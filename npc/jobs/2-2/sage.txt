@@ -29,7 +29,7 @@
 //==================================
 //Sage Castle
 //==================================
-yuno_in02.gat,38,61,4	script	Magic Academy Headmaster 	743,{
+yuno_in02,38,61,4	script	Magic Academy Headmaster 	743,{
 	callfunc "F_BlockHigh",Job_Mage_High,"High Mage",Job_Professor,"Professor","Keiron";
 	if(BaseJob == Job_Sage) goto L_Menu3_3;
 	if(BaseJob != Job_Mage) goto L_Menu2_1;
@@ -160,7 +160,7 @@ L_Menu3_3:
 //===============================
 //Biotech Lab
 //===============================
-yuno_in03.gat,244,31,3	script	Physics Professor	120,{
+yuno_in03,244,31,3	script	Physics Professor	120,{
 	if(BaseJob == Job_Sage) goto L_Menu3_2;
 	if(BaseJob != Job_Mage) goto L_Menu1_1;
 	if(SAGE_Q == 11) goto L_Menu3_1;
@@ -571,7 +571,7 @@ L_Menu3_2:
 //Monster Museum
 //==================================
 
-yuno_in03.gat,32,102,0	script	Biology Professor	755,{
+yuno_in03,32,102,0	script	Biology Professor	755,{
 	if(BaseJob == Job_Sage) goto L_Menu5_4;
 	if(BaseJob != Job_Mage) goto L_Menu1_1;
 	if(SAGE_Q == 11) goto L_Menu5_3;
@@ -940,7 +940,7 @@ L_Menu5_4:
 //Academy Interior
 //=================================
 
-yuno_in03.gat,154,35,4	script	Academy Staff	742,{
+yuno_in03,154,35,4	script	Academy Staff	742,{
 	callfunc "F_BlockHigh",26,"High Mage",40,"Professor","Mathias";
 
 	if(BaseJob == Job_Sage) goto L_Menu6_4;
@@ -1227,7 +1227,7 @@ L_Menu6_4:
 	close;
 }
 
-yuno_in03.gat,169,180,4	script	Test Professor	755,{
+yuno_in03,169,180,4	script	Test Professor	755,{
 	if(BaseJob == Job_Sage) goto L_Menu4_5;
 	if(BaseJob != Job_Mage) goto L_Menu1_1;
 	if(SAGE_Q == 5) goto L_Menu2_1;
@@ -1370,7 +1370,7 @@ L_Menu4_5:
 	close;
 }
 
-yuno_in03.gat,62,176,3	script	History Professor	109,{
+yuno_in03,62,176,3	script	History Professor	109,{
 	if(BaseJob == Job_Sage) goto L_Menu2_2;
 	if(BaseJob != Job_Mage) goto L_Menu1_1;
 	if(SAGE_Q == 11) goto L_Menu2_1;
@@ -1413,7 +1413,7 @@ L_Menu2_2:
 	close;
 }
 
-yuno_in03.gat,105,177,4	script	Placement Test Professor	754,{
+yuno_in03,105,177,4	script	Placement Test Professor	754,{
 	if(BaseJob == Job_Sage) goto L_Menu3_4;
 	if(BaseJob != Job_Mage) goto L_Menu1_1;
 	if(SAGE_Q == 11) goto L_Menu3_3;
@@ -1895,7 +1895,7 @@ L_Menu3_4:
 //Skill Test Room
 //==================================
 
-job_sage.gat,50,165,4	script	Skill Test Coordinator::jobsage_wroom	700,{
+job_sage,50,165,4	script	Skill Test Coordinator::jobsage_wroom	700,{
 	mes "[Skill Test Coordinator]";
 	mes "Welcome to the Sage skill test.";
 	mes "Please go to the waiting area if you want to take the test.";
@@ -1912,7 +1912,7 @@ OnInit:
 	end;
 OnStart:
 	disablewaitingroomevent;
-	warpwaitingpc "job_sage.gat",118,99;
+	warpwaitingpc "job_sage",118,99;
 	set $@jobsage_pid,$@warpwaitingpc[0];
 	if( attachrid($@jobsage_pid)==0 ) goto L_Error;
 		set $@jobsage_pname$,strcharinfo(0);
@@ -1927,30 +1927,30 @@ OnEnable:
 }
 
 //======== Test Step 1
-job_sage.gat,1,1,1	script	jobsage_1st	-1,{
+job_sage,1,1,1	script	jobsage_1st	-1,{
 	end;
 OnStart:
 	set $@jobsage_m,16;
-	monster "job_sage.gat",115,106,"Unit",1183,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",120,102,"Unit",1183,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",124,98,"Unit",1183,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",120,93,"Unit",1183,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",115,90,"Unit",1183,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",111,93,"Unit",1183,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",107,98,"Unit",1183,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",111,102,"Unit",1183,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",128,110,"Unit",1184,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",124,106,"Unit",1184,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",124,89,"Unit",1184,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",128,85,"Unit",1184,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",107,89,"Unit",1184,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",103,85,"Unit",1184,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",107,106,"Unit",1184,1,"jobsage_1st::OnKilled";
-	monster "job_sage.gat",103,110,"Unit",1184,1,"jobsage_1st::OnKilled";
+	monster "job_sage",115,106,"Unit",1183,1,"jobsage_1st::OnKilled";
+	monster "job_sage",120,102,"Unit",1183,1,"jobsage_1st::OnKilled";
+	monster "job_sage",124,98,"Unit",1183,1,"jobsage_1st::OnKilled";
+	monster "job_sage",120,93,"Unit",1183,1,"jobsage_1st::OnKilled";
+	monster "job_sage",115,90,"Unit",1183,1,"jobsage_1st::OnKilled";
+	monster "job_sage",111,93,"Unit",1183,1,"jobsage_1st::OnKilled";
+	monster "job_sage",107,98,"Unit",1183,1,"jobsage_1st::OnKilled";
+	monster "job_sage",111,102,"Unit",1183,1,"jobsage_1st::OnKilled";
+	monster "job_sage",128,110,"Unit",1184,1,"jobsage_1st::OnKilled";
+	monster "job_sage",124,106,"Unit",1184,1,"jobsage_1st::OnKilled";
+	monster "job_sage",124,89,"Unit",1184,1,"jobsage_1st::OnKilled";
+	monster "job_sage",128,85,"Unit",1184,1,"jobsage_1st::OnKilled";
+	monster "job_sage",107,89,"Unit",1184,1,"jobsage_1st::OnKilled";
+	monster "job_sage",103,85,"Unit",1184,1,"jobsage_1st::OnKilled";
+	monster "job_sage",107,106,"Unit",1184,1,"jobsage_1st::OnKilled";
+	monster "job_sage",103,110,"Unit",1184,1,"jobsage_1st::OnKilled";
 	initnpctimer;
 	end;
 OnReset:
-	killmonster "job_sage.gat","All";
+	killmonster "job_sage","All";
 	end;
 OnKilled:
 	set $@jobsage_m,$@jobsage_m-1;
@@ -1959,47 +1959,47 @@ OnKilled:
 	if((getnpctimer(0) >= 120000 ) && (getnpctimer(0) <= 170000 )) set sagecheck,sagecheck-1;
 	if(getnpctimer(0) > 170000 ) set sagecheck,sagecheck-2;
 		stopnpctimer;
-		mapannounce "job_sage.gat","Examiner: " + $@jobsage_pname$ + " killed all the monsters!",8;
+		mapannounce "job_sage","Examiner: " + $@jobsage_pname$ + " killed all the monsters!",8;
 		donpcevent "jobsage_2nd::OnStart";
 	L_NotWin:
 	end;
 OnTimer1000:
-	mapannounce "job_sage.gat","Examiner: The skill test begins now.",8;
+	mapannounce "job_sage","Examiner: The skill test begins now.",8;
 	end;
 OnTimer2500:
-	mapannounce "job_sage.gat","Examiner: The time limit for this portion of the test is 3 minutes.",8;
+	mapannounce "job_sage","Examiner: The time limit for this portion of the test is 3 minutes.",8;
 	end;
 OnTimer4000:
-	mapannounce "job_sage.gat","Examiner: You must kill all the monsters within that time period.",8;
+	mapannounce "job_sage","Examiner: You must kill all the monsters within that time period.",8;
 	end;
 OnTimer30000:
-	mapannounce "job_sage.gat","Examiner: 2 minutes, 30 seconds remaining.",8;
+	mapannounce "job_sage","Examiner: 2 minutes, 30 seconds remaining.",8;
 	end;
 OnTimer60000:
-	mapannounce "job_sage.gat","Examiner: 2 minutes remaining.",8;
+	mapannounce "job_sage","Examiner: 2 minutes remaining.",8;
 	end;
 OnTimer90000:
-	mapannounce "job_sage.gat","Examiner: 1 minute, 30 seconds remaining.",8;
+	mapannounce "job_sage","Examiner: 1 minute, 30 seconds remaining.",8;
 	end;
 OnTimer120000:
-	mapannounce "job_sage.gat","Examiner: 1 minute remaining.",8;
+	mapannounce "job_sage","Examiner: 1 minute remaining.",8;
 	end;
 OnTimer150000:
-	mapannounce "job_sage.gat","Examiner: 30 seconds remaining.",8;
+	mapannounce "job_sage","Examiner: 30 seconds remaining.",8;
 	end;
 OnTimer170000:
-	mapannounce "job_sage.gat","Examiner: 10 seconds remaining.",8;
+	mapannounce "job_sage","Examiner: 10 seconds remaining.",8;
 	end;
 OnTimer180000:
 	donpcevent "jobsage_1st::OnReset";
-	mapannounce "job_sage.gat","Examiner: Time has expired.",8;
+	mapannounce "job_sage","Examiner: Time has expired.",8;
 	end;
 OnTimer181500:
-	mapannounce "job_sage.gat","Examiner:" + $@jobsage_pname$ + "failed the test.",8;
-	areawarp "job_sage.gat",100,82,131,113,"yuno.gat",324,258;
+	mapannounce "job_sage","Examiner:" + $@jobsage_pname$ + "failed the test.",8;
+	areawarp "job_sage",100,82,131,113,"yuno",324,258;
 	end;
 OnTimer183000:
-	mapannounce "job_sage.gat","Next candidate, please step forward.",8;
+	mapannounce "job_sage","Next candidate, please step forward.",8;
 	end;
 OnTimer184000:
 	donpcevent "jobsage_wroom::OnEnable";
@@ -2008,39 +2008,39 @@ OnTimer184000:
 }
 
 //======== Test Step 2
-job_sage.gat,1,1,1	script	jobsage_2nd	-1,{
+job_sage,1,1,1	script	jobsage_2nd	-1,{
 	end;
 OnStart:
 	donpcevent "jobsage_2nd::OnReset";
 	set $@jobsage_m,24;
-	monster "job_sage.gat",120,102,"GeographyInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",120,102,"StatisticsInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",120,102,"MeteorologyInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",120,102,"AstronomyInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",120,102,"LinguisticsInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",120,102,"CityLifeInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",124,98,"ForestryInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",124,98,"HealthInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",124,98,"PsychologyInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",120,93,"AnthropologyInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",120,93,"BiologyInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",120,93,"EthicsInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",111,93,"ArchitectureInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",111,93,"PlasticsInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",111,93,"NutritionInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",111,93,"FoodInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",111,93,"ManagementInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",111,93,"SociologyInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",107,98,"EconomicsInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",107,98,"MagicInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",107,98,"PoliSciInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",111,102,"MathInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",111,102,"HistoryInfo",1063,1,"jobsage_2nd::OnKilled";
-	monster "job_sage.gat",111,102,"PhysicsInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",120,102,"GeographyInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",120,102,"StatisticsInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",120,102,"MeteorologyInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",120,102,"AstronomyInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",120,102,"LinguisticsInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",120,102,"CityLifeInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",124,98,"ForestryInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",124,98,"HealthInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",124,98,"PsychologyInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",120,93,"AnthropologyInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",120,93,"BiologyInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",120,93,"EthicsInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",111,93,"ArchitectureInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",111,93,"PlasticsInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",111,93,"NutritionInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",111,93,"FoodInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",111,93,"ManagementInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",111,93,"SociologyInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",107,98,"EconomicsInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",107,98,"MagicInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",107,98,"PoliSciInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",111,102,"MathInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",111,102,"HistoryInfo",1063,1,"jobsage_2nd::OnKilled";
+	monster "job_sage",111,102,"PhysicsInfo",1063,1,"jobsage_2nd::OnKilled";
 	initnpctimer;
 	end;
 OnReset:
-	killmonster "job_sage.gat","All";
+	killmonster "job_sage","All";
 	end;
 OnKilled:
 	set $@jobsage_m,$@jobsage_m-1;
@@ -2049,44 +2049,44 @@ OnKilled:
 		if(getnpctimer(0) < 60000 ) set sagecheck,sagecheck+1;
 		if((getnpctimer(0) >= 120000 ) && (getnpctimer(0) <= 170000 )) set sagecheck,sagecheck-1;
 		if(getnpctimer(0) > 170000 ) set sagecheck,sagecheck-2;
-		mapannounce "job_sage.gat","Examiner: " + $@jobsage_pname$ + " killed all the monsters!",8;
+		mapannounce "job_sage","Examiner: " + $@jobsage_pname$ + " killed all the monsters!",8;
 		donpcevent "jobsage_3rd::OnStart";
 	L_NotWin:
 	end;
 OnTimer1500:
-	mapannounce "job_sage.gat","Examiner: The time limit for this portion of the test is 3 minutes.",8;
+	mapannounce "job_sage","Examiner: The time limit for this portion of the test is 3 minutes.",8;
 	end;
 OnTimer3000:
-	mapannounce "job_sage.gat","Examiner: You must kill all the monsters within that time period.",8;
+	mapannounce "job_sage","Examiner: You must kill all the monsters within that time period.",8;
 	end;
 OnTimer30000:
-	mapannounce "job_sage.gat","Examiner: 2 minutes, 30 seconds remaining.",8;
+	mapannounce "job_sage","Examiner: 2 minutes, 30 seconds remaining.",8;
 	end;
 OnTimer60000:
-	mapannounce "job_sage.gat","Examiner: 2 minutes remaining.",8;
+	mapannounce "job_sage","Examiner: 2 minutes remaining.",8;
 	end;
 OnTimer90000:
-	mapannounce "job_sage.gat","Examiner: 1 minute, 30 seconds remaining.",8;
+	mapannounce "job_sage","Examiner: 1 minute, 30 seconds remaining.",8;
 	end;
 OnTimer120000:
-	mapannounce "job_sage.gat","Examiner: 1 minute remaining.",8;
+	mapannounce "job_sage","Examiner: 1 minute remaining.",8;
 	end;
 OnTimer150000:
-	mapannounce "job_sage.gat","Examiner: 30 seconds remaining.",8;
+	mapannounce "job_sage","Examiner: 30 seconds remaining.",8;
 	end;
 OnTimer170000:
-	mapannounce "job_sage.gat","Examiner: 10 seconds remaining.",8;
+	mapannounce "job_sage","Examiner: 10 seconds remaining.",8;
 	end;
 OnTimer180000:
 	donpcevent "jobsage_2nd::OnReset";
-	mapannounce "job_sage.gat","Examiner: Time has expired.",8;
+	mapannounce "job_sage","Examiner: Time has expired.",8;
 	end;
 OnTimer181500:
-	mapannounce "job_sage.gat","Examiner: " + $@jobsage_pname$ + "has failed the test.",8;
-	areawarp "job_sage.gat",100,82,131,113,"yuno.gat",324,258;
+	mapannounce "job_sage","Examiner: " + $@jobsage_pname$ + "has failed the test.",8;
+	areawarp "job_sage",100,82,131,113,"yuno",324,258;
 	end;
 OnTimer183000:
-	mapannounce "job_sage.gat","Next candidate, please step forward.",8;
+	mapannounce "job_sage","Next candidate, please step forward.",8;
 	end;
 OnTimer184000:
 	donpcevent "jobsage_wroom::OnEnable";
@@ -2096,16 +2096,16 @@ OnTimer184000:
 
 
 //======== Test Step 3
-job_sage.gat,1,1,1	script	jobsage_3rd	-1,{
+job_sage,1,1,1	script	jobsage_3rd	-1,{
 	end;
 OnStart:
 	donpcevent "jobsage_3rd::OnReset";
 	set $@jobsage_m,1;
-	monster "job_sage.gat",116,98,"Bachelor",1179,1,"jobsage_3rd::OnKilled";
-	monster "job_sage.gat",124,106,"Tardy",1185,1;
-	monster "job_sage.gat",124,89,"Loaner",1185,1;
-	monster "job_sage.gat",107,89,"Cheater",1185,1;
-	monster "job_sage.gat",107,106,"Absentee",1185,1;
+	monster "job_sage",116,98,"Bachelor",1179,1,"jobsage_3rd::OnKilled";
+	monster "job_sage",124,106,"Tardy",1185,1;
+	monster "job_sage",124,89,"Loaner",1185,1;
+	monster "job_sage",107,89,"Cheater",1185,1;
+	monster "job_sage",107,106,"Absentee",1185,1;
 	initnpctimer;
 	end;
 OnReset:
@@ -2114,34 +2114,34 @@ OnKilled:
 	set $@jobsage_m,$@jobsage_m-1;
 	if( $@jobsage_m > 0 )goto L_NotWin;
 		stopnpctimer;
-		killmonster "job_sage.gat","All";
+		killmonster "job_sage","All";
 		set SAGE_Q,7;
 		if(getnpctimer(0) < 20000 ) set sagecheck,sagecheck+1;
 		if((getnpctimer(0) >= 30000 ) && (getnpctimer(0) <= 50000 )) set sagecheck,sagecheck-1;
 		if(getnpctimer(0) > 50000 ) set sagecheck,sagecheck-2;
-		mapannounce "job_sage.gat","Examiner: Congratulations. " + $@jobsage_pname$ + "passed the test!",8;
+		mapannounce "job_sage","Examiner: Congratulations. " + $@jobsage_pname$ + "passed the test!",8;
 		donpcevent "jobsage_success::OnSuccess";
 	L_NotWin:
 	end;
 OnTimer1500:
-	mapannounce "job_sage.gat","Examiner: 1 minute remaining.",8;
+	mapannounce "job_sage","Examiner: 1 minute remaining.",8;
 	end;
 OnTimer30000:
-	mapannounce "job_sage.gat","Examiner: 30 seconds remaining.",8;
+	mapannounce "job_sage","Examiner: 30 seconds remaining.",8;
 	end;
 OnTimer50000:
-	mapannounce "job_sage.gat","Examiner: 10 seconds remaining.",8;
+	mapannounce "job_sage","Examiner: 10 seconds remaining.",8;
 	end;
 OnTimer60000:
 	donpcevent "jobsage_3rd::OnReset";
-	mapannounce "job_sage.gat","Examiner: Time has expired.",8;
+	mapannounce "job_sage","Examiner: Time has expired.",8;
 	end;
 OnTimer61500:
-	mapannounce "job_sage.gat","Examiner: " + $@jobsage_pname$ + "failed the test.",8;
-	areawarp "job_sage.gat",100,82,131,113,"yuno.gat",324,258;
+	mapannounce "job_sage","Examiner: " + $@jobsage_pname$ + "failed the test.",8;
+	areawarp "job_sage",100,82,131,113,"yuno",324,258;
 	end;
 OnTimer63000:
-	mapannounce "job_sage.gat","Examiner: This concludes the test.  Next candidate, please step forward.",8;
+	mapannounce "job_sage","Examiner: This concludes the test.  Next candidate, please step forward.",8;
 	end;
 OnTimer64000:
 	donpcevent "jobsage_wroom::OnEnable";
@@ -2150,17 +2150,17 @@ OnTimer64000:
 }
 
 //======== Successful
-job_sage.gat,1,7,1	script	jobsage_success	66,{
+job_sage,1,7,1	script	jobsage_success	66,{
 OnSuccess:
-	killmonster "job_sage.gat","All";
+	killmonster "job_sage","All";
 	initnpctimer;
 	end;
 OnTimer3000:
-	mapannounce "job_sage.gat","Examiner: Please allow me to guide you out.",8;
+	mapannounce "job_sage","Examiner: Please allow me to guide you out.",8;
 	end;
 OnTimer6000:
-	mapannounce "job_sage.gat","Next candidate, please step forward.",8;
-	areawarp "job_sage.gat",100,82,131,113,"yuno_in03.gat",163,180;
+	mapannounce "job_sage","Next candidate, please step forward.",8;
+	areawarp "job_sage",100,82,131,113,"yuno_in03",163,180;
 	end;
 OnTimer7000:
 	donpcevent "jobsage_wroom::OnEnable";
@@ -2171,10 +2171,10 @@ OnTimer7000:
 //==============================================================================
 // mapflag
 //==============================================================================
-job_sage.gat	mapflag	nomemo
-job_sage.gat	mapflag	noteleport
-job_sage.gat	mapflag	nosave	SavePoint
-job_sage.gat	mapflag	nopenalty
-job_sage.gat	mapflag	nobranch
-job_sage.gat	mapflag	noexp
-job_sage.gat	mapflag	noloot
+job_sage	mapflag	nomemo
+job_sage	mapflag	noteleport
+job_sage	mapflag	nosave	SavePoint
+job_sage	mapflag	nopenalty
+job_sage	mapflag	nobranch
+job_sage	mapflag	noexp
+job_sage	mapflag	noloot

@@ -25,7 +25,7 @@
 //============================================================
 // WIZARD - SIGHTBLASTER
 //============================================================
-gef_tower.gat,116,37,1	script	Enoz#2	748,{
+gef_tower,116,37,1	script	Enoz#2	748,{
 	if(HELLIONQ == 22)goto L_remember;
 	if(HELLIONQ == 21)goto L_joke;
 	if(HELLIONQ == 20)goto L_take;

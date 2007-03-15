@@ -24,7 +24,7 @@
 //============================================================
 // BARD - PANG VOICE
 //============================================================
-prontera.gat,134,328,7	script	Timid man	89,{
+prontera,134,328,7	script	Timid man	89,{
 	mes "[Timid man]";
 	if(BaseJob!=Job_Bard) goto L_nobard;
 	if(getskilllv(1010)) goto L_alreadyhave;

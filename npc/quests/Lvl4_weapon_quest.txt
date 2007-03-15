@@ -48,7 +48,7 @@ OnInit:
 // Bazo, creates Immaterial Sword, Quadrille and Slash
 //---------------------------------------------------------------
 
-umbala.gat,117,285,3	script	Bazo	85,{
+umbala,117,285,3	script	Bazo	85,{
 	set @NowWeight, MaxWeight - Weight;
 	if (@NowWeight >= 3000) goto LV4_NOT_OW;
 	mes "- Wait a minute! -";
@@ -593,7 +593,7 @@ LV4_HACK:
 // Hibilaithan, creates Mailbreaker, Swordbreaker and Slaughter
 //---------------------------------------------------------------
 
-umbala.gat,163,257,3	script	Hibilaithan	785,{
+umbala,163,257,3	script	Hibilaithan	785,{
 	if(event_umbala < 3) goto LumWord;
 	set @NowWeight, MaxWeight - Weight;
 	if (@NowWeight >= 3000) goto LV4_NOT_OW;
@@ -1147,7 +1147,7 @@ LV4_HACK:
 // Tabezthan, creates Talefing, Sabbath and Caesar's Sword
 //--------------------------------------------------
 
-um_in.gat,156,77,5	script	Tabezthan	788,{
+um_in,156,77,5	script	Tabezthan	788,{
 	if(event_umbala < 3) goto LumWord;
 	set @NowWeight, MaxWeight - Weight;
 	if (@NowWeight >= 3000) goto LV4_NOT_OW;
@@ -1726,7 +1726,7 @@ LV4_HACK:
 // Bill Thayer, Gives hints for S grade weapons quests
 //--------------------------------------------------
 
-aldebaran.gat,178,239,3	script	Bill Thayer	712,{
+aldebaran,178,239,3	script	Bill Thayer	712,{
 	// Explain Materials
 	if(lv4_weapon == 26) goto LV4_26;
 	if(lv4_weapon == 27) goto LV4_27;
@@ -2009,7 +2009,7 @@ LV4_50:
 // Kayron, creates Longinus' Spear, Guillotine, Great Axe and Brionac
 //--------------------------------------------------
 
-niflheim.gat,240,193,3	script	Kayron	794, {
+niflheim,240,193,3	script	Kayron	794, {
 	set @NowWeight, MaxWeight - Weight;
 	if (@NowWeight >= 3000) goto LV4_NOT_OW;
 	mes "- Wait a minute! -";
@@ -2416,7 +2416,7 @@ LV4_HACK:
 // Reyghema, creates Berserk, Tjungkulleti, Rudra's Bow and Brocca(Skewer)
 //--------------------------------------------------
 
-niflheim.gat,99,268,5	script	Reyghema	794, {
+niflheim,99,268,5	script	Reyghema	794, {
 	set @NowWeight, MaxWeight - Weight;
 	if (@NowWeight >= 3000) goto LV4_NOT_OW;
 	mes "- Wait a minute! -";
@@ -2816,7 +2816,7 @@ LV4_HACK:
 // Hein, creates Excalibur, Schweisersabel, Dragon Slayer and Edge
 //--------------------------------------------------
 
-niflheim.gat,187,280,3	script	Hein	795, {
+niflheim,187,280,3	script	Hein	795, {
 	set @NowWeight, MaxWeight - Weight;
 	if (@NowWeight >= 3000) goto LV4_NOT_OW;
 	mes "- Wait a minute! -";
@@ -3221,7 +3221,7 @@ LV4_HACK:
 // Waltboughst, creates Byeollungum, Exorciser(excercise), Combat Knife and Grand Cross
 //--------------------------------------------------
 
-niflheim.gat,331,72,3	script	Waltboughst	795,{
+niflheim,331,72,3	script	Waltboughst	795,{
 	set @NowWeight, MaxWeight - Weight;
 	if (@NowWeight >= 3000) goto LV4_NOT_OW;
 	mes "- Wait a minute! -";

@@ -16,6 +16,6 @@
 //============================================================ 
 
 // -== White Smith ==-
-valkyrie.gat,44,51,6	script	White Smith	726,{
+valkyrie,44,51,6	script	White Smith	726,{
 	callfunc "F_Rebirth",Job_Merchant_High,"Merchant High",Job_Whitesmith,"White Smith";
 }

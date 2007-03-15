@@ -17,7 +17,7 @@
 //= 1.2b Thanks to $ephiroth, fixed wrong ingredient lists
 //============================================================
 
-que_ng.gat,22,62,3	script	Taitsu	709,{
+que_ng,22,62,3	script	Taitsu	709,{
 
 	mes "[Taitsu]";
 	if(Class!=Job_Ninja){

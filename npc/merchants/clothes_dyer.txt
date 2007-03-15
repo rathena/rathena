@@ -24,7 +24,7 @@
 
 
 // Dyer Ginedin Rephere ---------------------------------------------------
-prt_in.gat,284,168,2	script	Dyer Ginedin Rephere	55,{
+prt_in,284,168,2	script	Dyer Ginedin Rephere	55,{
 	mes "[Dyer Ginedin Rephere]";
 	mes "11... 12... Mmm... good. I think I'll be able to finish before tonight’s party. Oh! I didn't notice that you were here. Anyway how may I assist you?";
 M_Menu:

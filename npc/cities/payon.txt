@@ -23,7 +23,7 @@
 //= 2.0 fixed some bugs, optimized script, added missing msg [Lupus]
 //============================================================ 
 
-payon.gat,190,115,0	script	Lady#05	90,{
+payon,190,115,0	script	Lady#05	90,{
 	mes "[Lady]";
 	mes "Did you know that in the past Payon was not as prosperous as it is now? Back then we had difficulty making a living for ourselves.";
 	emotion e_gasp;
@@ -48,7 +48,7 @@ payon.gat,190,115,0	script	Lady#05	90,{
 	mes "It is a very tragic situation, for those zombies were at one time beloved members of the Payon community.";
 	close;
 }
-payon_in01.gat,177,91,5	script	Young Man#06	88,{
+payon_in01,177,91,5	script	Young Man#06	88,{
 	mes "[Young Man]";
 	mes "I can see you are a stranger from the appearance of your traveling outfit. You must be a well-experienced fighter otherwise you couldn't successfully arrive at this steep place with all tough those creatures outside.";
 	mes "However you miss something important for fights. You can't defeat those monsters only with might.";
@@ -59,7 +59,7 @@ payon_in01.gat,177,91,5	script	Young Man#06	88,{
 	close;
 }
 
-payon.gat,104,62,5	script	Young Man#07	88,{
+payon,104,62,5	script	Young Man#07	88,{
 	mes "[Young Man]";
 	mes "I still remember the story my grandfather told me long ago about the Amulet that possessed an Evil Power within it.";
 	next;
@@ -78,7 +78,7 @@ payon.gat,104,62,5	script	Young Man#07	88,{
 	close;
 }
 
-payon_in01.gat,180,7,0	script	Waitress	90,{
+payon_in01,180,7,0	script	Waitress	90,{
 	mes "[Waitress]";
 	mes "People in this place seem to be busy all the time, they come and go to be Archers or to buy arrows, I have to stick with this small shop.";
 	mes "I feel so melancholy and bored.";
@@ -156,7 +156,7 @@ L_Menu4:
  	close;
 }
 
-payon.gat,193,116,1	script	Woman#05	66,{
+payon,193,116,1	script	Woman#05	66,{
 	mes "[Woman]";
 	mes "Welcome to Payon.  You must have had a hard time getting through the thick forest?  I hope you didn't run into too much trouble?";
 	next;
@@ -212,7 +212,7 @@ L_Menu3:
 	close;
 }
 
-payon.gat,190,119,5	script	Woman#06	66,{
+payon,190,119,5	script	Woman#06	66,{
 	mes "[Jim's Mother]";
 	mes "Oh boy there she goes again.  She is a confirmed gossip.  Please don't mistake her for being a typical Payon citizen.";
 	emotion e_dots;
@@ -251,7 +251,7 @@ L_Bye:
 	close;
 }
 
-payon.gat,210,110,4	script	Drunk	120,{
+payon,210,110,4	script	Drunk	120,{
 	mes "[Drunk]";
 	if(BaseJob == Job_Archer){
 		mes "Yoyo! Archer brother! Salute to your fingers stretching bowstring!";
@@ -303,7 +303,7 @@ L_Menu3:
 	close;
 }
 
-payon_in01.gat,47,59,5	script	Archer Zakk	88,{
+payon_in01,47,59,5	script	Archer Zakk	88,{
 	mes "[Archer Zakk]";
 	mes "I am so worried about one of my pals. He speaks about much crap.";
 	mes "Well he is an expert of archery, but I hate his big mouth...";
@@ -345,7 +345,7 @@ L_Menu3:
 	close;
 }
 
-payon_in01.gat,66,64,5	script	Archer Wolt	88,{
+payon_in01,66,64,5	script	Archer Wolt	88,{
 	mes "[Archer Wolt]";
 	mes "Archers should practice as much as they can. Otherwise they won't be an expert.";
 	mes "Are you new here? Howdy!";
@@ -491,7 +491,7 @@ L_temp3:
 	close;
 }
 
-pay_arche.gat,77,131,2	script	Archer Joe	88,{
+pay_arche,77,131,2	script	Archer Joe	88,{
 	mes "[Archer Joe]";
 	mes "Payon! What a wonderful place! Superb Bows! Excellent Archers!";
 	emotion e_no1;
@@ -555,7 +555,7 @@ L_Menu3:
 	close;	
 }
 
-payon.gat,132,235,2	script	Monster Scholar	98,{
+payon,132,235,2	script	Monster Scholar	98,{
 	mes "[Monster Scholar Vuicokk]";
 	mes "Nice to meet you. I am Vuicokk the scholar in the monster research organization of Rune Midgard.";
 	mes "Do you have any questions about monsters of Rune Midgard?";
@@ -619,8 +619,8 @@ L_End:
 	close;
 }
 
-payon.gat,158,246,4	script	Guardsman	708,{}
-payon.gat,158,245,4	script	PayonGuard1TriggerArea	139,3,2,{
+payon,158,246,4	script	Guardsman	708,{}
+payon,158,245,4	script	PayonGuard1TriggerArea	139,3,2,{
 	mes "[Guardsman]";
 	mes "This is the Central Palace of Payon. This place is open to the public, but in accordance with our laws, you must behave in an orderly fashion while inside.";
 	next;
@@ -631,8 +631,8 @@ payon.gat,158,245,4	script	PayonGuard1TriggerArea	139,3,2,{
 	close;
 }
 
-payon_in03.gat,96,116,4	script	Chief Guardsman	708,{}
-payon_in03.gat,96,117,4	script	PayonGuard2TriggerArea	139,3,2,{
+payon_in03,96,116,4	script	Chief Guardsman	708,{}
+payon_in03,96,117,4	script	PayonGuard2TriggerArea	139,3,2,{
 	mes "[Chief Guardsman]";
 	mes "What brings";
 	mes "you here?";
@@ -646,7 +646,7 @@ payon_in03.gat,96,117,4	script	PayonGuard2TriggerArea	139,3,2,{
 	close;
 }
 
-payon_in03.gat,102,185,4	script	Guard#06	708,{
+payon_in03,102,185,4	script	Guard#06	708,{
 	mes "[Guard]";
 	mes "Hey...!";
 	mes "You're not";
@@ -655,8 +655,8 @@ payon_in03.gat,102,185,4	script	Guard#06	708,{
 	close;
 }
 
-payon_in03.gat,99,190,4	script	Chief	120,{}
-payon_in03.gat,99,189,4	script	PayonChiefAreaTrigger	139,2,1,{
+payon_in03,99,190,4	script	Chief	120,{}
+payon_in03,99,189,4	script	PayonChiefAreaTrigger	139,2,1,{
 	if(BaseLevel < 30){
 		mes "[Guard]";
 		mes "Hey...";
@@ -730,14 +730,14 @@ L_Menu5:
 	next;
 }
 
-payon.gat,160,185,0	script	Billboard	111,{
+payon,160,185,0	script	Billboard	111,{
 	mes "^993333- The Billboard Reads -^000000";
 	mes "Welcome, and enjoy your stay in";
 	mes "the beautiful town of Payon.";
 	close;
 }
 
-payon.gat,173,238,5	script	Jade#01	754,{
+payon,173,238,5	script	Jade#01	754,{
 	mes "[Jade]";
 	mes "Bring me two";
 	mes "Gemstones of the";
@@ -842,7 +842,7 @@ L_Cancel:
 }
 
 //Need to find out ALL fortunes he can tell for each answer...
-payon_in03.gat,117,128,4	script	Fortune Teller	704,{
+payon_in03,117,128,4	script	Fortune Teller	704,{
 	mes "[Lhimetorra]";
 	mes "You're an adventurer of this";
 	mes "world... " + strcharinfo(0) + ", right? So, what can an old person like me do for you?";
@@ -1016,7 +1016,7 @@ L_Info:
 	close;
 }
 
-payon_in03.gat,131,7,4	script	Hunter	59,{
+payon_in03,131,7,4	script	Hunter	59,{
 	mes "[Hunter]";
 	mes "...Can I help you?";
 	mes "I'm here for official business and am busy at the moment. If you'll excuse me...";

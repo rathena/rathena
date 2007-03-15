@@ -19,7 +19,7 @@
 //	zeny exploits when you change DATE at your server
 //============================================================ 
 
-prontera.gat,131,190,1	script	Bank Clerk::bankg	833,{  
+prontera,131,190,1	script	Bank Clerk::bankg	833,{  
  mes"[Maniss]";
  mes strcharinfo(0)+", welcome to the 2nd Bank of Prontera!";
 
@@ -111,6 +111,6 @@ B_EXIT2:
  close;
 }
 
-geffen.gat,125,73,3	duplicate(bankg)	Bank Clerk#2	833
-izlude.gat,145,107,1	duplicate(bankg)	Bank Clerk#3	833
-morocc.gat,147,84,7	duplicate(bankg)	Bank Clerk#4	833
+geffen,125,73,3	duplicate(bankg)	Bank Clerk#2	833
+izlude,145,107,1	duplicate(bankg)	Bank Clerk#3	833
+morocc,147,84,7	duplicate(bankg)	Bank Clerk#4	833

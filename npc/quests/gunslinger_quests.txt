@@ -15,7 +15,7 @@
 
 //===================== Garrison =====================================================
 
-que_ng.gat,182,85,3	script	Mr.Garrison	109,{
+que_ng,182,85,3	script	Mr.Garrison	109,{
 	set @npcname$,"[Mr.Garrison]";
 
 	mes @npcname$;
@@ -170,7 +170,7 @@ L_Already:
 	close;
 }
 
-que_ng.gat,187,163,3	script	Ingrid	744,{
+que_ng,187,163,3	script	Ingrid	744,{
 	set @npcname$,"[Ingrid]";
 
 	mes @npcname$;
@@ -250,7 +250,7 @@ que_ng.gat,187,163,3	script	Ingrid	744,{
 	}
 }
 
-que_ng.gat,185,180,3	script	Vanessa	726,{
+que_ng,185,180,3	script	Vanessa	726,{
 	set @npcname$,"[Vanessa]";
 
 	mes @npcname$;
@@ -325,7 +325,7 @@ que_ng.gat,185,180,3	script	Vanessa	726,{
 	}
 }
 
-que_ng.gat,149,178,5	script	N.A	744,{
+que_ng,149,178,5	script	N.A	744,{
 	set @npcname$,"[N.A]";
 
 	mes @npcname$;

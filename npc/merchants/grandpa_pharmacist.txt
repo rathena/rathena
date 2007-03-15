@@ -23,7 +23,7 @@
 //============================================================
 
 
-alberta_in.gat,16,28,4	script	Grampa Pharmacist	61,{
+alberta_in,16,28,4	script	Grampa Pharmacist	61,{
 	mes "[Grampa Pharmacist]";
 	mes "Hmmm... what do you want...?";
 	next;

@@ -14,8 +14,8 @@
 
 //= Amatsu Dungeon ===========================================
 //disabled due to amatsu dungeon quest
-//ama_dun01.gat,228,6,0	warp	warp8007	1,1,ama_test.gat,50,87
-ama_dun01.gat,234,143,0	warp	warp8008	1,1,ama_dun02.gat,31,41
-ama_dun02.gat,196,124,0	warp	warp8010	1,1,ama_dun03.gat,119,14
-ama_dun02.gat,29,41,0	warp	warp8009	1,1,ama_dun01.gat,231,143
-ama_dun03.gat,119,9,0	warp	warp8011	1,1,ama_dun02.gat,196,121
+//ama_dun01,228,6,0	warp	warp8007	1,1,ama_test,50,87
+ama_dun01,234,143,0	warp	warp8008	1,1,ama_dun02,31,41
+ama_dun02,196,124,0	warp	warp8010	1,1,ama_dun03,119,14
+ama_dun02,29,41,0	warp	warp8009	1,1,ama_dun01,231,143
+ama_dun03,119,9,0	warp	warp8011	1,1,ama_dun02,196,121

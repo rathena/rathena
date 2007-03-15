@@ -23,35 +23,35 @@
 
 
 // Center ------------------------------------------------------------------
-yuno.gat,152,187,4	script	Kafra::kaf_yuno	113,{
+yuno,152,187,4	script	Kafra::kaf_yuno	113,{
 	cutin "kafra_05",2;
 	callfunc "F_KafSetYun";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "yuno.gat",158,125;
+		savepoint "yuno",158,125;
 		callfunc "F_KafEnd",0,1;
 }
 
 // South East --------------------------------------------------------------
-yuno.gat,327,108,4	script	Kafra::kaf_yuno2	113,{
+yuno,327,108,4	script	Kafra::kaf_yuno2	113,{
 	cutin "kafra_05",2;
 	callfunc "F_KafSetYun";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "yuno.gat",328,101;
+		savepoint "yuno",328,101;
 		callfunc "F_KafEnd",0,1;
 }
 
 // East --------------------------------------------------------------------
-yuno.gat,277,221,4	script	Kafra::kaf_yuno3	117,{
+yuno,277,221,4	script	Kafra::kaf_yuno3	117,{
 	cutin "kafra_01",2;
 	callfunc "F_KafSetYun";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "yuno.gat",274,229;
+		savepoint "yuno",274,229;
 		callfunc "F_KafEnd",0,1;
 }
 

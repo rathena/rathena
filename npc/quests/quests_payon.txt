@@ -21,7 +21,7 @@
 //==========================================================================================//
 //				Pretend Murdered quest
 //==========================================================================================//
-payon.gat,154,170,4	script	Granny	78,{
+payon,154,170,4	script	Granny	78,{
 	mes "[Granny]";
 	if(countitem(1049) >= 4) goto L_Get;
 
@@ -75,7 +75,7 @@ L_Get:
 //========================================================================================//
 //					Ear Muffs Quest
 //========================================================================================//
-payon_in01.gat,18,10,4	script	Mystic Lady	75,{
+payon_in01,18,10,4	script	Mystic Lady	75,{
 	mes "[Mystic Lady]";
 	mes "Hi there.";
 	next;
@@ -132,7 +132,7 @@ payon_in01.gat,18,10,4	script	Mystic Lady	75,{
 //========================================================================================//
 //					Oxygen Mask Quest
 //========================================================================================//
-payon_in02.gat,25,71,4	script	Young Man#11	86,{
+payon_in02,25,71,4	script	Young Man#11	86,{
 	mes "[Young Man]";
 	if(countitem(701) >= 5) goto L_GotOra;
 	mes "Blahhhhhh! I... I... I JUST CAN'T take it anymore!! You little stinky, filthy, BASTARDS!!!";
@@ -226,7 +226,7 @@ L_GotOra:
 //========================================================================================//
 //			Derivuchi Cap(Hat of Petite Diablo), Helm of Angel
 //========================================================================================//
-payon_in01.gat,56,12,4	script	Young Man#12	89,{
+payon_in01,56,12,4	script	Young Man#12	89,{
 	mes "[Young Man]";
 	mes "What is it?............";
 	next;

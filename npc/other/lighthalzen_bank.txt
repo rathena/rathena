@@ -14,7 +14,7 @@
 //= 1.1 Add correct name, and change some dialogue. [Au{R}oN]
 //============================================================
 
-lhz_in02.gat,34,41,7	script	Arthur	849,{
+lhz_in02,34,41,7	script	Arthur	849,{
 
 	mes "[Arthur]";
 	mes "The chairs here are";
@@ -26,7 +26,7 @@ lhz_in02.gat,34,41,7	script	Arthur	849,{
 	close;
 }
 
-lhz_in02.gat,28,39,3	script	Helen	703,{
+lhz_in02,28,39,3	script	Helen	703,{
 
 	mes "[Helen]";
 	mes "You know, maybe when";
@@ -37,7 +37,7 @@ lhz_in02.gat,28,39,3	script	Helen	703,{
 	close;
 }
 
-lhz_in02.gat,31,34,3	script	Tadem	847,{
+lhz_in02,31,34,3	script	Tadem	847,{
 
 	mes "[Tadem]";
 	mes "I do so enjoy the";
@@ -49,7 +49,7 @@ lhz_in02.gat,31,34,3	script	Tadem	847,{
 	close;
 }
 
-lhz_in02.gat,31,33,3	script	Gracie	863,{
+lhz_in02,31,33,3	script	Gracie	863,{
 
 	mes "[Gracie]";
 	mes "Oh, it's so comfortable";
@@ -69,7 +69,7 @@ lhz_in02.gat,31,33,3	script	Gracie	863,{
 	close;
 }
 
-lhz_in02.gat,34,22,8	script	Bank Clerk::1_st	755,{
+lhz_in02,34,22,8	script	Bank Clerk::1_st	755,{
 
 	mes "[Bank Clerk]";
 	mes "Due to some critical system";
@@ -79,5 +79,5 @@ lhz_in02.gat,34,22,8	script	Bank Clerk::1_st	755,{
 	mes "and appreciate your understanding.";
 	close;
 }
-lhz_in02.gat,21,25,9	duplicate(1_st)	Bank Clerk::2_nd	86
-lhz_in02.gat,21,38,9	duplicate(1_st)	Bank Clerk::3_th	86
+lhz_in02,21,25,9	duplicate(1_st)	Bank Clerk::2_nd	86
+lhz_in02,21,38,9	duplicate(1_st)	Bank Clerk::3_th	86

@@ -15,7 +15,7 @@
 //============================================================ 
 
 
-prontera.gat,122,200,1	script	Universal Rental Npc	726,{
+prontera,122,200,1	script	Universal Rental Npc	726,{
 	mes "[Universal Rental Npc]";
 	mes "Hi, here you can rent Carts, Falcons or Pecopecos.";
 	next;

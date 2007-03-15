@@ -12,7 +12,7 @@
 // 1.0 First version. [MasterOfMuppets]
 //============================================================
 
-sec_in02.gat,15,170,0	script	Seals Quest Vars	817,{
+sec_in02,15,170,0	script	Seals Quest Vars	817,{
 
 	if(getgmlevel() > 98)
 	{

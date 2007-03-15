@@ -137,23 +137,23 @@ function	script	F_NMerch	{
 	}
 }
 
-prontera.gat,123,102,5	script	Merchant#1	85,{
+prontera,123,102,5	script	Merchant#1	85,{
 	callfunc "F_NMerch","Merchant",935,5,914,10,909,10;
 }
 
-geffen.gat,173,88,5	script	Merchant#2	85,{
+geffen,173,88,5	script	Merchant#2	85,{
 	callfunc "F_NMerch","Merchant",935,5,915,6,909,10;
 }
 
-morocc.gat,180,259,3	script	Merchant#3	85,{
+morocc,180,259,3	script	Merchant#3	85,{
 	callfunc "F_NMerch","Merchant",935,5,916,7,909,10;
 }
 
-aldebaran.gat,152,63,5	script	Merchant#4	85,{
+aldebaran,152,63,5	script	Merchant#4	85,{
 	callfunc "F_NMerch","Merchant",955,1,916,7,909,10;
 }
 
-payon.gat,200,134,5	script	Merchant#5	85,{
+payon,200,134,5	script	Merchant#5	85,{
 	//we remove 3rd item, by adding 0,0
 	callfunc "F_NMerch","Merchant",902,6,909,10,0,0;
 }

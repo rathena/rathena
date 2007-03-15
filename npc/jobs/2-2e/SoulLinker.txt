@@ -15,7 +15,7 @@
 //= 1.1 Fixed NPC names according to iRO [Lupus]
 //============================================================ 
 
-morocc_in.gat,174,30,7	script	Kid#sltest	716,{
+morocc_in,174,30,7	script	Kid#sltest	716,{
 	if(SOUL_Q==1) goto L_Check;
 	if(SOUL_Q >= 2) goto L_Warp;
 	if(Class==Job_Soul_Linker) goto L_Thanks;
@@ -106,7 +106,7 @@ L_Warp:
 	mes "[Kid]";
 	mes "Okay, here we go.";
 	close2;
-	warp "job_soul.gat",30,30;
+	warp "job_soul",30,30;
 	end;
 
 L_Skill:
@@ -117,7 +117,7 @@ L_Skill:
 	close;
 }
 
-job_soul.gat,30,35,2	script	Lost Soul#1	827,{
+job_soul,30,35,2	script	Lost Soul#1	827,{
 	if(SOUL_Q==2) goto L_Talk1;
 	mes "[Lost Soul]";
 	mes "I have said all I have needed to say. Thank you.";
@@ -168,7 +168,7 @@ L_Talk1:
 	close;
 }
 
-job_soul.gat,25,30,3	script	Lost Soul#2	744,{
+job_soul,25,30,3	script	Lost Soul#2	744,{
 	if(SOUL_Q==3) goto L_Talk2;
 	if(SOUL_Q < 3) goto L_Notyet2;
 	mes "[Lost Soul]";
@@ -220,7 +220,7 @@ L_Talk2:
 	close;
 }
 
-job_soul.gat,30,25,0	script	Lost Soul#3	754,{
+job_soul,30,25,0	script	Lost Soul#3	754,{
 	if(SOUL_Q==4) goto L_Talk3;
 	if(SOUL_Q < 4) goto L_Notyet3;
 	mes "[Lost Soul]";
@@ -271,7 +271,7 @@ L_Talk3:
 	close;
 }
 
-job_soul.gat,35,30,3	script	Kid#4	716,{
+job_soul,35,30,3	script	Kid#4	716,{
 	if(SOUL_Q < 5) goto L_Notyet4;
 	mes "[Kid]";
 	mes "So you have listened to the tales of my friends?";
@@ -299,14 +299,14 @@ job_soul.gat,35,30,3	script	Kid#4	716,{
 	mes "[Kid]";
 	mes "Please try to help others.";
 	close2;
-	warp "morocc_in.gat",175,31;
+	warp "morocc_in",175,31;
 	end;
 
 L_Warpout:
 	mes "[Kid]";
 	mes "If you change your mind come and talk to me.";
 	close2;
-	warp "morocc_in.gat",175,31;
+	warp "morocc_in",175,31;
 	end;
 
 L_Notyet4:

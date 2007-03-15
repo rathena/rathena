@@ -25,12 +25,12 @@
 //============================================================
 
 
-einbech.gat,180,136,5	script	Notice Board	858,{
+einbech,180,136,5	script	Notice Board	858,{
 	mes "[Tool Shop Entrance]";
 	close;
 }
 
-einbech.gat,46,107,6	script	Shena	846,{
+einbech,46,107,6	script	Shena	846,{
 	mes "[Shena]";
 	mes "I think it's weird!";
 	mes "How do you youngsters";
@@ -285,9 +285,9 @@ L_THAT:
 	goto L_MENU;
 }
 	
-einbech.gat,48,107,4	duplicate(Shena)	Luda	850
+einbech,48,107,4	duplicate(Shena)	Luda	850
 	
-einbech.gat,93,139,6	script	Raust	847,{
+einbech,93,139,6	script	Raust	847,{
 	mes "[Raust]";
 	mes "I don't get it!";
 	mes "Einbroch gets bigger";
@@ -319,7 +319,7 @@ einbech.gat,93,139,6	script	Raust	847,{
 	close;
 }
 	
-einbech.gat,97,167,6	script	Cavitar	847,{
+einbech,97,167,6	script	Cavitar	847,{
 	mes "[Cavitar]";
 	mes "Recently, we had some";
 	mes "tunnel cave-ins that resulted";
@@ -353,7 +353,7 @@ einbech.gat,97,167,6	script	Cavitar	847,{
 	close;
 }
 	
-einbech.gat,105,218,6	script	Gushenmu	848,{
+einbech,105,218,6	script	Gushenmu	848,{
 	mes "[Gushenmu]"; 
 	mes "I've lived here a long time";
 	mes "and, believe it or not, things";
@@ -386,7 +386,7 @@ einbech.gat,105,218,6	script	Gushenmu	848,{
 	close;
 }
 	
-einbech.gat,39,215,6	script	Train Station Staff	852,{
+einbech,39,215,6	script	Train Station Staff	852,{
 	mes "[Staff]";
 	mes "Welcome to";
 	mes "the Train Station.";
@@ -410,7 +410,7 @@ L_YES:
 	mes "the ride. All aboard!";
 	next;
 	set Zeny,Zeny - 200;
-	warp "einbroch.gat",226,276;
+	warp "einbroch",226,276;
 	end;
 L_ZENY:
 	mes "[Staff]";
@@ -421,7 +421,7 @@ L_ZENY:
 	close;
 }
 
-einbech.gat,157,215,4	script	Train Station Manager	852,{
+einbech,157,215,4	script	Train Station Manager	852,{
 	mes "[Train Station Manager]";
 	mes "This train station";
 	mes "is strictly for trains";
@@ -432,7 +432,7 @@ einbech.gat,157,215,4	script	Train Station Manager	852,{
 	close;
 }
 
-einbech.gat,129,234,6	script	Hander	848,{
+einbech,129,234,6	script	Hander	848,{
 	mes "[Hander]";
 	mes "Those Einbroch bastards!";
 	mes "Living off the resources we";
@@ -456,7 +456,7 @@ einbech.gat,129,234,6	script	Hander	848,{
 	close;
 }
 
-einbech.gat,128,238,6	script	Mogan	848,{
+einbech,128,238,6	script	Mogan	848,{
 	mes "[Mogan]";
 	mes "Recently, there were a few";
 	mes "cave-ins where many miners";
@@ -481,7 +481,7 @@ einbech.gat,128,238,6	script	Mogan	848,{
 	close;
 }
 
-einbech.gat,130,253,2	script	Ekuri	848,{
+einbech,130,253,2	script	Ekuri	848,{
 	mes "[Ekuri]";
 	mes "Yo-heave-ho!";
 	mes "Yo-heave-ho~!";
@@ -510,7 +510,7 @@ einbech.gat,130,253,2	script	Ekuri	848,{
 	close;
 }
 
-einbech.gat,148,242,5	script	Jung	855,{
+einbech,148,242,5	script	Jung	855,{
 	mes "[Jung]";
 	mes "I'm one of the few";
 	mes "people who's lived";
@@ -650,7 +650,7 @@ L_OBSIDIAN:
 	close;
 }
 
-einbech.gat,148,246,5	script	Franz	851,{
+einbech,148,246,5	script	Franz	851,{
 	mes "[Franz]";
 	mes "So bored...";
 	mes "Starving for...";
@@ -801,7 +801,7 @@ L_CREATURE:
 	close;
 }
 
-einbech.gat,151,168,4	script	Tollaf	854,{
+einbech,151,168,4	script	Tollaf	854,{
 	mes "[Tollaf]";
 	mes "Ah...!";
 	mes "This is killing me!";
@@ -819,7 +819,7 @@ einbech.gat,151,168,4	script	Tollaf	854,{
 	close;
 }
 
-einbech.gat,149,154,4	script	Mjunia	850,{
+einbech,149,154,4	script	Mjunia	850,{
 	mes "[Mjunia]";
 	mes "It's hard being a woman";
 	mes "in this town, By being born";
@@ -859,7 +859,7 @@ einbech.gat,149,154,4	script	Mjunia	850,{
 	close;
 }
 
-einbech.gat,176,125,4	script	Ellhenje	850,{
+einbech,176,125,4	script	Ellhenje	850,{
 	mes "[Ellhenje]";
 	mes "Things might be";
 	mes "bad in this town";
@@ -897,7 +897,7 @@ einbech.gat,176,125,4	script	Ellhenje	850,{
 	close;
 }
 
-einbech.gat,172,113,4	script	Nemuk	855,{
+einbech,172,113,4	script	Nemuk	855,{
 	mes "[Nemuk]";
 	mes "You seem to be an";
 	mes "outsider, so let me";
@@ -952,7 +952,7 @@ L_FINE:
 	close;
 }
 
-ein_in01.gat,281,85,2	script	Drunken Man#01	849,{
+ein_in01,281,85,2	script	Drunken Man#01	849,{
 	mes "[Drunken Man]";
 	mes "...*Hiccup*...";
 	mes "*Hiccup*...";
@@ -963,7 +963,7 @@ ein_in01.gat,281,85,2	script	Drunken Man#01	849,{
 	close;
 }
 
-ein_in01.gat,277,95,8	script	Ryan Danger	855,{
+ein_in01,277,95,8	script	Ryan Danger	855,{
 	mes "[R.D. kim]";
 	mes "Oooh...";
 	next;
@@ -1015,7 +1015,7 @@ ein_in01.gat,277,95,8	script	Ryan Danger	855,{
 	close;
 }
 
-ein_in01.gat,279,92,2	script	Tavern Lady	854,{
+ein_in01,279,92,2	script	Tavern Lady	854,{
 	mes "[Tavern Lady]";
 	mes "most Einbech men are";
 	mes "crude and primitive male";
@@ -1039,7 +1039,7 @@ ein_in01.gat,279,92,2	script	Tavern Lady	854,{
 	close;
 }
 
-einbech.gat,197,139,4	script	Young Man#05	855,{	
+einbech,197,139,4	script	Young Man#05	855,{	
 	mes "[Heinz]";
 	mes "Wow...";
 	mes "And adventurer from";
@@ -1080,7 +1080,7 @@ einbech.gat,197,139,4	script	Young Man#05	855,{
 }
 
 
-ein_in01.gat,192,90,2	script	Supineque	849,{	
+ein_in01,192,90,2	script	Supineque	849,{	
 	mes "[Supineque]";
 	mes "Ugh...";
 	mes "I'm starving!";
@@ -1100,7 +1100,7 @@ ein_in01.gat,192,90,2	script	Supineque	849,{
 	close;
 }
 
-ein_in01.gat,208,86,3	script	Decii	855,{	
+ein_in01,208,86,3	script	Decii	855,{	
 	mes "[Decii]";
 	mes "This is so";
 	mes "frustating!";
@@ -1116,7 +1116,7 @@ ein_in01.gat,208,86,3	script	Decii	855,{
 	close;
 }
 
-einbech.gat,216,118,4	script	Catzllanpu	854,{	
+einbech,216,118,4	script	Catzllanpu	854,{	
 	mes "[Catzllanpu]";
 	mes "*Sigh...* ";
 	mes "Simple pleasures.";

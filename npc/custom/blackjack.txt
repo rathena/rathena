@@ -18,7 +18,7 @@
 //============================================================ 
 
 
-cmd_in02.gat,188,89,1	script	Black Jack Dealer	57,{
+cmd_in02,188,89,1	script	Black Jack Dealer	57,{
 
 	mes "[Dealer]";
 	mes "Hello there! Would you like to play a game of Black Jack?";

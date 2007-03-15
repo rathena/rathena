@@ -23,46 +23,46 @@
 
 
 // South =====================================
-geffen.gat,120,62,8	script	Kafra::kaf_geffen	115,{
+geffen,120,62,8	script	Kafra::kaf_geffen	115,{
 	cutin "kafra_03",2;
 	callfunc "F_KafSetGef";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "geffen.gat",119,40;
+		savepoint "geffen",119,40;
 		callfunc "F_KafEnd",0,1;
 }
 
 // East ==============================================
-geffen.gat,203,123,3	script	Kafra::geffen2	114,{
+geffen,203,123,3	script	Kafra::geffen2	114,{
 	cutin "kafra_04",2;
 	callfunc "F_KafSetGef";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "geffen.gat",200,124;
+		savepoint "geffen",200,124;
 		callfunc "F_KafEnd",0,1;
 }
 
 // North ==============================================
-geffen.gat,116,202,3	script	Kafra::geffen3	116,{
+geffen,116,202,3	script	Kafra::geffen3	116,{
 	cutin "kafra_02",2;
 	callfunc "F_KafSetGef";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "geffen.gat",110,199;
+		savepoint "geffen",110,199;
 		callfunc "F_KafEnd",0,1;
 }
 
 // West =========================================
-geffen.gat,37,116,6	script	Kafra::geffen4	117,{
+geffen,37,116,6	script	Kafra::geffen4	117,{
 	cutin "kafra_01",2;
 	callfunc "F_KafSetGef";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "geffen.gat",43,108;
+		savepoint "geffen",43,108;
 		callfunc "F_KafEnd",0,1;
 }
 

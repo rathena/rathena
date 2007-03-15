@@ -13,7 +13,7 @@
 //=
 //============================================================
 
-lighthalzen.gat,141,162,4	script	Old man	61,{
+lighthalzen,141,162,4	script	Old man	61,{
 readparam(baselevel);                         
 
 if (baselevel <= 70) {
@@ -138,7 +138,7 @@ menu "Also bandits.. and goods",-,"In every way i'm leaving this",l_leftthis;
 mes "[Kazien]";
 mes "Hm.. So you don't still receive goods.. And you say that bandits atack you...";
 mes "Now i understand. Go to Lyozien and be careful!";
-monster "airplane_01.gat",96,48,"Rogue",1268,1,"Man::OnMyMobDeath";
+monster "airplane_01",96,48,"Rogue",1268,1,"Man::OnMyMobDeath";
 getexp 150000,0;
 set quest_shadow_misc,2;
 set quest_shadow,9;
@@ -196,19 +196,19 @@ close;
 close;
 }
 //===================================================================================
-airplane_01.gat,96,53,4	script	#maner	-1,6,3{
+airplane_01,96,53,4	script	#maner	-1,6,3{
 OnTouch:
 if ((quest_shadow==6) && (quest_shadow_mobs==1)) {
-monster "airplane_01.gat",96,53,"Rogue",1268,5;
+monster "airplane_01",96,53,"Rogue",1268,5;
 set quest_shadow_mobs,0;
 }
 close;
 }
 //=======================================================================================
-airplane_01.gat,85,47,4	script	#maner01	-1,6,3{
+airplane_01,85,47,4	script	#maner01	-1,6,3{
 OnTouch:
 if ((quest_shadow==6) && (quest_shadow_mobs==1)) {
-monster "airplane_01.gat",85,47,"Rogue",1268,5;
+monster "airplane_01",85,47,"Rogue",1268,5;
 set quest_shadow_mobs,0;
 }
 close;
@@ -241,7 +241,7 @@ close;
 }
 //=======================================================================================
 
-einbroch.gat,54,52,4	script	Guard	734,{
+einbroch,54,52,4	script	Guard	734,{
 if (quest_shadow==2) goto l_done;
 
 mes "[Guard]";
@@ -271,7 +271,7 @@ close;
 
 //========================================================================================
 
-airplane_01.gat,96,48,4	script	Man	810,{
+airplane_01,96,48,4	script	Man	810,{
 if (quest_shadow==4) goto l_allok;
 if (quest_shadow==5) goto l_strange;
 if (quest_shadow==6) goto l_next;
@@ -320,7 +320,7 @@ set quest_shadow,8;
 close;
 
 l_nuinah:
-if mobcount("airplane_01.gat","Man::OnMyMobDeath")==0 goto ondeath;
+if mobcount("airplane_01","Man::OnMyMobDeath")==0 goto ondeath;
 mes "[Lyozien]";
 mes "Well.. I really don't know. But i will never tell you wat are the goods";
 mes "hey, Bandit is there! LOOK!!!";
@@ -354,7 +354,7 @@ close;
 
 //========================================================================================
 
-izlude.gat,186,57,4	script	Scamp	85,{
+izlude,186,57,4	script	Scamp	85,{
 if quest_shadow==4 goto l_gocheck;
 if quest_shadow==6 goto l_done;
 if quest_shadow==9 goto l_nah;

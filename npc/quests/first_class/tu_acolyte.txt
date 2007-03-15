@@ -16,7 +16,7 @@
 
 
 //=================================================Priest Praupin====================================================
-prt_church.gat,179,15,1	script	Priest Praupin	110,{
+prt_church,179,15,1	script	Priest Praupin	110,{
 	mes "[Priest Praupin]";
 	if(BaseClass != Job_Acolyte){
 		if(tu_acolyte01 == 25){
@@ -65,7 +65,7 @@ prt_church.gat,179,15,1	script	Priest Praupin	110,{
 				mes "to Sister Asthe for me.";
 				mes "Have a safe trip, little one...";
 				close2;
-				warp "prt_monk.gat",30,250;
+				warp "prt_monk",30,250;
 				end;
 			} else {
 				mes "[Priest Praupin]";
@@ -150,7 +150,7 @@ prt_church.gat,179,15,1	script	Priest Praupin	110,{
 		mes "to Sister Asthe for me.";
 		mes "Have a safe trip, little one...";
 		close2;
-		warp "prt_monk.gat",30,250;
+		warp "prt_monk",30,250;
 		end;
 	} else {
 		mes "[Priest Praupin]";
@@ -164,7 +164,7 @@ prt_church.gat,179,15,1	script	Priest Praupin	110,{
 }
 
 //=================================================Asthe====================================================
-prt_monk.gat,230,106,3	script	Asthe#tu	79,{
+prt_monk,230,106,3	script	Asthe#tu	79,{
 	mes "[Asthe]";
 	switch(tu_acolyte01){
 	case 1:
@@ -785,7 +785,7 @@ prt_monk.gat,230,106,3	script	Asthe#tu	79,{
 
 
 //=================================================Priest Gardron====================================================
-monk_in.gat,18,38,6	script	Priest Gardron#tu	110,{
+monk_in,18,38,6	script	Priest Gardron#tu	110,{
 	mes "[Priest Gardron]";
 	if(tu_acolyte01 == 7){
 		if(countitem(7148) >= 1){
@@ -878,7 +878,7 @@ monk_in.gat,18,38,6	script	Priest Gardron#tu	110,{
 				mes "I shall send you";
 				mes "there to fight the monsters in Payon Dungeon so that you can return with 5 Decayed Nails. May God bless you...";
 				close2;
-				warp "payon.gat",161,58;
+				warp "payon",161,58;
 				end;
 			}
 			close;
@@ -894,7 +894,7 @@ monk_in.gat,18,38,6	script	Priest Gardron#tu	110,{
 }
 
 //=================================================Dog====================================================
-prt_monk.gat,235,245,5	script	Dog#tu	81,{
+prt_monk,235,245,5	script	Dog#tu	81,{
 	mes "[Dog]";
 	mes "^CDB79EBark bark!";
 	mes "Woof woof!^000000";
@@ -941,7 +941,7 @@ prt_monk.gat,235,245,5	script	Dog#tu	81,{
 }
 
 //=================================================Boy====================================================
-prt_monk.gat,243,238,5	script	Boy#boy_voi	139,5,5{
+prt_monk,243,238,5	script	Boy#boy_voi	139,5,5{
 OnTouch:
 	if(tu_acolyte01 != 10)end;
 	mes "[???]";
@@ -950,7 +950,7 @@ OnTouch:
 	close;
 }
 //=================================================Ill Girl====================================================
-prt_monk.gat,226,257,6	script	Ill Girl#tu	93,{
+prt_monk,226,257,6	script	Ill Girl#tu	93,{
 	mes "[Angelic]";
 	if(tu_acolyte01 > 12){
 		mes "Thanks for helping me.";
@@ -1140,7 +1140,7 @@ L_NONE:
 }
 
 //=================================================Veiner====================================================
-prt_monk.gat,197,228,3	script	Veiner	89,{
+prt_monk,197,228,3	script	Veiner	89,{
 	mes "[Veiner]";
 	if(countitem(1081) && tu_acolyte01 == 18){
 		set tu_acolyte01, 19;
@@ -1183,7 +1183,7 @@ prt_monk.gat,197,228,3	script	Veiner	89,{
 }
 
 //=================================================Hedrick====================================================
-prt_monk.gat,28,260,5	script	Hedrick	50,{
+prt_monk,28,260,5	script	Hedrick	50,{
 	mes "[Hedrick]";
 	mes "^333333*Whew!*^000000";
 	mes "Man I worked hard today!";
@@ -1218,7 +1218,7 @@ prt_monk.gat,28,260,5	script	Hedrick	50,{
 }
 
 //=================================================Weapon Merchant====================================================
-prt_monk.gat,135,263,4	script	Weapon Merchant#tu	139,9,9{
+prt_monk,135,263,4	script	Weapon Merchant#tu	139,9,9{
 OnTouch:
 	if(tu_acolyte01 != 20 || countitem(1081)==0) end;
 	delitem 1081, 1;
@@ -1235,7 +1235,7 @@ OnTouch:
 }
 
 //=================================================Karven====================================================
-monk_in.gat,103,176,7	script	Karven	60,{
+monk_in,103,176,7	script	Karven	60,{
 	mes "[Karven]";
 	mes "May you rest";
 	if(tu_acolyte01 == 21 && countitem(7183)){
@@ -1268,7 +1268,7 @@ monk_in.gat,103,176,7	script	Karven	60,{
 }
 
 //=================================================Gloria====================================================
-prt_monk.gat,219,164,3	script	Gloria#tu	95,{
+prt_monk,219,164,3	script	Gloria#tu	95,{
 	mes "[Gloria]";
 	if(BaseJob != Job_Acolyte){
 		mes "Hi, hi~";
@@ -1329,7 +1329,7 @@ prt_monk.gat,219,164,3	script	Gloria#tu	95,{
 			mes "Here we go~!!";
 			mes "W-warp Portal!";
 			close2;
-			warp "prontera.gat",116,72;
+			warp "prontera",116,72;
 			end;
 			break;
 		}
@@ -1341,7 +1341,7 @@ prt_monk.gat,219,164,3	script	Gloria#tu	95,{
 	close;
 }
 //=================================================Cleope Verce====================================================  
-prt_monk.gat,153,210,3	script	Cleope Verce	95,{
+prt_monk,153,210,3	script	Cleope Verce	95,{
 	mes "[Cleope Verce]";
 	if(BaseJob != Job_Acolyte){
 		mes "Hello hello.";
@@ -1521,7 +1521,7 @@ prt_monk.gat,153,210,3	script	Cleope Verce	95,{
 	close; 
 }
 //=================================================Range NPC====================================================  
-prt_monk.gat,217,123,4	script	#tu_monk	139,10,10{
+prt_monk,217,123,4	script	#tu_monk	139,10,10{
 OnTouch:
 	if(BaseJob == Job_Acolyte){
 		switch(tu_acolyte01){
@@ -1550,7 +1550,7 @@ OnTouch:
 	end;
 }
 //=================================================Eavesdrop====================================================  
-prt_monk.gat,223,123,3	script	Eavesdrop#tu	111,{
+prt_monk,223,123,3	script	Eavesdrop#tu	111,{
 	if(BaseJob != Job_Acolyte){
 		mes "^3355FFThere's nothing here.^000000";
 		close;

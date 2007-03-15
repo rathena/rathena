@@ -14,7 +14,7 @@
 
 
 // Tour Guide - 1st Floor
-tha_t01.gat,149,78,3	script	Tour Guide#1	90,{
+tha_t01,149,78,3	script	Tour Guide#1	90,{
 
   if (ThanaQuest & 1) {
 
@@ -67,7 +67,7 @@ tha_t01.gat,149,78,3	script	Tour Guide#1	90,{
 
 
 // Tour Guide - 2nd Floor
-tha_t02.gat,231,161,5	script	Tour Guide#2	874,{
+tha_t02,231,161,5	script	Tour Guide#2	874,{
 
   if (ThanaQuest < 1) {
 
@@ -116,10 +116,10 @@ tha_t02.gat,231,161,5	script	Tour Guide#2	874,{
 
   for(set @i, 0; @i < @partymembercount; set @i, @i + 1) {
     if (getmapxy(@mapname$,@mapx,@mapy,0,@partymembername$[@i]) != 0) goto L_Offline;
-    if (@mapname$ != "tha_t02.gat" || @mapx < 223 || @mapx > 239 || @mapy < 153 || @mapy > 169) goto L_Away;
+    if (@mapname$ != "tha_t02" || @mapx < 223 || @mapx > 239 || @mapy < 153 || @mapy > 169) goto L_Away;
   }
 
-  warpparty "tha_t03.gat",220,165,@partyid;
+  warpparty "tha_t03",220,165,@partyid;
   end;
 
   L_NoParty:
@@ -152,7 +152,7 @@ tha_t02.gat,231,161,5	script	Tour Guide#2	874,{
 
 
 // Mechanical Device - Red Key
-tha_t03.gat,67,70,0	script	Mechanical Device#1	111,{
+tha_t03,67,70,0	script	Mechanical Device#1	111,{
 
   if (ThanaQuest & 2) {
 
@@ -214,7 +214,7 @@ tha_t03.gat,67,70,0	script	Mechanical Device#1	111,{
 
 
 // Mechanical Device - Yellow Key
-tha_t04.gat,195,195,0	script	Mechanical Device#2	111,{
+tha_t04,195,195,0	script	Mechanical Device#2	111,{
 
   if (ThanaQuest & 4) {
 
@@ -313,7 +313,7 @@ tha_t04.gat,195,195,0	script	Mechanical Device#2	111,{
 
 
 // Mechanical Device - Blue Key
-tha_t05.gat,101,37,0	script	Mechanical Device#3	111,{
+tha_t05,101,37,0	script	Mechanical Device#3	111,{
 
   if (ThanaQuest & 8) {
 
@@ -340,7 +340,7 @@ tha_t05.gat,101,37,0	script	Mechanical Device#3	111,{
   getmapxy @mapname$,@mapx,@mapy,0,strcharinfo(0);
   if (@mapx < 101 || @mapx > 104 || @mapy < 37 || @mapy > 40) goto L_Away;
 
-  set @help, getareausers("tha_t05.gat",101,40,104,37);
+  set @help, getareausers("tha_t05",101,40,104,37);
   if (@help == 1) goto L_Alone;
   if (@help < 3) goto L_NotEnough;
 
@@ -383,7 +383,7 @@ tha_t05.gat,101,37,0	script	Mechanical Device#3	111,{
 
 
 // Mechanical Device - Green Key
-tha_t06.gat,43,152,0	script	Mechanical Device#4	111,{
+tha_t06,43,152,0	script	Mechanical Device#4	111,{
 
   setarray @directions$[0],"up","right","down","left";
 
@@ -517,7 +517,7 @@ tha_t06.gat,43,152,0	script	Mechanical Device#4	111,{
 
 
 // Mechanical Device - Black Key
-tha_t09.gat,19,158,0	script	Mechanical Device#5	111,{
+tha_t09,19,158,0	script	Mechanical Device#5	111,{
 
   if (ThanaQuest & 32) {
 
@@ -555,7 +555,7 @@ tha_t09.gat,19,158,0	script	Mechanical Device#5	111,{
 
 
 // Seal - Blue Magical Stone
-tha_t04.gat,150,44,0	script	Seal#1	111,{
+tha_t04,150,44,0	script	Seal#1	111,{
 
   if (ThanaQuest < 63) {
 
@@ -607,7 +607,7 @@ tha_t04.gat,150,44,0	script	Seal#1	111,{
 
 
 // Seal - Red Magical Stone
-tha_t05.gat,218,116,0	script	Seal#2	111,{
+tha_t05,218,116,0	script	Seal#2	111,{
 
   if (ThanaQuest < 63) {
 
@@ -659,7 +659,7 @@ tha_t05.gat,218,116,0	script	Seal#2	111,{
 
 
 // Seal - Black Magical Stone
-tha_t06.gat,226,230,0	script	Seal#3	111,{
+tha_t06,226,230,0	script	Seal#3	111,{
 
   if (ThanaQuest < 63) {
 
@@ -711,7 +711,7 @@ tha_t06.gat,226,230,0	script	Seal#3	111,{
 
 
 // Seal - Yellow Magical Stone
-tha_t07.gat,113,129,0	script	Seal#4	111,{
+tha_t07,113,129,0	script	Seal#4	111,{
 
   if (ThanaQuest < 63) {
 
@@ -762,7 +762,7 @@ tha_t07.gat,113,129,0	script	Seal#4	111,{
 }
 
 // Seal - Green Magical Stone
-tha_t10.gat,129,159,0	script	Seal#5	111,{
+tha_t10,129,159,0	script	Seal#5	111,{
 
   if (ThanaQuest < 63) {
 
@@ -814,7 +814,7 @@ tha_t10.gat,129,159,0	script	Seal#5	111,{
 
 
 // Stone Statue - Floor 9
-tha_t09.gat,82,99,0	script	Stone Statue#09a	111,{
+tha_t09,82,99,0	script	Stone Statue#09a	111,{
 
   mes "[Stone Statue]";
   mes "There is a lever here.";
@@ -840,7 +840,7 @@ tha_t09.gat,82,99,0	script	Stone Statue#09a	111,{
 
 
 // Stone Statue - Floor 10 (A)
-tha_t10.gat,159,97,0	script	Stone Statue#10a	111,{
+tha_t10,159,97,0	script	Stone Statue#10a	111,{
 
   mes "[Stone Statue]";
   mes "There is a lever here.";
@@ -867,7 +867,7 @@ tha_t10.gat,159,97,0	script	Stone Statue#10a	111,{
 
 
 // Stone Statue - Floor 10 (B)
-tha_t10.gat,97,97,0	script	Stone Statue#10b	111,{
+tha_t10,97,97,0	script	Stone Statue#10b	111,{
 
   if (ThanaSteps & 2) {
 
@@ -902,7 +902,7 @@ tha_t10.gat,97,97,0	script	Stone Statue#10b	111,{
 
 
 // Stone Statue - Floor 11 (A)
-tha_t11.gat,85,85,0	script	Stone Statue#11a	111,{
+tha_t11,85,85,0	script	Stone Statue#11a	111,{
 
   mes "[Stone Statue]";
   mes "There is a lever here.";
@@ -933,7 +933,7 @@ tha_t11.gat,85,85,0	script	Stone Statue#11a	111,{
 
 
 // Stone Statue - Floor 11 (B)
-tha_t11.gat,16,16,0	script	Stone Statue#11b	111,{
+tha_t11,16,16,0	script	Stone Statue#11b	111,{
 
   if (ThanaSteps & 8) {
 
@@ -972,7 +972,7 @@ tha_t11.gat,16,16,0	script	Stone Statue#11b	111,{
 
 
 // Stone Statue - Floor 11 (C)
-tha_t11.gat,85,16,0	script	Stone Statue#11c	111,{
+tha_t11,85,16,0	script	Stone Statue#11c	111,{
 
   if (ThanaSteps & 16) {
 
@@ -1011,7 +1011,7 @@ tha_t11.gat,85,16,0	script	Stone Statue#11c	111,{
 
 
 // Stone Statue - Floor 11 (D)
-tha_t11.gat,16,85,0	script	Stone Statue#11d	111,{
+tha_t11,16,85,0	script	Stone Statue#11d	111,{
 
   if (ThanaSteps & 32) {
 
@@ -1050,7 +1050,7 @@ tha_t11.gat,16,85,0	script	Stone Statue#11d	111,{
 
 
 // Stone Statue - Red Magical Stone
-tha_t12.gat,96,58,0	script	Stone Statue#12a	111,{
+tha_t12,96,58,0	script	Stone Statue#12a	111,{
 
   if (ThanaQuest < 2047) {
 
@@ -1092,7 +1092,7 @@ tha_t12.gat,96,58,0	script	Stone Statue#12a	111,{
 
 
 // Stone Statue - Yellow Magical Stone
-tha_t12.gat,161,58,0	script	Stone Statue#12b	111,{
+tha_t12,161,58,0	script	Stone Statue#12b	111,{
 
   if (ThanaQuest < 2047) {
 
@@ -1134,7 +1134,7 @@ tha_t12.gat,161,58,0	script	Stone Statue#12b	111,{
 
 
 // Stone Statue - Blue Magical Stone
-tha_t12.gat,104,18,0	script	Stone Statue#12c	111,{
+tha_t12,104,18,0	script	Stone Statue#12c	111,{
 
   if (ThanaQuest < 2047) {
 
@@ -1176,7 +1176,7 @@ tha_t12.gat,104,18,0	script	Stone Statue#12c	111,{
 
 
 // Stone Statue - Green Magical Stone
-tha_t12.gat,154,18,0	script	Stone Statue#12d	111,{
+tha_t12,154,18,0	script	Stone Statue#12d	111,{
 
   if (ThanaQuest < 2047) {
 
@@ -1218,7 +1218,7 @@ tha_t12.gat,154,18,0	script	Stone Statue#12d	111,{
 
 
 // Stone Statue - Black Magical Stone
-tha_t12.gat,128,86,0	script	Stone Statue#12e	111,{
+tha_t12,128,86,0	script	Stone Statue#12e	111,{
 
   if (ThanaQuest < 2047) {
 
@@ -1260,7 +1260,7 @@ tha_t12.gat,128,86,0	script	Stone Statue#12e	111,{
 
 
 // Carvings
-tha_t12.gat,130,52,0	script	Carvings#1	111,{
+tha_t12,130,52,0	script	Carvings#1	111,{
 
   mes "[Carvings]";
   mes "There are some beautifull carvings here.";
@@ -1272,19 +1272,19 @@ tha_t12.gat,130,52,0	script	Carvings#1	111,{
 
   if (ThanaQuest < 65535) {
 
-    warp "thana_step.gat",185,15;
+    warp "thana_step",185,15;
     end;
 
   }
 
-  warp "thana_step.gat",73,288;
+  warp "thana_step",73,288;
   end;
 
 }
 
 
 // Seal of Sorrow
-thana_boss.gat,217,167,0	script	Carvings#2	111,{
+thana_boss,217,167,0	script	Carvings#2	111,{
 
   if ($Thana & 1) {
 
@@ -1312,7 +1312,7 @@ thana_boss.gat,217,167,0	script	Carvings#2	111,{
   stopnpctimer "TimerThana";
   set $Thana, $Thana | 1;
   initnpctimer "TimerThana";
-  mapannounce "thana_boss.gat", "The Seal of Sorrow has been broken.",bc_npc;
+  mapannounce "thana_boss", "The Seal of Sorrow has been broken.",bc_npc;
 
   mes "[Carvings]";
   mes "You've inserted the ^CE86C6Fragment of Sorrow^000000 into the hole and it fits perfectly.";
@@ -1360,7 +1360,7 @@ thana_boss.gat,217,167,0	script	Carvings#2	111,{
 
 
 // Seal of Agony
-thana_boss.gat,202,75,0	script	Carvings#3	111,{
+thana_boss,202,75,0	script	Carvings#3	111,{
 
   if ($Thana & 2) {
 
@@ -1394,7 +1394,7 @@ thana_boss.gat,202,75,0	script	Carvings#3	111,{
   stopnpctimer "TimerThana";
   set $Thana, $Thana | 2;
   initnpctimer "TimerThana";
-  mapannounce "thana_boss.gat", "The Seal of Agony has been broken.",bc_npc;
+  mapannounce "thana_boss", "The Seal of Agony has been broken.",bc_npc;
 
   mes "[Carvings]";
   mes "You've inserted the ^7B9663Fragment of Agony^000000 into the hole and it fits perfectly.";
@@ -1432,7 +1432,7 @@ thana_boss.gat,202,75,0	script	Carvings#3	111,{
 
 
 // Seal of Hatred
-thana_boss.gat,80,76,0	script	Carvings#4	111,{
+thana_boss,80,76,0	script	Carvings#4	111,{
 
   if ($Thana & 4) {
 
@@ -1472,7 +1472,7 @@ thana_boss.gat,80,76,0	script	Carvings#4	111,{
   stopnpctimer "TimerThana";
   set $Thana, $Thana | 4;
   initnpctimer "TimerThana";
-  mapannounce "thana_boss.gat", "The Seal of Hatred has been broken.",bc_npc;
+  mapannounce "thana_boss", "The Seal of Hatred has been broken.",bc_npc;
 
   mes "[Carvings]";
   mes "You've inserted the ^8C79ADFragment of Hatred^000000 into the hole and it fits perfectly.";
@@ -1504,7 +1504,7 @@ thana_boss.gat,80,76,0	script	Carvings#4	111,{
 
 
 // Seal of Despair
-thana_boss.gat,62,171,0	script	Carvings#5	111,{
+thana_boss,62,171,0	script	Carvings#5	111,{
 
   if ($Thana & 8) {
 
@@ -1550,7 +1550,7 @@ thana_boss.gat,62,171,0	script	Carvings#5	111,{
   stopnpctimer "TimerThana";
   set $Thana, $Thana | 8;
   initnpctimer "TimerThana";
-  mapannounce "thana_boss.gat", "The Seal of Despair has been broken.",bc_npc;
+  mapannounce "thana_boss", "The Seal of Despair has been broken.",bc_npc;
 
   mes "[Carvings]";
   mes "You've inserted the ^F7865AFragment of Despair^000000 into the hole and it fits perfectly.";
@@ -1576,7 +1576,7 @@ thana_boss.gat,62,171,0	script	Carvings#5	111,{
 
 
 // Seal of Thanatos
-thana_boss.gat,141,217,0	script	Carvings#6	111,{
+thana_boss,141,217,0	script	Carvings#6	111,{
 
 	if ($Thana == 15) {
 
@@ -1584,11 +1584,11 @@ thana_boss.gat,141,217,0	script	Carvings#6	111,{
 		mes "You stepped on the plate, and it seems it activated some sort of mechanism.";
 		next;
 
-		if (!getmapmobs("thana_boss.gat")) {
-			monster "thana_boss.gat",135,119,"Thanatos",1708,1,"TimerThana::OnThanaDead";
+		if (!getmapmobs("thana_boss")) {
+			monster "thana_boss",135,119,"Thanatos",1708,1,"TimerThana::OnThanaDead";
 			stopnpctimer "TimerThana";
 			set $Thana, $Thana | 16; 
-			mapannounce "thana_boss.gat", "The Seal of Thanatos has been broken.",bc_npc;
+			mapannounce "thana_boss", "The Seal of Thanatos has been broken.",bc_npc;
 			mes "[Carvings]";
 			mes "You hear the screams of the undead coming from below...";
 			close;
@@ -1607,14 +1607,14 @@ thana_boss.gat,141,217,0	script	Carvings#6	111,{
 
 
 // NPC Timer
-thana_boss.gat,1,1,1	script	TimerThana	-1,{
+thana_boss,1,1,1	script	TimerThana	-1,{
 
   // 10 secs
   OnTimer10000:
 
     if ($Thana >= 15) end;
     stopnpctimer;
-    mapannounce "thana_boss.gat", "You didn't manage to break all four Seals in time...",bc_npc;
+    mapannounce "thana_boss", "You didn't manage to break all four Seals in time...",bc_npc;
     set $Thana, 0;
     end;
 

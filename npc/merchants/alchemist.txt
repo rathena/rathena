@@ -16,7 +16,7 @@
 //============================================================ 
 
 
-alde_alche.gat,24,188,3	script	Gever AI Sharp	740,{
+alde_alche,24,188,3	script	Gever AI Sharp	740,{
 	mes "[Gever AI Sharp]";
 	mes "Welcome to the Alchemist Union.";
 	mes "How can I assist you today?";

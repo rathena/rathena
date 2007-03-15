@@ -14,21 +14,21 @@
 //============================================================
 
 //= Ant Hell =================================================
-anthell01.gat,35,267,0	script	ant001	45,1,1,{
+anthell01,35,267,0	script	ant001	45,1,1,{
 	if(@anthell) {
-		warp "moc_fild15.gat",251,248;
+		warp "moc_fild15",251,248;
 	} else {
-		warp "moc_fild04.gat",213,327;
+		warp "moc_fild04",213,327;
 	}
 	end;
 }
-anthell02.gat,171,169,0	script	ant002	45,1,2,{
+anthell02,171,169,0	script	ant002	45,1,2,{
 	if(@anthell) {
-		warp "moc_fild04.gat",213,327;
+		warp "moc_fild04",213,327;
 	} else {
-		warp "moc_fild15.gat",251,248;
+		warp "moc_fild15",251,248;
 	}
 	end;
 }
-anthell01.gat,253,32,0	warp	ant01	2,1,anthell02.gat,34,263
-anthell02.gat,32,267,0	warp	ant01-1	2,2,anthell01.gat,253,35
+anthell01,253,32,0	warp	ant01	2,1,anthell02,34,263
+anthell02,32,267,0	warp	ant01-1	2,2,anthell01,253,35

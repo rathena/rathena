@@ -1,5 +1,5 @@
 // Bank Test
-prontera.gat,162,188,1	script	Bank Test	112,{
+prontera,162,188,1	script	Bank Test	112,{
 	cutin "kafra_06",2;
 
 	mes "[Bank Test]";

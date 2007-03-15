@@ -1,4 +1,4 @@
-prontera.gat,160,182,5	script	Deleter2	51,{
+prontera,160,182,5	script	Deleter2	51,{
 	mes "Input item ID";
 	next;
 	input @nameid;

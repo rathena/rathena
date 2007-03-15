@@ -18,96 +18,96 @@
 // kh_school
 //============================================================
 //Entrance Level
-kh_school.gat,77,155,0	warp	school01	1,1,yuno_fild08.gat,154,189
-kh_school.gat,30,184,0	warp	school02	1,1,kh_school.gat,63,75
-kh_school.gat,30,125,0	warp	school03	1,1,kh_school.gat,63,14
-kh_school.gat,34,177,0	warp	school04	1,1,kh_school.gat,147,57
-kh_school.gat,34,133,0	warp	school05	1,1,kh_school.gat,147,17
+kh_school,77,155,0	warp	school01	1,1,yuno_fild08,154,189
+kh_school,30,184,0	warp	school02	1,1,kh_school,63,75
+kh_school,30,125,0	warp	school03	1,1,kh_school,63,14
+kh_school,34,177,0	warp	school04	1,1,kh_school,147,57
+kh_school,34,133,0	warp	school05	1,1,kh_school,147,17
 //Basement Level
-kh_school.gat,153,57,0	warp	school06	1,1,kh_school.gat,39,177
-kh_school.gat,153,17,0	warp	school07	1,1,kh_school.gat,39,133
+kh_school,153,57,0	warp	school06	1,1,kh_school,39,177
+kh_school,153,17,0	warp	school07	1,1,kh_school,39,133
 //Upper Level
-kh_school.gat,71,75,0	warp	school08	1,1,kh_school.gat,39,184
-kh_school.gat,71,14,0	warp	school09	1,1,kh_school.gat,39,125
-kh_school.gat,12,48,0	warp	school10	1,1,kh_school.gat,182,117
-kh_school.gat,187,117,0	warp	school11	1,1,kh_school.gat,17,48
+kh_school,71,75,0	warp	school08	1,1,kh_school,39,184
+kh_school,71,14,0	warp	school09	1,1,kh_school,39,125
+kh_school,12,48,0	warp	school10	1,1,kh_school,182,117
+kh_school,187,117,0	warp	school11	1,1,kh_school,17,48
 //Detention Room
-kh_school.gat,63,80,0	warp	school12	1,1,kh_school.gat,118,144
-kh_school.gat,118,139,0	warp	school13	1,1,kh_school.gat,63,75
+kh_school,63,80,0	warp	school12	1,1,kh_school,118,144
+kh_school,118,139,0	warp	school13	1,1,kh_school,63,75
 //Yuno Field
-yuno_fild08.gat,148,189,0	warp	school14	1,1,kh_school.gat,71,158
+yuno_fild08,148,189,0	warp	school14	1,1,kh_school,71,158
 
 //============================================================
 // kh_vila
 //============================================================
 //Entrance
-yuno_fild02.gat,92,213,0	warp	vila18	1,1,kh_vila.gat,79,14
+yuno_fild02,92,213,0	warp	vila18	1,1,kh_vila,79,14
 //Entrance Hall
-kh_vila.gat,79,10,0	warp	vila01	1,1,yuno_fild02.gat,92,208
-kh_vila.gat,70,38,0	warp	vila02	1,1,kh_vila.gat,43,38
-kh_vila.gat,70,54,0	warp	vila03	1,1,kh_vila.gat,43,55
-kh_vila.gat,91,49,0	warp	vila04	1,1,kh_vila.gat,118,47
-kh_vila.gat,84,67,0	warp	vila05	1,1,kh_vila.gat,45,106
+kh_vila,79,10,0	warp	vila01	1,1,yuno_fild02,92,208
+kh_vila,70,38,0	warp	vila02	1,1,kh_vila,43,38
+kh_vila,70,54,0	warp	vila03	1,1,kh_vila,43,55
+kh_vila,91,49,0	warp	vila04	1,1,kh_vila,118,47
+kh_vila,84,67,0	warp	vila05	1,1,kh_vila,45,106
 //Lounge and Atrium
-kh_vila.gat,47,39,0	warp	vila06	1,1,kh_vila.gat,74,38
-kh_vila.gat,47,55,0	warp	vila07	1,1,kh_vila.gat,74,54
-kh_vila.gat,34,67,0	warp	vila08	1,1,kh_vila.gat,20,106
+kh_vila,47,39,0	warp	vila06	1,1,kh_vila,74,38
+kh_vila,47,55,0	warp	vila07	1,1,kh_vila,74,54
+kh_vila,34,67,0	warp	vila08	1,1,kh_vila,20,106
 //Dining Room, Kitchen, Store Room
-kh_vila.gat,20,102,0	warp	vila09	1,1,kh_vila.gat,34,63
-kh_vila.gat,45,102,0	warp	vila10	1,1,kh_vila.gat,84,63
-kh_vila.gat,32,129,0	warp	vila11	1,1,kh_vila.gat,22,170
-kh_vila.gat,22,166,0	warp	vila12	1,1,kh_vila.gat,32,125
-kh_vila.gat,27,189,0	warp	vila13	1,1,kh_vila.gat,185,18
-kh_vila.gat,191,18,0	warp	vila14	1,1,kh_vila.gat,27,185
+kh_vila,20,102,0	warp	vila09	1,1,kh_vila,34,63
+kh_vila,45,102,0	warp	vila10	1,1,kh_vila,84,63
+kh_vila,32,129,0	warp	vila11	1,1,kh_vila,22,170
+kh_vila,22,166,0	warp	vila12	1,1,kh_vila,32,125
+kh_vila,27,189,0	warp	vila13	1,1,kh_vila,185,18
+kh_vila,191,18,0	warp	vila14	1,1,kh_vila,27,185
 //Stairwell and Upstairs
-kh_vila.gat,114,47,0	warp	vila15	1,1,kh_vila.gat,86,49
-kh_vila.gat,126,76,0	warp	vila16	1,1,kh_vila.gat,180,175
-kh_vila.gat,180,170,0	warp	vila17	1,1,kh_vila.gat,127,71
+kh_vila,114,47,0	warp	vila15	1,1,kh_vila,86,49
+kh_vila,126,76,0	warp	vila16	1,1,kh_vila,180,175
+kh_vila,180,170,0	warp	vila17	1,1,kh_vila,127,71
 
-kh_vila.gat,174,72,0	warp	vila19	1,1,kh_vila.gat,181,125
+kh_vila,174,72,0	warp	vila19	1,1,kh_vila,181,125
 
 
 //============================================================
 // kh_rossi - House of the Losimier family
 //============================================================
 //Entrance Level
-//???.gat,???,???,0	warp	rossi01	1,1,kh_rossi.gat,17,93
-//kh_rossi.gat,12,93,0	warp	rossi02	1,1,???.gat,???,???
-kh_rossi.gat,35,99,0	warp	rossi03	1,1,kh_rossi.gat,27,146
-kh_rossi.gat,27,142,0	warp	rossi04	1,1,kh_rossi.gat,35,95
-kh_rossi.gat,35,86,0	warp	rossi05	1,1,kh_rossi.gat,27,39
-kh_rossi.gat,27,43,0	warp	rossi06	1,1,kh_rossi.gat,35,90
-kh_rossi.gat,63,86,0	warp	rossi07	1,1,kh_rossi.gat,99,39
-kh_rossi.gat,99,43,0	warp	rossi08	1,1,kh_rossi.gat,63,90
-kh_rossi.gat,90,86,0	warp	rossi09	1,1,kh_rossi.gat,168,31
-kh_rossi.gat,168,35,0	warp	rossi10	1,1,kh_rossi.gat,90,90
-kh_rossi.gat,43,26,0	warp	rossi11	1,1,kh_rossi.gat,90,25
-kh_rossi.gat,86,25,0	warp	rossi12	1,1,kh_rossi.gat,37,26
-kh_rossi.gat,91,101,0	warp	rossi13	1,1,kh_rossi.gat,282,65
+//???,???,???,0	warp	rossi01	1,1,kh_rossi,17,93
+//kh_rossi,12,93,0	warp	rossi02	1,1,???,???,???
+kh_rossi,35,99,0	warp	rossi03	1,1,kh_rossi,27,146
+kh_rossi,27,142,0	warp	rossi04	1,1,kh_rossi,35,95
+kh_rossi,35,86,0	warp	rossi05	1,1,kh_rossi,27,39
+kh_rossi,27,43,0	warp	rossi06	1,1,kh_rossi,35,90
+kh_rossi,63,86,0	warp	rossi07	1,1,kh_rossi,99,39
+kh_rossi,99,43,0	warp	rossi08	1,1,kh_rossi,63,90
+kh_rossi,90,86,0	warp	rossi09	1,1,kh_rossi,168,31
+kh_rossi,168,35,0	warp	rossi10	1,1,kh_rossi,90,90
+kh_rossi,43,26,0	warp	rossi11	1,1,kh_rossi,90,25
+kh_rossi,86,25,0	warp	rossi12	1,1,kh_rossi,37,26
+kh_rossi,91,101,0	warp	rossi13	1,1,kh_rossi,282,65
 
 //Upper Level
-kh_rossi.gat,282,60,0	warp	rossi14	1,1,kh_rossi.gat,91,95
-kh_rossi.gat,222,24,0	warp	rossi15	1,1,kh_rossi.gat,22,219
-kh_rossi.gat,22,223,0	warp	rossi16	1,1,kh_rossi.gat,222,28
-kh_rossi.gat,248,24,0	warp	rossi17	1,1,kh_rossi.gat,88,219
-kh_rossi.gat,88,223,0	warp	rossi18	1,1,kh_rossi.gat,248,28
-kh_rossi.gat,258,46,0	warp	rossi19	1,1,kh_rossi.gat,225,235
-kh_rossi.gat,222,69,0	warp	rossi20	1,1,kh_rossi.gat,22,276
-kh_rossi.gat,22,272,0	warp	rossi21	1,1,kh_rossi.gat,222,65
-kh_rossi.gat,248,69,0	warp	rossi21	1,1,kh_rossi.gat,88,276
-kh_rossi.gat,88,272,0	warp	rossi23	1,1,kh_rossi.gat,248,65
+kh_rossi,282,60,0	warp	rossi14	1,1,kh_rossi,91,95
+kh_rossi,222,24,0	warp	rossi15	1,1,kh_rossi,22,219
+kh_rossi,22,223,0	warp	rossi16	1,1,kh_rossi,222,28
+kh_rossi,248,24,0	warp	rossi17	1,1,kh_rossi,88,219
+kh_rossi,88,223,0	warp	rossi18	1,1,kh_rossi,248,28
+kh_rossi,258,46,0	warp	rossi19	1,1,kh_rossi,225,235
+kh_rossi,222,69,0	warp	rossi20	1,1,kh_rossi,22,276
+kh_rossi,22,272,0	warp	rossi21	1,1,kh_rossi,222,65
+kh_rossi,248,69,0	warp	rossi21	1,1,kh_rossi,88,276
+kh_rossi,88,272,0	warp	rossi23	1,1,kh_rossi,248,65
 
 //Hallway
-kh_rossi.gat,229,235,0	warp	rossi24	1,1,kh_rossi.gat,263,46
-kh_rossi.gat,188,239,0	warp	rossi25	1,1,kh_rossi.gat,148,281
-kh_rossi.gat,148,278,0	warp	rossi26	1,1,kh_rossi.gat,188,235
-kh_rossi.gat,204,239,0	warp	rossi27	1,1,kh_rossi.gat,204,281
-kh_rossi.gat,204,278,0	warp	rossi28	1,1,kh_rossi.gat,204,235
-kh_rossi.gat,220,239,0	warp	rossi29	1,1,kh_rossi.gat,260,281
-kh_rossi.gat,260,278,0	warp	rossi30	1,1,kh_rossi.gat,220,235
-kh_rossi.gat,188,230,0	warp	rossi31	1,1,kh_rossi.gat,148,187
-kh_rossi.gat,148,191,0	warp	rossi32	1,1,kh_rossi.gat,188,234
-kh_rossi.gat,204,230,0	warp	rossi33	1,1,kh_rossi.gat,204,187
-kh_rossi.gat,204,191,0	warp	rossi34	1,1,kh_rossi.gat,204,234
-kh_rossi.gat,220,230,0	warp	rossi35	1,1,kh_rossi.gat,260,187
-kh_rossi.gat,260,191,0	warp	rossi36	1,1,kh_rossi.gat,220,234
+kh_rossi,229,235,0	warp	rossi24	1,1,kh_rossi,263,46
+kh_rossi,188,239,0	warp	rossi25	1,1,kh_rossi,148,281
+kh_rossi,148,278,0	warp	rossi26	1,1,kh_rossi,188,235
+kh_rossi,204,239,0	warp	rossi27	1,1,kh_rossi,204,281
+kh_rossi,204,278,0	warp	rossi28	1,1,kh_rossi,204,235
+kh_rossi,220,239,0	warp	rossi29	1,1,kh_rossi,260,281
+kh_rossi,260,278,0	warp	rossi30	1,1,kh_rossi,220,235
+kh_rossi,188,230,0	warp	rossi31	1,1,kh_rossi,148,187
+kh_rossi,148,191,0	warp	rossi32	1,1,kh_rossi,188,234
+kh_rossi,204,230,0	warp	rossi33	1,1,kh_rossi,204,187
+kh_rossi,204,191,0	warp	rossi34	1,1,kh_rossi,204,234
+kh_rossi,220,230,0	warp	rossi35	1,1,kh_rossi,260,187
+kh_rossi,260,191,0	warp	rossi36	1,1,kh_rossi,220,234

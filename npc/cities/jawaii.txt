@@ -26,10 +26,10 @@
 //============================================================
 
 //===== Shop: ================================================
-jawaii.gat,186,174,2	shop	Jawaii Dealer	85,536:150
+jawaii,186,174,2	shop	Jawaii Dealer	85,536:150
 
 //===== Jawaii Scripts ===================================
-jawaii.gat,141,200,3	script	Attendant#Sweetness Suite	798,{
+jawaii,141,200,3	script	Attendant#Sweetness Suite	798,{
 	
 	mes "[Alowawu]";
 	mes "Welcome.";
@@ -58,7 +58,7 @@ jawaii.gat,141,200,3	script	Attendant#Sweetness Suite	798,{
 				mes "Have a nice stay";
 				close2;
 				set Zeny,Zeny - 1000;
-				warp "jawaii_in.gat",116,64;
+				warp "jawaii_in",116,64;
 				end;
 }
 			else
@@ -79,7 +79,7 @@ s_Cancel:
 			close;
 }
 
-jawaii.gat,108,199,5	script	Attendant#Classic_Suite	74,{
+jawaii,108,199,5	script	Attendant#Classic_Suite	74,{
 	
 	mes "[Poyi Oland]";
 	mes "Welcome.";
@@ -107,7 +107,7 @@ jawaii.gat,108,199,5	script	Attendant#Classic_Suite	74,{
 				mes "Please enjoy your stay.";
 				close2;
 				set Zeny,Zeny - 1000;
-				warp "jawaii_in.gat",130,109;
+				warp "jawaii_in",130,109;
 				end;
 }
 			else
@@ -125,7 +125,7 @@ s_Cancel:
 			close;
 }
 
-jawaii.gat,107,189,5	script	Attendant#Honeymoon Suite	93,{
+jawaii,107,189,5	script	Attendant#Honeymoon Suite	93,{
 	
 	mes "[Saroki Lania]";
 	mes "...This is the Honeymoon suite and the cost is 1000 zeny.";
@@ -145,7 +145,7 @@ jawaii.gat,107,189,5	script	Attendant#Honeymoon Suite	93,{
 				mes "...Please come in.";
 				close2;
 				set Zeny,Zeny - 1000;
-				warp "jawaii_in.gat",86,117;
+				warp "jawaii_in",86,117;
 				end;
 }
 			else
@@ -159,7 +159,7 @@ s_Cancel:
 			mes "...Ok then.";
 			close;
 }
-jawaii.gat,112,173,7	script	Attendant#Villa Suite	93,{
+jawaii,112,173,7	script	Attendant#Villa Suite	93,{
 	
 	mes "[Lakers Lania]";
 	mes "Saroki, this is rude.";
@@ -184,7 +184,7 @@ jawaii.gat,112,173,7	script	Attendant#Villa Suite	93,{
 				mes "I hope you'll enjoy your trip.";
 				close2;
 				set Zeny,Zeny - 1000;
-				warp "jawaii_in.gat",87,75;
+				warp "jawaii_in",87,75;
 				end;
 }
 			else
@@ -203,7 +203,7 @@ s_Cancel:
 			close;
 }
 
-jawaii.gat,122,263,5	script	Sailor#Alberta	100,{
+jawaii,122,263,5	script	Sailor#Alberta	100,{
 
 	mes "[Sailor]";
 	mes "This ship will bring you back to Alberta.";
@@ -219,7 +219,7 @@ jawaii.gat,122,263,5	script	Sailor#Alberta	100,{
 			mes "[Sailor]";
 			mes "Anchors away! Next stop! Alberta!!";
 			close2;
-			warp "alberta.gat",192,157;
+			warp "alberta",192,157;
 			end;
 
 s_Cancel:
@@ -229,7 +229,7 @@ s_Cancel:
 			close;
 }
 
-jawaii.gat,239,112,7	script	Sailor#Jawaii2	100,{
+jawaii,239,112,7	script	Sailor#Jawaii2	100,{
 
 	mes "[Sailor]";
 	mes "This ship will bring you back to Izlude Island.";
@@ -255,7 +255,7 @@ s_Cancel:
 			close;
 }
 
-jawaii.gat,220,235,3	script	Jawaii Citizen#Love Bo	724,{
+jawaii,220,235,3	script	Jawaii Citizen#Love Bo	724,{
 
 	mes "[JawaJawa]";
 	mes "Do you know where is the most beautiful place in Jawaii?";
@@ -277,7 +277,7 @@ jawaii.gat,220,235,3	script	Jawaii Citizen#Love Bo	724,{
 	close;
 }
 
-jawaii.gat,239,146,3	script	Jawaii Citizen#Explain1	100,{
+jawaii,239,146,3	script	Jawaii Citizen#Explain1	100,{
 	
 	mes "[WaiiWaii]";
 	mes "Welcome to Jawaii!";
@@ -293,7 +293,7 @@ jawaii.gat,239,146,3	script	Jawaii Citizen#Explain1	100,{
 	close;
 }
 
-jawaii.gat,168,247,5	script	Jawaii Citizen#Explain2	724,{
+jawaii,168,247,5	script	Jawaii Citizen#Explain2	724,{
 
 	mes "[WajaWaja]";
 	mes "The hostels are located at the west.";
@@ -309,7 +309,7 @@ jawaii.gat,168,247,5	script	Jawaii Citizen#Explain2	724,{
 	close;
 }
 
-jawaii.gat,165,121,1	script	Jawaii Citizen#Explain3	724,{
+jawaii,165,121,1	script	Jawaii Citizen#Explain3	724,{
 
 	mes "[IwaIwa]";
 	mes "Jawaii~ Isn't this island of happiness great?";
@@ -325,7 +325,7 @@ jawaii.gat,165,121,1	script	Jawaii Citizen#Explain3	724,{
 	close;
 }
 
-jawaii_in.gat,43,115,0	script	Customer#jaw_1	97,{
+jawaii_in,43,115,0	script	Customer#jaw_1	97,{
 
 	mes "[Boogie]";
 	mes "uhOh....Oh my! How do I come to a place like this?";
@@ -341,7 +341,7 @@ jawaii_in.gat,43,115,0	script	Customer#jaw_1	97,{
 	close;
 }
 
-jawaii_in.gat,41,106,3	script	Customer#Kyle Jeet	98,{
+jawaii_in,41,106,3	script	Customer#Kyle Jeet	98,{
 
 	mes "[Kyle Jeet]";
 	mes "Eat and eat...!!";
@@ -354,7 +354,7 @@ jawaii_in.gat,41,106,3	script	Customer#Kyle Jeet	98,{
 	close;
 }
 
-jawaii_in.gat,15,104,0	script	Field Attendant#jawaii	80,{
+jawaii_in,15,104,0	script	Field Attendant#jawaii	80,{
 
 	mes "[Attendant]";
 	mes "....Well, I don't know what's your purpose of coming here.";
@@ -382,7 +382,7 @@ s_Cong:
 		close;
 }
 
-jawaii_in.gat,28,124,0	script	Bartender#jaw	46,{
+jawaii_in,28,124,0	script	Bartender#jaw	46,{
 
 	set @drinkcount,0;
 	mes "[Bartender]";
@@ -689,7 +689,7 @@ s_Magn:
 goto Loopback;
 }
 
-jawaii_in.gat,25,94,5	script	Attendant#jaw1	724,{
+jawaii_in,25,94,5	script	Attendant#jaw1	724,{
 
 	mes "[Attendant Teleteer]";
 	mes "Welcome to the Inn of Jawaii~";
@@ -698,7 +698,7 @@ jawaii_in.gat,25,94,5	script	Attendant#jaw1	724,{
 	close;
 }
 
-jawaii_in.gat,25,96,5	script	Attendant#jaw2	724,{
+jawaii_in,25,96,5	script	Attendant#jaw2	724,{
 
 	mes "[Attendant PoYi]";
 	mes "Welcome to the Inn of Jawaii~";
@@ -707,7 +707,7 @@ jawaii_in.gat,25,96,5	script	Attendant#jaw2	724,{
 	close;
 }
 
-jawaii_in.gat,25,98,5	script	Attendant#jaw3	724,{
+jawaii_in,25,98,5	script	Attendant#jaw3	724,{
 
 	mes "[Attendant Poppy]";
 	mes "Welcome to the Inn of Jawaii~";
@@ -720,7 +720,7 @@ jawaii_in.gat,25,98,5	script	Attendant#jaw3	724,{
 	close;
 }
 
-jawaii_in.gat,25,100,5	script	Attendant#jaw4	724,{
+jawaii_in,25,100,5	script	Attendant#jaw4	724,{
 
 	mes "[Attendant Ether]";
 	mes "Welcome to the Inn of Jawaii~";
@@ -729,7 +729,7 @@ jawaii_in.gat,25,100,5	script	Attendant#jaw4	724,{
 	close;
 }
 
-jawaii_in.gat,30,94,4	script	Attendant#jaw5	724,{
+jawaii_in,30,94,4	script	Attendant#jaw5	724,{
 
 	mes "[Attendant Donna]";
 	mes "Welcome to the Inn of Jawaii~";
@@ -738,7 +738,7 @@ jawaii_in.gat,30,94,4	script	Attendant#jaw5	724,{
 	close;
 }
 
-jawaii_in.gat,30,96,4	script	Attendant#jaw6	724,{
+jawaii_in,30,96,4	script	Attendant#jaw6	724,{
 
 	mes "[Attendant Ken]";
 	mes "Welcome to the Inn of Jawaii~";
@@ -747,7 +747,7 @@ jawaii_in.gat,30,96,4	script	Attendant#jaw6	724,{
 	close;
 }
 
-jawaii_in.gat,30,98,4	script	Attendant#jaw7	724,{
+jawaii_in,30,98,4	script	Attendant#jaw7	724,{
 
 	mes "[Attendant Emater]";
 	mes "Welcome to the Inn of Jawaii~";
@@ -760,7 +760,7 @@ jawaii_in.gat,30,98,4	script	Attendant#jaw7	724,{
 	close;
 }
 
-jawaii_in.gat,30,100,4	script	Attendant#jaw8	724,{
+jawaii_in,30,100,4	script	Attendant#jaw8	724,{
 
 	mes "[Attendant GoYa]";
 	mes "Welcome to the Inn of Jawaii~";

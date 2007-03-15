@@ -24,12 +24,12 @@
 //= The Airship System (Yuno -> Hugel -> Einbroch -> Lighthalzen -> repeat)
 //============================================================ 
 
-airplane.gat,243,74,4	script	#AirshipWarp-1	45,2,2{
+airplane,243,74,4	script	#AirshipWarp-1	45,2,2{
 OnTouch:
-	if($@airplanelocation == 1)warp "einbroch.gat",90,275;
-	if($@airplanelocation == 2)warp "yuno.gat",85,265;
-	if($@airplanelocation == 3)warp "lighthalzen.gat",302,75;
-	if($@airplanelocation == 4)warp "hugel.gat",182,150;
+	if($@airplanelocation == 1)warp "einbroch",90,275;
+	if($@airplanelocation == 2)warp "yuno",85,265;
+	if($@airplanelocation == 3)warp "lighthalzen",302,75;
+	if($@airplanelocation == 4)warp "hugel",182,150;
 	end;
 
 OnHide:
@@ -40,12 +40,12 @@ OnUnhide:
 	end;
 }
 
-airplane.gat,243,29,4	script	#AirshipWarp-2	45,2,2{
+airplane,243,29,4	script	#AirshipWarp-2	45,2,2{
 OnTouch:
-	if($@airplanelocation == 1)warp "einbroch.gat",90,275;
-	if($@airplanelocation == 2)warp "yuno.gat",85,265;
-	if($@airplanelocation == 3)warp "lighthalzen.gat",302,75;
-	if($@airplanelocation == 4)warp "hugel.gat",182,150;
+	if($@airplanelocation == 1)warp "einbroch",90,275;
+	if($@airplanelocation == 2)warp "yuno",85,265;
+	if($@airplanelocation == 3)warp "lighthalzen",302,75;
+	if($@airplanelocation == 4)warp "hugel",182,150;
 	end;
 
 OnHide:
@@ -56,7 +56,7 @@ OnUnhide:
 	end;
 }
 
-airplane.gat,1,1,0	script	EinYuno_Airship	-1,{
+airplane,1,1,0	script	EinYuno_Airship	-1,{
 OnInit:
 while(1)
 {
@@ -67,13 +67,13 @@ while(1)
 	donpcevent "#AirshipWarp-2::OnHide";
 	disablenpc "#AirshipWarp-1";
 	disablenpc "#AirshipWarp-2";
-	mapannounce "airplane.gat","The Airship is leaving the ground. Our next destination is Hugel.",1,0xBA55D3;
+	mapannounce "airplane","The Airship is leaving the ground. Our next destination is Hugel.",1,0xBA55D3;
 	end;
 OnTimer15000:
-	mapannounce "airplane.gat","We are heading to Hugel.",1,0xBA55D3;
+	mapannounce "airplane","We are heading to Hugel.",1,0xBA55D3;
 	end;
 OnTimer30000:
-	mapannounce "airplane.gat","We will arrive in Hugel shortly.",1,0xBA55D3;
+	mapannounce "airplane","We will arrive in Hugel shortly.",1,0xBA55D3;
 	end;
 OnTimer45000:
 	set $@airplanelocation,4;
@@ -81,10 +81,10 @@ OnTimer45000:
 	enablenpc "#AirshipWarp-2";
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";	
-	mapannounce "airplane.gat","Welcome to Hugel. Have a safe trip.",1,0xBA55D3;
+	mapannounce "airplane","Welcome to Hugel. Have a safe trip.",1,0xBA55D3;
 	end;
 OnTimer55000:
-	mapannounce "airplane.gat","Currently, we are in Hugel. The Airship will leave shortly.",1,0xBA55D3;
+	mapannounce "airplane","Currently, we are in Hugel. The Airship will leave shortly.",1,0xBA55D3;
 	end;
 OnTimer65000:
 	set $@airplanelocation,0;
@@ -92,13 +92,13 @@ OnTimer65000:
 	donpcevent "#AirshipWarp-2::OnHide";
 	disablenpc "#AirshipWarp-1";
 	disablenpc "#AirshipWarp-2";
-	mapannounce "airplane.gat","The Airship is leaving the ground. Our next destination is Einbroch.",1,0x00FF00;
+	mapannounce "airplane","The Airship is leaving the ground. Our next destination is Einbroch.",1,0x00FF00;
 	end;
 OnTimer80000:
-	mapannounce "airplane.gat","We are heading to Einbroch.",1,0x00FF00;
+	mapannounce "airplane","We are heading to Einbroch.",1,0x00FF00;
 	end;
 OnTimer95000:
-	mapannounce "airplane.gat","We will arrive in Einbroch shortly.",1,0x00FF00;
+	mapannounce "airplane","We will arrive in Einbroch shortly.",1,0x00FF00;
 	end;
 OnTimer110000:
 	set $@airplanelocation,1;
@@ -106,10 +106,10 @@ OnTimer110000:
 	enablenpc "#AirshipWarp-2";
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-	mapannounce "airplane.gat","Welcome to Einbroch. Have a safe trip.",1,0x00FF00;
+	mapannounce "airplane","Welcome to Einbroch. Have a safe trip.",1,0x00FF00;
 	end;
 OnTimer120000:
-	mapannounce "airplane.gat","Currently, we are in Einbroch. The Airship will take off shortly.",1,0x00FF00;
+	mapannounce "airplane","Currently, we are in Einbroch. The Airship will take off shortly.",1,0x00FF00;
 	end;
 OnTimer130000:
 	set $@airplanelocation,0;
@@ -117,13 +117,13 @@ OnTimer130000:
 	donpcevent "#AirshipWarp-2::OnHide";
 	disablenpc "#AirshipWarp-1";
 	disablenpc "#AirshipWarp-2";
-	mapannounce "airplane.gat","The Airship is leaving the ground. Our next destination is Lighthalzen.",1,0xFF8600;
+	mapannounce "airplane","The Airship is leaving the ground. Our next destination is Lighthalzen.",1,0xFF8600;
 	end;
 OnTimer145000:
-	mapannounce "airplane.gat","We are heading to Lighthalzen.",1,0xFF8600;
+	mapannounce "airplane","We are heading to Lighthalzen.",1,0xFF8600;
 	end;
 OnTimer160000:
-	mapannounce "airplane.gat","We will arrive in Lighthalzen shortly.",1,0xFF8600;
+	mapannounce "airplane","We will arrive in Lighthalzen shortly.",1,0xFF8600;
 	end;
 OnTimer175000:
 	set $@airplanelocation,3;
@@ -131,10 +131,10 @@ OnTimer175000:
 	enablenpc "#AirshipWarp-2";
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-	mapannounce "airplane.gat","Welcome to Lighthalzen. Have a safe trip.",1,0xFF8600;
+	mapannounce "airplane","Welcome to Lighthalzen. Have a safe trip.",1,0xFF8600;
 	end;
 OnTimer185000:
-	mapannounce "airplane.gat","Currently, we are in Lighthalzen. The Airship will leave shortly.",1,0xFF8600;
+	mapannounce "airplane","Currently, we are in Lighthalzen. The Airship will leave shortly.",1,0xFF8600;
 	end;
 OnTimer195000:
 	set $@airplanelocation,0;
@@ -142,13 +142,13 @@ OnTimer195000:
 	donpcevent "#AirshipWarp-2::OnHide";
 	disablenpc "#AirshipWarp-1";
 	disablenpc "#AirshipWarp-2";
-	mapannounce "airplane.gat","The Airship is now taking off. Our next destination is Yuno.",1,0x70DBDB;
+	mapannounce "airplane","The Airship is now taking off. Our next destination is Yuno.",1,0x70DBDB;
 	end;
 OnTimer210000:
-	mapannounce "airplane.gat","We are heading to Yuno.",1,0x70DBDB;
+	mapannounce "airplane","We are heading to Yuno.",1,0x70DBDB;
 	end;
 OnTimer225000:
-	mapannounce "airplane.gat","We will arrive in Yuno shortly.",1,0x70DBDB;
+	mapannounce "airplane","We will arrive in Yuno shortly.",1,0x70DBDB;
 	end;
 OnTimer240000:
 	set $@airplanelocation,2;
@@ -156,10 +156,10 @@ OnTimer240000:
 	enablenpc "#AirshipWarp-2";
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-	mapannounce "airplane.gat","Welcome to Yuno. Have a safe trip.",1,0x70DBDB;
+	mapannounce "airplane","Welcome to Yuno. Have a safe trip.",1,0x70DBDB;
 	end;
 OnTimer250000:
-	mapannounce "airplane.gat","Currently, we are in Yuno. The Airship will leave shortly.",1,0x70DBDB;
+	mapannounce "airplane","Currently, we are in Yuno. The Airship will leave shortly.",1,0x70DBDB;
 	end;
 OnTimer260000:
 	stoptimer;
@@ -169,22 +169,22 @@ OnTimer260000:
 //C4644E
 
 //============================================================ 
-//= Some normal NPCS (airplane.gat)
+//= Some normal NPCS (airplane)
 //============================================================ 
 
-airplane.gat,240,64,5	script	Exit#01::Exit2	857,{
+airplane,240,64,5	script	Exit#01::Exit2	857,{
 
 end;
 
 }
 
-airplane.gat,247,64,5	duplicate(Exit2)	Exit#02	857
+airplane,247,64,5	duplicate(Exit2)	Exit#02	857
 
-airplane.gat,240,39,1	duplicate(Exit2)	Exit#03	857
+airplane,240,39,1	duplicate(Exit2)	Exit#03	857
 
-airplane.gat,247,39,1	duplicate(Exit2)	Exit#04	857
+airplane,247,39,1	duplicate(Exit2)	Exit#04	857
 
-airplane.gat,100,69,2	script	Airship Crew#01::Airship Crew	852,{
+airplane,100,69,2	script	Airship Crew#01::Airship Crew	852,{
 
 	mes "[Airship Crew]";
 	mes "If we've landed at";
@@ -197,7 +197,7 @@ airplane.gat,100,69,2	script	Airship Crew#01::Airship Crew	852,{
 
 }
 
-airplane.gat,250,59,3	script	Airship Staff::AirshipInfo	67,{
+airplane,250,59,3	script	Airship Staff::AirshipInfo	67,{
 
 	mes "[Airship Staff]";
 	mes "Welcome";
@@ -252,7 +252,7 @@ s_Faci:
 
 }
 
-airplane.gat,50,66,4	script	Meltz::AirshipApples	86,{
+airplane,50,66,4	script	Meltz::AirshipApples	86,{
 
 	mes "[Meltz]";
 	mes "Welcome to Meltz's";
@@ -360,7 +360,7 @@ s_Material:
 }
 
 
-airplane.gat,33,69,4 script Kaci 73,{
+airplane,33,69,4 script Kaci 73,{
 if fragmentauest==1 {
 mes "[Kaci]";
 mes "Oh.. Thx my dear";
@@ -382,7 +382,7 @@ end;
 	end;
 }
 
-airplane.gat,80,71,4	script	Zerta	834,{
+airplane,80,71,4	script	Zerta	834,{
 	mes "[Zerta]";
 	mes "Oh, hello adventurer.";
 	mes "I am currently on a";
@@ -392,7 +392,7 @@ airplane.gat,80,71,4	script	Zerta	834,{
 	close;
 }
 
-airplane.gat,65,63,4	script	Maelin	714,{
+airplane,65,63,4	script	Maelin	714,{
 	mes "[Maelin]";
 	mes "Um, this Airship is";
 	mes "to Lutie, isn't it? I've";
@@ -402,7 +402,7 @@ airplane.gat,65,63,4	script	Maelin	714,{
 	close;
 }
 
-airplane.gat,32,61,4	script	Nils::TypingContest	49,{
+airplane,32,61,4	script	Nils::TypingContest	49,{
 
 loopback:
 	mes "[Nils]";
@@ -574,10 +574,10 @@ s_Record:
 //= The Airship System (Yuno -> Izlude -> Repeat)
 //============================================================ 
 
-airplane_01.gat,243,74,4	script	#AirshipWarp-3	45,2,2{
+airplane_01,243,74,4	script	#AirshipWarp-3	45,2,2{
 OnTouch:
-	if($@airplanelocation2 == 1)warp "izlude.gat",202,56;
-	if($@airplanelocation2 == 2)warp "yuno.gat",20,265;
+	if($@airplanelocation2 == 1)warp "izlude",202,56;
+	if($@airplanelocation2 == 2)warp "yuno",20,265;
 	end;
 
 OnHide:
@@ -588,10 +588,10 @@ OnUnhide:
 	end;
 }
 
-airplane_01.gat,243,29,4	script	#AirshipWarp-4	45,2,2{
+airplane_01,243,29,4	script	#AirshipWarp-4	45,2,2{
 OnTouch:
-	if($@airplanelocation2 == 1)warp "izlude.gat",202,56;
-	if($@airplanelocation2 == 2)warp "yuno.gat",20,265;
+	if($@airplanelocation2 == 1)warp "izlude",202,56;
+	if($@airplanelocation2 == 2)warp "yuno",20,265;
 
 OnHide:
 	misceffect 16;
@@ -601,7 +601,7 @@ OnUnhide:
 	end;
 }
 
-airplane_01.gat,1,1,0	script	YunoIzl_Airship	-1,{
+airplane_01,1,1,0	script	YunoIzl_Airship	-1,{
 OnInit:
 while(1)
 {
@@ -612,13 +612,13 @@ while(1)
 	donpcevent "#AirshipWarp-4::OnHide";
 	disablenpc "#AirshipWarp-3";
 	disablenpc "#AirshipWarp-4";
-	mapannounce "airplane_01.gat","The Airship is leaving the ground. Our next destination is Izlude.",1,0x00FF00;
+	mapannounce "airplane_01","The Airship is leaving the ground. Our next destination is Izlude.",1,0x00FF00;
 	end;
 OnTimer15000:
-	mapannounce "airplane_01.gat","We are heading to Izlude.",1,0x00FF00;
+	mapannounce "airplane_01","We are heading to Izlude.",1,0x00FF00;
 	end;
 OnTimer30000:
-	mapannounce "airplane_01.gat","We will arrive in Izlude shortly.",1,0x00FF00;
+	mapannounce "airplane_01","We will arrive in Izlude shortly.",1,0x00FF00;
 	end;
 OnTimer45000:
 	set $@airplanelocation2,1;
@@ -626,10 +626,10 @@ OnTimer45000:
 	enablenpc "#AirshipWarp-4";
 	donpcevent "#AirshipWarp-3::OnUnhide";
 	donpcevent "#AirshipWarp-4::OnUnhide";	
-	mapannounce "airplane_01.gat","Welcome to Izlude. Have a safe trip.",1,0x00FF00;
+	mapannounce "airplane_01","Welcome to Izlude. Have a safe trip.",1,0x00FF00;
 	end;
 OnTimer55000:
-	mapannounce "airplane_01.gat","Currently, we are in Izlude. The Airship will leave shortly.",1,0x00FF00;
+	mapannounce "airplane_01","Currently, we are in Izlude. The Airship will leave shortly.",1,0x00FF00;
 	end;
 OnTimer65000:
 	set $@airplanelocation2,0;
@@ -637,13 +637,13 @@ OnTimer65000:
 	donpcevent "#AirshipWarp-4::OnHide";
 	disablenpc "#AirshipWarp-3";
 	disablenpc "#AirshipWarp-4";
-	mapannounce "airplane_01.gat","The Airship is leaving the ground. Our next destination is Yuno.",1,0x70DBDB;
+	mapannounce "airplane_01","The Airship is leaving the ground. Our next destination is Yuno.",1,0x70DBDB;
 	end;
 OnTimer80000:
-	mapannounce "airplane_01.gat","We are heading to Yuno.",1,0x70DBDB;
+	mapannounce "airplane_01","We are heading to Yuno.",1,0x70DBDB;
 	end;
 OnTimer95000:
-	mapannounce "airplane_01.gat","We will arrive in Yuno shortly.",1,0x70DBDB;
+	mapannounce "airplane_01","We will arrive in Yuno shortly.",1,0x70DBDB;
 	end;
 OnTimer110000:
 	set $@airplanelocation2,2;
@@ -651,10 +651,10 @@ OnTimer110000:
 	enablenpc "#AirshipWarp-4";
 	donpcevent "#AirshipWarp-3::OnUnhide";
 	donpcevent "#AirshipWarp-4::OnUnhide";
-	mapannounce "airplane_01.gat","Welcome to Yuno. Have a safe trip.",1,0x70DBDB;
+	mapannounce "airplane_01","Welcome to Yuno. Have a safe trip.",1,0x70DBDB;
 	end;
 OnTimer120000:
-	mapannounce "airplane_01.gat","Currently, we are in Yuno. The Airship will take off shortly.",1,0x70DBDB;
+	mapannounce "airplane_01","Currently, we are in Yuno. The Airship will take off shortly.",1,0x70DBDB;
 	end;
 OnTimer130000:
 	stoptimer;
@@ -662,26 +662,26 @@ OnTimer130000:
 }
 
 //============================================================ 
-//= Some normal NPCS (airplane_01.gat)
+//= Some normal NPCS (airplane_01)
 //============================================================ 
 
-airplane_01.gat,240,64,5	duplicate(Exit2)	Exit#05	857
+airplane_01,240,64,5	duplicate(Exit2)	Exit#05	857
 
-airplane_01.gat,247,64,5	duplicate(Exit2)	Exit#06	857
+airplane_01,247,64,5	duplicate(Exit2)	Exit#06	857
 
-airplane_01.gat,240,39,1	duplicate(Exit2)	Exit#07	857
+airplane_01,240,39,1	duplicate(Exit2)	Exit#07	857
 
-airplane_01.gat,247,39,1	duplicate(Exit2)	Exit#08	857
+airplane_01,247,39,1	duplicate(Exit2)	Exit#08	857
 
-airplane_01.gat,100,69,2	duplicate(Airship Crew)	Airship Crew#02	852
+airplane_01,100,69,2	duplicate(Airship Crew)	Airship Crew#02	852
 
-airplane_01.gat,250,59,3	duplicate(AirshipInfo)	Airship Staff#info	67
+airplane_01,250,59,3	duplicate(AirshipInfo)	Airship Staff#info	67
 
-airplane_01.gat,50,66,4	duplicate(AirshipApples)	Meltz	86
+airplane_01,50,66,4	duplicate(AirshipApples)	Meltz	86
 
-airplane_01.gat,32,61,4	duplicate(TypingContest)	Nils	49	
+airplane_01,32,61,4	duplicate(TypingContest)	Nils	49	
 
-airplane_01.gat,83,61,2	script	Girl#10	72,{
+airplane_01,83,61,2	script	Girl#10	72,{
 
 	mes "[Dianne]";
 	mes "It's so weird!";
@@ -694,7 +694,7 @@ airplane_01.gat,83,61,2	script	Girl#10	72,{
 
 }
 
-airplane_01.gat,69,63,2	script	Old Man#06	55,{
+airplane_01,69,63,2	script	Old Man#06	55,{
 
 	mes "[Mendel]";
 	mes "As I expected, the";
@@ -707,7 +707,7 @@ airplane_01.gat,69,63,2	script	Old Man#06	55,{
 
 }
 
-airplane_01.gat,33,68,4	script	Clarice	74,{
+airplane_01,33,68,4	script	Clarice	74,{
 	callfunc "applegamble","Clarice";
 	end;
 }
@@ -716,7 +716,7 @@ airplane_01.gat,33,68,4	script	Clarice	74,{
 //= The Izlude Airship Staff
 //============================================================
 
-izlude.gat,201,54,3	script	Airship Staff#izl	91,{
+izlude,201,54,3	script	Airship Staff#izl	91,{
 
 	mes "[Airship Staff]";
 	mes "Welcome to the Izlude Airship.";
@@ -736,12 +736,12 @@ izlude.gat,201,54,3	script	Airship Staff#izl	91,{
 		if(countitem(7311) > 0) goto L_GotTicket;
 		if(Zeny < 1200) goto L_NoZeny;
 			set Zeny, Zeny - 1200;
-			warp "airplane_01.gat",224,64;
+			warp "airplane_01",224,64;
 			close;
 
 		L_GotTicket:
 			delitem 7311,1;
-			warp "airplane_01.gat",224,64;
+			warp "airplane_01",224,64;
 			close;
 
 	L_NoZeny:
@@ -760,7 +760,7 @@ izlude.gat,201,54,3	script	Airship Staff#izl	91,{
 //= The Hugel Airship Staff
 //============================================================
 
-hugel.gat,182,150,3	script	Airship Staff#hu	91,{
+hugel,182,150,3	script	Airship Staff#hu	91,{
 
 	mes "[Airship Staff]";
 	mes "Welcome to the Schwarzwald Republic's Airship.";
@@ -780,12 +780,12 @@ hugel.gat,182,150,3	script	Airship Staff#hu	91,{
 		if(countitem(7311) > 0) goto L_GotTicket;
 		if(Zeny < 1200) goto L_NoZeny;
 			set Zeny, Zeny - 1200;
-			warp "airplane.gat",224,64;
+			warp "airplane",224,64;
 			close;
 
 		L_GotTicket:
 			delitem 7311,1;
-			warp "airplane.gat",224,64;
+			warp "airplane",224,64;
 			close;
 
 	L_NoZeny:
@@ -804,7 +804,7 @@ hugel.gat,182,150,3	script	Airship Staff#hu	91,{
 //= Yuno Airport NPCs
 //============================================================
 
-y_airport.gat,144,63,4	script	Airport Staff#Ein	91,{
+y_airport,144,63,4	script	Airport Staff#Ein	91,{
 
 	mes "[Airship Staff]";
 	mes "Good day!";
@@ -824,12 +824,12 @@ s_Warp:
 	mes "Thank you and";
 	mes "have a nice day.";
 	close2;
-	warp "yuno.gat",57,240;
+	warp "yuno",57,240;
 	end;
 
 }
 	
-y_airport.gat,141,63,4	script	Airport Staff#Izl	91,{
+y_airport,141,63,4	script	Airport Staff#Izl	91,{
 
 	mes "[Airship Staff]";
 	mes "Good day!";
@@ -848,7 +848,7 @@ s_Warp:
 	mes "Thank you and";
 	mes "have a nice day.";
 	close2;
-	warp "yuno.gat",50,240;
+	warp "yuno",50,240;
 	end;
 
 }

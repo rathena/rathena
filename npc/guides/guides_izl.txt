@@ -16,7 +16,7 @@
 //= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
 //============================================================
 
-izlude.gat,121,87,6	script	Guide	105,{
+izlude,121,87,6	script	Guide	105,{
 	cutin "prt_soldier",2;
 	mes "[Izlude Guide]";
 	mes "Welcome to Izlude, Prontera's satellite city.";

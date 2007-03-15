@@ -12,7 +12,7 @@ function	script	func002	{
 }
 
 // 関数の呼び出しとサブルーティンのテスト
-prontera.gat,168,189,1	script	関数テスト	112,{
+prontera,168,189,1	script	関数テスト	112,{
 	callfunc "func001";		// ユーザー定義関数は文字列で指定
 	mes callfunc("func002");
 	next;
@@ -24,4 +24,3 @@ L_SUB001:
 	mes "サブルーティン";
 	return;		// 省略できない
 }
-

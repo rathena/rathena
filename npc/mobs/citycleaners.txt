@@ -15,36 +15,36 @@
 //= 1.0 Added other city spawns [Playtester]
 //============================================================
 
-prontera.gat,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-morocc.gat,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-alberta.gat,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-aldebaran.gat,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-geffen.gat,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-payon.gat,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-comodo.gat,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-izlude.gat,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-yuno.gat,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-umbala.gat,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-amatsu.gat,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
-gonryun.gat,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+prontera,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+morocc,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+alberta,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+aldebaran,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+geffen,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+payon,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+comodo,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+izlude,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+yuno,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+umbala,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+amatsu,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+gonryun,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
 
 //==================================================
 // einbech - Einbech, The Mining Village
 //==================================================
-einbech.gat,0,0,0,0	monster	Tarou	1175,5,1800000,1500000,0
-einbech.gat,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+einbech,0,0,0,0	monster	Tarou	1175,5,1800000,1500000,0
+einbech,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
 
 //==================================================
 // payon_in02 - Inside Payon
 //==================================================
-payon_in02.gat,23,68,5,5	monster	Thief Bug	1051,7,1200000,600000,0
+payon_in02,23,68,5,5	monster	Thief Bug	1051,7,1200000,600000,0
 
 //==================================================
 // sec_in02 - Inside Valhalla
 //==================================================
-sec_in02.gat,139,80,20,10	monster	Poring	1002,5,0,0,0
-sec_in02.gat,138,54,20,20	monster	Marin	1242,5,0,0,0
-sec_in02.gat,161,46,15,15	monster	Poporing	1031,5,0,0,0
-sec_in02.gat,114,47,10,10	monster	Drops	1113,5,0,0,0
-sec_in02.gat,114,47,10,10	monster	Bigfoot	1060,10,0,0,0
-sec_in02.gat,139,80,30,30	monster	Flora	1118,10,0,0,0
+sec_in02,139,80,20,10	monster	Poring	1002,5,0,0,0
+sec_in02,138,54,20,20	monster	Marin	1242,5,0,0,0
+sec_in02,161,46,15,15	monster	Poporing	1031,5,0,0,0
+sec_in02,114,47,10,10	monster	Drops	1113,5,0,0,0
+sec_in02,114,47,10,10	monster	Bigfoot	1060,10,0,0,0
+sec_in02,139,80,30,30	monster	Flora	1118,10,0,0,0

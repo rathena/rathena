@@ -7,7 +7,7 @@
 //= 			is your EQUPPED item produced?
 //============================================================
 
-prontera.gat,155,177,4	script	Check My Hat	810,{
+prontera,155,177,4	script	Check My Hat	810,{
 	mes "Checking your head...";
 	set @ref,0;
 

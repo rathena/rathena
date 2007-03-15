@@ -21,89 +21,89 @@
 //= Hugel City ================================================
 
 //Entrance
-hu_fild06.gat,199,373,0	warp	hugel01	1,1,hugel.gat,95,34
-hugel.gat,95,32,0	warp	hugel02	1,1,hu_fild06.gat,199,371
+hu_fild06,199,373,0	warp	hugel01	1,1,hugel,95,34
+hugel,95,32,0	warp	hugel02	1,1,hu_fild06,199,371
 
 //Church
-hugel.gat,155,114,0	warp	hugel03	1,1,hu_in01.gat,211,177
-hu_in01.gat,211,173,0	warp	hugel04	1,1,hugel.gat,159,113
-hu_in01.gat,162,228,0	warp	hugel05	1,1,hu_in01.gat,200,220
-hu_in01.gat,194,219,0	warp	hugel06	1,1,hu_in01.gat,159,228
-hu_in01.gat,162,168,0	warp	hugel07	1,1,hu_in01.gat,199,193
-hu_in01.gat,195,192,0	warp	hugel08	1,1,hu_in01.gat,158,168
+hugel,155,114,0	warp	hugel03	1,1,hu_in01,211,177
+hu_in01,211,173,0	warp	hugel04	1,1,hugel,159,113
+hu_in01,162,228,0	warp	hugel05	1,1,hu_in01,200,220
+hu_in01,194,219,0	warp	hugel06	1,1,hu_in01,159,228
+hu_in01,162,168,0	warp	hugel07	1,1,hu_in01,199,193
+hu_in01,195,192,0	warp	hugel08	1,1,hu_in01,158,168
 
 //House
-hugel.gat,153,153,0	warp	hugel09	1,1,hu_in01.gat,287,231
-hu_in01.gat,287,227,0	warp	hugel10	1,1,hugel.gat,153,149
-hu_in01.gat,263,252,0	warp	hugel11	1,1,hu_in01.gat,362,253
-hu_in01.gat,365,253,0	warp	hugel12	1,1,hu_in01.gat,268,252
+hugel,153,153,0	warp	hugel09	1,1,hu_in01,287,231
+hu_in01,287,227,0	warp	hugel10	1,1,hugel,153,149
+hu_in01,263,252,0	warp	hugel11	1,1,hu_in01,362,253
+hu_in01,365,253,0	warp	hugel12	1,1,hu_in01,268,252
 
 //House
-hugel.gat,92,167,0	warp	hugel13	1,1,hu_in01.gat,246,363
-hu_in01.gat,246,359,0	warp	hugel14	1,1,hugel.gat,92,165
-hu_in01.gat,244,315,0	warp	hugel15	1,1,hu_in01.gat,245,389
-hu_in01.gat,248,388,0	warp	hugel16	1,1,hu_in01.gat,250,315
-hu_in01.gat,229,313,0	warp	hugel17	1,1,hu_in01.gat,164,315
-hu_in01.gat,168,315,0	warp	hugel18	1,1,hu_in01.gat,233,313
-hu_in01.gat,168,307,0	warp	hugel19	1,1,hu_in01.gat,167,376
-hu_in01.gat,168,379,0	warp	hugel20	1,1,hu_in01.gat,168,312
-hugel.gat,85,181,0	warp	hugel21	1,1,hu_in01.gat,231,303
-hu_in01.gat,231,301,0	warp	hugel22	1,1,hugel.gat,83,181
+hugel,92,167,0	warp	hugel13	1,1,hu_in01,246,363
+hu_in01,246,359,0	warp	hugel14	1,1,hugel,92,165
+hu_in01,244,315,0	warp	hugel15	1,1,hu_in01,245,389
+hu_in01,248,388,0	warp	hugel16	1,1,hu_in01,250,315
+hu_in01,229,313,0	warp	hugel17	1,1,hu_in01,164,315
+hu_in01,168,315,0	warp	hugel18	1,1,hu_in01,233,313
+hu_in01,168,307,0	warp	hugel19	1,1,hu_in01,167,376
+hu_in01,168,379,0	warp	hugel20	1,1,hu_in01,168,312
+hugel,85,181,0	warp	hugel21	1,1,hu_in01,231,303
+hu_in01,231,301,0	warp	hugel22	1,1,hugel,83,181
 
 //House
-hugel.gat,70,157,0	warp	hugel23	1,1,hu_in01.gat,110,373
-hu_in01.gat,110,369,0	warp	hugel24	1,1,hugel.gat,73,153
-hu_in01.gat,108,390,0	warp	hugel25	1,1,hu_in01.gat,107,322
-hu_in01.gat,114,322,0	warp	hugel26	1,1,hu_in01.gat,111,390
+hugel,70,157,0	warp	hugel23	1,1,hu_in01,110,373
+hu_in01,110,369,0	warp	hugel24	1,1,hugel,73,153
+hu_in01,108,390,0	warp	hugel25	1,1,hu_in01,107,322
+hu_in01,114,322,0	warp	hugel26	1,1,hu_in01,111,390
 
 //House
-hugel.gat,91,104,0	warp	hugel27	1,1,hu_in01.gat,30,304
-hu_in01.gat,30,299,0	warp	hugel28	1,1,hugel.gat,94,103
-hu_in01.gat,33,318,0	warp	hugel29	1,1,hu_in01.gat,34,251
-hu_in01.gat,34,246,0	warp	hugel30	1,1,hu_in01.gat,33,314
+hugel,91,104,0	warp	hugel27	1,1,hu_in01,30,304
+hu_in01,30,299,0	warp	hugel28	1,1,hugel,94,103
+hu_in01,33,318,0	warp	hugel29	1,1,hu_in01,34,251
+hu_in01,34,246,0	warp	hugel30	1,1,hu_in01,33,314
 
 //House
-hugel.gat,104,79,0	warp	hugel31	1,1,hu_in01.gat,235,107
-hu_in01.gat,231,107,0	warp	hugel32	1,1,hugel.gat,99,77
-hu_in01.gat,268,123,0	warp	hugel33	1,1,hu_in01.gat,265,36
-hu_in01.gat,265,42,0	warp	hugel34	1,1,hu_in01.gat,265,123
+hugel,104,79,0	warp	hugel31	1,1,hu_in01,235,107
+hu_in01,231,107,0	warp	hugel32	1,1,hugel,99,77
+hu_in01,268,123,0	warp	hugel33	1,1,hu_in01,265,36
+hu_in01,265,42,0	warp	hugel34	1,1,hu_in01,265,123
 
 //Library
-hugel.gat,52,90,0	warp	hugel35	1,1,hu_in01.gat,33,90
-hu_in01.gat,37,90,0	warp	hugel36	1,1,hugel.gat,54,96
-hu_in01.gat,15,70,0	warp	hugel37	1,1,hu_in01.gat,15,27
-hu_in01.gat,15,29,0	warp	hugel38	1,1,hu_in01.gat,16,74
-hu_in01.gat,15,108,0	warp	hugel39	1,1,hu_in01.gat,15,155
-hu_in01.gat,15,151,0	warp	hugel40	1,1,hu_in01.gat,16,104
+hugel,52,90,0	warp	hugel35	1,1,hu_in01,33,90
+hu_in01,37,90,0	warp	hugel36	1,1,hugel,54,96
+hu_in01,15,70,0	warp	hugel37	1,1,hu_in01,15,27
+hu_in01,15,29,0	warp	hugel38	1,1,hu_in01,16,74
+hu_in01,15,108,0	warp	hugel39	1,1,hu_in01,15,155
+hu_in01,15,151,0	warp	hugel40	1,1,hu_in01,16,104
 
 //Hunter Guild
-hugel.gat,206,228,0	warp	hugel41	1,1,hu_in01.gat,381,368
-hu_in01.gat,381,363,0	warp	hugel42	1,1,hugel.gat,207,225
-hu_in01.gat,380,319,0	warp	hugel43	1,1,hu_in01.gat,384,388
-hu_in01.gat,388,388,0	warp	hugel44	1,1,hu_in01.gat,385,319
+hugel,206,228,0	warp	hugel41	1,1,hu_in01,381,368
+hu_in01,381,363,0	warp	hugel42	1,1,hugel,207,225
+hu_in01,380,319,0	warp	hugel43	1,1,hu_in01,384,388
+hu_in01,388,388,0	warp	hugel44	1,1,hu_in01,385,319
 
 //Other
-hu_in01.gat,149,90,0	warp	hugel45	1,1,hu_in01.gat,104,90
-hu_in01.gat,106,90,0	warp	hugel46	1,1,hu_in01.gat,151,90
-hu_in01.gat,85,108,0	warp	hugel47	1,1,hu_in01.gat,84,153
-hu_in01.gat,84,151,0	warp	hugel48	1,1,hu_in01.gat,85,106
-hu_in01.gat,84,71,0	warp	hugel49	1,1,hu_in01.gat,86,26
-hu_in01.gat,85,28,0	warp	hugel50	1,1,hu_in01.gat,84,73
-hugel.gat,129,65,0	warp	hugel51	1,1,hu_in01.gat,347,108
-hu_in01.gat,345,108,0	warp	hugel52	1,1,hugel.gat,127,65
-hu_in01.gat,380,118,0	warp	hugel53	1,1,hu_in01.gat,378,176
-hu_in01.gat,378,178,0	warp	hugel54	1,1,hu_in01.gat,378,118
-hu_in01.gat,314,386,0	warp	hugel55	1,1,hu_in01.gat,309,322
-hu_in01.gat,307,322,0	warp	hugel56	1,1,hu_in01.gat,312,386
-hugel.gat,80,230,0	warp	hugel57	1,1,hu_in01.gat,24,363
-hu_in01.gat,24,361,0	warp	hugel58	1,1,hugel.gat,82,230
-hugel.gat,93,201,0	warp	hugel60	1,1,hu_in01.gat,303,380
-hu_in01.gat,301,380,0	warp	hugel59	1,1,hugel.gat,93,199
+hu_in01,149,90,0	warp	hugel45	1,1,hu_in01,104,90
+hu_in01,106,90,0	warp	hugel46	1,1,hu_in01,151,90
+hu_in01,85,108,0	warp	hugel47	1,1,hu_in01,84,153
+hu_in01,84,151,0	warp	hugel48	1,1,hu_in01,85,106
+hu_in01,84,71,0	warp	hugel49	1,1,hu_in01,86,26
+hu_in01,85,28,0	warp	hugel50	1,1,hu_in01,84,73
+hugel,129,65,0	warp	hugel51	1,1,hu_in01,347,108
+hu_in01,345,108,0	warp	hugel52	1,1,hugel,127,65
+hu_in01,380,118,0	warp	hugel53	1,1,hu_in01,378,176
+hu_in01,378,178,0	warp	hugel54	1,1,hu_in01,378,118
+hu_in01,314,386,0	warp	hugel55	1,1,hu_in01,309,322
+hu_in01,307,322,0	warp	hugel56	1,1,hu_in01,312,386
+hugel,80,230,0	warp	hugel57	1,1,hu_in01,24,363
+hu_in01,24,361,0	warp	hugel58	1,1,hugel,82,230
+hugel,93,201,0	warp	hugel60	1,1,hu_in01,303,380
+hu_in01,301,380,0	warp	hugel59	1,1,hugel,93,199
 
 //Bingo
-hugel.gat,55,208,0	warp	hugelwarp1051	1,1,que_bingo.gat,49,9
-que_bingo.gat,49,7,0	warp	hugelwarp1052	1,1,hugel.gat,57,207
-que_bingo.gat,39,34,0	warp	hugelwarp1053	1,1,que_bingo.gat,34,109
-que_bingo.gat,34,105,0	warp	hugelwarp1054	1,1,que_bingo.gat,38,28
-que_bingo.gat,53,34,0	warp	hugelwarp1055	1,1,que_bingo.gat,49,71
-que_bingo.gat,48,66,0	warp	hugelwarp1056	1,1,que_bingo.gat,53,29
+hugel,55,208,0	warp	hugelwarp1051	1,1,que_bingo,49,9
+que_bingo,49,7,0	warp	hugelwarp1052	1,1,hugel,57,207
+que_bingo,39,34,0	warp	hugelwarp1053	1,1,que_bingo,34,109
+que_bingo,34,105,0	warp	hugelwarp1054	1,1,que_bingo,38,28
+que_bingo,53,34,0	warp	hugelwarp1055	1,1,que_bingo,49,71
+que_bingo,48,66,0	warp	hugelwarp1056	1,1,que_bingo,53,29

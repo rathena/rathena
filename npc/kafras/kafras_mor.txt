@@ -23,46 +23,46 @@
 
 
 // South ================================
-morocc.gat,156,97,4	script	Kafra::kaf_morocc	115,{
+morocc,156,97,4	script	Kafra::kaf_morocc	115,{
 	cutin "kafra_03",2;
 	callfunc "F_KafSetMoc";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "morocc.gat",156,46;
+		savepoint "morocc",156,46;
 		callfunc "F_KafEnd",0,1;
 }
 
 // North =================================
-morocc.gat,162,271,4	script	Kafra::kaf_morocc2	114,{
+morocc,162,271,4	script	Kafra::kaf_morocc2	114,{
 	cutin "kafra_04",2;
 	callfunc "F_KafSetMoc";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "morocc.gat",157,272;
+		savepoint "morocc",157,272;
 		callfunc "F_KafEnd",0,1;
 }
 
 // West  =================================
-morocc.gat,28,167,6	script	Kafra::kaf_morocc3	116,{
+morocc,28,167,6	script	Kafra::kaf_morocc3	116,{
 	cutin "kafra_02",2;
 	callfunc "F_KafSetMoc";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "morocc.gat",31,164;
+		savepoint "morocc",31,164;
 		callfunc "F_KafEnd",0,1;
 }
 
 // East =================================
-morocc.gat,292,211,4	script	Kafra::kaf_morocc4	112,{
+morocc,292,211,4	script	Kafra::kaf_morocc4	112,{
 	cutin "kafra_06",2;
 	callfunc "F_KafSetMoc";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "morocc.gat",294,207;
+		savepoint "morocc",294,207;
 		callfunc "F_KafEnd",0,1;
 }
 

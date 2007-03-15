@@ -31,7 +31,7 @@
 
 
 //<------------------------------------------------------------------------------------ Chivalry Captain Herman------------------------------------------------------------------------------------------>\\
-prt_in.gat,88,101,3	script	Chivalry Captain Herman	56,{
+prt_in,88,101,3	script	Chivalry Captain Herman	56,{
 	callfunc "F_BlockHigh",Job_Swordman_High,"Swordman High",Job_Lord_Knight,"Lord Knight","Chivalry Captain Herman";
 
 	if (BaseJob == Job_Swordman && KNIGHT_Q > 0) goto L_Check;
@@ -226,7 +226,7 @@ L_Check:
 
 
 //<--------------------------------------------------------------------------------- Sir Andrew Syloc (1st test) ------------------------------------------------------------------------------------------>\\
-prt_in.gat,75,107,4	script	Sir Andrew Syloc	65,{
+prt_in,75,107,4	script	Sir Andrew Syloc	65,{
 	mes "[Sir Andrew Syloc]";
 	if (BaseJob == Job_Knight) goto L_Knight;
 	if (BaseJob == Job_Novice) goto L_Novice;
@@ -384,7 +384,7 @@ L_Check:
 
 
 //<------------------------------------------------------------------------------ Sir James Syracuse (2nd Test) ----------------------------------------------------------------------------------------->\\
-prt_in.gat,71,91,6	script	Sir James Syracuse	65,{
+prt_in,71,91,6	script	Sir James Syracuse	65,{
 	mes "[Sir James Syracuse]";
 	if (BaseJob == Job_Knight) goto L_Knight;
 	if (BaseJob == Job_Novice) goto L_Novice;
@@ -723,7 +723,7 @@ L_Test:
 
 //<--------------------------------------------------------------------------------- Sir Windsor (3rd Test) -------------------------------------------------------------------------------------------------->\\
 // Sir Windsor ---------------------------------------------------------
-prt_in.gat,79,94,3	script	Sir Windsor#1	733,{
+prt_in,79,94,3	script	Sir Windsor#1	733,{
 	mes "[Sir Windsor]";
 	if(BaseJob == Job_Knight) goto L_Knight;
 	if(BaseJob == Job_Novice) goto L_Novice;
@@ -759,7 +759,7 @@ L_Test:
 	mes "Follow me.....";
 	next;
 	set KNIGHT_Q2,1;
-	savepoint "prt_in.gat",77,96;
+	savepoint "prt_in",77,96;
 	warp "job_knt",89,106;
 	end;
 
@@ -772,7 +772,7 @@ L_Test:
 		mes "[Sir Windsor]";
 		mes "Lets go......";
 		next;
-		savepoint "prt_in.gat",77,96;
+		savepoint "prt_in",77,96;
 		warp "job_knt",89,106;
 		end;
 
@@ -791,7 +791,7 @@ L_Done:
 
 
 // Waiting Room ---------------------------------------------------------------------------
-job_knt.gat,89,110,4	script	Sir Windsor#2::SW2	733,{
+job_knt,89,110,4	script	Sir Windsor#2::SW2	733,{
 	mes "[Sir Windsor]";
 	mes ".........."; 
 	next;
@@ -853,7 +853,7 @@ job_knt.gat,89,110,4	script	Sir Windsor#2::SW2	733,{
 		mes "[Sir Windsor]";
 		mes ".....Leave then.";
 		next;
-		warp "prt_in.gat",80,100;
+		warp "prt_in",80,100;
 		close;
 
 	M_End:
@@ -866,39 +866,39 @@ OnInit:
 	end;
 
 OnStart:
-	set $@KntUsers, getareausers("job_knt.gat", 24, 126, 63, 165);			// get user count for first lvl
-	set $@KntUsers, $@KntUsers + getareausers("job_knt.gat", 24, 32, 63, 71);		// get user count for second lvl + first lvl
-	set $@KntUsers, $@KntUsers + getareausers("job_knt.gat", 124, 132, 163, 171);		// get user count for third lvl + second lvl + first lvl
+	set $@KntUsers, getareausers("job_knt", 24, 126, 63, 165);			// get user count for first lvl
+	set $@KntUsers, $@KntUsers + getareausers("job_knt", 24, 32, 63, 71);		// get user count for second lvl + first lvl
+	set $@KntUsers, $@KntUsers + getareausers("job_knt", 124, 132, 163, 171);		// get user count for third lvl + second lvl + first lvl
 	if($@KntUsers > 0) end;
 
 	if ((getwaitingroomstate(33)) == 0) end;			// stops the rest of the script from running if there is no one in the waiting room;
 	//kills off any left over monsters from other testers
-	killmonster "job_knt.gat", "KntLvl1::OnMyMobDead";
-	killmonster "job_knt.gat", "KntLvl2::OnMyMobDead";
-	killmonster "job_knt.gat", "KntLvl3::OnMyMobDead";
-	warpwaitingpc "job_knt.gat",43,146;
+	killmonster "job_knt", "KntLvl1::OnMyMobDead";
+	killmonster "job_knt", "KntLvl2::OnMyMobDead";
+	killmonster "job_knt", "KntLvl3::OnMyMobDead";
+	warpwaitingpc "job_knt",43,146;
 	donpcevent "KntLvl1::OnStart";
 	end;
 }
 
 // First Level ---------------------------------------------------------
-job_knt.gat,1,1,1	script	KntLvl1	-1,{
+job_knt,1,1,1	script	KntLvl1	-1,{
 
 OnStart:
 	set $@KntRm, 1;
 	set $@KntMob,12;
-	monster "job_knt.gat",39,150,"Dustiness",1114,1,"KntLvl1::OnMyMobDead";
-	monster "job_knt.gat",47,150,"Dustiness",1114,1,"KntLvl1::OnMyMobDead";
-	monster "job_knt.gat",39,142,"Dustiness",1114,1,"KntLvl1::OnMyMobDead";
-	monster "job_knt.gat",47,142,"Dustiness",1114,1,"KntLvl1::OnMyMobDead";
-	monster "job_knt.gat",43,137,"Piere",1160,1,"KntLvl1::OnMyMobDead";
-	monster "job_knt.gat",43,155,"Piere",1160,1,"KntLvl1::OnMyMobDead";
-	monster "job_knt.gat",43,155,"Deniro",1105,1,"KntLvl1::OnMyMobDead";
-	monster "job_knt.gat",43,155,"Deniro",1105,1,"KntLvl1::OnMyMobDead";
-	monster "job_knt.gat",43,155,"Andre",1095,1,"KntLvl1::OnMyMobDead";
-	monster "job_knt.gat",43,137,"Andre",1095,1,"KntLvl1::OnMyMobDead";
-	monster "job_knt.gat",35,146,"Argos",1100,1,"KntLvl1::OnMyMobDead";
-	monster "job_knt.gat",52,146,"Argos",1100,1,"KntLvl1::OnMyMobDead";
+	monster "job_knt",39,150,"Dustiness",1114,1,"KntLvl1::OnMyMobDead";
+	monster "job_knt",47,150,"Dustiness",1114,1,"KntLvl1::OnMyMobDead";
+	monster "job_knt",39,142,"Dustiness",1114,1,"KntLvl1::OnMyMobDead";
+	monster "job_knt",47,142,"Dustiness",1114,1,"KntLvl1::OnMyMobDead";
+	monster "job_knt",43,137,"Piere",1160,1,"KntLvl1::OnMyMobDead";
+	monster "job_knt",43,155,"Piere",1160,1,"KntLvl1::OnMyMobDead";
+	monster "job_knt",43,155,"Deniro",1105,1,"KntLvl1::OnMyMobDead";
+	monster "job_knt",43,155,"Deniro",1105,1,"KntLvl1::OnMyMobDead";
+	monster "job_knt",43,155,"Andre",1095,1,"KntLvl1::OnMyMobDead";
+	monster "job_knt",43,137,"Andre",1095,1,"KntLvl1::OnMyMobDead";
+	monster "job_knt",35,146,"Argos",1100,1,"KntLvl1::OnMyMobDead";
+	monster "job_knt",52,146,"Argos",1100,1,"KntLvl1::OnMyMobDead";
 	initnpctimer "TimerKnt";
 	end;
 
@@ -907,7 +907,7 @@ OnMyMobDead:
 	if($@KntMob > 0) end;
 
 	stopnpctimer "TimerKnt";
-	areaannounce "job_knt.gat", 24, 126, 63, 165, "[Sir Windsor]: Get ready for the second level....",8;
+	areaannounce "job_knt", 24, 126, 63, 165, "[Sir Windsor]: Get ready for the second level....",8;
 	set $@KntMob, 0;
 	addtimer 5000, "KntLvl2::OnStart";
 	end;
@@ -915,24 +915,24 @@ OnMyMobDead:
 
 
 // Second Level ---------------------------------------------------------
-job_knt.gat,1,1,1	script	KntLvl2	-1,{
+job_knt,1,1,1	script	KntLvl2	-1,{
 
 OnStart:
 	set $@KntRm, 2;
 	set $@KntMob,12;
-	monster "job_knt.gat",53,52,"Frilldora",1119,1,"KntLvl2::OnMyMobDead";
-	monster "job_knt.gat",34,52,"Frilldora",1119,1,"KntLvl2::OnMyMobDead";
-	monster "job_knt.gat",43,42,"Desert Wolf",1106,1,"KntLvl2::OnMyMobDead";
-	monster "job_knt.gat",43,62,"Desert Wolf",1106,1,"KntLvl2::OnMyMobDead";
-	monster "job_knt.gat",58,52,"Drainliar",1111,1,"KntLvl2::OnMyMobDead";
-	monster "job_knt.gat",58,52,"Drainliar",1111,1,"KntLvl2::OnMyMobDead";
-	monster "job_knt.gat",29,52,"Drainliar",1111,1,"KntLvl2::OnMyMobDead";
-	monster "job_knt.gat",29,52,"Drainliar",1111,1,"KntLvl2::OnMyMobDead";
-	monster "job_knt.gat",60,68,"Anacondaq",1030,1,"KntLvl2::OnMyMobDead";
-	monster "job_knt.gat",27,68,"Anacondaq",1030,1,"KntLvl2::OnMyMobDead";
-	monster "job_knt.gat",60,35,"Anacondaq",1030,1,"KntLvl2::OnMyMobDead";
-	monster "job_knt.gat",27,35,"Anacondaq",1030,1,"KntLvl2::OnMyMobDead";
-	warp "job_knt.gat",43,52;
+	monster "job_knt",53,52,"Frilldora",1119,1,"KntLvl2::OnMyMobDead";
+	monster "job_knt",34,52,"Frilldora",1119,1,"KntLvl2::OnMyMobDead";
+	monster "job_knt",43,42,"Desert Wolf",1106,1,"KntLvl2::OnMyMobDead";
+	monster "job_knt",43,62,"Desert Wolf",1106,1,"KntLvl2::OnMyMobDead";
+	monster "job_knt",58,52,"Drainliar",1111,1,"KntLvl2::OnMyMobDead";
+	monster "job_knt",58,52,"Drainliar",1111,1,"KntLvl2::OnMyMobDead";
+	monster "job_knt",29,52,"Drainliar",1111,1,"KntLvl2::OnMyMobDead";
+	monster "job_knt",29,52,"Drainliar",1111,1,"KntLvl2::OnMyMobDead";
+	monster "job_knt",60,68,"Anacondaq",1030,1,"KntLvl2::OnMyMobDead";
+	monster "job_knt",27,68,"Anacondaq",1030,1,"KntLvl2::OnMyMobDead";
+	monster "job_knt",60,35,"Anacondaq",1030,1,"KntLvl2::OnMyMobDead";
+	monster "job_knt",27,35,"Anacondaq",1030,1,"KntLvl2::OnMyMobDead";
+	warp "job_knt",43,52;
 	initnpctimer "TimerKnt";
 	end;
 
@@ -941,7 +941,7 @@ OnMyMobDead:
 	if($@KntMob > 0) end;
 
 	stopnpctimer "TimerKnt";
-	areaannounce "job_knt.gat", 24, 32, 63, 71, "[Sir Windsor]: Get ready for the third level....",8;
+	areaannounce "job_knt", 24, 32, 63, 71, "[Sir Windsor]: Get ready for the third level....",8;
 	set $@KntMob, 0;
 	addtimer 5000, "KntLvl3::OnStart";
 	end;
@@ -949,19 +949,19 @@ OnMyMobDead:
 }
 
 // Third Level ---------------------------------------------------------------
-job_knt.gat,1,1,1	script	KntLvl3	-1,{
+job_knt,1,1,1	script	KntLvl3	-1,{
 
 OnStart:
 	set $@KntRm, 3;
 	set $@KntMob,7;
-	monster "job_knt.gat",136,152,"Knife Goblin Bro",1122,1,"KntLvl3::OnMyMobDead";
-	monster "job_knt.gat",150,152,"Mace Goblin Bro",1123,1,"KntLvl3::OnMyMobDead";
-	monster "job_knt.gat",143,145,"Axe Goblin Bro",1124,1,"KntLvl3::OnMyMobDead";
-	monster "job_knt.gat",143,167,"Hammer Goblin Bro",1125,1,"KntLvl3::OnMyMobDead";
-	monster "job_knt.gat",139,167,"Club Goblin Bro",1126,1,"KntLvl3::OnMyMobDead";
-	monster "job_knt.gat",147,167,"Goblin Archer",1258,1,"KntLvl3::OnMyMobDead";
-	monster "job_knt.gat",136,158,"Steam Goblin",1280,1,"KntLvl3::OnMyMobDead";
-	warp "job_knt.gat",143,152;
+	monster "job_knt",136,152,"Knife Goblin Bro",1122,1,"KntLvl3::OnMyMobDead";
+	monster "job_knt",150,152,"Mace Goblin Bro",1123,1,"KntLvl3::OnMyMobDead";
+	monster "job_knt",143,145,"Axe Goblin Bro",1124,1,"KntLvl3::OnMyMobDead";
+	monster "job_knt",143,167,"Hammer Goblin Bro",1125,1,"KntLvl3::OnMyMobDead";
+	monster "job_knt",139,167,"Club Goblin Bro",1126,1,"KntLvl3::OnMyMobDead";
+	monster "job_knt",147,167,"Goblin Archer",1258,1,"KntLvl3::OnMyMobDead";
+	monster "job_knt",136,158,"Steam Goblin",1280,1,"KntLvl3::OnMyMobDead";
+	warp "job_knt",143,152;
 	initnpctimer "TimerKnt";
 	end;
 
@@ -971,7 +971,7 @@ OnMyMobDead:
 
 	stopnpctimer "TimerKnt";
 	set KNIGHT_Q2, 2;
-	areaannounce "job_knt.gat", 124, 132, 163, 171, "[Sir Windsor]: ....... test completed.",8;
+	areaannounce "job_knt", 124, 132, 163, 171, "[Sir Windsor]: ....... test completed.",8;
 	set $@KntMob, 0;
 	addtimer 7000, "TimerKnt::OnTimer184000";
 	end;
@@ -979,7 +979,7 @@ OnMyMobDead:
 }
 
 // Timer --------------------------------------------------------------------------------
-job_knt.gat,1,1,1	script	TimerKnt	-1,{
+job_knt,1,1,1	script	TimerKnt	-1,{
 
 OnTimer2000:
 	set $@KntTime$, "You have 3 minutes...";
@@ -1012,26 +1012,26 @@ OnTimer182000:
 	callsub AnnounceKnt;
 OnTimer184000:
 	stopnpctimer;
-	if($@KntRm==1) areawarp "job_knt.gat", 24, 126, 63, 165, "prt_in.gat",77,96;
-	if($@KntRm==2) areawarp "job_knt.gat", 24, 32, 63, 71, "prt_in.gat",77,96;
-	if($@KntRm==3) areawarp "job_knt.gat", 124, 132, 163, 171, "prt_in.gat",77,96;
-	areaannounce "job_knt.gat", 82, 98, 97, 113, "[Sir Windsor]: The testing rooms are now open.....",8;
-	killmonster "job_knt.gat", "KntLvl1::OnMyMobDead";
-	killmonster "job_knt.gat", "KntLvl2::OnMyMobDead";
-	killmonster "job_knt.gat", "KntLvl3::OnMyMobDead";
+	if($@KntRm==1) areawarp "job_knt", 24, 126, 63, 165, "prt_in",77,96;
+	if($@KntRm==2) areawarp "job_knt", 24, 32, 63, 71, "prt_in",77,96;
+	if($@KntRm==3) areawarp "job_knt", 124, 132, 163, 171, "prt_in",77,96;
+	areaannounce "job_knt", 82, 98, 97, 113, "[Sir Windsor]: The testing rooms are now open.....",8;
+	killmonster "job_knt", "KntLvl1::OnMyMobDead";
+	killmonster "job_knt", "KntLvl2::OnMyMobDead";
+	killmonster "job_knt", "KntLvl3::OnMyMobDead";
 	donpcevent "SW2::OnStart";
 	end;
 
 AnnounceKnt:
-	if($@KntRm==1) areaannounce "job_knt.gat", 24, 126, 63, 165, "[Sir Windsor]: "+$@KntTime$+".",8;
-	if($@KntRm==2) areaannounce "job_knt.gat", 24, 32, 63, 71, "[Sir Windsor]: "+$@KntTime$+".",8;
-	if($@KntRm==3) areaannounce "job_knt.gat", 124, 132, 163, 171, "[Sir Windsor]: "+$@KntTime$+".",8;
+	if($@KntRm==1) areaannounce "job_knt", 24, 126, 63, 165, "[Sir Windsor]: "+$@KntTime$+".",8;
+	if($@KntRm==2) areaannounce "job_knt", 24, 32, 63, 71, "[Sir Windsor]: "+$@KntTime$+".",8;
+	if($@KntRm==3) areaannounce "job_knt", 124, 132, 163, 171, "[Sir Windsor]: "+$@KntTime$+".",8;
 	end;
 }
 
 
 //<------------------------------------------------------------------------------------ Lady Amy Beatris (4th Test) ---------------------------------------------------------------------------------------------->\\
-prt_in.gat,69,107,5	script	Lady Amy Beatris	728,{
+prt_in,69,107,5	script	Lady Amy Beatris	728,{
 	mes "[Lady Amy Beatris]";
 	if (BaseJob == Job_Knight) goto L_Knight;
 	if (BaseJob == Job_Novice) goto L_Novice;
@@ -1346,7 +1346,7 @@ M_Menu:
 
 
 //<------------------------------------------------------------------------------------------- Sir Edmund (5th Test) --------------------------------------------------------------------------------------------->\\
-prt_in.gat,70,99,5	script	Sir Edmund	734,{
+prt_in,70,99,5	script	Sir Edmund	734,{
 	mes "[Sir Edmund]";
 	if (BaseJob == Job_Knight) goto L_Knight;
 	if (BaseJob == Job_Swordman) goto L_Sword;
@@ -1417,7 +1417,7 @@ L_Test:
 	mes "[Sir Edmund]";
 	mes "Okay lets start the test now.";
 	next;
-	warp "job_knt.gat",143,57;
+	warp "job_knt",143,57;
 	doevent "ev_Test::OnStart";
 	end;
 
@@ -1432,7 +1432,7 @@ L_Test:
 		mes "[Sir Edmund]";
 		mes "Okay now, try again.";
 		next;
-		warp "job_knt.gat",143,57;
+		warp "job_knt",143,57;
 		doevent "ev_Test::OnStart";
 		end;
 
@@ -1453,56 +1453,56 @@ L_Test:
 }
 
 // Test -----------------------------
-job_knt.gat,1,1,1	script	ev_Test	-1,{
+job_knt,1,1,1	script	ev_Test	-1,{
 
 OnStart:
-	killmonster "job_knt.gat","ev_Test::OnMyMobDead";
-	monster "job_knt.gat",141,57,"Poring",1002,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",145,57,"Poring",1002,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",143,55,"Poring",1002,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",143,59,"Poring",1002,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",141,55,"Lunatic",1063,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",141,59,"Lunatic",1063,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",145,55,"Lunatic",1063,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",145,59,"Lunatic",1063,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",139,57,"Chonchon",1011,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",147,57,"Chonchon",1011,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",143,53,"Chonchon",1011,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",143,61,"Chonchon",1011,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",130,69,"Spore",1014,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",157,69,"Spore",1014,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",130,42,"Spore",1014,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",157,42,"Spore",1014,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",165,54,"Spore",1014,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",165,57,"Spore",1014,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",122,54,"Spore",1014,1,"ev_Test::OnMyMobDead";
-	monster "job_knt.gat",122,57,"Spore",1014,1,"ev_Test::OnMyMobDead";
+	killmonster "job_knt","ev_Test::OnMyMobDead";
+	monster "job_knt",141,57,"Poring",1002,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",145,57,"Poring",1002,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",143,55,"Poring",1002,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",143,59,"Poring",1002,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",141,55,"Lunatic",1063,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",141,59,"Lunatic",1063,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",145,55,"Lunatic",1063,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",145,59,"Lunatic",1063,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",139,57,"Chonchon",1011,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",147,57,"Chonchon",1011,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",143,53,"Chonchon",1011,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",143,61,"Chonchon",1011,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",130,69,"Spore",1014,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",157,69,"Spore",1014,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",130,42,"Spore",1014,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",157,42,"Spore",1014,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",165,54,"Spore",1014,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",165,57,"Spore",1014,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",122,54,"Spore",1014,1,"ev_Test::OnMyMobDead";
+	monster "job_knt",122,57,"Spore",1014,1,"ev_Test::OnMyMobDead";
 
 	addtimer 240000, "ev_Test::OnTimerPass";
 	end;
 
 OnTimerPass:
 	set KNIGHT_Q2, 2;
-	areaannounce "job_knt.gat", 124, 36, 163, 75, "[Sir Edmund]: Well done.",0;
+	areaannounce "job_knt", 124, 36, 163, 75, "[Sir Edmund]: Well done.",0;
 	addtimer 4000, "ev_Test::OnTimerWarp";
 	end;
 
 OnMyMobDead:
 	set KNIGHT_Q2, 1;
-	areaannounce "job_knt.gat", 124, 36, 163, 75, "[Sir Edmund]: You are not at peace and therfore have failed my test.",0;
+	areaannounce "job_knt", 124, 36, 163, 75, "[Sir Edmund]: You are not at peace and therfore have failed my test.",0;
 	deltimer "ev_Test::OnTimerPass";
 	addtimer 4000, "ev_Test::OnTimerWarp";
 	end;
 
 OnTimerWarp:
-	if(KNIGHT_Q2 == 2) warp "prt_in.gat",80,100;
-	if(KNIGHT_Q2 == 1) warp "prt_fild05.gat",353,251;
+	if(KNIGHT_Q2 == 2) warp "prt_in",80,100;
+	if(KNIGHT_Q2 == 1) warp "prt_fild05",353,251;
 	end;
 }
 
 
 //<------------------------------------------------------------------------------------------ Sir Grey (Final Test) ------------------------------------------------------------------------------------------------------>\\
-prt_in.gat,87,90,3	script	Sir Grey	119,{
+prt_in,87,90,3	script	Sir Grey	119,{
 	mes "[Sir Grey]";
 	if (BaseJob == Job_Knight) goto L_Knight;
 	if (BaseJob == Job_Novice) goto L_Novice;
@@ -1857,10 +1857,10 @@ M_Menu:
 //==============================================================================
 // mapflag
 //==============================================================================
-job_knt.gat	mapflag	nomemo
-job_knt.gat	mapflag	noteleport
-job_knt.gat	mapflag	nosave	SavePoint
-job_knt.gat	mapflag	nopenalty
-job_knt.gat	mapflag	nobranch
-job_knt.gat	mapflag	noexp
-job_knt.gat	mapflag	noloot
+job_knt	mapflag	nomemo
+job_knt	mapflag	noteleport
+job_knt	mapflag	nosave	SavePoint
+job_knt	mapflag	nopenalty
+job_knt	mapflag	nobranch
+job_knt	mapflag	noexp
+job_knt	mapflag	noloot

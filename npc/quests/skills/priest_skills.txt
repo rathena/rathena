@@ -24,7 +24,7 @@
 //============================================================
 // PRIEST - REDEMPTIO
 //============================================================
-prt_church.gat,111,112,3	script	Nun Linus	79,{
+prt_church,111,112,3	script	Nun Linus	79,{
 	mes "[Nun Linus]";
 	if(BaseJob!=Job_Priest) goto L_nopriest;
 	if(getskilllv(1014)) goto L_alreadyhave;

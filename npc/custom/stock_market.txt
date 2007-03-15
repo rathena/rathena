@@ -17,7 +17,7 @@
 //= 	so use it on your own risk
 //============================================================
 
-prontera.gat,140,181,5	script	sharenames	-1,{
+prontera,140,181,5	script	sharenames	-1,{
 end;
 OnInit:
 // Sets the names of the shares //
@@ -790,4 +790,4 @@ mes "Goodbye.";
 close;
 }
 
-prontera.gat,140,181,5	duplicate(stockmarket)	Stock Market	109
+prontera,140,181,5	duplicate(stockmarket)	Stock Market	109

@@ -13,7 +13,7 @@
 //============================================================
 
 // Ammo Dealer Tony
-que_ng.gat,187,156,3	script	Tony	86,{
+que_ng,187,156,3	script	Tony	86,{
 	mes "[Tony]";
 	mes "I can make spheres for you.";
 	mes "Spheres are the ammunition for";

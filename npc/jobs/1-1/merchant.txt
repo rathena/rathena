@@ -22,7 +22,7 @@
 
 // == Guild NPCs == 
 // -- Mahnsoo --
-alberta_in.gat,53,43,6	script	Chief Mahnsoo	86,{
+alberta_in,53,43,6	script	Chief Mahnsoo	86,{
 	callfunc "F_ToHigh",Job_Merchant_High,"Merchant High",Job_Whitesmith,"Chief Mahnsoo";
 	mes "[Chief Mahnsoo]";
 	if(BaseJob == Job_Novice && job_merchant_q3 == 4) goto L_MakeMerc;
@@ -400,7 +400,7 @@ L_Failed:
 
 
 // -- Wharehouse Manager Kay --
-alberta_in.gat,28,29,2	script	Merchant Guildsman	83,{
+alberta_in,28,29,2	script	Merchant Guildsman	83,{
 	if(BaseJob == Job_Novice && job_merchant_q3 > 0) goto L_Check;
 
 	mes "[Wharehouse Manager Kay]";
@@ -719,7 +719,7 @@ L_WrongDest:
 }
 
 // -- Kafra(Prontera) --
-prontera.gat,248,42,8	script	Kafra#01	115,{
+prontera,248,42,8	script	Kafra#01	115,{
 	cutin "kafra_03",2;
 	if(BaseJob == Job_Novice && job_merchant_q3>0) goto L_Start;
 L_Other:
@@ -733,7 +733,7 @@ L_Other:
 		if(Zeny < 600) goto sL_NdZeny;
 		set Zeny, Zeny - 600;
 		set RESRVPTS, RESRVPTS + 37;
-		warp "izlude.gat",91,105;
+		warp "izlude",91,105;
 		cutin "kafra_03",255;
 		end;
 
@@ -826,7 +826,7 @@ L_WrongDest:
 
 // == Other Npcs ==
 // -- Guild Staff --
-geffen_in.gat,155,122,4	script	Guild Staff	47,{
+geffen_in,155,122,4	script	Guild Staff	47,{
 
 	if(BaseJob == Job_Novice && job_merchant_q3>0) goto L_Start;
 L_Other:
@@ -897,7 +897,7 @@ L_WrongProd:
 
 
 // -- Dyer's Student --
-morocc_in.gat,140,102,4	script	Dyer's Student	86,{
+morocc_in,140,102,4	script	Dyer's Student	86,{
 	if(BaseJob == Job_Novice && job_merchant_q3>0) goto L_Start;
 
 L_Other:

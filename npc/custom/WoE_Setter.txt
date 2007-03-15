@@ -24,7 +24,7 @@
 //= Removed the need for disabling the normal agit_event
 //= 1.5a Applied Playtester's fix. [Vicious]
 //============================================================ 
-prontera.gat,162,194,5	script	WoE Setter	806,{
+prontera,162,194,5	script	WoE Setter	806,{
 	mes "[Woe Setter]";
 	if(getgmlevel()<99) goto L_NotGM;
 	mes "Welcome, I can set WoE times for you";

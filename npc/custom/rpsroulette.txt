@@ -13,7 +13,7 @@
 //= 1.2 Fixes by Blackthunder and me [Poki#3]
 //============================================================
 
-cmd_in02.gat,182,126,2	script	Crazy Boris	85,{
+cmd_in02,182,126,2	script	Crazy Boris	85,{
 	mes "Crazy Boris";
 	set @counter,1;
 	mes "Hey you! Up for Rock Scissors Roulette?";

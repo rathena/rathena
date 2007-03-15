@@ -14,7 +14,7 @@
 
 //==================================================== Edgar's
 //====================================================== Offer
-izlude.gat,182,186,6	script	Edgar	709,{
+izlude,182,186,6	script	Edgar	709,{
 	
 	mes "[Edgar]";
 	mes "My town, Izlude is connected to";
@@ -77,7 +77,7 @@ M_Menu:
 				set MISC_QUEST,MISC_QUEST | 16;
 				if(Zeny < 250) goto sl_NoZeny;
 				set Zeny, Zeny - 250;
-				warp "alberta.gat",195,164;
+				warp "alberta",195,164;
 
 			sm_1b:
 				mes "[Edgar]";
@@ -98,7 +98,7 @@ M_Menu:
 
 				if(Zeny < 250) goto sl_NoZeny;
 				set Zeny, Zeny - 250;
-				warp "alberta.gat",195,164;
+				warp "alberta",195,164;
 
 			sM_2b:
 				mes "[Edgar]";

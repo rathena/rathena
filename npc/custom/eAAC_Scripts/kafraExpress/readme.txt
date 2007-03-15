@@ -1021,9 +1021,9 @@ Base cost of warping to each dungeon, that is, the entrance level cost.
 
 Description
 ================================================================================
-The PvP warping module leads to the pvp maps named pvp_n_*-*.gat. It has two
+The PvP warping module leads to the pvp maps named pvp_n_*-*. It has two
 modes: simple and advanced. On simple mode, every player of every level gets
-thrown into the pvp_n_1-*.gat maps to nuke it out, on advanced mode each of
+thrown into the pvp_n_1-* maps to nuke it out, on advanced mode each of
 the map groups gets their own range of permissible levels to enter. Since
 there is no sure way how characters should escape from a pvp map, they are
 currently given a butterfly wing when they warp.
@@ -1136,15 +1136,15 @@ sprite on-screen that characters speak with. An enabled kafra may look like
 this:
 
 //Alberta
-alberta.gat,113,53,7 script   Kafra Express  116,{
-   callfunc "F_KafraExpress","Kafra Express","kafra_02",0,"alberta.gat",116,57;
+alberta,113,53,7 script   Kafra Express  116,{
+   callfunc "F_KafraExpress","Kafra Express","kafra_02",0,"alberta",116,57;
 }
 
 And a disabled/commented Kafra would look like this:
 
 //Prontera Guild Grounds
-//prt_gld.gat,127,163,5   script   Kafra Express  115,{
-//   callfunc "F_KafraExpress","Kafra Express","kafra_03",1,"prt_gld.gat",129,170;
+//prt_gld,127,163,5   script   Kafra Express  115,{
+//   callfunc "F_KafraExpress","Kafra Express","kafra_03",1,"prt_gld",129,170;
 //}
 
 For scripters, the way to define an NPC is not new, and beyond the scope of

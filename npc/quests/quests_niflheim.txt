@@ -19,7 +19,7 @@
 //=============================================================
 //Quest for Book of Devil
 //=============================================================
-niflheim.gat,184,199,5	script	Little Girl#02	793,{
+niflheim,184,199,5	script	Little Girl#02	793,{
 	mes "[Sairin]";
 	if(MISC_QUEST & 256){
 		mes "Thanks again!";
@@ -65,7 +65,7 @@ M_NO:
 	close;
 }
 
-nif_fild01.gat,213,268,5	script	Little Boy	797,{
+nif_fild01,213,268,5	script	Little Boy	797,{
 	if(MISC_QUEST & 256){
 L_DONE:
 		set @niflheimlost,2;
@@ -97,7 +97,7 @@ L_PART2:
 //=============================================================
 //Piano Quest
 //=============================================================
-niflheim.gat,224,243,3	script	Alager	795,{
+niflheim,224,243,3	script	Alager	795,{
 	mes "[Alager]";
 	mes "Muahaha, I love to eat meat...";
 	mes "You look... delicious!";
@@ -128,7 +128,7 @@ L_end:
  	close;
 }
 
-nif_in.gat,105,81,3	script	Crayu	794,{
+nif_in,105,81,3	script	Crayu	794,{
 	mes "[Crayu]";
 	mes "Ah, there was this poem...";
 	mes "in which author and time of writing was unknown,";
@@ -190,7 +190,7 @@ nif_in.gat,105,81,3	script	Crayu	794,{
 	close;
 }
 
-nif_in.gat,31,20,3	script	Kurtz	794,{
+nif_in,31,20,3	script	Kurtz	794,{
 	mes "[Kurtz]";
 	mes "Business nowadays is really bad...";
 	mes "Back when I used to be alive,";
@@ -209,7 +209,7 @@ nif_in.gat,31,20,3	script	Kurtz	794,{
 	close;
 }
 
-niflheim.gat,169,71,5	script	#1	111,2,2{
+niflheim,169,71,5	script	#1	111,2,2{
 	if(MISC_QUEST & 32 || nif_piano&8) end;
 
 	mes "- In the nearby tombs -";
@@ -226,7 +226,7 @@ L_end:
 	close;
 }
 
-niflheim.gat,208,103,5	script	#2	111,2,2{
+niflheim,208,103,5	script	#2	111,2,2{
 	if(MISC_QUEST & 32 || nif_piano&32) end;
 	if(nif_piano&16){
 		mes "- In the hole you have dug -";
@@ -254,7 +254,7 @@ niflheim.gat,208,103,5	script	#2	111,2,2{
 	close;
 }
 
-nif_in.gat,115,181,5	script	#4	111,3,3{
+nif_in,115,181,5	script	#4	111,3,3{
 	mes "- You see a huge old piano -";
 	if((MISC_QUEST & 32)==0) mes "- with a few keys missing  -";
 	if(MISC_QUEST & 32) mes "- with one key missing -";
@@ -271,7 +271,7 @@ nif_in.gat,115,181,5	script	#4	111,3,3{
 	close;
 }
 
-nif_in.gat,118,151,5	script	#5	111,3,3{
+nif_in,118,151,5	script	#5	111,3,3{
 	if((MISC_QUEST & 32)==0) end;
 	mes "- The very moment the long shadow -";
 	mes "- of your body falls on the piano -";
@@ -279,11 +279,11 @@ nif_in.gat,118,151,5	script	#5	111,3,3{
 	mes "- You suddenly seem to feel lighter -";
 	mes "- and your vision starts to blur... -";
 	next;
-	warp "nif_in.gat",179,163;
+	warp "nif_in",179,163;
 	close;
 }
 
-nif_in.gat,188,168,3	script	Witch	792,{
+nif_in,188,168,3	script	Witch	792,{
 	mes "[Kirkena]";
 	mes "Hmm?... Aren't you a living human?";
 	mes "Must have took you some effort";
@@ -295,6 +295,6 @@ nif_in.gat,188,168,3	script	Witch	792,{
 	mes "I shall use my powers to send you back";
 	mes "but you should not return in the future.";
 	close2;
-	warp "umbala.gat",138,208;
+	warp "umbala",138,208;
 	end;
 }

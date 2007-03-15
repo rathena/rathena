@@ -54,37 +54,37 @@ function	script	F_keWarpTown	{
 		if ($@kewt_showOnline) {
 			set @kmenu, select(
 				"- Cancel",
-				"- Alberta ("+@cost+"z/"+(getmapusers("alberta.gat")+getmapusers("alberta_in.gat"))+" "+$@ked_users$+")",
-				"- Al De Baran ("+@cost+"z/"+(getmapusers("aldebaran.gat")+getmapusers("aldeba_in.gat"))+" "+$@ked_users$+")",
-				"- Amatsu ("+@cost+"z/"+(getmapusers("amatsu.gat")+getmapusers("ama_in01.gat")+getmapusers("ama_in02.gat"))
+				"- Alberta ("+@cost+"z/"+(getmapusers("alberta")+getmapusers("alberta_in"))+" "+$@ked_users$+")",
+				"- Al De Baran ("+@cost+"z/"+(getmapusers("aldebaran")+getmapusers("aldeba_in"))+" "+$@ked_users$+")",
+				"- Amatsu ("+@cost+"z/"+(getmapusers("amatsu")+getmapusers("ama_in01")+getmapusers("ama_in02"))
 					+" "+$@ked_users$+")",
-				"- Ayothaya ("+@cost+"z/"+(getmapusers("ayothaya.gat")+getmapusers("ayo_in01.gat")+getmapusers("ayo_in02.gat"))
+				"- Ayothaya ("+@cost+"z/"+(getmapusers("ayothaya")+getmapusers("ayo_in01")+getmapusers("ayo_in02"))
 					+" "+$@ked_users$+")",
-				"- Comodo ("+@cost+"z/"+(getmapusers("comodo.gat")+getmapusers("cmd_in01.gat")+getmapusers("cmd_in02.gat"))
+				"- Comodo ("+@cost+"z/"+(getmapusers("comodo")+getmapusers("cmd_in01")+getmapusers("cmd_in02"))
 					+" "+$@ked_users$+")",
-				"- Einbech ("+@cost+"z/"+(getmapusers("einbech.gat"))+" "+$@ked_users$+")",
-				"- Einbroch ("+@cost+"z/"+(getmapusers("einbroch.gat")+getmapusers("ein_in01.gat"))+" "+$@ked_users$+")",
-				"- Geffen ("+@cost+"z/"+(getmapusers("geffen.gat")+getmapusers("geffen_in.gat")+getmapusers("gef_tower.gat"))
+				"- Einbech ("+@cost+"z/"+(getmapusers("einbech"))+" "+$@ked_users$+")",
+				"- Einbroch ("+@cost+"z/"+(getmapusers("einbroch")+getmapusers("ein_in01"))+" "+$@ked_users$+")",
+				"- Geffen ("+@cost+"z/"+(getmapusers("geffen")+getmapusers("geffen_in")+getmapusers("gef_tower"))
 					+" "+$@ked_users$+")",
-				"- Gon Ryun ("+@cost+"z/"+(getmapusers("gonryun.gat")+getmapusers("gon_in.gat"))+" "+$@ked_users$+")",
-				"- Hugel ("+@cost+"z/"+(getmapusers("hugel.gat")+getmapusers("hu_in01.gat"))+" "+$@ked_users$+")",
-				"- Izlude ("+@cost+"z/"+(getmapusers("izlude.gat")+getmapusers("izlude_in.gat"))+" "+$@ked_users$+")",
-				"- Jawaii ("+@cost+"z/"+(getmapusers("jawaii.gat")+getmapusers("jawaii_in.gat"))+" "+$@ked_users$+")",
-				"- LightHalzen ("+@cost+"z/"+(getmapusers("lighthalzen.gat")+getmapusers("lhz_in01.gat")
-					+getmapusers("lhz_in02.gat")+getmapusers("lhz_in03.gat"))+" "+$@ked_users$+")",
-				"- Lou Yang ("+@cost+"z/"+(getmapusers("louyang.gat")+getmapusers("lou_in01.gat")+getmapusers("lou_in02.gat"))
+				"- Gon Ryun ("+@cost+"z/"+(getmapusers("gonryun")+getmapusers("gon_in"))+" "+$@ked_users$+")",
+				"- Hugel ("+@cost+"z/"+(getmapusers("hugel")+getmapusers("hu_in01"))+" "+$@ked_users$+")",
+				"- Izlude ("+@cost+"z/"+(getmapusers("izlude")+getmapusers("izlude_in"))+" "+$@ked_users$+")",
+				"- Jawaii ("+@cost+"z/"+(getmapusers("jawaii")+getmapusers("jawaii_in"))+" "+$@ked_users$+")",
+				"- LightHalzen ("+@cost+"z/"+(getmapusers("lighthalzen")+getmapusers("lhz_in01")
+					+getmapusers("lhz_in02")+getmapusers("lhz_in03"))+" "+$@ked_users$+")",
+				"- Lou Yang ("+@cost+"z/"+(getmapusers("louyang")+getmapusers("lou_in01")+getmapusers("lou_in02"))
 					+" "+$@ked_users$+")",
-				"- Lutie ("+@cost+"z/"+(getmapusers("xmas.gat")+getmapusers("xmas_in.gat"))+" "+$@ked_users$+")",
-				"- Morocc ("+@cost+"z/"+(getmapusers("morocc.gat")+getmapusers("morocc_in.gat")+getmapusers("moc_castle.gat"))
+				"- Lutie ("+@cost+"z/"+(getmapusers("xmas")+getmapusers("xmas_in"))+" "+$@ked_users$+")",
+				"- Morocc ("+@cost+"z/"+(getmapusers("morocc")+getmapusers("morocc_in")+getmapusers("moc_castle"))
 					+" "+$@ked_users$+")",
-				"- Niflheim ("+@niflcost+"z/"+(getmapusers("niflheim.gat")+getmapusers("nif_in.gat"))+" "+$@ked_users$+")",
-				"- Payon ("+@cost+"z/"+(getmapusers("payon.gat")+getmapusers("payon_in01.gat")+getmapusers("payon_in02.gat"))
+				"- Niflheim ("+@niflcost+"z/"+(getmapusers("niflheim")+getmapusers("nif_in"))+" "+$@ked_users$+")",
+				"- Payon ("+@cost+"z/"+(getmapusers("payon")+getmapusers("payon_in01")+getmapusers("payon_in02"))
 					+" "+$@ked_users$+")",
-				"- Prontera ("+@cost+"z/"+(getmapusers("prontera.gat")+getmapusers("prt_castle.gat")
-					+getmapusers("prt_church.gat")+getmapusers("prt_in.gat"))+" "+$@ked_users$+")",
-				"- Umbala ("+@cost+"z/"+(getmapusers("umbala.gat")+getmapusers("um_in.gat"))+" "+$@ked_users$+")",
-				"- Yuno ("+@cost+"z/"+(getmapusers("yuno.gat")+getmapusers("yuno_in01.gat")+getmapusers("yuno_in02.gat")
-					+getmapusers("yuno_in03.gat")+getmapusers("yuno_in04.gat")+getmapusers("yuno_in05.gat"))+" "+$@ked_users$+")"
+				"- Prontera ("+@cost+"z/"+(getmapusers("prontera")+getmapusers("prt_castle")
+					+getmapusers("prt_church")+getmapusers("prt_in"))+" "+$@ked_users$+")",
+				"- Umbala ("+@cost+"z/"+(getmapusers("umbala")+getmapusers("um_in"))+" "+$@ked_users$+")",
+				"- Yuno ("+@cost+"z/"+(getmapusers("yuno")+getmapusers("yuno_in01")+getmapusers("yuno_in02")
+					+getmapusers("yuno_in03")+getmapusers("yuno_in04")+getmapusers("yuno_in05"))+" "+$@ked_users$+")"
 			);
 		} else {
 			set @kmenu, select(
@@ -115,67 +115,67 @@ function	script	F_keWarpTown	{
 		switch (@kmenu) {
 		case 2: //Alberta
 			if (SF_check(0x1))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"alberta.gat",117,56;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"alberta",117,56;
 			break;
 		case 3: //AlDeBaran
 			if (SF_check(0x2))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"aldebaran.gat",139,124;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"aldebaran",139,124;
 			break;
 		case 4: //Amatsu
 			if (SF_check(0x4))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"amatsu.gat",197,88;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"amatsu",197,88;
 			break;
 		case 5: //Ayathoya
 			if (SF_check(0x8))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"ayothaya.gat",202,174;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"ayothaya",202,174;
 			break;
 		case 6: //Comodo
 			if (SF_check(0x10))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"comodo.gat",189,150;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"comodo",189,150;
 			break;
 		case 7: //Einbech
 			if (SF_check(0x20))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"einbech.gat",137,220;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"einbech",137,220;
 			break;
 		case 8: //Einbroch
 			if (SF_check(0x40))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"einbroch.gat",64,199;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"einbroch",64,199;
 			break;
 		case 9: //Geffen
 			if (SF_check(0x80))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"geffen.gat",120,66;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"geffen",120,66;
 			break;
 		case 10: //GonRyun
 			if (SF_check(0x100))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"gonryun.gat",160,180;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"gonryun",160,180;
 			break;
 		case 11: //Hugel
 			if (SF_check(0x200))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"hugel.gat",96,105;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"hugel",96,105;
 			break;
 		case 12: //Izlude
 			if (SF_check(0x400))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"izlude.gat",127,97;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"izlude",127,97;
 			break;
 		case 13: //Jawaii
 			if (SF_check(0x800))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"jawaii.gat",214,223;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"jawaii",214,223;
 			break;
 		case 14: //LightHalzen
 			if (SF_check(0x1000))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"lighthalzen.gat",158,92;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"lighthalzen",158,92;
 			break;
 		case 15: //LouYang
 			if (SF_check(0x2000))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"louyang.gat",218,118;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"louyang",218,118;
 			break;
 		case 16: //Lutie
 			if (SF_check(0x4000))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"xmas.gat",148,133;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"xmas",148,133;
 			break;
 		case 17: //Morocc
 			if (SF_check(0x8000))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"morocc.gat",162,91;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"morocc",162,91;
 			break;
 		case 18: //Niflheim
 			if (SF_check(0x10000)) {
@@ -183,24 +183,24 @@ function	script	F_keWarpTown	{
 					mes "...?";
 					callfunc "F_keIntro", e_no, "For some reason I can't warp you there!";
 				} else
-					callfunc "F_keWarp",$@kewt_niflCost,$@kewd_discount,e_yawn,"niflheim.gat",194,185;
+					callfunc "F_keWarp",$@kewt_niflCost,$@kewd_discount,e_yawn,"niflheim",194,185;
 			}
 			break;
 		case 19: //Payon
 			if (SF_check(0x20000))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"payon.gat",159,181;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"payon",159,181;
 			break;
 		case 20: //Prontera
 			if (SF_check(0x40000))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"prontera.gat",156,175;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"prontera",156,175;
 			break;
 		case 21: //Umbala
 			if (SF_check(0x80000))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"umbala.gat",88,153;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"umbala",88,153;
 			break;
 		case 22: //Yuno
 			if (SF_check(0x100000))
-				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"yuno.gat",158,77;
+				SF_warp $@kewt_cost,$@kewt_discount,e_yawn,"yuno",158,77;
 			break;
 		}
 	} while (@kmenu > 1);
@@ -410,90 +410,90 @@ function	script	F_keAddTravelTown	{
 // End update code.
 
 	if ($@kewt_travel > 1) {
-		if (@map$ == "alberta.gat" || kewt_travel&0x1)
+		if (@map$ == "alberta" || kewt_travel&0x1)
 			set #kewt_travel,#kewt_travel|0x1;
-		if (@map$ == "aldebaran.gat" || kewt_travel&0x2)
+		if (@map$ == "aldebaran" || kewt_travel&0x2)
 			set #kewt_travel,#kewt_travel|0x2;
-		if (@map$ == "amatsu.gat" || kewt_travel&0x4)
+		if (@map$ == "amatsu" || kewt_travel&0x4)
 			set #kewt_travel,#kewt_travel|0x4;
-		if (@map$ == "ayothaya.gat" || kewt_travel&0x8)
+		if (@map$ == "ayothaya" || kewt_travel&0x8)
 			set #kewt_travel,#kewt_travel|0x8;
-		if (@map$ == "comodo.gat" || kewt_travel&0x10)
+		if (@map$ == "comodo" || kewt_travel&0x10)
 			set #kewt_travel,#kewt_travel|0x10;
-		if (@map$ == "einbech.gat" || kewt_travel&0x20)
+		if (@map$ == "einbech" || kewt_travel&0x20)
 			set #kewt_travel,#kewt_travel|0x20;
-		if (@map$ == "einbroch.gat" || kewt_travel&0x40)
+		if (@map$ == "einbroch" || kewt_travel&0x40)
 			set #kewt_travel,#kewt_travel|0x40;
-		if (@map$ == "geffen.gat" || kewt_travel&0x80)
+		if (@map$ == "geffen" || kewt_travel&0x80)
 			set #kewt_travel,#kewt_travel|0x80;
-		if (@map$ == "gonryun.gat" || kewt_travel&0x100)
+		if (@map$ == "gonryun" || kewt_travel&0x100)
 			set #kewt_travel,#kewt_travel|0x100;
-		if (@map$ == "hugel.gat" || kewt_travel&0x200)
+		if (@map$ == "hugel" || kewt_travel&0x200)
 			set #kewt_travel,#kewt_travel|0x200;
-		if (@map$ == "izlude.gat" || kewt_travel&0x400)
+		if (@map$ == "izlude" || kewt_travel&0x400)
 			set #kewt_travel,#kewt_travel|0x400;
-		if (@map$ == "jawaii.gat" || kewt_travel&0x800)
+		if (@map$ == "jawaii" || kewt_travel&0x800)
 			set #kewt_travel,#kewt_travel|0x800;
-		if (@map$ == "lighthalzen.gat" || kewt_travel&1000)
+		if (@map$ == "lighthalzen" || kewt_travel&1000)
 			set #kewt_travel,#kewt_travel|0x1000;
-		if (@map$ == "louyang.gat" || kewt_travel&0x2000)
+		if (@map$ == "louyang" || kewt_travel&0x2000)
 			set #kewt_travel,#kewt_travel|0x2000;
-		if (@map$ == "xmas.gat" || kewt_travel&0x4000)
+		if (@map$ == "xmas" || kewt_travel&0x4000)
 			set #kewt_travel,#kewt_travel|0x4000;
-		if (@map$ == "morocc.gat" || kewt_travel&0x8000)
+		if (@map$ == "morocc" || kewt_travel&0x8000)
 			set #kewt_travel,#kewt_travel|0x8000;
-		if (@map$ == "niflheim.gat" || kewt_travel&0x10000)
+		if (@map$ == "niflheim" || kewt_travel&0x10000)
 			set #kewt_travel,#kewt_travel|0x10000;
-		if (@map$ == "payon.gat" || kewt_travel&0x20000)
+		if (@map$ == "payon" || kewt_travel&0x20000)
 			set #kewt_travel,#kewt_travel|0x20000;
-		if (@map$ == "prontera.gat" || kewt_travel&0x40000)
+		if (@map$ == "prontera" || kewt_travel&0x40000)
 			set #kewt_travel,#kewt_travel|0x40000;
-		if (@map$ == "umbala.gat" || kewt_travel&0x80000)
+		if (@map$ == "umbala" || kewt_travel&0x80000)
 			set #kewt_travel,#kewt_travel|0x80000;
-		if (@map$ == "yuno.gat" || kewt_travel&0x100000)
+		if (@map$ == "yuno" || kewt_travel&0x100000)
 			set #kewt_travel,#kewt_travel|0x100000;
 	} else {
-		if (@map$ == "alberta.gat")
+		if (@map$ == "alberta")
 			set kewt_travel,kewt_travel|0x1;
-		if (@map$ == "aldebaran.gat")
+		if (@map$ == "aldebaran")
 			set kewt_travel,kewt_travel|0x2;
-		if (@map$ == "amatsu.gat")
+		if (@map$ == "amatsu")
 			set kewt_travel,kewt_travel|0x4;
-		if (@map$ == "ayothaya.gat")
+		if (@map$ == "ayothaya")
 			set kewt_travel,kewt_travel|0x8;
-		if (@map$ == "comodo.gat")
+		if (@map$ == "comodo")
 			set kewt_travel,kewt_travel|0x10;
-		if (@map$ == "einbech.gat")
+		if (@map$ == "einbech")
 			set kewt_travel,kewt_travel|0x20;
-		if (@map$ == "einbroch.gat")
+		if (@map$ == "einbroch")
 			set kewt_travel,kewt_travel|0x40;
-		if (@map$ == "geffen.gat")
+		if (@map$ == "geffen")
 			set kewt_travel,kewt_travel|0x80;
-		if (@map$ == "gonryun.gat")
+		if (@map$ == "gonryun")
 			set kewt_travel,kewt_travel|0x100;
-		if (@map$ == "hugel.gat")
+		if (@map$ == "hugel")
 			set kewt_travel,kewt_travel|0x200;
-		if (@map$ == "izlude.gat")
+		if (@map$ == "izlude")
 			set kewt_travel,kewt_travel|0x400;
-		if (@map$ == "jawaii.gat")
+		if (@map$ == "jawaii")
 			set kewt_travel,kewt_travel|0x800;
-		if (@map$ == "lighthalzen.gat")
+		if (@map$ == "lighthalzen")
 			set kewt_travel,kewt_travel|0x1000;
-		if (@map$ == "louyang.gat")
+		if (@map$ == "louyang")
 			set kewt_travel,kewt_travel|0x2000;
-		if (@map$ == "xmas.gat")
+		if (@map$ == "xmas")
 			set kewt_travel,kewt_travel|0x4000;
-		if (@map$ == "morocc.gat")
+		if (@map$ == "morocc")
 			set kewt_travel,kewt_travel|0x8000;
-		if (@map$ == "niflheim.gat")
+		if (@map$ == "niflheim")
 			set kewt_travel,kewt_travel|0x10000;
-		if (@map$ == "payon.gat")
+		if (@map$ == "payon")
 			set kewt_travel,kewt_travel|0x20000;
-		if (@map$ == "prontera.gat")
+		if (@map$ == "prontera")
 			set kewt_travel,kewt_travel|0x40000;
-		if (@map$ == "umbala.gat")
+		if (@map$ == "umbala")
 			set kewt_travel,kewt_travel|0x80000;
-		if (@map$ == "yuno.gat")
+		if (@map$ == "yuno")
 			set kewt_travel,kewt_travel|0x100000;
 	}
 	return;

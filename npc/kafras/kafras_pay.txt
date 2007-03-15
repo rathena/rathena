@@ -24,35 +24,35 @@
 
 
 // Main Town, South ----------------------------------------------------------
-payon.gat,181,104,4	script	Kafra::kaf_payon	113,{
+payon,181,104,4	script	Kafra::kaf_payon	113,{
 	cutin "kafra_05",2;
 	callfunc "F_KafSetPay";
 	callfunc "F_Kafra",0,0,1;
 
 	M_Save:
-		savepoint "payon.gat",160,58;
+		savepoint "payon",160,58;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Main Town, Middle North --------------------------------------------------
-payon.gat,175,226,4	script	Kafra::kaf_payon2	116,{
+payon,175,226,4	script	Kafra::kaf_payon2	116,{
 	cutin "kafra_02",2;
 	callfunc "F_KafSetPay";
 	callfunc "F_Kafra",0,0,1;
 
 	M_Save:
-		savepoint "payon.gat",257,242;
+		savepoint "payon",257,242;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Archer Village ------------------------------------------------------------
-pay_arche.gat,55,123,8	script	Kafra::kaf_payon3	115,{
+pay_arche,55,123,8	script	Kafra::kaf_payon3	115,{
 	cutin "kafra_03",2;
 	callfunc "F_KafSetPay";
 	callfunc "F_Kafra",0,5,1;
 
 	M_Save:
-		savepoint "pay_arche.gat",49,144;
+		savepoint "pay_arche",49,144;
 		callfunc "F_KafEnd",0,1;
 }
 

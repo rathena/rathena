@@ -14,39 +14,39 @@
 //= needed: 2,4,5,7,10,11,13 (7/17)
 //= ==Information For NPC's inside File==
 //= 1) Black Cat Ears [NekoNeko*] {Payon}
-//=   o payon.gat 115 131
+//=   o payon 115 131
 //= 2) Crossed Hair Band, Plaster and Flower Hairpin [Arjen] {Geffen}
-//=   o geffen.gat 129 148
+//=   o geffen 129 148
 //= 3) Hot-blooded-headband [Zhenbolt*] {Yuno}
-//=   o yuno.gat 300 188
+//=   o yuno 300 188
 //= 4) Red Tailed Ribbon [Netpia] {Prontera}
-//=   o prontera.gat 165 232
+//=   o prontera 165 232
 //= 5) Indian Headband [Merunte] {Comodo}
-//=   o comodo.gat 237 217
+//=   o comodo 237 217
 //= 6) Mushroom headband [Ipore*] {Geffen}
-//=   o geffen.gat 67 87
+//=   o geffen 67 87
 //= 7) Ears of angel wing &
 //=     Ears of devil wing [Old Blacksmith] {Yuno}
-//=   o yuno.gat 241 52
+//=   o yuno 241 52
 //= 8) Sea Otter Cap [Pretty Lindsay*] {Lutie}
-//=   o xmas.gat 183 267
+//=   o xmas 183 267
 //= 9) Brown Bear Cap [Fuzzy Fuzz*] {Lutie}
-//=   o xmas.gat 175 156
+//=   o xmas 175 156
 //=10) Cap of Concentration [Nan Hyang] {Payon}
-//=   o payon_in03.gat 8 193
+//=   o payon_in03 8 193
 //=11) Tulip Haipin [Ses] {Geffen}
-//=   o geffen.gat 83 189
+//=   o geffen 83 189
 //=12) Party Hat, Straw Hat, Cowboy Hat, Sombrero
 //=	and Fur hat [Headgear Merchant (Mike)*] {Lutie}
-//=   o xmas_in.gat 35 30
+//=   o xmas_in 35 30
 //=13) Big Golden Bell, Headgear of Queen
 //=     and Crown of Mistress [Neris] {Yuno}
-//=   o yuno_in03.gat 20 18
+//=   o yuno_in03 20 18
 //=14) Alarm Mask [Muscle Man*]{Aldebaran}
-//=   o alde_alche.gat 88 180
+//=   o alde_alche 88 180
 //=15) Drooping Kitty, Smokie Leaf, Lazy Smokie
 //= 	and Blue Fish [Traveler*] {Morroc}
-//=   o morocc.gat 273 79
+//=   o morocc 273 79
 //=16) Fox Mask [Nine Tail*] {Payon Dungeon}
 //=   o pay_dun03 48 84
 //=17) Orc Hero Helm [Orc Warrior*] {Orc Village}
@@ -61,7 +61,7 @@
 //============================================================
 
 //Payon /=Black cat ears=/
-payon.gat,115,131,3	script	NekoNeko	725,{
+payon,115,131,3	script	NekoNeko	725,{
 	if (countitem(2213) > 0 && countitem(983) > 0 && countitem(914) > 199 && Zeny > 9999) {
 		delitem 2213,1;
 		delitem 983,1;
@@ -120,7 +120,7 @@ payon.gat,115,131,3	script	NekoNeko	725,{
 	}
 }
 //Geffen /=Crossed Hair Ban, Plaster and Flower Hairpin=/
-geffen.gat,129,148,3	script	Arjen	779,{
+geffen,129,148,3	script	Arjen	779,{
 	mes "[Arjen]";
 	mes "Ahhh~So boring~ So very boring~";
 	mes "There's noone I need to see, and the weather is so good - ! !";
@@ -291,7 +291,7 @@ geffen.gat,129,148,3	script	Arjen	779,{
 }
 //Yuno /=Headband of power=/ <-- Ok, WTF? Thanks again bitches ;_;
 //Yuno /=Hot-blooded headband=/ [5070]
-yuno.gat,300,188,5	script	Zhenbolt	753,{
+yuno,300,188,5	script	Zhenbolt	753,{
 	if(countitem(7216) > 299 && countitem(7097) > 299 && countitem(2211) > 0 && countitem(982) > 0) {
 		delitem 7216,300;
 		delitem 7097,300;
@@ -367,7 +367,7 @@ yuno.gat,300,188,5	script	Zhenbolt	753,{
 	}
 }
 //Prontera /=Red Tailed Ribbon=/ [5083](Red Ribbon)//
-prontera.gat,165,232,3	script	Netpia	744,{
+prontera,165,232,3	script	Netpia	744,{
 	if(countitem(2244) > 0 && countitem(2209) > 0 && countitem(10007) > 0) {
 		delitem 2244,1;
 		delitem 2209,1;
@@ -438,7 +438,7 @@ prontera.gat,165,232,3	script	Netpia	744,{
 	}
 }
 //Comodo /=Indian Headband=/ [5071]
-comodo.gat,237,217,5	script	Merunte	732,{
+comodo,237,217,5	script	Merunte	732,{
 	if (countitem(5010) > 0 && countitem(5049) > 0 && countitem(7101) > 9 && Zeny > 9999) {
 		delitem 5010,1;
 		delitem 5049,1;
@@ -490,7 +490,7 @@ comodo.gat,237,217,5	script	Merunte	732,{
 	}
 }
 //Geffen /=Mushroom Band=/ [5082]
-geffen.gat,67,87,3	script	Ipore	700,{
+geffen,67,87,3	script	Ipore	700,{
 	if (countitem(921) > 299) {
 		delitem 921,300;
 		mes "[Ipore]";
@@ -552,7 +552,7 @@ geffen.gat,67,87,3	script	Ipore	700,{
 	}
 }
 //Yuno /=Ears of Angel's Wing & Ears of Devil's Wing=/ [5074]&[5068]
-yuno.gat,241,52,3	script	Old Blacksmith	813,{
+yuno,241,52,3	script	Old Blacksmith	813,{
 	mes "[A seemingly skillful craftman]";
 	mes "Uh Oh, since you've come to this place,";
 	mes "you must have known how to enjoy the scenary.";
@@ -904,7 +904,7 @@ yuno.gat,241,52,3	script	Old Blacksmith	813,{
 	}
 }
 //Lutie /=Sea Otter Cap=/
-xmas.gat,183,267,3	script	Pretty Lindsay	793,{
+xmas,183,267,3	script	Pretty Lindsay	793,{
 	if (countitem(5033) && countitem(5064)) {
 		delitem 5033,1;
 		delitem 5064,1;
@@ -1000,7 +1000,7 @@ xmas.gat,183,267,3	script	Pretty Lindsay	793,{
 	}
 }
 //Lutie /=Brown Bear Cap=/ [5059]
-xmas.gat,175,156,3	script	Fuzzy Fuzz	712,{
+xmas,175,156,3	script	Fuzzy Fuzz	712,{
 	if (countitem(5030) && countitem(7213) > 99 && countitem(7217) > 99 && countitem(7161) > 299) {
 		delitem 5030,1;
 		delitem 7213,100;
@@ -1073,7 +1073,7 @@ xmas.gat,175,156,3	script	Fuzzy Fuzz	712,{
 	}
 }
 //payon /=Cap of Concentration=/ [5073]
-payon_in03.gat,8,193,4	script	Nan Hyang	75,{
+payon_in03,8,193,4	script	Nan Hyang	75,{
 	if (countitem(2285) && countitem(1550)) {
 		mes "[Nan Hyang]";
 		mes "Sigh, give that to me.";
@@ -1219,7 +1219,7 @@ payon_in03.gat,8,193,4	script	Nan Hyang	75,{
 	}
 }
 //geffen /=Tulip Hairpin=/
-geffen.gat,83,189,5	script	Ses	716,{
+geffen,83,189,5	script	Ses	716,{
 	mes "[Ses]";
 	mes "My name is Ses.";
 	mes "Ses like to fold paper.";
@@ -1312,7 +1312,7 @@ geffen.gat,83,189,5	script	Ses	716,{
 	}
 }
 //Lutie /=Party Hat, Straw Hat, Cowboy Hat, Sombrero and Fur hat=/
-xmas_in.gat,35,30,3	script	Headgear Merchant	797,{
+xmas_in,35,30,3	script	Headgear Merchant	797,{
 	mes "[Mike]";
 	mes "I like hats...";
 	mes "I like hats more than any other thing in this world!!";
@@ -1691,7 +1691,7 @@ xmas_in.gat,35,30,3	script	Headgear Merchant	797,{
 	}
 }
 //Yuno /=Big Golden Bell, Headgear of Queen and Mistress Crown=/
-yuno_in03.gat,20,18,6	script	Neris	726,{
+yuno_in03,20,18,6	script	Neris	726,{
 	mes "[Neris]";
 	mes "This time,";
 	mes "as a gratitude of everyone's support to the Museum,";
@@ -1876,10 +1876,10 @@ yuno_in03.gat,20,18,6	script	Neris	726,{
 //Aldebaran /=Alarm Mask=/
 //Effects: EF_BLASTMINE: 106
 //EF_FLASHER:99
-alde_alche.gat,88,180,1	script	Muscle Man#Alarm	1193,{
+alde_alche,88,180,1	script	Muscle Man#Alarm	1193,{
 end;
 }
-alde_alche.gat,88,180,1	script	Muscle Man#Masked Alarm	748,{
+alde_alche,88,180,1	script	Muscle Man#Masked Alarm	748,{
 	mes "[Muscle Man]";
 	mes "Muscle, muscle. I like it. Hehe!!";
 	mes "What a beautiful robotic muscle!";
@@ -2006,28 +2006,28 @@ OnInit:
 	disablenpc "Muscle Man#Alarm";
 	end;
 }
-alde_alche.gat,86,184,3	script	#Masked Alarm1	1193,{
+alde_alche,86,184,3	script	#Masked Alarm1	1193,{
 end;
 OnBlast:
 misceffect 106;
 end; }
-alde_alche.gat,89,184,3	script	#Masked Alarm2	1193,{
+alde_alche,89,184,3	script	#Masked Alarm2	1193,{
 end;
 OnBlast:
 misceffect 106;
 end; }
-alde_alche.gat,92,184,3	script	#Masked Alarm3	1193,{
+alde_alche,92,184,3	script	#Masked Alarm3	1193,{
 end;
 OnBlast:
 misceffect 106;
 end; }
-alde_alche.gat,95,184,3	script	#Masked Alarm4	1193,{
+alde_alche,95,184,3	script	#Masked Alarm4	1193,{
 end;
 OnBlast:
 misceffect 106;
 end; }
 //Morocc /= Drooping Kitty, Huge Leaf, Lazy Smokie and Blue Fish =/
-morocc.gat,273,79,4	script	Traveler	99,{
+morocc,273,79,4	script	Traveler	99,{
 	function creation_lines {
 	 	mes "[Human]";
 		mes "Ah....So do you have all of it?";
@@ -2271,7 +2271,7 @@ morocc.gat,273,79,4	script	Traveler	99,{
 	}
 }
 //Payon /=Fox Mask=/ //==Lets hope this works as it's supposed==//
-pay_dun03.gat,48,84,4	script	Nine Tail#1	1180,1,1{
+pay_dun03,48,84,4	script	Nine Tail#1	1180,1,1{
 	mes "[Nine Tail]";
 	mes "Kee! KeeKee!";
 	mes "KeeKeeKee! KeeKee! KeeKee!";
@@ -2294,11 +2294,11 @@ pay_dun03.gat,48,84,4	script	Nine Tail#1	1180,1,1{
 OnInit:
 	disablenpc "Nine Tail#1";
 	disablenpc "Nine Tail#2";
-	monster "pay_dun03.gat",48,84,"Nine Tail",1180,1,"NT::OnMobDead";
+	monster "pay_dun03",48,84,"Nine Tail",1180,1,"NT::OnMobDead";
 	end;
 
 OnReset:
-	killmonster "pay_dun03.gat","NT::OnMobDead";
+	killmonster "pay_dun03","NT::OnMobDead";
 	disablenpc "Nine Tail#1";
 	disablenpc "Nine Tail#2";
 	initnpctimer;
@@ -2307,16 +2307,16 @@ OnReset:
 OnTimer300000:
 OnSpawn:
 	stopnpctimer;
-	killmonster "pay_dun03.gat","Nine Tail#1::OnMobDead";
-	monster "pay_dun03.gat",48,84,"Nine Tail",1180,1,"NT::OnMobDead";
+	killmonster "pay_dun03","Nine Tail#1::OnMobDead";
+	monster "pay_dun03",48,84,"Nine Tail",1180,1,"NT::OnMobDead";
 	end;
 }
-pay_dun03.gat,48,84,1	script	NT	-1,{
+pay_dun03,48,84,1	script	NT	-1,{
 OnMobDead:
 	enablenpc "Nine Tail#1";
 	end;
 }
-pay_dun03.gat,48,84,4	script	Nine Tail#2	1180,{
+pay_dun03,48,84,4	script	Nine Tail#2	1180,{
 	if(countitem(1022)>998) {
 		mes "[Nine Tail]";
 		mes "Uh Oh!! You've brought it, human.";
@@ -2383,7 +2383,7 @@ pay_dun03.gat,48,84,4	script	Nine Tail#2	1180,{
 	}
 }
 //Orc Village /=Orc Hero Helm=/
-in_orcs01.gat,31,93,1	script	Orc Warrior#1	1023,2,2{
+in_orcs01,31,93,1	script	Orc Warrior#1	1023,2,2{
 	if (orcs_hero_hat == 1) {
 		if (countitem(909)>999) {
 			delitem 909,1000;
@@ -3247,7 +3247,7 @@ in_orcs01.gat,31,93,1	script	Orc Warrior#1	1023,2,2{
 		}
 	}
 }
-in_orcs01.gat,162,33,1	script	Hero of Orc#1	1087,2,2{
+in_orcs01,162,33,1	script	Hero of Orc#1	1087,2,2{
 	if (orcs_hero_hat < 16) {
 		mes "[Orc Hero]";
 		mes ".....Go away, don't interrupt me!";

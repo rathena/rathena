@@ -13,7 +13,7 @@
 // 1.0a Removed duplicates [Toms]
 //============================================================
 
-prt_fild08.gat,175,374,3	script	Bard#brising	51,{
+prt_fild08,175,374,3	script	Bard#brising	51,{
 
 	if ($God2 > 49 && $God3 < 100)
 {
@@ -715,7 +715,7 @@ prt_fild08.gat,175,374,3	script	Bard#brising	51,{
 
 }
 
-yuno_in04.gat,47,113,1	script	Studying Scholar#1	749,{
+yuno_in04,47,113,1	script	Studying Scholar#1	749,{
 
 	if($God3 == 100)
 {
@@ -2098,7 +2098,7 @@ yuno_in04.gat,47,113,1	script	Studying Scholar#1	749,{
 
 }
 
-prt_church.gat,113,103,1	script	Praying Man	798,{
+prt_church,113,103,1	script	Praying Man	798,{
  
 	if($God2 < 50)
 {
@@ -2832,7 +2832,7 @@ prt_church.gat,113,103,1	script	Praying Man	798,{
 
 }
 
-prt_castle.gat,80,52,0	script	Personnel Record#hiddenbook1	111,{
+prt_castle,80,52,0	script	Personnel Record#hiddenbook1	111,{
 
 	if($God2 < 50)
 {
@@ -2894,7 +2894,7 @@ prt_castle.gat,80,52,0	script	Personnel Record#hiddenbook1	111,{
 		mes "out of here!";
 		set god_brising,30;
 		close2;
-		warp "prt_castle.gat",94,37;
+		warp "prt_castle",94,37;
 		end;
 	}
 		else
@@ -2906,7 +2906,7 @@ prt_castle.gat,80,52,0	script	Personnel Record#hiddenbook1	111,{
 		mes "Get the hell";
 		mes "out of here!";
 		close2;
-		warp "prt_castle.gat",94,37;
+		warp "prt_castle",94,37;
 		end;
 	}
 }
@@ -2969,7 +2969,7 @@ prt_castle.gat,80,52,0	script	Personnel Record#hiddenbook1	111,{
 		mes "Get the hell out of here!";
 		set god_brising,30;
 		close2;
-		warp "prt_castle.gat",94,37;
+		warp "prt_castle",94,37;
 		end;
 	}
 		else
@@ -2984,7 +2984,7 @@ prt_castle.gat,80,52,0	script	Personnel Record#hiddenbook1	111,{
 		mes "I didn't get";
 		mes "to finish reading!)";
 		close2;
-		warp "prt_castle.gat",94,37;
+		warp "prt_castle",94,37;
 		end;
 	}
 }
@@ -3000,7 +3000,7 @@ prt_castle.gat,80,52,0	script	Personnel Record#hiddenbook1	111,{
 
 //-----------librarian----------------------------------------------------------
  
-prt_castle.gat,84,51,5	script	Librarian#2	105,{
+prt_castle,84,51,5	script	Librarian#2	105,{
 
 	if($God2 < 50)
 {
@@ -3168,7 +3168,7 @@ prt_castle.gat,84,51,5	script	Librarian#2	105,{
 
 }
 
-prontera.gat,260,354,4	script	Woman#Rosa Ellenen	101,{
+prontera,260,354,4	script	Woman#Rosa Ellenen	101,{
 
 	if($God2 < 50)
 {
@@ -3277,7 +3277,7 @@ prontera.gat,260,354,4	script	Woman#Rosa Ellenen	101,{
 
 }
 
-prontera.gat,262,353,0	script	Gravestone	111,{
+prontera,262,353,0	script	Gravestone	111,{
 
 	if($God2 > 49)
 {
@@ -3310,7 +3310,7 @@ prontera.gat,262,353,0	script	Gravestone	111,{
 
 }
  
-gef_dun01.gat,89,192,0	script	#lowentrace	111,3,3,{
+gef_dun01,89,192,0	script	#lowentrace	111,3,3,{
 
 	if($God2 < 50)
 {
@@ -3435,7 +3435,7 @@ OnTouch:
 
 }
 
-gef_dun01.gat,203,48,0	script	#lowentrace1	111,3,3,{
+gef_dun01,203,48,0	script	#lowentrace1	111,3,3,{
 
 	if($God2 < 50)
 {
@@ -3472,7 +3472,7 @@ gef_dun01.gat,203,48,0	script	#lowentrace1	111,3,3,{
 							mes "^6E7B8BThank you,";
 							mes "thank you so much...^000000";
 							close2;
-							warp "que_god02.gat",47,53;
+							warp "que_god02",47,53;
 							end;
 						L_Sorry:
 							mes "[Lowen Ellenen]";
@@ -3487,7 +3487,7 @@ gef_dun01.gat,203,48,0	script	#lowentrace1	111,3,3,{
 					mes "^6E7B8BAh yes. This is it.";
 					mes "You look very curious about me, yet I am amazed that you can hear my voice. Please let me tell you an old story.^000000";
 					close2;
-					warp "que_god02.gat",47,53;
+					warp "que_god02",47,53;
 					end;
 			}
 				else if(god_brising == 25)
@@ -3576,7 +3576,7 @@ OnTouch:
 
 }
 
-que_god02.gat,48,55,3	script	Lowen Ellenen	745,{
+que_god02,48,55,3	script	Lowen Ellenen	745,{
 
 	if(god_brising == 30)
 {
@@ -3674,13 +3674,13 @@ que_god02.gat,48,55,3	script	Lowen Ellenen	745,{
 	mes "How come...";
 	mes "You're here?";
 	close2;
-	warp "geffen.gat",120,101;
+	warp "geffen",120,101;
 	end;
 }
 
 }
 
-que_god02.gat,54,64,4	script	Soldier#1_brising	105,1,1,{
+que_god02,54,64,4	script	Soldier#1_brising	105,1,1,{
  
 	if(god_brising == 31)
 {
@@ -3711,7 +3711,7 @@ que_god02.gat,54,64,4	script	Soldier#1_brising	105,1,1,{
 OnTouch:
 	if(god_brising == 31)
 {
-	warp "que_god02.gat",174,49;
+	warp "que_god02",174,49;
 	donpcevent "#brisinsold::OnSold1Off";
 	donpcevent "#brisinsold2::OnSold2On";
 	end;
@@ -3723,13 +3723,13 @@ OnTouch:
 	mes "You are not permitted";
 	mes "to enter!";
 	close2;
-	warp "que_god02.gat",51,59;
+	warp "que_god02",51,59;
 	end;
 }
 
 }
 
-que_god02.gat,55,64,4	script	Soldier#2_brising	105,1,1,{
+que_god02,55,64,4	script	Soldier#2_brising	105,1,1,{
 
 	mes "[Soldier]";
 	mes "Please back away.";
@@ -3738,7 +3738,7 @@ que_god02.gat,55,64,4	script	Soldier#2_brising	105,1,1,{
 	close;
 }
 
-que_god02.gat,1,1,1	script	#brisinsold1	-1,{
+que_god02,1,1,1	script	#brisinsold1	-1,{
 
 OnSold1On:
 	enablenpc "Soldier#1_brising";
@@ -3749,11 +3749,11 @@ OnSold1Off:
 	end;
 }
 
-que_god02.gat,1,1,1	script	#brisinsold2	-1,{
+que_god02,1,1,1	script	#brisinsold2	-1,{
 
 OnInit:
 	disablenpc "Soldier#2_brising";
-	areawarp "que_god02.gat",100,128,85,3,"geffen.gat",120,100;
+	areawarp "que_god02",100,128,85,3,"geffen",120,100;
 	end;
 
 OnSold2On:
@@ -3762,19 +3762,19 @@ OnSold2On:
 	end;
 
 OnTimer420000:
-	mapannounce "que_god02.gat","Lowen's spirit is beginning to weaken...",0,0x70DBDB;
+	mapannounce "que_god02","Lowen's spirit is beginning to weaken...",0,0x70DBDB;
 	end;
 
 OnTimer480000:
-	mapannounce "que_god02.gat","Your presense in her past can't be maintained for much longer...",0,0x70DBDB;
+	mapannounce "que_god02","Your presense in her past can't be maintained for much longer...",0,0x70DBDB;
 	end;
 
 OnTimer540000:
-	mapannounce "que_god02.gat","Lowen's spirit can't keep you in the past any longer.",0,0x70DBDB;
+	mapannounce "que_god02","Lowen's spirit can't keep you in the past any longer.",0,0x70DBDB;
 	end;
 
 OnTimer542000:
-	areawarp "que_god02.gat",1,1,400,400,"geffen.gat",120,100;
+	areawarp "que_god02",1,1,400,400,"geffen",120,100;
 	end;
 
 OnTimer550000:
@@ -3787,14 +3787,14 @@ OnTimer550500:
 
 }
 	
-que_god02.gat,1,1,1	script	#Warp_brising	-1,{
+que_god02,1,1,1	script	#Warp_brising	-1,{
 
 OnWarp:
 
 	end;
 }
 
-que_god02.gat,1,1,1	script	#brisinsummon	-1,{
+que_god02,1,1,1	script	#brisinsummon	-1,{
 
 OnInit:
 	disablenpc "#doppelganger1";
@@ -3865,15 +3865,15 @@ OnLowen2Off:
 
 OnSummon:
 	attachrid $@BrisinRID$;
-	monster "que_god02.gat",34,128,"",1015,1,"#brisinsummon::OnMobDeath";
-	monster "que_god02.gat",34,127,"",1015,1,"#brisinsummon::OnMobDeath";
-	monster "que_god02.gat",80,127,"",1015,1,"#brisinsummon::OnMobDeath";
-	monster "que_god02.gat",102,128,"",1036,1,"#brisinsummon::OnMobDeath";
-	monster "que_god02.gat",130,128,"",1036,1,"#brisinsummon::OnMobDeath";
-	monster "que_god02.gat",62,128,"",1041,1,"#brisinsummon::OnMobDeath";
-	monster "que_god02.gat",64,127,"",1041,1,"#brisinsummon::OnMobDeath";
-	monster "que_god02.gat",150,127,"",1041,1,"#brisinsummon::OnMobDeath";
-	monster "que_god02.gat",176,127,"",1041,1,"#brisinsummon::OnMobDeath";
+	monster "que_god02",34,128,"",1015,1,"#brisinsummon::OnMobDeath";
+	monster "que_god02",34,127,"",1015,1,"#brisinsummon::OnMobDeath";
+	monster "que_god02",80,127,"",1015,1,"#brisinsummon::OnMobDeath";
+	monster "que_god02",102,128,"",1036,1,"#brisinsummon::OnMobDeath";
+	monster "que_god02",130,128,"",1036,1,"#brisinsummon::OnMobDeath";
+	monster "que_god02",62,128,"",1041,1,"#brisinsummon::OnMobDeath";
+	monster "que_god02",64,127,"",1041,1,"#brisinsummon::OnMobDeath";
+	monster "que_god02",150,127,"",1041,1,"#brisinsummon::OnMobDeath";
+	monster "que_god02",176,127,"",1041,1,"#brisinsummon::OnMobDeath";
 	set brisinmobdead,9;
 	end;
 
@@ -3897,24 +3897,24 @@ OnReset:
 	enablenpc "#hermite";
 	enablenpc "Lowen Ellenen#2";
 	disablenpc "Valkyrie#1";
-	killmonster "que_god02.gat","#brisinsummon::OnMobDeath";
+	killmonster "que_god02","#brisinsummon::OnMobDeath";
 }
 
-que_god02.gat,173,58,4	script	#doppelganger1	739,{
+que_god02,173,58,4	script	#doppelganger1	739,{
 
 OnEmoGasp:
 	emotion e_gasp;
 	end;
 }
 
-que_god02.gat,175,55,4	script	#doppelganger2	739,{
+que_god02,175,55,4	script	#doppelganger2	739,{
 
 OnCast:
 	specialeffect 59;
 	end;
 }
 
-que_god02.gat,175,54,1	script	#lowen	745,{
+que_god02,175,54,1	script	#lowen	745,{
 
 OnEmoGasp:
 	emotion e_gasp;
@@ -3925,7 +3925,7 @@ OnCast:
 	end;
 }
 
-que_god02.gat,178,49,1	script	#knight1	751,{
+que_god02,178,49,1	script	#knight1	751,{
 
 OnEmoGasp:
 	emotion e_gasp;
@@ -3936,7 +3936,7 @@ OnEmoGo:
 	end;
 }
 
-que_god02.gat,168,53,7	script	#knight2	734,{
+que_god02,168,53,7	script	#knight2	734,{
 
 OnEmoGasp:
 	emotion e_gasp;
@@ -3947,7 +3947,7 @@ OnEmoGo:
 	end;
 }
 
-que_god02.gat,167,58,4	script	#knight3	752,{
+que_god02,167,58,4	script	#knight3	752,{
 
 OnEmoGasp:
 	emotion e_gasp;
@@ -3958,7 +3958,7 @@ OnEmoGo:
 	end;
 }
 
-que_god02.gat,174,49,0	script	#lowenone	139,0,0,{
+que_god02,174,49,0	script	#lowenone	139,0,0,{
 
 OnTouch:
 	donpcevent "brisinsold2::OnSold2On";
@@ -3978,7 +3978,7 @@ OnTouch:
 	mes "It wasn't any";
 	mes "trouble getting down here. But... We've got problems now.";
 	next;
-	mapannounce "que_god02.gat","D...Doppelganger!!!",0,0x9CFF00;
+	mapannounce "que_god02","D...Doppelganger!!!",0,0x9CFF00;
 	mes "[" + strcharinfo(0) + "]";
 	mes "What...?!";
 	mes "Doppelganger?!";
@@ -3997,7 +3997,7 @@ OnTouch:
 	mes "The commendant gave us the order...";
 	mes "And then..? And then what happened to me..?";
 	next;
-	mapannounce "que_god02.gat","Everyone, stay calm! Get into your positions!",0,0x9CFF00;
+	mapannounce "que_god02","Everyone, stay calm! Get into your positions!",0,0x9CFF00;
 	mes "^4E2F2F[Crusader Commander]";
 	mes "Everyone, get into your positions! Front line, block its movement! Rear line, support the defense!^000000";
 	donpcevent "#knight1::OnEmoGo";
@@ -4016,7 +4016,7 @@ OnTouch:
 	mes "Cast Grand Cross, now!^000000";
 	next;
 	donpcevent "#lowen::OnCast";
-	mapannounce "que_god02.gat","Mwahaha! Mortals are such fools...",0,0xA8A8A8;
+	mapannounce "que_god02","Mwahaha! Mortals are such fools...",0,0xA8A8A8;
 	donpcevent "#brisinsummon::OnDoppel1Off";
 	donpcevent "#brisinsummon::OnDoppel2On";
 	donpcevent "#knight1::OnEmoGasp";
@@ -4031,7 +4031,7 @@ OnTouch:
 	mes "Lowen!";
 	mes "Noooooooooo!!!";
 	close2;
-	warp "que_god02.gat",120,52;
+	warp "que_god02",120,52;
 	donpcevent "#brisinsummon::OnDoppel2Off";
 	donpcevent "#brisinsummon::OnKnight1Off";
 	donpcevent "#brisinsummon::OnKnight2Off";
@@ -4040,9 +4040,9 @@ OnTouch:
 	end;
 }
 
-que_god02.gat,124,59,7	script	#hermite	798,{ end; }
+que_god02,124,59,7	script	#hermite	798,{ end; }
  
-que_god02.gat,120,52,0	script	#monologue	139,0,0,{
+que_god02,120,52,0	script	#monologue	139,0,0,{
 
 OnTouch:
 	mes "[" + strcharinfo(0) + "]";
@@ -4061,7 +4061,7 @@ OnTouch:
 	mes "Using that's committing suicide! Lowen, don't do it!";
 	mes "Don't do that, Lowen!";
 	next;
-	mapannounce "que_god02.gat","Mwahaha! Mortals are such fools...",0,0xA8A8A8;
+	mapannounce "que_god02","Mwahaha! Mortals are such fools...",0,0xA8A8A8;
 	mes "[Hermite Charles]";
 	mes "Lowen!";
 	mes "Noooooooooo!!!";
@@ -4071,7 +4071,7 @@ OnTouch:
 	mes "Where did he go?";
 	mes "Was... Was that";
 	mes "from his mind?";
-	mapannounce "que_god02.gat","What happened?! L-Lowen's gone!!",0,0xA8A8A8;
+	mapannounce "que_god02","What happened?! L-Lowen's gone!!",0,0xA8A8A8;
 	next;
 	mes "[Lowen Ellenen]";
 	mes "...";
@@ -4079,12 +4079,12 @@ OnTouch:
 	mes "I know...";
 	mes "What happened...";
 	close2;
-	warp "que_god02.gat",18,127;
+	warp "que_god02",18,127;
 	end;
 
 }
 
-que_god02.gat,21,127,3	script	Lowen Ellenen#2	745,{
+que_god02,21,127,3	script	Lowen Ellenen#2	745,{
 
 	mes "[Lowen Ellenen]";
 	mes "I was a fool.";
@@ -4114,7 +4114,7 @@ que_god02.gat,21,127,3	script	Lowen Ellenen#2	745,{
 	mes "[Lowen Ellenen]";
 	mes "I went back to that place. I fought and I fought, trying to make penance for what I had done wrong...";
 	next;
-	mapannounce "que_god02.gat","If you wish, continue your battle. I promise you the winner will become an Einherjar...",0,0x70DB93;
+	mapannounce "que_god02","If you wish, continue your battle. I promise you the winner will become an Einherjar...",0,0x70DB93;
 	mes "[Lowen Ellenen]";
 	mes "That voice...";
 	mes "Isn't this...?";
@@ -4134,7 +4134,7 @@ que_god02.gat,21,127,3	script	Lowen Ellenen#2	745,{
 
 }
 
-que_god02.gat,178,127,3	script	Valkyrie#1	811,{
+que_god02,178,127,3	script	Valkyrie#1	811,{
 
 	if(god_brising == 31)
 {
@@ -4209,7 +4209,7 @@ que_god02.gat,178,127,3	script	Valkyrie#1	811,{
 			enablenpc "#hermite";
 			enablenpc "Lowen Ellenen#2";
 			disablenpc "Valkyrie#1";
-			warp "geffen.gat",120,101;
+			warp "geffen",120,101;
 			end;
 		L_No:
 			mes "[Valkyrie]";
@@ -4289,13 +4289,13 @@ que_god02.gat,178,127,3	script	Valkyrie#1	811,{
 			enablenpc "#hermite";
 			enablenpc "Lowen Ellenen#2";
 			disablenpc "Valkyrie#1";
-			warp "geffen.gat",120,101;
+			warp "geffen",120,101;
 			end;
 }
 
 }
 
-xmas.gat,38,105,0	script	#brisindwarf1	111,3,3,{
+xmas,38,105,0	script	#brisindwarf1	111,3,3,{
 
 	if($God2 < 50)
 {
@@ -4482,7 +4482,7 @@ OnAlfrikOff:
 
 }
 
-xmas.gat,36,103,4	script	Alfrik#1	826,{
+xmas,36,103,4	script	Alfrik#1	826,{
 
 	if (god_brising == 49)
 {
@@ -4764,7 +4764,7 @@ xmas.gat,36,103,4	script	Alfrik#1	826,{
 
 }
 
-prt_fild02.gat,185,269,0	script	#brisindwarf2	111,3,3,{
+prt_fild02,185,269,0	script	#brisindwarf2	111,3,3,{
 
 	if($God2 < 50)
 {
@@ -4787,7 +4787,7 @@ prt_fild02.gat,185,269,0	script	#brisindwarf2	111,3,3,{
 	menu "Step on it.",-,"Sweep the surface.",L_Sweep,"Scratch the surface.",L_Scratch,"Kick it.",L_Kick;
 			mes "^3355FFYou gingerly place your foot on the top of the stone. The entire rock suddenly swings downward into the ground, and you fall downward...^000000";
 			close2;
-			warp "prt_fild02.gat",165,224;
+			warp "prt_fild02",165,224;
 			end;
 		L_Sweep:
 			mes "^3355FFAs you sweep away the moss with your hand, you scratch your palm from the sharp edges of the rock.^000000";
@@ -4953,7 +4953,7 @@ OnDvalinOff:
 	end;
 }
 
-prt_fild02.gat,185,270,3	script	Dvalin#1	826,{
+prt_fild02,185,270,3	script	Dvalin#1	826,{
 
 	if (god_brising > 43)
 {
@@ -5061,7 +5061,7 @@ prt_fild02.gat,185,270,3	script	Dvalin#1	826,{
 
 }
 
-mjolnir_09.gat,85,129,0	script	#brisindwarf3	111,3,3,{
+mjolnir_09,85,129,0	script	#brisindwarf3	111,3,3,{
 
 	if($God2 < 50)
 {
@@ -5150,7 +5150,7 @@ OnBerlingOff:
 	end;
 }
 
-mjolnir_09.gat,87,129,3	script	Berling#1	826,{
+mjolnir_09,87,129,3	script	Berling#1	826,{
 
 	if(god_brising > 44)
 {
@@ -5278,7 +5278,7 @@ mjolnir_09.gat,87,129,3	script	Berling#1	826,{
 
 }
 
-mjo_dun02.gat,126,36,0	script	#brisindwarf4	111,3,3,{
+mjo_dun02,126,36,0	script	#brisindwarf4	111,3,3,{
 
 	if($God2 < 50)
 {
@@ -5423,24 +5423,24 @@ OnTouch:
 }
 	else
 {
-	warp "mjo_dun02.gat",118,56;
+	warp "mjo_dun02",118,56;
 	end;
 }
 
 OnTimer1000:
-	mapannounce "mjo_dun02.gat","Grer: Hurry and show that I can trust you!",0,0x70DBDB;
+	mapannounce "mjo_dun02","Grer: Hurry and show that I can trust you!",0,0x70DBDB;
 	end;
 
 OnTimer240000:
-	mapannounce "mjo_dun02.gat","Grer: Grrr, I won't wait much longer!",0,0x70DBDB;
+	mapannounce "mjo_dun02","Grer: Grrr, I won't wait much longer!",0,0x70DBDB;
 	end;
 
 OnTimer298000:
-	mapannounce "mjo_dun02.gat","Grer: Farewell, human!",0,0x70DBDB;
+	mapannounce "mjo_dun02","Grer: Farewell, human!",0,0x70DBDB;
 	end;
 
 OnTimer300000:
-	warp "mjo_dun02.gat",118,56;
+	warp "mjo_dun02",118,56;
 	disablenpc "Grer#1";
 	end;
 
@@ -5461,7 +5461,7 @@ OnGrerOff:
 	end;
 }
 
-mjo_dun02.gat,126,34,1	script	Grer#1	826,{
+mjo_dun02,126,34,1	script	Grer#1	826,{
 
 	if(god_brising > 47)
 {

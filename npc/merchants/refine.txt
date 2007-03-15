@@ -44,7 +44,7 @@
 //=========================================================
 // Christopher: Geffen Blacksmith
 //=========================================================
-geffen_in.gat,110,172,2	script	Christopher#1::Chris	63,{
+geffen_in,110,172,2	script	Christopher#1::Chris	63,{
 	mes "[Christopher Guillenrow]";
 	mes "Welcome to Christopher's Workshop. Ye can find all yer forging equipment here. So what can I help ye with?";
 	M_Menu:
@@ -178,37 +178,37 @@ ein_in01,38,29,6	duplicate(Chris)	Christopher#2	63
 //=====================================================================================
 // Weapon/Armor Refiners
 //=====================================================================================
-prt_in.gat,63,60,4	script	Hollengrhen	85,{
+prt_in,63,60,4	script	Hollengrhen	85,{
 	set @name$,"Hollengrhen";
 	callfunc "refinemain";
 	end;
 }
-morocc_in.gat,73,38,4	script	Aragham	99,{
+morocc_in,73,38,4	script	Aragham	99,{
 	set @name$,"Aragham";
 	callfunc "refinemain";
 	end;
 }
-payon.gat,144,173,4	script	Antonio	88,{
+payon,144,173,4	script	Antonio	88,{
 	set @name$,"Antonio";
 	callfunc "refinemain";
 	end;
 }
-alberta_in.gat,28,58,4	script	Fredrik	85,{
+alberta_in,28,58,4	script	Fredrik	85,{
 	set @name$,"Fredrik";
 	callfunc "refinemain";
 	end;
 }
-yuno_in01.gat,164,26,6	script	Disturb	88,{
+yuno_in01,164,26,6	script	Disturb	88,{
 	set @name$,"Disturb";
 	callfunc "refinemain";
 	end;
 }
-ein_in01.gat,24,87,6	script	Manthasman	826,{
+ein_in01,24,87,6	script	Manthasman	826,{
 	set @name$,"Manthasman Pruhag";
 	callfunc "refinemain";
 	end;
 }
-lhz_in02.gat,282,20,7	script	Fulerr	869,{
+lhz_in02,282,20,7	script	Fulerr	869,{
 	set @name$,"Fulerr";
 	callfunc "refinemain";
 	end;
@@ -565,37 +565,37 @@ L_refinenumber:
 //==============================================================================
 // Material Salesmen
 //==============================================================================
-prt_in.gat,56,69,4	script	Vurewell	86,{
+prt_in,56,69,4	script	Vurewell	86,{
 	set @name$,"Vurewell";
 	callfunc "phramain";
 	end;
 }
-payon.gat,145,178,4	script	Begnahd	88,{
+payon,145,178,4	script	Begnahd	88,{
 	set @name$,"Begnahd";
 	callfunc "phramain";
 	end;
 }
-morocc_in.gat,65,37,4	script	Sade	99,{
+morocc_in,65,37,4	script	Sade	99,{
 	set @name$,"Sade";
 	callfunc "phramain";
 	end;
 }
-alberta_in.gat,18,59,5	script	Kahlamanlith	86,{
+alberta_in,18,59,5	script	Kahlamanlith	86,{
 	set @name$,"Kahlamanlith";
 	callfunc "phramain";
 	end;
 }
-yuno_in01.gat,171,26,6	script	Dillemat	88,{
+yuno_in01,171,26,6	script	Dillemat	88,{
 	set @name$,"Dillemat";
 	callfunc "phramain";
 	end;
 }
-ein_in01.gat,15,87,7	script	Tirehaus	86,{
+ein_in01,15,87,7	script	Tirehaus	86,{
 	set @name$,"Tirehaus";
 	callfunc "phramain";
 	end;
 }
-lhz_in02.gat,278,24,3	script	Krugg	86,{
+lhz_in02,278,24,3	script	Krugg	86,{
 	set @name$,"Krugg";
 	callfunc "phramain";
 	end;
@@ -658,37 +658,37 @@ L_ABOVE:
 //==============================================================================
 // Ori/Elu Refiners
 //==============================================================================
-prt_in.gat,63,69,4	script	Dietrich	84,{
+prt_in,63,69,4	script	Dietrich	84,{
 	set @name$,"Dietrich";
 	callfunc "orimain";
 	end;
 }
-payon.gat,137,178,4	script	Hakhim	88,{
+payon,137,178,4	script	Hakhim	88,{
 	set @name$,"Hakhim";
 	callfunc "orimain";
 	end;
 }
-morocc_in.gat,72,32,4	script	Abdul	99,{
+morocc_in,72,32,4	script	Abdul	99,{
 	set @name$,"Abdul";
 	callfunc "orimain";
 	end;
 }
-alberta_in.gat,21,63,5	script	Xenophon	84,{
+alberta_in,21,63,5	script	Xenophon	84,{
 	set @name$,"Xenophon";
 	callfunc "orimain";
 	end;
 }
-yuno_in01.gat,171,22,6	script	Delayt	88,{
+yuno_in01,171,22,6	script	Delayt	88,{
 	set @name$,"Delayt";
 	callfunc "orimain";
 	end;
 }
-ein_in01.gat,18,82,6	script	Matestein	84,{
+ein_in01,18,82,6	script	Matestein	84,{
 	set @name$,"Matestein";
 	callfunc "orimain";
 	end;
 }
-lhz_in02.gat,281,24,5	script	Fruel	84,{
+lhz_in02,281,24,5	script	Fruel	84,{
 	set @name$,"Fruel";
 	callfunc "orimain";
 	end;
@@ -758,23 +758,23 @@ function	script	orimain	{
 //=====================================================================================
 // Equipment Repairmen
 //=====================================================================================
-prt_in.gat,62,54,2	script	Grendal	84,{
+prt_in,62,54,2	script	Grendal	84,{
 	set @name$,"Grendal";
 	callfunc "repairmain";
 	end;
 }
 //Temp Spot, Not Sure Where To place
-payon.gat,149,182,2	script	Repairman#01	88,{
+payon,149,182,2	script	Repairman#01	88,{
 	set @name$,"Repairman";
 	callfunc "repairmain";
 	end;
 }
-morocc_in.gat,71,40,2	script	Repairman#02	99,{
+morocc_in,71,40,2	script	Repairman#02	99,{
 	set @name$,"Repairman";
 	callfunc "repairmain";
 	end;
 }
-lhz_in02.gat,284,14,3	script	Repairman#03	86,{
+lhz_in02,284,14,3	script	Repairman#03	86,{
 	set @name$,"Repairman";
 	callfunc "repairmain";
 	end;

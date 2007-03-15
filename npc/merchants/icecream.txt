@@ -14,7 +14,7 @@
 //============================================================
 
 //ALBERTA
-alberta.gat,120,45,2	script	Ice Cream Maker::IceCreamer	85,{
+alberta,120,45,2	script	Ice Cream Maker::IceCreamer	85,{
 	mes "[Ice Cream Maker]";
 	mes "Fresh Ice Cream made with snow from Lutie!";
 	mes "Enjoy it now, it won't be on sale for long!";
@@ -55,7 +55,7 @@ alberta.gat,120,45,2	script	Ice Cream Maker::IceCreamer	85,{
 }
 
 //MORROC FIELD
-moc_fild16.gat,88,304,4	duplicate(IceCreamer)	Ice Cream Maker#2	85
+moc_fild16,88,304,4	duplicate(IceCreamer)	Ice Cream Maker#2	85
 
 //MORROC
-//morocc.gat,160,144,4	duplicate(IceCreamer)	Ice Cream Maker#3	85
+//morocc,160,144,4	duplicate(IceCreamer)	Ice Cream Maker#3	85

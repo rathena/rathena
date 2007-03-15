@@ -23,24 +23,24 @@
 
 
 // NorthWest -----------------------------------------------------------------
-alberta.gat,28,229,8	script	Kafra::kaf_alberta	115,{
+alberta,28,229,8	script	Kafra::kaf_alberta	115,{
 	cutin "kafra_03",2;
 	callfunc "F_KafSetAlb";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "alberta.gat",31,231;
+		savepoint "alberta",31,231;
 		callfunc "F_KafEnd",0,1;
 }
 
 // South ---------------------------------------------------------------------
-alberta.gat,113,60,5	script	Kafra::kaf_alberta2	112,{
+alberta,113,60,5	script	Kafra::kaf_alberta2	112,{
 	cutin "kafra_06",2;
 	callfunc "F_KafSetAlb";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "alberta.gat",117,57;
+		savepoint "alberta",117,57;
 		callfunc "F_KafEnd",0,1;
 }
 

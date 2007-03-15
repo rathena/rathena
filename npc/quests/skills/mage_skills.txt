@@ -20,7 +20,7 @@
 
 
 
-geffen_in.gat,151,119,4	script	BLIZZARDRISS	71,{
+geffen_in,151,119,4	script	BLIZZARDRISS	71,{
 	mes "[BLIZZARDRISS]";
 	if(baseClass == Job_Mage) goto L_Start;
 

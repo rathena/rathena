@@ -1,6 +1,6 @@
 -	shop	dyn_shop1	-1,501:50
 
-prontera.gat,181,200,4	script	Dynamic Shop	123,{
+prontera,181,200,4	script	Dynamic Shop	123,{
 callshop "dyn_shop1",0;
 end;
 

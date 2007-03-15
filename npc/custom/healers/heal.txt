@@ -16,7 +16,7 @@
 //= if you want that players have to pay their healings.
 //============================================================
 
-prontera.gat,150,184,5	script	Healer#h1-1::Healer	742,{
+prontera,150,184,5	script	Healer#h1-1::Healer	742,{
 
 	mes "[Healer]";
 	mes "I have amazing healing powers!!";
@@ -35,18 +35,18 @@ prontera.gat,150,184,5	script	Healer#h1-1::Healer	742,{
 	close;
 }
 
-morocc.gat,159,96,5	duplicate(Healer)	Healer#h1-2	742
-ayothaya.gat,155,111,5	duplicate(Healer)	Healer#h1-3	742
-geffen.gat,121,61,5	duplicate(Healer)	Healer#h1-4	742
-umbala.gat,94,162,5	duplicate(Healer)	Healer#h1-5	742
-payon.gat,180,105,5	duplicate(Healer)	Healer#h1-6	742
-alberta.gat,185,144,5	duplicate(Healer)	Healer#h1-7	742
-aldebaran.gat,134,123,5	duplicate(Healer)	Healer#h1-8	742
-izlude.gat,125,118,5	duplicate(Healer)	Healer#h1-9	742
-xmas.gat,149,136,5	duplicate(Healer)	Healer#h1-10	742
-comodo.gat,188,162,5	duplicate(Healer)	Healer#h1-11	742
-amatsu.gat,200,80,5	duplicate(Healer)	Healer#h1-12	742
-gonryun.gat,164,130,5	duplicate(Healer)	Healer#h1-13	742
-yuno.gat,152,186,5	duplicate(Healer)	Healer#h1-14	742
-niflheim.gat,188,180,5	duplicate(Healer)	Healer#h1-15	742
-louyang.gat,225,103,5	duplicate(Healer)	Healer#h1-16	742
+morocc,159,96,5	duplicate(Healer)	Healer#h1-2	742
+ayothaya,155,111,5	duplicate(Healer)	Healer#h1-3	742
+geffen,121,61,5	duplicate(Healer)	Healer#h1-4	742
+umbala,94,162,5	duplicate(Healer)	Healer#h1-5	742
+payon,180,105,5	duplicate(Healer)	Healer#h1-6	742
+alberta,185,144,5	duplicate(Healer)	Healer#h1-7	742
+aldebaran,134,123,5	duplicate(Healer)	Healer#h1-8	742
+izlude,125,118,5	duplicate(Healer)	Healer#h1-9	742
+xmas,149,136,5	duplicate(Healer)	Healer#h1-10	742
+comodo,188,162,5	duplicate(Healer)	Healer#h1-11	742
+amatsu,200,80,5	duplicate(Healer)	Healer#h1-12	742
+gonryun,164,130,5	duplicate(Healer)	Healer#h1-13	742
+yuno,152,186,5	duplicate(Healer)	Healer#h1-14	742
+niflheim,188,180,5	duplicate(Healer)	Healer#h1-15	742
+louyang,225,103,5	duplicate(Healer)	Healer#h1-16	742

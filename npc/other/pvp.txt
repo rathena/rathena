@@ -22,28 +22,28 @@
 //==========================================================================
 
 // Alberta -----------------------------------------
-alberta_in.gat,22,146,4	script	PvP Narrator#1	84,{
-	callfunc "F_PvPNarr", "alberta_in.gat", 24, 143;
+alberta_in,22,146,4	script	PvP Narrator#1	84,{
+	callfunc "F_PvPNarr", "alberta_in", 24, 143;
 	end;
 }
 // Payon -------------------------------------
-payon_in01.gat,173,109,3	script	PvP Narrator#2	84,{
-	callfunc "F_PvPNarr", "payon_in01.gat", 169, 108;
+payon_in01,173,109,3	script	PvP Narrator#2	84,{
+	callfunc "F_PvPNarr", "payon_in01", 169, 108;
 	end;
 }
 // Prontera -------------------------------------
-prt_in.gat,56,140,4	script	PvP Narrator#3	84,{
-	callfunc "F_PvPNarr", "prt_in.gat", 54, 137;
+prt_in,56,140,4	script	PvP Narrator#3	84,{
+	callfunc "F_PvPNarr", "prt_in", 54, 137;
 	end;
 }
 // Morocc --------------------------------------
-morocc_in.gat,144,138,4	script	PvP Narrator#4	84,{
-	callfunc "F_PvPNarr", "morocc_in.gat", 141, 140;
+morocc_in,144,138,4	script	PvP Narrator#4	84,{
+	callfunc "F_PvPNarr", "morocc_in", 141, 140;
 	end;
 }
 // Geffen --------------------------------------
-geffen_in.gat,67,63,4	script	PvP Narrator#5	84,{
-	callfunc "F_PvPNarr", "geffen_in.gat", 64, 60;
+geffen_in,67,63,4	script	PvP Narrator#5	84,{
+	callfunc "F_PvPNarr", "geffen_in", 64, 60;
 	end;
 }
 
@@ -129,7 +129,7 @@ function	script	F_PvPNarr	{
 //==========================================================================
 
 // Alberta -----------------------------------
-alberta_in.gat,26,146,4	script	Gate Keeper#1::GateKeep	83,{
+alberta_in,26,146,4	script	Gate Keeper#1::GateKeep	83,{
 	mes "[Gate Keeper]";
 	mes "Hi.  I'm glad to be of service.  I will open the PvP fight square for you!";
 	mes "If you have any questions about the PvP modes or rules, please ask the Narrator.....";
@@ -147,7 +147,7 @@ alberta_in.gat,26,146,4	script	Gate Keeper#1::GateKeep	83,{
 		set @room4$, "Alberta";
 		set @room5$, "Morroc";
 		callsub sF_Move;
-		warp "pvp_y_room.gat", 51, 23;
+		warp "pvp_y_room", 51, 23;
 		end;
 	M_1:
 		set @mode$, "Nightmare";
@@ -159,7 +159,7 @@ alberta_in.gat,26,146,4	script	Gate Keeper#1::GateKeep	83,{
 		set @room4$, "UnderCross Arena";
 		set @room5$, "Copass Arena";
 		callsub sF_Move;
-		warp "pvp_n_room.gat", 51, 23;
+		warp "pvp_n_room", 51, 23;
 		end;
 	M_2:
 
@@ -172,7 +172,7 @@ alberta_in.gat,26,146,4	script	Gate Keeper#1::GateKeep	83,{
 			delitem 7029, 1;
 			set @mode$, "Fighting";
 			callsub sF_Move;
-			warp "pvp_y_room.gat", 51, 23;
+			warp "pvp_y_room", 51, 23;
 			end;
 
 		sM_1:
@@ -211,13 +211,13 @@ sF_Move:
 }
 
 // Geffen --------------------------------------------
-geffen_in.gat,63,63,4	duplicate(GateKeep)	Gate Keeper#2	83
+geffen_in,63,63,4	duplicate(GateKeep)	Gate Keeper#2	83
 // Morroc----------------------------------------------
-morocc_in.gat,144,142,4	duplicate(GateKeep)	Gate Keeper#3	83
+morocc_in,144,142,4	duplicate(GateKeep)	Gate Keeper#3	83
 // Payon ----------------------------------------------
-payon_in01.gat,175,106,3	duplicate(GateKeep)	Gate Keeper#4	83
+payon_in01,175,106,3	duplicate(GateKeep)	Gate Keeper#4	83
 // Prontera -------------------------------------------
-prt_in.gat,52,140,4	duplicate(GateKeep)	Gate Keeper#5	83
+prt_in,52,140,4	duplicate(GateKeep)	Gate Keeper#5	83
 
 
 
@@ -226,7 +226,7 @@ prt_in.gat,52,140,4	duplicate(GateKeep)	Gate Keeper#5	83
 //==========================================================================//
 
 // LV31 ~ 40 ---------------------------------
-pvp_y_room.gat,30,85,4	script	Fight Square Helper::YHelper1	105,{
+pvp_y_room,30,85,4	script	Fight Square Helper::YHelper1	105,{
 	callfunc "F_PvPRoom", "y_1", 31, 40;
 OnInit:
 	waitingroom "LV31 ~ LV40",0;
@@ -234,7 +234,7 @@ OnInit:
 }
 
 // LV41 ~ 50 --------------------------------
-pvp_y_room.gat,38,85,4	script	Fight Square Helper::YHelper2	105,{
+pvp_y_room,38,85,4	script	Fight Square Helper::YHelper2	105,{
 	callfunc "F_PvPRoom", "y_2", 41, 50;
 OnInit:
 	waitingroom "LV41 ~ LV50",0;
@@ -242,7 +242,7 @@ OnInit:
 }
 
 // LV51 ~ 60 ---------------------------------
-pvp_y_room.gat,46,85,4	script	Fight Square Helper::YHelper3	105,{
+pvp_y_room,46,85,4	script	Fight Square Helper::YHelper3	105,{
 	callfunc "F_PvPRoom", "y_3", 51, 60;
 OnInit:
 	waitingroom "LV51 ~ LV60", 0;
@@ -250,7 +250,7 @@ OnInit:
 }
 
 // LV61 ~ 70 ------------------------------------
-pvp_y_room.gat,54,85,4	script	Fight Square Helper::YHelper4	105,{
+pvp_y_room,54,85,4	script	Fight Square Helper::YHelper4	105,{
 	callfunc "F_PvPRoom", "y_4", 61, 70;
 OnInit:
 	waitingroom "LV61 ~ LV70", 0;
@@ -258,7 +258,7 @@ OnInit:
 }
 
 // LV71 ~ 80 ------------------------------------
-pvp_y_room.gat,62,85,4	script	Fight Square Helper::YHelper5	105,{
+pvp_y_room,62,85,4	script	Fight Square Helper::YHelper5	105,{
 	callfunc "F_PvPRoom", "y_5", 71, 80;
 OnInit:
 	waitingroom "LV71 ~ LV80", 0;
@@ -266,7 +266,7 @@ OnInit:
 }
 
 // LV81 ~ 90 --------------------------------------
-pvp_y_room.gat,70,85,4	script	Fight Square Helper::YHelper6	105,{
+pvp_y_room,70,85,4	script	Fight Square Helper::YHelper6	105,{
 	callfunc "F_PvPRoom", "y_6", 81, 90;
 OnInit:
 	waitingroom "LV81 ~ LV90", 0;
@@ -274,7 +274,7 @@ OnInit:
 }
 
 // LV91 ~  --------------------------------------------
-pvp_y_room.gat,78,85,4	script	Fight Square Helper::YHelper7	105,{
+pvp_y_room,78,85,4	script	Fight Square Helper::YHelper7	105,{
 	callfunc "F_PvPRoom", "y_7", 91, 255;
 OnInit:
 	waitingroom "LV91 ~ ", 0;
@@ -282,7 +282,7 @@ OnInit:
 }
 
 // No Limit  -----------------------------------------
-pvp_y_room.gat,86,85,4	script	Fight Square Helper::YHelper8	105,{
+pvp_y_room,86,85,4	script	Fight Square Helper::YHelper8	105,{
 	callfunc "F_PvPRoom", "y_8", 0, 255;
 OnInit:
 	waitingroom "No Limit", 0;
@@ -294,7 +294,7 @@ OnInit:
 // 		PvP Nightmare Mode Fight Square Helpers
 //==========================================================================//
 // LV31 ~ 40 -------------------------------------
-pvp_n_room.gat,30,85,4	script	Fight Square Helper#N1	105,{
+pvp_n_room,30,85,4	script	Fight Square Helper#N1	105,{
 	callfunc "F_PvPRoom", "n_1", 31, 40;
 OnInit:
 	waitingroom "LV31 ~ LV40",0;
@@ -302,7 +302,7 @@ OnInit:
 }
 
 // LV41 ~ 50 --------------------------------------
-pvp_n_room.gat,38,85,4	script	Fight Square Helper#N2	105,{
+pvp_n_room,38,85,4	script	Fight Square Helper#N2	105,{
 	callfunc "F_PvPRoom", "n_2", 41, 50;
 OnInit:
 	waitingroom "LV41 ~ LV50",0;
@@ -310,7 +310,7 @@ OnInit:
 }
 
 // LV51 ~ 60 -------------------------------------
-pvp_n_room.gat,46,85,4	script	Fight Square Helper#N3	105,{
+pvp_n_room,46,85,4	script	Fight Square Helper#N3	105,{
 	callfunc "F_PvPRoom", "n_3", 51, 60;
 OnInit:
 	waitingroom "LV51 ~ LV60", 0;
@@ -318,7 +318,7 @@ OnInit:
 }
 
 // LV61 ~ 70 ------------------------------------
-pvp_n_room.gat,54,85,4	script	Fight Square Helper#N4	105,{
+pvp_n_room,54,85,4	script	Fight Square Helper#N4	105,{
 	callfunc "F_PvPRoom", "n_4", 61, 70;
 OnInit:
 	waitingroom "LV61 ~ LV70", 0;
@@ -326,7 +326,7 @@ OnInit:
 }
 
 // LV71 ~ 80 -----------------------------------
-pvp_n_room.gat,62,85,4	script	Fight Square Helper#N5	105,{
+pvp_n_room,62,85,4	script	Fight Square Helper#N5	105,{
 	callfunc "F_PvPRoom", "n_5", 71, 80;
 OnInit:
 	waitingroom "LV71 ~ LV80", 0;
@@ -334,7 +334,7 @@ OnInit:
 }
 
 // LV81 ~ 90 ------------------------------------
-pvp_n_room.gat,70,85,4	script	Fight Square Helper#N6	105,{
+pvp_n_room,70,85,4	script	Fight Square Helper#N6	105,{
 	callfunc "F_PvPRoom", "n_6", 81, 90;
 OnInit:
 	waitingroom "LV81 ~ LV90", 0;
@@ -342,7 +342,7 @@ OnInit:
 }
 
 // LV91 ~  ---------------------------------------
-pvp_n_room.gat,78,85,4	script	Fight Square Helper#N7	105,{
+pvp_n_room,78,85,4	script	Fight Square Helper#N7	105,{
 	callfunc "F_PvPRoom", "n_7", 91, 255;
 OnInit:
 	waitingroom "LV91 ~ ", 0;
@@ -350,7 +350,7 @@ OnInit:
 }
 
 // No Limit  ----------------------------------
-pvp_n_room.gat,86,85,4	script	Fight Square Helper#N8	105,{
+pvp_n_room,86,85,4	script	Fight Square Helper#N8	105,{
 	callfunc "F_PvPRoom", "n_8", 0, 255;
 OnInit:
 	waitingroom "No Limit", 0;
@@ -373,30 +373,30 @@ function	script	F_PvPRoom	{
 	mes "Please choose an arena to fight in...";
 	M_Menu:
 	next;
-	menu 	@room1$ + " [" + getmapusers("pvp_" + getarg(0) + "-1.gat") + "/" +@players1+ "]",M_Rm1, 
-		@room2$ + " [" + getmapusers("pvp_" + getarg(0) + "-2.gat") + "/" +@players2+ "]",M_Rm2, 
-		@room3$ + " [" + getmapusers("pvp_" + getarg(0) + "-3.gat") + "/" +@players2+ "]",M_Rm3, 
-		@room4$ + " [" + getmapusers("pvp_" + getarg(0) + "-4.gat") + "/" +@players2+ "]",M_Rm4, 
-		@room5$ + " [" + getmapusers("pvp_" + getarg(0) + "-5.gat") + "/" +@players2+ "]",M_Rm5, "Cancel",M_End;
+	menu 	@room1$ + " [" + getmapusers("pvp_" + getarg(0) + "-1") + "/" +@players1+ "]",M_Rm1, 
+		@room2$ + " [" + getmapusers("pvp_" + getarg(0) + "-2") + "/" +@players2+ "]",M_Rm2, 
+		@room3$ + " [" + getmapusers("pvp_" + getarg(0) + "-3") + "/" +@players2+ "]",M_Rm3, 
+		@room4$ + " [" + getmapusers("pvp_" + getarg(0) + "-4") + "/" +@players2+ "]",M_Rm4, 
+		@room5$ + " [" + getmapusers("pvp_" + getarg(0) + "-5") + "/" +@players2+ "]",M_Rm5, "Cancel",M_End;
 	M_Rm1:
-		if (getmapusers("pvp_" + getarg(0) + "-1.gat") == @players1) goto L_Full;
-		warp "pvp_" + getarg(0) + "-1.gat",0,0;
+		if (getmapusers("pvp_" + getarg(0) + "-1") == @players1) goto L_Full;
+		warp "pvp_" + getarg(0) + "-1",0,0;
 		end;
 	M_Rm2:
-		if (getmapusers("pvp_" + getarg(0) + "-2.gat") == @players2) goto L_Full;
-		warp "pvp_" + getarg(0) + "-2.gat",0,0;
+		if (getmapusers("pvp_" + getarg(0) + "-2") == @players2) goto L_Full;
+		warp "pvp_" + getarg(0) + "-2",0,0;
 		end;
 	M_Rm3:
-		if (getmapusers("pvp_" + getarg(0) + "-3.gat") == @players2) goto L_Full;
-		warp "pvp_" + getarg(0) + "-3.gat",0,0;
+		if (getmapusers("pvp_" + getarg(0) + "-3") == @players2) goto L_Full;
+		warp "pvp_" + getarg(0) + "-3",0,0;
 		end;
 	M_Rm4:
-		if (getmapusers("pvp_" + getarg(0) + "-4.gat") == @players2) goto L_Full;
-		warp "pvp_" + getarg(0) + "-4.gat",0,0;
+		if (getmapusers("pvp_" + getarg(0) + "-4") == @players2) goto L_Full;
+		warp "pvp_" + getarg(0) + "-4",0,0;
 		end;
 	M_Rm5:
-		if (getmapusers("pvp_" + getarg(0) + "-5.gat") == @players2) goto L_Full;
-		warp "pvp_" + getarg(0) + "-5.gat",0,0;
+		if (getmapusers("pvp_" + getarg(0) + "-5") == @players2) goto L_Full;
+		warp "pvp_" + getarg(0) + "-5",0,0;
 		end;
 	M_End:
 		close;

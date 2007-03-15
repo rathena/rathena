@@ -26,7 +26,7 @@
 // ---------------
 // *通常warp(warp)
 // ---------------
-// 書式 : <gatname>,<x>,<y>	warp	<displayname(hidden)>	<dx>,<dy>,<destination_gatname>[.gat],<destination_x>,<destination_y>
+// 書式 : <gatname>,<x>,<y>	warp	<displayname(hidden)>	<dx>,<dy>,<destination_gatname>[],<destination_x>,<destination_y>
 //
 // <gatname>	- マップデータファイル名。拡張子は必須です。
 // <x>,<y>		- ワープポイントの中心座標(x,y)
@@ -35,16 +35,16 @@
 // <dx>,<dy>	- 動作範囲(x,y) <x,y>を中心に(dx+1,dy+1)の範囲にPCが来ると発動します
 // <destination_gatname>,<destination_x>,<destination_y> -
 // 移動先のマップデータファイル名,座標(x,y)
-// destination_gatnameについては拡張子".gat"はあっても無くても構いません。
+// destination_gatnameについては拡張子""はあっても無くても構いません。
 // 移動先のmapデータファイルが存在しない(あるいはmap_configで指定されていない)場合は発動しません。
 // 移動先の座標が進入禁止区域であった場合は、ランダムな座標にワープします。
 // また、同一座標に複数のwarpが置かれていた場合、先に記述されているものが有効になります
 // これは、confファイル内で指定される、npc*.txtファイルをまたいでwarpを記述するときも同じことがいえます。
 // 例:
-prontera.gat,156,185,4	warp	sample1	0,0,prontera.gat,156,225
-prontera.gat,156,185,4	warp	sample1a	0,0,prontera.gat,156,230
+prontera,156,185,4	warp	sample1	0,0,prontera,156,225
+prontera,156,185,4	warp	sample1a	0,0,prontera,156,230
 // sample1の方が先に記述されているので、156,225に移動します
-prontera.gat,156,220,4	warp	sample1-1	0,0,prontera.gat,156,180
+prontera,156,220,4	warp	sample1-1	0,0,prontera,156,180
 
 // --------------------
 // *モンスター(monster)
@@ -60,7 +60,7 @@ prontera.gat,156,220,4	warp	sample1-1	0,0,prontera.gat,156,180
 // 前回出現時間+出現遅延1,倒された時間+出現遅延2,倒された時間+5秒 で算出される値のうち、最も大きい物を
 // 出現時間とします
 // 例:
-prontera.gat,0,0	monster	ポリン	1002,5
+prontera,0,0	monster	ポリン	1002,5
 
 // ---------
 // *店(shop)
@@ -74,7 +74,7 @@ prontera.gat,0,0	monster	ポリン	1002,5
 // <item_id_N>:<price_N>	- item_id_Nの商品を価格price_Nとして販売物ウインドウに表示します。
 // 						  item_idについてはdb/item_db.txtを参照してください。
 // 例:
-prontera.gat,136,203,6	shop	道具商人	73,501:5,502:20,503:55,504:120,506:20,645:80,656:150,601:30,602:30,611:20,610:400
+prontera,136,203,6	shop	道具商人	73,501:5,502:20,503:55,504:120,506:20,645:80,656:150,601:30,602:30,611:20,610:400
 
 // -====================-
 // *NPCスクリプト(script)
@@ -295,7 +295,7 @@ prontera.gat,136,203,6	shop	道具商人	73,501:5,502:20,503:55,504:120,506:20,645:8
 //
 
 // scriptの例:
-prontera.gat,146,203,2	script	デバッガー要員	116,{
+prontera,146,203,2	script	デバッガー要員	116,{
 	cutin "kafra_02",2;
 	if(countitem(515)<10) goto Llesscarrot;
 	mes "[デバッガー要員]";
@@ -407,7 +407,7 @@ Lend:	cutin "kafra_02",255;
 	close;
 	end;	}
 
-prontera.gat,156,195,4	script	カプラ職員	112,{
+prontera,156,195,4	script	カプラ職員	112,{
 	mes "[カプラ職員]";
 	mes "いらっしゃいませ";
 	mes "こちらでは、現在のAthenaの状況を説明いたします。";
@@ -454,4 +454,3 @@ Lend:	mes "[カプラ職員]";
 	mes "[カプラ職員]";
 	mes "AthenaではIDの最後に_Fまたは_Mを付けると新規IDが発行される仕組になっていますが、";
 	goto Lcont2;	}
-

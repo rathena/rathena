@@ -17,92 +17,92 @@
 //============================================================
 
 
-prtg_cas01.gat,197,197,0	script	Guardian_Pt01	-1,{
+prtg_cas01,197,197,0	script	Guardian_Pt01	-1,{
 OnAgitInit:
-	if (GetCastleData("prtg_cas01.gat",10) == 1) guardian "prtg_cas01.gat",196,92,"Soldier Guardian",1287,"Guardian_Pt01::OnGuardianDied",0;
-	if (GetCastleData("prtg_cas01.gat",11) == 1) guardian "prtg_cas01.gat",113,200,"Soldier Guardian",1287,"Guardian_Pt01::OnGuardianDied",1;
-	if (GetCastleData("prtg_cas01.gat",12) == 1) guardian "prtg_cas01.gat",111,186,"Soldier Guardian",1287,"Guardian_Pt01::OnGuardianDied",2;
-	if (GetCastleData("prtg_cas01.gat",13) == 1) guardian "prtg_cas01.gat",76,202,"Archer Guardian",1285,"Guardian_Pt01::OnGuardianDied",3;
-	if (GetCastleData("prtg_cas01.gat",14) == 1) guardian "prtg_cas01.gat",90,26,"Archer Guardian",1285,"Guardian_Pt01::OnGuardianDied",4;
-	if (GetCastleData("prtg_cas01.gat",15) == 1) guardian "prtg_cas01.gat",58,59,"Knight Guardian",1286,"Guardian_Pt01::OnGuardianDied",5;
-	if (GetCastleData("prtg_cas01.gat",16) == 1) guardian "prtg_cas01.gat",112,200,"Knight Guardian",1286,"Guardian_Pt01::OnGuardianDied",6;
-	if (GetCastleData("prtg_cas01.gat",17) == 1) guardian "prtg_cas01.gat",101,194,"Knight Guardian",1286,"Guardian_Pt01::OnGuardianDied",7;
+	if (GetCastleData("prtg_cas01",10) == 1) guardian "prtg_cas01",196,92,"Soldier Guardian",1287,"Guardian_Pt01::OnGuardianDied",0;
+	if (GetCastleData("prtg_cas01",11) == 1) guardian "prtg_cas01",113,200,"Soldier Guardian",1287,"Guardian_Pt01::OnGuardianDied",1;
+	if (GetCastleData("prtg_cas01",12) == 1) guardian "prtg_cas01",111,186,"Soldier Guardian",1287,"Guardian_Pt01::OnGuardianDied",2;
+	if (GetCastleData("prtg_cas01",13) == 1) guardian "prtg_cas01",76,202,"Archer Guardian",1285,"Guardian_Pt01::OnGuardianDied",3;
+	if (GetCastleData("prtg_cas01",14) == 1) guardian "prtg_cas01",90,26,"Archer Guardian",1285,"Guardian_Pt01::OnGuardianDied",4;
+	if (GetCastleData("prtg_cas01",15) == 1) guardian "prtg_cas01",58,59,"Knight Guardian",1286,"Guardian_Pt01::OnGuardianDied",5;
+	if (GetCastleData("prtg_cas01",16) == 1) guardian "prtg_cas01",112,200,"Knight Guardian",1286,"Guardian_Pt01::OnGuardianDied",6;
+	if (GetCastleData("prtg_cas01",17) == 1) guardian "prtg_cas01",101,194,"Knight Guardian",1286,"Guardian_Pt01::OnGuardianDied",7;
 	end;
 
 OnGuardianDied:
 	// Event when Guardian dies
-	MapAnnounce "prtg_cas01.gat","A Guardian Has Fallen",17;
+	MapAnnounce "prtg_cas01","A Guardian Has Fallen",17;
 	end;
 }
 //------------------------------------------------------------------------------
-prtg_cas02.gat,158,174,0	script	Guardian_Pt02	-1,{
+prtg_cas02,158,174,0	script	Guardian_Pt02	-1,{
 OnAgitInit:
-	if (GetCastleData("prtg_cas02.gat",10) == 1) guardian "prtg_cas02.gat",75,71,"Soldier Guardian",1287,"Guardian_Pt02::OnGuardianDied",0;
-	if (GetCastleData("prtg_cas02.gat",11) == 1) guardian "prtg_cas02.gat",56,31,"Soldier Guardian",1287,"Guardian_Pt02::OnGuardianDied",1;
-	if (GetCastleData("prtg_cas02.gat",12) == 1) guardian "prtg_cas02.gat",42,223,"Soldier Guardian",1287,"Guardian_Pt02::OnGuardianDied",2;
-	if (GetCastleData("prtg_cas02.gat",13) == 1) guardian "prtg_cas02.gat",44,195,"Archer Guardian",1285,"Guardian_Pt02::OnGuardianDied",3;
-	if (GetCastleData("prtg_cas02.gat",14) == 1) guardian "prtg_cas02.gat",197,22,"Archer Guardian",1285,"Guardian_Pt02::OnGuardianDied",4;
-	if (GetCastleData("prtg_cas02.gat",15) == 1) guardian "prtg_cas02.gat",68,71,"Knight Guardian",1286,"Guardian_Pt02::OnGuardianDied",5;
-	if (GetCastleData("prtg_cas02.gat",16) == 1) guardian "prtg_cas02.gat",202,27,"Knight Guardian",1286,"Guardian_Pt02::OnGuardianDied",6;
-	if (GetCastleData("prtg_cas02.gat",17) == 1) guardian "prtg_cas02.gat",59,24,"Knight Guardian",1286,"Guardian_Pt02::OnGuardianDied",7;
+	if (GetCastleData("prtg_cas02",10) == 1) guardian "prtg_cas02",75,71,"Soldier Guardian",1287,"Guardian_Pt02::OnGuardianDied",0;
+	if (GetCastleData("prtg_cas02",11) == 1) guardian "prtg_cas02",56,31,"Soldier Guardian",1287,"Guardian_Pt02::OnGuardianDied",1;
+	if (GetCastleData("prtg_cas02",12) == 1) guardian "prtg_cas02",42,223,"Soldier Guardian",1287,"Guardian_Pt02::OnGuardianDied",2;
+	if (GetCastleData("prtg_cas02",13) == 1) guardian "prtg_cas02",44,195,"Archer Guardian",1285,"Guardian_Pt02::OnGuardianDied",3;
+	if (GetCastleData("prtg_cas02",14) == 1) guardian "prtg_cas02",197,22,"Archer Guardian",1285,"Guardian_Pt02::OnGuardianDied",4;
+	if (GetCastleData("prtg_cas02",15) == 1) guardian "prtg_cas02",68,71,"Knight Guardian",1286,"Guardian_Pt02::OnGuardianDied",5;
+	if (GetCastleData("prtg_cas02",16) == 1) guardian "prtg_cas02",202,27,"Knight Guardian",1286,"Guardian_Pt02::OnGuardianDied",6;
+	if (GetCastleData("prtg_cas02",17) == 1) guardian "prtg_cas02",59,24,"Knight Guardian",1286,"Guardian_Pt02::OnGuardianDied",7;
 	end;
 
 OnGuardianDied:
 	// Event when Guardian dies
-	MapAnnounce "prtg_cas02.gat","A Guardian Has Fallen",17;
+	MapAnnounce "prtg_cas02","A Guardian Has Fallen",17;
 	end;
 }
 //------------------------------------------------------------------------------
-prtg_cas03.gat,17,221,0	script	Guardian_Pt03	-1,{
+prtg_cas03,17,221,0	script	Guardian_Pt03	-1,{
 OnAgitInit:
-	if (GetCastleData("prtg_cas03.gat",10) == 1) guardian "prtg_cas03.gat",165,55,"Soldier Guardian",1287,"Guardian_Pt03::OnGuardianDied",0;
-	if (GetCastleData("prtg_cas03.gat",11) == 1) guardian "prtg_cas03.gat",161,181,"Soldier Guardian",1287,"Guardian_Pt03::OnGuardianDied",1;
-	if (GetCastleData("prtg_cas03.gat",12) == 1) guardian "prtg_cas03.gat",165,199,"Soldier Guardian",1287,"Guardian_Pt03::OnGuardianDied",2;
-	if (GetCastleData("prtg_cas03.gat",13) == 1) guardian "prtg_cas03.gat",169,22,"Archer Guardian",1285,"Guardian_Pt03::OnGuardianDied",3;
-	if (GetCastleData("prtg_cas03.gat",14) == 1) guardian "prtg_cas03.gat",165,191,"Archer Guardian",1285,"Guardian_Pt03::OnGuardianDied",4;
-	if (GetCastleData("prtg_cas03.gat",15) == 1) guardian "prtg_cas03.gat",175,13,"Knight Guardian",1286,"Guardian_Pt03::OnGuardianDied",5;
-	if (GetCastleData("prtg_cas03.gat",16) == 1) guardian "prtg_cas03.gat",169,180,"Knight Guardian",1286,"Guardian_Pt03::OnGuardianDied",6;
-	if (GetCastleData("prtg_cas03.gat",17) == 1) guardian "prtg_cas03.gat",142,217,"Knight Guardian",1286,"Guardian_Pt03::OnGuardianDied",7;
+	if (GetCastleData("prtg_cas03",10) == 1) guardian "prtg_cas03",165,55,"Soldier Guardian",1287,"Guardian_Pt03::OnGuardianDied",0;
+	if (GetCastleData("prtg_cas03",11) == 1) guardian "prtg_cas03",161,181,"Soldier Guardian",1287,"Guardian_Pt03::OnGuardianDied",1;
+	if (GetCastleData("prtg_cas03",12) == 1) guardian "prtg_cas03",165,199,"Soldier Guardian",1287,"Guardian_Pt03::OnGuardianDied",2;
+	if (GetCastleData("prtg_cas03",13) == 1) guardian "prtg_cas03",169,22,"Archer Guardian",1285,"Guardian_Pt03::OnGuardianDied",3;
+	if (GetCastleData("prtg_cas03",14) == 1) guardian "prtg_cas03",165,191,"Archer Guardian",1285,"Guardian_Pt03::OnGuardianDied",4;
+	if (GetCastleData("prtg_cas03",15) == 1) guardian "prtg_cas03",175,13,"Knight Guardian",1286,"Guardian_Pt03::OnGuardianDied",5;
+	if (GetCastleData("prtg_cas03",16) == 1) guardian "prtg_cas03",169,180,"Knight Guardian",1286,"Guardian_Pt03::OnGuardianDied",6;
+	if (GetCastleData("prtg_cas03",17) == 1) guardian "prtg_cas03",142,217,"Knight Guardian",1286,"Guardian_Pt03::OnGuardianDied",7;
 	end;
 
 OnGuardianDied:
 	// Event when Guardian dies
-	MapAnnounce "prtg_cas03.gat","A Guardian Has Fallen",17;
+	MapAnnounce "prtg_cas03","A Guardian Has Fallen",17;
 	end;
 }
 //------------------------------------------------------------------------------
-prtg_cas04.gat,292,14,0	script	Guardian_Pt04	-1,{
+prtg_cas04,292,14,0	script	Guardian_Pt04	-1,{
 OnAgitInit:
-	if (GetCastleData("prtg_cas04.gat",10) == 1) guardian "prtg_cas04.gat",30,234,"Soldier Guardian",1287,"Guardian_Pt04::OnGuardianDied",0;
-	if (GetCastleData("prtg_cas04.gat",11) == 1) guardian "prtg_cas04.gat",38,234,"Soldier Guardian",1287,"Guardian_Pt04::OnGuardianDied",1;
-	if (GetCastleData("prtg_cas04.gat",12) == 1) guardian "prtg_cas04.gat",63,26,"Soldier Guardian",1287,"Guardian_Pt04::OnGuardianDied",2;
-	if (GetCastleData("prtg_cas04.gat",13) == 1) guardian "prtg_cas04.gat",253,274,"Archer Guardian",1285,"Guardian_Pt04::OnGuardianDied",3;
-	if (GetCastleData("prtg_cas04.gat",14) == 1) guardian "prtg_cas04.gat",269,256,"Archer Guardian",1285,"Guardian_Pt04::OnGuardianDied",4;
-	if (GetCastleData("prtg_cas04.gat",15) == 1) guardian "prtg_cas04.gat",267,271,"Knight Guardian",1286,"Guardian_Pt04::OnGuardianDied",5;
-	if (GetCastleData("prtg_cas04.gat",16) == 1) guardian "prtg_cas04.gat",34,281,"Knight Guardian",1286,"Guardian_Pt04::OnGuardianDied",6;
-	if (GetCastleData("prtg_cas04.gat",17) == 1) guardian "prtg_cas04.gat",33,232,"Knight Guardian",1286,"Guardian_Pt04::OnGuardianDied",7;
+	if (GetCastleData("prtg_cas04",10) == 1) guardian "prtg_cas04",30,234,"Soldier Guardian",1287,"Guardian_Pt04::OnGuardianDied",0;
+	if (GetCastleData("prtg_cas04",11) == 1) guardian "prtg_cas04",38,234,"Soldier Guardian",1287,"Guardian_Pt04::OnGuardianDied",1;
+	if (GetCastleData("prtg_cas04",12) == 1) guardian "prtg_cas04",63,26,"Soldier Guardian",1287,"Guardian_Pt04::OnGuardianDied",2;
+	if (GetCastleData("prtg_cas04",13) == 1) guardian "prtg_cas04",253,274,"Archer Guardian",1285,"Guardian_Pt04::OnGuardianDied",3;
+	if (GetCastleData("prtg_cas04",14) == 1) guardian "prtg_cas04",269,256,"Archer Guardian",1285,"Guardian_Pt04::OnGuardianDied",4;
+	if (GetCastleData("prtg_cas04",15) == 1) guardian "prtg_cas04",267,271,"Knight Guardian",1286,"Guardian_Pt04::OnGuardianDied",5;
+	if (GetCastleData("prtg_cas04",16) == 1) guardian "prtg_cas04",34,281,"Knight Guardian",1286,"Guardian_Pt04::OnGuardianDied",6;
+	if (GetCastleData("prtg_cas04",17) == 1) guardian "prtg_cas04",33,232,"Knight Guardian",1286,"Guardian_Pt04::OnGuardianDied",7;
 	end;
 
 OnGuardianDied:
 	// Event when Guardian dies
-	MapAnnounce "prtg_cas04.gat","A Guardian Has Fallen",17;
+	MapAnnounce "prtg_cas04","A Guardian Has Fallen",17;
 	end;
 }
 //------------------------------------------------------------------------------
-prtg_cas05.gat,266,266,0	script	Guardian_Pt05	-1,{
+prtg_cas05,266,266,0	script	Guardian_Pt05	-1,{
 OnAgitInit:
-	if (GetCastleData("prtg_cas05.gat",10) == 1) guardian "prtg_cas05.gat",244,15,"Soldier Guardian",1287,"Guardian_Pt05::OnGuardianDied",0;
-	if (GetCastleData("prtg_cas05.gat",11) == 1) guardian "prtg_cas05.gat",241,14,"Soldier Guardian",1287,"Guardian_Pt05::OnGuardianDied",1;
-	if (GetCastleData("prtg_cas05.gat",12) == 1) guardian "prtg_cas05.gat",68,40,"Soldier Guardian",1287,"Guardian_Pt05::OnGuardianDied",2;
-	if (GetCastleData("prtg_cas05.gat",13) == 1) guardian "prtg_cas05.gat",62,264,"Archer Guardian",1285,"Guardian_Pt05::OnGuardianDied",3;
-	if (GetCastleData("prtg_cas05.gat",14) == 1) guardian "prtg_cas05.gat",244,61,"Archer Guardian",1285,"Guardian_Pt05::OnGuardianDied",4;
-	if (GetCastleData("prtg_cas05.gat",15) == 1) guardian "prtg_cas05.gat",34,24,"Knight Guardian",1286,"Guardian_Pt05::OnGuardianDied",5;
-	if (GetCastleData("prtg_cas05.gat",16) == 1) guardian "prtg_cas05.gat",208,86,"Knight Guardian",1286,"Guardian_Pt05::OnGuardianDied",6;
-	if (GetCastleData("prtg_cas05.gat",17) == 1) guardian "prtg_cas05.gat",43,70,"Knight Guardian",1286,"Guardian_Pt05::OnGuardianDied",7;
+	if (GetCastleData("prtg_cas05",10) == 1) guardian "prtg_cas05",244,15,"Soldier Guardian",1287,"Guardian_Pt05::OnGuardianDied",0;
+	if (GetCastleData("prtg_cas05",11) == 1) guardian "prtg_cas05",241,14,"Soldier Guardian",1287,"Guardian_Pt05::OnGuardianDied",1;
+	if (GetCastleData("prtg_cas05",12) == 1) guardian "prtg_cas05",68,40,"Soldier Guardian",1287,"Guardian_Pt05::OnGuardianDied",2;
+	if (GetCastleData("prtg_cas05",13) == 1) guardian "prtg_cas05",62,264,"Archer Guardian",1285,"Guardian_Pt05::OnGuardianDied",3;
+	if (GetCastleData("prtg_cas05",14) == 1) guardian "prtg_cas05",244,61,"Archer Guardian",1285,"Guardian_Pt05::OnGuardianDied",4;
+	if (GetCastleData("prtg_cas05",15) == 1) guardian "prtg_cas05",34,24,"Knight Guardian",1286,"Guardian_Pt05::OnGuardianDied",5;
+	if (GetCastleData("prtg_cas05",16) == 1) guardian "prtg_cas05",208,86,"Knight Guardian",1286,"Guardian_Pt05::OnGuardianDied",6;
+	if (GetCastleData("prtg_cas05",17) == 1) guardian "prtg_cas05",43,70,"Knight Guardian",1286,"Guardian_Pt05::OnGuardianDied",7;
 	end;
 
 OnGuardianDied:
 	// Event when Guardian dies
-	MapAnnounce "prtg_cas05.gat","A Guardian Has Fallen",17;
+	MapAnnounce "prtg_cas05","A Guardian Has Fallen",17;
 	end;
 }

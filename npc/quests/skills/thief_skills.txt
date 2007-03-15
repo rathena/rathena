@@ -25,7 +25,7 @@
 
 
 //======================================================================================================
-moc_prydb1.gat,154,128,4	script	Alcouskou	118,{
+moc_prydb1,154,128,4	script	Alcouskou	118,{
 	mes "[Alcouskou]";
 	if(baseClass == Job_Thief) goto L_Start;
 	if(BaseJob==Job_Novice) goto L_Novice;
@@ -332,7 +332,7 @@ L_Fling:
 
 
 //====================================================================================
-payon.gat,91,77,4	script	RuRumuni	99,{
+payon,91,77,4	script	RuRumuni	99,{
 	mes "[RuRumuni]";
 	if(@SANDATTACK && !countitem(7042)) goto L_Start;
 

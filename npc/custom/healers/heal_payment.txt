@@ -18,7 +18,7 @@
 //= Removed Duplicates [Silent]
 //============================================================
 
-prontera.gat,150,184,5	script	Healer#h2-1::Healer2	742,{
+prontera,150,184,5	script	Healer#h2-1::Healer2	742,{
 	set @tempHp, MaxHp-Hp;
 	set @tempSpReal, MaxSp-Sp;
 	set @tempSp, ((MaxSp-Sp) * BaseLevel) / 5;
@@ -90,18 +90,18 @@ prontera.gat,150,184,5	script	Healer#h2-1::Healer2	742,{
 }
 
 
-morocc.gat,159,96,5	duplicate(Healer2)	Healer#h2-2	742
-ayothaya.gat,155,111,5	duplicate(Healer2)	Healer#h2-3	742
-geffen.gat,121,61,5	duplicate(Healer2)	Healer#h2-4	742
-umbala.gat,94,162,5	duplicate(Healer2)	Healer#h2-5	742
-payon.gat,180,105,5	duplicate(Healer2)	Healer#h2-6	742
-alberta.gat,185,144,5	duplicate(Healer2)	Healer#h2-7	742
-aldebaran.gat,134,123,5	duplicate(Healer2)	Healer#h2-8	742
-izlude.gat,125,118,5	duplicate(Healer2)	Healer#h2-9	742
-xmas.gat,149,136,5	duplicate(Healer2)	Healer#h2-10	742
-comodo.gat,188,162,5	duplicate(Healer2)	Healer#h2-11	742
-amatsu.gat,200,80,5	duplicate(Healer2)	Healer#h2-12	742
-gonryun.gat,164,130,5	duplicate(Healer2)	Healer#h2-13	742
-yuno.gat,152,186,5	duplicate(Healer2)	Healer#h2-14	742
-niflheim.gat,188,180,5	duplicate(Healer2)	Healer#h2-15	742
-louyang.gat,225,103,5	duplicate(Healer2)	Healer#h2-16	742
+morocc,159,96,5	duplicate(Healer2)	Healer#h2-2	742
+ayothaya,155,111,5	duplicate(Healer2)	Healer#h2-3	742
+geffen,121,61,5	duplicate(Healer2)	Healer#h2-4	742
+umbala,94,162,5	duplicate(Healer2)	Healer#h2-5	742
+payon,180,105,5	duplicate(Healer2)	Healer#h2-6	742
+alberta,185,144,5	duplicate(Healer2)	Healer#h2-7	742
+aldebaran,134,123,5	duplicate(Healer2)	Healer#h2-8	742
+izlude,125,118,5	duplicate(Healer2)	Healer#h2-9	742
+xmas,149,136,5	duplicate(Healer2)	Healer#h2-10	742
+comodo,188,162,5	duplicate(Healer2)	Healer#h2-11	742
+amatsu,200,80,5	duplicate(Healer2)	Healer#h2-12	742
+gonryun,164,130,5	duplicate(Healer2)	Healer#h2-13	742
+yuno,152,186,5	duplicate(Healer2)	Healer#h2-14	742
+niflheim,188,180,5	duplicate(Healer2)	Healer#h2-15	742
+louyang,225,103,5	duplicate(Healer2)	Healer#h2-16	742

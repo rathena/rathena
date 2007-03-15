@@ -1,4 +1,4 @@
-prontera.gat,155,177,1	script	Tell Me	725,{
+prontera,155,177,1	script	Tell Me	725,{
 	mes "[Tell Me]";
 	mes "Class: " + Class;
 	mes "BaseClass: " + BaseClass;

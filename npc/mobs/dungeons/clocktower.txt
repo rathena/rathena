@@ -13,144 +13,144 @@
 //==================================================
 // alde_dun01 - Clock Tower B1
 //==================================================
-alde_dun01.gat,0,0,0,0	monster	Arclouze	1194,50,0,0,0
-alde_dun01.gat,0,0,0,0	monster	Drainliar	1111,40,0,0,0
+alde_dun01,0,0,0,0	monster	Arclouze	1194,50,0,0,0
+alde_dun01,0,0,0,0	monster	Drainliar	1111,40,0,0,0
 
 //==================================================
 // alde_dun02 - Clock Tower B2
 //==================================================
-alde_dun02.gat,0,0,0,0	monster	High Orc	1213,40,0,0,0
-alde_dun02.gat,0,0,0,0	monster	Orc Archer	1189,20,0,0,0
-alde_dun02.gat,0,0,0,0	monster	Brilight	1211,20,0,0,0
-alde_dun02.gat,0,0,0,0	monster	Drainliar	1111,10,0,0,0
-alde_dun02.gat,0,0,0,0	monster	Arclouze	1194,20,0,0,0
+alde_dun02,0,0,0,0	monster	High Orc	1213,40,0,0,0
+alde_dun02,0,0,0,0	monster	Orc Archer	1189,20,0,0,0
+alde_dun02,0,0,0,0	monster	Brilight	1211,20,0,0,0
+alde_dun02,0,0,0,0	monster	Drainliar	1111,10,0,0,0
+alde_dun02,0,0,0,0	monster	Arclouze	1194,20,0,0,0
 
 //==================================================
 // alde_dun03 - Clock Tower B3
 //==================================================
-alde_dun03.gat,0,0,0,0	monster	Cramp	1209,25,0,0,0
-alde_dun03.gat,0,0,0,0	monster	Drainliar	1111,20,0,0,0
-alde_dun03.gat,77,28,5,5	monster	Cramp	1209,3,40000,20000,0
-alde_dun03.gat,0,0,0,0	monster	Penomena	1216,15,300000,150000,0
-alde_dun03.gat,184,61,30,30	monster	Cramp	1209,10,300000,150000,0
-alde_dun03.gat,184,61,30,30	monster	Drainliar	1111,10,300000,150000,0
-alde_dun03.gat,0,0,0,0	monster	Penomena	1216,5,300000,150000,0
-alde_dun03.gat,163,56,10,10	monster	Penomena	1216,3,600000,300000,0
-alde_dun03.gat,168,42,6,6	monster	Penomena	1216,2,600000,300000,0
-alde_dun03.gat,147,30,8,8	monster	Penomena	1216,2,600000,300000,0
-alde_dun03.gat,0,0,0,0	monster	Penomena	1216,10,300000,150000,0
-alde_dun03.gat,126,53,20,20	monster	Cramp	1209,5,300000,150000,0
-alde_dun03.gat,126,53,20,20	monster	Drainliar	1111,5,300000,150000,0
-alde_dun03.gat,102,40,10,10	monster	Penomena	1216,4,600000,300000,0
-alde_dun03.gat,0,0,0,0	monster	Penomena	1216,15,300000,150000,0
-alde_dun03.gat,130,220,40,40	monster	Cramp	1209,10,300000,150000,0
-alde_dun03.gat,130,220,40,40	monster	Drainliar	1111,10,300000,150000,0
-alde_dun03.gat,155,201,25,25	monster	Penomena	1216,7,600000,300000,0
-alde_dun03.gat,160,181,8,8	monster	Penomena	1216,2,600000,300000,0
-alde_dun03.gat,179,166,6,6	monster	Penomena	1216,4,600000,300000,0
-alde_dun03.gat,127,204,9,9	monster	Penomena	1216,5,600000,300000,0
-alde_dun03.gat,127,204,9,9	monster	Cramp	1209,3,300000,150000,0
-alde_dun03.gat,142,157,8,8	monster	Penomena	1216,5,600000,300000,0
-alde_dun03.gat,135,140,8,8	monster	Penomena	1216,3,600000,300000,0
-alde_dun03.gat,120,157,8,8	monster	Penomena	1216,3,600000,300000,0
-alde_dun03.gat,120,157,8,8	monster	Drainliar	1111,10,300000,150000,0
+alde_dun03,0,0,0,0	monster	Cramp	1209,25,0,0,0
+alde_dun03,0,0,0,0	monster	Drainliar	1111,20,0,0,0
+alde_dun03,77,28,5,5	monster	Cramp	1209,3,40000,20000,0
+alde_dun03,0,0,0,0	monster	Penomena	1216,15,300000,150000,0
+alde_dun03,184,61,30,30	monster	Cramp	1209,10,300000,150000,0
+alde_dun03,184,61,30,30	monster	Drainliar	1111,10,300000,150000,0
+alde_dun03,0,0,0,0	monster	Penomena	1216,5,300000,150000,0
+alde_dun03,163,56,10,10	monster	Penomena	1216,3,600000,300000,0
+alde_dun03,168,42,6,6	monster	Penomena	1216,2,600000,300000,0
+alde_dun03,147,30,8,8	monster	Penomena	1216,2,600000,300000,0
+alde_dun03,0,0,0,0	monster	Penomena	1216,10,300000,150000,0
+alde_dun03,126,53,20,20	monster	Cramp	1209,5,300000,150000,0
+alde_dun03,126,53,20,20	monster	Drainliar	1111,5,300000,150000,0
+alde_dun03,102,40,10,10	monster	Penomena	1216,4,600000,300000,0
+alde_dun03,0,0,0,0	monster	Penomena	1216,15,300000,150000,0
+alde_dun03,130,220,40,40	monster	Cramp	1209,10,300000,150000,0
+alde_dun03,130,220,40,40	monster	Drainliar	1111,10,300000,150000,0
+alde_dun03,155,201,25,25	monster	Penomena	1216,7,600000,300000,0
+alde_dun03,160,181,8,8	monster	Penomena	1216,2,600000,300000,0
+alde_dun03,179,166,6,6	monster	Penomena	1216,4,600000,300000,0
+alde_dun03,127,204,9,9	monster	Penomena	1216,5,600000,300000,0
+alde_dun03,127,204,9,9	monster	Cramp	1209,3,300000,150000,0
+alde_dun03,142,157,8,8	monster	Penomena	1216,5,600000,300000,0
+alde_dun03,135,140,8,8	monster	Penomena	1216,3,600000,300000,0
+alde_dun03,120,157,8,8	monster	Penomena	1216,3,600000,300000,0
+alde_dun03,120,157,8,8	monster	Drainliar	1111,10,300000,150000,0
 
 //==================================================
 // alde_dun04 - Clock Tower B4
 //==================================================
-alde_dun04.gat,0,0,0,0	monster	Bathory	1102,50,0,0,0
-alde_dun04.gat,0,0,0,0	monster	Joker	1131,10,0,0,0
-alde_dun04.gat,0,0,0,0	monster	Executioner	1205,1,3600000,1800000,1
-alde_dun04.gat,0,0,0,0	monster	Mysteltainn	1203,1,3600000,1800000,1
-alde_dun04.gat,0,0,0,0	monster	Ogretooth	1204,1,3600000,1800000,1
-alde_dun04.gat,0,0,0,0	monster	Whisper	1179,10,0,0,0
+alde_dun04,0,0,0,0	monster	Bathory	1102,50,0,0,0
+alde_dun04,0,0,0,0	monster	Joker	1131,10,0,0,0
+alde_dun04,0,0,0,0	monster	Executioner	1205,1,3600000,1800000,1
+alde_dun04,0,0,0,0	monster	Mysteltainn	1203,1,3600000,1800000,1
+alde_dun04,0,0,0,0	monster	Ogretooth	1204,1,3600000,1800000,1
+alde_dun04,0,0,0,0	monster	Whisper	1179,10,0,0,0
 
 //==================================================
 // c_tower1 - Clock Tower F1
 //==================================================
-c_tower1.gat,0,0,0,0	monster	Punk	1199,70,0,0,0
-c_tower1.gat,0,0,0,0	monster	Rideword	1195,70,0,0,0
-c_tower1.gat,0,0,0,0	monster	Clock Tower Manager	1270,1,0,0,0
-c_tower1.gat,0,0,0,0	monster	Bathory	1102,1,0,0,0
+c_tower1,0,0,0,0	monster	Punk	1199,70,0,0,0
+c_tower1,0,0,0,0	monster	Rideword	1195,70,0,0,0
+c_tower1,0,0,0,0	monster	Clock Tower Manager	1270,1,0,0,0
+c_tower1,0,0,0,0	monster	Bathory	1102,1,0,0,0
 
 //==================================================
 // c_tower2 - Clock Tower F2
 //==================================================
-c_tower2.gat,0,0,0,0	monster	Punk	1199,40,0,0,0
-c_tower2.gat,0,0,0,0	monster	Clock	1269,40,0,0,0
-c_tower2.gat,0,0,0,0	monster	Rideword	1195,7,0,0,0
-c_tower2.gat,128,100,10,10	monster	Rideword	1195,1,60000,30000,0
-c_tower2.gat,149,199,10,10	monster	Rideword	1195,1,120000,60000,0
-c_tower2.gat,149,199,10,10	monster	Rideword	1195,1,300000,120000,0
-c_tower2.gat,273,286,20,20	monster	Rideword	1195,1,120000,60000,0
-c_tower2.gat,273,286,20,20	monster	Rideword	1195,1,300000,120000,0
-c_tower2.gat,0,0,0,0	monster	Mimic	1191,3,0,0,0
-c_tower2.gat,0,0,0,0	monster	Clock Tower Manager	1270,1,0,0,0
-c_tower2.gat,0,0,0,0	monster	Elder	1377,1,3600000,1800000,0
-c_tower2.gat,0,0,0,0	monster	Elder	1377,1,3600000,1800000,0
+c_tower2,0,0,0,0	monster	Punk	1199,40,0,0,0
+c_tower2,0,0,0,0	monster	Clock	1269,40,0,0,0
+c_tower2,0,0,0,0	monster	Rideword	1195,7,0,0,0
+c_tower2,128,100,10,10	monster	Rideword	1195,1,60000,30000,0
+c_tower2,149,199,10,10	monster	Rideword	1195,1,120000,60000,0
+c_tower2,149,199,10,10	monster	Rideword	1195,1,300000,120000,0
+c_tower2,273,286,20,20	monster	Rideword	1195,1,120000,60000,0
+c_tower2,273,286,20,20	monster	Rideword	1195,1,300000,120000,0
+c_tower2,0,0,0,0	monster	Mimic	1191,3,0,0,0
+c_tower2,0,0,0,0	monster	Clock Tower Manager	1270,1,0,0,0
+c_tower2,0,0,0,0	monster	Elder	1377,1,3600000,1800000,0
+c_tower2,0,0,0,0	monster	Elder	1377,1,3600000,1800000,0
 
 //==================================================
 // c_tower3 - Clock Tower F3
 //==================================================
-c_tower3.gat,0,0,0,0	monster	Alarm	1193,60,0,0,0
-c_tower3.gat,0,0,0,0	monster	Rideword	1195,10,0,0,0
-c_tower3.gat,153,220,10,10	monster	Rideword	1195,1,126000,100000,0
-c_tower3.gat,0,0,0,0	monster	Mimic	1191,15,0,0,0
-c_tower3.gat,0,0,0,0	monster	Clock Tower Manager	1270,1,0,0,0
+c_tower3,0,0,0,0	monster	Alarm	1193,60,0,0,0
+c_tower3,0,0,0,0	monster	Rideword	1195,10,0,0,0
+c_tower3,153,220,10,10	monster	Rideword	1195,1,126000,100000,0
+c_tower3,0,0,0,0	monster	Mimic	1191,15,0,0,0
+c_tower3,0,0,0,0	monster	Clock Tower Manager	1270,1,0,0,0
 
 //==================================================
 // c_tower4 - Clock Tower F4
 //==================================================
-c_tower4.gat,0,0,0,0	monster	Clock Tower Manager	1270,2,1800000,0,0
-c_tower4.gat,0,0,0,0	monster	Clock Tower Manager	1270,1,3600000,0,0
-c_tower4.gat,0,0,0,0	monster	Whisper	1179,5,0,0,0
-c_tower4.gat,0,0,0,0	monster	Elder	1377,1,3600000,1800000,0
-c_tower4.gat,0,0,0,0	monster	Elder	1377,1,1800000,600000,0
-c_tower4.gat,108,198,100,10	monster	Alarm	1193,6,0,0,0
-c_tower4.gat,108,178,100,10	monster	Alarm	1193,6,0,0,0
-c_tower4.gat,108,158,100,10	monster	Alarm	1193,6,0,0,0
-c_tower4.gat,108,138,100,10	monster	Alarm	1193,6,0,0,0
-c_tower4.gat,108,118,100,10	monster	Alarm	1193,6,0,0,0
-c_tower4.gat,108,98,100,10	monster	Clock	1269,7,0,0,0
-c_tower4.gat,108,78,100,10	monster	Clock	1269,7,0,0,0
-c_tower4.gat,108,58,100,10	monster	Clock	1269,7,0,0,0
-c_tower4.gat,108,38,100,10	monster	Clock	1269,7,0,0,0
-c_tower4.gat,108,18,100,10	monster	Clock	1269,7,0,0,0
-c_tower4.gat,108,198,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4.gat,108,178,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4.gat,108,158,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4.gat,108,138,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4.gat,108,118,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4.gat,108,98,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4.gat,108,78,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4.gat,108,58,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4.gat,108,38,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4.gat,108,18,100,10	monster	Owl Duke	1320,3,0,0,0
-c_tower4.gat,98,180,0,0	monster	Rideword	1195,1,300000,150000,1
-c_tower4.gat,97,180,0,0	monster	Rideword	1195,1,240000,150000,1
-c_tower4.gat,96,180,0,0	monster	Rideword	1195,1,350000,150000,1
-c_tower4.gat,95,180,0,0	monster	Rideword	1195,1,410000,150000,1
-c_tower4.gat,94,180,0,0	monster	Rideword	1195,1,320000,150000,1
-c_tower4.gat,93,180,0,0	monster	Rideword	1195,1,260000,150000,1
-c_tower4.gat,92,180,0,0	monster	Rideword	1195,1,280000,150000,1
-c_tower4.gat,91,180,0,0	monster	Rideword	1195,1,330000,150000,1
-c_tower4.gat,87,180,0,0	monster	Rideword	1195,1,400000,150000,1
-c_tower4.gat,86,180,0,0	monster	Rideword	1195,1,380000,150000,1
-c_tower4.gat,80,179,0,0	monster	Rideword	1195,1,360000,150000,1
-c_tower4.gat,80,180,0,0	monster	Rideword	1195,1,350000,150000,1
-c_tower4.gat,80,181,0,0	monster	Rideword	1195,1,290000,150000,1
-c_tower4.gat,80,182,0,0	monster	Rideword	1195,1,300000,150000,1
-c_tower4.gat,80,183,0,0	monster	Rideword	1195,1,340000,150000,1
-c_tower4.gat,128,194,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4.gat,38,193,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4.gat,37,159,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4.gat,31,139,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4.gat,104,14,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4.gat,104,27,0,0	monster	Mimic	1191,1,900000,400000,1
-c_tower4.gat,105,24,0,0	monster	Mimic	1191,1,900000,400000,1
-c_tower4.gat,205,105,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4.gat,0,0,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4.gat,148,85,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4.gat,189,51,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4.gat,170,34,0,0	monster	Mimic	1191,1,1800000,900000,1
-c_tower4.gat,42,41,0,0	monster	Executioner	1205,1,7200000,3600000,1
+c_tower4,0,0,0,0	monster	Clock Tower Manager	1270,2,1800000,0,0
+c_tower4,0,0,0,0	monster	Clock Tower Manager	1270,1,3600000,0,0
+c_tower4,0,0,0,0	monster	Whisper	1179,5,0,0,0
+c_tower4,0,0,0,0	monster	Elder	1377,1,3600000,1800000,0
+c_tower4,0,0,0,0	monster	Elder	1377,1,1800000,600000,0
+c_tower4,108,198,100,10	monster	Alarm	1193,6,0,0,0
+c_tower4,108,178,100,10	monster	Alarm	1193,6,0,0,0
+c_tower4,108,158,100,10	monster	Alarm	1193,6,0,0,0
+c_tower4,108,138,100,10	monster	Alarm	1193,6,0,0,0
+c_tower4,108,118,100,10	monster	Alarm	1193,6,0,0,0
+c_tower4,108,98,100,10	monster	Clock	1269,7,0,0,0
+c_tower4,108,78,100,10	monster	Clock	1269,7,0,0,0
+c_tower4,108,58,100,10	monster	Clock	1269,7,0,0,0
+c_tower4,108,38,100,10	monster	Clock	1269,7,0,0,0
+c_tower4,108,18,100,10	monster	Clock	1269,7,0,0,0
+c_tower4,108,198,100,10	monster	Owl Duke	1320,3,0,0,0
+c_tower4,108,178,100,10	monster	Owl Duke	1320,3,0,0,0
+c_tower4,108,158,100,10	monster	Owl Duke	1320,3,0,0,0
+c_tower4,108,138,100,10	monster	Owl Duke	1320,3,0,0,0
+c_tower4,108,118,100,10	monster	Owl Duke	1320,3,0,0,0
+c_tower4,108,98,100,10	monster	Owl Duke	1320,3,0,0,0
+c_tower4,108,78,100,10	monster	Owl Duke	1320,3,0,0,0
+c_tower4,108,58,100,10	monster	Owl Duke	1320,3,0,0,0
+c_tower4,108,38,100,10	monster	Owl Duke	1320,3,0,0,0
+c_tower4,108,18,100,10	monster	Owl Duke	1320,3,0,0,0
+c_tower4,98,180,0,0	monster	Rideword	1195,1,300000,150000,1
+c_tower4,97,180,0,0	monster	Rideword	1195,1,240000,150000,1
+c_tower4,96,180,0,0	monster	Rideword	1195,1,350000,150000,1
+c_tower4,95,180,0,0	monster	Rideword	1195,1,410000,150000,1
+c_tower4,94,180,0,0	monster	Rideword	1195,1,320000,150000,1
+c_tower4,93,180,0,0	monster	Rideword	1195,1,260000,150000,1
+c_tower4,92,180,0,0	monster	Rideword	1195,1,280000,150000,1
+c_tower4,91,180,0,0	monster	Rideword	1195,1,330000,150000,1
+c_tower4,87,180,0,0	monster	Rideword	1195,1,400000,150000,1
+c_tower4,86,180,0,0	monster	Rideword	1195,1,380000,150000,1
+c_tower4,80,179,0,0	monster	Rideword	1195,1,360000,150000,1
+c_tower4,80,180,0,0	monster	Rideword	1195,1,350000,150000,1
+c_tower4,80,181,0,0	monster	Rideword	1195,1,290000,150000,1
+c_tower4,80,182,0,0	monster	Rideword	1195,1,300000,150000,1
+c_tower4,80,183,0,0	monster	Rideword	1195,1,340000,150000,1
+c_tower4,128,194,0,0	monster	Mimic	1191,1,1800000,900000,1
+c_tower4,38,193,0,0	monster	Mimic	1191,1,1800000,900000,1
+c_tower4,37,159,0,0	monster	Mimic	1191,1,1800000,900000,1
+c_tower4,31,139,0,0	monster	Mimic	1191,1,1800000,900000,1
+c_tower4,104,14,0,0	monster	Mimic	1191,1,1800000,900000,1
+c_tower4,104,27,0,0	monster	Mimic	1191,1,900000,400000,1
+c_tower4,105,24,0,0	monster	Mimic	1191,1,900000,400000,1
+c_tower4,205,105,0,0	monster	Mimic	1191,1,1800000,900000,1
+c_tower4,0,0,0,0	monster	Mimic	1191,1,1800000,900000,1
+c_tower4,148,85,0,0	monster	Mimic	1191,1,1800000,900000,1
+c_tower4,189,51,0,0	monster	Mimic	1191,1,1800000,900000,1
+c_tower4,170,34,0,0	monster	Mimic	1191,1,1800000,900000,1
+c_tower4,42,41,0,0	monster	Executioner	1205,1,7200000,3600000,1

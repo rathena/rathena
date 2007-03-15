@@ -18,7 +18,7 @@
 //= 1.1 Removed Duplicates [Silent]
 //============================================================
 
-alberta.gat,137,37,6	script	Stylist#01	91,{
+alberta,137,37,6	script	Stylist#01	91,{
 	mes "[Veronica]";
 	mes "Welcome~~Welcome~~";
 	mes "Welcome to the one of the best Hair shop, Veronicas Beauty Saloon!!";

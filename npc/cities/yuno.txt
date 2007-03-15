@@ -19,7 +19,7 @@
 //============================================================ 
 
 
-yuno.gat,330,100,4	script	Knight	734,{
+yuno,330,100,4	script	Knight	734,{
 	mes "[Leibech]";
 	mes "I have a great";
 	mes "interest in collecting";
@@ -39,7 +39,7 @@ yuno.gat,330,100,4	script	Knight	734,{
 }
 
 //======================================================================================
-yuno.gat,208,164,4	script	Active little girl	101,{
+yuno,208,164,4	script	Active little girl	101,{
 	mes "[Hisa]";
 	mes ".....";
 	mes "This town is so boring.";
@@ -51,7 +51,7 @@ yuno.gat,208,164,4	script	Active little girl	101,{
 
 
 //======================================================================================
-yuno.gat,164,200,4	script	Noyee	101,{
+yuno,164,200,4	script	Noyee	101,{
 	mes "[Noyee]";
 	mes "Did you know that there's a";
 	mes "difference between the armor you";
@@ -79,7 +79,7 @@ yuno.gat,164,200,4	script	Noyee	101,{
 }
 
 //======================================================================================
-yuno.gat,184,173,4	script	Freidrich	729,{
+yuno,184,173,4	script	Freidrich	729,{
 	mes "[Freidrich]";
 	mes "The city of Sages,";
 	mes "^5533FFJuno^000000, is made of";
@@ -100,7 +100,7 @@ yuno.gat,184,173,4	script	Freidrich	729,{
 }
 
 //======================================================================================
-yuno.gat,157,87,4	script	A Citizen of Yuno	102,{
+yuno,157,87,4	script	A Citizen of Yuno	102,{
 	mes "[Shalima]";
 	mes "When you go north from Al De Baran,";
 	mes "you will arrive at 'Elmeth";
@@ -135,7 +135,7 @@ yuno.gat,157,87,4	script	A Citizen of Yuno	102,{
 }
 
 //=======================================================================================
-yuno.gat,157,205,4	script	Juno Artisan	54,{
+yuno,157,205,4	script	Juno Artisan	54,{
 	mes "[Artisan]";
 	mes "*Mumble mumble...*";
 	next;
@@ -213,7 +213,7 @@ yuno.gat,157,205,4	script	Juno Artisan	54,{
 }
 
 //======================================================================================
-yuno.gat,336,227,4	script	Juno Granny	103,{
+yuno,336,227,4	script	Juno Granny	103,{
 	mes "[Granny]";
 	mes "I am an old Sage granny who";
 	mes "foresees everything...";
@@ -241,7 +241,7 @@ yuno.gat,336,227,4	script	Juno Granny	103,{
 }
 
 //========================================================================================
-yuno.gat,328,239,4	script	Juno Fighter	732,{
+yuno,328,239,4	script	Juno Fighter	732,{
 	mes "[Sergiof]";
 	mes "My name is Sergiof,";
 	mes "the fighter who";
@@ -263,7 +263,7 @@ yuno.gat,328,239,4	script	Juno Fighter	732,{
 }
 
 //========================================================================================
-yuno.gat,343,68,4	script	Juno Despot	730,{
+yuno,343,68,4	script	Juno Despot	730,{
 	mes "[Ninno]";
 	mes "Have you ever heard of an Egyptian";
 	mes "king who was once believed to be a";
@@ -284,7 +284,7 @@ yuno.gat,343,68,4	script	Juno Despot	730,{
 }
 	
 //=======================================================================================
-yuno.gat,261,99,4	script	Sage Yklah	735,{
+yuno,261,99,4	script	Sage Yklah	735,{
 	mes "[Yklah]";
 	mes "^5533FFJuphero^000000...";
 	mes "That was the name of the city that";
@@ -309,7 +309,7 @@ yuno.gat,261,99,4	script	Sage Yklah	735,{
 }
 
 //=========================================================================================
-yuno.gat,305,207,6	script	Sage Syklah	735,{
+yuno,305,207,6	script	Sage Syklah	735,{
 		mes "[Syklah]";
 		mes "The people here keep talking of";
 		mes "some suspicious man living in";
@@ -341,7 +341,7 @@ yuno.gat,305,207,6	script	Sage Syklah	735,{
 }
 
 //==========================================================================================
-yuno.gat,213,298,4	script	Sage Esklah	735,{
+yuno,213,298,4	script	Sage Esklah	735,{
 	mes "[Esklah]";
 	mes "I remember watching a harmless";
 	mes "piece of paper floating";
@@ -376,7 +376,7 @@ yuno.gat,213,298,4	script	Sage Esklah	735,{
 
 
 //======================================================================================
-yuno.gat,165,111,4	script	Juno Sage	123,{
+yuno,165,111,4	script	Juno Sage	123,{
 	mes "[Le Morpheous]";
 	mes "^FF5533Apocalypse...^000000";
 	mes "It is the name of an android that";

@@ -13,6 +13,6 @@
 //============================================================
 
 //= Toy Factory ==============================================
-xmas_dun01.gat,128,133,0	warp	xmas15	3,3,xmas_dun02.gat,129,133
-xmas_dun01.gat,205,13,0	warp	xmas14-1	3,3,xmas.gat,143,308
-xmas_dun02.gat,129,129,0	warp	xmas15-1	3,3,xmas_dun01.gat,128,128
+xmas_dun01,128,133,0	warp	xmas15	3,3,xmas_dun02,129,133
+xmas_dun01,205,13,0	warp	xmas14-1	3,3,xmas,143,308
+xmas_dun02,129,129,0	warp	xmas15-1	3,3,xmas_dun01,128,128

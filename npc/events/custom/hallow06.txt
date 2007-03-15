@@ -14,7 +14,7 @@
 //============================================================
 
 
-prontera.gat,151,190,5	script	Hallows' Eve Event	807,{
+prontera,151,190,5	script	Hallows' Eve Event	807,{
 	mes "[Hallows' Eve Event]";
 	if(Class == Job_Novice){
 		mes "I am sorry but you have to got a job to complete the event.";

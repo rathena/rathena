@@ -14,7 +14,7 @@
 //============================================================
 
 
-hugel.gat,98,57,3	script	Old Lady#hu1	863,{
+hugel,98,57,3	script	Old Lady#hu1	863,{
 	mes "[Old Lady]";
 	mes "Welcome to Hugel, the Power Source City.";
 	next;

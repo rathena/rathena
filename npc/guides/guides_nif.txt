@@ -15,7 +15,7 @@
 
 
 //=====================================================================================
-niflheim.gat,186,190,5	script	Wandering Man	798,{
+niflheim,186,190,5	script	Wandering Man	798,{
 	mes "[Wandering Man]";
 	mes "Why are you in this scary city? I guess you lost your way too, heh.";
 	mes "I was attracted here by the tall trees, but still can't find my way out after so long...";

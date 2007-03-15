@@ -28,7 +28,7 @@
 // == NPCs on the road to Umbala ==
 //========================================================
 //Note that On_Emotion is NOT an npc command but just an trigger for DoNpcEvent!!
-comodo.gat,170,137,7	script	Reid	84,{
+comodo,170,137,7	script	Reid	84,{
 	close;
 On_Emotion20:
 	emotion e_hmm;
@@ -39,7 +39,7 @@ On_Emotion29:
 }
 
 //========================================================
-comodo.gat,171,137,1	script	Heath	92,{
+comodo,171,137,1	script	Heath	92,{
 	mes "[Reid]";
 	mes "There's a huuuuuuuge treasure hidden";
 	mes "somewhere around here!";
@@ -155,7 +155,7 @@ comodo.gat,171,137,1	script	Heath	92,{
 }
 
 //========================================================
-cmd_in01.gat,175,120,3	script	Iria	69,{
+cmd_in01,175,120,3	script	Iria	69,{
 	mes "[Iria]";
 	mes "That guy over at the far table";
 	mes "in the corner is the adventurer";
@@ -175,7 +175,7 @@ cmd_in01.gat,175,120,3	script	Iria	69,{
 }
 
 //========================================================
-cmd_in01.gat,164,115,1	script	Niles	731,{
+cmd_in01,164,115,1	script	Niles	731,{
 	mes "[Niles]";
 	mes "Oh?";
 	mes "Another fool come to ask about";
@@ -241,7 +241,7 @@ cmd_in01.gat,164,115,1	script	Niles	731,{
 
 //==================================================================
 //Trade money for meat
-umbala.gat,70,106,3	script	Utan Child#1	781,{
+umbala,70,106,3	script	Utan Child#1	781,{
 if(event_umbala < 3) goto LumWord;
 	mes "[???]";
 	mes "Hello!  I'm a member of";
@@ -356,7 +356,7 @@ LumWord:
 
 //==================================================================
 //Trade Meat for Clover, ???, and Soft Fur 
-umbala.gat,59,243,5	script	Utan Child#4	787,{
+umbala,59,243,5	script	Utan Child#4	787,{
 if(event_umbala < 3) goto LumWord;
 	mes "[Kotan]";
 	mes ".....";
@@ -425,7 +425,7 @@ LuError:
 
 
 //=====================================================================
-umbala.gat,177,153,3	script	Bast	97,{
+umbala,177,153,3	script	Bast	97,{
 	if (event_umbala>=3) emotion e_gasp;
 	mes "[Bast]";
 	mes "Oh!  Another outsider.  It's";
@@ -463,7 +463,7 @@ umbala.gat,177,153,3	script	Bast	97,{
 }
 
 //=====================================================================
-umbala.gat,80,146,4	script	Yuki	753,{
+umbala,80,146,4	script	Yuki	753,{
 	mes "[Yuki]";
 	mes "Umbaubaugau...Oh!";
 	mes "You're from abroad?  That's";
@@ -495,7 +495,7 @@ umbala.gat,80,146,4	script	Yuki	753,{
 }
 
 //=====================================================================
-um_in.gat,101,73,3	script	Yunatan 	783,{
+um_in,101,73,3	script	Yunatan 	783,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Yunatan]";
 	mes "I'm standing out here because I";
@@ -512,7 +512,7 @@ LumWord:
 }
 
 //=====================================================================
-um_in.gat,94,123,5	script	Bartsutan	783,{
+um_in,94,123,5	script	Bartsutan	783,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Bartsutan]";
 	mes "I want to see Wambokoriotan";
@@ -531,7 +531,7 @@ LumWord:
 }
 
 //=====================================================================
-umbala.gat,140,157,6	script	Utan Tribe Young Adult::UtanTribeYougAdult1	785,{
+umbala,140,157,6	script	Utan Tribe Young Adult::UtanTribeYougAdult1	785,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Seirutan]";
 	mes "Bungy jumping is extremely dangerous.";
@@ -548,7 +548,7 @@ LumWord:
 }
 
 //=====================================================================
-umbala.gat,146,157,4	script	Utan Young Adult#2	786,{
+umbala,146,157,4	script	Utan Young Adult#2	786,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Arotan]";
 	mes "Making a safe bungy jump is a";
@@ -564,7 +564,7 @@ LumWord:
 }
 
 //=====================================================================
-umbala.gat,149,165,4	script	Utan Young Adult#3	781,{
+umbala,149,165,4	script	Utan Young Adult#3	781,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Kryubatan]";
 	mes "I'm really afraid of heights,";
@@ -582,7 +582,7 @@ LumWord:
 }
 
 //=====================================================================
-umbala.gat,92,159,4	script	Hartan	785,{
+umbala,92,159,4	script	Hartan	785,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Hartan]";
 	mes "You want to know why our";
@@ -610,7 +610,7 @@ LumWord:
 }
 
 //=====================================================================
-umbala.gat,194,104,4	script	Utan Tribe Child#2	787,{
+umbala,194,104,4	script	Utan Tribe Child#2	787,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Burkatan]";
 	mes "An outsider?";
@@ -650,7 +650,7 @@ LumWord:
 }
 
 //=====================================================================
-umbala.gat,193,208,6	script	Utan Child#3	789,{
+umbala,193,208,6	script	Utan Child#3	789,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Fuitan]";
 	mes "When I was younger, I went bungy";
@@ -669,7 +669,7 @@ LumWord:
 }
 
 //=====================================================================
-umbala.gat,139,205,4	script	Utan Tribe Young Adult::UtanTribeYougAdult5	785,{
+umbala,139,205,4	script	Utan Tribe Young Adult::UtanTribeYougAdult5	785,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Tsunitan]";
 	mes "Awesome!  I haven't seen an outsider in some time.";
@@ -709,7 +709,7 @@ LumWord:
 }
 
 //=====================================================================
-um_in.gat,158,71,3	script	Utan Tribesman	787,{
+um_in,158,71,3	script	Utan Tribesman	787,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Mutakutan]";
 	mes "Umbala has enough interesting trees";
@@ -771,7 +771,7 @@ LumWord:
 }
 
 //=====================================================================
-umbala.gat,145,217,3	script	Chibibatan	783,{
+umbala,145,217,3	script	Chibibatan	783,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Chibibatan]";
 	mes "I want to have some fun with";
@@ -788,7 +788,7 @@ LumWord:
 }
 
 //=====================================================================
-um_in.gat,139,48,5	script	Purenotan	783,{
+um_in,139,48,5	script	Purenotan	783,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Purenotan]";
 	mes "See that loser over there?";
@@ -818,7 +818,7 @@ end;
 }
 
 //=====================================================================
-um_in.gat,144,45,5	script	Wambokoriotan	789,{
+um_in,144,45,5	script	Wambokoriotan	789,{
 	if(event_umbala < 3) goto LumWord;
 	mes "[Wambokoriotan]";
 	mes "Ahhh...My wife is a real";
@@ -843,43 +843,43 @@ LumWord:
 //==============================================================================
 //Bungee jumping!
 //==============================================================================
-umbala.gat,140,197,0	script	#Shibonochikka	139,0,1,{
+umbala,140,197,0	script	#Shibonochikka	139,0,1,{
 	set @jumprand,rand(0,4);
 	if (@jumprand == 1) goto L1;
 	if (@jumprand == 2) goto L2;
 	if (@jumprand == 3) goto L3;
 	if (@jumprand == 4) goto L4;
-	mapannounce "umbala.gat","Bungy Jumping Area: " + strcharinfo(0) + " : Iyahaaaaahh!",8;
+	mapannounce "umbala","Bungy Jumping Area: " + strcharinfo(0) + " : Iyahaaaaahh!",8;
 	end;
 
 L1:
 //Dead
-	mapannounce "umbala.gat","Bungy Jumping Area: " + strcharinfo(0) + " : Ukiyaaaaaaaaaa!",8;
+	mapannounce "umbala","Bungy Jumping Area: " + strcharinfo(0) + " : Ukiyaaaaaaaaaa!",8;
 	percentheal -100,0;
 	end;
 
 L2:
 //HP50% Damage
-	mapannounce "umbala.gat","Bungy Jumping Area: " + strcharinfo(0) + " : Kyaaaaaaaaaaa!",8;
+	mapannounce "umbala","Bungy Jumping Area: " + strcharinfo(0) + " : Kyaaaaaaaaaaa!",8;
 	percentheal -50,0;
 	end;
 
 L3:
 //HP99% Damage
-	mapannounce "umbala.gat","Bungy Jumping Area: " + strcharinfo(0) + " : Waaaaaaaaaah!",8;
+	mapannounce "umbala","Bungy Jumping Area: " + strcharinfo(0) + " : Waaaaaaaaaah!",8;
 	percentheal -99,0;
 	end;
 
 L4:
 //1 HP left, warp to Niflheim
-	mapannounce "umbala.gat","Bungy Jumping Area: " + strcharinfo(0) + " : No-o!",8;
+	mapannounce "umbala","Bungy Jumping Area: " + strcharinfo(0) + " : No-o!",8;
 	heal -HP+1,0;
-	warp "nif_in.gat",69,15;
+	warp "nif_in",69,15;
 	end;
 }
 
 //=====================================================================
-umbala.gat,136,195,0	script	#Warp Point	139,1,1,{
-	warp "umbala.gat",145,166;
+umbala,136,195,0	script	#Warp Point	139,1,1,{
+	warp "umbala",145,166;
 	end;
 }

@@ -12,7 +12,7 @@
 //= 1.1 Fixed exploit [Lupus]
 //============================================================
 
-payon.gat,109,118,5	script	Iron Cain Quest	76,{
+payon,109,118,5	script	Iron Cain Quest	76,{
 	mes "[Iron Cain Quest]";
 	mes "Here's what you need";
 	mes "The requirements, should you be brave enough to collect them, are:";

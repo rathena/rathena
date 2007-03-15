@@ -16,6 +16,6 @@
 //============================================================ 
 
 // -== High Priest ==-
-valkyrie.gat,44,42,6	script	High Priest	60,{
+valkyrie,44,42,6	script	High Priest	60,{
 	callfunc "F_Rebirth",Job_Acolyte_High,"Acolyte High",Job_High_Priest,"High Priest";
 }

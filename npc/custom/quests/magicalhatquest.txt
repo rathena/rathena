@@ -13,7 +13,7 @@
 //= 	treasue boxes drops fix [Lupus] 
 //============================================================
 
-geffen.gat,126,107,5	script	Wizard Hat Dude	51,{
+geffen,126,107,5	script	Wizard Hat Dude	51,{
 	mes "[Wizard Hat Dude]";
 	mes "Huh! What do you want?";
 	mes "Ohh, I see, you want me to make you something.";

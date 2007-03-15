@@ -14,7 +14,7 @@
 //==================================================
 // xmas_fild01 - Lutie Field
 //==================================================
-xmas_fild01.gat,0,0,0,0	monster	Marin	1242,35,0,0,0
-xmas_fild01.gat,0,0,0,0	monster	Sasquatch	1243,20,0,0,0
-xmas_fild01.gat,0,0,0,0	monster	Garm Baby	1515,1,1800000,0,0
-xmas_fild01.gat,0,0,0,0	monster	Garm	1252,1,7200000,3600000,1
+xmas_fild01,0,0,0,0	monster	Marin	1242,35,0,0,0
+xmas_fild01,0,0,0,0	monster	Sasquatch	1243,20,0,0,0
+xmas_fild01,0,0,0,0	monster	Garm Baby	1515,1,1800000,0,0
+xmas_fild01,0,0,0,0	monster	Garm	1252,1,7200000,3600000,1

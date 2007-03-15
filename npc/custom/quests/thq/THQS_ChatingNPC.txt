@@ -22,7 +22,7 @@
 
 
 //Entrance Flags
-yuno.gat,48,101,6	script	Notice	722,{
+yuno,48,101,6	script	Notice	722,{
 	mes "^FF0000[ Treasure Hunter Guild House ]^000000";
 	mes " ";
 	mes "Welcome to the Treasure Hunter's Guild House.";
@@ -34,7 +34,7 @@ yuno.gat,48,101,6	script	Notice	722,{
 	close;
 }
 //Saver Girl;
-yuno_in01.gat,32,178,3	script	Ahlma	94,{
+yuno_in01,32,178,3	script	Ahlma	94,{
 	mes "[Ahlma]";
 	if (Event_THQS == 0) goto N_Member;
 	mes "Welcome to The Treasure Hunter Guild.";
@@ -43,7 +43,7 @@ yuno_in01.gat,32,178,3	script	Ahlma	94,{
 	menu "Save",-,"Quit",N_Quit;
 	mes "[Ahlma]";
 	mes "Ok, saved. Thank you ~ See you soon~";
-	savepoint "yuno_in01.gat",34,176;
+	savepoint "yuno_in01",34,176;
 	close;
 N_Quit:
 	mes "[Ahlma]";
@@ -54,7 +54,7 @@ N_Member:
 	close;
 }
 //Retired Smile mask girl;
-yuno_in01.gat,33,162,3	script	Smile Helper	92,{
+yuno_in01,33,162,3	script	Smile Helper	92,{
 	mes "[Smile Gal]";
 	mes "Oh man...I am so sick of";
 	mes "trading Mr. Smile masks for crap.";
@@ -63,7 +63,7 @@ yuno_in01.gat,33,162,3	script	Smile Helper	92,{
 	close;
 }
 //Usless Female Assasin;
-yuno_in01.gat,22,162,6	script	Female Assasin	725,{
+yuno_in01,22,162,6	script	Female Assasin	725,{
 	mes "[Sharlet]";
 	if (Event_THQS > 0) goto N_Member;
 	mes "Umm sorry I'm not gona waste my time talking to you if you arn't even a member!";
@@ -84,7 +84,7 @@ N_Chat2:
 	close;
 }
 //another usless member
-yuno_in01.gat,25,162,6	script	Female Wizard	123,{
+yuno_in01,25,162,6	script	Female Wizard	123,{
 	mes "[Sasha]";
 	if (Event_THQS > 0) goto N_Member;
 	mes "Umm sorry I'm not gona waste my time talking to you if you arn't even a member!";

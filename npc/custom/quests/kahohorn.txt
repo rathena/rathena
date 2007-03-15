@@ -1,6 +1,6 @@
 //This quest is custom. Don't use it.
 
-geffen.gat,115,107,5	script	Lord Kaho's Servant	61,{
+geffen,115,107,5	script	Lord Kaho's Servant	61,{
 	mes "[Lord Kaho's Servant]";
 	mes "I worked myself to death trying to fulfill Lord Kaho's ridiculous expectations for a headgear!";
 	mes "Now that I've finally found the formula for the perfect headgear, I'm willing to share my time and talents";

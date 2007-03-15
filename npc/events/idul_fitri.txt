@@ -12,7 +12,7 @@
 //============================================================
 
 
-prontera.gat,146,92,3	script	Cellerb	58,{
+prontera,146,92,3	script	Cellerb	58,{
 	set @npcname$,"[Staff Idul Fitri]";
 	mes @npcname$;
 	if((gettime(6)==10 && (gettime(5)==24 || gettime(5)==25))==0) {
@@ -75,4 +75,4 @@ prontera.gat,146,92,3	script	Cellerb	58,{
 	}
 }
 
-prontera.gat	mapflag	fireworks
+prontera	mapflag	fireworks

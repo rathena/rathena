@@ -16,12 +16,12 @@
 
 
 // Castle 1 ================================================================
-payg_cas01.gat,139,139,0	script	Agit_Py01	-1,{
+payg_cas01,139,139,0	script	Agit_Py01	-1,{
 OnInterIfInitOnce:
-	GetCastleData "payg_cas01.gat",0,"::OnRecvCastlePy01";
+	GetCastleData "payg_cas01",0,"::OnRecvCastlePy01";
 	end;
 OnRecvCastlePy01:
-	RequestGuildInfo GetCastleData("payg_cas01.gat",1);
+	RequestGuildInfo GetCastleData("payg_cas01",1);
 	end;
 OnAgitStart:
 	callfunc "F_AgitStart","payg_cas01","Py01",139,139;
@@ -33,8 +33,8 @@ OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas01","Py01";
 	end;
 OnAgitEliminate:
-	MapRespawnGuildID "payg_cas01.gat",GetCastleData("payg_cas01.gat",1),6;
-	Monster "payg_cas01.gat",139,139,"EMPERIUM",1288,1,"Agit_Py01::OnAgitBreak";
+	MapRespawnGuildID "payg_cas01",GetCastleData("payg_cas01",1),6;
+	Monster "payg_cas01",139,139,"EMPERIUM",1288,1,"Agit_Py01::OnAgitBreak";
 	end;
 OnAgitEnd:
 	callfunc "F_AgitEnd","payg_cas01","Py01";
@@ -42,12 +42,12 @@ OnAgitEnd:
 }
 
 // Castle 2 ================================================================
-payg_cas02.gat,39,25,0	script	Agit_Py02	-1,{
+payg_cas02,39,25,0	script	Agit_Py02	-1,{
 OnInterIfInitOnce:
-	GetCastleData "payg_cas02.gat",0,"::OnRecvCastlePy02";
+	GetCastleData "payg_cas02",0,"::OnRecvCastlePy02";
 	end;
 OnRecvCastlePy02:
-	RequestGuildInfo GetCastleData("payg_cas02.gat",1);
+	RequestGuildInfo GetCastleData("payg_cas02",1);
 	end;
 OnAgitStart:
 	callfunc "F_AgitStart","payg_cas02","Py02",39,25;
@@ -59,8 +59,8 @@ OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas02","Py02";
 	end;
 OnAgitEliminate:
-	MapRespawnGuildID "payg_cas02.gat",GetCastleData("payg_cas02.gat",1),6;
-	Monster "payg_cas02.gat",39,25,"EMPERIUM",1288,1,"Agit_Py02::OnAgitBreak";
+	MapRespawnGuildID "payg_cas02",GetCastleData("payg_cas02",1),6;
+	Monster "payg_cas02",39,25,"EMPERIUM",1288,1,"Agit_Py02::OnAgitBreak";
 	end;
 OnAgitEnd:
 	callfunc "F_AgitEnd","payg_cas02","Py02";
@@ -68,12 +68,12 @@ OnAgitEnd:
 }
 
 // Castle 3 ================================================================
-payg_cas03.gat,269,265,0	script	Agit_Py03	-1,{
+payg_cas03,269,265,0	script	Agit_Py03	-1,{
 OnInterIfInitOnce:
-	GetCastleData "payg_cas03.gat",0,"::OnRecvCastlePy03";
+	GetCastleData "payg_cas03",0,"::OnRecvCastlePy03";
 	end;
 OnRecvCastlePy03:
-	RequestGuildInfo GetCastleData("payg_cas03.gat",1);
+	RequestGuildInfo GetCastleData("payg_cas03",1);
 	end;
 OnAgitStart:
 	callfunc "F_AgitStart","payg_cas03","Py03",269,265;
@@ -85,8 +85,8 @@ OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas03","Py03";
 	end;
 OnAgitEliminate:
-	MapRespawnGuildID "payg_cas03.gat",GetCastleData("payg_cas03.gat",1),6;
-	Monster "payg_cas03.gat",269,265,"EMPERIUM",1288,1,"Agit_Py03::OnAgitBreak";
+	MapRespawnGuildID "payg_cas03",GetCastleData("payg_cas03",1),6;
+	Monster "payg_cas03",269,265,"EMPERIUM",1288,1,"Agit_Py03::OnAgitBreak";
 	end;
 OnAgitEnd:
 	callfunc "F_AgitEnd","payg_cas03","Py03";
@@ -94,12 +94,12 @@ OnAgitEnd:
 }
 
 // Castle 4 ================================================================
-payg_cas04.gat,271,29,0	script	Agit_Py04	-1,{
+payg_cas04,271,29,0	script	Agit_Py04	-1,{
 OnInterIfInitOnce:
-	GetCastleData "payg_cas04.gat",0,"::OnRecvCastlePy04";
+	GetCastleData "payg_cas04",0,"::OnRecvCastlePy04";
 	end;
 OnRecvCastlePy04:
-	RequestGuildInfo GetCastleData("payg_cas04.gat",1);
+	RequestGuildInfo GetCastleData("payg_cas04",1);
 	end;
 OnAgitStart:
 	callfunc "F_AgitStart","payg_cas04","Py04",271,29;
@@ -111,8 +111,8 @@ OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas04","Py04";
 	end;
 OnAgitEliminate:
-	MapRespawnGuildID "payg_cas04.gat",GetCastleData("payg_cas04.gat",1),6;
-	Monster "payg_cas04.gat",271,29,"EMPERIUM",1288,1,"Agit_Py04::OnAgitBreak";
+	MapRespawnGuildID "payg_cas04",GetCastleData("payg_cas04",1),6;
+	Monster "payg_cas04",271,29,"EMPERIUM",1288,1,"Agit_Py04::OnAgitBreak";
 	end;
 OnAgitEnd:
 	callfunc "F_AgitEnd","payg_cas04","Py04";
@@ -120,12 +120,12 @@ OnAgitEnd:
 }
 
 // Castle 5 ================================================================
-payg_cas05.gat,30,30,0	script	Agit_Py05	-1,{
+payg_cas05,30,30,0	script	Agit_Py05	-1,{
 OnInterIfInitOnce:
-	GetCastleData "payg_cas05.gat",0,"::OnRecvCastlePy05";
+	GetCastleData "payg_cas05",0,"::OnRecvCastlePy05";
 	end;
 OnRecvCastlePy05:
-	RequestGuildInfo GetCastleData("payg_cas05.gat",1);
+	RequestGuildInfo GetCastleData("payg_cas05",1);
 	end;
 OnAgitStart:
 	callfunc "F_AgitStart","payg_cas05","Py05",30,30;
@@ -137,8 +137,8 @@ OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas05","Py05";
 	end;
 OnAgitEliminate:
-	MapRespawnGuildID "payg_cas05.gat",GetCastleData("payg_cas05.gat",1),6;
-	Monster "payg_cas05.gat",30,30,"EMPERIUM",1288,1,"Agit_Py05::OnAgitBreak";
+	MapRespawnGuildID "payg_cas05",GetCastleData("payg_cas05",1),6;
+	Monster "payg_cas05",30,30,"EMPERIUM",1288,1,"Agit_Py05::OnAgitBreak";
 	end;
 OnAgitEnd:
 	callfunc "F_AgitEnd","payg_cas05","Py05";

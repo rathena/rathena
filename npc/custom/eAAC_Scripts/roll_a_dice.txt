@@ -19,7 +19,7 @@
 //==========================================================
 
 
-cmd_in02.gat,181,98,2	script	Dicer	57,{
+cmd_in02,181,98,2	script	Dicer	57,{
 
 //These variables allow you to set the amount of zeny people can bet
 set @betzeny1,500; //500 zeny

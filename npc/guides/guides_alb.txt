@@ -18,7 +18,7 @@
 //============================================================ 
 
 //North
-alberta.gat,23,238,4	script	Guide::Alb_Guide	105,{
+alberta,23,238,4	script	Guide::Alb_Guide	105,{
 	cutin "prt_soldier",2;
 	mes "[Alberta Guide]";
 	mes "Welcome to Alberta, the Port City.";
@@ -108,4 +108,4 @@ L_END:
 }
 
 // South --------------------------------------------------------
-alberta.gat,120,60,3	duplicate(Alb_Guide)	Guide#2	105
+alberta,120,60,3	duplicate(Alb_Guide)	Guide#2	105

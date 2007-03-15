@@ -15,7 +15,7 @@
 //= 1.1a Redo back. It wasn't a bug [Lupus]
 //============================================================ 
 
-hugel.gat,88,168,4	script	Cool Event Corp. Staff#hk	874,{
+hugel,88,168,4	script	Cool Event Corp. Staff#hk	874,{
 
 	mes "[Cool Event Corp. Staff]";
 	mes "Welcome to Cool Event Corp.";
@@ -34,7 +34,7 @@ hugel.gat,88,168,4	script	Cool Event Corp. Staff#hk	874,{
 		mes "Thank you for using the";
 		mes "Cool Event Corp. service~";
 		emotion e_thx;
-		savepoint "hugel.gat",96,155;
+		savepoint "hugel",96,155;
 		close;
 	case 2:
 		mes "[Cool Event Corp. Staff]";

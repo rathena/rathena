@@ -13,7 +13,7 @@
 //============================================================
 
 //Dungeon Warps
-einbech.gat,138,252,0	warp	eib_d01	1,1,ein_dun01.gat,22,14
-ein_dun01.gat,22,11,0	warp	eib_d01a	1,1,einbech.gat,138,249
-ein_dun01.gat,262,256,0	warp	ein012	1,1,ein_dun02.gat,292,290
-ein_dun02.gat,292,292,0	warp	ein012a	1,1,ein_dun01.gat,262,258
+einbech,138,252,0	warp	eib_d01	1,1,ein_dun01,22,14
+ein_dun01,22,11,0	warp	eib_d01a	1,1,einbech,138,249
+ein_dun01,262,256,0	warp	ein012	1,1,ein_dun02,292,290
+ein_dun02,292,292,0	warp	ein012a	1,1,ein_dun01,262,258

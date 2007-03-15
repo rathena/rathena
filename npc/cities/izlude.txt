@@ -23,28 +23,28 @@
 
 
 // Welcome Sign ----------------------------------------------------------
-izlude.gat,125,116,1	script	Welcome Sign::ws_izlude	111,{
+izlude,125,116,1	script	Welcome Sign::ws_izlude	111,{
   mes "~sign reads...~";
   mes "Salutations and welcome to Izlude! Izlude is the satellite of Prontera and is home to Swordsmen and the Cool Event Corp.'s Monster Arena!";
   close;
 }
 
 // Sign: Marina -----------------------------------------------------------------
-izlude.gat,179,183,1	script	Izlude Marina	111,{
+izlude,179,183,1	script	Izlude Marina	111,{
   mes "~sign reads...~";
   mes "Take a boat ride to the city of Alberta or to the island of Byalan.";
   close;
 }
 
 // Sign: Swordsman Assoc. ----------------------------------------------------
-izlude.gat,54,139,1	script	Swordsman Association	111,{
+izlude,54,139,1	script	Swordsman Association	111,{
   mes "~sign reads...~";
   mes "The Izlude Swordsman Association is proud to provide Rune-Midgard with the bravest and strongest warriors.";
   close;
 }
 
 //Bonne-----------------------------------------------------------------------------------
-izlude.gat,55,74,2	script	Bonne	90,{
+izlude,55,74,2	script	Bonne	90,{
 	mes "[Bonne]";
 	mes "Greetings!";
 	mes "Izlude welcomes you.";
@@ -83,7 +83,7 @@ izlude.gat,55,74,2	script	Bonne	90,{
 
 
 //Cuskoal-------------------------------------------------------------------------------------
-izlude.gat,119,121,1	script	Cuskoal	124,{
+izlude,119,121,1	script	Cuskoal	124,{
 	set @TEMP, rand(2);
 	mes "[Cuskoal]";
 	if(@TEMP != 0) goto L_R0;
@@ -123,7 +123,7 @@ izlude.gat,119,121,1	script	Cuskoal	124,{
 }
 
 //Charfri-------------------------------------------------------------------------------------
-izlude.gat,135,78,2	script	Charfri	91,{
+izlude,135,78,2	script	Charfri	91,{
 	set @TEMP,rand(2);
 	mes "[Charfri]";
 	if(@TEMP != 0) goto L_R0;
@@ -178,7 +178,7 @@ izlude.gat,135,78,2	script	Charfri	91,{
 }
 
 //Dega-------------------------------------------------------------------------------------
-izlude.gat,150,118,3	script	Dega	84,{
+izlude,150,118,3	script	Dega	84,{
 	set @TEMP,rand(3);
 	mes "[Dega]";
 	if(@TEMP != 0) goto L_R0;
@@ -301,7 +301,7 @@ izlude.gat,150,118,3	script	Dega	84,{
 }
 
 //Kylick-------------------------------------------------------------------------------------
-izlude.gat,150,143,4	script	Kylick	97,{
+izlude,150,143,4	script	Kylick	97,{
 	set @TEMP,rand(2);
 	mes "[Kylick]";
 	if (@TEMP != 0) goto L_R0;
@@ -347,7 +347,7 @@ izlude.gat,150,143,4	script	Kylick	97,{
 }
 
 // Soldier ------------------------------------------------------------------------------
-izlude.gat,124,178,4	script	Soldier	105,{
+izlude,124,178,4	script	Soldier	105,{
 	mes "[Soldier]";
 	mes "Hehehehe... Hahahaha";
 	mes "Huh? Why am I so happy?";
@@ -455,7 +455,7 @@ izlude.gat,124,178,4	script	Soldier	105,{
 }
 
 //Red-------------------------------------------------------------------------------------
-izlude.gat,58,126,1	script	Red	98,{
+izlude,58,126,1	script	Red	98,{
 
 	mes "[Red]";
 	mes "The only skill that's needed for a";
@@ -585,7 +585,7 @@ izlude.gat,58,126,1	script	Red	98,{
 }
 
 //Cebalis-------------------------------------------------------------------------------------
-izlude.gat,56,126,7	script	Cebalis	85,{
+izlude,56,126,7	script	Cebalis	85,{
 
 	mes "[Red]";
 	mes "The only slill that's needed for a";
@@ -715,7 +715,7 @@ izlude.gat,56,126,7	script	Cebalis	85,{
 }
 
 //Aaron-------------------------------------------------------------------------------------
-izlude_in.gat,125,164,5	script	Aaron	65,{
+izlude_in,125,164,5	script	Aaron	65,{
 	mes "[Aaron]";
 	mes "Don't you think Strong VIT and";
 	mes "training in a unique breathing";
@@ -786,7 +786,7 @@ izlude_in.gat,125,164,5	script	Aaron	65,{
 }
 
 //Sailor-------------------------------------------------------------------------------------
-izlude.gat,201,181,2	script	Sailor#06	100,{
+izlude,201,181,2	script	Sailor#06	100,{
 	mes "[Sailor]";
 	mes "Hey Everybody!";
 	mes "Attention, attention!";
@@ -798,12 +798,12 @@ izlude.gat,201,181,2	script	Sailor#06	100,{
 	
 		if(Zeny < 150) goto sl_NoZenyBya;
 		set Zeny, Zeny - 150;
-		warp "izlu2dun.gat",107,50;
+		warp "izlu2dun",107,50;
 		close;
 	L1:
 		if(Zeny < 500) goto sl_NoZenyMar;
 		set Zeny, Zeny - 500;
-		warp "alberta.gat",188,169;
+		warp "alberta",188,169;
 	LEnd:
 		close;
 	sl_NoZenyBya:
@@ -819,19 +819,19 @@ izlude.gat,201,181,2	script	Sailor#06	100,{
 }
 
 //Sailor-------------------------------------------------------------------------------------
-izlu2dun.gat,108,27,4	script	Sailor#07	100,{
+izlu2dun,108,27,4	script	Sailor#07	100,{
 	mes "[Sailor]";
 	mes "Wanna";
 	mes "head back?";
 	next;
 	menu "Yeah, I am Tired to Death.",-,"Nope I love this place.",L1;
 	
-		warp "izlude.gat",176,182;
+		warp "izlude",176,182;
 	L1:
 		close;
 }
 
-izlude.gat,171,185,3	script	Honeymoon Helper#Izlude I	71,{
+izlude,171,185,3	script	Honeymoon Helper#Izlude I	71,{
 
 	mes "[Marry Happy]";
 	mes "Newly weds and already weds...";
@@ -879,7 +879,7 @@ s_Go:
 				mes "Enjoy your trip...!!";
 				mes "Let's go to 'Jawaii'...!!";
 				close2;
-				warp "jawaii.gat",241,115;
+				warp "jawaii",241,115;
 				end;
 
 s_Cancel:

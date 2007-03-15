@@ -13,6 +13,6 @@
 //============================================================
 
 //= Veins City ================================================
-veins.gat,218,361,0	warp	veinswarp0501	1,1,ve_fild06.gat,152,221
-veins.gat,146,24,0		warp	veinswarp0502	1,1,ve_fild07.gat,148,370
-rachel.gat,130,20,0	warp	veinswarp0503	1,1,ve_fild02.gat,196,379
+veins,218,361,0	warp	veinswarp0501	1,1,ve_fild06,152,221
+veins,146,24,0		warp	veinswarp0502	1,1,ve_fild07,148,370
+rachel,130,20,0	warp	veinswarp0503	1,1,ve_fild02,196,379

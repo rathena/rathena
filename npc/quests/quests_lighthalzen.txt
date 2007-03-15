@@ -52,7 +52,7 @@
 //= 2.9 Fixed Friendship Quest levelup exploit (u could get EXP twice) [Lupus]
 //============================================================ 
 
-lighthalzen.gat,1,1,7	script	sneakAddSuber	-1,{
+lighthalzen,1,1,7	script	sneakAddSuber	-1,{
 OnInit:
 	set $@sneakchance, 3;	// chance of successful sneak(0 = never, 10 = always)
 	set $@sneakguard, 0;	// numbers of people who sneaked past guard
@@ -81,7 +81,7 @@ OnMinute55:
 	end;
 }
 
-lighthalzen.gat,1,1,7	script	AlertChk	-1,{
+lighthalzen,1,1,7	script	AlertChk	-1,{
 OnInit:
 	initnpctimer;
 	end;
@@ -95,10 +95,10 @@ OnTimer10000:
 MakeMob:
 	if($@lhz_alert == 1) goto ChkEnd;
 	set $@mobcount, $@mob;
-	mapannounce "lighthalzen.gat","Maintenance Organization of the Public Order: Currently the security of the city has been compromized, We ask the citizens to be more careful. I repeat. We ask the citizens to be more careful.", 1;
+	mapannounce "lighthalzen","Maintenance Organization of the Public Order: Currently the security of the city has been compromized, We ask the citizens to be more careful. I repeat. We ask the citizens to be more careful.", 1;
 	
 	for( set $@i, 0; $@i < $@mob; set $@i, $@i + 1 ) {
-		monster "lighthalzen.gat",0,0,"Gangster",1592,1,"AlertChk::OnMobKilled";
+		monster "lighthalzen",0,0,"Gangster",1592,1,"AlertChk::OnMobKilled";
 	}
 
 	set $@lhz_alert, 1;	
@@ -109,8 +109,8 @@ MakeMob:
 ClearMob:
 	if($@lhz_alert == 0) goto ChkEnd;
 	set $@mobcount, 0;
-	mapannounce "lighthalzen.gat","Maintenance organization of the Public Order: We were able to get rid of all the trouble makers in the city. You may relax now.", 1;	
-	killmonster "lighthalzen.gat","AlertChk::OnMobKilled";
+	mapannounce "lighthalzen","Maintenance organization of the Public Order: We were able to get rid of all the trouble makers in the city. You may relax now.", 1;	
+	killmonster "lighthalzen","AlertChk::OnMobKilled";
 	set $@lhz_alert, 0;
 	set $@sneakguard, 0;
 	setnpctimer 0;
@@ -127,7 +127,7 @@ ChkEnd:
 	end;	
 }
 
-lighthalzen.gat,267,200,3	script	Security Guard#01	868,{
+lighthalzen,267,200,3	script	Security Guard#01	868,{
 
 	if(countitem(7350)>0) goto Lhzpass1;
 	if($@lhz_alert == 1) goto Lhzstop;
@@ -148,7 +148,7 @@ LhzTalk1:
 	mes "-Looks like the guard is doing something else";
 	mes "Now is a good time to sneak by.-";
 	next;
-	warp "lighthalzen.gat",297,227;
+	warp "lighthalzen",297,227;
 	set $@sneakguard, $@sneakguard + 1;
 	close;
 
@@ -162,7 +162,7 @@ LhzTalk2:
 	mes "-Looks like the guard is sleeping";
 	mes "Now is a good time to sneak by.-";
 	next;
-	warp "lighthalzen.gat",297,227;
+	warp "lighthalzen",297,227;
 	close;
 
 Lhzpass1:
@@ -172,7 +172,7 @@ Lhzpass1:
 	mes "but I guess you got the authority.";
 	mes "You may pass.";
 	next; 
-	warp "lighthalzen.gat",297,227;
+	warp "lighthalzen",297,227;
 	close;
 
 Lhzstop:
@@ -184,7 +184,7 @@ Lhzstop:
 	close;
 }
 
-lighthalzen.gat,294,223,7	script	Security Guard#02	868,{
+lighthalzen,294,223,7	script	Security Guard#02	868,{
 
 	if(countitem(7350)>0) goto Lhzpass1;
 	if($@lhz_alert == 1) goto Lhzstop;
@@ -205,7 +205,7 @@ LhzTalk1:
 	mes "-Looks like the guard is doing something else";
 	mes "Now is a good time to sneak by.-";
 	next;
-	warp "lighthalzen.gat",264,200;
+	warp "lighthalzen",264,200;
 	set $@sneakguard, $@sneakguard + 1;
 	close;
 
@@ -219,7 +219,7 @@ LhzTalk2:
 	mes "-Looks like the guard is sleeping";
 	mes "Now is a good time to sneak by.-";
 	next;
-	warp "lighthalzen.gat",264,200;
+	warp "lighthalzen",264,200;
 	close;
 
 Lhzpass1:
@@ -229,7 +229,7 @@ Lhzpass1:
 	mes "but I guess you got the authority.";
 	mes "You may pass.";
 	next; 
-	warp "lighthalzen.gat",264,200;
+	warp "lighthalzen",264,200;
 	close;
 
 Lhzstop:
@@ -247,7 +247,7 @@ Lhzstop:
 
 //--------------------------Piciburn--------------------------
 
-lighthalzen.gat,341,224,4	script	Piciburn	868,{
+lighthalzen,341,224,4	script	Piciburn	868,{
 	if (BaseLevel < 60){
 		mes "[Piciburn]";
 		mes "Keep moving.";
@@ -568,7 +568,7 @@ L9_1:
 	set @rdm,rand(3);
 	if(@rdm==1)goto L_warp1;
 	if(@rdm==2)goto L_warp2;
- 	warp "lhz_cube.gat",67,193;
+ 	warp "lhz_cube",67,193;
 	end;
 
 L_10:
@@ -593,14 +593,14 @@ L10_1:
 	set @rdm,rand(3);
 	if(@rdm==1)goto L_warp1;
 	if(@rdm==2)goto L_warp2;
- 	warp "lhz_cube.gat",67,193;
+ 	warp "lhz_cube",67,193;
 	end;
 
 L_warp1: 
-	warp "lhz_cube.gat",66,136;
+	warp "lhz_cube",66,136;
 	end;
 L_warp2:
-	warp "lhz_cube.gat",66,74;
+	warp "lhz_cube",66,74;
 	end;
 
 L_DONE:
@@ -627,7 +627,7 @@ L_DONE:
 
 //--------------------------Box--------------------------
 
-lhz_cube.gat,248,179,0	script	Box#01	111,{
+lhz_cube,248,179,0	script	Box#01	111,{
 	if (MISC_QUEST&512 || cubekey&64) goto L_DONE;
 	mes "There is an axe in the box.";
 	next;
@@ -646,7 +646,7 @@ L_DONE:
 
 //--------------------------Barrel--------------------------
 
-lhz_cube.gat,237,183,0	script	Barrel	111,{
+lhz_cube,237,183,0	script	Barrel	111,{
 	if (MISC_QUEST&512 || cubekey&1) goto L_DONE;
 	if (cubekey&128) goto L_2;
 	mes "There is a box that looks weak.";
@@ -708,7 +708,7 @@ L_DONE:
 
 //--------------------------Drawer--------------------------
 
-lhz_cube.gat,242,201,0	script	Drawer	111,{
+lhz_cube,242,201,0	script	Drawer	111,{
 	if (MISC_QUEST&512 || cubekey&32) goto L_DONE;
 	mes "The drawer is locked.";
 	if (cubekey&2) goto L_1;
@@ -736,7 +736,7 @@ L_DONE:
 
 //--------------------------Documents--------------------------
 
-lhz_cube.gat,237,198,0	script	Documents	111,{
+lhz_cube,237,198,0	script	Documents	111,{
 	if (MISC_QUEST&512 || cubekey&2) goto L_DONE;
 	mes "There are tons of documents here.";
 	next;
@@ -758,7 +758,7 @@ L_DONE:
 
 //--------------------------Bed--------------------------
 
-lhz_cube.gat,247,198,0	script	Bed	111,{
+lhz_cube,247,198,0	script	Bed	111,{
 	mes "There is a messy bed.";
 	next;
 	menu "Above bed",-,"Below bed",L_1;
@@ -815,7 +815,7 @@ L_DONE:
 
 //--------------------------Cup--------------------------
 
-lhz_cube.gat,229,184,0	script	Cup	111,{
+lhz_cube,229,184,0	script	Cup	111,{
 	if (MISC_QUEST&512 || cubekey&4) goto L_DONE;
 	mes "You see an empty bottle and a cup with something in it.";
 	next;
@@ -837,7 +837,7 @@ L_DONE:
 
 //--------------------------Shelf--------------------------
 
-lhz_cube.gat,233,206,0	script	Shelf	111,{
+lhz_cube,233,206,0	script	Shelf	111,{
 	if (MISC_QUEST&512 || cubekey&8) goto L_DONE;
 	mes "There are lots of bottles filled with acids lined up";
 	mes "Along the shelf, they have different labels.";
@@ -867,7 +867,7 @@ L_DONE:
 
 //--------------------------Closet--------------------------
 
-lhz_cube.gat,249,191,0	script	Closet	111,{
+lhz_cube,249,191,0	script	Closet	111,{
 	if (MISC_QUEST&512 || cubekey&8192) goto L_DONE;
 	mes "There is a closet with lots of drawers.";
 	if (cubekey&8) goto L_2;
@@ -908,7 +908,7 @@ L_DONE:
 
 //--------------------------Desk--------------------------
 
-lhz_cube.gat,234,200,0	script	Desk	111,{
+lhz_cube,234,200,0	script	Desk	111,{
 	mes "There is a desk with lots of objects scattered around.";
 	next;
 	menu "Above the desk",-,"Below the desk",L_1,"Drawer",L_2;
@@ -948,7 +948,7 @@ L_2:
 
 //--------------------------Picture--------------------------
 
-lhz_cube.gat,237,206,0	script	Picture	111,{
+lhz_cube,237,206,0	script	Picture	111,{
 	if (MISC_QUEST&512 || num1 > 0) goto L_DONE;
 	mes "There is a picture on the wall.";
 	next;
@@ -1033,7 +1033,7 @@ L_DONE:
 
 //--------------------------generator--------------------------
 
-lhz_cube.gat,224,192,0	script	Generator	111,{
+lhz_cube,224,192,0	script	Generator	111,{
 	if (MISC_QUEST&512 || cubekey&256) goto L_DONE;
 	mes "The big machine is running, making a huge noise.";
 	mes "There are lots weird symbols and";
@@ -1062,7 +1062,7 @@ L_DONE:
 
 //--------------------------Lamp--------------------------
 
-lhz_cube.gat,248,205,0	script	Lamp	111,{
+lhz_cube,248,205,0	script	Lamp	111,{
 	if (MISC_QUEST&512 || cubekey&16) goto L_DONE;
 	if (cubekey&256) goto L_1;
 	mes "There is a bright lamp.";
@@ -1092,7 +1092,7 @@ L_DONE:
 
 //--------------------------Box--------------------------
 
-lhz_cube.gat,248,193,0	script	Box#02	111,{
+lhz_cube,248,193,0	script	Box#02	111,{
 	if (MISC_QUEST&512 || countitem(2657) || @gotLPkey) goto L_DONE;
 	mes "There is a box with three holes.";
 	next;
@@ -1175,7 +1175,7 @@ L_DONE:
 
 //--------------------------Test tube--------------------------
 
-lhz_cube.gat,224,197,0	script	Test Tube	111,{
+lhz_cube,224,197,0	script	Test Tube	111,{
 	if (MISC_QUEST&512) goto L_DONE;
 	if (countitem(2657) > 0) goto L_3;
 	if (cubekey&32768) goto L_2;
@@ -1229,7 +1229,7 @@ L4_1:
 	set MISC_QUEST,MISC_QUEST|512;
 	close2;
 L_DONE:
-	warp "lhz_cube.gat",177,13;
+	warp "lhz_cube",177,13;
 	end;
 }
 
@@ -1237,21 +1237,21 @@ L_DONE:
 // Lighthalzen Pickpocket Mini-Quest
 //============================================================
 
-lighthalzen.gat,240,216,4	script	Man#Pickpocket1	870,2,2,{
+lighthalzen,240,216,4	script	Man#Pickpocket1	870,2,2,{
 	end;
 OnTouch:
 	callfunc "F_LHZPick",33,1;
 	close;
 }
 
-lighthalzen.gat,220,169,4	script	Man#Pickpocket2	870,2,2,{
+lighthalzen,220,169,4	script	Man#Pickpocket2	870,2,2,{
 	end;
 OnTouch:
 	callfunc "F_LHZPick",33,2;
 	close;
 }
 
-lighthalzen.gat,164,127,4	script	Man#Pickpocket3	870,2,2,{
+lighthalzen,164,127,4	script	Man#Pickpocket3	870,2,2,{
 	end;
 OnTouch:
 	callfunc "F_LHZPick",20,3;
@@ -1354,7 +1354,7 @@ L_MoveC2:
 // Friendship
 //==============================================================
 
-lhz_in02.gat,201,210,3	script	Digotz	869,{
+lhz_in02,201,210,3	script	Digotz	869,{
 
 	if(friendship > 9)goto s_Dead;
 	if(friendship == 9)goto s_Wounded;
@@ -1812,7 +1812,7 @@ s_Dead:
 
 }
 
-lighthalzen.gat,337,232,3	script	Maku	870,{
+lighthalzen,337,232,3	script	Maku	870,{
 
 	if(friendship > 1)goto Switches;
 	mes "[Maku]";
@@ -2314,7 +2314,7 @@ failstr:
 	close;
 }
 
-yuno_in04.gat,107,14,4	script	Student	754,{
+yuno_in04,107,14,4	script	Student	754,{
 
 	mes "[Joey Choryee]";
 	mes "This is a study area where";
@@ -2336,7 +2336,7 @@ yuno_in04.gat,107,14,4	script	Student	754,{
 
 }
 
-yuno_in04.gat,96,106,4	script	Passionate Student	754,{
+yuno_in04,96,106,4	script	Passionate Student	754,{
 
 	if(friendship == 10)goto s_Ask;
 	if(friendship3 == 2 || friendship3 == 3)goto s_Cont2;
@@ -2537,7 +2537,7 @@ s_Ask:
 
 }
 
-yuno_in04.gat,168,117,1	script	Book	111,{
+yuno_in04,168,117,1	script	Book	111,{
 
 	if(friendship3 >= 3)goto Book2;
 	if(friendship3 == 2)goto Book;
@@ -2563,7 +2563,7 @@ Book2:
 
 }
 
-yuno_in04.gat,169,109,1	script	Ambitious Hollgrehenn	111,{
+yuno_in04,169,109,1	script	Ambitious Hollgrehenn	111,{
 
 	mes "*Hollgrehenn: The Ambition*";
 	mes "By Aragham Caul*";
@@ -2590,7 +2590,7 @@ yuno_in04.gat,169,109,1	script	Ambitious Hollgrehenn	111,{
 
 }
 
-yuno_in04.gat,171,117,1	script	List of Books	111,{
+yuno_in04,171,117,1	script	List of Books	111,{
 
 	mes "^3131FFYou find a series";
 	mes "of paperback books";

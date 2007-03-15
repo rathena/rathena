@@ -21,7 +21,7 @@
 //////////////////////////////////////////////////////////
 
 
-yuno_in01.gat,124,164,6	script	Guild Leader	108,{
+yuno_in01,124,164,6	script	Guild Leader	108,{
 	mes "[Keegan]";
 	mes "What brings you here? Have something to say?";
 	next;
@@ -80,7 +80,7 @@ N_OShop:
 	mes "[Keegan]";
 	mes "Yes "+strcharinfo(0)+" I will take you to our shop right away!";
 	next;
-	warp "prt_in.gat",166,171;
+	warp "prt_in",166,171;
 	close;
 	end;
 N_NeedMem:

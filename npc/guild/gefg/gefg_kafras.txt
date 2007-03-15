@@ -16,51 +16,51 @@
 
 
 // Castle 1 ===============================================
-//gefg_cas01.gat,96,173,0	script	Kafra Service#G01	117,{
-gefg_cas01.gat,35,37,0	script	Kafra Service#G01	117,{
+//gefg_cas01,96,173,0	script	Kafra Service#G01	117,{
+gefg_cas01,35,37,0	script	Kafra Service#G01	117,{
 	callfunc "F_GKafra", "gefg_cas01", "Geffen";
 	end;
 OnRecvCastleG01:
-	if (GetCastleData("gefg_cas01.gat",9) < 1) disablenpc "Kafra Service#G01";
+	if (GetCastleData("gefg_cas01",9) < 1) disablenpc "Kafra Service#G01";
 	end;
 }
 
 
 // Castle 2 ===============================================
-gefg_cas02.gat,23,66,3	script	Kafra Service#G02	117,{
+gefg_cas02,23,66,3	script	Kafra Service#G02	117,{
 	callfunc "F_GKafra", "gefg_cas02", "Geffen";
 	end;
 OnRecvCastleG02:
-	if (GetCastleData("gefg_cas02.gat",9) < 1) disablenpc "Kafra Service#G02";
+	if (GetCastleData("gefg_cas02",9) < 1) disablenpc "Kafra Service#G02";
 	end;
 }
 
 
 // Castle 3 ===============================================
-gefg_cas03.gat,116,89,5	script	Kafra Service#G03	117,{
+gefg_cas03,116,89,5	script	Kafra Service#G03	117,{
 	callfunc "F_GKafra", "gefg_cas03", "Geffen";
 	end;
 OnRecvCastleG03:
-	if (GetCastleData("gefg_cas03.gat",9) < 1) disablenpc "Kafra Service#G03";
+	if (GetCastleData("gefg_cas03",9) < 1) disablenpc "Kafra Service#G03";
 	end;
 }
 
 
 // Castle 4 ===============================================
-gefg_cas04.gat,59,70,3	script	Kafra Service#G04	117,{
+gefg_cas04,59,70,3	script	Kafra Service#G04	117,{
 	callfunc "F_GKafra", "gefg_cas04", "Geffen";
 	end;
 OnRecvCastleG04:
-	if (GetCastleData("gefg_cas04.gat",9) < 1) disablenpc "Kafra Service#G04";
+	if (GetCastleData("gefg_cas04",9) < 1) disablenpc "Kafra Service#G04";
 	end;
 }
 
 
 // Castle 5 ===============================================
-gefg_cas05.gat,61,52,5	script	Kafra Service#G05	117,{
+gefg_cas05,61,52,5	script	Kafra Service#G05	117,{
 	callfunc "F_GKafra", "gefg_cas05", "Geffen";
 	end;
 OnRecvCastleG05:
-	if (GetCastleData("gefg_cas05.gat",9) < 1) disablenpc "Kafra Service#G05";
+	if (GetCastleData("gefg_cas05",9) < 1) disablenpc "Kafra Service#G05";
 	end;
 }

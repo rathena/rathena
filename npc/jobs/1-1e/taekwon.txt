@@ -13,7 +13,7 @@
 //============================================================ 
 
 
-payon.gat,157,141,5	script	Phoenix#TKJobChange	753,{
+payon,157,141,5	script	Phoenix#TKJobChange	753,{
 
 	if (Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Soul_Linker)goto L_Complete;
 	if (TK_Q == 1)goto L_Activated2;

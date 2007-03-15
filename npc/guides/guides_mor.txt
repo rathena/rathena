@@ -17,7 +17,7 @@
 
 
 // North ------------------------------------------------
-morocc.gat,153,286,6	script	Guide#1::Mor_Guide	707,{
+morocc,153,286,6	script	Guide#1::Mor_Guide	707,{
 	cutin "moc_soldier",2;
 	mes "[Morroc Soldier]";
 	mes "Welcome to Morroc, the Desert Frontier!";
@@ -110,8 +110,8 @@ M_Menu:
 }
 
 // South --------------------------------------------
-morocc.gat,162,97,6	duplicate(Mor_Guide)	Guide#Mor2	707
+morocc,162,97,6	duplicate(Mor_Guide)	Guide#Mor2	707
 // West --------------------------------------------
-morocc.gat,28,161,6	duplicate(Mor_Guide)	Guide#Mor3	707
+morocc,28,161,6	duplicate(Mor_Guide)	Guide#Mor3	707
 // East  --------------------------------------------
-morocc.gat,294,203,9	duplicate(Mor_Guide)	Guide#Mor4	707
+morocc,294,203,9	duplicate(Mor_Guide)	Guide#Mor4	707

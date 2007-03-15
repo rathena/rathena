@@ -24,14 +24,14 @@
 
 
 //--------------------------------------- Necko: Crazy Uproar--------------------------------\\
-alberta.gat,89,96,5	script	Necko#01	139,0,4,{
+alberta,89,96,5	script	Necko#01	139,0,4,{
 	mes "[!?]";
 	mes "Muahahahahhhahahahahhahah!!";
 	mes "Pukakakakakkakakakakakakaka!!";
 	close;
 }
 
-alberta.gat,83,96,5	script	Necko#02	98,{
+alberta,83,96,5	script	Necko#02	98,{
 	mes "[Necko]";
 	if(baseClass == Job_Merchant) goto L_Start;
 
@@ -121,7 +121,7 @@ L_GotSkill:
 
 
 //----------------------------------------- Charlron: Change cart ---------------------------------\\
-alberta.gat,119,221,6	script	Charlron	107,{
+alberta,119,221,6	script	Charlron	107,{
 	mes "[Charlron]";
 	if(baseClass == Job_Merchant) goto L_Start;
 L_Other:
@@ -181,7 +181,7 @@ L_GotSkill:
 
 
 //-------------------------====-------- Gershaun: Cart Revolution ---------------------------------\\
-alberta.gat,232,106,6	script	Gershuan	57,{
+alberta,232,106,6	script	Gershuan	57,{
 	if(baseClass == Job_Merchant) goto L_Start;
 
 L_Other:

@@ -13,11 +13,11 @@
 //============================================================
 
 //Umbala Entrance
-um_dun02.gat,125,163,0	warp	nwarp1	1,1,yggdrasil01.gat,40,63
+um_dun02,125,163,0	warp	nwarp1	1,1,yggdrasil01,40,63
 
 //Niflheim Exit
-yggdrasil01.gat,249,262,0	warp	nwarp5	1,1,nif_fild01.gat,315,66
+yggdrasil01,249,262,0	warp	nwarp5	1,1,nif_fild01,315,66
 
 //Yggdrasil Tree
-yggdrasil01.gat,271,51,0	warp	nwarp3	1,1,yggdrasil01.gat,26,196
-yggdrasil01.gat,26,193,0	warp	nwarp4	1,1,yggdrasil01.gat,269,53
+yggdrasil01,271,51,0	warp	nwarp3	1,1,yggdrasil01,26,196
+yggdrasil01,26,193,0	warp	nwarp4	1,1,yggdrasil01,269,53

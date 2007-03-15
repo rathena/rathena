@@ -24,7 +24,7 @@
 //============================================================
 // CRUSADER SKILL - SHRINK
 //============================================================
-geffen.gat,110,118,3	script	Ford	752,{
+geffen,110,118,3	script	Ford	752,{
 	mes "[Ford]";
 	if(BaseJob!=Job_Crusader) goto L_nocruz;
 	if(getskilllv(1002)) goto L_alreadyhave;

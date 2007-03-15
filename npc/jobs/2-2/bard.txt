@@ -23,7 +23,7 @@
 //============================================================
 
 
-comodo.gat,226,123,5	script	Wandering Bard	741,{
+comodo,226,123,5	script	Wandering Bard	741,{
 	callfunc "F_BlockHigh",Job_Archer_High,"High Archer",Job_Clown,"Clown","Wandering Bard";
 	
 	if (BARD_Q == 1) goto L_BQ1;

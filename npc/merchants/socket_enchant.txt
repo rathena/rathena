@@ -18,7 +18,7 @@
 //============================================================
 
 
-lhz_in02.gat,281,35,5	script	Socket Enchant	84,{
+lhz_in02,281,35,5	script	Socket Enchant	84,{
 
   mes "[Socket Enchant]";
   mes "Hello.";
@@ -840,6 +840,6 @@ function	script	f_armor_s2	{
 }
 
 
-prt_in.gat,33,70,5	duplicate(Socket Enchant)	Socket Enchant#2	84
-payon.gat,140,151,5	duplicate(Socket Enchant)	Socket Enchant#3	84
-morocc.gat,51,41,5	duplicate(Socket Enchant)	Socket Enchant#4	84
+prt_in,33,70,5	duplicate(Socket Enchant)	Socket Enchant#2	84
+payon,140,151,5	duplicate(Socket Enchant)	Socket Enchant#3	84
+morocc,51,41,5	duplicate(Socket Enchant)	Socket Enchant#4	84

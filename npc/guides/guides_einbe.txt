@@ -17,7 +17,7 @@
 //= 1.4 Removed Duplicates [Silent]
 //= 1.4a missing tabs [KarLaeda]
 //============================================================
-einbech.gat,67,37,4	script	Guide#1::Einbech_Guide	852,{
+einbech,67,37,4	script	Guide#1::Einbech_Guide	852,{
 	cutin "ein_soldier",2;
 	mes "[Einbech Guide]";
 	mes "Welcome to Einbech, the Mining Town.";
@@ -117,4 +117,4 @@ L_END:
 	close;
 }
 
-einbech.gat,48,214,4	duplicate(Einbech_Guide)	Guide#Ein2	852
+einbech,48,214,4	duplicate(Einbech_Guide)	Guide#Ein2	852

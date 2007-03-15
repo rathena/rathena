@@ -17,12 +17,12 @@
 //= 1.5 Implemented a part of the Juperos quest [MasterOfMuppets]
 //============================================================
 	
-yuno_fild07.gat,207,175,0	warp	jupwrp01	1,1,jupe_cave.gat,143,52
-jupe_cave.gat,148,52,0	warp	jupwrp02	1,1,yuno_fild07.gat,212,175
-jupe_cave.gat,26,52,0	warp	jupwrp03	1,1,juperos_01.gat,53,247
-juperos_01.gat,50,250,0	warp	jupwrp04	1,1,jupe_cave.gat,29,52
+yuno_fild07,207,175,0	warp	jupwrp01	1,1,jupe_cave,143,52
+jupe_cave,148,52,0	warp	jupwrp02	1,1,yuno_fild07,212,175
+jupe_cave,26,52,0	warp	jupwrp03	1,1,juperos_01,53,247
+juperos_01,50,250,0	warp	jupwrp04	1,1,jupe_cave,29,52
 
-juperos_01.gat,99,92,1	script	jupwrp05	-1,0,0,{
+juperos_01,99,92,1	script	jupwrp05	-1,0,0,{
 OnTouch:
 
 	mes "^666666[" + strcharinfo(0) + "]";
@@ -39,7 +39,7 @@ OnTouch:
 	mes "weird's happening!";
 	mes "I gotta get away!";
 	close2;
-	warp "juperos_01.gat",96,91;
+	warp "juperos_01",96,91;
 	end;
 
 s_Nice:
@@ -49,58 +49,58 @@ s_Nice:
 	mes "It feels like";
 	mes "I'm floating...";
 	close2;
-	warp "juperos_02.gat",128,278;
+	warp "juperos_02",128,278;
 	end;
 
 }
 
-juperos_02.gat,33,60,0	warp	jupwrp06	1,1,juperos_01.gat,99,88
-jupe_ele_r.gat,49,27,0	warp	jupwrp07	1,1,jupe_gate.gat,49,52
-jupe_gate.gat,49,55,0	warp	jupwrp08	1,1,jupe_ele_r.gat,49,30
+juperos_02,33,60,0	warp	jupwrp06	1,1,juperos_01,99,88
+jupe_ele_r,49,27,0	warp	jupwrp07	1,1,jupe_gate,49,52
+jupe_gate,49,55,0	warp	jupwrp08	1,1,jupe_ele_r,49,30
 
-jupe_gate.gat,28,30,0	warp	jupwrp11	1,1,jupe_area1.gat,115,158
-jupe_area1.gat,118,158,0	warp	jupwrp12	1,1,jupe_gate.gat,31,30
-jupe_gate.gat,71,30,0	warp	jupwrp13	1,1,jupe_area2.gat,48,158
-jupe_area2.gat,45,158,0	warp	jupwrp14	1,1,jupe_gate.gat,68,30
-jupe_gate.gat,28,146,0	warp	jupwrp15	1,1,jupe_area1.gat,101,222
-jupe_area1.gat,103,222,0	warp	jupwrp16	1,1,jupe_gate.gat,31,146
-jupe_gate.gat,71,146,0	warp	jupwrp17	1,1,jupe_area2.gat,62,222
-jupe_area2.gat,60,222,0	warp	jupwrp18	1,1,jupe_gate.gat,68,146
+jupe_gate,28,30,0	warp	jupwrp11	1,1,jupe_area1,115,158
+jupe_area1,118,158,0	warp	jupwrp12	1,1,jupe_gate,31,30
+jupe_gate,71,30,0	warp	jupwrp13	1,1,jupe_area2,48,158
+jupe_area2,45,158,0	warp	jupwrp14	1,1,jupe_gate,68,30
+jupe_gate,28,146,0	warp	jupwrp15	1,1,jupe_area1,101,222
+jupe_area1,103,222,0	warp	jupwrp16	1,1,jupe_gate,31,146
+jupe_gate,71,146,0	warp	jupwrp17	1,1,jupe_area2,62,222
+jupe_area2,60,222,0	warp	jupwrp18	1,1,jupe_gate,68,146
 
-jupe_area1.gat,84,222,0	warp	jupwrp21	1,1,jupe_area1.gat,45,260
-jupe_area1.gat,48,260,0	warp	jupwrp22	1,1,jupe_area1.gat,86,222
-jupe_area1.gat,22,226,0	warp	jupwrp23	1,1,jupe_area1.gat,22,189
-jupe_area1.gat,22,192,0	warp	jupwrp24	1,1,jupe_area1.gat,22,228
-jupe_area1.gat,34,138,0	warp	jupwrp25	1,1,jupe_area1.gat,34,103
-jupe_area1.gat,34,106,0	warp	jupwrp26	1,1,jupe_area1.gat,34,140
-jupe_area1.gat,58,54,0	warp	jupwrp27	1,1,jupe_area1.gat,86,158
-jupe_area1.gat,84,158,0	warp	jupwrp28	1,1,jupe_area1.gat,55,54
+jupe_area1,84,222,0	warp	jupwrp21	1,1,jupe_area1,45,260
+jupe_area1,48,260,0	warp	jupwrp22	1,1,jupe_area1,86,222
+jupe_area1,22,226,0	warp	jupwrp23	1,1,jupe_area1,22,189
+jupe_area1,22,192,0	warp	jupwrp24	1,1,jupe_area1,22,228
+jupe_area1,34,138,0	warp	jupwrp25	1,1,jupe_area1,34,103
+jupe_area1,34,106,0	warp	jupwrp26	1,1,jupe_area1,34,140
+jupe_area1,58,54,0	warp	jupwrp27	1,1,jupe_area1,86,158
+jupe_area1,84,158,0	warp	jupwrp28	1,1,jupe_area1,55,54
 
-jupe_area2.gat,79,222,0	warp	jupwrp31	1,1,jupe_area2.gat,118,260
-jupe_area2.gat,115,260,0	warp	jupwrp32	1,1,jupe_area2.gat,77,222
-jupe_area2.gat,141,226,0	warp	jupwrp33	1,1,jupe_area2.gat,141,189
-jupe_area2.gat,141,192,0	warp	jupwrp34	1,1,jupe_area2.gat,141,228
-jupe_area2.gat,129,138,0	warp	jupwrp35	1,1,jupe_area2.gat,129,103
-jupe_area2.gat,129,106,0	warp	jupwrp36	1,1,jupe_area2.gat,129,140
-jupe_area2.gat,105,54,0	warp	jupwrp37	1,1,jupe_area2.gat,77,158
-jupe_area2.gat,79,158,0	warp	jupwrp38	1,1,jupe_area2.gat,108,54
+jupe_area2,79,222,0	warp	jupwrp31	1,1,jupe_area2,118,260
+jupe_area2,115,260,0	warp	jupwrp32	1,1,jupe_area2,77,222
+jupe_area2,141,226,0	warp	jupwrp33	1,1,jupe_area2,141,189
+jupe_area2,141,192,0	warp	jupwrp34	1,1,jupe_area2,141,228
+jupe_area2,129,138,0	warp	jupwrp35	1,1,jupe_area2,129,103
+jupe_area2,129,106,0	warp	jupwrp36	1,1,jupe_area2,129,140
+jupe_area2,105,54,0	warp	jupwrp37	1,1,jupe_area2,77,158
+jupe_area2,79,158,0	warp	jupwrp38	1,1,jupe_area2,108,54
 
-juperos_02.gat,129,150,0	script	JupeWarp2	-1,1,1{
+juperos_02,129,150,0	script	JupeWarp2	-1,1,1{
 OnInit:
 	disablenpc "JupeWarp2";
 	end;
 OnTouch:
-	warp "jupe_gate.gat",49,162;
+	warp "jupe_gate",49,162;
 	end;
 }
 
-jupe_gate.gat,49,168,0	script	JupeWarp3	-1,1,1,{
+jupe_gate,49,168,0	script	JupeWarp3	-1,1,1,{
 OnTouch:
-	warp "juperos_02.gat",129,147;
+	warp "juperos_02",129,147;
 	end;
 }
 
-jupe_ele_r.gat,50,98,0	script	Juperos Guard	111,{
+jupe_ele_r,50,98,0	script	Juperos Guard	111,{
 	mes "Are you sure you want to enter the Juperos Core?";
 	next;
 	if(select("Yes","No") == 1){
@@ -113,11 +113,11 @@ jupe_ele_r.gat,50,98,0	script	Juperos Guard	111,{
 OnTimer5000:
 	stopnpctimer;
 	setnpctimer 0;
-	warp "jupe_core.gat",150,20;
+	warp "jupe_core",150,20;
 	end;
 }
 
-jupe_core.gat,150,17,0	script	Juperos Guard#2	111,{
+jupe_core,150,17,0	script	Juperos Guard#2	111,{
 	mes "Leave Juperos Core?";
 	next;
 	if(select("Yes", "No") == 1){

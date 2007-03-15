@@ -14,7 +14,7 @@
 //============================================================
 
 
-lighthalzen.gat,108,229,2	script	La Fenn	766,{
+lighthalzen,108,229,2	script	La Fenn	766,{
 	mes "[La Fenn]";
 	if(BaseLevel<99) {
 		if(Q_99LVL) {

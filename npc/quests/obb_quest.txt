@@ -12,7 +12,7 @@
 //= 1.6a Halved the required items to make an obb, thanks to marquis007 [MasterOfMuppets]
 //===== Description =======================================
 
-alberta.gat,115,204,5	script	Tourist	97,{
+alberta,115,204,5	script	Tourist	97,{
 	mes "[Tourist]";
 	if(obb_quest == 1 ) goto L_YES;
 	if(obb_quest == 2 ) goto L_DONE;  
@@ -96,7 +96,7 @@ L_END:
 }
 
 //second part Jacob
-morocc.gat,267,142,5	script	Jacob	807,{
+morocc,267,142,5	script	Jacob	807,{
 	mes "[Jacob]";
 	if(obb_quest == 1 ) goto L_YES;
 	if(obb_quest == 2 ) goto L_DONE;
@@ -140,7 +140,7 @@ L_END:
 }
 
 //third part
-comodo.gat,41,209,5	script	Old Greek	120,{
+comodo,41,209,5	script	Old Greek	120,{
 	mes "[Old Greek]";
 	if(obb_quest == 2 ) goto L_YES;
 	if(obb_quest < 2 ) goto  L_LOST;

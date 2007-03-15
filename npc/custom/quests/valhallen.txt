@@ -12,7 +12,7 @@
 //= Custom quest, ingredients based on official RO FAQ
 //============================================================ 
 
-prontera.gat,147,171,5	script	Lenneth	811,{
+prontera,147,171,5	script	Lenneth	811,{
 	mes "[Lenneth]";
 	mes "I come from Valhalla to aid you.";
 	mes "I can transmute for you many of the Valhallen items.";

@@ -13,7 +13,7 @@
 //= 1.0 First release
 //============================================================
 
-prt_in.gat,24,61,7	script	Perchik	47,{
+prt_in,24,61,7	script	Perchik	47,{
 	mes "[Perchik]";
 	if(BaseJob==Job_Novice || BaseLevel<50) {
 		mes "Sorry, I don't help newbies. Go kill more Porings.";

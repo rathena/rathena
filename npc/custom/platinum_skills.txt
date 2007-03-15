@@ -13,7 +13,7 @@
 //= Added baby clases by Midas
 //= Simplified Job Checks [Silentdragon]
 //===========================================================================================
-prontera.gat,128,200,6	script	Platinum Skill NPC	94,{
+prontera,128,200,6	script	Platinum Skill NPC	94,{
 mes "[Platinum Skill NPC]";
 mes "I can give you the special skills available to your job. Would you like these skills now?";
 next;
@@ -109,4 +109,3 @@ mes "*sob* FINE!";
 mes "Have a nice day... >.>";
 close;
 }
-

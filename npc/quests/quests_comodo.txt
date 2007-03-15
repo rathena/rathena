@@ -22,7 +22,7 @@
 //============================================================================================//
 // Cross Hat, Bulb Hairband, Striped Hairband, Blue Hairband
 //==================================================
-comodo.gat,227,158,4	script	Hair Ornament Girl	700,{
+comodo,227,158,4	script	Hair Ornament Girl	700,{
 	mes "[Hair Ornament Girl]";
 	if(sex==1)mes "Oh, hi.  Do you need to buy a present for a friend, your mother, or maybe your girl friend? Then get her a Hair Band! It's the best gift you can get her.";
 	if(sex==0)mes "Oh, hi.  Do you need to buy a present for a friend, your mother, or maybe yourself? Then get a Hair Band! It's the best gift you can give, or get.";
@@ -122,7 +122,7 @@ M_Menu:
 //===================================================================================================//
 // 'Mine Helmet', 'Parcel Hat', 'Money Loser's Grief', 'Phantom of the Opera Mask'
 //===============================================================//
-comodo.gat,274,137,5	script	Mari Isac	702,{
+comodo,274,137,5	script	Mari Isac	702,{
 	mes "[Mari Isac]";
 	mes "I travel all over the world and get to hear many interesting stories from the people I meet.";
 	mes "Sometimes they even teach me how to make special items";
@@ -281,7 +281,7 @@ M_Menu:
 //			Chief Quest (Doomed Swords Part 1)
 //============================================================================//
 //=======================================================
-comodo.gat,206,310,4	script	Rochito	48,{
+comodo,206,310,4	script	Rochito	48,{
 	if(dmdswrd_Q == 1) goto L_1;
 	if(dmdswrd_Q == 2) goto L_2;
 	if(dmdswrd_Q == 3) goto sL_2;
@@ -410,7 +410,7 @@ L_3:
 }
 
 //=======================================================
-comodo.gat,204,310,4	script	Rockha	98,{
+comodo,204,310,4	script	Rockha	98,{
 	if(dmdswrd_Q == 3) goto L_1;
 	if(dmdswrd_Q == 4 || dmdswrd_Q==5) goto L_2;
 L_0:
@@ -463,7 +463,7 @@ L_2:
 }
 
 //=======================================================
-comodo.gat,209,314,4	script	Rotute	82,{
+comodo,209,314,4	script	Rotute	82,{
 	if(dmdswrd_Q==2 || dmdswrd_Q==3) goto L_1;
 	if(dmdswrd_Q == 4 || dmdswrd_Q==5) goto L_2;
 
@@ -507,7 +507,7 @@ L_2:
 }
 
 //=======================================================
-comodo.gat,209,305,4	script	Emralhandas	70,{
+comodo,209,305,4	script	Emralhandas	70,{
 	mes "[Emralhandas]";
 	mes "Rockha, empty your glass so I can pour you a drink.";
 	next;
@@ -579,7 +579,7 @@ comodo.gat,209,305,4	script	Emralhandas	70,{
 
 
 // Chief's House =========================================================//
-cmd_in02.gat,32,140,4	script	Chief Tausupa	49,{
+cmd_in02,32,140,4	script	Chief Tausupa	49,{
 	if(dmdswrd_Q == 1) goto L_1;
 	if(dmdswrd_Q == 2) goto sL_1;
 	if(dmdswrd_Q == 3) goto L_2;
@@ -693,7 +693,7 @@ L_2:
 //============================================================================//
 
 //=======================================================
-comodo.gat,88,97,4	script	Cheese Expert TORUNA	109,{
+comodo,88,97,4	script	Cheese Expert TORUNA	109,{
 	if(dmdswrd_Q == 7) goto sL_2;
 	mes "[TORUNA]";
 	mes "I hear that the cheese here is delicious.  Every time I come here to visit, I ask for some of that popular cheese.";
@@ -782,7 +782,7 @@ M_Menu:
 }
 
 //=======================================================
-comodo.gat,164,291,2	script	Rakusa	73,{
+comodo,164,291,2	script	Rakusa	73,{
 	if(dmdswrd_Q == 7) goto L_1;
 	if(dmdswrd_Q == 8) goto L_2;
 
@@ -814,7 +814,7 @@ L_2:
 }
 
 //=======================================================
-comodo.gat,169,284,4	script	Kichiri	99,{
+comodo,169,284,4	script	Kichiri	99,{
 	mes "[Kichiri]";
 	if(dmdswrd_Q == 8) goto L_1;
 	if(dmdswrd_Q == 9) goto L_2;
@@ -842,7 +842,7 @@ L_2:
 }
 
 //=======================================================
-comodo.gat,163,280,4	script	Magatu	55,{
+comodo,163,280,4	script	Magatu	55,{
 	mes "[Magatu]";
 	if(dmdswrd_Q == 9) goto L_1;
 	if(dmdswrd_Q == 10) goto L_2;
@@ -883,7 +883,7 @@ L_2:
 }
 
 //======================================================
-cmd_in02.gat,189,99,4	script	Manzi	85,{
+cmd_in02,189,99,4	script	Manzi	85,{
 	if(dmdswrd_Q == 10) goto L_1;
 	if(dmdswrd_Q == 11) goto L_2;
 	if(BaseJob == Job_Novice) goto L_Nov;
@@ -936,7 +936,7 @@ L_2:
 }
 
 //=======================================================
-comodo.gat,187,153,4	script	Hullaris	701,{
+comodo,187,153,4	script	Hullaris	701,{
 	mes "[Hullaris]";
 	if(dmdswrd_Q == 11) goto L_1;
 	if(dmdswrd_Q == 12) goto L_2;
@@ -1058,7 +1058,7 @@ L_4:
 }
 
 //=========================================================
-beach_dun3.gat,30,220,4	script	Wizard Nigirboran	704,{
+beach_dun3,30,220,4	script	Wizard Nigirboran	704,{
 	mes "[Nigirboran]";
 	if(dmdswrd_Q == 12) goto L_1;
 	if(dmdswrd_Q == 13) goto L_2;
@@ -1223,7 +1223,7 @@ L_2:
 	L_LowLvl:
 		mes "^3355FF~ it is unbearable and causes you to faint ~^000000";
 		next;
-		warp "beach_dun3.gat",32,214;
+		warp "beach_dun3",32,214;
 		doevent "Wizard Nigirboran::OnFainted";
 		end;
 

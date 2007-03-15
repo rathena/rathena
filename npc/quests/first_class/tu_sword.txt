@@ -16,7 +16,7 @@
 
 
 //=================================================Shurank====================================================
-izlude_in.gat,82,163,3	script	Shurank	733,{
+izlude_in,82,163,3	script	Shurank	733,{
 	mes "[Shurank]";
 	if(Class == Job_Novice || Class == Job_Baby){
 		mes "Still wondering";
@@ -571,7 +571,7 @@ izlude_in.gat,82,163,3	script	Shurank	733,{
 		mes "[Shurank]";
 		mes "But now that I think about it, it may take you a while to travel to Geffen. I shall send you there myself! Good luck!";
 		next;
-		warp "gef_fild07.gat",35,192;
+		warp "gef_fild07",35,192;
 		close;
 		break;
 	case 5:
@@ -909,7 +909,7 @@ izlude_in.gat,82,163,3	script	Shurank	733,{
 }
 
 //=================================================Daqu'ee====================================================
-geffen.gat,154,143,3	script	Dequ'ee	734,{ 
+geffen,154,143,3	script	Dequ'ee	734,{ 
 	if(BaseJob == Job_Novice){
 		mes "[Dequ'ee]";
 		mes "Hey there.";
@@ -991,7 +991,7 @@ if(tu_swordman == 20){
 	mes "wants to show you the ropes of Swordmanship.";
 	set tu_swordman, 21;
 	close2;
-	warp "izlude.gat",35,78;
+	warp "izlude",35,78;
 	end;
 }
 
@@ -1053,7 +1053,7 @@ if((tu_swordman == 17) || (tu_swordman == 18)){
 			set tu_swordman, 19;
 			set BaseExp, BaseExp + 1620;
 			close2;
-			warp "moc_fild07.gat",359,201;
+			warp "moc_fild07",359,201;
 			end;
 			break;
 		case 3:
@@ -1945,7 +1945,7 @@ if(tu_swordman == 13){
 	mes "near that city.";
 	next;
 	set tu_swordman, 14;
-	warp "moc_fild07.gat",359,201;
+	warp "moc_fild07",359,201;
 	close;
 }
 
@@ -2154,7 +2154,7 @@ if(tu_swordman == 6){
 							mes "of yourself,";
 							mes "brave Swordman.";
 							next;
-							warp "izlude.gat",35,78;
+							warp "izlude",35,78;
 							close;
 							break;
 					}
@@ -2219,7 +2219,7 @@ if(tu_swordman == 6){
 }
 
 //=================================================Geil====================================================
-morocc_in.gat,51,101,3	script	Geil	89,{
+morocc_in,51,101,3	script	Geil	89,{
 	mes "[Geil]";
 	if(tu_swordman == 15){
 		mes "Were you sent by the authorities? Quit giving me such a hard time! I'm not the murderer! I don't even know who was killed. I'm not the one you're looking for!";
@@ -2271,7 +2271,7 @@ morocc_in.gat,51,101,3	script	Geil	89,{
 }
 
 //=================================================Meutro====================================================		
-morocc.gat,82,292,5	script	Muetro	84,{
+morocc,82,292,5	script	Muetro	84,{
 	mes "[Muetro]";
 	if(tu_swordman == 15){
 		mes "You're just";
@@ -2311,7 +2311,7 @@ morocc.gat,82,292,5	script	Muetro	84,{
 }
 
 //=================================================Hans====================================================
-morocc.gat,240,72,3	script	Hans	86,{
+morocc,240,72,3	script	Hans	86,{
 	mes "[Hans]";
 	if(tu_swordman == 15){
 		mes "Help me!";
@@ -2368,7 +2368,7 @@ morocc.gat,240,72,3	script	Hans	86,{
 }
 	
 //=================================================Bankley====================================================
-morocc_in.gat,12,156,3	script	Bankley	97,{
+morocc_in,12,156,3	script	Bankley	97,{
 	if(tu_swordman > 19){
 		mes "^3355FFBankley had a pitiable";
 		mes "expression on his face.^000000";

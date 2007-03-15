@@ -1,4 +1,4 @@
-airplane.gat,236,63,4    script    Hallen    55,{
+airplane,236,63,4    script    Hallen    55,{
     if (fragmentauest>3) {
 	mes "[Hallen]";
 	mes "Nice weather, isn't it?";

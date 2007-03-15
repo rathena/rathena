@@ -18,128 +18,128 @@
 //= 1.7 Yet more missing warps implemented :P [MasterOfMuppets]
 //============================================================
 
-lighthalzen.gat,196,46,0	warp	lhz010	1,1,lhz_in02.gat,282,83
-lhz_in02.gat,282,79,0	warp	lhz010a	1,1,lighthalzen.gat,193,47
+lighthalzen,196,46,0	warp	lhz010	1,1,lhz_in02,282,83
+lhz_in02,282,79,0	warp	lhz010a	1,1,lighthalzen,193,47
 
-lighthalzen.gat,197,36,0	warp	lhz011	1,1,lhz_in02.gat,284,30
-lhz_in02.gat,288,30,0	warp	lhz011a	1,1,lighthalzen.gat,194,35
+lighthalzen,197,36,0	warp	lhz011	1,1,lhz_in02,284,30
+lhz_in02,288,30,0	warp	lhz011a	1,1,lighthalzen,194,35
 
-lhz_in02.gat,265,14,0	warp	lhz012	1,1,lhz_in02.gat,269,82
-lhz_in02.gat,274,82,0	warp	lhz012a	1,1,lhz_in02.gat,269,14
+lhz_in02,265,14,0	warp	lhz012	1,1,lhz_in02,269,82
+lhz_in02,274,82,0	warp	lhz012a	1,1,lhz_in02,269,14
 
-lhz_in02.gat,108,26,0	warp	lhz013	1,1,lighthalzen.gat,98,110
-lighthalzen.gat,92,110,0	warp	lhz013a	1,1,lhz_in02.gat,104,26
+lhz_in02,108,26,0	warp	lhz013	1,1,lighthalzen,98,110
+lighthalzen,92,110,0	warp	lhz013a	1,1,lhz_in02,104,26
 
-lighthalzen.gat,50,87,0	warp	lhz014	1,1,lhz_in03.gat,45,31
-lhz_in03.gat,50,31,0	warp	lhz014a	1,1,lighthalzen.gat,54,87
+lighthalzen,50,87,0	warp	lhz014	1,1,lhz_in03,45,31
+lhz_in03,50,31,0	warp	lhz014a	1,1,lighthalzen,54,87
 
-lhz_in03.gat,20,99,0	warp	lhz015	1,1,lhz_in03.gat,17,31
-lhz_in03.gat,13,31,0	warp	lhz015a	1,1,lhz_in03.gat,15,99
+lhz_in03,20,99,0	warp	lhz015	1,1,lhz_in03,17,31
+lhz_in03,13,31,0	warp	lhz015a	1,1,lhz_in03,15,99
 
-lighthalzen.gat,159,133,0	warp	lhz016	1,1,lhz_in02.gat,232,265
-lhz_in02.gat,232,261,0	warp	lhz016a	1,1,lighthalzen.gat,159,129
+lighthalzen,159,133,0	warp	lhz016	1,1,lhz_in02,232,265
+lhz_in02,232,261,0	warp	lhz016a	1,1,lighthalzen,159,129
 
-lhz_in02.gat,210,284,0	warp	lhz017	1,1,lhz_in02.gat,241,219
-lhz_in02.gat,236,219,0	warp	lhz017a	1,1,lhz_in02.gat,206,284
+lhz_in02,210,284,0	warp	lhz017	1,1,lhz_in02,241,219
+lhz_in02,236,219,0	warp	lhz017a	1,1,lhz_in02,206,284
 
-lhz_in02.gat,269,212,0	warp	lhz018	1,1,lhz_in02.gat,250,212
-lhz_in02.gat,254,212,0	warp	lhz018a	1,1,lhz_in02.gat,273,212
+lhz_in02,269,212,0	warp	lhz018	1,1,lhz_in02,250,212
+lhz_in02,254,212,0	warp	lhz018a	1,1,lhz_in02,273,212
 
-lhz_in02.gat,231,200,0	warp	lhz019	1,1,lhz_in02.gat,212,200
-lhz_in02.gat,216,200,0	warp	lhz019a	1,1,lhz_in02.gat,233,200
+lhz_in02,231,200,0	warp	lhz019	1,1,lhz_in02,212,200
+lhz_in02,216,200,0	warp	lhz019a	1,1,lhz_in02,233,200
 
-lhz_in02.gat,231,182,0	warp	lhz020	1,1,lhz_in02.gat,212,182
-lhz_in02.gat,216,182,0	warp	lhz020a	1,1,lhz_in02.gat,235,182
+lhz_in02,231,182,0	warp	lhz020	1,1,lhz_in02,212,182
+lhz_in02,216,182,0	warp	lhz020a	1,1,lhz_in02,235,182
 
-lhz_in02.gat,238,169,0	warp	lhz021	1,1,lhz_in02.gat,238,150
-lhz_in02.gat,238,154,0	warp	lhz021a	1,1,lhz_in02.gat,238,173
+lhz_in02,238,169,0	warp	lhz021	1,1,lhz_in02,238,150
+lhz_in02,238,154,0	warp	lhz021a	1,1,lhz_in02,238,173
 
-lhz_in02.gat,261,278,0	warp	lhz022	1,1,lhz_in02.gat,246,278
-lhz_in02.gat,250,278,0	warp	lhz022a	1,1,lhz_in02.gat,265,278
+lhz_in02,261,278,0	warp	lhz022	1,1,lhz_in02,246,278
+lhz_in02,250,278,0	warp	lhz022a	1,1,lhz_in02,265,278
 
-lighthalzen.gat,238,220,0	warp	lhz023	1,1,lhz_in02.gat,28,270
-lhz_in02.gat,27,265,0	warp	lhz023a	1,1,lighthalzen.gat,238,216
+lighthalzen,238,220,0	warp	lhz023	1,1,lhz_in02,28,270
+lhz_in02,27,265,0	warp	lhz023a	1,1,lighthalzen,238,216
 
-lhz_in02.gat,13,284,0	warp	lhz024	1,1,lhz_in02.gat,89,285
-lhz_in02.gat,95,285,0	warp	lhz024a	1,1,lhz_in02.gat,19,284
+lhz_in02,13,284,0	warp	lhz024	1,1,lhz_in02,89,285
+lhz_in02,95,285,0	warp	lhz024a	1,1,lhz_in02,19,284
 
-lhz_in02.gat,114,272,0	warp	lhz025	1,1,lhz_in02.gat,153,282
-lhz_in02.gat,149,282,0	warp	lhz025a	1,1,lhz_in02.gat,110,272
+lhz_in02,114,272,0	warp	lhz025	1,1,lhz_in02,153,282
+lhz_in02,149,282,0	warp	lhz025a	1,1,lhz_in02,110,272
 
-lighthalzen.gat,198,257,0	warp	lhz026	1,1,lhz_in02.gat,39,28
-lhz_in02.gat,44,28,0	warp	lhz026a	1,1,lighthalzen.gat,203,257
+lighthalzen,198,257,0	warp	lhz026	1,1,lhz_in02,39,28
+lhz_in02,44,28,0	warp	lhz026a	1,1,lighthalzen,203,257
 
-lighthalzen.gat,236,276,0	warp	lhz027	1,1,lhz_in02.gat,133,199
-lhz_in02.gat,129,199,0	warp	lhz027a	1,1,lighthalzen.gat,232,276
+lighthalzen,236,276,0	warp	lhz027	1,1,lhz_in02,133,199
+lhz_in02,129,199,0	warp	lhz027a	1,1,lighthalzen,232,276
 
-lighthalzen.gat,251,299,0	warp	lhz028	1,1,lhz_in03.gat,97,21
-lhz_in03.gat,93,21,0	warp	lhz028a	1,1,lighthalzen.gat,247,299
+lighthalzen,251,299,0	warp	lhz028	1,1,lhz_in03,97,21
+lhz_in03,93,21,0	warp	lhz028a	1,1,lighthalzen,247,299
 
-lhz_in03.gat,134,14,0	warp	lhz029	1,1,lhz_in03.gat,125,90
-lhz_in03.gat,120,90,0	warp	lhz029a	1,1,lhz_in03.gat,130,14
+lhz_in03,134,14,0	warp	lhz029	1,1,lhz_in03,125,90
+lhz_in03,120,90,0	warp	lhz029a	1,1,lhz_in03,130,14
 
-lighthalzen.gat,198,163,0	warp	lhz030	1,1,lhz_in02.gat,21,195
-lhz_in02.gat,21,191,0	warp	lhz030a	1,1,lighthalzen.gat,202,160
+lighthalzen,198,163,0	warp	lhz030	1,1,lhz_in02,21,195
+lhz_in02,21,191,0	warp	lhz030a	1,1,lighthalzen,202,160
 
-lhz_in02.gat,39,204,0	warp	lhz031	1,1,lhz_in02.gat,41,136
-lhz_in02.gat,36,136,0	warp	lhz031a	1,1,lhz_in02.gat,34,204
+lhz_in02,39,204,0	warp	lhz031	1,1,lhz_in02,41,136
+lhz_in02,36,136,0	warp	lhz031a	1,1,lhz_in02,34,204
 
-lhz_in02.gat,49,154,0	warp	lhz032	1,1,lhz_in02.gat,98,155
-lhz_in02.gat,103,155,0	warp	lhz032a	1,1,lhz_in02.gat,44,154
+lhz_in02,49,154,0	warp	lhz032	1,1,lhz_in02,98,155
+lhz_in02,103,155,0	warp	lhz032a	1,1,lhz_in02,44,154
 
-lhz_in02.gat,88,144,0	warp	lhz033	1,1,lhz_in02.gat,89,212
-lhz_in02.gat,94,212,0	warp	lhz033a	1,1,lhz_in02.gat,94,144
+lhz_in02,88,144,0	warp	lhz033	1,1,lhz_in02,89,212
+lhz_in02,94,212,0	warp	lhz033a	1,1,lhz_in02,94,144
 
-lhz_in02.gat,79,223,0	warp	lhz034	1,1,lhz_in02.gat,17,155
-lhz_in02.gat,13,155,0	warp	lhz034a	1,1,lhz_in02.gat,84,223
+lhz_in02,79,223,0	warp	lhz034	1,1,lhz_in02,17,155
+lhz_in02,13,155,0	warp	lhz034a	1,1,lhz_in02,84,223
 
-lighthalzen.gat,101,248,0	warp	lhz035	1,1,lhz_in01.gat,111,126
-lhz_in01.gat,111,121,0	warp	lhz035a	1,1,lighthalzen.gat,101,243
+lighthalzen,101,248,0	warp	lhz035	1,1,lhz_in01,111,126
+lhz_in01,111,121,0	warp	lhz035a	1,1,lighthalzen,101,243
 
-lighthalzen.gat,106,248,0	warp	lhz036	1,1,lhz_in01.gat,116,126
-lhz_in01.gat,116,121,0	warp	lhz036a	1,1,lighthalzen.gat,106,243
+lighthalzen,106,248,0	warp	lhz036	1,1,lhz_in01,116,126
+lhz_in01,116,121,0	warp	lhz036a	1,1,lighthalzen,106,243
 
-lhz_in01.gat,88,215,0	warp	lhz037	1,1,lhz_in01.gat,106,18
-lhz_in01.gat,106,15,0	warp	lhz037a	1,1,lhz_in01.gat,88,211
+lhz_in01,88,215,0	warp	lhz037	1,1,lhz_in01,106,18
+lhz_in01,106,15,0	warp	lhz037a	1,1,lhz_in01,88,211
 
-lhz_in01.gat,140,215,0	warp	lhz038	1,1,lhz_in01.gat,158,18
-lhz_in01.gat,158,15,0	warp	lhz038a	1,1,lhz_in01.gat,140,211
+lhz_in01,140,215,0	warp	lhz038	1,1,lhz_in01,158,18
+lhz_in01,158,15,0	warp	lhz038a	1,1,lhz_in01,140,211
 
-lhz_in01.gat,194,55,0	warp	lhz039	1,1,lhz_in01.gat,188,250
-lhz_in01.gat,188,254,0	warp	lhz039a	1,1,lhz_in01.gat,191,52
+lhz_in01,194,55,0	warp	lhz039	1,1,lhz_in01,188,250
+lhz_in01,188,254,0	warp	lhz039a	1,1,lhz_in01,191,52
 
-lhz_in01.gat,230,226,0	warp	lhz040	1,1,lhz_in01.gat,257,226
-lhz_in01.gat,251,226,0	warp	lhz040a	1,1,lhz_in01.gat,225,226
+lhz_in01,230,226,0	warp	lhz040	1,1,lhz_in01,257,226
+lhz_in01,251,226,0	warp	lhz040a	1,1,lhz_in01,225,226
 
-lhz_in01.gat,98,55,0	warp	lhz041	1,1,lhz_in01.gat,76,250
-lhz_in01.gat,76,254,0	warp	lhz041a	1,1,lhz_in01.gat,100,52
+lhz_in01,98,55,0	warp	lhz041	1,1,lhz_in01,76,250
+lhz_in01,76,254,0	warp	lhz041a	1,1,lhz_in01,100,52
 
-lhz_in01.gat,149,179,0	warp	lhz042	1,1,lhz_in01.gat,15,24
-lhz_in01.gat,11,24,0	warp	lhz042a	1,1,lhz_in01.gat,145,178
+lhz_in01,149,179,0	warp	lhz042	1,1,lhz_in01,15,24
+lhz_in01,11,24,0	warp	lhz042a	1,1,lhz_in01,145,178
 
-lighthalzen.gat,346,232,0	warp	lhz043	1,1,lhz_in03.gat,188,14
-lhz_in03.gat,188,11,0	warp	lhz043a	1,1,lighthalzen.gat,346,229
+lighthalzen,346,232,0	warp	lhz043	1,1,lhz_in03,188,14
+lhz_in03,188,11,0	warp	lhz043a	1,1,lighthalzen,346,229
 
-lhz_in03.gat,191,35,0	warp	lhz044	1,1,lhz_in03.gat,190,103
-lhz_in03.gat,190,100,0	warp	lhz044a	1,1,lhz_in03.gat,189,34
+lhz_in03,191,35,0	warp	lhz044	1,1,lhz_in03,190,103
+lhz_in03,190,100,0	warp	lhz044a	1,1,lhz_in03,189,34
 
-lighthalzen.gat,339,240,0	warp	lhz045	1,1,lhz_in03.gat,180,87
-lhz_in03.gat,180,90,0	warp	lhz045a	1,1,lighthalzen.gat,339,242
+lighthalzen,339,240,0	warp	lhz045	1,1,lhz_in03,180,87
+lhz_in03,180,90,0	warp	lhz045a	1,1,lighthalzen,339,242
 
-lhz_in01.gat,40,224,0	warp	lhz046	1,1,lhz_in01.gat,19,129
-lhz_in01.gat,15,129,0	warp	lhz046a	1,1,lhz_in01.gat,34,224
+lhz_in01,40,224,0	warp	lhz046	1,1,lhz_in01,19,129
+lhz_in01,15,129,0	warp	lhz046a	1,1,lhz_in01,34,224
 
-lhz_in01.gat,58,130,0	warp	lhz047	1,1,lhz_in01.gat,193,127
-lhz_in01.gat,191,127,0	warp	lhz047a	1,1,lhz_in01.gat,56,130
+lhz_in01,58,130,0	warp	lhz047	1,1,lhz_in01,193,127
+lhz_in01,191,127,0	warp	lhz047a	1,1,lhz_in01,56,130
 
-lhz_in01.gat,43,115,0	warp	lhz048	1,1,lhz_in01.gat,278,130
-lhz_in01.gat,278,132,0	warp	lhz048a	1,1,lhz_in01.gat,43,117
+lhz_in01,43,115,0	warp	lhz048	1,1,lhz_in01,278,130
+lhz_in01,278,132,0	warp	lhz048a	1,1,lhz_in01,43,117
 
-//lhz_in01.gat,275,235,0	warp	lhz049	1,1,lhz_in01.gat,275,242  //not sure
-//lhz_in01.gat,275,238,0	warp	lhz049a	1,1,lhz_in01.gat,275,232  //not sure
+//lhz_in01,275,235,0	warp	lhz049	1,1,lhz_in01,275,242  //not sure
+//lhz_in01,275,238,0	warp	lhz049a	1,1,lhz_in01,275,232  //not sure
 
-lighthalzen.gat,324,301,0	warp	lhz050	1,1,lhz_in03.gat,239,101
-lhz_in03.gat,237,101,0	warp	lhz050a	1,1,lighthalzen.gat,324,299
+lighthalzen,324,301,0	warp	lhz050	1,1,lhz_in03,239,101
+lhz_in03,237,101,0	warp	lhz050a	1,1,lighthalzen,324,299
 
-lighthalzen.gat,323,322,0	warp	lhz051	1,1,lhz_in03.gat,15,162
-lhz_in03.gat,13,162,0	warp	lhz051a	1,1,lighthalzen.gat,321,322
+lighthalzen,323,322,0	warp	lhz051	1,1,lhz_in03,15,162
+lhz_in03,13,162,0	warp	lhz051a	1,1,lighthalzen,321,322

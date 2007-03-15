@@ -36,7 +36,7 @@
 //============================================================ 
 
 //<====================================== Job Changer ========================================>\\
-hu_in01.gat,386,374,4	script	Hunter Sharon	727,{
+hu_in01,386,374,4	script	Hunter Sharon	727,{
 	callfunc "F_BlockHigh",Job_Archer_High,"High Archer",Job_Sniper,"Sniper","Hunter Sharon";
 
 	mes "[Hunter Sharon]";
@@ -368,7 +368,7 @@ L_Change:
 
 
 //<=========================== Demon Hunter: Second Test ===============================>\\
-hu_in01.gat,382,382,5	script	Demon Hunter	732,{
+hu_in01,382,382,5	script	Demon Hunter	732,{
 	if(BaseJob == Job_Archer) goto L_Arc;
 	if(BaseJob == Job_Hunter) goto L_Hnt;
 
@@ -474,7 +474,7 @@ L_Start:
 			mes "DON'T you mess around with me! If you're gonna fool around then LEAVE!";
 			emotion e_pif;
 			close2;
-			warp "hugel.gat", 207, 222;
+			warp "hugel", 207, 222;
 			end;
 
 L_Check:
@@ -543,7 +543,7 @@ L_Done:
 
 
 //<=============================== Guild Master: Last Test =================================>\\
-payon_in02.gat,21,31,1	script	Guild Master#03	59,{
+payon_in02,21,31,1	script	Guild Master#03	59,{
 	if(BaseJob == Job_Archer) goto L_Archer;
 	if(BaseJob == Job_Hunter) goto L_Hnt;
 
@@ -614,8 +614,8 @@ L_Start:
 		close2;
 		set HNTR_Q2, 1;
 		set @HNTR_QA,0;
-		savepoint "payon_in02.gat", 16, 26;
-		warp "job_hunte.gat", 176, 22;
+		savepoint "payon_in02", 16, 26;
+		warp "job_hunte", 176, 22;
 		end;
 
 		sF_GetArrows:
@@ -660,7 +660,7 @@ L_Done:
 
 
 // Test Guide ====================================================
-job_hunte.gat,178,32,5	script	Hunter Test Guide::HntTG	107,{
+job_hunte,178,32,5	script	Hunter Test Guide::HntTG	107,{
 
 L_Start:
 	mes "[Test Guide]";
@@ -687,7 +687,7 @@ L_Start:
 		mes "[Test Guide]";
 		mes "Alright, I'll send you back to Payon.  Hopefully I'll see you again later.  Don't forget to save!";
 		close2;
-		warp "payon_in02.gat", 16, 26;
+		warp "payon_in02", 16, 26;
 		end;
 
 OnInit:
@@ -695,12 +695,12 @@ OnInit:
 	end;
 
 OnStart:
-	set $@HntUsers, getareausers("job_hunte.gat", 50, 64, 123, 143);
+	set $@HntUsers, getareausers("job_hunte", 50, 64, 123, 143);
 	if ($@HntUsers > 0) end;			// stops the rest of the script from running if there is somebody taking the test
 
 	if ((getwaitingroomstate(33)) == 0) end;			// stops the rest of the script from running if there is no one in the waiting room
-	killmonsterall "job_hunte.gat";
-	warpwaitingpc "job_hunte.gat", 90, 67;
+	killmonsterall "job_hunte";
+	warpwaitingpc "job_hunte", 90, 67;
 	donpcevent "Ev_HntRm::OnStart";
 	end;
 
@@ -708,19 +708,19 @@ OnStart:
 
 
 // Ev_HntRm: Test room --------------------------------------------------------
-job_hunte.gat,1,1,1	script	Ev_HntRm	-1,{
+job_hunte,1,1,1	script	Ev_HntRm	-1,{
 
 OnStart:
 	disablenpc "SwitchHnt";
 	disablenpc "ExitHnt";
 	set $@HntMob, 4;
 	// Real Monsters
-	monster "job_hunte.gat",67,80,"Job Change Monster",1015,1,"Ev_HntRm::OnMyMobDead1";
-	monster "job_hunte.gat",114,78,"Job Change Monster",1015,1,"Ev_HntRm::OnMyMobDead1"; 
-	monster "job_hunte.gat",89,127,"Job Change Monster",1002,1,"Ev_HntRm::OnMyMobDead1";
-	monster "job_hunte.gat",53,73,"Job Change Monster",1041,1,"Ev_HntRm::OnMyMobDead1";
-	monster "job_hunte.gat",125,70,"Job Change Monster",1016,1,"Ev_HntRm::OnMyMobDead1";
-	monster "job_hunte.gat",90,92,"Job Change Monster",1015,1,"Ev_HntRm::OnMyMobDead1";
+	monster "job_hunte",67,80,"Job Change Monster",1015,1,"Ev_HntRm::OnMyMobDead1";
+	monster "job_hunte",114,78,"Job Change Monster",1015,1,"Ev_HntRm::OnMyMobDead1"; 
+	monster "job_hunte",89,127,"Job Change Monster",1002,1,"Ev_HntRm::OnMyMobDead1";
+	monster "job_hunte",53,73,"Job Change Monster",1041,1,"Ev_HntRm::OnMyMobDead1";
+	monster "job_hunte",125,70,"Job Change Monster",1016,1,"Ev_HntRm::OnMyMobDead1";
+	monster "job_hunte",90,92,"Job Change Monster",1015,1,"Ev_HntRm::OnMyMobDead1";
 	donpcevent "Ev_HntRm2::OnStart";
 	initnpctimer "TimerHnt";
 	end;
@@ -730,133 +730,133 @@ OnMyMobDead1:
 	if($@HntMob != 0) end;
 
 	stopnpctimer "TimerHnt";
-	killmonsterall "job_hunte.gat";
+	killmonsterall "job_hunte";
 	enablenpc "SwitchHnt";
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]: Great job! Go use the switch now!",8;	
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]: Great job! Go use the switch now!",8;	
 	end;
 
 }
 
 // Ev_HntRm2: Spawns the Decoy Monsters ----------------------------------------
-job_hunte.gat,1,1,1	script	Ev_HntRm2	-1,{
+job_hunte,1,1,1	script	Ev_HntRm2	-1,{
 
 OnStart:
 	// Decoy Monsters
-	monster "job_hunte.gat",85,100,"Test Monster",1016,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",72,102,"Test Monster",1041,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",108,103,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",88,127,"Test Monster",1002,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",125,69,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat", 77, 112,"Test Monster",1016,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",53, 106,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",53, 73,"Test Monster",1002,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",125, 70,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",90, 91,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",67, 80,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",77, 112,"Test Monster",1016,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",53, 106,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",53, 73,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",125, 70,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",90, 91,"Test Monster",1041,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",85, 100,"Test Monster",1002,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",72, 102,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",108, 103,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",77, 112,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",112, 139,"Vinnie Paul",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",112, 139,"Dimeback Darrel",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",112, 139,"Rex",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",112, 139,"Phillip Angelmo",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",90, 91,"Anolian",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",53, 73,"monster sample",1002,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",53, 106,"I'm not the one you want >_>",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",77, 112,"SPARE ME~",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",72, 102,"Don't hurt me!",1015,1,"Ev_HntRm2::OnMyMobDead2";
-	monster "job_hunte.gat",108, 103,"aspd 184",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",85,100,"Test Monster",1016,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",72,102,"Test Monster",1041,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",108,103,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",88,127,"Test Monster",1002,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",125,69,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte", 77, 112,"Test Monster",1016,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",53, 106,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",53, 73,"Test Monster",1002,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",125, 70,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",90, 91,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",67, 80,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",77, 112,"Test Monster",1016,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",53, 106,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",53, 73,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",125, 70,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",90, 91,"Test Monster",1041,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",85, 100,"Test Monster",1002,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",72, 102,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",108, 103,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",77, 112,"Test Monster",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",112, 139,"Vinnie Paul",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",112, 139,"Dimeback Darrel",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",112, 139,"Rex",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",112, 139,"Phillip Angelmo",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",90, 91,"Anolian",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",53, 73,"monster sample",1002,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",53, 106,"I'm not the one you want >_>",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",77, 112,"SPARE ME~",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",72, 102,"Don't hurt me!",1015,1,"Ev_HntRm2::OnMyMobDead2";
+	monster "job_hunte",108, 103,"aspd 184",1015,1,"Ev_HntRm2::OnMyMobDead2";
 	end;
 
 OnMyMobDead2:
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]: You killed the wrong monster! You have failed the test!",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]: You killed the wrong monster! You have failed the test!",8;
 	addtimer 3000, "TimerHnt::OnTimer196000";
 	end;
 }
 
 // Test Timer -----------------------------------------------------------------
-job_hunte.gat,1,1,1	script	TimerHnt	-1,{
+job_hunte,1,1,1	script	TimerHnt	-1,{
 
 
 OnTimer500:
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]: Remember, you need to kill the 'Job Change Monsters'!",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]: Remember, you need to kill the 'Job Change Monsters'!",8;
 	end;
 OnTimer4000:
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]: Don't forget to AVOID the TRAPS!!!",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]: Don't forget to AVOID the TRAPS!!!",8;
 	end;
 OnTimer10000:
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  ******The clock will start now! 3 minutes left! ****** ",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  ******The clock will start now! 3 minutes left! ****** ",8;
 	donpcevent "HntTG::OnStart";
 	end;
 OnTimer40000:
 	donpcevent "HntTG::OnStart";
 	end;
 OnTimer70000:
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  ****** 2 minutes left! ****** ",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  ****** 2 minutes left! ****** ",8;
 	donpcevent "HntTG::OnStart";
 	end;
 OnTimer100000:
 	donpcevent "HntTG::OnStart";
 	end;
 OnTimer130000:
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  ****** 1 minute left! ****** ",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  ****** 1 minute left! ****** ",8;
 	donpcevent "HntTG::OnStart";
 	end;
 OnTimer160000:
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  ****** 30 sec left! ****** ",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  ****** 30 sec left! ****** ",8;
 	donpcevent "HntTG::OnStart";
 	end;
 OnTimer185000:
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  5 . . . .",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  5 . . . .",8;
 	donpcevent "HntTG::OnStart";
 	end;
 OnTimer186000:
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  4. . . .",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  4. . . .",8;
 	end;
 OnTimer187000:
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  3. . .",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  3. . .",8;
 	end;
 OnTimer188000:
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  2. .",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  2. .",8;
 	end;
 OnTimer189000:
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  1...",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  1...",8;
 	end;
 OnTimer190000:
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  0! ",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  0! ",8;
 	end;
 OnTimer193000:
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  You ran out of time! You can challenge again later!.",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  You ran out of time! You can challenge again later!.",8;
 	end;
 OnTimer196000:
 	stopnpctimer;
-	areawarp "job_hunte.gat", 50, 64, 123, 143, "payon_in02.gat", 16, 26;
-	killmonsterall "job_hunte.gat";
+	areawarp "job_hunte", 50, 64, 123, 143, "payon_in02", 16, 26;
+	killmonsterall "job_hunte";
 	donpcevent "HntTG::OnStart";
 	end;
 }
 
 // SwitchHnt ------------------------------------------------------
-job_hunte.gat,93,101,1	script	SwitchHnt	723,{
-	areaannounce "job_hunte.gat", 50, 64, 123, 143, "[Test Guide]:  *** The exit has been activated! You have 30 sec. to find the exit!! *** ",8;
+job_hunte,93,101,1	script	SwitchHnt	723,{
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  *** The exit has been activated! You have 30 sec. to find the exit!! *** ",8;
 	enablenpc "ExitHnt";
 	addtimer 30000, "TimerHnt::OnTimer196000";
 	close;
 }
 
 // ExitHnt -----------------------------------------------------------
-job_hunte.gat,89,139,1	script	ExitHnt	45,2,2,{
+job_hunte,89,139,1	script	ExitHnt	45,2,2,{
 
 	deltimer "TimerHnt::OnTimer196000";
 	set HNTR_Q2, 2;
-	warp "payon_in02.gat", 16, 26;
-	killmonsterall "job_hunte.gat";
+	warp "payon_in02", 16, 26;
+	killmonsterall "job_hunte";
 	donpcevent "HntTG::OnStart";
 	end;
 }
@@ -864,395 +864,395 @@ job_hunte.gat,89,139,1	script	ExitHnt	45,2,2,{
 
 // Hunter Test Traps =======================================
 
-job_hunte.gat,52,140,1	script	1-1::HntTrap	139,0,1,{
+job_hunte,52,140,1	script	1-1::HntTrap	139,0,1,{
 	stopnpctimer "TimerHnt";
-	warp "payon_in02.gat", 16, 26;
-	killmonsterall "job_hunte.gat";
+	warp "payon_in02", 16, 26;
+	killmonsterall "job_hunte";
 	donpcevent "HntTG::OnStart";
 	end;
 }
 
-job_hunte.gat,53,140,1	duplicate(HntTrap)	1-2	139,0,1
-job_hunte.gat,54,141,1	duplicate(HntTrap)	1-3	139,0,0
-job_hunte.gat,55,141,1	duplicate(HntTrap)	1-4	139,0,0
-job_hunte.gat,55,140,1	duplicate(HntTrap)	1-5	139,0,0
-job_hunte.gat,54,140,1	duplicate(HntTrap)	1-6	139,0,0
-job_hunte.gat,52,138,1	duplicate(HntTrap)	1-7	139,0,0
-job_hunte.gat,53,138,1	duplicate(HntTrap)	1-8	139,0,0
-job_hunte.gat,62,140,1	duplicate(HntTrap)	2-1	139,0,1
-job_hunte.gat,63,140,1	duplicate(HntTrap)	2-2	139,0,1
-job_hunte.gat,64,140,1	duplicate(HntTrap)	2-3	139,0,0
-job_hunte.gat,64,141,1	duplicate(HntTrap)	2-4	139,0,0
-job_hunte.gat,65,140,1	duplicate(HntTrap)	2-5	139,0,0
-job_hunte.gat,65,141,1	duplicate(HntTrap)	2-6	139,0,0
-job_hunte.gat,62,138,1	duplicate(HntTrap)	2-7	139,0,0
-job_hunte.gat,63,138,1	duplicate(HntTrap)	2-8	139,0,0
-job_hunte.gat,72,140,1	duplicate(HntTrap)	3-1	139,0,1
-job_hunte.gat,73,140,1	duplicate(HntTrap)	3-2	139,0,1
-job_hunte.gat,72,138,1	duplicate(HntTrap)	3-3	139,0,0
-job_hunte.gat,72,138,1	duplicate(HntTrap)	3-4	139,0,0
-job_hunte.gat,78,140,1	duplicate(HntTrap)	4-1	139,0,0
-job_hunte.gat,78,141,1	duplicate(HntTrap)	4-2	139,0,0
-job_hunte.gat,79,140,1	duplicate(HntTrap)	4-3	139,0,0
-job_hunte.gat,79,141,1	duplicate(HntTrap)	4-4	139,0,0
-job_hunte.gat,82,138,1	duplicate(HntTrap)	5-1	139,0,0
-job_hunte.gat,82,139,1	duplicate(HntTrap)	5-2	139,0,0
-job_hunte.gat,83,138,1	duplicate(HntTrap)	5-3	139,0,0
-job_hunte.gat,83,139,1	duplicate(HntTrap)	5-4	139,0,0
-job_hunte.gat,99,138,1	duplicate(HntTrap)	6-1	139,1,0
-job_hunte.gat,99,139,1	duplicate(HntTrap)	6-2	139,1,0
-job_hunte.gat,101,138,1	duplicate(HntTrap)	6-3	139,0,0
-job_hunte.gat,101,139,1	duplicate(HntTrap)	6-4	139,0,0
-job_hunte.gat,106,140,1	duplicate(HntTrap)	7-1	139,0,1
-job_hunte.gat,107,140,1	duplicate(HntTrap)	7-2	139,0,1
-job_hunte.gat,106,138,1	duplicate(HntTrap)	7-3	139,0,0
-job_hunte.gat,107,138,1	duplicate(HntTrap)	7-4	139,0,0
-job_hunte.gat,112,140,1	duplicate(HntTrap)	8-1	139,0,0
-job_hunte.gat,112,141,1	duplicate(HntTrap)	8-2	139,0,0
-job_hunte.gat,113,140,1	duplicate(HntTrap)	8-3	139,0,0
-job_hunte.gat,113,141,1	duplicate(HntTrap)	8-4	139,0,0
-job_hunte.gat,116,140,1	duplicate(HntTrap)	9-1	139,0,0
-job_hunte.gat,116,141,1	duplicate(HntTrap)	9-2	139,0,0
-job_hunte.gat,117,140,1	duplicate(HntTrap)	9-3	139,0,0
-job_hunte.gat,117,141,1	duplicate(HntTrap)	9-4	139,0,0
-job_hunte.gat,120,138,1	duplicate(HntTrap)	10-1	139,0,0
-job_hunte.gat,120,139,1	duplicate(HntTrap)	10-2	139,0,0
-job_hunte.gat,121,138,1	duplicate(HntTrap)	10-3	139,0,0
-job_hunte.gat,121,139,1	duplicate(HntTrap)	10-4	139,0,0
-job_hunte.gat,126,139,1	duplicate(HntTrap)	11-1	139,0,2
-job_hunte.gat,127,139,1	duplicate(HntTrap)	11-2	139,0,2
-job_hunte.gat,126,136,1	duplicate(HntTrap)	11-3	139,0,0
-job_hunte.gat,127,136,1	duplicate(HntTrap)	11-4	139,0,0
-job_hunte.gat,52,134,1	duplicate(HntTrap)	12-1	139,0,1
-job_hunte.gat,53,134,1	duplicate(HntTrap)	12-2	139,0,1
-job_hunte.gat,52,132,1	duplicate(HntTrap)	12-3	139,0,0
-job_hunte.gat,53,132,1	duplicate(HntTrap)	12-4	139,0,0
-job_hunte.gat,124,130,1	duplicate(HntTrap)	13-1	139,0,0
-job_hunte.gat,124,131,1	duplicate(HntTrap)	13-2	139,0,0
-job_hunte.gat,125,130,1	duplicate(HntTrap)	13-3	139,0,0
-job_hunte.gat,125,131,1	duplicate(HntTrap)	13-4	139,0,0
-job_hunte.gat,64,128,1	duplicate(HntTrap)	14-1	139,0,0
-job_hunte.gat,64,129,1	duplicate(HntTrap)	14-2	139,0,0
-job_hunte.gat,65,128,1	duplicate(HntTrap)	14-3	139,0,0
-job_hunte.gat,65,129,1	duplicate(HntTrap)	14-4	139,0,0
-job_hunte.gat,68,126,1	duplicate(HntTrap)	15-1	139,0,0
-job_hunte.gat,68,127,1	duplicate(HntTrap)	15-2	139,0,0
-job_hunte.gat,69,126,1	duplicate(HntTrap)	15-3	139,0,0
-job_hunte.gat,69,127,1	duplicate(HntTrap)	15-4	139,0,0
-job_hunte.gat,75,128,1	duplicate(HntTrap)	16-1	139,1,0
-job_hunte.gat,75,129,1	duplicate(HntTrap)	16-2	139,1,0
-job_hunte.gat,77,128,1	duplicate(HntTrap)	16-3	139,0,0
-job_hunte.gat,77,129,1	duplicate(HntTrap)	16-4	139,0,0
-job_hunte.gat,82,126,1	duplicate(HntTrap)	17-1	139,0,0
-job_hunte.gat,82,127,1	duplicate(HntTrap)	17-2	139,0,0
-job_hunte.gat,83,126,1	duplicate(HntTrap)	17-3	139,0,0
-job_hunte.gat,83,127,1	duplicate(HntTrap)	17-4	139,0,0
-job_hunte.gat,96,128,1	duplicate(HntTrap)	18-1	139,0,0
-job_hunte.gat,96,129,1	duplicate(HntTrap)	18-2	139,0,0
-job_hunte.gat,97,128,1	duplicate(HntTrap)	18-3	139,0,0
-job_hunte.gat,97,129,1	duplicate(HntTrap)	18-4	139,0,0
-job_hunte.gat,100,126,1	duplicate(HntTrap)	19-1	139,0,0
-job_hunte.gat,100,127,1	duplicate(HntTrap)	19-2	139,0,0
-job_hunte.gat,101,126,1	duplicate(HntTrap)	19-3	139,0,0
-job_hunte.gat,101,127,1	duplicate(HntTrap)	19-4	139,0,0
-job_hunte.gat,106,128,1	duplicate(HntTrap)	20-1	139,0,0
-job_hunte.gat,106,129,1	duplicate(HntTrap)	20-2	139,0,0
-job_hunte.gat,107,128,1	duplicate(HntTrap)	20-3	139,0,0
-job_hunte.gat,107,129,1	duplicate(HntTrap)	20-4	139,0,0
-job_hunte.gat,112,126,1	duplicate(HntTrap)	21-1	139,0,0
-job_hunte.gat,112,127,1	duplicate(HntTrap)	21-2	139,0,0
-job_hunte.gat,113,126,1	duplicate(HntTrap)	21-3	139,0,0
-job_hunte.gat,113,127,1	duplicate(HntTrap)	21-4	139,0,0
-job_hunte.gat,126,126,1	duplicate(HntTrap)	22-1	139,0,0
-job_hunte.gat,126,127,1	duplicate(HntTrap)	22-2	139,0,0
-job_hunte.gat,127,126,1	duplicate(HntTrap)	22-3	139,0,0
-job_hunte.gat,127,127,1	duplicate(HntTrap)	22-4	139,0,0
-job_hunte.gat,52,122,1	duplicate(HntTrap)	23-1	139,0,1
-job_hunte.gat,52,122,1	duplicate(HntTrap)	23-2	139,0,1
-job_hunte.gat,53,120,1	duplicate(HntTrap)	23-3	139,1,0
-job_hunte.gat,54,121,1	duplicate(HntTrap)	23-4	139,0,0
-job_hunte.gat,55,121,1	duplicate(HntTrap)	23-5	139,0,0
-job_hunte.gat,55,120,1	duplicate(HntTrap)	23-6	139,0,0
-job_hunte.gat,66,120,1	duplicate(HntTrap)	24-1	139,0,0
-job_hunte.gat,66,121,1	duplicate(HntTrap)	24-2	139,0,0
-job_hunte.gat,67,120,1	duplicate(HntTrap)	24-3	139,0,0
-job_hunte.gat,67,121,1	duplicate(HntTrap)	24-4	139,0,0	
-job_hunte.gat,114,118,1	duplicate(HntTrap)	25-1	139,0,0
-job_hunte.gat,114,119,1	duplicate(HntTrap)	25-2	139,0,0
-job_hunte.gat,115,118,1	duplicate(HntTrap)	25-3	139,0,0
-job_hunte.gat,115,119,1	duplicate(HntTrap)	25-4	139,0,0
-job_hunte.gat,124,120,1	duplicate(HntTrap)	26-1	139,0,1
-job_hunte.gat,125,120,1	duplicate(HntTrap)	26-2	139,0,1
-job_hunte.gat,124,118,1	duplicate(HntTrap)	26-3	139,0,0
-job_hunte.gat,125,118,1	duplicate(HntTrap)	26-4	139,0,0
-job_hunte.gat,66,116,1	duplicate(HntTrap)	27-1	139,0,0
-job_hunte.gat,66,117,1	duplicate(HntTrap)	27-2	139,0,0
-job_hunte.gat,67,116,1	duplicate(HntTrap)	27-3	139,0,0
-job_hunte.gat,67,117,1	duplicate(HntTrap)	27-4	139,0,0
-job_hunte.gat,76,114,1	duplicate(HntTrap)	28-1	139,0,0
-job_hunte.gat,76,115,1	duplicate(HntTrap)	28-2	139,0,0
-job_hunte.gat,77,114,1	duplicate(HntTrap)	28-3	139,0,0
-job_hunte.gat,77,115,1	duplicate(HntTrap)	28-4	139,0,0
-job_hunte.gat,82,116,1	duplicate(HntTrap)	29-1	139,0,0
-job_hunte.gat,82,117,1	duplicate(HntTrap)	29-2	139,0,0
-job_hunte.gat,83,116,1	duplicate(HntTrap)	29-3	139,0,0
-job_hunte.gat,83,117,1	duplicate(HntTrap)	29-4	139,0,0
-job_hunte.gat,86,114,1	duplicate(HntTrap)	30-1	139,0,0
-job_hunte.gat,86,115,1	duplicate(HntTrap)	30-2	139,0,0
-job_hunte.gat,87,114,1	duplicate(HntTrap)	30-3	139,0,0
-job_hunte.gat,87,115,1	duplicate(HntTrap)	30-4	139,0,0
-job_hunte.gat,92,115,1	duplicate(HntTrap)	31-1	139,1,0
-job_hunte.gat,92,114,1	duplicate(HntTrap)	31-2	139,1,0
-job_hunte.gat,90,115,1	duplicate(HntTrap)	31-3	139,0,0
-job_hunte.gat,102,116,1	duplicate(HntTrap)	32-1	139,0,0
-job_hunte.gat,102,117,1	duplicate(HntTrap)	32-2	139,0,0
-job_hunte.gat,103,116,1	duplicate(HntTrap)	32-3	139,0,0
-job_hunte.gat,103,117,1	duplicate(HntTrap)	32-4	139,0,0
-job_hunte.gat,114,114,1	duplicate(HntTrap)	33-1	139,0,0
-job_hunte.gat,114,115,1	duplicate(HntTrap)	33-2	139,0,0
-job_hunte.gat,115,114,1	duplicate(HntTrap)	33-3	139,0,0
-job_hunte.gat,115,115,1	duplicate(HntTrap)	33-4	139,0,0
-job_hunte.gat,54,110,1	duplicate(HntTrap)	34-1	139,0,1
-job_hunte.gat,55,110,1	duplicate(HntTrap)	34-2	139,0,1
-job_hunte.gat,54,108,1	duplicate(HntTrap)	34-3	139,0,0
-job_hunte.gat,55,108,1	duplicate(HntTrap)	34-4	139,0,0
-job_hunte.gat,64,112,1	duplicate(HntTrap)	35-1	139,0,0
-job_hunte.gat,64,113,1	duplicate(HntTrap)	35-2	139,0,0
-job_hunte.gat,65,112,1	duplicate(HntTrap)	35-3	139,0,0
-job_hunte.gat,65,113,1	duplicate(HntTrap)	35-4	139,0,0
-job_hunte.gat,80,110,1	duplicate(HntTrap)	36-1	139,0,0
-job_hunte.gat,80,111,1	duplicate(HntTrap)	36-2	139,0,0
-job_hunte.gat,81,110,1	duplicate(HntTrap)	36-3	139,0,0
-job_hunte.gat,81,111,1	duplicate(HntTrap)	36-4	139,0,0
-job_hunte.gat,90,108,1	duplicate(HntTrap)	37-1	139,0,6
-job_hunte.gat,91,108,1	duplicate(HntTrap)	37-2	139,0,5
-job_hunte.gat,91,102,1	duplicate(HntTrap)	37-3	139,0,0
-job_hunte.gat,98,109,1	duplicate(HntTrap)	38-1	139,0,2
-job_hunte.gat,99,109,1	duplicate(HntTrap)	38-2	139,0,2
-job_hunte.gat,103,109,1	duplicate(HntTrap)	38-3	139,3,0
-job_hunte.gat,103,108,1	duplicate(HntTrap)	38-4	139,3,0
-job_hunte.gat,97,106,1	duplicate(HntTrap)	39-1	139,2,0
-job_hunte.gat,96,107,1	duplicate(HntTrap)	39-2	139,1,0
-job_hunte.gat,94,108,1	duplicate(HntTrap)	39-3	139,0,1
-job_hunte.gat,95,109,1	duplicate(HntTrap)	39-4	139,0,0
-job_hunte.gat,95,108,1	duplicate(HntTrap)	40-1	139,0,0
-job_hunte.gat,94,106,1	duplicate(HntTrap)	40-2	139,0,0
-job_hunte.gat,96,102,1	duplicate(HntTrap)	40-3	139,0,3
-job_hunte.gat,97,102,1	duplicate(HntTrap)	40-4	139,0,3
-job_hunte.gat,95,98,1	duplicate(HntTrap)	41-1	139,2,0
-job_hunte.gat,94,99,1	duplicate(HntTrap)	42-1	139,1,0
-job_hunte.gat,92,98,1	duplicate(HntTrap)	43-1	139,0,0
-job_hunte.gat,112,110,1	duplicate(HntTrap)	44-1	139,0,0
-job_hunte.gat,112,111,1	duplicate(HntTrap)	44-2	139,0,0
-job_hunte.gat,113,110,1	duplicate(HntTrap)	44-3	139,0,0
-job_hunte.gat,113,111,1	duplicate(HntTrap)	44-4	139,0,0
-job_hunte.gat,126,108,1	duplicate(HntTrap)	45-1	139,0,1
-job_hunte.gat,127,108,1	duplicate(HntTrap)	45-2	139,0,1
-job_hunte.gat,126,106,1	duplicate(HntTrap)	45-3	139,0,0
-job_hunte.gat,126,106,1	duplicate(HntTrap)	45-4	139,0,0
-job_hunte.gat,53,102,1	duplicate(HntTrap)	46-1	139,1,1
-job_hunte.gat,55,102,1	duplicate(HntTrap)	46-2	139,0,1
-job_hunte.gat,53,100,1	duplicate(HntTrap)	46-3	139,1,0
-job_hunte.gat,55,100,1	duplicate(HntTrap)	46-4	139,0,0
-job_hunte.gat,64,106,1	duplicate(HntTrap)	47-1	139,0,0
-job_hunte.gat,64,107,1	duplicate(HntTrap)	47-2	139,0,0
-job_hunte.gat,65,106,1	duplicate(HntTrap)	47-3	139,0,0
-job_hunte.gat,65,107,1	duplicate(HntTrap)	47-4	139,0,0
-job_hunte.gat,66,100,1	duplicate(HntTrap)	48-1	139,0,0
-job_hunte.gat,66,101,1	duplicate(HntTrap)	48-2	139,0,0
-job_hunte.gat,67,100,1	duplicate(HntTrap)	48-3	139,0,0
-job_hunte.gat,67,101,1	duplicate(HntTrap)	48-4	139,0,0
-job_hunte.gat,86,106,1	duplicate(HntTrap)	49-1	139,0,1
-job_hunte.gat,87,106,1	duplicate(HntTrap)	49-2	139,0,1
-job_hunte.gat,82,104,1	duplicate(HntTrap)	49-3	139,5,0
-job_hunte.gat,81,105,1	duplicate(HntTrap)	49-4	139,4,0
-job_hunte.gat,76,105,1	duplicate(HntTrap)	50-1	139,0,0
-job_hunte.gat,76,104,1	duplicate(HntTrap)	50-2	139,0,0
-job_hunte.gat,78,101,1	duplicate(HntTrap)	50-3	139,0,2
-job_hunte.gat,79,101,1	duplicate(HntTrap)	50-4	139,0,2
-job_hunte.gat,76,99,1	duplicate(HntTrap)	51-1	139,1,0
-job_hunte.gat,77,98,1	duplicate(HntTrap)	51-2	139,2,0
-job_hunte.gat,74,99,1	duplicate(HntTrap)	51-3	139,0,0
-job_hunte.gat,74,98,1	duplicate(HntTrap)	51-4	139,0,0
-job_hunte.gat,82,100,1	duplicate(HntTrap)	53-1	139,0,0
-job_hunte.gat,82,101,1	duplicate(HntTrap)	53-2	139,0,0
-job_hunte.gat,83,100,1	duplicate(HntTrap)	53-3	139,0,0
-job_hunte.gat,83,101,1	duplicate(HntTrap)	53-4	139,0,0
-job_hunte.gat,106,104,1	duplicate(HntTrap)	54-1	139,0,0
-job_hunte.gat,106,105,1	duplicate(HntTrap)	54-2	139,0,0
-job_hunte.gat,107,104,1	duplicate(HntTrap)	54-3	139,0,0
-job_hunte.gat,107,105,1	duplicate(HntTrap)	54-4	139,0,0
-job_hunte.gat,112,104,1	duplicate(HntTrap)	55-1	139,0,1
-job_hunte.gat,113,104,1	duplicate(HntTrap)	55-2	139,0,1
-job_hunte.gat,112,102,1	duplicate(HntTrap)	55-3	139,0,0
-job_hunte.gat,113,102,1	duplicate(HntTrap)	55-4	139,0,0
-job_hunte.gat,54,92,1	duplicate(HntTrap)	56-1	139,0,0
-job_hunte.gat,54,93,1	duplicate(HntTrap)	56-2	139,0,0
-job_hunte.gat,55,92,1	duplicate(HntTrap)	56-3	139,0,0
-job_hunte.gat,55,93,1	duplicate(HntTrap)	56-4	139,0,0
-job_hunte.gat,52,90,1	duplicate(HntTrap)	56-5	139,0,0
-job_hunte.gat,52,91,1	duplicate(HntTrap)	56-6	139,0,0
-job_hunte.gat,53,90,1	duplicate(HntTrap)	56-7	139,0,0
-job_hunte.gat,53,91,1	duplicate(HntTrap)	56-8	139,0,0
-job_hunte.gat,64,92,1	duplicate(HntTrap)	57-1	139,0,0
-job_hunte.gat,64,93,1	duplicate(HntTrap)	57-2	139,0,0
-job_hunte.gat,65,92,1	duplicate(HntTrap)	57-3	139,0,0
-job_hunte.gat,65,93,1	duplicate(HntTrap)	57-4	139,0,0
-job_hunte.gat,76,94,1	duplicate(HntTrap)	58-1	139,0,0
-job_hunte.gat,76,95,1	duplicate(HntTrap)	58-2	139,0,0
-job_hunte.gat,77,94,1	duplicate(HntTrap)	58-3	139,0,0
-job_hunte.gat,77,95,1	duplicate(HntTrap)	58-4	139,0,0
-job_hunte.gat,78,92,1	duplicate(HntTrap)	59-1	139,0,0
-job_hunte.gat,78,93,1	duplicate(HntTrap)	59-2	139,0,0
-job_hunte.gat,79,92,1	duplicate(HntTrap)	59-3	139,0,0
-job_hunte.gat,79,93,1	duplicate(HntTrap)	59-4	139,0,0
-job_hunte.gat,86,92,1	duplicate(HntTrap)	60-1	139,0,0
-job_hunte.gat,86,93,1	duplicate(HntTrap)	60-2	139,0,0
-job_hunte.gat,87,92,1	duplicate(HntTrap)	60-3	139,0,0
-job_hunte.gat,87,93,1	duplicate(HntTrap)	60-4	139,0,0
-job_hunte.gat,90,96,1	duplicate(HntTrap)	61-1	139,0,0
-job_hunte.gat,90,97,1	duplicate(HntTrap)	61-2	139,0,0
-job_hunte.gat,91,96,1	duplicate(HntTrap)	61-3	139,0,0
-job_hunte.gat,91,97,1	duplicate(HntTrap)	61-4	139,0,0
-job_hunte.gat,99,95,1	duplicate(HntTrap)	62-1	139,1,0
-job_hunte.gat,99,94,1	duplicate(HntTrap)	62-2	139,1,0
-job_hunte.gat,101,94,1	duplicate(HntTrap)	62-3	139,0,1
-job_hunte.gat,100,93,1	duplicate(HntTrap)	62-4	139,0,0
-job_hunte.gat,100,92,1	duplicate(HntTrap)	63-1	139,0,0
-job_hunte.gat,101,92,1	duplicate(HntTrap)	63-2	139,0,0
-job_hunte.gat,102,98,1	duplicate(HntTrap)	64-1	139,0,0
-job_hunte.gat,102,99,1	duplicate(HntTrap)	64-2	139,0,0
-job_hunte.gat,103,98,1	duplicate(HntTrap)	64-3	139,0,0
-job_hunte.gat,103,99,1	duplicate(HntTrap)	64-4	139,0,0
-job_hunte.gat,102,90,1	duplicate(HntTrap)	65-1	139,0,0
-job_hunte.gat,102,91,1	duplicate(HntTrap)	65-2	139,0,0
-job_hunte.gat,103,90,1	duplicate(HntTrap)	65-3	139,0,0
-job_hunte.gat,103,91,1	duplicate(HntTrap)	65-4	139,0,0
-job_hunte.gat,114,96,1	duplicate(HntTrap)	66-1	139,0,0
-job_hunte.gat,114,97,1	duplicate(HntTrap)	66-2	139,0,0
-job_hunte.gat,115,96,1	duplicate(HntTrap)	66-3	139,0,0
-job_hunte.gat,115,97,1	duplicate(HntTrap)	66-4	139,0,0
-job_hunte.gat,112,90,1	duplicate(HntTrap)	67-1	139,0,0
-job_hunte.gat,112,91,1	duplicate(HntTrap)	67-2	139,0,0
-job_hunte.gat,113,90,1	duplicate(HntTrap)	67-3	139,0,0
-job_hunte.gat,113,91,1	duplicate(HntTrap)	67-4	139,0,0
-job_hunte.gat,125,97,1	duplicate(HntTrap)	68-1	139,1,0
-job_hunte.gat,125,96,1	duplicate(HntTrap)	68-2	139,1,0
-job_hunte.gat,127,96,1	duplicate(HntTrap)	68-3	139,0,0
-job_hunte.gat,127,97,1	duplicate(HntTrap)	68-4	139,0,0
-job_hunte.gat,52,86,1	duplicate(HntTrap)	69-1	139,0,0
-job_hunte.gat,52,87,1	duplicate(HntTrap)	69-2	139,0,0
-job_hunte.gat,53,86,1	duplicate(HntTrap)	69-3	139,0,0
-job_hunte.gat,53,87,1	duplicate(HntTrap)	69-4	139,0,0
-job_hunte.gat,66,88,1	duplicate(HntTrap)	70-1	139,0,0
-job_hunte.gat,66,89,1	duplicate(HntTrap)	70-2	139,0,0
-job_hunte.gat,67,88,1	duplicate(HntTrap)	70-3	139,0,0
-job_hunte.gat,67,89,1	duplicate(HntTrap)	70-4	139,0,0
-job_hunte.gat,114,84,1	duplicate(HntTrap)	71-1	139,0,0
-job_hunte.gat,114,85,1	duplicate(HntTrap)	71-2	139,0,0
-job_hunte.gat,115,84,1	duplicate(HntTrap)	71-3	139,0,0
-job_hunte.gat,115,85,1	duplicate(HntTrap)	71-4	139,0,0
-job_hunte.gat,126,86,1	duplicate(HntTrap)	72-1	139,0,0
-job_hunte.gat,126,87,1	duplicate(HntTrap)	72-2	139,0,0
-job_hunte.gat,127,86,1	duplicate(HntTrap)	72-3	139,0,0
-job_hunte.gat,127,87,1	duplicate(HntTrap)	72-4	139,0,0
-job_hunte.gat,54,80,1	duplicate(HntTrap)	73-1	139,0,1
-job_hunte.gat,55,80,1	duplicate(HntTrap)	73-2	139,0,1
-job_hunte.gat,55,80,1	duplicate(HntTrap)	73-3	139,0,0
-job_hunte.gat,55,78,1	duplicate(HntTrap)	73-4	139,0,0
-job_hunte.gat,64,82,1	duplicate(HntTrap)	74-1	139,0,1
-job_hunte.gat,65,82,1	duplicate(HntTrap)	74-2	139,0,1
-job_hunte.gat,64,80,1	duplicate(HntTrap)	74-3	139,0,0
-job_hunte.gat,65,80,1	duplicate(HntTrap)	74-4	139,0,0
-job_hunte.gat,66,78,1	duplicate(HntTrap)	75-1	139,0,0
-job_hunte.gat,66,79,1	duplicate(HntTrap)	75-2	139,0,0
-job_hunte.gat,67,78,1	duplicate(HntTrap)	75-3	139,0,0
-job_hunte.gat,67,79,1	duplicate(HntTrap)	75-4	139,0,0
-job_hunte.gat,74,78,1	duplicate(HntTrap)	76-1	139,0,0
-job_hunte.gat,74,79,1	duplicate(HntTrap)	76-2	139,0,0
-job_hunte.gat,75,78,1	duplicate(HntTrap)	76-3	139,0,0
-job_hunte.gat,75,79,1	duplicate(HntTrap)	76-4	139,0,0
-job_hunte.gat,78,80,1	duplicate(HntTrap)	77-1	139,0,0
-job_hunte.gat,78,81,1	duplicate(HntTrap)	77-2	139,0,0
-job_hunte.gat,79,80,1	duplicate(HntTrap)	77-3	139,0,0
-job_hunte.gat,79,81,1	duplicate(HntTrap)	77-4	139,0,0
-job_hunte.gat,82,78,1	duplicate(HntTrap)	78-1	139,0,0
-job_hunte.gat,82,79,1	duplicate(HntTrap)	78-2	139,0,0
-job_hunte.gat,83,78,1	duplicate(HntTrap)	78-3	139,0,0
-job_hunte.gat,83,79,1	duplicate(HntTrap)	78-4	139,0,0
-job_hunte.gat,94,78,1	duplicate(HntTrap)	79-1	139,0,0
-job_hunte.gat,94,79,1	duplicate(HntTrap)	79-2	139,0,0
-job_hunte.gat,95,78,1	duplicate(HntTrap)	79-3	139,0,0
-job_hunte.gat,95,79,1	duplicate(HntTrap)	79-4	139,0,0
-job_hunte.gat,101,80,1	duplicate(HntTrap)	80-1	139,1,0
-job_hunte.gat,101,81,1	duplicate(HntTrap)	80-2	139,1,0
-job_hunte.gat,103,81,1	duplicate(HntTrap)	80-3	139,0,0
-job_hunte.gat,103,80,1	duplicate(HntTrap)	80-4	139,0,0
-job_hunte.gat,104,78,1	duplicate(HntTrap)	81-1	139,0,0
-job_hunte.gat,104,79,1	duplicate(HntTrap)	81-2	139,0,0
-job_hunte.gat,105,78,1	duplicate(HntTrap)	81-3	139,0,0
-job_hunte.gat,105,79,1	duplicate(HntTrap)	81-4	139,0,0
-job_hunte.gat,110,78,1	duplicate(HntTrap)	82-1	139,0,0
-job_hunte.gat,110,79,1	duplicate(HntTrap)	82-2	139,0,0
-job_hunte.gat,111,78,1	duplicate(HntTrap)	82-3	139,0,0
-job_hunte.gat,111,79,1	duplicate(HntTrap)	82-4	139,0,0
-job_hunte.gat,114,80,1	duplicate(HntTrap)	83-1	139,0,0
-job_hunte.gat,114,81,1	duplicate(HntTrap)	83-2	139,0,0
-job_hunte.gat,115,80,1	duplicate(HntTrap)	83-3	139,0,0
-job_hunte.gat,115,81,1	duplicate(HntTrap)	83-4	139,0,0
-job_hunte.gat,124,78,1	duplicate(HntTrap)	84-1	139,0,0
-job_hunte.gat,124,79,1	duplicate(HntTrap)	84-2	139,0,0
-job_hunte.gat,125,78,1	duplicate(HntTrap)	84-3	139,0,0
-job_hunte.gat,125,79,1	duplicate(HntTrap)	84-4	139,0,0
-job_hunte.gat,126,82,1	duplicate(HntTrap)	85-1	139,0,0
-job_hunte.gat,126,83,1	duplicate(HntTrap)	85-2	139,0,0
-job_hunte.gat,127,82,1	duplicate(HntTrap)	85-3	139,0,0
-job_hunte.gat,127,83,1	duplicate(HntTrap)	85-4	139,0,0
-job_hunte.gat,52,68,1	duplicate(HntTrap)	86-1	139,0,1
-job_hunte.gat,53,68,1	duplicate(HntTrap)	86-2	139,0,1
-job_hunte.gat,52,66,1	duplicate(HntTrap)	86-3	139,0,0
-job_hunte.gat,53,66,1	duplicate(HntTrap)	86-4	139,0,0
-job_hunte.gat,54,70,1	duplicate(HntTrap)	87-1	139,0,1
-job_hunte.gat,55,70,1	duplicate(HntTrap)	87-2	139,0,1
-job_hunte.gat,54,68,1	duplicate(HntTrap)	87-3	139,0,0
-job_hunte.gat,55,68,1	duplicate(HntTrap)	87-4	139,0,0
-job_hunte.gat,59,66,1	duplicate(HntTrap)	88-1	139,1,0
-job_hunte.gat,59,67,1	duplicate(HntTrap)	88-2	139,1,0
-job_hunte.gat,61,67,1	duplicate(HntTrap)	88-3	139,0,0
-job_hunte.gat,61,66,1	duplicate(HntTrap)	88-4	139,0,0
-job_hunte.gat,68,68,1	duplicate(HntTrap)	89-1	139,0,1
-job_hunte.gat,69,68,1	duplicate(HntTrap)	89-2	139,0,1
-job_hunte.gat,68,66,1	duplicate(HntTrap)	89-3	139,0,0
-job_hunte.gat,69,66,1	duplicate(HntTrap)	89-4	139,0,0
-job_hunte.gat,76,66,1	duplicate(HntTrap)	90-1	139,0,0
-job_hunte.gat,76,67,1	duplicate(HntTrap)	90-2	139,0,0
-job_hunte.gat,77,66,1	duplicate(HntTrap)	90-3	139,0,0
-job_hunte.gat,77,67,1	duplicate(HntTrap)	90-4	139,0,0
-job_hunte.gat,82,68,1	duplicate(HntTrap)	91-1	139,0,0
-job_hunte.gat,82,69,1	duplicate(HntTrap)	91-2	139,0,0
-job_hunte.gat,83,68,1	duplicate(HntTrap)	91-3	139,0,0
-job_hunte.gat,83,69,1	duplicate(HntTrap)	91-4	139,0,0
-job_hunte.gat,96,66,1	duplicate(HntTrap)	92-1	139,0,0
-job_hunte.gat,96,67,1	duplicate(HntTrap)	92-2	139,0,0
-job_hunte.gat,97,66,1	duplicate(HntTrap)	92-3	139,0,0
-job_hunte.gat,97,67,1	duplicate(HntTrap)	92-4	139,0,0
-job_hunte.gat,100,68,1	duplicate(HntTrap)	93-1	139,0,0
-job_hunte.gat,100,69,1	duplicate(HntTrap)	93-2	139,0,0
-job_hunte.gat,101,68,1	duplicate(HntTrap)	93-3	139,0,0
-job_hunte.gat,101,69,1	duplicate(HntTrap)	93-4	139,0,0
-job_hunte.gat,107,66,1	duplicate(HntTrap)	94-1	139,1,0
-job_hunte.gat,107,67,1	duplicate(HntTrap)	94-2	139,1,0
-job_hunte.gat,109,67,1	duplicate(HntTrap)	94-3	139,0,0
-job_hunte.gat,109,66,1	duplicate(HntTrap)	94-4	139,0,0
-job_hunte.gat,117,69,1	duplicate(HntTrap)	95-1	139,1,0
-job_hunte.gat,117,68,1	duplicate(HntTrap)	95-2	139,1,0
-job_hunte.gat,119,69,1	duplicate(HntTrap)	95-3	139,0,0
-job_hunte.gat,119,68,1	duplicate(HntTrap)	95-4	139,0,0
-job_hunte.gat,124,66,1	duplicate(HntTrap)	96-1	139,0,0
-job_hunte.gat,124,67,1	duplicate(HntTrap)	96-2	139,0,0
-job_hunte.gat,125,66,1	duplicate(HntTrap)	96-3	139,0,0
-job_hunte.gat,125,67,1	duplicate(HntTrap)	96-4	139,0,0
-job_hunte.gat,126,70,1	duplicate(HntTrap)	97-1	139,0,0
-job_hunte.gat,126,71,1	duplicate(HntTrap)	97-2	139,0,0
-job_hunte.gat,127,70,1	duplicate(HntTrap)	97-3	139,0,0
-job_hunte.gat,127,71,1	duplicate(HntTrap)	97-4	139,0,0
+job_hunte,53,140,1	duplicate(HntTrap)	1-2	139,0,1
+job_hunte,54,141,1	duplicate(HntTrap)	1-3	139,0,0
+job_hunte,55,141,1	duplicate(HntTrap)	1-4	139,0,0
+job_hunte,55,140,1	duplicate(HntTrap)	1-5	139,0,0
+job_hunte,54,140,1	duplicate(HntTrap)	1-6	139,0,0
+job_hunte,52,138,1	duplicate(HntTrap)	1-7	139,0,0
+job_hunte,53,138,1	duplicate(HntTrap)	1-8	139,0,0
+job_hunte,62,140,1	duplicate(HntTrap)	2-1	139,0,1
+job_hunte,63,140,1	duplicate(HntTrap)	2-2	139,0,1
+job_hunte,64,140,1	duplicate(HntTrap)	2-3	139,0,0
+job_hunte,64,141,1	duplicate(HntTrap)	2-4	139,0,0
+job_hunte,65,140,1	duplicate(HntTrap)	2-5	139,0,0
+job_hunte,65,141,1	duplicate(HntTrap)	2-6	139,0,0
+job_hunte,62,138,1	duplicate(HntTrap)	2-7	139,0,0
+job_hunte,63,138,1	duplicate(HntTrap)	2-8	139,0,0
+job_hunte,72,140,1	duplicate(HntTrap)	3-1	139,0,1
+job_hunte,73,140,1	duplicate(HntTrap)	3-2	139,0,1
+job_hunte,72,138,1	duplicate(HntTrap)	3-3	139,0,0
+job_hunte,72,138,1	duplicate(HntTrap)	3-4	139,0,0
+job_hunte,78,140,1	duplicate(HntTrap)	4-1	139,0,0
+job_hunte,78,141,1	duplicate(HntTrap)	4-2	139,0,0
+job_hunte,79,140,1	duplicate(HntTrap)	4-3	139,0,0
+job_hunte,79,141,1	duplicate(HntTrap)	4-4	139,0,0
+job_hunte,82,138,1	duplicate(HntTrap)	5-1	139,0,0
+job_hunte,82,139,1	duplicate(HntTrap)	5-2	139,0,0
+job_hunte,83,138,1	duplicate(HntTrap)	5-3	139,0,0
+job_hunte,83,139,1	duplicate(HntTrap)	5-4	139,0,0
+job_hunte,99,138,1	duplicate(HntTrap)	6-1	139,1,0
+job_hunte,99,139,1	duplicate(HntTrap)	6-2	139,1,0
+job_hunte,101,138,1	duplicate(HntTrap)	6-3	139,0,0
+job_hunte,101,139,1	duplicate(HntTrap)	6-4	139,0,0
+job_hunte,106,140,1	duplicate(HntTrap)	7-1	139,0,1
+job_hunte,107,140,1	duplicate(HntTrap)	7-2	139,0,1
+job_hunte,106,138,1	duplicate(HntTrap)	7-3	139,0,0
+job_hunte,107,138,1	duplicate(HntTrap)	7-4	139,0,0
+job_hunte,112,140,1	duplicate(HntTrap)	8-1	139,0,0
+job_hunte,112,141,1	duplicate(HntTrap)	8-2	139,0,0
+job_hunte,113,140,1	duplicate(HntTrap)	8-3	139,0,0
+job_hunte,113,141,1	duplicate(HntTrap)	8-4	139,0,0
+job_hunte,116,140,1	duplicate(HntTrap)	9-1	139,0,0
+job_hunte,116,141,1	duplicate(HntTrap)	9-2	139,0,0
+job_hunte,117,140,1	duplicate(HntTrap)	9-3	139,0,0
+job_hunte,117,141,1	duplicate(HntTrap)	9-4	139,0,0
+job_hunte,120,138,1	duplicate(HntTrap)	10-1	139,0,0
+job_hunte,120,139,1	duplicate(HntTrap)	10-2	139,0,0
+job_hunte,121,138,1	duplicate(HntTrap)	10-3	139,0,0
+job_hunte,121,139,1	duplicate(HntTrap)	10-4	139,0,0
+job_hunte,126,139,1	duplicate(HntTrap)	11-1	139,0,2
+job_hunte,127,139,1	duplicate(HntTrap)	11-2	139,0,2
+job_hunte,126,136,1	duplicate(HntTrap)	11-3	139,0,0
+job_hunte,127,136,1	duplicate(HntTrap)	11-4	139,0,0
+job_hunte,52,134,1	duplicate(HntTrap)	12-1	139,0,1
+job_hunte,53,134,1	duplicate(HntTrap)	12-2	139,0,1
+job_hunte,52,132,1	duplicate(HntTrap)	12-3	139,0,0
+job_hunte,53,132,1	duplicate(HntTrap)	12-4	139,0,0
+job_hunte,124,130,1	duplicate(HntTrap)	13-1	139,0,0
+job_hunte,124,131,1	duplicate(HntTrap)	13-2	139,0,0
+job_hunte,125,130,1	duplicate(HntTrap)	13-3	139,0,0
+job_hunte,125,131,1	duplicate(HntTrap)	13-4	139,0,0
+job_hunte,64,128,1	duplicate(HntTrap)	14-1	139,0,0
+job_hunte,64,129,1	duplicate(HntTrap)	14-2	139,0,0
+job_hunte,65,128,1	duplicate(HntTrap)	14-3	139,0,0
+job_hunte,65,129,1	duplicate(HntTrap)	14-4	139,0,0
+job_hunte,68,126,1	duplicate(HntTrap)	15-1	139,0,0
+job_hunte,68,127,1	duplicate(HntTrap)	15-2	139,0,0
+job_hunte,69,126,1	duplicate(HntTrap)	15-3	139,0,0
+job_hunte,69,127,1	duplicate(HntTrap)	15-4	139,0,0
+job_hunte,75,128,1	duplicate(HntTrap)	16-1	139,1,0
+job_hunte,75,129,1	duplicate(HntTrap)	16-2	139,1,0
+job_hunte,77,128,1	duplicate(HntTrap)	16-3	139,0,0
+job_hunte,77,129,1	duplicate(HntTrap)	16-4	139,0,0
+job_hunte,82,126,1	duplicate(HntTrap)	17-1	139,0,0
+job_hunte,82,127,1	duplicate(HntTrap)	17-2	139,0,0
+job_hunte,83,126,1	duplicate(HntTrap)	17-3	139,0,0
+job_hunte,83,127,1	duplicate(HntTrap)	17-4	139,0,0
+job_hunte,96,128,1	duplicate(HntTrap)	18-1	139,0,0
+job_hunte,96,129,1	duplicate(HntTrap)	18-2	139,0,0
+job_hunte,97,128,1	duplicate(HntTrap)	18-3	139,0,0
+job_hunte,97,129,1	duplicate(HntTrap)	18-4	139,0,0
+job_hunte,100,126,1	duplicate(HntTrap)	19-1	139,0,0
+job_hunte,100,127,1	duplicate(HntTrap)	19-2	139,0,0
+job_hunte,101,126,1	duplicate(HntTrap)	19-3	139,0,0
+job_hunte,101,127,1	duplicate(HntTrap)	19-4	139,0,0
+job_hunte,106,128,1	duplicate(HntTrap)	20-1	139,0,0
+job_hunte,106,129,1	duplicate(HntTrap)	20-2	139,0,0
+job_hunte,107,128,1	duplicate(HntTrap)	20-3	139,0,0
+job_hunte,107,129,1	duplicate(HntTrap)	20-4	139,0,0
+job_hunte,112,126,1	duplicate(HntTrap)	21-1	139,0,0
+job_hunte,112,127,1	duplicate(HntTrap)	21-2	139,0,0
+job_hunte,113,126,1	duplicate(HntTrap)	21-3	139,0,0
+job_hunte,113,127,1	duplicate(HntTrap)	21-4	139,0,0
+job_hunte,126,126,1	duplicate(HntTrap)	22-1	139,0,0
+job_hunte,126,127,1	duplicate(HntTrap)	22-2	139,0,0
+job_hunte,127,126,1	duplicate(HntTrap)	22-3	139,0,0
+job_hunte,127,127,1	duplicate(HntTrap)	22-4	139,0,0
+job_hunte,52,122,1	duplicate(HntTrap)	23-1	139,0,1
+job_hunte,52,122,1	duplicate(HntTrap)	23-2	139,0,1
+job_hunte,53,120,1	duplicate(HntTrap)	23-3	139,1,0
+job_hunte,54,121,1	duplicate(HntTrap)	23-4	139,0,0
+job_hunte,55,121,1	duplicate(HntTrap)	23-5	139,0,0
+job_hunte,55,120,1	duplicate(HntTrap)	23-6	139,0,0
+job_hunte,66,120,1	duplicate(HntTrap)	24-1	139,0,0
+job_hunte,66,121,1	duplicate(HntTrap)	24-2	139,0,0
+job_hunte,67,120,1	duplicate(HntTrap)	24-3	139,0,0
+job_hunte,67,121,1	duplicate(HntTrap)	24-4	139,0,0	
+job_hunte,114,118,1	duplicate(HntTrap)	25-1	139,0,0
+job_hunte,114,119,1	duplicate(HntTrap)	25-2	139,0,0
+job_hunte,115,118,1	duplicate(HntTrap)	25-3	139,0,0
+job_hunte,115,119,1	duplicate(HntTrap)	25-4	139,0,0
+job_hunte,124,120,1	duplicate(HntTrap)	26-1	139,0,1
+job_hunte,125,120,1	duplicate(HntTrap)	26-2	139,0,1
+job_hunte,124,118,1	duplicate(HntTrap)	26-3	139,0,0
+job_hunte,125,118,1	duplicate(HntTrap)	26-4	139,0,0
+job_hunte,66,116,1	duplicate(HntTrap)	27-1	139,0,0
+job_hunte,66,117,1	duplicate(HntTrap)	27-2	139,0,0
+job_hunte,67,116,1	duplicate(HntTrap)	27-3	139,0,0
+job_hunte,67,117,1	duplicate(HntTrap)	27-4	139,0,0
+job_hunte,76,114,1	duplicate(HntTrap)	28-1	139,0,0
+job_hunte,76,115,1	duplicate(HntTrap)	28-2	139,0,0
+job_hunte,77,114,1	duplicate(HntTrap)	28-3	139,0,0
+job_hunte,77,115,1	duplicate(HntTrap)	28-4	139,0,0
+job_hunte,82,116,1	duplicate(HntTrap)	29-1	139,0,0
+job_hunte,82,117,1	duplicate(HntTrap)	29-2	139,0,0
+job_hunte,83,116,1	duplicate(HntTrap)	29-3	139,0,0
+job_hunte,83,117,1	duplicate(HntTrap)	29-4	139,0,0
+job_hunte,86,114,1	duplicate(HntTrap)	30-1	139,0,0
+job_hunte,86,115,1	duplicate(HntTrap)	30-2	139,0,0
+job_hunte,87,114,1	duplicate(HntTrap)	30-3	139,0,0
+job_hunte,87,115,1	duplicate(HntTrap)	30-4	139,0,0
+job_hunte,92,115,1	duplicate(HntTrap)	31-1	139,1,0
+job_hunte,92,114,1	duplicate(HntTrap)	31-2	139,1,0
+job_hunte,90,115,1	duplicate(HntTrap)	31-3	139,0,0
+job_hunte,102,116,1	duplicate(HntTrap)	32-1	139,0,0
+job_hunte,102,117,1	duplicate(HntTrap)	32-2	139,0,0
+job_hunte,103,116,1	duplicate(HntTrap)	32-3	139,0,0
+job_hunte,103,117,1	duplicate(HntTrap)	32-4	139,0,0
+job_hunte,114,114,1	duplicate(HntTrap)	33-1	139,0,0
+job_hunte,114,115,1	duplicate(HntTrap)	33-2	139,0,0
+job_hunte,115,114,1	duplicate(HntTrap)	33-3	139,0,0
+job_hunte,115,115,1	duplicate(HntTrap)	33-4	139,0,0
+job_hunte,54,110,1	duplicate(HntTrap)	34-1	139,0,1
+job_hunte,55,110,1	duplicate(HntTrap)	34-2	139,0,1
+job_hunte,54,108,1	duplicate(HntTrap)	34-3	139,0,0
+job_hunte,55,108,1	duplicate(HntTrap)	34-4	139,0,0
+job_hunte,64,112,1	duplicate(HntTrap)	35-1	139,0,0
+job_hunte,64,113,1	duplicate(HntTrap)	35-2	139,0,0
+job_hunte,65,112,1	duplicate(HntTrap)	35-3	139,0,0
+job_hunte,65,113,1	duplicate(HntTrap)	35-4	139,0,0
+job_hunte,80,110,1	duplicate(HntTrap)	36-1	139,0,0
+job_hunte,80,111,1	duplicate(HntTrap)	36-2	139,0,0
+job_hunte,81,110,1	duplicate(HntTrap)	36-3	139,0,0
+job_hunte,81,111,1	duplicate(HntTrap)	36-4	139,0,0
+job_hunte,90,108,1	duplicate(HntTrap)	37-1	139,0,6
+job_hunte,91,108,1	duplicate(HntTrap)	37-2	139,0,5
+job_hunte,91,102,1	duplicate(HntTrap)	37-3	139,0,0
+job_hunte,98,109,1	duplicate(HntTrap)	38-1	139,0,2
+job_hunte,99,109,1	duplicate(HntTrap)	38-2	139,0,2
+job_hunte,103,109,1	duplicate(HntTrap)	38-3	139,3,0
+job_hunte,103,108,1	duplicate(HntTrap)	38-4	139,3,0
+job_hunte,97,106,1	duplicate(HntTrap)	39-1	139,2,0
+job_hunte,96,107,1	duplicate(HntTrap)	39-2	139,1,0
+job_hunte,94,108,1	duplicate(HntTrap)	39-3	139,0,1
+job_hunte,95,109,1	duplicate(HntTrap)	39-4	139,0,0
+job_hunte,95,108,1	duplicate(HntTrap)	40-1	139,0,0
+job_hunte,94,106,1	duplicate(HntTrap)	40-2	139,0,0
+job_hunte,96,102,1	duplicate(HntTrap)	40-3	139,0,3
+job_hunte,97,102,1	duplicate(HntTrap)	40-4	139,0,3
+job_hunte,95,98,1	duplicate(HntTrap)	41-1	139,2,0
+job_hunte,94,99,1	duplicate(HntTrap)	42-1	139,1,0
+job_hunte,92,98,1	duplicate(HntTrap)	43-1	139,0,0
+job_hunte,112,110,1	duplicate(HntTrap)	44-1	139,0,0
+job_hunte,112,111,1	duplicate(HntTrap)	44-2	139,0,0
+job_hunte,113,110,1	duplicate(HntTrap)	44-3	139,0,0
+job_hunte,113,111,1	duplicate(HntTrap)	44-4	139,0,0
+job_hunte,126,108,1	duplicate(HntTrap)	45-1	139,0,1
+job_hunte,127,108,1	duplicate(HntTrap)	45-2	139,0,1
+job_hunte,126,106,1	duplicate(HntTrap)	45-3	139,0,0
+job_hunte,126,106,1	duplicate(HntTrap)	45-4	139,0,0
+job_hunte,53,102,1	duplicate(HntTrap)	46-1	139,1,1
+job_hunte,55,102,1	duplicate(HntTrap)	46-2	139,0,1
+job_hunte,53,100,1	duplicate(HntTrap)	46-3	139,1,0
+job_hunte,55,100,1	duplicate(HntTrap)	46-4	139,0,0
+job_hunte,64,106,1	duplicate(HntTrap)	47-1	139,0,0
+job_hunte,64,107,1	duplicate(HntTrap)	47-2	139,0,0
+job_hunte,65,106,1	duplicate(HntTrap)	47-3	139,0,0
+job_hunte,65,107,1	duplicate(HntTrap)	47-4	139,0,0
+job_hunte,66,100,1	duplicate(HntTrap)	48-1	139,0,0
+job_hunte,66,101,1	duplicate(HntTrap)	48-2	139,0,0
+job_hunte,67,100,1	duplicate(HntTrap)	48-3	139,0,0
+job_hunte,67,101,1	duplicate(HntTrap)	48-4	139,0,0
+job_hunte,86,106,1	duplicate(HntTrap)	49-1	139,0,1
+job_hunte,87,106,1	duplicate(HntTrap)	49-2	139,0,1
+job_hunte,82,104,1	duplicate(HntTrap)	49-3	139,5,0
+job_hunte,81,105,1	duplicate(HntTrap)	49-4	139,4,0
+job_hunte,76,105,1	duplicate(HntTrap)	50-1	139,0,0
+job_hunte,76,104,1	duplicate(HntTrap)	50-2	139,0,0
+job_hunte,78,101,1	duplicate(HntTrap)	50-3	139,0,2
+job_hunte,79,101,1	duplicate(HntTrap)	50-4	139,0,2
+job_hunte,76,99,1	duplicate(HntTrap)	51-1	139,1,0
+job_hunte,77,98,1	duplicate(HntTrap)	51-2	139,2,0
+job_hunte,74,99,1	duplicate(HntTrap)	51-3	139,0,0
+job_hunte,74,98,1	duplicate(HntTrap)	51-4	139,0,0
+job_hunte,82,100,1	duplicate(HntTrap)	53-1	139,0,0
+job_hunte,82,101,1	duplicate(HntTrap)	53-2	139,0,0
+job_hunte,83,100,1	duplicate(HntTrap)	53-3	139,0,0
+job_hunte,83,101,1	duplicate(HntTrap)	53-4	139,0,0
+job_hunte,106,104,1	duplicate(HntTrap)	54-1	139,0,0
+job_hunte,106,105,1	duplicate(HntTrap)	54-2	139,0,0
+job_hunte,107,104,1	duplicate(HntTrap)	54-3	139,0,0
+job_hunte,107,105,1	duplicate(HntTrap)	54-4	139,0,0
+job_hunte,112,104,1	duplicate(HntTrap)	55-1	139,0,1
+job_hunte,113,104,1	duplicate(HntTrap)	55-2	139,0,1
+job_hunte,112,102,1	duplicate(HntTrap)	55-3	139,0,0
+job_hunte,113,102,1	duplicate(HntTrap)	55-4	139,0,0
+job_hunte,54,92,1	duplicate(HntTrap)	56-1	139,0,0
+job_hunte,54,93,1	duplicate(HntTrap)	56-2	139,0,0
+job_hunte,55,92,1	duplicate(HntTrap)	56-3	139,0,0
+job_hunte,55,93,1	duplicate(HntTrap)	56-4	139,0,0
+job_hunte,52,90,1	duplicate(HntTrap)	56-5	139,0,0
+job_hunte,52,91,1	duplicate(HntTrap)	56-6	139,0,0
+job_hunte,53,90,1	duplicate(HntTrap)	56-7	139,0,0
+job_hunte,53,91,1	duplicate(HntTrap)	56-8	139,0,0
+job_hunte,64,92,1	duplicate(HntTrap)	57-1	139,0,0
+job_hunte,64,93,1	duplicate(HntTrap)	57-2	139,0,0
+job_hunte,65,92,1	duplicate(HntTrap)	57-3	139,0,0
+job_hunte,65,93,1	duplicate(HntTrap)	57-4	139,0,0
+job_hunte,76,94,1	duplicate(HntTrap)	58-1	139,0,0
+job_hunte,76,95,1	duplicate(HntTrap)	58-2	139,0,0
+job_hunte,77,94,1	duplicate(HntTrap)	58-3	139,0,0
+job_hunte,77,95,1	duplicate(HntTrap)	58-4	139,0,0
+job_hunte,78,92,1	duplicate(HntTrap)	59-1	139,0,0
+job_hunte,78,93,1	duplicate(HntTrap)	59-2	139,0,0
+job_hunte,79,92,1	duplicate(HntTrap)	59-3	139,0,0
+job_hunte,79,93,1	duplicate(HntTrap)	59-4	139,0,0
+job_hunte,86,92,1	duplicate(HntTrap)	60-1	139,0,0
+job_hunte,86,93,1	duplicate(HntTrap)	60-2	139,0,0
+job_hunte,87,92,1	duplicate(HntTrap)	60-3	139,0,0
+job_hunte,87,93,1	duplicate(HntTrap)	60-4	139,0,0
+job_hunte,90,96,1	duplicate(HntTrap)	61-1	139,0,0
+job_hunte,90,97,1	duplicate(HntTrap)	61-2	139,0,0
+job_hunte,91,96,1	duplicate(HntTrap)	61-3	139,0,0
+job_hunte,91,97,1	duplicate(HntTrap)	61-4	139,0,0
+job_hunte,99,95,1	duplicate(HntTrap)	62-1	139,1,0
+job_hunte,99,94,1	duplicate(HntTrap)	62-2	139,1,0
+job_hunte,101,94,1	duplicate(HntTrap)	62-3	139,0,1
+job_hunte,100,93,1	duplicate(HntTrap)	62-4	139,0,0
+job_hunte,100,92,1	duplicate(HntTrap)	63-1	139,0,0
+job_hunte,101,92,1	duplicate(HntTrap)	63-2	139,0,0
+job_hunte,102,98,1	duplicate(HntTrap)	64-1	139,0,0
+job_hunte,102,99,1	duplicate(HntTrap)	64-2	139,0,0
+job_hunte,103,98,1	duplicate(HntTrap)	64-3	139,0,0
+job_hunte,103,99,1	duplicate(HntTrap)	64-4	139,0,0
+job_hunte,102,90,1	duplicate(HntTrap)	65-1	139,0,0
+job_hunte,102,91,1	duplicate(HntTrap)	65-2	139,0,0
+job_hunte,103,90,1	duplicate(HntTrap)	65-3	139,0,0
+job_hunte,103,91,1	duplicate(HntTrap)	65-4	139,0,0
+job_hunte,114,96,1	duplicate(HntTrap)	66-1	139,0,0
+job_hunte,114,97,1	duplicate(HntTrap)	66-2	139,0,0
+job_hunte,115,96,1	duplicate(HntTrap)	66-3	139,0,0
+job_hunte,115,97,1	duplicate(HntTrap)	66-4	139,0,0
+job_hunte,112,90,1	duplicate(HntTrap)	67-1	139,0,0
+job_hunte,112,91,1	duplicate(HntTrap)	67-2	139,0,0
+job_hunte,113,90,1	duplicate(HntTrap)	67-3	139,0,0
+job_hunte,113,91,1	duplicate(HntTrap)	67-4	139,0,0
+job_hunte,125,97,1	duplicate(HntTrap)	68-1	139,1,0
+job_hunte,125,96,1	duplicate(HntTrap)	68-2	139,1,0
+job_hunte,127,96,1	duplicate(HntTrap)	68-3	139,0,0
+job_hunte,127,97,1	duplicate(HntTrap)	68-4	139,0,0
+job_hunte,52,86,1	duplicate(HntTrap)	69-1	139,0,0
+job_hunte,52,87,1	duplicate(HntTrap)	69-2	139,0,0
+job_hunte,53,86,1	duplicate(HntTrap)	69-3	139,0,0
+job_hunte,53,87,1	duplicate(HntTrap)	69-4	139,0,0
+job_hunte,66,88,1	duplicate(HntTrap)	70-1	139,0,0
+job_hunte,66,89,1	duplicate(HntTrap)	70-2	139,0,0
+job_hunte,67,88,1	duplicate(HntTrap)	70-3	139,0,0
+job_hunte,67,89,1	duplicate(HntTrap)	70-4	139,0,0
+job_hunte,114,84,1	duplicate(HntTrap)	71-1	139,0,0
+job_hunte,114,85,1	duplicate(HntTrap)	71-2	139,0,0
+job_hunte,115,84,1	duplicate(HntTrap)	71-3	139,0,0
+job_hunte,115,85,1	duplicate(HntTrap)	71-4	139,0,0
+job_hunte,126,86,1	duplicate(HntTrap)	72-1	139,0,0
+job_hunte,126,87,1	duplicate(HntTrap)	72-2	139,0,0
+job_hunte,127,86,1	duplicate(HntTrap)	72-3	139,0,0
+job_hunte,127,87,1	duplicate(HntTrap)	72-4	139,0,0
+job_hunte,54,80,1	duplicate(HntTrap)	73-1	139,0,1
+job_hunte,55,80,1	duplicate(HntTrap)	73-2	139,0,1
+job_hunte,55,80,1	duplicate(HntTrap)	73-3	139,0,0
+job_hunte,55,78,1	duplicate(HntTrap)	73-4	139,0,0
+job_hunte,64,82,1	duplicate(HntTrap)	74-1	139,0,1
+job_hunte,65,82,1	duplicate(HntTrap)	74-2	139,0,1
+job_hunte,64,80,1	duplicate(HntTrap)	74-3	139,0,0
+job_hunte,65,80,1	duplicate(HntTrap)	74-4	139,0,0
+job_hunte,66,78,1	duplicate(HntTrap)	75-1	139,0,0
+job_hunte,66,79,1	duplicate(HntTrap)	75-2	139,0,0
+job_hunte,67,78,1	duplicate(HntTrap)	75-3	139,0,0
+job_hunte,67,79,1	duplicate(HntTrap)	75-4	139,0,0
+job_hunte,74,78,1	duplicate(HntTrap)	76-1	139,0,0
+job_hunte,74,79,1	duplicate(HntTrap)	76-2	139,0,0
+job_hunte,75,78,1	duplicate(HntTrap)	76-3	139,0,0
+job_hunte,75,79,1	duplicate(HntTrap)	76-4	139,0,0
+job_hunte,78,80,1	duplicate(HntTrap)	77-1	139,0,0
+job_hunte,78,81,1	duplicate(HntTrap)	77-2	139,0,0
+job_hunte,79,80,1	duplicate(HntTrap)	77-3	139,0,0
+job_hunte,79,81,1	duplicate(HntTrap)	77-4	139,0,0
+job_hunte,82,78,1	duplicate(HntTrap)	78-1	139,0,0
+job_hunte,82,79,1	duplicate(HntTrap)	78-2	139,0,0
+job_hunte,83,78,1	duplicate(HntTrap)	78-3	139,0,0
+job_hunte,83,79,1	duplicate(HntTrap)	78-4	139,0,0
+job_hunte,94,78,1	duplicate(HntTrap)	79-1	139,0,0
+job_hunte,94,79,1	duplicate(HntTrap)	79-2	139,0,0
+job_hunte,95,78,1	duplicate(HntTrap)	79-3	139,0,0
+job_hunte,95,79,1	duplicate(HntTrap)	79-4	139,0,0
+job_hunte,101,80,1	duplicate(HntTrap)	80-1	139,1,0
+job_hunte,101,81,1	duplicate(HntTrap)	80-2	139,1,0
+job_hunte,103,81,1	duplicate(HntTrap)	80-3	139,0,0
+job_hunte,103,80,1	duplicate(HntTrap)	80-4	139,0,0
+job_hunte,104,78,1	duplicate(HntTrap)	81-1	139,0,0
+job_hunte,104,79,1	duplicate(HntTrap)	81-2	139,0,0
+job_hunte,105,78,1	duplicate(HntTrap)	81-3	139,0,0
+job_hunte,105,79,1	duplicate(HntTrap)	81-4	139,0,0
+job_hunte,110,78,1	duplicate(HntTrap)	82-1	139,0,0
+job_hunte,110,79,1	duplicate(HntTrap)	82-2	139,0,0
+job_hunte,111,78,1	duplicate(HntTrap)	82-3	139,0,0
+job_hunte,111,79,1	duplicate(HntTrap)	82-4	139,0,0
+job_hunte,114,80,1	duplicate(HntTrap)	83-1	139,0,0
+job_hunte,114,81,1	duplicate(HntTrap)	83-2	139,0,0
+job_hunte,115,80,1	duplicate(HntTrap)	83-3	139,0,0
+job_hunte,115,81,1	duplicate(HntTrap)	83-4	139,0,0
+job_hunte,124,78,1	duplicate(HntTrap)	84-1	139,0,0
+job_hunte,124,79,1	duplicate(HntTrap)	84-2	139,0,0
+job_hunte,125,78,1	duplicate(HntTrap)	84-3	139,0,0
+job_hunte,125,79,1	duplicate(HntTrap)	84-4	139,0,0
+job_hunte,126,82,1	duplicate(HntTrap)	85-1	139,0,0
+job_hunte,126,83,1	duplicate(HntTrap)	85-2	139,0,0
+job_hunte,127,82,1	duplicate(HntTrap)	85-3	139,0,0
+job_hunte,127,83,1	duplicate(HntTrap)	85-4	139,0,0
+job_hunte,52,68,1	duplicate(HntTrap)	86-1	139,0,1
+job_hunte,53,68,1	duplicate(HntTrap)	86-2	139,0,1
+job_hunte,52,66,1	duplicate(HntTrap)	86-3	139,0,0
+job_hunte,53,66,1	duplicate(HntTrap)	86-4	139,0,0
+job_hunte,54,70,1	duplicate(HntTrap)	87-1	139,0,1
+job_hunte,55,70,1	duplicate(HntTrap)	87-2	139,0,1
+job_hunte,54,68,1	duplicate(HntTrap)	87-3	139,0,0
+job_hunte,55,68,1	duplicate(HntTrap)	87-4	139,0,0
+job_hunte,59,66,1	duplicate(HntTrap)	88-1	139,1,0
+job_hunte,59,67,1	duplicate(HntTrap)	88-2	139,1,0
+job_hunte,61,67,1	duplicate(HntTrap)	88-3	139,0,0
+job_hunte,61,66,1	duplicate(HntTrap)	88-4	139,0,0
+job_hunte,68,68,1	duplicate(HntTrap)	89-1	139,0,1
+job_hunte,69,68,1	duplicate(HntTrap)	89-2	139,0,1
+job_hunte,68,66,1	duplicate(HntTrap)	89-3	139,0,0
+job_hunte,69,66,1	duplicate(HntTrap)	89-4	139,0,0
+job_hunte,76,66,1	duplicate(HntTrap)	90-1	139,0,0
+job_hunte,76,67,1	duplicate(HntTrap)	90-2	139,0,0
+job_hunte,77,66,1	duplicate(HntTrap)	90-3	139,0,0
+job_hunte,77,67,1	duplicate(HntTrap)	90-4	139,0,0
+job_hunte,82,68,1	duplicate(HntTrap)	91-1	139,0,0
+job_hunte,82,69,1	duplicate(HntTrap)	91-2	139,0,0
+job_hunte,83,68,1	duplicate(HntTrap)	91-3	139,0,0
+job_hunte,83,69,1	duplicate(HntTrap)	91-4	139,0,0
+job_hunte,96,66,1	duplicate(HntTrap)	92-1	139,0,0
+job_hunte,96,67,1	duplicate(HntTrap)	92-2	139,0,0
+job_hunte,97,66,1	duplicate(HntTrap)	92-3	139,0,0
+job_hunte,97,67,1	duplicate(HntTrap)	92-4	139,0,0
+job_hunte,100,68,1	duplicate(HntTrap)	93-1	139,0,0
+job_hunte,100,69,1	duplicate(HntTrap)	93-2	139,0,0
+job_hunte,101,68,1	duplicate(HntTrap)	93-3	139,0,0
+job_hunte,101,69,1	duplicate(HntTrap)	93-4	139,0,0
+job_hunte,107,66,1	duplicate(HntTrap)	94-1	139,1,0
+job_hunte,107,67,1	duplicate(HntTrap)	94-2	139,1,0
+job_hunte,109,67,1	duplicate(HntTrap)	94-3	139,0,0
+job_hunte,109,66,1	duplicate(HntTrap)	94-4	139,0,0
+job_hunte,117,69,1	duplicate(HntTrap)	95-1	139,1,0
+job_hunte,117,68,1	duplicate(HntTrap)	95-2	139,1,0
+job_hunte,119,69,1	duplicate(HntTrap)	95-3	139,0,0
+job_hunte,119,68,1	duplicate(HntTrap)	95-4	139,0,0
+job_hunte,124,66,1	duplicate(HntTrap)	96-1	139,0,0
+job_hunte,124,67,1	duplicate(HntTrap)	96-2	139,0,0
+job_hunte,125,66,1	duplicate(HntTrap)	96-3	139,0,0
+job_hunte,125,67,1	duplicate(HntTrap)	96-4	139,0,0
+job_hunte,126,70,1	duplicate(HntTrap)	97-1	139,0,0
+job_hunte,126,71,1	duplicate(HntTrap)	97-2	139,0,0
+job_hunte,127,70,1	duplicate(HntTrap)	97-3	139,0,0
+job_hunte,127,71,1	duplicate(HntTrap)	97-4	139,0,0

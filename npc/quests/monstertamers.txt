@@ -16,7 +16,7 @@
 
 
 //<================================================= Alberta ===============================================>\\
-alberta_in.gat,173,77,3	script	Monster Tamer#01	125,{
+alberta_in,173,77,3	script	Monster Tamer#01	125,{
 	mes "[Monster Tamer Iwado]";
 	mes "Monster taming has never been more popular than it is now! Why not join in on all of the excitement?....";
 M_Menu:
@@ -129,7 +129,7 @@ M_Menu:
 
 
 //<================================================= Al De Baran ===============================================>\\
-aldeba_in.gat,167,177,3	script	Monster Tamer#02	125,{
+aldeba_in,167,177,3	script	Monster Tamer#02	125,{
 	mes "[Monster Tamer YuU]";
 	mes "You must be looking for some Taming Items.... When it comes to making Taming Items there is no one better than me here in Rune Midgard.";
 M_Menu:
@@ -326,7 +326,7 @@ M_Menu:
 
 
 //<================================================= Izlude ===============================================>\\
-izlude_in.gat,128,64,3	script	Monster Tamer#03	125,{
+izlude_in,128,64,3	script	Monster Tamer#03	125,{
 	mes "[Monster Tamer Shogo]";
 	mes "Are you pre-occupied with gathering items for your cute pets, and want a break? Then let us find those items for you.....";
 M_Menu:

@@ -13,10 +13,10 @@
 //============================================================
 
 //= Kiel Dungeon =============================================
-kh_dun01.gat,3,234,0	warp	khwarp01	1,1,yuno_fild08,69,170
+kh_dun01,3,234,0	warp	khwarp01	1,1,yuno_fild08,69,170
 
 //= Graveyard Switch =========================================
-yuno_fild08.gat,67,169,4	script	Switch#kh	111,1,1,{
+yuno_fild08,67,169,4	script	Switch#kh	111,1,1,{
 
   mes "You examine the grave and find a switch!";
   mes "Do you want to press it?";
@@ -36,7 +36,7 @@ L_End:
 }
 
 //= Elevator to Floor 2 ======================================
-kh_dun01.gat,44,203,4	script	Switch#khe1::khelevator	111,1,1,{
+kh_dun01,44,203,4	script	Switch#khe1::khelevator	111,1,1,{
 
   mes "The elevator seems to be broken.";
   mes "But you could repair it with";
@@ -68,10 +68,10 @@ L_End:
   close;
 }
 
-kh_dun01.gat,36,195,4	duplicate(khelevator)	Switch#khe2	111
+kh_dun01,36,195,4	duplicate(khelevator)	Switch#khe2	111
 
 //= Custom Kiel Dungeon Warps ================================
-//kh_dun01.gat,3,234,0	warp	warp01	1,1,kh_dun02.gat,42,197
-//kh_dun02.gat,45,194,0	warp	warp02	1,1,kh_dun01.gat,4,229
-//kh_kiehl02.gat,49,52,0	warp	warp05	1,1,kh_dun01.gat,63,10
-//kh_dun01.gat,64,7,0	warp	warp06	1,1,kh_kiehl02.gat,51,49
+//kh_dun01,3,234,0	warp	warp01	1,1,kh_dun02,42,197
+//kh_dun02,45,194,0	warp	warp02	1,1,kh_dun01,4,229
+//kh_kiehl02,49,52,0	warp	warp05	1,1,kh_dun01,63,10
+//kh_dun01,64,7,0	warp	warp06	1,1,kh_kiehl02,51,49

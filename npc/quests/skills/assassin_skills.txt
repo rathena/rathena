@@ -24,7 +24,7 @@
 //============================================================
 // ASSASSIN - SONIC ACCELERATION + THROW VENOM KNIFE
 //============================================================
-in_moc_16.gat,14,21,3	script	Kiltin	884,{
+in_moc_16,14,21,3	script	Kiltin	884,{
 	mes "[Kiltin]";
 	if(BaseJob!=Job_Assassin) goto L_nosin;
 	if(getskilllv(1003) && getskilllv(1004)) goto L_alreadyhave;
@@ -68,4 +68,3 @@ L_alreadyhave:
 	mes "everything I know...";
 	close;
 }
-

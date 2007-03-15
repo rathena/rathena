@@ -46,23 +46,23 @@
 //================================================
 function	script	F_GldTreas	{
 	if(getarg(10) == 1) goto L_SPAWN;
-	setcastledata getarg(0)+".gat",4,0;
-	setcastledata getarg(0)+".gat",5,0;
-	killmonster getarg(0)+".gat","Treasure_"+getarg(1)+"::OnDied";
-	if(GetCastleData(getarg(0)+".gat",2) > 100 || GetCastleData(getarg(0)+".gat",1) == 0) return;
+	setcastledata getarg(0),4,0;
+	setcastledata getarg(0),5,0;
+	killmonster getarg(0),"Treasure_"+getarg(1)+"::OnDied";
+	if(GetCastleData(getarg(0),2) > 100 || GetCastleData(getarg(0),1) == 0) return;
 	//sets the counter variable = to the box number amount
 	if(getarg(0) == "nguild_prt" || getarg(0) == "nguild_alde" || getarg(0) == "nguild_gef" || getarg(0) == "nguild_pay" ) {
 		//Novice Castles can't have more than 1 Treasure Chest
 		set getarg(2),1;
 	}else{
-		set getarg(2),GetCastleData(getarg(0)+".gat",2)/5+4;
+		set getarg(2),GetCastleData(getarg(0),2)/5+4;
 	}
 	if (getarg(2) <= 0) return;
 	set getarg(3), getarg(2);	//sets the counter variable = to the box number amount
 
 L_SPAWN:
-	set getarg(4), getarg(5)+((getarg(3)+1) & 1);	//sets the box id variable = to the box id
-	areamonster getarg(0)+".gat",getarg(6),getarg(7),getarg(8),getarg(9),"Treasure Chest",getarg(4),1,"Treasure_"+getarg(1)+"::OnDied";
+	set getarg(4), getarg(5)+(getarg(3)+1) & 1);	//sets the box id variable = to the box id
+	areamonster getarg(0),getarg(6),getarg(7),getarg(8),getarg(9),"Treasure Chest",getarg(4),1,"Treasure_"+getarg(1)+"::OnDied";
 	set getarg(3), getarg(3) - 1;
 	if(getarg(3) > 0) goto L_SPAWN;
 	return;
@@ -80,6 +80,6 @@ function	script	F_GldTreasSw	{
 	close;
 	
 	M_1:
-		warp getarg(0)+".gat",getarg(1),getarg(2);
+		warp getarg(0),getarg(1),getarg(2);
 		return;
 }

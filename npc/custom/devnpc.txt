@@ -20,7 +20,7 @@
 //============================================================ 
 
 // MouseJstr =========================================================>\\
-ayothaya.gat,76,145,5	script	MouseJstr	763,{
+ayothaya,76,145,5	script	MouseJstr	763,{
  	npcspeed 50;
 	mes "[MouseJstr]";
 	mes "Yo homeslices..";
@@ -67,7 +67,7 @@ OnInit:
 }
 
 // MC Cameri =========================================================>\\
-morocc.gat,160,97,4	script	MC Cameri	706,{
+morocc,160,97,4	script	MC Cameri	706,{
  	npcspeed 100;
 	mes "[MC Cameri]";
 	mes "I'm the @command guy from oA...";
@@ -150,7 +150,7 @@ OnInit:
 
 
 // Davidsiaw =========================================================>\\
-payon.gat,182,104,4	script	Davidsiaw	1002,{
+payon,182,104,4	script	Davidsiaw	1002,{
  	npcspeed 150;
 	mes "[Davidsiaw]";
 	mes "omghi";
@@ -202,7 +202,7 @@ OnInit:
 }
 
 //Aria\\
-prontera.gat,156,179,4	script	Aria	805,{
+prontera,156,179,4	script	Aria	805,{
  	npcspeed 150;
 	mes "[Aria]";
 	mes "Okay, I'm Evera's brother, Aria";
@@ -287,7 +287,7 @@ OnInit:
 }
 
 // Evera =========================================================>\\
-prontera.gat,156,183,5	script	Evera	769,{
+prontera,156,183,5	script	Evera	769,{
  	npcspeed 50;
 	mes "[Evera]";
 	mes "Hi";
@@ -344,7 +344,7 @@ OnInit:
 }
 
 // Kevin =========================================================>\\
-prontera.gat,178,204,5	script	Kevin	774,{
+prontera,178,204,5	script	Kevin	774,{
  	npcspeed 50;
 	mes "[Kevin]";
 	mes "SUP?!?!?!?!";
@@ -412,7 +412,7 @@ OnInit:
 
 
 // massdriller =========================================================>\\
-geffen.gat,122,63,5	script	massdriller	823,{
+geffen,122,63,5	script	massdriller	823,{
  	npcspeed 50;
 	mes "[massdriller]";
 	mes "Who am i? I am A nobody!";
@@ -478,7 +478,7 @@ OnInit:
  	initnpctimer;
         end;
 }
-aldebaran.gat,137,118,5	script	Fredzilla	4020,0,0,{
+aldebaran,137,118,5	script	Fredzilla	4020,0,0,{
  	npcspeed 140;
 OnTouch:
 	mes "[Fredzilla]";

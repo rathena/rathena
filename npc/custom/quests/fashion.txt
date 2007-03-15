@@ -13,7 +13,7 @@
 //= 1.1 fixed exploit [Lupus]
 //============================================================
 
-izlude.gat,135,96,5	script	Fashion Glasses Quest	76,{
+izlude,135,96,5	script	Fashion Glasses Quest	76,{
 	mes "[Fashionable Glasses Quest]"; 
 	mes "Hi, today's quest is...."; 
 	mes "Ah, the ^CC6633Fashionable Glasses^000000 Quest!"; 

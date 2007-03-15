@@ -24,7 +24,7 @@
 //============================================================
 // MONK - KI TRANSLATION + KI EXPLOSION
 //============================================================
-monk_test.gat,316,69,3	script	Krate	823,{
+monk_test,316,69,3	script	Krate	823,{
 	mes "[Krate]";
 	if(BaseJob!=Job_Monk) goto L_nomonk;
 	if(getskilllv(1015) && getskilllv(1016)) goto L_alreadyhave;

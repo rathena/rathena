@@ -14,7 +14,7 @@
 //= 1.01 translated the rest of dialogues
 //============================================================
 
-gonryun.gat,187,140,4	script	Yakima	850,{
+gonryun,187,140,4	script	Yakima	850,{
  mes "[Yakima]";
  mes callfunc("F_Hi");
  mes "I can make some items for you.";

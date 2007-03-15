@@ -33,29 +33,29 @@ function	script	F_keWarpPvp	{
 		if ($@kewp_showOnline) { 
 			set @kmenu, select(
 				"- Cancel",
-				"- All Levels Rooms ("+($@kewp_cost*@cost)+"z/"+(getmapusers("pvp_n_8-1.gat")+getmapusers("pvp_n_8-2.gat")
-					+getmapusers("pvp_n_8-3.gat")+getmapusers("pvp_n_8-4.gat")+getmapusers("pvp_n_8-5.gat"))+" "+$@ked_users$+")",
+				"- All Levels Rooms ("+($@kewp_cost*@cost)+"z/"+(getmapusers("pvp_n_8-1")+getmapusers("pvp_n_8-2")
+					+getmapusers("pvp_n_8-3")+getmapusers("pvp_n_8-4")+getmapusers("pvp_n_8-5"))+" "+$@ked_users$+")",
 				"- Levels "+($@kewp_baseLv1-$@kewp_range)+"-"+($@kewp_baseLv1+$@kewp_range)+" Rooms ("+($@kewp_cost1*@cost)+"z/"
-					+(getmapusers("pvp_n_1-1.gat")+getmapusers("pvp_n_1-2.gat")+getmapusers("pvp_n_1-3.gat")
-					+getmapusers("pvp_n_1-4.gat")+getmapusers("pvp_n_1-5.gat"))+" "+$@ked_users$+")",
+					+(getmapusers("pvp_n_1-1")+getmapusers("pvp_n_1-2")+getmapusers("pvp_n_1-3")
+					+getmapusers("pvp_n_1-4")+getmapusers("pvp_n_1-5"))+" "+$@ked_users$+")",
 				"- Levels "+($@kewp_baseLv2-$@kewp_range)+"-"+($@kewp_baseLv2+$@kewp_range)+" Rooms ("+($@kewp_cost2*@cost)+"z/"
-					+(getmapusers("pvp_n_2-1.gat")+getmapusers("pvp_n_2-2.gat")+getmapusers("pvp_n_2-3.gat")
-					+getmapusers("pvp_n_2-4.gat")+getmapusers("pvp_n_2-5.gat"))+" "+$@ked_users$+")",
+					+(getmapusers("pvp_n_2-1")+getmapusers("pvp_n_2-2")+getmapusers("pvp_n_2-3")
+					+getmapusers("pvp_n_2-4")+getmapusers("pvp_n_2-5"))+" "+$@ked_users$+")",
 				"- Levels "+($@kewp_baseLv3-$@kewp_range)+"-"+($@kewp_baseLv3+$@kewp_range)+" Rooms ("+($@kewp_cost3*@cost)+"z/"
-					+(getmapusers("pvp_n_3-1.gat")+getmapusers("pvp_n_3-2.gat")+getmapusers("pvp_n_3-3.gat")
-					+getmapusers("pvp_n_3-4.gat")+getmapusers("pvp_n_3-5.gat"))+" "+$@ked_users$+")",
+					+(getmapusers("pvp_n_3-1")+getmapusers("pvp_n_3-2")+getmapusers("pvp_n_3-3")
+					+getmapusers("pvp_n_3-4")+getmapusers("pvp_n_3-5"))+" "+$@ked_users$+")",
 				"- Levels "+($@kewp_baseLv4-$@kewp_range)+"-"+($@kewp_baseLv4+$@kewp_range)+" Rooms ("+($@kewp_cost4*@cost)+"z/"
-					+(getmapusers("pvp_n_4-1.gat")+getmapusers("pvp_n_4-2.gat")+getmapusers("pvp_n_4-3.gat")
-					+getmapusers("pvp_n_4-4.gat")+getmapusers("pvp_n_4-5.gat"))+" "+$@ked_users$+")",
+					+(getmapusers("pvp_n_4-1")+getmapusers("pvp_n_4-2")+getmapusers("pvp_n_4-3")
+					+getmapusers("pvp_n_4-4")+getmapusers("pvp_n_4-5"))+" "+$@ked_users$+")",
 				"- Levels "+($@kewp_baseLv5-$@kewp_range)+"-"+($@kewp_baseLv5+$@kewp_range)+" Rooms ("+($@kewp_cost5*@cost)+"z/"
-					+(getmapusers("pvp_n_5-1.gat")+getmapusers("pvp_n_5-2.gat")+getmapusers("pvp_n_5-3.gat")
-					+getmapusers("pvp_n_5-4.gat")+getmapusers("pvp_n_5-5.gat"))+" "+$@ked_users$+")",
+					+(getmapusers("pvp_n_5-1")+getmapusers("pvp_n_5-2")+getmapusers("pvp_n_5-3")
+					+getmapusers("pvp_n_5-4")+getmapusers("pvp_n_5-5"))+" "+$@ked_users$+")",
 				"- Levels "+($@kewp_baseLv6-$@kewp_range)+"-"+($@kewp_baseLv6+$@kewp_range)+" Rooms ("+($@kewp_cost6*@cost)+"z/"
-					+(getmapusers("pvp_n_6-1.gat")+getmapusers("pvp_n_6-2.gat")+getmapusers("pvp_n_6-3.gat")
-					+getmapusers("pvp_n_6-4.gat")+getmapusers("pvp_n_6-5.gat"))+" "+$@ked_users$+")",
+					+(getmapusers("pvp_n_6-1")+getmapusers("pvp_n_6-2")+getmapusers("pvp_n_6-3")
+					+getmapusers("pvp_n_6-4")+getmapusers("pvp_n_6-5"))+" "+$@ked_users$+")",
 				"- Levels "+($@kewp_baseLv7-$@kewp_range)+"-"+($@kewp_baseLv7+$@kewp_range)+" Rooms ("+($@kewp_cost7*@cost)+"z/"
-					+(getmapusers("pvp_n_7-1.gat")+getmapusers("pvp_n_7-2.gat")+getmapusers("pvp_n_7-3.gat")
-					+getmapusers("pvp_n_7-4.gat")+getmapusers("pvp_n_7-5.gat"))+" "+$@ked_users$+")"
+					+(getmapusers("pvp_n_7-1")+getmapusers("pvp_n_7-2")+getmapusers("pvp_n_7-3")
+					+getmapusers("pvp_n_7-4")+getmapusers("pvp_n_7-5"))+" "+$@ked_users$+")"
 			);
 		} else {
 			set @kmenu, select(
@@ -101,7 +101,7 @@ function	script	F_keWarpPvp	{
 
 //SubFunction: SF_pvpMenu (int map-group, int cost, int min level, int max level)
 //Displays the list of the five available Pvp rooms to warp to.
-//map-group is the first index of the pvp map names (in pvp_n_2-3.gat it would be 2)
+//map-group is the first index of the pvp map names (in pvp_n_2-3 it would be 2)
 function SF_pvpMenu {
 	if (getarg(4)) {
 		if (BaseLevel < getarg(3)) {
@@ -118,11 +118,11 @@ function SF_pvpMenu {
 	if ($@kewp_showOnline) {
 		set @submenu, select(
 			"- Cancel Warp (Rooms for "+@msg$+"/"+(getarg(1)*@cost)+"z)",
-			"- Room Sandwich ("+getmapusers("pvp_n_"+getarg(0)+"-1.gat")+" "+$@ked_users$+")",
-			"- Room Rock On ("+getmapusers("pvp_n_"+getarg(0)+"-2.gat")+" "+$@ked_users$+")",
-			"- Four Room ("+getmapusers("pvp_n_"+getarg(0)+"-3.gat")+" "+$@ked_users$+")",
-			"- Room Undercross ("+getmapusers("pvp_n_"+getarg(0)+"-4.gat")+" "+$@ked_users$+")",
-			"- Room Compass ("+getmapusers("pvp_n_"+getarg(0)+"-5.gat")+" "+$@ked_users$+")"
+			"- Room Sandwich ("+getmapusers("pvp_n_"+getarg(0)+"-1")+" "+$@ked_users$+")",
+			"- Room Rock On ("+getmapusers("pvp_n_"+getarg(0)+"-2")+" "+$@ked_users$+")",
+			"- Four Room ("+getmapusers("pvp_n_"+getarg(0)+"-3")+" "+$@ked_users$+")",
+			"- Room Undercross ("+getmapusers("pvp_n_"+getarg(0)+"-4")+" "+$@ked_users$+")",
+			"- Room Compass ("+getmapusers("pvp_n_"+getarg(0)+"-5")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -136,19 +136,19 @@ function SF_pvpMenu {
 	}
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",getarg(1),getarg(2),e_com,"pvp_n_"+getarg(0)+"-1.gat",-1,-1;
+		callfunc "F_keWarp",getarg(1),getarg(2),e_com,"pvp_n_"+getarg(0)+"-1",-1,-1;
 		break;
 	case 3:
-		callfunc "F_keWarp",getarg(1),getarg(2),e_com,"pvp_n_"+getarg(0)+"-2.gat",-1,-1;
+		callfunc "F_keWarp",getarg(1),getarg(2),e_com,"pvp_n_"+getarg(0)+"-2",-1,-1;
 		break;
 	case 4:
-		callfunc "F_keWarp",getarg(1),getarg(2),e_com,"pvp_n_"+getarg(0)+"-3.gat",-1,-1;
+		callfunc "F_keWarp",getarg(1),getarg(2),e_com,"pvp_n_"+getarg(0)+"-3",-1,-1;
 		break;
 	case 5:
-		callfunc "F_keWarp",getarg(1),getarg(2),e_com,"pvp_n_"+getarg(0)+"-4.gat",-1,-1;
+		callfunc "F_keWarp",getarg(1),getarg(2),e_com,"pvp_n_"+getarg(0)+"-4",-1,-1;
 		break;
 	case 6:
-		callfunc "F_keWarp",getarg(1),getarg(2),e_com,"pvp_n_"+getarg(0)+"-5.gat",-1,-1;
+		callfunc "F_keWarp",getarg(1),getarg(2),e_com,"pvp_n_"+getarg(0)+"-5",-1,-1;
 		break;
 	}
 }

@@ -25,14 +25,14 @@
 //Ragnarok Online Novice Script by yukito
 //====================================================================
 //Bulletin Board
-new_zone01.gat,66,114,4	script	Bulletin Board	111,{
+new_zone01,66,114,4	script	Bulletin Board	111,{
 	mes "^FF0000=================================^000000";
 	mes "^FF0000 ==^000000 ^E40CAA[Welcome] ^CC0000to^FF9000Training ^0000FFGrounds^FF0000==^000000";
 	mes "^FF0000=================================^000000";
 	close;
 }
 
-new_zone01.gat,53,114,4	script	Shion	727,{
+new_zone01,53,114,4	script	Shion	727,{
 	if(Class != Job_Novice || Upper) goto L_Fail;
 	switch (NEW_MES_FLAG0) {
 	case 0:	mes "[Shion]";
@@ -208,19 +208,19 @@ L_Fail:
 	mes "[Shion]";
 	mes "You shouldn't be here.";
 	close2;
-	savepoint "prontera.gat",273,354;
-	warp "prontera.gat",273,354;
+	savepoint "prontera",273,354;
+	warp "prontera",273,354;
 	end;
 }
 
-new_zone01.gat,144,116,2	script	Guard#01	105,{
+new_zone01,144,116,2	script	Guard#01	105,{
 	mes "[Training Grounds Guard]";
 	mes "Welcome to the Training Grounds.";
 	mes "You are now in the outer court yard. Please go inside the castle to begin your training.";
 	close;
 }
 
-new_zone01.gat,144,107,2	script	Guard#02	105,{
+new_zone01,144,107,2	script	Guard#02	105,{
 	mes "[Training Grounds Guard]";
 	if(rand(2)) {
 		mes "Come in!";
@@ -241,7 +241,7 @@ new_zone01.gat,144,107,2	script	Guard#02	105,{
 }
 
 //Receptionist
-new_zone02.gat,100,29,4	script	Receptionist#nz	86,{
+new_zone02,100,29,4	script	Receptionist#nz	86,{
 	if(Class != Job_Novice || Upper) goto L_Fail;
 	mes "[Training Grounds Receptionist]";
 	mes "Welcome!";
@@ -268,7 +268,7 @@ L_loop:
 		mes "to the Training Grounds.";
 		close2;
 		set Zeny,Zeny+50;
-		warp "new_zone02.gat",100,70;
+		warp "new_zone02",100,70;
 		end;
 	case 2:	mes "[Training Grounds Receptionist]";
 		mes "I understand.";
@@ -278,23 +278,23 @@ L_loop:
 		close2;
 		set NEW_MES_FLAG0,0;
 		switch( rand(6) ) {
-		case 0:	savepoint "prontera.gat",273,354;
-			warp "prontera.gat",273,354;
+		case 0:	savepoint "prontera",273,354;
+			warp "prontera",273,354;
 			break;
-		case 1:	savepoint "morocc.gat",160,94;
-			warp "morocc.gat",160,94;
+		case 1:	savepoint "morocc",160,94;
+			warp "morocc",160,94;
 			break;
-		case 2:	savepoint "geffen.gat",120,100;
-			warp "geffen.gat",120,100;
+		case 2:	savepoint "geffen",120,100;
+			warp "geffen",120,100;
 			break;
-		case 3:	savepoint "payon.gat",70,100;
-			warp "payon.gat",70,100;
+		case 3:	savepoint "payon",70,100;
+			warp "payon",70,100;
 			break;
-		case 4:	savepoint "alberta.gat",116,57;
-			warp "alberta.gat",116,57;
+		case 4:	savepoint "alberta",116,57;
+			warp "alberta",116,57;
 			break;
-		case 5:	savepoint "izlude.gat",94,103;
-			warp "izlude.gat",94,103;
+		case 5:	savepoint "izlude",94,103;
+			warp "izlude",94,103;
 		}
 		end;
 	case 3:	mes "[Training Grounds Receptionist]";
@@ -334,13 +334,13 @@ L_Fail:
 	mes "[Training Grounds Receptionist]";
 	mes "You shouldn't be here.";
 	close2;
-	savepoint "prontera.gat",273,354;
-	warp "prontera.gat",273,354;
+	savepoint "prontera",273,354;
+	warp "prontera",273,354;
 	end;
 }
 
 //Interfaces Instructor
-new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
+new_zone02,99,105,4	script	Interfaces Instructor	751,{
 	if (!(NEW_MES_FLAG1)) {
 		mes "[Chris]";
 		mes "Nice to meet you. could you show me your application?";
@@ -413,7 +413,7 @@ new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
 			mes "If you think you need to take more lectures,";
 			mes "Come to see me anytime.";
 			close2;
-			warp "new_zone02.gat",28,178;
+			warp "new_zone02",28,178;
 			end;
 		case 3:	emotion e_swt2;
 			close;
@@ -433,7 +433,7 @@ new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
 			mes "Well, find the skill instructor.";
 			mes "I will send you to him for free of charge.";
 			close2;
-			warp "new_zone02.gat",84,107;
+			warp "new_zone02",84,107;
 			end;
 		case 2:	mes "[Chris]";
 			mes "I will send you to the next course,";
@@ -447,7 +447,7 @@ new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
 				mes "[Chris]";
 				mes "I wish you good luck.";
 				close2;
-				warp "new_zone02.gat",28,178;
+				warp "new_zone02",28,178;
 				end;
 			}
 		case 3:	emotion e_swt2;
@@ -469,7 +469,7 @@ new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
 			mes "Well, Go to the item instructor.";
 			mes "I will send you to him for free of charge.";
 			close2;
-			warp "new_zone02.gat",115,107;
+			warp "new_zone02",115,107;
 			end;
 		case 2:	mes "[Chris]";
 			mes "I will send you to the next course,";
@@ -483,7 +483,7 @@ new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
 				mes "[Chris]";
 				mes "I wish you good luck.";
 				close2;
-				warp "new_zone02.gat",28,178;
+				warp "new_zone02",28,178;
 				end;
 			}
 		case 3:	emotion e_swt2;
@@ -502,7 +502,7 @@ new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
 		mes "Pay attention to what he says, and finish the course safely.";
 		mes "I wish you good luck.";
 		close2;
-		warp "new_zone02.gat",28,178;
+		warp "new_zone02",28,178;
 		end;
 	case 2:	mes "[Chris]";
 		mes "That is a good idea.";
@@ -538,7 +538,7 @@ new_zone02.gat,99,105,4	script	Interfaces Instructor	751,{
 	}
 }
 
-new_zone02.gat,83,111,4	script	Skill Instructor	753,{
+new_zone02,83,111,4	script	Skill Instructor	753,{
 	if (!(NEW_MES_FLAG2)) {
 		mes "[Shecil]";
 		mes ""+strcharinfo(0)+"";
@@ -662,7 +662,7 @@ new_zone02.gat,83,111,4	script	Skill Instructor	753,{
 			mes "Hahaha.";
 			mes "I will send you to the service.";
 			close2;
-			warp "new_zone02.gat",115,107;
+			warp "new_zone02",115,107;
 			break;
 		case 2:	goto L_battle;
 		case 3:	emotion e_omg;
@@ -686,7 +686,7 @@ new_zone02.gat,83,111,4	script	Skill Instructor	753,{
 		mes "My fists have gotten a bit rusty.";
 		mes "Ok, I will send you! You should grow up well!";
 		close2;
-		warp "new_zone02.gat",28,178;
+		warp "new_zone02",28,178;
 		end;
 	case 2:	mes "[Shecil]";
 		mes "Huh? you look like";
@@ -728,11 +728,11 @@ L_battle:
 	mes "Practical Course!";
 	mes "Cheer up!";
 	close2;
-	warp "new_zone02.gat",28,178;
+	warp "new_zone02",28,178;
 	end;
 }
 
-new_zone02.gat,115,111,4	script	Item Instructor	726,{
+new_zone02,115,111,4	script	Item Instructor	726,{
 	disable_items;
 	if (!(NEW_MES_FLAG3)) {
 		mes "[Alice]";
@@ -883,7 +883,7 @@ new_zone02.gat,115,111,4	script	Item Instructor	726,{
 			mes "I will send you there.";
 			mes "Study Hard!";
 			close2;
-			warp "new_zone02.gat",84,107;
+			warp "new_zone02",84,107;
 			end;
 	}
 	mes "[Alice]";
@@ -905,7 +905,7 @@ new_zone02.gat,115,111,4	script	Item Instructor	726,{
 			mes "Wear those tight.";
 			mes "Ok, I will let you go.";
 			close2;
-			warp "new_zone02.gat",28,178;
+			warp "new_zone02",28,178;
 			end;
 		} else {
 			mes "[Alice]";
@@ -930,7 +930,7 @@ L_battle1:
 		mes "Ok, I will send you there.";
 		mes "Goodbye.";
 		close2;
-		warp "new_zone02.gat",28,178;
+		warp "new_zone02",28,178;
 		end;
 	} else {
 		mes "[Alice]";
@@ -952,7 +952,7 @@ L_bye:
 	close;
 }
 
-new_zone02.gat,118,108,4	script	Kafra Employee	94,{
+new_zone02,118,108,4	script	Kafra Employee	94,{
 	mes "[Kafra Employee]";
 	mes "Welcome to";
 	mes "Kafra Corporation.";
@@ -995,7 +995,7 @@ new_zone02.gat,118,108,4	script	Kafra Employee	94,{
 				mes "[Kafra Employee]";
 				mes "You will be sent to Practical Course.";
 				close2;
-				warp "new_zone02.gat",28,178;
+				warp "new_zone02",28,178;
 				end;
 			}
 			set @menu,@menu-1;
@@ -1009,8 +1009,8 @@ new_zone02.gat,118,108,4	script	Kafra Employee	94,{
 			mes "May God be with you.";
 			close2;
 			callsub L_prewarp;
-			savepoint "prontera.gat",118,72;
-			warp "prontera.gat",150,50;
+			savepoint "prontera",118,72;
+			warp "prontera",150,50;
 			end;
 		case 2:	mes "[Kafra Employee]";
 			mes "Desert City, Morroc.";
@@ -1019,8 +1019,8 @@ new_zone02.gat,118,108,4	script	Kafra Employee	94,{
 			mes "I will pray you keep your hope in your heart always.";
 			close2;
 			callsub L_prewarp;
-			savepoint "morocc.gat",151,98;
-			warp "morocc.gat",155,110;
+			savepoint "morocc",151,98;
+			warp "morocc",155,110;
 			end;
 		case 3:	mes "[Kafra Employee]";
 			mes "Hm? do you want to be an archer?";
@@ -1028,8 +1028,8 @@ new_zone02.gat,118,108,4	script	Kafra Employee	94,{
 			mes "May God bless you.";
 			close2;
 			callsub L_prewarp;
-			savepoint "payon.gat",160,58;
-			warp "payon.gat",166,67;
+			savepoint "payon",160,58;
+			warp "payon",166,67;
 			end;
 		case 4:	mes "[Kafra Employee]";
 			mes "Harbor City, Alberta.";
@@ -1039,8 +1039,8 @@ new_zone02.gat,118,108,4	script	Kafra Employee	94,{
 			mes "May God bless you.";
 			close2;
 			callsub L_prewarp;
-			savepoint "alberta.gat",31,233;
-			warp "alberta.gat",114,58;
+			savepoint "alberta",31,233;
+			warp "alberta",114,58;
 			end;
 		case 5:	mes "[Kafra Employee]";
 			mes "City of Magic.";
@@ -1049,8 +1049,8 @@ new_zone02.gat,118,108,4	script	Kafra Employee	94,{
 			mes "May God bless you.";
 			close2;
 			callsub L_prewarp;
-			savepoint "geffen.gat",118,37;
-			warp "geffen.gat",121,65;
+			savepoint "geffen",118,37;
+			warp "geffen",121,65;
 			end;
 		}
 	} else {
@@ -1173,7 +1173,7 @@ L_prewarp:
 	return;
 }
 
-new_zone02.gat,121,101,2	script	Guide Soldier	105,{
+new_zone02,121,101,2	script	Guide Soldier	105,{
 	mes "[Soldier]";
 	mes "We, Soldiers, are guiding Novices here in the gate way of town.";
 	mes "When you go to a new town, Please visit Guide Soldier and receive their information for the map.";
@@ -1190,7 +1190,7 @@ new_zone02.gat,121,101,2	script	Guide Soldier	105,{
 }
 
 //Interface Assistant
-new_zone02.gat,161,182,6	script	Interface Assistant	92,{
+new_zone02,161,182,6	script	Interface Assistant	92,{
 	mes "[Edwin]";
 	mes "I am an Interface Assistant.";
 	mes "Choose what you want to know more about.";
@@ -1328,7 +1328,7 @@ L_loop:
 	goto L_loop;
 }
 
-new_zone02.gat,182,182,4	script	Status Assistant	754,{
+new_zone02,182,182,4	script	Status Assistant	754,{
 	mes "[Jarre Riotte]";
 	mes "Welcome new adventurer.";
 	mes "I, Jarre Riotte will help you learn about the fundamental rules of your characters status.";
@@ -1572,7 +1572,7 @@ L_loop:
 	goto L_loop;
 }
 
-new_zone02.gat,184,172,4	script	Skill Assistant	47,{
+new_zone02,184,172,4	script	Skill Assistant	47,{
 	mes "[Pitch Judas]";
 	mes "Welcome. I have been waiting for";
 	mes "you for a long time!!";
@@ -1947,9 +1947,9 @@ L_loop1:
 }
 
 //Potato Merchant
-new_zone02.gat,28,185,4	shop	Potato Merchant	90,516:15
+new_zone02,28,185,4	shop	Potato Merchant	90,516:15
 
-new_zone02.gat,38,182,4	script	Helper	92,{
+new_zone02,38,182,4	script	Helper	92,{
 	if (!(NEW_MES_FLAG5)) {
 		if (!(NEW_MES_FLAG4)) {
 			mes "[Kane]";
@@ -1994,8 +1994,8 @@ new_zone02.gat,38,182,4	script	Helper	92,{
 				getitem 611,2;
 				getitem 569,300;
 				close2;
-				savepoint "new_zone02.gat",24,188;
-				warp "new_zone03.gat",96,21;
+				savepoint "new_zone02",24,188;
+				warp "new_zone03",96,21;
 				end;
 			} else {
 				mes "[Kane]";
@@ -2032,7 +2032,7 @@ new_zone02.gat,38,182,4	script	Helper	92,{
 			percentheal 100,100;
 		}
 		close2;
-		warp "new_zone03.gat",96,21;
+		warp "new_zone03",96,21;
 		end;
 	} else {
 		mes "[Kane]";
@@ -2044,7 +2044,7 @@ new_zone02.gat,38,182,4	script	Helper	92,{
 	}
 }
 
-new_zone02.gat,17,182,6	script	Helper#2	84,{
+new_zone02,17,182,6	script	Helper#2	84,{
 	if (!(NEW_MES_FLAG4)) {
 		mes "[Elmeen]";
 		mes "Congratulations!";
@@ -2353,7 +2353,7 @@ L_equip:
 }
 
 //Training Center Employee
-new_zone03.gat,95,30,4	script	Training Center Employee#1	84,{
+new_zone03,95,30,4	script	Training Center Employee#1	84,{
 	mes "[Hoffman]";
 	mes "Hey there~";
 	mes "I'm here to provide";
@@ -2373,7 +2373,7 @@ new_zone03.gat,95,30,4	script	Training Center Employee#1	84,{
 	close;
 }
 
-new_zone03.gat,96,174,4	script	Keyman#1	85,{
+new_zone03,96,174,4	script	Keyman#1	85,{
 	mes "[Keyman]";
 	mes "Hmmm!";
 	mes "You have practised a lot, would you like to go on with further training?";
@@ -2382,7 +2382,7 @@ new_zone03.gat,96,174,4	script	Keyman#1	85,{
 		mes "[Keyman]";
 		mes "Don't forget about everything you've learnt here. Have a nice trip.";
 		close2;
-		warp "new_zone04.gat",99,10;
+		warp "new_zone04",99,10;
 		end;
 	}
 	mes "[Keyman]";
@@ -2391,7 +2391,7 @@ new_zone03.gat,96,174,4	script	Keyman#1	85,{
 }
 
 //Novice Instructor
-new_zone04.gat,91,22,4	script	Novice Instructor	57,{
+new_zone04,91,22,4	script	Novice Instructor	57,{
 	mes "[Bruce]";
 	mes "You have come from far away.";
 	mes "Thank you for coming here";
@@ -2605,7 +2605,7 @@ L_loop:
 	goto L_loop;
 }
 
-new_zone04.gat,100,29,4	script	Final Instructor	46,{
+new_zone04,100,29,4	script	Final Instructor	46,{
 	if (!(NEW_MES_FLAG6)) {
 		mes "[Hanson]";
 		mes "Nice to meet you.";
@@ -2694,23 +2694,23 @@ new_zone04.gat,100,29,4	script	Final Instructor	46,{
 L_cancel:
 		callsub L_cleararg;
 		switch ( rand(6) ) {
-		case 0:	savepoint "izlude.gat",94,103;
-			warp "prt_fild08.gat",357,212;
+		case 0:	savepoint "izlude",94,103;
+			warp "prt_fild08",357,212;
 			break;
-		case 1:	savepoint "payon.gat",256,242;
-			warp "pay_fild01.gat",334,354;
+		case 1:	savepoint "payon",256,242;
+			warp "pay_fild01",334,354;
 			break;
-		case 2:	savepoint "morocc.gat",149,100;
-			warp "moc_fild07.gat",198,39;
+		case 2:	savepoint "morocc",149,100;
+			warp "moc_fild07",198,39;
 			break;
-		case 3:	savepoint "geffen.gat",120,38;
-			warp "gef_fild07.gat",327,188;
+		case 3:	savepoint "geffen",120,38;
+			warp "gef_fild07",327,188;
 			break;
-		case 4:	savepoint "prontera.gat",116,72;
-			warp "prt_fild08.gat",170,371;
+		case 4:	savepoint "prontera",116,72;
+			warp "prt_fild08",170,371;
 			break;
-		case 5:	savepoint "alberta.gat",31,231;
-			warp "pay_fild03.gat",388,70;
+		case 5:	savepoint "alberta",31,231;
+			warp "pay_fild03",388,70;
 		}
 		end;
 	}
@@ -3331,23 +3331,23 @@ L_warp:
 	close2;
 	callsub L_cleararg;
 	switch( @JOB_NUMBER_CHK ) {
-	case 0:	savepoint "izlude.gat",94,103;
-		warp "izlude_in.gat",74,167;
+	case 0:	savepoint "izlude",94,103;
+		warp "izlude_in",74,167;
 		break;
-	case 1:	savepoint "payon.gat",256,242;
-		warp "payon_in02.gat",64,65;
+	case 1:	savepoint "payon",256,242;
+		warp "payon_in02",64,65;
 		break;
-	case 2:	savepoint "morocc.gat",149,100;
-		warp "moc_ruins.gat",155,44;
+	case 2:	savepoint "morocc",149,100;
+		warp "moc_ruins",155,44;
 		break;
-	case 3:	savepoint "geffen.gat",120,38;
-		warp "geffen_in.gat",163,98;
+	case 3:	savepoint "geffen",120,38;
+		warp "geffen_in",163,98;
 		break;
-	case 4:	savepoint "prontera.gat",116,72;
-		warp "prt_church.gat",172,19;
+	case 4:	savepoint "prontera",116,72;
+		warp "prt_church",172,19;
 		break;
-	case 5:	savepoint "alberta.gat",31,231;
-		warp "alberta_in.gat",62,44;
+	case 5:	savepoint "alberta",31,231;
+		warp "alberta_in",62,44;
 	}
 	end;
 L_place:
@@ -3417,17 +3417,17 @@ L_cleararg:
 }
 
 // Training Ground Mobs
-new_zone03.gat,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_zone03.gat,0,0,0,0	monster	Poring	1002,10,0,0,0
-new_zone03.gat,0,0,0,0	monster	ChonChon	1011,10,0,0,0
-new_zone03.gat,0,0,0,0	monster	Lunatic	1063,10,0,0,0
-new_zone03.gat,0,0,0,0	monster	Drops	1113,10,0,0,0
+new_zone03,0,0,0,0	monster	Fabre	1184,5,0,0,0
+new_zone03,0,0,0,0	monster	Poring	1002,10,0,0,0
+new_zone03,0,0,0,0	monster	ChonChon	1011,10,0,0,0
+new_zone03,0,0,0,0	monster	Lunatic	1063,10,0,0,0
+new_zone03,0,0,0,0	monster	Drops	1113,10,0,0,0
 // Unsure about the following mobs
-new_zone03.gat,0,0,0,0	monster	Condor	1009,2,0,0,0
-new_zone03.gat,0,0,0,0	monster	Willow	1010,2,0,0,0
-new_zone03.gat,0,0,0,0	monster	Roda Frog	1012,2,0,0,0
-new_zone03.gat,0,0,0,0	monster	Shell Picky	1050,2,0,0,0
-new_zone03.gat,0,0,0,0	monster	Spore	1014,1,0,0,0
-new_zone03.gat,0,0,0,0	monster	Thief Bug Larva	1051,1,0,0,0
-new_zone03.gat,0,0,0,0	monster	Rocker	1052,1,0,0,0
-new_zone03.gat,0,0,0,0	monster	Thief Bug Female	1053,1,0,0,0
+new_zone03,0,0,0,0	monster	Condor	1009,2,0,0,0
+new_zone03,0,0,0,0	monster	Willow	1010,2,0,0,0
+new_zone03,0,0,0,0	monster	Roda Frog	1012,2,0,0,0
+new_zone03,0,0,0,0	monster	Shell Picky	1050,2,0,0,0
+new_zone03,0,0,0,0	monster	Spore	1014,1,0,0,0
+new_zone03,0,0,0,0	monster	Thief Bug Larva	1051,1,0,0,0
+new_zone03,0,0,0,0	monster	Rocker	1052,1,0,0,0
+new_zone03,0,0,0,0	monster	Thief Bug Female	1053,1,0,0,0

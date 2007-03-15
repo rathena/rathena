@@ -11,7 +11,7 @@
 //============================================================
 
 
-gonryun.gat,180,118,4	script	Iron man#gnp	85,{
+gonryun,180,118,4	script	Iron man#gnp	85,{
 	if (countitem(1201) > 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
@@ -127,7 +127,7 @@ gonryun.gat,180,118,4	script	Iron man#gnp	85,{
 			mes "I like your confidence.";
 			mes "Good luck on you~";
 			close2;
-			warp "gon_test.gat",53,6;
+			warp "gon_test",53,6;
 			end;
 		} else {
 			mes "[Songmoodoo]";
@@ -147,7 +147,7 @@ gonryun.gat,180,118,4	script	Iron man#gnp	85,{
 	close;
 }
 
-gon_test.gat,50,14,4	script	Administrator#gnp	780,{
+gon_test,50,14,4	script	Administrator#gnp	780,{
 	mes "[Administrator]";
 	if (BaseJob == Job_Novice) {
 		mes "Children are not allowed in here.";
@@ -176,14 +176,14 @@ gon_test.gat,50,14,4	script	Administrator#gnp	780,{
 	}
 	set Zeny,Zeny - 500;
 	set in_battle,1;
-	warp "gon_test.gat",42,86;
+	warp "gon_test",42,86;
 	set $@in_battle,1;
 	setnpctimer 0,"Summoner#gnp";
 	startnpctimer "Summoner#gnp";
 	end;
 }
 
-gon_test.gat,42,89,4	script	Summoner#gnp	774,{
+gon_test,42,89,4	script	Summoner#gnp	774,{
 	mes "[SongYeunWoo]";
 	if (in_battle == 3) {
 		mes "Please come back after registration.";
@@ -208,7 +208,7 @@ gon_test.gat,42,89,4	script	Summoner#gnp	774,{
 	mes "Let the fight begin!";
 	close2;
 	set in_battle,2;
-	if (getnpctimer(0) < 180000) monster "gon_test.gat",56,86,.gnpMobsName$[(@gnpGroup-1)*6 + @gnpMob - 1],.gnpMobsId[(@gnpGroup-1)*6 + @gnpMob - 1],1,"Summoner#gnp::OnGnpMobDead";
+	if (getnpctimer(0) < 180000) monster "gon_test",56,86,.gnpMobsName$[(@gnpGroup-1)*6 + @gnpMob - 1],.gnpMobsId[(@gnpGroup-1)*6 + @gnpMob - 1],1,"Summoner#gnp::OnGnpMobDead";
 //  do init timer on mob select ?
 //	setnpctimer 0;
 	end;
@@ -241,30 +241,30 @@ gon_test.gat,42,89,4	script	Summoner#gnp	774,{
 	end;
 
 	OnTimer120000:
-		areaannounce "gon_test.gat",41,81,74,92,"1 min. left",0;
+		areaannounce "gon_test",41,81,74,92,"1 min. left",0;
 	end;
 
 	OnTimer180000:
-		killmonster "gon_test.gat","Summoner#gnp::OnGnpMobDead";
+		killmonster "gon_test","Summoner#gnp::OnGnpMobDead";
 	end;
 
 	OnTimer182000:
-		areaannounce "gon_test.gat",41,81,74,92,"Time Over.",0;
+		areaannounce "gon_test",41,81,74,92,"Time Over.",0;
 	end;
 
 	OnGnpMobDead:
 		setnpctimer 0;
 		set in_battle,1;
-		areaannounce "gon_test.gat",41,81,74,92,"Thank you. Please, come again.",0;
+		areaannounce "gon_test",41,81,74,92,"Thank you. Please, come again.",0;
 		sleep 4000;
 	OnTimer184000:
 		stopnpctimer;
-		areawarp "gon_test.gat",41,81,74,92,"gon_test.gat",44,4;
+		areawarp "gon_test",41,81,74,92,"gon_test",44,4;
 		set $@in_battle,0;
 	end;
 }
 
-gon_test.gat,46,14,3	script	Guide of field of fight#gnp	770,{
+gon_test,46,14,3	script	Guide of field of fight#gnp	770,{
 	mes "[SongHeeYeon]";
 	mes ".....";
 	mes "Hi, there~";
@@ -295,14 +295,14 @@ gon_test.gat,46,14,3	script	Guide of field of fight#gnp	770,{
 		mes "Have a good time.";
 		close2;
 		set in_battle,3;
-		warp "gon_test.gat",25,98;
+		warp "gon_test",25,98;
 		end;
 	case 4:
 		mes "[SongHeeYeon]";
 		mes "Thank you.";
 		mes "Please come again.";
 		close2;
-		warp "gonryun.gat",177,112;
+		warp "gonryun",177,112;
 		end;
 	case 5:
 		mes "[SongHeeYeon]";
@@ -313,7 +313,7 @@ gon_test.gat,46,14,3	script	Guide of field of fight#gnp	770,{
 	close;
 }
 
-gon_test.gat,70,103,3	script	ChowAnAn#gnp	773,{
+gon_test,70,103,3	script	ChowAnAn#gnp	773,{
 	mes "[ChowAnAn]";
 	mes "Want to go back?";
 	next;
@@ -323,7 +323,7 @@ gon_test.gat,70,103,3	script	ChowAnAn#gnp	773,{
 		mes "Please come again.";
 		close2;
 		set in_battle,1;
-		warp "gon_test.gat",44,4;
+		warp "gon_test",44,4;
 		end;
 	}
 	mes "[ChowAnAn]";

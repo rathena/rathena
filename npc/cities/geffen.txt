@@ -20,7 +20,7 @@
 
 
 // Lady -------------------------------------------------------
-geffen.gat,59,143,8	script	Lady#01	91,{
+geffen,59,143,8	script	Lady#01	91,{
 	mes "[Lady]";
 	mes "Oh, you must be a Stranger here.";
 	next;
@@ -48,7 +48,7 @@ geffen.gat,59,143,8	script	Lady#01	91,{
 
 
 // Womankind ------------------------------------------------------------
-geffen.gat,111,48,2	script	Kind Woman	101,{
+geffen,111,48,2	script	Kind Woman	101,{
 	mes "[Kind Woman]";
 	mes "Good Day, adventurer.";
 	next;
@@ -65,7 +65,7 @@ geffen.gat,111,48,2	script	Kind Woman	101,{
 
 
 // Researcher ------------------------------------------------------------------------
-geffen.gat,156,190,8	script	Researcher	57,{
+geffen,156,190,8	script	Researcher	57,{
 	mes "[Researcher]";
 	mes "Hmm... Interesting.  Hmm... It is Very interesting....";
 	next;
@@ -85,7 +85,7 @@ geffen.gat,156,190,8	script	Researcher	57,{
 }
 
 // Young Man --------------------------------------------------------------------------
-geffen.gat,147,26,0	script	Young man#06	97,{
+geffen,147,26,0	script	Young man#06	97,{
 	mes "[Young Man]";
 	mes "I heard that somewhere in this world, there is a rare staff which transforms its owner's psychic power into physical powers, and endows with destructive force also...";
 	mes "With this, everybody could be as strong as Hercules, despite their lack of muscles. Haw haw...I will take it.";
@@ -98,7 +98,7 @@ geffen.gat,147,26,0	script	Young man#06	97,{
 }
 
 // Young Man -----------------------------------------------------------------------
-geffen_in.gat,34,170,0	script	Young man#07	47,{
+geffen_in,34,170,0	script	Young man#07	47,{
 	mes "[Young Man]";
 	mes "Hello? Isn't it wonderful, today? I am a promising young Mage. Ahem.";
 	mes "Nowadays, my mental anguish about magic things keeps me awake every night..sigh...Especially, about the weak point of magic, you know.";
@@ -115,7 +115,7 @@ geffen_in.gat,34,170,0	script	Young man#07	47,{
 
 //<============================================ Inn =====================================================>\\
 // Waitress ---------------------------------------------------------------------------
-geffen_in.gat,70,67,5	script	Waitress#01	80,{
+geffen_in,70,67,5	script	Waitress#01	80,{
 	mes "[Waitress]";
 	mes "Ugh!! SO annoying! Why would you drink here when you could drink at the pub!? This is an Inn, not a pub!!";
 	mes "That man!... every time he drinks... he gets like that! Ugh!!";
@@ -165,7 +165,7 @@ M_Menu:
 }
 
 // Merchant Daven -------------------------------------------------------------------
-geffen_in.gat,79,75,2	script	Merchant Daven	61,{
+geffen_in,79,75,2	script	Merchant Daven	61,{
 	mes "[Merchant Daven]";
 	mes "Back in the day when I first came to Geffen, the town was a very boring place to live in.";
 	next;
@@ -227,7 +227,7 @@ M_Menu:
 }
 
 // Drunkard -------------------------------------------------------------------
-geffen_in.gat,59,62,2	script	Drunkard#01	120,{
+geffen_in,59,62,2	script	Drunkard#01	120,{
 	mes "[Drunkard]";
 	mes "Hmm... You're Joshua's friend too??";
 	next;
@@ -261,7 +261,7 @@ geffen_in.gat,59,62,2	script	Drunkard#01	120,{
 }
 
 // Schubaltzwald Merchant ----------------------------------------------------------------------
-geffen_in.gat,113,73,4	script	Schubaltzwald Merchant	709,{
+geffen_in,113,73,4	script	Schubaltzwald Merchant	709,{
 	mes "[Schubaltzwald Merchant]";
 	mes "How are you, Rune-Midgard young'un? I am Schubaltzwald's one and only Hans Hadenhiem.";
 	next;
@@ -288,7 +288,7 @@ geffen_in.gat,113,73,4	script	Schubaltzwald Merchant	709,{
 
 //<============================================== Pub ==================================================>\\
 // Waitress -----------------------------------------------------------------
-geffen_in.gat,28,134,4	script	Waitress#03	69,{
+geffen_in,28,134,4	script	Waitress#03	69,{
 	mes "[Waitress]";
 	mes "Meh! ALWAYS drinking and ALWAYS fighting..... HEY Mister! This is a place of BUSINESS!!";
 	emotion e_an;
@@ -328,7 +328,7 @@ M_Menu:
 }
 
 // Drunkard ----------------------------------------------------------------------------
-geffen_in.gat,21,125,5	script	Drunkard#02	52,{
+geffen_in,21,125,5	script	Drunkard#02	52,{
 	mes "[Drunkard]";
 	mes "You want to be an idiotic magician? Is that why you came here??";
 	emotion e_what;
@@ -337,7 +337,7 @@ geffen_in.gat,21,125,5	script	Drunkard#02	52,{
 
 // Lvl 4 weapon quest related NPC ------------------------------------------------------
 
-geffen.gat,203,146,5	script	Citizen	97, {
+geffen,203,146,5	script	Citizen	97, {
 	mes "[Citizen]";
 	mes "There was a skillful weaponsmith";
 	mes "in Al De Baran who had 4 sons.";
@@ -359,7 +359,7 @@ geffen.gat,203,146,5	script	Citizen	97, {
 }
 
 // Friend of Youth ---------------------------------------------------------------------
-geffen_in.gat,37,124,5	script	Friend of Youth	704,{
+geffen_in,37,124,5	script	Friend of Youth	704,{
 	set @temp,0;
 	mes "[Friend of Youth]";
 	mes "Welcome young one! Are you worrying about something? Tell me all your troubles and I will tell you your fortune with my silver ball of mystery!";
@@ -652,7 +652,7 @@ M_Menu:
 			
 //<============================================ Mage Guild ===============================================>\\
 // Dark Wizard -------------------------------------------------------------------------
-geffen_in.gat,164,109,2	script	Dark Wizard	64,{
+geffen_in,164,109,2	script	Dark Wizard	64,{
 
 	if(BaseJob == 2 || BaseJob == 9) goto L_Magic;
 	

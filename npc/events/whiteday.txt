@@ -14,7 +14,7 @@
 //============================================================
 
 
-alberta.gat,188,64,4	script	Sugar	91,{
+alberta,188,64,4	script	Sugar	91,{
 	set @maplenum,0;
 	set @mapleItemID,0;
 	set @maplePrice,0;

@@ -21,7 +21,7 @@
 //============================================================
 
 
-payon.gat,162,67,4	script	Guide#pay1	708,{
+payon,162,67,4	script	Guide#pay1	708,{
 	cutin "pay_soldier",2;
 	mes "[Payon Guide]";
 	mes "Welcome to the mountain city of Payon.";
@@ -145,7 +145,7 @@ L_END:
  	close;
 }
 
-pay_arche.gat,85,30,2	script	Guide#pay2	708,{
+pay_arche,85,30,2	script	Guide#pay2	708,{
 	cutin "pay_soldier",2;
 	mes "[Payon Guide]";
 	mes "Welcome to the Archer Village.";

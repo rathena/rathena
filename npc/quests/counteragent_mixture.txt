@@ -23,7 +23,7 @@
 
 
 // Merchant Louitz -----------------------------------------------------------
-alberta_in.gat,130,54,2	script	Merchant Louitz	84,{
+alberta_in,130,54,2	script	Merchant Louitz	84,{
 	mes "[Louitz]";
 	mes "What's going on?";
 	if(countitem(970) && countitem(971) && countitem(972)) goto M_Menu2;//Items: Alcohol, Detrimindexta, Karvodailnirol,
@@ -69,7 +69,7 @@ M_Menu2:
 }
 
 // Aure Dupon ------------------------------------------------------------------------
-geffen.gat,181,114,4	script	Aure Dupon	55,{
+geffen,181,114,4	script	Aure Dupon	55,{
 	mes "[Aure Dupon]";
 	mes "TIME never WAITS for you!! Even MAGIC cannot SLOW it down!  I can feel it passing me by even as we speak!!....";
 	emotion e_gasp;
@@ -114,7 +114,7 @@ M_Menu2:
 }
 
 // Chemist Morgenstein -----------------------------------------------------------
-geffen_in.gat,141,140,2	script	Morgenstein	121,{
+geffen_in,141,140,2	script	Morgenstein	121,{
 	if(MORGEN >= 2) goto L_0;
 	if(MISC_QUEST & 4) goto L_1;
 

@@ -17,7 +17,7 @@
 //<=============================== Castle 1 =================================>\\
 
 // Treasure Spawn -----------------------
-aldeg_cas01.gat,1,1,1	script	Treasure_A01	-1,{
+aldeg_cas01,1,1,1	script	Treasure_A01	-1,{
 
 OnRecvCastleA01:
 	end;
@@ -28,14 +28,14 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "aldeg_cas01.gat","Treasure Chest Broken Open",17;
+	mapannounce "aldeg_cas01","Treasure Chest Broken Open",17;
 	set $boxNumA01, $boxNumA01 -1;
-	if($boxNumA01 == 0) mapannounce "aldeg_cas01.gat", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	if($boxNumA01 == 0) mapannounce "aldeg_cas01", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
 // Treasure Room Switch --------------------
-aldeg_cas01.gat,123,223,0	script	Switch#TresA01	111,{
+aldeg_cas01,123,223,0	script	Switch#TresA01	111,{
 	callfunc "F_GldTreasSw", "aldeg_cas01",218,176;
 	end;
 }
@@ -43,7 +43,7 @@ aldeg_cas01.gat,123,223,0	script	Switch#TresA01	111,{
 //<================================ Castle 2 ================================>\\
 
 // Treasure Spawn ----------------------------
-aldeg_cas02.gat,1,1,1	script	Treasure_A02	-1,{
+aldeg_cas02,1,1,1	script	Treasure_A02	-1,{
 
 OnRecvCastleA02:
 	end;
@@ -54,21 +54,21 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "aldeg_cas02.gat","Treasure Chest Broken Open",17;
+	mapannounce "aldeg_cas02","Treasure Chest Broken Open",17;
 	set $boxNumA02, $boxNumA02 -1;
-	if($boxNumA02 == 0) mapannounce "aldeg_cas02.gat", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	if($boxNumA02 == 0) mapannounce "aldeg_cas02", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
 // Treasure Room Switch ----------------------
-aldeg_cas02.gat,139,235,0	script	Switch#TresA02	111,{
+aldeg_cas02,139,235,0	script	Switch#TresA02	111,{
 	callfunc "F_GldTreasSw", "aldeg_cas02",78,75;
 }
 
 //<================================ Castle 3 ================================>\\
 
 // Treasure Spawn ---------------------------
-aldeg_cas03.gat,1,1,1	script	Treasure_A03	-1,{
+aldeg_cas03,1,1,1	script	Treasure_A03	-1,{
 
 OnRecvCastleA03:
 	end;
@@ -79,21 +79,21 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "aldeg_cas03.gat","Treasure Chest Broken Open",17;
+	mapannounce "aldeg_cas03","Treasure Chest Broken Open",17;
 	set $boxNumA03, $boxNumA03 -1;
-	if($boxNumA03 == 0) mapannounce "aldeg_cas03.gat", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	if($boxNumA03 == 0) mapannounce "aldeg_cas03", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
 // Treasure Room Switch -----------------------
-aldeg_cas03.gat,229,267,0	script	Switch#TresA03	111,{
+aldeg_cas03,229,267,0	script	Switch#TresA03	111,{
 	callfunc "F_GldTreasSw", "aldeg_cas03",110,119;
 }
 
 //<================================ Castle 4 ================================>\\
 
 // Treasure Spawn -------------------------------
-aldeg_cas04.gat,1,1,1	script	Treasure_A04	-1,{
+aldeg_cas04,1,1,1	script	Treasure_A04	-1,{
 
 OnRecvCastleA04:
 	end;
@@ -104,21 +104,21 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "aldeg_cas04.gat","Treasure Chest Broken Open",17;
+	mapannounce "aldeg_cas04","Treasure Chest Broken Open",17;
 	set $boxNumA04, $boxNumA04 -1;
-	if($boxNumA04 == 0) mapannounce "aldeg_cas04.gat", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	if($boxNumA04 == 0) mapannounce "aldeg_cas04", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 
 }
 // Treasure Room Switch -------------------------
-aldeg_cas04.gat,83,17,0	script	Switch#TresA04	111,{
+aldeg_cas04,83,17,0	script	Switch#TresA04	111,{
 	callfunc "F_GldTreasSw", "aldeg_cas04",67,117;
 }
 
 //<================================ Castle 5 ================================>\\
 
 // Treasure Spawn ------------------------------------
-aldeg_cas05.gat,1,1,1	script	Treasure_A05	-1,{
+aldeg_cas05,1,1,1	script	Treasure_A05	-1,{
 
 OnRecvCastleA05:
 	end;
@@ -129,13 +129,13 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "aldeg_cas05.gat","Treasure Chest Broken Open",17;
+	mapannounce "aldeg_cas05","Treasure Chest Broken Open",17;
 	set $boxNumA05, $boxNumA05 -1;
-	if($boxNumA05 == 0) mapannounce "aldeg_cas05.gat", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	if($boxNumA05 == 0) mapannounce "aldeg_cas05", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
 // Treasure Room Switch ---------------------------------
-aldeg_cas05.gat,64,8,0	script	Switch#TresA05	111,{
+aldeg_cas05,64,8,0	script	Switch#TresA05	111,{
 	callfunc "F_GldTreasSw", "aldeg_cas05",51,179;
 }

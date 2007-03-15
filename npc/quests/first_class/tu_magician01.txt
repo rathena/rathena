@@ -16,7 +16,7 @@
 
 
 //=================================================Sign====================================================
-geffen.gat,61,174,4	script	Sign#M	111,{
+geffen,61,174,4	script	Sign#M	111,{
   mes "~sign reads...~";
   mes "Greetings!! This is the Geffen Magic Academy.  Come in if you have an interest in all things magic!";
   close;
@@ -24,7 +24,7 @@ geffen.gat,61,174,4	script	Sign#M	111,{
 
 
 //=================================================New Mage Manager====================================================
-geffen.gat,67,180,4	script	New Mage Manager#M	102,{
+geffen,67,180,4	script	New Mage Manager#M	102,{
 	mes "[Mana]";
 	if(Class == Job_Novice){
 		mes "[Mana]";
@@ -694,7 +694,7 @@ geffen.gat,67,180,4	script	New Mage Manager#M	102,{
 			mes "Hoho..";
 			set tu_magician01, 7;
 			emotion e_heh;
-			warp "morocc.gat",182,286;
+			warp "morocc",182,286;
 			close;
 		} else {
 			mes "[Mana]";

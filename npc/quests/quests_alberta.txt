@@ -28,7 +28,7 @@
 //=======================================================================================================//
 //						Doll Quest
 //=======================================================================================================//
-alberta.gat,117,134,8	script	Elin	96,{
+alberta,117,134,8	script	Elin	96,{
 	mes "[Elin]";
 	if(Sex){
 		mes "Hello, mister. Hmm, since you're a boy, you don't like dolls, do you?";
@@ -246,7 +246,7 @@ alberta.gat,117,134,8	script	Elin	96,{
 //=======================================================================================================//
 //						Boy's Cap' Quest
 //=======================================================================================================//
-alberta_in.gat,28,145,4	script	Grampa	120,{
+alberta_in,28,145,4	script	Grampa	120,{
 	mes "[Grampa]";
 	mes "Gasp ..Gasp";
 	next;
@@ -338,7 +338,7 @@ alberta_in.gat,28,145,4	script	Grampa	120,{
 //=======================================================================================================//
 //						Antlers Quest 
 //=======================================================================================================//
-alberta_in.gat,122,53,4	script	Cherokee	47,{
+alberta_in,122,53,4	script	Cherokee	47,{
 	mes "[Cherokee]";
 	mes "Hey there, I am a Horn Collector.  Sounds great, huh?";
 	next;
@@ -388,7 +388,7 @@ alberta_in.gat,122,53,4	script	Cherokee	47,{
 //=======================================================================================================//
 //			Bao Bao, Cresent Hairpin, Fashionbale Glasses, Heart Hairpin
 //=======================================================================================================//
-alberta.gat,120,53,3	script	Zic	51,{
+alberta,120,53,3	script	Zic	51,{
 	mes "[Zic]";
 	mes "Yay! A cool breeze! That's why I love the sea!!";
 	emotion e_ho;
@@ -503,7 +503,7 @@ alberta.gat,120,53,3	script	Zic	51,{
 //=======================================================================================================//
 //				Hat of Sun God, Sunday Hat, Mage Hat, Magician Hat
 //=======================================================================================================//
-alberta.gat,135,79,3	script	Tempestra	71,{
+alberta,135,79,3	script	Tempestra	71,{
 	mes "[Tempestra]";
 	mes "Ah...... Such a cool breeze.  It's good to be next to the sea.  I think it was the right choice for me to take a break from my business and come here.";
 	emotion e_ho;
@@ -683,7 +683,7 @@ alberta.gat,135,79,3	script	Tempestra	71,{
 //						Turtle Quest
 //=======================================================================================================//
 // Gotanblue --------------------------------------------------------------------------
-alberta.gat,247,123,5	script	Gotanblue	709,{
+alberta,247,123,5	script	Gotanblue	709,{
 	if(TURTLE) goto L_Turtle;
 	mes "[Gotanblue]";
 	mes "Ha ha! The sea seems endless!! We cannot begin to grasp its size merely by gazing at it from land....";
@@ -829,7 +829,7 @@ M_Menu:
 			next;
 			if(Zeny < 10000) goto sL_Zeny;
 			set Zeny, Zeny - 10000;
-			warp "tur_dun01.gat",154,39;
+			warp "tur_dun01",154,39;
 			close;
 		sL_Zeny:
 			mes "[Gotanblue]";
@@ -849,7 +849,7 @@ M_Menu:
 }
 
 //Go back to Alberta
-tur_dun01.gat,166,29,1	script	Gotanblue#2	709,{
+tur_dun01,166,29,1	script	Gotanblue#2	709,{
 	mes "[Gotanblue]";
 	mes "Going back to Alberta?";
 	next;
@@ -857,7 +857,7 @@ tur_dun01.gat,166,29,1	script	Gotanblue#2	709,{
 
 	mes "^5555FF(You and Gotanblue climb on board his little steamboat)^000000";
 	next;
-	warp "alberta.gat",244,123;
+	warp "alberta",244,123;
 	close;
 
 M_End:
@@ -867,7 +867,7 @@ M_End:
 }
 
 // Turtle Grandpa -------------------------------------------------------------------
-alberta_in.gat,23,104,2	script	Turtle Grandpa	120,{
+alberta_in,23,104,2	script	Turtle Grandpa	120,{
 	mes "[Turtle Grandpa]";
 	mes "~Buuurrrpp!!!~ Oops...";
 	emotion e_swt;
@@ -974,7 +974,7 @@ alberta_in.gat,23,104,2	script	Turtle Grandpa	120,{
 }
 
 // Letter of an explorer (on Turtle Grandpa's desk)------------------------------------------------------------------
-alberta_in.gat,17,101,1	script	Letter of an explorer	111,{
+alberta_in,17,101,1	script	Letter of an explorer	111,{
 	mes "~ The letter reads... ~";
 	mes "- O/X/XOVX -";
 	mes "If you find this letter, it means that our expedition to Turtle Island has failed.  Please inform the others...";
@@ -997,7 +997,7 @@ alberta_in.gat,17,101,1	script	Letter of an explorer	111,{
 }
 
 // Jornadan Niliria ------------------------------------------------------------------------
-alberta.gat,248,90,1	script	Jornadan Niliria	121,{
+alberta,248,90,1	script	Jornadan Niliria	121,{
 	mes "[Jornadan Niliria]";
 	mes "Sometimes I think that the world around me is ever changing.";
 	mes "When I view the land it seems different, when I look up at the sky it too seems different....";
@@ -1052,7 +1052,7 @@ alberta.gat,248,90,1	script	Jornadan Niliria	121,{
 }
 
 // Jornadan's Voyage Log -------------------------------------------------
-alberta.gat,247,93,1	script	A Voyage Log	111,{
+alberta,247,93,1	script	A Voyage Log	111,{
 	if(TURTLE == 1) goto L_Treasure;
 	mes "[A Voyage Log]";
 	mes "= 03:20 am =";
@@ -1173,7 +1173,7 @@ L_Treasure:
 }
 
 // Burried treasure --------------------------------------------------------------------
-tur_dun01.gat,160,80,1	script	Skull Stone	111,{
+tur_dun01,160,80,1	script	Skull Stone	111,{
 	if(TURTLE == 2) goto L_OpenBox;
 	mes "^5555FF(It's a frightening stone tomb with horrible skull on it.)^000000";
 	close;

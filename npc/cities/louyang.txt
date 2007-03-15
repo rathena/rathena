@@ -37,7 +37,7 @@
 //= 2.7b Moved guides to the Guides folder [Lupus]
 //============================================================
 
-alberta.gat,245,45,4	script	Girl#02	815,{
+alberta,245,45,4	script	Girl#02	815,{
 	mes "[Girl]";
 	mes "La la la la~";
 	mes "I feel so good today~";
@@ -95,7 +95,7 @@ M_GOTO:
 	mes "Have fun!";
 	close2;
 	set Zeny,Zeny-10000;
-	warp "lou_fild01.gat",190,101;
+	warp "lou_fild01",190,101;
 	end;
 
 M_CANCEL:
@@ -112,7 +112,7 @@ M_CANCEL2:
 	close;
 }
 
-lou_fild01.gat,190,100,1	script	Girl#03	815,{
+lou_fild01,190,100,1	script	Girl#03	815,{
 	mes "[Girl]";
 	mes "You'd like to go back to Alberta?";
 	next;
@@ -123,7 +123,7 @@ lou_fild01.gat,190,100,1	script	Girl#03	815,{
 	mes "see you again!";
 	mes "Bye bye!";
 	close2;
-	warp "alberta.gat",235,45;
+	warp "alberta",235,45;
 	end;
 
 M_CANCEL:
@@ -137,7 +137,7 @@ M_CANCEL:
 	close;
 }
 
-louyang.gat,261,123,4	script	Chi Wu Ping	824,{
+louyang,261,123,4	script	Chi Wu Ping	824,{
 	mes "[Chi Wu Ping]";
 	mes "I don't feel good...";
 	mes "So... Totally out of it...";
@@ -165,7 +165,7 @@ louyang.gat,261,123,4	script	Chi Wu Ping	824,{
 	close;
 }
 
-lou_in02.gat,43,169,8	script	Jiang Rong	827,{
+lou_in02,43,169,8	script	Jiang Rong	827,{
 	mes "[Jiang Rong]";
 	mes "Dragon Soup is known for its spicy";
 	mes "yea sweet and refreshing taste.";
@@ -190,7 +190,7 @@ lou_in02.gat,43,169,8	script	Jiang Rong	827,{
 	close;
 }
 
-lou_in02.gat,76,181,2	script	Employee#03	822,{
+lou_in02,76,181,2	script	Employee#03	822,{
 	mes "[Huang Jia Xian]";
 	mes "Ehhhh...";
 	mes "Forgive me...";
@@ -199,7 +199,7 @@ lou_in02.gat,76,181,2	script	Employee#03	822,{
 	close;
 }
 
-lou_in02.gat,58,183,4	script	Chef Assistant	823,{
+lou_in02,58,183,4	script	Chef Assistant	823,{
 	mes "[Jin Wei Ling]";
 	mes "I used to be";
 	mes "an enthusiastic";
@@ -249,13 +249,13 @@ lou_in02.gat,58,183,4	script	Chef Assistant	823,{
 	close;
 }
 
-lou_in02.gat,58,181,2	script	Lounpc	139,{
+lou_in02,58,181,2	script	Lounpc	139,{
 OnEffect:
 	misceffect 122;
 	end;
 }
 
-louyang.gat,274,136,4	script	Powerful-looking guy	819,{
+louyang,274,136,4	script	Powerful-looking guy	819,{
 	mes "[Akiira]";
 	mes "I am practicing my 'Claw of";
 	mes "Dragon.' I not only need to use the";
@@ -286,7 +286,7 @@ louyang.gat,274,136,4	script	Powerful-looking guy	819,{
 	close;
 }
 
-louyang.gat,276,136,4	script	Fist Master	819,{
+louyang,276,136,4	script	Fist Master	819,{
 	mes "[Zhiang Xiau Ji]";
 	mes "Finally...";
 	mes "I have mastered";
@@ -328,7 +328,7 @@ louyang.gat,276,136,4	script	Fist Master	819,{
 	close;	
 }
 
-louyang.gat,272,133,0	script	Trainee::trainees	819,{
+louyang,272,133,0	script	Trainee::trainees	819,{
 	mes "[Trainee]";
 	switch(rand(12)){
 	case 0:
@@ -396,21 +396,21 @@ louyang.gat,272,133,0	script	Trainee::trainees	819,{
 	}
 }
 
-louyang.gat,272,131,0	duplicate(trainees)	Trainee#2	819
-louyang.gat,272,129,0	duplicate(trainees)	Trainee#3	819
-louyang.gat,274,133,0	duplicate(trainees)	Trainee#4	819
-louyang.gat,274,131,0	duplicate(trainees)	Trainee#5	819
-louyang.gat,274,129,0	duplicate(trainees)	Trainee#6	819
-louyang.gat,276,133,0	duplicate(trainees)	Trainee#7	819
-louyang.gat,276,131,0	duplicate(trainees)	Trainee#8	819
-louyang.gat,276,129,0	duplicate(trainees)	Trainee#9	819
-louyang.gat,278,133,0	duplicate(trainees)	Trainee#10	819
-louyang.gat,278,131,0	duplicate(trainees)	Trainee#11	819
-louyang.gat,278,129,0	duplicate(trainees)	Trainee#12	819
+louyang,272,131,0	duplicate(trainees)	Trainee#2	819
+louyang,272,129,0	duplicate(trainees)	Trainee#3	819
+louyang,274,133,0	duplicate(trainees)	Trainee#4	819
+louyang,274,131,0	duplicate(trainees)	Trainee#5	819
+louyang,274,129,0	duplicate(trainees)	Trainee#6	819
+louyang,276,133,0	duplicate(trainees)	Trainee#7	819
+louyang,276,131,0	duplicate(trainees)	Trainee#8	819
+louyang,276,129,0	duplicate(trainees)	Trainee#9	819
+louyang,278,133,0	duplicate(trainees)	Trainee#10	819
+louyang,278,131,0	duplicate(trainees)	Trainee#11	819
+louyang,278,129,0	duplicate(trainees)	Trainee#12	819
 
 
 
-lou_in01.gat,111,151,4	script	Soldier#11	825,{
+lou_in01,111,151,4	script	Soldier#11	825,{
 	mes "[Soldier]";
 	mes "*Yawn* It's so boring here";
 	mes "nowadays. Although, I hear that";
@@ -426,7 +426,7 @@ lou_in01.gat,111,151,4	script	Soldier#11	825,{
 	close;
 }
 
-lou_in01.gat,91,151,4	script	Soldier#12	825,{
+lou_in01,91,151,4	script	Soldier#12	825,{
 	mes "[Soldier]";
 	mes "....z..Z..z...";
 	next;
@@ -450,7 +450,7 @@ lou_in01.gat,91,151,4	script	Soldier#12	825,{
 	close;
 }
 
-lou_in01.gat,82,139,6	script	Soldier#13	825,{
+lou_in01,82,139,6	script	Soldier#13	825,{
 	mes "[Soldier]";
 	mes "There is nothing much, but if you";
 	mes "wish to look around this room,";
@@ -458,7 +458,7 @@ lou_in01.gat,82,139,6	script	Soldier#13	825,{
 	close;
 }
 
-lou_in01.gat,45,138,4	script	Soldier#14	825,{
+lou_in01,45,138,4	script	Soldier#14	825,{
 	mes "[Soldier]";
 	mes "It's strange to see outsiders in";
 	mes "this kind of place. We don't have";
@@ -467,7 +467,7 @@ lou_in01.gat,45,138,4	script	Soldier#14	825,{
 	close;
 }
 
-lou_in01.gat,102,144,4	script	Soldier#15	825,{
+lou_in01,102,144,4	script	Soldier#15	825,{
 	mes "[Soldier]";
 	mes "People have been";
 	mes "saying that there's";
@@ -482,7 +482,7 @@ lou_in01.gat,102,144,4	script	Soldier#15	825,{
 	close;
 }
 
-lou_in01.gat,99,144,4	script	Soldier#16	825,{
+lou_in01,99,144,4	script	Soldier#16	825,{
 	mes "[Soldier]";
 	mes "Ah, don't bother";
 	mes "to listen to this";
@@ -494,7 +494,7 @@ lou_in01.gat,99,144,4	script	Soldier#16	825,{
 	close;
 }
 
-lou_in01.gat,25,23,4	script	Friendly Looking Lady	817,{
+lou_in01,25,23,4	script	Friendly Looking Lady	817,{
 	mes "[Hong Miao]";
 	mes "Welcome.";
 	next;
@@ -539,7 +539,7 @@ s_Yes:
 	mes "the best service, Please";
 	mes "come again.";
 	close2;
-	warp "lou_in01.gat",16,19;
+	warp "lou_in01",16,19;
 	end;
 
 s_Next_Time:
@@ -550,20 +550,20 @@ s_Next_Time:
 	close;
 }
 
-louyang.gat,84,253,0	script	Exit	111,{
+louyang,84,253,0	script	Exit	111,{
 
 	mes "^3131FFThere is some sort";
 	mes "of descent apparatus.";
 	mes "Would you like to use it?^000000";
 	next;	
 	menu "Yes",-,"No",s_No;
-	warp "lou_in01.gat",10,18;
+	warp "lou_in01",10,18;
 	end;
 s_No:
 	close;
 }
 
-lou_in02.gat,272,55,1	script	Familiar-Looking Patient	86,{
+lou_in02,272,55,1	script	Familiar-Looking Patient	86,{
 
 	mes "[??????]";
 	mes "*Cough cough...*";

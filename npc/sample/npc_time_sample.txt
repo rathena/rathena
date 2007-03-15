@@ -1,5 +1,5 @@
 
-prontera.gat,157,181,6	script	Time Sample	105,{
+prontera,157,181,6	script	Time Sample	105,{
 	mes "[Time Sample]";
 	mes "System Tick : " + gettimetick(0);
 	mes "  Time Tick : " + gettimetick(1);
@@ -15,5 +15,4 @@ prontera.gat,157,181,6	script	Time Sample	105,{
 	close;
 	end;
 }
-
 

@@ -13,21 +13,21 @@
 //============================================================
 
 //= Dungeon Level 1 ==========================================
-umbala.gat,106,286,0	warp	umba0011	1,1,um_dun01.gat,42,31
-um_dun01.gat,150,198,0	warp	umba0013	1,1,um_dun02.gat,48,30
-um_dun01.gat,42,26,0	warp	umba0012	1,1,umbala.gat,111,283
+umbala,106,286,0	warp	umba0011	1,1,um_dun01,42,31
+um_dun01,150,198,0	warp	umba0013	1,1,um_dun02,48,30
+um_dun01,42,26,0	warp	umba0012	1,1,umbala,111,283
 
 //= Dungeon Level 2 ==========================================
-um_dun02.gat,103,208,0	warp	umba0020	1,1,um_dun02.gat,116,208
-um_dun02.gat,113,208,0	warp	umba0019	1,1,um_dun02.gat,100,208
-um_dun02.gat,169,38,0	warp	umba0025	1,1,um_dun02.gat,180,38
-um_dun02.gat,177,38,0	warp	umba0026	1,1,um_dun02.gat,166,38
-um_dun02.gat,216,77,0	warp	umba0018	1,1,um_dun02.gat,217,88
-um_dun02.gat,216,84,0	warp	umba0017	1,1,um_dun02.gat,214,74
-um_dun02.gat,222,259,0	warp	umba0015	1,1,um_dun02.gat,234,255
-um_dun02.gat,231,255,0	warp	umba0016	1,1,um_dun02.gat,219,260
-um_dun02.gat,25,244,0	warp	umba0022	1,1,um_dun02.gat,35,251
-um_dun02.gat,33,249,0	warp	umba0021	1,1,um_dun02.gat,23,242
-um_dun02.gat,51,26,0	warp	umba0022	1,1,um_dun01.gat,153,201 
-um_dun02.gat,60,88,0	warp	umba0023	1,1,um_dun02.gat,66,77
-um_dun02.gat,63,80,0	warp	umba0024	1,1,um_dun02.gat,59,92
+um_dun02,103,208,0	warp	umba0020	1,1,um_dun02,116,208
+um_dun02,113,208,0	warp	umba0019	1,1,um_dun02,100,208
+um_dun02,169,38,0	warp	umba0025	1,1,um_dun02,180,38
+um_dun02,177,38,0	warp	umba0026	1,1,um_dun02,166,38
+um_dun02,216,77,0	warp	umba0018	1,1,um_dun02,217,88
+um_dun02,216,84,0	warp	umba0017	1,1,um_dun02,214,74
+um_dun02,222,259,0	warp	umba0015	1,1,um_dun02,234,255
+um_dun02,231,255,0	warp	umba0016	1,1,um_dun02,219,260
+um_dun02,25,244,0	warp	umba0022	1,1,um_dun02,35,251
+um_dun02,33,249,0	warp	umba0021	1,1,um_dun02,23,242
+um_dun02,51,26,0	warp	umba0022	1,1,um_dun01,153,201 
+um_dun02,60,88,0	warp	umba0023	1,1,um_dun02,66,77
+um_dun02,63,80,0	warp	umba0024	1,1,um_dun02,59,92

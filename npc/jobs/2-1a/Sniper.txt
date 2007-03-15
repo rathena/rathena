@@ -16,6 +16,6 @@
 //============================================================ 
 
 // -== Sniper ==-
-valkyrie.gat,44,55,6	script	Sniper	727,{
+valkyrie,44,55,6	script	Sniper	727,{
 	callfunc "F_Rebirth",Job_Archer_High,"High Archer",Job_Sniper,"Sniper";
 }

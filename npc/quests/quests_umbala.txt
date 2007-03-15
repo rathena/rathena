@@ -33,7 +33,7 @@
 //========================================================================================================================\\
 //                       Little Quest NPC to enter the dungeon
 //========================================================================================================================\\
-umbala.gat,65,253,4	script	Tree Guardian	752,{ 
+umbala,65,253,4	script	Tree Guardian	752,{ 
 	mes "[Tree Guardian]"; 
 	mes "Stop, stranger, here is the entrance to the ancient tree!"; 
 	next; 
@@ -87,7 +87,7 @@ M_DUN:
 	if(umbdun != 1) mes "We do not permit weak people to enter!";
 	if(umbdun != 1) close;
 	mes "Come on in, brave warrior!"; 
-	warp "um_dun01.gat",42,30; 
+	warp "um_dun01",42,30; 
 M_Leave:  
 	close; 
 }
@@ -95,7 +95,7 @@ M_Leave:
 //==============================================================================
 //Skeletal Gate
 //==============================================================================
-umbala.gat,221,193,1	script	 #Skeletal Gate	111,{
+umbala,221,193,1	script	 #Skeletal Gate	111,{
 	if(event_umbala==7) goto LwarpNoText;
 	set @ryumon,0;
 	mes "^3355FFThe gate is shaped like a skeleton";
@@ -257,7 +257,7 @@ umbala.gat,221,193,1	script	 #Skeletal Gate	111,{
 					mes "into the arms of death itself.^000000";
 					next;
 				LwarpNoText:
-					warp "um_in.gat",32,71;
+					warp "um_in",32,71;
 					close;
 Lend:
 	mes "^3355FFAfter hitting the gate a few";
@@ -269,7 +269,7 @@ Lend:
 //==============================================================================
 //Umbala Event
 //==============================================================================
-um_in.gat,39,122,5	script	Utan Tribal Elder	784,{
+um_in,39,122,5	script	Utan Tribal Elder	784,{
 	if(event_umbala == 1) goto LStart2;	
 	if(event_umbala == 2) goto LStart3;
 	if(event_umbala == 3) goto LStart4;
@@ -546,7 +546,7 @@ Lsmileok:
 //=====================================================================
 //                    Create Essence/Dismantle Stone
 //=====================================================================
-um_in.gat,44,71,2	script	Utan Tribe Shaman	782,{
+um_in,44,71,2	script	Utan Tribe Shaman	782,{
 
 	switch(event_umbala) {
 	default:	
@@ -557,7 +557,7 @@ um_in.gat,44,71,2	script	Utan Tribe Shaman	782,{
 		mes "Umbabaumbabaumbaumbabaumba";
 		mes "Fumbaumba.";
 		next;
-		warp "umbala.gat",217,186;
+		warp "umbala",217,186;
 		close;
 	case 3:	
 		mes "[Putsuchiritan]";

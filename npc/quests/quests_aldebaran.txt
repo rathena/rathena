@@ -18,7 +18,7 @@
 //=======================================================================================================//
 //			'Doctor Band', 'Feather Bonnet', 'Opera Masque', 'Sakkat Hat' Quest
 //=======================================================================================================//
-aldeba_in.gat,152,166,4	script	Trader#01	86,{
+aldeba_in,152,166,4	script	Trader#01	86,{
 	mes "[Trader]";
 	mes "Muhahaha! I am the Very Famous Enigmatic Dealer! I am always hustling and bustling in and out of Rune Midgard!";
 	mes "Take a look at my RARE and UNIQUE items from ALL OVER the WORLD!!";

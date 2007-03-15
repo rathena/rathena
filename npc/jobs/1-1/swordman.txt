@@ -10,7 +10,7 @@
 //= <Description> 
 //===== Additional Comments: ================================= 
 //= Fully working.  I have created a custom warp to get into the test room so disable
-//= the one in your warp script or scripts.  It is this warp: "izlude_in.gat",40,170.
+//= the one in your warp script or scripts.  It is this warp: "izlude_in",40,170.
 //= 1.1 Added instant job change for High Novice [Lupus]
 //= 1.3 Added Baby Class support [Lupus]
 //= 1.4 Changed the timing system to initnpctimer, now you do get warnings about time
@@ -27,7 +27,7 @@
 
 // == Npcs ==
 // -- Master Swordsman --
-izlude_in.gat,74,172,5	script	Master Swordsman	119,{
+izlude_in,74,172,5	script	Master Swordsman	119,{
 	callfunc "F_ToHigh",Job_Swordman_High,"Swordman High",Job_Lord_Knight,"Master Swordsman";
 	mes "[Master Swordsman]";
 	if(BaseJob == Job_Novice && job_sword_q == 2) goto L_Done;
@@ -63,7 +63,7 @@ L_Menu:
 		}
 
 		set job_sword_q,1;
-		savepoint "izlude_in.gat",65,165;
+		savepoint "izlude_in",65,165;
 		mes "Okay.  Let me just review your information......";
 		next;
 		mes "[Master Swordsman]";
@@ -175,20 +175,20 @@ L_Done:
 
 // == Warp ==
 // -- Warp to test room --
-izlude_in.gat,62,170,0	script	w1039	45,1,1,{
-	if(BaseJob == Job_Novice && job_sword_q > 0) warp "izlude_in.gat",40,170;
+izlude_in,62,170,0	script	w1039	45,1,1,{
+	if(BaseJob == Job_Novice && job_sword_q > 0) warp "izlude_in",40,170;
 	if(job_sword_q == 0) doevent "Swordsman#02::OnStart";
 	end;
 }
 
 // -- Swordsman --
-izlude_in.gat,65,171,5	script	Swordsman#01	85,{
+izlude_in,65,171,5	script	Swordsman#01	85,{
 	doevent "Swordsman#02::OnStart";
 	end;
 }
 
 // -- Hidden Npc --
-izlude_in.gat,65,171,5	script	Swordsman#02	-1,{
+izlude_in,65,171,5	script	Swordsman#02	-1,{
 
 OnStart:
 	mes "[Swordsman]";
@@ -224,7 +224,7 @@ L_Novice:
 }
 
 // -- Test Guide --
-izlude_in.gat,30,175,4	script	Test Guide	92,{
+izlude_in,30,175,4	script	Test Guide	92,{
 	mes "[Test Guide]";
 	mes "I will tell you about the legendary Izlude Swordsman Test! Listen VERY CAREFULLY for I won't repeat this again!";
 	next;
@@ -254,7 +254,7 @@ izlude_in.gat,30,175,4	script	Test Guide	92,{
 
 
 // -- Test Hall Staff 1 --
-izlude_in.gat,30,163,8	script	Test Hall Staff	105,{
+izlude_in,30,163,8	script	Test Hall Staff	105,{
 	mes "[Test Hall Staff]";
 	if(SWTEST == 1) goto L_Option2;
 	if(SWTEST >= 2) goto L_Option3;
@@ -269,10 +269,10 @@ izlude_in.gat,30,163,8	script	Test Hall Staff	105,{
 
 	M_yes:
 		set SWTEST, SWTEST + 1;
-		savepoint "izlude_in.gat",39,170;
+		savepoint "izlude_in",39,170;
 		stopnpctimer;
 		initnpctimer "TimerSwrdmn";
-		warp "job_sword1.gat",10,245;
+		warp "job_sword1",10,245;
 		end;
 
 	M_no:
@@ -294,34 +294,34 @@ L_Option3:
 	goto M_yes;
 	end;
 }
-job_sword1.gat,1,1,0	script	TimerSwrdmn	-1,{
+job_sword1,1,1,0	script	TimerSwrdmn	-1,{
 	OnTimer4000:
-		areaannounce "job_sword1.gat", 0, 0, 400, 400, "[Test Hall Staff]: Your 7 minutes starts now!",0;
+		areaannounce "job_sword1", 0, 0, 400, 400, "[Test Hall Staff]: Your 7 minutes starts now!",0;
 		end;
 	OnTimer184000:
-		areaannounce "job_sword1.gat", 0, 0, 400, 400, "[Test Hall Staff]: You have 4 minutes left!",0;
+		areaannounce "job_sword1", 0, 0, 400, 400, "[Test Hall Staff]: You have 4 minutes left!",0;
 		end;
 	OnTimer304000:
-		areaannounce "job_sword1.gat", 0, 0, 400, 400, "[Test Hall Staff]: You have 2 minutes left!",0;
+		areaannounce "job_sword1", 0, 0, 400, 400, "[Test Hall Staff]: You have 2 minutes left!",0;
 		end;
 	OnTimer364000:
-		areaannounce "job_sword1.gat", 0, 0, 400, 400, "[Test Hall Staff]: You have 1 minutes left!",0;
+		areaannounce "job_sword1", 0, 0, 400, 400, "[Test Hall Staff]: You have 1 minutes left!",0;
 		end;
 	OnTimer394000:
-		areaannounce "job_sword1.gat", 0, 0, 400, 400, "[Test Hall Staff]: You have 30 seconds left, hurry!",0;
+		areaannounce "job_sword1", 0, 0, 400, 400, "[Test Hall Staff]: You have 30 seconds left, hurry!",0;
 		end;
 	OnTimer424000:
-		areaannounce "job_sword1.gat", 0, 0, 400, 400, "[Test Hall Staff]: Your times up!  You failed the test.",0;
+		areaannounce "job_sword1", 0, 0, 400, 400, "[Test Hall Staff]: Your times up!  You failed the test.",0;
 		end;
 	OnTimer428000:
 		stopnpctimer;
-		areawarp "job_sword1.gat",0,0,400,400,"izlude_in.gat",39,170;
+		areawarp "job_sword1",0,0,400,400,"izlude_in",39,170;
 		end;
 }
 
 
 // -- Medic 1 --
-job_sword1.gat,230,245,2	script	Medic#01	105,{
+job_sword1,230,245,2	script	Medic#01	105,{
 	mes "[Medic]";
 	mes "This is the 1st check point! You're doing great!";
 	percentheal 100, 100;
@@ -329,14 +329,14 @@ job_sword1.gat,230,245,2	script	Medic#01	105,{
 }
 	
 // -- Test Hall Staff 2 --
-job_sword1.gat,230,242,2	script	Test Hall Staff#01	105,{
+job_sword1,230,242,2	script	Test Hall Staff#01	105,{
 	mes "[Test Hall Staff]";
 	mes "Do you surrender?";
 	next;
 	menu "Yes.",M_0,"No.",M_1;
 
 	M_0:
-		warp "izlude_in.gat",65,165;
+		warp "izlude_in",65,165;
 		close;
 	M_1:
 		mes "[Test Hall Staff]";
@@ -345,7 +345,7 @@ job_sword1.gat,230,242,2	script	Test Hall Staff#01	105,{
 }
 
 // -- Medic 2 --
-job_sword1.gat,230,207,2	script	Medic#02	105,{
+job_sword1,230,207,2	script	Medic#02	105,{
 	mes "[Medic]";
 	mes "This is the 2nd check point! Keep up the good work!";
 	percentheal 100, 100;
@@ -353,14 +353,14 @@ job_sword1.gat,230,207,2	script	Medic#02	105,{
 }
 
 // -- Test Hall Staff 3 --
-job_sword1.gat,230,204,2	script	Test Hall Staff#02	105,{
+job_sword1,230,204,2	script	Test Hall Staff#02	105,{
 	mes "[Test Hall Staff]";
 	mes "Do you surrender?";
 	next;
 	menu "Yes.",M_0,"No.",M_1;
 
 	M_0:
-		warp "izlude_in.gat",65,165;
+		warp "izlude_in",65,165;
 		close;
 	M_1:
 		mes "[Test Hall Staff]";
@@ -369,7 +369,7 @@ job_sword1.gat,230,204,2	script	Test Hall Staff#02	105,{
 }
 
 // -- Mae (Medic 3) --
-job_sword1.gat,223,167,2	script	Mae	92,{
+job_sword1,223,167,2	script	Mae	92,{
 	mes "[Mae]";
 	mes "I sincerely congratulate you for passing the test!";
 	mes "I've already sent your test results to the 'Master Swordsman'.";
@@ -379,7 +379,7 @@ job_sword1.gat,223,167,2	script	Mae	92,{
 	percentheal 100, 100;
 	set job_sword_q,2;
 	set SWTEST,0;
-	warp "izlude_in.gat",66,173;
+	warp "izlude_in",66,173;
 	close;
 }
 
@@ -391,410 +391,410 @@ job_sword1.gat,223,167,2	script	Mae	92,{
 
 // -- First Section --
 // - Left -
-job_sword1.gat,22,172,1	script	1green_1::green	139,0,0,{
+job_sword1,22,172,1	script	1green_1::green	139,0,0,{
 	heal -4,0;
 	end;
 }
 
 // -- Duplicates --
-job_sword1.gat,22,173,1	duplicate(green)	1green_2	139,0,0
-job_sword1.gat,23,172,1	duplicate(green)	1green_3	139,0,0
-job_sword1.gat,23,173,1	duplicate(green)	1green_4	139,0,0
-job_sword1.gat,34,172,1	duplicate(green)	1green_5	139,0,0
-job_sword1.gat,34,173,1	duplicate(green)	1green_6	139,0,0
-job_sword1.gat,35,172,1	duplicate(green)	1green_7	139,0,0
-job_sword1.gat,35,173,1	duplicate(green)	1green_8	139,0,0
-job_sword1.gat,66,170,1	duplicate(green)	1green_9	139,0,0
-job_sword1.gat,66,171,1	duplicate(green)	1green_10	139,0,0
-job_sword1.gat,67,170,1	duplicate(green)	1green_11	139,0,0
-job_sword1.gat,67,171,1	duplicate(green)	1green_12	139,0,0
-job_sword1.gat,70,170,1	duplicate(green)	1green_13	139,0,0
-job_sword1.gat,70,171,1	duplicate(green)	1green_14	139,0,0
-job_sword1.gat,71,170,1	duplicate(green)	1green_15	139,0,0
-job_sword1.gat,71,171,1	duplicate(green)	1green_16	139,0,0
+job_sword1,22,173,1	duplicate(green)	1green_2	139,0,0
+job_sword1,23,172,1	duplicate(green)	1green_3	139,0,0
+job_sword1,23,173,1	duplicate(green)	1green_4	139,0,0
+job_sword1,34,172,1	duplicate(green)	1green_5	139,0,0
+job_sword1,34,173,1	duplicate(green)	1green_6	139,0,0
+job_sword1,35,172,1	duplicate(green)	1green_7	139,0,0
+job_sword1,35,173,1	duplicate(green)	1green_8	139,0,0
+job_sword1,66,170,1	duplicate(green)	1green_9	139,0,0
+job_sword1,66,171,1	duplicate(green)	1green_10	139,0,0
+job_sword1,67,170,1	duplicate(green)	1green_11	139,0,0
+job_sword1,67,171,1	duplicate(green)	1green_12	139,0,0
+job_sword1,70,170,1	duplicate(green)	1green_13	139,0,0
+job_sword1,70,171,1	duplicate(green)	1green_14	139,0,0
+job_sword1,71,170,1	duplicate(green)	1green_15	139,0,0
+job_sword1,71,171,1	duplicate(green)	1green_16	139,0,0
 
 // - Right -
-job_sword1.gat,22,164,1	duplicate(green)	1green_17	139,0,0
-job_sword1.gat,22,165,1	duplicate(green)	1green_18	139,0,0
-job_sword1.gat,23,164,1	duplicate(green)	1green_19	139,0,0
-job_sword1.gat,23,165,1	duplicate(green)	1green_20	139,0,0
-job_sword1.gat,34,164,1	duplicate(green)	1green_21	139,0,0
-job_sword1.gat,34,165,1	duplicate(green)	1green_22	139,0,0
-job_sword1.gat,35,164,1	duplicate(green)	1green_23	139,0,0
-job_sword1.gat,35,165,1	duplicate(green)	1green_24	139,0,0
-job_sword1.gat,66,166,1	duplicate(green)	1green_25	139,0,0
-job_sword1.gat,66,167,1	duplicate(green)	1green_26	139,0,0
-job_sword1.gat,67,166,1	duplicate(green)	1green_27	139,0,0
-job_sword1.gat,67,167,1	duplicate(green)	1green_28	139,0,0
-job_sword1.gat,70,166,1	duplicate(green)	1green_29	139,0,0
-job_sword1.gat,70,167,1	duplicate(green)	1green_30	139,0,0
-job_sword1.gat,71,166,1	duplicate(green)	1green_31	139,0,0
-job_sword1.gat,71,167,1	duplicate(green)	1green_32	139,0,0
+job_sword1,22,164,1	duplicate(green)	1green_17	139,0,0
+job_sword1,22,165,1	duplicate(green)	1green_18	139,0,0
+job_sword1,23,164,1	duplicate(green)	1green_19	139,0,0
+job_sword1,23,165,1	duplicate(green)	1green_20	139,0,0
+job_sword1,34,164,1	duplicate(green)	1green_21	139,0,0
+job_sword1,34,165,1	duplicate(green)	1green_22	139,0,0
+job_sword1,35,164,1	duplicate(green)	1green_23	139,0,0
+job_sword1,35,165,1	duplicate(green)	1green_24	139,0,0
+job_sword1,66,166,1	duplicate(green)	1green_25	139,0,0
+job_sword1,66,167,1	duplicate(green)	1green_26	139,0,0
+job_sword1,67,166,1	duplicate(green)	1green_27	139,0,0
+job_sword1,67,167,1	duplicate(green)	1green_28	139,0,0
+job_sword1,70,166,1	duplicate(green)	1green_29	139,0,0
+job_sword1,70,167,1	duplicate(green)	1green_30	139,0,0
+job_sword1,71,166,1	duplicate(green)	1green_31	139,0,0
+job_sword1,71,167,1	duplicate(green)	1green_32	139,0,0
 // - Center -
-job_sword1.gat,86,168,1	duplicate(green)	1green_33	139,0,0
-job_sword1.gat,86,169,1	duplicate(green)	1green_34	139,0,0
-job_sword1.gat,87,168,1	duplicate(green)	1green_35	139,0,0
-job_sword1.gat,87,169,1	duplicate(green)	1green_36	139,0,0
+job_sword1,86,168,1	duplicate(green)	1green_33	139,0,0
+job_sword1,86,169,1	duplicate(green)	1green_34	139,0,0
+job_sword1,87,168,1	duplicate(green)	1green_35	139,0,0
+job_sword1,87,169,1	duplicate(green)	1green_36	139,0,0
 
 // -- Second Section --
 // - Left -
-job_sword1.gat,83,171,1	duplicate(green)	2green_1	139,0,1
-job_sword1.gat,82,171,1	duplicate(green)	2green_2	139,0,1
-job_sword1.gat,90,171,1	duplicate(green)	2green_3	139,0,1
-job_sword1.gat,91,171,1	duplicate(green)	2green_4	139,0,1
-job_sword1.gat,84,173,1	duplicate(green)	2green_5	139,1,0
-job_sword1.gat,90,173,1	duplicate(green)	2green_6	139,1,0
-job_sword1.gat,83,166,1	duplicate(green)	2green_7	139,0,1
-job_sword1.gat,82,166,1	duplicate(green)	2green_8	139,0,1
-job_sword1.gat,90,166,1	duplicate(green)	2green_9	139,0,1
-job_sword1.gat,91,166,1	duplicate(green)	2green_10	139,0,1
-job_sword1.gat,84,164,1	duplicate(green)	2green_11	139,1,0
-job_sword1.gat,90,164,1	duplicate(green)	2green_12	139,1,0
-job_sword1.gat,102,168,1	duplicate(green)	2green_13	139,0,0
-job_sword1.gat,102,169,1	duplicate(green)	2green_14	139,0,0
+job_sword1,83,171,1	duplicate(green)	2green_1	139,0,1
+job_sword1,82,171,1	duplicate(green)	2green_2	139,0,1
+job_sword1,90,171,1	duplicate(green)	2green_3	139,0,1
+job_sword1,91,171,1	duplicate(green)	2green_4	139,0,1
+job_sword1,84,173,1	duplicate(green)	2green_5	139,1,0
+job_sword1,90,173,1	duplicate(green)	2green_6	139,1,0
+job_sword1,83,166,1	duplicate(green)	2green_7	139,0,1
+job_sword1,82,166,1	duplicate(green)	2green_8	139,0,1
+job_sword1,90,166,1	duplicate(green)	2green_9	139,0,1
+job_sword1,91,166,1	duplicate(green)	2green_10	139,0,1
+job_sword1,84,164,1	duplicate(green)	2green_11	139,1,0
+job_sword1,90,164,1	duplicate(green)	2green_12	139,1,0
+job_sword1,102,168,1	duplicate(green)	2green_13	139,0,0
+job_sword1,102,169,1	duplicate(green)	2green_14	139,0,0
 // - Right -
-job_sword1.gat,102,172,1	duplicate(green)	2green_15	139,0,0
-job_sword1.gat,102,173,1	duplicate(green)	2green_16	139,0,0
-job_sword1.gat,103,172,1	duplicate(green)	2green_17	139,0,0
-job_sword1.gat,103,173,1	duplicate(green)	2green_18	139,0,0
-job_sword1.gat,106,172,1	duplicate(green)	2green_19	139,0,0
-job_sword1.gat,106,173,1	duplicate(green)	2green_20	139,0,0
-job_sword1.gat,107,172,1	duplicate(green)	2green_21	139,0,0
-job_sword1.gat,107,173,1	duplicate(green)	2green_22	139,0,0
-job_sword1.gat,110,172,1	duplicate(green)	2green_23	139,0,0
-job_sword1.gat,110,173,1	duplicate(green)	2green_24	139,0,0
-job_sword1.gat,111,172,1	duplicate(green)	2green_25	139,0,0
-job_sword1.gat,111,173,1	duplicate(green)	2green_26	139,0,0
+job_sword1,102,172,1	duplicate(green)	2green_15	139,0,0
+job_sword1,102,173,1	duplicate(green)	2green_16	139,0,0
+job_sword1,103,172,1	duplicate(green)	2green_17	139,0,0
+job_sword1,103,173,1	duplicate(green)	2green_18	139,0,0
+job_sword1,106,172,1	duplicate(green)	2green_19	139,0,0
+job_sword1,106,173,1	duplicate(green)	2green_20	139,0,0
+job_sword1,107,172,1	duplicate(green)	2green_21	139,0,0
+job_sword1,107,173,1	duplicate(green)	2green_22	139,0,0
+job_sword1,110,172,1	duplicate(green)	2green_23	139,0,0
+job_sword1,110,173,1	duplicate(green)	2green_24	139,0,0
+job_sword1,111,172,1	duplicate(green)	2green_25	139,0,0
+job_sword1,111,173,1	duplicate(green)	2green_26	139,0,0
 // - Center -
-job_sword1.gat,102,164,1	duplicate(green)	2green_27	139,0,0
-job_sword1.gat,102,165,1	duplicate(green)	2green_28	139,0,0
-job_sword1.gat,103,164,1	duplicate(green)	2green_29	139,0,0
-job_sword1.gat,103,165,1	duplicate(green)	2green_30	139,0,0
-job_sword1.gat,106,164,1	duplicate(green)	2green_31	139,0,0
-job_sword1.gat,106,165,1	duplicate(green)	2green_32	139,0,0
-job_sword1.gat,107,164,1	duplicate(green)	2green_33	139,0,0
-job_sword1.gat,107,165,1	duplicate(green)	2green_34	139,0,0
-job_sword1.gat,110,164,1	duplicate(green)	2green_35	139,0,0
-job_sword1.gat,110,165,1	duplicate(green)	2green_36	139,0,0
-job_sword1.gat,111,164,1	duplicate(green)	2green_37	139,0,0
-job_sword1.gat,111,165,1	duplicate(green)	2green_38	139,0,0
+job_sword1,102,164,1	duplicate(green)	2green_27	139,0,0
+job_sword1,102,165,1	duplicate(green)	2green_28	139,0,0
+job_sword1,103,164,1	duplicate(green)	2green_29	139,0,0
+job_sword1,103,165,1	duplicate(green)	2green_30	139,0,0
+job_sword1,106,164,1	duplicate(green)	2green_31	139,0,0
+job_sword1,106,165,1	duplicate(green)	2green_32	139,0,0
+job_sword1,107,164,1	duplicate(green)	2green_33	139,0,0
+job_sword1,107,165,1	duplicate(green)	2green_34	139,0,0
+job_sword1,110,164,1	duplicate(green)	2green_35	139,0,0
+job_sword1,110,165,1	duplicate(green)	2green_36	139,0,0
+job_sword1,111,164,1	duplicate(green)	2green_37	139,0,0
+job_sword1,111,165,1	duplicate(green)	2green_38	139,0,0
 
 
 // -- Third Section --
-job_sword1.gat,121,172,1	duplicate(green)	3green_1	139,2,0
-job_sword1.gat,121,173,1	duplicate(green)	3green_2	139,2,0
-job_sword1.gat,121,164,1	duplicate(green)	3green_3	139,2,0
-job_sword1.gat,121,165,1	duplicate(green)	3green_4	139,2,0
-job_sword1.gat,121,168,1	duplicate(green)	3green_5	139,2,0
-job_sword1.gat,121,169,1	duplicate(green)	3green_6	139,2,0
+job_sword1,121,172,1	duplicate(green)	3green_1	139,2,0
+job_sword1,121,173,1	duplicate(green)	3green_2	139,2,0
+job_sword1,121,164,1	duplicate(green)	3green_3	139,2,0
+job_sword1,121,165,1	duplicate(green)	3green_4	139,2,0
+job_sword1,121,168,1	duplicate(green)	3green_5	139,2,0
+job_sword1,121,169,1	duplicate(green)	3green_6	139,2,0
 
 // -- Fourth Section --
-job_sword1.gat,130,169,1	duplicate(green)	4green_1	139,0,4
-job_sword1.gat,131,169,1	duplicate(green)	4green_2	139,0,4
-job_sword1.gat,135,164,1	duplicate(green)	4green_3	139,5,0
-job_sword1.gat,136,165,1	duplicate(green)	4green_4	139,4,0
-job_sword1.gat,140,169,1	duplicate(green)	4green_5	139,0,3
-job_sword1.gat,141,168,1	duplicate(green)	4green_6	139,0,4
-job_sword1.gat,137,172,1	duplicate(green)	4green_7	139,2,0
-job_sword1.gat,138,173,1	duplicate(green)	4green_8	139,3,0
-job_sword1.gat,134,171,1	duplicate(green)	4green_9	139,0,2
-job_sword1.gat,135,168,1	duplicate(green)	4green_10	139,0,1
-job_sword1.gat,135,170,1	duplicate(green)	4green_11	139,1,0
+job_sword1,130,169,1	duplicate(green)	4green_1	139,0,4
+job_sword1,131,169,1	duplicate(green)	4green_2	139,0,4
+job_sword1,135,164,1	duplicate(green)	4green_3	139,5,0
+job_sword1,136,165,1	duplicate(green)	4green_4	139,4,0
+job_sword1,140,169,1	duplicate(green)	4green_5	139,0,3
+job_sword1,141,168,1	duplicate(green)	4green_6	139,0,4
+job_sword1,137,172,1	duplicate(green)	4green_7	139,2,0
+job_sword1,138,173,1	duplicate(green)	4green_8	139,3,0
+job_sword1,134,171,1	duplicate(green)	4green_9	139,0,2
+job_sword1,135,168,1	duplicate(green)	4green_10	139,0,1
+job_sword1,135,170,1	duplicate(green)	4green_11	139,1,0
 
 // -- Fifth Section --
-job_sword1.gat,144,169,1	duplicate(green)	5green_1	139,0,4
-job_sword1.gat,145,169,1	duplicate(green)	5green_2	139,0,4
-job_sword1.gat,148,164,1	duplicate(green)	5green_3	139,4,0
-job_sword1.gat,149,165,1	duplicate(green)	5green_4	139,3,0
-job_sword1.gat,156,166,1	duplicate(green)	5green_5	139,0,2
-job_sword1.gat,157,166,1	duplicate(green)	5green_6	139,0,2
-job_sword1.gat,153,169,1	duplicate(green)	5green_7	139,4,0
-job_sword1.gat,152,168,1	duplicate(green)	5green_8	139,3,0
-job_sword1.gat,149,171,1	duplicate(green)	5green_9	139,0,1
-job_sword1.gat,148,171,1	duplicate(green)	5green_10	139,0,2
-job_sword1.gat,154,173,1	duplicate(green)	5green_11	139,2,0
-job_sword1.gat,154,172,1	duplicate(green)	5green_12	139,2,0
+job_sword1,144,169,1	duplicate(green)	5green_1	139,0,4
+job_sword1,145,169,1	duplicate(green)	5green_2	139,0,4
+job_sword1,148,164,1	duplicate(green)	5green_3	139,4,0
+job_sword1,149,165,1	duplicate(green)	5green_4	139,3,0
+job_sword1,156,166,1	duplicate(green)	5green_5	139,0,2
+job_sword1,157,166,1	duplicate(green)	5green_6	139,0,2
+job_sword1,153,169,1	duplicate(green)	5green_7	139,4,0
+job_sword1,152,168,1	duplicate(green)	5green_8	139,3,0
+job_sword1,149,171,1	duplicate(green)	5green_9	139,0,1
+job_sword1,148,171,1	duplicate(green)	5green_10	139,0,2
+job_sword1,154,173,1	duplicate(green)	5green_11	139,2,0
+job_sword1,154,172,1	duplicate(green)	5green_12	139,2,0
 
 // -- Last Section --
-job_sword1.gat,164,172,1	duplicate(green)	6green_1	139,0,0
-job_sword1.gat,164,173,1	duplicate(green)	6green_2	139,0,0
-job_sword1.gat,165,172,1	duplicate(green)	6green_3	139,0,0
-job_sword1.gat,165,173,1	duplicate(green)	6green_4	139,0,0
-job_sword1.gat,172,172,1	duplicate(green)	6green_5	139,0,0
-job_sword1.gat,172,173,1	duplicate(green)	6green_6	139,0,0
-job_sword1.gat,173,172,1	duplicate(green)	6green_7	139,0,0
-job_sword1.gat,173,173,1	duplicate(green)	6green_8	139,0,0
+job_sword1,164,172,1	duplicate(green)	6green_1	139,0,0
+job_sword1,164,173,1	duplicate(green)	6green_2	139,0,0
+job_sword1,165,172,1	duplicate(green)	6green_3	139,0,0
+job_sword1,165,173,1	duplicate(green)	6green_4	139,0,0
+job_sword1,172,172,1	duplicate(green)	6green_5	139,0,0
+job_sword1,172,173,1	duplicate(green)	6green_6	139,0,0
+job_sword1,173,172,1	duplicate(green)	6green_7	139,0,0
+job_sword1,173,173,1	duplicate(green)	6green_8	139,0,0
 
-job_sword1.gat,164,168,1	duplicate(green)	6green_9	139,0,0
-job_sword1.gat,164,169,1	duplicate(green)	6green_10	139,0,0
-job_sword1.gat,165,168,1	duplicate(green)	6green_11	139,0,0
-job_sword1.gat,165,169,1	duplicate(green)	6green_12	139,0,0
-job_sword1.gat,172,168,1	duplicate(green)	6green_13	139,0,0
-job_sword1.gat,172,169,1	duplicate(green)	6green_14	139,0,0
-job_sword1.gat,173,168,1	duplicate(green)	6green_15	139,0,0
-job_sword1.gat,173,169,1	duplicate(green)	6green_16	139,0,0
+job_sword1,164,168,1	duplicate(green)	6green_9	139,0,0
+job_sword1,164,169,1	duplicate(green)	6green_10	139,0,0
+job_sword1,165,168,1	duplicate(green)	6green_11	139,0,0
+job_sword1,165,169,1	duplicate(green)	6green_12	139,0,0
+job_sword1,172,168,1	duplicate(green)	6green_13	139,0,0
+job_sword1,172,169,1	duplicate(green)	6green_14	139,0,0
+job_sword1,173,168,1	duplicate(green)	6green_15	139,0,0
+job_sword1,173,169,1	duplicate(green)	6green_16	139,0,0
 
-job_sword1.gat,164,164,1	duplicate(green)	6green_17	139,0,0
-job_sword1.gat,164,165,1	duplicate(green)	6green_18	139,0,0
-job_sword1.gat,165,164,1	duplicate(green)	6green_19	139,0,0
-job_sword1.gat,165,165,1	duplicate(green)	6green_20	139,0,0
-job_sword1.gat,172,164,1	duplicate(green)	6green_21	139,0,0
-job_sword1.gat,172,165,1	duplicate(green)	6green_22	139,0,0
-job_sword1.gat,173,164,1	duplicate(green)	6green_23	139,0,0
-job_sword1.gat,173,165,1	duplicate(green)	6green_24	139,0,0
+job_sword1,164,164,1	duplicate(green)	6green_17	139,0,0
+job_sword1,164,165,1	duplicate(green)	6green_18	139,0,0
+job_sword1,165,164,1	duplicate(green)	6green_19	139,0,0
+job_sword1,165,165,1	duplicate(green)	6green_20	139,0,0
+job_sword1,172,164,1	duplicate(green)	6green_21	139,0,0
+job_sword1,172,165,1	duplicate(green)	6green_22	139,0,0
+job_sword1,173,164,1	duplicate(green)	6green_23	139,0,0
+job_sword1,173,165,1	duplicate(green)	6green_24	139,0,0
 
 
 
 // == Fall Warps ==
 
-job_sword1.gat,16,251,4	script	1_blank_1a#1::1_blank	139,0,1,{
+job_sword1,16,251,4	script	1_blank_1a#1::1_blank	139,0,1,{
 	set @TEMP,rand(5);
-	if (@TEMP==0) warp "job_sword1.gat",65,56;
-	if (@TEMP==1) warp "job_sword1.gat",29,26;
-	if (@TEMP==2) warp "job_sword1.gat",43,16;
-	if (@TEMP==3) warp "job_sword1.gat",23,112;
-	if (@TEMP==4) warp "job_sword1.gat",58,83;
+	if (@TEMP==0) warp "job_sword1",65,56;
+	if (@TEMP==1) warp "job_sword1",29,26;
+	if (@TEMP==2) warp "job_sword1",43,16;
+	if (@TEMP==3) warp "job_sword1",23,112;
+	if (@TEMP==4) warp "job_sword1",58,83;
 	end;
 }
 
 // -- Duplicates --
-job_sword1.gat,19,251,4	duplicate(1_blank)	1_blank_1b	139,0,1
-job_sword1.gat,17,250,4	duplicate(1_blank)	1_blank_1c	139,1,0
-job_sword1.gat,17,251,4	duplicate(1_blank)	1_blank_1d	139,1,1
-job_sword1.gat,18,251,4	duplicate(1_blank)	1_blank_1e	139,1,1
-job_sword1.gat,17,251,4	duplicate(1_blank)	1_blank_1f	139,1,1
-job_sword1.gat,16,238,4	duplicate(1_blank)	1_blank_2a	139,0,1
-job_sword1.gat,19,238,4	duplicate(1_blank)	1_blank_2b	139,0,1
-job_sword1.gat,17,239,4	duplicate(1_blank)	1_blank_2c	139,0,1
-job_sword1.gat,28,246,4	duplicate(1_blank)	1_blank_3a	139,4,1
-job_sword1.gat,33,245,4	duplicate(1_blank)	1_blank_3b	139,0,2
-job_sword1.gat,29,242,4	duplicate(1_blank)	1_blank_3c	139,4,0
-job_sword1.gat,24,244,4	duplicate(1_blank)	1_blank_3d	139,0,2
-job_sword1.gat,38,251,4	duplicate(1_blank)	1_blank_4a	139,0,1
-job_sword1.gat,41,251,4	duplicate(1_blank)	1_blank_4b	139,0,1
-job_sword1.gat,39,250,4	duplicate(1_blank)	1_blank_4c	139,1,0
-job_sword1.gat,38,238,4	duplicate(1_blank)	1_blank_5a	139,0,1
-job_sword1.gat,41,238,4	duplicate(1_blank)	1_blank_5_b	139,0,1
-job_sword1.gat,39,239,4	duplicate(1_blank)	1_blank_5_c	139,1,0
-job_sword1.gat,54,251,4	duplicate(1_blank)	1_blank_6_a	139,0,1
-job_sword1.gat,71,251,4	duplicate(1_blank)	1_blank_6_b	139,0,1
-job_sword1.gat,62,250,4	duplicate(1_blank)	1_blank_6_c	139,9,0
-job_sword1.gat,62,247,4	duplicate(1_blank)	1_blank_7_a	139,8,0
-job_sword1.gat,71,244,4	duplicate(1_blank)	1_blank_7_b	139,0,2
-job_sword1.gat,63,242,4	duplicate(1_blank)	1_blank_7_c	139,8,0
-job_sword1.gat,54,244,4	duplicate(1_blank)	1_blank_7_d	139,0,2
-job_sword1.gat,54,238,4	duplicate(1_blank)	1_blank_8_a	139,0,1
-job_sword1.gat,71,238,4	duplicate(1_blank)	1_blank_8_b	139,0,1
-job_sword1.gat,62,239,4	duplicate(1_blank)	1_blank_8_c	139,9,0
-job_sword1.gat,102,247,4	duplicate(1_blank)	1_blank_9_a	139,2,0
-job_sword1.gat,105,245,4	duplicate(1_blank)	1_blank_9_b	139,0,2
-job_sword1.gat,103,242,4	duplicate(1_blank)	1_blank_9_c	139,2,0
-job_sword1.gat,100,244,4	duplicate(1_blank)	1_blank_9_d	139,0,2
-job_sword1.gat,156,249,4	duplicate(1_blank)	1_blank_10_a	139,14,0
-job_sword1.gat,156,248,4	duplicate(1_blank)	1_blank_10_b	139,14,0
-job_sword1.gat,170,249,4	duplicate(1_blank)	1_blank_10_c	139,1,0
-job_sword1.gat,170,248,4	duplicate(1_blank)	1_blank_10_d	139,1,0
-job_sword1.gat,156,245,4	duplicate(1_blank)	1_blank_11_a	139,14,0
-job_sword1.gat,156,244,4	duplicate(1_blank)	1_blank_11_b	139,14,0
-job_sword1.gat,170,245,4	duplicate(1_blank)	1_blank_11_c	139,1,0
-job_sword1.gat,170,244,4	duplicate(1_blank)	1_blank_11_d	139,1,0
-job_sword1.gat,156,241,4	duplicate(1_blank)	1_blank_12_a	139,14,0
-job_sword1.gat,156,240,4	duplicate(1_blank)	1_blank_12_b	139,14,0
-job_sword1.gat,170,241,4	duplicate(1_blank)	1_blank_12_c	139,1,0
-job_sword1.gat,170,240,4	duplicate(1_blank)	1_blank_12_d	139,1,0
-job_sword1.gat,180,251,4	duplicate(1_blank)	1_blank_13_a	139,0,1
-job_sword1.gat,183,251,4	duplicate(1_blank)	1_blank_13_b	139,0,1
-job_sword1.gat,181,250,4	duplicate(1_blank)	1_blank_13_c	139,1,0
-job_sword1.gat,180,238,4	duplicate(1_blank)	1_blank_14_a	139,0,1
-job_sword1.gat,183,238,4	duplicate(1_blank)	1_blank_14_b	139,0,1
-job_sword1.gat,181,239,4	duplicate(1_blank)	1_blank_14_c	139,1,0
+job_sword1,19,251,4	duplicate(1_blank)	1_blank_1b	139,0,1
+job_sword1,17,250,4	duplicate(1_blank)	1_blank_1c	139,1,0
+job_sword1,17,251,4	duplicate(1_blank)	1_blank_1d	139,1,1
+job_sword1,18,251,4	duplicate(1_blank)	1_blank_1e	139,1,1
+job_sword1,17,251,4	duplicate(1_blank)	1_blank_1f	139,1,1
+job_sword1,16,238,4	duplicate(1_blank)	1_blank_2a	139,0,1
+job_sword1,19,238,4	duplicate(1_blank)	1_blank_2b	139,0,1
+job_sword1,17,239,4	duplicate(1_blank)	1_blank_2c	139,0,1
+job_sword1,28,246,4	duplicate(1_blank)	1_blank_3a	139,4,1
+job_sword1,33,245,4	duplicate(1_blank)	1_blank_3b	139,0,2
+job_sword1,29,242,4	duplicate(1_blank)	1_blank_3c	139,4,0
+job_sword1,24,244,4	duplicate(1_blank)	1_blank_3d	139,0,2
+job_sword1,38,251,4	duplicate(1_blank)	1_blank_4a	139,0,1
+job_sword1,41,251,4	duplicate(1_blank)	1_blank_4b	139,0,1
+job_sword1,39,250,4	duplicate(1_blank)	1_blank_4c	139,1,0
+job_sword1,38,238,4	duplicate(1_blank)	1_blank_5a	139,0,1
+job_sword1,41,238,4	duplicate(1_blank)	1_blank_5_b	139,0,1
+job_sword1,39,239,4	duplicate(1_blank)	1_blank_5_c	139,1,0
+job_sword1,54,251,4	duplicate(1_blank)	1_blank_6_a	139,0,1
+job_sword1,71,251,4	duplicate(1_blank)	1_blank_6_b	139,0,1
+job_sword1,62,250,4	duplicate(1_blank)	1_blank_6_c	139,9,0
+job_sword1,62,247,4	duplicate(1_blank)	1_blank_7_a	139,8,0
+job_sword1,71,244,4	duplicate(1_blank)	1_blank_7_b	139,0,2
+job_sword1,63,242,4	duplicate(1_blank)	1_blank_7_c	139,8,0
+job_sword1,54,244,4	duplicate(1_blank)	1_blank_7_d	139,0,2
+job_sword1,54,238,4	duplicate(1_blank)	1_blank_8_a	139,0,1
+job_sword1,71,238,4	duplicate(1_blank)	1_blank_8_b	139,0,1
+job_sword1,62,239,4	duplicate(1_blank)	1_blank_8_c	139,9,0
+job_sword1,102,247,4	duplicate(1_blank)	1_blank_9_a	139,2,0
+job_sword1,105,245,4	duplicate(1_blank)	1_blank_9_b	139,0,2
+job_sword1,103,242,4	duplicate(1_blank)	1_blank_9_c	139,2,0
+job_sword1,100,244,4	duplicate(1_blank)	1_blank_9_d	139,0,2
+job_sword1,156,249,4	duplicate(1_blank)	1_blank_10_a	139,14,0
+job_sword1,156,248,4	duplicate(1_blank)	1_blank_10_b	139,14,0
+job_sword1,170,249,4	duplicate(1_blank)	1_blank_10_c	139,1,0
+job_sword1,170,248,4	duplicate(1_blank)	1_blank_10_d	139,1,0
+job_sword1,156,245,4	duplicate(1_blank)	1_blank_11_a	139,14,0
+job_sword1,156,244,4	duplicate(1_blank)	1_blank_11_b	139,14,0
+job_sword1,170,245,4	duplicate(1_blank)	1_blank_11_c	139,1,0
+job_sword1,170,244,4	duplicate(1_blank)	1_blank_11_d	139,1,0
+job_sword1,156,241,4	duplicate(1_blank)	1_blank_12_a	139,14,0
+job_sword1,156,240,4	duplicate(1_blank)	1_blank_12_b	139,14,0
+job_sword1,170,241,4	duplicate(1_blank)	1_blank_12_c	139,1,0
+job_sword1,170,240,4	duplicate(1_blank)	1_blank_12_d	139,1,0
+job_sword1,180,251,4	duplicate(1_blank)	1_blank_13_a	139,0,1
+job_sword1,183,251,4	duplicate(1_blank)	1_blank_13_b	139,0,1
+job_sword1,181,250,4	duplicate(1_blank)	1_blank_13_c	139,1,0
+job_sword1,180,238,4	duplicate(1_blank)	1_blank_14_a	139,0,1
+job_sword1,183,238,4	duplicate(1_blank)	1_blank_14_b	139,0,1
+job_sword1,181,239,4	duplicate(1_blank)	1_blank_14_c	139,1,0
 
 
-job_sword1.gat,56,212,4	script	2_blank_1_a::2_blank	139,40,0,{
+job_sword1,56,212,4	script	2_blank_1_a::2_blank	139,40,0,{
 	set @TEMP,rand(5);
-	if (@TEMP==0) warp "job_sword1.gat",162,120;
-	if (@TEMP==1) warp "job_sword1.gat",94,120;
-	if (@TEMP==2) warp "job_sword1.gat",94,85;
-	if (@TEMP==3) warp "job_sword1.gat",162,85;
-	if (@TEMP==4) warp "job_sword1.gat",130,47;
+	if (@TEMP==0) warp "job_sword1",162,120;
+	if (@TEMP==1) warp "job_sword1",94,120;
+	if (@TEMP==2) warp "job_sword1",94,85;
+	if (@TEMP==3) warp "job_sword1",162,85;
+	if (@TEMP==4) warp "job_sword1",130,47;
 	end;
 }
 
 // -- Duplicates --
-job_sword1.gat,95,212,4	duplicate(2_blank)	2_blank_1_b	139,2,0
-job_sword1.gat,56,210,4	duplicate(2_blank)	2_blank_2_a	139,40,0
-job_sword1.gat,95,210,4	duplicate(2_blank)	2_blank_2_b	139,2,0
-job_sword1.gat,16,206,4	duplicate(2_blank)	2_blank_2_c	139,0,3
-job_sword1.gat,97,206,4	duplicate(2_blank)	2_blank_2_d	139,0,3
-job_sword1.gat,56,203,4	duplicate(2_blank)	2_blank_2_e	139,40,0
-job_sword1.gat,95,203,4	duplicate(2_blank)	2_blank_2_f	139,2,0
-job_sword1.gat,56,201,4	duplicate(2_blank)	2_blank_3_a	139,40,0
-job_sword1.gat,95,201,4	duplicate(2_blank)	2_blank_3_b	139,2,0
+job_sword1,95,212,4	duplicate(2_blank)	2_blank_1_b	139,2,0
+job_sword1,56,210,4	duplicate(2_blank)	2_blank_2_a	139,40,0
+job_sword1,95,210,4	duplicate(2_blank)	2_blank_2_b	139,2,0
+job_sword1,16,206,4	duplicate(2_blank)	2_blank_2_c	139,0,3
+job_sword1,97,206,4	duplicate(2_blank)	2_blank_2_d	139,0,3
+job_sword1,56,203,4	duplicate(2_blank)	2_blank_2_e	139,40,0
+job_sword1,95,203,4	duplicate(2_blank)	2_blank_2_f	139,2,0
+job_sword1,56,201,4	duplicate(2_blank)	2_blank_3_a	139,40,0
+job_sword1,95,201,4	duplicate(2_blank)	2_blank_3_b	139,2,0
 
 // - part 2 -
-job_sword1.gat,113,212,4	duplicate(2_blank)	2_blank_4_a	139,14,0
-job_sword1.gat,125,212,4	duplicate(2_blank)	2_blank_4_b	139,2,0
-job_sword1.gat,113,210,4	duplicate(2_blank)	2_blank_5_a	139,14,0
-job_sword1.gat,125,210,4	duplicate(2_blank)	2_blank_5_b	139,2,0
-job_sword1.gat,100,206,4	duplicate(2_blank)	2_blank_5_c	139,0,3
-job_sword1.gat,127,206,4	duplicate(2_blank)	2_blank_5_d	139,0,3
-job_sword1.gat,113,203,4	duplicate(2_blank)	2_blank_5_e	139,14,0
-job_sword1.gat,125,210,4	duplicate(2_blank)	2_blank_5_f	139,2,0
-job_sword1.gat,113,201,4	duplicate(2_blank)	2_blank_6_a	139,14,0
-job_sword1.gat,113,201,4	duplicate(2_blank)	2_blank_6_b	139,2,0
+job_sword1,113,212,4	duplicate(2_blank)	2_blank_4_a	139,14,0
+job_sword1,125,212,4	duplicate(2_blank)	2_blank_4_b	139,2,0
+job_sword1,113,210,4	duplicate(2_blank)	2_blank_5_a	139,14,0
+job_sword1,125,210,4	duplicate(2_blank)	2_blank_5_b	139,2,0
+job_sword1,100,206,4	duplicate(2_blank)	2_blank_5_c	139,0,3
+job_sword1,127,206,4	duplicate(2_blank)	2_blank_5_d	139,0,3
+job_sword1,113,203,4	duplicate(2_blank)	2_blank_5_e	139,14,0
+job_sword1,125,210,4	duplicate(2_blank)	2_blank_5_f	139,2,0
+job_sword1,113,201,4	duplicate(2_blank)	2_blank_6_a	139,14,0
+job_sword1,113,201,4	duplicate(2_blank)	2_blank_6_b	139,2,0
 
 // - part 3 -
-job_sword1.gat,155,212,4	duplicate(2_blank)	2_blank_7_a	139,21,0
-job_sword1.gat,181,212,4	duplicate(2_blank)	2_blank_7_b	139,2,0
-job_sword1.gat,155,210,4	duplicate(2_blank)	2_blank_8_a	139,21,0
-job_sword1.gat,181,210,4	duplicate(2_blank)	2_blank_8_b	139,2,0
-job_sword1.gat,130,206,4	duplicate(2_blank)	2_blank_8_c	139,0,3
-job_sword1.gat,183,206,4	duplicate(2_blank)	2_blank_8_d	139,0,3
-job_sword1.gat,155,203,4	duplicate(2_blank)	2_blank_8_e	139,21,0
-job_sword1.gat,181,203,4	duplicate(2_blank)	2_blank_8_f	139,2,0
-job_sword1.gat,155,201,4	duplicate(2_blank)	2_blank_9_a	139,40,0
-job_sword1.gat,181,201,4	duplicate(2_blank)	2_blank_9_b	139,2,0
+job_sword1,155,212,4	duplicate(2_blank)	2_blank_7_a	139,21,0
+job_sword1,181,212,4	duplicate(2_blank)	2_blank_7_b	139,2,0
+job_sword1,155,210,4	duplicate(2_blank)	2_blank_8_a	139,21,0
+job_sword1,181,210,4	duplicate(2_blank)	2_blank_8_b	139,2,0
+job_sword1,130,206,4	duplicate(2_blank)	2_blank_8_c	139,0,3
+job_sword1,183,206,4	duplicate(2_blank)	2_blank_8_d	139,0,3
+job_sword1,155,203,4	duplicate(2_blank)	2_blank_8_e	139,21,0
+job_sword1,181,203,4	duplicate(2_blank)	2_blank_8_f	139,2,0
+job_sword1,155,201,4	duplicate(2_blank)	2_blank_9_a	139,40,0
+job_sword1,181,201,4	duplicate(2_blank)	2_blank_9_b	139,2,0
 
-job_sword1.gat,17,174,4	script	3_blank_1_a::3_blank	139,2,0,{
+job_sword1,17,174,4	script	3_blank_1_a::3_blank	139,2,0,{
 	set @TEMP,rand(5);
-	if (@TEMP==0) warp "job_sword1.gat",195,15;
-	if (@TEMP==1) warp "job_sword1.gat",195,38;
-	if (@TEMP==2) warp "job_sword1.gat",231,30;
-	if (@TEMP==3) warp "job_sword1.gat",198,65;
-	if (@TEMP==4) warp "job_sword1.gat",196,116;
+	if (@TEMP==0) warp "job_sword1",195,15;
+	if (@TEMP==1) warp "job_sword1",195,38;
+	if (@TEMP==2) warp "job_sword1",231,30;
+	if (@TEMP==3) warp "job_sword1",198,65;
+	if (@TEMP==4) warp "job_sword1",196,116;
 	end;
 }
 
 // -- Duplicates --
-job_sword1.gat,17,163,4	duplicate(3_blank)	3_blank_2_a	139,2,0
-job_sword1.gat,29,171,4	duplicate(3_blank)	3_blank_3_a	139,2,0
-job_sword1.gat,31,168,4	duplicate(3_blank)	3_blank_3_b	139,0,2
-job_sword1.gat,28,166,4	duplicate(3_blank)	3_blank_3_c	139,2,0
-job_sword1.gat,26,168,4	duplicate(3_blank)	3_blank_3_d	139,0,2
-job_sword1.gat,36,169,4	duplicate(3_blank)	3_blank_4_a	139,0,0
-job_sword1.gat,37,169,4	duplicate(3_blank)	3_blank_4_b	139,0,0
-job_sword1.gat,37,168,4	duplicate(3_blank)	3_blank_4_c	139,0,0
-job_sword1.gat,36,168,4	duplicate(3_blank)	3_blank_4_d	139,0,0
-job_sword1.gat,40,175,4	duplicate(3_blank)	3_blank_5_a	139,0,1
-job_sword1.gat,41,175,4	duplicate(3_blank)	3_blank_5_b	139,0,1
-job_sword1.gat,41,171,4	duplicate(3_blank)	3_blank_6_a	139,1,0
-job_sword1.gat,41,170,4	duplicate(3_blank)	3_blank_6_b	139,1,0
-job_sword1.gat,41,167,4	duplicate(3_blank)	3_blank_6_c	139,1,0
-job_sword1.gat,41,166,4	duplicate(3_blank)	3_blank_6_d	139,1,0
-job_sword1.gat,42,169,4	duplicate(3_blank)	3_blank_6_e	139,0,1
-job_sword1.gat,43,170,4	duplicate(3_blank)	3_blank_6_f	139,0,1
-job_sword1.gat,43,167,4	duplicate(3_blank)	3_blank_6_g	139,0,1
-job_sword1.gat,40,162,4	duplicate(3_blank)	3_blank_7_a	139,0,1
-job_sword1.gat,41,162,4	duplicate(3_blank)	3_blank_7_b	139,0,1
-job_sword1.gat,46,175,4	duplicate(3_blank)	3_blank_8_a	139,0,1
-job_sword1.gat,51,175,4	duplicate(3_blank)	3_blank_8_b	139,0,1
-job_sword1.gat,47,174,4	duplicate(3_blank)	3_blank_8_c	139,1,0
-job_sword1.gat,50,174,4	duplicate(3_blank)	3_blank_8_d	139,1,0
-job_sword1.gat,48,173,4	duplicate(3_blank)	3_blank_8_e	139,0,1
-job_sword1.gat,49,173,4	duplicate(3_blank)	3_blank_8_f	139,0,1
-job_sword1.gat,46,162,4	duplicate(3_blank)	3_blank_9_a	139,0,1
-job_sword1.gat,51,162,4	duplicate(3_blank)	3_blank_9_b	139,0,1
-job_sword1.gat,47,163,4	duplicate(3_blank)	3_blank_9_c	139,1,0
-job_sword1.gat,50,163,4	duplicate(3_blank)	3_blank_9_d	139,1,0
-job_sword1.gat,48,164,4	duplicate(3_blank)	3_blank_9_e	139,0,1
-job_sword1.gat,49,164,4	duplicate(3_blank)	3_blank_9_f	139,0,1
-job_sword1.gat,54,170,4	duplicate(3_blank)	3_blank_10_a	139,0,1
-job_sword1.gat,55,170,4	duplicate(3_blank)	3_blank_10_b	139,0,1
-job_sword1.gat,54,167,4	duplicate(3_blank)	3_blank_10_c	139,0,1
-job_sword1.gat,55,167,4	duplicate(3_blank)	3_blank_10_d	139,0,1
-job_sword1.gat,53,169,4	duplicate(3_blank)	3_blank_10_e	139,1,0
-job_sword1.gat,53,168,4	duplicate(3_blank)	3_blank_10_f	139,1,0
-job_sword1.gat,56,169,4	duplicate(3_blank)	3_blank_10_g	139,1,0
-job_sword1.gat,56,168,4	duplicate(3_blank)	3_blank_10_h	139,1,0
-job_sword1.gat,58,175,4	duplicate(3_blank)	3_blank_11_a	139,0,1
-job_sword1.gat,59,174,4	duplicate(3_blank)	3_blank_11_b	139,1,0
-job_sword1.gat,60,173,4	duplicate(3_blank)	3_blank_11_c	139,0,1
-job_sword1.gat,61,172,4	duplicate(3_blank)	3_blank_11_d	139,1,0
-job_sword1.gat,58,162,4	duplicate(3_blank)	3_blank_12_a	139,0,1
-job_sword1.gat,59,163,4	duplicate(3_blank)	3_blank_12_b	139,1,0
-job_sword1.gat,60,164,4	duplicate(3_blank)	3_blank_12_c	139,0,1
-job_sword1.gat,61,165,4	duplicate(3_blank)	3_blank_12_d	139,1,0
-job_sword1.gat,76,172,4	duplicate(3_blank)	3_blank_13_a	139,1,0
-job_sword1.gat,77,173,4	duplicate(3_blank)	3_blank_13_b	139,0,1
-job_sword1.gat,78,174,4	duplicate(3_blank)	3_blank_13_c	139,1,0
-job_sword1.gat,79,175,4	duplicate(3_blank)	3_blank_13_d	139,0,1
-job_sword1.gat,76,165,4	duplicate(3_blank)	3_blank_14_a	139,1,0
-job_sword1.gat,77,164,4	duplicate(3_blank)	3_blank_14_b	139,0,1
-job_sword1.gat,78,163,4	duplicate(3_blank)	3_blank_14_c	139,1,0
-job_sword1.gat,79,162,4	duplicate(3_blank)	3_blank_14_d	139,0,1
-job_sword1.gat,94,175,4	duplicate(3_blank)	3_blank_15_a	139,0,1
-job_sword1.gat,95,174,4	duplicate(3_blank)	3_blank_15_b	139,1,0
-job_sword1.gat,98,174,4	duplicate(3_blank)	3_blank_15_c	139,1,0
-job_sword1.gat,99,175,4	duplicate(3_blank)	3_blank_16_d	139,0,1
-job_sword1.gat,96,169,4	duplicate(3_blank)	3_blank_17_a	139,0,0
-job_sword1.gat,97,169,4	duplicate(3_blank)	3_blank_17_b	139,0,0
-job_sword1.gat,97,168,4	duplicate(3_blank)	3_blank_17_c	139,0,0
-job_sword1.gat,96,168,4	duplicate(3_blank)	3_blank_17_d	139,0,0
-job_sword1.gat,94,162,4	duplicate(3_blank)	3_blank_18_a	139,0,1
-job_sword1.gat,95,163,4	duplicate(3_blank)	3_blank_18_b	139,1,0
-job_sword1.gat,98,163,4	duplicate(3_blank)	3_blank_18_c	139,1,0
-job_sword1.gat,99,162,4	duplicate(3_blank)	3_blank_18_d	139,0,1
-job_sword1.gat,114,175,4	duplicate(3_blank)	3_blank_19_a	139,0,1
-job_sword1.gat,115,175,4	duplicate(3_blank)	3_blank_19_b	139,0,1
-job_sword1.gat,114,162,4	duplicate(3_blank)	3_blank_20_a	139,0,1
-job_sword1.gat,115,162,4	duplicate(3_blank)	3_blank_20_b	139,0,1
-job_sword1.gat,126,175,4	duplicate(3_blank)	3_blank_21_a	139,0,1
-job_sword1.gat,127,175,4	duplicate(3_blank)	3_blank_21_b	139,0,1
-job_sword1.gat,126,162,4	duplicate(3_blank)	3_blank_23_a	139,0,1
-job_sword1.gat,127,162,4	duplicate(3_blank)	3_blank_23_b	139,0,1
-job_sword1.gat,160,174,4	duplicate(3_blank)	3_blank_24_a	139,0,2
-job_sword1.gat,161,174,4	duplicate(3_blank)	3_blank_24_b	139,0,2
-job_sword1.gat,160,163,4	duplicate(3_blank)	3_blank_25_a	139,0,2
-job_sword1.gat,161,163,4	duplicate(3_blank)	3_blank_25_b	139,0,2
-job_sword1.gat,168,175,4	duplicate(3_blank)	3_blank_26_a	139,0,2
-job_sword1.gat,169,175,4	duplicate(3_blank)	3_blank_26_b	139,0,2
-job_sword1.gat,168,162,4	duplicate(3_blank)	3_blank_27_a	139,0,2
-job_sword1.gat,169,162,4	duplicate(3_blank)	3_blank_27_b	139,0,2
-job_sword1.gat,176,174,4	duplicate(3_blank)	3_blank_28_a	139,0,2
-job_sword1.gat,177,174,4	duplicate(3_blank)	3_blank_28_b	139,0,2
-job_sword1.gat,178,173,4	duplicate(3_blank)	3_blank_28_c	139,1,0
-job_sword1.gat,178,172,4	duplicate(3_blank)	3_blank_28_d	139,1,0
-job_sword1.gat,181,174,4	duplicate(3_blank)	3_blank_28_e	139,2,0
-job_sword1.gat,179,169,4	duplicate(3_blank)	3_blank_29_a	139,3,0
-job_sword1.gat,179,168,4	duplicate(3_blank)	3_blank_29_b	139,3,0
-job_sword1.gat,182,169,4	duplicate(3_blank)	3_blank_29_c	139,0,2
-job_sword1.gat,183,169,4	duplicate(3_blank)	3_blank_29_d	139,0,2
-job_sword1.gat,181,167,4	duplicate(3_blank)	3_blank_29_e	139,1,0
-job_sword1.gat,181,166,4	duplicate(3_blank)	3_blank_29_f	139,1,0
-job_sword1.gat,183,167,4	duplicate(3_blank)	3_blank_29_g	139,0,1
-job_sword1.gat,176,163,4	duplicate(3_blank)	3_blank_30_a	139,0,2
-job_sword1.gat,177,163,4	duplicate(3_blank)	3_blank_30_b	139,0,2
-job_sword1.gat,181,163,4	duplicate(3_blank)	3_blank_30_c	139,2,0
+job_sword1,17,163,4	duplicate(3_blank)	3_blank_2_a	139,2,0
+job_sword1,29,171,4	duplicate(3_blank)	3_blank_3_a	139,2,0
+job_sword1,31,168,4	duplicate(3_blank)	3_blank_3_b	139,0,2
+job_sword1,28,166,4	duplicate(3_blank)	3_blank_3_c	139,2,0
+job_sword1,26,168,4	duplicate(3_blank)	3_blank_3_d	139,0,2
+job_sword1,36,169,4	duplicate(3_blank)	3_blank_4_a	139,0,0
+job_sword1,37,169,4	duplicate(3_blank)	3_blank_4_b	139,0,0
+job_sword1,37,168,4	duplicate(3_blank)	3_blank_4_c	139,0,0
+job_sword1,36,168,4	duplicate(3_blank)	3_blank_4_d	139,0,0
+job_sword1,40,175,4	duplicate(3_blank)	3_blank_5_a	139,0,1
+job_sword1,41,175,4	duplicate(3_blank)	3_blank_5_b	139,0,1
+job_sword1,41,171,4	duplicate(3_blank)	3_blank_6_a	139,1,0
+job_sword1,41,170,4	duplicate(3_blank)	3_blank_6_b	139,1,0
+job_sword1,41,167,4	duplicate(3_blank)	3_blank_6_c	139,1,0
+job_sword1,41,166,4	duplicate(3_blank)	3_blank_6_d	139,1,0
+job_sword1,42,169,4	duplicate(3_blank)	3_blank_6_e	139,0,1
+job_sword1,43,170,4	duplicate(3_blank)	3_blank_6_f	139,0,1
+job_sword1,43,167,4	duplicate(3_blank)	3_blank_6_g	139,0,1
+job_sword1,40,162,4	duplicate(3_blank)	3_blank_7_a	139,0,1
+job_sword1,41,162,4	duplicate(3_blank)	3_blank_7_b	139,0,1
+job_sword1,46,175,4	duplicate(3_blank)	3_blank_8_a	139,0,1
+job_sword1,51,175,4	duplicate(3_blank)	3_blank_8_b	139,0,1
+job_sword1,47,174,4	duplicate(3_blank)	3_blank_8_c	139,1,0
+job_sword1,50,174,4	duplicate(3_blank)	3_blank_8_d	139,1,0
+job_sword1,48,173,4	duplicate(3_blank)	3_blank_8_e	139,0,1
+job_sword1,49,173,4	duplicate(3_blank)	3_blank_8_f	139,0,1
+job_sword1,46,162,4	duplicate(3_blank)	3_blank_9_a	139,0,1
+job_sword1,51,162,4	duplicate(3_blank)	3_blank_9_b	139,0,1
+job_sword1,47,163,4	duplicate(3_blank)	3_blank_9_c	139,1,0
+job_sword1,50,163,4	duplicate(3_blank)	3_blank_9_d	139,1,0
+job_sword1,48,164,4	duplicate(3_blank)	3_blank_9_e	139,0,1
+job_sword1,49,164,4	duplicate(3_blank)	3_blank_9_f	139,0,1
+job_sword1,54,170,4	duplicate(3_blank)	3_blank_10_a	139,0,1
+job_sword1,55,170,4	duplicate(3_blank)	3_blank_10_b	139,0,1
+job_sword1,54,167,4	duplicate(3_blank)	3_blank_10_c	139,0,1
+job_sword1,55,167,4	duplicate(3_blank)	3_blank_10_d	139,0,1
+job_sword1,53,169,4	duplicate(3_blank)	3_blank_10_e	139,1,0
+job_sword1,53,168,4	duplicate(3_blank)	3_blank_10_f	139,1,0
+job_sword1,56,169,4	duplicate(3_blank)	3_blank_10_g	139,1,0
+job_sword1,56,168,4	duplicate(3_blank)	3_blank_10_h	139,1,0
+job_sword1,58,175,4	duplicate(3_blank)	3_blank_11_a	139,0,1
+job_sword1,59,174,4	duplicate(3_blank)	3_blank_11_b	139,1,0
+job_sword1,60,173,4	duplicate(3_blank)	3_blank_11_c	139,0,1
+job_sword1,61,172,4	duplicate(3_blank)	3_blank_11_d	139,1,0
+job_sword1,58,162,4	duplicate(3_blank)	3_blank_12_a	139,0,1
+job_sword1,59,163,4	duplicate(3_blank)	3_blank_12_b	139,1,0
+job_sword1,60,164,4	duplicate(3_blank)	3_blank_12_c	139,0,1
+job_sword1,61,165,4	duplicate(3_blank)	3_blank_12_d	139,1,0
+job_sword1,76,172,4	duplicate(3_blank)	3_blank_13_a	139,1,0
+job_sword1,77,173,4	duplicate(3_blank)	3_blank_13_b	139,0,1
+job_sword1,78,174,4	duplicate(3_blank)	3_blank_13_c	139,1,0
+job_sword1,79,175,4	duplicate(3_blank)	3_blank_13_d	139,0,1
+job_sword1,76,165,4	duplicate(3_blank)	3_blank_14_a	139,1,0
+job_sword1,77,164,4	duplicate(3_blank)	3_blank_14_b	139,0,1
+job_sword1,78,163,4	duplicate(3_blank)	3_blank_14_c	139,1,0
+job_sword1,79,162,4	duplicate(3_blank)	3_blank_14_d	139,0,1
+job_sword1,94,175,4	duplicate(3_blank)	3_blank_15_a	139,0,1
+job_sword1,95,174,4	duplicate(3_blank)	3_blank_15_b	139,1,0
+job_sword1,98,174,4	duplicate(3_blank)	3_blank_15_c	139,1,0
+job_sword1,99,175,4	duplicate(3_blank)	3_blank_16_d	139,0,1
+job_sword1,96,169,4	duplicate(3_blank)	3_blank_17_a	139,0,0
+job_sword1,97,169,4	duplicate(3_blank)	3_blank_17_b	139,0,0
+job_sword1,97,168,4	duplicate(3_blank)	3_blank_17_c	139,0,0
+job_sword1,96,168,4	duplicate(3_blank)	3_blank_17_d	139,0,0
+job_sword1,94,162,4	duplicate(3_blank)	3_blank_18_a	139,0,1
+job_sword1,95,163,4	duplicate(3_blank)	3_blank_18_b	139,1,0
+job_sword1,98,163,4	duplicate(3_blank)	3_blank_18_c	139,1,0
+job_sword1,99,162,4	duplicate(3_blank)	3_blank_18_d	139,0,1
+job_sword1,114,175,4	duplicate(3_blank)	3_blank_19_a	139,0,1
+job_sword1,115,175,4	duplicate(3_blank)	3_blank_19_b	139,0,1
+job_sword1,114,162,4	duplicate(3_blank)	3_blank_20_a	139,0,1
+job_sword1,115,162,4	duplicate(3_blank)	3_blank_20_b	139,0,1
+job_sword1,126,175,4	duplicate(3_blank)	3_blank_21_a	139,0,1
+job_sword1,127,175,4	duplicate(3_blank)	3_blank_21_b	139,0,1
+job_sword1,126,162,4	duplicate(3_blank)	3_blank_23_a	139,0,1
+job_sword1,127,162,4	duplicate(3_blank)	3_blank_23_b	139,0,1
+job_sword1,160,174,4	duplicate(3_blank)	3_blank_24_a	139,0,2
+job_sword1,161,174,4	duplicate(3_blank)	3_blank_24_b	139,0,2
+job_sword1,160,163,4	duplicate(3_blank)	3_blank_25_a	139,0,2
+job_sword1,161,163,4	duplicate(3_blank)	3_blank_25_b	139,0,2
+job_sword1,168,175,4	duplicate(3_blank)	3_blank_26_a	139,0,2
+job_sword1,169,175,4	duplicate(3_blank)	3_blank_26_b	139,0,2
+job_sword1,168,162,4	duplicate(3_blank)	3_blank_27_a	139,0,2
+job_sword1,169,162,4	duplicate(3_blank)	3_blank_27_b	139,0,2
+job_sword1,176,174,4	duplicate(3_blank)	3_blank_28_a	139,0,2
+job_sword1,177,174,4	duplicate(3_blank)	3_blank_28_b	139,0,2
+job_sword1,178,173,4	duplicate(3_blank)	3_blank_28_c	139,1,0
+job_sword1,178,172,4	duplicate(3_blank)	3_blank_28_d	139,1,0
+job_sword1,181,174,4	duplicate(3_blank)	3_blank_28_e	139,2,0
+job_sword1,179,169,4	duplicate(3_blank)	3_blank_29_a	139,3,0
+job_sword1,179,168,4	duplicate(3_blank)	3_blank_29_b	139,3,0
+job_sword1,182,169,4	duplicate(3_blank)	3_blank_29_c	139,0,2
+job_sword1,183,169,4	duplicate(3_blank)	3_blank_29_d	139,0,2
+job_sword1,181,167,4	duplicate(3_blank)	3_blank_29_e	139,1,0
+job_sword1,181,166,4	duplicate(3_blank)	3_blank_29_f	139,1,0
+job_sword1,183,167,4	duplicate(3_blank)	3_blank_29_g	139,0,1
+job_sword1,176,163,4	duplicate(3_blank)	3_blank_30_a	139,0,2
+job_sword1,177,163,4	duplicate(3_blank)	3_blank_30_b	139,0,2
+job_sword1,181,163,4	duplicate(3_blank)	3_blank_30_c	139,2,0
 
 // == Monsters ==
 //Spawn is included in this file so make shure its not elsewhere to!
-job_sword1.gat,35,78,0,0	monster	Fabre	1184,4,0,0,0
-job_sword1.gat,50,108,0,0	monster	Fabre	1184,2,0,0,0
-job_sword1.gat,61,28,0,0	monster	Fabre	1184,4,0,0,0
-job_sword1.gat,61,92,0,0	monster	Fabre	1184,2,0,0,0
+job_sword1,35,78,0,0	monster	Fabre	1184,4,0,0,0
+job_sword1,50,108,0,0	monster	Fabre	1184,2,0,0,0
+job_sword1,61,28,0,0	monster	Fabre	1184,4,0,0,0
+job_sword1,61,92,0,0	monster	Fabre	1184,2,0,0,0
 //
-job_sword1.gat,110,112,0,0	monster	Fabre	1184,3,0,0,0
-job_sword1.gat,161,94,0,0	monster	Fabre	1184,2,0,0,0
-job_sword1.gat,130,76,0,0	monster	Fabre	1184,2,0,0,0
-job_sword1.gat,103,58,0,0	monster	Fabre	1184,2,0,0,0
-job_sword1.gat,130,24,0,0	monster	Fabre	1184,3,0,0,0
+job_sword1,110,112,0,0	monster	Fabre	1184,3,0,0,0
+job_sword1,161,94,0,0	monster	Fabre	1184,2,0,0,0
+job_sword1,130,76,0,0	monster	Fabre	1184,2,0,0,0
+job_sword1,103,58,0,0	monster	Fabre	1184,2,0,0,0
+job_sword1,130,24,0,0	monster	Fabre	1184,3,0,0,0
 //
-job_sword1.gat,201,36,0,0	monster	Fabre	1184,2,0,0,0
-job_sword1.gat,201,16,0,0	monster	Fabre	1184,2,0,0,0
-job_sword1.gat,239,44,0,0	monster	Fabre	1184,2,0,0,0
-job_sword1.gat,239,76,0,0	monster	Fabre	1184,2,0,0,0
-job_sword1.gat,231,101,0,0	monster	Fabre	1184,2,0,0,0
-job_sword1.gat,234,117,0,0	monster	Fabre	1184,2,0,0,0
-job_sword1.gat,198,91,0,0	monster	Fabre	1184,2,0,0,0
-job_sword1.gat,200,63,0,0	monster	Fabre	1184,2,0,0,0
+job_sword1,201,36,0,0	monster	Fabre	1184,2,0,0,0
+job_sword1,201,16,0,0	monster	Fabre	1184,2,0,0,0
+job_sword1,239,44,0,0	monster	Fabre	1184,2,0,0,0
+job_sword1,239,76,0,0	monster	Fabre	1184,2,0,0,0
+job_sword1,231,101,0,0	monster	Fabre	1184,2,0,0,0
+job_sword1,234,117,0,0	monster	Fabre	1184,2,0,0,0
+job_sword1,198,91,0,0	monster	Fabre	1184,2,0,0,0
+job_sword1,200,63,0,0	monster	Fabre	1184,2,0,0,0
 
 //==============================================================================
 // mapflag
 //==============================================================================
-job_sword1.gat	mapflag	nomemo
-job_sword1.gat	mapflag	noteleport
-job_sword1.gat	mapflag	nosave	SavePoint
-job_sword1.gat	mapflag	nopenalty
-job_sword1.gat	mapflag	nobranch
-job_sword1.gat	mapflag	noexp
-job_sword1.gat	mapflag	noloot
+job_sword1	mapflag	nomemo
+job_sword1	mapflag	noteleport
+job_sword1	mapflag	nosave	SavePoint
+job_sword1	mapflag	nopenalty
+job_sword1	mapflag	nobranch
+job_sword1	mapflag	noexp
+job_sword1	mapflag	noloot

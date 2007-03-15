@@ -13,7 +13,7 @@
 //= 1.1 Removed Duplicates [Silent]
 //============================================================
 
-amatsu.gat,207,89,3	script	Amatsu Guide#01	758,{
+amatsu,207,89,3	script	Amatsu Guide#01	758,{
 
 	mes "[Amachang]";
 	mes "Welcome to Amatsu,";
@@ -72,7 +72,7 @@ s_Bar:
 
 }
 
-amatsu.gat,251,283,4	script	Amatsu Guide#02	767,{
+amatsu,251,283,4	script	Amatsu Guide#02	767,{
 
 	mes "[Guide Man]";
 	mes "Welcome, tourist from";

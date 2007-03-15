@@ -48,7 +48,7 @@ function	script	Ramvp_M	{
 		close;
 
 	L_Leave:
-		warp "prontera.gat",156,179;
+		warp "prontera",156,179;
 		close;
 
 }
@@ -63,7 +63,7 @@ function	script	Ramvp_M2	{
 		close;
 
 	L_Leave:
-		warp "prontera.gat",156,179;
+		warp "prontera",156,179;
 		close;
 
 }

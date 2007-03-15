@@ -15,17 +15,17 @@
 
 
 // Castle 1 ==================================================================================
-prtg_cas01.gat,112,181,0	script	Abrai	55,{
+prtg_cas01,112,181,0	script	Abrai	55,{
 	if(callfunc("F_GldManager","Abrai","prtg_cas01",15,209,"Pt01") == 0) close;
 
-	if(@GDnum==10) guardian "prtg_cas01.gat",196,92,"Soldier Guardian",1287,"Guardian_Pt01::OnGuardianDied",0; 
-	if(@GDnum==11) guardian "prtg_cas01.gat",113,200,"Soldier Guardian",1287,"Guardian_Pt01::OnGuardianDied",1; 
-	if(@GDnum==12) guardian "prtg_cas01.gat",111,186,"Soldier Guardian",1287,"Guardian_Pt01::OnGuardianDied",2;
-	if(@GDnum==13) guardian "prtg_cas01.gat",76,202,"Archer Guardian",1285,"Guardian_Pt01::OnGuardianDied",3; 
-	if(@GDnum==14) guardian "prtg_cas01.gat",90,26,"Archer Guardian",1285,"Guardian_Pt01::OnGuardianDied",4; 
-	if(@GDnum==15) guardian "prtg_cas01.gat",58,59,"Knight Guardian",1286,"Guardian_Pt01::OnGuardianDied",5; 
-	if(@GDnum==16) guardian "prtg_cas01.gat",112,200,"Knight Guardian",1286,"Guardian_Pt01::OnGuardianDied",6; 
-	if(@GDnum==17) guardian "prtg_cas01.gat",101,194,"Knight Guardian",1286,"Guardian_Pt01::OnGuardianDied",7;
+	if(@GDnum==10) guardian "prtg_cas01",196,92,"Soldier Guardian",1287,"Guardian_Pt01::OnGuardianDied",0; 
+	if(@GDnum==11) guardian "prtg_cas01",113,200,"Soldier Guardian",1287,"Guardian_Pt01::OnGuardianDied",1; 
+	if(@GDnum==12) guardian "prtg_cas01",111,186,"Soldier Guardian",1287,"Guardian_Pt01::OnGuardianDied",2;
+	if(@GDnum==13) guardian "prtg_cas01",76,202,"Archer Guardian",1285,"Guardian_Pt01::OnGuardianDied",3; 
+	if(@GDnum==14) guardian "prtg_cas01",90,26,"Archer Guardian",1285,"Guardian_Pt01::OnGuardianDied",4; 
+	if(@GDnum==15) guardian "prtg_cas01",58,59,"Knight Guardian",1286,"Guardian_Pt01::OnGuardianDied",5; 
+	if(@GDnum==16) guardian "prtg_cas01",112,200,"Knight Guardian",1286,"Guardian_Pt01::OnGuardianDied",6; 
+	if(@GDnum==17) guardian "prtg_cas01",101,194,"Knight Guardian",1286,"Guardian_Pt01::OnGuardianDied",7;
 	mes "[ Abrai ]";
 	mes "Guardian has been installed, the guardian will protect our guild base against enemies.";
 	close;
@@ -33,17 +33,17 @@ prtg_cas01.gat,112,181,0	script	Abrai	55,{
 
 
 // Castle 2 ==================================================================================
-prtg_cas02.gat,94,61,0	script	Rhay	55,{
+prtg_cas02,94,61,0	script	Rhay	55,{
 	if(callfunc("F_GldManager","Rhay","prtg_cas02",201,229,"Pt02") == 0) close;
 
-	if(@GDnum==10) guardian "prtg_cas02.gat",75,71,"Soldier Guardian",1287,"Guardian_Pt02::OnGuardianDied",0; 
-	if(@GDnum==11) guardian "prtg_cas02.gat",56,31,"Soldier Guardian",1287,"Guardian_Pt02::OnGuardianDied",1; 
-	if(@GDnum==12) guardian "prtg_cas02.gat",42,223,"Soldier Guardian",1287,"Guardian_Pt02::OnGuardianDied",2;
-	if(@GDnum==13) guardian "prtg_cas02.gat",44,195,"Archer Guardian",1285,"Guardian_Pt02::OnGuardianDied",3; 
-	if(@GDnum==14) guardian "prtg_cas02.gat",197,22,"Archer Guardian",1285,"Guardian_Pt02::OnGuardianDied",4; 
-	if(@GDnum==15) guardian "prtg_cas02.gat",68,71,"Knight Guardian",1286,"Guardian_Pt02::OnGuardianDied",5; 
-	if(@GDnum==16) guardian "prtg_cas02.gat",202,27,"Knight Guardian",1286,"Guardian_Pt02::OnGuardianDied",6; 
-	if(@GDnum==17) guardian "prtg_cas02.gat",59,24,"Knight Guardian",1286,"Guardian_Pt02::OnGuardianDied",7;
+	if(@GDnum==10) guardian "prtg_cas02",75,71,"Soldier Guardian",1287,"Guardian_Pt02::OnGuardianDied",0; 
+	if(@GDnum==11) guardian "prtg_cas02",56,31,"Soldier Guardian",1287,"Guardian_Pt02::OnGuardianDied",1; 
+	if(@GDnum==12) guardian "prtg_cas02",42,223,"Soldier Guardian",1287,"Guardian_Pt02::OnGuardianDied",2;
+	if(@GDnum==13) guardian "prtg_cas02",44,195,"Archer Guardian",1285,"Guardian_Pt02::OnGuardianDied",3; 
+	if(@GDnum==14) guardian "prtg_cas02",197,22,"Archer Guardian",1285,"Guardian_Pt02::OnGuardianDied",4; 
+	if(@GDnum==15) guardian "prtg_cas02",68,71,"Knight Guardian",1286,"Guardian_Pt02::OnGuardianDied",5; 
+	if(@GDnum==16) guardian "prtg_cas02",202,27,"Knight Guardian",1286,"Guardian_Pt02::OnGuardianDied",6; 
+	if(@GDnum==17) guardian "prtg_cas02",59,24,"Knight Guardian",1286,"Guardian_Pt02::OnGuardianDied",7;
 	mes "[ Rhay ]";
 	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
 	close;
@@ -51,17 +51,17 @@ prtg_cas02.gat,94,61,0	script	Rhay	55,{
 
 
 // Castle 3 ==================================================================================
-prtg_cas03.gat,51,100,4	script	Stick	55,{
+prtg_cas03,51,100,4	script	Stick	55,{
 	if(callfunc("F_GldManager","Stick","prtg_cas03",189,132,"Pt03") == 0) close;
 
-	if(@GDnum==10) guardian "prtg_cas03.gat",165,55,"Soldier Guardian",1287,"Guardian_Pt03::OnGuardianDied",0; 
-	if(@GDnum==11) guardian "prtg_cas03.gat",161,181,"Soldier Guardian",1287,"Guardian_Pt03::OnGuardianDied",1; 
-	if(@GDnum==12) guardian "prtg_cas03.gat",165,199,"Soldier Guardian",1287,"Guardian_Pt03::OnGuardianDied",2;
-	if(@GDnum==13) guardian "prtg_cas03.gat",169,22,"Archer Guardian",1285,"Guardian_Pt03::OnGuardianDied",3; 
-	if(@GDnum==14) guardian "prtg_cas03.gat",165,191,"Archer Guardian",1285,"Guardian_Pt03::OnGuardianDied",4; 
-	if(@GDnum==15) guardian "prtg_cas03.gat",175,13,"Knight Guardian",1286,"Guardian_Pt03::OnGuardianDied",5; 
-	if(@GDnum==16) guardian "prtg_cas03.gat",169,180,"Knight Guardian",1286,"Guardian_Pt03::OnGuardianDied",6; 
-	if(@GDnum==17) guardian "prtg_cas03.gat",142,217,"Knight Guardian",1286,"Guardian_Pt03::OnGuardianDied",7;
+	if(@GDnum==10) guardian "prtg_cas03",165,55,"Soldier Guardian",1287,"Guardian_Pt03::OnGuardianDied",0; 
+	if(@GDnum==11) guardian "prtg_cas03",161,181,"Soldier Guardian",1287,"Guardian_Pt03::OnGuardianDied",1; 
+	if(@GDnum==12) guardian "prtg_cas03",165,199,"Soldier Guardian",1287,"Guardian_Pt03::OnGuardianDied",2;
+	if(@GDnum==13) guardian "prtg_cas03",169,22,"Archer Guardian",1285,"Guardian_Pt03::OnGuardianDied",3; 
+	if(@GDnum==14) guardian "prtg_cas03",165,191,"Archer Guardian",1285,"Guardian_Pt03::OnGuardianDied",4; 
+	if(@GDnum==15) guardian "prtg_cas03",175,13,"Knight Guardian",1286,"Guardian_Pt03::OnGuardianDied",5; 
+	if(@GDnum==16) guardian "prtg_cas03",169,180,"Knight Guardian",1286,"Guardian_Pt03::OnGuardianDied",6; 
+	if(@GDnum==17) guardian "prtg_cas03",142,217,"Knight Guardian",1286,"Guardian_Pt03::OnGuardianDied",7;
 	mes "[ Stick ]";
 	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
 	close;
@@ -69,17 +69,17 @@ prtg_cas03.gat,51,100,4	script	Stick	55,{
 
 
 // Castle 4 ==================================================================================
-prtg_cas04.gat,259,265,4	script	Bandred	55,{
+prtg_cas04,259,265,4	script	Bandred	55,{
 	if(callfunc("F_GldManager","Bandred","prtg_cas04",271,162,"Pt04") == 0) close;
 
-	if(@GDnum==10) guardian "prtg_cas04.gat",30,234,"Soldier Guardian",1287,"Guardian_Pt04::OnGuardianDied",0; 
-	if(@GDnum==11) guardian "prtg_cas04.gat",38,234,"Soldier Guardian",1287,"Guardian_Pt04::OnGuardianDied",1; 
-	if(@GDnum==12) guardian "prtg_cas04.gat",63,26,"Soldier Guardian",1287,"Guardian_Pt04::OnGuardianDied",2;
-	if(@GDnum==13) guardian "prtg_cas04.gat",253,274,"Archer Guardian",1285,"Guardian_Pt04::OnGuardianDied",3; 
-	if(@GDnum==14) guardian "prtg_cas04.gat",269,256,"Archer Guardian",1285,"Guardian_Pt04::OnGuardianDied",4; 
-	if(@GDnum==15) guardian "prtg_cas04.gat",267,271,"Knight Guardian",1286,"Guardian_Pt04::OnGuardianDied",5; 
-	if(@GDnum==16) guardian "prtg_cas04.gat",34,281,"Knight Guardian",1286,"Guardian_Pt04::OnGuardianDied",6; 
-	if(@GDnum==17) guardian "prtg_cas04.gat",33,232,"Knight Guardian",1286,"Guardian_Pt04::OnGuardianDied",7;
+	if(@GDnum==10) guardian "prtg_cas04",30,234,"Soldier Guardian",1287,"Guardian_Pt04::OnGuardianDied",0; 
+	if(@GDnum==11) guardian "prtg_cas04",38,234,"Soldier Guardian",1287,"Guardian_Pt04::OnGuardianDied",1; 
+	if(@GDnum==12) guardian "prtg_cas04",63,26,"Soldier Guardian",1287,"Guardian_Pt04::OnGuardianDied",2;
+	if(@GDnum==13) guardian "prtg_cas04",253,274,"Archer Guardian",1285,"Guardian_Pt04::OnGuardianDied",3; 
+	if(@GDnum==14) guardian "prtg_cas04",269,256,"Archer Guardian",1285,"Guardian_Pt04::OnGuardianDied",4; 
+	if(@GDnum==15) guardian "prtg_cas04",267,271,"Knight Guardian",1286,"Guardian_Pt04::OnGuardianDied",5; 
+	if(@GDnum==16) guardian "prtg_cas04",34,281,"Knight Guardian",1286,"Guardian_Pt04::OnGuardianDied",6; 
+	if(@GDnum==17) guardian "prtg_cas04",33,232,"Knight Guardian",1286,"Guardian_Pt04::OnGuardianDied",7;
 	mes "[ Bandred ]";
 	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
 	close;
@@ -87,17 +87,17 @@ prtg_cas04.gat,259,265,4	script	Bandred	55,{
 
 
 // Castle 5 ==================================================================================
-prtg_cas05.gat,36,37,4	script	Reiner	55,{
+prtg_cas05,36,37,4	script	Reiner	55,{
 	if(callfunc("F_GldManager","Reiner","prtg_cas05",273,179,"Pt05") == 0) close;
 
-	if(@GDnum==10) guardian "prtg_cas05.gat",244,15,"Soldier Guardian",1287,"Guardian_Pt05::OnGuardianDied",0; 
-	if(@GDnum==11) guardian "prtg_cas05.gat",241,14,"Soldier Guardian",1287,"Guardian_Pt05::OnGuardianDied",1; 
-	if(@GDnum==12) guardian "prtg_cas05.gat",68,40,"Soldier Guardian",1287,"Guardian_Pt05::OnGuardianDied",2;
-	if(@GDnum==13) guardian "prtg_cas05.gat",62,264,"Archer Guardian",1285,"Guardian_Pt05::OnGuardianDied",3; 
-	if(@GDnum==14) guardian "prtg_cas05.gat",244,61,"Archer Guardian",1285,"Guardian_Pt05::OnGuardianDied",4; 
-	if(@GDnum==15) guardian "prtg_cas05.gat",34,24,"Knight Guardian",1286,"Guardian_Pt05::OnGuardianDied",5; 
-	if(@GDnum==16) guardian "prtg_cas05.gat",208,86,"Knight Guardian",1286,"Guardian_Pt05::OnGuardianDied",6; 
-	if(@GDnum==17) guardian "prtg_cas05.gat",43,70,"Knight Guardian",1286,"Guardian_Pt05::OnGuardianDied",7;
+	if(@GDnum==10) guardian "prtg_cas05",244,15,"Soldier Guardian",1287,"Guardian_Pt05::OnGuardianDied",0; 
+	if(@GDnum==11) guardian "prtg_cas05",241,14,"Soldier Guardian",1287,"Guardian_Pt05::OnGuardianDied",1; 
+	if(@GDnum==12) guardian "prtg_cas05",68,40,"Soldier Guardian",1287,"Guardian_Pt05::OnGuardianDied",2;
+	if(@GDnum==13) guardian "prtg_cas05",62,264,"Archer Guardian",1285,"Guardian_Pt05::OnGuardianDied",3; 
+	if(@GDnum==14) guardian "prtg_cas05",244,61,"Archer Guardian",1285,"Guardian_Pt05::OnGuardianDied",4; 
+	if(@GDnum==15) guardian "prtg_cas05",34,24,"Knight Guardian",1286,"Guardian_Pt05::OnGuardianDied",5; 
+	if(@GDnum==16) guardian "prtg_cas05",208,86,"Knight Guardian",1286,"Guardian_Pt05::OnGuardianDied",6; 
+	if(@GDnum==17) guardian "prtg_cas05",43,70,"Knight Guardian",1286,"Guardian_Pt05::OnGuardianDied",7;
 	mes "[ Reiner ]";
 	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
 	close;

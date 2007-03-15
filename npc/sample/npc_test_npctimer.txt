@@ -1,5 +1,5 @@
 
-prontera.gat,156,183,0	script	NPCtimerテスト::npctimerX0000	116,{
+prontera,156,183,0	script	NPCtimerテスト::npctimerX0000	116,{
 	mes "タイマー値" + getnpctimer(0);
 	mes "タイマー状態" + getnpctimer(1,"npctimerX0000");
 	mes "イベント個数" + getnpctimer(2);

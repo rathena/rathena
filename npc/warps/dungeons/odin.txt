@@ -14,16 +14,16 @@
 //= 1.2 Removed Duplicates [Silent]
 //============================================================
 
-odin_tem01.gat,378,181,0	warp	odin01	1,1,odin_tem02.gat,22,181
-odin_tem02.gat,20,181,0	warp	odin02	1,1,odin_tem01.gat,376,181
-odin_tem01.gat,384,334,0	warp	odin03	1,1,odin_tem02.gat,23,334
-odin_tem02.gat,20,334,0	warp	odin04	1,1,odin_tem01.gat,381,334
-odin_tem02.gat,152,350,0	warp	odin05	1,1,odin_tem03.gat,121,51
-odin_tem03.gat,122,48,0	warp	odin06	1,1,odin_tem02.gat,153,347
-odin_tem02.gat,259,374,0	warp	odin07	1,1,odin_tem03.gat,249,35
-odin_tem03.gat,249,33,0	warp	odin08	1,1,odin_tem02.gat,262,371
+odin_tem01,378,181,0	warp	odin01	1,1,odin_tem02,22,181
+odin_tem02,20,181,0	warp	odin02	1,1,odin_tem01,376,181
+odin_tem01,384,334,0	warp	odin03	1,1,odin_tem02,23,334
+odin_tem02,20,334,0	warp	odin04	1,1,odin_tem01,381,334
+odin_tem02,152,350,0	warp	odin05	1,1,odin_tem03,121,51
+odin_tem03,122,48,0	warp	odin06	1,1,odin_tem02,153,347
+odin_tem02,259,374,0	warp	odin07	1,1,odin_tem03,249,35
+odin_tem03,249,33,0	warp	odin08	1,1,odin_tem02,262,371
 
-hugel.gat,209,109,1	script	Sailor Hako#01	709,{
+hugel,209,109,1	script	Sailor Hako#01	709,{
 	mes "[Sailor Hako]";
 	mes "Hello stranger. I'm the only person that offers a unique trip to the cursed Odin Islands.";
 	mes "One of the strongest monsters known to man live there, so no wonder. Ha, ha, ha~!";
@@ -37,7 +37,7 @@ hugel.gat,209,109,1	script	Sailor Hako#01	709,{
 	set Zeny, Zeny-800;
 	mes "All aboard!";
 	next;
-	warp "odin_tem01.gat",100,145;
+	warp "odin_tem01",100,145;
 	end;
 
 L_Zeny:
@@ -51,7 +51,7 @@ L_No:
 	close;
 }
 
-odin_tem01.gat,93,146,3	script	Sailor Hako#02	709,{
+odin_tem01,93,146,3	script	Sailor Hako#02	709,{
 	mes "[Sailor Hako]";
 	mes "So how is it? Not to hard for ya? Wanna to go back to Hugel?";
 	next;
@@ -59,7 +59,7 @@ odin_tem01.gat,93,146,3	script	Sailor Hako#02	709,{
 	mes "[Sailor Hako]";
 	mes "All aboard!";
 	next;
-	warp "hugel.gat",205,108;
+	warp "hugel",205,108;
 	end;
 
 L_No:

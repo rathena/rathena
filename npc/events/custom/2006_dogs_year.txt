@@ -15,7 +15,7 @@
 //============================================================
 
 
-prontera.gat,149,167,6	script	Maria	81,{
+prontera,149,167,6	script	Maria	81,{
 	mes "[Maria]";
 	//month
 	if((gettime(6)==1 && (gettime(5)==28 || gettime(5)==29))==0) {
@@ -92,4 +92,4 @@ OnInit:
 	end;
 }
 
-prontera.gat,0,0,0,0	monster	Fire Dog	1987,50,3600000,1800000,0
+prontera,0,0,0,0	monster	Fire Dog	1987,50,3600000,1800000,0

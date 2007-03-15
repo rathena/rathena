@@ -16,7 +16,7 @@
 //============================================================ 
 
 
-payon.gat,215,102,2	script	MooHyun	828,{
+payon,215,102,2	script	MooHyun	828,{
 	mes "[MooHyun]";
 	if(Class==Job_Taekwon && JobLevel>=40 && STGL_Q==0) goto L_Taekwon;
 	if(STGL_Q) goto L_Quest;
@@ -63,7 +63,7 @@ L_No:
 	close;
 }
 
-comodo.gat,172,231,2	script	Man#SKTest	730,{
+comodo,172,231,2	script	Man#SKTest	730,{
 	if(STGL_Q==1) goto L_Talk;
 	if(STGL_Q>=2) goto L_Needwarp;
 	mes "[Man]";
@@ -96,7 +96,7 @@ L_Warp:
 	mes "Great! With these items I can create a warp at any time.";
 	mes "so if you need to warp again just ask me, okay?";;
 	next;
-	warp "job_star.gat",33,41;
+	warp "job_star",33,41;
 	close;
 
 L_Noitem:
@@ -119,18 +119,18 @@ L_Needwarp:
 	close;
 
 L_Again:
-	warp "job_star.gat",33,41;
+	warp "job_star",33,41;
 	close;
 }
 
-job_star.gat,29,33,4	script	Gladiator of the Sun	823,{
+job_star,29,33,4	script	Gladiator of the Sun	823,{
 	if(STGL_Q==3) goto L_Warpnow1;
 	if(Class==Job_Taekwon && JobLevel>=40) goto L_Talk1;
 	mes "[Gladiator of the Sun]";
 	mes "How did you get in here!?";
 	mes "Get out at once!";
 	next;
-	warp "payon.gat",256,242;
+	warp "payon",256,242;
 	close;
 
 L_Talk1:
@@ -168,18 +168,18 @@ L_Talk1:
 	next;
 
 L_Warpnow1:
-	warp "job_star.gat",99,41;
+	warp "job_star",99,41;
 	close;
 }
 
-job_star.gat,95,34,4	script	Gladiator of the Moon	758,{
+job_star,95,34,4	script	Gladiator of the Moon	758,{
 	if(STGL_Q==3) goto L_Warpnow2;
 	if(Class==Job_Taekwon && JobLevel>=40) goto L_Talk2;
 	mes "[Gladiator of the Moon]";
 	mes "How did you get in here!?";
 	mes "Get out at once!";
 	next;
-	warp "payon.gat",256,242;
+	warp "payon",256,242;
 	close;
 
 L_Talk2:
@@ -216,18 +216,18 @@ L_Talk2:
 	next;
 
 L_Warpnow2:
-	warp "job_star.gat",165,39;
+	warp "job_star",165,39;
 	close;
 }
 
-job_star.gat,161,34,4	script	Gladiator of the Stars	77,{
+job_star,161,34,4	script	Gladiator of the Stars	77,{
 	if(Class==Job_Taekwon && JobLevel>=40) goto L_Talk3;
 	if(STGL_Q==3) goto L_Itemcheck;
 	mes "[Gladiator of the Stars]";
 	mes "How did you get in here!?";
 	mes "Get out at once!";
 	next;
-	warp "payon.gat",256,242;
+	warp "payon",256,242;
 	close;
 
 L_Talk3:
@@ -262,7 +262,7 @@ L_Itemcheck:
 	mes "[Gladiator of the Stars]";
 	mes "I wish you luck on your journey.";
 	next;
-	warp "payon.gat",256,242;
+	warp "payon",256,242;
 	close;
 
 L_Skill:
@@ -285,6 +285,6 @@ L_Noitem3:
 	mes "look for these items.";
 	next;
 	set STGL_Q,3;
-	warp "payon.gat",256,242;
+	warp "payon",256,242;
 	close;
 }

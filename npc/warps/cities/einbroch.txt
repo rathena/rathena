@@ -19,98 +19,98 @@
 //==========================================================================
 // Einbroch - Factory
 //==========================================================================
-einbroch.gat,132,79,0	warp	ein_fa01	1,1,ein_in01.gat,17,213
-ein_in01.gat,13,213,0	warp	ein_fa01a	1,1,einbroch.gat,129,79
-ein_in01.gat,81,198,0	warp	ein_fa02	1,1,einbroch.gat,179,70
-einbroch.gat,179,73,0	warp	ein_fa02a	1,1,ein_in01.gat,81,203
+einbroch,132,79,0	warp	ein_fa01	1,1,ein_in01,17,213
+ein_in01,13,213,0	warp	ein_fa01a	1,1,einbroch,129,79
+ein_in01,81,198,0	warp	ein_fa02	1,1,einbroch,179,70
+einbroch,179,73,0	warp	ein_fa02a	1,1,ein_in01,81,203
 
 
 //==========================================================================
 //Einbroch - Near Train station
 //==========================================================================
-einbroch.gat,214,263,0	warp	ein_to01	1,1,einbroch.gat,233,315
-einbroch.gat,233,312,0	warp	ein_to01a	1,1,einbroch.gat,214,260
-einbroch.gat,250,263,0	warp	ein_to02	1,1,einbroch.gat,269,315
-einbroch.gat,269,312,0	warp	ein_to02a	1,1,einbroch.gat,250,260
+einbroch,214,263,0	warp	ein_to01	1,1,einbroch,233,315
+einbroch,233,312,0	warp	ein_to01a	1,1,einbroch,214,260
+einbroch,250,263,0	warp	ein_to02	1,1,einbroch,269,315
+einbroch,269,312,0	warp	ein_to02a	1,1,einbroch,250,260
 
 
 //==========================================================================
 //Einbroch - Weapon shop
 //==========================================================================
-einbroch.gat,216,214,0	warp	ein_wp01	1,1,ein_in01.gat,108,17
-ein_in01.gat,108,13,0	warp	ein_wp01a	1,1,einbroch.gat,216,211
+einbroch,216,214,0	warp	ein_wp01	1,1,ein_in01,108,17
+ein_in01,108,13,0	warp	ein_wp01a	1,1,einbroch,216,211
 
 
 //=========================================================================
 //Einbroch - Hotel
 //=========================================================================
-einbroch.gat,257,199,0	warp	ein_h01	1,1,ein_in01.gat,198,224
-ein_in01.gat,195,224,0	warp	ein_h01a	1,1,einbroch.gat,254,199
-ein_in01.gat,211,216,0	warp	ein_h02	1,1,ein_in01.gat,274,218
-ein_in01.gat,271,218,0	warp	ein_h02a	1,1,ein_in01.gat,208,216
-ein_in01.gat,211,232,0	warp	ein_h03	1,1,ein_in01.gat,274,232
-ein_in01.gat,271,232,0	warp	ein_h03a	1,1,ein_in01.gat,208,232
-ein_in01.gat,274,246,0	warp	ein_h04	1,1,ein_in01.gat,273,276
-ein_in01.gat,273,273,0	warp	ein_h04a	1,1,ein_in01.gat,274,243
-ein_in01.gat,264,246,0	warp	ein_h05	1,1,ein_in01.gat,231,276
-ein_in01.gat,231,273,0	warp	ein_h05a	1,1,ein_in01.gat,264,243
-ein_in01.gat,274,203,0	warp	ein_h06	1,1,ein_in01.gat,274,173
-ein_in01.gat,274,176,0	warp	ein_h06a	1,1,ein_in01.gat,274,206
-ein_in01.gat,264,203,0	warp	ein_h07	1,1,ein_in01.gat,232,173
-ein_in01.gat,232,176,0	warp	ein_h07a	1,1,ein_in01.gat,264,206
-ein_in01.gat,284,224,0	warp	ein_h08	1,1,ein_in01.gat,177,277
-ein_in01.gat,180,277,0	warp	ein_h08a	1,1,ein_in01.gat,280,224
+einbroch,257,199,0	warp	ein_h01	1,1,ein_in01,198,224
+ein_in01,195,224,0	warp	ein_h01a	1,1,einbroch,254,199
+ein_in01,211,216,0	warp	ein_h02	1,1,ein_in01,274,218
+ein_in01,271,218,0	warp	ein_h02a	1,1,ein_in01,208,216
+ein_in01,211,232,0	warp	ein_h03	1,1,ein_in01,274,232
+ein_in01,271,232,0	warp	ein_h03a	1,1,ein_in01,208,232
+ein_in01,274,246,0	warp	ein_h04	1,1,ein_in01,273,276
+ein_in01,273,273,0	warp	ein_h04a	1,1,ein_in01,274,243
+ein_in01,264,246,0	warp	ein_h05	1,1,ein_in01,231,276
+ein_in01,231,273,0	warp	ein_h05a	1,1,ein_in01,264,243
+ein_in01,274,203,0	warp	ein_h06	1,1,ein_in01,274,173
+ein_in01,274,176,0	warp	ein_h06a	1,1,ein_in01,274,206
+ein_in01,264,203,0	warp	ein_h07	1,1,ein_in01,232,173
+ein_in01,232,176,0	warp	ein_h07a	1,1,ein_in01,264,206
+ein_in01,284,224,0	warp	ein_h08	1,1,ein_in01,177,277
+ein_in01,180,277,0	warp	ein_h08a	1,1,ein_in01,280,224
 
 
 //==========================================================================
 //Einbroch - Building behind the hotel
 //==========================================================================
-einbroch.gat,278,233,0	warp	ein_ho01	1,1,ein_in01.gat,107,95
-ein_in01.gat,103,95,0	warp	ein_ho01a	1,1,einbroch.gat,275,233
-ein_in01.gat,126,88,0	warp	ein_ho02	1,1,ein_in01.gat,100,139
-ein_in01.gat,100,142,0	warp	ein_ho02a	1,1,ein_in01.gat,123,85
-einbroch.gat,290,222,0	warp	ein_ho03	1,1,ein_in01.gat,121,80
-ein_in01.gat,121,77,0	warp	ein_ho03a	1,1,einbroch.gat,290,219
+einbroch,278,233,0	warp	ein_ho01	1,1,ein_in01,107,95
+ein_in01,103,95,0	warp	ein_ho01a	1,1,einbroch,275,233
+ein_in01,126,88,0	warp	ein_ho02	1,1,ein_in01,100,139
+ein_in01,100,142,0	warp	ein_ho02a	1,1,ein_in01,123,85
+einbroch,290,222,0	warp	ein_ho03	1,1,ein_in01,121,80
+ein_in01,121,77,0	warp	ein_ho03a	1,1,einbroch,290,219
 
 
 //==========================================================================
 //Einbroch - House of Kapetain
 //==========================================================================
-einbroch.gat,129,229,0	warp	ein_kf01	1,1,ein_in01.gat,14,147
-ein_in01.gat,11,147,0	warp	ein_kf01a	1,1,einbroch.gat,126,229
+einbroch,129,229,0	warp	ein_kf01	1,1,ein_in01,14,147
+ein_in01,11,147,0	warp	ein_kf01a	1,1,einbroch,126,229
 
 
 //=========================================================================
 //Einbroch - Lab
 //=========================================================================
-ein_in01.gat,286,25,0	warp	ein_lab	1,1,einbroch.gat,54,52
+ein_in01,286,25,0	warp	ein_lab	1,1,einbroch,54,52
 
 
 //=========================================================================
 //Einbroch - Blacksmith guild
 //=========================================================================
-einbroch.gat,255,107,0	warp	ein_jb01	1,1,ein_in01.gat,14,17
-ein_in01.gat,14,14,0	warp	ein_jb01a	1,1,einbroch.gat,255,110
-ein_in01.gat,39,36,0	warp	ein_jb02	1,1,ein_in01.gat,35,83
-ein_in01.gat,39,85,0	warp	ein_jb02a	1,1,ein_in01.gat,36,36
+einbroch,255,107,0	warp	ein_jb01	1,1,ein_in01,14,17
+ein_in01,14,14,0	warp	ein_jb01a	1,1,einbroch,255,110
+ein_in01,39,36,0	warp	ein_jb02	1,1,ein_in01,35,83
+ein_in01,39,85,0	warp	ein_jb02a	1,1,ein_in01,36,36
 
 
 //==========================================================================
 //Einbroch - Field related
 //==========================================================================
-einbroch.gat,157,331,0	warp	ein_fd01	1,1,ein_fild04.gat,184,31
-ein_fild04.gat,184,26,0	warp	ein_fd01a	1,1,einbroch.gat,157,327
-einbroch.gat,150,25,0	warp	ein_fd02	1,1,ein_fild08.gat,164,377
-ein_fild08.gat,164,380,0	warp	ein_fd02a	1,1,einbroch.gat,150,28
+einbroch,157,331,0	warp	ein_fd01	1,1,ein_fild04,184,31
+ein_fild04,184,26,0	warp	ein_fd01a	1,1,einbroch,157,327
+einbroch,150,25,0	warp	ein_fd02	1,1,ein_fild08,164,377
+ein_fild08,164,380,0	warp	ein_fd02a	1,1,einbroch,150,28
 
 //==========================================================================
-//Einbroch - Gunslinger Map Portion (Ninja's map is the same: que_ng.gat)
+//Einbroch - Gunslinger Map Portion (Ninja's map is the same: que_ng)
 //==========================================================================
-einbroch.gat,136,199,0	warp	gswarp1	1,1,que_ng.gat,138,167
-que_ng.gat,130,166,0	warp	gswarp2	1,1,einbroch.gat,130,197
-que_ng.gat,178,162,0	warp	gswarp3	1,1,que_ng.gat,172,86
-que_ng.gat,166,85,0	warp	gswarp4	1,1,que_ng.gat,182,161
-que_ng.gat,165,137,0	warp	gswarp5	1,1,que_ng.gat,177,41
-que_ng.gat,172,42,0	warp	gswarp6	1,1,que_ng.gat,160,139
+einbroch,136,199,0	warp	gswarp1	1,1,que_ng,138,167
+que_ng,130,166,0	warp	gswarp2	1,1,einbroch,130,197
+que_ng,178,162,0	warp	gswarp3	1,1,que_ng,172,86
+que_ng,166,85,0	warp	gswarp4	1,1,que_ng,182,161
+que_ng,165,137,0	warp	gswarp5	1,1,que_ng,177,41
+que_ng,172,42,0	warp	gswarp6	1,1,que_ng,160,139
 //This one seems to be wrong
-//einbroch.gat,137,149,0	warp	gswarp7	1,1,que_ng.gat,138,167
+//einbroch,137,149,0	warp	gswarp7	1,1,que_ng,138,167

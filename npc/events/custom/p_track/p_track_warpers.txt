@@ -12,24 +12,24 @@
 //= 0.0000000000000002 Removed Duplicates [Silent]
 //============================================================
 //| Warp-in npcs
-hugel.gat,58,72,5	script	Yan#track1	86,{
+hugel,58,72,5	script	Yan#track1	86,{
 //callfunc "P_TrackEnt",npcname,map name;
-callfunc "P_TrackEnt","[Yan]","p_track01.gat";
+callfunc "P_TrackEnt","[Yan]","p_track01";
 end;
 }
-hugel.gat,62,68,1	script	Yalmire#track1	86,{
+hugel,62,68,1	script	Yalmire#track1	86,{
 //callfunc "P_TrackEnt",npcname,map name;
-callfunc "P_TrackEnt","[Yalmire]","p_track02.gat";
+callfunc "P_TrackEnt","[Yalmire]","p_track02";
 end;
 }
 
 //| Warp-out npcs
 
-p_track01.gat,76,36,2	script	Yan#track2	86,{
+p_track01,76,36,2	script	Yan#track2	86,{
 end;
 }
 
-p_track02.gat,76,36,2	script	Yalmire#track2	86,{
+p_track02,76,36,2	script	Yalmire#track2	86,{
 end;
 }
 

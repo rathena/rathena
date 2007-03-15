@@ -15,7 +15,7 @@
 
 
 //Dungeon 
-ayo_fild02.gat,285,150,0	warp	ayodunwrp001	2,2,ayo_dun01.gat,275,17
-ayo_dun01.gat,275,14,0	warp	ayodunwrp002	2,2,ayo_fild02.gat,282,150
-ayo_dun02.gat,24,21,0	warp	ayodunwrp003	2,2,ayo_dun01.gat,24,281
-ayo_dun02.gat,275,21,0	warp	ayodunwrp004	2,2,ayo_dun01.gat,24,281
+ayo_fild02,285,150,0	warp	ayodunwrp001	2,2,ayo_dun01,275,17
+ayo_dun01,275,14,0	warp	ayodunwrp002	2,2,ayo_fild02,282,150
+ayo_dun02,24,21,0	warp	ayodunwrp003	2,2,ayo_dun01,24,281
+ayo_dun02,275,21,0	warp	ayodunwrp004	2,2,ayo_dun01,24,281

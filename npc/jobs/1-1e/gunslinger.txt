@@ -25,7 +25,7 @@
 //= 1.8 Fixed the reward you can get [Playtester]
 //============================================================ 
 
-que_ng.gat,152,167,3	script	Gunslinger Jobchanger	901,{
+que_ng,152,167,3	script	Gunslinger Jobchanger	901,{
 
 	set @npcname$,"[Armsmith]";
 	if (Class == Job_Novice) {
@@ -115,7 +115,7 @@ que_ng.gat,152,167,3	script	Gunslinger Jobchanger	901,{
 	close;
 }
 
-payon.gat,184,65,3	script	Mr. Tanieh	866,{
+payon,184,65,3	script	Mr. Tanieh	866,{
 
 	set @npcname$,"[Mr. Tanieh]";
 	if (GUNS_Q == 1) {

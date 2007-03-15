@@ -1,4 +1,4 @@
-geffen.gat,122,102,4	script	Message Man	774,{
+geffen,122,102,4	script	Message Man	774,{
 mes "[Robert]";
 mes "Hello, I am here to serve you. Enjoy my service. ^_-";
 next;

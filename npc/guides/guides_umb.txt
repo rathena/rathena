@@ -13,7 +13,7 @@
 //= 1.2 Optimized, updated common guide names [Lupus]
 //= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
 //============================================================ 
-umbala.gat,128,94,3	script	Ricard	702,{
+umbala,128,94,3	script	Ricard	702,{
 	mes "[Ricard]";
 	mes "This sure is an odd place, perhaps due to the fact that it hasn't been developed, and the roads here can be very perilous.";
 	next;

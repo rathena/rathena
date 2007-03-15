@@ -14,7 +14,7 @@
 //= 1.2 Fixed Chef Hat items [Lupus]
 //============================================================ 
 
-xmas.gat,117,295,3	script	Titicupe	704,{
+xmas,117,295,3	script	Titicupe	704,{
 	mes "[^469ED2Titicupe^000000]";
 	mes "I am the well known ^27BEB7Vending Machine Man Titicupe^000000, I am also a Wizard of the great ^9A3CA2Geffen Mage Guild^000000. I can use my special magic to make some rare items, but I need ingridients. Choose an item you want.";
 	next;

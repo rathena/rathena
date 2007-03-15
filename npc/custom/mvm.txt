@@ -23,19 +23,19 @@
 //============================================================ 
 
 // Entrance //
-prontera.gat,158,193,6	script	Monster Arena	702,{
+prontera,158,193,6	script	Monster Arena	702,{
 mes "[Monster Arena]";
 mes "Would you like to enter the Monster Arena?";
-mes "Currently ^FF0000" + getmapusers("gon_test.gat") + "^000000 players";
+mes "Currently ^FF0000" + getmapusers("gon_test") + "^000000 players";
 mes "^FF0000Note:^000000 Pecos, Falcons and Carts will be lost on entry.";
 L_Menu:
 next;
 menu "Enter",-,"Information",L_Info,"Cancel",L_Exit;
 
 set @marena,1;
-savepoint "gon_test.gat",56,99;
+savepoint "gon_test",56,99;
 set @battle,0;
-warp "gon_test.gat",57,99;
+warp "gon_test",57,99;
 close;
 
 L_Exit:
@@ -194,11 +194,11 @@ mes "[Referee]";
 mes "Alright";
 close;
 }
-gon_test.gat,56,91,6	duplicate(monsterreferee)	Referee#01	61
+gon_test,56,91,6	duplicate(monsterreferee)	Referee#01	61
 
 
 // Usher //
-gon_test.gat,58,94,6	script	Usher	86,{
+gon_test,58,94,6	script	Usher	86,{
 set @marena,1;
 mes "[Usher]";
 mes "What would you like to do?";
@@ -222,42 +222,42 @@ close;
 
 L_High:
 close2;
-savepoint "gon_test.gat",56,99;
+savepoint "gon_test",56,99;
 set @battle,1;
 atcommand strcharinfo(0) + "@option 64 0 64";
-warp "gon_test.gat",72,87;
+warp "gon_test",72,87;
 end;
 
 L_4to6:
 close2;
-savepoint "gon_test.gat",56,99;
+savepoint "gon_test",56,99;
 set @battle,1;
 atcommand strcharinfo(0) + "@option 64 0 64";
-warp "gon_test.gat",57,86;
+warp "gon_test",57,86;
 end;
 
 L_1to3:
 close2;
-savepoint "gon_test.gat",56,99;
+savepoint "gon_test",56,99;
 set @battle,1;
 atcommand strcharinfo(0) + "@option 64 0 64";
-warp "gon_test.gat",43,87;
+warp "gon_test",43,87;
 end;
 
 L_Exit:
 close2;
-savepoint "prontera.gat",149,186;
+savepoint "prontera",149,186;
 set @battle,0;
 atcommand strcharinfo(0) + "@option 0 0 0";
-warp "prontera.gat",149,186;
+warp "prontera",149,186;
 end;
 
 L_Spec:
 close2;
-savepoint "gon_test.gat",56,99;
+savepoint "gon_test",56,99;
 set @battle,0;
 atcommand strcharinfo(0) + "@option 0 0 0";
-warp "gon_test.gat",57,99;
+warp "gon_test",57,99;
 end;
 
 L_NoMon:
@@ -275,7 +275,7 @@ close;
 }
 
 // Monster Trainer //
-gon_test.gat,52,103,6	script	Monster Trainer	87,{
+gon_test,52,103,6	script	Monster Trainer	87,{
 mes "[Monster Trainer]";
 if (#monster != 0) goto L_Mon;
 
@@ -560,154 +560,154 @@ close;
 
 // Kill Trigger //
 // 6/Final. ---Change to Add Monsters--- //
-gon_test.gat,56,91,6	script	OnPoringKilled	-1,{
+gon_test,56,91,6	script	OnPoringKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+1;
 	announce "You killed a Poring - Gained 1 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnFaberKilled	-1,{
+gon_test,56,91,6	script	OnFaberKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+2;
 	announce "You killed a Faber - Gained 2 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnLunaticKilled	-1,{
+gon_test,56,91,6	script	OnLunaticKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+4;
 	announce "You killed a Lunatic - Gained 4 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnDropsKilled	-1,{
+gon_test,56,91,6	script	OnDropsKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+4;
 	announce "You killed a Drops - Gained 4 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnPickyKilled	-1,{
+gon_test,56,91,6	script	OnPickyKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+4;
 	announce "You killed a Picky - Gained 4 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnChonChonKilled	-1,{
+gon_test,56,91,6	script	OnChonChonKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+8;
 	announce "You killed a ChonChon - Gained 8 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnSPickyKilled	-1,{
+gon_test,56,91,6	script	OnSPickyKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+8;
 	announce "You killed a Super Picky - Gained 8 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnWillowKilled	-1,{
+gon_test,56,91,6	script	OnWillowKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+8;
 	announce "You killed a Willow - Gained 8 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnRodaKilled	-1,{
+gon_test,56,91,6	script	OnRodaKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+16;
 	announce "You killed a Roda Frog - Gained 16 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnCondorKilled	-1,{
+gon_test,56,91,6	script	OnCondorKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+16;
 	announce "You killed a Condor - Gained 16 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnThiefKilled	-1,{
+gon_test,56,91,6	script	OnThiefKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+32;
 	announce "You killed a Theif Bug Larva - Gained 32 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnSavageKilled	-1,{
+gon_test,56,91,6	script	OnSavageKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+64;
 	announce "You killed a Savage Babe - Gained 64 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnFamiliarKilled	-1,{
+gon_test,56,91,6	script	OnFamiliarKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+128;
 	announce "You killed a Familiar - Gained 128 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnHornetKilled	-1,{
+gon_test,56,91,6	script	OnHornetKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+128;
 	announce "You killed a Hornet - Gained 128 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnPuppyKilled	-1,{
+gon_test,56,91,6	script	OnPuppyKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+256;
 	announce "You killed a Desert Wolf Puppy - Gained 256 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnRockerKilled	-1,{
+gon_test,56,91,6	script	OnRockerKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+256;
 	announce "You killed a Rocker - Gained 256 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnSporeKilled	-1,{
+gon_test,56,91,6	script	OnSporeKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+256;
 	announce "You killed a Spore - Gained 256 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnSkeletonKilled	-1,{
+gon_test,56,91,6	script	OnSkeletonKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+512;
 	announce "You killed a Skeleton - Gained 512 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnPlanktonKilled	-1,{
+gon_test,56,91,6	script	OnPlanktonKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+512;
 	announce "You killed a Plankton - Gained 512 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnAntonioKilled	-1,{
+gon_test,56,91,6	script	OnAntonioKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+512;
 	announce "You killed an Antonio - Gained 512 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnThiefFemaleKilled	-1,{
+gon_test,56,91,6	script	OnThiefFemaleKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+512;
 	announce "You killed a Thief Bug Female - Gained 512 exp",19;
 	callfunc "duelkill";
 }
 
-gon_test.gat,56,91,6	script	OnSpecialKilled	-1,{
+gon_test,56,91,6	script	OnSpecialKilled	-1,{
 	if (@marena == 0) callfunc "illegalkill";
 	set #monpoints,#monpoints+512;
 	announce "You killed a Special Monster - Gained 1024 exp",19;
@@ -732,7 +732,7 @@ end;
 }
 
 // Healer //
-gon_test.gat,55,103,6	script	Nurse	90,{
+gon_test,55,103,6	script	Nurse	90,{
 if (@battle == 1 || #heal == 0) goto L_NoHeal;
 if (#heal == 1 && @healing < 100) goto L_Heal; //Total healing required
 set @fighting,0;
@@ -753,26 +753,26 @@ end;
 }
 
 // Warps players //
-gon_test.gat,57,86,5	script	Summon Pad 1::SummonPad	111,2,2,{
+gon_test,57,86,5	script	Summon Pad 1::SummonPad	111,2,2,{
 end;
 OnTouch:
 set @marena,1;
-warp "gon_test.gat",57,99;
+warp "gon_test",57,99;
 }
-gon_test.gat,43,87,5	duplicate(SummonPad)	Summon Pad 2	111,2,2
-gon_test.gat,72,87,5	duplicate(SummonPad)	Summon Pad 3	111,2,2
+gon_test,43,87,5	duplicate(SummonPad)	Summon Pad 2	111,2,2
+gon_test,72,87,5	duplicate(SummonPad)	Summon Pad 3	111,2,2
 
 
 
 // Skill Disabler //
-gon_test.gat,57,99,5	script	Skill Disable	111,3,3,{
+gon_test,57,99,5	script	Skill Disable	111,3,3,{
 atcommand strcharinfo(0) + "@skilloff";
 disablenpc "Skill Disable";
 end;
 }
 
 // Duel Arena //
-gon_test.gat,58,103,5	script	Duel Master#01	92,{
+gon_test,58,103,5	script	Duel Master#01	92,{
 if ($@duelist1$ == "") set @duel,0;
 if ($@monster1 == "") set @duel,0;
 set @marena,1;
@@ -803,7 +803,7 @@ set $@duelist1$,strcharinfo(0);
 set @battle,1;
 announce strcharinfo(0) + " [Monster Level: " + $@monster1 + "] is waiting for a duel",1;
 atcommand strcharinfo(0) + "@option 64 0 64";
-warp "gon_test.gat",49,5;
+warp "gon_test",49,5;
 close;
 
 L_Waiting:
@@ -831,7 +831,7 @@ set $@duelist2$,strcharinfo(0);
 set @battle,1;
 announce strcharinfo(0) + " [Monster Level: " + $@monster2 + "] has joined the duel",1;
 atcommand strcharinfo(0) + "@option 64 0 64";
-warp "gon_test.gat",49,5;
+warp "gon_test",49,5;
 close;
 
 	L_Dueling:
@@ -844,7 +844,7 @@ close;
 	L_Spec:
 	set @battle,0;
 	atcommand strcharinfo(0) + "@option 64 0 64";
-	warp "gon_test.gat",49,5;
+	warp "gon_test",49,5;
 	close;
 
 	L_Exit:
@@ -864,7 +864,7 @@ close;
 }
 
 // Duel Exit //
-gon_test.gat,42,8,5	script	Duel Master#02	92,{
+gon_test,42,8,5	script	Duel Master#02	92,{
 mes "[Duel Master]";
 mes "Would you like to return?";
 menu "Yes",L_Leave,"No",-;
@@ -878,7 +878,7 @@ close;
 		L_Leave3:
 		atcommand strcharinfo(0) + "@option 0 0 0";
 		set @battle,0;
-		warp "gon_test.gat",57,99;
+		warp "gon_test",57,99;
 		close;
 
 		L_Leave1:
@@ -896,5 +896,5 @@ close;
 		goto L_Leave3;
 }
 
-gon_test.gat,49,5,5	duplicate(SummonPad)	Summon Pad 4	111,2,2
-gon_test.gat,55,8,6	duplicate(monsterreferee)	Referee#02	61
+gon_test,49,5,5	duplicate(SummonPad)	Summon Pad 4	111,2,2
+gon_test,55,8,6	duplicate(monsterreferee)	Referee#02	61

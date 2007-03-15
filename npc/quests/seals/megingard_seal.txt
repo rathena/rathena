@@ -13,7 +13,7 @@
 // 1.1 fixed exploit [Lupus]
 //============================================================
 
-prt_castle.gat,44,151,0	script	Rebarev Doug	56,{
+prt_castle,44,151,0	script	Rebarev Doug	56,{
 
 if(countitem(7080) > 3 && countitem(7081) > 4 && countitem(7082) > 3 && countitem(7084) > 2 && countitem(7085) > 2)
 {
@@ -505,7 +505,7 @@ else
 
 }
 
-prt_castle.gat,48,164,0	script	Crusader#God	734,{
+prt_castle,48,164,0	script	Crusader#God	734,{
 
 if($God1 > 49 && $God2 < 100)
 {
@@ -572,7 +572,7 @@ else
 
 }
 
-prt_in.gat,172,109,0	script	A File#God1	111,{
+prt_in,172,109,0	script	A File#God1	111,{
 
 if(god_eremes == 12)
 {
@@ -616,7 +616,7 @@ else
 
 }
 
-prt_in.gat,170,109,0	script	A File#God2	111,{
+prt_in,170,109,0	script	A File#God2	111,{
 
 if(god_eremes == 12)
 {
@@ -658,7 +658,7 @@ else
 
 }
 
-prt_in.gat,168,109,0	script	A File#God3	111,{
+prt_in,168,109,0	script	A File#God3	111,{
 
 if(god_eremes == 12)
 {
@@ -700,7 +700,7 @@ else
 
 }
 
-prt_in.gat,169,109,0	script	A File#God4	111,{
+prt_in,169,109,0	script	A File#God4	111,{
 
 if(god_eremes == 12)
 {
@@ -742,7 +742,7 @@ else
 
 }
 
-prt_in.gat,166,109,0	script	A File#God5	111,{
+prt_in,166,109,0	script	A File#God5	111,{
 
 if(god_eremes == 12)
 {
@@ -784,7 +784,7 @@ else
 
 }
 
-prt_in.gat,172,106,0	script	Librarian#God	833,{
+prt_in,172,106,0	script	Librarian#God	833,{
 
 if($God1 > 49 && $God2 < 100)
 {
@@ -1409,7 +1409,7 @@ if($God1 > 49 && $God2 < 100)
 				mes "I thought I said";
 				mes "not to touch those!";
 				close2;
-				warp "prontera.gat",120,264;
+				warp "prontera",120,264;
 				end;
 			break;
 
@@ -1436,7 +1436,7 @@ else
 			mes "[Librarian Jekan]";
 			mes "I told you not to touch books there!";
 			close2;
-			warp "prontera.gat",120,264;
+			warp "prontera",120,264;
 			end;
 		break;
 
@@ -1451,7 +1451,7 @@ else
 
 }
 
-geffen_in.gat,109,161,3	script	Crusader#God1	751,{
+geffen_in,109,161,3	script	Crusader#God1	751,{
 
 if($God1 > 49 && $God2 < 100)
 {
@@ -1728,7 +1728,7 @@ else
 
 }
 
-morocc_in.gat,146,179,0	script	Employee#God1	66,{
+morocc_in,146,179,0	script	Employee#God1	66,{
 
 if($God1 > 49 && $God2 < 100)
 {
@@ -1939,7 +1939,7 @@ else
 
 }
 
-in_rogue.gat,243,61,0	script	Suspicious Man#God	748,{
+in_rogue,243,61,0	script	Suspicious Man#God	748,{
 
 	if($God1 > 49 && $God2 < 100)
 {
@@ -2201,7 +2201,7 @@ in_rogue.gat,243,61,0	script	Suspicious Man#God	748,{
 
 }
 
-alberta.gat,196,146,0	script	Crusader#megin2	751,{
+alberta,196,146,0	script	Crusader#megin2	751,{
 
 	if ($God1 > 49 && $God2 < 100)
 {
@@ -2440,7 +2440,7 @@ alberta.gat,196,146,0	script	Crusader#megin2	751,{
 
 }
 
-aldebaran.gat,66,213,0	script	Lady#megin	69,{
+aldebaran,66,213,0	script	Lady#megin	69,{
 
 	if ($God1 > 49 && $God2 < 100)
 {
@@ -2705,7 +2705,7 @@ aldebaran.gat,66,213,0	script	Lady#megin	69,{
 
 }
 
-cmd_in02.gat,190,94,3	script	Man#megin	828,{
+cmd_in02,190,94,3	script	Man#megin	828,{
 
 	if ($God1 > 49 && $God2 < 100)
 {
@@ -2944,7 +2944,7 @@ cmd_in02.gat,190,94,3	script	Man#megin	828,{
 
 }
 
-jawaii_in.gat,44,110,0	script	Security Officer#megin	734,{
+jawaii_in,44,110,0	script	Security Officer#megin	734,{
 
 	if ($God1 > 49 && $God2 < 100)
 {
@@ -3008,7 +3008,7 @@ jawaii_in.gat,44,110,0	script	Security Officer#megin	734,{
 
 }
 
-niflheim.gat,109,254,0	script	Egnigem	796,{
+niflheim,109,254,0	script	Egnigem	796,{
 
 	if ($God1 > 49 && $God2 < 100)
 {

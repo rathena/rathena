@@ -26,11 +26,11 @@
 
 
 // -== Warp's needed! ==-
-valkyrie.gat,48,73,0	warp	valk01	1,1,valkyrie.gat,48,64
-valkyrie.gat,48,66,0	warp	valk01	1,1,valkyrie.gat,48,75
+valkyrie,48,73,0	warp	valk01	1,1,valkyrie,48,64
+valkyrie,48,66,0	warp	valk01	1,1,valkyrie,48,75
 
 // -== Book of Ymir (Heavens Door) ==-
-yuno_in02.gat,93,207,0	script	Book of Ymir	111,{
+yuno_in02,93,207,0	script	Book of Ymir	111,{
 	mes "[Book of Ymir]";
 	if(Upper==1 || valkyrie_Q>1){
 		mes "...The entrance to the Hall of Honor";
@@ -126,7 +126,7 @@ yuno_in02.gat,93,207,0	script	Book of Ymir	111,{
 }
 
 // -== The Librarian that watches the "Book of Ymir" ==-
-yuno_in02.gat,91,176,5	script	Librarian	754,{
+yuno_in02,91,176,5	script	Librarian	754,{
 	mes "[Librarian]";
 	if(valkyrie_Q){
 		mes "Why? You have already paid me.";
@@ -165,7 +165,7 @@ M_EXIT:
 }
 
 // -== The Heart of Ymir ==-
-yuno_in05.gat,50,44,0	script	Heart of Ymir	111,{
+yuno_in05,50,44,0	script	Heart of Ymir	111,{
 	mes "[Heart of Ymir]";
 	if(valkyrie_Q == 1){
 		mes "Thus upon hard times and when our self esteem is at its lowest, then is when our faith has to be the strongest.";
@@ -188,7 +188,7 @@ yuno_in05.gat,50,44,0	script	Heart of Ymir	111,{
 }
 
 // -== Researcher of the Book of Ymir ==-
-yuno_in02.gat,90,77,4	script	Researcher#06	744,{
+yuno_in02,90,77,4	script	Researcher#06	744,{
 	mes "[Researcher]";
 	mes "Argh, where is it!?";
 	mes "They said that it would be around here somewhere...";
@@ -198,7 +198,7 @@ yuno_in02.gat,90,77,4	script	Researcher#06	744,{
 }
 
 // -== Valhallana ==-
-valkyrie.gat,48,86,6	script	Valkyrie	811,{
+valkyrie,48,86,6	script	Valkyrie	811,{
 	mes "[Valhallana]";
 	if(BaseJob == Job_SuperNovice) goto L_SN;
 	if(baseClass == Job_Taekwon || BaseJob == Job_Gunslinger || BaseJob == Job_Ninja) goto L_CANT; //sent back any Taekwondo/GS/NJ classes
@@ -218,7 +218,7 @@ L_BABY:
 	emotion e_what;
 	next;
 L_Y:
-	warp "yuno_in02.gat",93,204;
+	warp "yuno_in02",93,204;
 	close;
 
 L_CANT:
@@ -287,33 +287,33 @@ L_CHANGE:
 	if(ADVJOB == Job_Assassin_Cross || ADVJOB == Job_Stalker) goto L_Mor;
 
 L_Pro:
-	savepoint "prontera.gat",273,354;
-	warp "prontera.gat",273,354;
+	savepoint "prontera",273,354;
+	warp "prontera",273,354;
 	close;
 
 L_Mor:
-	savepoint "morocc.gat",160,94;
-	warp "morocc.gat",160,94;
+	savepoint "morocc",160,94;
+	warp "morocc",160,94;
 	close;
 
 L_Alb:
-	savepoint "alberta.gat",116,57;
-	warp "alberta.gat",116,57;
+	savepoint "alberta",116,57;
+	warp "alberta",116,57;
 	close;
 
 L_Pay:
-	savepoint "payon.gat",155,90;
-	warp "payon.gat",155,90;
+	savepoint "payon",155,90;
+	warp "payon",155,90;
 	close;
 
 L_Izl:
-	savepoint "izlude.gat",94,103;
-	warp "izlude.gat",94,103;
+	savepoint "izlude",94,103;
+	warp "izlude",94,103;
 	close;
 
 L_Gef:
-	savepoint "geffen.gat",120,100;
-	warp "geffen.gat",120,100;
+	savepoint "geffen",120,100;
+	warp "geffen",120,100;
 	close;
 
 L_ZENYITEMS:

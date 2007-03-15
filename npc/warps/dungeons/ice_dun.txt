@@ -12,8 +12,8 @@
 //= 1.0 Initial version [Playtester]
 //============================================================
 
-ice_dun01.gat,157,10,0	warp	ice001	1,1,ra_fild01.gat,233,330
-ice_dun01.gat,145,153,0	warp	ice002	1,1,ice_dun02.gat,151,155
-ice_dun02.gat,151,160,0	warp	ice003	1,1,ice_dun01.gat,146,157
-ice_dun02.gat,150,285,0	warp	ice004	1,1,ice_dun03.gat,149,22
-ice_dun03.gat,149,18,0	warp	ice005	1,1,ice_dun02.gat,150,281
+ice_dun01,157,10,0	warp	ice001	1,1,ra_fild01,233,330
+ice_dun01,145,153,0	warp	ice002	1,1,ice_dun02,151,155
+ice_dun02,151,160,0	warp	ice003	1,1,ice_dun01,146,157
+ice_dun02,150,285,0	warp	ice004	1,1,ice_dun03,149,22
+ice_dun03,149,18,0	warp	ice005	1,1,ice_dun02,150,281

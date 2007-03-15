@@ -58,7 +58,7 @@ OnInit:
 // $@divorcee id of the partner, who has to accept the divorce and pay.
 
 //The Priest
-prt_church.gat,100,123,4	script	Frederick Second	60,{
+prt_church,100,123,4	script	Frederick Second	60,{
 	set @name$,"Frederick Second";
 
 	function SF_wed_end;
@@ -434,7 +434,7 @@ OnInit:
 }
 
 //Registration & Status
-prt_church.gat,106,99,3	script	Sister Mary	67,{
+prt_church,106,99,3	script	Sister Mary	67,{
 	set @name$,"Mary";
 	if (getpartnerid() > 0) {
 		mes "["+@name$+"]";
@@ -810,7 +810,7 @@ function SF_Procedure {
 }
 }
 
-prt_church.gat,94,99,4	script	Sister Lisa	79,{
+prt_church,94,99,4	script	Sister Lisa	79,{
 	set @name$,"Lisa";
 
 	function SF_DivorceEnd;

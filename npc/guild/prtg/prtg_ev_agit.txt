@@ -16,12 +16,12 @@
 
 
 // Castle 1 ================================================================
-prtg_cas01.gat,197,197,0	script	Agit_Pt01	-1,{
+prtg_cas01,197,197,0	script	Agit_Pt01	-1,{
 OnInterIfInitOnce:
-	GetCastleData "prtg_cas01.gat",0,"::OnRecvCastlePt01";
+	GetCastleData "prtg_cas01",0,"::OnRecvCastlePt01";
 	end;
 OnRecvCastlePt01:
-	RequestGuildInfo GetCastleData("prtg_cas01.gat",1);
+	RequestGuildInfo GetCastleData("prtg_cas01",1);
 	end;
 OnAgitStart:
 	callfunc "F_AgitStart","prtg_cas01","Pt01",197,197;
@@ -33,8 +33,8 @@ OnGuildBreak:
 	callfunc "F_GuildBreak","prtg_cas01","Pt01";
 	end;
 OnAgitEliminate:
-	MapRespawnGuildID "prtg_cas01.gat",GetCastleData("prtg_cas01.gat",1),6;
-	Monster "prtg_cas01.gat",197,197,"EMPERIUM",1288,1,"Agit_Pt01::OnAgitBreak";
+	MapRespawnGuildID "prtg_cas01",GetCastleData("prtg_cas01",1),6;
+	Monster "prtg_cas01",197,197,"EMPERIUM",1288,1,"Agit_Pt01::OnAgitBreak";
 	end;
 OnAgitEnd:
 	callfunc "F_AgitEnd","prtg_cas01","Pt01";
@@ -42,12 +42,12 @@ OnAgitEnd:
 }
 
 // Castle 2 ================================================================
-prtg_cas02.gat,158,174,0	script	Agit_Pt02	-1,{
+prtg_cas02,158,174,0	script	Agit_Pt02	-1,{
 OnInterIfInitOnce:
-	GetCastleData "prtg_cas02.gat",0,"::OnRecvCastlePt02";
+	GetCastleData "prtg_cas02",0,"::OnRecvCastlePt02";
 	end;
 OnRecvCastlePt02:
-	RequestGuildInfo GetCastleData("prtg_cas02.gat",1);
+	RequestGuildInfo GetCastleData("prtg_cas02",1);
 	end;
 OnAgitStart:
 	callfunc "F_AgitStart","prtg_cas02","Pt02",158,174;
@@ -59,8 +59,8 @@ OnGuildBreak:
 	callfunc "F_GuildBreak","prtg_cas02","Pt02";
 	end;
 OnAgitEliminate:
-	MapRespawnGuildID "prtg_cas02.gat",GetCastleData("prtg_cas02.gat",1),6;
-	Monster "prtg_cas02.gat",158,174,"EMPERIUM",1288,1,"Agit_Pt02::OnAgitBreak";
+	MapRespawnGuildID "prtg_cas02",GetCastleData("prtg_cas02",1),6;
+	Monster "prtg_cas02",158,174,"EMPERIUM",1288,1,"Agit_Pt02::OnAgitBreak";
 	end;
 OnAgitEnd:
 	callfunc "F_AgitEnd","prtg_cas02","Pt02";
@@ -68,12 +68,12 @@ OnAgitEnd:
 }
 
 // Castle 3 ================================================================
-prtg_cas03.gat,17,221,0	script	Agit_Pt03	-1,{
+prtg_cas03,17,221,0	script	Agit_Pt03	-1,{
 OnInterIfInitOnce:
-	GetCastleData "prtg_cas03.gat",0,"::OnRecvCastlePt03";
+	GetCastleData "prtg_cas03",0,"::OnRecvCastlePt03";
 	end;
 OnRecvCastlePt03:
-	RequestGuildInfo GetCastleData("prtg_cas03.gat",1);
+	RequestGuildInfo GetCastleData("prtg_cas03",1);
 	end;
 OnAgitStart:
 	callfunc "F_AgitStart","prtg_cas03","Pt03",17,221;
@@ -85,8 +85,8 @@ OnGuildBreak:
 	callfunc "F_GuildBreak","prtg_cas03","Pt03";
 	end;
 OnAgitEliminate:
-	MapRespawnGuildID "prtg_cas03.gat",GetCastleData("prtg_cas03.gat",1),6;
-	Monster "prtg_cas03.gat",17,221,"EMPERIUM",1288,1,"Agit_Pt03::OnAgitBreak";
+	MapRespawnGuildID "prtg_cas03",GetCastleData("prtg_cas03",1),6;
+	Monster "prtg_cas03",17,221,"EMPERIUM",1288,1,"Agit_Pt03::OnAgitBreak";
 	end;
 OnAgitEnd:
 	callfunc "F_AgitEnd","prtg_cas03","Pt03";
@@ -94,12 +94,12 @@ OnAgitEnd:
 }
 
 // Castle 4 ================================================================
-prtg_cas04.gat,292,14,0	script	Agit_Pt04	-1,{
+prtg_cas04,292,14,0	script	Agit_Pt04	-1,{
 OnInterIfInitOnce:
-	GetCastleData "prtg_cas04.gat",0,"::OnRecvCastlePt04";
+	GetCastleData "prtg_cas04",0,"::OnRecvCastlePt04";
 	end;
 OnRecvCastlePt04:
-	RequestGuildInfo GetCastleData("prtg_cas04.gat",1);
+	RequestGuildInfo GetCastleData("prtg_cas04",1);
 	end;
 OnAgitStart:
 	callfunc "F_AgitStart","prtg_cas04","Pt04",292,14;
@@ -111,8 +111,8 @@ OnGuildBreak:
 	callfunc "F_GuildBreak","prtg_cas04","Pt04";
 	end;
 OnAgitEliminate:
-	MapRespawnGuildID "prtg_cas04.gat",GetCastleData("prtg_cas04.gat",1),6;
-	Monster "prtg_cas04.gat",292,14,"EMPERIUM",1288,1,"Agit_Pt04::OnAgitBreak";
+	MapRespawnGuildID "prtg_cas04",GetCastleData("prtg_cas04",1),6;
+	Monster "prtg_cas04",292,14,"EMPERIUM",1288,1,"Agit_Pt04::OnAgitBreak";
 	end;
 OnAgitEnd:
 	callfunc "F_AgitEnd","prtg_cas04","Pt04";
@@ -120,12 +120,12 @@ OnAgitEnd:
 }
 
 // Castle 5 ================================================================
-prtg_cas05.gat,266,266,0	script	Agit_Pt05	-1,{
+prtg_cas05,266,266,0	script	Agit_Pt05	-1,{
 OnInterIfInitOnce:
-	GetCastleData "prtg_cas05.gat",0,"::OnRecvCastlePt05";
+	GetCastleData "prtg_cas05",0,"::OnRecvCastlePt05";
 	end;
 OnRecvCastlePt05:
-	RequestGuildInfo GetCastleData("prtg_cas05.gat",1);
+	RequestGuildInfo GetCastleData("prtg_cas05",1);
 	end;
 OnAgitStart:
 	callfunc "F_AgitStart","prtg_cas05","Pt05",266,266;
@@ -137,8 +137,8 @@ OnGuildBreak:
 	callfunc "F_GuildBreak","prtg_cas05","Pt05";
 	end;
 OnAgitEliminate:
-	MapRespawnGuildID "prtg_cas05.gat",GetCastleData("prtg_cas05.gat",1),6;
-	Monster "prtg_cas05.gat",266,266,"EMPERIUM",1288,1,"Agit_Pt05::OnAgitBreak";
+	MapRespawnGuildID "prtg_cas05",GetCastleData("prtg_cas05",1),6;
+	Monster "prtg_cas05",266,266,"EMPERIUM",1288,1,"Agit_Pt05::OnAgitBreak";
 	end;
 OnAgitEnd:
 	callfunc "F_AgitEnd","prtg_cas05","Pt05";

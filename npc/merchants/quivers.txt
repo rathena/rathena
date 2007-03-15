@@ -17,7 +17,7 @@
 //============================================================
 
 
-payon_in01.gat,5,134,4	script	Inventor Jaax	89,{
+payon_in01,5,134,4	script	Inventor Jaax	89,{
 	mes "[Inventor Jaax]";
 	mes "My name is Jaax.";
 	mes "Without ego, I can";

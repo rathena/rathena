@@ -11,14 +11,14 @@
 //============================================================
 
 
-mag_dun02.gat,72,182,1	script	Dracula's Coffin::Dracula_Init	-1,{
+mag_dun02,72,182,1	script	Dracula's Coffin::Dracula_Init	-1,{
 
 OnInit:
 	set $dracula_event,0;
 	end;
 
 OnKilled:
-	MapAnnounce "mag_dun02.gat","Dracula's curse has been lifted!",17;
+	MapAnnounce "mag_dun02","Dracula's curse has been lifted!",17;
 	set $dracula_event,0;
 	initnpctimer;
 	end;
@@ -30,13 +30,13 @@ OnTimer7200000:
 	end;
 }
 
-mag_dun02.gat,72,182,1	script	Dracula's Coffin::Dracula_Event	801,{
+mag_dun02,72,182,1	script	Dracula's Coffin::Dracula_Event	801,{
 
 	if($dracula_event==1)
 	close;
 
 	set $dracula_event,1;
-	MapAnnounce "mag_dun02.gat","Count Dracula : Who has awakened me from my slumber?",17;
+	MapAnnounce "mag_dun02","Count Dracula : Who has awakened me from my slumber?",17;
 	npcskilleffect 21,10,66,175;
 	initnpctimer;
 	end;
@@ -123,7 +123,7 @@ OnTimer10500:
 
 OnTimer11000:
 	npcskilleffect 21,10,72,182;
-	monster "mag_dun02.gat",72,182,"Count Dracula",1389,1,"Dracula_Init::OnKilled";
+	monster "mag_dun02",72,182,"Count Dracula",1389,1,"Dracula_Init::OnKilled";
 	stopnpctimer;
 	disablenpc "Dracula_Event";
 	end;

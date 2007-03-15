@@ -1,7 +1,7 @@
 // by CallNix v.0.0
 
 //======================================Juno to Izlude  airship=====================================================================
-airplane_01.gat,238,154,4	script	Captain	854,{
+airplane_01,238,154,4	script	Captain	854,{
 if (airshipquest==0) {
 mes "[Fayroll]";
 mes "I have nothing to say to you anymore";
@@ -74,7 +74,7 @@ getexp 200000,10000;
 close;
 }
 //=======================================Juno to Lighthalzen airship====================================================================
-airplane.gat,236,163,4	script	Aiplane Captain	855,{
+airplane,236,163,4	script	Aiplane Captain	855,{
 if (airshipquest == 1) goto L_QUEST;
 if (airshipquest == 2) goto L_FINISH;
 mes "[Dulu]";

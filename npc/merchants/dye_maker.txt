@@ -16,7 +16,7 @@
 
 
 // Dye Maker JavaDullihan =======================
-morocc_in.gat,146,99,2	script	Dye Maker JavaDullihan	122,{
+morocc_in,146,99,2	script	Dye Maker JavaDullihan	122,{
 	mes "[Dye Maker JavaDullihan]";
 	mes "Oh... What a Beautiful day today.";
 	mes "This is a perfect day to make Dyestuffs";

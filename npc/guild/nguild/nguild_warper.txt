@@ -29,7 +29,7 @@
 //============================================================
 
 
-prontera.gat,146,163,6	script	Novice Castles	729,{
+prontera,146,163,6	script	Novice Castles	729,{
 	mes "[Cita]";
 	if(getcharid(2)!=0){
 		if(getgdskilllv(getcharid(2),10013)){
@@ -91,18 +91,18 @@ M_WARP:
 	sc_end SC_SACRIFICE;
 	sc_end SC_MAXOVERTHRUST;
 	sc_end SC_SPIRIT;
-	warp "n_castle.gat",102,93+rand(14);
+	warp "n_castle",102,93+rand(14);
 	close;
 }
 
 
-n_castle.gat,102,107,5	script	Cita	729,{
+n_castle,102,107,5	script	Cita	729,{
 	mes "[Cita]";
 	mes "Hello, "+ strcharinfo(0) +". Can I help you?";
 	next;
 	menu "Warp me to Prontera!",-,"Cancel",LEnd;
 	
-		warp "prontera.gat",155,177+rand(5);
+		warp "prontera",155,177+rand(5);
 		close;
 	LEnd:
 		mes "[Cita]";

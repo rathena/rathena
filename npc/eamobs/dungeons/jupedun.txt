@@ -19,31 +19,31 @@
 //==================================================
 // juperos_01 - The Ruins of Juperos F1
 //==================================================
-juperos_01.gat,0,0,0,0	monster	Venatu	1676,50,0,0,0
-juperos_01.gat,0,0,0,0	monster	Venatu	1677,50,0,0,0
-juperos_01.gat,0,0,0,0	monster	Venatu	1678,50,0,0,0
-juperos_01.gat,0,0,0,0	monster	Venatu	1679,40,0,0,0
-juperos_01.gat,0,0,0,0	monster	Hunter Fly	1035,40,0,0,0
-juperos_01.gat,0,0,0,0	monster	Wind Ghost	1263,30,0,0,0
+juperos_01,0,0,0,0	monster	Venatu	1676,50,0,0,0
+juperos_01,0,0,0,0	monster	Venatu	1677,50,0,0,0
+juperos_01,0,0,0,0	monster	Venatu	1678,50,0,0,0
+juperos_01,0,0,0,0	monster	Venatu	1679,40,0,0,0
+juperos_01,0,0,0,0	monster	Hunter Fly	1035,40,0,0,0
+juperos_01,0,0,0,0	monster	Wind Ghost	1263,30,0,0,0
 
 //==================================================
 // juperos_02 - The Ruins of Juperos F2
 //==================================================
-juperos_02.gat,0,0,0,0	monster	Venatu	1676,65,0,0,0
-juperos_02.gat,0,0,0,0	monster	Venatu	1677,65,0,0,0
-juperos_02.gat,0,0,0,0	monster	Venatu	1678,65,0,0,0
-juperos_02.gat,0,0,0,0	monster	Venatu	1679,50,0,0,0
-juperos_02.gat,0,0,0,0	monster	Apocalypse	1365,70,0,0,0
+juperos_02,0,0,0,0	monster	Venatu	1676,65,0,0,0
+juperos_02,0,0,0,0	monster	Venatu	1677,65,0,0,0
+juperos_02,0,0,0,0	monster	Venatu	1678,65,0,0,0
+juperos_02,0,0,0,0	monster	Venatu	1679,50,0,0,0
+juperos_02,0,0,0,0	monster	Apocalypse	1365,70,0,0,0
 
 //==================================================
 // juperos_core - Juperos Dungeon Entrance
 //==================================================
-jupe_core.gat,0,0,0,0	monster	Archdam	1668,40,0,0,0
-jupe_core.gat,0,0,0,0	monster	Dimik	1670,40,0,0,0
-jupe_core.gat,0,0,0,0	monster	Dimik	1671,40,0,0,0
-jupe_core.gat,0,0,0,0	monster	Dimik	1672,40,0,0,0
-jupe_core.gat,0,0,0,0	monster	Dimik	1673,40,0,0,0
-jupe_core.gat,0,0,0,0	monster	Venatu	1676,25,0,0,0
-jupe_core.gat,0,0,0,0	monster	Venatu	1677,25,0,0,0
-jupe_core.gat,0,0,0,0	monster	Venatu	1678,25,0,0,0
-jupe_core.gat,0,0,0,0	monster	Vesper	1685,1,7200000,3600000,1
+jupe_core,0,0,0,0	monster	Archdam	1668,40,0,0,0
+jupe_core,0,0,0,0	monster	Dimik	1670,40,0,0,0
+jupe_core,0,0,0,0	monster	Dimik	1671,40,0,0,0
+jupe_core,0,0,0,0	monster	Dimik	1672,40,0,0,0
+jupe_core,0,0,0,0	monster	Dimik	1673,40,0,0,0
+jupe_core,0,0,0,0	monster	Venatu	1676,25,0,0,0
+jupe_core,0,0,0,0	monster	Venatu	1677,25,0,0,0
+jupe_core,0,0,0,0	monster	Venatu	1678,25,0,0,0
+jupe_core,0,0,0,0	monster	Vesper	1685,1,7200000,3600000,1

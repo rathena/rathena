@@ -15,7 +15,7 @@
 //============================================================ 
 
 
-comodo.gat,135,227,5	script	Sherri	93,{
+comodo,135,227,5	script	Sherri	93,{
 	mes "[Sherri]";
 	mes " ";
 	mes "*sighs*";
@@ -70,7 +70,7 @@ ExEnd:
 	close;    
 }
 
-izlude_in.gat,115,76,5	script	Evan	47,{
+izlude_in,115,76,5	script	Evan	47,{
 	mes "[Evan]";
 	mes " ";
 	mes "*sighs*";
@@ -121,7 +121,7 @@ ExEnd:
 	close;
 }
 
-gef_fild07.gat,183,239,5	script	Old Smith	120,{
+gef_fild07,183,239,5	script	Old Smith	120,{
 	mes "[Old Smith]";
 	mes "Ah, isn't it peaceful up here - I used to be one of the legendary Blacksmiths of midgard...sadly my skills have faded.";
 	next;

@@ -33,7 +33,7 @@
 //============================================================
 //============================================== Ayothaya Clue
 //====================================================== Quest
-ayo_dun02.gat,277,178,1	script	OBB	139,4,4,{
+ayo_dun02,277,178,1	script	OBB	139,4,4,{
 	if(AyoOBB==1 || weddingring!=3) end;
 	mes "["+strcharinfo(0)+"]";
 	mes "Huh what is this?, not foot prints, this is an Old Blue coloured Box";
@@ -46,31 +46,31 @@ ayo_dun02.gat,277,178,1	script	OBB	139,4,4,{
 	close;
 }
 //Dungeon 1 foot prints x 5
-ayo_dun01.gat,30,149,1	script	Clue#01	139,5,5,{
+ayo_dun01,30,149,1	script	Clue#01	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "There are some foot prints here, they head off to the East.";
 	set @footprints1,1;
 	close;
 }
-ayo_dun01.gat,70,149,1	script	Clue#02	139,5,5,{
+ayo_dun01,70,149,1	script	Clue#02	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "There are some more foot prints, they are heading off to the East too!";
 	set @footprints2,1;
 	close;
 }
-ayo_dun01.gat,100,149,1	script	Clue#03	139,5,5,{
+ayo_dun01,100,149,1	script	Clue#03	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "More foot prints heading to the East, who do they belong too?";
 	set @footprints3,1;
 	close;
 }
-ayo_dun01.gat,190,149,1	script	Clue#04	139,5,5,{
+ayo_dun01,190,149,1	script	Clue#04	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "More foot prints, but these are going North.";
 	set @footprints4,1;
 	close;
 }
-ayo_dun01.gat,261,263,1	script	Clue#05	139,5,5,{
+ayo_dun01,261,263,1	script	Clue#05	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "There are some foot prints, they seem to head into that hole there.";
 	set @footprints5,1;
@@ -78,38 +78,38 @@ ayo_dun01.gat,261,263,1	script	Clue#05	139,5,5,{
 }
 
 //Dungeon 2 foot prints x 4 + 1 fake
-ayo_dun02.gat,222,204,1	script	Clue#06	139,5,5,{
+ayo_dun02,222,204,1	script	Clue#06	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "Yet more foot prints, they are either going South or West.";
 	set @footprints6,1;
 	close;
 }
-ayo_dun02.gat,169,212,1	script	Clue#07	139,5,5,{
+ayo_dun02,169,212,1	script	Clue#07	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "Looks like there are foot print going to the West.";
 	set @footprints7,1;
 	close;
 }
-ayo_dun02.gat,129,212,1	script	Clue#08	139,5,5,{
+ayo_dun02,129,212,1	script	Clue#08	139,5,5,{
 	if(weddingring!=3) end;
 	npctalk "Ok these foot prints are either going to the North or West.";
 	set @footprints8,1;
 	close;
 }
-ayo_dun02.gat,79,212,1	script	Clue#09	139,7,7,{
+ayo_dun02,79,212,1	script	Clue#09	139,7,7,{
 	if(weddingring!=3) end;
 	npctalk "These are very new, they are going North.";
 	set @footprints9,1;
 	close;
 }
 //FAKE
-ayo_dun02.gat,245,166,1	script	Clue#10	139,7,7,{
+ayo_dun02,245,166,1	script	Clue#10	139,7,7,{
 	if(weddingring!=3) end;
 	npctalk "Seems something came by this way, to the East.";
 	close;
 }
 
-ayothaya.gat,233,105,7	script	Shuda	838,{
+ayothaya,233,105,7	script	Shuda	838,{
 	mes "[Shuda]";
 	if(BaseLevel<50) {
 		mes "Where is my ring!?!";
@@ -189,7 +189,7 @@ L_QuestOver:
 	close;
 }
 
-ayothaya.gat,253,99,3	script	Fisherman#01	843,{
+ayothaya,253,99,3	script	Fisherman#01	843,{
 	mes "[Dannai]";
 	mes "This place is known to be teeming with fish. The fish here tend to eat anything they find, so it's easy to catch them.";
 	next;
@@ -242,7 +242,7 @@ L_RingCheck:
 	close;
 }
 
-ayothaya.gat,192,171,4	script	Old Man#10	824,{
+ayothaya,192,171,4	script	Old Man#10	824,{
 	mes "[Tham]";
 	if(weddingring==3) goto L_OnQ2;
 	mes "What a nice day it is today, don't you agree?";
@@ -263,7 +263,7 @@ L_OnQ2:
 	close;
 }
 
-ayo_dun02.gat,91,264,4	script	Guy	822,{
+ayo_dun02,91,264,4	script	Guy	822,{
 	if(weddingring==4) goto L_QuestComplete;
 	if(weddingring==5) goto L_TalkedShuda;
 	if(weddingring==3 && @footprints1==1 && @footprints2==1 && @footprints3==1 && @footprints4==1 && @footprints5==1 && @footprints6==1 && @footprints7==1 && @footprints8==1 && @footprints9==1) goto L_Groom;
@@ -329,7 +329,7 @@ L_TalkedShuda:
 //============================================================
 //============================================ Ayothaya Shrimp
 //====================================================== Quest
-ayothaya.gat,203,169,3	script	Noi	839,{
+ayothaya,203,169,3	script	Noi	839,{
 	mes "[Noi]";
 	mes "Welcome to Ayothaya.";
 	mes "Out beautiful village is built above the water, surrounded by a dense forest.";
@@ -421,7 +421,7 @@ s_Remo:
 	close;
 }
 
-ayothaya.gat,153,86,4	script	Thongpool	843,{
+ayothaya,153,86,4	script	Thongpool	843,{
 	if(ayoshrimps == 1)goto s_Shrimp2;
 	if(tomyumgoong == 2)goto s_Shrimp;
 	mes "[Thongpool]";
@@ -507,7 +507,7 @@ s_Shrimp2:
 //============================================================
 //=========================================== Ayothaya Dungeon
 //====================================================== Quest
-ayothaya.gat,83,132,7	script	Dusit	843,{
+ayothaya,83,132,7	script	Dusit	843,{
 	if(ayodunquest == 1 || ayodunquest == 2 || ayodunquest == 3)goto s_Dun;
 	mes "[Dusit]";
 	mes "Oh...!";
@@ -587,7 +587,7 @@ s_Dun:
 	close;
 }
 
-ayo_in01.gat,181,193,4	script	Shaman	840,{
+ayo_in01,181,193,4	script	Shaman	840,{
 	if(ayodot == 8)goto s_Check2;
 	if(ayodot == 7 && countitem(7285) > 0)goto s_ICheck;
 	if(ayodot == 6 && countitem(7285) > 0)goto s_Holier;
@@ -952,7 +952,7 @@ s_LoseThreads:
 	mes "Come back anytime!";
 	close;
 }
-ayo_fild01.gat,129,197,7	script	Puraim	842,{
+ayo_fild01,129,197,7	script	Puraim	842,{
 	if(countitem(7285) > 0)goto s_Dungeon; //Holy Threads
 	mes "[Puraim]";
 	mes "If I were you, I wouldn't even dare to approach";
@@ -1008,7 +1008,7 @@ s_Yes:
 	if(readparam(5) < @hpcheck)goto s_SetHp;
 	percentheal -10,0;
 s_Warp:
-	warp "ayo_fild02.gat",30,135;
+	warp "ayo_fild02",30,135;
 	end;
 s_SetHp:
 	set @hpcheck2,readparam(5)-1;
@@ -1016,7 +1016,7 @@ s_SetHp:
 	goto s_Warp;
 }
 	
-ayo_dun01.gat,260,42,4	script	LocationActivator	139,4,0,{
+ayo_dun01,260,42,4	script	LocationActivator	139,4,0,{
 	if(ayodot > 5)end;
 	if(countitem(7285) > 0)goto s_Dots;
 	end;
@@ -1068,7 +1068,7 @@ s_5:
 	close;
 }
 
-ayo_dun01.gat,198,164,4	script	#invayo1	111,{
+ayo_dun01,198,164,4	script	#invayo1	111,{
 
 	if(countitem(7285) < 1)end;
 	if(ayodot == 0)goto s_First;
@@ -1086,7 +1086,7 @@ s_First:
 
 }
 
-ayo_dun01.gat,87,16,4	script	#invayo2	111,{
+ayo_dun01,87,16,4	script	#invayo2	111,{
 
 	if(countitem(7285) < 1)end;
 	if(ayodot == 1)goto s_First;
@@ -1104,7 +1104,7 @@ s_First:
 
 }
 
-ayo_dun01.gat,268,215,4	script	#invayo3	111,{
+ayo_dun01,268,215,4	script	#invayo3	111,{
 
 	if(countitem(7285) < 1)end;
 	if(ayodot == 2)goto s_First;
@@ -1122,7 +1122,7 @@ s_First:
 
 }
 
-ayo_dun01.gat,147,274,4	script	#invayo4	111,{
+ayo_dun01,147,274,4	script	#invayo4	111,{
 
 	if(countitem(7285) < 1)end;
 	if(ayodot == 3)goto s_First;
@@ -1140,7 +1140,7 @@ s_First:
 
 }
 
-ayo_dun01.gat,99,118,4	script	#invayo5	111,{
+ayo_dun01,99,118,4	script	#invayo5	111,{
 	if(countitem(7285) < 1)end;
 	if(ayodot == 4)goto s_First;
 	mes "^3C2EE6You find a piece of a stone slate with letters etched on it. It seems to be the 5th part of the slate.";
@@ -1154,7 +1154,7 @@ s_First:
 
 }
 	
-ayo_dun01.gat,16,188,4	script	#invayo6	111,{
+ayo_dun01,16,188,4	script	#invayo6	111,{
 	if(countitem(7285) < 1)end;
 	if(ayodot == 5)goto s_First;
 	mes "^3C2EE6You find a piece of a stone slate with letters etched on it. It seems to be the last part of the slate.";
@@ -1167,32 +1167,32 @@ s_First:
 	close;
 }
 
-ayo_dun01.gat,24,283,4	script	#ayowarp	111,{
+ayo_dun01,24,283,4	script	#ayowarp	111,{
 	if(countitem(7287) < 1)goto s_NoEntry;
 	mes "^3C2EE6The holy threads emanate a powerful sense of safety and security. With the protection of holiness, you begin your descent into the 2nd level..";
 	close2;
 	set @ayodunwarp,rand(1,2);
 	if(@ayodunwarp == 2)goto s_2;
-	warp "ayo_dun02.gat",275,26;
+	warp "ayo_dun02",275,26;
 	end;
 s_2:
-	warp "ayo_dun02.gat",24,26;
+	warp "ayo_dun02",24,26;
 	end;	
 s_NoEntry:
 	mes "^3C2EE6You find what seems to be the entrance to the 2nd level. However, you are filled with an overwhelming sense of dread. Somehow, you can't bring yourself to go down...";
 	close;
 }
 
-ayo_dun01.gat,23,283,4	duplicate(#ayowarp)	#ayodupe1	111
-ayo_dun01.gat,25,283,4	duplicate(#ayowarp)	#ayodupe2	111
-ayo_dun01.gat,26,283,4	duplicate(#ayowarp)	#ayodupe3	111
+ayo_dun01,23,283,4	duplicate(#ayowarp)	#ayodupe1	111
+ayo_dun01,25,283,4	duplicate(#ayowarp)	#ayodupe2	111
+ayo_dun01,26,283,4	duplicate(#ayowarp)	#ayodupe3	111
 
 //============================================================
 //============================================== Tom Yum Goong
 //====================================================== Quest
 
 
-ayothaya.gat,196,265,3	script	Einon	842,{
+ayothaya,196,265,3	script	Einon	842,{
 	if(tomyumgoong == 5)goto s_Done;
 	if(tomyumgoong == 1 || tomyumgoong == 2 || tomyumgoong == 3 || tomyumgoong == 4)goto s_Resta;
 	mes "[Einon]";
@@ -1252,7 +1252,7 @@ s_Done:
 	close;	
 }
 
-ayo_in01.gat,145,163,4	script	Cook	839,{	
+ayo_in01,145,163,4	script	Cook	839,{	
 	if(tomyumgoong == 5)goto s_Busy;
 	if(ayopause == 1)goto s_Pause;
 	if(ayopause == 2)goto s_Pause2;
@@ -1517,7 +1517,7 @@ s_Busy:
 	close;	
 }
 
-ayothaya.gat,213,95,7	script	Merchant	841,{
+ayothaya,213,95,7	script	Merchant	841,{
 	if(tomyumgoong == 4)goto s_Chili;
 s_JumpBack:
 	mes "[Merchant Thongdum]";
@@ -1579,7 +1579,7 @@ s_NoZeny:
 	close;
 }
 
-ayothaya.gat,121,240,7	script	Mr. Jun	842,1,1,{
+ayothaya,121,240,7	script	Mr. Jun	842,1,1,{
 	mes "[Mr. Jun]";
 	mes "...";
 	close;

@@ -24,7 +24,7 @@
 
 
 // In Town ==============================================>\\
-comodo.gat,200,148,4	script	Kafra::kaf_comodo	721,{
+comodo,200,148,4	script	Kafra::kaf_comodo	721,{
 	cutin "kafra_07",2;
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpD$[0], "Morroc", "Comodo Pharos Lighthouse", "Umbala";
@@ -36,12 +36,12 @@ comodo.gat,200,148,4	script	Kafra::kaf_comodo	721,{
 	callfunc "F_Kafra",0,0,1;
 
 	M_Save:
-		savepoint "comodo.gat",204,143;
+		savepoint "comodo",204,143;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Comodo Pharos Lighthouse (Beacon Island) ===================>\\
-cmd_fild07.gat,135,134,4	script	Kafra::kaf_cmd_fild07	721,{
+cmd_fild07,135,134,4	script	Kafra::kaf_cmd_fild07	721,{
 	cutin "kafra_07",2;
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpD$[0], "Comodo", "Morroc";
@@ -52,6 +52,6 @@ cmd_fild07.gat,135,134,4	script	Kafra::kaf_cmd_fild07	721,{
 	callfunc "F_Kafra",0,0,1;
 
 	M_Save:
-		savepoint "cmd_fild07.gat",127,134;
+		savepoint "cmd_fild07",127,134;
 		callfunc "F_KafEnd",0,1;
 }

@@ -26,7 +26,7 @@
 
 
 // Panama  --------------------------------------------------------------
-aldebaran.gat,46,129,4	script	Panama	97,{
+aldebaran,46,129,4	script	Panama	97,{
 	mes "[Panama]";
 	mes "Al De Baran has been widely known throughout Rune-Midgard Kingdom as the City of canals.";
 	next;
@@ -48,7 +48,7 @@ aldebaran.gat,46,129,4	script	Panama	97,{
 }
 
 // Miller ------------------------------------------------------------------------
-aldebaran.gat,49,93,4	script	Miller	83,{
+aldebaran,49,93,4	script	Miller	83,{
 	mes "[Miller]";
 	mes "Did you know that LEVEL 4 weapons exist?";
 	next;
@@ -58,7 +58,7 @@ aldebaran.gat,49,93,4	script	Miller	83,{
 }
 
 // Senorita Sylvia -----------------------------------------------------------
-aldebaran.gat,60,70,4	script	Senorita Sylvia	69,{
+aldebaran,60,70,4	script	Senorita Sylvia	69,{
 	mes "[Senorita Sylvia]";
 	mes "I came all the way out here from Prontera because I heard that the Kafra Main Office is somewhere in the city of Al De Baran";
 	next;
@@ -93,7 +93,7 @@ aldebaran.gat,60,70,4	script	Senorita Sylvia	69,{
 }
 
 // Quatro ----------------------------------------------------------------
-aldebaran.gat,64,104,4	script	Quatro	55,{
+aldebaran,64,104,4	script	Quatro	55,{
 	mes "[Quatro]";
 	mes "It has been rumored that famous blacksmith came to this town from Geffen...";
 M_Menu:
@@ -123,7 +123,7 @@ M_Menu:
 }
 
 // Isenberg ---------------------------------------------------------------------
-aldebaran.gat,67,154,4	script	Isenberg	98,{
+aldebaran,67,154,4	script	Isenberg	98,{
 	mes "[Isenberg]";
 	mes "Mount Mjolnir and the Payon Forest are both notorious for high amounts of rainfall.";
 M_Menu:
@@ -170,7 +170,7 @@ M_Menu:
 }
 
 // Joanne ------------------------------------------------------------------------------
-aldebaran.gat,81,61,4	script	Joanne	101,{
+aldebaran,81,61,4	script	Joanne	101,{
 	mes "[Joanne]";
 	mes "I like to go gathering sea shells.  It is really fun";
 	next;
@@ -195,7 +195,7 @@ aldebaran.gat,81,61,4	script	Joanne	101,{
 }
 
 // Bebe -------------------------------------------------------------------
-aldebaran.gat,86,228,4	script	Bebe	703,{
+aldebaran,86,228,4	script	Bebe	703,{
 	mes "[Bebe]";
 	mes "A while back I went out for a walk towards Mt.Mjolnir, carrying a 'Savage Babe' with me.";
 M_Menu:
@@ -242,7 +242,7 @@ M_Menu:
 }
 
 // Epthiel -----------------------------------------------------------------
-aldebaran.gat,90,170,4	script	Epthiel	47,{
+aldebaran,90,170,4	script	Epthiel	47,{
 	mes "[Epthiel]";
 	mes "Some weapons and armor have slots in them.  This allows you to insert monster cards into them.";
 M_Menu:
@@ -275,7 +275,7 @@ M_Menu:
 }
 
 // Daniel --------------------------------------------------------------------------
-aldebaran.gat,93,80,4	script	Daniel	48,{
+aldebaran,93,80,4	script	Daniel	48,{
 	mes "[Daniel]";
 	mes "With waterways everywhere, the city of Al De Baran is a wonderful place to live.";
 	next;
@@ -305,7 +305,7 @@ aldebaran.gat,93,80,4	script	Daniel	48,{
 }
 
 // Munster -----------------------------------------------------------------
-aldebaran.gat,113,70,2	script	Munster	48,{
+aldebaran,113,70,2	script	Munster	48,{
 	mes "[Munster]";
 	mes "My family used to live in Geffen, the homeland of blacksmiths.  We moved to Al De Baran last winter.";
 	next;
@@ -333,7 +333,7 @@ aldebaran.gat,113,70,2	script	Munster	48,{
 }
 
 // Phracon Guy --------------------------------------------------------------
-aldebaran.gat,117,181,4	script	Phracon Guy	48,{
+aldebaran,117,181,4	script	Phracon Guy	48,{
 	mes "[Phracon Guy]";
 	mes "Lv 1 weapons require a metal called 'Phracon' to be upgraded.";
 	next;
@@ -366,7 +366,7 @@ aldebaran.gat,117,181,4	script	Phracon Guy	48,{
 }
 
 // Alchemy Guy Chemirre -----------------------------------------------------------
-aldebaran.gat,121,231,4	script	Alchemy Guy Chemirre	740,{
+aldebaran,121,231,4	script	Alchemy Guy Chemirre	740,{
 	mes "[Alchemy Guy Chemirre]";
 	mes "The Alchemist is one of the 2nd Job Classes and involves the creation of rare and valuable items from abundant materials.";
 M_Menu:
@@ -423,7 +423,7 @@ M_Menu:
 }
 
 // Anastasia --------------------------------------------------------------
-aldebaran.gat,146,124,4	script	Anastasia	101,{
+aldebaran,146,124,4	script	Anastasia	101,{
 	mes "[Anastasia]";
 	mes "Somewhere in Rune-Midgard exists the^3355FF' Assassin Guild '^000000.";
 	next;
@@ -453,7 +453,7 @@ aldebaran.gat,146,124,4	script	Anastasia	101,{
 }
 
 // Stromme ---------------------------------------------------------
-aldebaran.gat,159,242,4	script	Stromme	119,{
+aldebaran,159,242,4	script	Stromme	119,{
 	mes "[Stromme]";
 	mes "When you spend some time in Mt. Mjolnir, you'll start to notice something.";
 	next;
@@ -486,7 +486,7 @@ aldebaran.gat,159,242,4	script	Stromme	119,{
 }
 
 // Joo Jahk ------------------------------------------------------
-aldebaran.gat,180,46,4	script	Joo Jahk	88,{
+aldebaran,180,46,4	script	Joo Jahk	88,{
 	mes "[Joo Jahk]";
 	mes "I am a tourist from Payon, the city within the forest.  I noticed that it's very cool here... probably due to the waterways.";
 	next;
@@ -517,7 +517,7 @@ aldebaran.gat,180,46,4	script	Joo Jahk	88,{
 }
 
 // Gavin -------------------------------------------------------------------
-aldebaran.gat,212,122,4	script	Gavin	97,{
+aldebaran,212,122,4	script	Gavin	97,{
 	mes "Welcome! We, the towns people of Al De Baran, ALL welcome you . . . . .";
 	next;
 	mes "[Gavin]";
@@ -545,7 +545,7 @@ aldebaran.gat,212,122,4	script	Gavin	97,{
 
 
 // Giddy Fellow ------------------------------------------------------------------
-aldeba_in.gat,152,47,4	script	Giddy Fellow	97,{
+aldeba_in,152,47,4	script	Giddy Fellow	97,{
 	mes "[Giddy Fellow]";
 	mes "E..E..E..Emergenc----y!!! I CAN'T find my pet chicken anywhere!!";
 	emotion e_omg;
@@ -570,7 +570,7 @@ aldeba_in.gat,152,47,4	script	Giddy Fellow	97,{
 }
 
 // Master ----------------------------------------------------------
-aldeba_in.gat,156,179,4	script	Master#02	61,{
+aldeba_in,156,179,4	script	Master#02	61,{
 	mes "[Master]";
 	if(sex==0) mes "Oh hello.  Don't mind me, I'm just a perverted old man.... la di da.......";
 	if(sex==0) close;
@@ -658,7 +658,7 @@ aldeba_in.gat,156,179,4	script	Master#02	61,{
 }
 
 // RS125 ------------------------------------------------------------------------
-aldeba_in.gat,234,241,4	script	RS125	48,{
+aldeba_in,234,241,4	script	RS125	48,{
 	mes "[RS125]";
 	mes "Even if my first name is not human, and my manner of speech is not very eloquent, please don't be afraid of me.";
 	mes "I'm actually a warm hearted person.";
@@ -702,7 +702,7 @@ aldeba_in.gat,234,241,4	script	RS125	48,{
 }
 
 // Nice Looking Guy ----------------------------------------------------------
-aldeba_in.gat,219,61,4	script	Nice Looking Guy	109,{
+aldeba_in,219,61,4	script	Nice Looking Guy	109,{
 	mes "[Nice Looking Guy]";
 	mes "Forget about the doofus living next door.";
 	next;
@@ -716,7 +716,7 @@ aldeba_in.gat,219,61,4	script	Nice Looking Guy	109,{
 }
 
 // Evil Looking Guy --------------------------------------------------------------
-aldeba_in.gat,223,121,2	script	Evil looking Guy	63,{
+aldeba_in,223,121,2	script	Evil looking Guy	63,{
 	mes "[Evil Looking Guy]";
 	mes "Hey dude! Don't you think it's rude for a stranger to enter someone else's house?";
 	emotion e_what;
@@ -764,7 +764,7 @@ aldeba_in.gat,223,121,2	script	Evil looking Guy	63,{
 
 //<=================================================== Kafra Corp. Headquarters ==========================================================>\\
 // Kafra Jasmine  -------------------------
-aldeba_in.gat,24,245,4	script	 Kafra Jasmine	115,{
+aldeba_in,24,245,4	script	 Kafra Jasmine	115,{
 	cutin "kafra_03",2;
 	mes "[Kafra Jasmine]";
 	mes "Hi~ I am Kafra type Jasmine.  Thank you for coming all the way to the Kafra Main Office here in Al De Baran!";
@@ -819,7 +819,7 @@ aldeba_in.gat,24,245,4	script	 Kafra Jasmine	115,{
 }
 
 // Special Reserve ----------------------------------------------
-aldeba_in.gat,79,161,6	script	Kafra#04	115,{
+aldeba_in,79,161,6	script	Kafra#04	115,{
 	cutin "kafra_03",2;
 	mes "[Kafra]";
 	mes "Welcome, ^6666FF" + strcharinfo(0) + "^000000.  This is where you can trade in your special reserve points for useful items and cool prizes.";
@@ -1006,7 +1006,7 @@ M_Menu:
 }
 
 // Special Reserve 2 ----------------------------------------------
-aldeba_in.gat,88,161,3	script	Kafra#05	115,{
+aldeba_in,88,161,3	script	Kafra#05	115,{
 	cutin "kafra_03",2;
 	mes "[Kafra]";
 	mes "Welcome ^5577FF"+strcharinfo(0)+"^000000.  We are currently having a special event for our customers.";
@@ -1148,7 +1148,7 @@ sF_Spin:
 
 
 // Kafra Pavianne -----------------------------
-aldeba_in.gat,81,166,4	script	Kafra Pavianne	117,{
+aldeba_in,81,166,4	script	Kafra Pavianne	117,{
 	cutin "kafra_01",2;
 	mes "[Kafra Pavianne]";
 	mes "Welcome! I'm Pavianne,";
@@ -1216,7 +1216,7 @@ aldeba_in.gat,81,166,4	script	Kafra Pavianne	117,{
 }
 
 // Kafra Blossom -----------------------------------
-aldeba_in.gat,83,244,4	script	Kafra Blossom	116,{
+aldeba_in,83,244,4	script	Kafra Blossom	116,{
 	cutin "kafra_02",2;
 	mes "[Kafra Blossom]";
 	mes "..... Pavianne is soooo old school! She's too stubborn is what it is...";
@@ -1249,7 +1249,7 @@ aldeba_in.gat,83,244,4	script	Kafra Blossom	116,{
 }
 
 // Kafra Curly Sue ---------------------------------
-aldeba_in.gat,91,244,4	script	Kafra Curly Sue	112,{
+aldeba_in,91,244,4	script	Kafra Curly Sue	112,{
 	cutin "kafra_06",2;
 	mes "[Kafra Curly Sue]";
 	mes "Hello, hello! I'm the youngest of all Kafra personnel, the Kafra cutey....";
@@ -1278,7 +1278,7 @@ aldeba_in.gat,91,244,4	script	Kafra Curly Sue	112,{
 }
 
 // Kafra Roxie --------------------------------------
-aldeba_in.gat,148,244,4	script	Kafra Roxie	114,{
+aldeba_in,148,244,4	script	Kafra Roxie	114,{
 	cutin "kafra_04",2;
 	mes "[Kafra Roxie]";
 	mes "Welcome! I'm Kafra type 'Roxie'.  Let me let you in on a special secret about the Kafras!";
@@ -1311,7 +1311,7 @@ aldeba_in.gat,148,244,4	script	Kafra Roxie	114,{
 
 //<====================================================== Clock Tower ==============================================================>\\
 // Clock Keeper ---------------------------------------------------------------
-aldebaran.gat,143,136,4	script	Clock Keeper	89,{
+aldebaran,143,136,4	script	Clock Keeper	89,{
 	mes "[Clock Keeper]";
 	mes "Let me introduce myself, I am 'Monster A' of the Al De Baran Clock Tower, and the Committee of 'Heaven on Earth'.";
 	next;
@@ -1369,7 +1369,7 @@ aldebaran.gat,143,136,4	script	Clock Keeper	89,{
 }
 
 // Gatekeeper Riku -------------------------------------------------------------------
-c_tower3.gat,10,249,4	script	Gatekeeper#01	84,{
+c_tower3,10,249,4	script	Gatekeeper#01	84,{
 	mes "[Gatekeeper Riku]";
 	mes "Welcome to ";
 	mes "Kinase - Blue Gallino";
@@ -1442,7 +1442,7 @@ c_tower3.gat,10,249,4	script	Gatekeeper#01	84,{
 		mes "Please, You may enter.";
 		mes "May God bless you ..";
 		next;
-		warp "c_tower4.gat",185,44;
+		warp "c_tower4",185,44;
 		close;
 
 		L_Check_Key:
@@ -1463,7 +1463,7 @@ c_tower3.gat,10,249,4	script	Gatekeeper#01	84,{
 }
 
 //<======================================== Al De Baran Dungeon ==========================================>\\
-alde_dun03.gat,264,16,4	script	Gatekeeper#02	101,{
+alde_dun03,264,16,4	script	Gatekeeper#02	101,{
 	mes "[Gatekeeper Boy]";
 	mes "Welcome to";
 	mes "Kinase - Blue Gallino";
@@ -1537,7 +1537,7 @@ alde_dun03.gat,264,16,4	script	Gatekeeper#02	101,{
 		mes "Please,You may enter.";
 		mes "May God bless you ..";
 		next;
-		warp "alde_dun04.gat",79,267;
+		warp "alde_dun04",79,267;
 		close;
 
 		L_Check_Key:

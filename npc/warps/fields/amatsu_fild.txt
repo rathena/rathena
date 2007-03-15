@@ -14,9 +14,9 @@
 
 //= Amatsu Fields ============================================
 // removed
-//ama_fild.gat,154,301,0	warp	warp1998	1,1,prontera.gat,163,186
-//ama_fild.gat,174,132,0	warp	warp1996	1,1,prontera.gat,163,186
-//ama_fild.gat,193,302,0	warp	warp1997	1,1,prontera.gat,163,186
-//ama_fild.gat,330,141,0	warp	warp1999	1,1,prontera.gat,163,186
-ama_fild01.gat,174,332,0	warp	warp8003	1,1,ama_in01.gat,175,174
-ama_fild01.gat,75,29,0	warp	warp1961	1,1,amatsu.gat,247,287
+//ama_fild,154,301,0	warp	warp1998	1,1,prontera,163,186
+//ama_fild,174,132,0	warp	warp1996	1,1,prontera,163,186
+//ama_fild,193,302,0	warp	warp1997	1,1,prontera,163,186
+//ama_fild,330,141,0	warp	warp1999	1,1,prontera,163,186
+ama_fild01,174,332,0	warp	warp8003	1,1,ama_in01,175,174
+ama_fild01,75,29,0	warp	warp1961	1,1,amatsu,247,287

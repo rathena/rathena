@@ -17,7 +17,7 @@
 //= 1.2.1a fix due to new script engine
 //============================================================
 
-prontera.gat,1,1,1	script	lotterygenerator	111,{
+prontera,1,1,1	script	lotterygenerator	111,{
 OnInit:
 set $L_TicketPrice,4750; // TICKET COST
 set $L_Prize_Money,5000000; // JACKPOT AMOUNT
@@ -454,4 +454,4 @@ set $L_Rigged,1;
 close;
 }
 
-prontera.gat,141,182,5	duplicate(lottery)	Lottery	76
+prontera,141,182,5	duplicate(lottery)	Lottery	76

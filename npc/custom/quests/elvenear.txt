@@ -13,7 +13,7 @@
 //= 1.2 Fixed exploit [Lupus]
 //============================================================
 
-geffen.gat,127,49,5	script	Elven Ears Quest	84,{
+geffen,127,49,5	script	Elven Ears Quest	84,{
 	mes "[Elven Ears Quest]"; 
 	mes "Hi, today's quest is...."; 
 	mes "Ah, the ^61B031Elven Ears ^000000Quest!"; 

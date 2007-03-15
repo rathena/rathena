@@ -32,7 +32,7 @@
 //==================================================================================================//
 //					Registration and First Test
 //==================================================================================================//
-alde_alche.gat,27,185,4	script	Parmry Gianino	744,{
+alde_alche,27,185,4	script	Parmry Gianino	744,{
 	callfunc "F_BlockHigh",Job_Merchant_High,"Merchant High",Job_Creator,"Creator","Parmry Gianino";
 
 	mes "[Parmry Gianino]";
@@ -206,7 +206,7 @@ L_GoChange:
 //==================================================================================================//
 //					2nd Test: Math test :(
 //==================================================================================================//
-alde_alche.gat,175,107,4	script	Rasputin Gregory	749,{
+alde_alche,175,107,4	script	Rasputin Gregory	749,{
 	mes "[Rasputin Gregory]";
 	if(baseJob == Job_Merchant) goto L_Merc;
 	mes "What is it, kikikiki.  Are you curious about what I do...?";
@@ -467,7 +467,7 @@ L_Skip:
 //==================================================================================================//
 //					3rd Test: Mix some medicine
 //==================================================================================================//
-alde_alche.gat,13,15,8	script	Darwin	750,{
+alde_alche,13,15,8	script	Darwin	750,{
 	mes "[Darwin]";
 	if(baseJob == Job_Merchant) goto L_Merc;
 L_Other:
@@ -691,7 +691,7 @@ L_NotEnuf:
 //==================================================================================================//
 //					4th Test: Learn from Morgenstein
 //==================================================================================================//
-alde_alche.gat,79,19,4	script	Van Helmont	748,{
+alde_alche,79,19,4	script	Van Helmont	748,{
 	mes "[Van Helmont]";
 	if(baseJob == Job_Merchant) goto L_Merc;
 L_Other:
@@ -856,7 +856,7 @@ L_Done:
 //==================================================================================================//
 //				Test 5 & 6: Word Scramble, Help the Baijin Bros.
 //==================================================================================================//
-alde_alche.gat,145,19,4	script	Nicholas Flamel	57,{
+alde_alche,145,19,4	script	Nicholas Flamel	57,{
 	mes "[Nicholas Flamel]";
 	if(baseJob == Job_Merchant) goto L_Merc;
 L_Other:
@@ -1017,7 +1017,7 @@ L_Done:
 //==================================================================================================//
 //					Job Changer
 //==================================================================================================//
-alde_alche.gat,101,184,4	script	Vincent Carsciallo	122,{
+alde_alche,101,184,4	script	Vincent Carsciallo	122,{
 	mes "[Vincent Carsciallo]";
 	if(baseJob == Job_Merchant) goto L_Merc;
 	if(baseJob == Job_Alchem){

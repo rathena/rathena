@@ -8,7 +8,7 @@
 //= eAthena 1.0 Final +
 //===== Description: =========================================
 
-ayothaya.gat,58,134,5	script	Louise Gluck	763,{
+ayothaya,58,134,5	script	Louise Gluck	763,{
   mes "[Louise Gluck]";
   mes "What is the next line? ";
   close;
@@ -91,7 +91,7 @@ ayothaya.gat,58,134,5	script	Louise Gluck	763,{
 }
 
 
-ayothaya.gat,212,276,0	script	Romeo	50,{
+ayothaya,212,276,0	script	Romeo	50,{
   mes "[Romeo]";
   mes "What is the next line? ";
   close;
@@ -365,7 +365,7 @@ ayothaya.gat,212,276,0	script	Romeo	50,{
   end;
 }
  
-ayothaya.gat,214,279,3	script	Juliet	53,{
+ayothaya,214,279,3	script	Juliet	53,{
   mes "[Juliet]";
   mes "What is the next line? ";
   close;

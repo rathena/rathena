@@ -19,7 +19,7 @@
 
 
 // -- Archer Guildsman -- 
-payon_in02.gat,64,71,4	script	Archer Guildsman	59,{
+payon_in02,64,71,4	script	Archer Guildsman	59,{
 	callfunc "F_ToHigh",Job_Archer_High,"High Archer",Job_Sniper,"Archer Guildsman";
 	mes "[Archer Guildsman]";
 	if(BaseJob == Job_Novice && job_archer_q == 1) goto L_Check;

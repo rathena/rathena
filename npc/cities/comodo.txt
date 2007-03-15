@@ -26,7 +26,7 @@
 //============================================================================//
 
 //====================================================
-comodo.gat,216,310,4	script	BBQ Papa	85,{
+comodo,216,310,4	script	BBQ Papa	85,{
 OnStart:
 	mes "[BBQ Son]";
 	mes "Daddy! Daddy!... Is it true that an ^FF4444Evil Witch^000000 once lived in our village?? Does she still live here???";
@@ -50,19 +50,19 @@ OnStart:
 }
 
 //=======================================================
-comodo.gat,215,307,4	script	BBQ Mama	66,{
+comodo,215,307,4	script	BBQ Mama	66,{
 	doevent "BBQ Papa::OnStart";
 	end;
 }
 
 //=======================================================
-comodo.gat,213,310,4	script	BBQ Son	706,{
+comodo,213,310,4	script	BBQ Son	706,{
 	doevent "BBQ Papa::OnStart";
 	end;
 }
 
 //=======================================================
-comodo.gat,221,310,4	script	Rinta	89,{
+comodo,221,310,4	script	Rinta	89,{
 	mes "[Rinta]";
 	mes "I was 'accidentally' eavesdropping on those people having the BBQ over there.";
 	mes "It seems that they are long time friends of Comodo's ^5555FFChief^000000.";
@@ -74,7 +74,7 @@ comodo.gat,221,310,4	script	Rinta	89,{
 }
 
 //=======================================================
-comodo.gat,218,309,4	script	Razy	69,{
+comodo,218,309,4	script	Razy	69,{
 	mes "[Razy]";
 	mes "I really dislike people who constantly reminisce about the past.  Like that group of people over there.  They're really starting to bug me.";
 	next;
@@ -91,7 +91,7 @@ comodo.gat,218,309,4	script	Razy	69,{
 //============================================================================//
 
 //=============================================================
-cmd_in02.gat,172,105,4	script	G . J	86,{
+cmd_in02,172,105,4	script	G . J	86,{
 	mes "[G . J]";
 	mes "The more I think about it, the more I realize that it is easier and quicker to get rich by working a steady job and saving my money";
 	mes "than it is to gamble it away on false hopes of hitting the jackpot. ";
@@ -119,7 +119,7 @@ cmd_in02.gat,172,105,4	script	G . J	86,{
 }
 
 //=============================================================
-cmd_in02.gat,178,92,4	script	Shalone	101,{
+cmd_in02,178,92,4	script	Shalone	101,{
 	mes "[Shalone]";
 	mes "Ok, ok............ A-4!! Looks like you've lost again sir.... Hoo hoo, if you'd like a little advice, you shouldn't play when your luck's this bad.";
 	next;
@@ -129,7 +129,7 @@ cmd_in02.gat,178,92,4	script	Shalone	101,{
 }
 
 //=============================================================
-cmd_in02.gat,178,86,4	script	Stonae	98,{
+cmd_in02,178,86,4	script	Stonae	98,{
 	mes "[Stonae]";
 	mes "WHAT!! Dang it!! AGAIN!! Arghhhhhhh!!!............";
 	emotion e_omg;
@@ -145,7 +145,7 @@ cmd_in02.gat,178,86,4	script	Stonae	98,{
 }
 
 //=============================================================
-cmd_in02.gat,174,126,4	script	Loyar	83,{
+cmd_in02,174,126,4	script	Loyar	83,{
 	set @TEMP,0;
 	mes "[Loyar]";
 	mes "The Comodo Casino has a very pleasing decor... It's quite clean and simple!";
@@ -166,7 +166,7 @@ cmd_in02.gat,174,126,4	script	Loyar	83,{
 }
 
 //=============================================================
-cmd_in02.gat,73,81,4	script	Martine	48,{
+cmd_in02,73,81,4	script	Martine	48,{
 	set @temp, 2;
 	mes "[Martine]";
 	mes "Gambling? Oh no, it's NOT gambling! Don't say that the Comodo 'CASINO' houses gambling.....";
@@ -195,7 +195,7 @@ cmd_in02.gat,73,81,4	script	Martine	48,{
 }
 
 //=============================================================
-cmd_in02.gat,64,43,4	script	Roberto#01	709,{
+cmd_in02,64,43,4	script	Roberto#01	709,{
 	mes "[Roberto]";
 	mes "Muhahaha... What a stupid man! Now that's easy money! (~counts his money~)";
 	emotion e_gg;
@@ -207,7 +207,7 @@ cmd_in02.gat,64,43,4	script	Roberto#01	709,{
 }
 
 //=============================================================
-cmd_in02.gat,89,72,4	script	Deniroz	89,{
+cmd_in02,89,72,4	script	Deniroz	89,{
 	mes "[Deniroz]";
 	mes "If the bead falls in this time, I'll hit the JACKPOT!! All I have to do is put this small bead into that little hole.";
 	emotion e_gasp;
@@ -222,7 +222,7 @@ cmd_in02.gat,89,72,4	script	Deniroz	89,{
 }
 
 //=============================================================
-cmd_in02.gat,57,62,4	script	Casino Manager Moo	109,{
+cmd_in02,57,62,4	script	Casino Manager Moo	109,{
 	mes "[Casino Manager Moo]";
 	mes "I am the manager of Comodo Casino.  My name is ^3355FF'Moo'^000000.";
 	next;
@@ -240,7 +240,7 @@ cmd_in02.gat,57,62,4	script	Casino Manager Moo	109,{
 }
 
 //====================================================
-cmd_in02.gat,48,55,4	script	Scoursege	51,{
+cmd_in02,48,55,4	script	Scoursege	51,{
 	mes "[Scoursege]";
 	mes "Darn it, where is that guy who borrowed my zeny? He better not be hiding from me, he told me he would double my money!";
 	emotion e_swt2;
@@ -261,7 +261,7 @@ cmd_in02.gat,48,55,4	script	Scoursege	51,{
 //============================================================================//
 
 //==================================================
-cmd_fild07.gat,192,58,4	script	Light House Guard#01	100,{
+cmd_fild07,192,58,4	script	Light House Guard#01	100,{
 	mes "[Rahasu]";
 	mes "Good morning, I am Rahasu, your guide to the";
 	mes "^3355FF`lighthouses'^000000";
@@ -285,7 +285,7 @@ cmd_fild07.gat,192,58,4	script	Light House Guard#01	100,{
 }
 
 //=========================================================
-cmd_fild07.gat,52,280,4	script	Light House Guard#02	100,{
+cmd_fild07,52,280,4	script	Light House Guard#02	100,{
 	mes "[Hallosu]";
 	mes "That's correct, this is one of the two lighthouses in this area.";
 	mes "However, I can not let anyone go in yet because the lighthouse's interior is still under reconstruction.";
@@ -297,7 +297,7 @@ cmd_fild07.gat,52,280,4	script	Light House Guard#02	100,{
 }
 
 //=========================================================
-cmd_fild07.gat,299,83,4	script	Sailor#01	100,{
+cmd_fild07,299,83,4	script	Sailor#01	100,{
 	mes "[Zain]";
 	mes "Hello my friend, where do you wish to go?";
 	next;
@@ -306,12 +306,12 @@ cmd_fild07.gat,299,83,4	script	Sailor#01	100,{
 	M0:
 		if(Zeny < 600) goto NoZeny;
 		set Zeny, Zeny - 600;
-		warp "alberta.gat",192,169;
+		warp "alberta",192,169;
 		close;
 	M1:
 		if(Zeny < 800) goto NoZeny;
 		set Zeny, Zeny - 800;
-		warp "izlude.gat",176,182;
+		warp "izlude",176,182;
 		close;
 
 		NoZeny:
@@ -325,7 +325,7 @@ cmd_fild07.gat,299,83,4	script	Sailor#01	100,{
 }
 
 //=========================================================
-cmd_fild07.gat,94,134,4	script	Sailor#02	100,{
+cmd_fild07,94,134,4	script	Sailor#02	100,{
 	mes "[Sarumane]";
 	mes "Hello my friend, where do you wish to go?";
 	next;
@@ -334,12 +334,12 @@ cmd_fild07.gat,94,134,4	script	Sailor#02	100,{
 	M0:
 		if(Zeny < 600) goto NoZeny;
 		set Zeny, Zeny - 600;
-		warp "alberta.gat",192,169;
+		warp "alberta",192,169;
 		close;
 	M1:
 		if(Zeny < 800) goto NoZeny;
 		set Zeny, Zeny - 800;
-		warp "izlude.gat",176,182;
+		warp "izlude",176,182;
 		close;
 
 		NoZeny:
@@ -358,7 +358,7 @@ cmd_fild07.gat,94,134,4	script	Sailor#02	100,{
 //============================================================================//
 
 //=============================================================
-cmd_fild04.gat,188,74,4	script	Zyosegirl	93,{
+cmd_fild04,188,74,4	script	Zyosegirl	93,{
 	mes "[Zyosegirl]";
 	mes "Hello, I am Zyosegirl, I gather seashells in the sea all day and sell them to make a living.";
 	next;
@@ -368,7 +368,7 @@ cmd_fild04.gat,188,74,4	script	Zyosegirl	93,{
 }
 
 //=========================================================
-cmd_fild04.gat,248,86,4	script	Ziyaol	709,{
+cmd_fild04,248,86,4	script	Ziyaol	709,{
 	mes "[Ziyaol]";
 	mes "I don't care what you think of me, I am a fisherman, and it is a very tough profession.";
 	next;
@@ -378,7 +378,7 @@ cmd_fild04.gat,248,86,4	script	Ziyaol	709,{
 }
 
 //=========================================================
-cmd_fild04.gat,267,137,4	script	Kid	703,{
+cmd_fild04,267,137,4	script	Kid	703,{
 	mes "[Daeguro]";
 	mes "The sand here are so gentle and the smell of the ocean is great.";
 	mes "I hope one day I could get on one of those boats and head to Alberta.";
@@ -391,7 +391,7 @@ cmd_fild04.gat,267,137,4	script	Kid	703,{
 //============================================================================//
 
 //============================================================
-moc_fild12.gat,35,303,4	script	Saint Darmain Gatekeeper	59,{
+moc_fild12,35,303,4	script	Saint Darmain Gatekeeper	59,{
 	mes "[Serutero]";
 	mes "Good day, my name is Sertutero and I am the Gatekeeper for the road to Saint Darmain.";
 	mes "Do wish to proceed to Saint Darmain?";
@@ -402,7 +402,7 @@ moc_fild12.gat,35,303,4	script	Saint Darmain Gatekeeper	59,{
 		mes "[Serutero]";
 		mes "Good luck out there, things could get rough, so be extra careful.";
 		mes ". . . . .";
-		warp "cmd_fild08.gat",331,319;
+		warp "cmd_fild08",331,319;
 		close;
 	M1:
 		mes "[Serutero]";

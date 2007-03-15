@@ -1,4 +1,4 @@
-prontera.gat,152,181,5	script	MouseJstr	763,{
+prontera,152,181,5	script	MouseJstr	763,{
 
 //  hello
 Lquote0:

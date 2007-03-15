@@ -22,7 +22,7 @@
 
 
 // -- Jobchanger --
-aldeba_in.gat,223,167,3	script	Tozel	709,{
+aldeba_in,223,167,3	script	Tozel	709,{
 	if(SUPNOV_Q == 1) goto L_Start2;
 	if(BaseJob == Job_SuperNovice) goto L_Twice;
 	if(BaseJob != Job_Novice || Upper==1) goto L_Otherjob;
@@ -179,7 +179,7 @@ L_Otherjob:
 }
 
 // -- Totaly Useless :) --
-aldeba_in.gat,216,169,5	script	Serei	86,{
+aldeba_in,216,169,5	script	Serei	86,{
 	if(BaseJob == Job_SuperNovice) goto L_Supernovice;
 	if(BaseJob != Job_Novice) goto L_Otherjob;
 	mes "[Serei]";
@@ -216,7 +216,7 @@ L_Otherjob:
 
 
 // -- Car Rental --
-aldebaran.gat,54,238,5	script	Kafra::kaf_sn	117,{
+aldebaran,54,238,5	script	Kafra::kaf_sn	117,{
 	if(BaseJob != Job_SuperNovice) goto L_Otherjob;
 	if(checkcart() == 1) goto L_GotCart;
 	mes "[Kafra]";

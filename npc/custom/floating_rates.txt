@@ -16,7 +16,7 @@
 //===========================================================================================
 
 
-prontera.gat,3,4,5	script	FloatingRates	-1,{
+prontera,3,4,5	script	FloatingRates	-1,{
 	end;
 OnInit:
 

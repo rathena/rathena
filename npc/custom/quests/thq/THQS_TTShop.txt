@@ -23,9 +23,9 @@
 //= 	removed Executioner&Mysteltain swords [Lupus]
 //////////////////////////////////////////////////////////
 
-prt_in.gat,159,172,0	warp	thqwrp	3,3,yuno_in01.gat,123,155
+prt_in,159,172,0	warp	thqwrp	3,3,yuno_in01,123,155
 
-prt_in.gat,164,174,1	script	Treasure Hunter's Shop	65,{
+prt_in,164,174,1	script	Treasure Hunter's Shop	65,{
 	mes "[Ash]";
 	mes "Ahh, "+strcharinfo(0)+"! Welcome to the Offical Treasure Hunter's Guild Shop.";
 	mes "You currently have ^FF0000"+#Treasure_Token+"^000000 treasure tokens!!!";

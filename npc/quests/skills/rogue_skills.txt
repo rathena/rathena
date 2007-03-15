@@ -24,7 +24,7 @@
 //============================================================
 // ROGUE - CLOSE CONFINE
 //============================================================
-in_rogue.gat,387,94,3	script	Hyzaragrack	84,{
+in_rogue,387,94,3	script	Hyzaragrack	84,{
 	mes "[Hyzaragrack]";
 	if(BaseJob!=Job_Rogue) goto L_norogue;
 	if(getskilllv(1005)) goto L_alreadyhave;

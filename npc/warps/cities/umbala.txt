@@ -17,29 +17,29 @@
 
 //Witch House
 //Entrance via the Skeleton Gate Quest
-//umbala.gat,220,190,0	warp	umba0027	1,1,um_in.gat,32,70
-um_in.gat,28,70,0	warp	umba0028	1,1,umbala.gat,217,187
+//umbala,220,190,0	warp	umba0027	1,1,um_in,32,70
+um_in,28,70,0	warp	umba0028	1,1,umbala,217,187
 
 //Weapons
-umbala.gat,125,157,0	warp	umba0029	1,1,um_in.gat,155,114
-um_in.gat,155,110,0	warp	umba0030	1,1,umbala.gat,126,152
+umbala,125,157,0	warp	umba0029	1,1,um_in,155,114
+um_in,155,110,0	warp	umba0030	1,1,umbala,126,152
 
 //Fan Shack
-umbala.gat,138,129,0	warp	umba0031	1,1,um_in.gat,99,114
-um_in.gat,99,110,0	warp	umba0032	1,1,umbala.gat,136,127
+umbala,138,129,0	warp	umba0031	1,1,um_in,99,114
+um_in,99,110,0	warp	umba0032	1,1,umbala,136,127
 
 //Lower Double Shack 
-umbala.gat,95,186,0	warp	umba0033	1,1,um_in.gat,142,42
-um_in.gat,141,39,0	warp	umba0034	1,1,umbala.gat,95,183
+umbala,95,186,0	warp	umba0033	1,1,um_in,142,42
+um_in,141,39,0	warp	umba0034	1,1,umbala,95,183
 
 //Upper Double Shack 
-umbala.gat,100,202,0	warp	umba0035	1,1,um_in.gat,163,70
-um_in.gat,166,70,0	warp	umba0036	1,1,umbala.gat,102,204
+umbala,100,202,0	warp	umba0035	1,1,um_in,163,70
+um_in,166,70,0	warp	umba0036	1,1,umbala,102,204
 
 //Small Shack 
-umbala.gat,156,249,0	warp	umba0037	1,1,um_in.gat,99,67
-um_in.gat,99,63,0	warp	umba0038	1,1,umbala.gat,160,247
+umbala,156,249,0	warp	umba0037	1,1,um_in,99,67
+um_in,99,63,0	warp	umba0038	1,1,umbala,160,247
 
 //Large Shack 
-umbala.gat,108,164,0	warp	umba0039	1,1,um_in.gat,38,112
-um_in.gat,38,110,0	warp	umba0040	1,1,umbala.gat,104,163
+umbala,108,164,0	warp	umba0039	1,1,um_in,38,112
+um_in,38,110,0	warp	umba0040	1,1,umbala,104,163

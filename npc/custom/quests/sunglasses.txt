@@ -17,7 +17,7 @@
 // quest will reset it self after 1 pair of Slotted Sunglasses is made. 
 // 1st part of the quest
 
-alberta.gat,88,193,5	script	Sunglasses Trader	73,{
+alberta,88,193,5	script	Sunglasses Trader	73,{
 	if(SG_QUEST1 == 1) goto L_SG_Q1_Done;
 	mes "[Sunglasses Trader]";
 	mes "Hello. What can I do for you?";
@@ -90,7 +90,7 @@ L_SG_No:
  
 // 2nd part of the quest
 
-moc_fild09.gat,209,128,5	script	Maseph	702,{
+moc_fild09,209,128,5	script	Maseph	702,{
 	if(SG_QUEST1 == 1) goto L_SG_2;
 	mes "[Maseph]";
 	mes "Lovely Day, isn't it ?";

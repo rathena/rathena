@@ -40,7 +40,7 @@
 //				Job Changer
 //****************************************************************************//
 
-in_moc_16.gat,19,33,4	script	Guildsman	55,{
+in_moc_16,19,33,4	script	Guildsman	55,{
 	callfunc "F_BlockHigh",Job_Thief_High,"Thief High",Job_Assassin_Cross,"Assassin Cross","Assassin Huey";
 
 	if(BaseJob == Job_Assassin) {
@@ -126,9 +126,9 @@ in_moc_16.gat,19,33,4	script	Guildsman	55,{
 		mes "He'll take care of the registration process.";
 		enablenpc "Assassin Kai#1";
 		disablenpc "Assassin Kai#2";
-		savepoint "in_moc_16.gat", 19, 27;
+		savepoint "in_moc_16", 19, 27;
 		close2;
-		warp "in_moc_16.gat", 19, 76;
+		warp "in_moc_16", 19, 76;
 		end;
 	M_1:
 		mes "[Angry looking man]";
@@ -151,13 +151,13 @@ L_Failed1:
 	close2;
 	disablenpc "Assassin Kai#1";
 	enablenpc "Assassin Kai#2";
-	warp "in_moc_16.gat", 19, 76;
+	warp "in_moc_16", 19, 76;
 	end;
 
 L_Failed2:
 	mes "What are you doing out here?? Go back in and finish the second test!!";
 	close2;
-	warp "in_moc_16.gat", 21, 160;
+	warp "in_moc_16", 21, 160;
 	end;
 
 L_Change:
@@ -208,7 +208,7 @@ L_Change:
 			set ASSIN_Q, 0;
 			set ASSIN_Q2, 0;
 			close2;
-			warp "moc_fild16.gat", 206, 155;
+			warp "moc_fild16", 206, 155;
 			end;
 }
 
@@ -218,7 +218,7 @@ L_Change:
 //****************************************************************************//
 
 // Assassin Kai: First Position =================================
-in_moc_16.gat,21,91,4	script	Assassin Kai#1	730,4,4,{
+in_moc_16,21,91,4	script	Assassin Kai#1	730,4,4,{
 	end;
 
 OnTouch:
@@ -230,7 +230,7 @@ OnTouch:
 }
 
 // Assassin Kai: Second Position ==============================
-in_moc_16.gat,25,90,4	script	Assassin Kai#2	730,2,1,{
+in_moc_16,25,90,4	script	Assassin Kai#2	730,2,1,{
 	if(kaitrig == 1) goto OnTouch;
 	mes "[Assassin Kai]";
 	mes "Come closer to me, I like to see a persons face when I'm talking to them.";
@@ -267,7 +267,7 @@ OnTouch:
 		mes "Anyway, let me send to to the test hall for your first test.";
 		set JBLVL, 40;
 		close2;
-		warp "in_moc_16.gat", 19, 141;
+		warp "in_moc_16", 19, 141;
 		end;
 
 		sL_HighLvl:
@@ -278,7 +278,7 @@ OnTouch:
 			mes "You first test will be with the ^5533FF'Nameless One'^000000.  I'll send you too him right away.";
 			set JBLVL, 50;
 			close2;
-			warp "in_moc_16.gat", 19, 141;
+			warp "in_moc_16", 19, 141;
 			end;
 
 	M_No:
@@ -297,7 +297,7 @@ OnTouch:
 			mes "[Assassin Kai]";
 			mes "....Well, if thats the case,........ GET OUT!!";
 			close2;
-			warp "moc_fild16.gat", 206, 229;
+			warp "moc_fild16", 206, 229;
 			end;
 		sM_Yes:
 			mes "[Assassin Kai]";
@@ -369,7 +369,7 @@ L_Failed:
 		mes "Hahaha.... I can't beleive this..... hahaha.....";
 		emotion e_heh;
 		close2;
-		warp "in_moc_16.gat", 19, 141;
+		warp "in_moc_16", 19, 141;
 		end;
 	M_1:
 		mes "[Assassin Kai]";
@@ -397,7 +397,7 @@ L_Failed:
 		mes "[Assassin Kai]";
 		mes "This is all I have to say about Assassins...... I hope what I've said doesn't depress you?";
 		close2;
-		warp "in_moc_16.gat", 19, 141;
+		warp "in_moc_16", 19, 141;
 		end;
 	M_2:
 		mes "[Assassin Kai]";
@@ -431,7 +431,7 @@ L_Failed:
 			mes "I've said quite a lot and I acutally feel a little bit tired now.  Hopefully you will do better this time.";
 			mes "Get ready, I will send you to the test hall again.";
 			close2;
-			warp "in_moc_16.gat", 19, 141;
+			warp "in_moc_16", 19, 141;
 			close;
 
 		sM_End:
@@ -450,7 +450,7 @@ L_Failed:
 			mes "GET OUT! Get out of here right now!! You're not fit to become an Assassin!!!";
 			emotion e_pif;
 			close2;
-			warp "c_tower4.gat", 64, 76;
+			warp "c_tower4", 64, 76;
 			close;
 
 sF_Quiz:
@@ -535,11 +535,11 @@ sF_Quiz:
 //****************************************************************************//
 
 // Namelss One ====================================================
-in_moc_16.gat,19,150,1	script	Nameless One	139,8,6,{
+in_moc_16,19,150,1	script	Nameless One	139,8,6,{
 OnTouch:
 	if(ASSIN_Q > 1) end;
 
-	warp "in_moc_16.gat",19,142;
+	warp "in_moc_16",19,142;
 	sleep2 700;
 
 	if(ASSIN_Q == 1) goto L_ReTest;
@@ -566,7 +566,7 @@ OnTouch:
 		close2;
 		disablenpc "Assassin Kai#1";
 		enablenpc "Assassin Kai#2";
-		warp "in_moc_16.gat", 19, 76;
+		warp "in_moc_16", 19, 76;
 		end;
 	M_1:
 		mes "[Nameless One]";
@@ -973,7 +973,7 @@ L_Score:
 	next;
 	mes "[Nameless One]";
 	mes "Wait don't get so excited yet, there's still another test... Speak to Barkadi and she'll tell you about the second test..";
-	savepoint "in_moc_16.gat", 21, 160;
+	savepoint "in_moc_16", 21, 160;
 	set ASSIN_Q, 2;
 	close;
 
@@ -995,7 +995,7 @@ L_Score:
 		close2;
 		disablenpc "Assassin Kai#1";
 		enablenpc "Assassin Kai#2";
-		warp "in_moc_16.gat", 19, 76;
+		warp "in_moc_16", 19, 76;
 		end;
 
 L_ReTest:
@@ -1016,7 +1016,7 @@ L_ReTest:
 		mes "[Nameless One]";
 		mes "Leave the assassin guild now.  Go back to the town you came from!";
 		close2;
-		warp "moc_fild16.gat", 206, 241;
+		warp "moc_fild16", 206, 241;
 		end;
 	M_Retry:
 		mes "[Nameless One]";
@@ -1035,7 +1035,7 @@ L_ReTest:
 //=====================================================//
 
 // Barcardi ==============================>\\
-in_moc_16.gat,21,165,4	script	Barcardi	725,{
+in_moc_16,21,165,4	script	Barcardi	725,{
 
 	mes "[Barcardi]";
 	mes "I see that you passed the first test ^5533FF" + strcharinfo(0) + "^000000.";
@@ -1080,71 +1080,71 @@ in_moc_16.gat,21,165,4	script	Barcardi	725,{
 		mes "....... Oh, and don't forget to bring some courage with you loser!";
 		emotion e_pif;
 		next;
-		warp "moc_fild16.gat", 206, 241;
+		warp "moc_fild16", 206, 241;
 		close;
 
 OnInit:
 	waitingroom "Assasin Test Waitingroom",8,"Barcardi::OnStart",1;
 	end;
 OnStart:
-	set $@SinUsers, getareausers("in_moc_16.gat", 60, 136, 93, 177);
-	set $@SinUsers, $@SinUsers + getareausers("in_moc_16.gat", 64, 46, 111, 105);
+	set $@SinUsers, getareausers("in_moc_16", 60, 136, 93, 177);
+	set $@SinUsers, $@SinUsers + getareausers("in_moc_16", 64, 46, 111, 105);
 	if ($@SinUsers > 0) end;		// stops the rest of the script from running if there is somebody taking the test
 
 	if ((getwaitingroomstate(33)) == 0) end;		// stops the rest of the script from running if there is no one in the waiting room
-	killmonsterall "in_moc_16.gat";
-	warpwaitingpc "in_moc_16.gat", 65, 150;
+	killmonsterall "in_moc_16";
+	warpwaitingpc "in_moc_16", 65, 150;
 	donpcevent "SinTest2::OnStart";
 	end;
 }
 
 // Job Change Monsters ======================>\\
-in_moc_16.gat,1,1,0	script	SinTest2	-1,{
+in_moc_16,1,1,0	script	SinTest2	-1,{
 OnStart:
 	set $@SinMob, 6;
 	disablenpc "sinWarp1";
 	// Target Monsters
-	monster "in_moc_16.gat",62,161,"Job Change Target",1002,1,"SinTest2::OnMobDead"; 
-	monster "in_moc_16.gat",85,169,"Job Change Target",1063,1,"SinTest2::OnMobDead";
-	monster "in_moc_16.gat",88,152,"Job Change Target",1002,1,"SinTest2::OnMobDead";
-	monster "in_moc_16.gat",90,143,"Job Change Target",1113,1,"SinTest2::OnMobDead";
-	monster "in_moc_16.gat",74,167,"Job Change Target",1031,1,"SinTest2::OnMobDead";
-	monster "in_moc_16.gat",77,173,"Job Change Target",1002,1,"SinTest2::OnMobDead";
+	monster "in_moc_16",62,161,"Job Change Target",1002,1,"SinTest2::OnMobDead"; 
+	monster "in_moc_16",85,169,"Job Change Target",1063,1,"SinTest2::OnMobDead";
+	monster "in_moc_16",88,152,"Job Change Target",1002,1,"SinTest2::OnMobDead";
+	monster "in_moc_16",90,143,"Job Change Target",1113,1,"SinTest2::OnMobDead";
+	monster "in_moc_16",74,167,"Job Change Target",1031,1,"SinTest2::OnMobDead";
+	monster "in_moc_16",77,173,"Job Change Target",1002,1,"SinTest2::OnMobDead";
 	// Decoy Monsters
-	monster "in_moc_16.gat",62,161,"Jabs change target",1063,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",85,169,"Warrior test target",1031,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",79,174,"Target",1113,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",85,156,"Job quest target",1063,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",74,171,"bouncer",1002,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",68,173,"I got yours right here!",1113,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",65,158,"Battle Target",1002,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",60,158,"Soldiet Target",1113,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",64,169,"Target",1002,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",71,173,"Job change ready",1063,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",77,172,"Don't hit me",1002,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",76,172,"Target",1063,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",75,172,"Not me",1113,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",67,167,"Keep up the good work",1063,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",86,170,"Job target change",1031,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",86,171,"Target",1002,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",86,170,"Target",1113,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",86,173,"Hope you can become an assassin..",1063,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",85,170,"Battle Monster",1031,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",89,156,"Target",1002,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",89,156,"Speed182",1113,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",89,156,"Battle Target",1063,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",89,156,"Battlefield Tears",1113,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",89,156,"Job Change Tears",1031,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",83,169,"Evil Servant",1002,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",63,158,"Dead soul",1063,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",63,157,"Target",1002,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",64,159,"Battle Target",1002,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",63,159,"Target",1063,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",63,159,"Archer Target",1002,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",63,159,"Swordman Target",1002,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",83,148,"Thief Target",1002,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",82,148,"Acolyte Target",1002,1,"SinTest2::OnFailed";
-	monster "in_moc_16.gat",84,148,"Merchant Target",1002,1,"SinTest2::OnFailed";
+	monster "in_moc_16",62,161,"Jabs change target",1063,1,"SinTest2::OnFailed";
+	monster "in_moc_16",85,169,"Warrior test target",1031,1,"SinTest2::OnFailed";
+	monster "in_moc_16",79,174,"Target",1113,1,"SinTest2::OnFailed";
+	monster "in_moc_16",85,156,"Job quest target",1063,1,"SinTest2::OnFailed";
+	monster "in_moc_16",74,171,"bouncer",1002,1,"SinTest2::OnFailed";
+	monster "in_moc_16",68,173,"I got yours right here!",1113,1,"SinTest2::OnFailed";
+	monster "in_moc_16",65,158,"Battle Target",1002,1,"SinTest2::OnFailed";
+	monster "in_moc_16",60,158,"Soldiet Target",1113,1,"SinTest2::OnFailed";
+	monster "in_moc_16",64,169,"Target",1002,1,"SinTest2::OnFailed";
+	monster "in_moc_16",71,173,"Job change ready",1063,1,"SinTest2::OnFailed";
+	monster "in_moc_16",77,172,"Don't hit me",1002,1,"SinTest2::OnFailed";
+	monster "in_moc_16",76,172,"Target",1063,1,"SinTest2::OnFailed";
+	monster "in_moc_16",75,172,"Not me",1113,1,"SinTest2::OnFailed";
+	monster "in_moc_16",67,167,"Keep up the good work",1063,1,"SinTest2::OnFailed";
+	monster "in_moc_16",86,170,"Job target change",1031,1,"SinTest2::OnFailed";
+	monster "in_moc_16",86,171,"Target",1002,1,"SinTest2::OnFailed";
+	monster "in_moc_16",86,170,"Target",1113,1,"SinTest2::OnFailed";
+	monster "in_moc_16",86,173,"Hope you can become an assassin..",1063,1,"SinTest2::OnFailed";
+	monster "in_moc_16",85,170,"Battle Monster",1031,1,"SinTest2::OnFailed";
+	monster "in_moc_16",89,156,"Target",1002,1,"SinTest2::OnFailed";
+	monster "in_moc_16",89,156,"Speed182",1113,1,"SinTest2::OnFailed";
+	monster "in_moc_16",89,156,"Battle Target",1063,1,"SinTest2::OnFailed";
+	monster "in_moc_16",89,156,"Battlefield Tears",1113,1,"SinTest2::OnFailed";
+	monster "in_moc_16",89,156,"Job Change Tears",1031,1,"SinTest2::OnFailed";
+	monster "in_moc_16",83,169,"Evil Servant",1002,1,"SinTest2::OnFailed";
+	monster "in_moc_16",63,158,"Dead soul",1063,1,"SinTest2::OnFailed";
+	monster "in_moc_16",63,157,"Target",1002,1,"SinTest2::OnFailed";
+	monster "in_moc_16",64,159,"Battle Target",1002,1,"SinTest2::OnFailed";
+	monster "in_moc_16",63,159,"Target",1063,1,"SinTest2::OnFailed";
+	monster "in_moc_16",63,159,"Archer Target",1002,1,"SinTest2::OnFailed";
+	monster "in_moc_16",63,159,"Swordman Target",1002,1,"SinTest2::OnFailed";
+	monster "in_moc_16",83,148,"Thief Target",1002,1,"SinTest2::OnFailed";
+	monster "in_moc_16",82,148,"Acolyte Target",1002,1,"SinTest2::OnFailed";
+	monster "in_moc_16",84,148,"Merchant Target",1002,1,"SinTest2::OnFailed";
 	set $@sinRmX1, 60;
 	set $@sinRmY1, 136;
 	set $@sinRmX2, 93;
@@ -1157,132 +1157,132 @@ OnStart:
 
 OnTimer500:
 	stopnpctimer;
-	areaannounce "in_moc_16.gat", 60, 136, 93, 177, "Okay the test is about to start! Remember to eliminate the monsters called 'Job Change Target'",8;
+	areaannounce "in_moc_16", 60, 136, 93, 177, "Okay the test is about to start! Remember to eliminate the monsters called 'Job Change Target'",8;
 	end;
 OnMobDead:
 	set $@SinMob, $@SinMob -1;
-	areaannounce "in_moc_16.gat", 60, 136, 93, 177, "Good.  You have " + $@SinMob + " targets left to eliminate.",8;
+	areaannounce "in_moc_16", 60, 136, 93, 177, "Good.  You have " + $@SinMob + " targets left to eliminate.",8;
 	if($@SinMob > 0) end;
 
 	stopnpctimer "TimerSin";
-	killmonsterall "in_moc_16.gat";
+	killmonsterall "in_moc_16";
 	enablenpc "sinWarp1";
-	areaannounce "in_moc_16.gat", 60, 136, 93, 177,"Congratulations! You passed the test! A warp has just opened.  Use it to leave the test room.",8;
+	areaannounce "in_moc_16", 60, 136, 93, 177,"Congratulations! You passed the test! A warp has just opened.  Use it to leave the test room.",8;
 	addtimer 30000, "sinWarp1::OnTimer30000";		// warps player after 30 sec to move test along
 	end;
 OnFailed:
 	stopnpctimer "TimerSin";
-	areaannounce "in_moc_16.gat", 60, 136, 93, 177,"You failed!",8;
+	areaannounce "in_moc_16", 60, 136, 93, 177,"You failed!",8;
 	addtimer 3000, "TimerSin::OnTimer188000";
 	end;
 }
 
 // Observer ===========================>\\
-in_moc_16.gat,62,153,1	script	Observer	55,{
+in_moc_16,62,153,1	script	Observer	55,{
 	mes "[Observer]";
 	mes "Don't mind me, I'm just here to see how well you do on your test.....";
 	close;
 }
 
 // Warp ==============================>\\
-in_moc_16.gat,87,137,0	script	sinWarp1	45,2,1,{
+in_moc_16,87,137,0	script	sinWarp1	45,2,1,{
 OnTimer30000:
-	killmonsterall "in_moc_16.gat";
+	killmonsterall "in_moc_16";
 	enablenpc "Thomas";
-	warp "in_moc_16.gat", 87, 102;
+	warp "in_moc_16", 87, 102;
 	end;
 }
 
 // Booby Traps ========================>\\
-in_moc_16.gat,68,158,0	script	01_1::SinTrap	139,0,0,{
+in_moc_16,68,158,0	script	01_1::SinTrap	139,0,0,{
 	stopnpctimer "TimerSin";
-	warp "in_moc_16.gat", 19, 161;
-	killmonsterall "in_moc_16.gat";
+	warp "in_moc_16", 19, 161;
+	killmonsterall "in_moc_16";
 	donpcevent "Barcardi::OnStart";
 	end;
 }
-in_moc_16.gat,69,158,0	duplicate(SinTrap)	01_2	139,0,0
-in_moc_16.gat,68,159,0	duplicate(SinTrap)	01_3	139,0,0
-in_moc_16.gat,69,159,0	duplicate(SinTrap)	01_4	139,0,0
-in_moc_16.gat,64,162,0	duplicate(SinTrap)	02_1	139,0,0
-in_moc_16.gat,65,162,0	duplicate(SinTrap)	02_2	139,0,0
-in_moc_16.gat,64,163,0	duplicate(SinTrap)	02_3	139,0,0
-in_moc_16.gat,65,163,0	duplicate(SinTrap)	02_4	139,0,0
-in_moc_16.gat,62,168,0	duplicate(SinTrap)	03_1	139,0,0
-in_moc_16.gat,63,168,0	duplicate(SinTrap)	03_2	139,0,0
-in_moc_16.gat,62,169,0	duplicate(SinTrap)	03_3	139,0,0
-in_moc_16.gat,63,169,0	duplicate(SinTrap)	03_4	139,0,0
-in_moc_16.gat,66,170,0	duplicate(SinTrap)	04_1	139,0,0
-in_moc_16.gat,67,170,0	duplicate(SinTrap)	04_2	139,0,0
-in_moc_16.gat,66,171,0	duplicate(SinTrap)	04_3	139,0,0
-in_moc_16.gat,67,171,0	duplicate(SinTrap)	04_4	139,0,0
-in_moc_16.gat,64,174,0	duplicate(SinTrap)	05_1	139,0,0
-in_moc_16.gat,64,175,0	duplicate(SinTrap)	05_2	139,0,0
-in_moc_16.gat,65,174,0	duplicate(SinTrap)	05_3	139,0,0
-in_moc_16.gat,65,175,0	duplicate(SinTrap)	05_4	139,0,0
-in_moc_16.gat,72,174,0	duplicate(SinTrap)	06_1	139,0,0
-in_moc_16.gat,72,175,0	duplicate(SinTrap)	06_2	139,0,0
-in_moc_16.gat,73,174,0	duplicate(SinTrap)	06_3	139,0,0
-in_moc_16.gat,73,175,0	duplicate(SinTrap)	06_4	139,0,0
-in_moc_16.gat,72,166,0	duplicate(SinTrap)	07_1	139,0,0
-in_moc_16.gat,72,167,0	duplicate(SinTrap)	07_2	139,0,0
-in_moc_16.gat,73,166,0	duplicate(SinTrap)	07_3	139,0,0
-in_moc_16.gat,73,167,0	duplicate(SinTrap)	07_4	139,0,0
-in_moc_16.gat,72,168,0	duplicate(SinTrap)	08_1	139,0,0
-in_moc_16.gat,72,169,0	duplicate(SinTrap)	08_2	139,0,0
-in_moc_16.gat,73,168,0	duplicate(SinTrap)	08_3	139,0,0
-in_moc_16.gat,73,169,0	duplicate(SinTrap)	08_4	139,0,0
-in_moc_16.gat,78,168,0	duplicate(SinTrap)	09_1	139,0,0
-in_moc_16.gat,78,169,0	duplicate(SinTrap)	09_2	139,0,0
-in_moc_16.gat,79,168,0	duplicate(SinTrap)	09_3	139,0,0
-in_moc_16.gat,79,169,0	duplicate(SinTrap)	09_4	139,0,0
-in_moc_16.gat,80,172,0	duplicate(SinTrap)	10_1	139,0,0
-in_moc_16.gat,81,172,0	duplicate(SinTrap)	10_2	139,0,0
-in_moc_16.gat,82,172,0	duplicate(SinTrap)	10_3	139,0,0
-in_moc_16.gat,83,172,0	duplicate(SinTrap)	10_4	139,0,0
-in_moc_16.gat,80,173,0	duplicate(SinTrap)	10_5	139,0,0
-in_moc_16.gat,81,173,0	duplicate(SinTrap)	10_6	139,0,0
-in_moc_16.gat,82,173,0	duplicate(SinTrap)	10_7	139,0,0
-in_moc_16.gat,83,173,0	duplicate(SinTrap)	10_8	139,0,0
-in_moc_16.gat,88,174,0	duplicate(SinTrap)	11_1	139,0,0
-in_moc_16.gat,88,175,0	duplicate(SinTrap)	11_2	139,0,0
-in_moc_16.gat,89,174,0	duplicate(SinTrap)	11_3	139,0,0
-in_moc_16.gat,86,166,0	duplicate(SinTrap)	12_1	139,0,0
-in_moc_16.gat,86,167,0	duplicate(SinTrap)	12_2	139,0,0
-in_moc_16.gat,87,166,0	duplicate(SinTrap)	12_3	139,0,0
-in_moc_16.gat,87,167,0	duplicate(SinTrap)	12_4	139,0,0
-in_moc_16.gat,90,164,0	duplicate(SinTrap)	13_1	139,0,0
-in_moc_16.gat,90,165,0	duplicate(SinTrap)	13_2	139,0,0
-in_moc_16.gat,91,164,0	duplicate(SinTrap)	13_3	139,0,0
-in_moc_16.gat,91,165,0	duplicate(SinTrap)	13_4	139,0,0
-in_moc_16.gat,84,160,0	duplicate(SinTrap)	14_1	139,0,0
-in_moc_16.gat,85,160,0	duplicate(SinTrap)	14_2	139,0,0
-in_moc_16.gat,86,160,0	duplicate(SinTrap)	14_3	139,0,0
-in_moc_16.gat,87,160,0	duplicate(SinTrap)	14_4	139,0,0
-in_moc_16.gat,88,160,0	duplicate(SinTrap)	14_5	139,0,0
-in_moc_16.gat,89,160,0	duplicate(SinTrap)	14_6	139,0,0
-in_moc_16.gat,84,161,0	duplicate(SinTrap)	14_7	139,0,0
-in_moc_16.gat,85,161,0	duplicate(SinTrap)	14_8	139,0,0
-in_moc_16.gat,86,161,0	duplicate(SinTrap)	14_9	139,0,0
-in_moc_16.gat,87,161,0	duplicate(SinTrap)	14_10	139,0,0
-in_moc_16.gat,88,161,0	duplicate(SinTrap)	14_11	139,0,0
-in_moc_16.gat,89,161,0	duplicate(SinTrap)	14_12	139,0,0
-in_moc_16.gat,86,154,0	duplicate(SinTrap)	15_1	139,0,0
-in_moc_16.gat,86,155,0	duplicate(SinTrap)	15_2	139,0,0
-in_moc_16.gat,87,154,0	duplicate(SinTrap)	15_3	139,0,0
-in_moc_16.gat,87,155,0	duplicate(SinTrap)	15_4	139,0,0
-in_moc_16.gat,84,150,0	duplicate(SinTrap)	16_1	139,0,0
-in_moc_16.gat,84,151,0	duplicate(SinTrap)	16_2	139,0,0
-in_moc_16.gat,85,150,0	duplicate(SinTrap)	16_3	139,0,0
-in_moc_16.gat,85,151,0	duplicate(SinTrap)	16_4	139,0,0
-in_moc_16.gat,90,150,0	duplicate(SinTrap)	17_1	139,0,0
-in_moc_16.gat,90,151,0	duplicate(SinTrap)	17_2	139,0,0
-in_moc_16.gat,91,150,0	duplicate(SinTrap)	17_3	139,0,0
-in_moc_16.gat,91,151,0	duplicate(SinTrap)	17_4	139,0,0
-in_moc_16.gat,86,146,0	duplicate(SinTrap)	18_1	139,0,0
-in_moc_16.gat,86,147,0	duplicate(SinTrap)	18_2	139,0,0
-in_moc_16.gat,87,146,0	duplicate(SinTrap)	18_3	139,0,0
-in_moc_16.gat,87,147,0	duplicate(SinTrap)	18_4	139,0,0
+in_moc_16,69,158,0	duplicate(SinTrap)	01_2	139,0,0
+in_moc_16,68,159,0	duplicate(SinTrap)	01_3	139,0,0
+in_moc_16,69,159,0	duplicate(SinTrap)	01_4	139,0,0
+in_moc_16,64,162,0	duplicate(SinTrap)	02_1	139,0,0
+in_moc_16,65,162,0	duplicate(SinTrap)	02_2	139,0,0
+in_moc_16,64,163,0	duplicate(SinTrap)	02_3	139,0,0
+in_moc_16,65,163,0	duplicate(SinTrap)	02_4	139,0,0
+in_moc_16,62,168,0	duplicate(SinTrap)	03_1	139,0,0
+in_moc_16,63,168,0	duplicate(SinTrap)	03_2	139,0,0
+in_moc_16,62,169,0	duplicate(SinTrap)	03_3	139,0,0
+in_moc_16,63,169,0	duplicate(SinTrap)	03_4	139,0,0
+in_moc_16,66,170,0	duplicate(SinTrap)	04_1	139,0,0
+in_moc_16,67,170,0	duplicate(SinTrap)	04_2	139,0,0
+in_moc_16,66,171,0	duplicate(SinTrap)	04_3	139,0,0
+in_moc_16,67,171,0	duplicate(SinTrap)	04_4	139,0,0
+in_moc_16,64,174,0	duplicate(SinTrap)	05_1	139,0,0
+in_moc_16,64,175,0	duplicate(SinTrap)	05_2	139,0,0
+in_moc_16,65,174,0	duplicate(SinTrap)	05_3	139,0,0
+in_moc_16,65,175,0	duplicate(SinTrap)	05_4	139,0,0
+in_moc_16,72,174,0	duplicate(SinTrap)	06_1	139,0,0
+in_moc_16,72,175,0	duplicate(SinTrap)	06_2	139,0,0
+in_moc_16,73,174,0	duplicate(SinTrap)	06_3	139,0,0
+in_moc_16,73,175,0	duplicate(SinTrap)	06_4	139,0,0
+in_moc_16,72,166,0	duplicate(SinTrap)	07_1	139,0,0
+in_moc_16,72,167,0	duplicate(SinTrap)	07_2	139,0,0
+in_moc_16,73,166,0	duplicate(SinTrap)	07_3	139,0,0
+in_moc_16,73,167,0	duplicate(SinTrap)	07_4	139,0,0
+in_moc_16,72,168,0	duplicate(SinTrap)	08_1	139,0,0
+in_moc_16,72,169,0	duplicate(SinTrap)	08_2	139,0,0
+in_moc_16,73,168,0	duplicate(SinTrap)	08_3	139,0,0
+in_moc_16,73,169,0	duplicate(SinTrap)	08_4	139,0,0
+in_moc_16,78,168,0	duplicate(SinTrap)	09_1	139,0,0
+in_moc_16,78,169,0	duplicate(SinTrap)	09_2	139,0,0
+in_moc_16,79,168,0	duplicate(SinTrap)	09_3	139,0,0
+in_moc_16,79,169,0	duplicate(SinTrap)	09_4	139,0,0
+in_moc_16,80,172,0	duplicate(SinTrap)	10_1	139,0,0
+in_moc_16,81,172,0	duplicate(SinTrap)	10_2	139,0,0
+in_moc_16,82,172,0	duplicate(SinTrap)	10_3	139,0,0
+in_moc_16,83,172,0	duplicate(SinTrap)	10_4	139,0,0
+in_moc_16,80,173,0	duplicate(SinTrap)	10_5	139,0,0
+in_moc_16,81,173,0	duplicate(SinTrap)	10_6	139,0,0
+in_moc_16,82,173,0	duplicate(SinTrap)	10_7	139,0,0
+in_moc_16,83,173,0	duplicate(SinTrap)	10_8	139,0,0
+in_moc_16,88,174,0	duplicate(SinTrap)	11_1	139,0,0
+in_moc_16,88,175,0	duplicate(SinTrap)	11_2	139,0,0
+in_moc_16,89,174,0	duplicate(SinTrap)	11_3	139,0,0
+in_moc_16,86,166,0	duplicate(SinTrap)	12_1	139,0,0
+in_moc_16,86,167,0	duplicate(SinTrap)	12_2	139,0,0
+in_moc_16,87,166,0	duplicate(SinTrap)	12_3	139,0,0
+in_moc_16,87,167,0	duplicate(SinTrap)	12_4	139,0,0
+in_moc_16,90,164,0	duplicate(SinTrap)	13_1	139,0,0
+in_moc_16,90,165,0	duplicate(SinTrap)	13_2	139,0,0
+in_moc_16,91,164,0	duplicate(SinTrap)	13_3	139,0,0
+in_moc_16,91,165,0	duplicate(SinTrap)	13_4	139,0,0
+in_moc_16,84,160,0	duplicate(SinTrap)	14_1	139,0,0
+in_moc_16,85,160,0	duplicate(SinTrap)	14_2	139,0,0
+in_moc_16,86,160,0	duplicate(SinTrap)	14_3	139,0,0
+in_moc_16,87,160,0	duplicate(SinTrap)	14_4	139,0,0
+in_moc_16,88,160,0	duplicate(SinTrap)	14_5	139,0,0
+in_moc_16,89,160,0	duplicate(SinTrap)	14_6	139,0,0
+in_moc_16,84,161,0	duplicate(SinTrap)	14_7	139,0,0
+in_moc_16,85,161,0	duplicate(SinTrap)	14_8	139,0,0
+in_moc_16,86,161,0	duplicate(SinTrap)	14_9	139,0,0
+in_moc_16,87,161,0	duplicate(SinTrap)	14_10	139,0,0
+in_moc_16,88,161,0	duplicate(SinTrap)	14_11	139,0,0
+in_moc_16,89,161,0	duplicate(SinTrap)	14_12	139,0,0
+in_moc_16,86,154,0	duplicate(SinTrap)	15_1	139,0,0
+in_moc_16,86,155,0	duplicate(SinTrap)	15_2	139,0,0
+in_moc_16,87,154,0	duplicate(SinTrap)	15_3	139,0,0
+in_moc_16,87,155,0	duplicate(SinTrap)	15_4	139,0,0
+in_moc_16,84,150,0	duplicate(SinTrap)	16_1	139,0,0
+in_moc_16,84,151,0	duplicate(SinTrap)	16_2	139,0,0
+in_moc_16,85,150,0	duplicate(SinTrap)	16_3	139,0,0
+in_moc_16,85,151,0	duplicate(SinTrap)	16_4	139,0,0
+in_moc_16,90,150,0	duplicate(SinTrap)	17_1	139,0,0
+in_moc_16,90,151,0	duplicate(SinTrap)	17_2	139,0,0
+in_moc_16,91,150,0	duplicate(SinTrap)	17_3	139,0,0
+in_moc_16,91,151,0	duplicate(SinTrap)	17_4	139,0,0
+in_moc_16,86,146,0	duplicate(SinTrap)	18_1	139,0,0
+in_moc_16,86,147,0	duplicate(SinTrap)	18_2	139,0,0
+in_moc_16,87,146,0	duplicate(SinTrap)	18_3	139,0,0
+in_moc_16,87,147,0	duplicate(SinTrap)	18_4	139,0,0
 
 
 //=========================================================//
@@ -1290,7 +1290,7 @@ in_moc_16.gat,87,147,0	duplicate(SinTrap)	18_4	139,0,0
 //=========================================================//
 
 // Thomas ===============================>\\
-in_moc_16.gat,89,98,1	script	Thomas	118,4,2,{
+in_moc_16,89,98,1	script	Thomas	118,4,2,{
 OnTimer600:
 	if(ASSIN_Q2 == 1) goto L_ReTest;
 	mes "[Thomas]";
@@ -1322,58 +1322,58 @@ L_ReTest:
 	donpcevent "SinTest2_2::OnStart";
 	close;
 OnTouch:
-	warp "in_moc_16.gat",87,99;
+	warp "in_moc_16",87,99;
 	addtimer 600, "Thomas::OnTimer600";
 	end;
 }
 
 
 // SinTest2_2 ===============================>\\
-in_moc_16.gat,1,1,1	script	SinTest2_2	-1,{
+in_moc_16,1,1,1	script	SinTest2_2	-1,{
 OnStart:
-	monster "in_moc_16.gat", 81, 77, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
-	monster "in_moc_16.gat", 83, 77, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
-	monster "in_moc_16.gat", 85, 77, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
-	monster "in_moc_16.gat", 88, 77, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
-	monster "in_moc_16.gat", 90, 77, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
-	monster "in_moc_16.gat", 78, 56, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
-	monster "in_moc_16.gat", 80, 56, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
-	monster "in_moc_16.gat", 91, 56, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
-	monster "in_moc_16.gat", 93, 56, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
-	monster "in_moc_16.gat", 95, 56, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
-	monster "in_moc_16.gat", 97, 56, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
-	monster "in_moc_16.gat", 79, 62, "Hydra", 1068,1, "SinTest2_2::OnMobDead";
-	monster "in_moc_16.gat", 76, 65, "Hydra", 1068,1, "SinTest2_2::OnMobDead";
-	monster "in_moc_16.gat", 96, 65, "Hydra", 1068,1, "SinTest2_2::OnMobDead";
-	monster "in_moc_16.gat", 99, 65, "Hydra", 1068,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 81, 77, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 83, 77, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 85, 77, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 88, 77, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 90, 77, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 78, 56, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 80, 56, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 91, 56, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 93, 56, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 95, 56, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 97, 56, "MUMMY", 1041,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 79, 62, "Hydra", 1068,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 76, 65, "Hydra", 1068,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 96, 65, "Hydra", 1068,1, "SinTest2_2::OnMobDead";
+	monster "in_moc_16", 99, 65, "Hydra", 1068,1, "SinTest2_2::OnMobDead";
 	set $@sinRmX1, 64;
 	set $@sinRmY1, 46;
 	set $@sinRmX2, 111;
 	set $@sinRmY2, 105;
 	set $@wrpX, 87;
 	set $@wrpY, 102;
-	areawarp "in_moc_16.gat", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "in_moc_16.gat", $@wrpX, $@wrpY;
+	areawarp "in_moc_16", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "in_moc_16", $@wrpX, $@wrpY;
 	initnpctimer "TimerSin";
 	end;
 OnMobDead:
 	stopnpctimer "TimerSin";
-	areaannounce "in_moc_16.gat", 64, 46, 111, 105, ". . . You engaged a target without permission! You have failed the test!",8;
+	areaannounce "in_moc_16", 64, 46, 111, 105, ". . . You engaged a target without permission! You have failed the test!",8;
 	enablenpc "Thomas";
 	addtimer 3000, "TimerSin::OnTimer188000";
 	end;
 }
 
 // Warp ================================>\\
-in_moc_16.gat,87,48,2	script	sinWarp2	45,2,2,{
+in_moc_16,87,48,2	script	sinWarp2	45,2,2,{
 	mes "[Thomas]";
 	mes "Good job! There's only one test left, good luck!!";
 	stopnpctimer "TimerSin";
-	killmonster "in_moc_16.gat","SinTest2_2::OnMobDead";
+	killmonster "in_moc_16","SinTest2_2::OnMobDead";
 	set ASSIN_Q, 3;
 	set ASSIN_Q2, 0;
-	savepoint "in_moc_16.gat", 182, 180;
+	savepoint "in_moc_16", 182, 180;
 	close2;
-	warp "in_moc_16.gat", 181, 183;
+	warp "in_moc_16", 181, 183;
 	donpcevent "Barcardi::OnStart";
 	end;
 }
@@ -1382,53 +1382,53 @@ in_moc_16.gat,87,48,2	script	sinWarp2	45,2,2,{
 //=======================================================//
 // Timer for Sin Test 2
 //=======================================================//
-in_moc_16.gat,1,1,0	script	TimerSin	-1,{
+in_moc_16,1,1,0	script	TimerSin	-1,{
 OnTimer3000:
-	areaannounce "in_moc_16.gat", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "I'll announce how much time you'll have left on a minute by minute basis.",8;
+	areaannounce "in_moc_16", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "I'll announce how much time you'll have left on a minute by minute basis.",8;
 	end;
 OnTimer5000:
-	areaannounce "in_moc_16.gat", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "You have 3 minutes starting now!",8;
+	areaannounce "in_moc_16", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "You have 3 minutes starting now!",8;
 	end;
 OnTimer35000:
 	donpcevent "Barcardi::OnStart";
 	end;
 OnTimer65000:
-	areaannounce "in_moc_16.gat", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "You have 2 minutes left!  ",8;
+	areaannounce "in_moc_16", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "You have 2 minutes left!  ",8;
 	donpcevent "Barcardi::OnStart";
 	end;
 OnTimer95000:
 	donpcevent "Barcardi::OnStart";
 	end;
 OnTimer125000:
-	areaannounce "in_moc_16.gat", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "1 minute left!",8;
+	areaannounce "in_moc_16", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "1 minute left!",8;
 	donpcevent "Barcardi::OnStart";
 	end;
 OnTimer155000:
-	areaannounce "in_moc_16.gat", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "30 seconds left!",8;
+	areaannounce "in_moc_16", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "30 seconds left!",8;
 	donpcevent "Barcardi::OnStart";
 	end;
 OnTimer180000:
-	areaannounce "in_moc_16.gat", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "Test ending in 5 secs....",8;
+	areaannounce "in_moc_16", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "Test ending in 5 secs....",8;
 	end;
 OnTimer181000:
-	areaannounce "in_moc_16.gat", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "4 seconds....",8;
+	areaannounce "in_moc_16", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "4 seconds....",8;
 	end;
 OnTimer182000:
-	areaannounce "in_moc_16.gat", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "3 seconds...",8;
+	areaannounce "in_moc_16", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "3 seconds...",8;
 	end;
 OnTimer183000:
-	areaannounce "in_moc_16.gat", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "2 seconds..",8;
+	areaannounce "in_moc_16", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "2 seconds..",8;
 	end;
 OnTimer184000:
-	areaannounce "in_moc_16.gat", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "1 second.",8;
+	areaannounce "in_moc_16", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "1 second.",8;
 	end;
 OnTimer185000:
-	areaannounce "in_moc_16.gat", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "Okay times up! You failed!",8;
+	areaannounce "in_moc_16", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "Okay times up! You failed!",8;
 	end;
 OnTimer188000:
 	stopnpctimer;
-	areawarp "in_moc_16.gat", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "in_moc_16.gat", 21, 160;
-	killmonsterall "in_moc_16.gat";
+	areawarp "in_moc_16", $@sinRmX1, $@sinRmY1, $@sinRmX2, $@sinRmY2, "in_moc_16", 21, 160;
+	killmonsterall "in_moc_16";
 	donpcevent "Barcardi::OnStart";
 	end;
 }
@@ -1441,15 +1441,15 @@ OnTimer188000:
 //=============================================//
 // Warp
 //=============================================//
-in_moc_16.gat,182,169,1	script	sinWarp3	45,1,1,{
-	if(getareausers(("in_moc_16.gat"),148,74,187,117) > 0) goto L_Wait;
+in_moc_16,182,169,1	script	sinWarp3	45,1,1,{
+	if(getareausers(("in_moc_16"),148,74,187,117) > 0) goto L_Wait;
 	disablenpc "Huey#End";
 	disablenpc "Kai#End";
 	disablenpc "Nameless One#End";
 	disablenpc "Barcardi#End";
 	disablenpc "Observer#End";
 	disablenpc "Thomas#End";
-	warp "in_moc_16.gat", 167, 116;
+	warp "in_moc_16", 167, 116;
 	end;
 
 	L_Wait:
@@ -1463,7 +1463,7 @@ in_moc_16.gat,182,169,1	script	sinWarp3	45,1,1,{
 //==============================================//
 
 // Start Trigger ------------------------------------------------------------------
-in_moc_16.gat,167,114,3	script	guildmaster_Trig#0	139,4,0,{
+in_moc_16,167,114,3	script	guildmaster_Trig#0	139,4,0,{
 		mes "[Guild Master]";
 		mes "Welcome ^5533FF" + strcharinfo(0) + "^000000.  This is my private room.";
 		next;
@@ -1481,7 +1481,7 @@ in_moc_16.gat,167,114,3	script	guildmaster_Trig#0	139,4,0,{
 }
 
 // Guild Master -----------------------------------------------------------------------------
-in_moc_16.gat,149,80,4	script	Guild Master#01	106,1,1,{
+in_moc_16,149,80,4	script	Guild Master#01	106,1,1,{
 	end;
 
 OnTouch:
@@ -1611,9 +1611,9 @@ OnTouch:
 	disablenpc "Barkadi#End";
 	disablenpc "Observer#End";
 	disablenpc "Thomas#End";
-	savepoint "in_moc_16.gat", 18, 28;
+	savepoint "in_moc_16", 18, 28;
 	close2;
-	warp "in_moc_16.gat", 18, 28;
+	warp "in_moc_16", 18, 28;
 	end;
 
 
@@ -1837,17 +1837,17 @@ sF_Questions2:
 //=============================================//
 // Maze Triggers
 //=============================================//
-in_moc_16.gat,170,90,0	script	maze_trig#1	139,0,0,{
+in_moc_16,170,90,0	script	maze_trig#1	139,0,0,{
 	mes "[Guild Master]";
 	mes "There's no way to walk there, try another way.";
 	close;
 }
-in_moc_16.gat,150,85,0	script	maze_trig#2	139,0,0,{
+in_moc_16,150,85,0	script	maze_trig#2	139,0,0,{
 	mes "[Guild Master]";
 	mes ".... Getting warmer.... you're almost there.....";
 	close;
 }
-in_moc_16.gat,153,85,0	script	maze_trig#3	139,0,0,{
+in_moc_16,153,85,0	script	maze_trig#3	139,0,0,{
 	mes "[Guild Master]";
 	mes "You can't walk there..";
 	mes "Good, your almost there, keep walking.";
@@ -1855,33 +1855,33 @@ in_moc_16.gat,153,85,0	script	maze_trig#3	139,0,0,{
 	mes "you got to turn a round in order to get in.";
 	close;
 }
-in_moc_16.gat,160,85,0	script	maze_trig#4	139,0,0,{
+in_moc_16,160,85,0	script	maze_trig#4	139,0,0,{
 	mes "[Guild Master]";
 	mes "There's no way to walk there, try another way.";
 	close;
 }
-in_moc_16.gat,175,89,0	script	maze_trig#5	139,0,0,{
+in_moc_16,175,89,0	script	maze_trig#5	139,0,0,{
 	mes "[Guild Master]";
 	mes "That way leads to Botogun..";
 	mes "What are going to do there?";
 	close;
 }
-in_moc_16.gat,164,88,0	script	maze_trig#6	139,0,0,{
+in_moc_16,164,88,0	script	maze_trig#6	139,0,0,{
 	mes "[Guild Master]";
 	mes "Good.... you're on the right track.";
 	close;
 }
-in_moc_16.gat,149,95,0	script	maze_trig#7	139,0,0,{
+in_moc_16,149,95,0	script	maze_trig#7	139,0,0,{
 	mes "[Guild Master]";
 	mes "Good, you found the path.";
 	close;
 }
-in_moc_16.gat,180,101,0	script	maze_trig#8	139,0,0,{
+in_moc_16,180,101,0	script	maze_trig#8	139,0,0,{
 	mes "[Guild Master]";
 	mes "... It looks like that's not that way...";
 	close;
 }
-in_moc_16.gat,186,107,0	script	maze_trig#9	139,0,0,{
+in_moc_16,186,107,0	script	maze_trig#9	139,0,0,{
 	mes "[Guild Master]";
 	mes "...Not that way either...";
 	close;
@@ -1891,7 +1891,7 @@ in_moc_16.gat,186,107,0	script	maze_trig#9	139,0,0,{
 //================================================//
 // Decoy Chief
 //================================================//
-in_moc_16.gat,186,81,0	script	Guild Master#02	55,{
+in_moc_16,186,81,0	script	Guild Master#02	55,{
 	mes "[Guild Master Botogun]";
 	mes "I'm sorry but I am not the person in charge here.";
 	mes "The real Guild Chief is on the other side.";
@@ -1902,21 +1902,21 @@ in_moc_16.gat,186,81,0	script	Guild Master#02	55,{
 //=================================================//
 // Guild Npcs
 //=================================================//
-in_moc_16.gat,156,85,1	script	Huey#End	55,{end;}
-in_moc_16.gat,156,83,1	script	Kai#End	730,{end;}
-in_moc_16.gat,156,81,1	script	Nameless One#End	106,{end;}
-in_moc_16.gat,156,79,1	script	Barcardi#End	725,{end;}
-in_moc_16.gat,156,77,1	script	Observer#End	55,{end;}
-in_moc_16.gat,156,75,1	script	Thomas#End	118,{end;}
+in_moc_16,156,85,1	script	Huey#End	55,{end;}
+in_moc_16,156,83,1	script	Kai#End	730,{end;}
+in_moc_16,156,81,1	script	Nameless One#End	106,{end;}
+in_moc_16,156,79,1	script	Barcardi#End	725,{end;}
+in_moc_16,156,77,1	script	Observer#End	55,{end;}
+in_moc_16,156,75,1	script	Thomas#End	118,{end;}
 
 
 //==============================================================================
 // mapflag
 //==============================================================================
-in_moc_16.gat	mapflag	nomemo
-in_moc_16.gat	mapflag	noteleport
-in_moc_16.gat	mapflag	nosave	SavePoint
-in_moc_16.gat	mapflag	nopenalty
-in_moc_16.gat	mapflag	nobranch
-in_moc_16.gat	mapflag	noexp
-in_moc_16.gat	mapflag	noloot
+in_moc_16	mapflag	nomemo
+in_moc_16	mapflag	noteleport
+in_moc_16	mapflag	nosave	SavePoint
+in_moc_16	mapflag	nopenalty
+in_moc_16	mapflag	nobranch
+in_moc_16	mapflag	noexp
+in_moc_16	mapflag	noloot

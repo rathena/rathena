@@ -1,5 +1,5 @@
 // Card removal NPC by TyrNemesis^ “ú–{Œê–óFŒÓ’±—–
-prt_in.gat,28,73,4	script	Œ«‚¢˜V—	78,{
+prt_in,28,73,4	script	Œ«‚¢˜V—	78,{
 
 UPGRADEROOT:
 //	mes "[Wise Old Woman]";

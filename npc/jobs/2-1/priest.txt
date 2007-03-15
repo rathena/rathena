@@ -27,7 +27,7 @@
 //*********************************************************************************************************************************************************************************\\
 //============================================ Father Thomas: Job changer, Test 1 =============================================\\
 //*********************************************************************************************************************************************************************************\\
-prt_church.gat,16,41,4	script	Father Thomas	60,{
+prt_church,16,41,4	script	Father Thomas	60,{
 	callfunc "F_BlockHigh",Job_Acolyte_High,"Acolyte High",Job_High_Priest,"High Priest","Father Thomas";
 
 	mes "[Father Thomas]";
@@ -101,9 +101,9 @@ prt_church.gat,16,41,4	script	Father Thomas	60,{
 				mes "[Father Thomas]";
 				mes "I hope you will also take this opportunity to teach them what it means to be a good Priest.";
 				next;
-				if((getareausers("job_prist.gat", 8, 34, 39,109)) == 1) warp "job_prist.gat", 24, 44;
-				if((getareausers("job_prist.gat", 160, 14, 175, 178)) == 1) warp "job_prist.gat", 98, 40;
-				if((getareausers("job_prist.gat", 90, 34, 105,105)) == 1) warp "job_prist.gat", 168, 17;
+				if((getareausers("job_prist", 8, 34, 39,109)) == 1) warp "job_prist", 24, 44;
+				if((getareausers("job_prist", 160, 14, 175, 178)) == 1) warp "job_prist", 98, 40;
+				if((getareausers("job_prist", 90, 34, 105,105)) == 1) warp "job_prist", 168, 17;
 				mes "[Father Thomas]";
 				mes "Hmm........ wait a minute..... let me check my list.... Either no one is taking the test right now, or another Priest is already helping out.";
 				mes "In any case please check with me again later.";
@@ -311,8 +311,8 @@ L_Test2:
 		mes "Very well.  Let me send you to ^5544FFFather Peter^000000. Once there speak to him about the second task.";
 		next;
 		set PRIEST_Q2, 1;
-		warp "job_prist.gat", 24, 180;
-		savepoint "prt_church.gat", 16, 37;
+		warp "job_prist", 24, 180;
+		savepoint "prt_church", 16, 37;
 		end;
 		
 	M_4End:
@@ -465,7 +465,7 @@ L_Done:
 //**********************************************************************************************************************************************************************************\\
 //================================================== Father Peter: Test 2 ====================================================\\
 //**********************************************************************************************************************************************************************************\\
-job_prist.gat,24,186,4	script	Father Peter	110,{
+job_prist,24,186,4	script	Father Peter	110,{
 
 L_Start:
 	mes "[Father Peter]";
@@ -538,23 +538,23 @@ L_Start:
 		mes "Maybe because its your first time thats why your scared.";
 		mes "You can come back when you get more courage.";
 		next;
-		warp "prt_church.gat", 16, 37;
+		warp "prt_church", 16, 37;
 		close;
 
 OnInit:
 	waitingroom "Priest Test Waiting Room",8,"Father Peter::OnStart",1;
 	end;
 OnStart:
-	set $@PrstUsers, getareausers("job_prist.gat", 8, 34, 39,109);
-	set $@PrstUsers, $@PrstUsers + getareausers("job_prist.gat", 160, 14, 175, 178);
-	set $@PrstUsers, $@PrstUsers + getareausers("job_prist.gat", 90, 34, 105,105);
+	set $@PrstUsers, getareausers("job_prist", 8, 34, 39,109);
+	set $@PrstUsers, $@PrstUsers + getareausers("job_prist", 160, 14, 175, 178);
+	set $@PrstUsers, $@PrstUsers + getareausers("job_prist", 90, 34, 105,105);
 	if($@PrstUsers > 0) end;				// stops the rest of the script from running if there is already another player taking the test
 
 	if((getwaitingroomstate(33)) == 0) end;			// stops the rest of the script from running if there is no one in the waiting room
 	disablenpc "prst1_1";	//disables the exit warp
 	disablenpc "prst2_1";
-	warpwaitingpc "job_prist.gat", 24, 44;
-	killmonsterall "job_prist.gat";
+	warpwaitingpc "job_prist", 24, 44;
+	killmonsterall "job_prist";
 	donpcevent "PrstTest2_1::OnStart";
 	end;
 }
@@ -563,7 +563,7 @@ OnStart:
 //----------------------------------------------------------------------------------------------------------------------------------------------------------\\
 //				Test 2, Part 1: Kill the Zombies				              \\
 //********************************************************************************************************************************\\
-job_prist.gat,1,1,1	script	PrstTest2_1	-1,{
+job_prist,1,1,1	script	PrstTest2_1	-1,{
 
 OnStart:
 	set $@PrstRm, 1;		//used to determine what areawarp and areaannounce to use
@@ -581,78 +581,78 @@ OnMobDead:
 	if($@mob > 0) end;
 
 	enablenpc "prst1_1";
-	areaannounce "job_prist.gat",8,34,39,109,"[Father Peter]: Well done my child.  Enter the warp to start the next test.",8;
+	areaannounce "job_prist",8,34,39,109,"[Father Peter]: Well done my child.  Enter the warp to start the next test.",8;
 	initnpctimer "prst1_1";		//starts a 30 sec timer.  this will warp the player even if they don't enter the warp to keep the test going
 	end;
 
 OnTimer500:
-	areaannounce "job_prist.gat",8,34,39,109,"[Father Peter]: In order to pass this trial, you will have to kill all of the zomibes that appear.",8;
+	areaannounce "job_prist",8,34,39,109,"[Father Peter]: In order to pass this trial, you will have to kill all of the zomibes that appear.",8;
 	end;
 OnTimer2500:
 	stopnpctimer;
 	initnpctimer "TimerPrst";		// starts the 5 min test timer
-	areaannounce "job_prist.gat",8,34,39,109,"[Father Peter]: Move slowly and take your time.",8;
+	areaannounce "job_prist",8,34,39,109,"[Father Peter]: Move slowly and take your time.",8;
 	end;
 }
 
 // These hidden warps spawn the monsters when you walk
 // First set  of Zombies------------------------------------------------------------
-job_prist.gat,23,52,1	script	Zombie1_Trig	139,16,0,{
+job_prist,23,52,1	script	Zombie1_Trig	139,16,0,{
 
-	monster "job_prist.gat",24,52,"Robbery",1015,1,"PrstTest2_1::OnMobDead";
-	monster "job_prist.gat",18,52,"Evilness",1015,1,"PrstTest2_1::OnMobDead";
-	monster "job_prist.gat",30,52,"Jealousy",1015,1,"PrstTest2_1::OnMobDead";
+	monster "job_prist",24,52,"Robbery",1015,1,"PrstTest2_1::OnMobDead";
+	monster "job_prist",18,52,"Evilness",1015,1,"PrstTest2_1::OnMobDead";
+	monster "job_prist",30,52,"Jealousy",1015,1,"PrstTest2_1::OnMobDead";
 	disablenpc "Zombie1_Trig";		//disables the npc so that it can't spawn the monsters more than once
 	end;
 }
 
 // Second set  of Zombies----------------------------------------------------
-job_prist.gat,23,62,1	script	Zombie2_Trig	139,16,0,{
+job_prist,23,62,1	script	Zombie2_Trig	139,16,0,{
 
-	monster "job_prist.gat",21,62,"Anger",1015,1,"PrstTest2_1::OnMobDead";
-	monster "job_prist.gat",27,62,"Wonderness",1015,1,"PrstTest2_1::OnMobDead";
+	monster "job_prist",21,62,"Anger",1015,1,"PrstTest2_1::OnMobDead";
+	monster "job_prist",27,62,"Wonderness",1015,1,"PrstTest2_1::OnMobDead";
 	disablenpc "Zombie2_Trig";
 	end;
 }
 
 // Third set  of Zombies--------------------------------------------------------
-job_prist.gat,23,72,1	script	Zombie3_Trig	139,16,0,{
+job_prist,23,72,1	script	Zombie3_Trig	139,16,0,{
 
-	monster "job_prist.gat",24,72,"Cockyness",1015,1,"PrstTest2_1::OnMobDead";
-	monster "job_prist.gat",18,72,"Slutty",1015,1,"PrstTest2_1::OnMobDead";
-	monster "job_prist.gat",30,72,"Lazyness",1015,1,"PrstTest2_1::OnMobDead";
+	monster "job_prist",24,72,"Cockyness",1015,1,"PrstTest2_1::OnMobDead";
+	monster "job_prist",18,72,"Slutty",1015,1,"PrstTest2_1::OnMobDead";
+	monster "job_prist",30,72,"Lazyness",1015,1,"PrstTest2_1::OnMobDead";
 	disablenpc "Zombie3_Trig";
 	end;
 }
 
 // Fourth set  of Zombies--------------------------------------------------------
-job_prist.gat,23,82,1	script	Zombie4_Trig	139,16,0,{
+job_prist,23,82,1	script	Zombie4_Trig	139,16,0,{
 
-	monster "job_prist.gat",21,82,"Greed",1015,1,"PrstTest2_1::OnMobDead";
-	monster "job_prist.gat",27,82,"Greedyness",1015,1,"PrstTest2_1::OnMobDead";
+	monster "job_prist",21,82,"Greed",1015,1,"PrstTest2_1::OnMobDead";
+	monster "job_prist",27,82,"Greedyness",1015,1,"PrstTest2_1::OnMobDead";
 	disablenpc "Zombie4_Trig";
 	end;
 }
 
 // Fifth set of Zombies ---------------------------------------------------------
-job_prist.gat,23,92,1	script	Zombie5_Trig	139,16,0,{
+job_prist,23,92,1	script	Zombie5_Trig	139,16,0,{
 
-	monster "job_prist.gat",24,92,"Faithless",1015,1,"PrstTest2_1::OnMobDead";
-	monster "job_prist.gat",18,92,"Non-believer",1015,1,"PrstTest2_1::OnMobDead";
-	monster "job_prist.gat",30,92,"Scaryness",1015,1,"PrstTest2_1::OnMobDead";
+	monster "job_prist",24,92,"Faithless",1015,1,"PrstTest2_1::OnMobDead";
+	monster "job_prist",18,92,"Non-believer",1015,1,"PrstTest2_1::OnMobDead";
+	monster "job_prist",30,92,"Scaryness",1015,1,"PrstTest2_1::OnMobDead";
 	disablenpc "Zombie5_Trig";
 	end;
 }
 
 
 // End warp for 1st part of test--------------------------------------------------------------------
-job_prist.gat,24,109,1	script	prst1_1	45,3,3,{
+job_prist,24,109,1	script	prst1_1	45,3,3,{
 
 	if(BaseJob == Job_Priest) end;		//If a Priest friend steps on the warp nothing happens.  Need the aco to step on the warp.
 OnTimer30000:
 	stopnpctimer;
-	areawarp "job_prist.gat",8,34,39,109,"job_prist.gat",168,17;
-	killmonsterall "job_prist.gat";
+	areawarp "job_prist",8,34,39,109,"job_prist",168,17;
+	killmonsterall "job_prist";
 	donpcevent "PrstTest2_2::OnStart";
 	end;
 }
@@ -661,7 +661,7 @@ OnTimer30000:
 //----------------------------------------------------------------------------------------------------------------------------------------------------------\\
 //				Test 2, Part 1: Resist Temptation			              \\
 //********************************************************************************************************************************\\
-job_prist.gat,1,1,0	script	PrstTest2_2	-1,{
+job_prist,1,1,0	script	PrstTest2_2	-1,{
 
 OnStart:
 	enablenpc "Devi_Trig";		//enables these npc's just in case they were disabled by a previous tester
@@ -682,20 +682,20 @@ OnCheck:
 	if($PRIEST_Q3 < 4) end;
 
 	enablenpc "prst2_1";
-	areaannounce "job_prist.gat", 160, 14, 175, 178, "[Father Peter]: Excellent! You have shown great courage! Use the warp to move on to the next room.",8;
+	areaannounce "job_prist", 160, 14, 175, 178, "[Father Peter]: Excellent! You have shown great courage! Use the warp to move on to the next room.",8;
 	initnpctimer "prst2_1";		//starts a 30 sec timer.  this will warp the player even if they don't enter the warp to keep the test going
 	end;
 
 OnTimer500:
 	stopnpctimer;
-	areaannounce "job_prist.gat", 160, 14, 175, 178, "[Father Peter]: This trial will test the strength of your will and your commitment to God!",8;
+	areaannounce "job_prist", 160, 14, 175, 178, "[Father Peter]: This trial will test the strength of your will and your commitment to God!",8;
 	end;
 
 }
 
 
 // Deviruchi ------------------------------------------------------------------------
-job_prist.gat,168,45,4	script	Deviruchi	738,{
+job_prist,168,45,4	script	Deviruchi	738,{
 
 OnStart:
 	if(BaseJob == Job_Acolyte) goto L_Aco;
@@ -732,7 +732,7 @@ L_Aco:
 		mes "[Deviruchi]";
 		mes "I'll let you meet my friends...FOR FREE  HAHAHAHAH!";
 		next;
-		warp "c_tower2.gat", 168, 33;
+		warp "c_tower2", 168, 33;
 		end;
 	M_1a:
 		mes "[Deviruchi]";
@@ -754,7 +754,7 @@ L_Aco:
 			mes "[Deviruchi]";
 			mes "Well, too bad i can't give it to you.  Go look for it YOURSELF!";
 			next;
-			warp "mjolnir_05.gat", 200, 200;
+			warp "mjolnir_05", 200, 200;
 			end;
 		sM_1a:
 			cutin "미스트레스카드.bmp",255;
@@ -771,7 +771,7 @@ L_Aco:
 }
 
 // Doppelganger ------------------------------------------------------------------------------
-job_prist.gat,168,80,4	script	Doppelganger::Doppel	739,{
+job_prist,168,80,4	script	Doppelganger::Doppel	739,{
 
 OnStart:
 	if(BaseJob == Job_Acolyte) goto L_Aco;
@@ -810,7 +810,7 @@ L_Aco:
 		mes "[Doppelganger]";
 		mes "You know it takes a long time to ressurect when you DIE!!";
 		next;
-		warp "gef_dun02.gat", 210, 177;
+		warp "gef_dun02", 210, 177;
 		end;
 	M_1b:
 		mes "[Doppelganger]";
@@ -830,7 +830,7 @@ L_Aco:
 			mes "[Doppelganger]";
 			mes "You know its takes a long time to ressurect when you DIE??!!";
 			next;
-			warp "gef_dun02.gat", 210, 177;
+			warp "gef_dun02", 210, 177;
 			end;
 		sM_1b:
 			mes "[Doppelganger]";
@@ -845,7 +845,7 @@ L_Aco:
 }
 
 // Dark Lord -------------------------------------------------------------------------------
-job_prist.gat,168,115,4	script	Dark Lord	737,{
+job_prist,168,115,4	script	Dark Lord	737,{
 
 OnStart:
 	if(BaseJob == Job_Acolyte) goto L_Aco;
@@ -876,7 +876,7 @@ L_Aco:
 		mes "[Dark Lord]";
 		mes "Don't come here again!";
 		next;
-		warp "gl_church.gat", 145, 170;
+		warp "gl_church", 145, 170;
 		end;
 	M_1c:
 		mes "[Dark Lord]";
@@ -891,7 +891,7 @@ L_Aco:
 			mes "[Dark Lord]";
 			mes "Don't appear here again!";
 			next;
-			warp "gl_church.gat", 145, 170;
+			warp "gl_church", 145, 170;
 			end;
 		sM_1c:
 			mes "[Dark Lord]";
@@ -906,7 +906,7 @@ L_Aco:
 }
 
 // Baphomet -----------------------------------------------------------------------------
-job_prist.gat,168,150,4	script	Baphomet	736,{
+job_prist,168,150,4	script	Baphomet	736,{
 
 OnStart:
 	if(BaseJob == Job_Acolyte) goto L_Aco;
@@ -947,7 +947,7 @@ L_Aco:
 		mes "You go find where i live.";
 		mes "When your there, come and sign the contract.";
 		next;
-		warp "glast_01.gat", 200, 203;
+		warp "glast_01", 200, 203;
 		end;
 	M_1d:
 		mes "[Baphomet]";
@@ -969,25 +969,25 @@ L_Aco:
 
 // These hidden warps trigger the npcs when you get near them
 // Deviruchi Trigger --------------------------------------------------------------------
-job_prist.gat,167,40,1	script	Devi_Trig	139,8,0,{
+job_prist,167,40,1	script	Devi_Trig	139,8,0,{
 
 	doevent "Deviruchi::OnStart";
 	end;
 }
 // Doppleganger Trigger --------------------------------------------------------------------
-job_prist.gat,167,77,1	script	Doppel_Trig	139,8,0,{
+job_prist,167,77,1	script	Doppel_Trig	139,8,0,{
 
 	doevent "Doppel::OnStart";
 	end;
 }
 // Dark Lord Trigger --------------------------------------------------------------------
-job_prist.gat,167,112,1	script	Dark_Trig	139,8,0,{
+job_prist,167,112,1	script	Dark_Trig	139,8,0,{
 
 	doevent "Dark Lord::OnStart";
 	end;
 }
 // Baphomet Trigger --------------------------------------------------------------------
-job_prist.gat,167,145,1	script	Bapho_Trig	139,8,0,{
+job_prist,167,145,1	script	Bapho_Trig	139,8,0,{
 
 	doevent "Baphomet::OnStart";
 	end;
@@ -995,7 +995,7 @@ job_prist.gat,167,145,1	script	Bapho_Trig	139,8,0,{
 
 
 // End warp for 2nd part of test ---------------------------------------------------------
-job_prist.gat,168,180,0	script	prst2_1	45,3,3,{
+job_prist,168,180,0	script	prst2_1	45,3,3,{
 
 	if(BaseJob == Job_Priest) end;		//If a Priest friend steps on the warp nothing happens.  Need the Aco to step on the warp.
 OnTimer30000:
@@ -1006,7 +1006,7 @@ OnTimer30000:
 	enablenpc "Mummy3_Trig";
 	stopnpctimer;
 	initnpctimer "prst3_1";
-	areawarp "job_prist.gat", 160, 14, 175, 178, "job_prist.gat", 98, 40;
+	areawarp "job_prist", 160, 14, 175, 178, "job_prist", 98, 40;
 	end;
 }
 
@@ -1015,45 +1015,45 @@ OnTimer30000:
 //				Test 2, Part 3: Make it to the exit 			               \\
 //******************************************************************************************************************************* *\\
 // First set of Mummies --------------------------------------------------------
-job_prist.gat,97,50,0	script	Mummy1_Trig	139,8,1,{
+job_prist,97,50,0	script	Mummy1_Trig	139,8,1,{
 
-	monster "job_prist.gat", 93, 55, "ca", 1041,1;
-	monster "job_prist.gat", 102, 55, "ah", 1041,1;
+	monster "job_prist", 93, 55, "ca", 1041,1;
+	monster "job_prist", 102, 55, "ah", 1041,1;
 	disablenpc "Mummy1_Trig";
 	end;
 }
 // Second set of Mummies --------------------------------------------------------
-job_prist.gat,97,65,0	script	Mummy2_Trig	139,8,1,{
+job_prist,97,65,0	script	Mummy2_Trig	139,8,1,{
 
-	monster "job_prist.gat", 93, 70, "men", 1041,1;
-	monster "job_prist.gat", 102, 70, "ahke", 1041,1;
+	monster "job_prist", 93, 70, "men", 1041,1;
+	monster "job_prist", 102, 70, "ahke", 1041,1;
 	disablenpc "Mummy2_Trig";
 	end;
 }
 // Third set of Mummies --------------------------------------------------------
-job_prist.gat,97,80,0	script	Mummy3_Trig	139,8,1,{
+job_prist,97,80,0	script	Mummy3_Trig	139,8,1,{
 
-	monster "job_prist.gat", 93, 85, "mea", 1041,1;
-	monster "job_prist.gat", 102, 85, "sne", 1041,1;
+	monster "job_prist", 93, 85, "mea", 1041,1;
+	monster "job_prist", 102, 85, "sne", 1041,1;
 	disablenpc "Mummy3_Trig";
 	end;
 }
 
 
 // End warp for 3rd part of test ----------------------------------------------
-job_prist.gat,98,105,0	script	prst3_1	45,2,2,{
+job_prist,98,105,0	script	prst3_1	45,2,2,{
 
 	if(BaseJob == Job_Priest) end;		//If a Priest friend steps on the warp nothing happens.  Need the Aco to step on the warp.
 	stopnpctimer "TimerPrst";
-	areawarp "job_prist.gat", 90, 34, 105, 105, "prt_church.gat",16, 37;
+	areawarp "job_prist", 90, 34, 105, 105, "prt_church",16, 37;
 	set PRIEST_Q2, 2;
-	killmonsterall "job_prist.gat";
+	killmonsterall "job_prist";
 	donpcevent "Father Peter::OnStart";
 	end;
 
 OnTimer500:
 	stopnpctimer;
-	areaannounce "job_prist.gat",  90, 34, 105,105, "[Father Peter]: This is the last trial you must face my child.  Have faith, I know you can pass it!",8;
+	areaannounce "job_prist",  90, 34, 105,105, "[Father Peter]: This is the last trial you must face my child.  Have faith, I know you can pass it!",8;
 	end;
 }
 
@@ -1061,10 +1061,10 @@ OnTimer500:
 //----------------------------------------------------------------------------------------------------------------------------------------------------------\\
 //					Timer					              \\
 //********************************************************************************************************************************\\
-job_prist.gat,1,1,0	script	TimerPrst	-1,{
+job_prist,1,1,0	script	TimerPrst	-1,{
 
 OnTimer3000:
-	areaannounce "job_prist.gat",8,34,39,109,"[Father Peter]: You will have 5 minutes to pass all 3 trials starting now.",8;
+	areaannounce "job_prist",8,34,39,109,"[Father Peter]: You will have 5 minutes to pass all 3 trials starting now.",8;
 	end;
 OnTimer33000:
 	donpcevent "Father Peter::OnStart";
@@ -1111,17 +1111,17 @@ OnTimer302000:
 	goto AnnouncePrst;
 OnTimer306000:
 	stopnpctimer;
-	if($@PrstRm==1) areawarp "job_prist.gat",8,34,39,109,"prt_church.gat",16, 37;
-	if($@PrstRm==2) areawarp "job_prist.gat",160, 14, 175, 178,"prt_church.gat",16, 37;
-	if($@PrstRm==3) areawarp "job_prist.gat", 90, 34, 105,105,"prt_church.gat",16, 37;
-	killmonsterall "job_prist.gat";
+	if($@PrstRm==1) areawarp "job_prist",8,34,39,109,"prt_church",16, 37;
+	if($@PrstRm==2) areawarp "job_prist",160, 14, 175, 178,"prt_church",16, 37;
+	if($@PrstRm==3) areawarp "job_prist", 90, 34, 105,105,"prt_church",16, 37;
+	killmonsterall "job_prist";
 	donpcevent "Father Peter::OnStart";
 	end;
 
 AnnouncePrst:
-	if($@PrstRm==1) areaannounce "job_prist.gat",8,34,39,109,"[Father Peter]: "+$@PrstTime$+".",8;
-	if($@PrstRm==2) areaannounce "job_prist.gat",160, 14, 175, 178, "[Father Peter]: "+$@PrstTime$+".",8;
-	if($@PrstRm==3) areaannounce "job_prist.gat",  90, 34, 105,105, "[Father Peter]: "+$@PrstTime$+".",8;
+	if($@PrstRm==1) areaannounce "job_prist",8,34,39,109,"[Father Peter]: "+$@PrstTime$+".",8;
+	if($@PrstRm==2) areaannounce "job_prist",160, 14, 175, 178, "[Father Peter]: "+$@PrstTime$+".",8;
+	if($@PrstRm==3) areaannounce "job_prist",  90, 34, 105,105, "[Father Peter]: "+$@PrstTime$+".",8;
 	end;
 }
 
@@ -1130,7 +1130,7 @@ AnnouncePrst:
 //**********************************************************************************************************************************************************************************\\
 //================================================= Sister Cecile: Test 3 =====================================================\\
 //**********************************************************************************************************************************************************************************\\
-prt_church.gat,27,24,4	script	Sister Cecile	79,{
+prt_church,27,24,4	script	Sister Cecile	79,{
 	mes "[Sister Cecile]";
 	if(BaseJob == Job_Priest) goto L_Prst;
 	if(BaseJob == Job_Acolyte) goto L_Aco;
@@ -1427,10 +1427,10 @@ L_Done:
 //==============================================================================
 // mapflag
 //==============================================================================
-job_prist.gat	mapflag	nomemo
-job_prist.gat	mapflag	noteleport
-job_prist.gat	mapflag	nosave	SavePoint
-job_prist.gat	mapflag	nopenalty
-job_prist.gat	mapflag	nobranch
-job_prist.gat	mapflag	noexp
-job_prist.gat	mapflag	noloot
+job_prist	mapflag	nomemo
+job_prist	mapflag	noteleport
+job_prist	mapflag	nosave	SavePoint
+job_prist	mapflag	nopenalty
+job_prist	mapflag	nobranch
+job_prist	mapflag	noexp
+job_prist	mapflag	noloot

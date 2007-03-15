@@ -25,7 +25,7 @@
 
 
 // Morrison ------------------------------------------------
-prt_in.gat,47,173,2	script	Morrison	97,{
+prt_in,47,173,2	script	Morrison	97,{
 	mes "[Little Morrison]";
 	if(MISC_QUEST&1 || @MORRISON > 10) goto L_GoAway;
 	if(@MORRISON == 10) goto L_Candy;
@@ -115,7 +115,7 @@ L_Candy:
 }
 
 // Housewife Marianne ---------------------------------------------------
-prt_in.gat,49,172,2	script	Housewife Marianne	53,{
+prt_in,49,172,2	script	Housewife Marianne	53,{
 	mes "[Housewife Marianne]";
 	if(MISC_QUEST&1 || @MORRISON > 10) goto L_Juice;
 	if(@MORRISON) goto L_GaveMeat;
@@ -185,7 +185,7 @@ L_Juice:
 }
 
 // Juicer Marx Hansen ---------------------------------------------------------
-payon_in03.gat,188,146,5	script	Juicer Marx Hansen	86,{
+payon_in03,188,146,5	script	Juicer Marx Hansen	86,{
 	mes "[Juicer Marx Hansen]";
 	if(MISC_QUEST&1) goto L_Juice;
 	mes "Welcome to my shop. What brings you here?";

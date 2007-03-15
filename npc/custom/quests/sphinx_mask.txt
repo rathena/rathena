@@ -14,7 +14,7 @@
 
 
 //===========================================================================
-morocc.gat,140,156,5	script	Turban Thief	58,{
+morocc,140,156,5	script	Turban Thief	58,{
 	if(event_umbala < 2) goto AWAY;
 	if(sphmask_q) goto NoBus;
 	mes "[Turban Thief]";

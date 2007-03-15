@@ -32,110 +32,110 @@
 //==========================================================================
 
 // Amatsu ------------------------------------------------------------------
-amatsu.gat,102,149,4	script	Kafra::kaf_amatsu	116,{
+amatsu,102,149,4	script	Kafra::kaf_amatsu	116,{
 	cutin "kafra_02",2;
 	callfunc "F_Kafra",3,3,1;
 
 	M_Save:
-		savepoint "amatsu.gat",116,94;
+		savepoint "amatsu",116,94;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Ayothaya ----------------------------------------------------------------
-ayothaya.gat,212,169,5	script	Kafra::kaf_ayothaya	116,{
+ayothaya,212,169,5	script	Kafra::kaf_ayothaya	116,{
 	cutin "kafra_02",2;
 	callfunc "F_Kafra",4,3,1;
 
 	M_Save:
-		savepoint "ayothaya.gat",149,69;
+		savepoint "ayothaya",149,69;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Einbech -----------------------------------------------------------------
 
-einbech.gat,181,132,4	script	Kafra::kaf_einbech	860,{
+einbech,181,132,4	script	Kafra::kaf_einbech	860,{
 	cutin "kafra_08",2;
 	callfunc "F_Kafra",0,4,1;
 
 	M_Save:
-		savepoint "einbech.gat",182,124;
+		savepoint "einbech",182,124;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Einbroch (North-East) ---------------------------------------------------
-einbroch.gat,242,205,5	script	Kafra::kaf_einbroch	115,{
+einbroch,242,205,5	script	Kafra::kaf_einbroch	115,{
 	cutin "kafra_03",2;
 	callfunc "F_Kafra",0,4,1;
 
 	M_Save:
-		savepoint "einbroch.gat",238,198;
+		savepoint "einbroch",238,198;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Einbroch (East) ---------------------------------------------------------
-einbroch.gat,59,203,5	script	Kafra::kaf_einbroch2	117,{
+einbroch,59,203,5	script	Kafra::kaf_einbroch2	117,{
 	cutin "kafra_01",2;
 	callfunc "F_Kafra",0,4,1;
 
 	M_Save:
-		savepoint "einbroch.gat",240,197;
+		savepoint "einbroch",240,197;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Gonryun -----------------------------------------------------------------
-gonryun.gat,159,122,4	script	Kafra::kaf_gonryun	116,{
+gonryun,159,122,4	script	Kafra::kaf_gonryun	116,{
 	cutin "kafra_02",2;
 	callfunc "F_Kafra",0,3,1;
 
 	M_Save:
-		savepoint "gonryun.gat",160,62;
+		savepoint "gonryun",160,62;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Lighthalzen--------------------------------------------------------------
 
 //Outside the hotel
-lighthalzen.gat,164,100,4	script	Kafra::kaf_lighthalzen	860,{
+lighthalzen,164,100,4	script	Kafra::kaf_lighthalzen	860,{
 	cutin "kafra_08",2;
 	callfunc "F_Kafra",0,4,1;
 
 	M_Save:
-		savepoint "lighthalzen.gat",158,94;
+		savepoint "lighthalzen",158,94;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Entrance
-lighthalzen.gat,191,320,4	script	Kafra::kaf_lighthalzen2	861,{
+lighthalzen,191,320,4	script	Kafra::kaf_lighthalzen2	861,{
 	cutin "kafra_09",2;
 	callfunc "F_Kafra",0,4,1;
 
 	M_Save:
-		savepoint "lighthalzen.gat",194,313;
+		savepoint "lighthalzen",194,313;
 		callfunc "F_KafEnd",0,1;
 }
 
 //Inside the hotel
-lhz_in02.gat,237,284,4	script	Kafra::kaf_lhz_in02	861,{
+lhz_in02,237,284,4	script	Kafra::kaf_lhz_in02	861,{
 	cutin "kafra_09",2;
 	callfunc "F_Kafra",0,4,1;
 
 	M_Save:
-		savepoint "lhz_in02.gat",278,215;
+		savepoint "lhz_in02",278,215;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Louyang -----------------------------------------------------------------
-louyang.gat,210,104,5	script	Kafra::kaf_louyang	117,{
+louyang,210,104,5	script	Kafra::kaf_louyang	117,{
 	cutin "kafra_01",2;
 	callfunc "F_Kafra",4,3,1;
 
 	M_Save:
-		savepoint "louyang.gat",217,92;
+		savepoint "louyang",217,92;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Umbala Kafra ------------------------------------------------------------
-umbala.gat,128,133,4	script	Kafra::kaf_umbala	115,{
+umbala,128,133,4	script	Kafra::kaf_umbala	115,{
 	cutin "kafra_03",2;
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpD$[0], "Comodo";
@@ -144,15 +144,15 @@ umbala.gat,128,133,4	script	Kafra::kaf_umbala	115,{
 	set @wrpC$[1], "Cancel";
 	callfunc "F_Kafra",0,0,1;
 	M_Save:
-		savepoint "umbala.gat",126,131;
+		savepoint "umbala",126,131;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Niflheim ----------------------------------------------------------------
-niflheim.gat,202,180,3	script	Kafra::kaf_niflheim	791,{
+niflheim,202,180,3	script	Kafra::kaf_niflheim	791,{
 	callfunc "F_Kafra",1,2,1;
 //this SAVE isn't used. Niflheim Kafra doesn't SAVE
 	M_Save:
-		savepoint "niflheim.gat",192,182;
+		savepoint "niflheim",192,182;
 		callfunc "F_KafEnd",1,1;
 }

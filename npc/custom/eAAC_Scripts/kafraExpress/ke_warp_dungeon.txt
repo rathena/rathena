@@ -86,78 +86,78 @@ function SF_umbala;
 		if ($@kewd_showOnline) {
 			set @kmenu, select (
 				"- Cancel",
-				"- Abyss Lake ("+$@kewd_abyssLake*@discount/100+"z/"+(getmapusers("abyss_01.gat")
-					+getmapusers("abyss_02.gat")+getmapusers("abyss_03.gat"))+" "+$@ked_users$+")",
-				"- Amatsu Dungeon ("+$@kewd_amatsu*@discount/100+"z/"+(getmapusers("ama_dun01.gat")
-					+getmapusers("ama_dun02.gat")+getmapusers("ama_dun03.gat"))+" "+$@ked_users$+")",
-				"- Ant Hell ("+$@kewd_antHell*@discount/100+"z/"+(getmapusers("anthell01.gat")
-					+getmapusers("anthell02.gat"))+" "+$@ked_users$+")",
-				"- Ayothaya Ancient Shrine ("+$@kewd_ayothaya*@discount/100+"z/"+(getmapusers("ayo_dun01.gat")
-					+getmapusers("ayo_dun02.gat"))+" "+$@ked_users$+")",
-				"- Byalan Dungeon ("+$@kewd_byalan*@discount/100+"z/"+(getmapusers("iz_dun00.gat")
-					+getmapusers("iz_dun01.gat")+getmapusers("iz_dun02.gat")+getmapusers("iz_dun03.gat")
-					+getmapusers("iz_dun04.gat"))+" "+$@ked_users$+")",
-				"- Comodo Caves ("+$@kewd_comodo*@discount/100+"z/"+(getmapusers("beach_dun.gat")
-					+getmapusers("beach_dun2.gat")+getmapusers("beach_dun3.gat"))+" "+$@ked_users$+")",
-				"- Clock Tower ("+$@kewd_clockTower*@discount/100+"z/"+(getmapusers("c_tower1.gat")
-					+getmapusers("c_tower2.gat")+getmapusers("c_tower3.gat")+getmapusers("c_tower4.gat")
-					+getmapusers("alde_dun01.gat")+getmapusers("alde_dun02.gat")+getmapusers("alde_dun03.gat")
-					+getmapusers("alde_dun04.gat"))+" "+$@ked_users$+")",
-				"- Coal Mine ("+$@kewd_coalMines*@discount/100+"z/"+(getmapusers("mjo_dun01.gat")
-					+getmapusers("mjo_dun02.gat")+getmapusers("mjo_dun03.gat"))+" "+$@ked_users$+")",
-				"- Culvert ("+$@kewd_culvert*@discount/100+"z/"+(getmapusers("prt_sewb1.gat")+getmapusers("prt_sewb2.gat")
-					+getmapusers("prt_sewb3.gat")+getmapusers("prt_sewb4.gat"))+" "+$@ked_users$+")",
-				"- Einbroch Station ("+$@kewd_einbech*@discount/100+"z/"+(getmapusers("ein_dun01.gat")
-					+getmapusers("ein_dun02.gat"))+" "+$@ked_users$+")",
-				"- Gefenia ("+$@kewd_gefenia*@discount/100+"z/"+(getmapusers("gefenia01.gat")+getmapusers("gefenia02.gat")
-					+getmapusers("gefenia03.gat")+getmapusers("gefenia04.gat"))+" "+$@ked_users$+")",
-				"- Geffen Dungeon ("+$@kewd_geffen*@discount/100+"z/"+(getmapusers("gef_dun00.gat")
-					+getmapusers("gef_dun01.gat")+getmapusers("gef_dun02.gat")+getmapusers("gef_dun03.gat"))+" "+$@ked_users$+")",
-				"- Glast Heim ("+$@kewd_glastHeim*@discount/100+"z/"+(getmapusers("gl_cas02.gat")+getmapusers("gl_church.gat")
-					+getmapusers("gl_chyard.gat")+getmapusers("gl_dun01.gat")+getmapusers("gl_dun02.gat")
-					+getmapusers("gl_in01.gat")+getmapusers("gl_knt01.gat")+getmapusers("gl_knt02.gat")
-					+getmapusers("gl_prison.gat")+getmapusers("gl_prison1.gat")+getmapusers("gl_sew01.gat")
-					+getmapusers("gl_sew02.gat")+getmapusers("gl_sew03.gat")+getmapusers("gl_sew04.gat")
-					+getmapusers("gl_step.gat")+getmapusers("glast_01.gat"))+" "+$@ked_users$+")",
-				"- Gon Ryun Dungeon ("+$@kewd_gonRyun*@discount/100+"z/"+(getmapusers("gon_dun01.gat")
-					+getmapusers("gon_dun02.gat")+getmapusers("gon_dun03.gat"))+" "+$@ked_users$+")",
-				"- Hidden Temple ("+$@kewd_hiddenTemple*@discount/100+"z/"+(getmapusers("prt_maze01.gat")
-					+getmapusers("prt_maze02.gat")+getmapusers("prt_maze03.gat"))+" "+$@ked_users$+")",
-				"- Juperos ("+$@kewd_juperos*@discount/100+"z/"+(getmapusers("juperos_01.gat")+getmapusers("juperos_02.gat")
-					+getmapusers("jupe_area1.gat")+getmapusers("jupe_area2.gat")+getmapusers("jupe_core.gat")
-					+getmapusers("jupe_gate.gat")+getmapusers("jupe_area1.gat"))+" "+$@ked_users$+")",
-				"- LightHalzen Rekkenber ("+$@kewd_lightHalzen*@discount/100+"z/"+(getmapusers("lhz_dun01.gat")
-					+getmapusers("lhz_dun02.gat")+getmapusers("lhz_dun03.gat"))+" "+$@ked_users$+")",
-				"- Lou Yang Royal Tomb ("+$@kewd_louYang*@discount/100+"z/"+(getmapusers("lou_dun01.gat")
-					+getmapusers("lou_dun02.gat")+getmapusers("lou_dun03.gat"))+" "+$@ked_users$+")",
-				"- Magma Dungeon ("+$@kewd_magma*@discount/100+"z/"+(getmapusers("mag_dun01.gat")
-					+getmapusers("mag_dun02.gat"))+" "+$@ked_users$+")",
-				"- Orc Dungeon ("+$@kewd_orc*@discount/100+"z/"+(getmapusers("orcsdun01.gat")
-					+getmapusers("orcsdun02.gat"))+" "+$@ked_users$+")",
-				"- Payon Dungeon ("+$@kewd_payon*@discount/100+"z/"+(getmapusers("pay_dun00.gat")
-					+getmapusers("pay_dun01.gat")+getmapusers("pay_dun02.gat")+getmapusers("pay_dun03.gat")
-					+getmapusers("pay_dun04.gat"))+" "+$@ked_users$+")",
-				"- Pyramid ("+$@kewd_pyramid*@discount/100+"z/"+(getmapusers("moc_pryd01.gat")+getmapusers("moc_pryd02.gat")
-					+getmapusers("moc_pryd03.gat")+getmapusers("moc_pryd04.gat")+getmapusers("moc_pryd05.gat")
-					+getmapusers("moc_pryd06.gat")+getmapusers("moc_prydb1.gat"))+" "+$@ked_users$+")",
-				"- Sphinx ("+$@kewd_sphinx*@discount/100+"z/"+(getmapusers("in_sphinx1.gat")
-					+getmapusers("in_sphinx2.gat")+getmapusers("in_sphinx3.gat")+getmapusers("in_sphinx4.gat")
-					+getmapusers("in_sphinx5.gat"))+" "+$@ked_users$+")",
-				"- Sunken Ship ("+$@kewd_sunkenShip*@discount/100+"z/"+(getmapusers("treasure01.gat")
-					+getmapusers("treasure02.gat"))+" "+$@ked_users$+")",
-				"- Thanatos Tower ("+$@kewd_thanatosTower*@discount/100+"z/"+(getmapusers("tha_t01.gat")
-					+getmapusers("tha_t02.gat")+getmapusers("tha_t03.gat")+getmapusers("tha_t04.gat")
-					+getmapusers("tha_t05.gat")+getmapusers("tha_t06.gat")+getmapusers("tha_t07.gat")
-					+getmapusers("tha_t08.gat")+getmapusers("tha_t09.gat")+getmapusers("tha_t10.gat")
-					+getmapusers("tha_t11.gat")+getmapusers("tha_t12.gat")+getmapusers("thana_step.gat")
-					+getmapusers("thana_boss.gat"))+" "+$@ked_users$+")",
-				"- Toy Factory ("+$@kewd_toyFactory*@discount/100+"z/"+(getmapusers("xmas_dun01.gat")
-					+getmapusers("xmas_dun02.gat"))+" "+$@ked_users$+")",
-				"- Turtle Island ("+$@kewd_turtleIsland*@discount/100+"z/"+(getmapusers("tur_dun01.gat")
-					+getmapusers("tur_dun02.gat")+getmapusers("tur_dun03.gat")+getmapusers("tur_dun04.gat")
-					+getmapusers("tur_dun05.gat")+getmapusers("tur_dun06.gat"))+" "+$@ked_users$+")",
-				"- Umbala Dungeon ("+$@kewd_umbala*@discount/100+"z/"+(getmapusers("um_dun01.gat")
-					+getmapusers("um_dun02.gat"))+" "+$@ked_users$+")"
+				"- Abyss Lake ("+$@kewd_abyssLake*@discount/100+"z/"+(getmapusers("abyss_01")
+					+getmapusers("abyss_02")+getmapusers("abyss_03"))+" "+$@ked_users$+")",
+				"- Amatsu Dungeon ("+$@kewd_amatsu*@discount/100+"z/"+(getmapusers("ama_dun01")
+					+getmapusers("ama_dun02")+getmapusers("ama_dun03"))+" "+$@ked_users$+")",
+				"- Ant Hell ("+$@kewd_antHell*@discount/100+"z/"+(getmapusers("anthell01")
+					+getmapusers("anthell02"))+" "+$@ked_users$+")",
+				"- Ayothaya Ancient Shrine ("+$@kewd_ayothaya*@discount/100+"z/"+(getmapusers("ayo_dun01")
+					+getmapusers("ayo_dun02"))+" "+$@ked_users$+")",
+				"- Byalan Dungeon ("+$@kewd_byalan*@discount/100+"z/"+(getmapusers("iz_dun00")
+					+getmapusers("iz_dun01")+getmapusers("iz_dun02")+getmapusers("iz_dun03")
+					+getmapusers("iz_dun04"))+" "+$@ked_users$+")",
+				"- Comodo Caves ("+$@kewd_comodo*@discount/100+"z/"+(getmapusers("beach_dun")
+					+getmapusers("beach_dun2")+getmapusers("beach_dun3"))+" "+$@ked_users$+")",
+				"- Clock Tower ("+$@kewd_clockTower*@discount/100+"z/"+(getmapusers("c_tower1")
+					+getmapusers("c_tower2")+getmapusers("c_tower3")+getmapusers("c_tower4")
+					+getmapusers("alde_dun01")+getmapusers("alde_dun02")+getmapusers("alde_dun03")
+					+getmapusers("alde_dun04"))+" "+$@ked_users$+")",
+				"- Coal Mine ("+$@kewd_coalMines*@discount/100+"z/"+(getmapusers("mjo_dun01")
+					+getmapusers("mjo_dun02")+getmapusers("mjo_dun03"))+" "+$@ked_users$+")",
+				"- Culvert ("+$@kewd_culvert*@discount/100+"z/"+(getmapusers("prt_sewb1")+getmapusers("prt_sewb2")
+					+getmapusers("prt_sewb3")+getmapusers("prt_sewb4"))+" "+$@ked_users$+")",
+				"- Einbroch Station ("+$@kewd_einbech*@discount/100+"z/"+(getmapusers("ein_dun01")
+					+getmapusers("ein_dun02"))+" "+$@ked_users$+")",
+				"- Gefenia ("+$@kewd_gefenia*@discount/100+"z/"+(getmapusers("gefenia01")+getmapusers("gefenia02")
+					+getmapusers("gefenia03")+getmapusers("gefenia04"))+" "+$@ked_users$+")",
+				"- Geffen Dungeon ("+$@kewd_geffen*@discount/100+"z/"+(getmapusers("gef_dun00")
+					+getmapusers("gef_dun01")+getmapusers("gef_dun02")+getmapusers("gef_dun03"))+" "+$@ked_users$+")",
+				"- Glast Heim ("+$@kewd_glastHeim*@discount/100+"z/"+(getmapusers("gl_cas02")+getmapusers("gl_church")
+					+getmapusers("gl_chyard")+getmapusers("gl_dun01")+getmapusers("gl_dun02")
+					+getmapusers("gl_in01")+getmapusers("gl_knt01")+getmapusers("gl_knt02")
+					+getmapusers("gl_prison")+getmapusers("gl_prison1")+getmapusers("gl_sew01")
+					+getmapusers("gl_sew02")+getmapusers("gl_sew03")+getmapusers("gl_sew04")
+					+getmapusers("gl_step")+getmapusers("glast_01"))+" "+$@ked_users$+")",
+				"- Gon Ryun Dungeon ("+$@kewd_gonRyun*@discount/100+"z/"+(getmapusers("gon_dun01")
+					+getmapusers("gon_dun02")+getmapusers("gon_dun03"))+" "+$@ked_users$+")",
+				"- Hidden Temple ("+$@kewd_hiddenTemple*@discount/100+"z/"+(getmapusers("prt_maze01")
+					+getmapusers("prt_maze02")+getmapusers("prt_maze03"))+" "+$@ked_users$+")",
+				"- Juperos ("+$@kewd_juperos*@discount/100+"z/"+(getmapusers("juperos_01")+getmapusers("juperos_02")
+					+getmapusers("jupe_area1")+getmapusers("jupe_area2")+getmapusers("jupe_core")
+					+getmapusers("jupe_gate")+getmapusers("jupe_area1"))+" "+$@ked_users$+")",
+				"- LightHalzen Rekkenber ("+$@kewd_lightHalzen*@discount/100+"z/"+(getmapusers("lhz_dun01")
+					+getmapusers("lhz_dun02")+getmapusers("lhz_dun03"))+" "+$@ked_users$+")",
+				"- Lou Yang Royal Tomb ("+$@kewd_louYang*@discount/100+"z/"+(getmapusers("lou_dun01")
+					+getmapusers("lou_dun02")+getmapusers("lou_dun03"))+" "+$@ked_users$+")",
+				"- Magma Dungeon ("+$@kewd_magma*@discount/100+"z/"+(getmapusers("mag_dun01")
+					+getmapusers("mag_dun02"))+" "+$@ked_users$+")",
+				"- Orc Dungeon ("+$@kewd_orc*@discount/100+"z/"+(getmapusers("orcsdun01")
+					+getmapusers("orcsdun02"))+" "+$@ked_users$+")",
+				"- Payon Dungeon ("+$@kewd_payon*@discount/100+"z/"+(getmapusers("pay_dun00")
+					+getmapusers("pay_dun01")+getmapusers("pay_dun02")+getmapusers("pay_dun03")
+					+getmapusers("pay_dun04"))+" "+$@ked_users$+")",
+				"- Pyramid ("+$@kewd_pyramid*@discount/100+"z/"+(getmapusers("moc_pryd01")+getmapusers("moc_pryd02")
+					+getmapusers("moc_pryd03")+getmapusers("moc_pryd04")+getmapusers("moc_pryd05")
+					+getmapusers("moc_pryd06")+getmapusers("moc_prydb1"))+" "+$@ked_users$+")",
+				"- Sphinx ("+$@kewd_sphinx*@discount/100+"z/"+(getmapusers("in_sphinx1")
+					+getmapusers("in_sphinx2")+getmapusers("in_sphinx3")+getmapusers("in_sphinx4")
+					+getmapusers("in_sphinx5"))+" "+$@ked_users$+")",
+				"- Sunken Ship ("+$@kewd_sunkenShip*@discount/100+"z/"+(getmapusers("treasure01")
+					+getmapusers("treasure02"))+" "+$@ked_users$+")",
+				"- Thanatos Tower ("+$@kewd_thanatosTower*@discount/100+"z/"+(getmapusers("tha_t01")
+					+getmapusers("tha_t02")+getmapusers("tha_t03")+getmapusers("tha_t04")
+					+getmapusers("tha_t05")+getmapusers("tha_t06")+getmapusers("tha_t07")
+					+getmapusers("tha_t08")+getmapusers("tha_t09")+getmapusers("tha_t10")
+					+getmapusers("tha_t11")+getmapusers("tha_t12")+getmapusers("thana_step")
+					+getmapusers("thana_boss"))+" "+$@ked_users$+")",
+				"- Toy Factory ("+$@kewd_toyFactory*@discount/100+"z/"+(getmapusers("xmas_dun01")
+					+getmapusers("xmas_dun02"))+" "+$@ked_users$+")",
+				"- Turtle Island ("+$@kewd_turtleIsland*@discount/100+"z/"+(getmapusers("tur_dun01")
+					+getmapusers("tur_dun02")+getmapusers("tur_dun03")+getmapusers("tur_dun04")
+					+getmapusers("tur_dun05")+getmapusers("tur_dun06"))+" "+$@ked_users$+")",
+				"- Umbala Dungeon ("+$@kewd_umbala*@discount/100+"z/"+(getmapusers("um_dun01")
+					+getmapusers("um_dun02"))+" "+$@ked_users$+")"
 			);
 		} else {
 			set @kmenu, select(
@@ -341,16 +341,16 @@ function SF_check {
 }
 
 function SF_abyssLake {
-	if (!(SF_check(0x1, $@kewd_abyssLake, 3, @map$, 1, "hu_fild05.gat")))
+	if (!(SF_check(0x1, $@kewd_abyssLake, 3, @map$, 1, "hu_fild05")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Abyss Lake",
-			"- Entrance ("+@cost+"z/"+getmapusers("abyss_01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("abyss_02.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost3+"z/"+getmapusers("abyss_03.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("abyss_01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("abyss_02")+" "+$@ked_users$+")",
+			"- Level 3 ("+@cost3+"z/"+getmapusers("abyss_03")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -362,28 +362,28 @@ function SF_abyssLake {
 	}
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"hu_fild05.gat",173,308;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"hu_fild05",173,308;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"abyss_02.gat",272,270;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"abyss_02",272,270;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"abyss_03.gat",116,29;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"abyss_03",116,29;
 		break;
 	}
 }
 
 function SF_amatsu {
-	if (!(SF_check(0x2, $@kewd_amatsu, 3, @map$, 1, "ama_in02.gat")))
+	if (!(SF_check(0x2, $@kewd_amatsu, 3, @map$, 1, "ama_in02")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Amatsu Dungeon",
-			"- Entrance ("+@cost+"z/"+getmapusers("ama_dun01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("ama_dun02.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost3+"z/"+getmapusers("ama_dun03.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("ama_dun01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("ama_dun02")+" "+$@ked_users$+")",
+			"- Level 3 ("+@cost3+"z/"+getmapusers("ama_dun03")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -395,25 +395,25 @@ function SF_amatsu {
 	}
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"ama_in02.gat",120,181;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"ama_in02",120,181;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"ama_dun02.gat",34,41;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"ama_dun02",34,41;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"ama_dun03.gat",119,14;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"ama_dun03",119,14;
 		break;
 	}
 }
 
 function SF_antHell {
-	if (!(SF_check(0x4, $@kewd_antHell, 1, @map$, 2, "moc_fild04.gat","moc_fild15.gat")))
+	if (!(SF_check(0x4, $@kewd_antHell, 1, @map$, 2, "moc_fild04","moc_fild15")))
 		return;
 	if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Ant Hell",
-			"- Northern Entrance ("+@cost+"z/"+getmapusers("anthell01.gat")+" "+$@ked_users$+")",
-			"- Southern Entrance ("+@cost+"z/"+getmapusers("anthell02.gat")+" "+$@ked_users$+")"
+			"- Northern Entrance ("+@cost+"z/"+getmapusers("anthell01")+" "+$@ked_users$+")",
+			"- Southern Entrance ("+@cost+"z/"+getmapusers("anthell02")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -424,24 +424,24 @@ function SF_antHell {
 	}
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"moc_fild04.gat",201,327;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"moc_fild04",201,327;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"moc_fild15.gat",246,251;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"moc_fild15",246,251;
 		break;
 	}
 }
 
 function SF_ayothaya {
-	if (!(SF_check(0x8, $@kewd_ayothaya, 2, @map$, 1, "ayo_fild02.gat")))
+	if (!(SF_check(0x8, $@kewd_ayothaya, 2, @map$, 1, "ayo_fild02")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to the Ancient Shrine",
-			"- Entrance ("+@cost+"z/"+getmapusers("ayo_dun01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("ayo_dun02.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("ayo_dun01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("ayo_dun02")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -452,27 +452,27 @@ function SF_ayothaya {
 	}
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"ayo_fild02.gat",273,150;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"ayo_fild02",273,150;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"ayo_dun02.gat",24,28;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"ayo_dun02",24,28;
 		break;
 	}
 }
 
 function SF_byalan {
-	if (!(SF_check(0x10, $@kewd_byalan, 5, @map$, 1, "izlu2dun.gat")))
+	if (!(SF_check(0x10, $@kewd_byalan, 5, @map$, 1, "izlu2dun")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Undersea Tunnel",
-			"- Entrance ("+@cost+"z/"+getmapusers("iz_dun00.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("iz_dun01.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost3+"z/"+getmapusers("iz_dun02.gat")+" "+$@ked_users$+")",
-			"- Level 4 ("+@cost4+"z/"+getmapusers("iz_dun03.gat")+" "+$@ked_users$+")",
-			"- Level 5 ("+@cost5+"z/"+getmapusers("iz_dun04.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("iz_dun00")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("iz_dun01")+" "+$@ked_users$+")",
+			"- Level 3 ("+@cost3+"z/"+getmapusers("iz_dun02")+" "+$@ked_users$+")",
+			"- Level 4 ("+@cost4+"z/"+getmapusers("iz_dun03")+" "+$@ked_users$+")",
+			"- Level 5 ("+@cost5+"z/"+getmapusers("iz_dun04")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -486,33 +486,33 @@ function SF_byalan {
 	}
 	switch (@submenu) {
 	case 2:	
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"izlu2dun.gat",114,84;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"izlu2dun",114,84;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"iz_dun01.gat",253,252;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"iz_dun01",253,252;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"iz_dun02.gat",236,204;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"iz_dun02",236,204;
 		break;
 	case 5:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"iz_dun03.gat",32,63;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"iz_dun03",32,63;
 		break;
 	case 6:	
-		callfunc "F_keWarp",@cost5*100/@discountKP,$@kewd_discount,e_hmm,"iz_dun04.gat",26,27;
+		callfunc "F_keWarp",@cost5*100/@discountKP,$@kewd_discount,e_hmm,"iz_dun04",26,27;
 		break;
 	}
 }
 
 function SF_comodo {
-	if (!(SF_check(0x20, $@kewd_comodo, 1, @map$, 2, "comodo.gat","cmd_fild01.gat")))
+	if (!(SF_check(0x20, $@kewd_comodo, 1, @map$, 2, "comodo","cmd_fild01")))
 		return;
 
 	if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Comodo Caves",
-			"- Mao, The Eastern Cave ("+@cost+"z/"+getmapusers("beach_dun3.gat")+" "+$@ked_users$+")",
-			"- Karu, The Western Cave ("+@cost+"z/"+getmapusers("beach_dun.gat")+" "+$@ked_users$+")",
-			"- Ruande, The Northern Cave ("+@cost+"z/"+getmapusers("beach_dun2.gat")+" "+$@ked_users$+")"
+			"- Mao, The Eastern Cave ("+@cost+"z/"+getmapusers("beach_dun3")+" "+$@ked_users$+")",
+			"- Karu, The Western Cave ("+@cost+"z/"+getmapusers("beach_dun")+" "+$@ked_users$+")",
+			"- Ruande, The Northern Cave ("+@cost+"z/"+getmapusers("beach_dun2")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -524,33 +524,33 @@ function SF_comodo {
 	}
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"cmd_fild01.gat",34,325;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"cmd_fild01",34,325;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"comodo.gat",32,209;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"comodo",32,209;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"comodo.gat",180,352;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"comodo",180,352;
 		break;
 	}
 }
 
 function SF_clockTower {
-	if (!(SF_check(0x40, $@kewd_clockTower, 5, @map$, 1, "aldebaran.gat")))
+	if (!(SF_check(0x40, $@kewd_clockTower, 5, @map$, 1, "aldebaran")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Clock Tower",
-			"- Entrance ("+@cost+"z/"+getmapusers("c_tower1.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("c_tower2.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost3+"z/"+getmapusers("c_tower3.gat")+" "+$@ked_users$+")",
-			"- Level 4 ("+@cost4+"z/"+getmapusers("c_tower4.gat")+" "+$@ked_users$+")",
-			"- Basement 1 ("+@cost2+"z/"+getmapusers("alde_dun01.gat")+" "+$@ked_users$+")",
-			"- Basement 2 ("+@cost3+"z/"+getmapusers("alde_dun02.gat")+" "+$@ked_users$+")",
-			"- Basement 3 ("+@cost4+"z/"+getmapusers("alde_dun03.gat")+" "+$@ked_users$+")",
-			"- Basement 4 ("+@cost5+"z/"+getmapusers("alde_dun04.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("c_tower1")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("c_tower2")+" "+$@ked_users$+")",
+			"- Level 3 ("+@cost3+"z/"+getmapusers("c_tower3")+" "+$@ked_users$+")",
+			"- Level 4 ("+@cost4+"z/"+getmapusers("c_tower4")+" "+$@ked_users$+")",
+			"- Basement 1 ("+@cost2+"z/"+getmapusers("alde_dun01")+" "+$@ked_users$+")",
+			"- Basement 2 ("+@cost3+"z/"+getmapusers("alde_dun02")+" "+$@ked_users$+")",
+			"- Basement 3 ("+@cost4+"z/"+getmapusers("alde_dun03")+" "+$@ked_users$+")",
+			"- Basement 4 ("+@cost5+"z/"+getmapusers("alde_dun04")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -567,43 +567,43 @@ function SF_clockTower {
 	}
 	switch (@submenu) {
 	case 2:	
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"aldebaran.gat",140,130;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"aldebaran",140,130;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"c_tower2.gat",268,26;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"c_tower2",268,26;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"c_tower3.gat",68,146;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"c_tower3",68,146;
 		break;
 	case 5:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"c_tower4.gat",185,44;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"c_tower4",185,44;
 		break;
 	case 6:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"alde_dun01.gat",297,25;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"alde_dun01",297,25;
 		break;
 	case 7:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"alde_dun02.gat",43,24;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"alde_dun02",43,24;
 		break;
 	case 8:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"alde_dun03.gat",18,267;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"alde_dun03",18,267;
 		break;
 	case 9:
-		callfunc "F_keWarp",@cost5*100/@discountKP,$@kewd_discount,e_hmm,"alde_dun04.gat",82,267;
+		callfunc "F_keWarp",@cost5*100/@discountKP,$@kewd_discount,e_hmm,"alde_dun04",82,267;
 		break;
 	}
 }
 
 function SF_coalMine {
-	if (!(SF_check(0x80, $@kewd_coalMines, 3, @map$, 1, "mjolnir_02.gat")))
+	if (!(SF_check(0x80, $@kewd_coalMines, 3, @map$, 1, "mjolnir_02")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to the Mjolnir Dead Pit",
-			"- Entrance ("+@cost+"z/"+getmapusers("mjo_dun01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("mjo_dun02.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost3+"z/"+getmapusers("mjo_dun03.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("mjo_dun01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("mjo_dun02")+" "+$@ked_users$+")",
+			"- Level 3 ("+@cost3+"z/"+getmapusers("mjo_dun03")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -615,29 +615,29 @@ function SF_coalMine {
 	}
 	switch (@submenu) {
 	case 2:	
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"mjolnir_02.gat",89,358;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"mjolnir_02",89,358;
 		break;
 	case 3:	
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"mjo_dun02.gat",376,342;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"mjo_dun02",376,342;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"mjo_dun03.gat",305,260;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"mjo_dun03",305,260;
 		break;
 	}
 }
 
 function SF_culvert {
-	if (!(SF_check(0x100, $@kewd_culvert, 4, @map$, 1, "prt_fild05.gat")))
+	if (!(SF_check(0x100, $@kewd_culvert, 4, @map$, 1, "prt_fild05")))
 		return;
 	if ($@kewd_deep == 0) {
 		set @submenu, 2;
 	} else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to the Prontera Culvert",
-			"- Entrance ("+@cost+"z/"+getmapusers("prt_sewb1.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("prt_sewb2.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost3+"z/"+getmapusers("prt_sewb3.gat")+" "+$@ked_users$+")",
-			"- Level 4 ("+@cost4+"z/"+getmapusers("prt_sewb4.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("prt_sewb1")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("prt_sewb2")+" "+$@ked_users$+")",
+			"- Level 3 ("+@cost3+"z/"+getmapusers("prt_sewb3")+" "+$@ked_users$+")",
+			"- Level 4 ("+@cost4+"z/"+getmapusers("prt_sewb4")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -650,30 +650,30 @@ function SF_culvert {
 	}
 	switch (@submenu) {
 	case 2:	
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"prt_fild05.gat",274,208;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"prt_fild05",274,208;
 		break;
 	case 3:	
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"prt_sewb2.gat",19,19;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"prt_sewb2",19,19;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"prt_sewb3.gat",180,169;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"prt_sewb3",180,169;
 		break;
 	case 5:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"prt_sewb4.gat",100,92;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"prt_sewb4",100,92;
 		break;
 	}
 }
 
 function SF_einbech {
-	if (!(SF_check(0x200, $@kewd_einbech, 2, @map$, 1, "einbech.gat")))
+	if (!(SF_check(0x200, $@kewd_einbech, 2, @map$, 1, "einbech")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to the Einbroch Mines",
-			"- Entrance ("+@cost+"z/"+getmapusers("ein_dun01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("ein_dun02.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("ein_dun01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("ein_dun02")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -684,26 +684,26 @@ function SF_einbech {
 	}
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"einbech.gat",138,244;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"einbech",138,244;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"ein_dun02.gat",290,285;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"ein_dun02",290,285;
 		break;
 	}
 }
 
 function SF_geffen {
-	if (!(SF_check(0x800, $@kewd_geffen, 3, @map$, 1, "gef_tower.gat")))
+	if (!(SF_check(0x800, $@kewd_geffen, 3, @map$, 1, "gef_tower")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Geffen Dungeon",
-			"- Entrance ("+@cost+"z/"+getmapusers("gef_dun00.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("gef_dun01.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost3+"z/"+getmapusers("gef_dun02.gat")+" "+$@ked_users$+")"
-//			"- Level 4 ("+@cost4+"z/"+getmapusers("gef_dun03.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("gef_dun00")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("gef_dun01")+" "+$@ked_users$+")",
+			"- Level 3 ("+@cost3+"z/"+getmapusers("gef_dun02")+" "+$@ked_users$+")"
+//			"- Level 4 ("+@cost4+"z/"+getmapusers("gef_dun03")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -716,32 +716,32 @@ function SF_geffen {
 	}
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"gef_tower.gat",147,35;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"gef_tower",147,35;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"gef_dun01.gat",115,236;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"gef_dun01",115,236;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"gef_dun02.gat",106,132;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"gef_dun02",106,132;
 		break;
 	case 5:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"gef_dun03.gat",203,200;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"gef_dun03",203,200;
 		break;
 	}
 }
 
 function SF_gefenia {
-	if (!(SF_check(0x400, $@kewd_gefenia, 2, @map$, 4, "gefenia01.gat","gefenia02.gat","gefenia03.gat","gefenia04.gat")))
+	if (!(SF_check(0x400, $@kewd_gefenia, 2, @map$, 4, "gefenia01","gefenia02","gefenia03","gefenia04")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Gefenia",
-			"- Level 1 ("+@cost+"z/"+getmapusers("gefenia01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("gefenia02.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost2+"z/"+getmapusers("gefenia03.gat")+" "+$@ked_users$+")",
-			"- Level 4 ("+@cost+"z/"+getmapusers("gefenia04.gat")+" "+$@ked_users$+")"
+			"- Level 1 ("+@cost+"z/"+getmapusers("gefenia01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("gefenia02")+" "+$@ked_users$+")",
+			"- Level 3 ("+@cost2+"z/"+getmapusers("gefenia03")+" "+$@ked_users$+")",
+			"- Level 4 ("+@cost+"z/"+getmapusers("gefenia04")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -754,31 +754,31 @@ function SF_gefenia {
 	}
 	switch (@submenu) {
 	case 2:	
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"gefenia01.gat",60,169;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"gefenia01",60,169;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"gefenia02.gat",116,116;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"gefenia02",116,116;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"gefenia03.gat",119,277;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"gefenia03",119,277;
 		break;
 	case 5:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"gefenia04.gat",129,86;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"gefenia04",129,86;
 		break;
 	}
 }
 
 function SF_glastHeim {
-	if (!(SF_check(0x1000, $@kewd_glastHeim, 7, @map$, 1, "glast_01.gat")))
+	if (!(SF_check(0x1000, $@kewd_glastHeim, 7, @map$, 1, "glast_01")))
 		return;
 	if ($@kewd_deep == 0) {
 		if ($@kewd_showOnline) {
 			set @submenu, select(
 				"- Cancel warp to Glast Heim",
-				"- Church Entrance ("+@cost+"z/"+getmapusers("gl_church.gat")+" "+$@ked_users$+")",
-				"- Castle Terrace ("+@cost+"z/"+(getmapusers("gl_cas01.gat")+getmapusers("gl_cas02.gat"))+" "+$@ked_users$+")",
-				"- Staircase Entrance ("+@cost+"z/"+getmapusers("gl_step.gat")+" "+$@ked_users$+")",
-				"- Chivalry Entrance ("+@cost+"z/"+getmapusers("gl_knt01.gat")+" "+$@ked_users$+")"
+				"- Church Entrance ("+@cost+"z/"+getmapusers("gl_church")+" "+$@ked_users$+")",
+				"- Castle Terrace ("+@cost+"z/"+(getmapusers("gl_cas01")+getmapusers("gl_cas02"))+" "+$@ked_users$+")",
+				"- Staircase Entrance ("+@cost+"z/"+getmapusers("gl_step")+" "+$@ked_users$+")",
+				"- Chivalry Entrance ("+@cost+"z/"+getmapusers("gl_knt01")+" "+$@ked_users$+")"
 			);
 		} else {
 			set @submenu, select(
@@ -794,20 +794,20 @@ function SF_glastHeim {
 	} else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Glast Heim",
-			"- Church Entrance ("+@cost+"z/"+getmapusers("gl_church.gat")+" "+$@ked_users$+")",
-			"- Churchyard ("+@cost2+"z/"+getmapusers("gl_chyard.gat")+" "+$@ked_users$+")",
-			"- Castle Terrace ("+@cost+"z/"+(getmapusers("gl_cas01.gat")+getmapusers("gl_cas02.gat"))+" "+$@ked_users$+")",
-			"- Staircase Entrance ("+@cost+"z/"+getmapusers("gl_step.gat")+" "+$@ked_users$+")",
-			"- Chivalry Entrance ("+@cost+"z/"+getmapusers("gl_knt01.gat")+" "+$@ked_users$+")",
-			"- Chivalry Level 2 ("+@cost2+"z/"+getmapusers("gl_knt02.gat")+" "+$@ked_users$+")",
-			"- Underground Prison 1 ("+@cost2+"z/"+getmapusers("gl_prison.gat")+" "+$@ked_users$+")",
-			"- Underground Prison 2 ("+@cost3+"z/"+getmapusers("gl_prison1.gat")+" "+$@ked_users$+")",
-			"- Culvert Level 1 ("+@cost4+"z/"+getmapusers("gl_sew01.gat")+" "+$@ked_users$+")",
-			"- Culvert Level 2 ("+@cost3+"z/"+getmapusers("gl_sew02.gat")+" "+$@ked_users$+")",
-			"- Culvert Level 3 ("+@cost4+"z/"+getmapusers("gl_sew03.gat")+" "+$@ked_users$+")",
-			"- Culvert Level 4 ("+@cost5+"z/"+getmapusers("gl_sew04.gat")+" "+$@ked_users$+")",
-			"- Underground Cave 1 ("+@cost6+"z/"+getmapusers("gl_dun01.gat")+" "+$@ked_users$+")",
-			"- Underground Cave 2 ("+@cost7+"z/"+getmapusers("gl_dun02.gat")+" "+$@ked_users$+")"
+			"- Church Entrance ("+@cost+"z/"+getmapusers("gl_church")+" "+$@ked_users$+")",
+			"- Churchyard ("+@cost2+"z/"+getmapusers("gl_chyard")+" "+$@ked_users$+")",
+			"- Castle Terrace ("+@cost+"z/"+(getmapusers("gl_cas01")+getmapusers("gl_cas02"))+" "+$@ked_users$+")",
+			"- Staircase Entrance ("+@cost+"z/"+getmapusers("gl_step")+" "+$@ked_users$+")",
+			"- Chivalry Entrance ("+@cost+"z/"+getmapusers("gl_knt01")+" "+$@ked_users$+")",
+			"- Chivalry Level 2 ("+@cost2+"z/"+getmapusers("gl_knt02")+" "+$@ked_users$+")",
+			"- Underground Prison 1 ("+@cost2+"z/"+getmapusers("gl_prison")+" "+$@ked_users$+")",
+			"- Underground Prison 2 ("+@cost3+"z/"+getmapusers("gl_prison1")+" "+$@ked_users$+")",
+			"- Culvert Level 1 ("+@cost4+"z/"+getmapusers("gl_sew01")+" "+$@ked_users$+")",
+			"- Culvert Level 2 ("+@cost3+"z/"+getmapusers("gl_sew02")+" "+$@ked_users$+")",
+			"- Culvert Level 3 ("+@cost4+"z/"+getmapusers("gl_sew03")+" "+$@ked_users$+")",
+			"- Culvert Level 4 ("+@cost5+"z/"+getmapusers("gl_sew04")+" "+$@ked_users$+")",
+			"- Underground Cave 1 ("+@cost6+"z/"+getmapusers("gl_dun01")+" "+$@ked_users$+")",
+			"- Underground Cave 2 ("+@cost7+"z/"+getmapusers("gl_dun02")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -830,61 +830,61 @@ function SF_glastHeim {
 	}
 	switch (@submenu) {	
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"glast_01.gat",206,136;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"glast_01",206,136;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"gl_chyard.gat",147,15;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"gl_chyard",147,15;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"glast_01.gat",199,335;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"glast_01",199,335;
 		break;
 	case 5:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"glast_01.gat",62,107;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"glast_01",62,107;
 		break;
 	case 6:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"glast_01.gat",69,193;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"glast_01",69,193;
 		break;
 	case 7:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"gl_knt02.gat",157,287;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"gl_knt02",157,287;
 		break;
 	case 8:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"gl_prison.gat",14,70;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"gl_prison",14,70;
 		break;
 	case 9:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"gl_prison1.gat",150,14;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"gl_prison1",150,14;
 		break;
 	case 10:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"gl_sew01.gat",258,255;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"gl_sew01",258,255;
 		break;
 	case 11:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"gl_sew02.gat",108,291;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"gl_sew02",108,291;
 		break;
 	case 12:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"gl_sew03.gat",171,283;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"gl_sew03",171,283;
 		break;
 	case 13:
-		callfunc "F_keWarp",@cost5*100/@discountKP,$@kewd_discount,e_hmm,"gl_sew04.gat",68,277;
+		callfunc "F_keWarp",@cost5*100/@discountKP,$@kewd_discount,e_hmm,"gl_sew04",68,277;
 		break;
 	case 14:
-		callfunc "F_keWarp",@cost6*100/@discountKP,$@kewd_discount,e_hmm,"gl_dun01.gat",133,271;
+		callfunc "F_keWarp",@cost6*100/@discountKP,$@kewd_discount,e_hmm,"gl_dun01",133,271;
 		break;
 	case 15:
-		callfunc "F_keWarp",@cost7*100/@discountKP,$@kewd_discount,e_hmm,"gl_dun02.gat",224,274;
+		callfunc "F_keWarp",@cost7*100/@discountKP,$@kewd_discount,e_hmm,"gl_dun02",224,274;
 		break;
 	}
 }
 
 function SF_gonRyun {
-	if (!(SF_check(0x2000, $@kewd_gonRyun, 3, @map$, 1, "gonryun.gat")))
+	if (!(SF_check(0x2000, $@kewd_gonRyun, 3, @map$, 1, "gonryun")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Gon Ryun Dungeon",
-			"- Entrance ("+@cost+"z/"+getmapusers("gon_dun01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("gon_dun02.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost3+"z/"+getmapusers("gon_dun03.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("gon_dun01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("gon_dun02")+" "+$@ked_users$+")",
+			"- Level 3 ("+@cost3+"z/"+getmapusers("gon_dun03")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -896,28 +896,28 @@ function SF_gonRyun {
 	}
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"gonryun.gat",161,195;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"gonryun",161,195;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"gon_dun02.gat",22,114;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"gon_dun02",22,114;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"gon_dun03.gat",68,11;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"gon_dun03",68,11;
 		break;
 	}
 }
 
 function SF_hiddenTemple {
-	if (!(SF_check(0x4000, $@kewd_hiddenTemple, 3, @map$, 1, "prt_fild01.gat")))
+	if (!(SF_check(0x4000, $@kewd_hiddenTemple, 3, @map$, 1, "prt_fild01")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to the Laberynth Forest",
-			"- Entrance ("+@cost+"z/"+getmapusers("prt_maze01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("prt_maze02.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost3+"z/"+getmapusers("prt_maze03.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("prt_maze01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("prt_maze02")+" "+$@ked_users$+")",
+			"- Level 3 ("+@cost3+"z/"+getmapusers("prt_maze03")+" "+$@ked_users$+")"
 		);	
 	} else {
 		set @submenu, select(
@@ -929,28 +929,28 @@ function SF_hiddenTemple {
 	}
 	switch (@submenu) {
 	case 2:	
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"prt_fild01.gat",136,361;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"prt_fild01",136,361;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"prt_maze02.gat",106,62;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"prt_maze02",106,62;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"prt_maze03.gat",23,8;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"prt_maze03",23,8;
 		break;
 	}
 }
 
 function SF_juperos {
-	if (!(SF_check(0x8000, $@kewd_juperos, 3, @map$, 1, "jupe_cave.gat")))
+	if (!(SF_check(0x8000, $@kewd_juperos, 3, @map$, 1, "jupe_cave")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Juperos",
-			"- Entrance ("+@cost+"z/"+getmapusers("juperos_01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("juperos_02.gat")+" "+$@ked_users$+")",
-			"- Core ("+@cost3+"z/"+getmapusers("jupe_core.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("juperos_01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("juperos_02")+" "+$@ked_users$+")",
+			"- Core ("+@cost3+"z/"+getmapusers("jupe_core")+" "+$@ked_users$+")"
 		);	
 	} else {
 		set @submenu, select(
@@ -962,28 +962,28 @@ function SF_juperos {
 	}
 	switch (@submenu) {
 	case 2:	
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"jupe_cave.gat",55,52;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"jupe_cave",55,52;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"juperos_02.gat",37,63;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"juperos_02",37,63;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"jupe_gate.gat",-1,-1;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"jupe_gate",-1,-1;
 		break;
 	}
 }
 
 function SF_lightHalzen {
-	if (!(SF_check(0x10000, $@kewd_lightHalzen, 3, @map$, 1, "lighthalzen.gat")))
+	if (!(SF_check(0x10000, $@kewd_lightHalzen, 3, @map$, 1, "lighthalzen")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 				"- Cancel warp to the Rekkenber",
-				"- Entrance ("+@cost+"z/"+getmapusers("lou_dun01.gat")+" "+$@ked_users$+")",
-				"- Level 2 ("+@cost2+"z/"+getmapusers("lou_dun02.gat")+" "+$@ked_users$+")",
-				"- Level 3 ("+@cost3+"z/"+getmapusers("lou_dun03.gat")+" "+$@ked_users$+")"
+				"- Entrance ("+@cost+"z/"+getmapusers("lou_dun01")+" "+$@ked_users$+")",
+				"- Level 2 ("+@cost2+"z/"+getmapusers("lou_dun02")+" "+$@ked_users$+")",
+				"- Level 3 ("+@cost3+"z/"+getmapusers("lou_dun03")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -996,29 +996,29 @@ function SF_lightHalzen {
 	switch (@submenu) {	
 	case 2:
 //This is the Rekkenber building entrance, which officially is only a dungeon exit.
-//		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"lighthalzen.gat",74,72;
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"lighthalzen.gat",303,302;
+//		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"lighthalzen",74,72;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"lighthalzen",303,302;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"lhz_dun02.gat",154,18;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"lhz_dun02",154,18;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"lhz_dun03.gat",141,132;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"lhz_dun03",141,132;
 		break;
 	}
 }
 
 function SF_louYang {
-	if (!(SF_check(0x20000, $@kewd_louYang, 3, @map$, 1, "louyang.gat")))
+	if (!(SF_check(0x20000, $@kewd_louYang, 3, @map$, 1, "louyang")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to the Royal Tomb",
-			"- Entrance ("+@cost+"z/"+getmapusers("lou_dun01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("lou_dun02.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost3+"z/"+getmapusers("lou_dun03.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("lou_dun01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("lou_dun02")+" "+$@ked_users$+")",
+			"- Level 3 ("+@cost3+"z/"+getmapusers("lou_dun03")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -1030,27 +1030,27 @@ function SF_louYang {
 	};
 	switch (@submenu) {
 	case 2:	
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"louyang.gat",41,267;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"louyang",41,267;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"lou_dun02.gat",281,20;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"lou_dun02",281,20;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"lou_dun03.gat",165,39;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"lou_dun03",165,39;
 		break;
 	}
 }
 
 function SF_magma {
-	if (!(SF_check(0x40000, $@kewd_magma, 2, @map$, 1, "yuno_fild03.gat")))
+	if (!(SF_check(0x40000, $@kewd_magma, 2, @map$, 1, "yuno_fild03")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Nogg Road",
-			"- Entrance ("+@cost+"z/"+getmapusers("mag_dun01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("mag_dun02.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("mag_dun01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("mag_dun02")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -1061,22 +1061,22 @@ function SF_magma {
 	}
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"yuno_fild03.gat",35,135;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"yuno_fild03",35,135;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"mag_dun02.gat",47,30;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"mag_dun02",47,30;
 		break;
 	}
 }
 
 function SF_orcs {
-	if (!(SF_check(0x80000, $@kewd_orc, 2, @map$, 1, "gef_fild10.gat")))
+	if (!(SF_check(0x80000, $@kewd_orc, 2, @map$, 1, "gef_fild10")))
 		return;
 	if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Orcs Dungeon",
-			"- Front Entrance ("+@cost+"z/"+getmapusers("orcsdun01.gat")+" "+$@ked_users$+")",
-			"- Back Entrance ("+@cost+"z/"+getmapusers("orcsdun02.gat")+" "+$@ked_users$+")"
+			"- Front Entrance ("+@cost+"z/"+getmapusers("orcsdun01")+" "+$@ked_users$+")",
+			"- Back Entrance ("+@cost+"z/"+getmapusers("orcsdun02")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -1087,27 +1087,27 @@ function SF_orcs {
 	}
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"in_orcs01.gat",34,165;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"in_orcs01",34,165;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"in_orcs01.gat",112,99;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"in_orcs01",112,99;
 		break;
 	}
 }
 
 function SF_payon {
-	if (!(SF_check(0x100000, $@kewd_payon, 5, @map$, 1, "pay_arche.gat")))
+	if (!(SF_check(0x100000, $@kewd_payon, 5, @map$, 1, "pay_arche")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to the Payon Cave",
-			"- Entrance ("+@cost+"z/"+getmapusers("pay_dun00.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("pay_dun01.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost3+"z/"+getmapusers("pay_dun02.gat")+" "+$@ked_users$+")",
-			"- Level 4 ("+@cost4+"z/"+getmapusers("pay_dun03.gat")+" "+$@ked_users$+")",
-			"- Level 5 ("+@cost5+"z/"+getmapusers("pay_dun04.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("pay_dun00")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("pay_dun01")+" "+$@ked_users$+")",
+			"- Level 3 ("+@cost3+"z/"+getmapusers("pay_dun02")+" "+$@ked_users$+")",
+			"- Level 4 ("+@cost4+"z/"+getmapusers("pay_dun03")+" "+$@ked_users$+")",
+			"- Level 5 ("+@cost5+"z/"+getmapusers("pay_dun04")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -1121,37 +1121,37 @@ function SF_payon {
 	}
 	switch (@submenu) {	
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"pay_arche.gat",41,133;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"pay_arche",41,133;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"pay_dun01.gat",19,33;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"pay_dun01",19,33;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"pay_dun02.gat",19,63;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"pay_dun02",19,63;
 		break;
 	case 5:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"pay_dun03.gat",155,159;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"pay_dun03",155,159;
 		break;
 	case 6:
-		callfunc "F_keWarp",@cost5*100/@discountKP,$@kewd_discount,e_hmm,"pay_dun04.gat",34,202;
+		callfunc "F_keWarp",@cost5*100/@discountKP,$@kewd_discount,e_hmm,"pay_dun04",34,202;
 		break;
 	}
 }
 
 function SF_pyramid {
-	if (!(SF_check(0x200000, $@kewd_pyramid, 4, @map$,1, "moc_ruins.gat")))
+	if (!(SF_check(0x200000, $@kewd_pyramid, 4, @map$,1, "moc_ruins")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to the Pyramid",
-			"- Entrance ("+@cost+"z/"+getmapusers("moc_pryd01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("moc_pryd02.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost3+"z/"+getmapusers("moc_pryd03.gat")+" "+$@ked_users$+")",
-			"- Level 4 ("+@cost4+"z/"+getmapusers("moc_pryd04.gat")+" "+$@ked_users$+")",
-			"- Basement 1 ("+@cost2+"z/"+getmapusers("moc_pryd05.gat")+" "+$@ked_users$+")",
-			"- Basement 2 ("+@cost3+"z/"+getmapusers("moc_pryd06.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("moc_pryd01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("moc_pryd02")+" "+$@ked_users$+")",
+			"- Level 3 ("+@cost3+"z/"+getmapusers("moc_pryd03")+" "+$@ked_users$+")",
+			"- Level 4 ("+@cost4+"z/"+getmapusers("moc_pryd04")+" "+$@ked_users$+")",
+			"- Basement 1 ("+@cost2+"z/"+getmapusers("moc_pryd05")+" "+$@ked_users$+")",
+			"- Basement 2 ("+@cost3+"z/"+getmapusers("moc_pryd06")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -1166,39 +1166,39 @@ function SF_pyramid {
 	}
 	switch (@submenu) {	
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"moc_ruins.gat",62,162;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"moc_ruins",62,162;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"moc_pryd02.gat",10,192;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"moc_pryd02",10,192;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"moc_pryd03.gat",100,92;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"moc_pryd03",100,92;
 		break;
 	case 5:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"moc_pryd04.gat",18,187;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"moc_pryd04",18,187;
 		break;
 	case 6:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"moc_pryd05.gat",94,96;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"moc_pryd05",94,96;
 		break;
 	case 7:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"moc_pryd06.gat",192,11;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"moc_pryd06",192,11;
 		break;
 	}
 }
 
 function SF_sphinx {
-	if (!(SF_check(0x400000, $@kewd_sphinx, 5, @map$, 1, "moc_fild19.gat")))
+	if (!(SF_check(0x400000, $@kewd_sphinx, 5, @map$, 1, "moc_fild19")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to the Sphinx",
-			"- Entrance ("+@cost+"z/"+getmapusers("in_sphinx1.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("in_sphinx2.gat")+" "+$@ked_users$+")",
-			"- Level 3 ("+@cost3+"z/"+getmapusers("in_sphinx3.gat")+" "+$@ked_users$+")",
-			"- Level 4 ("+@cost4+"z/"+getmapusers("in_sphinx4.gat")+" "+$@ked_users$+")",
-			"- Level 5 ("+@cost5+"z/"+getmapusers("in_sphinx5.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("in_sphinx1")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("in_sphinx2")+" "+$@ked_users$+")",
+			"- Level 3 ("+@cost3+"z/"+getmapusers("in_sphinx3")+" "+$@ked_users$+")",
+			"- Level 4 ("+@cost4+"z/"+getmapusers("in_sphinx4")+" "+$@ked_users$+")",
+			"- Level 5 ("+@cost5+"z/"+getmapusers("in_sphinx5")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -1213,33 +1213,33 @@ function SF_sphinx {
 
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"moc_fild19.gat",107,100;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"moc_fild19",107,100;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"in_sphinx2.gat",149,81;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"in_sphinx2",149,81;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"in_sphinx3.gat",210,54;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"in_sphinx3",210,54;
 		break;
 	case 5:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"in_sphinx4.gat",10,222;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"in_sphinx4",10,222;
 		break;
 	case 6:
-		callfunc "F_keWarp",@cost5*100/@discountKP,$@kewd_discount,e_hmm,"in_sphinx5.gat",100,99;
+		callfunc "F_keWarp",@cost5*100/@discountKP,$@kewd_discount,e_hmm,"in_sphinx5",100,99;
 		break;
 	}
 }
 
 function SF_sunkenShip {
-	if (!(SF_check(0x800000, $@kewd_sunkenShip, 2, @map$, 1, "alb2trea.gat")))
+	if (!(SF_check(0x800000, $@kewd_sunkenShip, 2, @map$, 1, "alb2trea")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Sunken Ship",
-			"- Entrance ("+@cost+"z/"+getmapusers("treasure01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("treasure02.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("treasure01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("treasure02")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -1251,31 +1251,31 @@ function SF_sunkenShip {
 
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"alb2trea.gat",87,103;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"alb2trea",87,103;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"treasure02.gat",102,27;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"treasure02",102,27;
 		break;
 	}
 }
 
 function SF_thanatosTower {
-	if (!(SF_check(0x1000000, $@kewd_thanatosTower, 9, @map$, 1, "tha_t01.gat")))
+	if (!(SF_check(0x1000000, $@kewd_thanatosTower, 9, @map$, 1, "tha_t01")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Thanatos Tower",
-			"- Entrance ("+@cost+"z/"+getmapusers("tha_t01.gat")+" "+$@ked_users$+")",
-			"- Floor 2 ("+@cost2+"z/"+getmapusers("tha_t02.gat")+" "+$@ked_users$+")",
-			"- Floor 3 ("+@cost3+"z/"+getmapusers("tha_t03.gat")+" "+$@ked_users$+")",
-			"- Floor 4 ("+@cost4+"z/"+getmapusers("tha_t04.gat")+" "+$@ked_users$+")",
-			"- Floor 5 ("+@cost5+"z/"+getmapusers("tha_t05.gat")+" "+$@ked_users$+")",
-			"- Floor 6 ("+@cost6+"z/"+getmapusers("tha_t06.gat")+" "+$@ked_users$+")",
-			"- Floor 7 ("+@cost7+"z/"+getmapusers("tha_t07.gat")+" "+$@ked_users$+")",
-			"- Floor 8 ("+@cost8+"z/"+getmapusers("tha_t08.gat")+" "+$@ked_users$+")",
-			"- Floor 9 ("+@cost9+"z/"+getmapusers("tha_t09.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("tha_t01")+" "+$@ked_users$+")",
+			"- Floor 2 ("+@cost2+"z/"+getmapusers("tha_t02")+" "+$@ked_users$+")",
+			"- Floor 3 ("+@cost3+"z/"+getmapusers("tha_t03")+" "+$@ked_users$+")",
+			"- Floor 4 ("+@cost4+"z/"+getmapusers("tha_t04")+" "+$@ked_users$+")",
+			"- Floor 5 ("+@cost5+"z/"+getmapusers("tha_t05")+" "+$@ked_users$+")",
+			"- Floor 6 ("+@cost6+"z/"+getmapusers("tha_t06")+" "+$@ked_users$+")",
+			"- Floor 7 ("+@cost7+"z/"+getmapusers("tha_t07")+" "+$@ked_users$+")",
+			"- Floor 8 ("+@cost8+"z/"+getmapusers("tha_t08")+" "+$@ked_users$+")",
+			"- Floor 9 ("+@cost9+"z/"+getmapusers("tha_t09")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -1293,37 +1293,37 @@ function SF_thanatosTower {
 	}
 	switch (@submenu) {
 	case 2:	
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"tha_scene01.gat",139,201;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"tha_scene01",139,201;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"tha_t02.gat",149,136;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"tha_t02",149,136;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"tha_t03.gat",220,159;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"tha_t03",220,159;
 		break;
 	case 5:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"tha_t04.gat",59,144;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"tha_t04",59,144;
 		break;
 	case 6:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"tha_t05.gat",62,9;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"tha_t05",62,9;
 		break;
 	case 7:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"tha_t06.gat",120,225;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"tha_t06",120,225;
 		break;
 	case 8:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"tha_t07.gat",32,166;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"tha_t07",32,166;
 		break;
 	case 9:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"tha_t08.gat",108,44;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"tha_t08",108,44;
 		break;
 	case 10:
-		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"tha_t09.gat",87,145;
+		callfunc "F_keWarp",@cost4*100/@discountKP,$@kewd_discount,e_hmm,"tha_t09",87,145;
 		break;
 	}
 }
 
 function SF_toyFactory {
-	if (!(SF_check(0x2000000, $@kewd_toyFactory, 2, @map$, 1, "xmas.gat")))
+	if (!(SF_check(0x2000000, $@kewd_toyFactory, 2, @map$, 1, "xmas")))
 		return;
 
 	if ($@kewd_deep == 0)
@@ -1331,8 +1331,8 @@ function SF_toyFactory {
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Toy Factory",
-			"- Entrance ("+@cost+"z/"+getmapusers("xmas_dun01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("xmas_dun02.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("xmas_dun01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("xmas_dun02")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -1344,16 +1344,16 @@ function SF_toyFactory {
 
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"xmas.gat",144,306;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"xmas",144,306;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"xmas_dun02.gat",129,133;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"xmas_dun02",129,133;
 		break;
 	}
 }
 
 function SF_turtleIsland {
-	if (!(SF_check(0x4000000, $@kewd_turtleIsland, 3, @map$, 1, "tur_dun01.gat")))
+	if (!(SF_check(0x4000000, $@kewd_turtleIsland, 3, @map$, 1, "tur_dun01")))
 		return;
 	if ($@kewd_deep == 0) {
 		if ($@kewd_turtleCave)
@@ -1363,10 +1363,10 @@ function SF_turtleIsland {
 	} else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Turtle Island",
-			"- Island Entrance ("+@cost+"z/"+getmapusers("tur_dun01.gat")+" "+$@ked_users$+")",
-			"- Cave Entrance ("+@cost+"z/"+getmapusers("tur_dun02.gat")+" "+$@ked_users$+")",
-			"- Cave Level 2 ("+@cost2+"z/"+getmapusers("tur_dun03.gat")+" "+$@ked_users$+")",
-			"- Cave Level 3 ("+@cost3+"z/"+getmapusers("tur_dun04.gat")+" "+$@ked_users$+")"
+			"- Island Entrance ("+@cost+"z/"+getmapusers("tur_dun01")+" "+$@ked_users$+")",
+			"- Cave Entrance ("+@cost+"z/"+getmapusers("tur_dun02")+" "+$@ked_users$+")",
+			"- Cave Level 2 ("+@cost2+"z/"+getmapusers("tur_dun03")+" "+$@ked_users$+")",
+			"- Cave Level 3 ("+@cost3+"z/"+getmapusers("tur_dun04")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -1379,30 +1379,30 @@ function SF_turtleIsland {
 	}
 	switch (@submenu) {
 	case 2:	
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"tur_dun01.gat",153,47;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"tur_dun01",153,47;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"tur_dun01.gat",155,234;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"tur_dun01",155,234;
 		break;
 	case 4:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"tur_dun03.gat",132,189;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"tur_dun03",132,189;
 		break;
 	case 5:
-		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"tur_dun04.gat",100,192;
+		callfunc "F_keWarp",@cost3*100/@discountKP,$@kewd_discount,e_hmm,"tur_dun04",100,192;
 		break;
 	}
 }
 
 function SF_umbala {
-	if (!(SF_check(0x8000000, $@kewd_umbala, 2, @map$, 1, "umbala.gat")))
+	if (!(SF_check(0x8000000, $@kewd_umbala, 2, @map$, 1, "umbala")))
 		return;
 	if ($@kewd_deep == 0)
 		set @submenu, 2;
 	else if ($@kewd_showOnline) {
 		set @submenu, select(
 			"- Cancel warp to Umbala Dungeon",
-			"- Entrance ("+@cost+"z/"+getmapusers("um_dun01.gat")+" "+$@ked_users$+")",
-			"- Level 2 ("+@cost2+"z/"+getmapusers("um_dun02.gat")+" "+$@ked_users$+")"
+			"- Entrance ("+@cost+"z/"+getmapusers("um_dun01")+" "+$@ked_users$+")",
+			"- Level 2 ("+@cost2+"z/"+getmapusers("um_dun02")+" "+$@ked_users$+")"
 		);
 	} else {
 		set @submenu, select(
@@ -1413,10 +1413,10 @@ function SF_umbala {
 	}
 	switch (@submenu) {
 	case 2:
-		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"umbala.gat",113,282;
+		callfunc "F_keWarp",@cost*100/@discountKP,$@kewd_discount,e_hmm,"umbala",113,282;
 		break;
 	case 3:
-		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"um_dun02.gat",48,31;
+		callfunc "F_keWarp",@cost2*100/@discountKP,$@kewd_discount,e_hmm,"um_dun02",48,31;
 		break;
 	}
 }
@@ -1647,114 +1647,114 @@ function	script	F_keAddTravelDungeon	{
 
 // End transition code.
 	if ($@kewd_travel > 1) {
-		if (@map$ == "hu_fild05.gat" || kewd_travel&0x1)
+		if (@map$ == "hu_fild05" || kewd_travel&0x1)
 			set #kewd_travel,#kewd_travel|0x1;
-		if (@map$ == "ama_in02.gat" || kewd_travel&0x2)
+		if (@map$ == "ama_in02" || kewd_travel&0x2)
 			set #kewd_travel,#kewd_travel|0x2;
-		if (@map$ == "moc_fild04.gat" || @map$ == "moc_fild15.gat" || kewd_travel&0x4)
+		if (@map$ == "moc_fild04" || @map$ == "moc_fild15" || kewd_travel&0x4)
 			set #kewd_travel,#kewd_travel|0x4;
-		if (@map$ == "ayo_fild02.gat" || kewd_travel&0x8)
+		if (@map$ == "ayo_fild02" || kewd_travel&0x8)
 			set #kewd_travel,#kewd_travel|0x8;
-		if (@map$ == "izlu2dun.gat" || kewd_travel&0x10)
+		if (@map$ == "izlu2dun" || kewd_travel&0x10)
 			set #kewd_travel,#kewd_travel|0x10;
-		if (@map$ == "comodo.gat" || @map$ == "cmd_fild01.gat" || kewd_travel&0x20)
+		if (@map$ == "comodo" || @map$ == "cmd_fild01" || kewd_travel&0x20)
 			set #kewd_travel,#kewd_travel|0x20;
-		if (@map$ == "aldebaran.gat" || kewd_travel&0x40)
+		if (@map$ == "aldebaran" || kewd_travel&0x40)
 			set #kewd_travel,#kewd_travel|0x40;
-		if (@map$ == "mjolnir_02.gat" || kewd_travel&0x80)
+		if (@map$ == "mjolnir_02" || kewd_travel&0x80)
 			set #kewd_travel,#kewd_travel|0x80;
-		if (@map$ == "prt_fild05.gat" || kewd_travel&0x100)
+		if (@map$ == "prt_fild05" || kewd_travel&0x100)
 			set #kewd_travel,#kewd_travel|0x100;
-		if (@map$ == "einbech.gat" || kewd_travel&0x200)
+		if (@map$ == "einbech" || kewd_travel&0x200)
 			set #kewd_travel,#kewd_travel|0x200;
-		if (@map$ == "gef_tower.gat" || kewd_travel&0x800)
+		if (@map$ == "gef_tower" || kewd_travel&0x800)
 			set #kewd_travel,#kewd_travel|0x800;
-		if (@map$ == "glast_01.gat" || kewd_travel&0x1000)
+		if (@map$ == "glast_01" || kewd_travel&0x1000)
 			set #kewd_travel,#kewd_travel|0x1000;
-		if (@map$ == "gonryun.gat" || kewd_travel&0x2000)
+		if (@map$ == "gonryun" || kewd_travel&0x2000)
 			set #kewd_travel,#kewd_travel|0x2000;
-		if (@map$ == "prt_fild01.gat" || kewd_travel&0x4000)
+		if (@map$ == "prt_fild01" || kewd_travel&0x4000)
 			set #kewd_travel,#kewd_travel|0x4000;
-		if (@map$ == "jupe_cave.gat" || kewd_travel&0x8000)
+		if (@map$ == "jupe_cave" || kewd_travel&0x8000)
 			set #kewd_travel,#kewd_travel|0x8000;
-		if (@map$ == "lighthalzen.gat" || kewd_travel&0x10000)
+		if (@map$ == "lighthalzen" || kewd_travel&0x10000)
 			set #kewd_travel,#kewd_travel|0x10000;
-		if (@map$ == "louyang.gat" || kewd_travel&0x20000)
+		if (@map$ == "louyang" || kewd_travel&0x20000)
 			set #kewd_travel,#kewd_travel|0x20000;
-		if (@map$ == "yuno_fild03.gat" || kewd_travel&0x40000)
+		if (@map$ == "yuno_fild03" || kewd_travel&0x40000)
 			set #kewd_travel,#kewd_travel|0x40000;
-		if (@map$ == "in_orcs01.gat" || kewd_travel&0x80000)
+		if (@map$ == "in_orcs01" || kewd_travel&0x80000)
 			set #kewd_travel,#kewd_travel|0x80000;
-		if (@map$ == "pay_arche.gat" || kewd_travel&0x100000)
+		if (@map$ == "pay_arche" || kewd_travel&0x100000)
 			set #kewd_travel,#kewd_travel|0x100000;
-		if (@map$ == "moc_ruins.gat" || kewd_travel&0x200000)
+		if (@map$ == "moc_ruins" || kewd_travel&0x200000)
 			set #kewd_travel,#kewd_travel|0x200000;
-		if (@map$ == "moc_fild19.gat" || kewd_travel&0x400000)
+		if (@map$ == "moc_fild19" || kewd_travel&0x400000)
 			set #kewd_travel,#kewd_travel|0x400000;
-		if (@map$ == "alb2trea.gat" || kewd_travel&0x800000)
+		if (@map$ == "alb2trea" || kewd_travel&0x800000)
 			set #kewd_travel,#kewd_travel|0x800000;
-		if (@map$ == "tha_t01.gat" || kewd_travel&0x1000000)
+		if (@map$ == "tha_t01" || kewd_travel&0x1000000)
 			set #kewd_travel,#kewd_travel|0x1000000;
-		if (@map$ == "xmas.gat" || kewd_travel&0x2000000)
+		if (@map$ == "xmas" || kewd_travel&0x2000000)
 			set #kewd_travel,#kewd_travel|0x2000000;
-		if (@map$ == "tur_dun01.gat" || kewd_travel&0x4000000)
+		if (@map$ == "tur_dun01" || kewd_travel&0x4000000)
 			set #kewd_travel,#kewd_travel|0x4000000;
-		if (@map$ == "umbala.gat" || kewd_travel&0x8000000)
+		if (@map$ == "umbala" || kewd_travel&0x8000000)
 			set #kewd_travel,#kewd_travel|0x8000000;
 	} else {
-		if (@map$ == "hu_fild05.gat")
+		if (@map$ == "hu_fild05")
 			set kewd_travel,kewd_travel|0x1;
-		if (@map$ == "ama_in02.gat")
+		if (@map$ == "ama_in02")
 			set kewd_travel,kewd_travel|0x2;
-		if (@map$ == "moc_fild04.gat" || @map$ == "moc_fild15.gat")
+		if (@map$ == "moc_fild04" || @map$ == "moc_fild15")
 			set kewd_travel,kewd_travel|0x4;
-		if (@map$ == "ayo_fild02.gat")
+		if (@map$ == "ayo_fild02")
 			set kewd_travel,kewd_travel|0x8;
-		if (@map$ == "izlu2dun.gat")
+		if (@map$ == "izlu2dun")
 			set kewd_travel,kewd_travel|0x10;
-		if (@map$ == "comodo.gat" || @map$ == "cmd_fild01.gat")
+		if (@map$ == "comodo" || @map$ == "cmd_fild01")
 			set kewd_travel,kewd_travel|0x20;
-		if (@map$ == "aldebaran.gat")
+		if (@map$ == "aldebaran")
 			set kewd_travel,kewd_travel|0x40;
-		if (@map$ == "mjolnir_02.gat")
+		if (@map$ == "mjolnir_02")
 			set kewd_travel,kewd_travel|0x80;
-		if (@map$ == "prt_fild05.gat")
+		if (@map$ == "prt_fild05")
 			set kewd_travel,kewd_travel|0x100;
-		if (@map$ == "einbech.gat")
+		if (@map$ == "einbech")
 			set kewd_travel,kewd_travel|0x200;
-		if (@map$ == "gef_tower.gat")
+		if (@map$ == "gef_tower")
 			set kewd_travel,kewd_travel|0x800;
-		if (@map$ == "glast_01.gat")
+		if (@map$ == "glast_01")
 			set kewd_travel,kewd_travel|0x1000;
-		if (@map$ == "gonryun.gat")
+		if (@map$ == "gonryun")
 			set kewd_travel,kewd_travel|0x2000;
-		if (@map$ == "prt_fild01.gat")
+		if (@map$ == "prt_fild01")
 			set kewd_travel,kewd_travel|0x4000;
-		if (@map$ == "jupe_cave.gat")
+		if (@map$ == "jupe_cave")
 			set kewd_travel,kewd_travel|0x8000;
-		if (@map$ == "lighthalzen.gat")
+		if (@map$ == "lighthalzen")
 			set kewd_travel,kewd_travel|0x10000;
-		if (@map$ == "louyang.gat")
+		if (@map$ == "louyang")
 			set kewd_travel,kewd_travel|0x20000;
-		if (@map$ == "yuno_fild03.gat")
+		if (@map$ == "yuno_fild03")
 			set kewd_travel,kewd_travel|0x40000;
-		if (@map$ == "in_orcs01.gat")
+		if (@map$ == "in_orcs01")
 			set kewd_travel,kewd_travel|0x80000;
-		if (@map$ == "pay_arche.gat")
+		if (@map$ == "pay_arche")
 			set kewd_travel,kewd_travel|0x100000;
-		if (@map$ == "moc_ruins.gat")
+		if (@map$ == "moc_ruins")
 			set kewd_travel,kewd_travel|0x200000;
-		if (@map$ == "moc_fild19.gat")
+		if (@map$ == "moc_fild19")
 			set kewd_travel,kewd_travel|0x400000;
-		if (@map$ == "alb2trea.gat")
+		if (@map$ == "alb2trea")
 			set kewd_travel,kewd_travel|0x800000;
-		if (@map$ == "tha_t01.gat")
+		if (@map$ == "tha_t01")
 			set kewd_travel,kewd_travel|0x1000000;
-		if (@map$ == "xmas.gat")
+		if (@map$ == "xmas")
 			set kewd_travel,kewd_travel|0x2000000;
-		if (@map$ == "tur_dun01.gat")
+		if (@map$ == "tur_dun01")
 			set kewd_travel,kewd_travel|0x4000000;
-		if (@map$ == "umbala.gat")
+		if (@map$ == "umbala")
 			set kewd_travel,kewd_travel|0x8000000;
 	}
 	return;

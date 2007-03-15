@@ -21,7 +21,7 @@
 //============================================================ 
 
 // PecoPeco Breeder (for Knights)-------------------------------------------
-prontera.gat,61,338,3	script	PecoPeco Breeder	86,{
+prontera,61,338,3	script	PecoPeco Breeder	86,{
 	if(Upper==0) set @price,2500; //Normal Peco - default price
 	if(Upper==1) set @price,4000; //Armored Peco
 	if(Upper==2) set @price,2000; //Baby Peco
@@ -74,7 +74,7 @@ L_Start:
 }
 
 // Grand PecoPeco Breeder (for Crusaders)-------------------------------------------
-prontera.gat,238,312,5	script	Grand PecoPeco Breeder	86,{
+prontera,238,312,5	script	Grand PecoPeco Breeder	86,{
 	if(Upper==0) set @price,3000; //Normal Peco - default price
 	if(Upper==1) set @price,5000; //Armored Peco
 	if(Upper==2) set @price,2500; //Baby Peco
@@ -127,7 +127,7 @@ L_Start:
 }
 
 // Falcon Master--------------------------------------------------------------
-hu_in01.gat,375,318,5	script	Falcon Master	59,{
+hu_in01,375,318,5	script	Falcon Master	59,{
 	if(Upper==0) set @price,800; //Normal Falcon - default price
 	if(Upper==1) set @price,1000; //Scarf Falcon
 	if(Upper==2) set @price,600; //Baby Falcon

@@ -25,7 +25,7 @@
 //= reported inside the thread I made for this script, but be replaced by GM if proof was given :D
 //===========================================================================================
 
-prontera.gat,153,193,5	script	Auctioneer	807,{
+prontera,153,193,5	script	Auctioneer	807,{
 	mes "[Auctioneer]";
 	set @num,0;
 // These few line below are to recover item that would be lost due to a new auction starting
@@ -517,7 +517,7 @@ L_BItemsLoop:
 // Only for display purposes, and telling people info about the auction
 // Can also be used for finding out what phase the auction is in
 
-prontera.gat,158,193,3	script	Auction Helper	833,{
+prontera,158,193,3	script	Auction Helper	833,{
 	mes "[Auction Helper]";
 	set @num,0;
 	if($Auction==0 && $AItemsB[@num]!=0) goto L_ItemRecover;

@@ -1,4 +1,4 @@
-prontera.gat,156,183,0	script	NPCtimerテスト::npctimerX0000	116,{
+prontera,156,183,0	script	NPCtimerテスト::npctimerX0000	116,{
 L_INIT:
 	mes "What would you like to know?";
 	menu "Tell me my level",L_WAIT;

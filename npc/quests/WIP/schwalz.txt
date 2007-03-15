@@ -25,7 +25,7 @@
 //=
 //===== Additional Comments: =================================
 //In alchemist_skills.txt comment because I use this NPC in the script:
-//lhz_in01.gat,285,169,7	script	Researcher#2	865,{
+//lhz_in01,285,169,7	script	Researcher#2	865,{
 //Unknown Text
 //	mes "[Researcher]";
 //	mes "Hmm... I wonder...";
@@ -35,14 +35,14 @@
 //============================================================
 
 
-yuno_pre.gat,79,69,0	warp	inside_pre01	1,1,yuno_pre.gat,97,68
-yuno_pre.gat,113,50,0	warp	inside_pre02	1,1,yuno_pre.gat,58,22
-yuno_pre.gat,54,22,0	warp	inside_pre03	1,1,yuno_pre.gat,113,55
-lhz_in01.gat,275,234,0	warp	inside_pre04	1,1,lhz_in01.gat,277,161 //Здесь порталы поставил наобум, в месте около  двери,
-lhz_in01.gat,277,157,0	warp	inside_pre04	1,1,lhz_in01.gat,275,231 //где не было другого портала :
+yuno_pre,79,69,0	warp	inside_pre01	1,1,yuno_pre,97,68
+yuno_pre,113,50,0	warp	inside_pre02	1,1,yuno_pre,58,22
+yuno_pre,54,22,0	warp	inside_pre03	1,1,yuno_pre,113,55
+lhz_in01,275,234,0	warp	inside_pre04	1,1,lhz_in01,277,161 //Здесь порталы поставил наобум, в месте около  двери,
+lhz_in01,277,157,0	warp	inside_pre04	1,1,lhz_in01,275,231 //где не было другого портала :
 
 //OnInit!
-prontera.gat,0,0,0	script	swarzwalt_trilogy	-1,1,1{
+prontera,0,0,0	script	swarzwalt_trilogy	-1,1,1{
 OnInit:
 disablenpc "kurelle";
 disablenpc "President's Secretary#2";
@@ -58,7 +58,7 @@ end;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Beginning. Lighthalzen, Swaltzwalt Quest Part 1/////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-lighthalzen.gat,179,170,4	script	Ordinary man	48,{
+lighthalzen,179,170,4	script	Ordinary man	48,{
 if (SCHWALTZVALT_PART2==23) {
 							mes "[Ghalstein]";
 							mes "arrr...";
@@ -273,7 +273,7 @@ mes "I have already done this quest. I don't want to go there once more time!";
 close;
 }
 //=======================================================================
-lhz_dun02.gat,268,287,4	script	The broken Manufactoring	111,{
+lhz_dun02,268,287,4	script	The broken Manufactoring	111,{
 if SCHWALTZVALT_PART1!=2 goto l_end;
 mes "[The broken Manufactoring]";
 mes "You see something shining inside the spoiling machines.Open up the machinr and check it,detected a round shape";
@@ -301,7 +301,7 @@ close;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //NPC01 - Dismal Guy
-yuno_fild04.gat,165,245,5	script	Dismal Guy	89,{
+yuno_fild04,165,245,5	script	Dismal Guy	89,{
 if (SCHWALTZVALT_PART2>0) {
 					mes "[Dismal Guy]";
 					mes "Make your mission..we need you..";
@@ -352,7 +352,7 @@ close;
 }
 
 //NPC02 - President's Secretary
-yuno_pre.gat,69,20,5	script	President's Secretary::pre	862,{
+yuno_pre,69,20,5	script	President's Secretary::pre	862,{
 if (SCHWALTZVALT_PART2==4) {
 							mes "[Hes O'Neil]";
 							if(countitem(7342)==0) {mes "Where is documemt?";close;} //Здесь ИД документа, надо узнать у Лупуса.
@@ -410,10 +410,10 @@ mes "Sorry, I did't help you:(";
 close;
 }
 
-yuno_pre.gat,75,71,3	duplicate(pre)	President's Secretary#2	862,0,0
+yuno_pre,75,71,3	duplicate(pre)	President's Secretary#2	862,0,0
 
 //NPC03 - Security
-yuno_pre.gat,95,71,5	script	Security::sec	899,5,5	{
+yuno_pre,95,71,5	script	Security::sec	899,5,5	{
 if (SCHWALTZVALT_PART2==4) {
 							mes "[Security]";
 							mes "Mr.President still meeting with other person.";
@@ -423,7 +423,7 @@ if  (SCHWALTZVALT_PART2>=3) {
 							mes "[Security]";
 							mes "Mr.Presideny is free now. You can come in.";
 							close2;
-							warp "yuno_pre.gat",75,70;
+							warp "yuno_pre",75,70;
 							end;
 							}
 if  (SCHWALTZVALT_PART2!=2)  { 
@@ -465,7 +465,7 @@ goto G_menu;
 S_warp:
 set SCHWALTZVALT_PART2, 3; //У охранника все, теперь к президенту.
 close2;
-warp "yuno_pre.gat",75,70;
+warp "yuno_pre",75,70;
 
 OnTouch:
 if (SCHWALTZVALT_PART2==4) { 
@@ -494,17 +494,17 @@ if (SCHWALTZVALT_PART2==4) {
 }
 
 //NPC04 - A Fine Gentleman
-yuno_pre.gat,96,69,3	script	A Fine Gentleman::kurelle	82,{
+yuno_pre,96,69,3	script	A Fine Gentleman::kurelle	82,{
 close;
 }
 //NPC - KURELLE
-yuno_pre.gat,69,74,0	duplicate(kurelle)	Kurelle#1	109,0,0
+yuno_pre,69,74,0	duplicate(kurelle)	Kurelle#1	109,0,0
 
 //NPC - Security in presidents room
-yuno_pre.gat,76,72,8	duplicate(sec)	Security#2	899,0,0
+yuno_pre,76,72,8	duplicate(sec)	Security#2	899,0,0
 
 //NPC05 - President Karl
-yuno_pre.gat,69,79,5	script	President Karl	872,{
+yuno_pre,69,79,5	script	President Karl	872,{
 cutin "lhz_karl",2;
 if (SCHWALTZVALT_PART2==22) {
 							mes "...after the story about traitor ^FF0000Kurelle^000000 president looks stunned...";
@@ -675,7 +675,7 @@ if (SCHWALTZVALT_PART2<3) {
 							mes "Secutity!!!!";
 							cutin "",255;
 							close2;
-							warp "yuno.gat",153,313;
+							warp "yuno",153,313;
 							}
 mes "[President Karl]";
 mes "I believe, you have many questions but.. ";
@@ -714,7 +714,7 @@ goto PK_menu01;
 }
 
 //NPC06 - Venice
-aldeba_in.gat,155,240,3	script	Kafra Employee	859,{
+aldeba_in,155,240,3	script	Kafra Employee	859,{
 if (SCHWALTZVALT_PART2==7) {
 							if(countitem(7343)==0) {mes "Where is documemt?";close;} //Здесь ИД документа
 							delitem 7343,1; //Sealed Document
@@ -778,7 +778,7 @@ close;
 }
 
 //NPC07 - Jargeah
-lhz_fild02.gat,228,214,1	script	A Wounded Man	887,{
+lhz_fild02,228,214,1	script	A Wounded Man	887,{
 mes "["+strcharinfo(0)+"]";
 mes "It looks like a dead man...";
 if (SCHWALTZVALT_PART2!=6) {
@@ -799,7 +799,7 @@ close;
 }
 
 //NPC08 - Esuna
-lhz_fild01.gat,66,219,3	script	A Mystery Woman	859,20,20{
+lhz_fild01,66,219,3	script	A Mystery Woman	859,20,20{
 if (SCHWALTZVALT_PART2==21) {
 							mes "[Esuna]";
 							mes "..........";
@@ -879,7 +879,7 @@ close;
 
 //Тут вопрос с варпом, до Лестина не нашел как дойти, надо варп к нему поставить...вот тут lhz_in01 277 157
 //NPC09 - Lestin
-lhz_in01.gat,285,169,3	script	Researcher#2	865,{
+lhz_in01,285,169,3	script	Researcher#2	865,{
 if (SCHWALTZVALT_PART2==16) {
 							mes "[Lestin]";
 							mes "My entry pass! Thank you.";
@@ -927,7 +927,7 @@ close;
 //Если не успели и мы внутри, значит у нас переменная 13, 14 или 15, флаг двери 0, пропуск исчезает и нас выкидывает из локации, придется снова идти к Лестину за пропуском 
 //Допустим у нас 15 очков мы внутри, время истекло. Два варианта - нажать на дверь, тогда придется идти к лестину снова, переменная 11 становится. Либо умереть и топать к активации гвардов.
 //NPC10 - Door
-lhz_in01.gat,177,30,1	script	Door	111,{
+lhz_in01,177,30,1	script	Door	111,{
 if ( (SCHWALTZVALT_PART2==15) && ($SCHWALTZVALT_DOOR_FLAG==1) ) {
 																mes "You take out enty key.";
 																next;
@@ -937,7 +937,7 @@ if ( (SCHWALTZVALT_PART2==15) && ($SCHWALTZVALT_DOOR_FLAG==1) ) {
 																set SCHWALTZVALT_PART2, 16; //К Лестину
 																menu "Go out!",-;
 																close2;
-																warp "lhz_in01.gat",177,27;	
+																warp "lhz_in01",177,27;	
 																end;
 																}
 																
@@ -948,7 +948,7 @@ if ( (SCHWALTZVALT_PART2<15) && (SCHWALTZVALT_PART2>=13) && ($SCHWALTZVALT_DOOR_
 																mes "[Guards]";
 																mes "Intruder!!!";
 																close2;
-																warp "lighthalzen.gat",104,238;	
+																warp "lighthalzen",104,238;	
 																end;
 																			}
 if  (SCHWALTZVALT_PART2>15) { mes "I got all the documents I needed!";
@@ -980,7 +980,7 @@ close;
 }
 
 //NPC11 - Activate Guards
-lhz_in01.gat,187,30,4	script	Point of the review	111,1,0{
+lhz_in01,187,30,4	script	Point of the review	111,1,0{
 close;
 OnTouch:
 if ( (SCHWALTZVALT_PART2<=15) && (SCHWALTZVALT_PART2>=12) && ($SCHWALTZVALT_DOOR_FLAG==0) ){
@@ -995,7 +995,7 @@ close;
 }
 
 //NPC12 - File Search Engine
-lhz_in01.gat,180,35,4	script	File Search Engine	111,1,0{
+lhz_in01,180,35,4	script	File Search Engine	111,1,0{
 close;
 OnTouch:
 if (SCHWALTZVALT_PART2==13) {
@@ -1016,7 +1016,7 @@ close;
 }
 
 //NPC13 - area 1-5
-lhz_in01.gat,184,49,4	script	area 1-5	111,1,0{
+lhz_in01,184,49,4	script	area 1-5	111,1,0{
 close;
 OnTouch:
 if (SCHWALTZVALT_PART2==14) {
@@ -1031,7 +1031,7 @@ mes "I don't know what to find!";
 close;
 }
 //Timer
-lhz_in01.gat,1,1,0	script	schwalt2timer	-1,{
+lhz_in01,1,1,0	script	schwalt2timer	-1,{
 	OnTimer2000:
 		disablenpc "LhzRekGuard";
 		disablenpc "Guard#03";

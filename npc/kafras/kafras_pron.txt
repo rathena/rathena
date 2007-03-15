@@ -27,56 +27,56 @@
 
 
 // North ==================================
-prontera.gat,152,326,4	script	Kafra::kaf_prontera	112,{
+prontera,152,326,4	script	Kafra::kaf_prontera	112,{
 	cutin "kafra_06",2;
 	callfunc "F_Kafra",0,1,1;
 
 M_Save:
-	savepoint "prontera.gat",157,327;
+	savepoint "prontera",157,327;
 	callfunc "F_KafEnd",0,1;
 }
 
 // SOUTH ======================================
-prontera.gat,151,29,8	script	Kafra::kaf_prontera2	116,{
+prontera,151,29,8	script	Kafra::kaf_prontera2	116,{
 	cutin "kafra_02",2;
 	callfunc "F_KafSetPront";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "prontera.gat",150,33;
+		savepoint "prontera",150,33;
 		callfunc "F_KafEnd",0,1;
 }
 
 //WEST=========================================
-prontera.gat,29,207,6	script	Kafra::kaf_prontera3	113,{
+prontera,29,207,6	script	Kafra::kaf_prontera3	113,{
 	cutin "kafra_05",2;
 	callfunc "F_KafSetPront";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "prontera.gat",33,208;
+		savepoint "prontera",33,208;
 		callfunc "F_KafEnd",0,1;
 }
 
 // East ===========================================
-prontera.gat,282,200,4	script	Kafra::kaf_prontera4	115,{
+prontera,282,200,4	script	Kafra::kaf_prontera4	115,{
 	cutin "kafra_03",2;
 	callfunc "F_KafSetPront";
 	callfunc "F_Kafra",0,0,0;
 
 	M_Save:
-		savepoint "prontera.gat",281,203;
+		savepoint "prontera",281,203;
 		callfunc "F_KafEnd",0,1;
 }
 
 // Center ===========================================
-prontera.gat,146,86,6	script	Kafra::kaf_prontera5	117,{
+prontera,146,86,6	script	Kafra::kaf_prontera5	117,{
 	cutin "kafra_01",2;
 	callfunc "F_KafSetPront";
 	callfunc "F_Kafra",0,0,0;
 
 M_Save:
-	savepoint "prontera.gat",116,73;
+	savepoint "prontera",116,73;
 	callfunc "F_KafEnd",0,1;
 }
 

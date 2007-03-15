@@ -14,7 +14,7 @@
 //= 1.2 Fixed tab - missing pillar's appeared [Lupus]
 //============================================================
 
-hu_fild05.gat,168,303,0	script	Pillar#01	111,{
+hu_fild05,168,303,0	script	Pillar#01	111,{
 	mes "[Ancient Voice]";
 	mes "So, you wish access to the Abyss Cave?";
 	mes "You have to bring me then 1 Dragon Canine, 1 Dragon Tail and 1 Dragon Scale";
@@ -60,12 +60,12 @@ OnInit:
 }
 
 
-hu_fild05.gat,171,212,0	script	Pillar#02	111,{
+hu_fild05,171,212,0	script	Pillar#02	111,{
 	mes "[Ancient Voice]";
 	mes "Leave the island?";
 	next;
 	menu "Yes",-,"No",L_close;
-	warp "hu_fild05.gat",168,301;
+	warp "hu_fild05",168,301;
 	end;
 
 L_close:
@@ -74,4 +74,4 @@ L_close:
 	close;
 }
 
-hu_fild05.gat,197,210,0	warp	warpabyss	2,3,abyss_01.gat,264,271
+hu_fild05,197,210,0	warp	warpabyss	2,3,abyss_01,264,271

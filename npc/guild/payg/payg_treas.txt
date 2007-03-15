@@ -17,7 +17,7 @@
 //<================================ Castle 1 ================================>\\
 
 // Treasure Spawn ----------------------------------------------------------
-payg_cas01.gat,1,1,0	script	Treasure_Py01	-1,{
+payg_cas01,1,1,0	script	Treasure_Py01	-1,{
 OnRecvCastlePy01:
 	end;
 OnInit:
@@ -27,14 +27,14 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "payg_cas01.gat","Treasure Chest Broken Open",17;
+	mapannounce "payg_cas01","Treasure Chest Broken Open",17;
 	set $boxNumPy01, $boxNumPy01 -1;
-	if($boxNumPy01 == 0) mapannounce "payg_cas01.gat", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	if($boxNumPy01 == 0) mapannounce "payg_cas01", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
 // Treasure Room Switch ---------------------------------------------------
-payg_cas01.gat,295,8,0	script	Switch#TresPy01	111,{
+payg_cas01,295,8,0	script	Switch#TresPy01	111,{
 	callfunc "F_GldTreasSw", "payg_cas01",120,59;
 	end;
 }
@@ -42,7 +42,7 @@ payg_cas01.gat,295,8,0	script	Switch#TresPy01	111,{
 
 //<================================ Castle 2 ================================>\\
 // Treasure Spawn ----------------------------------------------------------
-payg_cas02.gat,1,1,0	script	Treasure_Py02	-1,{
+payg_cas02,1,1,0	script	Treasure_Py02	-1,{
 OnRecvCastlePy02:
 	end;
 OnInit:
@@ -52,14 +52,14 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "payg_cas02.gat","Treasure Chest Broken Open",17;
+	mapannounce "payg_cas02","Treasure Chest Broken Open",17;
 	set $boxNumPy02, $boxNumPy02 -1;
-	if($boxNumPy02 == 0) mapannounce "payg_cas02.gat", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	if($boxNumPy02 == 0) mapannounce "payg_cas02", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
 // Treasure Room Switch ----------------------------------------------------
-payg_cas02.gat,149,148,0	script	Switch#TresPy02	111,{
+payg_cas02,149,148,0	script	Switch#TresPy02	111,{
 	callfunc "F_GldTreasSw", "payg_cas02",22,261;
 	end;
 }
@@ -67,7 +67,7 @@ payg_cas02.gat,149,148,0	script	Switch#TresPy02	111,{
 
 //<================================ Castle 3 ================================>\\
 // Treasure Spawn ----------------------------------------------------------
-payg_cas03.gat,158,168,0	script	Treasure_Py03	-1,{
+payg_cas03,158,168,0	script	Treasure_Py03	-1,{
 OnRecvCastlePy03:
 	end;
 OnInit:
@@ -77,14 +77,14 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "payg_cas03.gat","Treasure Chest Broken Open",17;
+	mapannounce "payg_cas03","Treasure Chest Broken Open",17;
 	set $boxNumPy03, $boxNumPy03 -1;
-	if($boxNumPy03 == 0) mapannounce "payg_cas03.gat", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	if($boxNumPy03 == 0) mapannounce "payg_cas03", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
 // Treasure Room Switch ----------------------------------------------------
-payg_cas03.gat,163,167,0	script	Switch#TresPy03	111,{
+payg_cas03,163,167,0	script	Switch#TresPy03	111,{
 	callfunc "F_GldTreasSw", "payg_cas03",11,278;
 	end;
 }
@@ -92,7 +92,7 @@ payg_cas03.gat,163,167,0	script	Switch#TresPy03	111,{
 
 //<================================ Castle 4 ================================>\\
 // Treasure Spawn ----------------------------------------------------------
-payg_cas04.gat,146,48,0	script	Treasure_Py04	-1,{
+payg_cas04,146,48,0	script	Treasure_Py04	-1,{
 OnRecvCastlePy04:
 	end;
 OnInit:
@@ -102,14 +102,14 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "payg_cas04.gat","Treasure Chest Broken Open",17;
+	mapannounce "payg_cas04","Treasure Chest Broken Open",17;
 	set $boxNumPy04, $boxNumPy04 -1;
-	if($boxNumPy04 == 0) mapannounce "payg_cas04.gat", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	if($boxNumPy04 == 0) mapannounce "payg_cas04", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
 // Treasure Room Switch ----------------------------------------------------
-payg_cas04.gat,151,47,0	script	Switch#TresPy04	111,{
+payg_cas04,151,47,0	script	Switch#TresPy04	111,{
 	callfunc "F_GldTreasSw", "payg_cas04",38,285;
 	end;
 }
@@ -117,7 +117,7 @@ payg_cas04.gat,151,47,0	script	Switch#TresPy04	111,{
 
 //<================================ Castle 5 ================================>\\
 // Treasure Spawn ----------------------------------------------------------
-payg_cas05.gat,156,131,0	script	Treasure_Py05	-1,{
+payg_cas05,156,131,0	script	Treasure_Py05	-1,{
 OnRecvCastlePy05:
 	end;
 OnInit:
@@ -127,14 +127,14 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "payg_cas05.gat","Treasure Chest Broken Open",17;
+	mapannounce "payg_cas05","Treasure Chest Broken Open",17;
 	set $boxNumPy05, $boxNumPy05 -1;
-	if($boxNumPy05 == 0) mapannounce "payg_cas05.gat", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	if($boxNumPy05 == 0) mapannounce "payg_cas05", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
 // Treasure Room Switch ----------------------------------------------------
-payg_cas05.gat,161,136,0	script	Switch#TresPy05	111,{
+payg_cas05,161,136,0	script	Switch#TresPy05	111,{
 	callfunc "F_GldTreasSw", "payg_cas05",277,250;
 	end;
 }

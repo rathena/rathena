@@ -18,7 +18,7 @@
 
 
 // North --------------------------------------------
-geffen.gat,123,202,5	script	Guide#1::Gef_Guide	705,{
+geffen,123,202,5	script	Guide#1::Gef_Guide	705,{
 	cutin "gef_soldier",2;
 	mes "[Geffen Soldier]";
 	mes "Welcome to Geffen, the City of Magic.";
@@ -123,8 +123,8 @@ M_Menu:
 }
 
 // South ------------------------------------------
-geffen.gat,118,62,0	duplicate(Gef_Guide)	Guide#Gef2	705
+geffen,118,62,0	duplicate(Gef_Guide)	Guide#Gef2	705
 // East -----------------------------------------------------
-geffen.gat,203,116,2	duplicate(Gef_Guide)	Guide#Gef3	705
+geffen,203,116,2	duplicate(Gef_Guide)	Guide#Gef3	705
 // West ----------------------------------------------
-geffen.gat,37,123,5	duplicate(Gef_Guide)	Guide#Gef4	705
+geffen,37,123,5	duplicate(Gef_Guide)	Guide#Gef4	705

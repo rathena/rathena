@@ -12,7 +12,7 @@
 //= 
 //============================================================
 
-prontera.gat,157,168,2	script	Kiel Capry	68,{
+prontera,157,168,2	script	Kiel Capry	68,{
 	mes "[Kiel Capry]";
 	mes callfunc("F_Hi");
 	mes "Help us! Everybody's evacuated! There's been an accident in my father's University...";
@@ -29,7 +29,7 @@ prontera.gat,157,168,2	script	Kiel Capry	68,{
 	close;
 }
 
-kh_school.gat,119,146,3	script	Kiel Carlo	748,{
+kh_school,119,146,3	script	Kiel Carlo	748,{
 	mes "[Kiel Carlo]";
 	mes callfunc("F_Hi");
 	mes "We have evacuated all the students!";
@@ -56,8 +56,8 @@ M_GO:
 		close;
 	}
 	set Zeny,Zeny-10000;
-	warp "kh_kiehl02.gat",rand(46,53),rand(9,12);
+	warp "kh_kiehl02",rand(46,53),rand(9,12);
 	end;
 }
 
-kh_kiehl02.gat,49,5,0	warp	warpk06	1,1,kh_school.gat,119,146
+kh_kiehl02,49,5,0	warp	warpk06	1,1,kh_school,119,146

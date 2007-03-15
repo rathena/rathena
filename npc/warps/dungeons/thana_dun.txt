@@ -15,7 +15,7 @@
 
 
 // Tour Guide - Thanatos Tower
-hu_fild01.gat,140,163,5	script	Thanatos Tower Guard	852,{
+hu_fild01,140,163,5	script	Thanatos Tower Guard	852,{
 
   mes "[Thanatos Tower Guard]";
   mes "Are you sure you want to go to the Thanatos Tower?";
@@ -26,7 +26,7 @@ hu_fild01.gat,140,163,5	script	Thanatos Tower Guard	852,{
 
   if (Zeny < 5000) goto L_Zeny;
   set Zeny, Zeny - 5000;
-  warp "tha_scene01.gat",131,224;
+  warp "tha_scene01",131,224;
   end;
 
   L_Zeny:
@@ -41,31 +41,31 @@ hu_fild01.gat,140,163,5	script	Thanatos Tower Guard	852,{
 
 }
 
-// Thanatos Scene (tha_scene01.gat)
-tha_scene01.gat,144,200,0	warp	WarpThana0a	1,1,tha_t01.gat,150,39
-tha_t01.gat,150,32,0	warp	WarpThana0b	1,1,tha_scene01.gat,142,200
+// Thanatos Scene (tha_scene01)
+tha_scene01,144,200,0	warp	WarpThana0a	1,1,tha_t01,150,39
+tha_t01,150,32,0	warp	WarpThana0b	1,1,tha_scene01,142,200
 
-// Thanatos Tower Level 1 (tha_t01.gat)
-tha_t01.gat,150,149,0	warp	WarpThana1a	1,1,tha_t02.gat,150,129
-tha_t02.gat,150,126,0	warp	WarpThana1b	1,1,tha_t01.gat,150,146
+// Thanatos Tower Level 1 (tha_t01)
+tha_t01,150,149,0	warp	WarpThana1a	1,1,tha_t02,150,129
+tha_t02,150,126,0	warp	WarpThana1b	1,1,tha_t01,150,146
 
-// Thanatos Tower Level 2 (tha_t02.gat)
-tha_t03.gat,218,167,0	warp	WarpThana2a	1,1,tha_t02.gat,227,159
+// Thanatos Tower Level 2 (tha_t02)
+tha_t03,218,167,0	warp	WarpThana2a	1,1,tha_t02,227,159
 
-// Thanatos Tower Level 3 (tha_t03.gat)
-tha_t03.gat,60,141,0	warp	WarpThana3a	1,1,tha_t04.gat,60,141
-tha_t04.gat,60,138,0	warp	WarpThana3b	1,1,tha_t03.gat,60,138
+// Thanatos Tower Level 3 (tha_t03)
+tha_t03,60,141,0	warp	WarpThana3a	1,1,tha_t04,60,141
+tha_t04,60,138,0	warp	WarpThana3b	1,1,tha_t03,60,138
 
-// Thanatos Tower Level 4 (tha_t04.gat)
-tha_t04.gat,82,36,0	warp	WarpThana4a	1,1,tha_t05.gat,62,6
+// Thanatos Tower Level 4 (tha_t04)
+tha_t04,82,36,0	warp	WarpThana4a	1,1,tha_t05,62,6
 
-// Thanatos Tower Level 5 (tha_t05.gat)
-tha_t05.gat,61,157,0	warp	WarpThana5a	1,1,tha_t05.gat,211,97
-tha_t05.gat,208,97,0	warp	WarpThana5b	1,1,tha_t05.gat,61,162
-tha_t05.gat,186,236,0	warp	WarpThana5c	1,1,tha_t06.gat,207,6
+// Thanatos Tower Level 5 (tha_t05)
+tha_t05,61,157,0	warp	WarpThana5a	1,1,tha_t05,211,97
+tha_t05,208,97,0	warp	WarpThana5b	1,1,tha_t05,61,162
+tha_t05,186,236,0	warp	WarpThana5c	1,1,tha_t06,207,6
 
-// Thanatos Tower Level 6 (tha_t06.gat)
-tha_t06.gat,119,120,4	script	WarpThana6a	45,2,2,{
+// Thanatos Tower Level 6 (tha_t06)
+tha_t06,119,120,4	script	WarpThana6a	45,2,2,{
 
   if (ThanaQuest < 31) {
 
@@ -75,56 +75,56 @@ tha_t06.gat,119,120,4	script	WarpThana6a	45,2,2,{
 
   }
 
-  warp "thana_step.gat",73,372;
+  warp "thana_step",73,372;
   end;
 
 }
-thana_step.gat,70,372,0	warp	WarpThana6b	1,1,tha_t06.gat,236,120
-thana_step.gat,173,372,0	warp	WarpThana6c	1,1,tha_t07.gat,28,166
-tha_t07.gat,25,166,0	warp	WarpThana6d	1,1,thana_step.gat,170,372
+thana_step,70,372,0	warp	WarpThana6b	1,1,tha_t06,236,120
+thana_step,173,372,0	warp	WarpThana6c	1,1,tha_t07,28,166
+tha_t07,25,166,0	warp	WarpThana6d	1,1,thana_step,170,372
 
-// Thanatos Tower Level 7 (tha_t07.gat)
-tha_t07.gat,114,166,0	warp	WarpThana7a	1,1,tha_t08.gat,28,44
-tha_t08.gat,25,44,0	warp	WarpThana7b	1,1,tha_t07.gat,111,166
+// Thanatos Tower Level 7 (tha_t07)
+tha_t07,114,166,0	warp	WarpThana7a	1,1,tha_t08,28,44
+tha_t08,25,44,0	warp	WarpThana7b	1,1,tha_t07,111,166
 
-// Thanatos Tower Level 8 (tha_t08.gat)
-tha_t08.gat,114,44,0	warp	WarpThana8a	1,1,thana_step.gat,33,223
-thana_step.gat,30,223,0	warp	WarpThana8b	1,1,tha_t08.gat,111,44
+// Thanatos Tower Level 8 (tha_t08)
+tha_t08,114,44,0	warp	WarpThana8a	1,1,thana_step,33,223
+thana_step,30,223,0	warp	WarpThana8b	1,1,tha_t08,111,44
 
-// Thanatos Tower Level 9 (tha_t09.gat)
-thana_step.gat,32,165,0	warp	WarpThana9a	1,1,tha_t09.gat,89,146
-tha_t09.gat,92,146,0	script	WarpThana9b	45,1,1,{
+// Thanatos Tower Level 9 (tha_t09)
+thana_step,32,165,0	warp	WarpThana9a	1,1,tha_t09,89,146
+tha_t09,92,146,0	script	WarpThana9b	45,1,1,{
 
-  if (ThanaSteps & 1) warp "thana_step.gat",183,223;
-  else warp "thana_step.gat",35,165;
+  if (ThanaSteps & 1) warp "thana_step",183,223;
+  else warp "thana_step",35,165;
   end;
 
 }
-thana_step.gat,180,223,0	warp	WarpThana9c	1,1,tha_t09.gat,89,146
+thana_step,180,223,0	warp	WarpThana9c	1,1,tha_t09,89,146
 
-// Thanatos Tower Level 10 (tha_t10.gat)
-thana_step.gat,182,165,0	warp	WarpThana10a	1,1,tha_t10.gat,167,138
-tha_t10.gat,170,138,0	script	WarpThana10b	45,1,1,{
+// Thanatos Tower Level 10 (tha_t10)
+thana_step,182,165,0	warp	WarpThana10a	1,1,tha_t10,167,138
+tha_t10,170,138,0	script	WarpThana10b	45,1,1,{
 
-  if (ThanaSteps & 4) warp "thana_step.gat",17,73;
-  else warp "thana_step.gat",185,165;
+  if (ThanaSteps & 4) warp "thana_step",17,73;
+  else warp "thana_step",185,165;
   end;
 
 }
-thana_step.gat,14,73,0	warp	WarpThana10c	1,1,tha_t10.gat,167,138
+thana_step,14,73,0	warp	WarpThana10c	1,1,tha_t10,167,138
 
-// Thanatos Tower Level 11 (tha_t11.gat)
-thana_step.gat,16,15,0	warp	WarpThana11a	1,1,tha_t11.gat,89,36
-tha_t11.gat,92,36,0	script	WarpThana11b	45,1,1,{
+// Thanatos Tower Level 11 (tha_t11)
+thana_step,16,15,0	warp	WarpThana11a	1,1,tha_t11,89,36
+tha_t11,92,36,0	script	WarpThana11b	45,1,1,{
 
-  if (ThanaSteps & 64) warp "thana_step.gat",183,73;
-  else warp "thana_step.gat",19,15;
+  if (ThanaSteps & 64) warp "thana_step",183,73;
+  else warp "thana_step",19,15;
   end;
 
 }
-thana_step.gat,180,73,0	warp	WarpThana11c	1,1,tha_t11.gat,89,36
+thana_step,180,73,0	warp	WarpThana11c	1,1,tha_t11,89,36
 
-// Thanatos Tower Level 12 (tha_t12.gat)
-thana_step.gat,182,15,0	warp	WarpThana12a	1,1,tha_t12.gat,129,51
-thana_step.gat,70,288,0	warp	WarpThana12b	1,1,tha_t12.gat,129,51
-thana_step.gat,173,288,0	warp	WarpThana12c	1,1,thana_boss.gat,135,128
+// Thanatos Tower Level 12 (tha_t12)
+thana_step,182,15,0	warp	WarpThana12a	1,1,tha_t12,129,51
+thana_step,70,288,0	warp	WarpThana12b	1,1,tha_t12,129,51
+thana_step,173,288,0	warp	WarpThana12c	1,1,thana_boss,135,128

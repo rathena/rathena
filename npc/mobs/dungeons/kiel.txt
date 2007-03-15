@@ -14,30 +14,30 @@
 //==================================================
 // kh_kiehl01
 //==================================================
-kh_kiehl01.gat,0,0,0,0	monster	Constant	1745,10,0,0,0
-kh_kiehl01.gat,0,0,0,0	monster	Aliot	1740,8,0,0,0
-kh_kiehl01.gat,0,0,0,0	monster	Aliza	1746,8,0,0,0
-kh_kiehl01.gat,0,0,0,0	monster	Alicel	1739,8,0,0,0
-kh_kiehl01.gat,0,0,0,0	monster	Aliza	1737,2,0,0,0
-kh_kiehl01.gat,0,0,0,0	monster	Aliot	1736,2,0,0,0
-kh_kiehl01.gat,0,0,0,0	monster	Alicel	1735,2,0,0,0
+kh_kiehl01,0,0,0,0	monster	Constant	1745,10,0,0,0
+kh_kiehl01,0,0,0,0	monster	Aliot	1740,8,0,0,0
+kh_kiehl01,0,0,0,0	monster	Aliza	1746,8,0,0,0
+kh_kiehl01,0,0,0,0	monster	Alicel	1739,8,0,0,0
+kh_kiehl01,0,0,0,0	monster	Aliza	1737,2,0,0,0
+kh_kiehl01,0,0,0,0	monster	Aliot	1736,2,0,0,0
+kh_kiehl01,0,0,0,0	monster	Alicel	1735,2,0,0,0
 
 //==================================================
 // kh_dun01 - Machine doll factory, 1st floor
 //==================================================
-kh_dun01.gat,0,0,0,0	monster	Alice	1275,30,0,0,0
-kh_dun01.gat,0,0,0,0	monster	Aliza	1737,60,0,0,0
-kh_dun01.gat,0,0,0,0	monster	Constant	1738,10,0,0,0
-kh_dun01.gat,0,0,0,0	monster	Constant	1745,10,0,0,0
-kh_dun01.gat,0,0,0,0	monster	Alicel	1735,5,0,0,0
-kh_dun01.gat,0,0,0,0	monster	Aliot	1736,5,0,0,0
+kh_dun01,0,0,0,0	monster	Alice	1275,30,0,0,0
+kh_dun01,0,0,0,0	monster	Aliza	1737,60,0,0,0
+kh_dun01,0,0,0,0	monster	Constant	1738,10,0,0,0
+kh_dun01,0,0,0,0	monster	Constant	1745,10,0,0,0
+kh_dun01,0,0,0,0	monster	Alicel	1735,5,0,0,0
+kh_dun01,0,0,0,0	monster	Aliot	1736,5,0,0,0
 
 //==================================================
 // kh_dun02 - Machine doll factory, 2nd floor
 //==================================================
-kh_dun02.gat,0,0,0,0	monster	Aliot	1736,30,0,0,0
-kh_dun02.gat,0,0,0,0	monster	Alicel	1735,30,0,0,0
-kh_dun02.gat,0,0,0,0	monster	Aliza	1737,30,0,0,0
-kh_dun02.gat,0,0,0,0	monster	Constant	1738,30,0,0,0
-kh_dun02.gat,0,0,0,0	monster	Constant	1745,30,0,0,0
-kh_dun02.gat,0,0,0,0	monster	Kiel D-01	1734,1,7200000,3600000,1
+kh_dun02,0,0,0,0	monster	Aliot	1736,30,0,0,0
+kh_dun02,0,0,0,0	monster	Alicel	1735,30,0,0,0
+kh_dun02,0,0,0,0	monster	Aliza	1737,30,0,0,0
+kh_dun02,0,0,0,0	monster	Constant	1738,30,0,0,0
+kh_dun02,0,0,0,0	monster	Constant	1745,30,0,0,0
+kh_dun02,0,0,0,0	monster	Kiel D-01	1734,1,7200000,3600000,1

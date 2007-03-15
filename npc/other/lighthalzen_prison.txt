@@ -14,7 +14,7 @@
 //= 1.1 Add correct names and fix some dialogues. [Au{R}oN]
 //============================================================
 
-lhz_in02.gat,145,179,7	script	Togii::d1	849,{
+lhz_in02,145,179,7	script	Togii::d1	849,{
 
 	mes "[Togii]";
 	mes "Ooo yeah";
@@ -25,7 +25,7 @@ lhz_in02.gat,145,179,7	script	Togii::d1	849,{
 	close;
 }
 
-lhz_in02.gat,157,198,8	script	Healthy Looking Guy	85,{
+lhz_in02,157,198,8	script	Healthy Looking Guy	85,{
 
 	mes "[Healthy Looking Guy]";
 	mes "Grrrrr! Leave me alone!";
@@ -36,7 +36,7 @@ lhz_in02.gat,157,198,8	script	Healthy Looking Guy	85,{
 	close;
 }
 
-lhz_in02.gat,155,201,7	script	Hinkley::d2	870,{
+lhz_in02,155,201,7	script	Hinkley::d2	870,{
 
 	mes "[Hinkley]";
 	mes "Meh heh heh...";
@@ -54,7 +54,7 @@ lhz_in02.gat,155,201,7	script	Hinkley::d2	870,{
 	close;
 }
 
-lhz_in02.gat,153,206,6	script	Milette::d3	853,{
+lhz_in02,153,206,6	script	Milette::d3	853,{
 
 	mes "[Milette]";
 	mes "Let me go!";
@@ -74,7 +74,7 @@ lhz_in02.gat,153,206,6	script	Milette::d3	853,{
 	close;
 }
 
-lhz_in02.gat,147,222,4	script	Officer Guo::off_guo	85,{
+lhz_in02,147,222,4	script	Officer Guo::off_guo	85,{
 
 	mes "[Officer Guo]";
 	mes "Tell me...!";
@@ -148,4 +148,4 @@ lhz_in02.gat,147,222,4	script	Officer Guo::off_guo	85,{
 	close;
 }
 
-lhz_in02.gat,142,221,8	duplicate(off_guo)	Suspect::susp_guo	870
+lhz_in02,142,221,8	duplicate(off_guo)	Suspect::susp_guo	870

@@ -11,35 +11,35 @@
 //============================================================
 
 //= Beach Dungeon ============================================
-//beach_dun.gat,89,28,0	warp	cmd00a	3,3,beach_dun2.gat,15,182
-//beach_dun2.gat,13,182,0	warp	cmd00b	3,3,beach_dun.gat,89,30
+//beach_dun,89,28,0	warp	cmd00a	3,3,beach_dun2,15,182
+//beach_dun2,13,182,0	warp	cmd00b	3,3,beach_dun,89,30
 
 //= Comodo Field
-//moc_fild12.gat,35,303,0	warp	cmd011	3,3,cmd_fild08.gat,331,319
-//cmd_fild09.gat,14,120,0	warp	cmdf14-3	3,3,cmd_fild07.gat,386,96
+//moc_fild12,35,303,0	warp	cmd011	3,3,cmd_fild08,331,319
+//cmd_fild09,14,120,0	warp	cmdf14-3	3,3,cmd_fild07,386,96
 
 
 //= Morroc Field =============================================
-//moc_fild04.gat,219,327,0	warp	mocf016	3,4,anthell01.gat,35,262
-//moc_fild15.gat,258,253,0	warp	mocf017	3,3,anthell01.gat,35,262
+//moc_fild04,219,327,0	warp	mocf016	3,4,anthell01,35,262
+//moc_fild15,258,253,0	warp	mocf017	3,3,anthell01,35,262
 
 //= Ant Hell =================================================
-//anthell01.gat,35,267,0	warp	ant001	1,1,moc_fild04.gat,213,327
-//anthell02.gat,171,169,0	warp	ant002	1,2,moc_fild04.gat,213,327
+//anthell01,35,267,0	warp	ant001	1,1,moc_fild04,213,327
+//anthell02,171,169,0	warp	ant002	1,2,moc_fild04,213,327
 
 //= Morroc Ruins =============================================
-//morocc_in.gat,108,179,0	warp	w280	3,2,morocc.gat,284,175
+//morocc_in,108,179,0	warp	w280	3,2,morocc,284,175
 
 //= Morroc Town ==============================================
-//morocc_in.gat,72,67,0	warp	w341	2,2,morocc_in.gat,44,162
+//morocc_in,72,67,0	warp	w341	2,2,morocc_in,44,162
 
 //= Izlude Town ==============================================
 //= Due to Job Quest
-//izlude_in.gat,62,170,0	warp	w1039	1,1,izlude_in.gat,68,165
+//izlude_in,62,170,0	warp	w1039	1,1,izlude_in,68,165
 
 //= Payon Cave
-//pay_dun03.gat,127,62,0	warp	payd04	1,2,pay_dun04.gat,201,204
+//pay_dun03,127,62,0	warp	payd04	1,2,pay_dun04,201,204
 
 // Airplane (no direct access there)
-//airplane.gat,255,55,0	warp	ein044	1,1,airplane.gat,90,68
-//airplane.gat,88,68,0	warp	ein044a	1,1,airplane.gat,253,55
+//airplane,255,55,0	warp	ein044	1,1,airplane,90,68
+//airplane,88,68,0	warp	ein044a	1,1,airplane,253,55

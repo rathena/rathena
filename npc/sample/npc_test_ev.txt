@@ -30,24 +30,24 @@
 
 // ----------イベント駆動のサンプル -------------
 // クリックするとイベント「event_test2」を起こすNPC
-prontera.gat,155,180,0	script	ev_doテスト	116,{
+prontera,155,180,0	script	ev_doテスト	116,{
 	doevent "event_test2";
 }
 
 // ----------MOBによるイベント駆動のサンプル -------------
 // 倒すとイベント「event_test」を起こすモンスターの[召喚]
-prontera.gat,150,185,0	script	ev_mobテスト	116,{
+prontera,150,185,0	script	ev_mobテスト	116,{
 	monster "this",0,0,"Event_Mob2",1002,1,"event_test";
 }
 
 // ----------MOBによるイベント駆動のサンプル2-------------
 // 倒すとイベント「event_test3」を起こすモンスターの[配置]
-prontera.gat,150,180,0	monster	Event_Mob	1008,1,0,0,event_test3
+prontera,150,180,0	monster	Event_Mob	1008,1,0,0,event_test3
 
 // ----------タイマによるイベント駆動のサンプル -------------
 // クリックすると５秒後にラベル「OnTimer」を実行するNPC
 // （イベント名に「NPC名::On～で始まるラベル」を指定するとラベルを実行できる）
-prontera.gat,155,185,0	script	ev_timerテスト	116,{
+prontera,155,185,0	script	ev_timerテスト	116,{
 	addtimer 5000,"ev_timerテスト::OnTimer";
 	end;
 OnTimer:
@@ -58,13 +58,13 @@ OnTimer:
 // ----------OnInit/チャットルームによるイベント駆動のサンプル -------------
 // マップサーバー起動時にラベル「OnInit」が実行され、チャットを作る
 // また、waitingroomの第3引数にイベントを設定する
-prontera.gat,145,180,0	script	ev_initテスト	116,{
+prontera,145,180,0	script	ev_initテスト	116,{
 	end;
 OnInit:
 	waitingroom "OnInitテスト",1,"ev_initテスト::OnMax";
 	end;
 OnMax:
-	warpwaitingpc "prontera.gat",155,190;
+	warpwaitingpc "prontera",155,190;
 	end;
 
 }
@@ -72,7 +72,7 @@ OnMax:
 // ----------時計によるイベント駆動のサンプル -------------
 // 指定の時刻や日付でイベントを実行する
 // announceに0x08フラグを指定しているところに注意してください。
-prontera.gat,145,185,0	script	ev_clockテスト	116,{
+prontera,145,185,0	script	ev_clockテスト	116,{
 	end;
 // 毎時5分
 OnMinute05:
@@ -105,21 +105,21 @@ OnDate0101:
 
 // ----------イベントで、エリアは指定していないサンプル------------
 // 同じマップ内でイベント「event_test」が起こると実行される
-prontera.gat,150,185,0	script	event_test	-1,{
+prontera,150,185,0	script	event_test	-1,{
 	announce strcharinfo(0) + " が召喚MOBを倒しました",2;
 	close;
 }
 
 // ----------イベントで、エリアを指定したサンプル------------
 // (155,185)から半径5セル以内でイベント「event_test2」が起こると実行される
-prontera.gat,155,180,0	script	event_test2	-1,5,5 {
+prontera,155,180,0	script	event_test2	-1,5,5 {
 	announce "５セル以内でクリックしましたね",19;
 	close;
 }
 
 // ----------イベントで、エリアを-1にしたサンプル------------
 // 同じマップ鯖でイベント「event_test3」が起こると実行される
-prontera.gat,150,180,0	script	event_test3	-1,-1,-1 {
+prontera,150,180,0	script	event_test3	-1,-1,-1 {
 	mes "配置MOB倒しましたね";
 	close;
 }
@@ -134,13 +134,13 @@ prontera.gat,150,180,0	script	event_test3	-1,-1,-1 {
 // ----------セーブ禁止のサンプル---------
 // このマップでログアウトすると、必ず プロンテラ の座標(156,190)に
 // セーブされる
-//prontera.gat	mapflag	nosave	prontera.gat,156,190
+//prontera	mapflag	nosave	prontera,156,190
 
 // ----------メモ禁止のサンプル---------
 // このマップではメモがとれない
-//prontera.gat	mapflag	nomemo	dummy
+//prontera	mapflag	nomemo	dummy
 
 // ----------テレポ禁止のサンプル---------
 // このマップでは蝿、蝶、テレポ、ポタが使えない
 // 注意：スクリプトのwarpの"Random","SavePoint"が無効になります
-//prontera.gat	mapflag	noteleport	dummy
+//prontera	mapflag	noteleport	dummy

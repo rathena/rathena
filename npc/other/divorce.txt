@@ -15,7 +15,7 @@
 //============================================================ 
 
 
-nif_in.gat,190,112,5	script	Deviruchi#divorce	1109,{
+nif_in,190,112,5	script	Deviruchi#divorce	1109,{
 	mes "[Deviruchi]";
 	if (getpartnerid() == 0) {
 		mes "Kekeke, humans are always alone in the end,";
@@ -66,7 +66,7 @@ nif_in.gat,190,112,5	script	Deviruchi#divorce	1109,{
 	mes "and come back to find Deviruchi someday!";
 	mes "We'll see how long your happiness will last!!";
 	close2;
-	warp "niflheim.gat",169,162;
+	warp "niflheim",169,162;
 	end;
 
 M_NewLife:

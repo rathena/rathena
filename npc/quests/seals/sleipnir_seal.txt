@@ -12,7 +12,7 @@
 // 1.0 First version. [MasterOfMuppets]
 //============================================================
 // Juno citizen Noyee
-yuno.gat,164,200,4	script	Noyee#God	101,{
+yuno,164,200,4	script	Noyee#God	101,{
 
     if(BaseLevel < 70)
       {
@@ -72,7 +72,7 @@ yuno.gat,164,200,4	script	Noyee#God	101,{
 }
 
 //Cukure Kirin
-que_god01.gat,98,98,4	script	Manager#God	69,{
+que_god01,98,98,4	script	Manager#God	69,{
 
 	set @NowWeight, MaxWeight - Weight;
 	if (@NowWeight >= 5000) goto NOT_OW;
@@ -533,7 +533,7 @@ NOT_OW:
 }
 
 // Hallandaute Lagunis - Wheel of the Unknown
-que_god01.gat,66,125,6	script	Investigator#God1	89,{
+que_god01,66,125,6	script	Investigator#God1	89,{
 
     if($God2 < 100)
     {
@@ -752,7 +752,7 @@ que_god01.gat,66,125,6	script	Investigator#God1	89,{
 }
 
 //Aadin Keil - Feather of Angel Wing
-que_god01.gat,11,136,6	script	Investigator#God2	742,{
+que_god01,11,136,6	script	Investigator#God2	742,{
 
     if($God1 < 100)
     {
@@ -1058,7 +1058,7 @@ que_god01.gat,11,136,6	script	Investigator#God2	742,{
 }
 
 //Kurdt Jerremant - Spirit of Fish
-que_god01.gat,55,47,3	script	Investigator#God3	803,{
+que_god01,55,47,3	script	Investigator#God3	803,{
 
     if ($God1 < 100)
     {
@@ -1234,7 +1234,7 @@ que_god01.gat,55,47,3	script	Investigator#God3	803,{
 }
 
 //Pavel Stheinus Breath of Spirit
-que_god01.gat,14,47,3	script	Investigator#God4	713,{
+que_god01,14,47,3	script	Investigator#God4	713,{
 
     if($God1 < 100)
     {
@@ -1391,7 +1391,7 @@ que_god01.gat,14,47,3	script	Investigator#God4	713,{
 
 }
   
-que_god01.gat,20,48,0	script	Slab#God	111,{
+que_god01,20,48,0	script	Slab#God	111,{
 
   if($God1 < 100)
   {
@@ -1569,7 +1569,7 @@ que_god01.gat,20,48,0	script	Slab#God	111,{
 }
 
 //Lania Grunkurque
-payon.gat,79,171,4	script	Friar#God5	95,{
+payon,79,171,4	script	Friar#God5	95,{
 
     if($God1 < 100)
     {
@@ -2040,7 +2040,7 @@ payon.gat,79,171,4	script	Friar#God5	95,{
 }
   
 // warp 0 -laboratory entrance
-que_god01.gat,84,95,0	script	Switch#God0	111,{
+que_god01,84,95,0	script	Switch#God0	111,{
 
     if(god_sl_1 > 1 && god_sl_1 < 51)
     {
@@ -2050,7 +2050,7 @@ que_god01.gat,84,95,0	script	Switch#God0	111,{
       mes "As you put your temporary pass onto the detector,";
       mes "the door was open.";
       close2;
-      warp "que_god01.gat",60,88;
+      warp "que_god01",60,88;
       end;
     }
     else
@@ -2065,7 +2065,7 @@ que_god01.gat,84,95,0	script	Switch#God0	111,{
 
 }
 
-que_god01.gat,84,92,0	script	god_sl_w0	45,1,1,{
+que_god01,84,92,0	script	god_sl_w0	45,1,1,{
 
     if(god_sl_1 > 1 && god_sl_1 < 51)
     {
@@ -2075,7 +2075,7 @@ que_god01.gat,84,92,0	script	god_sl_w0	45,1,1,{
       mes "As you put your temporary pass onto the detector,";
       mes "the door was open.";
       next;
-      warp "que_god01.gat",60,88;
+      warp "que_god01",60,88;
       end;
     }
     else
@@ -2091,7 +2091,7 @@ que_god01.gat,84,92,0	script	god_sl_w0	45,1,1,{
 }
 
 // 워프 1번 -하란도트
-que_god01.gat,49,97,0	script	Switch#God1	111,{
+que_god01,49,97,0	script	Switch#God1	111,{
 
     if(god_sl_1 > 1 && god_sl_1 < 51)
     {
@@ -2101,7 +2101,7 @@ que_god01.gat,49,97,0	script	Switch#God1	111,{
       mes "As you put your temporary pass onto the detector,";
       mes "the door was open.";
       next;
-      warp "que_god01.gat",62,119;
+      warp "que_god01",62,119;
       end;
     }
     else
@@ -2116,7 +2116,7 @@ que_god01.gat,49,97,0	script	Switch#God1	111,{
 
 }
 
-que_god01.gat,46,97,0	script	god_sl_w1	45,1,1,{
+que_god01,46,97,0	script	god_sl_w1	45,1,1,{
 
     if(god_sl_1 > 1 && god_sl_1 < 51)
     {
@@ -2126,7 +2126,7 @@ que_god01.gat,46,97,0	script	god_sl_w1	45,1,1,{
       mes "As you put your temporary pass onto the detector,";
       mes "the door was open.";
       next;
-      warp "que_god01.gat",62,119;
+      warp "que_god01",62,119;
       end;
     }
     else
@@ -2143,7 +2143,7 @@ que_god01.gat,46,97,0	script	god_sl_w1	45,1,1,{
 
 
 // 워프 2번 -아딘
-que_god01.gat,19,97,0	script	Switch#God2	111,{
+que_god01,19,97,0	script	Switch#God2	111,{
 
     if(god_sl_1 > 1 && god_sl_1 < 51)
     {
@@ -2153,7 +2153,7 @@ que_god01.gat,19,97,0	script	Switch#God2	111,{
       mes "As you put your temporary pass onto the detector,";
       mes "the door was open.";
       next;
-      warp "que_god01.gat",12,119;
+      warp "que_god01",12,119;
       end;
     }
     else
@@ -2168,7 +2168,7 @@ que_god01.gat,19,97,0	script	Switch#God2	111,{
 
 }
 
-que_god01.gat,16,97,0	script	god_sl_w2	45,1,1,{
+que_god01,16,97,0	script	god_sl_w2	45,1,1,{
 
     if(god_sl_1 > 1 && god_sl_1 < 51)
     {
@@ -2178,7 +2178,7 @@ que_god01.gat,16,97,0	script	god_sl_w2	45,1,1,{
       mes "As you put your temporary pass onto the detector,";
       mes "the door was open.";
       next;
-      warp "que_god01.gat",12,119;
+      warp "que_god01",12,119;
       end;
     }
     else
@@ -2193,7 +2193,7 @@ que_god01.gat,16,97,0	script	god_sl_w2	45,1,1,{
 
 }
 
-que_god01.gat,14,80,0	script	Switch#God3	111,{
+que_god01,14,80,0	script	Switch#God3	111,{
 
     if(god_sl_1 > 1 && god_sl_1 < 51)
     {
@@ -2218,7 +2218,7 @@ que_god01.gat,14,80,0	script	Switch#God3	111,{
 
 }
 
-que_god01.gat,17,80,0	script	god_sl_w3	45,1,1,{
+que_god01,17,80,0	script	god_sl_w3	45,1,1,{
 
     if(god_sl_1 > 1 && god_sl_1 < 51)
     {
@@ -2228,7 +2228,7 @@ que_god01.gat,17,80,0	script	god_sl_w3	45,1,1,{
       mes "As you put your temporary pass onto the detector,";
       mes "the door was open.";
       next;
-      warp "que_god01.gat",12,52;
+      warp "que_god01",12,52;
       end;
     }
     else
@@ -2244,7 +2244,7 @@ que_god01.gat,17,80,0	script	god_sl_w3	45,1,1,{
 }
 
 // 워프 4번 쿠르트
-que_god01.gat,44,80,0	script	Switch#God4	111,{
+que_god01,44,80,0	script	Switch#God4	111,{
 
     if(god_sl_1 > 1 && god_sl_1 < 51)
     {
@@ -2254,7 +2254,7 @@ que_god01.gat,44,80,0	script	Switch#God4	111,{
       mes "As you put your temporary pass onto the detector,";
       mes "the door was open.";
       next;
-      warp "que_god01.gat",50,52;
+      warp "que_god01",50,52;
       end;
      }
     else
@@ -2269,7 +2269,7 @@ que_god01.gat,44,80,0	script	Switch#God4	111,{
 
 }
 
-que_god01.gat,47,80,0	script	god_sl_w4	45,1,1,{
+que_god01,47,80,0	script	god_sl_w4	45,1,1,{
 
     if(god_sl_1 > 1 && god_sl_1 < 51)
     {
@@ -2279,7 +2279,7 @@ que_god01.gat,47,80,0	script	god_sl_w4	45,1,1,{
       mes "As you put your temporary pass onto the detector,";
       mes "the door was open.";
       next;
-      warp "que_god01.gat",50,52;
+      warp "que_god01",50,52;
       end;
     }
     else

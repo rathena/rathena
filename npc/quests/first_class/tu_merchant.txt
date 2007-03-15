@@ -16,7 +16,7 @@
 
 
 //=================================================Guarnien====================================================
-alberta_in.gat,70,51,5	script	Guarnien	98,{
+alberta_in,70,51,5	script	Guarnien	98,{
 	mes "[Guarnien]";
 	if(Class != Job_Merchant && Class != Job_Baby_Merchant){
 		mes "Hello stranger.";
@@ -426,7 +426,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 		mes "some reason --to send you there right now. Get ready...!";
 		next;
 		set tu_merchant, rand(6,8);
-		warp "prontera.gat",155,46;
+		warp "prontera",155,46;
 		close2;
 		end;
 		break;
@@ -676,7 +676,7 @@ alberta_in.gat,70,51,5	script	Guarnien	98,{
 }
 	
 //=================================================Sagle====================================================
-prontera.gat,66,111,3	script	Sagle	82,{
+prontera,66,111,3	script	Sagle	82,{
 	mes "[Sagle]";
 	if(tu_merchant == 8){
 		mes "Hello, hello~";
@@ -840,7 +840,7 @@ prontera.gat,66,111,3	script	Sagle	82,{
 }
 
 //=================================================Kellion====================================================
-prontera.gat,93,330,3	script	Kellion	97,{
+prontera,93,330,3	script	Kellion	97,{
 	mes "[Kellion]";
 	if(tu_merchant == 8){
 		mes "I'm selling sets of";
@@ -979,7 +979,7 @@ prontera.gat,93,330,3	script	Kellion	97,{
 }
 	
 //=================================================Aigie====================================================
-prt_in.gat,169,11,3	script	Aigie	92,{
+prt_in,169,11,3	script	Aigie	92,{
 	if(tu_merchant == 8){
 		mes "[Aigie]";
 		mes "Welcome to my shop.";
@@ -1130,7 +1130,7 @@ prt_in.gat,169,11,3	script	Aigie	92,{
 }
 	
 //=================================================Jayon====================================================
-prontera.gat,247,129,3	script	Jayon	85,{
+prontera,247,129,3	script	Jayon	85,{
 	if(tu_merchant == 8){
 		mes "[Jayon]";
 		mes "If you've checked out the market for Red Potions, you know that my price is the best. I'm offering 10 Red Potions for only 410 Zeny!";
@@ -1287,7 +1287,7 @@ prontera.gat,247,129,3	script	Jayon	85,{
 }
 
 //=================================================Maos====================================================
-prt_in.gat,251,129,3	script	Maos	709,{
+prt_in,251,129,3	script	Maos	709,{
 	if(tu_merchant == 8){
 		mes "[Maos]";
 		mes "Don't say anything.";

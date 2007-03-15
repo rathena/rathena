@@ -14,25 +14,25 @@
 //==================================================
 // mag_dun01 - Nogg Road F1
 //==================================================
-mag_dun01.gat,0,0,0,0	monster	Blazer	1367,20,0,0,0
-mag_dun01.gat,0,0,0,0	monster	Lava Golem	1366,20,600000,300000,0
-mag_dun01.gat,0,0,0,0	monster	Kaho	1072,20,0,0,0
-mag_dun01.gat,0,0,0,0	monster	Explosion	1383,30,0,0,0
-mag_dun01.gat,0,0,0,0	monster	Grizzly	1381,10,0,0,0
+mag_dun01,0,0,0,0	monster	Blazer	1367,20,0,0,0
+mag_dun01,0,0,0,0	monster	Lava Golem	1366,20,600000,300000,0
+mag_dun01,0,0,0,0	monster	Kaho	1072,20,0,0,0
+mag_dun01,0,0,0,0	monster	Explosion	1383,30,0,0,0
+mag_dun01,0,0,0,0	monster	Grizzly	1381,10,0,0,0
 
 //==================================================
 // mag_dun02 - Nogg Road F2
 //==================================================
-mag_dun02.gat,70,190,20,20	monster	Blazer	1367,5,300000,150000,0
-mag_dun02.gat,200,120,40,40	monster	Blazer	1367,15,300000,150000,0
-mag_dun02.gat,70,87,50,50	monster	Nightmare Terror	1379,10,300000,150000,0
-mag_dun02.gat,210,156,15,15	monster	Nightmare Terror	1379,3,60000,30000,0
-mag_dun02.gat,135,153,15,15	monster	Nightmare Terror	1379,3,60000,30000,0
-mag_dun02.gat,0,0,0,0	monster	Nightmare Terror	1379,12,60000,30000,0
-mag_dun02.gat,120,202,20,20	monster	Deleter	1384,5,60000,30000,0
-mag_dun02.gat,185,185,50,50	monster	Deleter	1385,10,300000,150000,0
-mag_dun02.gat,200,77,30,30	monster	Deleter	1384,5,300000,150000,0
-mag_dun02.gat,0,0,0,0	monster	Gig	1387,10,0,0,0
-mag_dun02.gat,200,77,30,30	monster	Diabolic	1382,10,300000,150000,0
-mag_dun02.gat,135,68,15,15	monster	Diabolic	1382,5,300000,30000,0
-mag_dun02.gat,0,0,0,0	monster	Diabolic	1382,5,60000,30000,0
+mag_dun02,70,190,20,20	monster	Blazer	1367,5,300000,150000,0
+mag_dun02,200,120,40,40	monster	Blazer	1367,15,300000,150000,0
+mag_dun02,70,87,50,50	monster	Nightmare Terror	1379,10,300000,150000,0
+mag_dun02,210,156,15,15	monster	Nightmare Terror	1379,3,60000,30000,0
+mag_dun02,135,153,15,15	monster	Nightmare Terror	1379,3,60000,30000,0
+mag_dun02,0,0,0,0	monster	Nightmare Terror	1379,12,60000,30000,0
+mag_dun02,120,202,20,20	monster	Deleter	1384,5,60000,30000,0
+mag_dun02,185,185,50,50	monster	Deleter	1385,10,300000,150000,0
+mag_dun02,200,77,30,30	monster	Deleter	1384,5,300000,150000,0
+mag_dun02,0,0,0,0	monster	Gig	1387,10,0,0,0
+mag_dun02,200,77,30,30	monster	Diabolic	1382,10,300000,150000,0
+mag_dun02,135,68,15,15	monster	Diabolic	1382,5,300000,30000,0
+mag_dun02,0,0,0,0	monster	Diabolic	1382,5,60000,30000,0

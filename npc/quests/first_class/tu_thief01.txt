@@ -15,7 +15,7 @@
 //============================================================ 
 
 //=================================================Thief Trainer====================================================
-moc_ruins.gat,66,164,4	script	Thief Trainer#T	84,{
+moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 	mes "[Yierhan]";
 	if(Class == Job_Novice){
 		mes "Eh...?";
@@ -371,13 +371,13 @@ moc_ruins.gat,66,164,4	script	Thief Trainer#T	84,{
 			mes "10 ^ff0000Feather of Birds^000000.";
 			mes "You can go ahead and kill Pickies to get those. It really shouldn't be that hard. Oh, and use this Wing thingee to come back.";
 			set tu_thief01, 5;
-			savepoint "moc_ruins.gat",80,164;
+			savepoint "moc_ruins",80,164;
 			getitem 602, 1;
 			set BaseExp, BaseExp + 100;
 			set JobExp, JobExp + 50;
 			//misceffect EF_HIT5;
 			close2;
-			warp "moc_fild12.gat",158,373;
+			warp "moc_fild12",158,373;
 			end;
 		} else if(tu_thief01 == 5 || tu_thief01 == 6){
 			if(countitem(916) < 10){	//Feather_Of_Birds
@@ -386,7 +386,7 @@ moc_ruins.gat,66,164,4	script	Thief Trainer#T	84,{
 				mes "Remember, experience is more important";
 				mes "that knowledge.";
 				close2;
-				warp "moc_fild07.gat",203,38;
+				warp "moc_fild07",203,38;
 				end;
 			} else {
 				mes "Ah~ there you go.";

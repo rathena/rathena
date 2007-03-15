@@ -16,32 +16,31 @@
 //==========================================================================
 //Einbech - Weapon shop
 //==========================================================================
-einbech.gat,177,136,0	warp	eib_wp01	1,1,ein_in01.gat,190,35
-ein_in01.gat,190,38,0	warp	eib_wp01a	1,1,einbech.gat,177,133
+einbech,177,136,0	warp	eib_wp01	1,1,ein_in01,190,35
+ein_in01,190,38,0	warp	eib_wp01a	1,1,einbech,177,133
 
 
 //==========================================================================
 //Einbech - buildings
 //==========================================================================
-einbech.gat,207,135,0	warp	eib_hu01	1,1,ein_in01.gat,190,99
-ein_in01.gat,187,99,0	warp	eib_hu01a	1,1,einbech.gat,204,135
-einbech.gat,214,121,0	warp	eib_hu02	1,1,ein_in01.gat,205,86
-ein_in01.gat,205,83,0	warp	eib_hu02a	1,1,einbech.gat,214,118
+einbech,207,135,0	warp	eib_hu01	1,1,ein_in01,190,99
+ein_in01,187,99,0	warp	eib_hu01a	1,1,einbech,204,135
+einbech,214,121,0	warp	eib_hu02	1,1,ein_in01,205,86
+ein_in01,205,83,0	warp	eib_hu02a	1,1,einbech,214,118
 
 
 //==========================================================================
 //Einbech - Pub
 //==========================================================================
-einbech.gat,154,106,0	warp	eib_b01	1,1,ein_in01.gat,285,89
-ein_in01.gat,288,89,0	warp	eib_b01a	1,1,einbech.gat,157,106
-einbech.gat,145,112,0	warp	eib_b02	1,1,ein_in01.gat,268,104
-ein_in01.gat,265,104,0	warp	eib_b02a	1,1,einbech.gat,141,112
+einbech,154,106,0	warp	eib_b01	1,1,ein_in01,285,89
+ein_in01,288,89,0	warp	eib_b01a	1,1,einbech,157,106
+einbech,145,112,0	warp	eib_b02	1,1,ein_in01,268,104
+ein_in01,265,104,0	warp	eib_b02a	1,1,einbech,141,112
 
 
 //=========================================================================
 //Einbech - Swordman guild
 //=========================================================================
-einbech.gat,256,109,0	warp	eib_js01	1,1,ein_in01.gat,148,153
-ein_in01.gat,144,153,0	warp	eib_js01a	1,1,einbech.gat,253,109
-
+einbech,256,109,0	warp	eib_js01	1,1,ein_in01,148,153
+ein_in01,144,153,0	warp	eib_js01a	1,1,einbech,253,109
 

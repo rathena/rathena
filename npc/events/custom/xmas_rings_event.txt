@@ -14,7 +14,7 @@
 //============================================================
 
 
-prontera.gat,156,174,4	script	Snower	713,{
+prontera,156,174,4	script	Snower	713,{
 	mes "[Snower]";
 	if(Q_XMSRINGS==2){
 		mes "Oh.. is it true? You've helped my sis Sneewy? Thank you.";
@@ -99,7 +99,7 @@ OnInit:
 	end;
 }
 
-louyang.gat,224,249,4	script	Sneewy	717,{
+louyang,224,249,4	script	Sneewy	717,{
 	mes "[Sneewy]";
 	if(Q_XMSRINGS==0){
 		mes "Hi! I'm waithing for my sister's birdy with mail...";
@@ -142,7 +142,7 @@ M_END:
 	close;
 }
 
-izlu2dun.gat,133,160,2	script	Snoowy	714,{
+izlu2dun,133,160,2	script	Snoowy	714,{
 	mes "[Snoowy]";
 	if(Q_XMSRINGS==0){
 		mes "Helloooou! Do you know my bro and sis? How so? My brother Snower's well known in Prontera!! Just ask any child there.";

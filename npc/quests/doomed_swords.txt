@@ -22,7 +22,7 @@
 //			Doomed Swords Part 3
 //=============================================================================
 // Moet Leng Good: Tablet Of Power
-aldebaran.gat,44,53,4	script	Wizard in Training	64,{
+aldebaran,44,53,4	script	Wizard in Training	64,{
 	if(dmdswrd_Q == 15) goto L_1;
 	if(dmdswrd_Q == 16) goto L_2;
 	if(dmdswrd_Q == 17) goto L_3;
@@ -134,7 +134,7 @@ L_4:
 //			Doomed Swords Part 4
 //=============================================================================
 // Zaka: Book of Tiresome Sheep
-morocc.gat,202,33,4	script	ZAKA	99,{
+morocc,202,33,4	script	ZAKA	99,{
 	if(dmdswrd_Q == 18) goto L_1;
 	if(dmdswrd_Q == 19) goto L_2;
 	if(dmdswrd_Q == 20) goto L_3;
@@ -284,7 +284,7 @@ L_6:
 //			Doomed Swords Part 5
 //=============================================================================
 // Won: Voucher of Power
-comodo.gat,232,87,4	script	Wandering Swordsman WON	106,{
+comodo,232,87,4	script	Wandering Swordsman WON	106,{
 	if(dmdswrd_Q == 23) goto L_1;
 	if(dmdswrd_Q == 24) goto L_2;
 	if(dmdswrd_Q == 25) goto L_3;
@@ -372,7 +372,7 @@ L_3:
 //==============================================================================
 
 // Cetsu --------------------------------------------
-morocc.gat,281,178,8	script	Cetsu	97,{
+morocc,281,178,8	script	Cetsu	97,{
 	if(dmdswrd_Q == 25) goto M_Yes;
 	if(dmdswrd_Q > 25) goto L_1;
 
@@ -415,7 +415,7 @@ L_1:
 }
 
 // Veeyop --------------------------------------------------
-prontera.gat,197,188,4	script	Veeyop	50,{
+prontera,197,188,4	script	Veeyop	50,{
 	if(dmdswrd_Q == 26) goto M_Yes;
 	if(dmdswrd_Q > 26) goto L_1;
 
@@ -459,7 +459,7 @@ L_1:
 }
 
 // Nain  -------------------------------------------------------------
-izlude_in.gat,173,88,2	script	Nain	102,{
+izlude_in,173,88,2	script	Nain	102,{
 	if(dmdswrd_Q == 27) goto M_Yes;
 	if(dmdswrd_Q > 27) goto L_1;
 
@@ -514,7 +514,7 @@ L_1:
 }
 
 // Rupeto ---------------------------------------------------------
-prt_in.gat,169,16,3	script	Rupeto	86,{
+prt_in,169,16,3	script	Rupeto	86,{
 	if(dmdswrd_Q == 27) goto L_0;
 	mes "[Rupeto]";
 	mes "Hello.";
@@ -533,7 +533,7 @@ L_0:
 //=============================================================================
 
 // Legendary Blacksmith ----------------------------------------------
-pay_fild08.gat,217,273,4	script	Legendary Blacksmith	63,{
+pay_fild08,217,273,4	script	Legendary Blacksmith	63,{
 
 	if(dmdswrd_Q == 27) goto L_Start;
 	if(dmdswrd_Q == 28) goto L_Forge;

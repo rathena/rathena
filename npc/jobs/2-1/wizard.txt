@@ -29,7 +29,7 @@
 
 
 //<=================== Some dog =========================>
-gef_tower.gat,107,35,5	script	Some Dog	81,{
+gef_tower,107,35,5	script	Some Dog	81,{
 	callfunc "F_BlockHigh",Job_Mage_High,"High Mage",Job_High_Wizard,"High Wizard","Dog";
 	mes "[Dog]";
 	if(baseJob == Job_Mage) goto L_JobMage;
@@ -143,7 +143,7 @@ L_JobMage:
 			mes "Dang it! I hope you FAIL!! Now go get lost!";
 			emotion e_go;
 			next;
-			warp "gef_dun00.gat",54,23;
+			warp "gef_dun00",54,23;
 			end;
 	M_1:
 		mes "[Dog]";
@@ -156,7 +156,7 @@ L_JobMage:
 
 
 //<=========================================== Registrar and Examiner Catherine Medichi ==============================================>\\
-gef_tower.gat,111,37,4	script	Catherine Medichi	68,{
+gef_tower,111,37,4	script	Catherine Medichi	68,{
 	callfunc "F_BlockHigh",26,"High Mage",33,"High Wizard","Catherine Medichi";
 
 	mes "[Catherine Medichi]";
@@ -502,7 +502,7 @@ L_Mage:
 
 
 //<================================================ Examiner: Raul Expagarus ==================================================>\\
-gef_tower.gat,102,24,3	script	Raul Expagarus	735,{
+gef_tower,102,24,3	script	Raul Expagarus	735,{
 	mes "[Raul Expagarus]";
 	if(BaseJob == Job_Mage) goto L_Mage;
 	if(BaseJob == Job_Wizard) goto L_Wizard;
@@ -519,7 +519,7 @@ L_Novice:
 	mes "What's a little kid like you doing here? Get out!!";
 	emotion e_gasp;
 	next;
-	warp "geffen.gat",120,110;
+	warp "geffen",120,110;
 	close;
 L_Holy:
 	mes "Leave holy ones!";
@@ -1040,8 +1040,8 @@ L_Mage:
 			mes "[Raul Expagarus]";
 			mes "I'll send you now... By the way, have fun getting slaughtered!";
 			next;
-			savepoint "gef_tower.gat",106,29;
-			warp "job_wiz.gat",57,154;
+			savepoint "gef_tower",106,29;
+			warp "job_wiz",57,154;
 			end;
 
 		M_1b:
@@ -1072,14 +1072,14 @@ L_Mage:
 				mes "Kid, you have courage.  We'll start right away!";
 				next;
 				set WIZ_Q2, 1;
-				savepoint "gef_tower.gat",106,29;
-				warp "job_wiz.gat",57,154;
+				savepoint "gef_tower",106,29;
+				warp "job_wiz",57,154;
 				end;
 
 			sM_b:
 				mes "[Raul Expagarus]";
 				mes "Good choice.  Have a nice peaceful life!";
-				warp "geffen.gat",120,110;
+				warp "geffen",120,110;
 				end;
 
 		sL_ReTest3:
@@ -1177,15 +1177,15 @@ L_Mage:
 				mes "[Raul Expagarus]";
 				mes "I'll send you to the arena now.  Have fun getting your butt whooped!";
 				next;
-				savepoint "gef_tower.gat",106,29;
-				warp "job_wiz.gat",55,156;
+				savepoint "gef_tower",106,29;
+				warp "job_wiz",55,156;
 				end;
 }
 
 
 //<====================================================== Test Arena ========================================================>\\
 // Test Guide  ---------------------------------------------------------------------------------
-job_wiz.gat,50,165,4	script	Wizard Test Guide::WzTG	123,{
+job_wiz,50,165,4	script	Wizard Test Guide::WzTG	123,{
 	mes "[Test Guide]";
 	mes "Welcome.  I will be your guide for the Wizard Test.";
 	next;
@@ -1207,7 +1207,7 @@ job_wiz.gat,50,165,4	script	Wizard Test Guide::WzTG	123,{
 		mes "[Test Guide]";
 		mes "I see.  I will send you back.";
 		next;
-		warp "gef_tower.gat",106, 35;
+		warp "gef_tower",106, 35;
 		end;
 
 OnInit:
@@ -1215,9 +1215,9 @@ OnInit:
 	end;
 
 OnStart:
-	set $@WzUsers, getareausers("job_wiz.gat", 98, 154, 129, 185);			// get user count for first lvl
-	set $@WzUsers, $@WzUsers + getareausers("job_wiz.gat", 100, 82, 131, 113);		// get user count for second lvl + first lvl
-	set $@WzUsers, $@WzUsers + getareausers("job_wiz.gat", 30, 82, 61, 113);		// get user count for third lvl + second lvl + first lvl
+	set $@WzUsers, getareausers("job_wiz", 98, 154, 129, 185);			// get user count for first lvl
+	set $@WzUsers, $@WzUsers + getareausers("job_wiz", 100, 82, 131, 113);		// get user count for second lvl + first lvl
+	set $@WzUsers, $@WzUsers + getareausers("job_wiz", 30, 82, 61, 113);		// get user count for third lvl + second lvl + first lvl
 	if ($@WzUsers > 0) end;
 
 	if ((getwaitingroomstate(33)) == 0) end;		// finds out if there is anyone in the waiting room
@@ -1233,26 +1233,26 @@ OnStart:
 	disablenpc "firewarpN";
 	disablenpc "firewarpW";
 	disablenpc "firewarpS";
-	killmonsterall "job_wiz.gat";		//makes sure there are no left over mobs from other testers
-	warpwaitingpc "job_wiz.gat",114,169;
+	killmonsterall "job_wiz";		//makes sure there are no left over mobs from other testers
+	warpwaitingpc "job_wiz",114,169;
 	donpcevent "WaterRm::OnStart";
 	end;
 }
 
 // Room of Water  -----------------------------------------------------------------------------
-job_wiz.gat,1,1,1	script	WaterRm	-1,{
+job_wiz,1,1,1	script	WaterRm	-1,{
 
 OnStart:
 	set $@WzRm, 1;		// used to determine which map area(room) to make time announcements in
 	set $@WzMOB, 8;		//used as a counter for the monsters that are summoned
-	monster "job_wiz.gat",109,174,"Phen",1158,1,"WaterRm::OnMyMobDead1";
-	monster "job_wiz.gat",118,174,"Kukre",1070,1,"WaterRm::OnMyMobDead1";
-	monster "job_wiz.gat",98,170,"Kukre",1070,1,"WaterRm::OnMyMobDead1";
-	monster "job_wiz.gat",109,165,"Vadon",1066,1,"WaterRm::OnMyMobDead1";
-	monster "job_wiz.gat",118,165,"Cornutus",1067,1,"WaterRm::OnMyMobDead1";
-	monster "job_wiz.gat",101,157,"Marina",1141,1,"WaterRm::OnMyMobDead1";
-	monster "job_wiz.gat",126,157,"Marin",1242,1,"WaterRm::OnMyMobDead1";
-	monster "job_wiz.gat",129,170,"Obeaune",1044,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz",109,174,"Phen",1158,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz",118,174,"Kukre",1070,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz",98,170,"Kukre",1070,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz",109,165,"Vadon",1066,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz",118,165,"Cornutus",1067,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz",101,157,"Marina",1141,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz",126,157,"Marin",1242,1,"WaterRm::OnMyMobDead1";
+	monster "job_wiz",129,170,"Obeaune",1044,1,"WaterRm::OnMyMobDead1";
 	initnpctimer "TimerWz";
 	end;
 
@@ -1267,12 +1267,12 @@ OnMyMobDead1:		//when a monster dies this portion of script is run
 
 OnTimer2000:
 	set $@WzMOB, 5;
-	areaannounce "job_wiz.gat", 98, 154, 129, 185, "[Test Guide]: You must now defeat the door gaurds! Hurry!",8;
-	monster "job_wiz.gat",114,169,"Marine Sphere",1142,1,"WaterRm::OnMyMobDead2";
-	monster "job_wiz.gat",112,169,"Hydra",1068,1,"WaterRm::OnMyMobDead2";
-	monster "job_wiz.gat",116,169,"Hydra",1068,1,"WaterRm::OnMyMobDead2";
-	monster "job_wiz.gat",114,171,"Hydra",1068,1,"WaterRm::OnMyMobDead2";
-	monster "job_wiz.gat",114,167,"Hydra",1068,1,"WaterRm::OnMyMobDead2";
+	areaannounce "job_wiz", 98, 154, 129, 185, "[Test Guide]: You must now defeat the door gaurds! Hurry!",8;
+	monster "job_wiz",114,169,"Marine Sphere",1142,1,"WaterRm::OnMyMobDead2";
+	monster "job_wiz",112,169,"Hydra",1068,1,"WaterRm::OnMyMobDead2";
+	monster "job_wiz",116,169,"Hydra",1068,1,"WaterRm::OnMyMobDead2";
+	monster "job_wiz",114,171,"Hydra",1068,1,"WaterRm::OnMyMobDead2";
+	monster "job_wiz",114,167,"Hydra",1068,1,"WaterRm::OnMyMobDead2";
 	setnpctimer 120000, "TimerWz";
 	startnpctimer "TimerWz";
 	end;
@@ -1283,7 +1283,7 @@ OnMyMobDead2:
 
 	stopnpctimer "TimerWz";
 	set $@WzMOB, 0;
-	areaannounce "job_wiz.gat", 98, 154, 129, 185, "[Test Guide]: Well done.  You have completed the Room of Water.  Get ready for the Room of Earth.",8;
+	areaannounce "job_wiz", 98, 154, 129, 185, "[Test Guide]: Well done.  You have completed the Room of Water.  Get ready for the Room of Earth.",8;
 	percentheal 100,100;
 	enablenpc "waterwrp";
 	enablenpc "waterwarpW";
@@ -1294,21 +1294,21 @@ OnMyMobDead2:
 }
 
 // Room of Earth -----------------------------------------------------------------------------------------------
-job_wiz.gat,1,1,1	script	EarthRm	-1,{
+job_wiz,1,1,1	script	EarthRm	-1,{
 
 OnStart:
 	set $@WzRm, 2;
 	set $@WzMOB, 10;
-	monster "job_wiz.gat",111,102,"Yoyo",1057,1,"EarthRm::OnMyMobDead1";
-	monster "job_wiz.gat",120,102, "Deniro",1105,1,"EarthRm::OnMyMobDead1";
-	monster "job_wiz.gat",111,102, "Caramel",1103,1,"EarthRm::OnMyMobDead1";
-	monster "job_wiz.gat",120,102,"Hode",1127,1,"EarthRm::OnMyMobDead1";
-	monster "job_wiz.gat",111,93,"Savage",1166,1,"EarthRm::OnMyMobDead1";
-	monster "job_wiz.gat",120,93,"Giearth",1121,1,"EarthRm::OnMyMobDead1";
-	monster "job_wiz.gat",107,98,"Bigfoot",1160,1,"EarthRm::OnMyMobDead1";
-	monster "job_wiz.gat",124,98,"Orc Warrior",1023,1,"EarthRm::OnMyMobDead1";
-	monster "job_wiz.gat",104,86,"Vitata",1176,1,"EarthRm::OnMyMobDead1";
-	monster "job_wiz.gat",127,86,"Mantis",1139,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz",111,102,"Yoyo",1057,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz",120,102, "Deniro",1105,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz",111,102, "Caramel",1103,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz",120,102,"Hode",1127,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz",111,93,"Savage",1166,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz",120,93,"Giearth",1121,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz",107,98,"Bigfoot",1160,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz",124,98,"Orc Warrior",1023,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz",104,86,"Vitata",1176,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz",127,86,"Mantis",1139,1,"EarthRm::OnMyMobDead1";
 	initnpctimer "TimerWz";
 	end;
 
@@ -1323,14 +1323,14 @@ OnMyMobDead1:
 
 OnTimer2000:
 	set $@WzMOB, 7;
-	areaannounce "job_wiz.gat", 100, 82, 131, 113, "[Test Guide]: You now must defeat the door gaurds! Hurry!.",8;
-	monster "job_wiz.gat",116,97,"Flora",1118,1,"EarthRm::OnMyMobDead2";
-	monster "job_wiz.gat",114,95,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
-	monster "job_wiz.gat",118,95,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
-	monster "job_wiz.gat",114,99,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
-	monster "job_wiz.gat",118,99,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
-	monster "job_wiz.gat",116,94,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
-	monster "job_wiz.gat",116,100,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
+	areaannounce "job_wiz", 100, 82, 131, 113, "[Test Guide]: You now must defeat the door gaurds! Hurry!.",8;
+	monster "job_wiz",116,97,"Flora",1118,1,"EarthRm::OnMyMobDead2";
+	monster "job_wiz",114,95,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
+	monster "job_wiz",118,95,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
+	monster "job_wiz",114,99,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
+	monster "job_wiz",118,99,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
+	monster "job_wiz",116,94,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
+	monster "job_wiz",116,100,"Mandragora",1020,1,"EarthRm::OnMyMobDead2";
 	setnpctimer 120000, "TimerWz";
 	startnpctimer "TimerWz";
 	end;
@@ -1341,7 +1341,7 @@ OnMyMobDead2:
 
 	stopnpctimer "TimerWz";
 	set $@WzMOB, 0;
-	areaannounce "job_wiz.gat", 100, 82, 131, 113, "[Test Guide]: Well done.  You have completed the Room of Earth.  Get ready for the Room of Fire.",8;
+	areaannounce "job_wiz", 100, 82, 131, 113, "[Test Guide]: Well done.  You have completed the Room of Earth.  Get ready for the Room of Fire.",8;
 	percentheal 100,100;
 	enablenpc "earthwrp";
 	enablenpc "earthwarpN";
@@ -1352,18 +1352,18 @@ OnMyMobDead2:
 }
 
 // Room of Fire ------------------------------------------------------------------------------------------------------------
-job_wiz.gat,1,1,1	script	FireRm	-1,{
+job_wiz,1,1,1	script	FireRm	-1,{
 
 OnStart:
 	set $@WzRm, 3;
 	set $@WzMOB, 7;
-	monster "job_wiz.gat",58,110,"Zerom",1178,1,"FireRm::OnMyMobDead1";
-	monster "job_wiz.gat",33,110,"Flail Goblin",1123,1,"FireRm::OnMyMobDead1";
-	monster "job_wiz.gat",40,103,"Scorpion",1001,1,"FireRm::OnMyMobDead1";
-	monster "job_wiz.gat",51,103,"Frilldora",1119,1,"FireRm::OnMyMobDead1";
-	monster "job_wiz.gat",40,92,"Peco Peco",1019,1,"FireRm::OnMyMobDead1";
-	monster "job_wiz.gat",51,92,"Elder Willow",1033,1,"FireRm::OnMyMobDead1";
-	monster "job_wiz.gat",37,89,"Metaller",1058,1,"FireRm::OnMyMobDead1";
+	monster "job_wiz",58,110,"Zerom",1178,1,"FireRm::OnMyMobDead1";
+	monster "job_wiz",33,110,"Flail Goblin",1123,1,"FireRm::OnMyMobDead1";
+	monster "job_wiz",40,103,"Scorpion",1001,1,"FireRm::OnMyMobDead1";
+	monster "job_wiz",51,103,"Frilldora",1119,1,"FireRm::OnMyMobDead1";
+	monster "job_wiz",40,92,"Peco Peco",1019,1,"FireRm::OnMyMobDead1";
+	monster "job_wiz",51,92,"Elder Willow",1033,1,"FireRm::OnMyMobDead1";
+	monster "job_wiz",37,89,"Metaller",1058,1,"FireRm::OnMyMobDead1";
 	initnpctimer "TimerWz";
 	end;
 
@@ -1378,10 +1378,10 @@ OnMyMobDead1:
 
 OnTimer2000:
 	set $@WzMOB, 3;
-	areaannounce "job_wiz.gat", 30, 82, 61, 113, "[Test Guide]: You now must defeat the door gaurds! Hurry!.",8;
-	monster "job_wiz.gat",44,99,"Greatest General",1277,1,"FireRm::OnMyMobDead2";
-	monster "job_wiz.gat",43,99,"Horong",1129,1,"FireRm::OnMyMobDead2";
-	monster "job_wiz.gat",45,99,"Horong",1129,1,"FireRm::OnMyMobDead2";
+	areaannounce "job_wiz", 30, 82, 61, 113, "[Test Guide]: You now must defeat the door gaurds! Hurry!.",8;
+	monster "job_wiz",44,99,"Greatest General",1277,1,"FireRm::OnMyMobDead2";
+	monster "job_wiz",43,99,"Horong",1129,1,"FireRm::OnMyMobDead2";
+	monster "job_wiz",45,99,"Horong",1129,1,"FireRm::OnMyMobDead2";
 	setnpctimer 120000, "TimerWz";
 	startnpctimer "TimerWz";
 	end;
@@ -1394,7 +1394,7 @@ OnMyMobDead2:
 	set $@WzMOB, 0;
 	set WIZ_Q, 4;
 	set WIZ_Q2, 0;
-	areaannounce "job_wiz.gat", 30, 82, 61, 113, "[Test Guide]: Well done. You have completed the Room of Fire and the entire test.",0;
+	areaannounce "job_wiz", 30, 82, 61, 113, "[Test Guide]: Well done. You have completed the Room of Fire and the entire test.",0;
 	enablenpc "firewrp";
 	enablenpc "firewarpN";
 	enablenpc "firewarpW";
@@ -1405,12 +1405,12 @@ OnMyMobDead2:
 
 
 // Timer -----------------------------------------------------------------------------------------------
-job_wiz.gat,1,1,1	script	TimerWz	-1,{
+job_wiz,1,1,1	script	TimerWz	-1,{
 
 OnTimer1000:
-	if($@WzRm==1) areaannounce "job_wiz.gat", 98, 154, 129, 185, "[Test Guide]: Room of Water, testing will begin.",8;
-	if($@WzRm==2) areaannounce "job_wiz.gat", 100, 82, 131, 113, "[Test Guide]: Room of Earth, testing will begin.",8;
-	if($@WzRm==3) areaannounce "job_wiz.gat", 30, 82, 61, 113, "[Test Guide]: Room of Fire, testing will begin.",8;
+	if($@WzRm==1) areaannounce "job_wiz", 98, 154, 129, 185, "[Test Guide]: Room of Water, testing will begin.",8;
+	if($@WzRm==2) areaannounce "job_wiz", 100, 82, 131, 113, "[Test Guide]: Room of Earth, testing will begin.",8;
+	if($@WzRm==3) areaannounce "job_wiz", 30, 82, 61, 113, "[Test Guide]: Room of Fire, testing will begin.",8;
 	end;
 OnTimer4000:
 	set $@WzTime$, "You have 3 minutes to defeat all of the monsters in this room starting now!";
@@ -1442,17 +1442,17 @@ OnTimer184000:
 	callsub AnnounceWz;
 OnTimer188000:
 	stopnpctimer;
-	if($@WzRm==1) areawarp "job_wiz.gat", 98, 154, 129, 185, "gef_tower.gat",106, 35;
-	if($@WzRm==2) areawarp "job_wiz.gat", 100, 82, 131, 113, "gef_tower.gat",106, 35;
-	if($@WzRm==3) areawarp "job_wiz.gat", 30, 82, 61, 113, "gef_tower.gat",106, 35;
-	killmonsterall "job_wiz.gat";
+	if($@WzRm==1) areawarp "job_wiz", 98, 154, 129, 185, "gef_tower",106, 35;
+	if($@WzRm==2) areawarp "job_wiz", 100, 82, 131, 113, "gef_tower",106, 35;
+	if($@WzRm==3) areawarp "job_wiz", 30, 82, 61, 113, "gef_tower",106, 35;
+	killmonsterall "job_wiz";
 	donpcevent "WzTG::OnStart";
 	end;
 
 AnnounceWz:
-	if($@WzRm==1) areaannounce "job_wiz.gat", 98, 154, 129, 185, "[Test Guide]: "+$@WzTime$+".",8;
-	if($@WzRm==2) areaannounce "job_wiz.gat", 100, 82, 131, 113, "[Test Guide]: "+$@WzTime$+".",8;
-	if($@WzRm==3) areaannounce "job_wiz.gat", 30, 82, 61, 113, "[Test Guide]: "+$@WzTime$+".",8;
+	if($@WzRm==1) areaannounce "job_wiz", 98, 154, 129, 185, "[Test Guide]: "+$@WzTime$+".",8;
+	if($@WzRm==2) areaannounce "job_wiz", 100, 82, 131, 113, "[Test Guide]: "+$@WzTime$+".",8;
+	if($@WzRm==3) areaannounce "job_wiz", 30, 82, 61, 113, "[Test Guide]: "+$@WzTime$+".",8;
 	end;
 }
 
@@ -1460,54 +1460,54 @@ AnnounceWz:
 // Warps ------------------------------------------------------------------------------------------
 
 // Water
-job_wiz.gat,129,169,1	script	waterwarpE::waterwrp	45,1,1,{
+job_wiz,129,169,1	script	waterwarpE::waterwrp	45,1,1,{
 
 OnTimer30000:
 	stopnpctimer "waterwrp";
-	areawarp "job_wiz.gat", 98, 154, 129, 185, "job_wiz.gat",116,98;
+	areawarp "job_wiz", 98, 154, 129, 185, "job_wiz",116,98;
 	donpcevent "EarthRm::OnStart";
 	end;
 }
-job_wiz.gat,98,169,1	duplicate(waterwrp)	waterwarpW	45,1,1
-job_wiz.gat,114,185,1	duplicate(waterwrp)	waterwarpN	45,1,1
-job_wiz.gat,114,154,1	duplicate(waterwrp)	waterwarpS	45,1,1
+job_wiz,98,169,1	duplicate(waterwrp)	waterwarpW	45,1,1
+job_wiz,114,185,1	duplicate(waterwrp)	waterwarpN	45,1,1
+job_wiz,114,154,1	duplicate(waterwrp)	waterwarpS	45,1,1
 
 
 // Earth
-job_wiz.gat,131,98,1	script	earthwarpE::earthwrp	45,1,1,{
+job_wiz,131,98,1	script	earthwarpE::earthwrp	45,1,1,{
 
 OnTimer30000:
 	stopnpctimer "earthwrp";
-	areawarp "job_wiz.gat", 100, 82, 131, 113, "job_wiz.gat",47,98;
+	areawarp "job_wiz", 100, 82, 131, 113, "job_wiz",47,98;
 	donpcevent "FireRm::OnStart";
 	end;
 }
-job_wiz.gat,100,98,1	duplicate(earthwrp)	earthwarpW	45,1,1
-job_wiz.gat,116,82,1	duplicate(earthwrp)	earthwarpN	45,1,1
-job_wiz.gat,116,113,1	duplicate(earthwrp)	earthwarpS	45,1,1
+job_wiz,100,98,1	duplicate(earthwrp)	earthwarpW	45,1,1
+job_wiz,116,82,1	duplicate(earthwrp)	earthwarpN	45,1,1
+job_wiz,116,113,1	duplicate(earthwrp)	earthwarpS	45,1,1
 
 
 // Fire
-job_wiz.gat,61,97,1	script	firewarpE::firewrp	45,1,1,{
+job_wiz,61,97,1	script	firewarpE::firewrp	45,1,1,{
 
 OnTimer30000:
 	stopnpctimer "firewrp";
-	areawarp "job_wiz.gat", 30, 82, 61, 113, "gef_tower.gat",106,35;
+	areawarp "job_wiz", 30, 82, 61, 113, "gef_tower",106,35;
 	donpcevent "WzTG::OnStart";
 	end;
 }
-job_wiz.gat,30,97,1	duplicate(firewrp)	firewarpW	45,1,1
-job_wiz.gat,46,113,1	duplicate(firewrp)	firewarpN	45,1,1
-job_wiz.gat,46,82,1	duplicate(firewrp)	firewarpS	45,1,1
+job_wiz,30,97,1	duplicate(firewrp)	firewarpW	45,1,1
+job_wiz,46,113,1	duplicate(firewrp)	firewarpN	45,1,1
+job_wiz,46,82,1	duplicate(firewrp)	firewarpS	45,1,1
 
 
 //==============================================================================
 // mapflag
 //==============================================================================
-job_wiz.gat	mapflag	nomemo
-job_wiz.gat	mapflag	noteleport
-job_wiz.gat	mapflag	nosave	SavePoint
-job_wiz.gat	mapflag	nopenalty
-job_wiz.gat	mapflag	nobranch
-job_wiz.gat	mapflag	noexp
-job_wiz.gat	mapflag	noloot
+job_wiz	mapflag	nomemo
+job_wiz	mapflag	noteleport
+job_wiz	mapflag	nosave	SavePoint
+job_wiz	mapflag	nopenalty
+job_wiz	mapflag	nobranch
+job_wiz	mapflag	noexp
+job_wiz	mapflag	noloot

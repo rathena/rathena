@@ -47,7 +47,7 @@
 //= query_sql command.
 //===========================================================
 
-prontera.gat,145,179,5	script	Donation Girl	714,{
+prontera,145,179,5	script	Donation Girl	714,{
 
 if (getgmlevel() >= 80) goto L_GM;
 

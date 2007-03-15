@@ -12,7 +12,7 @@
 //= 1.0 Added the first 8 ammo boxes [Playtester]
 //============================================================
 
-que_ng.gat,187,149,3	script	Kenny	83,{
+que_ng,187,149,3	script	Kenny	83,{
 	mes "[Kenny]";
 	mes "My name is Kenny.";
 	mes "I can create ^0000FFbullet casings^000000";

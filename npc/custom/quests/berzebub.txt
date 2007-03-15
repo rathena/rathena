@@ -11,7 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.1 Fixed ingredients. Was too exploitable [Lupus]
 //============================================================
-prontera.gat,165,178,8	script	Old Woman	103,{
+prontera,165,178,8	script	Old Woman	103,{
 	mes "[Old Woman]";
 	if(BerzQuest == 1) goto L_Already;
 	mes "Greeting lad. I found a really nifty item while I was picking mushrooms near Glast Heim.";

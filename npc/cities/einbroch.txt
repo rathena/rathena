@@ -30,12 +30,12 @@
 
 
 //== some boards, signs ======================
-einbroch.gat,220,208,5	script	Notice Board#01	858,{
+einbroch,220,208,5	script	Notice Board#01	858,{
 	mes "[Weapon Shop Entrance]";
 	close;
 }
 
-einbroch.gat,183,174,5	script	Bulletin Board#01	858,{
+einbroch,183,174,5	script	Bulletin Board#01	858,{
 	mes "East - Weapon Shop, Hotel";
 	mes "South - Factory";
 	mes "Southwest - Airship Repair Shop,";
@@ -44,19 +44,19 @@ einbroch.gat,183,174,5	script	Bulletin Board#01	858,{
 	close;
 }
 
-einbroch.gat,244,255,5	script	Bulletin Board#02	858,{
+einbroch,244,255,5	script	Bulletin Board#02	858,{
 	mes " ";
 	mes " Train Station";
 	close;
 }
 	
-einbroch.gat,68,206,5	script	Bulletin Board#03	858,{
+einbroch,68,206,5	script	Bulletin Board#03	858,{
 	mes " ";
 	mes " Airship Airport";
 	close;
 }
 	
-einbroch.gat,162,256,5	script	Bulletin Board#04	858,{
+einbroch,162,256,5	script	Bulletin Board#04	858,{
 	mes "East - Train Station";
 	mes "Southeast - Hotel";
 	mes "South - Weapon Shop, Factory";
@@ -65,7 +65,7 @@ einbroch.gat,162,256,5	script	Bulletin Board#04	858,{
 	close;
 }
 
-einbroch.gat,235,141,5	script	Bulletin Board#05	858,{
+einbroch,235,141,5	script	Bulletin Board#05	858,{
 	mes "Southwest- Airship Repair Shop,";
 	mes "Laboratory";
 	mes "Northwest- Airport";
@@ -118,7 +118,7 @@ s_Tower2:
 	mes "Let me guide you to";
 	mes "the tower right away.";
 	close2;
-	warp "einbroch.gat",174,204;
+	warp "einbroch",174,204;
 	return;
 	
 s_Apple:
@@ -143,7 +143,7 @@ s_NEnough:
 	return;
 }
 	
-einbroch.gat,176,172,5	script	Khemko	855,{
+einbroch,176,172,5	script	Khemko	855,{
 	set @Tower_Name$,"Khemko";
 	callfunc "Ein_Tower";
 	end;
@@ -159,7 +159,7 @@ OnUnhide:
 
 }
 	
-einbroch.gat,218,198,5	script	Mark	855,{
+einbroch,218,198,5	script	Mark	855,{
 	set @Tower_Name$,"Mark";
 	callfunc "Ein_Tower";
 	end;
@@ -175,7 +175,7 @@ OnUnhide:
 
 }
 	
-einbroch.gat,174,228,5	script	Oberu	855,{
+einbroch,174,228,5	script	Oberu	855,{
 	set @Tower_Name$,"Oberu";
 	callfunc "Ein_Tower";
 	end;
@@ -191,7 +191,7 @@ OnUnhide:
 
 }
 	
-einbroch.gat,175,196,5	script	Morei	854,{
+einbroch,175,196,5	script	Morei	854,{
 	mes "[Morei]";
 	mes "Greetings,";
 	mes "I am Morei,";
@@ -223,13 +223,13 @@ s_Goback:
 	close2;
 	switch(rand(3)){
 	case 0:
-		warp "einbroch.gat",218,196;
+		warp "einbroch",218,196;
 		end;
 	case 1:
-		warp "einbroch.gat",178,172;
+		warp "einbroch",178,172;
 		end;
 	case 2:
-		warp "einbroch.gat",172,228;
+		warp "einbroch",172,228;
 		end;
 	}
 
@@ -244,7 +244,7 @@ OnUnhide:
 
 }
 	
-einbroch.gat,208,208,3	script	Kesunboss	850,{
+einbroch,208,208,3	script	Kesunboss	850,{
 	mes "[Kesunboss]";
 	mes "Lady Calla is the";
 	mes "epitome of elegance,";
@@ -286,7 +286,7 @@ OnUnhide:
 
 }
 
-einbroch.gat,232,255,5	script	Khowropher	847,{
+einbroch,232,255,5	script	Khowropher	847,{
 	mes "[Khowropher]";
 	mes "^6A6A6A*Cough cough*^000000";
 	mes "Jiminy! The air here";
@@ -323,7 +323,7 @@ OnUnhide:
 
 }
 
-einbroch.gat,259,327,5	script	Leslie	846,{
+einbroch,259,327,5	script	Leslie	846,{
 	mes "[Leslie]";
 	mes "^6A6A6A*Cough cough*^000000";
 	mes "Laaaand sakes!";
@@ -356,7 +356,7 @@ OnUnhide:
 
 }
 
-einbroch.gat,232,272,3	script	Train Station Staff#01::EinbrochTrain	852,{
+einbroch,232,272,3	script	Train Station Staff#01::EinbrochTrain	852,{
 	mes "[Staff]";
 	mes "Welcome to";
 	mes "the Train Station.";
@@ -392,7 +392,7 @@ s_Yes:
 	mes "Have a safe trip.";
 	mes "^111111*Ahem*^000000 All aboard!";
 	close2;
-	warp "einbech.gat",43,215;
+	warp "einbech",43,215;
 	end;
 s_Enviroment:
 	mes "[Staff]";
@@ -420,9 +420,9 @@ OnUnhide:
 
 }
 	
-einbroch.gat,252,301,3	duplicate(EinbrochTrain)	Train Station Staff#02	852
+einbroch,252,301,3	duplicate(EinbrochTrain)	Train Station Staff#02	852
 
-einbroch.gat,228,121,5	script	Little Toby	855,{
+einbroch,228,121,5	script	Little Toby	855,{
 	mes "[Little Toby]";
 	mes "Excuse me...";
 	mes "But I'm lost!";
@@ -455,7 +455,7 @@ OnUnhide:
 
 }
 	
-einbroch.gat,229,149,3	script	Sleik	854,{
+einbroch,229,149,3	script	Sleik	854,{
 	mes "[Sleik]";
 	mes "Surprisingly, we have";
 	mes "a Train Station that everyone";
@@ -483,7 +483,7 @@ OnUnhide:
 
 }
 
-einbroch.gat,236,191,3	script	Tan	855,{
+einbroch,236,191,3	script	Tan	855,{
 	mes "[Tan]";
 	mes "All the factories";
 	mes "here in Einbroch are";
@@ -517,7 +517,7 @@ OnUnhide:
 
 }
 
-ein_in01.gat,31,217,3	script	Cendadt	851,{
+ein_in01,31,217,3	script	Cendadt	851,{
 
 	mes "[Cendadt]";
 	mes "This factory has a lot";
@@ -551,7 +551,7 @@ ein_in01.gat,31,217,3	script	Cendadt	851,{
 
 }
 
-ein_in01.gat,36,204,3	script	Rombell	851,{
+ein_in01,36,204,3	script	Rombell	851,{
 
 	mes "[Rombell]";
 	mes "It's great that the";
@@ -579,7 +579,7 @@ ein_in01.gat,36,204,3	script	Rombell	851,{
 
 }
 
-ein_in01.gat,49,202,3	script	Dorf	851,{
+ein_in01,49,202,3	script	Dorf	851,{
 
 	mes "[Dorf]";
 	mes "machines are sooo";
@@ -604,7 +604,7 @@ ein_in01.gat,49,202,3	script	Dorf	851,{
 
 }
 
-ein_in01.gat,48,220,3	script	Lowe	851,{
+ein_in01,48,220,3	script	Lowe	851,{
 
 	mes "[Lowe]";
 	mes "...";
@@ -636,7 +636,7 @@ ein_in01.gat,48,220,3	script	Lowe	851,{
 
 }
 
-ein_in01.gat,43,253,4	script	Canphotii	852,{
+ein_in01,43,253,4	script	Canphotii	852,{
 
 	mes "[Canphotii]";
 	mes "Hustle, hustle!";
@@ -662,7 +662,7 @@ ein_in01.gat,43,253,4	script	Canphotii	852,{
 
 }
 
-ein_in01.gat,68,209,4	script	Khashurantze	852,{
+ein_in01,68,209,4	script	Khashurantze	852,{
 
 	mes "[Khashurantze]";
 	mes "I'm sorry, but you need";
@@ -677,12 +677,12 @@ ein_in01.gat,68,209,4	script	Khashurantze	852,{
 		close;
 	}
 	close2;
-	warp "einbroch.gat",179,63;
+	warp "einbroch",179,63;
 	end;
 
 }
 
-ein_in01.gat,113,211,3	script	Treinz	851,{
+ein_in01,113,211,3	script	Treinz	851,{
 
 	mes "[Treinz]";
 	mes "If you just pay me money,";
@@ -701,7 +701,7 @@ ein_in01.gat,113,211,3	script	Treinz	851,{
 	close;
 }
 
-ein_in01.gat,84,218,3	script	Tsuen	851,{
+ein_in01,84,218,3	script	Tsuen	851,{
 
 	mes "[Tsuen]";
 	mes "There was a time";
@@ -735,7 +735,7 @@ ein_in01.gat,84,218,3	script	Tsuen	851,{
 	close;
 }
 
-ein_in01.gat,85,261,3	script	Zherin	851,{
+ein_in01,85,261,3	script	Zherin	851,{
 
 	mes "[Zherin]";
 	mes "I'm in charge of this";
@@ -760,7 +760,7 @@ ein_in01.gat,85,261,3	script	Zherin	851,{
 	close;
 }
 
-ein_in01.gat,64,271,3	script	Vonstein	851,{
+ein_in01,64,271,3	script	Vonstein	851,{
 
 	mes "[Vonstein]";
 	mes "Staring at this";
@@ -778,7 +778,7 @@ ein_in01.gat,64,271,3	script	Vonstein	851,{
 	close;	
 }
 
-ein_in01.gat,33,275,9	script	Pevtatin	848,{
+ein_in01,33,275,9	script	Pevtatin	848,{
 
 	mes "[Pevtatin]";
 	mes "Good god!";
@@ -801,7 +801,7 @@ ein_in01.gat,33,275,9	script	Pevtatin	848,{
 	close;
 }
 
-ein_in01.gat,87,237,3	script	Dinje	850,{
+ein_in01,87,237,3	script	Dinje	850,{
 
 	mes "[Dinje]";
 	mes "Do you know why a woman";
@@ -830,7 +830,7 @@ ein_in01.gat,87,237,3	script	Dinje	850,{
 	close;
 }
 
-ein_in01.gat,103,238,9	script	Gesin	849,{
+ein_in01,103,238,9	script	Gesin	849,{
 
 	mes "[Gesin]";
 	mes "Arrgh!";
@@ -862,7 +862,7 @@ ein_in01.gat,103,238,9	script	Gesin	849,{
 	close;
 }
 
-einbroch.gat,188,72,3	script	Keneshiotz	855,{
+einbroch,188,72,3	script	Keneshiotz	855,{
 
 	mes "[Keneshiotz]";
 	mes "This city is full of sky";
@@ -896,7 +896,7 @@ OnUnhide:
 
 }
 
-ein_in01.gat,206,224,2	script	Hotel Employee	855,{
+ein_in01,206,224,2	script	Hotel Employee	855,{
 
 	mes "[Hotel Employee]";
 	mes "Good day, welcome to the";
@@ -914,7 +914,7 @@ ein_in01.gat,206,224,2	script	Hotel Employee	855,{
 	close;
 
 s_Save:
-	savepoint "ein_in01.gat",199,224;
+	savepoint "ein_in01",199,224;
 	mes "[Hotel Employee]";
 	mes "Your Respawn Point";
 	mes "has been saved here";
@@ -939,13 +939,13 @@ s_Rest:
 	mes "your rest~";
 	close2;
 	set zeny,zeny - 5000;
-	warp "ein_in01.gat",272,167;
+	warp "ein_in01",272,167;
 	percentheal 100,100;
 	end;
 
 }
 
-ein_in01.gat,21,147,4	script	Megass	853,3,3,{
+ein_in01,21,147,4	script	Megass	853,3,3,{
 	end;
 
 OnTouch:
@@ -962,7 +962,7 @@ OnTouch:
 	mes "to the authorities";
 	mes "for trespassing!";
 	close2;
-	warp "einbroch.gat",112,245;
+	warp "einbroch",112,245;
 	end;
 }
 

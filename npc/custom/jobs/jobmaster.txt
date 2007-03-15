@@ -17,7 +17,7 @@
 //= 1.5 Rewrite everything from scratch. [Lance]
 //= 1.5a fixed Baby -> Super Baby change. Switched to JobName() [Lupus]
 //============================================================
-prontera.gat,153,193,6	script	Job Master	123,{
+prontera,153,193,6	script	Job Master	123,{
 	mes "^ff0000[Job Master]^000000";
 	if(Upper == 1 && Class >= Job_Lord_Knight) goto L_noReq;
 	if(SkillPoint != 0){

@@ -21,15 +21,15 @@
 
 // == Monsters ==
 //Spawn is included in this file so make shure its not elsewhere to!
-job_thief1.gat,0,0,0,0	monster	Orange Mushroom	1182,180,0,0,0
-job_thief1.gat,0,0,0,0	monster	Fabre	1184,50,0,0,0
-job_thief1.gat,0,0,0,0	monster	Chonchon	1183,50,0,0,0
-job_thief1.gat,0,0,0,0	monster	Spore	1014,30,0,0,0
+job_thief1,0,0,0,0	monster	Orange Mushroom	1182,180,0,0,0
+job_thief1,0,0,0,0	monster	Fabre	1184,50,0,0,0
+job_thief1,0,0,0,0	monster	Chonchon	1183,50,0,0,0
+job_thief1,0,0,0,0	monster	Spore	1014,30,0,0,0
 
 
 // == NPCs ==
 // -- Interviewer --
-moc_prydb1.gat,39,129,5	script	Thief Guide	69,{
+moc_prydb1,39,129,5	script	Thief Guide	69,{
 
 	mes "[Thief Guide]";
 	if(BaseJob == Job_Thief) {
@@ -239,7 +239,7 @@ M_Menu:
 
 
 // -- Test Grader --
-moc_prydb1.gat,42,133,2	script	Comrade Brad	118,{
+moc_prydb1,42,133,2	script	Comrade Brad	118,{
 	callfunc "F_ToHigh",Job_Thief_High,"Thief High",Job_Assassin_Cross,"Brad";
 	if(BaseJob == Job_Novice) goto L_Novice;
 	if(BaseJob == Job_Thief) goto L_Thief;
@@ -334,7 +334,7 @@ L_4:
 
 
 // -- Irrelevant Man --
-moc_ruins.gat,141,125,3	script	Irrelevant Man	118,{
+moc_ruins,141,125,3	script	Irrelevant Man	118,{
 	if(BaseJob == Job_Thief) goto L_Thief;
 	if(BaseJob == Job_Novice) goto L_Novice;
 
@@ -411,22 +411,22 @@ L_2:
 	set @TEMP,rand(5);
 	set job_thief_q,2;
 	if(@TEMP != 0) goto warpL03a;
-		warp "job_thief1.gat",228,106;
+		warp "job_thief1",228,106;
 		close;
 	warpL03a:
 		if(@TEMP != 1) goto warpL03b;
-		warp "job_thief1.gat",38,50;
+		warp "job_thief1",38,50;
 		close;
 	warpL03b:
 		if(@TEMP != 2) goto warpL03c;
-		warp "job_thief1.gat",66,331;
+		warp "job_thief1",66,331;
 		close;
 	warpL03c:
 		if(@TEMP != 3) goto warpL03d;
-		warp "job_thief1.gat",196,331;
+		warp "job_thief1",196,331;
 		close;
 	warpL03d:
-		warp "job_thief1.gat",309,234;
+		warp "job_thief1",309,234;
 		close;
 
 L_3:
@@ -452,9 +452,9 @@ L_3:
 //==============================================================================
 // mapflag
 //==============================================================================
-job_thief1.gat	mapflag	nomemo
-job_thief1.gat	mapflag	noteleport
-job_thief1.gat	mapflag	nosave	SavePoint
-job_thief1.gat	mapflag	nopenalty
-job_thief1.gat	mapflag	nobranch
-job_thief1.gat	mapflag	noexp
+job_thief1	mapflag	nomemo
+job_thief1	mapflag	noteleport
+job_thief1	mapflag	nosave	SavePoint
+job_thief1	mapflag	nopenalty
+job_thief1	mapflag	nobranch
+job_thief1	mapflag	noexp

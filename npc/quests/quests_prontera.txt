@@ -17,7 +17,7 @@
 
 
 // Ph.D Hat Quest-------------------------------------------------------
-prt_in.gat,38,108,4	script	Teacher#01	53,{
+prt_in,38,108,4	script	Teacher#01	53,{
 	if(countitem(710) >= 1 && countitem(703) >= 1 && countitem(704) >= 1 && countitem(708) >= 1) goto L_Start;//Items: Illusion Flower, Hinalle, Aloe, Ment,
 	mes "Don't you think.... ^4444FF'flowers'^000000 are pretty?";
 	next;
@@ -100,14 +100,14 @@ L_Start:
 
 // ------------------------------------------------------------------------------------------- Culvert -------------------------------------------------------------------------------\\
 // Culvert Guardian ----------------------------------------------------
-prt_fild05.gat,270,212,5	script	Culvert Guardian	105,{
+prt_fild05,270,212,5	script	Culvert Guardian	105,{
 	mes "[Culvert Guardian]";
 	if(MISC_QUEST & 8) {
 		mes "Here you are. The entrance of the Culvert. Are you sure you want to Go inside?";
 		next;
 		menu "Sure.",-,"Quit.",M_END;
 
-			warp "prt_sewb1.gat",131,247;
+			warp "prt_sewb1",131,247;
 		M_END:
 			close;
 	}
@@ -117,7 +117,7 @@ prt_fild05.gat,270,212,5	script	Culvert Guardian	105,{
 }
 
 // Recruiter -----------------------------------------------------------
-prt_in.gat,88,105,2	script	Recruiter	105,{
+prt_in,88,105,2	script	Recruiter	105,{
 	mes "[Recruiter]";
 	if(MISC_QUEST & 8) goto L_WARP;
 	mes "Let me inform about the official Notice from the Capital Defence Headquarter of Rune-Midgard Kingdom";
@@ -170,7 +170,7 @@ prt_in.gat,88,105,2	script	Recruiter	105,{
 	L_WARP:
 		mes "Are you ready? I will warp you to the Culvert.";
 		next;
-		warp "prt_fild05.gat",274,208;
+		warp "prt_fild05",274,208;
 	L_END:
 		close;
 

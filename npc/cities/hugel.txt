@@ -22,7 +22,7 @@
 //=	  just using up memory. [erKURITA]
 //============================================================
 
-hu_in01.gat,23,311,4	script	Johsh	898,{
+hu_in01,23,311,4	script	Johsh	898,{
 	set @npcname$, "[Josh]";
 
 	mes @npcname$;
@@ -49,55 +49,54 @@ hu_in01.gat,23,311,4	script	Johsh	898,{
 }
 
 //Should be moved later on to Bulletin Boards.txt
-//hugel.gat,91,152,4	script	Bulletin Board	837,{end;}
+//hugel,91,152,4	script	Bulletin Board	837,{end;}
 
 
 //= New Npcs
-//hugel.gat,76,134,4	script	Yahna	101,{end;}
-//hugel.gat,71,137,5	script	Jamira	879,{end;}
+//hugel,76,134,4	script	Yahna	101,{end;}
+//hugel,71,137,5	script	Jamira	879,{end;}
 
-//hugel.gat,175,115,5	script	Anhi Anh	897,{end;}
-//hugel.gat,191,172,4	script	Yanhe	895,{end;}
-//hugel.gat,196,164,3	script	Amnot	50,{end;}
-//hugel.gat,203,166,0	script	Star#1	111,{
+//hugel,175,115,5	script	Anhi Anh	897,{end;}
+//hugel,191,172,4	script	Yanhe	895,{end;}
+//hugel,196,164,3	script	Amnot	50,{end;}
+//hugel,203,166,0	script	Star#1	111,{
 //invisible but clickeable npc
 //end;
 //}
-//hugel.gat,209,164,0	script	Star#2	111,{
+//hugel,209,164,0	script	Star#2	111,{
 //invisible but clickeable npc
 //end;
 //}
-//hugel.gat,216,158,0	script	Shellfish	111,{
+//hugel,216,158,0	script	Shellfish	111,{
 //invisible but clickeable npc
 //end;
 //}
-//hugel.gat,168,183,5	script	Thief	118,{end;}
-//hugel.gat,126,151,4	script	Tanyee	90,{end;}
-//hugel.gat,88,168,4	script	Zondaman	874,{end;}
-//hugel.gat,71,198,3	script	Kampia	90,{end;}
-//hugel.gat,84,125,4	script	Anzian	700,{end;}
+//hugel,168,183,5	script	Thief	118,{end;}
+//hugel,126,151,4	script	Tanyee	90,{end;}
+//hugel,88,168,4	script	Zondaman	874,{end;}
+//hugel,71,198,3	script	Kampia	90,{end;}
+//hugel,84,125,4	script	Anzian	700,{end;}
 //= End of new npcs
 
-//hugel.gat,102,161,3	script	Young Sailor	100,{end;}
-//hugel.gat,85,139,3	script	Yoko	86,{end;}
-//hugel.gat,100,102,3	script	Grandpa Hohi	866,{end;}
-//hugel.gat,85,93,3	script	Grandpa Hiho	866,{end;}
-//hugel.gat,85,165,5	script	Cudy	896,{end;}
-//hugel.gat,107,67,3	script	Kiddy the Kid	706,{end;}
+//hugel,102,161,3	script	Young Sailor	100,{end;}
+//hugel,85,139,3	script	Yoko	86,{end;}
+//hugel,100,102,3	script	Grandpa Hohi	866,{end;}
+//hugel,85,93,3	script	Grandpa Hiho	866,{end;}
+//hugel,85,165,5	script	Cudy	896,{end;}
+//hugel,107,67,3	script	Kiddy the Kid	706,{end;}
 
-//hugel.gat,71,83,4	script	Hon Kiki	900,{end;}
-//hugel.gat,56,103,4	script	Sarko	709,{end;}
-//hugel.gat,68,99,2	script	Billy the Bull	889,{end;}
-//hugel.gat,169,112,5	script	Sani	892,{end;}
-//hu_in01.gat,26,77,4	script	Bokie	50,{end;}
-//hu_in01.gat,18,94,2	script	Katsuki	95,{end;}
-//hu_in01.gat,16,20,4	script	Jamie	70,{end;}
-//hu_in01.gat,14,11,4	script	Jana	49,{end;}
-//hu_in01.gat,19,161,2	script	Matilda	803,{end;}
-//hu_in01.gat,18,167,4	script	Gin	86,{end;}
-//hu_in01.gat,381,304,5	script	Soldier	105,{end;}
-//hu_in01.gat,111,386,4	script	Jino	86,{end;}
+//hugel,71,83,4	script	Hon Kiki	900,{end;}
+//hugel,56,103,4	script	Sarko	709,{end;}
+//hugel,68,99,2	script	Billy the Bull	889,{end;}
+//hugel,169,112,5	script	Sani	892,{end;}
+//hu_in01,26,77,4	script	Bokie	50,{end;}
+//hu_in01,18,94,2	script	Katsuki	95,{end;}
+//hu_in01,16,20,4	script	Jamie	70,{end;}
+//hu_in01,14,11,4	script	Jana	49,{end;}
+//hu_in01,19,161,2	script	Matilda	803,{end;}
+//hu_in01,18,167,4	script	Gin	86,{end;}
+//hu_in01,381,304,5	script	Soldier	105,{end;}
+//hu_in01,111,386,4	script	Jino	86,{end;}
 //Johsh was here!
-//hu_in01.gat,246,107,2	script	Receptionist	53,{end;}
-//hu_in01.gat,256,40,2	script	Garud	897,{end;}
-
+//hu_in01,246,107,2	script	Receptionist	53,{end;}
+//hu_in01,256,40,2	script	Garud	897,{end;}

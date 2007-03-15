@@ -26,7 +26,7 @@
 //============================================================
 // HUNTER SKILL - PHANTASMIC ARROW
 //============================================================
-payon_in02.gat,54,13,7	script	Albest	55,{
+payon_in02,54,13,7	script	Albest	55,{
 	mes "[Albest]";
 	if(BaseJob!=Job_Hunter) goto L_hunterno;
 	if(getskilllv(1009)) goto L_alreadyhave;

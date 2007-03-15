@@ -15,7 +15,7 @@
 //============================================================
 
 
-ra_fild12.gat,45,230,3	script	Airport Guide	934,{
+ra_fild12,45,230,3	script	Airport Guide	934,{
 
 	mes "[Airport Guide]";
 	mes "This international airline, which is run by Shubaltz, runs from Arunafeltz to Richelmanhole.";
@@ -24,7 +24,7 @@ ra_fild12.gat,45,230,3	script	Airport Guide	934,{
 	close;
 }
 
-rachel.gat,268,120,1	script	Rachel  Guard#01	934,{
+rachel,268,120,1	script	Rachel  Guard#01	934,{
 
 	mes "[Rachel Guard]";
 	mes "This is the holy capital of ancient";
@@ -35,7 +35,7 @@ rachel.gat,268,120,1	script	Rachel  Guard#01	934,{
 	close;
 }
 
-rachel.gat,261,175,3	script	Kid#ra0	914,{
+rachel,261,175,3	script	Kid#ra0	914,{
 
 	mes "[Mankoo]";
 	mes "Ahhh my gosh";
@@ -49,7 +49,7 @@ rachel.gat,261,175,3	script	Kid#ra0	914,{
 	close;
 }
 
-rachel.gat,201,174,3	script	Freya Follower	926,{
+rachel,201,174,3	script	Freya Follower	926,{
 
 	mes "[Freya Follower]";
 	mes "Arunafeltz is a country that believes 'Praymyiang'.";
@@ -79,7 +79,7 @@ rachel.gat,201,174,3	script	Freya Follower	926,{
 	close;
 }
 
-rachel.gat,157,183,3	script	Follower Ustiala	916,{
+rachel,157,183,3	script	Follower Ustiala	916,{
 
 	mes "[Ustialla]";
 	mes "May the blessings of Freya be with you...";
@@ -199,12 +199,12 @@ rachel.gat,157,183,3	script	Follower Ustiala	916,{
 
 }
 
-rachel.gat,141,168,5	script	Looking for Someone	916,{ // No Info
+rachel,141,168,5	script	Looking for Someone	916,{ // No Info
 
 	end;
 } 
 
-rachel.gat,151,155,3	script	Kid#ra1	921,{
+rachel,151,155,3	script	Kid#ra1	921,{
 
 	mes "[Kid]";
 	mes "When I grow up, I'm going to become a traveller that";
@@ -227,7 +227,7 @@ rachel.gat,151,155,3	script	Kid#ra1	921,{
 	close;
 }
 
-rachel.gat,124,132,1	script	Town Native	921,{
+rachel,124,132,1	script	Town Native	921,{
 
 	mes "[Town Native]";
 	mes "May Freya's blessings be with you...";
@@ -240,7 +240,7 @@ rachel.gat,124,132,1	script	Town Native	921,{
 	close;
 }
 
-rachel.gat,109,138,5	script	Cool Event Corp	874,{
+rachel,109,138,5	script	Cool Event Corp	874,{
 
 //	mes "[Cool Event Corp Employee]";
 //	mes "Welcome to Cool Event Corp. We always";
@@ -254,7 +254,7 @@ rachel.gat,109,138,5	script	Cool Event Corp	874,{
 	end;
 }
 
-rachel.gat,197,137,3	script	Wandering Citizen	51,{
+rachel,197,137,3	script	Wandering Citizen	51,{
 
 	mes "[Wandering Citizen]";
 	mes "Oh oh~ I'm the wandering citizen wandering to various lands~";
@@ -286,7 +286,7 @@ rachel.gat,197,137,3	script	Wandering Citizen	51,{
 	close;
 }
 
-rachel.gat,138,73,3	script	Speechless Shopkeeper	85,{
+rachel,138,73,3	script	Speechless Shopkeeper	85,{
 
 	mes "[Speechless Shopkeeper]";
 	mes "Jeez business is slow today.";
@@ -294,7 +294,7 @@ rachel.gat,138,73,3	script	Speechless Shopkeeper	85,{
 	close;
 }
 
-rachel.gat,120,46,3	script	Idle Shopkeeper	85,{
+rachel,120,46,3	script	Idle Shopkeeper	85,{
 
 	mes "[Idle Shopkeeper]";
 	mes "There's not even a single fly...";
@@ -302,12 +302,12 @@ rachel.gat,120,46,3	script	Idle Shopkeeper	85,{
 	close;
 }
 
-rachel.gat,125,33,5	script	Shopkeeper#ra	85,{
+rachel,125,33,5	script	Shopkeeper#ra	85,{
 
 	end;
 }
 
-rachel.gat,206,30,3	script	Freya Bishop	920,{
+rachel,206,30,3	script	Freya Bishop	920,{
 
 	mes "[Freya Bishop]";
 	mes "I'm bored...";
@@ -324,7 +324,7 @@ rachel.gat,206,30,3	script	Freya Bishop	920,{
 		close;
 }
 
-rachel.gat,243,37,3	script	Kid#ra2	921,{
+rachel,243,37,3	script	Kid#ra2	921,{
 
 	mes	"[Kid]";
 	mes	"Stop trying to pat my head!";
@@ -376,7 +376,7 @@ rachel.gat,243,37,3	script	Kid#ra2	921,{
 
 // bottom right, right bottom of pond.
 
-rachel.gat,266,35,3	script	Grandmother#ra	918,{
+rachel,266,35,3	script	Grandmother#ra	918,{
 
 	mes "[Grandmother]";
 	mes "This pond not only has a good view, but it makes";
@@ -389,19 +389,19 @@ rachel.gat,266,35,3	script	Grandmother#ra	918,{
 	close;
 }
 
-rachel.gat,273,33,3	script	Little Kid#ra	931,{
+rachel,273,33,3	script	Little Kid#ra	931,{
 
 	mes "[Little Kid]";
 	mes "I like being alone!!";
 	close;
 }
 
-rachel.gat,265,46,0	script	#someNPC	111,{
+rachel,265,46,0	script	#someNPC	111,{
 
 	end;
 }
 
-rachel.gat,265,98,3	script	Haiton	930,{
+rachel,265,98,3	script	Haiton	930,{
 
 	mes "[Haiton]";
 	mes "I'm studying alone, so ask someone else if";
@@ -409,7 +409,7 @@ rachel.gat,265,98,3	script	Haiton	930,{
 	close;
 }
 
-ra_in01.gat,250,19,3	script	Cendal	929,{
+ra_in01,250,19,3	script	Cendal	929,{
 
 	mes "[Cendal]";
 	mes "It seemed my daughter is going out with someone";
@@ -420,7 +420,7 @@ ra_in01.gat,250,19,3	script	Cendal	929,{
 	close;
 }
 
-rachel.gat,196,77,3	script	Kid#ra3	914,{
+rachel,196,77,3	script	Kid#ra3	914,{
 
 	mes "[Kid]";
 	mes "Bluestiti is really nice and pretty. She even";
@@ -436,7 +436,7 @@ rachel.gat,196,77,3	script	Kid#ra3	914,{
 	close;
 }
 
-rachel.gat,113,96,5	script	Mohammed	929,{
+rachel,113,96,5	script	Mohammed	929,{
 
 	mes "[Mohammed]";
 	mes "It's so hot lately, and my neck feels dry ... sure makes me";
@@ -445,14 +445,14 @@ rachel.gat,113,96,5	script	Mohammed	929,{
 }
 
 
-rachel.gat,76,77,3	script	Rachel Bishop	927,{ 
+rachel,76,77,3	script	Rachel Bishop	927,{ 
 	mes "[Freya Bishop]";
 	mes "Haaa~! Drinks taste the best when I drink";
 	mes "them while on duty!";
 	close;
 }
 
-rachel.gat,74,150,7	script	Village Girl	914,{
+rachel,74,150,7	script	Village Girl	914,{
 
 	mes "[Village Girl]";
 	mes "Our pope has white skin and white hair.";
@@ -462,7 +462,7 @@ rachel.gat,74,150,7	script	Village Girl	914,{
 	close;
 }
 
-rachel.gat,73,244,3	script	Ricellen	919,{
+rachel,73,244,3	script	Ricellen	919,{
 
 	mes "[Ricellen]";
 	mes "My friend Bluestiti is a really good friend.";
@@ -489,7 +489,7 @@ rachel.gat,73,244,3	script	Ricellen	919,{
 	close;
 }
 
-rachel.gat,114,232,3	script	Logan	869,{
+rachel,114,232,3	script	Logan	869,{
 
 	mes "[Logan]";
 	mes "I am Logan. I work here at Sir Jed's Mansion.";
@@ -499,7 +499,7 @@ rachel.gat,114,232,3	script	Logan	869,{
 	close;
 }
 
-ra_in01.gat,372,200,3	script	Hanson	929,{
+ra_in01,372,200,3	script	Hanson	929,{
 
 	mes "[Hanson]";
 	mes "This here is Sir Jed's Mansion, and this is";
@@ -508,7 +508,7 @@ ra_in01.gat,372,200,3	script	Hanson	929,{
 	close;
 }
 
-ra_in01.gat,384,246,3	script	Vincent	47,{
+ra_in01,384,246,3	script	Vincent	47,{
 
 	mes "[Vincent]";
 	mes "(nod) I am Vincent, and I am the house manager";
@@ -571,7 +571,7 @@ ra_in01.gat,384,246,3	script	Vincent	47,{
 // they'd say something different now that Vincent's quest has
 // been started.
 
-rachel.gat,48,237,5	script	Jenny	893,{
+rachel,48,237,5	script	Jenny	893,{
 
 	mes "[Jenny]";
 	mes "This is Sir Jed's private residence. Please";
@@ -579,7 +579,7 @@ rachel.gat,48,237,5	script	Jenny	893,{
 	close;
 }
 
-rachel.gat,144,243,5	script	Guard#Ra01	934,{
+rachel,144,243,5	script	Guard#Ra01	934,{
 
 	mes "[Sessimir Guard]";
 	mes "This is the Sessimir Castle. Here resides the Pope,";
@@ -588,7 +588,7 @@ rachel.gat,144,243,5	script	Guard#Ra01	934,{
 	close;
 }
 
-rachel.gat,155,243,3	script	Guard#Ra02	934,{
+rachel,155,243,3	script	Guard#Ra02	934,{
 
 	mes "[Sessimir Guard]";
 	mes "This is the Sessimir Castle. Here resides the Pope,";
@@ -597,7 +597,7 @@ rachel.gat,155,243,3	script	Guard#Ra02	934,{
 	close;
 }
 
-ra_temple.gat,119,179,3	script	#door1	45,2,2,{
+ra_temple,119,179,3	script	#door1	45,2,2,{
 
 OnTouch:
 	mes "** The door is locked. **";
@@ -615,7 +615,7 @@ OnTouch:
 		close;
 }
 
-ra_temple.gat,116,174,3	script	Bishop Nema	920,{
+ra_temple,116,174,3	script	Bishop Nema	920,{
 
 	mes "[Bishop Nema]";
 	mes "I need to get in somehow...";

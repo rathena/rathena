@@ -12,7 +12,7 @@
 //= 1.0 First version, partly implemented [MasterOfMuppets]
 //=========================================================
 
-juperos_01.gat,79,91,1	script	Sculpture#Juperos1	111,{
+juperos_01,79,91,1	script	Sculpture#Juperos1	111,{
 
 	mes "^3131FFIt's a sculpture that";
 	mes "looks familiar to you.";
@@ -20,7 +20,7 @@ juperos_01.gat,79,91,1	script	Sculpture#Juperos1	111,{
 
 }
 
-juperos_01.gat,100,71,1	script	Bronze Statue#Juperos2	111,{
+juperos_01,100,71,1	script	Bronze Statue#Juperos2	111,{
 
 	mes "^3131FFIt's an elaborate";
 	mes "bronze statue that";
@@ -30,7 +30,7 @@ juperos_01.gat,100,71,1	script	Bronze Statue#Juperos2	111,{
 
 }
 
-juperos_01.gat,124,92,1	script	Stone Statue#Juperos3	111,{
+juperos_01,124,92,1	script	Stone Statue#Juperos3	111,{
 
 	mes "^3131FFIt's an old";
 	mes "statue sculpted";
@@ -40,7 +40,7 @@ juperos_01.gat,124,92,1	script	Stone Statue#Juperos3	111,{
 }
 
 //Quest related?
-//juperos_01.gat,x,y,1	script	Bronze Statue#Juperos4	111,{
+//juperos_01,x,y,1	script	Bronze Statue#Juperos4	111,{
 //
 //	mes "^3131FFThere's a peculiar";
 //	mes "engraving on the";
@@ -76,33 +76,33 @@ juperos_01.gat,124,92,1	script	Stone Statue#Juperos3	111,{
 //
 //}
 
-juperos_02.gat,1,1,1	script	JuperosLvl2QuestInit	-1,{
+juperos_02,1,1,1	script	JuperosLvl2QuestInit	-1,{
 OnInit:
 while(1)
 	{
 
-		monster "juperos_02.gat",24,276,"1st Gate Switch",1674,1,"JuperosLvl2QuestInit::OnGate1Dead";
-		monster "juperos_02.gat",240,29,"2nd Gate Switch",1674,1,"JuperosLvl2QuestInit::OnGate2Dead";
-		monster "juperos_02.gat",282,183,"3rd Gate Switch",1674,1,"JuperosLvl2QuestInit::OnGate3Dead";
+		monster "juperos_02",24,276,"1st Gate Switch",1674,1,"JuperosLvl2QuestInit::OnGate1Dead";
+		monster "juperos_02",240,29,"2nd Gate Switch",1674,1,"JuperosLvl2QuestInit::OnGate2Dead";
+		monster "juperos_02",282,183,"3rd Gate Switch",1674,1,"JuperosLvl2QuestInit::OnGate3Dead";
 		end;
 
 OnGate1Dead:
 
-	mapannounce "juperos_02.gat","Have you come seeking Juperos?! It no longer exists...",1,0xFF0000;
+	mapannounce "juperos_02","Have you come seeking Juperos?! It no longer exists...",1,0xFF0000;
 	set $JupeGate1,1;
 	if($JupeGate1 && $JupeGate2 && $JupeGate3)goto s_WarpOpen;
 	end;
 
 OnGate2Dead:
 
-	mapannounce "juperos_02.gat","Who are you to come here?",1,0xFF0000;
+	mapannounce "juperos_02","Who are you to come here?",1,0xFF0000;
 	set $JupeGate2,1;
 	if($JupeGate1 && $JupeGate2 && $JupeGate3)goto s_WarpOpen;
 	end;
 
 OnGate3Dead:
 
-	mapannounce "juperos_02.gat","Have you come to see me? Fine! Find me first!",1,0xFF0000;
+	mapannounce "juperos_02","Have you come to see me? Fine! Find me first!",1,0xFF0000;
 	set $JupeGate3,1;
 	if($JupeGate1 && $JupeGate2 && $JupeGate3)goto s_WarpOpen;
 	end;
@@ -112,17 +112,17 @@ s_WarpOpen:
 	initnpctimer;
 		end;
 	OnTimer3000:
-		mapannounce "juperos_02.gat","Vroom! Vroom!",1,0xBA55D3;
+		mapannounce "juperos_02","Vroom! Vroom!",1,0xBA55D3;
 		end;
 	OnTimer6000:
-		mapannounce "juperos_02.gat","Attention, visitors.",1,0xBA55D3;
+		mapannounce "juperos_02","Attention, visitors.",1,0xBA55D3;
 		end;
 	OnTimer9000:
-		mapannounce "juperos_02.gat","You are allowed to enter the next zone for a short period of time. Please use the portal in the center of the map.",1,0xBA55D3;
+		mapannounce "juperos_02","You are allowed to enter the next zone for a short period of time. Please use the portal in the center of the map.",1,0xBA55D3;
 		enablenpc "JupeWarp2";
 		end;
 	OnTimer309000:
-		mapannounce "juperos_02.gat","The portal has now closed.",1,0xBA55D3;
+		mapannounce "juperos_02","The portal has now closed.",1,0xBA55D3;
 		disablenpc "JupeWarp2";
 		set $JupeGate1,0;
 		set $JupeGate2,0;

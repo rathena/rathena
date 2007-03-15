@@ -14,7 +14,7 @@
 //= 1.5 Removed Duplicates [Silent]
 //============================================================
 
-prontera.gat,146,92,4	script	Twin Towers#tt1::Twin-Towers	813,{
+prontera,146,92,4	script	Twin Towers#tt1::Twin-Towers	813,{
 	mes "[Twin Towers]";
 	mes "How are you? We are the Twin Towers.";
 	mes "It is such a pleasure to be able to meet you here.";
@@ -63,16 +63,16 @@ prontera.gat,146,92,4	script	Twin Towers#tt1::Twin-Towers	813,{
 	mes "Just let us know you desired destination and we will send your there!";
 	menu "Hidden Temple", HiddenTemple,"Orc Dungeon",OrcDungeon,"Ant Hell",AntHell,"Mjolnir Waste Pit",MjolnirWastePit,"Sphinx",Sphinx,"Glast Heim",GlastHeim,"Comodo",Comodo;
 		HiddenTemple:
-			warp "prt_fild01.gat",136,368;
+			warp "prt_fild01",136,368;
 			close;
 		OrcDungeon:
-			warp "gef_fild10.gat",67,334;
+			warp "gef_fild10",67,334;
 			close;
 		AntHell:
-			warp "moc_fild04.gat",210,329;
+			warp "moc_fild04",210,329;
 			close;
 		MjolnirWastePit:
-			warp "mjolnir_02.gat",79,361;
+			warp "mjolnir_02",79,361;
 			close;
 		Sphinx:
 			warp "moc_fild19",105,99;
@@ -85,10 +85,10 @@ prontera.gat,146,92,4	script	Twin Towers#tt1::Twin-Towers	813,{
 			close;
 }
 
-morocc.gat,160,97,4	duplicate(Twin-Towers)	Twin Towers#tt2	812
-payon.gat,176,226,4	duplicate(Twin-Towers)	Twin Towers#tt3	812
-izlude.gat,134,92,4	duplicate(Twin-Towers)	Twin Towers#tt4	812
-alberta.gat,25,238,4	duplicate(Twin-Towers)	Twin Towers#tt5	812
-geffen.gat,120,60,4	duplicate(Twin-Towers)	Twin Towers#tt6	812
-aldebaran.gat,143,116,4	duplicate(Twin-Towers)	Twin Towers#tt7	812
-comodo.gat,194,158,4	duplicate(Twin-Towers)	Twin Towers#tt8	812
+morocc,160,97,4	duplicate(Twin-Towers)	Twin Towers#tt2	812
+payon,176,226,4	duplicate(Twin-Towers)	Twin Towers#tt3	812
+izlude,134,92,4	duplicate(Twin-Towers)	Twin Towers#tt4	812
+alberta,25,238,4	duplicate(Twin-Towers)	Twin Towers#tt5	812
+geffen,120,60,4	duplicate(Twin-Towers)	Twin Towers#tt6	812
+aldebaran,143,116,4	duplicate(Twin-Towers)	Twin Towers#tt7	812
+comodo,194,158,4	duplicate(Twin-Towers)	Twin Towers#tt8	812

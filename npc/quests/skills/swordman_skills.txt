@@ -23,7 +23,7 @@
 
 
 //<-------------------------------------- Fatal Blow------------------------------------>\\
-prt_in.gat,75,88,5	script	Leon	85,{
+prt_in,75,88,5	script	Leon	85,{
 	mes "[Leon]";
 	if(baseClass == Job_Swordman) goto L_Start;
 	if(BaseJob == Job_Novice) goto L_Novice;
@@ -163,7 +163,7 @@ L_Done:
 
 
 //<---------------------------------- Moving HP Recovery ---------------------------------->\\
-izlude_in.gat,175,130,2	script	Knight De Thomas	98,{
+izlude_in,175,130,2	script	Knight De Thomas	98,{
 	mes "[Knight De Thomas]";
 	if(baseClass == Job_Swordman) goto L_Start;
 
@@ -265,7 +265,7 @@ L_Check:
 
 
 //<----------------------------------------- Auto-Berserk --------------------------------->\\
-prt_in.gat,94,57,3	script	Juan	85,{
+prt_in,94,57,3	script	Juan	85,{
 	mes "[Juan]";
 	if(baseClass == Job_Swordman) goto L_Start;
 

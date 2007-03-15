@@ -13,7 +13,7 @@
 //============================================================ 
 
 
-yuno_in03.gat,25,39,3	script	Metto	709,{
+yuno_in03,25,39,3	script	Metto	709,{
 	mes "[Metto]";
 	if(metto_q == 2 || metto_q == 4 || metto_q == 6) goto L_Check;
 	if(metto_q == 1) goto L_Stang;
@@ -111,7 +111,7 @@ L_Done:
 }
 
 //=====================================================================
-yuno_in01.gat,18,95,5	script	Stangckle	99,{
+yuno_in01,18,95,5	script	Stangckle	99,{
 	mes "[Stangckle]";
 	if(metto_q > 2) goto L_Done;
 	if(metto_q == 2) goto L_Start;
@@ -162,7 +162,7 @@ L_Done:
 }
 
 //===================================================================
-yuno_in01.gat,19,182,3	script	Kato	55,{
+yuno_in01,19,182,3	script	Kato	55,{
 	mes "[Kato]";
 	if(metto_q > 4) goto L_Done;
 	if(metto_q == 4) goto L_Start;
@@ -204,7 +204,7 @@ L_Done:
 }
 
 //===================================================================
-yuno_in03.gat,179,43,5	script	CiCi	121,{
+yuno_in03,179,43,5	script	CiCi	121,{
 	mes "[CiCi]";
 	if(metto_q > 6) goto L_Done;
 	mes "My name is ^5533FFCiCi^000000.  I am one of the ^5533FF3 great scientists^000000 that live in this city.";
@@ -250,7 +250,7 @@ L_Done:
 }
 
 //===================================================================
-yuno_in01.gat,18,30,3	script	Wagan	85,{
+yuno_in01,18,30,3	script	Wagan	85,{
 	mes "[Wagan]";
 	if(metto_q > 0) goto L_Check;
 	mes "I'm sure you know that our village has been able to prosper for many years because of the brilliant research done here.";

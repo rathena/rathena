@@ -17,7 +17,7 @@
 //<=============================== Castle 1 =================================>\\
 
 // Treasure Spawn -----------------------
-nguild_alde.gat,1,1,1	script	Treasure_N01	-1,{
+nguild_alde,1,1,1	script	Treasure_N01	-1,{
 
 OnRecvCastleN01:
 	end;
@@ -28,14 +28,14 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "nguild_alde.gat","Treasure Chest Broken Open",17;
+	mapannounce "nguild_alde","Treasure Chest Broken Open",17;
 	set $boxNumN01, $boxNumN01 -1;
-	if($boxNumN01 == 0) mapannounce "nguild_alde.gat", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	if($boxNumN01 == 0) mapannounce "nguild_alde", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
 // Treasure Room Switch --------------------
-nguild_alde.gat,123,223,0	script	Switch#TresN01	111,{
+nguild_alde,123,223,0	script	Switch#TresN01	111,{
 	callfunc "F_GldTreasSw", "nguild_alde",218,176;
 	end;
 }
@@ -43,7 +43,7 @@ nguild_alde.gat,123,223,0	script	Switch#TresN01	111,{
 //<================================ Castle 2 ================================>\\
 
 // Treasure Spawn ----------------------------
-nguild_gef.gat,1,1,1	script	Treasure_N02	-1,{
+nguild_gef,1,1,1	script	Treasure_N02	-1,{
 
 OnRecvCastleN02:
 	end;
@@ -54,14 +54,14 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "nguild_gef.gat","Treasure Chest Broken Open",17;
+	mapannounce "nguild_gef","Treasure Chest Broken Open",17;
 	set $boxNumN02, $boxNumN02 -1;
-	if($boxNumN02 == 0) mapannounce "nguild_gef.gat", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	if($boxNumN02 == 0) mapannounce "nguild_gef", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
 // Room Switch ---------------------------------------------------------
-nguild_gef.gat,152,117,0	script	Switch#TresN02	111,{
+nguild_gef,152,117,0	script	Switch#TresN02	111,{
 	callfunc "F_GldTreasSw","nguild_gef",40,49;
 	end;
 }
@@ -69,7 +69,7 @@ nguild_gef.gat,152,117,0	script	Switch#TresN02	111,{
 //<================================ Castle 3 ================================>\\
 
 // Treasure Spawn ---------------------------
-nguild_pay.gat,1,1,0	script	Treasure_N03	-1,{
+nguild_pay,1,1,0	script	Treasure_N03	-1,{
 OnRecvCastleN03:
 	end;
 OnInit:
@@ -79,14 +79,14 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "nguild_pay.gat","Treasure Chest Broken Open",17;
+	mapannounce "nguild_pay","Treasure Chest Broken Open",17;
 	set $boxNumN03, $boxNumN03 -1;
-	if($boxNumN03 == 0) mapannounce "nguild_pay.gat", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	if($boxNumN03 == 0) mapannounce "nguild_pay", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
 // Treasure Room Switch ---------------------------------------------------
-nguild_pay.gat,295,8,0	script	Switch#TresN03	111,{
+nguild_pay,295,8,0	script	Switch#TresN03	111,{
 	callfunc "F_GldTreasSw", "nguild_pay",120,59;
 	end;
 }
@@ -94,7 +94,7 @@ nguild_pay.gat,295,8,0	script	Switch#TresN03	111,{
 //<================================ Castle 4 ================================>\\
 
 // Treasure Spawn -------------------------------
-nguild_prt.gat,1,1,0	script	Treasure_N04	-1,{
+nguild_prt,1,1,0	script	Treasure_N04	-1,{
 OnRecvCastleN04:
 	end;
 OnInit:
@@ -104,14 +104,14 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "nguild_prt.gat","Treasure Chest Broken Open",17;
+	mapannounce "nguild_prt","Treasure Chest Broken Open",17;
 	set $boxNumN04, $boxNumN04 -1;
-	if($boxNumN04 == 0) mapannounce "nguild_prt.gat", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
+	if($boxNumN04 == 0) mapannounce "nguild_prt", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
 // Treasure Room Switch ----------------------------------------------------
-nguild_prt.gat,15,209,0	script	Switch#TresN04	111,{
+nguild_prt,15,209,0	script	Switch#TresN04	111,{
 	callfunc "F_GldTreasSw", "nguild_prt",109,179;
 	end;
 }

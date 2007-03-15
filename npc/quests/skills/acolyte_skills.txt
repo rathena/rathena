@@ -18,7 +18,7 @@
 //============================================================
 
 
-prt_church.gat,173,23,4	script	Acolyte Klift	79,{
+prt_church,173,23,4	script	Acolyte Klift	79,{
 	mes "[Acolyte Klift]";
 	if (baseClass == Job_Acolyte) goto L_Start;
 

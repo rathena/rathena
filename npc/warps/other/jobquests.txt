@@ -24,99 +24,99 @@
 //==============================================================================
 //Novice
 //==============================================================================
-new_zone01.gat,148,112,0	warp	newwarp6001	2,2,new_zone02.gat,100,9
-new_zone02.gat,100,6,0	warp	newwarp6002	2,2,new_zone01.gat,144,112
-new_zone02.gat,126,106,0	warp	newwarp6003	2,2,new_zone02.gat,160,171
-new_zone02.gat,156,171,0	warp	newwarp6004	2,2,new_zone02.gat,123,106
-new_zone02.gat,73,106,0	warp	newwarp6005	2,2,new_zone02.gat,41,172
-new_zone02.gat,46,172,0	warp	newwarp6006	2,2,new_zone02.gat,78,106
+new_zone01,148,112,0	warp	newwarp6001	2,2,new_zone02,100,9
+new_zone02,100,6,0	warp	newwarp6002	2,2,new_zone01,144,112
+new_zone02,126,106,0	warp	newwarp6003	2,2,new_zone02,160,171
+new_zone02,156,171,0	warp	newwarp6004	2,2,new_zone02,123,106
+new_zone02,73,106,0	warp	newwarp6005	2,2,new_zone02,41,172
+new_zone02,46,172,0	warp	newwarp6006	2,2,new_zone02,78,106
 
 //==============================================================================
 //Swordman
 //==============================================================================
-job_sword1.gat,192,244,0	warp	SwordWarp0	2,2,job_sword1.gat,215,244
-job_sword1.gat,223,243,0	warp	SwordWarp1	2,2,job_sword1.gat,12,206
-job_sword1.gat,192,206,0	warp	SwordWarp2	2,2,job_sword1.gat,215,205
-job_sword1.gat,223,205,0	warp	SwordWarp3	2,2,job_sword1.gat,12,168
-job_sword1.gat,192,168,0	warp	SwordWarp4	2,2,job_sword1.gat,215,167
+job_sword1,192,244,0	warp	SwordWarp0	2,2,job_sword1,215,244
+job_sword1,223,243,0	warp	SwordWarp1	2,2,job_sword1,12,206
+job_sword1,192,206,0	warp	SwordWarp2	2,2,job_sword1,215,205
+job_sword1,223,205,0	warp	SwordWarp3	2,2,job_sword1,12,168
+job_sword1,192,168,0	warp	SwordWarp4	2,2,job_sword1,215,167
 // Underground cave
-job_sword1.gat,65,117,0	warp	swd101	1,1,job_sword1.gat,10,245
-job_sword1.gat,98,27,0	warp	swd102	1,1,job_sword1.gat,11,207
-job_sword1.gat,161,27,0	warp	swd103	1,1,job_sword1.gat,11,207
-job_sword1.gat,239,117,0	warp	swd106	1,1,job_sword1.gat,11,169
+job_sword1,65,117,0	warp	swd101	1,1,job_sword1,10,245
+job_sword1,98,27,0	warp	swd102	1,1,job_sword1,11,207
+job_sword1,161,27,0	warp	swd103	1,1,job_sword1,11,207
+job_sword1,239,117,0	warp	swd106	1,1,job_sword1,11,169
 
 //==============================================================================
 //Thief
 //==============================================================================
-job_thief1.gat,180,15,0	warp	jthf	7,1,moc_ruins.gat,145,117
+job_thief1,180,15,0	warp	jthf	7,1,moc_ruins,145,117
 
 
 //==============================================================================
 // Assassin
 //==============================================================================
-in_moc_16.gat,18,8,0	warp	guild_to_16	2,2,moc_fild16.gat,205,291
-moc_fild16.gat,205,296,0	warp	16_to_guild	2,2,in_moc_16.gat,18,11
+in_moc_16,18,8,0	warp	guild_to_16	2,2,moc_fild16,205,291
+moc_fild16,205,296,0	warp	16_to_guild	2,2,in_moc_16,18,11
 
 //==============================================================================
 // Hunter
 //==============================================================================
-in_hunter.gat,100,15,0	warp	jhun01	0,0,pay_fild10.gat,143,250
+in_hunter,100,15,0	warp	jhun01	0,0,pay_fild10,143,250
 
 
 
 //==============================================================================
 // Monk (St. Capitolina Abbey)
 //==============================================================================
-prt_monk.gat,192,172,0	warp	monk15	1,1,monk_test.gat,329,50
-monk_test.gat,329,47,0	warp	monk16	1,1,prt_monk.gat,193,166
-monk_test.gat,329,76,0	warp	monk17	1,1,monk_test.gat,259,118
-monk_test.gat,259,115,0	warp	monk18	1,1,monk_test.gat,329,71
-monk_test.gat,272,125,0	warp	monk19	1,1,monk_test.gat,301,127
-monk_test.gat,298,127,0	warp	monk20	1,1,monk_test.gat,268,125
+prt_monk,192,172,0	warp	monk15	1,1,monk_test,329,50
+monk_test,329,47,0	warp	monk16	1,1,prt_monk,193,166
+monk_test,329,76,0	warp	monk17	1,1,monk_test,259,118
+monk_test,259,115,0	warp	monk18	1,1,monk_test,329,71
+monk_test,272,125,0	warp	monk19	1,1,monk_test,301,127
+monk_test,298,127,0	warp	monk20	1,1,monk_test,268,125
 
 //==============================================================================
 //Alchemist
 //==============================================================================
 //Town - Alchemist , Alchemist - Town
-aldebaran.gat,54,66,0	warp	alche01	1,1,alde_alche.gat,41,174
-alde_alche.gat,41,171,0	warp	alche02	1,1,aldebaran.gat,56,68
+aldebaran,54,66,0	warp	alche01	1,1,alde_alche,41,174
+alde_alche,41,171,0	warp	alche02	1,1,aldebaran,56,68
 //Alchemist Hall 1st Floor Top Rooms
-alde_alche.gat,129,104,0	warp	alche03	1,1,alde_alche.gat,163,163
-alde_alche.gat,159,163,0	warp	alche04	1,1,alde_alche.gat,126,104
-alde_alche.gat,131,77,0	warp	alche05	1,1,alde_alche.gat,162,107
-alde_alche.gat,159,107,0	warp	alche06	1,1,alde_alche.gat,128,77
+alde_alche,129,104,0	warp	alche03	1,1,alde_alche,163,163
+alde_alche,159,163,0	warp	alche04	1,1,alde_alche,126,104
+alde_alche,131,77,0	warp	alche05	1,1,alde_alche,162,107
+alde_alche,159,107,0	warp	alche06	1,1,alde_alche,128,77
 //Alchemist Hall 1st Floor Bottom Rooms
-alde_alche.gat,47,103,0	warp	alche07	1,1,alde_alche.gat,88,18
-alde_alche.gat,92,18,0	warp	alche08	1,1,alde_alche.gat,50,103
-alde_alche.gat,47,77,0	warp	alche09	1,1,alde_alche.gat,155,18
-alde_alche.gat,159,18,0	warp	alche10	1,1,alde_alche.gat,50,77
+alde_alche,47,103,0	warp	alche07	1,1,alde_alche,88,18
+alde_alche,92,18,0	warp	alche08	1,1,alde_alche,50,103
+alde_alche,47,77,0	warp	alche09	1,1,alde_alche,155,18
+alde_alche,159,18,0	warp	alche10	1,1,alde_alche,50,77
 //Alchemist Hall 2nd Floor - 1st Floor Link
-alde_alche.gat,14,184,0	warp	alche11	1,1,alde_alche.gat,88,113
-alde_alche.gat,88,117,0	warp	alche12	1,1,alde_alche.gat,14,180
+alde_alche,14,184,0	warp	alche11	1,1,alde_alche,88,113
+alde_alche,88,117,0	warp	alche12	1,1,alde_alche,14,180
 //Alchemist Hall 2nd Floor Rooms
-alde_alche.gat,19,171,0	warp	alche13	1,1,aldebaran.gat,68,56
-aldebaran.gat,66,54,0	warp	alche14	1,1,alde_alche.gat,19,175
-alde_alche.gat,18,28,0	warp	alche15	1,1,alde_alche.gat,89,66
-alde_alche.gat,89,63,0	warp	alche16	1,1,alde_alche.gat,18,24
+alde_alche,19,171,0	warp	alche13	1,1,aldebaran,68,56
+aldebaran,66,54,0	warp	alche14	1,1,alde_alche,19,175
+alde_alche,18,28,0	warp	alche15	1,1,alde_alche,89,66
+alde_alche,89,63,0	warp	alche16	1,1,alde_alche,18,24
 //Alchemist Hall 3rd Floor
-alde_alche.gat,41,187,0	warp	alche17	1,1,alde_alche.gat,114,178
-alde_alche.gat,114,182,0	warp	alche18	1,1,alde_alche.gat,41,183
+alde_alche,41,187,0	warp	alche17	1,1,alde_alche,114,178
+alde_alche,114,182,0	warp	alche18	1,1,alde_alche,41,183
 
 //==============================================================================
 //Rogue
 //==============================================================================
-cmd_fild07.gat,193,117,0	warp	fild07-rogue00	1,1,in_rogue.gat,378,46
-in_rogue.gat,375,46,0	warp	rogue00-fild07	1,1,cmd_fild07.gat,195,116
-in_rogue.gat,376,34,0	warp	rogue01-02	1,1,in_rogue.gat,378,125
-in_rogue.gat,375,125,0	warp	rogue02-01	1,1,in_rogue.gat,379,34
-cmd_fild07.gat,352,275,0	warp	fild07-rogue03	1,1,in_rogue.gat,265,122
-in_rogue.gat,265,118,0	warp	rogue03-fild07	1,1,cmd_fild07.gat,349,275
-in_rogue.gat,244,20,0	warp	rogue04-fild09	1,1,cmd_fild09.gat,106,192
-in_rogue.gat,172,34,0	warp	rogue05-fild09	1,1,cmd_fild09.gat,339,143
-in_rogue.gat,160,103,0	warp	rogue06-fild04	1,1,cmd_fild04.gat,301,177
+cmd_fild07,193,117,0	warp	fild07-rogue00	1,1,in_rogue,378,46
+in_rogue,375,46,0	warp	rogue00-fild07	1,1,cmd_fild07,195,116
+in_rogue,376,34,0	warp	rogue01-02	1,1,in_rogue,378,125
+in_rogue,375,125,0	warp	rogue02-01	1,1,in_rogue,379,34
+cmd_fild07,352,275,0	warp	fild07-rogue03	1,1,in_rogue,265,122
+in_rogue,265,118,0	warp	rogue03-fild07	1,1,cmd_fild07,349,275
+in_rogue,244,20,0	warp	rogue04-fild09	1,1,cmd_fild09,106,192
+in_rogue,172,34,0	warp	rogue05-fild09	1,1,cmd_fild09,339,143
+in_rogue,160,103,0	warp	rogue06-fild04	1,1,cmd_fild04,301,177
 
 //==============================================================================
 //Dancer
 //==============================================================================
-//job_duncer.gat,69,43,0	warp 	duncer1	1,1,comodo.gat,185,156
-job_duncer.gat,70,45,0	warp	duncer1	2,2,comodo.gat,193,149
+//job_duncer,69,43,0	warp 	duncer1	1,1,comodo,185,156
+job_duncer,70,45,0	warp	duncer1	2,2,comodo,193,149

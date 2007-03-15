@@ -14,25 +14,25 @@
 //= 1.2 Completed the warps [MasterOfMuppets]
 //============================================================
 
-cmd_in01.gat,17,34,0	warp	sign01	1,1,comodo.gat,187,164
+cmd_in01,17,34,0	warp	sign01	1,1,comodo,187,164
 
-geffen.gat,140,99,0	warp	sign02	1,1,geffen_in.gat,165,52
-geffen_in.gat,165,54,0	warp	sign02a	1,1,geffen.gat,138,101
+geffen,140,99,0	warp	sign02	1,1,geffen_in,165,52
+geffen_in,165,54,0	warp	sign02a	1,1,geffen,138,101
 
-himinn.gat,49,6,0	warp	sign03	1,1,gef_fild07.gat,179,241
+himinn,49,6,0	warp	sign03	1,1,gef_fild07,179,241
 
-himinn.gat,49,67,0	warp	sign04	1,1,himinn.gat,49,75
-himinn.gat,49,73,0	warp	sign04a	1,1,himinn.gat,49,65
+himinn,49,67,0	warp	sign04	1,1,himinn,49,75
+himinn,49,73,0	warp	sign04a	1,1,himinn,49,65
 
-um_in.gat,33,18,0	warp	sign05	1,1,um_in.gat,89,11
-um_in.gat,89,9,0	warp	sign05a	1,1,um_in.gat,33,16
+um_in,33,18,0	warp	sign05	1,1,um_in,89,11
+um_in,89,9,0	warp	sign05a	1,1,um_in,33,16
 
-um_dun01.gat,132,90,0	warp	sign06	1,1,um_in.gat,12,18
-um_in.gat,10,18,0	warp	sign06a	1,1,um_dun01.gat,129,90
+um_dun01,132,90,0	warp	sign06	1,1,um_in,12,18
+um_in,10,18,0	warp	sign06a	1,1,um_dun01,129,90
 
-que_sign01.gat,113,133,0	warp	sign07	1,1,nif_in.gat,117,173
+que_sign01,113,133,0	warp	sign07	1,1,nif_in,117,173
 
-que_sign01.gat,45,15,0	warp	sign08	1,1,niflheim.gat,146,245
+que_sign01,45,15,0	warp	sign08	1,1,niflheim,146,245
 
-que_sign02.gat,22,314,0	warp	sign09	1,1,niflheim.gat,30,156
-que_sign02.gat,379,235,0	warp	sign09a	1,1,que_sign01.gat,180,172
+que_sign02,22,314,0	warp	sign09	1,1,niflheim,30,156
+que_sign02,379,235,0	warp	sign09a	1,1,que_sign01,180,172

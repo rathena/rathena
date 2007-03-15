@@ -22,7 +22,7 @@
 
 function	script	F_GKafra	{
 	cutin "kafra_01",2;
-	set @GID, GetCastleData(getarg(0)+".gat",1);
+	set @GID, GetCastleData(getarg(0),1);
 	if (getcharid(2) == @GID && getgdskilllv(@GID,10001)) goto L_StartG;
 
 	mes "[Kafra Service]";

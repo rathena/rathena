@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= Any eAthena Version
 //===== Description: =========================================
-//= Lets players race around Morroc (pvp_y_1-5.gat)
+//= Lets players race around Morroc (pvp_y_1-5)
 //===== Additional Comments: =================================
 //= If there are more than 3 players, at least 3 people
 //= must finish before a new race can be started.
@@ -20,7 +20,7 @@
 //============================================================
 
 //Warps you into race way
-morocc.gat,166,105,6	script	Race Girl#01	116,{
+morocc,166,105,6	script	Race Girl#01	116,{
 mes "[Race Girl]";
 mes "Would you like to visit ^0000FFMorroc Raceway^000000?";
 next;
@@ -30,12 +30,12 @@ mes "Alright, talk to me again when you want to go.";
 close;
 
 L_Warp:
-warp "pvp_y_1-5.gat",165,256;
+warp "pvp_y_1-5",165,256;
 close;
 }
 
 //Warps you out of raceway
-pvp_y_1-5.gat,169,265,5	script	Race Girl#02	116,{
+pvp_y_1-5,169,265,5	script	Race Girl#02	116,{
 mes "[Race Girl]";
 mes "Welcome to Morroc Raceway!";
 next;
@@ -51,7 +51,7 @@ mes "You must reach all the checkpoints - No cheating!";
 close;
 
 L_Warp:
-warp "morocc.gat",165,101;
+warp "morocc",165,101;
 
 L_Cancel:
 mes "[Race Girl]";
@@ -60,7 +60,7 @@ close;
 }
 
 //Counts down and starts race
-pvp_y_1-5.gat,145,269,5	script	Starter	733,{
+pvp_y_1-5,145,269,5	script	Starter	733,{
 if ($@race != 0) goto L_Started;
 if ($@counting != 0) goto L_Started;
 if ($@racecount == 1) goto L_Started;
@@ -106,7 +106,7 @@ close;
 
 
 L_Started:
-if ((getmapusers("pvp_y_1-5.gat") < 3) && ($@position > 0)) goto L_Menu;
+if ((getmapusers("pvp_y_1-5") < 3) && ($@position > 0)) goto L_Menu;
 if ($@position > 2) goto L_Menu;
 mes "[Starter]";
 mes "Race in progress";
@@ -120,7 +120,7 @@ end;
 }
 
 //Checkpoint 1
-pvp_y_1-5.gat,144,262,5	script	Check Point 1	111,0,5,{
+pvp_y_1-5,144,262,5	script	Check Point 1	111,0,5,{
 end;
 OnTouch:
 if (@raceid != $@raceid) goto L_Started;
@@ -138,7 +138,7 @@ close;
 }
 
 //Checkpoint 2
-pvp_y_1-5.gat,73,247,5	script	Check Point 2	111,6,6,{
+pvp_y_1-5,73,247,5	script	Check Point 2	111,6,6,{
 end;
 OnTouch:
 if (@race != 1) goto L_Miss;
@@ -151,7 +151,7 @@ close;
 }
 
 //Checkpoint 3
-pvp_y_1-5.gat,77,44,5	script	Check Point 3	111,6,6,{
+pvp_y_1-5,77,44,5	script	Check Point 3	111,6,6,{
 end;
 OnTouch:
 if (@race != 2) goto L_Miss;
@@ -164,7 +164,7 @@ close;
 }
 
 //Checkpoint 3
-pvp_y_1-5.gat,249,60,5	script	Check Point 4	111,6,6,{
+pvp_y_1-5,249,60,5	script	Check Point 4	111,6,6,{
 end;
 OnTouch:
 if (@race != 3) goto L_Miss;
@@ -177,7 +177,7 @@ close;
 }
 
 //Checkpoint 4
-pvp_y_1-5.gat,255,256,5	script	Check Point 5	111,6,6,{
+pvp_y_1-5,255,256,5	script	Check Point 5	111,6,6,{
 end;
 OnTouch:
 if (@race != 4) goto L_Miss;
@@ -190,7 +190,7 @@ close;
 }
 
 //Finish Line
-pvp_y_1-5.gat,174,244,5	script	Finish Line	111,6,6,{
+pvp_y_1-5,174,244,5	script	Finish Line	111,6,6,{
 end;
 OnTouch:
 if (@raceid != $@raceid) goto L_WrongRace;
@@ -208,39 +208,39 @@ close;
 }
 
 //Check Point Marker Flags
-pvp_y_1-5.gat,144,267,4	script	Check Point 1#01	722,{
+pvp_y_1-5,144,267,4	script	Check Point 1#01	722,{
 end;
 }
-pvp_y_1-5.gat,144,257,4	script	Check Point 1#02	722,{
+pvp_y_1-5,144,257,4	script	Check Point 1#02	722,{
 end;
 }
-pvp_y_1-5.gat,70,252,3	script	Check Point 2#01	722,{
+pvp_y_1-5,70,252,3	script	Check Point 2#01	722,{
 end;
 }
-pvp_y_1-5.gat,77,243,3	script	Check Point 2#02	722,{
+pvp_y_1-5,77,243,3	script	Check Point 2#02	722,{
 end;
 }
-pvp_y_1-5.gat,81,48,1	script	Check Point 3#01	722,{
+pvp_y_1-5,81,48,1	script	Check Point 3#01	722,{
 end;
 }
-pvp_y_1-5.gat,72,40,1	script	Check Point 3#02	722,{
+pvp_y_1-5,72,40,1	script	Check Point 3#02	722,{
 end;
 }
-pvp_y_1-5.gat,244,65,7	script	Check Point 4#01	722,{
+pvp_y_1-5,244,65,7	script	Check Point 4#01	722,{
 end;
 }
-pvp_y_1-5.gat,252,57,7	script	Check Point 4#02	722,{
+pvp_y_1-5,252,57,7	script	Check Point 4#02	722,{
 end;
 }
-pvp_y_1-5.gat,259,260,5	script	Check Point 5#01	722,{
+pvp_y_1-5,259,260,5	script	Check Point 5#01	722,{
 end;
 }
-pvp_y_1-5.gat,251,252,5	script	Check Point 5#02	722,{
+pvp_y_1-5,251,252,5	script	Check Point 5#02	722,{
 end;
 }
-pvp_y_1-5.gat,174,249,4	script	Finish Line#01	722,{
+pvp_y_1-5,174,249,4	script	Finish Line#01	722,{
 end;
 }
-pvp_y_1-5.gat,174,238,4	script	Finish Line#02	722,{
+pvp_y_1-5,174,238,4	script	Finish Line#02	722,{
 end;
 }

@@ -14,7 +14,7 @@
 //============================================================
 
 
-prontera.gat,154,198,5	script	Geovani	805,{
+prontera,154,198,5	script	Geovani	805,{
 	mes "[Geovani]";
 	mes "Hi there my friend,";
 	mes "A while ago a very wise man taught me something.";
@@ -30,5 +30,5 @@ prontera.gat,154,198,5	script	Geovani	805,{
 	menu "Sure, Warp Me ;)",Mwarpme,"Nah, Don't Try It On me",-;
 	close;
 Mwarpme:
-	warp "gefenia01.gat",	40,	103;	close;
+	warp "gefenia01",	40,	103;	close;
 }

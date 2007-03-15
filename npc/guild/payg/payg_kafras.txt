@@ -16,50 +16,50 @@
 
 
 // Castle 1 =============
-payg_cas01.gat,128,58,3	script	Kafra Service#Py01	117,{
+payg_cas01,128,58,3	script	Kafra Service#Py01	117,{
 	callfunc "F_GKafra", "payg_cas01", "Payon";
 	end;
 OnRecvCastlePy01:
-	if (GetCastleData("payg_cas01.gat",9) < 1) disablenpc "Kafra Service#Py01";
+	if (GetCastleData("payg_cas01",9) < 1) disablenpc "Kafra Service#Py01";
 	end;
 }
 
 
 // Castle 2 =============
-payg_cas02.gat,22,275,5	script	Kafra Service#Py02	117,{
+payg_cas02,22,275,5	script	Kafra Service#Py02	117,{
 	callfunc "F_GKafra", "payg_cas02", "Payon";
 	end;
 OnRecvCastlePy02:
-	if (GetCastleData("payg_cas02.gat",9) < 1) disablenpc "Kafra Service#Py02";
+	if (GetCastleData("payg_cas02",9) < 1) disablenpc "Kafra Service#Py02";
 	end;
 }
 
 
 // Castle 3 =============
-payg_cas03.gat,9,263,5	script	Kafra Service#Py03	117,{
+payg_cas03,9,263,5	script	Kafra Service#Py03	117,{
 	callfunc "F_GKafra", "payg_cas03", "Payon";
 	end;
 OnRecvCastlePy03:
-	if (GetCastleData("payg_cas03.gat",9) < 1) disablenpc "Kafra Service#Py03";
+	if (GetCastleData("payg_cas03",9) < 1) disablenpc "Kafra Service#Py03";
 	end;
 }
 
 
 // Castle 4 =============
-payg_cas04.gat,40,235,1	script	Kafra Service#Py04	117,{
+payg_cas04,40,235,1	script	Kafra Service#Py04	117,{
 	callfunc "F_GKafra", "payg_cas04", "Payon";
 	end;
 OnRecvCastlePy04:
-	if (GetCastleData("payg_cas04.gat",9) < 1) disablenpc "Kafra Service#Py04";
+	if (GetCastleData("payg_cas04",9) < 1) disablenpc "Kafra Service#Py04";
 	end;
 }
 
 
 // Castle 5 =============
-payg_cas05.gat,276,227,1	script	Kafra Service#Py05	117,{
+payg_cas05,276,227,1	script	Kafra Service#Py05	117,{
 	callfunc "F_GKafra", "payg_cas05", "Payon";
 	end;
 OnRecvCastlePy05:
-	if (GetCastleData("payg_cas05.gat",9) < 1) disablenpc "Kafra Service#Py05";
+	if (GetCastleData("payg_cas05",9) < 1) disablenpc "Kafra Service#Py05";
 	end;
 }

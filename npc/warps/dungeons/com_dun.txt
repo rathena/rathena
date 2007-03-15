@@ -13,7 +13,7 @@
 //============================================================
 
 //Beach Dungeon ==================================================
-beach_dun.gat,276,67,0	warp	cmd004	1,1,comodo.gat,31,215
-beach_dun2.gat,154,13,0	warp	cmd005	2,1,comodo.gat,176,353
-beach_dun3.gat,17,265,0	warp	cmd007	1,1,comodo.gat,328,175
-beach_dun3.gat,286,57,0	warp	cmd006	1,1,cmd_fild01.gat,30,317
+beach_dun,276,67,0	warp	cmd004	1,1,comodo,31,215
+beach_dun2,154,13,0	warp	cmd005	2,1,comodo,176,353
+beach_dun3,17,265,0	warp	cmd007	1,1,comodo,328,175
+beach_dun3,286,57,0	warp	cmd006	1,1,cmd_fild01,30,317

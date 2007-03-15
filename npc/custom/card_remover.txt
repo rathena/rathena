@@ -2,7 +2,7 @@
 // DANGEROUS! TODO: Think.. think 8) [Lupus]
 
 
-prt_in.gat,28,73,4	script	Wise Old Woman	78,{
+prt_in,28,73,4	script	Wise Old Woman	78,{
 
 UPGRADEROOT:
 	mes "[Wise Old Woman]";

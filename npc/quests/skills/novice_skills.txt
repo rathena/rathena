@@ -20,7 +20,7 @@
 
 
 //<---------------------------------------------------------------------------------------------- Nurse Aid: First Aid NPC ---------------------------------------------------------------------------->\\
-prt_in.gat,235,133,4	script	Nurse Aid	90,{
+prt_in,235,133,4	script	Nurse Aid	90,{
 	mes "[Nurse Aid]";
 	if(FIRSTAID){
 		if((JobLevel <  3) || (countitem(507) < 5 ) || (countitem(705) < 5) || (countitem(930) < 1)) goto sM_Yes;
@@ -87,7 +87,7 @@ prt_in.gat,235,133,4	script	Nurse Aid	90,{
 
 
 //<-------------------------------------------------------------------------------------------------- Bulma: Play Dead -------------------------------------------------------------------------------------------->\\
-prt_in.gat,73,87,2	script	Bulma	98,{
+prt_in,73,87,2	script	Bulma	98,{
 	mes "[Bulma]";
 	if(BaseJob != Job_Novice){
 		mes "Yeah... I look great.... After all, I'm a Knight of the Prontera Chivalry.  Kuhahahaha!";
@@ -210,7 +210,7 @@ prt_in.gat,73,87,2	script	Bulma	98,{
 
 
 //Newbie Assistant------------------------------------------------------------------------------
-prt_castle.gat,174,147,2	script	Newbie Assistant	84,{
+prt_castle,174,147,2	script	Newbie Assistant	84,{
 	mes "[Newbie Assistant]";
 	if(BaseJob != Job_Novice){
 		mes "What am I doing here?  I'm just trying to help out young newbies.  You remember how it was to be a newbie... confused.... lost.... heh heh.";

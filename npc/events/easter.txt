@@ -17,7 +17,7 @@
 //============================================================
 
 
-geffen.gat,95,201,3	script	Shilo	50,{
+geffen,95,201,3	script	Shilo	50,{
 	mes "[Shilo]";
 	if(easter_Q == 1) goto L_Check;
 	mes "*Sigh*... Where is my sister!?";
@@ -179,24 +179,24 @@ L_Check:
 
 // Easter Eggs
 //=====================================================
-alberta.gat,0,0,0,0	monster	Easter Egg	1920,100,0,0,0
-aldebaran.gat,0,0,0,0	monster	Easter Egg	1920,150,0,0,0
-amatsu.gat,0,0,0,0	monster	Easter Egg	1920,100,0,0,0
-comodo.gat,0,0,0,0	monster	Easter Egg	1920,100,0,0,0
-geffen.gat,0,0,0,0	monster	Easter Egg	1920,120,0,0,0
-gonryun.gat,0,0,0,0	monster	Easter Egg	1920,100,0,0,0
-izlude.gat,0,0,0,0	monster	Easter Egg	1920,80,0,0,0
-louyang.gat,0,0,0,0	monster	Easter Egg	1920,200,0,0,0
-morocc.gat,0,0,0,0	monster	Easter Egg	1920,250,0,0,0
-payon.gat,0,0,0,0	monster	Easter Egg	1920,150,0,0,0
-prontera.gat,0,0,0,0	monster	Easter Egg	1920,250,0,0,0
-umbala.gat,0,0,0,0	monster	Easter Egg	1920,100,0,0,0
-yuno.gat,0,0,0,0	monster	Easter Egg	1920,150,0,0,0
+alberta,0,0,0,0	monster	Easter Egg	1920,100,0,0,0
+aldebaran,0,0,0,0	monster	Easter Egg	1920,150,0,0,0
+amatsu,0,0,0,0	monster	Easter Egg	1920,100,0,0,0
+comodo,0,0,0,0	monster	Easter Egg	1920,100,0,0,0
+geffen,0,0,0,0	monster	Easter Egg	1920,120,0,0,0
+gonryun,0,0,0,0	monster	Easter Egg	1920,100,0,0,0
+izlude,0,0,0,0	monster	Easter Egg	1920,80,0,0,0
+louyang,0,0,0,0	monster	Easter Egg	1920,200,0,0,0
+morocc,0,0,0,0	monster	Easter Egg	1920,250,0,0,0
+payon,0,0,0,0	monster	Easter Egg	1920,150,0,0,0
+prontera,0,0,0,0	monster	Easter Egg	1920,250,0,0,0
+umbala,0,0,0,0	monster	Easter Egg	1920,100,0,0,0
+yuno,0,0,0,0	monster	Easter Egg	1920,150,0,0,0
 
 // Easter Bunny
 //======================================================
-alberta.gat,0,0,0,0	monster	Easter Bunny	1921,1,1200000,900000,0
-geffen.gat,0,0,0,0	monster	Easter Bunny	1921,1,1200000,900000,0
-morocc.gat,0,0,0,0	monster	Easter Bunny	1921,2,1200000,900000,0
-payon.gat,0,0,0,0	monster	Easter Bunny	1921,1,1200000,900000,0
-prontera.gat,0,0,0,0	monster	Easter Bunny	1921,2,840000,420000,0
+alberta,0,0,0,0	monster	Easter Bunny	1921,1,1200000,900000,0
+geffen,0,0,0,0	monster	Easter Bunny	1921,1,1200000,900000,0
+morocc,0,0,0,0	monster	Easter Bunny	1921,2,1200000,900000,0
+payon,0,0,0,0	monster	Easter Bunny	1921,1,1200000,900000,0
+prontera,0,0,0,0	monster	Easter Bunny	1921,2,840000,420000,0

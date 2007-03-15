@@ -16,6 +16,6 @@
 //============================================================ 
 
 // -== Professor ==-
-valkyrie.gat,53,47,4	script	Professor	743,{
+valkyrie,53,47,4	script	Professor	743,{
 	callfunc "F_Rebirth",Job_Mage_High,"High Mage",Job_Professor,"Professor";
 }

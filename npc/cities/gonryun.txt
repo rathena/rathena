@@ -18,7 +18,7 @@
 //============================================================
 
 
-alberta.gat,245,69,4	script	Public Relations#01	776,{
+alberta,245,69,4	script	Public Relations#01	776,{
 	mes "[Waba]";
 	mes "Hello there! I have traveled far from the Kingdom of Gonryun, my hometown.";
 	mes "I invite all to visit and celebrate the diversity of Gonryun! We welcome all sorts of visitors.";
@@ -47,7 +47,7 @@ alberta.gat,245,69,4	script	Public Relations#01	776,{
 				close;
 			}
 			set Zeny,Zeny-10000;
-			warp "gon_fild01.gat",258,82;
+			warp "gon_fild01",258,82;
 			end;
 	M_End:
 		mes "[Waba]";	
@@ -58,13 +58,13 @@ alberta.gat,245,69,4	script	Public Relations#01	776,{
 
 //===============================================================================
 
-gon_fild01.gat,255,79,6	script	Public Relations#02	776,{
+gon_fild01,255,79,6	script	Public Relations#02	776,{
 	mes "[Waba]";
 	mes "We are ready to head back as soon as the conditions are favorable.";
 	next;
 	menu "ALBERTA.",-,"I'll stay a bit longer.",M_End;
 
-		warp "alberta.gat",243,68;
+		warp "alberta",243,68;
 		end;
 	M_End:
 		mes "[Waba]";
@@ -74,7 +74,7 @@ gon_fild01.gat,255,79,6	script	Public Relations#02	776,{
 
 //===============================================================================
 
-gon_fild01.gat,187,239,4	script	Public Relations#03	776,{
+gon_fild01,187,239,4	script	Public Relations#03	776,{
 	mes "[Choseryu]";
 	mes "The sacred pillar of light connects this island to Gonryun Kingdom. There's no time to idly chit chat now, be on your way.";
 	mes "I hope you will have many fond memories of Gonryun before you leave.";
@@ -83,7 +83,7 @@ gon_fild01.gat,187,239,4	script	Public Relations#03	776,{
 
 //===============================================================================
 
-gonryun.gat,153,64,0	script	Public Relations#04	776,{
+gonryun,153,64,0	script	Public Relations#04	776,{
 	mes "[Choseryu]";
 	mes "If you're ready to set sail I can send you back to the harbor.";
 	next;
@@ -92,7 +92,7 @@ gonryun.gat,153,64,0	script	Public Relations#04	776,{
 		mes "[Choseryu]";
 		mes "Please come back to visit soon!";
 		next;
-		warp "gon_fild01.gat",258,82;
+		warp "gon_fild01",258,82;
 		close;
 	M_End:
 		mes "[Choseryu]";
@@ -104,7 +104,7 @@ gonryun.gat,153,64,0	script	Public Relations#04	776,{
 //Inn
 //===============================================================================
 
-gon_in.gat,153,35,4	script	Hotel Manager	702,{
+gon_in,153,35,4	script	Hotel Manager	702,{
 	mes "[Mayouban]";
 	mes "Welcome! Your face is new around here. We've had many strangers from the outside coming into the village recently.";
 	mes "We've been quite short-handed here at the hotel.";
@@ -125,7 +125,7 @@ gon_in.gat,153,35,4	script	Hotel Manager	702,{
 
 //===============================================================================
 
-gonryun.gat,139,142,6	script	Girl#08	772,{
+gonryun,139,142,6	script	Girl#08	772,{
 	mes "[Sanfayon]";
 	mes "................";
 	mes "It's been great having new visitors come to the village, but........ ever since I was robbed by that Thief.......";
@@ -138,7 +138,7 @@ gonryun.gat,139,142,6	script	Girl#08	772,{
 
 //===============================================================================
 
-gon_in.gat,18,27,4	script	Elder's Wife	771,{
+gon_in,18,27,4	script	Elder's Wife	771,{
 	mes "[Sangufayon]";
 	mes "Oh my! You look like an important visitor from the outside. Aren't you?";
 	next;
@@ -155,7 +155,7 @@ gon_in.gat,18,27,4	script	Elder's Wife	771,{
 
 //===============================================================================
 
-gonryun.gat,119,111,4	script	Chen Wan Sok	89,{
+gonryun,119,111,4	script	Chen Wan Sok	89,{
 	mes "[Chen Wan Sok]";
 	mes "The village Elder here is truly a sociable fellow. Just because he is friendly does not mean he is lax on the rules! He can get riled up sometimes.";
 	next;
@@ -166,7 +166,7 @@ gonryun.gat,119,111,4	script	Chen Wan Sok	89,{
 
 //===============================================================================
 
-gonryun.gat,237,225,4	script	Hanyon Kyou	776,{
+gonryun,237,225,4	script	Hanyon Kyou	776,{
 	mes "[Hanyon Kyou]";
 	mes "How could I have done something like this?";
 	mes "..............";
@@ -178,7 +178,7 @@ gonryun.gat,237,225,4	script	Hanyon Kyou	776,{
 
 //===============================================================================
 
-gonryun.gat,51,101,4	script	Gaiysonchoru	778,{
+gonryun,51,101,4	script	Gaiysonchoru	778,{
 	mes "[Gaiysonchoru]";
 	emotion e_swt;
 	mes "..............";
@@ -193,7 +193,7 @@ gonryun.gat,51,101,4	script	Gaiysonchoru	778,{
 
 //===============================================================================
 
-gonryun.gat,237,226,3	script	YunKyoHam#gn	776,{
+gonryun,237,226,3	script	YunKyoHam#gn	776,{
 	mes "[YunKyoHam]";
 	if (nakha < 2) {
 		mes "Oh no~ Holy cow!";
@@ -261,7 +261,7 @@ gonryun.gat,237,226,3	script	YunKyoHam#gn	776,{
 	close;
 }
 
-gon_fild01.gat,245,257,0	script	lost knife#gn	139,1,1,{
+gon_fild01,245,257,0	script	lost knife#gn	139,1,1,{
 	if (nakha == 1) {
 		set nakha, 2;
 		mes "-something is hidden underneath the sand dunes-";
@@ -274,7 +274,7 @@ gon_fild01.gat,245,257,0	script	lost knife#gn	139,1,1,{
 	}
 }
 
-gonryun.gat,200,82,3	script	Sungson Gam#gn	774,{
+gonryun,200,82,3	script	Sungson Gam#gn	774,{
 	mes "[Sungson Gam]";
 	mes "Festival is always wonderful.";
 	mes "That's why I love this town.";
@@ -283,7 +283,7 @@ gonryun.gat,200,82,3	script	Sungson Gam#gn	774,{
 	close;
 }
 
-gonryun.gat,268,88,3	script	Joonpo Lyang#gn	776,{
+gonryun,268,88,3	script	Joonpo Lyang#gn	776,{
 	mes "[Joonpo Lyang]";
 	mes "We are proud in name of independent nation";
 	mes "We've been fighting againt the evil envaders";
@@ -296,7 +296,7 @@ gonryun.gat,268,88,3	script	Joonpo Lyang#gn	776,{
 	close;
 }
 
-gonryun.gat,118,111,5	script	Wonsuk Chen#gn	89,{
+gonryun,118,111,5	script	Wonsuk Chen#gn	89,{
 	mes "[Wonsuk Chen]";
 	mes "A chieft of this town is";
 	mes "an open-hearted man.";
@@ -311,7 +311,7 @@ gonryun.gat,118,111,5	script	Wonsuk Chen#gn	89,{
 	close;
 }
 
-gonryun.gat,181,161,3	script	Moonjin Chung#gn	773,{
+gonryun,181,161,3	script	Moonjin Chung#gn	773,{
 	mes "[Moonjin Chung]";
 	mes "The men in our town, Gonryun are";
 	mes "all brave and energetic.";
@@ -327,7 +327,7 @@ gonryun.gat,181,161,3	script	Moonjin Chung#gn	773,{
 	close;
 }
 
-gonryun.gat,113,135,6	script	Gatekeeper#gn1	780,{
+gonryun,113,135,6	script	Gatekeeper#gn1	780,{
 	mes "[Gatekeeper]";
 	mes "Welcome. This is a resident";
 	mes "of SaYumMoon, a chief";
@@ -345,7 +345,7 @@ gonryun.gat,113,135,6	script	Gatekeeper#gn1	780,{
 	close;
 }
 
-gonryun.gat,113,127,6	script	Gatekeeper#gn2	780,{
+gonryun,113,127,6	script	Gatekeeper#gn2	780,{
 	mes "[Gatekeeper]";
 	mes "Welcome. This is a resident";
 	mes "of SaYumMoon, a chief";
@@ -363,7 +363,7 @@ gonryun.gat,113,127,6	script	Gatekeeper#gn2	780,{
 	close;
 }
 
-gon_in.gat,73,82,5	script	SungChul Ki#gn	778,{
+gon_in,73,82,5	script	SungChul Ki#gn	778,{
 	mes "[SungChul Ki]";
 	if (nakha != 3) {
 		mes "............";
@@ -427,7 +427,7 @@ gon_in.gat,73,82,5	script	SungChul Ki#gn	778,{
 //	next;
 //	mes "[È_ÀÌ _÷]"
 
-gon_in.gat,173,27,3	script	Kuha Woo#gn	774,{
+gon_in,173,27,3	script	Kuha Woo#gn	774,{
 	mes "[Kuha Woo]";
 	mes "Like I expected, with my age,";
 	mes "they don't sell alcohol to me.";
@@ -443,7 +443,7 @@ gon_in.gat,173,27,3	script	Kuha Woo#gn	774,{
 	close;
 }
 
-gonryun.gat,163,60,4	script	Gonryun Guide	780,{
+gonryun,163,60,4	script	Gonryun Guide	780,{
 	mes "[Wonchi Ha]";
 	mes "Come to Gonryun where passion";
 	mes "and energy overflows. You can feel liveliness";
@@ -504,7 +504,7 @@ gonryun.gat,163,60,4	script	Gonryun Guide	780,{
 	close;
 }
 
-gonryun.gat,166,196,3	script	Soldier#gn	780,{
+gonryun,166,196,3	script	Soldier#gn	780,{
 	mes "[Waguo]";
 	if (b_sword < 7) {
 		mes "You know what?";
@@ -548,7 +548,7 @@ gonryun.gat,166,196,3	script	Soldier#gn	780,{
 	close;
 }
 
-gonryun.gat,169,71,3	script	Guide#gn	770,{
+gonryun,169,71,3	script	Guide#gn	770,{
 	mes "[Leeheemin]";
 	mes "Welcome~";
 	mes "Did you enjoy sightseeing";

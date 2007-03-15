@@ -19,7 +19,7 @@
 //		12 elv;
 //		13 wlv;
 
-prontera.gat,164,161,5	script	Lupus	1013,{
+prontera,164,161,5	script	Lupus	1013,{
 	menu "Make Knife[3] Edible",M_1,
 		"Make Apple Equippable",M_2,
 		"Edible Knife = Full SP",M_3,
@@ -67,4 +67,3 @@ M_4:
 	close;
 
 }
-

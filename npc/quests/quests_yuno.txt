@@ -18,7 +18,7 @@
 
 
 //===========================================================================
-yuno_in01.gat,103,158,4	script	Bain	98,{
+yuno_in01,103,158,4	script	Bain	98,{
 	set @name$, "[Bain]";
 	
 OnStart:
@@ -121,7 +121,7 @@ sF_List:
 }
 
 //=====================================================================
-yuno_in01.gat,99,153,4	script	Bajin	47,{
+yuno_in01,99,153,4	script	Bajin	47,{
 	set @name$, "[Bajin]";
 	doevent "Bain::OnStart";
 	close;

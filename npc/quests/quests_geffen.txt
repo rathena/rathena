@@ -18,7 +18,7 @@
 //==============================================================================================//
 // 					Blacksmith: 'Welding Mask' Quest
 //==============================================================================================//
-geffen_in.gat,144,166,4	script	Blacksmith#01	63,{
+geffen_in,144,166,4	script	Blacksmith#01	63,{
 	mes "[Blacksmith]";
 	mes "Who am I?!........";
 	emotion e_gasp;
@@ -85,7 +85,7 @@ geffen_in.gat,144,166,4	script	Blacksmith#01	63,{
 //=============================================================================================//
 //					Eric: Headset Quest
 //=============================================================================================//
-geffen_in.gat,30,71,4	script	Eric	83,{
+geffen_in,30,71,4	script	Eric	83,{
 	mes "[Eric]";
 	mes "Please listen to the story of my blessed grand father...";
 	emotion e_sob;

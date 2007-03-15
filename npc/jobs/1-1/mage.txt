@@ -20,7 +20,7 @@
 
 
 // -- Expert Mage -- 
-geffen_in.gat,164,124,4	script	Expert Mage	123,{
+geffen_in,164,124,4	script	Expert Mage	123,{
 	callfunc "F_ToHigh",Job_Mage_High,"High Mage",Job_High_Wizard,"Expert Mage";
 	if(BaseJob == Job_Novice && job_magician_q >= 1) goto L_BeMage;
 
@@ -149,7 +149,7 @@ L_BeMage:
 }
 
 // -- Solutions Guide Book --
-geffen_in.gat,177,112,1	script	Solutions Guide Book	111,{
+geffen_in,177,112,1	script	Solutions Guide Book	111,{
 	mes "[Solutions Guide Book]";
 	mes "I belong to Geffen Magic Academy.  Please handle with care.";
 	next;
@@ -249,7 +249,7 @@ geffen_in.gat,177,112,1	script	Solutions Guide Book	111,{
 }
 
 // -- Mixing Machine --
-geffen_in.gat,164,112,1	script	Mixing Machine	111,{
+geffen_in,164,112,1	script	Mixing Machine	111,{
 	mes "[Mixing Machine]";
 	mes "This is the unique Mixing Machine designed only for making magic solutions.  It is the property of the Geffen Magic Academy.";
 	next;
@@ -418,7 +418,7 @@ geffen_in.gat,164,112,1	script	Mixing Machine	111,{
 
 
 // -- Morroc Solution --
-moc_ruins.gat,91,150,5	script	Ponka-Hontas	93,{
+moc_ruins,91,150,5	script	Ponka-Hontas	93,{
 	mes "[Mage Guildsman]";
 	mes "You want the Solution? Then give me 50 Zeny and at least 1 Empty Testube.";
 	next;
@@ -457,7 +457,7 @@ moc_ruins.gat,91,150,5	script	Ponka-Hontas	93,{
 
 
 // -- Payon Solution --
-pay_arche.gat,122,100,5	script	Dollshoi	88,{
+pay_arche,122,100,5	script	Dollshoi	88,{
 	mes "[Mage Guildsman]";
 	mes "You want the Solution? Then give me 50 Zeny and at least 1 Empty Testube.";
 	next;
@@ -493,4 +493,3 @@ pay_arche.gat,122,100,5	script	Dollshoi	88,{
 		mes "[Mage Guildsman]";
 		close;
 }
-

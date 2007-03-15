@@ -24,7 +24,7 @@
 //////////////////////////////////////////////////////////
 
 
-yuno_in01.gat,112,151,6	script	Quest Manager	62,{
+yuno_in01,112,151,6	script	Quest Manager	62,{
 	mes "[Guy]";
 	mes "Welcome to the Treasure Hunters Guild "+strcharinfo(0)+".";
 	next;

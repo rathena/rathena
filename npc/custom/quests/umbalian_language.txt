@@ -15,7 +15,7 @@
 //				Custom Umbala Language Quest
 //======================================================================================//
 
-prontera.gat,145,290,5	script	Mason	742,{
+prontera,145,290,5	script	Mason	742,{
 	mes "[Mason]";
 	if(umb_lang==0) goto L_NOT_GOT_QUEST;
 	if(umb_lang==2 || umb_mason==1) goto L_AGAIN;
@@ -96,7 +96,7 @@ M_NO:
 	close;
 }
 
-aldebaran.gat,153,212,1	script	Mojo	740,{
+aldebaran,153,212,1	script	Mojo	740,{
 	mes "[Mojo]";
 	if(umb_lang!=1) goto L_NOT_GOT_QUEST;
 	mes "Oh no!  I lost my teacher's ^FF0000old magic book^000000!";
@@ -109,7 +109,7 @@ L_NOT_GOT_QUEST:
 	close;
 }
 
-amatsu.gat,267,189,4	script	Marie	744,{
+amatsu,267,189,4	script	Marie	744,{
 	mes "[Marie]";
 	if(umb_lang==0) goto L_NOT_GOT_QUEST;
 	if(umb_lang==2 || umb_marie==1) goto L_AGAIN;
@@ -159,7 +159,7 @@ L_AGAIN:
 	close;
 }
 
-yuno.gat,157,366,2	script	Wise Man Fabius	743,{
+yuno,157,366,2	script	Wise Man Fabius	743,{
 	mes "[Fabius]";
 	if(event_umbala >= 3) set umb_lang,2; //You already learnt Umbalian language from Umbalian Chief. So this Quest is disabled
 	if(umb_lang<2) goto L_QUEST;

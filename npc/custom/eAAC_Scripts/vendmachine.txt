@@ -29,7 +29,7 @@
 // - Used numbered variables to allow for multiplacation of the script.
 //=====================================
 
-p_track01.gat,45,58,4	script	Vending Machine#1	910,{
+p_track01,45,58,4	script	Vending Machine#1	910,{
 
 	set @machine,1; //sets the unique number of this machine
 	//DO NOT have two machines with the same number

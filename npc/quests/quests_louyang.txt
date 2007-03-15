@@ -17,7 +17,7 @@
 //============================================================
 //======================================================= Soup
 //====================================================== Quest
-lou_fild01.gat,195,177,4	script	Jiu Lian Bu#01	819,{
+lou_fild01,195,177,4	script	Jiu Lian Bu#01	819,{
 	if(QL_SOUP2) goto L_DONE;
 	if(QL_SOUPQUEST)goto L_WHERE;
 	if(QL_GOTFAKESOUP) goto L_FAKE;
@@ -159,7 +159,7 @@ L_SOUP:
 	mes "[Jiu Lian Bu]";
 	mes "Good job, chum! Heh heh heh, because you risked your neck for me, I'm gonna show you an awesome place! Just follow me~";
 	close2;
-	warp "lou_fild01.gat",180,171;
+	warp "lou_fild01",180,171;
 	end;
 
 L_DONE:
@@ -175,7 +175,7 @@ L_DONE:
 	mes "Let's get";
 	mes "a groove on.";
 	close2;
-	warp "lou_fild01.gat",180,171;
+	warp "lou_fild01",180,171;
 	end;
 
 M_NAH:
@@ -192,11 +192,11 @@ L_WHERE:
 	mes "Come up again and I'll";
 	mes "give you your reward.";
 	close2;
-	warp "lou_fild01.gat",180,171;
+	warp "lou_fild01",180,171;
 	end;
 }
 
-lou_fild01.gat,175,174,4	script	Jiu Lian Bu#02	819,{
+lou_fild01,175,174,4	script	Jiu Lian Bu#02	819,{
 	if(QL_SOUPQUEST < 1) goto L_DOQUEST;
 	if(QL_SOUP2 < 1) goto L_1STTIME;
 	mes "[Jiu Lian Bu]";
@@ -211,7 +211,7 @@ lou_fild01.gat,175,174,4	script	Jiu Lian Bu#02	819,{
 	mes "Say it out loud!";
 	next;
 	input @loushout$;
-	mapannounce "lou_fild01.gat","'" + strcharinfo(0) + "' shouts: " + @loushout$ ,1,0x9CFF00;
+	mapannounce "lou_fild01","'" + strcharinfo(0) + "' shouts: " + @loushout$ ,1,0x9CFF00;
 	mes "[" + strcharinfo(0) + "]";
 	mes @loushout$;
 	close;
@@ -222,7 +222,7 @@ M_LEAVE:
 	mes "Alright, let's";	
 	mes "get a groove on.";
 	close2;
-	warp "lou_fild01.gat",197,174;
+	warp "lou_fild01",197,174;
 	end;
 
 L_DOQUEST:
@@ -230,7 +230,7 @@ L_DOQUEST:
 	mes "Who are you?";
 	mes "Get off my turf!";
 	close2;
-	warp "lou_fild01.gat",197,174;
+	warp "lou_fild01",197,174;
 	end;
 
 L_1STTIME:
@@ -279,7 +279,7 @@ L_1STTIME:
 	mes "Say it out loud!";
 	next;
 	input @loushout$;
-	mapannounce "lou_fild01.gat","'" + strcharinfo(0) + "' shouts: " + @loushout$ ,1,0x9CFF00;
+	mapannounce "lou_fild01","'" + strcharinfo(0) + "' shouts: " + @loushout$ ,1,0x9CFF00;
 	mes "[" + strcharinfo(0) + "]";
 	mes @loushout$;
 	set QL_SOUP2,1;
@@ -297,7 +297,7 @@ L_1STTIME:
 	close;	
 }
 
-lou_in02.gat,61,175,2	script	Employee#01	818,2,2{
+lou_in02,61,175,2	script	Employee#01	818,2,2{
 	mes "[Ya Hua]";
 	mes "^6A6A6A*Yawn...*";
 	close;
@@ -325,13 +325,13 @@ S_CAUGHT:
 	close;
 }
 
-lou_in02.gat,54,174,6	script	Employee#02	822,{
+lou_in02,54,174,6	script	Employee#02	822,{
 	mes "[Chang Pai]";
 	mes "^6A6A6A*Yawn...*";
 	close;
 }
 
-lou_in02.gat,50,185,4	script	Pot#01	111,{
+lou_in02,50,185,4	script	Pot#01	111,{
 	if(QL_SOUPQUEST == 1) goto L_EMPTY;
 	if(QL_ACCEPTSOUP < 1) goto L_NORMAL;
 	mes "^3131FFBeneath the shadows, you find a large pot filled with dark, red liquid. What do you want to do?";
@@ -369,7 +369,7 @@ L_EMPTY:
 	close;
 }
 
-lou_in02.gat,49,185,4	script	Pot#02	111,{
+lou_in02,49,185,4	script	Pot#02	111,{
 	if(QL_SOUPQUEST == 1) goto L_EMPTY;
 	if(QL_ACCEPTSOUP < 1) goto L_NORMAL;
 	mes "^3131FFBeneath the shadows, you find a large pot filled with dark, red liquid. What do you want to do?";
@@ -407,7 +407,7 @@ L_EMPTY:
 	close;
 }
 
-lou_in02.gat,62,183,4	script	Chef	820,{
+lou_in02,62,183,4	script	Chef	820,{
 	if(QL_SOUPQUEST == 1) goto L_FINISHED;
 	mes "[Wang Shi Long]";
 	mes "Hello, are you";
@@ -462,7 +462,7 @@ L_FINISHED:
 	close;
 }
 
-lou_in02.gat,42,186,4	script	Liu Jia Lim	816,{
+lou_in02,42,186,4	script	Liu Jia Lim	816,{
 	if(QL_SOUPQUEST == 1) goto L_FINISHED;
 	mes "[Liu Jia Lim]";
 	mes "Do you know what's the best dish at this restaurant? It's Dragon Soup! They've been selling it here for as long as this restaurant has been around";
@@ -486,7 +486,7 @@ L_FINISHED:
 	close;
 }
 
-lou_in02.gat,80,173,2	script	Li Min	746,{
+lou_in02,80,173,2	script	Li Min	746,{
 	if(QL_SOUPQUEST == 1) goto L_FINISHED;
 	mes "[Li Min]";
 	mes "Well, I don't really";
@@ -531,7 +531,7 @@ L_FINISHED:
 	close;
 }
 
-louyang.gat,174,150,4	script	Liu Chi Ling	815,{
+louyang,174,150,4	script	Liu Chi Ling	815,{
 	if(QL_SOUPQUEST == 1) goto L_RUMOR;
 	mes "[Jiu Chi Ling]";
 	mes "I'm worried about my brother.";
@@ -569,7 +569,7 @@ L_RUMOR:
 //============================================================
 //================================================ Tool Master
 //====================================================== Quest
-lou_in02.gat,210,47,8	script	City Hall Officer	825,{
+lou_in02,210,47,8	script	City Hall Officer	825,{
 	if(QL_GOTCOMPROP == 1)goto L_BEENTOHIM;
 	if(QL_LOUBRIBE == 1)goto L_OFFICER;
 	if(QL_BEENTOSTORAGE == 1)goto L_QUEST;
@@ -665,7 +665,7 @@ L_BEENTOHIM:
 	close;
 }
 
-lou_in02.gat,156,38,8	script	Studying Officer	822,{
+lou_in02,156,38,8	script	Studying Officer	822,{
 	if(QL_GOTCOMPROP == 1)goto L_RANT2;
 	if(QL_LOUBRIBE == 1)goto L_BRIBED;
 	if(QL_BEENTOSTORAGE == 1)goto L_RANT;
@@ -781,7 +781,7 @@ L_RANT2:
 	close;
 }
 
-lou_in02.gat,248,166,2	script	Tool Shop Master	824,{
+lou_in02,248,166,2	script	Tool Shop Master	824,{
 	if(QL_GOTHERB == 1)goto L_HERB;
 	if(QL_TOOLMASTER == 1)goto L_STORAGE;
 	if(QL_DOCQUEST == 1)goto L_QUEST;
@@ -823,7 +823,7 @@ L_STORAGE:
 	close;
 }
 
-lou_in02.gat,201,166,5	script	Storage Keeper	819,{
+lou_in02,201,166,5	script	Storage Keeper	819,{
 	if(QL_GOTCOMPROP == 1)goto L_FINALLY;
 	if(QL_BEENTOSTORAGE == 1)goto L_LAZY;
 	if(QL_TOOLMASTER == 1)goto L_QUEST;
@@ -948,7 +948,7 @@ L_FINALLY:
 //============================================================
 //===================================================== Doctor
 //====================================================== Quest
-lou_in02.gat,265,69,4	script	Doctor	814,{
+lou_in02,265,69,4	script	Doctor	814,{
 	if(QL_DOCQUEST == 1) goto L_MED;
 	if(QL_DOCQUEST == 2) goto L_RANT;
 	if(QL_DOCQUEST == 3) goto L_CHECKITM;
@@ -1148,7 +1148,7 @@ L_NOTENOUGH:
 //============================================================
 //================================================ Poison King
 //====================================================== Quest
-lou_fild01.gat,224,348,7	script	Lady#04	817,{
+lou_fild01,224,348,7	script	Lady#04	817,{
 
 	emotion 30;
 	mes "[Lady]";
@@ -1244,7 +1244,7 @@ s_Firework:
 
 }
 
-lou_fild01.gat,225,349,1	script	LouFireWrk	139,{
+lou_fild01,225,349,1	script	LouFireWrk	139,{
 
 OnExplosion:
 	misceffect 183;
@@ -1252,7 +1252,7 @@ OnExplosion:
 
 }
 
-lou_in01.gat,99,158,4	script	Lord	821,{
+lou_in01,99,158,4	script	Lord	821,{
 	mes "[Lord Bai Long]";
 	mes "Hahahaha!";
 	mes "Welcome to Louyang!";
@@ -1340,7 +1340,7 @@ s_Journal:
 	close;
 
 }
-lou_in02.gat,253,45,4	script	Employee#04	822,{
+lou_in02,253,45,4	script	Employee#04	822,{
 
 	if(QL_POISONKING == 30)goto s_NoGoodIdea;
 	if(QL_POISONKING == 18)goto s_Busy;
@@ -1998,7 +1998,7 @@ s_CameBack:
 	else if(BaseLevel > 80 && BaseLevel < 86)set BaseExp,BaseExp+142340;
 	else if(BaseLevel > 85 && BaseLevel < 91)set BaseExp,BaseExp+152052;
 	else if(BaseLevel > 90)set BaseExp,BaseExp+366786;
-	warp "louyang.gat",270,136;
+	warp "louyang",270,136;
 	end;
 
 s_Proud:
@@ -2075,7 +2075,7 @@ s_NoGoodIdea:
 
 }
 
-lou_in02.gat,122,38,4	script	Poison King	824,{
+lou_in02,122,38,4	script	Poison King	824,{
 
 	if(QL_POISONKING > 16 && QL_POISONKING != 30)goto s_Proud;
 	if(QL_POISONKING == 16)goto s_Letter;
@@ -3033,7 +3033,7 @@ s_Letter:
 	else if(BaseLevel > 90)set BaseExp,BaseExp+406786;
 	set QL_POISONKING,17;
 	close2;
-	warp "louyang.gat",270,136;
+	warp "louyang",270,136;
 	end;
 
 s_Proud:
@@ -3047,7 +3047,7 @@ s_Proud:
 
 }
 
-lou_in01.gat,101,124,0	script	#LouSoldChk	139,100,0,{
+lou_in01,101,124,0	script	#LouSoldChk	139,100,0,{
 	if(QL_POISONKING == 13)goto s_SoldChk;
 	end;
 
@@ -3058,12 +3058,12 @@ s_SoldChk:
 	mes "^3131FFYou ran away as quickly as you";
 	mes "could!";
 	close2;
-	warp "louyang.gat",218,249;
+	warp "louyang",218,249;
 	end;
 
 }
 
-lou_in01.gat,115,163,0	script	#LouSoldChk2	139,0,2,{
+lou_in01,115,163,0	script	#LouSoldChk2	139,0,2,{
 	if(QL_POISONKING == 13)goto s_SoldChk;
 	end;
 
@@ -3074,12 +3074,12 @@ s_SoldChk:
 	mes "^3131FFYou escape before the soldier can";
 	mes "find you.";
 	close2;
-	warp "louyang.gat",217,278;
+	warp "louyang",217,278;
 	end;
 
 }
 
-lou_in01.gat,115,163,0	script	#LouSoldChk3	139,25,0,{
+lou_in01,115,163,0	script	#LouSoldChk3	139,25,0,{
 	if(QL_POISONKING == 13)goto s_SoldChk;
 	end;
 
@@ -3090,11 +3090,11 @@ s_SoldChk:
 	mes "^3131FFYou escape before the soldier can";
 	mes "find you.";
 	close2;
-	warp "louyang.gat",217,278;
+	warp "louyang",217,278;
 	end;
 
 }
-louyang.gat,218,278,0	script	#LouSecEntrnc	111,{
+louyang,218,278,0	script	#LouSecEntrnc	111,{
 
 	mes "[" + strcharinfo(0) + "]";
 	mes "What's this?";
@@ -3105,12 +3105,12 @@ louyang.gat,218,278,0	script	#LouSecEntrnc	111,{
 	mes "You move through the crack as";
 	mes "quickly as you can.";
 	close2;
-	warp "lou_in01.gat",119,167;
+	warp "lou_in01",119,167;
 	end;
 
 }
 
-lou_in01.gat,117,167,0	script	#LouSecExit	111,{
+lou_in01,117,167,0	script	#LouSecExit	111,{
 
 	mes "[" + strcharinfo(0) + "]";
 	mes "What's this?";
@@ -3121,12 +3121,12 @@ lou_in01.gat,117,167,0	script	#LouSecExit	111,{
 	mes "You move through the crack as";
 	mes "quickly as you can.";
 	close2;
-	warp "louyang.gat",217,278;
+	warp "louyang",217,278;
 	end;
 
 }
 
-lou_in01.gat,106,162,0	script	#BaiLongBottle	111,{
+lou_in01,106,162,0	script	#BaiLongBottle	111,{
 
 	if(QL_POISONPATH > 1 && countitem(713) && countitem(938))goto s_Save;
 	if(QL_POISONKING != 13)goto s_Fancy;

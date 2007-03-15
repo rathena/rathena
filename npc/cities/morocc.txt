@@ -24,7 +24,7 @@
 //==================================================== Town of Morroc ====================================================\\
 
 // Old Scholar ===============================
-morocc_in.gat,112,122,2	script	Old Scholar	61,{
+morocc_in,112,122,2	script	Old Scholar	61,{
 	mes "[Old Scholar]";
 	mes "I've devoted my Life to researching the Pyramids.  Although I not found anything significant yet, I am confident that I will find the Tomb of Ancient King, Osiris!";
 	next;
@@ -34,7 +34,7 @@ morocc_in.gat,112,122,2	script	Old Scholar	61,{
 }
 
 // Drunk Man =================================
-morocc.gat,44,180,8	script	Drunk Man	89,{
+morocc,44,180,8	script	Drunk Man	89,{
 	mes "[Drunk Man]";
 	mes "Heh Heh... (Hiccup)! Oh, Are you new here? Nice to meet ya, Buddy! So how was your trip?";
 	mes "This was predestined that you and I meet here, I tell you what (Hiccup). Let me tell you something I just heard from the pub....";
@@ -54,7 +54,7 @@ morocc.gat,44,180,8	script	Drunk Man	89,{
 }
 
 // Towner =================================
-morocc.gat,68,260,8	script	Towner	99,{
+morocc,68,260,8	script	Towner	99,{
 	mes "[Towner]";
 	mes "Those giant, Triangular Buildings North West of town are called Pyramids... They have been there for thousands and thousands of years.";
 	next;
@@ -67,7 +67,7 @@ morocc.gat,68,260,8	script	Towner	99,{
 }
 
 // Ant Man Akira =============================
-morocc.gat,76,75,4	script	Ant Man Akira	47,{
+morocc,76,75,4	script	Ant Man Akira	47,{
 	mes "[Ant Man Akira]";
 	mes "About 1 map north and 3 maps east of Morroc, there lies the entrance to a cave known as ^ff0000ANTHELL^000000 ...";
 M_Menu:
@@ -109,7 +109,7 @@ M_Menu:
 }
 
 // Poring Lady Syvia ==================================
-morocc.gat,79,111,2	script	Poring Lady Syvia	700,{
+morocc,79,111,2	script	Poring Lady Syvia	700,{
 	mes "[Poring Lady Syvia]";
 	mes "All over Rune-Midgard you can see lots of cute monsters such as Spores, the mushroom type creature....";
 	next;
@@ -165,7 +165,7 @@ M_Menu:
 }
 
 // Slayer Kid ====================================
-morocc.gat,123,58,4	script	Slayer Kid	118,{
+morocc,123,58,4	script	Slayer Kid	118,{
 	mes "[Slayer Kid]";
 	mes ".... An expert in hand to hand combat who polishes off enemies quickly and quietly....";
 	next;
@@ -202,7 +202,7 @@ M_Menu:
 }
 
 // Lapidary =======================================
-morocc.gat,150,50,8	script	Lapidary	99,{
+morocc,150,50,8	script	Lapidary	99,{
 	mes "[Lapidary]";
 	mes "The Queen of Jewelry is the Diamond.  No one can deny its beautiful appearance.  That's why it cost so much to buy...";
 	next;
@@ -215,7 +215,7 @@ morocc.gat,150,50,8	script	Lapidary	99,{
 }
 
 // Uncle Dimitrii ==========================================
-morocc.gat,180,155,4	script	Uncle Dimitri	49,{
+morocc,180,155,4	script	Uncle Dimitri	49,{
 	mes "[Uncle Dimitrii]";
 	mes "The avarage temperature in the Morroc Desert is many times higher than anywhere else in the Rune-Midgard Kingdom.";
 	next;
@@ -256,7 +256,7 @@ M_Menu:
 }
 
 // Trader Joe =====================================
-morocc.gat,208,85,7	script	Trader Joe	83,{
+morocc,208,85,7	script	Trader Joe	83,{
 	mes "[Trader Joe]";
 	mes "I earn a living as a Trader so I'm constantly traveling between Morroc and Prontera.";
 	mes "I can't even count how many times I've been across the Hot, Dry desert.";
@@ -281,7 +281,7 @@ morocc.gat,208,85,7	script	Trader Joe	83,{
 }
 
 // Fly Man Armani ===============================
-morocc.gat,234,273,3	script	Fly Man Armani	54,{
+morocc,234,273,3	script	Fly Man Armani	54,{
 	mes "[Fly Man Armani]";
 	mes "I SAW IT!! I SAW IT!!!";
 	emotion e_ic;
@@ -326,7 +326,7 @@ morocc.gat,234,273,3	script	Fly Man Armani	54,{
 }
 
 // Uncle Phlanette ================================
-morocc.gat,277,213,4	script	Uncle Phlanette	48,{
+morocc,277,213,4	script	Uncle Phlanette	48,{
 	mes "[Uncle Phlanette]";
 	mes "Morroc is a highly dry region surrounded by desert.  There isn't a place as hot or dry as Morroc anywhere in Rune-Midgard.";
 M_Menu:
@@ -363,7 +363,7 @@ M_Menu:
 }
 
 //Bartender
-morocc_in.gat,166,76,3	script	Bartender#02	46,{
+morocc_in,166,76,3	script	Bartender#02	46,{
 	mes "[Bartender]";
 	mes "What are you going to order?";
 	next;
@@ -402,7 +402,7 @@ Nomoney:
 
 // Lvl 4 weapon quest related NPC ================================
 
-morocc.gat,289,230,3	script	Citizen#06	92, {
+morocc,289,230,3	script	Citizen#06	92, {
 	mes "[Citizen]";
 	mes "Meeting a dead man is basically";
 	mes "impossible.";
@@ -421,7 +421,7 @@ morocc.gat,289,230,3	script	Citizen#06	92, {
 //<================================================== Assassin Guild ====================================================>\\
 
 // Hashisid ====================================
-moc_fild16.gat,199,212,4	script	Hashisid	48,{
+moc_fild16,199,212,4	script	Hashisid	48,{
 	mes "[Hashisid]";
 	mes "For Assassins, it is important not to look a target in the eye.  If a target is smart, he/she may be able to tell what you're up too.";
 	next;
@@ -447,7 +447,7 @@ moc_fild16.gat,199,212,4	script	Hashisid	48,{
 // Assassin Guild Guards
 //===================================================
 
-moc_fild16.gat,195,281,4	script	Assassin Guardian#1::SinGuard	707,{
+moc_fild16,195,281,4	script	Assassin Guardian#1::SinGuard	707,{
 	mes "[Assassin Guardian]";
 	if(BaseJob == Job_Assassin) {
 		mes "Welcome.";
@@ -461,10 +461,10 @@ moc_fild16.gat,195,281,4	script	Assassin Guardian#1::SinGuard	707,{
 	close;
 }
 
-moc_fild16.gat,204,281,4	duplicate(SinGuard)	Assassin Guardian#2	707
-moc_fild16.gat,207,281,4	duplicate(SinGuard)	Assassin Guardian#3	707
-moc_fild16.gat,216,281,4	duplicate(SinGuard)	Assassin Guardian#4	707
-moc_fild16.gat,200,231,4	duplicate(SinGuard)	Assassin Guardian#5	707
-moc_fild16.gat,211,231,4	duplicate(SinGuard)	Assassin Guardian#6	707
-moc_fild16.gat,200,257,4	duplicate(SinGuard)	Assassin Guardian#7	707
-moc_fild16.gat,211,257,4	duplicate(SinGuard)	Assassin Guardian#8	707
+moc_fild16,204,281,4	duplicate(SinGuard)	Assassin Guardian#2	707
+moc_fild16,207,281,4	duplicate(SinGuard)	Assassin Guardian#3	707
+moc_fild16,216,281,4	duplicate(SinGuard)	Assassin Guardian#4	707
+moc_fild16,200,231,4	duplicate(SinGuard)	Assassin Guardian#5	707
+moc_fild16,211,231,4	duplicate(SinGuard)	Assassin Guardian#6	707
+moc_fild16,200,257,4	duplicate(SinGuard)	Assassin Guardian#7	707
+moc_fild16,211,257,4	duplicate(SinGuard)	Assassin Guardian#8	707

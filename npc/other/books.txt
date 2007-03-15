@@ -4,7 +4,7 @@
 //<--------------- NPCs BOOKS [Update: July. 27, 2004] --------------->\\
 
 //<=========== Library - Begin ==========>\\
-prt_in.gat,159,56,4	script	Monster Encyclopedia::me_prt_in	111,{
+prt_in,159,56,4	script	Monster Encyclopedia::me_prt_in	111,{
 	mes "^FF0000[Monster Encyclopedia]^000000";
 	mes "This is a Monster Encyclopedia including information of Earth,Fire,Neutral Monsters!";
 	next;
@@ -302,7 +302,7 @@ prt_in.gat,159,56,4	script	Monster Encyclopedia::me_prt_in	111,{
 		close;
 }
 
-prt_in.gat,161,50,4	script	Monster Encyclopedia::me_prt_in2	111,{
+prt_in,161,50,4	script	Monster Encyclopedia::me_prt_in2	111,{
 	mes "^FF0000[Monster Encyclopedia]^000000";
 	mes "This is a Monster Encyclopedia including Monsters of Dark,Poison and Undead Property!";
 	next;
@@ -533,7 +533,7 @@ prt_in.gat,161,50,4	script	Monster Encyclopedia::me_prt_in2	111,{
 		close;
 }
 
-prt_in.gat,162,68,4	script	`Merchant Guideline' for Dummies::mgfd_2	111,{
+prt_in,162,68,4	script	`Merchant Guideline' for Dummies::mgfd_2	111,{
 	mes "^FF0000[`Merchant Guideline' for Dummies]^000000";
 	mes "Please go over the next page if you want to check `Vending'.";
 	next;
@@ -571,7 +571,7 @@ prt_in.gat,162,68,4	script	`Merchant Guideline' for Dummies::mgfd_2	111,{
 		close;
 }
 
-prt_in.gat,164,96,4	script	Monster Encyclopedia::me_prt_in3	111,{
+prt_in,164,96,4	script	Monster Encyclopedia::me_prt_in3	111,{
 	mes "^FF0000[Dungeon Monster Encyclopedia]^000000";
 	mes "This is an Encyclopedia describing Monsters living in Dungeons.";
 	next;
@@ -933,7 +933,7 @@ prt_in.gat,164,96,4	script	Monster Encyclopedia::me_prt_in3	111,{
         	close;
 }
 
-prt_in.gat,164,102,4	script	Monster Encyclopedia::me_prt_in4	111,{
+prt_in,164,102,4	script	Monster Encyclopedia::me_prt_in4	111,{
 	mes "^FF0000[Dungeon Monster Encyclopedia]^000000";
 	mes "The is an Encyclopedia describing Monsters living in Dungeons.";
 	next;
@@ -1314,7 +1314,7 @@ prt_in.gat,164,102,4	script	Monster Encyclopedia::me_prt_in4	111,{
 			close;
 }
 
-prt_in.gat,168,56,4	script	Monster Encyclopedia::me_prt_in5	111,{
+prt_in,168,56,4	script	Monster Encyclopedia::me_prt_in5	111,{
 	mes "^FF0000[Monster Encyclopedia]^000000";
 	mes "I am a Monster Encyclopedia, you can check several types of Monster with me.";
 	next;
@@ -1559,7 +1559,7 @@ prt_in.gat,168,56,4	script	Monster Encyclopedia::me_prt_in5	111,{
 		close;
 }
 
-prt_in.gat,168,68,4	script	`Merchant Guideline' for Dummies::mgfd_1	111,{
+prt_in,168,68,4	script	`Merchant Guideline' for Dummies::mgfd_1	111,{
 	mes "^FF0000[Blacksmith Guide for Dummies]^000000";	
 	mes "You can get the information about how to refine Ores and about Weapon Craft Skills.";
 	next;
@@ -1618,7 +1618,7 @@ prt_in.gat,168,68,4	script	`Merchant Guideline' for Dummies::mgfd_1	111,{
 		close;
 }
 
-prt_in.gat,172,96,4	script	Monster Encyclopedia::me_prt_in7	111,{
+prt_in,172,96,4	script	Monster Encyclopedia::me_prt_in7	111,{
 	mes "^FF0000[Dungeon Monster Encyclopedia]^000000";
 	mes "This is an Encyclopedia describing monsters living in Dungeons.";
 	next;
@@ -1944,7 +1944,7 @@ prt_in.gat,172,96,4	script	Monster Encyclopedia::me_prt_in7	111,{
 		close;
 }
 
-prt_in.gat,172,102,4	script	Monster Encyclopedia::me_prt_in8	111,{
+prt_in,172,102,4	script	Monster Encyclopedia::me_prt_in8	111,{
 	mes "^FF0000[Dungeon Monster Encyclopedia]^000000";
 	mes "The is an Encyclopedia describing Monsters living in Dungeons.";
 	next;

@@ -13,7 +13,7 @@
 //============================================================ 
 
 
-gon_in.gat,17,93,5	script	Chief#gnbs	775,{
+gon_in,17,93,5	script	Chief#gnbs	775,{
 	mes "[SaYumMoon]";
 	if (BaseLevel <= 50) {
 		mes "hmm...";
@@ -429,7 +429,7 @@ gon_in.gat,17,93,5	script	Chief#gnbs	775,{
 	close;
 }
 
-gon_in.gat,152,35,4	script	Hostess#gnbs	702,{
+gon_in,152,35,4	script	Hostess#gnbs	702,{
 	mes "[MaYumBang]";
 	if (b_sword < 1) {
 		mes "Oh.. you're new here right?";
@@ -509,7 +509,7 @@ gon_in.gat,152,35,4	script	Hostess#gnbs	702,{
 	close;
 }
 
-gon_in.gat,165,16,4	script	Man in hangover#gnbs	748,{
+gon_in,165,16,4	script	Man in hangover#gnbs	748,{
 	mes "[SulBoong]";
 	if (b_sword < 4) {
 		mes "Ahhh.. my stomach.. my head..";
@@ -745,7 +745,7 @@ gon_in.gat,165,16,4	script	Man in hangover#gnbs	748,{
 	close;
 }
 
-gon_dun01.gat,148,156,0	script	start01#gnbs	-1,{
+gon_dun01,148,156,0	script	start01#gnbs	-1,{
 	OnInit:
 		sleep 10000;
 	OnCommandOn:
@@ -753,7 +753,7 @@ gon_dun01.gat,148,156,0	script	start01#gnbs	-1,{
 		end;
 }
 
-gon_dun01.gat,201,25,0	script	trace1-1#gnbs	139,1,1,{
+gon_dun01,201,25,0	script	trace1-1#gnbs	139,1,1,{
 	if (b_sword == 7) donpcevent "timer1-1::OnCommandOn";
 	end;
 
@@ -776,7 +776,7 @@ gon_dun01.gat,201,25,0	script	trace1-1#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun01.gat,2,1,0	script	timer1-1	-1,{
+gon_dun01,2,1,0	script	timer1-1	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -799,7 +799,7 @@ gon_dun01.gat,2,1,0	script	timer1-1	-1,{
 		end;
 }
 
-gon_dun01.gat,202,25,0	script	#getitem1-1	111,2,1,{
+gon_dun01,202,25,0	script	#getitem1-1	111,2,1,{
 	if (b_sword != 7) end;
 	set b_sword,8;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -820,7 +820,7 @@ gon_dun01.gat,202,25,0	script	#getitem1-1	111,2,1,{
 		end;
 }
 
-gon_dun01.gat,190,160,0	script	trace1-2#gnbs	139,1,1,{
+gon_dun01,190,160,0	script	trace1-2#gnbs	139,1,1,{
 	if (b_sword == 7) donpcevent "timer1-2::OnCommandOn";
 	end;
 
@@ -843,7 +843,7 @@ gon_dun01.gat,190,160,0	script	trace1-2#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun01.gat,3,1,0	script	timer1-2	-1,{
+gon_dun01,3,1,0	script	timer1-2	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -866,7 +866,7 @@ gon_dun01.gat,3,1,0	script	timer1-2	-1,{
 		end;
 }
 
-gon_dun01.gat,190,159,0	script	#getitem1-2	111,2,1,{
+gon_dun01,190,159,0	script	#getitem1-2	111,2,1,{
 	if (b_sword != 7) end;
 	set b_sword,8;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -887,7 +887,7 @@ gon_dun01.gat,190,159,0	script	#getitem1-2	111,2,1,{
 		end;
 }
 
-gon_dun01.gat,163,53,0	script	trace1-3#gnbs	139,1,1,{
+gon_dun01,163,53,0	script	trace1-3#gnbs	139,1,1,{
 	if (b_sword == 7) donpcevent "timer1-3::OnCommandOn";
 	end;
 
@@ -910,7 +910,7 @@ gon_dun01.gat,163,53,0	script	trace1-3#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun01.gat,4,1,0	script	timer1-3	-1,{
+gon_dun01,4,1,0	script	timer1-3	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -933,7 +933,7 @@ gon_dun01.gat,4,1,0	script	timer1-3	-1,{
 		end;
 }
 
-gon_dun01.gat,164,53,0	script	#getitem1-3	111,2,1,{
+gon_dun01,164,53,0	script	#getitem1-3	111,2,1,{
 	if (b_sword != 7) end;
 	set b_sword,8;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -954,7 +954,7 @@ gon_dun01.gat,164,53,0	script	#getitem1-3	111,2,1,{
 		end;
 }
 
-gon_dun01.gat,133,183,0	script	trace1-4#gnbs	139,1,1,{
+gon_dun01,133,183,0	script	trace1-4#gnbs	139,1,1,{
 	if (b_sword == 7) donpcevent "timer1-4::OnCommandOn";
 	end;
 
@@ -977,7 +977,7 @@ gon_dun01.gat,133,183,0	script	trace1-4#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun01.gat,5,1,0	script	timer1-4	-1,{
+gon_dun01,5,1,0	script	timer1-4	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1000,7 +1000,7 @@ gon_dun01.gat,5,1,0	script	timer1-4	-1,{
 		end;
 }
 
-gon_dun01.gat,134,183,0	script	#getitem1-4	111,2,1,{
+gon_dun01,134,183,0	script	#getitem1-4	111,2,1,{
 	if (b_sword != 7) end;
 	set b_sword,8;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -1021,7 +1021,7 @@ gon_dun01.gat,134,183,0	script	#getitem1-4	111,2,1,{
 		end;
 }
 
-gon_dun01.gat,139,257,0	script	trace1-5#gnbs	139,1,1,{
+gon_dun01,139,257,0	script	trace1-5#gnbs	139,1,1,{
 	if (b_sword == 7) donpcevent "timer1-5::OnCommandOn";
 	end;
 
@@ -1044,7 +1044,7 @@ gon_dun01.gat,139,257,0	script	trace1-5#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun01.gat,6,1,0	script	timer1-5	-1,{
+gon_dun01,6,1,0	script	timer1-5	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1067,7 +1067,7 @@ gon_dun01.gat,6,1,0	script	timer1-5	-1,{
 		end;
 }
 
-gon_dun01.gat,140,257,0	script	#getitem1-5	111,2,1,{
+gon_dun01,140,257,0	script	#getitem1-5	111,2,1,{
 	if (b_sword != 7) end;
 	set b_sword,8;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -1088,7 +1088,7 @@ gon_dun01.gat,140,257,0	script	#getitem1-5	111,2,1,{
 		end;
 }
 
-gon_dun02.gat,1,1,0	script	start02#gnbs	-1,{
+gon_dun02,1,1,0	script	start02#gnbs	-1,{
 	OnInit:
 		sleep 10000;
 	OnCommandOn:
@@ -1096,7 +1096,7 @@ gon_dun02.gat,1,1,0	script	start02#gnbs	-1,{
 		end;
 }
 
-gon_dun02.gat,65,168,0	script	trace2-1#gnbs	139,1,1,{
+gon_dun02,65,168,0	script	trace2-1#gnbs	139,1,1,{
 	if (b_sword == 8) donpcevent "timer2-1::OnCommandOn";
 	end;
 
@@ -1119,7 +1119,7 @@ gon_dun02.gat,65,168,0	script	trace2-1#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun02.gat,2,1,0	script	timer2-1	-1,{
+gon_dun02,2,1,0	script	timer2-1	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1142,7 +1142,7 @@ gon_dun02.gat,2,1,0	script	timer2-1	-1,{
 		end;
 }
 
-gon_dun02.gat,202,25,0	script	#getitem2-1	111,2,1,{
+gon_dun02,202,25,0	script	#getitem2-1	111,2,1,{
 	if (b_sword != 8) end;
 	set b_sword,9;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -1163,7 +1163,7 @@ gon_dun02.gat,202,25,0	script	#getitem2-1	111,2,1,{
 		end;
 }
 
-gon_dun02.gat,265,200,0	script	trace2-2#gnbs	139,1,1,{
+gon_dun02,265,200,0	script	trace2-2#gnbs	139,1,1,{
 	if (b_sword == 8) donpcevent "timer2-2::OnCommandOn";
 	end;
 
@@ -1186,7 +1186,7 @@ gon_dun02.gat,265,200,0	script	trace2-2#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun02.gat,3,1,0	script	timer2-2	-1,{
+gon_dun02,3,1,0	script	timer2-2	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1209,7 +1209,7 @@ gon_dun02.gat,3,1,0	script	timer2-2	-1,{
 		end;
 }
 
-gon_dun02.gat,265,201,0	script	#getitem2-2	111,2,1,{
+gon_dun02,265,201,0	script	#getitem2-2	111,2,1,{
 	if (b_sword != 8) end;
 	set b_sword,9;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -1230,7 +1230,7 @@ gon_dun02.gat,265,201,0	script	#getitem2-2	111,2,1,{
 		end;
 }
 
-gon_dun02.gat,247,129,0	script	trace2-3#gnbs	139,1,1,{
+gon_dun02,247,129,0	script	trace2-3#gnbs	139,1,1,{
 	if (b_sword == 8) donpcevent "timer2-3::OnCommandOn";
 	end;
 
@@ -1253,7 +1253,7 @@ gon_dun02.gat,247,129,0	script	trace2-3#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun02.gat,4,1,0	script	timer2-3	-1,{
+gon_dun02,4,1,0	script	timer2-3	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1276,7 +1276,7 @@ gon_dun02.gat,4,1,0	script	timer2-3	-1,{
 		end;
 }
 
-gon_dun02.gat,247,128,0	script	#getitem2-3	111,2,1,{
+gon_dun02,247,128,0	script	#getitem2-3	111,2,1,{
 	if (b_sword != 8) end;
 	set b_sword,9;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -1297,7 +1297,7 @@ gon_dun02.gat,247,128,0	script	#getitem2-3	111,2,1,{
 		end;
 }
 
-gon_dun02.gat,149,74,0	script	trace2-4#gnbs	139,1,1,{
+gon_dun02,149,74,0	script	trace2-4#gnbs	139,1,1,{
 	if (b_sword == 8) donpcevent "timer2-4::OnCommandOn";
 	end;
 
@@ -1320,7 +1320,7 @@ gon_dun02.gat,149,74,0	script	trace2-4#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun02.gat,5,1,0	script	timer2-4	-1,{
+gon_dun02,5,1,0	script	timer2-4	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1343,7 +1343,7 @@ gon_dun02.gat,5,1,0	script	timer2-4	-1,{
 		end;
 }
 
-gon_dun02.gat,149,75,0	script	#getitem2-4	111,2,1,{
+gon_dun02,149,75,0	script	#getitem2-4	111,2,1,{
 	if (b_sword != 8) end;
 	set b_sword,9;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -1364,7 +1364,7 @@ gon_dun02.gat,149,75,0	script	#getitem2-4	111,2,1,{
 		end;
 }
 
-gon_dun02.gat,23,105,0	script	trace2-5#gnbs	139,1,1,{
+gon_dun02,23,105,0	script	trace2-5#gnbs	139,1,1,{
 	if (b_sword == 8) donpcevent "timer2-5::OnCommandOn";
 	end;
 
@@ -1387,7 +1387,7 @@ gon_dun02.gat,23,105,0	script	trace2-5#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun02.gat,6,1,0	script	timer2-5	-1,{
+gon_dun02,6,1,0	script	timer2-5	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1410,7 +1410,7 @@ gon_dun02.gat,6,1,0	script	timer2-5	-1,{
 		end;
 }
 
-gon_dun02.gat,23,106,0	script	#getitem2-5	111,2,1,{
+gon_dun02,23,106,0	script	#getitem2-5	111,2,1,{
 	if (b_sword != 8) end;
 	set b_sword,9;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -1431,7 +1431,7 @@ gon_dun02.gat,23,106,0	script	#getitem2-5	111,2,1,{
 		end;
 }
 
-gon_dun02.gat,249,39,0	script	trace2-6#gnbs	139,1,1,{
+gon_dun02,249,39,0	script	trace2-6#gnbs	139,1,1,{
 	if (b_sword == 8) donpcevent "timer2-6::OnCommandOn";
 	end;
 
@@ -1454,7 +1454,7 @@ gon_dun02.gat,249,39,0	script	trace2-6#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun02.gat,7,1,0	script	timer2-6	-1,{
+gon_dun02,7,1,0	script	timer2-6	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1477,7 +1477,7 @@ gon_dun02.gat,7,1,0	script	timer2-6	-1,{
 		end;
 }
 
-gon_dun02.gat,249,40,0	script	#getitem2-6	111,2,1,{
+gon_dun02,249,40,0	script	#getitem2-6	111,2,1,{
 	if (b_sword != 8) end;
 	set b_sword,9;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -1498,7 +1498,7 @@ gon_dun02.gat,249,40,0	script	#getitem2-6	111,2,1,{
 		end;
 }
 
-gon_dun03.gat,1,1,0	script	start03#gnbs	-1,{
+gon_dun03,1,1,0	script	start03#gnbs	-1,{
 	OnInit:
 		sleep 10000;
 	OnCommandOn:
@@ -1506,7 +1506,7 @@ gon_dun03.gat,1,1,0	script	start03#gnbs	-1,{
 		end;
 }
 
-gon_dun03.gat,11,75,0	script	trace3-1#gnbs	139,1,1,{
+gon_dun03,11,75,0	script	trace3-1#gnbs	139,1,1,{
 	if (b_sword == 9) donpcevent "timer3-1::OnCommandOn";
 	end;
 
@@ -1529,7 +1529,7 @@ gon_dun03.gat,11,75,0	script	trace3-1#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun03.gat,2,1,0	script	timer3-1	-1,{
+gon_dun03,2,1,0	script	timer3-1	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1552,7 +1552,7 @@ gon_dun03.gat,2,1,0	script	timer3-1	-1,{
 		end;
 }
 
-gon_dun03.gat,10,74,0	script	#getitem3-1	111,2,1,{
+gon_dun03,10,74,0	script	#getitem3-1	111,2,1,{
 	if (b_sword != 9) end;
 	set b_sword,10;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -1576,7 +1576,7 @@ gon_dun03.gat,10,74,0	script	#getitem3-1	111,2,1,{
 		end;
 }
 
-gon_dun03.gat,199,103,0	script	trace3-2#gnbs	139,1,1,{
+gon_dun03,199,103,0	script	trace3-2#gnbs	139,1,1,{
 	if (b_sword == 9) donpcevent "timer3-2::OnCommandOn";
 	end;
 
@@ -1599,7 +1599,7 @@ gon_dun03.gat,199,103,0	script	trace3-2#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun03.gat,3,1,0	script	timer3-2	-1,{
+gon_dun03,3,1,0	script	timer3-2	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1622,7 +1622,7 @@ gon_dun03.gat,3,1,0	script	timer3-2	-1,{
 		end;
 }
 
-gon_dun03.gat,199,102,0	script	#getitem3-2	111,2,1,{
+gon_dun03,199,102,0	script	#getitem3-2	111,2,1,{
 	if (b_sword != 9) end;
 	set b_sword,10;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -1646,7 +1646,7 @@ gon_dun03.gat,199,102,0	script	#getitem3-2	111,2,1,{
 		end;
 }
 
-gon_dun03.gat,14,162,0	script	trace3-3#gnbs	139,1,1,{
+gon_dun03,14,162,0	script	trace3-3#gnbs	139,1,1,{
 	if (b_sword == 9) donpcevent "timer3-3::OnCommandOn";
 	end;
 
@@ -1669,7 +1669,7 @@ gon_dun03.gat,14,162,0	script	trace3-3#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun03.gat,4,1,0	script	timer3-3	-1,{
+gon_dun03,4,1,0	script	timer3-3	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1692,7 +1692,7 @@ gon_dun03.gat,4,1,0	script	timer3-3	-1,{
 		end;
 }
 
-gon_dun03.gat,14,163,0	script	#getitem3-3	111,2,1,{
+gon_dun03,14,163,0	script	#getitem3-3	111,2,1,{
 	if (b_sword != 9) end;
 	set b_sword,10;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -1716,7 +1716,7 @@ gon_dun03.gat,14,163,0	script	#getitem3-3	111,2,1,{
 		end;
 }
 
-gon_dun03.gat,155,263,0	script	trace3-4#gnbs	139,1,1,{
+gon_dun03,155,263,0	script	trace3-4#gnbs	139,1,1,{
 	if (b_sword == 9) donpcevent "timer3-4::OnCommandOn";
 	end;
 
@@ -1739,7 +1739,7 @@ gon_dun03.gat,155,263,0	script	trace3-4#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun03.gat,5,1,0	script	timer3-4	-1,{
+gon_dun03,5,1,0	script	timer3-4	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1762,7 +1762,7 @@ gon_dun03.gat,5,1,0	script	timer3-4	-1,{
 		end;
 }
 
-gon_dun03.gat,156,263,0	script	#getitem3-4	111,2,1,{
+gon_dun03,156,263,0	script	#getitem3-4	111,2,1,{
 	if (b_sword != 9) end;
 	set b_sword,10;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -1786,7 +1786,7 @@ gon_dun03.gat,156,263,0	script	#getitem3-4	111,2,1,{
 		end;
 }
 
-gon_dun03.gat,169,90,0	script	trace3-5#gnbs	139,1,1,{
+gon_dun03,169,90,0	script	trace3-5#gnbs	139,1,1,{
 	if (b_sword == 9) donpcevent "timer3-5::OnCommandOn";
 	end;
 
@@ -1809,7 +1809,7 @@ gon_dun03.gat,169,90,0	script	trace3-5#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun03.gat,6,1,0	script	timer3-5	-1,{
+gon_dun03,6,1,0	script	timer3-5	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1832,7 +1832,7 @@ gon_dun03.gat,6,1,0	script	timer3-5	-1,{
 		end;
 }
 
-gon_dun03.gat,170,90,0	script	#getitem3-5	111,2,1,{
+gon_dun03,170,90,0	script	#getitem3-5	111,2,1,{
 	if (b_sword != 9) end;
 	set b_sword,10;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -1856,7 +1856,7 @@ gon_dun03.gat,170,90,0	script	#getitem3-5	111,2,1,{
 		end;
 }
 
-gon_dun03.gat,162,40,0	script	trace3-6#gnbs	139,1,1,{
+gon_dun03,162,40,0	script	trace3-6#gnbs	139,1,1,{
 	if (b_sword == 9) donpcevent "timer3-6::OnCommandOn";
 	end;
 
@@ -1879,7 +1879,7 @@ gon_dun03.gat,162,40,0	script	trace3-6#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun03.gat,7,1,0	script	timer3-6	-1,{
+gon_dun03,7,1,0	script	timer3-6	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1902,7 +1902,7 @@ gon_dun03.gat,7,1,0	script	timer3-6	-1,{
 		end;
 }
 
-gon_dun03.gat,68,39,0	script	#getitem3-6	111,1,2,{
+gon_dun03,68,39,0	script	#getitem3-6	111,1,2,{
 	if (b_sword != 9) end;
 	set b_sword,10;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -1926,7 +1926,7 @@ gon_dun03.gat,68,39,0	script	#getitem3-6	111,1,2,{
 		end;
 }
 
-gon_dun03.gat,68,212,0	script	trace3-7#gnbs	139,1,1,{
+gon_dun03,68,212,0	script	trace3-7#gnbs	139,1,1,{
 	if (b_sword == 9) donpcevent "timer3-7::OnCommandOn";
 	end;
 
@@ -1949,7 +1949,7 @@ gon_dun03.gat,68,212,0	script	trace3-7#gnbs	139,1,1,{
 		end;
 }
 
-gon_dun03.gat,6,1,0	script	timer3-7	-1,{
+gon_dun03,6,1,0	script	timer3-7	-1,{
 	OnInit:
 		initnpctimer;
 		stopnpctimer;
@@ -1972,7 +1972,7 @@ gon_dun03.gat,6,1,0	script	timer3-7	-1,{
 		end;
 }
 
-gon_dun03.gat,68,213,0	script	#getitem3-7	111,1,2,{
+gon_dun03,68,213,0	script	#getitem3-7	111,1,2,{
 	if (b_sword != 9) end;
 	set b_sword,10;
 	mes "You found ^FF0000piece of blade^000000.";
@@ -2089,7 +2089,7 @@ gonryun,139,142,7	script	Girl##gnbs1	772,{
 	close;
 }
 
-gonryun.gat,100,241,0	script	Stranger#gnbs"	733,{
+gonryun,100,241,0	script	Stranger#gnbs"	733,{
 	mes "[Choahk]";
 	if (b_sword < 14) {
 		mes "Hmm...";
@@ -2298,7 +2298,7 @@ gonryun.gat,100,241,0	script	Stranger#gnbs"	733,{
 	close;
 }
 
-geffen_in.gat,71,112,2	script	Blacksmith#SaYumMoon	731,{
+geffen_in,71,112,2	script	Blacksmith#SaYumMoon	731,{
 	mes "[Aumgarl]";
 	if (b_sword < 17) {
 		mes "Pew..hew....";
@@ -2344,7 +2344,7 @@ geffen_in.gat,71,112,2	script	Blacksmith#SaYumMoon	731,{
 				mes "What nerve you've got!";
 			}
 			close2;
-			warp "geffen.gat",173,169;
+			warp "geffen",173,169;
 			end;
 		case 19:
 			mes "Hmm....";
@@ -2559,7 +2559,7 @@ geffen_in.gat,71,112,2	script	Blacksmith#SaYumMoon	731,{
 								mes "I hate people who lie";
 								emotion e_pif;
 								close2;
-								warp "geffen.gat",173,169;
+								warp "geffen",173,169;
 								end;
 							case 2:
 								mes "[Aumgarl]";
@@ -2872,7 +2872,7 @@ geffen_in.gat,71,112,2	script	Blacksmith#SaYumMoon	731,{
 	close;
 }
 
-geffen_in.gat,106,106,7	script	Girl#gnbs2	716,{
+geffen_in,106,106,7	script	Girl#gnbs2	716,{
 	mes "[Lyroo]";
 	if (b_sword < 20) {
 		mes "Ah...Ah....";
@@ -2976,7 +2976,7 @@ geffen_in.gat,106,106,7	script	Girl#gnbs2	716,{
 	}
 }
 
-prontera.gat,275,86,2	script	Young man#SaYumMoon"	97,{
+prontera,275,86,2	script	Young man#SaYumMoon"	97,{
 	mes "[Neil]";
 	if (b_sword < 20) {
 		mes "It's so good to be helathy.";
@@ -3161,7 +3161,7 @@ yuno_in01,99,101,4	script	Doctor#gnbs	744,{
 								mes "I don't have any bussiness";
 								mes "with you. please leave.";
 								close2;
-								warp "yuno.gat",246,143;
+								warp "yuno",246,143;
 								end;
 							}
 						}
@@ -3352,7 +3352,7 @@ yuno_in01,99,101,4	script	Doctor#gnbs	744,{
 				mes "But, it became strange medicine!";
 				mes "Bring me the exact symptoms!";
 				close2;
-				warp "yuno.gat",246,143;
+				warp "yuno",246,143;
 				end;
 			} else {
 				mes "...........";
@@ -3371,7 +3371,7 @@ yuno_in01,99,101,4	script	Doctor#gnbs	744,{
 				mes "Alright?";
 				mes "Now, hurry!.";
 				close2;
-				warp "yuno.gat",246,143;
+				warp "yuno",246,143;
 				end;
 			}
 			break;
@@ -3426,7 +3426,7 @@ yuno_in01,99,101,4	script	Doctor#gnbs	744,{
 				mes "Alright?";
 				mes "Go get them as fast as possible.";
 				close;
-				warp "yuno.gat",246,143;
+				warp "yuno",246,143;
 				end;
 			}
 			break;
@@ -3463,13 +3463,13 @@ yuno_in01,99,101,4	script	Doctor#gnbs	744,{
 	close;
 }
 
-yuno_in01.gat,104,94,0	script	go away#gnbs	139,2,1{
+yuno_in01,104,94,0	script	go away#gnbs	139,2,1{
 	if (b_sword < 22) {
 		mes "[??????]";
 		mes "^FF0000What are you doing here?";
 		mes "Get out!^000000";
 		close2;
-		warp "yuno.gat",246,143;
+		warp "yuno",246,143;
 		end;
 	} else if (b_sword == 22) {
 		if (rand(1,10) == 10) {
@@ -3482,7 +3482,7 @@ yuno_in01.gat,104,94,0	script	go away#gnbs	139,2,1{
 			mes "^FF0000What are you doing here?";
 			mes "Get out!^000000";
 			close2;
-			warp "yuno.gat",246,143;
+			warp "yuno",246,143;
 			end;
 		}
 	} else {

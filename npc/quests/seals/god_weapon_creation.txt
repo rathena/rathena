@@ -12,7 +12,7 @@
 // 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
 //============================================================
 
-gld_dun01.gat,28,85,0	script	Grunburti	826,{
+gld_dun01,28,85,0	script	Grunburti	826,{
 
 	mes "[Dwarf Grunburti]";
 	mes "Hmmhah! What brought you here, human!";
@@ -292,7 +292,7 @@ gld_dun01.gat,28,85,0	script	Grunburti	826,{
 		mes "[Dwarf Grunburti]";
 		mes "Now, you must hurry up! ^0000FFOnly one of each godly item^000000 will be given to humans ^FF0000right after all the seals are released^000000!";
 		close2;
-		warp "que_god01.gat",214,63;
+		warp "que_god01",214,63;
 		end;
 	break;
 
@@ -306,7 +306,7 @@ gld_dun01.gat,28,85,0	script	Grunburti	826,{
 	}
 }
 
-gld_dun02.gat,85,84,0	script	Grunburti#2	826,{
+gld_dun02,85,84,0	script	Grunburti#2	826,{
 
 	mes "[Dwarf Grunburti]";
 	mes "Hmmhah! What brought you here, human!";
@@ -586,7 +586,7 @@ gld_dun02.gat,85,84,0	script	Grunburti#2	826,{
 		mes "[Dwarf Grunburti]";
 		mes "Now, you must hurry up! ^0000FFOnly one of each godly item^000000 will be given to humans ^FF0000right after all the seals are released^000000!";
 		close2;
-		warp "que_god01.gat",214,63;
+		warp "que_god01",214,63;
 		end;
 	break;
 
@@ -600,7 +600,7 @@ gld_dun02.gat,85,84,0	script	Grunburti#2	826,{
 	}
 }
 
-gld_dun03.gat,92,105,0	script	Grunburti#3	826,{
+gld_dun03,92,105,0	script	Grunburti#3	826,{
 
 	mes "[Dwarf Grunburti]";
 	mes "Hmmhah! What brought you here, human!";
@@ -880,7 +880,7 @@ gld_dun03.gat,92,105,0	script	Grunburti#3	826,{
 		mes "[Dwarf Grunburti]";
 		mes "Now, you must hurry up! ^0000FFOnly one of each godly item^000000 will be given to humans ^FF0000right after all the seals are released^000000!";
 		close2;
-		warp "que_god01.gat",214,63;
+		warp "que_god01",214,63;
 		end;
 	break;
 
@@ -894,7 +894,7 @@ gld_dun03.gat,92,105,0	script	Grunburti#3	826,{
 	}
 }
 
-gld_dun04.gat,268,230,0	script	Grunburti#4	826,{
+gld_dun04,268,230,0	script	Grunburti#4	826,{
 
 	mes "[Dwarf Grunburti]";
 	mes "Hmmhah! What brought you here, human!";
@@ -1174,7 +1174,7 @@ gld_dun04.gat,268,230,0	script	Grunburti#4	826,{
 		mes "[Dwarf Grunburti]";
 		mes "Now, you must hurry up! ^0000FFOnly one of each godly item^000000 will be given to humans ^FF0000right after all the seals are released^000000!";
 		close2;
-		warp "que_god01.gat",214,63;
+		warp "que_god01",214,63;
 		end;
 	break;
 
@@ -1188,7 +1188,7 @@ gld_dun04.gat,268,230,0	script	Grunburti#4	826,{
 	}
 }
 
-que_god01.gat,215,127,0	script	#god_hopewarp1	111,{
+que_god01,215,127,0	script	#god_hopewarp1	111,{
 	end;
 
 	OnInit:
@@ -1196,13 +1196,13 @@ que_god01.gat,215,127,0	script	#god_hopewarp1	111,{
 		end;
 	
 	OnWarp:
-		warpwaitingpc "que_god01.gat",155,63;
+		warpwaitingpc "que_god01",155,63;
 		donpcevent "Grunburti#god::OnRun";
 		delwaitingroom;
 		end;
 }
 
-que_god01.gat,214,128,0	script	#que_godnpc1	111,{
+que_god01,214,128,0	script	#que_godnpc1	111,{
 
 		mes "[Entrance Notice]";
 		mes "Only the quickest human being will possess the power of God.";
@@ -1210,7 +1210,7 @@ que_god01.gat,214,128,0	script	#que_godnpc1	111,{
 
 }
 
-que_god01.gat,215,128,0	script	#que_godnpc2"	111,{
+que_god01,215,128,0	script	#que_godnpc2"	111,{
 
 		mes "[Entrance Notice]";
 		mes "Only the quickest human being will possess the power of God.";
@@ -1218,7 +1218,7 @@ que_god01.gat,215,128,0	script	#que_godnpc2"	111,{
 
 }
 
-que_god01.gat,213,128,0	script	#que_godnpc3	111,{
+que_god01,213,128,0	script	#que_godnpc3	111,{
 
 		mes "[Entrance Notice]";
 		mes "Only the quickest human being will possess the power of God.";
@@ -1226,7 +1226,7 @@ que_god01.gat,213,128,0	script	#que_godnpc3	111,{
 
 }
 
-que_god01.gat,154,112,4	script	Grunburti#god	826,{
+que_god01,154,112,4	script	Grunburti#god	826,{
 
 		if ($God1 < 100 || $God2 < 100 || $God3 < 100 || $God4 < 100)
 	{
@@ -1571,20 +1571,20 @@ OnRun:
 	end;
 
 OnTimer10000:
-	mapannounce "que_god01.gat","Remember that you only have 10 minutes for this! Hurry up!",0;
+	mapannounce "que_god01","Remember that you only have 10 minutes for this! Hurry up!",0;
 	end;
 
 OnTimer610000:
-	mapannounce "que_god01.gat","You are too slow! I am going to give the chance to the other! Next!",0;
+	mapannounce "que_god01","You are too slow! I am going to give the chance to the other! Next!",0;
 	end;
 
 OnTimer612000:
-	areawarp "que_god01.gat",154,67,4,7,"prontera.gat",156,324;
-	areawarp "que_god01.gat",154,82,4,7,"prontera.gat",156,324;
-	areawarp "que_god01.gat",145,99,9,9,"prontera.gat",156,324;
-	areawarp "que_god01.gat",164,99,9,9,"prontera.gat",156,324;
-	areawarp "que_god01.gat",145,118,9,9,"prontera.gat",156,324;
-	areawarp "que_god01.gat",164,118,9,9,"prontera.gat",156,324;
+	areawarp "que_god01",154,67,4,7,"prontera",156,324;
+	areawarp "que_god01",154,82,4,7,"prontera",156,324;
+	areawarp "que_god01",145,99,9,9,"prontera",156,324;
+	areawarp "que_god01",164,99,9,9,"prontera",156,324;
+	areawarp "que_god01",145,118,9,9,"prontera",156,324;
+	areawarp "que_god01",164,118,9,9,"prontera",156,324;
 	end;
 
 OnTimer615000:

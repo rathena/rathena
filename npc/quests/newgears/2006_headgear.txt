@@ -20,7 +20,7 @@
 
 //===================== Anonymous Mask =====================================================
 
-rachel.gat,91,273,4	script	Masked Man	880,{
+rachel,91,273,4	script	Masked Man	880,{
 	set @npcname$,"[Masked Man]";
 
 	mes @npcname$;
@@ -75,7 +75,7 @@ rachel.gat,91,273,4	script	Masked Man	880,{
 
 //======================== Feather Beret ================================================
 
-rachel.gat,135,121,4	script	Sakyul	933,{
+rachel,135,121,4	script	Sakyul	933,{
 	set @npcname$,"[Sakyul]";
 
 	mes @npcname$;
@@ -128,7 +128,7 @@ rachel.gat,135,121,4	script	Sakyul	933,{
 
 //============================ Valkyrie Helm =====================================================
 
-hugel.gat,146,105,4	script	Genirhimin	897,{
+hugel,146,105,4	script	Genirhimin	897,{
 	set @npcname$,"[Genirhimin]";
 
 	mes @npcname$;
@@ -211,7 +211,7 @@ hugel.gat,146,105,4	script	Genirhimin	897,{
 
 //======================= Smiling Mask / Lion Masquerade / Bride Mask ===============================
 
-payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
+payon,135,231,5	script	Chung-Wol-Mang	907,{
 	set @npcname$,"[Chung-Wol-Mang]";
 
 	mes @npcname$;
@@ -335,7 +335,7 @@ payon.gat,135,231,5	script	Chung-Wol-Mang	907,{
 
 //====================== Judge Hat / A-Yam Hat =============================================
 
-payon.gat,137,123,5	script	Hangaram	740,{
+payon,137,123,5	script	Hangaram	740,{
 	set @npcname$,"[Hangaram]";
 
 	mes @npcname$;

@@ -25,7 +25,7 @@
 //============================================================
 
 
-prt_in.gat,130,66,5	script	Zac	704,{
+prt_in,130,66,5	script	Zac	704,{
 	mes "[Zac]";
 	mes "I am the oldest and strongest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat, so I can make them.";
 	next;
@@ -85,7 +85,7 @@ L3:
 	close;
 }
 
-prt_in.gat,162,131,5	script	Blac	732,{
+prt_in,162,131,5	script	Blac	732,{
 	mes "[Blac]";
 	mes "I am the youngest and sexiest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat, so I can make them.";
 	next;
@@ -139,7 +139,7 @@ L3:
 	close;
 }
 
-prt_in.gat,53,56,5	script	Jac	107,{
+prt_in,53,56,5	script	Jac	107,{
 	mes "[Jac]";
 	mes "I am the 2nd oldest and calmest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat, so I can make them.";
 	next;
@@ -223,7 +223,7 @@ L3:
 	close;
 }
 
-prt_in.gat,45,113,5	script	Pac	705,{
+prt_in,45,113,5	script	Pac	705,{
 	mes "[Pac]";
 	mes "I am 3rd oldest and wisest of the 4 brothers that makes all the newer hats. You will need to bring me the correct items for each hat so I can make them.";
 	next;

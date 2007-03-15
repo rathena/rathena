@@ -17,7 +17,7 @@
 
 
 // Milk Trader -------------------------------------------------------------
-prontera.gat,71,131,7	script	Milk Trader	86,{
+prontera,71,131,7	script	Milk Trader	86,{
 	mes "[Milk Trader]";
 	mes "If you bring me an empty bottle and 20 Zeny, I will exchange it for 1 bottle of milk.";
 	next;

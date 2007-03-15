@@ -1,6 +1,6 @@
 //by Lupus
 
-prontera.gat,156,179,6	script	test_getmonsterinfo	117,{
+prontera,156,179,6	script	test_getmonsterinfo	117,{
 	mes "Please enter a monster ID (1001 ... 2000)";
 	input @value;
 	if(getmonsterinfo(@value,MOB_LV)<0 || getmonsterinfo(@value,MOB_NAME)=="Dummy") {

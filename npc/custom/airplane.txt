@@ -11,11 +11,11 @@
 //= It's the elRO airship. XD
 //===== Additional Comments: =================================
 //= ALWAYS HAVE AT LEAST TWELVE (12) LOCATIONS AS THE MINIMUM.  This is unless you modify to OnMinutes and change the schedule around.
-//= If you have "airplane.gat,103,72,0	warp	airs02a	1,1,airplane.gat,102,200" as a warp, remove it.  Where it's supposed to go, I have no clue.
+//= If you have "airplane,103,72,0	warp	airs02a	1,1,airplane,102,200" as a warp, remove it.  Where it's supposed to go, I have no clue.
 //= 2.1 Removed Duplicates [Silent]
 //= 2.2 Added missing next;'s [Evera]
 //============================================================ 
-payon.gat,153,43,5	script	itinsetter	-1,{
+payon,153,43,5	script	itinsetter	-1,{
 
 //This is just OnInit stuff to set the hourly intinerary.
 OnInit:
@@ -48,30 +48,30 @@ setarray $locationsname$[20],"Gefenia Ruins";
 setarray $locationsname$[21],"Ayothaya"; 
 setarray $locationsname$[22],"Lighthalzen"; 
 setarray $locationsname$[23],"Juperos"; 
-setarray $locationsmap$[0],"airport.gat"; 
-setarray $locationsmap$[1],"prt_fild08.gat"; 
-setarray $locationsmap$[2],"pay_fild08.gat"; 
-setarray $locationsmap$[3],"mjolnir_12.gat"; 
-setarray $locationsmap$[4],"pay_fild03.gat"; 
-setarray $locationsmap$[5],"gef_fild00.gat"; 
-setarray $locationsmap$[6],"moc_fild10.gat"; 
-setarray $locationsmap$[7],"glast_01.gat"; 
-setarray $locationsmap$[8],"umbala.gat"; 
-setarray $locationsmap$[9],"comodo.gat"; 
-setarray $locationsmap$[10],"amatsu.gat"; 
-setarray $locationsmap$[11],"niflheim.gat"; 
-setarray $locationsmap$[12],"xmas.gat"; 
-setarray $locationsmap$[13],"louyang.gat"; 
-setarray $locationsmap$[14],"gonryun.gat"; 
-setarray $locationsmap$[15],"yuno.gat"; 
-setarray $locationsmap$[16],"moc_fild04.gat"; 
-setarray $locationsmap$[17],"jawaii.gat"; 
-setarray $locationsmap$[18],"gef_fild10.gat"; 
-setarray $locationsmap$[19],"mjolnir_02.gat"; 
-setarray $locationsmap$[20],"gefenia01.gat"; 
-setarray $locationsmap$[21],"ayothaya.gat"; 
-setarray $locationsmap$[22],"lighthalzen.gat";
-setarray $locationsmap$[23],"jupe_gate.gat";
+setarray $locationsmap$[0],"airport"; 
+setarray $locationsmap$[1],"prt_fild08"; 
+setarray $locationsmap$[2],"pay_fild08"; 
+setarray $locationsmap$[3],"mjolnir_12"; 
+setarray $locationsmap$[4],"pay_fild03"; 
+setarray $locationsmap$[5],"gef_fild00"; 
+setarray $locationsmap$[6],"moc_fild10"; 
+setarray $locationsmap$[7],"glast_01"; 
+setarray $locationsmap$[8],"umbala"; 
+setarray $locationsmap$[9],"comodo"; 
+setarray $locationsmap$[10],"amatsu"; 
+setarray $locationsmap$[11],"niflheim"; 
+setarray $locationsmap$[12],"xmas"; 
+setarray $locationsmap$[13],"louyang"; 
+setarray $locationsmap$[14],"gonryun"; 
+setarray $locationsmap$[15],"yuno"; 
+setarray $locationsmap$[16],"moc_fild04"; 
+setarray $locationsmap$[17],"jawaii"; 
+setarray $locationsmap$[18],"gef_fild10"; 
+setarray $locationsmap$[19],"mjolnir_02"; 
+setarray $locationsmap$[20],"gefenia01"; 
+setarray $locationsmap$[21],"ayothaya"; 
+setarray $locationsmap$[22],"lighthalzen";
+setarray $locationsmap$[23],"jupe_gate";
 setarray $locationsx[0],148; 
 setarray $locationsx[1],206; 
 setarray $locationsx[2],159; 
@@ -245,7 +245,7 @@ Board:
 
 L_Yes:
 	if($destination!=getarg(0))goto Notime;
-	warp "airplane.gat", 105, 72;
+	warp "airplane", 105, 72;
 	specialeffect2 501;
 L_Nope:
 	mes "^FF0000[Porter]^000000";
@@ -265,83 +265,83 @@ Itin:
 mes "^FF0000[Porter]^000000";
 callfunc "F_Itin";
 }
-airport.gat,153,43,5	script	Airport Porter	774,{
+airport,153,43,5	script	Airport Porter	774,{
 callfunc "F_Porter",0;
 }
-prt_fild08.gat,206,279,5	script	Porter#01	774,{
+prt_fild08,206,279,5	script	Porter#01	774,{
 callfunc "F_Porter",1;
 }
-gef_fild00.gat,50,364,5	script	Porter#02	774,{
+gef_fild00,50,364,5	script	Porter#02	774,{
 callfunc "F_Porter",5;
 }
-moc_fild10.gat,163,173,5	script	Porter#03	774,{
+moc_fild10,163,173,5	script	Porter#03	774,{
 callfunc "F_Porter",6;
 }
-mjolnir_12.gat,61,380,5	script	Porter#04	774,{
+mjolnir_12,61,380,5	script	Porter#04	774,{
 callfunc "F_Porter",3;
 }
-pay_fild08.gat,159,91,5	script	Porter#05	774,{
+pay_fild08,159,91,5	script	Porter#05	774,{
 callfunc "F_Porter",2;
 }
-pay_fild03.gat,194,181,5	script	Porter#06	774,{
+pay_fild03,194,181,5	script	Porter#06	774,{
 callfunc "F_Porter",4;
 }
-glast_01.gat,196,326,1	script	Porter#07	774,{
+glast_01,196,326,1	script	Porter#07	774,{
 callfunc "F_Porter",7;
 }
-umbala.gat,188,98,3	script	Porter#08	774,{
+umbala,188,98,3	script	Porter#08	774,{
 callfunc "F_Porter",8;
 }
-comodo.gat,203,75,8	script	Porter#09	774,{
+comodo,203,75,8	script	Porter#09	774,{
 callfunc "F_Porter",9;
 }
-amatsu.gat,115,78,8	script	Porter#10	774,{
+amatsu,115,78,8	script	Porter#10	774,{
 callfunc "F_Porter",10;
 }
-niflheim.gat,132,242,5	script	Porter#11	774,{
+niflheim,132,242,5	script	Porter#11	774,{
 callfunc "F_Porter",11;
 }
-xmas.gat,232,309,5	script	Porter#12	774,{
+xmas,232,309,5	script	Porter#12	774,{
 callfunc "F_Porter",12;
 }
-louyang.gat,35,279,8	script	Porter#13	774,{
+louyang,35,279,8	script	Porter#13	774,{
 callfunc "F_Porter",13;
 }
-gonryun.gat,82,95,7	script	Porter#14	774,{
+gonryun,82,95,7	script	Porter#14	774,{
 callfunc "F_Porter",14;
 }
-yuno.gat,58,195,4	script	Porter#15	774,{
+yuno,58,195,4	script	Porter#15	774,{
 callfunc "F_Porter",15;
 }
-moc_fild04.gat,210,326,2	script	Porter#16	774,{
+moc_fild04,210,326,2	script	Porter#16	774,{
 callfunc "F_Porter",16;
 }
-jawaii.gat,247,174,7	script	Porter#17	774,{
+jawaii,247,174,7	script	Porter#17	774,{
 callfunc "F_Porter",17;
 }
-gef_fild10.gat,159,95,2	script	Porter#18	774,{
+gef_fild10,159,95,2	script	Porter#18	774,{
 callfunc "F_Porter",18;
 }
-mjolnir_02.gat,76,364,5	script	Porter#19	774,{
+mjolnir_02,76,364,5	script	Porter#19	774,{
 callfunc "F_Porter",19;
 }
-gefenia01.gat,97,22,6	script	Porter#20	774,{
+gefenia01,97,22,6	script	Porter#20	774,{
 callfunc "F_Porter",20;
 }
-ayothaya.gat,182,105,5	script	Porter#21	774,{
+ayothaya,182,105,5	script	Porter#21	774,{
 callfunc "F_Porter",21;
 }
-lighthalzen.gat,99,241,4	script	Porter#22	774,{
+lighthalzen,99,241,4	script	Porter#22	774,{
 callfunc "F_Porter",22;
 }
-jupe_gate.gat,46,18,7	script	Porter#23	774,{
+jupe_gate,46,18,7	script	Porter#23	774,{
 callfunc "F_Porter",23;
 }
-airport.gat,141,43,5	script	Itinerary Schedule	837,{
+airport,141,43,5	script	Itinerary Schedule	837,{
 mes "^FF0000[Itinerary]^000000";
 callfunc "F_Itin";
 }
-airplane.gat,102,68,5	script	Docker	852,{
+airplane,102,68,5	script	Docker	852,{
 	if($destination == 250) goto Nowhere;
 	mes "^FF0000[Airplane Attendant]^000000";
 	if($destination == 250)goto Notime;

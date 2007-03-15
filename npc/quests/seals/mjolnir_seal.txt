@@ -13,7 +13,7 @@
 // 1.1 Fixed wrong label names [Luups]
 //============================================================
 
-prontera.gat,124,297,3	script	Tialfi	706,{
+prontera,124,297,3	script	Tialfi	706,{
 
 	if ($God3 < 50)
 {
@@ -419,7 +419,7 @@ prontera.gat,124,297,3	script	Tialfi	706,{
 
 }
 
-prt_fild01.gat,196,47,3	script	Roskva	703,{
+prt_fild01,196,47,3	script	Roskva	703,{
 
 
 	if(god_mjo_0 == 1)
@@ -503,7 +503,7 @@ prt_fild01.gat,196,47,3	script	Roskva	703,{
 
 }
 
-mjolnir_11.gat,149,247,5	script	Dwarf Blacksmith#east	826,{
+mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 
 	if ($God3 < 50)
 {
@@ -1094,7 +1094,7 @@ L_Speak2:
 
 }
 
-mjolnir_09.gat,209,341,3	script	Dwarf Blacksmith#south	826,{
+mjolnir_09,209,341,3	script	Dwarf Blacksmith#south	826,{
 
 	if ($God3 < 50)
 {
@@ -2012,7 +2012,7 @@ mjolnir_09.gat,209,341,3	script	Dwarf Blacksmith#south	826,{
 
 }
 
-mjolnir_01.gat,35,136,7	script	Dwarf Blacksmith#west	826,{
+mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 
 	if($God3 < 50)
 {
@@ -2732,7 +2732,7 @@ mjolnir_01.gat,35,136,7	script	Dwarf Blacksmith#west	826,{
 
 }
 
-mjolnir_12.gat,18,18,7	script	Dwarf Blacksmith#north	826,{
+mjolnir_12,18,18,7	script	Dwarf Blacksmith#north	826,{
 
 	if ($God3 < 50)
 {

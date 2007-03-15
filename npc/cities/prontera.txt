@@ -22,7 +22,7 @@
 
 
 // Tono ---------------------------------------------------------------
-prontera.gat,54,240,5	script	Tono	97,{
+prontera,54,240,5	script	Tono	97,{
 	mes "[Tono]";
 	mes "Did you know the larva of a Creamy is a Fabre.";
 	mes "The pupa stage of a Fabre is simply called Pupa.";
@@ -36,7 +36,7 @@ prontera.gat,54,240,5	script	Tono	97,{
 }
 
 // Dairene ----------------------------------------------------------------
-prontera.gat,78,150,3	script	Dairenne	90,{
+prontera,78,150,3	script	Dairenne	90,{
 	mes "[Town girl Dairenne]";
 	mes "(Cough Cough)... Nowadays the streets are too crowded. (Cough Cough)...";
 	mes "Oh..So Dusty...So dirty here... Now I think the Capital City isn't all that good.";
@@ -64,7 +64,7 @@ prontera.gat,78,150,3	script	Dairenne	90,{
 }
 
 // Merideth --------------------------------------------------------------
-prontera.gat,106,117,6	script	Merideth	91,{
+prontera,106,117,6	script	Merideth	91,{
 	mes "[Merideth]";
 	mes "The weather was nice on my day off, so my family and I decided to have a picnic.";
 	mes "We chose to go to a somewhat secluded area and were amazed at what we saw."; 
@@ -81,7 +81,7 @@ prontera.gat,106,117,6	script	Merideth	91,{
 }
 
 // YuNa ---------------------------------------------------------------------
-prontera.gat,146,204,2	script	YuNa	700,{
+prontera,146,204,2	script	YuNa	700,{
 	mes "[YuNa]";
 	mes "Odin is the god of wisdom and war.  He courageously removed one of his eyes in order to acquire ultimate wisdom. ";
 	next;
@@ -103,7 +103,7 @@ prontera.gat,146,204,2	script	YuNa	700,{
 }
 
 // YuPi -----------------------------------------------------------------------
-prontera.gat,160,133,2	script	YuPi	102,{
+prontera,160,133,2	script	YuPi	102,{
 	mes "[YuPi]";
 	mes "Among monsters of the same species, there are some that are MORE FEROCIOUS than others";
 	mes "If you even TOUCH them by mistake, you'd better prepare yourself for what's gonna happen next.";
@@ -115,7 +115,7 @@ prontera.gat,160,133,2	script	YuPi	102,{
 }
 
 // Shuger -------------------------------------------------------------
-prontera.gat,102,287,5	script	Shuger	98,{
+prontera,102,287,5	script	Shuger	98,{
 	mes "[Shuger]";
 	mes "In the fields outside of town, there are pink monsters called '^FF8888Porings^000000'.";
 	mes "Though they are cute and do not harm people, they are notorious looters.  They will absorb any item that they find on the ground.";
@@ -130,7 +130,7 @@ prontera.gat,102,287,5	script	Shuger	98,{
 
 //------------------------------------------------------------------------------------- Prontera Church -------------------------------------------------------------------------------\\
 // Henson ---------------------------------------------------------------
-prt_church.gat,103,71,2	script	Henson	120,{
+prt_church,103,71,2	script	Henson	120,{
 	mes "[Henson]";
 	mes "Our duty is not only to help others, but to also purify poor souls that have been turned into the Undead.";
 	mes "In order to successfully accomplish our duty, we have to learn special skills and practice them very diligently.";
@@ -200,7 +200,7 @@ L_MENU:
 }
 
 // Garnet --------------------------------------------------------------
-prt_church.gat,103,76,2	script	Garnet	67,{
+prt_church,103,76,2	script	Garnet	67,{
 	mes "[Garnet]";
 	mes "Oh~ you want to find pleasure in helping other people, but you don't know how to do so?";
 	mes "Fortunately we have the abilities to help and support other people.";
@@ -282,7 +282,7 @@ L_MENU:
 
 // ----------------------------------------------------------------------------------------------- PUB -----------------------------------------------------------------------------------------------------\\
 // Sir Michael (West End Pub)
-prt_in.gat,26,30,1	script	Sir Michael	54,{
+prt_in,26,30,1	script	Sir Michael	54,{
 	mes "[Sir Michael]";
 	mes "I dunno if you'll ever believe me, but I saw the WEIRDEST thing down in the ^5555FFCulvert Sewers^000000.";
 	mes "I've been training in the 3rd level of the sewers for a long time now, so there's nothing about that area that I don't know.";
@@ -300,7 +300,7 @@ prt_in.gat,26,30,1	script	Sir Michael	54,{
 }
 
 //Shevild ----------------------------------------------------
-prt_in.gat,173,24,2	script	Shevild	85,{
+prt_in,173,24,2	script	Shevild	85,{
 	mes "[Shevild]";
 	mes "Hey~Hey~ Come on over and have a drink, man. I'll tell you some exciting stories.";
 	mes "Do not judge me by the way I look... I've been everywhere you can imagine around Prontera.";
@@ -373,7 +373,7 @@ prt_in.gat,173,24,2	script	Shevild	85,{
 }
 
 // Bartender ---------------------------------------------------------
-prt_in.gat,181,21,2	script	Bartender#03	61,{
+prt_in,181,21,2	script	Bartender#03	61,{
 	mes "[Bartender]";
 	mes "Phew~ more and more people a crawling in these days.";
 	mes "I am getting more and more tired everyday, though business has never been better...";
@@ -419,7 +419,7 @@ L_MENU:
 }
 
 // Marvin -----------------------------------------------------------
-prt_in.gat,177,18,2	script	Marvin	80,{
+prt_in,177,18,2	script	Marvin	80,{
 	mes "[Marvin]";
 	mes "....Usually skills are mastered at level 10. So some people get nervous about selecting which one they should learn.";
 	next;
@@ -439,7 +439,7 @@ prt_in.gat,177,18,2	script	Marvin	80,{
 }
 
 // Tensue -----------------------------------------------------
-prt_in.gat,177,20,2	script	TenSue	97,{
+prt_in,177,20,2	script	TenSue	97,{
 	mes "[TenSue]";
 	set @TEMP,rand(3);
 	if(@TEMP == 1) goto L_TMP1;
@@ -481,7 +481,7 @@ prt_in.gat,177,20,2	script	TenSue	97,{
 //----------------------------------------------- Library -----------------------------------------------------\\
 
 // Library Girl Ellen ----------------------------------------------------
-prt_in.gat,175,50,2	script	Librarian Ellen	71,{
+prt_in,175,50,2	script	Librarian Ellen	71,{
 	if(@libtmp)goto L_1;
 	mes "[Librarian Ellen]";
 	mes "Welcome. You can find books about monsters, organized by their properties here. There are also books about Merchant and Blacksmith skills.";
@@ -504,7 +504,7 @@ L_1:
 }
 
 // Gurator Guiss -------------------------------------------------------
-prt_in.gat,178,92,2	script	Curator  Guiss	57,{
+prt_in,178,92,2	script	Curator  Guiss	57,{
 	mes "[Curator Guiss]";
 	mes "Our library keeps records of monsters in various dungeons scattered around Rune-Midgard.";
 	mes "They are categorized according to each dungeon where the specific monster resides. Needless to say, every record is very easily accessible.";
@@ -519,7 +519,7 @@ prt_in.gat,178,92,2	script	Curator  Guiss	57,{
 }
 
 // Drunken man in the inn -----------------------------------------------
-prt_in.gat,173,13,4	script	Customer#Hans Solo	86,{
+prt_in,173,13,4	script	Customer#Hans Solo	86,{
 
 	set @number_drink,0;
 	set @number_place,0;
@@ -595,7 +595,7 @@ s_Five:
 				mes "Good! Let me send you to that place now...Hehe..";
 				percentheal 100,0;
 				close2;
-				warp "jawaii_in.gat",44,124;
+				warp "jawaii_in",44,124;
 				end;
 
 s_Dont:
@@ -615,7 +615,7 @@ s_While:
 				mes "Good! I'll send you there now...Hehe..";
 				mes "Grumble about your pityful life while you can...Hehe...";
 				percentheal 100,0;
-				warp "jawaii_in.gat",44,124;
+				warp "jawaii_in",44,124;
 				close;
 s_Dont2:
 				mes "[Hans Solo]";

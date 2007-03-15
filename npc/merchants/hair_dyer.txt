@@ -17,7 +17,7 @@
 
 
 // HairDyer Jovovich -----------------------------------------------------
-prt_in.gat,243,168,4	script	HairDyer Jovovich	91,{
+prt_in,243,168,4	script	HairDyer Jovovich	91,{
 	mes "[HairDyer Jovovich]";
 	mes "Welcome to my Hair Dying shop.";
 	next;
@@ -156,4 +156,3 @@ prt_in.gat,243,168,4	script	HairDyer Jovovich	91,{
 		mes "I think... every human being has the right to become beautiful......";
 		close;
 }
-

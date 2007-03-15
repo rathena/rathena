@@ -16,7 +16,7 @@
 //Fixed Mounted Class bugs and Baby Class bugs [Zoc]
 //============================================================
 
-prontera.gat,160,186,6	script	Job Changer	94,{
+prontera,160,186,6	script	Job Changer	94,{
 cutin "kafra_01",2;
 mes "[ ^0065DFJobra^000000 ]";
 mes "Sup? I'm the insanely cool and uber cute jobchanger thingy for eAthena! First of all, what class would you like to change into (must meet preliminary requirements for each class..)?";

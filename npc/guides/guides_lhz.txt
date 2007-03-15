@@ -13,7 +13,7 @@
 //= 1.1 Removed Duplicates [Silent]
 //============================================================
 
-lighthalzen.gat,220,311,3	script	Guide::LhzSlum	852,{
+lighthalzen,220,311,3	script	Guide::LhzSlum	852,{
 
 	mes "[Lighthalzen Guide]";
 	mes "welcome to Lighthalzen,";
@@ -142,7 +142,7 @@ s_Notice:
 
 }
 
-lighthalzen.gat,207,311,3	script	Guide::LhzWest	852,{
+lighthalzen,207,311,3	script	Guide::LhzWest	852,{
 
 	mes "[Lighthalzen Guide]";
 	mes "welcome to Lighthalzen,";
@@ -357,6 +357,6 @@ s_Notice:
 
 }
 
-lighthalzen.gat,154,100,5	duplicate(LhzWest)	Guide#lhz1	852
+lighthalzen,154,100,5	duplicate(LhzWest)	Guide#lhz1	852
 
-lighthalzen.gat,319,243,5	duplicate(LhzSlum)	Guide#lhz2	852
+lighthalzen,319,243,5	duplicate(LhzSlum)	Guide#lhz2	852

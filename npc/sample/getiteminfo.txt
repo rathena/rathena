@@ -1,6 +1,6 @@
 //by Lupus
 
-prontera.gat,156,179,6	script	test_getiteminfo	117,{
+prontera,156,179,6	script	test_getiteminfo	117,{
 	mes "Please enter an item ID (501 ... 14000)";
 	input @value;
 //WOW! this line uses INTERNAL function of your client to show item name by its ID!

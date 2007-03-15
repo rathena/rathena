@@ -21,32 +21,32 @@
 //////////////////////////
 //Places all of our NPCs//
 //////////////////////////
-prt_fild05.gat,277,226,5	script	Dullahan Master	736,{
+prt_fild05,277,226,5	script	Dullahan Master	736,{
 	callfunc "PXC_Disguiser",0,quest_disguise;
 Close;
 }
 
-moc_fild10.gat,34,283,4	script	Dullahan Master	736,{
+moc_fild10,34,283,4	script	Dullahan Master	736,{
 	callfunc "PXC_Disguiser",1,quest_disguise;
 close;
 }
 
-gef_fild00.gat,97,123,4	script	Dullahan Master	736,{
+gef_fild00,97,123,4	script	Dullahan Master	736,{
 	callfunc "PXC_Disguiser",2,quest_disguise;
 close;
 }
 
-pay_fild01.gat,369,305,4	script	Dullahan Master	736,{
+pay_fild01,369,305,4	script	Dullahan Master	736,{
 	callfunc "PXC_Disguiser",3,quest_disguise;
 close;
 }
 
-pay_fild03.gat,313,40,4	script	Dullahan Master	736,{
+pay_fild03,313,40,4	script	Dullahan Master	736,{
 	callfunc "PXC_Disguiser",4,quest_disguise;
 close;
 }
 
-prt_fild08.gat,362,185,4	script	Dullahan Master	736,{
+prt_fild08,362,185,4	script	Dullahan Master	736,{
 	callfunc "PXC_Disguiser",5,quest_disguise;
 	close;
 

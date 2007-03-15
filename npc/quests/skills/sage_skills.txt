@@ -25,7 +25,7 @@
 //============================================================
 // SAGE SKILL - CREATE CONVERTER + ELEMENTAL CHANGE
 //============================================================
-yuno_in03.gat,176,24,3	script	Mischna	755,{
+yuno_in03,176,24,3	script	Mischna	755,{
 	mes "[Mischna]";
 	if(BaseJob!=Job_Sage) goto L_sageno;
 	if(getskilllv(1007)) goto L_elemental;

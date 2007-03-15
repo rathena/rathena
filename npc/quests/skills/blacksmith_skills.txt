@@ -26,7 +26,7 @@
 // BLACKSMITH SKILL - GREED + UNFAIR TRICK
 //============================================================
 //== GOODDAY - GREED SKILL ===================================
-geffen.gat,172,53,7	script	Goodday	826,{
+geffen,172,53,7	script	Goodday	826,{
 	mes "[Goodday]";
 	if(BaseJob!=Job_Blacksmith) goto L_nosmith;
 	if(getskilllv(1013)) goto L_alreadyhave;
@@ -67,7 +67,7 @@ L_alreadyhave:
 }
 
 //== AKI - UNFAIR TRICK SKILL ==================================
-geffen.gat,178,72,7	script	Aki	726,{
+geffen,178,72,7	script	Aki	726,{
 	mes "[Aki]";
 	if(BaseJob!=Job_Blacksmith) goto L_nosmith;
 	if(getskilllv(1012)) goto L_alreadyhave;

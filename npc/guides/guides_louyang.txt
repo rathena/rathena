@@ -16,7 +16,7 @@
 
 //----------------------------------------------------------------------
 
-louyang.gat,224,104,4	script	Representative#Lou	818,{
+louyang,224,104,4	script	Representative#Lou	818,{
 
 	mes "[Representative]";
 	mes "Welcome to Louyang,";
@@ -154,7 +154,7 @@ louyang.gat,224,104,4	script	Representative#Lou	818,{
 		close;
 }
 
-louyang.gat,160,175,4	script	Soldier#Lou1	825,{
+louyang,160,175,4	script	Soldier#Lou1	825,{
 
 	mes "[Soldier]";
 	mes "Welcome to Louyang,";
@@ -294,4 +294,4 @@ louyang.gat,160,175,4	script	Soldier#Lou1	825,{
 		close;
 }
 
-louyang.gat,213,213,4	duplicate(Soldier#Lou1)	Soldier#Lou2	825
+louyang,213,213,4	duplicate(Soldier#Lou1)	Soldier#Lou2	825

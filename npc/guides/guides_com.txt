@@ -16,17 +16,17 @@
 //= 1.4	Removed 3 guides, and converted to use functions.
 //============================================================
 
-comodo.gat,322,178,4	script	Comodo Guide#1	700,{
+comodo,322,178,4	script	Comodo Guide#1	700,{
 	set @name$,"Native Kokomo";
 	callfunc "comodo_guide";
 	end;
 }
-comodo.gat,176,350,4	script	Comodo Guide#2	700,{
+comodo,176,350,4	script	Comodo Guide#2	700,{
 	set @name$,"Native Cocomo";
 	callfunc "comodo_guide";
 	end;
 }
-comodo.gat,37,219,4	script	Comodo Guide#3	700,{
+comodo,37,219,4	script	Comodo Guide#3	700,{
 	set @name$,"Native Papaya";
 	callfunc "comodo_guide";
 	end;

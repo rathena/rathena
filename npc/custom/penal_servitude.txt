@@ -16,7 +16,7 @@
 // 1.2 Stricted the conditions a bit
 //=========================================================
 
-sec_pri.gat,36,58,1	script	Chief Warder	105,{ 
+sec_pri,36,58,1	script	Chief Warder	105,{ 
 	mes "[Saddeus]";
 	emotion 1;
 	if(sex) {
@@ -75,8 +75,8 @@ L_RELEASE:
 	mes "[Saddeus]";
 	mes "You are free now!";
 	next;
-	savepoint "izlude.gat",105,112;
-	warp "izlude.gat",105,112;
+	savepoint "izlude",105,112;
+	warp "izlude",105,112;
 	close;
 
 M_Q1:
@@ -103,23 +103,23 @@ M_Q1:
 	if (@rw==4) goto L_W4;
 
 L_W1:
-	savepoint "sec_in02.gat",179,76;
-	warp "sec_in02.gat",179,76;
+	savepoint "sec_in02",179,76;
+	warp "sec_in02",179,76;
 	close;
 
 L_W2:
-	savepoint "sec_in02.gat",139,32;
-	warp "sec_in02.gat",139,32;
+	savepoint "sec_in02",139,32;
+	warp "sec_in02",139,32;
 	close;
 
 L_W3:
-	savepoint "sec_in02.gat",100,28;
-	warp "sec_in02.gat",100,28;
+	savepoint "sec_in02",100,28;
+	warp "sec_in02",100,28;
 	close;
 
 L_W4:
-	savepoint "sec_in02.gat",107,75;
-	warp "sec_in02.gat",107,75;
+	savepoint "sec_in02",107,75;
+	warp "sec_in02",107,75;
 	close;
 
 M_NO_THANKS:
@@ -130,7 +130,7 @@ M_NO_THANKS:
 	close;  
 }
 
-sec_in02.gat,137,57,1	script	Overseer	708,{ 
+sec_in02,137,57,1	script	Overseer	708,{ 
 	mes "[Oliver]";
 
 	delitem 4002,countitem(4002);//Items: Fabre_Card,
@@ -152,8 +152,8 @@ sec_in02.gat,137,57,1	script	Overseer	708,{
 	delitem 1069,countitem(1069);//Items: Orange_Net_Mushroom,
 	delitem 1070,countitem(1070);//Items: Orange_Gooey_Mushroom_,
 	next;
-	savepoint "izlude.gat",105,112;
-	warp "izlude.gat",105,112;
+	savepoint "izlude",105,112;
+	warp "izlude",105,112;
 	close;
 
 L_GET_Q:
@@ -174,21 +174,21 @@ L_GET_Q:
 }
 
 
-sec_in02.gat	mapflag	nomemo
-sec_in02.gat	mapflag	nosave	SavePoint
-sec_in02.gat	mapflag	noteleport
-sec_in02.gat	mapflag	nobranch
-sec_in02.gat	mapflag	nowarp
-sec_in02.gat	mapflag	nowarpto
-sec_in02.gat	mapflag	noexp
-sec_in02.gat	mapflag	noskill
-//sec_in02.gat	mapflag	pvp
-//sec_in02.gat	mapflag	pvp_noparty
-//sec_in02.gat	mapflag	gvg
-sec_in02.gat	mapflag	pvp_nightmaredrop	random,all,300
+sec_in02	mapflag	nomemo
+sec_in02	mapflag	nosave	SavePoint
+sec_in02	mapflag	noteleport
+sec_in02	mapflag	nobranch
+sec_in02	mapflag	nowarp
+sec_in02	mapflag	nowarpto
+sec_in02	mapflag	noexp
+sec_in02	mapflag	noskill
+//sec_in02	mapflag	pvp
+//sec_in02	mapflag	pvp_noparty
+//sec_in02	mapflag	gvg
+sec_in02	mapflag	pvp_nightmaredrop	random,all,300
 
-sec_in02.gat,138,55,100,100	monster	Toadstool	1182,30,10000,10000,1
-sec_in02.gat,138,55,100,100	monster	Fabre	1184,10,20000,20000
-sec_in02.gat,138,55,100,100	monster	Chonchon	1183,11,20000,20000
-sec_in02.gat,138,55,100,100	monster	Spore	1014,12,20000,20000
-sec_in02.gat,138,55,100,100	monster	Poison Spore	1077,3,20000,20000
+sec_in02,138,55,100,100	monster	Toadstool	1182,30,10000,10000,1
+sec_in02,138,55,100,100	monster	Fabre	1184,10,20000,20000
+sec_in02,138,55,100,100	monster	Chonchon	1183,11,20000,20000
+sec_in02,138,55,100,100	monster	Spore	1014,12,20000,20000
+sec_in02,138,55,100,100	monster	Poison Spore	1077,3,20000,20000

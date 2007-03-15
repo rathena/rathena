@@ -17,7 +17,7 @@
 //==================================================================================//
 // 				Stop Post Quest
 //==================================================================================//
-morocc_in.gat,142,100,4	script	William	89,{
+morocc_in,142,100,4	script	William	89,{
 	mes "[William]";
 	mes "Welcome to MacMillan's ^3355FF'Post'^000000 Workshop .";
 	next;
@@ -65,7 +65,7 @@ morocc_in.gat,142,100,4	script	William	89,{
 //==================================================================================//
 //				Binoculars Quest
 //==================================================================================//
-morocc_in.gat,76,163,4	script	Alchemist	64,{
+morocc_in,76,163,4	script	Alchemist	64,{
 	mes "[Marius]";
 	mes "Howdy! A new customer........ Wait!!! I know what you're here for....... You're interested in those magical goggles aren't you?";
 	next;

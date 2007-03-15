@@ -20,7 +20,7 @@
 //=====================================================
 //		Getting To Lutie
 //=====================================================
-aldebaran.gat,168,168,4	script	Mr. Claus	718,{
+aldebaran,168,168,4	script	Mr. Claus	718,{
 	mes "[Mr. Claus]";
 	mes "Merry Christmas!!";
 	mes "I wish you all happiness!";
@@ -50,7 +50,7 @@ aldebaran.gat,168,168,4	script	Mr. Claus	718,{
 		mes "Ok then, off you go to enjoy the fun and excitement that Lutie";
 		mes "Has to offer!";
 		close2;
-		warp "xmas_fild01.gat",78,68;
+		warp "xmas_fild01",78,68;
 		end;
 	LEnd:
 		mes "[Mr. Claus]";
@@ -66,7 +66,7 @@ aldebaran.gat,168,168,4	script	Mr. Claus	718,{
 
 // Mima
 //============================================================
-xmas_in.gat,27,103,4	script	Mima	701,{
+xmas_in,27,103,4	script	Mima	701,{
 	if(xmas_npc==5) goto Xmas5;
 	if(xmas_npc==6) goto Xmas6;
 	if(xmas_npc==7) goto Xmas7;
@@ -185,7 +185,7 @@ Xmas8:
 
 // Santa Claus
 //===================================================================
-xmas_in.gat,100,96,4	script	Father Christmas::Santa1	718,{
+xmas_in,100,96,4	script	Father Christmas::Santa1	718,{
 	if(@talkedsanta == 1) goto L_Xmas1;
 	mes "[Santa Claus]";
 	mes "Ho Ho Ho~";
@@ -251,7 +251,7 @@ L_End:
 
 // Debra
 //==================================================================
-xmas_in.gat,165,173,4	script	Debra	711,{
+xmas_in,165,173,4	script	Debra	711,{
 	if(xmas_npc==1 || xmas_npc==2) goto Xmas1;
 	mes "[Debra]";
 	mes "Merry Christmas!";
@@ -327,7 +327,7 @@ xmas_in.gat,165,173,4	script	Debra	711,{
 
 // Peterson
 //=========================================================
-xmas.gat,117,304,4	script	Peterson	713,{
+xmas,117,304,4	script	Peterson	713,{
 	if((xmas_npc==3) || (xmas_npc==4)) goto Xmas34;
 	mes "[Peterson]";
 	mes "Merry Christmas!";
@@ -376,7 +376,7 @@ Xmas34:
 
 // Hairy Uncle Ken
 //==========================================================
-xmas.gat,176,236,4	script	Hairy Uncle Ken	712,{
+xmas,176,236,4	script	Hairy Uncle Ken	712,{
 	if(xmas_npc==4) goto Xmas4;
 	if(xmas_npc==5) goto Xmas5;
 	mes "[Hairy Uncle Ken]";
@@ -508,7 +508,7 @@ Xmas4:
 
 // Jack Frost
 //====================================================================
-xmas.gat,134,112,4	script	Jack Frost	710,{
+xmas,134,112,4	script	Jack Frost	710,{
 	mes "[Jack Frost]";
 	if(xmas_npc==2) goto Xmas2;
 	if(xmas_npc==3) goto Xmas3;
@@ -769,7 +769,7 @@ Xmas11:
 
 // Howie the Clown
 //=====================================================================
-xmas.gat,146,136,4	script	Howie the Clown	715,{
+xmas,146,136,4	script	Howie the Clown	715,{
 	mes "[Howie]";
 	mes "Meeee~RrrrrYYYY Christmas~!";
 	mes "La La La! La La La La!~";
@@ -858,7 +858,7 @@ xmas.gat,146,136,4	script	Howie the Clown	715,{
 
 // Charlie
 //================================================================
-xmas.gat,206,168,4	script	Charlie	706,{
+xmas,206,168,4	script	Charlie	706,{
 	if(xmas_npc==9) goto Xmas9;
 	mes "[Charlie]";
 	mes "Merry, Merry Christmas! Did you talk to that clown, ^5533FFHowie^000000 yet? Man that";
@@ -893,7 +893,7 @@ Xmas9:
 
 // Marsha
 //================================================================
-xmas.gat,208,168,4	script	Marsha	703,{
+xmas,208,168,4	script	Marsha	703,{
 	if(xmas_npc==10) goto Xmas10;
 	if(xmas_npc==9) goto Xmas9a;
 

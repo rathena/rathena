@@ -17,7 +17,7 @@
 //============================================================
 
 
-einbroch.gat,72,202,4	script	Guide#1::Einbroch_Guide	852,{
+einbroch,72,202,4	script	Guide#1::Einbroch_Guide	852,{
 	cutin "ein_soldier",2;
 	mes "[Einbroch Guide]";
 	mes "Welcome to Einbroch, the City of Steel.";
@@ -164,5 +164,5 @@ M_End:
 	close;
 }
 
-einbroch.gat,155,43,4	duplicate(Einbroch_Guide)	Guide#Einb2	852
-einbroch.gat,162,317,4	duplicate(Einbroch_Guide)	Guide#Einb3	852
+einbroch,155,43,4	duplicate(Einbroch_Guide)	Guide#Einb2	852
+einbroch,162,317,4	duplicate(Einbroch_Guide)	Guide#Einb3	852

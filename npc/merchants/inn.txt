@@ -30,71 +30,71 @@
 
 //======================== Prontera ===================================
 // West Side Inn -------------------
-prt_in.gat,244,135,2	script	Inn Maid::Sammy	53,{
+prt_in,244,135,2	script	Inn Maid::Sammy	53,{
 
-	callfunc "F_InnMaid","[Sammy]","West Inn","prt_in.gat",238,130;
-	warp "prt_in.gat",237,102;
+	callfunc "F_InnMaid","[Sammy]","West Inn","prt_in",238,130;
+	warp "prt_in",237,102;
 }
 // East Side Inn ------------------
-prt_in.gat,61,141,2	script	Inn Maid::Ahlma#01	53,{
+prt_in,61,141,2	script	Inn Maid::Ahlma#01	53,{
 
-	callfunc "F_InnMaid","[Ahlma]","East Inn","prt_in.gat",64,136;
-	warp "prt_in.gat",49,173;
+	callfunc "F_InnMaid","[Ahlma]","East Inn","prt_in",64,136;
+	warp "prt_in",49,173;
 }
 
 //======================== Alberta ====================================
 // North --------------------------
-alberta_in.gat,32,142,5	script	Inn Maid::Moira	53,{
+alberta_in,32,142,5	script	Inn Maid::Moira	53,{
 
-	callfunc "F_InnMaid","[Moira]","North Inn","alberta_in.gat",26,138;
-	warp "alberta_in.gat",18,188;
+	callfunc "F_InnMaid","[Moira]","North Inn","alberta_in",26,138;
+	warp "alberta_in",18,188;
 }
 // South -----------------------------
-alberta_in.gat,55,142,8	script	Inn Maid::Tina	53,{
+alberta_in,55,142,8	script	Inn Maid::Tina	53,{
 
-	callfunc "F_InnMaid","[Tina]","South Inn","alberta_in.gat",60,140;
-	warp "alberta_in.gat",68,188;
+	callfunc "F_InnMaid","[Tina]","South Inn","alberta_in",60,140;
+	warp "alberta_in",68,188;
 }
 
 //====================== Geffen ======================================
-geffen_in.gat,70,64,5	script	Inn Maid::Betty	53,{
+geffen_in,70,64,5	script	Inn Maid::Betty	53,{
 
-	callfunc "F_InnMaid","[Betty]","Geffen Inn","geffen_in.gat",74,60;
-	warp "geffen_in.gat",106,106;
+	callfunc "F_InnMaid","[Betty]","Geffen Inn","geffen_in",74,60;
+	warp "geffen_in",106,106;
 }
 
 //======================= Payon ======================================
-payon_in01.gat,131,62,5	script	Inn Maid::SunHee	53,{
+payon_in01,131,62,5	script	Inn Maid::SunHee	53,{
 
-	callfunc "F_InnMaid","[Sun Hee]","Payon Inn","payon_in01.gat",132,56;
-	warp "payon_in01.gat",140,15;
+	callfunc "F_InnMaid","[Sun Hee]","Payon Inn","payon_in01",132,56;
+	warp "payon_in01",140,15;
 }
 
 //======================== Morocc ====================================
 // North East --------------------------
-morocc_in.gat,147,138,5	script	Inn Maid::Suzie	53,{
+morocc_in,147,138,5	script	Inn Maid::Suzie	53,{
 
-	callfunc "F_InnMaid","[Suzie]","North East Inn","morocc_in.gat",142,140;
-	warp "morocc_in.gat",174,144;
+	callfunc "F_InnMaid","[Suzie]","North East Inn","morocc_in",142,140;
+	warp "morocc_in",174,144;
 }
 // South --------------------------------
-morocc_in.gat,80,100,5	script	Inn Maid::Shala	53,{
+morocc_in,80,100,5	script	Inn Maid::Shala	53,{
 
-	callfunc "F_InnMaid","[Shala]","South Inn","morocc_in.gat",78,95;
-	warp "morocc_in.gat",74,128;
+	callfunc "F_InnMaid","[Shala]","South Inn","morocc_in",78,95;
+	warp "morocc_in",74,128;
 }
 
 //======================== Rachel ====================================
-ra_in01.gat,376,69,4	script	Inn Keeper	931,{
+ra_in01,376,69,4	script	Inn Keeper	931,{
 
-	callfunc "F_InnMaid","[Annie]","Rachel Inn","ra_in01.gat",375,58;
-	warp "ra_in01.gat",384,128;
+	callfunc "F_InnMaid","[Annie]","Rachel Inn","ra_in01",375,58;
+	warp "ra_in01",384,128;
 }
 
 //======================== Hugel ====================================
-hu_in01.gat,246,107,3	script	Inn Maid::Receptionist	53,{
+hu_in01,246,107,3	script	Inn Maid::Receptionist	53,{
 
-	callfunc "F_InnMaid","[Receptionist]","Hugel Inn","hu_in01.gat",263,95;
+	callfunc "F_InnMaid","[Receptionist]","Hugel Inn","hu_in01",263,95;
 	warp "hu_in01",267,5;
 }
 

@@ -1,5 +1,5 @@
 
-prontera.gat,161,181,6	script	GetEquipID Sample	105,{
+prontera,161,181,6	script	GetEquipID Sample	105,{
    	mes "[GetEquipID Sample]";
 	mes " GetEquipID(01) : " + getequipid(1);
 	mes " GetEquipID(02) : " + getequipid(2);
@@ -14,4 +14,3 @@ prontera.gat,161,181,6	script	GetEquipID Sample	105,{
         close;
         end;
 }
-

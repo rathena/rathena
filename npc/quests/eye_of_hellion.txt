@@ -15,7 +15,7 @@
 //= 1.1 a ',' that should be ';' [FlavioJS]
 //============================================================
 
-geffen.gat,110,200,3	script	Sage Welshyun	754,2,2,{
+geffen,110,200,3	script	Sage Welshyun	754,2,2,{
 
 	if(HELLIONQ > 25)goto s_Last;
 	if(HELLIONQ > 18)goto s_Switches;
@@ -357,7 +357,7 @@ s_Switches:
 		mes "warp you to the location";
 		mes "marked on the tablet's map...";
 		close2;
-		warp "gef_fild09.gat",368,88;
+		warp "gef_fild09",368,88;
 		set HELLIONQ,26;
 		end;
 	break;
@@ -376,7 +376,7 @@ OnTouch:
 
 }
 
-prontera.gat,269,326,3	script	Clanux Heffron	50,{
+prontera,269,326,3	script	Clanux Heffron	50,{
 
 	if(HELLIONQ > 7)goto s_Last;
 	if(HELLIONQ)goto s_Switches;
@@ -686,7 +686,7 @@ s_Sorry:
 
 }
 
-prontera.gat,224,84,1	script	Training Dummy#HellionDummy	111,{
+prontera,224,84,1	script	Training Dummy#HellionDummy	111,{
 
 	if(HELLIONQ == 2)goto s_Hellion;
 	mes "^3151FFIt's a training dummy";
@@ -726,7 +726,7 @@ s_Hellion:
 
 }
 
-prt_in.gat,128,79,0	script	Unknown Machine#HellionMchn	111,{
+prt_in,128,79,0	script	Unknown Machine#HellionMchn	111,{
 	if(HELLIONQ == 6)goto s_Input2;
 	if(HELLIONQ == 5)goto s_Input;
 	mes "^3151FFIt's some sort of";
@@ -830,7 +830,7 @@ s_NoCog:
 
 }
 
-prontera.gat,45,67,1	script	#HellionActivator	139,0,0,{
+prontera,45,67,1	script	#HellionActivator	139,0,0,{
 OnTouch:
 	if(HELLIONQ != 4)end;
 	mes "[" + strcharinfo(0) + "]";
@@ -910,7 +910,7 @@ s_Failstr:
 
 }
 
-payon.gat,182,132,3	script	Grout'he Tuccok	48,{
+payon,182,132,3	script	Grout'he Tuccok	48,{
 
 	if(HELLIONQ > 17)goto s_Final;
 	if(HELLIONQ > 8)goto s_Switches;
@@ -1212,7 +1212,7 @@ s_Switches:
 
 }
 
-payon.gat,101,191,1	script	#HellionStepAct	139,1,1,{
+payon,101,191,1	script	#HellionStepAct	139,1,1,{
 	if(HELLIONQ != 10)end;
 	mes "[" + strcharinfo(0) + "]";
 	mes "Well, this is where";
@@ -1232,7 +1232,7 @@ payon.gat,101,191,1	script	#HellionStepAct	139,1,1,{
 
 }
 
-payon.gat,82,109,1	script	Pile of Stones#HellionStones	111,{
+payon,82,109,1	script	Pile of Stones#HellionStones	111,{
 	if(HELLIONQ != 11)end;
 	mes "[" + strcharinfo(0) + "]";
 	mes "Well, this is the place";
@@ -1254,7 +1254,7 @@ payon.gat,82,109,1	script	Pile of Stones#HellionStones	111,{
 
 }
 
-payon.gat,239,56,1	script	Dried Fish#HellionFish	111,{
+payon,239,56,1	script	Dried Fish#HellionFish	111,{
 	if(HELLIONQ != 12)end;
 	mes "[" + strcharinfo(0) + "]";
 	mes "So... Dried fish all";
@@ -1275,7 +1275,7 @@ payon.gat,239,56,1	script	Dried Fish#HellionFish	111,{
 
 }
 
-payon.gat,240,161,1	script	Vat#HellionVat	111,{
+payon,240,161,1	script	Vat#HellionVat	111,{
 	if(HELLIONQ != 13)end;
 	mes "[" + strcharinfo(0) + "]";
 	mes "Alright, the last";
@@ -1301,7 +1301,7 @@ payon.gat,240,161,1	script	Vat#HellionVat	111,{
 
 }
 
-payon.gat,159,130,1	script	Wooden Floor#HellionFloor	111,{
+payon,159,130,1	script	Wooden Floor#HellionFloor	111,{
 	if(HELLIONQ > 15)goto s_Slab;
 	if(HELLIONQ != 15)end;
 	mes "[" + strcharinfo(0) + "]";
@@ -1380,7 +1380,7 @@ s_Slab:
 
 }
 
-pay_arche.gat,141,29,1	script	Buddha Statue#HellionStat	111,3,3,{
+pay_arche,141,29,1	script	Buddha Statue#HellionStat	111,3,3,{
 	if(HELLIONQ != 17)end;
 	mes "[" + strcharinfo(0) + "]";
 	mes "Hey, there's a huge";
@@ -1476,7 +1476,7 @@ OnTouch:
 
 }
 
-morocc_in.gat,116,101,2	script	Old Scholar Tyus	735,2,2,{
+morocc_in,116,101,2	script	Old Scholar Tyus	735,2,2,{
 
 	if(HELLIONQ == 27)goto s_Last;
 	if(countitem(7332))goto s_Tablet;
@@ -2075,7 +2075,7 @@ OnTouch:
 
 }
 
-gef_fild09.gat,296,59,1	script	Hidden Cave#HellionCave	111,{
+gef_fild09,296,59,1	script	Hidden Cave#HellionCave	111,{
 
 	if(!countitem(7332))goto s_NoTablet;
 	mes "^3151FFAmongst the wild bushes";
@@ -2132,7 +2132,7 @@ s_Insert:
 	mes " ";
 	mes "                       -Tyus";
 	close2;
-	warp "gef_dun03.gat",140,119;
+	warp "gef_dun03",140,119;
 	end;
 
 s_NoTablet:

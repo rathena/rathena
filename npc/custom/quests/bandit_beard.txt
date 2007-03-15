@@ -16,7 +16,7 @@
 //= 1.2 fixed donpcevent label [Lupus]
 //============================================================
 
-umbala.gat,126,129,4	script	Bearded Man	120,{
+umbala,126,129,4	script	Bearded Man	120,{
 	if(BEARD_QUEST == 4 ) goto L_MAKE;
 	if(BEARD_QUEST >= 5 ) goto L_DONE;
 	if(BEARD_QUEST >= 1 ) goto L_THREAD;
@@ -101,7 +101,7 @@ L_NOITEMS:
 }  
 
 //Master Tailor----------
-izlude_in.gat,123,175,4	script	Master Tailor	50,{
+izlude_in,123,175,4	script	Master Tailor	50,{
 	mes "[Master Tailor]";
 	mes "Good evening! I am the Master Tailor!";
 	if(BEARD_QUEST != 1 ) close;
@@ -118,7 +118,7 @@ izlude_in.gat,123,175,4	script	Master Tailor	50,{
 	close;
 }
 // Karfa Thread Clerk---
-aldeba_in.gat,70,179,5	script	Karfa Clerk	113,{
+aldeba_in,70,179,5	script	Karfa Clerk	113,{
 	mes "[Karfa Clerk]";
 	if(BEARD_QUEST == 3 ) goto L_REPEAT;
 	if(BEARD_QUEST > 3 ) goto L_DONE;
@@ -156,7 +156,7 @@ L_DONE:
 }
 
 //Thread Merchant ------
-alberta.gat,65,123,6	script	Man	85,{
+alberta,65,123,6	script	Man	85,{
 	if(BEARD_QUEST == 3 && $@beardMobD) goto L_KILLED;
 	if(BEARD_QUEST > 3) goto L_DONE;
 
@@ -208,20 +208,20 @@ M_NO:
 }
 
 //mobsummons -------
-alberta.gat,1,1,1	script	BRDQ_MOBS	-1,{
+alberta,1,1,1	script	BRDQ_MOBS	-1,{
 OnStart:
 	set $@beardMob,10;
 	set $@beardMobD,0;
-	monster "alberta.gat",65,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta.gat",66,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta.gat",67,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta.gat",68,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta.gat",66,121,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta.gat",67,121,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta.gat",68,121,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta.gat",66,122,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta.gat",67,122,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
-	monster "alberta.gat",68,122,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",65,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",66,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",67,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",68,120,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",66,121,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",67,121,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",68,121,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",66,122,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",67,122,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
+	monster "alberta",68,122,"Thef Bug Male",1054,1,"BRDQ_MOBS::OnDie";
 	end;
 OnDie:
 	set $@beardmob, $@beardmob - 1;

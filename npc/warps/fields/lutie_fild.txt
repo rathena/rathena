@@ -13,5 +13,5 @@
 //============================================================
 
 //= Lutie Field ==============================================
-xmas_fild01.gat,80,251,0	warp	xmas2	2,2,xmas.gat,150,45
-xmas_fild01.gat,85,49,0	warp	xmas001	10,3,aldebaran.gat,140,240
+xmas_fild01,80,251,0	warp	xmas2	2,2,xmas,150,45
+xmas_fild01,85,49,0	warp	xmas001	10,3,aldebaran,140,240

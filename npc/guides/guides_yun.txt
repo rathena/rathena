@@ -21,7 +21,7 @@
 
 
 //=====================================================================================
-yuno.gat,153,47,4	script	Juno Guide#yun1	700,{ 
+yuno,153,47,4	script	Juno Guide#yun1	700,{ 
 	mes "[Ms. Yoon]"; 
 	mes "A place that takes the vision of"; 
 	mes "the future, and gives it form in";
@@ -33,7 +33,7 @@ yuno.gat,153,47,4	script	Juno Guide#yun1	700,{
 }
 
 //=====================================================================
-yuno.gat,334,182,4	script	Juno Soldier#yun1	105,{
+yuno,334,182,4	script	Juno Soldier#yun1	105,{
 	mes "[Juno Soldier]";
 	mes "Welcome to Juno, the city of";
 	mes "noble-mindedness.";
@@ -53,7 +53,7 @@ yuno.gat,334,182,4	script	Juno Soldier#yun1	105,{
 }
 
 //=====================================================================
-yuno.gat,263,320,4	script	Juno Soldier#yun2	105,{
+yuno,263,320,4	script	Juno Soldier#yun2	105,{
 	mes "[Juno Soldier]";
 	mes "Welcome to Juno, the city of";
 	mes "noble-mindedness.";
@@ -73,7 +73,7 @@ yuno.gat,263,320,4	script	Juno Soldier#yun2	105,{
 }
 
 //=====================================================================
-yuno.gat,227,292,4	script	Juno Soldier#yun3	105,{
+yuno,227,292,4	script	Juno Soldier#yun3	105,{
 	mes "[Juno Soldier]";
 	mes "Welcome to Juno, the city of";
 	mes "noble-mindedness.";
@@ -94,7 +94,7 @@ yuno.gat,227,292,4	script	Juno Soldier#yun3	105,{
 }
 
 //=====================================================================
-yuno.gat,165,283,4	script	Yuno Soldier#yun4	105,{
+yuno,165,283,4	script	Yuno Soldier#yun4	105,{
 	mes "[Juno Soldier]";
 	mes "Welcome to Juno, the city of";
 	mes "noble-mindedness.";
@@ -120,7 +120,7 @@ yuno.gat,165,283,4	script	Yuno Soldier#yun4	105,{
 }
 
 //=====================================================================
-yuno.gat,150,283,4	script	Yuno Soldier#yun5	105,{
+yuno,150,283,4	script	Yuno Soldier#yun5	105,{
 	mes "[Juno Soldier]";
 	mes "Welcome to Juno, the city of";
 	mes "noble-mindedness.";
@@ -148,7 +148,7 @@ yuno.gat,150,283,4	script	Yuno Soldier#yun5	105,{
 }
 
 //=====================================================================
-yuno.gat,165,228,4	script	Yuno Soldier#yun6	105,{
+yuno,165,228,4	script	Yuno Soldier#yun6	105,{
 	mes "[Juno Soldier]";
 	mes "Welcome to Juno, the city of";
 	mes "noble-mindedness.";
@@ -173,7 +173,7 @@ yuno.gat,165,228,4	script	Yuno Soldier#yun6	105,{
 }
 
 //=====================================================================
-yuno.gat,150,228,4	script	Yuno Soldier#yun7	105,{
+yuno,150,228,4	script	Yuno Soldier#yun7	105,{
 	mes "[Juno Soldier]";
 	mes "Welcome to Juno, the city of";
 	mes "noble-mindedness.";

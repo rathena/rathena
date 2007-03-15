@@ -13,43 +13,43 @@
 //==================================================
 // odin_tem01 - Odin Temple F1
 //==================================================
-odin_tem01.gat,0,0,0,0	monster	Plasma	1693,15,0,0,0
-odin_tem01.gat,0,0,0,0	monster	Breeze	1692,10,0,0,0
-odin_tem01.gat,0,0,0,0	monster	Plasma	1694,3,0,0,0
-odin_tem01.gat,0,0,0,0	monster	Plasma	1695,3,0,0,0
-odin_tem01.gat,0,0,0,0	monster	Plasma	1696,3,0,0,0
-odin_tem01.gat,0,0,0,0	monster	Plasma	1697,3,0,0,0
-odin_tem01.gat,0,0,0,0	monster	Skeggiold	1754,1,0,0,0
-odin_tem01.gat,0,0,0,0	monster	Blue Plant	1079,5,900000,450000,1
-odin_tem01.gat,0,0,0,0	monster	Green Plant	1080,5,180000,90000,1
-odin_tem01.gat,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000,1
+odin_tem01,0,0,0,0	monster	Plasma	1693,15,0,0,0
+odin_tem01,0,0,0,0	monster	Breeze	1692,10,0,0,0
+odin_tem01,0,0,0,0	monster	Plasma	1694,3,0,0,0
+odin_tem01,0,0,0,0	monster	Plasma	1695,3,0,0,0
+odin_tem01,0,0,0,0	monster	Plasma	1696,3,0,0,0
+odin_tem01,0,0,0,0	monster	Plasma	1697,3,0,0,0
+odin_tem01,0,0,0,0	monster	Skeggiold	1754,1,0,0,0
+odin_tem01,0,0,0,0	monster	Blue Plant	1079,5,900000,450000,1
+odin_tem01,0,0,0,0	monster	Green Plant	1080,5,180000,90000,1
+odin_tem01,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000,1
 
 //==================================================
 // odin_tem02 - Odin Temple F2
 //==================================================
-odin_tem02.gat,0,0,0,0	monster	Skogul	1752,30,0,0,0
-odin_tem02.gat,0,0,0,0	monster	Frus	1753,25,0,0,0
-odin_tem02.gat,0,0,0,0	monster	Plasma	1693,15,0,0,0
-odin_tem02.gat,0,0,0,0	monster	Skeggiold	1754,3,0,0,0
-odin_tem02.gat,0,0,0,0	monster	Skeggiold	1755,3,0,0,0
-odin_tem02.gat,0,0,0,0	monster	Valkyrie	1765,1,0,0,0
-odin_tem02.gat,0,0,0,0	monster	Blue Plant	1079,12,900000,450000,1
+odin_tem02,0,0,0,0	monster	Skogul	1752,30,0,0,0
+odin_tem02,0,0,0,0	monster	Frus	1753,25,0,0,0
+odin_tem02,0,0,0,0	monster	Plasma	1693,15,0,0,0
+odin_tem02,0,0,0,0	monster	Skeggiold	1754,3,0,0,0
+odin_tem02,0,0,0,0	monster	Skeggiold	1755,3,0,0,0
+odin_tem02,0,0,0,0	monster	Valkyrie	1765,1,0,0,0
+odin_tem02,0,0,0,0	monster	Blue Plant	1079,12,900000,450000,1
 //Slave of who?
-odin_tem02.gat,0,0,0,0	monster	Skogul	1761,1,0,0,0
-odin_tem02.gat,0,0,0,0	monster	Frus	1762,1,0,0,0
+odin_tem02,0,0,0,0	monster	Skogul	1761,1,0,0,0
+odin_tem02,0,0,0,0	monster	Frus	1762,1,0,0,0
 
 //==================================================
 // odin_tem03 - Odin Temple F3
 //==================================================
-odin_tem03.gat,0,0,0,0	monster	Plasma	1693,20,0,0,0
-odin_tem03.gat,0,0,0,0	monster	Skeggiold	1754,15,0,0,0
-odin_tem03.gat,0,0,0,0	monster	Skeggiold	1755,10,0,0,0
-odin_tem03.gat,0,0,0,0	monster	Skogul	1752,5,0,0,0
-odin_tem03.gat,0,0,0,0	monster	Frus	1753,5,0,0,0
-odin_tem03.gat,0,0,0,0	monster	Valkyrie	1765,2,0,0,0
-odin_tem03.gat,0,0,0,0	monster	Valkyrie Randgris	1751,1,3600000,1800000,1
-odin_tem03.gat,0,0,0,0	monster	Blue Plant	1079,12,900000,450000,1
-odin_tem03.gat,0,0,0,0	monster	Shining Plant	1083,10,1800000,900000,1
+odin_tem03,0,0,0,0	monster	Plasma	1693,20,0,0,0
+odin_tem03,0,0,0,0	monster	Skeggiold	1754,15,0,0,0
+odin_tem03,0,0,0,0	monster	Skeggiold	1755,10,0,0,0
+odin_tem03,0,0,0,0	monster	Skogul	1752,5,0,0,0
+odin_tem03,0,0,0,0	monster	Frus	1753,5,0,0,0
+odin_tem03,0,0,0,0	monster	Valkyrie	1765,2,0,0,0
+odin_tem03,0,0,0,0	monster	Valkyrie Randgris	1751,1,3600000,1800000,1
+odin_tem03,0,0,0,0	monster	Blue Plant	1079,12,900000,450000,1
+odin_tem03,0,0,0,0	monster	Shining Plant	1083,10,1800000,900000,1
 //Slave of who?
-odin_tem03.gat,0,0,0,0	monster	Skogul	1761,1,0,0,0
-odin_tem03.gat,0,0,0,0	monster	Frus	1762,1,0,0,0
+odin_tem03,0,0,0,0	monster	Skogul	1761,1,0,0,0
+odin_tem03,0,0,0,0	monster	Frus	1762,1,0,0,0

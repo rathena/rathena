@@ -18,7 +18,7 @@
 
 
 //=================================================Bard Jet====================================================
-payon_in02.gat,67,65,3	script	Bard Jet#tu	51,{
+payon_in02,67,65,3	script	Bard Jet#tu	51,{
 	mes "[Jet]";
 	mes "Every god never grows old";
 	mes "Because of beautiful";
@@ -163,7 +163,7 @@ payon_in02.gat,67,65,3	script	Bard Jet#tu	51,{
 }
 
 //=================================================Sign====================================================
-pay_arche.gat,127,154,4	script	Sign#arc	835,{
+pay_arche,127,154,4	script	Sign#arc	835,{
 	mes " ";
 	mes " Archer Job Change Office  --->  ";
 	mes " <---     Icarus  ";
@@ -172,7 +172,7 @@ pay_arche.gat,127,154,4	script	Sign#arc	835,{
 }
 
 //=================================================Master Kavaruk====================================================
-payon_in02.gat,47,13,3	script	Master Kavaruk	55,{
+payon_in02,47,13,3	script	Master Kavaruk	55,{
 
 	mes "[Master Kavaruk]";
 	mes "Hello, young one.";
@@ -412,7 +412,7 @@ payon_in02.gat,47,13,3	script	Master Kavaruk	55,{
 }
 
 //=================================================Raiden Karus====================================================
-pay_arche.gat,103,165,5	script	Raiden Karus#tu	832,{
+pay_arche,103,165,5	script	Raiden Karus#tu	832,{
 
 	mes "[Raiden Karus]";
 	if(MaxWeight - Weight < 2000){
@@ -578,7 +578,7 @@ pay_arche.gat,103,165,5	script	Raiden Karus#tu	832,{
 								mes "Off you go!";
 								mes "To Prontera!";
 								close2;
-								warp "prontera.gat",116,72;
+								warp "prontera",116,72;
 								end;
 								break;
 							case 2:
@@ -746,7 +746,7 @@ pay_arche.gat,103,165,5	script	Raiden Karus#tu	832,{
 					mes "Alright...!";
 					mes "Get a move on!";
 					close2;
-					warp "prontera.gat",116,72;
+					warp "prontera",116,72;
 					end;
 					break;
 				case 2:
@@ -786,7 +786,7 @@ pay_arche.gat,103,165,5	script	Raiden Karus#tu	832,{
 					mes "Alright...!";
 					mes "Get a move on!";
 					close2;
-					warp "prontera.gat",116,72;
+					warp "prontera",116,72;
 					end;
 					break;
 				case 2:
@@ -1039,7 +1039,7 @@ pay_arche.gat,103,165,5	script	Raiden Karus#tu	832,{
 					mes "the chance, give a hello to my Acolyte pal over there for me~";
 					emotion e_heh;
 					close2;
-					warp "mjolnir_11.gat",25,221;
+					warp "mjolnir_11",25,221;
 					end;
 					break;
 				case 2:
@@ -1131,7 +1131,7 @@ pay_arche.gat,103,165,5	script	Raiden Karus#tu	832,{
 }
 
 //=================================================Arepesto====================================================
-pay_arche.gat,109,169,3	script	Arpesto	712,{
+pay_arche,109,169,3	script	Arpesto	712,{
 	mes "[Arpesto]";
 	mes "The sky still looks clear, but recently the winds that have been blowing through the land seem to carry with them an air of misfortune.";
 	next;
@@ -1151,7 +1151,7 @@ pay_arche.gat,109,169,3	script	Arpesto	712,{
 }
 
 //=================================================Seisner====================================================
-pay_arche.gat,84,139,3	script	Seisner	727,{
+pay_arche,84,139,3	script	Seisner	727,{
 	//misceffect EF_HIT2;
 	mes "[Seisner]";
 	mes "Aaaah!";
@@ -1355,10 +1355,10 @@ pay_arche.gat,84,139,3	script	Seisner	727,{
 }
 
 //=================================================Target====================================================
-pay_arche.gat,76,135,3	script	Target#Target	111,{ end; }	// empty NPC?? [Jukka]
+pay_arche,76,135,3	script	Target#Target	111,{ end; }	// empty NPC?? [Jukka]
 
 //=================================================Acolyte====================================================
-mjolnir_11.gat,27,223,3	script	Acolyte#tu	95,{
+mjolnir_11,27,223,3	script	Acolyte#tu	95,{
 	mes "[Acolyte]";
 	if(tu_archer01 == 14){
 		if(gettime(3) >= 18 && gettime(3) < 22){
@@ -1560,7 +1560,7 @@ mjolnir_11.gat,27,223,3	script	Acolyte#tu	95,{
 }
 
 //=================================================Alchemist Guildmember====================================================
-pay_arche.gat,130,113,3	script	Alchemist Guildmember#tu	740,{
+pay_arche,130,113,3	script	Alchemist Guildmember#tu	740,{
 	mes "[Alchemist Guildmember]";
 	if(tu_archer02 > 0){
 		if((countitem(1032) > 0) || (countitem(905) > 0 )){	// Blossom_Of_Maneater & Stem
@@ -1635,7 +1635,7 @@ pay_arche.gat,130,113,3	script	Alchemist Guildmember#tu	740,{
 }
 
 //=================================================Arthail====================================================
-prontera.gat,126,335,5	script	Arthail	51,{
+prontera,126,335,5	script	Arthail	51,{
 	mes "[Arthail]";
 	if(tu_archer02 < 3){
 		mes "I am the Bard";
@@ -1818,7 +1818,7 @@ prontera.gat,126,335,5	script	Arthail	51,{
 }
 
 //=================================================New Guild Master====================================================
-prontera.gat,167,281,3	script	New Guild Master#tu	753,{
+prontera,167,281,3	script	New Guild Master#tu	753,{
 	mes "[New Guild Master]";
 	mes "Hearken, all";
 	mes "of you who seek";
@@ -1840,7 +1840,7 @@ prontera.gat,167,281,3	script	New Guild Master#tu	753,{
 }
 
 //=================================================Mage====================================================
-prontera.gat,144,301,5	script	Mage#tu	123,{
+prontera,144,301,5	script	Mage#tu	123,{
 	mes "[Mage]";
 	mes "Did you see that";
 	mes "new guild master?";
@@ -1867,7 +1867,7 @@ prontera.gat,144,301,5	script	Mage#tu	123,{
 }
 
 //=================================================Minister====================================================
-prt_castle.gat,76,165,6	script	Minister#tu	55,{
+prt_castle,76,165,6	script	Minister#tu	55,{
 	mes "[Minister]";
 	mes "The royal family";
 	mes "is extremely busy";
@@ -1938,7 +1938,7 @@ OnTouch:
 }
 
 //=================================================Bishop Maugins====================================================
-monk_in.gat,19,43,1	script	Bishop Maugins	60,{
+monk_in,19,43,1	script	Bishop Maugins	60,{
 	mes "[Bishop Maugins]";
 	if(vu_archer02 == 7){
 		mes "Greetings.";

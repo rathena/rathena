@@ -25,7 +25,7 @@
 
 function	script	F_Flags	{
 
-	set @GID, GetCastleData(getarg(1)+".gat",1);
+	set @GID, GetCastleData(getarg(1),1);
 	if (@GID != 0) goto L_Startg;
 
 	mes "[ Edict of the Divine Rune Midgard Kingdom of " + getarg(0) + " ]";
@@ -56,6 +56,6 @@ L_Startg2:
 	return;
 
 	M_Enter:
-		if (getcharid(2) == GetCastleData(getarg(1)+".gat",1)) warp getarg(1)+".gat",getarg(2),getarg(3);
+		if (getcharid(2) == GetCastleData(getarg(1),1)) warp getarg(1),getarg(2),getarg(3);
 		return;
 }

@@ -24,7 +24,7 @@
 //============================================================
 // DANCER - WINK OF CHARM
 //============================================================
-comodo.gat,205,171,7	script	Chanel	724,{
+comodo,205,171,7	script	Chanel	724,{
 	mes "[Chanel]";
 	if(BaseJob!=Job_Dancer) goto L_nodancer;
 	if(getskilllv(1011)) goto L_alreadyhave;

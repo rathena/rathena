@@ -74,27 +74,27 @@
 //============================================================ 
 
 //Yuno
-yuno.gat,153,191,4	script	Cool Event Voting Staff::CoolEventVotingStaff01	874,{
+yuno,153,191,4	script	Cool Event Voting Staff::CoolEventVotingStaff01	874,{
 	callfunc "F_DTS_Warp",0,0;
 }
-yuno.gat,162,191,6	script	Kafra Voting Staff#01	861,{
+yuno,162,191,6	script	Kafra Voting Staff#01	861,{
 	callfunc "F_DTS_Warp",1,8;
 }
 //Lighthalzen
-lighthalzen.gat,154,60,6	script	Cool Event Voting Staff::CoolEventVotingStaff02	874,{
+lighthalzen,154,60,6	script	Cool Event Voting Staff::CoolEventVotingStaff02	874,{
 	callfunc "F_DTS_Warp",0,0;
 }
 //Prontera
-prontera.gat,147,125,4	script	Cool Event Voting Staff::CoolEventVotingStaff03	874,{
+prontera,147,125,4	script	Cool Event Voting Staff::CoolEventVotingStaff03	874,{
 	callfunc "F_DTS_Warp",0,0;
 }
-prontera.gat,164,125,6	script	Kafra Voting Staff#02	115,{
+prontera,164,125,6	script	Kafra Voting Staff#02	115,{
 	callfunc "F_DTS_Warp",1,3;
 }
 
 //Cool Event Staff Headquarters NPCs
 //Kudiuu (Maintenance Guy)
-lhz_in02.gat,20,274,6	script	Maintenance Guy	851,{
+lhz_in02,20,274,6	script	Maintenance Guy	851,{
 	mes "[Kudiuu]";
 	mes "Holy...!";
 	mes "Will this place";
@@ -105,7 +105,7 @@ lhz_in02.gat,20,274,6	script	Maintenance Guy	851,{
 	close;
 }
 //Cesuna (Zondaman at desk)
-lhz_in02.gat,36,284,1	script	Cool Event Staff#01	874,{
+lhz_in02,36,284,1	script	Cool Event Staff#01	874,{
 	mes "[Cesuna]";
 	mes "Ack! I'm totally";
 	mes "swamped with all this";
@@ -122,7 +122,7 @@ lhz_in02.gat,36,284,1	script	Cool Event Staff#01	874,{
 	close;
 }
 //Jellarin (Event planner)
-lhz_in02.gat,40,279,3	script	Event Planner	833,{
+lhz_in02,40,279,3	script	Event Planner	833,{
 	mes "[Jellarin]";
 	mes "I don't like this.";
 	mes "But I don't like that";
@@ -138,7 +138,7 @@ lhz_in02.gat,40,279,3	script	Event Planner	833,{
 	close;
 }
 //Baoto (Cool Event Manager)
-lhz_in02.gat,110,283,5	script	Cool Event Manager	853,{
+lhz_in02,110,283,5	script	Cool Event Manager	853,{
 	mes "[Baoto]";
 	mes "Hmmm...";
 	mes "The employees seem";
@@ -156,7 +156,7 @@ lhz_in02.gat,110,283,5	script	Cool Event Manager	853,{
 	close;
 }
 //Saera (Secretary), contains GM menu
-lhz_in02.gat,36,274,3	script	Cool Event Staff#02	831,{
+lhz_in02,36,274,3	script	Cool Event Staff#02	831,{
 	callfunc "F_ClearGarbage";				//Clear outdated, unused variables
 	if($dts == 0){
 		set $dts,$dts|(1<<0);				//Sets NPCs to election mode if first time running
@@ -840,17 +840,17 @@ function	script	F_DTS_Warp	{
 		if (@dtswarp$[@num] == "Cancel") goto Lcancel;
 		if (Zeny<4000) goto Lnomoney;
 		set Zeny, Zeny-4000;
-		if (@dtswarpmap$[@num] == "Toy Factory, Level 2") warp "xmas_dun02.gat",130,123;
+		if (@dtswarpmap$[@num] == "Toy Factory, Level 2") warp "xmas_dun02",130,123;
  //Maps to warp to
-		if (@dtswarpmap$[@num] == "Clock Tower, Level 3") warp "alde_dun03.gat",265,22;
+		if (@dtswarpmap$[@num] == "Clock Tower, Level 3") warp "alde_dun03",265,22;
 
-		if (@dtswarpmap$[@num] == "Lava Dungeon, Level 2") warp "mag_dun02.gat",47,40;
+		if (@dtswarpmap$[@num] == "Lava Dungeon, Level 2") warp "mag_dun02",47,40;
 
-		if (@dtswarpmap$[@num] == "Byalan, Level 4") warp "iz_dun03.gat",32,63;
+		if (@dtswarpmap$[@num] == "Byalan, Level 4") warp "iz_dun03",32,63;
 
-		if (@dtswarpmap$[@num] == "Clock Tower, Basement 3") warp "alde_dun03.gat",277,178;
+		if (@dtswarpmap$[@num] == "Clock Tower, Basement 3") warp "alde_dun03",277,178;
 
-		if (@dtswarpmap$[@num] == "Glastheim Entrance") warp "glast_01.gat",370,304;
+		if (@dtswarpmap$[@num] == "Glastheim Entrance") warp "glast_01",370,304;
 
 		cutin "", 255;
 		end;

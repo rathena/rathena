@@ -16,7 +16,7 @@
 //= 1.2 Fixed Momotaro Quest, thanks to .~Abism0~. [Lupus]
 //============================================================ 
 
-amatsu.gat,223,235,4	script	Publisher	763,{
+amatsu,223,235,4	script	Publisher	763,{
 	if (event_momo > 4) goto Lfin;
 	if ((event_momo >= 1) && (event_momo <= 4)) goto Lget;
 	mes "[Publisher]";
@@ -335,7 +335,7 @@ Lfin:
 	close;
 }
 //=====================================================================
-ama_test.gat,50,44,4	script	Event Hall Staff	109,{
+ama_test,50,44,4	script	Event Hall Staff	109,{
 	mes "[Satoshi]";
 	mes "Welcome to <Momotaro Field Trip>";
 	next;
@@ -381,7 +381,7 @@ ama_test.gat,50,44,4	script	Event Hall Staff	109,{
 		mes "Thank you.";
 		mes "Bye~~";
 		close2;
-		warp "amatsu.gat",223,230;
+		warp "amatsu",223,230;
 		end;
 L1:
 		mes "[Satoshi]";
@@ -431,15 +431,15 @@ OnInit:
 	waitingroom "Event Hall Waiting Room",1,"Event Hall Staff::OnMax";
 OnInitCopy:
 	enablewaitingroomevent "Event Hall Staff";
-	areawarp "ama_test.gat",30,78,68,120,"amatsu.gat",223,230;
+	areawarp "ama_test",30,78,68,120,"amatsu",223,230;
 	disablenpc "Manager#Momotaro";
 	enablenpc "Grandpa#Momotaro";
 	enablenpc "Grandma#Momotaro";
 	donpcevent "#MomotaroTimer::OnStopTimer";
-	killmonsterall "ama_test.gat";
+	killmonsterall "ama_test";
 	end;
 OnMax:
-	warpwaitingpc "ama_test.gat",51,85;
+	warpwaitingpc "ama_test",51,85;
 	disablewaitingroomevent "Event Hall Staff";
 	disablenpc "Manager#Momotaro";
 	enablenpc "Grandpa#Momotaro";
@@ -448,23 +448,23 @@ OnMax:
 	end;
 }
 
-ama_test.gat,1,1,0	script	#MomotaroTimer	-1,{
+ama_test,1,1,0	script	#MomotaroTimer	-1,{
 OnStartTimer:
 	initnpctimer;
 	end;
 OnTimer180000:
 	if(!isloggedin($MomotaroRID))goto s_Cleanup;
-	mapannounce "ama_test.gat","Timer: 3 Minutes left.",8;
+	mapannounce "ama_test","Timer: 3 Minutes left.",8;
 	end;
 OnTimer300000:
 	if(!isloggedin($MomotaroRID))goto s_Cleanup;
-	mapannounce "ama_test.gat","Timer: 1 Minute left.",8;
+	mapannounce "ama_test","Timer: 1 Minute left.",8;
 	end;
 OnTimer360000:
 	if(!isloggedin($MomotaroRID))goto s_Cleanup;
-	mapannounce "ama_test.gat","Timer: Beep- Beep- Beep- Time's up.",8;
+	mapannounce "ama_test","Timer: Beep- Beep- Beep- Time's up.",8;
 OnTimer362500:
-	areawarp "ama_test.gat",30,78,68,120,"amatsu.gat",223,230;
+	areawarp "ama_test",30,78,68,120,"amatsu",223,230;
 	goto s_Cleanup;
 
 
@@ -493,7 +493,7 @@ s_Cleanup:
 	set $MomoDokebi,0;
 	set $MomoDokebi2,0;
 	set $MomotaroRID,0;
-	mapannounce "ama_test.gat","The current player has exited. The waiting room will now open again.",8;
+	mapannounce "ama_test","The current player has exited. The waiting room will now open again.",8;
 	disablenpc "Manager#Momotaro";
 	donpcevent "Event Hall Staff::OnInitCopy";
 	end;
@@ -504,11 +504,11 @@ OnStopTimer:
 
 }
 
-ama_test.gat,51,85,0	script	#MomotaroActivator	139,1,1,{
+ama_test,51,85,0	script	#MomotaroActivator	139,1,1,{
 	if($Momotaro)end;
 	set $Momotaro,1;
 	set $MomotaroRID,getcharid(3);
-	areaannounce "ama_test.gat",30,78,68,120,"Timer: The Timer has been activated. You have 6 minutes. Annihilate the monsters in time!",8;
+	areaannounce "ama_test",30,78,68,120,"Timer: The Timer has been activated. You have 6 minutes. Annihilate the monsters in time!",8;
 	donpcevent "#MomotaroTimer::OnStartTimer";
 	mes "[Grandpa]";
 	mes "Arrrk!!!";
@@ -562,15 +562,15 @@ OnTimer5000:
 	set $MomoDokebi2,0;
 	disablenpc "Grandpa#Momotaro";
 	disablenpc "Grandma#Momotaro";
-	monster "ama_test.gat",47,101,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
-	monster "ama_test.gat",51,101,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
-	monster "ama_test.gat",55,101,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
-	monster "ama_test.gat",55,97,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
-	monster "ama_test.gat",55,93,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
-	monster "ama_test.gat",53,91,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
-	monster "ama_test.gat",49,91,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
-	monster "ama_test.gat",45,96,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
-	monster "ama_test.gat",45,99,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
+	monster "ama_test",47,101,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
+	monster "ama_test",51,101,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
+	monster "ama_test",55,101,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
+	monster "ama_test",55,97,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
+	monster "ama_test",55,93,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
+	monster "ama_test",53,91,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
+	monster "ama_test",49,91,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
+	monster "ama_test",45,96,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
+	monster "ama_test",45,99,"Dokebi",1110,1,"mobcount#momotaro::OnMobDead";
 	end;
 
 OnInit:
@@ -582,14 +582,14 @@ OnInit:
 
 }
 
-ama_test.gat,49,95,4	script	Grandpa#Momotaro	766,{
+ama_test,49,95,4	script	Grandpa#Momotaro	766,{
 
 	mes "[Grandpa]";
 	mes "Zzzzzz......";
 	close;
 }
 
-ama_test.gat,51,95,4	script	Grandma#Momotaro	761,{
+ama_test,51,95,4	script	Grandma#Momotaro	761,{
 
 	mes "[Grandma]";
 	mes "Oh....!?";
@@ -597,7 +597,7 @@ ama_test.gat,51,95,4	script	Grandma#Momotaro	761,{
 
 }
 
-ama_test.gat,50,100,4	script	Manager#Momotaro	762,{
+ama_test,50,100,4	script	Manager#Momotaro	762,{
 
 	if (event_momo >= 4) goto LSecondFin;
 	mes "[Manager]";
@@ -632,7 +632,7 @@ L1:
 	set $MomotaroRID,0;
 	set event_momo,1;
 	donpcevent "Event Hall Staff::OnInitCopy";
-	warp "amatsu.gat",223,230;
+	warp "amatsu",223,230;
 	disablenpc "Manager#Momotaro";
 	end;
 L2:
@@ -671,9 +671,9 @@ OnTimer5000:
 	stopnpctimer;
 	if(!isloggedin($MomotaroRID)){ donpcevent "#MomotaroTimer::OnCleanUp"; end; }
 	attachrid($MomotaroRID);
-	monster "ama_test.gat",35,103,"Am Mut",1301,1,"mobcount2#momotaro::OnMobDead";
-	monster "ama_test.gat",56,111,"Am Mut",1301,1,"mobcount2#momotaro::OnMobDead";
-	monster "ama_test.gat",40,91,"Am Mut",1301,1,"mobcount2#momotaro::OnMobDead";
+	monster "ama_test",35,103,"Am Mut",1301,1,"mobcount2#momotaro::OnMobDead";
+	monster "ama_test",56,111,"Am Mut",1301,1,"mobcount2#momotaro::OnMobDead";
+	monster "ama_test",40,91,"Am Mut",1301,1,"mobcount2#momotaro::OnMobDead";
 	misceffect 16;
 	set event_momo,3;
 	disablenpc "Manager#Momotaro";
@@ -692,7 +692,7 @@ LWarpOut:
 	set $MomoDokebi,0;
 	set $MomoDokebi2,0;
 	set $MomotaroRID,0;
-	warp "amatsu.gat",223,230;
+	warp "amatsu",223,230;
 	donpcevent "Event Hall Staff::OnInitCopy";
 	disablenpc "Manager#Momotaro";
 	end;
@@ -706,10 +706,10 @@ OnStart:
 
 }
 //=======================================MobCount===============================-
-ama_test.gat,0,1,0	script	mobcount#momotaro	-1,{
+ama_test,0,1,0	script	mobcount#momotaro	-1,{
 OnMobDead:
 	if ($MomoDokebi >= 8){
-		areaannounce "ama_test.gat",30,78,68,120,"Dokebi: I will be baaack~~~~!!!",8;
+		areaannounce "ama_test",30,78,68,120,"Dokebi: I will be baaack~~~~!!!",8;
 		attachrid($MomotaroRID);
 		initnpctimer;
 		end;
@@ -720,29 +720,29 @@ OnMobDead:
 	if (@mobrand == 2) goto Lrand2;
 	if (@mobrand == 3) goto Lrand3;
 
-	areaannounce "ama_test.gat",30,78,68,120,"Dokebi: I'm sorry~~! Waaaaah~~",8;
+	areaannounce "ama_test",30,78,68,120,"Dokebi: I'm sorry~~! Waaaaah~~",8;
 	end;
 Lrand1:
-	areaannounce "ama_test.gat",30,78,68,120,"Dokebi: !! IT'S A RAID!!!! RUN!!",8;
+	areaannounce "ama_test",30,78,68,120,"Dokebi: !! IT'S A RAID!!!! RUN!!",8;
 	end;
 Lrand2:
-	areaannounce "ama_test.gat",30,78,68,120,"Dokebi: But I didn't even do anything baaaaad~!",8;
+	areaannounce "ama_test",30,78,68,120,"Dokebi: But I didn't even do anything baaaaad~!",8;
 	end;
 Lrand3:
-	areaannounce "ama_test.gat",30,78,68,120,"Dokebi: Ow, Ouch!!!",8;
+	areaannounce "ama_test",30,78,68,120,"Dokebi: Ow, Ouch!!!",8;
 	end;
 OnTimer5000:
 	donpcevent "mobcount2#momotaro::OnTimer5000";
 	end;
 }
 //=======================================MobCount2==============================-
-ama_test.gat,50,101,0	script	mobcount2#momotaro	-1,{
+ama_test,50,101,0	script	mobcount2#momotaro	-1,{
 OnMobDead:
 	if ($MomoDokebi2 == 2) goto Lfin;
 	set $MomoDokebi2,$MomoDokebi2+1;
-	areaannounce "ama_test.gat",30,78,68,120,"Am Mut: Ow, Ouch!!!",8;end;
+	areaannounce "ama_test",30,78,68,120,"Am Mut: Ow, Ouch!!!",8;end;
 Lfin:
-	areaannounce "ama_test.gat",30,78,68,120,"Am Mut: I'm sorry~~! Waaaaah~~",8;
+	areaannounce "ama_test",30,78,68,120,"Am Mut: I'm sorry~~! Waaaaah~~",8;
 	set event_momo,4;
 	initnpctimer;
 	end;
@@ -757,7 +757,7 @@ OnTimer5000:
 //============================================================
 //====================================================== Sushi
 //====================================================== Quest
-ama_in01.gat,162,17,0	script	Iron Chef	765,{
+ama_in01,162,17,0	script	Iron Chef	765,{
 	if (ama_sushi == 1) goto LStart2;
 	mes "[ShabuShabu]";
 	mes "*Sighs* This is getting worse..";
@@ -882,7 +882,7 @@ Lok:
 //============================================================
 //===================================================== Amatsu
 //====================================================== Event
-amatsu.gat,189,166,4	script	Kouji	764,{
+amatsu,189,166,4	script	Kouji	764,{
 	mes "[Kuruchi]";
 	mes "Lalala Lalala Lalalalalala..";
 	mes "Lalala Lalala Lalalalalala..";
@@ -938,7 +938,7 @@ LEnd:
 	close;
 }
 //=====================================================================
-amatsu.gat,171,174,4	script	Guard Soldier#01	767,{
+amatsu,171,174,4	script	Guard Soldier#01	767,{
 	if ((event_amatsu == 0) || (event_amatsu == 1)) goto L0;
 	if (event_amatsu == 6) goto L1;
 	if (event_amatsu == 7) goto L2;
@@ -977,7 +977,7 @@ L2:
 	close;
 }
 //=====================================================================
-amatsu.gat,164,174,4	script	Guard Soldier#02	767,{
+amatsu,164,174,4	script	Guard Soldier#02	767,{
 	if (event_amatsu == 0) goto LOnce;
 	if ((event_amatsu >= 2) && (event_amatsu <= 5)) goto L2;
 	if (event_amatsu == 6) goto L3;
@@ -1022,7 +1022,7 @@ L4:
 }
 
 //=====================================================================
-ama_in01.gat,22,111,0	script	Old Lady#01	761,{
+ama_in01,22,111,0	script	Old Lady#01	761,{
 	if (event_amatsu == 5) goto LStart2;
 	if (event_amatsu == 6) goto LStart3;
 	if (event_amatsu == 7) goto LStart4;
@@ -1063,8 +1063,8 @@ LStart2:
 	mes "I'll curse them forever! FOREVER!";
 	mes "Human, you better be careful too!^000000";
 	next;
-	monster "ama_in01.gat",22,112,"Fox",1180,1;
-	killmonsterall "ama_in01.gat";
+	monster "ama_in01",22,112,"Fox",1180,1;
+	killmonsterall "ama_in01";
 	getitem 1022,1;
 	mes "[...]";
 	mes "^FF0066Everything that Paul Shinaku did";
@@ -1159,7 +1159,7 @@ LStart4:
 	close;
 }
 //=====================================================================
-ama_in02.gat,170,62,4	script	Soldier#02	767,{
+ama_in02,170,62,4	script	Soldier#02	767,{
 	mes "[Kyro]";
 	mes "My name is Kyro. In this town";
 	mes "I handle all the administrative work.";
@@ -1217,7 +1217,7 @@ L3:
 }
 
 //=====================================================================
-ama_in02.gat,115,177,7	script	Juro	767,{
+ama_in02,115,177,7	script	Juro	767,{
 	mes "[Juro]";
 	mes "What are you here for?";
 	mes "There is nothing much over here.";
@@ -1242,7 +1242,7 @@ L2:
 			mes "Then, I will open the door for you.";
 			mes "Please take care...";
 			next;
-			warp "ama_dun01.gat",229,10;
+			warp "ama_dun01",229,10;
 			end;
 L2_2:
 			mes "[Juro]";
@@ -1276,7 +1276,7 @@ L2_2:
 			mes "Then, I'll open the door for you.";
 			mes "Please be careful...";
 			next;
-			warp "ama_dun01.gat",229,10;
+			warp "ama_dun01",229,10;
 			end;
 Llost:
 		mes "[Juro]";
@@ -1296,7 +1296,7 @@ Lnoflag:
 		mes "I hope you have a good time...";
 		close;
 }
-ama_dun01.gat,229,7,0	script	Soldier#08	767,{
+ama_dun01,229,7,0	script	Soldier#08	767,{
 	mes "[Juro]";
 	mes "Ready to leave?";
 	next;
@@ -1304,7 +1304,7 @@ ama_dun01.gat,229,7,0	script	Soldier#08	767,{
 		mes "[Juro]";
 		mes "Gogo!!";
 		next;
-		warp "ama_in02.gat",119,181;
+		warp "ama_in02",119,181;
 		end;
 L1:
 		mes "[Juro]";
@@ -1313,7 +1313,7 @@ L1:
 }
 
 //=====================================================================
-ama_in02.gat,200,176,4	script	Castle Owner	768,{
+ama_in02,200,176,4	script	Castle Owner	768,{
 	if (event_amatsu == 1) goto LStart2;
 	if ((event_amatsu >= 2) && (event_amatsu <=5)) goto LStart3;
 	if (event_amatsu == 6) goto LStart4;
@@ -1453,7 +1453,7 @@ LStart5:
 	close;
 }
 
-ama_in01.gat,180,173,2	script	Fox Mask	762,{
+ama_in01,180,173,2	script	Fox Mask	762,{
 	if (event_amatsu == 4) goto LStart2;
 	if (event_amatsu == 5) goto LStart3;
 	mes "[Takikuwi]";

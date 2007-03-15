@@ -13,13 +13,13 @@
 //============================================================
 
 //HyeGun Mob spawning
-anthell01.gat,0,0,0,0	monster	Hyegun	1512,3,180000,30000,0
-mag_dun01.gat,0,0,0,0	monster	Hyegun	1512,3,180000,30000,0
-alde_dun01.gat,0,0,0,0	monster	Hyegun	1512,3,180000,30000,0
-in_sphinx1.gat,0,0,0,0	monster	Hyegun	1512,3,180000,30000,0
+anthell01,0,0,0,0	monster	Hyegun	1512,3,180000,30000,0
+mag_dun01,0,0,0,0	monster	Hyegun	1512,3,180000,30000,0
+alde_dun01,0,0,0,0	monster	Hyegun	1512,3,180000,30000,0
+in_sphinx1,0,0,0,0	monster	Hyegun	1512,3,180000,30000,0
 
 //Munak Quest
-pay_dun01.gat,53,269,6	script	Munak	1026,{
+pay_dun01,53,269,6	script	Munak	1026,{
 if(event_hyegun==3) goto Lfinished;
 mes "[^FF0000Munak^000000]";
 mes "Hello, kinda strange talking to a Munak huh?";

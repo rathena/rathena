@@ -25,7 +25,7 @@
 //============================================================ 
 
 
-prt_monk.gat,55,249,4	script	Tohobu the Guarding Monk	139,0,5,{
+prt_monk,55,249,4	script	Tohobu the Guarding Monk	139,0,5,{
 	mes "[Tohobu]";
 	mes "Who are you?!";
 	mes "How dare you enter this holy training place without my permission!!";
@@ -34,7 +34,7 @@ prt_monk.gat,55,249,4	script	Tohobu the Guarding Monk	139,0,5,{
 	mes "Get Out!!";
 	close;
 }
-prt_monk.gat,59,247,4	script	Master	120,{
+prt_monk,59,247,4	script	Master	120,{
 	callfunc "F_BlockHigh",Job_Acolyte_High,"Acolyte High",Job_Champion,"Champion","Tohobu";
 
 	if(MONK_Q == 1 ) goto Part1;
@@ -63,7 +63,7 @@ L_START:
 
 		mes "[Tohobu]";
 		mes "You are so impolite! Get out!";
-		warp "prt_fild03.gat",357,256;
+		warp "prt_fild03",357,256;
 		end;
 L_MENU_1:
 	mes "[Tohobu]";
@@ -146,7 +146,7 @@ Part3:
 	close;
 }
 
-monk_in.gat,99,58,4	script	Elder Wuhai	60,{
+monk_in,99,58,4	script	Elder Wuhai	60,{
 	//Not sure if this is needed, but hopefully it will prevent bugs [Zephiris]
 	if(MONK_Q > 11) set MONK_Q,11;
 
@@ -635,7 +635,7 @@ Part7:
 	close;
 }
 
-prt_monk.gat,251,255,4	script	Wutao	79,{
+prt_monk,251,255,4	script	Wutao	79,{
 	if(MONK_Q == 4 ) goto L_START;
 	if(MONK_Q == 5 ) goto Part1;
 	if(MONK_Q == 6 ) goto Part2;
@@ -1165,7 +1165,7 @@ Part3:
 	close;
 }
 
-prt_monk.gat,57,179,4	script	Fuhai	110,{
+prt_monk,57,179,4	script	Fuhai	110,{
 
 	if(@Choice_mission == 1 ) goto Part1;
 	if(@Choice_mission == 2 ) goto Part2;
@@ -1312,7 +1312,7 @@ Part2:
 
 }
 
-prt_monk.gat,199,169,4	script	Guard	746,{
+prt_monk,199,169,4	script	Guard	746,{
 	if(MONK_Q == 7) goto L_START;
 	if(MONK_Q > 6) goto Part1;
 
@@ -1343,7 +1343,7 @@ Part1:
 	close;
 }
 
-monk_test.gat,329,61,4	script	Bashu	753,{
+monk_test,329,61,4	script	Bashu	753,{
 	if(MONK_Q == 7) goto L_START;
 
 	mes "[Bashu]";
@@ -1376,18 +1376,18 @@ L_MISSC:
 	mes "[Bashu]";
 	mes "The test you choose is Monk's patience - Mushroom Collecting";
 	next;
-	warp "job_monk.gat",225,179;
+	warp "job_monk",225,179;
 	end;
 
 L_MENU_1:
 	mes "[Bashu]";
 	mes "The test you choose is Monk's willpower - Marathon";	
 	next;
-	warp "monk_test.gat",387,345;
+	warp "monk_test",387,345;
 	end;
 }
 
-monk_test.gat,387,347,4	script	Musha	110,{
+monk_test,387,347,4	script	Musha	110,{
 	mes "[Musha]";
 	mes "Wel...Welcome...!";
 	mes "This...This is the area for testing the wi...willpower of those who want to be a Monk.";
@@ -1410,13 +1410,13 @@ monk_test.gat,387,347,4	script	Musha	110,{
 	next;
 	menu "I want to giveup!",-,"I want to run!!",L_MENU_1;
 
-		mapannounce "monk_test.gat","Musha: " + strcharinfo(0) + " has give...given up on the test...! Gave up on the Marathon test... No...No willpower.....HaHaHaHa!!!...",8;
+		mapannounce "monk_test","Musha: " + strcharinfo(0) + " has give...given up on the test...! Gave up on the Marathon test... No...No willpower.....HaHaHaHa!!!...",8;
 		mes "[Musha]";
 		mes strcharinfo(0) + "...give...give up the test...";
 		mes "Give up the Marathon test...";
 		mes "No...No willpower.....HaHaHaHa!!!...";
 		next;
-		warp "prt_monk.gat",196,168;
+		warp "prt_monk",196,168;
 		end;
 L_MENU_1:
 	next;
@@ -1429,103 +1429,103 @@ L_MENU_1:
 	close;
 }
 
-monk_test.gat,390,387,0	script	monk_warp	45,1,1,{
+monk_test,390,387,0	script	monk_warp	45,1,1,{
 	set @run, @run + 1;
-	if(@run == (@runtimes-1)) mapannounce "monk_test.gat","Musha: Cheer up! The next lap is the last!",8;
+	if(@run == (@runtimes-1)) mapannounce "monk_test","Musha: Cheer up! The next lap is the last!",8;
 	if(@run == @runtimes) goto L_DONE;
-	warp "monk_test.gat",388,348;
+	warp "monk_test",388,348;
 	end;
 L_DONE:
-	mapannounce "monk_test.gat","Musha: Con....Congratulations!!" + strcharinfo(0)+ " Passes!! Please go to [Daowen], he is deep inside the building.",8;
+	mapannounce "monk_test","Musha: Con....Congratulations!!" + strcharinfo(0)+ " Passes!! Please go to [Daowen], he is deep inside the building.",8;
 	set MONK_Q, 8;
-	warp "prt_monk.gat",196,168;
+	warp "prt_monk",196,168;
 	end;
 }
 
 function	script	MnkTraps	{
-	mapannounce "monk_test.gat","trap: " + strcharinfo(0)+ " , you fell into a trap! We will warp you to the starting line.",8;
-	warp "monk_test.gat",388,348;
+	mapannounce "monk_test","trap: " + strcharinfo(0)+ " , you fell into a trap! We will warp you to the starting line.",8;
+	warp "monk_test",388,348;
 }
 //---------------------
-monk_test.gat,386,164,0	script	monk1-1	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,386,165,0	script	monk1-2	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,387,164,0	script	monk1-3	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,387,165,0	script	monk1-4	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,388,164,0	script	monk1-5	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,388,165,0	script	monk1-6	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,389,164,0	script	monk1-7	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,389,165,0	script	monk1-8	139,0,0,{callfunc "MnkTraps";}
+monk_test,386,164,0	script	monk1-1	139,0,0,{callfunc "MnkTraps";}
+monk_test,386,165,0	script	monk1-2	139,0,0,{callfunc "MnkTraps";}
+monk_test,387,164,0	script	monk1-3	139,0,0,{callfunc "MnkTraps";}
+monk_test,387,165,0	script	monk1-4	139,0,0,{callfunc "MnkTraps";}
+monk_test,388,164,0	script	monk1-5	139,0,0,{callfunc "MnkTraps";}
+monk_test,388,165,0	script	monk1-6	139,0,0,{callfunc "MnkTraps";}
+monk_test,389,164,0	script	monk1-7	139,0,0,{callfunc "MnkTraps";}
+monk_test,389,165,0	script	monk1-8	139,0,0,{callfunc "MnkTraps";}
 //---------------------
-monk_test.gat,386,42,0	script	monk2-1	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,386,43,0	script	monk2-2	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,387,42,0	script	monk2-3	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,387,43,0	script	monk2-4	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,388,42,0	script	monk2-5	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,388,43,0	script	monk2-6	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,389,42,0	script	monk2-7	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,389,43,0	script	monk2-8	139,0,0,{callfunc "MnkTraps";}
+monk_test,386,42,0	script	monk2-1	139,0,0,{callfunc "MnkTraps";}
+monk_test,386,43,0	script	monk2-2	139,0,0,{callfunc "MnkTraps";}
+monk_test,387,42,0	script	monk2-3	139,0,0,{callfunc "MnkTraps";}
+monk_test,387,43,0	script	monk2-4	139,0,0,{callfunc "MnkTraps";}
+monk_test,388,42,0	script	monk2-5	139,0,0,{callfunc "MnkTraps";}
+monk_test,388,43,0	script	monk2-6	139,0,0,{callfunc "MnkTraps";}
+monk_test,389,42,0	script	monk2-7	139,0,0,{callfunc "MnkTraps";}
+monk_test,389,43,0	script	monk2-8	139,0,0,{callfunc "MnkTraps";}
 //---------------------
-monk_test.gat,184,11,0	script	monk3-1	139,0,3,{callfunc "MnkTraps";}
-monk_test.gat,185,11,0	script	monk3-2	139,0,3,{callfunc "MnkTraps";}
-monk_test.gat,186,11,0	script	monk3-3	139,0,3,{callfunc "MnkTraps";}
-monk_test.gat,187,11,0	script	monk3-4	139,0,3,{callfunc "MnkTraps";}
+monk_test,184,11,0	script	monk3-1	139,0,3,{callfunc "MnkTraps";}
+monk_test,185,11,0	script	monk3-2	139,0,3,{callfunc "MnkTraps";}
+monk_test,186,11,0	script	monk3-3	139,0,3,{callfunc "MnkTraps";}
+monk_test,187,11,0	script	monk3-4	139,0,3,{callfunc "MnkTraps";}
 //---------------------
-monk_test.gat,70,10,0	script	monk4-1	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,70,11,0	script	monk4-2	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,70,12,0	script	monk4-3	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,70,13,0	script	monk4-4	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,71,10,0	script	monk4-5	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,71,11,0	script	monk4-6	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,71,12,0	script	monk4-7	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,71,13,0	script	monk4-8	139,0,0,{callfunc "MnkTraps";}
+monk_test,70,10,0	script	monk4-1	139,0,0,{callfunc "MnkTraps";}
+monk_test,70,11,0	script	monk4-2	139,0,0,{callfunc "MnkTraps";}
+monk_test,70,12,0	script	monk4-3	139,0,0,{callfunc "MnkTraps";}
+monk_test,70,13,0	script	monk4-4	139,0,0,{callfunc "MnkTraps";}
+monk_test,71,10,0	script	monk4-5	139,0,0,{callfunc "MnkTraps";}
+monk_test,71,11,0	script	monk4-6	139,0,0,{callfunc "MnkTraps";}
+monk_test,71,12,0	script	monk4-7	139,0,0,{callfunc "MnkTraps";}
+monk_test,71,13,0	script	monk4-8	139,0,0,{callfunc "MnkTraps";}
 //---------------------
-monk_test.gat,8,30,0	script	monk5-1	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,8,31,0	script	monk5-2	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,9,30,0	script	monk5-3	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,9,31,0	script	monk5-4	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,10,30,0	script	monk5-5	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,10,31,0	script	monk5-6	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,11,30,0	script	monk5-7	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,11,31,0	script	monk5-8	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,12,30,0	script	monk5-9	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,12,31,0	script	monk5-10	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,13,30,0	script	monk5-11	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,13,31,0	script	monk5-12	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,14,30,0	script	monk5-13	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,14,31,0	script	monk5-14	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,15,30,0	script	monk5-15	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,15,31,0	script	monk5-16	139,0,0,{callfunc "MnkTraps";}
+monk_test,8,30,0	script	monk5-1	139,0,0,{callfunc "MnkTraps";}
+monk_test,8,31,0	script	monk5-2	139,0,0,{callfunc "MnkTraps";}
+monk_test,9,30,0	script	monk5-3	139,0,0,{callfunc "MnkTraps";}
+monk_test,9,31,0	script	monk5-4	139,0,0,{callfunc "MnkTraps";}
+monk_test,10,30,0	script	monk5-5	139,0,0,{callfunc "MnkTraps";}
+monk_test,10,31,0	script	monk5-6	139,0,0,{callfunc "MnkTraps";}
+monk_test,11,30,0	script	monk5-7	139,0,0,{callfunc "MnkTraps";}
+monk_test,11,31,0	script	monk5-8	139,0,0,{callfunc "MnkTraps";}
+monk_test,12,30,0	script	monk5-9	139,0,0,{callfunc "MnkTraps";}
+monk_test,12,31,0	script	monk5-10	139,0,0,{callfunc "MnkTraps";}
+monk_test,13,30,0	script	monk5-11	139,0,0,{callfunc "MnkTraps";}
+monk_test,13,31,0	script	monk5-12	139,0,0,{callfunc "MnkTraps";}
+monk_test,14,30,0	script	monk5-13	139,0,0,{callfunc "MnkTraps";}
+monk_test,14,31,0	script	monk5-14	139,0,0,{callfunc "MnkTraps";}
+monk_test,15,30,0	script	monk5-15	139,0,0,{callfunc "MnkTraps";}
+monk_test,15,31,0	script	monk5-16	139,0,0,{callfunc "MnkTraps";}
 //---------------------
-monk_test.gat,10,158,0	script	monk6-1	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,10,159,0	script	monk6-2	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,11,158,0	script	monk6-3	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,11,159,0	script	monk6-4	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,12,158,0	script	monk6-5	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,12,159,0	script	monk6-6	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,13,158,0	script	monk6-7	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,13,159,0	script	monk6-8	139,0,0,{callfunc "MnkTraps";}
+monk_test,10,158,0	script	monk6-1	139,0,0,{callfunc "MnkTraps";}
+monk_test,10,159,0	script	monk6-2	139,0,0,{callfunc "MnkTraps";}
+monk_test,11,158,0	script	monk6-3	139,0,0,{callfunc "MnkTraps";}
+monk_test,11,159,0	script	monk6-4	139,0,0,{callfunc "MnkTraps";}
+monk_test,12,158,0	script	monk6-5	139,0,0,{callfunc "MnkTraps";}
+monk_test,12,159,0	script	monk6-6	139,0,0,{callfunc "MnkTraps";}
+monk_test,13,158,0	script	monk6-7	139,0,0,{callfunc "MnkTraps";}
+monk_test,13,159,0	script	monk6-8	139,0,0,{callfunc "MnkTraps";}
 //---------------------
-monk_test.gat,38,386,0	script	monk7-1	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,38,387,0	script	monk7-2	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,38,388,0	script	monk7-3	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,38,389,0	script	monk7-4	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,39,386,0	script	monk7-5	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,39,387,0	script	monk7-6	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,39,388,0	script	monk7-7	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,39,389,0	script	monk7-8	139,0,0,{callfunc "MnkTraps";}
+monk_test,38,386,0	script	monk7-1	139,0,0,{callfunc "MnkTraps";}
+monk_test,38,387,0	script	monk7-2	139,0,0,{callfunc "MnkTraps";}
+monk_test,38,388,0	script	monk7-3	139,0,0,{callfunc "MnkTraps";}
+monk_test,38,389,0	script	monk7-4	139,0,0,{callfunc "MnkTraps";}
+monk_test,39,386,0	script	monk7-5	139,0,0,{callfunc "MnkTraps";}
+monk_test,39,387,0	script	monk7-6	139,0,0,{callfunc "MnkTraps";}
+monk_test,39,388,0	script	monk7-7	139,0,0,{callfunc "MnkTraps";}
+monk_test,39,389,0	script	monk7-8	139,0,0,{callfunc "MnkTraps";}
 //---------------------
-monk_test.gat,82,390,0	script	monk8-1	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,82,391,0	script	monk8-2	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,83,390,0	script	monk8-3	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,83,391,0	script	monk8-4	139,0,0,{callfunc "MnkTraps";}
+monk_test,82,390,0	script	monk8-1	139,0,0,{callfunc "MnkTraps";}
+monk_test,82,391,0	script	monk8-2	139,0,0,{callfunc "MnkTraps";}
+monk_test,83,390,0	script	monk8-3	139,0,0,{callfunc "MnkTraps";}
+monk_test,83,391,0	script	monk8-4	139,0,0,{callfunc "MnkTraps";}
 //---------------------
-monk_test.gat,82,384,0	script	monk9-1	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,82,385,0	script	monk9-2	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,83,384,0	script	monk9-3	139,0,0,{callfunc "MnkTraps";}
-monk_test.gat,83,385,0	script	monk9-4	139,0,0,{callfunc "MnkTraps";}
+monk_test,82,384,0	script	monk9-1	139,0,0,{callfunc "MnkTraps";}
+monk_test,82,385,0	script	monk9-2	139,0,0,{callfunc "MnkTraps";}
+monk_test,83,384,0	script	monk9-3	139,0,0,{callfunc "MnkTraps";}
+monk_test,83,385,0	script	monk9-4	139,0,0,{callfunc "MnkTraps";}
 //---------------------
 
-prt_monk.gat,225,179,4	script	XuanWu#01 	89,{
+prt_monk,225,179,4	script	XuanWu#01 	89,{
 	mes "[XuanWu]";
 	mes "To see the growing of crops, I deeply appreciate the grace of God.";
 	next;
@@ -1547,7 +1547,7 @@ prt_monk.gat,225,179,4	script	XuanWu#01 	89,{
 	mes "The farmer is the root of world. That is quite true.";
 	close;
 }
-job_monk.gat,225,179,4	script	XuanWu#02	89,{
+job_monk,225,179,4	script	XuanWu#02	89,{
 
 	if(MONK_Q == 8 ) goto Part2;
 	if(@mission_start == 1 ) goto Part1;
@@ -1583,7 +1583,7 @@ job_monk.gat,225,179,4	script	XuanWu#02	89,{
 	menu "Start Mushroom Collecting",L_MENU_1,"I'll give up",L_MENU_2;
 
 L_MENU_2:
-		mapannounce "monk_test.gat","XuanWu: ......Another one without patience...",8;
+		mapannounce "monk_test","XuanWu: ......Another one without patience...",8;
 		mes "[XuanWu]";
 		mes "Another one without patience...";
 		set @mission_start, 0;
@@ -1592,7 +1592,7 @@ L_MENU_2:
 		getitem 1070, 1;//Items: Orange_Gooey_Mushroom,
 		delitem 1070, countitem(1070);//Items: Orange_Gooey_Mushroom_,
 		next;
-		warp "prt_monk.gat",196,168;
+		warp "prt_monk",196,168;
 		end;		
 L_MENU_1:
 	mes "[XuanWu]";
@@ -1629,18 +1629,18 @@ Part2:
 	mes "Go to [Daowen], he is in deep inside the building.";
 	close;
 }
-job_monk.gat,191,172,4	script	job_monk_warp	45,1,1,{
-	warp "monk_test.gat",329,57;
+job_monk,191,172,4	script	job_monk_warp	45,1,1,{
+	warp "monk_test",329,57;
 	end;
 }
 
-job_monk.gat,199,169,4	script	Guard ChaoLi 	746,{
+job_monk,199,169,4	script	Guard ChaoLi 	746,{
 	mes "[Guard ChaoLi]";
 	mes "Silence in test area!";
 	close;
 }
 
-monk_test.gat,319,139,4	script	Daowen	52,{
+monk_test,319,139,4	script	Daowen	52,{
 	if(MONK_Q == 8) goto L_START;
 	if(MONK_Q == 9) goto Part1;
 	if(MONK_Q == 10) goto Part2;
@@ -1711,7 +1711,7 @@ Part2:
 	close;
 }
 
-monk_test.gat,88,91,4	script	Test Assistant#01	52,{
+monk_test,88,91,4	script	Test Assistant#01	52,{
 	mes "[Test Assistant]";
 	mes "Are you ready for training in the dispersement of evil?";
 	next;
@@ -1723,56 +1723,56 @@ monk_test.gat,88,91,4	script	Test Assistant#01	52,{
 	mes "Of course, there will be some monsters spawned in the maze. You'll have to fight with them.";
 	mes "Good luck! May God be with you.";
 	next;
-	if(getareausers("monk_test.gat",126,161,165,199) > 0) goto L_WAIT;
-	killmonster "monk_test.gat","monk_mob1::OnMobDead";
+	if(getareausers("monk_test",126,161,165,199) > 0) goto L_WAIT;
+	killmonster "monk_test","monk_mob1::OnMobDead";
 	enablenpc "monk_mob1_1";
 	enablenpc "monk_mob1_2";
 	enablenpc "monk_mob1_3";
 	enablenpc "monk_mob1_3";
-	warp "monk_test.gat",127,179;
+	warp "monk_test",127,179;
 	end;
 L_WAIT:
 	mes "[Test Assistant]";
 	mes "Oh... There is someone else taking the test. Please wait a minute then try again.";
 	close;
 }
-monk_test.gat,129,180,4	script	monk_mob1_1	139,0,19,{
-	monster "monk_test.gat",130,183,"--ja--",1015,1,"monk_mob1::OnMobDead";
-	monster "monk_test.gat",130,177,"--ja--",1015,1,"monk_mob1::OnMobDead";
+monk_test,129,180,4	script	monk_mob1_1	139,0,19,{
+	monster "monk_test",130,183,"--ja--",1015,1,"monk_mob1::OnMobDead";
+	monster "monk_test",130,177,"--ja--",1015,1,"monk_mob1::OnMobDead";
 //~	disablenpc "monk_mob1_1";
 	end;
 }
-monk_test.gat,133,180,4	script	monk_mob1_2	139,0,19,{
-	monster "monk_test.gat",134,183,"--ja--",1015,1,"monk_mob1::OnMobDead";
-	monster "monk_test.gat",134,177,"--ja--",1015,1,"monk_mob1::OnMobDead";
+monk_test,133,180,4	script	monk_mob1_2	139,0,19,{
+	monster "monk_test",134,183,"--ja--",1015,1,"monk_mob1::OnMobDead";
+	monster "monk_test",134,177,"--ja--",1015,1,"monk_mob1::OnMobDead";
 //~	disablenpc "monk_mob1_2";
 	end;
 }
-monk_test.gat,145,180,4	script	monk_mob1_3	139,0,19,{
-	monster "monk_test.gat",145,180,"--ja--",1041,1,"monk_mob1::OnMobDead";
+monk_test,145,180,4	script	monk_mob1_3	139,0,19,{
+	monster "monk_test",145,180,"--ja--",1041,1,"monk_mob1::OnMobDead";
 //~	disablenpc "monk_mob1_3";
 	end;
 }
-monk_test.gat,155,180,4	script	monk_mob1_4	139,0,19,{
-	monster "monk_test.gat",157,183,"--ja--",1015,1,"monk_mob1::OnMobDead";
-	monster "monk_test.gat",157,177,"--ja--",1015,1,"monk_mob1::OnMobDead";
+monk_test,155,180,4	script	monk_mob1_4	139,0,19,{
+	monster "monk_test",157,183,"--ja--",1015,1,"monk_mob1::OnMobDead";
+	monster "monk_test",157,177,"--ja--",1015,1,"monk_mob1::OnMobDead";
 //~	disablenpc "monk_mob1_4";
 	end;
 }
-monk_test.gat,165,179,4	script	monk_mob3_warp#01	45,1,1,{
+monk_test,165,179,4	script	monk_mob3_warp#01	45,1,1,{
 	set MONK_Q, 9;
-	mapannounce "monk_test.gat","Congratulations!!" + strcharinfo(0)+ " Passes!! Please go to [Daowen], he is deep inside the building.",8;
-	killmonster "monk_test.gat","monk_mob1::OnMobDead";
-	warp "monk_test.gat",317,142;
+	mapannounce "monk_test","Congratulations!!" + strcharinfo(0)+ " Passes!! Please go to [Daowen], he is deep inside the building.",8;
+	killmonster "monk_test","monk_mob1::OnMobDead";
+	warp "monk_test",317,142;
 	end;
 }
 
-monk_test.gat,1,1,1	script	monk_mob1	-1,{
+monk_test,1,1,1	script	monk_mob1	-1,{
 OnMobDead:
 		end;
 }
 
-monk_test.gat,95,85,4	script	Test Assistant#02	79,{
+monk_test,95,85,4	script	Test Assistant#02	79,{
 	mes "[Test Assistant]";
 	mes "Are you ready for training in the dispersement of evil?";
 	next;
@@ -1784,13 +1784,13 @@ monk_test.gat,95,85,4	script	Test Assistant#02	79,{
 	mes "Of course, there will be some monsters spawned in the maze. You'll have to fight with them.";
 	mes "Good luck! May God be with you.";
 	next;
-	if(getareausers("monk_test.gat",126,262,165,300) > 0) goto L_WAIT;
-	killmonster "monk_test.gat","monk_mob2::OnMobDead";
+	if(getareausers("monk_test",126,262,165,300) > 0) goto L_WAIT;
+	killmonster "monk_test","monk_mob2::OnMobDead";
 	enablenpc "monk_mob2_1";
 	enablenpc "monk_mob2_2";
 	enablenpc "monk_mob2_3";
 	enablenpc "monk_mob2_4";
-	warp "monk_test.gat",127,278;
+	warp "monk_test",127,278;
 	end;
 
 L_WAIT:
@@ -1799,43 +1799,43 @@ L_WAIT:
 	close;
 
 }
-monk_test.gat,129,281,4	script	monk_mob2_1	139,0,19,{
-	monster "monk_test.gat",130,278,"--ja--",1015,1,"monk_mob2::OnMobDead";
-	monster "monk_test.gat",130,284,"--ja--",1015,1,"monk_mob2::OnMobDead";
+monk_test,129,281,4	script	monk_mob2_1	139,0,19,{
+	monster "monk_test",130,278,"--ja--",1015,1,"monk_mob2::OnMobDead";
+	monster "monk_test",130,284,"--ja--",1015,1,"monk_mob2::OnMobDead";
 //~	disablenpc "monk_mob2_1";
 	end;
 }
-monk_test.gat,136,281,4	script	monk_mob2_2	139,0,19,{
-	monster "monk_test.gat",139,278,"--ja--",1015,1,"monk_mob2::OnMobDead";
-	monster "monk_test.gat",139,284,"--ja--",1015,1,"monk_mob2::OnMobDead";
+monk_test,136,281,4	script	monk_mob2_2	139,0,19,{
+	monster "monk_test",139,278,"--ja--",1015,1,"monk_mob2::OnMobDead";
+	monster "monk_test",139,284,"--ja--",1015,1,"monk_mob2::OnMobDead";
 //~	disablenpc "monk_mob2_2";
 	end;
 }
-monk_test.gat,144,281,4	script	monk_mob2_3	139,0,19,{
-	monster "monk_test.gat",145,281,"--ja--",1041,1,"monk_mob2::OnMobDead";
+monk_test,144,281,4	script	monk_mob2_3	139,0,19,{
+	monster "monk_test",145,281,"--ja--",1041,1,"monk_mob2::OnMobDead";
 //~	disablenpc "monk_mob2_3";
 	end;
 }
-monk_test.gat,153,281,4	script	monk_mob2_4	139,0,19,{
-	monster "monk_test.gat",155,278,"--ja--",1015,1,"monk_mob2::OnMobDead";
-	monster "monk_test.gat",155,284,"--ja--",1015,1,"monk_mob2::OnMobDead";
+monk_test,153,281,4	script	monk_mob2_4	139,0,19,{
+	monster "monk_test",155,278,"--ja--",1015,1,"monk_mob2::OnMobDead";
+	monster "monk_test",155,284,"--ja--",1015,1,"monk_mob2::OnMobDead";
 //~	disablenpc "monk_mob2_4";
 	end;
 }
-monk_test.gat,165,278,4	script	monk_mob2_warp	45,1,1,{
+monk_test,165,278,4	script	monk_mob2_warp	45,1,1,{
 	set MONK_Q, 9;
-	mapannounce "monk_test.gat","Congratulations!!" + strcharinfo(0)+ " Passes!! Please go to [Daowen], he is deep inside the building.",8;
-	killmonster "monk_test.gat","monk_mob2::OnMobDead";
-	warp "monk_test.gat",317,142;
+	mapannounce "monk_test","Congratulations!!" + strcharinfo(0)+ " Passes!! Please go to [Daowen], he is deep inside the building.",8;
+	killmonster "monk_test","monk_mob2::OnMobDead";
+	warp "monk_test",317,142;
 	end;
 }
 
-monk_test.gat,1,1,1	script	monk_mob2	-1,{
+monk_test,1,1,1	script	monk_mob2	-1,{
 OnMobDead:
 		end;
 }
 
-monk_test.gat,82,85,4	script	Test Assistant#03	95,{
+monk_test,82,85,4	script	Test Assistant#03	95,{
 	mes "[Test Assistant]";
 	mes "Are you ready for training in the dispersement of evil?";
 	next;
@@ -1847,13 +1847,13 @@ monk_test.gat,82,85,4	script	Test Assistant#03	95,{
 	mes "Of course, there will be some monsters spawned in the maze. You'll have to fight with them.";
 	mes "Good luck! May God be with you.";
 	next;
-	if(getareausers("monk_test.gat",233,262,269,300) > 0) goto L_WAIT;
-	killmonster "monk_test.gat","monk_mob3::OnMobDead";
+	if(getareausers("monk_test",233,262,269,300) > 0) goto L_WAIT;
+	killmonster "monk_test","monk_mob3::OnMobDead";
 	enablenpc "monk_mob3_1";
 	enablenpc "monk_mob3_2";
 	enablenpc "monk_mob3_3";
 	enablenpc "monk_mob3_4";
-	warp "monk_test.gat",231,279;
+	warp "monk_test",231,279;
 	end;
 
 L_WAIT:
@@ -1862,37 +1862,37 @@ L_WAIT:
 	close;
 }
 
-monk_test.gat,234,281,4	script	monk_mob3_1	139,0,19,{
-	monster "monk_test.gat",235,277,"--ja--",1015,1,"monk_mob3::OnMobDead";
-	monster "monk_test.gat",235,284,"--ja--",1015,1,"monk_mob3::OnMobDead";
+monk_test,234,281,4	script	monk_mob3_1	139,0,19,{
+	monster "monk_test",235,277,"--ja--",1015,1,"monk_mob3::OnMobDead";
+	monster "monk_test",235,284,"--ja--",1015,1,"monk_mob3::OnMobDead";
 //~	disablenpc "monk_mob3_1";
 	end;
 }
-monk_test.gat,239,281,4	script	monk_mob3_2	139,0,19,{
-	monster "monk_test.gat",240,277,"--ja--",1015,1,"monk_mob3::OnMobDead";
-	monster "monk_test.gat",240,284,"--ja--",1015,1,"monk_mob3::OnMobDead";
+monk_test,239,281,4	script	monk_mob3_2	139,0,19,{
+	monster "monk_test",240,277,"--ja--",1015,1,"monk_mob3::OnMobDead";
+	monster "monk_test",240,284,"--ja--",1015,1,"monk_mob3::OnMobDead";
 //~	disablenpc "monk_mob3_2";
 	end;
 }
-monk_test.gat,248,281,4	script	monk_mob3_3	139,0,19,{
-	monster "monk_test.gat",249,281,"--ja--",1041,1,"monk_mob3::OnMobDead";
+monk_test,248,281,4	script	monk_mob3_3	139,0,19,{
+	monster "monk_test",249,281,"--ja--",1041,1,"monk_mob3::OnMobDead";
 //~	disablenpc "monk_mob3_3";
 	end;
 }
-monk_test.gat,260,281,4	script	monk_mob3_4	139,0,19,{
-	monster "monk_test.gat",261,277,"--ja--",1015,1,"monk_mob3::OnMobDead";
-	monster "monk_test.gat",261,284,"--ja--",1015,1,"monk_mob3::OnMobDead";
+monk_test,260,281,4	script	monk_mob3_4	139,0,19,{
+	monster "monk_test",261,277,"--ja--",1015,1,"monk_mob3::OnMobDead";
+	monster "monk_test",261,284,"--ja--",1015,1,"monk_mob3::OnMobDead";
 //~	disablenpc "monk_mob3_4";
 	end;
 }
-monk_test.gat,269,279,4	script	monk_mob3_warp#02	45,1,1,{
+monk_test,269,279,4	script	monk_mob3_warp#02	45,1,1,{
 	set MONK_Q, 9;
-	mapannounce "monk_test.gat","Congratulations!!" + strcharinfo(0)+ " Passes!! Please go to [Daowen], he is deep inside the building.",8;
-	killmonster "monk_test.gat","monk_mob3::OnMobDead";
-	warp "monk_test.gat",317,142;
+	mapannounce "monk_test","Congratulations!!" + strcharinfo(0)+ " Passes!! Please go to [Daowen], he is deep inside the building.",8;
+	killmonster "monk_test","monk_mob3::OnMobDead";
+	warp "monk_test",317,142;
 	end;
 }
-monk_test.gat,1,1,1	script	monk_mob3	-1,{
+monk_test,1,1,1	script	monk_mob3	-1,{
 OnMobDead:
 		end;
 }
@@ -1901,26 +1901,26 @@ OnMobDead:
 //==============================================================================
 // Monsters of Mushroom Collecting
 //==============================================================================
-job_monk.gat,0,0,0,0	monster	Thief Mushroom	1182,170,0,0,0
-job_monk.gat,0,0,0,0	monster	Thief Bug Larva	1051,120,0,0,0
+job_monk,0,0,0,0	monster	Thief Mushroom	1182,170,0,0,0
+job_monk,0,0,0,0	monster	Thief Bug Larva	1051,120,0,0,0
 
 //==============================================================================
 // warps
 //==============================================================================
-prt_monk.gat,192,172,0	warp	monk15	1,1,monk_test.gat,329,50
-monk_test.gat,329,47,0	warp	monk16	1,1,prt_monk.gat,193,166
-monk_test.gat,329,76,0	warp	monk17	1,1,monk_test.gat,259,118
-monk_test.gat,259,115,0	warp	monk18	1,1,monk_test.gat,329,71
-monk_test.gat,271,126,0	warp	monk19	1,1,monk_test.gat,301,127
-monk_test.gat,298,127,0	warp	monk20	1,1,monk_test.gat,268,126
+prt_monk,192,172,0	warp	monk15	1,1,monk_test,329,50
+monk_test,329,47,0	warp	monk16	1,1,prt_monk,193,166
+monk_test,329,76,0	warp	monk17	1,1,monk_test,259,118
+monk_test,259,115,0	warp	monk18	1,1,monk_test,329,71
+monk_test,271,126,0	warp	monk19	1,1,monk_test,301,127
+monk_test,298,127,0	warp	monk20	1,1,monk_test,268,126
 
 //==============================================================================
 // mapflag
 //==============================================================================
-monk_test.gat	mapflag	nomemo
-monk_test.gat	mapflag	noteleport
-monk_test.gat	mapflag	nosave	SavePoint
-monk_test.gat	mapflag	nopenalty
-monk_test.gat	mapflag	nobranch
-monk_test.gat	mapflag	noexp
-monk_test.gat	mapflag	noloot
+monk_test	mapflag	nomemo
+monk_test	mapflag	noteleport
+monk_test	mapflag	nosave	SavePoint
+monk_test	mapflag	nopenalty
+monk_test	mapflag	nobranch
+monk_test	mapflag	noexp
+monk_test	mapflag	noloot

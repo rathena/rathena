@@ -16,6 +16,6 @@
 //============================================================ 
 
 // -== Gypsy ==-
-valkyrie.gat,53,56,4	script	Gypsy	101,{
+valkyrie,53,56,4	script	Gypsy	101,{
 	callfunc "F_Rebirth",Job_Archer_High,"High Archer",Job_Gypsy,"Gypsy";
 }

@@ -29,7 +29,7 @@
 //= 1.7b Fixed possible exploit [Lupus]
 //============================================================ 
 //===== Configuration : ======================================
-prontera.gat,1,1,1	script	TheSignConfig	-1,{
+prontera,1,1,1	script	TheSignConfig	-1,{
 OnInit:
 //= This string will be used to show which timezone your server
 //= is located in, it's necessary for the quest, so please change it.
@@ -47,7 +47,7 @@ OnInit:
 }
 //============================================================
 
-alberta.gat,34,241,1	script	Sign::GeffeniaSigns	111,{
+alberta,34,241,1	script	Sign::GeffeniaSigns	111,{
 
 	if($signbmps)
 {
@@ -110,13 +110,13 @@ alberta.gat,34,241,1	script	Sign::GeffeniaSigns	111,{
 
 }	
 
-morocc.gat,168,264,1	duplicate(GeffeniaSigns)	Sign#2	111
-payon.gat,160,183,1	duplicate(GeffeniaSigns)	Sign#3	111
-prontera.gat,147,305,1	duplicate(GeffeniaSigns)	Sign#4	111
-geffen.gat,168,175,1	duplicate(GeffeniaSigns)	Sign#5	111
-aldebaran.gat,54,223,1	duplicate(GeffeniaSigns)	Sign#6	111
+morocc,168,264,1	duplicate(GeffeniaSigns)	Sign#2	111
+payon,160,183,1	duplicate(GeffeniaSigns)	Sign#3	111
+prontera,147,305,1	duplicate(GeffeniaSigns)	Sign#4	111
+geffen,168,175,1	duplicate(GeffeniaSigns)	Sign#5	111
+aldebaran,54,223,1	duplicate(GeffeniaSigns)	Sign#6	111
 
-prt_in.gat,228,26,4	script	Steward	55,{
+prt_in,228,26,4	script	Steward	55,{
 
 	if(signquest > 22) goto L_Situation;
 	if(signquest == 14) goto L_Artisan;
@@ -188,7 +188,7 @@ s_Cash:
 	mes "you leave the premises";
 	mes "^FF0000immediately^000000.";
 	close2;
-	warp "prontera.gat",150,150;
+	warp "prontera",150,150;
 	end;
 }
 
@@ -220,7 +220,7 @@ L_Situation:
 
 }
 
-prt_in.gat,227,45,4	script	Archaeologist	804,{
+prt_in,227,45,4	script	Archaeologist	804,{
 
 	cutin "mets_alpha",2;
 	if(sign_fail) goto L_Stop;
@@ -845,13 +845,13 @@ L_Stop:
 
 }
 
-prt_in.gat,248,23,4	script	Maid#2	1275,{
+prt_in,248,23,4	script	Maid#2	1275,{
 
 end;
 
 }
 
-morocc_in.gat,114,162,4	script	Young Man#13	118,{
+morocc_in,114,162,4	script	Young Man#13	118,{
 
 	if(signquest == 5)
 {
@@ -971,7 +971,7 @@ s_5W:
 
 }
 
-morocc_in.gat,115,154,5	script	Rogue	810,{
+morocc_in,115,154,5	script	Rogue	810,{
 	
 	if(signquest == 5)
 {
@@ -1020,7 +1020,7 @@ s_Metz:
 	mes "back! No way I'm fallin'";
 	mes "for that trick, chump!";
 	close2;
-	warp "morocc.gat",279,173;
+	warp "morocc",279,173;
 	end;
 
 s_Name:
@@ -1335,29 +1335,29 @@ Verifyitems:
 	end;
 }
 
-payon_in03.gat,81,16,8	script	Maid::Sohee	1170,{
+payon_in03,81,16,8	script	Maid::Sohee	1170,{
 
 end;
 
 }
 
-payon_in03.gat,78,16,8	script	Maid::Miyabi	1404,{
+payon_in03,78,16,8	script	Maid::Miyabi	1404,{
 
 end;
 
 }
 
-payon_in03.gat,13,31,4	script	Maid::Nymph	1416,{
+payon_in03,13,31,4	script	Maid::Nymph	1416,{
 
 end;
 
 }
 
-payon_in03.gat,81,21,4	duplicate(Sohee)	Maid::Sohee2	1170
-payon_in03.gat,78,21,4	duplicate(Miyabi)	Maid::Miyabi2	1404
-payon_in03.gat,8,31,4	duplicate(Nymph)	Maid::Nymph2	1416
+payon_in03,81,21,4	duplicate(Sohee)	Maid::Sohee2	1170
+payon_in03,78,21,4	duplicate(Miyabi)	Maid::Miyabi2	1404
+payon_in03,8,31,4	duplicate(Nymph)	Maid::Nymph2	1416
 
-payon_in03.gat,11,31,4	script	Daewoon	808,{
+payon_in03,11,31,4	script	Daewoon	808,{
 
 
 
@@ -1972,23 +1972,23 @@ s_Last:
 
 }
 
-aldebaran.gat,226,54,4	script	#aldesignwarp	45,2,2,{
+aldebaran,226,54,4	script	#aldesignwarp	45,2,2,{
 OnTouch:
 	set @aldesigncheck,0;
-	warp "aldeba_in.gat",149,120;
+	warp "aldeba_in",149,120;
 	end;
 
 }
 
-aldeba_in.gat,149,123,4	script	#aldesignwarp2	45,2,2,{
+aldeba_in,149,123,4	script	#aldesignwarp2	45,2,2,{
 OnTouch:
 	set @aldesigncheck,0;
-	warp "aldebaran.gat",223,56;
+	warp "aldebaran",223,56;
 	end;
 
 }
 
-aldeba_in.gat,147,104,1	script	PotionActivator	139,3,0,{
+aldeba_in,147,104,1	script	PotionActivator	139,3,0,{
 OnTouch:
 	if(@aldesigncheck == 0)
 {
@@ -1998,7 +1998,7 @@ OnTouch:
 	end;
 }
 	
-aldeba_in.gat,156,118,4	script	Piru Piru	700,{
+aldeba_in,156,118,4	script	Piru Piru	700,{
 
 	emotion e_sob;
 	mes "[Piru Piru]";
@@ -2058,7 +2058,7 @@ s_SageStone:
 
 }
 
-aldeba_in.gat,155,101,2	script	Jore#SignAldeNpc	805,{
+aldeba_in,155,101,2	script	Jore#SignAldeNpc	805,{
 
 	if(gettime(3) == 17 || gettime(3) == 18 || gettime(3) == 19 || gettime(3) == 20 || gettime(3) == 21)
 {
@@ -2419,7 +2419,7 @@ else
 	end;
 }
 
-prt_maze02.gat,57,152,1	script	Girl#11	91,{
+prt_maze02,57,152,1	script	Girl#11	91,{
 
 	mes "^3355FFYou catch a glimpse";
 	mes "of a girl headin directly";
@@ -2428,7 +2428,7 @@ prt_maze02.gat,57,152,1	script	Girl#11	91,{
 	mes "to follow her and see if you can";
 	mes "learn more.";
 	close2;
-	warp "prt_maze02.gat",11,146;
+	warp "prt_maze02",11,146;
 	end;
 s_No:
 	mes "to not follow her since you're";
@@ -2442,16 +2442,16 @@ Loopback:
 if($signmazemonster == 0)
 {
 	set $signmazemonster,5;
-	monster "prt_maze02.gat",14,177,"Flora",1118,1,"Sign_Alch_Summon::OnMonsterDead";
-	monster "prt_maze02.gat",17,171,"Flora",1118,1,"Sign_Alch_Summon::OnMonsterDead";
-	monster "prt_maze02.gat",24,173,"Flora",1118,1,"Sign_Alch_Summon::OnMonsterDead";
-	monster "prt_maze02.gat",17,175,"Marine Sphere",1142,1,"Sign_Alch_Summon::OnMonsterDead";
-	monster "prt_maze02.gat",17,168,"Marine Sphere",1142,1,"Sign_Alch_Summon::OnMonsterDead";
+	monster "prt_maze02",14,177,"Flora",1118,1,"Sign_Alch_Summon::OnMonsterDead";
+	monster "prt_maze02",17,171,"Flora",1118,1,"Sign_Alch_Summon::OnMonsterDead";
+	monster "prt_maze02",24,173,"Flora",1118,1,"Sign_Alch_Summon::OnMonsterDead";
+	monster "prt_maze02",17,175,"Marine Sphere",1142,1,"Sign_Alch_Summon::OnMonsterDead";
+	monster "prt_maze02",17,168,"Marine Sphere",1142,1,"Sign_Alch_Summon::OnMonsterDead";
 	return;
 }
 else
 {
-	killmonster "prt_maze02.gat","Sign_Alch_Summon::OnMonsterDead";
+	killmonster "prt_maze02","Sign_Alch_Summon::OnMonsterDead";
 	set $signmazemonster,0;
 	goto Loopback;
 }
@@ -2461,7 +2461,7 @@ OnMonsterDead:
 
 }
 
-prt_maze02.gat,16,183,3	script	Pleur	91,{
+prt_maze02,16,183,3	script	Pleur	91,{
 
 	if(signquest == 7 || signquest == 8)
 {
@@ -2477,7 +2477,7 @@ else
 	mes "I'll help you find";
 	mes "your way back...";
 	close2;
-	warp "prt_maze02.gat",61,149;
+	warp "prt_maze02",61,149;
 	end;
 }
 OnHo:
@@ -2494,7 +2494,7 @@ OnOmg:
 	end;
 }
 
-prt_maze02.gat,14,183,3	script	Gordon	51,{
+prt_maze02,14,183,3	script	Gordon	51,{
 
 	if(signquest == 7 || signquest == 8)
 {
@@ -2682,13 +2682,13 @@ s_Scared:
 	mes "Don't worry... I'll help";
 	mes "you.";
 	close2;
-	warp "prt_maze02.gat",61,149;
+	warp "prt_maze02",61,149;
 	end;
 }
 
 }
 
-geffen_in.gat,59,74,3	script	Jesqurienne	803,{
+geffen_in,59,74,3	script	Jesqurienne	803,{
 
 	if(signquest == 10) goto L_won;
 	if(signquest == 9) goto L_Sign_Jesq;
@@ -2851,7 +2851,7 @@ L_won:
 // ---------------------------------------------------------
 
 
-geffen_in.gat,60,70,6	script	Aaron::Aaron2	754,{
+geffen_in,60,70,6	script	Aaron::Aaron2	754,{
 
 	if(signquest == 10) goto L_done;
 	if(@signquiz == 1) goto L_startquiz;
@@ -3749,7 +3749,7 @@ OnHeh:
 
 }
 
-cmd_in02.gat,88,51,3	script	Strange Man	806,{
+cmd_in02,88,51,3	script	Strange Man	806,{
 
 	if(signquest == 12) goto L_Ever;
 	if(signquest == 11) goto L_Test;
@@ -3792,7 +3792,7 @@ L_Excuse:
 	mes "freakin' death! Bam bam bam!";
 	close2;
 	set Hp,1;
-	warp "comodo.gat",122,100;
+	warp "comodo",122,100;
 	end;
 
 L_Metz:
@@ -3977,7 +3977,7 @@ L_Check:
 	mes "of my test. Yeah, I know...";
 	set dearles_test,3;
 	close2;
-	warp "cmd_in01.gat",34,17;
+	warp "cmd_in01",34,17;
 	end;
 }
 
@@ -4002,7 +4002,7 @@ L_Dance:
 	mes "my test. I'm gonna send";
 	mes "you to Lamadin now...";
 	close2;
-	warp "cmd_in01.gat",34,17;
+	warp "cmd_in01",34,17;
 	end;
 
 L_Fail:
@@ -4031,7 +4031,7 @@ L_Another:
 	mes "supposed to be";
 	mes "the easy part...";
 	close2;
-	warp "cmd_in01.gat",34,17;
+	warp "cmd_in01",34,17;
 	end;
 
 L_Win:
@@ -4065,7 +4065,7 @@ L_Ever:
 	close;
 }
 
-cmd_in01.gat,32,25,3	script	Lamadin	724,{
+cmd_in01,32,25,3	script	Lamadin	724,{
 
 	if(SignDance == 1)goto L_Win;
 	if(SignDance == 2)goto L_Another;
@@ -4140,7 +4140,7 @@ L_Win:
 
 }
 
-cmd_in01.gat,33,33,3	script	Waiting Room#SignDance	66,{
+cmd_in01,33,33,3	script	Waiting Room#SignDance	66,{
 	end;
 
 OnWarp:
@@ -4154,73 +4154,73 @@ OnInit:
 	end;
 }
 
-cmd_in01.gat,1,1,1	script	DanceInit	139,{
+cmd_in01,1,1,1	script	DanceInit	139,{
 
 OnInitiation:
 	initnpctimer;
 	end;
 OnTimer1000:
 	if(!isloggedin($SignDancingrid))goto s_Cleanup;
-	areaannounce "cmd_in01.gat",12,12,35,35,"The test will begin shortly. Please do your best~",8;
+	areaannounce "cmd_in01",12,12,35,35,"The test will begin shortly. Please do your best~",8;
 	end;
 OnTimer4000:
 	if(!isloggedin($SignDancingrid))goto s_Cleanup;
 	set $signdance,1;
-	areaannounce "cmd_in01.gat",12,12,35,35,"UP LEFT",8;
+	areaannounce "cmd_in01",12,12,35,35,"UP LEFT",8;
 	end;
 OnTimer7000:
 	if(!isloggedin($SignDancingrid))goto s_Cleanup;
 	if($signdance != 2) set $Signdanceresult,1;
 	set $signdance,3;
-	areaannounce "cmd_in01.gat",12,12,35,35,"DOWN RIGHT",8;
+	areaannounce "cmd_in01",12,12,35,35,"DOWN RIGHT",8;
 	end;
 OnTimer10000:
 	if(!isloggedin($SignDancingrid))goto s_Cleanup;
 	if($signdance != 4) set $Signdanceresult,1;
 	set $signdance,5;
-	areaannounce "cmd_in01.gat",12,12,35,35,"DOWN LEFT & UP RIGHT",8;
+	areaannounce "cmd_in01",12,12,35,35,"DOWN LEFT & UP RIGHT",8;
 	end;
 OnTimer13000:
 	if(!isloggedin($SignDancingrid))goto s_Cleanup;
 	if($signdance != 7) set $Signdanceresult,1;
 	 set $signdance,8;
-	areaannounce "cmd_in01.gat",12,12,35,35,"DOWN RIGHT",8;
+	areaannounce "cmd_in01",12,12,35,35,"DOWN RIGHT",8;
 	end;
 OnTimer15000:
 	if(!isloggedin($SignDancingrid))goto s_Cleanup;
 	if($signdance != 9) set $Signdanceresult,1;
 	set $signdance,10;
-	areaannounce "cmd_in01.gat",12,12,35,35,"DOWN LEFT & UP RIGHT & UP LEFT & STAY CENTER",8;
+	areaannounce "cmd_in01",12,12,35,35,"DOWN LEFT & UP RIGHT & UP LEFT & STAY CENTER",8;
 	end;
 OnTimer20000:
 	if(!isloggedin($SignDancingrid))goto s_Cleanup;
 	if($signdance != 14) set $Signdanceresult,1;
 	set $signdance,15;
-	areaannounce "cmd_in01.gat",12,12,35,35,"DOWN LEFT & DOWN RIGHT & DOWN LEFT",8;
+	areaannounce "cmd_in01",12,12,35,35,"DOWN LEFT & DOWN RIGHT & DOWN LEFT",8;
 	end;
 OnTimer24000:
 	if(!isloggedin($SignDancingrid))goto s_Cleanup;
 	if($signdance != 18) set $Signdanceresult,1;
 	set $signdance,19;
-	areaannounce "cmd_in01.gat",12,12,35,35,"DOWN RIGHT & CENTER & DOWN RIGHT",8;
+	areaannounce "cmd_in01",12,12,35,35,"DOWN RIGHT & CENTER & DOWN RIGHT",8;
 	end;
 OnTimer28000:
 	if(!isloggedin($SignDancingrid))goto s_Cleanup;
 	if($signdance != 22) set $Signdanceresult,1;
 	set $signdance,23;
-	areaannounce "cmd_in01.gat",12,12,35,35,"DOWN LEFT & UP LEFT & UP RIGHT & DOWN RIGHT & CENTER",8;
+	areaannounce "cmd_in01",12,12,35,35,"DOWN LEFT & UP LEFT & UP RIGHT & DOWN RIGHT & CENTER",8;
 	end;
 OnTimer33000:
 	if(!isloggedin($SignDancingrid))goto s_Cleanup;
 	if($signdance != 28) set $Signdanceresult,1;
 	set $signdance,29;
-	areaannounce "cmd_in01.gat",12,12,35,35,"DOWN LEFT & UP RIGHT & UP LEFT & DOWN RIGHT",8;
+	areaannounce "cmd_in01",12,12,35,35,"DOWN LEFT & UP RIGHT & UP LEFT & DOWN RIGHT",8;
 	end;
 OnTimer40000:
 	if(!isloggedin($SignDancingrid))goto s_Cleanup;
 	if($signdance != 33) set $Signdanceresult,1;
 	set $signdance,34;
-	areaannounce "cmd_in01.gat",12,12,35,35,"UP RIGHT & DOWN RIGHT & UP RIGHT & DOWN RIGHT",8;
+	areaannounce "cmd_in01",12,12,35,35,"UP RIGHT & DOWN RIGHT & UP RIGHT & DOWN RIGHT",8;
 	end;
 OnTimer44000:
 	if(!isloggedin($SignDancingrid))goto s_Cleanup;
@@ -4228,21 +4228,21 @@ OnTimer44000:
 	set $signdance,39;
 	set $SignDanceRandomizer,rand(0,1);
 	if(!$SignDanceRandomizer)
-	areaannounce "cmd_in01.gat",12,12,35,35,"UP LEFT & UP RIGHT & CENTER & UP RIGHT & DOWN LEFT & DOWN RIGHT",8;
+	areaannounce "cmd_in01",12,12,35,35,"UP LEFT & UP RIGHT & CENTER & UP RIGHT & DOWN LEFT & DOWN RIGHT",8;
 	else
-	areaannounce "cmd_in01.gat",12,12,35,35,"UP LEFT & UP RIGHT & DOWN LEFT & UP RIGHT & DOWN LEFT & DOWN RIGHT",8;
+	areaannounce "cmd_in01",12,12,35,35,"UP LEFT & UP RIGHT & DOWN LEFT & UP RIGHT & DOWN LEFT & DOWN RIGHT",8;
 	end;
 OnTimer51500:
 	if(!isloggedin($SignDancingrid))goto s_Cleanup;
 	if($signdance != 45)set $Signdanceresult,1;
-	areaannounce "cmd_in01.gat",12,12,35,35,"Well done.",8;
+	areaannounce "cmd_in01",12,12,35,35,"Well done.",8;
 	end;
 OnTimer54500:
 	if(!isloggedin($SignDancingrid))goto s_Cleanup;
 	attachrid($SignDancingrid);
 	if($Signdanceresult)set SignDance,2;
 	else set SignDance,1;
-	warp "cmd_in01.gat",34,17;
+	warp "cmd_in01",34,17;
 	detachrid;
 	enablenpc "SignDance#WARPER";
 	disablenpc "SignDance#CENTER";
@@ -4261,11 +4261,11 @@ s_Cleanup:
 
 }
 
-cmd_in01.gat,1,1,1	script	SignDanceCleanUp	-1,{
+cmd_in01,1,1,1	script	SignDanceCleanUp	-1,{
 
 OnPlayerLogout:
 	initnpctimer;
-	areaannounce "cmd_in01.gat",12,12,35,35,"The current dancer has logged out. New dancers will be accepted shortly.",8;
+	areaannounce "cmd_in01",12,12,35,35,"The current dancer has logged out. New dancers will be accepted shortly.",8;
 	enablenpc "SignDance#WARPER";
 	disablenpc "SignDance#CENTER";
 	set $signdance,0;
@@ -4288,7 +4288,7 @@ OnInit:
 }
 
 //Dancing tiles
-cmd_in01.gat,16,13,4	script	SignDance#DOWNRIGHT	139,1,1,{
+cmd_in01,16,13,4	script	SignDance#DOWNRIGHT	139,1,1,{
 
 	if($signdance == 3){ set $signdance,4; soundeffect "effect\\sign_down.wav",1; }
 	if($signdance == 8){ set $signdance,9; soundeffect "effect\\sign_down.wav",1; }
@@ -4300,13 +4300,13 @@ cmd_in01.gat,16,13,4	script	SignDance#DOWNRIGHT	139,1,1,{
 	if($signdance == 35){ set $signdance,36; soundeffect "effect\\sign_down.wav",1; }
 	if($signdance == 37){ set $signdance,38; soundeffect "effect\\sign_down.wav",1; }
 	if($signdance == 44){ set $signdance,45; soundeffect "effect\\sign_down.wav",1; }
-	if(getcharid(3) != $SignDancingrid)warp "comodo.gat",187,164;
+	if(getcharid(3) != $SignDancingrid)warp "comodo",187,164;
 	end;
 
 }
 
 
-cmd_in01.gat,19,16,4	script	SignDance#UPRIGHT	139,1,1,{
+cmd_in01,19,16,4	script	SignDance#UPRIGHT	139,1,1,{
 
 	if($signdance == 6) { set $signdance,7; soundeffect "effect\\sign_right.wav",1; }
 	if($signdance == 11) { set $signdance,12; soundeffect "effect\\sign_right.wav",1; }
@@ -4316,30 +4316,30 @@ cmd_in01.gat,19,16,4	script	SignDance#UPRIGHT	139,1,1,{
 	if($signdance == 36) { set $signdance,37; soundeffect "effect\\sign_right.wav",1; }
 	if($signdance == 40) { set $signdance,41; soundeffect "effect\\sign_right.wav",1; }
 	if($signdance == 42) { set $signdance,43; soundeffect "effect\\sign_right.wav",1; }
-	if(getcharid(3) != $SignDancingrid)warp "comodo.gat",187,164;
+	if(getcharid(3) != $SignDancingrid)warp "comodo",187,164;
 	end;
 
 }
 
-cmd_in01.gat,16,19,4	script	SignDance#UPLEFT	139,1,1,{
+cmd_in01,16,19,4	script	SignDance#UPLEFT	139,1,1,{
 
 	if($signdance == 1) { set $signdance,2; soundeffect "effect\\sign_up.wav",1; }
 	if($signdance == 12) { set $signdance,13; soundeffect "effect\\sign_up.wav",1; }
 	if($signdance == 24) { set $signdance,25; soundeffect "effect\\sign_up.wav",1; }
 	if($signdance == 31) { set $signdance,32; soundeffect "effect\\sign_up.wav",1; }
 	if($signdance == 39) { set $signdance,40; soundeffect "effect\\sign_up.wav",1; }
-	if(getcharid(3) != $SignDancingrid)warp "comodo.gat",187,164;
+	if(getcharid(3) != $SignDancingrid)warp "comodo",187,164;
 	end;
 
 }
 
-cmd_in01.gat,16,16,4	script	SignDance#WARPER	139,1,1,{
-	if(getcharid(3) != $SignDancingrid)warp "comodo.gat",187,164;
+cmd_in01,16,16,4	script	SignDance#WARPER	139,1,1,{
+	if(getcharid(3) != $SignDancingrid)warp "comodo",187,164;
 	end;
 
 }
 
-cmd_in01.gat,16,16,4	script	SignDance#CENTER	139,1,1,{
+cmd_in01,16,16,4	script	SignDance#CENTER	139,1,1,{
 
 	if($signdance == 0) { set $SignDancingrid, getcharid(3); donpcevent "DanceInit::OnInitiation"; }
 	if($signdance == 13) { set $signdance,14; soundeffect "effect\\sign_center.wav",1; }
@@ -4354,7 +4354,7 @@ OnInit:
 
 }
 
-cmd_in01.gat,13,16,4	script	SignDance#DOWNLEFT	139,1,1,{
+cmd_in01,13,16,4	script	SignDance#DOWNLEFT	139,1,1,{
 
 	if($signdance == 5) { set $signdance,6; soundeffect "effect\\sign_left.wav",1; }
 	if($signdance == 10) { set $signdance,11; soundeffect "effect\\sign_left.wav",1; }
@@ -4364,12 +4364,12 @@ cmd_in01.gat,13,16,4	script	SignDance#DOWNLEFT	139,1,1,{
 	if($signdance == 29) { set $signdance,30; soundeffect "effect\\sign_left.wav",1; }
 	if($signdance == 41 && $SignDanceRandomizer) { set $signdance,42; soundeffect "effect\\sign_left.wav",1; }
 	if($signdance == 43) { set $signdance,44; soundeffect "effect\\sign_left.wav",1; }
-	if(getcharid(3) != $SignDancingrid)warp "comodo.gat",187,164;
+	if(getcharid(3) != $SignDancingrid)warp "comodo",187,164;
 	end;
 
 }
 
-alberta.gat,99,151,1	script	Sign::AlbertaSign	111,{
+alberta,99,151,1	script	Sign::AlbertaSign	111,{
 
 	mes "^FF0000- The Sign Reads -^000000";
 	mes "Tools by the Cart full!";
@@ -4379,7 +4379,7 @@ alberta.gat,99,151,1	script	Sign::AlbertaSign	111,{
 
 }
 
-alberta_in.gat,114,178,5	script	Refined Steward	109,{
+alberta_in,114,178,5	script	Refined Steward	109,{
 
 	if(bakerlan_test > 12) goto L_Hope;
 	if(bakerlan_test == 12) goto L_Thanks;
@@ -4523,7 +4523,7 @@ L_Hope:
 
 }
 
-alberta_in.gat,154,171,5	script	Maid#3	758,{
+alberta_in,154,171,5	script	Maid#3	758,{
 
 	if(bakerlan_test > 11) goto L_Done;
 	if(bakerlan_test == 11) goto L_Thanks;
@@ -4737,7 +4737,7 @@ L_Done:
 
 }
 
-alberta_in.gat,125,101,5	script	Wealthy-looking Merchant	807,{
+alberta_in,125,101,5	script	Wealthy-looking Merchant	807,{
 
 	if(!signquest)
 	{
@@ -4907,7 +4907,7 @@ L_Over:
 	close;
 }
 
-yuno.gat,330,100,3	script	Knight#2	734,{
+yuno,330,100,3	script	Knight#2	734,{
 
 	if (bakerlan_test > 4) goto L_Thanks;
 	if (bakerlan_test == 3) goto L_Delivery;
@@ -4954,7 +4954,7 @@ L_Thanks:
 	close;
 }
 
-alde_alche.gat,169,162,7	script	Alchemist#3	749,{
+alde_alche,169,162,7	script	Alchemist#3	749,{
 
 	if(!bakerlan_test)
 	{
@@ -5207,7 +5207,7 @@ L_Done:
 
 }
 
-prt_castle.gat,107,58,5	script	Soldier#2	105,{
+prt_castle,107,58,5	script	Soldier#2	105,{
 
 	if(bakerlan_test > 10) goto L_Heya;
 	mes "[Maruin]";
@@ -5299,7 +5299,7 @@ L_Heya:
 
 }
 
-geffen_in.gat,171,43,3	script	Cute Girl	703,{
+geffen_in,171,43,3	script	Cute Girl	703,{
 
 	if(!signquest)
 	{
@@ -5418,7 +5418,7 @@ L_Never:
 }
 
 
-geffen_in.gat,159,48,5	script	Woman	711,{
+geffen_in,159,48,5	script	Woman	711,{
 	if(signquest > 22) goto L_Cherish;
 	if(signquest > 19) goto L_Done;
 	if(signquest == 19 && countitem(7278)) goto L_Letter;
@@ -5544,7 +5544,7 @@ L_Cherish:
 
 }
 
-mjo_dun02.gat,88,295,3		script	Flaming Spirit Man	85,{
+mjo_dun02,88,295,3		script	Flaming Spirit Man	85,{
 	//get rid of some pieces, to let player reborn in future
 	if(signquest > 22) delitem 7177,countitem(7177);
 
@@ -5563,7 +5563,7 @@ mjo_dun02.gat,88,295,3		script	Flaming Spirit Man	85,{
 	mes "training, so I'd appreciate it if";
 	mes "you would just leave now.";
 	close2;
-	warp "mjo_dun02.gat",372,346;
+	warp "mjo_dun02",372,346;
 	end;
 
 L_Family:
@@ -5681,7 +5681,7 @@ L_Letter:
 	mes "your way out of here. Good luck~";
 	set signquest,18;
 	close2;
-	warp "mjo_dun02.gat",371,344;
+	warp "mjo_dun02",371,344;
 	end;
 
 L_Check:
@@ -5919,7 +5919,7 @@ L_Improve:
 
 }
 
-gef_tower.gat,118,36,5	script	Annoyed Man	64,{
+gef_tower,118,36,5	script	Annoyed Man	64,{
 
 
 	if(signquest > 24) goto L_Answer;
@@ -5983,7 +5983,7 @@ L_Answer:
 	
 }
 
-umbala.gat,163,256,3	script	Native	781,{
+umbala,163,256,3	script	Native	781,{
 
 	if(event_umbala < 3) goto L_UmWord;
 	if(signquest > 25) goto L_Thanks;
@@ -6058,7 +6058,7 @@ L_Thanks:
 	close;	
 }
 
-um_in.gat,27,23,3	script	Weird Man	121,{
+um_in,27,23,3	script	Weird Man	121,{
 
 	if(signquest > 27) goto L_Done;
 	if(signquest == 27) goto L_Check;
@@ -6079,7 +6079,7 @@ um_in.gat,27,23,3	script	Weird Man	121,{
 	emotion e_an;
 	if(signquest == 26) goto L_Sign;
 	close2;
-	warp "um_dun01.gat",129,90;
+	warp "um_dun01",129,90;
 	end;
 
 L_Sign:
@@ -6176,7 +6176,7 @@ L_Check:
 	next;
 	percentheal -30,0;
 	close2;
-	warp "um_dun01.gat",129,90;
+	warp "um_dun01",129,90;
 	end;
 
 L_Text:
@@ -6216,7 +6216,7 @@ L_Done:
 	close;
 }
 
-alberta.gat,165,83,3	script	Fastidious Old Man	755,{
+alberta,165,83,3	script	Fastidious Old Man	755,{
 
 	if(signquest > 30) goto L_Done;
 	if(signquest == 30) goto L_Interpret;
@@ -6360,7 +6360,7 @@ L_Done:
 
 // Himinn Part & Valkyrie
 
-gef_fild07.gat,182,241,1	script	#himinnwarper	111,1,1,{
+gef_fild07,182,241,1	script	#himinnwarper	111,1,1,{
 
 	if(signquest == 31 && countitem(7013) > 364 && countitem(953) > 11 && countitem(907) > 3) goto L_FirstClick;
 	end;
@@ -6406,11 +6406,11 @@ L_FirstTouch:
 	delitem 907,4;
 
 L_Warp:
-	warp "himinn.gat",49,10;
+	warp "himinn",49,10;
 	end;
 }
 
-himinn.gat,48,86,5	script	Valkyrie#2	811,{
+himinn,48,86,5	script	Valkyrie#2	811,{
 
 	if(signquest == 58) goto L_Done;
 	if(signquest > 51) goto L_Gods;
@@ -6466,7 +6466,7 @@ himinn.gat,48,86,5	script	Valkyrie#2	811,{
 	mes "one of the hearts there...";
 	if(signquest==32)set signquest,33;
 	close2;
-	warp "geffen.gat",120,100;
+	warp "geffen",120,100;
 	end;
 
 L_Duty:
@@ -6545,7 +6545,7 @@ L_Done:
 
 // Niflheim Part & Realm of the Dead
 
-niflheim.gat,102,54,4	script	Mad Man		739,{
+niflheim,102,54,4	script	Mad Man		739,{
 
 	if(signquest > 53) goto L_Queen;
 	if(signlaichin == 4) goto L_Where1;
@@ -6945,7 +6945,7 @@ function	script		Sign_Seal	{
 	return;
 }
 
-niflheim.gat,313,70,3	script	Pleasant-Featured Lady	90,{
+niflheim,313,70,3	script	Pleasant-Featured Lady	90,{
 
 	if(signquest > 55) goto L_NoWord;
 	if(Sign_Branch8A) goto L_Memory;
@@ -7336,16 +7336,16 @@ L_BranchB:
 	mes "ready to come with me?";
 	next;
 	menu "Yes.",-,"No.",L_No;
-	if(($signroom2full > 1) || getareausers("que_sign01.gat",229,77,166,12) > 0) goto L_Full;
+	if(($signroom2full > 1) || getareausers("que_sign01",229,77,166,12) > 0) goto L_Full;
 	mes "[Serin]";
 	mes "Please follow me";
 	mes "......";
 	close2;
-	if(($signroom2full > 1) || getareausers("que_sign01.gat",229,77,166,12) > 0) end;
+	if(($signroom2full > 1) || getareausers("que_sign01",229,77,166,12) > 0) end;
 	donpcevent "#signserin2::OnSerin";
 	donpcevent "#signserin2::OnCooldown";
 	set $signroom2full,2;
-	warp "que_sign01.gat",191,39;
+	warp "que_sign01",191,39;
 	end;
 	
 
@@ -7383,7 +7383,7 @@ L_Full:
 
 }
 
-nif_in.gat,156,93,1	script	#signann	139,2,2,{
+nif_in,156,93,1	script	#signann	139,2,2,{
 
 	if(signquest > 33) goto L_SignAnn;
 	end;
@@ -7523,7 +7523,7 @@ L_Sad:
 
 }
 
-niflheim.gat,350,258,1	script	#signbruce	139,2,2,{
+niflheim,350,258,1	script	#signbruce	139,2,2,{
 
 	if(signquest == 35 || Sign_Branch2B == 3) goto L_SignBruce;
 	end;
@@ -7575,8 +7575,8 @@ L_Book1:
 	mes "How dare you touch my books";
 	mes "when I specifically said";
 	mes "'Don't touch my books!'";
-	killmonster "niflheim.gat","#signbruce::Onmymob";
-	monster "niflheim.gat",350,258,"Rideword",1478,1,"#signbruce::Onmymob";
+	killmonster "niflheim","#signbruce::Onmymob";
+	monster "niflheim",350,258,"Rideword",1478,1,"#signbruce::Onmymob";
 	close;
 
 L_Book2:
@@ -7585,7 +7585,7 @@ L_Book2:
 	mes "Get lost....";
 	mes "Don't disrupt my restingggaaahh!!";
 	close2;
-	warp "niflheim.gat",34,162;
+	warp "niflheim",34,162;
 	end;
 
 L_Book3:
@@ -7615,14 +7615,14 @@ L_Check:
 	mes "Muhahahahahaha!";
 	mes "That's not the right spell!";
 	mes "Now death awaits you!";
-	killmonster "niflheim.gat","#signbruce::Onmymob";
-	monster "niflheim.gat",349,256,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
-	monster "niflheim.gat",347,258,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
-	monster "niflheim.gat",347,254,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
-	monster "niflheim.gat",350,252,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
-	monster "niflheim.gat",344,255,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
-	monster "niflheim.gat",348,252,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
-	monster "niflheim.gat",347,259,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
+	killmonster "niflheim","#signbruce::Onmymob";
+	monster "niflheim",349,256,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
+	monster "niflheim",347,258,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
+	monster "niflheim",347,254,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
+	monster "niflheim",350,252,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
+	monster "niflheim",344,255,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
+	monster "niflheim",348,252,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
+	monster "niflheim",347,259,"Orc Skeleton",1462,1,"#signbruce::Onmymob";
 	close;
 
 L_Success:
@@ -7647,7 +7647,7 @@ Onmymob:
 
 }
 	
-nif_in.gat,188,168,1	script	#signwitch	139,2,2,{
+nif_in,188,168,1	script	#signwitch	139,2,2,{
 
 	if(signquest > 36) goto L_SignWitch;
 	if(Sign_Branch2B > 1) goto L_Book;
@@ -7689,7 +7689,7 @@ L_SignWitch:
 	mes "good choice... I mean...";
 	mes "for your life...";
 	close2;
-	warp "umbala.gat",138,208;
+	warp "umbala",138,208;
 	end;
 
 L_Child:
@@ -7900,7 +7900,7 @@ L_Privacy:
 
 }
 
-nif_in.gat,105,81,1	script	#signcrayu	139,2,2,{
+nif_in,105,81,1	script	#signcrayu	139,2,2,{
 
 	if(signquest == 44) goto L_SignCrayu;
 	end;
@@ -7970,7 +7970,7 @@ L_Chosen:
 
 }
 
-niflheim.gat,146,241,7	script	Depressing Man	735,{
+niflheim,146,241,7	script	Depressing Man	735,{
 
 	if(signquest > 56) goto L_Done;
 	if(Sign_Branch8A > 3 || (Sign_Branch8B && Sign_Branch8B < 4)) goto L_Hurry;
@@ -8030,7 +8030,7 @@ L_Queen:
 	mes "Lady Hell. Otherwise, the";
 	mes "consequences will be severe...";
 	close2;
-	warp "que_sign01.gat",45,20;
+	warp "que_sign01",45,20;
 	end;
 
 L_No:
@@ -8096,7 +8096,7 @@ L_Done:
 	mes "speak to her highness";
 	mes "with the utmost respect!";
 	close2;
-	warp "que_sign01.gat",45,20;
+	warp "que_sign01",45,20;
 	end;
 
 L_No2:
@@ -8109,7 +8109,7 @@ L_No2:
 
 }
 
-niflheim.gat,146,241,1	script	#signgen	139,2,2,{
+niflheim,146,241,1	script	#signgen	139,2,2,{
 
 	if(signquest == 45 || Sign_Branch2B == 1) goto L_SignGen;
 	end;
@@ -8147,14 +8147,14 @@ L_SignGen:
 
 }
 
-nif_in.gat,140,177,1	script	#signgrave	111,{
+nif_in,140,177,1	script	#signgrave	111,{
 
-	if(signquest > 47 || countitem(7313) > 0)  warp "que_sign01.gat",115,135;
+	if(signquest > 47 || countitem(7313) > 0)  warp "que_sign01",115,135;
 	end;
 
 }
 
-que_sign01.gat,122,141,5	script	Witch#2	792,{
+que_sign01,122,141,5	script	Witch#2	792,{
 
 	if(Sign_Branch8B && Sign_Branch8B < 4)goto L_MustHurry;
 	if(signquest > 56) goto L_NoMedal;
@@ -8424,7 +8424,7 @@ L_Complete:
 	close;
 
 L_Serin:
-	if(($signroomfull > 1) || getmapusers("que_sign02.gat") > 0 || getareausers("que_sign01.gat",229,227,166,162) > 0) goto L_Full;
+	if(($signroomfull > 1) || getmapusers("que_sign02") > 0 || getareausers("que_sign01",229,227,166,162) > 0) goto L_Full;
 	if(countitem(2643) < 1) goto L_NoRing;
 	mes "[Kirkena]";
 	mes "You're finally";
@@ -8434,13 +8434,13 @@ L_Serin:
 	mes "to try. Are you ready?";
 	next;
 	menu "Yes",-,"No",L_No;
-	if(($signroomfull > 1) || getmapusers("que_sign02.gat") > 0 || getareausers("que_sign01.gat",229,227,166,162) > 0) goto L_Full;
+	if(($signroomfull > 1) || getmapusers("que_sign02") > 0 || getareausers("que_sign01",229,227,166,162) > 0) goto L_Full;
 	close2;
 	donpcevent "#signserin::OnSerin";
 	donpcevent "#signserin::OnCooldown";
 	set $signroomfull,2;
 	set $signparty,getcharid(1);
-	warp "que_sign01.gat",195,189;
+	warp "que_sign01",195,189;
 	end;
 
 L_No:
@@ -8478,18 +8478,18 @@ L_NoRing:
 	mes "you ready to go?";
 	next;
 	menu "Yes",-,"No",L_No;
-	if(($signroomfull > 1) || getmapusers("que_sign02.gat") > 0 || getareausers("que_sign01.gat",229,227,166,162) > 0) goto L_Full;
+	if(($signroomfull > 1) || getmapusers("que_sign02") > 0 || getareausers("que_sign01",229,227,166,162) > 0) goto L_Full;
 	mes "[Kirkena]";
 	mes "Okay then.";
 	mes "Good luck,";
 	mes "" + strcharinfo(0) + "...";
 	close2;
-	if(($signroomfull > 1) || getmapusers("que_sign02.gat") > 0 || getareausers("que_sign01.gat",229,227,166,162) > 0) end;
+	if(($signroomfull > 1) || getmapusers("que_sign02") > 0 || getareausers("que_sign01",229,227,166,162) > 0) end;
 	donpcevent "#signserin::OnSerin";
 	donpcevent "#signserin::OnCooldown";
 	set $signroomfull,2;
 	set $signparty,getcharid(1);
-	warp "que_sign02.gat",35,313;
+	warp "que_sign02",35,313;
 	end;
 
 L_Medal:
@@ -8519,7 +8519,7 @@ L_MedalOk:
 	mes "be too much for just";
 	mes "one adventurer alone...";
 	close2;
-	warp "que_sign01.gat",195,189;
+	warp "que_sign01",195,189;
 	end;
 	
 
@@ -8537,7 +8537,7 @@ L_Path:
 	mes "be too much for just";
 	mes "one adventurer alone...";
 	close2;
-	warp "que_sign02.gat",35,313;
+	warp "que_sign02",35,313;
 	end;
 
 L_Success:
@@ -8619,7 +8619,7 @@ L_Fail:
 
 //Seals in Glast Heim Lowest Cave
 
-gl_dun02.gat,262,265,1	script	Mysterious Energy	111,{
+gl_dun02,262,265,1	script	Mysterious Energy	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 1) || (brokenseal == 2 && Sign_Seal2 == 1) || (brokenseal == 3 && Sign_Seal3 == 1) || (brokenseal == 4 && Sign_Seal4 == 1))
 {
@@ -8643,7 +8643,7 @@ gl_dun02.gat,262,265,1	script	Mysterious Energy	111,{
 
 }
 
-gl_dun02.gat,270,98,1	script	Mysterious Energy#2	111,{
+gl_dun02,270,98,1	script	Mysterious Energy#2	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 2) || (brokenseal == 2 && Sign_Seal2 == 2) || (brokenseal == 3 && Sign_Seal3 == 2) || (brokenseal == 4 && Sign_Seal4 == 2))
 {
@@ -8667,7 +8667,7 @@ gl_dun02.gat,270,98,1	script	Mysterious Energy#2	111,{
 
 }
 
-gl_dun02.gat,268,31,1	script	Mysterious Energy#3	111,{
+gl_dun02,268,31,1	script	Mysterious Energy#3	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 3) || (brokenseal == 2 && Sign_Seal2 == 3) || (brokenseal == 3 && Sign_Seal3 == 3) || (brokenseal == 4 && Sign_Seal4 == 3))
 {
@@ -8691,7 +8691,7 @@ gl_dun02.gat,268,31,1	script	Mysterious Energy#3	111,{
 
 }
 
-gl_dun02.gat,139,72,1	script	Mysterious Energy#4	111,{
+gl_dun02,139,72,1	script	Mysterious Energy#4	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 4) || (brokenseal == 2 && Sign_Seal2 == 4) || (brokenseal == 3 && Sign_Seal3 == 4) || (brokenseal == 4 && Sign_Seal4 == 4))
 {
@@ -8715,7 +8715,7 @@ gl_dun02.gat,139,72,1	script	Mysterious Energy#4	111,{
 
 }
 
-gl_dun02.gat,16,26,1	script	Mysterious Energy#5	111,{
+gl_dun02,16,26,1	script	Mysterious Energy#5	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 5) || (brokenseal == 2 && Sign_Seal2 == 5) || (brokenseal == 3 && Sign_Seal3 == 5) || (brokenseal == 4 && Sign_Seal4 == 5))
 {
@@ -8739,7 +8739,7 @@ gl_dun02.gat,16,26,1	script	Mysterious Energy#5	111,{
 
 }
 
-gl_dun02.gat,120,180,1	script	Mysterious Energy#6	111,{
+gl_dun02,120,180,1	script	Mysterious Energy#6	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 6) || (brokenseal == 2 && Sign_Seal2 == 6) || (brokenseal == 3 && Sign_Seal3 == 6) || (brokenseal == 4 && Sign_Seal4 == 6))
 {
@@ -8763,7 +8763,7 @@ gl_dun02.gat,120,180,1	script	Mysterious Energy#6	111,{
 
 }
 
-gl_dun02.gat,42,251,1	script	Mysterious Energy#7	111,{
+gl_dun02,42,251,1	script	Mysterious Energy#7	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 7) || (brokenseal == 2 && Sign_Seal2 == 7) || (brokenseal == 3 && Sign_Seal3 == 7) || (brokenseal == 4 && Sign_Seal4 == 7))
 {
@@ -8787,7 +8787,7 @@ gl_dun02.gat,42,251,1	script	Mysterious Energy#7	111,{
 
 }
 
-gl_dun02.gat,124,231,1	script	Mysterious Energy#8	111,{
+gl_dun02,124,231,1	script	Mysterious Energy#8	111,{
 
 	if((brokenseal == 1 && Sign_Seal1 == 8) || (brokenseal == 2 && Sign_Seal2 == 8) || (brokenseal == 3 && Sign_Seal3 == 8) || (brokenseal == 4 && Sign_Seal4 == 8))
 {
@@ -8876,7 +8876,7 @@ L_Soul:
 
 //End of Seals
 
-que_sign01.gat,46,55,1	script	Fountain	111,{
+que_sign01,46,55,1	script	Fountain	111,{
 	if(signquest > 54) goto L_Bottle;
 	mes "^3355FFThe water in this";
 	mes "fountain looks clean";
@@ -8912,7 +8912,7 @@ L_Nobottle:
 
 }
 
-que_sign01.gat,45,227,5	script	Queen of the Dead	856,{
+que_sign01,45,227,5	script	Queen of the Dead	856,{
 
 	if(signquest > 65) goto L_Greet;
 	if(signquest > 64) goto L_Work;
@@ -9043,7 +9043,7 @@ L_No:
 	mes "Still, it would be unwise";
 	mes "to displease me~";
 	close2;
-	warp "niflheim.gat",29,154;
+	warp "niflheim",29,154;
 	end;
 
 L_Work:
@@ -9105,7 +9105,7 @@ L_Greet:
 
 }
 
-que_sign01.gat,1,1,1	script	#signserin	-1,{
+que_sign01,1,1,1	script	#signserin	-1,{
 
 OnInit:
 	disablenpc "Serin#serin";
@@ -9120,10 +9120,10 @@ OnSerin:
 OnSummon:
 	disablenpc "Serin#serin";
 	set $@Sign_Summon,8;
-	areamonster "que_sign01.gat",188,184,205,205,"Rotten Corpse",1036,3,"#signserin::OnSignDead";
-	areamonster "que_sign01.gat",188,184,205,205,"Ancient Wraith",1192,2,"#signserin::OnSignDead";
-	areamonster "que_sign01.gat",188,184,205,205,"Ancient Mummy",1297,2,"#signserin::OnSignDead";
-	areamonster "que_sign01.gat",188,184,205,205,"Dark Lord Incarnation",1302,1,"#signserin::OnSignDead";
+	areamonster "que_sign01",188,184,205,205,"Rotten Corpse",1036,3,"#signserin::OnSignDead";
+	areamonster "que_sign01",188,184,205,205,"Ancient Wraith",1192,2,"#signserin::OnSignDead";
+	areamonster "que_sign01",188,184,205,205,"Ancient Mummy",1297,2,"#signserin::OnSignDead";
+	areamonster "que_sign01",188,184,205,205,"Dark Lord Incarnation",1302,1,"#signserin::OnSignDead";
 	end;
 
 OnSignDead:
@@ -9140,15 +9140,15 @@ OnCooldown:
 
 OnTimer600000:
 	disablenpc "Serin#serin";
-	killmonster "que_sign01.gat","#signserin::OnSignDead";
+	killmonster "que_sign01","#signserin::OnSignDead";
 	set $signroomfull,1;
-	areawarp "que_sign01.gat",229,227,166,162,"niflheim.gat",30,156;
-	areawarp "que_sign02.gat",1,1,400,400,"niflheim.gat",30,156;
+	areawarp "que_sign01",229,227,166,162,"niflheim",30,156;
+	areawarp "que_sign02",1,1,400,400,"niflheim",30,156;
 	stopnpctimer;
 	end;
 }
 
-que_sign01.gat,1,1,1	script	#signserin2	-1,{
+que_sign01,1,1,1	script	#signserin2	-1,{
 
 OnInit:
 	disablenpc "Serin#serin2";
@@ -9162,10 +9162,10 @@ OnSerin:
 OnSummon:
 	disablenpc "Serin#serin2";
 	set $@Sign_Summon2,8;
-	areamonster "que_sign01.gat",188,34,205,55,"Rotten Corpse",1036,3,"#signserin2::OnSignDead";
-	areamonster "que_sign01.gat",188,34,205,55,"Ancient Wraith",1192,2,"#signserin2::OnSignDead";
-	areamonster "que_sign01.gat",188,34,205,55,"Ancient Mummy",1297,2,"#signserin2::OnSignDead";
-	areamonster "que_sign01.gat",188,34,205,55,"Dark Lord Incarnation",1302,1,"#signserin2::OnSignDead";
+	areamonster "que_sign01",188,34,205,55,"Rotten Corpse",1036,3,"#signserin2::OnSignDead";
+	areamonster "que_sign01",188,34,205,55,"Ancient Wraith",1192,2,"#signserin2::OnSignDead";
+	areamonster "que_sign01",188,34,205,55,"Ancient Mummy",1297,2,"#signserin2::OnSignDead";
+	areamonster "que_sign01",188,34,205,55,"Dark Lord Incarnation",1302,1,"#signserin2::OnSignDead";
 	end;
 
 OnSignDead:
@@ -9182,14 +9182,14 @@ OnCooldown:
 
 OnTimer600000:
 	disablenpc "Serin#serin2";
-	killmonster "que_sign01.gat","#signserin2::OnSignDead";
+	killmonster "que_sign01","#signserin2::OnSignDead";
 	set $signroom2full,1;
-	areawarp "que_sign01.gat",229,77,166,12,"niflheim.gat",30,156;
+	areawarp "que_sign01",229,77,166,12,"niflheim",30,156;
 	stopnpctimer;
 	end;
 }
 
-que_sign01.gat,197,195,5	script	Serin#serin	90,{
+que_sign01,197,195,5	script	Serin#serin	90,{
 
 	if(signquest > 55) goto L_Done;
 	if(Sign_Branch8A > 7) goto L_Success;
@@ -9267,7 +9267,7 @@ L_Go:
 	mes "Dark Lord.";
 	close2;
 	set $signroomfull,0;
-	warp "niflheim.gat",30,156;
+	warp "niflheim",30,156;
 	end;
 
 L_Summon:
@@ -9387,11 +9387,11 @@ L_Done:
 	mes "and returned to Niflheim.";
 	close2;
 	set $signroomfull,0;
-	warp "niflheim.gat",30,156;
+	warp "niflheim",30,156;
 	end;
 }
 
-que_sign01.gat,197,45,5	script	Serin#serin2	90,{
+que_sign01,197,45,5	script	Serin#serin2	90,{
 
 	if(signquest > 55) goto L_Done;
 	if(Sign_Branch8B > 3) goto L_Success;
@@ -9468,7 +9468,7 @@ L_Go:
 	mes "Dark Lord.";
 	close2;
 	set $signroom2full,0;
-	warp "niflheim.gat",30,156;
+	warp "niflheim",30,156;
 	end;
 
 L_Summon:
@@ -9602,7 +9602,7 @@ L_Done:
 	mes "and returned to Niflheim.";
 	close2;
 	set $signroom2full,0;
-	warp "niflheim.gat",30,156;
+	warp "niflheim",30,156;
 	end;
 }
 
@@ -9634,7 +9634,7 @@ L_Party:
 	mes "be too much for just";
 	mes "one adventurer alone...";
 	close2;
-	warp "que_sign01.gat",195,189;
+	warp "que_sign01",195,189;
 	end;
 	
 
@@ -9652,59 +9652,59 @@ L_Path:
 	mes "be too much for just";
 	mes "one adventurer alone...";
 	close2;
-	warp "que_sign02.gat",135,313;
+	warp "que_sign02",135,313;
 	end;
 
 }
 
 // Warp to leave Serin's room
 
-que_sign01.gat,178,169,0	script	#serinwarp	45,1,1,{
+que_sign01,178,169,0	script	#serinwarp	45,1,1,{
 
 	if($signroomfull > 2)
 {
-	if(getmapusers("que_sign02.gat") > 0 || getareausers("que_sign01.gat",229,227,166,162) > 0) end;
+	if(getmapusers("que_sign02") > 0 || getareausers("que_sign01",229,227,166,162) > 0) end;
 	donpcevent "#signserin::OnInit";
 }
-	warp "niflheim.gat",30,156;
+	warp "niflheim",30,156;
 	end;
 }
 
-que_sign01.gat,178,19,0	script	#serinwarp2	45,1,1,{
+que_sign01,178,19,0	script	#serinwarp2	45,1,1,{
 
 	set $signroom2full,0;
-	warp "niflheim.gat",30,156;
+	warp "niflheim",30,156;
 	end;
 }
 
 // Fountain script
 
-geffen.gat,119,55,1	script	GeffeniaWarper	45,2,2,{
+geffen,119,55,1	script	GeffeniaWarper	45,2,2,{
 
 	switch($GeffeniaWarp)
 	{
 
 	case 1:
-		warp "gefenia01.gat",58,169;
+		warp "gefenia01",58,169;
 	break;
 
 	case 2:
-		warp "gefenia02.gat",116,115;
+		warp "gefenia02",116,115;
 	break;
 
 	case 3:
-		warp "gefenia03.gat",130,206;
+		warp "gefenia03",130,206;
 	break;
 
 	case 4:
-		warp "gefenia04.gat",133,88;
+		warp "gefenia04",133,88;
 	break;
 
 	}
 
 OnWarping:
 	misceffect 215;
-	mapannounce "geffen.gat","With a flash of light from Geffen Fountain, the door to Geffenia has opened.",1,0x9CFF00;
+	mapannounce "geffen","With a flash of light from Geffen Fountain, the door to Geffenia has opened.",1,0x9CFF00;
 	misceffect 247;
 	initnpctimer;
 	end;
@@ -9719,7 +9719,7 @@ OnTimer30000:
 
 OnTimer45000:
 	stopnpctimer;
-	mapannounce "geffen.gat","The portal to Geffenia is now closed.",1,0x9CFF00;
+	mapannounce "geffen","The portal to Geffenia is now closed.",1,0x9CFF00;
 	misceffect 16;
 
 OnInit:
@@ -9729,7 +9729,7 @@ OnInit:
 
 }
 
-geffen.gat,119,49,1	script	Fountain#SignFountain	111,{
+geffen,119,49,1	script	Fountain#SignFountain	111,{
 
 	if(countitem(7025) && !$GeffeniaWarp)goto L_Lament;
 	mes "^3355FFThis is the";
@@ -9759,14 +9759,14 @@ L_Throw:
 }
 
 //==================================================
-// que_sign02.gat - Monster Spawns
+// que_sign02 - Monster Spawns
 //==================================================
 
-que_sign02.gat,0,0,0,0	monster	Incubus	1580,1,0,0,0
-que_sign02.gat,0,0,0,0	monster	Wraith Dead	1566,3,0,0,0
-que_sign02.gat,0,0,0,0	monster	Evil Druid	1435,5,0,0,0
-que_sign02.gat,0,0,0,0	monster	Wraith	1475,5,0,0,0
-que_sign02.gat,0,0,0,0	monster	Injustice	1446,10,0,0,0
-que_sign02.gat,0,0,0,0	monster	Skeleton Prisoner	1479,10,0,0,0
-que_sign02.gat,0,0,0,0	monster	Zombie Prisoner	1480,10,0,0,0
-que_sign02.gat,0,0,0,0	monster	Ghoul	1423,15,0,0,0
+que_sign02,0,0,0,0	monster	Incubus	1580,1,0,0,0
+que_sign02,0,0,0,0	monster	Wraith Dead	1566,3,0,0,0
+que_sign02,0,0,0,0	monster	Evil Druid	1435,5,0,0,0
+que_sign02,0,0,0,0	monster	Wraith	1475,5,0,0,0
+que_sign02,0,0,0,0	monster	Injustice	1446,10,0,0,0
+que_sign02,0,0,0,0	monster	Skeleton Prisoner	1479,10,0,0,0
+que_sign02,0,0,0,0	monster	Zombie Prisoner	1480,10,0,0,0
+que_sign02,0,0,0,0	monster	Ghoul	1423,15,0,0,0

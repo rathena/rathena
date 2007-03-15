@@ -16,7 +16,7 @@
 
 //Statue (NPC)(U: UP, D: DOWN, R: RIGHT, L: LEFT) :
 // Explain Npc
-tha_t08.gat,69,106,4	script	Statue	111,{
+tha_t08,69,106,4	script	Statue	111,{
 
 	mes "You can read on the back of the statue:";
 	mes "'By the spirit of olds, the walls are closed";
@@ -28,11 +28,11 @@ tha_t08.gat,69,106,4	script	Statue	111,{
 }
 
 //Tha_t09 :
-//(Thalos)(U,L)-->tha_t09.gat,17,158,4
-//(Mediane)(D,R)-->tha_t09.gat,84,99,4
+//(Thalos)(U,L)-->tha_t09,17,158,4
+//(Mediane)(D,R)-->tha_t09,84,99,4
 //Script:
 
-tha_t09.gat,17,158,4	script	Thalos	111,{
+tha_t09,17,158,4	script	Thalos	111,{
 
 	if(TSQ_CHK == 1) goto done;
 	mes "[Thalos]";
@@ -47,14 +47,14 @@ done:
            
 }
 
-tha_t09.gat,84,99,4	script	Mediane	111,{
+tha_t09,84,99,4	script	Mediane	111,{
 
 	if(TSQ_CHK != 1) goto nook;
 	mes "[Mediane]";
 	mes "Okay, i am warping you to the next floor now.";
 	next;
 	set TSQ_CHK,0;
-	warp "tha_t10.gat",	165,	138; 
+	warp "tha_t10",	165,	138; 
 	close;
 nook:
 	mes "[Mediane]";
@@ -63,12 +63,12 @@ nook:
 }
 
 //Tha_t10 :
-//(Melkor)(U)-->tha_t10.gat,130,159,4
-//(Zebrus)(D,R)-->tha_t10.gat,160,98,4
-//(Veriaelle)(D,L)-->tha_t10.gat,99,97,4
+//(Melkor)(U)-->tha_t10,130,159,4
+//(Zebrus)(D,R)-->tha_t10,160,98,4
+//(Veriaelle)(D,L)-->tha_t10,99,97,4
 //Script:
 
-tha_t10.gat,130,159,4	script	Melkor	111,{
+tha_t10,130,159,4	script	Melkor	111,{
 
 	if(TSQ_CHK == 1) goto done;
 	mes "[Melkor]";
@@ -82,7 +82,7 @@ done:
 	close;
 }
 
-tha_t10.gat,160,98,4	script	Zebrus	111,{
+tha_t10,160,98,4	script	Zebrus	111,{
 
 	if(TSQ_CHK != 1) goto nook;
 	mes "[Zebrus]";
@@ -97,14 +97,14 @@ nook:
 	close;
 }
 
-tha_t10.gat,99,97,4	script	Veriaelle	111,{
+tha_t10,99,97,4	script	Veriaelle	111,{
 
 	if(TSQ_CHK != 2) goto nook;
 	mes "[Veriaelle]";
 	mes "Okay, i am warping you to the next floor.";
 	next;
 	set TSQ_CHK,0;
-	warp "tha_t11.gat",	86,	38;
+	warp "tha_t11",	86,	38;
 	close;
 nook:
 	mes "[Veriaelle]";
@@ -115,13 +115,13 @@ nook:
 }
 
 //Tha_t11 :
-//(Throtre)(U,L)-->tha_t11.gat,16,85,4
-//(Klermaz)(D,R)-->tha_t11.gat,85,16,4
-//(Mihane)(D,L)-->tha_t11.gat,16,16,4
-//(Seranes)(U,R)-->tha_t11.gat,85,85,4
+//(Throtre)(U,L)-->tha_t11,16,85,4
+//(Klermaz)(D,R)-->tha_t11,85,16,4
+//(Mihane)(D,L)-->tha_t11,16,16,4
+//(Seranes)(U,R)-->tha_t11,85,85,4
 //Script:
 
-tha_t11.gat,16,85,4	script	Throtre	111,{
+tha_t11,16,85,4	script	Throtre	111,{
 	if(TSQ_CHK == 1) goto done;
 	mes "[Throtre]";
 	mes "You got my authorization for the next floor";
@@ -134,7 +134,7 @@ done:
 	close;
 }
 
-tha_t11.gat,85,16,4	script	Klermaz	111,{
+tha_t11,85,16,4	script	Klermaz	111,{
 	if(TSQ_CHK != 1) goto nook;
 	mes "[Klermaz]";
 	mes "Hmm it seems that Throtre allowed you to pass.";
@@ -149,7 +149,7 @@ nook:
 	close;
 }
 
-tha_t11.gat,16,16,4	script	Mihane	111,{
+tha_t11,16,16,4	script	Mihane	111,{
       if(TSQ_CHK != 2) goto nook;
 	mes "[Mihane]";
 	mes "Keep on this way, Only 1 Left.";
@@ -163,14 +163,14 @@ nook:
 	close;
 }
 
-tha_t11.gat,85,85,4	script	Seranes	111,{
+tha_t11,85,85,4	script	Seranes	111,{
 	if(TSQ_CHK != 3 ) goto nook;
 	mes "[Seranes]";
 	mes "Perfect, it seems that the other spirits grants you the access.";
 	mes "I am warping you to the next floor.";
 	next;
 	set TSQ_CHK,0;
-	warp "tha_t12.gat",	129,	58;
+	warp "tha_t12",	129,	58;
 	close;
 nook:
 	mes "[Seranes]";
@@ -181,14 +181,14 @@ nook:
 }
 
 //Tha_t12 ( M: Middle):
-//(Nox)(D,L)-->tha_t12.gat,103,18,4
-//(Vox)(R)-->tha_t12.gat,162,58,4
-//(Hox)(L)-->tha_t12.gat,96,57,4
-//(Dox)(D,R)-->tha_t12.gat,153,17,4
-//(Sox)(U)-->tha_t12.gat,128,88,4
+//(Nox)(D,L)-->tha_t12,103,18,4
+//(Vox)(R)-->tha_t12,162,58,4
+//(Hox)(L)-->tha_t12,96,57,4
+//(Dox)(D,R)-->tha_t12,153,17,4
+//(Sox)(U)-->tha_t12,128,88,4
 //Script:
 
-tha_t12.gat,103,18,4	script	Nox	111,{
+tha_t12,103,18,4	script	Nox	111,{
 	if(TSQ_CHK == 1 ) goto done;
 	mes "[Nox]";
 	mes "Fine, 4 Spirits left.";
@@ -200,7 +200,7 @@ done:
 	close;
 }
 
-tha_t12.gat,162,58,4	script	Vox	111,{
+tha_t12,162,58,4	script	Vox	111,{
 	if(TSQ_CHK != 1 ) goto nook;
 	mes "[Vox]";
 	mes "Keep on this way, 3 Spirits remaining !";
@@ -214,7 +214,7 @@ nook:
 	close;
 }
 
-tha_t12.gat,96,57,4	script	Hox	111,{	
+tha_t12,96,57,4	script	Hox	111,{	
 	if(TSQ_CHK != 2 ) goto nook;
 	mes "[Hox]";
 	mes "You are on the good way, 2 Spirits remaining !";
@@ -228,7 +228,7 @@ nook:
 	close;
 }
 
-tha_t12.gat,153,17,4	script	Dox	111,{
+tha_t12,153,17,4	script	Dox	111,{
 	if(TSQ_CHK != 3 ) goto nook;
 	mes "[Dox]";
 	mes "Perfect, 1 Spirit left.";
@@ -242,7 +242,7 @@ nook:
 	close;
 }
 
-tha_t12.gat,128,88,4	script	Sox	111,{
+tha_t12,128,88,4	script	Sox	111,{
 	if(TSQ_CHK != 4 ) goto nook;
 	mes "[Sox]";
 	mes "You have just passed the test successfully.";
@@ -260,7 +260,7 @@ tha_t12.gat,128,88,4	script	Sox	111,{
 	mes "Good-bye.";
 	next;
 	set TSQ_CHK,0;
-	warp "thana_step.gat", 186, 223;
+	warp "thana_step", 186, 223;
 	close;
 
 nostone:

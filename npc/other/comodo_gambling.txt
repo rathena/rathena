@@ -21,7 +21,7 @@
 //=      Added missing emotions and cutins
 //============================================================ 
 
-comodo.gat,219,160,3	script	Kachua	91,{
+comodo,219,160,3	script	Kachua	91,{
 
 	cutin "katsua01.bmp",2;
 
@@ -355,7 +355,7 @@ comodo.gat,219,160,3	script	Kachua	91,{
 	end;
 }
 
-mjolnir_02.gat,85,364,3	script	Blacksmith Miner	726,{
+mjolnir_02,85,364,3	script	Blacksmith Miner	726,{
 
 	mes "[Dwayne]";
 	mes "Wahahahaha~";
@@ -444,7 +444,7 @@ mjolnir_02.gat,85,364,3	script	Blacksmith Miner	726,{
 	close;
 }
 
-comodo.gat,204,148,7	script	Devellin	90,{
+comodo,204,148,7	script	Devellin	90,{
 
 	mes "[Devellin]";
 	mes "It seems some traveller showed";
@@ -469,7 +469,7 @@ comodo.gat,204,148,7	script	Devellin	90,{
 	close;
 }
 
-comodo.gat,210,154,4	script	Suspicious Guy	118,{
+comodo,210,154,4	script	Suspicious Guy	118,{
 
 	if (BaseClass == Job_Thief) {
 	

@@ -1,5 +1,5 @@
 /* Guild Warehouse Service Test-Script 
-prontera.gat,165,188,4	script	Guild Warehouse	112,{
+prontera,165,188,4	script	Guild Warehouse	112,{
 	cutin "kafra_06",2;
 
 	mes "[Guild Warehouse Coupler]";
@@ -36,7 +36,7 @@ GS_EXIT4:
 */
 
 // カプラギルド倉庫サービス	テストスクリプト
-prontera.gat,165,188,4	script	ギルド倉庫カプラ	112,{
+prontera,165,188,4	script	ギルド倉庫カプラ	112,{
 	cutin "kafra_06",2;
 
 	mes"[ギルド倉庫カプラ]";

@@ -12,7 +12,7 @@
 // 1.0 First version, converted from the official aegis script. [MasterOfMuppets]
 //============================================================ 
 
-yuno.gat,222,116,3	script	Kasis#LhzHat	851,{
+yuno,222,116,3	script	Kasis#LhzHat	851,{
 
 	if(countitem(519) > 49 && countitem(7031) > 49 && countitem(548) > 49 && countitem(539) > 49)
 	{
@@ -235,7 +235,7 @@ yuno.gat,222,116,3	script	Kasis#LhzHat	851,{
 
 }
 
-lighthalzen.gat,143,68,0	script	Strange Guy#LhzHat	47,{
+lighthalzen,143,68,0	script	Strange Guy#LhzHat	47,{
 
 	if(DTHATQ == 0)
 	{
@@ -842,7 +842,7 @@ lighthalzen.gat,143,68,0	script	Strange Guy#LhzHat	47,{
 
 }
 
-lighthalzen.gat,360,313,3	script	Boy#LhzHat	706,{
+lighthalzen,360,313,3	script	Boy#LhzHat	706,{
 
 	mes "[Boy]";
 	mes "Hello, mister!";
@@ -972,7 +972,7 @@ lighthalzen.gat,360,313,3	script	Boy#LhzHat	706,{
 
 }
 
-einbech.gat,70,222,5	script	Mater#LhzHat	91,{
+einbech,70,222,5	script	Mater#LhzHat	91,{
 
 	if(countitem(983) && countitem(7267) > 998 && countitem(749) && Zeny > 49999)
 	{
@@ -1086,7 +1086,7 @@ einbech.gat,70,222,5	script	Mater#LhzHat	91,{
 
 }
 
-lhz_in02.gat,91,38,5	script	Margaret Mary#LhzHat	90,{
+lhz_in02,91,38,5	script	Margaret Mary#LhzHat	90,{
 
 	mes "[Margaret Mary]";
 	mes "The white rose, in its";
@@ -1193,7 +1193,7 @@ lhz_in02.gat,91,38,5	script	Margaret Mary#LhzHat	90,{
 
 }
 
-lighthalzen.gat,182,89,0	script	Rich Girl#LhzHat	91,{
+lighthalzen,182,89,0	script	Rich Girl#LhzHat	91,{
 
 	if(LHZBTQ == 0)
 	{
@@ -1506,7 +1506,7 @@ lighthalzen.gat,182,89,0	script	Rich Girl#LhzHat	91,{
 
 }
 
-gl_prison1.gat,137,138,5	script	Zealotus#LhzHat	1200,{
+gl_prison1,137,138,5	script	Zealotus#LhzHat	1200,{
 
 	if(ZLMASKQ == 0)
 	{
@@ -1723,7 +1723,7 @@ gl_prison1.gat,137,138,5	script	Zealotus#LhzHat	1200,{
 
 }
 
-gl_prison1.gat,97,104,1	script	Phendark#LhzHat	1202,{
+gl_prison1,97,104,1	script	Phendark#LhzHat	1202,{
 
 	if(ZLMASKQ == 0)
 	{
@@ -2139,7 +2139,7 @@ gl_prison1.gat,97,104,1	script	Phendark#LhzHat	1202,{
 
 }
 
-gl_prison1.gat,100,48,5	script	Rybio#LhzHat	1201,{
+gl_prison1,100,48,5	script	Rybio#LhzHat	1201,{
 
 	if(ZLMASKQ == 2)
 	{

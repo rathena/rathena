@@ -32,7 +32,7 @@
 
 
 //<==================================================== Blacksmith Altiregen (Job changer)==================================================>\\
-ein_in01.gat,18,28,4	script	Guildsman Altiregen	731,{
+ein_in01,18,28,4	script	Guildsman Altiregen	731,{
 	callfunc "F_BlockHigh",Job_Merchant_High,"Merchant High",Job_Whitesmith,"White Smith","Blacksmith Altiregen";
 
 	if (BaseJob == Job_Merchant) goto L_Merc;
@@ -240,7 +240,7 @@ L_Change:
 
 
 //<=============================================== Geshupenschte: 1st, 2nd, 3rd Test ===================================================>\\
-ein_in01.gat,201,27,4	script	Geshupenschte	63,{
+ein_in01,201,27,4	script	Geshupenschte	63,{
 
 	if(BaseJob == Job_Merchant) goto L_merchant;
 	mes "[Geshupenschte]";
@@ -932,7 +932,7 @@ L_GoChange:
 
 // Delivery Recipients ==================================================>\\
 // Baisulitst -----------------------------------------------------------
-geffen.gat,46,164,4	script	Baisulitst	69,{
+geffen,46,164,4	script	Baisulitst	69,{
 	if (BSMITH_Q==3) goto L_Start;
 
 	mes "[Baisulitst]";
@@ -988,7 +988,7 @@ L_Start:
 }
 
 // Wickebine --------------------------------------------------------------------
-morocc.gat,27,112,4	script	Wickebine	725,{
+morocc,27,112,4	script	Wickebine	725,{
 	if (BSMITH_Q == 3) goto L_Start;
 
 	mes "[Wickebine]";
@@ -1048,7 +1048,7 @@ L_Start:
 }
 
 // Gromgast ---------------------------------------------------------------------
-izlude.gat,69,181,4	script	Gromgast	734,{
+izlude,69,181,4	script	Gromgast	734,{
 	if (BSMITH_Q == 3) goto L_Start;
 
 	mes "[Gromgast]";
@@ -1106,7 +1106,7 @@ L_Start:
 }
 
 // Tilpitz --------------------------------------------------------------------
-payon.gat,214,79,4	script	Tilpitz	59,{
+payon,214,79,4	script	Tilpitz	59,{
 	if (BSMITH_Q == 3) goto L_Start;
 
 	mes "[Tilpitz]";
@@ -1169,7 +1169,7 @@ L_Start:
 }
 
 // Bismarck ---------------------------------------------------------------------------
-comodo.gat,158,342,4	script	Bismarck	118,{
+comodo,158,342,4	script	Bismarck	118,{
 	if (BSMITH_Q == 3) goto L_Start;
 
 	mes "[Bismarck]";
@@ -1234,7 +1234,7 @@ L_Start:
 
 
 //<===================================================== Mitehmaeeuh: Last Test ===================================================>\\
-ein_in01.gat,24,41,4	script	Mitmayer	726,{
+ein_in01,24,41,4	script	Mitmayer	726,{
 	if (BSMITH_Q == 4) goto L_Start;
 	if (BSMITH_Q == 5) goto L_Done;
 	mes "[Mitmayer]";
@@ -1450,7 +1450,7 @@ L_Result:
 
 //=========================== NPC that tells you, that the Guild moved
 //=========================== She's there on kRO, but the current text is custom ^^
-geffen_in.gat,110,169,4	script	Guildsman#01	726,{
+geffen_in,110,169,4	script	Guildsman#01	726,{
 	mes "[Blacksmith Guildsman]";
 	mes "Welcome! We're the masters of the metal, blacksmiths!";
 	mes "Our skills in creating weapons, in a way, is almost an art form!.";
@@ -1498,7 +1498,7 @@ M_know:
 	mes "[Blacksmith Guildsman]";
 	mes "Have a nice trip!!";
 	close2;
-	warp "izlude.gat",145,39;
+	warp "izlude",145,39;
 	end;
 
 M_ok:

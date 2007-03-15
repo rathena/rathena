@@ -2,7 +2,7 @@
 //-------------------- 'Balmung & Lord Kaho's Horns' Quest --------------------
 // Warning! Don't use this quest 8)
 
-prontera.gat,158,356,4	script	Royal Messenger	105,{
+prontera,158,356,4	script	Royal Messenger	105,{
 	mes "[Royal Messenger]";
 	mes "Welcome to prontera, I am the Royal Messenger in charge of the royal quest.";
 	next;

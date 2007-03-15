@@ -1,6 +1,6 @@
 
 
-prontera.gat,158,182,0	script	chatテスト::test0001	116,{
+prontera,158,182,0	script	chatテスト::test0001	116,{
 	mes "トリガー人数" + getwaitingroomstate(2);
 	mes "トリガー状態" + getwaitingroomstate(3);
 	menu "有効化",L_ENA,"無効化",L_DISA,"削除",L_DEL,"作成",L_MAKE;
@@ -22,7 +22,7 @@ OnInit:
 	end;
 OnChatEvent:
 	disablewaitingroomevent;
-	warpwaitingpc "prontera.gat",160,180;
+	warpwaitingpc "prontera",160,180;
 	end;
 
 }

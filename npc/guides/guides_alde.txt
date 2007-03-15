@@ -18,7 +18,7 @@
 //============================================================
 
 
-aldebaran.gat,139,63,4	script	Soldier::Alde_Guide	105,{
+aldebaran,139,63,4	script	Soldier::Alde_Guide	105,{
 	cutin "prt_soldier",2;
 	mes "[Al De Baran Guard]";
 	mes "I'm just an ordinary guard that you could find in any other city.";
@@ -50,4 +50,4 @@ L_End:
 	close;
 }
 
-aldebaran.gat,241,136,4	duplicate(Alde_Guide)	Soldier#Alde02	105
+aldebaran,241,136,4	duplicate(Alde_Guide)	Soldier#Alde02	105

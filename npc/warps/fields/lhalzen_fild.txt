@@ -13,8 +13,8 @@
 //= 1.2 Updated the warp, according to korean eA site [Vicious]
 //============================================================
 
-lhz_fild01.gat,210,18,0	warp	lhz043	1,1,lighthalzen.gat,214,324
-lighthalzen.gat,214,329,0	warp	lhz043a	1,1,lhz_fild01.gat,210,23
+lhz_fild01,210,18,0	warp	lhz043	1,1,lighthalzen,214,324
+lighthalzen,214,329,0	warp	lhz043a	1,1,lhz_fild01,210,23
 
-lhz_fild01.gat,367,222,0	warp	lhz044	1,1,lhz_fild02.gat,36,221
-lhz_fild02.gat,29,219,0	warp	lhz044a	1,1,lhz_fild01.gat,361,222
+lhz_fild01,367,222,0	warp	lhz044	1,1,lhz_fild02,36,221
+lhz_fild02,29,219,0	warp	lhz044a	1,1,lhz_fild01,361,222

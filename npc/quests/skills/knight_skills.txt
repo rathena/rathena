@@ -24,7 +24,7 @@
 //============================================================
 // KNIGHT - CHARGE ATTACK
 //============================================================
-prt_in.gat,84,98,3	script	Esope	734,{
+prt_in,84,98,3	script	Esope	734,{
 	mes "[Esope]";
 	if(BaseJob!=Job_Knight) goto L_noknight;
 	if(getskilllv(1001)) goto L_alreadyhave;

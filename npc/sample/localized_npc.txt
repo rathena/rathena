@@ -113,7 +113,7 @@ function	script	mes2	{
 
 //////////////////////////////////////////////////////////////
 /// Sample localized NPC
-prontera.gat,155,183,4	script	LocalizedNPC	705,{
+prontera,155,183,4	script	LocalizedNPC	705,{
 	// Get text for specific languages
 	set @menu1$, callfunc("getmes2","LNPC_lang",0);
 	set @menu2$, callfunc("getmes2","LNPC_lang",1);

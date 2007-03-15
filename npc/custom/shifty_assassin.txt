@@ -12,7 +12,7 @@
 //= 1.1.1 Changed all gmcommand to atcommand as Poki#3 suggested. [Vicious]
 //============================================================
 
-morocc.gat,148,86,5	script	Shifty Assassin	725,{
+morocc,148,86,5	script	Shifty Assassin	725,{
 set $ninja_price,250000;
 
 // STARTS THE MENU //

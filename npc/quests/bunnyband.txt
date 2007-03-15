@@ -17,7 +17,7 @@
 
 
 // Alberta ------------------------------------------------------------------------------------------------------------------------------------------
-alberta.gat,23,232,1	script	Kafra Corp. Rep.#1::KCRep	83,{
+alberta,23,232,1	script	Kafra Corp. Rep.#1::KCRep	83,{
 	mes "[Kafra Corp. Rep.]";
 	if (@BUNYBND) goto L_Check;
 	mes "^529DFFSpecial Event, ^FF0000Bunny Band ^529DFFQuest!!^000000";
@@ -89,10 +89,10 @@ alberta.gat,23,232,1	script	Kafra Corp. Rep.#1::KCRep	83,{
 
 
 // Geffen ------------------------------------------------------------------------------------------------------------------------------------------
-//geffen.gat,116,62,2	duplicate(KCRep)	Kafra Corp. Rep.#2	83,
+//geffen,116,62,2	duplicate(KCRep)	Kafra Corp. Rep.#2	83,
 // Morroc ------------------------------------------------------------------------------------------------------------------------------------------
-//morocc.gat,154,97,4	duplicate(KCRep)	Kafra Corp. Rep.#3	83,
+//morocc,154,97,4	duplicate(KCRep)	Kafra Corp. Rep.#3	83,
 // Payon ------------------------------------------------------------------------------------------------------------------------------------------
-//payon.gat,184,104,4	duplicate(KCRep)	Kafra Corp. Rep.#4	83,
+//payon,184,104,4	duplicate(KCRep)	Kafra Corp. Rep.#4	83,
 // Prontera ------------------------------------------------------------------------------------------------------------------------------------------
-//prontera.gat,146,87,6	duplicate(KCRep)	Kafra Corp. Rep.#5	83,
+//prontera,146,87,6	duplicate(KCRep)	Kafra Corp. Rep.#5	83,

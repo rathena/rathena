@@ -7,7 +7,7 @@
 // if the script is like this:
 //
 // [code]
-// prontera.gat,0,0,0	script	OnPCLoginEvent	-1,{
+// prontera,0,0,0	script	OnPCLoginEvent	-1,{
 //	mes "lmao";
 //	close;
 // }
@@ -31,21 +31,21 @@
 //
 // The 1st type -- with 'event_script_type' set to 0
 //
-prontera.gat,0,0,0	script	OnPCLoginEvent	-1,{
+prontera,0,0,0	script	OnPCLoginEvent	-1,{
 	end;
 }
 
 //
 // The 2nd type -- with 'event_script_type' set to 1
 //
-prontera.gat,155,175,0	script	An NPC	46,{
+prontera,155,175,0	script	An NPC	46,{
 	close;
 OnPCLoginEvent:
 	// this part will run
 	close;
 }
 
-prontera.gat,156,176,0	script	Another NPC	46,{
+prontera,156,176,0	script	Another NPC	46,{
 	close;
 OnPCLoginEvent:
 	// this part runs AS WELL

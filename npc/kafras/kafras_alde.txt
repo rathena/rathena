@@ -22,18 +22,18 @@
 
 
 // Kafra Main Office (Kafra Leilah) ------------------------------------
-aldeba_in.gat,96,181,4	script	Kafra Leilah	113,{
+aldeba_in,96,181,4	script	Kafra Leilah	113,{
 	cutin "kafra_05",2;
 	callfunc "F_Kafra",0,2,1;
 
 	M_Save:
-		savepoint "aldeba_in.gat",96,179;
+		savepoint "aldeba_in",96,179;
 		callfunc "F_KafEnd",0,1;
 
 }
 
 // South --------------------------------------------------
-aldebaran.gat,143,119,4	script	Kafra::kaf_aldebaran	113,{
+aldebaran,143,119,4	script	Kafra::kaf_aldebaran	113,{
 	cutin "kafra_05",2;
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpP[0], 1200, 1200, 1800, 1700;
@@ -46,6 +46,6 @@ aldebaran.gat,143,119,4	script	Kafra::kaf_aldebaran	113,{
 	callfunc "F_Kafra",0,0,1;
 
 	M_Save:
-		savepoint "aldebaran.gat",143,109;
+		savepoint "aldebaran",143,109;
 		callfunc "F_KafEnd",0,1;
 }

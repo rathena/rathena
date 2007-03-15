@@ -17,7 +17,7 @@
 
 
 // Alberta ------------------------------------------------------------------------------------------
-alberta.gat,113,53,3	script	Smile Assistance::SmileAT	92,{
+alberta,113,53,3	script	Smile Assistance::SmileAT	92,{
 	mes "[Smile Assistant]";
 	mes "Hi, I'm a Smile Assistance.  How may I help you?";
 	next;
@@ -79,14 +79,14 @@ alberta.gat,113,53,3	script	Smile Assistance::SmileAT	92,{
 }
 
 // Aldebaran --------------------------------------------------------------------------------
-aldebaran.gat,136,135,4	duplicate(SmileAT)	Smile Assistance#2	92
+aldebaran,136,135,4	duplicate(SmileAT)	Smile Assistance#2	92
 // Geffen -----------------------------------------------------------------------------------
-geffen.gat,119,107,4	duplicate(SmileAT)	Smile Assistance#3	92
+geffen,119,107,4	duplicate(SmileAT)	Smile Assistance#3	92
 // Izlude -----------------------------------------------------------------------------------
-izlude.gat,129,118,4	duplicate(SmileAT)	Smile Assistance#4	92
+izlude,129,118,4	duplicate(SmileAT)	Smile Assistance#4	92
 // Morroc -----------------------------------------------------------------------------------
-morocc.gat,158,97,4	duplicate(SmileAT)	Smile Assistance#5	92
+morocc,158,97,4	duplicate(SmileAT)	Smile Assistance#5	92
 // Payon ------------------------------------------------------------------------------------
-payon.gat,168,225,4	duplicate(SmileAT)	Smile Assistance#6	92
+payon,168,225,4	duplicate(SmileAT)	Smile Assistance#6	92
 // Prontera ---------------------------------------------------------------------------------
-prontera.gat,157,187,4	duplicate(SmileAT)	Smile Assistance#7	92
+prontera,157,187,4	duplicate(SmileAT)	Smile Assistance#7	92

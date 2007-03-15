@@ -27,7 +27,7 @@
 //============================================================
 // ALCHEMIST - ELEMENTAL POTION CREATION
 //============================================================
-yuno_in04.gat,33,108,5	script	Pislik	750,{
+yuno_in04,33,108,5	script	Pislik	750,{
 	mes "[Pislik]";
 	if(BaseJob != Job_Alchem) goto L_noalche;
 	if(countitem(7434)) goto L_alreadyhave;//Items: Elemental_Potion_Creation_Guide,
@@ -91,7 +91,7 @@ L_nojob:
 //============================================================
 
 //=====================Requires Bug Testing=====================
-lhz_in01.gat,46,125,6	script	Rekenber Guard	867,{
+lhz_in01,46,125,6	script	Rekenber Guard	867,{
 	mes "[Rekenber Guard]";
 	if(isequipped(2241) && isequipped(2243)){
 		mes "......................";
@@ -101,7 +101,7 @@ lhz_in01.gat,46,125,6	script	Rekenber Guard	867,{
 				mes "[Rekenber Guard]";
 				mes "...";
 				close2;
-				warp "lhz_in01.gat",282,172;
+				warp "lhz_in01",282,172;
 				end;
 				break;
 			case 2:
@@ -114,24 +114,24 @@ lhz_in01.gat,46,125,6	script	Rekenber Guard	867,{
 		close;
 	}
 }
-lhz_in01.gat,282,172,0	script	BioEthTrg1::BETrg1	-1,1,1{
+lhz_in01,282,172,0	script	BioEthTrg1::BETrg1	-1,1,1{
 	OnTouch:
 		mes "[Researcher]";
 		mes "This is a restricted";
 		mes "area. Please leave";
 		mes "immediately.";
 		close2;
-		warp "lhz_in01.gat",199,131;
+		warp "lhz_in01",199,131;
 		end;
 }
 		
-lhz_in01.gat,285,169,7	script	Researcher#2	865,{
+lhz_in01,285,169,7	script	Researcher#2	865,{
 //Unknown Text
 	mes "[Researcher]";
 	mes "Hmm... I wonder...";
 	close;
 }
-lhz_in01.gat,199,137,8	script	Scientist#2	865,{
+lhz_in01,199,137,8	script	Scientist#2	865,{
 	mes "[Scientist]";
 	mes "Whoa whoa~!";
 	mes "Please! Don't";
@@ -140,7 +140,7 @@ lhz_in01.gat,199,137,8	script	Scientist#2	865,{
 	mes "volatile chemicals here!";
 	close;
 }
-lhz_in01.gat,204,138,6	script	Keshibien	750,{
+lhz_in01,204,138,6	script	Keshibien	750,{
 	if(bioeth >= 2){
 		//Unofficial text
 		mes "[Keshibien]";
@@ -173,7 +173,7 @@ lhz_in01.gat,204,138,6	script	Keshibien	750,{
 	mes "collaborate with any of them...";
 	close;
 }
-lhz_in01.gat,203,123,8	script	Scientist#3	750,{
+lhz_in01,203,123,8	script	Scientist#3	750,{
 	mes "[Scientist]";
 	mes "Alright. Pull one test";
 	mes "tube out of the machine,";
@@ -190,7 +190,7 @@ lhz_in01.gat,203,123,8	script	Scientist#3	750,{
 	mes "lose the instructions...";
 	close;
 }
-lhz_in01.gat,221,131,3	script	Scientist#4	865,{
+lhz_in01,221,131,3	script	Scientist#4	865,{
 	mes "[Scientist]";
 	mes "It takes so long for";
 	mes "this device to process";
@@ -199,7 +199,7 @@ lhz_in01.gat,221,131,3	script	Scientist#4	865,{
 	mes "heightens my anticipation...";
 	close;
 }
-lhz_in01.gat,218,141,0	script	Alchemist#2	98,{
+lhz_in01,218,141,0	script	Alchemist#2	98,{
 	mes "[Alchemist]";
 	mes "Out of all humans,";
 	mes "I believe Kellasus is";
@@ -225,7 +225,7 @@ lhz_in01.gat,218,141,0	script	Alchemist#2	98,{
 	mes "both science and personal life.";
 	close;
 }
-lhz_in01.gat,224,140,8	script	Kellasus	57,{
+lhz_in01,224,140,8	script	Kellasus	57,{
 	if(MISC_QUEST&64){
 		mes "[Kellasus]";
 		mes "I already taught you";
@@ -376,7 +376,7 @@ lhz_in01.gat,224,140,8	script	Kellasus	57,{
 		break;
 	}
 }
-lhz_in01.gat,217,121,6	script	Repairman	851,{
+lhz_in01,217,121,6	script	Repairman	851,{
 	mes "[Repairman]";
 	mes "No wonder these things";
 	mes "break all the time! These";
@@ -393,7 +393,7 @@ lhz_in01.gat,217,121,6	script	Repairman	851,{
 	mes "need to be extra cautious.";
 	close;
 }
-lhz_in01.gat,225,122,4	script	Skrajiad	754,{
+lhz_in01,225,122,4	script	Skrajiad	754,{
 	mes "[Skrajiad]";
 	mes "Alchemy is wondrous...";
 	mes "It incorporates every";
@@ -412,7 +412,7 @@ lhz_in01.gat,225,122,4	script	Skrajiad	754,{
 	if(bioeth == 1) set bioeth,2;
 	close;
 }
-lhz_in02.gat,269,273,4	script	Bringel	709,{
+lhz_in02,269,273,4	script	Bringel	709,{
 //Unofficial Text
 	if(bioeth == 3){
 		mes "[Bringel]";
@@ -434,7 +434,7 @@ lhz_in02.gat,269,273,4	script	Bringel	709,{
 	mes "did in the past...";
 	close;
 }
-lhz_in03.gat,106,34,4	script	Golin	706,{
+lhz_in03,106,34,4	script	Golin	706,{
 //Unofficial text
 	if(bioeth == 5){
 		mes "[Golin]";

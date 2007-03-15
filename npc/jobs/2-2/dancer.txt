@@ -17,19 +17,19 @@
 //============================================================
 
 //= Warning Warp to escape the quest if need to
-job_duncer.gat,69,165,1	script	DQWWarp	45,1,1,{
+job_duncer,69,165,1	script	DQWWarp	45,1,1,{
 	mes "[Warning]";
 	mes "This is the way out, this will cancel your quest if you leave.";
 	next;
 	menu "Leave the quest",-,"Cancel",L_Can;
-	warp "comodo.gat",193,149;
+	warp "comodo",193,149;
 	end;
 L_Can:
 	close;
 }
 
 //= Warp man, takes you to the quest map (Comodo Theater)
-comodo.gat,193,151,4	script	Bor Robin	86,{
+comodo,193,151,4	script	Bor Robin	86,{
 	callfunc "F_BlockHigh",Job_Archer_High,"High Archer",Job_Gypsy,"Gypsy","Bor Robin";
 
 	mes "[Bor Robin]";
@@ -58,12 +58,12 @@ L1:
 		mes "[Bor Robin]";
 		mes "I will take you now.";
 		close2;
-		warp "job_duncer.gat",70,49;
+		warp "job_duncer",70,49;
 		end;
 }
 
 //= 1st quest NPC, asks for Items and/or money, then passes you onto the next NPC
-job_duncer.gat,43,93,4	script	Aire	724,{
+job_duncer,43,93,4	script	Aire	724,{
 	mes "[Aire]";
 	if(BaseJob == Job_Dancer) {
 		mes "Nice to see you return.";
@@ -250,7 +250,7 @@ S_SHOWITEMS:
 }
 
 //= 2nd "Quest" and Job changer for after the 3rd Quest
-job_duncer.gat,95,93,4	script	Bijou	101,{
+job_duncer,95,93,4	script	Bijou	101,{
 	mes "[Bijou]";
 	if(BaseJob == Job_Dancer){
 		mes "What will you be doing today?";
@@ -581,15 +581,15 @@ L_DANCETEST:
 		mes "I will take you back stage so you can take you test!";
 		set DANC_Q,8;
 		close2;
-		warp "job_duncer.gat",104,109;
+		warp "job_duncer",104,109;
 		end;
 }
 
 //=Start of the 3rd quest is here, once complete you go back to Bijou to change job
-job_duncer.gat,32,152,6	script	Guide::dancew	69,{
+job_duncer,32,152,6	script	Guide::dancew	69,{
 	end;
 OnWarp:
-	warpwaitingpc "job_duncer.gat",70,112,1;
+	warpwaitingpc "job_duncer",70,112,1;
 	set $@DQRID,$@warpwaitingpc[0];
 	if( attachrid($@DQRID)==0 ) goto OnInit;
 	disablewaitingroomevent;
@@ -601,116 +601,116 @@ OnInit:
 	end;
 }
 
-job_duncer.gat,0,0,0	script	jobDq	-1,{
+job_duncer,0,0,0	script	jobDq	-1,{
 	end;
 
 OnStart:
 
 OnTimer1000:
-	mapannounce "job_duncer.gat","Bijou: The test begins. Total time allowed is 1 minute.",8;
+	mapannounce "job_duncer","Bijou: The test begins. Total time allowed is 1 minute.",8;
 	end;
 OnTimer3000:
-	mapannounce "job_duncer.gat","Bijou: Step Up! [ /\\ ]",8;
+	mapannounce "job_duncer","Bijou: Step Up! [ /\\ ]",8;
 	callsub L_SUB1,2000;
 	end;
 OnTimer7000:
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou: To the bottom.  [ \\/ ]",8;
+	mapannounce "job_duncer","Bijou: To the bottom.  [ \\/ ]",8;
 	callsub L_SUB5,2000;
 	end;
 OnTimer11000:
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou: To the left.  [ < ]",8;
+	mapannounce "job_duncer","Bijou: To the left.  [ < ]",8;
 	callsub L_SUB2,2000;
 	end;
 OnTimer15000:
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou: Go to the right. [ > ]",8;
+	mapannounce "job_duncer","Bijou: Go to the right. [ > ]",8;
 	callsub L_SUB4,2000;
 	end;
 OnTimer19000:
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou: Return to the middle. [ * ]",8;
+	mapannounce "job_duncer","Bijou: Return to the middle. [ * ]",8;
 	callsub L_SUB3,3000;
 	end;
 OnTimer21000:
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou: Stay still!",8;
+	mapannounce "job_duncer","Bijou: Stay still!",8;
 	end;
 OnTimer26000:
 	set $@DQSP,SP;
-	mapannounce "job_duncer.gat","Bijou: Use 'Attention Concentrate'!",8;
+	mapannounce "job_duncer","Bijou: Use 'Attention Concentrate'!",8;
 	end;
 OnTimer29000:
 	if($@DQSP==SP) goto OnTimer80000;
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou: To the left.  [ < ]",8;
+	mapannounce "job_duncer","Bijou: To the left.  [ < ]",8;
 	callsub L_SUB2,2000;
 	end;
 OnTimer33000:
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou: To the bottom.  [ \\/ ]",8;
+	mapannounce "job_duncer","Bijou: To the bottom.  [ \\/ ]",8;
 	end;
 OnTimer35000:
-	mapannounce "job_duncer.gat","Bijou: Directly the right! [ > ]",8;
+	mapannounce "job_duncer","Bijou: Directly the right! [ > ]",8;
 	callsub L_SUB4,3000;
 	end;
 OnTimer38000:
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou: Stay still!",8;
+	mapannounce "job_duncer","Bijou: Stay still!",8;
 	end;
 OnTimer41000:
-	mapannounce "job_duncer.gat","Bijou: The left * center * right * top [ < ] [ * ] [ > ] [ /\\ ]",8;
+	mapannounce "job_duncer","Bijou: The left * center * right * top [ < ] [ * ] [ > ] [ /\\ ]",8;
 	callsub L_SUB1,0;
 	end;
 OnTimer47000:
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou: To the right.  [ > ] ",8;
+	mapannounce "job_duncer","Bijou: To the right.  [ > ] ",8;
 	callsub L_SUB4,3000;
 	end;
 OnTimer50000:
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou: The left * center * down * up:   [ < ] [ * ] [ \\/ ] [ /\\ ] ",8;
+	mapannounce "job_duncer","Bijou: The left * center * down * up:   [ < ] [ * ] [ \\/ ] [ /\\ ] ",8;
 	callsub L_SUB1,0;
 	end;
 OnTimer56000:
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou: Once again, the left * center * down * up:  [ < ] [ * ] [ \\/ ] [ /\\ ]",8;
+	mapannounce "job_duncer","Bijou: Once again, the left * center * down * up:  [ < ] [ * ] [ \\/ ] [ /\\ ]",8;
 	callsub L_SUB1,0;
 	end;
 OnTimer62000:
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou: Down!  [ \\/ ]",8;
+	mapannounce "job_duncer","Bijou: Down!  [ \\/ ]",8;
 	callsub L_SUB5,2500;
 	end;
 OnTimer65000:
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou: To the left!  [ < ]",8;
+	mapannounce "job_duncer","Bijou: To the left!  [ < ]",8;
 	callsub L_SUB2,2500;
 	end;
 OnTimer68000:
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou: Return to the middle. [ * ]",8;
+	mapannounce "job_duncer","Bijou: Return to the middle. [ * ]",8;
 	callsub L_SUB3,2500;
 	end;
 OnTimer71000:
 	donpcevent "::OnDE1";
-	mapannounce "job_duncer.gat","Bijou:  Kill the monster using Arrow Shower!",8;
+	mapannounce "job_duncer","Bijou:  Kill the monster using Arrow Shower!",8;
 	set $@DQSP,SP;
-	monster "job_duncer.gat",69,106,"Poring",1002,1,"jddie::OnDie";
+	monster "job_duncer",69,106,"Poring",1002,1,"jddie::OnDie";
 	end;
 OnTimer76000:
-	killmonsterall "job_duncer.gat";
+	killmonsterall "job_duncer";
 	end;
 OnTimer80000:
-	mapannounce "job_duncer.gat","Dancer: You were a bit too slow, sorry but you have failed.",8;
+	mapannounce "job_duncer","Dancer: You were a bit too slow, sorry but you have failed.",8;
 	disablenpc "uppertile";
 	disablenpc "lefttile";
 	disablenpc "righttile";
 	disablenpc "lowertile";
 	disablenpc "middletile";
-	if(getareausers("job_duncer.gat",68,106,70,114)) areawarp "job_duncer.gat",68,106,70,114,"job_duncer.gat",69,102;
-	if(getareausers("job_duncer.gat",65,109,73,111)) areawarp "job_duncer.gat",65,109,73,111,"job_duncer.gat",69,102;
+	if(getareausers("job_duncer",68,106,70,114)) areawarp "job_duncer",68,106,70,114,"job_duncer",69,102;
+	if(getareausers("job_duncer",65,109,73,111)) areawarp "job_duncer",65,109,73,111,"job_duncer",69,102;
 	stopnpctimer;
 	enablewaitingroomevent "dancew";
 	end;
@@ -756,15 +756,15 @@ L_SUB5:
 	return;
 }
 
-job_duncer.gat,0,0,0	script	jddie	-1,{
+job_duncer,0,0,0	script	jddie	-1,{
 
 OnDie:
 	if($@DQRID && isloggedin($@DQRID)) {
 		attachrid($@DQRID);
 		if($@DQSP==SP)
-			mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+", but you failed to use arrow shower to kill the monster",8;
+			mapannounce "job_duncer","Dancer: Sorry "+strcharinfo(0)+", but you failed to use arrow shower to kill the monster",8;
 		else {
-			mapannounce "job_duncer.gat","Dancer: Well done, you were very skillful, and have passed the test.",8;
+			mapannounce "job_duncer","Dancer: Well done, you were very skillful, and have passed the test.",8;
 			set DANC_Q,9;
 		}
 	}
@@ -778,13 +778,13 @@ OnDie:
 	enablewaitingroomevent "dancew";
 
 	if($@DQRID && isloggedin($@DQRID))
-		warp "job_duncer.gat",69,102;
+		warp "job_duncer",69,102;
 
 	set $@DQRID,0;
 	set $@DQSP,0;
 	end;
 }
-job_duncer.gat,63,110,4	script	Back Dancer#1::jdt1	724,{
+job_duncer,63,110,4	script	Back Dancer#1::jdt1	724,{
 	end;
 OnTimer5000:
 	enablenpc "lefttile";
@@ -800,7 +800,7 @@ OnDE2:
 	emotion e_omg;
 	end;
 }
-job_duncer.gat,66,113,4	script	Back Dancer#2::jdt2	724,{
+job_duncer,66,113,4	script	Back Dancer#2::jdt2	724,{
 	end;
 OnTimer5000:
 	enablenpc "uppertile";
@@ -816,7 +816,7 @@ OnDE2:
 	emotion e_omg;
 	end;
 }
-job_duncer.gat,72,113,4	script	Back Dancer#3::jdt3	724,{
+job_duncer,72,113,4	script	Back Dancer#3::jdt3	724,{
 	end;
 OnTimer5000:
 	enablenpc "lefttile";
@@ -832,7 +832,7 @@ OnDE2:
 	emotion e_omg;
 	end;
 }
-job_duncer.gat,75,110,4	script	Back Dancer#4::jdt4	724,{
+job_duncer,75,110,4	script	Back Dancer#4::jdt4	724,{
 	end;
 OnTimer5000:
 	enablenpc "lefttile";
@@ -849,7 +849,7 @@ OnDE2:
 	end;
 }
 
-job_duncer.gat,75,110,4	script	jdt5	139,{
+job_duncer,75,110,4	script	jdt5	139,{
 	end;
 OnTimer5000:
 	enablenpc "lefttile";
@@ -860,10 +860,10 @@ OnTimer5000:
 	end;
 }
 
-job_duncer.gat,69,113,4	script	uppertile	139,1,1,{
+job_duncer,69,113,4	script	uppertile	139,1,1,{
 	end;
 OnTouch:
-	mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+", but you failed to make it in time.",8;
+	mapannounce "job_duncer","Dancer: Sorry "+strcharinfo(0)+", but you failed to make it in time.",8;
 	disablenpc "uppertile";
 	disablenpc "lefttile";
 	disablenpc "righttile";
@@ -871,7 +871,7 @@ OnTouch:
 	disablenpc "middletile";
 	enablewaitingroomevent "dancew";
 	stopnpctimer "jobDq";
-	areawarp "job_duncer.gat",68,112,70,114,"job_duncer.gat",69,102;
+	areawarp "job_duncer",68,112,70,114,"job_duncer",69,102;
 	donpcevent "::OnDE2";
 	end;
 OnDE1:
@@ -879,10 +879,10 @@ OnInit:
 	disablenpc "uppertile";
 	end;
 }
-job_duncer.gat,66,110,4	script	lefttile	139,1,1,{
+job_duncer,66,110,4	script	lefttile	139,1,1,{
 	end;
 OnTouch:
-	mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+", but you failed to make it in time.",8;
+	mapannounce "job_duncer","Dancer: Sorry "+strcharinfo(0)+", but you failed to make it in time.",8;
 	disablenpc "uppertile";
 	disablenpc "lefttile";
 	disablenpc "righttile";
@@ -890,39 +890,19 @@ OnTouch:
 	disablenpc "middletile";
 	enablewaitingroomevent "dancew";
 	stopnpctimer "jobDq";
-	areawarp "job_duncer.gat",65,109,67,111,"job_duncer.gat",69,102;
+	areawarp "job_duncer",65,109,67,111,"job_duncer",69,102;
 	donpcevent "::OnDE2";
 	end;
 OnDE1:
 OnInit:
 	disablenpc "lefttile";
-	end;
-}
-
-job_duncer.gat,69,110,4	script	middletile	139,1,1,{
-	end;
-OnTouch:
-	mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+", but you failed to make it in time.",8;
-	disablenpc "uppertile";
-	disablenpc "lefttile";
-	disablenpc "righttile";
-	disablenpc "lowertile";
-	disablenpc "middletile";
-	enablewaitingroomevent "dancew";
-	stopnpctimer "jobDq";
-	areawarp "job_duncer.gat",68,109,70,111,"job_duncer.gat",69,102;
-	donpcevent "::OnDE2";
-	end;
-OnDE1:
-OnInit:
-	disablenpc "middletile";
 	end;
 }
 
-job_duncer.gat,72,110,4	script	righttile	139,1,1,{
+job_duncer,69,110,4	script	middletile	139,1,1,{
 	end;
 OnTouch:
-	mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+", but you failed to make it in time.",8;
+	mapannounce "job_duncer","Dancer: Sorry "+strcharinfo(0)+", but you failed to make it in time.",8;
 	disablenpc "uppertile";
 	disablenpc "lefttile";
 	disablenpc "righttile";
@@ -930,7 +910,27 @@ OnTouch:
 	disablenpc "middletile";
 	enablewaitingroomevent "dancew";
 	stopnpctimer "jobDq";
-	areawarp "job_duncer.gat",71,109,73,111,"job_duncer.gat",69,102;
+	areawarp "job_duncer",68,109,70,111,"job_duncer",69,102;
+	donpcevent "::OnDE2";
+	end;
+OnDE1:
+OnInit:
+	disablenpc "middletile";
+	end;
+}
+
+job_duncer,72,110,4	script	righttile	139,1,1,{
+	end;
+OnTouch:
+	mapannounce "job_duncer","Dancer: Sorry "+strcharinfo(0)+", but you failed to make it in time.",8;
+	disablenpc "uppertile";
+	disablenpc "lefttile";
+	disablenpc "righttile";
+	disablenpc "lowertile";
+	disablenpc "middletile";
+	enablewaitingroomevent "dancew";
+	stopnpctimer "jobDq";
+	areawarp "job_duncer",71,109,73,111,"job_duncer",69,102;
 	donpcevent "::OnDE2";
 	end;
 OnDE1:
@@ -939,10 +939,10 @@ OnInit:
 	end;
 }
 
-job_duncer.gat,69,107,4	script	lowertile	139,1,1,{
+job_duncer,69,107,4	script	lowertile	139,1,1,{
 	end;
 OnTouch:
-	mapannounce "job_duncer.gat","Dancer: Sorry "+strcharinfo(0)+", but you failed to make it in time.",8;
+	mapannounce "job_duncer","Dancer: Sorry "+strcharinfo(0)+", but you failed to make it in time.",8;
 	disablenpc "uppertile";
 	disablenpc "lefttile";
 	disablenpc "righttile";
@@ -950,7 +950,7 @@ OnTouch:
 	disablenpc "middletile";
 	enablewaitingroomevent "dancew";
 	stopnpctimer "jobDq";
-	areawarp "job_duncer.gat",68,106,70,108,"job_duncer.gat",69,102;
+	areawarp "job_duncer",68,106,70,108,"job_duncer",69,102;
 	donpcevent "::OnDE2";
 	end;
 OnDE1:

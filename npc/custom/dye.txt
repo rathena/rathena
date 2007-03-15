@@ -21,7 +21,7 @@
 
 
 //Stylist------------------------------------------------------------------------------------------------------------
-prontera.gat,170,180,1	script	Stylist	122,{
+prontera,170,180,1	script	Stylist	122,{
 	mes "[^FF8000Stylist^000000]";
 	mes "I'm the greatest stylist in all of Rune-Midgard~~!";
 	mes "I can change your hair style or color!";
@@ -173,4 +173,3 @@ prontera.gat,170,180,1	script	Stylist	122,{
 		if(@look == 77) menu "Back To The Begin",Lbrowsecloth,"I like this one",Lstop;
 		if(@look != 77)	menu "Keep going",Lbrowseclothrep,"I like this one",Lstop;
 }
-

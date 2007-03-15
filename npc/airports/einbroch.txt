@@ -16,7 +16,7 @@
 //============================================================
 
 
-airport.gat,126,43,4	script	Airport Staff#01::AirportE	90,{
+airport,126,43,4	script	Airport Staff#01::AirportE	90,{
 	mes "[Airport Staff]";
 	mes "Welcome to the Airport.";
 	mes "How may I help you?";
@@ -35,12 +35,12 @@ airport.gat,126,43,4	script	Airport Staff#01::AirportE	90,{
 		if(countitem(7311) > 0) goto L_GotTicket;
 		if(Zeny < 1200) goto L_NoZeny;
 			set Zeny, Zeny - 1200;
-			warp "airport.gat",148,51;
+			warp "airport",148,51;
 			close;
 
 		L_GotTicket:
 			delitem 7311,1;
-			warp "airport.gat",148,51;
+			warp "airport",148,51;
 			close;
 
 	L_NoZeny:
@@ -55,10 +55,10 @@ airport.gat,126,43,4	script	Airport Staff#01::AirportE	90,{
 		close;
 }
 
-airport.gat,143,43,4	duplicate(AirportE)	Airport Staff#02	90
-airport.gat,156,43,4	duplicate(AirportE)	Airport Staff#03	90
+airport,143,43,4	duplicate(AirportE)	Airport Staff#02	90
+airport,156,43,4	duplicate(AirportE)	Airport Staff#03	90
 
-airport.gat,126,51,4	script	Airport Staff#04::AirportE2	90,{
+airport,126,51,4	script	Airport Staff#04::AirportE2	90,{
 	mes "[Airport Staff]";
 	mes "Welcome~";
 	mes "Please head this";
@@ -76,7 +76,7 @@ airport.gat,126,51,4	script	Airport Staff#04::AirportE2	90,{
 		next;
 		menu "Yes",-,"No",L_Cancel;
 
-			warp "airport.gat",142,40;
+			warp "airport",142,40;
 			close;
 
 	L_Cancel:
@@ -88,10 +88,10 @@ airport.gat,126,51,4	script	Airport Staff#04::AirportE2	90,{
 		close;
 }
 
-airport.gat,143,51,4	duplicate(AirportE2)	Airport Staff#05	90
-airport.gat,156,51,4	duplicate(AirportE2)	Airport Staff#06	90
+airport,143,51,4	duplicate(AirportE2)	Airport Staff#05	90
+airport,156,51,4	duplicate(AirportE2)	Airport Staff#06	90
 
-einbroch.gat,94,267,4	script	Airship Staff	91,{
+einbroch,94,267,4	script	Airship Staff	91,{
 	mes "[Airship Staff]";
 	mes "Welcome to the";
 	mes "Einbroch Airport.";

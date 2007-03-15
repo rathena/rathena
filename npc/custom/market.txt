@@ -14,7 +14,7 @@
 //=========================================================
 
 
-prontera.gat,144,174,3	script	Market Place	722,{
+prontera,144,174,3	script	Market Place	722,{
 	mes"[Market Place]";
 	mes"Tristan III's order: ^FF0000Move all the private shops to a special Market Place^000000.";
 	next;
@@ -30,13 +30,13 @@ M_ENTER:
 }
 
 gon_test,73,103,0	script	MarketExit	45,1,2,{
-	warp "prontera.gat",155,177-rand(10);
+	warp "prontera",155,177-rand(10);
 	end;
 }
 
 //disable vending in Prontera
-prontera.gat	mapflag	novending
-prt_in.gat	mapflag	novending
+prontera	mapflag	novending
+prt_in	mapflag	novending
 //Market Place settings
 gon_test	mapflag	noteleport
 gon_test	mapflag	nomemo

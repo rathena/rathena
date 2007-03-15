@@ -11,7 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 0.1 Added a Sailor NPC to get back to Alberta [ZoDIaC]
 //= 0.2 fixed coords, dialogues
-//= 0.3 Fixed Warp name, ayotaya.gat doesn't exist, even though iRO 
+//= 0.3 Fixed Warp name, ayotaya doesn't exist, even though iRO 
 //= 	decided to call it Ayotaya, it really is Ayothaya, like 
 //=	that Yuno/Juno thing
 //= 0.4 Added the official warp npc for Ayothaya. [MasterOfMuppets]
@@ -25,7 +25,7 @@
 //= 1.4 Moved quests to quests/quests_ayothaya.txt [Evera]
 //============================================================ 
 
-ayothaya.gat,152,68,1	script	Aibakthing#01	843,{
+ayothaya,152,68,1	script	Aibakthing#01	843,{
 	mes "[Aibakthing]";
 	mes "Hoo! Hah! Hmm! Hah!";
 	mes "So, how did you like Ayothaya? Did you get a chance to try Tom Yum Goong? When you're ready, I shall take you back home.";
@@ -35,7 +35,7 @@ ayothaya.gat,152,68,1	script	Aibakthing#01	843,{
 	mes "[Aibakthing]";
 	mes "You will be welcome to come back whenever you please. I hope that we weill see each other again sometime soon. Thank you~";
 	close2;
-	warp "alberta.gat",235,45;
+	warp "alberta",235,45;
 	end;	
 s_Cancel:
 	mes "[Aibakthing]";
@@ -43,7 +43,7 @@ s_Cancel:
 	close;
 } 
 
-alberta.gat,247,42,3	script	Aibakthing#02	843,{
+alberta,247,42,3	script	Aibakthing#02	843,{
 	mes "[Aibakthing]";
 	mes "Hoo! Hah! Hoo! Hah!";
 	mes "Let me take you away to a distant spiritual place, a land of exotic mystery, my hometown Ayothaya.";
@@ -81,7 +81,7 @@ s_Go:
 	mes "Let us be off! Back to my beautiful Ayothaya!";
 	close2;	
 	set Zeny, Zeny - 10000;
-	warp "ayothaya.gat",150,65;
+	warp "ayothaya",150,65;
 	end;
 s_NoZeny:
 	mes "[Aibakthing]";
@@ -89,7 +89,7 @@ s_NoZeny:
 	close;
 }
 
-ayothaya.gat,143,102,5	script	Old Man#01	842,{
+ayothaya,143,102,5	script	Old Man#01	842,{
 	mes "[Villager]";
 	mes "Ummm.";
 	mes "Hmmmmm...";
@@ -123,7 +123,7 @@ ayothaya.gat,143,102,5	script	Old Man#01	842,{
 	close;
 }
 
-ayo_fild02.gat,25,155,7	script	Aik	843,{
+ayo_fild02,25,155,7	script	Aik	843,{
 	mes "[Aik]";
 	mes "So, How was your expedition? I hope that the evil spirits will not follow you outside the ruins, and haunt your dreams.";
 	next;
@@ -151,11 +151,11 @@ s_Yes:
 	next;
 	mes "^3C2EE6He suddenly grabbed you and hurled you up into the air!";	
 	close2;
-	warp "ayo_fild01.gat",115,200;
+	warp "ayo_fild01",115,200;
 	end;
 }
 
-ayothaya.gat,193,171,3	script	Old Man#02	842,{
+ayothaya,193,171,3	script	Old Man#02	842,{
 	mes "[Tham]";
 	mes "Ah~";
 	mes "I've got this craving for Ms. Mali the Spicy's food, especially her 'Tom Yum Goong.'";
@@ -165,7 +165,7 @@ ayothaya.gat,193,171,3	script	Old Man#02	842,{
 	close;
 }
 
-ayothaya.gat,171,152,5	script	Girl	838,{
+ayothaya,171,152,5	script	Girl	838,{
 	mes "[Lalitha]";
 	mes "When you go East from this village, you will arrive at the ruins of an old shrine. It is now a nest full of fearsome monsters.";
 	next;
@@ -188,7 +188,7 @@ ayothaya.gat,171,152,5	script	Girl	838,{
 	close;
 }
 
-ayothaya.gat,197,188,5	script	Young Man#01	841,{
+ayothaya,197,188,5	script	Young Man#01	841,{
 	mes "[Kwan]";
 	mes "Phew, isn't it";
 	mes "soooo hot today?";
@@ -212,7 +212,7 @@ ayothaya.gat,197,188,5	script	Young Man#01	841,{
 	close;
 }
 
-ayothaya.gat,241,264,5	script	Young Man#02	843,{
+ayothaya,241,264,5	script	Young Man#02	843,{
 
 	mes "[Eik]";
 	mes "Hey...";
@@ -238,7 +238,7 @@ s_Sure:
 	close;
 }
 
-ayothaya.gat,213,142,5	script	Young Man#03	843,{
+ayothaya,213,142,5	script	Young Man#03	843,{
 	mes "[Detzi]";
 	mes "In Ayothaya, we have our own traditional martial arts. We, the young men of the village, practice our traditional martial arts in order to become strong.";
 	next;
@@ -248,7 +248,7 @@ ayothaya.gat,213,142,5	script	Young Man#03	843,{
 }
 
 //This might not get fixed, feel free to submit a fix in the forum to apply though.
-ayothaya.gat,253,99,3	script	Fisherman	843,{
+ayothaya,253,99,3	script	Fisherman	843,{
 	mes "[Dannai]";
 	mes "This place is known to be teeming with fish. The fish here tend to eat anything they find, so it's easy to catch them.";
 	next;
@@ -269,19 +269,19 @@ s_Yes:
 	close;
 }
 
-ayo_dun01.gat,25,271,4	script	#ayokillscript	139,1,1,{
+ayo_dun01,25,271,4	script	#ayokillscript	139,1,1,{
 	percentheal -100,0;
 	end;
 }
 
-ayo_dun01.gat,25,274,4	duplicate(#ayokillscript)	#ayodupe4	139,1,1
-ayo_dun01.gat,28,274,4	duplicate(#ayokillscript)	#ayodupe5	139,1,1
-ayo_dun01.gat,28,271,4	duplicate(#ayokillscript)	#ayodupe6	139,1,1
-ayo_dun01.gat,25,28,4	duplicate(#ayokillscript)	#ayodupe7	139,1,1
-ayo_dun01.gat,25,25,4	duplicate(#ayokillscript)	#ayodupe8	139,1,1
-ayo_dun01.gat,28,25,4	duplicate(#ayokillscript)	#ayodupe9	139,1,1
-ayo_dun01.gat,28,28,4	duplicate(#ayokillscript)	#ayodupe10	139,1,1
-ayo_dun01.gat,271,274,4	duplicate(#ayokillscript)	#ayodupe11	139,1,1
-ayo_dun01.gat,271,271,4	duplicate(#ayokillscript)	#ayodupe12	139,1,1
-ayo_dun01.gat,274,271,4	duplicate(#ayokillscript)	#ayodupe13	139,1,1
-ayo_dun01.gat,274,274,4	duplicate(#ayokillscript)	#ayodupe14	139,1,1
+ayo_dun01,25,274,4	duplicate(#ayokillscript)	#ayodupe4	139,1,1
+ayo_dun01,28,274,4	duplicate(#ayokillscript)	#ayodupe5	139,1,1
+ayo_dun01,28,271,4	duplicate(#ayokillscript)	#ayodupe6	139,1,1
+ayo_dun01,25,28,4	duplicate(#ayokillscript)	#ayodupe7	139,1,1
+ayo_dun01,25,25,4	duplicate(#ayokillscript)	#ayodupe8	139,1,1
+ayo_dun01,28,25,4	duplicate(#ayokillscript)	#ayodupe9	139,1,1
+ayo_dun01,28,28,4	duplicate(#ayokillscript)	#ayodupe10	139,1,1
+ayo_dun01,271,274,4	duplicate(#ayokillscript)	#ayodupe11	139,1,1
+ayo_dun01,271,271,4	duplicate(#ayokillscript)	#ayodupe12	139,1,1
+ayo_dun01,274,271,4	duplicate(#ayokillscript)	#ayodupe13	139,1,1
+ayo_dun01,274,274,4	duplicate(#ayokillscript)	#ayodupe14	139,1,1

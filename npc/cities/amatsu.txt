@@ -22,7 +22,7 @@
 //= 1.1 Split quests into quests/quests_amatsu.txt [Evera]
 //= 1.2	Fixed missing name [Evera]
 //=====================================================================
-alberta.gat,245,93,4	script	Sea Captain#01	709,{
+alberta,245,93,4	script	Sea Captain#01	709,{
 	mes "[Walter Moers]";
 	mes "Hey, there.";
 	mes "Have you ever heard that there";
@@ -142,7 +142,7 @@ alberta.gat,245,93,4	script	Sea Captain#01	709,{
 			close;
 }
 //=====================================================================
-amatsu.gat,194,79,4	script	Sea Captain#02	709,{
+amatsu,194,79,4	script	Sea Captain#02	709,{
 	mes "[Walter Moers]";
 	mes "You came... Did you enjoy";
 	mes "your trip to Amatsu...?";
@@ -167,7 +167,7 @@ amatsu.gat,194,79,4	script	Sea Captain#02	709,{
 //=====================================================================
 // Amatsu Citizen
 //=====================================================================
-amatsu.gat,179,107,4	script	John	86,{
+amatsu,179,107,4	script	John	86,{
 	mes "[John]";
 	mes "Hey.";
 	mes "You seem like me,";
@@ -216,7 +216,7 @@ amatsu.gat,179,107,4	script	John	86,{
 	close;
 }
 //=====================================================================
-amatsu.gat,185,116,4	script	Drunken Man	765,{
+amatsu,185,116,4	script	Drunken Man	765,{
 	mes "[Ralph]";
 	mes "Cough. I'm old and useless.";
 	mes "Only brute strength. Cough.";
@@ -255,7 +255,7 @@ L1:
 	close;
 }
 //=====================================================================
-amatsu.gat,217,179,0	script	Old Women	760,{
+amatsu,217,179,0	script	Old Women	760,{
 	mes "[Hashey]";
 	mes "My husband is so into gambling, it worries me to death.";
 	mes "Went to that town that's really far away, lost a lot of zeny again.";
@@ -268,7 +268,7 @@ amatsu.gat,217,179,0	script	Old Women	760,{
 	close;
 }
 //=====================================================================
-amatsu.gat,205,163,4	script	Mimi	759,{
+amatsu,205,163,4	script	Mimi	759,{
 	mes "[Mimi]";
 	mes "Phew..";
 	mes "Did you see the Ms. Amatsu besides the dock?";
@@ -283,7 +283,7 @@ amatsu.gat,205,163,4	script	Mimi	759,{
 	close;
 }
 //=====================================================================
-amatsu.gat,230,160,4	script	Lady	757,{
+amatsu,230,160,4	script	Lady	757,{
 	mes "[Yorukoc]";
 	mes "Although I come to the well for water everyday,";
 	mes "if it's misty or rainy,";
@@ -297,7 +297,7 @@ amatsu.gat,230,160,4	script	Lady	757,{
 	close;
 }
 //=====================================================================
-amatsu.gat,119,164,4	script	Guard Soldier#03	767,{
+amatsu,119,164,4	script	Guard Soldier#03	767,{
 	mes "[Guard Soldier]";
 	mes "Are you from Rune-Midgard?";
 	mes "Welcome to the town of Amatsu.";
@@ -313,7 +313,7 @@ amatsu.gat,119,164,4	script	Guard Soldier#03	767,{
 	close;
 }
 //=====================================================================
-amatsu.gat,112,164,4	script	Guard Soldier#04	767,{
+amatsu,112,164,4	script	Guard Soldier#04	767,{
 	mes "[Guard Soldier]";
 	mes "This is the best castle in Amatsu,";
 	mes "called the East Lake Castle.";
@@ -329,7 +329,7 @@ amatsu.gat,112,164,4	script	Guard Soldier#04	767,{
 }
 
 //=====================================================================
-ama_in02.gat,207,40,6	script	Guard Soldier#05	767,{
+ama_in02,207,40,6	script	Guard Soldier#05	767,{
 	mes "[Guard Soldier]";
 	mes "Welcome,";
 	mes "The Master specifically allowed";
@@ -341,7 +341,7 @@ ama_in02.gat,207,40,6	script	Guard Soldier#05	767,{
 	close;
 }
 //=====================================================================
-ama_in02.gat,207,49,6	script	Guard Soldier#06	767,{
+ama_in02,207,49,6	script	Guard Soldier#06	767,{
 	mes "[Guard Soldier]";
 	mes "The master is really a great guy.";
 	mes "Who would have thought that anyone could";
@@ -356,7 +356,7 @@ ama_in02.gat,207,49,6	script	Guard Soldier#06	767,{
 	close;
 }
 //=====================================================================
-ama_in02.gat,187,57,2	script	Soldier#01	767,{
+ama_in02,187,57,2	script	Soldier#01	767,{
 	mes "[Ichiro]";
 	mes "Welcome, our master";
 	mes "has already prepared a place";
@@ -371,7 +371,7 @@ ama_in02.gat,187,57,2	script	Soldier#01	767,{
 	close;
 }
 //=====================================================================
-ama_in02.gat,37,157,4	script	Soldier#03	767,{
+ama_in02,37,157,4	script	Soldier#03	767,{
 	mes "[Sbarro]";
 	mes "This is our soldier's";
 	mes "training ground.";
@@ -399,7 +399,7 @@ ama_in02.gat,37,157,4	script	Soldier#03	767,{
 	close;
 }
 //=====================================================================
-ama_in02.gat,32,51,6	script	Shiro	767,{
+ama_in02,32,51,6	script	Shiro	767,{
 	mes "[Shiro]";
 	mes "Cough cough, cough cough, what... leave me alone";
 	mes "Go visit another place...";
@@ -419,7 +419,7 @@ ama_in02.gat,32,51,6	script	Shiro	767,{
 	close;
 }
 //=====================================================================
-ama_in02.gat,40,167,3	script	Soldier#04	767,{
+ama_in02,40,167,3	script	Soldier#04	767,{
 	mes "[Kuro]";
 	mes "Shh... customer, please be quiet.";
 	mes "I will tell you a story";
@@ -449,7 +449,7 @@ ama_in02.gat,40,167,3	script	Soldier#04	767,{
 	close;
 }
 //=====================================================================
-ama_in02.gat,32,167,5	script	Kukuro	767,{
+ama_in02,32,167,5	script	Kukuro	767,{
 	mes "[Kukuro]";
 	mes "That guy is always rambling";
 	mes "some gibberish, saying that our master";
@@ -472,7 +472,7 @@ ama_in02.gat,32,167,5	script	Kukuro	767,{
 	close;
 }
 //=====================================================================
-ama_in02.gat,42,34,2	script	Soldier#05	767,{
+ama_in02,42,34,2	script	Soldier#05	767,{
 	mes "[Hakiro]";
 	mes "Rest for a while before leaving,";
 	mes "master has already prepared";
@@ -490,7 +490,7 @@ ama_in02.gat,42,34,2	script	Soldier#05	767,{
 }
 
 //=====================================================================
-ama_in02.gat,203,156,4	script	Soldier#06	767,{
+ama_in02,203,156,4	script	Soldier#06	767,{
 	mes "[Hakiro]";
 	mes "Master is in there.";
 	mes "If you want to go greet him,";
@@ -505,7 +505,7 @@ ama_in02.gat,203,156,4	script	Soldier#06	767,{
 }
 
 //=====================================================================
-ama_in02.gat,195,156,4	script	Soldier#07	767,{
+ama_in02,195,156,4	script	Soldier#07	767,{
 	mes "[Kuro]";
 	mes "Damn, maybe the master";
 	mes "is having a hard time right now.";
@@ -520,7 +520,7 @@ ama_in02.gat,195,156,4	script	Soldier#07	767,{
 	close;
 }
 
-ama_in01.gat,169,173,0	script	Miko	769,{
+ama_in01,169,173,0	script	Miko	769,{
 	mes "[Tokari]";
 	mes "I'm not a real shrine maiden."; 
 	mes "my friend, Takikuwi told me to try on";
@@ -542,7 +542,7 @@ ama_in01.gat,169,173,0	script	Miko	769,{
 	close;
 }
 
-amatsu.gat,269,221,1	script	Proposing Girl	758,{
+amatsu,269,221,1	script	Proposing Girl	758,{
 	mes "[Hutari Sioko]";
 	mes "Nice to meet you";
 	mes "my name is Hutari Sioko,";
@@ -577,7 +577,7 @@ amatsu.gat,269,221,1	script	Proposing Girl	758,{
 	close;
 }
 
-amatsu.gat,287,266,3	script	Jyaburo	766,{
+amatsu,287,266,3	script	Jyaburo	766,{
 	mes "[Jyaburo]";
 	mes "This is a special place";
 	mes "for my wife and me";
@@ -620,7 +620,7 @@ amatsu.gat,287,266,3	script	Jyaburo	766,{
 	close;
 }
 
-amatsu.gat,274,178,0	script	Vet	735,{
+amatsu,274,178,0	script	Vet	735,{
 	mes "[Sakura Seiichi]";
 	mes "Oww... I'm not a suspicious guy,";
 	mes "please don't be surprised, I am just";
@@ -680,7 +680,7 @@ L2:
 	close;
 }
 
-amatsu.gat,283,203,1	script	PokePoke	738,{
+amatsu,283,203,1	script	PokePoke	738,{
 	emotion e_swt2;
 	mes "[Pokepoke]";
 	mes "The tree on this hill";
@@ -709,7 +709,7 @@ amatsu.gat,283,203,1	script	PokePoke	738,{
 	close;
 }
 
-amatsu.gat,261,197,4	script	Legendary Sakura Tree	111,{
+amatsu,261,197,4	script	Legendary Sakura Tree	111,{
 	mes "^0000FFJust as she said";
 	mes "this tree is famous because";
 	mes "many couples confessed their love here";
@@ -726,7 +726,7 @@ amatsu.gat,261,197,4	script	Legendary Sakura Tree	111,{
 	close;
 }
 
-ama_in02.gat,61,27,6	script	Alchemist#amatsu	749,{
+ama_in02,61,27,6	script	Alchemist#amatsu	749,{
 
 	mes "[Laspuchin Gregory]";
 	mes "KeekeekeeKeheheh.";
@@ -932,8 +932,8 @@ s_NEnough:
 }
 
 //| Ninja map portion dummy npcs, commented by default.
-//que_ng.gat,27,18,3	script	Seaman	709,{end;}
-//que_ng.gat,28,45,3	script	Man	86,{end;}
-//que_ng.gat,28,50,3	script	Seaman2	709,{end;}
-//que_ng.gat,22,62,3	script	Seaman2	709,{end;}
-//que_ng.gat,30,65,3	script	Ninja Sensei	730,{end;}
+//que_ng,27,18,3	script	Seaman	709,{end;}
+//que_ng,28,45,3	script	Man	86,{end;}
+//que_ng,28,50,3	script	Seaman2	709,{end;}
+//que_ng,22,62,3	script	Seaman2	709,{end;}
+//que_ng,30,65,3	script	Ninja Sensei	730,{end;}

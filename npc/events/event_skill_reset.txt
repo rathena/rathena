@@ -15,7 +15,7 @@
 //= Skill Reset with payment, minimum BaseLv.60 to reset skill.
 //= Each 1 BaseLv need 20.000 Zeny, so be careful to use skill.
 //============================================================
-yuno.gat,138,187,4	script	Hypnotist Teacher	124,{
+yuno,138,187,4	script	Hypnotist Teacher	124,{
 	set @npcname$,"[^D5A500Hypnotist^000000]";
 	mes @npcname$;
 

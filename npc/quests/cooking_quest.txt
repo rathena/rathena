@@ -20,7 +20,7 @@
 //= 1.5 More fixes [Lupus]
 //============================================================ 
 
-prt_castle.gat,43,30,6	script	Chef Apprentice	878,{
+prt_castle,43,30,6	script	Chef Apprentice	878,{
 
 	mes "[Chef's Apprentice]";
 
@@ -292,7 +292,7 @@ prt_castle.gat,43,30,6	script	Chef Apprentice	878,{
 }
 
 
-payon.gat,209,127,4	script	Cooking Friend	88,{
+payon,209,127,4	script	Cooking Friend	88,{
 	mes "[Cooking Friend]";
 	if(cooking == 5){
 		if(countitem(7432)) {
@@ -316,7 +316,7 @@ payon.gat,209,127,4	script	Cooking Friend	88,{
 }
 
 
-prt_castle.gat,45,35,4	script	Sharle	886,{
+prt_castle,45,35,4	script	Sharle	886,{
 	mes "[Sharle]";
 	if(cooking && getequipid(1) != 5026) goto L_No_Uniform; //Item: Chef's Hat
 	if(cooking == 7)goto L_Cooking_7;

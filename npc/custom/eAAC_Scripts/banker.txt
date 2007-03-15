@@ -75,7 +75,7 @@
 
 //| Copyright © 2006 erKURITA. All Rights Reserved
 
-prontera.gat,155,188,3	script	Zacariath Madhat	872,{
+prontera,155,188,3	script	Zacariath Madhat	872,{
 
 //|~~~~~~~~~ Settings of the NPC: ~~~~~~~~~~~~~~~~~
 set @npcname$,"^999999[Zach]^000000";		//|
