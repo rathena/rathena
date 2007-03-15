@@ -7,14 +7,14 @@
 //===== Current Version: =====================================
 
 //Aldebaran Turbo Track
-alde_tt02.gat	mapflag	restricted	1
-turbo_n_1.gat	mapflag	restricted	1
-turbo_n_4.gat	mapflag	restricted	1
-turbo_n_8.gat	mapflag	restricted	1
-turbo_n_16.gat	mapflag	restricted	1
-turbo_e_4.gat	mapflag	restricted	1
-turbo_e_8.gat	mapflag	restricted	1
-turbo_e_16.gat	mapflag	restricted	1
+alde_tt02	mapflag	restricted	1
+turbo_n_1	mapflag	restricted	1
+turbo_n_4	mapflag	restricted	1
+turbo_n_8	mapflag	restricted	1
+turbo_n_16	mapflag	restricted	1
+turbo_e_4	mapflag	restricted	1
+turbo_e_8	mapflag	restricted	1
+turbo_e_16	mapflag	restricted	1
 
 //Jail
-sec_pri.gat	mapflag	restricted	2
+sec_pri	mapflag	restricted	2

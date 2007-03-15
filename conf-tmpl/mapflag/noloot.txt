@@ -7,19 +7,19 @@
 //============================================================
 
 // Location for Job's Quests
-job_sword1.gat	mapflag	noloot
-in_moc_16.gat	mapflag	noloot
-job_hunte.gat	mapflag	noloot
-job_knt.gat	mapflag	noloot
-job_prist.gat	mapflag	noloot
-job_wiz.gat	mapflag	noloot
-job_cru.gat	mapflag	noloot
-monk_test.gat	mapflag	noloot
-in_rogue.gat	mapflag	noloot
-job_sage.gat	mapflag	noloot
-job_soul.gat	mapflag	noloot
-job_star.gat	mapflag	noloot
-que_ng.gat	mapflag	noloot
+job_sword1	mapflag	noloot
+in_moc_16	mapflag	noloot
+job_hunte	mapflag	noloot
+job_knt	mapflag	noloot
+job_prist	mapflag	noloot
+job_wiz	mapflag	noloot
+job_cru	mapflag	noloot
+monk_test	mapflag	noloot
+in_rogue	mapflag	noloot
+job_sage	mapflag	noloot
+job_soul	mapflag	noloot
+job_star	mapflag	noloot
+que_ng	mapflag	noloot
 
 //Thievs have to gather some mushrooms. So they need loot
-//job_thief1.gat	mapflag	noloot
+//job_thief1	mapflag	noloot

@@ -19,6 +19,8 @@
 	-----
 
 ========================
+2007/03/17
+	* Removed .gat from configs [Lupus]
 03/15
 	* Increased Shield Chain's range by one. It is now a ranged skill.
 	  [Skotlex]
@@ -2452,7 +2454,7 @@
 	* Added packet_ver 18 by Sara-chan [Lupus]
 
 06/28
-	* Added "gld_dun01.gat  5" to water_height.txt as reported by Manipulator [Skotlex]
+	* Added "gld_dun01  5" to water_height.txt as reported by Manipulator [Skotlex]
 	* Added Dryad Card effect, thx to MasterOfMuppets [Lupus]
 	* Fixed Land Protector's Range to be 7x7,7x7,9x9,9x9,11x11 [Skotlex]
 	* Made Lemon consumable (previous equip_jobs was 0), that was not on

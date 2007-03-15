@@ -411,7 +411,7 @@ autosave_time
 start_point
 	When a new character is created, it is the place where they start.
 	It describes like "a map file name, X coordinates, and Y coordinates."
-	It can omit and is a default.   It is new_1-1.gat and 53,111.
+	It can omit and is a default.   It is new_1-1 and 53,111.
 
 start_weapon:
 	Starting weapon for new characters
@@ -508,7 +508,7 @@ char_new: 0
 max_connect_user: 0
 check_ip_flag: yes
 autosave_time: 15
-start_point: new_1-1.gat,53,111
+start_point: new_1-1,53,111
 start_weapon: 1201
 start_armor: 2301
 start_zeny: 500
@@ -697,12 +697,12 @@ npc: conf/warp/npc_warp.txt
 npc: conf/warp/npc_warp25.txt
 npc: conf/warp/npc_warp3.txt
 npc: conf/mob/npc_monster3J.txt
-map: prontera.gat
-map: prt_castle.gat
+map: prontera
+map: prt_castle
 ÅinpcÅAmapÇÕëΩÇ¢ÇÃÇ≈è»ó™Åj
 delnpc: conf/sample/npc_test.txt
 npc: clear
-delmap: prontera.gat
+delmap: prontera
 delmap: all
 
 ==========================================================================

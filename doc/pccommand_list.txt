@@ -14,7 +14,7 @@ When a player logs in, the NPC will run as if he just clicked it. Which means
 if the script is like this:
 
 + Sample:
-prontera.gat,0,0,0	script	OnPCLoginEvent	-1,{
+prontera,0,0,0	script	OnPCLoginEvent	-1,{
 	mes "lmao";
 	close;
  }
@@ -106,7 +106,7 @@ When a player logs in on the map, the NPC will run as if he just clicked it. Whi
 if the script is like this:
 
 + Sample:
-prontera.gat,159,192,2 script OnPCLoadMapEvent 101,{
+prontera,159,192,2 script OnPCLoadMapEvent 101,{
    mes "Holy shit";
    close;
 }
@@ -134,8 +134,8 @@ can be getmapxy, something like this:
 
 -	script	PCDieEvent	-1,{
 if (getmapxy(@mapname$,@mapx,@mapy,0) == -1) goto L_Finish;
-if (@mapname$ == "valkyrie.gat") || (@mapname$ == "amatsu.gat") {
-killmonster "valkyrie.gat","All";	
+if (@mapname$ == "valkyrie") || (@mapname$ == "amatsu") {
+killmonster "valkyrie","All";	
 announce "Deep Voice: You have failed.... you have another opportunity though...",bc_self,0x660033;
 if (killtest != 0) enablenpc "Outern Voices";
 if (killedonce == 1) end;
@@ -151,8 +151,8 @@ L_Finish:
 
 OnPCDieEvent: 
 if (getmapxy(@mapname$,@mapx,@mapy,0) == -1) goto L_Finish;
-if (@mapname$ == "valkyrie.gat") || (@mapname$ == "amatsu.gat") {
-killmonster "valkyrie.gat","All";	
+if (@mapname$ == "valkyrie") || (@mapname$ == "amatsu") {
+killmonster "valkyrie","All";	
 announce "Deep Voice: You have failed.... you have another opportunity though...",bc_self,0x660033;
 if (killtest != 0) enablenpc "Outern Voices";
 if (killedonce == 1) end;

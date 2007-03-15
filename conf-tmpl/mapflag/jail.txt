@@ -21,28 +21,28 @@
 
 
 // No Memory =============================
-sec_pri.gat	mapflag	nomemo
+sec_pri	mapflag	nomemo
 
 // No Save ===============================
-sec_pri.gat	mapflag	nosave	SavePoint
+sec_pri	mapflag	nosave	SavePoint
 
 // No Teleport ===========================
-sec_pri.gat	mapflag	noteleport
+sec_pri	mapflag	noteleport
 
 // No Warp ===============================
-sec_pri.gat	mapflag	nowarp
+sec_pri	mapflag	nowarp
 
 // No Return, Stop people from being pulled out of jail (warpparty/guild)
-sec_pri.gat	mapflag	noreturn 
+sec_pri	mapflag	noreturn 
 
 // Bloody Jail ===========================
 //Uncomment following maps to let your prisoners fight with other prisoners
 
 // PvP ===================================
-sec_pri.gat	mapflag	pvp
+sec_pri	mapflag	pvp
 
 // No Party ==============================
-sec_pri.gat	mapflag	pvp_noparty
+sec_pri	mapflag	pvp_noparty
 
 //Nightmare Equipment Drops PVP ==========
-sec_pri.gat	mapflag	pvp_nightmaredrop	random,equip,300
+sec_pri	mapflag	pvp_nightmaredrop	random,equip,300

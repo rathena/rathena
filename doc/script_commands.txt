@@ -9,7 +9,7 @@
 //= Maeki Rika - A section on general concepts and lots of
 //=              other updates and additions.
 //===== Version ===========================================
-//= 3.03.20070226
+//= 3.04.20070317
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -67,6 +67,8 @@
 //=       Updated makeitem and how to include " in strings [Lupus]
 //= 3.03.20070228
 //=       Added info on OnTimerQuit label to npctimer section. [Skotlex]
+//= 3.04.20070317
+//=       Removed all .gat refferences from the examples [Lupus]
 //===== Compatible With ===================================
 //= LOL, can be used by anyone hopefully
 //===== Description =======================================
@@ -131,10 +133,9 @@ of functions or operators returning a value, in (round brackets) instead of most
 numbers. Round brackets will not always be required, but they're often a good 
 idea.
 
-Wherever you refer to a map name, it's always 'mapname.gat' or 'mapname.afm' if 
-you are using AFM maps, (if you don't know what they are, you aren't using them) 
-and not just 'mapname'. While some commands do know that if you didn't give 
-'.gat', it should add it, it's pretty tricky to tell which ones they are.
+Wherever you refer to a map name, it's always 'mapname' or 'mapname.gat'
+(Please, don't use .gat suffix anymore. It's useless.) 
+
 
 Script loading structure
 ------------------------
@@ -877,9 +878,9 @@ name to start from. The label name can be any of your liking, but must be
 
 Example:
 
-monster "prontera.gat",123,42,"Poringz0rd",2341,23,"Master::OnThisMobDeath";
+monster "prontera",123,42,"Poringz0rd",2341,23,"Master::OnThisMobDeath";
 
-amatsu.gat,13,152,4	script	Master	767,{
+amatsu,13,152,4	script	Master	767,{
 	mes "Hi there";
 	close;
 
@@ -994,7 +995,7 @@ make it stop in some other manner.
     mes "[Woman]";
     mes "I will warp you now";
     close2;
-    warp "place.gat",50,50;
+    warp "place",50,50;
     end;
     
 Don't expect things to run smoothly if you don't make your scripts 'end'.
@@ -1321,7 +1322,7 @@ This command lets you call up a function NPC. A function NPC can be called from
 any script on any map server. Using the 'return' command it will come back to 
 the place that called it.
 
-	place.gat,50,50,6%TAB%script%TAB%Woman%TAB%115,{
+	place,50,50,6%TAB%script%TAB%Woman%TAB%115,{
 		mes "[Woman]"
 		mes "Lets see if you win";
 		callfunc "funcNPC";
@@ -1343,7 +1344,7 @@ If you want to return a real value from inside your function NPC, it is better
 to write it in the function form, which will also work and will make the script 
 generally cleaner:
 
-	place.gat,50,50,6%TAB%script%TAB%Man%TAB%115,{
+	place,50,50,6%TAB%script%TAB%Man%TAB%115,{
 		mes "[Man]"
 		mes "Gimme a number!";
 		next;
@@ -1394,7 +1395,7 @@ This is another thing that can let you use the same code more than once.
 Argument numbering starts with 0, i.e. the first argument you gave is number 0. 
 If no such argument was given, a zero is returned.
 
-	place.gat,50,50,6%TAB%script%TAB%Woman1%TAB%115,{
+	place,50,50,6%TAB%script%TAB%Woman1%TAB%115,{
 		mes "[Woman]";
 		mes "Lets see if you win";
 		callfunc "funcNPC",2;
@@ -1402,7 +1403,7 @@ If no such argument was given, a zero is returned.
 
 	...
 
-	place.gat,52,50,6%TAB%script%TAB%Woman2%TAB%115,{
+	place,52,50,6%TAB%script%TAB%Woman2%TAB%115,{
 		mes "[Woman]";
 		mes "Lets see if you win";
 		callfunc "funcNPC",5;
@@ -1465,7 +1466,7 @@ And at least, but inside the script itself, put the function <function name> {<c
 
 Example:
 
-prontera.gat,154,189,4	script	Item seller	767,{
+prontera,154,189,4	script	Item seller	767,{
 
 function SF_Selling;
 
@@ -2073,7 +2074,7 @@ armor, but also don't want them to equip if after the check, you would do this:
         if ((countitem(2341) > 0) || (countitem(2432) > 0) goto L_InventoryLegionPlate;
         mes "I will lets you pass";
         close2;
-        warp "place.gat",50,50;
+        warp "place",50,50;
         end;
     L_EquipedLegionPlate:
         mes "You are wearing some Legion Plate Armor, please drop that in your stash before continuing";
@@ -2404,12 +2405,12 @@ NOT locate a pet by name.
 
 What a mess. Example, a working and tested one now:
 
-    prontera.gat,164,301,3%TAB%script%TAB%Meh%TAB%730,{
+    prontera,164,301,3%TAB%script%TAB%Meh%TAB%730,{
         mes "My name is Meh. I'm here so that Nyah can find me.";
         close;
     }
 
-    prontera.gat,164,299,3%TAB%script%TAB%Nyah%TAB%730,{
+    prontera,164,299,3%TAB%script%TAB%Nyah%TAB%730,{
         mes "My name is Nyah.";
         mes "I will now search for Meh all across the world!";
         if (getmapxy(@mapname$,@mapx,@mapy,1,"Meh")!=0) goto Notfound;
@@ -2525,7 +2526,7 @@ This function will return the count of connected characters which are located
 within the specified area - an x1/y1-x2/y2 square on the specified map.
 
 This is useful for maps that are split into many buildings, such as all the 
-"*_in.gat" maps, due to all the shops and houses.
+"*_in" maps, due to all the shops and houses.
 
 ---------------------------------------
 
@@ -2665,7 +2666,7 @@ Example(s):
 //Will set the @persons variable to the amount of persons from the guild
 //which ID's = 10 and are at prontera.
 
-	set @persons,getMapGuildUsers "prontera.gat",10;
+	set @persons,getMapGuildUsers "prontera",10;
 
 ---------------------------------------
 //
@@ -3168,13 +3169,13 @@ window.
 This command will take the invoking character to the specifed map, and if 
 wanted, specified coordinates too, but these can be random.
 
-    warp "place.gat",50,55;
+    warp "place",50,55;
 
 This would take them to X 50 Y 55 on the map called "place". If your X and Y 
 coordinates land on an unwalkable map square, it will send the warped character 
 to a random place. Same will happen if they are both zero:
 
-    warp "place.gat",0,0;
+    warp "place",0,0;
 
 Notice that while warping people to coordinates 0,0 will normally get them into 
 a random place, it's not certain to always be so. Darned if I know where this is 
@@ -3195,13 +3196,13 @@ character, but instead, all characters within a specified area, defined by the
 x1/y1-x2/y2 square, will be warped. Nobody outside the area will be affected, 
 including the activating character, if they are outside the area.
 
-    areawarp "place.gat",10,10,120,120,"place2.gat",150,150;
+    areawarp "place",10,10,120,120,"place2",150,150;
 
 Everyone that is in the area between X 10 Y 10 and X 120 Y 120, in a square 
 shape, on the map called "place", will be affected, and warped to "place2" X 150 
 Y 150
 
-    areawarp "place.gat",10,10,120,120,"place2.gat",0,0;
+    areawarp "place",10,10,120,120,"place2",0,0;
 
 By using ,0,0; as the destination coordinates it will take all the characters in 
 the affected area to a random set of co-ordinates on "place2".
@@ -3213,7 +3214,7 @@ See also 'warp'.
 
 ---------------------------------------
  
-*warpparty "<mapname.gat>",<x>,<y>,<party_id>;
+*warpparty "<mapname>",<x>,<y>,<party_id>;
  
 Warps a party to specified map and coordinate given the party ID, which you can get with
 getcharid(1). You can also request another party id given a member's name with getcharid(1,<player_name>).
@@ -3223,12 +3224,12 @@ mes "[Party Warper]";
 mes "Here you go!";
 close2;
 set @id,getcharid(1);
-warpparty "prontera.gat",150,100,@id;
+warpparty "prontera",150,100,@id;
 close;
  
 ---------------------------------------
  
-*warpchar "<mapname.gat>",<x>,<y>,<char_id>;
+*warpchar "<mapname>",<x>,<y>,<char_id>;
  
 Warps another player to specified map and coordinate given the char id, which you can get with
 getcharid(0,<player_name>). Obviously this is useless if you want to warp the same player that
@@ -3236,18 +3237,18 @@ is executing this script, unless it's some kind of "chosen" script.
  
 Example:
  
-warpchar "prontera.gat",150,100,20000001;
+warpchar "prontera",150,100,20000001;
  
 ---------------------------------------
  
-*warpguild "<mapname.gat>",<x>,<y>,<guild_id>;
+*warpguild "<mapname>",<x>,<y>,<guild_id>;
  
 Warps a guild to specified map and coordinate given the guild id, which you can get with 
 getcharid(2). You can also request another guild id given the member's name with getcharid(2,<player_name>).
  
 Example:
  
-warpguild "prontera.gat",x,y,Guild_ID;
+warpguild "prontera",x,y,Guild_ID;
 
 ---------------------------------------
 
@@ -3270,7 +3271,7 @@ equivalent. Map name, X coordinate and Y coordinate should be perfectly obvious.
 This ignores any and all map flags, and can make a character respawn where no 
 teleportation is otherwise possible.
 
-    savepoint "place.gat",350,75;
+    savepoint "place",350,75;
 
 ---------------------------------------
 
@@ -4401,7 +4402,7 @@ and upon the monster being killed, it will execute the script inside of the
 specified NPC object starting from the label given. The RID of the player 
 attached at this execution will be the RID of the killing character.
 
-    monster "place.gat",60,100,"Poring",1002,1,"NPCNAME::OnLabel";
+    monster "place",60,100,"Poring",1002,1,"NPCNAME::OnLabel";
 
 If you do not specify any event label, a label in the NPC object that ran this 
 command, called 'OnMyMobDead:' will execute anyway, if present.
@@ -4423,7 +4424,7 @@ Simple monster killing script:
         mes "Come back later";
         close;
     L_Yes:
-        monster "prontera.gat",0,0,"Quest Poring",1002,10,"NPCNAME::OnPoringKilled";
+        monster "prontera",0,0,"Quest Poring",1002,10,"NPCNAME::OnPoringKilled";
         // By using 0,0 it will spawn them in a random place.
         mes "[Summon Man]";
         mes "Now go and kill all the Poring I summoned";
@@ -4569,7 +4570,7 @@ Note, I will use the stuff here in the examples for the unitcontrol.
 Example(s):
 
 //Spawns a poring named poi poi and put's it's GID in .GID.
-	set .GID,mobspawn("Poi Poi",1002,"prontera.gat",160,180);
+	set .GID,mobspawn("Poi Poi",1002,"prontera",160,180);
 //would kill our poring.
 	mobRemove .GID;
 
@@ -4713,7 +4714,7 @@ No parameters may be passed with a doevent call.
 The script of the NPC object invoked in this manner will run as if it's been 
 invoked by the RID that was active in the script that issued a 'doevent'.
 
-    place.gat,100,100,1%TAB%script%TAB%NPC%TAB%53,{
+    place,100,100,1%TAB%script%TAB%NPC%TAB%53,{
         mes "This is what you will see when you click me";
         close;
     Label:
@@ -4745,7 +4746,7 @@ This can be used for making another NPC react to an action that you have done
 with the NPC that has this command in it, i.e. show an emotion, or say 
 something.
 
-    place.gat,100,100,1%TAB%script%TAB%NPC%TAB%53,{
+    place,100,100,1%TAB%script%TAB%NPC%TAB%53,{
         mes "Hey NPC2 copy what I do";
         close2;
         set @emo, rand(1,30);
@@ -4755,7 +4756,7 @@ something.
         end;
     }
 
-    place.gat,102,100,1%TAB%script%TAB%NPC2%TAB%53,{
+    place,102,100,1%TAB%script%TAB%NPC2%TAB%53,{
         mes "Hey NPC copy what I do";
         close2;
         set @emo, rand(1,30);
@@ -5050,7 +5051,7 @@ residing in the specified x1/y1-x2/y2 square on the map given. The flags and
 color parameter given are the same as in 'announce', but only the color
 related ones have effect.
 
-    areaannounce "prt_church.gat",0,0,350,350,"God's in his heaven, all right with the world",0;
+    areaannounce "prt_church",0,0,350,350,"God's in his heaven, all right with the world",0;
 
 ---------------------------------------
 
@@ -5326,7 +5327,7 @@ The mapname and second x and y is the target area of the warp portal.
 Example(s):
 
 //Will create a warp portal on the NPC's map at 150,150 leading to prontera, coords 150,180.
-	warpPortal 150,150,"prontera.gat",150,180;
+	warpPortal 150,150,"prontera",150,180;
 
 ---------------------------------------
 
@@ -5400,7 +5401,7 @@ returns a guild id:
 // This will change the emblem on the flag to that of the guild that owns
 // "guildcastle"
 
-    flagemblem GetCastleData("guildcastle.gat",1); 
+    flagemblem GetCastleData("guildcastle",1); 
 
 ---------------------------------------
 
