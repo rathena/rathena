@@ -1,0 +1,18 @@
+"How to use the mapcache builder"
+DracoRPG
+
+
+This is only useful if you have custom maps, as eAthena is provided with an updated mapcache containing every map
+from kRO Sakray's data.
+
+1. First add the path to the directory / GRF containing your maps to db/grf_files.txt
+/!\ Please note you must also have the official maps as the whole mapcache will be rebuilt from scratch
+
+2. Then add those custom maps at the end of db/map_list.txt, carefully chosing their index
+
+3. Now just run the mapcache builder and it'll build a new one at db/map_cache.dat
+
+
+NOTE:
+You can override those default paths by providing your own ones as command-line arguments to the mapcache builder:
+$> mapcache [grf_files_path [map_list_path [map_cache_path]]]
