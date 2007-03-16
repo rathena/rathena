@@ -15,12 +15,6 @@
 
 #define FIFOSIZE_SERVERLINK	256*1024
 
-// set to 0 to not check IP of player between each server.
-// set to another value if you want to check (1)
-#define CMP_AUTHFIFO_IP 1
-
-#define CMP_AUTHFIFO_LOGIN2 1
-
 //Remove/Comment this line to disable sc_data saving. [Skotlex]
 #define ENABLE_SC_SAVING 
 

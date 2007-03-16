@@ -140,8 +140,6 @@ struct {
 } auth_fifo[AUTH_FIFO_SIZE];
 int auth_fifo_pos = 0;
 
-int check_ip_flag = 1; // It's to check IP of a player between char-server and other servers (part of anti-hacking system)
-
 struct mmo_charstatus char_dat;
 int char_num,char_max;
 int max_connect_user = 0;
@@ -1871,7 +1869,7 @@ int parse_tologin(int fd) {
 				//printf("connect login server error : %d\n", RFIFOB(fd, 2));
 				ShowError("Can not connect to login-server.\n");
 				ShowError("The server communication passwords (default s1/p1) are probably invalid.\n");
-				ShowError("Also, please make sure your login db has the correct coounication username/passwords and the gender of the account is S.\n");
+				ShowError("Also, please make sure your login db has the correct communication username/passwords and the gender of the account is S.\n");
 				ShowError("The communication passwords are set in map_athena.conf and char_athena.conf\n");
 				return 0;
 				//exit(1); //fixed for server shutdown.
@@ -3245,10 +3243,8 @@ int parse_char(int fd) {
 				i < AUTH_FIFO_SIZE && !(
 				auth_fifo[i].account_id == sd->account_id &&
 				auth_fifo[i].login_id1 == sd->login_id1 &&
-#if CMP_AUTHFIFO_LOGIN2 != 0
 				auth_fifo[i].login_id2 == sd->login_id2 && // relate to the versions higher than 18
-#endif
-				(!check_ip_flag || auth_fifo[i].ip == session[fd]->client_addr.sin_addr.s_addr) &&
+				auth_fifo[i].ip == session[fd]->client_addr.sin_addr.s_addr &&
 				auth_fifo[i].delflag == 2)
 				; i++);
 		  
@@ -4028,9 +4024,8 @@ int char_config_read(const char *cfgName) {
 		if(strcmpi(w1,"timestamp_format")==0) {
 			strncpy(timestamp_format, w2, 20);
 		} else if(strcmpi(w1,"console_silent")==0){
-			msg_silent = 0; //To always allow the next line to show up.
-			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
+			ShowInfo("Console Silent Setting: %d\n", msg_silent);
 		} else if(strcmpi(w1,"stdout_with_ansisequence")==0){
 			stdout_with_ansisequence = config_switch(w2);
 		} else if (strcmpi(w1, "userid") == 0) {
@@ -4085,8 +4080,6 @@ int char_config_read(const char *cfgName) {
 			gm_allow_level = atoi(w2);
 			if(gm_allow_level < 0)
 				gm_allow_level = 99;
-		} else if (strcmpi(w1, "check_ip_flag") == 0) {
-			check_ip_flag = config_switch(w2);
 		} else if (strcmpi(w1, "online_check") == 0) {
 			online_check = config_switch(w2);
 		} else if (strcmpi(w1, "autosave_time") == 0) {
@@ -4130,8 +4123,6 @@ int char_config_read(const char *cfgName) {
 			char_name_option = atoi(w2);
 		} else if (strcmpi(w1, "char_name_letters") == 0) {
 			strcpy(char_name_letters, w2);
-		} else if (strcmpi(w1, "check_ip_flag") == 0) {
-			check_ip_flag = config_switch(w2);
 		} else if (strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			char_per_account = atoi(w2);
 		} else if (strcmpi(w1, "char_del_level") == 0) { //disable/enable char deletion by its level condition [Lupus]

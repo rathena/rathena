@@ -49,7 +49,7 @@
 /// if false removes the escape sequences
 int stdout_with_ansisequence = 0;
 
-int msg_silent; //Specifies how silent the console is.
+int msg_silent = 0; //Specifies how silent the console is.
 
 ///////////////////////////////////////////////////////////////////////////////
 /// static/dynamic buffer for the messages

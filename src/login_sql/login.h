@@ -12,7 +12,7 @@
 
 #ifndef SQL_DEBUG
 
-#define mysql_query(_x, _y) mysql_real_query(_x, _y, strlen(_y)) //supports ' in names and runs faster [Kevin]
+#define mysql_query(_x, _y) mysql_query(_x, _y)
 
 #else 
 
@@ -26,11 +26,10 @@
 							// When it is made 3, it corresponds to both.
 
 struct mmo_account {
-	int version;	//Added by sirius for versioncheck
+	int version;
 	char userid[NAME_LENGTH];
 	char passwd[NAME_LENGTH];
 	int passwdenc;
-	
 	
 	long account_id;
 	long login_id1;
@@ -38,7 +37,7 @@ struct mmo_account {
 	long char_id;
 	char lastlogin[24];
 	int sex;
-	int level; // added [zzo]
+	int level;
 };
 
 struct mmo_char_server {
@@ -49,6 +48,5 @@ struct mmo_char_server {
 	int maintenance;
 	int new_;
 };
-
 
 #endif /* _LOGIN_SQL_H_ */

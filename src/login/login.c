@@ -1,18 +1,19 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-// new version of the login-server by [Yor]
-
 #include <sys/types.h>
+
 #ifdef __WIN32
-#define WIN32_LEAN_AND_MEAN
-#include <winsock2.h>
+	#define WIN32_LEAN_AND_MEAN
+	#include <windows.h>
+	#include <winsock2.h>
 #else
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <netdb.h>
+	#include <sys/socket.h>
+	#include <netinet/in.h>
+	#include <arpa/inet.h>
+	#include <netdb.h>
 #endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h> // for stat/lstat/fstat
@@ -32,17 +33,13 @@
 #include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
-#include "login.h"
-
-#ifdef PASSWORDENC
 #include "../common/md5calc.h"
-#endif
+#include "login.h"
 
 int account_id_count = START_ACCOUNT_NUM;
 int server_num;
 int new_account_flag = 0;
-in_addr_t bind_ip= 0;
-char bind_ip_str[128];
+in_addr_t login_ip = INADDR_ANY;
 int login_port = 6900;
 
 // Advanced subnet check [LuzZza]
@@ -105,7 +102,6 @@ char *access_ladmin_allow = NULL;
 int min_level_to_connect = 0; // minimum level of player/GM (0: player, 1-99: gm) to connect on the server
 int add_to_unlimited_account = 0; // Give possibility or not to adjust (ladmin command: timeadd) the time of an unlimited account.
 int start_limited_time = -1; // Starting additional sec from now for the limited time at creation of accounts (-1: unlimited time, 0 or more: additional sec from now)
-int check_ip_flag = 1; // It's to check IP of a player between login-server and char-server (part of anti-hacking system)
 
 int check_client_version = 0; //Client version check ON/OFF .. (sirius)
 int client_version_to_connect = 20; //Client version needed to connect ..(sirius)
@@ -158,19 +154,14 @@ int auth_before_save_file = 0; // Counter. First save when 1st char-server do co
 
 int admin_state = 0;
 char admin_pass[24] = "";
-unsigned int GM_num;
-unsigned int GM_max=256;
+unsigned int GM_num = 0;
+unsigned int GM_max = 0;
 char gm_pass[64] = "";
 int level_new_gm = 60;
 
-struct gm_account *gm_account_db;
+struct gm_account* gm_account_db = NULL;
 
 static struct dbt *online_db;
-
-int dynamic_pass_failure_ban = 1;
-int dynamic_pass_failure_ban_time = 5;
-int dynamic_pass_failure_ban_how_many = 3;
-int dynamic_pass_failure_ban_how_long = 1;
 
 int use_md5_passwds = 0;
 
@@ -195,8 +186,6 @@ int login_log(char *fmt, ...) {
 				fprintf(log_fp, RETCODE);
 			else {
 				va_start(ap, fmt);
-				// Platform/Compiler dependant clock() for time check is removed. [Lance]
-				// clock() is originally used to track processing ticks on program execution.
 				time(&raw_time);
 				strftime(tmpstr, 24, date_format, localtime(&raw_time));
 				sprintf(tmpstr + strlen(tmpstr), ": %s", fmt);
@@ -1139,71 +1128,73 @@ int mmo_auth_new(struct mmo_account* account, char sex, char* email) {
 //---------------------------------------
 // Check/authentification of a connection
 //---------------------------------------
-int mmo_auth(struct mmo_account* account, int fd) {
-	char *dnsbl_serv;
+int mmo_auth(struct mmo_account* account, int fd)
+{
 	unsigned int i;
 	time_t raw_time;
 	char tmpstr[256];
-	int len, newaccount = 0;
+	int len;
+	int newaccount = 0;
 #ifdef PASSWORDENC
 	struct login_session_data *ld;
 #endif
 	int encpasswdok;
 	char md5str[64], md5bin[32];
+	char user_password[256];
+
 	char ip[16];
 	unsigned char *sin_addr = (unsigned char *)&session[fd]->client_addr.sin_addr;
-	char user_password[256];
-	char r_ip[16]; // [Zido]
-	char ip_dnsbl[256]; // [Zido]
-
 	sprintf(ip, "%d.%d.%d.%d", sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3]);
 
-	// Start DNS Blacklist check [Zido]
-	if(use_dnsbl) {
+	// DNS Blacklist check
+	if(use_dnsbl)
+	{
+		char r_ip[16];
+		char ip_dnsbl[256];
+		char *dnsbl_serv;
+		bool matched = false;
+
 		sprintf(r_ip, "%d.%d.%d.%d", sin_addr[3], sin_addr[2], sin_addr[1], sin_addr[0]);
 
-		dnsbl_serv=strtok(dnsbl_servs,",");
-		sprintf(ip_dnsbl,"%s.%s",r_ip,dnsbl_serv);
-// Using directly gethostbyname should be quicker. [Skotlex]
-//		if(resolve_hostbyname(ip_dnsbl, NULL, NULL)) {
-		if(gethostbyname(ip_dnsbl)) {
-			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",ip);
-			return 3;
-		}
-
-		while((dnsbl_serv=strtok(dnsbl_servs,","))) {
-			sprintf(ip_dnsbl,"%s.%s",r_ip,dnsbl_serv);
-// Using directly gethostbyname should be quicker. [Skotlex]
-//			if(resolve_hostbyname(ip_dnsbl,NULL,NULL)!=0) {
-			if(gethostbyname(ip_dnsbl)) {
-				ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n",ip);
-				return 3;
+		for (dnsbl_serv = strtok(dnsbl_servs,","); dnsbl_serv != NULL; dnsbl_serv = strtok(NULL,","))
+		{
+			if (!matched) {
+				sprintf(ip_dnsbl, "%s.%s", r_ip, dnsbl_serv);
+				if(gethostbyname(ip_dnsbl))
+					matched = true;
 			}
 		}
 
+		if (matched) {
+			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n", r_ip);
+			return 3;
+		}
 	}
-	// End DNS Blacklist check [Zido]
 
 
 	len = strlen(account->userid) - 2;
+
 	// Account creation with _M/_F
-	if (account->passwdenc == 0 && account->userid[len] == '_' &&
-		(account->userid[len+1] == 'F' || account->userid[len+1] == 'M' ||
-		account->userid[len+1] == 'f' || account->userid[len+1] == 'm')
-		&& new_account_flag && account_id_count <= END_ACCOUNT_NUM && len >= 4 && strlen(account->passwd) >= 4) {
-						
-		//only continue if amount in this time limit is allowed (account registration flood protection)[Kevin]
-		if(DIFF_TICK(gettick(), new_reg_tick) < 0 && num_regs >= allowed_regs) {
-			ShowNotice("Account registration denied (registration limit exceeded) to %s!\n", ip);
-			login_log("Notice: Account registration denied (registration limit exceeded) to %s!", ip);
-			return 3;
+	if (new_account_flag) 
+	{
+		if (account->passwdenc == 0 && account->userid[len] == '_' &&
+		   (account->userid[len+1] == 'F' || account->userid[len+1] == 'M' ||
+			account->userid[len+1] == 'f' || account->userid[len+1] == 'm') &&
+			account_id_count <= END_ACCOUNT_NUM && len >= 4 && strlen(account->passwd) >= 4)
+		{
+			//only continue if amount in this time limit is allowed (account registration flood protection)[Kevin]
+			if(DIFF_TICK(gettick(), new_reg_tick) < 0 && num_regs >= allowed_regs) {
+				ShowNotice("Account registration denied (registration limit exceeded) to %s!\n", ip);
+				login_log("Notice: Account registration denied (registration limit exceeded) to %s!", ip);
+				return 3;
+			}
+			newaccount = 1;
+			account->userid[len] = '\0';
 		}
-		newaccount = 1;
-		account->userid[len] = '\0';
 	}
 	
 	//EXE Version check [Sirius]
-	if (check_client_version == 1 && account->version != 0 &&
+	if (check_client_version && account->version != 0 &&
 		account->version != client_version_to_connect)
 		return 5;
 	
@@ -1457,16 +1448,14 @@ int parse_fromchar(int fd) {
 			if (RFIFOREST(fd) < 19)
 				return 0;
 		  {
-			int acc;
-			acc = RFIFOL(fd,2); // speed up
+			int account_id;
+			account_id = RFIFOL(fd,2); // speed up
 			for(i = 0; i < AUTH_FIFO_SIZE; i++) {
-				if (auth_fifo[i].account_id == acc &&
+				if (auth_fifo[i].account_id == account_id &&
 				    auth_fifo[i].login_id1 == RFIFOL(fd,6) &&
-#if CMP_AUTHFIFO_LOGIN2 != 0
 				    auth_fifo[i].login_id2 == RFIFOL(fd,10) && // relate to the versions higher than 18
-#endif
 				    auth_fifo[i].sex == RFIFOB(fd,14) &&
-				    (!check_ip_flag || auth_fifo[i].ip == RFIFOL(fd,15)) &&
+				    auth_fifo[i].ip == RFIFOL(fd,15) &&
 				    !auth_fifo[i].delflag) {
 					unsigned int k;
 					time_t connect_until_time = 0;
@@ -1474,17 +1463,17 @@ int parse_fromchar(int fd) {
 					WFIFOHEAD(fd,51);
 					auth_fifo[i].delflag = 1;
 					login_log("Char-server '%s': authentification of the account %d accepted (ip: %s)." RETCODE,
-					          server[id].name, acc, ip);
+					          server[id].name, account_id, ip);
 //					printf("%d\n", i);
 					for(k = 0; k < auth_num; k++) {
-						if (auth_dat[k].account_id == acc) {
+						if (auth_dat[k].account_id == account_id) {
 							strcpy(email, auth_dat[k].email);
 							connect_until_time = auth_dat[k].connect_until_time;
 							break;
 						}
 					}
 					WFIFOW(fd,0) = 0x2713;
-					WFIFOL(fd,2) = acc;
+					WFIFOL(fd,2) = account_id;
 					WFIFOB(fd,6) = 0;
 					memcpy(WFIFOP(fd, 7), email, 40);
 					WFIFOL(fd,47) = (unsigned long)connect_until_time;
@@ -1495,10 +1484,10 @@ int parse_fromchar(int fd) {
 			// authentification not found
 			if (i == AUTH_FIFO_SIZE) {
 				login_log("Char-server '%s': authentification of the account %d REFUSED (ip: %s)." RETCODE,
-				          server[id].name, acc, ip);
+				          server[id].name, account_id, ip);
                                 WFIFOHEAD(fd, 51);
 				WFIFOW(fd,0) = 0x2713;
-				WFIFOL(fd,2) = acc;
+				WFIFOL(fd,2) = account_id;
 				WFIFOB(fd,6) = 1;
 				// It is unnecessary to send email
 				// It is unnecessary to send validity date of the account
@@ -3026,28 +3015,17 @@ int parse_admin(int fd) {
 
 //--------------------------------------------
 // Test to know if an IP come from LAN or WAN.
-// Rewrote: Adnvanced subnet check [LuzZza]
 //--------------------------------------------
 int lan_subnetcheck(long *p) {
 
 	int i;
-	unsigned char *sbn, *msk/*, *src = (unsigned char *)p*/;
 	
 	for(i=0; i<subnet_count; i++) {
-	
 		if(subnet[i].subnet == (*p & subnet[i].mask)) {
-			
-			sbn = (char *)&subnet[i].subnet;
-			msk = (char *)&subnet[i].mask;
-/*			
-			ShowInfo("Subnet check [%u.%u.%u.%u]: Matches "CL_CYAN"%u.%u.%u.%u/%u.%u.%u.%u"CL_RESET"\n",
-				src[0], src[1], src[2], src[3], sbn[0], sbn[1], sbn[2], sbn[3], msk[0], msk[1], msk[2], msk[3]);
-*/
 			return subnet[i].char_ip;
 		}
 	}
 	
-//	ShowInfo("Subnet check [%u.%u.%u.%u]: "CL_CYAN"WAN"CL_RESET"\n", src[0], src[1], src[2], src[3]);
 	return 0;
 }
 
@@ -3099,7 +3077,7 @@ int parse_login(int fd) {
 			RFIFOSKIP(fd,18);
 			break;
 
-		case 0x277: // New login packet
+		case 0x277:		// New login packet
 		case 0x64:		// request client login
 		case 0x01dd:	// request client login with encrypt
 		{
@@ -3505,14 +3483,16 @@ static int online_data_cleanup(int tid, unsigned int tick, int id, int data)
 	online_db->foreach(online_db, online_data_cleanup_sub);
 	return 0;
 } 
+
 //-------------------------------------------------
 // Return numerical value of a switch configuration
-// on/off, english, français, deutsch, español
+// 1/0, on/off, english, français, deutsch
 //-------------------------------------------------
-int config_switch(const char *str) {
-	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0)
+int config_switch(const char *str)
+{
+	if (strcmpi(str, "1") == 0 || strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0)
 		return 1;
-	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0)
+	if (strcmpi(str, "0") == 0 || strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0)
 		return 0;
 
 	return atoi(str);
@@ -3520,10 +3500,9 @@ int config_switch(const char *str) {
 
 //----------------------------------
 // Reading Lan Support configuration
-// Rewrote: Anvanced subnet check [LuzZza]
 //----------------------------------
-int login_lan_config_read(const char *lancfgName) {
-
+int login_lan_config_read(const char *lancfgName)
+{
 	FILE *fp;
 	int line_num = 0;
 	char line[1024], w1[64], w2[64], w3[64], w4[64];
@@ -3575,25 +3554,29 @@ int login_lan_config_read(const char *lancfgName) {
 }
 
 //-----------------------------------
-// Reading general configuration file
+// Reading main configuration file
 //-----------------------------------
-int login_config_read(const char *cfgName) {
+int login_config_read(const char* cfgName)
+{
 	char line[1024], w1[1024], w2[1024];
-	FILE *fp;
-
-	if ((fp = fopen(cfgName, "r")) == NULL) {
+	FILE* fp = fopen(cfgName, "r");
+	if (fp == NULL) {
 		ShowError("Configuration file (%s) not found.\n", cfgName);
 		return 1;
 	}
-
 	ShowInfo("Reading configuration file %s...\n", cfgName);
-	while(fgets(line, sizeof(line)-1, fp)) {
+	while (fgets(line, sizeof(line)-1, fp))
+	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 
 		line[sizeof(line)-1] = '\0';
 		memset(w2, 0, sizeof(w2));
-		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) == 2) {
+
+		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) < 2)
+			continue;
+
+		//TODO: unindent
 			remove_control_chars((unsigned char *)w1);
 			remove_control_chars((unsigned char *)w2);
 
@@ -3602,9 +3585,8 @@ int login_config_read(const char *cfgName) {
 			} else if(strcmpi(w1,"stdout_with_ansisequence")==0){
 				stdout_with_ansisequence = config_switch(w2);
 			} else if(strcmpi(w1,"console_silent")==0){
-				msg_silent = 0; //To always allow the next line to show up.
-				ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 				msg_silent = atoi(w2);
+				ShowInfo("Console Silent Setting: %d\n", msg_silent);
 			} else if (strcmpi(w1, "admin_state") == 0) {
 				admin_state = config_switch(w2);
 			} else if (strcmpi(w1, "admin_pass") == 0) {
@@ -3644,9 +3626,10 @@ int login_config_read(const char *cfgName) {
 			} else if (strcmpi(w1, "new_account") == 0) {
 				new_account_flag = config_switch(w2);
 			} else if (strcmpi(w1, "bind_ip") == 0) {
-				bind_ip = resolve_hostbyname(w2, NULL, bind_ip_str);
-				if (bind_ip) 
-					ShowStatus("Login server binding IP address : %s -> %s\n", w2, bind_ip_str);
+				char login_ip_str[128];
+				login_ip = resolve_hostbyname(w2, NULL, login_ip_str);
+				if (login_ip) 
+					ShowStatus("Login server binding IP address : %s -> %s\n", w2, login_ip_str);
 			} else if (strcmpi(w1, "login_port") == 0) {
 				login_port = atoi(w2);
 			} else if (strcmpi(w1, "account_filename") == 0) {
@@ -3666,7 +3649,7 @@ int login_config_read(const char *cfgName) {
 				strncpy(login_log_filename, w2, sizeof(login_log_filename));
 				login_log_filename[sizeof(login_log_filename)-1] = '\0';
 			} else if (strcmpi(w1, "log_login") == 0) {
-				log_login = atoi(w2);
+				log_login = config_switch(w2);
 			} else if (strcmpi(w1, "login_log_unknown_packets_filename") == 0) {
 				memset(login_log_unknown_packets_filename, 0, sizeof(login_log_unknown_packets_filename));
 				strncpy(login_log_unknown_packets_filename, w2, sizeof(login_log_unknown_packets_filename));
@@ -3674,35 +3657,19 @@ int login_config_read(const char *cfgName) {
 			} else if (strcmpi(w1, "save_unknown_packets") == 0) {
 				save_unknown_packets = config_switch(w2);
 			} else if (strcmpi(w1, "display_parse_login") == 0) {
-				display_parse_login = config_switch(w2); // 0: no, 1: yes
+				display_parse_login = config_switch(w2);
 			} else if (strcmpi(w1, "display_parse_admin") == 0) {
-				display_parse_admin = config_switch(w2); // 0: no, 1: yes
+				display_parse_admin = config_switch(w2);
 			} else if (strcmpi(w1, "display_parse_fromchar") == 0) {
 				display_parse_fromchar = config_switch(w2); // 0: no, 1: yes (without packet 0x2714), 2: all packets
-			} else if (strcmpi(w1, "date_format") == 0) { // note: never have more than 19 char for the date!
-				memset(date_format, 0, sizeof(date_format));
-				switch (atoi(w2)) {
-				case 0:
-					strcpy(date_format, "%d-%m-%Y %H:%M:%S"); // 31-12-2004 23:59:59
-					break;
-				case 1:
-					strcpy(date_format, "%m-%d-%Y %H:%M:%S"); // 12-31-2004 23:59:59
-					break;
-				case 2:
-					strcpy(date_format, "%Y-%d-%m %H:%M:%S"); // 2004-31-12 23:59:59
-					break;
-				case 3:
-					strcpy(date_format, "%Y-%m-%d %H:%M:%S"); // 2004-12-31 23:59:59
-					break;
-				}
+			} else if (!strcmpi(w1, "date_format")) {
+				strncpy(date_format, w2, sizeof(date_format));
 			} else if (strcmpi(w1, "min_level_to_connect") == 0) {
 				min_level_to_connect = atoi(w2);
 			} else if (strcmpi(w1, "add_to_unlimited_account") == 0) {
 				add_to_unlimited_account = config_switch(w2);
 			} else if (strcmpi(w1, "start_limited_time") == 0) {
 				start_limited_time = atoi(w2);
-			} else if (strcmpi(w1, "check_ip_flag") == 0) {
-				check_ip_flag = config_switch(w2);
 			} else if (strcmpi(w1, "order") == 0) {
 				access_order = atoi(w2);
 				if (strcmpi(w2, "deny,allow") == 0 ||
@@ -3759,53 +3726,30 @@ int login_config_read(const char *cfgName) {
 						access_deny[access_denynum * ACO_STRSIZE - 1] = '\0';
 					}
 				}
-			// dynamic password error ban
-			} else if (strcmpi(w1, "dynamic_pass_failure_ban") == 0) {
-				dynamic_pass_failure_ban = config_switch(w2);
-			} else if (strcmpi(w1, "dynamic_pass_failure_ban_time") == 0) {
-				dynamic_pass_failure_ban_time = atoi(w2);
-			} else if (strcmpi(w1, "dynamic_pass_failure_ban_how_many") == 0) {
-				dynamic_pass_failure_ban_how_many = atoi(w2);
-			} else if (strcmpi(w1, "dynamic_pass_failure_ban_how_long") == 0) {
-				dynamic_pass_failure_ban_how_long = atoi(w2);
-			} else if(strcmpi(w1, "check_client_version") == 0){		//Added by Sirius for client version check
-				if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 ){
-					check_client_version = 1;
-				}
-				if(strcmpi(w2,"off") == 0 || strcmpi(w2,"no") == 0 ){
-					check_client_version = 0;
-				}
-			}else if(strcmpi(w1, "client_version_to_connect") == 0){	//Added by Sirius for client version check
-				client_version_to_connect = atoi(w2);			//Added by Sirius for client version check
+			} else if(strcmpi(w1, "check_client_version") == 0) {
+				check_client_version = config_switch(w2);
+			} else if(strcmpi(w1, "client_version_to_connect") == 0) {
+				client_version_to_connect = atoi(w2);
 			} else if (strcmpi(w1, "console") == 0) {
-				if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 )
-					console = 1;
-			} else if (strcmpi(w1, "allowed_regs") == 0) { //account flood protection system [Kevin]
+				console = config_switch(w2);
+			} else if (strcmpi(w1, "allowed_regs") == 0) { //account flood protection system
 				allowed_regs = atoi(w2);
 			} else if (strcmpi(w1, "time_allowed") == 0) {
 				time_allowed = atoi(w2);
 			} else if (strcmpi(w1, "online_check") == 0) {
-				if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 )
-					online_check = 1;
-				else if(strcmpi(w2,"off") == 0 || strcmpi(w2,"no") == 0 )
-					online_check = 0;
-				else
-					online_check = atoi(w2);
-			} else if (strcmpi(w1, "import") == 0) {
-				login_config_read(w2);
-			} else if(strcmpi(w1,"use_dnsbl")==0) { // [Zido]
-				use_dnsbl=atoi(w2);
-			} else if(strcmpi(w1,"dnsbl_servers")==0) { // [Zido]
+				online_check = config_switch(w2);
+			} else if(strcmpi(w1,"use_dnsbl")==0) {
+				use_dnsbl=config_switch(w2);
+			} else if(strcmpi(w1,"dnsbl_servers")==0) {
 				strcpy(dnsbl_servs,w2);
 			} else if(strcmpi(w1,"ip_sync_interval")==0) {
 				ip_sync_interval = 1000*60*atoi(w2); //w2 comes in minutes.
+			} else if (strcmpi(w1, "import") == 0) {
+				login_config_read(w2);
 			}
-		}
 	}
 	fclose(fp);
-
 	ShowInfo("Finished reading %s.\n", cfgName);
-
 	return 0;
 }
 
@@ -3898,12 +3842,6 @@ void display_conf_warnings(void) {
 		start_limited_time = -1;
 	}
 
-	if (check_ip_flag != 0 && check_ip_flag != 1) { // 0: no, 1: yes
-		ShowWarning("Invalid value for check_ip_flag parameter\n");
-		ShowWarning("  -> setting to 1 (check players ip between login-server & char-server).\n");
-		check_ip_flag = 1;
-	}
-
 	if (access_order == ACO_DENY_ALLOW) {
 		if (access_denynum == 1 && access_deny[0] == '\0') {
 			ShowWarning("The IP security order is 'deny,allow' (allow if not deny) and you refuse ALL IP.\n");
@@ -3921,24 +3859,6 @@ void display_conf_warnings(void) {
 			ShowWarning("The IP security order is mutual-failture\n");
 			ShowWarning("  (allow if in the allow list and not in the deny list).\n");
 			ShowWarning("  But, you refuse ALL IP!\n");
-		}
-	}
-
-	if (dynamic_pass_failure_ban != 0) {
-		if (dynamic_pass_failure_ban_time < 1) {
-			ShowWarning("Invalid value for dynamic_pass_failure_ban_time (%d) parameter\n", dynamic_pass_failure_ban_time);
-			ShowWarning("  -> setting to 5 (5 minutes to look number of invalid passwords.\n");
-			dynamic_pass_failure_ban_time = 5;
-		}
-		if (dynamic_pass_failure_ban_how_many < 1) {
-			ShowWarning("Invalid value for dynamic_pass_failure_ban_how_many (%d) parameter\n", dynamic_pass_failure_ban_how_many);
-			ShowWarning("  -> setting to 3 (3 invalid passwords before to temporarily ban.\n");
-			dynamic_pass_failure_ban_how_many = 3;
-		}
-		if (dynamic_pass_failure_ban_how_long < 1) {
-			ShowWarning("Invalid value for dynamic_pass_failure_ban_how_long (%d) parameter\n", dynamic_pass_failure_ban_how_long);
-			ShowWarning("  -> setting to 1 (1 minute of temporarily ban.\n");
-			dynamic_pass_failure_ban_how_long = 1;
 		}
 	}
 
@@ -4041,11 +3961,6 @@ void save_config_in_log(void) {
 	else
 		login_log("- to create new accounts with a limited time: time of creation + %d second(s)." RETCODE, start_limited_time);
 
-	if (check_ip_flag)
-		login_log("- with control of players IP between login-server and char-server." RETCODE);
-	else
-		login_log("- to not check players IP between login-server and char-server." RETCODE);
-
 	if (access_order == ACO_DENY_ALLOW) {
 		if (access_denynum == 0) {
 			login_log("- with the IP security order: 'deny,allow' (allow if not deny). You refuse no IP." RETCODE);
@@ -4085,14 +4000,6 @@ void save_config_in_log(void) {
 				login_log("    %s" RETCODE, (char *)(access_deny + i * ACO_STRSIZE));
 		}
 
-		// dynamic password error ban
-		if (dynamic_pass_failure_ban == 0)
-			login_log("- with NO dynamic password error ban." RETCODE);
-		else {
-			login_log("- with a dynamic password error ban:" RETCODE);
-			login_log("  After %d invalid password in %d minutes" RETCODE, dynamic_pass_failure_ban_how_many, dynamic_pass_failure_ban_time);
-			login_log("  IP is banned for %d minutes" RETCODE, dynamic_pass_failure_ban_how_long);
-		}
 	}
 }
 
@@ -4150,9 +4057,6 @@ int do_init(int argc, char **argv) {
 	for(i = 0; i < MAX_SERVERS; i++)
 		server_fd[i] = -1;
 
-	gm_account_db = NULL;
-	GM_num = 0;
-	GM_max = 0;
 	mmo_auth_init();
 	read_gm_account();
 	set_defaultparse(parse_login);
@@ -4160,7 +4064,7 @@ int do_init(int argc, char **argv) {
 	online_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));	// reinitialise
 	add_timer_func_list(waiting_disconnect_timer, "waiting_disconnect_timer");
 
-	login_fd = make_listen_bind(bind_ip?bind_ip:INADDR_ANY,login_port);
+	login_fd = make_listen_bind(login_ip, login_port);
 
 	add_timer_func_list(check_auth_sync, "check_auth_sync");
 	add_timer_interval(gettick() + 60000, check_auth_sync, 0, 0, 60000); // every 60 sec we check if we must save accounts file (only if necessary to save)

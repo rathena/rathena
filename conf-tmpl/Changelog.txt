@@ -1,13 +1,17 @@
 Date	Added
 
 2007/03/17
+	* Cleaned up the login & char config [ultramage]
+	- removed check_ip_flag
+	- changed date_format to input the format string directly
+	- changed many settings to allow yes/no instead of just 1/0
 	* Removed .gat from configs [Lupus]
 2007/03/14
 	* Changed the default of debuff_on_logout to 1 since food items shouldn't
 	  dispell on logout. [Skotlex]
 2007/03/08
 	* Adjustments for the new mapcache [DracoRPG]
-	- Removed "" from map names in maps_athena.conf
+	- Removed ".gat" from map names in maps_athena.conf
 	- Removed read_map_from_cache option as there's no more choice to do
 	- Removed afm_dir option as there's no more need for AFM/AF2 support
 2007/03/06

@@ -111,7 +111,6 @@ struct {
 } auth_fifo[AUTH_FIFO_SIZE];
 int auth_fifo_pos = 0;
 
-int check_ip_flag = 1; // It's to check IP of a player between char-server and other servers (part of anti-hacking system)
 static int online_check = 1; //If one, it won't let players connect when their account is already registered online and will send the relevant map server a kick user request. [Skotlex]
 
 int char_id_count = START_CHAR_NUM;
@@ -3433,10 +3432,8 @@ int parse_char(int fd) {
 			for(i = 0; i < AUTH_FIFO_SIZE && !(
 				auth_fifo[i].account_id == sd->account_id &&
 				auth_fifo[i].login_id1 == sd->login_id1 &&
-#if CMP_AUTHFIFO_LOGIN2 != 0
 				auth_fifo[i].login_id2 == sd->login_id2 && // relate to the versions higher than 18
-#endif
-				(!check_ip_flag || auth_fifo[i].ip == session[fd]->client_addr.sin_addr.s_addr) &&
+				auth_fifo[i].ip == session[fd]->client_addr.sin_addr.s_addr &&
 				auth_fifo[i].delflag == 2)
 				; i++);
 
@@ -4087,9 +4084,8 @@ int char_config_read(const char *cfgName) {
 		if(strcmpi(w1,"timestamp_format") == 0) {
 			strncpy(timestamp_format, w2, 20);
 		} else if(strcmpi(w1,"console_silent")==0){
-			msg_silent = 0; //To always allow the next line to show up.
-			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
+			ShowInfo("Console Silent Setting: %d\n", msg_silent);
 #ifndef TXT_SQL_CONVERT
 		} else if(strcmpi(w1,"stdout_with_ansisequence")==0){
 			stdout_with_ansisequence = config_switch(w2);
@@ -4159,8 +4155,6 @@ int char_config_read(const char *cfgName) {
 			gm_allow_level = atoi(w2);
 			if(gm_allow_level < 0)
 				gm_allow_level = 99;
-		} else if (strcmpi(w1, "check_ip_flag") == 0) {
-			check_ip_flag = config_switch(w2);
 		} else if (strcmpi(w1, "online_check") == 0) {
 			online_check = config_switch(w2);
 		} else if (strcmpi(w1, "autosave_time") == 0) {
