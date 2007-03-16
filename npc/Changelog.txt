@@ -27,6 +27,7 @@ KarLaeda
 Date		Added
 ======
 2007/03/17
+	* Fixed a missing curly brace and removed some more .gat-s [ultramage]
 	* Removed all .gat from the scripts [Lupus]
 2007/03/14
 	* Reduced the chance to socket enchant a C rank item to 40% [Playtester]

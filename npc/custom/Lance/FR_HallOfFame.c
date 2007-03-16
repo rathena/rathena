@@ -33,7 +33,7 @@
 //= 2.3 - Utilizing eAthena's new scripting engine  [Lance]
 //===========================================================
 
-prontera.gat,0,0,0	script	OnPCLoginEvent	-1,{
+prontera,0,0,0	script	OnPCLoginEvent	-1,{
 	callfunc "HallOfFameInit";
 	end;
 
@@ -90,7 +90,7 @@ OnClock0000:
 	end;
 }
 
-prontera.gat,0,0,0	script	PCLogoutEvent	-1,{
+prontera,0,0,0	script	PCLogoutEvent	-1,{
 	callfunc "HallOfFameInit";
 	end;
 }
@@ -269,7 +269,7 @@ function	script	printHallOfFame	{
 	return;
 }
 
-prontera.gat,180,200,4	script	Jury	109,{
+prontera,180,200,4	script	Jury	109,{
 	mes "[Jury]";
 	mes "Good day. Would you like to view the Hall of Fame?";
 	next;

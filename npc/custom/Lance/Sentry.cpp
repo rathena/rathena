@@ -120,7 +120,7 @@
 
 OnInit:
 	// Customization ---------------------------------------------------------------------
-	setarray .mob_map$, "prt_fild08.gat", "prt_fild05.gat", "prt_fild06.gat", "prt_gld.gat";
+	setarray .mob_map$, "prt_fild08", "prt_fild05", "prt_fild06", "prt_gld";
 	setarray .mob_x,176,369,29,165;
 	setarray .mob_y,372,201,187,37;
 	set .karma, 5;

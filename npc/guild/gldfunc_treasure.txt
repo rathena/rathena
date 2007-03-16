@@ -61,7 +61,7 @@ function	script	F_GldTreas	{
 	set getarg(3), getarg(2);	//sets the counter variable = to the box number amount
 
 L_SPAWN:
-	set getarg(4), getarg(5)+(getarg(3)+1) & 1);	//sets the box id variable = to the box id
+	set getarg(4), getarg(5)+((getarg(3)+1) & 1);	//sets the box id variable = to the box id
 	areamonster getarg(0),getarg(6),getarg(7),getarg(8),getarg(9),"Treasure Chest",getarg(4),1,"Treasure_"+getarg(1)+"::OnDied";
 	set getarg(3), getarg(3) - 1;
 	if(getarg(3) > 0) goto L_SPAWN;

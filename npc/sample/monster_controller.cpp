@@ -1,6 +1,6 @@
 // Variables Logging:
 // .mc_moblist[] - ID list of mobs
-prontera.gat,180,200,4	script	Monster Controller	123,{
+prontera,180,200,4	script	Monster Controller	123,{
 	function display_info {
 		getmobdata getarg(0), .@mob_data;
 		set .@array_size, getarraysize(.@mob_data);
@@ -31,7 +31,7 @@ prontera.gat,180,200,4	script	Monster Controller	123,{
 
 	function summon_mob {
 		set .@mob_size, getarraysize(.mc_moblist);
-		set .mc_moblist[.@mob_size], spawnmob("Slave - " + .@mob_size, getarg(0), "prontera.gat", 180, 200);
+		set .mc_moblist[.@mob_size], spawnmob("Slave - " + .@mob_size, getarg(0), "prontera", 180, 200);
 		mobattach .mc_moblist[.@mob_size];
 		setmobdata .mc_moblist[.@mob_size], 25, 
 			AI_ACTION_TYPE_ATTACK|
@@ -54,7 +54,7 @@ prontera.gat,180,200,4	script	Monster Controller	123,{
 	}
 
 	if(getarraysize(.ai_action) == 4){
-		mapannounce "prontera.gat", "[Mob Control] AI Action Received from " + .ai_action[AI_ACTION_SRC] + "!",16;
+		mapannounce "prontera", "[Mob Control] AI Action Received from " + .ai_action[AI_ACTION_SRC] + "!",16;
 		switch(.ai_action[AI_ACTION_TAR_TYPE]){
 			case AI_ACTION_TAR_TYPE_PC:
 				set .@action_from$, "Player";
@@ -106,7 +106,7 @@ prontera.gat,180,200,4	script	Monster Controller	123,{
 				break;
 		}
 
-		mapannounce "prontera.gat", "Details - " + .@action_type$ + " [" + .@action_from$ + "] " + .@action_name$ + "!", 16;
+		mapannounce "prontera", "Details - " + .@action_type$ + " [" + .@action_from$ + "] " + .@action_name$ + "!", 16;
 		deletearray .ai_action, 4;
 		end;
 	}

@@ -30,7 +30,7 @@
 //===== Comments ============================================
 //= 1.0 - Initial release                             [Lance]
 //===========================================================
-prontera.gat,143,171,3	script	Messenger	738,1,1,{
+prontera,143,171,3	script	Messenger	738,1,1,{
 	mes "[Messenger Deviruchi]";
 	mes "Hiya! I'm the fastest messenger in Rune Midgard!";
 	next;
