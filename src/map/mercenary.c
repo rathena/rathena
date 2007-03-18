@@ -36,7 +36,6 @@
 #include "unit.h"
 
 #include "mercenary.h"
-#include "charsave.h"
 
 //Better equiprobability than rand()% [orn]
 #define rand(a, b) a+(int) ((float)(b-a+1)*rand()/(RAND_MAX+1.0))

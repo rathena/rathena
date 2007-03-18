@@ -46,7 +46,7 @@ struct Login_Config {
 	char date_format[32];							// date format used in messages
 	bool console;									// console input system enabled?
 	unsigned int ip_sync_interval;					// interval (in minutes) to execute a DNS/IP update (for dynamic IPs)
-	unsigned short min_level_to_connect;			// minimum level of player/GM (0: player, 1-99: gm) to connect
+	int min_level_to_connect;						// minimum level of player/GM (0: player, 1-99: gm) to connect
 	bool new_account_flag;							// autoregistration via _M/_F ?
 	bool case_sensitive;							// are logins case sensitive ?
 	bool use_md5_passwds;							// work with password hashes instead of plaintext passwords?
@@ -1450,7 +1450,6 @@ int parse_login(int fd)
 #endif
 			result=mmo_auth(&account, fd);
 
-
 			jstrescapecpy(t_uid,account.userid);
 			if(result==-1){
 				if (login_config.min_level_to_connect > account.level) {
@@ -1515,11 +1514,11 @@ int parse_login(int fd)
 					}
 				}
 			} else {
-				const char* error = "";
 				WFIFOHEAD(fd,23);
 				if (login_config.log_login)
 				{
-					switch((result + 1)) {
+					const char* error;
+					switch ((result + 1)) {
 					case  -2: error = "Account banned."; break; //-3 = Account Banned
 					case  -1: error = "dynamic ban (ip and account)."; break; //-2 = Dynamic Ban
 					case   1: error = "Unregistered ID."; break; // 0 = Unregistered ID
@@ -1554,7 +1553,7 @@ int parse_login(int fd)
 						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 					}
-				} //End login log of error.
+				}
 
 				if ((result == 1) && login_config.dynamic_pass_failure_ban && login_config.log_login) {	// failed password
 					sprintf(tmpsql,"SELECT count(*) FROM `%s` WHERE `ip` = '%u' AND `rcode` = '1' AND `time` > NOW() - INTERVAL %d MINUTE",
@@ -1599,16 +1598,11 @@ int parse_login(int fd)
 				WFIFOW(fd,0)=0x6a;
 				WFIFOB(fd,2)=result;
 				if (result == 6) { // 6 = Your are Prohibited to log in until %s
-					if (sql_row && atol(sql_row[0]) != 0) { // if account is banned, we send ban timestamp
-						char tmpstr[20];
-						time_t ban_until_time;
-						ban_until_time = atol(sql_row[0]);
-						strftime(tmpstr, 20, login_config.date_format, localtime(&ban_until_time));
-						tmpstr[19] = '\0';
-						memcpy(WFIFOP(fd,3), tmpstr, 20);
-					} else { // we send error message
-						memcpy(WFIFOP(fd,3), error, 20);
-					}
+					char tmpstr[20];
+					time_t ban_until_time = (sql_row) ? atol(sql_row[0]) : 0;
+					strftime(tmpstr, 20, login_config.date_format, localtime(&ban_until_time));
+					tmpstr[19] = '\0';
+					strncpy(WFIFOP(fd,3), tmpstr, 20); // ban timestamp goes here
 				}
 				WFIFOSET(fd,23);
 			}
@@ -1635,14 +1629,14 @@ int parse_login(int fd)
 			if(RFIFOREST(fd)<86)
 				return 0;
 			{
-				unsigned char* server_name;
+				char* server_name;
 				WFIFOHEAD(fd, 3);
 				memcpy(account.userid,RFIFOP(fd, 2),NAME_LENGTH);
 				account.userid[23] = '\0';
 				memcpy(account.passwd,RFIFOP(fd, 26),NAME_LENGTH);
 				account.passwd[23] = '\0';
 				account.passwdenc = 0;
-				server_name = RFIFOP(fd,60);
+				server_name = (char*)RFIFOP(fd,60);
 				server_name[20] = '\0';
 				ShowInfo("server connection request %s @ %d.%d.%d.%d:%d (%d.%d.%d.%d)\n",
 					server_name, RFIFOB(fd, 54), RFIFOB(fd, 55), RFIFOB(fd, 56), RFIFOB(fd, 57), RFIFOW(fd, 58),
@@ -1903,7 +1897,7 @@ int login_config_read(const char* cfgName)
 			if (login_config.login_ip)
 				ShowStatus("Login server binding IP address : %s -> %s\n", w2, login_ip_str);
 		} else if(!strcmpi(w1,"login_port")) {
-			login_config.login_port = atoi(w2);
+			login_config.login_port = (unsigned short)atoi(w2);
 			ShowStatus("set login_port : %s\n",w2);
 		}
 		else if (!strcmpi(w1,"ipban"))

@@ -399,14 +399,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\map\charsave.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\map\charsave.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\map\chat.c"
 				>
 			</File>

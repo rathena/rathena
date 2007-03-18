@@ -1,5 +1,7 @@
 Date	Added
 
+2007/03/19
+	* Removed the 'charsave_method' setting from inter_athena.conf
 2007/03/17
 	* Cleaned up the login & char config [ultramage]
 	- removed check_ip_flag

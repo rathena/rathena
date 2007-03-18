@@ -1431,9 +1431,6 @@ void map_spawnmobs(int); // [Wizputer]
 void map_removemobs(int); // [Wizputer]
 void do_reconnect_map(void); //Invoked on map-char reconnection [Skotlex]
 
-//Added for own save method
-int charsql_db_init(int method);
-
 extern char *INTER_CONF_NAME;
 extern char *LOG_CONF_NAME;
 extern char *MAP_CONF_NAME;
@@ -1444,8 +1441,6 @@ extern char *SCRIPT_CONF_NAME;
 extern char *MSG_CONF_NAME;
 extern char *GRF_PATH_FILENAME;
 
-
-extern int charsave_method; //needed ..
 extern char *map_server_dns;
 
 #ifndef TXT_ONLY
@@ -1463,10 +1458,6 @@ extern int db_use_sqldbs;
 extern MYSQL mmysql_handle;
 extern MYSQL_RES*	sql_res ;
 extern MYSQL_ROW	sql_row ;
-
-extern MYSQL charsql_handle;
-extern MYSQL_RES*	charsql_res;
-extern MYSQL_ROW	charsql_row;
 
 extern MYSQL logmysql_handle;
 extern MYSQL_RES*	logsql_res ;

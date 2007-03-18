@@ -23,9 +23,7 @@
 #include "pc.h"
 #include "status.h"
 #include "mercenary.h"
-#ifndef TXT_ONLY
-#include "charsave.h"
-#endif
+
 //Updated table (only doc^^) [Sirius]
 //Used Packets: U->2af8
 //Free Packets: F->2af8
@@ -210,16 +208,7 @@ int chrif_save(struct map_session_data *sd, int flag)
 		intif_saveregistry(sd, 2); //Save account regs
 	if (sd->state.reg_dirty&1)
 		intif_saveregistry(sd, 1); //Save account2 regs
-#ifndef TXT_ONLY
-	if(charsave_method){ //New 'Local' save
-		charsave_savechar(sd->status.char_id, &sd->status);
-		if (flag) //Character final saved.
-			sd->state.finalsave = 1;
-		if (flag == 1)
-			chrif_char_offline(sd); //Tell char server that character went offline.
-		return 0;	
-	}
-#endif
+
 	WFIFOHEAD(char_fd, sizeof(sd->status) + 13);
 	WFIFOW(char_fd,0) = 0x2b01;
 	WFIFOW(char_fd,2) = sizeof(sd->status) + 13;
@@ -458,10 +447,6 @@ int chrif_sendmapack(int fd)
 int chrif_scdata_request(int account_id, int char_id)
 {
 #ifdef ENABLE_SC_SAVING
-#ifndef TXT_ONLY
-	if (charsave_method)
-		return charsave_load_scdata(account_id, char_id);
-#endif
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd, 10);
@@ -1231,13 +1216,6 @@ int chrif_save_scdata(struct map_session_data *sd)
 
 	if (sd->state.finalsave) //Character was already saved?
 		return -1;
-#ifndef TXT_ONLY
-	if(charsave_method) //New 'Local' save
-	{
-		charsave_save_scdata(sd->status.account_id, sd->status.char_id, &sd->sc, MAX_STATUSCHANGE);
-		return 0;
-	}
-#endif
 	
 	chrif_check(-1);
 	tick = gettick();

@@ -369,7 +369,7 @@ int npc_chat_sub(struct block_list *bl, va_list ap)
 {
     struct npc_data *nd = (struct npc_data *)bl;
     struct npc_parse *npcParse = (struct npc_parse *) nd->chatdb;
-    unsigned char *msg;
+    char *msg;
     int len, pos, i;
     struct map_session_data *sd;
     struct npc_label_list *lst;
@@ -379,7 +379,7 @@ int npc_chat_sub(struct block_list *bl, va_list ap)
     if (npcParse == NULL || npcParse->active_ == NULL)
         return 0;
 
-    msg = va_arg(ap,unsigned char*);
+    msg = va_arg(ap,char*);
     len = va_arg(ap,int);
     sd = va_arg(ap,struct map_session_data *);
 

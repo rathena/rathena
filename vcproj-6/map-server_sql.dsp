@@ -215,14 +215,6 @@ SOURCE=..\src\map\charcommand.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\map\charsave.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\map\charsave.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\src\map\chat.c
 # End Source File
 # Begin Source File

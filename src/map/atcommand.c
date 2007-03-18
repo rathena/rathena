@@ -2913,6 +2913,8 @@ int atcommand_gm(const int fd, struct map_session_data* sd, const char* command,
 	return 0;
 }
 
+// helper function, used in foreach calls to stop auto-attack timers
+// parameter: '0' - everyone, 'id' - only those attacking someone with that id
 static int atcommand_stopattack(struct block_list *bl,va_list ap)
 {
 	struct unit_data *ud = unit_bl2ud(bl);

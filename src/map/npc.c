@@ -2345,9 +2345,8 @@ static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *fir
 		script_free_vars( &oldscript->script_vars );
 		aFree( oldscript->script_buf );
 		user_db->remove(user_db,str2key(p));
-		strdb_put(user_db, p, script);
-	} else
-		strdb_put(user_db, p, script);
+	}
+	strdb_put(user_db, p, script);
 
 	// もう使わないのでバッファ解放
 	aFree(srcbuf);

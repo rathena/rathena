@@ -67,7 +67,6 @@ extern char char_name_letters[];
 extern bool char_gm_read;
 extern int autosave_interval;
 extern int save_log;
-extern int charsave_method;
 extern char db_path[];
 extern char char_db[256];
 extern char scdata_db[256];
