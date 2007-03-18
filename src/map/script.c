@@ -2850,19 +2850,15 @@ void run_script_main(struct script_state *st)
 		c= get_com(st->script->script_buf,&st->pos);
 		switch(c){
 		case C_EOL:
-			if(stack->sp!=stack->defsp){
-				if(stack->sp > stack->defsp)
+			if( stack->sp != stack->defsp )
+			{
+				if( stack->sp > stack->defsp )
 				{	//sp > defsp is valid in cases when you invoke functions and don't use the returned value. [Skotlex]
 					//Since sp is supposed to be defsp in these cases, we could assume the extra stack elements are unneeded.
-					if (battle_config.etc_log)
-					{
-						ShowWarning("Clearing unused stack stack.sp(%d) -> default(%d)\n",stack->sp,stack->defsp);
-						report_src(st);
-					}
 					pop_stack(stack, stack->defsp, stack->sp); //Clear out the unused stack-section.
-				} else if(battle_config.error_log)
-					ShowError("stack.sp(%d) != default(%d)\n",stack->sp,stack->defsp);
-				stack->sp=stack->defsp;
+				} else if( battle_config.error_log )
+					ShowError("script:run_script_main: unexpected stack position stack.sp(%d) != default(%d)\n", stack->sp, stack->defsp);
+				stack->sp = stack->defsp;
 			}
 			break;
 		case C_INT:
@@ -4175,8 +4171,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mobremove,"i"),
 	BUILDIN_DEF(getmobdata,"i*"),
 	BUILDIN_DEF(setmobdata,"iii"),
-	BUILDIN_DEF(mobassist,"i*"),
-	BUILDIN_DEF(mobattach,"i*"),
+	BUILDIN_DEF(mobassist,"i?"),
+	BUILDIN_DEF(mobattach,"i?"),
 	BUILDIN_DEF(unitwalk,"ii?"),
 	BUILDIN_DEF(unitkill,"i"),
 	BUILDIN_DEF(unitwarp,"isii"),
@@ -12511,6 +12507,8 @@ BUILDIN_FUNC(pcstopfollow)
 }
 // <--- [zBuffer] List of player cont commands
 // [zBuffer] List of mob control commands --->
+//## TODO always return if the request/whatever was successfull [FlavioJS]
+
 BUILDIN_FUNC(mobspawn)
 {
 	int class_,x,y,id;
@@ -12589,156 +12587,193 @@ BUILDIN_FUNC(getmobdata)
 	return 0;
 }
 
+/// Changes the data of a mob
+///
+/// setmobdata <mob unit id>,<type>,<value>;
 BUILDIN_FUNC(setmobdata)
 {
-	int id, value, value2;
-	struct mob_data *md = NULL;
-	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
-	value = conv_num(st, & (st->stack->stack_data[st->start+3]));
-	value2 = conv_num(st, & (st->stack->stack_data[st->start+4]));
-	if(!(md = (struct mob_data *)map_id2bl(id)) || md->bl.type != BL_MOB){
-		ShowWarning("buildin_setmobdata: Error in argument!\n");
-		return -1;
-	}
-	switch(value){
+	struct block_list* mob_bl;
+
+	mob_bl = map_id2bl(conv_num(st, script_getdata(st, 2)));
+
+	if( mob_bl != NULL && mob_bl->type == BL_MOB )
+	{
+		TBL_MOB* md = (TBL_MOB*)mob_bl;
+		int type;
+		int value;
+
+		type = conv_num(st, script_getdata(st, 3));
+		value = conv_num(st, script_getdata(st, 4));
+
+		switch( type )
+		{
 		case 0:
-			md->class_ = (short)value2;
+			md->class_ = (short)value;
 			break;
 		case 1:
-			md->level = (unsigned short)value2;
+			md->level = (unsigned short)value;
 			break;
 		case 2:
-			md->status.hp = (unsigned int)value2;
+			md->status.hp = (unsigned int)value;
 			break;
 		case 3:
-			md->status.max_hp = (unsigned int)value2;
+			md->status.max_hp = (unsigned int)value;
 			break;
 		case 4:
-			md->master_id = value2;
+			md->master_id = value;
 			break;
 		case 5:
-			md->bl.m = (short)value2;
+			md->bl.m = (short)value;
 			break;
 		case 6:
-			md->bl.x = (short)value2;
+			md->bl.x = (short)value;
 			break;
 		case 7:
-			md->bl.y = (short)value2;
+			md->bl.y = (short)value;
 			break;
 		case 8:
-			md->status.speed = (unsigned short)value2;
+			md->status.speed = (unsigned short)value;
 			break;
 		case 9:
-			md->status.mode = (unsigned short)value2;
+			md->status.mode = (unsigned short)value;
 			break;
 		case 10:
-			md->special_state.ai = (unsigned int)value2;
+			md->special_state.ai = (unsigned int)value;
 			break;
 		case 11:
-			md->sc.option = (unsigned short)value2;
+			md->sc.option = (unsigned short)value;
 			break;
 		case 12:
-			md->vd->sex = (char)value2;
+			md->vd->sex = (char)value;
 			break;
 		case 13:
-			md->vd->class_ = (unsigned short)value2;
+			md->vd->class_ = (unsigned short)value;
 			break;
 		case 14:
-			md->vd->hair_style = (unsigned short)value2;
+			md->vd->hair_style = (unsigned short)value;
 			break;
 		case 15:
-			md->vd->hair_color = (unsigned short)value2;
+			md->vd->hair_color = (unsigned short)value;
 			break;
 		case 16:
-			md->vd->head_bottom = (unsigned short)value2;
+			md->vd->head_bottom = (unsigned short)value;
 			break;
 		case 17:
-			md->vd->head_mid = (unsigned short)value2;
+			md->vd->head_mid = (unsigned short)value;
 			break;
 		case 18:
-			md->vd->head_top = (unsigned short)value2;
+			md->vd->head_top = (unsigned short)value;
 			break;
 		case 19:
-			md->vd->cloth_color = (unsigned short)value2;
+			md->vd->cloth_color = (unsigned short)value;
 			break;
 		case 20:
-			md->vd->shield = (unsigned short)value2;
+			md->vd->shield = (unsigned short)value;
 			break;
 		case 21:
-			md->vd->weapon = (unsigned short)value2;
+			md->vd->weapon = (unsigned short)value;
 			break;
 		case 22:
-			md->vd->shield = (unsigned short)value2;
+			md->vd->shield = (unsigned short)value;
 			break;
 		case 23:
-			md->ud.dir = (unsigned char)value2;
+			md->ud.dir = (unsigned char)value;
 			break;
 		case 24:
-			md->state.killer = value2>0?1:0;
+			md->state.killer = value > 0 ? 1 : 0;
 			break;
 		case 25:
-			md->callback_flag = (short)value2;
+			md->callback_flag = (short)value;
 			break;
 		case 26:
-			md->state.no_random_walk = value2>0?1:0;
+			md->state.no_random_walk = value > 0 ? 1 : 0;
 			break;
 		default:
-			ShowError("buildin_setmobdata: argument id is not identified.");
-			return -1;
+			ShowError("script:setmobdata: unknown data identifier %d\n", type);
+			return 1;
+		}
 	}
+
 	return 0;
 }
 
+/// Makes the mob assist the target unit as a slave
+///
+/// mobassist <mob unit id>,"<player name>";
+/// mobassist <mob unit id>,<target id>;
 BUILDIN_FUNC(mobassist)
 {
-	int id;
-	const char *target;
-	struct mob_data *md = NULL;
-	struct block_list *bl = NULL;
-	struct unit_data *ud;
-	
-	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
-	target = conv_str(st, & (st->stack->stack_data[st->start+3]));
+	struct block_list* mob_bl;
 
-	if((bl =&(map_nick2sd(target)->bl)) || (bl = map_id2bl(atoi(target)))) {
-		md = (struct mob_data *)map_id2bl(id);
-		if(md && md->bl.type == BL_MOB) {
-			ud = unit_bl2ud(bl);
-			md->master_id = bl->id;
+	// get mob
+	mob_bl = map_id2bl(conv_num(st, script_getdata(st,2)));
+	if( mob_bl != NULL && mob_bl->type == BL_MOB )
+	{
+		TBL_MOB* md = (TBL_MOB*)mob_bl;
+		struct block_list* target_bl = NULL;
+		struct script_data* data;
+
+		// get target
+		data = script_getdata(st, 3);
+		get_val(st, data);
+		if( data_isstring(data) )
+		{
+			struct map_session_data* sd = map_nick2sd(conv_str(st, data));
+			if( sd != NULL )
+				target_bl = &sd->bl;
+		}
+		if( target_bl == NULL )
+			target_bl = map_id2bl(conv_num(st, data));
+
+		// set mob as slave
+		if( target_bl != NULL )
+		{
+			struct unit_data* ud;
+
+			md->master_id = target_bl->id;
 			md->state.killer = 1;
 			mob_convertslave(md);
-			if (ud) {
-				if (ud->target)
+			ud = unit_bl2ud(mob_bl);
+			if( ud != NULL )
+			{
+				if( ud->target != 0 )
 					md->target_id = ud->target;
-				else if (ud->skilltarget)
+				else if( ud->skilltarget != 0 )
 					md->target_id = ud->skilltarget;
-				if(md->target_id)
+				if( md->target_id != 0 )
 					unit_walktobl(&md->bl, map_id2bl(md->target_id), 65025, 2);
 			}
 		}
 	}
+
 	return 0;
 }
 
+/// Attaches the current npc or the target npc to the mob unit
+///
+/// mobattach <mob unit id>{,"<npc name>"};
 BUILDIN_FUNC(mobattach)
 {
-	int id;
-	struct mob_data *md = NULL;
-	struct npc_data *nd = NULL;
-	const char *npcname = NULL;
-	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
-	if(st->end > st->start + 3){
-		npcname = conv_str(st, & (st->stack->stack_data[st->start+3]));
-	}
+	struct block_list* mob_bl;
 
-	if(npcname)
-		nd = npc_name2id(npcname);
-	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+	mob_bl = map_id2bl(conv_num(st, script_getdata(st,2)));
+	if( mob_bl != NULL && mob_bl->type == BL_MOB )
+	{
+		TBL_MOB* md = (TBL_MOB*)mob_bl;
+		TBL_NPC* nd = NULL;
 
-	if(nd)
-		if((md = (struct mob_data *)map_id2bl(id)) && md->bl.type == BL_MOB)
+		if( script_hasdata(st,3) )
+			nd = npc_name2id(conv_str(st, script_getdata(st,3)));
+		else
+		{
+			struct block_list* npc_bl = map_id2bl(st->oid);
+			if( npc_bl != NULL && npc_bl->type == BL_NPC )
+				nd = (TBL_NPC*)npc_bl;
+		}
+
+		if( nd != NULL )
 			md->nd = nd;
+	}
 
 	return 0;
 }
@@ -12746,8 +12781,8 @@ BUILDIN_FUNC(mobattach)
 /// Makes the unit walk to target position or map
 /// Returns if it was successfull
 ///
-/// unitwalk(<unit_id>,<x>,<y>) -> <bool>;
-/// unitwalk(<unit_id>,<map_id>) -> <bool>;
+/// unitwalk(<unit_id>,<x>,<y>) -> <bool>
+/// unitwalk(<unit_id>,<map_id>) -> <bool>
 BUILDIN_FUNC(unitwalk)
 {
 	struct block_list* bl;
@@ -12787,7 +12822,7 @@ BUILDIN_FUNC(unitkill)
 /// Warps the unit to the target position in the target map
 /// Returns if it was successfull
 ///
-/// unitwarp(<unit_id>,"<map name>",<x>,<y>) -> <bool>;
+/// unitwarp(<unit_id>,"<map name>",<x>,<y>) -> <bool>
 BUILDIN_FUNC(unitwarp)
 {
 	int unit_id;
@@ -12802,7 +12837,7 @@ BUILDIN_FUNC(unitwarp)
 	y = (short)conv_num(st, script_getdata(st,5));
 
 	bl = map_id2bl(unit_id);
-	if( map != 0 && bl != NULL )
+	if( map > 0 && bl != NULL )
 	{
 		script_pushint(st, unit_warp(bl,map,x,y,0));
 	}
@@ -12814,48 +12849,71 @@ BUILDIN_FUNC(unitwarp)
 	return 0;
 }
 
-/// TODO clean up
+/// Makes the unit attack the target.
+/// If the unit is a player and <action type> is not 0, it does a continuous 
+/// attack instead of a single attack.
+/// Returns if the request was successfull.
 ///
-/// unitattack(<unit_id>,"<target name>",<action type>) -> <bool>;
-/// unitattack(<unit_id>,<target_id>,<action type>) -> <bool>;
-/// unitattack(<unit_id>,"<target name>") -> <bool>;
-/// unitattack(<unit_id>,<target_id>) -> <bool>;
+/// unitattack(<unit_id>,"<target name>"{,<action type>}) -> <bool>
+/// unitattack(<unit_id>,<target_id>{,<action type>}) -> <bool>
 BUILDIN_FUNC(unitattack)
 {
+	struct block_list* unit_bl;
+
 	int id = 0, actiontype = 0;
 	const char *target = NULL;
 	struct map_session_data *sd = NULL;
 	struct block_list *bl = NULL, *tbl = NULL;
-	
-	id = conv_num(st, & (st->stack->stack_data[st->start+2]));
-	target = conv_str(st, & (st->stack->stack_data[st->start+3]));
-	if(st->end > st->start + 4)
-		actiontype = conv_num(st, & (st->stack->stack_data[st->start+4]));
 
-	sd = map_nick2sd(target);
-	if(!sd)
-		tbl = map_id2bl(atoi(target));
-	else
-		tbl = &sd->bl;
+	// get unit
+	unit_bl = map_id2bl(conv_num(st, script_getdata(st, 2)));
+	if( unit_bl != NULL )
+	{
+		struct block_list* target_bl = NULL;
+		struct script_data* data;
+		int actiontype = 0;
 
-	if((bl = map_id2bl(id))){
-		switch (bl->type) {
-		case BL_PC:
-			clif_parse_ActionRequest_sub(((TBL_PC *)bl), actiontype > 0?0x07:0x00, tbl->id, gettick());
-			push_val(st->stack,C_INT,1);
-			return 0;
-		case BL_MOB:
-			((TBL_MOB *)bl)->state.killer = 1;
-			((TBL_MOB *)bl)->target_id = tbl->id;
-			break;
-		case BL_PET:
-			((TBL_PET *)bl)->target_id = tbl->id;
-			break;
+		// get target
+		data = script_getdata(st, 3);
+		get_val(st, data);
+		if( data_isstring(data) )
+		{
+			struct map_session_data* sd = map_nick2sd(conv_str(st, data));
+			if( sd != NULL )
+				target_bl = &sd->bl;
 		}
-		push_val(st->stack,C_INT,unit_walktobl(bl, tbl, 65025, 2));
-	} else {
-		push_val(st->stack,C_INT,0);
+		if( target_bl == NULL )
+			target_bl = map_id2bl(conv_num(st, data));
+
+		// get actiontype
+		if( script_hasdata(st,4) )
+			actiontype = conv_num(st, script_getdata(st, 4));
+
+		// request the attack
+		if( target_bl != NULL )
+		{
+			switch( unit_bl->type )
+			{
+			case BL_PC:
+				clif_parse_ActionRequest_sub(((TBL_PC *)unit_bl), actiontype > 0 ? 0x07 : 0x00, target_bl->id, gettick());
+				script_pushint(st, 1);
+				return 0;
+			case BL_MOB:
+				((TBL_MOB *)unit_bl)->state.killer = 1;
+				((TBL_MOB *)unit_bl)->target_id = target_bl->id;
+				break;
+			case BL_PET:
+				((TBL_PET *)unit_bl)->target_id = target_bl->id;
+				break;
+			default:
+				ShowError("script:unitattack: unsupported source unit type %d\n", unit_bl->type);
+				script_pushint(st, 0);
+				return  0;
+			}
+			script_pushint(st, unit_walktobl(unit_bl, target_bl, 65025, 2));
+		}
 	}
+	script_pushint(st, 0);
 
 	return 0;
 }
@@ -12953,6 +13011,10 @@ BUILDIN_FUNC(unitdeadsit)
 			WBUFL(buf, 2) = bl->id;
 			WBUFB(buf,26) = (unsigned char)action;
 			clif_send(buf, 61, bl, AREA);
+		} else
+		{
+			ShowWarning("script:unitdeadsit: %d is not a valid action\n", action);
+			report_src(st);
 		}
 	}
 

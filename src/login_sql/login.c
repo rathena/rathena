@@ -1515,7 +1515,7 @@ int parse_login(int fd)
 					}
 				}
 			} else {
-				char* error;
+				const char* error = "";
 				WFIFOHEAD(fd,23);
 				if (login_config.log_login)
 				{
@@ -1547,7 +1547,7 @@ int parse_login(int fd)
 					default : error = "Unknown Error."; break;
 					}
 
-					sprintf(tmpsql, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s', '%d','login failed : %s')", loginlog_db, ntohl(ipl), t_uid, result, error);
+					sprintf(tmpsql, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s', '%d','login failed : %s')", loginlog_db, ntohl(ipl), t_uid, result, error);
 
 					//query
 					if(mysql_query(&mysql_handle, tmpsql)) {

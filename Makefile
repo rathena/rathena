@@ -133,9 +133,8 @@ endif
 
 conf:
 	cp -r conf-tmpl conf
-	rm -rf conf/.svn conf/*/.svn
 	cp -r save-tmpl save
-	rm -rf save/.svn
+	rm -rf conf/.svn conf/*/.svn save/.svn
 
 common: src/common/GNUmakefile
 	$(MAKE) -C src/$@ $(MKDEF)
