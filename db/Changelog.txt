@@ -19,7 +19,11 @@
 	-----
 
 ========================
-2007/03/17
+03/20
+	* Updated new cards [Playtester]
+	- they can all be used now, however some bonuses are still incomplete
+	- also fixed Byeollungum, The Sign and Turtle General Card
+03/17
 	* Removed .gat from configs [Lupus]
 03/15
 	* Increased Shield Chain's range by one. It is now a ranged skill.
