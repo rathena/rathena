@@ -310,7 +310,7 @@ job_duncer,95,93,4	script	Bijou	101,{
 		if(@gift==50) {
 			getitem 1953,1;
 			mes "Since you are very experienced I have given you a Line, instead of a simple Rope that normal people would get.";
-			mes "Now take you Line, and be the best Dancer you can be!";
+			mes "Now take your Line, and be the best Dancer you can be!";
 		} else {
 			getitem 1950,1;
 	 		mes "Now take this Rope, and be the best Dancer you can be!";

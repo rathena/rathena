@@ -51,34 +51,6 @@ yuno,208,164,4	script	Active little girl	101,{
 
 
 //======================================================================================
-yuno,164,200,4	script	Noyee	101,{
-	mes "[Noyee]";
-	mes "Did you know that there's a";
-	mes "difference between the armor you";
-	mes "can buy from NPC shops and the";
-	mes "kinds you obtain from hunting";
-	mes "monsters?";
-	next;
-	mes "[Noyee]";
-	mes "The difference, my friend, is in";
-	mes "the number of ^5533FFslots^000000 in your armor.";
-	next;
-	mes "[Noyee]";
-	mes "The same kind of Armor will have";
-	mes "the same Defense. However, if an";
-	mes "Armor has a slot, you can insert a";
-	mes "Monster Card which will add an";
-	mes "enhancement to that armor.";
-	next;
-	mes "[Noyee]";
-	mes "Both Monster Cards and Slotted";
-	mes "Armors are rarely dropped by";
-	mes "monsters, and are thus valuable";
-	mes "commodies.";
-	close;
-}
-
-//======================================================================================
 yuno,184,173,4	script	Freidrich	729,{
 	mes "[Freidrich]";
 	mes "The city of Sages,";

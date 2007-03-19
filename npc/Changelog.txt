@@ -26,6 +26,8 @@ KarLaeda
 
 Date		Added
 ======
+2007/03/20
+	* Removed duplicate Noyee npc (skipped in r9943 ?)
 2007/03/17
 	* Fixed a missing curly brace and removed some more .gat-s [ultramage]
 	* Removed all .gat from the scripts [Lupus]
