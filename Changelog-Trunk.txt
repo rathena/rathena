@@ -4,6 +4,17 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/03/19
+	* Rewrote the jail logic to always use a status change. This means that the
+	  character's save point is not changed when jailed, and the char is always
+	  warped back to the point where it was before being jailed on unjail.
+	* Modified @adjcmdlvl so you can't set a command to require higher level
+	  than yourself, and so you can't edit the level of a command which is higher
+	  than your own.
+	* Corrected attack_attr_none setting disabling elemental resist cards.
+	* Corrected Dispell removing Jailed status.
+	* Corrected being able to revive with 0 hp.
+	* Modified the "Restart" code so that it makes you stand on spot when
+	  pc_setpos fails to move you back to your originating location. [Skotlex]
 	* Fixed some wrong sql login logic
 	* Fixed some compiler warnings, cleaned up mapserver sql-related vars
 	* Removed the old 'mapserver charsave' mechanism [ultramage]

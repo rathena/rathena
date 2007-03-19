@@ -8841,39 +8841,38 @@ void clif_parse_Restart(int fd, struct map_session_data *sd) {
 
 	switch(RFIFOB(fd,2)) {
 	case 0x00:
-		if (pc_isdead(sd)) {
-			pc_setstand(sd);
-			pc_setrestartvalue(sd, 3);
-			if (sd->sc.count && battle_config.debuff_on_logout&2) {
-			  	//For some reason food buffs are removed when you respawn.
-				if(sd->sc.data[SC_STRFOOD].timer!=-1)
-					status_change_end(&sd->bl,SC_STRFOOD,-1);
-				if(sd->sc.data[SC_AGIFOOD].timer!=-1)
-					status_change_end(&sd->bl,SC_AGIFOOD,-1);
-				if(sd->sc.data[SC_VITFOOD].timer!=-1)
-					status_change_end(&sd->bl,SC_VITFOOD,-1);
-				if(sd->sc.data[SC_INTFOOD].timer!=-1)
-					status_change_end(&sd->bl,SC_INTFOOD,-1);
-				if(sd->sc.data[SC_DEXFOOD].timer!=-1)
-					status_change_end(&sd->bl,SC_DEXFOOD,-1);
-				if(sd->sc.data[SC_LUKFOOD].timer!=-1)
-					status_change_end(&sd->bl,SC_LUKFOOD,-1);
-				if(sd->sc.data[SC_HITFOOD].timer!=-1)
-					status_change_end(&sd->bl,SC_HITFOOD,-1);
-				if(sd->sc.data[SC_FLEEFOOD].timer!=-1)
-					status_change_end(&sd->bl,SC_FLEEFOOD,-1);
-				if(sd->sc.data[SC_BATKFOOD].timer!=-1)
-					status_change_end(&sd->bl,SC_BATKFOOD,-1);
-				if(sd->sc.data[SC_WATKFOOD].timer!=-1)
-					status_change_end(&sd->bl,SC_WATKFOOD,-1);
-				if(sd->sc.data[SC_MATKFOOD].timer!=-1)
-					status_change_end(&sd->bl,SC_MATKFOOD,-1);
-			}
-			pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 2);
+		if (!pc_isdead(sd))
+			break;
+		pc_setstand(sd);
+		pc_setrestartvalue(sd, 3);
+		if (sd->sc.count && battle_config.debuff_on_logout&2) {
+			//For some reason food buffs are removed when you respawn.
+			if(sd->sc.data[SC_STRFOOD].timer!=-1)
+				status_change_end(&sd->bl,SC_STRFOOD,-1);
+			if(sd->sc.data[SC_AGIFOOD].timer!=-1)
+				status_change_end(&sd->bl,SC_AGIFOOD,-1);
+			if(sd->sc.data[SC_VITFOOD].timer!=-1)
+				status_change_end(&sd->bl,SC_VITFOOD,-1);
+			if(sd->sc.data[SC_INTFOOD].timer!=-1)
+				status_change_end(&sd->bl,SC_INTFOOD,-1);
+			if(sd->sc.data[SC_DEXFOOD].timer!=-1)
+				status_change_end(&sd->bl,SC_DEXFOOD,-1);
+			if(sd->sc.data[SC_LUKFOOD].timer!=-1)
+				status_change_end(&sd->bl,SC_LUKFOOD,-1);
+			if(sd->sc.data[SC_HITFOOD].timer!=-1)
+				status_change_end(&sd->bl,SC_HITFOOD,-1);
+			if(sd->sc.data[SC_FLEEFOOD].timer!=-1)
+				status_change_end(&sd->bl,SC_FLEEFOOD,-1);
+			if(sd->sc.data[SC_BATKFOOD].timer!=-1)
+				status_change_end(&sd->bl,SC_BATKFOOD,-1);
+			if(sd->sc.data[SC_WATKFOOD].timer!=-1)
+				status_change_end(&sd->bl,SC_WATKFOOD,-1);
+			if(sd->sc.data[SC_MATKFOOD].timer!=-1)
+				status_change_end(&sd->bl,SC_MATKFOOD,-1);
 		}
-		// in case the player's status somehow wasn't updated yet [Celest]
-		else if (sd->battle_status.hp <= 0)
-			pc_setdead(sd);
+		//If warping fails, send a normal stand up packet.
+		if (pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 2))
+			clif_resurrection(&sd->bl, 1);
 		break;
 	case 0x01:
 		/*	Rovert's Prevent logout option - Fixed [Valaris]	*/
@@ -11760,12 +11759,6 @@ int clif_parse(int fd) {
 	TBL_PC *sd;
 	RFIFOHEAD(fd);
 
-	if (fd <= 0)
-	{	//Just in case, there are some checks for this later down below anyway which should be removed. [Skotlex]
-		ShowError("clif_parse: Received invalid session %d\n", fd);
-		return 0;
-	}
-
 	sd = (TBL_PC *)session[fd]->session_data;
 	if (session[fd]->eof) {
 		if (sd) {
@@ -11945,8 +11938,7 @@ int clif_parse(int fd) {
 
 	if (dump) {
 		int i;
-		if (fd)
-			ShowDebug("\nclif_parse: session #%d, packet 0x%04x, length %d, version %d\n", fd, cmd, packet_len, packet_ver);
+		ShowDebug("\nclif_parse: session #%d, packet 0x%04x, length %d, version %d\n", fd, cmd, packet_len, packet_ver);
 		printf("---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
 		for(i = 0; i < packet_len; i++) {
 			if ((i & 15) == 0)

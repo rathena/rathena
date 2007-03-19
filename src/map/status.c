@@ -896,9 +896,13 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 
 	if(hp > status->max_hp - status->hp)
 		hp = status->max_hp - status->hp;
-
+	else if (per_hp && !hp)
+		hp = 1;
+		
 	if(sp > status->max_sp - status->sp)
 		sp = status->max_sp - status->sp;
+	else if (per_sp && !sp)
+		sp = 1;
 
 	status->hp += hp;
 	status->sp += sp;
@@ -4891,7 +4895,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			case SC_ASPDPOTION3:
 			case SC_ATKPOTION:
 			case SC_MATKPOTION:
-			case SC_JAILED:
 			case SC_ARMOR_ELEMENT:
 				break;
 			case SC_GOSPEL:
@@ -4915,6 +4918,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 					delete_timer(sc->data[type].val4,kaahi_heal_timer);
 					sc->data[type].val4=-1;
 				}
+				break;
+			case SC_JAILED:
+				//When a player is already jailed, do not edit the jail data.
+				val2 = sc->data[type].val2;
+				val3 = sc->data[type].val3;
+				val4 = sc->data[type].val4;
 				break;
 			default:
 				if(sc->data[type].val1 > val1)
@@ -5675,17 +5684,24 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			tick = 1000;  
 			break;  
 		case SC_JAILED:
+			//Val1 is duration in minutes. Use INT_MAX to specify 'unlimited' time.
 			tick = val1>0?1000:250;
-			if (sd && sd->mapindex != val2)
+			if (sd)
 			{
-				int pos =  (bl->x&0xFFFF)|(bl->y<<16), //Current Coordinates
-				map =  sd->mapindex; //Current Map
-				//1. Place in Jail (val2 -> Jail Map, val3 -> x, val4 -> y
-				if (pc_setpos(sd,(unsigned short)val2,val3,val4, 3) == 0)
-					pc_setsavepoint(sd, (unsigned short)val2,val3,val4);
-				//2. Set restore point (val3 -> return map, val4 return coords
-				val3 = map;
-				val4 = pos;
+				if (sd->mapindex != val2)
+				{
+					int pos =  (bl->x&0xFFFF)|(bl->y<<16), //Current Coordinates
+					map =  sd->mapindex; //Current Map
+					//1. Place in Jail (val2 -> Jail Map, val3 -> x, val4 -> y
+					pc_setpos(sd,(unsigned short)val2,val3,val4, 3);
+					//2. Set restore point (val3 -> return map, val4 return coords
+					val3 = map;
+					val4 = pos;
+				} else if (!val3 || val3 == sd->mapindex) { //Use save point.
+					val3 = sd->status.save_point.map;
+					val4 = (sd->status.save_point.x&0xFFFF)
+						|(sd->status.save_point.y<<16);
+				}
 			}
 			break;
 		case SC_UTSUSEMI:
@@ -6320,10 +6336,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				break;
 		  	//natural expiration.
 			if(sd && sd->mapindex == sc->data[type].val2)
-			{
-				if (pc_setpos(sd,(unsigned short)sc->data[type].val3,sc->data[type].val4&0xFFFF, sc->data[type].val4>>16, 3) == 0)
-					pc_setsavepoint(sd, sd->mapindex, bl->x, bl->y);
-			}
+				pc_setpos(sd,(unsigned short)sc->data[type].val3,sc->data[type].val4&0xFFFF, sc->data[type].val4>>16, 3);
 			break; //guess hes not in jail :P
 		case SC_CHANGE:
 			if (tid == -1)
@@ -6868,7 +6881,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		}
 		break;
 	case SC_JAILED:
-		if(--sc->data[type].val1 > 0)
+		if(sc->data[type].val1 == INT_MAX || --sc->data[type].val1 > 0)
 		{
 			sc->data[type].timer=add_timer(
 				60000+tick, status_change_timer, bl->id,data);

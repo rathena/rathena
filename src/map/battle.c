@@ -987,9 +987,6 @@ static struct Damage battle_calc_weapon_attack(
 	if (skill_num == GS_GROUNDDRIFT)
 		s_ele = s_ele_ = wflag; //element comes in flag.
 
-	if (s_ele == ELE_NEUTRAL && (battle_config.attack_attr_none&src->type))
-		nk|=NK_NO_ELEFIX;
-
 	if(!skill_num)
   	{	//Skills ALWAYS use ONLY your right-hand weapon (tested on Aegis 10.2)
 		if (sd && sd->weapontype1 == 0 && sd->weapontype2 > 0)
@@ -1813,7 +1810,8 @@ static struct Damage battle_calc_weapon_attack(
 	if(skill_num==TF_POISON)
 		ATK_ADD(15*skill_lv);
 
-	if (!(nk&NK_NO_ELEFIX))
+	if (!(nk&NK_NO_ELEFIX) ||
+		(s_ele == ELE_NEUTRAL && (battle_config.attack_attr_none&src->type)))
 	{	//Elemental attribute fix
 		if (wd.damage > 0)
 		{
@@ -4242,14 +4240,26 @@ void battle_validate_conf() {
 		battle_config.item_drop_mvp_min = 1;
 	if(battle_config.item_drop_mvp_max > 10000)
 		battle_config.item_drop_mvp_max = 10000;	// End Addition
+	if(battle_config.item_drop_heal_min < 1)
+		battle_config.item_drop_heal_min = 1;
+	if(battle_config.item_drop_heal_max > 10000)
+		battle_config.item_drop_heal_max = 10000;
+	if(battle_config.item_drop_use_min < 1)
+		battle_config.item_drop_use_min = 1;
+	if(battle_config.item_drop_use_max > 10000)
+		battle_config.item_drop_use_max = 10000;
+	if(battle_config.item_drop_adddrop_min < 1)
+		battle_config.item_drop_adddrop_min = 1;
+	if(battle_config.item_drop_adddrop_max > 10000)
+		battle_config.item_drop_adddrop_max = 10000;
+	if(battle_config.item_drop_treasure_min < 1)
+		battle_config.item_drop_treasure_min = 1;
+	if(battle_config.item_drop_treasure_max > 10000)
+		battle_config.item_drop_treasure_max = 10000;
 
-/*	if (battle_config.night_at_start < 0) // added by [Yor]
-		battle_config.night_at_start = 0;
-	else if (battle_config.night_at_start > 1) // added by [Yor]
-		battle_config.night_at_start = 1; */
-	if (battle_config.day_duration != 0 && battle_config.day_duration < 60000) // added by [Yor]
+	if (battle_config.day_duration && battle_config.day_duration < 60000) // added by [Yor]
 		battle_config.day_duration = 60000;
-	if (battle_config.night_duration != 0 && battle_config.night_duration < 60000) // added by [Yor]
+	if (battle_config.night_duration && battle_config.night_duration < 60000) // added by [Yor]
 		battle_config.night_duration = 60000;
 	
 	if (battle_config.hack_info_GM_level > 100)

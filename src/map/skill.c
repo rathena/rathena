@@ -2941,7 +2941,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		{	//Invoked from map_foreachinarea, skill_area_temp[0] holds number of targets to divide damage by.
 			if (skill_area_temp[1] != bl->id)
 				skill_attack(skill_get_type(skillid), src, src, bl,
-					skillid, skilllv, tick, skill_area_temp[0]|SD_ANIMATION);
+					skillid, skilllv, tick, skill_area_temp[0]|SD_ANIMATION|(flag&SD_LEVEL));
 			break;
 		}
 		if ( skillid == NJ_BAKUENRYU )
@@ -4637,7 +4637,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case SC_GUILDAURA:   case SC_EDP:         case SC_AUTOBERSERK:
 				case SC_CARTBOOST:   case SC_MELTDOWN:    case SC_SAFETYWALL:
 				case SC_SMA:         case SC_SPEEDUP0:    case SC_NOCHAT:
-				case SC_ANKLE:
+				case SC_ANKLE:       case SC_JAILED:
 					continue;
 				}
 				if(i==SC_BERSERK) tsc->data[i].val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.

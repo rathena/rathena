@@ -184,8 +184,9 @@ int chrif_isconnect(void)
 int chrif_save(struct map_session_data *sd, int flag)
 {
 	nullpo_retr(-1, sd);
-	
-	pc_makesavestatus(sd);
+
+	if (!flag) //The flag check is needed to prevent 'nosave' taking effect when a jailed player logs out.
+		pc_makesavestatus(sd);
 	if(!chrif_isconnect())
   	{
 		if (flag) sd->state.finalsave = 1; //Will save character on reconnect.

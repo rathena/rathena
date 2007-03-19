@@ -319,6 +319,19 @@ int pc_makesavestatus(struct map_session_data *sd)
 		sd->status.clothes_color=0;
 
 	sd->status.option = sd->sc.option; //Since the option saved is in 
+		
+	if (sd->sc.count && sd->sc.data[SC_JAILED].timer != -1)
+	{	//When Jailed, do not move last point.
+		if(pc_isdead(sd))
+			pc_setrestartvalue(sd,0);
+		sd->status.hp = sd->battle_status.hp;
+		sd->status.sp = sd->battle_status.sp;
+		sd->status.last_point.map = sd->mapindex;
+		sd->status.last_point.x = sd->bl.x;
+		sd->status.last_point.y = sd->bl.y;
+		return 0;
+	}
+
 	if(pc_isdead(sd)){
 		pc_setrestartvalue(sd,0);
 		memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
@@ -3335,12 +3348,10 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 
 	if (sd->mapindex != mapindex)
 	{	//Misc map-changing settings
-		party_send_dot_remove(sd); //minimap dot fix [Kevin]
-		guild_send_dot_remove(sd);
-		if (sd->regen.state.gc)
-			sd->regen.state.gc = 0;
 		if (sd->sc.count)
 		{ //Cancel some map related stuff.
+			if (sd->sc.data[SC_JAILED].timer != -1)
+				return 1; //You may not get out!
 			if (sd->sc.data[SC_WARM].timer != -1)
 				status_change_end(&sd->bl,SC_WARM,-1);
 			if (sd->sc.data[SC_SUN_COMFORT].timer != -1)
@@ -3356,6 +3367,10 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 		}
 		if (battle_config.clear_unit_onwarp&BL_PC)
 			skill_clear_unitgroup(&sd->bl);
+		party_send_dot_remove(sd); //minimap dot fix [Kevin]
+		guild_send_dot_remove(sd);
+		if (sd->regen.state.gc)
+			sd->regen.state.gc = 0;
 	}
 
 	if(m<0){
