@@ -31,7 +31,7 @@
 #define LIFETIME_FLOORITEM 60
 #define DAMAGELOG_SIZE 30
 #define LOOTITEM_SIZE 10
-#define MAX_STATUSCHANGE 251
+#define MAX_STATUSCHANGE 300
 //Quick defines to know which are the min-max common ailments. [Skotlex]
 //Because of the way the headers are included.. these must be replaced for actual values.
 //Remember to update as needed! Min is SC_STONE and max is SC_DPOISON currently.

@@ -2454,7 +2454,6 @@ int map_readmap(struct map_data *m)
 	for(i = 0; i < map_count; i++) {
 		fread(&info, sizeof(info), 1, map_cache_fp);
 		if(strcmp(m->name, info.name) == 0) { // Map found
-			m->index = info.index;
 			m->xs = info.xs;
 			m->ys = info.ys;
 			m->gat = (unsigned char *)aMalloc(m->xs*m->ys); // Allocate room for map cells data
@@ -2567,6 +2566,8 @@ int map_readallmaps (void)
 			continue;
 		}
 
+		map[i].index = mapindex_name2id(map[i].name);
+
 		if (uidb_get(map_db,(unsigned int)map[i].index) != NULL) {
 			ShowWarning("Map %s already loaded!\n", map[i].name);
 			if (map[i].gat) {
@@ -2578,6 +2579,8 @@ int map_readallmaps (void)
 			i--;
 			continue;
 		}
+
+		uidb_put(map_db, (unsigned int)map[i].index, &map[i]);
 
 		map[i].m = i;
 		memset(map[i].moblist, 0, sizeof(map[i].moblist));	//Initialize moblist [Skotlex]
@@ -2604,9 +2607,6 @@ int map_readallmaps (void)
 		size = map[i].bxs * map[i].bys * sizeof(int);
 		map[i].block_count = (int*)aCallocA(size, 1);
 		map[i].block_mob_count = (int*)aCallocA(size, 1);
-
-		mapindex_addmap(map[i].index, map[i].name);
-		uidb_put(map_db, (unsigned int)map[i].index, &map[i]);
 	}
 
 	// finished map loading
@@ -3142,7 +3142,9 @@ void do_final(void) {
 				if (map[i].moblist[j]) aFree(map[i].moblist[j]);
 		}
 	}
-	
+
+	mapindex_final();
+
 	id_db->destroy(id_db, NULL);
 	pc_db->destroy(pc_db, NULL);
 	charid_db->destroy(charid_db, NULL);
@@ -3296,6 +3298,7 @@ int do_init(int argc, char *argv[]) {
 	map_sql_init();
 #endif /* not TXT_ONLY */
 
+	mapindex_init();
 	map_readallmaps();
 
 	add_timer_func_list(map_freeblock_timer, "map_freeblock_timer");
