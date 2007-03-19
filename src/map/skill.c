@@ -1352,7 +1352,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		rate = 3*skilllv;
 		if (sstatus->dex > tstatus->dex)
 			rate += (sstatus->dex - tstatus->dex)/5;
-		skill_strip_equip(bl, EQP_WEAPON, rate, skilllv, skill_get_time(skillid,skilllv));
+		if (skill_strip_equip(bl, EQP_WEAPON, rate, skilllv, skill_get_time(skillid,skilllv)))
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 	}
 
@@ -1576,8 +1577,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			skilllv = dstsd->autospell2[i].lv?dstsd->autospell2[i].lv:1;
 			if (skilllv < 0) skilllv = 1+rand()%(-skilllv);
 
-			rate = ((sd && !sd->state.arrow_atk) || (status_get_range(src)<=2)) ?
-				dstsd->autospell2[i].rate : dstsd->autospell2[i].rate / 2;
+			rate = dstsd->autospell2[i].rate;
+			if (attack_type&BF_LONG)
+				 rate>>=1;
 			
 			if (skillnotok(skillid, dstsd))
 				continue;
@@ -6069,10 +6071,17 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 
 	case AL_WARP:
 		if(sd) {
-			clif_skill_warppoint(sd,skillid,skilllv,mapindex_id2name(sd->status.save_point.map),
-				(skilllv>1 && sd->status.memo_point[0].map)?mapindex_id2name(sd->status.memo_point[0].map):"",
-				(skilllv>2 && sd->status.memo_point[1].map)?mapindex_id2name(sd->status.memo_point[1].map):"",
-				(skilllv>3 && sd->status.memo_point[2].map)?mapindex_id2name(sd->status.memo_point[2].map):"");
+			char memo[4][MAP_NAME_LENGTH] = {"", "", "", ""};
+			snprintf(memo[0], MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(sd->status.save_point.map));
+			if (skilllv>1 && sd->status.memo_point[0].map)
+				snprintf(memo[1], MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(sd->status.memo_point[0].map));
+			if (skilllv>2 && sd->status.memo_point[1].map)
+				snprintf(memo[2], MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(sd->status.memo_point[1].map));
+			if (skilllv>3 && sd->status.memo_point[2].map)
+				snprintf(memo[3], MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(sd->status.memo_point[2].map));
+
+			clif_skill_warppoint(sd,skillid,skilllv,
+				memo[0],memo[1],memo[2],memo[3]);
 		}
 		break;
 

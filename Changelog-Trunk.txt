@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/03/20
+	* Corrected Warp Portal not sending the map names with the .gat extension.
+	* Probably corrected Disarm's strip animation.
 2007/03/19
 	* Rewrote the jail logic to always use a status change. This means that the
 	  character's save point is not changed when jailed, and the char is always
