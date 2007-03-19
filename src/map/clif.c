@@ -4221,7 +4221,7 @@ int clif_skillup(struct map_session_data *sd,int skill_num)
 int clif_skillcasting(struct block_list* bl,
 	int src_id,int dst_id,int dst_x,int dst_y,int skill_num,int casttime)
 {
-	int pl = skill_get_pl(skill_num);
+	int pl = skill_get_pl(skill_num, 1); //TODO: Need Skill level here :/
 	unsigned char buf[32];
 	WBUFW(buf,0) = 0x13e;
 	WBUFL(buf,2) = src_id;
@@ -5365,7 +5365,7 @@ int clif_item_refine_list(struct map_session_data *sd)
  * アイテムによる一時的なスキル効果
  *------------------------------------------
  */
-int clif_item_skill(struct map_session_data *sd,int skillid,int skilllv,const char *name)
+int clif_item_skill(struct map_session_data *sd,int skillid,int skilllv)
 {
 	int fd;
 
@@ -5380,7 +5380,7 @@ int clif_item_skill(struct map_session_data *sd,int skillid,int skilllv,const ch
 	WFIFOW(fd, 8)=skilllv;
 	WFIFOW(fd,10)=skill_get_sp(skillid,skilllv);
 	WFIFOW(fd,12)=skill_get_range2(&sd->bl, skillid,skilllv);
-	strncpy((char*)WFIFOP(fd,14),name,NAME_LENGTH);
+	strncpy((char*)WFIFOP(fd,14),skill_get_name(skillid),NAME_LENGTH);
 	WFIFOB(fd,38)=0;
 	WFIFOSET(fd,packet_len(0x147));
 	return 0;

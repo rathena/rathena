@@ -248,6 +248,7 @@ const struct skill_name_db skill_names[] = {
  { HW_MAGICPOWER, "HW_MAGICPOWER", "Mystical_Amplification" } ,
  { HW_NAPALMVULCAN, "HW_NAPALMVULCAN", "Napalm_Vulcan" } ,
  { HW_SOULDRAIN, "HW_SOULDRAIN", "Soul_Drain" } ,
+ { ITEM_ENCHANTARMS, "ITEM_ENCHANTARMS", "Weapon Enchantment" },
  { ITM_TOMAHAWK, "ITM_TOMAHAWK", "Tomahawk_Throwing" } ,
  { KN_AUTOCOUNTER, "KN_AUTOCOUNTER", "Counter_Attack" } ,
  { KN_BOWLINGBASH, "KN_BOWLINGBASH", "Bowling_Bash" } ,
@@ -652,7 +653,7 @@ struct skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 // Skill DB
 int	skill_get_hit( int id ){ skill_get (skill_db[id].hit, id, 1); }
 int	skill_get_inf( int id ){ skill_get (skill_db[id].inf, id, 1); }
-int	skill_get_pl( int id ){ skill_get (skill_db[id].pl, id, 1); }
+int	skill_get_pl( int id , int lv ){ skill_get (skill_db[id].pl[lv-1], id, lv); }
 int	skill_get_nk( int id ){ skill_get (skill_db[id].nk, id, 1); }
 int	skill_get_max( int id ){ skill_get (skill_db[id].max, id, 1); }
 int	skill_get_range( int id , int lv ){ skill_get(skill_db[id].range[lv-1], id, lv); }
@@ -800,11 +801,18 @@ int skill_calc_heal (struct block_list *bl, int skill_lv)
 		return battle_config.max_heal;
 
 	heal = ( status_get_lv(bl)+status_get_int(bl) )/8 *(4+ skill_lv*8);
-	if(bl->type == BL_PC && (skill = pc_checkskill((TBL_PC*)bl, HP_MEDITATIO)) > 0)
-		heal += heal * skill * 2 / 100;
+	if(bl->type == BL_PC)
+	{
+		if ((skill = pc_checkskill((TBL_PC*)bl, HP_MEDITATIO)) > 0)
+			heal += heal * skill * 2 / 100;
+		if ((skill = battle_skillatk_bonus((TBL_PC*)bl, AL_HEAL)) > 0)
+			heal += heal * skill / 100;
+	}
 
 	if(bl->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)bl), HLIF_BRAIN)) > 0)
 		heal += heal * skill * 2 / 100;
+
+
 	return heal;
 }
 
@@ -1761,6 +1769,10 @@ int skill_blown (struct block_list *src, struct block_list *target, int count)
 			if(src != target && is_boss(target)) //Bosses can't be knocked-back
 				return 0;
 			break;
+		case BL_PC:
+			if(src != target && ((TBL_PC*)target)->special_state.no_knockback)
+				return 0;
+			break;
 		case BL_SKILL:
 			su=(struct skill_unit *)target;
 			break;
@@ -1877,7 +1889,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		struct pet_data *pd = (TBL_PET*)src;
 		if (pd->a_skill && pd->a_skill->div_ && pd->a_skill->id == skillid)
 		{
-			int element = skill_get_pl(skillid);
+			int element = skill_get_pl(skillid, skilllv);
 			if (skillid == -1)
 				element = sstatus->rhw.ele;
 			if (element != ELE_NEUTRAL || !(battle_config.attack_attr_none&BL_PET))
@@ -3489,7 +3501,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				sd->skillitem = abra_skillid;
 				sd->skillitemlv = abra_skilllv;
 				sd->state.abra_flag = 1;
-				clif_item_skill (sd, abra_skillid, abra_skilllv, "Abracadabra");
+				clif_item_skill (sd, abra_skillid, abra_skilllv);
 			} else
 			{	// [Skotlex]
 				struct unit_data *ud = unit_bl2ud(src);
@@ -3682,27 +3694,33 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
 
+	case ITEM_ENCHANTARMS:
+		clif_skill_nodamage(src,bl,skillid,skilllv,
+			sc_start2(bl,type,100,skilllv,
+				skill_get_pl(skillid,skilllv), skill_get_time(skillid,skilllv)));
+		break;
+
 	case TK_SEVENWIND:
-		switch(skilllv){
-			case 1:
+		switch(skill_get_pl(skillid,skilllv)){
+			case ELE_EARTH:
 				type=SC_EARTHWEAPON;
 				break;
-			case 2:
+			case ELE_WIND:
 				type=SC_WINDWEAPON;
 				break;
-			case 3:
+			case ELE_WATER:
 				type=SC_WATERWEAPON;
 				break;
-			case 4:
+			case ELE_FIRE:
 				type=SC_FIREWEAPON;
 				break;
-			case 5:
+			case ELE_GHOST:
 				type=SC_GHOSTWEAPON;
 				break;
-			case 6:
+			case ELE_DARK:
 				type=SC_SHADOWWEAPON;
 				break;
-			case 7:
+			case ELE_HOLY:
 				type=SC_ASPERSIO;
 				break;
 		}
@@ -4417,8 +4435,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					pc_randomwarp(sd,3);
 			} else {
 				if (sd->skillitem != AL_TELEPORT)
-					clif_skill_warppoint(sd,skillid,skilllv,"Random",
-						mapindex_id2name(sd->status.save_point.map),"","");
+				{
+					char save_map[MAP_NAME_LENGTH];
+					snprintf(save_map, MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(sd->status.save_point.map));
+					clif_skill_warppoint(sd,skillid,skilllv,"Random",save_map,"","");
+				}
 				else //Autocasted Teleport level 2??
 					pc_setpos(sd,sd->status.save_point.map,
 						sd->status.save_point.x,sd->status.save_point.y,3);
@@ -4547,6 +4568,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 						if(dstsd)
 							sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10) / 100;
 					}
+				}
+				if ((i = battle_skillatk_bonus(sd, skillid)) > 0)
+				{
+					hp += hp * i / 100;
+					sp += sp * i / 100;
 				}
 			}
 			else {
@@ -4795,7 +4821,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_CHANGETELEKINESIS:
 	case NPC_CHANGEUNDEAD:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start4(bl, type, 100, skilllv, skillid, skill_get_pl(skillid), 0, 
+			sc_start4(bl, type, 100, skilllv, skillid, skill_get_pl(skillid,skilllv), 0, 
 				skill_get_time(skillid, skilllv)));
 		break;
 
@@ -6140,7 +6166,8 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 			//Apply skill bonuses
 			i = pc_checkskill(sd,CR_SLIMPITCHER)*10
 				+ pc_checkskill(sd,AM_POTIONPITCHER)*10
-				+ pc_checkskill(sd,AM_LEARNINGPOTION)*5;
+				+ pc_checkskill(sd,AM_LEARNINGPOTION)*5
+				+ battle_skillatk_bonus(sd, skillid);
 
 			potion_hp = potion_hp * (100+i)/100;
 			potion_sp = potion_sp * (100+i)/100;
@@ -6554,6 +6581,8 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 	case PR_SANCTUARY:
 		val1=(skilllv+3)*2;
 		val2=(skilllv>6)?777:skilllv*100;
+		if (sd && (i = battle_skillatk_bonus(sd, skillid)) > 0)
+			val2 += val2 * i / 100;
 		break;
 
 	case WZ_FIREPILLAR:
@@ -11220,7 +11249,7 @@ int skill_readdb (void)
 		skill_split_atoi(split[1],skill_db[i].range);
 		skill_db[i].hit=atoi(split[2]);
 		skill_db[i].inf=atoi(split[3]);
-		skill_db[i].pl=atoi(split[4]);
+		skill_split_atoi(split[4],skill_db[i].pl);
 		skill_db[i].nk=(int)strtol(split[5], NULL, 0);
 		skill_split_atoi(split[6],skill_db[i].splash);
 		skill_db[i].max=atoi(split[7]);

@@ -3962,7 +3962,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(gettimestr,"si"),
 	BUILDIN_DEF(openstorage,""),
 	BUILDIN_DEF(guildopenstorage,"*"),
-	BUILDIN_DEF(itemskill,"iis"),
+	BUILDIN_DEF(itemskill,"ii"),
 	BUILDIN_DEF(produce,"i"),
 	BUILDIN_DEF(monster,"siisii*"),
 	BUILDIN_DEF(areamonster,"siiiisii*"),
@@ -7098,12 +7098,10 @@ BUILDIN_FUNC(guildopenstorage)
 BUILDIN_FUNC(itemskill)
 {
 	int id,lv;
-	const char *str;
 	struct map_session_data *sd=script_rid2sd(st);
 
 	id=conv_num(st,script_getdata(st,2));
 	lv=conv_num(st,script_getdata(st,3));
-	str=conv_str(st,script_getdata(st,4));
 
 	// 詠唱中にスキルアイテムは使用できない
 	if(sd->ud.skilltimer != -1)
@@ -7111,7 +7109,7 @@ BUILDIN_FUNC(itemskill)
 
 	sd->skillitem=id;
 	sd->skillitemlv=lv;
-	clif_item_skill(sd,id,lv,str);
+	clif_item_skill(sd,id,lv);
 	return 0;
 }
 /*==========================================

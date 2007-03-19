@@ -62,7 +62,7 @@
 struct skill_db {
 	char *name;
 	char *desc;
-	int range[MAX_SKILL_LEVEL],hit,inf,pl,nk,splash[MAX_SKILL_LEVEL],max;
+	int range[MAX_SKILL_LEVEL],hit,inf,pl[MAX_SKILL_LEVEL],nk,splash[MAX_SKILL_LEVEL],max;
 	int num[MAX_SKILL_LEVEL];
 	int cast[MAX_SKILL_LEVEL],walkdelay[MAX_SKILL_LEVEL],delay[MAX_SKILL_LEVEL];
 	int upkeep_time[MAX_SKILL_LEVEL],upkeep_time2[MAX_SKILL_LEVEL];
@@ -155,7 +155,7 @@ int skill_get_casttype(int id); //[Skotlex]
 int	skill_get_type( int id );
 int	skill_get_hit( int id );
 int	skill_get_inf( int id );
-int	skill_get_pl( int id );
+int	skill_get_pl( int id , int lv );
 int	skill_get_nk( int id );
 int	skill_get_max( int id );
 int	skill_get_range( int id , int lv );
@@ -801,8 +801,8 @@ enum _skill {
 	CG_TAROTCARD,
 	CR_ACIDDEMONSTRATION,
 	CR_CULTIVATION,
-	//492,missing?
-	TK_MISSION = 493,
+	ITEM_ENCHANTARMS,
+	TK_MISSION,
 	SL_HIGH,
 	KN_ONEHAND,
 	AM_TWILIGHT1,

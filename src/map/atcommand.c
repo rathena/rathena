@@ -6355,7 +6355,7 @@ int atcommand_jailfor(const int fd, struct map_session_data* sd, const char* com
 
 	//Added by Coltaro
 	if (pl_sd->sc.count && pl_sd->sc.data[SC_JAILED].timer != -1 && 
-		pl_sd->sc.data[SC_JAILED].val1 != UINT_MAX)
+		pl_sd->sc.data[SC_JAILED].val1 != INT_MAX)
   	{	//Update the player's jail time
 		jailtime += pl_sd->sc.data[SC_JAILED].val1;
 		if (jailtime <= 0) {

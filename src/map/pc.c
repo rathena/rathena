@@ -1721,6 +1721,10 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			clif_status_load(&sd->bl, SI_INTRAVISION, 1);
 		}
 		break;
+	case SP_NO_KNOCKBACK:
+		if(sd->state.lr_flag != 2)
+			sd->special_state.no_knockback = 1;
+		break;
 	case SP_SPLASH_RANGE:
 		if(sd->state.lr_flag != 2 && sd->splash_range < val)
 			sd->splash_range = val;

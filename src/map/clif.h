@@ -233,7 +233,7 @@ int clif_item_repair_list (struct map_session_data *sd, struct map_session_data 
 int clif_item_repaireffect(struct map_session_data *sd, int nameid, int flag);
 int clif_item_refine_list(struct map_session_data *sd);
 
-int clif_item_skill(struct map_session_data *sd,int skillid,int skilllv,const char *name);
+int clif_item_skill(struct map_session_data *sd,int skillid,int skilllv);
 
 int clif_mvp_effect(struct map_session_data *sd);
 int clif_mvp_item(struct map_session_data *sd,int nameid);

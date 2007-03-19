@@ -524,7 +524,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 	char t_uid[256], t_pass[256];
 	char user_password[256];
 
-	int encpasswdok = 0;
+	int encpasswdok = 0, state;
 
 	char md5str[64], md5bin[32];
 
@@ -610,6 +610,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 		return 0;
 	}
 
+	state = atoi(sql_row[9]);
 	//Client Version check
 	if (login_config.check_client_version && account->version != 0) {
 		if (account->version != login_config.client_version_to_connect) {
@@ -618,15 +619,11 @@ int mmo_auth(struct mmo_account* account, int fd)
 		}
 	}           
 
-	if (atoi(sql_row[9]) == -3) {
-		//id is banned
+	switch (state) {
+	case -3: //id is banned
+	case -2: //dynamic ban
 		mysql_free_result(sql_res);
-		return -3;
-	} else if (atoi(sql_row[9]) == -2) { //dynamic ban
-		//id is banned
-		mysql_free_result(sql_res);
-		//add IP list.
-		return -2;
+		return state;
 	}
 
 	if (login_config.use_md5_passwds) {
@@ -683,15 +680,17 @@ int mmo_auth(struct mmo_account* account, int fd)
 		if (ban_until_time > time(NULL)) // always banned
 			return 6; // 6 = Your are Prohibited to log in until %s
 
-		sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0' WHERE `%s`= %s '%s'", login_db, login_db_userid, login_config.case_sensitive ? "BINARY" : "", t_uid);
+		sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0' %s WHERE `%s`= %s '%s'",
+			login_db, state==7?",state='0'":"", login_db_userid,
+			login_config.case_sensitive ? "BINARY" : "", t_uid);
 		if (mysql_query(&mysql_handle, tmpsql)) {
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 		}
 	}
 
-	if (atoi(sql_row[9])) {
-		switch(atoi(sql_row[9])) { // packet 0x006a value + 1
+	if (state) {
+		switch(state) { // packet 0x006a value + 1
 		case 1: // 0 = Unregistered ID
 		case 2: // 1 = Incorrect Password
 		case 3: // 2 = This ID is expired

@@ -530,7 +530,7 @@
 489,9,6,1,0,0x41,0,5,1,no,0,0,0,misc,0	//CG_TAROTCARD#Tarot Card of Fate#
 490,9,8,1,0,0x40,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,misc,0	//CR_ACIDDEMONSTRATION#Acid Demonstration#
 491,1,6,2,0,0x1,0,2,1,no,0,0,0,none,0	//CR_CULTIVATION#Cultivation#
-
+492,0,6,4,0:1:2:3:4:5:6:7:8:9,0x1,0,10,1,no,0,0x2,0,none,0	//ITEM_ENCHANTARMS#Weapon Enchantment#
 493,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0	//TK_MISSION#Taekwon Mission#
 494,9,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0	//SL_HIGH#Spirit of Rebirth#
 495,0,6,4,0,0x1,0,1,1,no,0,0x8,0,weapon,0	//KN_ONEHAND#Onehand Quicken#

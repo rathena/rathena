@@ -833,6 +833,20 @@ static int battle_blewcount_bonus(struct map_session_data *sd, int skill_num)
 	return 0;
 }
 
+int battle_skillatk_bonus(struct map_session_data *sd, int skill_num)
+{
+	int i;
+	if (!sd->skillatk[0].id)
+		return 0;
+	for (i = 0; i < MAX_PC_BONUS && sd->skillatk[i].id &&
+		sd->skillatk[i].id != skill_num; i++);
+
+	if (i < MAX_PC_BONUS && sd->skillatk[i].id)
+		return sd->skillatk[i].val;
+
+	return 0;
+}
+
 struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag);
 struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag);
 
@@ -975,7 +989,7 @@ static struct Damage battle_calc_weapon_attack(
 	}
 
 	t_class = status_get_class(target);
-	s_ele = s_ele_ = skill_get_pl(skill_num);
+	s_ele = s_ele_ = skill_get_pl(skill_num, skill_lv);
 	if (!skill_num || s_ele == -1) { //Take weapon's element
 		s_ele = sstatus->rhw.ele;
 		s_ele_ = sstatus->lhw?sstatus->lhw->ele:0;
@@ -1627,14 +1641,8 @@ static struct Damage battle_calc_weapon_attack(
 		
 		if(sd)
 		{
-			if (skill_num && sd->skillatk[0].id)
-			{	//Additional skill damage.
-				for (i = 0; i < MAX_PC_BONUS && sd->skillatk[i].id &&
-				  	sd->skillatk[i].id != skill_num; i++);
-
-				if (i < MAX_PC_BONUS && sd->skillatk[i].id == skill_num)
-					ATK_ADDRATE(sd->skillatk[i].val);
-			}
+			if (skill_num && (i = battle_skillatk_bonus(sd, skill_num)))
+				ATK_ADDRATE(i);
 
 			if(skill_num != PA_SACRIFICE && skill_num != MO_INVESTIGATE &&
 				skill_num != CR_GRANDCROSS && skill_num != NPC_GRANDDARKNESS &&
@@ -2145,7 +2153,7 @@ struct Damage battle_calc_magic_attack(
 	BL_CAST(BL_PC, target, tsd);
 
 	//Initialize variables that will be used afterwards
-	s_ele = skill_get_pl(skill_num);
+	s_ele = skill_get_pl(skill_num, skill_lv);
 
 	if (s_ele == -1) // pl=-1 : the skill takes the weapon's element
 		s_ele = sstatus->rhw.ele;
@@ -2324,12 +2332,8 @@ struct Damage battle_calc_magic_attack(
 
 		if(sd) {
 			//Damage bonuses
-			if (sd->skillatk[0].id)
-			{
-				for (i = 0; i < MAX_PC_BONUS && sd->skillatk[i].id && sd->skillatk[i].id != skill_num; i++);
-				if (i < MAX_PC_BONUS && sd->skillatk[i].id == skill_num)
-					ad.damage += ad.damage*sd->skillatk[i].val/100;
-			}
+			if ((i = battle_skillatk_bonus(sd, skill_num)))
+				ad.damage += ad.damage*i/100;
 
 			//Ignore Defense?
 			if (!flag.imdef && (
@@ -2468,7 +2472,7 @@ struct Damage  battle_calc_misc_attack(
 		md.blewcount += battle_blewcount_bonus(sd, skill_num);
 	}
 
-	s_ele = skill_get_pl(skill_num);
+	s_ele = skill_get_pl(skill_num, skill_lv);
 	if (s_ele < 0) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
 		s_ele = ELE_NEUTRAL;
 
@@ -2625,12 +2629,9 @@ struct Damage  battle_calc_misc_attack(
 		if (cardfix != 10000)
 			md.damage=md.damage*cardfix/10000;
 	}
-	if (sd && skill_num > 0 && sd->skillatk[0].id != 0)
-	{
-		for (i = 0; i < MAX_PC_BONUS && sd->skillatk[i].id != 0 && sd->skillatk[i].id != skill_num; i++);
-		if (i < MAX_PC_BONUS && sd->skillatk[i].id == skill_num)
-			md.damage += md.damage*sd->skillatk[i].val/100;
-	}
+
+	if (sd && (i = battle_skillatk_bonus(sd, skill_num)))
+		md.damage += md.damage*i/100;
 
 	if(md.damage < 0)
 		md.damage = 0;

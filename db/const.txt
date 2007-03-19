@@ -348,8 +348,8 @@ bRandomAttackIncrease	1072
 bAllStats		1073
 bAgiVit			1074
 bAgiDexStr		1075
-bPerfectHide		1076
-
+bPerfectHide	1076
+bNoKnockback	1077
 bClassChange	1078
 bHPDrainValue	1079
 bSPDrainValue	1080
@@ -392,7 +392,7 @@ bAddItemHealRate	2028
 bSPDrainValueRace	2029
 bExpAddRace	2030
 bSPGainRace	2031
-bSPSubRace2	2032
+bSubRace2	2032
 bAddEffWhenHitShort	2033
 bUnstripableWeapon	2034
 bUnstripableArmor	2035

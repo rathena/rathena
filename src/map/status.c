@@ -351,6 +351,7 @@ void initChangeTables(void) {
 	set_sc(WS_OVERTHRUSTMAX, SC_MAXOVERTHRUST, SI_MAXOVERTHRUST, SCB_NONE);
 	set_sc(CG_LONGINGFREEDOM, SC_LONGING, SI_BLANK, SCB_SPEED|SCB_ASPD);
 	add_sc(CG_HERMODE, SC_HERMODE);
+	set_sc(ITEM_ENCHANTARMS, SC_ENCHANTARMS, SI_BLANK, SCB_ATK_ELE);
 	set_sc(SL_HIGH, SC_SPIRIT, SI_SPIRIT, SCB_PC);
 	set_sc(KN_ONEHAND, SC_ONEHAND, SI_ONEHAND, SCB_ASPD);
 	set_sc(GS_FLING, SC_FLING, SI_BLANK, SCB_DEF|SCB_DEF2);
@@ -1091,7 +1092,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	hide_flag = flag?OPTION_HIDE:(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK);
 		
  	//You cannot hide from ground skills.
-	if(skill_get_pl(skill_num) == ELE_EARTH)
+	if(skill_get_pl(skill_num,1) == ELE_EARTH) //TODO: Need Skill Lv here :/
 		hide_flag &= ~OPTION_HIDE;
 
 	switch (target->type)
@@ -3903,6 +3904,8 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 {
 	if(!sc || !sc->count)
 		return element;
+	if( sc->data[SC_ENCHANTARMS].timer!=-1)
+		return sc->data[SC_ENCHANTARMS].val2;
 	if( sc->data[SC_WATERWEAPON].timer!=-1)
 		return ELE_WATER;
 	if( sc->data[SC_EARTHWEAPON].timer!=-1)
@@ -5743,6 +5746,13 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			//Attack requirements to be blocked:
 			val3 = BF_LONG; //Range
 			val4 = BF_WEAPON|BF_MISC; //Type
+			break;
+		case SC_ENCHANTARMS:
+			//Make sure the received element is valid.
+			if (val2 >= ELE_MAX)
+				val2 = val2%ELE_MAX;
+			else if (val2 < 0)
+				val2 = rand()%ELE_MAX;
 			break;
 		case SC_ARMOR_ELEMENT:
 			//Place here SCs that have no SCB_* data, no skill associated, no ICON

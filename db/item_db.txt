@@ -88,7 +88,7 @@
 582,Orange,Orange,0,300,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(10,20),rand(10,20); },{},{}
 583,Ketupat_,Ketupat,0,7000,,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),rand(40,60); sc_end SC_Poison; sc_end SC_Silence; sc_end SC_Blind; sc_end SC_Confusion; sc_end SC_Curse; sc_end SC_Hallucination; },{},{}
 584,Skewer_Soup,Skewer Soup,0,100,,60,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(40,70),0; },{},{}
-585,Brusti,Brusti,0,2,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(15,20),0; itemskill 74,3,"Magnificat"; },{},{}
+585,Brusti,Brusti,0,2,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(15,20),0; itemskill 74,3; },{},{}
 586,Mother's_Cake,Mother's Cake,0,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),0; },{},{}
 587,Thorny_Fruit,Red Thorn Fruit,0,880,,60,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(270,330),rand(20,30); },{},{}
 588,Spaghetti,Spaghetti,0,100,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(40,70),0; },{},{}
@@ -105,8 +105,8 @@
 607,Yggdrasilberry,Yggdrasil Berry,0,5000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,100; },{},{}
 608,Seed_Of_Yggdrasil,Yggdrasil Seed,0,5000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; },{},{}
 609,Amulet,Amulet,2,100,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-610,Leaf_Of_Yggdrasil,Yggdrasil Leaf,11,4000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 54,1,"Resurrection"; },{},{}
-611,Spectacles,Magnifier,11,40,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 40,1,"Identify"; },{},{}
+610,Leaf_Of_Yggdrasil,Yggdrasil Leaf,11,4000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 54,1; },{},{}
+611,Spectacles,Magnifier,11,40,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 40,1; },{},{}
 // Smithing Items
 612,Portable_Furnace,Mini Furnace,2,150,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 21; },{},{}
 613,Iron_Hammer,Iron Hammer,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 1; },{},{}
@@ -180,21 +180,21 @@
 684,Durian,Durian,0,15000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,10; sc_start SC_MATKPOTION,60000,10; },{},{}
 685,RAMADAN,Ramadan,0,5000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 // Scrolls
-686,Earth_Scroll_1_3,Level 3 Earth Spike,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 90,3,"Earth Spike Level 3"; },{},{}
-687,Earth_Scroll_1_5,Level 5 Earth Spike,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 90,5,"Earth Spike Level 5"; },{},{}
-688,Cold_Scroll_1_3,Level 3 Cold Bolt,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 14,3,"Cold Bolt Level 3"; },{},{}
-689,Cold_Scroll_1_5,Level 5 Cold Bolt,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 14,5,"Cold Bolt Level 5"; },{},{}
-690,Fire_Scroll_1_3,Level 3 Fire Bolt,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 19,3,"Fire Bolt Level 3"; },{},{}
-691,Fire_Scroll_1_5,Level 5 Fire Bolt,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 19,5,"Fire bolt Level 5"; },{},{}
-692,Wind_Scroll_1_3,Level 3 Lightening Bolt,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 20,3,"Lightning Bolt Level 3"; },{},{}
-693,Wind_Scroll_1_5,Level 5 Lightening Bolt,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 20,5,"Lightning Bolt Level 5"; },{},{}
-694,Ghost_Scroll_1_3,Level 3 Soul Strike,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 13,3,"Soul Strike Level 3"; },{},{}
-695,Ghost_Scroll_1_5,Level 5 Soul Strike,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 13,5,"Soul Strike Level 5"; },{},{}
-696,Fire_Scroll_2_1,Level 1 Fire Ball,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 17,1,"Fire Ball Level 1"; },{},{}
-697,Fire_Scroll_2_5,Level 5 Fire Ball,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 17,5,"Fire Ball Level 5"; },{},{}
-698,Fire_Scroll_3_1,Level 1 Fire Wall,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 18,1,"Fire Wall Level 1"; },{},{}
-699,Fire_Scroll_3_5,Level 5 Fire Wall,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 18,5,"Fire Wall Level 5"; },{},{}
-700,Cold_Scroll_2_1,Level 1 Frost Diver,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 15,1,"Frost Diver Level 1"; },{},{}
+686,Earth_Scroll_1_3,Level 3 Earth Spike,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 90,3; },{},{}
+687,Earth_Scroll_1_5,Level 5 Earth Spike,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 90,5; },{},{}
+688,Cold_Scroll_1_3,Level 3 Cold Bolt,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 14,3; },{},{}
+689,Cold_Scroll_1_5,Level 5 Cold Bolt,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 14,5; },{},{}
+690,Fire_Scroll_1_3,Level 3 Fire Bolt,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 19,3; },{},{}
+691,Fire_Scroll_1_5,Level 5 Fire Bolt,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 19,5; },{},{}
+692,Wind_Scroll_1_3,Level 3 Lightening Bolt,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 20,3; },{},{}
+693,Wind_Scroll_1_5,Level 5 Lightening Bolt,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 20,5; },{},{}
+694,Ghost_Scroll_1_3,Level 3 Soul Strike,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 13,3; },{},{}
+695,Ghost_Scroll_1_5,Level 5 Soul Strike,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 13,5; },{},{}
+696,Fire_Scroll_2_1,Level 1 Fire Ball,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 17,1; },{},{}
+697,Fire_Scroll_2_5,Level 5 Fire Ball,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 17,5; },{},{}
+698,Fire_Scroll_3_1,Level 1 Fire Wall,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 18,1; },{},{}
+699,Fire_Scroll_3_5,Level 5 Fire Wall,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 18,5; },{},{}
+700,Cold_Scroll_2_1,Level 1 Frost Diver,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 15,1; },{},{}
 // Etc Items
 //===================================================================
 701,Ora_Ora,Ora Ora,3,,27500,200,,,,,,,,,,,,,{},{},{}
@@ -2526,10 +2526,10 @@
 // More Usable Items
 //===================================================================
 // Scrolls
-12000,Cold_Scroll_2_5,Level 5 Frost Diver,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 15,5,"Frost Diver Level 5"; },{},{}
-12001,Holy_Scroll_1_3,Level 3 Heal,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 28,3,"Heal Level 3"; },{},{}
-12002,Holy_Scroll_1_5,Level 5 Heal,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 28,5,"Heal Level 5"; },{},{}
-12003,Holy_Scroll_2_1,Level 1 Teleport,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 26,1,"Teleport Level 1"; },{},{}
+12000,Cold_Scroll_2_5,Level 5 Frost Diver,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 15,5; },{},{}
+12001,Holy_Scroll_1_3,Level 3 Heal,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 28,3; },{},{}
+12002,Holy_Scroll_1_5,Level 5 Heal,11,2000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 28,5; },{},{}
+12003,Holy_Scroll_2_1,Level 1 Teleport,11,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 26,1; },{},{}
 // Arrow Quivers
 12004,Arrow_Container,Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1750,500; },{},{}
 12005,Iron_Arrow_Container,Iron Arrow Quiver,2,,1,250,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1770,500; },{},{}
@@ -2547,8 +2547,8 @@
 12016,Speed_Up_Potion,Speed Potion,0,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 507; sc_start SC_SpeedUp1,5000,0; },{},{}
 12017,Slow_Down_Potion,Slow Potion,0,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12018,Fire_Cracker,Firecracker,2,,1,20,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(256); },{},{}
-12019,Holy_Egg,Holy Egg,2,,1,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 54,2,"Resurrection"; },{},{}
-12020,Water_Of_Darkness,Cursed_Water,0,,1,30,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SHADOWWEAPON, 1200000, 1; },{},{}
+12019,Holy_Egg,Holy Egg,11,,1,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 54,2; },{},{}
+12020,Water_Of_Darkness,Cursed_Water,11,,1,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,8; },{},{}
 12021,Pork_Belly,Pork,0,,0,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
 12022,Spareribs,Galbi,0,,0,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
 12023,Giftbox_China,Wrapped Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
@@ -2558,10 +2558,10 @@
 // Effect Boxes
 12027,Giggling_Box,Giggling Box,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 9,0; if(rand(100)<30) sc_start SC_Curse,30000,0; },{},{}
 12028,Box_Of_Thunder,Box of Thunder,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SpeedUp0,30000,0; },{},{}
-12029,Gloomy_Box,Box of Gloom,11,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 45,1,"Improve Concentration"; },{},{}
+12029,Gloomy_Box,Box of Gloom,11,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 45,1; },{},{}
 12030,Box_Of_Grudge,Box of Resentment,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,20; },{},{}
 12031,Sleepy_Box,Box of Drowsiness,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,60000,20; },{},{}
-12032,Box_Of_Storm,Box of Storms,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_WATERWEAPON,180000,0; },{},{}
+12032,Box_Of_Storm,Box of Storms,11,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,2; },{},{}
 12033,Box_Of_Sunlight,Box of Sunlight,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Intravision,20000,0; },{},{}
 12034,Painting_Box,Box of Panting,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,9; if(rand(100)<30) sc_start SC_Silence,30000,0; },{},{}
 12035,Lotto_Box01,Lotto Box 01,2,,0,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7361,7370),1; },{},{}
@@ -2647,10 +2647,10 @@
 12112,Tropical_Sograt,Tropical Sograt,0,,500,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Curse,10000,1; },{},{}
 12113,Vermilion_The_Beach,Vermilion on the Beach,0,,500,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Stun,10000,1; },{},{}
 // Elemental Converters
-12114,Flame_Converter,Flame Elemental Converter,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FIREWEAPON,180000,1; },{},{}
-12115,Frost_Converter,Frost Elemental Converter,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_WATERWEAPON,180000,1; },{},{}
-12116,Seismic_Converter,Seismic Elemental Converter,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EARTHWEAPON,180000,1; },{},{}
-12117,Lighting_Converter,Lightning Elemental Converter,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_WINDWEAPON,180000,1; },{},{}
+12114,Flame_Converter,Flame Elemental Converter,11,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,4; },{},{}
+12115,Frost_Converter,Frost Elemental Converter,11,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,2; },{},{}
+12116,Seismic_Converter,Seismic Elemental Converter,11,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,3; },{},{}
+12117,Lighting_Converter,Lightning Elemental Converter,11,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,5; },{},{}
 // Elemental Resistance Potions
 12118,Resist_Fire_Potion,Fire Resist Potion,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Fire,20,Ele_Water,-15; },{},{}
 12119,Resist_Cold_Potion,Cold Resist Potion,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Water,20,Ele_Wind,-15; },{},{}

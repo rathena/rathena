@@ -236,7 +236,6 @@ enum {
 	SC_SKA, // [marquis007]
 	SC_TKREST, // [marquis007]
 	SC_MIRACLE, //SG 'hidden' skill [Komurka]
-	//Ninja/GS states
 	SC_MADNESSCANCEL,
 	SC_ADJUSTMENT,
 	SC_INCREASING,  //230
@@ -259,6 +258,7 @@ enum {
 	SC_INCAGIRATE,
 	SC_INCDEXRATE,
 	SC_JAILED,
+	SC_ENCHANTARMS,
 	SC_MAX, //Automatically updated max, used in for's and at startup to check we are within bounds. [Skotlex]
 };
 int SkillStatusChangeTable(int skill);

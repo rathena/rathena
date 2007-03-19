@@ -19,7 +19,13 @@
 	-----
 
 ========================
+
 03/20
+	* Corrected itemskill calls in the item_db,
+	* Made the weapon enchanting items invoke the ITEM_ENCHANTARMS skill
+	* Corrected Holy Egg not being type 11 (delay consume)
+	* Corrected typo in bonus bSubRace2 (it was called bSPSubRace2 for some
+	  reason) [Skotlex]
 	* Updated new cards [Playtester]
 	- they can all be used now, however some bonuses are still incomplete
 	- also fixed Byeollungum, The Sign and Turtle General Card
