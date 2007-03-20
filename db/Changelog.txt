@@ -20,6 +20,8 @@
 
 ========================
 03/21
+	* Increased Improve Concentration's hide-revealing range to 3 (7x7)
+	  [Skotlex]
 	* Fixed RSX 0806 and General Ygnizem card [Playtester]
 03/20
 	* Corrected itemskill calls in the item_db,

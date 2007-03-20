@@ -4442,6 +4442,10 @@ int status_get_sc_def(struct block_list *bl, int type)
 	case SC_CONFUSION:
 		sc_def = 300 +50*status->str +50*status->int_;
 		break;
+	case SC_ANKLE:
+		sc_def = 100*status->agi;
+		break;
+
 	default:
 		return 0; //Effect that cannot be reduced? Likely a buff.
 	}
@@ -5723,12 +5727,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				tick /= 5; //TODO: Reduce skill's duration. But for how long?
 			break;
 		case SC_ANKLE:
-			if (sd && battle_config.pc_sc_def_rate != 100)
-				tick -= tick*status->agi*battle_config.pc_sc_def_rate/10000;
-			else if (battle_config.mob_sc_def_rate != 100)
-				tick -= tick*status->agi*battle_config.mob_sc_def_rate/10000;
-			else
-				tick -= tick*status->agi/100;
 			if(status->mode&MD_BOSS) // Lasts 5 times less on bosses
 				tick /= 5;
 			// Minimum trap time of 3+0.03*skilllv seconds [celest]
