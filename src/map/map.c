@@ -479,6 +479,8 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick) {
 				status_change_end(bl, SC_BASILICA, -1);
 			if (sc->data[SC_TATAMIGAESHI].timer != -1)
 				status_change_end(bl, SC_TATAMIGAESHI, -1);
+			if (sc->data[SC_MAGICROD].timer != -1)
+				status_change_end(bl, SC_MAGICROD, -1);
 		}
 	}
 	if (moveblock) map_delblock_sub(bl,0);

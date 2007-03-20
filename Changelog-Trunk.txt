@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/03/21
+	* Removed Magic Rod's cast bar.
+	* Gravitation no longer causes damage flinch. [Skotlex]
 2007/03/20
 	* Increased MAX_STATUSCHANGE to 300 to make room for new statuses [DracoRPG]
 	* Reverted mapindex reading from map_list.txt for the map-server [DracoRPG]

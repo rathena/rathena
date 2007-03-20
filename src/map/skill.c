@@ -812,7 +812,6 @@ int skill_calc_heal (struct block_list *bl, int skill_lv)
 	if(bl->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)bl), HLIF_BRAIN)) > 0)
 		heal += heal * skill * 2 / 100;
 
-
 	return heal;
 }
 
@@ -5711,10 +5710,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 		if (ud->walktimer != -1 && ud->skillid != TK_RUN)
 			unit_stop_walking(src,1);
 		
-		if (ud->skillid == SA_MAGICROD)
-			ud->canact_tick = tick;
-		else
-			ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
+		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
 	
 		if (skill_get_state(ud->skillid) != ST_MOVE_ENABLE)
 			unit_set_walkdelay(src, tick, battle_config.default_skill_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);

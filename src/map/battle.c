@@ -2177,6 +2177,7 @@ struct Damage battle_calc_magic_attack(
 				ad.blewcount = 0; //No knockback
 			else
 				ad.blewcount |= 0x10000;
+		case HW_GRAVITATION:
 			ad.dmotion = 0; //No flinch animation.
 			break;
 		case WZ_STORMGUST: //Should knockback randomly.

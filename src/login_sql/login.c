@@ -1545,7 +1545,7 @@ int parse_login(int fd)
 					default : error = "Unknown Error."; break;
 					}
 
-					sprintf(tmpsql, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s', '%d','login failed : %s')", loginlog_db, ntohl(ipl), t_uid, result, error);
+					sprintf(tmpsql, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%lu', '%s', '%d','login failed : %s')", loginlog_db, (unsigned int)ntohl(ipl), t_uid, result, error);
 
 					//query
 					if(mysql_query(&mysql_handle, tmpsql)) {

@@ -966,7 +966,6 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 		if (sc && sc->data[SC_RUN].timer != -1)
 			casttime = 0;
 		break;
-	case SA_MAGICROD:
 	case SA_SPELLBREAKER:
 		temp =1;
 		break;

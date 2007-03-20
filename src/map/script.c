@@ -9257,10 +9257,10 @@ BUILDIN_FUNC(setcastledata)
 			case 25:
 				gc->guardian[index-18].hp = value;
 				if (gc->guardian[index-18].id)
-		  		{	//Update this mob's HP.
+				{	//Update this mob's HP.
 					struct block_list *bl = map_id2bl(gc->guardian[index-18].id);
 					if (!bl)
-			  		{	//Wrong target?
+					{	//Wrong target?
 						gc->guardian[index-18].id = 0;
 						break;
 					}
