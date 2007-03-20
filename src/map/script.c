@@ -10663,7 +10663,7 @@ BUILDIN_FUNC(recovery)
 /*==========================================
  * Get your pet info: getpetinfo(n)  
  * n -> 0:pet_id 1:pet_class 2:pet_name
-	3:friendly 4:hungry
+ * 3:friendly 4:hungry, 5: rename flag.
  *------------------------------------------
  */
 BUILDIN_FUNC(getpetinfo)
@@ -10692,6 +10692,9 @@ BUILDIN_FUNC(getpetinfo)
 				break;
 			case 4:
 				script_pushint(st,pd->pet.hungry);
+				break;
+			case 5:
+				script_pushint(st,pd->pet.rename_flag);
 				break;
 			default:
 				script_pushint(st,0);

@@ -1494,7 +1494,8 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	}
 
 	if (dlist->first_sd && dlist->first_sd->state.autoloot &&
-		(drop_rate <= dlist->first_sd->state.autoloot)
+		drop_rate <= dlist->first_sd->state.autoloot &&
+		check_distance_blxy(&dlist->first_sd->bl, dlist->x, dlist->y, AUTOLOOT_DISTANCE)
 	) {	//Autoloot.
 		if (party_share_loot(
 			dlist->first_sd->status.party_id?

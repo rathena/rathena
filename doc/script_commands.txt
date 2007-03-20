@@ -2737,7 +2737,7 @@ currently has active. Valid types are:
  2 - Pet name. Will return "null" if there's no pet. 
  3 - Pet friendly level (intimacy score). 1000 is full loyalty.
  4 - Pet hungry level. 100 is completely full.
-
+ 5 - Pet rename flag. 0 means this pet has not been named yet.
 ---------------------------------------
 
 *petstat(<flag>)
