@@ -4754,6 +4754,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 	case SA_MAGICROD:
+		clif_skill_nodamage(src,bl,skillid,-1,0); //Skill animation with no yell.
 		sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv));
 		break;
 	case SA_AUTOSPELL:
