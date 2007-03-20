@@ -230,7 +230,9 @@ typedef char bool;
 // hmm only ints?
 //#define swap(a,b) { int temp=a; a=b; b=temp;} 
 // if using macros then something that is type independent
-#define swap(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
+//#define swap(a,b) ((a == b) || ((a ^= b), (b ^= a), (a ^= b)))
+// Avoid "value computed is not used" warning and generates the same assembly code
+#define swap(a,b) if (a != b) ((a ^= b), (b ^= a), (a ^= b))
 
 #ifndef max
 #define max(a,b) (((a) > (b)) ? (a) : (b))
