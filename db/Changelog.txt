@@ -19,7 +19,8 @@
 	-----
 
 ========================
-
+03/21
+	* Fixed RSX 0806 and General Ygnizem card [Playtester]
 03/20
 	* Corrected itemskill calls in the item_db,
 	* Made the weapon enchanting items invoke the ITEM_ENCHANTARMS skill
