@@ -1,0 +1,51 @@
+//by Lupus.
+// *** Usage of Global_Functions.txt (you can translate Global_Functions.txt function messages)
+// Here's a polite wolf NPC ^_- Luppy
+// learn how to make your NPC more alive.
+// PS don't use it as a normal NPC in your server. It's exploitable 8)
+
+prontera,167,177,5	script	Luppy	1107,{
+        mes "[Luppy]";
+
+	//say random greeting from Global_Functions.txt
+	mes callfunc("F_Hi");
+
+	//say a compliment according to player's gender
+	//1st string is for FEMALE, 2nd for MALE
+	mes callfunc("F_Sex","What a beautiful lady!","What a handsome man!");
+
+	//add some random greeting and goodbye into the menu
+	menu callfunc("F_Hi"),-, callfunc("F_Bye"),M_BYE;
+
+        mes "[Luppy]";
+	//give a random prize from set list of items
+	if(@gotstuff){
+		//again, say stuff according to player's gender
+		mes "I like "+callfunc("F_Sex","smiling ladies!","bloody pirates!");
+
+		//show one of 3 emotion from the list (we added ,1 to show emotion over PLAYER's head)
+		emotion callfunc("F_RandMes",3,e_scissors,e_kis,e_pat),1;
+		close;
+	}
+
+	//we set a temp var to give present just once. Player can get more by RE-entering the server
+	set @gotstuff,1;
+
+	//get item Id from the list of presents: Apple, Mastela Fruit, Yggdrasil Seed or Orange Juice
+	set @itemIDfromList, callfunc("F_RandMes",4,512,522,608,620);
+
+	//again, say stuff according to player's gender
+	mes "Hey, "+callfunc("F_Sex","sister!","brother!")+" I have "+getitemname(@itemIDfromList)+" for you!";
+
+	//get the item from the list
+	getitem @itemIDfromList,1;
+	close;
+
+M_BYE:
+	mes "[Luppy]";
+	//add some random goodbye from Global_Functions.txt
+	mes callfunc("F_Bye");
+	close;
+}
+
+//Please, be more creative. Or else this li'l wolfy would eat you up!

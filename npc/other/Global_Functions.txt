@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.08
+//= 2.09
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -29,8 +29,8 @@
 //= 2.05 Book of Devil -> MISC_QUEST|256, clear other Niflheim garbage vars [Lupus]
 //=	+more garbage clean
 //= 2.06 Pass to Bio-Lab -> MISC_QUEST|512 [Lupus]
-//= 2.07 Added TK_Q variable clear [Lupus]
-//- 2.08 Added NINJ_Q variable clear [Lupus]
+//= 2.07 Added TK_Q variable clear. 2.08 Added NINJ_Q variable clear [Lupus]
+//= 2.09 Cleared F_ClearGarbage [Lupus]
 //============================================================ 
 
 
@@ -80,24 +80,6 @@ function	script	F_ClearJobVar	{
 
 function	script	F_ClearGarbage	{
 	// Clear outdated global VARS
-	//DTS Vote System
-	if($dtsglobalelig) set $dtsglobalelig,0;
-	if($dts&(1<<6)) set $dts,$dts&~(1<<6);
-	//Cube Room
-	if(hzdun) {
-		set MISC_QUEST,MISC_QUEST|512;
-		set num1,0;	set num2,0;	set num3,0;	set num4,0;	set num5,0;
-		set num6,0;	set num7,0;	set num8,0;	set num9,0;
-		set hzdun,0; set cubekey,0; set piciburn,0;
-	}
-	//Airship
-	if($lengths){
-		cleararray $textstringsa$[0],"",getarraysize($textstringsa$);
-		cleararray $textstringsb$[0],"",getarraysize($textstringsb$);
-		cleararray $textstringsc$[0],"",getarraysize($textstringsc$);
-		cleararray $compstring$[0],"",getarraysize($compstring$);
-		cleararray $lengths[0],0,getarraysize($lengths);
-	}
 	//Shinkskas Quest garbage
 	if(Shinokas_Quest > 7){
 		set ein_scientist,0;
@@ -221,7 +203,7 @@ function	script	F_RandMes	{
 // *** Function "F_Sex"
 //////////////////////////////////////////////////////////////////////////////////
 //returns 1st string if female, 2nd string otherwise
-// Example: mes callfunc("F_Sex","What a beautiful lady!","What a handsom man!");
+// Example: mes callfunc("F_Sex","What a beautiful lady!","What a handsome man!");
 
 function	script	F_SexMes	{
 	return getarg(Sex);

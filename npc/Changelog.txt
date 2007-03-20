@@ -27,6 +27,7 @@ KarLaeda
 Date		Added
 ======
 2007/03/20
+	* Added npc/sample/npc_live_dialogues.txt how to use Global_Functions.txt [Lupus]
 	* Removed duplicate Noyee npc (skipped in r9943 ?)
 2007/03/17
 	* Fixed a missing curly brace and removed some more .gat-s [ultramage]
