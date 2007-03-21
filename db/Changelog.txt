@@ -19,6 +19,8 @@
 	-----
 
 ========================
+03/22
+	* Optimized Aliza Card [Lupus]
 03/21
 	* Increased Improve Concentration's hide-revealing range to 3 (7x7)
 	  [Skotlex]
