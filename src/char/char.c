@@ -99,7 +99,7 @@ int log_inter = 1;	// loggin inter or not [devil]
 
 struct char_session_data{
 	int account_id, login_id1, login_id2, sex;
-	int found_char[9];
+	int found_char[MAX_CHARS];
 	char email[40]; // e-mail (default: a@a.com) by [Yor]
 	time_t connect_until_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 };
@@ -1145,7 +1145,7 @@ int make_new_char(int fd, unsigned char *dat) {
 	} // else, all letters/symbols are authorised (except control char removed before)
 
 	if (dat[24] + dat[25] + dat[26] + dat[27] + dat[28] + dat[29] != 5*6 || // stats
-	    dat[30] >= 9 || // slots (dat[30] can not be negativ)
+	    dat[30] >= MAX_CHARS || // slots (dat[30] can not be negativ)
 	    dat[33] <= 0 || dat[33] >= 24 || // hair style
 	    dat[31] >= 9) { // hair color (dat[31] can not be negativ)
 		char_log("Make new char error (invalid values): (connection #%d, account: %d) slot %d, name: %s, stats: %d+%d+%d+%d+%d+%d=%d, hair: %d, hair color: %d" RETCODE,
@@ -1731,11 +1731,11 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 	for(i = 0; i < char_num; i++) {
 		if (char_dat[i].status.account_id == sd->account_id) {
 			sd->found_char[found_num] = i;
-			if( ++found_num == 9 )
+			if( ++found_num == MAX_CHARS )
 				break;
 		}
 	}
-	for(i = found_num; i < 9; i++)
+	for(i = found_num; i < MAX_CHARS; i++)
 		sd->found_char[i] = -1;
 
 
@@ -2295,7 +2295,7 @@ int parse_tologin(int fd) {
 							for (j = 0; j < fd_max; j++) {
 								if (session[j] && (sd2 = (struct char_session_data*)session[j]->session_data) &&
 									sd2->account_id == char_dat[char_num-1].status.account_id) {
-									for (k = 0; k < 9; k++) {
+									for (k = 0; k < MAX_CHARS; k++) {
 										if (sd2->found_char[k] == char_num-1) {
 											sd2->found_char[k] = i;
 											break;
@@ -3477,10 +3477,10 @@ int parse_char(int fd) {
 				break;
 			}
 			// otherwise, load the character
-			for (ch = 0; ch < 9; ch++)
+			for (ch = 0; ch < MAX_CHARS; ch++)
 				if (sd->found_char[ch] >= 0 && char_dat[sd->found_char[ch]].status.char_num == char_num)
 					break;
-			if (ch == 9)
+			if (ch == MAX_CHARS)
 			{	//Not found?? May be forged packet.
 				break;
 			}
@@ -3628,7 +3628,7 @@ int parse_char(int fd) {
 			WFIFOSET(fd,len);
 			RFIFOSKIP(fd,37);
 		}
-			for(ch = 0; ch < 9; ch++) {
+			for(ch = 0; ch < MAX_CHARS; ch++) {
 				if (sd->found_char[ch] == -1) {
 					sd->found_char[ch] = i;
 					break;
@@ -3657,7 +3657,7 @@ int parse_char(int fd) {
 					break;
 				}
 				// we change the packet to set it like selection.
-				for (i = 0; i < 9; i++)
+				for (i = 0; i < MAX_CHARS; i++)
 					if (sd->found_char[i] != -1 && char_dat[sd->found_char[i]].status.char_id == cid) {
 						// we save new e-mail
 						memcpy(sd->email, email, 40);
@@ -3673,7 +3673,7 @@ int parse_char(int fd) {
 						// not send packet, it's modify of actual packet
 						break;
 					}
-				if (i == 9) {
+				if (i == MAX_CHARS) {
 					WFIFOW(fd, 0) = 0x70;
 					WFIFOB(fd, 2) = 0; // 00 = Incorrect Email address
 					WFIFOSET(fd, 3);
@@ -3687,11 +3687,11 @@ int parse_char(int fd) {
 				WFIFOSET(fd, 3);
 				break;
 			}
-			for (i = 0; i < 9; i++) {
+			for (i = 0; i < MAX_CHARS; i++) {
 				if (sd->found_char[i] == -1) continue;
 				if (char_dat[sd->found_char[i]].status.char_id == cid) break;
 			}
-			if (i == 9) {
+			if (i == MAX_CHARS) {
 				WFIFOW(fd,0) = 0x70;
 				WFIFOB(fd,2) = 0;
 				WFIFOSET(fd,3);
@@ -3708,7 +3708,7 @@ int parse_char(int fd) {
 				for (j = 0; j < fd_max; j++) {
 					if (session[j] && (sd2 = (struct char_session_data*)session[j]->session_data) &&
 						sd2->account_id == char_dat[char_num-1].status.account_id) {
-						for (k = 0; k < 9; k++) {
+						for (k = 0; k < MAX_CHARS; k++) {
 							if (sd2->found_char[k] == char_num-1) {
 								sd2->found_char[k] = sd->found_char[i];
 								break;
@@ -3719,9 +3719,9 @@ int parse_char(int fd) {
 				}
 			}
 			char_num--;
-			for(ch = i; ch < 9-1; ch++)
+			for(ch = i; ch < MAX_CHARS-1; ch++)
 				sd->found_char[ch] = sd->found_char[ch+1];
-			sd->found_char[8] = -1;
+			sd->found_char[MAX_CHARS-1] = -1;
 			WFIFOW(fd,0) = 0x6f;
 			WFIFOSET(fd,2);
 			break;
