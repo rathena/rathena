@@ -9237,20 +9237,24 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 	if(sd->sc.data[SC_BLADESTOP].timer!=-1 || sd->sc.data[SC_BERSERK].timer!=-1 )
 		return;
 
-	if(!sd->status.inventory[index].identify) {		// 未鑑定
+	if(!sd->status.inventory[index].identify) {
 		clif_equipitemack(sd,index,0,0);	// fail
 		return;
 	}
-	//ペット用装備であるかないか
-	if(sd->inventory_data[index]) {
-		if(sd->inventory_data[index]->type != IT_PETARMOR){
-			if(sd->inventory_data[index]->type == IT_AMMO)
-				pc_equipitem(sd,index,EQP_AMMO); //Client doesn't sends the position.
-			else
-				pc_equipitem(sd,index,RFIFOW(fd,4));
-		} else
-			pet_equipitem(sd,index);
+
+	if(!sd->inventory_data[index])
+		return;
+
+	if(sd->inventory_data[index]->type == IT_PETARMOR){
+		pet_equipitem(sd,index);
+		return;
 	}
+	
+	//Client doesn't sends the position for ammo.
+	if(sd->inventory_data[index]->type == IT_AMMO)
+		pc_equipitem(sd,index,EQP_AMMO);
+	else
+		pc_equipitem(sd,index,RFIFOW(fd,4));
 }
 
 /*==========================================
