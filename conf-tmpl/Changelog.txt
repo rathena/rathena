@@ -1,5 +1,8 @@
 Date	Added
 
+2007/03/22
+	* Made packet_ver_flag's description use hexadecimal values for the packet
+	  versions, and changed the default to 0xFFFF. [Skotlex]
 2007/03/19
 	* Removed the 'charsave_method' setting from inter_athena.conf
 2007/03/17

@@ -12198,27 +12198,34 @@ BUILDIN_FUNC(setitemscript)
 	int item_id,n=0;
 	const char *script;
 	struct item_data *i_data;
-	struct script_code *dstscript;
+	struct script_code **dstscript;
 
 	item_id	= conv_num(st,script_getdata(st,2));
 	script = conv_str(st,script_getdata(st,3));
-	if( st->end>st->start+4 )
+	if( script_hasdata(st,4) )
 		n=conv_num(st,script_getdata(st,4));
 	i_data = itemdb_exists(item_id);
 
-	if (i_data && script!=NULL && script[0]=='{' && n<3) {
-		if(n==2)
-			dstscript = i_data->unequip_script;
-		else if(n==1)
-			dstscript = i_data->equip_script;
-		else
-			dstscript = i_data->script;
-		if(dstscript)
-			script_free_code(dstscript);
-		dstscript = parse_script(script, "script_setitemscript", 0, 0);
-		script_pushint(st,1);
-	} else
+	if (!i_data || script==NULL || script[0]!='{') {
 		script_pushint(st,0);
+		return 0;
+	}
+	switch (n) {
+	case 2:
+		dstscript = &i_data->unequip_script;
+		break;
+	case 1:
+		dstscript = &i_data->equip_script;
+		break;
+	default:
+		dstscript = &i_data->script;
+		break;
+	}
+	if(*dstscript)
+		script_free_code(*dstscript);
+
+	*dstscript = parse_script(script, "script_setitemscript", 0, 0);
+	script_pushint(st,1);
 	return 0;
 }
 
@@ -12838,14 +12845,10 @@ BUILDIN_FUNC(unitwarp)
 	y = (short)conv_num(st, script_getdata(st,5));
 
 	bl = map_id2bl(unit_id);
-	if( map > 0 && bl != NULL )
-	{
+	if( map >= 0 && bl != NULL )
 		script_pushint(st, unit_warp(bl,map,x,y,0));
-	}
 	else
-	{
 		script_pushint(st, 0);
-	}
 
 	return 0;
 }
@@ -12860,57 +12863,56 @@ BUILDIN_FUNC(unitwarp)
 BUILDIN_FUNC(unitattack)
 {
 	struct block_list* unit_bl;
+	struct block_list* target_bl = NULL;
+	struct script_data* data;
+	int actiontype = 0;
 
 	// get unit
 	unit_bl = map_id2bl(conv_num(st, script_getdata(st, 2)));
-	if( unit_bl != NULL )
-	{
-		struct block_list* target_bl = NULL;
-		struct script_data* data;
-		int actiontype = 0;
-
-		// get target
-		data = script_getdata(st, 3);
-		get_val(st, data);
-		if( data_isstring(data) )
-		{
-			struct map_session_data* sd = map_nick2sd(conv_str(st, data));
-			if( sd != NULL )
-				target_bl = &sd->bl;
-		}
-		if( target_bl == NULL )
-			target_bl = map_id2bl(conv_num(st, data));
-
-		// get actiontype
-		if( script_hasdata(st,4) )
-			actiontype = conv_num(st, script_getdata(st, 4));
-
-		// request the attack
-		if( target_bl != NULL )
-		{
-			switch( unit_bl->type )
-			{
-			case BL_PC:
-				clif_parse_ActionRequest_sub(((TBL_PC *)unit_bl), actiontype > 0 ? 0x07 : 0x00, target_bl->id, gettick());
-				script_pushint(st, 1);
-				return 0;
-			case BL_MOB:
-				((TBL_MOB *)unit_bl)->state.killer = 1;
-				((TBL_MOB *)unit_bl)->target_id = target_bl->id;
-				break;
-			case BL_PET:
-				((TBL_PET *)unit_bl)->target_id = target_bl->id;
-				break;
-			default:
-				ShowError("script:unitattack: unsupported source unit type %d\n", unit_bl->type);
-				script_pushint(st, 0);
-				return  0;
-			}
-			script_pushint(st, unit_walktobl(unit_bl, target_bl, 65025, 2));
-		}
+	if( unit_bl == NULL ) {
+		script_pushint(st, 0);
+		return 0;
 	}
-	script_pushint(st, 0);
+	
+	data = script_getdata(st, 3);
+	get_val(st, data);
+	if( data_isstring(data) )
+	{
+		struct map_session_data* sd = map_nick2sd(conv_str(st, data));
+		if( sd != NULL )
+			target_bl = &sd->bl;
+	} else
+		target_bl = map_id2bl(conv_num(st, data));
+	// request the attack
+	if( target_bl == NULL )
+	{
+		script_pushint(st, 0);
+		return 0;
+	}
+	
+	// get actiontype
+	if( script_hasdata(st,4) )
+		actiontype = conv_num(st, script_getdata(st, 4));
 
+	switch( unit_bl->type )
+	{
+	case BL_PC:
+		clif_parse_ActionRequest_sub(((TBL_PC *)unit_bl), actiontype > 0 ? 0x07 : 0x00, target_bl->id, gettick());
+		script_pushint(st, 1);
+		return 0;
+	case BL_MOB:
+		((TBL_MOB *)unit_bl)->state.killer = 1;
+		((TBL_MOB *)unit_bl)->target_id = target_bl->id;
+		break;
+	case BL_PET:
+		((TBL_PET *)unit_bl)->target_id = target_bl->id;
+		break;
+	default:
+		ShowError("script:unitattack: unsupported source unit type %d\n", unit_bl->type);
+		script_pushint(st, 0);
+		return  0;
+	}
+	script_pushint(st, unit_walktobl(unit_bl, target_bl, 65025, 2));
 	return 0;
 }
 
