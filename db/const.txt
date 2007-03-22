@@ -382,7 +382,7 @@ bSkillAtk	2018
 bUnstripable	2019
 bAddDamageByClass	2020
 bSPGainValue	2021
-bIgnoreDefMob	2022
+
 bHPLossRate	2023
 bAddRace2	2024
 bHPGainValue	2025

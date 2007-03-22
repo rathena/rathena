@@ -1375,8 +1375,8 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				case MC_CARTREVOLUTION:
 					skillratio += 50;
-					if(sd && sd->cart_max_weight > 0 && sd->cart_weight > 0)
-						skillratio += 100*sd->cart_weight/sd->cart_max_weight; // +1% every 1% weight
+					if(sd && sd->cart_weight)
+						skillratio += 100*sd->cart_weight/battle_config.max_cart_weight; // +1% every 1% weight
 					else if (!sd)
 						skillratio += 150; //Max damage for non players.
 					break;
@@ -1499,8 +1499,8 @@ static struct Damage battle_calc_weapon_attack(
 					i = 10 * (16 - skill_lv);
 					if (i < 1) i = 1;
 					//Preserve damage ratio when max cart weight is changed.
-					if(sd && sd->cart_weight && sd->cart_max_weight)
-						skillratio += sd->cart_weight/i * 80000/sd->cart_max_weight - 100;
+					if(sd && sd->cart_weight)
+						skillratio += sd->cart_weight/i * 80000/battle_config.max_cart_weight - 100;
 					else if (!sd)
 						skillratio += 80000 / i - 100;
 					break;
@@ -1669,7 +1669,6 @@ static struct Damage battle_calc_weapon_attack(
 			if (skill_num != CR_GRANDCROSS && skill_num != NPC_GRANDDARKNESS)
 		  	{	//Ignore Defense?
 				if (!flag.idef && (
-					(target->type == BL_MOB && sd->right_weapon.ignore_def_mob & (is_boss(target)?2:1)) ||
 					sd->right_weapon.ignore_def_ele & (1<<tstatus->def_ele) ||
 					sd->right_weapon.ignore_def_race & (1<<tstatus->race) ||
 					sd->right_weapon.ignore_def_race & (is_boss(target)?1<<RC_BOSS:1<<RC_NONBOSS)
@@ -1677,7 +1676,6 @@ static struct Damage battle_calc_weapon_attack(
 					flag.idef = 1;
 
 				if (!flag.idef2 && (
-					(target->type == BL_MOB && sd->left_weapon.ignore_def_mob & (is_boss(target)?2:1)) ||
 					sd->left_weapon.ignore_def_ele & (1<<tstatus->def_ele) ||
 					sd->left_weapon.ignore_def_race & (1<<tstatus->race) ||
 					sd->left_weapon.ignore_def_race & (is_boss(target)?1<<RC_BOSS:1<<RC_NONBOSS)

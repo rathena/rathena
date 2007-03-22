@@ -2580,9 +2580,9 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 	case SP_CARTINFO:
 		WFIFOW(fd,0)=0x121;
 		WFIFOW(fd,2)=sd->cart_num;
-		WFIFOW(fd,4)=sd->cart_max_num;
+		WFIFOW(fd,4)=MAX_CART;
 		WFIFOL(fd,6)=sd->cart_weight;
-		WFIFOL(fd,10)=sd->cart_max_weight;
+		WFIFOL(fd,10)=battle_config.max_cart_weight;
 		len=14;
 		break;
 

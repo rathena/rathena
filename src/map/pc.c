@@ -1865,12 +1865,6 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		if(!sd->state.lr_flag)
 			sd->sp_gain_value += val;
 		break;
-	case SP_IGNORE_DEF_MOB:	// 0:normal monsters only, 1:affects boss monsters as well
-		if(!sd->state.lr_flag)
-			sd->right_weapon.ignore_def_mob |= 1<<val;
-		else if(sd->state.lr_flag == 1)
-			sd->left_weapon.ignore_def_mob |= 1<<val;
-		break;
 	case SP_HP_GAIN_VALUE:
 		if(!sd->state.lr_flag)
 			sd->hp_gain_value += val;
@@ -2796,10 +2790,12 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 	if(amount <= 0)
 		return 0;
 
-	if (sd->status.inventory[n].nameid <= 0 ||
-	    sd->status.inventory[n].amount < amount ||
-	    sd->trade_partner != 0 || sd->vender_id != 0 ||
-	    sd->status.inventory[n].amount <= 0)
+	if(sd->status.inventory[n].nameid <= 0 ||
+		sd->status.inventory[n].amount < amount ||
+		sd->trade_partner != 0 || sd->vender_id != 0 ||
+		sd->status.inventory[n].amount <= 0 ||
+		!sd->inventory_data[n] //pc_delitem would fail on this case.
+		)
 		return 0;
 
 	if (map[sd->bl.m].flag.nodrop) {
@@ -3060,7 +3056,7 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 		return 1;
 	}
 
-	if((w=data->weight*amount) + sd->cart_weight > sd->cart_max_weight)
+	if((w=data->weight*amount) + sd->cart_weight > battle_config.max_cart_weight)
 		return 1;
 
 	i=MAX_CART;

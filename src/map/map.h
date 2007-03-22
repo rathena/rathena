@@ -441,16 +441,15 @@ struct weapon_data {
 	//  in status_calc_pc as well! All the following are automatically zero'ed. [Skotlex]
 	int overrefine;
 	int star;
-	int ignore_def_ele;
-	int ignore_def_race;
-	int def_ratio_atk_ele;
-	int def_ratio_atk_race;
 	int addele[ELE_MAX];
 	int addrace[RC_MAX];
 	int addrace2[RC_MAX];
 	int addsize[3];
 
-	short ignore_def_mob;
+	unsigned char ignore_def_ele;
+	unsigned char ignore_def_race;
+	unsigned char def_ratio_atk_ele;
+	unsigned char def_ratio_atk_race;
 	struct drain_data {
 		short rate;
 		short per;
@@ -630,7 +629,7 @@ struct map_session_data {
 	struct item_data *inventory_data[MAX_INVENTORY];
 	short equip_index[11];
 	unsigned int weight,max_weight;
-	int cart_weight,cart_max_weight,cart_num,cart_max_num;
+	int cart_weight,cart_num;
 	int fd;
 	unsigned short mapindex;
 	unsigned short prev_speed,prev_adelay;
@@ -724,8 +723,6 @@ struct map_session_data {
 	int critical_def,double_rate;
 	int long_attack_atk_rate; //Long range atk rate, not weapon based. [Skotlex]
 	int near_attack_def_rate,long_attack_def_rate,magic_def_rate,misc_def_rate;
-	int ignore_mdef_ele;
-	int ignore_mdef_race;
 	int perfect_hit;
 	int perfect_hit_add;
 	int get_zeny_rate;
@@ -757,6 +754,8 @@ struct map_session_data {
 	short add_def_count,add_mdef_count;
 	short add_dmg_count,add_mdmg_count;
 
+	unsigned char ignore_mdef_ele;
+	unsigned char ignore_mdef_race;
 	// zeroed vars end here.
 
 	int castrate,delayrate,hprate,sprate,dsprate;
@@ -1200,14 +1199,13 @@ enum _sp {
 	SP_HP_DRAIN_VALUE,SP_SP_DRAIN_VALUE, // 1079-1080
 	SP_WEAPON_ATK,SP_WEAPON_ATK_RATE, // 1081-1082
 	SP_DELAYRATE,SP_HP_DRAIN_RATE_RACE,SP_SP_DRAIN_RATE_RACE, // 1083-1085
-	
 	SP_RESTART_FULL_RECOVER=2000,SP_NO_CASTCANCEL,SP_NO_SIZEFIX,SP_NO_MAGIC_DAMAGE,SP_NO_WEAPON_DAMAGE,SP_NO_GEMSTONE, // 2000-2005
 	SP_NO_CASTCANCEL2,SP_NO_MISC_DAMAGE,SP_UNBREAKABLE_WEAPON,SP_UNBREAKABLE_ARMOR, SP_UNBREAKABLE_HELM, // 2006-2010
 	SP_UNBREAKABLE_SHIELD, SP_LONG_ATK_RATE, // 2011-2012
 
 	SP_CRIT_ATK_RATE, SP_CRITICAL_ADDRACE, SP_NO_REGEN, SP_ADDEFF_WHENHIT, SP_AUTOSPELL_WHENHIT, // 2013-2017
 	SP_SKILL_ATK, SP_UNSTRIPABLE, SP_ADD_DAMAGE_BY_CLASS, // 2018-2020
-	SP_SP_GAIN_VALUE, SP_IGNORE_DEF_MOB, SP_HP_LOSS_RATE, SP_ADDRACE2, SP_HP_GAIN_VALUE, // 2021-2025
+	SP_SP_GAIN_VALUE, SP_FREE, SP_HP_LOSS_RATE, SP_ADDRACE2, SP_HP_GAIN_VALUE, // 2021-2025
 	SP_SUBSIZE, SP_HP_DRAIN_VALUE_RACE, SP_ADD_ITEM_HEAL_RATE, SP_SP_DRAIN_VALUE_RACE, SP_EXP_ADDRACE,	// 2026-2030
 	SP_SP_GAIN_RACE, SP_SUBRACE2, SP_ADDEFF_WHENHIT_SHORT,	// 2031-2033
 	SP_UNSTRIPABLE_WEAPON,SP_UNSTRIPABLE_ARMOR,SP_UNSTRIPABLE_HELM,SP_UNSTRIPABLE_SHIELD,  // 2034-2037
@@ -1215,6 +1213,7 @@ enum _sp {
 	SP_ADD_SKILL_BLOW, SP_SP_VANISH_RATE //2041
 	//Before adding another, note that these are free:
 	//1024 (SP_FREE2, previous matk)
+	//2022 (SP_FREE, previous bDefIgnoreMob)
 };
 
 enum _look {

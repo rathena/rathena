@@ -1566,9 +1566,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 				continue;
 			sd->weight += sd->inventory_data[i]->weight*sd->status.inventory[i].amount;
 		}
-		sd->cart_max_weight=battle_config.max_cart_weight;
 		sd->cart_weight=0;
-		sd->cart_max_num=MAX_CART;
 		sd->cart_num=0;
 		for(i=0;i<MAX_CART;i++){
 			if(sd->status.cart[i].nameid==0)
@@ -1675,8 +1673,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->long_attack_def_rate)
 		+ sizeof(sd->magic_def_rate)
 		+ sizeof(sd->misc_def_rate)
-		+ sizeof(sd->ignore_mdef_ele)
-		+ sizeof(sd->ignore_mdef_race)
 		+ sizeof(sd->perfect_hit)
 		+ sizeof(sd->perfect_hit_add)
 		+ sizeof(sd->get_zeny_rate)
@@ -1716,6 +1712,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->add_mdef_count)
 		+ sizeof(sd->add_dmg_count)
 		+ sizeof(sd->add_mdmg_count)
+		// chars
+		+ sizeof(sd->ignore_mdef_ele)
+		+ sizeof(sd->ignore_mdef_race)
 		);
 
 	// Parse equipment.
