@@ -14,7 +14,7 @@
 //=      and other fixes, thanks to Shinomori
 //= 1.02 Fixed & Spell Checked [massdriller]
 //= 1.03 Fixed 2 NPC names, slight optimization [Lupus]
-//= 1.04 Fixed a few typo's [Nexon]
+//= 1.04 Fixed a few typos [Nexon]
 //= 1.05 Changed all breaks to ends. [Skotlex]
 //= 1.06 The Captain now uses iRO dialog [MasterOfMuppets]
 //= 1.07 Implemented a missing NPC [MasterOfMuppets]

@@ -125,7 +125,7 @@ char date_format[32] = "%Y-%m-%d %H:%M:%S";
 //
 //  check <account_name> <password>
 //    Check the validity of a password for an account
-//    NOTE: Server will never sends back a password.
+//    NOTE: Server will never send back a password.
 //          It's the only method you have to know if a password is correct.
 //          The other method is to have a ('physical') access to the accounts file.
 //
@@ -933,7 +933,7 @@ void display_help(char* param, int language) {
 		} else if (strcmp(command, "check") == 0) {
 			printf("check <account_name> <password>\n");
 			printf("  Check the validity of a password for an account.\n");
-			printf("  NOTE: Server will never sends back a password.\n");
+			printf("  NOTE: Server will never send back a password.\n");
 			printf("        It's the only method you have to know if a password is correct.\n");
 			printf("        The other method is to have a ('physical') access to the accounts file.\n");
 		} else if (strcmp(command, "create") == 0) {

@@ -14,7 +14,7 @@
 //= Implemented the 'Cheese'/Stone of Awakening quest.  Re-organized stuff. [kobra_k88]
 //= 1.2b Added Baby Class support [Lupus]
 //= 1.3 Spell Checked and Fixed [massdriller]
-//= 1.4 Fixed typo’s [Nexon]
+//= 1.4 Fixed typos [Nexon]
 //= 1.5 Removed Duplicates [Silent]
 //= 1.6 Split doomed sword quest to quests/quests_comodo.txt [Evera]
 //============================================================

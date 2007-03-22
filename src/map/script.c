@@ -10939,11 +10939,8 @@ BUILDIN_FUNC(message)
 }
 
 /*==========================================
- * npctalk (sends message to surrounding
- * area) [Valaris]
- *------------------------------------------
- */
-
+ * npctalk (sends message to surrounding area)
+ *------------------------------------------*/
 BUILDIN_FUNC(npctalk)
 {
 	const char *str;

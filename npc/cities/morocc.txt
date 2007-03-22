@@ -14,7 +14,7 @@
 //= (in both NPC/Warps) [Lupus]. Removed it from NPC and put in Warp
 //= 1.3 Removed some NPC due to Assassin Job Quest [kobra_k88]
 //= 1.3b mobs name corrected [Lupus], 1.3c - Adv classes support
-//= 1.4 Fixed typo’s [Nexon]
+//= 1.4 Fixed typos [Nexon]
 //= 1.5 Added a lvl 4 weapon quest related NPC [MasterOfMuppets]
 //= 1.6 Added Bartender NPC, made by Persian69 [Vicious_Pucca]
 //= 1.7 Removed Duplicates [Silent]

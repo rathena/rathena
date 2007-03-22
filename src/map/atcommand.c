@@ -4456,7 +4456,7 @@ int atcommand_char_block(const int fd, struct map_session_data* sd, const char* 
 		return -1;
 	} else {
 		chrif_char_ask_name(sd->status.account_id, atcmd_player_name, 1, 0, 0, 0, 0, 0, 0); // type: 1 - block
-		clif_displaymessage(fd, msg_txt(88)); // Character name sends to char-server to ask it.
+		clif_displaymessage(fd, msg_txt(88)); // Character name sent to char-server to ask it.
 	}
 
 	return 0;
@@ -4542,7 +4542,7 @@ int atcommand_char_ban(const int fd, struct map_session_data* sd, const char* co
 		return -1;
 	} else {
 		chrif_char_ask_name(sd->status.account_id, atcmd_player_name, 2, year, month, day, hour, minute, second); // type: 2 - ban
-		clif_displaymessage(fd, msg_txt(88)); // Character name sends to char-server to ask it.
+		clif_displaymessage(fd, msg_txt(88)); // Character name sent to char-server to ask it.
 	}
 
 	return 0;
@@ -4573,7 +4573,7 @@ int atcommand_char_unblock(const int fd, struct map_session_data* sd, const char
 	} else {
 		// send answer to login server via char-server
 		chrif_char_ask_name(sd->status.account_id, atcmd_player_name, 3, 0, 0, 0, 0, 0, 0); // type: 3 - unblock
-		clif_displaymessage(fd, msg_txt(88)); // Character name sends to char-server to ask it.
+		clif_displaymessage(fd, msg_txt(88)); // Character name sent to char-server to ask it.
 	}
 
 	return 0;
@@ -4604,7 +4604,7 @@ int atcommand_char_unban(const int fd, struct map_session_data* sd, const char* 
 	} else {
 		// send answer to login server via char-server
 		chrif_char_ask_name(sd->status.account_id, atcmd_player_name, 4, 0, 0, 0, 0, 0, 0); // type: 4 - unban
-		clif_displaymessage(fd, msg_txt(88)); // Character name sends to char-server to ask it.
+		clif_displaymessage(fd, msg_txt(88)); // Character name sent to char-server to ask it.
 	}
 
 	return 0;

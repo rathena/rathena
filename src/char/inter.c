@@ -298,7 +298,7 @@ int inter_mapif_init(int fd) {
 //--------------------------------------------------------
 // sended packets to map-server
 
-//Sends to map server the current max Account/Char id [Skotlex]
+//Sends the current max account/char id to map server [Skotlex]
 void mapif_send_maxid(int account_id, int char_id)
 {
 	unsigned char buf[12];

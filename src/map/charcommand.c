@@ -1170,7 +1170,7 @@ int charcommand_warp(
 	}
 	if (pc_setpos(pl_sd, map[m].index, x, y, 3) == 0) {
 		clif_displaymessage(pl_sd->fd, msg_table[0]); // Warped.
-		clif_displaymessage(fd, msg_table[15]); // Player warped (message sends to player too).
+		clif_displaymessage(fd, msg_table[15]); // Player warped (message sent to player too).
 		return 0;
 	}
 	//No error message specified...?
@@ -1755,7 +1755,7 @@ int charcommand_changesex(
 		return -1;
 	} else {
 		chrif_char_ask_name(sd->status.account_id, player, 5, 0, 0, 0, 0, 0, 0); // type: 5 - changesex
-		clif_displaymessage(fd, msg_table[88]); // Character name sends to char-server to ask it.
+		clif_displaymessage(fd, msg_table[88]); // Character name sent to char-server to ask it.
 	}
 
 	return 0;

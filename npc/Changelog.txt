@@ -27,6 +27,7 @@ KarLaeda
 Date		Added
 ======
 2007/03/23
+	* Fixed some misc typos (skill reset npc has horrible engrish btw) [ultramage]
 	* Reformatted TSQ for easier bug hunt [Lupus]
 2007/03/22
 	* Retouch of Novice Grounds [Lupus]

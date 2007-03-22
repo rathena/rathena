@@ -386,7 +386,7 @@ ama_test,50,44,4	script	Event Hall Staff	109,{
 L1:
 		mes "[Satoshi]";
 		mes "Hehe...Good.";
-		mes "Momotoro's Story is our";
+		mes "Momotaro's Story is our";
 		mes "pride. It's the best story EVER.";
 		mes "Hahaha!!!";
 		next;

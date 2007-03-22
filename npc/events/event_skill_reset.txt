@@ -67,12 +67,12 @@ L_Info:
 	mes @npcname$;
 	mes "This skill reset is not FREE OF CHARGE!!";
 	mes "Expense for the reset of skill is ^D5A50020000 Zeny x BaseLv^000000.";
-	mes "Yeah ...each One BaseLv need 20000 Zeny to reset skill.";
+	mes "Yeah ...each One BaseLv costs 20000 Zeny to reset skill.";
 	next;
 	mes @npcname$;
 	mes "Oh yeah, one more thing!";
-	mes "Any carts, falcon or peco's you have equiped,";
-	mes "will be removed if you will reset your skills.";
+	mes "Any carts, falcons or pecos you have equiped";
+	mes "will be removed if you reset your skills.";
 	next;
 	mes @npcname$;
 	mes "Just one time does again to shake the skill point";

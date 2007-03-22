@@ -478,9 +478,9 @@ int mob_chat_sub(struct block_list *bl, va_list ap){
 // Various script builtins used to support these functions
 
 int buildin_defpattern(struct script_state *st) {
-    int setid=conv_num(st,& (st->stack->stack_data[st->start+2]));
-    const char *pattern=conv_str(st,& (st->stack->stack_data[st->start+3]));
-    const char *label=conv_str(st,& (st->stack->stack_data[st->start+4]));
+    int setid=conv_num(st, script_getdata(st,2));
+    const char *pattern=conv_str(st, script_getdata(st,3));
+    const char *label=conv_str(st, script_getdata(st,4));
     struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
     
     npc_chat_def_pattern(nd, setid, pattern, label);
@@ -489,7 +489,7 @@ int buildin_defpattern(struct script_state *st) {
 }
 
 int buildin_activatepset(struct script_state *st) {
-    int setid=conv_num(st,& (st->stack->stack_data[st->start+2]));
+    int setid=conv_num(st, script_getdata(st,2));
     struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
 
     activate_pcreset(nd, setid);
@@ -497,7 +497,7 @@ int buildin_activatepset(struct script_state *st) {
     return 0;
 }
 int buildin_deactivatepset(struct script_state *st) {
-    int setid=conv_num(st,& (st->stack->stack_data[st->start+2]));
+    int setid=conv_num(st, script_getdata(st,2));
     struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
 
     deactivate_pcreset(nd, setid);
@@ -505,7 +505,7 @@ int buildin_deactivatepset(struct script_state *st) {
     return 0;
 }
 int buildin_deletepset(struct script_state *st) {
-    int setid=conv_num(st,& (st->stack->stack_data[st->start+2]));
+    int setid=conv_num(st, script_getdata(st,2));
     struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
 
     delete_pcreset(nd, setid);
