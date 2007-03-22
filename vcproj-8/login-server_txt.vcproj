@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
 				ExceptionHandling="0"
@@ -66,7 +66,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib zdll.lib"
+				AdditionalDependencies="msvcrtd.lib oldnames.lib ws2_32.lib zdll.lib"
 				ShowProgress="0"
 				OutputFile="$(OutDir)\login-server.exe"
 				LinkIncremental="2"
@@ -135,7 +135,7 @@
 				EnableFiberSafeOptimizations="true"
 				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				DefaultCharIsUnsigned="false"
@@ -166,6 +166,7 @@
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
 				LinkTimeCodeGeneration="1"
 				TargetMachine="1"
 			/>
@@ -213,6 +214,10 @@
 		<Filter
 			Name="common"
 			>
+			<File
+				RelativePath="..\src\common\cbasetypes.h"
+				>
+			</File>
 			<File
 				RelativePath="..\src\common\core.c"
 				>

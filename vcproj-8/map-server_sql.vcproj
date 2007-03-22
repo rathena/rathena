@@ -41,7 +41,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;PCRE_SUPPORT;MAPREGSQL;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;PCRE_SUPPORT;MAPREGSQL;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
 				ExceptionHandling="0"
@@ -66,7 +66,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib libmysql.lib zdll.lib pcre.lib"
+				AdditionalDependencies="msvcrtd.lib oldnames.lib ws2_32.lib libmysql.lib zdll.lib pcre.lib"
 				OutputFile="$(OutDir)\$(ProjectName).exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
@@ -136,7 +136,8 @@
 				EnableFiberSafeOptimizations="true"
 				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;PCRE_SUPPORT;MAPREGSQL;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;PCRE_SUPPORT;MAPREGSQL;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				StringPooling="true"
 				RuntimeLibrary="2"
 				DefaultCharIsUnsigned="false"
 				UsePrecompiledHeader="0"
@@ -167,6 +168,7 @@
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
 				LinkTimeCodeGeneration="1"
 				TargetMachine="1"
 			/>
@@ -396,6 +398,14 @@
 			</File>
 			<File
 				RelativePath="..\src\map\charcommand.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\charsave.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\charsave.h"
 				>
 			</File>
 			<File

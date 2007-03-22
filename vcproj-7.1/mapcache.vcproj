@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+<?xml version="1.0" encoding="windows-1250"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
 	Name="mapcache"
-	ProjectGUID="{CB8556B8-9673-42FD-B2F6-3826534E64E2}"
+	ProjectGUID="{BB5C63F0-57AD-42F0-83F8-8F9323BC089C}"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -12,32 +12,38 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\"
-			IntermediateDirectory="Debug"
+			OutputDirectory=".."
+			IntermediateDirectory="$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\src\common"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;_WIN32;__WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE"
+				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG"
 				MinimalRebuild="TRUE"
+				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="5"
+				RuntimeLibrary="3"
+				BufferSecurityCheck="TRUE"
+				EnableFunctionLevelLinking="TRUE"
+				DefaultCharIsUnsigned="FALSE"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="FALSE"
-				DebugInformationFormat="4"/>
+				DebugInformationFormat="4"
+				CompileAs="1"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="oldnames.lib ws2_32.lib zdll.lib"
-				OutputFile="$(OutDir)/mapcache.exe"
+				AdditionalDependencies="msvcrtd.lib oldnames.lib zdll.lib"
+				OutputFile="$(OutDir)\mapcache.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
+				IgnoreAllDefaultLibraries="TRUE"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="$(OutDir)/mapcache.pdb"
+				ProgramDatabaseFile="$(OutDir)\$(ProjectName).pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
 			<Tool
@@ -63,39 +69,48 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\"
-			IntermediateDirectory="Release"
+			OutputDirectory=".."
+			IntermediateDirectory="$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2"
 			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="2"
 				GlobalOptimizations="TRUE"
+				InlineFunctionExpansion="2"
 				EnableIntrinsicFunctions="TRUE"
+				ImproveFloatingPointConsistency="TRUE"
 				FavorSizeOrSpeed="1"
+				OmitFramePointers="TRUE"
 				EnableFiberSafeOptimizations="TRUE"
-				OptimizeForProcessor="3"
+				OptimizeForProcessor="2"
 				OptimizeForWindowsApplication="TRUE"
-				AdditionalIncludeDirectories="..\src\common"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE_WIN32;__WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE"
-				RuntimeLibrary="4"
-				EnableEnhancedInstructionSet="1"
+				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG"
+				StringPooling="TRUE"
+				RuntimeLibrary="3"
+				DefaultCharIsUnsigned="FALSE"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="FALSE"
-				DebugInformationFormat="3"/>
+				DebugInformationFormat="3"
+				CompileAs="1"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="oldnames.lib ws2_32.lib zdll.lib"
-				OutputFile="$(OutDir)/mapcache.exe"
+				AdditionalDependencies="msvcrt.lib oldnames.lib zdll.lib"
+				OutputFile="$(OutDir)\mapcache.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"
+				IgnoreAllDefaultLibraries="TRUE"
 				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile="$(OutDir)\$(ProjectName).pdb"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -123,40 +138,38 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Source Files"
-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			Name="mapcache"
+			Filter="">
 			<File
 				RelativePath="..\src\tool\grfio.c">
-			</File>
-			<File
-				RelativePath="..\src\zlib\ioapi.c">
-			</File>
-			<File
-				RelativePath="..\src\zlib\iowin32.c">
-			</File>
-			<File
-				RelativePath="..\src\tool\mapcache.c">
-			</File>
-			<File
-				RelativePath="..\src\zlib\unzip.c">
-			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath="..\src\zlib\crypt.h">
 			</File>
 			<File
 				RelativePath="..\src\tool\grfio.h">
 			</File>
 			<File
+				RelativePath="..\src\tool\mapcache.c">
+			</File>
+		</Filter>
+		<Filter
+			Name="zlib"
+			Filter="">
+			<File
+				RelativePath="..\src\zlib\crypt.h">
+			</File>
+			<File
+				RelativePath="..\src\zlib\ioapi.c">
+			</File>
+			<File
 				RelativePath="..\src\zlib\ioapi.h">
 			</File>
 			<File
+				RelativePath="..\src\zlib\iowin32.c">
+			</File>
+			<File
 				RelativePath="..\src\zlib\iowin32.h">
+			</File>
+			<File
+				RelativePath="..\src\zlib\unzip.c">
 			</File>
 			<File
 				RelativePath="..\src\zlib\unzip.h">
@@ -167,11 +180,6 @@
 			<File
 				RelativePath="..\src\zlib\zlib.h">
 			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 		</Filter>
 	</Files>
 	<Globals>

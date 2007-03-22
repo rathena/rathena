@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="char-server_txt"
 	ProjectGUID="{D356871D-58E1-450B-967A-E3E9646175AF}"
 	RootNamespace="char-server_txt"
@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
 				ExceptionHandling="0"
@@ -67,7 +67,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib zdll.lib"
+				AdditionalDependencies="msvcrtd.lib oldnames.lib ws2_32.lib zdll.lib"
 				OutputFile="$(OutDir)\char-server.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
@@ -109,6 +109,7 @@
 			ConfigurationType="1"
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
+			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -135,7 +136,7 @@
 				EnableFiberSafeOptimizations="true"
 				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;TXT_ONLY;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"
 				StringPooling="true"
 				RuntimeLibrary="2"
 				DefaultCharIsUnsigned="false"
@@ -166,6 +167,7 @@
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
 				LinkTimeCodeGeneration="1"
 				TargetMachine="1"
 			/>
@@ -266,6 +268,10 @@
 			Name="common"
 			>
 			<File
+				RelativePath="..\src\common\cbasetypes.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\core.c"
 				>
 			</File>
@@ -283,6 +289,10 @@
 			</File>
 			<File
 				RelativePath="..\src\common\ers.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\ers.h"
 				>
 			</File>
 			<File
