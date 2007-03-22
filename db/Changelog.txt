@@ -19,6 +19,8 @@
 	-----
 
 ========================
+03/23
+	* Added 11.2 weapons [Playtester]
 03/22
 	* Optimized Aliza Card [Lupus]
 03/21
