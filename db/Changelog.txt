@@ -19,7 +19,10 @@
 	-----
 
 ========================
+
 03/23
+	* Twilight Pharmacy's cast time is no longer reducable by dex.
+	* All weapon enchant levels now last 3 minutes. [Skotlex]
 	* Added 11.2 weapons [Playtester]
 03/22
 	* Optimized Aliza Card [Lupus]

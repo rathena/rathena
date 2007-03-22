@@ -8845,31 +8845,6 @@ void clif_parse_Restart(int fd, struct map_session_data *sd) {
 			break;
 		pc_setstand(sd);
 		pc_setrestartvalue(sd, 3);
-		if (sd->sc.count && battle_config.debuff_on_logout&2) {
-			//For some reason food buffs are removed when you respawn.
-			if(sd->sc.data[SC_STRFOOD].timer!=-1)
-				status_change_end(&sd->bl,SC_STRFOOD,-1);
-			if(sd->sc.data[SC_AGIFOOD].timer!=-1)
-				status_change_end(&sd->bl,SC_AGIFOOD,-1);
-			if(sd->sc.data[SC_VITFOOD].timer!=-1)
-				status_change_end(&sd->bl,SC_VITFOOD,-1);
-			if(sd->sc.data[SC_INTFOOD].timer!=-1)
-				status_change_end(&sd->bl,SC_INTFOOD,-1);
-			if(sd->sc.data[SC_DEXFOOD].timer!=-1)
-				status_change_end(&sd->bl,SC_DEXFOOD,-1);
-			if(sd->sc.data[SC_LUKFOOD].timer!=-1)
-				status_change_end(&sd->bl,SC_LUKFOOD,-1);
-			if(sd->sc.data[SC_HITFOOD].timer!=-1)
-				status_change_end(&sd->bl,SC_HITFOOD,-1);
-			if(sd->sc.data[SC_FLEEFOOD].timer!=-1)
-				status_change_end(&sd->bl,SC_FLEEFOOD,-1);
-			if(sd->sc.data[SC_BATKFOOD].timer!=-1)
-				status_change_end(&sd->bl,SC_BATKFOOD,-1);
-			if(sd->sc.data[SC_WATKFOOD].timer!=-1)
-				status_change_end(&sd->bl,SC_WATKFOOD,-1);
-			if(sd->sc.data[SC_MATKFOOD].timer!=-1)
-				status_change_end(&sd->bl,SC_MATKFOOD,-1);
-		}
 		//If warping fails, send a normal stand up packet.
 		if (pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 2))
 			clif_resurrection(&sd->bl, 1);

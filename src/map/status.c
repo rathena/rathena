@@ -6035,17 +6035,6 @@ int status_change_clear(struct block_list *bl,int type)
 		case SC_READYTURN:
 		case SC_DODGE:
 		case SC_JAILED:
-		case SC_STRFOOD:
-		case SC_AGIFOOD:
-		case SC_VITFOOD:
-		case SC_INTFOOD:
-		case SC_DEXFOOD:
-		case SC_LUKFOOD:
-		case SC_HITFOOD:
-		case SC_FLEEFOOD:
-		case SC_BATKFOOD:
-		case SC_WATKFOOD:
-		case SC_MATKFOOD:
 			continue;
 		}
 		status_change_end(bl, i, -1);
@@ -7021,6 +7010,17 @@ int status_change_clear_buffs (struct block_list *bl, int type)
 			case SC_CP_SHIELD:
 			case SC_CP_ARMOR:
 			case SC_CP_HELM:
+			case SC_STRFOOD:
+			case SC_AGIFOOD:
+			case SC_VITFOOD:
+			case SC_INTFOOD:
+			case SC_DEXFOOD:
+			case SC_LUKFOOD:
+			case SC_HITFOOD:
+			case SC_FLEEFOOD:
+			case SC_BATKFOOD:
+			case SC_WATKFOOD:
+			case SC_MATKFOOD:
 				continue;
 				
 			//Debuffs that can be removed.
