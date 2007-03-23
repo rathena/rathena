@@ -19,7 +19,8 @@
 	-----
 
 ========================
-
+03/24
+	* Fixed some item names thanks to Argatlahm [Playtester]
 03/23
 	* Twilight Pharmacy's cast time is no longer reducable by dex.
 	* All weapon enchant levels now last 3 minutes. [Skotlex]
