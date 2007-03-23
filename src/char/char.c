@@ -157,8 +157,8 @@ struct online_char_data {
 	int account_id;
 	int char_id;
 	int fd;
+	int waiting_disconnect;
 	short server;
-	unsigned waiting_disconnect :1;
 };
 
 struct dbt *online_char_db; //Holds all online characters.
@@ -290,6 +290,7 @@ static void * create_online_char_data(DBKey key, va_list args) {
 	character->char_id = -1;
   	character->server = -1;
 	character->fd = -1;
+	character->waiting_disconnect = -1;
 	return character;
 }
 
@@ -321,7 +322,10 @@ void set_char_online(int map_id, int char_id, int account_id) {
 				character->account_id, character->char_id, character->server, map_id, account_id, char_id);
 		mapif_disconnectplayer(server_fd[character->server], character->account_id, character->char_id, 2);
 	}
-	character->waiting_disconnect = 0;
+	if(character->waiting_disconnect != -1){
+		delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
+		character->waiting_disconnect = -1;
+	}
 	character->char_id = (char_id==99)?-1:char_id;
 	character->server = (char_id==99)?-1:map_id;
 
@@ -341,7 +345,10 @@ void set_char_offline(int char_id, int account_id) {
 	{	//We don't free yet to avoid aCalloc/aFree spamming during char change. [Skotlex]
 		character->char_id = -1;
 		character->server = -1;
-		character->waiting_disconnect = 0;
+		if(character->waiting_disconnect != -1){
+			delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
+			character->waiting_disconnect = -1;
+		}
 	}
 	if (login_fd <= 0 || session[login_fd]->eof)
 		return;
@@ -358,7 +365,10 @@ static int char_db_setoffline(DBKey key, void* data, va_list ap) {
 	if (server == -1) {
 		character->char_id = -1;
 		character->server = -1;
-		character->waiting_disconnect = 0;	
+		if(character->waiting_disconnect != -1){
+			delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
+			character->waiting_disconnect = -1;
+		}
 	} else if (character->server == server)
 		character->server = -2; //In some map server that we aren't connected to.
 	return 0;
@@ -375,7 +385,7 @@ static int char_db_kickoffline(DBKey key, void* data, va_list ap) {
 	if (character->server > -1)
 		mapif_disconnectplayer(server_fd[character->server],
 			character->account_id, character->char_id, 1);
-	else if (!character->waiting_disconnect)
+	else if (character->waiting_disconnect == -1)
 		set_char_offline(character->char_id, character->account_id);
 	else return 0;
 	return 1;
@@ -1945,9 +1955,8 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 		{	//Character already online. KICK KICK KICK
 			mapif_disconnectplayer(server_fd[character->server],
 				character->account_id, character->char_id, 2);
-			if (!character->waiting_disconnect)
-				add_timer(gettick()+20000, chardb_waiting_disconnect, character->account_id, 0);
-			character->waiting_disconnect = 1;
+			if (character->waiting_disconnect == -1)
+				character->waiting_disconnect = add_timer(gettick()+20000, chardb_waiting_disconnect, character->account_id, 0);
 			WFIFOW(fd,0) = 0x81;
 			WFIFOB(fd,2) = 8;
 			WFIFOSET(fd,3);
@@ -2438,9 +2447,8 @@ int parse_tologin(int fd) {
 					if (character->server > -1)
 					{	//Kick it from the map server it is on.
 						mapif_disconnectplayer(server_fd[character->server], character->account_id, character->char_id, 2);
-						if (!character->waiting_disconnect)
-							add_timer(gettick()+15000, chardb_waiting_disconnect, character->account_id, 0);
-						character->waiting_disconnect = 1;
+						if (character->waiting_disconnect == -1)
+							character->waiting_disconnect = add_timer(gettick()+15000, chardb_waiting_disconnect, character->account_id, 0);
 					} else { //Manual kick from char server.
 						struct char_session_data *tsd;
 						int i;
@@ -3984,8 +3992,9 @@ int check_connect_login_server(int tid, unsigned int tick, int id, int data) {
 static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, int data)
 {
 	struct online_char_data* character;
-	if ((character = idb_get(online_char_db, id)) != NULL && character->waiting_disconnect)
+	if ((character = idb_get(online_char_db, id)) != NULL && character->waiting_disconnect == tid)
 	{	//Mark it offline due to timeout.
+		character->waiting_disconnect = -1;
 		set_char_offline(character->char_id, character->account_id);
 	}
 	return 0;

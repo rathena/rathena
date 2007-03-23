@@ -6440,7 +6440,7 @@ int atcommand_charjailtime(const int fd, struct map_session_data* sd, const char
 		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
-	if (pc_isGM(pl_sd) < pc_isGM(sd)) {
+	if (pc_isGM(pl_sd) >= pc_isGM(sd)) {
 		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorize you to do this action on this player.
 		return -1;
 	}

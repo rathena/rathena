@@ -496,7 +496,18 @@ void chrif_authreq(struct map_session_data *sd)
 //character selected, insert into auth db
 void chrif_authok(int fd) {
 	struct auth_node *auth_data;
+	TBL_PC* sd;
 	RFIFOHEAD(fd);
+	//Check if we don't already have player data in our server
+	//(prevents data that is to be saved from being overwritten by
+	//this received status data if this auth is later successful) [Skotlex]
+	if ((sd = map_id2sd(RFIFOL(fd, 4))) != NULL)
+	{
+		struct mmo_charstatus *status = (struct mmo_charstatus *)RFIFOP(fd, 20);
+		//Auth check is because this could be the very same sd that is waiting char-server authorization.
+		if (sd->state.auth && sd->status.char_id == status->char_id)
+			return;
+	}
 	
 	if ((auth_data =uidb_get(auth_db, RFIFOL(fd, 4))) != NULL)
 	{	//Is the character already awaiting authorization?
