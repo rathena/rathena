@@ -25,6 +25,9 @@
 
 #include "pcre.h"
 
+/// Returns the stack_data at the target index
+#define script_getdata(st,i) &((st)->stack->stack_data[(st)->start+(i)])
+
 /**
  *  Written by MouseJstr in a vision... (2/21/2005)
  *
