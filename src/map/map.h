@@ -441,15 +441,15 @@ struct weapon_data {
 	//  in status_calc_pc as well! All the following are automatically zero'ed. [Skotlex]
 	int overrefine;
 	int star;
+	int ignore_def_ele;
+	int ignore_def_race;
+	int def_ratio_atk_ele;
+	int def_ratio_atk_race;
 	int addele[ELE_MAX];
 	int addrace[RC_MAX];
 	int addrace2[RC_MAX];
 	int addsize[3];
 
-	unsigned char ignore_def_ele;
-	unsigned char ignore_def_race;
-	unsigned char def_ratio_atk_ele;
-	unsigned char def_ratio_atk_race;
 	struct drain_data {
 		short rate;
 		short per;
@@ -723,6 +723,8 @@ struct map_session_data {
 	int critical_def,double_rate;
 	int long_attack_atk_rate; //Long range atk rate, not weapon based. [Skotlex]
 	int near_attack_def_rate,long_attack_def_rate,magic_def_rate,misc_def_rate;
+	int ignore_mdef_ele;
+	int ignore_mdef_race;
 	int perfect_hit;
 	int perfect_hit_add;
 	int get_zeny_rate;
@@ -754,8 +756,6 @@ struct map_session_data {
 	short add_def_count,add_mdef_count;
 	short add_dmg_count,add_mdmg_count;
 
-	unsigned char ignore_mdef_ele;
-	unsigned char ignore_mdef_race;
 	// zeroed vars end here.
 
 	int castrate,delayrate,hprate,sprate,dsprate;

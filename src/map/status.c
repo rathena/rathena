@@ -1673,6 +1673,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->long_attack_def_rate)
 		+ sizeof(sd->magic_def_rate)
 		+ sizeof(sd->misc_def_rate)
+		+ sizeof(sd->ignore_mdef_ele)
+		+ sizeof(sd->ignore_mdef_race)
 		+ sizeof(sd->perfect_hit)
 		+ sizeof(sd->perfect_hit_add)
 		+ sizeof(sd->get_zeny_rate)
@@ -1712,9 +1714,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->add_mdef_count)
 		+ sizeof(sd->add_dmg_count)
 		+ sizeof(sd->add_mdmg_count)
-		// chars
-		+ sizeof(sd->ignore_mdef_ele)
-		+ sizeof(sd->ignore_mdef_race)
 		);
 
 	// Parse equipment.
