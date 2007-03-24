@@ -1328,8 +1328,8 @@ int clif_spawn(struct block_list *bl)
 			WBUFW(buf,10)=sc->opt2;
 			WBUFW(buf,12)=sc->option;
 		}
+		WBUFW(buf,14)=vd->hair_style;  //Required for pets.
 		WBUFW(buf,20)=vd->class_;
-		WBUFW(buf,22)=vd->hair_style;  //Required for pets.
 		WBUFW(buf,24)=vd->head_bottom;	//Pet armor
 
 		WBUFPOS(buf,36,bl->x,bl->y,unit_getdir(bl));
@@ -2054,7 +2054,7 @@ int clif_delitem(struct map_session_data *sd,int n,int amount)
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-        WFIFOHEAD(fd, packet_len(0xaf));
+	WFIFOHEAD(fd, packet_len(0xaf));
 	WFIFOW(fd,0)=0xaf;
 	WFIFOW(fd,2)=n+2;
 	WFIFOW(fd,4)=amount;
@@ -8154,6 +8154,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(map_flag_gvg(sd->bl.m))
 		clif_set0199(fd,3);
 
+	map_foreachinarea(clif_getareachar,sd->bl.m,
+		sd->bl.x-AREA_SIZE,sd->bl.y-AREA_SIZE,sd->bl.x+AREA_SIZE,sd->bl.y+AREA_SIZE,
+		BL_ALL,sd);
+
 	// pet
 	if(sd->pd) {
 		map_addblock(&sd->pd->bl);
@@ -8261,10 +8265,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_changeoption(&sd->bl);
 
 	clif_weather_check(sd);
-	
-	map_foreachinarea(clif_getareachar,sd->bl.m,
-		sd->bl.x-AREA_SIZE,sd->bl.y-AREA_SIZE,sd->bl.x+AREA_SIZE,sd->bl.y+AREA_SIZE,
-		BL_ALL,sd);
 	
 	// For automatic triggering of NPCs after map loading (so you don't need to walk 1 step first)
 	if (map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNPC))
@@ -9225,7 +9225,7 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 		return;
 	}
 	
-	//Client doesn't send the position for ammo.
+	//Client doesn't sends the position for ammo.
 	if(sd->inventory_data[index]->type == IT_AMMO)
 		pc_equipitem(sd,index,EQP_AMMO);
 	else
