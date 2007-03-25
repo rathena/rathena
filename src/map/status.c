@@ -4434,6 +4434,10 @@ int status_get_sc_def(struct block_list *bl, int type)
 		else
 			sc_def = 300 +100*status->luk;
 		break;
+	case SC_COMA:
+		//TODO: Need actual data on rate reductions.
+		sc_def = 100*status->luk;
+		break;
 	case SC_BLIND: //TODO: These 50/50 factors are guessed. Need to find actual value.
 		sc_def = 300 +50*status->vit +50*status->int_;
 		break;
@@ -5505,8 +5509,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		}
 
-		case SC_COMA: //Coma. Sends a char to 1HP
-			status_zap(bl, status_get_hp(bl)-1, 0);
+		case SC_COMA: //Coma. Sends a char to 1HP. If val2, do not zap sp
+			status_zap(bl, status->hp-1, val2?0:status->sp);
 			return 1;
 
 		case SC_CLOSECONFINE2:

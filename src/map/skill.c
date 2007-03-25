@@ -4853,7 +4853,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NPC_DARKBLESSING:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,(50+skilllv*5),skilllv,skill_get_time2(skillid,skilllv)));
+			sc_start2(bl,type,(50+skilllv*5),skilllv,skilllv,skill_get_time2(skillid,skilllv)));
 		break;
 
 	case NPC_LICK:
