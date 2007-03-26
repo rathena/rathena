@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/03/27
+	* Cleaned up some the mob skill use code. The skill re-use delay is set at
+	  the time the skill is used rather than when it finishes casting. The
+	  invalid target check was also moved to the mob skill db reading function.
+	* Skills can be used now when the autoskill menu is open (since there's no
+	  packet sent by the client when you hit on cancel). [Skotlex]
 	* Added some svn:ignore properties [Toms]
 	* Solved console plugins compilation error [Toms]
 	* Changed MAX_LEVEL to the standard value 99. Memory consumption-= 55MB.

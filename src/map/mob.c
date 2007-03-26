@@ -2675,8 +2675,9 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 {
 	struct mob_skill *ms;
 	struct block_list *fbl = NULL; //Friend bl, which can either be a BL_PC or BL_MOB depending on the situation. [Skotlex]
+	struct block_list *bl;
 	struct mob_data *fmd = NULL;
-	int i,n;
+	int i,j,n;
 
 	nullpo_retr (0, md);
 	nullpo_retr (0, ms = md->db->skill);
@@ -2734,7 +2735,6 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 					if (!md->sc.count) {
 						flag = 0;
 					} else if (ms[i].cond2 == -1) {
-						int j;
 						for (j = SC_COMMON_MIN; j <= SC_COMMON_MAX; j++)
 							if ((flag = (md->sc.data[j].timer != -1)) != 0)
 								break;
@@ -2778,103 +2778,95 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 
 		//Execute skill	
 		if (skill_get_casttype(ms[i].skill_id) == CAST_GROUND)
-		{
-			struct block_list *bl = NULL;
-			short x = 0, y = 0;
-			if (ms[i].target <= MST_AROUND) {
-				switch (ms[i].target) {
-					case MST_RANDOM: //Pick a random enemy within skill range.
-						bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
-							skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv));
+		{	//Ground skill.
+			short x, y;
+			switch (ms[i].target) {
+				case MST_RANDOM: //Pick a random enemy within skill range.
+					bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
+						skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv));
+					break;
+				case MST_TARGET:
+				case MST_AROUND5:
+				case MST_AROUND6:
+				case MST_AROUND7:
+				case MST_AROUND8:
+					bl = map_id2bl(md->target_id);
+					break;
+				case MST_MASTER:
+					bl = &md->bl;
+					if (md->master_id) 
+						bl = map_id2bl(md->master_id);
+					if (bl) //Otherwise, fall through.
 						break;
-					case MST_TARGET:
-					case MST_AROUND5:
-					case MST_AROUND6:
-					case MST_AROUND7:
-					case MST_AROUND8:
-						bl = map_id2bl(md->target_id);
-						break;
-					case MST_MASTER:
-						bl = &md->bl;
-						if (md->master_id) 
-							bl = map_id2bl(md->master_id);
-						if (bl) //Otherwise, fall through.
-							break;
-					case MST_FRIEND:
-						if (fbl)
-						{
-							bl = fbl;
-							break;
-						} else if (fmd) {
-							bl= &fmd->bl;
-							break;
-						} // else fall through
-					default:
-						bl = &md->bl;
-						break;
-				}
-				if (bl != NULL) {
-					x = bl->x; y=bl->y;
-				}
+				case MST_FRIEND:
+					bl = fbl?fbl:(fmd?&fmd->bl:&md->bl);
+					break;
+				default:
+					bl = &md->bl;
+					break;
 			}
-			if (x <= 0 || y <= 0)
-				continue;
+			if (!bl) continue;
+			x = bl->x;
+		  	y = bl->y;
 			// Look for an area to cast the spell around...
 			if (ms[i].target >= MST_AROUND1 || ms[i].target >= MST_AROUND5) {
-				int r = ms[i].target >= MST_AROUND1?
+				j = ms[i].target >= MST_AROUND1?
 					(ms[i].target-MST_AROUND1) +1:
 					(ms[i].target-MST_AROUND5) +1;
-				map_search_freecell(&md->bl, md->bl.m, &x, &y, r, r, 3);
+				map_search_freecell(&md->bl, md->bl.m, &x, &y, j, j, 3);
 			}
 			md->skillidx = i;
 			flag = unit_skilluse_pos2(&md->bl, x, y, ms[i].skill_id, ms[i].skill_lv,
 				ms[i].casttime, ms[i].cancel);
-			if (!flag) md->skillidx = -1; //Skill failed.
-			return flag;
 		} else {
-			if (ms[i].target <= MST_MASTER) {
-				struct block_list *bl;
-				switch (ms[i].target) {
-					case MST_RANDOM: //Pick a random enemy within skill range.
-						bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
-							skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv));
+			//Targetted skill
+			switch (ms[i].target) {
+				case MST_RANDOM: //Pick a random enemy within skill range.
+					bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
+						skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv));
+					break;
+				case MST_TARGET:
+					bl = map_id2bl(md->target_id);
+					break;
+				case MST_MASTER:
+					bl = &md->bl;
+					if (md->master_id) 
+						bl = map_id2bl(md->master_id);
+					if (bl) //Otherwise, fall through.
 						break;
-					case MST_TARGET:
-						bl = map_id2bl(md->target_id);
+				case MST_FRIEND:
+					if (fbl) {
+						bl = fbl;
 						break;
-					case MST_MASTER:
-						bl = &md->bl;
-						if (md->master_id) 
-							bl = map_id2bl(md->master_id);
-						if (bl) //Otherwise, fall through.
-							break;
-					case MST_FRIEND:
-						if (fbl) {
-							bl = fbl;
-							break;
-						} else if (fmd) {
-							bl = &fmd->bl;
-							break;
-						} // else fall through
-					default:
-						bl = &md->bl;
+					} else if (fmd) {
+						bl = &fmd->bl;
 						break;
-				}
-				md->skillidx = i;
-				flag = (bl && unit_skilluse_id2(&md->bl, bl->id, ms[i].skill_id, ms[i].skill_lv,
-					ms[i].casttime, ms[i].cancel));
-				if (!flag) md->skillidx = -1;
-				return flag;
-			} else {
-				if (battle_config.error_log)
-					ShowWarning("Wrong mob skill target 'around' for non-ground skill %d (%s). Mob %d - %s\n",
-						ms[i].skill_id, skill_get_name(ms[i].skill_id), md->class_, md->db->sprite);
-				continue;
+					} // else fall through
+				default:
+					bl = &md->bl;
+					break;
 			}
+			if (!bl) continue;
+			md->skillidx = i;
+			flag = unit_skilluse_id2(&md->bl, bl->id, ms[i].skill_id, ms[i].skill_lv,
+				ms[i].casttime, ms[i].cancel);
 		}
+		//Skill used. Post-setups... 
+		if (!flag) 
+		{	//Skill failed.
+			md->skillidx = -1;
+			return 0;
+		}
+		if(battle_config.mob_ai&0x200)
+		{ //pass on delay to same skill.
+			for (j = 0; j < md->db->maxskill; j++)
+				if (md->db->skill[j].skill_id == ms[i].skill_id)
+					md->skilldelay[j]=tick;
+		} else
+			md->skilldelay[i]=tick;
 		return 1;
 	}
-
+	//No skill was used.
 	return 0;
 }
 /*==========================================
@@ -3827,6 +3819,26 @@ static int mob_readskilldb(void)
 				if( strcmp(sp[9],target[j].str)==0)
 					ms->target=target[j].id;
 			}
+
+			//Check that the target condition is right for the skill type. [Skotlex]
+			if (skill_get_casttype(ms->skill_id) == CAST_GROUND)
+			{	//Ground skill.
+				if (ms->target > MST_AROUND)
+				{
+					if (battle_config.error_log)
+						ShowWarning("Wrong mob skill target for ground skill %d (%s) for %s\n",
+							ms->skill_id, skill_get_name(ms[i].skill_id),
+							mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
+					ms->target = MST_TARGET;
+				}
+			} else if (ms[i].target > MST_MASTER) {
+				if (battle_config.error_log)
+					ShowWarning("Wrong mob skill target 'around' for non-ground skill %d (%s). for %s\n",
+						ms[i].skill_id, skill_get_name(ms[i].skill_id),
+						mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
+				ms->target = MST_TARGET;
+			}
+
 			ms->cond1=-1;
 			tmp = sizeof(cond1)/sizeof(cond1[0]);
 			for(j=0;j<tmp && strcmp(sp[10],cond1[j].str);j++);

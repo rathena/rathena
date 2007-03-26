@@ -5678,17 +5678,8 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 				md->last_thinktime=tick +md->status.amotion;
 			else
 				md->last_thinktime=tick +md->status.adelay;
-			if(battle_config.mob_ai&0x200) { //pass on delay to same skill.
-				int i;
-				for (i = 0; i < md->db->maxskill; i++)
-					if (md->db->skill[i].skill_id == ud->skillid)
-						md->skilldelay[i]=tick;
-			} else
-			if(md->skillidx >= 0) {
-				md->skilldelay[md->skillidx]=tick;
-				if (md->db->skill[md->skillidx].emotion >= 0)
-					clif_emotion(src, md->db->skill[md->skillidx].emotion);
-			}
+			if(md->skillidx >= 0 && md->db->skill[md->skillidx].emotion >= 0)
+				clif_emotion(src, md->db->skill[md->skillidx].emotion);
 		}
 
 		if(src != target && battle_config.skill_add_range &&
@@ -5864,17 +5855,8 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 				md->last_thinktime=tick +md->status.amotion;
 			else
 				md->last_thinktime=tick +md->status.adelay;
-			if(battle_config.mob_ai&0x200) { //pass on delay to same skill.
-				int i;
-				for (i = 0; i < md->db->maxskill; i++)
-					if (md->db->skill[i].skill_id == ud->skillid)
-						md->skilldelay[i]=tick;
-			} else
-			if(md->skillidx >= 0) {
-				md->skilldelay[md->skillidx]=tick;
-				if (md->db->skill[md->skillidx].emotion >= 0)
-					clif_emotion(src, md->db->skill[md->skillidx].emotion);
-			}
+			if(md->skillidx >= 0 && md->db->skill[md->skillidx].emotion >= 0)
+				clif_emotion(src, md->db->skill[md->skillidx].emotion);
 		}
 
 		if(battle_config.skill_log && battle_config.skill_log&src->type)
