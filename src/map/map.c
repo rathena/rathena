@@ -3316,13 +3316,13 @@ int do_init(int argc, char *argv[]) {
 	do_init_clif();
 	do_init_script();
 	do_init_itemdb();
-	do_init_mob();	// npc‚Ì‰Šú‰»E‚Åmob_spawn‚µ‚ÄAmob_db‚ğ?Æ‚·‚é‚Ì‚Åinit_npc‚æ‚èæ
+	do_init_skill();
+	do_init_mob();
 	do_init_pc();
 	do_init_status();
 	do_init_party();
 	do_init_guild();
 	do_init_storage();
-	do_init_skill();
 	do_init_pet();
 	do_init_merc();	//[orn]
 	do_init_npc();

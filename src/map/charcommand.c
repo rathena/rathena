@@ -181,6 +181,9 @@ is_charcommand(const int fd, struct map_session_data* sd, const char* message) {
 
 	nullpo_retr(CharCommand_None, sd);
 
+	if (sd->sc.count && sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCOMMAND)
+		return CharCommand_None;
+
 	if (!message || !*message)
 		return CharCommand_None;
 

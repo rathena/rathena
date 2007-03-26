@@ -3744,7 +3744,7 @@ static int mob_readskilldb(void)
 			if (mob_id > 0 && mob_db(mob_id) == mob_dummy)
 			{
 				if (mob_id != last_mob_id) {
-					ShowWarning("mob_skill: Non existant Mob id %d at %s, line %d\n", mob_id, filename[x], count);
+					ShowError("mob_skill: Non existant Mob id %d at %s, line %d\n", mob_id, filename[x], count);
 					last_mob_id = mob_id;
 				}
 				continue;
@@ -3767,7 +3767,7 @@ static int mob_readskilldb(void)
 						break;
 				if(i==MAX_MOBSKILL){
 					if (mob_id != last_mob_id) {
-						ShowWarning("mob_skill: readdb: too many skill! Line %d in %d[%s]\n",
+						ShowError("mob_skill: readdb: too many skill! Line %d in %d[%s]\n",
 							count,mob_id,mob_db_data[mob_id]->sprite);
 						last_mob_id = mob_id;
 					}
@@ -3780,17 +3780,19 @@ static int mob_readskilldb(void)
 			for(j=0;j<tmp && strcmp(sp[2],state[j].str);j++);
 			if (j < tmp)
 				ms->state=state[j].id;
-			else
-				ShowError("mob_skill: Unrecognized state %s at %s, line %d\n", sp[2], filename[x], count);
+			else if (!ms->state) {
+				ShowWarning("mob_skill: Unrecognized state %s at %s, line %d\n", sp[2], filename[x], count);
+				ms->state=MSS_ANY;
+			}
 
 			//Skill ID
 			j=atoi(sp[3]);
 			if (j<=0 || j>MAX_SKILL_DB) //fixed Lupus
 			{
 				if (mob_id < 0)
-					ShowWarning("Invalid Skill ID (%d) for all mobs\n", j);
+					ShowError("Invalid Skill ID (%d) for all mobs\n", j);
 				else
-					ShowWarning("Invalid Skill ID (%d) for mob %d (%s)\n", j, mob_id, mob_db_data[mob_id]->sprite);
+					ShowError("Invalid Skill ID (%d) for mob %d (%s)\n", j, mob_id, mob_db_data[mob_id]->sprite);
 				continue;
 			}
 			ms->skill_id=j;
@@ -3826,26 +3828,28 @@ static int mob_readskilldb(void)
 				if (ms->target > MST_AROUND)
 				{
 					if (battle_config.error_log)
-						ShowWarning("Wrong mob skill target for ground skill %d (%s) for %s\n",
-							ms->skill_id, skill_get_name(ms[i].skill_id),
+						ShowWarning("Wrong mob skill target for ground skill %d (%s) for %s.\n",
+							ms->skill_id, skill_get_name(ms->skill_id),
 							mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
 					ms->target = MST_TARGET;
 				}
-			} else if (ms[i].target > MST_MASTER) {
+			} else if (ms->target > MST_MASTER) {
 				if (battle_config.error_log)
-					ShowWarning("Wrong mob skill target 'around' for non-ground skill %d (%s). for %s\n",
-						ms[i].skill_id, skill_get_name(ms[i].skill_id),
+					ShowWarning("Wrong mob skill target 'around' for non-ground skill %d (%s) for %s\n.",
+						ms->skill_id, skill_get_name(ms->skill_id),
 						mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
 				ms->target = MST_TARGET;
 			}
 
-			ms->cond1=-1;
 			tmp = sizeof(cond1)/sizeof(cond1[0]);
 			for(j=0;j<tmp && strcmp(sp[10],cond1[j].str);j++);
 			if (j < tmp)
 				ms->cond1=cond1[j].id;
-			else
-				ShowError("mob_skill: Unrecognized condition 1 %s at %s, line %d\n", sp[10], filename[x], count);
+			else {
+				ShowWarning("mob_skill: Unrecognized condition 1 %s at %s, line %d\n",
+					sp[10], filename[x], count);
+				ms->cond1=-1;
+			}
 
 			ms->cond2=atoi(sp[11]);
 			tmp = sizeof(cond2)/sizeof(cond2[0]);
