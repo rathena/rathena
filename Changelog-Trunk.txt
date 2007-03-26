@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/03/27
+	* Changed MAX_LEVEL to the standard value 99. Memory consumption-= 55MB.
+	- !!!WARNING!!! If your server uses higher levels, be sure to adjust
+	  this appropriately! (the define can be found in /src/map/map.h)
+	* Corrected SC_COMA's success chance (X.4 says it's unconditional 100%)
 	* Changed the vs8 used crt library to static linking [ultramage]
 2007/03/26
 	* Coma now reduces SP to 0 (with the exception of Dark Blessing) [Skotlex]

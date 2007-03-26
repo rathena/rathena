@@ -4425,18 +4425,11 @@ int status_get_sc_def(struct block_list *bl, int type)
 	case SC_STONE:
 	case SC_FREEZE:
 	case SC_DECREASEAGI:
-	case SC_COMA:
-		sc_def = 300 +100*status->mdef;
-		break;
 	case SC_CURSE:
 		if (status->luk > status_get_lv(bl))
 			return 10000; //Special property: inmunity when luk is greater than level
 		else
 			sc_def = 300 +100*status->luk;
-		break;
-	case SC_COMA:
-		//TODO: Need actual data on rate reductions.
-		sc_def = 100*status->luk;
 		break;
 	case SC_BLIND: //TODO: These 50/50 factors are guessed. Need to find actual value.
 		sc_def = 300 +50*status->vit +50*status->int_;
