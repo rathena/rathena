@@ -17,7 +17,6 @@ M_SRV_C2=./conf/battle_athena.conf
 M_SRV_C3=./conf/atcommand_athena.conf
 M_SRV_C4=./conf/script_athena.conf
 M_SRV_C5=./conf/msg_athena.conf
-M_SRV_C6=./conf/grf-files.txt
 
 print_start() {
 #	more << EOF
@@ -114,7 +113,7 @@ check_account() {
 
 check_files() {
 
-	for i in ${L_SRV} ${C_SRV} ${M_SRV} ${L_SRV_C} ${C_SRV_C} ${C_SRV_C2} ${M_SRV_C} ${M_SRV_C2} ${M_SRV_C3} ${M_SRV_C4} ${M_SRV_C5} ${M_SRV_C6}
+	for i in ${L_SRV} ${C_SRV} ${M_SRV} ${L_SRV_C} ${C_SRV_C} ${C_SRV_C2} ${M_SRV_C} ${M_SRV_C2} ${M_SRV_C3} ${M_SRV_C4} ${M_SRV_C5}
 	do
 		if [ ! -f ./$i ]; then
     		echo "$i does not exist, or can't run."
@@ -169,8 +168,8 @@ case $1 in
 #			exec ${C_SRV} ${C_SRV_C} ${C_SRV_C2} > /dev/null&
 #			exec ${M_SRV} ${M_SRV_C} ${M_SRV_C2} > /dev/null&
 			exec ${C_SRV} ${C_SRV_C} ${C_SRV_C2}&
-#			exec nice -n -20 ${M_SRV} ${M_SRV_C} ${M_SRV_C2} ${M_SRV_C3} ${M_SRV_C4} ${M_SRV_C5} ${M_SRV_C6}&
-			exec ${M_SRV} ${M_SRV_C} ${M_SRV_C2} ${M_SRV_C3} ${M_SRV_C4} ${M_SRV_C5} ${M_SRV_C6}&
+#			exec nice -n -20 ${M_SRV} ${M_SRV_C} ${M_SRV_C2} ${M_SRV_C3} ${M_SRV_C4} ${M_SRV_C5}&
+			exec ${M_SRV} ${M_SRV_C} ${M_SRV_C2} ${M_SRV_C3} ${M_SRV_C4} ${M_SRV_C5}&
 
 			echo "Now Started Athena."
 		else
@@ -267,7 +266,7 @@ case $1 in
 				map=$(ps ax | grep "${M_SRV}" | grep "${map}" | wc -l)
 			fi
 			if [ ${map} -eq 0 ]; then
-				exec ${M_SRV} ${M_SRV_C} ${M_SRV_C2} ${M_SRV_C3} ${M_SRV_C4} ${M_SRV_C5} ${M_SRV_C6}&
+				exec ${M_SRV} ${M_SRV_C} ${M_SRV_C2} ${M_SRV_C3} ${M_SRV_C4} ${M_SRV_C5}&
 			fi
 		fi
 	;;

@@ -4093,8 +4093,8 @@ int char_config_read(const char *cfgName) {
 		if(strcmpi(w1,"timestamp_format") == 0) {
 			strncpy(timestamp_format, w2, 20);
 		} else if(strcmpi(w1,"console_silent")==0){
+			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
-			ShowInfo("Console Silent Setting: %d\n", msg_silent);
 #ifndef TXT_SQL_CONVERT
 		} else if(strcmpi(w1,"stdout_with_ansisequence")==0){
 			stdout_with_ansisequence = config_switch(w2);

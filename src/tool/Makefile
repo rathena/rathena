@@ -12,4 +12,4 @@ mapcache:
 	$(CC) -o ../../$@ mapcache.c grfio.o ../zlib/unz.o -lz
 
 clean:
-	rm -rf ../../tools/adduser ../../tools/convert ../../mapcache
+	rm -rf *.o ../../tools/adduser ../../tools/convert ../../mapcache

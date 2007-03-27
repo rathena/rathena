@@ -1887,8 +1887,8 @@ int login_config_read(const char* cfgName)
 		} else if(!strcmpi(w1,"stdout_with_ansisequence")) {
 			stdout_with_ansisequence = config_switch(w2);
 		} else if(!strcmpi(w1,"console_silent")) {
+			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
-			ShowInfo("Console Silent Setting: %d\n", msg_silent);
 		}
 		else if (!strcmpi(w1, "bind_ip")) {
 			char login_ip_str[128];

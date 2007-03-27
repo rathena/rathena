@@ -3585,8 +3585,8 @@ int login_config_read(const char* cfgName)
 			} else if(strcmpi(w1,"stdout_with_ansisequence")==0){
 				stdout_with_ansisequence = config_switch(w2);
 			} else if(strcmpi(w1,"console_silent")==0){
+				ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 				msg_silent = atoi(w2);
-				ShowInfo("Console Silent Setting: %d\n", msg_silent);
 			} else if (strcmpi(w1, "admin_state") == 0) {
 				admin_state = config_switch(w2);
 			} else if (strcmpi(w1, "admin_pass") == 0) {
