@@ -27,6 +27,8 @@ KarLaeda
 Date		Added
 ======
 2007/03/28
+	* Added Akagi to Ninja Job quest [Playtester]
+	- he teleports job level 10 novices to amatsu for free
 	* My attempt at fixing the zealotus mask npc, now correctly requires a whip
 	- it could have been a one-liner, but not possible with current script engine 
 2007/03/23

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Legionaire
 //===== Current Version: ===================================== 
-//= 1.1a
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN that supports Ninjas
 //===== Description: ========================================= 
@@ -14,8 +14,56 @@
 //= The official dialouge in English comes out, this is the
 //= Best that I can do.
 //= 1.1 Optimized, updated, checked [Lupus]
+//= 1.2 Added Akagi [Playtester]
 //============================================================ 
 
+alberta,30,65,3	script	Akagi#nq	730,{
+
+	if(Class == Job_Novice){
+		if(JobLevel > 9){
+			mes "[Akagi]";
+			mes "Hmm...";
+			mes "Some force must have lead your feet to this dark alley because you are needed here.";
+			mes "Would you like to walk the path of Patience?";
+			next;
+			if(select("No, I don't want to go.:Yep, I'll walk the path.") == 1){
+				mes "[Akagi]";
+				mes "Ok.";
+				mes ".....";
+				mes "Then farewell.";
+				close;
+			}else{
+				mes "[Akagi]";
+				mes "Very well, I'll send you over right away.";
+				close2;
+				switch (rand(3)) {
+					case 1:
+						warp "amatsu", 170, 229;
+						break;
+					case 2:
+						warp "amatsu", 216, 188;
+						break;
+					default:
+						warp "amatsu", 178, 176;
+						break;
+				}
+				end;
+			}
+		}
+		else{
+			mes "[Akagi]";
+			mes "This isn't where you should be.";
+			mes "Come back after you've become stronger.";
+			close;
+		}
+	}
+	else{
+		mes "[Akagi]";
+		mes "I have nothing to say to you.";
+		mes "Go back to where you came from.";
+		close;
+	}
+}
 
 que_ng,30,65,3	script	Cool Kid#nq	730,{
 	set @npcname$,"[Cool Kid]";
