@@ -3,13 +3,14 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
 //= 2005 Headgears Official Quest.
 //===== Additional Comments: =================================
 // 1.0 First version, converted from the official aegis script. [MasterOfMuppets]
+// 1.1 Updated item ids in the zealotus mask npc, now requires a whip [ultramage]
 //============================================================ 
 
 yuno,222,116,3	script	Kasis#LhzHat	851,{
@@ -1736,15 +1737,6 @@ gl_prison1,97,104,1	script	Phendark#LhzHat	1202,{
 	}
 	else if(ZLMASKQ == 1)
 	{
-		if(countitem(1164) || isequipped(1164))set @whipcount,@whipcount+1;
-		if(countitem(1165) || isequipped(1165))set @whipcount,@whipcount+1;
-		if(countitem(1166) || isequipped(1166))set @whipcount,@whipcount+1;
-		if(countitem(1167) || isequipped(1167))set @whipcount,@whipcount+1;
-		if(countitem(1168) || isequipped(1168))set @whipcount,@whipcount+1;
-		if(countitem(1169) || isequipped(1169))set @whipcount,@whipcount+1;
-		if(countitem(1170) || isequipped(1170))set @whipcount,@whipcount+1;
-		if(countitem(1261) || isequipped(1261))set @whipcount,@whipcount+1;
-		if(countitem(1363) || isequipped(1363))set @whipcount,@whipcount+1;
 		mes "[Phendark]";
 		mes "Huh? Oh no!";
 		mes "Another h-human?!";
@@ -1767,7 +1759,20 @@ gl_prison1,97,104,1	script	Phendark#LhzHat	1202,{
 		mes "of value! Z-Zealotus, please!";
 		mes "Zealotus, heeeeeelp me~!";
 		emotion e_sob;
-		if(!@whipcount)close;
+
+
+		if(!(
+			countitem(1950) || countitem(1951) || countitem(1952) || 
+			countitem(1953) || countitem(1954) || countitem(1955) || 
+			countitem(1956) || countitem(1957) || countitem(1958) || 
+			countitem(1959) || countitem(1960) || countitem(1961) || 
+			countitem(1962) || countitem(1963) || countitem(1964) || 
+			countitem(1965) || countitem(1966) || countitem(1967) || 
+			countitem(1968) || countitem(1969) || countitem(1970) || 
+			countitem(1971)
+		))
+			close; // no whip equipped or in inventory
+
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "You're pathetic!";
