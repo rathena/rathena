@@ -980,7 +980,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 
 	if( casttime>0 || temp){ 
 
-		clif_skillcasting(src, src->id, target_id, 0,0, skill_num,casttime);
+		clif_skillcasting(src, src->id, target_id, 0,0, skill_num, skill_get_pl(skill_num, skill_lv), casttime);
 
 		if (sd && target->type == BL_MOB)
 		{
@@ -1114,7 +1114,7 @@ int unit_skilluse_pos2( struct block_list *src, int skill_x, int skill_y, int sk
 
 	if( casttime>0 ) {
 		unit_stop_walking( src, 1);
-		clif_skillcasting(src, src->id, 0, skill_x,skill_y, skill_num,casttime);
+		clif_skillcasting(src, src->id, 0, skill_x, skill_y, skill_num, skill_get_pl(skill_num, skill_lv), casttime);
 	} else
 		ud->state.skillcastcancel=0;
 

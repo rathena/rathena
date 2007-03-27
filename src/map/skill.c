@@ -7028,8 +7028,11 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 		break;
 	case UNT_MOONLIT:
 	//Knockback out of area if affected char isn't in Moonlit effect
-		if (!sc || sc->data[SC_DANCING].timer==-1 || (sc->data[SC_DANCING].val1&0xFFFF) != CG_MOONLIT)
-			skill_blown(ss, bl, skill_get_blewcount(sg->skill_id,sg->skill_lv));
+		if (sc && sc->data[SC_DANCING].timer!=-1 && (sc->data[SC_DANCING].val1&0xFFFF) == CG_MOONLIT)
+			break;
+		if (ss == bl) //Also needed to prevent infinite loop crash.
+			break;
+		skill_blown(ss, bl, skill_get_blewcount(sg->skill_id,sg->skill_lv));
 		break;
 	}
 	return skillid;

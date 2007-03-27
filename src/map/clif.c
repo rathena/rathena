@@ -4219,9 +4219,8 @@ int clif_skillup(struct map_session_data *sd,int skill_num)
  *------------------------------------------
  */
 int clif_skillcasting(struct block_list* bl,
-	int src_id,int dst_id,int dst_x,int dst_y,int skill_num,int casttime)
+	int src_id,int dst_id,int dst_x,int dst_y,int skill_num,int pl, int casttime)
 {
-	int pl = skill_get_pl(skill_num, 1); //TODO: Need Skill level here :/
 	unsigned char buf[32];
 	WBUFW(buf,0) = 0x13e;
 	WBUFL(buf,2) = src_id;
