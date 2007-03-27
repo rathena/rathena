@@ -618,6 +618,7 @@ struct map_session_data {
 		unsigned intravision : 1; // Maya Purple Card effect [DracoRPG]
 		unsigned perfect_hiding : 1; // [Valaris]
 		unsigned no_knockback : 1;
+		unsigned bonus_coma : 1;
 	} special_state;
 	int login_id1, login_id2;
 	unsigned short class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]

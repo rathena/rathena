@@ -2928,20 +2928,6 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 
 	battle_delay_damage(tick+wd.amotion, src, target, BF_WEAPON, 0, 0, damage, wd.dmg_lv, wd.dmotion);
 
-	if (!status_isdead(target) && damage > 0) {
-		if (sd) {
-			int rate = 0;
-			if (sd->weapon_coma_ele[tstatus->def_ele] > 0)
-				rate += sd->weapon_coma_ele[tstatus->def_ele];
-			if (sd->weapon_coma_race[tstatus->race] > 0)
-				rate += sd->weapon_coma_race[tstatus->race];
-			if (sd->weapon_coma_race[tstatus->mode&MD_BOSS?RC_BOSS:RC_NONBOSS] > 0)
-				rate += sd->weapon_coma_race[tstatus->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
-			if (rate)
-				status_change_start(target, SC_COMA, rate, 0, 0, 0, 0, 0, 0);
-		}
-	}
-
 	if (sc && sc->data[SC_AUTOSPELL].timer != -1 && rand()%100 < sc->data[SC_AUTOSPELL].val4) {
 		int sp = 0;
 		int skillid = sc->data[SC_AUTOSPELL].val2;
@@ -3692,6 +3678,7 @@ static const struct battle_data_short {
 	{ "hom_rename",                     &battle_config.hom_rename },
 	{ "homunculus_show_growth",					&battle_config.homunculus_show_growth },	//[orn]
 	{ "homunculus_friendly_rate",				&battle_config.homunculus_friendly_rate },
+	{ "vending_tax",                       &battle_config.vending_tax },
 };
 
 static const struct battle_data_int {
@@ -3955,6 +3942,7 @@ void battle_set_defaults() {
 	battle_config.mob_warp = 0;
 	battle_config.dead_branch_active = 0;
 	battle_config.vending_max_value = 10000000;
+	battle_config.vending_tax = 0;
 	battle_config.show_steal_in_same_party = 0;
 	battle_config.party_update_interval = 1000;
 	battle_config.party_share_type = 0;
@@ -4270,6 +4258,9 @@ void battle_validate_conf() {
 
 	if (battle_config.vending_max_value > MAX_ZENY || battle_config.vending_max_value==0)
 		battle_config.vending_max_value = MAX_ZENY;
+
+	if (battle_config.vending_tax > 10000)
+		battle_config.vending_tax = 10000;
 
 	if (battle_config.min_skill_delay_limit < 10)
 		battle_config.min_skill_delay_limit = 10;	// minimum delay of 10ms

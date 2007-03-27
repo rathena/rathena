@@ -1534,9 +1534,11 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			ShowError("pc_bonus: bonus bAspd is no longer supported!\n");
 		break;
 	case SP_ASPD_RATE:	//Non stackable increase
-		if(sd->state.lr_flag != 2 && status->aspd_rate > 1000-val*10)
-			status->aspd_rate = 1000-val*10;
-		break;
+		if(val >= 0) { //Let negative ASPD bonuses become AddRate ones.
+			if(sd->state.lr_flag != 2 && status->aspd_rate > 1000-val*10)
+				status->aspd_rate = 1000-val*10;
+			break;
+		}
 	case SP_ASPD_ADDRATE:	//Stackable increase - Made it linear as per rodatazone
 		if(sd->state.lr_flag != 2)
 			sd->aspd_add_rate -= val;
@@ -2130,12 +2132,16 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				ShowError("pc_bonus2: SP_WEAPON_COMA_ELE: Invalid element %d\n", type2);
 			break;
 		}
-		if(sd->state.lr_flag != 2)
-			sd->weapon_coma_ele[type2] += val;
+		if(sd->state.lr_flag == 2)
+			break;
+		sd->weapon_coma_ele[type2] += val;
+		sd->special_state.bonus_coma = 1;
 		break;
 	case SP_WEAPON_COMA_RACE:
-		if(sd->state.lr_flag != 2)
-			sd->weapon_coma_race[type2] += val;
+		if(sd->state.lr_flag == 2)
+			break;
+		sd->weapon_coma_race[type2] += val;
+		sd->special_state.bonus_coma = 1;
 		break;
 	case SP_RANDOM_ATTACK_INCREASE:	// [Valaris]
 		if(sd->state.lr_flag !=2){

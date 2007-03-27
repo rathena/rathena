@@ -9637,8 +9637,8 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd) {
 	sd->idletime = last_tick;
 
 	tmp = skill_get_inf(skillnum);
-	if (tmp&INF_GROUND_SKILL)
-		return; //Using a ground skill on a target? WRONG.
+	if (tmp&INF_GROUND_SKILL || !tmp)
+		return; //Using a ground/passive skill on a target? WRONG.
 
 	if (skillnum >= HM_SKILLBASE && skillnum <= HM_SKILLBASE+MAX_HOMUNSKILL) {
 		clif_parse_UseSkillToId_homun(sd->hd, sd, tick, skillnum, skilllv, target_id);

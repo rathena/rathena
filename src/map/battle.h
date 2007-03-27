@@ -261,7 +261,8 @@ extern struct Battle_Config {
 	unsigned short chat_warpportal;
 	unsigned short mob_warp;
 	unsigned short dead_branch_active;
-	unsigned int vending_max_value;
+	int vending_max_value;
+	unsigned short vending_tax;
 	unsigned short show_steal_in_same_party;
 	unsigned short party_share_type;
 	unsigned short party_hp_mode;

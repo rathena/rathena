@@ -1016,6 +1016,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	if (!tsc) //skill additional effect is about adding effects to the target...
 		//So if the target can't be inflicted with statuses, this is pointless.
 		return 0;	
+	if (sc && !sc->count)
+		sc = NULL;
 
 	switch(skillid){
 	case 0: // Normal attacks (no skill used)
@@ -1024,8 +1026,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			// Automatic trigger of Blitz Beat
 			if (pc_isfalcon(sd) && sd->status.weapon == W_BOW && (skill=pc_checkskill(sd,HT_BLITZBEAT))>0 &&
 				rand()%1000 <= sstatus->luk*10/3+1 ) {
-				int lv=(sd->status.job_level+9)/10;
-				skill_castend_damage_id(src,bl,HT_BLITZBEAT,(skill<lv)?skill:lv,tick,SD_LEVEL);
+				rate=(sd->status.job_level+9)/10;
+				skill_castend_damage_id(src,bl,HT_BLITZBEAT,(skill<rate)?skill:rate,tick,SD_LEVEL);
 			}
 			// Gank
 			if(dstmd && sd->status.weapon != W_BOW &&
@@ -1037,33 +1039,41 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 					clif_skill_fail(sd,RG_SNATCHER,0,0);
 			}
 			// Chance to trigger Taekwon kicks [Dralnu]
-			if(sd->sc.count && sd->sc.data[SC_COMBO].timer == -1) {
-				if(sd->sc.data[SC_READYSTORM].timer != -1 &&
+			if(sc && sc->data[SC_COMBO].timer == -1) {
+				if(sc->data[SC_READYSTORM].timer != -1 &&
 					sc_start(src,SC_COMBO, 15, TK_STORMKICK,
 						(2000 - 4*sstatus->agi - 2*sstatus->dex)))
 					; //Stance triggered
-				else if(sd->sc.data[SC_READYDOWN].timer != -1 &&
+				else if(sc->data[SC_READYDOWN].timer != -1 &&
 					sc_start(src,SC_COMBO, 15, TK_DOWNKICK,
 						(2000 - 4*sstatus->agi - 2*sstatus->dex)))
 					; //Stance triggered
-				else if(sd->sc.data[SC_READYTURN].timer != -1 && 
+				else if(sc->data[SC_READYTURN].timer != -1 && 
 					sc_start(src,SC_COMBO, 15, TK_TURNKICK,
 						(2000 - 4*sstatus->agi - 2*sstatus->dex)))
 					; //Stance triggered
-				else if(sd->sc.data[SC_READYCOUNTER].timer != -1)
+				else if(sc->data[SC_READYCOUNTER].timer != -1)
 				{	//additional chance from SG_FRIEND [Komurka]
 					rate = 20;
-					if (sd->sc.data[SC_SKILLRATE_UP].timer != -1 && sd->sc.data[SC_SKILLRATE_UP].val1 == TK_COUNTER) {
-						rate += rate*sd->sc.data[SC_SKILLRATE_UP].val2/100;
+					if (sc->data[SC_SKILLRATE_UP].timer != -1 && sc->data[SC_SKILLRATE_UP].val1 == TK_COUNTER) {
+						rate += rate*sc->data[SC_SKILLRATE_UP].val2/100;
 						status_change_end(src,SC_SKILLRATE_UP,-1);
 					} 
 					sc_start4(src,SC_COMBO, rate, TK_COUNTER, bl->id,0,0,
 						(2000 - 4*sstatus->agi - 2*sstatus->dex));
 				}
 			}
-		}
 
-		if (sc && sc->count) {
+			if (sd->special_state.bonus_coma) {
+				rate  = sd->weapon_coma_ele[tstatus->def_ele];
+				rate += sd->weapon_coma_race[tstatus->race];
+				rate += sd->weapon_coma_race[tstatus->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
+				if (rate)
+					status_change_start(bl, SC_COMA, rate, 0, 0, 0, 0, 0, 0);
+			}
+		}
+		
+		if (sc) {
 		// Enchant Poison gives a chance to poison attacked enemies
 			if(sc->data[SC_ENCPOISON].timer != -1) //Don't use sc_start since chance comes in 1/10000 rate.
 				status_change_start(bl,SC_POISON,sc->data[SC_ENCPOISON].val2,
@@ -6771,11 +6781,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 
 	if(skillid==HT_TALKIEBOX ||
 	   skillid==RG_GRAFFITI){
-		group->valstr=(char *) aMallocA(MESSAGE_SIZE*sizeof(char));
-		if(group->valstr==NULL){
-			ShowFatalError("skill_castend_map: out of memory !\n");
-			exit(1);
-		}
+		group->valstr=(char *) aMalloc(MESSAGE_SIZE*sizeof(char));
 		if (sd)
 			memcpy(group->valstr,sd->message,MESSAGE_SIZE);
 		else //Eh... we have to write something here... even though mobs shouldn't use this. [Skotlex]
@@ -6870,6 +6876,20 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		skill_delunitgroup(src, group, 0);
 		return NULL;
 	}
+	
+	if (group->state.song_dance) {
+		if(sd){
+			sd->skillid_dance = skillid;
+			sd->skilllv_dance = skilllv;
+		}
+		if (
+			sc_start4(src, SC_DANCING, 100, skillid, (int)group, skilllv,
+				(group->state.song_dance&2?BCT_SELF:0), limit+1000) &&
+			sd && group->state.song_dance&2 && skillid != CG_HERMODE //Hermod is a encore with a warp!
+		)
+			skill_check_pc_partner(sd, skillid, &skilllv, 1, 1);
+	}
+
 	if (skillid == NJ_TATAMIGAESHI) //Store number of tiles.
 		group->val1 = group->alive_count;
 
@@ -7774,6 +7794,11 @@ int skill_check_pc_partner (struct map_session_data *sd, int skill_id, int* skil
 	static int c=0;
 	static int p_sd[2] = { 0, 0 };
 	int i;
+
+	if (!battle_config.player_skill_partner_check ||
+		(battle_config.gm_skilluncond && pc_isGM(sd) >= battle_config.gm_skilluncond))
+		return 99; //As if there were infinite partners.
+
 	if (cast_flag)
 	{	//Execute the skill on the partners.
 		struct map_session_data* tsd;
@@ -8205,10 +8230,6 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		break;
 	case PR_BENEDICTIO:
 		{
-			if (!battle_config.player_skill_partner_check ||
-				(battle_config.gm_skilluncond && pc_isGM(sd) >= battle_config.gm_skilluncond)
-			)
-				break; //No need to do any partner checking [Skotlex]
 			if (!(type&1))
 			{	//Started casting.
 				if (skill_check_pc_partner(sd, skill, &lv, 1, 0) < 2)
@@ -8218,10 +8239,9 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 				}
 			}
 			else
-			{	//Done casting
-				//Should I repeat the check? If so, it would be best to only do this on cast-ending. [Skotlex]
+				//Should I repeat the check? If so, it would be best to only do
+				//this on cast-ending. [Skotlex]
 				skill_check_pc_partner(sd, skill, &lv, 1, 1);
-			}
 		}
 		break;
 	case AM_CANNIBALIZE:
@@ -9845,22 +9865,6 @@ struct skill_unit_group *skill_initunitgroup (struct block_list *src, int count,
 	if (skillid == PR_SANCTUARY) //Sanctuary starts healing +1500ms after casted. [Skotlex]
 		group->tick += 1500;
 	group->valstr=NULL;
-
-	i = skill_get_unit_flag(skillid); //Reuse for faster access from here on. [Skotlex]
-	if (i&(UF_DANCE|UF_SONG|UF_ENSEMBLE)) {
-		struct map_session_data *sd = NULL;
-		if(src->type==BL_PC && (sd=(struct map_session_data *)src) ){
-			sd->skillid_dance=skillid;
-			sd->skilllv_dance=skilllv;
-		}
-		sc_start4(src,SC_DANCING,100,skillid,(int)group,skilllv,(i&UF_ENSEMBLE?BCT_SELF:0),skill_get_time(skillid,skilllv)+1000);
-		if (sd && i&UF_ENSEMBLE && skillid != CG_HERMODE && //Hermod is a encore with a warp!
-			battle_config.player_skill_partner_check &&
-			(!battle_config.gm_skilluncond || pc_isGM(sd) < battle_config.gm_skilluncond)
-			) {
-				skill_check_pc_partner(sd, skillid, &skilllv, 1, 1);
-		}
-	}
 	return group;
 }
 

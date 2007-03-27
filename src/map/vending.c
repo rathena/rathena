@@ -158,6 +158,8 @@ void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned cha
 	//Logs
 
 	pc_payzeny(sd, (int)z);
+	if (battle_config.vending_tax)
+		z = z*battle_config.vending_tax/10000;
 	pc_getzeny(vsd, (int)z);
 
 	for(i = 0; 8 + 4 * i < len; i++) {

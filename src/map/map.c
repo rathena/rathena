@@ -2529,7 +2529,7 @@ int map_readallmaps (void)
 		exit(1); //No use launching server if maps can't be read.
 	}
 
-	ShowStatus("Loading maps...\n");
+	ShowStatus("Loading maps (using %s as map cache)...\n", map_cache_file);
 
 	for(i = 0; i < map_num; i++)
 	{
