@@ -5933,9 +5933,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_ORCISH:
 			sc->option |= OPTION_ORCISH;
 			break;
-		case SC_SIGHTTRASHER:
-			sc->option |= OPTION_SIGHTTRASHER;
-			break;
 		case SC_FUSION:
 			sc->option |= OPTION_FLYING;
 			break;
@@ -6390,9 +6387,6 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		break;
 	case SC_RUWACH:
 		sc->option &= ~OPTION_RUWACH;
-		break;
-	case SC_SIGHTTRASHER:
-		sc->option &= ~OPTION_SIGHTTRASHER;
 		break;
 	case SC_FUSION:
 		sc->option &= ~OPTION_FLYING;

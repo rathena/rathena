@@ -480,11 +480,9 @@ enum {
 #define OPTION_WEDDING 0x00001000
 #define OPTION_RUWACH 0x00002000
 #define OPTION_CHASEWALK 0x00004000
-//Note that clientside Flying and Xmas are 0x8000!!
-#define OPTION_XMAS 0x00020000
+//Note that clientside Flying and Xmas are 0x8000 for clients prior to 2007.
 #define OPTION_FLYING 0x0008000
-//TODO: Get these Missing options...
-#define OPTION_SIGHTTRASHER 0x00010000
+#define OPTION_XMAS 0x00010000
 
 #define OPTION_CART (OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5)
 
