@@ -46,7 +46,7 @@
 #define PVP_CALCRANK_INTERVAL 1000	// PVP‡ˆÊŒvŽZ‚ÌŠÔŠu
 static unsigned int exp_table[MAX_PC_CLASS][2][MAX_LEVEL];
 static unsigned int max_level[MAX_PC_CLASS][2];
-static short statp[MAX_LEVEL];
+static short statp[MAX_LEVEL+1];
 
 // h-files are for declarations, not for implementations... [Shinomori]
 struct skill_tree_entry skill_tree[MAX_PC_CLASS][MAX_SKILL_TREE];
@@ -4690,6 +4690,14 @@ int pc_resetstate(struct map_session_data* sd)
 	if (battle_config.use_statpoint_table)
 	{	// New statpoint table used here - Dexity
 		int stat;
+		if (sd->status.base_level > MAX_LEVEL)
+		{	//statp[] goes out of bounds, can't reset!
+			if (battle_config.error_log)
+				ShowError("pc_resetstate: Can't reset stats of %d:%d, the base level (%d) is greater than the max level supported (%d)\n",
+					sd->status.account_id, sd->status.char_id, sd->status.base_level,
+					MAX_LEVEL);
+			return 0;
+		}
 		stat = statp[sd->status.base_level];
 		if (sd->class_&JOBL_UPPER)
 			stat+=52;	// extra 52+48=100 stat points
@@ -4737,7 +4745,7 @@ int pc_resetstate(struct map_session_data* sd)
 	clif_updatestatus(sd,SP_STATUSPOINT);
 	status_calc_pc(sd,0);
 
-	return 0;
+	return 1;
 }
 
 /*==========================================
@@ -7533,7 +7541,7 @@ int pc_readdb(void)
 				continue;
 			if ((j=atoi(line))<0)
 				j=0;
-			if (i >= MAX_LEVEL)
+			if (i > MAX_LEVEL)
 				break;
 			statp[i]=j;			
 			i++;
@@ -7542,7 +7550,7 @@ int pc_readdb(void)
 		ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","statpoint.txt");
 	}
 	// generate the remaining parts of the db if necessary
-	for (; i < MAX_LEVEL; i++) {
+	for (; i <= MAX_LEVEL; i++) {
 		j += (i+15)/5;
 		statp[i] = j;		
 	}
