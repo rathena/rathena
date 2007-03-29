@@ -3909,6 +3909,14 @@ void do_final(void) {
 
 	ShowInfo("ok! all done...\n");
 }
+
+//------------------------------
+// Function called when the server
+// has received a crash signal.
+//------------------------------
+void do_abort(void) {
+}
+
 #endif //TXT_SQL_CONVERT
 void sql_config_read(const char *cfgName){ /* Kalaspuff, to get login_db */
 	char line[1024], w1[1024], w2[1024];

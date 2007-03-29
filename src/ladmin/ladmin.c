@@ -4361,6 +4361,12 @@ int ladmin_config_read(const char *cfgName) {
 	return 0;
 }
 
+//------------------------------
+// Function called when the server
+// has received a crash signal.
+//------------------------------
+void do_abort(void) {}
+
 //--------------------------------------
 // Function called at exit of the server
 //--------------------------------------

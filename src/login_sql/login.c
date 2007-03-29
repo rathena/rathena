@@ -2038,6 +2038,13 @@ void do_final(void)
 		aFree(gm_account_db);
 }
 
+//------------------------------
+// Function called when the server
+// has received a crash signal.
+//------------------------------
+void do_abort(void) {
+}
+
 void set_server_type(void)
 {
 	SERVER_TYPE = ATHENA_SERVER_LOGIN;

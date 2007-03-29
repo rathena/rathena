@@ -228,5 +228,6 @@ int do_init(int argc,char **argv)
 	exit (0);
 }
 
+void do_abort(void) {}
 
-void do_final() {}
+void do_final(void) {}

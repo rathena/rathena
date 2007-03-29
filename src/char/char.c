@@ -4297,6 +4297,13 @@ void do_final(void) {
 	char_log("----End of char-server (normal end with closing of all files)." RETCODE);
 }
 
+//------------------------------
+// Function called when the server
+// has received a crash signal.
+//------------------------------
+void do_abort(void) {
+}
+
 void set_server_type(void)
 {
 	SERVER_TYPE = ATHENA_SERVER_CHAR;

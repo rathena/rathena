@@ -4035,6 +4035,13 @@ void do_final(void) {
 }
 
 //------------------------------
+// Function called when the server
+// has received a crash signal.
+//------------------------------
+void do_abort(void) {
+}
+
+//------------------------------
 // Main function of login-server
 //------------------------------
 void set_server_type(void)

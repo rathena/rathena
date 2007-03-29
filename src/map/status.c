@@ -3874,9 +3874,9 @@ static unsigned char status_calc_element(struct block_list *bl, struct status_ch
 	if( sc->data[SC_BENEDICTIO].timer!=-1 )
 		return ELE_HOLY;
 	if( sc->data[SC_CHANGEUNDEAD].timer!=-1)
-		return sc->data[SC_CHANGEUNDEAD].val3;
+		return ELE_UNDEAD;
 	if( sc->data[SC_ELEMENTALCHANGE].timer!=-1)
-		return sc->data[SC_ELEMENTALCHANGE].val3;
+		return sc->data[SC_ELEMENTALCHANGE].val2;
 	return cap_value(element,0,UCHAR_MAX);
 }
 
@@ -3893,7 +3893,7 @@ static unsigned char status_calc_element_lv(struct block_list *bl, struct status
 	if( sc->data[SC_CHANGEUNDEAD].timer!=-1)
 		return 1;
 	if(sc->data[SC_ELEMENTALCHANGE].timer!=-1)
-		return sc->data[SC_ELEMENTALCHANGE].val4;
+		return sc->data[SC_ELEMENTALCHANGE].val1;
 	return cap_value(lv,1,4);
 }
 
@@ -5007,10 +5007,14 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			skill_enchant_elemental_end(bl,type);
 			break;
 		case SC_ELEMENTALCHANGE:
-			//Val1 is skill level, val2 is skill that invoked this.
-			if (!val3) //Val 3 holds the element, when not given, a random one is picked.
-				val3 = rand()%ELE_MAX;
-			val4 =1+rand()%4; //Elemental Lv is always a random value between  1 and 4.
+			//Val1 is elemental change level, val2 is eleemnt to use.
+			if (!val2) //Val 3 holds the element, when not given, a random one is picked.
+				val2 = rand()%ELE_MAX;
+			//Elemental Lv is always a random value between  1 and 4.
+			if (val1 == 1)
+				val1 =1+rand()%4;
+			else if (val1 > 4)
+				val1 = 4;
 			break;
 		case SC_PROVIDENCE:
 			val2=val1*5; //Race/Ele resist

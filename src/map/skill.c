@@ -4831,7 +4831,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_CHANGETELEKINESIS:
 	case NPC_CHANGEUNDEAD:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start4(bl, type, 100, skilllv, skillid, skill_get_pl(skillid,skilllv), 0, 
+			sc_start2(bl, type, 100, skilllv, skill_get_pl(skillid,skilllv), 
 				skill_get_time(skillid, skilllv)));
 		break;
 

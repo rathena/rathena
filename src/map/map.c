@@ -3156,6 +3156,34 @@ void do_final(void) {
 	ShowStatus("Successfully terminated.\n");
 }
 
+static int map_abort_sub(DBKey key,void * data,va_list ap)
+{
+	struct map_session_data *sd = (TBL_PC*)data;
+
+	if (!sd->state.auth || sd->state.waitingdisconnect || sd->state.finalsave) 
+		return 0;
+
+	chrif_save(sd,1);
+	return 1;
+}
+
+
+//------------------------------
+// Function called when the server
+// has received a crash signal.
+//------------------------------
+void do_abort(void) {
+	//Save all characters and then flush the inter-connection.
+	if (!chrif_isconnect())
+	{
+		ShowFatalError("Server has crashed without a connection to the char-server, character data can't be saved!\n");
+		return;
+	}
+	ShowError("Server received crash signal! Attempting to save all online characters!\n");
+	map_foreachpc(map_abort_sub);
+	chrif_flush_fifo();
+}
+
 /*======================================================
  * Map-Server Version Screen [MC Cameri]
  *------------------------------------------------------
