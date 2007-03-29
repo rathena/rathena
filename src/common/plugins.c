@@ -329,6 +329,8 @@ static int plugins_config_read(const char *cfgName)
 
 void plugins_init(void)
 {
+	// Sugested functionality:
+	// add atcommands/script commands (Borf)
 	char* PLUGIN_CONF_FILENAME = "conf/plugin_athena.conf";
 	//ShowDebug("plugins_init()\n");
 	register_plugin_func(EVENT_PLUGIN_INIT);
