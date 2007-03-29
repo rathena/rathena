@@ -10735,10 +10735,10 @@ BUILDIN_FUNC(jump_zero)
 	sel=script_getnum(st,2);
 	if(!sel) {
 		int pos;
-		if( !data_islabel(script_getdata(st,2)) ){
+		if( !data_islabel(script_getdata(st,3)) ){
 			ShowError("script: jump_zero: not label !\n");
 			st->state=END;
-			return 0;
+			return 1;
 		}
 
 		pos=script_getnum(st,3);

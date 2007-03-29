@@ -1072,7 +1072,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 					status_change_start(bl, SC_COMA, rate, 0, 0, 0, 0, 0, 0);
 			}
 		}
-		
+
 		if (sc) {
 		// Enchant Poison gives a chance to poison attacked enemies
 			if(sc->data[SC_ENCPOISON].timer != -1) //Don't use sc_start since chance comes in 1/10000 rate.

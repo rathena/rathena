@@ -4425,6 +4425,8 @@ int status_get_sc_def(struct block_list *bl, int type)
 	case SC_STONE:
 	case SC_FREEZE:
 	case SC_DECREASEAGI:
+		sc_def = 300 +100*status->mdef;
+		break;
 	case SC_CURSE:
 		if (status->luk > status_get_lv(bl))
 			return 10000; //Special property: inmunity when luk is greater than level
