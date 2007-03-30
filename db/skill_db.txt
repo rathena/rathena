@@ -5,7 +5,7 @@
 // 03 hit (8- repeated hitting, 6- single-hit)
 // 04 inf (0- passive, 1- enemy, 2- place, 4- self, 16- friend, 32- trap)
 // 05 pl attributes (0- neutral, 1- water, 2- earth, 3- fire, 4- wind,
-//    5- poison, 6- saint, 7- darkness, 8- sense, 9- immortality)
+//    5- poison, 6- holy, 7- dark, 8- ghost, 9- undead, -1- use weapon element)
 // 06 nk (skill damage properties):
 //    0x01 - No damage skill
 //    0x02 - Has splash area

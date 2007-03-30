@@ -5009,7 +5009,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			skill_enchant_elemental_end(bl,type);
 			break;
 		case SC_ELEMENTALCHANGE:
-			//Val1 is elemental change level, val2 is eleemnt to use.
+			//Val1 is elemental change level, val2 is element to use.
 			if (!val2) //Val 3 holds the element, when not given, a random one is picked.
 				val2 = rand()%ELE_MAX;
 			//Elemental Lv is always a random value between  1 and 4.

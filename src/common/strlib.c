@@ -7,7 +7,8 @@
 #include <ctype.h>
 
 #include "strlib.h"
-#include "utils.h"
+#include "../common/cbasetypes.h"
+#include "../common/utils.h"
 #include "../common/malloc.h"
 
 //-----------------------------------------------

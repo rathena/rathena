@@ -31,7 +31,6 @@
 #include "skill.h"
 #include "unit.h"
 
-#ifdef _WIN32
 
 struct npc_src_list {
 	struct npc_src_list * next;

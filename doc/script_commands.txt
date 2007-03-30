@@ -69,6 +69,8 @@
 //=       Added info on OnTimerQuit label to npctimer section. [Skotlex]
 //= 3.04.20070317
 //=       Removed all .gat refferences from the examples [Lupus]
+//= 3.04.20070330
+//=       Adjusted the 'itemskill' description due to recent change [ultramage]
 //===== Compatible With ===================================
 //= LOL, can be used by anyone hopefully
 //===== Description =======================================
@@ -3821,7 +3823,7 @@ effect is still in effect).
 
 ---------------------------------------
 
-*itemskill <skill id>,<skill level>,"<skill name to show>";
+*itemskill <skill id>,<skill level>;
 
 This is a command meant for item scripts to replicate single-use skills. It will 
 not work properly in NPC scripts a lot of the time because casting a skill is 
@@ -3831,7 +3833,7 @@ just fine and even show a targeting pointer if this is a targeting skill.
 
 // When you use Anodyne, you will cast Endure(8) level 1, 
 // and "Endure" will appear above your head as you use it.
-605,Anodyne,Anodyne,11,2000,0,100,,,,,10477567,2,,,,,{ itemskill 8,1,"Endure"; },{}
+605,Anodyne,Anodyne,11,2000,0,100,,,,,10477567,2,,,,,{ itemskill 8,1; },{}
 
 
 ---------------------------------------
