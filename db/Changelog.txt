@@ -20,6 +20,7 @@
 
 ========================
 03/31
+	* Fixed item name of Arm Guard [Playtester]
 	* Updated some headgear names to match the translations [Playtester]
 	* Fixed High Wizard card [Playtester]
 	* Updated Item Givers to X.4 [Playtester]
