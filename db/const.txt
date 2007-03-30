@@ -448,7 +448,7 @@ IG_GiftBox	4
 IG_ScrollBox	5
 IG_FingingOre	6
 IG_CookieBag	7
-IG_Potion	8
+IG_FirstAid	8
 IG_Herb	9
 IG_Fruit	10
 IG_Meat	11
@@ -475,7 +475,9 @@ IG_GiftBox_4	31
 IG_EggBoy	32
 IG_EggGirl	33
 IG_GiftBoxChina	34
-IG_LottoBox 35
+IG_LottoBox	35
+IG_FoodBag	36
+IG_Potion	37
 
 SC_ALL -1
 SC_STONE	0

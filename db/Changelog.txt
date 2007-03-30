@@ -20,6 +20,7 @@
 
 ========================
 03/31
+	* Updated and fixed Item Groups and Doom Slayer [Playtester]
 	* Fixed item name of Arm Guard [Playtester]
 	* Updated some headgear names to match the translations [Playtester]
 	* Fixed High Wizard card [Playtester]

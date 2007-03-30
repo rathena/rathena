@@ -621,8 +621,8 @@
 1367,Slaughter,Slaughter,4,,10,2500,120,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bIgnoreDefRace,RC_Brute; bonus2 bWeaponComaRace,RC_Brute,40; bonus bAtkEle,Ele_Earth; },{},{}
 1368,Tomahawk,Tomahawk,4,,10,2500,165,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus bAtkEle,Ele_Wind; skill 337,1; },{},{}
 1369,Guillotine,Guillotine,4,,10,3000,215,,1,0,0x000444A2,7,2,34,4,44,1,7,{ bonus2 bWeaponComaRace,RC_DemiHuman,30; bonus2 bSPDrainValueRace,RC_DemiHuman,2; bonus2 bSPGainRace,RC_DemiHuman,20; },{},{}
-1370,Doom_Slayer,Doom Slayer,4,,10,6000,10,,1,0,0x000444A2,7,2,34,4,80,1,7,{ bonus2 bAddEff,Eff_Stun,3000; bonus bBreakArmorRate,100; bonus bAspdRate,-40; bonus bUseSPrate,100; if(BaseLevel>=95) bonus bBaseAtk,340; },{},{}
-1371,Doom_Slayer_,Doom Slayer,4,,10,6000,10,,1,1,0x000444A2,7,2,34,4,80,1,7,{ bonus2 bAddEff,Eff_Stun,3000; bonus bBreakArmorRate,100; bonus bAspdRate,-40; bonus bUseSPrate,100; if(BaseLevel>=95) bonus bBaseAtk,340; },{},{}
+1370,Doom_Slayer,Doom Slayer,4,,10,6000,10,,1,0,0x000444A2,7,2,34,4,80,1,7,{ bonus2 bAddEff,Eff_Stun,3000; bonus bBreakArmorRate,100; bonus bAspdRate,-40; bonus bUseSPrate,100; if(readparam(bStr)>=95) bonus bBaseAtk,340; },{},{}
+1371,Doom_Slayer_,Doom Slayer,4,,10,6000,10,,1,1,0x000444A2,7,2,34,4,80,1,7,{ bonus2 bAddEff,Eff_Stun,3000; bonus bBreakArmorRate,100; bonus bAspdRate,-40; bonus bUseSPrate,100; if(readparam(bStr)>=95) bonus bBaseAtk,340; },{},{}
 // 1-Handed Spears
 1401,Javelin,Javelin,4,150,,700,28,,3,3,0x00004082,7,2,2,1,4,1,4,{},{},{}
 1402,Javelin_,Javelin,4,150,,700,28,,3,4,0x00004082,7,2,2,1,4,1,4,{},{},{}
@@ -2642,13 +2642,13 @@
 // New Monster Summoners & Item Givers
 12103,Bloody_Dead_Branch,Bloody Branch,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ monster "this",-1,-1,"--ja--",-3,1,""; },{},{}
 12104,Random_Quiver,Random Quiver,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Quiver),1; },{},{}
-12105,Set_Of_Taiming_Item,Taming Gift Set,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Taming),3; },{},{}
+12105,Set_Of_Taiming_Item,Taming Gift Set,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Taming),1; getitem groupranditem(IG_Taming),1; getitem groupranditem(IG_Taming),1; },{},{}
 12106,Accessory_Box,Jewelry Box,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Accesory),1; },{},{}
 12107,Wrapped_Mask,Wrapped Mask,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Mask),1; },{},{}
-12108,Bundle_Of_Magic_Scroll,Scroll Package,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Scroll),5; },{},{}
+12108,Bundle_Of_Magic_Scroll,Scroll Package,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Scroll),1; getitem groupranditem(IG_Scroll),1; getitem groupranditem(IG_Scroll),1; getitem groupranditem(IG_Scroll),1; getitem groupranditem(IG_Scroll),1; },{},{}
 12109,Poring_Box,Poring Box,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ monster "this",-1,-1,"--ja--",-2,1,""; },{},{}
-12110,First_Aid_Kit,First Aid Kit,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Potion),5; },{},{}
-12111,Food_Package,Bundle of Food,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_Fruit),1; getitem groupranditem(IG_Meat),1; getitem groupranditem(IG_Fish),1; },{},{}
+12110,First_Aid_Kit,First Aid Kit,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_FirstAid),1; getitem groupranditem(IG_FirstAid),1; getitem groupranditem(IG_FirstAid),1; getitem groupranditem(IG_FirstAid),1; getitem groupranditem(IG_FirstAid),1; },{},{}
+12111,Food_Package,Bundle of Food,2,,5000,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_FoodBag),1; getitem groupranditem(IG_FoodBag),1; getitem groupranditem(IG_FoodBag),1; },{},{}
 12112,Tropical_Sograt,Tropical Sograt,0,,500,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Curse,10000,1; },{},{}
 12113,Vermilion_The_Beach,Vermilion on the Beach,0,,500,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Stun,10000,1; },{},{}
 // Elemental Converters
@@ -2671,7 +2671,7 @@
 12128,Imperial_Cooking_Kits,Royal Cooking Kit,2,5000,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 14; },{},{}
 12129,Fantastic_Cooking_Kits,Fantastic Cooking Kit,2,10000,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 15; },{},{}
 //
-12130,Cookie_Bag,Cookie Bag,2,,1,70,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_CookieBag),1; },{},{}
+12130,Cookie_Bag,Cookie Bag,2,,1,70,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_CookieBag),1; getitem groupranditem(IG_CookieBag),1; getitem groupranditem(IG_CookieBag),1; },{},{}
 12131,Lucky_Potion,Lucky Potion,0,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12132,Red_Bag,Santa's Bag,2,,0,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Xmas,600000,0; },{},{}
 12133,Ice_Cream_,McDonald's Ice Cone,0,0,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ if(gettime(5) != MDiceCone) { set MDiceCone,gettime(5); percentheal 50,50; } },{},{}
