@@ -20,6 +20,9 @@
 
 ========================
 03/31
+	* Updated Item Givers to X.4 [Playtester]
+	- they are now added up and sorted
+	- fixed China Gift Box
 	* More item updates thanks to Argatlahm [Playtester]
 03/24
 	* Fixed some item names thanks to Argatlahm [Playtester]

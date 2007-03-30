@@ -155,10 +155,10 @@
 662,Inspector_Certificate,Authoritative Badge,2,1450,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 507; sc_start SC_SpeedUp0,240000,0; },{},{}
 663,Korea_Rice_Cake,Songpyun,0,1,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 10,0; },{},{}
 // Item Givers
-664,Gift_Box_1,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
-665,Gift_Box_2,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
-666,Gift_Box_3,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
-667,Gift_Box_4,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
+664,Gift_Box_1,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox_1),1; },{},{}
+665,Gift_Box_2,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox_2),1; },{},{}
+666,Gift_Box_3,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox_3),1; },{},{}
+667,Gift_Box_4,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox_4),1; },{},{}
 668,Handsei,Red_Envelope,2,0,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ set Zeny,Zeny+rand(1000,10000); },{},{}
 669,Rice_Cake_Soup,Rice-Cake Soup,0,500,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal -100,-100; },{},{}
 // Coins
@@ -2556,7 +2556,7 @@
 12020,Water_Of_Darkness,Cursed_Water,11,,1,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,8; },{},{}
 12021,Pork_Belly,Pork,0,,0,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
 12022,Spareribs,Galbi,0,,0,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
-12023,Giftbox_China,Wrapped Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
+12023,Giftbox_China,Wrapped Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBoxChina),1; },{},{}
 12024,Red_Pouch_Of_Surprise,Red Pouch,2,50,,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12025,Egg_Boy,Dano Festival Egg,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12026,Egg_Girl,Dano Festival Egg,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

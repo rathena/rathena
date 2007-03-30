@@ -1,24 +1,24 @@
 //GroupID,ItemID,Rate
 //
 // Potions
-8,501,5	//Red Potion
-8,502,5	//Orange Potion
-8,503,5	//Yellow Potion
-8,504,5	//White Potion
-8,505,5	//Blue Potion
-8,506,5	//Green Potion
-8,545,5	//Condensed Red Potion
-8,546,5	//Condensed Yellow Potion
-8,547,5	//Condensed White Potion
-8,605,5	//Anodyne
-8,645,5	//Concentration Potion
-8,656,5	//Awakening Potion
-8,657,5	//Berserk Potion
-8,569,5	//Novice Potion
-8,678,1	//Poison Bottle
-8,12016,5	//Speed Potion
-8,12017,5	//Slow Potion
-8,12020,5	//Cursed_Water
+8,501,5
+8,502,5
+8,503,5
+8,504,5
+8,505,5
+8,506,5
+8,545,5
+8,546,5
+8,547,5
+8,569,5
+8,605,5
+8,645,5
+8,656,5
+8,657,5
+8,678,1
+8,12016,4
+8,12017,5
+8,12020,5
 // Herbs
 9,507,1
 9,508,1
@@ -40,7 +40,7 @@
 // Juice (removed Grape juice 533)
 13,531,1
 13,532,1
-13,534,1		
+13,534,1
 // Fish
 14,544,1
 14,551,1
@@ -197,117 +197,18 @@
 24,12015,1	//Rusty Arrow Quiver
 24,12183,1	//Holy Arrow Quiver
 //masks
-25,2278,1	//Mr. Smile
-25,2281,1	//Opera Masque
-25,2288,1	//Mr. Scream
-25,2292,1	//Welding Mask
-25,2297,1	//Goblin Mask
-25,5005,1	//Gas Mask
-25,5086,1	//Alarm Mask
-25,5087,1	//Poker Face
-25,5088,1	//Surprised Mask
-25,5089,1	//Annoyed Mask
-25,5090,1	//Goblin Leader Mask
-25,2278,1	//Mr. Smile
-25,2281,1	//Opera Masque
-25,2288,1	//Mr. Scream
-25,2292,1	//Welding Mask
-25,2297,1	//Goblin Mask
-25,5005,1	//Gas Mask
-25,5086,1	//Alarm Mask
-25,5087,1	//Poker Face
-25,5088,1	//Surprised Mask
-25,5089,1	//Annoyed Mask
-25,5090,1	//Goblin Leader Mask
-25,2278,1	//Mr. Smile
-25,2281,1	//Opera Masque
-25,2288,1	//Mr. Scream
-25,2292,1	//Welding Mask
-25,2297,1	//Goblin Mask
-25,5005,1	//Gas Mask
-25,5086,1	//Alarm Mask
-25,5087,1	//Poker Face
-25,5088,1	//Surprised Mask
-25,5089,1	//Annoyed Mask
-25,5090,1	//Goblin Leader Mask
-25,2278,1	//Mr. Smile
-25,2281,1	//Opera Masque
-25,2288,1	//Mr. Scream
-25,2292,1	//Welding Mask
-25,2297,1	//Goblin Mask
-25,5005,1	//Gas Mask
-25,5086,1	//Alarm Mask
-25,5087,1	//Poker Face
-25,5088,1	//Surprised Mask
-25,5089,1	//Annoyed Mask
-25,5090,1	//Goblin Leader Mask
-25,2278,1	//Mr. Smile
-25,2281,1	//Opera Masque
-25,2288,1	//Mr. Scream
-25,2292,1	//Welding Mask
-25,2297,1	//Goblin Mask
-25,5005,1	//Gas Mask
-25,5086,1	//Alarm Mask
-25,5087,1	//Poker Face
-25,5088,1	//Surprised Mask
-25,5089,1	//Annoyed Mask
-25,5090,1	//Goblin Leader Mask
-25,2278,1	//Mr. Smile
-25,2281,1	//Opera Masque
-25,2288,1	//Mr. Scream
-25,2292,1	//Welding Mask
-25,2297,1	//Goblin Mask
-25,5005,1	//Gas Mask
-25,5086,1	//Alarm Mask
-25,5087,1	//Poker Face
-25,5088,1	//Surprised Mask
-25,5089,1	//Annoyed Mask
-25,5090,1	//Goblin Leader Mask
-25,2278,1	//Mr. Smile
-25,2281,1	//Opera Masque
-25,2288,1	//Mr. Scream
-25,2292,1	//Welding Mask
-25,2297,1	//Goblin Mask
-25,5005,1	//Gas Mask
-25,5086,1	//Alarm Mask
-25,5087,1	//Poker Face
-25,5088,1	//Surprised Mask
-25,5089,1	//Annoyed Mask
-25,5090,1	//Goblin Leader Mask
-25,2278,1	//Mr. Smile
-25,2281,1	//Opera Masque
-25,2288,1	//Mr. Scream
-25,2292,1	//Welding Mask
-25,2297,1	//Goblin Mask
-25,5005,1	//Gas Mask
-25,5086,1	//Alarm Mask
-25,5087,1	//Poker Face
-25,5088,1	//Surprised Mask
-25,5089,1	//Annoyed Mask
-25,5090,1	//Goblin Leader Mask
-25,2278,1	//Mr. Smile
-25,2281,1	//Opera Masque
-25,2288,1	//Mr. Scream
-25,2292,1	//Welding Mask
-25,2297,1	//Goblin Mask
-25,5005,1	//Gas Mask
-25,5086,1	//Alarm Mask
-25,5087,1	//Poker Face
-25,5088,1	//Surprised Mask
-25,5089,1	//Annoyed Mask
-25,5090,1	//Goblin Leader Mask
-25,2278,1	//Mr. Smile
-25,2281,1	//Opera Masque
-25,2288,1	//Mr. Scream
-25,2292,1	//Welding Mask
-25,2297,1	//Goblin Mask
-25,5005,1	//Gas Mask
-25,5086,1	//Alarm Mask
-25,5087,1	//Poker Face
-25,5088,1	//Surprised Mask
-25,5089,1	//Annoyed Mask
-25,5090,1	//Goblin Leader Mask
-25,5121,1	//Zherlthsh Mask
+25,2278,10
+25,2281,10
+25,2288,10
+25,2292,10
+25,2297,10
+25,5005,10
+25,5086,10
+25,5087,10
+25,5088,10
+25,5089,10
+25,5090,10
+25,5121,1
 //accessory
 26,2601,10	//Ring
 26,2602,10	//Earring
