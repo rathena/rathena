@@ -32,9 +32,6 @@
 #include "unit.h"
 
 #ifdef _WIN32
-#undef isspace
-#define isspace(x)  (x == ' ' || x == '\t')
-#endif
 
 struct npc_src_list {
 	struct npc_src_list * next;

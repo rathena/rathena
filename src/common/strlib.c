@@ -150,7 +150,7 @@ const char *stristr(const char *haystack, const char *needle)
 	}
 	for ( ; *haystack; ++haystack )
 	{
-		if ( toupper(*haystack) == toupper(*needle) )
+		if ( TOUPPER(*haystack) == TOUPPER(*needle) )
 		{
 			/*
 			* Matched starting char -- loop through remaining chars.
@@ -158,7 +158,7 @@ const char *stristr(const char *haystack, const char *needle)
 			const char *h, *n;
 			for ( h = haystack, n = needle; *h && *n; ++h, ++n )
 			{
-				if ( toupper(*h) != toupper(*n) )
+				if ( TOUPPER(*h) != TOUPPER(*n) )
 				{
 					break;
 				}

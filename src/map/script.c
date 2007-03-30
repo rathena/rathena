@@ -353,18 +353,18 @@ static unsigned int calc_hash2(const unsigned char *p)
 #if defined(SCRIPT_HASH_DJB2)
 	unsigned int h = 5381;
 	while( *p ) // hash*33 + c
-		h = ( h << 5 ) + h + ((unsigned char)tolower(*p++));
+		h = ( h << 5 ) + h + ((unsigned char)TOLOWER(*p++));
 	return h;
 #elif defined(SCRIPT_HASH_SDBM)
 	unsigned int h = 0;
 	while( *p )
-		h = ( h << 6 ) + ( h << 16 ) - h + ((unsigned char)tolower(*p++));
+		h = ( h << 6 ) + ( h << 16 ) - h + ((unsigned char)TOLOWER(*p++));
 	return h;
 #elif defined(SCRIPT_HASH_ELF)
 	unsigned int h = 0;
 	unsigned int g;
 	while( *p ){ // UNIX ELF hash
-		h = ( h << 4 ) + ((unsigned char)tolower(*p++));
+		h = ( h << 4 ) + ((unsigned char)TOLOWER(*p++));
 		if ( g = h & 0xF0000000 )
 		h ^= g >> 24;
 		h &= ~g;
@@ -374,7 +374,7 @@ static unsigned int calc_hash2(const unsigned char *p)
 	unsigned int h = 0;
 	unsigned int g;
 	while( *p ){
-		h = ( h << 4 ) + ((unsigned char)tolower(*p++));
+		h = ( h << 4 ) + ((unsigned char)TOLOWER(*p++));
 		if ( (g=h&0xF0000000) ) {
 			h ^= g>>24;
 			h ^= g;
@@ -385,7 +385,7 @@ static unsigned int calc_hash2(const unsigned char *p)
 	unsigned int h = 0;
 	while( *p ){
 		h = ( h << 1 ) + ( h >> 3 ) + ( h >> 5 ) + ( h >> 8 );
-		h+=(unsigned char)tolower(*p++);
+		h+=(unsigned char)TOLOWER(*p++);
 	}
 	return h;
 #endif
@@ -783,7 +783,7 @@ const char* parse_simpleexpr(const char *p)
 		if( *p != ')' )
 			disp_error_message("parse_simpleexpr: unmatch ')'",p);
 		++p;
-	} else if(isdigit(*p) || ((*p=='-' || *p=='+') && isdigit(p[1]))){
+	} else if(ISDIGIT(*p) || ((*p=='-' || *p=='+') && ISDIGIT(p[1]))){
 		char *np;
 		i=strtoul(p,&np,0);
 		add_scripti(i);
@@ -1123,7 +1123,7 @@ const char* parse_syntax(const char* p)
 					v = str_data[v].val;
 					p = skip_word(p);
 				} else { //Numeric value
-					if((*p == '-' || *p == '+') && isdigit(p[1]))	// pre-skip because '-' can not skip_word
+					if((*p == '-' || *p == '+') && ISDIGIT(p[1]))	// pre-skip because '-' can not skip_word
 						p++;
 					p = skip_word(p);
 					if(np != p)

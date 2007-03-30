@@ -99,7 +99,7 @@ void irc_announce_shop(struct map_session_data *sd, int flag)
 		strcpy(mapname, map[sd->bl.m].name);
 		maplen = strcspn(mapname,".");
 		mapname[maplen] = '\0';
-		mapname[0]=toupper(mapname[0]);
+		mapname[0]=TOUPPER(mapname[0]);
 
 		sprintf(send_string,"PRIVMSG %s :%s has opened a shop, %s, at <%d,%d> in %s.",irc_trade_channel,sd->status.name,sd->message,sd->bl.x,sd->bl.y,mapname);
 	} else
@@ -123,7 +123,7 @@ void irc_announce_mvp(struct map_session_data *sd, struct mob_data *md)
 	strcpy(mapname, map[md->bl.m].name);
 	maplen = strcspn(mapname,".");
 	mapname[maplen] = '\0';
-	mapname[0]=toupper(mapname[0]);
+	mapname[0]=TOUPPER(mapname[0]);
 
 	sprintf(send_string,"PRIVMSG %s :%s the %s has MVP'd %s in %s.",irc_channel,sd->status.name,job_name(sd->status.class_),md->name, mapname);
 	irc_send(send_string);

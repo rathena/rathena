@@ -152,7 +152,7 @@ const char* get_svn_revision(void)
 		// Check the version
 		if (fgets(line,sizeof(line),fp))
 		{
-			if(!isdigit(line[0]))
+			if(!ISDIGIT(line[0]))
 			{
 				// XML File format
 				while (fgets(line,sizeof(line),fp))

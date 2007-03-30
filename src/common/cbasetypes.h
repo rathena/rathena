@@ -297,9 +297,22 @@ typedef char bool;
 
 //////////////////////////////////////////////////////////////////////////
 // Has to be unsigned to avoid problems in some systems
-#define TOLOWER(c) ((char)tolower((unsigned char)(c)))
-#define ISSPACE(c) (isspace((unsigned char)(c)))
-#define ISALPHA(c) (isalpha((unsigned char)(c)))
+// Problems arise when these functions expect an argument in the range [0,256[ and are feed a signed char.
+// NOTE: <ctype.h> needs to be included when using these defines
 #define ISALNUM(c) (isalnum((unsigned char)(c)))
+#define ISALPHA(c) (isalpha((unsigned char)(c)))
+#define ISCNTRL(c) (iscntrl((unsigned char)(c)))
+#define ISDIGIT(c) (isdigit((unsigned char)(c)))
+#define ISGRAPH(c) (isgraph((unsigned char)(c)))
+#define ISLOWER(c) (islower((unsigned char)(c)))
+#define ISPRINT(c) (isprint((unsigned char)(c)))
+#define ISPUNCT(c) (ispunct((unsigned char)(c)))
+#define ISSPACE(c) (isspace((unsigned char)(c)))
+#define ISUPPER(c) (isupper((unsigned char)(c)))
+#define ISXDIGIT(c) (isxdigit((unsigned char)(c)))
+#define TOASCII(c) (toascii((unsigned char)(c)))
+#define TOLOWER(c) (tolower((unsigned char)(c)))
+#define TOUPPER(c) (toupper((unsigned char)(c)))
+
 
 #endif /* _CBASETYPES_H_ */

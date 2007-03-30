@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/03/31
+	* Added all the missing defines for ctype.h functions and converted all 
+	  the direct uses to the defines. [FlavioJS]
 2007/03/30
 	* Added "do_abort" function to the core. It is invoked when the server has
 	  received a Segmentation Fault or Floating Point Exception signal. Currently

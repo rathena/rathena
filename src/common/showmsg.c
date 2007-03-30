@@ -242,7 +242,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 			q=q+2;	
 			while(1)
 			{
-				if( isdigit((int)((unsigned char)*q)) ) 
+				if( ISDIGIT(*q) ) 
 				{	// add number to number array, only accept 2digits, shift out the rest
 					// so // \033[123456789m will become \033[89m
 					numbers[numpoint] = (numbers[numpoint]<<4) | (*q-'0');
@@ -565,7 +565,7 @@ int	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 			q=q+2;	
 			while(1)
 			{
-				if( isdigit((int)((unsigned char)*q)) ) 
+				if( ISDIGIT(*q) ) 
 				{					
 					++q;
 					// and next character
