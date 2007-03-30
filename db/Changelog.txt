@@ -20,6 +20,7 @@
 
 ========================
 03/31
+	* Fixed High Wizard card [Playtester]
 	* Updated Item Givers to X.4 [Playtester]
 	- they are now added up and sorted
 	- fixed China Gift Box
