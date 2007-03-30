@@ -19,6 +19,8 @@
 	-----
 
 ========================
+03/31
+	* More item updates thanks to Argatlahm [Playtester]
 03/24
 	* Fixed some item names thanks to Argatlahm [Playtester]
 03/23
