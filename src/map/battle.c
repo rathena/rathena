@@ -1378,7 +1378,7 @@ static struct Damage battle_calc_weapon_attack(
 					if(sd && sd->cart_weight)
 						skillratio += 100*sd->cart_weight/battle_config.max_cart_weight; // +1% every 1% weight
 					else if (!sd)
-						skillratio += 150; //Max damage for non players.
+						skillratio += 100; //Max damage for non players.
 					break;
 				case NPC_RANDOMATTACK:
 					skillratio += rand()%150-50;
