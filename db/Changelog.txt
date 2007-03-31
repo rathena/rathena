@@ -20,6 +20,7 @@
 
 ========================
 03/31
+	* Added names to Item Group items thanks to Leon [Playtester]
 	* Updated and fixed Item Groups and Doom Slayer [Playtester]
 	* Fixed item name of Arm Guard [Playtester]
 	* Updated some headgear names to match the translations [Playtester]
