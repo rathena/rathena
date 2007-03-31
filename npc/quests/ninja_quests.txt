@@ -1,13 +1,14 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= SVN eA
 //===== Description: =========================================
 //= Ninja quests
 //===== Additional Comments: =================================
 //= 1.0 Ninja Arm Guards only yet [Playtester]
+//= 1.1 Added Kaibara [Playtester]
 //============================================================
 
 que_ng,28,50,3	script	Boshuu	709,{
@@ -835,5 +836,284 @@ que_ng,27,18,3	script	Toshu	709,{
 					break;
 			}
 		}
+	}
+}
+
+que_ng,72,34,3	script	Craftsman Kaibara	847,{
+
+	if (BaseJob != Job_Ninja){
+		mes "[Kaibara]";
+		mes "I am a Craftsman called Kaibara";
+		mes "I create weapons for Ninjas.";
+		mes "However, It doesn't look like you are a ninja.";
+		next;
+		mes "[Kaibara]";
+		mes "Even if I created a sword for you, I doubt you would be able to appreciate it. What a shame...";
+		close;
+	}
+	mes "[Kaibara]";
+	mes "I am the last Craftsman who knows how to make a sword out of a Black Dragon's scales. They call me Kaibara.";
+	mes "You look like a Ninja.";
+	mes "If you're interested, take a look at my goods while you decide what you want.";
+	next;
+	switch(select("Gokurin:Jitte:Ashura[1]:Murasame:Hakujin:Cancel")){
+		case 1:
+			mes "[Kaibara]";
+			mes "Hmm~ I see you've picked the Gokurin.";
+			mes "Gokurin is made with various materials, one of them being Dragon's Scale.";
+			next;
+			mes "[Kaibara]";
+			mes "The required material for this sword is 400 Dragon Scales,";
+			mes "5 Oridecons, and 30 Dragon Skins.";
+			mes "and 200,000 Zeny.";
+			mes "Do you want me to create this item for you?";
+			next;
+			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+				mes "[Kaibara]";
+				mes "Hrm. I understand. These are materials that are difficult to attain...";
+				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				close;
+			}else{
+				if(countitem(1036) < 400 || countitem(984) < 5 || countitem(7123) < 30){
+					mes "[Kaibara]";
+					mes "It looks like there are not enough ingredients for me to make you a Gokurin.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to make the Gokurin,";
+					mes "I require ^ff0000 400 Dragon's Scale,^000000";
+					mes "^ff00005 Oridecons^000000, ^ff000030 Dragon Skins^000000";
+					mes "and ^ff0000200000 Zeny^000000.";
+					mes "Make sure you have those items when you return to me.";
+					close;
+				}
+				if(Zeny < 200000){
+					mes "[Kaibara]";
+					mes "Hmm, it looks like you have enough materials, but you're short on Zeny.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to make the Gokurin,";
+					mes "I require ^ff0000 400 Dragon Scales,^000000";
+					mes "^ff00005 Oridecons^000000, ^ff000030 Dragon Skins^000000";
+					mes "and ^ff0000200,000 Zeny^000000.";
+					mes "Make sure you have those items when you return to me.";
+					close;
+				}
+				delitem 1036,400;
+				delitem 984,5;
+				delitem 7123,30;
+				set Zeny,Zeny-200000;
+				getitem 13006,1;
+				mes "[Kaibara]";
+				mes "Hmm, looks good.";
+				mes "I've checked your ingredients and fees.";
+				mes "Here is your completed Gokurin.";
+				close;
+			}
+			break;
+		case 2:
+			mes "[Kaibara]";
+			mes "Hmm~ You've picked the ^ff0000Jitte^000000.";
+			mes "This sword has a legend that the more enemies you slay with it, the stronger it gets.";
+			next;
+			mes "[Kaibara]";
+			mes "The required materials are 30 Steel, one Old Hilt";
+			mes "and 20,000 Zeny.";
+			mes "Do you want me to create this item for you?";
+			next;
+			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+				mes "[Kaibara]";
+				mes "Hrm. I understand. These are materials that are difficult to attain...";
+				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				close;
+			}else{
+				if(countitem(999) < 30 || countitem(7022) < 1){
+					mes "[Kaibara]";
+					mes "It looks like you need more materials before I can make you a Jitte.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to create a Jitte, I require";
+					mes "^ff000030 Steel^000000, ";
+					mes "^f00001 Old Hilt^000000,";
+					mes "and ^ff000020,000 Zeny^000000.";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				if(Zeny < 20000){
+					mes "[Kaibara]";
+					mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to create the Jitte, I require";
+					mes "^ff000030 Steel,^000000";
+					mes "^f00001 Old Hilt^000000,";
+					mes "and ^ff000020,000 Zeny^000000.";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				delitem 999,30;
+				delitem 7022,1;
+				set Zeny,Zeny-20000;
+				getitem 13007,1;
+				mes "[Kaibara]";
+				mes "Hmm, very well.";
+				mes "I've checked your ingredients and fees.";
+				mes "Here is your completed Jitte.";
+				close;
+			}
+			break;
+		case 3:
+			mes "[Kaibara]";
+			mes "Hmm~ You've chose the ^ff0000Ashura[1]^000000.";
+			mes "In order to create an Ashura[1], I require ";
+			mes "25 Steel, 5 Worn-out Magic Scrolls";
+			mes "And 32,000 Zeny.";
+			mes "Do you want me to create this item for you?";
+			next;
+			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+				mes "[Kaibara]";
+				mes "Hrm. I understand. These are materials that are difficult to attain...";
+				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				close;
+			}else{
+				if(countitem(999) < 25 || countitem(7099) < 5){
+					mes "[Kaibara]";
+					mes "It looks like you don't have all the materials I need to create an Ashura[1] for you.";
+					next;
+					mes "[Kaibara]";
+					mes "I require ^ff000025 Steel,^000000";
+					mes "^ff0000Five Worn-out Magic Scrolls,^000000";
+					mes "and ^ff0000 32,000 Zeny^000000 in order to create an Ashura[1].";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				if(Zeny < 32000){
+					mes "[Kaibara]";
+					mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to create an Ashura[1], I require the following materials - ";
+					mes "^ff000025 Steel,^000000";
+					mes "^ff00005 Worn-out Magic Scrolls^000000,";
+					mes "and ^ff0000 32,000 Zeny^000000";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				delitem 999,25;
+				delitem 7099,5;
+				set Zeny,Zeny-32000;
+				getitem 13011,1;
+				mes "[Kaibara]";
+				mes "Hmm, very well.";
+				mes "I've checked your ingredients and fees.";
+				mes "Here is your completed Ashura[1].";
+				close;
+			}
+			break;
+		case 4:
+			mes "[Kaibara]";
+			mes "Hmm~ You've chose the ^ff0000Murasame^000000.";
+			mes "To create the Murasame, I require";
+			mes "30 Steel, 10 Aquamarines";
+			mes "And 48,000 Zeny.";
+			mes "Do you want me to create this item for you?";
+			next;
+			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+				mes "[Kaibara]";
+				mes "Hrm. I understand. These are materials that are difficult to attain...";
+				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				close;
+			}else{
+				if(countitem(999) < 30 || countitem(720) < 10){
+					mes "[Kaibara]";
+					mes "It looks like your short on materials for me to create you a Murasame.";
+					next;
+					mes "[Kaibara]";
+					mes "I require ^ff000030 Steel^000000, ";
+					mes "^ff000010 Aquamarines^000000,";
+					mes "and ^ff000048,000 Zeny^000000";
+					mes "in order to create a Murasame.";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				if(Zeny < 48000){
+					mes "[Kaibara]";
+					mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to create a Murasame, I require..";
+					mes "^ff000030 Steel^000000, ";
+					mes "^ff000010 Aquamarines^000000,";
+					mes "and ^ff000048,000 Zeny^000000.";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				delitem 999,30;
+				delitem 720,10;
+				set Zeny,Zeny-48000;
+				getitem 13012,1;
+				mes "[Kaibara]";
+				mes "Hmm, very well.";
+				mes "I've checked your ingredients and fees.";
+				mes "Here is your completed Murasame.";
+				close;
+			}
+			break;
+		case 5:
+			mes "[Kaibara]";
+			mes "Hmm~ You've chose the ^ff0000Hakujin^000000.";
+			mes "In order to create a Hakujin, I require...";
+			mes "500 Skel-Bones, 5 Pearls";
+			mes "10 Level 3 Heal Scrolls";
+			mes "and 120,000 Zeny.";
+			mes "Do you want me to create this item for you?";
+			next;
+			if(select("No thanks. It's too expensive.:Yes! I want one!") == 1){
+				mes "[Kaibara]";
+				mes "Hrm. I understand. These are materials that are difficult to attain...";
+				mes "If you ever happen to gather all these materials one day, feel free to come back.";
+				close;
+			}else{
+				if(countitem(932) < 500 || countitem(12001) < 10 || countitem(722) < 5){
+					mes "[Kaibara]";
+					mes "It looks like you're short on raw materials for me to be able to make you a Hakujin.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to create a Hakujin, I require...";
+					mes "500 Skel-Bones, 5 Pearls";
+					mes "10 Level 3 Heal Scrolls";
+					mes "and 120,000 Zeny.";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				if(Zeny < 120000){
+					mes "[Kaibara]";
+					mes "Hmm.. You brought plenty of materials, but you're short on zeny.";
+					next;
+					mes "[Kaibara]";
+					mes "In order to create a Hakujin, I require...";
+					mes "500 Skel-Bones, 5 Pearls";
+					mes "10 Level 3 Heal Scrolls";
+					mes "and 120,000 Zeny.";
+					mes "Remember these needed materials, and come back after you're positive you have them all.";
+					close;
+				}
+				delitem 932,500;
+				delitem 12001,10;
+				delitem 722,5;
+				set Zeny,Zeny-120000;
+				getitem 13014,1;
+				mes "[Kaibara]";
+				mes "Hmm, very well.";
+				mes "I've double checked the materials and Zeny you've brought.";
+				mes "Here is your completed Hakujin.";
+				close;
+			}
+			break;
+		default:
+			mes "[Kaibara]";
+			mes "Hmm, Very well.";
+			mes "Come and look for me again.";
+			close;
+			break;
 	}
 }

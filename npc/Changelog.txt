@@ -26,8 +26,10 @@ KarLaeda
 
 Date		Added
 ======
+2007/04/01
+	* Added Ninja Weapon quests [Playtester]
 2007/03/30
-	* Added Ninja Gauntlet quests [Playtester]
+	* Added Ninja Shield quests [Playtester]
 	- massive testing and probably optimisation needed
 2007/03/28
 	* Added Akagi to Ninja Job quest [Playtester]
