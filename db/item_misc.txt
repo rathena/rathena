@@ -1,120 +1,120 @@
 //GroupID,ItemID,Rate
 //
 // First Aid Kit
-8,501,5
-8,502,5
-8,503,5
-8,504,5
-8,505,5
-8,506,5
-8,545,5
-8,546,5
-8,547,5
-8,569,5
-8,605,5
-8,645,5
-8,656,5
-8,657,5
-8,678,1
-8,12016,4
-8,12017,5
-8,12020,5
+8,501,5	//Red Potion
+8,502,5	//Orange Potion
+8,503,5	//Yellow Potion
+8,504,5	//White Potion
+8,505,5	//Blue Potion
+8,506,5	//Green Potion
+8,545,5	//Condensed Red Potion
+8,546,5	//Condensed Yellow Potion
+8,547,5	//Condensed White Potion
+8,569,5	//Novice Potion
+8,605,5	//Anodyne
+8,645,5	//Concentration Potion
+8,656,5	//Awakening Potion
+8,657,5	//Berserk Potion
+8,678,1	//Poison Bottle
+8,12016,4	//Speed Potion
+8,12017,5	//Slow Potion
+8,12020,5	//Cursed_Water
 // Herbs
-9,507,1
-9,508,1
-9,509,1
-9,510,1
-9,511,1
+9,507,1	//Red Herb
+9,508,1	//Yellow Herb
+9,509,1	//White Herb
+9,510,1	//Blue Herb
+9,511,1	//Green Herb
 // Fruits
-10,512,1
-10,513,1
-10,514,1
-10,515,1
-10,516,1
+10,512,1	//Apple
+10,513,1	//Banana
+10,514,1	//Grape
+10,515,1	//Carrot
+10,516,1	//Potato
 // Meat
-11,517,1
-11,528,1
+11,517,1	//Meat
+11,528,1	//Monster Food
 // Candy
-12,529,1
-12,530,1
+12,529,1	//Candy
+12,530,1	//Candy Cane
 // Juice (removed Grape juice 533)
-13,531,1
-13,532,1
-13,534,1
+13,531,1	//Apple Juice
+13,532,1	//Banana Juice
+13,534,1	//Carrot Juice
 // Fish
-14,544,1
-14,551,1
+14,544,1	//Raw Fish
+14,551,1	//Sushi
 // Boxes
-15,603,1
-15,617,1
-15,644,1
+15,603,1	//Old Blue Box
+15,617,1	//Old Purple Box
+15,644,1	//Gift Box
 // Gemstones
-16,715,1
-16,716,1
-16,717,1
+16,715,1	//Yellow Gemstone
+16,716,1	//Red Gemstone
+16,717,1	//Blue Gemstone
 // Elemental Resist Potions
-17,12118,1
-17,12119,1
-17,12120,1
-17,12121,1
+17,12118,1	//Fire Resist Potion
+17,12119,1	//Cold Resist Potion
+17,12120,1	//Earth Resist Potion
+17,12121,1	//Thunder Resist Potion
 // ores
-18,756,1
-18,757,1
-18,998,1
-18,999,1
-18,1002,1
-18,1003,1
-18,1010,1
-18,1011,1
+18,756,1	//Rough Oridecon
+18,757,1	//Rough Elunium
+18,998,1	//Iron
+18,999,1	//Steel
+18,1002,1	//Iron Ore
+18,1003,1	//Coal
+18,1010,1	//Phracon
+18,1011,1	//Emveretarcon
 // food types
-19,512,1
-19,513,1
-19,514,1
-19,515,1
-19,516,1
-19,517,1
-19,528,1
-19,529,1
-19,530,1
-19,544,1
-19,551,1
+19,512,1	//Apple
+19,513,1	//Banana
+19,514,1	//Grape
+19,515,1	//Carrot
+19,516,1	//Potato
+19,517,1	//Meat
+19,528,1	//Monster Food
+19,529,1	//Candy
+19,530,1	//Candy Cane
+19,544,1	//Raw Fish
+19,551,1	//Sushi
 //recovery-types
-20,501,1
-20,502,1
-20,503,1
-20,504,1
-20,505,1
-20,506,1
-20,507,1
-20,508,1
-20,509,1
-20,510,1
-20,511,1
-20,531,1
-20,532,1
-20,533,1
-20,534,1
+20,501,1	//Red Potion
+20,502,1	//Orange Potion
+20,503,1	//Yellow Potion
+20,504,1	//White Potion
+20,505,1	//Blue Potion
+20,506,1	//Green Potion
+20,507,1	//Red Herb
+20,508,1	//Yellow Herb
+20,509,1	//White Herb
+20,510,1	//Blue Herb
+20,511,1	//Green Herb
+20,531,1	//Apple Juice
+20,532,1	//Banana Juice
+20,533,1	//Grape Juice
+20,534,1	//Carrot Juice
 // minerals
-21,714,1
-21,756,1
-21,757,1
-21,969,1
-21,984,1
-21,985,1
-21,990,1
-21,991,1
-21,992,1
-21,993,1
-21,994,1
-21,995,1
-21,996,1
-21,997,1
-21,998,1
-21,999,1
-21,1002,1
-21,1003,1
-21,1010,1
-21,1011,1
+21,714,1	//Emperium
+21,756,1	//Rough Oridecon
+21,757,1	//Rough Elunium
+21,969,1	//Gold
+21,984,1	//Oridecon
+21,985,1	//Elunium
+21,990,1	//Red Blood
+21,991,1	//Crystal Blue
+21,992,1	//Wind of Verdure
+21,993,1	//Green Live
+21,994,1	//Flame Heart
+21,995,1	//Mystic Frozen
+21,996,1	//Rough Wind
+21,997,1	//Great Nature
+21,998,1	//Iron
+21,999,1	//Steel
+21,1002,1	//Iron Ore
+21,1003,1	//Coal
+21,1010,1	//Phracon
+21,1011,1	//Emveretarcon
 // taming items
 22,619,1	//Unripe Apple
 22,620,1	//Orange Juice
@@ -197,18 +197,18 @@
 24,12015,1	//Rusty Arrow Quiver
 24,12183,1	//Holy Arrow Quiver
 //masks
-25,2278,10
-25,2281,10
-25,2288,10
-25,2292,10
-25,2297,10
-25,5005,10
-25,5086,10
-25,5087,10
-25,5088,10
-25,5089,10
-25,5090,10
-25,5121,1
+25,2278,10	//Mr. Smile
+25,2281,10	//Opera Masque
+25,2288,10	//Mr. Scream
+25,2292,10	//Welding Mask
+25,2297,10	//Goblin Mask
+25,5005,10	//Gas Mask
+25,5086,10	//Alarm Mask
+25,5087,10	//Poker Face
+25,5088,10	//Surprised Mask
+25,5089,10	//Annoyed Mask
+25,5090,10	//Goblin Leader Mask
+25,5121,1	//Zherlthsh Mask
 //accessory
 26,2601,10	//Ring
 26,2602,10	//Earring
@@ -237,22 +237,22 @@
 26,2628,10	//Novice Armlet
 26,2658,10	//Nile Rose
 // jewels
-27,718,1
-27,719,1
-27,720,1
-27,721,1
-27,722,1
-27,723,1
-27,724,1
-27,725,1
-27,726,1
-27,727,1
-27,728,1
-27,729,1
-27,730,1
-27,731,1
-27,732,1
-27,733,1
+27,718,1	//Garnet
+27,719,1	//Amethyst
+27,720,1	//Aquamarine
+27,721,1	//Emerald
+27,722,1	//Pearl
+27,723,1	//Ruby
+27,724,1	//Cursed Ruby
+27,725,1	//Sardonyx
+27,726,1	//Sapphire
+27,727,1	//Opal
+27,728,1	//Topaz
+27,729,1	//Zircon
+27,730,1	//1carat Diamond
+27,731,1	//2carat Diamond
+27,732,1	//3carat Diamond
+27,733,1	//Cracked Diamond
 // Egg Boy
 32,514,300	//Grape
 32,564,522	//Rice Ball
@@ -272,63 +272,63 @@
 33,5042,5	//Bao Bao
 33,5066,1	//Succubus Horn
 // Lotto Box
-35,7391,1
-35,7392,1
-35,7393,1
-35,7394,1
-35,7395,1
-35,7396,1
-35,7397,1
-35,7398,1
-35,7540,1
-35,7541,1
+35,7391,1	//Lotto Ball 31
+35,7392,1	//Lotto Ball 32
+35,7393,1	//Lotto Ball 33
+35,7394,1	//Lotto Ball 34
+35,7395,1	//Lotto Ball 35
+35,7396,1	//Lotto Ball 36
+35,7397,1	//Lotto Ball 37
+35,7398,1	//Lotto Ball 38
+35,7540,1	//Lotto Ball 39
+35,7541,1	//Lotto Ball 40
 // Food Package
-36,512,1
-36,513,1
-36,514,1
-36,515,1
-36,516,1
-36,517,1
-36,518,1
-36,519,1
-36,520,1
-36,521,1
-36,522,1
-36,526,1
-36,529,1
-36,530,1
-36,531,1
-36,532,1
-36,533,1
-36,534,1
-36,536,1
-36,538,1
-36,539,1
-36,544,1
-36,548,1
-36,549,1
-36,550,1
-36,551,1
-36,553,1
-36,554,1
-36,555,1
-36,556,1
-36,557,1
-36,558,1
-36,559,1
-36,560,1
-36,561,1
-36,564,1
-36,566,1
-36,567,1
-36,568,1
-36,576,1
-36,607,1
-36,608,1
-36,663,1
-36,669,1
+36,512,1	//Apple
+36,513,1	//Banana
+36,514,1	//Grape
+36,515,1	//Carrot
+36,516,1	//Potato
+36,517,1	//Meat
+36,518,1	//Honey
+36,519,1	//Milk
+36,520,1	//Hinalle Leaflet
+36,521,1	//Aloe Leaflet
+36,522,1	//Mastela Fruit
+36,526,1	//Royal Jelly
+36,529,1	//Candy
+36,530,1	//Candy Cane
+36,531,1	//Apple Juice
+36,532,1	//Banana Juice
+36,533,1	//Grape Juice
+36,534,1	//Carrot Juice
+36,536,1	//Ice Cream
+36,538,1	//Well-baked Cookie
+36,539,1	//Piece of Cake
+36,544,1	//Raw Fish
+36,548,1	//Cheese
+36,549,1	//Yam
+36,550,1	//Rice Cake
+36,551,1	//Sushi
+36,553,1	//Bao
+36,554,1	//Mochi
+36,555,1	//Traditional Rice Cake
+36,556,1	//Rice Cake Stick
+36,557,1	//Neatly Sliced Rice Cake
+36,558,1	//Chocolate
+36,559,1	//Hand-made Chocolate
+36,560,1	//Hand-made White Chocolate
+36,561,1	//White Chocolate
+36,564,1	//Rice Ball
+36,566,1	//Tom Yum Goong
+36,567,1	//Shrimp
+36,568,1	//Lemon
+36,576,1	//Prickly Fruit
+36,607,1	//Yggdrasil Berry
+36,608,1	//Yggdrasil Seed
+36,663,1	//Songpyun
+36,669,1	//Rice-Cake Soup
 // Potions
-37,501,1
-37,502,1
-37,503,1
-37,504,1
+37,501,1	//Red Potion
+37,502,1	//Orange Potion
+37,503,1	//Yellow Potion
+37,504,1	//White Potion
