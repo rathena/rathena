@@ -125,8 +125,8 @@ int auth_fifo_pos = 0;
 
 struct online_login_data {
 	int account_id;
+	int waiting_disconnect;
 	short char_server;
-	short waiting_disconnect;
 };
 
 //-----------------------------------------------------
@@ -141,10 +141,12 @@ static void* create_online_user(DBKey key, va_list args)
 	p = aCalloc(1, sizeof(struct online_login_data));
 	p->account_id = key.i;
 	p->char_server = -1;
+	p->waiting_disconnect = -1;
 	return p;	
 }
 
 int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len);
+static int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data);
 
 //-----------------------------------------------------
 // Online User Database [Wizputer]
@@ -157,12 +159,11 @@ void add_online_user(int char_server, int account_id)
 		return;
 	p = idb_ensure(online_db, account_id, create_online_user);
 	p->char_server = char_server;
-	p->waiting_disconnect = 0;
-}
-
-int is_user_online(int account_id)
-{
-	return (idb_get(online_db, account_id) != NULL);
+	if (p->waiting_disconnect != -1)
+	{
+		delete_timer(p->waiting_disconnect, waiting_disconnect_timer);
+		p->waiting_disconnect = -1;
+	}
 }
 
 void remove_online_user(int account_id)
@@ -176,11 +177,14 @@ void remove_online_user(int account_id)
 	idb_remove(online_db,account_id);
 }
 
-int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data)
+static int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data)
 {
 	struct online_login_data *p;
-	if ((p= idb_get(online_db, id)) != NULL && p->waiting_disconnect)
+	if ((p= idb_get(online_db, id)) != NULL && p->waiting_disconnect == id)
+	{
+		p->waiting_disconnect = -1;
 		remove_online_user(id);
+	}
 	return 0;
 }
 
@@ -735,9 +739,8 @@ int mmo_auth(struct mmo_account* account, int fd)
 			WBUFW(buf,0) = 0x2734;
 			WBUFL(buf,2) = atol(sql_row[0]);
 			charif_sendallwos(-1, buf, 6);
-			if (!data->waiting_disconnect)
-				add_timer(gettick()+30000, waiting_disconnect_timer, atol(sql_row[0]), 0);
-			data->waiting_disconnect = 1;
+			if (data->waiting_disconnect == -1)
+				data->waiting_disconnect = add_timer(gettick()+30000, waiting_disconnect_timer, atol(sql_row[0]), 0);
 			return 3; // Rejected
 		}
 	}
@@ -768,7 +771,11 @@ static int online_db_setoffline(DBKey key, void* data, va_list ap)
 	int server = va_arg(ap, int);
 	if (server == -1) {
 		p->char_server = -1;
-		p->waiting_disconnect = 0;
+		if (p->waiting_disconnect != -1)
+		{
+			delete_timer(p->waiting_disconnect, waiting_disconnect_timer);
+			p->waiting_disconnect = -1;
+		}
 	} else if (p->char_server == server)
 		p->char_server = -2; //Char server disconnected.
 	return 0;
@@ -1222,11 +1229,7 @@ int parse_fromchar(int fd)
 		case 0x272d:	// Receive list of all online accounts. [Skotlex]
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
-			if (!login_config.online_check) {
-				RFIFOSKIP(fd,RFIFOW(fd,2));
-				break;	
-			}
-			{
+			if (login_config.online_check) {
 				struct online_login_data *p;
 				int aid, users;
 				online_db->foreach(online_db,online_db_setoffline,id); //Set all chars from this char-server offline first
@@ -1235,10 +1238,15 @@ int parse_fromchar(int fd)
 					aid = RFIFOL(fd,6+i*4);
 					p = idb_ensure(online_db, aid, create_online_user);
 					p->char_server = id;
+					if (p->waiting_disconnect != -1)
+					{
+						delete_timer(p->waiting_disconnect, waiting_disconnect_timer);
+						p->waiting_disconnect = -1;
+					}
 				}
-				RFIFOSKIP(fd,RFIFOW(fd,2));
-				break;
 			}
+			RFIFOSKIP(fd,RFIFOW(fd,2));
+			break;
 		case 0x272e: //Request account_reg2 for a character.
 			if (RFIFOREST(fd) < 10)
 				return 0;
