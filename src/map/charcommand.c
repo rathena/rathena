@@ -224,7 +224,7 @@ CharCommandType charcommand(struct map_session_data* sd, const int level, const 
 		int i = 0;
 		memset(info, 0, sizeof(CharCommandInfo));
 		sscanf(p, "%100s", command);
-		command[sizeof(command)-1] = '\0';
+		command[100] = '\0';
 
 		while (charcommand_info[i].type != CharCommand_Unknown) {
 			if (strcmpi(command+1, charcommand_info[i].command+1) == 0 && level >= charcommand_info[i].level) {
@@ -891,16 +891,16 @@ charcommand_effect(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
 	struct map_session_data *pl_sd = NULL;
-	char target[255];
+	char target[NAME_LENGTH];
 	int type = 0;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%d %s", &type, target) != 2) {
+	if (!message || !*message || sscanf(message, "%d %23s", &type, target) != 2) {
 		clif_displaymessage(fd, "usage: #effect <type+> <target>.");
 		return -1;
 	}
 
-	if((pl_sd=map_nick2sd((char *) target)) == NULL)
+	if((pl_sd=map_nick2sd(target)) == NULL)
 		return -1;
 
 	clif_specialeffect(&pl_sd->bl, type, AREA);
