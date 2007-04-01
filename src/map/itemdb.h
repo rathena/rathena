@@ -4,10 +4,14 @@
 #ifndef _ITEMDB_H_
 #define _ITEMDB_H_
 
-#include "map.h"
+#include "mmo.h" // ITEM_NAME_LENGTH
+
 #define MAX_RANDITEM	10000
 
-enum {
+#define MAX_SEARCH	5  //Designed for search functions, species max number of matches to display.
+
+
+enum item_types {
 	IT_HEALING = 0,
 	IT_UNKNOWN, //1
 	IT_USABLE,  //2
@@ -21,7 +25,48 @@ enum {
 	IT_AMMO,    //10
 	IT_DELAYCONSUME,//11
 	IT_MAX 
-} item_types;
+};
+
+enum item_group_list {
+	IG_BLUEBOX=1,	//1
+	IG_VIOLETBOX,	//2
+	IG_CARDALBUM,	//3
+	IG_GIFTBOX,	//4
+	IG_SCROLLBOX,	//5
+	IG_FINDINGORE,	//6
+	IG_COOKIEBAG,	//7
+	IG_FIRSTAID,	//8
+	IG_HERB,	//9
+	IG_FRUIT,	//10
+	IG_MEAT,	//11
+	IG_CANDY,	//12
+	IG_JUICE,	//13
+	IG_FISH,	//14
+	IG_BOX,	//15
+	IG_GEMSTONE,	//16
+	IG_RESIST,	//17
+	IG_ORE,	//18
+	IG_FOOD,	//19
+	IG_RECOVERY,	//20
+	IG_MINERAL,	//21
+	IG_TAMING,	//22
+	IG_SCROLL,	//23
+	IG_QUIVER,	//24
+	IG_MASK,	//25
+	IG_ACCESORY,	//26
+	IG_JEWEL,	//27
+	IG_GIFTBOX_1,	//28
+	IG_GIFTBOX_2,	//29
+	IG_GIFTBOX_3,	//30
+	IG_GIFTBOX_4,	//31
+	IG_EGGBOY,	//32
+	IG_EGGGIRL,	//33
+	IG_GIFTBOXCHINA,	//34
+	IG_LOTTOBOX,	//35
+	IG_FOODBAG,	//36
+	IG_POTION,	//37
+	MAX_ITEMGROUP,
+};
 
 #define CARD0_FORGE 0x00FF
 #define CARD0_CREATE 0x00FE
@@ -102,7 +147,7 @@ struct item_data* itemdb_exists(int nameid);
 #define itemdb_available(n) (itemdb_exists(n) && itemdb_search(n)->flag.available)
 #define itemdb_viewid(n) (itemdb_search(n)->view_id)
 #define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
-int itemdb_group_bonus(struct map_session_data *sd, int itemid);
+int itemdb_group_bonus(const int itemgrouphealrate[MAX_ITEMGROUP], int itemid);
 
 int itemdb_searchrandomid(int flags);
 
@@ -133,11 +178,6 @@ int itemdb_isequip2(struct item_data *);
 int itemdb_isidentified(int);
 int itemdb_isstackable(int);
 int itemdb_isstackable2(struct item_data *);
-
-// itemdb_equipマクロとitemdb_equippointとの違いは
-// 前者が鯖側dbで定義された値そのものを返すのに対し
-// 後者はsessiondataを考慮した鞍側での装備可能場所
-// すべての組み合わせを返す
 
 void itemdb_reload(void);
 

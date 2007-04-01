@@ -5495,7 +5495,7 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 		if (potion_flag > 1)
 			bonus += bonus*(potion_flag-1)*50/100;
 		//Item Group bonuses
-		bonus += bonus*itemdb_group_bonus(sd, itemid)/100;
+		bonus += bonus*itemdb_group_bonus(sd->itemgrouphealrate, itemid)/100;
 		//Individual item bonuses.
 		for(i = 0; i < MAX_PC_BONUS && sd->itemhealrate[i].nameid; i++)
 		{
