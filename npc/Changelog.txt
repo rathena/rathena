@@ -26,6 +26,9 @@ KarLaeda
 
 Date		Added
 ======
+2007/04/02
+	* Removed some poor coding from the gunslinger job script
+	* Corrected multiple "WoE has begun" announces [ultramage]
 2007/04/01
 	* Added Ninja Weapon quests [Playtester]
 2007/03/30

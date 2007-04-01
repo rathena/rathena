@@ -4,7 +4,7 @@
 //= kalen (1.0)
 //= 1.1 by Akaru and ho|yAnge|
 //===== Current Version: =====================================
-//= 1.5a
+//= 1.6
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -23,6 +23,7 @@
 //= Now they appear in castles from 00:01 to 00:24. [Lupus]
 //= 1.5 Fixed WOE end messages on non-WOE days, by Avaj
 //= 1.5a missing tabs [KarLaeda]
+//= 1.6 Corrected multiple "WoE has begun" announces [ultramage]
 //============================================================
 //| To know how to set up WoE times, go to doc\woe_time_explanation.txt
 // WoE Start/Stop times
@@ -36,25 +37,29 @@ OnClock1600:	//start time for Sat(6)
 OnClock1800:	//end time for Sat(6)
 
 OnAgitInit:
-// starting time checks
-if((gettime(4)==2) && (gettime(3)>=21 && gettime(3)<23)) goto L_Start;
-if((gettime(4)==4) && (gettime(3)>=21 && gettime(3)<23)) goto L_Start;
-if((gettime(4)==6) && (gettime(3)>=16 && gettime(3)<18)) goto L_Start;
+	// starting time checks
+	if((gettime(4)==2) && (gettime(3)>=21 && gettime(3)<23)) goto L_Start;
+	if((gettime(4)==4) && (gettime(3)>=21 && gettime(3)<23)) goto L_Start;
+	if((gettime(4)==6) && (gettime(3)>=16 && gettime(3)<18)) goto L_Start;
 
-// end time checks
-if((gettime(4)==2) && (gettime(3)==23)) goto L_End;
-if((gettime(4)==4) && (gettime(3)==23)) goto L_End;
-if((gettime(4)==6) && (gettime(3)==18)) goto L_End;
-   end;
+	// end time checks
+	if((gettime(4)==2) && (gettime(3)==23)) goto L_End;
+	if((gettime(4)==4) && (gettime(3)==23)) goto L_End;
+	if((gettime(4)==6) && (gettime(3)==18)) goto L_End;
+	end;
 
 L_End:
-Announce "The War Of Emperium is over!",8;
-AgitEnd;
-end;
+	if (agitcheck()) {
+		Announce "The War Of Emperium is over!",8;
+		AgitEnd;
+	}
+	end;
 
 L_Start:
-	Announce "The War Of Emperium has begun!",8;
-	AgitStart;
+	if (!agitcheck()) {
+		Announce "The War Of Emperium has begun!",8;
+		AgitStart;
+	}
 	end;
 }
 

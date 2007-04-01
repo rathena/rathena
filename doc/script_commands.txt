@@ -1932,7 +1932,7 @@ Lets say the ID of a party was saved as a global variable:
 
 Thank you to HappyDenn for all this information.
 
-This command will finds all members of a specified party and returns their names 
+This command will find all members of a specified party and returns their names 
 (or character id or account id depending on the value of "type") into an array
 of temporary global variables. There's actually quite a few commands like this
 which will fill a special variable with data upon execution and not do anything
@@ -4268,13 +4268,8 @@ everything not equippable by the new job class anyway.
 *disguise <Monster ID>;
 *undisguise;
 
-This command disgueses current player with a monster sprite.
-The disguise is disappearing on re-login or on 'undisguise' command.
-
-Note: It doesn't work with "Pets with equipment on"
-Note: If u're a Sniper, u'd get an old Falcon over your head
-Note: You can kill yourself with some skills
-Note: Monsters of your type could heal you
+This command disguises the current player with a monster sprite.
+The disguise lasts until 'undisguise' is issued or the player logs out.
 
 Example:
 

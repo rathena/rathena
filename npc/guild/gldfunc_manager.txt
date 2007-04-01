@@ -29,6 +29,7 @@
 //= 1.5 Official Novice Castles Menu (u can't invest / hire guardians) [Lupus]
 //= 1.6 According to recent info u can re-install Guardians during WoE [Lupus]
 //= 1.6a Fix for guild manager recognizing [KarLaeda]
+//= 1.6b Fixed the chance for double invest, now 50% instead of 49% [Lupus]
 //============================================================
 
 
