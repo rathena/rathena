@@ -9,11 +9,11 @@
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
-#include "map.h"
-#include "battle.h"
 #include "itemdb.h"
-#include "script.h"
-#include "pc.h"
+#include "map.h"
+#include "battle.h" // struct battle_config
+#include "script.h" // item script processing
+#include "pc.h"     // W_MUSICAL, W_WHIP
 
 static struct dbt* item_db;
 
@@ -103,19 +103,18 @@ int itemdb_searchrandomid(int group)
 }
 
 /*==========================================
- * Calculates total item-group related bonuses for the given item. [Skotlex]
- *------------------------------------------
- */
-int itemdb_group_bonus(struct map_session_data *sd, int itemid)
+ * Calculates total item-group related bonuses for the given item
+ *------------------------------------------*/
+int itemdb_group_bonus(const int itemgrouphealrate[MAX_ITEMGROUP], int itemid)
 {
 	int bonus = 0, i, j;
 	for (i=0; i < MAX_ITEMGROUP; i++) {
-		if (!sd->itemgrouphealrate[i])
+		if (itemgrouphealrate[i])
 			continue;
 		for (j=0; j < itemgroup_db[i].qty; j++) {
 			if (itemgroup_db[i].nameid[j] == itemid)
 			{
-				bonus += sd->itemgrouphealrate[i];
+				bonus += itemgrouphealrate[i];
 				break;
 			}
 		}
@@ -447,8 +446,7 @@ static int itemdb_read_itemavail (void)
 
 /*==========================================
  * read item group data
- *------------------------------------------
- */
+ *------------------------------------------*/
 static void itemdb_read_itemgroup_sub(const char* filename)
 {
 	FILE *fp;
@@ -498,7 +496,7 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 			continue;
 		}
 		k = atoi(str[2]);
-		if (itemgroup_db[groupid].qty+k > MAX_RANDITEM) {
+		if (itemgroup_db[groupid].qty+k >= MAX_RANDITEM) {
 			ShowWarning("itemdb_read_itemgroup: Group %d is full (%d entries) in %s:%d\n", groupid, MAX_RANDITEM, filename, ln);
 			continue;
 		}
@@ -512,52 +510,11 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 static void itemdb_read_itemgroup(void)
 {
 	char path[256];
-	int i;
-	const char* groups[] = {
-		"Blue Box",
-		"Violet Box",
-		"Card Album",
-		"Gift Box",
-		"Scroll Box",
-		"Finding Ore",
-		"Cookie Bag",
-		"Potion",
-		"Herbs",
-		"Fruits",
-		"Meat",
-		"Candy",
-		"Juice",
-		"Fish",
-		"Boxes",
-		"Gemstone",
-		"Jellopy",
-		"Ore",
-		"Food",
-		"Recovery",
-		"Minerals",
-		"Taming",
-		"Scrolls",
-		"Quivers",
-		"Masks",
-		"Accesory",
-		"Jewels",
-		"Gift Box 1",
-		"Gift Box 2",
-		"Gift Box 3",
-		"Gift Box 4",
-		"Egg Boy",
-		"Egg Girl",
-		"Gift Box China",
-		"Lotto Box",
-	};
-	memset(&itemgroup_db, 0, sizeof(itemgroup_db));
 	snprintf(path, 255, "%s/item_group_db.txt", db_path);
+
+	memset(&itemgroup_db, 0, sizeof(itemgroup_db));
 	itemdb_read_itemgroup_sub(path);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n","item_group_db.txt");
-	if (battle_config.etc_log) {
-		for (i = 1; i < MAX_ITEMGROUP; i++)
-			ShowInfo("Group %s: %d entries.\n", groups[i-1], itemgroup_db[i].qty);
-	}
+	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n", "item_group_db.txt");
 	return;
 }
 

@@ -9,6 +9,8 @@
 #include "../common/mapindex.h"
 #include "../common/db.h"
 
+#include "itemdb.h" // MAX_ITEMGROUP
+
 //Uncomment to enable the Cell Stack Limit mod.
 //It's only config is the battle_config cell_stack_limit.
 //Only chars affected are those defined in BL_CHAR (mobs and players currently)
@@ -56,8 +58,6 @@
 #define MOBID_EMPERIUM 1288
 
 #define MAX_PC_BONUS 10
-//Designed for search functions, species max number of matches to display.
-#define MAX_SEARCH 5
 #define MAX_DUEL 1024
 
 #define map_id2index(id) map[(id)].index
@@ -228,10 +228,6 @@ enum {
 	ELE_UNDEAD,
 	ELE_MAX
 };
-
-//The onlu item group required by the code to be known.
-#define IG_FINDINGORE 6
-#define MAX_ITEMGROUP 40
 
 enum {
 	ATF_SELF=0x01,

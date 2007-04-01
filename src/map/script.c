@@ -10134,33 +10134,32 @@ BUILDIN_FUNC(clearitem)
 }
 
 /*==========================================
-	Disguise Player (returns Mob/NPC ID if success, 0 on fail) [Lupus]
- *------------------------------------------
- */
+ * Disguise Player (returns Mob/NPC ID if success, 0 on fail)
+ *------------------------------------------*/
 BUILDIN_FUNC(disguise)
 {
-	struct map_session_data *sd=script_rid2sd(st);
 	int id;
+	struct map_session_data* sd = script_rid2sd(st);
+	if (sd == NULL) return 0;
 
-	id	= script_getnum(st,2);
+	id = script_getnum(st,2);
 
-	if (!mobdb_checkid(id) && !npcdb_checkid(id)) {
+	if (mobdb_checkid(id) || npcdb_checkid(id)) {
+		pc_disguise(sd, id);
+		script_pushint(st,id);
+	} else
 		script_pushint(st,0);
-		return 0;
-	}
 
-	pc_disguise(sd, id);
-	script_pushint(st,id);
 	return 0;
 }
 
 /*==========================================
-	Undisguise Player (returns 1 if success, 0 on fail) [Lupus]
- *------------------------------------------
- */
+ * Undisguise Player (returns 1 if success, 0 on fail)
+ *------------------------------------------*/
 BUILDIN_FUNC(undisguise)
 {
-	struct map_session_data *sd=script_rid2sd(st);
+	struct map_session_data* sd = script_rid2sd(st);
+	if (sd == NULL) return 0;
 
 	if (sd->disguise) {
 		pc_disguise(sd, 0);

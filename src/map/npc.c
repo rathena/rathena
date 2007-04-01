@@ -90,12 +90,12 @@ int npc_enable_sub( struct block_list *bl, va_list ap )
 {
 	struct map_session_data *sd;
 	struct npc_data *nd;
-	//char *name=(char *)aCallocA(50,sizeof(char)); // fixed [Shinomori]
 
 	nullpo_retr(0, bl);
 	nullpo_retr(0, ap);
 	nullpo_retr(0, nd=va_arg(ap,struct npc_data *));
-	if(bl->type == BL_PC && (sd=(struct map_session_data *)bl)){
+	if(bl->type == BL_PC && (sd=(struct map_session_data *)bl))
+	{
 		char name[50]; // need 24 + 9 for the "::OnTouch"
 
 		if (nd->sc.option&OPTION_INVISIBLE)	// 無効化されている
@@ -2136,7 +2136,8 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 
 	//-----------------------------------------
 	// イベント用ラベルデータのエクスポート
-	for (i = 0; i < nd->u.scr.label_list_num; i++){
+	for (i = 0; i < nd->u.scr.label_list_num; i++)
+	{
 		char *lname = nd->u.scr.label_list[i].name;
 		int pos = nd->u.scr.label_list[i].pos;
 
@@ -2149,11 +2150,9 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 				exit(1);
 			} else {
 				struct event_data *ev;
-				unsigned char buf[51];
-				// 51 comes from: 24 for npc name + 24 for label + 2 for a "::" and 1 for EOS
+				unsigned char buf[50+1]; // 24 for npc name + 24 for label + 2 for a "::" and 1 for EOS
 				sprintf(buf,"%s::%s",nd->exname,lname);
 
-				// remember the label is max 50 chars + eos; see the strdb_init below
 				// generate the data and insert it
 				ev=(struct event_data *)aMalloc(sizeof(struct event_data));
 				ev->nd=nd;
