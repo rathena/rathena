@@ -37,11 +37,10 @@ bonus bFleeRate,n;			Flee +n%
 bonus bFlee2,n;				Lucky Flee + n
 bonus bFlee2Rate,n;			Lucky Flee + n%
 bonus bSpeed,n;				Moving speed + n
-bonus bAspd,n;				Attack speed + n
 bonus bSpeedRate,n;			Moving speed + n% (only the highest among all is applied)
-bonus bAspdRate,n;			Attack speed + n% (only the highest among all is applied)
-bonus bSpeedAddRate			Moving speed + n%
-bonus bAspdAddRate			Attack speed + n%
+bonus bSpeedAddRate,n;			Moving speed + n%
+bonus bAspd,n;				Attack speed + n
+bonus bAspdRate,n;			Attack speed + n%
 bonus bAtkRange,n;			Attack range + n
 bonus bCastrate,n;			Skill casting time rate + n%
 bonus bUseSPrate,n;			SP consumption + n%

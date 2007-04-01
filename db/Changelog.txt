@@ -19,6 +19,9 @@
 	-----
 
 ========================
+04/02
+	* Added EggBoy and EggGirl scripts [Playtester]
+	- also small fixes to Aspd and Speed bonus
 03/31
 	* Added names to Item Group items thanks to Leon [Playtester]
 	* Updated and fixed Item Groups and Doom Slayer [Playtester]

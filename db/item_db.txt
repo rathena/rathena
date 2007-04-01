@@ -1845,14 +1845,14 @@
 5263,Pagdayaw,Pagdayaw,5,,10,100,,1,,0,0xFFFFFFFE,7,2,769,,20,1,303,{ bonus2 bSubEle,Ele_Water,1; bonus2 bSubEle,Ele_Earth,1; bonus2 bSubEle,Ele_Fire,1; bonus2 bSubEle,Ele_Wind,1; bonus2 bAddEff,Eff_Curse,3; },{},{}
 5264,Australian_Flag_Hat,Australian Flag Hat,5,,10,500,,4,,0,0xFFFFFFFF,7,2,256,,,1,304,{ bonus bAllStats,2; },{},{}
 //There are some headgears missing
-5269,Flying_Angel_,Flying Angel,5,,10,300,,1,,0,0xFFFFFFFF,7,2,256,,10,1,264,{ bonus bAspdRate,3; bonus bSpeedAddRate,3; },{},{}
+5269,Flying_Angel_,Flying Angel,5,,10,300,,1,,0,0xFFFFFFFF,7,2,256,,10,1,264,{ bonus bAspdRate,3; bonus bSpeedRate,3; },{},{}
 5270,Autumn_Leaves_,Autumn Leaves,5,20,,100,,1,,1,0xFFFFFFFF,7,2,256,,0,1,241,{ bonus bFlee2,5; },{},{}
 5271,Chinese_Crown_,Phoenix Crown,5,20,,500,,4,,1,0xFFFFFFFF,7,2,768,,0,1,221,{ bonus bMdef,3; bonus2 bSubRace,RC_Boss,getrefine(); },{},{}
 5272,Raspberry_Mask_,Smiling Mask,5,20,,100,,2,,0,0xFFFFFFFF,7,2,513,,0,0,253,{ bonus4 bAutoSpell,6,5,30,1; },{},{}
-5273,Happy_Wig,Happy Wig,5,,10,100,,1,,0,0xFFFFFFFF,7,2,768,,,1,305,{ bonus bSpeedAddRate,5; bonus bDef,4; skill 51,1; },{},{}
-5274,Shiny_Wig,Shiny Wig,5,,10,100,,1,,0,0xFFFFFFFF,7,2,768,,,1,306,{ bonus bSpeedAddRate,5; bonus bDef,4; skill 51,1; },{},{}
-5275,Marvelous_Wig,Marvelous Wig,5,,10,100,,1,,0,0xFFFFFFFF,7,2,768,,,1,307,{ bonus bSpeedAddRate,5; bonus bDef,4; skill 51,1; },{},{}
-5276,Fantastic_Wig,Fantastic Wig,5,,10,100,,1,,0,0xFFFFFFFF,7,2,768,,,1,308,{ bonus bSpeedAddRate,5; bonus bDef,4; skill 51,1; },{},{}
+5273,Happy_Wig,Happy Wig,5,,10,100,,1,,0,0xFFFFFFFF,7,2,768,,,1,305,{ bonus bSpeedRate,5; bonus bDef,4; skill 51,1; },{},{}
+5274,Shiny_Wig,Shiny Wig,5,,10,100,,1,,0,0xFFFFFFFF,7,2,768,,,1,306,{ bonus bSpeedRate,5; bonus bDef,4; skill 51,1; },{},{}
+5275,Marvelous_Wig,Marvelous Wig,5,,10,100,,1,,0,0xFFFFFFFF,7,2,768,,,1,307,{ bonus bSpeedRate,5; bonus bDef,4; skill 51,1; },{},{}
+5276,Fantastic_Wig,Fantastic Wig,5,,10,100,,1,,0,0xFFFFFFFF,7,2,768,,,1,308,{ bonus bSpeedRate,5; bonus bDef,4; skill 51,1; },{},{}
 5277,Yellow_Bandana,Yellow Bandana,5,,10,100,,1,,0,0xFFFFFFFE,7,2,256,,20,1,309,{ bonus bLuk,2; bonus bVit,2; bonus bLongAtkDef,10; },{},{}
 5278,Yellow_Ribbon,Yellow Ribbon,5,,10,100,,1,,0,0xFFFFFFFE,7,2,256,,20,1,310,{ bonus bLuk,2; bonus bVit,2; bonus bLongAtkDef,10; },{},{}
 // More Etc Items
@@ -2558,8 +2558,8 @@
 12022,Spareribs,Galbi,0,,0,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
 12023,Giftbox_China,Wrapped Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBoxChina),1; },{},{}
 12024,Red_Pouch_Of_Surprise,Red Pouch,2,50,,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12025,Egg_Boy,Dano Festival Egg,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12026,Egg_Girl,Dano Festival Egg,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12025,Egg_Boy,Dano Festival Egg,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_EggBoy),1; },{},{}
+12026,Egg_Girl,Dano Festival Egg,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_EggGirl),1; },{},{}
 // Effect Boxes
 12027,Giggling_Box,Giggling Box,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 9,0; if(rand(100)<30) sc_start SC_Curse,30000,0; },{},{}
 12028,Box_Of_Thunder,Box of Thunder,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SpeedUp0,30000,0; },{},{}
