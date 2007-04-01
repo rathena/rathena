@@ -1,5 +1,7 @@
 Date	Added
 
+2007/04/02
+	* Set the default vending tax to 2% as it is in kRO Sakray [Playtester]
 2007/03/28
 	* Added config "vending_tax" to apply a tax to all vending requests, as it
 	  was in kRO Sakray some time ago (items.conf).
