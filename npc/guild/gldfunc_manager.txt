@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= jAthena - kalen (1.0) & eAthena Team
 //===== Current Version: =====================================
-//= 1.6a
+//= 1.6b
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -129,7 +129,7 @@ function	script	F_GldManager	{
 			set Zeny,Zeny-@eco_invest;
 			SetCastleData getarg(1),4,@TriggerE+1;
 			// if we learnt Emsolute Develop there's 50% chance to get +1 investment again
-			SetCastleData getarg(1),2,@Economy + 1 + (getgdskilllv(@GID,10014)>0 && rand(100)>50 && @Economy<99);
+			SetCastleData getarg(1),2,@Economy + 1 + (@Economy<99 && rand(2) && getgdskilllv(@GID,10014));
 
 			mes "You have invested successfully.";
 			return 0;
