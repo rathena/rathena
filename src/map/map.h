@@ -704,7 +704,7 @@ struct map_session_data {
 	int hp_loss_rate;
 	int sp_loss_rate;
 	int classchange; // [Valaris]
-	int speed_add_rate, aspd_add_rate;
+	int speed_add_rate, aspd_add;
 	unsigned int setitem_hash, setitem_hash2; //Split in 2 because shift operations only work on int ranges. [Skotlex]
 	
 	short splash_range, splash_add_range;
@@ -1149,7 +1149,7 @@ enum _sp {
 	SP_CRITICAL_DEF,SP_NEAR_ATK_DEF,SP_LONG_ATK_DEF, // 1019-1021
 	SP_DOUBLE_RATE, SP_DOUBLE_ADD_RATE, SP_FREE2, SP_MATK_RATE, // 1022-1025
 	SP_IGNORE_DEF_ELE,SP_IGNORE_DEF_RACE, // 1026-1027
-	SP_ATK_RATE,SP_SPEED_ADDRATE,SP_ASPD_ADDRATE, // 1028-1030
+	SP_ATK_RATE,SP_SPEED_ADDRATE,SP_FREE3, // 1028-1030
 	SP_MAGIC_ATK_DEF,SP_MISC_ATK_DEF, // 1031-1032
 	SP_IGNORE_MDEF_ELE,SP_IGNORE_MDEF_RACE, // 1033-1034
 	SP_MAGIC_ADDELE,SP_MAGIC_ADDRACE,SP_MAGIC_ADDSIZE, // 1035-1037
@@ -1179,6 +1179,7 @@ enum _sp {
 	SP_ADD_SKILL_BLOW, SP_SP_VANISH_RATE //2041
 	//Before adding another, note that these are free:
 	//1024 (SP_FREE2, previous matk)
+	//1030 (SP_FREE3, previous AspdAddRate)
 	//2022 (SP_FREE, previous bDefIgnoreMob)
 };
 

@@ -302,7 +302,7 @@ bIgnoreDefEle	1026
 bIgnoreDefRace	1027
 bAtkRate	1028
 bSpeedAddRate	1029
-bAspdAddRate	1030
+
 bMagicAtkDef	1031
 bMiscAtkDef	1032
 bIgnoreMdefEle	1033

@@ -1170,6 +1170,14 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 
 void status_calc_bl(struct block_list *bl, unsigned long flag);
 
+	// Basic ASPD value
+#define status_base_amotion_pc(sd,status) (sd->aspd_add + \
+	(sd->status.weapon < MAX_WEAPON_TYPE? \
+		(1000 -4*status->agi -status->dex)*aspd_base[sd->status.class_][sd->status.weapon]/1000:\
+		(1000 -4*status->agi -status->dex)*(\
+			aspd_base[sd->status.class_][sd->weapontype1]+\
+			aspd_base[sd->status.class_][sd->weapontype2])*2/3000))
+
 static int status_base_atk(struct block_list *bl, struct status_data *status)
 {
 	int flag = 0, str, dex, dstr;
@@ -1692,7 +1700,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->sp_loss_rate)
 		+ sizeof(sd->classchange)
 		+ sizeof(sd->speed_add_rate)
-		+ sizeof(sd->aspd_add_rate)
+		+ sizeof(sd->aspd_add)
 		+ sizeof(sd->setitem_hash)
 		+ sizeof(sd->setitem_hash2)
 		// shorts
@@ -1882,8 +1890,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	sd->double_rate += sd->double_add_rate;
 	sd->perfect_hit += sd->perfect_hit_add;
 	sd->splash_range += sd->splash_add_range;
-	if(sd->aspd_add_rate)	
-		status->aspd_rate += 10*sd->aspd_add_rate;
 	if(sd->speed_add_rate)	
 		sd->speed_rate += sd->speed_add_rate;
 
@@ -2166,18 +2172,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 // Unlike other stats, ASPD rate modifiers from skills/SCs/items/etc are first all added together, then the final modifier is applied
 
 	// Basic ASPD value
-	if (sd->status.weapon < MAX_WEAPON_TYPE)
-		i = (1000 -4*status->agi -status->dex)
-			*aspd_base[sd->status.class_][sd->status.weapon]/1000;
-	else
-		i = ((
-			(1000 -4*status->agi -status->dex)
-			*aspd_base[sd->status.class_][sd->weapontype1]/1000
-		)+(
-			(1000 -4*status->agi -status->dex)
-			*aspd_base[sd->status.class_][sd->weapontype2]/1000
-		)) *2/3; //From what I read in rodatazone, 2/3 should be more accurate than 0.7 -> 140 / 200; [Skotlex]
-
+	i = status_base_amotion_pc(sd,status);
 	status->amotion = cap_value(i,battle_config.max_aspd,2000);
 
 	// Relative modifiers from passive skills
@@ -2696,18 +2691,8 @@ void status_calc_bl_sub_pc(struct map_session_data *sd, unsigned long flag)
 	}
 	if(flag&(SCB_ASPD|SCB_AGI|SCB_DEX)) {
 		flag|=SCB_ASPD;
-		if (sd->status.weapon < MAX_WEAPON_TYPE)
-			skill = (1000 -4*status->agi -status->dex)
-				*aspd_base[sd->status.class_][sd->status.weapon]/1000;
-		else
-			skill = ((
-				(1000 -4*status->agi -status->dex)
-				*aspd_base[sd->status.class_][sd->weapontype1]/1000
-			)+(
-				(1000 -4*status->agi -status->dex)
-				*aspd_base[sd->status.class_][sd->weapontype2]/1000
-			)) *2/3;
 
+		skill = status_base_amotion_pc(sd,status);
 		status->aspd_rate = status_calc_aspd_rate(&sd->bl, &sd->sc , b_status->aspd_rate);
 
 		// Apply all relative modifiers
