@@ -67,7 +67,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/FIXED:NO"
-				AdditionalDependencies="msvcrtd.lib oldnames.lib zdll.lib"
+				AdditionalDependencies="libcmtd.lib oldnames.lib zdll.lib"
 				OutputFile="$(OutDir)\mapcache.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
@@ -157,7 +157,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="msvcrt.lib oldnames.lib zdll.lib"
+				AdditionalDependencies="libcmt.lib oldnames.lib zdll.lib"
 				OutputFile="$(OutDir)\mapcache.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"

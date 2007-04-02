@@ -67,7 +67,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="msvcrtd.lib oldnames.lib ws2_32.lib zdll.lib"
+				AdditionalDependencies="libcmtd.lib oldnames.lib ws2_32.lib zdll.lib"
 				OutputFile="$(OutDir)\char-server.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
@@ -157,7 +157,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="msvcrt.lib oldnames.lib ws2_32.lib zdll.lib"
+				AdditionalDependencies="libcmt.lib oldnames.lib ws2_32.lib zdll.lib"
 				OutputFile="$(OutDir)\char-server.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"
