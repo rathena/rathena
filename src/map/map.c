@@ -3228,13 +3228,14 @@ void map_versionscreen(int flag) {
 
 /*======================================================
  * Map-Server Init and Command-line Arguments [Valaris]
- *------------------------------------------------------
- */
+ *------------------------------------------------------*/
 void set_server_type(void)
 {
 	SERVER_TYPE = ATHENA_SERVER_MAP;
 }
-int do_init(int argc, char *argv[]) {
+
+int do_init(int argc, char *argv[])
+{
 	int i;
 
 #ifdef GCOLLECT
@@ -3284,24 +3285,22 @@ int do_init(int argc, char *argv[]) {
 	chrif_checkdefaultlogin();
 
 	if (!map_ip_set || !char_ip_set) {
-		// The map server should know what IP address it is running on
-		//   - MouseJstr
-		int localaddr = ntohl(addr_[0]);
-		unsigned char *ptr = (unsigned char *) &localaddr;
-		char buf[16];
-		if (naddr_ == 0) {
-			ShowError("\nUnable to determine your IP address... please edit the map_athena.conf file and set it.\n");
-			ShowError("(127.0.0.1 is valid if you have no network interface)\n");
-		}
-		sprintf(buf, "%d.%d.%d.%d", ptr[0], ptr[1], ptr[2], ptr[3]);;
-		if (naddr_ != 1)
-			ShowNotice("Multiple interfaces detected..  using %s as our IP address\n", buf);
-		else
-			ShowInfo("Defaulting to %s as our IP address\n", buf);
+		char ip_str[16];
+		ip2str(addr_[0], ip_str);
+
+		ShowError("\nNot all IP addresses in map_athena.conf configured, autodetecting...\n");
+
+		if (naddr_ == 0)
+			ShowError("Unable to determine your IP address...\n");
+		else if (naddr_ > 1)
+			ShowNotice("Multiple interfaces detected...\n");
+
+		ShowInfo("Defaulting to %s as our IP address\n", ip_str);
+
 		if (!map_ip_set)
-			clif_setip(buf);
+			clif_setip(ip_str);
 		if (!char_ip_set)
-			chrif_setip(buf);
+			chrif_setip(ip_str);
 	}
 
 	if (SHOW_DEBUG_MSG)
@@ -3373,19 +3372,5 @@ int do_init(int argc, char *argv[]) {
 
 	ShowStatus("Server is '"CL_GREEN"ready"CL_RESET"' and listening on port '"CL_WHITE"%d"CL_RESET"'.\n\n", map_port);
 
-	return 0;
-}
-
-int compare_item(struct item *a, struct item *b) {
-
-	if (a->nameid == b->nameid &&
-		a->identify == b->identify &&
-		a->refine == b->refine &&
-		a->attribute == b->attribute)
-	{
-		int i;
-		for (i = 0; i < MAX_SLOTS && (a->card[i] == b->card[i]); i++);
-		return (i == MAX_SLOTS);
-	}
 	return 0;
 }

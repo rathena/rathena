@@ -1349,7 +1349,6 @@ void map_foreachpc(int (*func)(DBKey,void*,va_list),...);
 int map_foreachiddb(int (*)(DBKey,void*,va_list),...);
 void map_addnickdb(struct map_session_data *);
 struct map_session_data * map_nick2sd(const char*);
-int compare_item(struct item *a, struct item *b);
 char *map_normalize_name(char *mapname);
 
 // ‚»‚Ì‘¼

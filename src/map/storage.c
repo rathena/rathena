@@ -41,13 +41,13 @@ int storage_comp_item(const void *_i1, const void *_i2)
 	return i1->nameid - i2->nameid;
 }
  
-void sortage_sortitem (struct storage *stor)
+void storage_sortitem (struct storage *stor)
 {
 	nullpo_retv(stor);
 	qsort(stor->storage_, MAX_STORAGE, sizeof(struct item), storage_comp_item);
 }
 
-void sortage_gsortitem (struct guild_storage* gstor)
+void storage_gsortitem (struct guild_storage* gstor)
 {
 	nullpo_retv(gstor);
 	qsort(gstor->storage_, MAX_GUILD_STORAGE, sizeof(struct item), storage_comp_item);
@@ -155,6 +155,21 @@ int storage_storageopen(struct map_session_data *sd)
 	sd->state.storage_flag = 1;
 	clif_storagelist(sd,stor);
 	clif_updatestorageamount(sd,stor);
+	return 0;
+}
+
+// helper function
+int compare_item(struct item *a, struct item *b) {
+
+	if (a->nameid == b->nameid &&
+		a->identify == b->identify &&
+		a->refine == b->refine &&
+		a->attribute == b->attribute)
+	{
+		int i;
+		for (i = 0; i < MAX_SLOTS && (a->card[i] == b->card[i]); i++);
+		return (i == MAX_SLOTS);
+	}
 	return 0;
 }
 
@@ -452,7 +467,7 @@ int storage_storage_saved(int account_id)
 	if (stor->dirty && stor->storage_status == 0)
 	{	//Only mark it clean if it's not in use. [Skotlex]
 		stor->dirty = 0;
-		sortage_sortitem(stor);
+		storage_sortitem(stor);
 		return 1;
 	}
 	return 0;
@@ -716,7 +731,7 @@ int storage_guild_storagesaved(int guild_id)
 		if (stor->dirty && stor->storage_status == 0)
 		{	//Storage has been correctly saved.
 			stor->dirty = 0;
-			sortage_gsortitem(stor);
+			storage_gsortitem(stor);
 		}
 		return 1;
 	}

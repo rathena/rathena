@@ -125,13 +125,10 @@ extern void set_nonblocking(int fd, int yes);
 
 void set_defaultparse(ParseFunc defaultparse);
 
-//Resolves the hostname and stores the string representation of the string in ip.
-//Meant to simplify calls to gethostbyname without the need of all the
-//required network includes.
-//hostname is the name to resolve.
-//ip is an array of char[4] where the individual parts of the ip are stored (optional)
-//ip_str is a char[16] where the whole ip is stored in string notation (optional)
-in_addr_t resolve_hostbyname(const char* hostname, unsigned char* ip, char* ip_str);
+// hostname/ip conversion functions
+in_addr_t host2ip(const char* hostname);
+const char* ip2str(in_addr_t ip, char ip_str[16]);
+
 
 int socket_getips(uint32* ips, int max);
 

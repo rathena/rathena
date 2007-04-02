@@ -2245,11 +2245,11 @@ int parse_tologin(int fd) {
 			WBUFW(buf,0) = 0x2b1e;
 			mapif_sendall(buf, 2);
 
-			new_ip = resolve_hostbyname(login_ip_str, NULL, NULL);
+			new_ip = host2ip(login_ip_str);
 			if (new_ip && new_ip != login_ip) //Update login ip, too.
 				login_ip = new_ip;
 
-			new_ip = resolve_hostbyname(char_ip_str, NULL, NULL);
+			new_ip = host2ip(char_ip_str);
 			if (new_ip && new_ip != char_ip)
 			{	//Update ip.
 				char_ip = new_ip;
@@ -4059,27 +4059,27 @@ int char_config_read(const char *cfgName) {
 				wisp_server_name[sizeof(wisp_server_name) - 1] = '\0';
 			}
 		} else if (strcmpi(w1, "login_ip") == 0) {
-			unsigned char ip_str[16];
-			login_ip = resolve_hostbyname(w2, NULL, ip_str);
+			char ip_str[16];
+			login_ip = host2ip(w2);
 			if (login_ip) {
 				strncpy(login_ip_str, w2, sizeof(login_ip_str));
-				ShowStatus("Login server IP address : %s -> %s\n", w2, ip_str);
+				ShowStatus("Login server IP address : %s -> %s\n", w2, ip2str(login_ip, ip_str));
 			}
 		} else if (strcmpi(w1, "login_port") == 0) {
 			login_port=atoi(w2);
 		} else if (strcmpi(w1, "char_ip") == 0) {
-			unsigned char ip_str[16];
-			char_ip = resolve_hostbyname(w2, NULL, ip_str);
+			char ip_str[16];
+			char_ip = host2ip(w2);
 			if (char_ip){
 				strncpy(char_ip_str, w2, sizeof(char_ip_str));
-				ShowStatus("Character server IP address : %s -> %s\n", w2, ip_str);
+				ShowStatus("Character server IP address : %s -> %s\n", w2, ip2str(char_ip, ip_str));
 			}
 		} else if (strcmpi(w1, "bind_ip") == 0) {
-			unsigned char ip_str[16];
-			bind_ip = resolve_hostbyname(w2, NULL, ip_str);
+			char ip_str[16];
+			bind_ip = host2ip(w2);
 			if (bind_ip) {
 				strncpy(bind_ip_str, w2, sizeof(bind_ip_str));
-				ShowStatus("Character server binding IP address : %s -> %s\n", w2, ip_str);
+				ShowStatus("Character server binding IP address : %s -> %s\n", w2, ip2str(bind_ip, ip_str));
 			}
 		} else if (strcmpi(w1, "char_port") == 0) {
 			char_port = atoi(w2);

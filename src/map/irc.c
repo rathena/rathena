@@ -351,7 +351,7 @@ void do_init_irc(void)
 		return;
 	if (irc_ip_str[strlen(irc_ip_str)-1] == '\n') 
 		irc_ip_str[strlen(irc_ip_str)-1] = '\0'; 
-	irc_ip = resolve_hostbyname(irc_ip_str, NULL, irc_ip_str);
+	irc_ip = host2ip(irc_ip_str);
 	if (!irc_ip)
 	{
 		ShowError("Unable to resolve %s! Cannot connect to IRC server, disabling irc_bot.\n", irc_ip_str);

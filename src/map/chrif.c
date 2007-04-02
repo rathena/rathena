@@ -143,17 +143,16 @@ void chrif_checkdefaultlogin(void)
  *
  *------------------------------------------
  */
-int chrif_setip(char *ip)
+int chrif_setip(const char *ip)
 {
 	char ip_str[16];
-	char_ip = resolve_hostbyname(ip,NULL,ip_str);
-
+	char_ip = host2ip(ip);
 	if (!char_ip) {
 		ShowWarning("Failed to Resolve Char Server Address! (%s)\n", ip);
 		return 0;
 	}
 	strncpy(char_ip_str, ip, sizeof(char_ip_str));
-	ShowInfo("Char Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, ip_str);
+	ShowInfo("Char Server IP Address : '"CL_WHITE"%s"CL_RESET"' -> '"CL_WHITE"%s"CL_RESET"'.\n", ip, ip2str(char_ip, ip_str));
 	return 1;
 }
 
@@ -1418,10 +1417,11 @@ int chrif_disconnect(int fd) {
 	return 0;
 }
 
-void chrif_update_ip(int fd){
+void chrif_update_ip(int fd)
+{
 	unsigned long new_ip;
 	WFIFOHEAD(fd, 6);
-	new_ip = resolve_hostbyname(char_ip_str, NULL, NULL);
+	new_ip = host2ip(char_ip_str);
 	if (new_ip && new_ip != char_ip)
 		char_ip = new_ip; //Update char_ip
 

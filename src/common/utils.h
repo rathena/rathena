@@ -10,9 +10,6 @@
 #define NULL (void *)0
 #endif
 
-#define LOWER(c)   (((c)>='A'  && (c) <= 'Z') ? ((c)+('a'-'A')) : (c))
-#define UPPER(c)   (((c)>='a'  && (c) <= 'z') ? ((c)+('A'-'a')) : (c) )
-
 void dump(unsigned char *buffer, int num);
 
 struct StringBuf {

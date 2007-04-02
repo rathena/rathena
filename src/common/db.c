@@ -75,6 +75,10 @@
 #include "../common/showmsg.h"
 #include "../common/ers.h"
 
+//TODO: get rid of this
+#define LOWER(c)   (((c)>='A'  && (c) <= 'Z') ? ((c)+('a'-'A')) : (c))
+#define UPPER(c)   (((c)>='a'  && (c) <= 'z') ? ((c)+('A'-'a')) : (c))
+
 /*****************************************************************************\
  *  (1) Private typedefs, enums, structures, defines and global variables of *
  *  the database system.                                                     *

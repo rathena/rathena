@@ -846,8 +846,7 @@ int access_ipmask(const char* str, AccessControl* acc)
 		}
 	}
 	if( access_debug ){
-		ShowMessage("access_ipmask: Loaded IP:%d.%d.%d.%d mask:%d.%d.%d.%d\n",
-			CONVIP(ip), CONVIP(mask));
+		ShowMessage("access_ipmask: Loaded IP:%d.%d.%d.%d mask:%d.%d.%d.%d\n", CONVIP(ip), CONVIP(mask));
 	}
 	acc->ip   = ip;
 	acc->mask = mask;
@@ -857,69 +856,62 @@ int access_ipmask(const char* str, AccessControl* acc)
 #endif
 //////////////////////////////
 
-int socket_config_read(const char *cfgName) {
-	int i;
+int socket_config_read(const char *cfgName)
+{
 	char line[1024],w1[1024],w2[1024];
 	FILE *fp;
 
-	fp=fopen(cfgName, "r");
-	if(fp==NULL){
+	fp = fopen(cfgName, "r");
+	if(fp == NULL) {
 		ShowError("File not found: %s\n", cfgName);
 		return 1;
 	}
-	while(fgets(line,1020,fp)){
+
+	while(fgets(line,1020,fp))
+	{
 		if(line[0] == '/' && line[1] == '/')
 			continue;
-		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);
-		if(i!=2)
+		if(sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
 			continue;
-		if(strcmpi(w1,"stall_time")==0){
+
+		if (!strcmpi(w1, "stall_time"))
 			stall_time = atoi(w2);
 #ifndef MINICORE
-		} else if( strcmpi(w1,"enable_ip_rules") == 0 ){
-			if( strcmpi(w2,"yes") == 0 )
-				ip_rules = 1;
-			else if( strcmpi(w2,"no") == 0 )
-				ip_rules = 0;
-			else
-				ip_rules = atoi(w2);
-		} else if( strcmpi(w1,"order") == 0 ){
-			access_order = atoi(w2);
-			if( strcmpi(w2,"deny,allow") == 0 )
+		else if (!strcmpi(w1, "enable_ip_rules")) {
+			ip_rules = config_switch(w2);
+		} else if (!strcmpi(w1, "order")) {
+			if (!strcmpi(w2, "deny,allow"))
 				access_order = ACO_DENY_ALLOW;
-			else if( strcmpi(w2,"allow,deny") == 0 )
-				access_order=ACO_ALLOW_DENY;
-			else if( strcmpi(w2,"mutual-failure") == 0 )
-				access_order=ACO_MUTUAL_FAILURE;
-		} else if( strcmpi(w1,"allow") == 0 ){
+			else if (!strcmpi(w2, "allow,deny"))
+				access_order = ACO_ALLOW_DENY;
+			else if (!strcmpi(w2, "mutual-failure"))
+				access_order = ACO_MUTUAL_FAILURE;
+		} else if (!strcmpi(w1, "allow")) {
 			RECREATE(access_allow, AccessControl, access_allownum+1);
-			if( access_ipmask(w2,&access_allow[access_allownum]) )
+			if (access_ipmask(w2, &access_allow[access_allownum]))
 				++access_allownum;
 			else
 				ShowError("socket_config_read: Invalid ip or ip range '%s'!\n", line);
-		} else if( strcmpi(w1,"deny") == 0 ){
+		} else if (!strcmpi(w1, "deny")) {
 			RECREATE(access_deny, AccessControl, access_denynum+1);
-			if( access_ipmask(w2,&access_deny[access_denynum]) )
+			if (access_ipmask(w2, &access_deny[access_denynum]))
 				++access_denynum;
 			else
 				ShowError("socket_config_read: Invalid ip or ip range '%s'!\n", line);
-		} else if( strcmpi(w1,"ddos_interval") == 0){
+		}
+		else if (!strcmpi(w1,"ddos_interval"))
 			ddos_interval = atoi(w2);
-		} else if( strcmpi(w1,"ddos_count") == 0){
+		else if (!strcmpi(w1,"ddos_count"))
 			ddos_count = atoi(w2);
-		} else if( strcmpi(w1,"ddos_autoreset") == 0){
+		else if (!strcmpi(w1,"ddos_autoreset"))
 			ddos_autoreset = atoi(w2);
-		} else if( strcmpi(w1,"debug") == 0){
-			if( strcmpi(w2,"yes") == 0 )
-				access_debug = 1;
-			else if( strcmpi(w2,"no") == 0 )
-				access_debug = 0;
-			else
-				access_debug = atoi(w2);
+		else if (!strcmpi(w1,"debug"))
+			access_debug = config_switch(w2);
 #endif
-		} else if (strcmpi(w1, "import") == 0)
+		else if (!strcmpi(w1, "import"))
 			socket_config_read(w2);
 	}
+
 	fclose(fp);
 	return 0;
 }
@@ -1107,18 +1099,16 @@ int session_isActive(int fd)
 	return ( session_isValid(fd) && !session[fd]->eof );
 }
 
-in_addr_t resolve_hostbyname(const char* hostname, unsigned char* ip, char* ip_str)
+
+in_addr_t host2ip(const char* hostname)
 {
-	struct hostent *h = gethostbyname(hostname);
-	char ip_buf[16];
-	unsigned char ip2[4];
-	if (!h) return 0;
-	if (ip == NULL) ip = ip2;
-	ip[0] = (unsigned char) h->h_addr[0];
-	ip[1] = (unsigned char) h->h_addr[1];
-	ip[2] = (unsigned char) h->h_addr[2];
-	ip[3] = (unsigned char) h->h_addr[3];
-	if (ip_str == NULL) ip_str = ip_buf;
-	sprintf(ip_str, "%d.%d.%d.%d", ip[0], ip[1], ip[2], ip[3]);
-	return inet_addr(ip_str);
+	struct hostent* h = gethostbyname(hostname);
+	return (h != NULL) ? *(in_addr_t*)h->h_addr : 0;
+}
+
+const char* ip2str(in_addr_t ip, char ip_str[16])
+{
+	in_addr_t addr = ntohl(ip);
+	sprintf(ip_str, "%d.%d.%d.%d", (addr>>24)&0xFF, (addr>>16)&0xFF, (addr>>8)&0xFF, (addr>>0)&0xFF);
+	return ip_str;
 }

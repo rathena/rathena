@@ -3636,10 +3636,10 @@ int login_config_read(const char* cfgName)
 			} else if (strcmpi(w1, "new_account") == 0) {
 				new_account_flag = config_switch(w2);
 			} else if (strcmpi(w1, "bind_ip") == 0) {
-				char login_ip_str[128];
-				login_ip = resolve_hostbyname(w2, NULL, login_ip_str);
+				char ip_str[16];
+				login_ip = host2ip(w2);
 				if (login_ip) 
-					ShowStatus("Login server binding IP address : %s -> %s\n", w2, login_ip_str);
+					ShowStatus("Login server binding IP address : %s -> %s\n", w2, ip2str(login_ip, ip_str));
 			} else if (strcmpi(w1, "login_port") == 0) {
 				login_port = atoi(w2);
 			} else if (strcmpi(w1, "account_filename") == 0) {

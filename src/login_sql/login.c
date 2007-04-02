@@ -1899,10 +1899,10 @@ int login_config_read(const char* cfgName)
 			msg_silent = atoi(w2);
 		}
 		else if (!strcmpi(w1, "bind_ip")) {
-			char login_ip_str[128];
-			login_config.login_ip = resolve_hostbyname(w2, NULL, login_ip_str);
+			char ip_str[16];
+			login_config.login_ip = host2ip(w2);
 			if (login_config.login_ip)
-				ShowStatus("Login server binding IP address : %s -> %s\n", w2, login_ip_str);
+				ShowStatus("Login server binding IP address : %s -> %s\n", w2, ip2str(login_config.login_ip, ip_str));
 		} else if(!strcmpi(w1,"login_port")) {
 			login_config.login_port = (unsigned short)atoi(w2);
 			ShowStatus("set login_port : %s\n",w2);

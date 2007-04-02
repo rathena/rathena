@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/04/03
+	* Some source code cleaning
+	- Fixed the badly worded messages during mapserver startup
+	- Cleaned up socket config reading
+	- Split resolve_hostbyname() into 2 separate functions for clarity
+	- Moved the probably obsolete LOWER/UPPER macros to db.c (TODO: remove)
+	- Moved the badly placed compare_item() function to storage.c (see r779)
 	* Fully removed the msvcr80.dll dependency from the vs8 project files
 2007/04/02
 	* Removed some overly verbose item group messages & code
