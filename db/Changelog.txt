@@ -19,6 +19,8 @@
 	-----
 
 ========================
+04/03
+	* Raised skill usage and mode of 11.1 MVPs [Playtester]
 04/02
 	* Added EggBoy and EggGirl scripts [Playtester]
 	- also small fixes to Aspd and Speed bonus
