@@ -1436,6 +1436,7 @@ int status_calc_pet(struct pet_data *pd, int first)
 
 	if (first) {
 		memcpy(&pd->status, &pd->db->status, sizeof(struct status_data));
+		pd->status.mode|= MD_CANMOVE; //so they can chase their master!
 		pd->status.speed = pd->petDB->speed;
 	}
 

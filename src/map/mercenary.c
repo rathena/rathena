@@ -103,6 +103,8 @@ int merc_hom_vaporize(struct map_session_data *sd, int flag)
 	//Delete timers when vaporized.
 	merc_hom_hungry_timer_delete(hd);
 	hd->homunculus.vaporize = 1;
+	if(battle_config.hom_setting&0x40)
+		memset(hd->blockskill, 0, sizeof(hd->blockskill));
 	clif_hominfo(sd, sd->hd, 0);
 	merc_save(hd);
 	return unit_remove_map(&hd->bl, 0);

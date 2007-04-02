@@ -204,6 +204,7 @@ static void* create_online_user(DBKey key, va_list args) {
 	p = aCalloc(1, sizeof(struct online_login_data));
 	p->account_id = key.i;
 	p->char_server = -1;
+	p->waiting_disconnect = -1;
 	return p;
 }
 static int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data);
