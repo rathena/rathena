@@ -1,1 +1,0 @@
-ALTER TABLE `friends` ADD `friend_id0` int(11) NOT NULL default '0', ADD `name0` varchar(255) NOT NULL default '';

@@ -7,7 +7,7 @@
 //=====By================================================
 // AppleGirl and Evera(version 1.0)
 //=====Current Version===================================
-// 2.8
+// 2.9
 //=====Compatible With:==================================
 // eAthena Version SVN-R8637 and up; RO Episode 6+
 //=====Description=======================================
@@ -15,8 +15,8 @@
 //=====Additional Comments:==============================
 // Lesbian and Gay Weddings by ShadowLady (version 1.1)
 // Complete Rewrite by Skotlex (version 2.0->2.8)
+// 2.9 : Somewhat iRO-official NPC names [DracoRPG]
 //=======================================================
-//  
 
 // Configuration Variables: 
 -	script	marriage_init	-1,{
@@ -57,9 +57,9 @@ OnInit:
 // $@divorcer$ name of the person who requested divorce
 // $@divorcee id of the partner, who has to accept the divorce and pay.
 
-//The Priest
-prt_church,100,123,4	script	Frederick Second	60,{
-	set @name$,"Frederick Second";
+//The Priest - official iRO sprite & in-dialog name (on-map name not confirmed)
+prt_church,100,123,4	script	Vomars	60,{
+	set @name$,"Vomars";
 
 	function SF_wed_end;
 	function SF_equip_check;
@@ -77,11 +77,16 @@ prt_church,100,123,4	script	Frederick Second	60,{
 		mes "You have my blessings, have a wonderful married life.";
 		close;
 	}
-	if ($wed_progress == 0) {
+	if ($wed_progress == 0) { // Official iRO dialog
 		mes "["+@name$+"]";
-		mes "Hello child. How is life treating you?";
+		mes "You must apply for";
+		mes "marriage with Happy Marry";
+		mes "before you can get married.";
+		mes "Happy Marry will let you know";
+		mes "what else you'll need to do";
+		mes "to prepare for marriage";
 		close;
-	}
+	} // End official iRO dialog
 	
 	if (strcharinfo(0) == $wed_groom$) {
 		SF_Groom();
@@ -434,8 +439,8 @@ OnInit:
 }
 
 //Registration & Status
-prt_church,106,99,3	script	Sister Mary	67,{
-	set @name$,"Mary";
+prt_church,106,99,3	script	Happy Marry	67,{
+	set @name$,"Marry";
 	if (getpartnerid() > 0) {
 		mes "["+@name$+"]";
 		mes "Isn't marriage beautiful?";
