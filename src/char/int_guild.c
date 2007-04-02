@@ -879,7 +879,7 @@ int mapif_guild_emblem(struct guild *g) {
 
 int mapif_guild_master_changed(struct guild *g, int aid, int cid)
 {
-	unsigned char buf[12];
+	unsigned char buf[14];
 	WBUFW(buf,0)=0x3843;
 	WBUFL(buf,2)=g->guild_id;
 	WBUFL(buf,6)=aid;
