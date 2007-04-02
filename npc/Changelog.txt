@@ -27,6 +27,7 @@ KarLaeda
 Date		Added
 ======
 2007/04/03
+	* Small fix in Monk Quest [Playtester]
 	* Officialized Kunai/Shuriken traders [Playtester]
 	* Officialized Fuuma Shuriken quest and merged it to ninja_quests.txt [Playtester]
 2007/04/02

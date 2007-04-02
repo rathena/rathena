@@ -323,7 +323,7 @@ Part1:
 			delitem 940, 10;//Items: Grasshopper's_Leg,
 			goto L_CollectS2_E;
 		L_CollectS2_3:
-			delitem 7012, 30;//Items: Tough_Scalelike_Stem,
+			delitem 905, 30;//Items: Stem,
 			delitem 909, 5;//Items: Jellopy,
 			delitem 955, 10;//Items: Worm_Peeling,
 			goto L_CollectS2_E;
