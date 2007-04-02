@@ -1816,8 +1816,8 @@ static struct Damage battle_calc_weapon_attack(
 	if(skill_num==TF_POISON)
 		ATK_ADD(15*skill_lv);
 
-	if (!(nk&NK_NO_ELEFIX) ||
-		(s_ele == ELE_NEUTRAL && !(battle_config.attack_attr_none&src->type)))
+	if(!(nk&NK_NO_ELEFIX || (s_ele == ELE_NEUTRAL &&
+		battle_config.attack_attr_none&src->type)))
 	{	//Elemental attribute fix
 		if (wd.damage > 0)
 		{
