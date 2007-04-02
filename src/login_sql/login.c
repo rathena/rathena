@@ -523,11 +523,10 @@ int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len)
 //-----------------------------------------------------
 int mmo_auth(struct mmo_account* account, int fd)
 {
-	time_t ban_until_time, raw_time;
-	char tmpstr[256];
-	char t_uid[256], t_pass[256];
-	char user_password[256];
-
+	time_t ban_until_time;
+	char t_uid[256];
+	char user_password[256], password[256];
+	long connect_until;
 	int encpasswdok = 0, state;
 
 	char md5str[64], md5bin[32];
@@ -577,23 +576,12 @@ int mmo_auth(struct mmo_account* account, int fd)
 		}
 	}
 
-	// auth start : time seed
-	time(&raw_time);
-	strftime(tmpstr, 24, login_config.date_format, localtime(&raw_time));
-
 	jstrescapecpy(t_uid,account->userid);
 
-	if (account->passwdenc==PASSWORDENC) {
-		memcpy(t_pass, account->passwd, NAME_LENGTH);
-		t_pass[NAME_LENGTH] = '\0';
-	} else
-		jstrescapecpy(t_pass, account->passwd);
-
-
 	// retrieve login entry for the specified username
-	sprintf(tmpsql, "SELECT `%s`,`%s`,`%s`,`lastlogin`,`logincount`,`sex`,`connect_until`,`last_ip`,`ban_until`,`state`,`%s`"
-		" FROM `%s` WHERE `%s`= %s '%s'", login_db_account_id, login_db_userid, login_db_user_pass, login_db_level, login_db, login_db_userid, login_config.case_sensitive ? "BINARY" : "", t_uid);
-	//login {0-account_id/1-userid/2-user_pass/3-lastlogin/4-logincount/5-sex/6-connect_untl/7-last_ip/8-ban_until/9-state/10-level}
+	sprintf(tmpsql, "SELECT `%s`,`%s`,`lastlogin`,`sex`,`connect_until`,`ban_until`,`state`,`%s`"
+		" FROM `%s` WHERE `%s`= %s '%s'", login_db_account_id, login_db_user_pass, login_db_level, login_db, login_db_userid, login_config.case_sensitive ? "BINARY" : "", t_uid);
+	//login {0-account_id/1-user_pass/2-lastlogin/3-sex/4-connect_untl/5-ban_until/6-state/7-level}
 
 	// query
 	if (mysql_query(&mysql_handle, tmpsql)) {
@@ -601,40 +589,47 @@ int mmo_auth(struct mmo_account* account, int fd)
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 	}
 	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res) {
-		sql_row = mysql_fetch_row(sql_res);
-		if (!sql_row) {
-			//there's no id.
-			ShowNotice("auth failed: no such account %s %s %s\n", tmpstr, account->userid, account->passwd);
-			mysql_free_result(sql_res);
-			return 0;
-		}
-	} else {
+	if (!sql_res) {
 		ShowError("mmo_auth DB result error ! \n");
 		return 0;
 	}
+	sql_row = mysql_fetch_row(sql_res);
+	if (!sql_row) {
+		//there's no id.
+		ShowNotice("auth failed: no such account %s\n", account->userid);
+		mysql_free_result(sql_res);
+		return 0;
+	}
 
-	state = atoi(sql_row[9]);
+	account->account_id = atoi(sql_row[0]);
+	strncpy(password, sql_row[1], sizeof(password)-1);
+	strncpy(account->lastlogin, sql_row[2], 24);
+	account->sex = sql_row[3][0] == 'S' ? 2 : sql_row[3][0]=='M' ? 1 : 0;
+	connect_until = atol(sql_row[4]);
+	ban_until_time = atol(sql_row[5]);
+	state = atoi(sql_row[6]);
+	account->level = atoi(sql_row[7]);
+	if (account->level > 99) account->level = 99;
+	
+	//This function has too many leaks because this is only free'd on the end.
+	//Better avoid that and free it as soon as possible. [Skotlex]
+	mysql_free_result(sql_res);
+
 	//Client Version check
-	if (login_config.check_client_version && account->version != 0) {
-		if (account->version != login_config.client_version_to_connect) {
-			mysql_free_result(sql_res);
-			return 5;
-		}
-	}           
+	if(login_config.check_client_version && account->version != 0 &&
+		account->version != login_config.client_version_to_connect)
+		return 5;
 
 	switch (state) {
 	case -3: //id is banned
 	case -2: //dynamic ban
-		mysql_free_result(sql_res);
 		return state;
 	}
 
-	if (login_config.use_md5_passwds) {
+	if (login_config.use_md5_passwds)
 		MD5_String(account->passwd,user_password);
-	} else {
+	else
 		jstrescapecpy(user_password, account->passwd);
-	}
 
 #ifdef PASSWORDENC
 	if (account->passwdenc > 0) {
@@ -644,9 +639,9 @@ int mmo_auth(struct mmo_account* account, int fd)
 			j = 1;
 		do {
 			if (j == 1) {
-				sprintf(md5str, "%s%s", md5key,sql_row[2]);
+				sprintf(md5str, "%s%s", md5key, password);
 			} else if (j == 2) {
-				sprintf(md5str, "%s%s", sql_row[2], md5key);
+				sprintf(md5str, "%s%s", password, md5key);
 			} else
 				md5str[0] = 0;
 			MD5_String2binary(md5str, md5bin);
@@ -654,14 +649,14 @@ int mmo_auth(struct mmo_account* account, int fd)
 		} while (j < 2 && !encpasswdok && (j++) != account->passwdenc);
 	}
 #endif
-	if ((strcmp(user_password, sql_row[2]) && !encpasswdok)) {
+	if ((strcmp(user_password, password) && !encpasswdok)) {
 		if (account->passwdenc == 0) {
-			ShowInfo("auth failed pass error %s %s %s" RETCODE, tmpstr, account->userid, user_password);
+			ShowInfo("auth failed pass error %s %s" RETCODE, account->userid, user_password);
 #ifdef PASSWORDENC
 		} else {
 			char logbuf[1024], *p = logbuf;
 			int j;
-			p += sprintf(p, "auth failed pass error %s %s recv-md5[", tmpstr, account->userid);
+			p += sprintf(p, "auth failed pass error %s recv-md5[", account->userid);
 			for(j = 0; j < 16; j++)
 				p += sprintf(p, "%02x", ((unsigned char *)user_password)[j]);
 			p += sprintf(p, "] calc-md5[");
@@ -677,91 +672,79 @@ int mmo_auth(struct mmo_account* account, int fd)
 		return 1;
 	}
 
-	ban_until_time = atol(sql_row[8]);
-
-	//login {0-account_id/1-userid/2-user_pass/3-lastlogin/4-logincount/5-sex/6-connect_untl/7-last_ip/8-ban_until/9-state}
 	if (ban_until_time != 0) { // if account is banned
 		if (ban_until_time > time(NULL)) // always banned
 			return 6; // 6 = Your are Prohibited to log in until %s
 
-		sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0' %s WHERE `%s`= %s '%s'",
-			login_db, state==7?",state='0'":"", login_db_userid,
-			login_config.case_sensitive ? "BINARY" : "", t_uid);
+		sprintf(tmpsql, "UPDATE `%s` SET `ban_until`='0' %s WHERE `%s`= '%d'",
+			login_db, state==7?",state='0'":"",
+			login_db_account_id, account->account_id);
 		if (mysql_query(&mysql_handle, tmpsql)) {
 			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 		}
 	}
 
-	if (state) {
-		switch(state) { // packet 0x006a value + 1
-		case 1: // 0 = Unregistered ID
-		case 2: // 1 = Incorrect Password
-		case 3: // 2 = This ID is expired
-		case 4: // 3 = Rejected from Server
-		case 5: // 4 = You have been blocked by the GM Team
-		case 6: // 5 = Your Game's EXE file is not the latest version
-		case 7: // 6 = Your are Prohibited to log in until %s
-		case 8: // 7 = Server is jammed due to over populated
-		case 9: // 8 = No more accounts may be connected from this company
-		case 10: // 9 = MSI_REFUSE_BAN_BY_DBA
-		case 11: // 10 = MSI_REFUSE_EMAIL_NOT_CONFIRMED
-		case 12: // 11 = MSI_REFUSE_BAN_BY_GM
-		case 13: // 12 = MSI_REFUSE_TEMP_BAN_FOR_DBWORK
-		case 14: // 13 = MSI_REFUSE_SELF_LOCK
-		case 15: // 14 = MSI_REFUSE_NOT_PERMITTED_GROUP
-		case 16: // 15 = MSI_REFUSE_NOT_PERMITTED_GROUP
-		case 100: // 99 = This ID has been totally erased
-		case 101: // 100 = Login information remains at %s.
-		case 102: // 101 = Account has been locked for a hacking investigation. Please contact the GM Team for more information
-		case 103: // 102 = This account has been temporarily prohibited from login due to a bug-related investigation
-		case 104: // 103 = This character is being deleted. Login is temporarily unavailable for the time being
-		case 105: // 104 = Your spouse character is being deleted. Login is temporarily unavailable for the time being
-			ShowNotice("Auth Error #%d\n", atoi(sql_row[9]));
-			return atoi(sql_row[9]) - 1;
-			break;
-		default:
-			return 99; // 99 = ID has been totally erased
-			break;
-		}
+	if (state)
+	switch(state) { // packet 0x006a value + 1
+	case 1: // 0 = Unregistered ID
+	case 2: // 1 = Incorrect Password
+	case 3: // 2 = This ID is expired
+	case 4: // 3 = Rejected from Server
+	case 5: // 4 = You have been blocked by the GM Team
+	case 6: // 5 = Your Game's EXE file is not the latest version
+	case 7: // 6 = Your are Prohibited to log in until %s
+	case 8: // 7 = Server is jammed due to over populated
+	case 9: // 8 = No more accounts may be connected from this company
+	case 10: // 9 = MSI_REFUSE_BAN_BY_DBA
+	case 11: // 10 = MSI_REFUSE_EMAIL_NOT_CONFIRMED
+	case 12: // 11 = MSI_REFUSE_BAN_BY_GM
+	case 13: // 12 = MSI_REFUSE_TEMP_BAN_FOR_DBWORK
+	case 14: // 13 = MSI_REFUSE_SELF_LOCK
+	case 15: // 14 = MSI_REFUSE_NOT_PERMITTED_GROUP
+	case 16: // 15 = MSI_REFUSE_NOT_PERMITTED_GROUP
+	case 100: // 99 = This ID has been totally erased
+	case 101: // 100 = Login information remains at %s.
+	case 102: // 101 = Account has been locked for a hacking investigation. Please contact the GM Team for more information
+	case 103: // 102 = This account has been temporarily prohibited from login due to a bug-related investigation
+	case 104: // 103 = This character is being deleted. Login is temporarily unavailable for the time being
+	case 105: // 104 = Your spouse character is being deleted. Login is temporarily unavailable for the time being
+		ShowInfo("Auth Error #%d\n", state);
+		return state - 1;
+	default:
+		return 99; // 99 = ID has been totally erased
 	}
 
-	if (atol(sql_row[6]) != 0 && atol(sql_row[6]) < time(NULL)) {
+	if (connect_until != 0 && connect_until < time(NULL))
 		return 2; // 2 = This ID is expired
-	}
 
 	if (login_config.online_check) {
-		struct online_login_data* data = idb_get(online_db,atoi(sql_row[0]));
+		struct online_login_data* data = idb_get(online_db,account->account_id);
 		unsigned char buf[8];
 		if (data && data->char_server > -1) {
 			//Request char servers to kick this account out. [Skotlex]
-			ShowNotice("User [%s] is already online - Rejected.\n",sql_row[1]);
+			ShowNotice("User [%s] is already online - Rejected.\n",account->userid);
 			WBUFW(buf,0) = 0x2734;
-			WBUFL(buf,2) = atol(sql_row[0]);
+			WBUFL(buf,2) = account->account_id;
 			charif_sendallwos(-1, buf, 6);
 			if (data->waiting_disconnect == -1)
-				data->waiting_disconnect = add_timer(gettick()+30000, waiting_disconnect_timer, atol(sql_row[0]), 0);
+				data->waiting_disconnect = add_timer(gettick()+30000, waiting_disconnect_timer, account->account_id, 0);
 			return 3; // Rejected
 		}
 	}
 
-	account->account_id = atoi(sql_row[0]);
 	account->login_id1 = rand();
 	account->login_id2 = rand();
-	strncpy(account->lastlogin, sql_row[3], 24);
-	account->sex = sql_row[5][0] == 'S' ? 2 : sql_row[5][0]=='M' ? 1 : 0;
-	account->level = atoi(sql_row[10]) > 99 ? 99 : atoi(sql_row[10]);
 
 	if (account->sex != 2 && account->account_id < START_ACCOUNT_NUM)
 		ShowWarning("Account %s has account id %d! Account IDs must be over %d to work properly!\n", account->userid, account->account_id, START_ACCOUNT_NUM);
-	sprintf(tmpsql, "UPDATE `%s` SET `lastlogin` = NOW(), `logincount`=`logincount` +1, `last_ip`='%s'  WHERE `%s` = %s '%s'",
-		login_db, ip, login_db_userid, login_config.case_sensitive ? "BINARY" : "", sql_row[1]);
-	mysql_free_result(sql_res) ; //resource free
+
+	sprintf(tmpsql, "UPDATE `%s` SET `lastlogin` = NOW(), `logincount`=`logincount` +1, `last_ip`='%s'  WHERE `%s` = '%d'",
+		login_db, ip, login_db_account_id, account->account_id);
 	if (mysql_query(&mysql_handle, tmpsql)) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 	}
-
 	return -1;
 }
 
@@ -1678,14 +1661,14 @@ int parse_login(int fd)
 					server[account.account_id].maintenance=RFIFOW(fd,82);
 					server[account.account_id].new_=RFIFOW(fd,84);
 					server_fd[account.account_id]=fd;
-					sprintf(tmpsql,"DELETE FROM `sstatus` WHERE `index`='%ld'", account.account_id);
+					sprintf(tmpsql,"DELETE FROM `sstatus` WHERE `index`='%d'", account.account_id);
 					//query
 					if(mysql_query(&mysql_handle, tmpsql)) {
 						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 					}
 
-					sprintf(tmpsql,"INSERT INTO `sstatus`(`index`,`name`,`user`) VALUES ( '%ld', '%s', '%d')",
+					sprintf(tmpsql,"INSERT INTO `sstatus`(`index`,`name`,`user`) VALUES ( '%d', '%s', '%d')",
 						account.account_id, t_uid,0);
 					//query
 					if(mysql_query(&mysql_handle, tmpsql)) {

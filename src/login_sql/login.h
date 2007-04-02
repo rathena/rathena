@@ -31,10 +31,10 @@ struct mmo_account {
 	char passwd[NAME_LENGTH];
 	int passwdenc;
 	
-	long account_id;
+	int account_id;
+	int char_id;
 	long login_id1;
 	long login_id2;
-	long char_id;
 	char lastlogin[24];
 	int sex;
 	int level;
