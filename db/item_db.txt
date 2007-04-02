@@ -2377,9 +2377,9 @@
 7519,Handsel,Handsel,3,,10,10,,,,,,,,,,,,,{},{},{}
 7520,Please_Be_Rich,Please Be Rich,3,,10,10,,,,,,,,,,,,,{},{},{}
 7521,Burning_Stone,Burning Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
-7522,Freezing_Stone,Freezing Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
-7523,Windchime_Stone,Windchime Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
-7524,Fang,Fang,3,300,,20,,,,,,7,2,,,,,,{},{},{}
+7522,Freezing_Stone,Ice Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
+7523,Windchime_Stone,Wind Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
+7524,Fang,Shadow Orb,3,300,,20,,,,,,7,2,,,,,,{},{},{}
 7525,Summer_Festival_Ticket,Summer Festival Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
 7526,Application,Application,3,,10,0,,,,,,,,,,,,,{},{},{}
 7527,Book_About_True_Life,Book About True Life,3,,10,100,,,,,,,,,,,,,{},{},{}
@@ -2808,7 +2808,7 @@
 13250,Shuriken,Shuriken,10,4,,5,10,,,,0x02000000,7,2,32768,,1,,6,{},{},{}
 13251,Raincloud_Shuriken,Raincloud Shuriken,10,10,,5,30,,,,0x02000000,7,2,32768,,20,,6,{},{},{}
 13252,Flash_Shuriken,Flash Shuriken,10,20,,5,45,,,,0x02000000,7,2,32768,,40,,6,{},{},{}
-13253,Pointed_Leaf_Shuriken,Pointed Leaf Shuriken,10,40,,5,70,,,,0x02000000,7,2,32768,,60,,6,{},{},{}
+13253,Pointed_Leaf_Shuriken,Sharp Leaf Shuriken,10,40,,5,70,,,,0x02000000,7,2,32768,,60,,6,{},{},{}
 13254,Piercing_Thorn_Shuriken,Piercing Thorn Shuriken,10,100,,5,100,,,,0x02000000,7,2,32768,,80,,6,{},{},{}
 13255,Kunai_of_Frozen_Icicle,Kunai of Frozen Icicle,10,10,,20,30,,,,0x02000000,7,2,32768,,1,,7,{ bonus bAtkEle,Ele_Water; },{},{}
 13256,Kunai_of_Black_Earth,Kunai of Black Earth,10,10,,20,30,,,,0x02000000,7,2,32768,,1,,7,{ bonus bAtkEle,Ele_Earth; },{},{}
