@@ -170,7 +170,7 @@
 675,Silver_Coin,Silver Coin,2,5000,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
 676,Silver_Coin_Moneybag,Bag of Silver Coins,2,50000,,400,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
 677,White_Gold_Coin,Platinum Coin,2,2000,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-678,Poison_Bottle,Poison Bottle,0,5000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(Class == 4013) { sc_start SC_Poison,600000,0; sc_start SC_ASPDPOTION3,30000,0; } else percentheal -100,0; },{},{}
+678,Poison_Bottle,Poison Bottle,0,5000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(Class == Job_Assassin_Cross) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION3,60000,0; } else percentheal -100,0; },{},{}
 679,Gold_Pill,Pilule,0,5000,,300,,,,,0xFFFFFFFF,7,3,,,,,,{ itemheal 50,50; },{},{}
 680,Magical_Carnation,Magic Carnation,2,,0,1000,,,,,0xFFFFFFFF,7,3,,,,,,{ itemheal 25,0; },{},{}
 681,Memory_Of_Wedding,Sweet Memory of Marriage,2,50000,,10,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
@@ -2553,7 +2553,7 @@
 12017,Slow_Down_Potion,Slow Potion,0,,1,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12018,Fire_Cracker,Firecracker,2,,1,20,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(256); },{},{}
 12019,Holy_Egg,Holy Egg,11,,1,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 54,2; },{},{}
-12020,Water_Of_Darkness,Cursed_Water,11,,1,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,8; },{},{}
+12020,Water_Of_Darkness,Cursed Water,11,,1,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,8; },{},{}
 12021,Pork_Belly,Pork,0,,0,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
 12022,Spareribs,Galbi,0,,0,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,99),0; },{},{}
 12023,Giftbox_China,Wrapped Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBoxChina),1; },{},{}
@@ -2562,7 +2562,7 @@
 12026,Egg_Girl,Dano Festival Egg,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_EggGirl),1; },{},{}
 // Effect Boxes
 12027,Giggling_Box,Giggling Box,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 9,0; if(rand(100)<30) sc_start SC_Curse,30000,0; },{},{}
-12028,Box_Of_Thunder,Box of Thunder,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SpeedUp0,30000,0; },{},{}
+12028,Box_Of_Thunder,Box of Thunder,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SpeedUp0,20000,0; },{},{}
 12029,Gloomy_Box,Box of Gloom,11,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 45,1; },{},{}
 12030,Box_Of_Grudge,Box of Resentment,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,20; },{},{}
 12031,Sleepy_Box,Box of Drowsiness,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,60000,20; },{},{}

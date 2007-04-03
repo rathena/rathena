@@ -20,6 +20,7 @@
 
 ========================
 04/04
+	* Updated Poison Bottle and Thunder Box [Playtester]
 	* Had to revert some mob modes [Playtester]
 	- figured out I can't read the mode fully from the inc value
 	- now mob mode is based on Doddler's info
