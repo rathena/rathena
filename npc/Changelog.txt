@@ -1,5 +1,8 @@
 Date		Added
 ======
+2007/04/04
+	* Updated Ninja quest variable usage [Playtester]
+	- now MISC_QUEST variable is used when completed
 2007/04/03
 	* Removed the never-updated "who does what" header in this very file [DracoRPG]
 	* Got screenie of wedding NPC, made ours stick to it as much as possible [DracoRPG]

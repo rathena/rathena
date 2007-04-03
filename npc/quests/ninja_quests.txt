@@ -39,7 +39,7 @@ que_ng,28,50,3	script	Boshuu	709,{
 		mes "Come back after you've grown a bit more.";
 		close;
 	}
-	if (countitem(2102) < 1){
+	if (countitem(2102) < 1 && !(MISC_QUEST & 2048)){
 		mes "[Boshuu]";
 		mes "I'm the best craftsman out of what people call the Three Craftsmen of Ninja Tools.";
 		mes "They call me Murata Boshuu.";
@@ -182,12 +182,14 @@ que_ng,28,50,3	script	Boshuu	709,{
 			delitem 2102,1;
 			delitem 2117,1;
 			set Zeny,Zeny-10000;
-			set ninbo,3;
+			set ninbo,0;
+			set MISC_QUEST,MISC_QUEST | 2048;
 			getitem 2118,1;
 			close;
 		}
 	}
-	else if (ninbo == 3){
+	else if (MISC_QUEST & 2048){
+		set ninbo,0;
 		mes "[Boshuu]";
 		mes "Oh~ I see you've come back.";
 		mes "Is it because you need another slotted Arm Guard?";
@@ -248,13 +250,13 @@ que_ng,28,50,3	script	Boshuu	709,{
 				delitem 2102,1;
 				delitem 2117,1;
 				set Zeny,Zeny-10000;
-				set ninbo,3;
 				getitem 2118,1;
 				close;
 			}
 		}
 	}
 	else{	
+		set ninbo,0;
 		mes "[Boshuu]";
 		mes "Oh~ You~!";
 		mes "Is what you have there the shield from overseas called a Guard? Let me take a look.";
@@ -295,7 +297,6 @@ que_ng,28,50,3	script	Boshuu	709,{
 			mes "Hmm, is that so?";
 			mes "What a shame...";
 			mes "Well, if you change your mind later, come back and see me.";
-			set ninbo,3;
 			close;
 		}else{
 			if (countitem(2102) < 1 || countitem(2117) < 1){
@@ -351,7 +352,7 @@ que_ng,28,50,3	script	Boshuu	709,{
 				delitem 2102,1;
 				delitem 2117,1;
 				set Zeny,Zeny-10000;
-				set ninbo,3;
+				set MISC_QUEST,MISC_QUEST | 2048;
 				getitem 2118,1;
 				close;					
 			}
@@ -384,7 +385,7 @@ que_ng,28,45,3	script	Basshu	86,{
 		mes "Come back when you're stronger.";
 		close;
 	}
-	if (countitem(2107) < 1){
+	if (countitem(2107) < 1 && !(MISC_QUEST & 4096)){
 		mes "[Basshu]";
 		mes "I am one of the brothers of the three craftsmen in charge of crafting shields in the east named Murata Basshu";
 		next;
@@ -521,12 +522,14 @@ que_ng,28,45,3	script	Basshu	86,{
 			delitem 2107,1;
 			delitem 2117,1;
 			set Zeny,Zeny-20000;
-			set ninbot,3;
+			set ninbot,0;
+			set MISC_QUEST,MISC_QUEST | 4096;
 			getitem 2119,1;
 			close;
 		}
 	}
-	else if (ninbot == 3){
+	else if (MISC_QUEST & 4096){
+		set ninbot,0;
 		mes "[Basshu]";
 		mes "Oh~ I see you've come back.";
 		mes "Are you here because you need an Improved Arm Guard?";
@@ -592,13 +595,13 @@ que_ng,28,45,3	script	Basshu	86,{
 				delitem 2107,1;
 				delitem 2117,1;
 				set Zeny,Zeny-20000;
-				set ninbot,3;
 				getitem 2119,1;
 				close;
 			}
 		}
 	}
 	else{
+		set ninbot,0;
 		mes "[Basshu]";
 		mes "Why~ That's~!";
 		mes "Is what you have there that shield which is called a 'Mirror Shield' overseas?";
@@ -643,7 +646,6 @@ que_ng,28,45,3	script	Basshu	86,{
 			mes "Hmm, is that so.";
 			mes "What a shame.";
 			mes "Come and find me if you change your mind.";
-			set ninbot,3;
 			close;
 		}else{
 			if(countitem(2107) < 1 || countitem(2117) < 1){
@@ -701,7 +703,7 @@ que_ng,28,45,3	script	Basshu	86,{
 				delitem 2107,1;
 				delitem 2117,1;
 				set Zeny,Zeny-20000;
-				set ninbot,3;
+				set MISC_QUEST,MISC_QUEST | 4096;
 				getitem 2119,1;
 				close;
 			}

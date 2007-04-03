@@ -79,6 +79,16 @@ Info:		Yuno, Hypnotist Teacher
 How to set: 	set MISC_QUEST,MISC_QUEST | 1024;
 How to check: 	if(MISC_QUEST & 1024){}
 
+Quest: 		Slotted Arm Guard Quest
+Info:		Ninja Job Room, Boshuu
+How to set: 	set MISC_QUEST,MISC_QUEST | 2048;
+How to check: 	if(MISC_QUEST & 2048){}
+
+Quest: 		Improved Arm Guard Quest
+Info:		Ninja Job Room, Basshu
+How to set: 	set MISC_QUEST,MISC_QUEST | 4096;
+How to check: 	if(MISC_QUEST & 4096){}
+
 --------------------------------------------------------------
 Variable: MISC_QUEST2
 
