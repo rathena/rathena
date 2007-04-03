@@ -869,7 +869,8 @@ static int itemdb_readdb(void)
 				//(yggdrasil leaf, spells & pet lures) [Skotlex]
 				id->type = IT_USABLE;
 				id->flag.delay_consume=1;
-			}
+			} else //In case of an itemdb reload and the item type changed.
+				id->flag.delay_consume=0;
 
 			{
 				int buy = atoi(str[4]), sell = atoi(str[5]);
