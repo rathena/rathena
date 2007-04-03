@@ -353,6 +353,7 @@ void trade_tradeadditem(struct map_session_data *sd, int index, int amount) {
 		!itemdb_canpartnertrade(item, trade_i, trade_weight))) //Can't partner-trade
 	{
 		clif_displaymessage (sd->fd, msg_txt(260));
+		clif_tradeitemok(sd, index+2, 1);
 		return;
 	}
 

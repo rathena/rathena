@@ -4882,6 +4882,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			case SC_ASPDPOTION3:
 			case SC_ATKPOTION:
 			case SC_MATKPOTION:
+			case SC_ENCHANTARMS:
 			case SC_ARMOR_ELEMENT:
 				break;
 			case SC_GOSPEL:
