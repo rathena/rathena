@@ -19,6 +19,11 @@
 	-----
 
 ========================
+04/04
+	* Had to revert some mob modes [Playtester]
+	- figured out I can't read the mode fully from the inc value
+	- now mob mode is based on Doddler's info
+	- updated sql files
 04/03
 	* Tried to fixup some 11.1 mob modes [Playtester]
 	- a converter would be nice, anyone?
