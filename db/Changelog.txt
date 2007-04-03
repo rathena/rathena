@@ -20,6 +20,8 @@
 
 ========================
 04/03
+	* Tried to fixup some 11.1 mob modes [Playtester]
+	- a converter would be nice, anyone?
 	* Raised skill usage and mode of 11.1 MVPs [Playtester]
 04/02
 	* Added EggBoy and EggGirl scripts [Playtester]
