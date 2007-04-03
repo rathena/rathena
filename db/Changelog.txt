@@ -20,6 +20,7 @@
 
 ========================
 04/04
+	* Corrected Marionette Control's SP cost, it should be 100. [Skotlex]
 	* Updated Poison Bottle and Thunder Box [Playtester]
 	* Had to revert some mob modes [Playtester]
 	- figured out I can't read the mode fully from the inc value
