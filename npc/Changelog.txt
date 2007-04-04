@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/04/05
+	* Fixed a typo in tu_archer.txt [ultramage]
 2007/04/04
 	* Updated Gunslinger quest [Playtester]
 	- you can now create a Butcher

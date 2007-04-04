@@ -1940,7 +1940,7 @@ OnTouch:
 //=================================================Bishop Maugins====================================================
 monk_in,19,43,1	script	Bishop Maugins	60,{
 	mes "[Bishop Maugins]";
-	if(vu_archer02 == 7){
+	if(tu_archer02 == 7){
 		mes "Greetings.";
 		mes "I doubt that you're here to change to the Monk job, but may I help you with something? Perhaps you're here for a confession?";
 		next;
