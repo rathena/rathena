@@ -68,10 +68,6 @@ ra_temin,130,93,0	warp	rachel007	1,1,ra_temin,238,257
 ra_temin,238,252,0	warp	rachel008	1,1,ra_temin,130,88
 
 ra_temin,276,326,0	script	Statue#Rachel	111,{
-	mes "Welcome to the temporary Rachel";
-	mes "Sanctuary entrance npc!";
-	mes "Isn't it great?";
-	next;
 	mes "Do you want to enter Rachel Sanctuary?";
 	mes "Please donate ^FF000050000 Zeny^000000 to enter.";
 	next;
