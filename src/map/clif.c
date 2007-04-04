@@ -941,18 +941,28 @@ static int clif_set0078(struct block_list *bl, struct view_data *vd, unsigned ch
 	}
 	WBUFW(buf,14)=vd->class_;
 	WBUFW(buf,16)=vd->hair_style;  //Required for pets.
+	//18W: Weapon
 	WBUFW(buf,20)=vd->head_bottom;	//Pet armor
 	if (bl->type == BL_NPC && vd->class_ == FLAG_CLASS)
 	{	//The hell, why flags work like this?
 		WBUFL(buf,22)=emblem_id;
 		WBUFL(buf,26)=guild_id;
 	}
+	//22W: shield
+	//24W: Head top
+	//26W: Head mid
+	//28W: Hair color
+	//30W: Clothes color
 	WBUFW(buf,32)=dir;
 	WBUFL(buf,34)=guild_id;
 	WBUFL(buf,38)=emblem_id;
+	//42W: Manner
+	//44B: Karma
+	//45B: Sex
 	WBUFPOS(buf,46,bl->x,bl->y,dir);
 	WBUFB(buf,49)=5;
 	WBUFB(buf,50)=5;
+	//51BL Sit/Stand
 	WBUFW(buf,52)=clif_setlevel(lv);
 	return packet_len(0x78);
 }

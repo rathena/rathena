@@ -1877,25 +1877,21 @@ int atcommand_whomap(const int fd, struct map_session_data* sd, const char* comm
  */
 int atcommand_whogm(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	char temp0[100];
-	char temp1[100];
 	struct map_session_data *pl_sd, **pl_allsd;
 	int i, j, count, users;
 	int pl_GM_level, GM_level;
-	char match_text[100];
+	char match_text[200];
 	char player_name[NAME_LENGTH];
 	struct guild *g;
 	struct party_data *p;
 
 	nullpo_retr(-1, sd);
 
-	memset(temp0, '\0', sizeof(temp0));
-	memset(temp1, '\0', sizeof(temp1));
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(match_text, '\0', sizeof(match_text));
 	memset(player_name, '\0', sizeof(player_name));
 
-	if (sscanf(message, "%99[^\n]", match_text) < 1)
+	if (sscanf(message, "%199[^\n]", match_text) < 1)
 		strcpy(match_text, "");
 	for (j = 0; match_text[j]; j++)
 		match_text[j] = TOLOWER(match_text[j]);
@@ -1904,35 +1900,46 @@ int atcommand_whogm(const int fd, struct map_session_data* sd, const char* comma
 	GM_level = pc_isGM(sd);
 	pl_allsd = map_getallusers(&users);
 	for (i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i])) {
-			pl_GM_level = pc_isGM(pl_sd);
-			if (pl_GM_level > 0) {
-				if (!((battle_config.hide_GM_session || (pl_sd->sc.option & OPTION_INVISIBLE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
-					memcpy(player_name, pl_sd->status.name, NAME_LENGTH);
-					for (j = 0; player_name[j]; j++)
-						player_name[j] = TOLOWER(player_name[j]);
-					if (strstr(player_name, match_text) != NULL) { // search with no case sensitive
-						sprintf(atcmd_output, "Name: %s (GM:%d) | Location: %s %d %d", pl_sd->status.name, pl_GM_level, mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
-						clif_displaymessage(fd, atcmd_output);
-						sprintf(atcmd_output, "       BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.base_level, job_name(pl_sd->status.class_), pl_sd->status.job_level);
-						clif_displaymessage(fd, atcmd_output);
-						g = guild_search(pl_sd->status.guild_id);
-						if (g == NULL)
-							sprintf(temp1, "None");
-						else
-							sprintf(temp1, "%s", g->name);
-						p = party_search(pl_sd->status.party_id);
-						if (p == NULL)
-							sprintf(temp0, "None");
-						else
-							sprintf(temp0, "%s", p->party.name);
-						sprintf(atcmd_output, "       Party: '%s' | Guild: '%s'", temp0, temp1);
-						clif_displaymessage(fd, atcmd_output);
-						count++;
-					}
-				}
-			}
+		pl_sd = pl_allsd[i];
+		pl_GM_level = pc_isGM(pl_sd);
+		if (!pl_GM_level)
+			continue;
+		if (pl_sd->sc.option & OPTION_INVISIBLE)
+			continue;
+
+		if (match_text[0])
+		{
+			memcpy(player_name, pl_sd->status.name, NAME_LENGTH);
+			for (j = 0; player_name[j]; j++)
+				player_name[j] = TOLOWER(player_name[j]);
+		  	// search with no case sensitive
+			if (strstr(player_name, match_text) == NULL)
+				continue;
 		}
+		if (pl_GM_level > GM_level) {
+			sprintf(atcmd_output, "Name: %s (GM)", pl_sd->status.name);
+			clif_displaymessage(fd, atcmd_output);
+			continue;
+		}
+
+		sprintf(atcmd_output, "Name: %s (GM:%d) | Location: %s %d %d",
+			pl_sd->status.name, pl_GM_level,
+			mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
+		clif_displaymessage(fd, atcmd_output);
+
+		sprintf(atcmd_output, "       BLvl: %d | Job: %s (Lvl: %d)",
+			pl_sd->status.base_level,
+			job_name(pl_sd->status.class_), pl_sd->status.job_level);
+		clif_displaymessage(fd, atcmd_output);
+		
+		p = party_search(pl_sd->status.party_id);
+		g = guild_search(pl_sd->status.guild_id);
+	
+		sprintf(atcmd_output,"       Party: '%s' | Guild: '%s'",
+			p?p->party.name:"None", g?g->name:"None");
+
+		clif_displaymessage(fd, atcmd_output);
+		count++;
 	}
 
 	if (count == 0)
