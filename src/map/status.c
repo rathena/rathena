@@ -6752,7 +6752,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 					s=10;
 					break;
 			}
-			if (s && ((sc->data[type].val3 % s) == 0)) {
+			if (s && (counter%s == 0)) {
 				if (sc->data[SC_LONGING].timer != -1)
 					sp*= 3;
 				if (!status_charge(bl, 0, sp))
