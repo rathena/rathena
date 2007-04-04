@@ -1,7 +1,7 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= SVN eA
 //===== Description: =========================================
@@ -10,6 +10,7 @@
 //= 1.0 Only Garrison Gun done yet [Playtester]
 //= 1.1 Added Garrison[2] [Playtester]
 //= 1.2 Added Drifter, Destroyer and Inferno [Playtester]
+//= 1.3 Added official Gatling quests [Playtester]
 //============================================================
 
 
