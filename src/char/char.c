@@ -3344,7 +3344,6 @@ int parse_char(int fd)
 	int map_fd;
 	struct char_session_data *sd;
 	uint32 ipl = session[fd]->client_addr;
-	uint32 subnet_map_ip;
 	
 	RFIFOHEAD(fd);
 
@@ -3532,6 +3531,7 @@ int parse_char(int fd)
 			}
 			{
 				//Send player to map
+				uint32 subnet_map_ip;
 				char map_name[MAP_NAME_LENGTH];
 				snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(cd->last_point.map));
 
@@ -3541,11 +3541,8 @@ int parse_char(int fd)
 				memcpy(WFIFOP(fd,6), map_name, MAP_NAME_LENGTH);
 			
 				// Advanced subnet check [LuzZza]
-				if(subnet_map_ip = lan_subnetcheck(ipl))
-					WFIFOL(fd,22) = htonl(subnet_map_ip);
-				else
-					WFIFOL(fd,22) = htonl(server[i].ip);
-
+				subnet_map_ip = lan_subnetcheck(ipl);
+				WFIFOL(fd,22) = (subnet_map_ip) ? htonl(subnet_map_ip) : htonl(server[i].ip);
 				WFIFOW(fd,26) = server[i].port; // /!\ must be sent in intel host byte order /!\ (client bug)
 				WFIFOSET(fd,28);
 
@@ -3940,7 +3937,8 @@ int send_accounts_tologin(int tid, unsigned int tick, int id, int data) {
 	return 0;
 }
 
-int check_connect_login_server(int tid, unsigned int tick, int id, int data) {
+int check_connect_login_server(int tid, unsigned int tick, int id, int data)
+{
 	if (login_fd > 0 && session[login_fd] != NULL)
 		return 0;
 
@@ -4342,11 +4340,11 @@ int do_init(int argc, char **argv)
 			ShowStatus("Defaulting to %s as our IP address\n", ip_str);
 		if (!login_ip) {
 			strcpy(login_ip_str, ip_str);
-			login_ip = inet_addr(login_ip_str);
+			login_ip = ntohl(inet_addr(login_ip_str));
 		}
 		if (!char_ip) {
 			strcpy(char_ip_str, ip_str);
-			char_ip = inet_addr(char_ip_str);
+			char_ip = ntohl(inet_addr(char_ip_str));
 		}
 	}
 

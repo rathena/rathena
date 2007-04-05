@@ -388,13 +388,13 @@ int check_ipmask(uint32 ip, const unsigned char *str)
 	unsigned char *p = (unsigned char *)&ip2, *p2 = (unsigned char *)&mask;
 
 	// scan ip address
-	if (sscanf((const char*)str, "%d.%d.%d.%d/%n", &p[3], &p[2], &p[1], &p[0], &i) != 4 || i == 0)
+	if (sscanf((const char*)str, "%u.%u.%u.%u/%n", &p[3], &p[2], &p[1], &p[0], &i) != 4 || i == 0)
 		return 0;
 
 	// scan mask
-	if (sscanf((const char*)str+i, "%d.%d.%d.%d", &p2[3], &p2[2], &p2[1], &p2[0]) == 4) {
+	if (sscanf((const char*)str+i, "%u.%u.%u.%u", &p2[3], &p2[2], &p2[1], &p2[0]) == 4) {
 		;
-	} else if (sscanf((const char*)(str+i), "%d", &m) == 1 && m >= 0 && m <= 32) {
+	} else if (sscanf((const char*)(str+i), "%u", &m) == 1 && m >= 0 && m <= 32) {
 		for(i = 0; i < m && i < 32; i++)
 			mask |= (1 << i);
 	} else {
@@ -3108,7 +3108,7 @@ int parse_login(int fd)
 					WFIFOHEAD(fd, 47+32*MAX_SERVERS);
 					for(i = 0; i < MAX_SERVERS; i++) {
 						if (server_fd[i] >= 0) {
-						    // Advanced subnet check [LuzZza]
+							// Advanced subnet check [LuzZza]
 							uint32 subnet_char_ip = lan_subnetcheck(ipl);
 							WFIFOL(fd,47+server_num*32) = (subnet_char_ip) ? htonl(subnet_char_ip) : htonl(server[i].ip);
 							WFIFOW(fd,47+server_num*32+4) = server[i].port; // /!\ must be sent in intel host byte order /!\ (client bug)
