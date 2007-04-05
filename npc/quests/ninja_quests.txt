@@ -158,7 +158,7 @@ que_ng,28,50,3	script	Boshuu	709,{
 		mes "[Boshuu]";
 		mes "Oh, I see you're back with all the required materials.";
 		mes "But before I start, I must ask you one more time.";
-		mes "Do you want to give me the materials you've brought and recieve a Slotted Arm Guard instead?";
+		mes "Do you want to give me the materials you've brought and receive a Slotted Arm Guard instead?";
 		next;
 		if(select("No:Yes") == 1){
 			mes "[Boshuu]";

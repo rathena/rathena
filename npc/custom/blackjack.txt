@@ -113,7 +113,7 @@ cmd_in02,188,89,1	script	Black Jack Dealer	57,{
 			mes "11 points to give you 15 points total.";
 			next;
 			mes "[Dealer]";
-			mes "If you had decided to pull and recieved a 9, the ace would";
+			mes "If you had decided to pull and received a 9, the ace would";
 			mes "automatically be counted as 1 point to give you a total of 14";
 			mes "points.  If the Ace was counted as 11 points, you would have a";
 			mes "point total over 21 and would have lost.";

@@ -13,7 +13,7 @@
 // }
 // [/code]
 // 
-// every player who logs in will recieve a message 'lmao' in their face as soon
+// every player who logs in will receive a message 'lmao' in their face as soon
 // as they can see the map.
 //-----------------------------------------------------------------------------
 // Note:

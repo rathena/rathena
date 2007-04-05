@@ -122,7 +122,7 @@ in_moc_16,19,33,4	script	Guildsman	55,{
 
 	M_0:
 		mes "[Angry looking man]";
-		mes "It's been a long time since we've recieved any Assassin candidates..... anyhow let me send you ^5533FFAssassin 'Kai'^000000.";
+		mes "It's been a long time since we've received any Assassin candidates..... anyhow let me send you ^5533FFAssassin 'Kai'^000000.";
 		mes "He'll take care of the registration process.";
 		enablenpc "Assassin Kai#1";
 		disablenpc "Assassin Kai#2";
@@ -931,7 +931,7 @@ L_Test:
 		sM_6c:
 
 		mes "[Nameless One]";
-		mes "7. When an Assassin reaches a ^5533FFJob level of 50^000000, what is the added bonus he/she recieves to agility?";
+		mes "7. When an Assassin reaches a ^5533FFJob level of 50^000000, what is the added bonus he/she receives to agility?";
 		next;
 		menu "7",sM_7c, "8",sM_7c, "9",sM_7c, "10",-;
 

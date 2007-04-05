@@ -65,7 +65,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b12: Incomming, chrif_divorce -> 'divorce a wedding of charid X and partner id X'
 //2b13: Incomming, chrif_accountdeletion -> 'Delete acc XX, if the player is on, kick ....'
 //2b14: Incomming, chrif_accountban -> 'not sure: kick the player with message XY'
-//2b15: Incomming, chrif_recvgmaccounts -> 'recieve gm accs from charserver (seems to be incomplete !)'
+//2b15: Incomming, chrif_recvgmaccounts -> 'receive gm accs from charserver (seems to be incomplete !)'
 //2b16: Outgoing, chrif_ragsrvinfo -> 'sends motd / rates ....'
 //2b17: Outgoing, chrif_char_offline -> 'tell the charserver that the char is now offline'
 //2b18: Outgoing, chrif_char_reset_offline -> 'set all players OFF!'

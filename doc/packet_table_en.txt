@@ -487,7 +487,7 @@ S 00e4 <ID>.l
 	request trade.
 R 00e5 <nick>.24B
 	取り引き要請受け
-	recieve a request to trade.
+	receive a request to trade.
 S 00e6 <type>.B
 	type=03 取り引き要請ok
 			trade ok.
@@ -518,9 +518,9 @@ S 00eb
 	completed adding item.(cliecked OK)
 R 00ec <fail>.B
 	fail=00 自分からのok受領
-			recieved "OK" from myself
+			received "OK" from myself
 	fail=01 相手からのok受領
-			recieved "OK" from the other.
+			received "OK" from the other.
 S 00ed
 	取り引きキャンセル
 	trade canceled.

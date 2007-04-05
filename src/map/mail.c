@@ -210,7 +210,7 @@ int mail_delete(struct map_session_data *sd, int message_id)
 			}
 			if(!atoi(mail_row[4])) {
 				mysql_free_result(mail_res);
-				//clif_displaymessage(sd->fd,"You have recieved new mail, use @listmail before deleting.");
+				//clif_displaymessage(sd->fd,"You have received new mail, use @listmail before deleting.");
 				clif_displaymessage(sd->fd,msg_txt(520));
 				return 0;
 			}

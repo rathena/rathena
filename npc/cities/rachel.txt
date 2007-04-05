@@ -92,7 +92,7 @@ rachel,157,183,3	script	Follower Ustiala	916,{
 	mes "["+strcharinfo(0)+"]";
 	mes "Oh... Hello.";
 	next;
-	menu "I'm here to recieve the teachings of Freya",-,"I'm just here to tour",L_menu2;
+	menu "I'm here to receive the teachings of Freya",-,"I'm just here to tour",L_menu2;
 
 		mes "[Ustialla]";
 		mes "The day that our all knowing Freya ressurects,";

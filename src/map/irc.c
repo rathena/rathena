@@ -317,7 +317,7 @@ void irc_parse_sub(int fd, char *incoming_string)
 
 		// Names Reply [Zido]
 		else if((strcmpi(command,"353")==0)) {
-			ShowInfo("IRC: NAMES recieved\n");
+			ShowInfo("IRC: NAMES received\n");
 			parse_names_packet(incoming_string);
 		}
 	}

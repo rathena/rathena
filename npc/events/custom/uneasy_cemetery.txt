@@ -8,7 +8,7 @@
 //= eAthena Version 1.0
 //===== Description: ========================================= 
 //= A periodical quest of the Uneasy Cemetery (Kill undead / Prevent their appearance)
-//= Every day, at the midnight Prontera recieve a wave of Undeads.
+//= Every day, at the midnight Prontera receive a wave of Undeads.
 //= They come from Uneasy Cemetery of Prontera. To protect the players
 //= from the undeads terror you may either kill the enemy. Or supply Mother Mathana
 //= with needed amount of Holy Water. Every citizen can take his part in the 

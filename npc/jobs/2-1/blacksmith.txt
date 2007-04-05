@@ -942,7 +942,7 @@ geffen,46,164,4	script	Baisulitst	69,{
 	mes "I ordered something from the Geffen Blacksmith Guild but the order got transfered to a blacksmith in Alberta.....";
 	next;
 	mes "[Baisulitst]";
-	mes "Hmmm....., I wonder when I will recieve my special order ^5555FFArc Wand^000000.....";
+	mes "Hmmm....., I wonder when I will receive my special order ^5555FFArc Wand^000000.....";
 	emotion e_hmm;
 	close;
 

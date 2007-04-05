@@ -2811,7 +2811,7 @@ L_quiztime:
     set @signquestions19$,"Choose the monster that is a different type than the others.";
     set @signquestions20$,"Choose the Job class that cannot equip Silk Robe.";
     set @signquestions21$,"Four thousand five hundred sixty divided by four, divided by two, plus three is equal too...";
-    set @signquestions22$,"Which monster would recieve the most damage from a Fire Property Dagger?";
+    set @signquestions22$,"Which monster would receive the most damage from a Fire Property Dagger?";
     set @signquestions23$,"Choose the skill related to the Priest's B.S. Sacramenti from the ones displayed in the list.";
 
     set @playerpoints,0;

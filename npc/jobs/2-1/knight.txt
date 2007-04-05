@@ -129,7 +129,7 @@ L_Check:
 		mes "Let me just say that I applaud all of your hard work and your determination.";
 		next;
 		mes "[Chivalry Captain Herman]";
-		mes "The final step to become a Knight is to recieve a recomondation from all six of the Knights who tested you.";
+		mes "The final step to become a Knight is to receive a recommendation from all six of the Knights who tested you.";
 		next;
 		mes "[Chivalry Captain Herman]";
 		mes "Let's start with Sir Andrew Syloc.  Sir Syloc, what is your opinion of Knight candidate, ^ff0000"+strcharinfo(0)+"^000000.";

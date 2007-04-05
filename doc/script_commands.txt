@@ -1312,7 +1312,7 @@ allow the player to enter text. Otherwise, only numbers will be allowed.
 Notice that in current SVN, you may not input a negative number with this 
 command. This was done to prevent exploits in badly written scripts, which would 
 let people, for example, put negative amounts of zeny into a bank script and 
-recieve free zeny as a result. Unfortunately it limits the uses of the 'input' 
+receive free zeny as a result. Unfortunately it limits the uses of the 'input' 
 command quite a bit.
 
 ---------------------------------------
@@ -5843,7 +5843,7 @@ mes "4."+@name$[3]+"("+@fame[3]+")";
 mes "5."+@name$[4]+"("+@fame[4]+")";
 
 Note: In the TXT version it doesn't fill the array and always return -1.
-Note: Use $ as suffix in the array to recieve all data as text.
+Note: Use $ as suffix in the array to receive all data as text.
 
 ---------------------------------------
 

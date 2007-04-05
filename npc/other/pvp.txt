@@ -103,7 +103,7 @@ function	script	F_PvPNarr	{
 		mes "There is a hidden EXP value in PvP mode.  This EXP will only apply inside of the PvP zone and not outside.";
 		next;
 		mes "[PvP Narrator]";
-		mes "Every one will recieve a base EXP of 5 points when they first start.  If you win a match your EXP with increase by 1 point.";
+		mes "Every one will receive a base EXP of 5 points when they first start.  If you win a match your EXP with increase by 1 point.";
 		mes "If you loose your EXP will drop by 5 points, so be carefull!";
 		next;
 		mes "[PvP Narrator]";

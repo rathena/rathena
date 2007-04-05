@@ -63,7 +63,7 @@ payon_in02,64,71,4	script	Archer Guildsman	59,{
 		next;
 		mes "[Archer Guildsman]";
 		mes "The higher the quality of the wood you gather the higher your score.";
-		mes "You must recieve a score of ^ff0000at least 25^000000 in order to ^ff0000pass the test^000000.";
+		mes "You must receive a score of ^ff0000at least 25^000000 in order to ^ff0000pass the test^000000.";
 		next;
 		mes "[Archer Guildsman]";
 		mes "You can find wood by battling ^0000ff'Willows'^000000, a type of tree monster found outside of town in Payon forest.";

@@ -3208,7 +3208,7 @@ int parse_frommap(int fd)
 			}
 			break;
 
-		case 0x2b16: // Recieve rates [Wizputer]
+		case 0x2b16: // Receive rates [Wizputer]
 			if (RFIFOREST(fd) < 6 || RFIFOREST(fd) < RFIFOW(fd,8))
 				return 0;
 			// Txt doesn't need this packet, so just skip it

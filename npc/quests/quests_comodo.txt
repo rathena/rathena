@@ -637,7 +637,7 @@ L_1:
 	mes "[Tausupa]";
 	mes "Can you take this special seasoning to my friends?";
 	next;
-	mes "^5555FF~ recieved Koserahserah ~^000000";
+	mes "^5555FF~ received Koserahserah ~^000000";
 	set dmdswrd_Q, 2;
 	next;
 

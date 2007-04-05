@@ -103,7 +103,7 @@ L_Test1:
 	if(rand(2)) goto L_QSet2;
 
 		mes "[Markie]";
-		mes "1) What is the added flee rate that a Thief recieves when the ^5533FFImprove Dodge^000000 skill is ^5533FFmastered^000000?";
+		mes "1) What is the added flee rate that a Thief receives when the ^5533FFImprove Dodge^000000 skill is ^5533FFmastered^000000?";
 		next;
 		menu "20",sM1_1, "30",-, "40",sM1_1, "160",sM1_1;
 
