@@ -42,8 +42,8 @@ struct mmo_account {
 
 struct mmo_char_server {
 	char name[20];
-	long ip;
-	short port;
+	uint32 ip;
+	uint16 port;
 	int users;
 	int maintenance;
 	int new_;

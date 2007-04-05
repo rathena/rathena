@@ -81,7 +81,7 @@ struct socket_data {
 	size_t rdata_size, wdata_size;
 	size_t rdata_pos;
 	time_t rdata_tick; // time of last receive (for detecting timeouts)
-	struct sockaddr_in client_addr; // remote client address (zero for s2s connections)
+	uint32 client_addr; // remote client address (zero for s2s connections)
 	void* session_data;
 	RecvFunc func_recv;
 	SendFunc func_send;
@@ -106,12 +106,12 @@ extern int session_isActive(int fd);
 
 // Function prototype declaration
 
-int make_listen_bind(long,int);
-int make_connection(long,int);
-int realloc_fifo(int fd,unsigned int rfifo_size,unsigned int wfifo_size);
+int make_listen_bind(uint32 ip, uint16 port);
+int make_connection(uint32 ip, uint16 port);
+int realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size);
 int realloc_writefifo(int fd, size_t addition);
-int WFIFOSET(int fd,int len);
-int RFIFOSKIP(int fd,int len);
+int WFIFOSET(int fd, int len);
+int RFIFOSKIP(int fd, int len);
 
 int do_sendrecv(int next);
 int do_parsepacket(void);
@@ -126,9 +126,9 @@ extern void set_nonblocking(int fd, int yes);
 void set_defaultparse(ParseFunc defaultparse);
 
 // hostname/ip conversion functions
-in_addr_t host2ip(const char* hostname);
-const char* ip2str(in_addr_t ip, char ip_str[16]);
-
+uint32 host2ip(const char* hostname);
+const char* ip2str(uint32 ip, char ip_str[16]);
+#define CONVIP(ip) (ip>>24)&0xFF,(ip>>16)&0xFF,(ip>>8)&0xFF,(ip>>0)&0xFF
 
 int socket_getips(uint32* ips, int max);
 

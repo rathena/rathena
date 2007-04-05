@@ -698,20 +698,20 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	sd->state.event_kill_mob = 1;
 
 	{	//Add IP field
-		unsigned char *ip = (unsigned char *) &session[sd->fd]->client_addr.sin_addr;
+		uint32 ip = session[sd->fd]->client_addr;
 		if (pc_isGM(sd))
 			ShowInfo("GM '"CL_WHITE"%s"CL_RESET"' logged in."
 				" (AID/CID: '"CL_WHITE"%d/%d"CL_RESET"',"
 				" Packet Ver: '"CL_WHITE"%d"CL_RESET"', IP: '"CL_WHITE"%d.%d.%d.%d"CL_RESET"',"
 				" GM Level '"CL_WHITE"%d"CL_RESET"').\n",
 				sd->status.name, sd->status.account_id, sd->status.char_id,
-				sd->packet_ver, ip[0],ip[1],ip[2],ip[3], pc_isGM(sd));
+				sd->packet_ver, CONVIP(ip), pc_isGM(sd));
 		else
 			ShowInfo("'"CL_WHITE"%s"CL_RESET"' logged in."
 				" (AID/CID: '"CL_WHITE"%d/%d"CL_RESET"',"
 				" Packet Ver: '"CL_WHITE"%d"CL_RESET"', IP: '"CL_WHITE"%d.%d.%d.%d"CL_RESET"').\n",
 				sd->status.name, sd->status.account_id, sd->status.char_id,
-				sd->packet_ver, ip[0],ip[1],ip[2],ip[3]);
+				sd->packet_ver, CONVIP(ip));
 	}
 	
 	// Send friends list
@@ -3371,10 +3371,11 @@ int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,in
 			sd->regen.state.gc = 0;
 	}
 
-	if(m<0){
-		if(sd->mapindex){
-			int ip,port;
-			if(map_mapname2ipport(mapindex,&ip,&port)==0){
+	if(m<0) {
+		if(sd->mapindex) {
+			uint32 ip;
+			uint16 port;
+			if(map_mapname2ipport(mapindex,&ip,&port)==0) {
 				unit_remove_map(&sd->bl,clrtype);
 				sd->mapindex = mapindex;
 				sd->bl.x=x;

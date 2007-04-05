@@ -96,9 +96,9 @@ struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB];
 //Guarantees that the given string does not exceeds the allowed size, as well as making sure it's null terminated. [Skotlex\]
 #define mes_len_check(mes, len, max) if (len > max) { mes[max-1] = '\0'; len = max; } else mes[len-1] = '\0';
 static char map_ip_str[128];
-static in_addr_t map_ip;
-static in_addr_t bind_ip = INADDR_ANY;
-static int map_port = 5121;
+static uint32 map_ip;
+static uint32 bind_ip = INADDR_ANY;
+static uint16 map_port = 5121;
 int map_fd;
 
 //These two will be used to verify the incoming player's validity.
@@ -142,7 +142,7 @@ void clif_setbindip(const char* ip)
  * mapŽI‚ÌportÝ’è
  *------------------------------------------
  */
-void clif_setport(int port)
+void clif_setport(uint16 port)
 {
 	map_port = port;
 }
@@ -151,27 +151,21 @@ void clif_setport(int port)
  * mapŽI‚Ìip“Ç‚Ýo‚µ
  *------------------------------------------
  */
-in_addr_t clif_getip(void)
+uint32 clif_getip(void)
 {
 	return map_ip;
 }
 
-//Returns the ip casted as a basic type, to avoid needing to include the socket/net related libs by calling modules.
-unsigned long clif_getip_long(void)
-{
-	return (unsigned long)map_ip;
-}
-
 //Refreshes map_server ip, returns the new ip if the ip changed, otherwise it returns 0.
-unsigned long clif_refresh_ip(void)
+uint32 clif_refresh_ip(void)
 {
-	in_addr_t new_ip;
+	uint32 new_ip;
 
 	new_ip = host2ip(map_ip_str);
 	if (new_ip && new_ip != map_ip) {
 		map_ip = new_ip;
-		ShowInfo("Updating IP resolution of [%s].\n",map_ip_str);
-		return (unsigned long)map_ip;
+		ShowInfo("Updating IP resolution of [%s].\n", map_ip_str);
+		return map_ip;
 	}
 	return 0;
 }
@@ -180,7 +174,7 @@ unsigned long clif_refresh_ip(void)
  * mapŽI‚Ìport“Ç‚Ýo‚µ
  *------------------------------------------
  */
-int clif_getport(void)
+uint16 clif_getport(void)
 {
 	return map_port;
 }
@@ -1625,10 +1619,10 @@ int clif_changemap(struct map_session_data *sd, short map, int x, int y) {
 }
 
 /*==========================================
- *
- *------------------------------------------
- */
-int clif_changemapserver(struct map_session_data* sd, const char* mapname, int x, int y, int ip, int port) {
+ * Tells the client to connect to another map-server
+ *------------------------------------------*/
+int clif_changemapserver(struct map_session_data* sd, const char* mapname, int x, int y, uint32 ip, uint16 port)
+{
 	int fd;
 
 	nullpo_retr(0, sd);
@@ -1641,8 +1635,8 @@ int clif_changemapserver(struct map_session_data* sd, const char* mapname, int x
 	WFIFOB(fd,17) = 0;	//Null terminator for mapname
 	WFIFOW(fd,18) = x;
 	WFIFOW(fd,20) = y;
-	WFIFOL(fd,22) = ip;
-	WFIFOW(fd,26) = port;
+	WFIFOL(fd,22) = htonl(ip);
+	WFIFOW(fd,26) = port; // /!\ must be sent in intel host byte order /!\ (client bug)
 	WFIFOSET(fd, packet_len(0x92));
 
 	return 0;
@@ -8862,7 +8856,7 @@ void clif_parse_Restart(int fd, struct map_session_data *sd) {
 		/*	Rovert's Prevent logout option - Fixed [Valaris]	*/
 		if (!battle_config.prevent_logout || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout)
 		{	//Send to char-server for character selection.
-			chrif_charselectreq(sd, session[fd]->client_addr.sin_addr.s_addr);
+			chrif_charselectreq(sd, session[fd]->client_addr);
 		} else {
 			WFIFOHEAD(fd,packet_len(0x18b));
 			WFIFOW(fd,0)=0x18b;
@@ -11746,7 +11740,8 @@ void clif_parse_debug(int fd,struct map_session_data *sd)
  * socket.c‚Ìdo_parsepacket‚©‚çŒÄ‚Ño‚³‚ê‚é
  *------------------------------------------
  */
-int clif_parse(int fd) {
+int clif_parse(int fd)
+{
 	int packet_len = 0, cmd, packet_ver, err, dump = 0;
 	TBL_PC *sd;
 	RFIFOHEAD(fd);
@@ -11772,8 +11767,8 @@ int clif_parse(int fd) {
 				map_quit(sd);
 			}
 		} else {
-			unsigned char *ip = (unsigned char *) &session[fd]->client_addr.sin_addr;
-			ShowInfo("Closed connection from '"CL_WHITE"%d.%d.%d.%d"CL_RESET"'.\n", ip[0],ip[1],ip[2],ip[3]);
+			uint32 ip = session[fd]->client_addr;
+			ShowInfo("Closed connection from '"CL_WHITE"%d.%d.%d.%d"CL_RESET"'.\n", CONVIP(ip));
 		}
 		do_close(fd);
 		return 0;
@@ -12321,8 +12316,8 @@ static int packetdb_readdb(void)
  *
  *------------------------------------------
  */
-int do_init_clif(void) {
-	
+int do_init_clif(void)
+{
 	clif_config.packet_db_ver = -1; // the main packet version of the DB
 	memset(clif_config.connect_cmd, 0, sizeof(clif_config.connect_cmd)); //The default connect command will be determined after reading the packet_db [Skotlex]
 

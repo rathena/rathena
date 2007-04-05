@@ -20,28 +20,28 @@
 #include "../common/showmsg.h"
 #include "../common/cbasetypes.h"
 
-void dump(unsigned char *buffer, int num)
+void dump(unsigned char* buffer, int num)
 {
-   int     icnt,jcnt;
+   int icnt, jcnt;
 
    printf("         Hex                                                  ASCII\n");
    printf("         -----------------------------------------------      ----------------");
 
-   for (icnt=0;icnt<num;icnt+=16) {
-	printf("\n%p ",&buffer[icnt]);
-    for (jcnt=icnt;jcnt<icnt+16;++jcnt) {
+   for (icnt = 0; icnt < num; icnt += 16) {
+	printf("\n%p ", &buffer[icnt]);
+    for (jcnt = icnt; jcnt < icnt + 16; ++jcnt) {
 	    if (jcnt < num) {
-              printf("%02hX ",buffer[jcnt]);
+              printf("%02hX ", buffer[jcnt]);
 		}  else
               printf("   ");
     }
 
     printf("  |  ");
 
-	for (jcnt=icnt;jcnt<icnt+16;++jcnt) {
+	for (jcnt = icnt; jcnt < icnt + 16; ++jcnt) {
         if (jcnt < num) {
             if (buffer[jcnt] > 31 && buffer[jcnt] < 127)
-                   printf("%c",buffer[jcnt]);
+                   printf("%c", buffer[jcnt]);
                else
                    printf(".");
            }  else
@@ -266,30 +266,20 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 
 unsigned char GetByte(unsigned long val, size_t num)
 {
-	switch(num)
-	{
-	case 0:
-		return (unsigned char)((val & 0x000000FF)      );
-	case 1:
-		return (unsigned char)((val & 0x0000FF00)>>0x08);
-	case 2:
-		return (unsigned char)((val & 0x00FF0000)>>0x10);
-	case 3:
-		return (unsigned char)((val & 0xFF000000)>>0x18);
-	default:
-		return 0;	//better throw something here
+	switch(num) {
+	case 0:  return (unsigned char)((val & 0x000000FF)      );
+	case 1:	 return (unsigned char)((val & 0x0000FF00)>>0x08);
+	case 2:	 return (unsigned char)((val & 0x00FF0000)>>0x10);
+	case 3:	 return (unsigned char)((val & 0xFF000000)>>0x18);
+	default: return 0;	//better throw something here
 	}
 }
 unsigned short GetWord(unsigned long val, size_t num)
 {
-	switch(num)
-	{
-	case 0:
-		return (unsigned short)((val & 0x0000FFFF)      );
-	case 1:
-		return (unsigned short)((val & 0xFFFF0000)>>0x10);
-	default:
-		return 0;	//better throw something here
+	switch(num) {
+	case 0:  return (unsigned short)((val & 0x0000FFFF)      );
+	case 1:  return (unsigned short)((val & 0xFFFF0000)>>0x10);
+	default: return 0;	//better throw something here
 	}
 }
 unsigned short MakeWord(unsigned char byte0, unsigned char byte1)

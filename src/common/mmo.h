@@ -215,8 +215,8 @@ struct mmo_charstatus {
 	short str,agi,vit,int_,dex,luk;
 	unsigned char char_num,sex;
 
-	unsigned long mapip;
-	unsigned int mapport;
+	uint32 mapip;
+	uint16 mapport;
 
 	struct point last_point,save_point,memo_point[MAX_MEMOPOINTS];
 	struct item inventory[MAX_INVENTORY],cart[MAX_CART];

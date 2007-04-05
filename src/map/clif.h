@@ -52,11 +52,11 @@ extern struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB];
 
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
-void clif_setport(int);
+void clif_setport(uint16 port);
 
-unsigned long clif_getip_long(void);
-unsigned long clif_refresh_ip(void);
-int clif_getport(void);
+uint32 clif_getip(void);
+uint32 clif_refresh_ip(void);
+uint16 clif_getport(void);
 int clif_countusers(void);
 void clif_setwaitclose(int);
 
@@ -75,7 +75,7 @@ int clif_spawn(struct block_list*);	//area
 int clif_walkok(struct map_session_data*);	// self
 void clif_move(struct unit_data *ud); //area
 int clif_changemap(struct map_session_data*,short,int,int);	//self
-int clif_changemapserver(struct map_session_data* sd, const char* mapname, int x, int y, int ip, int port);	//self
+int clif_changemapserver(struct map_session_data* sd, const char* mapname, int x, int y, uint32 ip, uint16 port);	//self
 int clif_blown(struct block_list *); // area
 int clif_slide(struct block_list *,int,int); // area
 int clif_fixpos(struct block_list *);	// area

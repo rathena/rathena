@@ -1109,8 +1109,8 @@ struct map_data_other_server {
 	char name[MAP_NAME_LENGTH];
 	unsigned short index; //Index is the map index used by the mapindex* functions.
 	unsigned char *gat;	// NULLŒÅ’è‚É‚µ‚Ä”»’f
-	unsigned long ip;
-	unsigned int port;
+	uint32 ip;
+	uint16 port;
 };
 
 struct flooritem_data {
@@ -1339,9 +1339,9 @@ struct map_session_data * map_id2sd(int);
 struct block_list * map_id2bl(int);
 int map_mapindex2mapid(unsigned short mapindex);
 int map_mapname2mapid(const char* name);
-int map_mapname2ipport(unsigned short,int*,int*);
-int map_setipport(unsigned short map,unsigned long ip,int port);
-int map_eraseipport(unsigned short map,unsigned long ip,int port);
+int map_mapname2ipport(unsigned short name, uint32* ip, uint16* port);
+int map_setipport(unsigned short map, uint32 ip, uint16 port);
+int map_eraseipport(unsigned short map, uint32 ip, uint16 port);
 int map_eraseallipport(void);
 void map_addiddb(struct block_list *);
 void map_deliddb(struct block_list *bl);

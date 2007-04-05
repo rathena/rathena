@@ -12,11 +12,11 @@ struct auth_node{
 	unsigned int node_created; //For node auto-deleting
 };
 
-void chrif_setuserid(char*);
-void chrif_setpasswd(char*);
+void chrif_setuserid(char* id);
+void chrif_setpasswd(char* pwd);
 void chrif_checkdefaultlogin(void);
-int chrif_setip(const char*);
-void chrif_setport(int);
+int chrif_setip(const char* ip);
+void chrif_setport(uint16 port);
 
 int chrif_isconnect(void);
 
@@ -27,9 +27,9 @@ void chrif_authreq(struct map_session_data *);
 void chrif_authok(int fd);
 int chrif_scdata_request(int account_id, int char_id);
 int chrif_save(struct map_session_data*, int flag);
-int chrif_charselectreq(struct map_session_data *sd, unsigned long s_ip);
+int chrif_charselectreq(struct map_session_data*sd, uint32 s_ip);
 void check_fake_id(int fd, struct map_session_data *sd, int target_id);
-int chrif_changemapserver(struct map_session_data *sd,short map,int x,int y,int ip,short port);
+int chrif_changemapserver(struct map_session_data*sd, short map, int x, int y, uint32 ip, uint16 port);
 
 int chrif_searchcharid(int char_id);
 int chrif_changegm(int id,const char *pass,int len);

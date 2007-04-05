@@ -2077,9 +2077,9 @@ int map_mapindex2mapid(unsigned short mapindex) {
 
 /*==========================================
  * ‘¼ŽImap–¼‚©‚çip,port?Š·
- *------------------------------------------
- */
-int map_mapname2ipport(unsigned short name,int *ip,int *port) {
+ *------------------------------------------*/
+int map_mapname2ipport(unsigned short name, uint32* ip, uint16* port)
+{
 	struct map_data_other_server *mdos=NULL;
 
 	mdos = (struct map_data_other_server*)uidb_get(map_db,(unsigned int)name);
@@ -2349,16 +2349,17 @@ static void* create_map_data_other_server(DBKey key, va_list args) {
 }
 /*==========================================
  * ‘¼ŽIŠÇ—‚Ìƒ}ƒbƒv‚ðdb‚É’Ç‰Á
- *------------------------------------------
- */
-int map_setipport(unsigned short mapindex,unsigned long ip,int port) {
+ *------------------------------------------*/
+
+int map_setipport(unsigned short mapindex, uint32 ip, uint16 port)
+{
 	struct map_data_other_server *mdos=NULL;
 
 	mdos=(struct map_data_other_server *)uidb_ensure(map_db,(unsigned int)mapindex, create_map_data_other_server);
 	
 	if(mdos->gat) //Local map,Do nothing. Give priority to our own local maps over ones from another server. [Skotlex]
 		return 0;
-	if(ip == clif_getip_long() && port == clif_getport()) {
+	if(ip == clif_getip() && port == clif_getport()) {
 		//That's odd, we received info that we are the ones with this map, but... we don't have it.
 		ShowFatalError("map_setipport : received info that this map-server SHOULD have map '%s', but it is not loaded.\n",mapindex_id2name(mapindex));
 		exit(1);
@@ -2388,12 +2389,10 @@ int map_eraseallipport(void) {
 
 /*==========================================
  * ‘¼ŽIŠÇ—‚Ìƒ}ƒbƒv‚ðdb‚©‚çíœ
- *------------------------------------------
- */
-int map_eraseipport(unsigned short mapindex,unsigned long ip,int port)
+ *------------------------------------------*/
+int map_eraseipport(unsigned short mapindex, uint32 ip, uint16 port)
 {
 	struct map_data_other_server *mdos;
-//	unsigned char *p=(unsigned char *)&ip;
 
 	mdos = uidb_get(map_db,(unsigned int)mapindex);
 	if(!mdos || mdos->gat) //Map either does not exists or is a local map.

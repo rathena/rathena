@@ -11,12 +11,15 @@
 #include "../common/utils.h"
 #include "../common/malloc.h"
 
-//-----------------------------------------------
-// string lib.
-char* jstrescape (char* pt) {
+
+#define J_MAX_MALLOC_SIZE 65535
+
+// escapes a string in-place (' -> \' , \ -> \\ , % -> _)
+char* jstrescape (char* pt)
+{
 	//copy from here
 	char *ptr;
-	int i =0, j=0;
+	int i = 0, j = 0;
 
 	//copy string to temporary
 	CREATE(ptr, char, J_MAX_MALLOC_SIZE);
@@ -41,10 +44,12 @@ char* jstrescape (char* pt) {
 	}
 	pt[j++] = '\0';
 	aFree(ptr);
-	return &pt[0];
+	return pt;
 }
 
-char* jstrescapecpy (char* pt, const char* spt) {
+// escapes a string into a provided buffer
+char* jstrescapecpy (char* pt, const char* spt)
+{
 	//copy from here
 	//WARNING: Target string pt should be able to hold strlen(spt)*2, as each time
 	//a escape character is found, the target's final length increases! [Skotlex]
@@ -75,7 +80,10 @@ char* jstrescapecpy (char* pt, const char* spt) {
 	pt[j++] = '\0';
 	return &pt[0];
 }
-int jmemescapecpy (char* pt,char* spt, int size) {
+
+// escapes exactly 'size' bytes of a string into a provided buffer
+int jmemescapecpy (char* pt, const char* spt, int size)
+{
 	//copy from here
 	int i =0, j=0;
 
@@ -100,11 +108,9 @@ int jmemescapecpy (char* pt,char* spt, int size) {
 	return j;
 }
 
-//-----------------------------------------------------
 // Function to suppress control characters in a string.
-//-----------------------------------------------------
-//int remove_control_chars(char *str) {
-int remove_control_chars(unsigned char *str) {
+int remove_control_chars(char* str)
+{
 	int i;
 	int change = 0;
 
@@ -119,11 +125,11 @@ int remove_control_chars(unsigned char *str) {
 }
 
 //Trims a string, also removes illegal characters such as \t and reduces continous spaces to a single one. by [Foruken]
-char *trim(char *str, const char *delim)
+char* trim(char* str, const char* delim)
 {
-	char *strp = strtok(str,delim);
+	char* strp = strtok(str,delim);
 	char buf[1024];
-	char *bufp = buf;
+	char* bufp = buf;
 	memset(buf,0,sizeof buf);
 
 	while(strp) {
@@ -143,7 +149,7 @@ char *trim(char *str, const char *delim)
 //stristr: Case insensitive version of strstr, code taken from 
 //http://www.daniweb.com/code/snippet313.html, Dave Sinkula
 //
-const char *stristr(const char *haystack, const char *needle)
+const char* stristr(const char* haystack, const char* needle)
 {
 	if ( !*needle )
 	{
@@ -153,9 +159,7 @@ const char *stristr(const char *haystack, const char *needle)
 	{
 		if ( TOUPPER(*haystack) == TOUPPER(*needle) )
 		{
-			/*
-			* Matched starting char -- loop through remaining chars.
-			*/
+			// matched starting char -- loop through remaining chars
 			const char *h, *n;
 			for ( h = haystack, n = needle; *h && *n; ++h, ++n )
 			{
@@ -164,9 +168,9 @@ const char *stristr(const char *haystack, const char *needle)
 					break;
 				}
 			}
-			if ( !*n ) /* matched all of 'needle' to null termination */
+			if ( !*n ) // matched all of 'needle' to null termination
 			{
-				return haystack; /* return the start of the match */
+				return haystack; // return the start of the match
 			}
 		}
 	}
@@ -174,7 +178,7 @@ const char *stristr(const char *haystack, const char *needle)
 }
 
 #ifdef __WIN32
-char *_strtok_r(char *s1, const char *s2, char **lasts)
+char* _strtok_r(char *s1, const char *s2, char **lasts)
 {
 	char *ret;
 
