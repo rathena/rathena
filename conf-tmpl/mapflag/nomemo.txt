@@ -189,8 +189,8 @@ anthell01	mapflag	nomemo
 anthell02	mapflag	nomemo
 // Amatsu Dungeon ------------
 ama_dun01	mapflag	nomemo
-ama_dun02	mapflag	nomemo 
-ama_dun03	mapflag	nomemo 
+ama_dun02	mapflag	nomemo
+ama_dun03	mapflag	nomemo
 // Ayothaya
 ayo_dun01	mapflag	nomemo
 ayo_dun02	mapflag	nomemo
