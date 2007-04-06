@@ -833,12 +833,12 @@ int parse_fromchar(int fd)
 			WFIFOHEAD(fd,51);
 			account_id = RFIFOL(fd,2); // speed up
 			for(i = 0; i < AUTH_FIFO_SIZE; i++) {
-				if (auth_fifo[i].account_id == account_id &&
-				    auth_fifo[i].login_id1 == RFIFOL(fd,6) &&
-				    auth_fifo[i].login_id2 == RFIFOL(fd,10) && // relate to the versions higher than 18
-				    auth_fifo[i].sex == RFIFOB(fd,14) &&
-				    auth_fifo[i].ip == ntohl(RFIFOL(fd,15)) &&
-				    !auth_fifo[i].delflag)
+				if(auth_fifo[i].account_id == account_id &&
+					auth_fifo[i].login_id1 == RFIFOL(fd,6) &&
+					auth_fifo[i].login_id2 == RFIFOL(fd,10) && // relate to the versions higher than 18
+					auth_fifo[i].sex == RFIFOB(fd,14) &&
+					auth_fifo[i].ip == ntohl(RFIFOL(fd,15)) &&
+					!auth_fifo[i].delflag)
 				{
 					auth_fifo[i].delflag = 1;
 					break;

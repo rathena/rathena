@@ -1173,10 +1173,10 @@ int mmo_auth(struct mmo_account* account, int fd)
 	len = strlen(account->userid) - 2;
 
 	// Account creation with _M/_F
-	if (new_account_flag) 
+	if (new_account_flag)
 	{
 		if (account->passwdenc == 0 && account->userid[len] == '_' &&
-		   (account->userid[len+1] == 'F' || account->userid[len+1] == 'M' ||
+			(account->userid[len+1] == 'F' || account->userid[len+1] == 'M' ||
 			account->userid[len+1] == 'f' || account->userid[len+1] == 'm') &&
 			account_id_count <= END_ACCOUNT_NUM && len >= 4 && strlen(account->passwd) >= 4)
 		{

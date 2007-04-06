@@ -19,6 +19,9 @@
 	-----
 
 ========================
+
+04/07
+	* Corrected Aliza card's item_db line. [Skotlex]
 04/05
 	* Fixed some items that should heal percentual hp/sp [Playtester]
 04/04

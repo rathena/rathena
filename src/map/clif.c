@@ -4962,7 +4962,7 @@ int clif_heal(int fd,int type,int val)
 	WFIFOHEAD(fd,packet_len(0x13d));
 	WFIFOW(fd,0)=0x13d;
 	WFIFOW(fd,2)=type;
-	WFIFOW(fd,4)=val;
+	WFIFOW(fd,4)=cap_value(val,0,SHRT_MAX);
 	WFIFOSET(fd,packet_len(0x13d));
 
 	return 0;
