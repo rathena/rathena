@@ -49,7 +49,7 @@
  *  is matched.
  *
  *  each of the matched Groups will result in a variable being
- *  set ($p1$ through $p9$  with $p0$ being the entire string)
+ *  set ($@p1$ through $@p9$  with $@p0$ being the entire string)
  *  before the script gets executed.
  *
  *    activatepset 1;
@@ -402,43 +402,43 @@ int npc_chat_sub(struct block_list *bl, va_list ap)
                 case 10:
                     memcpy(buf, &msg[offsets[18]], offsets[19]);
                     buf[offsets[19]] = '\0';
-                    set_var(sd, "$p9$", buf);
+                    set_var(sd, "$@p9$", buf);
                 case 9:
                     memcpy(buf, &msg[offsets[16]], offsets[17]);
                     buf[offsets[17]] = '\0';
-                    set_var(sd, "$p8$", buf);
+                    set_var(sd, "$@p8$", buf);
                 case 8:
                     memcpy(buf, &msg[offsets[14]], offsets[15]);
                     buf[offsets[15]] = '\0';
-                    set_var(sd, "$p7$", buf);
+                    set_var(sd, "$@p7$", buf);
                 case 7:
                     memcpy(buf, &msg[offsets[12]], offsets[13]);
                     buf[offsets[13]] = '\0';
-                    set_var(sd, "$p6$", buf);
+                    set_var(sd, "$@p6$", buf);
                 case 6:
                     memcpy(buf, &msg[offsets[10]], offsets[11]);
                     buf[offsets[11]] = '\0';
-                    set_var(sd, "$p5$", buf);
+                    set_var(sd, "$@p5$", buf);
                 case 5:
                     memcpy(buf, &msg[offsets[8]], offsets[9]);
                     buf[offsets[9]] = '\0';
-                    set_var(sd, "$p4$", buf);
+                    set_var(sd, "$@p4$", buf);
                 case 4:
                     memcpy(buf, &msg[offsets[6]], offsets[7]);
                     buf[offsets[7]] = '\0';
-                    set_var(sd, "$p3$", buf);
+                    set_var(sd, "$@p3$", buf);
                 case 3:
                     memcpy(buf, &msg[offsets[4]], offsets[5]);
                     buf[offsets[5]] = '\0';
-                    set_var(sd, "$p2$", buf);
+                    set_var(sd, "$@p2$", buf);
                 case 2:
                     memcpy(buf, &msg[offsets[2]], offsets[3]);
                     buf[offsets[3]] = '\0';
-                    set_var(sd, "$p1$", buf);
+                    set_var(sd, "$@p1$", buf);
                 case 1:
                     memcpy(buf, &msg[offsets[0]], offsets[1]);
                     buf[offsets[1]] = '\0';
-                    set_var(sd, "$p0$", buf);
+                    set_var(sd, "$@p0$", buf);
                 }
 
                 // find the target label.. this sucks..

@@ -5794,7 +5794,7 @@ expression pattern is, see a few web pages:
 http://www.regular-expressions.info/
 http://www.weitz.de/regex-coach/
 
-For an example of this in use, see 'npc\custom\eliza.txt'.
+For an example of this in use, see 'npc\sample\npc_pcre.txt'.
 
 With this you could, for example, automagically punish players for asking for 
 zeny in public places, or alternatively, automagically give them zeny instead if 
