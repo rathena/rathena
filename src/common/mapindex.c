@@ -12,9 +12,8 @@
 
 #define MAX_MAPINDEX 2000
 
-//Leave an extra char of space to hold the terminator, in case for the strncpy(mapindex_id2name()) calls.
 struct indexes {
-	char name[MAP_NAME_LENGTH+1]; //Stores map name
+	char name[MAP_NAME_LENGTH]; //Stores map name
 	char exists; //Set to 1 if index exists
 } indexes[MAX_MAPINDEX];
 
@@ -42,14 +41,14 @@ char *mapindex_normalize_name(char *mapname)
 /// Returns 1 if successful, 0 oherwise
 int mapindex_addmap(int index, const char *name)
 {
-	char map_name[1024];
+	char map_name[MAP_NAME_LENGTH_EXT];
 
 	if (index < 0 || index >= MAX_MAPINDEX) {
 		ShowError("(mapindex_add) Map index (%d) for \"%s\" out of range (max is %d)\n", index, name, MAX_MAPINDEX);
 		return 0;
 	}
 
-	snprintf(map_name, 1024, "%s", name);
+	snprintf(map_name, MAP_NAME_LENGTH_EXT, "%s", name);
 	mapindex_normalize_name(map_name);
 
 	if (strlen(map_name) > MAP_NAME_LENGTH-1) {
@@ -60,7 +59,7 @@ int mapindex_addmap(int index, const char *name)
 	if (indexes[index].exists)
 		ShowWarning("(mapindex_add) Overriding index %d: map \"%s\" -> \"%s\"\n", index, indexes[index].name, map_name);
 
-	strncpy(indexes[index].name, map_name, MAP_NAME_LENGTH);
+	snprintf(indexes[index].name, MAP_NAME_LENGTH, "%s", map_name);
 	indexes[index].exists = 1;
 	if (max_index <= index)
 		max_index = index+1;
@@ -70,9 +69,9 @@ int mapindex_addmap(int index, const char *name)
 unsigned short mapindex_name2id(const char* name) {
 	//TODO: Perhaps use a db to speed this up? [Skotlex]
 	int i;
-	char map_name[1024];
+	char map_name[MAP_NAME_LENGTH_EXT];
 
-	snprintf(map_name, 1024, "%s", name);
+	snprintf(map_name, MAP_NAME_LENGTH_EXT, "%s", name);
 	mapindex_normalize_name(map_name);
 
 	for (i = 1; i < max_index; i++)
@@ -107,7 +106,7 @@ void mapindex_init(void) {
 	char line[1024];
 	int last_index = -1;
 	int index;
-	char map_name[1024];
+	char map_name[1024]; // only MAP_NAME_LENGTH(_EXT) under safe conditions
 	
 	memset (&indexes, 0, sizeof (indexes));
 	fp=fopen(mapindex_cfgfile,"r");
@@ -119,7 +118,7 @@ void mapindex_init(void) {
 		if(line[0] == '/' && line[1] == '/')
 			continue;
 
-		switch (sscanf(line,"%1000s\t%d",map_name,&index)) {
+		switch (sscanf(line,"%s\t%d",map_name,&index)) {
 			case 1: //Map with no ID given, auto-assign
 				index = last_index+1;
 			case 2: //Map with ID given

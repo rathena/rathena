@@ -4025,7 +4025,7 @@ int char_config_read(const char *cfgName) {
 		} else if (strcmpi(w1, "start_point") == 0) {
 			char map[MAP_NAME_LENGTH_EXT];
 			int x, y;
-			if (sscanf(w2, "%16[^,],%d,%d", map, &x, &y) < 3)
+			if (sscanf(w2, "%15[^,],%d,%d", map, &x, &y) < 3)
 				continue;
 			start_point.map = mapindex_name2id(map);
 			if (!start_point.map)

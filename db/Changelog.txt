@@ -21,6 +21,7 @@
 ========================
 
 04/07
+	* Fixed Galion's mob skills (remnants of copy-paste) [ultramage]
 	* Updated map index and map cache with Nameless Island maps [DracoRPG]
 	- also removed the duplicate g_room2 entry from map index, read the note
 	* Corrected Aliza card's item_db line. [Skotlex]

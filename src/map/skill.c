@@ -6095,8 +6095,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 			if (skilllv>3 && sd->status.memo_point[2].map)
 				snprintf(memo[3], MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(sd->status.memo_point[2].map));
 
-			clif_skill_warppoint(sd,skillid,skilllv,
-				memo[0],memo[1],memo[2],memo[3]);
+			clif_skill_warppoint(sd,skillid,skilllv, memo[0],memo[1],memo[2],memo[3]);
 		}
 		break;
 
@@ -6314,7 +6313,7 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 	if( skill_num != sd->menuskill_id) 
 		return 0;
 
-	if (strlen(map) > MAP_NAME_LENGTH-1)
+	if (strlen(map) > MAP_NAME_LENGTH_EXT-1)
 	{	//Map_length check, as it is sent by the client and we shouldn't trust it [Skotlex]
 		if (battle_config.error_log)
 			ShowError("skill_castend_map: Received map name '%s' too long!\n", map);

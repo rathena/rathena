@@ -5433,7 +5433,7 @@ int atcommand_mapinfo(const int fd, struct map_session_data* sd, const char* com
 
 	if (atcmd_player_name[0] == '\0') {
 		memcpy(atcmd_player_name, mapindex_id2name(sd->mapindex), MAP_NAME_LENGTH_EXT);
-		atcmd_player_name[MAP_NAME_LENGTH_EXT] = '\0';
+		atcmd_player_name[MAP_NAME_LENGTH_EXT-1] = '\0';
 		m_id =  map_mapindex2mapid(sd->mapindex);
 	} else {
 		m_id = map_mapname2mapid(atcmd_player_name);
