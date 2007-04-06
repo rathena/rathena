@@ -9,6 +9,7 @@
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
+#include "../common/mapindex.h"
 #include "../common/showmsg.h"
 #include "../common/ers.h"
 
@@ -183,7 +184,7 @@ static int guild_read_castledb(void)
 
 		gc=(struct guild_castle *)aCalloc(1,sizeof(struct guild_castle));
 		gc->castle_id=atoi(str[0]);
-		memcpy(gc->map_name,map_normalize_name(str[1]),MAP_NAME_LENGTH-1);
+		memcpy(gc->map_name,mapindex_normalize_name(str[1]),MAP_NAME_LENGTH-1);
 		memcpy(gc->castle_name,str[2],NAME_LENGTH-1);
 		memcpy(gc->castle_event,str[3],NAME_LENGTH-1);
 
@@ -254,7 +255,7 @@ struct guild_castle *guild_mapname2gc(char *mapname)
 	int i;
 	struct guild_castle *gc=NULL;
 
-	map_normalize_name(mapname);
+	mapindex_normalize_name(mapname);
 
 	for(i=0;i<MAX_GUILDCASTLE;i++){
 		gc=guild_castle_search(i);

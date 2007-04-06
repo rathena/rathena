@@ -145,6 +145,20 @@ struct charid2nick {
 	int req_id;
 };
 
+// This is the main header found at the very beginning of the map cache
+struct map_cache_main_header {
+	unsigned long file_size;
+	unsigned short map_count;
+};
+
+// This is the header appended before every compressed map cells info in the map cache
+struct map_cache_map_info {
+	char name[MAP_NAME_LENGTH];
+	short xs;
+	short ys;
+	long len;
+};
+
 char map_cache_file[256]="db/map_cache.dat";
 char db_path[256] = "db";
 char motd_txt[256] = "conf/motd.txt";
@@ -2410,61 +2424,34 @@ int map_eraseipport(unsigned short mapindex, uint32 ip, uint16 port)
 * Map cache reading
 *===========================================*/
 
-// This is the header appended before every compressed map cells info
-struct map_cache_info {
-	char name[MAP_NAME_LENGTH];
-	unsigned short index;
-	short xs;
-	short ys;
-	long len;
-};
-
-FILE *map_cache_fp;
-
-// Removes the extension from a map name
-char *map_normalize_name(char *mapname)
-{
-	char *ptr, *ptr2;
-	ptr = strchr(mapname, '.');
-	if (ptr) { //Check and remove extension.
-		while (ptr[1] && (ptr2 = strchr(ptr+1, '.')))
-			ptr = ptr2; //Skip to the last dot.
-		if(stricmp(ptr,".gat") == 0 ||
-			stricmp(ptr,".afm") == 0 ||
-			stricmp(ptr,".af2") == 0)
-			*ptr = '\0'; //Remove extension.
-	}
-	return mapname;
-}
-
-int map_readmap(struct map_data *m)
+int map_readfromcache(struct map_data *m, FILE *fp)
 {
 	int i;
-	unsigned short map_count;
-	struct map_cache_info info;
+	struct map_cache_main_header header;
+	struct map_cache_map_info info;
 	unsigned long size;
 	unsigned char *buf;
 
-	if(!map_cache_fp)
+	if(!fp)
 		return 0;
 
-	fseek(map_cache_fp, 0, SEEK_SET);
-	fread(&map_count, sizeof(map_count), 1, map_cache_fp);
+	fseek(fp, 0, SEEK_SET);
+	fread(&header, sizeof(struct map_cache_main_header), 1, fp);
 
-	for(i = 0; i < map_count; i++) {
-		fread(&info, sizeof(info), 1, map_cache_fp);
+	for(i = 0; i < header.map_count; i++) {
+		fread(&info, sizeof(struct map_cache_map_info), 1, fp);
 		if(strcmp(m->name, info.name) == 0) { // Map found
 			m->xs = info.xs;
 			m->ys = info.ys;
 			m->gat = (unsigned char *)aMalloc(m->xs*m->ys); // Allocate room for map cells data
 			buf = aMalloc(info.len); // Allocate a temp buffer to read the zipped map
-			fread(buf, info.len, 1, map_cache_fp);
+			fread(buf, info.len, 1, fp);
 			size = m->xs*m->ys;
 			decode_zip(m->gat, &size, buf, info.len); // Unzip the map from the buffer
 			aFree(buf);
 			return 1;
 		} else // Map not found, jump to the beginning of the next map info header
-			fseek(map_cache_fp, info.len, SEEK_CUR);
+			fseek(fp, info.len, SEEK_CUR);
 	}
 
 	return 0;
@@ -2482,7 +2469,7 @@ int map_addmap(char *mapname) {
 		return 1;
 	}
 
-	memcpy(map[map_num].name, map_normalize_name(mapname), MAP_NAME_LENGTH-1);
+	memcpy(map[map_num].name, mapindex_normalize_name(mapname), MAP_NAME_LENGTH-1);
 	map_num++;
 	return 0;
 }
@@ -2520,8 +2507,9 @@ int map_readallmaps (void)
 {
 	int i;
 	int maps_removed = 0;
+	FILE *fp;
 
-	if(!(map_cache_fp = fopen(map_cache_file, "rb")))
+	if(!(fp = fopen(map_cache_file, "rb")))
 	{
 		ShowFatalError("Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", map_cache_file);
 		exit(1); //No use launching server if maps can't be read.
@@ -2559,7 +2547,7 @@ int map_readallmaps (void)
 			fflush(stdout);
 		}
 
-		if(!map_readmap(&map[i])) {
+		if(!map_readfromcache(&map[i], fp)) {
 			map_delmapid(i);
 			maps_removed++;
 			i--;
@@ -2608,6 +2596,8 @@ int map_readallmaps (void)
 		map[i].block_count = (int*)aCallocA(size, 1);
 		map[i].block_mob_count = (int*)aCallocA(size, 1);
 	}
+
+	fclose(fp);
 
 	// finished map loading
 	printf("\r");

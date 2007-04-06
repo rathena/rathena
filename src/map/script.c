@@ -9119,10 +9119,10 @@ BUILDIN_FUNC(flagemblem)
 
 BUILDIN_FUNC(getcastlename)
 {
-	char mapname[MAP_NAME_LENGTH];
+	char mapname[MAP_NAME_LENGTH_EXT];
 	struct guild_castle *gc;
 
-	strncpy(mapname, script_getstr(st,2), MAP_NAME_LENGTH);
+	strncpy(mapname, script_getstr(st,2), MAP_NAME_LENGTH_EXT);
 	gc = guild_mapname2gc(mapname);
 
 	if(gc)
@@ -9134,13 +9134,13 @@ BUILDIN_FUNC(getcastlename)
 
 BUILDIN_FUNC(getcastledata)
 {
-	char mapname[MAP_NAME_LENGTH];
+	char mapname[MAP_NAME_LENGTH_EXT];
 	int index=script_getnum(st,3);
 	const char *event=NULL;
 	struct guild_castle *gc;
 	int i;
 
-	strncpy(mapname, script_getstr(st,2), MAP_NAME_LENGTH);
+	strncpy(mapname, script_getstr(st,2), MAP_NAME_LENGTH_EXT);
 	gc = guild_mapname2gc(mapname);
 
 	if(script_hasdata(st,4) && index==0 && gc) {
@@ -9202,12 +9202,12 @@ BUILDIN_FUNC(getcastledata)
 
 BUILDIN_FUNC(setcastledata)
 {
-	char mapname[MAP_NAME_LENGTH];
+	char mapname[MAP_NAME_LENGTH_EXT];
 	int index=script_getnum(st,3);
 	int value=script_getnum(st,4);
 	struct guild_castle *gc;
 
-	strncpy(mapname, script_getstr(st,2), MAP_NAME_LENGTH);
+	strncpy(mapname, script_getstr(st,2), MAP_NAME_LENGTH_EXT);
 	gc = guild_mapname2gc(mapname);
 
 	if(gc) {
@@ -11084,9 +11084,9 @@ BUILDIN_FUNC(getsavepoint)
 	y=sd->status.save_point.y;
 	switch(type){
 		case 0:
-			mapname=(char *) aMallocA((MAP_NAME_LENGTH+1)*sizeof(char));
+			mapname=(char *) aMallocA((MAP_NAME_LENGTH)*sizeof(char));
 			memcpy(mapname, mapindex_id2name(sd->status.save_point.map), MAP_NAME_LENGTH);
-			mapname[MAP_NAME_LENGTH]='\0';
+			mapname[MAP_NAME_LENGTH-1]='\0';
 			script_pushstr(st,mapname);
 		break;
 		case 1:
@@ -11133,7 +11133,7 @@ BUILDIN_FUNC(getmapxy)
 	char prefix;
 
 	int x,y,type;
-	char mapname[MAP_NAME_LENGTH+1];
+	char mapname[MAP_NAME_LENGTH];
 	memset(mapname, 0, sizeof(mapname));
 
 	if( !data_isreference(script_getdata(st,2)) ){

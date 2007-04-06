@@ -3340,13 +3340,12 @@ int parse_char(int fd)
 			{
 				//Send player to map.
 				uint32 subnet_map_ip;
-				char map_name[MAP_NAME_LENGTH];
-				snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(char_dat.last_point.map));
-
+				char map_name[MAP_NAME_LENGTH_EXT];
+				snprintf(map_name, MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(char_dat.last_point.map));	
 				WFIFOHEAD(fd,28);
 				WFIFOW(fd,0) = 0x71;
 				WFIFOL(fd,2) = char_dat.char_id;
-				memcpy(WFIFOP(fd,6), map_name, MAP_NAME_LENGTH);
+				memcpy(WFIFOP(fd,6), map_name, MAP_NAME_LENGTH_EXT);
 
 				// Advanced subnet check [LuzZza]
 				subnet_map_ip = lan_subnetcheck(ipl);
@@ -4024,17 +4023,15 @@ int char_config_read(const char *cfgName) {
 		} else if (strcmpi(w1, "save_log") == 0) {
 			save_log = config_switch(w2);
 		} else if (strcmpi(w1, "start_point") == 0) {
-			char map[MAP_NAME_LENGTH];
+			char map[MAP_NAME_LENGTH_EXT];
 			int x, y;
 			if (sscanf(w2, "%16[^,],%d,%d", map, &x, &y) < 3)
 				continue;
-			if (strstr(map, ".gat") != NULL) { // Verify at least if '.gat' is in the map name
-				start_point.map = mapindex_name2id(map);
-				if (!start_point.map)
-					ShowError("Specified start_point %s not found in map-index cache.\n", map);
-				start_point.x = x;
-				start_point.y = y;
-			}
+			start_point.map = mapindex_name2id(map);
+			if (!start_point.map)
+				ShowError("Specified start_point %s not found in map-index cache.\n", map);
+			start_point.x = x;
+			start_point.y = y;
 		} else if (strcmpi(w1, "start_zeny") == 0) {
 			start_zeny = atoi(w2);
 			if (start_zeny < 0)

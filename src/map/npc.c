@@ -1659,7 +1659,7 @@ int npc_parse_warp (char *w1,char *w2,char *w3,char *w4)
 {
 	int x, y, xs, ys, to_x, to_y, m;
 	int i;
-	char mapname[MAP_NAME_LENGTH], to_mapname[MAP_NAME_LENGTH];
+	char mapname[MAP_NAME_LENGTH_EXT], to_mapname[MAP_NAME_LENGTH_EXT];
 	struct npc_data *nd;
 
 	// 引数の個数チェック
@@ -1723,7 +1723,7 @@ static int npc_parse_shop (char *w1, char *w2, char *w3, char *w4)
 	#define MAX_SHOPITEM 100
 	char *p;
 	int x, y, dir, m, pos = 0;
-	char mapname[MAP_NAME_LENGTH];
+	char mapname[MAP_NAME_LENGTH_EXT];
 	struct npc_data *nd;
 
 	if (strcmp(w1, "-") == 0) {
@@ -1953,7 +1953,7 @@ static int npc_skip_script (char *w1,char *w2,char *w3,char *w4,char *first_line
 static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line,FILE *fp,int *lines,const char* file)
 {
 	int x, y, dir = 0, m, xs = 0, ys = 0, class_ = 0;	// [Valaris] thanks to fov
-	char mapname[MAP_NAME_LENGTH];
+	char mapname[MAP_NAME_LENGTH_EXT];
 	unsigned char *srcbuf = NULL;
 	struct script_code *script;
 	int srcsize = 65536;
@@ -2380,7 +2380,7 @@ int npc_parse_mob2 (struct spawn_data *mob, int index)
 int npc_parse_mob (char *w1, char *w2, char *w3, char *w4)
 {
 	int level, num, class_, mode, x,y,xs,ys;
-	char mapname[MAP_NAME_LENGTH];
+	char mapname[MAP_NAME_LENGTH_EXT];
 	char mobname[NAME_LENGTH];
 	struct spawn_data mob, *data;
 
@@ -2515,7 +2515,7 @@ int npc_parse_mob (char *w1, char *w2, char *w3, char *w4)
 static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 {
 	int m;
-	char mapname[MAP_NAME_LENGTH];
+	char mapname[MAP_NAME_LENGTH_EXT];
 	int state = 1;
 
 	// 引数の個数チェック
@@ -2530,7 +2530,7 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 	
 //マップフラグ
 	if (strcmpi(w3, "nosave") == 0) {
-		char savemap[MAP_NAME_LENGTH];
+		char savemap[MAP_NAME_LENGTH_EXT];
 		int savex, savey;
 		if (state == 0)
 			; //Map flag disabled.
@@ -2764,7 +2764,7 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 static int npc_parse_mapcell (char *w1, char *w2, char *w3, char *w4)
 {
 	int m, cell, x, y, x0, y0, x1, y1;
-	char type[24], mapname[MAP_NAME_LENGTH];
+	char type[24], mapname[MAP_NAME_LENGTH_EXT];
 
 	if (sscanf(w1, "%15[^,]", mapname) != 1)
 		return 1;

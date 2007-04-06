@@ -37,6 +37,7 @@ extern char mapindex_cfgfile[80];
 #define MAP_VEINS "veins"
 #define MAP_JAIL "sec_pri"
 #define MAP_NOVICE "new_zone01"
+char *mapindex_normalize_name(char *mapname);
 int mapindex_addmap(int index, const char *name);
 unsigned short mapindex_name2id(const char*);
 const char* mapindex_id2name(unsigned short);

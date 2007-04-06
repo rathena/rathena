@@ -617,7 +617,7 @@ int charcommand_save(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	char map_name[MAP_NAME_LENGTH];
+	char map_name[MAP_NAME_LENGTH_EXT];
 	char character[NAME_LENGTH];
 	struct map_session_data* pl_sd;
 	int x = 0, y = 0;
@@ -1130,7 +1130,7 @@ int charcommand_warp(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
-	char map_name[MAP_NAME_LENGTH];
+	char map_name[MAP_NAME_LENGTH_EXT];
 	char character[NAME_LENGTH];
 	int x = 0, y = 0;
 	struct map_session_data *pl_sd;

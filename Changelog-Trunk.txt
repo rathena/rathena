@@ -5,6 +5,17 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2007/04/07
+	* Final touches to the whole map crap [DracoRPG]
+	- changed MAP_NAME_LENGTH to 12, now there's MAP_NAME_LENGTH_EXT at 16 for
+	  uses where there is / may be the .gat extension, code adjusted accordingly
+	- moved map_normalize_name to mapindex_normalize_name so that everything
+	  handling map names uses the same extension-removing function
+	- greatly enhanced the map cache generator, complete documentation on the
+	  tool and the map cache format can be found in doc/
+	- the map cache format changed a bit as a consequence, but of course a new
+	  valid one is included (contains latest Nameless Island maps)
+	- and I'm sorry for the number of times I've moved around and renamed files,
+	  now the final structure should have been reached
 	* Capped clif_heal's heal field (the argument received is int, but the
 	  packet field is short, meaning that if the heal is high enough, the client
 	  would receive a negative heal amount). [Skotlex]

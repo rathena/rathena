@@ -1605,10 +1605,6 @@ void create_online_files(void) {
 				if (online_display_option & 24) { // 8 or 16
 					// prepare map name
 					memcpy(temp, mapindex_id2name(char_dat[j].status.last_point.map), MAP_NAME_LENGTH);
-					temp[MAP_NAME_LENGTH] = '\0';
-					if (strstr(temp, ".gat") != NULL) {
-						temp[strstr(temp, ".gat") - temp] = 0; // suppress the '.gat'
-					}
 					// write map name
 					if (online_display_option & 16) { // map-name AND coordinates
 						fprintf(fp2, "        <td>%s (%d, %d)</td>\n", temp, char_dat[j].status.last_point.x, char_dat[j].status.last_point.y);
@@ -3532,13 +3528,13 @@ int parse_char(int fd)
 			{
 				//Send player to map
 				uint32 subnet_map_ip;
-				char map_name[MAP_NAME_LENGTH];
-				snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(cd->last_point.map));
+				char map_name[MAP_NAME_LENGTH_EXT];
+				snprintf(map_name, MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(cd->last_point.map));
 
 				WFIFOHEAD(fd,28);
 				WFIFOW(fd,0) = 0x71;
 				WFIFOL(fd,2) = cd->char_id;
-				memcpy(WFIFOP(fd,6), map_name, MAP_NAME_LENGTH);
+				memcpy(WFIFOP(fd,6), map_name, MAP_NAME_LENGTH_EXT);
 			
 				// Advanced subnet check [LuzZza]
 				subnet_map_ip = lan_subnetcheck(ipl);

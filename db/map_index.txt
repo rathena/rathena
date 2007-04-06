@@ -9,6 +9,11 @@
 //mapname <- map will use index of previous map +1
 //Note that map index 0 is special and reserved for "error" status. 
 
+// NOTE TO DEVELOPERS
+// Due to a removed duplicate, index 591 is free, if you have to add a single map,
+// please add it there instead of the end. Then remove the 592 on next line (rachel)
+// and remove all those comments.  ~DracoRPG
+
 alb_ship 1
 alb2trea
 alberta
@@ -599,8 +604,8 @@ job_hunter
 job_knight
 job_priest
 job_wizard
-g_room2
-rachel
+// INDEX 591 IS FREE, PLEASE USE IT
+rachel 592
 ra_in01
 ra_fild01
 ra_fild02
@@ -645,6 +650,14 @@ ve_fild07
 poring_c01
 poring_c02
 que_ng
+nameless_i
+nameless_n
+nameless_in
+abbey01
+abbey02
+abbey03
+poring_w01
+poring_w02
 
 
 // Only add maps under this line if they are not standard maps!

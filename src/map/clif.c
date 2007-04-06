@@ -1208,12 +1208,16 @@ static void clif_spiritball_single(int fd, struct map_session_data *sd)
  *------------------------------------------
  */
 static int clif_set0192(int fd, int m, int x, int y, int type) {
+	char map_name[MAP_NAME_LENGTH_EXT];
+
+	sprintf(map_name, "%s.gat", map[m].name);
+
 	WFIFOHEAD(fd, packet_len(0x192));
 	WFIFOW(fd,0) = 0x192;
 	WFIFOW(fd,2) = x;
 	WFIFOW(fd,4) = y;
 	WFIFOW(fd,6) = type;
-	memcpy(WFIFOP(fd,8),map[m].name,MAP_NAME_LENGTH);
+	memcpy(WFIFOP(fd,8),map_name,MAP_NAME_LENGTH_EXT);
 	WFIFOSET(fd,packet_len(0x192));
 
 	return 0;
@@ -1600,17 +1604,17 @@ void clif_setwaitclose(int fd) {
  */
 int clif_changemap(struct map_session_data *sd, short map, int x, int y) {
 	int fd;
-	char map_name[MAP_NAME_LENGTH];
-	
+	char map_name[MAP_NAME_LENGTH_EXT];
+
 	nullpo_retr(0, sd);
 
 	fd = sd->fd;
 
-	snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(map));
+	sprintf(map_name, "%s.gat", mapindex_id2name(map));
 
 	WFIFOHEAD(fd, packet_len(0x91));
 	WFIFOW(fd,0) = 0x91;
-	memcpy(WFIFOP(fd,2), map_name, MAP_NAME_LENGTH);
+	memcpy(WFIFOP(fd,2), map_name, MAP_NAME_LENGTH_EXT);
 	WFIFOW(fd,18) = x;
 	WFIFOW(fd,20) = y;
 	WFIFOSET(fd, packet_len(0x91));
@@ -1631,7 +1635,7 @@ int clif_changemapserver(struct map_session_data* sd, const char* mapname, int x
 	WFIFOHEAD(fd, packet_len(0x92));
 	WFIFOW(fd,0) = 0x92;
 	//Better not trust the null-terminator is there. [Skotlex]
-	memcpy(WFIFOP(fd,2), mapname, MAP_NAME_LENGTH);
+	memcpy(WFIFOP(fd,2), mapname, MAP_NAME_LENGTH_EXT);
 	WFIFOB(fd,17) = 0;	//Null terminator for mapname
 	WFIFOW(fd,18) = x;
 	WFIFOW(fd,20) = y;
@@ -4661,10 +4665,10 @@ int clif_skill_warppoint(struct map_session_data *sd,int skill_num,int skill_lv,
 	WFIFOHEAD(fd,packet_len(0x11c));
 	WFIFOW(fd,0)=0x11c;
 	WFIFOW(fd,2)=skill_num;
-	strncpy((char*)WFIFOP(fd, 4),map1,MAP_NAME_LENGTH);
-	strncpy((char*)WFIFOP(fd,20),map2,MAP_NAME_LENGTH);
-	strncpy((char*)WFIFOP(fd,36),map3,MAP_NAME_LENGTH);
-	strncpy((char*)WFIFOP(fd,52),map4,MAP_NAME_LENGTH);
+	strncpy((char*)WFIFOP(fd, 4),map1,MAP_NAME_LENGTH_EXT);
+	strncpy((char*)WFIFOP(fd,20),map2,MAP_NAME_LENGTH_EXT);
+	strncpy((char*)WFIFOP(fd,36),map3,MAP_NAME_LENGTH_EXT);
+	strncpy((char*)WFIFOP(fd,52),map4,MAP_NAME_LENGTH_EXT);
 	WFIFOSET(fd,packet_len(0x11c));
 	sd->menuskill_id = skill_num;
 	if (skill_num == AL_WARP)
@@ -5660,7 +5664,7 @@ int clif_party_created(struct map_session_data *sd,int flag)
 int clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 {
 	unsigned char buf[96];
-	char map_name[MAP_NAME_LENGTH];
+	char map_name[MAP_NAME_LENGTH_EXT];
 
 	if (!sd) { //Pick any party member (this call is used when changing item share rules)
 		int i;
@@ -5669,7 +5673,7 @@ int clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 		sd = p->data[i].sd;
 	}
 
-	snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(sd->mapindex));
+	snprintf(map_name, MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(sd->mapindex));
 
 	WBUFW(buf,0)=0x1e9;
 	WBUFL(buf,2)= sd->status.account_id;
@@ -5679,7 +5683,7 @@ int clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 	WBUFB(buf,14)=0; //Unconfirmed byte, could be online/offline.
 	memcpy(WBUFP(buf,15), p->party.name, NAME_LENGTH);
 	memcpy(WBUFP(buf,39), sd->status.name, NAME_LENGTH);
-	memcpy(WBUFP(buf,63), map_name, MAP_NAME_LENGTH);
+	memcpy(WBUFP(buf,63), map_name, MAP_NAME_LENGTH_EXT);
 	WBUFB(buf,79) = (p->party.item&1)?1:0;
 	WBUFB(buf,80) = (p->party.item&2)?1:0;
 	clif_send(buf,packet_len(0x1e9),&sd->bl,PARTY);
@@ -5693,7 +5697,7 @@ int clif_party_member_info(struct party_data *p, struct map_session_data *sd)
  *------------------------------------------*/
 int clif_party_info(struct party_data* p, struct map_session_data *sd)
 {
-	unsigned char buf[2+2+NAME_LENGTH+(4+NAME_LENGTH+MAP_NAME_LENGTH+1+1)*MAX_PARTY];
+	unsigned char buf[2+2+NAME_LENGTH+(4+NAME_LENGTH+MAP_NAME_LENGTH_EXT+1+1)*MAX_PARTY];
 	struct map_session_data* party_sd = NULL;
 	int i, c;
 
@@ -5704,17 +5708,17 @@ int clif_party_info(struct party_data* p, struct map_session_data *sd)
 	for(i = 0, c = 0; i < MAX_PARTY; i++)
 	{
 		struct party_member* m = &p->party.member[i];
-		char map_name[MAP_NAME_LENGTH];
+		char map_name[MAP_NAME_LENGTH_EXT];
 
 		if(!m->account_id) continue;
 
 		if(party_sd == NULL) party_sd = p->data[i].sd;
 
-		snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(m->map));
+		snprintf(map_name, MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(m->map));
 
 		WBUFL(buf,28+c*46) = m->account_id;
 		memcpy(WBUFP(buf,28+c*46+4), m->name, NAME_LENGTH);
-		memcpy(WBUFP(buf,28+c*46+28), map_name, MAP_NAME_LENGTH);
+		memcpy(WBUFP(buf,28+c*46+28), map_name, MAP_NAME_LENGTH_EXT);
 		WBUFB(buf,28+c*46+44) = (m->leader) ? 0 : 1;
 		WBUFB(buf,28+c*46+45) = (m->online) ? 0 : 1;
 		c++;
@@ -5993,12 +5997,12 @@ int clif_hpmeter(struct map_session_data *sd)
 int clif_party_move(struct party *p,struct map_session_data *sd,int online)
 {
 	unsigned char buf[128];
-	char map_name[MAP_NAME_LENGTH];
+	char map_name[MAP_NAME_LENGTH_EXT];
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, p);
 
-	snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", map[sd->bl.m].name);
+	snprintf(map_name, MAP_NAME_LENGTH_EXT, "%s.gat", map[sd->bl.m].name);
 
 	WBUFW(buf, 0)=0x104;
 	WBUFL(buf, 2)=sd->status.account_id;
@@ -6008,7 +6012,7 @@ int clif_party_move(struct party *p,struct map_session_data *sd,int online)
 	WBUFB(buf,14)=!online;
 	memcpy(WBUFP(buf,15),p->name, NAME_LENGTH);
 	memcpy(WBUFP(buf,39),sd->status.name, NAME_LENGTH);
-	memcpy(WBUFP(buf,63),map_name, MAP_NAME_LENGTH);
+	memcpy(WBUFP(buf,63),map_name, MAP_NAME_LENGTH_EXT);
 	clif_send(buf,packet_len(0x104),&sd->bl,PARTY);
 	return 0;
 }
@@ -6415,6 +6419,9 @@ int clif_changemapcell(int m,int x,int y,int cell_type,int type)
 {
 	struct block_list bl;
 	unsigned char buf[32];
+	char map_name[MAP_NAME_LENGTH_EXT];
+
+	snprintf(map_name, MAP_NAME_LENGTH_EXT, "%s.gat", map[m].name);
 
 	bl.type = BL_NUL;
 	bl.m = m;
@@ -6424,7 +6431,7 @@ int clif_changemapcell(int m,int x,int y,int cell_type,int type)
 	WBUFW(buf,2) = x;
 	WBUFW(buf,4) = y;
 	WBUFW(buf,6) = cell_type;
-	memcpy(WBUFP(buf,8),map[m].name,MAP_NAME_LENGTH);
+	memcpy(WBUFP(buf,8),map_name,MAP_NAME_LENGTH_EXT);
 	if(!type)
 		clif_send(buf,packet_len(0x192),&bl,AREA);
 	else
@@ -7850,13 +7857,13 @@ void clif_gospel_info(struct map_session_data *sd, int type)
 void clif_feel_info(struct map_session_data *sd, unsigned char feel_level, unsigned char type)
 {
 	int fd=sd->fd;
-	char map_name[MAP_NAME_LENGTH];
+	char map_name[MAP_NAME_LENGTH_EXT];
 
-	snprintf(map_name, MAP_NAME_LENGTH, "%s.gat", mapindex_id2name(sd->feel_map[feel_level].index));
+	snprintf(map_name, MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(sd->feel_map[feel_level].index));
 
 	WFIFOHEAD(fd,packet_len(0x20e));
 	WFIFOW(fd,0)=0x20e;
-	memcpy(WFIFOP(fd,2),map_name, MAP_NAME_LENGTH);
+	memcpy(WFIFOP(fd,2),map_name, MAP_NAME_LENGTH_EXT);
 	WFIFOL(fd,26)=sd->bl.id;
 	WFIFOB(fd,30)=feel_level;
 	WFIFOB(fd,31)=type?1:0;
@@ -8636,8 +8643,8 @@ int clif_message(struct block_list *bl, const char* msg)
  */
 void clif_parse_MapMove(int fd, struct map_session_data *sd) {
 // /m /mapmove (as @rura GM command)
-	char output[MAP_NAME_LENGTH+15]; // Max length of a short: ' -6XXXX' -> 7 digits
-	char message[MAP_NAME_LENGTH+15+5]; // "/mm "+output
+	char output[MAP_NAME_LENGTH_EXT+15]; // Max length of a short: ' -6XXXX' -> 7 digits
+	char message[MAP_NAME_LENGTH_EXT+15+5]; // "/mm "+output
 	char *map_name;
 	RFIFOHEAD(fd);
 
@@ -8647,7 +8654,7 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd) {
 		return;
 
 	map_name = RFIFOP(fd,2);
-	map_name[MAP_NAME_LENGTH-1]='\0';
+	map_name[MAP_NAME_LENGTH_EXT-1]='\0';
 	sprintf(output, "%s %d %d", map_name, RFIFOW(fd,18), RFIFOW(fd,20));
 	atcommand_rura(fd, sd, "@rura", output);
 	if(log_config.gm && get_atcommand_level(AtCommand_MapMove) >= log_config.gm)

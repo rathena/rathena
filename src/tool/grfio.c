@@ -578,7 +578,6 @@ void* grfio_reads(char *fname, int *size)
 			if (entry != NULL && entry->gentry < 0) {
 				entry->gentry = -entry->gentry;	// local file checked
 			} else {
-				printf("%s not found (grfio_reads - local file %s)\n", fname, lfname);
 				return NULL;
 			}
 		}

@@ -77,8 +77,9 @@
 #define NAME_LENGTH 24
 //For item names, which tend to have much longer names.
 #define ITEM_NAME_LENGTH 50
-//For Map Names, which the client considers to be 16 in length
-#define MAP_NAME_LENGTH 16
+//For Map Names, which the client considers to be 16 in length including the .gat extension
+#define MAP_NAME_LENGTH 12
+#define MAP_NAME_LENGTH_EXT 16
 
 #define MAX_FRIENDS 40
 #define MAX_MEMOPOINTS 10

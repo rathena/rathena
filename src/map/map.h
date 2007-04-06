@@ -1030,7 +1030,7 @@ enum { ATK_LUCKY=1,ATK_FLEE,ATK_DEF};	// ˆÍ‚Ü‚êƒyƒiƒ‹ƒeƒBŒvŽZ—p
 struct map_data {
 	char name[MAP_NAME_LENGTH];
 	unsigned short index; //Index is the map index used by the mapindex* functions.
-	unsigned char *gat;	// NULL‚È‚ç‰º‚Ìmap_data_other_server‚Æ‚µ‚Äˆµ‚¤
+	unsigned char *gat;	// If this is NULL‚ the map is not on this map-server
 	unsigned char *cell; //Contains temporary cell data that is set/unset on tiles.
 #ifdef CELL_NOSTACK
 	unsigned char *cell_bl; //Holds amount of bls in any given cell.
@@ -1350,7 +1350,6 @@ void map_foreachpc(int (*func)(DBKey,void*,va_list),...);
 int map_foreachiddb(int (*)(DBKey,void*,va_list),...);
 void map_addnickdb(struct map_session_data *);
 struct map_session_data * map_nick2sd(const char*);
-char *map_normalize_name(char *mapname);
 
 // ‚»‚Ì‘¼
 int map_check_dir(int s_dir,int t_dir);

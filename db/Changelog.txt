@@ -21,6 +21,8 @@
 ========================
 
 04/07
+	* Updated map index and map cache with Nameless Island maps [DracoRPG]
+	- also removed the duplicate g_room2 entry from map index, read the note
 	* Corrected Aliza card's item_db line. [Skotlex]
 04/05
 	* Fixed some items that should heal percentual hp/sp [Playtester]
