@@ -665,8 +665,8 @@
 1470,Brionac,Brionac,4,,10,3000,190,,3,0,0x00004082,7,2,34,4,48,1,5,{ bonus bAtkEle,Ele_Holy; skill 28,5; bonus3 bAutoSpell,13,3,100; bonus2 bAddRace,RC_Boss,5; },{},{}
 1471,Hell_Fire,Hellfire,4,,10,3500,200,,3,0,0x00004082,7,2,34,4,48,1,5,{ bonus bAtkEle,Ele_Fire; bonus3 bAutoSpell,17,3,100; bonus bStr,3; },{},{}
 // 2-Handed Staffs
-1472,Staff_Of_Soul,Soul Staff,4,,10,1400,25,,1,0,0x00810204,7,2,34,3,73,1,10,{ bonus bInt,5; bonus bAgi,2; bonus bMatkRate,15; },{},{}
-1473,Wizardy_Staff,Wizardry Staff,4,,10,2400,120,,1,0,0x00810204,7,2,34,4,90,1,10,{ bonus bInt,6; bonus bDex,2; bonus bMatkRate,15; },{},{}
+1472,Staff_Of_Soul,Soul Staff,4,,10,1400,25,,1,0,0x00810204,7,2,34,3,73,1,10,{ bonus bInt,5; bonus bAgi,2; bonus bMatkRate,15; if(isequipped(2677)){ bonus bMatkRate,6; bonus bDex,2; bonus bCastrate,-getrefine(); } },{},{}
+1473,Wizardy_Staff,Wizardry Staff,4,,10,2400,120,,1,0,0x00810204,7,2,34,4,90,1,10,{ bonus bInt,6; bonus bDex,2; bonus bMatkRate,15; if(isequipped(2677)){ bonus bMatkRate,6; bonus bDex,2; bonus bCastrate,-getrefine(); } },{},{}
 // 2-Handed Spears
 1474,Gae_Bolg,Gae Bolg,4,,10,2000,160,,3,0,0x00004082,7,2,34,4,60,1,5,{ bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddRace,RC_Boss,10; },{},{}
 1475,Horseback_Lance,Equestrian's Spear,4,,10,3700,200,,4,0,0x00004082,7,2,34,4,75,1,5,{},{},{}
@@ -1171,7 +1171,12 @@
 2673,Warrior_Radiating_Ring,Warrior's Shining Ring,5,0,,100,,0,,0,0xFFFFFFFE,7,2,136,,48,0,0,{ bonus bBaseAtk,10; bonus bSPrecovRate,3; },{},{}
 2674,Ring_Of_Honor,Ring of Honor,5,20,,0,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{},{},{}
 2675,Lord_Ring,Lord Ring,5,0,,10,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{ bonus bAllStats,3; },{},{}
-//Accessories are missing here
+2676,Hunter's_Earring,Hunter's Earring,5,,10,300,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
+2677,Spiritual_Ring,Spiritual Ring,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bInt,2; bonus bDex,1; if(isequipped(2607) || isequipped(2608)){ bonus2 bSkillAtk,79,30; bonus bSPrecovRate,9; } },{},{}
+2678,Ring_of_Flame_Lord,Ring of Flame Lord,5,,10,100,,0,,0,0xFFFFFFFF,2,2,136,,0,0,0,{ bonus bStr,2; bonus bVit,1; bonus bBaseAtk,15; bonus2 bSubEle,Ele_Fire,10; },{},{}
+2679,Ring_of_Resonance,Ring of Resonance,5,,10,100,,2,,0,0xFFFFFFFF,2,2,136,,0,0,0,{ bonus bAgi,2; bonus bVit,1; bonus bMdef,2; bonus2 bSubEle,Ele_Fire,10; },{},{}
+2680,Ring_of_Minor_Spirits,Ring of Minor Spirits,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bAllStats,1; },{},{}
+2681,Republic_Anniversary_Ring,Republic Anniversary Ring,5,,10,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus bAllStats,3; },{},{}
 2682,Ring_of_Water,Ring of Water,5,,10,100,,1,,0,0xFFFFFFFE,7,2,136,,20,0,0,{ bonus2 bSubEle,Ele_Water,5; },{},{}
 2683,Ring_of_Fire,Ring of Fire,5,,10,100,,1,,0,0xFFFFFFFE,7,2,136,,20,0,0,{ bonus2 bSubEle,Ele_Fire,5; },{},{}
 2684,Ring_of_Wind,Ring of Wind,5,,10,100,,1,,0,0xFFFFFFFE,7,2,136,,20,0,0,{ bonus2 bSubEle,Ele_Wind,5; },{},{}
@@ -1757,7 +1762,7 @@
 5168,Bongun_Hat_,Bongun Hat,5,20,,300,,5,,1,0xFFFFFFFF,7,2,769,,0,0,139,{},{},{}
 5169,Bride_Mask,Bride Mask,5,30000,,500,,4,,1,0xFFFFFFFF,7,2,768,,40,1,223,{ if(BaseClass==Job_Taekwon){ bonus bLuk,2; bonus bCritical,5; } },{},{}
 5170,Feather_Beret,Feather Beret,5,30000,,600,,1,,0,0xFFFFFFFE,7,2,256,,0,1,224,{ bonus bMdef,1; bonus2 bSubRace,RC_DemiHuman,10; },{},{}
-5171,Valkyrie_Helm,Valkyrie Helm,5,100000,,1000,,5,,1,0xFFFFFFFE,2,2,256,,0,1,225,{ bonus bMdef,5; },{},{}
+5171,Valkyrie_Helm,Valkyrie Helm,5,100000,,1000,,5,,1,0xFFFFFFFE,2,2,256,,0,1,225,{ bonus bMdef,5; if(isequipped(2357,2421,2524)) bonus bAllStats,1; },{},{}
 5172,Beret,Beret,5,30000,,700,,0,,0,0xFFFFFFFF,7,2,256,,0,0,226,{ bonus2 bSubRace,RC_DemiHuman,10; },{},{}
 5173,Judge_Hat,Judge Hat,5,30000,,400,,3,,1,0xFFFFFFFF,7,2,256,,60,1,227,{ if(BaseClass==Job_Taekwon){ bonus bAgi,1; bonus bHPrecovRate,3; } },{},{}
 5174,A_yam,A-yam,5,30000,,400,,3,,1,0xFFFFFFFF,7,2,256,,60,1,228,{ if(BaseClass==Job_Taekwon){ bonus bInt,1; bonus bSPrecovRate,3; } },{},{}

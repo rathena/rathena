@@ -19,7 +19,9 @@
 	-----
 
 ========================
-
+04/08
+	* Added some accessories thanks to Argatlahm [Playtester]
+	- also added Valkyrie combo bonus
 04/07
 	* Corrected amatsu dungeon's nomemo mapflags not working
 	* Added a missing map entry, 've_in02' to map list and index

@@ -729,7 +729,7 @@ einbroch,184,194,3	script	Exceptional Man	881,{
 		mes @npcname$;
 		mes "Ohh.... It'll take awhile to get to Amatsu";
 		mes "definitely a long trip.";
-		mes "I'll take "+strcharinfo(0)+" to Amatasu.";
+		mes "I'll take "+strcharinfo(0)+" to Amatsu.";
 		mes "Ok.";
 		delitem 1010,1;
 		delitem 7053,5;
