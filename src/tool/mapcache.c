@@ -163,7 +163,7 @@ int read_map(char *name, struct map_data *m)
 void cache_map(char *name, struct map_data *m)
 {
 	struct map_info info;
-	long len;
+	unsigned long len;
 	unsigned char *write_buf;
 
 	// Create an output buffer twice as big as the uncompressed map... this way we're sure it fits
@@ -218,9 +218,9 @@ char *remove_extension(char *mapname)
 	if (ptr) { //Check and remove extension.
 		while (ptr[1] && (ptr2 = strchr(ptr+1, '.')))
 			ptr = ptr2; //Skip to the last dot.
-		if(stricmp(ptr,".gat") == 0 ||
-			stricmp(ptr,".afm") == 0 ||
-			stricmp(ptr,".af2") == 0)
+		if(strcmp(ptr,".gat") == 0 ||
+			strcmp(ptr,".afm") == 0 ||
+			strcmp(ptr,".af2") == 0)
 			*ptr = '\0'; //Remove extension.
 	}
 	return mapname;

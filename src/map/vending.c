@@ -227,7 +227,7 @@ void vending_openvending(struct map_session_data *sd,int len,char *message,int f
 
 	vending_skill_lvl = pc_checkskill(sd, MC_VENDING);
 	if(!vending_skill_lvl || !pc_iscarton(sd)) {	// cart skill and cart check [Valaris]
-		clif_skill_fail(sd,MC_VENDING,0,0);
+		clif_skill_fail(sd, MC_VENDING, 0, 0);
 		return;
 	}
 
@@ -247,8 +247,8 @@ void vending_openvending(struct map_session_data *sd,int len,char *message,int f
 			}
 			sd->vending[i].amount = *(short*)(p+2+8*j);
 			sd->vending[i].value = *(int*)(p+4+8*j);
-			if(sd->vending[i].value > battle_config.vending_max_value)
-				sd->vending[i].value=battle_config.vending_max_value;
+			if(sd->vending[i].value > (unsigned int)battle_config.vending_max_value)
+				sd->vending[i].value = (unsigned int)battle_config.vending_max_value;
 			else if(sd->vending[i].value < 1)
 				sd->vending[i].value = 1000000;	// auto set to 1 million [celest]
 			// カート内のアイテム数と販売するアイテム数に相違があったら中止

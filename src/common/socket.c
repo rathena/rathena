@@ -57,6 +57,7 @@
 #include "../common/timer.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
+#include "../common/strlib.h"
 
 fd_set readfds;
 int fd_max;
@@ -1109,4 +1110,10 @@ const char* ip2str(uint32 ip, char ip_str[16])
 	struct in_addr addr;
 	addr.s_addr = htonl(ip);
 	return (ip_str == NULL) ? inet_ntoa(addr) : strncpy(ip_str, inet_ntoa(addr), 16);
+}
+
+// Converts a dot-formatted ip string into a numeric ip.
+uint32 str2ip(const char* ip_str)
+{
+	return ntohl(inet_addr(ip_str));
 }

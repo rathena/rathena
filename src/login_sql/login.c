@@ -1765,9 +1765,9 @@ int login_lan_config_read(const char *lancfgName)
 
 		if(strcmpi(w1, "subnet") == 0) {
 
-			subnet[subnet_count].mask = ntohl(inet_addr(w2));
-			subnet[subnet_count].char_ip = ntohl(inet_addr(w3));
-			subnet[subnet_count].map_ip = ntohl(inet_addr(w4));
+			subnet[subnet_count].mask = str2ip(w2);
+			subnet[subnet_count].char_ip = str2ip(w3);
+			subnet[subnet_count].map_ip = str2ip(w4);
 			subnet[subnet_count].subnet = subnet[subnet_count].char_ip&subnet[subnet_count].mask;
 			if (subnet[subnet_count].subnet != (subnet[subnet_count].map_ip&subnet[subnet_count].mask)) {
 				ShowError("%s: Configuration Error: The char server (%s) and map server (%s) belong to different subnetworks!\n", lancfgName, w3, w4);

@@ -503,8 +503,6 @@ enum {
 		#define strnicmp strncasecmp
 	#endif
 #else
-	#define snprintf _snprintf
-	#define vsnprintf _vsnprintf
 	#ifndef strncmpi
 		#define strncmpi strnicmp
 	#endif

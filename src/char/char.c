@@ -3977,9 +3977,9 @@ int char_lan_config_read(const char *lancfgName) {
 
 		if(strcmpi(w1, "subnet") == 0) {
 	
-			subnet[subnet_count].mask = ntohl(inet_addr(w2));
-			subnet[subnet_count].char_ip = ntohl(inet_addr(w3));
-			subnet[subnet_count].map_ip = ntohl(inet_addr(w4));
+			subnet[subnet_count].mask = str2ip(w2);
+			subnet[subnet_count].char_ip = str2ip(w3);
+			subnet[subnet_count].map_ip = str2ip(w4);
 			subnet[subnet_count].subnet = subnet[subnet_count].char_ip&subnet[subnet_count].mask;
 			if (subnet[subnet_count].subnet != (subnet[subnet_count].map_ip&subnet[subnet_count].mask)) {
 				ShowError("%s: Configuration Error: The char server (%s) and map server (%s) belong to different subnetworks!\n", lancfgName, w3, w4);
@@ -4284,11 +4284,11 @@ int do_init(int argc, char **argv)
 			ShowStatus("Defaulting to %s as our IP address\n", ip_str);
 		if (!login_ip) {
 			strcpy(login_ip_str, ip_str);
-			login_ip = ntohl(inet_addr(login_ip_str));
+			login_ip = str2ip(login_ip_str);
 		}
 		if (!char_ip) {
 			strcpy(char_ip_str, ip_str);
-			char_ip = ntohl(inet_addr(char_ip_str));
+			char_ip = str2ip(char_ip_str);
 		}
 	}
 

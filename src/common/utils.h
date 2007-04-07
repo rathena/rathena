@@ -6,10 +6,6 @@
 
 #include <stdarg.h>
 
-#ifndef NULL
-#define NULL (void *)0
-#endif
-
 void dump(unsigned char *buffer, int num);
 
 struct StringBuf {

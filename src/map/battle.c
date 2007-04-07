@@ -12,6 +12,7 @@
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/ers.h"
+#include "../common/strlib.h"
 
 #include "map.h"
 #include "pc.h"
@@ -3710,7 +3711,7 @@ int battle_set_value(const char* w1, const char* w2) {
 	int i;
 	for(i = 0; i < sizeof(battle_data_short) / (sizeof(battle_data_short[0])); i++)
 		if (strcmpi(w1, battle_data_short[i].str) == 0) {
-			* battle_data_short[i].val = config_switch(w2);
+			*battle_data_short[i].val = config_switch(w2);
 			return 1;
 		}
 	for(i = 0; i < sizeof(battle_data_int) / (sizeof(battle_data_int[0])); i++)
@@ -3725,7 +3726,7 @@ int battle_get_value(const char* w1) {
 	int i;
 	for(i = 0; i < sizeof(battle_data_short) / (sizeof(battle_data_short[0])); i++)
 		if (strcmpi(w1, battle_data_short[i].str) == 0) {
-			return * battle_data_short[i].val;
+			return *battle_data_short[i].val;
 		}
 	for(i = 0; i < sizeof(battle_data_int) / (sizeof(battle_data_int[0])); i++)
 		if (strcmpi(w1, battle_data_int[i].str) == 0) {
@@ -4236,7 +4237,7 @@ void battle_validate_conf() {
 	if (battle_config.any_warp_GM_min_level > 100)
 		battle_config.any_warp_GM_min_level = 100;
 
-	if (battle_config.vending_max_value > MAX_ZENY || battle_config.vending_max_value==0)
+	if (battle_config.vending_max_value > MAX_ZENY || battle_config.vending_max_value <= 0)
 		battle_config.vending_max_value = MAX_ZENY;
 
 	if (battle_config.vending_tax > 10000)

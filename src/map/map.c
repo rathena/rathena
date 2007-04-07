@@ -20,6 +20,7 @@
 #include "../common/showmsg.h"
 #include "../common/version.h"
 #include "../common/nullpo.h"
+#include "../common/strlib.h"
 
 #include "map.h"
 #include "chrif.h"

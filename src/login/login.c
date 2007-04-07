@@ -387,18 +387,21 @@ int read_gm_account(void) {
 int check_ipmask(uint32 ip, const unsigned char *str)
 {
 	unsigned int i = 0, m = 0;
-	unsigned int ip2, mask = 0;
-	unsigned char *p = (unsigned char *)&ip2, *p2 = (unsigned char *)&mask;
+	uint32 ip2, mask = 0;
+	uint32 a0, a1, a2, a3;
+	uint8* p = (uint8 *)&ip2, *p2 = (uint8 *)&mask;
+
 
 	// scan ip address
-	if (sscanf((const char*)str, "%u.%u.%u.%u/%n", &p[3], &p[2], &p[1], &p[0], &i) != 4 || i == 0)
+	if (sscanf((const char*)str, "%u.%u.%u.%u/%n", &a0, &a1, &a2, &a3, &i) != 4 || i == 0)
 		return 0;
+	p[0] = (uint8)a3; p[1] = (uint8)a2; p[2] = (uint8)a1; p[3] = (uint8)a0;
 
 	// scan mask
-	if (sscanf((const char*)str+i, "%u.%u.%u.%u", &p2[3], &p2[2], &p2[1], &p2[0]) == 4) {
-		;
+	if (sscanf((const char*)str+i, "%u.%u.%u.%u", &a0, &a1, &a2, &a3) == 4) {
+		p2[0] = (uint8)a3; p2[1] = (uint8)a2; p2[2] = (uint8)a1; p2[3] = (uint8)a0;
 	} else if (sscanf((const char*)(str+i), "%u", &m) == 1 && m >= 0 && m <= 32) {
-		for(i = 0; i < m && i < 32; i++)
+		for(i = 32 - m; i < 32; i++)
 			mask |= (1 << i);
 	} else {
 		ShowError("check_ipmask: invalid mask [%s].\n", str);
@@ -3445,9 +3448,9 @@ int login_lan_config_read(const char *lancfgName)
 
 		if(strcmpi(w1, "subnet") == 0) {
 
-			subnet[subnet_count].mask = ntohl(inet_addr(w2));
-			subnet[subnet_count].char_ip = ntohl(inet_addr(w3));
-			subnet[subnet_count].map_ip = ntohl(inet_addr(w4));
+			subnet[subnet_count].mask = str2ip(w2);
+			subnet[subnet_count].char_ip = str2ip(w3);
+			subnet[subnet_count].map_ip = str2ip(w4);
 			subnet[subnet_count].subnet = subnet[subnet_count].char_ip&subnet[subnet_count].mask;
 			if (subnet[subnet_count].subnet != (subnet[subnet_count].map_ip&subnet[subnet_count].mask)) {
 				ShowError("%s: Configuration Error: The char server (%s) and map server (%s) belong to different subnetworks!\n", lancfgName, w3, w4);

@@ -128,6 +128,7 @@ void set_defaultparse(ParseFunc defaultparse);
 // hostname/ip conversion functions
 uint32 host2ip(const char* hostname);
 const char* ip2str(uint32 ip, char ip_str[16]);
+uint32 str2ip(const char* ip_str);
 #define CONVIP(ip) (ip>>24)&0xFF,(ip>>16)&0xFF,(ip>>8)&0xFF,(ip>>0)&0xFF
 
 int socket_getips(uint32* ips, int max);
