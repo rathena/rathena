@@ -198,8 +198,14 @@ typedef unsigned long long	uint64;
 #if defined(_MSC_VER) || defined(__BORLANDC__)
 #define strcasecmp			stricmp
 #define strncasecmp			strnicmp
+#define strncmpi			strnicmp
 #define snprintf			_snprintf
 #define vsnprintf			_vsnprintf
+#else
+#define strcmpi				strcasecmp
+#define stricmp				strcasecmp
+#define strncmpi			strncasecmp
+#define strnicmp			strncasecmp
 #endif
 
 // keyword replacement in windows

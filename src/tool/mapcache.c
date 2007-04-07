@@ -218,9 +218,9 @@ char *remove_extension(char *mapname)
 	if (ptr) { //Check and remove extension.
 		while (ptr[1] && (ptr2 = strchr(ptr+1, '.')))
 			ptr = ptr2; //Skip to the last dot.
-		if(strcmp(ptr,".gat") == 0 ||
-			strcmp(ptr,".afm") == 0 ||
-			strcmp(ptr,".af2") == 0)
+		if(stricmp(ptr,".gat") == 0 ||
+			stricmp(ptr,".afm") == 0 ||
+			stricmp(ptr,".af2") == 0)
 			*ptr = '\0'; //Remove extension.
 	}
 	return mapname;

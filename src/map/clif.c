@@ -5593,9 +5593,9 @@ int clif_openvending(struct map_session_data *sd,int id,struct vending *vending)
 	nullpo_retr(0, sd);
 
 	fd=sd->fd;
-        WFIFOHEAD(fd, 8+sd->vend_num*22);
+	WFIFOHEAD(fd, 8+sd->vend_num*22);
 	buf = WFIFOP(fd,0);
-	for(i=0,n=0;i<sd->vend_num;i++){
+	for(i = 0, n = 0; i < sd->vend_num; i++) {
 		if (sd->vend_num > 2+pc_checkskill(sd,MC_VENDING)) return 0;
 		WBUFL(buf,8+n*22)=vending[i].value;
 		WBUFW(buf,12+n*22)=(index=vending[i].index)+2;
@@ -5615,7 +5615,7 @@ int clif_openvending(struct map_session_data *sd,int id,struct vending *vending)
 		clif_addcards(WBUFP(buf, 22+n*22), &sd->status.cart[index]);
 		n++;
 	}
-	if(n > 0){
+	if(n > 0) {
 		WBUFW(buf,0)=0x136;
 		WBUFW(buf,2)=8+n*22;
 		WBUFL(buf,4)=id;
