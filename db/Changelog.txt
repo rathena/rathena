@@ -21,6 +21,8 @@
 ========================
 
 04/07
+	* Corrected amatsu dungeon's nomemo mapflags not working
+	* Added a missing map entry, 've_in02' to map list and index
 	* Fixed Galion's mob skills (remnants of copy-paste) [ultramage]
 	* Updated map index and map cache with Nameless Island maps [DracoRPG]
 	- also removed the duplicate g_room2 entry from map index, read the note

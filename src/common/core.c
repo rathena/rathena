@@ -116,17 +116,18 @@ void signals_init (void)
 {
 	compat_signal(SIGTERM, sig_proc);
 	compat_signal(SIGINT, sig_proc);
+#ifndef _DEBUG // need unhandled exceptions to debug on Windows
 	compat_signal(SIGSEGV, sig_proc);
 	compat_signal(SIGFPE, sig_proc);
-
+#endif
 	// Signal to create coredumps by system when necessary (crash)
 	compat_signal(SIGILL, SIG_DFL);
-	#ifndef _WIN32
-		compat_signal(SIGXFSZ, sig_proc);
-		compat_signal(SIGPIPE, sig_proc);
-		compat_signal(SIGBUS, SIG_DFL);
-		compat_signal(SIGTRAP, SIG_DFL);
-	#endif
+#ifndef _WIN32
+	compat_signal(SIGXFSZ, sig_proc);
+	compat_signal(SIGPIPE, sig_proc);
+	compat_signal(SIGBUS, SIG_DFL);
+	compat_signal(SIGTRAP, SIG_DFL);
+#endif
 }
 #endif
 
