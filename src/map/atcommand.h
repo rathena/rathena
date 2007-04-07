@@ -325,7 +325,6 @@ void do_final_msg(void);
 
 char* estr_lower(char* str);
 
-int e_mail_check(char* email);
 extern char atcommand_symbol;
 #define MAX_MSG 1000
 extern char* msg_table[MAX_MSG];

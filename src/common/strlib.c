@@ -207,3 +207,53 @@ size_t strnlen (const char* string, size_t maxlen)
   return end ? (size_t) (end - string) : maxlen;
 }
 #endif
+
+//----------------------------------------------------
+// E-mail check: return 0 (not correct) or 1 (valid).
+//----------------------------------------------------
+int e_mail_check(char* email)
+{
+	char ch;
+	char* last_arobas;
+	int len = strlen(email);
+
+	// athena limits
+	if (len < 3 || len > 39)
+		return 0;
+
+	// part of RFC limits (official reference of e-mail description)
+	if (strchr(email, '@') == NULL || email[len-1] == '@')
+		return 0;
+
+	if (email[len-1] == '.')
+		return 0;
+
+	last_arobas = strrchr(email, '@');
+
+	if (strstr(last_arobas, "@.") != NULL || strstr(last_arobas, "..") != NULL)
+		return 0;
+
+	for(ch = 1; ch < 32; ch++)
+		if (strchr(last_arobas, ch) != NULL)
+			return 0;
+
+	if (strchr(last_arobas, ' ') != NULL || strchr(last_arobas, ';') != NULL)
+		return 0;
+
+	// all correct
+	return 1;
+}
+
+//--------------------------------------------------
+// Return numerical value of a switch configuration
+// on/off, english, français, deutsch, español
+//--------------------------------------------------
+int config_switch(const char* str)
+{
+	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0)
+		return 1;
+	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0)
+		return 0;
+
+	return (int)strtol(str, NULL, 0);
+}

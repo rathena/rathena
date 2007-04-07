@@ -3339,26 +3339,6 @@ int battle_check_range(struct block_list *src,struct block_list *bl,int range)
 	return path_search_long(NULL,src->m,src->x,src->y,bl->x,bl->y);
 }
 
-/*==========================================
- * Return numerical value of a switch configuration (modified by [Yor])
- * on/off, english, français, deutsch, español
- *------------------------------------------
- */
-int battle_config_switch(const char *str) {
-	if(strncmpi(str, "on",2) == 0 ||
-		strncmpi(str, "yes",3) == 0 ||
-		strncmpi(str, "oui",3) == 0 ||
-		strncmpi(str, "ja",2) == 0 ||
-		strncmpi(str, "si",2) == 0)
-		return 1;
-	if(strncmpi(str, "off",3) == 0 ||
-		strncmpi(str, "no",2) == 0 ||
-		strncmpi(str, "non",3) == 0 ||
-		strncmpi(str, "nein",4) == 0)
-		return 0;
-	return (int)strtol(str,NULL,0);
-}
-
 static const struct battle_data_short {
 	const char *str;
 	unsigned short *val;
@@ -3730,12 +3710,12 @@ int battle_set_value(const char* w1, const char* w2) {
 	int i;
 	for(i = 0; i < sizeof(battle_data_short) / (sizeof(battle_data_short[0])); i++)
 		if (strcmpi(w1, battle_data_short[i].str) == 0) {
-			* battle_data_short[i].val = battle_config_switch(w2);
+			* battle_data_short[i].val = config_switch(w2);
 			return 1;
 		}
 	for(i = 0; i < sizeof(battle_data_int) / (sizeof(battle_data_int[0])); i++)
 		if (strcmpi(w1, battle_data_int[i].str) == 0) {
-			*battle_data_int[i].val = battle_config_switch(w2);
+			*battle_data_int[i].val = config_switch(w2);
 			return 1;
 		}
 	return 0;

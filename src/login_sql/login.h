@@ -11,13 +11,9 @@
 #define LAN_CONF_NAME "conf/subnet_athena.conf"
 
 #ifndef SQL_DEBUG
-
-#define mysql_query(_x, _y) mysql_query(_x, _y)
-
+	#define mysql_query(_x, _y) mysql_query(_x, _y)
 #else 
-
-#define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
-
+	#define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
 #endif
 
 #define PASSWORDENC		3	// A definition is given when making an encryption password correspond.

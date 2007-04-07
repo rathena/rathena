@@ -361,45 +361,6 @@ int verify_accountname(char* account_name) {
 	return 1;
 }
 
-//---------------------------------------------------
-// E-mail check: return 0 (not correct) or 1 (valid).
-//---------------------------------------------------
-int e_mail_check(char *email) {
-	char ch;
-	char* last_arobas;
-
-	// athena limits
-	if (strlen(email) < 3 || strlen(email) > 39)
-		return 0;
-
-	// part of RFC limits (official reference of e-mail description)
-	if (strchr(email, '@') == NULL || email[strlen(email)-1] == '@')
-		return 0;
-
-	if (email[strlen(email)-1] == '.')
-		return 0;
-
-	last_arobas = strrchr(email, '@');
-
-	if (strstr(last_arobas, "@.") != NULL ||
-	    strstr(last_arobas, "..") != NULL)
-		return 0;
-
-	for(ch = 1; ch < 32; ch++) {
-		if (strchr(last_arobas, ch) != NULL) {
-			return 0;
-			break;
-		}
-	}
-
-	if (strchr(last_arobas, ' ') != NULL ||
-	    strchr(last_arobas, ';') != NULL)
-		return 0;
-
-	// all correct
-	return 1;
-}
-
 //----------------------------------
 // Sub-function: Input of a password
 //----------------------------------
@@ -4254,19 +4215,6 @@ int Connect_login_server(void) {
 #endif
 
 	return 0;
-}
-
-//-------------------------------------------------
-// Return numerical value of a switch configuration
-// on/off, english, français, deutsch, español
-//-------------------------------------------------
-int config_switch(const char *str) {
-	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0)
-		return 1;
-	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0)
-		return 0;
-
-	return atoi(str);
 }
 
 //-----------------------------------

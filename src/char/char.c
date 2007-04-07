@@ -334,7 +334,7 @@ void set_char_online(int map_id, int char_id, int account_id) {
 
 	if (login_fd <= 0 || session[login_fd]->eof)
 		return;
-	WFIFOHEAD(login_fd, 6);
+	WFIFOHEAD(login_fd,6);
 	WFIFOW(login_fd,0) = 0x272b;
 	WFIFOL(login_fd,2) = account_id;
 	WFIFOSET(login_fd,6);
@@ -355,7 +355,7 @@ void set_char_offline(int char_id, int account_id) {
 	}
 	if (login_fd <= 0 || session[login_fd]->eof)
 		return;
-	WFIFOHEAD(login_fd, 6);
+	WFIFOHEAD(login_fd,6);
 	WFIFOW(login_fd,0) = 0x272c;
 	WFIFOL(login_fd,2) = account_id;
 	WFIFOSET(login_fd,6);
@@ -404,7 +404,7 @@ void set_all_offline(int id) {
 	if (id >= 0 || login_fd <= 0 || session[login_fd]->eof)
 		return;
 	//Tell login-server to also mark all our characters as offline.
-	WFIFOHEAD(login_fd, 2);
+	WFIFOHEAD(login_fd,2);
 	WFIFOW(login_fd,0) = 0x2737;
 	WFIFOSET(login_fd,2);
 }
@@ -1750,7 +1750,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 
 	j = 24;// offset
 	{
-		WFIFOHEAD(fd, j + found_num*108);
+		WFIFOHEAD(fd,j + found_num*108);
 		WFIFOW(fd,0) = 0x6b;
 		memset(WFIFOP(fd,4), 0, 20);// unknown bytes
 
@@ -1837,45 +1837,6 @@ void char_clearparty(int party_id)
 		if (char_dat[i].status.party_id == party_id)
 			char_dat[i].status.party_id = 0;
 	}
-}
-
-//------------------------------------------------------------
-// E-mail check: return 0 (not correct) or 1 (valid). by [Yor]
-//------------------------------------------------------------
-int e_mail_check(char *email) {
-	char ch;
-	char* last_arobas;
-
-	// athena limits
-	if (strlen(email) < 3 || strlen(email) > 39)
-		return 0;
-
-	// part of RFC limits (official reference of e-mail description)
-	if (strchr(email, '@') == NULL || email[strlen(email)-1] == '@')
-		return 0;
-
-	if (email[strlen(email)-1] == '.')
-		return 0;
-
-	last_arobas = strrchr(email, '@');
-
-	if (strstr(last_arobas, "@.") != NULL ||
-	    strstr(last_arobas, "..") != NULL)
-		return 0;
-
-	for(ch = 1; ch < 32; ch++) {
-		if (strchr(last_arobas, ch) != NULL) {
-			return 0;
-			break;
-		}
-	}
-
-	if (strchr(last_arobas, ' ') != NULL ||
-	    strchr(last_arobas, ';') != NULL)
-		return 0;
-
-	// all correct
-	return 1;
 }
 
 //----------------------------------------------------------------------
@@ -1972,7 +1933,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 	}
 	if (login_fd > 0) {
 		// request to login-server to obtain e-mail/time limit
-		WFIFOHEAD(login_fd, 6);
+		WFIFOHEAD(login_fd,6);
 		WFIFOW(login_fd,0) = 0x2716;
 		WFIFOL(login_fd,2) = sd->account_id;
 		WFIFOSET(login_fd,6);
@@ -2043,7 +2004,7 @@ int parse_tologin(int fd) {
 				; i++);
 			if (i < fd_max) {
 				if (RFIFOB(fd,6) != 0) {
-					WFIFOHEAD(i, 3);
+					WFIFOHEAD(i,3);
 					WFIFOW(i,0) = 0x6c;
 					WFIFOB(i,2) = 0x42;
 					WFIFOSET(i,3);
@@ -2453,7 +2414,7 @@ int parse_tologin(int fd) {
 						for(i = 0; i < fd_max; i++) {
 							if (session[i] && (tsd = (struct char_session_data*)session[i]->session_data) && tsd->account_id == aid)
 							{
-								WFIFOHEAD(i, 3);
+								WFIFOHEAD(i,3);
 								WFIFOW(i,0) = 0x81;
 								WFIFOB(i,2) = 2;
 								WFIFOSET(i,3);
@@ -2505,11 +2466,11 @@ int parse_tologin(int fd) {
 
 int request_accreg2(int account_id, int char_id) {
 	if (login_fd > 0) {
-		WFIFOHEAD(login_fd, 10);
-		WFIFOW(login_fd, 0) = 0x272e;
-		WFIFOL(login_fd, 2) = account_id;
-		WFIFOL(login_fd, 6) = char_id;
-		WFIFOSET(login_fd, 10);
+		WFIFOHEAD(login_fd,10);
+		WFIFOW(login_fd,0) = 0x272e;
+		WFIFOL(login_fd,2) = account_id;
+		WFIFOL(login_fd,6) = char_id;
+		WFIFOSET(login_fd,10);
 		return 1;
 	}
 	return 0;
@@ -2518,7 +2479,7 @@ int request_accreg2(int account_id, int char_id) {
 //Send packet forward to login-server for account saving
 int save_accreg2(unsigned char* buf, int len) {
 	if (login_fd > 0) {
-		WFIFOHEAD(login_fd, len+4);
+		WFIFOHEAD(login_fd,len+4);
 		memcpy(WFIFOP(login_fd,4), buf, len);
 		WFIFOW(login_fd,0) = 0x2728;
 		WFIFOW(login_fd,2) = len+4;
@@ -2741,9 +2702,9 @@ int parse_frommap(int fd)
 
 		case 0x2af7: // request from map-server to reload GM accounts. Transmission to login-server
 			if (login_fd > 0) { // don't send request if no login-server
-				WFIFOHEAD(login_fd, 2);
+				WFIFOHEAD(login_fd,2);
 				WFIFOW(login_fd,0) = 0x2709;
-				WFIFOSET(login_fd, 2);
+				WFIFOSET(login_fd,2);
 			}
 			RFIFOSKIP(fd,2);
 			break;
@@ -3007,11 +2968,11 @@ int parse_frommap(int fd)
 				memcpy(WFIFOP(login_fd,2), RFIFOP(fd,2), RFIFOW(fd,2)-2);
 				WFIFOSET(login_fd, RFIFOW(fd,2));
 			} else {
-				WFIFOHEAD(fd, 10);
+				WFIFOHEAD(fd,10);
 				WFIFOW(fd,0) = 0x2b0b;
 				WFIFOL(fd,2) = RFIFOL(fd,4);
 				WFIFOL(fd,6) = 0;
-				WFIFOSET(fd, 10);
+				WFIFOSET(fd,10);
 			}
 			RFIFOSKIP(fd, RFIFOW(fd,2));
 			break;
@@ -3020,10 +2981,10 @@ int parse_frommap(int fd)
 			if (RFIFOREST(fd) < 86)
 				return 0;
 			if (login_fd > 0) { // don't send request if no login-server
-				WFIFOHEAD(login_fd, 86);
+				WFIFOHEAD(login_fd,86);
 				memcpy(WFIFOP(login_fd,0), RFIFOP(fd,0), 86); // 0x2722 <account_id>.L <actual_e-mail>.40B <new_e-mail>.40B
 				WFIFOW(login_fd,0) = 0x2722;
-				WFIFOSET(login_fd, 86);
+				WFIFOSET(login_fd,86);
 			}
 			RFIFOSKIP(fd, 86);
 			break;
@@ -3050,11 +3011,11 @@ int parse_frommap(int fd)
 				case 1: // block
 					if (acc == -1 || isGM(acc) >= isGM(char_dat[i].status.account_id)) {
 						if (login_fd > 0) { // don't send request if no login-server
-							WFIFOHEAD(login_fd, 10);
+							WFIFOHEAD(login_fd,10);
 							WFIFOW(login_fd,0) = 0x2724;
 							WFIFOL(login_fd,2) = char_dat[i].status.account_id; // account value
 							WFIFOL(login_fd,6) = 5; // status of the account
-							WFIFOSET(login_fd, 10);
+							WFIFOSET(login_fd,10);
 //							printf("char : status -> login: account %d, status: %d \n", char_dat[i].account_id, 5);
 						} else
 							WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
@@ -3084,11 +3045,11 @@ int parse_frommap(int fd)
 				case 3: // unblock
 					if (acc == -1 || isGM(acc) >= isGM(char_dat[i].status.account_id)) {
 						if (login_fd > 0) { // don't send request if no login-server
-							WFIFOHEAD(login_fd, 10);
+							WFIFOHEAD(login_fd,10);
 							WFIFOW(login_fd,0) = 0x2724;
 							WFIFOL(login_fd,2) = char_dat[i].status.account_id; // account value
 							WFIFOL(login_fd,6) = 0; // status of the account
-							WFIFOSET(login_fd, 10);
+							WFIFOSET(login_fd,10);
 //							printf("char : status -> login: account %d, status: %d \n", char_dat[i].account_id, 0);
 						} else
 							WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
@@ -3098,10 +3059,10 @@ int parse_frommap(int fd)
 				case 4: // unban
 					if (acc == -1 || isGM(acc) >= isGM(char_dat[i].status.account_id)) {
 						if (login_fd > 0) { // don't send request if no login-server
-							WFIFOHEAD(login_fd, 6);
+							WFIFOHEAD(login_fd,6);
 							WFIFOW(login_fd, 0) = 0x272a;
 							WFIFOL(login_fd, 2) = char_dat[i].status.account_id; // account value
-							WFIFOSET(login_fd, 6);
+							WFIFOSET(login_fd,6);
 //							printf("char : status -> login: account %d, unban request\n", char_dat[i].account_id);
 						} else
 							WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
@@ -3111,10 +3072,10 @@ int parse_frommap(int fd)
 				case 5: // changesex
 					if (acc == -1 || isGM(acc) >= isGM(char_dat[i].status.account_id)) {
 						if (login_fd > 0) { // don't send request if no login-server
-							WFIFOHEAD(login_fd, 6);
+							WFIFOHEAD(login_fd,6);
 							WFIFOW(login_fd, 0) = 0x2727;
 							WFIFOL(login_fd, 2) = char_dat[i].status.account_id; // account value
-							WFIFOSET(login_fd, 6);
+							WFIFOSET(login_fd,6);
 //							printf("char : status -> login: account %d, change sex request\n", char_dat[i].account_id);
 						} else
 							WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
@@ -3392,7 +3353,7 @@ int parse_char(int fd)
 				return 0;
 		{
 			int GM_value;
-			WFIFOHEAD(fd, 4);
+			WFIFOHEAD(fd,4);
 
 			if (sd) {
 				//Received again auth packet for already authentified account?? Discard it.
@@ -3458,10 +3419,10 @@ int parse_char(int fd)
 
 			// if we activated email creation and email is default email
 			if (email_creation != 0 && strcmp(sd->email, "a@a.com") == 0 && login_fd > 0) { // to modify an e-mail, login-server must be online
-				WFIFOHEAD(fd, 3);
-				WFIFOW(fd, 0) = 0x70;
-				WFIFOB(fd, 2) = 0; // 00 = Incorrect Email address
-				WFIFOSET(fd, 3);
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x70;
+				WFIFOB(fd,2) = 0; // 00 = Incorrect Email address
+				WFIFOSET(fd,3);
 				break;
 			}
 			// otherwise, load the character
@@ -3490,7 +3451,7 @@ int parse_char(int fd)
 						break;
 				if (j == MAX_MAP_SERVERS) {
 					ShowInfo("Connection Closed. No map servers available.\n");
-					WFIFOHEAD(fd, 3);
+					WFIFOHEAD(fd,3);
 					WFIFOW(fd,0) = 0x81;
 					WFIFOB(fd,2) = 1; // 01 = Server closed
 					WFIFOSET(fd,3);
@@ -3516,7 +3477,7 @@ int parse_char(int fd)
 					cd->last_point.y = 103;
 				} else {
 					ShowInfo("Connection Closed. No map server available that has a major city, and unable to find map-server for '%s'.\n", mapindex_id2name(cd->last_point.map));
-					WFIFOHEAD(fd, 3);
+					WFIFOHEAD(fd,3);
 					WFIFOW(fd,0) = 0x81;
 					WFIFOB(fd,2) = 1; // 01 = Server closed
 					WFIFOSET(fd,3);
@@ -3559,7 +3520,7 @@ int parse_char(int fd)
 			//Send NEW auth packet [Kevin]
 			if ((map_fd = server_fd[i]) < 1 || session[map_fd] == NULL)
 			{
-				WFIFOHEAD(fd, 3);
+				WFIFOHEAD(fd,3);
 				ShowError("parse_char: Attempting to write to invalid session %d! Map Server #%d disconnected.\n", map_fd, i);
 				server_fd[i] = -1;
 				memset(&server[i], 0, sizeof(struct mmo_map_server));
@@ -3597,12 +3558,12 @@ int parse_char(int fd)
 			//'Charname already exists' (-1), 'Char creation denied' (-2) and 'You are underaged' (-3)
 			if (i < 0)
 			{
-				WFIFOHEAD(fd, 3);
+				WFIFOHEAD(fd,3);
 				WFIFOW(fd, 0) = 0x6e;
 				switch (i) {
-				case -1: WFIFOB(fd, 2) = 0x00; break;
-				case -2: WFIFOB(fd, 2) = 0x02; break;
-				case -3: WFIFOB(fd, 2) = 0x01; break;
+				case -1: WFIFOB(fd,2) = 0x00; break;
+				case -2: WFIFOB(fd,2) = 0x02; break;
+				case -3: WFIFOB(fd,2) = 0x01; break;
 				}
 				WFIFOSET(fd, 3);
 				RFIFOSKIP(fd, 37);
@@ -3610,7 +3571,7 @@ int parse_char(int fd)
 			}
 		{	//Send to player.
 			int len;
-			WFIFOHEAD(fd, 110);
+			WFIFOHEAD(fd,110);
 			WFIFOW(fd,0) = 0x6d;
 			len = 2 + mmo_char_tobuf(WFIFOP(fd,2), &char_dat[i].status);
 			WFIFOSET(fd,len);
@@ -3630,7 +3591,7 @@ int parse_char(int fd)
 		{
 			int cid = RFIFOL(fd,2);
 			struct mmo_charstatus *cs = NULL;
-			WFIFOHEAD(fd, 46);
+			WFIFOHEAD(fd,46);
 			WFIFOHEAD(login_fd,46);
 			ShowInfo(CL_RED" Request Char Deletion:"CL_GREEN"%d (%d)"CL_RESET"\n", sd->account_id, cid);
 			memcpy(email, RFIFOP(fd,6), 40);
@@ -3730,7 +3691,7 @@ int parse_char(int fd)
 		{
 			char *l_user = RFIFOP(fd,2);
 			char *l_pass = RFIFOP(fd,26);
-			WFIFOHEAD(fd, 4+5*GM_num);
+			WFIFOHEAD(fd,4+5*GM_num);
 			l_user[23] = '\0';
 			l_pass[23] = '\0';
 			WFIFOW(fd,0) = 0x2af9;
@@ -3779,7 +3740,7 @@ int parse_char(int fd)
 
 		case 0x7530:	// Athena info get
 		{
-			WFIFOHEAD(fd, 10);
+			WFIFOHEAD(fd,10);
 			WFIFOW(fd,0) = 0x7531;
 			WFIFOB(fd,2) = ATHENA_MAJOR_VERSION;
 			WFIFOB(fd,3) = ATHENA_MINOR_VERSION;
@@ -3858,9 +3819,9 @@ int mapif_sendallwos(int sfd, unsigned char *buf, unsigned int len) {
 	for(i = 0; i < MAX_MAP_SERVERS; i++) {
 		int fd;
 		if ((fd = server_fd[i]) > 0 && fd != sfd) {
-			WFIFOHEAD(fd, len);
+			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
-			WFIFOSET(fd, len);
+			WFIFOSET(fd,len);
 			c++;
 		}
 	}
@@ -3910,7 +3871,7 @@ static int send_accounts_tologin_sub(DBKey key, void* data, va_list ap) {
 	if ((*i) >= count)
 		return 0; //This is an error that shouldn't happen....
 	if(character->server > -1) {
-		WFIFOHEAD(login_fd, 8+count*4);
+		WFIFOHEAD(login_fd,8+count*4);
 		WFIFOL(login_fd, 8+(*i)*4) =character->account_id;
 		(*i)++;
 		return 1;
@@ -3923,7 +3884,7 @@ int send_accounts_tologin(int tid, unsigned int tick, int id, int data) {
 
 	if (login_fd > 0 && session[login_fd]) {
 		// send account list to login server
-		WFIFOHEAD(login_fd, 8+users*4);
+		WFIFOHEAD(login_fd,8+users*4);
 		WFIFOW(login_fd,0) = 0x272d;
 		WFIFOL(login_fd,4) = users;
 		online_char_db->foreach(online_char_db, send_accounts_tologin_sub, &i);
@@ -3948,7 +3909,7 @@ int check_connect_login_server(int tid, unsigned int tick, int id, int data)
 	session[login_fd]->func_parse = parse_tologin;
 	realloc_fifo(login_fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 	{
-	WFIFOHEAD(login_fd, 86);
+	WFIFOHEAD(login_fd,86);
 	WFIFOW(login_fd,0) = 0x2710;
 	memcpy(WFIFOP(login_fd,2), userid, 24);
 	memcpy(WFIFOP(login_fd,26), passwd, 24);
@@ -3977,19 +3938,6 @@ static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, int dat
 		set_char_offline(character->char_id, character->account_id);
 	}
 	return 0;
-}
-
-//----------------------------------------------------------
-// Return numerical value of a switch configuration by [Yor]
-// on/off, english, français, deutsch, español
-//----------------------------------------------------------
-int config_switch(const char *str) {
-	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0)
-		return 1;
-	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0)
-		return 0;
-
-	return atoi(str);
 }
 
 //----------------------------------

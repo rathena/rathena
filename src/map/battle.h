@@ -87,8 +87,6 @@ int battle_check_range(struct block_list *src,struct block_list *bl,int range);
 void battle_consume_ammo(struct map_session_data* sd, int skill, int lv);
 // İ’è
 
-int battle_config_switch(const char *str); // [Valaris]
-
 extern struct Battle_Config {
 	unsigned short warp_point_debug;
 	unsigned short enable_critical;

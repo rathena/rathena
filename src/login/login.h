@@ -15,7 +15,7 @@
 
 extern int login_port;
 struct mmo_account {
-	int version;	//Added for version check [Sirius]
+	int version;
 	char userid[NAME_LENGTH];
 	char passwd[NAME_LENGTH];
 	int passwdenc;
@@ -29,9 +29,9 @@ struct mmo_account {
 };
 
 struct mmo_char_server {
-	char name[21];
-	long ip;
-	short port;
+	char name[20];
+	uint32 ip;
+	uint16 port;
 	int users;
 	int maintenance;
 	int new_;

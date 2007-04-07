@@ -2678,18 +2678,6 @@ int parse_console(char* buf)
 	return 0;
 }
 
-//-------------------------------------------------
-// Return numerical value of a switch configuration
-// on/off, english, franÁais, deutsch, espaÒol
-//-------------------------------------------------
-int config_switch(const char *str) {
-	if (strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0 || strcmpi(str, "si") == 0)
-		return 1;
-	if (strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0)
-		return 0;
-	return atoi(str);
-}
-
 /*==========================================
  * ê›íËÉtÉ@ÉCÉãÇ?Ç›?Çﬁ
  *------------------------------------------
@@ -2812,7 +2800,7 @@ int inter_config_read(char *cfgName)
 		if(i!=2)
 			continue;
 		if(strcmpi(w1,"party_share_level")==0){
-			party_share_level = battle_config_switch(w2);
+			party_share_level = config_switch(w2);
 		} else if(strcmpi(w1,"lowest_gm_level")==0){
 			lowest_gm_level = atoi(w2);
 		
@@ -2845,7 +2833,7 @@ int inter_config_read(char *cfgName)
 		} else if(strcmpi(w1,"default_codepage")==0){
 			strcpy(default_codepage, w2);
 		} else if(strcmpi(w1,"use_sql_db")==0){
-			db_use_sqldbs = battle_config_switch(w2);
+			db_use_sqldbs = config_switch(w2);
 			ShowStatus ("Using SQL dbs: %s\n",w2);
 		} else if(strcmpi(w1,"log_db")==0) {
 			strcpy(log_db, w2);
@@ -2861,7 +2849,7 @@ int inter_config_read(char *cfgName)
 			log_db_port = atoi(w2);
 		// Mail Server SQL 
 		} else if(strcmpi(w1,"mail_server_enable")==0){
-			mail_server_enable = battle_config_switch(w2);
+			mail_server_enable = config_switch(w2);
 			ShowStatus ("Using Mail Server: %s\n",w2);
 		} else if(strcmpi(w1,"mail_server_ip")==0){
 			strcpy(mail_server_ip, w2);

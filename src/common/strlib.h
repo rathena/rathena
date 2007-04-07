@@ -22,4 +22,8 @@ char* _strtok_r(char* s1, const char* s2, char** lasts);
 size_t strnlen (const char* string, size_t maxlen);
 #endif
 
+int e_mail_check(char* email);
+int config_switch(const char* str);
+
+
 #endif /* _STRLIB_H_ */

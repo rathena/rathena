@@ -721,46 +721,6 @@ char * player_title_txt(int level) {
 	return atcmd_temp;
 }
 
-//------------------------------------------------------------
-// E-mail check: return 0 (not correct) or 1 (valid). by [Yor]
-//------------------------------------------------------------
-int e_mail_check(char *email)
-{
-	char ch;
-	char* last_arobas;
-
-	// athena limits
-	if (strlen(email) < 3 || strlen(email) > 39)
-		return 0;
-
-	// part of RFC limits (official reference of e-mail description)
-	if (strchr(email, '@') == NULL || email[strlen(email)-1] == '@')
-		return 0;
-
-	if (email[strlen(email)-1] == '.')
-		return 0;
-
-	last_arobas = strrchr(email, '@');
-
-	if (strstr(last_arobas, "@.") != NULL ||
-	    strstr(last_arobas, "..") != NULL)
-		return 0;
-
-	for(ch = 1; ch < 32; ch++) {
-		if (strchr(last_arobas, ch) != NULL) {
-			return 0;
-			break;
-		}
-	}
-
-	if (strchr(last_arobas, ' ') != NULL ||
-	    strchr(last_arobas, ';') != NULL)
-		return 0;
-
-	// all correct
-	return 1;
-}
-
 /*==========================================
  * Retrieve the atcommand's required gm level
  *------------------------------------------
@@ -7675,7 +7635,7 @@ int atcommand_partyoption(const int fd, struct map_session_data* sd, const char*
 		return -1;
 	}
 	w1[14] = w2[14] = '\0'; //Assure a proper string terminator.
-	option = (battle_config_switch(w1)?1:0)|(battle_config_switch(w2)?2:0);
+	option = (config_switch(w1)?1:0)|(config_switch(w2)?2:0);
 	
 	//Change item share type.
 	if (option != p->party.item)

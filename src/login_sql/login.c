@@ -9,7 +9,7 @@
 	#include <winsock2.h>
 #else
 	#include <sys/socket.h>
-	#include <netinet/in.h> 
+	#include <netinet/in.h>
 	#include <arpa/inet.h>
 	#include <netdb.h>
 #endif
@@ -24,16 +24,16 @@
 //add include for DBMS(mysql)
 #include <mysql.h>
 
+#include "../common/cbasetypes.h"
 #include "../common/core.h"
 #include "../common/socket.h"
-#include "../common/malloc.h"
 #include "../common/db.h"
 #include "../common/timer.h"
+#include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/version.h"
-#include "../common/cbasetypes.h"
 #include "../common/md5calc.h"
 #include "login.h"
 
@@ -117,7 +117,7 @@ char login_db_level[256] = "level";
 
 #define AUTH_FIFO_SIZE 256
 struct {
-	int account_id,login_id1,login_id2;
+	int account_id, login_id1, login_id2;
 	uint32 ip;
 	char sex;
 	bool delflag;
@@ -263,49 +263,11 @@ void send_GM_accounts(int fd)
 		charif_sendallwos(-1, buf, len);
 	else
 	{
-		WFIFOHEAD(fd, len);
+		WFIFOHEAD(fd,len);
 		memcpy(WFIFOP(fd,0), buf, len);
-		WFIFOSET(fd, len);
+		WFIFOSET(fd,len);
 	}
 	return;
-}
-
-//---------------------------------------------------
-// E-mail check: return 0 (not correct) or 1 (valid).
-//---------------------------------------------------
-int e_mail_check(char* email)
-{
-	char ch;
-	char* last_arobas;
-	int len = strlen(email);
-
-	// athena limits
-	if (len < 3 || len > 39)
-		return 0;
-
-	// part of RFC limits (official reference of e-mail description)
-	if (strchr(email, '@') == NULL || email[len-1] == '@')
-		return 0;
-
-	if (email[len-1] == '.')
-		return 0;
-
-	last_arobas = strrchr(email, '@');
-
-	if (strstr(last_arobas, "@.") != NULL ||
-		strstr(last_arobas, "..") != NULL)
-		return 0;
-
-	for(ch = 1; ch < 32; ch++)
-		if (strchr(last_arobas, ch) != NULL)
-			return 0;
-
-	if (strchr(last_arobas, ' ') != NULL ||
-		strchr(last_arobas, ';') != NULL)
-		return 0;
-
-	// all correct
-	return 1;
 }
 
 /*=============================================
@@ -510,11 +472,11 @@ int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len)
 
 	for(i = 0, c = 0; i < MAX_SERVERS; i++) {
 		if ((fd = server_fd[i]) > 0 && fd != sfd) {
-			WFIFOHEAD(fd, len);
+			WFIFOHEAD(fd,len);
 			if (WFIFOSPACE(fd) < len) //Increase buffer size.
 				realloc_writefifo(fd, len);
 			memcpy(WFIFOP(fd,0), buf, len);
-			WFIFOSET(fd, len);
+			WFIFOSET(fd,len);
 			c++;
 		}
 	}
@@ -942,11 +904,11 @@ int parse_fromchar(int fd)
 
 			RFIFOSKIP(fd, RFIFOW(fd, 2));
 		{
-			WFIFOHEAD(fd, 10);
-			WFIFOW(fd, 0) = 0x2721;
-			WFIFOL(fd, 2) = RFIFOL(fd,4); // oldacc;
-			WFIFOL(fd, 6) = 0; // newacc;
-			WFIFOSET(fd, 10);
+			WFIFOHEAD(fd,10);
+			WFIFOW(fd,0) = 0x2721;
+			WFIFOL(fd,2) = RFIFOL(fd,4); // oldacc;
+			WFIFOL(fd,6) = 0; // newacc;
+			WFIFOSET(fd,10);
 		}
 			return 0;
 
@@ -1399,7 +1361,7 @@ int parse_login(int fd)
 			//Perform ip-ban check
 			if (login_config.ipban && login_ip_ban_check(ipl))
 			{
-				WFIFOHEAD(fd, 23);
+				WFIFOHEAD(fd,23);
 				WFIFOW(fd,0) = 0x6a;
 				WFIFOB(fd,2) = 3; // 3 = Rejected from Server
 				WFIFOSET(fd,23);
@@ -1408,7 +1370,7 @@ int parse_login(int fd)
 				break;
 			}
 
-			switch(RFIFOW(fd, 0)){
+			switch(RFIFOW(fd,0)){
 				case 0x64:
 					if(packet_len < 55)
 						return 0;
@@ -1431,14 +1393,14 @@ int parse_login(int fd)
 			account.passwd[23] = '\0';
 
 #ifdef PASSWORDENC
-			account.passwdenc= (RFIFOW(fd,0)!=0x01dd)?0:PASSWORDENC;
+			account.passwdenc = (RFIFOW(fd,0)!=0x01dd)?0:PASSWORDENC;
 #else
-			account.passwdenc=0;
+			account.passwdenc = 0;
 #endif
-			result=mmo_auth(&account, fd);
+			result = mmo_auth(&account, fd);
 
 			jstrescapecpy(t_uid,account.userid);
-			if(result==-1) {  // auth success
+			if(result == -1) { // auth success
 				if (login_config.min_level_to_connect > account.level) {
 					WFIFOHEAD(fd,3);
 					WFIFOW(fd,0) = 0x81;
@@ -1499,7 +1461,7 @@ int parse_login(int fd)
 					}
 				}
 			} else { // auth failed
-				WFIFOHEAD(fd, 23);
+				WFIFOHEAD(fd,23);
 				if (login_config.log_login)
 				{
 					const char* error;
@@ -1607,7 +1569,7 @@ int parse_login(int fd)
 			}
 		{
 			RFIFOSKIP(fd,2);
-			WFIFOHEAD(fd, 4 + md5keylen);
+			WFIFOHEAD(fd,4 + md5keylen);
 			WFIFOW(fd,0) = 0x01dc;
 			WFIFOW(fd,2) = 4 + md5keylen;
 			memcpy(WFIFOP(fd,4), md5key, md5keylen);
@@ -1623,13 +1585,13 @@ int parse_login(int fd)
 				uint32 server_ip;
 				uint16 server_port;
 
-				WFIFOHEAD(fd, 3);
-				memcpy(account.userid,RFIFOP(fd, 2),NAME_LENGTH); account.userid[23] = '\0';
-				memcpy(account.passwd,RFIFOP(fd, 26),NAME_LENGTH); account.passwd[23] = '\0';
+				WFIFOHEAD(fd,3);
+				memcpy(account.userid,RFIFOP(fd,2),NAME_LENGTH); account.userid[23] = '\0';
+				memcpy(account.passwd,RFIFOP(fd,26),NAME_LENGTH); account.passwd[23] = '\0';
 				account.passwdenc = 0;
 				server_name = (char*)RFIFOP(fd,60); server_name[20] = '\0';
-				server_ip = ntohl(RFIFOL(fd, 54));
-				server_port = ntohs(RFIFOW(fd, 58));
+				server_ip = ntohl(RFIFOL(fd,54));
+				server_port = ntohs(RFIFOW(fd,58));
 				ShowInfo("Connection request of the char-server '%s' @ %d.%d.%d.%d:%d (ip: %s)\n",
 					server_name, CONVIP(server_ip), server_port, ip);
 				jstrescapecpy(t_uid, server_name);
@@ -1688,7 +1650,7 @@ int parse_login(int fd)
 			RFIFOSKIP(fd,86);
 			return 0;
 
-		case 0x7530:	// request Athena information
+		case 0x7530:	// Server version information request
 		{
 			ShowInfo ("Athena version check...\n");
 			WFIFOHEAD(fd,10);
@@ -1704,6 +1666,7 @@ int parse_login(int fd)
 			RFIFOSKIP(fd,2);
 			break;
 		}
+
 		case 0x7532:	// Request to end connection
 			ShowStatus ("End of connection (ip: %s)" RETCODE, ip);
 			session[fd]->eof = 1;
@@ -1766,20 +1729,6 @@ static int online_data_cleanup(int tid, unsigned int tick, int id, int data)
 	return 0;
 } 
 
-//-------------------------------------------------
-// Return numerical value of a switch configuration
-// 1/0, on/off, english, français, deutsch
-//-------------------------------------------------
-int config_switch(const char *str)
-{
-	if (strcmpi(str, "1") == 0 || strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0)
-		return 1;
-	if (strcmpi(str, "0") == 0 || strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0)
-		return 0;
-
-	return atoi(str);
-}
-
 //----------------------------------
 // Reading Lan Support configuration
 //----------------------------------
@@ -1798,14 +1747,14 @@ int login_lan_config_read(const char *lancfgName)
 
 	while(fgets(line, sizeof(line)-1, fp)) {
 
-		line_num++;		
+		line_num++;
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n' || line[1] == '\n')
 			continue;
 
-		line[sizeof(line)-1] = '\0';	
+		line[sizeof(line)-1] = '\0';
 		if(sscanf(line,"%[^:]: %[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4) != 4) {
 
-			ShowWarning("Error syntax of configuration file %s in line %d.\n", lancfgName, line_num);	
+			ShowWarning("Error syntax of configuration file %s in line %d.\n", lancfgName, line_num);
 			continue;
 		}
 
@@ -1891,24 +1840,24 @@ int login_config_read(const char* cfgName)
 		else if (!strcmpi(w1, "log_login"))
 			login_config.log_login = config_switch(w2);
 
-		else if (!strcmpi(w1,"ipban"))
+		else if (!strcmpi(w1, "ipban"))
 			login_config.ipban = config_switch(w2);
-		else if (!strcmpi(w1,"dynamic_pass_failure_ban"))
-			login_config.dynamic_pass_failure_ban=config_switch(w2);
-		else if (!strcmpi(w1,"dynamic_pass_failure_ban_interval"))
-			login_config.dynamic_pass_failure_ban_interval=atoi(w2);
-		else if (!strcmpi(w1,"dynamic_pass_failure_ban_limit"))
-			login_config.dynamic_pass_failure_ban_limit=atoi(w2);
-		else if (!strcmpi(w1,"dynamic_pass_failure_ban_duration"))
-			login_config.dynamic_pass_failure_ban_duration=atoi(w2);
+		else if (!strcmpi(w1, "dynamic_pass_failure_ban"))
+			login_config.dynamic_pass_failure_ban = config_switch(w2);
+		else if (!strcmpi(w1, "dynamic_pass_failure_ban_interval"))
+			login_config.dynamic_pass_failure_ban_interval = atoi(w2);
+		else if (!strcmpi(w1, "dynamic_pass_failure_ban_limit"))
+			login_config.dynamic_pass_failure_ban_limit = atoi(w2);
+		else if (!strcmpi(w1, "dynamic_pass_failure_ban_duration"))
+			login_config.dynamic_pass_failure_ban_duration = atoi(w2);
 
-		else if (!strcmpi(w1,"new_account"))
+		else if (!strcmpi(w1, "new_account"))
 			login_config.new_account_flag=config_switch(w2);
-		else if (!strcmpi(w1,"check_client_version"))
+		else if (!strcmpi(w1, "check_client_version"))
 			login_config.check_client_version=config_switch(w2);
-		else if (!strcmpi(w1,"client_version_to_connect"))
+		else if (!strcmpi(w1, "client_version_to_connect"))
 			login_config.client_version_to_connect=atoi(w2);
-		else if (!strcmpi(w1,"use_MD5_passwords"))
+		else if (!strcmpi(w1, "use_MD5_passwords"))
 			login_config.use_md5_passwds = config_switch(w2);
 		else if (!strcmpi(w1, "min_level_to_connect"))
 			login_config.min_level_to_connect = atoi(w2);
@@ -1924,11 +1873,11 @@ int login_config_read(const char* cfgName)
 			time_allowed = atoi(w2);
 		else if (!strcmpi(w1, "online_check"))
 			login_config.online_check = config_switch(w2);
-		else if (!strcmpi(w1,"use_dnsbl"))
+		else if (!strcmpi(w1, "use_dnsbl"))
 			login_config.use_dnsbl = config_switch(w2);
-		else if (!strcmpi(w1,"dnsbl_servers"))
-			{ strncpy(login_config.dnsbl_servs,w2,1023); login_config.dnsbl_servs[1023] = '\0'; }
-		else if (!strcmpi(w1,"ip_sync_interval"))
+		else if (!strcmpi(w1, "dnsbl_servers"))
+			{ strncpy(login_config.dnsbl_servs, w2, 1023); login_config.dnsbl_servs[1023] = '\0'; }
+		else if (!strcmpi(w1, "ip_sync_interval"))
 			login_config.ip_sync_interval = 1000*60*atoi(w2); //w2 comes in minutes.
 		else if (!strcmpi(w1, "import"))
 			login_config_read(w2);
@@ -1958,31 +1907,31 @@ void sql_config_read(const char* cfgName)
 			login_config.login_gm_read = (atoi(w2) == 0);
 		else if (!strcmpi(w1, "login_db"))
 			strcpy(login_db, w2);
-		else if (!strcmpi(w1,"login_server_ip"))
+		else if (!strcmpi(w1, "login_server_ip"))
 			strcpy(login_server_ip, w2);
-		else if (!strcmpi(w1,"login_server_port"))
+		else if (!strcmpi(w1, "login_server_port"))
 			login_server_port = atoi(w2);
-		else if (!strcmpi(w1,"login_server_id"))
+		else if (!strcmpi(w1, "login_server_id"))
 			strcpy(login_server_id, w2);
-		else if (!strcmpi(w1,"login_server_pw"))
+		else if (!strcmpi(w1, "login_server_pw"))
 			strcpy(login_server_pw, w2);
-		else if (!strcmpi(w1,"login_server_db"))
+		else if (!strcmpi(w1, "login_server_db"))
 			strcpy(login_server_db, w2);
-		else if (!strcmpi(w1,"default_codepage"))
+		else if (!strcmpi(w1, "default_codepage"))
 			strcpy(default_codepage, w2);
-		else if (!strcmpi(w1,"login_db_account_id"))
+		else if (!strcmpi(w1, "login_db_account_id"))
 			strcpy(login_db_account_id, w2);
-		else if (!strcmpi(w1,"login_db_userid"))
+		else if (!strcmpi(w1, "login_db_userid"))
 			strcpy(login_db_userid, w2);
-		else if (!strcmpi(w1,"login_db_user_pass"))
+		else if (!strcmpi(w1, "login_db_user_pass"))
 			strcpy(login_db_user_pass, w2);
-		else if (!strcmpi(w1,"login_db_level"))
+		else if (!strcmpi(w1, "login_db_level"))
 			strcpy(login_db_level, w2);
 		else if (!strcmpi(w1, "loginlog_db"))
 			strcpy(loginlog_db, w2);
 		else if (!strcmpi(w1, "reg_db"))
 			strcpy(reg_db, w2);
-		else if (!strcmpi(w1,"import"))
+		else if (!strcmpi(w1, "import"))
 			sql_config_read(w2);
 	}
 	fclose(fp);

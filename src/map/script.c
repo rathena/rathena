@@ -3312,22 +3312,22 @@ int script_config_read_sub(char *cfgName)
 			set_posword(w2);
 		}
 		else if(strcmpi(w1,"verbose_mode")==0) {
-			script_config.verbose_mode = battle_config_switch(w2);
+			script_config.verbose_mode = config_switch(w2);
 		}
 		else if(strcmpi(w1,"warn_func_mismatch_paramnum")==0) {
-			script_config.warn_func_mismatch_paramnum = battle_config_switch(w2);
+			script_config.warn_func_mismatch_paramnum = config_switch(w2);
 		}
 		else if(strcmpi(w1,"check_cmdcount")==0) {
-			script_config.check_cmdcount = battle_config_switch(w2);
+			script_config.check_cmdcount = config_switch(w2);
 		}
 		else if(strcmpi(w1,"check_gotocount")==0) {
-			script_config.check_gotocount = battle_config_switch(w2);
+			script_config.check_gotocount = config_switch(w2);
 		}
 		else if(strcmpi(w1,"event_script_type")==0) {
-			script_config.event_script_type = battle_config_switch(w2);
+			script_config.event_script_type = config_switch(w2);
 		}
 		else if(strcmpi(w1,"event_requires_trigger")==0) {
-			script_config.event_requires_trigger = battle_config_switch(w2);
+			script_config.event_requires_trigger = config_switch(w2);
 		}
 		else if(strcmpi(w1,"die_event_name")==0) {			
 			strncpy(script_config.die_event_name, w2, NAME_LENGTH-1);

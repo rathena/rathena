@@ -22,17 +22,17 @@
 #include <string.h>
 #include <stdarg.h>
 
+#include "../common/cbasetypes.h"
 #include "../common/core.h"
 #include "../common/socket.h"
-#include "../common/timer.h"
-#include "../common/mmo.h"
-#include "../common/showmsg.h"
-#include "../common/version.h"
 #include "../common/db.h"
+#include "../common/timer.h"
 #include "../common/lock.h"
 #include "../common/malloc.h"
 #include "../common/strlib.h"
+#include "../common/mmo.h"
 #include "../common/showmsg.h"
+#include "../common/version.h"
 #include "../common/md5calc.h"
 #include "login.h"
 
@@ -215,7 +215,8 @@ static int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data
 // Online User Database [Wizputer]
 //-----------------------------------------------------
 
-void add_online_user (int char_server, int account_id) {
+void add_online_user(int char_server, int account_id)
+{
 	struct online_login_data *p;
 	if (!online_check)
 		return;
@@ -228,11 +229,12 @@ void add_online_user (int char_server, int account_id) {
 	}
 }
 
-void remove_online_user (int account_id) {
+void remove_online_user(int account_id)
+{
 	if(!online_check)
 		return;
-	if (account_id == 99) {	// reset all to offline
-		online_db->clear(online_db, NULL);	// purge db
+	if (account_id == 99) { // reset all to offline
+		online_db->clear(online_db, NULL); // purge db
 		return;
 	}
 	idb_remove(online_db,account_id);
@@ -244,12 +246,13 @@ static int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data
 	if ((p= idb_get(online_db, id)) != NULL && p->waiting_disconnect == id)
 	{
 		p->waiting_disconnect = -1;
-		remove_online_user(p->account_id);
+		remove_online_user(id);
 	}
 	return 0;
 }
 
-static int sync_ip_addresses(int tid, unsigned int tick, int id, int data){
+static int sync_ip_addresses(int tid, unsigned int tick, int id, int data)
+{
 	unsigned char buf[2];
 	ShowInfo("IP Sync in progress...\n");
 	WBUFW(buf,0) = 0x2735;
@@ -485,43 +488,6 @@ int check_ladminip(uint32 ip)
 	}
 
 	return 0;
-}
-
-//---------------------------------------------------
-// E-mail check: return 0 (not correct) or 1 (valid).
-//---------------------------------------------------
-int e_mail_check(char *email)
-{
-	char ch;
-	char* last_arobas;
-
-	// athena limits
-	if (strlen(email) < 3 || strlen(email) > 39)
-		return 0;
-
-	// part of RFC limits (official reference of e-mail description)
-	if (strchr(email, '@') == NULL || email[strlen(email)-1] == '@')
-		return 0;
-
-	if (email[strlen(email)-1] == '.')
-		return 0;
-
-	last_arobas = strrchr(email, '@');
-
-	if (strstr(last_arobas, "@.") != NULL ||
-	    strstr(last_arobas, "..") != NULL)
-		return 0;
-
-	for(ch = 1; ch < 32; ch++)
-		if (strchr(last_arobas, ch) != NULL)
-			return 0;
-
-	if (strchr(last_arobas, ' ') != NULL ||
-	    strchr(last_arobas, ';') != NULL)
-		return 0;
-
-	// all correct
-	return 1;
 }
 
 //-----------------------------------------------
@@ -1005,11 +971,11 @@ int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len)
 
 	for(i = 0, c = 0; i < MAX_SERVERS; i++) {
 		if ((fd = server_fd[i]) >= 0 && fd != sfd) {
-			WFIFOHEAD(fd, len);
+			WFIFOHEAD(fd,len);
 			if (WFIFOSPACE(fd) < len) //Increase buffer size.
 				realloc_writefifo(fd, len);
 			memcpy(WFIFOP(fd,0), buf, len);
-			WFIFOSET(fd, len);
+			WFIFOSET(fd,len);
 			c++;
 		}
 	}
@@ -1487,7 +1453,7 @@ int parse_fromchar(int fd)
 			if (i == AUTH_FIFO_SIZE) {
 				login_log("Char-server '%s': authentification of the account %d REFUSED (ip: %s)." RETCODE,
 				          server[id].name, account_id, ip);
-                                WFIFOHEAD(fd, 51);
+                                WFIFOHEAD(fd,51);
 				WFIFOW(fd,0) = 0x2713;
 				WFIFOL(fd,2) = account_id;
 				WFIFOB(fd,6) = 1;
@@ -1505,7 +1471,7 @@ int parse_fromchar(int fd)
 			//printf("parse_fromchar: Receiving of the users number of the server '%s': %d\n", server[id].name, RFIFOL(fd,2));
 			server[id].users = RFIFOL(fd,2);
 			// send some answer
-			WFIFOHEAD(fd, 2);
+			WFIFOHEAD(fd,2);
 			WFIFOW(fd,0) = 0x2718;
 			WFIFOSET(fd,2);
 
@@ -2033,7 +1999,7 @@ int parse_admin(int fd)
 		switch(RFIFOW(fd,0)) {
 		case 0x7530:	// Request of the server version
 			login_log("'ladmin': Sending of the server version (ip: %s)" RETCODE, ip);
-                        WFIFOHEAD(fd, 10);
+                        WFIFOHEAD(fd,10);
 			WFIFOW(fd,0) = 0x7531;
 			WFIFOB(fd,2) = ATHENA_MAJOR_VERSION;
 			WFIFOB(fd,3) = ATHENA_MINOR_VERSION;
@@ -2988,7 +2954,7 @@ int lan_subnetcheck(uint32 ip)
 }
 
 //----------------------------------------------------------------------------------------
-// Default packet parsing (normal players or administation/char-server connexion requests)
+// Default packet parsing (normal players or administation/char-server connection requests)
 //----------------------------------------------------------------------------------------
 int parse_login(int fd)
 {	
@@ -3042,7 +3008,7 @@ int parse_login(int fd)
 			//Perform ip-ban check
 			if (!check_ip(ipl)) {
 				login_log("Connection refused: IP isn't authorised (deny/allow, ip: %s)." RETCODE, ip);
-				WFIFOHEAD(fd, 23);
+				WFIFOHEAD(fd,23);
 				WFIFOW(fd,0) = 0x6a;
 				WFIFOB(fd,2) = 3; // 3 = Rejected from Server
 				WFIFOSET(fd,23);
@@ -3050,7 +3016,7 @@ int parse_login(int fd)
 				break;
 			}
 
-			switch(RFIFOW(fd, 0)){
+			switch(RFIFOW(fd,0)){
 				case 0x64:
 					if(packet_len < 55)
 						return 0;
@@ -3094,18 +3060,18 @@ int parse_login(int fd)
 				if (min_level_to_connect > gm_level) {
 					login_log("Connection refused: the minimum GM level for connection is %d (account: %s, GM level: %d, ip: %s)." RETCODE,
 					          min_level_to_connect, account.userid, gm_level, ip);
-					WFIFOHEAD(fd, 3);
+					WFIFOHEAD(fd,3);
 					WFIFOW(fd,0) = 0x81;
 					WFIFOB(fd,2) = 1; // 01 = Server closed
 					WFIFOSET(fd,3);
 				} else {
 					if (gm_level)
-						ShowInfo("Connection of the GM (level:%d) account '%s' accepted.\n", gm_level, account.userid);
+						ShowStatus("Connection of the GM (level:%d) account '%s' accepted.\n", gm_level, account.userid);
 					else
-						ShowInfo("Connection of the account '%s' accepted.\n", account.userid);
+						ShowStatus("Connection of the account '%s' accepted.\n", account.userid);
 
 					server_num = 0;
-					WFIFOHEAD(fd, 47+32*MAX_SERVERS);
+					WFIFOHEAD(fd,47+32*MAX_SERVERS);
 					for(i = 0; i < MAX_SERVERS; i++) {
 						if (server_fd[i] >= 0) {
 							// Advanced subnet check [LuzZza]
@@ -3147,7 +3113,7 @@ int parse_login(int fd)
 					}
 				}
 			} else { // auth failed
-				WFIFOHEAD(fd, 23);
+				WFIFOHEAD(fd,23);
 				memset(WFIFOP(fd,0), '\0', 23);
 				WFIFOW(fd,0) = 0x6a;
 				WFIFOB(fd,2) = result;
@@ -3187,7 +3153,7 @@ int parse_login(int fd)
 					ld->md5key[i] = rand() % 255 + 1;
 
 				RFIFOSKIP(fd,2);
-				WFIFOHEAD(fd, 4 + ld->md5keylen);
+				WFIFOHEAD(fd,4 + ld->md5keylen);
 				WFIFOW(fd,0) = 0x01dc;
 				WFIFOW(fd,2) = 4 + ld->md5keylen;
 				memcpy(WFIFOP(fd,4), ld->md5key, ld->md5keylen);
@@ -3204,7 +3170,7 @@ int parse_login(int fd)
 				uint32 server_ip;
 				uint16 server_port;
 
- 				WFIFOHEAD(fd, 3);
+ 				WFIFOHEAD(fd,3);
 				memcpy(account.userid,RFIFOP(fd,2),NAME_LENGTH); account.userid[23] = '\0'; remove_control_chars((unsigned char *)account.userid);
 				memcpy(account.passwd, RFIFOP(fd,26), NAME_LENGTH); account.passwd[23] = '\0'; remove_control_chars((unsigned char *)account.passwd);
 				account.passwdenc = 0;
@@ -3271,8 +3237,9 @@ int parse_login(int fd)
 			return 0;
 
 		case 0x7530:	// Server version information request
+		{
 			login_log("Sending of the server version (ip: %s)" RETCODE, ip);
-			WFIFOHEAD(fd, 10);
+			WFIFOHEAD(fd,10);
 			WFIFOW(fd,0) = 0x7531;
 			WFIFOB(fd,2) = ATHENA_MAJOR_VERSION;
 			WFIFOB(fd,3) = ATHENA_MINOR_VERSION;
@@ -3284,6 +3251,7 @@ int parse_login(int fd)
 			WFIFOSET(fd,10);
 			RFIFOSKIP(fd,2);
 			break;
+		}
 
 		case 0x7532:	// Request to end connection
 			login_log("End of connection (ip: %s)" RETCODE, ip);
@@ -3441,20 +3409,6 @@ static int online_data_cleanup(int tid, unsigned int tick, int id, int data)
 	return 0;
 } 
 
-//-------------------------------------------------
-// Return numerical value of a switch configuration
-// 1/0, on/off, english, français, deutsch
-//-------------------------------------------------
-int config_switch(const char *str)
-{
-	if (strcmpi(str, "1") == 0 || strcmpi(str, "on") == 0 || strcmpi(str, "yes") == 0 || strcmpi(str, "oui") == 0 || strcmpi(str, "ja") == 0)
-		return 1;
-	if (strcmpi(str, "0") == 0 || strcmpi(str, "off") == 0 || strcmpi(str, "no") == 0 || strcmpi(str, "non") == 0 || strcmpi(str, "nein") == 0)
-		return 0;
-
-	return atoi(str);
-}
-
 //----------------------------------
 // Reading Lan Support configuration
 //----------------------------------
@@ -3473,14 +3427,14 @@ int login_lan_config_read(const char *lancfgName)
 
 	while(fgets(line, sizeof(line)-1, fp)) {
 
-		line_num++;		
+		line_num++;
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n' || line[1] == '\n')
 			continue;
 
 		line[sizeof(line)-1] = '\0';
 		if(sscanf(line,"%[^:]: %[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4) != 4) {
-	
-			ShowWarning("Error syntax of configuration file %s in line %d.\n", lancfgName, line_num);	
+
+			ShowWarning("Error syntax of configuration file %s in line %d.\n", lancfgName, line_num);
 			continue;
 		}
 
@@ -3490,7 +3444,7 @@ int login_lan_config_read(const char *lancfgName)
 		remove_control_chars((unsigned char *)w4);
 
 		if(strcmpi(w1, "subnet") == 0) {
-	
+
 			subnet[subnet_count].mask = ntohl(inet_addr(w2));
 			subnet[subnet_count].char_ip = ntohl(inet_addr(w3));
 			subnet[subnet_count].map_ip = ntohl(inet_addr(w4));
@@ -3499,7 +3453,7 @@ int login_lan_config_read(const char *lancfgName)
 				ShowError("%s: Configuration Error: The char server (%s) and map server (%s) belong to different subnetworks!\n", lancfgName, w3, w4);
 				continue;
 			}
-	
+
 			subnet_count++;
 		}
 
@@ -3512,7 +3466,7 @@ int login_lan_config_read(const char *lancfgName)
 
 //-----------------------------------
 // Reading main configuration file
-//-----------------------------------	
+//-----------------------------------
 int login_config_read(const char* cfgName)
 {
 	char line[1024], w1[1024], w2[1024];
@@ -3676,35 +3630,35 @@ int login_config_read(const char* cfgName)
 					access_deny[access_denynum * ACO_STRSIZE - 1] = '\0';
 				}
 			}
-		} else if (strcmpi(w1, "new_account") == 0) {
-			new_account_flag = config_switch(w2);
-		} else if(strcmpi(w1, "check_client_version") == 0) {
-			check_client_version = config_switch(w2);
-		} else if(strcmpi(w1, "client_version_to_connect") == 0) {
-			client_version_to_connect = atoi(w2);
-		} else if (strcmpi(w1, "use_MD5_passwords") == 0) {
-			use_md5_passwds = config_switch(w2);
-		} else if (strcmpi(w1, "min_level_to_connect") == 0) {
-			min_level_to_connect = atoi(w2);
-		} else if (!strcmpi(w1, "date_format")) {
-			strncpy(date_format, w2, sizeof(date_format));
-		} else if (strcmpi(w1, "console") == 0) {
-			console = config_switch(w2);
-		} else if (strcmpi(w1, "allowed_regs") == 0) { //account flood protection system
-			allowed_regs = atoi(w2);
-		} else if (strcmpi(w1, "time_allowed") == 0) {
-			time_allowed = atoi(w2);
-		} else if (strcmpi(w1, "online_check") == 0) {
-			online_check = config_switch(w2);
-		} else if(strcmpi(w1,"use_dnsbl")==0) {
-			use_dnsbl=config_switch(w2);
-		} else if(strcmpi(w1,"dnsbl_servers")==0) {
-			strcpy(dnsbl_servs,w2);
-		} else if(strcmpi(w1,"ip_sync_interval")==0) {
-			ip_sync_interval = 1000*60*atoi(w2); //w2 comes in minutes.
-		} else if (strcmpi(w1, "import") == 0) {
-			login_config_read(w2);
 		}
+		else if(!strcmpi(w1, "new_account"))
+			new_account_flag = config_switch(w2);
+		else if(!strcmpi(w1, "check_client_version"))
+			check_client_version = config_switch(w2);
+		else if(!strcmpi(w1, "client_version_to_connect"))
+			client_version_to_connect = atoi(w2);
+		else if(!strcmpi(w1, "use_MD5_passwords"))
+			use_md5_passwds = config_switch(w2);
+		else if(!strcmpi(w1, "min_level_to_connect"))
+			min_level_to_connect = atoi(w2);
+		else if(!strcmpi(w1, "date_format"))
+			strncpy(date_format, w2, sizeof(date_format));
+		else if(!strcmpi(w1, "console"))
+			console = config_switch(w2);
+		else if(!strcmpi(w1, "allowed_regs")) //account flood protection system
+			allowed_regs = atoi(w2);
+		else if(!strcmpi(w1, "time_allowed"))
+			time_allowed = atoi(w2);
+		else if(!strcmpi(w1, "online_check"))
+			online_check = config_switch(w2);
+		else if(!strcmpi(w1, "use_dnsbl"))
+			use_dnsbl = config_switch(w2);
+		else if(!strcmpi(w1, "dnsbl_servers"))
+			strcpy(dnsbl_servs, w2);
+		else if(!strcmpi(w1, "ip_sync_interval"))
+			ip_sync_interval = 1000*60*atoi(w2); //w2 comes in minutes.
+		else if(!strcmpi(w1, "import"))
+			login_config_read(w2);
 	}
 	fclose(fp);
 	ShowInfo("Finished reading %s.\n", cfgName);
@@ -3996,7 +3950,8 @@ void do_final(void) {
 // Function called when the server
 // has received a crash signal.
 //------------------------------
-void do_abort(void) {
+void do_abort(void)
+{
 }
 
 //------------------------------
@@ -4006,7 +3961,9 @@ void set_server_type(void)
 {
 	SERVER_TYPE = ATHENA_SERVER_LOGIN;
 }
-int do_init(int argc, char **argv) {
+
+int do_init(int argc, char **argv)
+{
 	int i, j;
 
 	// read login-server configuration
@@ -4056,7 +4013,7 @@ int do_init(int argc, char **argv) {
 		//##TODO invoke a CONSOLE_START plugin event
 	}
 
-	new_reg_tick=gettick();
+	new_reg_tick = gettick();
 
 	login_log("The login-server is ready (Server is listening on the port %d)." RETCODE, login_port);
 	ShowStatus("The login-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", login_port);
