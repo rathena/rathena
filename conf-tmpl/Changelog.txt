@@ -1,8 +1,5 @@
 Date	Added
 
-2007/04/09
-	* Removed the nosave mapflags from the Guild Castles
-	  (http://www.eathena.ws/board/index.php?showtopic=146581) [Skotlex]
 2007/04/03
 	* Added hom_setting&0x40, when set it clears the "can't reuse" skill delay
 	  when you vaporize a homunculus (set by default). [Skotlex]
