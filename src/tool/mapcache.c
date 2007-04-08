@@ -9,6 +9,7 @@
 #include <unistd.h>
 #endif
 
+#include "../common/cbasetypes.h"
 #include "grfio.h"
 
 #define MAP_NAME_LENGTH 12

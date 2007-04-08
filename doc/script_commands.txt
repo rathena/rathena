@@ -71,6 +71,8 @@
 //=       Removed all .gat refferences from the examples [Lupus]
 //= 3.04.20070330
 //=       Adjusted the 'itemskill' description due to recent change [ultramage]
+//= 3.04.20070409
+//=       Fixed the incorrect order of parameters in 'makeitem' [ultramage]
 //===== Compatible With ===================================
 //= LOL, can be used by anyone hopefully
 //===== Description =======================================
@@ -3715,18 +3717,18 @@ Example:
 	}
 
 ---------------------------------------
-!!!!!!!!!!!!!!!
-*makeitem <item id>,<amount>,<X>,<Y>,"<map name>";
-*makeitem "<item name>",<amount>,<X>,<Y>,"<map name>";
+
+*makeitem <item id>,<amount>,"<map name>",<X>,<Y>;
+*makeitem "<item name>",<amount>,"<map name>",<X>,<Y>;
 
 This command will create an item lying around on a specified map in the 
 specified location.
 
  itemid   - Found in 'db/item_db.txt'
  amount   - Amount you want produced
+ map name - The map name
  X        - The X coordinate
- Y        - The Y coordinate
- map name - The map name.
+ Y        - The Y coordinate.
 
 This item will still disappear just like any other dropped item. Like 'getitem', 
 it also accepts an 'english name' field from the database and creates apples if 
