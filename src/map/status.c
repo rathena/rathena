@@ -4464,7 +4464,6 @@ int status_get_sc_def(struct block_list *bl, int type)
 		else if (sc->data[SC_SIEGFRIED].timer != -1)
 			sc_def += 100*sc->data[SC_SIEGFRIED].val3; //Status resistance.
 	}
-
 	return sc_def>10000?10000:sc_def;
 }
 
@@ -4519,7 +4518,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		if (def && tick && !(flag&2))
 		{
 			tick -= tick*def/10000;
-			if (tick <= 0)
+			if (tick <= 0 && type != SC_ANKLE) //Ankle Snare has it's opwn minimum
 				return 0;
 		}
 
