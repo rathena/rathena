@@ -650,7 +650,7 @@ int guild_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	}
 	if(tsd->status.guild_id>0 ||
 		tsd->guild_invite>0 ||
-		map[tsd->bl.m].flag.gvg_castle)
+		(agit_flag && map[tsd->bl.m].flag.gvg_castle))
 	{	//Can't invite people inside castles. [Skotlex]
 		clif_guild_inviteack(sd,0);
 		return 0;
@@ -784,7 +784,7 @@ int guild_leave(struct map_session_data *sd,int guild_id,
 
 	if(sd->status.account_id!=account_id ||
 		sd->status.char_id!=char_id || sd->status.guild_id!=guild_id ||
-		map[sd->bl.m].flag.gvg_castle) //Can't leave inside guild castles.
+		(agit_flag && map[sd->bl.m].flag.gvg_castle))
 		return 0;
 
 	intif_guild_leave(sd->status.guild_id, sd->status.account_id, sd->status.char_id,0,mes);
@@ -814,7 +814,7 @@ int guild_expulsion(struct map_session_data *sd,int guild_id,
   	//Can't leave inside guild castles.
 	if ((tsd = map_id2sd(account_id)) &&
 		tsd->status.char_id == char_id &&
-		map[tsd->bl.m].flag.gvg_castle)
+		(agit_flag && map[tsd->bl.m].flag.gvg_castle))
 		return 0;
 
 	for(i=0;i<g->max_member;i++){	// Š‘®‚µ‚Ä‚¢‚é‚©
@@ -1404,11 +1404,6 @@ int guild_opposition(struct map_session_data *sd,struct map_session_data *tsd)
 
 	if( guild_get_alliance_count(g,1)>=3 )	{
 		clif_guild_oppositionack(sd,1);
-		return 0;
-	}
-
-	if(agit_flag)	{
-		clif_displaymessage(sd->fd,"You cannot make oppositions during Guild Wars!");
 		return 0;
 	}
 

@@ -5720,6 +5720,8 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 		if(battle_config.skill_log && battle_config.skill_log&src->type)
 			ShowInfo("Type %d, ID %d skill castend id [id =%d, lv=%d, target ID %d)\n",
 				src->type, src->id, ud->skillid, ud->skilllv, target->id);
+
+		map_freeblock_lock();
 		if (skill_get_casttype(ud->skillid) == CAST_NODAMAGE)
 			skill_castend_nodamage_id(src,target,ud->skillid,ud->skilllv,tick,0);
 		else
@@ -5734,6 +5736,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 			else ud->skillid = 0; //mobs can't clear this one as it is used for skill condition 'afterskill'
 			ud->skilllv = ud->skilltarget = 0;
 		}
+		map_freeblock_unlock();
 		return 1;
 	} while(0);
 	//Skill failed.
@@ -5875,6 +5878,8 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 		unit_stop_walking(src,1);
 		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
 		unit_set_walkdelay(src, tick, battle_config.default_skill_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
+
+		map_freeblock_lock();
 		skill_castend_pos2(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv,tick,0);
 
 		if (ud->skilltimer == -1) {
@@ -5882,6 +5887,7 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 			else ud->skillid = 0; //Non mobs can't clear this one as it is used for skill condition 'afterskill'
 			ud->skilllv = ud->skillx = ud->skilly = 0;
 		}
+		map_freeblock_unlock();
 		return 1;
 	} while(0);
 

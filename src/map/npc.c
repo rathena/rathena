@@ -1206,10 +1206,9 @@ int npc_scriptcont(struct map_session_data *sd,int id)
 	if( id != sd->npc_id ){
 		TBL_NPC* nd_sd=(TBL_NPC*)map_id2bl(sd->npc_id);
 		TBL_NPC* nd=(TBL_NPC*)map_id2bl(id);
-		if( nd_sd && nd )
-			ShowWarning("npc_scriptcont: %s (sd->npc_id=%d) is not %s (id=%d).\n", nd_sd->name, sd->npc_id, nd->name, id);
-		else
-			ShowDebug("npc_scriptcont: Invalid npc ID, npc_id variable not cleared? %x (sd->npc_id=%d) is not %x (id=%d)\n", (int)nd_sd, sd->npc_id, (int)nd, id);
+		ShowDebug("npc_scriptcont: %s (sd->npc_id=%d) is not %s (id=%d).\n",
+			nd_sd?nd_sd->name:"'Unknown NPC'", sd->npc_id,
+		  	nd?nd->name:"'Unknown NPC'", id);
 		return 1;
 	}
 	
