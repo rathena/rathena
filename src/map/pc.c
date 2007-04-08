@@ -318,7 +318,9 @@ int pc_makesavestatus(struct map_session_data *sd)
 	if(!battle_config.save_clothcolor)
 		sd->status.clothes_color=0;
 
-	sd->status.option = sd->sc.option; //Since the option saved is in 
+  	//Only copy the Cart/Peco/Falcon options, the rest are handled via 
+	//status change load/saving. [Skotlex]
+	sd->status.option = sd->sc.option&(OPTION_CART|OPTION_FALCON|OPTION_RIDING);
 		
 	if (sd->sc.count && sd->sc.data[SC_JAILED].timer != -1)
 	{	//When Jailed, do not move last point.
