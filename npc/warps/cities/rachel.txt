@@ -67,21 +67,6 @@ ra_temin,312,252,0	warp	rachel006	1,1,ra_temin,206,88
 ra_temin,130,93,0	warp	rachel007	1,1,ra_temin,238,257
 ra_temin,238,252,0	warp	rachel008	1,1,ra_temin,130,88
 
-ra_temin,276,326,0	script	Statue#Rachel	111,{
-	mes "Do you want to enter Rachel Sanctuary?";
-	mes "Please donate ^FF000050000 Zeny^000000 to enter.";
-	next;
-	if(select("Yes", "No") == 1){
-	  if(Zeny >= 50000){
-	    set Zeny,Zeny-50000;
-	    close2;
-	    warp "ra_san01",139,14;
-	    end;
-	  }
-	}
-	close;
-}
-
 //== WEAPON SHOP ==========================
 //rachel,42,108,0	warp	ra_in001	2,2,ra_in01,171,389
 //ra_in01,171,393,0	warp	ra_in001a	2,2,rachel,41,112
@@ -109,7 +94,6 @@ ra_temin,276,326,0	script	Statue#Rachel	111,{
 //ra_in01,315,62,0	warp	ra_in010a	2,2,ra_in01,360,61
 //ra_in01,297,58,0	warp	ra_in011	2,2,ra_in01,340,117
 //ra_in01,338,120,0	warp	ra_in011a	2,2,ra_in01,297,62
-
 
 //== HOUSES ===============================
 rachel,57,259,0	warp	ra_in012	2,2,ra_in01,295,350

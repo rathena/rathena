@@ -89,6 +89,11 @@ Info:		Ninja Job Room, Basshu
 How to set: 	set MISC_QUEST,MISC_QUEST | 4096;
 How to check: 	if(MISC_QUEST & 4096){}
 
+Quest: 		Rachel Sanctuary Quest
+Info:		Gained access to Rachel Santuary (yes/no)
+How to set: 	set MISC_QUEST,MISC_QUEST | 8192;
+How to check: 	if(MISC_QUEST & 8192){}
+
 --------------------------------------------------------------
 Variable: MISC_QUEST2
 

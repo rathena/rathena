@@ -1,0 +1,96 @@
+//===== eAthena Script ======================================= 
+//= Quest NPCs related to Rachel
+//===== By: ================================================== 
+//= Playtester
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena svn
+//===== Description: ========================================= 
+//= Rachel Santuary Quest
+//===== Additional Comments: ================================= 
+//= 1.0 Added semi-official Rachel Santuary Quest [Playtester]
+//============================================================
+
+//////////////////////////////////////////////////////////////
+//		  Rachel Sanctuary Quest		    //
+//							    //
+//It's all in one NPC for now because I don't know location //
+//and sprite ids of related NPCs. - Playtester		    //
+//////////////////////////////////////////////////////////////
+ra_temin,276,326,0	script	Statue#Rachel	111,{
+
+	if($rachel_donate < 10000){
+		mes "-A sign on the statue reads-";
+		mes "Please donate ^FF000050,000 Zeny^000000 to our holy goddess.";
+		mes "There have been "+$rachel_donate+" donations already.";
+		next;
+		if(select("Don't donate.:Donate.") == 1){
+			mes "-You decided not to donate-";
+			close;
+		}else{
+			if(Zeny >= 50000){
+				set Zeny,Zeny-50000;
+				mes "-You can hear a voice-";
+				mes "May the goddess bless you.";
+				set .@bonus_donate,rand(1000);
+				if(.@bonus_donate < 400) getitem 545,1; //Red Condensed 40%
+				else if(.@bonus_donate >= 400 && .@bonus_donate < 700) getitem 546,1; //Yellow Condensed 30%
+				else if(.@bonus_donate >= 700 && .@bonus_donate < 900) getitem 547,1; //White Condensed 20%
+				else if(.@bonus_donate >= 900 && .@bonus_donate < 950) getitem 518,1; //Honey 5%
+				else if(.@bonus_donate >= 950 && .@bonus_donate < 970) getitem 526,1; //Royal Jelly 2%
+				else if(.@bonus_donate >= 970 && .@bonus_donate < 980) getitem 608,1; //Yggdrasil Seed 1%
+				else if(.@bonus_donate >= 980 && .@bonus_donate < 990) getitem 644,1; //Gift Box 1%
+				else if(.@bonus_donate >= 990 && .@bonus_donate < 995) getitem 607,1; //Yggdrasil Berry 0.5%
+				else if(.@bonus_donate >= 995 && .@bonus_donate < 1000) getitem 603,1; //Old Blue Box 0.5%
+				set $rachel_donate,$rachel_donate+1;
+				close;
+			}
+			else{
+				mes "-You want to donate-";
+				mes "-But you don't have enough zeny-";
+				close;
+			}
+		}
+	}
+	if(!(MISC_QUEST & 8192)){
+		mes "-You can hear a voice-";
+		next;
+		mes "[Voice]";
+		mes "The gates to Rachel Sanctuary have opened.";
+		mes "Bring me ^0000FF40 Ice Hearts^000000, ^FF00001 Candy^000000 and ^FF000020 Firecrackers^000000 and I'll allow you to enter.";
+		next;
+		if(select("Do nothing.:Hand over the items.") == 1){
+			mes "[Voice]";
+			mes "I won't grant you access to Rachel Sanctuary.";
+			close;
+		}else{
+			if(countitem(7561) < 40 || countitem(529) < 1 || countitem(12018) < 20){
+				mes "[Voice]";
+				mes "You don't have enough items.";
+				mes "I won't grant you access to Rachel Sanctuary.";
+				close;
+			}
+			delitem 7561,40;  //Ice Hearts
+			delitem 529,1;    //Candy
+			delitem 12018,20; //Firecrackers
+			mes "[Voice]";
+			mes "Very well. I shall grant you access to Rachel Sanctuary.";
+			set MISC_QUEST,MISC_QUEST | 8192;
+			close;
+		}
+	}
+	mes "[Voice]";
+	mes "Oh it's you my blessed child.";
+	mes "Do you want to enter Rachel Sanctuary?";
+	next;
+	if(select("No.", "Yes.") == 2){
+		mes "-The door to Rachel Sanctuary opens-";
+		close2;
+		warp "ra_san01",139,14;
+	    	end;
+	}
+	mes "[Voice]";
+	mes "I see, come back when you need my help.";
+	close;
+}
