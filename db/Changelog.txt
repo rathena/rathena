@@ -19,6 +19,8 @@
 	-----
 
 ========================
+04/10
+	* Fixed aspd value of Fuuma Shuriken [Playtester]
 04/08
 	* Added some accessories thanks to Argatlahm [Playtester]
 	- also added Valkyrie combo bonus
