@@ -65,7 +65,7 @@ int npc_get_new_npc_id(void);
 
 void npc_addsrcfile(const char* name);
 void npc_delsrcfile(const char* name);
-void npc_parsesrcfile(char *);
+void npc_parsesrcfile(const char* name);
 int do_final_npc(void);
 int do_init_npc(void);
 int npc_event_do_oninit(void);
@@ -86,8 +86,6 @@ int npc_unload(struct npc_data *nd);
 int npc_reload(void);
 void npc_read_event_script(void);
 int npc_script_event(TBL_PC* sd, int type);
-
-extern char *current_file;
 
 struct npc_data *fake_nd;
 

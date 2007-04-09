@@ -46,7 +46,7 @@ static int npc_script=0;
 static int npc_mob=0;
 static int npc_delay_mob=0;
 static int npc_cache_mob=0;
-char *current_file = NULL;
+const char *current_file = NULL;
 int npc_get_new_npc_id(void){ return npc_id++; }
 
 static struct dbt *ev_db;
@@ -63,7 +63,7 @@ static struct eri *timer_event_ers; //For the npc timer data. [Skotlex]
 //For holding the view data of npc classes. [Skotlex]
 static struct view_data npc_viewdb[MAX_NPC_CLASS];
 
-static struct
+static struct script_event_s
 {	//Holds pointers to the commonly executed scripts for speedup. [Skotlex]
 	struct npc_data *nd;
 	struct event_data *event[UCHAR_MAX];
@@ -2795,7 +2795,7 @@ static int npc_parse_mapcell (char *w1, char *w2, char *w3, char *w4)
 	return 0;
 }
 
-void npc_parsesrcfile (char *name)
+void npc_parsesrcfile(const char* name)
 {
 	int m, lines = 0;
 	char line[2048];
@@ -2876,6 +2876,7 @@ void npc_parsesrcfile (char *name)
 		}
 	}
 	fclose(fp);
+	current_file = NULL;
 
 	return;
 }
@@ -3135,17 +3136,17 @@ static void npc_debug_warps(void)
  */
 int do_init_npc(void)
 {
-	struct npc_src_list *nsl;
-	time_t last_time = time(0);
-	int busy, i;
+	struct npc_src_list *file;
+	time_t last_time = time(NULL);
+	int busy = 0;
+	int i;
 	char c = '-';
 
 	//Stock view data for normal npcs.
 	memset(&npc_viewdb, 0, sizeof(npc_viewdb));
 	npc_viewdb[0].class_ = INVISIBLE_CLASS; //Invisible class is stored here.
-	for (busy = 1; busy < MAX_NPC_CLASS; busy++) 
-		npc_viewdb[busy].class_ = busy;
-	busy = 0;
+	for( i = 1; i < MAX_NPC_CLASS; i++ ) 
+		npc_viewdb[i].class_ = i;
 
 	// comparing only the first 24 chars of labels that are 50 chars long isn't that nice
 	// will cause "duplicated" labels where actually no dup is...
@@ -3155,16 +3156,17 @@ int do_init_npc(void)
 	memset(&ev_tm_b, -1, sizeof(ev_tm_b));
 	timer_event_ers = ers_new(sizeof(struct timer_event_data));
 
-	for (nsl = npc_src_files; nsl; nsl = nsl->next) {
-		npc_parsesrcfile(nsl->name);
-		current_file = NULL;
+	for( file = npc_src_files; file != NULL; file = file->next) {
+		npc_parsesrcfile(file->name);
 		printf("\r");
 		if (script_config.verbose_mode)
-			ShowStatus ("Loading NPCs... %-53s", nsl->name);
-		else {
+			ShowStatus("Loading NPCs... %-53s", file->name);
+		else
+		{
 			ShowStatus("Loading NPCs... Working: ");
-			if (last_time != time(0)) {
-				last_time = time(0);
+			if (last_time != time(NULL))
+			{// change character at least every second
+				last_time = time(NULL);
 				switch(busy) {
 					case 0: c='\\'; busy++; break;
 					case 1: c='|'; busy++; break;
@@ -3197,7 +3199,7 @@ int do_init_npc(void)
 	add_timer_func_list(npc_timerevent,"npc_timerevent");
 
 	// Init dummy NPC
-	fake_nd = (struct npc_data *)aCalloc(sizeof(struct npc_data),1);
+	fake_nd = (struct npc_data *)aMalloc(sizeof(struct npc_data));
 	fake_nd->bl.prev = fake_nd->bl.next = NULL;
 	fake_nd->bl.m = -1;
 	fake_nd->bl.x = 0;

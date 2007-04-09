@@ -1256,7 +1256,7 @@ int make_new_char_sql(int fd, unsigned char *dat) {
 
 	strncpy(name, dat, NAME_LENGTH);
 	name[NAME_LENGTH-1] = '\0'; //Always terminate string.
-	trim(name,TRIM_CHARS); //Trim character name. [Skotlex]
+	normalize_name(name,TRIM_CHARS); //Normalize character name. [Skotlex]
 	jstrescapecpy(t_name, name);
 
 	// disabled until fixed >.>

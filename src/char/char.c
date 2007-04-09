@@ -1118,7 +1118,7 @@ int make_new_char(int fd, unsigned char *dat) {
 	strncpy(name, dat, NAME_LENGTH);
 	name[NAME_LENGTH-1] = '\0'; //Trunc name to max possible value (23)
 	
-	trim(name,TRIM_CHARS); //Trim character name. [Skotlex]
+	normalize_name(name,TRIM_CHARS);//Normalize character name. [Skotlex]
 	
 	//check name != main chat nick [LuzZza]
 	if(strcmpi(name, main_chat_nick) == 0) {

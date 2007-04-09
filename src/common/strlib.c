@@ -123,27 +123,70 @@ int remove_control_chars(char* str)
 	return change;
 }
 
-//Trims a string, also removes illegal characters such as \t and reduces continous spaces to a single one. by [Foruken]
-char* trim(char* str, const char* delim)
+// Removes characters identified by ISSPACE from the start and end of the string
+// NOTE: make sure the string is not const!!
+char* trim(char* str)
 {
-	char* strp = strtok(str,delim);
-	char buf[1024];
-	char* bufp = buf;
-	memset(buf,0,sizeof buf);
+	size_t start;
+	size_t end;
 
-	while(strp) {
-		strcpy(bufp, strp);
-		bufp = bufp + strlen(strp);
-		strp = strtok(NULL, delim);
-		if (strp) {
-			strcpy(bufp," ");
-			bufp++;
-		}
+	if( str == NULL )
+		return str;
+
+	// get start position
+	for( start = 0; str[start] && ISSPACE(str[start]); ++start )
+		;
+	// get end position
+	for( end = strlen(str); start < end && str[end-1] && ISSPACE(str[end-1]); --end )
+		;
+	// trim
+	if( start == end )
+		*str = '\0';// empty string
+	else
+	{// move string with nul terminator
+		str[end] = '\0';
+		memmove(str,str+start,end-start+1);
 	}
-	strcpy(str,buf);
 	return str;
 }
 
+// Converts one or more consecutive occurences of the delimiters into a single space
+// and removes such occurences from the beginning and end of string
+// NOTE: make sure the string is not const!!
+char* normalize_name(char* str,const char* delims)
+{
+	char* in = str;
+	char* out = str;
+	int put_space = 0;
+
+	if( str == NULL || delims == NULL )
+		return str;
+
+	// trim start of string
+	while( *in && strchr(delims,*in) )
+		++in;
+	while( *in )
+	{
+		if( put_space )
+		{// replace trim characters with a single space
+			*out = ' ';
+			++out;
+		}
+		// copy non trim characters
+		while( *in && !strchr(delims,*in) )
+		{
+			*out = *in;
+			++out;
+			++in;
+		}
+		// skip trim characters
+		while( *in && strchr(delims,*in) )
+			++in;
+		put_space = 1;
+	}
+	*out = '\0';
+	return str;
+}
 
 //stristr: Case insensitive version of strstr, code taken from 
 //http://www.daniweb.com/code/snippet313.html, Dave Sinkula

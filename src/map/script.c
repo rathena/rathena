@@ -22,7 +22,6 @@
 #include "itemdb.h"
 #include "pc.h"
 #include "status.h"
-#include "script.h"
 #include "storage.h"
 #include "mob.h"
 #include "npc.h"
@@ -40,6 +39,7 @@
 #include "unit.h"
 #include "irc.h"
 #include "pet.h"
+#include "script.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -346,7 +346,7 @@ static void check_event(struct script_state *st, const char *evt)
  * 文字列のハッシュを計算
  *------------------------------------------
  */
-#define calc_hash(x) calc_hash2(x)%SCRIPT_HASH_SIZE
+#define calc_hash(x) (calc_hash2(x)%SCRIPT_HASH_SIZE)
 static unsigned int calc_hash2(const unsigned char *p)
 {
 #if defined(SCRIPT_HASH_DJB2)

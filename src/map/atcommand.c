@@ -5898,7 +5898,7 @@ int atcommand_loadnpc(const int fd, struct map_session_data* sd, const char* com
 
 	// add to list of script sources and run it
 	npc_addsrcfile(message);
-	npc_parsesrcfile((char *)message);
+	npc_parsesrcfile(message);
 	npc_read_event_script();
 
 	clif_displaymessage(fd, msg_txt(262));
