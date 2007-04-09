@@ -142,7 +142,7 @@ typedef struct eri {
  * @param The requested size of the entry in bytes
  * @return Interface of the object
  */
-ERS ers_new(size_t size);
+ERS ers_new(uint32 size);
 
 /**
  * Print a report about the current state of the Entry Reusage System.

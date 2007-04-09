@@ -6,7 +6,11 @@
 
 #include <stdarg.h>
 
-void dump(unsigned char *buffer, int num);
+// Function that dumps the hex of the first num bytes of the buffer to the screen
+//#define UTIL_DUMP
+#ifdef UTIL_DUMP
+void dump(const unsigned char* buffer, int num);
+#endif
 
 struct StringBuf {
 	char *buf_;

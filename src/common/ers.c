@@ -349,7 +349,7 @@ static void ers_obj_destroy(ERS self)
  * @see #ers_root
  * @see #ers_num
  */
-ERS ers_new(size_t size)
+ERS ers_new(uint32 size)
 {
 	ERS_impl obj;
 	uint32 i;

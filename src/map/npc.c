@@ -1,12 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <time.h>
-
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -17,7 +11,6 @@
 #include "../common/db.h"
 #include "map.h"
 #include "log.h"
-#include "npc.h"
 #include "clif.h"
 #include "intif.h"
 #include "pc.h"
@@ -29,11 +22,18 @@
 #include "battle.h"
 #include "skill.h"
 #include "unit.h"
+#include "npc.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <time.h>
+
 
 
 struct npc_src_list {
 	struct npc_src_list * next;
-//	struct npc_src_list * prev; //[Shinomori]
 	char name[4];
 };
 
@@ -67,7 +67,7 @@ static struct
 {	//Holds pointers to the commonly executed scripts for speedup. [Skotlex]
 	struct npc_data *nd;
 	struct event_data *event[UCHAR_MAX];
-	unsigned char *event_name[UCHAR_MAX];
+	const char *event_name[UCHAR_MAX];
 	unsigned char event_count;
 } script_event[NPCE_MAX];
 
@@ -320,7 +320,7 @@ int npc_event_sub(struct map_session_data *, struct event_data *, const unsigned
  */
 int npc_event_doall_sub(DBKey key,void *data,va_list ap)
 {
-	unsigned char*p = key.str;
+	const char*p = key.str;
 	struct event_data *ev;
 	int *c;
 	int rid;
@@ -362,7 +362,7 @@ int npc_event_doall_id(const unsigned char *name, int rid)
 
 int npc_event_do_sub(DBKey key,void *data,va_list ap)
 {
-	unsigned char *p = key.str;
+	const char *p = key.str;
 	struct event_data *ev;
 	int *c;
 	const unsigned char *name;
@@ -511,7 +511,7 @@ int npc_cleareventtimer(struct npc_data *nd)
 
 int npc_do_ontimer_sub(DBKey key,void *data,va_list ap)
 {
-	unsigned char *p = key.str;
+	const char *p = key.str;
 	struct event_data *ev = (struct event_data *)data;
 	int *c = va_arg(ap,int *);
 //	struct map_session_data *sd=va_arg(ap,struct map_session_data *);
@@ -2900,10 +2900,10 @@ int npc_script_event(TBL_PC* sd, int type) {
 
 static int npc_read_event_script_sub(DBKey key,void *data,va_list ap)
 {
-	unsigned char *p = key.str;
+	const char *p = key.str;
 	unsigned char *name = va_arg(ap,unsigned char *);
 	struct event_data **event_buf = va_arg(ap,struct event_data**);
-	unsigned char **event_name = va_arg(ap,unsigned char **);
+	const char **event_name = va_arg(ap,const char **);
 	unsigned char *count = va_arg(ap,char *);;
 
 	if (*count >= UCHAR_MAX) return 0;

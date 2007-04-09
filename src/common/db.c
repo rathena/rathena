@@ -75,10 +75,6 @@
 #include "../common/showmsg.h"
 #include "../common/ers.h"
 
-//TODO: get rid of this
-#define LOWER(c)   (((c)>='A'  && (c) <= 'Z') ? ((c)+('a'-'A')) : (c))
-#define UPPER(c)   (((c)>='a'  && (c) <= 'z') ? ((c)+('A'-'a')) : (c))
-
 /*****************************************************************************\
  *  (1) Private typedefs, enums, structures, defines and global variables of *
  *  the database system.                                                     *
@@ -642,7 +638,7 @@ static void db_dup_key_free(DB_impl db, DBKey key)
 	switch (db->type) {
 		case DB_STRING:
 		case DB_ISTRING:
-			aFree(key.str);
+			aFree((char*)key.str);
 			return;
 
 		default:
@@ -962,7 +958,7 @@ static unsigned int db_uint_hash(DBKey key, unsigned short maxlen)
  */
 static unsigned int db_string_hash(DBKey key, unsigned short maxlen)
 {
-	unsigned char *k = key.str;
+	const char *k = key.str;
 	unsigned int hash = 0;
 	unsigned short i;
 
@@ -972,8 +968,9 @@ static unsigned int db_string_hash(DBKey key, unsigned short maxlen)
 	if (maxlen == 0)
 		maxlen = UINT16_MAX;
 
-	for (i = 0; *k; i++) {
-		hash = (hash*33 + *k++)^(hash>>24);
+	for (i = 0; *k; ++i) {
+		hash = (hash*33 + ((unsigned char)*k))^(hash>>24);
+		k++;
 		if (i == maxlen)
 			break;
 	}
@@ -992,7 +989,7 @@ static unsigned int db_string_hash(DBKey key, unsigned short maxlen)
  */
 static unsigned int db_istring_hash(DBKey key, unsigned short maxlen)
 {
-	unsigned char *k = key.str;
+	const char *k = key.str;
 	unsigned int hash = 0;
 	unsigned short i;
 
@@ -1003,7 +1000,7 @@ static unsigned int db_istring_hash(DBKey key, unsigned short maxlen)
 		maxlen = UINT16_MAX;
 
 	for (i = 0; *k; i++) {
-		hash = (hash*33 + LOWER(*k))^(hash>>24);
+		hash = (hash*33 + ((unsigned char)TOLOWER(*k)))^(hash>>24);
 		k++;
 		if (i == maxlen)
 			break;
@@ -1044,7 +1041,7 @@ static void db_release_key(DBKey key, void *data, DBRelease which)
 #ifdef DB_ENABLE_STATS
 	COUNT(db_release_key);
 #endif /* DB_ENABLE_STATS */
-	if (which&DB_RELEASE_KEY) aFree(key.str); // needs to be a pointer
+	if (which&DB_RELEASE_KEY) aFree((char*)key.str); // needs to be a pointer
 }
 
 /**
@@ -1083,7 +1080,7 @@ static void db_release_both(DBKey key, void *data, DBRelease which)
 #ifdef DB_ENABLE_STATS
 	COUNT(db_release_both);
 #endif /* DB_ENABLE_STATS */
-	if (which&DB_RELEASE_KEY) aFree(key.str); // needs to be a pointer
+	if (which&DB_RELEASE_KEY) aFree((char*)key.str); // needs to be a pointer
 	if (which&DB_RELEASE_DATA) aFree(data);
 }
 
@@ -1893,19 +1890,18 @@ static DBOptions db_obj_options(DB self)
 }
 
 /*****************************************************************************\
- *  (5) Section with public functions.                                       *
- *  db_fix_options     - Apply database type restrictions to the options.    *
- *  db_default_cmp     - Get the default comparator for a type of database.  *
- *  db_default_hash    - Get the default hasher for a type of database.      *
- *  db_default_release - Get the default releaser for a type of database     *
- *           with the specified options.                                     *
- *  db_custom_release  - Get a releaser that behaves a certains way.         *
- *  db_alloc           - Allocate a new database.                            *
- *  db_i2key           - Manual cast from 'int' to 'DBKey'.                  *
- *  db_ui2key          - Manual cast from 'unsigned int' to 'DBKey'.         *
- *  db_str2key         - Manual cast from 'unsigned char *' to 'DBKey'.      *
- *  db_init            - Initialize the database system.                     *
- *  db_final           - Finalize the database system.                       *
+ *  (5) Section with public functions.
+ *  db_fix_options     - Apply database type restrictions to the options.
+ *  db_default_cmp     - Get the default comparator for a type of database.
+ *  db_default_hash    - Get the default hasher for a type of database.
+ *  db_default_release - Get the default releaser for a type of database with the specified options.
+ *  db_custom_release  - Get a releaser that behaves a certains way.
+ *  db_alloc           - Allocate a new database.
+ *  db_i2key           - Manual cast from 'int' to 'DBKey'.
+ *  db_ui2key          - Manual cast from 'unsigned int' to 'DBKey'.
+ *  db_str2key         - Manual cast from 'unsigned char *' to 'DBKey'.
+ *  db_init            - Initializes the database system.
+ *  db_final           - Finalizes the database system.
 \*****************************************************************************/
 
 /**
@@ -2137,8 +2133,6 @@ DB db_alloc(const char *file, int line, DBType type, DBOptions options, unsigned
  * @return The key as a DBKey union
  * @public
  * @see #DB_MANUAL_CAST_TO_UNION
- * @see #db_ui2key(unsigned int)
- * @see #db_str2key(unsigned char *)
  */
 DBKey db_i2key(int key)
 {
@@ -2157,10 +2151,7 @@ DBKey db_i2key(int key)
  * @param key Key to be casted
  * @return The key as a DBKey union
  * @public
- * @see common\db.h#DB_MANUAL_CAST_TO_UNION
- * @see #db_i2key(int)
- * @see #db_str2key(unsigned char *)
- * @see common\db.h#db_ui2key(unsigned int)
+ * @see #DB_MANUAL_CAST_TO_UNION
  */
 DBKey db_ui2key(unsigned int key)
 {
@@ -2174,17 +2165,14 @@ DBKey db_ui2key(unsigned int key)
 }
 
 /**
- * Manual cast from 'unsigned char *' to the union DBKey.
+ * Manual cast from 'const char *' to the union DBKey.
  * Created for compilers that don't support casting to unions.
  * @param key Key to be casted
  * @return The key as a DBKey union
  * @public
- * @see common\db.h#DB_MANUAL_CAST_TO_UNION
- * @see #db_i2key(int)
- * @see #db_ui2key(unsigned int)
- * @see common\db.h#db_str2key(unsigned char *)
+ * @see #DB_MANUAL_CAST_TO_UNION
  */
-DBKey db_str2key(unsigned char *key)
+DBKey db_str2key(const char *key)
 {
 	DBKey ret;
 
@@ -2197,10 +2185,9 @@ DBKey db_str2key(unsigned char *key)
 #endif /* DB_MANUAL_CAST_TO_UNION */
 
 /**
- * Initialize the database system.
+ * Initializes the database system.
  * @public
  * @see #db_final(void)
- * @see common\db.h#db_init(void)
  */
 void db_init(void)
 {
@@ -2210,12 +2197,9 @@ void db_init(void)
 }
 
 /**
- * Finalize the database system.
- * Frees the memory used by the block reusage system.
+ * Finalizes the database system.
  * @public
- * @see common\db.h#DB_FINAL_NODE_CHECK
  * @see #db_init(void)
- * @see common\db.h#db_final(void)
  */
 void db_final(void)
 {

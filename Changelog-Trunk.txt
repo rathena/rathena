@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/04/10
+	* Changed db key from 'unsigned char*' to 'const char*'.
+	* Defined out the dump function in util.h/c. [FlavioJS]
 	* As an experiment Corrected many /W4 warnings on the txt login server
 	* Played around with MinGW a bit today... [ultramage]
 	- adjusted code so that it handles mingw-specific compatibility problems

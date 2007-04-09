@@ -78,7 +78,7 @@
  * @see #DBReleaser
  * @see #db_custom_release(DBRelease)
  */
-typedef enum {
+typedef enum DBRelease {
 	DB_RELEASE_NOTHING = 0,
 	DB_RELEASE_KEY     = 1,
 	DB_RELEASE_DATA    = 2,
@@ -102,7 +102,7 @@ typedef enum {
  * @see #db_default_release(DBType,DBOptions)
  * @see #db_alloc(const char *,int,DBType,DBOptions,unsigned short)
  */
-typedef enum {
+typedef enum DBType {
 	DB_INT,
 	DB_UINT,
 	DB_STRING,
@@ -154,7 +154,7 @@ typedef enum db_opt {
 typedef union dbkey {
 	int i;
 	unsigned int ui;
-	unsigned char *str;//## TODO change to 'const char *'
+	const char *str;
 } DBKey;
 
 /**
@@ -272,7 +272,7 @@ struct dbt {
 	 * @protected
 	 * @see #db_get(DB,DBKey)
 	 */
-	void *(*get)(struct dbt *dbi, DBKey key);
+	void *(*get)(DB self, DBKey key);
 
 	/**
 	 * Just calls {@link DB#vgetall(DB,void **,unsigned int,DBMatch,va_list)}.
@@ -498,8 +498,8 @@ struct dbt {
 #else /* not DB_MANUAL_CAST_TO_UNION */
 #	define i2key(k)   ((DBKey)(int)(k))
 #	define ui2key(k)  ((DBKey)(unsigned int)(k))
-#	define str2key(k) ((DBKey)(unsigned char *)(k))
-#endif /* DB_MANUAL_CAST_TO_UNION / not DB_MANUAL_CAST_TO_UNION */
+#	define str2key(k) ((DBKey)(const char *)(k))
+#endif /* not DB_MANUAL_CAST_TO_UNION */
 
 #define db_get(db,k)    (db)->get((db),(k))
 #define idb_get(db,k)   (db)->get((db),i2key(k))
@@ -638,9 +638,6 @@ DB db_alloc(const char *file, int line, DBType type, DBOptions options, unsigned
  * @return The key as a DBKey union
  * @public
  * @see #DB_MANUAL_CAST_TO_UNION
- * @see #db_ui2key(unsigned int)
- * @see #db_str2key(unsigned char *)
- * @see common\db.c#db_i2key(int)
  */
 DBKey db_i2key(int key);
 
@@ -651,9 +648,6 @@ DBKey db_i2key(int key);
  * @return The key as a DBKey union
  * @public
  * @see #DB_MANUAL_CAST_TO_UNION
- * @see #db_i2key(int)
- * @see #db_str2key(unsigned char *)
- * @see common\db.c#db_ui2key(unsigned int)
  */
 DBKey db_ui2key(unsigned int key);
 
@@ -664,18 +658,14 @@ DBKey db_ui2key(unsigned int key);
  * @return The key as a DBKey union
  * @public
  * @see #DB_MANUAL_CAST_TO_UNION
- * @see #db_i2key(int)
- * @see #db_ui2key(unsigned int)
- * @see common\db.c#db_str2key(unsigned char *)
  */
-DBKey db_str2key(unsigned char *key);
+DBKey db_str2key(const char *key);
 #endif /* DB_MANUAL_CAST_TO_UNION */
 
 /**
  * Initialize the database system.
  * @public
  * @see #db_final(void)
- * @see common\db.c#db_init(void)
  */
 void db_init(void);
 
@@ -684,7 +674,6 @@ void db_init(void);
  * Frees the memory used by the block reusage system.
  * @public
  * @see #db_init(void)
- * @see common\db.c#db_final(void)
  */
 void db_final(void);
 

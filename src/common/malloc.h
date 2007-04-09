@@ -4,6 +4,8 @@
 #ifndef _MALLOC_H_
 #define _MALLOC_H_
 
+#include "../common/cbasetypes.h"
+
 // Q: What are the 'a'-variant allocation functions?
 // A: They allocate memory from the stack, which is automatically 
 //    freed when the invoking function returns.
