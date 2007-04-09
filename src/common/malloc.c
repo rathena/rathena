@@ -575,8 +575,8 @@ static void memmgr_final (void)
 				{
 				#ifdef LOG_MEMMGR
 					sprintf (buf,
-						"%04d : %s line %d size %d\n", ++count,
-						head->file, head->line, head->size);
+						"%04d : %s line %d size %lu\n", ++count,
+						head->file, head->line, (unsigned long)head->size);
 					memmgr_log (buf);
 				#endif
 					// get block pointer and free it [celest]
@@ -623,8 +623,8 @@ static void memmgr_final (void)
 		large2 = large->next;
 	#ifdef LOG_MEMMGR
 		sprintf (buf,
-			"%04d : %s line %d size %d\n", ++count,
-			large->unit_head.file, large->unit_head.line, large->unit_head.size);
+			"%04d : %s line %d size %lu\n", ++count,
+			large->unit_head.file, large->unit_head.line, (unsigned long)large->unit_head.size);
 		memmgr_log (buf);
 	#endif
 		FREE(large,file,line,func);

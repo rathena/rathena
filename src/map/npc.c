@@ -1206,8 +1206,8 @@ int npc_scriptcont(struct map_session_data *sd,int id)
 		TBL_NPC* nd_sd=(TBL_NPC*)map_id2bl(sd->npc_id);
 		TBL_NPC* nd=(TBL_NPC*)map_id2bl(id);
 		ShowDebug("npc_scriptcont: %s (sd->npc_id=%d) is not %s (id=%d).\n",
-			nd_sd?nd_sd->name:"'Unknown NPC'", sd->npc_id,
-		  	nd?nd->name:"'Unknown NPC'", id);
+			nd_sd?(char*)nd_sd->name:"'Unknown NPC'", (int)sd->npc_id,
+		  	nd?(char*)nd->name:"'Unknown NPC'", (int)id);
 		return 1;
 	}
 	

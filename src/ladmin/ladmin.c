@@ -2198,11 +2198,11 @@ int changememo(char* param) {
 
 	if (strlen(memo) > 254) {
 		if (defaultlanguage == 'F') {
-			printf("Mémo trop long (%d caractères).\n", strlen(memo));
+			printf("Mémo trop long (%lu caractères).\n", (unsigned long)strlen(memo));
 			printf("Entrez un mémo de 254 caractères maximum svp.\n");
 			ladmin_log("Mémo trop long (%d caractères). Entrez un mémo de 254 caractères maximum svp." RETCODE, strlen(memo));
 		} else {
-			printf("Memo is too long (%d characters).\n", strlen(memo));
+			printf("Memo is too long (%lu characters).\n", (unsigned long)strlen(memo));
 			printf("Please input a memo of 254 bytes at the maximum.\n");
 			ladmin_log("Email is too long (%d characters). Please input a memo of 254 bytes at the maximum." RETCODE, strlen(memo));
 		}

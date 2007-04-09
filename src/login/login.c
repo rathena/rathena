@@ -1940,7 +1940,7 @@ int parse_fromchar(int fd)
 					time(&raw_time);
 					strftime(tmpstr, 23, date_format, localtime(&raw_time));
 					fprintf(logfp, "%s: receiving of an unknown packet -> disconnection" RETCODE, tmpstr);
-					fprintf(logfp, "parse_fromchar: connection #%d (ip: %s), packet: 0x%x (with being read: %d)." RETCODE, fd, ip, RFIFOW(fd,0), RFIFOREST(fd));
+					fprintf(logfp, "parse_fromchar: connection #%d (ip: %s), packet: 0x%x (with being read: %lu)." RETCODE, fd, ip, RFIFOW(fd,0), (unsigned long)RFIFOREST(fd));
 					fprintf(logfp, "Detail (in hex):" RETCODE);
 					fprintf(logfp, "---- 00-01-02-03-04-05-06-07  08-09-0A-0B-0C-0D-0E-0F" RETCODE);
 					memset(tmpstr, '\0', sizeof(tmpstr));
@@ -2906,7 +2906,7 @@ int parse_admin(int fd)
 					time(&raw_time);
 					strftime(tmpstr, 23, date_format, localtime(&raw_time));
 					fprintf(logfp, "%s: receiving of an unknown packet -> disconnection" RETCODE, tmpstr);
-					fprintf(logfp, "parse_admin: connection #%d (ip: %s), packet: 0x%x (with being read: %d)." RETCODE, fd, ip, RFIFOW(fd,0), RFIFOREST(fd));
+					fprintf(logfp, "parse_admin: connection #%d (ip: %s), packet: 0x%x (with being read: %lu)." RETCODE, fd, ip, RFIFOW(fd,0), (unsigned long)RFIFOREST(fd));
 					fprintf(logfp, "Detail (in hex):" RETCODE);
 					fprintf(logfp, "---- 00-01-02-03-04-05-06-07  08-09-0A-0B-0C-0D-0E-0F" RETCODE);
 					memset(tmpstr, '\0', sizeof(tmpstr));
@@ -3333,7 +3333,7 @@ int parse_login(int fd)
 					time(&raw_time);
 					strftime(tmpstr, 23, date_format, localtime(&raw_time));
 					fprintf(logfp, "%s: receiving of an unknown packet -> disconnection" RETCODE, tmpstr);
-					fprintf(logfp, "parse_login: connection #%d (ip: %s), packet: 0x%x (with being read: %d)." RETCODE, fd, ip, RFIFOW(fd,0), RFIFOREST(fd));
+					fprintf(logfp, "parse_login: connection #%d (ip: %s), packet: 0x%x (with being read: %lu)." RETCODE, fd, ip, RFIFOW(fd,0), (unsigned long)RFIFOREST(fd));
 					fprintf(logfp, "Detail (in hex):" RETCODE);
 					fprintf(logfp, "---- 00-01-02-03-04-05-06-07  08-09-0A-0B-0C-0D-0E-0F" RETCODE);
 					memset(tmpstr, '\0', sizeof(tmpstr));
