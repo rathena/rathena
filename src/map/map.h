@@ -828,8 +828,8 @@ struct npc_data {
 	short n;
 	short class_;
 	short speed;
-	unsigned char name[NAME_LENGTH];
-	unsigned char exname[NAME_LENGTH];
+	char name[NAME_LENGTH];
+	char exname[NAME_LENGTH];
 	int chat_id;
 	unsigned int next_walktime;
 
@@ -1243,8 +1243,8 @@ enum {
 struct chat_data {
 	struct block_list bl;
 
-	unsigned char pass[8+1];   /* password */
-	unsigned char title[60+1]; /* room title */
+	char pass[8+1];   /* password */
+	char title[60+1]; /* room title */
 	unsigned char limit;     /* join limit */
 	unsigned char trigger;
 	unsigned char users;     /* current users */
@@ -1405,10 +1405,8 @@ extern char *map_server_dns;
 
 #ifndef TXT_ONLY
 
-// MySQL
-#ifdef __WIN32
-#include <my_global.h>
-#include <my_sys.h>
+#ifdef _WIN32
+#include <windows.h> // SOCKET
 #endif
 #include <mysql.h>
 

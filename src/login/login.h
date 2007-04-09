@@ -4,8 +4,6 @@
 #ifndef _LOGIN_H_
 #define _LOGIN_H_
 
-#define MAX_SERVERS 30
-
 #define LOGIN_CONF_NAME "conf/login_athena.conf"
 #define LAN_CONF_NAME "conf/subnet_athena.conf"
 #define PASSWORDENC 3	// A definition is given when making an encryption password correspond.
@@ -13,31 +11,29 @@
                      	// It is made into 2 at the time of passwordencrypt2.
                      	// When it is made 3, it corresponds to both.
 
-extern int login_port;
+extern uint16 login_port;
+
 struct mmo_account {
 	int version;
 	char userid[NAME_LENGTH];
 	char passwd[NAME_LENGTH];
 	int passwdenc;
 
-	long account_id;
+	uint32 account_id;
 	long login_id1;
 	long login_id2;
 	long char_id;
 	char lastlogin[24];
-	int sex;
+	char sex;
 };
 
 struct mmo_char_server {
 	char name[20];
 	uint32 ip;
 	uint16 port;
-	int users;
-	int maintenance;
-	int new_;
+	uint16 users;		// user count on this server
+	uint16 maintenance;	// in maintenance mode?
+	uint16 new_;		// allows creating new chars?
 };
-
-extern struct mmo_char_server server[MAX_SERVERS];
-extern int server_fd[MAX_SERVERS];
 
 #endif /* _LOGIN_H_ */

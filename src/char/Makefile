@@ -17,7 +17,7 @@ char-server: char.o inter.o int_party.o int_guild.o int_status.o int_storage.o i
 	$(CC) -o ../../$@ $> $(LIB_S)
 
 clean:
-	rm -f *.o ../../char-server
+	rm -f *.o ../../char-server GNUmakefile
 
 # DO NOT DELETE
 

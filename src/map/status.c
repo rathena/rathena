@@ -2,7 +2,6 @@
 // For more information, see LICENCE in the main folder
 
 #include <time.h>
-#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>

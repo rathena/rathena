@@ -8,7 +8,6 @@
 #endif
 #include <signal.h>
 #include <string.h>
-#include <ctype.h>
 
 #include "core.h"
 #include "../common/mmo.h"

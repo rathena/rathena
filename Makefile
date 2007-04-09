@@ -25,7 +25,7 @@ OPT += -ffast-math
 # OPT += -fbounds-checking
 # OPT += -fstack-protector
 # OPT += -fomit-frame-pointer
-OPT += -Wall -Wno-sign-compare
+OPT += -Wall -Wno-sign-compare -Wno-unused-parameter
 ifeq ($(GCC_VERSION), 4)
 	OPT += -Wno-unused-parameter -Wno-pointer-sign
 endif
@@ -71,14 +71,18 @@ endif
 
 ifeq ($(findstring CYGWIN,$(PLATFORM)), CYGWIN)
    OPT += -DFD_SETSIZE=4096
-   ifeq ($(findstring mingw,$(shell gcc --version)), mingw)
-      IS_MINGW = 1
-      OS_TYPE = -DMINGW
-      LIBS += -L../.. -lwsock32
-   else
-      OS_TYPE = -DCYGWIN
-   endif
+   OS_TYPE = -DCYGWIN
 endif
+
+ifeq ($(findstring mingw,$(shell gcc --version)), mingw)
+   IS_MINGW = 1
+   OS_TYPE = -DMINGW
+   OPT += -DFD_SETSIZE=4096
+#   CFLAGS += -I../zlib
+#   LIBS += -L../../lib
+   LIBS += -lws2_32
+endif
+
 
 ifeq ($(findstring x86_64,$(ARCH)), x86_64)
     OPT += -m32

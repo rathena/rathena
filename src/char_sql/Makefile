@@ -14,7 +14,7 @@ char-server_sql: char.o inter.o int_party.o int_guild.o int_storage.o int_pet.o 
 	$(CC) -o ../../$@ $^ $(LIB_S)
 
 clean:
-	rm -f *.o ../../char-server_sql
+	rm -f *.o ../../char-server_sql GNUmakefile
 
 # DO NOT DELETE
 

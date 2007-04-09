@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 #include "strlib.h"
 #include "../common/cbasetypes.h"
@@ -198,7 +197,7 @@ char* _strtok_r(char *s1, const char *s2, char **lasts)
 }
 #endif
 
-#if !defined(WIN32) || (defined(_MSC_VER) && _MSC_VER < 1400)
+#if !(defined(WIN32) && defined(_MSC_VER) && _MSC_VER >= 1400)
 /* Find the length of STRING, but scan at most MAXLEN characters.
    If no '\0' terminator is found in that many characters, return MAXLEN.  */
 size_t strnlen (const char* string, size_t maxlen)

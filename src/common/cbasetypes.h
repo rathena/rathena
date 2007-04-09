@@ -29,6 +29,10 @@
 #define WIN32
 #endif
 
+#if defined(__MINGW32__) && !defined(MINGW)
+#define MINGW
+#endif
+
 // __APPLE__ is the only predefined macro on MacOS X
 #if defined(__APPLE__)
 #define __DARWIN__
@@ -306,7 +310,7 @@ typedef char bool;
 //////////////////////////////////////////////////////////////////////////
 // Has to be unsigned to avoid problems in some systems
 // Problems arise when these functions expect an argument in the range [0,256[ and are feed a signed char.
-// NOTE: <ctype.h> needs to be included when using these defines
+#include <ctype.h>
 #define ISALNUM(c) (isalnum((unsigned char)(c)))
 #define ISALPHA(c) (isalpha((unsigned char)(c)))
 #define ISCNTRL(c) (iscntrl((unsigned char)(c)))

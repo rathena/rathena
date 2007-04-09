@@ -67,7 +67,6 @@ voidpf ZCALLBACK win32_open_file_func (opaque, filename, mode)
    const char* filename;
    int mode;
 {
-    const char* mode_fopen = NULL;
     DWORD dwDesiredAccess,dwCreationDisposition,dwShareMode,dwFlagsAndAttributes ;
     HANDLE hFile = 0;
     voidpf ret=NULL;

@@ -81,7 +81,7 @@ int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc fun
 
 #ifndef MINICORE
 	int ip_rules = 1;
-	static int connect_check(unsigned int ip);
+	static int connect_check(uint32 ip);
 #endif
 
 
@@ -111,7 +111,7 @@ void set_nonblocking(int fd, int yes)
 	
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s. 
 	// The argp parameter is zero if nonblocking is to be disabled. 
-	if (ioctlsocket(fd, FIONBIO, &yes) != 0)
+	if (ioctlsocket(fd, FIONBIO, (unsigned long*)&yes) != 0)
 		ShowError("Couldn't set the socket to non-blocking mode (code %d)!\n", s_errno);
 }
 

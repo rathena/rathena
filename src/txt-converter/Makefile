@@ -13,7 +13,7 @@ login-converter: login-converter.o ../common/obj/minicore.o ../common/obj/db.o .
 	$(CC) -o ../../tools/$@ $^ $(LIB_S)
 
 clean:
-	rm -f *.o ../../tools/login-converter ../../tools/char-converter
+	rm -f *.o ../../tools/login-converter ../../tools/char-converter GNUmakefile
 
 # DO NOT DELETE
 
