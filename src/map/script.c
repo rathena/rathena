@@ -2506,7 +2506,7 @@ void op_2num(struct script_state *st,int op,int i1,int i2)
 	int ret = 0;
 	double ret_double = 0;
 	switch(op){
-	case C_MOD:  ret = i1 % i2;		break;
+	case C_MOD:  ret = i2 ? i1 % i2 : 0;	break;
 	case C_AND:  ret = i1 & i2;		break;
 	case C_OR:   ret = i1 | i2;		break;
 	case C_XOR:  ret = i1 ^ i2;		break;
