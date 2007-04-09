@@ -32,13 +32,13 @@
 
 
 
+// linked list of npc source files
 struct npc_src_list {
-	struct npc_src_list * next;
-	char name[4];
+	struct npc_src_list* next;
+	char name[4];// dynamic array, the structure is allocated with extra bytes (string length)
 };
+static struct npc_src_list* npc_src_files=NULL;
 
-static struct npc_src_list *npc_src_first=NULL;
-static struct npc_src_list *npc_src_last=NULL;
 static int npc_id=START_NPC_NUM;
 static int npc_warp=0;
 static int npc_shop=0;
@@ -1575,77 +1575,81 @@ int npc_unload(struct npc_data *nd)
 // 初期化関係
 //
 
-/*==========================================
- * 読み込むnpcファイルのクリア
- *------------------------------------------
- */
-void npc_clearsrcfile (void)
-{
-	struct npc_src_list *p = npc_src_first, *p2;
+//
+// NPC Source Files
+//
 
-	while (p) {
-		p2 = p;
-		p = p->next;
-		aFree(p2);
+/// Clears the npc source file list
+static void npc_clearsrcfile(void)
+{
+	struct npc_src_list* file = npc_src_files;
+	struct npc_src_list* file_tofree;
+
+	while( file != NULL )
+	{
+		file_tofree = file;
+		file = file->next;
+		aFree(file_tofree);
 	}
-	npc_src_first = NULL;
-	npc_src_last = NULL;
+	npc_src_files = NULL;
 }
-/*==========================================
- * 読み込むnpcファイルの追加
- *------------------------------------------
- */
-void npc_addsrcfile (char *name)
-{
-	struct npc_src_list *nsl;
 
-	if (strcmpi(name, "clear") == 0) {
+/// Adds a npc source file (or removes all)
+void npc_addsrcfile(const char* name)
+{
+	struct npc_src_list* file;
+	struct npc_src_list* file_prev = NULL;
+
+	if( strcmpi(name, "clear") == 0 )
+	{
 		npc_clearsrcfile();
 		return;
 	}
 
 	// prevent multiple insert of source files
-	nsl = npc_src_first;
-	while (nsl)
-	{   // found the file, no need to insert it again
-		if (0 == strcmp(name, nsl->name))
-			return;
-		nsl = nsl->next;
+	file = npc_src_files;
+	while( file != NULL )
+	{
+		if( strcmp(name, file->name) == 0 )
+			return;// found the file, no need to insert it again
+		file_prev = file;
+		file = file->next;
 	}
 
-	nsl = (struct npc_src_list *) aMalloc (sizeof(*nsl) + strlen(name));
-	nsl->next = NULL;
-	strncpy(nsl->name, name, strlen(name) + 1);
-	if (npc_src_first == NULL)
-		npc_src_first = nsl;
-	if (npc_src_last)
-		npc_src_last->next = nsl;
-	npc_src_last = nsl;
+	file = (struct npc_src_list*)aMalloc(sizeof(struct npc_src_list) + strlen(name));
+	file->next = NULL;
+	strncpy(file->name, name, strlen(name) + 1);
+	if( file_prev == NULL )
+		npc_src_files = file;
+	else
+		file_prev->next = file;
 }
-/*==========================================
- * 読み込むnpcファイルの削除
- *------------------------------------------
- */
-void npc_delsrcfile (char *name)
-{
-	struct npc_src_list *p = npc_src_first, *pp = NULL, **lp = &npc_src_first;
 
-	if (strcmpi(name, "all") == 0) {
+/// Removes a npc source file (or all)
+void npc_delsrcfile(const char* name)
+{
+	struct npc_src_list* file = npc_src_files;
+	struct npc_src_list* file_prev = NULL;
+
+	if( strcmpi(name, "all") == 0 )
+	{
 		npc_clearsrcfile();
 		return;
 	}
 
-	while (p) {
-		if (strcmp(p->name, name) == 0) {
-			*lp = p->next;
-			if (npc_src_last == p)
-				npc_src_last = pp;
-			aFree(p);
+	while( file != NULL )
+	{
+		if( strcmp(file->name, name) == 0 )
+		{
+			if( npc_src_files == file )
+				npc_src_files = file->next;
+			else
+				file_prev->next = file->next;
+			aFree(file);
 			break;
 		}
-		lp = &p->next;
-		pp = p;
-		p = p->next;
+		file_prev = file;
+		file = file->next;
 	}
 }
 
@@ -3018,7 +3022,7 @@ int npc_reload (void)
 	npc_warp = npc_shop = npc_script = 0;
 	npc_mob = npc_cache_mob = npc_delay_mob = 0;
 
-	for (nsl = npc_src_first; nsl; nsl = nsl->next) {
+	for (nsl = npc_src_files; nsl; nsl = nsl->next) {
 		npc_parsesrcfile(nsl->name);
 		if (script_config.verbose_mode) {
 			printf("\r");
@@ -3040,14 +3044,14 @@ int npc_reload (void)
 		fflush(stdout);
 	}
 	printf("\r");
-	ShowInfo ("Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:%30s\n\t-'"
-		CL_WHITE"%d"CL_RESET"' Warps\n\t-'"
-		CL_WHITE"%d"CL_RESET"' Shops\n\t-'"
-		CL_WHITE"%d"CL_RESET"' Scripts\n\t-'"
-		CL_WHITE"%d"CL_RESET"' Mobs\n\t-'"
-		CL_WHITE"%d"CL_RESET"' Mobs Cached\n\t-'"
-		CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
-		npc_id - npc_new_min, "", npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
+	ShowInfo ("Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:\n"
+		"\t-'"CL_WHITE"%d"CL_RESET"' Warps\n"
+		"\t-'"CL_WHITE"%d"CL_RESET"' Shops\n"
+		"\t-'"CL_WHITE"%d"CL_RESET"' Scripts\n"
+		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs\n"
+		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs Cached\n"
+		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
+		npc_id - npc_new_min, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
 	//Re-read the NPC Script Events cache.
 	npc_read_event_script();
@@ -3151,7 +3155,7 @@ int do_init_npc(void)
 	memset(&ev_tm_b, -1, sizeof(ev_tm_b));
 	timer_event_ers = ers_new(sizeof(struct timer_event_data));
 
-	for (nsl = npc_src_first; nsl; nsl = nsl->next) {
+	for (nsl = npc_src_files; nsl; nsl = nsl->next) {
 		npc_parsesrcfile(nsl->name);
 		current_file = NULL;
 		printf("\r");
@@ -3173,21 +3177,21 @@ int do_init_npc(void)
 		fflush(stdout);
 	}
 	printf("\r");
-	ShowInfo ("Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:%30s\n\t-'"
-		CL_WHITE"%d"CL_RESET"' Warps\n\t-'"
-		CL_WHITE"%d"CL_RESET"' Shops\n\t-'"
-		CL_WHITE"%d"CL_RESET"' Scripts\n\t-'"
-		CL_WHITE"%d"CL_RESET"' Mobs\n\t-'"
-		CL_WHITE"%d"CL_RESET"' Mobs Cached\n\t-'"
-		CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
-		npc_id - START_NPC_NUM, "", npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
+	ShowInfo ("Done loading '"CL_WHITE"%d"CL_RESET"' NPCs:\n"
+		"\t-'"CL_WHITE"%d"CL_RESET"' Warps\n"
+		"\t-'"CL_WHITE"%d"CL_RESET"' Shops\n"
+		"\t-'"CL_WHITE"%d"CL_RESET"' Scripts\n"
+		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs\n"
+		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs Cached\n"
+		"\t-'"CL_WHITE"%d"CL_RESET"' Mobs Not Cached\n",
+		npc_id - START_NPC_NUM, npc_warp, npc_shop, npc_script, npc_mob, npc_cache_mob, npc_delay_mob);
 
 	memset(script_event, 0, sizeof(script_event));
 	npc_read_event_script();
 	//Debug function to locate all endless loop warps.
 	if (battle_config.warp_point_debug)
 		npc_debug_warps();
-	
+
 	add_timer_func_list(npc_event_timer,"npc_event_timer");
 	add_timer_func_list(npc_event_do_clock,"npc_event_do_clock");
 	add_timer_func_list(npc_timerevent,"npc_timerevent");

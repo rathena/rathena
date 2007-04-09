@@ -5897,7 +5897,7 @@ int atcommand_loadnpc(const int fd, struct map_session_data* sd, const char* com
 	fclose(fp);
 
 	// add to list of script sources and run it
-	npc_addsrcfile((char *)message);
+	npc_addsrcfile(message);
 	npc_parsesrcfile((char *)message);
 	npc_read_event_script();
 
