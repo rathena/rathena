@@ -3,13 +3,14 @@
 //===== By: ================================================== 
 //= Playtester
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena svn
 //===== Description: ========================================= 
 //= Rachel Santuary Quest
 //===== Additional Comments: ================================= 
 //= 1.0 Added semi-official Rachel Santuary Quest [Playtester]
+//= 1.1 Official donation items, chance guessed [Playtester]
 //============================================================
 
 //////////////////////////////////////////////////////////////
@@ -34,15 +35,16 @@ ra_temin,276,326,0	script	Statue#Rachel	111,{
 				mes "-You can hear a voice-";
 				mes "May the goddess bless you.";
 				set .@bonus_donate,rand(1000);
-				if(.@bonus_donate < 400) getitem 545,1; //Red Condensed 40%
-				else if(.@bonus_donate >= 400 && .@bonus_donate < 700) getitem 546,1; //Yellow Condensed 30%
-				else if(.@bonus_donate >= 700 && .@bonus_donate < 900) getitem 547,1; //White Condensed 20%
-				else if(.@bonus_donate >= 900 && .@bonus_donate < 950) getitem 518,1; //Honey 5%
-				else if(.@bonus_donate >= 950 && .@bonus_donate < 970) getitem 526,1; //Royal Jelly 2%
-				else if(.@bonus_donate >= 970 && .@bonus_donate < 980) getitem 608,1; //Yggdrasil Seed 1%
-				else if(.@bonus_donate >= 980 && .@bonus_donate < 990) getitem 644,1; //Gift Box 1%
-				else if(.@bonus_donate >= 990 && .@bonus_donate < 995) getitem 607,1; //Yggdrasil Berry 0.5%
-				else if(.@bonus_donate >= 995 && .@bonus_donate < 1000) getitem 603,1; //Old Blue Box 0.5%
+				if(.@bonus_donate < 600) getitem 547,1; //White Condensed Potion 60%
+				else if(.@bonus_donate >= 600 && .@bonus_donate < 750) getitem 518,1; //Honey 15%
+				else if(.@bonus_donate >= 750 && .@bonus_donate < 850) getitem 505,1; //Blue Potion 10%
+				else if(.@bonus_donate >= 850 && .@bonus_donate < 900) getitem 526,1; //Royal Jelly 5%
+				else if(.@bonus_donate >= 900 && .@bonus_donate < 930) getitem 608,1; //Yggdrasil Seed 3%
+				else if(.@bonus_donate >= 930 && .@bonus_donate < 950) getitem 607,1; //Yggdrasil Berry 2%
+				else if(.@bonus_donate >= 950 && .@bonus_donate < 970) getitem 604,1; //Dead Branch 2%
+				else if(.@bonus_donate >= 970 && .@bonus_donate < 990) getitem 644,1; //Gift Box 2%
+				else if(.@bonus_donate >= 990 && .@bonus_donate < 998) getitem 617,1; //Old Purple Box 0.8%
+				else if(.@bonus_donate >= 998 && .@bonus_donate < 1000) getitem 616,1; //Old Card Album 0.2%
 				set $rachel_donate,$rachel_donate+1;
 				close;
 			}
@@ -54,8 +56,6 @@ ra_temin,276,326,0	script	Statue#Rachel	111,{
 		}
 	}
 	if(!(MISC_QUEST & 8192)){
-		mes "-You can hear a voice-";
-		next;
 		mes "[Voice]";
 		mes "The gates to Rachel Sanctuary have opened.";
 		mes "Bring me ^0000FF40 Ice Hearts^000000, ^FF00001 Candy^000000 and ^FF000020 Firecrackers^000000 and I'll allow you to enter.";
