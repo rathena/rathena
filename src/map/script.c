@@ -8118,7 +8118,7 @@ BUILDIN_FUNC(sc_end)
 BUILDIN_FUNC(getscrate)
 {
 	struct block_list *bl;
-	int sc_def=0,type,rate;
+	int type,rate;
 
 	type=script_getnum(st,2);
 	rate=script_getnum(st,3);

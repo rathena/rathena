@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/04/11
+	* Modified spirit of Wizard so that the consumption of 'Fragments' when
+	  blocking bounced spells will only consume 1 Fragment per skill casted,
+	  regardless of how many hits were reflected.
 	* Modified status_get_sc_def to handle both rate and tick reductions. This
 	  way it can take care of the fact that curse rate/duration reductions are
 	  not reduced by the same stats. Curse duration is now reduced by vit.

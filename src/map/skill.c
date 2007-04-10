@@ -1924,12 +1924,28 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			if (sc && !sc->count)
 				sc = NULL; //Don't need it.
 			//Spirit of Wizard blocks bounced back spells.
-			if (sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_WIZARD
-				&& !(tsd && (type = pc_search_inventory (tsd, 7321)) < 0))
+			if (sc && sc->data[SC_SPIRIT].timer != -1 &&
+				sc->data[SC_SPIRIT].val2 == SL_WIZARD)
 			{
-				if (tsd) pc_delitem(tsd, type, 1, 0);
-				dmg.damage = dmg.damage2 = 0;
-				dmg.dmg_lv = ATK_FLEE;
+				//It should only consume once per skill casted. Val3 is the skill
+				//id and val4 is the ID of the damage src, this should account for
+				//ground spells (and single target spells will be completed on
+				//castend_id) [Skotlex]
+				if (tsd && !(
+					sc->data[SC_SPIRIT].val3 == skillid &&
+				  	sc->data[SC_SPIRIT].val4 == dsrc->id)
+				) {	//Check if you have stone to consume.
+				  	type = pc_search_inventory (tsd, 7321);
+					if (type >= 0)
+						pc_delitem(tsd, type, 1, 0);
+				} else
+					type = 0;
+				if (type >= 0) {
+					dmg.damage = dmg.damage2 = 0;
+					dmg.dmg_lv = ATK_FLEE;
+					sc->data[SC_SPIRIT].val3 = skillid;
+					sc->data[SC_SPIRIT].val4 = dsrc->id;
+				}
 			}
 		}
 	
@@ -2574,8 +2590,14 @@ static int skill_timerskill (int tid, unsigned int tick, int id, int data)
 						skill_addtimerskill(src,tick+125,target->id,0,0,skl->skill_id,skl->skill_lv,skl->type-1,skl->flag);
 					} else {
 						struct status_change *sc = status_get_sc(src);
-						if(sc && sc->data[SC_MAGICPOWER].timer != -1)
-							status_change_end(src,SC_MAGICPOWER,-1);
+						if(sc) {
+							if(sc->data[SC_MAGICPOWER].timer != -1)
+								status_change_end(src,SC_MAGICPOWER,-1);
+							if(sc->data[SC_SPIRIT].timer != -1 &&
+								sc->data[SC_SPIRIT].val2 == SL_WIZARD &&
+								sc->data[SC_SPIRIT].val3 == skl->skill_id)
+								sc->data[SC_SPIRIT].val3 = 0; //Clear bounced spell check.
+						}
 					}
 					break;
 				default:
@@ -5728,8 +5750,16 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 			skill_castend_damage_id(src,target,ud->skillid,ud->skilllv,tick,0);
 
 		sc = status_get_sc(src);
-		if(sc && sc->count && sc->data[SC_MAGICPOWER].timer != -1 && ud->skillid != HW_MAGICPOWER && ud->skillid != WZ_WATERBALL)
-			status_change_end(src,SC_MAGICPOWER,-1);		
+		if(sc && sc->count) {
+		  	if(sc->data[SC_MAGICPOWER].timer != -1 &&
+				ud->skillid != HW_MAGICPOWER && ud->skillid != WZ_WATERBALL)
+				status_change_end(src,SC_MAGICPOWER,-1);
+			if(sc->data[SC_SPIRIT].timer != -1 &&
+				sc->data[SC_SPIRIT].val2 == SL_WIZARD &&
+				sc->data[SC_SPIRIT].val3 == ud->skillid &&
+			  	ud->skillid != WZ_WATERBALL)
+				sc->data[SC_SPIRIT].val3 = 0; //Clear bounced spell check.
+		}
 
 		if (ud->skilltimer == -1) {
 			if(md) md->skillidx = -1;
