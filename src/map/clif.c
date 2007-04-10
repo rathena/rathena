@@ -1519,6 +1519,43 @@ int clif_walkok(struct map_session_data *sd)
 	return 0;
 }
 
+static void clif_move2(struct block_list *bl, struct view_data *vd, struct unit_data *ud) {
+	unsigned char buf[256];
+	int len;
+	
+	len = clif_set007b(bl,vd,ud,buf);
+	clif_send(buf,len,bl,AREA_WOS);
+	if (disguised(bl))
+		clif_setdisguise((TBL_PC*)bl, buf, len, 0);
+		
+	if(vd->cloth_color)
+		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
+
+	switch(bl->type)
+	{
+	case BL_PC:
+		{
+			TBL_PC *sd = ((TBL_PC*)bl);
+//			clif_movepc(sd);
+			if(sd->state.size==2) // tiny/big players [Valaris]
+				clif_specialeffect(&sd->bl,423,AREA);
+			else if(sd->state.size==1)
+				clif_specialeffect(&sd->bl,421,AREA);
+		}
+		break;
+	case BL_MOB:
+		{
+			TBL_MOB *md = ((TBL_MOB*)bl);
+			if(md->special_state.size==2) // tiny/big mobs [Valaris]
+				clif_specialeffect(&md->bl,423,AREA);
+			else if(md->special_state.size==1)
+				clif_specialeffect(&md->bl,421,AREA);
+		}
+		break;
+	}
+	return;
+}
+
 /// Move the unit (does nothing if the client has no info about the unit)
 /// Note: unit must not be self
 void clif_move(struct unit_data *ud)
@@ -1530,6 +1567,14 @@ void clif_move(struct unit_data *ud)
 	if (!vd || vd->class_ == INVISIBLE_CLASS)
 		return; //This performance check is needed to keep GM-hidden objects from being notified to bots.
 	
+	if (ud->state.speed_changed) {
+		// Since we don't know how to update the speed of other objects,
+		// use the old walk packet to update the data.
+		ud->state.speed_changed = 0;
+		clif_move2(bl, vd, ud);
+		return;
+	}
+
 	WBUFW(buf,0)=0x86;
 	WBUFL(buf,2)=bl->id;
 	WBUFPOS2(buf,6,bl->x,bl->y,ud->to_x,ud->to_y,8,8);

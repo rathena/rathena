@@ -1879,6 +1879,7 @@ int atcommand_whogm(const int fd, struct map_session_data* sd, const char* comma
 		if (pl_GM_level > GM_level) {
 			sprintf(atcmd_output, "Name: %s (GM)", pl_sd->status.name);
 			clif_displaymessage(fd, atcmd_output);
+			count++;
 			continue;
 		}
 

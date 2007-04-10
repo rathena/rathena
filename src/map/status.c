@@ -3004,7 +3004,7 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 		//because if you step on something while walking, the moment this
 		//piece of code triggers the walk-timer is set on -1) [Skotlex]
 	  	if (ud)
-			ud->state.change_walk_target = 1;
+			ud->state.change_walk_target = ud->state.speed_changed = 1;
 	}
 
 	if(flag&SCB_CRI && b_status->cri) {

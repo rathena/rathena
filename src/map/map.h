@@ -332,6 +332,7 @@ struct unit_data {
 		unsigned attack_continue : 1 ;
 		unsigned walk_easy : 1 ;
 		unsigned running : 1;
+		unsigned speed_changed : 1;
 	} state;
 };
 
