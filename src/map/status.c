@@ -4351,11 +4351,12 @@ void status_change_init(struct block_list *bl)
 		sc->data[i].timer = -1;
 }
 
-//Returns defense against the specified status change.
-//Return range is 0 (no resist) to 10000 (inmunity)
-int status_get_sc_def(struct block_list *bl, int type)
+//Applies SC defense to a given status change.
+//Returns the adjusted duration based on flag values.
+//the flag values are the same as in status_change_start.
+int status_get_sc_def(struct block_list *bl, int type, int rate, int tick, int flag)
 {
-	int sc_def;
+	int sc_def, tick_def = 0;
 	struct status_data* status;
 	struct status_change* sc;
 	struct map_session_data *sd;
@@ -4388,9 +4389,10 @@ int status_get_sc_def(struct block_list *bl, int type)
 	case SC_STONE:
 	case SC_QUAGMIRE:
 	case SC_SUITON:
-		return 10000;
+		return 0;
 	}
 	
+	BL_CAST(BL_PC,bl,sd);
 	status = status_get_status_data(bl);
 	switch (type)
 	{
@@ -4399,37 +4401,42 @@ int status_get_sc_def(struct block_list *bl, int type)
 	case SC_DPOISON:
 	case SC_SILENCE:
 	case SC_BLEEDING:
-		sc_def = 300 +100*status->vit;
+		sc_def = 3 +status->vit;
 		break;
 	case SC_SLEEP:
-		sc_def = 300 +100*status->int_;
+		sc_def = 3 +status->int_;
 		break;
+	case SC_DECREASEAGI:
+		if (sd) tick>>=1; //Half duration for players.
 	case SC_STONE:
 	case SC_FREEZE:
-	case SC_DECREASEAGI:
-		sc_def = 300 +100*status->mdef;
+		sc_def = 3 +status->mdef;
 		break;
 	case SC_CURSE:
+		//Special property: inmunity when luk is greater than level
 		if (status->luk > status_get_lv(bl))
-			return 10000; //Special property: inmunity when luk is greater than level
+			return 0;
 		else
-			sc_def = 300 +100*status->luk;
+			sc_def = 3 +status->luk;
+		tick_def = status->vit;
 		break;
 	case SC_BLIND: //TODO: These 50/50 factors are guessed. Need to find actual value.
-		sc_def = 300 +50*status->vit +50*status->int_;
+		sc_def = 3 +(status->vit + status->int_)/2;
 		break;
 	case SC_CONFUSION:
-		sc_def = 300 +50*status->str +50*status->int_;
+		sc_def = 3 +(status->str + status->int_)/2;
 		break;
 	case SC_ANKLE:
-		sc_def = 100*status->agi;
+		if(status->mode&MD_BOSS) // Lasts 5 times less on bosses
+			tick /= 5;
+		sc_def = status->agi;
 		break;
-
 	default:
-		return 0; //Effect that cannot be reduced? Likely a buff.
+		//Effect that cannot be reduced? Likely a buff.
+		if (!(rand()%10000 < rate))
+			return 0;
+		return tick;
 	}
-
-	BL_CAST(BL_PC,bl,sd);
 	
 	if (sd) {
 
@@ -4442,6 +4449,11 @@ int status_get_sc_def(struct block_list *bl, int type)
 		else
 			sc_def = battle_config.pc_max_sc_def;
 
+		if (tick_def) {
+			if (battle_config.pc_sc_def_rate != 100)
+				tick_def = sc_def*battle_config.pc_sc_def_rate/100;
+		}
+
 	} else {
 
 		if (battle_config.mob_sc_def_rate != 100)
@@ -4453,17 +4465,50 @@ int status_get_sc_def(struct block_list *bl, int type)
 		else
 			sc_def = battle_config.mob_max_sc_def;
 
+		if (tick_def) {
+			if (battle_config.mob_sc_def_rate != 100)
+				tick_def = sc_def*battle_config.mob_sc_def_rate/100;
+		}
 	}
 	
 	sc = status_get_sc(bl);
 	if (sc && sc->count)
 	{
 		if (sc->data[SC_SCRESIST].timer != -1)
-			sc_def += 100*sc->data[SC_SCRESIST].val1; //Status resist
+			sc_def += sc->data[SC_SCRESIST].val1; //Status resist
 		else if (sc->data[SC_SIEGFRIED].timer != -1)
-			sc_def += 100*sc->data[SC_SIEGFRIED].val3; //Status resistance.
+			sc_def += sc->data[SC_SIEGFRIED].val3; //Status resistance.
 	}
-	return sc_def>10000?10000:sc_def;
+
+	//When no tick def, reduction is the same for both.
+	if (!tick_def) tick_def = sc_def;
+
+	//Natural resistance
+	if (!(flag&8)) {
+		rate -= rate*sc_def/100;
+
+		//Item resistance (only applies to rate%)
+		if(sd && SC_COMMON_MIN<=type && type<=SC_COMMON_MAX
+			&& sd->reseff[type-SC_COMMON_MIN] > 0)
+			rate -= rate*sd->reseff[type-SC_COMMON_MIN]/10000;
+	}
+	if (!(rand()%10000 < rate))
+		return 0;
+
+	//Why would a status start with no duration? Presume it has 
+	//duration defined elsewhere.
+	if (!tick) return 1;
+
+	//Rate reduction
+ 	if (flag&2)
+		return tick;
+
+	tick -= tick*tick_def/100;
+	// Minimum trap time of 3+0.03*skilllv seconds [celest]
+	// Changed to 3 secs and moved from skill.c [Skotlex]
+	if (type == SC_ANKLE && tick < 3000)
+		tick = 3000;
+	return tick<=0?0:tick;
 }
 
 /*==========================================
@@ -4510,30 +4555,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		return 0;
 	}
 
-	//Check rate
+	//Check resistance.
 	if (!(flag&(1|4))) {
-		int def = status_get_sc_def(bl, type);
-
-		if (def && tick && !(flag&2))
-		{
-			tick -= tick*def/10000;
-			if (tick <= 0 && type != SC_ANKLE) //Ankle Snare has it's opwn minimum
-				return 0;
-		}
-
-		if (!(flag&8)) {
-			if (def) //Natural resistance
-				rate -= rate*def/10000;
-
-			//Item resistance (only applies to rate%)
-			if(sd && SC_COMMON_MIN<=type && type<=SC_COMMON_MAX
-				&& sd->reseff[type-SC_COMMON_MIN] > 0)
-				rate -= rate*sd->reseff[type-SC_COMMON_MIN]/10000;
-		}
-
-		if (!(rand()%10000 < rate))
-			return 0;
-
+		tick = status_get_sc_def(bl, type, rate, tick, flag);
+		if (!tick) return 0;
 	}
 
 	undead_flag=battle_check_undead(status->race,status->def_ele);
@@ -4925,7 +4950,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	if(!(flag&4)) //Do not parse val settings when loading SCs
 	switch(type){
 		case SC_DECREASEAGI:
-			if (sd) tick>>=1; //Half duration for players.
 		case SC_INCREASEAGI:
 			val2 = 2 + val1; //Agi change
 			break;
@@ -5708,14 +5732,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_SWOO:
 			if(status->mode&MD_BOSS)
 				tick /= 5; //TODO: Reduce skill's duration. But for how long?
-			break;
-		case SC_ANKLE:
-			if(status->mode&MD_BOSS) // Lasts 5 times less on bosses
-				tick /= 5;
-			// Minimum trap time of 3+0.03*skilllv seconds [celest]
-			// Changed to 3 secs and moved from skill.c [Skotlex]
-			if (tick < 3000)
-				tick = 3000;
 			break;
 		case SC_SPIDERWEB:
 			if (bl->type == BL_PC)

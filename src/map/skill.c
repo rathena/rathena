@@ -4646,12 +4646,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{
 			int i;
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			i = status_get_sc_def_mdef(bl);
-			if (i >= 10000 ||
+			i = tstatus->mdef;
+			if (i >= 100 ||
 				(dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) ||
 				tsc == NULL || (tsc->data[SC_SPIRIT].timer != -1 && tsc->data[SC_SPIRIT].val2 == SL_ROGUE) || //Rogue's spirit defends againt dispel.
 			//Fixed & changed to use a proportionnal reduction (no info, but seems far more logical) [DracoRPG]
-				rand()%10000 >= (10000-i)*(50+10*skilllv)/100)
+				rand()%100 >= (100-i)*(50+10*skilllv)/100)
 			{
 				if (sd)
 					clif_skill_fail(sd,skillid,0,0);

@@ -8128,13 +8128,10 @@ BUILDIN_FUNC(getscrate)
 		bl = map_id2bl(st->rid);
 
 	if (bl)
-		sc_def = status_get_sc_def(bl,type);
+		rate = status_get_sc_def(bl,type, 10000, 10000, 0);
 
-	rate = rate*(10000-sc_def)/10000;
-	script_pushint(st,rate<0?0:rate);
-
+	script_pushint(st,rate);
 	return 0;
-
 }
 
 /*==========================================
