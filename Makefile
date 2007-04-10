@@ -27,7 +27,7 @@ OPT += -ffast-math
 # OPT += -fomit-frame-pointer
 OPT += -Wall -Wno-sign-compare -Wno-unused-parameter
 ifeq ($(GCC_VERSION), 4)
-	OPT += -Wno-unused-parameter -Wno-pointer-sign
+	OPT += -Wno-pointer-sign
 endif
 # Server Packet Protocol version (also defined in src/common/mmo.h)
 # OPT += -DPACKETVER=8

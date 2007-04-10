@@ -103,7 +103,7 @@ void set_defaultparse(ParseFunc defaultparse)
 /*======================================
  *	CORE : Socket options
  *--------------------------------------*/
-void set_nonblocking(int fd, int yes)
+void set_nonblocking(int fd, unsigned long yes)
 {
 	// TCP_NODELAY BOOL Disables the Nagle algorithm for send coalescing.
 	if(MODE_NODELAY)
@@ -111,7 +111,7 @@ void set_nonblocking(int fd, int yes)
 	
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s. 
 	// The argp parameter is zero if nonblocking is to be disabled. 
-	if (ioctlsocket(fd, FIONBIO, (unsigned long*)&yes) != 0)
+	if (ioctlsocket(fd, FIONBIO, &yes) != 0)
 		ShowError("Couldn't set the socket to non-blocking mode (code %d)!\n", s_errno);
 }
 
