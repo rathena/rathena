@@ -107,6 +107,7 @@ kh_rossi	mapflag	nobranch
 kh_school	mapflag	nobranch
 kh_vila	mapflag	nobranch
 que_rachel	mapflag	nobranch
+que_thor	mapflag	nobranch
 
 // Guild Castles ==================
 //alde_gld	mapflag	nobranch
