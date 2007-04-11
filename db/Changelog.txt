@@ -19,6 +19,9 @@
 	-----
 
 ========================
+04/12
+	* Ganbantein now has a range equal to the level used [Playtester]
+	- only mobs use levels higher than 1
 04/11
 	* Added dummy information to the pet_db.txt for the Rice Cake and Xmas
 	  Goblin pets. [Skotlex]
