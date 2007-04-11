@@ -52,8 +52,6 @@ ein_in01	mapflag	nobranch
 airport	mapflag	nobranch
 airplane	mapflag	nobranch
 airplane_01	mapflag	nobranch
-ra_in01	mapflag	nobranch
-// New areas
 yuno_pre	mapflag	nobranch
 y_airport	mapflag	nobranch
 lhz_airport	mapflag	nobranch
@@ -67,9 +65,12 @@ auction_01	mapflag	nobranch
 auction_02	mapflag	nobranch
 p_track01	mapflag	nobranch
 p_track02	mapflag	nobranch
+ra_in01	mapflag	nobranch
 ra_temple	mapflag	nobranch
 ra_temsky	mapflag	nobranch
-que_rachel	mapflag	nobranch
+ve_in	mapflag	nobranch
+ve_in02	mapflag	nobranch
+thor_camp	mapflag	nobranch
 
 // Job Quests ====================
 job_sword1	mapflag	nobranch
@@ -105,6 +106,7 @@ kh_mansion	mapflag	nobranch
 kh_rossi	mapflag	nobranch
 kh_school	mapflag	nobranch
 kh_vila	mapflag	nobranch
+que_rachel	mapflag	nobranch
 
 // Guild Castles ==================
 //alde_gld	mapflag	nobranch
@@ -286,3 +288,4 @@ umbala	mapflag	nobranch
 xmas	mapflag	nobranch
 yuno	mapflag	nobranch
 rachel	mapflag	nobranch
+veins	mapflag	nobranch

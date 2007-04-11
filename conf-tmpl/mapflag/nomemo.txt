@@ -72,6 +72,10 @@ p_track02	mapflag	nomemo
 ra_in01	mapflag	nomemo
 ra_temin	mapflag	nomemo
 ra_temsky	mapflag	nomemo
+veins	mapflag	nomemo
+ve_in	mapflag	nomemo
+ve_in02	mapflag	nomemo
+thor_camp	mapflag	nomemo
 
 // Fields  ===================
 alb2trea	mapflag	nomemo
@@ -122,7 +126,7 @@ moc_fild18	mapflag	nomemo
 nif_fild01	mapflag	nomemo
 nif_fild02	mapflag	nomemo
 pay_fild02	mapflag	nomemo
-//pay_fild04	mapflag	nomemo
+pay_fild04	mapflag	nomemo
 pay_fild05	mapflag	nomemo
 pay_fild09	mapflag	nomemo
 pay_fild10	mapflag	nomemo
@@ -145,7 +149,17 @@ yuno_fild07	mapflag	nomemo
 yuno_fild08	mapflag	nomemo
 yuno_fild09	mapflag	nomemo
 yuno_fild10	mapflag	nomemo
-
+ra_fild01	mapflag	nomemo
+ra_fild02	mapflag	nomemo
+ra_fild03	mapflag	nomemo
+ra_fild04	mapflag	nomemo
+ra_fild05	mapflag	nomemo
+ra_fild06	mapflag	nomemo
+ra_fild10	mapflag	nomemo
+ve_fild02	mapflag	nomemo
+ve_fild03	mapflag	nomemo
+ve_fild04	mapflag	nomemo
+ve_fild06	mapflag	nomemo
 
 // Job Quests ================
 // First Job Class
@@ -366,6 +380,10 @@ ra_san02	mapflag	nomemo
 ra_san03	mapflag	nomemo
 ra_san04	mapflag	nomemo
 ra_san05	mapflag	nomemo
+//Thor Volcano
+thor_v01	mapflag	nomemo
+thor_v02	mapflag	nomemo
+thor_v03	mapflag	nomemo
 
 // Guild Castles =============
 //alde_gld	mapflag	nomemo

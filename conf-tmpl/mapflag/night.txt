@@ -228,3 +228,11 @@ ra_fild12	mapflag	nightenabled
 ra_fild13	mapflag	nightenabled
 ra_temple	mapflag	nightenabled
 ra_temsky	mapflag	nightenabled
+veins	mapflag	nightenabled
+ve_fild01	mapflag	nightenabled
+ve_fild02	mapflag	nightenabled
+ve_fild03	mapflag	nightenabled
+ve_fild04	mapflag	nightenabled
+ve_fild05	mapflag	nightenabled
+ve_fild06	mapflag	nightenabled
+ve_fild07	mapflag	nightenabled

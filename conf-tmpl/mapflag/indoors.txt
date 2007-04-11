@@ -79,3 +79,5 @@ kh_school	mapflag	indoors
 kh_vila	mapflag	indoors
 que_bingo	mapflag	indoors
 que_ng	mapflag	indoors
+ve_in	mapflag	indoors
+ve_in02	mapflag	indoors

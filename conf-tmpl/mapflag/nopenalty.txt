@@ -96,6 +96,10 @@ kh_rossi	mapflag	nopenalty
 kh_school	mapflag	nopenalty
 kh_vila	mapflag	nopenalty
 ayothaya	mapflag	nopenalty
+veins	mapflag	nopenalty
+ve_in	mapflag	nopenalty
+ve_in02	mapflag	nopenalty
+thor_camp	mapflag	nopenalty
 
 // Job Quests ========================
 job_sword1	mapflag	nopenalty

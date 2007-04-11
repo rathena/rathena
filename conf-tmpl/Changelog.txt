@@ -1,5 +1,7 @@
 Date	Added
 
+2007/04/12
+	* Updated various mapflags with 11.2 maps [Playtester]
 2007/04/11
 	* The pc_max_status_def and mob_max_status_def configs are now set on a
 	  1-100 scale instead of 1-10000 (status.conf)

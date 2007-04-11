@@ -56,11 +56,6 @@ ein_in01	mapflag	noreturn
 airport	mapflag	noreturn
 airplane	mapflag	noreturn
 airplane_01	mapflag	noreturn
-ra_in01	mapflag	noreturn
-ra_temin	mapflag	noreturn
-que_rachel	mapflag	noreturn
-
-// New areas
 yuno_pre	mapflag	noreturn
 y_airport	mapflag	noreturn
 lhz_airport	mapflag	noreturn
@@ -72,6 +67,10 @@ kh_mansion	mapflag	noreturn
 kh_rossi	mapflag	noreturn
 kh_school	mapflag	noreturn
 kh_vila	mapflag	noreturn
+ra_in01	mapflag	noreturn
+ra_temin	mapflag	noreturn
+ve_in	mapflag	noreturn
+ve_in02	mapflag	noreturn
 
 // Job Quests ====================
 job_sword1	mapflag	noreturn
@@ -98,6 +97,7 @@ que_god01	mapflag	noreturn
 que_god02	mapflag	noreturn
 que_bingo	mapflag	noreturn
 que_hugel	mapflag	noreturn
+que_rachel	mapflag	noreturn
 poring_c01	mapflag	noreturn
 poring_c02	mapflag	noreturn
 

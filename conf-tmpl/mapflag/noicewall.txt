@@ -91,6 +91,8 @@ kh_mansion	mapflag	noicewall
 kh_rossi	mapflag	noicewall
 kh_school	mapflag	noicewall
 kh_vila	mapflag	noicewall
+ve_in	mapflag	noicewall
+ve_in02	mapflag	noicewall
 
 // Guild Castles ==========
 aldeg_cas01	mapflag	noicewall
