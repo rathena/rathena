@@ -3,17 +3,18 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.1 Official kRO 10.1 spawns [Playtester]
+//= 1.2 Small 11.1 spawn update [Playtester]
 //============================================================
 
 //==================================================
 // beach_dun - Karu, the West Cave
 //==================================================
-beach_dun,0,0,0,0	monster	Medusa	1148,20,0,0,0
+beach_dun,0,0,0,0	monster	Medusa	1148,30,0,0,0
 beach_dun,0,0,0,0	monster	Merman	1264,3,10000,5000,0
 beach_dun,0,0,0,0	monster	Nereid	1255,15,0,0,0
 beach_dun,0,0,0,0	monster	Pest	1256,15,0,0,0

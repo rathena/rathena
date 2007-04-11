@@ -6,7 +6,7 @@
 // Licensed under GPL
 // http://prometheus.fnae.net/
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena/Freya Version
 //===== Additional Comments: =================================
@@ -15,6 +15,7 @@
 //= 0.3 Updated the spawns according to own info from iRO [MasterOfMuppets]
 //= 1.0 More exact numbers thanks to Tharis [Playtester]
 //= 1.1 Official X.3 spawns [Playtester]
+//= 1.2 Some 11.1 spawn changes [Playtester]
 //============================================================
 
 //========================================================================================
@@ -26,9 +27,13 @@ juperos_01,100,180,60,70	monster	Venatu	1676,25,0,0,1
 juperos_01,100,180,60,70	monster	Venatu	1677,20,0,0,1
 juperos_01,100,180,60,70	monster	Venatu	1678,25,0,0,1
 juperos_01,192,132,60,80	monster	Venatu	1679,35,0,0,1
-juperos_01,192,132,60,80	monster	Venatu	1676,45,0,0,1
-juperos_01,192,132,60,80	monster	Venatu	1677,50,0,0,1
-juperos_01,192,132,60,80	monster	Venatu	1678,45,0,0,1
+juperos_01,192,132,60,80	monster	Venatu	1676,40,0,0,1
+juperos_01,192,132,60,80	monster	Venatu	1677,45,0,0,1
+juperos_01,192,132,60,80	monster	Venatu	1678,40,0,0,1
+juperos_01,0,0,0,0	monster	Dimik	1670,5,0,0,1
+juperos_01,0,0,0,0	monster	Dimik	1671,5,0,0,1
+juperos_01,0,0,0,0	monster	Dimik	1672,5,0,0,1
+juperos_01,0,0,0,0	monster	Dimik	1673,5,0,0,1
 
 //========================================================================================
 // - Juperos 02
