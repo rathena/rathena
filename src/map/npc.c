@@ -3199,17 +3199,11 @@ int do_init_npc(void)
 	add_timer_func_list(npc_timerevent,"npc_timerevent");
 
 	// Init dummy NPC
-	fake_nd = (struct npc_data *)aMalloc(sizeof(struct npc_data));
-	fake_nd->bl.prev = fake_nd->bl.next = NULL;
+	fake_nd = (struct npc_data *)aCalloc(1,sizeof(struct npc_data));
 	fake_nd->bl.m = -1;
-	fake_nd->bl.x = 0;
-	fake_nd->bl.y = 0;
 	fake_nd->bl.id = npc_get_new_npc_id();
 	fake_nd->class_ = -1;
 	fake_nd->speed = 200;
-	fake_nd->u.scr.script = NULL;
-	fake_nd->u.scr.src_id = 0;
-	fake_nd->chatdb = NULL;
 	for (i = 0; i < MAX_EVENTTIMER; i++)
 		fake_nd->eventtimer[i] = -1;
 	strcpy(fake_nd->name,"FAKE_NPC");
