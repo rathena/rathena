@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/04/12
+	* Fixed up some Veins warps [Playtester]
 2007/04/11
 	* Added official donation items in Rachel Sanctuary quest [Playtester]
 	- chances are guessed but safe to use

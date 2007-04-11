@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= erKURITA & RockmanEXE
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //= 1.0 Added the official warps and commented out the 
 //= 	  "custom duplicates" for future checkout. Special thanks
 //= 	  to RockmanEXE who provided all the info. [erKURITA]
+//= 1.1 Added warp to Veins Field [Playtester]
 //============================================================
 
 //| Official warps under this comment. Needs separation though...
@@ -45,6 +46,7 @@ ra_in01,192,152,0	warp	rachel26	1,1,rachel,90,193
 rachel,90,189,0	warp	rachel27	1,1,ra_in01,192,148
 rachel,25,125,0	warp	rachel28	1,1,ra_fild11,353,226
 rachel,273,125,0	warp	rachel29	1,1,ra_fild12,41,225
+rachel,130,20,0	warp	rachel30	1,1,ve_fild02,196,379
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //~~~~~~~~~~~~~~~~~~~ Custom warps starts here ~~~~~~~~~~~~~~~~~~~

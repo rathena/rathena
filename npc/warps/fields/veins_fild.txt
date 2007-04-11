@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= $ephiroth
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 Initial version [$ephiroth]
 //= 1.1 Updated more warps [$ephiroth]
+//= 1.2 Removed some unofficial warps [Playtester]
 //============================================================
 
 //= Beins Field (ve_fild) ====================================
@@ -22,7 +23,7 @@ ve_fild01,243,369,0	warp	veinswarp5005	1,1,ra_fild11,232,29
 ra_fild11,232,26,0	warp	veinswarp5006	1,1,ve_fild01,243,366
 ve_fild01,367,263,0	warp	veinswarp5007	1,1,ve_fild02,33,259
 ve_fild02,30,259,0	warp	veinswarp5008	1,1,ve_fild01,364,263
-ve_fild01,351,95,0	warp	veinswarp5009	1,1,ve_fild02,76,133
+ve_fild01,351,95,0	warp	veinswarp5009	1,1,ve_fild02,76,133	
 ve_fild02,73,133,0	warp	veinswarp5010	1,1,ve_fild01,348,95
 ve_fild01,185,19,0	warp	veinswarp5011	1,1,ve_fild04,174,337
 ve_fild04,174,340,0	warp	veinswarp5012	1,1,ve_fild01,185,22
@@ -32,12 +33,5 @@ ve_fild03,355,222,0	warp	veinswarp5015	1,1,ve_fild04,46,249
 ve_fild04,43,249,0	warp	veinswarp5016	1,1,ve_fild03,353,221
 ve_fild03,222,42,0	warp	veinswarp5017	1,1,ve_fild05,204,330
 ve_fild05,206,331,0	warp	veinswarp5018	1,1,ve_fild03,222,45
-ve_fild04,115,50,0	warp	veinswarp5019	1,1,ve_fild06,78,183
-ve_fild05,359,192,0	warp	veinswarp5020	1,1,ve_fild06,78,183
-ve_fild06,88,176,0	script	#veinswarp5021	45,1,1,{
-	if(rand(2))
-		warp "ve_fild04",115,55;
-	else
-		warp "ve_fild05",354,192;
-	end;
-}
+ve_fild05,359,192,0	warp	veinswarp5019	1,1,ve_fild06,78,183
+ve_fild06,88,176,0	warp	veinswarp5020	1,1,ve_fild05,354,192

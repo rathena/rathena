@@ -3,16 +3,16 @@
 //===== By: ==================================================
 //= $ephiroth
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Warp Points for Veins
 //===== Additional Comments: =================================
 //= 1.0 Initial version [$ephiroth]
+//= 1.1 Removed Rachel City warp [Playtester]
 //============================================================
 
 //= Veins City ================================================
 veins,218,361,0	warp	veinswarp0501	1,1,ve_fild06,152,221
 veins,146,24,0		warp	veinswarp0502	1,1,ve_fild07,148,370
-rachel,130,20,0	warp	veinswarp0503	1,1,ve_fild02,196,379
