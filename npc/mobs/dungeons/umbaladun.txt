@@ -15,29 +15,29 @@
 // um_dun01 - Carpenter's Shop in the Tree
 //==================================================
 um_dun01,0,0,0,0	monster	Stone Shooter	1495,70,0,0,0
-um_dun01,0,0,0,0	monster	Wootan Fighter	1499,20,0,0,0
-um_dun01,0,0,0,0	monster	Stainer	1174,20,0,0,0
-um_dun01,0,0,0,0	monster	Dustiness	1114,20,0,0,0
+um_dun01,0,0,0,0	monster	Wootan Fighter	1499,10,0,0,0
+um_dun01,0,0,0,0	monster	Stainer	1174,10,0,0,0
+um_dun01,0,0,0,0	monster	Dustiness	1114,10,0,0,0
 um_dun01,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000,1
 um_dun01,0,0,0,0	monster	Green Plant	1080,5,180000,90000,1
 
 //==================================================
 // um_dun02 - Passage to a Foreign World
 //==================================================
-um_dun02,0,0,0,0	monster	Wooden Golem	1497,25,0,0,0
+um_dun02,0,0,0,0	monster	Wooden Golem	1497,15,0,0,0
 um_dun02,79,227,5,5	monster	Wooden Golem	1497,5,120000,60000,0
 um_dun02,87,189,5,5	monster	Wooden Golem	1497,2,120000,60000,0
 um_dun02,170,145,5,5	monster	Wooden Golem	1497,3,120000,60000,0
 um_dun02,196,131,7,7	monster	Wooden Golem	1497,5,120000,60000,0
 um_dun02,244,129,10,10	monster	Wooden Golem	1497,5,120000,60000,0
-um_dun02,0,0,0,0	monster	Wooden Golem	1497,20,0,0,0
+um_dun02,0,0,0,0	monster	Wooden Golem	1497,10,0,0,0
 um_dun02,90,97,10,10	monster	Wooden Golem	1497,3,120000,60000,0
 um_dun02,32,83,10,10	monster	Wooden Golem	1497,2,120000,60000,0
 um_dun02,180,238,10,10	monster	Wooden Golem	1497,3,120000,60000,0
 um_dun02,144,277,10,10	monster	Wooden Golem	1497,2,120000,60000,0
 um_dun02,272,163,10,10	monster	Wooden Golem	1497,2,120000,60000,0
 um_dun02,232,156,10,10	monster	Wooden Golem	1497,3,120000,60000,0
-um_dun02,0,0,0,0	monster	Wootan Shooter	1498,30,0,0,0
+um_dun02,0,0,0,0	monster	Wootan Shooter	1498,20,0,0,0
 um_dun02,213,217,10,10	monster	Wootan Shooter	1498,2,120000,60000,0
 um_dun02,72,258,10,10	monster	Wootan Shooter	1498,3,120000,60000,0
 um_dun02,79,227,5,5	monster	Wootan Shooter	1498,1,120000,60000,0
@@ -45,7 +45,7 @@ um_dun02,170,145,5,5	monster	Wootan Shooter	1498,1,120000,60000,0
 um_dun02,209,34,10,10	monster	Wootan Shooter	1498,1,120000,60000,0
 um_dun02,272,163,10,10	monster	Wootan Shooter	1498,1,120000,60000,0
 um_dun02,232,156,10,10	monster	Wootan Shooter	1498,1,120000,60000,0
-um_dun02,0,0,0,0	monster	Dryad	1493,20,0,0,0
+um_dun02,0,0,0,0	monster	Dryad	1493,10,0,0,0
 um_dun02,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000,1
 um_dun02,0,0,0,0	monster	Red Plant	1078,5,180000,90000,1
 um_dun02,0,0,0,0	monster	Shining Plant	1083,6,180000,90000,1
