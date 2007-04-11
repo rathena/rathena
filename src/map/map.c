@@ -3154,7 +3154,8 @@ void do_abort(void) {
 	//Save all characters and then flush the inter-connection.
 	if (!chrif_isconnect())
 	{
-		ShowFatalError("Server has crashed without a connection to the char-server, character data can't be saved!\n");
+		if (pc_db->size(pc_db))
+			ShowFatalError("Server has crashed without a connection to the char-server, character data can't be saved!\n");
 		return;
 	}
 	ShowError("Server received crash signal! Attempting to save all online characters!\n");

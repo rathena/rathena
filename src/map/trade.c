@@ -39,7 +39,13 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 		clif_tradestart(sd, 1); // character does not exist
 		return;
 	}
-	
+
+	if (target_sd->npc_id)
+	{	//Trade fails if you are using an NPC.
+		clif_tradestart(sd, 2);
+		return;
+	}
+
 	if (!battle_config.invite_request_check) {
 		if (target_sd->guild_invite > 0 || target_sd->party_invite > 0) {
 			clif_tradestart(sd, 2);
