@@ -240,20 +240,6 @@ rachel,124,132,1	script	Town Native	921,{
 	close;
 }
 
-rachel,109,138,5	script	Cool Event Corp	874,{
-
-//	mes "[Cool Event Corp Employee]";
-//	mes "Welcome to Cool Event Corp. We always";
-//	mes "bring you the best service.";
-//	mes "What service do you need?";
-//	next;
-//	mes "Use Save Service",Z_end,"Use Storage Service",Z_end,"Use Cart //Service",Z_end,"End Conversation",Z_end;
-//	
-//	Z_end:
-//		close;
-	end;
-}
-
 rachel,197,137,3	script	Wandering Citizen	51,{
 
 	mes "[Wandering Citizen]";

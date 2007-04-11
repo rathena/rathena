@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/04/12
+	* Added Cool Corp Event Staff in Rachel [Playtester]
+	- some skilled script dev should combine them into one function, though
 	* Fixed up some Veins warps [Playtester]
 2007/04/11
 	* Added official donation items in Rachel Sanctuary quest [Playtester]
