@@ -62,7 +62,7 @@ ra_temsky,62,139,0	warp	rasky006	1,1,ra_temsky,91,143
 
 //Rachel Temple
 ra_temple,119,21,0	warp	rachel002	1,1,rachel,149,244
-ra_temple,119,181,0	warp	rachel003	1,1,ra_temin,169,22
+//ra_temple,119,181,0	warp	rachel003	1,1,ra_temin,169,22
 ra_temin,169,17,0	warp	rachel004	1,1,ra_temple,119,176
 ra_temin,206,93,0	warp	rachel005	1,1,ra_temin,312,257
 ra_temin,312,252,0	warp	rachel006	1,1,ra_temin,206,88

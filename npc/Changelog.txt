@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/04/12
+	* Merged duplicate Rachel Temple entrance into one NPC [Playtester]
+	- we need to add a quest that you need to enter later
 	* Some 11.1 and 11.2 spawn updates [Playtester]
 	* Added Cool Corp Event Staff in Rachel [Playtester]
 	- some skilled script dev should combine them into one function, though

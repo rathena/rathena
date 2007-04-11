@@ -588,17 +588,22 @@ ra_temple,119,179,3	script	#door1	45,2,2,{
 OnTouch:
 	mes "** The door is locked. **";
 	next;
-	menu "Kick it",-,"Take out your weapon",L_weap;
+	menu "Kick it",-,"Take out your weapon",L_weap,"Pray to the goddess",L_enter;
 
 	emotion 23;
 	mes "[Bishop Nema]";
 	mes "Please stop!";
 	close;
-	end;
 	
-	L_weap:
-		emotion 23;
-		close;
+L_weap:
+	emotion 23;
+	close;
+
+L_enter:
+	mes "** The door opens. **";
+	close2;
+	warp "ra_temin",169,22;
+	end;
 }
 
 ra_temple,116,174,3	script	Bishop Nema	920,{
