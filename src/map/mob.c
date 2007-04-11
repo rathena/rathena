@@ -1160,7 +1160,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			)	{	//Rude attacked
 				if (md->state.attacked_count++ >= RUDE_ATTACKED_COUNT &&
 					!mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move &&
-					unit_escape(bl, abl, rand()%10 +1))
+					!tbl && unit_escape(bl, abl, rand()%10 +1))
 				{	//Escaped.
 					//TODO: Maybe it shouldn't attempt to run if it has another, valid target?
 					md->attacked_id = 0;
@@ -2855,7 +2855,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 		if (!flag) 
 		{	//Skill failed.
 			md->skillidx = -1;
-			return 0;
+			continue;
 		}
 		if(battle_config.mob_ai&0x200)
 		{ //pass on delay to same skill.
