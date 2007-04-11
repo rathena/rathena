@@ -6327,9 +6327,13 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 
 //Simplify skill_failed code.
 #define skill_failed(sd) { sd->menuskill_id = sd->menuskill_lv = 0; }
-
-	if( sd->bl.prev == NULL || pc_isdead(sd) )
+	if(skill_num != sd->menuskill_id) 
 		return 0;
+
+	if( sd->bl.prev == NULL || pc_isdead(sd) ) {
+		skill_failed(sd);
+		return 0;
+	}
 
 	if(sd->sc.opt1 || sd->sc.option&OPTION_HIDE ) {
 		skill_failed(sd);
@@ -6343,11 +6347,10 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 		sd->sc.data[SC_DANCING].timer!=-1 ||
 		sd->sc.data[SC_BERSERK].timer != -1 ||
 		sd->sc.data[SC_MARIONETTE].timer != -1
-	 ))
+	 )) {
+		skill_failed(sd);
 		return 0;
-
-	if( skill_num != sd->menuskill_id) 
-		return 0;
+	}
 
 	if (strlen(map) > MAP_NAME_LENGTH_EXT-1)
 	{	//Map_length check, as it is sent by the client and we shouldn't trust it [Skotlex]

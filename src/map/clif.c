@@ -9889,22 +9889,21 @@ void clif_parse_UseSkillToPosMoreInfo(int fd, struct map_session_data *sd) {
  */
 void clif_parse_UseSkillMap(int fd,struct map_session_data *sd)
 {
+	int skill_num;
 	RFIFOHEAD(fd);
+	skill_num = RFIFOW(fd,2);
+
+	if(skill_num != sd->menuskill_id) 
+		return;
 
 	if (clif_cant_act(sd))
+	{
+		sd->menuskill_id = sd->menuskill_lv = 0;
 		return;
-
-	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
-		return;
-	
-	if(sd->menuskill_id &&
-		sd->menuskill_id != RFIFOW(fd,2) &&
-		sd->menuskill_id != SA_AUTOSPELL)
-		return; //Can't use skills while a menu is open.
+	}
 
 	pc_delinvincibletimer(sd);
-
-	skill_castend_map(sd,RFIFOW(fd,2),(char*)RFIFOP(fd,4));
+	skill_castend_map(sd,skill_num,(char*)RFIFOP(fd,4));
 }
 /*==========================================
  * ƒƒ‚—v‹

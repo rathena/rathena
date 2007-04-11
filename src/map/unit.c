@@ -971,7 +971,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 		break;
 	case KN_CHARGEATK:
 		//Taken from jA: Casttime is increased by dist/3*100%
-		casttime = casttime * ((distance_bl(src,target)-1)/3+1);
+		casttime+= casttime * (distance_bl(src,target)-1)/3;
 		break;
 	}
   	
