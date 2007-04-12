@@ -36,20 +36,19 @@
 //Constants to identify a skill's inf2 value.
 #define INF2_QUEST_SKILL 1
 //NPC skills are those that players can't have in their skill tree.
-#define INF2_NPC_SKILL 2
-#define INF2_WEDDING_SKILL 4
-#define INF2_SPIRIT_SKILL 8
-#define INF2_GUILD_SKILL 16
-#define INF2_SONG_DANCE 32
-#define INF2_ENSEMBLE_SKILL 64
-#define INF2_TRAP 128
+#define INF2_NPC_SKILL 0x2
+#define INF2_WEDDING_SKILL 0x4
+#define INF2_SPIRIT_SKILL 0x8
+#define INF2_GUILD_SKILL 0x10
+#define INF2_SONG_DANCE 0x20
+#define INF2_ENSEMBLE_SKILL 0x40
+#define INF2_TRAP 0x80
 //Refers to ground placed skills that will target the caster as well (like Grandcross)
-#define INF2_TARGET_SELF 256
-#define INF2_NO_TARGET_SELF 512
-#define INF2_PARTY_ONLY 1024
-#define INF2_GUILD_ONLY 2048
-//For Party/Guild only skills that can ALSO be used on enemies.
-#define INF2_ALLOW_ENEMY 4096
+#define INF2_TARGET_SELF 0x100
+#define INF2_NO_TARGET_SELF 0x200
+#define INF2_PARTY_ONLY 0x400
+#define INF2_GUILD_ONLY 0x800
+#define INF2_NO_ENEMY 0x1000
 
 //Walk intervals at which chase-skills are attempted to be triggered.
 #define WALK_SKILL_INTERVAL 5

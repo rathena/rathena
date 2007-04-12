@@ -5676,14 +5676,17 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 			if(inf&INF_ATTACK_SKILL ||
 				(inf&INF_SELF_SKILL && inf2&INF2_NO_TARGET_SELF)) //Combo skills
 				inf = BCT_ENEMY; //Offensive skill.
-			else
-				inf = 0;
+			else if(inf2&INF2_NO_ENEMY)
+				inf = BCT_NOENEMY;
 
 			if(inf2 & (INF2_PARTY_ONLY|INF2_GUILD_ONLY) && src != target)
+			{
 				inf |= 	
 					(inf2&INF2_PARTY_ONLY?BCT_PARTY:0)|
-					(inf2&INF2_GUILD_ONLY?BCT_GUILD:0)|
-					(inf2&INF2_ALLOW_ENEMY?BCT_ENEMY:0);
+					(inf2&INF2_GUILD_ONLY?BCT_GUILD:0);
+				//Remove neutral targets (but allow enemy if skill is designed to be so)
+				inf &= ~BCT_NEUTRAL;
+			}
 
 			if (inf && battle_check_target(src, target, inf) <= 0)
 				break;

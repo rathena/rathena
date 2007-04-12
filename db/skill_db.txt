@@ -32,9 +32,9 @@
 //    0x0080- trap
 //    0x0100- skill that damages/targets yourself
 //    0x0200- cannot be casted on self (if inf = 4, auto-select target skill)
-//    0x0400- usable only on party-members
-//    0x0800- usable only on guild-mates
-//    0x1000- allow usage on enemies too (use with 0x0400/0x0800)
+//    0x0400- usable only on party-members (and enemies if skill is offensive)
+//    0x0800- usable only on guild-mates (and enemies if skill is offensive)
+//    0x1000- disable usage on enemies (for non-offensive skills).
 // 13 maxcount: max amount of skill instances to place on the ground when
 //    player_land_skill_limit/monster_land_skill_limit is enabled.
 // 14 attack type (none, weapon, magic, misc)
@@ -327,7 +327,7 @@
 286,2,6,2,1,0x1,0,5,1,yes,0,0,0,magic,0	//SA_DELUGE#Deluge#
 287,2,6,2,4,0x1,0,5,1,yes,0,0,0,magic,0	//SA_VIOLENTGALE#Whirlwind#
 288,3,6,2,0,0x1,0,5,1,yes,0,0,0,magic,0	//SA_LANDPROTECTOR#Magnetic Earth#
-289,9,6,1,0,0x1,0,5,1,yes,0,0x1E00,0,magic,0	//SA_DISPELL#Dispel#
+289,9,6,1,0,0x1,0,5,1,yes,0,0xE00,0,magic,0	//SA_DISPELL#Dispel#
 290,0,6,4,0,0x1,0,10,1,yes,0,0,0,magic,0	//SA_ABRACADABRA#Hocus-pocus#
 291,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0	//SA_MONOCELL#Monocell#
 292,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0	//SA_CLASSCHANGE#Class Change#
@@ -412,7 +412,7 @@
 371,-2,8,4,-1,0,0,5,1,no,0,0x200,0,weapon,0	//CH_TIGERFIST#Glacier Fist#
 372,-2,8,4,-1,0,0,10,-1:-1:-2:-2:-3:-3:-4:-4:-5:-5,no,0,0x200,0,weapon,0	//CH_CHAINCRUSH#Chain Crush Combo#
 373,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0	//PF_HPCONVERSION#Health Conversion#
-374,9,6,16,0,0x1,0,1,1,yes,0,0x1E00,0,none,0	//PF_SOULCHANGE#Soul Exhale#
+374,9,6,1,0,0x1,0,1,1,yes,0,0xE00,0,none,0	//PF_SOULCHANGE#Soul Exhale#
 375,9,6,1,0,0x98,0,5,1,yes,0,0,0,magic,0	//PF_SOULBURN#Soul Siphon#
 376,0,0,0,0,0x1,0,5,1,no,0,0,0,weapon,0	//ASC_KATAR#Advanced Katar Mastery#
 //377,0,0,4,0,0x1,0,10,1,no,0,0,0,misc,0	//ASC_HALLUCINATION#Hallucination Walk#
@@ -434,7 +434,7 @@
 393,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0	//CR_SYNTHESISPOTION#Potion Synthesis#
 394,9,8,1,-1,0,0,10,-9,yes,0,0,0,weapon,0	//CG_ARROWVULCAN#Vulcan Arrow#
 395,0,0,4,0,0x1,3,1,1,yes,0,0x40,0,misc,2	//CG_MOONLIT#Sheltering Bliss#
-396,-1,6,16,0,0x1,0,1,1,yes,0,0x600,0,none,0	//CG_MARIONETTE#Marionette Control#
+396,1,6,16,0,0x1,0,1,1,yes,0,0x600,0,none,0	//CG_MARIONETTE#Marionette Control#
 397,5,8,1,-1,0x20,0,5,5,no,0,0,0,weapon,0	//LK_SPIRALPIERCE#Spiral Pierce#
 398,4,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//LK_HEADCRUSH#Traumatic Blow#
 399,4,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	//LK_JOINTBEAT#Vital Strike#

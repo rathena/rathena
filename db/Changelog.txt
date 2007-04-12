@@ -20,6 +20,8 @@
 
 ========================
 04/13
+	* Corrected the inf2 of some skills considering the changes to the inf2
+	  party/guild only and 'allow enemy' meanings. [Skotlex]
 	* Thanatos, Kiel and Randgris now use Ganbantein [Playtester]
 	* Added Magmaring mob [Playtester]
 04/12

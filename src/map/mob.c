@@ -1316,8 +1316,18 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		return 0;
 
 	//Follow up if possible.
-	if (!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH) ||
-		!unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
+	if (mob_can_reach(md, tbl, md->min_chase, MSS_RUSH) &&
+		unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
+		return 0; //Chasing.
+
+	//Can't chase locked target. Return to IDLE.
+	if(md->state.skillstate == MSS_IDLE ||
+		md->state.skillstate == MSS_WALK)
+	{	//Mob is already idle, try a idle skill before giving up.
+		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL))
+			mobskill_use(md, tick, -1);
+		md->target_id=0;
+	} else
 		mob_unlocktarget(md,tick);
 	return 0;
 }
