@@ -20,6 +20,7 @@
 
 ========================
 04/13
+	* Corrected mob skill CALLSLAVE's target to be always 'self'
 	* Converted mob skills that had the combination idle+target+always to
 	  idle+randomtarget+always as per Playtester's request.
 	* Corrected the inf2 of some skills considering the changes to the inf2
