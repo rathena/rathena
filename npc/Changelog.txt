@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/04/13
+	* Updated Kiel Hyre quest warps [Playtester]
 	* Added Veins field spawns thanks to $ephiroth [Playtester]
 	* Added Kiel Hyre quest thanks to L0ne_W0lf [Playtester]
 	- please motivate your players to test it

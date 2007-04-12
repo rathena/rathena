@@ -44,7 +44,7 @@ kh_school,187,117,0	warp	school11	1,1,kh_school,17,48
 kh_school,63,80,0	warp	school12	1,1,kh_school,118,144
 kh_school,118,139,0	warp	school13	1,1,kh_school,63,75
 //Yuno Field
-yuno_fild08,148,189,0	warp	school14	1,1,kh_school,71,158
+//yuno_fild08,148,189,0	warp	school14	1,1,kh_school,71,158
 
 //============================================================
 // kh_vila
@@ -62,17 +62,17 @@ kh_vila,47,39,0	warp	vila06	1,1,kh_vila,74,38
 kh_vila,47,55,0	warp	vila07	1,1,kh_vila,74,54
 kh_vila,34,67,0	warp	vila08	1,1,kh_vila,20,106
 //Dining Room, Kitchen, Store Room
-kh_vila,20,102,0	warp	vila09	1,1,kh_vila,34,63
+kh_vila,20,102,0	warp	vila09	1,1,kh_vila,136,64
 kh_vila,45,102,0	warp	vila10	1,1,kh_vila,84,63
 kh_vila,32,129,0	warp	vila11	1,1,kh_vila,22,170
 kh_vila,22,166,0	warp	vila12	1,1,kh_vila,32,125
-kh_vila,27,189,0	warp	vila13	1,1,kh_vila,185,18
+//kh_vila,27,189,0	warp	vila13	1,1,kh_vila,185,18
 kh_vila,191,18,0	warp	vila14	1,1,kh_vila,27,185
 //Stairwell and Upstairs
 kh_vila,114,47,0	warp	vila15	1,1,kh_vila,86,49
 kh_vila,126,76,0	warp	vila16	1,1,kh_vila,180,175
 kh_vila,180,170,0	warp	vila17	1,1,kh_vila,127,71
-kh_vila,174,72,0	warp	vila18	1,1,kh_vila,181,125
+//kh_vila,174,72,0	warp	vila18	1,1,kh_vila,181,125
 
 //============================================================
 // kh_rossi - House of the Losimier family

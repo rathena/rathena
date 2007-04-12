@@ -106,6 +106,8 @@ kh_mansion	mapflag	nobranch
 kh_rossi	mapflag	nobranch
 kh_school	mapflag	nobranch
 kh_vila	mapflag	nobranch
+kh_kiehl01	mapflag	nobranch
+kh_kiehl02	mapflag	nobranch
 que_rachel	mapflag	nobranch
 que_thor	mapflag	nobranch
 

@@ -2188,18 +2188,18 @@
 7325,Tube,Flexible Tube,3,,51,10,,,,,,,,,,,,,{},{},{}
 7326,Fluorescent_Liquid,Fluorescent Liquid,3,,356,10,,,,,,,,,,,,,{},{},{}
 7327,Headlamp,Flashlight,3,,512,10,,,,,,,,,,,,,{},{},{}
-7328,Legendary_Scroll,Legend of Songkran,3,,10,10,,,,,,,,,,,,,{},{},{}
-7329,Old_Copper_Key,Old Bronze Key,3,,10,10,,,,,,,,,,,,,{},{},{}
-//7330,Holy_Marble,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
-7331,Flower_Of_Heaven,Heaven Flower,3,,10,10,,,,,,,,,,,,,{},{},{}
+7328,Legendary_Scroll,Legend of Songkran,3,,0,10,,,,,,,,,,,,,{},{},{}
+7329,Old_Copper_Key,Old Bronze Key,3,,0,10,,,,,,,,,,,,,{},{},{}
+//7330,Holy_Marble,Mystic Orb,3,,0,100,,,,,,,,,,,,,{},{},{}
+7331,Flower_Of_Heaven,Heaven Flower,3,500,,10,,,,,,,,,,,,,{},{},{}
 7332,Slate,Complete Tablet,3,,0,0,,,,,,,,,,,,,{},{},{}
-7333,Piece_Of_Slate_1,Prontera Tablet,3,,10,10,,,,,,,,,,,,,{},{},{}
-7334,Piece_Of_Slate_2,Payon Tablet,3,,10,10,,,,,,,,,,,,,{},{},{}
-7335,Piece_Of_Slate_3,Morocc Tablet,3,,10,10,,,,,,,,,,,,,{},{},{}
-7336,Piece_Of_Slate_4,Geffen Tablet,3,,10,10,,,,,,,,,,,,,{},{},{}
+7333,Piece_Of_Slate_1,Prontera Tablet,3,,0,0,,,,,,,,,,,,,{},{},{}
+7334,Piece_Of_Slate_2,Payon Tablet,3,,0,0,,,,,,,,,,,,,{},{},{}
+7335,Piece_Of_Slate_3,Morocc Tablet,3,,0,0,,,,,,,,,,,,,{},{},{}
+7336,Piece_Of_Slate_4,Geffen Tablet,3,,0,0,,,,,,,,,,,,,{},{},{}
 7337,Eye_Of_Hellion,Eye of Hellion,3,,0,0,,,,,,,,,,,,,{},{},{}
-7338,RO_Transportation_Card,One-way Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
-7339,RO_Transportation_Card_,Commemorative Travel Card,3,,10,10,,,,,,,,,,,,,{},{},{}
+7338,RO_Transportation_Card,One-way Ticket,3,,0,0,,,,,,,,,,,,,{},{},{}
+7339,RO_Transportation_Card_,Commemorative Travel Card,3,,0,0,,,,,,,,,,,,,{},{},{}
 7340,Will_Of_Darkness,Will of the Darkness,3,,367,50,,,,,,,,,,,,,{},{},{}
 7341,Worn_Out_Pendant,Old Pendant,3,,10,0,,,,,,,,,,,,,{},{},{}
 7342,File01,File Folder,3,,10,0,,,,,,,,,,,,,{},{},{}
@@ -2220,81 +2220,81 @@
 7357,Piece_Of_Crest2,Crest Piece,3,,2500,10,,,,,,,,,,,,,{},{},{}
 7358,Piece_Of_Crest3,Crest Piece,3,,2500,10,,,,,,,,,,,,,{},{},{}
 7359,Piece_Of_Crest4,Crest Piece,3,,2500,10,,,,,,,,,,,,,{},{},{}
-7360,RO_Festival_Ticket,RO Festival Invitation,3,,10,10,,,,,,,,,,,,,{},{},{}
-7361,Lotto01,Lotto Ball 01,3,,10,10,,,,,,,,,,,,,{},{},{}
-7362,Lotto02,Lotto Ball 02,3,,10,10,,,,,,,,,,,,,{},{},{}
-7363,Lotto03,Lotto Ball 03,3,,10,10,,,,,,,,,,,,,{},{},{}
-7364,Lotto04,Lotto Ball 04,3,,10,10,,,,,,,,,,,,,{},{},{}
-7365,Lotto05,Lotto Ball 05,3,,10,10,,,,,,,,,,,,,{},{},{}
-7366,Lotto06,Lotto Ball 06,3,,10,10,,,,,,,,,,,,,{},{},{}
-7367,Lotto07,Lotto Ball 07,3,,10,10,,,,,,,,,,,,,{},{},{}
-7368,Lotto08,Lotto Ball 08,3,,10,10,,,,,,,,,,,,,{},{},{}
-7369,Lotto09,Lotto Ball 09,3,,10,10,,,,,,,,,,,,,{},{},{}
-7370,Lotto10,Lotto Ball 10,3,,10,10,,,,,,,,,,,,,{},{},{}
-7371,Lotto11,Lotto Ball 11,3,,10,10,,,,,,,,,,,,,{},{},{}
-7372,Lotto12,Lotto Ball 12,3,,10,10,,,,,,,,,,,,,{},{},{}
-7373,Lotto13,Lotto Ball 13,3,,10,10,,,,,,,,,,,,,{},{},{}
-7374,Lotto14,Lotto Ball 14,3,,10,10,,,,,,,,,,,,,{},{},{}
-7375,Lotto15,Lotto Ball 15,3,,10,10,,,,,,,,,,,,,{},{},{}
-7376,Lotto16,Lotto Ball 16,3,,10,10,,,,,,,,,,,,,{},{},{}
-7377,Lotto17,Lotto Ball 17,3,,10,10,,,,,,,,,,,,,{},{},{}
-7378,Lotto18,Lotto Ball 18,3,,10,10,,,,,,,,,,,,,{},{},{}
-7379,Lotto19,Lotto Ball 19,3,,10,10,,,,,,,,,,,,,{},{},{}
-7380,Lotto20,Lotto Ball 20,3,,10,10,,,,,,,,,,,,,{},{},{}
-7381,Lotto21,Lotto Ball 21,3,,10,10,,,,,,,,,,,,,{},{},{}
-7382,Lotto22,Lotto Ball 22,3,,10,10,,,,,,,,,,,,,{},{},{}
-7383,Lotto23,Lotto Ball 23,3,,10,10,,,,,,,,,,,,,{},{},{}
-7384,Lotto24,Lotto Ball 24,3,,10,10,,,,,,,,,,,,,{},{},{}
-7385,Lotto25,Lotto Ball 25,3,,10,10,,,,,,,,,,,,,{},{},{}
-7386,Lotto26,Lotto Ball 26,3,,10,10,,,,,,,,,,,,,{},{},{}
-7387,Lotto27,Lotto Ball 27,3,,10,10,,,,,,,,,,,,,{},{},{}
-7388,Lotto28,Lotto Ball 28,3,,10,10,,,,,,,,,,,,,{},{},{}
-7389,Lotto29,Lotto Ball 29,3,,10,10,,,,,,,,,,,,,{},{},{}
-7390,Lotto30,Lotto Ball 30,3,,10,10,,,,,,,,,,,,,{},{},{}
-7391,Lotto31,Lotto Ball 31,3,,10,10,,,,,,,,,,,,,{},{},{}
-7392,Lotto32,Lotto Ball 32,3,,10,10,,,,,,,,,,,,,{},{},{}
-7393,Lotto33,Lotto Ball 33,3,,10,10,,,,,,,,,,,,,{},{},{}
-7394,Lotto34,Lotto Ball 34,3,,10,10,,,,,,,,,,,,,{},{},{}
-7395,Lotto35,Lotto Ball 35,3,,10,10,,,,,,,,,,,,,{},{},{}
-7396,Lotto36,Lotto Ball 36,3,,10,10,,,,,,,,,,,,,{},{},{}
-7397,Lotto37,Lotto Ball 37,3,,10,10,,,,,,,,,,,,,{},{},{}
-7398,Lotto38,Lotto Ball 38,3,,10,10,,,,,,,,,,,,,{},{},{}
-7399,Piece_Of_Clue01,Selamat,3,,10,10,,,,,,,,,,,,,{},{},{}
-7400,Piece_Of_Clue02,Hari,3,,10,10,,,,,,,,,,,,,{},{},{}
-7401,Piece_Of_Clue03,Kemerdekaan,3,,10,10,,,,,,,,,,,,,{},{},{}
-7402,Piece_Of_Clue04,Republik,3,,10,10,,,,,,,,,,,,,{},{},{}
-7403,Piece_Of_Clue05,Indonesia,3,,10,10,,,,,,,,,,,,,{},{},{}
-7404,Piece_Of_Clue06,Ke-60,3,,10,10,,,,,,,,,,,,,{},{},{}
+7360,RO_Festival_Ticket,RO Festival Invitation,3,,0,10,,,,,,,,,,,,,{},{},{}
+7361,Lotto01,Lotto Ball 01,3,,0,10,,,,,,,,,,,,,{},{},{}
+7362,Lotto02,Lotto Ball 02,3,,0,10,,,,,,,,,,,,,{},{},{}
+7363,Lotto03,Lotto Ball 03,3,,0,10,,,,,,,,,,,,,{},{},{}
+7364,Lotto04,Lotto Ball 04,3,,0,10,,,,,,,,,,,,,{},{},{}
+7365,Lotto05,Lotto Ball 05,3,,0,10,,,,,,,,,,,,,{},{},{}
+7366,Lotto06,Lotto Ball 06,3,,0,10,,,,,,,,,,,,,{},{},{}
+7367,Lotto07,Lotto Ball 07,3,,0,10,,,,,,,,,,,,,{},{},{}
+7368,Lotto08,Lotto Ball 08,3,,0,10,,,,,,,,,,,,,{},{},{}
+7369,Lotto09,Lotto Ball 09,3,,0,10,,,,,,,,,,,,,{},{},{}
+7370,Lotto10,Lotto Ball 10,3,,0,10,,,,,,,,,,,,,{},{},{}
+7371,Lotto11,Lotto Ball 11,3,,0,10,,,,,,,,,,,,,{},{},{}
+7372,Lotto12,Lotto Ball 12,3,,0,10,,,,,,,,,,,,,{},{},{}
+7373,Lotto13,Lotto Ball 13,3,,0,10,,,,,,,,,,,,,{},{},{}
+7374,Lotto14,Lotto Ball 14,3,,0,10,,,,,,,,,,,,,{},{},{}
+7375,Lotto15,Lotto Ball 15,3,,0,10,,,,,,,,,,,,,{},{},{}
+7376,Lotto16,Lotto Ball 16,3,,0,10,,,,,,,,,,,,,{},{},{}
+7377,Lotto17,Lotto Ball 17,3,,0,10,,,,,,,,,,,,,{},{},{}
+7378,Lotto18,Lotto Ball 18,3,,0,10,,,,,,,,,,,,,{},{},{}
+7379,Lotto19,Lotto Ball 19,3,,0,10,,,,,,,,,,,,,{},{},{}
+7380,Lotto20,Lotto Ball 20,3,,0,10,,,,,,,,,,,,,{},{},{}
+7381,Lotto21,Lotto Ball 21,3,,0,10,,,,,,,,,,,,,{},{},{}
+7382,Lotto22,Lotto Ball 22,3,,0,10,,,,,,,,,,,,,{},{},{}
+7383,Lotto23,Lotto Ball 23,3,,0,10,,,,,,,,,,,,,{},{},{}
+7384,Lotto24,Lotto Ball 24,3,,0,10,,,,,,,,,,,,,{},{},{}
+7385,Lotto25,Lotto Ball 25,3,,0,10,,,,,,,,,,,,,{},{},{}
+7386,Lotto26,Lotto Ball 26,3,,0,10,,,,,,,,,,,,,{},{},{}
+7387,Lotto27,Lotto Ball 27,3,,0,10,,,,,,,,,,,,,{},{},{}
+7388,Lotto28,Lotto Ball 28,3,,0,10,,,,,,,,,,,,,{},{},{}
+7389,Lotto29,Lotto Ball 29,3,,0,10,,,,,,,,,,,,,{},{},{}
+7390,Lotto30,Lotto Ball 30,3,,0,10,,,,,,,,,,,,,{},{},{}
+7391,Lotto31,Lotto Ball 31,3,,0,10,,,,,,,,,,,,,{},{},{}
+7392,Lotto32,Lotto Ball 32,3,,0,10,,,,,,,,,,,,,{},{},{}
+7393,Lotto33,Lotto Ball 33,3,,0,10,,,,,,,,,,,,,{},{},{}
+7394,Lotto34,Lotto Ball 34,3,,0,10,,,,,,,,,,,,,{},{},{}
+7395,Lotto35,Lotto Ball 35,3,,0,10,,,,,,,,,,,,,{},{},{}
+7396,Lotto36,Lotto Ball 36,3,,0,10,,,,,,,,,,,,,{},{},{}
+7397,Lotto37,Lotto Ball 37,3,,0,10,,,,,,,,,,,,,{},{},{}
+7398,Lotto38,Lotto Ball 38,3,,0,10,,,,,,,,,,,,,{},{},{}
+7399,Piece_Of_Clue01,Selamat,3,,1,10,,,,,,,,,,,,,{},{},{}
+7400,Piece_Of_Clue02,Hari,3,,1,10,,,,,,,,,,,,,{},{},{}
+7401,Piece_Of_Clue03,Kemerdekaan,3,,1,10,,,,,,,,,,,,,{},{},{}
+7402,Piece_Of_Clue04,Republik,3,,1,10,,,,,,,,,,,,,{},{},{}
+7403,Piece_Of_Clue05,Indonesia,3,,1,10,,,,,,,,,,,,,{},{},{}
+7404,Piece_Of_Clue06,Ke-60,3,,1,10,,,,,,,,,,,,,{},{},{}
 7405,Crushed_Can,Crushed Can,3,,1,10,,,,,,,,,,,,,{},{},{}
-7406,Moon_Cake1,Yuebing,3,,10,10,,,,,,,,,,,,,{},{},{}
-7407,Moon_Cake2,Yuebing,3,,10,10,,,,,,,,,,,,,{},{},{}
-7408,Moon_Cake3,Yuebing,3,,10,10,,,,,,,,,,,,,{},{},{}
-7409,Moon_Cake4,Yuebing,3,,10,10,,,,,,,,,,,,,{},{},{}
-7410,Moon_Cake5,Yuebing,3,,10,10,,,,,,,,,,,,,{},{},{}
-7411,Moon_Cake6,Yuebing,3,,10,10,,,,,,,,,,,,,{},{},{}
-7412,Moon_Cake7,Yuebing,3,,10,10,,,,,,,,,,,,,{},{},{}
-7413,Moon_Cake8,Yuebing,3,,10,10,,,,,,,,,,,,,{},{},{}
-7414,Moon_Cake9,Yuebing,3,,10,10,,,,,,,,,,,,,{},{},{}
-7415,Stone_Of_Summons,Summoning Stone,3,,10,10,,,,,,,,,,,,,{},{},{}
-7416,Letter_Of_Recommendation,Letter of Recommentation,3,,10,10,,,,,,,,,,,,,{},{},{}
-7417,Mission_ScrollA,Written Request (A),3,,10,10,,,,,,,,,,,,,{},{},{}
-7418,Mission_ScrollB,Written Request (B),3,,10,10,,,,,,,,,,,,,{},{},{}
-7419,Embryo_Create_Book,Embryo Creation Guide,3,,10,10,,,,,,,,,,,,,{},{},{}
-7420,Skull_,Skull,3,,0,10,,,,,,,,,,,,,{},{},{}
-7421,Red_Key,Red Key,3,,10,0,,,,,,,,,,,,,{},{},{}
-7422,Yellow_Key,Yellow Key,3,,10,0,,,,,,,,,,,,,{},{},{}
-7423,Blue_Key,Blue Key,3,,10,0,,,,,,,,,,,,,{},{},{}
-7424,Green_Key,Green Key,3,,10,0,,,,,,,,,,,,,{},{},{}
-7425,Black_Key,Black Key,3,,10,0,,,,,,,,,,,,,{},{},{}
-7426,Red_Magic_Stone,Red Charm Stone,3,,10,0,,,,,,,,,,,,,{},{},{}
-7427,Yellow_Magic_Stone,Yellow Charm Stone,3,,10,0,,,,,,,,,,,,,{},{},{}
-7428,Blue_Magic_Stone,Blue Charm Stone,3,,10,0,,,,,,,,,,,,,{},{},{}
-7429,Green_Magic_Stone,Green Charm Stone,3,,10,0,,,,,,,,,,,,,{},{},{}
-7430,Black_Magic_Stone,Black Charm Stone,3,,10,0,,,,,,,,,,,,,{},{},{}
-7431,Books,Pile of Books,3,,10,10,,,,,,,,,,,,,{},{},{}
-7432,Leather_Pouch,Leather Pouch,3,,10,10,,,,,,,,,,,,,{},{},{}
+7406,Moon_Cake1,Yuebing,3,,1,10,,,,,,,,,,,,,{},{},{}
+7407,Moon_Cake2,Yuebing,3,,1,10,,,,,,,,,,,,,{},{},{}
+7408,Moon_Cake3,Yuebing,3,,1,10,,,,,,,,,,,,,{},{},{}
+7409,Moon_Cake4,Yuebing,3,,1,10,,,,,,,,,,,,,{},{},{}
+7410,Moon_Cake5,Yuebing,3,,1,10,,,,,,,,,,,,,{},{},{}
+7411,Moon_Cake6,Yuebing,3,,1,10,,,,,,,,,,,,,{},{},{}
+7412,Moon_Cake7,Yuebing,3,,1,10,,,,,,,,,,,,,{},{},{}
+7413,Moon_Cake8,Yuebing,3,,1,10,,,,,,,,,,,,,{},{},{}
+7414,Moon_Cake9,Yuebing,3,,1,10,,,,,,,,,,,,,{},{},{}
+7415,Stone_Of_Summons,Summoning Stone,3,,1,10,,,,,,,,,,,,,{},{},{}
+7416,Letter_Of_Recommendation,Letter of Recommentation,3,,0,0,,,,,,,,,,,,,{},{},{}
+7417,Mission_ScrollA,Written Request (A),3,,0,0,,,,,,,,,,,,,{},{},{}
+7418,Mission_ScrollB,Written Request (B),3,,0,0,,,,,,,,,,,,,{},{},{}
+7419,Embryo_Create_Book,Embryo Creation Guide,3,48000,,10,,,,,,,,,,,,,{},{},{}
+7420,Skull_,Skull,3,,0,0,,,,,,,,,,,,,{},{},{}
+7421,Red_Key,Red Key,3,,0,0,,,,,,,,,,,,,{},{},{}
+7422,Yellow_Key,Yellow Key,3,,0,0,,,,,,,,,,,,,{},{},{}
+7423,Blue_Key,Blue Key,3,,0,0,,,,,,,,,,,,,{},{},{}
+7424,Green_Key,Green Key,3,,0,0,,,,,,,,,,,,,{},{},{}
+7425,Black_Key,Black Key,3,,0,0,,,,,,,,,,,,,{},{},{}
+7426,Red_Magic_Stone,Red Charm Stone,3,,0,0,,,,,,,,,,,,,{},{},{}
+7427,Yellow_Magic_Stone,Yellow Charm Stone,3,,0,0,,,,,,,,,,,,,{},{},{}
+7428,Blue_Magic_Stone,Blue Charm Stone,3,,0,0,,,,,,,,,,,,,{},{},{}
+7429,Green_Magic_Stone,Green Charm Stone,3,,0,0,,,,,,,,,,,,,{},{},{}
+7430,Black_Magic_Stone,Black Charm Stone,3,,0,0,,,,,,,,,,,,,{},{},{}
+7431,Books,Pile of Books,3,,0,0,,,,,,,,,,,,,{},{},{}
+7432,Leather_Pouch,Leather Pouch,3,,0,0,,,,,,,,,,,,,{},{},{}
 7433,Empty_Scroll,Blank Scroll,3,,2000,10,,,,,,,,,,,,,{},{},{}
-7434,Elemental_Create_Book,Elemental Potion Creation Guide,3,,10,10,,,,,,,,,,,,,{},{},{}
+7434,Elemental_Create_Book,Elemental Potion Creation Guide,3,100000,,10,,,,,,,,,,,,,{},{},{}
 7435,Golden_Accessory,Golden Ornament,3,,953,10,,,,,,,,,,,,,{},{},{}
 7436,Fragment_of_Agony,Fragment of Agony,3,,753,10,,,,,,,,,,,,,{},{},{}
 7437,Fragment_of_Sorrow,Fragment of Sorrow,3,,753,10,,,,,,,,,,,,,{},{},{}
@@ -2318,55 +2318,55 @@
 7455,Hot_Sauce,Spicy Sauce,3,700,,10,,,,,,,,,,,,,{},{},{}
 7456,Red_Spice,Red Spice,3,1000,,10,,,,,,,,,,,,,{},{},{}
 7457,Cooking_Oil,Cooking Oil,3,500,,10,,,,,,,,,,,,,{},{},{}
-7458,Fortune_Horn,Fortune Horn,3,,10,10,,,,,,,,,,,,,{},{},{}
-7459,Ramadan_,Ramadan,3,,10,10,,,,,,,,,,,,,{},{},{}
-7460,Nifl_Express_Ticket,Niflheim Express Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
-7461,Blue_A_Card,Blue A Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7462,Blue_E_Card,Blue E Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7463,Blue_F_Card,Blue F Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7464,Blue_H_Card,Blue H Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7465,Blue_L_Card,Blue L Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7466,Blue_N_Card,Blue N Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7467,Blue_O_Card,Blue O Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7468,Blue_P_Card,Blue P Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7469,Blue_U_Card,Blue U Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7470,Blue_W_Card,Blue W Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7471,Blue_Y_Card,Blue Y Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7472,Cookbook01,Level 1 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7473,Cookbook02,Level 2 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7474,Cookbook03,Level 3 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7475,Cookbook04,Level 4 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7476,Cookbook05,Level 5 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7477,Cookbook06,Level 6 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7478,Cookbook07,Level 7 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7479,Cookbook08,Level 8 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7480,Cookbook09,Level 9 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
-7481,Cookbook10,Level 10 Cookbook,3,,10,10,,,,,,,,,,,,,{},{},{}
+7458,Fortune_Horn,Fortune Horn,3,,1,10,,,,,,,,,,,,,{},{},{}
+7459,Ramadan_,Ramadan,3,,1,10,,,,,,,,,,,,,{},{},{}
+7460,Nifl_Express_Ticket,Niflheim Express Ticket,3,,1,10,,,,,,,,,,,,,{},{},{}
+7461,Blue_A_Card,Blue A Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+7462,Blue_E_Card,Blue E Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+7463,Blue_F_Card,Blue F Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+7464,Blue_H_Card,Blue H Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+7465,Blue_L_Card,Blue L Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+7466,Blue_N_Card,Blue N Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+7467,Blue_O_Card,Blue O Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+7468,Blue_P_Card,Blue P Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+7469,Blue_U_Card,Blue U Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+7470,Blue_W_Card,Blue W Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+7471,Blue_Y_Card,Blue Y Card,3,,0,10,,,,,,,,,,,,,{},{},{}
+7472,Cookbook01,Level 1 Cookbook,3,1000,,10,,,,,,,,,,,,,{},{},{}
+7473,Cookbook02,Level 2 Cookbook,3,1000,,10,,,,,,,,,,,,,{},{},{}
+7474,Cookbook03,Level 3 Cookbook,3,1000,,10,,,,,,,,,,,,,{},{},{}
+7475,Cookbook04,Level 4 Cookbook,3,1000,,10,,,,,,,,,,,,,{},{},{}
+7476,Cookbook05,Level 5 Cookbook,3,1000,,10,,,,,,,,,,,,,{},{},{}
+7477,Cookbook06,Level 6 Cookbook,3,1000,,10,,,,,,,,,,,,,{},{},{}
+7478,Cookbook07,Level 7 Cookbook,3,1000,,10,,,,,,,,,,,,,{},{},{}
+7479,Cookbook08,Level 8 Cookbook,3,1000,,10,,,,,,,,,,,,,{},{},{}
+7480,Cookbook09,Level 9 Cookbook,3,1000,,10,,,,,,,,,,,,,{},{},{}
+7481,Cookbook10,Level 10 Cookbook,3,1000,,10,,,,,,,,,,,,,{},{},{}
 7482,Pot,Pot,3,200,,10,,,,,,,,,,,,,{},{},{}
-7483,Key_of_the_Seal,Key of the Seal,3,,,10,,,,,,,,,,,,,{},{},{}
-7484,Warrior_Symbol,Symbol of a Brave Warrior,3,,10,10,,,,,,0,2,,,,,,{},{},{}
-7485,2nd_Floor_Pass,Cloud General,3,,10,10,,,,,,0,2,,,,,,{},{},{}
-7486,3rd_Floor_Pass,Wind General,3,,10,10,,,,,,0,2,,,,,,{},{},{}
-7487,Pub_Liquor,Pub Liquor,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7488,Delivery_Box,Delivery Box,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7489,Outhouse_Spare_Key,Spare Key to the Outhouse,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7490,Letter_to_Elie,Letter to Elie,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7491,Iron_Box,Iron_Box,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7492,Yellow_Keycard,Yellow Keycard,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7493,Golden_Key,Golden Key,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7494,Exquisite_Button,Exquisite Button,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7495,Blue_Keycard,Blue Keycard,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7496,Red_Keycard,Red_Keycard,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7497,Piece_of_Metal,Piece of Metal,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7498,Losimier's_House_Key,Key to Losimier's_House,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7499,Portrait_of_a_Family,Portrait of a Family,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7500,Portrait_of_a_Lady,Portrait of a Lady,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7501,K.H's_Letter,K.H's Letter,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7502,James's_Memo,James's Memo,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7503,Portrait_of_a_Guy,Portrait of a Guy,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7504,Power_Source,Power Source,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7505,Toy_Key,Toy Key,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7506,Black_Keycard,Black Keycard,3,,10,0,,,,,,0,2,,,,,,{},{},{}
+7483,Key_of__Seal,Key of the Seal,3,,0,0,,,,,,,,,,,,,{},{},{}
+7484,Warrior_Symbol,Symbol of a Brave Warrior,3,,0,10,,,,,,0,2,,,,,,{},{},{}
+7485,2nd_Floor_Pass,Cloud General,3,,0,10,,,,,,0,2,,,,,,{},{},{}
+7486,3rd_Floor_Pass,Wind General,3,,0,10,,,,,,0,2,,,,,,{},{},{}
+7487,Tavern_Wine,Pub Liquor,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7488,Delivery_Box,Delivery Box,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7489,Villa_Spare_Key,Spare Key to the Outhouse,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7490,Kyll_Hire_Letter,Letter to Elie,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7491,Iron_Box,Iron_Box,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7492,Yellow_Key_Card,Yellow Keycard,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7493,Golden_Key,Golden Key,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7494,Kiel_Button,Exquisite Button,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7495,Blue_Key_Card,Blue Keycard,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7496,Red_Key_Card,Red_Keycard,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7497,Steel_Piece,Piece of Metal,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7498,Rosimier_Key,Key to Losimier's_House,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7499,Family_Portrait,Portrait of a Family,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7500,Elysia_Portrait,Portrait of a Lady,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7501,Kyll_Hyre_Letter2,K.H's Letter,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7502,Pieco_Memo_Of_James,James's Memo,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7503,Man_Portrait,Portrait of a Guy,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7504,Toy_Motor,Power Source,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7505,Toy_Key,Toy Key,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7506,Black_Key_Card,Black Keycard,3,,0,0,,,,,,0,2,,,,,,{},{},{}
 7507,Hard_Piece_of_Steel,Hard Piece of Steel,3,,10,0,,,,,,0,2,,,,,,{},{},{}
 7508,Elisia's_Ring,Elisia's Ring,3,,10,0,,,,,,0,2,,,,,,{},{},{}
 7509,Gorgeous_Keycard,Gorgeous Keycard,3,,10,0,,,,,,0,2,,,,,,{},{},{}

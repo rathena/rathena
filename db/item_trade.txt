@@ -53,26 +53,26 @@
 7429,123,100
 7430,123,100
 // Kiel Hyre Quest Items
-7487,123,100    //Pub_Liquor
-7488,123,100    //Delivery_Box
-7489,123,100    //Outhouse_Spare_Key
-7490,123,100    //Letter_to_Elie
-7491,123,100    //Iron_Box
-7492,123,100    //Yellow_Keycard
-7493,123,100    //Golden_Key
-7494,123,100    //Exquisite_Button
-7495,123,100    //Blue_Keycard
-7496,123,100    //Red_Keycard
-7497,123,100    //Piece_of_Metal
-7498,123,100    //Losimier's_House_Key
-7499,123,100    //Portrait_of_a_Family
-7500,123,100    //Portrait_of_a_Lady
-7501,123,100    //K.H's_Letter
-7502,123,100    //James's_Memo
-7503,123,100    //Portrait_of_a_Guy
-7504,123,100    //Power_Source
-7505,123,100    //Toy_Key
-7506,115,100    //Black_Keycard
-7508,123,100    //Elisia's_Ring
-7509,91,100        //Gorgeous_Keycard
-7516,123,100    //Green Keycard
+7487,123,100	//Pub_Liquor
+7488,123,100	//Delivery_Box
+7489,123,100	//Outhouse_Spare_Key
+7490,123,100	//Letter_to_Elie
+7491,123,100	//Iron_Box
+7492,123,100	//Yellow_Keycard
+7493,123,100	//Golden_Key
+7494,123,100	//Exquisite_Button
+7495,123,100	//Blue_Keycard
+7496,123,100	//Red_Keycard
+7497,123,100	//Piece_of_Metal
+7498,123,100	//Losimier's_House_Key
+7499,123,100	//Portrait_of_a_Family
+7500,123,100	//Portrait_of_a_Lady
+7501,123,100	//K.H's_Letter
+7502,123,100	//James's_Memo
+7503,123,100	//Portrait_of_a_Guy
+7504,123,100	//Power_Source
+7505,123,100	//Toy_Key
+7506,115,100	//Black_Keycard
+7508,123,100	//Elisia's_Ring
+7509,91,100	//Gorgeous_Keycard
+7516,123,100	//Green Keycard

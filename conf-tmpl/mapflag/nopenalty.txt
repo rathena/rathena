@@ -95,6 +95,8 @@ kh_mansion	mapflag	nopenalty
 kh_rossi	mapflag	nopenalty
 kh_school	mapflag	nopenalty
 kh_vila	mapflag	nopenalty
+kh_kiehl01	mapflag	nopenalty
+kh_kiehl02	mapflag	nopenalty
 ayothaya	mapflag	nopenalty
 veins	mapflag	nopenalty
 ve_in	mapflag	nopenalty

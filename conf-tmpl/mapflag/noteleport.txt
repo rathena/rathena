@@ -125,6 +125,8 @@ que_god01	mapflag	noteleport
 que_god02	mapflag	noteleport
 que_bingo	mapflag	noteleport
 que_hugel	mapflag	noteleport
+kh_kiehl01	mapflag	noteleport
+kh_kiehl02	mapflag	noteleport
 que_rachel	mapflag	noteleport
 que_thor	mapflag	noteleport
 poring_c01	mapflag	noteleport
