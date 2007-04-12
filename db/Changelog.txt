@@ -20,6 +20,7 @@
 
 ========================
 04/13
+	* Thanatos, Kiel and Randgris now use Ganbantein [Playtester]
 	* Added Magmaring mob [Playtester]
 04/12
 	* Ganbantein now has a range equal to the level used [Playtester]
