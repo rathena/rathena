@@ -1003,6 +1003,11 @@ int mob_unlocktarget(struct mob_data *md,int tick)
 		mob_script_callback(md, map_id2bl(md->target_id), CALLBACK_UNLOCK);
 
 	switch (md->state.skillstate) {
+	case MSS_WALK:
+		if (md->ud.walktimer != -1)
+			break;
+		//Because it is not unset when the mob finishes walking.
+		md->state.skillstate = MSS_IDLE;
 	case MSS_IDLE:
 		// Idle skill.
 		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) &&
@@ -1014,8 +1019,6 @@ int mob_unlocktarget(struct mob_data *md,int tick)
 			!mob_randomwalk(md,tick))
 			//Delay next random walk when this one failed.
 			md->next_walktime=tick+rand()%3000;
-		break;
-	case MSS_WALK:
 		break;
 	default:
 		mob_stop_attack(md);
