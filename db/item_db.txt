@@ -2367,60 +2367,60 @@
 7504,Toy_Motor,Power Source,3,,0,0,,,,,,0,2,,,,,,{},{},{}
 7505,Toy_Key,Toy Key,3,,0,0,,,,,,0,2,,,,,,{},{},{}
 7506,Black_Key_Card,Black Keycard,3,,0,0,,,,,,0,2,,,,,,{},{},{}
-7507,Hard_Piece_of_Steel,Hard Piece of Steel,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7508,Elisia's_Ring,Elisia's Ring,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7509,Gorgeous_Keycard,Gorgeous Keycard,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7510,Valhalla's_Flower,Valhalla's Flower,3,,50000,10,,,,,,0,2,,,,,,{},{},{}
-7511,Darkness_Rune,Darkness Rune,3,1263,,10,,,,,,0,2,,,,,,{},{},{}
-7512,Burnt_Pieces,Burnt Pieces,3,,400,10,,,,,,0,2,,,,,,{},{},{}
-7513,Pocket_Watch,Pocket Watch,3,,855,10,,,,,,0,2,,,,,,{},{},{}
-7514,Monster_Ticket,Monster Ticket,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7515,Interesting_Medal,Interesting Medal,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7516,Green_Keycard,Green Keycard,3,,10,0,,,,,,0,2,,,,,,{},{},{}
-7517,Golden_Coin,Golden Coin,3,,10,100,,,,,,0,2,,,,,,{},{},{}
-7518,Women's_Medal,Women's Medal,3,,10,10,,,,,,0,2,,,,,,{},{},{}
-7519,Handsel,Handsel,3,,10,10,,,,,,,,,,,,,{},{},{}
-7520,Please_Be_Rich,Please Be Rich,3,,10,10,,,,,,,,,,,,,{},{},{}
-7521,Burning_Stone,Burning Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
-7522,Freezing_Stone,Ice Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
-7523,Windchime_Stone,Wind Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
-7524,Fang,Shadow Orb,3,300,,20,,,,,,7,2,,,,,,{},{},{}
-7525,Summer_Festival_Ticket,Summer Festival Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
-7526,Application,Application,3,,10,0,,,,,,,,,,,,,{},{},{}
-7527,Book_About_True_Life,Book About True Life,3,,10,100,,,,,,,,,,,,,{},{},{}
-7528,Lottery_Ticket,Lottery Ticket,3,,10,0,,,,,,,,,,,,,{},{},{}
-7529,Stolen_Sandal,Stolen Sandal,3,,10,0,,,,,,,,,,,,,{},{},{}
-7530,Amatsu_Travel_Brochure,Amatsu Travel Brochure,3,,10,0,,,,,,,,,,,,,{},{},{}
-7531,Gonryun_Travel_Brochure,Gonryun Travel Brochure,3,,10,0,,,,,,,,,,,,,{},{},{}
-7532,Louyang_Travel_Brochure,Louyang Travel Brochure,3,,10,0,,,,,,,,,,,,,{},{},{}
-7533,Ayothaya_Travel_Brochure,Ayothaya Travel Brochure,3,,10,0,,,,,,,,,,,,,{},{},{}
-7534,Amatsu_Photo_Album,Amatsu Photo Album,3,,10,0,,,,,,,,,,,,,{},{},{}
-7535,Gonryun_Photo_Album,Gonryun Photo Album,3,,10,0,,,,,,,,,,,,,{},{},{}
-7536,Louyang_Photo_Album,Louyang Photo Album,3,,10,0,,,,,,,,,,,,,{},{},{}
-7537,Ayothaya_Photo_Album,Ayothaya Photo Album,3,,10,0,,,,,,,,,,,,,{},{},{}
-7538,Sand_For_Work,Sand For Work,3,,10,0,,,,,,,,,,,,,{},{},{}
-7539,Poring_Coin,Poring Coin,3,,10,0,,,,,,,,,,,,,{},{},{}
-7540,Lotto_Ball_39,Lotto Ball 39,3,,10,10,,,,,,,,,,,,,{},{},{}
-7541,Lotto_Ball_40,Lotto Ball 40,3,,10,10,,,,,,,,,,,,,{},{},{}
-7542,Lotto_Ball_41,Lotto Ball 41,3,,10,10,,,,,,,,,,,,,{},{},{}
-7543,Lotto_Ball_42,Lotto Ball 42,3,,10,10,,,,,,,,,,,,,{},{},{}
-7544,Lotto_Ball_43,Lotto Ball 43,3,,10,10,,,,,,,,,,,,,{},{},{}
-7545,Lotto_Ball_44,Lotto Ball 44,3,,10,10,,,,,,,,,,,,,{},{},{}
-7546,Lotto_Ball_45,Lotto Ball 45,3,,10,10,,,,,,,,,,,,,{},{},{}
+7507,Sturdy_Iron_Piece,Hard Piece of Steel,3,842,,10,,,,,,0,2,,,,,,{},{},{}
+7508,Elysia_Ring,Elisia's Ring,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7509,Fancy_Key_Card,Gorgeous Keycard,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7510,Valhalla_Flower,Valhalla's Flower,3,200000,,10,,,,,,0,2,,,,,,{},{},{}
+7511,Rune_Of_Darkness,Darkness Rune,3,2526,,10,,,,,,0,2,,,,,,{},{},{}
+7512,Burnt_Parts,Burnt Pieces,3,1600,,10,,,,,,0,2,,,,,,{},{},{}
+7513,Pocket_Watch,Pocket Watch,3,3420,,10,,,,,,0,2,,,,,,{},{},{}
+7514,Monster_Ticket,Monster Ticket,3,2,,0,,,,,,0,2,,,,,,{},{},{}
+7515,Marvelous_Medal,Interesting Medal,3,2,,0,,,,,,0,2,,,,,,{},{},{}
+7516,Green_Key_Card,Green Keycard,3,,0,0,,,,,,0,2,,,,,,{},{},{}
+7517,Gold_Coin_,Golden Coin,3,1000,,100,,,,,,0,2,,,,,,{},{},{}
+7518,Women's_Medal,Women's Medal,3,,0,10,,,,,,0,2,,,,,,{},{},{}
+7519,Money_Envelope,Handsel,3,,0,10,,,,,,,,,,,,,{},{},{}
+7520,Chinese_Scroll,Please Be Rich,3,,0,10,,,,,,,,,,,,,{},{},{}
+7521,Flame_Stone,Burning Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
+7522,Ice_Stone,Ice Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
+7523,Wind_Stone,Wind Stone,3,150,,10,,,,,,7,2,,,,,,{},{},{}
+7524,Shadow_Orb,Shadow Orb,3,300,,20,,,,,,7,2,,,,,,{},{},{}
+7525,Summer_Feast_Ticket,Summer Festival Ticket,3,10,,10,,,,,,,,,,,,,{},{},{}
+7526,Manuscript_Paper,Application,3,2,,0,,,,,,,,,,,,,{},{},{}
+7527,Life_Book,Book About True Life,3,,0,100,,,,,,,,,,,,,{},{},{}
+7528,Id_Lottery_Ticket,Lottery Ticket,3,,0,0,,,,,,,,,,,,,{},{},{}
+7529,Stolen_Sandals,Stolen Sandal,3,,0,0,,,,,,,,,,,,,{},{},{}
+7530,Travel_Brochure_01,Amatsu Travel Brochure,3,,0,0,,,,,,,,,,,,,{},{},{}
+7531,Travel_Brochure_02,Gonryun Travel Brochure,3,,0,0,,,,,,,,,,,,,{},{},{}
+7532,Travel_Brochure_03,Louyang Travel Brochure,3,,0,0,,,,,,,,,,,,,{},{},{}
+7533,Travel_Brochure_04,Ayothaya Travel Brochure,3,,0,0,,,,,,,,,,,,,{},{},{}
+7534,Photo_Album_01,Amatsu Photo Album,3,,0,0,,,,,,,,,,,,,{},{},{}
+7535,Photo_Album_02,Gonryun Photo Album,3,,0,0,,,,,,,,,,,,,{},{},{}
+7536,Photo_Album_03,Louyang Photo Album,3,,0,0,,,,,,,,,,,,,{},{},{}
+7537,Photo_Album_04,Ayothaya Photo Album,3,,0,0,,,,,,,,,,,,,{},{},{}
+7538,Sifted_Sand,Sand For Work,3,,0,0,,,,,,,,,,,,,{},{},{}
+7539,Poring_Coin,Poring Coin,3,,0,0,,,,,,,,,,,,,{},{},{}
+7540,Lotto39,Lotto Ball 39,3,,0,10,,,,,,,,,,,,,{},{},{}
+7541,Lotto40,Lotto Ball 40,3,,0,10,,,,,,,,,,,,,{},{},{}
+7542,Lotto41,Lotto Ball 41,3,,0,10,,,,,,,,,,,,,{},{},{}
+7543,Lotto42,Lotto Ball 42,3,,0,10,,,,,,,,,,,,,{},{},{}
+7544,Lotto43,Lotto Ball 43,3,,0,10,,,,,,,,,,,,,{},{},{}
+7545,Lotto44,Lotto Ball 44,3,,0,10,,,,,,,,,,,,,{},{},{}
+7546,Lotto45,Lotto Ball 45,3,,0,10,,,,,,,,,,,,,{},{},{}
 7547,Soccer_Ball,Soccer Ball,3,,10,10,,,,,,,,,,,,,{},{},{}
 7548,Soccer_Shoes,Soccer Shoes,3,,10,10,,,,,,,,,,,,,{},{},{}
-7549,Brazilian_Flag,Brazilian Flag,3,,10,10,,,,,,,,,,,,,{},{},{}
-7550,6.13_Ticket,6.13 Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
-7551,6.18_Ticket,6.18 Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
-7552,6.22_Ticket,6.22 Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
-7553,Lotus_,Lotus,3,,10,10,,,,,,,,,,,,,{},{},{}
-7554,Striped_Candle,Striped Candle,3,,10,10,,,,,,,,,,,,,{},{},{}
-7555,Green_Incense,Green Incense,3,,10,10,,,,,,,,,,,,,{},{},{}
-7556,Longing_Heart,Longing Heart,3,,10,10,,,,,,,,,,,,,{},{},{}
-7557,Invitation_Letter,Invitation Letter,3,,10,10,,,,,,,,,,,,,{},{},{}
-7558,Invitation_Ticket,Invitation Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
-7559,Key_to_the_Secret_Garden,Key to the Secret Garden,3,,10,10,,,,,,,,,,,,,{},{},{}
-7560,Longing_Heart_,Longing Heart,3,,10,10,,,,,,,,,,,,,{},{},{}
+7549,Braziianl_Flag,Brazilian Flag,3,,10,10,,,,,,,,,,,,,{},{},{}
+7550,Ticket01,6.13 Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
+7551,Ticket02,6.18 Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
+7552,Ticket03,6.22 Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
+7553,Lotus,Lotus,3,,0,0,,,,,,,,,,,,,{},{},{}
+7554,Striped_Candle,Striped Candle,3,,0,0,,,,,,,,,,,,,{},{},{}
+7555,Green_Incense,Green Incense,3,,0,0,,,,,,,,,,,,,{},{},{}
+7556,Longing_Heart,Longing Heart,3,,0,0,,,,,,,,,,,,,{},{},{}
+7557,Invitation_Letter,Invitation Letter,3,,0,0,,,,,,,,,,,,,{},{},{}
+7558,Invitation_Ticket,Invitation Ticket,3,,0,0,,,,,,,,,,,,,{},{},{}
+7559,Key_to_Secret_Garden,Key to the Secret Garden,3,,0,0,,,,,,,,,,,,,{},{},{}
+7560,Longing_Heart_,Longing Heart,3,,0,0,,,,,,,,,,,,,{},{},{}
 7561,Ice_Heart,Ice Heart,3,,303,10,,,,,,,,,,,,,{},{},{}
 7562,Ice_Scale,Ice Scale,3,,1510,10,,,,,,,,,,,,,{},{},{}
 7563,Bloody_Rune,Bloody Rune,3,,1008,10,,,,,,,,,,,,,{},{},{}
@@ -2429,12 +2429,12 @@
 7566,Will_of_Red_Darkness,Will of Red Darkness,3,,765,10,,,,,,,,,,,,,{},{},{}
 7567,Suspicious_Hat,Suspicious Hat,3,,645,10,,,,,,,,,,,,,{},{},{}
 7568,White_Mask,White Mask,3,,530,10,,,,,,,,,,,,,{},{},{}
-7569,Hammer_of_Wind,Hammer of Wind,3,,10,0,,,,,,,,,,,,,{},{},{}
-7570,Temple_Lottery_Ticket,Temple Lottery Ticket,3,,10,10,,,,,,,,,,,,,{},{},{}
-7571,Blue's_Diary,Blue's Diary,3,,10,0,,,,,,,,,,,,,{},{},{}
-7572,Gray_Necklace,Gray Necklace,3,,10,0,,,,,,,,,,,,,{},{},{}
-7573,Shining_Necklace,Shining Necklace,3,,10,0,,,,,,,,,,,,,{},{},{}
-7574,Ice_Powder,Ice Powder,3,,10,0,,,,,,,,,,,,,{},{},{}
+7569,Hammer_of_Wind,Hammer of Wind,3,,0,0,,,,,,,,,,,,,{},{},{}
+7570,Lottery_Coupon,Temple Lottery Ticket,3,,0,10,,,,,,,,,,,,,{},{},{}
+7571,Blue_Diary,Blue's Diary,3,,0,0,,,,,,,,,,,,,{},{},{}
+7572,Gray_Necklace,Gray Necklace,3,,0,0,,,,,,,,,,,,,{},{},{}
+7573,Shining_Necklace,Shining Necklace,3,,0,0,,,,,,,,,,,,,{},{},{}
+7574,Ice_Powder,Ice Powder,3,,0,0,,,,,,,,,,,,,{},{},{}
 7575,Red-coloured_Gem,Red-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
 7576,Blue-coloured_Gem,Blue-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
 7577,Yellow-coloured_Gem,Yellow-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}

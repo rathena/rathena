@@ -20,6 +20,7 @@
 
 ========================
 04/13
+	* Updated Aegis name, price and weight of etc items [Playtester]
 	* Updated various Kiel Hyre quest items [Playtester]
 	* Added Kiel Hyre quest items to item_trade [Playtester]
 	* Kyrie Eleison cannot be cast on mobs anymore [Playtester]
