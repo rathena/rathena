@@ -1647,10 +1647,10 @@
 1377,Elder@MG_STONECURSE,attack,16,10,10000,0,5000,yes,target,always,0,,,,,,11
 1377,Elder@SA_DISPELL,attack,289,1,0,0,30000,yes,target,always,0,,,,,,
 1377,Elder@NPC_SILENCEATTACK,attack,178,5,500,700,5000,no,target,always,0,,,,,,
-1377,Elder@MG_FIREBOLT,idle,19,7,10000,1500,5000,yes,target,always,0,,,,,,11
-1377,Elder@MG_FROSTDIVER,idle,15,9,10000,500,5000,yes,target,always,0,,,,,,
-1377,Elder@MG_LIGHTNINGBOLT,idle,20,7,10000,1500,5000,yes,target,always,0,,,,,,12
-1377,Elder@MG_STONECURSE,idle,16,10,10000,0,5000,yes,target,always,0,,,,,,11
+1377,Elder@MG_FIREBOLT,idle,19,7,10000,1500,5000,yes,randomtarget,always,0,,,,,,11
+1377,Elder@MG_FROSTDIVER,idle,15,9,10000,500,5000,yes,randomtarget,always,0,,,,,,
+1377,Elder@MG_LIGHTNINGBOLT,idle,20,7,10000,1500,5000,yes,randomtarget,always,0,,,,,,12
+1377,Elder@MG_STONECURSE,idle,16,10,10000,0,5000,yes,randomtarget,always,0,,,,,,11
 1378,Demon Pungus@NPC_BLINDATTACK,attack,177,5,500,0,5000,yes,target,always,0,,,,,,
 1378,Demon Pungus@NPC_BLINDATTACK,chase,177,5,500,0,5000,yes,target,always,0,,,,,,
 1378,Demon Pungus@NPC_PETRIFYATTACK,attack,180,5,500,500,5000,no,target,always,0,,,,,,
@@ -2694,7 +2694,7 @@
 1633,Beholder@NPC_MENTALBREAKER,chase,159,3,500,800,5000,no,target,always,0,,,,,,
 1634,Seyren@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1634,Seyren@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
-1634,Seyren@KN_SPEARBOOMERANG,idle,59,5,10000,0,0,yes,target,always,0,,,,,,6
+1634,Seyren@KN_SPEARBOOMERANG,idle,59,5,10000,0,0,yes,randomtarget,always,0,,,,,,6
 1634,Seyren@KN_SPEARBOOMERANG,chase,59,5,10000,0,0,yes,target,skillused,18,,,,,,6
 1634,Seyren@KN_BOWLINGBASH,attack,62,5,1000,0,10000,yes,target,always,0,,,,,,
 1634,Seyren@SM_BASH,attack,5,10,1000,0,5000,yes,target,always,0,,,,,,
@@ -2707,7 +2707,7 @@
 1634,Seyren@NPC_FIREATTACK,attack,186,5,2000,0,5000,yes,target,always,0,,,,,,9
 1635,Eremes@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1635,Eremes@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
-1635,Eremes@AS_GRIMTOOTH,idle,137,5,10000,0,0,yes,target,always,0,,,,,,6
+1635,Eremes@AS_GRIMTOOTH,idle,137,5,10000,0,0,yes,randomtarget,always,0,,,,,,6
 1635,Eremes@AS_GRIMTOOTH,chase,137,5,10000,0,0,yes,target,skillused,18,,,,,,6
 1635,Eremes@TF_POISON,attack,52,10,1000,0,10000,yes,target,always,0,,,,,,
 1635,Eremes@NPC_AGIUP,attack,350,5,2000,0,100000,yes,self,always,0,,,,,,
@@ -2780,9 +2780,9 @@
 1639,Katrinn@MG_SIGHT,idle,10,1,10000,0,30000,yes,self,skillused,137,,,,,,
 1639,Katrinn@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1639,Katrinn@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
-1639,Katrinn@MG_FROSTDIVER,idle,15,10,10000,1000,7000,no,target,always,0,,,,,,
-1639,Katrinn@WZ_JUPITEL,idle,84,28,10000,1000,7000,no,target,always,0,,,,,,
-1639,Katrinn@MG_FIREBALL,idle,17,10,10000,500,7000,no,target,always,0,,,,,,
+1639,Katrinn@MG_FROSTDIVER,idle,15,10,10000,1000,7000,no,randomtarget,always,0,,,,,,
+1639,Katrinn@WZ_JUPITEL,idle,84,28,10000,1000,7000,no,randomtarget,always,0,,,,,,
+1639,Katrinn@MG_FIREBALL,idle,17,10,10000,500,7000,no,randomtarget,always,0,,,,,,
 1639,Katrinn@MG_FROSTDIVER,chase,15,10,10000,1000,10000,no,target,skillused,18,,,,,,
 1639,Katrinn@WZ_JUPITEL,chase,84,28,10000,1000,10000,no,target,skillused,18,,,,,,
 1639,Katrinn@MG_FIREBALL,chase,17,10,10000,500,10000,no,target,skillused,18,,,,,,
@@ -2803,7 +2803,7 @@
 1640,Lord Knight Seyren@RG_INTIMIDATE,attack,219,10,100,0,5000,yes,target,always,0,,,,,,
 1640,Lord Knight Seyren@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1640,Lord Knight Seyren@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
-1640,Lord Knight Seyren@KN_SPEARBOOMERANG,idle,59,5,10000,0,0,yes,target,always,0,,,,,,6
+1640,Lord Knight Seyren@KN_SPEARBOOMERANG,idle,59,5,10000,0,0,yes,randomtarget,always,0,,,,,,6
 1640,Lord Knight Seyren@KN_SPEARBOOMERANG,chase,59,5,10000,0,0,yes,target,skillused,18,,,,,,6
 1640,Lord Knight Seyren@KN_TWOHANDQUICKEN,attack,60,10,10000,0,300000,yes,self,always,0,,,,,,2
 1640,Lord Knight Seyren@KN_BOWLINGBASH,attack,62,10,1000,0,10000,yes,target,always,0,,,,,,
@@ -2823,7 +2823,7 @@
 1641,Assassin Cross Eremes@RG_INTIMIDATE,attack,219,10,100,0,5000,yes,target,always,0,,,,,,
 1641,Assassin Cross Eremes@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1641,Assassin Cross Eremes@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
-1641,Assassin Cross Eremes@AS_GRIMTOOTH,idle,137,5,10000,0,0,yes,target,always,0,,,,,,6
+1641,Assassin Cross Eremes@AS_GRIMTOOTH,idle,137,5,10000,0,0,yes,randomtarget,always,0,,,,,,6
 1641,Assassin Cross Eremes@AS_GRIMTOOTH,chase,137,5,10000,0,0,yes,target,skillused,18,,,,,,6
 1641,Assassin Cross Eremes@NPC_INVISIBLE,idle,353,1,2000,0,30000,yes,self,always,0,,,,,,
 1641,Assassin Cross Eremes@NPC_INVISIBLE,attack,353,1,2000,0,30000,yes,self,always,0,,,,,,
@@ -2834,7 +2834,7 @@
 1641,Assassin Cross Eremes@AS_SONICBLOW,attack,136,10,2000,0,5000,yes,target,always,0,,,,,,6
 1641,Assassin Cross Eremes@AS_SONICBLOW,attack,136,10,3000,0,0,yes,target,myhpltmaxrate,30,,,,,,6
 1641,Assassin Cross Eremes@AS_GRIMTOOTH,chase,137,5,2000,0,0,yes,target,always,0,,,,,,
-1641,Assassin Cross Eremes@AS_VENOMDUST,idle,140,1,2000,0,10000,yes,target,always,0,,,,,,29
+1641,Assassin Cross Eremes@AS_VENOMDUST,idle,140,1,2000,0,10000,yes,randomtarget,always,0,,,,,,29
 1641,Assassin Cross Eremes@AS_VENOMDUST,attack,140,1,2000,0,10000,yes,target,always,0,,,,,,29
 1641,Assassin Cross Eremes@NPC_CRITICALSLASH,attack,170,1,1000,0,5000,yes,target,always,0,,,,,,
 1641,Assassin Cross Eremes@NPC_STUNATTACK,attack,179,5,1000,0,5000,yes,target,always,0,,,,,,
@@ -2912,9 +2912,9 @@
 1645,High Wizard Katrinn@RG_INTIMIDATE,attack,219,10,100,0,5000,yes,target,always,0,,,,,,
 1645,High Wizard Katrinn@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1645,High Wizard Katrinn@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
-1645,High Wizard Katrinn@WZ_STORMGUST,idle,89,10,10000,1000,10000,no,target,always,0,,,,,,
-1645,High Wizard Katrinn@WZ_VERMILION,idle,85,10,10000,1000,10000,no,target,always,0,,,,,,
-1645,High Wizard Katrinn@WZ_METEOR,idle,83,10,10000,1000,10000,no,target,always,0,,,,,,
+1645,High Wizard Katrinn@WZ_STORMGUST,idle,89,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
+1645,High Wizard Katrinn@WZ_VERMILION,idle,85,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
+1645,High Wizard Katrinn@WZ_METEOR,idle,83,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
 1645,High Wizard Katrinn@WZ_STORMGUST,chase,89,10,10000,1000,10000,no,target,skillused,18,,,,,,
 1645,High Wizard Katrinn@WZ_VERMILION,chase,85,10,10000,1000,10000,no,target,skillused,18,,,,,,
 1645,High Wizard Katrinn@WZ_METEOR,chase,83,10,10000,1000,10000,no,target,skillused,18,,,,,,
@@ -2939,7 +2939,7 @@
 1646,Lord Knight Seyren@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1641,1642,1643,1644,1645,
 1646,Lord Knight Seyren@NPC_SUMMONSLAVE,idle,196,5,10000,0,0,no,self,onspawn,0,1641,1642,1643,1644,1645,
 1646,Lord Knight Seyren@NPC_SUMMONMONSTER,attack,209,1,10000,700,60000000,yes,self,myhpltmaxrate,30,1195,,,,,
-1646,Lord Knight Seyren@KN_SPEARBOOMERANG,idle,59,5,10000,0,0,yes,target,always,0,,,,,,6
+1646,Lord Knight Seyren@KN_SPEARBOOMERANG,idle,59,5,10000,0,0,yes,randomtarget,always,0,,,,,,6
 1646,Lord Knight Seyren@KN_SPEARBOOMERANG,chase,59,5,10000,0,0,yes,target,skillused,18,,,,,,6
 1646,Lord Knight Seyren@KN_TWOHANDQUICKEN,attack,60,10,10000,0,300000,yes,self,always,0,,,,,,2
 1646,Lord Knight Seyren@KN_BOWLINGBASH,attack,62,10,1000,0,10000,yes,target,always,0,,,,,,
@@ -2966,7 +2966,7 @@
 1647,Assassin Cross Eremes@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1642,1643,1644,1645,
 1647,Assassin Cross Eremes@NPC_SUMMONSLAVE,idle,196,5,10000,0,0,no,self,onspawn,0,1640,1642,1643,1644,1645,
 1647,Assassin Cross Eremes@NPC_SUMMONMONSTER,attack,209,1,10000,700,60000000,yes,self,myhpltmaxrate,30,1132,,,,,
-1647,Assassin Cross Eremes@AS_GRIMTOOTH,idle,137,5,10000,0,0,yes,target,always,0,,,,,,6
+1647,Assassin Cross Eremes@AS_GRIMTOOTH,idle,137,5,10000,0,0,yes,randomtarget,always,0,,,,,,6
 1647,Assassin Cross Eremes@AS_GRIMTOOTH,chase,137,5,10000,0,0,yes,target,skillused,18,,,,,,6
 1647,Assassin Cross Eremes@NPC_INVISIBLE,idle,353,1,2000,0,30000,yes,self,always,0,,,,,,
 1647,Assassin Cross Eremes@NPC_INVISIBLE,attack,353,1,2000,0,30000,yes,self,always,0,,,,,,
@@ -2977,7 +2977,7 @@
 1647,Assassin Cross Eremes@AS_SONICBLOW,attack,136,10,2000,0,5000,yes,target,always,0,,,,,,6
 1647,Assassin Cross Eremes@AS_SONICBLOW,attack,136,10,3000,0,0,yes,target,myhpltmaxrate,30,,,,,,6
 1647,Assassin Cross Eremes@AS_GRIMTOOTH,chase,137,5,2000,0,0,yes,target,always,0,,,,,,
-1647,Assassin Cross Eremes@AS_VENOMDUST,idle,140,1,2000,0,10000,yes,target,always,0,,,,,,29
+1647,Assassin Cross Eremes@AS_VENOMDUST,idle,140,1,2000,0,10000,yes,randomtarget,always,0,,,,,,29
 1647,Assassin Cross Eremes@AS_VENOMDUST,attack,140,1,2000,0,10000,yes,target,always,0,,,,,,29
 1647,Assassin Cross Eremes@NPC_CRITICALSLASH,attack,170,1,1000,0,5000,yes,target,always,0,,,,,,
 1647,Assassin Cross Eremes@NPC_STUNATTACK,attack,179,5,1000,0,5000,yes,target,always,0,,,,,,
@@ -3085,9 +3085,9 @@
 1651,High Wizard Katrinn@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1643,1644,
 1651,High Wizard Katrinn@NPC_SUMMONSLAVE,idle,196,5,10000,0,0,no,self,onspawn,0,1640,1641,1642,1643,1644,
 1651,High Wizard Katrinn@NPC_SUMMONMONSTER,attack,209,1,10000,700,60000000,yes,self,myhpltmaxrate,30,1195,,,,,
-1651,High Wizard Katrinn@WZ_STORMGUST,idle,89,10,10000,1000,10000,no,target,always,0,,,,,,
-1651,High Wizard Katrinn@WZ_VERMILION,idle,85,10,10000,1000,10000,no,target,always,0,,,,,,
-1651,High Wizard Katrinn@WZ_METEOR,idle,83,10,10000,1000,10000,no,target,always,0,,,,,,
+1651,High Wizard Katrinn@WZ_STORMGUST,idle,89,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
+1651,High Wizard Katrinn@WZ_VERMILION,idle,85,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
+1651,High Wizard Katrinn@WZ_METEOR,idle,83,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
 1651,High Wizard Katrinn@WZ_STORMGUST,chase,89,10,10000,1000,10000,no,target,skillused,18,,,,,,
 1651,High Wizard Katrinn@WZ_VERMILION,chase,85,10,10000,1000,10000,no,target,skillused,18,,,,,,
 1651,High Wizard Katrinn@WZ_METEOR,chase,83,10,10000,1000,10000,no,target,skillused,18,,,,,,
@@ -3157,8 +3157,8 @@
 1656,Kavac@NPC_EMOTION,attack,197,1,10000,0,5000,yes,self,skillused,28,15,,,,,
 1656,Kavac@NPC_EMOTION,chase,197,1,10000,0,5000,yes,self,skillused,28,15,,,,,
 1656,Kavac@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1657,Rawrel@MG_SOULSTRIKE,idle,13,9,5000,0,1000,yes,target,always,0,,,,,,
-1657,Rawrel@MG_LIGHTNINGBOLT,idle,20,9,1000,1000,5000,no,target,always,0,,,,,,
+1657,Rawrel@MG_SOULSTRIKE,idle,13,9,5000,0,1000,yes,randomtarget,always,0,,,,,,
+1657,Rawrel@MG_LIGHTNINGBOLT,idle,20,9,1000,1000,5000,no,randomtarget,always,0,,,,,,
 1657,Rawrel@MG_FIREWALL,chase,18,5,500,500,5000,yes,target,always,0,,,,,,2
 1657,Rawrel@MG_THUNDERSTORM,attack,21,5,2000,1500,5000,no,target,attackpcgt,2,,,,,,
 1657,Rawrel@MG_FROSTDIVER,chase,15,9,10000,500,20000,yes,target,always,0,,,,,,2
@@ -3444,7 +3444,7 @@
 1701,Shelter@NPC_DARKNESSATTACK,attack,190,2,500,500,5000,no,target,always,0,,,,,,36
 1701,Shelter@NPC_DARKTHUNDER,chase,341,4,500,1000,5000,yes,target,always,0,,,,,,
 1701,Shelter@NPC_DARKTHUNDER,attack,341,4,500,1000,5000,yes,target,always,0,,,,,,
-1701,Shelter@AS_VENOMDUST,idle,140,1,2000,0,10000,yes,target,always,0,,,,,,29
+1701,Shelter@AS_VENOMDUST,idle,140,1,2000,0,10000,yes,randomtarget,always,0,,,,,,29
 1701,Shelter@AS_VENOMDUST,attack,140,1,2000,0,10000,yes,target,always,0,,,,,,29
 1701,Shelter@NPC_BLINDATTACK,angry,177,7,500,700,5000,yes,target,always,0,,,,,,29
 1701,Shelter@NPC_BLINDATTACK,follow,177,7,500,700,5000,yes,target,always,0,,,,,,29
@@ -3506,7 +3506,7 @@
 1707,Thanatos Dolor@AL_HEAL,chase,28,8,1000,0,5000,yes,friend,friendhpltmaxrate,40,,,,,,3
 1707,Thanatos Dolor@AL_HEAL,chase,28,8,1000,0,5000,yes,self,myhpltmaxrate,40,,,,,,3
 1708,Thanatos@NPC_CALLSLAVE,attack,352,1,10000,0,60000,yes,target,always,0,,,,,,
-1708,Thanatos@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,target,always,0,,,,,,
+1708,Thanatos@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,randomtarget,always,0,,,,,,
 1708,Thanatos@NPC_SUMMONSLAVE,attack,196,6,10000,700,30000,no,self,slavele,0,1711,1710,1709,1712,,
 1708,Thanatos@NPC_SUMMONSLAVE,idle,196,6,10000,700,30000,no,self,slavele,0,1711,1710,1709,1712,,
 1708,Thanatos@NPC_SUMMONSLAVE,idle,196,6,10000,0,0,no,self,onspawn,0,1711,1710,1709,1712,,
@@ -3577,7 +3577,7 @@
 1713,Acidus@NPC_FIREATTACK,attack,186,6,500,500,5000,no,target,always,0,,,,,,
 1713,Acidus@NPC_CRITICALSLASH,attack,170,1,1000,500,5000,no,target,always,0,,,,,,
 1713,Acidus@NPC_STUNATTACK,attack,179,5,1000,1500,5000,no,target,always,0,,,,,,
-1713,Acidus@MG_FIREBALL,idle,17,9,2000,0,5000,yes,target,always,0,,,,,,
+1713,Acidus@MG_FIREBALL,idle,17,9,2000,0,5000,yes,randomtarget,always,0,,,,,,
 1713,Acidus@MG_FIREBALL,chase,17,9,2000,0,5000,yes,target,always,0,,,,,,44
 1713,Acidus@SM_MAGNUM,attack,7,9,2000,500,5000,no,self,attackpcgt,2,,,,,,36
 1713,Acidus@WZ_FIREPILLAR,idle,80,3,100,0,30000,no,around2,always,0,,,,,,32
@@ -3598,7 +3598,7 @@
 1715,Novus@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,37
 1716,Acidus@NPC_WINDATTACK,attack,187,6,500,500,5000,no,target,always,0,,,,,,
 1716,Acidus@NPC_STOP,attack,342,1,500,500,5000,no,target,always,0,,,,,,
-1716,Acidus@MG_LIGHTNINGBOLT,idle,20,8,2000,1000,5000,yes,target,always,0,,,,,,
+1716,Acidus@MG_LIGHTNINGBOLT,idle,20,8,2000,1000,5000,yes,randomtarget,always,0,,,,,,
 1716,Acidus@MG_LIGHTNINGBOLT,chase,20,8,1000,1000,5000,yes,target,always,0,,,,,,32
 1716,Acidus@MG_LIGHTNINGBOLT,attack,20,8,1000,1000,5000,yes,target,always,0,,,,,,
 1716,Acidus@MG_THUNDERSTORM,attack,21,9,1000,1500,5000,no,target,always,0,,,,,,
@@ -3622,7 +3622,7 @@
 1719,Detale@NPC_SUMMONSLAVE,chase,196,1,10000,2000,5000,no,self,slavele,0,1756,,,,,
 1719,Detale@NPC_SUMMONSLAVE,idle,196,1,10000,0,0,no,self,onspawn,0,1720,,,,,
 1719,Detale@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
-1719,Detale@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,target,always,0,,,,,,
+1719,Detale@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,randomtarget,always,0,,,,,,
 1719,Detale@NPC_CALLSLAVE,chase,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1719,Detale@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,
 1719,Detale@NPC_DARKBREATH,attack,202,5,500,800,5000,no,target,always,0,,,,,,36
@@ -3679,7 +3679,7 @@
 1733,Kiel@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1733,Kiel@AL_TELEPORT,walk,26,1,10000,0,5000,yes,self,rudeattacked,,,,,,,
 1734,Kiel-D-01@NPC_CALLSLAVE,attack,352,1,10000,0,60000,yes,target,always,0,,,,,,
-1734,Kiel-D-01@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,target,always,0,,,,,,
+1734,Kiel-D-01@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,randomtarget,always,0,,,,,,
 1734,Kiel-D-01@NPC_SUMMONSLAVE,attack,196,6,10000,700,30000,no,self,slavele,0,1739,1740,,,,
 1734,Kiel-D-01@NPC_SUMMONSLAVE,idle,196,6,10000,700,30000,no,self,slavele,0,1739,1740,,,,
 1734,Kiel-D-01@SM_MAGNUM,chase,7,20,1000,0,3000,yes,self,always,0,,,,,,
@@ -3760,7 +3760,7 @@
 1751,Valkyrie Randgris@NPC_SUMMONSLAVE,idle,196,3,10000,2000,5000,no,self,slavele,1,1765,,,,,
 1751,Valkyrie Randgris@NPC_SUMMONSLAVE,chase,196,3,10000,2000,5000,no,self,slavele,1,1765,,,,,
 1751,Valkyrie Randgris@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,target,always,0,,,,,,
-1751,Valkyrie Randgris@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,target,always,0,,,,,,
+1751,Valkyrie Randgris@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,randomtarget,always,0,,,,,,
 1751,Valkyrie Randgris@NPC_CALLSLAVE,chase,352,1,10000,0,30000,yes,target,always,0,,,,,,
 1751,Valkyrie Randgris@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1751,Valkyrie Randgris@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,
@@ -3810,7 +3810,7 @@
 1754,Skeggiold(Brown)@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1754,Skeggiold(Brown)@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
 1754,Skeggiold(Brown)@NPC_CALLSLAVE,attack,352,1,10000,0,60000,yes,target,always,0,,,,,,
-1754,Skeggiold(Brown)@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,target,always,0,,,,,,
+1754,Skeggiold(Brown)@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,randomtarget,always,0,,,,,,
 1754,Skeggiold(Brown)@NPC_SUMMONSLAVE,any,196,2,10000,700,60000,no,self,onspawn,0,1763,,,,,
 1755,Skeggiold(Blue)@AL_HEAL,attack,28,9,5000,500,5000,no,friend,friendhpltmaxrate,30,,,,,,18
 1755,Skeggiold(Blue)@AL_HEAL,attack,28,9,5000,500,5000,no,self,myhpltmaxrate,30,,,,,,18
@@ -3827,7 +3827,7 @@
 1755,Skeggiold(Blue)@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1755,Skeggiold(Blue)@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
 1755,Skeggiold(Blue)@NPC_CALLSLAVE,attack,352,1,10000,0,60000,yes,target,always,0,,,,,,
-1755,Skeggiold(Blue)@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,target,always,0,,,,,,
+1755,Skeggiold(Blue)@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,randomtarget,always,0,,,,,,
 1755,Skeggiold(Blue)@NPC_SUMMONSLAVE,any,196,2,10000,700,60000,no,self,onspawn,0,1764,,,,,
 1756,Hydro@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1756,Hydro@AL_HEAL,idle,28,10,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47

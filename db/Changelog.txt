@@ -20,6 +20,8 @@
 
 ========================
 04/13
+	* Converted mob skills that had the combination idle+target+always to
+	  idle+randomtarget+always as per Playtester's request.
 	* Corrected the inf2 of some skills considering the changes to the inf2
 	  party/guild only and 'allow enemy' meanings. [Skotlex]
 	* Thanatos, Kiel and Randgris now use Ganbantein [Playtester]
