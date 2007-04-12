@@ -990,6 +990,9 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 
 /*==========================================
  * A lock of target is stopped and mob moves to a standby state.
+ * This also triggers idle skill/movement since the AI can get stuck
+ * when trying to pick new targets when the current chosen target is
+ * unreachable.
  *------------------------------------------
  */
 int mob_unlocktarget(struct mob_data *md,int tick)
@@ -999,11 +1002,31 @@ int mob_unlocktarget(struct mob_data *md,int tick)
 	if(md->nd)
 		mob_script_callback(md, map_id2bl(md->target_id), CALLBACK_UNLOCK);
 
-	md->target_id=0;
-	md->state.skillstate=MSS_IDLE;
-	md->next_walktime=tick+rand()%3000+3000;
-	mob_stop_attack(md);
-	md->ud.target = 0;
+	switch (md->state.skillstate) {
+	case MSS_IDLE:
+		// Idle skill.
+		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) &&
+			mobskill_use(md, tick, -1))
+			break;
+		//Random walk.
+		if (!md->master_id &&
+			DIFF_TICK(md->next_walktime, tick) <= 0 &&
+			!mob_randomwalk(md,tick))
+			//Delay next random walk when this one failed.
+			md->next_walktime=tick+rand()%3000;
+		break;
+	case MSS_WALK:
+		break;
+	default:
+		mob_stop_attack(md);
+		if (battle_config.mob_ai&0x8)
+			mob_stop_walking(md,1); //Inmediately stop chasing.
+		md->state.skillstate = MSS_IDLE;
+		md->target_id=0;
+		md->ud.target = 0;
+		md->next_walktime=tick+rand()%3000+3000;
+		break;
+	}
 	return 0;
 }
 /*==========================================
@@ -1119,8 +1142,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				map_foreachinrange (mob_ai_sub_hard_warpsearch, &md->bl,
 					view_range, BL_NPC, md, &tbl);
 				if (tbl) unit_walktobl(&md->bl, tbl, 0, 1);
-			} else if (battle_config.mob_ai&0x8) //Inmediately stop chasing.
-				mob_stop_walking(md,1);
+			}
 			mob_unlocktarget(md, tick-(battle_config.mob_ai&0x8?3000:0)); //Imediately do random walk.
 			tbl = NULL;
 		}
@@ -1214,16 +1236,8 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	if (!tbl) { //No targets available.
 		if (mode&MD_ANGRY && !md->state.aggressive)
 			md->state.aggressive = 1; //Restore angry state when no targets are available.
-
-		if(md->ud.walktimer == -1) {
-			// Idle skill.
-			md->state.skillstate = MSS_IDLE;
-			if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mobskill_use(md, tick, -1))
-				return 0;
-		}
-		// Random walk.
-		if (can_move && !md->master_id && DIFF_TICK(md->next_walktime, tick) <= 0)
-			mob_randomwalk(md,tick);
+		//This handles triggering idle walk/skill.
+		mob_unlocktarget(md, tick);
 		return 0;
 	}
 	
@@ -1236,7 +1250,6 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		if (md->lootitem == NULL)
 		{	//Can't loot...
 			mob_unlocktarget (md, tick);
-			mob_stop_walking(md,0);
 			return 0;
 		}
 		if (!check_distance_bl(&md->bl, tbl, 1))
@@ -1316,19 +1329,10 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		return 0;
 
 	//Follow up if possible.
-	if (mob_can_reach(md, tbl, md->min_chase, MSS_RUSH) &&
-		unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
-		return 0; //Chasing.
-
-	//Can't chase locked target. Return to IDLE.
-	if(md->state.skillstate == MSS_IDLE ||
-		md->state.skillstate == MSS_WALK)
-	{	//Mob is already idle, try a idle skill before giving up.
-		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL))
-			mobskill_use(md, tick, -1);
-		md->target_id=0;
-	} else
+	if(!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH) ||
+		!unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
 		mob_unlocktarget(md,tick);
+
 	return 0;
 }
 
