@@ -251,7 +251,7 @@ int connect_client(int listen_fd)
 
 	if ( fd >= FD_SETSIZE )
 	{	//More connections than we can handle!
-		ShowError("accept failed. Received socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (%d) for your OS to fix this!\n", fd, FD_SETSIZE);
+		ShowError("accept failed. Received socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (currently %d) for your OS to fix this!\n", fd, FD_SETSIZE);
 		closesocket(fd);
 		return -1;
 	}
