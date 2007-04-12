@@ -190,6 +190,7 @@ ACMD_FUNC(storeall); // by MouseJstr
 ACMD_FUNC(charstoreall); // by MouseJstr
 ACMD_FUNC(skillid); // by MouseJstr
 ACMD_FUNC(useskill); // by MouseJstr
+ACMD_FUNC(displayskill); // by MouseJstr
 ACMD_FUNC(summon);
 ACMD_FUNC(rain);
 ACMD_FUNC(snow);
@@ -508,6 +509,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Charstoreall,       "@charstoreall",    60, atcommand_charstoreall }, // MouseJstr
 	{ AtCommand_Skillid,            "@skillid",         40, atcommand_skillid }, // MouseJstr
 	{ AtCommand_Useskill,           "@useskill",        40, atcommand_useskill }, // MouseJstr
+	{ AtCommand_DisplaySkill,       "@displayskill",    99, atcommand_displayskill }, // MouseJstr
 //	{ AtCommand_Rain,               "@rain",            99, atcommand_rain }, //Client no longer supports rain!
 	{ AtCommand_Snow,               "@snow",            99, atcommand_snow },
 	{ AtCommand_Sakura,             "@sakura",          99, atcommand_sakura },
@@ -7213,6 +7215,35 @@ int atcommand_useskill(const int fd, struct map_session_data* sd, const char* co
 	else
 		unit_skilluse_id(bl, pl_sd->bl.id, skillnum, skilllv);
 
+	return 0;
+}
+
+/*==========================================
+ * @showskill by [Skotlex]
+ *  Debug command to locate new skill IDs. It sends the
+ *  three possible skill-effect packets to the area.
+ *------------------------------------------
+ */
+int atcommand_displayskill(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	struct status_data * status;
+	unsigned int tick;
+	int skillnum;
+	int skilllv = 1;
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message ||
+		sscanf(message, "%d %d", &skillnum, &skilllv) < 1)
+	{
+		clif_displaymessage(fd, "Usage: @displayskill <skillnum> {<skillv>}>");
+		return -1;
+	}
+	status = status_get_status_data(&sd->bl);
+	tick = gettick();
+	clif_skill_damage(&sd->bl,&sd->bl, tick, status->amotion, status->dmotion,
+		1, 1, skillnum, skilllv, 5);
+	clif_skill_nodamage(&sd->bl, &sd->bl, skillnum, skilllv, 1);
+	clif_skill_poseffect(&sd->bl, skillnum, skilllv, sd->bl.x, sd->bl.y, tick);
 	return 0;
 }
 

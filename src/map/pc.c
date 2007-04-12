@@ -1442,7 +1442,20 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		switch (sd->state.lr_flag)
 		{
 		case 2:
-			sd->arrow_ele=val;
+			switch (sd->status.weapon) {
+				case W_BOW:
+				case W_REVOLVER:
+				case W_RIFLE:
+				case W_SHOTGUN:
+				case W_GATLING:
+				case W_GRENADE:
+					//Become weapon element.
+					status->rhw.ele=val;
+					break;
+				default: //Become arrow element.
+					sd->arrow_ele=val;
+					break;
+			}
 			break;
 		case 1:
 			status->lhw->ele=val;

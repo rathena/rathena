@@ -172,6 +172,7 @@ enum AtCommandType {
 	AtCommand_Charstoreall, // by MouseJstr
 	AtCommand_Skillid, // by MouseJstr
 	AtCommand_Useskill, // by MouseJstr
+	AtCommand_DisplaySkill,
 	AtCommand_Summon,
 	AtCommand_Rain,
 	AtCommand_Snow,

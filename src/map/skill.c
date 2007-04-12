@@ -6770,9 +6770,8 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		{
 		int element[5]={ELE_WIND,ELE_DARK,ELE_POISON,ELE_WATER,ELE_FIRE};
 
-		if (sd)
-			val1=sd->arrow_ele;
-		else
+		val1 = status->rhw.ele;
+		if (!val1)
 			val1=element[rand()%5];
 
 		switch (val1)
