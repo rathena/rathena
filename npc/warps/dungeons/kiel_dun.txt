@@ -3,75 +3,22 @@
 //===== By: ==================================================
 //= Lost Kakashi
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena 1.0
 //===== Description: =========================================
 //= Warp Points for the Kiel Dungeon
 //===== Additional Comments: =================================
 //= 1.1 Added official Kiel Dungeon entrance [Playtester]
+//= 1.2 Changed warps because of Kiel quest [Playtester]
 //============================================================
 
 //= Kiel Dungeon =============================================
-kh_dun01,3,234,0	warp	khwarp01	1,1,yuno_fild08,69,170
+kh_dun01,3,234,0	warp	kh_dun_00	1,1,yuno_fild08,69,170
 
-//= Graveyard Switch =========================================
-yuno_fild08,67,169,4	script	Switch#kh	111,1,1,{
+//Factory Restricted Area Exit
+kh_dun01,232,225,0	warp	kh_dun_01	1,1,kh_dun01,14,12
 
-  mes "You examine the grave and find a switch!";
-  mes "Do you want to press it?";
-  next;
-
-  menu "Yes.",-,"No.",L_End;
-
-  mes "Suddenly the grave opens and reveals a staircase.";
-  close2;
-
-  warp "kh_dun01",4,229;
-  end;
-
-L_End:
-  mes "You decided not to press it.";
-  close;
-}
-
-//= Elevator to Floor 2 ======================================
-kh_dun01,44,203,4	script	Switch#khe1::khelevator	111,1,1,{
-
-  mes "The elevator seems to be broken.";
-  mes "But you could repair it with";
-  mes "^0000FF40 Hard Pieces of Steel^000000.";
-  next;
-
-  mes "Be careful, though.";
-  mes "This will only work once and there's no turning back.";
-  next;
-
-  mes "Do you want to repair the elevator?";
-  next;
-
-  menu "Yes.",-,"No.",L_End;
-  
-  if(countitem(7507)<40) goto L_NoItem;
-  delitem 7507,40;
-  mes "The elevator starts moving.";
-  mes "You quickly jump into it.";
-  close2;
-  
-  warp "kh_dun02",44,195;
-  end;
-
-L_NoItem:
-  mes "It appears you don't have enough items.";
-L_End:
-  mes "The elevator remains broken.";
-  close;
-}
-
-kh_dun01,36,195,4	duplicate(khelevator)	Switch#khe2	111
-
-//= Custom Kiel Dungeon Warps ================================
-//kh_dun01,3,234,0	warp	warp01	1,1,kh_dun02,42,197
-//kh_dun02,45,194,0	warp	warp02	1,1,kh_dun01,4,229
-//kh_kiehl02,49,52,0	warp	warp05	1,1,kh_dun01,63,10
-//kh_dun01,64,7,0	warp	warp06	1,1,kh_kiehl02,51,49
+//Factory side warps
+kh_dun01,63,7,0	warp	kh_dun_02	1,1,kh_dun01,227,176
+kh_dun01,232,176,0	warp	kh_dun_03	1,1,kh_dun01,63,12

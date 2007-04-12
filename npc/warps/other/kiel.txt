@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 8+
 //===== Description: =========================================
@@ -11,8 +11,17 @@
 //===== Additional Comments: =================================
 //= 1.0 Added Kiel warps thanks to Celestria [Playtester]
 //= 1.1 Added more warps thanks to Celestria [Playtester]
+//= 1.2 Added warps according to Kiel quest [Playtester]
 //============================================================
 
+//============================================================
+// kh_mansion
+//============================================================
+//Mansion entrance
+lighthalzen,188,204,0	warp	kh_mansion_01	1,1,kh_mansion,84,50
+kh_mansion,88,50,0	warp	kh_mansion_02	1,1,lighthalzen,188,199
+//Mansion office -> Entry way
+kh_mansion,21,11,0	warp	kh_mansion_03	1,1,kh_mansion,72,49
 
 //============================================================
 // kh_school
@@ -63,16 +72,14 @@ kh_vila,191,18,0	warp	vila14	1,1,kh_vila,27,185
 kh_vila,114,47,0	warp	vila15	1,1,kh_vila,86,49
 kh_vila,126,76,0	warp	vila16	1,1,kh_vila,180,175
 kh_vila,180,170,0	warp	vila17	1,1,kh_vila,127,71
-
-kh_vila,174,72,0	warp	vila19	1,1,kh_vila,181,125
-
+kh_vila,174,72,0	warp	vila18	1,1,kh_vila,181,125
 
 //============================================================
 // kh_rossi - House of the Losimier family
 //============================================================
-//Entrance Level
-//???,???,???,0	warp	rossi01	1,1,kh_rossi,17,93
-//kh_rossi,12,93,0	warp	rossi02	1,1,???,???,???
+//Rosimier Mansion exit
+kh_rossi,16,92,0	warp	rossi02	1,1,yuno,270,139
+//Lower Level
 kh_rossi,35,99,0	warp	rossi03	1,1,kh_rossi,27,146
 kh_rossi,27,142,0	warp	rossi04	1,1,kh_rossi,35,95
 kh_rossi,35,86,0	warp	rossi05	1,1,kh_rossi,27,39
@@ -84,7 +91,6 @@ kh_rossi,168,35,0	warp	rossi10	1,1,kh_rossi,90,90
 kh_rossi,43,26,0	warp	rossi11	1,1,kh_rossi,90,25
 kh_rossi,86,25,0	warp	rossi12	1,1,kh_rossi,37,26
 kh_rossi,91,101,0	warp	rossi13	1,1,kh_rossi,282,65
-
 //Upper Level
 kh_rossi,282,60,0	warp	rossi14	1,1,kh_rossi,91,95
 kh_rossi,222,24,0	warp	rossi15	1,1,kh_rossi,22,219
@@ -96,7 +102,6 @@ kh_rossi,222,69,0	warp	rossi20	1,1,kh_rossi,22,276
 kh_rossi,22,272,0	warp	rossi21	1,1,kh_rossi,222,65
 kh_rossi,248,69,0	warp	rossi21	1,1,kh_rossi,88,276
 kh_rossi,88,272,0	warp	rossi23	1,1,kh_rossi,248,65
-
 //Hallway
 kh_rossi,229,235,0	warp	rossi24	1,1,kh_rossi,263,46
 kh_rossi,188,239,0	warp	rossi25	1,1,kh_rossi,148,281
