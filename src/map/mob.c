@@ -2826,8 +2826,10 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				map_search_freecell(&md->bl, md->bl.m, &x, &y, j, j, 3);
 			}
 			md->skillidx = i;
-			flag = unit_skilluse_pos2(&md->bl, x, y, ms[i].skill_id, ms[i].skill_lv,
-				ms[i].casttime, ms[i].cancel);
+			if (!unit_skilluse_pos2(&md->bl, x, y,
+				ms[i].skill_id, ms[i].skill_lv,
+				ms[i].casttime, ms[i].cancel))
+				continue;
 		} else {
 			//Targetted skill
 			switch (ms[i].target) {
@@ -2858,15 +2860,12 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			}
 			if (!bl) continue;
 			md->skillidx = i;
-			flag = unit_skilluse_id2(&md->bl, bl->id, ms[i].skill_id, ms[i].skill_lv,
-				ms[i].casttime, ms[i].cancel);
+			if (!unit_skilluse_id2(&md->bl, bl->id,
+				ms[i].skill_id, ms[i].skill_lv,
+				ms[i].casttime, ms[i].cancel))
+				continue;
 		}
 		//Skill used. Post-setups... 
-		if (!flag) 
-		{	//Skill failed.
-			md->skillidx = -1;
-			continue;
-		}
 		if(battle_config.mob_ai&0x200)
 		{ //pass on delay to same skill.
 			for (j = 0; j < md->db->maxskill; j++)
@@ -2877,6 +2876,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 		return 1;
 	}
 	//No skill was used.
+	md->skillidx = -1;
 	return 0;
 }
 /*==========================================
