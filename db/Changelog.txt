@@ -19,6 +19,8 @@
 	-----
 
 ========================
+04/13
+	* Added Magmaring mob [Playtester]
 04/12
 	* Ganbantein now has a range equal to the level used [Playtester]
 	- only mobs use levels higher than 1
