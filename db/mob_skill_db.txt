@@ -3510,6 +3510,7 @@
 1708,Thanatos@NPC_SUMMONSLAVE,attack,196,6,10000,700,30000,no,self,slavele,0,1711,1710,1709,1712,,
 1708,Thanatos@NPC_SUMMONSLAVE,idle,196,6,10000,700,30000,no,self,slavele,0,1711,1710,1709,1712,,
 1708,Thanatos@NPC_SUMMONSLAVE,idle,196,6,10000,0,0,no,self,onspawn,0,1711,1710,1709,1712,,
+1708,Thanatos@HW_GANBANTEIN,idle,483,5,10000,0,2000,yes,randomtarget,always,0,,,,,,
 1708,Thanatos@KN_TWOHANDQUICKEN,attack,60,10,3000,0,300000,yes,self,myhpltmaxrate,30,,,,,,2
 1708,Thanatos@KN_BOWLINGBASH,attack,62,10,1000,0,10000,yes,target,always,0,,,,,,
 1708,Thanatos@SM_BASH,attack,5,10,1000,0,5000,yes,target,always,0,,,,,,
@@ -3531,7 +3532,6 @@
 1708,Thanatos@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1708,Thanatos@AL_TELEPORT,walk,26,1,10000,0,5000,yes,self,rudeattacked,,,,,,,
 1708,Thanatos@AL_TELEPORT,attack,26,1,500,0,10000,yes,self,always,0,,,,,,
-1708,Thanatos@HW_GANBANTEIN,any,483,5,10000,0,0,yes,self,rudeattacked,,,,,,,
 1709,Thanatos Odium@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1709,Thanatos Odium@NPC_DARKNESSATTACK,attack,190,5,500,500,5000,no,target,always,0,,,,,,36
 1709,Thanatos Odium@NPC_PIERCINGATT,attack,158,3,500,0,5000,yes,target,always,0,,,,,,36
@@ -3682,6 +3682,7 @@
 1734,Kiel-D-01@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,self,always,0,,,,,,
 1734,Kiel-D-01@NPC_SUMMONSLAVE,attack,196,6,10000,700,30000,no,self,slavele,0,1739,1740,,,,
 1734,Kiel-D-01@NPC_SUMMONSLAVE,idle,196,6,10000,700,30000,no,self,slavele,0,1739,1740,,,,
+1734,Kiel-D-01@HW_GANBANTEIN,idle,483,5,10000,0,2000,yes,randomtarget,always,0,,,,,,
 1734,Kiel-D-01@SM_MAGNUM,chase,7,20,1000,0,3000,yes,self,always,0,,,,,,
 1734,Kiel-D-01@SM_MAGNUM,attack,7,20,1000,0,3000,yes,self,always,0,,,,,,
 1734,Kiel-D-01@NPC_DARKBLESSING,attack,203,1,500,800,5000,no,target,always,0,,,,,,9
@@ -3700,7 +3701,6 @@
 1734,Kiel-D-01@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1734,Kiel-D-01@AL_TELEPORT,walk,26,1,10000,0,5000,yes,self,rudeattacked,,,,,,,
 1734,Kiel-D-01@AL_PNEUMA,attack,25,1,10000,0,10000,yes,self,longrangeattacked,,,,,,,
-1734,Kiel-D-01@HW_GANBANTEIN,any,483,5,10000,0,0,yes,self,rudeattacked,,,,,,,
 1735,Alicel@MO_BODYRELOCATION,chase,264,1,2000,500,5000,no,target,always,0,,,,,,
 1735,Alicel@NPC_EMOTION,chase,197,1,2000,0,5000,yes,self,always,0,29,,,,,
 1735,Alicel@NPC_DARKNESSATTACK,attack,190,1,500,500,5000,yes,target,always,0,,,,,,
@@ -3762,6 +3762,7 @@
 1751,Valkyrie Randgris@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1751,Valkyrie Randgris@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1751,Valkyrie Randgris@NPC_CALLSLAVE,chase,352,1,10000,0,30000,yes,self,always,0,,,,,,
+1751,Valkyrie Randgris@HW_GANBANTEIN,idle,483,5,10000,0,2000,yes,randomtarget,always,0,,,,,,
 1751,Valkyrie Randgris@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1751,Valkyrie Randgris@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,
 1751,Valkyrie Randgris@NPC_POWERUP,chase,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,
@@ -3777,7 +3778,6 @@
 1751,Valkyrie Randgris@MG_THUNDERSTORM,attack,21,20,1000,1500,5000,no,target,attackpcgt,2,,,,,,
 1751,Valkyrie Randgris@WZ_VERMILION,attack,85,20,1000,1000,5000,no,target,always,0,,,,,,
 1751,Valkyrie Randgris@WZ_VERMILION,chase,85,20,2000,1000,5000,no,target,always,0,,,,,,
-1751,Valkyrie Randgris@HW_GANBANTEIN,any,483,5,10000,0,0,yes,self,rudeattacked,,,,,,,
 1752,Skogul@TF_HIDING,idle,51,1,2000,0,180000,no,self,always,0,,,,,,9
 1752,Skogul@MG_SOULSTRIKE,chase,13,5,2000,0,3000,yes,target,always,0,,,,,,
 1752,Skogul@AS_GRIMTOOTH,idle,137,5,10000,0,700,yes,target,mystatuson,hiding,,,,,,
@@ -4045,6 +4045,7 @@
 1779,Ktullanux@NPC_SUMMONSLAVE,idle,196,6,10000,0,0,no,self,onspawn,0,1777,,,,,
 1779,Ktullanux@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1779,Ktullanux@NPC_CALLSLAVE,chase,352,1,10000,0,30000,yes,self,always,0,,,,,,
+1779,Ktullanux@WZ_STORMGUST,idle,89,10,10000,0,5000,no,randomtarget,always,0,,,,,,
 1779,Ktullanux@NPC_WATERATTACK,attack,184,5,2000,0,5000,yes,target,always,0,,,,,,
 1779,Ktullanux@NPC_WATERATTACK,chase,184,5,2000,0,5000,yes,target,always,0,,,,,,
 1779,Ktullanux@NPC_RANDOMATTACK,attack,183,5,2000,0,5000,no,target,always,0,,,,,,

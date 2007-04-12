@@ -20,6 +20,8 @@
 
 ========================
 04/13
+	* Kyrie Eleison cannot be cast on mobs anymore [Playtester]
+	- also some small mob skill changes
 	* Corrected mob skill CALLSLAVE's target to be always 'self'
 	* Converted mob skills that had the combination idle+target+always to
 	  idle+randomtarget+always as per Playtester's request.
