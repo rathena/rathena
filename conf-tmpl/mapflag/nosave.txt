@@ -39,6 +39,8 @@ que_rachel	mapflag	nosave	SavePoint
 que_thor	mapflag	nosave	SavePoint
 que_ng	mapflag	nosave	SavePoint
 gon_test	mapflag	nosave	SavePoint
+kh_kiehl01	mapflag	nosave	SavePoint
+kh_kiehl02	mapflag	nosave	SavePoint
 
 // GvG Arenas ==========================
 guild_vs1	mapflag	nosave	SavePoint
