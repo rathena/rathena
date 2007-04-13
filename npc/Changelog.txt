@@ -1,6 +1,9 @@
 Date		Added
 ======
 2007/04/13
+2007/04/13
+	* Added new Lighthalzen NPCs by $ephiroth and merged other NPCs
+	  from npc\other\lighthalzen_???.txt [Lupus]
 	* Updated Kiel Hyre quest warps [Playtester]
 	* Added Veins field spawns thanks to $ephiroth [Playtester]
 	* Added Kiel Hyre quest thanks to L0ne_W0lf [Playtester]
