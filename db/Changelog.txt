@@ -19,6 +19,8 @@
 	-----
 
 ========================
+04/14
+	* Fixed Eremes using Venomdust on self instead of target [Playtester]
 04/13
 	* Updated Aegis name, price and weight of etc items [Playtester]
 	* Updated various Kiel Hyre quest items [Playtester]

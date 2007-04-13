@@ -2713,7 +2713,7 @@
 1635,Eremes@NPC_AGIUP,attack,350,5,2000,0,100000,yes,self,always,0,,,,,,
 1635,Eremes@AS_SONICBLOW,attack,136,5,2000,0,5000,yes,target,always,0,,,,,,6
 1635,Eremes@AS_GRIMTOOTH,chase,137,5,2000,0,0,yes,target,always,0,,,,,,
-1635,Eremes@AS_VENOMDUST,idle,140,1,2000,0,50000,yes,self,always,0,,,,,,29
+1635,Eremes@AS_VENOMDUST,idle,140,1,2000,0,50000,yes,randomtarget,always,0,,,,,,29
 1635,Eremes@AS_VENOMDUST,attack,140,1,2000,0,50000,yes,target,always,0,,,,,,29
 1635,Eremes@NPC_CRITICALSLASH,attack,170,1,1000,0,5000,yes,target,always,0,,,,,,
 1635,Eremes@NPC_STUNATTACK,attack,179,5,1000,0,5000,yes,target,always,0,,,,,,
