@@ -7219,7 +7219,7 @@ int atcommand_useskill(const int fd, struct map_session_data* sd, const char* co
 }
 
 /*==========================================
- * @showskill by [Skotlex]
+ * @displayskill by [Skotlex]
  *  Debug command to locate new skill IDs. It sends the
  *  three possible skill-effect packets to the area.
  *------------------------------------------

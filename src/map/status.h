@@ -383,7 +383,7 @@ enum {
 	SI_STAR_COMFORT		= 171,	
 	SI_PRESERVE		= 181,
 	SI_INCSTR	= 182,
-	SI_INTRAVISION	= 184, //WTF?? creates the black shape of 4_m_02 NPC, with NPC talk cursor. Supposedly intravision shows this.
+	SI_INTRAVISION	= 184,
 	SI_DOUBLECAST		= 186,
 	SI_MAXOVERTHRUST	= 188,
 	SI_TAROT		= 191, // the icon allows no doubt... but what is it really used for ?? [DracoRPG]
