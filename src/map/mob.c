@@ -1025,10 +1025,12 @@ int mob_unlocktarget(struct mob_data *md,int tick)
 		if (battle_config.mob_ai&0x8)
 			mob_stop_walking(md,1); //Inmediately stop chasing.
 		md->state.skillstate = MSS_IDLE;
-		md->target_id=0;
-		md->ud.target = 0;
 		md->next_walktime=tick+rand()%3000+3000;
 		break;
+	}
+	if (md->target_id) {
+		md->target_id=0;
+		md->ud.target = 0;
 	}
 	return 0;
 }
