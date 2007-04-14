@@ -1674,7 +1674,7 @@
 5080,Headgear_Of_Queen,Crown of Ancient Queen,5,20,,400,,4,,0,0xFFFFFFFF,7,2,256,,45,1,164,{},{},{}
 5081,Mistress_Crown,Crown of Mistress,5,20,,100,,0,,0,0xFFFFFFFE,7,0,256,,75,1,165,{ bonus bMaxSP,100; bonus bInt,2; bonus bUnbreakableHelm,0; },{},{}
 5082,Mushroom_Band,Decorative Mushroom,5,20,,100,,2,,0,0xFFFFFFFF,7,2,256,,0,1,166,{},{},{}
-5083,Red_Tailed_Ribbon,Red Ribbon,5,20,,200,,1,,0,0xFFFFFFFF,7,0,256,,45,1,167,{ bonus bMdef,10; },{},{}
+5083,Red_Tailed_Ribbon,Red Tailed Ribbon,5,20,,200,,1,,0,0xFFFFFFFF,7,0,256,,45,1,167,{ bonus bMdef,10; },{},{}
 5084,Lazy_Raccoon,Lazy Smokie,5,20,,500,,1,,0,0xFFFFFFFE,7,2,256,,0,1,168,{ bonus2 bResEff,Eff_Sleep,2000; },{},{}
 5085,Pair_Of_Red_Ribbon,Small Ribbons,5,20,,100,,1,,0,0xFFFFFFFF,7,0,512,,45,0,169,{},{},{}
 5086,Alarm_Mask,Alarm Mask,5,20,,100,,2,,0,0xFFFFFFFE,7,2,513,,0,0,170,{ bonus2 bResEff,Eff_Blind,5000; },{},{}
