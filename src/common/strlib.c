@@ -114,7 +114,7 @@ int remove_control_chars(char* str)
 	int change = 0;
 
 	for(i = 0; str[i]; i++) {
-		if (str[i] < 32) {
+		if (ISCNTRL(str[i])) {
 			str[i] = '_';
 			change = 1;
 		}
