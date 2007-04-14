@@ -20,6 +20,8 @@
 
 ========================
 04/14
+	* Corrected land protector's duration according to the descriptions
+	  [Skotlex]
 	* Fixed Eremes using Venomdust on self instead of target [Playtester]
 04/13
 	* Updated Aegis name, price and weight of etc items [Playtester]

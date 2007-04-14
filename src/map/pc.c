@@ -2803,9 +2803,9 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 		return 0;
 
 	if(sd->status.inventory[n].nameid <= 0 ||
-		sd->status.inventory[n].amount < amount ||
-		sd->trade_partner != 0 || sd->vender_id != 0 ||
 		sd->status.inventory[n].amount <= 0 ||
+		sd->status.inventory[n].amount < amount ||
+		sd->state.trading || sd->vender_id != 0 ||
 		!sd->inventory_data[n] //pc_delitem would fail on this case.
 		)
 		return 0;
