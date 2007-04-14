@@ -20,6 +20,7 @@
 
 ========================
 04/15
+	* Added some new staffs [Playtester]
 	* Hopefully fixed Skogul not using Grimtooth [Playtester]
 	* Changed item name of item 5083 to "Red Tailed Ribbon" [Playtester]
 04/14
