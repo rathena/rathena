@@ -3780,7 +3780,7 @@
 1751,Valkyrie Randgris@WZ_VERMILION,chase,85,20,2000,1000,5000,no,target,always,0,,,,,,
 1752,Skogul@TF_HIDING,idle,51,1,2000,0,180000,no,self,always,0,,,,,,9
 1752,Skogul@MG_SOULSTRIKE,chase,13,5,2000,0,3000,yes,target,always,0,,,,,,
-1752,Skogul@AS_GRIMTOOTH,idle,137,5,10000,0,700,yes,target,mystatuson,hiding,,,,,,
+1752,Skogul@AS_GRIMTOOTH,idle,137,5,10000,0,700,yes,randomtarget,mystatuson,hiding,,,,,,
 1752,Skogul@NPC_CURSEATTACK,attack,181,5,1000,0,5000,no,target,always,0,,,,,,
 1752,Skogul@NPC_DARKNESSATTACK,attack,190,5,1000,0,5000,no,target,always,0,,,,,,9
 1752,Skogul@NPC_SUMMONSLAVE,attack,196,1,100,0,3600000,no,self,slavele,0,1762,,,,,
@@ -3848,7 +3848,7 @@
 1756,Hydro@NPC_CALLSLAVE,chase,352,1,2000,0,10000,yes,self,always,0,,,,,,
 1761,Skogul@TF_HIDING,idle,51,1,2000,0,180000,no,self,always,0,,,,,,9
 1761,Skogul@MG_SOULSTRIKE,chase,13,5,2000,0,3000,yes,target,always,0,,,,,,
-1761,Skogul@AS_GRIMTOOTH,idle,137,5,10000,0,700,yes,target,mystatuson,hiding,,,,,,
+1761,Skogul@AS_GRIMTOOTH,idle,137,5,10000,0,700,yes,randomtarget,mystatuson,hiding,,,,,,
 1761,Skogul@NPC_CURSEATTACK,attack,181,5,1000,0,5000,no,target,always,0,,,,,,
 1761,Skogul@NPC_DARKNESSATTACK,attack,190,5,1000,0,5000,no,target,always,0,,,,,,9
 1762,Frus@RG_STRIPARMOR,attack,217,5,1000,0,30000,yes,target,always,0,,,,,,2
