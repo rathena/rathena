@@ -1,6 +1,7 @@
 Date		Added
 ======
-2007/04/13
+2007/04/15
+	* Lowered the amount of Dimiks spawning in Juperos F1 [Playtester]
 2007/04/13
 	* Added new Lighthalzen NPCs by $ephiroth and merged other NPCs
 	  from npc\other\lighthalzen_???.txt [Lupus]
