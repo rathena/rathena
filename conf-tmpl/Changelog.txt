@@ -1,5 +1,8 @@
 Date	Added
 
+2007/04/16
+	* Changed the default setting for emergency_call to 11 (usable all the
+	  time, but only in Gvg Maps) as described by Tharis (skill.conf). [Skotlex]
 2007/04/13
 	* Added some Kiel quest mapflags [Playtester]
 	* Added debug command @displayskill. Should be used only by people
