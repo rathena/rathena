@@ -114,7 +114,7 @@
 73,9,6,16,0,0x1,0,10,1,yes,0,0x1000,0,magic,0	//PR_KYRIE#Kyrie Eleison#
 74,0,6,4,0,0x3,-1,5,1,yes,0,0,0,magic,0	//PR_MAGNIFICAT#Magnificat#
 75,0,6,4,0,0x3,-1,5,1,yes,0,0,0,magic,0	//PR_GLORIA#Gloria#
-76,5,6,1,0,0x1,0,10,0,yes,0,0,0,magic,0	//PR_LEXDIVINA#Lex Divina#
+76,5,6,1,0,0x1,0:0:0:0:0:0:0:0:0:0:-1,10,0,yes,0,0,0,magic,0	//PR_LEXDIVINA#Lex Divina#
 77,5,6,1,6,0x28,0,10,1,yes,0,0,0,magic,0	//PR_TURNUNDEAD#Turn Undead#
 78,9,6,1,0,0x1,0,1,0,yes,0,0,0,magic,0	//PR_LEXAETERNA#Lex Aeterna#
 79,9,8,2,6,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0	//PR_MAGNUS#Magnus Exorcismus#
@@ -216,9 +216,9 @@
 175,0,0,4,0,0x41,0,10,1,no,0,0x2,0,misc,0	//NPC_SUICIDE#Suicide#
 176,-1,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_POISON#Poison Attack#
 177,7,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_BLINDATTACK#Darkness Attack#
-178,-1,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_SILENCEATTACK#Silence Attack#
+178,-1,6,1,-1,0,0:0:0:0:0:-1,5,1,no,0,0x2,0,weapon,0	//NPC_SILENCEATTACK#Silence Attack#
 179,-1,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_STUNATTACK#Stun Attack#
-180,7,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_PETRIFYATTACK#Petrify Attack#
+180,7,6,1,-1,0,0:0:0:0:0:-1,5,1,no,0,0x2,0,weapon,0	//NPC_PETRIFYATTACK#Petrify Attack#
 181,7,6,1,7,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_CURSEATTACK#Cursing Attack #
 182,-1,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_SLEEPATTACK#Sleep attack#
 183,-1,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_RANDOMATTACK#Random Attack #
@@ -327,7 +327,7 @@
 286,2,6,2,1,0x1,0,5,1,yes,0,0,0,magic,0	//SA_DELUGE#Deluge#
 287,2,6,2,4,0x1,0,5,1,yes,0,0,0,magic,0	//SA_VIOLENTGALE#Whirlwind#
 288,3,6,2,0,0x1,0,5,1,yes,0,0,0,magic,0	//SA_LANDPROTECTOR#Magnetic Earth#
-289,9,6,1,0,0x1,0,5,1,yes,0,0xE00,0,magic,0	//SA_DISPELL#Dispel#
+289,9,6,1,0,0x1,0:0:0:0:0:-1,5,1,yes,0,0xE00,0,magic,0	//SA_DISPELL#Dispel#
 290,0,6,4,0,0x1,0,10,1,yes,0,0,0,magic,0	//SA_ABRACADABRA#Hocus-pocus#
 291,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0	//SA_MONOCELL#Monocell#
 292,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0	//SA_CLASSCHANGE#Class Change#

@@ -20,6 +20,7 @@
 
 ========================
 04/16
+	* Added some splash ranges for MVP level skills [Playtester]
 	* Readded and updated Anubis [Playtester]
 04/15
 	* Added some new staffs [Playtester]
