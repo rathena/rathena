@@ -118,7 +118,8 @@ static int battle_getenemy_sub(struct block_list *bl, va_list ap)
 		return 0;
 	if (*c >= 24)
 		return 0;
-
+	if (status_isdead(bl))
+		return 0;
 	if (battle_check_target(target, bl, BCT_ENEMY) > 0) {
 		bl_list[(*c)++] = bl;
 		return 1;
@@ -1207,36 +1208,37 @@ static struct Damage battle_calc_weapon_attack(
 						sd->inventory_data[index] &&
 						sd->inventory_data[index]->type == IT_WEAPON)
 						wd.damage = sd->inventory_data[index]->weight*8/100; //80% of weight
+				} else
+					wd.damage = sstatus->rhw.atk2*8/10; //Else use Atk2
 
-					ATK_ADDRATE(50*skill_lv); //Skill modifier applies to weight only.
-					index = sstatus->str/10;
-					index = index*index;
-					ATK_ADD(index); //Add str bonus.
-
-					switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
-						case 0: //Small: 125%
-							ATK_RATE(125);
-							break;
-						//case 1: //Medium: 100%
-						case 2: //Large: 75%
-							ATK_RATE(75);
-							break;
-					}
-					break;
+				ATK_ADDRATE(50*skill_lv); //Skill modifier applies to weight only.
+				i = sstatus->str/10;
+				i*=i;
+				ATK_ADD(i); //Add str bonus.
+				switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
+					case 0: //Small: 125%
+						ATK_RATE(125);
+						break;
+					//case 1: //Medium: 100%
+					case 2: //Large: 75%
+						ATK_RATE(75);
+						break;
 				}
+				break;
 			case CR_SHIELDBOOMERANG:
 			case PA_SHIELDCHAIN:
+				wd.damage = sstatus->batk;
 				if (sd) {
 					short index = sd->equip_index[EQI_HAND_L];
-
-					wd.damage = sstatus->batk;
 
 					if (index >= 0 &&
 						sd->inventory_data[index] &&
 						sd->inventory_data[index]->type == IT_ARMOR)
 						ATK_ADD(sd->inventory_data[index]->weight/10);
 					break;
-				}
+				} else
+					ATK_ADD(sstatus->rhw.atk2); //Else use Atk2
+				break;
 			case HFLI_SBR44:	//[orn]
 				if(src->type == BL_HOM) {
 					wd.damage = ((TBL_HOM*)src)->homunculus.intimacy ;
@@ -3106,9 +3108,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 						return 0;
 				}
 			} else if (su->group->skill_id==WZ_ICEWALL)
-			{	//Icewall can be hit by anything except skills.
-				if (src->type == BL_SKILL)
-					return 0;
+			{
 				state |= BCT_ENEMY;
 				strip_enemy = 0;
 			} else	//Excepting traps and icewall, you should not be able to target skills.

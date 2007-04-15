@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/04/15
+	* Fixed 'randomtarget' picking dead characters.
+	* Adjusted Spiral Pierce, Shield Boomerang and Shield Chain to use atk2
+	  instead of weight when used by non-players.
+	* Adjusted skills blindAttack, SilenceAttack, StunAttack, PetrifyAttack,
+	  CurseAttack, SleepAttack, Lex Divina and Dispell to be area effect skills,
+	  if the used skill level has a splash-range different from 0.
+	* Mob used Meteor Assault is able to hit icewalls now. [Skotlex]
+2007/04/15
 	* Fixed TXT char creation blocking characters with nonstandard names
 2007/04/13
 	* Committing some accumulated stuff [ultramage]
