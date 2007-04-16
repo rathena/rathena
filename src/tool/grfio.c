@@ -648,9 +648,10 @@ static int grfio_entryread(char *gfname,int gentry)
 
 	fp = fopen(gfname, "rb");
 	if (fp == NULL) {
-		printf("GRF data file not found: '%s'.\n",gfname);
+		printf("GRF data file not found: '%s'\n",gfname);
 		return 1;	// 1:not found error
-	}
+	} else
+		printf("GRF data file found: '%s'\n",gfname);
 
 	fseek(fp,0,2);	// SEEK_END
 	grf_size = ftell(fp);
@@ -961,8 +962,10 @@ void grfio_init(char *fname)
 			// Entry table reading
 			if(strcmp(w1, "grf") == 0)	// GRF file
 				grf_num += (grfio_add(w2) == 0);
-			else if(strcmp(w1,"data_dir") == 0)	// Data directory
+			else if(strcmp(w1,"data_dir") == 0) {	// Data directory
 				strcpy(data_dir, w2);
+				printf("Use data directory %s\n", w2);
+			}
 		}
 		fclose(data_conf);
 	} // end of reading grf-files.txt

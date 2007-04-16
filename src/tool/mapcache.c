@@ -310,6 +310,7 @@ int main(int argc, char *argv[])
 		if(strcmp("map:", name) == 0 && sscanf(line, "%*s %15s", name) < 1)
 			continue;
 
+		name[MAP_NAME_LENGTH_EXT-1] = '\0';
 		remove_extension(name);
 		printf("%s", name);
 		if(find_map(name))
