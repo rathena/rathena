@@ -4245,8 +4245,8 @@ int ladmin_config_read(const char *cfgName) {
 
 		line[sizeof(line)-1] = '\0';
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) == 2) {
-			remove_control_chars((unsigned char *) w1);
-			remove_control_chars((unsigned char *) w2);
+			remove_control_chars(w1);
+			remove_control_chars(w2);
 
 			if(strcmpi(w1,"login_ip")==0){
 				struct hostent *h = gethostbyname (w2);

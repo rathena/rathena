@@ -8,7 +8,7 @@ char* jstrescape (char* pt);
 char* jstrescapecpy (char* pt, const char* spt);
 int jmemescapecpy (char* pt, const char* spt, int size);
 
-int remove_control_chars(char *);
+int remove_control_chars(char* str);
 char* trim(char* str);
 char* normalize_name(char* str,const char* delims);
 const char *stristr(const char *haystack, const char *needle);

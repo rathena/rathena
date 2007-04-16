@@ -600,7 +600,7 @@ static int db_is_key_null(DBType type, DBKey key)
  */
 static DBKey db_dup_key(DB_impl db, DBKey key)
 {
-	unsigned char *str;
+	char *str;
 
 #ifdef DB_ENABLE_STATS
 	COUNT(db_dup_key);
@@ -609,12 +609,12 @@ static DBKey db_dup_key(DB_impl db, DBKey key)
 		case DB_STRING:
 		case DB_ISTRING:
 			if (db->maxlen) {
-				CREATE(str, unsigned char, db->maxlen +1);
+				CREATE(str, char, db->maxlen +1);
 				memcpy(str, key.str, db->maxlen);
 				str[db->maxlen] = '\0';
 				key.str = str;
 			} else {
-				key.str = (unsigned char *)aStrdup((const char *)key.str);
+				key.str = (char *)aStrdup(key.str);
 			}
 			return key;
 

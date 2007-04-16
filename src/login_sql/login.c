@@ -41,7 +41,7 @@
 struct Login_Config {
 
 	uint32 login_ip;								// the address to bind to
-	unsigned short login_port;						// the port to bind to
+	uint16 login_port;								// the port to bind to
 	bool log_login;									// whether to log login server actions or not
 	char date_format[32];							// date format used in messages
 	bool console;									// console input system enabled?
@@ -1758,10 +1758,10 @@ int login_lan_config_read(const char *lancfgName)
 			continue;
 		}
 
-		remove_control_chars((unsigned char *)w1);
-		remove_control_chars((unsigned char *)w2);
-		remove_control_chars((unsigned char *)w3);
-		remove_control_chars((unsigned char *)w4);
+		remove_control_chars(w1);
+		remove_control_chars(w2);
+		remove_control_chars(w3);
+		remove_control_chars(w4);
 
 		if(strcmpi(w1, "subnet") == 0) {
 
@@ -1817,8 +1817,8 @@ int login_config_read(const char* cfgName)
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) < 2)
 			continue;
 
-		remove_control_chars((unsigned char *)w1);
-		remove_control_chars((unsigned char *)w2);
+		remove_control_chars(w1);
+		remove_control_chars(w2);
 
 		if(!strcmpi(w1,"timestamp_format")) {
 			strncpy(timestamp_format, w2, 20);
@@ -1834,7 +1834,7 @@ int login_config_read(const char* cfgName)
 			if (login_config.login_ip)
 				ShowStatus("Login server binding IP address : %s -> %s\n", w2, ip2str(login_config.login_ip, ip_str));
 		} else if(!strcmpi(w1,"login_port")) {
-			login_config.login_port = (unsigned short)atoi(w2);
+			login_config.login_port = (uint16)atoi(w2);
 			ShowStatus("set login_port : %s\n",w2);
 		}
 		else if (!strcmpi(w1, "log_login"))
@@ -2048,7 +2048,7 @@ int do_init(int argc, char** argv)
 
 	new_reg_tick = gettick();
 
-	ShowStatus("The login-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", login_config.login_port);
+	ShowStatus("The login-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %u).\n\n", login_config.login_port);
 
 	return 0;
 }

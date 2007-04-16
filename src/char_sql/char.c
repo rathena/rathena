@@ -3795,10 +3795,10 @@ int char_lan_config_read(const char *lancfgName) {
 			continue;
 		}
 
-		remove_control_chars((unsigned char *)w1);
-		remove_control_chars((unsigned char *)w2);
-		remove_control_chars((unsigned char *)w3);
-		remove_control_chars((unsigned char *)w4);
+		remove_control_chars(w1);
+		remove_control_chars(w2);
+		remove_control_chars(w3);
+		remove_control_chars(w4);
 
 		if(strcmpi(w1, "subnet") == 0) {
 	
@@ -3940,8 +3940,8 @@ int char_config_read(const char *cfgName) {
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
 			continue;
 
-		remove_control_chars((unsigned char *)w1);
-		remove_control_chars((unsigned char *)w2);
+		remove_control_chars(w1);
+		remove_control_chars(w2);
 		if(strcmpi(w1,"timestamp_format") == 0) {
 			strncpy(timestamp_format, w2, 20);
 		} else if(strcmpi(w1,"console_silent")==0){

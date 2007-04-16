@@ -349,7 +349,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 					//    \033[2J - Clears the screen and moves the cursor to the home position (line 1, column 1).
 					uint8 num = (numbers[numpoint]>>4)*10+(numbers[numpoint]&0x0F);
 					int cnt;
-					uint32 tmp;
+					DWORD tmp;
 					COORD origin = {0,0};
 					if(num==1)
 					{	// chars from start up to and including cursor
@@ -377,7 +377,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 					uint8 num = (numbers[numpoint]>>4)*10+(numbers[numpoint]&0x0F);
 					COORD origin = {0,info.dwCursorPosition.Y};
 					SHORT cnt;
-					uint32 tmp;
+					DWORD tmp;
 					if(num==1)
 					{	
 						cnt = info.dwCursorPosition.X + 1;

@@ -19,8 +19,9 @@
 #endif
 #endif
 
-#ifdef _WIN32
-#define __attribute__(x)	/* nothing */
+
+#if !defined(__GNUC__) && !defined(MINGW)
+#  define  __attribute__(x)	/* nothing */
 #endif
 
 

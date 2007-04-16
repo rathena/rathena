@@ -399,14 +399,14 @@ int check_ipmask(uint32 ip, const unsigned char *str)
 
 
 	// scan ip address
-	if (sscanf((const char*)str, "%lu.%lu.%lu.%lu/%n", &a0, &a1, &a2, &a3, &i) != 4 || i == 0)
+	if (sscanf((const char*)str, "%u.%u.%u.%u/%n", &a0, &a1, &a2, &a3, &i) != 4 || i == 0)
 		return 0;
 	p[0] = (uint8)a3; p[1] = (uint8)a2; p[2] = (uint8)a1; p[3] = (uint8)a0;
 
 	// scan mask
-	if (sscanf((const char*)str+i, "%lu.%lu.%lu.%lu", &a0, &a1, &a2, &a3) == 4) {
+	if (sscanf((const char*)str+i, "%u.%u.%u.%u", &a0, &a1, &a2, &a3) == 4) {
 		p2[0] = (uint8)a3; p2[1] = (uint8)a2; p2[2] = (uint8)a1; p2[3] = (uint8)a0;
-	} else if (sscanf((const char*)(str+i), "%u", &m) == 1 && m >= 0 && m <= 32) {
+	} else if (sscanf((const char*)(str+i), "%u", &m) == 1 && m <= 32) {
 		for(i = 32 - m; i < 32; i++)
 			mask |= (1 << i);
 	} else {
@@ -439,7 +439,7 @@ int check_ip(uint32 ip)
 //	    If we have an answer, there is no guarantee to have a 100% correct value.
 //	    And, the waiting time (to check) can be long (over 1 minute to a timeout). That can block the software.
 //	    So, DNS notation isn't authorised for ip checking.
-	sprintf(buf, "%lu.%lu.%lu.%lu.", CONVIP(ip));
+	sprintf(buf, "%u.%u.%u.%u.", CONVIP(ip));
 
 	for(i = 0; i < access_allownum; i++) {
 		access_ip = access_allow + i * ACO_STRSIZE;
@@ -487,7 +487,7 @@ int check_ladminip(uint32 ip)
 //	    If we have an answer, there is no guarantee to have a 100% correct value.
 //	    And, the waiting time (to check) can be long (over 1 minute to a timeout). That can block the software.
 //	    So, DNS notation isn't authorised for ip checking.
-	sprintf(buf, "%lu.%lu.%lu.%lu.", CONVIP(ip));
+	sprintf(buf, "%u.%u.%u.%u.", CONVIP(ip));
 
 	for(i = 0; i < access_ladmin_allownum; i++) {
 		access_ip = access_ladmin_allow + i * ACO_STRSIZE;
@@ -540,7 +540,7 @@ int mmo_auth_tostr(char *str, struct auth_dat *p) {
 	int i;
 	char *str_p = str;
 
-	str_p += sprintf(str_p, "%lu\t%s\t%s\t%s\t%c\t%d\t%lu\t%s\t%s\t%ld\t%s\t%s\t%ld\t",
+	str_p += sprintf(str_p, "%u\t%s\t%s\t%s\t%c\t%d\t%u\t%s\t%s\t%ld\t%s\t%s\t%ld\t",
 	                 p->account_id, p->userid, p->pass, p->lastlogin,
 	                 p->sex == 2 ? 'S' : p->sex == 1 ? 'M' : 'F',
 	                 p->logincount, p->state, p->email, p->error_message,
@@ -598,11 +598,11 @@ int mmo_auth_init(void)
 		memset(memo, 0, sizeof(memo));
 
 		// database version reading (v2)
-		if (((i = sscanf(line, "%lu\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%lu\t"
+		if (((i = sscanf(line, "%u\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%u\t"
 		                 "%[^\t]\t%[^\t]\t%ld\t%[^\t]\t%[^\t]\t%ld%n",
 		    &account_id, userid, pass, lastlogin, &sex, &logincount, &state,
 		    email, error_message, &connect_until_time, last_ip, memo, &ban_until_time, &n)) == 13 && line[n] == '\t') ||
-		    ((i = sscanf(line, "%lu\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%lu\t"
+		    ((i = sscanf(line, "%u\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%u\t"
 		                 "%[^\t]\t%[^\t]\t%ld\t%[^\t]\t%[^\t]%n",
 		    &account_id, userid, pass, lastlogin, &sex, &logincount, &state,
 		    email, error_message, &connect_until_time, last_ip, memo, &n)) == 12 && line[n] == '\t')) {
@@ -667,8 +667,6 @@ int mmo_auth_init(void)
 
 			if (state > 255)
 				auth_dat[auth_num].state = 100;
-			else if (state < 0)
-				auth_dat[auth_num].state = 0;
 			else
 				auth_dat[auth_num].state = state;
 
@@ -731,7 +729,7 @@ int mmo_auth_init(void)
 				account_id_count = account_id + 1;
 
 		// Old athena database version reading (v1)
-		} else if ((i = sscanf(line, "%lu\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%lu\t%n",
+		} else if ((i = sscanf(line, "%u\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%u\t%n",
 		           &account_id, userid, pass, lastlogin, &sex, &logincount, &state, &n)) >= 5) {
 			if (account_id > END_ACCOUNT_NUM) {
 				ShowError(CL_RED"mmmo_auth_init: an account has an id higher than %d\n", END_ACCOUNT_NUM);
@@ -795,8 +793,6 @@ int mmo_auth_init(void)
 			if (i >= 7) {
 				if (state > 255)
 					auth_dat[auth_num].state = 100;
-				else if (state < 0)
-					auth_dat[auth_num].state = 0;
 				else
 					auth_dat[auth_num].state = state;
 			} else
@@ -839,7 +835,7 @@ int mmo_auth_init(void)
 
 		} else {
 			int i = 0;
-			if (sscanf(line, "%lu\t%%newid%%\n%n", &account_id, &i) == 1 &&
+			if (sscanf(line, "%u\t%%newid%%\n%n", &account_id, &i) == 1 &&
 			    i > 0 && account_id > account_id_count)
 				account_id_count = account_id;
 		}
@@ -855,7 +851,7 @@ int mmo_auth_init(void)
 			sprintf(line, "1 account read in %s,", account_filename);
 		} else {
 			ShowStatus("mmo_auth_init: %d accounts read in %s,\n", auth_num, account_filename);
-			sprintf(line, "%lu accounts read in %s,", auth_num, account_filename);
+			sprintf(line, "%u accounts read in %s,", auth_num, account_filename);
 		}
 		if (GM_count == 0) {
 			ShowStatus("               of which is no GM account, and ");
@@ -936,7 +932,7 @@ void mmo_auth_sync(void) {
 		mmo_auth_tostr(line, &auth_dat[k]);
 		fprintf(fp, "%s" RETCODE, line);
 	}
-	fprintf(fp, "%lu\t%%newid%%\n", account_id_count);
+	fprintf(fp, "%u\t%%newid%%\n", account_id_count);
 
 	lock_fclose(fp, account_filename, &lock);
 
@@ -1946,7 +1942,7 @@ int parse_fromchar(int fd)
 					memset(tmpstr, '\0', sizeof(tmpstr));
 					for(i = 0; i < RFIFOREST(fd); i++) {
 						if ((i & 15) == 0)
-							fprintf(logfp, "%04lX ",i);
+							fprintf(logfp, "%04X ",i);
 						fprintf(logfp, "%02x ", RFIFOB(fd,i));
 						if (RFIFOB(fd,i) > 0x1f)
 							tmpstr[i % 16] = RFIFOB(fd,i);
@@ -2008,7 +2004,7 @@ int parse_admin(int fd)
 		switch(RFIFOW(fd,0)) {
 		case 0x7530:	// Request of the server version
 			login_log("'ladmin': Sending of the server version (ip: %s)" RETCODE, ip);
-                        WFIFOHEAD(fd,10);
+			WFIFOHEAD(fd,10);
 			WFIFOW(fd,0) = 0x7531;
 			WFIFOB(fd,2) = ATHENA_MAJOR_VERSION;
 			WFIFOB(fd,3) = ATHENA_MINOR_VERSION;
