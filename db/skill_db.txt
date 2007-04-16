@@ -208,29 +208,29 @@
 167,0,0,4,6,0x1,0,1,1,no,0,0x2,0,magic,0	//NPC_CHANGEHOLY#Holy Attribute Change#
 168,0,0,4,7,0x1,0,1,1,no,0,0x2,0,magic,0	//NPC_CHANGEDARKNESS#Shadow Attribute Change#
 169,0,0,4,8,0x1,0,1,1,no,0,0x2,0,magic,0	//NPC_CHANGETELEKINESIS#Sense Attribute Change#
-170,-1,6,1,-1,0x20,0,10,1,no,0,0x2,0,weapon,0	//NPC_CRITICALSLASH#Defense disregard attack#
-171,-1,8,1,-1,0,0,10,2:3:4:5:6:7:8:9:10:11,no,0,0x2,0,weapon,0	//NPC_COMBOATTACK#Multi-stage Attack#
-172,-1,6,1,-1,0x40,0,10,1,no,0,0x2,0,weapon,0	//NPC_GUIDEATTACK#On-target Impact Attack#
+170,9,6,1,-1,0x20,0,10,1,no,0,0x2,0,weapon,0	//NPC_CRITICALSLASH#Defense disregard attack#
+171,9,8,1,-1,0,0,10,2:3:4:5:6:7:8:9:10:11,no,0,0x2,0,weapon,0	//NPC_COMBOATTACK#Multi-stage Attack#
+172,9,6,1,-1,0x40,0,10,1,no,0,0x2,0,weapon,0	//NPC_GUIDEATTACK#On-target Impact Attack#
 173,5,6,4,3,0xD2,5,10,1,no,0,0x2,0,misc,3	//NPC_SELFDESTRUCTION#Suicide bombing#
-174,-1,6,1,-1,0x2,3,1,1,no,0,0x2,0,weapon,0	//NPC_SPLASHATTACK#Splash attack#
+174,9,6,1,-1,0x2,3,1,1,no,0,0x2,0,weapon,0	//NPC_SPLASHATTACK#Splash attack#
 175,0,0,4,0,0x41,0,10,1,no,0,0x2,0,misc,0	//NPC_SUICIDE#Suicide#
-176,-1,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_POISON#Poison Attack#
-177,7,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_BLINDATTACK#Darkness Attack#
-178,-1,6,1,-1,0,0:0:0:0:0:-1,5,1,no,0,0x2,0,weapon,0	//NPC_SILENCEATTACK#Silence Attack#
-179,-1,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_STUNATTACK#Stun Attack#
-180,7,6,1,-1,0,0:0:0:0:0:-1,5,1,no,0,0x2,0,weapon,0	//NPC_PETRIFYATTACK#Petrify Attack#
-181,7,6,1,7,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_CURSEATTACK#Cursing Attack #
-182,-1,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_SLEEPATTACK#Sleep attack#
-183,-1,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_RANDOMATTACK#Random Attack #
-184,-1,6,1,1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_WATERATTACK#Water Attribute Attack#
-185,-1,6,1,2,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_GROUNDATTACK#Earth Attribute Attack#
-186,-1,6,1,3,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_FIREATTACK#Fire Attribute Attack#
-187,-1,6,1,4,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_WINDATTACK#Wind Attribute Attack#
-188,-1,6,1,5,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_POISONATTACK#Poison Attribute Attack#
-189,-1,6,1,6,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_HOLYATTACK#Holy Attribute Attack#
-190,-1,6,1,7,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_DARKNESSATTACK#Shadow Attribute Attack#
-191,-1,6,1,8,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_TELEKINESISATTACK#Sense Attribute Attack#
-192,-1,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_MAGICALATTACK#Demon Shock Attack#
+176,9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_POISON#Poison Attack#
+177,9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_BLINDATTACK#Darkness Attack#
+178,9,6,1,-1,0,0:0:0:0:0:-1,5,1,no,0,0x2,0,weapon,0	//NPC_SILENCEATTACK#Silence Attack#
+179,9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_STUNATTACK#Stun Attack#
+180,9,6,1,-1,0,0:0:0:0:0:-1,5,1,no,0,0x2,0,weapon,0	//NPC_PETRIFYATTACK#Petrify Attack#
+181,9,6,1,7,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_CURSEATTACK#Cursing Attack #
+182,9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_SLEEPATTACK#Sleep attack#
+183,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_RANDOMATTACK#Random Attack #
+184,9,6,1,1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_WATERATTACK#Water Attribute Attack#
+185,9,6,1,2,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_GROUNDATTACK#Earth Attribute Attack#
+186,9,6,1,3,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_FIREATTACK#Fire Attribute Attack#
+187,9,6,1,4,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_WINDATTACK#Wind Attribute Attack#
+188,9,6,1,5,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_POISONATTACK#Poison Attribute Attack#
+189,9,6,1,6,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_HOLYATTACK#Holy Attribute Attack#
+190,9,6,1,7,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_DARKNESSATTACK#Shadow Attribute Attack#
+191,9,6,1,8,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_TELEKINESISATTACK#Sense Attribute Attack#
+192,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_MAGICALATTACK#Demon Shock Attack#
 193,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0	//NPC_METAMORPHOSIS#Metamorphosis#
 194,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0	//NPC_PROVOCATION#Provocation#
 195,0,6,4,0,0x50,0,10,1,no,0,0x2,0,misc,0	//NPC_SMOKING#Smoking#
@@ -240,7 +240,7 @@
 199,9,6,1,7,0x40,0,1,1,no,0,0x2,0,weapon,0	//NPC_BLOODDRAIN#Sucking Blood#
 200,9,6,1,7,0,0,1,1,no,0,0x2,0,magic,0	//NPC_ENERGYDRAIN#Energy Drain#
 201,0,0,4,0,0x1,0,1,1,no,0,0x2,0,weapon,0	//NPC_KEEPING#Keeping#
-202,2,6,1,7,0,0,5,1,no,0,0x2,0,misc,0	//NPC_DARKBREATH#Dark Breath#
+202,9,6,1,7,0,0,5,1,no,0,0x2,0,misc,0	//NPC_DARKBREATH#Dark Breath#
 203,9,6,1,7,0x1,0,10,1,no,0,0x2,0,magic,0	//NPC_DARKBLESSING#Dark Blessing#
 204,0,0,4,0,0x1,0,1,1,no,0,0x2,0,magic,0	//NPC_BARRIER#Barrier#
 205,0,0,4,0,0x1,0,1,1,no,0,0x2,0,weapon,0	//NPC_DEFENDER#Defender#
@@ -385,7 +385,7 @@
 344,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_BREAKARMOR#Break armor#
 345,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_BREAKHELM#Break helm#
 346,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_BREAKSHIELD#Break shield#
-347,-1,6,1,9,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_UNDEADATTACK
+347,9,6,1,9,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_UNDEADATTACK
 348,9,0,1,9,0x1,0,5,1,no,0,0x2,0,magic,0	//NPC_CHANGEUNDEAD
 349,0,6,4,0,0x1,0,10,0,no,0,0x2,0,weapon,0	//NPC_POWERUP
 350,0,6,4,0,0x1,0,10,0,no,0,0x2,0,none,0	//NPC_AGIUP
