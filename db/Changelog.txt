@@ -19,6 +19,8 @@
 	-----
 
 ========================
+04/17
+	* More Anubis updates [Playtester]
 04/16
 	* Added some splash ranges for MVP level skills [Playtester]
 	* Readded and updated Anubis [Playtester]
