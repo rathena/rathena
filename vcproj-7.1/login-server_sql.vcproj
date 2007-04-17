@@ -176,12 +176,6 @@
 				RelativePath="..\src\common\ers.h">
 			</File>
 			<File
-				RelativePath="..\src\common\grfio.c">
-			</File>
-			<File
-				RelativePath="..\src\common\grfio.h">
-			</File>
-			<File
 				RelativePath="..\src\common\lock.c">
 			</File>
 			<File

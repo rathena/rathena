@@ -83,14 +83,6 @@ SOURCE=..\src\common\ers.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\common\grfio.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\common\grfio.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\src\common\lock.c
 # End Source File
 # Begin Source File
