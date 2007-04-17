@@ -9602,6 +9602,8 @@ void clif_parse_PutItemToCart(int fd,struct map_session_data *sd)
 
 	if (clif_trading(sd))
 		return;
+	if (!pc_iscarton(sd))
+		return;
 	pc_putitemtocart(sd,RFIFOW(fd,2)-2,RFIFOL(fd,4));
 }
 /*==========================================
@@ -9611,6 +9613,8 @@ void clif_parse_PutItemToCart(int fd,struct map_session_data *sd)
 void clif_parse_GetItemFromCart(int fd,struct map_session_data *sd)
 {
 	RFIFOHEAD(fd);
+	if (!pc_iscarton(sd))
+		return;
 	pc_getitemfromcart(sd,RFIFOW(fd,2)-2,RFIFOL(fd,4));
 }
 
@@ -10250,7 +10254,8 @@ void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd) {
 
 	if(sd->vender_id)	
 		return;
-
+	if (!pc_iscarton(sd))
+		return;
 	if (sd->state.storage_flag == 1)
 		storage_storageaddfromcart(sd, RFIFOW(fd,2) - 2, RFIFOL(fd,4));
 	else	if (sd->state.storage_flag == 2)
@@ -10265,6 +10270,8 @@ void clif_parse_MoveFromKafraToCart(int fd, struct map_session_data *sd) {
 	RFIFOHEAD(fd);
 
 	if (sd->vender_id)
+		return;
+	if (!pc_iscarton(sd))
 		return;
 	if (sd->state.storage_flag == 1)
 		storage_storagegettocart(sd, RFIFOW(fd,2)-1, RFIFOL(fd,4));
