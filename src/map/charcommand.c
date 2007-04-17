@@ -23,9 +23,16 @@
 #include "skill.h"
 #include "mob.h"
 #include "pet.h"
+#include "mercenary.h"	//[orn]
 #include "battle.h"
 #include "charcommand.h"
 #include "atcommand.h"
+#include "party.h"
+#include "guild.h"
+#include "script.h"
+#include "npc.h"
+#include "trade.h"
+#include "unit.h"
 
 char charcommand_symbol = '#';
 
@@ -60,7 +67,43 @@ CCMD_FUNC(skpoint);
 CCMD_FUNC(changesex);
 CCMD_FUNC(feelreset);
 CCMD_FUNC(help);
-
+CCMD_FUNC(load);
+CCMD_FUNC(speed);
+CCMD_FUNC(storage);
+CCMD_FUNC(guildstorage);
+CCMD_FUNC(hide);
+CCMD_FUNC(alive);
+CCMD_FUNC(heal);
+CCMD_FUNC(item2);
+CCMD_FUNC(itemreset);
+CCMD_FUNC(refine);
+CCMD_FUNC(produce);
+CCMD_FUNC(param);
+CCMD_FUNC(guildlevelup);
+CCMD_FUNC(hatch);
+CCMD_FUNC(pethungry);
+CCMD_FUNC(allskill);
+CCMD_FUNC(dye);
+CCMD_FUNC(hair_style);
+CCMD_FUNC(hair_color);
+CCMD_FUNC(allstats);
+CCMD_FUNC(mount_peco);
+CCMD_FUNC(delitem);
+CCMD_FUNC(jailtime);
+CCMD_FUNC(disguise);
+CCMD_FUNC(undisguise);
+CCMD_FUNC(cart_list);
+CCMD_FUNC(killer);
+CCMD_FUNC(killable);
+CCMD_FUNC(refresh);
+CCMD_FUNC(exp);
+CCMD_FUNC(monsterignore);
+CCMD_FUNC(size);
+CCMD_FUNC(homlevel);
+CCMD_FUNC(homevolution);
+CCMD_FUNC(homfriendly);
+CCMD_FUNC(homhungry);
+CCMD_FUNC(hominfo);
 
 /*==========================================
  *CharCommandInfo charcommand_info[]構造体の定義
@@ -70,43 +113,101 @@ CCMD_FUNC(help);
 // First char of commands is configured in charcommand_athena.conf. Leave # in this list for default value.
 // to set default level, read charcommand_athena.conf first please.
 static CharCommandInfo charcommand_info[] = {
-	{ CharCommandJobChange,				"#job",					60, charcommand_jobchange },
-	{ CharCommandJobChange,				"#jobchange",				60, charcommand_jobchange },
-	{ CharCommandPetRename,				"#petrename",				50, charcommand_petrename },
-	{ CharCommandPetFriendly,			"#petfriendly",				50, charcommand_petfriendly },
+	{ CharCommandJobChange,			"#job",						60, charcommand_jobchange },
+	{ CharCommandJobChange,			"#jobchange",				60, charcommand_jobchange },
+	{ CharCommandPetRename,			"#petrename",				50, charcommand_petrename },
+	{ CharCommandPetFriendly,		"#petfriendly",				50, charcommand_petfriendly },
 	{ CharCommandStats,				"#stats",					40, charcommand_stats },
-	{ CharCommandOption,				"#option",					60, charcommand_option },
+	{ CharCommandOption,			"#option",					60, charcommand_option },
 	{ CharCommandReset,				"#reset",					60, charcommand_reset },
 	{ CharCommandSave,				"#save",					60, charcommand_save },
-	{ CharCommandStatsAll,				"#statsall",				40, charcommand_stats_all },
-	{ CharCommandSpiritball,			"#spiritball",				40, charcommand_spiritball },
-	{ CharCommandItemList,				"#itemlist",				40, charcommand_itemlist },
-	{ CharCommandEffect,				"#effect",					40, charcommand_effect },
-	{ CharCommandStorageList,			"#storagelist",				40, charcommand_storagelist },
+	{ CharCommandSpiritball,		"#spiritball",				40, charcommand_spiritball },
+	{ CharCommandItemList,			"#itemlist",				40, charcommand_itemlist },
+	{ CharCommandEffect,			"#effect",					40, charcommand_effect },
+	{ CharCommandStorageList,		"#storagelist",				40, charcommand_storagelist },
 	{ CharCommandItem,				"#item",					60, charcommand_item },
 	{ CharCommandWarp,				"#warp",					60, charcommand_warp },
 	{ CharCommandWarp,				"#rura",					60, charcommand_warp },
 	{ CharCommandWarp,				"#rura+",					60, charcommand_warp },
 	{ CharCommandZeny,				"#zeny",					60, charcommand_zeny },
-	{ CharCommandFakeName,				"#fakename",				20, charcommand_fakename},
-	
-	//*********************************Recently added commands*********************************************
-	{ CharCommandBaseLevel,				"#baselvl",					20, charcommand_baselevel},
-	{ CharCommandBaseLevel,				"#blvl",					60, charcommand_baselevel},
-	{ CharCommandBaseLevel,				"#baselvlup",				60, charcommand_baselevel},
-	{ CharCommandJobLevel,				"#joblvl",					60, charcommand_joblevel},
-	{ CharCommandJobLevel,				"#jlvl",					60, charcommand_joblevel},
-	{ CharCommandJobLevel,				"#joblvlup",				60, charcommand_joblevel},
-	{ CharCommandQuestSkill,			"#questskill",				60, charcommand_questskill },
-	{ CharCommandLostSkill,				"#lostskill",				60, charcommand_lostskill },
-	{ CharCommandSkReset,				"#skreset",					60, charcommand_skreset },
-	{ CharCommandStReset,				"#streset",					60, charcommand_streset },
+	{ CharCommandFakeName,			"#fakename",				50, charcommand_fakename},
+	{ CharCommandBaseLevel,			"#baselvl",					60, charcommand_baselevel},
+	{ CharCommandBaseLevel,			"#baselevel",				60, charcommand_baselevel},
+	{ CharCommandBaseLevel,			"#blvl",					60, charcommand_baselevel},
+	{ CharCommandBaseLevel,			"#blevel",					60, charcommand_baselevel},
+	{ CharCommandJobLevel,			"#joblvl",					60, charcommand_joblevel},
+	{ CharCommandJobLevel,			"#joblevel",				60, charcommand_joblevel},
+	{ CharCommandJobLevel,			"#jlvl",					60, charcommand_joblevel},
+	{ CharCommandJobLevel,			"#jlevel",					60, charcommand_joblevel},
+	{ CharCommandQuestSkill,		"#questskill",				60, charcommand_questskill },
+	{ CharCommandLostSkill,			"#lostskill",				60, charcommand_lostskill },
+	{ CharCommandSkReset,			"#skreset",					60, charcommand_skreset },
+	{ CharCommandStReset,			"#streset",					60, charcommand_streset },
 	{ CharCommandModel,				"#model",					50, charcommand_model },
-	{ CharCommandSKPoint,				"#skpoint",					60, charcommand_skpoint },
-	{ CharCommandSTPoint,				"#stpoint",					60, charcommand_stpoint },
-	{ CharCommandChangeSex,				"#changesex",				60, charcommand_changesex },
-	{ CharCommandFeelReset,				"#feelreset",				60, charcommand_feelreset },
-	{ CharCommandHelp,				"#help",				20, charcommand_help },
+	{ CharCommandSKPoint,			"#skpoint",					60, charcommand_skpoint },
+	{ CharCommandSTPoint,			"#stpoint",					60, charcommand_stpoint },
+	{ CharCommandChangeSex,			"#changesex",				60, charcommand_changesex },
+	{ CharCommandFeelReset,			"#feelreset",				60, charcommand_feelreset },
+	{ CharCommandHelp,				"#help",					20, charcommand_help },
+	{ CharCommandLoad,				"#load",					60, charcommand_load },
+	{ CharCommandSpeed,				"#speed",					60, charcommand_speed },
+	{ CharCommandStorage,			"#storage",					60, charcommand_storage },
+	{ CharCommandGStorage,			"#gstorage",				60, charcommand_guildstorage },
+	{ CharCommandHide,				"#hide",					60, charcommand_hide },
+	{ CharCommandAlive,				"#alive",					60, charcommand_alive },
+	{ CharCommandHeal,				"#heal",					60, charcommand_heal },
+	{ CharCommandItem2,				"#item2",					60, charcommand_item2 },
+	{ CharCommandItemReset,			"#itemreset",				60, charcommand_itemreset },
+	{ CharCommandRefine,			"#refine",					60, charcommand_refine },
+	{ CharCommandProduce,			"#produce",					60, charcommand_produce },
+	{ CharCommandStrength,			"#str",						60, charcommand_param },
+	{ CharCommandAgility,			"#agi",						60, charcommand_param },
+	{ CharCommandVitality,			"#vit",						60, charcommand_param },
+	{ CharCommandIntelligence,		"#int",						60, charcommand_param },
+	{ CharCommandDexterity,			"#dex",						60, charcommand_param },
+	{ CharCommandLuck,				"#luk",						60, charcommand_param },
+	{ CharCommandGuildLevelUp,		"#glvl",					60, charcommand_guildlevelup },
+	{ CharCommandGuildLevelUp,		"#glevel",					60, charcommand_guildlevelup },
+	{ CharCommandGuildLevelUp,		"#guildlvl",				60, charcommand_guildlevelup },
+	{ CharCommandGuildLevelUp,		"#guildlevel",				60, charcommand_guildlevelup },
+	{ CharCommandHatch,				"#hatch",					50, charcommand_hatch },
+	{ CharCommandPetHungry,			"#pethungry",				60, charcommand_pethungry },
+	{ CharCommandAllSkill,			"#allskill",				60, charcommand_allskill },
+	{ CharCommandAllSkill,			"#allskills",				60, charcommand_allskill },
+	{ CharCommandAllSkill,			"#skillall",				60, charcommand_allskill },
+	{ CharCommandAllSkill,			"#skillsall",				60, charcommand_allskill },
+	{ CharCommandDye,				"#dye",						50, charcommand_dye },
+	{ CharCommandHStyle,			"#hairstyle",				50, charcommand_hair_style },
+	{ CharCommandHStyle,			"#hstyle",					50, charcommand_hair_style },
+	{ CharCommandHColor,			"#haircolor",				50, charcommand_hair_color },
+	{ CharCommandHColor,			"#hcolor",					50, charcommand_hair_color },
+	{ CharCommandAllStats,			"#allstat",					60, charcommand_allstats },
+	{ CharCommandAllStats,			"#allstats",				60, charcommand_allstats },
+	{ CharCommandAllStats,			"#statall",					60, charcommand_allstats },
+	{ CharCommandAllStats,			"#statsall",				60, charcommand_allstats },
+	{ CharCommandMountPeco,			"#mount",					50, charcommand_mount_peco },
+	{ CharCommandMountPeco,			"#mountpeco",				50, charcommand_mount_peco },
+	{ CharCommandDelItem,			"#delitem",					60, charcommand_delitem },
+	{ CharCommandJailTime,			"#jailtime",				40, charcommand_jailtime },
+	{ CharCommandDisguie,			"#disguise",				60, charcommand_disguise },
+	{ CharCommandUnDisguise,		"#undisguise",				60, charcommand_undisguise },
+	{ CharCommandCartList,			"#cartlist",				40, charcommand_cart_list },
+	{ CharCommandKiller,			"#killer",					60, charcommand_killer },
+	{ CharCommandKillable,			"#killable",				60, charcommand_killable },
+	{ CharCommandRefresh,			"#refresh",					40, charcommand_refresh },
+	{ CharCommandExp,				"#exp",						 1, charcommand_exp },
+	{ CharCommandMonsterIgnore,		"#monsterignore",			60, charcommand_monsterignore },
+	{ CharCommandSize,				"#size",					50, charcommand_size },
+	{ CharCommandHomLevel,			"#hlvl",					60, charcommand_homlevel },
+	{ CharCommandHomLevel,			"#hlevel",					60, charcommand_homlevel },
+	{ CharCommandHomLevel,			"#homlvl",					60, charcommand_homlevel },
+	{ CharCommandHomLevel,			"#homlevel",				60, charcommand_homlevel },
+	{ CharCommandHomEvolve,			"#homevolve",				60, charcommand_homevolution },
+	{ CharCommandHomEvolve,			"#homevolvution",			60, charcommand_homevolution },
+	{ CharCommandHomFriendly,		"#homfriendly",				60, charcommand_homfriendly },
+	{ CharCommandHomHungry,			"#homhungry",				60, charcommand_homhungry },
+	{ CharCommandHomInfo,			"#hominfo",					40, charcommand_hominfo },
+	
 // add new commands before this line
 	{ CharCommand_Unknown, 		            NULL, 				       1, NULL }
 };
@@ -121,8 +222,7 @@ int get_charcommand_level(const CharCommandType type) {
 	return 100; // 100: command can not be used
 }
 
-CharCommandType 
-is_charcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl) {
+CharCommandType is_charcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl) {
 	CharCommandInfo info;
 	CharCommandType type;
 
@@ -173,8 +273,7 @@ is_charcommand_sub(const int fd, struct map_session_data* sd, const char* str, i
  *is_charcommand @コマンドに存在するかどうか確認する
  *------------------------------------------
  */
-CharCommandType
-is_charcommand(const int fd, struct map_session_data* sd, const char* message) {
+CharCommandType is_charcommand(const int fd, struct map_session_data* sd, const char* message) {
 	const char* str = message;
 	int s_flag = 0;
 
@@ -318,50 +417,62 @@ int charcommand_jobchange(
 {
 	char character[100];
 	struct map_session_data* pl_sd;
-	int job = 0, upper = -1;
+	int job = 0, upper = -1, j = 0;
 
 	memset(character, '\0', sizeof(character));
 
-	if (!message || !*message) {
-		clif_displaymessage(fd, "Please, enter a job and a player name (usage: #job/#jobchange <job ID> <char name>).");
+	if (!message || !*message || sscanf(message, "%d %23[^\n]", &job, character) < 2) {
+		clif_displaymessage(fd, "Please, enter a job and a player name (usage: #job/#jobchange <job ID> <player>).");
+		clif_displaymessage(fd, "   0 Novice            7 Knight           14 Crusader         21 Peco Crusader");
+		clif_displaymessage(fd, "   1 Swordman          8 Priest           15 Monk             22 N/A");
+		clif_displaymessage(fd, "   2 Mage              9 Wizard           16 Sage             23 Super Novice");
+		clif_displaymessage(fd, "   3 Archer           10 Blacksmith       17 Rogue            24 Gunslinger");
+		clif_displaymessage(fd, "   4 Acolyte          11 Hunter           18 Alchemist        25 Ninja");
+		clif_displaymessage(fd, "   5 Merchant         12 Assassin         19 Bard             26 N/A");
+		clif_displaymessage(fd, "   6 Thief            13 Peco Knight      20 Dancer");
+		clif_displaymessage(fd, "4001 Novice High    4008 Lord Knight      4015 Paladin        4022 Peco Paladin");
+		clif_displaymessage(fd, "4002 Swordman High  4009 High Priest      4016 Champion");
+		clif_displaymessage(fd, "4003 Mage High      4010 High Wizard      4017 Professor");
+		clif_displaymessage(fd, "4004 Archer High    4011 Whitesmith       4018 Stalker");
+		clif_displaymessage(fd, "4005 Acolyte High   4012 Sniper           4019 Creator");
+		clif_displaymessage(fd, "4006 Merchant High  4013 Assassin Cross   4020 Clown");
+		clif_displaymessage(fd, "4007 Thief High     4014 Peco Lord Knight 4021 Gypsy");
+		clif_displaymessage(fd, "4023 Baby Novice    4030 Baby Knight      4037 Baby Crusader  4044 Baby Peco Crusader");
+		clif_displaymessage(fd, "4024 Baby Swordsman 4031 Baby Priest      4038 Baby Monk      4045 Super Baby");
+		clif_displaymessage(fd, "4025 Baby Mage      4032 Baby Wizard      4039 Baby Sage      4046 Taekwon Kid");
+		clif_displaymessage(fd, "4026 Baby Archer    4033 Baby Blacksmith  4040 Baby Rogue     4047 Taekwon Master");
+		clif_displaymessage(fd, "4027 Baby Acolyte   4034 Baby Hunter      4041 Baby Alchemist 4048 N/A");
+		clif_displaymessage(fd, "4028 Baby Merchant  4035 Baby Assassin    4042 Baby Bard      4049 Soul Linker");
+		clif_displaymessage(fd, "4029 Baby Thief     4036 Baby Peco-Knight 4043 Baby Dancer");
 		return -1;
 	}
 
-	if (sscanf(message, "%d %d %99[^\n]", &job, &upper, character) < 3) { //upper指定してある
-		upper = -1;
-		if (sscanf(message, "%d %99[^\n]", &job, character) < 2) { //upper指定してない上に何か足りない
-			clif_displaymessage(fd, "Please, enter a job and a player name (usage: #job/#jobchange <job ID> <char name>).");
-			return -1;
-		}
-	}
-
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		int j;
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change job only to lower or same level
-			if ((job >= 0 && job < MAX_PC_CLASS)) {
-				for (j=0; j < MAX_INVENTORY; j++) {
-					if(pl_sd->status.inventory[j].nameid>0 && pl_sd->status.inventory[j].equip!=0)
-						pc_unequipitem(pl_sd, j, 3);
-				}
-				if (pc_jobchange(pl_sd, job, upper) == 0)
-					clif_displaymessage(fd, msg_table[48]); // Character's job changed.
-				else {
-					clif_displaymessage(fd, msg_table[192]); // Impossible to change the character's job.
-					return -1;
-				}
-			} else {
-				clif_displaymessage(fd, msg_table[49]); // Invalid job ID.
-				return -1;
-			}
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+	if ((pl_sd = map_nick2sd(character)) == NULL) {
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if (job < 0 || job > MAX_PC_CLASS) {
+		clif_displaymessage(fd, msg_txt(49)); // Invalid job ID.
+		return -1;
+	}
+
+	for (j=0; j < MAX_INVENTORY; j++) {
+		if(pl_sd->status.inventory[j].nameid>0 && pl_sd->status.inventory[j].equip!=0)
+			pc_unequipitem(pl_sd, j, 3);
+	}
+	if (pc_jobchange(pl_sd, job, upper) != 0) {
+		clif_displaymessage(fd, msg_txt(192)); // Impossible to change the character's job.
+		return -1;
+	}
+
+	clif_displaymessage(fd, msg_txt(48)); // Character's job changed.
 	return 0;
 }
 
@@ -380,7 +491,7 @@ int charcommand_petrename(
 	memset(character, '\0', sizeof(character));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
-		clif_displaymessage(fd, "Please, enter a player name (usage: #petrename <char name>).");
+		clif_displaymessage(fd, "Please, enter a player name (usage: #petrename <player>).");
 		return -1;
 	}
 
@@ -390,20 +501,20 @@ int charcommand_petrename(
 	}
 
 	if (!pl_sd->status.pet_id || !pl_sd->pd) {
-		clif_displaymessage(fd, msg_table[191]); // Sorry, but this player has no pet.
+		clif_displaymessage(fd, msg_txt(191)); // Sorry, but this player has no pet.
 		return -1;
 	}
 
 	pd = pl_sd->pd;
 
 	if (pd->pet.rename_flag) {
-		clif_displaymessage(fd, msg_table[190]); // This player can already rename his/her pet.
+		clif_displaymessage(fd, msg_txt(190)); // This player can already rename his/her pet.
 		return -1;
 	}
 	pd->pet.rename_flag = 0;
 	intif_save_petdata(pl_sd->status.account_id, &pd->pet);
 	clif_send_petstatus(pl_sd);
-	clif_displaymessage(fd, msg_table[189]); // This player can now rename his/her pet.
+	clif_displaymessage(fd, msg_txt(189)); // This player can now rename his/her pet.
 	return 0;
 }
 
@@ -423,38 +534,43 @@ int charcommand_petfriendly(
 
 	memset(character, '\0', sizeof(character));
 	if (!message || !*message || sscanf(message,"%d %23s",&friendly,character) < 2) {
-		clif_displaymessage(fd, "Please, enter a valid value (usage: "
-			"#petfriendly <0-1000> <player>).");
+		clif_displaymessage(fd, "Please, enter a valid value (usage: #petfriendly <0-1000> <player>).");
 		return -1;
 	}
 
-	if (((pl_sd = map_nick2sd(character)) == NULL) ||
-		pc_isGM(sd)<pc_isGM(pl_sd)) {
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
 		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
-	if (!pl_sd->status.pet_id  || !pl_sd->pd) {
-		clif_displaymessage(fd, msg_table[191]); // Sorry, but this player has no pet.
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
 		return -1;
 	}
 
-	if (friendly < 0 || friendly > 1000) {
-		clif_displaymessage(fd, msg_table[37]); // An invalid number was specified.
+	if (!pl_sd->status.pet_id  || !pl_sd->pd) {
+		clif_displaymessage(fd, msg_txt(191)); // Sorry, but this player has no pet.
 		return -1;
 	}
+
+	if (friendly < 0)
+		friendly = 0;
+	else if (friendly > 1000)
+		friendly = 1000;
 
 	pd = pl_sd->pd;
 	if (friendly == pd->pet.intimate) {
-		clif_displaymessage(fd, msg_table[183]); // Pet friendly is already the good value.
+		clif_displaymessage(fd, msg_txt(183)); // Pet friendly is already the good value.
 		return -1;
 	}
 	
 	pd->pet.intimate = friendly;
 	clif_send_petstatus(pl_sd);
 	clif_pet_emotion(pd,0);
-	clif_displaymessage(pl_sd->fd, msg_table[182]); // Pet friendly value changed!
-	clif_displaymessage(sd->fd, msg_table[182]); // Pet friendly value changed!
+	clif_displaymessage(pl_sd->fd, msg_txt(182)); // Pet friendly value changed!
+	clif_displaymessage(sd->fd, msg_txt(182)); // Pet friendly value changed!
 	return 0;
 }
 
@@ -471,61 +587,65 @@ int charcommand_stats(
 	char output[200];
 	struct map_session_data *pl_sd;
 	int i;
+	struct {
+		const char* format;
+		int value;
+	} output_table[] = {
+		{ "Base Level - %d", 0 },
+		{ NULL, 0 },
+		{ "Hp - %d", 0 },
+		{ "MaxHp - %d", 0 },
+		{ "Sp - %d", 0 },
+		{ "MaxSp - %d", 0 },
+		{ "Str - %3d", 0 },
+		{ "Agi - %3d", 0 },
+		{ "Vit - %3d", 0 },
+		{ "Int - %3d", 0 },
+		{ "Dex - %3d", 0 },
+		{ "Luk - %3d", 0 },
+		{ "Zeny - %d", 0 },
+		{ NULL, 0 }
+	};
 
 	memset(character, '\0', sizeof(character));
 	memset(job_jobname, '\0', sizeof(job_jobname));
 	memset(output, '\0', sizeof(output));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
-		clif_displaymessage(fd, "Please, enter a player name (usage: #stats <char name>).");
+		clif_displaymessage(fd, "Please, enter a player name (usage: #stats <player>).");
 		return -1;
 	}
 
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		struct {
-			const char* format;
-			int value;
-		} output_table[] = {
-			{ "Base Level - %d", 0 },
-			{ NULL, 0 },
-			{ "Hp - %d", 0 },
-			{ "MaxHp - %d", 0 },
-			{ "Sp - %d", 0 },
-			{ "MaxSp - %d", 0 },
-			{ "Str - %3d", 0 },
-			{ "Agi - %3d", 0 },
-			{ "Vit - %3d", 0 },
-			{ "Int - %3d", 0 },
-			{ "Dex - %3d", 0 },
-			{ "Luk - %3d", 0 },
-			{ "Zeny - %d", 0 },
-			{ NULL, 0 }
-		};
-		//direct array initialization with variables is not standard C compliant.
-		output_table[0].value = pl_sd->status.base_level;
-		output_table[1].format = job_jobname;
-		output_table[1].value = pl_sd->status.job_level;
-		output_table[2].value = pl_sd->status.hp;
-		output_table[3].value = pl_sd->status.max_hp;
-		output_table[4].value = pl_sd->status.sp;
-		output_table[5].value = pl_sd->status.max_sp;
-		output_table[6].value = pl_sd->status.str;
-		output_table[7].value = pl_sd->status.agi;
-		output_table[8].value = pl_sd->status.vit;
-		output_table[9].value = pl_sd->status.int_;
-		output_table[10].value = pl_sd->status.dex;
-		output_table[11].value = pl_sd->status.luk;
-		output_table[12].value = pl_sd->status.zeny;
-		sprintf(job_jobname, "Job - %s %s", job_name(pl_sd->status.class_), "(level %d)");
-		sprintf(output, msg_table[53], pl_sd->status.name); // '%s' stats:
-		clif_displaymessage(fd, output);
-		for (i = 0; output_table[i].format != NULL; i++) {
-			sprintf(output, output_table[i].format, output_table[i].value);
-			clif_displaymessage(fd, output);
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
+	}
+
+	//direct array initialization with variables is not standard C compliant.
+	output_table[0].value = pl_sd->status.base_level;
+	output_table[1].format = job_jobname;
+	output_table[1].value = pl_sd->status.job_level;
+	output_table[2].value = pl_sd->status.hp;
+	output_table[3].value = pl_sd->status.max_hp;
+	output_table[4].value = pl_sd->status.sp;
+	output_table[5].value = pl_sd->status.max_sp;
+	output_table[6].value = pl_sd->status.str;
+	output_table[7].value = pl_sd->status.agi;
+	output_table[8].value = pl_sd->status.vit;
+	output_table[9].value = pl_sd->status.int_;
+	output_table[10].value = pl_sd->status.dex;
+	output_table[11].value = pl_sd->status.luk;
+	output_table[12].value = pl_sd->status.zeny;
+
+	sprintf(job_jobname, "Job - %s %s", job_name(pl_sd->status.class_), "(level %d)");
+	sprintf(output, msg_txt(53), pl_sd->status.name); // '%s' stats:
+
+	clif_displaymessage(fd, output);
+	
+	for (i = 0; output_table[i].format != NULL; i++) {
+		sprintf(output, output_table[i].format, output_table[i].value);
+		clif_displaymessage(fd, output);
 	}
 
 	return 0;
@@ -547,24 +667,26 @@ int charcommand_reset(
 	memset(output, '\0', sizeof(output));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
-		clif_displaymessage(fd, "Please, enter a player name (usage: #reset <charname>).");
+		clif_displaymessage(fd, "Please, enter a player name (usage: #reset <player>).");
 		return -1;
 	}
 
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can reset a character only for lower or same GM level
-			pc_resetstate(pl_sd);
-			pc_resetskill(pl_sd,1);
-			sprintf(output, msg_table[208], character); // '%s' skill and stats points reseted!
-			clif_displaymessage(fd, output);
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	pc_resetstate(pl_sd);
+	pc_resetskill(pl_sd,1);
+	sprintf(output, msg_txt(208), character); // '%s' skill and stats points reseted!
+	clif_displaymessage(fd, output);
 
 	return 0;
 }
@@ -586,24 +708,26 @@ int charcommand_option(
 	if (!message || !*message ||
 		sscanf(message, "%d %d %d %23[^\n]", &opt1, &opt2, &opt3, character) < 4 ||
 		opt1 < 0 || opt2 < 0 || opt3 < 0) {
-		clif_displaymessage(fd, "Please, enter valid options and a player name (usage: #option <param1> <param2> <param3> <charname>).");
+		clif_displaymessage(fd, "Please, enter valid options and a player name (usage: #option <param1> <param2> <param3> <player>).");
 		return -1;
 	}
 
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change option only to lower or same level
-			pl_sd->sc.opt1 = opt1;
-			pl_sd->sc.opt2 = opt2;
-			pc_setoption(pl_sd, opt3);
-			clif_displaymessage(fd, msg_table[58]); // Character's options changed.
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	pl_sd->sc.opt1 = opt1;
+	pl_sd->sc.opt2 = opt2;
+	pc_setoption(pl_sd, opt3);
+	clif_displaymessage(fd, msg_txt(58)); // Character's options changed.
 
 	return 0;
 }
@@ -626,36 +750,39 @@ int charcommand_save(
 	memset(character, '\0', sizeof(character));
 
 	if (!message || !*message || sscanf(message, "%15s %d %d %23[^\n]", map_name, &x, &y, character) < 4 || x < 0 || y < 0) {
-		clif_displaymessage(fd, "Please, enter a valid save point and a player name (usage: #save <map> <x> <y> <charname>).");
+		clif_displaymessage(fd, "Please, enter a valid save point and a player name (usage: #save <map> <x> <y> <player>).");
 		return -1;
 	}
 
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change save point only to lower or same gm level
-			m = map_mapname2mapid(map_name);
-			if (m < 0 && !mapindex_name2id(map_name)) {
-				clif_displaymessage(fd, msg_table[1]); // Map not found.
-				return -1;
-			} else {
-				//FIXME: What do you do if the map is in another map server with the nowarpto flag?
-				if (m>=0 && map[m].flag.nosave && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
-					clif_displaymessage(fd, "You are not authorised to set this map as a save map.");
-					return -1;
-				}
-				if (m>=0)
-					pc_setsavepoint(pl_sd, map[m].index, x, y);
-				else
-					pc_setsavepoint(pl_sd, mapindex_name2id(map_name), x, y);
-				clif_displaymessage(fd, msg_table[57]); // Character's respawn point changed.
-			}
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	m = map_mapname2mapid(map_name);
+	if (m < 0 && !mapindex_name2id(map_name)) {
+		clif_displaymessage(fd, msg_txt(1)); // Map not found.
+		return -1;
+	}
+
+	//FIXME: What do you do if the map is in another map server with the nowarpto flag?
+	if (m>=0 && map[m].flag.nosave && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+		clif_displaymessage(fd, "You are not authorised to set this map as a save map.");
+		return -1;
+	}
+
+	if (m>=0)
+		pc_setsavepoint(pl_sd, map[m].index, x, y);
+	else
+		pc_setsavepoint(pl_sd, mapindex_name2id(map_name), x, y);
+	clif_displaymessage(fd, msg_txt(57)); // Character's respawn point changed.
 
 	return 0;
 }
@@ -695,11 +822,11 @@ int charcommand_stats_all(const int fd, struct map_session_data* sd, const char*
 	}
 
 	if (count == 0)
-		clif_displaymessage(fd, msg_table[28]); // No player found.
+		clif_displaymessage(fd, msg_txt(28)); // No player found.
 	else if (count == 1)
-		clif_displaymessage(fd, msg_table[29]); // 1 player found.
+		clif_displaymessage(fd, msg_txt(29)); // 1 player found.
 	else {
-		sprintf(output, msg_table[30], count); // %d players found.
+		sprintf(output, msg_txt(30), count); // %d players found.
 		clif_displaymessage(fd, output);
 	}
 
@@ -719,32 +846,31 @@ int charcommand_spiritball(const int fd, struct map_session_data* sd,const char*
 	memset(character, '\0', sizeof(character));
 
 	if(!message || !*message || sscanf(message, "%d %23[^\n]", &spirit, character) < 2 || spirit < 0 || spirit > 1000) {
-		clif_displaymessage(fd, "Usage: @spiritball <number: 0-1000>) <CHARACTER_NAME>.");
+		clif_displaymessage(fd, "Usage: @spiritball <number: 0-1000> <player>.");
 		return -1;
 	}
 
-	if((pl_sd = map_nick2sd(character)) != NULL) {
-		if (spirit >= 0 && spirit <= 0x7FFF) {
-			if (pl_sd->spiritball != spirit || spirit > 999) {
-				if (pl_sd->spiritball > 0)
-					pc_delspiritball(pl_sd, pl_sd->spiritball, 1);
-				pl_sd->spiritball = spirit;
-				clif_spiritball(pl_sd);
-				// no message, player can look the difference
-				if (spirit > 1000)
-					clif_displaymessage(fd, msg_table[204]); // WARNING: more than 1000 spiritballs can CRASH your server and/or client!
-			} else {
-				clif_displaymessage(fd, msg_table[205]); // You already have this number of spiritballs.
-				return -1;
-			}
-		} else {
-			clif_displaymessage(fd, msg_table[37]); // An invalid number was specified.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
+
+	if (spirit >= 0 && spirit <= 0x7FFF) {
+		if (pl_sd->spiritball != spirit || spirit > 999) {
+			if (pl_sd->spiritball > 0)
+				pc_delspiritball(pl_sd, pl_sd->spiritball, 1);
+		}
+		pl_sd->spiritball = spirit;
+		clif_spiritball(pl_sd);
+		// no message, player can look the difference
+		if (spirit > 1000)
+			clif_displaymessage(fd, msg_txt(204)); // WARNING: more than 1000 spiritballs can CRASH your server and/or client!
+	} else {
+		clif_displaymessage(fd, msg_txt(205)); // You already have this number of spiritballs.
+		return -1;
+	}
+
 	return 0;
 }
 
@@ -752,8 +878,7 @@ int charcommand_spiritball(const int fd, struct map_session_data* sd,const char*
  * #itemlist <character>: Displays the list of a player's items.
  *------------------------------------------
  */
-int
-charcommand_itemlist(
+int charcommand_itemlist(
 	const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
@@ -770,112 +895,109 @@ charcommand_itemlist(
 	memset(outputtmp, '\0', sizeof(outputtmp));
 
 	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
-		clif_displaymessage(fd, "Please, enter a player name (usage: #itemlist <char name>).");
+		clif_displaymessage(fd, "Please, enter a player name (usage: #itemlist <player>).");
 		return -1;
 	}
 
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can look items only lower or same level
-			counter = 0;
-			count = 0;
-			for (i = 0; i < MAX_INVENTORY; i++) {
-				i_item = &pl_sd->status.inventory[i];
-				if (pl_sd->status.inventory[i].nameid > 0 && (item_data = itemdb_exists(i_item->nameid)) != NULL) {
-					counter = counter + i_item->amount;
-					count++;
-					if (count == 1) {
-						sprintf(output, "------ Items list of '%s' ------", pl_sd->status.name);
-						clif_displaymessage(fd, output);
-					}
-					if ((equip = i_item->equip)) {
-						strcpy(equipstr, "| equiped: ");
-						if (equip & EQP_GARMENT)
-							strcat(equipstr, "robe/gargment, ");
-						if (equip & EQP_ACC_L)
-							strcat(equipstr, "left accessory, ");
-						if (equip & EQP_ARMOR)
-							strcat(equipstr, "body/armor, ");
-						if ((equip & EQP_ARMS) == EQP_HAND_R)
-							strcat(equipstr, "right hand, ");
-						if ((equip & EQP_ARMS) == EQP_HAND_L)
-							strcat(equipstr, "left hand, ");
-						if ((equip & EQP_ARMS) == EQP_ARMS)
-							strcat(equipstr, "both hands, ");
-						if (equip & EQP_SHOES)
-							strcat(equipstr, "feet, ");
-						if (equip & EQP_ACC_R)
-							strcat(equipstr, "right accessory, ");
-						if ((equip & EQP_HELM) == EQP_HEAD_LOW)
-							strcat(equipstr, "lower head, ");
-						if ((equip & EQP_HELM) == EQP_HEAD_TOP)
-							strcat(equipstr, "top head, ");
-						if ((equip & EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_TOP))
-							strcat(equipstr, "lower/top head, ");
-						if ((equip & EQP_HELM) == EQP_HEAD_MID)
-							strcat(equipstr, "mid head, ");
-						if ((equip & EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_MID))
-							strcat(equipstr, "lower/mid head, ");
-						if ((equip & EQP_HELM) == EQP_HELM)
-							strcat(equipstr, "lower/mid/top head, ");
-						// remove final ', '
-						equipstr[strlen(equipstr) - 2] = '\0';
-					} else
-						memset(equipstr, '\0', sizeof(equipstr));
-					if (i_item->refine)
-						sprintf(output, "%d %s %+d (%s %+d, id: %d) %s", i_item->amount, item_data->name, i_item->refine, item_data->jname, i_item->refine, i_item->nameid, equipstr);
-					else
-						sprintf(output, "%d %s (%s, id: %d) %s", i_item->amount, item_data->name, item_data->jname, i_item->nameid, equipstr);
-					clif_displaymessage(fd, output);
-					memset(output, '\0', sizeof(output));
-					counter2 = 0;
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
 
-					if(i_item->card[0]==CARD0_PET) { //pet eggs
-						if (i_item->card[3])
-							sprintf(outputtmp, " -> (pet egg, pet id: %u, named)", (unsigned int)MakeDWord(i_item->card[1], i_item->card[2]));
+	counter = 0;
+	count = 0;
+	for (i = 0; i < MAX_INVENTORY; i++) {
+		i_item = &pl_sd->status.inventory[i];
+		if (pl_sd->status.inventory[i].nameid > 0 && (item_data = itemdb_exists(i_item->nameid)) != NULL) {
+			counter = counter + i_item->amount;
+			count++;
+			if (count == 1) {
+				sprintf(output, "------ Items list of '%s' ------", pl_sd->status.name);
+				clif_displaymessage(fd, output);
+			}
+			if ((equip = i_item->equip)) {
+				strcpy(equipstr, "| equiped: ");
+				if (equip & EQP_GARMENT)
+					strcat(equipstr, "robe/gargment, ");
+				if (equip & EQP_ACC_L)
+					strcat(equipstr, "left accessory, ");
+				if (equip & EQP_ARMOR)
+					strcat(equipstr, "body/armor, ");
+				if ((equip & EQP_ARMS) == EQP_HAND_R)
+					strcat(equipstr, "right hand, ");
+				if ((equip & EQP_ARMS) == EQP_HAND_L)
+					strcat(equipstr, "left hand, ");
+				if ((equip & EQP_ARMS) == EQP_ARMS)
+					strcat(equipstr, "both hands, ");
+				if (equip & EQP_SHOES)
+					strcat(equipstr, "feet, ");
+				if (equip & EQP_ACC_R)
+					strcat(equipstr, "right accessory, ");
+				if ((equip & EQP_HELM) == EQP_HEAD_LOW)
+					strcat(equipstr, "lower head, ");
+				if ((equip & EQP_HELM) == EQP_HEAD_TOP)
+					strcat(equipstr, "top head, ");
+				if ((equip & EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_TOP))
+					strcat(equipstr, "lower/top head, ");
+				if ((equip & EQP_HELM) == EQP_HEAD_MID)
+					strcat(equipstr, "mid head, ");
+				if ((equip & EQP_HELM) == (EQP_HEAD_LOW|EQP_HEAD_MID))
+					strcat(equipstr, "lower/mid head, ");
+				if ((equip & EQP_HELM) == EQP_HELM)
+					strcat(equipstr, "lower/mid/top head, ");
+				// remove final ', '
+				equipstr[strlen(equipstr) - 2] = '\0';
+			} else
+				memset(equipstr, '\0', sizeof(equipstr));
+			if (i_item->refine)
+				sprintf(output, "%d %s %+d (%s %+d, id: %d) %s", i_item->amount, item_data->name, i_item->refine, item_data->jname, i_item->refine, i_item->nameid, equipstr);
+			else
+				sprintf(output, "%d %s (%s, id: %d) %s", i_item->amount, item_data->name, item_data->jname, i_item->nameid, equipstr);
+			clif_displaymessage(fd, output);
+			memset(output, '\0', sizeof(output));
+			counter2 = 0;
+
+			if(i_item->card[0]==CARD0_PET) { //pet eggs
+				if (i_item->card[3])
+					sprintf(outputtmp, " -> (pet egg, pet id: %u, named)", (unsigned int)MakeDWord(i_item->card[1], i_item->card[2]));
+				else
+					sprintf(outputtmp, " -> (pet egg, pet id: %u, unnamed)", (unsigned int)MakeDWord(i_item->card[1], i_item->card[2]));
+				strcat(output, outputtmp);
+			} else
+			if(i_item->card[0]==CARD0_FORGE) { //forged items.
+				sprintf(outputtmp, " -> (crafted item, creator id: %u, star crumbs %d, element %d)", (unsigned int)MakeDWord(i_item->card[2], i_item->card[3]), i_item->card[1]>>8, i_item->card[1]&0x0f);
+			} else
+			if(i_item->card[0]==CARD0_CREATE) { //created items.
+				sprintf(outputtmp, " -> (produced item, creator id: %u)", (unsigned int)MakeDWord(i_item->card[2], i_item->card[3]));
+				strcat(output, outputtmp);
+			} else //Normal slots
+			for (j = 0; j < item_data->slot; j++) {
+				if (pl_sd->status.inventory[i].card[j]) {
+					if ((item_temp = itemdb_exists(i_item->card[j])) != NULL) {
+						if (output[0] == '\0')
+							sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
 						else
-							sprintf(outputtmp, " -> (pet egg, pet id: %u, unnamed)", (unsigned int)MakeDWord(i_item->card[1], i_item->card[2]));
+							sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
 						strcat(output, outputtmp);
-					} else
-					if(i_item->card[0]==CARD0_FORGE) { //forged items.
-						sprintf(outputtmp, " -> (crafted item, creator id: %u, star crumbs %d, element %d)", (unsigned int)MakeDWord(i_item->card[2], i_item->card[3]), i_item->card[1]>>8, i_item->card[1]&0x0f);
-					} else
-					if(i_item->card[0]==CARD0_CREATE) { //created items.
-						sprintf(outputtmp, " -> (produced item, creator id: %u)", (unsigned int)MakeDWord(i_item->card[2], i_item->card[3]));
-						strcat(output, outputtmp);
-					} else //Normal slots
-					for (j = 0; j < item_data->slot; j++) {
-						if (pl_sd->status.inventory[i].card[j]) {
-							if ((item_temp = itemdb_exists(i_item->card[j])) != NULL) {
-								if (output[0] == '\0')
-									sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-								else
-									sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-								strcat(output, outputtmp);
-							}
-						}
-					}
-					if (output[0] != '\0') {
-						output[strlen(output) - 2] = ')';
-						output[strlen(output) - 1] = '\0';
-						clif_displaymessage(fd, output);
 					}
 				}
 			}
-			if (count == 0)
-				clif_displaymessage(fd, "No item found on this player.");
-			else {
-				sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
+			if (output[0] != '\0') {
+				output[strlen(output) - 2] = ')';
+				output[strlen(output) - 1] = '\0';
 				clif_displaymessage(fd, output);
 			}
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
 		}
-	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+	}
+	if (count == 0)
+	{
+		clif_displaymessage(fd, "No item found on this player.");
 		return -1;
 	}
 
+	sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
+	clif_displaymessage(fd, output);
 	return 0;
 }
 
@@ -885,25 +1007,27 @@ charcommand_itemlist(
  * Create a effect localized on another character
  *------------------------------------------
  */
-int
-charcommand_effect(const int fd, struct map_session_data* sd,
+int charcommand_effect(const int fd, struct map_session_data* sd,
 	const char* command, const char* message)
 {
 	struct map_session_data *pl_sd = NULL;
-	char target[NAME_LENGTH];
+	char character[NAME_LENGTH];
 	int type = 0;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%d %23s", &type, target) != 2) {
+	if (!message || !*message || sscanf(message, "%d %23[^\n]", &type, character) != 2) {
 		clif_displaymessage(fd, "usage: #effect <type+> <target>.");
 		return -1;
 	}
 
-	if((pl_sd=map_nick2sd(target)) == NULL)
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
+	}
 
 	clif_specialeffect(&pl_sd->bl, type, AREA);
-	clif_displaymessage(fd, msg_table[229]); // Your effect has changed.
+	clif_displaymessage(fd, msg_txt(229)); // Your effect has changed.
 
 	return 0;
 }
@@ -933,61 +1057,63 @@ charcommand_storagelist(
 		return -1;
 	}
 
-	if ((pl_sd = map_nick2sd(character)) != NULL) {
-		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can look items only lower or same level
-			if((stor = account2storage2(pl_sd->status.account_id)) != NULL) {
-				counter = 0;
-				count = 0;
-				for (i = 0; i < MAX_STORAGE; i++) {
-					if (stor->storage_[i].nameid > 0 && (item_data = itemdb_search(stor->storage_[i].nameid)) != NULL) {
-						counter = counter + stor->storage_[i].amount;
-						count++;
-						if (count == 1) {
-							sprintf(output, "------ Storage items list of '%s' ------", pl_sd->status.name);
-							clif_displaymessage(fd, output);
-						}
-						if (stor->storage_[i].refine)
-							sprintf(output, "%d %s %+d (%s %+d, id: %d)", stor->storage_[i].amount, item_data->name, stor->storage_[i].refine, item_data->jname, stor->storage_[i].refine, stor->storage_[i].nameid);
-						else
-							sprintf(output, "%d %s (%s, id: %d)", stor->storage_[i].amount, item_data->name, item_data->jname, stor->storage_[i].nameid);
-						clif_displaymessage(fd, output);
-						memset(output, '\0', sizeof(output));
-						counter2 = 0;
-						for (j = 0; j < item_data->slot; j++) {
-							if (stor->storage_[i].card[j]) {
-								if ((item_temp = itemdb_search(stor->storage_[i].card[j])) != NULL) {
-									if (output[0] == '\0')
-										sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-									else
-										sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
-									strcat(output, outputtmp);
-								}
-							}
-						}
-						if (output[0] != '\0') {
-							output[strlen(output) - 2] = ')';
-							output[strlen(output) - 1] = '\0';
-							clif_displaymessage(fd, output);
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if((stor = account2storage2(pl_sd->status.account_id)) != NULL) {
+		counter = 0;
+		count = 0;
+		for (i = 0; i < MAX_STORAGE; i++) {
+			if (stor->storage_[i].nameid > 0 && (item_data = itemdb_search(stor->storage_[i].nameid)) != NULL) {
+				counter = counter + stor->storage_[i].amount;
+				count++;
+				if (count == 1) {
+					sprintf(output, "------ Storage items list of '%s' ------", pl_sd->status.name);
+					clif_displaymessage(fd, output);
+				}
+				if (stor->storage_[i].refine)
+					sprintf(output, "%d %s %+d (%s %+d, id: %d)", stor->storage_[i].amount, item_data->name, stor->storage_[i].refine, item_data->jname, stor->storage_[i].refine, stor->storage_[i].nameid);
+				else
+					sprintf(output, "%d %s (%s, id: %d)", stor->storage_[i].amount, item_data->name, item_data->jname, stor->storage_[i].nameid);
+				clif_displaymessage(fd, output);
+				memset(output, '\0', sizeof(output));
+				counter2 = 0;
+				for (j = 0; j < item_data->slot; j++) {
+					if (stor->storage_[i].card[j]) {
+						if ((item_temp = itemdb_search(stor->storage_[i].card[j])) != NULL) {
+							if (output[0] == '\0')
+								sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
+							else
+								sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
+							strcat(output, outputtmp);
 						}
 					}
 				}
-				if (count == 0)
-					clif_displaymessage(fd, "No item found in the storage of this player.");
-				else {
-					sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
+				if (output[0] != '\0') {
+					output[strlen(output) - 2] = ')';
+					output[strlen(output) - 1] = '\0';
 					clif_displaymessage(fd, output);
 				}
-			} else {
-				clif_displaymessage(fd, "This player has no storage.");
-				return 0;
 			}
-		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
-			return -1;
+		}
+		if (count == 0)
+			clif_displaymessage(fd, "No item found in the storage of this player.");
+		else {
+			sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
+			clif_displaymessage(fd, output);
 		}
 	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
-		return -1;
+		clif_displaymessage(fd, "This player has no storage.");
+		return 0;
 	}
 
 	return 0;
@@ -1091,9 +1217,9 @@ int charcommand_item(
 				if(log_config.enable_logs&0x400)
 					log_pick_pc(sd, "A", item_tmp.nameid, number, &item_tmp);
 
-				clif_displaymessage(fd, msg_table[18]); // Item created.
+				clif_displaymessage(fd, msg_txt(18)); // Item created.
 			} else {
-				clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+				clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
 				return -1;
 			}
 		} else if(/* from jA's @giveitem */strcmpi(character,"all")==0 || strcmpi(character,"everyone")==0){
@@ -1110,11 +1236,11 @@ int charcommand_item(
 			snprintf(tmp_cmdoutput, sizeof(tmp_cmdoutput), "%s received %s %d.","Everyone",item_name,number);
 			clif_displaymessage(fd, tmp_cmdoutput);
 		} else {
-			clif_displaymessage(fd, msg_table[3]); // Character not found.
+			clif_displaymessage(fd, msg_txt(3)); // Character not found.
 			return -1;
 		}
 	} else {
-		clif_displaymessage(fd, msg_table[19]); // Invalid item ID or name.
+		clif_displaymessage(fd, msg_txt(19)); // Invalid item ID or name.
 		return -1;
 	}
 
@@ -1146,20 +1272,20 @@ int charcommand_warp(
 	}
 
 	if ((pl_sd = map_nick2sd(character)) == NULL) {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 	if (pc_isGM(sd) < pc_isGM(pl_sd)) { // you can rura+ only lower or same GM level
-		clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
 		return -1;
 	}
 	m = map_mapname2mapid(map_name);
 	if (m < 0) {
-		clif_displaymessage(fd, msg_table[1]); // Map not found.
+		clif_displaymessage(fd, msg_txt(1)); // Map not found.
 		return -1;
 	}
 	if ((x || y) && map_getcell(m, x, y, CELL_CHKNOREACH)) {
-		clif_displaymessage(fd, msg_table[2]); // Coordinates out of range.
+		clif_displaymessage(fd, msg_txt(2)); // Coordinates out of range.
 		x = y = 0;
 	}
 	if (map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
@@ -1171,8 +1297,9 @@ int charcommand_warp(
 		return -1;
 	}
 	if (pc_setpos(pl_sd, map[m].index, x, y, 3) == 0) {
-		clif_displaymessage(pl_sd->fd, msg_table[0]); // Warped.
-		clif_displaymessage(fd, msg_table[15]); // Player warped (message sent to player too).
+		clif_displaymessage(pl_sd->fd, msg_txt(0)); // Warped.
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, msg_txt(15)); // Player warped (message sends to player too).
 		return 0;
 	}
 	//No error message specified...?
@@ -1208,16 +1335,16 @@ int charcommand_zeny(
 		if (new_zeny != pl_sd->status.zeny) {
 			pl_sd->status.zeny = new_zeny;
 			clif_updatestatus(pl_sd, SP_ZENY);
-			clif_displaymessage(fd, msg_table[211]); // Character's number of zenys changed!
+			clif_displaymessage(fd, msg_txt(211)); // Character's number of zenys changed!
 		} else {
 			if (zeny < 0)
-				clif_displaymessage(fd, msg_table[41]); // Impossible to decrease the number/value.
+				clif_displaymessage(fd, msg_txt(41)); // Impossible to decrease the number/value.
 			else
-				clif_displaymessage(fd, msg_table[149]); // Impossible to increase the number/value.
+				clif_displaymessage(fd, msg_txt(149)); // Impossible to increase the number/value.
 			return -1;
 		}
 	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
@@ -1290,7 +1417,7 @@ int charcommand_baselevel(
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%d %23[^\n]", &level, player) < 2 || level == 0) {
-		clif_displaymessage(fd, "Please, enter a level adjustement and a player name (usage: #baselvl <#> <nickname>).");
+		clif_displaymessage(fd, "Please, enter a level adjustment and a player name (usage: #baselvl <#> <nickname>).");
 		return -1;
 	}
 
@@ -1319,10 +1446,6 @@ int charcommand_baselevel(
 		else
 			pl_sd->status.status_point += status_point;
 		pl_sd->status.base_level += (unsigned int)level;
-		clif_updatestatus(pl_sd, SP_BASELEVEL);
-		clif_updatestatus(pl_sd, SP_NEXTBASEEXP);
-		clif_updatestatus(pl_sd, SP_STATUSPOINT);
-		status_calc_pc(pl_sd, 0);
 		status_percent_heal(&pl_sd->bl, 100, 100);
 		clif_misceffect(&pl_sd->bl, 0);
 		clif_displaymessage(fd, msg_table[65]); // Character's base level raised.
@@ -1342,14 +1465,15 @@ int charcommand_baselevel(
 			pl_sd->status.status_point = 0;
 		else
 			pl_sd->status.status_point -= status_point;
-		clif_updatestatus(pl_sd, SP_STATUSPOINT);
 		pl_sd->status.base_level -= (unsigned int)level;
-		clif_updatestatus(pl_sd, SP_BASELEVEL);
-		clif_updatestatus(pl_sd, SP_NEXTBASEEXP);
-		status_calc_pc(pl_sd, 0);
 		clif_displaymessage(fd, msg_table[66]); // Character's base level lowered.
 	}
-
+	clif_updatestatus(pl_sd, SP_BASELEVEL);
+	clif_updatestatus(pl_sd, SP_NEXTBASEEXP);
+	clif_updatestatus(pl_sd, SP_STATUSPOINT);
+	status_calc_pc(pl_sd, 0);
+	if(pl_sd->status.party_id) 
+		party_send_levelup(pl_sd); 
 	return 0; //正常終了
 }
 
@@ -1369,7 +1493,7 @@ int charcommand_joblevel(
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%d %23[^\n]", &level, player) < 2 || level == 0) {
-		clif_displaymessage(fd, "Please, enter a level adjustement and a player name (usage: #joblvl <#> <nickname>).");
+		clif_displaymessage(fd, "Please, enter a level adjustment and a player name (usage: #joblvl <#> <nickname>).");
 		return -1;
 	}
 
@@ -1377,7 +1501,7 @@ int charcommand_joblevel(
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can change job level only lower or same gm level
 			if (level > 0) {
 				if (pl_sd->status.job_level == pc_maxjoblv(pl_sd)) {
-					clif_displaymessage(fd, msg_table[67]); // Character's job level can't go any higher.
+					clif_displaymessage(fd, msg_txt(67)); // Character's job level can't go any higher.
 					return -1;
 				}
 				if ((unsigned int)level > pc_maxjoblv(pl_sd) ||
@@ -1394,10 +1518,10 @@ int charcommand_joblevel(
 				clif_updatestatus(pl_sd, SP_SKILLPOINT);
 				status_calc_pc(pl_sd, 0);
 				clif_misceffect(&pl_sd->bl, 1);
-				clif_displaymessage(fd, msg_table[68]); // character's job level raised.
+				clif_displaymessage(fd, msg_txt(68)); // character's job level raised.
 			} else {
 				if (pl_sd->status.job_level == 1) {
-					clif_displaymessage(fd, msg_table[194]); // Character's job level can't go any lower.
+					clif_displaymessage(fd, msg_txt(194)); // Character's job level can't go any lower.
 					return -1;
 				}
 				level*=-1;
@@ -1414,14 +1538,14 @@ int charcommand_joblevel(
 					pl_sd->status.skill_point -= level;
 				clif_updatestatus(pl_sd, SP_SKILLPOINT);
 				status_calc_pc(pl_sd, 0);
-				clif_displaymessage(fd, msg_table[69]); // Character's job level lowered.
+				clif_displaymessage(fd, msg_txt(69)); // Character's job level lowered.
 			}
 		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+			clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
 			return -1;
 		}
 	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
@@ -1453,21 +1577,21 @@ int charcommand_questskill(
 			if ((pl_sd = map_nick2sd(player)) != NULL) {
 				if (pc_checkskill(pl_sd, skill_id) == 0) {
 					pc_skill(pl_sd, skill_id, 1, 0);
-					clif_displaymessage(fd, msg_table[199]); // This player has learned the skill.
+					clif_displaymessage(fd, msg_txt(199)); // This player has learned the skill.
 				} else {
-					clif_displaymessage(fd, msg_table[200]); // This player already has this quest skill.
+					clif_displaymessage(fd, msg_txt(200)); // This player already has this quest skill.
 					return -1;
 				}
 			} else {
-				clif_displaymessage(fd, msg_table[3]); // Character not found.
+				clif_displaymessage(fd, msg_txt(3)); // Character not found.
 				return -1;
 			}
 		} else {
-			clif_displaymessage(fd, msg_table[197]); // This skill number doesn't exist or isn't a quest skill.
+			clif_displaymessage(fd, msg_txt(197)); // This skill number doesn't exist or isn't a quest skill.
 			return -1;
 		}
 	} else {
-		clif_displaymessage(fd, msg_table[198]); // This skill number doesn't exist.
+		clif_displaymessage(fd, msg_txt(198)); // This skill number doesn't exist.
 		return -1;
 	}
 
@@ -1501,21 +1625,21 @@ int charcommand_lostskill(
 					pl_sd->status.skill[skill_id].lv = 0;
 					pl_sd->status.skill[skill_id].flag = 0;
 					clif_skillinfoblock(pl_sd);
-					clif_displaymessage(fd, msg_table[202]); // This player has forgotten the skill.
+					clif_displaymessage(fd, msg_txt(202)); // This player has forgotten the skill.
 				} else {
-					clif_displaymessage(fd, msg_table[203]); // This player doesn't have this quest skill.
+					clif_displaymessage(fd, msg_txt(203)); // This player doesn't have this quest skill.
 					return -1;
 				}
 			} else {
-				clif_displaymessage(fd, msg_table[3]); // Character not found.
+				clif_displaymessage(fd, msg_txt(3)); // Character not found.
 				return -1;
 			}
 		} else {
-			clif_displaymessage(fd, msg_table[197]); // This skill number doesn't exist or isn't a quest skill.
+			clif_displaymessage(fd, msg_txt(197)); // This skill number doesn't exist or isn't a quest skill.
 			return -1;
 		}
 	} else {
-		clif_displaymessage(fd, msg_table[198]); // This skill number doesn't exist.
+		clif_displaymessage(fd, msg_txt(198)); // This skill number doesn't exist.
 		return -1;
 	}
 
@@ -1543,14 +1667,14 @@ int charcommand_skreset(
 	if ((pl_sd = map_nick2sd(player)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can reset skill points only lower or same gm level
 			pc_resetskill(pl_sd,1);
-			sprintf(tmp_cmdoutput, msg_table[206], player); // '%s' skill points reseted!
+			sprintf(tmp_cmdoutput, msg_txt(206), player); // '%s' skill points reseted!
 			clif_displaymessage(fd, tmp_cmdoutput);
 		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+			clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
 			return -1;
 		}
 	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
@@ -1578,14 +1702,14 @@ int charcommand_streset(
 	if ((pl_sd = map_nick2sd(player)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can reset stats points only lower or same gm level
 			pc_resetstate(pl_sd);
-			sprintf(tmp_cmdoutput, msg_table[207], player); // '%s' stats points reseted!
+			sprintf(tmp_cmdoutput, msg_txt(207), player); // '%s' stats points reseted!
 			clif_displaymessage(fd, tmp_cmdoutput);
 		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+			clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
 			return -1;
 		}
 	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
@@ -1621,21 +1745,21 @@ int charcommand_model(
 			if (cloth_color != 0 &&
 				pl_sd->status.sex == 1 &&
 				(pl_sd->status.class_ == JOB_ASSASSIN ||  pl_sd->status.class_ == JOB_ROGUE)) {
-				clif_displaymessage(fd, msg_table[35]); // You can't use this command with this class.
+				clif_displaymessage(fd, msg_txt(35)); // You can't use this command with this class.
 				return -1;
 			} else {
 			*/
 				pc_changelook(pl_sd, LOOK_HAIR, hair_style);
 				pc_changelook(pl_sd, LOOK_HAIR_COLOR, hair_color);
 				pc_changelook(pl_sd, LOOK_CLOTHES_COLOR, cloth_color);
-				clif_displaymessage(fd, msg_table[36]); // Appearence changed.
+				clif_displaymessage(fd, msg_txt(36)); // Appearence changed.
 //			}
 		} else {
-			clif_displaymessage(fd, msg_table[37]); // An invalid number was specified.
+			clif_displaymessage(fd, msg_txt(37)); // An invalid number was specified.
 			return -1;
 		}
 	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
@@ -1671,16 +1795,16 @@ int charcommand_skpoint(
 		if (new_skill_point != (int)pl_sd->status.skill_point) {
 			pl_sd->status.skill_point = new_skill_point;
 			clif_updatestatus(pl_sd, SP_SKILLPOINT);
-			clif_displaymessage(fd, msg_table[209]); // Character's number of skill points changed!
+			clif_displaymessage(fd, msg_txt(209)); // Character's number of skill points changed!
 		} else {
 			if (point < 0)
-				clif_displaymessage(fd, msg_table[41]); // Impossible to decrease the number/value.
+				clif_displaymessage(fd, msg_txt(41)); // Impossible to decrease the number/value.
 			else
-				clif_displaymessage(fd, msg_table[149]); // Impossible to increase the number/value.
+				clif_displaymessage(fd, msg_txt(149)); // Impossible to increase the number/value.
 			return -1;
 		}
 	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
@@ -1716,16 +1840,16 @@ int charcommand_stpoint(
 		if (new_status_point != (int)pl_sd->status.status_point) {
 			pl_sd->status.status_point = new_status_point;
 			clif_updatestatus(pl_sd, SP_STATUSPOINT);
-			clif_displaymessage(fd, msg_table[210]); // Character's number of status points changed!
+			clif_displaymessage(fd, msg_txt(210)); // Character's number of status points changed!
 		} else {
 			if (point < 0)
-				clif_displaymessage(fd, msg_table[41]); // Impossible to decrease the number/value.
+				clif_displaymessage(fd, msg_txt(41)); // Impossible to decrease the number/value.
 			else
-				clif_displaymessage(fd, msg_table[149]); // Impossible to increase the number/value.
+				clif_displaymessage(fd, msg_txt(149)); // Impossible to increase the number/value.
 			return -1;
 		}
 	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
@@ -1786,14 +1910,14 @@ int charcommand_feelreset(
 	if ((pl_sd = map_nick2sd(character)) != NULL) {
 		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can reset a character only for lower or same GM level
 			pc_resetfeel(pl_sd);
-			sprintf(output, msg_table[267], character); // '%s' designated maps reseted!
+			sprintf(output, msg_txt(267), character); // '%s' designated maps reseted!
 			clif_displaymessage(fd, output);
 		} else {
-			clif_displaymessage(fd, msg_table[81]); // Your GM level don't authorise you to do this action on this player.
+			clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
 			return -1;
 		}
 	} else {
-		clif_displaymessage(fd, msg_table[3]); // Character not found.
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
@@ -1816,7 +1940,7 @@ int charcommand_help(
 	memset(buf, '\0', sizeof(buf));
 
 	if ((fp = fopen(charhelp_txt, "r")) != NULL) {
-		clif_displaymessage(fd, msg_table[26]); /* Help commands: */
+		clif_displaymessage(fd, msg_txt(26)); /* Help commands: */
 		gm_level = pc_isGM(sd);
 		while(fgets(buf, sizeof(buf) - 1, fp) != NULL) {
 			if (buf[0] == '/' && buf[1] == '/')
@@ -1834,9 +1958,2241 @@ int charcommand_help(
 		}
 		fclose(fp);
 	} else {
-		clif_displaymessage(fd, msg_table[27]); /*  File help.txt not found. */
+		clif_displaymessage(fd, msg_txt(27)); /*  File help.txt not found. */
 		return -1;
 	}
+
+	return 0;
+}
+
+/*==========================================
+ * Loads a character back to their save point [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_load(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int m;
+	char character[NAME_LENGTH];
+
+	struct map_session_data *pl_sd;
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #load <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	m = map_mapindex2mapid(pl_sd->status.save_point.map);
+	if (m >= 0 && map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(pl_sd)) {
+		clif_displaymessage(fd, "Not authorized to warp to target map.");
+		return -1;
+	}
+	if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(pl_sd)) {
+		clif_displaymessage(fd, "Not authorized to warp from current map.");
+		return -1;
+	}
+
+	pc_setpos(pl_sd, pl_sd->status.save_point.map, pl_sd->status.save_point.x, pl_sd->status.save_point.y, 0);
+	clif_displaymessage(pl_sd->fd, msg_txt(7)); // Warping to respawn point.
+	if (pl_sd->fd != fd)
+		clif_displaymessage(fd, msg_txt(7)); // Warping to respawn point.
+	
+	return 0;
+}
+
+/*==========================================
+ * Changes the targets speed [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_speed(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int speed;
+	char character[NAME_LENGTH];
+	char output[200];
+	struct map_session_data *pl_sd;
+
+	if (!message || !*message || sscanf(message, "%d %23[^\n]", &speed, character) < 2) {
+		sprintf(output, "Please, enter proper values (usage: #speed <%d-%d> <player>).", MIN_WALK_SPEED, MAX_WALK_SPEED);
+		clif_displaymessage(fd, output);
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	if (speed < MIN_WALK_SPEED)
+	{
+		speed = MIN_WALK_SPEED;
+	}
+	else if (speed > MAX_WALK_SPEED)
+	{
+		speed = MAX_WALK_SPEED;
+	}
+	
+	pl_sd->base_status.speed = speed;
+	status_calc_bl(&pl_sd->bl, SCB_SPEED);
+	clif_displaymessage(pl_sd->fd, msg_txt(8)); // Speed changed.
+	if (pl_sd->fd != fd)
+		clif_displaymessage(fd, msg_txt(8)); // Speed changed.
+	return 0;
+}
+
+/*==========================================
+ * Opens their storage [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_storage(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char character[NAME_LENGTH];
+
+	struct map_session_data *pl_sd;
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #storage <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	if (pl_sd->npc_id || pl_sd->vender_id || pl_sd->state.trading || pl_sd->state.storage_flag)
+		return -1;
+
+	if (storage_storageopen(pl_sd) == 1)
+  	{	//Already open.
+		clif_displaymessage(fd, "Players storage already open.");
+		return -1;
+	}
+	
+	clif_displaymessage(pl_sd->fd, "Storage opened.");
+	if (pl_sd->fd != fd)
+		clif_displaymessage(fd, "Player's storage opened.");
+
+	return 0;
+}
+
+
+/*==========================================
+ * Opens their guild storage
+ *------------------------------------------
+ */
+int charcommand_guildstorage(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct storage *stor; //changes from Freya/Yor
+	char character[NAME_LENGTH];
+
+	struct map_session_data *pl_sd;
+	
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #gstorage <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	if (pl_sd->npc_id || pl_sd->vender_id || pl_sd->state.trading || pl_sd->state.storage_flag)
+		return -1;
+
+	if (pl_sd->status.guild_id > 0) {
+		if (pl_sd->state.storage_flag) {
+			clif_displaymessage(fd, "Guild storage is currently in use.");
+			return -1;
+		}
+		if ((stor = account2storage2(pl_sd->status.account_id)) != NULL && stor->storage_status == 1) {
+			clif_displaymessage(fd, "Guild storage is currently in use.");
+			return -1;
+		}
+		storage_guild_storageopen(pl_sd);
+	} else {
+		clif_displaymessage(fd, "Target player is not in a guild.");
+		return -1;
+	}
+
+	clif_displaymessage(pl_sd->fd, "Guild storage opened.");
+	if (pl_sd->fd != fd)
+		clif_displaymessage(fd, "Player's guild storage opened.");
+
+	return 0;
+}
+
+/*==========================================
+ * Applies GM Hide to a character [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_hide(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char character[NAME_LENGTH];
+
+	struct map_session_data *pl_sd;
+	
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #hide <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	if (pl_sd->sc.option & OPTION_INVISIBLE) {
+		pl_sd->sc.option &= ~OPTION_INVISIBLE;
+		if (pl_sd->disguise)
+			status_set_viewdata(&pl_sd->bl, pl_sd->disguise);
+		else
+			status_set_viewdata(&pl_sd->bl, pl_sd->status.class_);
+		clif_changeoption(&pl_sd->bl);
+		clif_displaymessage(pl_sd->fd, msg_txt(10)); // Invisible: Off
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, msg_txt(10)); // Invisible: Off
+	} else {
+		pl_sd->sc.option |= OPTION_INVISIBLE;
+		pl_sd->vd.class_ = INVISIBLE_CLASS;
+		clif_changeoption(&pl_sd->bl);
+		clif_displaymessage(pl_sd->fd, msg_txt(11)); // Invisible: On
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, msg_txt(11)); // Invisible: On
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Resurrects a dead character [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_alive(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char character[NAME_LENGTH];
+
+	struct map_session_data *pl_sd;
+	
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #alive <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	if (!status_revive(&pl_sd->bl, 100, 100))
+	{
+		clif_displaymessage(fd, "Target player is not dead.");
+		return -1;
+	}
+	clif_skill_nodamage(&pl_sd->bl,&pl_sd->bl,ALL_RESURRECTION,4,1);
+	clif_displaymessage(pl_sd->fd, msg_txt(16)); // You've been revived! It's a miracle!
+	return 0;
+}
+
+/*==========================================
+ * Heals someone's HP and SP [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_heal(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int hp = 0, sp = 0; // [Valaris] thanks to fov
+	char character[NAME_LENGTH];
+
+	struct map_session_data *pl_sd;
+	
+	if (!message || !*message || sscanf(message, "%d %d %23[^\n]", &hp, &sp, character) < 3) {
+		clif_displaymessage(fd, "Please, enter proper values (usage: #heal <hp> <sp> <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if (hp == 0 && sp == 0) {
+		if (!status_percent_heal(&pl_sd->bl, 100, 100))
+			clif_displaymessage(fd, msg_txt(157)); // HP and SP are already with the good value.
+		else
+		{
+			clif_displaymessage(pl_sd->fd, msg_txt(17)); // HP, SP recovered.
+			if (pl_sd->fd != fd)
+				clif_displaymessage(fd, msg_txt(17)); // HP, SP recovered.
+		}
+		return 0;
+	}
+	
+	if(hp > 0 && sp >= 0) {
+		if(!status_heal(&pl_sd->bl, hp, sp, 2))
+			clif_displaymessage(fd, msg_txt(157)); // HP and SP are already with the good value.
+		else
+		{
+			clif_displaymessage(pl_sd->fd, msg_txt(17)); // HP, SP recovered.
+			if (pl_sd->fd != fd)
+				clif_displaymessage(fd, msg_txt(17)); // HP, SP recovered.
+		}
+		return 0;
+	}
+
+	if(hp < 0 && sp <= 0) {
+		status_damage(NULL, &pl_sd->bl, -hp, -sp, 0, 0);
+		clif_damage(&pl_sd->bl,&pl_sd->bl, gettick(), 0, 0, -hp, 0 , 4, 0);
+		clif_displaymessage(pl_sd->fd, msg_txt(156)); // HP or/and SP modified.
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, msg_txt(156)); // HP or/and SP modified.
+		return 0;
+	}
+
+	//Opposing signs.
+	if (hp) {
+		if (hp > 0)
+			status_heal(&pl_sd->bl, hp, 0, 2);
+		else {
+			status_damage(NULL, &pl_sd->bl, -hp, 0, 0, 0);
+			clif_damage(&pl_sd->bl,&pl_sd->bl, gettick(), 0, 0, -hp, 0 , 4, 0);
+		}
+	}
+
+	if (sp) {
+		if (sp > 0)
+			status_heal(&pl_sd->bl, 0, sp, 2);
+		else
+			status_damage(NULL, &pl_sd->bl, 0, -sp, 0, 0);
+	}
+
+	clif_displaymessage(pl_sd->fd, msg_txt(156)); // HP or/and SP modified.
+	if (pl_sd->fd != fd)
+		clif_displaymessage(fd, msg_txt(156)); // HP or/and SP modified.
+	return 0;
+}
+
+/*==========================================
+ * Creates items as specified [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_item2(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct item item_tmp;
+	struct item_data *item_data;
+	char item_name[100];
+	int item_id, number = 0;
+	int identify = 0, refine = 0, attr = 0;
+	int c1 = 0, c2 = 0, c3 = 0, c4 = 0;
+	int flag;
+	int loop, get_count, i;
+	char character[NAME_LENGTH];
+
+	struct map_session_data *pl_sd;
+	
+	if (!message || !*message || (
+		sscanf(message, "\"%99[^\"]\" %d %d %d %d %d %d %d %d %23[^\n]", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, character) < 10 &&
+		sscanf(message, "%99s %d %d %d %d %d %d %d %d %23[^\n]", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, character) < 10
+	)) {
+		clif_displaymessage(fd, "Please, enter all informations (usage: @item2 <item name or ID> <quantity>");
+		clif_displaymessage(fd, "  <Identify_flag[1|0]> <refine> <attribut> <Card1> <Card2> <Card3> <Card4> <player>).");
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	if (number <= 0)
+		number = 1;
+
+	item_id = 0;
+	if ((item_data = itemdb_searchname(item_name)) != NULL ||
+	    (item_data = itemdb_exists(atoi(item_name))) != NULL)
+		item_id = item_data->nameid;
+
+	if (item_id > 500) {
+		loop = 1;
+		get_count = number;
+		if (item_data->type == 4 || item_data->type == 5 ||
+			item_data->type == 7 || item_data->type == 8) {
+			loop = number;
+			get_count = 1;
+			if (item_data->type == 7) {
+				identify = 1;
+				refine = 0;
+			}
+			if (item_data->type == 8)
+				refine = 0;
+			if (refine > 10)
+				refine = 10;
+		} else {
+			identify = 1;
+			refine = attr = 0;
+		}
+		for (i = 0; i < loop; i++) {
+			memset(&item_tmp, 0, sizeof(item_tmp));
+			item_tmp.nameid = item_id;
+			item_tmp.identify = identify;
+			item_tmp.refine = refine;
+			item_tmp.attribute = attr;
+			item_tmp.card[0] = c1;
+			item_tmp.card[1] = c2;
+			item_tmp.card[2] = c3;
+			item_tmp.card[3] = c4;
+			if ((flag = pc_additem(pl_sd, &item_tmp, get_count)))
+				clif_additem(pl_sd, 0, 0, flag);
+		}
+
+		//Logs (A)dmins items [Lupus]
+		if(log_config.enable_logs&0x400)
+			log_pick_pc(pl_sd, "A", item_tmp.nameid, number, &item_tmp);
+
+		clif_displaymessage(pl_sd->fd, msg_txt(18)); // Item created.
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, msg_txt(18)); // Item created.
+	} else {
+		clif_displaymessage(fd, msg_txt(19)); // Invalid item ID or name.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Reset a character's items [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_itemreset(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int i, count = 0;
+	char character[NAME_LENGTH];
+	char output[200];
+
+	struct map_session_data *pl_sd;
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #itemreset <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	for (i = 0; i < MAX_INVENTORY; i++) {
+		if (pl_sd->status.inventory[i].amount && pl_sd->status.inventory[i].equip == 0) {
+
+			//Logs (A)dmins items [Lupus]
+			if(log_config.enable_logs&0x400)
+				log_pick_pc(pl_sd, "A", pl_sd->status.inventory[i].nameid, -pl_sd->status.inventory[i].amount, &pl_sd->status.inventory[i]);
+
+			pc_delitem(pl_sd, i, pl_sd->status.inventory[i].amount, 0);
+			count++;
+		}
+	}
+	
+	sprintf(output, msg_txt(114), count);
+	if (pl_sd->fd != fd)
+		clif_displaymessage(pl_sd->fd, output); // %d item(s) removed from the player.
+	clif_displaymessage(fd, msg_txt(20)); // All of your items have been removed.
+
+	return 0;
+}
+
+/*==========================================
+ * Refine their items [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_refine(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int i,j, position = 0, refine = 0, current_position, final_refine;
+	int count;
+	char character[NAME_LENGTH];
+	char output[200];
+	struct map_session_data *pl_sd;
+
+	if (!message || !*message || sscanf(message, "%d %d %s", &position, &refine, character) < 3) {
+		clif_displaymessage(fd, "Please, enter a position and a amount (usage: #refine <equip position> <+/- amount> <player>).");
+		sprintf(output, "%d: Left Accessory", EQI_ACC_L);
+		clif_displaymessage(fd, output);
+		sprintf(output, "%d: Right Accessory", EQI_ACC_R);
+		clif_displaymessage(fd, output);
+		sprintf(output, "%d: Shoes", EQI_SHOES);
+		clif_displaymessage(fd, output);
+		sprintf(output, "%d: Garment", EQI_GARMENT);
+		clif_displaymessage(fd, output);
+		sprintf(output, "%d: Lower Headgear", EQI_HEAD_LOW);
+		clif_displaymessage(fd, output);
+		sprintf(output, "%d: Mid Headgear", EQI_HEAD_MID);
+		clif_displaymessage(fd, output);
+		sprintf(output, "%d: Top Headgear", EQI_HEAD_TOP);
+		clif_displaymessage(fd, output);
+		sprintf(output, "%d: Body Armor", EQI_ARMOR);
+		clif_displaymessage(fd, output);
+		sprintf(output, "%d: Left Hand", EQI_HAND_L);
+		clif_displaymessage(fd, output);
+		sprintf(output, "%d: Right Hand", EQI_HAND_R);
+		clif_displaymessage(fd, output);
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	if (refine < -MAX_REFINE)
+		refine = -MAX_REFINE;
+	else if (refine > MAX_REFINE)
+		refine = MAX_REFINE;
+	else if (refine == 0)
+		refine = 1;
+
+	count = 0;
+	for (j = 0; j < EQI_MAX-1; j++) {
+		if ((i = pl_sd->equip_index[j]) < 0)
+			continue;
+		if(j == EQI_HAND_R && pl_sd->equip_index[EQI_HAND_L] == i)
+			continue;
+		if(j == EQI_HEAD_MID && pl_sd->equip_index[EQI_HEAD_LOW] == i)
+			continue;
+		if(j == EQI_HEAD_TOP && (pl_sd->equip_index[EQI_HEAD_MID] == i || pl_sd->equip_index[EQI_HEAD_LOW] == i))
+			continue;
+
+		if(position && !(pl_sd->status.inventory[i].equip & position))
+			continue;
+
+		final_refine = pl_sd->status.inventory[i].refine + refine;
+		if (final_refine > MAX_REFINE)
+			final_refine = MAX_REFINE;
+		else if (final_refine < 0)
+			final_refine = 0;
+		if (pl_sd->status.inventory[i].refine != final_refine) {
+			pl_sd->status.inventory[i].refine = final_refine;
+			current_position = pl_sd->status.inventory[i].equip;
+			pc_unequipitem(sd, i, 3);
+			clif_refine(fd, 0, i, pl_sd->status.inventory[i].refine);
+			clif_delitem(pl_sd, i, 1);
+			clif_additem(pl_sd, i, 1, 0);
+			pc_equipitem(pl_sd, i, current_position);
+			clif_misceffect(&pl_sd->bl, 3);
+			count++;
+		}
+	}
+
+	if (count == 0)
+		clif_displaymessage(fd, msg_txt(166)); // No item has been refined!
+	else if (count == 1)
+	{
+		clif_displaymessage(pl_sd->fd, msg_txt(167)); // 1 item has been refined!
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, msg_txt(167)); // 1 item has been refined!
+	}
+	else {
+		sprintf(output, msg_txt(168), count); // %d items have been refined!
+		clif_displaymessage(pl_sd->fd, output);
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, output);
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Produce a manufactured item in their inventory [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_produce(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char item_name[100];
+	int item_id, attribute = 0, star = 0;
+	int flag = 0;
+	struct item_data *item_data;
+	struct item tmp_item;
+	char character[NAME_LENGTH];
+	char output[200];
+
+	struct map_session_data *pl_sd;
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message || (
+		sscanf(message, "\"%99[^\"]\" %d %d %23[^\n]", item_name, &attribute, &star, character) < 4 &&
+		sscanf(message, "%99s %d %d %23[^\n]", item_name, &attribute, &star, character) < 4
+	)) {
+		clif_displaymessage(fd, "Please, enter at least an item name/id (usage: #produce <equip name or equip ID> <element> <# of very's> <player>).");
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	item_id = 0;
+	if ((item_data = itemdb_searchname(item_name)) == NULL &&
+	    (item_data = itemdb_exists(atoi(item_name))) == NULL)
+	{
+		sprintf(output, msg_txt(170)); // This item is not an equipment.
+		clif_displaymessage(fd, output);
+		return -1;
+	}
+	item_id = item_data->nameid;
+	if (itemdb_isequip2(item_data)) {
+		if (attribute < MIN_ATTRIBUTE || attribute > MAX_ATTRIBUTE)
+			attribute = ATTRIBUTE_NORMAL;
+		if (star < MIN_STAR || star > MAX_STAR)
+			star = 0;
+		memset(&tmp_item, 0, sizeof tmp_item);
+		tmp_item.nameid = item_id;
+		tmp_item.amount = 1;
+		tmp_item.identify = 1;
+		tmp_item.card[0] = CARD0_FORGE;
+		tmp_item.card[1] = item_data->type==IT_WEAPON?
+			((star*5) << 8) + attribute:0;
+		tmp_item.card[2] = GetWord(pl_sd->status.char_id, 0);
+		tmp_item.card[3] = GetWord(pl_sd->status.char_id, 1);
+		clif_produceeffect(pl_sd, 0, item_id);
+		clif_misceffect(&pl_sd->bl, 3);
+
+		//Logs (A)dmins items [Lupus]
+		if(log_config.enable_logs&0x400)
+			log_pick_pc(pl_sd, "A", tmp_item.nameid, 1, &tmp_item);
+
+		if ((flag = pc_additem(pl_sd, &tmp_item, 1)))
+		{
+			clif_additem(pl_sd, 0, 0, flag);
+			clif_displaymessage(fd, msg_txt(18));
+		}
+	} else {
+		sprintf(output, msg_txt(169), item_id, item_data->name); // This item (%d: '%s') is not an equipment.
+		clif_displaymessage(fd, output);
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Changes a character's stats [HiddenDragon
+ *------------------------------------------
+ */
+int charcommand_param(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int index, value = 0, new_value;
+	char character[NAME_LENGTH];
+	char output[200];
+	struct map_session_data *pl_sd;
+	const char* param[] = { "#str", "#agi", "#vit", "#int", "#dex", "#luk", NULL };
+	short* status[6];
+
+	
+	if (!message || !*message || sscanf(message, "%d %s", &value, character) < 2 || value == 0) {
+		sprintf(output, "Please, enter a valid value (usage: #str,#agi,#vit,#int,#dex,#luk <+/-adjustment> <player>).");
+		clif_displaymessage(fd, output);
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	status[0] = &pl_sd->status.str;
+	status[1] = &pl_sd->status.agi;
+	status[2] = &pl_sd->status.vit;
+	status[3] = &pl_sd->status.int_;
+	status[4] = &pl_sd->status.dex;
+	status[5] = &pl_sd->status.luk;
+
+	index = -1;
+	for (index = 0; index < sizeof(param)/sizeof(param[0]); index++) {
+		if (strcmpi(command, param[index]) == 0)
+			break;
+	}
+	if (index == sizeof(param)/sizeof(param[0]) || index > MAX_STATUS_TYPE) {
+		// normaly impossible...
+		sprintf(output, "Please, enter a valid value (usage: #str,#agi,#vit,#int,#dex,#luk <+/-adjustment> <player>).");
+		clif_displaymessage(fd, output);
+		return -1;
+	}
+
+	if (value > 0 && *status[index] > 999 - value)
+		new_value = 999;
+	else if (value < 0 && *status[index] <= -value)
+		new_value = 1;
+	else
+		new_value = *status[index] + value;
+	
+	if (new_value != (int)*status[index]) {
+		*status[index] = new_value;
+		clif_updatestatus(pl_sd, SP_STR + index);
+		clif_updatestatus(pl_sd, SP_USTR + index);
+		status_calc_pc(pl_sd, 0);
+		clif_displaymessage(pl_sd->fd, msg_txt(42)); // Stat changed.
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, msg_txt(42)); // Stat changed.
+	} else {
+		if (value < 0)
+			clif_displaymessage(fd, msg_txt(41)); // Impossible to decrease the number/value.
+		else
+			clif_displaymessage(fd, msg_txt(149)); // Impossible to increase the number/value.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Levels up a character's guild [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_guildlevelup(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int level = 0;
+	short added_level;
+	struct guild *guild_info;
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message || sscanf(message, "%d %s", &level, character) < 2 || level == 0) {
+		clif_displaymessage(fd, "Please, enter a valid level and player (usage: #guildlvup/@guildlvlup <# of levels> <player>).");
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	if (pl_sd->status.guild_id <= 0 || (guild_info = guild_search(pl_sd->status.guild_id)) == NULL) {
+		clif_displaymessage(fd, "Target player is not in a guild"); // You're not in a guild.
+		return -1;
+	}
+	//if (strcmp(sd->status.name, guild_info->master) != 0) {
+	//	clif_displaymessage(fd, msg_txt(44)); // You're not the master of your guild.
+	//	return -1;
+	//}
+
+	added_level = (short)level;
+	if (level > 0 && (level > MAX_GUILDLEVEL || added_level > ((short)MAX_GUILDLEVEL - guild_info->guild_lv))) // fix positiv overflow
+		added_level = (short)MAX_GUILDLEVEL - guild_info->guild_lv;
+	else if (level < 0 && (level < -MAX_GUILDLEVEL || added_level < (1 - guild_info->guild_lv))) // fix negativ overflow
+		added_level = 1 - guild_info->guild_lv;
+
+	if (added_level != 0) {
+		intif_guild_change_basicinfo(guild_info->guild_id, GBI_GUILDLV, &added_level, 2);
+		clif_displaymessage(pl_sd->fd, msg_txt(179)); // Guild level changed.
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, msg_txt(179));
+	} else {
+		clif_displaymessage(fd, msg_txt(45)); // Guild level change failed.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Opens a hatch window for them [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_hatch(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #hatch <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if (pl_sd->status.pet_id <= 0)
+		clif_sendegg(sd);
+	else {
+		clif_displaymessage(fd, "Target player already has a pet"); // You already have a pet.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Change target pet's hunger [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_pethungry(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int hungry;
+	struct pet_data *pd;
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message || sscanf(message, "%d %23[^\n]", &hungry, character) < 2) {
+		clif_displaymessage(fd, "Please, enter a valid number and player (usage: #pethungry <0-100> <player>).");
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	pd = pl_sd->pd;
+	if (!pl_sd->status.pet_id || !pd) {
+		clif_displaymessage(fd, "Target has no pet"); // Sorry, but you have no pet.
+		return -1;
+	}
+	if (hungry < 0 || hungry > 100) {
+		clif_displaymessage(fd, msg_txt(37)); // An invalid number was specified.
+		return -1;
+	}
+	if (hungry == pd->pet.hungry) {
+		clif_displaymessage(fd, msg_txt(186)); // Pet hungry is already the good value.
+		return -1;
+	}
+
+	pd->pet.hungry = hungry;
+	clif_send_petstatus(pl_sd);
+	clif_displaymessage(pl_sd->fd, msg_txt(185)); // Pet hungry value changed!
+	if (pl_sd->fd != fd)
+		clif_displaymessage(fd, msg_txt(185)); // Pet hungry value changed!
+
+	return 0;
+}
+
+/*==========================================
+ * Give all skills to target [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_allskill(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char character[NAME_LENGTH];
+
+	struct map_session_data *pl_sd;
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #allskill <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	pc_allskillup(pl_sd); // all skills
+	pl_sd->status.skill_point = 0; // 0 skill points
+	clif_updatestatus(pl_sd, SP_SKILLPOINT); // update
+	clif_displaymessage(pl_sd->fd, msg_txt(76)); // You have received all skills.
+	if (pl_sd->fd != fd)
+		clif_displaymessage(fd, "Player has received all skills for his/her class.");
+
+	return 0;
+}
+
+
+/*==========================================
+ * Change target's clothing color [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_dye(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	int cloth_color = 0;
+	char character[NAME_LENGTH];
+	char output[200];
+	
+	struct map_session_data *pl_sd;
+
+	if (!message || !*message || sscanf(message, "%d %23[^\n]", &cloth_color, character) < 2) {
+		sprintf(output, "Please, enter a clothes color (usage: #dye/@ccolor <clothes color: %d-%d> <player>).", MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
+		clif_displaymessage(fd,output);
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	if (cloth_color >= MIN_CLOTH_COLOR && cloth_color <= MAX_CLOTH_COLOR) {
+		pc_changelook(pl_sd, LOOK_CLOTHES_COLOR, cloth_color);
+		clif_displaymessage(pl_sd->fd, msg_txt(36)); // Appearence changed.
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, msg_txt(36)); // Appearence changed.
+	} else {
+		clif_displaymessage(fd, msg_txt(37)); // An invalid number was specified.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Change target's hair style [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_hair_style(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	int hair_style = 0;
+	char character[NAME_LENGTH];
+	char output[200];
+	struct map_session_data *pl_sd;
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message || sscanf(message, "%d %23[^\n]", &hair_style, character) < 2) {
+		sprintf(output, "Please, enter a hair style (usage: #hairstyle/#hstyle <hair ID: %d-%d> <player>.", MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+		clif_displaymessage(fd, output);
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if (hair_style >= MIN_HAIR_STYLE && hair_style <= MAX_HAIR_STYLE) {
+		/* Removed because this check is TOO strange. [Skotlex]
+		if (hair_style != 0 && sd->status.sex == 1 && (sd->status.class_ == JOB_ASSASSIN || sd->status.class_ == JOB_ROGUE)) { //???
+			clif_displaymessage(fd, msg_txt(35)); // You can't use this command with this class.
+			return -1;
+		} else {
+		*/
+			pc_changelook(pl_sd, LOOK_HAIR, hair_style);
+			clif_displaymessage(pl_sd->fd, msg_txt(36)); // Appearence changed.
+			if (pl_sd->fd != fd)
+				clif_displaymessage(fd, msg_txt(36)); // Appearence changed.
+//		}
+	} else {
+		clif_displaymessage(fd, msg_txt(37)); // An invalid number was specified.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Change target's hair color [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_hair_color(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	int hair_color = 0;
+	char character[NAME_LENGTH];
+	char output[200];
+	struct map_session_data *pl_sd;
+	nullpo_retr(-1, sd);
+
+	memset(output, '\0', sizeof(output));
+
+	if (!message || !*message || sscanf(message, "%d %23[^\n]", &hair_color, character) < 2) {
+		sprintf(output, "Please, enter a hair color (usage: #haircolor/#hcolor <hair color: %d-%d> <player>).", MIN_HAIR_COLOR, MAX_HAIR_COLOR);
+		clif_displaymessage(fd, output);
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if (hair_color >= MIN_HAIR_COLOR && hair_color <= MAX_HAIR_COLOR) {
+		/* Removed for being such a strange check. [Skotlex]
+		if (hair_color != 0 && sd->status.sex == 1 && (sd->status.class_ == JOB_ASSASSIN || sd->status.class_ == JOB_ROGUE)) {
+			clif_displaymessage(fd, msg_txt(35)); // You can't use this command with this class.
+			return -1;
+		} else {
+		*/
+			pc_changelook(pl_sd, LOOK_HAIR_COLOR, hair_color);
+			clif_displaymessage(pl_sd->fd, msg_txt(36)); // Appearence changed.
+			if (pl_sd->fd != fd)
+				clif_displaymessage(fd, msg_txt(36)); // Appearence changed.
+//		}
+	} else {
+		clif_displaymessage(fd, msg_txt(37)); // An invalid number was specified.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Change all target's stats [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_allstats(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int index, count, value = 0, max, new_value;
+	short* status[6];
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+
+ 	//we don't use direct initialization because it isn't part of the c standard.
+	nullpo_retr(-1, sd);
+	memset(character, '\0', sizeof(character));
+	
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #statall/#statsall/#allstat/#allstats <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	status[0] = &pl_sd->status.str;
+	status[1] = &pl_sd->status.agi;
+	status[2] = &pl_sd->status.vit;
+	status[3] = &pl_sd->status.int_;
+	status[4] = &pl_sd->status.dex;
+	status[5] = &pl_sd->status.luk;
+
+	count = 0;
+	max = pc_maxparameter(pl_sd);
+	for (index = 0; index < (int)(sizeof(status) / sizeof(status[0])); index++) {
+
+		if (value > 0 && *status[index] > max - value)
+			new_value = max;
+		else if (value < 0 && *status[index] <= -value)
+			new_value = 1;
+		else
+			new_value = *status[index] +value;
+		
+		if (new_value != (int)*status[index]) {
+			*status[index] = new_value;
+			clif_updatestatus(pl_sd, SP_STR + index);
+			clif_updatestatus(pl_sd, SP_USTR + index);
+			status_calc_pc(pl_sd, 0);
+			count++;
+		}
+	}
+
+	if (count > 0) // if at least 1 stat modified
+	{
+		clif_displaymessage(pl_sd->fd, msg_txt(84)); // All stats changed!
+		if (fd != pl_sd->fd)
+			clif_displaymessage(fd, "Player's stats changed"); // All stats changed!
+	}
+	else {
+		if (value < 0)
+			clif_displaymessage(fd, msg_txt(177)); // Impossible to decrease a stat.
+		else
+			clif_displaymessage(fd, msg_txt(178)); // Impossible to increase a stat.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Gives/Removes a peco from a player [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_mount_peco(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct map_session_data *pl_sd;
+	char character[NAME_LENGTH];
+	nullpo_retr(-1, sd);
+
+	memset(character, '\0', sizeof(character));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #mount/#mountpeco <player>).");
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if (!pc_isriding(pl_sd))
+	{ // if actually no peco
+		if (!pc_checkskill(pl_sd, KN_RIDING))
+		{
+			clif_displaymessage(fd, msg_txt(217));	// Player cannot mount a PecoePeco with his/her job.
+			return -1;
+		}
+
+		if (pl_sd->disguise)
+		{
+			clif_displaymessage(fd, msg_txt(215)); // Player cannot mount a PecoPeco while in disguise.
+			return -1;
+		}
+
+		pc_setoption(pl_sd, pl_sd->sc.option | OPTION_RIDING);
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, "Player mounted a peco.");
+		clif_displaymessage(pl_sd->fd, msg_txt(216));	// Mounted Peco.
+	}
+	else
+	{	//Dismount
+		pc_setoption(pl_sd, pl_sd->sc.option & ~OPTION_RIDING);
+		clif_displaymessage(pl_sd->fd, msg_txt(218)); // Unmounted Peco.
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, "Player unmounted a peco.");
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Remove items from a player (now a char command) [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_delitem(const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct map_session_data *pl_sd;
+	char item_name[100];
+	int i, number = 0, item_id, item_position, count;
+	struct item_data *item_data;
+	char character[NAME_LENGTH];
+	char output[200];
+
+	nullpo_retr(-1, sd);
+
+	memset(character, '\0', sizeof(character));
+	memset(item_name, '\0', sizeof(item_name));
+	memset(output, '\0', sizeof(output));
+
+	if (!message || !*message || (
+		sscanf(message, "\"%99[^\"]\" %d %23[^\n]", item_name, &number, character) < 3 &&
+		sscanf(message, "%s %d %23[^\n]", item_name, &number, character) < 3
+	) || number < 1) {
+		clif_displaymessage(fd, "Please, enter an item name/id, a quantity and a player name (usage: #delitem <item_name_or_ID> <quantity> <player>).");
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	item_id = 0;
+	if ((item_data = itemdb_searchname(item_name)) != NULL ||
+	    (item_data = itemdb_exists(atoi(item_name))) != NULL)
+		item_id = item_data->nameid;
+	
+	if (item_id > 500) {
+		item_position = pc_search_inventory(pl_sd, item_id);
+		if (item_position >= 0) {
+			count = 0;
+			for(i = 0; i < number && item_position >= 0; i++) {
+
+				//Logs (A)dmins items [Lupus]
+				if(log_config.enable_logs&0x400)
+					log_pick_pc(pl_sd, "A", pl_sd->status.inventory[item_position].nameid, -1, &pl_sd->status.inventory[item_position]);
+
+				pc_delitem(pl_sd, item_position, 1, 0);
+				count++;
+				item_position = pc_search_inventory(pl_sd, item_id); // for next loop
+			}
+			sprintf(output, msg_txt(113), count); // %d item(s) removed by a GM.
+			clif_displaymessage(pl_sd->fd, output);
+			if (number == count)
+				sprintf(output, msg_txt(114), count); // %d item(s) removed from the player.
+			else
+				sprintf(output, msg_txt(115), count, count, number); // %d item(s) removed. Player had only %d on %d items.
+			clif_displaymessage(fd, output);
+		} else {
+			clif_displaymessage(fd, msg_txt(116)); // Character does not have the item.
+			return -1;
+		}
+	}
+	else
+	{
+		clif_displaymessage(fd, msg_txt(19)); // Invalid item ID or name.
+		return -1;
+	}
+
+	return 0;
+}
+
+//Added by Coltaro
+//We're using this function here instead of using time_t so that it only counts player's jail time when he/she's online (and since the idea is to reduce the amount of minutes one by one in status_change_timer...).
+//Well, using time_t could still work but for some reason that looks like more coding x_x
+static void get_jail_time(int jailtime, int* year, int* month, int* day, int* hour, int* minute) {
+	const int factor_year = 518400; //12*30*24*60 = 518400
+	const int factor_month = 43200; //30*24*60 = 43200
+	const int factor_day = 1440; //24*60 = 1440
+	const int factor_hour = 60;
+
+	*year = jailtime/factor_year;
+	jailtime -= *year*factor_year;
+	*month = jailtime/factor_month;
+	jailtime -= *month*factor_month;
+	*day = jailtime/factor_day;
+	jailtime -= *day*factor_day;
+	*hour = jailtime/factor_hour;
+	jailtime -= *hour*factor_hour;
+	*minute = jailtime;
+
+	*year = *year > 0? *year : 0;
+	*month = *month > 0? *month : 0;
+	*day = *day > 0? *day : 0;
+	*hour = *hour > 0? *hour : 0;
+	*minute = *minute > 0? *minute : 0;
+	return;
+}
+
+/*==========================================
+ * Jail a player for a certain amount of time [Coltaro]
+ *------------------------------------------
+ */
+int charcommand_jailtime(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+	{  
+	struct map_session_data* pl_sd;
+	int year, month, day, hour, minute;
+	char character[NAME_LENGTH];
+	char output[200];
+	memset(character, '\0', sizeof(character));
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #jailtime <player>).");
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if (pl_sd->sc.data[SC_JAILED].val1 == INT_MAX) {
+		clif_displaymessage(fd, "You have been jailed indefinitely.");
+		return 0;
+	}
+
+	if (pl_sd->sc.data[SC_JAILED].val1 <= 0) { // Was not jailed with @jailfor (maybe @jail? or warped there? or got recalled?)
+		clif_displaymessage(fd, "This player has been jailed for an unknown amount of time.");
+		return -1;
+	}
+	//Get remaining jail time
+	get_jail_time(pl_sd->sc.data[SC_JAILED].val1,&year,&month,&day,&hour,&minute);
+	sprintf(output,msg_txt(402),"This player will remain",year,month,day,hour,minute); 
+	clif_displaymessage(fd, output);
+
+	return 0;
+}
+
+/*==========================================
+ * Disguises a player [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_disguise(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int mob_id;
+	char mob_name[NAME_LENGTH];
+	struct map_session_data* pl_sd;
+	char character[NAME_LENGTH];
+	nullpo_retr(-1, sd);
+
+	memset(character, '\0', sizeof(character));
+	memset(mob_name, '\0', sizeof(mob_name));
+
+	if (!message || !*message || sscanf(message, "%s %23[^\n]", mob_name, character) < 2) {
+		clif_displaymessage(fd, "Please, enter a Monster/NPC name/id and a player name (usage: #disguise <monster_name_or_monster_ID> <player>).");
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if ((mob_id = atoi(mob_name)) > 0)
+	{	//Acquired an ID
+		if (!mobdb_checkid(mob_id) && !npcdb_checkid(mob_id))
+			mob_id = 0; //Invalid id for either mobs or npcs.
+	}	else	{ //Acquired a Name
+		if ((mob_id = mobdb_searchname(mob_name)) == 0)
+		{
+			struct npc_data* nd = npc_name2id(mob_name);
+			if (nd != NULL)
+				mob_id = nd->n;
+		}
+	}
+
+	if (mob_id == 0)
+	{
+		clif_displaymessage(fd, msg_txt(123)); // Monster/NPC name/id hasn't been found.
+		return -1;
+	}
+
+	if(pc_isriding(pl_sd))
+	{
+		clif_displaymessage(fd, msg_txt(228)); 	// Character cannot wear disguise while riding a PecoPeco.
+		return -1;
+	}
+
+	pc_disguise(pl_sd, mob_id);
+	clif_displaymessage(pl_sd->fd, msg_txt(122));	// Disguise applied.
+	if (pl_sd->fd != fd)
+		clif_displaymessage(fd, msg_txt(140)); // Character's disguise applied.
+	
+	
+	return 0;
+}
+
+/*==========================================
+ * Undisguises a player [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_undisguise(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char character[NAME_LENGTH];
+	struct map_session_data* pl_sd;
+	nullpo_retr(-1, sd);
+
+	memset(character, '\0', sizeof(character));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #undisguise <player>).");
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if (pl_sd->disguise)
+	{
+		pc_disguise(pl_sd, 0);
+		clif_displaymessage(pl_sd->fd, msg_txt(124));	// Disguise removed from character
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, msg_txt(141));	// Undisguise applied
+	}
+	else {
+		clif_displaymessage(fd, msg_txt(142)); // Character is not disguised.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Displays contents of target's cart [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_cart_list(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char outputtmp[200];
+	char output[200];
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	struct item_data *item_data, *item_temp;
+	int i, j, count = 0, counter = 0, counter2;
+	nullpo_retr(-1, sd);
+
+	memset(character, '\0', sizeof(character));
+	memset(output, '\0', sizeof(output));
+	memset(outputtmp, '\0', sizeof(outputtmp));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #cartlist <player>).");
+		return -1;
+	}
+
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	for (i = 0; i < MAX_CART; i++) {
+		if (pl_sd->status.cart[i].nameid > 0 && (item_data = itemdb_search(pl_sd->status.cart[i].nameid)) != NULL) {
+			counter = counter + pl_sd->status.cart[i].amount;
+			count++;
+			if (count == 1) {
+				sprintf(output, "------ Cart items list of '%s' ------", pl_sd->status.name);
+				clif_displaymessage(fd, output);
+			}
+			if (pl_sd->status.cart[i].refine)
+				sprintf(output, "%d %s %+d (%s %+d, id: %d)", pl_sd->status.cart[i].amount, item_data->name, pl_sd->status.cart[i].refine, item_data->jname, pl_sd->status.cart[i].refine, pl_sd->status.cart[i].nameid);
+			else
+				sprintf(output, "%d %s (%s, id: %d)", pl_sd->status.cart[i].amount, item_data->name, item_data->jname, pl_sd->status.cart[i].nameid);
+			clif_displaymessage(fd, output);
+			memset(output, '\0', sizeof(output));
+			counter2 = 0;
+			for (j = 0; j < item_data->slot; j++) {
+				if (pl_sd->status.cart[i].card[j]) {
+					if ( (item_temp = itemdb_search(pl_sd->status.cart[i].card[j])) != NULL) {
+						if (output[0] == '\0')
+							sprintf(outputtmp, " -> (card(s): #%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
+						else
+							sprintf(outputtmp, "#%d %s (%s), ", ++counter2, item_temp->name, item_temp->jname);
+						strcat(output, outputtmp);
+					}
+				}
+			}
+			if (output[0] != '\0') {
+				output[strlen(output) - 2] = ')';
+				output[strlen(output) - 1] = '\0';
+				clif_displaymessage(fd, output);
+			}
+		}
+	}
+	if (count == 0)
+		clif_displaymessage(fd, "No item found in the cart of this player.");
+	else {
+		sprintf(output, "%d item(s) found in %d kind(s) of items.", counter, count);
+		clif_displaymessage(fd, output);
+	}
+
+	return 0;
+}
+
+static int charcommand_stopattack(struct block_list *bl,va_list ap)
+{
+	struct unit_data *ud = unit_bl2ud(bl);
+	int id = va_arg(ap, int);
+	if (ud && ud->attacktimer != INVALID_TIMER && (!id || id == ud->target))
+	{
+		unit_stop_attack(bl);
+		return 1;
+	}
+	return 0;
+}
+
+/*==========================================
+ * Enable a player to kill players even when not in pvp [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_killer(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	memset(character, '\0', sizeof(character));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #killer <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	pl_sd->state.killer = !pl_sd->state.killer;
+
+	if(pl_sd->state.killer)
+	{
+		clif_displaymessage(pl_sd->fd, msg_txt(241));
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, "Target player can now kill anybody.");
+	}
+	else
+	{
+		clif_displaymessage(pl_sd->fd, msg_txt(287));
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, msg_txt(287));
+		pc_stop_attack(pl_sd);
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Enable other players to kill target even when not in pvp [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_killable(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	memset(character, '\0', sizeof(character));
+	
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #killable <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	pl_sd->state.killable = !pl_sd->state.killable;
+
+	if(pl_sd->state.killable)
+	{
+		clif_displaymessage(pl_sd->fd, msg_txt(242));
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, msg_txt(289));
+	}
+	else
+	{
+		clif_displaymessage(pl_sd->fd, msg_txt(288));
+		if (pl_sd->fd != fd)
+			clif_displaymessage(fd, msg_txt(290));
+		map_foreachinrange(charcommand_stopattack,&pl_sd->bl, AREA_SIZE, BL_CHAR, pl_sd->bl.id);
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Refreshes target [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_refresh(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	memset(character, '\0', sizeof(character));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #refresh <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	clif_refresh(pl_sd);
+	return 0;
+}
+
+
+/*==========================================
+ * View target's exp [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_exp(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char output[200];
+	double nextb, nextj;
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	
+	memset(character, '\0', sizeof(character));
+	memset(output, '\0', sizeof(output));
+	
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #exp <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	nextb = pc_nextbaseexp(pl_sd);
+	if (nextb)
+		nextb = pl_sd->status.base_exp*100.0/nextb;
+	
+	nextj = pc_nextjobexp(pl_sd);
+	if (nextj)
+		nextj = pl_sd->status.job_exp*100.0/nextj;
+	
+	sprintf(output, "Base Level: %d (%.3f%%) | Job Level: %d (%.3f%%)", pl_sd->status.base_level, nextb, pl_sd->status.job_level, nextj);
+	clif_displaymessage(fd, output);
+	return 0;
+}
+
+/*==========================================
+ * Makes monsters ignore target [HiddenDragon]
+ *------------------------------------------
+ */
+ 
+int charcommand_monsterignore(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	memset(character, '\0', sizeof(character));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #monsterignore/#battleignore <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if (!pl_sd->state.monster_ignore) {
+		pl_sd->state.monster_ignore = 1;
+		clif_displaymessage(pl_sd->fd, "You are now inmune to attacks.");
+		if (fd != pl_sd->fd)
+			clif_displaymessage(pl_sd->fd, "Target player is now immune to attacks.");
+	} else {
+		sd->state.monster_ignore = 0;
+		clif_displaymessage(sd->fd, "You are no longer immune to attacks.");
+		if (fd != pl_sd->fd)
+			clif_displaymessage(pl_sd->fd, "Target player is no longer immune to attacks.");
+
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Change target's size [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_size(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int size=0;
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	memset(character, '\0', sizeof(character));
+
+	if (!message || !*message || sscanf(message, "%d %23[^\n]", &size, character) < 2) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #size <0-2> <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if(pl_sd->state.size) {
+		pl_sd->state.size=0;
+		pc_setpos(pl_sd, pl_sd->mapindex, pl_sd->bl.x, pl_sd->bl.y, 3);
+	}
+
+	if(size==1) {
+		pl_sd->state.size=1;
+		clif_specialeffect(&pl_sd->bl,420,AREA);
+		clif_displaymessage(fd, "Size changed."); 
+		if (fd != pl_sd->fd)
+			clif_displaymessage(pl_sd->fd, "Size changed."); 
+	} else if(size==2) {
+		pl_sd->state.size=2;
+		clif_specialeffect(&pl_sd->bl,422,AREA);
+		clif_displaymessage(fd, "Size changed."); 
+		if (fd != pl_sd->fd)
+			clif_displaymessage(pl_sd->fd, "Size changed."); 
+	}
+	else
+	{
+		clif_displaymessage(fd, "Size restored."); 
+		if (fd != pl_sd->fd)
+			clif_displaymessage(pl_sd->fd, "Size restored."); 
+	}
+
+
+	return 0;
+}
+
+/*==========================================
+ * Level up target's homunculus [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_homlevel(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	TBL_HOM * hd;
+	int level = 0, i = 0;
+
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	memset(character, '\0', sizeof(character));
+
+	if (!message || !*message || sscanf(message, "%d %23[^\n]", &level, character) < 2) {
+		clif_displaymessage(fd, "Please, enter a player name and level (usage: #homlevel <# of levels> <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+		
+	if ( !merc_is_hom_active(pl_sd->hd) )
+	{
+		clif_displaymessage(fd, "Target player does not have a homunculus."); 
+		return 1;
+	}
+
+	hd = pl_sd->hd;
+	
+	for (i = 1; i <= level && hd->exp_next; i++){
+		hd->homunculus.exp += hd->exp_next;
+		merc_hom_levelup(hd);
+	}
+	status_calc_homunculus(hd,0);
+	status_percent_heal(&hd->bl, 100, 100);
+	clif_misceffect2(&hd->bl,568);
+	clif_displaymessage(pl_sd->fd, "Homunculus level changed."); 
+	if (pl_sd->fd != fd)
+		clif_displaymessage(fd, "Player's homunculus level changed.");
+
+	return 0;
+}
+
+/*==========================================
+ * Evolve target's homunculus [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_homevolution(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	memset(character, '\0', sizeof(character));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #homevolution <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	if (pl_sd->hd)
+	{
+		if (pl_sd->hd->homunculusDB->evo_class)
+		{
+			merc_hom_evolution(pl_sd->hd);
+			clif_displaymessage(pl_sd->fd, "Homunculus evolution initiated."); 
+			if (pl_sd->fd != fd)
+				clif_displaymessage(fd, "Homunculus evolution initiated."); 
+			return 0;
+		}
+		clif_displaymessage(fd, "Target homunculus cannot evolve."); 
+		return -1;
+	}
+	else
+	{
+		clif_displaymessage(fd, "Target player does not have a homunculus."); 
+	}
+	return -1;
+}
+
+/*==========================================
+ * Create a homunculus for target [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_makehomun(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int homunid;
+	
+	char character[NAME_LENGTH];
+	char output[200];
+	struct map_session_data *pl_sd;
+	memset(character, '\0', sizeof(character));
+	memset(output, '\0', sizeof(output));
+
+	if (!message || !*message || sscanf(message, "%d %23[^\n]", &homunid, character) < 2) {
+		sprintf(output, "Please, enter a player name (usage: #makehomun <homunculus id: %d-%d> <player>).", HM_CLASS_BASE, HM_CLASS_BASE + MAX_HOMUNCULUS_CLASS - 1);
+		clif_displaymessage(fd, output);
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	
+	if( homunid < HM_CLASS_BASE || homunid > HM_CLASS_BASE + MAX_HOMUNCULUS_CLASS - 1 )
+	{
+		clif_displaymessage(fd, "Invalid homunculus ID."); 
+		return -1;
+	}
+	
+	if(pl_sd->status.hom_id == 0)
+	{
+		merc_create_homunculus_request(pl_sd,homunid);
+	}
+	else
+	{
+		clif_displaymessage(fd, "Target player already has a homunculus.");
+	}
+	return 0;
+}
+
+/*==========================================
+ * Change Target's homunculus' friendlyness [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_homfriendly(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int friendly = 0;
+
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	memset(character, '\0', sizeof(character));
+
+	if (!message || !*message || sscanf(message, "%d %23[^\n]", &friendly, character) < 2) {
+		clif_displaymessage(fd, "Please, enter a player name and friendly value (usage: #homfriendly <0-1000> <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if (merc_is_hom_active(pl_sd->hd)) {
+		if (friendly > 0 && friendly <= 1000) {
+			pl_sd->hd->homunculus.intimacy = friendly * 100 ;
+			clif_send_homdata(pl_sd,SP_INTIMATE,friendly);
+			clif_displaymessage(pl_sd->fd, "Homunculus friendly value changed."); 
+			if (fd != pl_sd->fd)
+				clif_displaymessage(fd, "Homunculus friendly value changed."); 
+		} else {
+			clif_displaymessage(fd, "Invalid friendly value."); 
+		}
+	}
+	else
+	{
+		clif_displaymessage(fd, "Target player's homunculus does not exist."); 
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
+ * Modify target's homunculus hunger [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_homhungry(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	int hungry = 0;
+
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	memset(character, '\0', sizeof(character));
+
+	if (!message || !*message || sscanf(message, "%d %23[^\n]", &hungry, character) < 2) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #homhungry <0-100> <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if (pl_sd->status.hom_id > 0 && pl_sd->hd) {
+		struct homun_data *hd = pl_sd->hd;
+		if (hungry >= 0 && hungry <= 100) {
+			hd->homunculus.hunger = hungry;
+			clif_send_homdata(pl_sd,SP_HUNGRY,hd->homunculus.hunger);
+			clif_displaymessage(pl_sd->fd, "Homunculus hungry value changed."); 
+			if (fd != pl_sd->fd)
+				clif_displaymessage(fd, "Homunculus hungry value changed."); 
+		} else {
+			clif_displaymessage(fd, "Invalid hungry value."); 
+			return -1;
+		}
+	}
+	else
+	{
+		clif_displaymessage(fd, "Target player does not have a homunculus."); 
+		return -1;
+	}
+	
+
+	return 0;
+}
+
+/*==========================================
+ * Show target's homunculus stats [HiddenDragon]
+ *------------------------------------------
+ */
+int charcommand_hominfo(
+	const int fd, struct map_session_data* sd,
+	const char* command, const char* message)
+{
+	struct homun_data *hd;
+	struct status_data *status;
+	char output[200];
+	char character[NAME_LENGTH];
+	struct map_session_data *pl_sd;
+	memset(character, '\0', sizeof(character));
+	memset(output, '\0', sizeof(output));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", character) < 1) {
+		clif_displaymessage(fd, "Please, enter a player name (usage: #hominfo <player>).");
+		return -1;
+	}
+	
+	if ( (pl_sd = map_nick2sd(character)) == NULL )
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+
+	if ( pc_isGM(sd) < pc_isGM(pl_sd) )
+	{
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+
+	if(!merc_is_hom_active(pl_sd->hd))
+		return -1;
+	hd = pl_sd->hd;
+	status = status_get_status_data(&hd->bl);
+	clif_displaymessage(fd, "Homunculus stats :");
+
+	snprintf(output, sizeof(output) ,"HP : %d/%d - SP : %d/%d",
+		status->hp, status->max_hp, status->sp, status->max_sp);
+	clif_displaymessage(fd, output);
+
+	snprintf(output, sizeof(output) ,"ATK : %d - MATK : %d~%d",
+		status->rhw.atk2 +status->batk, status->matk_min, status->matk_max);
+	clif_displaymessage(fd, output);
+
+	snprintf(output, sizeof(output) ,"Hungry : %d - Intimacy : %u",
+		hd->homunculus.hunger, hd->homunculus.intimacy/100);
+	clif_displaymessage(fd, output);
+
+	snprintf(output, sizeof(output) ,
+		"Stats: Str %d / Agi %d / Vit %d / Int %d / Dex %d / Luk %d",
+		status->str, status->agi, status->vit,
+		status->int_, status->dex, status->luk);
+	clif_displaymessage(fd, output);
 
 	return 0;
 }

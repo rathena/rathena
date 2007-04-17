@@ -13,7 +13,6 @@ enum CharCommandType {
 	CharCommandStats,
 	CharCommandOption,
 	CharCommandSave,
-	CharCommandStatsAll,
 	CharCommandSpiritball,
 	CharCommandItemList,
 	CharCommandEffect,
@@ -34,18 +33,49 @@ enum CharCommandType {
 	CharCommandChangeSex,
 	CharCommandFeelReset, // Komurka
 	CharCommandHelp,
-
-#ifdef TXT_ONLY
-/* TXT_ONLY */
-
-/* TXT_ONLY */
-#else
-/* SQL-only */
-
-/* SQL Only */
-#endif
-	
-	// End. No more commans after this line.
+	CharCommandLoad,
+	CharCommandSpeed,
+	CharCommandStorage,
+	CharCommandGStorage,
+	CharCommandHide,
+	CharCommandAlive,
+	CharCommandHeal,
+	CharCommandItem2,
+	CharCommandItemReset,
+	CharCommandRefine,
+	CharCommandProduce,
+	CharCommandStrength,
+	CharCommandAgility,
+	CharCommandVitality,
+	CharCommandIntelligence,
+	CharCommandDexterity,
+	CharCommandLuck,
+	CharCommandGuildLevelUp,
+	CharCommandHatch,
+	CharCommandPetHungry,
+	CharCommandAllSkill,
+	CharCommandDye,
+	CharCommandHStyle,
+	CharCommandHColor,
+	CharCommandAllStats,
+	CharCommandMountPeco,
+	CharCommandDelItem,
+	CharCommandJailTime,
+	CharCommandDisguie,
+	CharCommandUnDisguise,
+	CharCommandCartList,
+	CharCommandKiller,
+	CharCommandKillable,
+	CharCommandRefresh,
+	CharCommandExp,
+	CharCommandMonsterIgnore,
+	CharCommandSize,
+	CharCommandHomLevel,
+	CharCommandHomEvolve,
+	CharCommandHomFriendly,
+	CharCommandHomHungry,
+	CharCommandHomInfo,
+	// No more commands after this line
 	CharCommand_Unknown,
 	CharCommand_MAX
 };

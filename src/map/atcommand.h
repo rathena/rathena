@@ -73,7 +73,7 @@ enum AtCommandType {
 	AtCommand_Produce,
 	AtCommand_Memo,
 	AtCommand_GAT,
-	AtCommand_Packet,
+	AtCommand_DisplayStatus,
 	AtCommand_StatusPoint,
 	AtCommand_SkillPoint,
 	AtCommand_Zeny,
@@ -90,9 +90,6 @@ enum AtCommandType {
 	AtCommand_PetHungry,
 	AtCommand_PetRename,
 	AtCommand_Recall,
-	AtCommand_Revive,
-	AtCommand_CharacterStatsAll,
-	AtCommand_CharacterLoad,
 	AtCommand_Night,
 	AtCommand_Day,
 	AtCommand_Doom,
@@ -132,7 +129,6 @@ enum AtCommandType {
 	AtCommand_CharUnBlock, // by Yor
 	AtCommand_CharUnBan, // by Yor
 	AtCommand_MountPeco, // by Valaris
-	AtCommand_CharMountPeco, // by Yor
 	AtCommand_GuildSpy, // [Syrus22]
 	AtCommand_PartySpy, // [Syrus22]
 	AtCommand_RepairAll, // [Valaris]
@@ -144,20 +140,15 @@ enum AtCommandType {
 	AtCommand_Loadnpc,
 	AtCommand_Unloadnpc,
 	AtCommand_ServerTime, // by Yor
-	AtCommand_CharDelItem, // by Yor
 	AtCommand_Jail, // by Yor
 	AtCommand_UnJail, // by Yor
 	AtCommand_JailFor, // Meruru
 	AtCommand_JailTime, // Coltaro
-	AtCommand_CharJailTime, // Coltaro
 	AtCommand_Disguise, // [Valaris]
 	AtCommand_UnDisguise, // by Yor
-	AtCommand_CharDisguise, // Kalaspuff
-	AtCommand_CharUnDisguise, // Kalaspuff
 	AtCommand_EMail, // by Yor
 	AtCommand_Hatch,
 	AtCommand_Effect, // by Apple
-	AtCommand_Char_Cart_List, // by Yor
 	AtCommand_AddWarp, // by MouseJstr
 	AtCommand_Follow, // by MouseJstr
 	AtCommand_SkillOn, // by MouseJstr
@@ -165,11 +156,8 @@ enum AtCommandType {
 	AtCommand_Killer, // by MouseJstr
 	AtCommand_NpcMove, // by MouseJstr
 	AtCommand_Killable, // by MouseJstr
-	AtCommand_CharKillable, // by MouseJstr
 	AtCommand_Dropall, // by MouseJstr
-	AtCommand_Chardropall, // by MouseJstr
 	AtCommand_Storeall, // by MouseJstr
-	AtCommand_Charstoreall, // by MouseJstr
 	AtCommand_Skillid, // by MouseJstr
 	AtCommand_Useskill, // by MouseJstr
 	AtCommand_DisplaySkill,
@@ -203,41 +191,17 @@ enum AtCommandType {
 	AtCommand_NpcTalk,
 	AtCommand_PetTalk,
 	AtCommand_Users,
-	// SQL-only commands start
-#ifndef TXT_ONLY
-	AtCommand_CheckMail, // [Valaris]
-	AtCommand_ListMail, // [Valaris]
-	AtCommand_ListNewMail, // [Valaris]
-	AtCommand_ReadMail, // [Valaris]
-	AtCommand_SendMail, // [Valaris]
-	AtCommand_DeleteMail, // [Valaris]
-	AtCommand_SendPriorityMail, // [Valaris]
-	AtCommand_RefreshOnline, // [Valaris]
-	// SQL-only commands end
-#endif
 	AtCommand_SkillTree, // by MouseJstr
 	AtCommand_Marry, // by MouseJstr
 	AtCommand_Divorce, // by MouseJstr
-	AtCommand_Grind, // by MouseJstr
-	AtCommand_Grind2, // by MouseJstr
-
 	AtCommand_Me, //added by massdriller, code by lordalfa
-
 	AtCommand_DMStart, // by MouseJstr
 	AtCommand_DMTick, // by MouseJstr
-
-	AtCommand_JumpToId, // by Dino9021
 	AtCommand_JumpToId2, // by Dino9021
-	AtCommand_RecallId, // by Dino9021
 	AtCommand_RecallId2, // by Dino9021
-	AtCommand_KickId, // by Dino9021
 	AtCommand_KickId2, // by Dino9021
-	AtCommand_ReviveId, // by Dino9021
 	AtCommand_ReviveId2, // by Dino9021
-	AtCommand_KillId, // by Dino9021
 	AtCommand_KillId2, // by Dino9021
-	AtCommand_CharKillableId, // by Dino9021
-	AtCommand_CharKillableId2, // by Dino9021
 	AtCommand_Sound,
 	AtCommand_UndisguiseAll,
 	AtCommand_DisguiseAll,
@@ -247,10 +211,8 @@ enum AtCommandType {
 	AtCommand_Exp,	// by Skotlex
 	AtCommand_Adopt, // by Veider
 	AtCommand_Version, // by Ancyker
-
 	AtCommand_MuteArea, // MouseJstr
 	AtCommand_Rates, // MouseJstr
-
 	AtCommand_ItemInfo, // Lupus
 	AtCommand_WhoDrops, // Skotlex
 	AtCommand_MapFlag, // Lupus
@@ -264,16 +226,13 @@ enum AtCommandType {
 	AtCommand_ChangeGM,//durf
 	AtCommand_ChangeLeader,
 	AtCommand_PartyOption,
-	
 	AtCommand_Invite, // By LuzZza
 	AtCommand_Duel, // By LuzZza
 	AtCommand_Leave, // By LuzZza
 	AtCommand_Accept, // By LuzZza
 	AtCommand_Reject, // By LuzZza
-	
 	AtCommand_Away, // LuzZza
 	AtCommand_Main, // LuzZza
-
 	AtCommand_Clone, // [Valaris]
 	AtCommand_ToNPC, // LuzZza
 	AtCommand_Commands, // [Skotlex]
@@ -289,7 +248,21 @@ enum AtCommandType {
 	AtCommand_HomStats, //[Skotlex]
 	AtCommand_HomShuffle, //[Skotlex]
 	AtCommand_ShowMobs, //KarLaeda
-	// end <- Ahem, guys, don't place AtCommands after AtCommand_Unknown! [Skotlex]
+	AtCommand_FeelReset, //[HiddenDragon]
+	AtCommand_HappyHappyJoyJoy,
+	// SQL-only commands start
+#ifndef TXT_ONLY
+	AtCommand_CheckMail, // [Valaris]
+	AtCommand_ListMail, // [Valaris]
+	AtCommand_ListNewMail, // [Valaris]
+	AtCommand_ReadMail, // [Valaris]
+	AtCommand_SendMail, // [Valaris]
+	AtCommand_DeleteMail, // [Valaris]
+	AtCommand_SendPriorityMail, // [Valaris]
+	AtCommand_RefreshOnline, // [Valaris]
+	// SQL-only commands end
+#endif
+	// No more commands after this line
 	AtCommand_Unknown,
 	AtCommand_MAX
 };
