@@ -5,25 +5,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <ctype.h> // tolower()
 
 #include "grfio.h"
-#include "../zlib/unzip.h"
+#include <zlib.h>
 
-#define CHUNK 16384
 
-#ifdef __WIN32
-	#include "../zlib/zlib.h"
-	#include "../zlib/iowin32.h"
-#else
-	#include <zlib.h>
+#ifndef __WIN32
 	#define strcmpi strcasecmp
 #endif
-
-typedef	unsigned char	BYTE;
-typedef	unsigned short	WORD;
-typedef	unsigned long	DWORD;
-
-static char data_dir[1024] = "";	// "../";
+	
 
 //----------------------------
 //	file entry table struct
@@ -51,19 +42,22 @@ typedef struct _FILELIST {
 //#define GRFIO_LOCAL
 
 // stores info about every loaded file
-static FILELIST* filelist		= NULL;
-static int	filelist_entrys		= 0;
-static int	filelist_maxentry	= 0;
+FILELIST* filelist		= NULL;
+int filelist_entrys		= 0;
+int filelist_maxentry	= 0;
 
 // stores grf file names
-static char** gentry_table		= NULL;
-static int gentry_entrys		= 0;
-static int gentry_maxentry		= 0;
+char** gentry_table		= NULL;
+int gentry_entrys		= 0;
+int gentry_maxentry		= 0;
+
+// the path to the data directory
+char data_dir[1024] = "";
 
 //----------------------------
 //	file list hash table
 //----------------------------
-static int filelist_hash[256];
+int filelist_hash[256];
 
 //----------------------------
 //	grf decode data table
@@ -112,31 +106,27 @@ static unsigned char NibbleData[4][64]={
 		0xa0, 0x9f, 0xf6, 0x5c, 0x6a, 0x09, 0x8d, 0xf0,  0x0f, 0xe3, 0x53, 0x25, 0x95, 0x36, 0x28, 0xcb,
 	}
 };
-/*-----------------
- *	long data get
- */
+
+// little endian char array to uint conversion
 static unsigned int getlong(unsigned char* p)
 {
-	return   p[0]
-		| p[1] << 0x08
-		| p[2] << 0x10
-		| p[3] << 0x18; // Shinomori
+	return (p[0] | p[1] << 0x08 | p[2] << 0x10 | p[3] << 0x18);
 }
 
 /*==========================================
  *	Grf data decode : Subs
  *------------------------------------------*/
-static void NibbleSwap(BYTE* Src, int len)
+static void NibbleSwap(unsigned char* Src, int len)
 {
 	for(;0<len;len--,Src++) {
 		*Src = (*Src>>4) | (*Src<<4);
 	}
 }
 
-static void BitConvert(BYTE* Src, char* BitSwapTable)
+static void BitConvert(unsigned char* Src, char* BitSwapTable)
 {
 	int lop,prm;
-	BYTE tmp[8];
+	unsigned char tmp[8];
 	memset(tmp,0,8);
 	for(lop=0;lop!=64;lop++) {
 		prm = BitSwapTable[lop]-1;
@@ -147,10 +137,10 @@ static void BitConvert(BYTE* Src, char* BitSwapTable)
 	memcpy(Src,tmp,8);
 }
 
-static void BitConvert4(BYTE* Src)
+static void BitConvert4(unsigned char* Src)
 {
 	int lop,prm;
-	BYTE tmp[8];
+	unsigned char tmp[8];
 	tmp[0] = ((Src[7]<<5) | (Src[4]>>3)) & 0x3f;	// ..0 vutsr
 	tmp[1] = ((Src[4]<<1) | (Src[5]>>7)) & 0x3f;	// ..srqpo n
 	tmp[2] = ((Src[4]<<5) | (Src[5]>>3)) & 0x3f;	// ..o nmlkj
@@ -165,7 +155,7 @@ static void BitConvert4(BYTE* Src)
 		         | (NibbleData[lop][tmp[lop*2+1]] & 0x0f);
 	}
 
-	*(DWORD*)(tmp+4)=0;
+	memset(tmp+4,0,4);
 	for(lop=0;lop!=32;lop++) {
 		prm = BitSwapTable3[lop]-1;
 		if (tmp[prm >> 3] & BitMaskTable[prm & 7]) {
@@ -178,25 +168,25 @@ static void BitConvert4(BYTE* Src)
 	Src[3] ^= tmp[7];
 }
 
-static void decode_des_etc(BYTE* buf, int len, int type, int cycle)
+static void decode_des_etc(unsigned char* buf, size_t len, int type, int cycle)
 {
-	int lop,cnt=0;
+	size_t lop,cnt=0;
 	if(cycle<3) cycle=3;
 	else if(cycle<5) cycle++;
 	else if(cycle<7) cycle+=9;
 	else cycle+=15;
 
-	for(lop=0;lop*8<len;lop++,buf+=8) {
-		if(lop<20 || (type==0 && lop%cycle==0)){ // des
+	for(lop=0; lop*8<len; lop++, buf+=8)
+	{
+		if(lop<20 || (type==0 && lop%cycle==0)) { // des
 			BitConvert(buf,BitSwapTable1);
 			BitConvert4(buf);
 			BitConvert(buf,BitSwapTable2);
 		} else {
-			if(cnt==7 && type==0){
-				BYTE a;
-				BYTE tmp[8];
-				*(DWORD*)tmp     = *(DWORD*)buf;
-				*(DWORD*)(tmp+4) = *(DWORD*)(buf+4);
+			if(cnt==7 && type==0) {
+				unsigned char a;
+				unsigned char tmp[8];
+				memcpy(tmp,buf,8);
 				cnt=0;
 				buf[0]=tmp[3];
 				buf[1]=tmp[4];
@@ -291,68 +281,6 @@ int encode_zip(unsigned char* dest, unsigned long* destLen, const unsigned char*
 	return err;
 }
 
-/* ===================================
-* Unzips a file. 1: success, 0: error
-* Adapted from miniunz.c [Celest]
-* Version 1.01b, May 30th, 2004
-* Copyright (C) 1998-2004 Gilles Vollant
-* -------------------------------------*/
-int deflate_file (const char* source, const char* filename)
-{
-#ifdef _WIN32
-	zlib_filefunc_def ffunc;
-#endif
-	unzFile uf = NULL;
-	int err = UNZ_OK;
-	uInt size_buf = 8192;
-	FILE *fout = NULL;
-	void *buf;
-
-#ifdef _WIN32
-	fill_win32_filefunc(&ffunc);
-	uf = unzOpen2(source, &ffunc);
-#else
-	uf = unzOpen(source);
-#endif
-
-	if (uf == NULL)
-		return 0;
-
-	if (unzLocateFile(uf, filename, 0) != UNZ_OK)
-		return 0;
-
-	err = unzOpenCurrentFilePassword(uf, NULL);
-
-	fout = fopen(filename,"wb");
-	if (fout == NULL)
-		return 0;
-
-	buf = (void *)malloc(size_buf);
-	do {
-		err = unzReadCurrentFile(uf, buf, size_buf);
-		if (err < 0)
-			break;
-		if (err > 0 &&
-			fwrite(buf, err, 1, fout)!=1)
-		{
-			err = UNZ_ERRNO;
-			break;
-		}
-	} while (err > 0);
-	
-	if (fout) fclose(fout);
-
-	if (err == UNZ_OK) {
-		err = unzCloseCurrentFile (uf);
-		free(buf);
-		return (err == UNZ_OK);
-	}
-	
-	unzCloseCurrentFile(uf); /* don't lose the error */
-
-	return 0;
-}
-
 unsigned long grfio_crc32 (const unsigned char* buf, unsigned int len)
 {
 	return crc32(crc32(0L, Z_NULL, 0), buf, len);
@@ -362,9 +290,15 @@ unsigned long grfio_crc32 (const unsigned char* buf, unsigned int len)
  ***                File List Subroutines                ***
  ***********************************************************/
 
-/*==========================================
- *	File List : Hash make
- *------------------------------------------*/
+// initializes the table that holds the first elements of all hash chains
+static void hashinit(void)
+{
+	int i;
+	for (i = 0; i < 256; i++)
+		filelist_hash[i] = -1;
+}
+
+// hashes a filename string into a number from {0..255}
 static int filehash(char* fname)
 {
 	unsigned int hash = 0;
@@ -375,19 +309,7 @@ static int filehash(char* fname)
 	return hash & 255;
 }
 
-/*==========================================
- *	File List : Hash initalize
- *------------------------------------------*/
-static void hashinit(void)
-{
-	int i;
-	for (i = 0; i < 256; i++)
-		filelist_hash[i] = -1;
-}
-
-/*==========================================
- *	File List : File find
- *------------------------------------------*/
+// finds a FILELIST entry with the specified file name
 static FILELIST* filelist_find(char* fname)
 {
 	int hash, index;
@@ -413,14 +335,12 @@ char* grfio_find_file(char* fname)
 }
 */
 
-/*==========================================
- *	File List : Filelist add
- *------------------------------------------*/
-#define	FILELIST_ADDS	1024	// number increment of file lists `
-
+// adds a FILELIST entry into the list of loaded files
 static FILELIST* filelist_add(FILELIST* entry)
 {
 	int hash;
+
+	#define	FILELIST_ADDS	1024	// number increment of file lists `
 
 	if (filelist_entrys >= filelist_maxentry) {
 		filelist = (FILELIST *)realloc(filelist, (filelist_maxentry + FILELIST_ADDS) * sizeof(FILELIST));
@@ -439,7 +359,7 @@ static FILELIST* filelist_add(FILELIST* entry)
 	return &filelist[filelist_entrys - 1];
 }
 
-// adds a new entry or overwrites an existing one
+// adds a new FILELIST entry or overwrites an existing one
 static FILELIST* filelist_modify(FILELIST* entry)
 {
 	FILELIST* fentry = filelist_find(entry->fn);
@@ -502,9 +422,7 @@ int grfio_size(char* fname)
 }
 */
 
-/*==========================================
- *	Grfio : Resource file read & size get
- *------------------------------------------*/
+// reads a file into a newly allocated buffer (from grf or data directory)
 void* grfio_reads(char* fname, int* size)
 {
 	FILE* in;
@@ -527,10 +445,10 @@ void* grfio_reads(char* fname, int* size)
 			if (entry != NULL && entry->gentry == 0) {
 				lentry.declen = entry->declen;
 			} else {
-				fseek(in,0,2);	// SEEK_END
+				fseek(in,0,SEEK_END);
 				lentry.declen = ftell(in);
 			}
-			fseek(in,0,0);	// SEEK_SET
+			fseek(in,0,SEEK_SET);
 			buf2 = (unsigned char *)malloc(lentry.declen + 1024);
 			fread(buf2, 1, lentry.declen, in);
 			fclose(in);
@@ -542,6 +460,7 @@ void* grfio_reads(char* fname, int* size)
 			if (entry != NULL && entry->gentry < 0) {
 				entry->gentry = -entry->gentry;	// local file checked
 			} else {
+				printf("%s not found (grfio_reads - local file %s)\n", fname, lfname);
 				return NULL;
 			}
 		}
@@ -597,9 +516,8 @@ static char* decode_filename(unsigned char* buf, int len)
 	return (char*)buf;
 }
 
-/*==========================================
- * Grfio : Entry table read
- *------------------------------------------*/
+// loads all entries in the specified grf file into the filelist
+// gentry - index of the grf file name in the gentry_table
 static int grfio_entryread(char* grfname, int gentry)
 {
 	FILE* fp;
@@ -616,12 +534,12 @@ static int grfio_entryread(char* grfname, int gentry)
 	} else
 		printf("GRF data file found: '%s'\n",grfname);
 
-	fseek(fp,0,2);	// SEEK_END
+	fseek(fp,0,SEEK_END);
 	grf_size = ftell(fp);
-	fseek(fp,0,0);	// SEEK_SET
+	fseek(fp,0,SEEK_SET);
 	fread(grf_header,1,0x2e,fp);
 	if (strcmp((const char *) grf_header,"Master of Magic") ||
-		fseek(fp,getlong(grf_header+0x1e),1))	// SEEK_CUR
+		fseek(fp,getlong(grf_header+0x1e),SEEK_CUR))
 	{
 		fclose(fp);
 		printf("GRF %s read error\n", grfname);
@@ -698,7 +616,7 @@ static int grfio_entryread(char* grfname, int gentry)
 		rSize = getlong(eheader);	// Read Size
 		eSize = getlong(eheader+4);	// Extend Size
 
-		if ((long)rSize > grf_size-ftell(fp)) { // Warning fix [Lance]
+		if ((long)rSize > grf_size-ftell(fp)) {
 			fclose(fp);
 			printf("Illegal data format: GRF compress entry size\n");
 			return 4;
@@ -715,7 +633,7 @@ static int grfio_entryread(char* grfname, int gentry)
 		entrys = getlong(grf_header+0x26) - 7;
 
 		// Get an entry
-		for(entry = 0, ofs = 0; entry < entrys; entry++){
+		for(entry = 0, ofs = 0; entry < entrys; entry++) {
 			int ofs2, srclen, srccount, type;
 			FILELIST aentry;
 
@@ -725,7 +643,6 @@ static int grfio_entryread(char* grfname, int gentry)
 				free(grf_filelist);
 				exit(1);
 			}
-			//ofs2 = ofs+strlen((char*)(grf_filelist+ofs))+1;
 			ofs2 = ofs + (int)strlen(fname)+1;
 			type = grf_filelist[ofs2+12];
 			if (type == 1 || type == 3 || type == 5) {
@@ -799,7 +716,7 @@ static void grfio_resourcecheck(void)
 					FILELIST fentry;
 					memcpy(&fentry, entry, sizeof(FILELIST));
 					strncpy(fentry.fn, src, sizeof(fentry.fn) - 1);
-					fentry.fnd = grfio_alloc_ptr(dst);
+					fentry.fnd = strdup(dst);
 					filelist_modify(&fentry);
 				}
 			}
@@ -808,13 +725,12 @@ static void grfio_resourcecheck(void)
 		return;	// we're done here!
 	}
 	
-	// read resnametable from loaded GRF's, only if it cannot be
-	// loaded from the data directory
+	// read resnametable from loaded GRF's, only if it cannot be loaded from the data directory
 	buf = (char *)grfio_reads("data\\resnametable.txt", &size);
 	if (buf) {
 		buf[size] = 0;
-		ptr = buf;
 
+		ptr = buf;
 		while (ptr - buf < size) {
 			if (sscanf(ptr, "%[^#]#%[^#]#", w1, w2) == 2 &&
 				(strstr(w2, ".gat") || strstr(w2, ".rsw")))
@@ -826,7 +742,7 @@ static void grfio_resourcecheck(void)
 					FILELIST fentry;
 					memcpy(&fentry, entry, sizeof(FILELIST));
 					strncpy(fentry.fn, src, sizeof(fentry.fn) - 1);
-					fentry.fnd = grfio_alloc_ptr(dst);
+					fentry.fnd = strdup(dst);
 					filelist_modify(&fentry);
 				}
 			}
@@ -840,21 +756,11 @@ static void grfio_resourcecheck(void)
 
 }
 
-/*==========================================
- * Grfio : Resource add
- *------------------------------------------*/
-#define	GENTRY_ADDS	4	// The number increment of gentry_table entries
-
+// reads a grf file and adds it to the list
 static int grfio_add(char* fname)
 {
-	grfio_alloc_ptr(fname);
+	#define	GENTRY_ADDS	4	// The number increment of gentry_table entries
 
-	return grfio_entryread(fname, gentry_entrys - 1);
-}
-
-// adds a copy of 'fname' into the gentry_table
-char* grfio_alloc_ptr(char* fname)
-{
 	if (gentry_entrys >= gentry_maxentry) {
 		gentry_maxentry += GENTRY_ADDS;
 		gentry_table = (char**)realloc(gentry_table, gentry_maxentry * sizeof(char*));
@@ -863,12 +769,10 @@ char* grfio_alloc_ptr(char* fname)
 
 	gentry_table[gentry_entrys++] = strdup(fname);
 
-	return gentry_table[gentry_entrys - 1];
+	return grfio_entryread(fname, gentry_entrys - 1);
 }
 
-/*==========================================
- * Grfio : Finalize
- *------------------------------------------*/
+// removes all entries
 void grfio_final(void)
 {
 	if (filelist != NULL)
@@ -922,7 +826,7 @@ void grfio_init(char* fname)
 		printf("No GRF loaded, using default data directory\n");
 	}
 
-	// Unnecessary area release of filelist
+	// Unneccessary area release of filelist
 	filelist_adjust();
 
 	// Resource check

@@ -420,27 +420,6 @@
 			Name="zlib"
 			Filter="">
 			<File
-				RelativePath="..\src\zlib\crypt.h">
-			</File>
-			<File
-				RelativePath="..\src\zlib\ioapi.c">
-			</File>
-			<File
-				RelativePath="..\src\zlib\ioapi.h">
-			</File>
-			<File
-				RelativePath="..\src\zlib\iowin32.c">
-			</File>
-			<File
-				RelativePath="..\src\zlib\iowin32.h">
-			</File>
-			<File
-				RelativePath="..\src\zlib\unzip.c">
-			</File>
-			<File
-				RelativePath="..\src\zlib\unzip.h">
-			</File>
-			<File
 				RelativePath="..\src\zlib\zconf.h">
 			</File>
 			<File

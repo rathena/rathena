@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="map-server_txt"
 	ProjectGUID="{D356871D-58E1-450B-967A-E1E9646175AF}"
 	RootNamespace="map-server_txt"
@@ -436,34 +436,6 @@
 		<Filter
 			Name="zlib"
 			>
-			<File
-				RelativePath="..\src\zlib\crypt.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\ioapi.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\ioapi.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\iowin32.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\iowin32.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\unzip.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\unzip.h"
-				>
-			</File>
 			<File
 				RelativePath="..\src\zlib\zconf.h"
 				>

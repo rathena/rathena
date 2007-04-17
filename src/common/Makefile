@@ -6,7 +6,7 @@ obj:
 common: obj/core.o obj/socket.o obj/timer.o obj/db.o obj/plugins.o obj/lock.o \
 	obj/nullpo.o obj/malloc.o obj/showmsg.o  obj/strlib.o obj/utils.o \
 	obj/grfio.o obj/minicore.o obj/minisocket.o obj/minimalloc.o \
-	obj/mapindex.o obj/unz.o obj/ers.o obj/md5calc.o
+	obj/mapindex.o obj/ers.o obj/md5calc.o
 
 
 obj/%.o: %.c
@@ -14,10 +14,6 @@ obj/%.o: %.c
 
 obj/mini%.o: %.c
 	$(COMPILE.c) -DMINICORE $(OUTPUT_OPTION) $<
-
-obj/unz.o:
-	$(MAKE) -C ../zlib
-	@touch $@
 
 
 clean:

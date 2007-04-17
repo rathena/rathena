@@ -5,7 +5,6 @@
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
-#include "../common/grfio.h"
 #include "../common/showmsg.h"
 #include "../common/ers.h"
 #include "../common/db.h"

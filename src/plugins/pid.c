@@ -1,15 +1,17 @@
 
 #include <stdio.h>
 #include <string.h>
+
 #ifndef _WIN32
 	#include <unistd.h>
-#else
-	#define getpid GetCurrentProcessId
 #endif
 #ifdef MINGW
 	#include <process.h>
 	#include <io.h>
+#else
+	#define getpid GetCurrentProcessId
 #endif
+
 #include "../common/plugin.h"
 
 PLUGIN_INFO = {

@@ -38,7 +38,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W2 /GX /O2 /I "..\src\common" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_WIN32" /D "TXT_ONLY" /D "NEW_006b" /D "__WIN32" /D "LOCALZLIB" /D "PCRE_SUPPORT" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /Fp"tmp/map_txt/map-server_txt.pch" /YX /Fo"tmp/map_txt/" /Fd"tmp/map_txt/" /FD /c
+# ADD CPP /nologo /W2 /GX /O2 /I "..\src\common" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_WIN32" /D "TXT_ONLY" /D "__WIN32" /D "PCRE_SUPPORT" /D FD_SETSIZE=4096 /D "DB_MANUAL_CAST_TO_UNION" /Fp"tmp/map_txt/map-server_txt.pch" /YX /Fo"tmp/map_txt/" /Fd"tmp/map_txt/" /FD /c
 # ADD BASE RSC /l 0x409
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
@@ -189,9 +189,6 @@ SOURCE=..\src\common\version.h
 # Begin Group "map"
 
 # PROP Default_Filter ""
-# Begin Group "cpp"
-
-# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=..\src\map\atcommand.c
@@ -308,10 +305,6 @@ SOURCE=..\src\map\unit.c
 
 SOURCE=..\src\map\vending.c
 # End Source File
-# End Group
-# Begin Group "h"
-
-# PROP Default_Filter ""
 # Begin Source File
 
 SOURCE=..\src\map\atcommand.h
@@ -425,38 +418,9 @@ SOURCE=..\src\map\unit.h
 SOURCE=..\src\map\vending.h
 # End Source File
 # End Group
-# End Group
 # Begin Group "zlib"
 
 # PROP Default_Filter ""
-# Begin Source File
-
-SOURCE=..\src\zlib\crypt.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\zlib\ioapi.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\zlib\ioapi.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\zlib\iowin32.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\zlib\iowin32.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\zlib\unzip.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\zlib\unzip.h
-# End Source File
 # Begin Source File
 
 SOURCE=..\src\zlib\zconf.h

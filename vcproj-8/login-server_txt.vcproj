@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="login-server_txt"
 	ProjectGUID="{D356871D-58E1-450B-967A-E2E9646175AF}"
 	RootNamespace="login-server_txt"
@@ -240,14 +240,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\common\grfio.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\common\grfio.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\common\lock.c"
 				>
 			</File>
@@ -337,46 +329,6 @@
 			</File>
 			<File
 				RelativePath="..\src\common\version.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="zlib"
-			>
-			<File
-				RelativePath="..\src\zlib\crypt.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\ioapi.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\ioapi.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\iowin32.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\iowin32.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\unzip.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\unzip.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\zconf.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\zlib\zlib.h"
 				>
 			</File>
 		</Filter>
