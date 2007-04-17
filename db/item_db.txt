@@ -1549,7 +1549,7 @@
 4360,Eremes_Card,Eremes Guile Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bCriticalAddRace,RC_DemiHuman,10; },{},{}
 4361,Whitesmith_Card,Whitesmith Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBreakWeaponRate,1000; bonus bBreakArmorRate,700; },{},{}
 4362,Harword_Card,Howard Alt-Eisen Card,6,,10,10,,,,,,,,2,,,,,{ bonus bAspdRate,-5; bonus bHit,30; },{},{}
-4363,High_Priest_Card,High Priest Card,6,,10,10,,,,,,,,16,,,,,{ bonus4 bAutoSpellWhenHit,361,1,10,0; },{},{}
+4363,High_Priest_Card,High Priest Card,6,,10,10,,,,,,,,16,,,,,{ bonus5 bAutoSpellWhenHit,361,1,10,BF_WEAPON|BF_MAGIC|BF_LONG|BF_SHORT,0; },{},{}
 4364,Magaleta_Card,Margaretha Solin Card,6,,10,10,,,,,,,,769,,,,,{ bonus bInt,1; bonus5 bAutoSpellWhenHit,76,5,150,BF_MAGIC|BF_LONG|BF_SHORT,1; },{},{}
 4365,High_Wizard_Card,High Wizard Card,6,,10,10,,,,,,,,769,,,,,{ bonus bIgnoreMDefRace,RC_NonBoss; bonus bCastrate,100; bonus bSPrecovRate,-100; },{},{ heal 0,-2000; }
 4366,Katrinn_Card,Kathryne Keyron Card,6,,10,10,,,,,,,,769,,,,,{ bonus bCastrate,getrefine()*-1; if(getrefine()>=9) { bonus bMatkRate,2; } },{},{}

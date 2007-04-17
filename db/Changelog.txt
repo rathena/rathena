@@ -20,6 +20,7 @@
 
 ========================
 04/18
+	* High Priest card now triggers on physical and magic hit [Playtester]
 	* Now Magaleta and Detale card will only trigger on magic [Playtester]
 04/17
 	* Fixed various mob skills not being ranged [Playtester]
