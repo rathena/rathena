@@ -21,7 +21,7 @@
 513,Banana,Banana,0,15,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(17,21),0; },{},{}
 514,Grape,Grape,0,200,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,rand(10,15); },{},{}
 515,Carrot,Carrot,0,15,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(18,20),0; },{},{}
-516,Sweet_Potato,Potato,0,15,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(15,23),0; if(rand(100)<3) sc_start SC_Stun,10000,0; },{},{}
+516,Sweet_Potato,Potato,0,15,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(15,23),0; if(rand(1000)<15) sc_start SC_Stun,3000,0; },{},{}
 517,Meat,Meat,0,50,,150,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,100),0; },{},{}
 518,Honey,Honey,0,500,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,100),rand(20,40); },{},{}
 519,Milk,Milk,0,25,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(27,37),0; },{},{}
@@ -39,7 +39,7 @@
 533,Grape_Juice,Grape Juice,0,250,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,rand(15,25); },{},{}
 534,Carrot_Juice,Carrot Juice,0,20,,40,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(27,33),0; },{},{}
 535,Pumpkin,Pumpkin,0,15,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 19,0; },{},{}
-536,Ice_Cream,Ice Cream,0,150,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; if(rand(100)<24) sc_start SC_Freeze,10000,0; },{},{}
+536,Ice_Cream,Ice Cream,0,150,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; if(rand(1000)<25) sc_start SC_Freeze,10000,0; },{},{}
 537,Pet_Food,Pet Food,0,1000,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(50,90),0; },{},{}
 538,Well_Baked_Cookie,Well-baked Cookie,0,1000,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(160,200),0; },{},{}
 539,Piece_Of_Cake,Piece of Cake,0,3000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(270,330),0; },{},{}
@@ -57,7 +57,7 @@
 551,Shusi,Sushi,0,1,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(50,60),0; },{},{}
 552,KETUPAT,Ketupat,0,1,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,90),rand(20,30); },{},{}
 553,Bun,Bao,0,1,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(35,70),0; },{},{}
-554,Mojji,Mochi,0,100,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; if(rand(100)<3) sc_start SC_Stun,10000,0; if(rand(100)<3) sc_start SC_Blind,10000,0; },{},{}
+554,Mojji,Mochi,0,100,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; if(rand(1000)<10) sc_start SC_Stun,3000,0; if(rand(1000)<15) sc_start SC_Blind,2000,0; },{},{}
 555,Rice_Cake,Traditional Rice Cake,0,100,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; },{},{}
 556,Long_Rice_Cake,Rice Cake Stick,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(20,25),0; },{},{}
 557,Hash_Rice_Cake,Neatly Sliced Rice Cake,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(25,30),0; },{},{}

@@ -20,6 +20,7 @@
 
 ========================
 04/18
+	* Fixed Potato, Ice Cream and Mochi [Playtester]
 	* Fixed Berzebub Card [Playtester]
 	* High Priest card now triggers on physical and magic hit [Playtester]
 	* Now Magaleta and Detale card will only trigger on magic [Playtester]
