@@ -1550,7 +1550,7 @@
 4361,Whitesmith_Card,Whitesmith Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBreakWeaponRate,1000; bonus bBreakArmorRate,700; },{},{}
 4362,Harword_Card,Howard Alt-Eisen Card,6,,10,10,,,,,,,,2,,,,,{ bonus bAspdRate,-5; bonus bHit,30; },{},{}
 4363,High_Priest_Card,High Priest Card,6,,10,10,,,,,,,,16,,,,,{ bonus4 bAutoSpellWhenHit,361,1,10,0; },{},{}
-4364,Magaleta_Card,Margaretha Solin Card,6,,10,10,,,,,,,,769,,,,,{ bonus bInt,1; bonus4 bAutoSpellWhenHit,76,5,10,1; },{},{}
+4364,Magaleta_Card,Margaretha Solin Card,6,,10,10,,,,,,,,769,,,,,{ bonus bInt,1; bonus5 bAutoSpellWhenHit,76,5,150,BF_MAGIC|BF_LONG|BF_SHORT,1; },{},{}
 4365,High_Wizard_Card,High Wizard Card,6,,10,10,,,,,,,,769,,,,,{ bonus bIgnoreMDefRace,RC_NonBoss; bonus bCastrate,100; bonus bSPrecovRate,-100; },{},{ heal 0,-2000; }
 4366,Katrinn_Card,Kathryne Keyron Card,6,,10,10,,,,,,,,769,,,,,{ bonus bCastrate,getrefine()*-1; if(getrefine()>=9) { bonus bMatkRate,2; } },{},{}
 4367,Sniper_Card,Sniper Card,6,,10,10,,,,,,,,2,,,,,{ bonus bNoRegen,1; bonus2 bHpDrainRate,50,20; },{},{}
@@ -1572,7 +1572,7 @@
 4383,Novus_Card,Red Novus Card,6,,10,10,,,,,,,,16,,,,,{ bonus3 bAddEffWhenHit,Eff_Confusion,3000,2; },{},{}
 4384,Hydro_Card,Hydro Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,277,1,100; },{},{}
 4385,Dragon_Egg_Card,Dragon Egg Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12048,RC_Dragon,300; },{},{}
-4386,Detale_Card,Detale Card,6,,10,10,,,,,,,,16,,,,,{ bonus bMdef,-20; bonus2 bResEff,Eff_Freeze,10000; bonus4 bAutoSpellWhenHit,288,1,10,0; },{},{}
+4386,Detale_Card,Detale Card,6,,10,10,,,,,,,,16,,,,,{ bonus bMdef,-20; bonus2 bResEff,Eff_Freeze,10000; bonus5 bAutoSpellWhenHit,288,1,50,BF_MAGIC|BF_LONG|BF_SHORT,0; },{},{}
 4387,Ancient_Mimic_Card,Ancient Mimic Card,6,,10,10,,,,,,,,16,,,,,{ bonus bAgi,readparam(bLuk)/18; },{},{}
 4388,Deathword_Card,Deathword Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,11,5; bonus2 bSkillAtk,13,5; bonus2 bSkillAtk,400,5; },{},{ heal 0,-50; }
 4389,Plasma_Card,Plasma Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItemGroup,IG_Resist,1200; },{},{}

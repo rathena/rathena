@@ -19,6 +19,8 @@
 	-----
 
 ========================
+04/18
+	* Now Magaleta and Detale card will only trigger on magic [Playtester]
 04/17
 	* Fixed various mob skills not being ranged [Playtester]
 	* More Anubis updates [Playtester]
