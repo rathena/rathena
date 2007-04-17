@@ -1331,7 +1331,7 @@
 4142,Doppelganger_Card,Doppelganger Card,6,,10,10,,,,,,,,2,,,,,{ bonus bAspdRate,10; },{},{}
 4143,Orc_Hero_Card,Orc Hero Card,6,,10,10,,,,,,,,769,,,,,{ bonus bVit,3; bonus2 bResEff,Eff_Stun,10000; },{},{}
 4144,Osiris_Card,Osiris Card,6,,10,10,,,,,,,,136,,,,,{ bonus bRestartFullRecover,0; },{},{}
-4145,Berzebub_Card,Berzebub Card,6,,10,10,,,,,,,,136,,,,,{ bonus bCastrate,-30; bonus bMaxSPrate,-15; bonus bMaxHPrate,-5; },{},{}
+4145,Berzebub_Card,Berzebub Card,6,,10,10,,,,,,,,136,,,,,{ bonus bCastrate,-30; },{},{}
 4146,Maya_Card,Maya Card,6,,10,10,,,,,,,,32,,,,,{ bonus bMagicDamageReturn,50; },{},{}
 4147,Baphomet_Card,Baphomet Card,6,,10,10,,,,,,,,2,,,,,{ bonus bHit,-10; bonus bSplashRange,1; },{},{}
 4148,Pharaoh_Card,Pharaoh Card,6,,10,10,,,,,,,,769,,,,,{ bonus bUseSPrate,-30; },{},{}
