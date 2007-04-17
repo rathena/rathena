@@ -3119,6 +3119,31 @@ int clif_changeoption(struct block_list* bl)
 	return 0;
 }
 
+int clif_changeoption2(struct block_list* bl)
+{
+	unsigned char buf[20];
+	struct status_change *sc;
+	
+	sc = status_get_sc(bl);
+	if (!sc) return 0; //How can an option change if there's no sc?
+
+	WBUFW(buf,0) = 0x28a;
+	WBUFL(buf,2) = bl->id;
+	WBUFL(buf,6) = sc->option;
+	WBUFL(buf,10) = clif_setlevel(status_get_lv(bl));
+	WBUFL(buf,14) = sc->opt3;
+	if(disguised(bl)) {
+		clif_send(buf,packet_len(0x28a),bl,AREA_WOS);
+		WBUFL(buf,2) = -bl->id;
+		clif_send(buf,packet_len(0x28a),bl,SELF);
+		WBUFL(buf,2) = bl->id;
+		WBUFL(buf,6) = OPTION_INVISIBLE;
+		clif_send(buf,packet_len(0x28a),bl,SELF);
+	} else
+		clif_send(buf,packet_len(0x28a),bl,AREA);
+	return 0;
+}
+
 /*==========================================
  *
  *------------------------------------------
@@ -12012,7 +12037,7 @@ static int packetdb_readdb(void)
 	int skip_ver = 0;
 	int warned = 0;
 	char *str[64],*p,*str2[64],*p2,w1[64],w2[64];
-	int packet_len_table[0x260] = {
+	int packet_len_table[0x290] = {
 	   10,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
@@ -12067,7 +12092,11 @@ static int packetdb_readdb(void)
 	   12, 26,   9, 11, -1, -1, 10,  2, 282, 11,  4, 36, -1,-1,  4,  2,
 	//#0x0240
 	   -1, -1,  -1, -1, -1,  3,  4,  8,  -1,  3, 70,  4,  8,12,  4, 10,
-	    3, 32,  -1,  3,  3,  5,  5,  8,   2,  3, -1, -1,  4,-1,  4,  0
+	    3, 32,  -1,  3,  3,  5,  5,  8,   2,  3, -1, -1,  4,-1,  4,  0,
+		 0,  0,   0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0, 0,  0,  0,
+		 0,  0,   0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0, 0,  0,  0,
+	//#0x0280
+		 0,  0,   0,  0,  0,  0,  0,  0,   0,  0, 18,  0,  0, 0,  0,  0
 	};
 	struct {
 		void (*func)(int, struct map_session_data *);
@@ -12212,7 +12241,7 @@ static int packetdb_readdb(void)
 
 	// Set server packet lengths - packet_db[SERVER]
 	memset(packet_db,0,sizeof(packet_db));
-	for( i = 0; i < 0x260; ++i )
+	for( i = 0; i < sizeof(packet_len_table)/sizeof(packet_len_table[0]); ++i )
 		packet_len(i) = packet_len_table[i];
 
 	sprintf(line, "%s/packet_db.txt", db_path);

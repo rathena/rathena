@@ -5861,18 +5861,18 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_SPEARQUICKEN:
 		case SC_CONCENTRATION:
 			sc->opt3 |= 0x1;
-			opt_flag = 0;
+			opt_flag = 2;
 			break;
 		case SC_MAXOVERTHRUST:
 		case SC_OVERTHRUST:
 		case SC_SWOO:	//Why does it shares the same opt as Overthrust? Perhaps we'll never know...
 			sc->opt3 |= 0x2;
-			opt_flag = 0;
+			opt_flag = 2;
 			break;
 		case SC_ENERGYCOAT:
 		case SC_SKE:
 			sc->opt3 |= 0x4;
-			opt_flag = 0;
+			opt_flag = 2;
 			break;
 		case SC_INCATKRATE:
 			//Simulate Explosion Spirits effect for NPC_POWERUP [Skotlex]
@@ -5882,39 +5882,39 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			}
 		case SC_EXPLOSIONSPIRITS:
 			sc->opt3 |= 0x8;
-			opt_flag = 0;
+			opt_flag = 2;
 			break;
 		case SC_STEELBODY:
 		case SC_SKA:
 			sc->opt3 |= 0x10;
-			opt_flag = 0;
+			opt_flag = 2;
 			break;
 		case SC_BLADESTOP:
 			sc->opt3 |= 0x20;
-			opt_flag = 0;
+			opt_flag = 2;
 			break;
 		//0x40 missing?
 		case SC_BERSERK:
 			sc->opt3 |= 0x80;
-			opt_flag = 0;
+			opt_flag = 2;
 			break;
 		//0x100, 0x200 missing?
 		case SC_MARIONETTE:
 		case SC_MARIONETTE2:
 			sc->opt3 |= 0x400;
-			opt_flag = 0;
+			opt_flag = 2;
 			break;
 		case SC_ASSUMPTIO:
 			sc->opt3 |= 0x800;
-			opt_flag = 0;
+			opt_flag = 2;
 			break;
 		case SC_WARM: //SG skills [Komurka]
 			sc->opt3 |= 0x1000;
-			opt_flag = 0;
+			opt_flag = 2;
 			break;
 		case SC_KAITE:
 			sc->opt3 |= 0x2000;
-			opt_flag = 0;
+			opt_flag = 2;
 			break;
 		//OPTION
 		case SC_HIDING:
@@ -5950,8 +5950,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 	//On Aegis, when turning on a status change, first goes the option packet,
 	// then the sc packet.
-	if(opt_flag)
-		clif_changeoption(bl);
+	if(opt_flag) {
+		if (opt_flag == 2)
+			clif_changeoption2(bl);
+		else
+			clif_changeoption(bl);
+	}
 
 	if (calc_flag&SCB_DYE)
 	{	//Reset DYE color
@@ -6371,15 +6375,15 @@ int status_change_end( struct block_list* bl , int type,int tid )
 
 	case SC_HIDING:
 		sc->option &= ~OPTION_HIDE;
-		opt_flag|= 2|4; //Check for warp trigger + AoE trigger
+		opt_flag|= 8|4; //Check for warp trigger + AoE trigger
 		break;
 	case SC_CLOAKING:
 		sc->option &= ~OPTION_CLOAK;
-		opt_flag|= 2;
+		opt_flag|= 8;
 		break;
 	case SC_CHASEWALK:
 		sc->option &= ~(OPTION_CHASEWALK|OPTION_CLOAK);
-		opt_flag|= 2;
+		opt_flag|= 8;
 		break;
 	case SC_SIGHT:
 		sc->option &= ~OPTION_SIGHT;
@@ -6405,55 +6409,55 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	case SC_SPEARQUICKEN:
 	case SC_CONCENTRATION:
 		sc->opt3 &= ~0x1;
-		opt_flag = 0;
+		opt_flag = 2;
 		break;
 	case SC_OVERTHRUST:
 	case SC_MAXOVERTHRUST:
 	case SC_SWOO:
 		sc->opt3 &= ~0x2;
-		opt_flag = 0;
+		opt_flag = 2;
 		break;
 	case SC_ENERGYCOAT:
 	case SC_SKE:
 		sc->opt3 &= ~0x4;
-		opt_flag = 0;
+		opt_flag = 2;
 		break;
 	case SC_INCATKRATE: //Simulated Explosion spirits effect.
 		if (bl->type != BL_MOB)
 			break;
 	case SC_EXPLOSIONSPIRITS:
 		sc->opt3 &= ~0x8;
-		opt_flag = 0;
+		opt_flag = 2;
 		break;
 	case SC_STEELBODY:
 	case SC_SKA:
 		sc->opt3 &= ~0x10;
-		opt_flag = 0;
+		opt_flag = 2;
 		break;
 	case SC_BLADESTOP:
 		sc->opt3 &= ~0x20;
-		opt_flag = 0;
+		opt_flag = 2;
 		break;
 	case SC_BERSERK:
 		sc->opt3 &= ~0x80;
-		opt_flag = 0;
+		opt_flag = 2;
 		break;
 	case SC_MARIONETTE:
 	case SC_MARIONETTE2:
 		sc->opt3 &= ~0x400;
-		opt_flag = 0;
+		opt_flag = 2;
 		break;
 	case SC_ASSUMPTIO:
 		sc->opt3 &= ~0x800;
-		opt_flag = 0;
+		opt_flag = 2;
 		break;
 	case SC_WARM: //SG skills [Komurka]
 		sc->opt3 &= ~0x1000;
-		opt_flag = 0;
+		opt_flag = 2;
 		break;
 	case SC_KAITE:
 		sc->opt3 &= ~0x2000;
-		opt_flag = 0;
+		opt_flag = 2;
 		break;
 	default:
 		opt_flag = 0;
@@ -6472,8 +6476,12 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	else if (sd)
 		clif_status_load(bl,StatusIconChangeTable[type],0);
 
-	if(opt_flag)
-		clif_changeoption(bl);
+	if(opt_flag) {
+		if (opt_flag & 2)
+			clif_changeoption2(bl);
+		else
+			clif_changeoption(bl);
+	}
 
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
@@ -6481,7 +6489,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	if(opt_flag&4) //Out of hiding, invoke on place.
 		skill_unit_move(bl,gettick(),1);
 
-	if(opt_flag&2 && sd && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
+	if(opt_flag&8 && sd && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
 		npc_touch_areanpc(sd,bl->m,bl->x,bl->y); //Trigger on-touch event.
 
 	return 1;

@@ -658,7 +658,7 @@ struct map_session_data {
 	// zeroed arrays end here.
 	// zeroed structures start here
 	struct s_autospell{
-		short id, lv, rate, card_id;
+		short id, lv, rate, card_id, flag;
 	} autospell[MAX_PC_BONUS], autospell2[MAX_PC_BONUS];
 	struct s_addeffect{
 		short id, rate, arrow_rate;

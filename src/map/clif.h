@@ -109,6 +109,7 @@ int clif_unequipitemack(struct map_session_data *,int,int,int);	// self
 int clif_misceffect(struct block_list*,int);	// area
 int clif_misceffect2(struct block_list *bl,int type);
 int clif_changeoption(struct block_list*);	// area
+int clif_changeoption2(struct block_list*);	// area
 int clif_useitemack(struct map_session_data*,int,int,int);	// self
 void clif_GlobalMessage(struct block_list* bl, const char* message);
 int clif_createchat(struct map_session_data*,int);	// self

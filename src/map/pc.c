@@ -1236,7 +1236,7 @@ static int pc_bonus_autospell_del(struct s_autospell *spell, int max, short id, 
 	return rate;
 }
 
-static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, short lv, short rate, short card_id) {
+static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, short lv, short rate, short flag, short card_id) {
 	int i;
 	if (rate < 0) return //Remove the autobonus.
 		pc_bonus_autospell_del(spell, max, id, lv, -rate, card_id);
@@ -1260,6 +1260,7 @@ static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, shor
 	spell[i].id = id;
 	spell[i].lv = lv;
 	spell[i].rate = rate;
+	spell[i].flag|= flag;
 	spell[i].card_id = card_id;
 	return 1;
 }
@@ -2328,11 +2329,11 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		break;
 	case SP_AUTOSPELL:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, type2, type3, val, current_equip_card_id);
+			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, type2, type3, val, BF_WEAPON|BF_SHORT|BF_LONG, current_equip_card_id);
 		break;
 	case SP_AUTOSPELL_WHENHIT:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, type2, type3, val, current_equip_card_id);
+			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, type2, type3, val, BF_WEAPON|BF_SHORT|BF_LONG, current_equip_card_id);
 		break;
 	case SP_HP_LOSS_RATE:
 		if(sd->state.lr_flag != 2) {
@@ -2421,16 +2422,39 @@ int pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4
 	switch(type){
 	case SP_AUTOSPELL:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, (val&1?type2:-type2), (val&2?-type3:type3), type4, current_equip_card_id);
+			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, (val&1?type2:-type2), (val&2?-type3:type3), type4, BF_WEAPON|BF_SHORT|BF_LONG, current_equip_card_id);
 		break;
 
 	case SP_AUTOSPELL_WHENHIT:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, (val&1?type2:-type2), (val&2?-type3:type3), type4, current_equip_card_id);
+			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, (val&1?type2:-type2), (val&2?-type3:type3), type4, BF_WEAPON|BF_SHORT|BF_LONG, current_equip_card_id);
 		break;
 	default:
 		if(battle_config.error_log)
 			ShowWarning("pc_bonus4: unknown type %d %d %d %d %d!\n",type,type2,type3,type4,val);
+		break;
+	}
+
+	return 0;
+}
+
+int pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type4,int type5,int val)
+{
+	nullpo_retr(0, sd);
+
+	switch(type){
+	case SP_AUTOSPELL:
+		if(sd->state.lr_flag != 2)
+			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, (val&1?type2:-type2), (val&2?-type3:type3), type4, type5, current_equip_card_id);
+		break;
+
+	case SP_AUTOSPELL_WHENHIT:
+		if(sd->state.lr_flag != 2)
+			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, (val&1?type2:-type2), (val&2?-type3:type3), type4, type5, current_equip_card_id);
+		break;
+	default:
+		if(battle_config.error_log)
+			ShowWarning("pc_bonus5: unknown type %d %d %d %d %d %d!\n",type,type2,type3,type4,type5,val);
 		break;
 	}
 

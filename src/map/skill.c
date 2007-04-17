@@ -1413,13 +1413,15 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	//Reports say that autospell effects get triggered on skills and pretty much everything including splash attacks. [Skotlex]
 	//But Gravity Patched this silently, and it now seems to trigger only on
 	//weapon attacks.
-	if(sd && !status_isdead(bl) && src != bl && attack_type&BF_WEAPON
-//		!(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)
-	) {
+	if(sd && !status_isdead(bl) && src != bl && sd->autospell[0].id) {
 		struct block_list *tbl;
 		struct unit_data *ud;
 		int i, skilllv;
 		for (i = 0; i < MAX_PC_BONUS && sd->autospell[i].id; i++) {
+
+			if(!(sd->autospell[i].flag&attack_type&BF_RANGEMASK &&
+				sd->autospell[i].flag&attack_type&BF_WEAPONMASK))
+				continue; //Attack type or range type did not match.
 
 			skill = (sd->autospell[i].id > 0) ? sd->autospell[i].id : -sd->autospell[i].id;
 
@@ -1582,13 +1584,18 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	}
 
 	//Trigger counter-spells to retaliate against damage causing skills. [Skotlex]
-	if(dstsd && !status_isdead(bl) && src != bl && !(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)) 
+	if(dstsd && !status_isdead(bl) && src != bl && dstsd->autospell2[0].id &&
+		!(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)) 
 	{
 		struct block_list *tbl;
 		struct unit_data *ud;
 		int i, skillid, skilllv, rate;
 
 		for (i = 0; i < MAX_PC_BONUS && dstsd->autospell2[i].id; i++) {
+
+			if(!(dstsd->autospell2[i].flag&attack_type&BF_RANGEMASK &&
+				dstsd->autospell2[i].flag&attack_type&BF_WEAPONMASK))
+				continue; //Attack type or range type did not match.
 
 			skillid = (dstsd->autospell2[i].id > 0) ? dstsd->autospell2[i].id : -dstsd->autospell2[i].id;
 			skilllv = dstsd->autospell2[i].lv?dstsd->autospell2[i].lv:1;

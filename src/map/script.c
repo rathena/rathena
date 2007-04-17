@@ -3615,6 +3615,7 @@ BUILDIN_FUNC(bonus);
 BUILDIN_FUNC(bonus2);
 BUILDIN_FUNC(bonus3);
 BUILDIN_FUNC(bonus4);
+BUILDIN_FUNC(bonus5);
 BUILDIN_FUNC(skill);
 BUILDIN_FUNC(addtoskill); // [Valaris]
 BUILDIN_FUNC(guildskill);
@@ -3946,6 +3947,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(bonus,"bonus2","iii"),
 	BUILDIN_DEF2(bonus,"bonus3","iiii"),
 	BUILDIN_DEF2(bonus,"bonus4","iiiii"),
+	BUILDIN_DEF2(bonus,"bonus5","iiiiii"),
 	BUILDIN_DEF(skill,"ii?"),
 	BUILDIN_DEF(addtoskill,"ii?"), // [Valaris]
 	BUILDIN_DEF(guildskill,"ii"),
@@ -6558,12 +6560,14 @@ BUILDIN_FUNC(statusup2)
 /// bonus2 <bonus type>,<val1>,<val2>
 /// bonus3 <bonus type>,<val1>,<val2>,<val3>
 /// bonus4 <bonus type>,<val1>,<val2>,<val3>,<val4>
+/// bonus4 <bonus type>,<val1>,<val2>,<val3>,<val4>,<val5>
 BUILDIN_FUNC(bonus)
 {
 	int type;
 	int type2;
 	int type3;
 	int type4;
+	int type5;
 	int val;
 	TBL_PC* sd;
 
@@ -6594,6 +6598,14 @@ BUILDIN_FUNC(bonus)
 		type4 = script_getnum(st,5);
 		val   = script_getnum(st,6);
 		pc_bonus4(sd, type, type2, type3, type4, val);
+		break;
+	case 7:
+		type2 = script_getnum(st,3);
+		type3 = script_getnum(st,4);
+		type4 = script_getnum(st,5);
+		type5 = script_getnum(st,6);
+		val   = script_getnum(st,7);
+		pc_bonus5(sd, type, type2, type3, type4, type5, val);
 		break;
 	default:
 		ShowDebug("buildin_bonus: unexpected last data (%d)\n", script_lastdata(st));
