@@ -706,6 +706,7 @@ int unit_can_move(struct block_list *bl)
 
 	if (sd && (
 		pc_issit(sd) ||
+		sd->vender_id ||
 		sd->state.blockedmove
 	))
 		return 0; //Can't move

@@ -1178,7 +1178,7 @@ int npc_click(struct map_session_data *sd,struct npc_data *nd)
 	if ((nd = npc_checknear(sd,&nd->bl)) == NULL)
 		return 1;
 	//Hidden/Disabled npc.
-	if (nd->class_ < 0 || nd->sc.option&OPTION_INVISIBLE)
+	if (nd->class_ < 0 || nd->sc.option&(OPTION_INVISIBLE|OPTION_HIDE))
 		return 1;
 
 	switch(nd->bl.subtype) {

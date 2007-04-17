@@ -3479,11 +3479,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				{
 					int exp = 0,jexp = 0;
 					int lv = dstsd->status.base_level - sd->status.base_level, jlv = dstsd->status.job_level - sd->status.job_level;
-					if(lv > 0) {
+					if(lv > 0 && pc_nextbaseexp(dstsd)) {
 						exp = (int)((double)dstsd->status.base_exp * (double)lv * (double)battle_config.resurrection_exp / 1000000.);
 						if (exp < 1) exp = 1;
 					}
-					if(jlv > 0) {
+					if(jlv > 0 && pc_nextjobexp(dstsd)) {
 						jexp = (int)((double)dstsd->status.job_exp * (double)lv * (double)battle_config.resurrection_exp / 1000000.);
 						if (jexp < 1) jexp = 1;
 					}
