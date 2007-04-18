@@ -3321,7 +3321,10 @@ int mob_parse_dbrow(char** str)
 	status_calc_misc(&data.bl, status, db->lv);
 	
 	// MVP EXP Bonus, Chance: MEXP,ExpPer
-	db->mexp = atoi(str[30]) * battle_config.mvp_exp_rate / 100;
+	// Some new MVP's MEXP multipled by high exp-rate cause overflow. [LuzZza]
+	exp = (double)atoi(str[30]) * (double)battle_config.mvp_exp_rate / 100.;
+	db->mexp = (unsigned int)cap_value(exp, 0, UINT_MAX);
+
 	db->mexpper = atoi(str[31]);
 	
 	//Now that we know if it is an mvp or not, apply battle_config modifiers [Skotlex]
