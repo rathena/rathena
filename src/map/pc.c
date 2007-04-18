@@ -580,8 +580,9 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 		ShowDebug("pc_authok: Received auth ok for already authorized client (account id %d)!\n", sd->bl.id);
 		return 1;
 	}
-		
+
 	sd->login_id2 = login_id2;
+	memcpy(&sd->status, st, sizeof(*st));
 
 	if (st->sex != sd->status.sex) {
 		clif_authfail_fd(sd->fd, 0);
@@ -598,7 +599,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 		clif_authfail_fd(sd->fd, 8); // still recognizes last connection
 		return 1;
 	}
-	memcpy(&sd->status, st, sizeof(*st));
 
 	//Set the map-server used job id. [Skotlex]
 	i = pc_jobid2mapid(sd->status.class_);

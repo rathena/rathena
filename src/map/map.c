@@ -1672,11 +1672,15 @@ void map_deliddb(struct block_list *bl) {
 int map_quit(struct map_session_data *sd) {
 
 	if(!sd->state.auth) { //Removing a player that hasn't even finished loading
+		TBL_PC *sd2 = map_id2sd(sd->status.account_id);
 		if (sd->pd) unit_free(&sd->pd->bl,-1);
 		if (sd->hd) unit_free(&sd->hd->bl,-1);
+		//Double login, let original do the cleanups below.
+		if (sd2 && sd2 != sd)
+			return 0;
+		idb_remove(id_db,sd->bl.id);
 		idb_remove(pc_db,sd->status.account_id);
 		idb_remove(charid_db,sd->status.char_id);
-		idb_remove(id_db,sd->bl.id);
 		return 0;
 	}
 	if(!sd->state.waitingdisconnect) {
@@ -1692,13 +1696,11 @@ int map_quit(struct map_session_data *sd) {
 		chrif_save(sd,1);
 	} else { //Try to free some data, without saving anything (this could be invoked on map server change. [Skotlex]
 		if (sd->bl.prev != NULL)
-		{	//Remove from map...
 			unit_remove_map(&sd->bl, 0);
-			if (sd->pd && sd->pd->bl.prev != NULL)
-				unit_remove_map(&sd->pd->bl, 0);
-			if (sd->hd && sd->hd->bl.prev != NULL)
-			  	unit_remove_map(&sd->hd->bl, 0);
-		}
+		if (sd->pd && sd->pd->bl.prev != NULL)
+			unit_remove_map(&sd->pd->bl, 0);
+		if (sd->hd && sd->hd->bl.prev != NULL)
+			unit_remove_map(&sd->hd->bl, 0);
 	}
 
 	//Do we really need to remove the name?
