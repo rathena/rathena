@@ -19,6 +19,8 @@
 	-----
 
 ========================
+04/19
+	* Fixed two aegis names [Playtester]
 04/18
 	* Fixed Potato, Ice Cream and Mochi [Playtester]
 	* Fixed Berzebub Card [Playtester]

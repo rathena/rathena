@@ -82,7 +82,7 @@
 576,Prickly_Fruit,Prickly Fruit,0,540,,60,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(150,300),rand(20,30); },{},{}
 577,Grain,Bag of Grain,0,200,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(60,70),0; },{},{}
 578,Strawberry,Strawberry,0,200,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,rand(16,28); },{},{}
-579,Delicious_Fish,Fresh Fish,0,250,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(100,150),0; },{},{}
+579,Yummy_Fish,Fresh Fish,0,250,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(100,150),0; },{},{}
 580,Bread,Bread,0,150,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(50,90),0; },{},{}
 581,Mushroom,Edible Mushroom,0,40,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(20,30),0; },{},{}
 582,Orange,Orange,0,300,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(10,20),rand(10,20); },{},{}
@@ -2437,7 +2437,7 @@
 7570,Lottery_Coupon,Temple Lottery Ticket,3,,0,10,,,,,,,,,,,,,{},{},{}
 7571,Blue_Diary,Blue's Diary,3,,0,0,,,,,,,,,,,,,{},{},{}
 7572,Gray_Necklace,Gray Necklace,3,,0,0,,,,,,,,,,,,,{},{},{}
-7573,Shining_Necklace,Shining Necklace,3,,0,0,,,,,,,,,,,,,{},{},{}
+7573,Shiny_Necklace,Shining Necklace,3,,0,0,,,,,,,,,,,,,{},{},{}
 7574,Ice_Powder,Ice Powder,3,,0,0,,,,,,,,,,,,,{},{},{}
 7575,Red-coloured_Gem,Red-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
 7576,Blue-coloured_Gem,Blue-colored Gem,3,,10,50,,,,,,,,,,,,,{},{},{}
