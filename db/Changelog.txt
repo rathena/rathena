@@ -20,6 +20,9 @@
 
 ========================
 04/19
+	* Changed summoning behavior to Aegis 10.4 [Playtester]
+	- removed almost all "onspawn" summons
+	- fixed a few summons
 	* Fixed two aegis names [Playtester]
 04/18
 	* Fixed Potato, Ice Cream and Mochi [Playtester]
