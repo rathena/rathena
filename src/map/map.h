@@ -1290,9 +1290,7 @@ int map_getusers(void);
 // blockíœŠÖ˜A
 int map_freeblock(struct block_list *bl);
 int map_freeblock_lock(void);
-//int map_freeblock_unlock(void);
-int map_freeblock_unlock_sub (char *file, int lineno);
-#define map_freeblock_unlock() map_freeblock_unlock_sub (__FILE__, __LINE__)
+int map_freeblock_unlock(void);
 // blockŠÖ˜A
 int map_addblock_sub(struct block_list *, int);
 int map_delblock_sub(struct block_list *, int);

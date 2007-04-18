@@ -276,16 +276,13 @@ int map_freeblock_lock (void)
  * バッファにたまっていたblockを全部削除
  *------------------------------------------
  */
-//int map_freeblock_unlock (void)
-int map_freeblock_unlock_sub(char *file, int lineno)
+int map_freeblock_unlock (void)
 {
 	if ((--block_free_lock) == 0) {
 		int i;
 		for (i = 0; i < block_free_count; i++)
 		{
 			aFree(block_free[i]);
-//			_mfree(block_free[i], file, lineno, __func__);
-//			_mfree(block_free[i], file, ((block_free[i]?block_free[i]->type:0)*100000)+lineno, __func__);
 			block_free[i] = NULL;
 		}
 		block_free_count = 0;

@@ -5707,7 +5707,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 			else if(inf2&INF2_NO_ENEMY)
 				inf = BCT_NOENEMY;
 			else
-				inf =0;
+				inf = 0;
 
 			if(inf2 & (INF2_PARTY_ONLY|INF2_GUILD_ONLY) && src != target)
 			{
