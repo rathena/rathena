@@ -1,7 +1,14 @@
-------------------
-client effect list
-------------------
-Credits: Valaris, Spira, Au{R}oN, Tharis, HiddenDragon
+//===== Athena Doc ========================================
+//= Client Effect List
+//===== By ================================================
+//= Valaris, Spira, Au{R}oN, Tharis, HiddenDragon
+//===== Version ===========================================
+//= 1.0
+//=========================================================
+//= 1.0 - Formatted to the standard
+//===== Description =======================================
+//= A list of client-side effects sorted by their ID
+//=========================================================
 
 The following is a compiled list of visual and sound effects which the client
 can produce when receiving a packet with id 0x1f3 (01f3 <ID>.l <type>.l).

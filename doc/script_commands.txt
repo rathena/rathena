@@ -1,4 +1,4 @@
-//===== Athena Script =====================================
+//===== Athena Doc ========================================
 //= eAthena Script Commands
 //===== By ================================================
 //= Fredzilla
@@ -73,8 +73,6 @@
 //=       Adjusted the 'itemskill' description due to recent change [ultramage]
 //= 3.04.20070409
 //=       Fixed the incorrect order of parameters in 'makeitem' [ultramage]
-//===== Compatible With ===================================
-//= LOL, can be used by anyone hopefully
 //===== Description =======================================
 //= A reference manual for the eAthena scripting language,
 //= sorted out depending on their functionality.
@@ -4222,6 +4220,7 @@ specified amount permanently. The amount can be negative. See 'statusup'.
 *bonus2 <bonus type>,<val1>,<val2>;
 *bonus3 <bonus type>,<val1>,<val2>,<val3>;
 *bonus4 <bonus type>,<val1>,<val2>,<val3>,<val4>;
+*bonus5 <bonus type>,<val1>,<val2>,<val3>,<val4>,<val5>;
 
 These commands are meant to be used in item scripts. They will probably work 
 outside item scripts, but the bonus will not persist for long. They, as 

@@ -1,5 +1,5 @@
 //===== Athena Doc ========================================
-//= Map Cache Builder and Format Documentation
+//= eAthena Map Cache Builder and Format Documentation
 //===== By ================================================
 //= DracoRPG
 //===== Version ===========================================

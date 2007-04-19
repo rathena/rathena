@@ -1,4 +1,16 @@
-//eAthena Items Scripting Manual
+//===== Athena Doc ========================================
+//= eAthena Item Bonuses List
+//===== By ================================================
+//= Developers
+//===== Version ===========================================
+//= 1.0
+//=========================================================
+//= 1.0 - Standardized doc file
+//===== Description =======================================
+//= List of script instructions used in item bonuses,
+//= mainly bonus/bonus2/bonus3/bonus4/bonus5 arguments
+//=========================================================
+
 
 skill i,n;				Gives skill #i at level n
 

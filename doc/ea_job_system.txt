@@ -1,4 +1,4 @@
-//===== Athena Script =====================================
+//===== Athena Doc=== =====================================
 //= eAthena Job System
 //===== By ================================================
 //= Skotlex
@@ -6,8 +6,6 @@
 //= 0.1
 //=========================================================
 //= 0.1 - First release, explained as well as I could.
-//===== Compatible With ===================================
-//= ... does not apply.
 //===== Description =======================================
 //= A reference description of eA's inner job system (for
 //= use on scripts through the eaclass and roclass script
@@ -81,6 +79,7 @@ If we had used addition, we would have gotten a completely different result.
 
 The EAJL (eA Job Level) constants
 -------------------------------------------------------------------------------
+
 	There are a few constants which can be used to filter out and make job comparisons easier.
 
 EAJL_2_1:

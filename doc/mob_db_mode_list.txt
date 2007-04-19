@@ -1,5 +1,18 @@
+//===== Athena Doc ========================================
+//= eAthena Monster Modes Reference
+//===== By ================================================
+//= Developers
+//===== Version ===========================================
+//= 1.0
+//=========================================================
+//= 1.0 - Standardized doc file
+//===== Description =======================================
+//= A reference description of eA's mob_db 'mode' field
+//=========================================================
+
 Bit Legend:
-----------
+-------------------------------------------------------------------------------
+
 MD_CANMOVE            | 0x0001 |    1
 MD_LOOTER             | 0x0002 |    2
 MD_AGGRESSIVE         | 0x0004 |    4
@@ -16,7 +29,7 @@ MD_CHANGETARGET_MELEE | 0x1000 | 4096
 MD_CHANGETARGET_CHASE | 0x2000 | 8192
 
 Explanation for modes:
----------------------
+-------------------------------------------------------------------------------
 
 CanMove: Enables the mob to move/chase characters.
 
@@ -57,8 +70,9 @@ Change Target Melee: Enables a mob to switch targets when attacked while
 Change Target Chase: Enables a mob to switch targets when attacked while
 	chasing another character.
 
-Aegis Mob Types
----------------
+Aegis Mob Types:
+-------------------------------------------------------------------------------
+
 What Aegis has are mob-types, where each type represents an AI behaviour that
 is mimicked by a group of eA mode bits. This is the table to convert from one
 to another:
