@@ -23,11 +23,11 @@
 #include "../common/utils.h"
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
+#include "../common/db.h"
+#include "../common/malloc.h"
 
 #include "itemdb.h"
 #include "inter.h"
-#include "db.h"
-#include "malloc.h"
 #include "int_guild.h"
 #include "int_homun.h"
 #include "char.h"

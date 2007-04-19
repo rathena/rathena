@@ -12,12 +12,11 @@
 #include "../common/cbasetypes.h"
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
-// #include "int_storage.h"
+#include "../common/db.h"
+#include "../common/malloc.h"
+#include "../common/socket.h"
 #include "inter.h"
 #include "int_guild.h"
-#include "socket.h"
-#include "db.h"
-#include "malloc.h"
 #include "char.h"
 
 #define GS_MEMBER_UNMODIFIED 0x00
