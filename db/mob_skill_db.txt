@@ -3575,7 +3575,6 @@
 1719,Detale@NPC_SUMMONSLAVE,attack,196,1,10000,2000,5000,no,self,slavele,0,1756,,,,,
 1719,Detale@NPC_SUMMONSLAVE,idle,196,1,10000,2000,5000,no,self,slavele,0,1756,,,,,
 1719,Detale@NPC_SUMMONSLAVE,chase,196,1,10000,2000,5000,no,self,slavele,0,1756,,,,,
-1719,Detale@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1720,,,,,
 1719,Detale@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1719,Detale@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1719,Detale@NPC_CALLSLAVE,chase,352,1,10000,0,30000,yes,self,always,0,,,,,,

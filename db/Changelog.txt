@@ -20,6 +20,7 @@
 
 ========================
 04/20
+	* Fixed Aegis onspawn bug [Playtester]
 	* Minor summoning behavior fixes [Playtester]
 04/19
 	* Changed summoning behavior to Aegis 10.4 [Playtester]
