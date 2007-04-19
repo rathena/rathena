@@ -19,6 +19,8 @@
 	-----
 
 ========================
+04/20
+	* Minor summoning behavior fixes [Playtester]
 04/19
 	* Changed summoning behavior to Aegis 10.4 [Playtester]
 	- removed almost all "onspawn" summons

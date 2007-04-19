@@ -1089,7 +1089,6 @@
 1250,Chepet@WZ_FIREPILLAR,idle,80,5,500,0,5000,yes,around2,always,0,,,,,,
 1250,Chepet@NPC_SUMMONSLAVE,attack,196,3,10000,2000,60000,no,self,slavele,0,1743,,,,,27
 1250,Chepet@NPC_SUMMONSLAVE,idle,196,3,10000,2000,60000,no,self,slavele,0,1743,,,,,27
-1250,Chepet@NPC_SUMMONSLAVE,idle,196,3,10000,0,0,no,self,onspawn,0,1249,,,,,
 1250,Chepet@PR_STRECOVERY,attack,72,1,2000,700,5000,yes,friend,friendstatuson,anybad,,,,,,3
 1250,Chepet@PR_STRECOVERY,chase,72,1,2000,700,5000,yes,friend,friendstatuson,anybad,,,,,,3
 1251,Stormy Knight@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
@@ -1243,7 +1242,6 @@
 1275,Alice@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,2,,,,,
 1275,Alice@NPC_SUMMONSLAVE,attack,196,1,50,2000,60000,no,self,slavele,0,1744,,,,,
 1275,Alice@NPC_SUMMONSLAVE,idle,196,1,500,2000,60000,no,self,slavele,0,1744,,,,,
-1275,Alice@NPC_SUMMONSLAVE,idle,196,1,500,0,0,no,self,onspawn,0,1261,,,,,
 1276,Raydric Archer@AC_CHARGEARROW,attack,148,1,500,0,5000,yes,target,always,0,,,,,,9
 1276,Raydric Archer@NPC_DARKNESSATTACK,attack,190,3,500,500,5000,no,target,always,0,,,,,,9
 1276,Raydric Archer@CR_AUTOGUARD,chase,249,2,2000,0,300000,yes,self,longrangeattacked,,,,,,,
@@ -2983,7 +2981,7 @@
 1649,High Priest Magaleta@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,self,always,0,,,,,,
 1649,High Priest Magaleta@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1644,1645,
 1649,High Priest Magaleta@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1644,1645,
-1649,High Priest Magaleta@NPC_SUMMONMONSTER,attack,209,1,10000,700,60000000,yes,self,myhpltmaxrate,30,1640,1641,1642,1644,1645,
+1649,High Priest Magaleta@NPC_SUMMONMONSTER,attack,209,5,10000,700,60000000,yes,self,myhpltmaxrate,30,1640,1641,1642,1644,1645,
 1649,High Priest Magaleta@AL_PNEUMA,idle,25,1,10000,0,0,yes,self,longrangeattacked,,,,,,,
 1649,High Priest Magaleta@AL_RUWACH,idle,24,1,500,0,5000,yes,self,always,0,,,,,,
 1649,High Priest Magaleta@AL_RUWACH,idle,24,1,10000,0,5000,yes,self,skillused,137,,,,,,
@@ -3018,7 +3016,7 @@
 1650,Sniper Shecil@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,self,always,0,,,,,,
 1650,Sniper Shecil@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1643,1645,
 1650,Sniper Shecil@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1643,1645,
-1650,Sniper Shecil@NPC_SUMMONMONSTER,attack,209,1,10000,700,60000000,yes,self,myhpltmaxrate,30,1640,1641,1642,1643,1645,
+1650,Sniper Shecil@NPC_SUMMONMONSTER,attack,209,5,10000,700,60000000,yes,self,myhpltmaxrate,30,1640,1641,1642,1643,1645,
 1650,Sniper Shecil@AC_DOUBLE,attack,46,10,2000,0,3000,yes,target,always,0,,,,,,6
 1650,Sniper Shecil@AC_SHOWER,attack,47,10,2000,0,3000,yes,target,always,0,,,,,,6
 1650,Sniper Shecil@AC_CHARGEARROW,attack,148,1,2000,0,3000,yes,target,always,0,,,,,,6
@@ -3044,7 +3042,7 @@
 1651,High Wizard Katrinn@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,self,always,0,,,,,,
 1651,High Wizard Katrinn@NPC_SUMMONSLAVE,attack,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1643,1644,
 1651,High Wizard Katrinn@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1643,1644,
-1651,High Wizard Katrinn@NPC_SUMMONMONSTER,attack,209,1,10000,700,60000000,yes,self,myhpltmaxrate,30,1640,1641,1642,1643,1644,
+1651,High Wizard Katrinn@NPC_SUMMONMONSTER,attack,209,5,10000,700,60000000,yes,self,myhpltmaxrate,30,1640,1641,1642,1643,1644,
 1651,High Wizard Katrinn@WZ_STORMGUST,idle,89,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
 1651,High Wizard Katrinn@WZ_VERMILION,idle,85,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
 1651,High Wizard Katrinn@WZ_METEOR,idle,83,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
