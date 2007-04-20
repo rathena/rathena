@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/04/21
+	* Added ntows() to properly handle that client port number deficiency
+	* Adjusted the packet_db array for a more consistent look [ultramage]
 2007/04/20
 	* Cleaned up the doc folder. Removed outdated, untranslated, useless files
 	  and began normalizing a bit other ones~ [DracoRPG]

@@ -1,13 +1,14 @@
 // The packet database allows you to add support for new clients,
 // because packets change every release.
 // Note: Every packet version needs a wanttoconnection specification, since
-// that is the packet used to identify a client's version, if multiple versions
-// have the same connection packet, the higher version will be used (unless
-// the lower one is specified as the default)
+// that is the packet used to identify a client's version.
+// If multiple versions have the same connection packet, the higher version
+// will be used (unless the lower one is specified as the default)
 
 // Main packet version of the DB to use (default = max available version)
-// Client detection is faster when all clients use the specified here version.
+// Client detection is faster when all clients use this version.
 packet_db_ver: default
+
 
 packet_ver: 5
 0x0064,55
@@ -751,19 +752,19 @@ packet_ver: 18
 
 //2006-04-03aSakexe by blackhole89
 packet_ver: 19
-0x009b,37,wanttoconnection,9:21:28:32:36
-0x00a2,11,solvecharname,7
-0x008c,12,getcharnamerequest,8
-0x00a7,15,walktoxy,12
-0x0116,17,dropitem,8:15
-0x00f5,13,takeitem,9
-0x009f,24,useitem,9:20
 0x0072,26,useskilltoid,11:18:22
-0x0113,40,useskilltopos,5:15:29:38
-0x0085,12,changedir,7:11
 0x007e,120,useskilltoposinfo,5:15:29:38:40
+0x0085,12,changedir,7:11
+0x008c,12,getcharnamerequest,8
 0x0094,23,movetokafra,5:19
+0x009b,37,wanttoconnection,9:21:28:32:36
+0x009f,24,useitem,9:20
+0x00a2,11,solvecharname,7
+0x00a7,15,walktoxy,12
+0x00f5,13,takeitem,9
 0x00f7,26,movefromkafra,11:22
+0x0113,40,useskilltopos,5:15:29:38
+0x0116,17,dropitem,8:15
 0x0190,18,actionrequest,7:17
 
 //2006-06-07aSakexe
@@ -822,9 +823,8 @@ packet_ver: 19
 //2006-10-23aSakexe
 0x006d,110
 
-//2007-01-08aSakexe (http://www.eathena.ws/board/index.php?s=&showtopic=141398&view=findpost&p=779954)
+//2007-01-08aSakexe
 packet_ver: 20
-0x006d,110
 0x0072,30,useskilltoid,10:14:26
 0x007e,120,useskilltoposinfo,10:19:23:38:40
 0x0085,14,changedir,10:13
@@ -843,7 +843,26 @@ packet_ver: 20
 0x0190,10,actionrequest,4:9
 0x0193,2,closekafra,0
 
-//Unknown-Sakexe (http://www.eathena.ws/board/index.php?s=&showtopic=141398&view=findpost&p=780882)
+//2007-02-12aSakexe
+packet_ver: 21
+0x006d,110
+0x0072,25,useskilltoid,6:10:21
+0x007e,102,useskilltoposinfo,5:9:12:20:22
+0x0085,11,changedir,7:10
+0x0089,8,ticksend,4
+0x008c,11,getcharnamerequest,7
+0x0094,14,movetokafra,7:10
+0x009b,26,wanttoconnection,4:9:17:18:25
+0x009f,14,useitem,4:10
+0x00a2,15,solvecharname,11
+0x00a7,8,walktoxy,5
+0x00f3,-1,globalmessage,2:4
+0x00f5,8,takeitem,4
+0x00f7,22,movefromkafra,14:18
+0x0113,22,useskilltopos,5:9:12:20
+0x0116,10,dropitem,5:8
+0x0190,19,actionrequest,5:18
+0x0193,2,closekafra,0
 0x028b,-1
 0x028c,46
 0x028d,34
@@ -865,45 +884,11 @@ packet_ver: 20
 0x029d,-1
 0x029e,11
 0x029f,3
-0x02a0,0
-0x02a1,0
-0x02a2,0
-0x02a3,0
-0x02a4,0
-0x02a5,8
-0x02a6,0
-0x02a7,0
-0x02a8,0
-0x02a9,0
-0x02aa,4
-0x02ab,36
-0x02ac,6
-
-//2007-02-12aSakexe (http://www.eathena.ws/board/index.php?s=&showtopic=141398&view=findpost&p=779954)
-packet_ver: 21
-0x006d,110
-0x0072,25,useskilltoid,6:10:21
-0x007e,102,useskilltoposinfo,5:9:12:20:22
-0x0085,11,changedir,7:10
-0x0089,8,ticksend,4
-0x008c,11,getcharnamerequest,7
-0x0094,14,movetokafra,7:10
-0x009b,26,wanttoconnection,4:9:17:18:25
-0x009f,14,useitem,4:10
-0x00a2,15,solvecharname,11
-0x00a7,8,walktoxy,5
-0x00f3,-1,globalmessage,2:4
-0x00f5,8,takeitem,4
-0x00f7,22,movefromkafra,14:18
-0x0113,22,useskilltopos,5:9:12:20
-0x0116,10,dropitem,5:8
-0x0190,19,actionrequest,5:18
-0x0193,2,closekafra,0
-0x029b,72
+0x02a2,8
 0x02a5,8
 0x02aa,4
 0x02ab,36
 0x02ac,6
 
 // Add new packets here
-packet_ver: 22
+//packet_ver: 22

@@ -3349,8 +3349,8 @@ int parse_char(int fd)
 
 				// Advanced subnet check [LuzZza]
 				subnet_map_ip = lan_subnetcheck(ipl);
-				WFIFOL(fd,22) = (subnet_map_ip) ? htonl(subnet_map_ip) : htonl(server[i].ip);
-				WFIFOW(fd,26) = server[i].port; // /!\ must be sent in intel host byte order /!\ (client bug)
+				WFIFOL(fd,22) = htonl((subnet_map_ip) ? subnet_map_ip : server[i].ip);
+				WFIFOW(fd,26) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
 				WFIFOSET(fd,28);
 			}
 			if (auth_fifo_pos >= AUTH_FIFO_SIZE)

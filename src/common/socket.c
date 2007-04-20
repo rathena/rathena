@@ -1117,3 +1117,10 @@ uint32 str2ip(const char* ip_str)
 {
 	return ntohl(inet_addr(ip_str));
 }
+
+// Reorders bytes from network to little endian (Windows).
+// Neccessary for sending port numbers to the RO client until Gravity notices that they forgot ntohs() calls.
+uint16 ntows(uint16 neshort)
+{
+	return ((neshort & 0xFF) << 8) | ((neshort & 0xFF00) >> 8);
+}

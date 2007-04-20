@@ -1426,8 +1426,8 @@ int parse_login(int fd)
 						if (server_fd[i] >= 0) {
 							// Advanced subnet check [LuzZza]
 							uint32 subnet_char_ip = lan_subnetcheck(ipl);
-							WFIFOL(fd,47+server_num*32) = (subnet_char_ip) ? htonl(subnet_char_ip) : htonl(server[i].ip);
-							WFIFOW(fd,47+server_num*32+4) = server[i].port; // /!\ must be sent in intel host byte order /!\ (client bug)
+							WFIFOL(fd,47+server_num*32) = htonl((subnet_char_ip) ? subnet_char_ip : server[i].ip);
+							WFIFOW(fd,47+server_num*32+4) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
 							memcpy(WFIFOP(fd,47+server_num*32+6), server[i].name, 20);
 							WFIFOW(fd,47+server_num*32+26) = server[i].users;
 							WFIFOW(fd,47+server_num*32+28) = server[i].maintenance;

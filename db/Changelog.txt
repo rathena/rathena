@@ -19,6 +19,8 @@
 	-----
 
 ========================
+04/21
+	* Reorganized some entries in packet_db.txt [ultramage]
 04/20
 	* Fixed Aegis onspawn bug [Playtester]
 	* Minor summoning behavior fixes [Playtester]

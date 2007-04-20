@@ -50,7 +50,7 @@ struct Clif_Config {
 	int connect_cmd[MAX_PACKET_VER + 1]; //Store the connect command for all versions. [Skotlex]
 } clif_config;
 
-struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB];
+struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB + 1];
 
 //Converts item type in case of pet eggs.
 #define itemtype(a) (a == 7)?4:a
@@ -1684,7 +1684,7 @@ int clif_changemapserver(struct map_session_data* sd, const char* mapname, int x
 	WFIFOW(fd,18) = x;
 	WFIFOW(fd,20) = y;
 	WFIFOL(fd,22) = htonl(ip);
-	WFIFOW(fd,26) = port; // /!\ must be sent in intel host byte order /!\ (client bug)
+	WFIFOW(fd,26) = ntows(htons(port)); // [!] LE byte order here [!]
 	WFIFOSET(fd, packet_len(0x92));
 
 	return 0;
@@ -11903,7 +11903,7 @@ int clif_parse(int fd)
 	}
 
 	// ゲーム用以外パケットか、認証を終える前に0072以外が来たら、切断する
-	if (cmd >= MAX_PACKET_DB || packet_db[packet_ver][cmd].len == 0) {	// if packet is not inside these values: session is incorrect?? or auth packet is unknown
+	if (cmd > MAX_PACKET_DB || packet_db[packet_ver][cmd].len == 0) {	// if packet is not inside these values: session is incorrect?? or auth packet is unknown
 		ShowWarning("clif_parse: Received unsupported packet (packet 0x%04x, %d bytes received), disconnecting session #%d.\n", cmd, RFIFOREST(fd), fd);
 		session[fd]->eof = 1;
 		return 0;
@@ -12259,10 +12259,13 @@ static int packetdb_readdb(void)
 
 	clif_config.packet_db_ver = MAX_PACKET_VER;
 	packet_ver = MAX_PACKET_VER;	// read into packet_db's version by default
-	while(fgets(line,1020,fp)){
+	while( fgets(line,sizeof(line),fp) )
+	{
+		ln++;
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		if (sscanf(line,"%[^:]: %[^\r\n]",w1,w2) == 2) {
+		if (sscanf(line,"%256[^:]: %256[^\r\n]",w1,w2) == 2)
+		{
 			if(strcmpi(w1,"packet_ver")==0) {
 				int prev_ver = packet_ver;
 				skip_ver = 0;
@@ -12319,7 +12322,8 @@ static int packetdb_readdb(void)
 			continue; // Skipping current packet version
 
 		memset(str,0,sizeof(str));
-		for(j=0,p=line;j<4 && p;j++){
+		for(j=0,p=line;j<4 && p; ++j)
+		{
 			str[j]=p;
 			p=strchr(p,',');
 			if(p) *p++=0;
@@ -12329,7 +12333,7 @@ static int packetdb_readdb(void)
 		cmd=strtol(str[0],(char **)NULL,0);
 		if(max_cmd < cmd)
 			max_cmd = cmd;
-		if(cmd<=0 || cmd>=MAX_PACKET_DB)
+		if(cmd <= 0 || cmd > MAX_PACKET_DB)
 			continue;
 		if(str[1]==NULL){
 			ShowError("packet_db: packet len error\n");
@@ -12349,7 +12353,7 @@ static int packetdb_readdb(void)
 			{
 				if (packet_db[packet_ver][cmd].func != clif_parse_func[j].func)
 				{	//If we are updating a function, we need to zero up the previous one. [Skotlex]
-					for(i=0;i<MAX_PACKET_DB;i++){
+					for(i=0;i<=MAX_PACKET_DB;i++){
 						if (packet_db[packet_ver][i].func == clif_parse_func[j].func)
 						{	
 							memset(&packet_db[packet_ver][i], 0, sizeof(struct packet_db));
@@ -12377,10 +12381,6 @@ static int packetdb_readdb(void)
 			// if (packet_db[packet_ver][cmd].pos[j] != k && clif_config.prefer_packet_db)	// not used for now
 			packet_db[packet_ver][cmd].pos[j] = k;
 		}
-
-		ln++;
-//		if(packet_db[clif_config.packet_db_ver][cmd].len > 2 /* && packet_db[cmd].pos[0] == 0 */)
-//			printf("packet_db ver %d: %d 0x%x %d %s %p\n",packet_ver,ln,cmd,packet_db[packet_ver][cmd].len,str[2],packet_db[packet_ver][cmd].func);
 	}
 	fclose(fp);
 	if(max_cmd > MAX_PACKET_DB)

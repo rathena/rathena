@@ -291,7 +291,7 @@ typedef char bool;
 
 //////////////////////////////////////////////////////////////////////////
 // Has to be unsigned to avoid problems in some systems
-// Problems arise when these functions expect an argument in the range [0,256[ and are feed a signed char.
+// Problems arise when these functions expect an argument in the range [0,256[ and are fed a signed char.
 #include <ctype.h>
 #define ISALNUM(c) (isalnum((unsigned char)(c)))
 #define ISALPHA(c) (isalpha((unsigned char)(c)))
