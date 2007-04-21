@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Warp Points for Ice Dungeon
 //===== Additional Comments: =================================
 //= 1.0 Initial version [Playtester]
+//= 1.1 Official warps [Playtester]
 //============================================================
 
 ice_dun01,157,10,0	warp	ice001	1,1,ra_fild01,233,327
