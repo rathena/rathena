@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/04/22
+	* Official Ice Dungeon warps [Playtester]
 	* Official Rachel Sanctuary warps [Playtester]
 	- had to move the current quest to another position
 	* Official Rachel warps [Playtester]
