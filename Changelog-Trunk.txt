@@ -3,6 +3,15 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/04/22
+	* Updated the autospell bonus scripts so you don't have to specify all the
+	  attack type criteria. If neither of BF_LONG/BF_SHORT is specified, the
+	  spell will trigger on both. If neither of BF_WEAPON/BF_MAGIC/BF_MISC is
+	  specified, the spell will trigger on BF_WEAPON, if neither of
+	  BF_NORMAL/BF_SKILL is specified, BF_SKILL is used if the trigger is
+	  BF_MAGIC/BF_MISC and BF_NORMAL is used if the attack is BF_WEAPON. This way
+	  the default when nothing is specified is
+	  BF_NORMAL|BF_WEAPON|BF_SHORT|BF_LONG. [Skotlex]
 2007/04/21
 	* Removed the +25% mdef, -50% def effect from Freeze status
 	* Changed autocast skills, they now only work with normal attacks!

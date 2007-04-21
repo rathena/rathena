@@ -6560,7 +6560,7 @@ BUILDIN_FUNC(statusup2)
 /// bonus2 <bonus type>,<val1>,<val2>
 /// bonus3 <bonus type>,<val1>,<val2>,<val3>
 /// bonus4 <bonus type>,<val1>,<val2>,<val3>,<val4>
-/// bonus4 <bonus type>,<val1>,<val2>,<val3>,<val4>,<val5>
+/// bonus5 <bonus type>,<val1>,<val2>,<val3>,<val4>,<val5>
 BUILDIN_FUNC(bonus)
 {
 	int type;

@@ -1260,6 +1260,13 @@ static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, shor
 	spell[i].id = id;
 	spell[i].lv = lv;
 	spell[i].rate = rate;
+	//Auto-update flag value.
+	if (!(flag&BF_RANGEMASK)) flag|=BF_SHORT|BF_LONG; //No range defined? Use both.
+	if (!(flag&BF_WEAPONMASK)) flag|=BF_WEAPON; //No attack type defined? Use weapon.
+	if (!(flag&BF_SKILLMASK)) {
+		if (flag&(BF_MAGIC|BF_MISC)) flag|=BF_SKILL; //These two would never trigger without BF_SKILL
+		if (flag&BF_WEAPON) flag|=BF_NORMAL; //By default autospells should only trigger on normal weapon attacks.
+	}
 	spell[i].flag|= flag;
 	spell[i].card_id = card_id;
 	return 1;
@@ -2329,11 +2336,11 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		break;
 	case SP_AUTOSPELL:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, type2, type3, val, BF_WEAPON|BF_SHORT|BF_LONG|BF_NORMAL, current_equip_card_id);
+			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, type2, type3, val, 0, current_equip_card_id);
 		break;
 	case SP_AUTOSPELL_WHENHIT:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, type2, type3, val, BF_WEAPON|BF_SHORT|BF_LONG|BF_NORMAL, current_equip_card_id);
+			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, type2, type3, val, 0, current_equip_card_id);
 		break;
 	case SP_HP_LOSS_RATE:
 		if(sd->state.lr_flag != 2) {
@@ -2422,12 +2429,12 @@ int pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4
 	switch(type){
 	case SP_AUTOSPELL:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, (val&1?type2:-type2), (val&2?-type3:type3), type4, BF_WEAPON|BF_SHORT|BF_LONG|BF_NORMAL, current_equip_card_id);
+			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, (val&1?type2:-type2), (val&2?-type3:type3), type4, 0, current_equip_card_id);
 		break;
 
 	case SP_AUTOSPELL_WHENHIT:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, (val&1?type2:-type2), (val&2?-type3:type3), type4, BF_WEAPON|BF_SHORT|BF_LONG|BF_NORMAL, current_equip_card_id);
+			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, (val&1?type2:-type2), (val&2?-type3:type3), type4, 0, current_equip_card_id);
 		break;
 	default:
 		if(battle_config.error_log)
