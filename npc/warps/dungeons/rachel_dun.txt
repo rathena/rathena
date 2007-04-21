@@ -3,7 +3,7 @@
 //==== By ================================================
 //= Playtester
 //==== Current Version :==================================
-//= 1.2
+//= 1.3
 //==== Compatible With :==================================
 //= Any Athena Version
 //==== Description :======================================
@@ -11,20 +11,33 @@
 //==== Additional Comment:================================
 //= 1.1 Added $ephiroth's warps [Playtester]
 //= 1.2 Replaced old versions with jAthena's [Playtester]
+//= 1.3 Official warps [Playtester]
 //========================================================
 
-// Rachel Sanctuary Dungeon
-ra_san01,140,6,0	warp	rachelwarp4000	1,1,ra_temin,276,318
-ra_san01,140,140,0	warp	rachelwarp4001	1,1,ra_san02,32,21
-ra_san02,30,21,0	warp	rachelwarp4002	1,1,ra_san01,140,138
-ra_san02,291,149,0	warp	rachelwarp4003	1,1,ra_san03,4,149
-ra_san03,2,149,0	warp	rachelwarp4004	1,1,ra_san02,289,149
-ra_san02,214,2,0	warp	rachelwarp4005	1,1,ra_san04,36,221
-ra_san04,36,223,0	warp	rachelwarp4006	1,1,ra_san02,214,4
-ra_san03,86,14,0	warp	rachelwarp4007	1,1,ra_san04,204,220
-ra_san04,204,222,0	warp	rachelwarp4008	1,1,ra_san03,86,16
-ra_san04,120,50,0	warp	rachelwarp4009	1,1,ra_san05,150,9
-ra_san05,150,7,0	warp	rachelwarp4010	1,1,ra_san04,120,48
-ra_san02,214,278,0	warp	rachelwarp4011	1,1,ra_san01,140,138
-ra_san03,124,283,0	warp	rachelwarp4012	1,1,ra_san01,140,138
-ra_san04,120,104,0	warp	rachelwarp4013	1,1,ra_san01,140,138
+ra_san01,139,13,0	script	sanctuary01	45,1,1,{
+	switch(rand(3)){
+		case 1:
+			warp "ra_san02",213,275;
+			break;
+		case 2:
+			warp "ra_san03",119,283;
+			break;
+		default:
+			warp "ra_san04",119,110;
+			break;
+	}
+}
+
+ra_san02,213,280,0	warp	sanctuary02	1,1,ra_san01,140,19
+ra_san03,123,283,0	warp	sanctuary03	1,1,ra_san01,140,19
+ra_san04,119,104,0	warp	sanctuary04	1,1,ra_san01,140,19
+ra_san03,279,21,0	warp	sanctuary05	1,1,ra_san05,282,149
+ra_san03,85,15,0	warp	sanctuary06	1,1,ra_san04,203,216
+ra_san04,203,221,0	warp	sanctuary07	1,1,ra_san03,85,20
+ra_san04,120,48,0	warp	sanctuary08	1,1,ra_san05,150,282
+ra_san05,150,7,0	warp	sanctuary09	1,1,ra_temple,119,153
+ra_san02,289,149,0	warp	sanctuary10	1,1,ra_san03,10,149
+ra_san03,5,149,0	warp	sanctuary11	1,1,ra_san02,284,149
+ra_san02,213,4,0	warp	sanctuary12	1,1,ra_san04,35,216
+ra_san04,35,221,0	warp	sanctuary13	1,1,ra_san02,213,9
+ra_san02,30,21,0	warp	sanctuary14	1,1,ra_san05,14,149

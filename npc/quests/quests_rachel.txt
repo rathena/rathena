@@ -19,7 +19,7 @@
 //It's all in one NPC for now because I don't know location //
 //and sprite ids of related NPCs. - Playtester		    //
 //////////////////////////////////////////////////////////////
-ra_temin,276,326,0	script	Statue#Rachel	111,{
+ra_temple,119,157,0	script	Statue#Rachel	111,{
 
 	if($rachel_donate < 10000){
 		mes "-A sign on the statue reads-";
@@ -87,7 +87,7 @@ ra_temin,276,326,0	script	Statue#Rachel	111,{
 	if(select("No.", "Yes.") == 2){
 		mes "-The door to Rachel Sanctuary opens-";
 		close2;
-		warp "ra_san01",139,14;
+		warp "ra_san01",139,139;
 	    	end;
 	}
 	mes "[Voice]";
