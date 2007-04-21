@@ -149,7 +149,7 @@ struct delay_damage {
 	unsigned short skill_lv;
 	unsigned short skill_id;
 	unsigned short dmg_lv;
-	unsigned char attack_type;
+	unsigned short attack_type;
 };
 
 int battle_delay_damage_sub (int tid, unsigned int tick, int id, int data)
@@ -163,7 +163,7 @@ int battle_delay_damage_sub (int tid, unsigned int tick, int id, int data)
 		if ((dat->dmg_lv == ATK_DEF || dat->damage > 0) && dat->attack_type)
 		{
 			if (!status_isdead(target))
-				skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type, tick);
+				skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
 			skill_counter_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
 		}
 
@@ -2785,8 +2785,7 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int rdamage, int ldamage, 
  * ’Ê?í?UŒ‚?ˆ—?‚Ü‚Æ‚ß
  *------------------------------------------
  */
-int battle_weapon_attack( struct block_list *src,struct block_list *target,
-	 unsigned int tick,int flag)
+int battle_weapon_attack(struct block_list* src, struct block_list* target, unsigned int tick, int flag)
 {
 	struct map_session_data *sd = NULL, *tsd = NULL;
 	struct status_data *sstatus, *tstatus;
@@ -2929,7 +2928,7 @@ int battle_weapon_attack( struct block_list *src,struct block_list *target,
 
 	map_freeblock_lock();
 
-	battle_delay_damage(tick+wd.amotion, src, target, BF_WEAPON, 0, 0, damage, wd.dmg_lv, wd.dmotion);
+	battle_delay_damage(tick+wd.amotion, src, target, wd.flag, 0, 0, damage, wd.dmg_lv, wd.dmotion);
 
 	if (sc && sc->data[SC_AUTOSPELL].timer != -1 && rand()%100 < sc->data[SC_AUTOSPELL].val4) {
 		int sp = 0;

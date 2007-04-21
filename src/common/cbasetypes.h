@@ -136,9 +136,8 @@ typedef unsigned long int   ppuint32;
 
 //////////////////////////////////////////////////////////////////////////
 // integer with exact processor width (and best speed)
-//						size_t already defined in stdio.h
 //////////////////////////////
-#include <string.h>// size_t
+#include <stddef.h> // size_t
 
 #if defined(WIN32) && !defined(MINGW) // does not have a signed size_t
 //////////////////////////////
@@ -307,6 +306,5 @@ typedef char bool;
 #define TOASCII(c) (toascii((unsigned char)(c)))
 #define TOLOWER(c) (tolower((unsigned char)(c)))
 #define TOUPPER(c) (toupper((unsigned char)(c)))
-
 
 #endif /* _CBASETYPES_H_ */

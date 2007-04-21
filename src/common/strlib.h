@@ -4,6 +4,8 @@
 #ifndef _STRLIB_H_
 #define _STRLIB_H_
 
+#include <stddef.h> // size_t
+
 char* jstrescape (char* pt);
 char* jstrescapecpy (char* pt, const char* spt);
 int jmemescapecpy (char* pt, const char* spt, int size);
@@ -25,6 +27,5 @@ size_t strnlen (const char* string, size_t maxlen);
 
 int e_mail_check(char* email);
 int config_switch(const char* str);
-
 
 #endif /* _STRLIB_H_ */

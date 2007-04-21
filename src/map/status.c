@@ -3539,8 +3539,6 @@ static signed char status_calc_def(struct block_list *bl, struct status_change *
 		def += sc->data[SC_DEFENCE].val2 ;
 	if(sc->data[SC_INCDEFRATE].timer!=-1)
 		def += def * sc->data[SC_INCDEFRATE].val1/100;
-	if(sc->data[SC_FREEZE].timer!=-1)
-		def >>=1;
 	if(sc->data[SC_STONE].timer!=-1 && sc->opt1 == OPT1_STONE)
 		def >>=1;
 	if(sc->data[SC_SIGNUMCRUCIS].timer!=-1)
@@ -3606,8 +3604,6 @@ static signed char status_calc_mdef(struct block_list *bl, struct status_change 
 		return 90;
 	if(sc->data[SC_SKA].timer != -1) // [marquis007]
 		return 90;
-	if(sc->data[SC_FREEZE].timer!=-1)
-		mdef += 25*mdef/100;
 	if(sc->data[SC_STONE].timer!=-1 && sc->opt1 == OPT1_STONE)
 		mdef += 25*mdef/100;
 	if(sc->data[SC_ENDURE].timer!=-1 && sc->data[SC_ENDURE].val4 == 0)

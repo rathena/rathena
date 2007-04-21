@@ -20,6 +20,7 @@
 
 ========================
 04/21
+	* Added entries to const.txt, updated the new autocast cards
 	* Reorganized some entries in packet_db.txt [ultramage]
 04/20
 	* Fixed Aegis onspawn bug [Playtester]
