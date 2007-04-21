@@ -583,7 +583,7 @@ rachel,155,243,3	script	Guard#Ra02	934,{
 	close;
 }
 
-ra_temple,119,179,3	script	#door1	45,2,2,{
+ra_temple,119,180,3	script	#door1	45,2,2,{
 
 OnTouch:
 	mes "** The door is locked. **";
@@ -602,7 +602,7 @@ L_weap:
 L_enter:
 	mes "** The door opens. **";
 	close2;
-	warp "ra_temin",169,22;
+	warp "ra_temin",169,23;
 	end;
 }
 

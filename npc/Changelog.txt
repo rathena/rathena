@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/04/22
+	* Official Rachel warps [Playtester]
 2007/04/21
 	* Fixed a small scripts_custom.conf typo [ultramage]
 2007/04/15
