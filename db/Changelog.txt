@@ -19,6 +19,8 @@
 	-----
 
 ========================
+04/22
+	* Optimized db entries for autocast [Playtester]
 04/21
 	* Added entries to const.txt, updated the new autocast cards
 	* Reorganized some entries in packet_db.txt [ultramage]
