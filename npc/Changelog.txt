@@ -1,6 +1,9 @@
 Date		Added
 ======
 2007/04/22
+	* Added Rachel to the airship route [Playtester]
+	- why was it still missing?
+	- thanks to Articulus for scripting most of it
 	* Official Rachel Field warps [Playtester]
 	* Official Ice Dungeon warps [Playtester]
 	* Official Rachel Sanctuary warps [Playtester]

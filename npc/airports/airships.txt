@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 0.5c
+//= 0.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -17,7 +17,9 @@
 //= 0.3 Implemented some more NPCs [MasterOfMuppets]
 //= 0.4 Implemented two mini games scripted by Dj-Yhn [MasterOfMuppets]
 //= 0.5 Removed Duplicates [Silent]
-//= 0.5aFixed a typo [Evera] 0.5b Fixed appledice bugs [Lupus]
+//= 0.5a Fixed a typo [Evera] 
+//= 0.5b Fixed appledice bugs [Lupus]
+//= 0.6 Added Rachel to the international route [Playtester]
 //============================================================ 
 
 //============================================================ 
@@ -562,13 +564,14 @@ s_Record:
 }
 
 //============================================================ 
-//= The Airship System (Yuno -> Izlude -> Repeat)
+//= The Airship System (Izlude -> Yuno -> Rachel -> Repeat)
 //============================================================ 
 
 airplane_01,243,74,4	script	#AirshipWarp-3	45,2,2{
 OnTouch:
 	if($@airplanelocation2 == 1)warp "izlude",202,56;
 	if($@airplanelocation2 == 2)warp "yuno",20,265;
+	if($@airplanelocation2 == 3)warp "ra_fild12",292,204;
 	end;
 
 OnHide:
@@ -583,6 +586,8 @@ airplane_01,243,29,4	script	#AirshipWarp-4	45,2,2{
 OnTouch:
 	if($@airplanelocation2 == 1)warp "izlude",202,56;
 	if($@airplanelocation2 == 2)warp "yuno",20,265;
+	if($@airplanelocation2 == 3)warp "ra_fild12",292,204;
+	end;
 
 OnHide:
 	misceffect 16;
@@ -648,7 +653,32 @@ OnTimer120000:
 	mapannounce "airplane_01","Currently, we are in Yuno. The Airship will take off shortly.",1,0x70DBDB;
 	end;
 OnTimer130000:
-	stoptimer;
+	set $@airplanelocation2,0;
+	donpcevent "#AirshipWarp-3::OnHide";
+	donpcevent "#AirshipWarp-4::OnHide";
+	disablenpc "#AirshipWarp-3";
+	disablenpc "#AirshipWarp-4";
+	mapannounce "airplane_01.gat","The Airship is leaving the ground. Our next destination is Rachel.",1,0xFF8600;
+	end;
+OnTimer145000:
+	mapannounce "airplane_01.gat","We are heading to Rachel.",1,0xFF8600;
+	end;
+OnTimer160000:
+	mapannounce "airplane_01.gat","We will arrive in Rachel shortly.",1,0xFF8600;
+	end;
+OnTimer175000:
+	set $@airplanelocation2,3;
+	enablenpc "#AirshipWarp-3";
+	enablenpc "#AirshipWarp-4";
+	donpcevent "#AirshipWarp-3::OnUnhide";
+	donpcevent "#AirshipWarp-4::OnUnhide";
+	mapannounce "airplane_01.gat","Welcome to Rachel. Have a safe trip.",1,0xFF8600;
+	end;
+OnTimer185000:
+	mapannounce "airplane_01.gat","Currently, we are in Rachel. The Airship will leave shortly.",1,0xFF8600;
+	end;
+OnTimer195000:
+ 	stoptimer;
 }
 }
 
@@ -710,7 +740,7 @@ airplane_01,33,68,4	script	Clarice	74,{
 izlude,201,54,3	script	Airship Staff#izl	91,{
 
 	mes "[Airship Staff]";
-	mes "Welcome to the Izlude Airship.";
+	mes "Welcome to the International Airship.";
 	mes "How may I help you?";
 	next;
 	menu "Board the Airship",-,"Cancel",L_Cancel;
@@ -792,6 +822,50 @@ hugel,182,150,3	script	Airship Staff#hu	91,{
 }
 
 //============================================================ 
+//= The Rachel Airship Staff
+//============================================================
+
+ra_fild12.gat,294,206,3	script	Airship Staff#ra	91,{
+
+	mes "[Airship Staff]";
+	mes "Welcome to the International Airship.";
+	mes "How may I help you?";
+	next;
+	menu "Board the Airship",-,"Cancel",L_Cancel;
+
+		mes "[Airship Staff]";
+		mes "The Airship boarding fee";
+		mes "is 1,200 zeny, but if you've";
+		mes "got a Free Ticket for Airship,"; 
+		mes "the fee will be waived. Will";
+		mes "you board the Airship?";
+		next;
+		menu "Yes",-,"No",L_Cancel;
+
+		if(countitem(7311) > 0) goto L_GotTicket;
+		if(Zeny < 1200) goto L_NoZeny;
+			set Zeny, Zeny - 1200;
+			warp "airplane_01.gat",224,64;
+			close;
+
+		L_GotTicket:
+			delitem 7311,1;
+			warp "airplane_01.gat",224,64;
+			close;
+
+	L_NoZeny:
+		mes "[Airship Staff]";
+		mes "You don't have enough zeny.";
+		close;
+
+	L_Cancel:
+		mes "[Airship Staff]";
+		mes "Thank you and";
+		mes "have a nice day.";
+		close;
+}
+
+//============================================================ 
 //= Yuno Airport NPCs
 //============================================================
 
@@ -825,7 +899,7 @@ y_airport,141,63,4	script	Airport Staff#Izl	91,{
 	mes "[Airship Staff]";
 	mes "Good day!";
 	mes "Would you like to go";
-	mes "to ^FF0000Izlude^000000?";
+	mes "to ^FF0000Izlude^000000 or ^FF0000Rachel^000000?";
 	next;
 	menu "Yes.",s_Warp,"No.",-;
 
