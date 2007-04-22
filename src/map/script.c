@@ -3876,11 +3876,15 @@ BUILDIN_FUNC(deletepset); // MouseJstr
 #endif
 
 struct script_function buildin_func[] = {
+	// NPC interaction
 	BUILDIN_DEF(mes,"s"),
 	BUILDIN_DEF(next,""),
 	BUILDIN_DEF(close,""),
 	BUILDIN_DEF(close2,""),
-	BUILDIN_DEF(menu,"*"),
+	BUILDIN_DEF(menu,"sl*"),
+	BUILDIN_DEF(select,"s*"), //for future jA script compatibility
+	BUILDIN_DEF(prompt,"s*"),
+	//
 	BUILDIN_DEF(goto,"l"),
 	BUILDIN_DEF(callsub,"i*"),
 	BUILDIN_DEF(callfunc,"s*"),
@@ -4130,8 +4134,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getpetinfo,"i"),
 	BUILDIN_DEF(checkequipedcard,"i"),
 	BUILDIN_DEF(jump_zero,"ii"), //for future jA script compatibility
-	BUILDIN_DEF(select,"*"), //for future jA script compatibility
-	BUILDIN_DEF(prompt,"*"),
 	BUILDIN_DEF(globalmes,"s*"),
 	BUILDIN_DEF(getmapmobs,"s"), //end jA addition
 	BUILDIN_DEF(unequip,"i"), // unequip command [Spectre]
@@ -4209,36 +4211,373 @@ struct script_function buildin_func[] = {
 	{NULL,NULL,NULL},
 };
 
-/*==========================================
- *
- *------------------------------------------
- */
+/////////////////////////////////////////////////////////////////////
+// NPC interaction
+//
+
+/// Appends a message to the npc dialog.
+/// If a dialog doesn't exist yet, one is created.
+/// TODO does the client support dialogs with different oid's at the same time?
+///
+/// mes "<message>";
 BUILDIN_FUNC(mes)
 {
-	struct map_session_data *sd = script_rid2sd(st);
-	const char *mes = script_getstr(st, 2);
-	if (sd)
-		clif_scriptmes(sd, st->oid, mes);
+	TBL_PC* sd;
+	const char* msg;
+	
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 1;
+
+	msg = script_getstr(st, 2);
+	clif_scriptmes(sd, st->oid, msg);
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------
- */
+/// Displays the button 'next' in the npc dialog.
+/// The dialog text is cleared and the script continues when the button is pressed.
+///
+/// next;
+BUILDIN_FUNC(next)
+{
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 1;
+
+	st->state = STOP;
+	clif_scriptnext(sd, st->oid);
+	return 0;
+}
+
+/// Ends the script and displays the button 'close' on the npc dialog.
+/// The dialog is closed when the button is pressed.
+///
+/// close;
+BUILDIN_FUNC(close)
+{
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 1;
+
+	st->state = END;
+	clif_scriptclose(sd, st->oid);
+	return 0;
+}
+
+/// Displays the button 'close' on the npc dialog.
+/// The dialog is closed and the script continues when the button is pressed.
+///
+/// close2;
+BUILDIN_FUNC(close2)
+{
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 1;
+
+	st->state = STOP;
+	clif_scriptclose(sd, st->oid);
+	return 0;
+}
+
+/// Counts the number of valid and total number of options in 'str'
+/// If max_count > 0 the counting stops when that valid option is reached
+/// total is incremented for each option (NULL is supported)
+static int menu_countoptions(const char* str, int max_count, int* total)
+{
+	int count = 0;
+	int bogus_total;
+
+	if( total == NULL )
+		total = &bogus_total;
+	++(*total);
+
+	// initial empty options
+	while( *str == ':' )
+	{
+		++str;
+		++(*total);
+	}
+	// count menu options
+	while( *str != '\0' )
+	{
+		++count;
+		--max_count;
+		if( max_count == 0 )
+			break;
+		while( *str != ':' && *str != '\0' )
+			++str;
+		while( *str == ':' )
+		{
+			++str;
+			++(*total);
+		}
+	}
+	return count;
+}
+
+/// Displays a menu with options and goes to the target label.
+/// The script is stopped if cancel is pressed.
+/// Options with no text are not displayed in the client.
+///
+/// Options can be grouped together, separated by the character ':' in the text:
+///   ex: menu "A:B:C",L_target;
+/// All these options go to the specified target label.
+///
+/// The index of the selected option is put in the variable @menu.
+/// Indexes start with 1 and are consistent with grouped and empty options.
+///   ex: menu "A::B",-,"",L_Impossible,"C",-;
+///       // displays "A", "B" and "C", corresponding to indexes 1, 3 and 5
+///
+/// NOTE: the client closes the npc dialog when cancel is pressed
+///
+/// menu "<option_text>",<target_label>{,"<option_text>",<target_label>,...};
+BUILDIN_FUNC(menu)
+{
+	int i;
+	const char* text;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 1;
+
+	// TODO detect multiple scripts waiting for input at the same time, and what to do when that happens
+	if( sd->state.menu_or_input == 0 )
+	{
+		struct StringBuf* buf;
+		struct script_data* data;
+
+		if( script_lastdata(st) % 2 == 0 )
+		{// argument count is not even (1st argument is at index 2)
+			ShowError("script:menu: illegal number of arguments (%d).\n", (script_lastdata(st) - 1));
+			st->state = END;
+			return 1;
+		}
+		buf = StringBuf_Malloc();
+		for( i = 2, sd->npc_menu = 0; i < script_lastdata(st); i += 2 )
+		{
+			// menu options
+			data = script_getdata(st, i);
+			get_val(st, data);
+			if( data_isstring(data) && data_isint(data) )
+			{// not a string (or compatible)
+				StringBuf_Free(buf);
+				ShowError("script:menu: argument #%d (from 1) is not a string or compatible.\n", (i - 1));
+				st->state = END;
+				return 1;
+			}
+			text = conv_str(st, data);// convert to string
+
+			// target label
+			data = script_getdata(st, i+1);
+			if( !data_islabel(data) )
+			{// not a label
+				StringBuf_Free(buf);
+				ShowError("script:menu: label argument of menu option #%d (from 1) is not a label.\n", (script_lastdata(st) - 1));
+				st->state = END;
+				return 1;
+			}
+
+			// append option(s)
+			if( text[0] == '\0' )
+				continue;// empty string, ignore
+			if( sd->npc_menu > 0 )
+				StringBuf_AppendStr(buf, ":");
+			StringBuf_AppendStr(buf, text);
+			sd->npc_menu += menu_countoptions(text, 0, NULL);
+		}
+		st->state = RERUNLINE;
+		sd->state.menu_or_input = 1;
+		clif_scriptmenu(sd, st->oid, StringBuf_Value(buf));
+		StringBuf_Free(buf);
+		//TODO what's the maximum number of options that can be displayed and/or received? -> give warning
+	}
+	else if( sd->npc_menu == 0xff )
+	{// Cancel was pressed
+		sd->state.menu_or_input = 0;
+		st->state = END;
+	}
+	else
+	{// goto target label
+		int menu = 0;
+
+		sd->state.menu_or_input = 0;
+		if( sd->npc_menu <= 0 )
+		{
+			ShowDebug("script:menu: unexpected selection (%d)\n", sd->npc_menu);
+			st->state = END;
+			return 1;
+		}
+
+		// get target label
+		for( i = 2; i < script_lastdata(st); i += 2 )
+		{
+			text = script_getstr(st, i);
+			sd->npc_menu -= menu_countoptions(text, sd->npc_menu, &menu);
+			if( sd->npc_menu <= 0 )
+				break;// entry found
+		}
+		if( sd->npc_menu > 0 )
+		{// Invalid selection
+			ShowDebug("script:menu: selection is out of range, expected %d extra menu options\n", sd->npc_menu);
+			st->state = END;
+			return 1;
+		}
+		if( !data_islabel(script_getdata(st, i + 1)) )
+		{// TODO remove this temporary crash-prevention code (fallback for multiple scripts requesting user input)
+			st->state = END;
+			return 0;
+		}
+		pc_setreg(sd, add_str("@menu"), menu);
+		st->pos = script_getnum(st, i + 1);
+		st->state = GOTO;
+	}
+	return 0;
+}
+
+/// Displays a menu with options and returns the selected option.
+/// Behaves like 'menu' without the target labels.
+///
+/// select(<option_text>{,<option_text>,...}) -> <selected_option>
+///
+/// @see menu
+BUILDIN_FUNC(select)
+{
+	int i;
+	const char* text;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 1;
+
+	if( sd->state.menu_or_input == 0 )
+	{
+		struct StringBuf* buf;
+
+		buf = StringBuf_Malloc();
+		for( i = 2, sd->npc_menu = 0; i <= script_lastdata(st); ++i )
+		{
+			text = script_getstr(st, i);
+			if( sd->npc_menu > 0 )
+				StringBuf_AppendStr(buf, ":");
+			StringBuf_AppendStr(buf, script_getstr(st, i));
+			sd ->npc_menu += menu_countoptions(text, 0, NULL);
+		}
+
+		st->state = RERUNLINE;
+		sd->state.menu_or_input = 1;
+		clif_scriptmenu(sd, st->oid, StringBuf_Value(buf));
+		StringBuf_Free(buf);
+	}
+	else if( sd->npc_menu == 0xff )
+	{// Cancel was pressed
+		sd->state.menu_or_input = 0;
+		st->state = END;
+	}
+	else
+	{// return selected option
+		int menu = 0;
+
+		sd->state.menu_or_input = 0;
+		for( i = 2; i <= script_lastdata(st); ++i )
+		{
+			text = script_getstr(st, i);
+			sd->npc_menu -= menu_countoptions(text, sd->npc_menu, &menu);
+			if( sd->npc_menu <= 0 )
+				break;// entry found
+		}
+		pc_setreg(sd, add_str("@menu"), menu);
+		script_pushint(st, menu);
+	}
+	return 0;
+}
+
+/// Displays a menu with options and returns the selected option.
+/// Behaves like 'menu' without the target labels, except when cancel is 
+/// pressed.
+/// When cancel is pressed, the script continues and 255 is returned.
+///
+/// prompt(<option_text>{,<option_text>,...}) -> <selected_option>
+///
+/// @see menu
+BUILDIN_FUNC(prompt)
+{
+	int i;
+	const char *text;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 1;
+
+	if( sd->state.menu_or_input == 0 )
+	{
+		struct StringBuf* buf;
+
+		buf = StringBuf_Malloc();
+		for( i = 2, sd->npc_menu = 0; i <= script_lastdata(st); ++i )
+		{
+			text = script_getstr(st, i);
+			if( sd->npc_menu > 0 )
+				StringBuf_AppendStr(buf, ":");
+			StringBuf_AppendStr(buf, script_getstr(st, i));
+			sd ->npc_menu += menu_countoptions(text, 0, NULL);
+		}
+
+		st->state = RERUNLINE;
+		sd->state.menu_or_input = 1;
+		clif_scriptmenu(sd, st->oid, StringBuf_Value(buf));
+		StringBuf_Free(buf);
+	}
+	else if( sd->npc_menu == 0xff )
+	{// Cancel was pressed
+		sd->state.menu_or_input = 0;
+		pc_setreg(sd, add_str("@menu"), 0xff);
+		script_pushint(st, 0xff);
+	}
+	else
+	{// return selected option
+		int menu = 0;
+
+		sd->state.menu_or_input = 0;
+		for( i = 2; i <= script_lastdata(st); ++i )
+		{
+			text = script_getstr(st, i);
+			sd->npc_menu -= menu_countoptions(text, sd->npc_menu, &menu);
+			if( sd->npc_menu <= 0 )
+				break;// entry found
+		}
+		pc_setreg(sd, add_str("@menu"), menu);
+		script_pushint(st, menu);
+	}
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////////////
+// ...
+//
+
+/// Jumps to the target script label.
+///
+/// goto <label>;
 BUILDIN_FUNC(goto)
 {
-	int pos;
-
-	if( !data_islabel(script_getdata(st,2))){
-		ShowMessage("script: goto: not label!\n");
-		st->state=END;
+	if( !data_islabel(script_getdata(st,2)) )
+	{
+		ShowError("script:goto: not label!\n");
+		st->state = END;
 		return 1;
 	}
 
-	pos=script_getnum(st,2);
-	st->pos=pos;
-	st->state=GOTO;
+	st->pos = script_getnum(st,2);
+	st->state = GOTO;
 	return 0;
 }
 
@@ -4387,105 +4726,6 @@ BUILDIN_FUNC(return)
 		}
 	}
 	st->state=RETFUNC;
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-BUILDIN_FUNC(next)
-{
-	st->state=STOP;
-	clif_scriptnext(script_rid2sd(st),st->oid);
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-BUILDIN_FUNC(close)
-{
-	st->state=END;
-	clif_scriptclose(script_rid2sd(st),st->oid);
-	return 0;
-}
-BUILDIN_FUNC(close2)
-{
-	st->state=STOP;
-	clif_scriptclose(script_rid2sd(st),st->oid);
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------
- */
-BUILDIN_FUNC(menu)
-{
-	char *buf, *ptr;
-	int len,i;
-	struct map_session_data *sd = script_rid2sd(st);
-
-	nullpo_retr(0, sd);
-
-	if(sd->state.menu_or_input==0){
-		st->state=RERUNLINE;
-		sd->state.menu_or_input=1;
-		if( (st->end - st->start - 2) % 2 == 1 ) {
-			// ˆø”‚Ì”‚ªŠï”‚È‚Ì‚ÅƒGƒ‰[ˆµ‚¢
-			ShowError("buildin_menu: illegal argument count(%d).\n", st->end - st->start - 2);
-			sd->state.menu_or_input=0;
-			st->state=END;
-			return 1;
-		}
-		for(i=st->start+2,len=0;i<st->end;i+=2){
-			conv_str(st,& (st->stack->stack_data[i]));
-			len+=(int)strlen(st->stack->stack_data[i].u.str)+1;
-		}
-		buf=(char *)aMallocA((len+1)*sizeof(char));
-		buf[0]=0;
-		for(i=st->start+2,len=0;i<st->end;i+=2){
-			if( st->stack->stack_data[i].u.str[0] ) {
-				strcat(buf,st->stack->stack_data[i].u.str);
-				strcat(buf,":");
-			}
-		}
-		
-		ptr = buf;
-		sd->npc_menu = 0;  //Reuse to store max menu entries. Avoids the need of an extra variable.
-		while (ptr && (ptr = strchr(ptr, ':')) != NULL)
-		{	sd->npc_menu++; ptr++; }
-		clif_scriptmenu(sd,st->oid,buf);
-		aFree(buf);
-	} else if(sd->npc_menu==0xff){	// cancel
-		sd->state.menu_or_input=0;
-		st->state=END;
-	} else {	// goto“®ì
-		sd->state.menu_or_input=0;
-		if(sd->npc_menu>0){
-			//Skip empty menu entries which weren't displayed on the client (blackhole89)
-			for(i=st->start+2;i<=(st->start+sd->npc_menu*2) && sd->npc_menu<(st->end-st->start)/2;i+=2) {
-				conv_str(st,& (st->stack->stack_data[i])); // we should convert variables to strings before access it [jA1983] [EoE]
-				if((int)strlen(st->stack->stack_data[i].u.str) < 1)
-					sd->npc_menu++; //Empty selection which wasn't displayed on the client.
-			}
-			if(sd->npc_menu >= (st->end-st->start)/2) {
-				//Invalid selection.
-				st->state=END;
-				return 0;
-			}
-			if( !data_islabel(script_getdata(st, sd->npc_menu*2+1)) ){
-				ShowError("script: menu: not label !\n");
-				st->state=END;
-				return 1;
-			}
-			pc_setreg(sd,add_str("@menu"),sd->npc_menu);
-			st->pos=script_getnum(st,sd->npc_menu*2+1);
-			st->state=GOTO;
-		}
-	}
 	return 0;
 }
 
@@ -10755,98 +10995,6 @@ BUILDIN_FUNC(jump_zero)
 		// printf("script: jump_zero: fail\n");
 	}
 	return 0;
-}
-
-BUILDIN_FUNC(select)
-{
-	char *buf, *ptr;
-	int len,i;
-	struct map_session_data *sd;
-
-	sd=script_rid2sd(st);
-	nullpo_retr(0, sd);
-	if(sd->state.menu_or_input==0){
-		st->state=RERUNLINE;
-		sd->state.menu_or_input=1;
-		for(i=st->start+2,len=16;i<st->end;i++){
-			conv_str(st,& (st->stack->stack_data[i]));
-			len+=(int)strlen(st->stack->stack_data[i].u.str)+1;
-		}
-		buf=(char *)aMalloc((len+1)*sizeof(char));
-		buf[0]=0;
-		for(i=st->start+2,len=0;i<st->end;i++){
-			strcat(buf,st->stack->stack_data[i].u.str);
-			strcat(buf,":");
-		}
-
-		ptr = buf;
-		sd->npc_menu = 0;  //Reuse to store max menu entries. Avoids the need of an extra variable.
-		while (ptr && (ptr = strchr(ptr, ':')) != NULL)
-		{	sd->npc_menu++; ptr++; }
-
-		clif_scriptmenu(sd,st->oid,buf);
-		aFree(buf);
-	} else if(sd->npc_menu==0xff){
-		sd->state.menu_or_input=0;
-		st->state=END;
-	} else {
-		//Skip empty menu entries which weren't displayed on the client (Skotlex)
-		for(i=st->start+2;i< (st->start+2+sd->npc_menu) && sd->npc_menu < (st->end-st->start-2);i++) {
-			conv_str(st,& (st->stack->stack_data[i])); // we should convert variables to strings before access it [jA1983] [EoE]
-			if((int)strlen(st->stack->stack_data[i].u.str) < 1)
-				sd->npc_menu++; //Empty selection which wasn't displayed on the client.
-		}
-		pc_setreg(sd,add_str("@menu"),sd->npc_menu);
-		sd->state.menu_or_input=0;
-		script_pushint(st,sd->npc_menu);
-	}
-	return 0;
-}
-
-BUILDIN_FUNC(prompt)
-{
-	char *buf, *ptr;
-	int len,i;
-	struct map_session_data *sd;
-
-	sd=script_rid2sd(st);
-	nullpo_retr(0, sd);
-
-	if(sd->state.menu_or_input==0){
-		st->state=RERUNLINE;
-		sd->state.menu_or_input=1;
-		for(i=st->start+2,len=16;i<st->end;i++){
-			conv_str(st,& (st->stack->stack_data[i]));
-			len+=(int)strlen(st->stack->stack_data[i].u.str)+1;
-		}
-		buf=(char *)aMalloc((len+1)*sizeof(char));
-		buf[0]=0;
-		for(i=st->start+2,len=0;i<st->end;i++){
-			strcat(buf,st->stack->stack_data[i].u.str);
-			strcat(buf,":");
-		}
-
-		ptr = buf;
-		sd->npc_menu = 0;  //Reuse to store max menu entries. Avoids the need of an extra variable.
-		while (ptr && (ptr = strchr(ptr, ':')) != NULL)
-		{	sd->npc_menu++; ptr++; }
-
-		clif_scriptmenu(sd,st->oid,buf);
-		aFree(buf);
-	} else {
-		if(sd->npc_menu != 0xff){
-			//Skip empty menu entries which weren't displayed on the client (Skotlex)
-			for(i=st->start+2;i< (st->start+2+sd->npc_menu) && sd->npc_menu < (st->end-st->start-2);i++) {
-				conv_str(st,& (st->stack->stack_data[i])); // we should convert variables to strings before access it [jA1983] [EoE]
-				if((int)strlen(st->stack->stack_data[i].u.str) < 1)
-					sd->npc_menu++; //Empty selection which wasn't displayed on the client.
-			}
-		}
-		pc_setreg(sd,add_str("@menu"),sd->npc_menu);
-		sd->state.menu_or_input=0;
-		script_pushint(st,sd->npc_menu);
-	  }
-	  return 0;
 }
 
 /*==========================================

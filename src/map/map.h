@@ -523,7 +523,7 @@ struct map_session_data {
 	//status_calc_pc, while special_state is recalculated in each call. [Skotlex]
 	struct {
 		unsigned auth : 1;
-		unsigned menu_or_input : 1;
+		unsigned menu_or_input : 1;// if a script is waiting for feedback from the player
 		unsigned dead_sit : 2;
 		unsigned waitingdisconnect : 1;
 		unsigned lr_flag : 2;

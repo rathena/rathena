@@ -23,6 +23,8 @@ void StringBuf_Init(struct StringBuf *);
 int StringBuf_Vprintf(struct StringBuf *,const char *,va_list);
 int StringBuf_Printf(struct StringBuf *,const char *,...);
 int StringBuf_Append(struct StringBuf *,const struct StringBuf *);
+int StringBuf_AppendStr(struct StringBuf* sbuf, const char* str);
+int StringBuf_Length(struct StringBuf* sbuf);
 char * StringBuf_Value(struct StringBuf *);
 void StringBuf_Destroy(struct StringBuf *);
 void StringBuf_Free(struct StringBuf *);

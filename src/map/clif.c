@@ -10014,7 +10014,7 @@ void clif_parse_WeaponRefine(int fd, struct map_session_data *sd) {
  */
 void clif_parse_NpcSelectMenu(int fd,struct map_session_data *sd)
 {
-	unsigned char select;
+	uint8 select;
 	RFIFOHEAD(fd);
 
 	select = RFIFOB(fd,6);

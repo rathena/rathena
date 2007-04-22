@@ -9,7 +9,7 @@
 //= Maeki Rika - A section on general concepts and lots of
 //=              other updates and additions.
 //===== Version ===========================================
-//= 3.04.20070317
+//= 3.05.20070423
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -73,6 +73,9 @@
 //=       Adjusted the 'itemskill' description due to recent change [ultramage]
 //= 3.04.20070409
 //=       Fixed the incorrect order of parameters in 'makeitem' [ultramage]
+//= 3.05.20070423
+//=       menu/select/prompt produce consistent results for grouped and empty 
+//=       options [FlavioJS]
 //===== Description =======================================
 //= A reference manual for the eAthena scripting language,
 //= sorted out depending on their functionality.
@@ -1116,7 +1119,7 @@ Note by FlavioJS: goto's are "evil" and should be avoided if possible (ò_ó)
 
 ---------------------------------------
 
-*menu "<menu option>",<label>{,"<menu option>",<label>,...};
+*menu "<option_text>",<target_label>{,"<option_text>",<target_label>,...};
 
 This command will create a selectable menu for the invoking character. Only one 
 menu can be on screen at the same time.
@@ -1125,25 +1128,40 @@ Depending on what the player picks from the menu, the script execution will
 continue from the corresponding label. (it's string-label pairs, not label-
 string)
 
+Options can be grouped together, separated by the character ':'.
+
+	menu "A:B",L_Wrong,"C",L_Right;
+
 It also sets a special temporary character variable @menu, which contains the 
 number of option the player picked. (Numbering of options starts at 1.)
+This number is consistent with empty options and grouped options.
 
-       menu "I want to Start",L_Start,"I want to end",L_End;
-    L_Start:
-       //If they click "I want to Start" they will end up here
-    L_End:
-       //If they click "I want to end" they will end up here
+       menu "A::B",L_Wrong,"",L_Impossible,"C",L_Right;
+    L_Wrong:
+       // If they click "A" or "B" they will end up here
+	   // @menu == 1 if "A"
+	   // @menu == 2 will never happen because the option is empty
+	   // @menu == 3 if "B"
+	L_Impossible:
+	   // Empty options are not displayed and therefore can't be selected
+	   // this label will never be reached from the menu command
+    L_Right:
+       // If they click "C" they will end up here
+	   // @menu == 5
 
 If a label is '-', the script execution will continue right after the menu 
 command if that option is selected, this can be used to save you time, and 
 optimize big scripts.
 
-        menu "I want to Start",-,"I want to end",L_End;
-        //If they click "I want to Start" they will end up here
-    L_End:
-        //If they click "I want to end" they will end up here
+        menu "A::B:",-,"C",L_Right;
+        // If they click "A" or "B" they will end up here
+		// @menu == 1 if "A"
+		// @menu == 3 if "B"
+    L_Right:
+        // If they click "C" they will end up here
+		// @menu == 5
 
-Both these examples will perform the same task.
+Both these examples will perform the exact same task.
 
 If you give an empty string as a menu item, the item will not display. This
 can effectively be used to script dynamic menus by using empty string for
@@ -1242,8 +1260,8 @@ perfectly equivalent.
 
 ---------------------------------------
 
-*select("<option>"{,"<option>"..."<option>"})
-*prompt("<option>"{,"<option>"..."<option>"})
+*select("<option>"{,"<option>",...})
+*prompt("<option>"{,"<option>",...})
 
 This function is a handy replacement for 'menu' for some specific cases where 
 you don't want a complex label structure - like, for example, asking simple yes-
@@ -1251,12 +1269,10 @@ no questions. It will return the number of menu option picked, starting with 1.
 Like 'menu', it will also set the variable @menu to contain the option the user 
 picked.
 
-    if (select("Yes","No")==1) mes "You said yes, I know.";
+    if (select("Yes:No")==1) mes "You said yes, I know.";
 
-And like 'menu', this command has a problem with empty strings - if some of the 
-option strings given to it are empty, you won't be able to tell which one the 
-user really picked. The number it returns will only make sense if all the empty 
-strings are last in the list of options.
+And like 'menu', the selected option is consistent with grouped options 
+and empty options.
 
 prompt works almost the same as select, except that when a character clicks
 the Cancel button, this function will return 255 instead.

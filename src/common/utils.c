@@ -123,6 +123,31 @@ int StringBuf_Append(struct StringBuf *buf1,const struct StringBuf *buf2)
 	return (int)(buf1->ptr_ - buf1->buf_);
 }
 
+// Appends str onto the end of buf
+int StringBuf_AppendStr(struct StringBuf* sbuf, const char* str) 
+{
+	int available = sbuf->max_ - (sbuf->ptr_ - sbuf->buf_);
+	int size = (int)strlen(str);
+
+	if( size >= available )
+	{// not enough space, expand the buffer (minimum expansion = 1024)
+		int off = (int)(sbuf->ptr_ - sbuf->buf_);
+		sbuf->max_ += max(size, 1024);
+		sbuf->buf_ = (char *) aRealloc(sbuf->buf_, sbuf->max_ + 1);
+		sbuf->ptr_ = sbuf->buf_ + off;
+	}
+
+	memcpy(sbuf->ptr_, str, size);
+	sbuf->ptr_ += size;
+	return (int)(sbuf->ptr_ - sbuf->buf_);
+}
+
+// Returns the length of the data in a Stringbuf
+int StringBuf_Length(struct StringBuf *sbuf) 
+{
+	return (int)(sbuf->ptr_ - sbuf->buf_);
+}
+
 // Destroy a StringBuf [MouseJstr]
 void StringBuf_Destroy(struct StringBuf *sbuf) 
 {
