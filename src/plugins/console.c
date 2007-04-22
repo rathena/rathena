@@ -8,7 +8,6 @@
 	#include <windows.h>
 #else
 	#define __USE_XOPEN
-	#include <features.h>
 	#include <sys/types.h>
 	#include <unistd.h>
 	#include <poll.h>

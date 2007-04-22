@@ -821,9 +821,9 @@ int chrif_changedsex(int fd)
 			sd->status.sex = !sd->status.sex;
 
 			// to avoid any problem with equipment and invalid sex, equipment is unequiped.
-			for (i = 0; i < MAX_INVENTORY; i++) {
-				if (sd->status.inventory[i].nameid && sd->status.inventory[i].equip)
-					pc_unequipitem((struct map_session_data*)sd, i, 2);
+			for (i = 0; i < EQI_MAX; i++) {
+				if (sd->equip_index[i] >= 0)
+					pc_unequipitem((struct map_session_data*)sd, sd->equip_index[i], 2);
 			}
 			// reset skill of some job
 			if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER) {

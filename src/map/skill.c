@@ -4805,7 +4805,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		break;
 	case SA_MAGICROD:
-		clif_skill_nodamage(src,bl,skillid,-1,0); //Skill animation with no yell.
+		//It activates silently, no use animation.
 		sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv));
 		break;
 	case SA_AUTOSPELL:
@@ -8160,12 +8160,6 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		break;
 	case MO_CALLSPIRITS:
 		if(sd->spiritball >= lv) {
-			clif_skill_fail(sd,skill,0,0);
-			return 0;
-		}
-		break;
-	case CH_SOULCOLLECT:
-		if(sd->spiritball >= 5) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}

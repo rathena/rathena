@@ -2579,7 +2579,8 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 	else if (strcmpi(w3,"pvp")==0) {
 		map[m].flag.pvp=state;
 		if (state) {
-			map[m].flag.gvg=0;
+			if (map[m].flag.gvg || map[m].flag.gvg_dungeon || map[m].flag.gvg_castle)
+				ShowWarning("You can't set PvP and GvG flags for the same map! Removing GvG flags from %s\n", map[m].name);
 			map[m].flag.gvg=0;
 			map[m].flag.gvg_dungeon=0;
 			map[m].flag.gvg_castle=0;
@@ -2626,7 +2627,11 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 	}
 	else if (strcmpi(w3,"gvg")==0) {
 		map[m].flag.gvg=state;
-		if (state) map[m].flag.pvp=0;
+		if (state && map[m].flag.pvp) 
+		{
+			map[m].flag.pvp=0;
+			ShowWarning("You can't set PvP and GvG flags for the same map! Removing PvP flag from %s\n", map[m].name);
+		}
 	}
 	else if (strcmpi(w3,"gvg_noparty")==0) {
 		map[m].flag.gvg_noparty=state;

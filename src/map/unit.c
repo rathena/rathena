@@ -1787,28 +1787,12 @@ int unit_free(struct block_list *bl, int clrtype) {
 			}
 			if (battle_config.debuff_on_logout&2)
 			{	//Food items are removed on logout.
-				if(sd->sc.data[SC_STRFOOD].timer!=-1)
-					status_change_end(bl,SC_STRFOOD,-1);
-				if(sd->sc.data[SC_AGIFOOD].timer!=-1)
-					status_change_end(bl,SC_AGIFOOD,-1);
-				if(sd->sc.data[SC_VITFOOD].timer!=-1)
-					status_change_end(bl,SC_VITFOOD,-1);
-				if(sd->sc.data[SC_INTFOOD].timer!=-1)
-					status_change_end(bl,SC_INTFOOD,-1);
-				if(sd->sc.data[SC_DEXFOOD].timer!=-1)
-					status_change_end(bl,SC_DEXFOOD,-1);
-				if(sd->sc.data[SC_LUKFOOD].timer!=-1)
-					status_change_end(bl,SC_LUKFOOD,-1);
-				if(sd->sc.data[SC_HITFOOD].timer!=-1)
-					status_change_end(bl,SC_HITFOOD,-1);
-				if(sd->sc.data[SC_FLEEFOOD].timer!=-1)
-					status_change_end(bl,SC_FLEEFOOD,-1);
-				if(sd->sc.data[SC_BATKFOOD].timer!=-1)
-					status_change_end(bl,SC_BATKFOOD,-1);
-				if(sd->sc.data[SC_WATKFOOD].timer!=-1)
-					status_change_end(bl,SC_WATKFOOD,-1);
-				if(sd->sc.data[SC_MATKFOOD].timer!=-1)
-					status_change_end(bl,SC_MATKFOOD,-1);
+				if(sd->sc.data[SC_MAXIMIZEPOWER].timer!=-1)
+					status_change_end(bl,SC_MAXIMIZEPOWER,-1);
+				if(sd->sc.data[SC_MAXOVERTHRUST].timer!=-1)
+					status_change_end(bl,SC_MAXOVERTHRUST,-1);
+				if(sd->sc.data[SC_STEELBODY].timer!=-1)
+					status_change_end(bl,SC_STEELBODY,-1);
 			}
 		}
 		if (sd->followtimer != -1)

@@ -109,7 +109,7 @@ int itemdb_group_bonus(const int itemgrouphealrate[MAX_ITEMGROUP], int itemid)
 {
 	int bonus = 0, i, j;
 	for (i=0; i < MAX_ITEMGROUP; i++) {
-		if (itemgrouphealrate[i])
+		if (!itemgrouphealrate[i])
 			continue;
 		for (j=0; j < itemgroup_db[i].qty; j++) {
 			if (itemgroup_db[i].nameid[j] == itemid)
