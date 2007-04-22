@@ -19,6 +19,8 @@
 	-----
 
 ========================
+04/23
+	* Some more Anubis updates [Playtester]
 04/22
 	* Optimized db entries for autocast [Playtester]
 04/21
