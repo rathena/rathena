@@ -7110,8 +7110,7 @@ BUILDIN_FUNC(itemskill)
 	id=script_getnum(st,2);
 	lv=script_getnum(st,3);
 
-	// 詠唱中にスキルアイテムは使用できない
-	if(sd->ud.skilltimer != -1)
+	if(!sd || sd->ud.skilltimer != -1)
 		return 0;
 
 	sd->skillitem=id;

@@ -1790,12 +1790,18 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 	}
 
-	for(i=0,mvp_damage=0;i<DAMAGELOG_SIZE && md->dmglog[i].id;i++)
+	for(i=count=0,mvp_damage=0;i<DAMAGELOG_SIZE && md->dmglog[i].id;i++)
 	{
 		tmpsd[i] = map_charid2sd(md->dmglog[i].id);
 		if(tmpsd[i] == NULL)
 			continue;
-		if(tmpsd[i]->bl.m != m || pc_isdead(tmpsd[i]))
+		if(tmpsd[i]->bl.m != m)
+		{
+			tmpsd[i] = NULL;
+			continue;
+		}
+		count++; //Only logged into same map chars are counted for the total.
+		if (pc_isdead(tmpsd[i]))
 		{
 			tmpsd[i] = NULL;
 			continue;
@@ -1805,7 +1811,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			tmpsd[i] = NULL;
 			continue;
 		}
-
 		if(mvp_damage<(unsigned int)md->dmglog[i].dmg){
 			third_sd = second_sd;
 			second_sd = mvp_sd;
@@ -1813,7 +1818,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			mvp_damage=md->dmglog[i].dmg;
 		}
 	}
-	count = i; //Total number of attackers.
 
 	if(!battle_config.exp_calc_type && count > 1)
 	{	//Apply first-attacker 200% exp share bonus

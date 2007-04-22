@@ -1440,9 +1440,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			else
 				tbl = bl;
 
-			if (tbl != src && !battle_check_range(src, tbl, skill_get_range2(src, skill, skilllv)))
-				continue; //Autoskills DO check for target-src range. [Skotlex]
-			rate = skill_get_inf(skill);
 			switch (skill_get_casttype(skill)) {
 				case CAST_GROUND:
 					skill_castend_pos2(src, tbl->x, tbl->y, skill, skilllv, tick, 0);
@@ -1614,9 +1611,6 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				tbl = bl;
 			else
 				tbl = src;
-			
-			if (tbl != bl && !battle_check_range(bl, tbl, skill_get_range2(bl, skillid, skilllv)))
-				continue; //Autoskills DO check for target-src range. [Skotlex]
 			
 			switch (skill_get_casttype(skillid)) {
 				case CAST_GROUND:
@@ -7964,7 +7958,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 
 	nullpo_retr(0, sd);
 
-	if (lv <= 0) return 0;
+	if (lv <= 0 || sd->chatID) return 0;
 
 	if( battle_config.gm_skilluncond &&
 		pc_isGM(sd)>= battle_config.gm_skilluncond &&
