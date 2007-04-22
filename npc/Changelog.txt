@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/04/23
+	* Fixed up some shops [Playtester]
 	* Fixed some level requirements for swordman quest skills [Playtester]
 	- all the skill quests are still very custom :-/
 2007/04/22
