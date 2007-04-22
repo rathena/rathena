@@ -25,7 +25,7 @@
 //<-------------------------------------- Fatal Blow------------------------------------>\\
 prt_in,75,88,5	script	Leon	85,{
 	mes "[Leon]";
-	if(baseClass == Job_Swordman) goto L_Start;
+	if((BaseClass == Job_Swordman && JobLevel >=25) || BaseJob == Job_Knight || BaseJob == Job_Crusader) goto L_Start;
 	if(BaseJob == Job_Novice) goto L_Novice;
 
 	mes "Hello there.  I am Leon, a well known and well respected member of the famous Prontera Chivalry.";
@@ -165,7 +165,7 @@ L_Done:
 //<---------------------------------- Moving HP Recovery ---------------------------------->\\
 izlude_in,175,130,2	script	Knight De Thomas	98,{
 	mes "[Knight De Thomas]";
-	if(baseClass == Job_Swordman) goto L_Start;
+	if(BaseClass == Job_Swordman) goto L_Start;
 
 L_Other:
 	mes "I am Thomas De Knight of the Prontera Chivalry.  I am very busy now so please leave me alone.";
@@ -227,7 +227,7 @@ L_Check:
 	next;
 	mes "[Knight De Thomas]";
 	if ((countitem(713)<200) || (countitem(1058)<1) || (countitem(2312)<1)) goto L_NoItems;
-	if (baseClass==Job_Swordman && JobLevel < 35) goto L_LowLvl;
+	if (JobLevel<35 && BaseJob!=Job_Knight && BaseJob!=Job_Crusader) goto L_LowLvl;
 	delitem 713,200;
 	delitem 1058,1;
 	mes "Great! You have everything needed to learn this skill.  Take a deep breath.... let us begin.";
@@ -267,7 +267,7 @@ L_Check:
 //<----------------------------------------- Auto-Berserk --------------------------------->\\
 prt_in,94,57,3	script	Juan	85,{
 	mes "[Juan]";
-	if(baseClass == Job_Swordman) goto L_Start;
+	if(BaseClass == Job_Swordman) goto L_Start;
 
 L_Other:
 	mes "So how's your adventure going? I hope there will be good days ahead of you.";
@@ -278,7 +278,7 @@ L_Other:
 	close;
 
 L_Start:
-	if (baseClass == Job_Swordman && JobLevel<30) goto L_LowLvl;
+	if (JobLevel<30 && BaseJob!=Job_Knight && BaseJob!=Job_Crusader) goto L_LowLvl;
 	if (BERSERK == 1) goto L_Check;
 	if (getskilllv(146)>0) goto L_GotSkill;
 
