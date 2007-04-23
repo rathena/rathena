@@ -16,7 +16,7 @@
 //= 1.2 Added Rachel Cool Event Corp. Staff [Playtester]
 //============================================================ 
 
-hugel,88,168,4	script	Cool Event Corp. Staff#hugel	874,{
+hugel,88,168,4	script	Cool Event Corp. Staff::CoolEventCorpStaffHugel	874,{
 
 	mes "[Cool Event Corp. Staff]";
 	mes "Welcome to Cool Event Corp.";
@@ -128,7 +128,7 @@ hugel,88,168,4	script	Cool Event Corp. Staff#hugel	874,{
 	}
 }
 
-rachel,109,138,5	script	Cool Event Corp. Staff#rachel	874,{
+rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
 
 	mes "[Cool Event Corp. Staff]";
 	mes "Welcome to Cool Event Corp.";
