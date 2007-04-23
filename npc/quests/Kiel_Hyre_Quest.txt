@@ -763,7 +763,7 @@ yuno_fild08,158,183,7	duplicate(KHAGuard)	Security Guard#2	852
 //----------------------------------------------------------------------------
 // Gossiping Teenagers/Story NPCs
 //----------------------------------------------------------------------------
-kh_school,57,142,7	script	Student	893,3,3,{
+kh_school,57,142,7	script	Student::StudentKHQ1	893,3,3,{
 	mes "[Laci]";
 	mes "Oh, wow! We usually";
 	mes "don't get visitors on";
@@ -797,7 +797,7 @@ OnTouch:
 	close;
 }
 
-kh_school,57,139,1	script	Student	893,{
+kh_school,57,139,1	script	Student::StudentKHQ2	893,{
 	mes "[Gui Nesha]";
 	mes "Aren't we a little";
 	mes "old to be talking about";
@@ -812,7 +812,7 @@ kh_school,57,139,1	script	Student	893,{
 //----------------------------------------------------------------------------
 // Mrs. Lecollane
 //----------------------------------------------------------------------------
-kh_school,176,60,4	script	Lady	101,{
+kh_school,176,60,4	script	Lady::LadyKHQ	101,{
 	if (KielHyreQuest == 2) { 
 		mes "[Mrs. Lecollane]";
 		mes "Oh, hello. Ah!";
@@ -1444,7 +1444,7 @@ kh_school,179,39,1	script	Cute Student	895,{
 //----------------------------------------------------------------------------
 // Elly's Window 
 //----------------------------------------------------------------------------
-yuno_fild08,69,185,0	script	Window	111,{
+yuno_fild08,69,185,0	script	Window::WindowKHQ1	111,{
 	if ((KielHyreQuest <= 28) && (KielHyreQuest >= 46)){
 		mes "^3355FFThis must be Elly's room.^000000";
 		mes "^3355FFIt doesn't sound like anyone^000000";
@@ -1724,7 +1724,7 @@ kh_school,175,175,0	script	Cookie Basket	111,{
 //----------------------------------------------------------------------------
 // Elly's Window (In Dormitory)
 //----------------------------------------------------------------------------
-kh_school,188,185,0	script	Window	111,{
+kh_school,188,185,0	script	Window::WindowKHQ2	111,{
 	warp "yuno_fild08",69,183;
 	end;
 }
@@ -1946,7 +1946,7 @@ yuno_fild02,93,210,3	script	Cottage Keeper	85,{
 //----------------------------------------------------------------------------
 // Cottage Door (left)
 //----------------------------------------------------------------------------
-yuno_fild02,75,218,0	script	Door	111,{
+yuno_fild02,75,218,0	script	Door::DoorKHQ1	111,{
 	if (KielHyreQuest < 16) {
 		mes "^3355FFThis door is locked.^000000";
 		mes "^3355FFIf someone inside won't^000000";
@@ -2008,7 +2008,7 @@ yuno_fild02,75,218,0	script	Door	111,{
 //----------------------------------------------------------------------------
 // Cottage Door (Right)
 //----------------------------------------------------------------------------
-yuno_fild02,109,218,0	script	Door	111,{
+yuno_fild02,109,218,0	script	Door::DoorKHQ2	111,{
 	if (KielHyreQuest < 16) {
 		mes "^3355FFThis door is locked.^000000";
 		mes "^3355FFIf someone inside won't^000000";
@@ -2079,14 +2079,14 @@ OnOpenDoor:
 //----------------------------------------------------------------------------
 // Store room interior; books
 //----------------------------------------------------------------------------
-kh_vila,184,20,0	script	Book::KHBooks	111,{
+kh_vila,184,20,0	script	Book::BookKHQ1	111,{
 	mes "^3355FFThis bookshelf is^000000";
 	mes "^3355FFcrammed with many^000000";
 	mes "^3355FFlarge, hardcover books^000000";
 	close;
 }
 
-kh_vila,181,20,0	script	Book	111,{
+kh_vila,181,20,0	script	Book::BookKHQ2	111,{
 	if (KielHyreQuest != 26) {
 		mes "^3355FFThis bookshelf is^000000";
 		mes "^3355FFcrammed with many^000000";
@@ -2107,9 +2107,9 @@ kh_vila,181,20,0	script	Book	111,{
 
 }
 
-kh_vila,178,20,0	duplicate(KHBooks)	Book	111
+kh_vila,178,20,0	duplicate(BookKHQ1)	Book::BookKHQ3	111
 
-kh_vila,175,19,0	duplicate(KHBooks)	Book	111
+kh_vila,175,19,0	duplicate(BookKHQ1)	Book::BookKHQ4	111
 
 
 //----------------------------------------------------------------------------
@@ -2136,7 +2136,7 @@ OnTouch:
 //----------------------------------------------------------------------------
 // Cottage interior, kitchen; Box (Pet Food vending machine)
 //----------------------------------------------------------------------------
-kh_vila,16,175,0	script	Box	111,{
+kh_vila,16,175,0	script	Box::BoxKHQ1	111,{
 		mes "^FFFFFF##^000000*Tasty-Nutricious-Delicious*";
 		mes "*Cute Pet Doof Vending Machine*";
 		mes "The best food for your Cute Pets";
@@ -2623,7 +2623,7 @@ OnTouch:
 //----------------------------------------------------------------------------
 // Cottage interior, upstairs; Drawer, first room nightstand
 //----------------------------------------------------------------------------
-kh_vila,115,186,0	script	Drawer	111,{
+kh_vila,115,186,0	script	Drawer::DrawerKHQ1	111,{
 	if ((countitem(7492) < 1) && (KielHyreQuest < 36)) {
 		mes "^3355FFyou find an old drawer^000000";
 		mes "^3355FFthat has been closed.^000000";
@@ -2662,7 +2662,7 @@ kh_vila,115,186,0	script	Drawer	111,{
 //----------------------------------------------------------------------------
 // Cottage interior, upstairs; Box
 //----------------------------------------------------------------------------
-kh_vila,107,126,0	script	Box	111,{
+kh_vila,107,126,0	script	Box::BoxKHQ2	111,{
 	if ((countitem(7329) < 1) && (countitem(7516) < 1) && (countitem(7491) < 1) && (KielHyreQuest < 30)) {
 		mes "^3355FFA solid box is laid^000000";
 		mes "^3355FFon the floor in which^000000";
@@ -2718,7 +2718,7 @@ kh_vila,107,126,0	script	Box	111,{
 //----------------------------------------------------------------------------
 // Cottage interior, upstairs; Bookshelf.
 //----------------------------------------------------------------------------
-kh_vila,181,138,0	script	Bookshelf	111,{
+kh_vila,181,138,0	script	Bookshelf::BookshelfKHQ1	111,{
 	if ((countitem(7491) < 1) && (countitem(7516) >= 1)) {
 		mes "^3355FFOne of the books on^000000";
 		mes "^3355FFthis crammed bookshell^000000";
@@ -2838,7 +2838,7 @@ kh_vila,181,138,0	script	Bookshelf	111,{
 //----------------------------------------------------------------------------
 // Cottage interior, upstairs; Desk
 //----------------------------------------------------------------------------
-kh_vila,118,143,0	script	Desk	111,{
+kh_vila,118,143,0	script	Desk::DeskKHQ1	111,{
 	if (KHCottagePoem2 < 1) {
 		mes "^3355FFThere are piles of papers^000000";
 		mes "^3355FFand books stacked on top^000000";
@@ -3250,7 +3250,7 @@ kh_vila,136,68,0	script	Sword Hilt	111,{
 //----------------------------------------------------------------------------
 // Cottage interior, Secret Room; left test tube
 //----------------------------------------------------------------------------
-kh_vila,179,68,0	script	Test Tube	111,{
+kh_vila,179,68,0	script	Test Tube::TestTubeKHQ1	111,{
 	mes "^3355FFThis test tube contains^000000";
 	mes "^3355FFa young man dressed in^000000";
 	mes "^3355FFa Kiel Hyre Academy^000000";
@@ -3264,7 +3264,7 @@ kh_vila,179,68,0	script	Test Tube	111,{
 //----------------------------------------------------------------------------
 // Cottage interior, Secret Room; Right test tube
 //----------------------------------------------------------------------------
-kh_vila,185,68,0	script	Test Tube	111,{
+kh_vila,185,68,0	script	Test Tube::TestTubeKHQ2	111,{
 	if (KielHyreQuest == 28) {
 		mes "^3355FFA strange looking,^000000";
 		mes "^3355FFwizend old man is^000000";
@@ -3349,7 +3349,7 @@ kh_vila,185,68,0	script	Test Tube	111,{
 //----------------------------------------------------------------------------
 // Robotic's Factory; Heavy Door
 //----------------------------------------------------------------------------
-kh_dun01,235,48,0	script	Heavy Door	111,{
+kh_dun01,235,48,0	script	Heavy Door::HeavyDoorKHQ1	111,{
 	if ((KielHyreQuest >= 38) && (KielHyreQuest < 46)) {
 		mes "^3355FFThere is a large, heavy^000000";
 		mes "^3355FFdoor infront of you^000000";
@@ -3396,7 +3396,7 @@ kh_dun01,235,48,0	script	Heavy Door	111,{
 //----------------------------------------------------------------------------
 // Robotic's Factory; Heavy Door (These doors don't seem to serve any purpose)
 //----------------------------------------------------------------------------
-kh_dun01,76,233,0	script	Heavy Door::KHHeaveyDoor	111,{
+kh_dun01,76,233,0	script	Heavy Door::HeavyDoorKHQ2	111,{
 	if ((KielHyreQuest >= 38) && (KielHyreQuest < 46)) {
 		mes "^3355FFThere is a large, heavy^000000";
 		mes "^3355FFdoor infront of you^000000";
@@ -3431,20 +3431,20 @@ kh_dun01,76,233,0	script	Heavy Door::KHHeaveyDoor	111,{
 
 }
 
-kh_dun01,106,233,0	duplicate(KHHeaveyDoor)	Heavy Door	111
-kh_dun01,6,164,0	duplicate(KHHeaveyDoor)	Heavy Door	111
-kh_dun01,6,134,0	duplicate(KHHeaveyDoor)	Heavy Door	111
-kh_dun01,6,60,0		duplicate(KHHeaveyDoor)	Heavy Door	111
-kh_dun01,6,30,0		duplicate(KHHeaveyDoor)	Heavy Door	111
-kh_dun01,6,18,0		duplicate(KHHeaveyDoor)	Heavy Door	111
-kh_dun01,235,70,0	duplicate(KHHeaveyDoor)	Heavy Door	111
-kh_dun01,235,92,0	duplicate(KHHeaveyDoor)	Heavy Door	111
-kh_dun01,235,114,0	duplicate(KHHeaveyDoor)	Heavy Door	111
+kh_dun01,106,233,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ3	111
+kh_dun01,6,164,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ4	111
+kh_dun01,6,134,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ5	111
+kh_dun01,6,60,0		duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ6	111
+kh_dun01,6,30,0		duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ7	111
+kh_dun01,6,18,0		duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ8	111
+kh_dun01,235,70,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ9	111
+kh_dun01,235,92,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ10	111
+kh_dun01,235,114,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ11	111
 
 //----------------------------------------------------------------------------
 // Beautiful Lady and Beautiful Lady copies.
 //----------------------------------------------------------------------------
-kh_school,119,149,4	script	Beautiful lady	894,{
+kh_school,119,149,4	script	Beautiful lady::BeatifulLadyKHQ1	894,{
 	cutin "kh_ellisia",2;
 	if (KielHyreQuest < 40) {
 		mes "[Allysia]";
@@ -3531,15 +3531,15 @@ kh_school,119,149,4	script	Beautiful lady	894,{
 }
 
 
-kh_school,117,149,4	script	Beautiful lady::KHBeautifulLady	894,{
+kh_school,117,149,4	script	Beautiful lady::BeatifulLadyKHQ2	894,{
 	end;
 }
 
-kh_school,118,149,4	duplicate(KHBeautifulLady)	Beautiful lady	894
+kh_school,118,149,4	duplicate(BeatifulLadyKHQ2)	Beautiful lady::BeatifulLadyKHQ3	894
 
-kh_school,120,149,4	duplicate(KHBeautifulLady)	Beautiful lady	894
+kh_school,120,149,4	duplicate(BeatifulLadyKHQ2)	Beautiful lady::BeatifulLadyKHQ4	894
 
-kh_school,121,149,4	duplicate(KHBeautifulLady)	Beautiful lady	894
+kh_school,121,149,4	duplicate(BeatifulLadyKHQ1)	Beautiful lady::BeatifulLadyKHQ5	894
 
 //----------------------------------------------------------------------------
 // Beautiful Lady "Allysia"
@@ -3884,7 +3884,7 @@ kh_dun01,44,203,0	duplicate(KHAccess)	Entrance Device#KHEntry2	111
 //----------------------------------------------------------------------------
 // Kiel's Steward
 //----------------------------------------------------------------------------
-kh_mansion,78,55,5	script	Steward	109,{
+kh_mansion,78,55,5	script	Steward::StewardKHQ1	109,{
 	if ((KielHyreQuest >= 46) && (KielHyreQuest < 50)) {
 		mes "[Steward]";
 		mes "Greetings.";
@@ -5708,7 +5708,7 @@ kh_rossi,23,23,0	script	Table	111,{
 //----------------------------------------------------------------------------
 // Rosimier Mansion, first floor; Shelf
 //----------------------------------------------------------------------------
-kh_rossi,92,40,0	script	Shelf	111,{
+kh_rossi,92,40,0	script	Shelf::ShelfKHQ1	111,{
 	if (countitem(7500) < 1) {
 		mes "^3355FFThere are locked^000000";
 		mes "^3355FFboxes on these bookshelves.^000000";
@@ -5769,7 +5769,7 @@ kh_rossi,92,40,0	script	Shelf	111,{
 //----------------------------------------------------------------------------
 // Rosimier Mansion, top floor; Desk
 //----------------------------------------------------------------------------
-kh_rossi,144,287,0	script	Desk	111,{
+kh_rossi,144,287,0	script	Desk::DeskKHQ2	111,{
 	mes "^3355FFThe desk has^000000";
 	mes "^3355FFthree drawers^000000";
 	next;
@@ -5819,7 +5819,7 @@ kh_rossi,144,287,0	script	Desk	111,{
 //----------------------------------------------------------------------------
 // Rosimier Mansion, top floor; Bookshelf
 //----------------------------------------------------------------------------
-kh_rossi,149,288,0	script	Bookshelf	111,{
+kh_rossi,149,288,0	script	Bookshelf::BookshelfKHQ2	111,{
 	if (countitem(7502) < 1) {
 		mes "^3355FFYou encounter a dusty ^000000";
 		mes "^3355FFbookshelf filled with^000000";
@@ -6086,7 +6086,7 @@ kh_kiehl01,13,40,0	script	Flower Vase	111,{
 //----------------------------------------------------------------------------
 // Kiehl's Room; Box
 //----------------------------------------------------------------------------
-kh_kiehl01,19,25,0	script	Box	111,{
+kh_kiehl01,19,25,0	script	Box::BoxKHQ3	111,{
 	if (countitem(7505) < 1) {
 		mes "^3355FFYou found a box with";
 		mes "a button for each letter";
@@ -6124,7 +6124,7 @@ kh_kiehl01,19,25,0	script	Box	111,{
 // - Consume one Black KeyCard when opened.
 // - Only one person actually needs to open it.
 //----------------------------------------------------------------------------
-kh_kiehl01,44,33,0	script	Big Door	111,{
+kh_kiehl01,44,33,0	script	Big Door::BigDoorKHQ1	111,{
 	if (.KHDoor1Opened == 0) {
 		mes "^3355FFThe door is locked,";
 		mes "but there is a narrow";
@@ -6186,7 +6186,7 @@ OnTouch:
 // - Consume Toy Key when opened.
 // - Only one person actually needs to open it.
 //----------------------------------------------------------------------------
-kh_kiehl01,174,40,0	script	Big Door	111,{
+kh_kiehl01,174,40,0	script	Big Door::BigDoorKHQ2	111,{
 	if (.KHDoor2Opened == 0) {
 		mes "^3355FFThe door is locked,";
 		mes "but there is a small";
@@ -6249,7 +6249,7 @@ OnTouch:
 // - Consume one Black KeyCard when opened.
 // - Only one person actually needs to open it.
 //----------------------------------------------------------------------------
-kh_kiehl01,77,108,0	script	Big Door	111,{
+kh_kiehl01,77,108,0	script	Big Door::BigDoorKHQ3	111,{
 	if (.KHDoor3Opened == 0) {
 		mes "^3355FFThe door is locked,";
 		mes "but there is a narrow";
@@ -6312,7 +6312,7 @@ OnTouch:
 // - Consume TWO Black KeyCard when opened.
 // - Only one person actually needs to open it.
 //----------------------------------------------------------------------------
-kh_kiehl01,42,177,0	script	Big Door	111,{
+kh_kiehl01,42,177,0	script	Big Door::BigDoorKHQ4	111,{
 	if (.KHDoor4Opened == 0) {
 		mes "^3355FFThe door is locked,";
 		mes "but there is a narrow";
@@ -6407,7 +6407,7 @@ OnMyMobDead:
 // - 10 minute timer is QEUSTIONABLE, may not even be a 10 minute limit.
 //   Put it in anyway, used to make sure people don't abuse the room.
 //----------------------------------------------------------------------------
-kh_kiehl01,166,187,0	script	Big Door#5	111,{
+kh_kiehl01,166,187,0	script	Big Door::BigDoorKHQ5	111,{
 	if (($@KH_DoorInvoker$ == "") && (KielHyreQuest <= 106)) {
 		if (KielHyreQuest < 86) {
 			mes "^3355FFThis large door..";
