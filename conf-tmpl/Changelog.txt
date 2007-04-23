@@ -1,5 +1,7 @@
 Date	Added
-
+2007/04/24
+	* monster_ai&0x400 disables all mob-casted skills having a range of 9
+	  (monster.conf) [Skotlex]
 2007/04/23
 	* Debuff on logout&2 is again set to default, instead of removing food
 	  bonuses now it removes Maximize Power, Maximum Overthrust and Steel Body.
