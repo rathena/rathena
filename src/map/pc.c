@@ -6018,16 +6018,24 @@ int pc_setregstr(struct map_session_data *sd,int reg,char *str)
 
 	nullpo_retr(0, sd);
 
-	if(strlen(str)+1 >= sizeof(sd->regstr[0].data)){
+	if(str && strlen(str)+1 >= sizeof(sd->regstr[0].data)){
 		ShowWarning("pc_setregstr: string too long !\n");
 		return 0;
 	}
 
 	for(i=0;i<sd->regstr_num;i++)
 		if(sd->regstr[i].index==reg){
-			strcpy(sd->regstr[i].data,str);
+			if (str && strcmp(str,"")!=0)
+				strcpy(sd->regstr[i].data,str);
+			else { //Delete last entry.
+				sd->regstr_num--;
+				memcpy(&sd->regstr[i], &sd->regstr[sd->regstr_num], sizeof(sd->regstr[0]));
+				sd->regstr = (struct script_regstr *) aRealloc(sd->regstr, sizeof(sd->regstr[0]) * sd->regstr_num);
+			}
 			return 1;
 		}
+
+	if (!str) return 1;
 
 	sd->regstr_num++;
 	sd->regstr = (struct script_regstr *) aRealloc(sd->regstr, sizeof(sd->regstr[0]) * sd->regstr_num);
@@ -6233,7 +6241,7 @@ int pc_setregistry_str(struct map_session_data *sd,char *reg,char *val,int type)
 	}
 	
 	// delete reg
-	if (strcmp(val,"")==0) {
+	if (!val || strcmp(val,"")==0) {
 		for(i = 0; i < *max; i++) {
 			if (strcmp(sd_reg[i].str, reg) == 0) {
 				if (i != *max - 1)

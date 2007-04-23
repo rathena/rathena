@@ -30,7 +30,7 @@
 //but only one of each.
 
 //NOTE: The max value (100%) of attack_rate, defense_rate & change_target_rate is 10000.
-// MobID,Name,JName,LureID,EggID,AcceID,FoodID,Fullness,HungryDelay,R_Hungry,R_Full,Intimate,Die,Capture,Speed,S_Performance,talk_convert_class,attack_rate,defence_attack_rate,change_target_rate,pet_script
+// MobID,Name,JName,LureID,EggID,EquipID,FoodID,Fullness,HungryDelay,R_Hungry,R_Full,Intimate,Die,Capture,Speed,S_Performance,talk_convert_class,attack_rate,defence_attack_rate,change_target_rate,pet_script
 1002,PORING,Poring,619,9001,10013,531,80,20,50,100,250,20,2000,400,1,0,350,400,800,{ petloot 10; }
 1011,CHONCHON,ChonChon,624,9006,10002,537,80,10,30,100,250,20,1500,200,1,0,500,500,250,{ petskillbonus bAgi,4,10,50; }
 1014,SPORE,Spore,630,9012,10017,537,80,20,30,100,250,20,1500,200,0,0,350,500,500,{ petrecovery SC_Poison,60; }
@@ -57,6 +57,6 @@
 1170,SOHEE,Sohee,638,9020,10016,537,80,20,10,100,250,20,500,300,0,0,100,1000,200,{ petheal 400,60,33,100; }
 1188,BON_GUN,Bon Gun,659,9025,10020,537,80,20,10,100,250,20,500,200,1,0,600,200,400,{ petskillattack2 190,555,1,1,1; }
 1200,ZHERLTHSH,Zherlthsh,660,9026,0,929,80,20,10,100,250,20,50,200,0,0,1000,100,500,{ petskillattack 136,1,0,3; }
-1245,GOBLINE_XMAS,Christmas Goblin,12225,9029,0,911,80,15,20,100,250,20,500,100,0,0,300,300,800,{ petskillattack 10,5,5,5; }
+1245,GOBLINE_XMAS,Christmas Goblin,12225,9029,0,911,80,20,50,100,250,20,2000,100,0,0,300,300,800,{ petskillattack 10,5,5,5; }
 1275,ALICE,Alice,661,9027,0,504,80,20,10,100,250,20,100,200,0,0,100,1000,200,{ petskillsupport 28,5,60,25,100; }
-1815,EVENT_RICECAKE,Rice Cake,0,9028,0,550,80,20,10,100,250,20,2000,150,0,0,500,500,200,{ petskillsupport 257,3,240,50,100; }
+1815,EVENT_RICECAKE,Rice Cake,0,9028,0,511,80,20,50,100,250,20,2000,150,1,0,500,500,200,{ petskillsupport 257,3,240,50,100; }

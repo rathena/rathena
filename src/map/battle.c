@@ -2637,7 +2637,7 @@ struct Damage  battle_calc_misc_attack(
 
 	if(md.damage < 0)
 		md.damage = 0;
-	else if(md.damage && tstatus->mode&MD_PLANT && skill_num != PA_PRESSURE) //Pressure can vaporize plants
+	else if(md.damage && tstatus->mode&MD_PLANT)
 		md.damage = 1;
 
 	if(!(nk&NK_NO_ELEFIX))
@@ -4324,16 +4324,15 @@ int battle_config_read(const char *cfgName)
 	}
 	fclose(fp);
 
-	if (--count == 0) {
+	if (--count == 0)
 		battle_validate_conf();
-		add_timer_func_list(battle_delay_damage_sub, "battle_delay_damage_sub");
-	}
 
 	return 0;
 }
 
 void do_init_battle(void) {
 	delay_damage_ers = ers_new(sizeof(struct delay_damage));
+	add_timer_func_list(battle_delay_damage_sub, "battle_delay_damage_sub");
 }
 
 void do_final_battle(void) {

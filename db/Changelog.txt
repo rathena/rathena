@@ -19,6 +19,9 @@
 	-----
 
 ========================
+
+04/24
+	* Corrected the pet_db information for Xmas Goblin and Rice Cake. [Skotlex]
 04/23
 	* Added some "refined" headgears [Playtester]
 	* Some more Anubis updates [Playtester]
