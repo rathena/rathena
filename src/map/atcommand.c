@@ -5245,7 +5245,7 @@ int atcommand_reloadstatusdb(const int fd, struct map_session_data* sd, const ch
 	return 0;
 }
 /*==========================================
- * @reloadpcdb - reloads exp.txt skill_tree.txt attr_fix.txt 
+ * @reloadpcdb - reloads exp.txt skill_tree.txt attr_fix.txt statpoint.txt
  *------------------------------------------
  */
 int atcommand_reloadpcdb(const int fd, struct map_session_data* sd, const char* command, const char* message)

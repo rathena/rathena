@@ -4080,7 +4080,7 @@ void battle_set_defaults() {
 	battle_config.pc_luk_sc_def = 300;
 	battle_config.mob_luk_sc_def = 300;
 	battle_config.pc_max_sc_def = 100;
-	battle_config.mob_max_sc_def = 50;
+	battle_config.mob_max_sc_def = 100;
 	battle_config.sg_miracle_skill_ratio=1;
 	battle_config.sg_angel_skill_ratio=1;
 	battle_config.sg_miracle_skill_duration=3600000;

@@ -229,12 +229,12 @@ enum {
 	ELE_MAX
 };
 
-enum {
+enum auto_trigger_flag {
 	ATF_SELF=0x01,
 	ATF_TARGET=0x02,
 	ATF_SHORT=0x04,
 	ATF_LONG=0x08
-} auto_trigger_flag;
+};
 
 struct block_list {
 	struct block_list *next,*prev;

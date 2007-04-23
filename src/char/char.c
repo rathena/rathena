@@ -62,7 +62,7 @@ uint16 login_port = 6900;
 char char_ip_str[128];
 uint32 char_ip;
 char bind_ip_str[128];
-uint32 bind_ip;
+uint32 bind_ip = INADDR_ANY;
 uint16 char_port = 6121;
 int char_maintenance;
 int char_new;
@@ -4310,7 +4310,7 @@ int do_init(int argc, char **argv)
 
 	set_defaultparse(parse_char);
 
-	char_fd = make_listen_bind(bind_ip?bind_ip:INADDR_ANY,char_port);
+	char_fd = make_listen_bind(bind_ip, char_port);
 
 	add_timer_func_list(check_connect_login_server, "check_connect_login_server");
 	add_timer_func_list(send_users_tologin, "send_users_tologin");

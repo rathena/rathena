@@ -14,13 +14,11 @@ txt sql all: $(PLUGINS)
 
 %.$(PLUGINEXT): %.c
 	$(CC) $(CFLAGS) -shared -o ../../plugins/$@ $<
-	@touch $@
 
 sig.$(PLUGINEXT): sig.c
 	$(CC) $(CFLAGS) -shared -o ../../plugins/$@ $< \
 	../common/obj/showmsg.o ../common/obj/utils.o \
 	../common/obj/minimalloc.o
-	@touch $@
 
 gui.$(PLUGINEXT): ../../plugins/gui.conf
 upnp.$(PLUGINEXT): ../../plugins/upnp.conf

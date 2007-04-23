@@ -2,13 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifndef _WIN32
-	#include <unistd.h>
-#endif
-#ifdef MINGW
-	#include <process.h>
-	#include <io.h>
+#if !defined _WIN32 || defined MINGW
+	#include <unistd.h> // getpid(), unlink()
 #else
+	#include <windows.h>
 	#define getpid GetCurrentProcessId
 #endif
 
