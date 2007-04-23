@@ -420,6 +420,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		set BaseExp, BaseExp + 400;
 		set JobExp,JobExp+200;
 		//misceffect EF_HIT5;
+		close;
 		break;
 	case 3:
 		mes "Ah~ You're here?";

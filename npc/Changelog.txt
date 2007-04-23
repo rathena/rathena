@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/04/24
+	* Added missing close; to the magician first_class quest [ultramage]
 2007/04/23
 	* Fixed up some shops [Playtester]
 	* Fixed some level requirements for swordman quest skills [Playtester]
