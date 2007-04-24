@@ -8448,6 +8448,7 @@ L_Fail:
         mes "That's terrible! Does she";
         mes "even know that she will not";
         mes "have any memory of her past life?";
+        set sign_fail,2;
         next;
     }
     mes "[Kirkena]";
@@ -8456,7 +8457,6 @@ L_Fail:
     mes "can't be helped. Now, return";
     mes "to your world, and watch its";
     mes "silent death.";
-    set sign_fail,2;
     close;
 
 }

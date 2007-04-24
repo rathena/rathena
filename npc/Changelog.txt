@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/04/25
+	* Fixed exploit in The Sign quest [Playtester]
 	* Fixed rewards of Momotaro event [Playtester]
 	* Applied L0ne_W0lf's fixes to the Kiel quest [ultramage]
 2007/04/24
