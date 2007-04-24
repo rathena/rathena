@@ -53,7 +53,7 @@ struct Clif_Config {
 struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB + 1];
 
 //Converts item type in case of pet eggs.
-#define itemtype(a) (a == 7)?4:a
+#define itemtype(a) (a == IT_PETEGG)?IT_WEAPON:a
 
 #define WBUFPOS(p,pos,x,y,dir) \
 	do { \

@@ -3133,7 +3133,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case AL_HOLYLIGHT:
 	case WZ_JUPITEL:
 	case NPC_DARKTHUNDER:
-	case NPC_MAGICALATTACK:
 	case PR_ASPERSIO:
 	case MG_FROSTDIVER:
 	case WZ_SIGHTBLASTER:
@@ -3142,6 +3141,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case NJ_HYOUSENSOU:
 	case NJ_HUUJIN:
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
+		break;
+
+	case NPC_MAGICALATTACK:
+		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
+		sc_start(src,SkillStatusChangeTable(skillid),100,skilllv,skill_get_time(skillid,skilllv));
 		break;
 
 	case HVAN_CAPRICE: //[blackhole89]

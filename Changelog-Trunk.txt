@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/04/25
+	* NPC_MAGICALATTACK now starts a state similar to Sacrificial Ritual, in
+	  the sense that every normal attack afterwards becomes a Magical Attack. The
+	  skill duration is 15 secs. [Skotlex]
 	* Added missing Rachel quest map [Playtester] 
 	* Ganbantein now deletes individual skill cells instead of the whole skill
 	  in the area it is casted.

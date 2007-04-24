@@ -54,7 +54,7 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 	}
 
 	if ((target_sd->trade_partner != 0) || (sd->trade_partner != 0)) {
-		trade_tradecancel(sd); // person is in another trade
+		clif_tradestart(sd, 2); //  person is in another trade
 		return;
 	}
 
@@ -62,7 +62,7 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 	if ( pc_can_give_items(level) || pc_can_give_items(pc_isGM(target_sd)) ) //check if both GMs are allowed to trade
 	{
 		clif_displaymessage(sd->fd, msg_txt(246));
-		trade_tradecancel(sd); // GM is not allowed to trade
+		clif_tradestart(sd, 2); // GM is not allowed to trade
 		return;
 	} 
 	

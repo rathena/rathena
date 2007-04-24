@@ -259,6 +259,7 @@ enum {
 	SC_INCDEXRATE,
 	SC_JAILED,
 	SC_ENCHANTARMS,
+	SC_MAGICALATTACK,
 	SC_MAX, //Automatically updated max, used in for's and at startup to check we are within bounds. [Skotlex]
 };
 int SkillStatusChangeTable(int skill);

@@ -2899,8 +2899,12 @@ int battle_weapon_attack(struct block_list* src, struct block_list* target, unsi
 		if (rand()%100 < triple_rate)
 			return skill_attack(BF_WEAPON,src,src,target,MO_TRIPLEATTACK,damage,tick,0);
 	}
-	else if (sc && sc->data[SC_SACRIFICE].timer != -1)
-		return skill_attack(BF_WEAPON,src,src,target,PA_SACRIFICE,sc->data[SC_SACRIFICE].val1,tick,0);
+	else if (sc) {
+		if (sc->data[SC_SACRIFICE].timer != -1)
+			return skill_attack(BF_WEAPON,src,src,target,PA_SACRIFICE,sc->data[SC_SACRIFICE].val1,tick,0);
+		if (sc->data[SC_MAGICALATTACK].timer != -1)
+			return skill_attack(BF_MAGIC,src,src,target,NPC_MAGICALATTACK,sc->data[SC_MAGICALATTACK].val1,tick,0);
+	}
 
 	wd = battle_calc_weapon_attack(src, target, 0, 0, flag);
 
