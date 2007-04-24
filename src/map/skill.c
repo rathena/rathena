@@ -6527,7 +6527,7 @@ int skill_dance_overlap(struct skill_unit *unit, int flag)
  * Flag: 0 - Convert, 1 - Revert, 2 - Initialize.
  *------------------------------------------
  */
-#define skill_dance_switch(unit, group, flag) ((group->state.song_dance&0x1 && unit->val2&UF_ENSEMBLE)?skill_dance_switch_sub(unit, group, flag):0)
+#define skill_dance_switch(unit, group, flag) (((group)->state.song_dance&0x1 && (unit)->val2&UF_ENSEMBLE)?skill_dance_switch_sub(unit, group, flag):0)
 static int skill_dance_switch_sub(struct skill_unit *unit, struct skill_unit_group *group, int flag)
 {
 	static struct skill_unit_group original, dissonance, uglydance, *group2;
@@ -9552,10 +9552,7 @@ int skill_ganbatein (struct block_list *bl, va_list ap)
 	if (unit->group->state.song_dance&0x1)
 		return 0; //Don't touch song/dance.
 
-	if (unit->group->skill_id == SA_LANDPROTECTOR)
-		skill_delunit(unit, 1);
-	else skill_delunitgroup(NULL, unit->group, 1);
-
+	skill_delunit(unit, 1);
 	return 1;
 }
 

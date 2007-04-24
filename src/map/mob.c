@@ -1513,8 +1513,10 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	}
 
 	if (dlist->first_sd && dlist->first_sd->state.autoloot &&
-		drop_rate <= dlist->first_sd->state.autoloot &&
-		check_distance_blxy(&dlist->first_sd->bl, dlist->x, dlist->y, AUTOLOOT_DISTANCE)
+		drop_rate <= dlist->first_sd->state.autoloot
+#ifdef AUTOLOOT_DISTANCE
+		&& check_distance_blxy(&dlist->first_sd->bl, dlist->x, dlist->y, AUTOLOOT_DISTANCE)
+#endif
 	) {	//Autoloot.
 		if (party_share_loot(
 			dlist->first_sd->status.party_id?
@@ -1617,7 +1619,14 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 
 	if (damage > 0)
 	{	//Store total damage...
-		md->tdmg+=damage;
+		if (UINT_MAX - (unsigned int)damage > md->tdmg)
+			md->tdmg+=damage;
+		else if (md->tdmg == UINT_MAX)
+			damage = 0; //Stop recording damage once the cap has been reached.
+		else { //Cap damage log...
+			damage = (int)(UINT_MAX - md->tdmg);
+			md->tdmg = UINT_MAX;
+		}
 		if (md->state.aggressive)
 		{	//No longer aggressive, change to retaliate AI.
 			md->state.aggressive = 0;
@@ -1688,8 +1697,9 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	}
 	//Log damage...
 	if (char_id && damage > 0) {
-		int i,minpos,mindmg;
-		for(i=0,minpos=DAMAGELOG_SIZE-1,mindmg=INT_MAX;i<DAMAGELOG_SIZE;i++){
+		int i,minpos;
+		unsigned int mindmg;
+		for(i=0,minpos=DAMAGELOG_SIZE-1,mindmg=UINT_MAX;i<DAMAGELOG_SIZE;i++){
 			if(md->dmglog[i].id==char_id &&
 				md->dmglog[i].flag==flag)
 				break;
@@ -1811,7 +1821,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			tmpsd[i] = NULL;
 			continue;
 		}
-		if(mvp_damage<(unsigned int)md->dmglog[i].dmg){
+		if(mvp_damage<md->dmglog[i].dmg){
 			third_sd = second_sd;
 			second_sd = mvp_sd;
 			mvp_sd=tmpsd[i];
@@ -1822,8 +1832,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	if(!battle_config.exp_calc_type && count > 1)
 	{	//Apply first-attacker 200% exp share bonus
 		//TODO: Determine if this should go before calculating the MVP player instead of after.
-		md->tdmg += md->dmglog[0].dmg;
-		md->dmglog[0].dmg<<=1;
+		if (UINT_MAX - md->dmglog[0].dmg > md->tdmg) {
+			md->tdmg += md->dmglog[0].dmg;
+			md->dmglog[0].dmg<<=1;
+		} else {
+			md->dmglog[0].dmg+= UINT_MAX - md->tdmg;
+			md->tdmg = UINT_MAX;
+		}
 	}
 
 	if(!(type&2) && //No exp

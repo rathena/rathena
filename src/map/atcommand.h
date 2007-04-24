@@ -7,9 +7,8 @@
 //This is the distance at which @autoloot works,
 //if the item drops farther from the player than this,
 //it will not be autolooted. [Skotlex]
-#ifndef AUTOLOOT_DISTANCE 
-	#define AUTOLOOT_DISTANCE AREA_SIZE
-#endif
+//Note: The range is unlimited unless this define is set.
+//#define AUTOLOOT_DISTANCE AREA_SIZE
 
 enum AtCommandType {
 	AtCommand_None = -1,
