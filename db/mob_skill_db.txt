@@ -1160,7 +1160,7 @@
 1261,Wild Rose@NPC_WINDATTACK,attack,187,1,2000,0,5000,yes,target,always,0,,,,,,
 1262,Mutant Dragon@MG_FIREBALL,chase,17,10,500,0,5000,yes,target,always,0,,,,,,
 1262,Mutant Dragon@NPC_FIREATTACK,attack,186,5,500,500,5000,no,target,always,0,,,,,,6
-1262,Mutant Dragon@SM_MAGNUM,attack,7,10,500,500,5000,no,self,always,0,,,,,,
+1262,Mutant Dragon@SM_MAGNUM,attack,7,20,500,500,5000,no,self,always,0,,,,,,
 1263,Wind Ghost@HT_SHOCKWAVE,idle,118,5,500,0,300000,yes,around2,always,0,,,,,,29
 1263,Wind Ghost@MG_LIGHTNINGBOLT,attack,20,5,500,1500,5000,yes,target,always,0,,,,,,6
 1263,Wind Ghost@MG_LIGHTNINGBOLT,chase,20,5,500,1500,5000,yes,target,always,0,,,,,,6
@@ -1774,12 +1774,12 @@
 1399,Event Baphomet@NPC_GUIDEDATTACK,attack,172,5,2000,0,20000,yes,target,always,0,,,,,,29
 1399,Event Baphomet@NPC_SUMMONSLAVE,attack,196,10,10000,2000,20000,no,self,slavele,3,1026,1170,1029,1044,1749,
 1399,Event Baphomet@NPC_SUMMONSLAVE,idle,196,10,10000,2000,20000,no,self,slavele,3,1026,1170,1029,1044,1749,
-1399,Event Baphomet@WZ_METEOR,chase,83,10,2000,0,5000,yes,target,always,0,,,,,,29
-1399,Event Baphomet@WZ_METEOR,attack,83,10,2000,0,5000,yes,target,always,0,,,,,,29
+1399,Event Baphomet@WZ_METEOR,chase,83,11,2000,0,5000,yes,target,always,0,,,,,,29
+1399,Event Baphomet@WZ_METEOR,attack,83,11,2000,0,5000,yes,target,always,0,,,,,,29
 1399,Event Baphomet@WZ_STORMGUST,chase,89,10,2000,0,5000,yes,target,always,0,,,,,,29
 1399,Event Baphomet@WZ_STORMGUST,attack,89,10,2000,0,5000,yes,target,always,0,,,,,,29
-1399,Event Baphomet@WZ_VERMILION,chase,85,10,2000,0,5000,yes,target,always,0,,,,,,29
-1399,Event Baphomet@WZ_VERMILION,attack,85,10,2000,0,5000,yes,target,always,0,,,,,,29
+1399,Event Baphomet@WZ_VERMILION,chase,85,20,2000,0,5000,yes,target,always,0,,,,,,29
+1399,Event Baphomet@WZ_VERMILION,attack,85,20,2000,0,5000,yes,target,always,0,,,,,,29
 1400,Karakasa@NPC_HALLUCINATION,attack,207,1,500,500,5000,yes,target,always,0,,,,,,31
 1400,Karakasa@NPC_HALLUCINATION,chase,207,1,500,500,5000,yes,target,always,0,,,,,,31
 1400,Karakasa@MO_BODYRELOCATION,chase,264,1,2000,500,5000,no,target,always,0,,,,,,6
@@ -1867,7 +1867,7 @@
 1418,Evil Snake Lord@NPC_STOP,attack,342,1,10000,0,15000,yes,target,always,0,,,,,,2
 1418,Evil Snake Lord@NPC_SUMMONSLAVE,attack,196,5,10000,700,10000,no,self,slavele,2,1531,1531,1564,,,
 1418,Evil Snake Lord@NPC_SUMMONSLAVE,idle,196,5,10000,700,10000,no,self,slavele,2,1531,1531,1564,,,
-1418,Evil Snake Lord@SM_MAGNUM,attack,7,10,2000,0,5000,yes,self,attackpcgt,2,,,,,,
+1418,Evil Snake Lord@SM_MAGNUM,attack,7,20,2000,0,5000,yes,self,attackpcgt,2,,,,,,
 1418,Evil Snake Lord@MG_FROSTDIVER,chase,15,10,10000,0,0,yes,target,skillused,18,,,,,,
 1419,Farmiliar@NPC_BLINDATTACK,angry,177,1,500,0,5000,yes,target,always,0,,,,,,
 1419,Farmiliar@NPC_DARKNESSATTACK,angry,190,1,2000,0,5000,yes,target,always,0,,,,,,
@@ -2087,12 +2087,12 @@
 1448,Dark Frame@NPC_DARKNESSATTACK,attack,190,3,500,500,5000,no,target,always,0,,,,,,
 1448,Dark Frame@NPC_PETRIFYATTACK,attack,180,1,500,500,5000,no,target,always,0,,,,,,
 1448,Dark Frame@NPC_PETRIFYATTACK,chase,180,1,500,500,5000,no,target,always,0,,,,,,
-1449,Muntant Dragon@MG_FIREBALL,follow,17,10,500,0,5000,yes,target,always,0,,,,,,
-1449,Muntant Dragon@NPC_FIREATTACK,angry,186,5,500,500,5000,no,target,always,0,,,,,,
-1449,Muntant Dragon@SM_MAGNUM,angry,7,10,500,500,5000,no,self,always,0,,,,,,
-1449,Muntant Dragon@MG_FIREBALL,chase,17,10,500,0,5000,yes,target,always,0,,,,,,
-1449,Muntant Dragon@NPC_FIREATTACK,attack,186,5,500,500,5000,no,target,always,0,,,,,,
-1449,Muntant Dragon@SM_MAGNUM,attack,7,10,500,500,5000,no,self,always,0,,,,,,
+1449,Mutant Dragon@MG_FIREBALL,follow,17,10,500,0,5000,yes,target,always,0,,,,,,
+1449,Mutant Dragon@NPC_FIREATTACK,angry,186,5,500,500,5000,no,target,always,0,,,,,,
+1449,Mutant Dragon@SM_MAGNUM,angry,7,20,500,500,5000,no,self,always,0,,,,,,
+1449,Mutant Dragon@MG_FIREBALL,chase,17,10,500,0,5000,yes,target,always,0,,,,,,
+1449,Mutant Dragon@NPC_FIREATTACK,attack,186,5,500,500,5000,no,target,always,0,,,,,,
+1449,Mutant Dragon@SM_MAGNUM,attack,7,20,500,500,5000,no,self,always,0,,,,,,
 1450,Wind Ghost@MG_LIGHTNINGBOLT,follow,20,5,500,1500,5000,yes,target,always,0,,,,,,
 1450,Wind Ghost@MG_LIGHTNINGBOLT,angry,20,5,500,1500,5000,yes,target,always,0,,,,,,
 1450,Wind Ghost@NPC_MAGICALATTACK,angry,192,1,500,1000,5000,no,target,always,0,,,,,,
@@ -2186,11 +2186,11 @@
 1467,Raydric@BS_MAXIMIZE,follow,114,5,500,1000,5000,no,self,always,0,,,,,,
 1467,Raydric@BS_MAXIMIZE,angry,114,5,500,1000,5000,no,self,always,0,,,,,,
 1467,Raydric@NPC_DARKNESSATTACK,angry,190,3,500,500,5000,no,target,always,0,,,,,,
-1467,Raydric@SM_MAGNUM,angry,7,10,500,500,5000,no,self,always,0,,,,,,
+1467,Raydric@SM_MAGNUM,angry,7,20,500,500,5000,no,self,always,0,,,,,,
 1467,Raydric@BS_MAXIMIZE,chase,114,5,500,1000,5000,no,self,always,0,,,,,,
 1467,Raydric@BS_MAXIMIZE,attack,114,5,500,1000,5000,no,self,always,0,,,,,,
 1467,Raydric@NPC_DARKNESSATTACK,attack,190,3,500,500,5000,no,target,always,0,,,,,,
-1467,Raydric@SM_MAGNUM,attack,7,10,500,500,5000,no,self,always,0,,,,,,
+1467,Raydric@SM_MAGNUM,attack,7,20,500,500,5000,no,self,always,0,,,,,,
 1468,Requim@NPC_DARKNESSATTACK,angry,190,1,2000,0,5000,yes,target,always,0,,,,,,
 1468,Requim@NPC_STUNATTACK,angry,179,3,500,1500,5000,no,target,always,0,,,,,,
 1468,Requim@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,yes,target,always,0,,,,,,
@@ -2364,14 +2364,24 @@
 1500,Parasite@NPC_CURSEATTACK,chase,181,3,500,800,5000,no,target,always,0,,,,,,9
 1500,Parasite@NPC_PETRIFYATTACK,chase,180,3,500,500,5000,no,target,always,0,,,,,,9
 1500,Parasite@NPC_POISON,chase,176,3,500,800,5000,no,target,always,0,,,,,,9
-1502,Bring it on!@AL_HEAL,idle,28,10,10000,0,2000,yes,self,always,0,,,,,,4
-1502,Bring it on!@AL_HEAL,walk,28,10,100000,0,2000,yes,self,always,0,,,,,,4
+1502,Bring it on!@AL_HEAL,idle,28,11,10000,0,2000,yes,self,always,0,,,,,,4
+1502,Bring it on!@AL_HEAL,walk,28,11,10000,0,2000,yes,self,always,0,,,,,,4
 1502,Bring it on!@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1502,Bring it on!@AL_TELEPORT,attack,26,1,1000,5000,60000,no,self,myhpltmaxrate,30,,,,,,
+1502,Bring it on!@BS_HAMMERFALL,chase,110,11,10000,0,15000,yes,target,always,0,,,,,,
+1502,Bring it on!@BS_HAMMERFALL,attack,110,11,10000,0,15000,yes,target,always,0,,,,,,
+1502,Bring it on!@MG_FIREWALL,attack,18,10,10000,0,10000,yes,target,always,0,,,,,,
+1502,Bring it on!@AS_SONICBLOW,attack,136,10,10000,0,20000,yes,target,always,0,,,,,,
+1502,Bring it on!@SM_MAGNUM,attack,7,20,10000,0,30000,yes,self,always,0,,,,,,
+1502,Bring it on!@SM_MAGNUM,attack,7,20,10000,0,5000,yes,self,attackpcgt,2,,,,,,
+1502,Bring it on!@WZ_VERMILION,chase,85,20,1000,1000,5000,no,target,always,0,,,,,,29
+1502,Bring it on!@WZ_VERMILION,attack,85,20,1000,1000,5000,no,target,always,0,,,,,,29
+1502,Bring it on!@WZ_METEOR,chase,83,11,1000,1000,5000,no,target,always,0,,,,,,29
+1502,Bring it on!@WZ_METEOR,attack,83,11,1000,1000,5000,no,target,always,0,,,,,,29
+1502,Bring it on!@WZ_STORMGUST,chase,89,10,1000,1000,5000,no,target,always,0,,,,,,29
+1502,Bring it on!@WZ_STORMGUST,attack,89,10,1000,1000,5000,no,target,always,0,,,,,,29
 1502,Bring it on!@NPC_DARKBLESSING,attack,203,1,1000,2000,5000,no,target,always,0,,,,,,18
-1502,Bring it on!@NPC_SUMMONSLAVE,attack,196,16,10000,2000,10000,no,self,slavele,3,1491,1431,1433,,,18
 1502,Bring it on!@NPC_SUMMONSLAVE,idle,196,16,10000,2000,10000,no,self,slavele,3,1491,1431,1433,,,18
-1502,Bring it on!@RG_INTIMIDATE,attack,219,5,1000,0,3000,yes,target,always,0,,,,,,
+1502,Bring it on!@NPC_SUMMONSLAVE,attack,196,16,10000,2000,10000,no,self,slavele,3,1491,1431,1433,,,18
 1502,Bring it on!@RG_STRIPARMOR,attack,217,5,2000,0,3000,yes,target,always,0,,,,,,
 1502,Bring it on!@RG_STRIPHELM,attack,218,5,2000,0,3000,yes,target,always,0,,,,,,
 1502,Bring it on!@RG_STRIPSHIELD,attack,216,5,2000,0,3000,yes,target,always,0,,,,,,
@@ -2595,7 +2605,7 @@
 1623,RSX 0806@NPC_SUMMONSLAVE,idle,196,5,10000,2000,10000,no,self,slavele,3,1624,1624,,,,
 1623,RSX 0806@NPC_SUMMONSLAVE,idle,196,5,10000,0,0,no,self,onspawn,0,1617,,,,,
 1623,RSX 0806@NPC_WEAPONBRAKER,attack,343,10,1000,0,60000,no,target,always,0,,,,,,6
-1623,RSX 0806@BS_HAMMERFALL,chase,110,10,2000,0,5000,yes,target,always,0,,,,,,
+1623,RSX 0806@BS_HAMMERFALL,chase,110,11,2000,0,5000,yes,target,always,0,,,,,,
 1623,RSX 0806@AL_TELEPORT,idle,26,1,10000,0,5000,yes,self,rudeattacked,,,,,,,
 1623,RSX 0806@AL_TELEPORT,walk,26,1,10000,0,5000,yes,self,rudeattacked,,,,,,,
 1623,RSX 0806@NPC_CRITICALSLASH,attack,170,1,2000,500,5000,no,target,always,0,,,,,,
@@ -2774,7 +2784,7 @@
 1640,Lord Knight Seyren@KN_BOWLINGBASH,attack,62,10,2000,0,0,yes,target,myhpltmaxrate,30,,,,,,
 1640,Lord Knight Seyren@SM_BASH,attack,5,10,1000,0,5000,yes,target,always,0,,,,,,
 1640,Lord Knight Seyren@SM_BASH,attack,5,10,2000,0,0,yes,target,myhpltmaxrate,30,,,,,,
-1640,Lord Knight Seyren@SM_MAGNUM,attack,7,10,1000,0,0,yes,self,attackpcgt,2,,,,,,
+1640,Lord Knight Seyren@SM_MAGNUM,attack,7,20,1000,0,0,yes,self,attackpcgt,2,,,,,,
 1640,Lord Knight Seyren@NPC_POWERUP,attack,349,5,2000,0,100000,yes,self,always,0,,,,,,
 1640,Lord Knight Seyren@NPC_POWERUP,attack,349,5,2000,0,25000,yes,self,myhpltmaxrate,30,,,,,,
 1640,Lord Knight Seyren@SM_PROVOKE,attack,6,10,1000,0,300000,yes,target,always,0,,,,,,29
@@ -2811,8 +2821,8 @@
 1642,Whitesmith Harword@BS_MAXIMIZE,attack,114,1,1000,0,60000,yes,self,always,0,,,,,,
 1642,Whitesmith Harword@MC_MAMMONITE,attack,42,10,2000,0,0,yes,target,myhpltmaxrate,30,,,,,,23
 1642,Whitesmith Harword@MC_MAMMONITE,attack,42,10,2000,0,5000,yes,target,always,0,,,,,,23
-1642,Whitesmith Harword@BS_HAMMERFALL,chase,110,10,2000,0,5000,yes,target,always,0,,,,,,
-1642,Whitesmith Harword@BS_HAMMERFALL,attack,110,10,2000,0,5000,yes,target,always,0,,,,,,
+1642,Whitesmith Harword@BS_HAMMERFALL,chase,110,11,2000,0,5000,yes,target,always,0,,,,,,
+1642,Whitesmith Harword@BS_HAMMERFALL,attack,110,11,2000,0,5000,yes,target,always,0,,,,,,
 1642,Whitesmith Harword@NPC_POWERUP,attack,349,5,2000,0,100000,yes,self,always,0,,,,,,
 1642,Whitesmith Harword@NPC_POWERUP,attack,349,5,2000,0,25000,yes,self,myhpltmaxrate,30,,,,,,
 1642,Whitesmith Harword@NPC_SPLASHATTACK,attack,174,1,1000,0,0,yes,target,attackpcgt,2,,,,,,
@@ -2877,21 +2887,21 @@
 1645,High Wizard Katrinn@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1645,High Wizard Katrinn@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
 1645,High Wizard Katrinn@WZ_STORMGUST,idle,89,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
-1645,High Wizard Katrinn@WZ_VERMILION,idle,85,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
-1645,High Wizard Katrinn@WZ_METEOR,idle,83,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
+1645,High Wizard Katrinn@WZ_VERMILION,idle,85,20,10000,1000,10000,no,randomtarget,always,0,,,,,,
+1645,High Wizard Katrinn@WZ_METEOR,idle,83,11,10000,1000,10000,no,randomtarget,always,0,,,,,,
 1645,High Wizard Katrinn@WZ_STORMGUST,chase,89,10,10000,1000,10000,no,target,skillused,18,,,,,,
-1645,High Wizard Katrinn@WZ_VERMILION,chase,85,10,10000,1000,10000,no,target,skillused,18,,,,,,
-1645,High Wizard Katrinn@WZ_METEOR,chase,83,10,10000,1000,10000,no,target,skillused,18,,,,,,
+1645,High Wizard Katrinn@WZ_VERMILION,chase,85,20,10000,1000,10000,no,target,skillused,18,,,,,,
+1645,High Wizard Katrinn@WZ_METEOR,chase,83,11,10000,1000,10000,no,target,skillused,18,,,,,,
 1645,High Wizard Katrinn@MG_SIGHT,idle,10,1,500,0,5000,yes,self,always,0,,,,,,
 1645,High Wizard Katrinn@MG_SIGHT,idle,10,1,10000,0,5000,yes,self,skillused,137,,,,,,
 1645,High Wizard Katrinn@WZ_STORMGUST,chase,89,10,10000,1000,20000,no,target,always,0,,,,,,
-1645,High Wizard Katrinn@WZ_VERMILION,chase,85,10,10000,1000,20000,no,target,always,0,,,,,,
+1645,High Wizard Katrinn@WZ_VERMILION,chase,85,20,10000,1000,20000,no,target,always,0,,,,,,
 1645,High Wizard Katrinn@WZ_STORMGUST,attack,89,10,10000,1000,20000,no,target,always,0,,,,,,
-1645,High Wizard Katrinn@WZ_VERMILION,attack,85,10,10000,1000,20000,no,target,always,0,,,,,,
+1645,High Wizard Katrinn@WZ_VERMILION,attack,85,20,10000,1000,20000,no,target,always,0,,,,,,
 1645,High Wizard Katrinn@WZ_FIREPILLAR,idle,80,10,5000,200,2000,yes,around2,always,0,,,,,,
 1645,High Wizard Katrinn@WZ_FIREPILLAR,attack,80,10,2000,200,0,yes,target,always,0,,,,,,
-1645,High Wizard Katrinn@WZ_METEOR,chase,83,10,10000,1000,20000,no,target,always,0,,,,,,
-1645,High Wizard Katrinn@WZ_METEOR,attack,83,10,10000,1000,20000,no,target,always,0,,,,,,
+1645,High Wizard Katrinn@WZ_METEOR,chase,83,11,10000,1000,20000,no,target,always,0,,,,,,
+1645,High Wizard Katrinn@WZ_METEOR,attack,83,11,10000,1000,20000,no,target,always,0,,,,,,
 1645,High Wizard Katrinn@WZ_HEAVENDRIVE,attack,91,5,2000,0,20000,yes,target,always,0,,,,,,
 1645,High Wizard Katrinn@WZ_WATERBALL,chase,86,5,5000,0,3000,yes,target,always,0,,,,,,
 1645,High Wizard Katrinn@WZ_WATERBALL,attack,86,5,5000,0,3000,yes,target,always,0,,,,,,
@@ -2909,7 +2919,7 @@
 1646,Lord Knight Seyren@KN_BOWLINGBASH,attack,62,10,2000,0,0,yes,target,myhpltmaxrate,30,,,,,,
 1646,Lord Knight Seyren@SM_BASH,attack,5,10,1000,0,5000,yes,target,always,0,,,,,,
 1646,Lord Knight Seyren@SM_BASH,attack,5,10,2000,0,0,yes,target,myhpltmaxrate,30,,,,,,
-1646,Lord Knight Seyren@SM_MAGNUM,attack,7,10,1000,0,0,yes,self,attackpcgt,2,,,,,,
+1646,Lord Knight Seyren@SM_MAGNUM,attack,7,20,1000,0,0,yes,self,attackpcgt,2,,,,,,
 1646,Lord Knight Seyren@NPC_POWERUP,attack,349,5,2000,0,100000,yes,self,always,0,,,,,,
 1646,Lord Knight Seyren@NPC_POWERUP,attack,349,5,2000,0,25000,yes,self,myhpltmaxrate,30,,,,,,
 1646,Lord Knight Seyren@SM_PROVOKE,attack,6,10,1000,0,300000,yes,target,always,0,,,,,,29
@@ -3044,21 +3054,21 @@
 1651,High Wizard Katrinn@NPC_SUMMONSLAVE,idle,196,5,10000,700,30000,no,self,slavele,3,1640,1641,1642,1643,1644,
 1651,High Wizard Katrinn@NPC_SUMMONMONSTER,attack,209,5,10000,700,60000000,yes,self,myhpltmaxrate,30,1640,1641,1642,1643,1644,
 1651,High Wizard Katrinn@WZ_STORMGUST,idle,89,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
-1651,High Wizard Katrinn@WZ_VERMILION,idle,85,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
-1651,High Wizard Katrinn@WZ_METEOR,idle,83,10,10000,1000,10000,no,randomtarget,always,0,,,,,,
+1651,High Wizard Katrinn@WZ_VERMILION,idle,85,20,10000,1000,10000,no,randomtarget,always,0,,,,,,
+1651,High Wizard Katrinn@WZ_METEOR,idle,83,11,10000,1000,10000,no,randomtarget,always,0,,,,,,
 1651,High Wizard Katrinn@WZ_STORMGUST,chase,89,10,10000,1000,10000,no,target,skillused,18,,,,,,
-1651,High Wizard Katrinn@WZ_VERMILION,chase,85,10,10000,1000,10000,no,target,skillused,18,,,,,,
-1651,High Wizard Katrinn@WZ_METEOR,chase,83,10,10000,1000,10000,no,target,skillused,18,,,,,,
+1651,High Wizard Katrinn@WZ_VERMILION,chase,85,20,10000,1000,10000,no,target,skillused,18,,,,,,
+1651,High Wizard Katrinn@WZ_METEOR,chase,83,11,10000,1000,10000,no,target,skillused,18,,,,,,
 1651,High Wizard Katrinn@MG_SIGHT,idle,10,1,500,0,5000,yes,self,always,0,,,,,,
 1651,High Wizard Katrinn@MG_SIGHT,idle,10,1,10000,0,5000,yes,self,skillused,137,,,,,,
 1651,High Wizard Katrinn@WZ_STORMGUST,chase,89,10,10000,1000,20000,no,target,always,0,,,,,,
-1651,High Wizard Katrinn@WZ_VERMILION,chase,85,10,10000,1000,20000,no,target,always,0,,,,,,
+1651,High Wizard Katrinn@WZ_VERMILION,chase,85,20,10000,1000,20000,no,target,always,0,,,,,,
 1651,High Wizard Katrinn@WZ_STORMGUST,attack,89,10,10000,1000,20000,no,target,always,0,,,,,,
-1651,High Wizard Katrinn@WZ_VERMILION,attack,85,10,10000,1000,20000,no,target,always,0,,,,,,
+1651,High Wizard Katrinn@WZ_VERMILION,attack,85,20,10000,1000,20000,no,target,always,0,,,,,,
 1651,High Wizard Katrinn@WZ_FIREPILLAR,idle,80,10,5000,200,2000,yes,around2,always,0,,,,,,
 1651,High Wizard Katrinn@WZ_FIREPILLAR,attack,80,10,2000,200,0,yes,target,always,0,,,,,,
-1651,High Wizard Katrinn@WZ_METEOR,chase,83,10,10000,1000,20000,no,target,always,0,,,,,,
-1651,High Wizard Katrinn@WZ_METEOR,attack,83,10,10000,1000,20000,no,target,always,0,,,,,,
+1651,High Wizard Katrinn@WZ_METEOR,chase,83,11,10000,1000,20000,no,target,always,0,,,,,,
+1651,High Wizard Katrinn@WZ_METEOR,attack,83,11,10000,1000,20000,no,target,always,0,,,,,,
 1651,High Wizard Katrinn@WZ_HEAVENDRIVE,attack,91,5,2000,0,20000,yes,target,always,0,,,,,,
 1651,High Wizard Katrinn@WZ_WATERBALL,chase,86,5,5000,0,3000,yes,target,always,0,,,,,,
 1651,High Wizard Katrinn@WZ_WATERBALL,attack,86,5,5000,0,3000,yes,target,always,0,,,,,,
@@ -3129,7 +3139,7 @@
 1657,Rawrel@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1658,General Ygnizem@SM_BASH,attack,5,10,1000,800,5000,no,target,always,0,,,,,,32
 1658,General Ygnizem@SM_BASH,attack,5,10,10000,800,1000,no,target,skillused,5,,,,,,32
-1658,General Ygnizem@SM_MAGNUM,attack,7,10,5000,500,5000,no,self,attackpcgt,2,,,,,,
+1658,General Ygnizem@SM_MAGNUM,attack,7,20,5000,500,5000,no,self,attackpcgt,2,,,,,,
 1658,General Ygnizem@SM_PROVOKE,attack,6,10,500,600,5000,no,target,always,0,,,,,,6
 1658,General Ygnizem@SM_PROVOKE,chase,6,10,500,600,5000,no,target,always,0,,,,,,6
 1658,General Ygnizem@KN_TWOHANDQUICKEN,attack,60,10,10000,0,120000,yes,self,myhpltmaxrate,30,,,,,,6
@@ -3295,7 +3305,7 @@
 1685,Vesper@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,self,always,0,,,,,,
 1685,Vesper@NPC_POWERUP,attack,349,5,5000,0,30000,yes,self,always,0,,,,,,
 1685,Vesper@NPC_CRITICALSLASH,attack,170,1,5000,0,3000,yes,target,always,0,,,,,,
-1685,Vesper@WZ_METEOR,attack,83,10,500,10000,20000,yes,target,always,0,,,,,,
+1685,Vesper@WZ_METEOR,attack,83,11,500,10000,20000,yes,target,always,0,,,,,,
 1685,Vesper@NPC_EMOTION,idle,197,1,1000,0,0,yes,self,always,0,9,,,,,
 1686,Orc Baby@SM_BASH,attack,5,5,500,800,5000,no,target,always,0,,,,,,6
 1686,Orc Baby@NPC_EMOTION,idle,197,1,10000,0,5000,no,self,slavele,0,28,,,,,
@@ -3605,7 +3615,7 @@
 1720,Hydro@AS_SONICBLOW,attack,136,10,2000,800,5000,no,target,always,0,,,,,,
 1720,Hydro@NPC_DARKBREATH,attack,202,4,500,800,5000,no,target,always,0,,,,,,32
 1720,Hydro@NPC_POWERUP,attack,349,3,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,36
-1720,Hydro@WZ_METEOR,attack,83,10,2000,1000,30000,no,target,always,0,,,,,,
+1720,Hydro@WZ_METEOR,attack,83,11,2000,1000,30000,no,target,always,0,,,,,,
 1720,Hydro@NPC_SUMMONSLAVE,attack,196,4,10000,2000,5000,no,self,slavele,2,1757,1758,1759,1760,,
 1720,Hydro@NPC_SUMMONSLAVE,idle,196,4,10000,2000,5000,no,self,slavele,2,1757,1758,1759,1760,,
 1720,Hydro@NPC_SUMMONSLAVE,chase,196,4,10000,2000,5000,no,self,slavele,2,1757,1758,1759,1760,,

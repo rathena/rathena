@@ -19,7 +19,10 @@
 	-----
 
 ========================
-
+04/25
+	* Updated MVP level skills [Playtester]
+	- updated Pori Pori's skills
+	- MVP level triggers for all level 10 mob skills regardless of MVP mode
 04/24
 	* Corrected the pet_db information for Xmas Goblin and Rice Cake. [Skotlex]
 04/23
