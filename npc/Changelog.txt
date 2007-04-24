@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/04/25
+	* Some official Odin and Hugel warps [Playtester]
 	* Official Hugel field warps [Playtester]
 	* Fixed exploit in The Sign quest [Playtester]
 	* Fixed rewards of Momotaro event [Playtester]
