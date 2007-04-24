@@ -20,6 +20,8 @@
 
 ========================
 04/25
+	* Updated sql files and Anubis [Playtester]
+	- Anubis gives -40% exp because he's missing one skill
 	* Updated MVP level skills [Playtester]
 	- updated Pori Pori's skills
 	- MVP level triggers for all level 10 mob skills regardless of MVP mode
