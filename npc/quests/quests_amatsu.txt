@@ -113,216 +113,97 @@ Lget:
 	mes "How was it? Did you enjoy the event?";
 	mes "I hope the arrangements at the event hall allowed you to spend an enjoyable time there.";
 	next;
-	if (event_momo > 1 && event_momo < 4)
+	if (event_momo >= 1 && event_momo < 4)
 	{
-	switch(rand(1,24))
+	switch(rand(1,10))
 		{
-
 	case 1:
-		getitem 627,1; //sweet milk
-	break;
-
-	case 2:
-		getitem 629,1; //singing flower
-	break;
-
-	case 3:
-		getitem 625,1; //rusty iron
-	break;
-
-	case 4:
-		getitem 619,1; //unripe apple
-	break;
-
-	case 5:
-		getitem 620,1; //orange juice
-	break;
-
-	case 6:
-		getitem 621,1; //bitter herb
-	break;
-
-	case 7:
 		getitem 622,1; //rainbow carrot
 	break;
 
-	case 8:
-		getitem 623,1; //earthworm the dude
+	case 2:
+		getitem 627,1; //sweet milk
 	break;
 
-	case 9:
-		getitem 624,1; //rotten fish
+	case 3:
+		getitem 629,1; //singing flower
 	break;
 
-	case 10:
-		getitem 626,1; //monster juice
-	break;
-
-	case 11:
-		getitem 628,1; //well-dried bone
-	break;
-
-	case 12:
-		getitem 630,1; //dew laden moss
-	break;
-
-	case 13:
-		getitem 631,1; //deadly noxious herb
-	break;
-
-	case 14:
+	case 4:
 		getitem 632,1; //fatty chubby earthworm
 	break;
 
-	case 15:
-		getitem 633,1; //sweet potato
+	case 5:
+		getitem 623,1; //earthworm the dude
 	break;
 
-	case 16:
-		getitem 634,1; //tropical banana
+	case 6:
+		getitem 619,1; //unripe apple
 	break;
 
-	case 17:
-		getitem 635,1; //orc trophy
+	case 7:
+		getitem 621,1; //bitter herb
 	break;
 
-	case 18:
-		getitem 636,1; //no recipient
+	case 8:
+		getitem 620,1; //orange juice
 	break;
 
-	case 19:
-		getitem 637,1; //old broom
+	case 9:
+		getitem 625,1; //rusty iron
 	break;
 
-	case 20:
-		getitem 638,1; //silver knife of chastity
+	case 10:
+		getitem 624,1; //rotten fish
 	break;
-
-	case 21:
-		getitem 639,1; //armlet of obedience
-	break;
-
-	case 22:
-		getitem 640,1; //shining stone
-	break;
-
-	case 23:
-		getitem 641,1; //contract in shadow
-	break;
-
-	case 24:
-		getitem 642,1; //book of the devil
-	break;
-
 		}
 	}
+
 //Am Mut successful finish unknown
 	if (event_momo == 4)
 	{
-	while(@i != 3)
-	{
-	switch(rand(1,24))
+	switch(rand(1,10))
 		{
-
 	case 1:
-		getitem 627,1; //sweet milk
+		getitem 659,1; //her heart
 	break;
 
 	case 2:
-		getitem 629,1; //singing flower
-	break;
-
-	case 3:
-		getitem 625,1; //rusty iron
-	break;
-
-	case 4:
-		getitem 619,1; //unripe apple
-	break;
-
-	case 5:
-		getitem 620,1; //orange juice
-	break;
-
-	case 6:
-		getitem 621,1; //bitter herb
-	break;
-
-	case 7:
-		getitem 622,1; //rainbow carrot
-	break;
-
-	case 8:
-		getitem 623,1; //earthworm the dude
-	break;
-
-	case 9:
-		getitem 624,1; //rotten fish
-	break;
-
-	case 10:
-		getitem 626,1; //monster juice
-	break;
-
-	case 11:
-		getitem 628,1; //well-dried bone
-	break;
-
-	case 12:
-		getitem 630,1; //dew laden moss
-	break;
-
-	case 13:
-		getitem 631,1; //deadly noxious herb
-	break;
-
-	case 14:
-		getitem 632,1; //fatty chubby earthworm
-	break;
-
-	case 15:
 		getitem 633,1; //sweet potato
 	break;
 
-	case 16:
+	case 3:
 		getitem 634,1; //tropical banana
 	break;
 
-	case 17:
-		getitem 635,1; //orc trophy
-	break;
-
-	case 18:
-		getitem 636,1; //no recipient
-	break;
-
-	case 19:
-		getitem 637,1; //old broom
-	break;
-
-	case 20:
-		getitem 638,1; //silver knife of chastity
-	break;
-
-	case 21:
+	case 4:
 		getitem 639,1; //armlet of obedience
 	break;
 
-	case 22:
-		getitem 640,1; //shining stone
+	case 5:
+		getitem 636,1; //no recipient
 	break;
 
-	case 23:
+	case 6:
+		getitem 628,1; //well-dried bone
+	break;
+
+	case 7:
+		getitem 637,1; //old broom
+	break;
+
+	case 8:
+		getitem 635,1; //orc trophy
+	break;
+
+	case 9:
+		getitem 626,1; //monster juice
+	break;
+
+	case 10:
 		getitem 641,1; //contract in shadow
 	break;
-
-	case 24:
-		getitem 642,1; //book of the devil
-	break;
-
 		}
-	set @i,@i+1;
-	}
 	}
 	set event_momo,5;
 	mes "[Publisher]";
