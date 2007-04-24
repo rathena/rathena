@@ -653,6 +653,7 @@ abbey02
 abbey03
 poring_w01
 poring_w02
+que_san04
 
 
 // Only add maps under this line if they are not standard maps!
