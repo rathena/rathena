@@ -3359,7 +3359,7 @@ kh_dun01,235,48,0	script	Heavy Door::HeavyDoorKHQ1	111,{
 
 		case 1:
 			input @KHInput$;
-			if (@KHkeycard2$ == "Blue Keycard") {
+			if (@KHInput$ == "Blue Keycard") {
 				mes "^3355FFYou've successfully^000000";
 				mes "^3355FFopened the door.^000000";
 				close2;
