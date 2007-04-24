@@ -35,7 +35,6 @@
 #include "date.h"
 #include "irc.h"
 
-#define MIN_MOBTHINKTIME 100
 #define IDLE_SKILL_INTERVAL 10	//Active idle skills should be triggered every 1 second (1000/MIN_MOBTHINKTIME)
 
 #define MOB_LAZYSKILLPERC 10	// Probability for mobs far from players from doing their IDLE skill. (rate of 1000 minute)
