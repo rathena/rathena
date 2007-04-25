@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/04/26
+	* Updated Kiel F2 spawns [Playtester]
 2007/04/25
 	* Some official Odin and Hugel warps [Playtester]
 	* Official Hugel field warps [Playtester]
