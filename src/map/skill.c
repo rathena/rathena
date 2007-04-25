@@ -1775,7 +1775,7 @@ int skill_blown (struct block_list *src, struct block_list *target, int count)
 
 	if (src != target && map_flag_gvg(target->m))
 		return 0; //No knocking back in WoE
-	if (!count&0xffff)
+	if (!(count&0xffff))
 		return 0; //Actual knockback distance is 0.
 	
 	switch (target->type) {
@@ -4743,7 +4743,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			int x,y, dir = unit_getdir(src);
 
 		  	//Fails on noteleport maps, except for vs maps [Skotlex]
-			if(map[src->m].flag.noteleport && !map_flag_vs(src->m)) {
+			if(map[src->m].flag.noteleport &&
+				!(map_flag_vs(src->m) || map_flag_gvg2(src->m))
+			) {
 				x = src->x;
 				y = src->y;
 			} else {
@@ -7096,7 +7098,7 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 			break;
 		if (ss == bl) //Also needed to prevent infinite loop crash.
 			break;
-		skill_blown(ss, bl, skill_get_blewcount(sg->skill_id,sg->skill_lv));
+		skill_blown(ss, bl, 0x10000|skill_get_blewcount(sg->skill_id,sg->skill_lv));
 		break;
 	}
 	return skillid;
