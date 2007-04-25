@@ -20,6 +20,7 @@
 
 ========================
 04/26
+	* Reverted RSX0806 summon [Playtester]
 	* Some minor mob skill updates [Playtester]
 04/25
 	* Updated sql files and Anubis [Playtester]
