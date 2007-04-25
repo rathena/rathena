@@ -79,12 +79,12 @@ to another:
 
 Aegis/eA (description)
 01: 0x0081 (passive)
-02: 0x0083 (passive looter)
+02: 0x0083 (passive, looter)
 03: 0x1089 (passive, assist and change-target melee)
 04: 0x3885 (angry, change-target melee/chase)
 05: 0x2085 (aggro, change-target chase)
 06: 0x0000 (passive, immobile, can't attack) [plants]
-07: 0x108B (aggro, immobile, assist, change-target melee)
+07: 0x108B (passive, looter, assist, change-target melee)
 09: 0x3095 (aggro, change-target melee/chase, cast sensor idle) [Guardian]
 10: 0x0084 (aggro, immobile)
 11: 0x0084 (aggro, immobile) [Guardian]

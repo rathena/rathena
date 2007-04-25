@@ -20,6 +20,7 @@
 
 ========================
 04/26
+	* Updated mob mode [Playtester]
 	* Reverted RSX0806 summon [Playtester]
 	* Some minor mob skill updates [Playtester]
 04/25
