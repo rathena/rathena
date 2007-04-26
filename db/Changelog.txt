@@ -20,6 +20,8 @@
 
 ========================
 04/27
+	* Fixed some mob skills [Playtester]
+	- replaced attackpcgt with attackpcge
 	* Added 1 second cast time to Chase Walk [Playtester]
 	* Fixed Wild Ginseng card [Playtester]
 04/26
