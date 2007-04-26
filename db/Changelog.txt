@@ -20,6 +20,7 @@
 
 ========================
 04/27
+	* Added 1 second cast time to Chase Walk [Playtester]
 	* Fixed Wild Ginseng card [Playtester]
 04/26
 	* Updated mob mode [Playtester]
