@@ -1,6 +1,9 @@
 Date		Added
 ======
 2007/04/27
+	* Updated Sphinx spawns [Playtester]
+	- Anubis instead of Marduk on F4 and F5
+	- note: Anubis is not fully official yet
 	* Updated Kiel spawns [Playtester]
 2007/04/25
 	* Some official Odin and Hugel warps [Playtester]
