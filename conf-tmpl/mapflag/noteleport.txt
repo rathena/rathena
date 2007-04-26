@@ -92,6 +92,7 @@ kh_mansion	mapflag	noteleport
 kh_rossi	mapflag	noteleport
 kh_school	mapflag	noteleport
 kh_vila	mapflag	noteleport
+kh_dun01	mapflag	noteleport
 veins	mapflag	noteleport
 ve_in	mapflag	noteleport
 ve_in02	mapflag	noteleport

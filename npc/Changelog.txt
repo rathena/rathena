@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/04/27
+	* Some small Kiel quest fixes [Playtester]
 	* Updated Sphinx spawns [Playtester]
 	- Anubis instead of Marduk on F4 and F5
 	- note: Anubis is not fully official yet

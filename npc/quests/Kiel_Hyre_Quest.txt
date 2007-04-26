@@ -3873,7 +3873,7 @@ kh_dun01,44,203,0	script	Entrance Device#KHEntry1::KHAccess	111,{
 
 }
 
-kh_dun01,44,203,0	duplicate(KHAccess)	Entrance Device#KHEntry2	111
+kh_dun01,36,195,0	duplicate(KHAccess)	Entrance Device#KHEntry2	111
 
 //============================================================================
 
