@@ -19,6 +19,8 @@
 	-----
 
 ========================
+04/27
+	* Fixed Wild Ginseng card [Playtester]
 04/26
 	* Updated mob mode [Playtester]
 	* Reverted RSX0806 summon [Playtester]

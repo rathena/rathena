@@ -23,8 +23,6 @@
 9,507,1	//Red Herb
 9,508,1	//Yellow Herb
 9,509,1	//White Herb
-9,510,1	//Blue Herb
-9,511,1	//Green Herb
 // Fruits
 10,512,1	//Apple
 10,513,1	//Banana
