@@ -72,7 +72,6 @@ lhz_in02	mapflag	noteleport
 lhz_in03	mapflag	noteleport
 jupe_area1	mapflag	noteleport
 jupe_area2	mapflag	noteleport
-jupe_core	mapflag	noteleport
 jupe_ele	mapflag	noteleport
 jupe_ele_r	mapflag	noteleport
 jupe_gate	mapflag	noteleport
