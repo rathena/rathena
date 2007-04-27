@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/04/28
+	* More Kiel quest fixes thanks to Toms and L0ne_W0lf [Playtester]
 	* Added a part of Munin's Hugel NPCs [Playtester]
 	- more to come
 2007/04/27

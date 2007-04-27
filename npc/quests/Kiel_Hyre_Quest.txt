@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -15,7 +15,9 @@
 //= 1.1 Copied over some changes made by -Tsuyuki- [L0ne_W0lf]
 //=	Reworked variables slightly so that the permenents ones aside from the 
 //=	main tracking variable, are deleted when no longer needed. Renamed
-//=	several variables that handle strings to @KHInput$.
+//=	several variables that handle strings to @KHInput$. [L0ne_W0lf]
+//= 1.2 Removed duplicate NPCs. [Toms]
+//= 1.3 More Bug fixes, fixed typo. Updated Additional comments. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -147,7 +149,7 @@
 //  Book ........................ kh_vila	[175, 19]
 //  KH_Letter_Trigger ........... kh_vila	[179, 11]
 //  Box ......................... kh_vila	[ 16,175]
-//  Apple Box ................... kh_vila	[ 13,184]
+//  Apple Box ................... kh_vila	[ 30,184]
 //  Map ......................... kh_vila	[ 44,125]
 //  Pot ......................... kh_vila	[ 33,148]
 //  Calabash .................... kh_vila	[ 14, 55]
@@ -2053,7 +2055,7 @@ kh_vila,191,14,0	script	Wall	111,{
 		close;
 	}
 
-	if (KielHyreQuest == 28) {
+	if (KielHyreQuest >= 28) {
 		mes "^3355FFThe wall is now^000000";
 		mes "^3355FFopen, revealing^000000";
 		mes "^3355FFa secret path.^000000";
@@ -2080,13 +2082,6 @@ OnOpenDoor:
 // Store room interior; books
 //----------------------------------------------------------------------------
 kh_vila,184,20,0	script	Book::BookKHQ1	111,{
-	mes "^3355FFThis bookshelf is^000000";
-	mes "^3355FFcrammed with many^000000";
-	mes "^3355FFlarge, hardcover books^000000";
-	close;
-}
-
-kh_vila,181,20,0	script	Book::BookKHQ2	111,{
 	if (KielHyreQuest != 26) {
 		mes "^3355FFThis bookshelf is^000000";
 		mes "^3355FFcrammed with many^000000";
@@ -2107,10 +2102,16 @@ kh_vila,181,20,0	script	Book::BookKHQ2	111,{
 
 }
 
-kh_vila,178,20,0	duplicate(BookKHQ1)	Book::BookKHQ3	111
+kh_vila,181,20,0	script	Book::BookKHQ2	111,{
+	mes "^3355FFThis bookshelf is^000000";
+	mes "^3355FFcrammed with many^000000";
+	mes "^3355FFlarge, hardcover books^000000";
+	close;
+}
 
-kh_vila,175,19,0	duplicate(BookKHQ1)	Book::BookKHQ4	111
+kh_vila,178,20,0	duplicate(BookKHQ2)	Book::BookKHQ3	111
 
+kh_vila,175,19,0	duplicate(BookKHQ2)	Book::BookKHQ4	111
 
 //----------------------------------------------------------------------------
 // Store room interior; Letter to Elly on the floor.
@@ -2183,7 +2184,7 @@ kh_vila,16,175,0	script	Box::BoxKHQ1	111,{
 //----------------------------------------------------------------------------
 // Cottage interior, kitchen; Apple Box (Useless?)
 //----------------------------------------------------------------------------
-kh_vila,13,184,0	script	Apple Box	111,{
+kh_vila,30,184,0	script	Apple Box	111,{
 	mes "^3355FFYou find a box filled with^000000";
 	mes "^3355FFripe, delicious apples.^000000";
 	next;
@@ -2294,7 +2295,7 @@ kh_vila,44,126,0	script	Map	111,{
 		close;
 	}
 
-	else  if ((KHCottagePoem1 > 2) && (KielHyreQuest >= 30)) {
+	else  if ((KHCottagePoem1 > 2) || (KielHyreQuest >= 30)) {
 		mes "^3355FFThis is where you found^000000";
 		mes "^3355FFthe paper on which the^000000";
 		mes "^3355FFpoem was written. Perhaps^000000";
@@ -2892,7 +2893,7 @@ kh_vila,123,170,0	script	Medicine Chest	111,{
 		mes "^3355FFWait, you have a blank piece^000000";
 		mes "^3355FFof paper with the Kiel Hyre^000000";
 		mes "^3355FFFoundation seal! It's strange^000000";
-		mes "^3355FFthat the heal was put on a blank^000000";
+		mes "^3355FFthat the seal was put on a blank^000000";
 		mes "^3355FFpiece of paper. Maybe something^000000";
 		mes "^3355FFis written on it with special ink?^000000";
 		next;
@@ -2985,7 +2986,7 @@ kh_vila,123,170,0	script	Medicine Chest	111,{
 		}
 	}
 
-	else if ((KHCottagePoem2 >= 2) && (KielHyreQuest >= 30)) {
+	else if ((KHCottagePoem2 >= 2) || (KielHyreQuest >= 30)) {
 		mes "^3355FFThis is where you poured^000000";
 		mes "^3355FFsome blue liquid to read^000000";
 		mes "^3355FFa poem written in invisible^000000";
@@ -3225,9 +3226,6 @@ kh_vila,136,68,0	script	Sword Hilt	111,{
 	}
 
 	else if ((KHCottagePoem1 == 5) && (KHCottagePoem2 == 3) || (KielHyreQuest >= 30)) {
-		//KHCottagePoem1 and KHCottagePoem2 no longer needed-- deleting
-		set KHCottagePoem1,0;
-		set KHCottagePoem2,0;
 		mes "^3355FFHere is a hidden^000000";
 		mes "^3355FFpath that leads to^000000";
 		mes "^3355FFthe secret laboratory.^000000";
@@ -3301,6 +3299,9 @@ kh_vila,185,68,0	script	Test Tube::TestTubeKHQ2	111,{
 				mes "^3355FFWhat could^000000";
 				mes "^3355FFthose numbers^000000";
 				mes "^3355FFpossibly mean?^000000";
+				//KHCottagePoem1 and KHCottagePoem2 no longer needed-- deleting
+				set KHCottagePoem1,0;
+				set KHCottagePoem2,0;
 				set KielHyreQuest,30;
 				close;
 			}
@@ -3324,7 +3325,7 @@ kh_vila,185,68,0	script	Test Tube::TestTubeKHQ2	111,{
 
 	}
 
-	else if (KielHyreQuest == 30) {
+	else if (KielHyreQuest >= 30) {
 		mes "^3355FFWhat could the^000000";
 		mes "^3355FFnumber 4772961^000000";
 		mes "^3355FFmean? For now, you've^000000";
@@ -4753,7 +4754,7 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 
 	}
 
-	else if ((KielHyreQuest >= 74) && (KielHyreQuest <= 104)) {
+	else if ((KielHyreQuest >= 74) && (KielHyreQuest <= 106)) {
 		cutin "kh_kyel01",2;
 		mes "[Kiel Hyre]";
 		mes "You're back...!";
@@ -6567,6 +6568,15 @@ kh_kiehl01,166,187,0	script	Big Door::BigDoorKHQ5	111,{
 				close;
 			}
 
+		}
+
+		else {
+			mes "^3355FFThis large door..";
+			mes "is closed shut.";
+			mes "If you listen carefully,";
+			mes "you can hear the door";
+			mes "hinges slightly squeak.^000000";
+			close;
 		}
 
 	}
