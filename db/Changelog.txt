@@ -20,6 +20,7 @@
 
 ========================
 04/28
+	* More mob skill updates [Playtester]
 	* Raised Anubis's DEF to prevent exploit [Playtester]
 04/27
 	* Fixed some mob skills [Playtester]
