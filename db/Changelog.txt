@@ -19,6 +19,8 @@
 	-----
 
 ========================
+04/28
+	* Raised Anubis's DEF to prevent exploit [Playtester]
 04/27
 	* Fixed some mob skills [Playtester]
 	- replaced attackpcgt with attackpcge
