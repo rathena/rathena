@@ -1,9 +1,9 @@
 //===== eAthena Script =======================================
 //= Hugel City
 //===== By: ==================================================
-//= vicious_pucca, Poki#3, erKURITA
+//= vicious_pucca, Poki#3, erKURITA, Munin
 //===== Current Version: =====================================
-//= 1.0
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena 1.0
 //===== Description: =========================================
@@ -19,33 +19,452 @@
 //=	Special thanks to RockmanEXE who provided all necesary info =3
 //=	Abducted/Moved Yan and Yalmire(temp names) to npc\events\custom\p_track. [erKURITA]
 //= 1.1 Commented out the whole list of dummy npcs. They're there for nothing anyway,
-//=	  just using up memory. [erKURITA]
+//=	just using up memory. [erKURITA]
+//= 1.2 Added a few NPCs scripted by Munin and fixed up format a little [Playtester]
 //============================================================
 
-hu_in01,23,311,4	script	Johsh	898,{
-	set @npcname$, "[Josh]";
 
-	mes @npcname$;
-	mes "Hi ho~ I sell some awesome firecrackers, would you like to buy one?";
-	mes "Only 500z and you get 5 ^FF0000firecrackers^000000!";
+//-------------------------------------------------------------------------
+// Hugel Field NPCs
+//-------------------------------------------------------------------------
+
+//Torpy's Mom
+//---------------------------------------------------------------------------
+hu_fild06.gat,190,367,3	script	Torpy's Mom	701,{
+
+	mes "[Torpy's Mom]";
+	mes "Where did he go this time?!";
+	mes "If my husband doesn't have";
+	mes "a good excuse for not coming";
+	mes "home, then he better come";
+	mes "up with one or he'll be sorry!";
+	close;
+}
+
+//Postell Schuwell
+//---------------------------------------------------------------------------
+hu_fild06.gat,34,123,3	script	Postell Schuwell	97,{
+
+	mes "[Postell]";
+	mes "I really like living";
+	mes "in Hugel. Fresh air,";
+	mes "clean water, everyone's";
+	mes "friendly and nice. What";
+	mes "more could I want?";
+	close;
+}
+
+
+//---------------------------------------------------------------------------
+// Hugel Town NPCs  - Outside
+//---------------------------------------------------------------------------
+
+// Manainne
+//--------------------------------------------------------------------------
+hugel.gat,191,172,5	script	Manainne	893,{
+
+	mes "[Manainne]";
+	mes "You know, even though";
+	mes "it's not a wealthy area,";
+	mes "I really love this small";
+	mes "and quiet town. Even if";
+	mes "I could live anywhere in";
+	mes "the world, I'd live right here~";
+	close;
+}
+
+//El Schatt
+//---------------------------------------------------------------------------
+hugel.gat,196,164,5	script	El Schatt	50,{
+
+	mes "[El Schatt]";
+	mes "Father was right...";
+	mes "This area is the perfect";
+	mes "place to build some stores.";
+	mes "All that's left is to chop down";
+	mes "that old tree. It's in the way";
+	mes "of a whole lot of things...";
+	close;
+}
+
+//Young Man
+//---------------------------------------------------------------------------
+hugel.gat,189,143,5	script	Young Man	898,{
+
+	mes "[Young Man]";
+	mes "Huh. So that giant";
+	mes "air pouch can make";
+	mes "people float in midair?";
+	mes "Would filling my tummy";
+	mes "with air work the same way?";
+	close;
+}
+
+
+//Emily
+//---------------------------------------------------------------------------
+hugel.gat,126,151,3	script	Emily	90,{
+
+	mes "[Emily]";
+	mes "I feel so blessed to";
+	mes "live in this quant, little";
+	mes "town. It's so beautiful, and";
+	mes "everyone here is so nice~";
 	next;
-	switch(select("Yes Please:No thanks")) {
-	case 1:
-		if (Zeny < 500) {
-			mes @npcname$;
-			mes "Err sir, you don't have 500z zeny. I can't sell you anything";
-			close;
-		} else 
+	mes "[Emily]";
+	mes "For some reason, my older";
+	mes "sister wants to move out of";
+	mes "Hugel as soon as she can. She";
+	mes "Says that she's getting creeped";
+	mes "out by the people that live here.";
+	mes "Don't you think that sounds weird?";
+	close;
+}
+ 
+//Mudie
+//---------------------------------------------------------------------------
+hugel.gat,85,93,3	script	Mudie	866,{
+
+	mes "[Mudie]";
+	mes "The Monster Races";
+	mes "are probably the biggest";
+	mes "attraction here in Hugel.";
+	mes "We don't have much else";
+	mes "going on here, I'm afraid.";
+	next;
+	mes "[Mudie]";
+	mes "If you want to go visit";
+	mes "the Monster Race Arena,";
+	mes "just head towards the";
+	mes "7 'o clock direction on";
+	mes "your Mini-Map, and look for";
+	mes "the hill surrounded by a fence.";
+	next;
+	mes "[Mudie]";
+	mes "You should find the arena";
+	mes "somewhere around that area.";
+	mes "Anyway, if you want to wager";
+	mes "or just watch the races, just";
+	mes "ask one of the Eckar brothers.";
+	mes "I hope you enjoy our little town~";
+	close;
+}
+
+//Perfitz
+//---------------------------------------------------------------------------
+hugel.gat,100,103,3	script	Perfitz	866,{
+
+	mes "[Perfitz]";
+	mes "Money is very dependable...";
+	mes "But it's value is relative, and";
+	mes "can change at any moment.";
+	mes "Still, at my age, you can't";
+	mes "live without it. Make sure you";
+	mes "financially prepare of old age.";
+	next;
+	mes "[Perfitz]";
+	mes "Now, most people assume that";
+	mes "I have very few friends because";
+	mes "I trust money more than people.";
+	mes "That's somewhat true: money";
+	mes "will never betray you, and few";
+	mes "friends can be so dependable.";
+	next;
+	mes "[Perfitz]";
+	mes "However, friends that can";
+	mes "be trusted for life are worth";
+	mes "more than all the money in the";
+	mes "world. To a rich man like me,";
+	mes "those are the only friends";
+	mes "that are worth having.";
+	close;
+}
+
+//Torpy
+//---------------------------------------------------------------------------
+hugel.gat,107,67,3	script	Torpy	706,{
+
+	mes "[Torpy]";
+	mes "Waaah~!";
+	mes "I have to find";
+	mes "my Daddy! Daddy...!";
+	mes "Where are yoooooou?!";
+	close;
+}
+
+//Kayplas
+//---------------------------------------------------------------------------
+hugel.gat,86,165,5	script	Kayplas	896,{
+
+	mes "[Kayplas]";
+	mes "Ooh, I really want to";
+	mes "have that red bottle.";
+	mes "I should ask my mom";
+	mes "to buy me one. It doesn't";
+	mes "look too expensive, does it?";
+	close;
+}
+
+//Erjan
+//---------------------------------------------------------------------------
+hugel.gat,102,161,3	script	Erjan	100,{
+
+	mes "[Erjan]";
+	mes "I am Erjan, first son of";
+	mes "the noble Franchefeschu";
+	mes "family. Commoner, if you";
+	mes "do not have any business";
+	mes "with me, then leave me be,";
+	mes "and do whatever it is you do.";
+	close;
+}
+
+//Barrel 
+//---------------------------------------------------------------------------
+hugel.gat,100,175,0	script	Suspicious Barrel	111,{
+
+	mes "^CD00CDYou hear something bustling from";
+	mes "the hole in the barrel.";
+	mes "However, it doesn't seem to be a";
+	mes "big deal.^000000";
+	emotion e_dots;
+	close;
+
+}
+
+//Lisa
+//---------------------------------------------------------------------------
+hugel.gat,71,197,3	script	Lisa	90,{
+
+	mes "[Lisa]";
+	mes "Hugel is a pretty";
+	mes "small, homely village.";
+	mes "Everyone knows everyone,";
+	mes "everybody knows what";
+	mes "everybody else is doing.";
+	mes "It's so suffocating!";
+	next;
+	mes "[Lisa]";
+	mes "There's no privacy in";
+	mes "small towns. Someday,";
+	mes "I wanna go out and";
+	mes "live in the big city~";
+	close;
+}
+
+//Old Nikki 
+//---------------------------------------------------------------------------
+hugel.gat,169,112,5	script	Old Nikki	892,{
+
+	mes "[Old Nikki]";
+	mes "You must not be from";
+	mes "around here. Ah, you're";
+	mes "an adventurer, right? Do";
+	mes "you know how I could tell?";
+	next;
+	mes "[Old Nikki]";
+	mes "It's because everyone";
+	mes "who's lived here starts";
+	mes "to look alike after a while.";
+	mes "And you certainly don't look";
+	mes "as old as us. Well, have";
+	mes "a nice day, adventurer~";
+	close;
+}
+
+//Bismarc
+//---------------------------------------------------------------------------
+hugel.gat,168,183,5	script	Bismarc	118,{
+
+	mes "[Bismarc]";
+	mes "^808080*Ghyklk*";
+	mes "*Huk Hukk*^000000";
+	mes "When will my";
+	mes "o-order arrive...?";
+	next;
+	mes "[Bismarc]";
+	mes "The poison in";
+	mes "my body... the pain...";
+	mes "excruciating... L-lord...";
+	next;
+	mes "[Bismarc]";
+	mes "When is the";
+	mes "antidote gonna";
+	mes "get here?!";
+	close;
+}
+
+//Tree ~Completely missed this on iRO; full credit to Tsuyuki ~Munin
+//---------------------------------------------------------------------------
+hugel.gat,198,171,0	script	#oldtree	139,1,1,{
+
+	end;
+
+OnTouch:
+	mes "^3131FFFor some reason, you";
+	mes "feel very warm, safe,";
+	mes "and secure near this";
+	mes "tree. Just being near";
+	mes "it brings you a sense";
+	mes "of overwhelming comfort.^000000";
+	close;
+}
+
+//-------------------------------------------------------------------------
+// Hugel Town NPCs - Inside 
+//-------------------------------------------------------------------------
+
+//Allen Schuwell
+//-------------------------------------------------------------------------
+hu_in01.gat,386,245,1	script	Allen Schuwell	849,{
+
+	mes "[Allen]";
+	mes "*Groooooan~*";
+	mes "Arrrgh, my back hurts...";
+	mes "And my stomach... Why do";
+	mes "I have to suffer like this";
+	mes "while other people get to";
+	mes "live happy, luxurious lives?";
+	close;
+}
+
+//Siria
+//---------------------------------------------------------------------------
+hu_in01.gat,326,307,3	script	Siria	90,{
+
+	mes "[Siria]";
+	mes "Oh, hello there.";
+	mes "Can I help you";
+	mes "with anything?";
+	close;
+}
+
+//Furniture Drawer
+//---------------------------------------------------------------------------
+hu_in01.gat,370,254,0	script	Upper Drawer	111,1,1,{
+
+	end;
+
+OnTouch:
+	mes "^3131FFThere are several";
+	mes "books and a few";
+	mes "liquid medicines";
+	mes "inside this drawer.^000000";
+	close;
+}
+
+//Girl
+//---------------------------------------------------------------------------
+hu_in01.gat,310,380,5	script	Girl	891,{
+
+	mes "[Girl]";
+	mes "Oh... I'm so bored!";
+	mes "I need someone to play with...";
+	mes "Maybe... Maybe that's what";
+	mes "school is for? Oh, no wonder";
+	mes "people go there everyday!";
+	mes "I wanna go to school right now!";
+	close;
+}
+
+//Chris
+//---------------------------------------------------------------------------
+hu_in01.gat,111,386,4	script	Chris	86,{
+
+	mes "[Chris]";
+	mes "You know, the people don't";
+	mes "fight harmful monsters, they";
+	mes "just protect themselves by";
+	mes "equipping armor. That's";
+	mes "just the way they are.";
+	next;
+	mes "[Chris]";
+	mes "If you want to buy";
+	mes "some nicer armors,";
+	mes "then I suggest buying";
+	mes "some in a bigger city.";
+	close;
+}
+
+//Herico  - Has Cut-In!
+//---------------------------------------------------------------------------
+hu_in01.gat,256,40,3	script	Herico	897,{
+
+	cutin "heri1",2;
+	mes "[Herico]";
+	mes "Oh, the weather looks so";
+	mes "nice outside today. But these";
+	mes "old bones of mine just hurt";
+	mes "too much for me to get out...";
+	close2;
+	cutin "",255;
+	end;
+}
+
+//Rachel
+//---------------------------------------------------------------------------
+hu_in01.gat,365,170,5	script	Rachel	793,{
+
+	mes "[Rachel]";
+	mes "You know what I love?";
+	mes "Sitting in front of a warm";
+	mes "stove on a cold night. I just";
+	mes "feel so fuzzy and comfortable,";
+	mes "and it's so relaxing!";
+	close;
+}
+
+//Shaomei
+//---------------------------------------------------------------------------
+hu_in01.gat,377,106,5	script	Shaomei	892,{
+
+	mes "[Shaomei]";
+	mes "We didn't use to get";
+	mes "so many tourists, but";
+	mes "now they come in droves!";
+	mes "They make me pretty busy,";
+	mes "but I do like it when I can";
+	mes "see them enjoy my food. Har!";
+	close;
+}
+
+//--------------------------------------------------------------
+// Party Supplies/Firecracker Seller
+//--------------------------------------------------------------
+
+hu_in01.gat,23,311,4	script	Party Supplies Shop	898,{
+
+	mes "[Shopkeeper]";
+	mes "Welcome to the party supplies";
+	mes "shop!";
+	mes "Why don't you enjoy some";
+	mes "spectacular fireworks with your";
+	mes "friends?";
+	mes "We can provide you with 5 of them";
+	mes "at 500 zeny.";
+	next;
+	menu "Buy",L_Buy,"Cancel",L_Cancel;
+
+	L_Buy:
+		if (Zeny < 500) goto L_NEnoughZ;
+
 		set Zeny,Zeny-500;
 		getitem 12018,5;
-		mes @npcname$;
-		mes "Good! here you go! Have fun with them!";
+		mes "[Shopkeeper]";
+		mes "Here you go!";
+		mes "Have fun with them!";
 		close;
-	case 2:
-		mes @npcname$;
-		mes "Aww~~ you miss it";
+
+	L_NEnoughZ:
+		mes "[Shopkeeper]";
+		mes "I am sorry, but you don't have";
+		mes "enough money~";
 		close;
-	}
+
+	L_Cancel:
+		mes "[Shopkeeper]";
+		mes "Thank you, please come again.";
+		close;
 }
 
 //Should be moved later on to Bulletin Boards.txt
@@ -97,6 +516,5 @@ hu_in01,23,311,4	script	Johsh	898,{
 //hu_in01,18,167,4	script	Gin	86,{end;}
 //hu_in01,381,304,5	script	Soldier	105,{end;}
 //hu_in01,111,386,4	script	Jino	86,{end;}
-//Johsh was here!
 //hu_in01,246,107,2	script	Receptionist	53,{end;}
 //hu_in01,256,40,2	script	Garud	897,{end;}
