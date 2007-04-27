@@ -66,13 +66,12 @@ kh_vila,34,67,0	warp	vila08	1,1,kh_vila,20,106
 kh_vila,45,102,0	warp	vila10	1,1,kh_vila,84,63
 kh_vila,32,129,0	warp	vila11	1,1,kh_vila,22,170
 kh_vila,22,166,0	warp	vila12	1,1,kh_vila,32,125
-//kh_vila,27,189,0	warp	vila13	1,1,kh_vila,185,18
-kh_vila,191,18,0	warp	vila14	1,1,kh_vila,27,185
+kh_vila,191,18,0	warp	vila13	1,1,yuno_fild02,75,214
 //Stairwell and Upstairs
-kh_vila,114,47,0	warp	vila15	1,1,kh_vila,86,49
-kh_vila,126,76,0	warp	vila16	1,1,kh_vila,180,175
-kh_vila,180,170,0	warp	vila17	1,1,kh_vila,127,71
-kh_vila,174,72,0	warp	vila18	1,1,kh_vila,136,64
+kh_vila,114,47,0	warp	vila14	1,1,kh_vila,86,49
+kh_vila,126,76,0	warp	vila15	1,1,kh_vila,180,175
+kh_vila,180,170,0	warp	vila16	1,1,kh_vila,127,71
+kh_vila,174,72,0	warp	vila17	1,1,kh_vila,136,64
 
 //============================================================
 // kh_rossi - House of the Losimier family
