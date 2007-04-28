@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/04/29
+	* Fixed doors not resetting in kh_kiehl01 after 30 second timer is up. [L0ne_W0lf]
 	* Updated Hotel Employee from Einbroch [Samuray22]
 	* Added AirShip Ticket Quest [Samuray22]
 	* Updated Ammo Casing NPC Kenny to official version [SinSloth]

@@ -17,8 +17,43 @@
 	7458 Fortune Horn:	It's a custom name ^^;
 	12017 Speed Decreasing Potion: A potion which decreases the moving speed of a character for a duration.
 	-----
+	Incomplete or missing bonuses:
+	1269 Inverse_Scare;		Missing Area Effect (Ramdom status effects in 5x5 area)
+	1270 Drill_Katar		Full stripping target without applying "Stripped" status.
+	1271 Bloody_Blade;		Missing Area Effect (Bleeding in a 5x5 area. 11x11 if +10)
+	1565 Book_of_the_Dead;		Missing Area Effect (Fullscreen Curse and damage to enemies)
+	1919 Bass_Guitar;		Missing Area Effect (Chaos in a 5x5 area)
+	1973 Foot_of_the_Sea_Witch;	Missing Area Effect (Silence in a 5x5 area)
+	1377 Hurricane's_Fury		Area effect knock back (all enemies in a 7x7 area around user are knocked back 15x15)
+	1565 Book_of_the_Dead		Cause Coma status to Demi-human
+	2000 Staff_of_Destruction	Reduce cast-rime of Mystical Amplification by 50%
+	1535 Holgrehenn's_Hammer	Breaking your own gear at low rate when compounded with Whitesmith_card
 
+	Missing Status Effects:
+	12209 Life_Insurrance		No EXP penetly on death (Recommend constant: SC_NoPenelty - Has status icon)
+	12208 Field_Manual		Increased EXP rate (Recommend constant: SC_IncreasedEXP - Has status icon)
+	12210 Bubble_Gum		Increased Drop rate (Recommend constant: SC_IncreasedDropRate - Has status icon)
+	12214 Convex_Mirror		Detect MVP spawn on minimap; doesn't work with special condition MVPs. (Recommend constant: SC_DetectMVPSpawn)
+	1268 Ogre's_Toenail		Reduces effectiveness of healing skills/items. (Recommend constant: Eff_ReducedHeal)
+	13027 Tooth_Blade		Slow Cast (Reduces cast time) (Recommend constant: Eff_SlowCast - Has status icon)
+	2122 Platinum_Shield		Magic reflection (reflect all offensive magic against you at x% chance for y seconds.)
+	2531 Wolfhedin			Reduce damage from Physical attacks while lowering MDEF for 2 seconds.
+	2532 Mithril_Magic_Cape		Reduce damage from Magical attacks while lowering MDEF for 2 seconds.
+
+	Possible Improper bonuses:
+	12212 Giant_Fly_Wing		Summons all party members to leader using script.
+	12213 Glittering_Wand		Simple script to ensure weight is 0 and then resets characters skills.	
+	7621 Token_of_Ziegfried		Revive player on death (if item is in inventoy? Needs a clearer description)
+	Still need proper rates for most 11.3 Equipment that don't have their +rates/Status Infliction rates clearly defined.
+	13107 Western_Outlaw		Need correct HIT and ASPD Rate
+	----
 ========================
+o4/29
+	* Added remaining 11.3 Equipment. [L0ne_W0lf]
+	* Added Known-Effect Cash Shop items. [L0ne_W0lf]
+	* Added Valentine's Day (2007) event items with info provided by Muad_Dib.  [L0ne_W0lf]
+	* Added St. Patrick's Day (2007) items. [L0ne_W0lf]
+	* Added a list of problems with 11.3 equipment and cash shop items to changelog. [L0ne_W0lf]
 04/28
 	* More MVP level mob skill fixes [Playtester]
 	* More mob skill updates [Playtester]
