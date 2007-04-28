@@ -18,6 +18,9 @@
 //= 1.4 Fixed the Check of Weight.
 //= 1.5 Re-Optimized Code.
 //============================================================ 
+
+//====================Kain Himere=============================
+
 airplane,47,61,1	script	Crewman	833,{
 	if(kain_ticket==4) {
 		mes "[Kain Himere]";
@@ -409,6 +412,8 @@ airplane,47,61,1	script	Crewman	833,{
 	}
 }
 
+//====================Empty Room 201==========================
+
 ein_in01,227,279,5	script	door_ein	-1,5,5,{
 OnTouch:
 	if (kain_ticket == 5) {
@@ -431,6 +436,8 @@ OnTouch:
 		close;
 	}
 }
+
+//====================Elle Cherno=============================
 
 ein_in01,261,241,5	script	Elle Cherno	703,3,3,{
 OnTouch:
@@ -513,6 +520,8 @@ OnTouch:
 	close;
 }
 
+//====================Theo Cherno=============================
+
 ein_in01,123,94,1	script	Theo Cherno	851,{
 	if(kain_ticket == 7) {
 		callfunc "cherno";
@@ -547,6 +556,9 @@ ein_in01,123,94,1	script	Theo Cherno	851,{
 		close;
 	}
 }
+
+//====================Tarsha Cherno===========================
+
 ein_in01,125,99,3	script	Tarsha Cherno	850,{
 	if(kain_ticket == 7) {
 		callfunc "cherno";
@@ -833,6 +845,9 @@ function	script	cherno	{
 		return;
 	}
 }
+
+//========Unidentified Machine #1 and #2=======================
+
 ein_in01,127,94,5	script	 Unidentified Machine#machine1	111,{
 	callfunc "Machine";
 }
@@ -847,6 +862,8 @@ function	script	Machine	{
 	mes "even do anything?^000000";
 	close;
 }
+
+//====================Mirror=============================
 
 ein_in01,121,99,5	script	Mirror	111,{
 	if(kain_ticket==8) {
@@ -867,6 +884,8 @@ ein_in01,121,99,5	script	Mirror	111,{
 		close;
 	}
 }
+
+//====================Tree from Einbech=============================
 
 einbech,45,113,5	script	Tree#t1-1::Tree	111,{
 	if(kain_ticket==11) {
@@ -980,6 +999,8 @@ function	script	diary	{
 	mes "^3355FFThat was the last page of the journal. You picked it up so that you can bring it over to ^3131FFTarsha.^000000";
 	return;
 }
+
+//====================Expert Repairman=============================
 
 ein_in01,117,80,5	script	Unidentified Machine	111,{
 	if(kain_ticket > 12) {
