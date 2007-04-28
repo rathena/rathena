@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/04/29
+	* Fixed level requirement of Eye of Hellion quest [Playtester]
 	* Some 11.1 field spawn updates [Playtester]
 2007/04/28
 	* Small Kiel warp fix [Playtester]

@@ -1547,7 +1547,7 @@ s_Glimmer:
 	close;
 
 s_Looking:
-	if(BaseLevel < 75)goto s_Glimmer;
+	if(BaseLevel < 60)goto s_Glimmer;
 	mes "[Sir Chilias'Tyus]";
 	mes "I suppose I should tell you";
 	mes "first about my grandfather,";
