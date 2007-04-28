@@ -19,6 +19,7 @@
 //= 1.2 Removed duplicate NPCs. [Toms]
 //= 1.3 More Bug fixes, fixed typo. Updated Additional comments. [L0ne_W0lf]
 //= 1.4 Fixed doors not resetting in kh_kiehl01 after 30 second timer is up. [L0ne_W0lf]
+//= 1.5 Another bug fixed (&& instead of ||). [L0ne_W0lf]
 //============================================================ 
 
 
@@ -1448,7 +1449,7 @@ kh_school,179,39,1	script	Cute Student	895,{
 // Elly's Window 
 //----------------------------------------------------------------------------
 yuno_fild08,69,185,0	script	Window::WindowKHQ1	111,{
-	if ((KielHyreQuest <= 28) && (KielHyreQuest >= 46)){
+	if ((KielHyreQuest <= 28) || (KielHyreQuest >= 46)){
 		mes "^3355FFThis must be Elly's room.^000000";
 		mes "^3355FFIt doesn't sound like anyone^000000";
 		mes "^3355FFis inside, so the probably^000000";
