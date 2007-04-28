@@ -10,7 +10,7 @@
 
 // server protocol version
 #ifndef PACKETVER
-	#define PACKETVER			7
+	#define PACKETVER			8
 #endif
 
 #define FIFOSIZE_SERVERLINK	256*1024

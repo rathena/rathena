@@ -534,7 +534,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 		{
 			if (!matched) {
 				sprintf(ip_dnsbl, "%s.%s", r_ip, dnsbl_serv);
-				if(gethostbyname(ip_dnsbl))
+				if(host2ip(ip_dnsbl))
 					matched = true;
 			}
 		}
