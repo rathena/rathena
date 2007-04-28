@@ -46,9 +46,7 @@ void Gettimeofday(struct timeval *timenow)
 #include "../common/version.h"
 #include "../common/mmo.h"
 
-#ifdef PASSWORDENC
 #include "../common/md5calc.h"
-#endif
 
 //-------------------------------INSTRUCTIONS------------------------------
 // Set the variables below:
@@ -63,11 +61,7 @@ void Gettimeofday(struct timeval *timenow)
 char loginserverip[16] = "127.0.0.1";        // IP of login-server
 int loginserverport = 6900;                  // Port of login-server
 char loginserveradminpassword[24] = "admin"; // Administration password
-#ifdef PASSWORDENC
-int passenc = 2;                             // Encoding type of the password
-#else
 int passenc = 0;                             // Encoding type of the password
-#endif
 char defaultlanguage = 'E';                  // Default language (F: Français/E: English)
                                              // (if it's not 'F', default is English)
 char ladmin_log_filename[1024] = "log/ladmin.log";
@@ -3274,7 +3268,6 @@ int parse_fromlogin(int fd) {
 			RFIFOSKIP(fd,3);
 			break;
 
-#ifdef PASSWORDENC
 		case 0x01dc:	// answer of a coding key request
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
@@ -3308,7 +3301,6 @@ int parse_fromlogin(int fd) {
 			bytes_to_read = 1;
 			RFIFOSKIP(fd,RFIFOW(fd,2));
 			break;
-#endif
 
 		case 0x7531:	// Displaying of the version of the login-server
 			if (RFIFOREST(fd) < 10)
@@ -4182,9 +4174,7 @@ int Connect_login_server(void) {
 		printf("Error: Failed to connect to Login Server\n");
 		exit(1);
 	}
-#ifdef PASSWORDENC
 	if (passenc == 0) {
-#endif
 		WFIFOHEAD(login_fd,28);
 		WFIFOW(login_fd,0) = 0x7918; // Request for administation login
 		WFIFOW(login_fd,2) = 0; // no encrypted
@@ -4198,7 +4188,6 @@ int Connect_login_server(void) {
 			printf("Sending of the password...\n");
 			ladmin_log("Sending of the password..." RETCODE);
 		}
-#ifdef PASSWORDENC
 	} else {
 		WFIFOHEAD(login_fd,2);
 		WFIFOW(login_fd,0) = 0x791a; // Sending request about the coding key
@@ -4212,7 +4201,6 @@ int Connect_login_server(void) {
 			ladmin_log("Request about the MD5 key..." RETCODE);
 		}
 	}
-#endif
 
 	return 0;
 }
@@ -4264,12 +4252,10 @@ int ladmin_config_read(const char *cfgName) {
 			} else if (strcmpi(w1, "admin_pass") == 0) {
 				strncpy(loginserveradminpassword, w2, sizeof(loginserveradminpassword));
 				loginserveradminpassword[sizeof(loginserveradminpassword)-1] = '\0';
-#ifdef PASSWORDENC
 			} else if (strcmpi(w1, "passenc") == 0) {
 				passenc = atoi(w2);
 				if (passenc < 0 || passenc > 2)
 					passenc = 0;
-#endif
 			} else if (strcmpi(w1, "defaultlanguage") == 0) {
 				if (w2[0] == 'F' || w2[0] == 'E')
 					defaultlanguage = w2[0];

@@ -1,28 +1,12 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <sys/types.h>
-
-#ifdef __WIN32
-	#define WIN32_LEAN_AND_MEAN
-	#include <windows.h>
-	#include <winsock2.h>
-#else
-	#include <sys/socket.h>
-	#include <netinet/in.h>
-	#include <arpa/inet.h>
-	#include <netdb.h>
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h> // for stat/lstat/fstat
 #include <signal.h>
 #include <fcntl.h>
 #include <string.h>
-
-//add include for DBMS(mysql)
-#include <mysql.h>
 
 #include "../common/cbasetypes.h"
 #include "../common/core.h"
@@ -37,6 +21,8 @@
 #include "../common/md5calc.h"
 #include "login.h"
 
+//add include for DBMS(mysql)
+#include <mysql.h>
 
 struct Login_Config {
 
@@ -115,6 +101,11 @@ char login_db_level[256] = "level";
 
 //-----------------------------------------------------
 
+struct login_session_data {
+	uint16 md5keylen;
+	char md5key[20];
+};
+
 #define AUTH_FIFO_SIZE 256
 struct {
 	int account_id, login_id1, login_id2;
@@ -132,8 +123,6 @@ struct online_login_data {
 };
 
 //-----------------------------------------------------
-
-static char md5key[20], md5keylen = 16;
 
 struct dbt *online_db;
 
@@ -416,10 +405,10 @@ int mmo_auth_new(struct mmo_account* account, char sex)
 	mysql_real_escape_string(&mysql_handle, account->userid, account->userid, strlen(account->userid));
 	mysql_real_escape_string(&mysql_handle, account->passwd, account->passwd, strlen(account->passwd));
 
-	if (sex == 'f') sex = 'F';
-	else if (sex == 'm') sex = 'M';
+	sex = TOUPPER(sex);
+
 	if (login_config.use_md5_passwds)
-		MD5_String(account->passwd,user_password);
+		MD5_String(account->passwd, user_password);
 	else
 		jstrescapecpy(user_password, account->passwd);
 
@@ -484,8 +473,39 @@ int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len)
 	return c;
 }
 
+
 //-----------------------------------------------------
-// Auth
+// encrypted/unencrypted password check
+//-----------------------------------------------------
+bool check_encrypted(const char* str1, const char* str2, const char* passwd)
+{
+	char md5str[64], md5bin[32];
+	snprintf(md5str, sizeof(md5str), "%s%s", str1, str2); md5str[sizeof(md5str)-1] = '\0';
+	MD5_String2binary(md5str, md5bin);
+
+	return (0==memcmp(passwd, md5bin, 16));
+}
+
+bool check_password(struct login_session_data* ld, int passwdenc, const char* passwd, const char* refpass)
+{	
+	if(passwdenc == 0)
+	{
+		return (0==strcmp(passwd, refpass));
+	}
+	else if (ld)
+	{
+		// password mode set to 1 -> (md5key, refpass) enable with <passwordencrypt></passwordencrypt>
+		// password mode set to 2 -> (refpass, md5key) enable with <passwordencrypt2></passwordencrypt2>
+		
+		return ((passwdenc&0x01) && check_encrypted(ld->md5key, refpass, passwd)) ||
+		       ((passwdenc&0x02) && check_encrypted(refpass, ld->md5key, passwd));
+	}
+	return false;
+}
+
+
+//-----------------------------------------------------
+// Check/authentication of a connection
 //-----------------------------------------------------
 int mmo_auth(struct mmo_account* account, int fd)
 {
@@ -494,8 +514,6 @@ int mmo_auth(struct mmo_account* account, int fd)
 	char user_password[256], password[256];
 	long connect_until;
 	int encpasswdok = 0, state;
-
-	char md5str[64], md5bin[32];
 
 	char ip[16];
 	uint32 ipl = session[fd]->client_addr;
@@ -594,49 +612,15 @@ int mmo_auth(struct mmo_account* account, int fd)
 	}
 
 	if (login_config.use_md5_passwds)
-		MD5_String(account->passwd,user_password);
+		MD5_String(account->passwd, user_password);
 	else
-		jstrescapecpy(user_password, account->passwd);
+		memcpy(user_password, account->passwd, NAME_LENGTH);
 
-#ifdef PASSWORDENC
-	if (account->passwdenc > 0) {
-		int j = account->passwdenc;
-
-		if (j > 2)
-			j = 1;
-		do {
-			if (j == 1) {
-				sprintf(md5str, "%s%s", md5key, password);
-			} else if (j == 2) {
-				sprintf(md5str, "%s%s", password, md5key);
-			} else
-				md5str[0] = 0;
-			MD5_String2binary(md5str, md5bin);
-			encpasswdok = (memcmp(user_password, md5bin, 16) == 0);
-		} while (j < 2 && !encpasswdok && (j++) != account->passwdenc);
-	}
-#endif
-	if ((strcmp(user_password, password) && !encpasswdok)) {
-		if (account->passwdenc == 0) {
-			ShowInfo("auth failed pass error %s %s" RETCODE, account->userid, user_password);
-#ifdef PASSWORDENC
-		} else {
-			char logbuf[1024], *p = logbuf;
-			int j;
-			p += sprintf(p, "auth failed pass error %s recv-md5[", account->userid);
-			for(j = 0; j < 16; j++)
-				p += sprintf(p, "%02x", ((unsigned char *)user_password)[j]);
-			p += sprintf(p, "] calc-md5[");
-			for(j = 0; j < 16; j++)
-				p += sprintf(p, "%02x", ((unsigned char *)md5bin)[j]);
-			p += sprintf(p, "] md5key[");
-			for(j = 0; j < md5keylen; j++)
-				p += sprintf(p, "%02x", ((unsigned char *)md5key)[j]);
-			p += sprintf(p, "]" RETCODE);
-			ShowInfo("%s\n", p);
-#endif
-		}
-		return 1;
+	if (!check_password(session[fd]->session_data, account->passwdenc, user_password, password))
+	{
+		ShowInfo("Invalid password (account: %s, pass: %s, received pass: %s, ip: %s)" RETCODE,
+		         account->userid, password, (account->passwdenc) ? "[MD5]" : account->passwd, ip);
+		return 1; // 1 = Incorrect Password
 	}
 
 	if (ban_until_time != 0) { // if account is banned
@@ -747,30 +731,32 @@ int parse_fromchar(int fd)
 	for(id = 0; id < MAX_SERVERS; id++)
 		if (server_fd[id] == fd)
 			break;
-
-	if (id == MAX_SERVERS)
+	if (id == MAX_SERVERS) { // not a char server
 		session[fd]->eof = 1;
+		do_close(fd);
+		return 0;
+	}
+
 	if(session[fd]->eof) {
-		if (id < MAX_SERVERS) {
-			ShowStatus("Char-server '%s' has disconnected.\n", server[id].name);
-			server_fd[id] = -1;
-			memset(&server[id], 0, sizeof(struct mmo_char_server));
-			online_db->foreach(online_db,online_db_setoffline,id); //Set all chars from this char server to offline.
-			// server delete
-			sprintf(tmpsql, "DELETE FROM `sstatus` WHERE `index`='%d'", id);
-			// query
-			if (mysql_query(&mysql_handle, tmpsql)) {
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
-			}
+		ShowStatus("Char-server '%s' has disconnected.\n", server[id].name);
+		server_fd[id] = -1;
+		memset(&server[id], 0, sizeof(struct mmo_char_server));
+		online_db->foreach(online_db,online_db_setoffline,id); //Set all chars from this char server to offline.
+		sprintf(tmpsql, "DELETE FROM `sstatus` WHERE `index`='%d'", id);
+		if (mysql_query(&mysql_handle, tmpsql)) {
+			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 		}
 		do_close(fd);
 		return 0;
 	}
 
-	while (RFIFOREST(fd) >= 2) {
+	while (RFIFOREST(fd) >= 2)
+	{
+		uint16 command = RFIFOW(fd,0);
 
-		switch (RFIFOW(fd,0)) {
+		switch (command)
+		{
 
 		case 0x2709: // request from map-server via char-server to reload GM accounts
 			if (login_config.log_login)
@@ -795,11 +781,11 @@ int parse_fromchar(int fd)
 			WFIFOHEAD(fd,51);
 			account_id = RFIFOL(fd,2); // speed up
 			for(i = 0; i < AUTH_FIFO_SIZE; i++) {
-				if(auth_fifo[i].account_id == account_id &&
-					auth_fifo[i].login_id1 == RFIFOL(fd,6) &&
-					auth_fifo[i].login_id2 == RFIFOL(fd,10) && // relate to the versions higher than 18
-					auth_fifo[i].sex == RFIFOB(fd,14) &&
-					auth_fifo[i].ip == ntohl(RFIFOL(fd,15)) &&
+				if( auth_fifo[i].account_id == account_id &&
+					auth_fifo[i].login_id1  == RFIFOL(fd,6) &&
+					auth_fifo[i].login_id2  == RFIFOL(fd,10) && // relate to the versions higher than 18
+					auth_fifo[i].sex        == RFIFOB(fd,14) &&
+					auth_fifo[i].ip         == ntohl(RFIFOL(fd,15)) &&
 					!auth_fifo[i].delflag)
 				{
 					auth_fifo[i].delflag = 1;
@@ -1319,7 +1305,6 @@ int parse_login(int fd)
 {
 	char t_uid[100];
 	struct mmo_account account;
-
 	int result, i;
 	uint32 ipl = session[fd]->client_addr;
 	char ip[16];
@@ -1330,31 +1315,31 @@ int parse_login(int fd)
 	memset(&account, 0, sizeof(account));
 
 	if (session[fd]->eof) {
-		for(i = 0; i < MAX_SERVERS; i++)
-			if (server_fd[i] == fd)
-				server_fd[i] = -1;
 		do_close(fd);
 		return 0;
 	}
 
-	while(RFIFOREST(fd) >= 2) {
+	while (RFIFOREST(fd) >= 2)
+	{
+		uint16 command = RFIFOW(fd,0);
 
-		switch(RFIFOW(fd,0)) {
-		case 0x200:		// New alive packet: structure: 0x200 <account.userid>.24B. used to verify if client is always alive.
+		switch(command)
+		{
+		case 0x0200:		// New alive packet: structure: 0x200 <account.userid>.24B. used to verify if client is always alive.
 			if (RFIFOREST(fd) < 26)
 				return 0;
 			RFIFOSKIP(fd,26);
 			break;
 
-		case 0x204:		// New alive packet: structure: 0x204 <encrypted.account.userid>.16B. (new ragexe from 22 june 2004)
+		case 0x0204:		// New alive packet: structure: 0x204 <encrypted.account.userid>.16B. (new ragexe from 22 june 2004)
 			if (RFIFOREST(fd) < 18)
 				return 0;
 			RFIFOSKIP(fd,18);
 			break;
 
-		case 0x277:		// New login packet
-		case 0x64:		// request client login
-		case 0x01dd:	// request client login with encrypt
+		case 0x0064:		// request client login
+		case 0x0277:		// New login packet (layout is same as 0x64 but different length)
+		case 0x01dd:		// request client login (encryption mode)
 		{
 			int packet_len = RFIFOREST(fd);
 
@@ -1370,37 +1355,24 @@ int parse_login(int fd)
 				break;
 			}
 
-			switch(RFIFOW(fd,0)){
-				case 0x64:
-					if(packet_len < 55)
-						return 0;
-					break;
-				case 0x01dd:
-					if(packet_len < 47)
-						return 0;
-					break;
-				case 0x277:
-					if(packet_len < 84)
-						return 0;
-					break;
-			}
+			if ((command == 0x0064 && packet_len < 55) ||
+				(command == 0x0277 && packet_len < 84) ||
+				(command == 0x01dd && packet_len < 47))
+				return 0;
 
-			account.version = RFIFOL(fd, 2);
+			// S 0064 <version>.l <account name>.24B <password>.24B <version2>.B
+			// S 0277 ??
+			// S 01dd <version>.l <account name>.24B <md5 binary>.16B <version2>.B
+
+			account.version = RFIFOL(fd,2);
 			if (!account.version) account.version = 1; //Force some version...
-			memcpy(account.userid,RFIFOP(fd, 6),NAME_LENGTH);
-			account.userid[23] = '\0';
-			memcpy(account.passwd,RFIFOP(fd, 30),NAME_LENGTH);
-			account.passwd[23] = '\0';
+			memcpy(account.userid,RFIFOP(fd,6),NAME_LENGTH); account.userid[23] = '\0';
+			memcpy(account.passwd,RFIFOP(fd,30),NAME_LENGTH); account.passwd[23] = '\0';
+			account.passwdenc = (command != 0x01dd) ? 0 : PASSWORDENC;
+			jstrescapecpy(t_uid, account.userid);
 
-#ifdef PASSWORDENC
-			account.passwdenc = (RFIFOW(fd,0)!=0x01dd)?0:PASSWORDENC;
-#else
-			account.passwdenc = 0;
-#endif
 			result = mmo_auth(&account, fd);
-
-			jstrescapecpy(t_uid,account.userid);
-			if(result == -1) { // auth success
+			if (result == -1) { // auth success
 				if (login_config.min_level_to_connect > account.level) {
 					WFIFOHEAD(fd,3);
 					WFIFOW(fd,0) = 0x81;
@@ -1546,7 +1518,7 @@ int parse_login(int fd)
 				//cannot connect login failed
 				memset(WFIFOP(fd,0), '\0', 23);
 				WFIFOW(fd,0) = 0x6a;
-				WFIFOB(fd,2) = result;
+				WFIFOB(fd,2) = (uint8)result;
 				if (result == 6) { // 6 = Your are Prohibited to log in until %s
 					char tmpstr[20];
 					time_t ban_until_time = (sql_row) ? atol(sql_row[0]) : 0;
@@ -1561,21 +1533,32 @@ int parse_login(int fd)
 			break;
 		}
 
-		case 0x01db:	// request password key
+		case 0x01db:	// Sending request of the coding key
+		{
+			struct login_session_data* ld;
 			if (session[fd]->session_data) {
 				ShowWarning("login: abnormal request of MD5 key (already opened session).\n");
 				session[fd]->eof = 1;
 				return 0;
 			}
-		{
+
+			ld = (struct login_session_data*)aCalloc(1, sizeof(struct login_session_data));
+			session[fd]->session_data = ld;
+
+			// Creation of the coding key
+			memset(ld->md5key, '\0', sizeof(ld->md5key));
+			ld->md5keylen = (uint16)(12 + rand() % 4);
+			for(i = 0; i < ld->md5keylen; i++)
+				ld->md5key[i] = (char)(1 + rand() % 255);
+
 			RFIFOSKIP(fd,2);
-			WFIFOHEAD(fd,4 + md5keylen);
+			WFIFOHEAD(fd,4 + ld->md5keylen);
 			WFIFOW(fd,0) = 0x01dc;
-			WFIFOW(fd,2) = 4 + md5keylen;
-			memcpy(WFIFOP(fd,4), md5key, md5keylen);
+			WFIFOW(fd,2) = 4 + ld->md5keylen;
+			memcpy(WFIFOP(fd,4), ld->md5key, ld->md5keylen);
 			WFIFOSET(fd,WFIFOW(fd,2));
 		}
-			break;
+		break;
 
 		case 0x2710:	// Connection request of a char-server
 			if (RFIFOREST(fd) < 86)
@@ -1991,41 +1974,36 @@ void set_server_type(void)
 
 int do_init(int argc, char** argv)
 {
-	//initialize login server
+	// initialize login server
 	int i;
 
 	login_set_defaults();
-	//read login configue
+
+	// read login-server configuration
 	login_config_read((argc > 1) ? argv[1] : LOGIN_CONF_NAME);
 	sql_config_read(SQL_CONF_NAME);
 	login_lan_config_read((argc > 2) ? argv[2] : LAN_CONF_NAME);
-	//Generate Passworded Key.
-	memset(md5key, 0, sizeof(md5key));
-	md5keylen=rand()%4+12;
-	for(i=0;i<md5keylen;i++)
-		md5key[i]=rand()%255+1;
+
+	srand((unsigned int)time(NULL));
 
 	for(i=0;i<AUTH_FIFO_SIZE;i++)
 		auth_fifo[i].delflag=1;
 
 	for(i=0;i<MAX_SERVERS;i++)
 		server_fd[i]=-1;
-	//server port open & binding
 
 	// Online user database init
 	online_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
 	add_timer_func_list(waiting_disconnect_timer, "waiting_disconnect_timer");
 
-	login_fd = make_listen_bind(login_config.login_ip, login_config.login_port);
-
-	//Auth start
+	// Auth init
 	mmo_auth_sqldb_init();
 
-	//Read account information.
+	// Read account information.
 	if(login_config.login_gm_read)
 		read_gm_account();
 
-	//set default parser as parse_login function
+	// set default parser as parse_login function
 	set_defaultparse(parse_login);
 
 	// ban deleter timer
@@ -2047,6 +2025,9 @@ int do_init(int argc, char** argv)
 	}
 
 	new_reg_tick = gettick();
+
+	// server port open & binding
+	login_fd = make_listen_bind(login_config.login_ip, login_config.login_port);
 
 	ShowStatus("The login-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %u).\n\n", login_config.login_port);
 

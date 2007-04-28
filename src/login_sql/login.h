@@ -10,16 +10,14 @@
 #define SQL_CONF_NAME "conf/inter_athena.conf"
 #define LAN_CONF_NAME "conf/subnet_athena.conf"
 
+// supported encryption types: 1- passwordencrypt, 2- passwordencrypt2, 3- both
+#define PASSWORDENC 3
+
 #ifndef SQL_DEBUG
 	#define mysql_query(_x, _y) mysql_query(_x, _y)
 #else 
-	#define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
+	#define mysql_query(_x, _y) debug_mysql_query(__FILE__, __LINE__, _x, _y)
 #endif
-
-#define PASSWORDENC		3	// A definition is given when making an encryption password correspond.
-							// It is 1 at the time of passwordencrypt.
-							// It is made into 2 at the time of passwordencrypt2.
-							// When it is made 3, it corresponds to both.
 
 struct mmo_account {
 	int version;
