@@ -1,116 +1,154 @@
 //===== eAthena Script ========================================
-//= Ammo Box Event
+//= Casing Pack Dealer Kenny
 //===== By: ==================================================
-//= Playtester
+//= SinSloth
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena 1.0+
 //===== Description: =========================================
-//= Turns bullets into ammo boxes.
+//= Turns bullets/spheres into packs/casings.
 //===== Additional Comments: =================================
-//= 1.0 Added the first 8 ammo boxes [Playtester]
+//= 1.0 First version. [SinSloth]
+//= 1.1 Optimized version - Reduced to only one function [SinSloth]
 //============================================================
 
-que_ng,187,149,3	script	Kenny	83,{
+que_ng,187,149,3	script	Casing Pack Dealer Kenny	83,{
+
+	if(BaseJob == Job_Gunslinger)
+	{
+		mes "[Kenny]";
+		mes "I am the Casing Dealer, Kenny!";
+		mes "If your bullets are getting";
+		mes "too heavy, come to me!";
+		next;
+		mes "[Kenny]";
+		mes "I can make you Casings and Packs,";
+		mes "which will let you carry the";
+		mes "Spheres at a lower weight!";
+		mes "Come on! Take a look!";
+		next;
+		switch( select( "Lightning Sphere Pack","Blind Sphere Pack","Poison Sphere Pack","Freezing Sphere Pack","Flare Sphere Pack","Bullet Casing","Shell of Blood Casing","Silver Bullet Casing","Cancel" ))
+		{
+			case 1:
+				callfunc "Func_Casing",13204,12144;
+			break;
+			case 2:
+				callfunc "Func_Casing",13206,12145;
+			break;
+			case 3 :
+				callfunc "Func_Casing",13205,12146;
+			break;
+			case 4 :
+				callfunc "Func_Casing",13207,12147;
+			break;
+			case 5 :
+				callfunc "Func_Casing",13203,12148;
+			break;
+			case 6 :
+				callfunc "Func_Casing",13200,12149;
+			break;
+			case 7 :
+				callfunc "Func_Casing",13202,12150;
+			break;
+			case 8 :
+				callfunc "Func_Casing",13201,12151;
+			break;
+			case 9:
+				goto L_Cancel;
+			break;
+		}
+	}
 	mes "[Kenny]";
-	mes "My name is Kenny.";
-	mes "I can create ^0000FFbullet casings^000000";
-	mes "and ^0000FFsphere packs^000000.";
+	mes "I am the Casing Dealer, Kenny!";
+	mes "I'm here to package the Shells";
+	mes "and Bullets for Gunslingers.";
 	next;
 	mes "[Kenny]";
-	mes "Would you like to try using one of";
-	mes "my bullet bullet casings or sphere";
-	mes "packs?";
-	mes "Select the one you want me to make!";
-	next;
-
-	menu "Bullet Casing",-,"Silver Bullet Casing",Q2,"Shell of Blood Casing",Q3,"Lightning Sphere Pack",Q4,"Blind Sphere Pack",Q5,"Poison Sphere Pack",Q6,"Freezing Sphere Pack",Q7,"Flare Sphere Pack",Q8;
-
-// Arguments
-//===========
-		callsub sF_Make, 13200,500,12149, "Bullet Casings";
-			goto M_Menu;
-Q2:
-		callsub sF_Make, 13201,500,12151, "Silver Bullet Casings";
-			goto M_Menu;
-Q3:
-		callsub sF_Make, 13202,500,12150, "Shell of Blood Casings";
-			goto M_Menu;
-Q4:
-		callsub sF_Make, 13204,500,12144, "Lightning Sphere Packs";
-			goto M_Menu;
-Q5:
-		callsub sF_Make, 13206,500,12145, "Blind Sphere Packs";
-			goto M_Menu;
-Q6:
-		callsub sF_Make, 13205,500,12146, "Poison Sphere Packs";
-			goto M_Menu;
-Q7:
-		callsub sF_Make, 13207,500,12147, "Freezing Sphere Packs";
-			goto M_Menu;
-Q8:
-		callsub sF_Make, 13203,500,12148, "Flare Sphere Packs";
-			goto M_Menu;
-
-// Subfunction for making ammo boxes
-//==================================
-sF_Make:
-	set @ammonum,500;
-	if(countitem(getarg(0)) < @ammonum) goto L_NdAmmo;
-	if(Zeny < getarg(1)) goto L_NdZeny;
-	mes "[Kenny]";
-	mes "What do you want me to do?";
-	next;
-	menu "Give me as many as you can.",-, "I want to set the amount.",sM_0b, "Nevermind",M_End;
-
-		set @amount,50;
-		if(zeny/getarg(1) < @amount) set @amount, zeny/getarg(1);
-		if(countitem(getarg(0))/@ammonum < @amount) set @amount, countitem(getarg(0))/@ammonum;
-		if(@amount > 0) goto L_End;
-		mes "[Kenny]";
-		mes "Dude, you don't even have the right items...";
-		close;
-		
-	sM_0b:
-		input @amount;
-		if(@amount<1 || @amount>50) goto L_BadAmnt;
-		if(countitem(getarg(0))/@ammonum < @amount) goto L_NdAmmo;
-		if(Zeny < (getarg(1)*@amount)) goto L_NdZeny;
-
-	L_End:
-		set Zeny, Zeny - (getarg(1)*@amount);
-		delitem getarg(0), (@amount*@ammonum);
-		getitem getarg(2), @amount;
-		mes "[Kenny]";
-		mes "There you go~!";
-		mes "Here are your " +getarg(3)+ ".";
-		close;
-
-	L_NdAmmo:
-		mes "[Kenny]";
-		mes "Sorry, but you need 500 bullets or"; 
-		mes "spheres and 500 zeny to make";
-		mes "1 bullet casing or 1 sphere pack.";
-		close;
-		
-	L_NdZeny:
-		mes "[Kenny]";
-		mes "You don't have enough zeny for that many.";
-		close;
-
-	L_BadAmnt:
-		mes "[Kenny]";
-		mes "Please choose a number between 1 and 50.";	
-		close;
-
-L_Come:
-	mes "[Kenny]";
-	mes "Please, come again whenever you want too.";
+	mes "But you don't look like a";
+	mes "Gunslinger to me. I'm afraid";
+	mes "that I must ask you to leave";
+	mes "after you're done looking around.";
 	close;
-M_End:
+
+L_Cancel:
 	mes "[Kenny]";
-	mes "Sure, no problem.";
-	mes "Come back any time.";
+	mes "Alright. If there's";
+	mes "something else I can help";
+	mes "you with, please tell me.";
 	close;
 }
+
+function	script		Func_Casing	{
+
+	mes "[Kenny]";
+	mes "Please input the amount you want.";
+	next;
+	mes "[Kenny]";
+	mes "" +getitemname(getarg(1))+ " will";
+	if(getarg(0) == 13202) { mes "cost 500 Shells of Blood"; } else mes "cost 500 " +getitemname(getarg(0))+ "s";
+	mes "and 500 zeny each.";
+	next;
+	mes "[Kenny]";
+	mes "You can trade a maximum of 50.";
+	mes "Input 0 if you want to cancel.";
+	next;
+	input @caser_amount;
+	if(@caser_amount < 1) goto L_Cancel;
+	else if(@caser_amount > 50)
+	{
+		mes "[Kenny]";
+		mes "You've exceeded the limit!";
+		mes "Try again next time?";
+		close;
+	}
+	set @caser_bullet,@caser_amount * 500;
+
+//Weight checking
+	if(checkweight(getarg(1),@caser_amount) != 1) goto L_Weight;
+
+//Materials checking
+	else if(countitem(getarg(0)) < @caser_bullet) goto L_NoBullet;
+
+//Zeny checking
+	else if(Zeny < @caser_bullet) goto L_NoMoney;
+	mes "[Kenny]";
+	mes "Ah very well!";
+	mes "The number is confirmed!";
+	if(getarg(1) < 12149) mes "I'll get you the Packs right away.";
+	else mes "I'll get you the Casings right away.";
+	set Zeny, Zeny - @caser_bullet;
+	delitem getarg(0),@caser_bullet;
+	getitem getarg(1),@caser_amount;
+	close;
+
+L_Weight:
+	mes "[Kenny]";
+	mes "You are overweight.";
+	mes "Please clear your inventory.";
+	close;
+
+L_NoBullet:
+	mes "[Kenny]";
+	mes "Huh......";
+	mes "You don't have enough";
+	mes "materials to trade for";
+	mes "the number of items you";
+	mes "want. Please come with the";
+	mes "correct amount of items.";
+	close;
+
+L_NoMoney:
+	mes "[Kenny]";
+	mes "Erm... You don't have enough money.";
+	mes "The fee is 500 zeny";
+	mes "Check your zeny and come again.";
+	close;
+
+L_Cancel:
+	mes "[Kenny]";
+	mes "Alright. If there's";
+	mes "something else I can help";
+	mes "you with, please tell me.";
+	close;
+}	
