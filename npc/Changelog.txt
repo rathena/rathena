@@ -8,6 +8,7 @@ Date		Added
 	* Updated Ammo Casing NPC Kenny to official version [SinSloth]
 	* Fixed level requirement of Eye of Hellion quest [Playtester]
 	* Some 11.1 field spawn updates [Playtester]
+	* Updated Bullet Merchant Tony (npc/merchants/ammo_dealer.txt) to Official One [Paradox924X]
 2007/04/28
 	* Small Kiel warp fix [Playtester]
 	* More Kiel quest fixes thanks to Toms and L0ne_W0lf [Playtester]

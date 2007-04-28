@@ -1,100 +1,113 @@
-//===== eAthena Script =======================================
-//= Ammo Dealer
-//===== By: ==================================================
-//= Playtester
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
+//===== Athena Script =====================================
+//= Bullet Merchant Tony
+//===== By ================================================
+//= Paradox924X
+//===== Version ===========================================
+//= 1.5 - Replaced @input with .@input
+//= 1.4 - Fixed item id for Lightning Sphere from the id for a Lightning Sphere Pack
+//= 1.3 - Minor Optimizations
+//= 1.2 - Majorly reduced script length by using a function
+//= 1.1 - Minor Optimizations
+//= 1.0 - First Release
+//===== Compatible With ===================================
 //= eAthena
-//===== Description: =========================================
-//= trades items for spheres
-//===== Additional Comments: =================================
-//= 1.0 first version [Playtester]
-//============================================================
-
-// Ammo Dealer Tony
-que_ng,187,156,3	script	Tony	86,{
-	mes "[Tony]";
-	mes "I can make spheres for you.";
-	mes "Spheres are the ammunition for";
-	mes "grenade launchers.";
-	next;
-	mes "[Tony]";
-	mes "For 30 spheres, I need";
-	mes "^FF00001 Phracon^000000";
-	mes "and";
-	mes "^FF00001 Emveretarcon^000000.";
-	next;
-	mes "[Tony]";
-	mes "I also need another material,";
-	mes "depending on which sphere type";
-	mes "you want to create.";
-	next;
-	mes "[Tony]";
-	mes "Here's a list:";
-	mes "Flare Sphere - ^FF00002 Burning Hearts^000000";
-	mes "Lightning Sphere - ^FF00003 Cyfars^000000";
-	mes "Poison Sphere - ^FF000010 Venom Canines^000000";
-	mes "Blind Sphere - ^FF00005 Squid Inks^000000";
-	mes "Freezing Sphere - ^FF00002 Brigans^000000";
-	next;
-	mes "[Tony]";
-	mes "So which ones do you want me";
-	mes "to create?";
-	next;
-	menu "Flare Sphere",-,"Lightning Sphere",S2,"Poison Sphere",S3,"Blind Sphere",S4,"Freezing Sphere",S5;
-
-	callsub sF_Make,13203,7097,2;
-S2:
-	callsub sF_Make,13204,7053,3;
-S3:
-	callsub sF_Make,13205,937,10;
-S4:
-	callsub sF_Make,13206,1024,5;
-S5:
-	callsub sF_Make,13207,7054,2;
-
-//Subfunction, getarg(0):created sphere, getarg(1):special material, getarg(2):number needed
-sF_Make:
-	if( (countitem(1010)<1) || (countitem(1011)<1) || (countitem(getarg(1))<getarg(2)) ) goto L_NoMat;
-	mes "[Tony]";
-	mes "So how many ^0000FF30x packages^000000 do";
-	mes "you want me to make?";
-	next;
-	menu "-Exchange as many as possible.",M_0, "-Let me set the amount.",M_1, "-Cancel",M_End;
-
-	M_0:
-		set @amount, 500;
-		if(countitem(1010) < @amount) set @amount,countitem(1010);
-		if(countitem(1011) < @amount) set @amount,countitem(1011);
-		if(countitem(getarg(1))/getarg(2) < @amount) set @amount,countitem(getarg(1))/getarg(2);
-		if(@amount > 0) goto L_Make;
+//===== Description =======================================
+//= A simple bullet trader.
+//===== Comments ==========================================
+//= Converted from Aegis Script.
+//=========================================================
+que_ng.gat,187,156,3	script	Bullet Merchant Tony	86,{
+	if (BaseJob == JOB_GUNSLINGER) {
 		mes "[Tony]";
-		mes "Are you trying to make a fool of me...?";
-		close;
-
-	M_1:
-		input @amount;
-		if(@amount < 1 || @amount > 500) goto M_End;
-		if(countitem(1010) < @amount) goto L_NoMat;
-		if(countitem(1011) < @amount) goto L_NoMat;
-		if(countitem(getarg(1))/getarg(2) < @amount) goto L_NoMat;
-
-	L_Make:
-		delitem 1010,@amount;
-		delitem 1011,@amount;
-		delitem getarg(1),@amount*getarg(2);
-		getitem getarg(0),@amount*30;
-
-	M_End:
+		mes "I'm Bullet-tooth Tony!";
+		mes "Whenever your out of bullets,";
+		mes "Visit me!!!";
+		next;
 		mes "[Tony]";
-		mes "Come back anytime.";
-		close;
-
-	L_NoMat:
+		mes "Now~! Friend~Companion~ Buddy~";
+		mes "What do you need?!";
+		mes "Choose anything~!";
+		mes "And pay money~!";
+		next;
+		switch(select("Poison Sphere:Flare Sphere:Lighting Sphere:Blind Sphere:Freezing Sphere:Cancel")) {
+			case 1:
+				callfunc "Bullet_Trade",937,10,13205;
+			case 2:
+				callfunc "Bullet_Trade",7097,2,13203;
+			case 3:
+				callfunc "Bullet_Trade",7053,3,13204;
+			case 4:
+				callfunc "Bullet_Trade",1024,5,13206;
+			case 5:
+				callfunc "Bullet_Trade",7054,2,13207;
+			case 6:
+				mes "[Tony]";
+				mes "Mmm~ Okay~";
+				mes "Please visit again~";
+				mes "I, Bullet-tooth Tony,";
+				mes "Will always be here~!!!";
+				close;
+		}
+	} else {
 		mes "[Tony]";
-		mes "I'm sorry but you don't have";
-		mes "enough materials to create the";
-		mes "spheres.";
+		mes "I'm a trader who supplies";
+		mes "Gunslingers with trade items.";
+		mes "I am called Bullet-tooth Tony.";
+		next;
+		mes "[Tony]";
+		mes "I don't think you are a Gunslinger";
+		mes "So just look around";
+		mes "and go.";
 		close;
+	}
+}
+
+function	script	Bullet_Trade	{
+	mes "[Tony]";
+	mes "Input the amount you wish to purchase.";
+	next;
+	mes "[Tony]";
+	mes "We trade 30 "+getitemname(getarg(2))+"s for";
+	mes "1 Phracon,";
+	mes "1 Emveretarcon,";
+	mes "and "+getarg(1)+" "+getitemname(getarg(0))+".";
+	next;
+	mes "[Tony]";
+	mes "The maximum number you can trade is 500.";
+	mes "If you want to cancel, input 0.";
+	next;
+	input .@input;
+	set @tony,.@input;
+	set @tony1,.@input;
+	set @tony2,.@input * getarg(1);
+	if (.@input < 1 || .@input > 500) {
+		mes "[Tony]";
+		mes "Invalid Amount!";
+		mes "Enter again~!";
+		close;
+	} else if ((countitem(1010) >= @tony) && (countitem(1011) >= @tony1) && (countitem(getarg(0)) >= @tony2)) {
+		if (checkweight(getarg(2),.@input * 30) == 0) {
+			mes "[Tony]";
+			mes "I cannot give it to you because your inventory is full. Come back after your inventory has more space.";
+			close;
+		} else {
+			mes "[Tony]";
+			mes "Oh~ Good!";
+			mes "Trade number checked!";
+			mes "I'll trade immediately.";
+			delitem 1010,@tony;
+			delitem 1011,@tony1;
+			delitem getarg(0),@tony2;
+			getitem getarg(2),.@input * 30;
+			close;
+		}
+	} else {
+		mes "[Tony]";
+		mes "Tsk Tsk~";
+		mes "You do not have";
+		mes "enough items for the";
+		mes "items you want to trade.";
+		mes "Prepare again and come back.";
+		close;
+	}
 }
