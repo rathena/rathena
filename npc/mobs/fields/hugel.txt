@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -15,6 +15,7 @@
 //=	Mob quantity is custom.
 //= 1.0 Updated by using Tharis' Homun AI, by Tharis [Vicious]
 //= 1.1 Official X.3 spawns [Playtester]
+//= 1.2 Some 11.1 spawn updates [Playtester]
 //============================================================
 
 //==================================================
@@ -46,9 +47,9 @@ hu_fild02,0,0,0,0	monster	Novus	1718,2,0,0,0
 //==================================================
 // hu_fild03 - Hugel Field
 //==================================================
-hu_fild03,0,0,0,0	monster	Metaling	1613,80,0,0,0
+hu_fild03,0,0,0,0	monster	Grove	1687,80,0,0,0
 hu_fild03,0,0,0,0	monster	Poporing	1031,20,0,0,0
-hu_fild03,0,0,0,0	monster	Grove	1687,10,0,0,0
+hu_fild03,0,0,0,0	monster	Novus	1715,10,0,0,0
 hu_fild03,0,0,0,0	monster	Thief Bug	1051,10,0,0,0
 hu_fild03,0,0,0,0	monster	Red Mushroom	1085,10,180000,90000,1
 hu_fild03,0,0,0,0	monster	Black Mushroom	1084,10,180000,90000,1

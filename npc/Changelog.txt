@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/04/29
+	* Some 11.1 field spawn updates [Playtester]
 2007/04/28
 	* Small Kiel warp fix [Playtester]
 	* More Kiel quest fixes thanks to Toms and L0ne_W0lf [Playtester]
