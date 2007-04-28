@@ -48,7 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
-o4/29
+04/29
+	* Corrected Weight, buy/sell, attack, level and slots on three of the new fists. [L0ne_W0lf]
 	* Added remaining 11.3 Equipment. [L0ne_W0lf]
 	* Added Known-Effect Cash Shop items. [L0ne_W0lf]
 	* Added Valentine's Day (2007) event items with info provided by Muad_Dib.  [L0ne_W0lf]
