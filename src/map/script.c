@@ -55,8 +55,8 @@
 // struct script_state* st;
 //
 
-/// Returns the stack_data at the target index
-#define script_getdata(st,i) &((st)->stack->stack_data[(st)->start+(i)])
+/// Returns the script_data at the target index
+#define script_getdata(st,i) ( &((st)->stack->stack_data[(st)->start + (i)]) )
 /// Returns if the stack contains data at the target index
 #define script_hasdata(st,i) ( (st)->end > (st)->start + (i) )
 /// Returns the index of the last data in the stack
@@ -65,10 +65,25 @@
 #define script_pushint(st,val) push_val((st)->stack, C_INT, (val))
 #define script_pushstr(st,val) push_str((st)->stack, C_STR, (val))
 #define script_pushconststr(st,val) push_str((st)->stack, C_CONSTSTR, (val))
+/// Pushes a nil into the stack
+#define script_pushnil(st) push_val((st)->stack, C_NOP, 0)
+/// Pushes a copy of the data in the target index
+#define script_pushcopy(st,i) push_copy((st)->stack, (st)->start + (i))
 
 #define script_getnum(st,val) conv_num(st, script_getdata(st,val))
 #define script_getstr(st,val) conv_str(st, script_getdata(st,val))
 #define script_getref(st,val) ((st)->stack->stack_data[(st)->start+(val)].ref)
+
+// Note: "top" functions/defines use indexes relative to the top of the stack
+//       -1 is the index of the data at the top
+
+/// Returns the script_data at the target index relative to the top of the stack
+#define script_getdatatop(st,i) ( &((st)->stack->stack_data[(st)->stack->sp + (i)]) )
+/// Pushes a copy of the data in the target index relative to the top of the stack
+#define script_pushcopytop(st,i) push_copy((st)->stack, (st)->stack->sp + (i))
+/// Removes the range of values [start,end[ relative to the top of the stack
+#define script_removetop(st,start,end) ( pop_stack((st)->stack, ((st)->stack->sp + (start)), (st)->stack->sp + (end)) )
+
 //
 // struct script_data* data;
 //
@@ -83,6 +98,9 @@
 #define data_islabel(data) ( (data)->type == C_POS )
 /// Returns if the script data is an internal script function label
 #define data_isfunclabel(data) ( (data)->type == C_USERFUNC_POS )
+
+/// Returns the name of the reference
+#define data_referencename(data) ( str_buf + str_data[(data)->u.num&0x00ffffff].str )
 
 #define FETCH(n, t) \
 		if( script_hasdata(st,n) ) \
@@ -209,7 +227,7 @@ int mapreg_setreg(int num,int val);
 int mapreg_setregstr(int num,const char *str);
 
 enum c_op {
-	C_NOP,
+	C_NOP, // end of script/no value (nil)
 	C_POS,
 	C_INT, // number
 	C_PARAM, // parameter variable (see pc_readparam/pc_setparam)
@@ -2159,98 +2177,96 @@ int conv_num(struct script_state *st,struct script_data *data)
 	return data->u.num;
 }
 
-/*==========================================
- * スタックへ数値をプッシュ
- *------------------------------------------
- */
-void push_val(struct script_stack *stack,int type,int val)
+//
+// Stack operations
+//
+
+/// Increases the size of the stack
+void stack_expand(struct script_stack* stack)
 {
-	if(stack->sp >= stack->sp_max){
-		stack->sp_max += 64;
-		stack->stack_data = (struct script_data *)aRealloc(stack->stack_data,
-			sizeof(stack->stack_data[0]) * stack->sp_max);
-		memset(stack->stack_data + (stack->sp_max - 64), 0,
-			64 * sizeof(*(stack->stack_data)));
-	}
-//	if(battle_config.etc_log)
-//		printf("push (%d,%d)-> %d\n",type,val,stack->sp);
-	stack->stack_data[stack->sp].type=type;
-	stack->stack_data[stack->sp].u.num=val;
+	stack->sp_max += 64;
+	stack->stack_data = (struct script_data*)aRealloc(stack->stack_data,
+			stack->sp_max * sizeof(stack->stack_data[0]) );
+	memset(stack->stack_data + (stack->sp_max - 64), 0,
+			64 * sizeof(stack->stack_data[0]) );
+}
+
+/// Pushes a value into the stack
+#define push_val(stack,type,val) push_val2(stack, type, val, NULL)
+
+/// Pushes a value into the stack (with reference)
+void push_val2(struct script_stack* stack, int type, int val, struct linkdb_node** ref)
+{
+	if( stack->sp >= stack->sp_max )
+		stack_expand(stack);
+	stack->stack_data[stack->sp].type  = type;
+	stack->stack_data[stack->sp].u.num = val;
+	stack->stack_data[stack->sp].ref   = ref;
+	stack->sp++;
+}
+
+/// Pushes a string into the stack
+void push_str(struct script_stack* stack, int type, char* str)
+{
+	if( stack->sp >= stack->sp_max )
+		stack_expand(stack);
+	stack->stack_data[stack->sp].type  = type;
+	stack->stack_data[stack->sp].u.str = str;
 	stack->stack_data[stack->sp].ref   = NULL;
 	stack->sp++;
 }
 
-/*==========================================
- * スタックへ数値＋リファレンスをプッシュ
- *------------------------------------------
- */
-
-void push_val2(struct script_stack *stack,int type,int val,struct linkdb_node** ref) {
-	push_val(stack,type,val);
-	stack->stack_data[stack->sp-1].ref = ref;
-}
-
-/*==========================================
- * スタックへ文字列をプッシュ
- *------------------------------------------
- */
-void push_str(struct script_stack *stack,int type,char *str)
+/// Pushes a copy of the target position into the stack
+void push_copy(struct script_stack* stack, int pos)
 {
-	if(stack->sp>=stack->sp_max){
-		stack->sp_max += 64;
-		stack->stack_data = (struct script_data *)aRealloc(stack->stack_data,
-			sizeof(stack->stack_data[0]) * stack->sp_max);
-		memset(stack->stack_data + (stack->sp_max - 64), '\0',
-			64 * sizeof(*(stack->stack_data)));
-	}
-//	if(battle_config.etc_log)
-//		printf("push (%d,%x)-> %d\n",type,str,stack->sp);
-	stack->stack_data[stack->sp].type =type;
-	stack->stack_data[stack->sp].u.str=str;
-	stack->stack_data[stack->sp].ref  =NULL;
-	stack->sp++;
-}
-
-/*==========================================
- * スタックへ複製をプッシュ
- *------------------------------------------
- */
-void push_copy(struct script_stack *stack,int pos)
-{
-	switch(stack->stack_data[pos].type){
+	switch( stack->stack_data[pos].type )
+	{
 	case C_CONSTSTR:
-		push_str(stack,C_CONSTSTR,stack->stack_data[pos].u.str);
+		push_str(stack, C_CONSTSTR, stack->stack_data[pos].u.str);
 		break;
 	case C_STR:
-		push_str(stack,C_STR,aStrdup(stack->stack_data[pos].u.str));
+		push_str(stack, C_STR, aStrdup(stack->stack_data[pos].u.str));
 		break;
 	default:
 		push_val2(
-			stack,stack->stack_data[pos].type,stack->stack_data[pos].u.num,
+			stack,stack->stack_data[pos].type,
+			stack->stack_data[pos].u.num,
 			stack->stack_data[pos].ref
 		);
 		break;
 	}
 }
 
-/*==========================================
- * スタックからポップ
- *------------------------------------------
- */
-void pop_stack(struct script_stack* stack,int start,int end)
+/// Removes the values in indexes [start,end[ from the stack
+void pop_stack(struct script_stack* stack, int start, int end)
 {
+	struct script_data* data;
 	int i;
-	for(i=start;i<end;i++){
-		if(stack->stack_data[i].type==C_STR){
-			aFree(stack->stack_data[i].u.str);
-			stack->stack_data[i].type=C_INT;  //Might not be correct, but it's done in case to prevent pointer errors later on. [Skotlex]
-		}
+
+	if( start < 0 )
+		start = 0;
+	if( end > stack->sp_max )
+		end = stack->sp_max;
+	if( start >= end )
+		return;// nothing to pop
+
+	// free stack elements
+	for( i = start; i < end; i++ )
+	{
+		data = &stack->stack_data[i];
+		if( data->type == C_STR )
+			aFree(data->u.str);
+		data->type = C_NOP;
 	}
-	if(stack->sp>end){
-		memmove(&stack->stack_data[start],&stack->stack_data[end],sizeof(stack->stack_data[0])*(stack->sp-end));
-	}
-	stack->sp-=end-start;
+	// move the rest of the elements
+	if( stack->sp > end )
+		memmove(&stack->stack_data[start], &stack->stack_data[end], sizeof(stack->stack_data[0])*(stack->sp - end));
+	stack->sp -= end - start;
 }
+
+///
+///
+///
 
 /*==========================================
  * スクリプト依存変数、関数依存変数の解放
@@ -2379,134 +2395,82 @@ int isstr(struct script_data *c) {
 	return 0;
 }
 
-/*==========================================
- * Three-section operator
- * test ? if_true : if_false
- *------------------------------------------
- */
-void op_3(struct script_state *st) {
+/// Triary operators
+/// test ? if_true : if_false
+void op_3(struct script_state* st, int op)
+{
+	struct script_data* data;
 	int flag = 0;
-	if( isstr(&st->stack->stack_data[st->stack->sp-3])) {
-		const char *str = conv_str(st,& (st->stack->stack_data[st->stack->sp-3]));
-		flag = str[0];
-	} else {
-		flag = conv_num(st,& (st->stack->stack_data[st->stack->sp-3]));
+
+	data = script_getdatatop(st, -3);
+	get_val(st, data);
+
+	if( data_isstring(data) )
+		flag = data->u.str[0];
+	else if( data_isint(data) )
+		flag = data->u.num;
+	else
+	{
+		ShowError("script:op_3: invalid type of data op:%d data:%d\n", op, data->type);
+		report_src(st);
+		script_removetop(st, -3, 0);
+		script_pushnil(st);
+		return;
 	}
-	if( flag ) {
-		push_copy(st->stack, st->stack->sp-2 );
-	} else {
-		push_copy(st->stack, st->stack->sp-1 );
-	}
-	pop_stack(st->stack,st->stack->sp-4,st->stack->sp-1);
+	if( flag )
+		script_pushcopytop(st, -2);
+	else
+		script_pushcopytop(st, -1);
+	script_removetop(st, -4, -1);
 }
 
-/*==========================================
- * 加算演算子
- *------------------------------------------
- */
-void op_add(struct script_state* st)
+/// Binary string operators
+/// s1 EQ s2 -> i
+/// s1 NE s2 -> i
+/// s1 GT s2 -> i
+/// s1 GE s2 -> i
+/// s1 LT s2 -> i
+/// s1 LE s2 -> i
+/// s1 ADD s2 -> s
+void op_2str(struct script_state* st, int op, const char* s1, const char* s2)
 {
-	st->stack->sp--;
-	get_val(st,&(st->stack->stack_data[st->stack->sp]));
-	get_val(st,&(st->stack->stack_data[st->stack->sp-1]));
-
-	if(isstr(&st->stack->stack_data[st->stack->sp]) || isstr(&st->stack->stack_data[st->stack->sp-1])){
-		conv_str(st,&(st->stack->stack_data[st->stack->sp]));
-		conv_str(st,&(st->stack->stack_data[st->stack->sp-1]));
-	}
-	if(st->stack->stack_data[st->stack->sp].type==C_INT){ // ii
-		int *i1 = &st->stack->stack_data[st->stack->sp-1].u.num;
-		int *i2 = &st->stack->stack_data[st->stack->sp].u.num;
-		int ret = *i1 + *i2;
-		double ret_double = (double)*i1 + (double)*i2;
-		if(ret_double > INT_MAX|| ret_double < INT_MIN) {
-			ShowWarning("script::op_add overflow detected op:%d\n",C_ADD);
-			report_src(st);
-			ret = cap_value(ret, INT_MIN, INT_MAX);
-		}
-		*i1 = ret;
-	} else { // ssの予定
-		char *buf;
-		buf=(char *)aMallocA((strlen(st->stack->stack_data[st->stack->sp-1].u.str)+
-				strlen(st->stack->stack_data[st->stack->sp].u.str)+1)*sizeof(char));
-		strcpy(buf,st->stack->stack_data[st->stack->sp-1].u.str);
-		strcat(buf,st->stack->stack_data[st->stack->sp].u.str);
-		if(st->stack->stack_data[st->stack->sp-1].type==C_STR) 
-		{
-			aFree(st->stack->stack_data[st->stack->sp-1].u.str);
-			st->stack->stack_data[st->stack->sp-1].type=C_INT;
-		}
-		if(st->stack->stack_data[st->stack->sp].type==C_STR)
-		{
-			aFree(st->stack->stack_data[st->stack->sp].u.str);
-			st->stack->stack_data[st->stack->sp].type=C_INT;
-		}
-		st->stack->stack_data[st->stack->sp-1].type=C_STR;
-		st->stack->stack_data[st->stack->sp-1].u.str=buf;
-	}
-	st->stack->stack_data[st->stack->sp-1].ref = NULL;
-}
-
-/*==========================================
- * 二項演算子(文字列)
- *------------------------------------------
- */
-void op_2str(struct script_state *st,int op,int sp1,int sp2)
-{
-	char *s1=st->stack->stack_data[sp1].u.str,
-		 *s2=st->stack->stack_data[sp2].u.str;
-	int a=0;
+	int a = 0;
 
 	switch(op){
-	case C_EQ:
-		a= (strcmp(s1,s2)==0);
-		break;
-	case C_NE:
-		a= (strcmp(s1,s2)!=0);
-		break;
-	case C_GT:
-		a= (strcmp(s1,s2)> 0);
-		break;
-	case C_GE:
-		a= (strcmp(s1,s2)>=0);
-		break;
-	case C_LT:
-		a= (strcmp(s1,s2)< 0);
-		break;
-	case C_LE:
-		a= (strcmp(s1,s2)<=0);
-		break;
+	case C_EQ: a = (strcmp(s1,s2) == 0); break;
+	case C_NE: a = (strcmp(s1,s2) != 0); break;
+	case C_GT: a = (strcmp(s1,s2) >  0); break;
+	case C_GE: a = (strcmp(s1,s2) >= 0); break;
+	case C_LT: a = (strcmp(s1,s2) <  0); break;
+	case C_LE: a = (strcmp(s1,s2) <= 0); break;
+	case C_ADD:
+		{
+			char* buf = (char *)aMallocA((strlen(s1)+strlen(s2)+1)*sizeof(char));
+			strcpy(buf, s1);
+			strcat(buf, s2);
+			script_pushstr(st, buf);
+			return;
+		}
 	default:
-		ShowWarning("script: illegal string operator\n");
-		break;
+		ShowError("script:op2_str: unexpected string operator op:%d\n", op);
+		report_src(st);
+		script_pushnil(st);
+		st->state = END;
+		return;
 	}
 
-	// Because push_val() overwrite stack_data[sp1], C_STR on stack_data[sp1] won't be freed.
-	// So, call push_val() after freeing strings. [jA1783]
-	// script_pushint(st,a);
-	if(st->stack->stack_data[sp1].type==C_STR)
-	{
-		aFree(s1);
-		st->stack->stack_data[sp1].type=C_INT;
-	}
-	if(st->stack->stack_data[sp2].type==C_STR)
-	{
-		aFree(s2);
-		st->stack->stack_data[sp2].type=C_INT;
-	}
 	script_pushint(st,a);
 }
 
-/*==========================================
- * 二項演算子(数値)
- *------------------------------------------
- */
-void op_2num(struct script_state *st,int op,int i1,int i2)
+/// Binary number operators
+/// i OP i -> i
+void op_2num(struct script_state* st, int op, int i1, int i2)
 {
-	int ret = 0;
-	double ret_double = 0;
-	switch(op){
-	case C_MOD:  ret = i2 ? i1 % i2 : 0;	break;
+	int ret;
+	double ret_double;
+
+	switch( op )
+	{
 	case C_AND:  ret = i1 & i2;		break;
 	case C_OR:   ret = i1 | i2;		break;
 	case C_XOR:  ret = i1 ^ i2;		break;
@@ -2520,90 +2484,131 @@ void op_2num(struct script_state *st,int op,int i1,int i2)
 	case C_LE:   ret = (i1 <= i2);	break;
 	case C_R_SHIFT: ret = i1>>i2;	break;
 	case C_L_SHIFT: ret = i1<<i2;	break;
+	case C_DIV:
+	case C_MOD:
+		if( i2 == 0 )
+		{
+			ShowError("script:op_2num: division by zero detected op:%d\n", op);
+			report_src(st);
+			script_pushnil(st);
+			st->state = END;
+			return;
+		}
+		else if( op == C_DIV )
+			ret = i1 / i2;
+		else//if( op == C_MOD )
+			ret = i1 % i2;
+		break;
 	default:
-		switch(op) {
+		switch( op )
+		{// operators that can overflow/underflow
+		case C_ADD: ret = i1 + i2; ret_double = (double)i1 + (double)i2; break;
 		case C_SUB: ret = i1 - i2; ret_double = (double)i1 - (double)i2; break;
 		case C_MUL: ret = i1 * i2; ret_double = (double)i1 * (double)i2; break;
-		case C_DIV:
-			if(i2 == 0) {
-				printf("script::op_2num division by zero.\n");
-				ret = INT_MAX;
-				ret_double = 0; // doubleの精度が怪しいのでオーバーフロー対策を飛ばす
-			} else {
-				ret = i1 / i2; ret_double = (double)i1 / (double)i2;
-			}
-			break;
-		}
-		if(ret_double > INT_MAX || ret_double < INT_MIN) {
-			printf("script::op_2num overflow detected op:%d\n",op);
+		default:
+			ShowError("script:op_2num: unexpected number operator op:%d\n", op);
 			report_src(st);
-			ret = (int)cap_value(ret_double,INT_MAX,INT_MIN);
+			script_pushnil(st);
+			return;
+		}
+		if( ret_double < INT_MIN )
+		{
+			ShowWarning("script:op_2num: underflow detected op:%d\n", op);
+			report_src(st);
+			ret = INT_MIN;
+		}
+		else if( ret_double > INT_MAX )
+		{
+			ShowWarning("script:op_2num: overflow detected op:%d\n", op);
+			report_src(st);
+			ret = INT_MAX;
 		}
 	}
-	script_pushint(st,ret);
+	script_pushint(st, ret);
 }
 
-/*==========================================
- * 二項演算子
- *------------------------------------------
- */
-void op_2(struct script_state *st,int op)
+/// Binary operators
+void op_2(struct script_state *st, int op)
 {
-	int i1,i2;
-	char *s1=NULL,*s2=NULL;
+	struct script_data* left;
+	struct script_data* right;
 
-	i2=pop_val(st);
-	if( isstr(&st->stack->stack_data[st->stack->sp]) )
-		s2=st->stack->stack_data[st->stack->sp].u.str;
+	left = script_getdatatop(st, -2);
+	right = script_getdatatop(st, -1);
 
-	i1=pop_val(st);
-	if( isstr(&st->stack->stack_data[st->stack->sp]) )
-		s1=st->stack->stack_data[st->stack->sp].u.str;
+	get_val(st, left);
+	get_val(st, right);
 
-	if( s1!=NULL && s2!=NULL ){
-		// ss => op_2str
-		op_2str(st,op,st->stack->sp,st->stack->sp+1);
-	}else if( s1==NULL && s2==NULL ){
-		// ii => op_2num
-		op_2num(st,op,i1,i2);
-	}else{
-		// si,is => error
-		ShowWarning("script: op_2: int&str, str&int not allow.\n");
+	// automatic conversions
+	switch( op )
+	{
+	case C_ADD:
+		if( data_isstring(left) || data_isstring(right) )
+		{// convert to string
+			conv_str(st, left);
+			conv_str(st, right);
+		}
+		break;
+	}
+
+	if( data_isstring(left) && data_isstring(right) )
+	{// ss => op_2str
+		op_2str(st, op, left->u.str, right->u.str);
+		script_removetop(st, -3, -1);// pop the two values before the top one
+	}
+	else if( data_isint(left) && data_isint(right) )
+	{// ii => op_2num
+		int i1 = left->u.num;
+		int i2 = right->u.num;
+		script_removetop(st, -2, 0);
+		op_2num(st, op, i1, i2);
+	}
+	else
+	{// invalid argument
+		ShowError("script:op_2: invalid type of data op:%d left:%d right:%d\n", op, left->type, right->type);
 		report_src(st);
-		if(s1 && st->stack->stack_data[st->stack->sp].type == C_STR)
-		{
-			aFree(s1);
-			st->stack->stack_data[st->stack->sp].type = C_INT;
-		}
-		if(s2 && st->stack->stack_data[st->stack->sp+1].type == C_STR)
-		{
-			aFree(s2);
-			st->stack->stack_data[st->stack->sp+1].type = C_INT;
-		}
-		script_pushint(st,0);
+		script_removetop(st, -2, 0);
+		script_pushnil(st);
+		st->state = END;
 	}
 }
 
-/*==========================================
- * 単項演算子
- *------------------------------------------
- */
-void op_1num(struct script_state *st,int op)
+/// Unary operators
+/// NEG i -> i
+/// NOT i -> i
+/// LNOT i -> i
+void op_1(struct script_state* st, int op)
 {
+	struct script_data* data;
 	int i1;
-	i1=pop_val(st);
-	switch(op){
-	case C_NEG:
-		i1=-i1;
-		break;
-	case C_NOT:
-		i1=~i1;
-		break;
-	case C_LNOT:
-		i1=!i1;
-		break;
+
+	data = script_getdatatop(st, -1);
+	get_val(st, data);
+
+	if( !data_isint(data) )
+	{// not a number
+		ShowError("script:op_1: invalid type of data op:%d data:%d\n", op, data->type);
+		report_src(st);
+		script_pushnil(st);
+		st->state = END;
+		return;
 	}
-	script_pushint(st,i1);
+
+	i1 = data->u.num;
+	script_removetop(st, -1, 0);
+	switch( op )
+	{
+	case C_NEG: i1 = -i1; break;
+	case C_NOT: i1 = ~i1; break;
+	case C_LNOT: i1 = !i1; break;
+	default:
+		ShowError("script:op_1: unexpected operator op:%d\n", op);
+		report_src(st);
+		script_pushnil(st);
+		st->state = END;
+		return;
+	}
+	script_pushint(st, i1);
 }
 
 
@@ -2896,10 +2901,13 @@ void run_script_main(struct script_state *st)
 			}
 			break;
 
-		case C_ADD:
-			op_add(st);
+		case C_NEG:
+		case C_NOT:
+		case C_LNOT:
+			op_1(st ,c);
 			break;
 
+		case C_ADD:
 		case C_SUB:
 		case C_MUL:
 		case C_DIV:
@@ -2917,17 +2925,11 @@ void run_script_main(struct script_state *st)
 		case C_LOR:
 		case C_R_SHIFT:
 		case C_L_SHIFT:
-			op_2(st,c);
-			break;
-
-		case C_NEG:
-		case C_NOT:
-		case C_LNOT:
-			op_1num(st,c);
+			op_2(st, c);
 			break;
 
 		case C_OP3:
-			op_3(st);
+			op_3(st, c);
 			break;
 
 		case C_NOP:
@@ -3888,7 +3890,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(goto,"l"),
 	BUILDIN_DEF(callsub,"i*"),
 	BUILDIN_DEF(callfunc,"s*"),
-	BUILDIN_DEF(return,"*"),
+	BUILDIN_DEF(return,"?"),
 	BUILDIN_DEF(getarg,"i"),
 	BUILDIN_DEF(jobchange,"i*"),
 	BUILDIN_DEF(jobname,"i"),
@@ -4690,35 +4692,41 @@ BUILDIN_FUNC(getarg)
 	return 0;
 }
 
-/*==========================================
- * サブルーチン/ユーザー定義関数の終了
- *------------------------------------------
- */
+/// Returns from the current function, optionaly returning a value from the functions.
+/// Don't use outside script functions.
+///
+/// return;
+/// return <value>;
 BUILDIN_FUNC(return)
 {
-	if(script_hasdata(st,2)){	// 戻り値有り
-		struct script_data *sd;
-		push_copy(st->stack,st->start+2);
-		sd = &st->stack->stack_data[st->stack->sp-1];
-		if(data_isreference(sd)) {
-			char *name = str_buf + str_data[sd->u.num&0x00ffffff].str;
-			if( name[0] == '.' && name[1] == '@') {
-				// '@ 変数を参照渡しにすると危険なので値渡しにする
-				get_val(st,sd);
-				//Fix dangling pointer crash due when returning a temporary 
-				// script variable (from Rayce/jA)
-				if(isstr(sd)) {
-					sd->type  = C_STR;
-					sd->u.str = (char *)aStrdup(sd->u.str);
+	if( script_hasdata(st,2) )
+	{// return value
+		struct script_data* data;
+		script_pushcopy(st, 2);
+		data = script_getdatatop(st, -1);
+		if( data_isreference(data) )
+		{
+			char* name = data_referencename(data);
+			if( name[0] == '.' && name[1] == '@' )
+			{// temporary script variable, convert to value
+				get_val(st, data);
+				if( data_isstring(data) )
+				{// duplicate the string
+					data->type = C_STR;
+					data->u.str = aStrdup(data->u.str);
 				}
-			} else if( name[0] == '.' && !sd->ref) {
-				// ' 変数は参照渡しでも良いが、参照元が設定されていないと
-				// 元のスクリプトの値を差してしまうので補正する。
-				sd->ref = &st->script->script_vars;
+			}
+			else if( name[0] == '.' && !data->ref )
+			{// script variable, link to current script
+				data->ref = &st->script->script_vars;
 			}
 		}
 	}
-	st->state=RETFUNC;
+	else
+	{// no return value
+		script_pushnil(st);
+	}
+	st->state = RETFUNC;
 	return 0;
 }
 

@@ -43,12 +43,14 @@ struct script_code {
 	struct linkdb_node* script_vars;
 };
 
+struct script_stack {
+	int sp,sp_max,defsp;
+	struct script_data *stack_data;
+	struct linkdb_node **var_function;	// ŠÖ”ˆË‘¶•Ï”
+};
+
 struct script_state {
-	struct script_stack {
-		int sp,sp_max,defsp;
-		struct script_data *stack_data;
-		struct linkdb_node **var_function;	// ŠÖ”ˆË‘¶•Ï”
-	} *stack;
+	struct script_stack* stack;
 	int start,end;
 	int pos,state;
 	int rid,oid;
