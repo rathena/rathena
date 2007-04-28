@@ -26,6 +26,7 @@
 //= 1.2 Split more quests into above file [Evera]
 //= 1.3 Added (finally) the Garrison quest npc [erKURITA]
 //= 1.4 Implemented the polution script. [MasterOfMuppets]
+//= 1.5 Updated Hotel Employee to work with Airship Ticket Quest [Samuray22]
 //============================================================
 
 
@@ -897,7 +898,6 @@ OnUnhide:
 }
 
 ein_in01,206,224,2	script	Hotel Employee	855,{
-
 	mes "[Hotel Employee]";
 	mes "Good day, welcome to the";
 	mes "Einbroch Hotel. The staff is";
@@ -906,8 +906,19 @@ ein_in01,206,224,2	script	Hotel Employee	855,{
 	mes "standards in cleanliness,";
 	mes "service and convenience~";
 	next;
+	if(kain_ticket == 5) {
+		mes "[Hotel Employee]";
+		mes "Are you looking";
+		mes "for Mr. Defru Ark?";
+		mes "Let me see...";
+		next;
+		mes "[Hotel Employee]";
+		mes "Here we are...";
+		mes "He's staying";
+		mes "in Room 201.";
+		close;
+	}
 	menu "Save",s_Save,"Take Rest- 5,000 zeny",s_Rest,"Cancel",-;
-
 	mes "[Hotel Employee]";
 	mes "Thank you and";
 	mes "please come again~";
