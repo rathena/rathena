@@ -1260,7 +1260,7 @@ int lan_subnetcheck(uint32 ip)
 
 int login_ip_ban_check(uint32 ip)
 {
-	char* p = (char*)&ip;
+	uint8* p = (uint8*)&ip;
 	sprintf(tmpsql, "SELECT count(*) FROM `ipbanlist` WHERE `list` = '%d.*.*.*' OR `list` = '%d.%d.*.*' OR `list` = '%d.%d.%d.*' OR `list` = '%d.%d.%d.%d'",
 		p[3], p[3], p[2], p[3], p[2], p[1], p[3], p[2], p[1], p[0]);
 	if (mysql_query(&mysql_handle, tmpsql)) {
