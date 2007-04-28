@@ -2037,20 +2037,20 @@
 1442,Sasquatch@SM_ENDURE,chase,8,1,5000,0,10000,yes,self,longrangeattacked,,,,,,,
 1443,Cruiser@NPC_COMBOATTACK,angry,171,1,500,700,5000,no,target,always,0,,,,,,
 1443,Cruiser@NPC_COMBOATTACK,attack,171,1,500,700,5000,no,target,always,0,,,,,,
-1444,Chepet@AL_HEAL,angry,28,10,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
-1444,Chepet@AL_HEAL,follow,28,10,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
-1444,Chepet@AL_HEAL,angry,28,10,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,
-1444,Chepet@AL_HEAL,follow,28,10,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,
+1444,Chepet@AL_HEAL,angry,28,11,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
+1444,Chepet@AL_HEAL,follow,28,11,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
+1444,Chepet@AL_HEAL,angry,28,11,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,
+1444,Chepet@AL_HEAL,follow,28,11,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,
 1444,Chepet@MG_FIREWALL,follow,18,10,500,500,5000,yes,target,always,0,,,,,,
 1444,Chepet@MG_FIREWALL,angry,18,10,500,500,5000,yes,target,always,0,,,,,,
 1444,Chepet@NPC_FIREATTACK,angry,186,5,500,500,5000,no,target,always,0,,,,,,
 1444,Chepet@NPC_GUIDEDATTACK,angry,172,5,500,1000,20000,no,target,always,0,,,,,,
 1444,Chepet@PR_STRECOVERY,follow,72,1,2000,700,5000,yes,friend,friendstatuson,anybad,,,,,,
 1444,Chepet@PR_STRECOVERY,angry,72,1,2000,700,5000,yes,friend,friendstatuson,anybad,,,,,,
-1444,Chepet@AL_HEAL,attack,28,10,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
-1444,Chepet@AL_HEAL,chase,28,10,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
-1444,Chepet@AL_HEAL,attack,28,10,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,
-1444,Chepet@AL_HEAL,chase,28,10,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,
+1444,Chepet@AL_HEAL,attack,28,11,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
+1444,Chepet@AL_HEAL,chase,28,11,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,
+1444,Chepet@AL_HEAL,attack,28,11,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,
+1444,Chepet@AL_HEAL,chase,28,11,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,
 1444,Chepet@MG_FIREWALL,chase,18,10,500,500,5000,yes,target,always,0,,,,,,
 1444,Chepet@MG_FIREWALL,attack,18,10,500,500,5000,yes,target,always,0,,,,,,
 1444,Chepet@NPC_FIREATTACK,attack,186,5,500,500,5000,no,target,always,0,,,,,,
@@ -2819,8 +2819,8 @@
 1642,Whitesmith Harword@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
 1642,Whitesmith Harword@BS_ADRENALINE,attack,111,10,2000,0,150000,yes,self,always,0,,,,,,
 1642,Whitesmith Harword@BS_MAXIMIZE,attack,114,1,1000,0,60000,yes,self,always,0,,,,,,
-1642,Whitesmith Harword@MC_MAMMONITE,attack,42,10,2000,0,0,yes,target,myhpltmaxrate,30,,,,,,23
-1642,Whitesmith Harword@MC_MAMMONITE,attack,42,10,2000,0,5000,yes,target,always,0,,,,,,23
+1642,Whitesmith Harword@MC_MAMMONITE,attack,42,20,2000,0,0,yes,target,myhpltmaxrate,30,,,,,,23
+1642,Whitesmith Harword@MC_MAMMONITE,attack,42,20,2000,0,5000,yes,target,always,0,,,,,,23
 1642,Whitesmith Harword@BS_HAMMERFALL,chase,110,11,2000,0,5000,yes,target,always,0,,,,,,
 1642,Whitesmith Harword@BS_HAMMERFALL,attack,110,11,2000,0,5000,yes,target,always,0,,,,,,
 1642,Whitesmith Harword@NPC_POWERUP,attack,349,5,2000,0,100000,yes,self,always,0,,,,,,
@@ -2854,12 +2854,12 @@
 1643,High Priest Magaleta@NPC_CRITICALSLASH,attack,170,1,1000,0,5000,yes,target,always,0,,,,,,
 1643,High Priest Magaleta@NPC_STUNATTACK,attack,179,5,1000,0,5000,yes,target,always,0,,,,,,
 1643,High Priest Magaleta@NPC_HOLYATTACK,attack,189,10,1000,0,5000,yes,target,always,0,,,,,,
-1643,High Priest Magaleta@AL_HEAL,attack,28,10,3000,0,2000,yes,friend,friendhpltmaxrate,99,,,,,,3
-1643,High Priest Magaleta@AL_HEAL,attack,28,10,3000,0,2000,yes,self,myhpltmaxrate,99,,,,,,3
-1643,High Priest Magaleta@AL_HEAL,idle,28,10,3000,0,2000,yes,friend,friendhpltmaxrate,99,,,,,,3
-1643,High Priest Magaleta@AL_HEAL,idle,28,10,3000,0,2000,yes,self,myhpltmaxrate,99,,,,,,3
-1643,High Priest Magaleta@AL_HEAL,chase,28,10,3000,0,2000,yes,friend,friendhpltmaxrate,99,,,,,,3
-1643,High Priest Magaleta@AL_HEAL,chase,28,10,3000,0,2000,yes,self,myhpltmaxrate,99,,,,,,3
+1643,High Priest Magaleta@AL_HEAL,attack,28,11,3000,0,2000,yes,friend,friendhpltmaxrate,99,,,,,,3
+1643,High Priest Magaleta@AL_HEAL,attack,28,11,3000,0,2000,yes,self,myhpltmaxrate,99,,,,,,3
+1643,High Priest Magaleta@AL_HEAL,idle,28,11,3000,0,2000,yes,friend,friendhpltmaxrate,99,,,,,,3
+1643,High Priest Magaleta@AL_HEAL,idle,28,11,3000,0,2000,yes,self,myhpltmaxrate,99,,,,,,3
+1643,High Priest Magaleta@AL_HEAL,chase,28,11,3000,0,2000,yes,friend,friendhpltmaxrate,99,,,,,,3
+1643,High Priest Magaleta@AL_HEAL,chase,28,11,3000,0,2000,yes,self,myhpltmaxrate,99,,,,,,3
 1643,High Priest Magaleta@PR_SANCTUARY,attack,70,10,1000,0,10000,yes,self,always,0,,,,,,14
 1643,High Priest Magaleta@PR_SANCTUARY,idle,70,10,1000,0,10000,yes,self,always,0,,,,,,14
 1644,Sniper Shecil@NPC_SELFDESTRUCTION,attack,173,1,2000,2000,0,no,self,myhpltmaxrate,3,,,,,,
@@ -2966,8 +2966,8 @@
 1648,Whitesmith Harword@NPC_SUMMONMONSTER,attack,209,5,10000,700,60000000,yes,self,myhpltmaxrate,30,1640,1641,1643,1644,1645,
 1648,Whitesmith Harword@BS_ADRENALINE,attack,111,10,2000,0,150000,yes,self,always,0,,,,,,
 1648,Whitesmith Harword@BS_MAXIMIZE,attack,114,1,1000,0,60000,yes,self,always,0,,,,,,
-1648,Whitesmith Harword@MC_MAMMONITE,attack,42,10,2000,0,0,yes,target,myhpltmaxrate,30,,,,,,23
-1648,Whitesmith Harword@MC_MAMMONITE,attack,42,10,2000,0,5000,yes,target,always,0,,,,,,23
+1648,Whitesmith Harword@MC_MAMMONITE,attack,42,20,2000,0,0,yes,target,myhpltmaxrate,30,,,,,,23
+1648,Whitesmith Harword@MC_MAMMONITE,attack,42,20,2000,0,5000,yes,target,always,0,,,,,,23
 1648,Whitesmith Harword@BS_HAMMERFALL,chase,110,11,2000,0,5000,yes,target,always,0,,,,,,
 1648,Whitesmith Harword@BS_HAMMERFALL,attack,110,11,2000,0,5000,yes,target,always,0,,,,,,
 1648,Whitesmith Harword@NPC_POWERUP,attack,349,5,2000,0,100000,yes,self,always,0,,,,,,
@@ -3171,12 +3171,12 @@
 1660,Armaia@NPC_EMOTION,idle,197,1,10000,0,5000,yes,self,skillused,28,15,,,,,
 1660,Armaia@NPC_EMOTION,attack,197,1,10000,0,5000,yes,self,skillused,28,15,,,,,
 1660,Armaia@NPC_EMOTION,chase,197,1,10000,0,5000,yes,self,skillused,28,15,,,,,
-1661,Erend@AL_HEAL,attack,28,10,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,3
-1661,Erend@AL_HEAL,attack,28,10,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,3
-1661,Erend@AL_HEAL,idle,28,10,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,3
-1661,Erend@AL_HEAL,idle,28,10,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,3
-1661,Erend@AL_HEAL,chase,28,10,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,3
-1661,Erend@AL_HEAL,chase,28,10,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,3
+1661,Erend@AL_HEAL,attack,28,11,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,3
+1661,Erend@AL_HEAL,attack,28,11,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,3
+1661,Erend@AL_HEAL,idle,28,11,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,3
+1661,Erend@AL_HEAL,idle,28,11,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,3
+1661,Erend@AL_HEAL,chase,28,11,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,3
+1661,Erend@AL_HEAL,chase,28,11,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,3
 1661,Erend@NPC_HOLYATTACK,attack,189,3,1000,0,5000,yes,target,always,0,,,,,,
 1661,Erend@NPC_SILENCEATTACK,attack,178,4,1000,700,5000,no,target,always,0,,,,,,
 1661,Erend@AL_DECAGI,attack,30,10,500,1000,5000,no,target,always,0,,,,,,29
@@ -3531,8 +3531,8 @@
 1712,Thanatos Dolor@NPC_DARKTHUNDER,chase,341,9,500,1000,5000,no,target,always,0,,,,,,
 1712,Thanatos Dolor@AL_DECAGI,chase,30,10,2000,0,10000,yes,target,always,0,,,,,,
 1712,Thanatos Dolor@AL_DECAGI,attack,30,10,2000,0,10000,yes,target,always,0,,,,,,
-1712,Thanatos Dolor@AL_HEAL,attack,28,10,1000,0,5000,yes,friend,friendhpltmaxrate,70,,,,,,3
-1712,Thanatos Dolor@AL_HEAL,attack,28,10,1000,0,5000,yes,self,myhpltmaxrate,70,,,,,,3
+1712,Thanatos Dolor@AL_HEAL,attack,28,11,1000,0,5000,yes,friend,friendhpltmaxrate,70,,,,,,3
+1712,Thanatos Dolor@AL_HEAL,attack,28,11,1000,0,5000,yes,self,myhpltmaxrate,70,,,,,,3
 1712,Thanatos Dolor@AL_HEAL,idle,28,9,1000,0,5000,yes,friend,friendhpltmaxrate,70,,,,,,3
 1712,Thanatos Dolor@AL_HEAL,idle,28,9,1000,0,5000,yes,self,myhpltmaxrate,70,,,,,,3
 1712,Thanatos Dolor@AL_HEAL,chase,28,9,1000,0,5000,yes,friend,friendhpltmaxrate,70,,,,,,3
@@ -3602,13 +3602,13 @@
 1719,Detale@MG_FIREBALL,chase,17,20,5000,500,1000,no,target,always,0,,,,,,
 1719,Detale@SM_PROVOKE,attack,5,10,10000,0,30000,yes,target,always,0,,,,,,6
 1719,Detale@SM_MAGNUM,attack,7,20,10000,0,5000,yes,self,attackpcge,2,,,,,,
-1719,Detale@AL_HEAL,idle,28,10,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
-1719,Detale@AL_HEAL,attack,28,10,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
-1719,Detale@AL_HEAL,chase,28,10,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
+1719,Detale@AL_HEAL,idle,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
+1719,Detale@AL_HEAL,attack,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
+1719,Detale@AL_HEAL,chase,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
 1720,Hydro@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1720,Hydro@AL_HEAL,idle,28,10,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
-1720,Hydro@AL_HEAL,attack,28,10,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
-1720,Hydro@AL_HEAL,chase,28,10,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
+1720,Hydro@AL_HEAL,idle,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
+1720,Hydro@AL_HEAL,attack,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
+1720,Hydro@AL_HEAL,chase,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
 1720,Hydro@NPC_RANDOMATTACK,attack,183,5,500,500,5000,no,target,always,0,,,,,,6
 1720,Hydro@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,
 1720,Hydro@NPC_COMBOATTACK,attack,171,2,500,700,5000,no,target,always,0,,,,,,
@@ -3794,9 +3794,9 @@
 1755,Skeggiold(Blue)@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,self,always,0,,,,,,
 1755,Skeggiold(Blue)@NPC_SUMMONSLAVE,any,196,2,10000,700,60000,no,self,onspawn,0,1764,,,,,
 1756,Hydro@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1756,Hydro@AL_HEAL,idle,28,10,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
-1756,Hydro@AL_HEAL,attack,28,10,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
-1756,Hydro@AL_HEAL,chase,28,10,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
+1756,Hydro@AL_HEAL,idle,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
+1756,Hydro@AL_HEAL,attack,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
+1756,Hydro@AL_HEAL,chase,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
 1756,Hydro@NPC_RANDOMATTACK,attack,183,5,500,500,5000,no,target,always,0,,,,,,6
 1756,Hydro@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,
 1756,Hydro@NPC_COMBOATTACK,attack,171,2,500,700,5000,no,target,always,0,,,,,,
@@ -4087,3 +4087,48 @@
 1795,Bloody Knight@NPC_WEAPONBRAKER,attack,343,5,500,0,30000,yes,target,always,0,,,,,,
 1795,Bloody Knight@WZ_METEOR,attack,83,5,2000,1500,5000,no,target,myhpltmaxrate,20,,,,,,
 1795,Bloody Knight@WZ_METEOR,chase,83,5,2000,1500,5000,no,target,myhpltmaxrate,20,,,,,,
+1812,Delightful Lude@AL_HEAL,chase,28,9,1000,500,5000,no,friend,friendhpltmaxrate,60,,,,,,18
+1812,Delightful Lude@AL_HEAL,attack,28,9,1000,500,5000,no,friend,friendhpltmaxrate,60,,,,,,18
+1812,Delightful Lude@AL_HEAL,chase,28,9,1000,500,5000,no,self,myhpltmaxrate,30,,,,,,18
+1812,Delightful Lude@AL_HEAL,attack,28,9,1000,500,5000,no,self,myhpltmaxrate,30,,,,,,18
+1812,Delightful Lude@NPC_METAMORPHOSIS,attack,193,1,1000,0,60000,no,self,myhpltmaxrate,30,1814,,,,,19
+1812,Delightful Lude@PR_LEXAETERNA,chase,78,1,1000,1000,5000,yes,target,always,0,,,,,,6
+1812,Delightful Lude@PR_LEXAETERNA,attack,78,1,1000,1000,5000,yes,target,always,0,,,,,,6
+1813,Hydrolancer@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,target,always,0,,,,,,
+1813,Hydrolancer@NPC_DARKBREATH,attack,202,5,500,800,5000,no,target,always,0,,,,,,36
+1813,Hydrolancer@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,20,,,,,,36
+1813,Hydrolancer@KN_TWOHANDQUICKEN,attack,60,20,10000,0,300000,yes,self,myhpltmaxrate,20,,,,,,
+1813,Hydrolancer@AS_SONICBLOW,attack,136,10,2000,800,5000,no,target,always,0,,,,,,
+1813,Hydrolancer@CR_REFLECTSHIELD,attack,252,5,1000,0,300000,yes,self,always,0,,,,,,32
+1813,Hydrolancer@CR_REFLECTSHIELD,chase,252,5,5000,0,300000,yes,self,always,0,,,,,,32
+1813,Hydrolancer@WZ_METEOR,attack,83,11,2000,500,2000,no,target,always,0,,,,,,
+1813,Hydrolancer@WZ_METEOR,chase,83,11,2000,500,2000,no,target,always,0,,,,,,
+1813,Hydrolancer@WZ_VERMILION,attack,85,20,2000,500,2000,no,target,always,0,,,,,,
+1813,Hydrolancer@WZ_VERMILION,chase,85,20,2000,500,2000,no,target,always,0,,,,,,
+1813,Hydrolancer@WZ_STORMGUST,attack,89,10,2000,1000,20000,no,target,always,0,,,,,,
+1813,Hydrolancer@WZ_STORMGUST,chase,89,10,2000,1000,20000,no,target,always,0,,,,,,
+1813,Hydrolancer@MG_FIREBALL,chase,17,20,5000,500,1000,no,target,always,0,,,,,,
+1813,Hydrolancer@SM_PROVOKE,attack,6,10,10000,0,30000,yes,target,always,0,,,,,,6
+1813,Hydrolancer@SM_MAGNUM,attack,7,20,10000,0,5000,yes,self,attackpcge,2,,,,,,
+1813,Hydrolancer@AL_HEAL,idle,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
+1813,Hydrolancer@AL_HEAL,attack,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
+1813,Hydrolancer@AL_HEAL,chase,28,11,10000,0,5000,yes,self,myhpltmaxrate,30,,,,,,47
+1814,Moonlight Flower@AL_HEAL,attack,28,9,10000,0,5000,no,self,myhpltmaxrate,50,,,,,,21
+1814,Moonlight Flower@AL_HEAL,chase,28,9,10000,0,5000,no,self,myhpltmaxrate,50,,,,,,21
+1814,Moonlight Flower@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1814,Moonlight Flower@AL_TELEPORT,idle,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
+1814,Moonlight Flower@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
+1814,Moonlight Flower@MG_FIREBOLT,chase,19,10,3000,0,5000,no,target,always,0,,,,,,0
+1814,Moonlight Flower@MG_FIREBOLT,attack,19,10,2000,0,5000,no,target,always,0,,,,,,0
+1814,Moonlight Flower@MG_FIREBOLT,chase,19,10,4000,0,5000,no,target,skillused,18,,,,,,0
+1814,Moonlight Flower@WZ_WATERBALL,attack,86,5,2000,1000,5000,no,target,always,0,,,,,,
+1814,Moonlight Flower@WZ_WATERBALL,chase,86,5,2000,1000,5000,no,target,always,0,,,,,,
+1814,Moonlight Flower@WZ_METEOR,attack,83,5,2000,1500,5000,no,target,always,0,,,,,,
+1814,Moonlight Flower@WZ_METEOR,chase,83,5,2000,1500,5000,no,target,always,0,,,,,,
+1814,Moonlight Flower@MC_MAMMONITE,attack,42,20,2000,0,5000,no,target,always,0,,,,,,8
+1814,Moonlight Flower@NPC_PETRIFYATTACK,attack,180,5,500,500,5000,no,target,always,0,,,,,,
+1814,Moonlight Flower@NPC_GUIDEDATTACK,attack,172,5,500,0,20000,no,target,always,0,,,,,,6
+1814,Moonlight Flower@MG_FIREWALL,attack,18,10,1000,500,5000,yes,target,always,0,,,,,,
+1814,Moonlight Flower@MG_FIREWALL,chase,18,10,1000,500,5000,yes,target,always,0,,,,,,
+1814,Moonlight Flower@SA_DISPELL,attack,289,5,500,500,5000,no,target,always,0,,,,,,6
+1814,Moonlight Flower@SA_DISPELL,chase,289,5,500,500,5000,no,target,always,0,,,,,,6
