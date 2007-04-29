@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+04/30
+	* Updated Amon Ra and High Wizard mob skills [Playtester]
 04/29
 	* Corrected Weight, buy/sell, attack, level and slots on three of the new fists. [L0ne_W0lf]
 	* Added remaining 11.3 Equipment. [L0ne_W0lf]
