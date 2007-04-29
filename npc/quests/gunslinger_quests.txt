@@ -1,7 +1,7 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= SVN eA
 //===== Description: =========================================
@@ -11,6 +11,8 @@
 //= 1.1 Added Garrison[2] [Playtester]
 //= 1.2 Added Drifter, Destroyer and Inferno [Playtester]
 //= 1.3 Added official Gatling quests [Playtester]
+//= 1.4 Updated Destroyer Quest - Credits to Sinoco for first
+//= official version. [SinSloth]
 //============================================================
 
 
@@ -252,77 +254,316 @@ que_ng,187,163,3	script	Ingrid	744,{
 }
 
 que_ng,185,180,3	script	Vanessa	726,{
-	set @npcname$,"[Vanessa]";
 
-	mes @npcname$;
-	mes "I can make a grenade launcher";
-	mes "that can destroy armors.";
-	mes "It's called ^0000FFDestroyer^000000.";
-	next;
-	if(BaseJob != Job_Gunslinger || BaseLevel < 52){
-		mes @npcname$;
-		mes "But I don't think you are";
-		mes "experienced enough to use it.";
+	if(BaseJob != Job_Gunslinger)
+	{
+		mes "[Vanessa]";
+		mes "Hah !Hah !!";
+		mes "Ballitude! Commander Sambo!";
+		mes "Wrestling!, Muye Tai!";
+		mes "Pancracion!,Lucharibre!";
+		mes "I'm going to master all the bare hand weapons in this world!!";
 		next;
-		mes @npcname$;
-		mes "Come back when you think";
-		mes "you are worthy to use this";
-		mes "weapon.";
+		mes "[Vanessa]";
+		mes "Hmm?!";
+		mes "Who are you? You're inturrupting my practice!";
+		mes "Get lost!";
 		close;
 	}
-	mes @npcname$;
-	mes "You look experienced.";
-	mes "I think I could make one";
-	mes "for you.";
-	next;
-	mes @npcname$;
-	mes "So, do you want me to make a";
-	mes "^0000FFDestroyer^000000 for you?";
-	next;
-
-	switch(select("Yes, please.","No thanks."))
+	switch(gunst)
 	{
-
-		case 1:
-			mes @npcname$;
-			mes "Okay, but first you need to";
-			mes "bring me the materials I need";
-			mes "to create one.";
+		case 0:
+			mes "[Vanessa]";
+			mes "Ha!Hyaa!!";
+			mes "Vale Tudo!Commando Sambo!";
+			mes "Wrestling!,Muay Thai!";
+			mes "Pankration!,Mucho Libre!";
+			mes "I will master all fighting styles";
+			mes "in this world!!";
 			next;
-			mes @npcname$;
-			mes "This is what I need:";
-			mes "^FF000050 Used Iron Plates^000000,";
-			mes "^FF00005 Oridecons^000000,";
-			mes "^FF000070 Rusty Screws^000000 and";
-			mes "^FF0000100000 Zeny^000000.";
+			mes "[Vanessa]";
+			mes "Mm?";
+			mes "You are a Gunslinger, huh?";
+			mes "Why are you disturbing";
+			mes "my exercises and me";
+			mes "standing beside me?";
 			next;
-			mes @npcname$;
-			if ( (countitem(7319)<50) || (countitem(984)<5) || (countitem(7317)<70) || (Zeny < 100000) ) {
-				mes "Come back when you have the materials.";
-				close;
+			mes "["+strcharinfo(0)+"]";
+			mes "It's just watching exercise";
+			mes "looks good...";
+			mes ".............";
+			next;
+			mes "[Vanessa]";
+			mes "Oh! You like martial arts?";
+			mes "Come here~ I'll lock";
+			mes "you in an arm-bar~";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "N~ No thanks~";
+			mes "it's okay~";
+			next;
+			mes "[Vanessa]";
+			mes "What's okay~";
+			mes "Come here~!";
+			mes "-Bam!Bam!-";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Aah~Ugh~ Don't do that~";
+			mes "Aa..Aaaahhhh~~!!";
+			mes "Argh~";
+			mes "-Sound of something broken-";
+			mes "Owww~~";
+			mes "*Sobs*~~";
+			next;
+			mes "[Vanessa]";
+			mes "Hmm...Did I do it too strong.";
+			mes "Mm~";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Well obviously!";
+			mes "Idiot!Idiot!!";
+			mes "*sobs*~";
+			next;
+			mes "[Vanessa]";
+			mes "Umm~umm~";
+			mes "Sorry~";
+			mes "Okay, okay,";
+			mes "Don't cry.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "*sob*~";
+			next;
+			mes "[Vanessa]";
+			mes "Okay~ okay..";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "*sob*~";
+			next;
+			mes "[Vanessa]";
+			mes "Stop! Arrgh!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "........";
+			next;
+			mes "[Vanessa]";
+			mes "Fine, okay.";
+			mes "I'm sorry what happened";
+			mes "I'll make a weapon for you";
+			mes "if you gather some";
+			mes "materials...";
+			next;
+			mes "[Vanessa]";
+			mes "I'm Vanessa Louise.";
+			mes "Originally a Martial Artist Applicant";
+			mes "but I took a wrong turn";
+			mes "and I'm stuck making weapons.";
+			mes "Oh my god~oh my~ my miserable life~";
+			next;
+			mes "[Vanessa]";
+			mes "Now onto the subject.";
+			mes "The weapon I can create is";
+			mes "called the Destroyer.";
+			next;
+			mes "[Vanessa]";
+			mes "I especially named it";
+			mes "after a technique I used in an arena";
+			mes "Hehe~";
+			mes "Take this~!Destroyer~";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "*sob*~ Please~Stop~";
+			next;
+			mes "[Vanessa]";
+			mes "Ah uh..Sorry...";
+			mes "First Destroyer needs";
+			mes "materials before creating it.";
+			next;
+			mes "[Vanessa]";
+			mes "A considerable amount of items is needed";
+			mes "so think carefully.";
+			next;
+			mes "[Vanessa]";
+			mes "How about it? This kind of";
+			mes "opportunity is not common.";
+			mes "Want to make a request?";
+			next;
+			switch( select( "Maybe next time.","Okay.") )
+			{
+				case 1:	
+					mes "[Vanessa]";
+					mes "Mm~ Is that so~";
+					mes "It will be an opportunity for you.";
+					mes "You'll regret it~";
+					mes "Then see you next time~";
+					mes "Bye~Bye~";
+					close;
+           
+				case 2:	
+					mes "[Vanessa]";
+					mes "Mm, Okay.";
+					mes "To make a Destroyer,";
+					mes "You need 50 Used Iron Plates";
+					mes "5 Oridecons, 70 Rusty Old Screws";
+					mes "and a fee of 100,000 zeny.";
+					mes "You must bring me these exact materials. Understood?";
+					set gunst,1;
+					close;
 			}
-			delitem 7319,50;
-			delitem 984,5;
-			delitem 7317,70;
-			set Zeny,Zeny-100000;
-			mes "Oh, you already have the materials.";
-			mes "Let me have them.";
-			next;
-			mes @npcname$;
-			mes "I'll make it in a minute...";
-			mes "...";
-			mes "...";
-			next;
-			getitem 13160,1;
-			mes @npcname$;
-			mes "It's done.";
-			mes "Be careful with it.";
-			close;
-
+			case 1:
+			callsub SubDestroyer;
+			
 		case 2:
-			mes @npcname$;
-			mes "Oh well, your loss.";
-			close;
+			mes "[Vanessa]";
+			mes "Oh~ You're back.?";
+			mes "How are you nowadays?";
+			mes "There's a new item in the store.";
+			mes "Go ahead and choose.";
+			next;
+			switch(select( "Destroyer","Slotted Destroyer","Cancel") )
+			{
+				case 1:
+					mes "[Vanessa]";
+					mes "Yeah, that's nice";
+					mes "That's a normal Destroyer.";
+					mes "It takes 50 Used Iron Plates,";
+					mes "5 Oridecons, 70 Rusty Old Screws,";
+					mes "and 100,000 Zeny to make it.";
+					mes "You have to bring me the correct amount of materials.";
+					mes "Do you want it?";
+					next;
+					switch( select( "Maybe next time.","Okay.") )
+					{
+               					case 1:
+							mes "[Vanessa]";
+							mes "What~ C'mon";
+							mes "What's there to think about?";
+							mes "Ok, well, think about it";
+							mes "and come back...";
+							close;
+							case 2:
+							callsub SubDestroyer;
+					}
+							
+				case 2:
+					mes "[Vanessa]";
+					mes "Oh~ The Slotted Destroyer~";
+					mes "Unlike the normal Destroyer,";
+					mes "I want you to find me one of the rare items I'm collecting.";
+					mes "Then I'll give it to you.";
+					next;
+					mes "[Vanessa]";
+					mes "I'm looking for a Finger[2].";
+					mes "I want 5 Oridecons too.";
+					mes "You have to bring me the correct amount of materials.";
+					mes "Do you still want a Slotted Destroyer?";
+					next;
+					switch( select( "I'll think about it.","OK! I do!") )
+					{
+               					case 1:
+							mes "[Vanessa]";
+							mes "What~ C'mon";
+							mes "What's there to think about?";
+							mes "Ok, well, think about it";
+							mes "and come back...";
+							close;
+			
+						case 2:
+							callsub SubDestroyer_;
+			
+					}
+           
+				case 3:
+					mes "[Vanessa]";
+					mes "Hmm~ Yeah~";
+					mes "Take your time.";
+					mes "Maybe you'd like to spar with me?";
+					close;
+			}
+	}
+
+SubDestroyer:
+
+	if ((countitem(7319) < 50) || (countitem(7317) < 70) || (countitem(984) < 5))
+	{
+		mes "[Vanessa]";
+		mes "Yeah, the required materials are 50 Used Iron Plates,";
+		mes "5 Oridecons, 70 Rusty Old Screws, and 100,000 Zeny.";
+		mes "Keep in mind that you have to bring the correct amount.";
+		close;
+	}
+	else if(Zeny < 100000)
+	{
+		mes "[Vanessa]";
+		mes "You've brought plenty of material,";
+		mes "But the fee is 100,000.";
+		mes "Keep that in mind.";
+		close;
+	}
+	else if(checkweight(13160,1) != 1)
+	{
+		mes "[Vanessa]";
+		mes "It looks like you wouldn't be able to carry my creation with you even if I made it.";
+		mes "Go and empty your inventory a bit.";
+		close;
+	}
+	else
+	{
+		mes "[Vanessa]";
+		mes "Okay~ Very well~";
+		mes "All Checked~";
+		mes "You've got the perfect materials and Zeny~";
+		mes "Here's the Destroyer I made ahead of time for you.";
+		mes "Use it well.";
+		set Zeny,Zeny-100000;
+		delitem 7319,50;
+		delitem 984,5;
+		delitem 7317,70;
+		getitem 13160,1;
+		if(gunst == 1) set gunst,2;
+		next;
+		mes "[Vanessa]";
+		mes "If you ever need one again later,";
+		mes "Come and fine me anytime~";
+		mes "Next time I'll cast a different kind of bare hand technique.";
+		close;
+	}
+
+SubDestroyer_:
+
+	if ((countitem(1812) < 1) || (countitem(984) < 5))
+	{
+		mes "[Vanessa]";
+		mes "Yeah, the required materials are 1 Finger[2]";
+		mes "and 5 Oridecons.";
+		mes "Keep in mind that the materials need to be exact.";
+		close;
+	}
+	else if(checkweight(13161,1) != 1)
+	{
+		mes "[Vanessa]";
+		mes "There's no space in your inventory.";
+		mes "Even if I made you one,";
+		mes "You wouldn't be able to carry it";
+		mes "Come back after you've cleared out your inventory.";
+		close;
+	}
+	else
+	{
+		mes "[Vanessa]";
+		mes "Okay~ Very well~";
+		mes "All Checked~";
+		mes "You've got the perfect materials and Zeny~";
+		mes "Here's the Slotted Destroyer I made ahead of time for you.";
+		mes "Use it well.";
+		delitem 1811,1;
+		delitem 984,5;
+		getitem 13161,1;
+		next;
+		mes "[Vanessa]";
+		mes "If you ever need one again later,";
+		mes "Come and fine me anytime~";
+		mes "Next time I'll cast a different kind of bare hand technique.";
+		close;
 	}
 }
 
