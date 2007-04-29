@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= $ephiroth
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -11,8 +11,38 @@
 //===== Additional Comments: =================================
 //= 1.0 Initial version [$ephiroth]
 //= 1.1 Removed Rachel City warp [Playtester]
+//= 1.2 Updated veins warp based on jA info [$ephiroth]
 //============================================================
 
-//= Veins City ================================================
+//= Veins City ===============================================
 veins,218,361,0	warp	veinswarp0501	1,1,ve_fild06,152,221
-veins,146,24,0		warp	veinswarp0502	1,1,ve_fild07,148,370
+veins,146,24,0	warp	veinswarp0502	1,1,ve_fild07,148,370
+rachel,130,20,0	warp	veinswarp0503	1,1,ve_fild02,196,379
+veins,196,260,0	warp	veinswarp1001	1,1,ve_in,351,320
+ve_in,351,317,0	warp	veinswarp1002	1,1,veins,196,257
+veins,116,277,0	warp	veinswarp1003	1,1,ve_in,99,218
+ve_in,99,215,0	warp	veinswarp1004	1,1,veins,113,277
+ve_in,76,229,0	warp	veinswarp1005	1,1,ve_in,74,160
+ve_in,71,160,0	warp	veinswarp1006	1,1,ve_in,73,229
+veins,148,220,0	warp	veinswarp1007	1,1,ve_in,253,127
+ve_in,256,127,0	warp	veinswarp1008	1,1,veins,150,217
+ve_in,224,115,0	warp	veinswarp1009	1,1,ve_in,312,114
+ve_in,309,114,0	warp	veinswarp1010	1,1,ve_in,221,115
+veins,230,166,0	warp	veinswarp1011	1,1,ve_in,251,286
+ve_in,251,283,0	warp	veinswarp1012	1,1,veins,230,163
+ve_in,261,315,0	warp	veinswarp1013	1,1,ve_in,177,296
+ve_in,177,293,0	warp	veinswarp1014	1,1,ve_in,261,312
+veins,138,190,0	warp	veinswarp1015	1,1,ve_in,349,251
+ve_in,346,251,0	warp	veinswarp1016	1,1,veins,135,190
+veins,88,174,0	warp	veinswarp1017	1,1,ve_in,77,294
+ve_in,77,291,0	warp	veinswarp1018	1,1,veins,88,171
+ve_in,97,298,0	warp	veinswarp1019	1,1,ve_in,125,372
+ve_in,128,372,0	warp	veinswarp1020	1,1,ve_in,100,298
+veins,199,165,0	warp	veinswarp1021	1,1,ve_in,183,206
+ve_in,183,203,0	warp	veinswarp1022	1,1,veins,199,162
+veins,210,167,0	warp	veinswarp1023	1,1,ve_in,203,211
+ve_in,206,211,0	warp	veinswarp1024	1,1,veins,213,167
+veins,267,230,0	warp	veinswarp1025	1,1,ve_in,283,223
+ve_in,286,223,0	warp	veinswarp1026	1,1,veins,268,227
+veins,338,230,0	warp	veinswarp1027	1,1,ve_in,194,372
+ve_in,194,369,0	warp	veinswarp1028	1,1,veins,335,230
