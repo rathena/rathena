@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/04/30
+	* Updated Ninja Job Quest to official version [SinSloth]
 	* Added $ephiroth's veins/nameless warps update [ultramage]
 2007/04/29
 	* More squashed bugs with if checking in Kiel Hyre quest. [L0ne_W0lf]
