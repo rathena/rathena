@@ -79,7 +79,7 @@ prontera,153,193,6	script	Job Master	123,{
 							break;
 						case 9:
 						case 10:
-							if(Class == Job_Novice_High) goto L_noReq;
+							if(Class == Job_Novice_High || Upper == 2) goto L_noReq;
 							set @target_job, @menu + 15;
 							break;
 						default:
