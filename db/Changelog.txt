@@ -49,6 +49,10 @@
 	----
 ========================
 04/30
+	* Some more skill updates [Playtester]
+	- some smaller mob skill updates
+	- MVP power skill updates (not sure if code works with higher levels)
+	- fixed comments in mob db
 	* Updated Amon Ra and High Wizard mob skills [Playtester]
 04/29
 	* Corrected Weight, buy/sell, attack, level and slots on three of the new fists. [L0ne_W0lf]
