@@ -1347,7 +1347,7 @@ int atcommand_jumpto(const int fd, struct map_session_data* sd, const char* comm
 	}
 	
 	pc_setpos(sd, pl_sd->mapindex, pl_sd->bl.x, pl_sd->bl.y, 3);
-	sprintf(atcmd_output, msg_txt(4), atcmd_player_name); // Jumped to %s
+	sprintf(atcmd_output, msg_txt(4), pl_sd->status.name); // Jumped to %s
  	clif_displaymessage(fd, atcmd_output);
 
 	return 0;

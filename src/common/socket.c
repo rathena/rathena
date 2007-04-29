@@ -249,12 +249,12 @@ int connect_client(int listen_fd)
 		return -1;
 	}
 
-	if ( fd >= FD_SETSIZE )
-	{	//More connections than we can handle!
-		ShowError("accept failed. Received socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (currently %d) for your OS to fix this!\n", fd, FD_SETSIZE);
+	if ( fd >= FD_SETSIZE ) { //Not enough capacity for this socket
+		ShowError("connect_client: New socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (currently %d) for your OS to fix this!\n", fd, FD_SETSIZE);
 		closesocket(fd);
 		return -1;
 	}
+
 	setsocketopts(fd);
 	set_nonblocking(fd, 1);
 
@@ -265,10 +265,8 @@ int connect_client(int listen_fd)
 	}
 #endif
 
+	if( fd_max <= fd ) fd_max = fd + 1;
 	FD_SET(fd,&readfds);
-
-	if( fd_max <= fd )
-		fd_max = fd + 1;
 
 	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
 	session[fd]->client_addr = ntohl(client_address.sin_addr.s_addr);
@@ -288,6 +286,12 @@ int make_listen_bind(uint32 ip, uint16 port)
 	if (fd == INVALID_SOCKET) {
 		ShowError("socket() creation failed (code %d)!\n", s_errno);
 		exit(1);
+	}
+
+	if ( fd >= FD_SETSIZE ) { //Not enough capacity for this socket
+		ShowError("make_listen_bind: New socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (currently %d) for your OS to fix this!\n", fd, FD_SETSIZE);
+		closesocket(fd);
+		return -1;
 	}
 
 	setsocketopts(fd);
@@ -314,7 +318,7 @@ int make_listen_bind(uint32 ip, uint16 port)
 	}
 
 	if(fd_max <= fd) fd_max = fd + 1;
-	FD_SET(fd, &readfds );
+	FD_SET(fd, &readfds);
 
 	create_session(fd, connect_client, null_send, null_parse);
 
@@ -331,6 +335,12 @@ int make_connection(uint32 ip, uint16 port)
 
 	if (fd == INVALID_SOCKET) {
 		ShowError("socket() creation failed (code %d)!\n", fd, s_errno);
+		return -1;
+	}
+
+	if ( fd >= FD_SETSIZE ) { //Not enough capacity for this socket
+		ShowError("make_connection: New socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (currently %d) for your OS to fix this!\n", fd, FD_SETSIZE);
+		closesocket(fd);
 		return -1;
 	}
 
@@ -351,8 +361,7 @@ int make_connection(uint32 ip, uint16 port)
 	//Now the socket can be made non-blocking. [Skotlex]
 	set_nonblocking(fd, 1);
 
-	if (fd_max <= fd)
-		fd_max = fd + 1;
+	if (fd_max <= fd) fd_max = fd + 1;
 	FD_SET(fd,&readfds);
 
 	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);

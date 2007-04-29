@@ -116,6 +116,7 @@ struct online_login_data {
 	int char_server;
 };
 
+// holds info about all existing accounts
 struct auth_data {
 	uint32 account_id;
 	uint8 sex; // 0, 1, 2
@@ -131,7 +132,7 @@ struct auth_data {
 	char last_ip[16]; // save of last IP of connection
 	char memo[255]; // a memo field
 	int account_reg2_num;
-	struct global_reg account_reg2[ACCOUNT_REG2_NUM];
+	struct global_reg account_reg2[ACCOUNT_REG2_NUM]; // account script variables
 } *auth_dat = NULL;
 
 uint32 auth_num = 0, auth_max = 0;

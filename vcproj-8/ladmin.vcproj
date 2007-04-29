@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8,00"
-	Name="mapcache"
-	ProjectGUID="{D356871D-58E1-450B-967A-E7E9646175AF}"
-	RootNamespace="mapcache"
+	Name="ladmin"
+	ProjectGUID="{D356871D-58E1-450B-967A-E8E9646175AF}"
+	RootNamespace="ladmin"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -40,8 +40,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE"
+				AdditionalIncludeDirectories="..\src\common"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_USE_32BIT_TIME_T;MINICORE;FD_SETSIZE=4096"
 				GeneratePreprocessedFile="0"
 				MinimalRebuild="true"
 				ExceptionHandling="0"
@@ -67,8 +67,8 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/FIXED:NO"
-				AdditionalDependencies="libcmtd.lib oldnames.lib zdll.lib"
-				OutputFile="$(OutDir)\mapcache.exe"
+				AdditionalDependencies="libcmtd.lib oldnames.lib ws2_32.lib"
+				OutputFile="$(OutDir)\ladmin.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\lib"
 				IgnoreAllDefaultLibraries="true"
@@ -134,8 +134,8 @@
 				OmitFramePointers="true"
 				EnableFiberSafeOptimizations="true"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="..\src\common;..\src\zlib"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE"
+				AdditionalIncludeDirectories="..\src\common"
+				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;NDEBUG;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_USE_32BIT_TIME_T;MINICORE;FD_SETSIZE=4096"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="false"
@@ -157,8 +157,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libcmt.lib oldnames.lib zdll.lib"
-				OutputFile="$(OutDir)\mapcache.exe"
+				AdditionalDependencies="libcmt.lib oldnames.lib ws2_32.lib"
+				OutputFile="$(OutDir)\ladmin.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\lib"
 				IgnoreAllDefaultLibraries="true"
@@ -201,30 +201,90 @@
 	</References>
 	<Files>
 		<Filter
-			Name="mapcache"
+			Name="ladmin"
 			>
 			<File
-				RelativePath="..\src\tool\grfio.c"
+				RelativePath="..\src\ladmin\ladmin.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\tool\grfio.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\tool\mapcache.c"
+				RelativePath="..\src\ladmin\ladmin.h"
 				>
 			</File>
 		</Filter>
 		<Filter
-			Name="zlib"
+			Name="common"
 			>
 			<File
-				RelativePath="..\src\zlib\zconf.h"
+				RelativePath="..\src\common\core.c"
 				>
 			</File>
 			<File
-				RelativePath="..\src\zlib\zlib.h"
+				RelativePath="..\src\common\core.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\malloc.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\malloc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\md5calc.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\md5calc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\mmo.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\showmsg.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\showmsg.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\socket.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\socket.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\strlib.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\strlib.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\timer.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\timer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\utils.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\utils.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\version.h"
 				>
 			</File>
 		</Filter>
