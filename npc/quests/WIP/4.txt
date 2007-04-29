@@ -120,4 +120,4 @@ ein_in01,255,33,4    script    Ferlok    55,{
     mes "[Hallen]";
     mes "I have already told you to go to plane. Hurry!";
     close;
-s}
+}

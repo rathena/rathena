@@ -3968,4 +3968,3 @@ um_dun01,0,0,0,0	monster	Green Plant	1080,5,180000,90000,1
 um_dun02,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000,1
 um_dun02,0,0,0,0	monster	Red Plant	1078,5,180000,90000,1
 um_dun02,0,0,0,0	monster	Shining Plant	1083,6,180000,90000,1
-

@@ -109,4 +109,3 @@ moc_fild03,0,0,0,0	monster	Bacsojin	1518,1,60000,66000
 moc_fild03,0,0,0,0	monster	Chung E	1519,1,60000,66000
 moc_fild13,0,0,0,0	monster	Chung E	1519,1,60000,66000
 pay_fild01,0,0,0,0	monster	Chung E	1519,1,60000,66000
-  

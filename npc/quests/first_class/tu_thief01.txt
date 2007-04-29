@@ -722,4 +722,3 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 	mes "of course the sand storm. Hahaha.";
 	close;
 }
-
