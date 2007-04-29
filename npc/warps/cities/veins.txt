@@ -17,7 +17,6 @@
 //= Veins City ===============================================
 veins,218,361,0	warp	veinswarp0501	1,1,ve_fild06,152,221
 veins,146,24,0	warp	veinswarp0502	1,1,ve_fild07,148,370
-rachel,130,20,0	warp	veinswarp0503	1,1,ve_fild02,196,379
 veins,196,260,0	warp	veinswarp1001	1,1,ve_in,351,320
 ve_in,351,317,0	warp	veinswarp1002	1,1,veins,196,257
 veins,116,277,0	warp	veinswarp1003	1,1,ve_in,99,218

@@ -14,7 +14,7 @@
 //= 1.2 Removed some unofficial warps [Playtester]
 //============================================================
 
-//= Beins Field (ve_fild) ====================================
+//= Veins Field (ve_fild) ====================================
 ve_fild02,196,382,0	warp	veinswarp5001	1,1,rachel,130,23
 ve_fild06,154,219,0	warp	veinswarp5002	1,1,veins,218,358
 ve_fild07,147,372,0	warp	veinswarp5003	1,1,veins,146,27
