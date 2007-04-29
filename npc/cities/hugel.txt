@@ -30,7 +30,7 @@
 
 //Torpy's Mom
 //---------------------------------------------------------------------------
-hu_fild06.gat,190,367,3	script	Torpy's Mom	701,{
+hu_fild06,190,367,3	script	Torpy's Mom	701,{
 
 	mes "[Torpy's Mom]";
 	mes "Where did he go this time?!";
@@ -43,7 +43,7 @@ hu_fild06.gat,190,367,3	script	Torpy's Mom	701,{
 
 //Postell Schuwell
 //---------------------------------------------------------------------------
-hu_fild06.gat,34,123,3	script	Postell Schuwell	97,{
+hu_fild06,34,123,3	script	Postell Schuwell	97,{
 
 	mes "[Postell]";
 	mes "I really like living";
@@ -61,7 +61,7 @@ hu_fild06.gat,34,123,3	script	Postell Schuwell	97,{
 
 // Manainne
 //--------------------------------------------------------------------------
-hugel.gat,191,172,5	script	Manainne	893,{
+hugel,191,172,5	script	Manainne	893,{
 
 	mes "[Manainne]";
 	mes "You know, even though";
@@ -75,7 +75,7 @@ hugel.gat,191,172,5	script	Manainne	893,{
 
 //El Schatt
 //---------------------------------------------------------------------------
-hugel.gat,196,164,5	script	El Schatt	50,{
+hugel,196,164,5	script	El Schatt	50,{
 
 	mes "[El Schatt]";
 	mes "Father was right...";
@@ -89,7 +89,7 @@ hugel.gat,196,164,5	script	El Schatt	50,{
 
 //Young Man
 //---------------------------------------------------------------------------
-hugel.gat,189,143,5	script	Young Man	898,{
+hugel,189,143,5	script	Young Man	898,{
 
 	mes "[Young Man]";
 	mes "Huh. So that giant";
@@ -103,7 +103,7 @@ hugel.gat,189,143,5	script	Young Man	898,{
 
 //Emily
 //---------------------------------------------------------------------------
-hugel.gat,126,151,3	script	Emily	90,{
+hugel,126,151,3	script	Emily	90,{
 
 	mes "[Emily]";
 	mes "I feel so blessed to";
@@ -123,7 +123,7 @@ hugel.gat,126,151,3	script	Emily	90,{
  
 //Mudie
 //---------------------------------------------------------------------------
-hugel.gat,85,93,3	script	Mudie	866,{
+hugel,85,93,3	script	Mudie	866,{
 
 	mes "[Mudie]";
 	mes "The Monster Races";
@@ -152,7 +152,7 @@ hugel.gat,85,93,3	script	Mudie	866,{
 
 //Perfitz
 //---------------------------------------------------------------------------
-hugel.gat,100,103,3	script	Perfitz	866,{
+hugel,100,103,3	script	Perfitz	866,{
 
 	mes "[Perfitz]";
 	mes "Money is very dependable...";
@@ -182,7 +182,7 @@ hugel.gat,100,103,3	script	Perfitz	866,{
 
 //Torpy
 //---------------------------------------------------------------------------
-hugel.gat,107,67,3	script	Torpy	706,{
+hugel,107,67,3	script	Torpy	706,{
 
 	mes "[Torpy]";
 	mes "Waaah~!";
@@ -194,7 +194,7 @@ hugel.gat,107,67,3	script	Torpy	706,{
 
 //Kayplas
 //---------------------------------------------------------------------------
-hugel.gat,86,165,5	script	Kayplas	896,{
+hugel,86,165,5	script	Kayplas	896,{
 
 	mes "[Kayplas]";
 	mes "Ooh, I really want to";
@@ -207,7 +207,7 @@ hugel.gat,86,165,5	script	Kayplas	896,{
 
 //Erjan
 //---------------------------------------------------------------------------
-hugel.gat,102,161,3	script	Erjan	100,{
+hugel,102,161,3	script	Erjan	100,{
 
 	mes "[Erjan]";
 	mes "I am Erjan, first son of";
@@ -221,7 +221,7 @@ hugel.gat,102,161,3	script	Erjan	100,{
 
 //Barrel 
 //---------------------------------------------------------------------------
-hugel.gat,100,175,0	script	Suspicious Barrel	111,{
+hugel,100,175,0	script	Suspicious Barrel	111,{
 
 	mes "^CD00CDYou hear something bustling from";
 	mes "the hole in the barrel.";
@@ -234,7 +234,7 @@ hugel.gat,100,175,0	script	Suspicious Barrel	111,{
 
 //Lisa
 //---------------------------------------------------------------------------
-hugel.gat,71,197,3	script	Lisa	90,{
+hugel,71,197,3	script	Lisa	90,{
 
 	mes "[Lisa]";
 	mes "Hugel is a pretty";
@@ -254,7 +254,7 @@ hugel.gat,71,197,3	script	Lisa	90,{
 
 //Old Nikki 
 //---------------------------------------------------------------------------
-hugel.gat,169,112,5	script	Old Nikki	892,{
+hugel,169,112,5	script	Old Nikki	892,{
 
 	mes "[Old Nikki]";
 	mes "You must not be from";
@@ -274,7 +274,7 @@ hugel.gat,169,112,5	script	Old Nikki	892,{
 
 //Bismarc
 //---------------------------------------------------------------------------
-hugel.gat,168,183,5	script	Bismarc	118,{
+hugel,168,183,5	script	Bismarc	118,{
 
 	mes "[Bismarc]";
 	mes "^808080*Ghyklk*";
@@ -296,7 +296,7 @@ hugel.gat,168,183,5	script	Bismarc	118,{
 
 //Tree ~Completely missed this on iRO; full credit to Tsuyuki ~Munin
 //---------------------------------------------------------------------------
-hugel.gat,198,171,0	script	#oldtree	139,1,1,{
+hugel,198,171,0	script	#oldtree	139,1,1,{
 
 	end;
 
@@ -316,7 +316,7 @@ OnTouch:
 
 //Allen Schuwell
 //-------------------------------------------------------------------------
-hu_in01.gat,386,245,1	script	Allen Schuwell	849,{
+hu_in01,386,245,1	script	Allen Schuwell	849,{
 
 	mes "[Allen]";
 	mes "*Groooooan~*";
@@ -330,7 +330,7 @@ hu_in01.gat,386,245,1	script	Allen Schuwell	849,{
 
 //Siria
 //---------------------------------------------------------------------------
-hu_in01.gat,326,307,3	script	Siria	90,{
+hu_in01,326,307,3	script	Siria	90,{
 
 	mes "[Siria]";
 	mes "Oh, hello there.";
@@ -341,7 +341,7 @@ hu_in01.gat,326,307,3	script	Siria	90,{
 
 //Furniture Drawer
 //---------------------------------------------------------------------------
-hu_in01.gat,370,254,0	script	Upper Drawer	111,1,1,{
+hu_in01,370,254,0	script	Upper Drawer	111,1,1,{
 
 	end;
 
@@ -355,7 +355,7 @@ OnTouch:
 
 //Girl
 //---------------------------------------------------------------------------
-hu_in01.gat,310,380,5	script	Girl	891,{
+hu_in01,310,380,5	script	Girl	891,{
 
 	mes "[Girl]";
 	mes "Oh... I'm so bored!";
@@ -369,7 +369,7 @@ hu_in01.gat,310,380,5	script	Girl	891,{
 
 //Chris
 //---------------------------------------------------------------------------
-hu_in01.gat,111,386,4	script	Chris	86,{
+hu_in01,111,386,4	script	Chris	86,{
 
 	mes "[Chris]";
 	mes "You know, the people don't";
@@ -388,7 +388,7 @@ hu_in01.gat,111,386,4	script	Chris	86,{
 
 //Herico  - Has Cut-In!
 //---------------------------------------------------------------------------
-hu_in01.gat,256,40,3	script	Herico	897,{
+hu_in01,256,40,3	script	Herico	897,{
 
 	cutin "heri1",2;
 	mes "[Herico]";
@@ -403,7 +403,7 @@ hu_in01.gat,256,40,3	script	Herico	897,{
 
 //Rachel
 //---------------------------------------------------------------------------
-hu_in01.gat,365,170,5	script	Rachel	793,{
+hu_in01,365,170,5	script	Rachel	793,{
 
 	mes "[Rachel]";
 	mes "You know what I love?";
@@ -416,7 +416,7 @@ hu_in01.gat,365,170,5	script	Rachel	793,{
 
 //Shaomei
 //---------------------------------------------------------------------------
-hu_in01.gat,377,106,5	script	Shaomei	892,{
+hu_in01,377,106,5	script	Shaomei	892,{
 
 	mes "[Shaomei]";
 	mes "We didn't use to get";
@@ -432,7 +432,7 @@ hu_in01.gat,377,106,5	script	Shaomei	892,{
 // Party Supplies/Firecracker Seller
 //--------------------------------------------------------------
 
-hu_in01.gat,23,311,4	script	Party Supplies Shop	898,{
+hu_in01,23,311,4	script	Party Supplies Shop	898,{
 
 	mes "[Shopkeeper]";
 	mes "Welcome to the party supplies";

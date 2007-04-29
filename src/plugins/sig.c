@@ -208,4 +208,3 @@ int sig_init ()
 	return 1;
 }
 #endif
-

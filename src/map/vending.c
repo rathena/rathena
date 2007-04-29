@@ -274,4 +274,3 @@ void vending_openvending(struct map_session_data *sd,int len,char *message,int f
 			sd->vender_id = 0;
 	}
 }
-

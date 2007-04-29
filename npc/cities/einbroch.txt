@@ -976,4 +976,3 @@ OnTouch:
 	warp "einbroch",112,245;
 	end;
 }
-

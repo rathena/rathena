@@ -12426,4 +12426,3 @@ int do_init_clif(void)
 	add_timer_func_list(clif_delayquit, "clif_delayquit");
 	return 0;
 }
-

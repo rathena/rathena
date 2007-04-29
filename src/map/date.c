@@ -69,4 +69,3 @@ int is_day_of_star(void)
 {
 	return date_get_day()%5 == 0;
 }
-

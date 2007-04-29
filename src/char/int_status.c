@@ -184,4 +184,4 @@ void status_final(void)
 {
 	scdata_db->destroy(scdata_db, scdata_db_final);
 }
-#endif
+#endif //ENABLE_SC_SAVING

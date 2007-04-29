@@ -2377,4 +2377,3 @@ void  linkdb_final( struct linkdb_node** head ) {
 	}
 	*head = NULL;
 }
-

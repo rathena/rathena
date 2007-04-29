@@ -321,4 +321,3 @@ unsigned long MakeDWord(unsigned short word0, unsigned short word1)
 	return 	  ((unsigned long)word0)
 			| ((unsigned long)word1<<0x10);
 }
-

@@ -658,13 +658,13 @@ OnTimer130000:
 	donpcevent "#AirshipWarp-4::OnHide";
 	disablenpc "#AirshipWarp-3";
 	disablenpc "#AirshipWarp-4";
-	mapannounce "airplane_01.gat","The Airship is leaving the ground. Our next destination is Rachel.",1,0xFF8600;
+	mapannounce "airplane_01","The Airship is leaving the ground. Our next destination is Rachel.",1,0xFF8600;
 	end;
 OnTimer145000:
-	mapannounce "airplane_01.gat","We are heading to Rachel.",1,0xFF8600;
+	mapannounce "airplane_01","We are heading to Rachel.",1,0xFF8600;
 	end;
 OnTimer160000:
-	mapannounce "airplane_01.gat","We will arrive in Rachel shortly.",1,0xFF8600;
+	mapannounce "airplane_01","We will arrive in Rachel shortly.",1,0xFF8600;
 	end;
 OnTimer175000:
 	set $@airplanelocation2,3;
@@ -672,10 +672,10 @@ OnTimer175000:
 	enablenpc "#AirshipWarp-4";
 	donpcevent "#AirshipWarp-3::OnUnhide";
 	donpcevent "#AirshipWarp-4::OnUnhide";
-	mapannounce "airplane_01.gat","Welcome to Rachel. Have a safe trip.",1,0xFF8600;
+	mapannounce "airplane_01","Welcome to Rachel. Have a safe trip.",1,0xFF8600;
 	end;
 OnTimer185000:
-	mapannounce "airplane_01.gat","Currently, we are in Rachel. The Airship will leave shortly.",1,0xFF8600;
+	mapannounce "airplane_01","Currently, we are in Rachel. The Airship will leave shortly.",1,0xFF8600;
 	end;
 OnTimer195000:
  	stoptimer;
@@ -825,7 +825,7 @@ hugel,182,150,3	script	Airship Staff#hu	91,{
 //= The Rachel Airship Staff
 //============================================================
 
-ra_fild12.gat,294,206,3	script	Airship Staff#ra	91,{
+ra_fild12,294,206,3	script	Airship Staff#ra	91,{
 
 	mes "[Airship Staff]";
 	mes "Welcome to the International Airship.";
@@ -845,12 +845,12 @@ ra_fild12.gat,294,206,3	script	Airship Staff#ra	91,{
 		if(countitem(7311) > 0) goto L_GotTicket;
 		if(Zeny < 1200) goto L_NoZeny;
 			set Zeny, Zeny - 1200;
-			warp "airplane_01.gat",224,64;
+			warp "airplane_01",224,64;
 			close;
 
 		L_GotTicket:
 			delitem 7311,1;
-			warp "airplane_01.gat",224,64;
+			warp "airplane_01",224,64;
 			close;
 
 	L_NoZeny:

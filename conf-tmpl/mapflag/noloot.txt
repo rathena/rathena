@@ -21,5 +21,5 @@ job_soul	mapflag	noloot
 job_star	mapflag	noloot
 que_ng	mapflag	noloot
 
-//Thievs have to gather some mushrooms. So they need loot
+//Thieves have to gather some mushrooms. So they need loot
 //job_thief1	mapflag	noloot

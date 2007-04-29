@@ -502,4 +502,3 @@ void ers_force_destroy_all(void)
 	ers_num = 0;
 }
 #endif /* not DISABLE_ERS */
-

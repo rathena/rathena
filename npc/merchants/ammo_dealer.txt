@@ -16,7 +16,7 @@
 //===== Comments ==========================================
 //= Converted from Aegis Script.
 //=========================================================
-que_ng.gat,187,156,3	script	Bullet Merchant Tony	86,{
+que_ng,187,156,3	script	Bullet Merchant Tony	86,{
 	if (BaseJob == JOB_GUNSLINGER) {
 		mes "[Tony]";
 		mes "I'm Bullet-tooth Tony!";

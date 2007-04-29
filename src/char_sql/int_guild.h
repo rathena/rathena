@@ -32,4 +32,5 @@ int inter_guild_CharOffline(int char_id, int guild_id);
 //For the TXT->SQL converter.
 int inter_guild_tosql(struct guild *g,int flag);
 int inter_guildcastle_tosql(struct guild_castle *gc);
-#endif
+
+#endif /* _INT_GUILD_SQL_H_ */

@@ -369,4 +369,3 @@ int inter_homun_parse_frommap(int fd)
 	}
 	return 1;
 }
-

@@ -8,4 +8,3 @@ int decode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char*
 int encode_zip(unsigned char *dest, unsigned long* destLen, const unsigned char* source, unsigned long sourceLen);
 
 #endif /* _GRFIO_H_ */
-
