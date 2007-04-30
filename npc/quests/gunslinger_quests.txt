@@ -13,6 +13,7 @@
 //= 1.3 Added official Gatling quests [Playtester]
 //= 1.4 Updated Destroyer Quest - Credits to Sinoco for first
 //= official version. [SinSloth]
+//= 1.5 Updated Inferno Quest to official version [SinSloth]
 //============================================================
 
 
@@ -174,82 +175,175 @@ L_Already:
 }
 
 que_ng,187,163,3	script	Ingrid	744,{
-	set @npcname$,"[Ingrid]";
 
-	mes @npcname$;
-	mes "I can make the strongest of";
-	mes "all weapons. The ultimate";
-	mes "grenade launcher.";
-	mes "It's called ^0000FFInferno^000000.";
-	next;
-	if(BaseJob != Job_Gunslinger || BaseLevel < 65){
-		mes @npcname$;
-		mes "But I don't think you are";
-		mes "experienced enough to use it.";
+	if(BaseJob != Job_Gunslinger)
+	{
+		mes "[Ingrid]";
+		mes "How are you!";
+		mes "I've been appointed the new Gunslinger Weapons Creator. The name is Ingrid.";
 		next;
-		mes @npcname$;
-		mes "You'll probably kill yourself.";
-		mes "It's just too powerful to use";
-		mes "for a beginner. I refuse to";
-		mes "make one for you.";
+		mes "[Ingrid]";
+		mes "However, you don't seem to be a member of the Gunslinger Guild, so I can't help you with anything. Sorry.";
 		close;
 	}
-	mes @npcname$;
-	mes "You look experienced.";
-	mes "I think I could make one";
-	mes "for you.";
-	next;
-	mes @npcname$;
-	mes "So, do you want me to make an";
-	mes "^0000FFInferno^000000 for you?";
-	next;
-
-	switch(select("Yes, please.","No thanks."))
+	switch(gun_inf)
 	{
+		case 0:
+			mes "[Ingrid]";
+			mes "How are you!";
+			mes "I've been appointed the new Gunslinger";
+			mes "Weapons Creator. The name is Ingrid.";
+			mes "A pleasure to serve you!";
+			next;
+			mes "[Ingrid]";
+			mes "It's only been a short while";
+			mes "since I've started working,";
+			mes "But I'll try my best to";
+			mes "assist you.";
+			next;
+			mes "[Ingrid]";
+			mes "Ahh ... I feel so anxious.";
+			mes "As of now, I'm doing the job of creating a weapon called the Inferno for customers.";
+			next;
+			mes "[Ingrid]";
+			mes "The Inferno is the most advanced weapon made in our Guild laboratory.";
+			next;
+			mes "[Ingrid]";
+			mes "It features incredible power and range, and an ergonomic design so that it can be held well and significantly minimize kickback when fired.";
+			mes "It's a weapon worthy of being called the ultimate weapon for any Gunslinger.";
+			mes "huff huff...";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "You know quite a lot about it";
+			mes ".....";
+			next;
+			mes "[Ingrid]";
+			mes "Ah. Of course~";
+			mes "I am the person who designed this weapon..";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Wooow~ That's incredible~";
+			next;
+			mes "[Ingrid]";
+			mes "Ah Oops...";
+			mes "Did I end up bragging?";
+			mes "I'm still nothing compared to Professor Serena.";
+			next;
+			mes "[Ingrid]";
+			mes "Actually, I wanted to become a gunslinger too, but because of my physical shortcomings weak determination, I had to give up.";
+			next;
+			mes "[Ingrid]";
+			mes "While I was applying to become a gunslinger, I was lucky enough to have Professor Serena see my talents, and with her help, I'm where I am now helping with the manufacturing and sales of Gunslinger Weapons";
+			next;
+			mes "[Ingrid]";
+			mes "I'm still remorseful that I wasn't able to become a Gunslinger, but at least my brother, who took the Gunslinger test with me, passed and become one.";
+			next;
+			mes "[Ingrid]";
+			mes "I'm glad that even though I fell, my brother was able to fulfill our dream.";
+			next;
+			mes "[Ingrid]";
+			mes "Haha~ Look at me telling you all these things when you didn't even ask.";
+			mes "Sorry.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "No, it's ok.";
+			mes "You may not have become a Gunslinger, but I think you've become a great person.";
+			next;
+			mes "[Ingrid]";
+			mes "Really? Thank you~";
+			mes "I'll try my best.";
+			next;
+			mes "[Ingrid]";
+			mes "To produce an Inferno,";
+			mes "I need 100 Used Iron Plates, 10 Oridecons, 50 Old Rusty Screws, 100 Burning Hearts, and 200,000 Zeny.";
+			mes "Would you like to produce it for you?";
+			next;
+			switch( select( "I'll think about it.", "Yes, please." ) )
+			{
+				case 1:
+					mes "[Ingrid]";
+					mes "Ah~ I see.";
+					mes "I understand.";
+					mes "Ok, well, think about it.";
+					mes "Come back when you've made up your mind.";
+					close;
+
+				case 2:
+					mes "[Ingrid]";
+					mes "I understand.";
+					mes "Here are the materials again.";
+					next;
+					mes "[Inferno]";
+					mes "To produce an Inferno,";
+					mes "I need 100 Used Iron Plates, 10 Oridecons, 50 Rusty Old Screws, 100 Burning Hearts, and 200,000 Zeny.";
+					mes "You must bring me the correct number of materials.";
+					mes "Please don't forget that.";
+					set gun_inf,1;
+					close;
+			}
 
 		case 1:
-			mes @npcname$;
-			mes "Okay, but first you need to";
-			mes "bring me the materials I need";
-			mes "to create one.";
-			next;
-			mes @npcname$;
-			mes "This is what I need:";
-			mes "^FF0000100 Used Iron Plates^000000,";
-			mes "^FF000010 Oridecons^000000,";
-			mes "^FF000050 Rusty Screws^000000,";
-			mes "^FF0000100 Burning Hearts^000000 and";
-			mes "^FF0000200000 Zeny^000000.";
-			next;
-			mes @npcname$;
-			if ( (countitem(7319)<100) || (countitem(984)<10) || (countitem(7317)<50) || (countitem(7097)<100) || (Zeny < 200000) ) {
-				mes "Come back when you have the materials.";
-				close;
-			}
-			delitem 7319,100;
-			delitem 984,10;
-			delitem 7317,50;
-			delitem 7097,100;
-			set Zeny,Zeny-200000;
-			mes "Oh, you already have the materials.";
-			mes "Let me have them.";
-			next;
-			mes @npcname$;
-			mes "I need to be careful...";
-			mes "...";
-			mes "...";
-			next;
-			getitem 13162,1;
-			mes @npcname$;
-			mes "It's done.";
-			mes "Be careful with it.";
-			close;
+			callsub SubInferno;
 
 		case 2:
-			mes @npcname$;
-			mes "Probably a good choice.";
-			mes "It's really dangerous.";
-			close;
+			mes "[Ingrid]";
+			mes "Hello~ You're back~";
+			mes "Are you back because you need an Inferno?";
+			next;
+			switch( select( "Nah, I'm back just because..","Yes, make me an Inferno." ) )
+			{
+				case 1:
+					mes "[Ingrid]";
+					mes "Ah~ I see.";
+					mes "I understand.";
+					mes "Ok, well, think about it.";
+					mes "Come back when you've made up your mind.";
+					close;
+
+				case 2:
+					callsub SubInferno;
+			}
+	}
+
+SubInferno:
+	if ((countitem(7319) < 100) || (countitem(7317) < 50) || (countitem(984) < 10) || countitem(7097) < 100)
+	{
+		mes "[Ingrid]";
+		mes "Yeah, the required materials are 100 Used Iron Plates, 10 Oridecons, 50 Rusty Old Screws, 100 Burning Hearts, and 200,000 Zeny";
+		mes "You must bring me the correct number of materials.";
+		mes "Please don't forget that.";
+		close;
+	}
+	else if(Zeny < 200000)
+	{
+		mes "[Ingrid]";
+		mes "You've brought plenty of material,";
+		mes "but did you bring enough Zeny?";
+		mes "The price of creating an Inferno is 200,000 Zeny.";
+		mes "Please don't forget that.";
+		close;
+	}
+	else if(checkweight(13162,1) != 1)
+	{
+		mes "[Ingrid]";
+		mes "It looks like you have too many items to carry my creation, so I can't give it to you.";
+		mes "Why don't you come and see me again when you're ready to receive it?";
+		close;
+	}
+	else
+	{
+		mes "[Ingrid]";
+		mes "I see you have the proper amount of materials and Zeny.";
+		mes "Here is the Inferno I've created for you.";
+		mes "Use it well.";
+		set Zeny,Zeny-200000;
+		delitem 7319,100;
+		delitem 984,10;
+		delitem 7317,50;
+		delitem 7097,100;
+		getitem 13162,1;
+		if(gun_inf == 1) set gun_inf,2;
+		close;
 	}
 }
 
@@ -409,7 +503,8 @@ que_ng,185,180,3	script	Vanessa	726,{
 					set gunst,1;
 					close;
 			}
-			case 1:
+
+		case 1:
 			callsub SubDestroyer;
 			
 		case 2:
