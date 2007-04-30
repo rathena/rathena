@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -33,8 +33,9 @@
 //=	Made it so that you need to be at least step 84 to activate the final door.
 //=	Corrected not deleting Allysia's Ring from inventory.
 //= 1.9 Exit will now enable if you are just retrieving the Ring, keeps you from getting stuck. [L0ne_W0lf]
-//	Corrected "KH_Kielh02", was setting off a debug, invalid map index. Should have been "kh_Kiehl02"
-//	Made .KHQuestBusy$ into a temp global variable. $@KHQuestBusy$. 
+//=	Corrected "KH_Kielh02", was setting off a debug, invalid map index. Should have been "kh_Kiehl02"
+//=	Made .KHQuestBusy$ into a temp global variable. $@KHQuestBusy$. 
+//= 2.0 Changed the labels on the "Big Doors" to "Identifier Names" to prevent an error with using getvariableofnpc [L0ne_W0lf]
 //
 //============================================================ 
 
@@ -6163,7 +6164,7 @@ kh_kiehl01,19,25,0	script	Box::BoxKHQ3	111,{
 // - Consume one Black KeyCard when opened.
 // - Only one person actually needs to open it.
 //----------------------------------------------------------------------------
-kh_kiehl01,44,33,0	script	Big Door::BigDoorKHQ1	111,{
+kh_kiehl01,44,33,0	script	Big Door#BigDoorKHQ1	111,{
 	if (.KHDoor1Opened == 0) {
 		mes "^3355FFThe door is locked,";
 		mes "but there is a narrow";
@@ -6213,7 +6214,7 @@ OnTimer30000:
 	stopnpctimer;
 	misceffect 215;
 	disablenpc "Big_Door_1_Warp";
-	set getvariableofnpc(.KHDoor1Opened,"Big Door::BigDoorKHQ1"),0;
+	set getvariableofnpc(.KHDoor1Opened,"Big Door#BigDoorKHQ1"),0;
 	end;
 
 OnTouch:
@@ -6226,7 +6227,7 @@ OnTouch:
 // - Consume Toy Key when opened.
 // - Only one person actually needs to open it.
 //----------------------------------------------------------------------------
-kh_kiehl01,174,40,0	script	Big Door::BigDoorKHQ2	111,{
+kh_kiehl01,174,40,0	script	Big Door#BigDoorKHQ2	111,{
 	if (.KHDoor2Opened == 0) {
 		mes "^3355FFThe door is locked,";
 		mes "but there is a small";
@@ -6277,7 +6278,7 @@ OnTimer30000:
 	stopnpctimer;
 	misceffect 215;
 	disablenpc "Big_Door_2_Warp";
-	set getvariableofnpc(.KHDoor2Opened,"Big Door::BigDoorKHQ2"),0;
+	set getvariableofnpc(.KHDoor2Opened,"Big Door#BigDoorKHQ2"),0;
 	end;
 
 OnTouch:
@@ -6290,7 +6291,7 @@ OnTouch:
 // - Consume one Black KeyCard when opened.
 // - Only one person actually needs to open it.
 //----------------------------------------------------------------------------
-kh_kiehl01,77,108,0	script	Big Door::BigDoorKHQ3	111,{
+kh_kiehl01,77,108,0	script	Big Door#BigDoorKHQ3	111,{
 	if (.KHDoor3Opened == 0) {
 		mes "^3355FFThe door is locked,";
 		mes "but there is a narrow";
@@ -6340,7 +6341,7 @@ OnTimer30000:
 	stopnpctimer;
 	misceffect 215;
 	disablenpc "Big_Door_3_Warp";
-	set getvariableofnpc(.KHDoor3Opened,"Big Door::BigDoorKHQ3"),0;
+	set getvariableofnpc(.KHDoor3Opened,"Big Door#BigDoorKHQ3"),0;
 	end;
 
 OnTouch:
@@ -6350,11 +6351,10 @@ OnTouch:
 
 //----------------------------------------------------------------------------
 // Kiehl's Room; Big Door, (Fourth)
-
 // - Consume TWO Black KeyCard when opened.
 // - Only one person actually needs to open it.
 //----------------------------------------------------------------------------
-kh_kiehl01,42,177,0	script	Big Door::BigDoorKHQ4	111,{
+kh_kiehl01,42,177,0	script	Big Door#BigDoorKHQ4	111,{
 	if (.KHDoor4Opened == 0) {
 		mes "^3355FFThe door is locked,";
 		mes "but there is a narrow";
@@ -6404,7 +6404,7 @@ OnTimer30000:
 	stopnpctimer;
 	misceffect 215;
 	disablenpc "Big_Door_4_Warp";
-	set getvariableofnpc(.KHDoor4Opened,"Big Door::BigDoorKHQ4"),0;
+	set getvariableofnpc(.KHDoor4Opened,"Big Door#BigDoorKHQ4"),0;
 	end;
 
 OnTouch:
@@ -6450,7 +6450,7 @@ OnMyMobDead:
 // - 10 minute timer is QEUSTIONABLE, may not even be a 10 minute limit.
 //   Put it in anyway, used to make sure people don't abuse the room.
 //----------------------------------------------------------------------------
-kh_kiehl01,166,187,0	script	Big Door#5::BigDoorKHQ5	111,{
+kh_kiehl01,166,187,0	script	Big Door#BigDoorKHQ5	111,{
 	if (($@KH_DoorInvoker$ == "") && (KielHyreQuest >= 84) && (KielHyreQuest <= 106)) {
 
 		if ($@KHQuestBusy$ == "") {
