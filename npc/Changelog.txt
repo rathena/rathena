@@ -1,13 +1,18 @@
 Date		Added
 ======
 2007/05/01
+	* Even more Fixes to the Kiel Hyre Quest [L0ne_W0lf]
+	- Exit will now enable if you are just retrieving the Ring, keeps you from getting stuck.
+	- Corrected "KH_Kielh02", was setting off a debug, invalid map index. Should have been "kh_Kiehl02"
+	- Made .KHQuestBusy$ into a temp global variable. $@KHQuestBusy$.
 	* Updated some Gunslinger quests. [SinSloth]
 	- Inferno Quest updated to official.
 	- Garrison Quest updated to official, thanks to Lazarus^.
-	* Elly now deletes the Iron_Box, and Kiel Hyre deletes the Pin. [L0ne_W0lf]
-	* More security on the 5th Big Door, now makes sure no one outside of who acticated it initially can use it. Resets after 10 minutes to make it. [L0ne_W0lf]
-	* Made it so that you need to be at least step 84 to activate the final door. [L0ne_W0lf]
-	* Corrected not deleting Allysia's Ring from inventory. [L0ne_W0lf]
+	* More Fixes to the Kiel Hyre Quest [L0ne_W0lf]
+	- Elly now deletes the Iron_Box, and Kiel Hyre deletes the Pin. [L0ne_W0lf]
+	- More security on the 5th Big Door, now makes sure no one outside of who acticated it initially can use it. Resets after 10 minutes to make it.
+	- Made it so that you need to be at least step 84 to activate the final door.
+	- Corrected not deleting Allysia's Ring from inventory.
 2007/04/30
 	* Fixed small bug in custom JobChanger. [Paradox924X]
 	* Updated Gunslinger weapon Destroyer Quest to official. Thanks to Sinoco [SinSloth]
@@ -15,8 +20,8 @@ Date		Added
 	* Added $ephiroth's veins/nameless warps update [ultramage]
 2007/04/29
 	* More squashed bugs with if checking in Kiel Hyre quest. [L0ne_W0lf]
-	* Another bug fixed in the Kiel Hyre quest. (&& instead of ||) [L0ne_W0lf]
-	* Fixed doors not resetting in kh_kiehl01 after 30 second timer is up. [L0ne_W0lf]
+	- Another bug fixed in the Kiel Hyre quest. (&& instead of ||)
+	- Fixed doors not resetting in kh_kiehl01 after 30 second timer is up.
 	* Updated Hotel Employee from Einbroch [Samuray22]
 	* Added AirShip Ticket Quest [Samuray22]
 	* Updated Ammo Casing NPC Kenny to official version [SinSloth]

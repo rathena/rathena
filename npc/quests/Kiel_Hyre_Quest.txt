@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -21,7 +21,7 @@
 //= 1.4 Fixed doors not resetting in kh_kiehl01 after 30 second timer is up. [L0ne_W0lf]
 //= 1.5 Another bug fixed (&& instead of ||). [L0ne_W0lf]
 //= 1.6 More squashed bugs with if checking. [L0ne_W0lf]
-//= 1.7 Corrected some spelling mistakes. [gopelaez]
+//= 1.7 Corrected some spelling mistakes. [Balish]
 //	Corrected Exploit with the pub man, giving infinite wine and money.
 //	Corrected pool and map not showing text for some states of the quest.
 //	Corrected Elly showing cutin but not text for some states of the quest (causing players to log off to continue).
@@ -32,6 +32,9 @@
 //=	acticated it initially can use it. Resets after 10 minutes to make it.
 //=	Made it so that you need to be at least step 84 to activate the final door.
 //=	Corrected not deleting Allysia's Ring from inventory.
+//= 1.9 Exit will now enable if you are just retrieving the Ring, keeps you from getting stuck. [L0ne_W0lf]
+//	Corrected "KH_Kielh02", was setting off a debug, invalid map index. Should have been "kh_Kiehl02"
+//	Made .KHQuestBusy$ into a temp global variable. $@KHQuestBusy$. 
 //
 //============================================================ 
 
@@ -142,7 +145,7 @@
 //
 //  .KHKilledBoss	- 0/1 depending on if the boss has been killed.
 //
-//  .KHQuestBusy	- Holds strcharinfo(0) for "locking" reasons, so only that person can use the door. Variable is unset at boss room reset.
+//  $@KHQuestBusy$	- Holds strcharinfo(0) for "locking" reasons, so only that person can use the door. Variable is unset at boss room reset.
 //
 //  $@KH_DoorInvoker$	- Holds character name, so only that person can use certain NPCs.
 //
@@ -6447,15 +6450,15 @@ OnMyMobDead:
 // - 10 minute timer is QEUSTIONABLE, may not even be a 10 minute limit.
 //   Put it in anyway, used to make sure people don't abuse the room.
 //----------------------------------------------------------------------------
-kh_kiehl01,166,187,0	script	Big Door::BigDoorKHQ5	111,{
+kh_kiehl01,166,187,0	script	Big Door#5::BigDoorKHQ5	111,{
 	if (($@KH_DoorInvoker$ == "") && (KielHyreQuest >= 84) && (KielHyreQuest <= 106)) {
 
-		if (.KHQuestBusy$ == "") {
+		if ($@KHQuestBusy$ == "") {
 			initnpctimer;
-			set .KHQuestBusy$,strcharinfo(0);
+			set $@KHQuestBusy$,strcharinfo(0);
 		}
 
-		else if (strcharinfo(0) != .KHQuestBusy$) {
+		else if (strcharinfo(0) != $@KHQuestBusy$) {
 			goto L_CannotOpen;
 		}
 
@@ -6644,7 +6647,7 @@ kh_kiehl01,166,187,0	script	Big Door::BigDoorKHQ5	111,{
 
 OnTimer600000:
 	stopnpctimer;
-	set .KHQuestBusy$,"";
+	set $@KHQuestBusy$,"";
 	end;
 }
 
@@ -6658,7 +6661,6 @@ OnTimer30000:
 	stopnpctimer;
 	misceffect 215;
 	disablenpc "Big_Door_5_Warp";
-	set getvariableofnpc(.KHDoor5Opened,"Big Door::BigDoorKHQ5"),0;
 	end;
 
 OnInit:
@@ -7129,6 +7131,7 @@ kh_kiehl02,50,52,4	script	Kiehl#Original	902,{
 			mes "Kiehl's old robotic body.^000000";
 			getitem 7508,1; //Elisia's_Ring
 			set KielHyreQuest,106;
+			enablenpc "Kiehl_Room_Exit";
 			close2;
 			cutin "",255;
 			end;
@@ -7217,7 +7220,7 @@ OnReset:
 	set getvariableofnpc(.KHKilledBoss,"KiehlRoom"),0;
 	set getvariableofnpc(.KHKilled,"KiehlRoom"),0;
 	set getvariableofnpc(.KHTrapSprung,"Kiehl_Room_Trap"),0;
-	set getvariableofnpc(.KHQuestBusy$,"Big Door::BigDoorKHQ5"),"";
+	set $@KHQuestBusy$,"";
 	set $@KH_DoorInvoker$,"";
 }
 
@@ -7272,7 +7275,7 @@ OnInit:
 //----------------------------------------------------------------------------
 kh_kiehl02,50,59,0	script	Kiehl_Room_Exit	45,1,1,{
 OnTouch:
-	if (getmapusers("KH_Kiehl02") < 1) {
+	if (getmapusers("kh_kiehl02") < 1) {
 		donpcevent "KiehlRoom::OnReset";
 		warp "lighthalzen",193,202;
 	}
