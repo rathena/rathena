@@ -1,6 +1,9 @@
 Date		Added
 ======
 2007/05/01
+	* Added Few Missings NPCs to the Airplane [Samuray22]
+	- Changed name form girl#10 to the Official name "Dianne".
+	* Added "How Does the Airship Work" Quest. [Samuray22]
 	* Updated Gunslinger Job Change Quest to official. [SinSloth]
 	* Fixed a minor bug in Ninja Job Change Quest. [SinSloth]
 	* Even more Fixes to the Kiel Hyre Quest [L0ne_W0lf]

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 0.6
+//= 0.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -20,6 +20,9 @@
 //= 0.5a Fixed a typo [Evera] 
 //= 0.5b Fixed appledice bugs [Lupus]
 //= 0.6 Added Rachel to the international route [Playtester]
+//= 0.7 Implemented Few Missings NPCs like (Pilot, Aanos, etc...).
+//=	Corrected Dialogs from some NPCs.
+//=	Added sistem to work with the "How Does the Airship Work" Quest [Samuray22]
 //============================================================ 
 
 //============================================================ 
@@ -361,7 +364,6 @@ s_Material:
 
 }
 
-
 airplane,33,69,4	script	Kaci	73,{
 	callfunc "applegamble","Kaci";
 	end;
@@ -392,6 +394,15 @@ airplane,65,63,4	script	Maelin	714,{
 	mes "been waiting so long,";
 	mes "but I haven't heard any";
 	mes "broadcast about Lutie.";
+	close;
+}
+
+airplane,72,34,2	script	Aanos	702,{
+	mes "[Aanos]";
+	mes "Oh wooow~";
+	mes "The sky looks";
+	mes "so different and";
+	mes "pretty from up there!";
 	close;
 }
 
@@ -563,6 +574,61 @@ s_Record:
 
 }
 
+airplane_01,221,158,6	script	Pilot#air-0::Pilot	852,{
+	set @pilot, rand(1,4);
+	if (@pilot == 1) {
+		mes "[Pilot]";
+		mes "Longitude, 131 degrees east.";
+		mes "Latitude, 37 degrees north.";
+		mes "We're right on course, captain.";
+		close;
+	} else if(@aa == 2) {
+		mes "[Pilot]";
+		mes "Looks like a really";
+		mes "cloudy day. Always hard";
+		mes "to navigate when the skies";
+		mes "aren't clear. Guess we'll";
+		mes "need to amp the radar.";
+		close;
+	} else if(@aa == 3) {
+		mes "[Pilot]";
+		mes "The Captain is a good";
+		mes "man and I can't think of";
+		mes "a finer person to command";
+		mes "this ship. Still, he's pretty";
+		mes "tough, a real slave driver.";
+		next;
+		mes "[^ff0000Tarlock^000000]";
+		mes "^ff0000Hey...!^000000";
+		mes "^ff0000Less chit-chat^000000";
+		mes "^ff0000and more piloting!^000000";
+		next;
+		mes "[Pilot]";
+		mes "R-right away, sir!";
+		mes "(See what I mean?)";
+		close;
+	}
+		mes "[Pilot]";
+		mes "This uniform is";
+		mes "really dapper, but";
+		mes "it's way too thick to";
+		mes "wear around the Airship.";
+		next;
+		mes "[Pilot]";
+		mes "...";
+		mes "......";
+		mes "No one ever really";
+		mes "comes into this room.";
+		mes "And the captain IS a reindeer.";
+		mes "I could just strip to my boxers.";
+		next;
+		//Emotion "Pilot#airplane_01" ET_HUK
+		mes "[Pilot]";
+		mes "Oh...! Hello there!";
+		mes "E-e-enjoying your flight?!";
+		close;
+}
+
 //============================================================ 
 //= The Airship System (Izlude -> Yuno -> Rachel -> Repeat)
 //============================================================ 
@@ -601,6 +667,7 @@ airplane_01,1,1,0	script	YunoIzl_Airship	-1,{
 OnInit:
 while(1)
 {
+	disablenpc "Quest_Izl";
 	initnpctimer;
 	setnpctimer 0;
 	set $@airplanelocation2,0;
@@ -611,6 +678,13 @@ while(1)
 	mapannounce "airplane_01","The Airship is leaving the ground. Our next destination is Izlude.",1,0x00FF00;
 	end;
 OnTimer15000:
+	set $@mobinv, $@mob_inv+1;
+	set $@mobrand, rand(1,3);
+	if($@mobinv == 9 && $@mobrand == 3) {
+		stopnpctimer;
+		enablenpc "Quest_Izl";
+		donpcevent "Quest_Izl::OnInvasion";
+	}
 	mapannounce "airplane_01","We are heading to Izlude.",1,0x00FF00;
 	end;
 OnTimer30000:
@@ -680,6 +754,12 @@ OnTimer185000:
 OnTimer195000:
  	stoptimer;
 }
+OnReturn:
+	killmonsterall "airplane_01";
+	set $@mobinv, 0;
+	mapannounce "airplane_01","Monster thread nullfied. The Airship is now returning to normal operation.",1,0x00FF00;
+	startnpctimer;
+	end;
 }
 
 //============================================================ 
@@ -702,8 +782,10 @@ airplane_01,50,66,4	duplicate(AirshipApples)	Meltz	86
 
 airplane_01,32,61,4	duplicate(TypingContest)	Nils	49	
 
-airplane_01,83,61,2	script	Girl#10	72,{
+airplane_01,221,158,6	duplicate(Pilot)	Pilot#air-1	852
 
+
+airplane_01,83,61,2	script	Dianne	72,{
 	mes "[Dianne]";
 	mes "It's so weird!";
 	mes "I went to visit the";
@@ -712,7 +794,9 @@ airplane_01,83,61,2	script	Girl#10	72,{
 	mes "weird reindeer. Oh!";
 	mes "Do you think that...";
 	close;
-
+OnTouch:
+	Emotion 28, "Dianne";
+	end;
 }
 
 airplane_01,69,63,2	script	Old Man#06	55,{
@@ -731,6 +815,21 @@ airplane_01,69,63,2	script	Old Man#06	55,{
 airplane_01,33,68,4	script	Clarice	74,{
 	callfunc "applegamble","Clarice";
 	end;
+}
+
+airplane_01,71,31,6	script	Swordman Shimizu	106,{
+	mes "[Swordsman Shimizu]";
+	mes "Finally, after five";
+	mes "years of next;ing...";
+	mes "I can have my revenge!";
+	next;
+	mes "[Swordsman Shimizu]";
+	mes "I just...";
+	mes "Have to make sure that";
+	mes "I don't keep missing my";
+	mes "stop. But soon, very soon,";
+	mes "vengeance will be mine!";
+	close;
 }
 
 //============================================================ 
@@ -917,6 +1016,26 @@ s_Warp:
 	end;
 
 }
+
+yuno,14,262,3	script	Airship Staff#yuno01::Airship Staff	91,{
+	mes "[Airship Staff]";
+	mes "Welcome to Juno Airport.";
+	mes "Please use this door to";
+	mes "board the Airship that will";
+	mes "be flying all the way to Izlude";
+	mes "in the Rune-Midgarts Kingdom.";
+	next;
+	mes "[Airship Staff]";
+	mes "Otherwise, if Juno is";
+	mes "your intended destination,";
+	mes "please head down the stairs";
+	mes "and ask the Arrival Staff to lead";
+	mes "you to the main terminal. Thank";
+	mes "you, and enjoy your travels.";
+	close;
+}
+
+yuno,88,263,5	duplicate(Airship Staff)	Airship Staff#yuno02	91
 
 //============================================================ 
 //= Apple Gambling Function

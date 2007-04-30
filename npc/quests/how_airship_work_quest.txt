@@ -1,0 +1,727 @@
+//===== eAthena Script ======================================= 
+//= "How Does the Airship Work" Quest
+//===== By: ================================================== 
+//= Samuray22
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= Quest about how work the airship
+//= Reward: -Base Experience 200.000
+//=	    -Job Experience 10.000
+//===== Additional Comments: ================================= 
+//= 1.0 First Beta [Samuray22]
+//============================================================ 
+airplane_01,1,1,0	script	Quest_Izl	-1,{
+OnInit:
+	disablenpc "Airship Captain#02";
+OnInvasion:
+while($@mobinv == 9 && $@mobrand == 3)
+{
+	Initnpctimer;
+	end;
+OnTimer1764000:
+	mapannounce "airplane_01","Captain: Attention, all passengers.",1,0x00FF00;
+	end;
+OnTimer10000:
+	mapannounce "airplane_01","Captain: We are being approached by a group of unidentified creatures.",1,0x00ff00;
+	end;
+OnTimer12000:
+	mapannounce "airplane_01", "Captain: All passengers on deck, please find shelter inside the ship!",1,0x00ff00;
+	disablenpc "Airship Staff#info";
+	end;
+OnTimer16000:
+	monster "airplane_01",245,57,"Gremlin",1632,1;
+	monster "airplane_01",247,59,"Gremlin",1632,1;
+	monster "airplane_01",249,52,"Gremlin",1632,1;
+	monster "airplane_01",243,62,"Gremlin",1632,1;
+	monster "airplane_01",239,52,"Beholder",1633,1;
+	monster "airplane_01",234,56,"Beholder",1633,1;
+	monster "airplane_01",227,49,"Beholder",1633,1;
+	monster "airplane_01",233,41,"Beholder",1633,1;
+	set $@monster, rand(1,5);
+	if($@monster == 1) {
+		monster "airplane_01",251,47,"Drainliar",1434,1;
+		monster "airplane_01",245,53,"Drainliar",1434,1;
+		monster "airplane_01",234,46,"Drainliar",1434,1;
+		monster "airplane_01",233,58,"Drainliar",1434,1;
+		monster "airplane_01",243,60,"Drainliar",1434,1;
+		monster "airplane_01",228,54,"Drainliar",1434,1;
+		monster "airplane_01",232,41,"Drainliar",1434,1;
+	} else if($@monster == 2) {
+		monster "airplane_01",251,47,"Rotar Zairo",1557,1;
+		monster "airplane_01",245,53,"Rotar Zairo",1557,1;
+		monster "airplane_01",234,46,"Rotar Zairo",1557,1;
+		monster "airplane_01",233,58,"Rotar Zairo",1557,1;
+		monster "airplane_01",243,60,"Rotar Zairo",1557,1;
+		monster "airplane_01",228,54,"Rotar Zairo",1557,1;
+		monster "airplane_01",232,41,"Rotar Zairo",1557,1;
+	} else if($@monster == 3) {
+		monster "airplane_01",251,47,"Farmiliar",1419,1;
+		monster "airplane_01",245,53,"Farmiliar",1419,1;
+		monster "airplane_01",234,46,"Farmiliar",1419,1;
+		monster "airplane_01",233,58,"Farmiliar",1419,1;
+		monster "airplane_01",243,60,"Farmiliar",1419,1;
+		monster "airplane_01",228,54,"Farmiliar",1419,1;
+		monster "airplane_01",232,41,"Farmiliar",1419,1;
+	} else if($@monster == 4) {
+		monster "airplane_01",251,47,"Picky",1050,1;
+		monster "airplane_01",245,53,"Picky",1050,1;
+		monster "airplane_01",234,46,"Picky",1050,1;
+		monster "airplane_01",233,58,"Picky",1050,1;
+		monster "airplane_01",243,60,"Picky",1050,1;
+		monster "airplane_01",228,54,"Picky",1050,1;
+		monster "airplane_01",232,41,"Picky",1050,1;
+	} else if($@monster == 5) {
+		monster "airplane_01",251,47,"Steel Chonchon",1042,1;
+		monster "airplane_01",245,53,"Steel Chonchon",1042,1;
+		monster "airplane_01",234,46,"Steel Chonchon",1042,1;
+		monster "airplane_01",233,58,"Steel Chonchon",1042,1;
+		monster "airplane_01",243,60,"Steel Chonchon",1042,1;
+		monster "airplane_01",228,54,"Steel Chonchon",1042,1;
+		monster "airplane_01",232,41,"Steel Chonchon",1042,1;	
+	}
+	end;
+OnTimer16010:
+	monster "airplane_01",238,56,"Gremlin",1632,1;
+	monster "airplane_01",239,56,"Gremlin",1632,1;
+	monster "airplane_01",240,50,"Gremlin",1632,1;
+	monster "airplane_01",241,56,"Gremlin",1632,1;
+	monster "airplane_01",247,51,"Gremlin",1632,1;
+	monster "airplane_01",237,44,"Beholder",1633,1;
+	monster "airplane_01",233,54,"Beholder",1633,1;
+	monster "airplane_01",237,62,"Beholder",1633,1;
+	end;
+OnTimer21000:
+	mapannounce "airplane_01", "Attendant: Captain Tarlock, we're in trouble! The monsters are heading to the propellers!",1,0x00FF00;
+	end;
+OnTimer26000:
+	mapannounce "airplane_01", "Captain Tarlock: What?! I've got to stop them!",1,0x70DBDB;
+	end;
+OnTimer31000:
+	disablenpc "Airship Captain#01";
+	enablenpc "Airship Captain#02";
+	end;
+OnTimer36000:
+	emotion 6, "Airship Captain#02";
+	mapannounce "airplane_01", "Captain Tarlock: You ugly, godforsaken creatures... Get off my ship!",1,0x70DBDB;
+	end;
+OnTimer36500:
+	mapannounce "airplane_01", "*Kzzz...Drrrr...Boom! CRASH!*",1,0x00FF00;
+	donpcevent "boom#air-6::OnAttack"; //6
+	end;
+OnTimer37000:
+	donpcevent "boom#air-7::OnAttack"; //7
+	end;
+OnTimer37500:
+	donpcevent "boom#air-8::OnAttack"; //8
+	end;
+OnTimer38000:
+	donpcevent "boom#air-9::OnAttack"; //9
+	end;
+OnTimer38500:
+	donpcevent "boom#air-10::OnAttack"; //10
+	end;
+OnTimer39000:
+	donpcevent "boom#air-6::OnAttack"; //6
+	end;
+OnTimer39500:
+	donpcevent "boom#air-7::OnAttack"; //7
+	end;
+OnTimer40000:
+	donpcevent "boom#air-8::OnAttack"; //8
+	end;
+OnTimer40500:
+	donpcevent "boom#air-9::OnAttack"; //9
+	end;
+OnTimer41000:
+	donpcevent "boom#air-10::OnAttack"; //10
+	end;
+OnTimer41500:
+	donpcevent "boom#air-6::OnAttack"; //6
+	mapannounce "airplane_01", "Engineer: Oh no! We've got a problem with the Number One Rear Engine!",1,0x00FF00;
+	end;
+OnTimer42500:
+	donpcevent "boom#air-7::OnAttack"; //7
+	end;
+OnTimer43500:
+	donpcevent "boom#air-8::OnAttack"; //8
+	end;
+OnTimer44500:
+	donpcevent "boom#air-9::OnAttack"; //9
+	end;
+OnTimer45500:
+	donpcevent "boom#air-10::OnAttack"; //10
+	end;
+OnTimer46500:
+	mapannounce "airplane_01", "Pilot: Hurry! Get the women, old people and children somewhere safe first! Hurry!",1,0x00FF00;
+	end;
+OnTimer47500:
+	donpcevent "boom#air-6::OnAttack"; //6
+	end;
+OnTimer48500:
+	donpcevent "boom#air-7::OnAttack"; //7
+	end;
+OnTimer49500:
+	donpcevent "boom#air-8::OnAttack"; //8
+	end;
+OnTimer50500:
+	donpcevent "boom#air-7::OnAttack"; //7
+	end;
+OnTimer51500:
+	Emotion 6, "Airship Captain#02";
+	mapannounce "airplane_01", "Captain Tarlock: You dirty monsters are dealing with this ship's captain...",1,0x70DBDB;
+	end;
+OnTimer56500:
+	Emotion 6, "Airship Captain#02";
+	mapannounce "airplane_01", "Captain Tarlock: I'll protect this ship and my crew with my life!",1,0x70DBDB;
+	end;
+OnTimer61500:
+	Emotion 29, "Airship Captain#02";
+	mapannounce "airplane_01", "Captain Tarlock: Here goes! Special Exodus Joker XIII Doom Rifle!",1,0x70DBDB;
+	end;
+OnTimer66500:
+	mapannounce "airplane_01", "*Bang! Bang Bang! Bang Bang! Bang Bang Bang!*",1,0x00FF00;
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer67000:
+	donpcevent "boom#air-1::OnAttack"; //1
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer67500:
+	donpcevent "boom#air-2::OnAttack"; //2
+	//ShowEffect "Airship Captain#02" EF_HIT5
+	end;
+OnTimer68000:
+	donpcevent "boom#air-3::OnAttack"; //3
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer68500:
+	donpcevent "boom#air-4::OnAttack"; //4
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer69000:
+	donpcevent "boom#air-5::OnAttack"; //5
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer69500:
+	donpcevent "boom#air-0::OnAttack"; //0
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer70000:
+	donpcevent "boom#air-1::OnAttack"; //1
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer70500:
+	donpcevent "boom#air-2::OnAttack"; //2
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer71000:
+	donpcevent "boom#air-4::OnAttack"; //4
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer71500:
+	donpcevent "boom#air-5::OnAttack"; //5
+	end;
+OnTimer72000:
+	Emotion 6, "Airship Captain#02";
+	mapannounce "airplane_01","Captain Tarlock: Filthy animals! Stop ruining my ship!",1,0x70DBDB;
+	end;
+OnTimer72500:
+	mapannounce "airplane_01", "*Bang! Bang Bang! Bang Bang! Bang Bang Bang!*",1,0x00FF00;
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer73000:
+	donpcevent "boom#air-6::OnAttack"; //6
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer73500:
+	donpcevent "boom#air-7::OnAttack"; //7
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer74000:
+	donpcevent "boom#air-8::OnAttack"; //8
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer74500:
+	donpcevent "boom#air-9::OnAttack"; //9
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer75000:
+	donpcevent "boom#air-10::OnAttack"; //10
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer75500:
+	donpcevent "boom#air-6::OnAttack"; //6
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer76000:
+	donpcevent "boom#air-7::OnAttack"; //7
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer76500:
+	donpcevent "boom#air-8::OnAttack"; //8
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer77000:
+	donpcevent "boom#air-9::OnAttack"; //9
+	donpcevent "Airship Captain#02::OnStart:";
+	end;
+OnTimer77500:
+	donpcevent "boom#air-8::OnAttack"; //8
+	mapannounce "airplane_01", "*Boom! Boom Boom! Boom Boom! Boom!*",1,0x00FF00;
+	end;
+OnTimer78000:
+	donpcevent "boom#air-9::OnAttack"; //9
+	end;
+OnTimer78500:
+	donpcevent "boom#air-10::OnAttack"; //10
+	end;
+OnTimer79000:
+	donpcevent "boom#air-6::OnAttack"; //6
+	end;
+OnTimer79500:
+	donpcevent "boom#air-7::OnAttack"; //7
+	end;
+OnTimer80000:
+	Emotion 26,"Airship Captain#02";
+	mapannounce "airplane_01", "Captain Tarlock: There's... To many to handle!",1,0x70DBDB;
+	end;
+OnTimer85000:
+	mapannounce "airplane_01", "Pilot: Captain, sir, the situation is getting critical!",1,0x00FF00;
+	end;
+OnTimer100000:
+	Emotion 4,"Airship Captain#02";
+	mapannounce "airplane_01", "Captain Tarlock: We'll need all the help we can get!",1,0x70DBDB;
+	end;
+OnTimer125000:
+	Emotion 26,"Airship Captain#02";
+	mapannounce "airplane_01", "Captain Tarlock: All hands and any passenger who can fight! We've got to drive away these monsters!",1,0x70DBDB;
+	end;
+OnTimer130000:
+	disablenpc "Airship Captain#02";
+	enablenpc "Airship Captain#01";
+	enablenpc "Airship Staff#info";
+	donpcevent "YunoIzl_Airship::OnReturn";
+	end;
+}
+}
+
+airplane_01,246,54,5	script	Airship Captain#02	873,{
+	mes "[Tarlock]";
+	mes "I am Tarlock,";
+	mes "captain of this";
+	mes "Airship. Go and";
+	mes "fight with the";
+	mes "Gremlins!";
+	close;
+OnAttack:
+	misceffect 4;
+	end;
+}
+airplane_01,238,154,5	script	Airship Captain#01	873,{
+	mes "[Tarlock]";
+	mes "I am Tarlock,";
+	mes "captain of this";
+	mes "Airship. Did you";
+	mes "have a question?";
+	next;
+	if (lght_air >= 0 && lght_air <= 2 || lght_air == 7) {
+		set question$, "How does this Airship fly?";
+	} else if(lght_air == 4) {
+		set question$, "I handed the letter to Captain Ferlock.";
+	} else if(lght_air == 5) {
+		set question$, "You finished reading the letter?";
+	} else if(lght_air == 6) {
+		set question$, "Already finished reading?";
+	}
+	switch( select( "Y-you're a reindeer?!", ""+question$+"", "No, not really." )){
+	case 1:
+		mes "[Tarlock]";
+		mes "Hm? Oh, that";
+		mes "We reindeer are a proud";
+		mes "race who like to travel the";
+		mes "world. But that should be";
+		mes "obvious if you think of the";
+		mes "reindeer working for Claus.";
+		next;
+		mes "[Tarlock]";
+		mes "Well, reindeer or";
+		mes "not, I've earned the";
+		mes "captaincy of this ship";
+		mes "and the loyalty of my crew.";
+		mes "We'll do everything we can to";
+		mes "make sure your flight is safe.";
+		close;
+	case 2:
+		if(lght_air == 1) {
+			if (BaseLevel <= 59) {
+				mes "[Tarlock]";
+				mes "Mm...?";
+				mes "Didn't you ask me that";
+				mes "before? Well, in any case";
+				mes "I apologize, but I'm still not";
+				mes "allowed to tell you that secret.";
+				close;
+			} else {
+				mes "[Tarlock]";
+				mes "Mm...?";
+				mes "Didn't you ask me that";
+				mes "before? Are you just curious";
+				mes "or did you really want to know?";
+				next;
+				switch( select( "No, not really...", "Yes, I really want to know!")) {
+				case 1:
+					mes "[Tarlock]";
+					mes "Hahahaha~";
+					mes "Maybe someday you'll";
+					mes "figure out how this Airship";
+					mes "is able to stay aloft and";
+					mes "fly through the skies.";
+					close;
+				case 2:
+					mes "[Tarlock]";
+					mes "In all honestly, the";
+					mes "secret to this Airship's";
+					mes "flight is something that";
+					mes "only captains are authorized";
+					mes "to know. So I shouldn't really";
+					mes "tell you anything about it.";
+					next;
+					mes "[Tarlock]";
+					mes "But I've never been able";
+					mes "to trust upper management";
+					mes "so I don't have any loyalty to";
+					mes "them. I wouldn't mind telling";
+					mes "you that classified info if you";
+					mes "do a little favor for me first.";
+					next;
+					switch( select( "Let me think about it.", "Sure.")) {
+					case 1:
+						mes "[Tarlock]";
+						mes "Alright. But don't";
+						mes "worry, I'm not going";
+						mes "to ask you to do anything";
+						mes "that you can't handle. Come";
+						mes "back after you decide, alright?";
+						close;
+					case 2:
+						set lght_air, 2;
+						mes "[Tarlock]";
+						mes "Ha-hah! I like you";
+						mes "already! Alright, here's";
+						mes "the deal. I have a younger";
+						mes "brother who I rarely see since";
+						mes "he's also an Airship Captain";
+						mes "that's always traveling.";
+						next;
+						mes "[Tarlock]";
+						mes "Would you bring this";
+						mes "letter to my brother,";
+						mes "Ferlock? Also, please";
+						mes "make sure that you come";
+						mes "back with his reply, alright?";
+						mes "Thank you, adventurer.";
+						next;
+						mes "[Tarlock]";
+						mes "Oh, and once you meet";
+						mes "my brother, please help";
+						mes "him out. He'll explain it";
+						mes "once you see him.";
+						next;
+						mes "^3131FFYou have received";
+						mes "Captain Tarlock's letter";
+						mes "to deliver to his younger";
+						mes "brother, Captain Ferlock.";
+						close;
+					}
+				}
+			}
+		} else if(lght_air == 4) {
+			set lght_air, 5;
+			mes "[Tarlock]";
+			mes "Oh!";
+			mes "And he answer you? Really?!";
+			mes "In fact, I wasn't";
+			mes "expecting that too much...";
+			mes "Please wait a little,";
+			mes "I'll read his letter.";
+			close;
+		} else if(lght_air == 5) {
+			set lght_air, 6;
+			mes "[Tarlock]";
+			mes "Um... Ha ha ha~!";
+			mes "This guy, he is a real lover!";
+			mes "But his true inner man";
+			mes "is limited by his duty.";
+			mes "What do you think?";
+			mes "Hoh hoh hoh.";
+			next;
+			mes "^3131ffHe continue reading";
+			mes "the letter.^000000";
+			close;
+		} else if(lght_air== 6) {
+			mes "[Tarlock]";
+			mes "Yes, I finished.";
+			mes "Even if I understand him";
+			mes "I've a totally different";
+			mes "point of view. But both";
+			mes "of us are fearless.";
+			next;
+			mes "[Tarlock]";
+			mes "Oh, I almost forgot,";
+			mes "I'll teach you what you";
+			mes "wanted to know.";
+			next;
+			mes "[Tarlock]";
+			mes "The Airship's secret to float is...";
+			mes "The large boiler is setted on fire,";
+			mes "That moves the pistons, gears";
+			mes "and turbines with the steam";
+			mes "that is generated when the water";
+			mes "passes within the boiler.";
+			next;
+			mes "[Tarlock]";
+			mes "That turns the propeller.";
+			mes "That's all. Did you understand?";
+			next;
+			switch( select( "Um? Only that? There's no more?")) {
+			case 1:
+				mes "[Tarlock]";
+				mes "Ha ha ha!";
+				mes "I explained it roughtly to";
+				mes "make it easier to understand";
+				mes "by you. Still, you aren't";
+				mes "pleased? I said it in plain";
+				mes "english that everyone could";
+				mes "understand.";
+				next;
+				mes "[Tarlock]";
+				mes "Obviously, only with a steam";
+				mes "is impossible to make this fly.";
+				mes "Therefore, it uses an amplifier";
+				mes "called ^ff0000Rune Mechanism^000000.";
+				next;
+				switch( select( "Uh? What's a Rune Mechanism?")) {
+				case 1:					
+					mes "[Tarlock]";
+					mes "It's a device that uses a";
+					mes "magic stone as power source.";
+					mes "However, I don't know how";
+					mes "this work...";
+					mes "I forgot the details probably";
+					mes "because I didn't paid much attention.";
+					next;
+					mes "[Tarlock]";
+					mes "The only I remember is";
+					mes "that the energy is amplified";
+					mes "while it passes through the";
+					mes "Rune that is attached to a";
+					mes "steam engine.";
+					next;
+					mes "[Tarlock]";
+					mes "In fact, all this airship";
+					mes "floats thanks to the power";
+					mes "given by the stone, no";
+					mes "exaggeration.";
+					mes "It has really a strong power.";
+					next;
+					specialeffect2 231;
+					mes "[Tarlock]";
+					mes "Did you understand?";
+					mes "I'll rest a little.";
+					mes "I'm tired for reading";
+					mes "and writing those long";
+					mes "letters.";
+					set lght_air, 7;
+					getexp 200000, 10000;
+					close;
+				}
+			}
+		} else if(lght_air == 7) {
+			mes "[Tarlock]";
+			mes "Didn't I teach you before?";
+			mes "I won't explain such a long";
+			mes "tale again!";
+			close;
+		} else if(lght_air == 2) {
+			mes "[Tarlock]";
+			mes "Hahahah! Don't worry, I'll";
+			mes "tell you know this Airship";
+			mes "flies once you deliver that";
+			mes "letter to my brother, Ferlock,";
+			mes "and bring back his reply.";
+			close;
+		}
+		mes "[Tarlock]";
+		mes "Hahaha! How this";
+		mes "Airship flies? Yes, it's";
+		mes "quite wonderful, isn't it?";
+		mes "Although that's a secret,";
+		mes "let me assure you that it's";
+		mes "nothing weird or dangerous.";
+		set lght_air, 1;
+		close;
+	case 3:
+		mes "[Tarlock]";
+		mes "Alright, then.";
+		mes "Thanks for flying";
+		mes "with us, and I hope";
+		mes "you enjoy your travels.";
+		close;
+	}
+}
+
+airplane,236,163,5	script	Airship Captain#03	873,{
+	mes "[Ferlock]";
+	mes "Hey there, welcome";
+	mes "aboard the Airship. I'm";
+	mes "Ferlock, your captain";
+	mes "on this flight. How can";
+	mes "I be of service to you?";
+	next;
+	if(lght_air == 2) {
+		set question2$, "Give him Tarlock's Letter.";
+		set question3$, "Cancel.";
+	} else if(lght_air == 3) {
+		set question2$, "Here are the items I've found.";
+		set question3$, "Cancel.";
+	} else {
+		set question2$, "Cancel.";
+		set question3$, "";
+	}
+	switch( select( "How does this Airship fly?", ""+question2$+"", ""+question3$+"")) {
+	case 1:
+		mes "[Ferlock]";
+		mes "I'm sorry, but I can't";
+		mes "give you that kind of";
+		mes "classified information.";
+		mes "It's too important to the";
+		mes "security and safety of";
+		mes "this Airship, you see.";
+		close;
+	case 2:
+		if (lght_air == 2) {
+		set lght_air, 3;
+		mes "^3131FFYou give Captain Ferlock";
+		mes "the letter that his brother";
+		mes "Tarlock has written for him.^000000";
+		next;
+		mes "[Ferlock]";
+		mes "Oh, this is from my";
+		mes "brother? Hey, thanks so";
+		mes "much for bringing this to";
+		mes "me for him. Ah, give me";
+		mes "a minute to read all of";
+		mes "this, would you now?";
+		next;
+		mes "[Ferlock]";
+		mes "...";
+		mes "So that's what he's been";
+		mes "up to. Huh. Hahaha! Oh, that's";
+		mes "funny. Ah, it's always good to";
+		mes "hear from Tarlock. Anyway,";
+		mes "I'm sorry to make you next;.";
+		next;
+		mes "[Ferlock]";
+		mes "Anyway, my brother wrote";
+		mes "about the usual stuff, but";
+		mes "he mentioned that he was";
+		mes "hoping to finally return a few";
+		mes "things he borrowed from me.";
+		mes "However, he lost them...";
+		next;
+		mes "[Ferlock]";
+		mes "It turns that those nasty";
+		mes "gremlins that sometimes";
+		mes "attack his ship stole my";
+		mes "things, so was he actually";
+		mes "hoping that you would";
+		mes "help me get them back.";
+		next;
+		mes "[Ferlock]";
+		mes "Yeah, yeah. He specifically";
+		mes "mentioned that I shouldn't";
+		mes "give you my reply until you";
+		mes "hunt those monsters and get";
+		mes "my stuff back. I'm sorry, but";
+		mes "I guess you owe big bro, huh?";
+		next;
+		mes "[Ferlock]";
+		mes "Well, if you're willing to";
+		mes "help me, would you get my";
+		mes "^ff00002 Will of the Darkness^000000 and";
+		mes "^ff00002 Prickly Fruit^000000 back for me?";
+		next;
+		mes "[Ferlock]";
+		mes "The monsters that attack";
+		mes "Tarlock's Airship should";
+		mes "have them. I'd appreciate";
+		mes "it if you'd help me out on";
+		mes "this, adventurer. Thanks";
+		mes "in advance and good luck~";
+		close;
+		} else if(lght_air == 3) {
+			if (countitem(7340) >= 2 && countitem(576) >= 2) {
+				delitem 7340, 2;
+				delitem 576, 2;
+				set lght_air, 4;
+				mes "[Ferlock]";
+				mes "You brought the items!";
+				mes "Thank you very much.";
+				mes "Here, take this letter";
+				mes "to my brother and give it";
+				mes "to him.";
+				next;
+				mes "^3131ffYou received a letter from the Captain.^000000";
+				next;
+				mes "[Ferlock]";
+				mes "Please give the best regards";
+				mes "to my big brother.";
+				mes "Well then, good bye.";
+				close;
+			}
+				mes "[Ferlock]";
+				mes "Oh, I'm sorry, but it looks";
+				mes "like you're missing something.";
+				mes "Would you please go and find";
+				mes "^ff00002 Will of the Darkness^000000 and";
+				mes "^ff00002 Prickly Fruit^000000? Thanks,";
+				mes "brave adventurer~";
+				close;
+		}
+		mes "[Ferlock]";
+		mes "Well, I hope that";
+		mes "you enjoy your time";
+		mes "here on the Airship";
+		mes "and that you have a";
+		mes "very pleasant journey.";
+		close;		
+	case 3:
+		mes "[Ferlock]";
+		mes "Well, I hope that";
+		mes "you enjoy your time";
+		mes "here on the Airship";
+		mes "and that you have a";
+		mes "very pleasant journey.";
+		close;
+	}
+}
+
+airplane_01,239,62,0	script	boom#air-1::boom	139,{
+OnAttack:
+	misceffect 183;
+	end;
+}
+//==========Duplicates=============
+airplane_01,244,55,0	duplicate(boom)	boom#air-2	139
+airplane_01,239,50,0	duplicate(boom)	boom#air-3	139
+airplane_01,245,59,0	duplicate(boom)	boom#air-4	139
+airplane_01,245,48,0	duplicate(boom)	boom#air-5	139
+airplane_01,235,39,0	duplicate(boom)	boom#air-6	139
+airplane_01,252,41,0	duplicate(boom)	boom#air-7	139
+airplane_01,252,63,0	duplicate(boom)	boom#air-8	139
+airplane_01,234,65,0	duplicate(boom)	boom#air-9::boom	139
+airplane_01,227,67,0	duplicate(boom)	boom#air-10::boom	139
+airplane_01,249,50,0	duplicate(boom)	boom#air-0::boom	139
