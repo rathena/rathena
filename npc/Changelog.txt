@@ -1,7 +1,9 @@
 Date		Added
 ======
 2007/05/01
-	* Updated Gunslinger weapon Inferno Quest to official. [SinSloth]
+	* Updated some Gunslinger quests. [SinSloth]
+	- Inferno Quest updated to official.
+	- Garrison Quest updated to official, thanks to Lazarus^.
 	* Elly now deletes the Iron_Box, and Kiel Hyre deletes the Pin. [L0ne_W0lf]
 	* More security on the 5th Big Door, now makes sure no one outside of who acticated it initially can use it. Resets after 10 minutes to make it. [L0ne_W0lf]
 	* Made it so that you need to be at least step 84 to activate the final door. [L0ne_W0lf]
