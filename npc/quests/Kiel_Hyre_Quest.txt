@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -21,6 +21,18 @@
 //= 1.4 Fixed doors not resetting in kh_kiehl01 after 30 second timer is up. [L0ne_W0lf]
 //= 1.5 Another bug fixed (&& instead of ||). [L0ne_W0lf]
 //= 1.6 More squashed bugs with if checking. [L0ne_W0lf]
+//= 1.7 Corrected some spelling mistakes. [gopelaez]
+//	Corrected Exploit with the pub man, giving infinite wine and money.
+//	Corrected pool and map not showing text for some states of the quest.
+//	Corrected Elly showing cutin but not text for some states of the quest (causing players to log off to continue).
+//	Let fisherman talk to you when you have 10 fishes OR MORE.
+//	Corrected not letting you enter the tombstone after finishing the quest.
+//= 1.8 Elly now deletes the Iron_Box, and Kiel Hyre deletes the Pin. [L0ne_W0lf]
+//= 	More security on the 5th Big Door, now makes sure no one outside of who-
+//=	acticated it initially can use it. Resets after 10 minutes to make it.
+//=	Made it so that you need to be at least step 84 to activate the final door.
+//=	Corrected not deleting Allysia's Ring from inventory.
+//
 //============================================================ 
 
 
@@ -116,6 +128,8 @@
 //
 //  @KHTitle$		- Holds "Mr", "Mrs", or "Miss"
 //
+//  @KHDoorPushAttempt	- Keeps track of how many times a person has attmepted pushed the door open.
+//
 //  @KHPryingItem$	- Used for incorrect options when prying open last door.
 //
 //  .KHKilled		- Tracks how many monsters have been killed. Used with "Receiver", "Robots", and "Kiehl" NPCs
@@ -127,6 +141,8 @@
 //  .KHDoor5Open	- 0/1 Depending on if the fifth door is opened.
 //
 //  .KHKilledBoss	- 0/1 depending on if the boss has been killed.
+//
+//  .KHQuestBusy	- Holds strcharinfo(0) for "locking" reasons, so only that person can use the door. Variable is unset at boss room reset.
 //
 //  $@KH_DoorInvoker$	- Holds character name, so only that person can use certain NPCs.
 //
@@ -402,8 +418,6 @@ yuno_in01,35,179,1	script	Pub Master	46,4,4,{
 	}
 
 	else if ((KielHyreQuest > 6) || (KHPubMasterEnd == 1)) {
-		//KHPubMasterEnd no longer needed-- deleting.
-		set KHPubMasterEnd,0;
 		mes "[Vandt]";		
 		mes "Hey, thanks a lot";
 		mes "for helping me out that";
@@ -956,7 +970,7 @@ kh_school,179,39,1	script	Cute Student	895,{
 				cutin "kh_elly03",2;
 				mes "[Elly]";
 				mes "Okay, I need to calm";
-				mes "down. I htink I can do";
+				mes "down. I think I can do";
 				mes "this with your help.";
 				mes "Would you please do me";
 				mes "this huge favor and bring";
@@ -1070,6 +1084,8 @@ kh_school,179,39,1	script	Cute Student	895,{
 			mes "these cookies?  It shouldn't take";
 			mes "long, so hold on just a bit.";
 			set KielHyreQuest,8;
+			//KHPubMasterEnd no longer needed-- deleting.
+			set KHPubMasterEnd,0;
 			delitem 519,7; //Milk
 			delitem 548,2; //Cheese
 			delitem 7182,5; //Cacao
@@ -1408,7 +1424,7 @@ kh_school,179,39,1	script	Cute Student	895,{
 		goto KH_Step26;
 	}
 
-	else if (KielHyreQuest == 26) {
+	else if (KielHyreQuest >= 26) {
 	KH_Step26:
 		mes "[Elly]";
 		mes "Say, "+strcharinfo(0)+",";
@@ -1631,6 +1647,7 @@ kh_school,178,180,5	script	Elly	895,{
 			mes "Sorry about that,";
 			mes "Grandpa";
 			getitem 7495,1; //Blue_Keycard
+			delitem 7491,1; //Iron_Box
 			set KielHyreQuest,36;
 			close;
 		}
@@ -1720,7 +1737,7 @@ kh_school,175,175,0	script	Cookie Basket	111,{
 		mes "^3355FFThese cookies aren't^000000";
 		mes "^3355FFstale yet, but they're no^000000";
 		mes "^3355FFlonger warm. If they're^000000";
-		mes "^3355FFnot room rtemperature,^000000";
+		mes "^3355FFnot room temperature,^000000";
 		mes "^3355FFthen they're a little cold.^000000";
 		close;
 	}
@@ -1836,7 +1853,7 @@ yuno_fild08,72,170,0	script	Grave	111,{
 
 	}
 
-	else if (KielHyreQuest == 106) {
+	else if (KielHyreQuest >= 106) {
 		if (countitem(7509) < 1) {
 			mes "^3355FFThe secret entrance";
 			mes "has now been sealed.^000000";
@@ -2220,7 +2237,7 @@ kh_vila,30,184,0	script	Apple Box	111,{
 // Cottage interior, dining room; Map
 //----------------------------------------------------------------------------
 kh_vila,44,126,0	script	Map	111,{
-	if ((KHCottagePoem1 < 1) && (KielHyreQuest < 30)) {
+	if ((KHCottagePoem1 < 2) && (KielHyreQuest < 30)) {
 		mes "^3355FFA magnificent world map,^000000";
 		mes "^3355FFdetailing the Rune-Midgarts^000000";
 		mes "^3355FFKingdom, Schwaltzvalt Republic,^000000";
@@ -2450,7 +2467,7 @@ kh_vila,14,55,0	script	Calabash	111,{
 // Cottage interior, garden; Pool
 //----------------------------------------------------------------------------
 kh_vila,39,41,0	script	pool	111,{
-	if ((KHCottagePoem1 < 1) && (KielHyreQuest < 30)) {
+	if ((KHCottagePoem1 < 3) && (KielHyreQuest < 30)) {
 		mes "^3355FFYou find a fancy pool^000000";
 		mes "^3355FFfilled with fresh water.^000000";
 		close;
@@ -3319,7 +3336,7 @@ kh_vila,185,68,0	script	Test Tube::TestTubeKHQ2	111,{
 			}
 
 		case 2:
-			mes "^3355FFLet's ionvestigate^000000";
+			mes "^3355FFLet's investigate^000000";
 			mes "^3355FFthis area a little^000000";
 			mes "^3355FFmore first.^000000";
 			close;
@@ -3697,6 +3714,21 @@ kh_school,122,186,4	script	Beautiful lady	894,{
 		cutin "",255;
 		end;
 	}
+	
+	else if (KielHyreQuest >= 44) {
+		mes "[Allysia]";
+		mes "I understand that this";
+		mes "is sudden, and I'm not";
+		mes "giving you a thorough";
+		mes "explanation, but something";
+		mes "horrible will happen if i don't";
+		mes "hurry as quickly as possible.";
+		close2;
+		warp "yuno_fild08",73,172;
+		cutin "",255;
+		end;
+	}
+	
 }
 
 //----------------------------------------------------------------------------
@@ -4486,6 +4518,7 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 								delitem 7501,1; //K.H's_Letter
 								delitem 7502,1; //James's_Memo
 								delitem 7503,1; //Portrait_of_a_Guy
+								delitem 7494,1; //Exquisite_Button
 								close;
 
 							}
@@ -4818,6 +4851,7 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 		mes "with my thanks for all of";
 		mes "your help, "+@KHTitle+". "+strcharinfo(0)+".";
 		getitem 616,1;  //Old card Album
+		delitem 7508,1; //Elisia's_Ring
 		getexp 1300000,0;
 	}
 
@@ -5352,8 +5386,6 @@ OnTouch:
 	end;
 
 OnEnable:
-	//Start timer that will close this portal in 30 seconds.
-	//timer
 	initnpctimer;
 	misceffect 215;
 	end;
@@ -5790,7 +5822,7 @@ kh_rossi,144,287,0	script	Desk::DeskKHQ2	111,{
 			mes "^3355FFthis second drawer. it^000000";
 			mes "^3355FFwas sent by a person^000000";
 			mes "^3355FFwith the initials, K.H.,^000000";
-			mes "^3355FFand addressed to Allysia.^000000";
+			mes "^3355FFand addressed to Allysia.^000000";
 			getitem 7501,1; //K.H's_Letter
 			close;
 		}
@@ -5867,7 +5899,7 @@ yuno_fild12,232,222,0	script		Old Fisherman	709,{
 		mes "Now, if you bring me some";
 		mes "Raw Fish, I'd be more friendly~";
 
-		if (countitem(544) == 10)  {
+		if (countitem(544) >= 10)  {
 			next;
 			mes "[Fisherman]";
 			mes "Oh, is all this fish";
@@ -6416,7 +6448,17 @@ OnMyMobDead:
 //   Put it in anyway, used to make sure people don't abuse the room.
 //----------------------------------------------------------------------------
 kh_kiehl01,166,187,0	script	Big Door::BigDoorKHQ5	111,{
-	if (($@KH_DoorInvoker$ == "") && (KielHyreQuest <= 106)) {
+	if (($@KH_DoorInvoker$ == "") && (KielHyreQuest >= 84) && (KielHyreQuest <= 106)) {
+
+		if (.KHQuestBusy$ == "") {
+			initnpctimer;
+			set .KHQuestBusy$,strcharinfo(0);
+		}
+
+		else if (strcharinfo(0) != .KHQuestBusy$) {
+			goto L_CannotOpen;
+		}
+
 		if (KielHyreQuest < 86) {
 			mes "^3355FFThis large door..";
 			mes "is closed shut.";
@@ -6451,11 +6493,14 @@ kh_kiehl01,166,187,0	script	Big Door::BigDoorKHQ5	111,{
 			mes "This must be some";
 			mes "kind of security device.^000000";
 			close2;
-			set KielHyreQuest,KielHyreQuest+2;
+			set @KHDoorPushAttempt,@KHDoorPushAttempt+1;
 			monster "kh_kiehl01",162,183,"Alicel",1739,1;
 			monster "kh_kiehl01",162,179,"Aliot",1740,1;
 			monster "kh_kiehl01",169,183,"Alicel",1739,1;
 			monster "kh_kiehl01",169,179,"Aliot",1740,1;
+			if (@KHDoorPushAttempt >= 3) { 
+				set KielHyreQuest,86; 
+			}
 			end;
 		}
 
@@ -6485,7 +6530,7 @@ kh_kiehl01,166,187,0	script	Big Door::BigDoorKHQ5	111,{
 
 			case 3:
 				if (countitem(7507) >= 1) {
-					if (KielHyreQuest < 94) {
+					if (KielHyreQuest < 92) {
 						mes "^3355FFYou insert one end of";
 						mes "a Solid Iron Piece into the";
 						mes "door's gap in a strenuous";
@@ -6557,8 +6602,7 @@ kh_kiehl01,166,187,0	script	Big Door::BigDoorKHQ5	111,{
 					set $@KH_DoorInvoker$,strcharinfo(0);
 					donpcevent "Big_Door_5_Warp::OnEnable";
 					enablenpc"Big_Door_5_Warp";
-					set .KHDoor5Opened,1;
-					//set .KHQuestBusy,1;
+					set .KHDoor5Opened,1;					set .KHQuestBusy,"";
 					end;
 
 				case 2:
@@ -6589,6 +6633,7 @@ kh_kiehl01,166,187,0	script	Big Door::BigDoorKHQ5	111,{
 	}
 
 	else {
+		L_CannotOpen:
 		mes "^3355FFThis large door..";
 		mes "is closed shut.";
 		mes "If you listen carefully,";
@@ -6597,6 +6642,10 @@ kh_kiehl01,166,187,0	script	Big Door::BigDoorKHQ5	111,{
 		close;
 	}
 
+OnTimer600000:
+	stopnpctimer;
+	set .KHQuestBusy$,"";
+	end;
 }
 
 kh_kiehl01,166,186,0	script	Big_Door_5_Warp	45,1,1,{
@@ -7168,6 +7217,7 @@ OnReset:
 	set getvariableofnpc(.KHKilledBoss,"KiehlRoom"),0;
 	set getvariableofnpc(.KHKilled,"KiehlRoom"),0;
 	set getvariableofnpc(.KHTrapSprung,"Kiehl_Room_Trap"),0;
+	set getvariableofnpc(.KHQuestBusy$,"Big Door::BigDoorKHQ5"),"";
 	set $@KH_DoorInvoker$,"";
 }
 
@@ -7243,3 +7293,4 @@ OnInit:
 }
 
 //============================================================================
+
