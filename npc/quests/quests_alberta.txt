@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 1.6 TEMPESTRA quest uses common quests variable MISC_QUEST 
 //=	Condition if done: (MISC_QUEST & 2) [Lupus]
 //= 1.7 Moved quest from cities/albera.txt [Evera]
+//= 1.8 Re-made the Doll Quest, now with official dialogs. [DZeroX]
 //============================================================ 
 
 
@@ -28,218 +29,362 @@
 //=======================================================================================================//
 //						Doll Quest
 //=======================================================================================================//
-alberta,117,134,8	script	Elin	96,{
-	mes "[Elin]";
-	if(Sex){
-		mes "Hello, mister. Hmm, since you're a boy, you don't like dolls, do you?";
-	}else{
-		mes "Hello, miss. Since you're a girl, you must like dolls, don't you?";
+alberta.gat,117,135,0	script	Elin	96,{
+	set .@weight,MaxWeight-Weight;
+	if ((.@weight) < 10000) {
+		mes "[Elin]";
+		mes "Wait a moment!!";
+		mes "You have brought too many things!";
+		mes "You cannot accept any more items!";
+		mes "Please reduce the amount of items,";
+		mes "then come see me again";
+		close;
+	}
+		mes "[Elin]";
+	if (Sex == 1) {
+		mes "Hello~!";
+		mes "Heh heh, you're a boy, so you";
+		mes "probably don't like dolls, right?";
+		mes "Well, I like dolls very very much!";
+	} else {
+		mes "Hi hi~! Oh, oh, do you like dolls?";
+		mes "I really really like dolls... Hee";
+		mes "Hee~!";
 	}
 	next;
 	mes "[Elin]";
-	mes "I LOVE dolls!!";
-	emotion e_lv2;
-	next;
-	mes "[Elin]";
-	mes "Ya know..... I REALLY, REALLY, want a new doll.  I hope daddy is going to buy me one for my birthday.....";
-	next;
-	menu "Aww, you must be happy...",-,"How about I give you one now?",M_2;
-
-		mes "[Elin]";
-		mes "Yeah, this time I'm hoping for a Yoyo doll.  Hehe, they're so cute! They're my FAVORITE!";
-		emotion e_ok;
-		close;
-	M_2:
-		mes "[Elin]";
-		mes "Oh my goodness! Really?? You're such a sweetie.... gimme, gimme!!";
-		mes "What kinda doll are you going to give me? Are you really gonna give me one?";
-		emotion e_gasp;
-		next;
-		menu "Puppet",-,"Poring doll",sM_2,"Chonchon doll",sM_3,"Rocker doll",sM_4, "Spore doll",sM_5,
-		           "Osiris doll",sM_6,"Baphomet doll",sM_7,"Racoon doll",sM_8,"Yoyo doll",sM_9, "I am as adorable as a doll!",sM_10;
-		
-			if(countitem(740) < 1) goto L_Liar;
-			delitem 740,1;
-			mes "[Elin]";
-			mes "Wow--! It's a rabbit! It's SOOOO cute!! Thank you SOOO much!";
-			emotion e_lv2;
+	mes "You know, I really really want a";
+	mes "new doll! I hope my daddy will give";
+	mes "me one on my birthday...!";
+	switch(select("Um, I hope your daddy gives you one too.","How about I give you one now?")) {
+		case 1:
 			next;
 			mes "[Elin]";
-			mes "It's SOOO fluffy... Oh yeah! Let me give you a present too!";
-			next;
-			mes "(diggs around in her pockets)";
-			next;
-			mes "[Elin]";
-			mes "Ummm ... found it! Here take this!";
-			next;
-			getitem 530,1;
-			mes "[Elin]";
-			mes "I got this from Santa. It's a candy cane~";
-			next;
-			mes "[Elin]";
-			mes "Thanks again for the rabbit doll! I'm gonna HUG this to sleep EVERY night~";
-			emotion e_thx;
+			mes "Yeah, I'm hoping";
+			mes "he gives me a Yoyo";
+			mes "doll. They're so cute!";
 			close;
-
-		sM_2:
-			if(countitem(741) < 1) goto L_Liar;
-			delitem 741,1;
-			mes "[Elin]";
-			mes "Yay! It's a poring doll! It's SOOOO cute! Since you gave me a doll I'll give you this....";
-			emotion e_lv2;
+		case 2:
 			next;
-			getitem 529,1;
+			set .@weight,MaxWeight-Weight;
+			if ((.@weight) < 10000) {
+				mes "[Elin]";
+				mes "Your weight is too heavy!";
+				mes "I will accept your doll if";
+				mes "you lighten your load.";
+				close;
+			}
 			mes "[Elin]";
-			mes "Thank you for the doll!";
-			emotion e_thx;
-			close;
-
-		sM_3:
-			if(countitem(742) < 1) goto L_Liar;
-			delitem 742,1;
-			mes "[Elin]";
-			mes "Ew whats this?.... a Chonchon ... doll? ...";
-			emotion e_wah;
-			next;
-			mes "[Elin]";
-			mes "Oh well, since you're giving it to me, I guess it's ok ....";
+			if (Sex == 1) {
+				mes "Oh my goodness!";
+				mes "Really? You're";
+				mes "such a sweetie~!";
+			} else {
+				mes "Will you really?";
+				mes "You're gonna give";
+				mes "me a doll? Yaaaay~";
+			}
 			next;
 			mes "[Elin]";
-			mes "Well here's a little something for giving me the doll.  Don't eat too much or you'll get cavities.";
-			getitem 530,1;
-			next;
-			mes "[Elin]";
-			mes ".... chonchon.... (~grumble, grumble~)";
-			emotion e_ag;
-			close;
-
-		sM_4:
-			if(countitem(752) < 1) goto L_Liar;
-			delitem 752,1;
-			mes "[Elin]";
-			mes "Oh! a Rocker doll.  I hate hopping things but this doll's kinda cute.";
-			next;
-			mes "[Elin]";
-			mes "Thank you.  Let me give you something too.";
-			next;
-			mes "[Elin]";
-			mes "Hmm, didn't I get some stuff from my uncle ...";
-			next;
-			mes "[Elin]";
-			mes "Here it is.  We've got tons of it at home so I'll share some with you~";
-			getitem 532,7;
-			next;
-			mes "[Elin]";
-			mes "Thanks again for the doll!";
-			emotion e_thx;
-			close;
-
-		sM_5:
-			if(countitem(743) < 1) goto L_Liar;
-			delitem 743,1;
-			mes "[Elin]";
-			mes "Blehh .... It's a mushroom... Mom's always scolding me for not eating mushrooms ...";
-			emotion e_swt;
-			next;
-			mes "[Elin]";
-			mes "I'll take it anyway, since the doll looks cute.  But I still won't eat mushrooms though ...";
-			next;
-			mes "[Elin]";
-			mes "Hmm, I'll need to give you a present too.";
-			next;
-			mes "[Elin]";
-			mes "My mom made this so please take it.";
-			getitem 538,5;
-			next;
-			mes "[Litte Kid]";
-			mes "Thank you for the doll~";
-			emotion e_thx;
-			close;
-
-		sM_6:
-			if(countitem(751) < 1) goto L_Liar;
-			delitem 751,1;
-			mes "[Elin]";
-			mes "Yay! It's an Osiris doll!";
-			next;
-			mes "[Elin]";
-			mes "Here's something for you too.";
-			getitem 522,2;
-			mes "[Elin]";
-			mes "Thank you for the doll!";
-			close;
-
-		sM_7:
-			if(countitem(750) < 1) goto L_Liar;
-			delitem 750,1;
-			mes "[Elin]";
-			mes "Yay! It's a Baphomet doll!";
-			next;
-			mes "[Elin]";
-			mes "Here's something for you too.";
-			getitem 525,5;
-			mes "[Elin]";
-			mes "Thank you for the doll!";
-			emotion e_thx;
-			close;
-
-		sM_8:
-			if(countitem(754) < 1) goto L_Liar;
-			delitem 754,1;
-			mes "[Elin]";
-			mes "Ah, it's a Smokie doll.  I hate Smokies, but the doll's really cute! Thank you!";
-			emotion e_ok;
-			next;
-			mes "[Elin]";
-			mes "Let me give you some of Grandma's home-made cake!";
-			getitem 539,3;
-			next;
-			mes "[Elin]";
-			mes "They're really good so make sure you eat them ok.";
-			next;
-			mes "[Elin]";
-			mes "Thanks again for this cute doll!";
-			emotion e_thx;
-			close;
-
-		sM_9:
-			if(countitem(753) < 1) goto L_Liar;
-			delitem 753,1;
-			mes "[Elin]";
-			mes "WOW--!!! OH MY GOSH! It's a Yoyo doll! This is what I REALLY wanted!! It's SOOOO cute......";
-			emotion e_lv2;
-			next;
-			mes "[Elin]";
-			mes "As a thank you, I'll give you this.";
-			getitem 608,1;
-			next;
-			mes "[Elin]";
-			mes "Dad picked them up during his travels.  It's a seed of some kind.";
-			mes "We tried planting them at home, but it doesn't seem to grow.";
-			next;
-			mes "[Elin]";
-			mes "Anyway, thank you SOOO MUCH for the Yoyo doll!!!!";
-			emotion e_thx;
-			close;
-
-		sM_10:
-			mes "[Elin]";
-			mes "BLAAAAAAAAHHH!! Don't make fun of me cuz I'm young!";
-			emotion e_pif;
-			next;
-			mes "[Elin]";
-			mes "(mumbles) .....'stupid'.....";
-			close;
-
-		L_Liar:
-			mes "[Elin]";
-			mes "HEY!! You don't have any dolls... I can't believe you would lie to a little kid!!!";
-			emotion e_gasp;
-			next;
-			mes "[Elin]";
-			mes "You're a MEANIE!! I HATE YOU!!!..... sniff... sniff.... Waaaaaaaaaaaaaaaaaaaahhhhhh!!";
-			emotion e_sob;
-			close;
+			mes "What kind of doll are you going to";
+			mes "give me? Are you really gonna give";
+			mes "me one?";
+			switch(select("Poring Doll","Chonchon Doll","Puppet","Rocker Doll","Spore Doll","Osiris Doll","Baphomet Doll","Racoon Doll","YoYo Doll","I'm as adorable as a doll.")) {
+				case 1:
+					next;
+					if (countitem(741) >= 1) {
+						mes "[Elin]";
+						mes "Yay, it's a poring doll!";
+						next;
+						delitem 741,1;
+						getitem 529,1;
+						mes "[Elin]";
+						mes "Thank you for the doll!";
+						close;
+					} else {
+						mes "[Elin]";
+						if (Sex == 1) {
+							mes "Aww...?";
+							mes "Were you only teasing me?";
+						} else {
+							mes "Aww...";
+							mes "You're not making fun of me are";
+							mes "you?";
+						}
+						next;
+						mes "[Elin]";
+						mes "I guess you forgot it somewhere...";
+						close;
+					}
+				case 2:
+					next;
+					if (countitem(742) >= 1) {
+						mes "[Elin]";
+						mes "Eh .... Chonchon ... doll ...";
+						next;
+						mes "[Elin]";
+						mes "Oh well, since you're giving it to me, I have to treasure it ....";
+						next;
+						delitem 742,1;
+						getitem 530,1;
+						mes "[Elin]";
+						mes "If I ate too much of it, I'll get cavities anyway.";
+						if (Sex == 1) {
+							mes "You too, mister.";
+						} else {
+							mes "You too, lady.";
+						}
+						mes "Don't eat too much, ok?";
+						mes "And thanks, by the way ...";
+						next;
+						mes "[Elin]";
+						mes "(Chonchon ... *mumble mumble*)";
+						close;
+					} else {
+						mes "[Elin]";
+						mes "Chonchon dolls are ugly anyways,";
+						mes "but you still lied to me! How can";
+						mes "you be so mean?!";
+						next;
+						mes "[Elin]";
+						mes "Waaaaaaaaaaaaaaaaah~~";
+						close;
+					}
+				case 3:
+					next;
+					if (countitem(740) >= 1) {
+						mes "[Elin]";
+						mes "Wow--! It's a rabbit!";
+						mes "It's so cute!!";
+						if (Sex == 1) {
+							mes "Thank you so much, mister!";
+						} else {
+							mes "Thank you so much, lady!";
+						}
+						next;
+						mes "[Elin]";
+						mes "So fluffy~";
+						mes "Oh yeah! Let me give you a present too!";
+						mes "Ummm ... found it!";
+						mes "Take this!";
+						next;
+						delitem 740,1;
+						getitem 530,1;
+						mes "[Elin]";
+						mes "I got this from Santa. It's a candy cane~";
+						if (Sex == 1) {
+							mes "Eat it too, mister.";
+						} else {
+							mes "Eat it too, lady.";
+						}
+						mes "Thank you for the rabbit doll!";
+						mes "I'm gonna hug this to sleep every night~";
+						close;
+					} else {
+						mes "[Elin]";
+						mes "Awww, you were only kidding?";
+						mes "W-W-Why are you teasing me like";
+						mes "that?";
+						next;
+						mes "[Elin]";
+						mes "*^CCCCCCSniff...^000000*";
+						next;
+						mes "[Elin]";
+						mes "Waaaaaaaaaaaaaaaaah~~";
+						close;
+					}
+				case 4:
+					next;
+					if (countitem(752) >= 1) {
+						mes "[Elin]";
+						mes "Ah, a Rocker doll.";
+						mes "I hate hopping things but the doll's kinda cute.";
+						next;
+						mes "[Elin]";
+						mes "Thank you~";
+						mes "I'll have to give you something too.";
+						mes "Hmm, didn't I get some stuff from my uncle ...";
+						next;
+						delitem 752,1;
+						getitem 532,7;
+						mes "[Elin]";
+						mes "We've got tons of them at home.";
+						mes "So I'll share some with you~";
+						mes "Thank you for the doll!";
+						close;
+					} else {
+						mes "[Elin]";
+						mes "Awww...";
+						next;
+						mes "[Elin]";
+						mes "You don't";
+						mes "really have a doll...?";
+						mes "I was so excited about it, too...";
+						close;
+					}
+				case 5:
+					next;
+					if (countitem(743) >= 1) {
+						mes "[Elin]";
+						mes "Blehh ....";
+						mes "It's a mushroom...";
+						mes "Mom's always scolding me for not eating mushrooms ...";
+						next;
+						mes "[Elin]";
+						mes "I'll take it anyway, since the doll looks cute.";
+						mes "But I still won't eat mushrooms though ...";
+						mes "Hmm, I'll need to give you a present too.";
+						next;
+						delitem 743,1;
+						getitem 538,5;
+						mes "[Elin]";
+						mes "Mom made this.";
+						if (Sex == 1) {
+							mes "Take it, mister!";
+						} else {
+							mes "Take it, lady!";
+						}
+						next;
+						mes "[Litte Kid]";
+						mes "Thank you for the doll~";
+						close;
+					} else {
+						mes "[Elin]";
+						mes "Eh...?";
+						mes "You don't";
+						mes "have a doll?";
+						next;
+						mes "[Elin]";
+						mes "Awww...";
+						mes "It's not nice";
+						mes "to tease people";
+						mes "like that. *^CCCCCCSniff, sniff^000000*";
+						close;
+					}
+				case 6:
+					next;
+					if (countitem(751) >= 1) {
+						mes "[Elin]";
+						mes "Yay! It's an Osiris doll!";
+						next;
+						delitem 751,1;
+						getitem 522,2;
+						mes "[Elin]";
+						mes "Thank you for the doll!";
+						close;
+					} else {
+						mes "[Elin]";
+						mes "Awww...";
+						mes "Why do you have";
+						mes "to make fun of me?";
+						close;
+					}
+				case 7:
+					next;
+					if (countitem(750) >= 1) {
+						mes "[Elin]";
+						mes "Yay! It's a Baphomet doll!";
+						next;
+						delitem 750,1;
+						getitem 525,5;
+						mes "[Elin]";
+						mes "Thank you for the doll!";
+						close;
+					} else {
+						mes "[Elin]";
+						mes "You big liar! Why are you";
+						mes "pretending to be nice?!";
+						close;
+					}
+				case 8:
+					next;
+					if (countitem(754) >= 1) {
+						mes "[Elin]";
+						mes "Ah, it's a racoon doll~";
+						mes "I hate Smokies, but the doll's really cute!";
+						next;
+						mes "[Elin]";
+						mes "It's really cute~";
+						if (Sex == 1) {
+							mes "Thank you very much, mister!";
+						} else {
+							mes "Thank you very much, lady!";
+						}
+						next;
+						delitem 754,1;
+						getitem 539,3;
+						mes "[Elin]";
+						mes "Let me give you some of Grandma's home-made cakes!";
+						if (Sex == 1) {
+							mes "Do you like sweet things, mister?";
+						} else {
+							mes "Do you like sweet things, lady?";
+						}
+						mes "This is really good, so eat it~";
+						next;
+						mes "[Elin]";
+						mes "Thank you for this cute doll!";
+						close;
+					} else {
+						mes "[Elin]";
+						mes "Hey! How come you have to say";
+						mes "things like that? Are you making";
+						mes "fun of me?!";
+						close;
+					}
+				case 9:
+					next;
+					if (countitem(753) >= 1) {
+						mes "[Elin]";
+						mes "Wow--!!!";
+						mes "It's a monkey! So cute~";
+						if (Sex == 1) {
+							mes "Thank you very much, mister!";
+						} else {
+							mes "Thank you very much, lady!";
+						}
+						mes "I really wanted it~";
+						next;
+						mes "[Elin]";
+						mes "It's so cute~";
+						mes "That's right!";
+						mes "As a thank you, I'll give you this.";
+						next;
+						delitem 753,1;
+						getitem 608,1;
+						mes "[Elin]";
+						mes "Dad picked them up during his travels.";
+						mes "It's a seed of some kind.";
+						mes "We tried planting them at home, but it doesn't seem to grow.";
+						if (Sex == 1) {
+							mes "I'll give it to you, mister!";
+						} else {
+							mes "I'll give it to you, lady!";
+						}
+						next;
+						mes "[Elin]";
+						mes "Thank you so much for the doll!";
+						close;
+					} else {
+						mes "[Elin]";
+						mes "Hey...";
+						mes "How come you're making fun of me?!";
+						close;
+					}
+				case 10:
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "I'm as adorable as a doll...";
+					next;
+					mes "[Elin]";
+					mes "Whaaaaaaaaaaaaaaaaaaaaat...?";
+					next;
+					mes "[Elin]";
+					mes "^3355FFWhat did^000000";
+					mes "^3355FFyou just say?!^000000";
+					close;
+			}
+	}
 }
 
 

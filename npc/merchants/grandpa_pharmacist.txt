@@ -1,162 +1,242 @@
 //===== eAthena Script =======================================
 //= Grandpa Pharmacist
 //===== By: ==================================================
-//= kobra_k88
+//= DZeroX
 //===== Current Version: =====================================
-//= 1.2
+//= 1.0
 //===== Compatible With: =====================================
-//= eAthena 7.15 +
+//= eAthena SVN Trunk
 //===== Description: =========================================
 //= Trade in items for potions
 //===============================
 //= Breakdown of arguments used
-//= arg(0): first item id#
-//= arg(1): 2nd item id# if needed, or else use 0
-//= arg(2): zeny cost
-//= arg(3): potion id#
-//= arg(4): potion name
+//= arg(0): Herb required.
+//= arg(1): Zeny cost.
+//= arg(2): z
 //===== Additional Comments: =================================
-//= Fully working
-//= 1.1 Negative input bug fixed [Lupus]
-//= 1.2 Created a subfunc for the potion making part.  Added more
-//= input/zeny exploit checks. Added Lupus's "loopless" technique.[kobra_k88]
+//= 1.0 - Fully working.
 //============================================================
 
-
-alberta_in,16,28,4	script	Grampa Pharmacist	61,{
-	mes "[Grampa Pharmacist]";
-	mes "Hmmm... what do you want...?";
-	next;
-	menu "Make Potion",M_Make, "Talk",M_Talk, "Information",M_Info, "Cancel",M_End;
+alberta_in.gat,16,28,4	script	Grandpa Pharmacist	61,{
+	mes "[Grandpa Pharmacist]";
+	mes "Err....Are you a customer...?";
+	switch(select("Make Potion","Talk.","Instruction of making potions","Cancel")) {
+		case 1:
+			next;
+			set .@weight,MaxWeight-Weight;
+			if ((.@weight) < 10000) {
+				mes "[Grandpa Pharmacist]";
+				mes "Oh, boy! Why are carrying so much stuffs with you?";
+				mes "Don't be so greedy! bring little by little.";
+				next;
+				mes "[Grandpa Pharmacist]";
+				mes "At least, you should have some space to carry the potions...";
+				mes "Why don't you keep some of them in storage and come back to me again?";
+				close;
+			} else {
+				mes "[Grandpa Pharmacist]";
+				mes "Did you bring all the ingredients? Which potion do you want to make?";
+				switch(select("Red Potion.","Orange Potion.","Yellow Potion.","White Potion.","Blue Potion.","Green Potion.","Nah, I changed my mind.")) {
+					case 1:
+						callsub L_making,507,3,501;
+					case 2:
+						next;
+						mes "[Grandpa Pharmacist]";
+						if (countitem(507) < countitem(713)) {
+							set .@max,countitem(507);
+						}
+						if (countitem(508) < countitem(713)) {
+							set .@max,countitem(508);
+						} else {
+							set .@max,countitem(713);
+						}
+						if ((countitem(507) < 1) | (countitem(508) < 1) | (countitem(713) == 0)) {
+							mes "You are silly! How can you make a potion if you don't even have ingredients?!";
+							mes "Go away!";
+							close;
+						}
+						if (Zeny < 3) {
+							mes "You are silly! Did you think you can make a potion without money?";
+							mes "Go away!";
+							close;
+						}
+						mes "How many?";
+						switch(select("As many as I can","I will set the amounts.","Nah, forget about it.")) {
+							case 1:
+								next;
+								if ((countitem(507) < .@max) | (countitem(508) < .@max) | (countitem(713) < .@max) | (Zeny < .@max*3)) {
+									mes "[Grandpa Pharmacist]";
+									mes "You punk! Do you want me to make stuff from insufficient ingredients?";
+									close;
+								}
+								set Zeny,Zeny-(.@max*getarg(1));
+								delitem getarg(0),.@max*2;
+								delitem 713,.@max;
+								getitem getarg(2),.@max; 
+								mes "[Grandpa Pharmacist]";
+								mes "Here. Take them.";
+								mes "Keep it in mind! Overdose could lead you to death.";
+								close;
+							case 2:
+								next;
+								mes "[Grandpa Pharmacist]";
+								mes "Set the amounts from 1 to 100. type '0' if you want to Cancel";
+								mes "I think you can make "+.@max+" potions?";
+								input .@amount;
+								if (.@amount == 0) {
+									next;
+									mes "[Grandpa Pharmacist]";
+									mes "Can't you do it correctly?!";
+									close;
+								}
+								if (.@amount > 100) {
+									next;
+									mes "[Grandpa Pharmacist]";
+									mes "Are you a deaf of something? I can't make more than 100.";
+									close;
+								}
+								if ((countitem(507) < .@amount) | (countitem(508) < .@amount) | (countitem(713) < .@amount) | (Zeny < .@amount*3)) {
+									next;
+									mes "[Grandpa Pharmacist]";
+									mes "You punk! Do you want me to make stuff from insufficient ingredients?";
+									close;
+								}
+								next;
+								set Zeny,Zeny-(.@amount*getarg(1));
+								delitem getarg(0),.@amount*2;
+								delitem 713,.@amount;
+								getitem getarg(2),.@amount; 
+								mes "[Grandpa Pharmacist]";
+								mes "Here. Take them.";
+								mes "Keep it in mind! Overdose could lead you to death.";
+								close;
+							case 3:
+								next;
+								mes "[Grandpa Pharmacist]";
+								mes "What did you say?! You little punk.. Get out of here!";
+								close;
+						}
+					case 3:
+						callsub L_making,508,10,503;
+					case 4:
+						callsub L_making,509,20,504;
+					case 5:
+						callsub L_making,510,30,505;
+					case 6:
+						callsub L_making,511,3,506;
+					case 7:
+						mes "[Grandpa Pharmacist]";
+						mes "What did you say?! You little punk.. Get out of here!";
+						close;
+					}
+				}
+		case 2:
+			next;
+			mes "[Grandpa Pharmacist]";
+			mes "You can improve immune system with medicine. But youhave to be careful in medicine otherwise you would be addicted...";
+			mes "Oh man... Since I'm old, I enjoy recalling my youth.";
+			mes "Anyway, the potion is just a medicine which can assist you. That's all.";
+			close;
+		case 3:
+			next;
+			mes "[Grandpa Pharmacist]";
+			mes "Phew... What an annoying young people... Fine, I will explain how the potion works on you.";
+			next;
+			mes "[Grandpa Pharmacist]";
+			mes "You can just use raw herbs but I can process herbs to make potions which have greater effect.";
+			next;
+			mes "[Grandpa Pharmacist]";
+			mes "If you ask me to make potions, I will make them with the few fee.";
+			next;
+			mes "[Grandpa Pharmacist]";
+			mes "Red_Potion - ^0098E5Red Herb: 2ea, Empty Bottle: 1ea, Fee: 3 zeny.^000000";
+			mes "Orange_Potion - ^0098E5Red Herb: 1ea, Yellow Herb: 1ea, Empty Bottle: 1ea, Fee: 5 zeny.^000000";
+			mes "Yellow_Potion - ^0098E5Yellow Herb: 2ea, Empty Bottle: 1ea, Fee: 10 zeny.^000000";
+			next;
+			mes "[Grandpa Pharmacist]";
+			mes "White_Potion - ^0098E5White Herb: 2ea, Empty Bottle: 1ea, Fee: 20 zeny.^000000";
+			mes "Blue_Potion - ^0098E5Blue Herb: 2ea, Empty Bottle: 1ea, Fee: 30 zeny.^000000";
+			mes "Green_Potion - ^0098E5Green Herb: 2ea, Empty Bottle: 1ea, Fee: 3 zeny.^000000";
+			close;
+		case 4:
+			next;
+			mes "[Grandpa Pharmacist]";
+			mes "Don't you have anything to say?";
+			close;
+	}
 	
-	M_Make:
-		mes "[Grampa Pharmacist]";
-		mes "Did you prepare all the items needed? If so what potion do you want?";
-		M_Menu:
-		next;
-		menu "Red Potion",M_0, "Orange Potion",M_1, "Yellow Potion",M_2,
-			 "White Potion",M_3, "Blue Potion",M_4, "Green Potion",M_5,
-			 "Nah, I change my mind.",M_End;
-		
-		M_0:
-			callsub sF_Make, 507, 0, 2, 501, "red";
-			goto M_Menu;
-		M_1:
-			callsub sF_Make, 507, 508, 5, 502, "orange";
-			goto M_Menu;
-		M_2:
-			callsub sF_Make, 508, 0, 10, 503, "yellow";
-			goto M_Menu;
-		M_3:
-			callsub sF_Make, 509, 0, 20, 504, "white";
-			goto M_Menu;
-		M_4:
-			callsub sF_Make, 510, 0, 30, 505, "blue";
-			goto M_Menu;
-		M_5:
-			callsub sF_Make, 511, 0, 3, 506, "green";
-			goto M_Menu;
-
-	M_Talk:
-		mes "[Grampa Pharmacist]";
-		mes "The right type of medicinal Herbs can replenish a person's HP or SP";
-		mes ". ~Sigh~ I'm starting to reminisce about my youth.... a sign that I";
-		mes "must be getting old.....";
-		next;
-		mes "[Grampa Pharmacist]";
-		mes "... A potion is merely an, 'easy to use', form of medicinal  Herbs";
-		mes "..... nothing more and nothing less.";
-		close;
-	M_Info:
-		mes "[Grampa Pharmacist]";
-		mes "~Sigh~... you young ones can be quite bothersome.. Fine, I will";
-		mes "explain to you how potions work....";
-		next;
-		mes "[Grampa Pharmacist]";
-		mes "Though the bennefits from consuming the various Herbs found around";
-		mes "Rune-Midgard are great... by refining them into potions, the";
-		mes "effects of the Herbs are dramatically enhanced.";
-		next;
-		mes "[Grampa Pharmacist]";
-		mes "The process of refining herbs into potions is a special one that I";
-		mes "created.  For a small fee I can make any potion you desire.";
-		next;
-		mes "[Grampa Pharmacist]";
-		mes "^FF5533Red Potion^000000 - 2 Red Herbs, 1 Empty Bottle, 2 Zeny fee.";
-		mes "^FF8000Orange Potion^000000 - 1 Red Herb, 1 Yellow Herb, 1 Empty Bottle, 5 Zeny fee.";
-		mes "^E8CF20Yellow Potion^000000 - 2 Yellow Herbs, 1 Empty Bottle, 10 Zeny fee.";
-		next;
-		mes "[Grampa Pharmacist]";
-		mes "^999999White Potion^000000 -  2 White Herbs, 1 Empty Bottle, 20 Zeny fee.";
-		mes "^3355FFBlue Potion^000000 - 2 Blue Herbs, 1 Empty Bottle, 30 Zeny fee.";
-		mes "^00B000Green Potion^000000 - 2 Green Herbs, 1 Empty Bottle, 3 Zeny fee.";
-		close;
-	M_End:
-		mes "[Grampa Pharmacist]";
-		mes "Didn't you have something to say?!";
-		close;
-
-// Subfunction for making potions
-//================================
-sF_Make:
-	set @herbnum, 2;
-	if(getarg(1) != 0) set @herbnum, 1;
-	if(countitem(getarg(0)) < @herbnum) goto L_NdHerbs;
-	if(getarg(1) != 0) if(countitem(getarg(1)) < @herbnum) goto L_NdHerbs;
-	if(countitem(713) < 1) goto L_NdBottle;
-	if(Zeny < getarg(2)) goto L_NdZeny;
-
-	mes "[Grampa Pharmacist]";
-	mes "How many?";
+L_making:
 	next;
-	menu "As many as possible.",sM_0a, "I will set the amount.",sM_0b, "Nah, forget about it",M_End;
-
-	sM_0a:
-		set @amount, 1000;
-		if(zeny/getarg(2) < @amount) set @amount, zeny/getarg(2);
-		if(countitem(getarg(0))/@herbnum < @amount) set @amount, countitem(getarg(0))/@herbnum;
-		if(getarg(1) != 0) if (countitem(getarg(1))/@herbnum < @amount) set @amount, countitem(getarg(1))/@herbnum;
-		if(countitem(713) < @amount) set @amount, countitem(713);
-		if(@amount > 0) goto L_End;
-		mes "[Grampa Pharmacist]";
-		mes "Jeez... you don't even have the right items.....";
+	mes "[Grandpa Pharmacist]";
+	if ((countitem(getarg(0))/2) < countitem(713)) {
+		set .@max,countitem(getarg(0))/2;
+	} else {
+		set .@max,countitem(713);
+	}
+	if ((countitem(getarg(0)) < 2) | (countitem(713) == 0)) {
+		mes "You are silly! How can you make a potion if you don't even have ingredients?!";
+		mes "Go away!";
 		close;
-		
-	sM_0b:
-		input @amount;
-		if(@amount<1 || @amount>1000) goto L_BadAmnt;
-		if(countitem(getarg(0))/@herbnum < @amount) goto L_NdHerbs;
-		if(getarg(1) != 0) if (countitem(getarg(1))/@herbnum < @amount) goto L_NdHerbs;
-		if(countitem(713) < @amount) goto L_NdBottle;
-		if(Zeny < (getarg(2)*@amount)) goto L_NdZeny;
-
-	L_End:
-		set Zeny, Zeny - (getarg(2)*@amount);
-		delitem getarg(0), (@amount*@herbnum);
-		if(getarg(1) != 0) delitem getarg(1), (@amount*@herbnum);
-		delitem 713, @amount;
-		getitem getarg(3), @amount;
-		mes "[Grampa Pharmacist]";
-		mes "Here are your " +getarg(4)+ " potions.";
+	}
+	if (Zeny < 3) {
+		mes "You are silly! Did you think you can make a potion without money?";
+		mes "Go away!";
 		close;
-
-	L_NdBottle:
-		mes "[Grampa Pharmacist]";
-		mes "You don't have enough empty bottles to put the medicine in you idiot!!";
-		return;
-
-	L_NdHerbs:
-		mes "[Grampa Pharmacist]";
-		mes "You rascal! What did you expect from me? You didn't even bring all of the right herbs!";
-		return;
-
-	L_NdZeny:
-		mes "[Grampa Pharmacist]";
-		mes "You don't have enough zeny for that many potions.";
-		return;
-
-	L_BadAmnt:
-		mes "[Grampa Pharmacist]";
-		mes "What?! That's not a valid amount!";	
-		return;
+	}
+	mes "How many?";
+	switch(select("As many as I can","I will set the amounts.","Nah, forget about it.")) {
+		case 1:
+			next;
+			if ((countitem(getarg(0)) < .@max*2) | (countitem(713) < .@max) | (Zeny < .@max*getarg(1))) {
+				mes "[Grandpa Pharmacist]";
+				mes "You punk! Do you want me to make stuff from insufficient ingredients?";
+				close;
+			}
+			set Zeny,Zeny-(.@max*getarg(1));
+			delitem getarg(0),.@max*2;
+			delitem 713,.@max;
+			getitem getarg(2),.@max; 
+			mes "[Grandpa Pharmacist]";
+			mes "Here. Take them.";
+			mes "Keep it in mind! Overdose could lead you to death.";
+			close;
+		case 2:
+			next;
+			mes "[Grandpa Pharmacist]";
+			mes "Set the amounts from 1 to 100. type '0' if you want to Cancel";
+			mes "I think you can make "+.@max+" potions?";
+			input .@amount;
+			if (.@amount == 0) {
+				next;
+				mes "[Grandpa Pharmacist]";
+				mes "Can't you do it correctly?!";
+				close;
+			}
+			if (.@amount > 100) {
+				next;
+				mes "[Grandpa Pharmacist]";
+				mes "Are you a deaf of something? I can't make more than 100.";
+				close;
+			}
+			if ((countitem(getarg(0)) < .@amount*2) | (countitem(713) < .@amount) | (Zeny < .@amount*getarg(1))) {
+				next;
+				mes "[Grandpa Pharmacist]";
+				mes "You punk! Do you want me to make stuff from insufficient ingredients?";
+				close;
+			}
+			next;
+			set Zeny,Zeny-(.@amount*getarg(1));
+			delitem getarg(0),.@amount*2;
+			delitem 713,.@amount;
+			getitem getarg(2),.@amount; 
+			mes "[Grandpa Pharmacist]";
+			mes "Here. Take them.";
+			mes "Keep it in mind! Overdose could lead you to death.";
+			close;
+		case 3:
+			next;
+			mes "[Grandpa Pharmacist]";
+			mes "What did you say?! You little punk.. Get out of here!";
+			close;
+	}
 }
