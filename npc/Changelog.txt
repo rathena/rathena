@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/05/01
+	* Updated Gunslinger Job Change Quest to official. [SinSloth]
+	* Fixed a minor bug in Ninja Job Change Quest. [SinSloth]
 	* Even more Fixes to the Kiel Hyre Quest [L0ne_W0lf]
 	- Exit will now enable if you are just retrieving the Ring, keeps you from getting stuck.
 	- Corrected "KH_Kielh02", was setting off a debug, invalid map index. Should have been "kh_Kiehl02"

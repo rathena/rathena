@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Legionaire
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN that supports Ninjas
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= 1.1 Optimized, updated, checked [Lupus]
 //= 1.2 Added Akagi [Playtester]
 //= 1.3 Updated dialogs to official ones and optimized [SinSloth]
+//= 1.4 Fixed a minor bug [SinSloth]
 //============================================================ 
 
 alberta,30,65,3	script	Akagi#nq	730,{
@@ -433,7 +434,7 @@ que_ng,30,65,3	script	Cougar Gai	730,{
 		mes "You don't know when and where you may be asked to go on a mission, so don't put off your training for a single day.";
 		close;
 	}
-	else if(Class == Job_Super_Baby)
+	else if(Class == Job_Baby)
 	{
 		mes "[Cougar Gai]";
 		mes "What the...! A super baby!";
