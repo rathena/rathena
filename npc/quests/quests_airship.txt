@@ -1063,7 +1063,7 @@ airplane_01,1,1,0	script	Quest_Izl	-1,{
 OnInit:
 	disablenpc "Airship Captain#02";
 OnInvasion:
-while($@mobinv == 9 && $@mobrand == 3)
+while($@mobinv >= 9 && $@mobrand == 3)
 {
 	Initnpctimer;
 	end;
