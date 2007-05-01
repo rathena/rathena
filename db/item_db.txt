@@ -1951,9 +1951,9 @@
 5277,Yellow_Bandana,Yellow Bandana,5,,10,100,,1,,0,0xFFFFFFFE,7,2,256,,20,1,309,{ bonus bLuk,2; bonus bVit,2; bonus bLongAtkDef,10; },{},{}
 5278,Yellow_Ribbon,Yellow Ribbon,5,,10,100,,1,,0,0xFFFFFFFE,7,2,256,,20,1,310,{ bonus bLuk,2; bonus bVit,2; bonus bLongAtkDef,10; },{},{}
 5279,Refined_Drooping_Cat,Refined Drooping Cat,5,,0,0,,1,,0,0xFFFFFFFE,7,2,256,,0,0,142,{ bonus bMDef,15; bonus2 bResEff,Eff_Curse,3000; },{},{}
-5280,Refined_Majestic_Goat,Refined Majestic Goat,5,,0,0,,5,,0,0x006444A2,7,2,256,,0,0,41,{ bonus bStr,1; },{},{}
+5280,Refined_Majestic_Goat,Refined Majestic Goat,5,,0,0,,5,,0,0xFFFFFFFF,7,2,256,,0,0,41,{ bonus bStr,1; },{},{}
 5281,Refined_Deviruchi_Hat,Refined Deviruchi Hat,5,,0,0,,2,,0,0xFFFFFFFE,7,2,256,,1,0,123,{ bonus bStr,1; bonus bInt,1; },{},{}
-5282,Baseball_Cap___,Europe Baseball Cap,5,,10,200,,3,,0,0xFFFFFFFF,7,2,256,,0,1,216,{},{},{}
+5282,Baseball_Cap___,Europe Baseball Cap,5,,10,200,,3,,1,0xFFFFFFFF,7,2,256,,0,1,216,{},{},{}
 // More Etc Items
 //===================================================================
 7001,Mould_Powder,Mould Powder,3,,340,10,,,,,,,,,,,,,{},{},{}
@@ -2890,7 +2890,7 @@
 12906,Hwergelmir's_Tonic_Box,Hwergelmir's_Tonic_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{  getitem 12205,10; },{},{}
 12907,Cooked_Nine_Tail_Box,Cooked_Nine_Tail_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{  getitem 12206,10; },{},{}
 12908,Immortal_Stew_Box,Immortal_Stew_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{  getitem 12207,10; },{},{}
-12909,Kafra_Card_Box,Kafra_Card_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{  getitem 12209,10; },{},{}
+12909,Kafra_Card_Box,Kafra_Card_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{  getitem 12211,10; },{},{}
 12910,Giant_Fly_Wing_Box,Giant_Fly_Wing_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12212,10; },{},{}
 12911,Glittering_Wand_Box,Glittering_Wand_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12213,10; },{},{}
 12912,Convex_Mirror_Box,Convex_Mirror_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12214,10; },{},{}
@@ -2902,7 +2902,7 @@
 12918,Adrenaline_Rush_Scroll_Box,Adrenaline_Rush_Scroll_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12220,10; },{},{}
 12919,Megaphone_Box,Megaphone_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12221,10; },{},{}
 12920,Enriched_Elunium_Box,Enriched_Elunium_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7619,10; },{},{}
-12921,Enriched_Oridecon_Box,Enriched_Oridecon_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 122097620,10; },{},{}
+12921,Enriched_Oridecon_Box,Enriched_Oridecon_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7620,10; },{},{}
 12922,Token_of_Ziegfried_Box,Token_of_Ziegfried_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7621,10; },{},{}
 12927,Aspersio_Scroll_Box_,Aspersio_Scroll_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12928,10; },{},{}
 12928,Level_5_Aspersio_Scroll_,Level_5_Aspersio_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 68,5; },{},{}
@@ -3071,9 +3071,9 @@
 14519,Chemical_Protection_Armor_Scroll,Chemical_Protection_Armor_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 236,5; },{},{}
 14520,Chemical_Protection_Weapon_Scroll,Chemical_Protection_Weapon_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 234,5; },{},{}
 14521,Repair_Weapon_Scroll,Repair_Weapon_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 108,1; },{},{}
-14522,Big_Bun,Big_Bun,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,0; },{},{}
-14523,Pill_,Pill,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,100; },{},{}
-14524,Superb_Fish_Slice,Superb_Fish_Slice,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,100; },{},{}
-14525,Chewy_Ricecake,Chewy_Ricecake,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,180000,10; },{},{}
-14526,Oriental_Pastry,Oriental_Pastry,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,180000,10; },{},{}
+14522,Big_Bun,Big_Bun,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,0; },{},{}
+14523,Pill_,Pill,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,100; },{},{}
+14524,Superb_Fish_Slice,Superb_Fish_Slice,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,100; },{},{}
+14525,Chewy_Ricecake,Chewy_Ricecake,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,180000,10; },{},{}
+14526,Oriental_Pastry,Oriental_Pastry,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,180000,10; },{},{}
 14527,Dungeon_Teleport_Scroll,Dungeon_Teleport_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{}{}{}
