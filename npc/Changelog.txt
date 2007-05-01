@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/05/02
+	* Added forgotten warp entries to the main conf file [ultramage]
 	* Removed unofficial spawns form airship. [Samuray22]
 2007/05/01
 	* Changed the labels on the "Big Doors" to "Identifier Names" to prevent an error with using getvariableofnpc [L0ne_W0lf]
