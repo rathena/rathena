@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 8+
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //= 1.0 Added Kiel warps thanks to Celestria [Playtester]
 //= 1.1 Added more warps thanks to Celestria [Playtester]
 //= 1.2 Added warps according to Kiel quest [Playtester]
+//= 1.3 Removed and altered exploitable warps for Kiel Hyre Quest. [L0ne_W0lf]
 //============================================================
 
 //============================================================
@@ -41,8 +42,7 @@ kh_school,71,14,0	warp	school09	1,1,kh_school,39,125
 kh_school,12,48,0	warp	school10	1,1,kh_school,182,117
 kh_school,187,117,0	warp	school11	1,1,kh_school,17,48
 //Detention Room
-kh_school,63,80,0	warp	school12	1,1,kh_school,118,144
-kh_school,118,139,0	warp	school13	1,1,kh_school,63,75
+kh_school,118,139,0	warp	school13	1,1,kh_dun01,231,92
 //Yuno Field
 //yuno_fild08,148,189,0	warp	school14	1,1,kh_school,71,158
 

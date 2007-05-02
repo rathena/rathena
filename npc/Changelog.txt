@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/05/03
+	* Removed and altered exploitable warps for Kiel Hyre Quest. [L0ne_W0lf]
 2007/05/02
 	* Added forgotten warp entries to the main conf file [ultramage]
 	* Removed unofficial spawns form airship. [Samuray22]
