@@ -1,54 +1,19 @@
 //===== Athena Script =====================================
-//= Bullet Merchant Tony
+//= Bullet Merchant, Tony.
 //===== By ================================================
-//= Paradox924X
+//= Legionaire
 //===== Version ===========================================
-//= 1.5 - Replaced @input with .@input
-//= 1.4 - Fixed item id for Lightning Sphere from the id for a Lightning Sphere Pack
-//= 1.3 - Minor Optimizations
-//= 1.2 - Majorly reduced script length by using a function
-//= 1.1 - Minor Optimizations
-//= 1.0 - First Release
+//= 1.0
 //===== Compatible With ===================================
-//= eAthena
+//= eAthena SVN with jAthena scripting engine and . variables.
 //===== Description =======================================
-//= A simple bullet trader.
+//= Bullet trader.
 //===== Comments ==========================================
-//= Converted from Aegis Script.
+//= Converted from Aegis 10.4
 //=========================================================
-que_ng,187,156,3	script	Bullet Merchant Tony	86,{
-	if (BaseJob == JOB_GUNSLINGER) {
-		mes "[Tony]";
-		mes "I'm Bullet-tooth Tony!";
-		mes "Whenever your out of bullets,";
-		mes "Visit me!!!";
-		next;
-		mes "[Tony]";
-		mes "Now~! Friend~Companion~ Buddy~";
-		mes "What do you need?!";
-		mes "Choose anything~!";
-		mes "And pay money~!";
-		next;
-		switch(select("Poison Sphere:Flare Sphere:Lighting Sphere:Blind Sphere:Freezing Sphere:Cancel")) {
-			case 1:
-				callfunc "Bullet_Trade",937,10,13205;
-			case 2:
-				callfunc "Bullet_Trade",7097,2,13203;
-			case 3:
-				callfunc "Bullet_Trade",7053,3,13204;
-			case 4:
-				callfunc "Bullet_Trade",1024,5,13206;
-			case 5:
-				callfunc "Bullet_Trade",7054,2,13207;
-			case 6:
-				mes "[Tony]";
-				mes "Mmm~ Okay~";
-				mes "Please visit again~";
-				mes "I, Bullet-tooth Tony,";
-				mes "Will always be here~!!!";
-				close;
-		}
-	} else {
+que_ng.gat,187,156,3	script	Bullet Merchant Tony	86,{
+
+	if(BaseJob != Job_Gunslinger){
 		mes "[Tony]";
 		mes "I'm a trader who supplies";
 		mes "Gunslingers with trade items.";
@@ -59,55 +24,69 @@ que_ng,187,156,3	script	Bullet Merchant Tony	86,{
 		mes "So just look around";
 		mes "and go.";
 		close;
-	}
-}
-
-function	script	Bullet_Trade	{
+		}
+	mes "[Tony]";
+	mes "I'm Bullet-tooth Tony!";
+	mes "Whenever you're out of bullets,";
+	mes "Visit me!!!";
+	next;
+	mes "[Tony]";
+	mes "Now~! Friend~Companion~ Buddy~";
+	mes "What do you need?!";
+	mes "Choose anything~!";
+	mes "And pay money~!";
+	menu "Poison Sphere",-, "Flare Sphere",-, "Lightning Sphere",-, "Blind Sphere",-, "Freezing  Sphere",-, "Cancel",-;
+	next;
+		if(@menu == 1) setarray .@btt[0],13205,937,10;
+		if(@menu == 2) setarray .@btt[0],13203,7097,2;
+		if(@menu == 3) setarray .@btt[0],13204,7053,3;
+		if(@menu == 4) setarray .@btt[0],13206,1024,5;
+		if(@menu == 5) setarray .@btt[0],13207,7054,2;
+		if(@menu == 6){ mes "[Tony]";
+			mes "Mmm~ Okay~";
+			mes "Please visit again~";
+			mes "I, Bullet-tooth Tony,";
+			mes "Will always be here~!!!";
+			close;
+		}
 	mes "[Tony]";
 	mes "Input the amount you wish to purchase.";
 	next;
 	mes "[Tony]";
-	mes "We trade 30 "+getitemname(getarg(2))+"s for";
+	mes "We trade 30 "+getitemname(.@btt[0])+"s for";
 	mes "1 Phracon,";
-	mes "1 Emveretarcon,";
-	mes "and "+getarg(1)+" "+getitemname(getarg(0))+".";
+	if(.@btt[0] == 13205){ mes "10 Venom Canines,"; mes "And 1 Emveretarcon."; }else{ mes "1  Emveretarcon,"; mes "and "+.@btt[2]+" "+getitemname(.@btt[1])+"."; }
 	next;
 	mes "[Tony]";
 	mes "The maximum number you can trade is 500.";
 	mes "If you want to cancel, input 0.";
+	input .@btt[3];
 	next;
-	input .@input;
-	set @tony,.@input;
-	set @tony1,.@input;
-	set @tony2,.@input * getarg(1);
-	if (.@input < 1 || .@input > 500) {
+	if(.@btt[3] == 0 && .@btt >= 501){
 		mes "[Tony]";
-		mes "Invalid Amount!";
+		mes "Invalid amount!";
 		mes "Enter again~!";
 		close;
-	} else if ((countitem(1010) >= @tony) && (countitem(1011) >= @tony1) && (countitem(getarg(0)) >= @tony2)) {
-		if (checkweight(getarg(2),.@input * 30) == 0) {
+	}else if(countitem(1010) < .@btt[3] || countitem(1011) < .@btt[3] || countitem(.@btt[1]) <  .@btt[3]*.@btt[2]){
 			mes "[Tony]";
-			mes "I cannot give it to you because your inventory is full. Come back after your inventory has more space.";
+			mes "Tsk tsk~";
+			mes "You do not have";
+			mes "enough items for the";
+			mes "items you want to trade.";
+			mes "Prepare again and come back.";
 			close;
-		} else {
+		}else if(checkweight(.@btt[0],.@btt[3]*30) == 0){
 			mes "[Tony]";
-			mes "Oh~ Good!";
-			mes "Trade number checked!";
-			mes "I'll trade immediately.";
-			delitem 1010,@tony;
-			delitem 1011,@tony1;
-			delitem getarg(0),@tony2;
-			getitem getarg(2),.@input * 30;
+			mes "I cannot give it to you because your inventory is full. Come back after  your inventory has more space.";
 			close;
 		}
-	} else {
 		mes "[Tony]";
-		mes "Tsk Tsk~";
-		mes "You do not have";
-		mes "enough items for the";
-		mes "items you want to trade.";
-		mes "Prepare again and come back.";
+		mes "Oh~ Good!";
+		mes "Trade number checked!";
+		mes "I'll trade immediately.";
+		delitem 1010,.@btt[3];
+		delitem 1011,.@btt[3];
+		delitem .@btt[1],.@btt[3]*.@btt[2];
+		getitem .@btt[0],.@btt[3]*30;
 		close;
-	}
 }
