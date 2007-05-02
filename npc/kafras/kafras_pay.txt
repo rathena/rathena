@@ -3,7 +3,7 @@
 //===== By: =========================
 //= eAthena Dev Team
 //===== Current Version: ===================
-//= 2.31
+//= 2.32
 //===== Compatible With: =====================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -20,6 +20,7 @@
 //= v2.2 New Payon Locations. [Darkchild]
 //= 2.3 1 New Kafra, fixed save menus
 //= 2.31 New prices [Evera]
+//= 2.32 Minor fix to Payon Archer Kafra [SinSloth]
 //==========================================================================
 
 
@@ -46,7 +47,7 @@ payon,175,226,4	script	Kafra::kaf_payon2	116,{
 }
 
 // Archer Village ------------------------------------------------------------
-pay_arche,55,123,8	script	Kafra::kaf_payon3	115,{
+pay_arche,55,123,0	script	Kafra::kaf_payon3	115,{
 	cutin "kafra_03",2;
 	callfunc "F_KafSetPay";
 	callfunc "F_Kafra",0,5,1;

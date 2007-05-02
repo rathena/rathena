@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 2.9
+//= 3.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -50,6 +50,7 @@
 //= 2.8 More optimization. Also fixed bug with "2x short sticks -> long" [Lupus]
 //=	Now uses MISC_QUEST&512 instead of 'hzdun'. WIP
 //= 2.9 Fixed Friendship Quest levelup exploit (u could get EXP twice) [Lupus]
+//= 3.0 Moved a book non-related to Lighthalzen quests. [SinSloth]
 //============================================================ 
 
 lighthalzen,1,1,7	script	sneakAddSuber	-1,{
@@ -2559,33 +2560,6 @@ Book2:
 	mes "^3131FFThis is where you found";
 	mes "the book that Benkastein";
 	mes "was looking for.";
-	close;
-
-}
-
-yuno_in04,169,109,1	script	Ambitious Hollgrehenn	111,{
-
-	mes "*Hollgrehenn: The Ambition*";
-	mes "By Aragham Caul*";
-	mes "";
-	mes "";
-	mes "";
-	mes "";
-	mes "Publisher:";
-	mes "Muha Books, Co.";
-	next;
-	mes "...";
-	mes "He would stop at nothing";
-	mes "to have the greatest weapon";
-	mes "in the world in his possession.";
-	mes "He became a smith so that he";
-	mes "could discern which weapons";
-	mes "were the most powerful...";
-	next;
-	mes "[" + strcharinfo(0) + "]";
-	mes "That's strange...";
-	mes "The next page";
-	mes "has been torn out.";
 	close;
 
 }
