@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+05/03
+	* Fixed old id of Assassin Mask in OVB items [Playtester]
 05/02
 	* Some small item fixes thanks to WonderSwan [Playtester]
 04/30

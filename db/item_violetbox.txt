@@ -625,7 +625,6 @@
 2,5035,7	//Poring Hat
 2,5037,7	//Nutshell
 2,5053,1	//Sphinx Hat
-2,5054,1	//Assassin Mask
 2,5055,7	//Novice False Eggshell
 2,5066,1	//Succubus Horn
 2,5072,1	//Incubus Horn
@@ -633,6 +632,7 @@
 2,5088,7	//Surprised Mask
 2,5089,7	//Annoyed Mask
 2,5090,7	//Goblin Leader Mask
+2,5096,1	//Assassin Mask
 2,7001,14	//Mould Powder
 2,7002,14	//Ogre Tooth
 2,7003,14	//Anolian Skin
