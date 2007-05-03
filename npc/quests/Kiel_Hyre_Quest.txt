@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -36,6 +36,7 @@
 //=	Corrected "KH_Kielh02", was setting off a debug, invalid map index. Should have been "kh_Kiehl02"
 //=	Made .KHQuestBusy$ into a temp global variable. $@KHQuestBusy$. 
 //= 2.0 Changed the labels on the "Big Doors" to "Identifier Names" to prevent an error with using getvariableofnpc [L0ne_W0lf]
+//= 2.1 Fifth door now checks for a variable HIGHER or EQUAL to 74 not 84, as pointed out by Stollen. [L0ne_W0lf]
 //
 //============================================================ 
 
@@ -6451,7 +6452,7 @@ OnMyMobDead:
 //   Put it in anyway, used to make sure people don't abuse the room.
 //----------------------------------------------------------------------------
 kh_kiehl01,166,187,0	script	Big Door#BigDoorKHQ5	111,{
-	if (($@KH_DoorInvoker$ == "") && (KielHyreQuest >= 84) && (KielHyreQuest <= 106)) {
+	if (($@KH_DoorInvoker$ == "") && (KielHyreQuest >= 74) && (KielHyreQuest <= 106)) {
 
 		if ($@KHQuestBusy$ == "") {
 			initnpctimer;

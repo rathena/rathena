@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/05/03
+	* Fifth door now checks for a variable HIGHER or EQUAL to 74 not 84, as pointed out by Stollen. [L0ne_W0lf]
 	* Added Juperos Ruins History Quest. Thanks to Keplerk. [SinSloth]
 	* Moved a book non-related to Lighthalzen quests. [SinSloth]
 	* Applied a minor fix to Payon Archer Kafra. [SinSloth]
