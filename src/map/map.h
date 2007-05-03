@@ -10,6 +10,7 @@
 #include "../common/db.h"
 
 #include "itemdb.h" // MAX_ITEMGROUP
+#include "status.h" // SC_MAX
 
 //Uncomment to enable the Cell Stack Limit mod.
 //It's only config is the battle_config cell_stack_limit.
@@ -33,7 +34,7 @@
 #define LIFETIME_FLOORITEM 60
 #define DAMAGELOG_SIZE 30
 #define LOOTITEM_SIZE 10
-#define MAX_STATUSCHANGE 300
+//#define MAX_STATUSCHANGE 300
 //Quick defines to know which are the min-max common ailments. [Skotlex]
 //Because of the way the headers are included.. these must be replaced for actual values.
 //Remember to update as needed! Min is SC_STONE and max is SC_DPOISON currently.
@@ -384,7 +385,7 @@ struct status_change_entry {
 };
 
 struct status_change {
-	struct status_change_entry data[MAX_STATUSCHANGE];
+	struct status_change_entry data[SC_MAX];
 	short count;
 	unsigned short opt1,opt2;
 	unsigned int opt3, option; //Note that older packet versions use short here.

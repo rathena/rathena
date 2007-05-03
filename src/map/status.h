@@ -4,7 +4,12 @@
 #ifndef _STATUS_H_
 #define _STATUS_H_
 
-#include "map.h"
+// forward declarations from map.h
+struct block_list;
+struct mob_data;
+struct pet_data;
+struct homun_data;
+struct status_change;
 
 //Use this to refer the max refinery level [Skotlex]
 #define MAX_REFINE 10
@@ -258,7 +263,7 @@ enum {
 	SC_INCAGIRATE,
 	SC_INCDEXRATE,
 	SC_JAILED,
-	SC_ENCHANTARMS,
+	SC_ENCHANTARMS,	//250
 	SC_MAGICALATTACK,
 	SC_MAX, //Automatically updated max, used in for's and at startup to check we are within bounds. [Skotlex]
 };

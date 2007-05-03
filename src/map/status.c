@@ -7415,11 +7415,6 @@ int status_readdb(void) {
  */
 int do_init_status(void)
 {
-	if (SC_MAX > MAX_STATUSCHANGE)
-	{
-		ShowDebug("status.h defines %d status changes, but the MAX_STATUSCHANGE is %d! Fix it.\n", SC_MAX, MAX_STATUSCHANGE);
-		exit(1);
-	}
 	add_timer_func_list(status_change_timer,"status_change_timer");
 	add_timer_func_list(kaahi_heal_timer,"kaahi_heal_timer");
 	add_timer_func_list(status_natural_heal_timer,"status_natural_heal_timer");
