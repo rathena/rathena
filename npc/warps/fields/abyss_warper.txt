@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= erKURITA
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -12,66 +12,155 @@
 //= 1.0 Added by Nexon [Nexon]
 //= 1.1 Removed Duplicates [Silent]
 //= 1.2 Fixed tab - missing pillar's appeared [Lupus]
+//= 1.3 Updated Abyss Lake entrance based on official [SinSloth]
 //============================================================
 
-hu_fild05,168,303,0	script	Pillar#01	111,{
-	mes "[Ancient Voice]";
-	mes "So, you wish access to the Abyss Cave?";
-	mes "You have to bring me then 1 Dragon Canine, 1 Dragon Tail and 1 Dragon Scale";
-	mes "in order to grant you access to the island";
-	next;
-	mes "[Ancient Voice]";
-	mes "Do you wish to go?";
-	next;
-	menu "Yes",L_Check,"No",-;
-	mes "Return when you are ready.";
+hu_fild05,168,304,0	script	Column	111,{
+
+	mes "^3355FFThere are 3 oddly";
+	mes "shaped grooves on";
+	mes "the surface of this";
+	mes "column. It seems that";
+	mes "certain dragon body parts";
+	mes "would fit perfectly into";
+	mes "the column grooves.^000000";
+	if((countitem(1035)) && (countitem(1036)) && (countitem(1037)))
+	{
+		next;
+		switch( select( "Insert Dragon Body Parts","Eat Dragon Body Parts" ) )
+		{
+			case 1:
+				mes "^3355FFYou carefully place a";
+				mes "Dragon Canine into one of";
+				mes "the grooves, and then you";
+				mes "hear a powerful rumbling";
+				mes "from within the column.^000000";
+				specialeffect 52;
+				next;
+				mes "^3355FFYou slowly insert a";
+				mes "Dragon Scale into another";
+				mes "of the column's grooves,";
+				mes "trigerring another small";
+				mes "tremor from the column.^000000";
+				specialeffect 52;
+				next;
+				mes "^3355FFYou cautiously insert";
+				mes "a Dragon Tail into the";
+				mes "final groove. Lights shine";
+				mes "forth from cracks in the";
+				mes "column's surface...^000000";
+				specialeffect 52;
+				next;
+				mes "^3355FFThe ground beneath";
+				mes "your feet begins to";
+				mes "violently shake.^000000";
+				specialeffect 73;
+				donpcevent "AbyssWarp::OnWarp";
+				specialeffect2 36;
+				delitem 1035,1;
+				delitem 1036,1;
+				delitem 1037,1;
+				close2;
+				warp "hu_fild05.gat",184,204;
+				end;
+
+			case 2:
+				mes "^3355FFYou gingerly place a";
+				mes "Dragon's Canine, a Dragon";
+				mes "Scale, and a Dragon Tail into";
+				mes "your mouth and slowly begin";
+				mes "to chew. Nothing happens";
+				mes "and the taste of these items";
+				mes "is surprisingly putrid.^000000";
+				next;
+				emotion e_rice,1;
+				delitem 1035,1;
+				delitem 1036,1;
+				delitem 1037,1;
+				percentheal -10,0;
+				close;
+		}
+	}
 	close;
+}
 
-L_Check:
-	mes "[Ancient Voice]";
-	mes "Good, let me check your items first";
+hu_fild05,171,211,0	script	Column	111,1,1,{
+
+	mes "^3355FFThis column looks";
+	mes "very similar to the";
+	mes "one you've seen in";
+	mes "the lake. There is";
+	mes "a conspicious blue";
+	mes "groove on its surface.^000000";
 	next;
-	mes "[Ancient Voice]";
-	if ((countitem(1035) == 0) || (countitem(1036) == 0) || (countitem(1037) == 0)) goto L_No_Items;
-	mes "Good, I hereby grant you access then";
-	mes "Please hurry. The entrance will not stay open for long";
-	close2;
-	delitem 1035,1;
-	delitem 1036,1;
-	delitem 1037,1;
-	enablenpc "warpabyss";
-	initnpctimer;
-	warp "hu_fild05",181,197;
-	end;
+	switch( select( "Touch the Groove","Remove Item from Groove" ) )
+	{
+		case 1:
+			mes "^3355FF*Clatter Clatter*^000000";
+			next;
+			mes "^3355FFThe light emanating from";
+			mes "the groove distorts and";
+			mes "the column starts to shake.";
+			mes "You hear a faint rumbling";
+			mes "from inside the column.^000000";
+			specialeffect 52;
+			next;
+			mes "*Ggghhhhhzzzz!*";
+			mes "*BAM!*";
+			next;
+			mes "^3355FFThe light shining from";
+			mes "the column's groove grows";
+			mes "brighter as you feel the";
+			mes "ground beneath your feet";
+			mes "begin to slowly sink away...^000000";
+			next;
+			specialeffect 73;
+			specialeffect2 36;
+			close2;
+			warp "hu_fild05.gat",169,305;
+			end;
 
-L_No_Items:
-	mes "You don't have enough items";
-	close;
+		case 2:
+			mes "^3355FF*Ppppsssh!*";
+			mes "You accidentally";
+			mes "broke the item.^000000";
+			specialeffect 52;
+			next;
+			mes "^3355FF*Gggggggghhhhhhhhzzzzzzjjjjhh!*^000000";
+			next;
+			mes "^3355FFThe light emanating from";
+			mes "the groove distorts and";
+			mes "the column starts to shake.";
+			mes "The tremors in the ground";
+			mes "make it difficult to stand";
+			mes "steadily, but suddently you";
+			mes "are warped somewhere else...^000000";
+			next;
+			specialeffect 73;
+			specialeffect2 36;
+			close2;
+			warp "hu_fild05.gat",157,284;
+			end;
+	}
+}
 
-OnTimer10000:
-	disablenpc "warpabyss";
-	stopnpctimer;
-	setnpctimer 0;
-	end;
+hu_fild05,196,210,1	script	AbyssWarp	45,2,2,{
 
 OnInit:
-	disablenpc "warpabyss";
-	end;
-}
-
-
-hu_fild05,171,212,0	script	Pillar#02	111,{
-	mes "[Ancient Voice]";
-	mes "Leave the island?";
-	next;
-	menu "Yes",-,"No",L_close;
-	warp "hu_fild05",168,301;
+	disablenpc "AbyssWarp";
 	end;
 
-L_close:
-	mes "[Ancient Voice]";
-	mes "Return when you are ready.";
-	close;
-}
+OnTouch:
+	warp "abyss_01.gat",260,268;
+	end;
 
-hu_fild05,197,210,0	warp	warpabyss	2,3,abyss_01,264,271
+OnWarp:
+	initnpctimer;
+	enablenpc "AbyssWarp";
+	end;
+
+OnTimer30000:
+	stopnpctimer;
+	disablenpc "AbyssWarp";
+	end;
+}
