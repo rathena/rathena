@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -37,6 +37,7 @@
 //=	Made .KHQuestBusy$ into a temp global variable. $@KHQuestBusy$. 
 //= 2.0 Changed the labels on the "Big Doors" to "Identifier Names" to prevent an error with using getvariableofnpc [L0ne_W0lf]
 //= 2.1 Fifth door now checks for a variable HIGHER or EQUAL to 74 not 84, as pointed out by Stollen. [L0ne_W0lf]
+//= 2.2 Another fix for elly, no longer RESETS to 26 when you tak to her. [L0ne_W0lf]
 //
 //============================================================ 
 
@@ -1429,7 +1430,7 @@ kh_school,179,39,1	script	Cute Student	895,{
 		goto KH_Step26;
 	}
 
-	else if (KielHyreQuest >= 26) {
+	else if (KielHyreQuest == 26) {
 	KH_Step26:
 		mes "[Elly]";
 		mes "Say, "+strcharinfo(0)+",";
@@ -1458,6 +1459,36 @@ kh_school,179,39,1	script	Cute Student	895,{
 		mes "Hurry, hurry, the";
 		mes "teacher's coming!";
 		set KielHyreQuest,26;
+		goto KH_Elly_end;
+	}
+
+	else if (KielHyreQuest > 26) {
+		mes "[Elly]";
+		mes "Say, "+strcharinfo(0)+",";
+		mes "if it's okay, would you";
+		mes "please go find what my";
+		mes "grandpa left for me in";
+		mes "the ^FF0000cottage study^000000? You're";
+		mes "the only one I can trust!";
+		next;
+		mes "[Elly]";
+		mes "Anyway, I'll see you later";
+		mes "in the evening! Please come";
+		mes "by my ^FF0000dorm room^000000. Um, the";
+		mes "dorms are in the church just";
+		mes "behind the academy, okay?";
+		next;
+		mes "[Elly]";
+		mes "My room is in the back,";
+		mes "and it's on the ^FF0000second floor^000000";
+		mes "^FF0000on the left side^000000. Please use";
+		mes "a ladder to come up, okay?";
+		mes "I'll leave my window open";
+		mes "for you, so just come, okay?";
+		next;
+		mes "[Elly]";
+		mes "Hurry, hurry, the";
+		mes "teacher's coming!";
 		goto KH_Elly_end;
 	}
 
