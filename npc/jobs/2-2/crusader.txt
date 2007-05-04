@@ -5,7 +5,7 @@
 //= Converted by: Shin
 //=
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena  0.5.2 +
 //===== Description: ========================================= 
@@ -29,972 +29,1031 @@
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Fixed endless loop, wrong condition check [Lupus]
 //=	also changed all job numbers to constants, fixed logic
+//= 2.2 Updated All NPCs to the officials one [Samuray22]
+//=	-Based on the ASB 4.0 Package.
+//=	-Maybe need be checked the monsters in the test 2 and 4.
 //============================================================
 
 
-prt_castle,45,169,4	script	Senior Crusader	752,{
-	callfunc "F_BlockHigh",Job_Swordman_High,"Swordman High",Job_Paladin,"Paladin","^000080Michael Halig^000000";
+//=============== Senior Crusader: 1º Collect Items Test============================
 
-	mes "[^000080Michael Halig^000000]";
-	if (BaseJob > Job_Swordman) goto NEXT0;
-	if (BaseJob == Job_Novice){
-		mes "Hello there.";
+prt_castle,45,169,3	script	Senior Crusader	752,5,5 {
+	if (Upper == 1) {
+		mes "[Michele Cantonyon]";
+		mes "We, the Crusader, follow Odin's will to prepare ourselves for the Holy War.";
+		mes "The history a thousand years ago will return, the demons will come to to invade our land.";
 		next;
-		mes "[^000080Michael Halig^000000]";
-		mes "If you become a ^800000Swordsman^000000, you will gain the privelege of becoming a ^800000Knight^000000 or ^800000Crusader^000000.";
+		mes "[Michele Cantonyon]";
+		mes "There are bette place that is suitable for you...";
+		mes "Do not stop here. Do not stop training yourself.";
+		close;
+	} else if(Class != Job_Swordman) {
+		if(Class == Job_Crusader) {
+			mes "[Michele Cantonyon]";
+			mes "Excuse me. For those who are ready for Holy Battle, please don't stop at here, and keep training.";
+			mes "The victory is belongs to those who has well prepared...";
+			next;
+			mes "[Michele Cantonyon]";
+			mes "When Malaria comes to the end, follow Odin's order to kill all the monsters.";
+			mes "We must keep training until the day we build our own Utopia.";
+			close;
+		} else if(Class == Job_Novice) {
+			mes "[Michele Cantonyon]";
+			mes "We are Crusader, who follows Odin's order to ready for battle.";
+			next;
+			mes "[Michele Cantonyon]";
+			mes "If you wan to join us, train yourself as a Swordman and then come back to here...";
+			close;
+		}
+			mes "[Michele Cantonyon]";
+			mes "We are Crusader, who follows Odin's order to ready for battle.";
+			next;
+			mes "[Michele Cantonyon]";
+			mes "The demons will fight against us one day just like thousand years ago.";
+			close;
+	} else if((CRUS_Q == 0 || CRUS_Q == 1 || CRUS_Q == 2 || CRUS_Q == 3) && (countitem(1004) > 0 && countitem(1009) > 0)) {
+		mes "[Michele Cantonyon]";
+		mes "Do you accept the call-up by Odin?";
+		mes "Or, you're ready to show your effort?";
 		next;
-		mes "[^000080Michael Halig^000000]";
-		mes "If you decide to go along the path of the ^800000Crusader^000000, come back here.";
-		mes "Just take note that you must obtain a job level of at least 40 first before you can move up to the 2nd job.";
+		mes "[Michele Cantonyon]";
+		mes "Oh! I can see your potential to become a Crusader.";
+		mes "Let's have a test to certify then.";
+		next;
+		mes "[Michele Cantonyon]";
+		mes "Find Murnak Myjol at the Underground jail in Prontera.";
+		mes "Then ask him about it.";
+		next;
+		delitem 1004, 1;
+		delitem 1009, 1;
+		set CRUS_Q, 4;
+		mes "[Michele Cantonyon]";
+		mes "He will show you the road you should go,";
+		mes "and come back to me after you have success to pass all the test...";
+		close;
+	} else if(CRUS_Q == 0) {
+		mes "[Michele Cantonyon]";
+		mes "We are Crusader, who follows Odin's order to ready for battle.";
+		mes "Anything I can do for you?";
+		next;
+		switch( select( "Ready for Holy Battle", "Nothing")) {
+		case 1:
+			mes "[Michele Cantonyon]";
+			mes "Excuse me. Do you want to become a crusader?";
+			mes "It isn't easy to join us...";
+			next;
+			mes "[Michele Cantonyon]";
+			mes "I'm Michele Cantonyon, one of warrior who ready for Holy Battle.";
+			mes "We use our trust-worthy and loyalty to train ourselves hard.";
+			next;
+			mes "[Michele Cantonyon]";
+			mes "According to Odin's order, choose the trusted person as the warrior.";
+			mes "We will suggest these people and hope they can join us.";
+			next;
+			mes "[Michele Cantonyon]";
+			mes "Those Swordman who has ^3355FFPatriotism Marks^000000 and ^3355FFSacred Marks^000000 will call-up by Crusader.";
+			mes "These people will come with us once they has pass all the tests.";
+			next;
+			mes "[Michele Cantonyon]";
+			mes "Although I still not know you well...";
+			mes "OK, I'm going to test you then. Want to register now?";
+			next;
+			switch( select( "Yes, I want to register.", "Let me think about it again.")) {
+			case 1:
+				if(JobLevel < 40) {
+					mes "[Michele Cantonyon]";
+					mes "Hold on...You still can't get through.";
+					mes "Job Lv40 or above is required to become a Crusader.";
+					next;
+					mes "[Michele Cantonyon]";
+					mes "While waiting for Odin's order, you as a Swordman should keep on training.";
+					mes "We understand your passionate to join us, but we can't do nothing now...";
+					close;
+				} else if(SkillPoint != 0) {
+					mes "[Michele Cantonyon]";
+					mes "Excuse me, are you still a Swordman?";
+					mes "Come back to here after you master all the others skills...";
+					close;
+				}
+				mes "[Michele Cantonyon]";
+				mes "Let me see are you suitable for Crusader profession.";
+				mes "Let me see. Your name is " + strcharinfo(0) + "..right?";
+				next;
+				if (countitem(1004) > 0 && countitem(1009) > 0) {
+					mes "[Michele Cantonyon]";
+					mes "Oh! I can see your potential to become a Crusader.";
+					mes "But that are not enough. Let's have a test to certify.";
+					next;
+					mes "[Michele Cantonyon]";
+					mes "Find Murnak Myjol at the Underground jail in Prontera.";
+					mes "Then ask him.";
+					next;
+					delitem 1004, 1;
+					delitem 1009, 1;
+					set CRUS_Q, 4;
+					mes "[Michele Cantonyon]";
+					mes "He will show you the road you should go,";
+					mes "and come back to me after you have success to pass all the test...";
+					close;
+				}
+				mes "[Michele Cantonyon]";
+				mes "Ehm, it's hard to see your potential to become a Crusader,";
+				mes "But I can see your passionate to become a Crusader, please show me your hardworking attitude.";
+				next;
+				set @cru_m1, rand(1, 3);
+				if(@cru_m1 == 1) {
+					set CRUS_Q, 1;
+					mes "[Michele Cantonyon]";
+					mes "You must get these items to me,";
+					mes "10 ^3355FF"+getitemname(957)+"^000000";
+					mes "10 ^3355FF"+getitemname(959)+"^000000";
+					mes "10 ^3355FF"+getitemname(1099)+"^000000";
+					mes "10 ^3355FF"+getitemname(901)+"^000000";
+					next;
+					mes "[Michele Cantonyon]";
+					mes "We will judge whether you qualify to become a Crusader depends on your effort.";
+					mes "Wish you good luck then. May the Odin be with you.";
+					close;
+				} else if(@cru_m1 == 2) {
+					set CRUS_Q, 2;
+					mes "[Michele Cantonyon]";
+					mes "You must get these items to me,";
+					mes "10 ^3355FF"+getitemname(932)+"^000000";
+					mes "10 ^3355FF"+getitemname(1043)+"^000000";
+					mes "10 ^3355FF"+getitemname(1098)+"^000000";
+					mes "10 ^3355FF"+getitemname(1094)+"^000000";
+					next;
+					mes "[Michele Cantonyon]";
+					mes "We will judge whether you qualify to become a Crusader depends on your effort.";
+					mes "Wish you good luck then. May Odin be with you.";
+					close;
+				}
+					set CRUS_Q, 3;
+					mes "[Michele Cantonyon]";
+					mes "You must get these items to me,";
+					mes "10 ^3355FF"+getitemname(958)+"^000000";
+					mes "10 ^3355FF"+getitemname(930)+"^000000";
+					mes "10 ^3355FF"+getitemname(1041)+"^000000";
+					mes "10 ^3355FF"+getitemname(1062)+"^000000";
+					next;
+					mes "[Michele Cantonyon]";
+					mes "We will judge whether you qualify to become a Crusader depends on your effort.";
+					mes "Wish you good luck then. May the Odin be with you.";
+					close;
+			case 2:
+				mes "[Michele Cantonyon]";
+				mes "Yeah, but no idea when is the Holy Battle.";
+				mes "Get well prepared, don't stop your training.";
+				next;
+				mes "[Michele Cantonyon]";
+				mes "With Odin's instruction, you must come back for test no matter when.";
+				close;
+			}
+		case 2:
+			mes "[Michele Cantonyon]";
+			mes "You're also a Swordman, put all the efforts to train yourself hard.";
+			mes "No one knows when is the Holy Battle.";
+			next;
+			mes "[Michele Cantonyon]";
+			mes "Those unknown issue might be a call-up by Odin.";
+			close;
+		}
+	} else if(CRUS_Q == 1 || CRUS_Q == 2 || CRUS_Q == 3) {
+		mes "[Michele Cantonyon]";
+		mes "Do you accept the call-up by Odin?";
+		mes "Or, you're ready to show your effort?";
+		next;
+		if(CRUS_Q == 1) {
+		set @item1, 957;
+		set @item2, 959;
+		set @item3, 1099;
+		set @item4, 901;
+		} else if(CRUS_Q == 2) {
+		set @item1, 932;
+		set @item2, 1043;
+		set @item3, 1098;
+		set @item4, 1094;
+		} else if(CRUS_Q == 3) {
+		set @item1, 958;
+		set @item2, 930;
+		set @item3, 1041;
+		set @item4, 1062;
+		}
+		if (countitem(@item1) > 9 && countitem(@item2) > 9 && countitem(@item3) > 9 && countitem(@item4) > 9) {
+			mes "[Michele Cantonyon]";
+			mes "Oh, well done. I have to certify you because of you'd put effort to collect these items.";
+			mes "You may go for the test now just because of I saw your efforts.";
+			next;
+			mes "[Michele Cantonyon]";
+			mes "Find Murnak Myjol at the Underground jail in Prontera.";
+			mes "Then ask him about it.";
+			next;
+			delitem @item1, 10;
+			delitem @item2, 10;
+			delitem @item3, 10;
+			delitem @item4, 10;
+			set CRUS_Q, 4;
+			mes "[Michele Cantonyon]";
+			mes "He will show you the road you should go,";
+			mes "and come back to me after you have success to pass all the test...";
+			close;
+		} else {
+			mes "[Michele Cantonyon]";
+			mes "I can't see your potential to become a Crusader.";
+			mes "But I can see your passionate to become a Crusader, please show me your effort.";
+			next;
+			mes "[Michele Cantonyon]";
+			mes "10 ^3355FF"+getitemname(@item1)+"^000000";
+			mes "10 ^3355FF"+getitemname(@item2)+"^000000";
+			mes "10 ^3355FF"+getitemname(@item3)+"^000000";
+			mes "10 ^3355FF"+getitemname(@item4)+"^000000";
+			next;
+			mes "[Michele Cantonyon]";
+			mes "Always show you're improving.";
+			mes "Wish you good luck then. May the Odin be with you.";
+			close;
+		}
+	} else if(CRUS_Q == 10) {
+		if(SkillPoint != 0) {
+			mes "[Michele Cantonyon]";
+			mes "Excuse me, are you still a Swordman?";
+			mes "Come back to here after you have master all the other skills.";
+			close;
+		}
+		mes "[Michele Cantonyon]";
+		mes "Congratulation. You have completed all the tests perfectly.";
+		mes "Be prepared and stay with us! We are the warriors ready for Holy Battle!";
+		next;
+		callfunc "Job_Change",Job_Crusader;
+		callfunc "F_ClearJobVar";		//clears all job variables for the current player
+		mes "[Michele Cantonyon]";
+		mes "Congratulation. You have completed all the tests perfectly.";
+		mes "Be prepared and stay with us! We are the warriors ready for Holy Battle!";
+		next;
+		if(JobLevel != 50) {
+		getitem 504, 6;
+		} else {
+		getitem 504, 12;
+		}
+		mes "[Michele Cantonyon]";
+		mes "And this one. Use it when in emergency.";
+		mes "It will bring us the power to our force of Crusader.";
+		next;
+		mes "[Michele Cantonyon]";
+		mes "Keep on training. The Holy Battle is coming soon.";
+		mes "May Odin bless you!";
+		mes "You may go now!";
 		close;
 	}
+		mes "[Michele Cantonyon]";
+		mes "Seem like you haven't pass through all the tests.";
+		mes "We not yet see your potential to become a Crusader.";
+		next;
+		mes "[Michele Cantonyon]";
+		mes "Go through all the tests and come back here.";
+		mes "I'll clarify your qualification after that.";
+		close;
+}
 
-	mes "Hello "+ strcharinfo(0);
-	mes "I see that you've registered to the ^008000Swordsman's Association^000000.";
-	if (CRUS_Q == 1) goto CONT;
-	if (CRUS_Q == 2) goto CONT0;
-	if (CRUS_Q == 3) goto L_GETITM1;
-	if (CRUS_Q == 4) goto L_GETITM2;
-	if (CRUS_Q > 4) goto CONT3;
-	mes "Welcome, can I help you with something?";
-	next;
-	menu "I want to become a ^800000Crusader^000000.",JOB,"What's being a ^800000Crusader^000000 like?",ASK,"What is the purpose of a ^800000Crusader^000000?",ASK0,"I was just looking around.",-;
-	mes "[^000080Michael Halig^000000]";
-	mes "Oh, all right.";
-	next;
-	mes "[^000080Michael Halig^000000]";
-	mes "If you decide to take the path of the ^800000Crusader^000000, feel free to come back.";
-	close;
-JOB:
-	mes "[^000080Michael Halig^000000]";
-	mes "All right, let me take a look at you first.";
-	next;	
-	if (JobLevel != 50) goto SKIP;
-	set JBLVL,50;
-	set CRUS_Q,5;
-	goto TEST1;
-SKIP:
-	if (JobLevel > 39) goto OKAY;
-	mes "[^000080Michael Halig^000000]";
-	mes "I'm sorry, but you need to be at least at a job level of 40.";
-	next;
-	mes "[^000080Michael Halig^000000]";
-	mes "All 2nd jobs require that.";
-	close;
-OKAY:
-	if (SkillPoint == 0) goto OKAY0;
-JOB0:
-	mes "[^000080Michael Halig^000000]";
-	mes "In order to become a ^800000Crusader^000000, you have to have used all your available skill points first.";
-	close;
-OKAY0:
-	mes "[^000080Michael Halig^000000]";
-	mes "Everything looks all right.";
-	set CRUS_Q,1;
-	next;
-	mes "[^000080Michael Halig^000000]";
-	mes "All right, shall we begin the tests?";
-	next;
-	menu "Yes, of course.",OKAY1,"Not yet.",-;
-	mes "[^000080Michael Halig^000000]";
-	mes "Oh, all right.  Come back when you're ready.";
-	close;
-OKAY1:
-	if (SkillPoint != 0) goto JOB0;
-	set CRUS_Q,rand (3,4);
-	mes "[^000080Michael Halig^000000]";
-	mes "All right, the first test requires you to collect items.";
-	next;
-	mes "[^000080Michael Halig^000000]";
-	mes "Bring back the following items:";
-	if (CRUS_Q == 3){
-		mes "- 10 ^FF0000Decayed Nails^000000";
-		mes "- 10 ^FF0000Daenggies^000000";
-		mes "- 10 ^FF0000Worn-out Prison Uniforms^000000";
-		mes "- 10 ^FF0000Stinky Scales^000000";
+//===================== Suffering Man: 2º Endure Test ===============================================
+prt_castle,164,32,0	script	Suffering Man	733,5,5{
+	if(Class != Job_Swordman) {
+		if (Class == Job_Crusader) {
+			mes "[Murnak Myjol]";
+			mes "Don't stopping at this kind of place, carry on...";
+			mes "We will fight together someday. The day will come...";
+			close;
+		} else if(Class == Job_Novice) {
+			mes "[Murnak Myjol]";
+			mes "I'm just a Novice, not a criminal!";
+			next;
+			mes "[Murnak Myjol]";
+			mes "I'm here just to training.";
+			close;
+		}
+			mes "[Murnak Myjol]";
+			mes "Shut up and get out from here!";
+			next;
+			mes "[Murnak Myjol]";
+			mes "Do not disturb my training.";
+			close;
+	} else if(CRUS_Q == 0 || CRUS_Q == 1 || CRUS_Q == 2 || CRUS_Q == 3) {
+		mes "[Murnak Myjol]";
+		mes "What's happen? Please go out if nothing else.";
+		mes "I need CALM for my training.";
+		next;
+		mes "[Murnak Myjol]";
+		mes "I must have a calm mind for preparing the Holy Battle.";
+		mes "So, can you please give me a seat?";
+		close;
+	} else if(CRUS_Q == 4) {
+		mes "[Murnak Myjol]";
+		mes "What's happen?";
+		mes "What happen, Swordman? Why need to disturbed me from my training?";
+		next;
+		switch( select( "I want to participate in Crusader job profession change.", "Nothing actually.")) {
+		case 1:
+			mes "[Murnak Myjol]";
+			mes "Didn't see you for quite some time, the hope of Crusader.";
+			mes "I'm Murnak Myjol, who ready for Holy Battle.";
+			next;
+			mes "[Murnak Myjol]";
+			mes "Your name is..." + strcharinfo(0) + "...right?";
+			mes "Come over; let me see your face.";
+			next;
+			if(getequipname(7) != "Rosary" || getequipname(8) != "Rosary") {
+				mes "[Murnak Myjol]";
+				mes "Oh, you don't even have a Rosary, how to become a Crusader?";
+				mes "I don't want to see the guy like you, go out and buy a Carrot.";
+				next;
+				mes "[Murnak Myjol]";
+				mes "You just play with that sword for life time like that, got it?";
+				close;
+			}
+			mes "[Murnak Myjol]";
+			mes "But, you're also imprudent...";
+			mes "Seems like inadequate to become a Crusader with that attitude.";
+			next;
+			mes "[Murnak Myjol]";
+			mes "Let's see your patienceness before you become a Crusader.";
+			mes "Patience is very important.";
+			next;
+			mes "[Murnak Myjol]";
+			mes "You may go for the test now. The test isn't difficult.";
+			mes "Just walk to the end of the corridor.";
+			next;
+			mes "[Murnak Myjol]";
+			mes "However, bear in mind of one thing.";
+			mes "Do not slave any monsters not matter what happens.";
+			next;
+			set CRUS_Q, 5;
+			mes "[Murnak Myjol]";
+			mes "Let's start then.";
+			close2;
+			warp job_cru,23,42;
+			break;
+		case 2:
+			mes "[Murnak Myjol]";
+			mes "Is it the young people are free?";
+			mes "Don't play at this place. Better go out to pick for Jellopy.";
+			close;
+		}
+	} else if(CRUS_Q == 5) {
+		mes "[Murnak Myjol]";
+		mes "What's the matter? You are the Swordman just now.";
+		mes "Hmm? What? Fail? Doesn't did well in the exam?";
+		next;
+		switch( select( "Please, give me another chance.", "What the hell the exam is?")) {
+		case 1:
+			mes "[Murnak Myjol]";
+			mes "You can take the exam no matter how many times.";
+			mes "But, if you fail, the problem is lie on your mentality.";
+			next;
+			if (countitem(2608) == 0) {
+				mes "[Murnak Myjol]";
+				mes "Where you put the Rosary this time?";
+				mes "We had accepted the protection from Odin, we can't simply put on the Rosary.";
+				next;
+				mes "[Murnak Myjol]";
+				mes "Nothing in mind, just playing the sword at will, it was only happended as a Swordman.";
+				mes "If you want to take the exam again, please strictly adhere to the etiquette.";
+				close;
+			}
+			mes "[Murnak Myjol]";
+			mes "It had been a habit to hit the monster when its appeared, it may be a point of the problem, right?";
+			mes "Patience and persistence are what I ask for.";
+			next;
+			mes "[Murnak Myjol]";
+			mes "So, I repeat, just like last time...";
+			mes "Just walk to the end to the altar.";
+			next;
+			mes "[Murnak Myjol]";
+			mes "So too this time strictly slave any monsters no matter what happen.";
+			mes "Please think wisely before you go through.";
+			next;
+			mes "[Murnak Myjol]";
+			mes "Start then!";
+			close2;
+			savepoint "prt_castle",162,27;
+			if (getmapusers("job_cru") > 0) {
+				mes "[Murnak Myjol]";
+				mes "I'm sorry, there's already another person there right now.";
+				mes "Please wait a little longer.";
+			}
+			set CRUS_Q,5;
+			warp "job_cru",23,42;
+			break;
+		case 2:
+			mes "[Murnak Myjol]";
+			mes "Ahem, does your reaction mean you don't like my tests?";
+			mes "A person like you would never qualify for Holy Battle.";
+			next;
+			mes "[Murnak Myjol]";
+			mes "Get lost right now!";
+			close;
+		}
+	} else if(CRUS_Q == 6) {
+		mes "[Murnak Myjol]";
+		mes "Your result seems not bad. Not difficult, right?";
+		mes "You has nothing to look for me now.";
+		next;
+		mes "[Murnak Myjol]";
+		mes "Look for Gabriel Valentine at the Church in Prontera.";
+		mes "You can go for the next exam. OK, go for it now.";
 		close;
 	}
-	mes "- 10 ^FF0000Lanterns^000000";
-	mes "- 10 ^FF0000Horrendous Mouths^000000";
-	mes "- 10 ^FF0000Rotten Bandages^000000";
-	mes "- 10 ^FF0000Jack 'o Pumpkins^000000";
-	close;
-	
-	ASK:
-	mes "[^000080Michael Halig^000000]";
-	mes "To be a ^800000Crusader^000000 is to fight for the righteous people.";
-	mes "Not always those who are in power, but rather for the justly cause.";
-	next;
-	mes "[^000080Michael Halig^000000]";
-	mes "I hope that you consider to become one.";
-	mes "To fight for good is a job that should be done by everyone to some extent.";
-	close;
-ASK0:
-	mes "[^000080Michael Halig^000000]";
-	mes "The purpose of a ^800000Crusader^000000 is to work for the good in the world.";
-	mes "A ^800000Crusader^000000 is a person of righteousness at work.";
-	close;
-CONT:
-	mes "Have you changed your mind?";
-	next;
-	menu "Yes, I want to become a ^800000Crusader^000000.",JOB,"Sorry, but I don't want to.",-;
-	mes "[^000080Michael Halig^000000]";
-	mes "I see... That's a shame.";
-	next;
-	mes "[^000080Michael Halig^000000]";
-	mes "Come back if you do want to.";
-	close;
-CONT0:
-	mes "Well, hm...";
-	next;
-	mes "[^000080Michael Halig^000000]";
-	mes "I was expecting that someone like you would pass.";
-	next;
-	mes "[^000080Michael Halig^000000]";
-	mes "Mind to try again?";
-	next;
-	menu "Yes, of course.",OKAY1,"No, I'm all right.",-;
-	mes "[^000080Michael Halig^000000]";
-	mes "Oh, all right.";
-	close;
-L_GETITM1:
-	set @item,0;
-	if(countitem(957)>=10) goto ITEM7;//Items: Decayed_Nail,
-	mes "- 10 ^FF0000Decayed Nails^000000";
-	set @item, @item +1;
-	ITEM7:
-	if(countitem(901)>=10) goto ITEM8;//Items: Daenggie,
-	mes "You still miss the this item";
-	mes "- 10 ^FF0000Danggies^000000";
-	set @item, @item +1;
-	ITEM8:
-	if(countitem(1099)>=10) goto ITEM9;//Items: Worn-out_Prison_Uniform,
-	mes "You still miss the this item";
-	mes "- 10 ^FF0000Worn-out Prison Uniforms^000000";
-	set @item, @item +1;
-	ITEM9:
-	if(countitem(959)>=10) goto ITEM10;//Items: Stinky_Scale,
-	mes "You still miss the this item";
-	mes "- 10 ^FF0000Stinky Scales^000000";
-	set @item, @item +1;
-	ITEM10:
-	if(@item) close;
-
-	mes "Good job!";
-	mes "You collected everything!";
-	delitem 957,10;//Items: Decayed_Nail,
-	delitem 901,10;//Items: Daenggie,
-	delitem 1099,10;//Items: Worn-out_Prison_Uniform,
-	delitem 959,10;//Items: Stinky_Scale,
-	set CRUS_Q,5;
-TEST1:
-	next;
-	mes "[^000080Michael Halig^000000]";
-	mes "All right, let's move on to the 2nd test.";
-	next;
-	mes "[^000080Michael Halig^000000]";
-	mes "Go to the prison, it's in the basement";
-	mes "Before you do, make sure that you bring a ^FF0000Rosary^000000 with you.";
-	close;
-
-L_GETITM2:
-	set @item, 0;
-	if(countitem(1041)>=10) goto ITEM11;//Items: Lantern,
-	mes "You still miss the this item";
-	mes "- 10 ^FF0000Lanterns^000000";
-	set @item, @item +1;
-	ITEM11:
-	if(countitem(958)>=10) goto ITEM12;//Items: Horrendous_Mouth,
-	mes "You still miss the this item";
-	mes "- 10 ^FF0000Horrendous Mouths^000000";
-	set @item, @item +1;
-	ITEM12:
-	if(countitem(930)>=10) goto ITEM13;//Items: Rotten_Bandage,
-	mes "You still miss the this item";
-	mes "- 10 ^FF0000Rotten Bandages^000000";
-	set @item, @item +1;
-	ITEM13:
-	if(countitem(1062)>=10) goto ITEM14;//Items: Jack_'o_Pumpkin,
-	mes "You still miss the this item";
-	mes "- 10 ^FF0000Jack 'o Pumpkins^000000";
-	set @item, @item +1;
-	ITEM14:
-	if(@item) close;
-
-	mes "Good job!";
-	mes "You collected everything!";
-	delitem 1041,10;//Items: Lantern,
-	delitem 958,10;//Items: Horrendous_Mouth,
-	delitem 930,10;//Items: Rotten_Bandage,
-	delitem 1062,10;//Items: Jack_'o_Pumpkin,
-	set CRUS_Q,5;
-	goto TEST1;
-CONT3:
-	if (CRUS_Q == 8) goto CONT4;
-	if (CRUS_Q > 8) goto CONT5;
-	mes "Please talk to the man in the prison to continue.";
-	mes "Make sure you bring a ^FF0000Rosary^000000 with you.";
-	close;
-CONT4:
-	mes "Great job in accomplishing the ^FF8000Patience Test^000000!";
-	next;
-	mes "[^000080Michael Halig^000000]";
-	mes "Now to move on to the ^FF8000Knowledge Test^000000.";
-	mes "Please talk to Gabriel Valentine at the Cathedral, she will test your knowledge.";
-	set CRUS_Q,9;
-	close;
-CONT5:
-	if (CRUS_Q == 13) goto CONT6;
-	if (CRUS_Q == 14) goto CONT7;
-	mes "Please go talk to Gabriel Valentine at the Cathedral to continue.";
-	close;
-CONT6:
-	mes "Excellent work in completing all the necessary tests!";
-	mes "Now let me examine you before you become a ^800000Crusader^000000.";
-	next;
-	set CRUS_Q,14;
-	mes "[^000080Michael Halig^000000]";
-CONT7:
-	if (SkillPoint == 0) goto GOOD;
-	mes "I'm sorry, but you'll need to use up all your skill points first.";
-	close;
-GOOD:
-	mes "This is to compliment your job change.";
-	if (JBLVL != 50) getitem 1409,1;//Items: Pike__,
-	if (JBLVL == 50) getitem 1408,1;//Items: Pike_,
-
-	callfunc "Job_Change",Job_Crusader;
-	callfunc "F_ClearJobVar";	// clears all job variables for the current player
-	close;
-NEXT0:
-	if (BaseJob != Job_Mage) goto NEXT1;
-	mes "Hello, welcome to the ^008000Castle of Prontera^000000.";
-	mes "Hope you have a good day!";
-	close;
-NEXT1:
-	if (BaseJob != Job_Archer) goto NEXT2;
-	mes "Good luck in your hunting.";
-	close;
-NEXT2:
-	if (BaseJob != Job_Acolyte) goto NEXT3;
-	mes "Good day to you!";
-	mes "Hope you do well to find your path.";
-	close;
-NEXT3:
-	if (BaseJob != Job_Merchant) goto NEXT4;
-	mes "Hello, we don't currently need anything, sorry about that.";
-	close;
-NEXT4:
-	if (BaseJob != Job_Thief) goto NEXT5;
-	mes "Better watch yourself.";
-	close;
-NEXT5:
-	if (BaseJob != Job_Knight) goto NEXT6;
-	mes "Good day to you, " + strcharinfo(0);
-	close;
-NEXT6:
-	if (BaseJob != Job_Priest) goto NEXT7;
-	mes "Good day, "+ strcharinfo(0);
-	mes "I would hope to believe that all is going well.";
-	close;
-NEXT7:
-	if (BaseJob != Job_Wizard) goto NEXT8;
-	mes "Hello, welcome to the ^008000Castle of Prontera^000000.";
-	mes "Nice to have you wish us.";
-	close;
-NEXT8:
-	if (BaseJob != Job_Blacksmith) goto NEXT9;
-	mes "Hello, we're not in need of any weapons or armour at the moment, thank you.";
-	close;
-NEXT9:
-	if (BaseJob != Job_Hunter) goto NEXT10;
-	mes "Hello, wish you luck for your success.";
-	close;
-NEXT10:
-	if (BaseJob != Job_Assassin) goto NEXT11;
-	mes "Stay out of trouble, you don't want the guards to come after you, now do you?";
-	close;
-NEXT11:
-	if (BaseJob != Job_Crusader) goto NEXT12;
-	mes "Good day, "+ strcharinfo(0);
-	close;
-NEXT12:
-	if (BaseJob != Job_Monk) goto NEXT13;
-	mes "Hello, welcome to the ^008000Castle of Prontera^000000.";
-	close;
-NEXT13:
-	if (BaseJob != Job_Sage) goto NEXT14;
-	mes "Welcome to the ^008000Castle of Prontera^000000, I hope you enjoy your stay.";
-	close;
-NEXT14:
-	if (BaseJob != Job_Rogue) goto NEXT15;
-	mes "Stay out of trouble if you know what's good for you.";
-	close;
-NEXT15:
-	if (BaseJob != Job_Alchem) goto NEXT16;
-	mes "So, how are the experiments going down in ^00FF00Al de Baran^000000?";
-	close;
-NEXT16:
-	if (BaseJob != Job_Bard) goto NEXT17;
-	mes "Welcome to the castle, good sir.";
-	close;
-NEXT17:
-	if (BaseJob != Job_Dancer) goto NEXT18;
-	mes "Good day, miss.";
-	close;
-NEXT18:
-	if (BaseJob != Job_Wedding) goto NEXT19;
-	if (Sex){
-		mes "Well done, sir!";
-	} else {
-		mes "Hello, welcome to the ^008000Castle of Prontera^000000.";
-	}
-	close;
-NEXT19:
-	mes "Hello and good day!";
-	close;
+		mes "[Murnak Myjol]";
+		mes "You seem like haven't finished the exam, I'll not interrupt you. Please carry on with your exam.";
+		close;
 }
 
-//-----------------------------------------------------------------------------------------------------------------------------------------------------
-//
-// Man in Anguish - Crusader Job Quest - 2nd Test
-// By Black Dragon based on the information at RagnaInfo
-//
-//-----------------------------------------------------------------------------------------------------------------------------------------------------
-prt_castle,164,32,0	script	Man in Anguish	733,{
-	if (CRUS_Q == 7) goto CONT;
-	if (CRUS_Q > 7) goto CONT0;
-	mes "[^000080Murnak Mijoul^000000]";
-	mes "Who... who are you?";
-	next;
-	if (CRUS_Q == 5) goto CHECK;
-
-	OTHER:
-	if (CRUS_Q == 6) goto EXIT1;
-	mes "[^000080Murnak Mijoul^000000]";
-	mes "What do you want?";
-	mes "Leave me alone~!";
-	close;
-	CHECK:	
-	if (countitem(2608) == 0) goto NOT;//Items: Rosary,
-
-	mes "[^000080Murnak Mijoul^000000]";
-	mes "I see, you're here for the job.";
-	next;
-	mes "[^000080Murnak Mijoul^000000]";
-	mes "It's torture.";
-	mes "They send me to that room time and time again.";
-	next;
-	mes "[^000080Murnak Mijoul^000000]";
-	mes "I've grown awefully weak from it.";
-	next;
-	mes "[^000080Murnak Mijoul^000000]";
-	mes "But if it's your wish, I will send to there.";
-	next;
-	menu "Yes.",-,"On second thought...",EXIT;
-	mes "[^000080Murnak Mijoul^000000]";
-	mes "All right then... I'll tell you where to go.";
-	GO:
-	next;
-	savepoint "prt_castle",162,27;
-	if (getmapusers("job_cru") > 0) goto EXIT0;
-	set CRUS_Q,6;
-	warp "job_cru",23,42;
-	EXIT0:
-	mes "[^000080Murnak Mijoul^000000]";
-	mes "I'm sorry, there's already another person there right now.";
-	mes "Please wait a little longer.";
-	close;
-	EXIT:
-	mes "[^000080Murnak Mijoul^000000]";
-	mes "Please do not disturb me then!";
-	close;
-	NOT:
-	mes "[^000080Murnak Mijoul^000000]";
-	mes "Leave me alone!";
-	mes "Can't you leave someone in pain alone ?";
-	close;
-
-	CONT:
-	mes "[^000080Murnak Mijoul^000000]";
-	mes "I see you've passed.  Good work.";
-	set CRUS_Q,8;
-	close;
-	EXIT1:
-	mes "[^000080Murnak Mijoul^000000]";
-	mes "Sorry but you're going to need to go again.";
-	goto GO;
-	CONT0:
-	mes "[^000080Murnak Mijoul^000000]";
-	mes "There is nothing else you need from me.";
-	mes "Let me be...";
-	close;
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------------------------------
-//
-// Gabriel Valentine - Crusader Job Quest - Knowledge Test
-// By Black Dragon based on the information at RagnaInfo
-//
-//-----------------------------------------------------------------------------------------------------------------------------------------------------
-prt_church,94,116,0	script	Gabriel Valentine	745,{
-	mes "[^000080Gabriel Valentine^000000]";
-	if (BaseJob == Job_Novice){
-		mes "Hello young traveler.";
+//===================== Catholic Knight: 3º Knoledge Test ====================================
+prt_church,95,127,0	script	Catholic Knight	745,{
+	if(Class != Job_Swordman) {
+		if(Class == Job_Crusader) {
+			mes "[Gabriel Valentine]";
+			mes "Welcome, Crusaders.";
+			mes "Still remember the training?";
+			next;
+			mes "[Gabriel Valentine]";
+			mes "For the coming of the Holy War, don't ever forget the day.";
+			mes "Work hard!";
+			close;
+		} else if(Class == Job_Novice) {
+			mes "[Gabriel Valentine]";
+			mes "Welcome, I'm a Crusaders.";
+			mes "A warrior prepared for the Holy Battle in future.";
+			next;
+			mes "[Gabriel Valentine]";
+			mes "Swordman, if you interested about Crusader, please train hard.";
+			mes "See us again when you think you've qualified the requirement...";
+			next;
+			mes "[Gabriel Valentine]";
+			mes "We are living in the middle section of the Prontera.";
+			mes "It's good to visit us if you are in free.";
+			close;
+		}
+			mes "[Gabriel Valentine]";
+			mes "Welcome, I'm a Crusaders.";
+			mes "A warrior prepared for the Holy Battle in future.";
+			next;
+			mes "[Gabriel Valentine]";
+			mes "You must train hard to ready for the days to come.";
+			close;
+	} else if(CRUS_Q == 0) {
+		mes "[Gabriel Valentine]";
+		mes "Welcome, I'm a Crusaders.";
+		mes "A warrior prepared for the Holy Battle in future.";
+		next;
+		mes "[Gabriel Valentine]";
+		mes "If you want to become a crusader.";
+		mes "See our Leader in the middle section of Prontera.";
+		close;
+	} else if(CRUS_Q == 6) {
+		mes "[Gabriel Valentine]";
+		mes "Welcome. Finished all the tough tests?";
+		mes "I will prepare for your next test.";
+		next;
+		mes "[Gabriel Valentine]";
+		mes "My name is Gabriel Valentine, a warrior ready for Holy Battle.";
+		mes "A temporary special agent for this Church.";
+		next;
+		mes "[Gabriel Valentine]";
+		mes "I want to see whether you have the knowledge to become a Crusader.";
+		mes "You cant win that easily just with a sword.";
+		next;
+		goto C_Questions;
+	} else if(CRUS_Q == 7) {
+		mes "[Gabriel Valentine]";
+		mes "Welcome. Are you ready for the test?";
+		mes "Resit the test then.";
+		next;
+C_Questions:	
+		set @cru_t, 0;
+		set @cru_m, rand(1,3);
+		mes "[Gabriel Valentine]";
+		mes "10 questions as before.";
+		mes "Listen carefully. Give me the correct answer.";
+		next;
+		if(@cru_m == 1) {
+			mes "[Gabriel Valentine]";
+			mes "1.Which element is the best against Undead?";
+			next;
+			switch( select( "None Element:Earth Element:Undead Element:Holy Element")) {
+			case 4:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 2:
+			case 3:
+			}
+			mes "[Gabriel Valentine]";
+			mes "2. How much the Damage increase compare to Fire Elemental Attack by Undead Monster Lv.2?";
+			next;
+			switch( select("25%:50%:75%:100%")) {
+			case 2:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "3. Which item are not obtain from Druid?";
+			next;
+			switch( select("Holy Bonnet:Leaf of Yggdrasil:White Herb:Amulet")) {
+			case 1:
+				set @cru_t, @cru_t+10;
+			case 2:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "4. Which Undead from the below has the most HP?";
+			next;
+			switch( select( "Ghoul:Skel Prisoner:Wraith:Zombie Prisoner")) {
+			case 4:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 2:
+			case 3:
+			}
+			mes "[Gabriel Valentine]";
+			mes "5. Which Undead from the below has different in size?";
+			next;
+			switch( select( "Wraith:Khalitzburg:Drake:Evil Druid")) {
+			case 3:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 2:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "6. Which card has the most effectiveness against Undead?";
+			next;
+			switch( select( "Orc Skeleton Card:Orc Zombie Card:Ghoul Card:Skel Worker Card")) {
+			case 2:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "7. What is the relationship between Munak and Bon Gun when it still alive?";
+			next;
+			switch( select( "Sibling:Neighbour's sibling:Sibling that doesn't have blood relationtionship:No relationship")) {
+			case 2:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "8. Differentiate these Undead Monster.";
+			next;
+			switch( select( "Soldier Skeleton:Orc Skeleton:Skeleton:Skel Worker")) {
+			case 3:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 2:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "9. The shield that sloted in the Munak Card is...";
+			next;
+			switch( select( "Atomic Shield:Amulet Shield:Hypnotic Shield:Homer's Shield")) {
+			case 2:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "10. Which Undead doesn't drops Memetos?";
+			next;
+			switch( select( "Munak:Ghoul:Mummy:Soldier Skeleton")) {
+			case 1:
+				set @cru_t, @cru_t+10;
+			case 2:
+			case 3:
+			case 4:
+			}
+		} else if(@cru_m == 2) {
+			mes "[Gabriel Valentine]";
+			mes "1. Which from the below are not categorize under Ghost?";
+			next;
+			switch( select( "Carat:Wind Ghost:Isis:Wander Man")) {
+			case 3:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 2:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "2. Which sword is the best sword against Ghost?";
+			next;
+			switch( select( "Decussate Tsurugi:Tsurugi from hell:Damned Tsurugi:Divine Tsurugi")) {
+			case 1:
+				set @cru_t, @cru_t+10;
+			case 2:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "3. Which item are not able to get from Dokebi?";
+			next;
+			switch( select( "Elunium Stone:Golden Hammer:Sword Mace:Mighty Staff")) {
+			case 2:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "4. Which Ghost below has the highest HP?";
+			next;
+			switch( select( "Giearth:Magnolia:Dokebi:Marionette")) {
+			case 4:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 2:
+			case 3:
+			}
+			mes "[Gabriel Valentine]";
+			mes "5.Which Ghost from the below different in size?";
+			next;
+			switch( select( "Ghostring:Whisper:Deviruchi:Baphomet")) {
+			case 1:
+				set @cru_t, @cru_t+10;
+			case 2:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "6. Which Shield from below has the best Defense when against Ghost?";
+			next;
+			switch( select( "Satanic Shield:Shield from hell:Amulet Shield:Excellent Shield")) {
+			case 2:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "7. Which element is best effective to Wind elemental Wizard?";
+			next;
+			switch( select( "Water Element:Earth Element:Fire Element:Wind Element")) {
+			case 2:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "8.Please select the monster not from Ghost Class.";
+			next;
+			switch( select( "Sohee:Isis:Dokebi:Whisper")) {
+			case 4:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 2:
+			case 3:
+			}
+			mes "[Gabriel Valentine]";
+			mes "9. What is the usage of Marrionette Card?";
+			next;
+			switch( select( "Increase 30% of DEF against Darkness Attack:Increase 30% of DEF against Poisoness Attack:Increase 30% of DEF against Mind Attack:Increase 30% of DEF against none elementary Attack")) {
+			case 3:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 2:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "10. The best way to against Ghost is...";
+			next;
+			switch( select( "Shout louder 'Get lost!':Give it your soul and sign the contract:Attack with a weapon coated with Holy water:Wear Deviruchi Hat" )) {
+			case 3:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 2:
+			case 4:
+			}
+		} else {
+			mes "[Gabriel Valentine]";
+			mes "1. What's the minimum prerequisite skilln in order to master Demonbane?";
+			next;
+			switch( select( "Lv. 1:Lv. 2:Lv. 3:Lv. 4")) {
+			case 3:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 2:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "2. At level 55, if the INT was increased to 30, what's the recovery rate for Heal at Level 5?";
+			next;
+			switch( select( "396:440:484:528" )) {
+			case 2:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "3. How much is the DEF increase when against Undead with Divine Protection?";
+			next;
+			switch( select( "21:22:23:24")) {
+			case 1:
+				set @cru_t, @cru_t+10;
+			case 2:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "4.Which spear from the below has the effective to catch Mind Nightmare?";
+			next;
+			switch( select( "Lance:Bill Guisame:Crescent Scythe:Zephyrus")) {
+			case 4:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 2:
+			case 3:
+			}
+			mes "[Gabriel Valentine]";
+			mes "5.What's the minimum prerequisite skill in order to master Heal?";
+			next;
+			switch( select( "Lv. 1:Lv. 2:Lv. 3:Lv. 4")) {
+			case 2:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "6. What's the Aspd of Knight at Lv.3?";
+			next;
+			switch( select( "70% as usual:80% as usual:90% as usual:100% as usual")) {
+			case 2:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "7.Which description about Demonbane are false?";
+			next;
+			switch( select( "Increase ATK against Undead:A skill only available for Acolyte:Increase +30 when mastered the skill:A passive skill")) {
+			case 2:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "8. How much SP will consume when Heal Lv.7?";
+			next;
+			switch( select( "30:31:33:35")) {
+			case 2:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "9.Which status are unable to cure with Heal?";
+			next;
+			switch( select( "Curse:Silent:Confuse:Darkness")) {
+			case 1:
+				set @cru_t, @cru_t+10;
+			case 2:
+			case 3:
+			case 4:
+			}
+			mes "[Gabriel Valentine]";
+			mes "10. What's the objective of Crusader?";
+			next;
+			switch( select( "A person ready for biscuit:A person ready for Holy Battle:A person ready for alchoholic:A person ready for Potion")) {
+			case 2:
+				set @cru_t, @cru_t+10;
+			case 1:
+			case 3:
+			case 4:
+			}
+		}
+		mes "[Gabriel Valentine]";
+		mes "Well done. I will tell you your result now.";
+		next;
+		mes "[Gabriel Valentine]";
+		mes " " + strcharinfo(0) + "and your score is..." + @cru_t + " point.";
+		if(@cru_t == 100) {
+			set CRUS_Q, 8;
+			mes "Well done! Get ready for the next test.";
+			next;
+			mes "[Gabriel Valentine]";
+			mes "Find Briten Pyrod at Prontera.";
+			mes "He will prepare the next test for you.";
+			close;
+		} else if(@cru_t == 90) {
+			set CRUS_Q, 8;
+			mes "Excellent! Go ahead for the next test.";
+			next;
+			mes "[Gabriel Valentine]";
+			mes "Find Briten Pyrod at Prontera.";
+			mes "He will prepare the next test for you.";
+			close;
+		}
+			mes "What a pity. Train hard and try again.";
+			next;
+			mes "[Gabriel Valentine]";
+			mes "Because you need to prepare many things, so I'll wait you here.";
+			mes "Come back when you've well prepared.";
+			close;
+	} else if(CRUS_Q == 8) {
+		mes "[Gabriel Valentine]";
+		mes "I've told you. Just go ahead for the next test.";
+		mes "Find Briten Pyrod at Prontera.";
+		close;
+	} else if(CRUS_Q == 9) {
+		mes "[Gabriel Valentine]";
+		mes "I've told you. Just go ahead for the next test.";
+		mes "Find Briten Pyrod at Prontera.";
+		close;
+	} else if(CRUS_Q == 10) {
+		mes "[Gabriel Valentine]";
+		mes "What are you waiting for? The test has ended.";
+		mes "Go and see Captain, you will become a Crusader very soon.";
+		next;
+		mes "[Gabriel Valentine]";
+		mes "You will join us for the Holy Battle.";
+		mes "Hope you can continue to live in thoroughly after changed job profession.";
 		close;
 	}
-	if (BaseJob != Job_Swordman) goto NEXT0;
-	mes "Hello, " + strcharinfo(0);
-	next;
-	if (CRUS_Q != 9) goto EXIT;
-BEGIN:
-	menu "Take the Knowledge test.",-,"Nothing.",EXIT;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "Oh, on your way to become a ^800000Crusader^000000 huh?";
-	mes "Okay...";
-	next;
-START:
-	set @Q , 0;
-	set @Q1 , 0;
-	set @Q2 , 0;
-	set @Q3 , 0;
-	set @Q4 , 0;
-	set @Q5 , 0;
-	set @Q6 , 0;
-	set @Q7 , 0;
-	set @Q8 , 0;
-	set @Q9 , 0;
-	set @Q10 , 0;
-	set @Q11 , 0;
-	set @Q12 , 0;
-	set @Q13 , 0;
-	set @Q14 , 0;
-	set @Q15 , 0;
-	set @Q16 , 0;
-	set @Q17 , 0;
-	set @Q18 , 0;
-	set @Q19 , 0;
-	set @Q20 , 0;
-	set @ANS , 0;
-RND:
-	if (@Q > 10) goto L_DONE;
-	set @RND, rand(20);
-	if (@RND > 9) goto G1;
-	if (@RND > 4) goto G1A;
-	if (@RND > 3) goto G1A1;
-	if (@RND == 0) goto Q1;
-	if (@RND == 1) goto Q2;
-	if (@RND != 1) goto Q3;
-	G1A1:
-	if (@RND == 3) goto Q4;
-	if (@RND != 3) goto Q5;
-	G1A:
-	if (@RND > 8) goto G1A2;
-	if (@RND == 5) goto Q6;
-	if (@RND == 6) goto Q7;
-	if (@RND != 6) goto Q8;
-	G1A2:
-	if (@RND == 8) goto Q9;
-	if (@RND != 8) goto Q10;
-	G1:
-	if (@RND > 14) goto G2A;
-	if (@RND > 13) goto G2A1;
-	if (@RND == 10) goto Q11;
-	if (@RND == 11) goto Q12;
-	if (@RND == 12) goto Q13;
-	G2A1:
-	if (@RND == 13) goto Q14;
-	if (@RND == 14) goto Q15;
-	G2A:
-	if (@RND > 18) goto G2A2;
-	if (@RND == 15) goto Q16;
-	if (@RND == 16) goto Q17;
-	if (@RND == 17) goto Q18;
-	G2A2:
-	if (@RND == 18) goto Q19;
-	if (@Q20 != 0) goto RND;
-	set @Q20,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "Are you willing to risk your life to save someone else?";
-	next;
-	menu "Yes",-,"No",RND;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q1:
-	if (@Q1 != 0) goto RND;
-	set @Q1,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "If someone asks you to help them for a good cause, will you oblige?";
-	next;
-	menu "Yes",-,"No",RND;
-	set @ANS, @ANS + 1;
-	goto RND;
-	Q2:
-	if (@Q2 != 0) goto RND;
-	set @Q2, 1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "Would you allow a robber to get away with stolen goods?";
-	next;
-	menu "Yes",RND,"No",-;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q3:
-	if (@Q3 != 0) goto RND;
-	set @Q3,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "Do you wish that the world was at harmony?";
-	next;
-	menu "Yes",-,"No",RND;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q4:
-	if (@Q4 != 0) goto RND;
-	set @Q4,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "Will you ever attempt suicide?";
-	next;
-	menu "Yes",RND,"No",-;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q5:
-	if (@Q5 != 0) goto RND;
-	set @Q5,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "Will you intoxicate yourself at parties?";
-	next;
-	menu "Yes",RND,"No",-;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q6:
-	if (@Q6 != 0) goto RND;
-	set @Q6,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "Will you openly massacre?";
-	next;
-	menu "Yes",RND,"No",-;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q7:
-	if (@Q7 != 0) goto RND;
-	set @Q7,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "Will you hold your temper during arguments?";
-	next;
-	menu "Yes",-,"No",RND;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q8:
-	if (@Q8 != 0) goto RND;
-	set @Q8,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "Would you allow alchemists to perform illegal experiments?";
-	next;
-	menu "Yes",RND,"No",-;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q9:
-	if (@Q9 != 0) goto RND;
-	set @Q9,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "If someone threw a stone at you, you'd become furious.";
-	next;
-	menu "Yes",RND,"No",-;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q10:
-	if (@Q10 != 0) goto RND;
-	set @Q10,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "If someone offered you money that belongs to someone poor, would you take it?";
-	next;
-	menu "Yes",RND,"No",-;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q11:
-	if (@Q11 != 0) goto RND;
-	set @Q11,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "You think highly of yourself.";
-	next;
-	menu "Yes",RND,"No",-;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q12:
-	if (@Q12 != 0) goto RND;
-	set @Q12,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "You are humble before others.";
-	next;
-	menu "Yes",-,"No",RND;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q13:
-	if (@Q13 != 0) goto RND;
-	set @Q13,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "You answer people full of respect and with kindness.";
-	next;
-	menu "Yes",-,"No",RND;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q14:
-	if (@Q14 != 0) goto RND;
-	set @Q14,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "You fight when you feel like it.";
-	next;
-	menu "Yes",RND,"No",-;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q15:
-	if (@Q15 != 0) goto RND;
-	set @Q15,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "You go to the pub every night.";
-	next;
-	menu "Yes",RND,"No",-;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q16:
-	if (@Q16 != 0) goto RND;
-	set @Q16,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "You believe in the Father, Son and Holy Spirit.";
-	next;
-	menu "Yes",-,"No",RND;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q17:
-	if (@Q17 != 0) goto RND;
-	set @Q17,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "You believe that the Devil is evil and cruel and should be treated the same way.";
-	next;
-	menu "Yes",RND,"No",-;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q18:
-	if (@Q18 != 0) goto RND;
-	set @Q18,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "You believe that talk is for wimps and that action plays the main role in peace-making";
-	next;
-	menu "Yes",RND,"No",-;
-	set @ANS,@ANS + 1;
-	goto RND;
-	Q19:
-	if (@Q19 != 0) goto RND;
-	set @Q19,1;
-	set @Q,@Q + 1;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "If all other means to keep peace fail, THEN it is all right to resort to violence.";
-	next;
-	menu "Yes",-,"No",RND;
-	set @ANS,@ANS + 1;
-	goto RND;
-	L_DONE:
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "You got "+ @ANS +" / 10 questions correct.";
-	next;
-	if (CRUS_Q != 10) goto secND;
-	if (@ANS < 8) goto NO;
-PASS:
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "Excellent work!  You qualify to pass the ^FF8000Knowledge Test^000000!";
-	mes "You're almost done, you are now at the ^FF8000Purification Test^000000, find Bliant Piyord at ^008000Prontera Chivalry^000000.";
-	set CRUS_Q, 11;
-	close;
-NO:
-	set CRUS_Q, 10;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "I'm sorry, you didn't get enough to qualify.";
-	next;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "Try giving it another go when you feel you're ready.";
-	mes "I'll only expect you to get at least 8 correct from now on.";
-	close;
-secND:
-	if (@ANS > 7) goto PASS;
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "I'm sorry, you didn't get enough correct.";
-	close;
-EXIT:
-	if (CRUS_Q == 10) goto BEGIN;
-	if (CRUS_Q > 10) goto FINISH;
-	close;
-FINISH:
-	mes "[^000080Gabriel Valentine^000000]";
-	mes "Please go to the Guardian Knight at ^008000Prontera Castle^000000 to continue on to the ^FF8000Purification Test^000000.";
-	close;
-NEXT0:
-	if (BaseJob != Job_Mage) goto NEXT1;
-	mes "Hello, welcome to the ^008000Prontera Chivalry^000000.";
-	mes "Hope you have a good day!";
-	close;
-NEXT1:
-	if (BaseJob != Job_Archer) goto NEXT2;
-	mes "Good luck in your hunting.";
-	close;
-NEXT2:
-	if (BaseJob != Job_Acolyte) goto NEXT3;
-	mes "Good day to you!";
-	mes "Hope you do well to find your path.";
-	close;
-NEXT3:
-	if (BaseJob != Job_Merchant) goto NEXT4;
-	mes "Hello, we don't currently need anything, sorry about that.";
-	close;
-NEXT4:
-	if (BaseJob != Job_Thief) goto NEXT5;
-	mes "Better watch yourself.";
-	close;
-NEXT5:
-	if (BaseJob != Job_Knight) goto NEXT6;
-	mes "Good day to you, "+ strcharinfo(0);
-	close;
-NEXT6:
-	if (BaseJob != Job_Priest) goto NEXT7;
-	mes "Good day, " + strcharinfo(0);
-	mes "I would hope to believe that all is going well.";
-	close;
-NEXT7:
-	if (BaseJob != Job_Wizard) goto NEXT8;
-	mes "Hello!  Nice to have you wish us.";
-	close;
-NEXT8:
-	if (BaseJob != Job_Blacksmith) goto NEXT9;
-	mes "Hello, we're not in need of any weapons or armour at the moment, thank you.";
-	close;
-NEXT9:
-	if (BaseJob != Job_Hunter) goto NEXT10;
-	mes "Hello, wish you luck for your success.";
-	close;
-NEXT10:
-	if (BaseJob != Job_Assassin) goto NEXT11;
-	mes "Stay out of trouble, you don't want the guards to come after you, now do you?";
-	close;
-NEXT11:
-	if (BaseJob != Job_Crusader) goto NEXT12;
-	mes "Good day, " + strcharinfo(0);
-	close;
-NEXT12:
-	if (BaseJob != Job_Monk) goto NEXT13;
-	mes "Hello, welcome to the ^008000Knight's Headquarters^000000.";
-	close;
-NEXT13:
-	if (BaseJob != Job_Sage) goto NEXT14;
-	mes "Welcome to the ^008000Knight's Headquarters^000000, I hope you enjoy your stay.";
-	close;
-NEXT14:
-	if (BaseJob != Job_Rogue) goto NEXT15;
-	mes "Stay out of trouble if you know what's good for you.";
-	close;
-NEXT15:
-	if (BaseJob != Job_Alchem) goto NEXT16;
-	mes "So, how are the experiments going down in ^00FF00Al de Baran^000000?";
-	close;
-NEXT16:
-	if (BaseJob != Job_Bard) goto NEXT17;
-	mes "Welcome to the castle, good sir.";
-	close;
-NEXT17:
-	if (BaseJob != Job_Dancer) goto NEXT18;
-	mes "Good day, miss.";
-	close;
-NEXT18:
-	if (BaseJob != Job_Wedding) goto NEXT19;
-	if (Sex != 0){
-		mes "Well done, sir!";
-	} else {
-		mes "Hello, welcome to the ^008000Knight's Headquarters^000000.";
-	}
-	close;
-NEXT19:
-	mes "Hello and good day!";
-	close;
+		mes "[Gabriel Valentine]";
+		mes "You are the hope of Crusader,";
+		mes "But not qualify to see me yet.";
+		next;
+		mes "[Gabriel Valentine]";
+		mes "Come back to see me after you've finish all the tests.";
+		mes "So, see you then.";
+		close;
 }
 
-//-----------------------------------------------------------------------------------------------------------------------------------------------------
-//
-// Bliant Piyord - Crusader Job Quest - Purification Test
-// By Black Dragon based on the information at RagnaInfo
-//
-//-----------------------------------------------------------------------------------------------------------------------------------------------------
-prt_in,83,97,0	script	Patron Knight	734,{
-	mes "[^000080Bliant Piyord^000000]";
-	if (BaseJob == Job_Novice){
-		mes "Hello, young traveler.";
-		mes "Welcome.";
+//===================== Crusader: 4º Purification Test =====================================================
+// Crusader - prt_castle 35 151
+prt_castle,35,151,7	script	Crusader#1	751,{
+	if(Class != Job_Swordman) {
+		if(Class == Job_Crusader) {
+			mes "[Briten Pyrod]";
+			mes "Welcome, does your training going well?";
+			next;
+			mes "[Briten Pyrod]";
+			mes "Train hard everyday, and become a greatest Crusader.";
+			close;
+		} else if(Class == Job_Novice) {
+			mes "[Briten Pyrod]";
+			mes "Welcome, we are Crusaders.";
+			mes "Who ready for Holy Battle.";
+			next;
+			mes "[Briten Pyrod]";
+			mes "Interested about Crusader?";
+			mes "We are always recruiting.";
+			next;
+			mes "[Briten Pyrod]";
+			mes "Come back to us when you gained some training as a Swordman.";
+			mes "We will only welcome those who call-up by Odin.";
+			close;
+		}
+			mes "[Briten Pyrod]";
+			mes "Welcome, we are Crusaders.";
+			mes "Who ready for Holy Battle.";
+			next;
+			mes "[Briten Pyrod]";
+			mes "Get ready for the peaceful future...";
+			mes "for the day of Holy Battle...";
+			close;
+	} else if(CRUS_Q == 0) {
+		mes "[Briten Pyrod]";
+		mes "Welcome, we are Crusaders.";
+		mes "Warriors who ready for Holy Battle.";
+		next;
+		mes "[Briten Pyrod]";
+		mes "Interested about Crusader?";
+		mes "We are always recruiting.";
+		next;
+		mes "[Briten Pyrod]";
+		mes "Job Lv 40 or above required to become a Crusader.";
+		mes "For further details, please ask our Captian inside there.";
+		next;
+		mes "[Briten Pyrod]";
+		mes "May Odin bless you...";
+		close;
+	} else if(CRUS_Q == 8 || CRUS_Q == 9) {
+		if(CRUS_Q == 8) {
+			mes "[Briten Pyrod]";
+			mes "Welcome.";
+			mes "This is the last and the final test.";
+			next;
+			mes "[Briten Pyrod]";
+			mes "My name is Briten Pyrod, one of the warrior prepared for the Holy Battle.";
+			mes "Well done!";
+			next;
+			mes "[Briten Pyrod]";
+			mes "The last test is to a Battle test.";
+			mes "Only the strongest person can become a Crusader.";
+			next;
+			mes "[Briten Pyrod]";
+			mes "For the battle test, please prepare one ^3355FFHoly water^000000.";
+			mes "To purify the candidates.";
+			next;
+			mes "[Briten Pyrod]";
+			mes "Ready for the test?";
+			mes "Or get ready once again?";
+			next;
+		} else {
+			mes "[Briten Pyrod]";
+			mes "Welcome. Get ready for the test?";
+			next;
+			mes "[Briten Pyrod]";
+			mes "Ready for the test?";
+			mes "Or get ready once again?";
+		}
+		switch( select( "Let's get started.", "Give me some time to get prepare.")) {
+		case 1:
+			next;
+			if (countitem(2608) == 0) {
+				if(CRUS_Q == 8) {
+					set CRUS_Q, 9; 
+				}
+				mes "[Briten Pyrod]";
+				mes "Hold on! You don't equip Rosary, do you?";
+				mes "You must equip Rosary all the time in the Crusader test.";
+				next;
+				mes "[Briten Pyrod]";
+				mes "Equip Rosary and come back then.";
+				close;
+			} else if(countitem(523) < 1) {
+				if(CRUS_Q == 8) {
+					set CRUS_Q, 9;
+				}
+				mes "[Briten Pyrod]";
+				mes "For the battle test, please prepare one ^3355FFHoly water^000000.";
+				mes "I told you just to purify the candidates.";
+				next;
+				mes "[Briten Pyrod]";
+				mes "Get prepares and come back to here.";
+				mes "I will wait for you.";
+				close;
+			}
+				if(CRUS_Q == 8) {
+					set CRUS_Q, 9; 
+				}
+				delitem 523, 1;
+				mes "[Briten Pyrod]";
+				mes "OK, let's get started then.";
+				mes "Use the Holy water to purify you.";
+				next;
+				mes "[Briten Pyrod]";
+				mes "...............";
+				next;
+				mes "[Briten Pyrod]";
+				mes "Almost getting start. Get in and go to waiting room.";
+				mes "Defeat all the monsters in 4th Floor.";
+				if( getmapusers("job_cru")>0 ) {
+					mes "[^000080Bliant Piyord^000000]";
+					mes "I'm sorry, but someone else is inside at the moment.";
+					close;
+				}
+				close2;
+				savepoint "prt_castle",39,151;
+				warp "job_cru",167,175;
+				break;
+		case 2:
+			next;
+			mes "[Briten Pyrod]";
+			mes "Yes, get prepare and come back here then.";
+			mes "I will wait for you.";
+			close;
+		}
+	} else if(CRUS_Q == 10) {
+		mes "[Briten Pyrod]";
+		mes "Congratulation, all the Crusader tests ended like this.";
+		next;
+		mes "[Briten Pyrod]";
+		mes "Get inside and talk to the Captain.";
+		mes "Starting from now, you're also one of the warriors for the Holy Battle.";
 		close;
 	}
-
-	if (BaseJob != Job_Swordman) goto NEXT0;
-	if (CRUS_Q == 11) goto PART1;
-	if (CRUS_Q == 12) goto PART2;
-	if (CRUS_Q != 13) goto EXIT;
-	mes "Well done!";
-	mes "Go talk to ^000080Michael Halig^000000, he will turn you into a ^800000Crusader^000000.";
-	close;
-	PART2:
-	if (@CRU2 == 43) goto EXIT2;
-	PART2A:
-	mes "So, do you want to try again?";
-	next;
-	menu "Yes",TEST,"No",-;
-	mes "[^000080Bliant Piyord^000000]";
-	mes "Oh, okay then.";
-	close;
-	PART1:
-	mes "Hello, " + strcharinfo(0);
-	mes "I see that you've passed thus far.";
-	next;
-	mes "[^000080Bliant Piyord^000000]";
-	mes "Don't let me down in this test.";
-	mes "This is the ^FF8000Purification Test^000000.";
-	mes "I will take you to the proper location when you are ready.";
-	next;
-	menu "I want to go now.",-,"All right, just a second.",EXIT0;
-	TEST:
-	mes "[^000080Bliant Piyord^000000]";
-	mes "Let me make sure it's empty first.";
-	next;
-	if( getmapusers("job_cru")>0 ) goto EXIT1;
-	killmonster "job_cru","CR_KILL::OnStart";
-	savepoint "prt_in",81,100;
-	set CRUS_Q, 12;
-	warp "job_cru",167,175;
-	EXIT1:
-	mes "[^000080Bliant Piyord^000000]";
-	mes "I'm sorry, but someone else is inside at the moment.";
-	close;
-	EXIT0:
-	mes "[^000080Bliant Piyord^000000]";
-	mes "No problem, take as long as you need.";
-	close;
-	EXIT:
-	mes "Hello, " + strcharinfo(0);
-	mes "So how are things coming along with building up your abilities?";
-	mes "Are you strong enough to become a ^800000Crusader^000000 yet?";
-	next;
-	mes "[^000080Bliant Piyord^000000]";
-	mes "If you do, you'll find yourself coming back to me for one of the tests.";
-	close;
-EXIT2:
-	mes "Well done!";
-	set CRUS_Q,13;
-	next;
-	mes "Return to ^000080Michael Halig^000000 and he will make you a ^800000Crusader^000000.";
-	close;
-NEXT0:
-	if (BaseJob != Job_Mage) goto NEXT1;
-	mes "It's nice to see you.";
-	mes "Hope we'll be able to work together to keep ^00FF00Prontera^000000 safe.";
-	close;
-NEXT1:
-	if (BaseJob != Job_Archer) goto NEXT2;
-	mes "Welcome, I hope you have a great day!";
-	close;
-NEXT2:
-	if (BaseJob != Job_Acolyte) goto NEXT3;
-	mes "Good day to you!";
-	close;
-NEXT3:
-	if (BaseJob != Job_Merchant) goto NEXT4;
-	mes "Hello, sorry but I'm not in need of anything.";
-	close;
-NEXT4:
-	if (BaseJob != Job_Thief) goto NEXT5;
-	mes "Don't think you can get away with theft in ^00FF00Prontera^000000, we have soldiers watching everywhere.";
-	close;
-NEXT5:
-	if (BaseJob != Job_Knight) goto NEXT6;
-	mes "Welcome!";
-	mes "I hope you have a great day!";
-	close;
-NEXT6:
-	if (BaseJob != Job_Priest) goto NEXT7;
-	mes "Welcome to ^00FF00Prontera^000000!";
-	mes "Hope you have a good day!";
-	close;
-NEXT7:
-	if (BaseJob != Job_Wizard) goto NEXT8;
-	mes "Hello!  Glad to see people of your stature here!";
-	close;
-NEXT8:
-	if (BaseJob != Job_Blacksmith) goto NEXT9;
-	mes "I appreciate your presence, but I don't need anything at the moment.";
-	mes "Sorry about that.";
-	close;
-NEXT9:
-	if (BaseJob != Job_Hunter) goto NEXT10;
-	mes "How goes the hunting campaign?";
-	mes "Hope everything is going all right.";
-	close;
-NEXT10:
-	if (BaseJob != Job_Assassin) goto NEXT11;
-	mes "Stay out of trouble, you hear me?";
-	close;
-NEXT11:
-	if (BaseJob != Job_Crusader) goto NEXT12;
-	mes "Welcome!  Good day to you!";
-	close;
-NEXT12:
-	if (BaseJob != Job_Monk) goto NEXT13;
-	mes "Good day, I hope your stay in ^00FF00Prontera^000000 will be a peaceful one.";
-	close;
-NEXT13:
-	if (BaseJob != Job_Sage) goto NEXT14;
-	mes "It's good to see people of your stature here in ^00FF00Prontera^000000!";
-	close;
-NEXT14:
-	if (BaseJob != Job_Rogue) goto NEXT15;
-	mes "Be careful if you don't want to get caught.";
-	mes "I don't want to have to hang you or something.";
-	close;
-NEXT15:
-	if (BaseJob != Job_Alchem) goto NEXT16;
-	mes "I hope the experiments in ^00FF00Al de Baran^000000 are legal, or we'll have to send someone to clear it up.";
-	close;
-NEXT16:
-	if (BaseJob != Job_Bard) goto NEXT17;
-	mes "Ah, what a fine day it is to have such a person as yourself to come and visit.";
-	close;
-NEXT17:
-	if (BaseJob != Job_Dancer) goto NEXT18;
-	mes "Welcome, good day to you!";
-	close;
-NEXT18:
-	if (BaseJob != Job_Wedding) goto NEXT19;
-	if (Sex){
-		mes "Well done!  I congratulate you upon your marriage!";
-	} else {
-		mes "Wow!  Congratulations on your marriage!";
-	}
-	close;
-NEXT19:
-	mes "Good day to you!";
-	close;
+		mes "[Briten Pyrod]";
+		mes "Welcome, is this in the middle of the Crusader profession change?";
+		next;
+		mes "[Briten Pyrod]";
+		mes "Haven't to my turn yet?";
+		mes "Finish all the tests and come back to me then.";
+		next;
+		mes "[Briten Pyrod]";
+		mes "Please come back to here then.";
+		mes "May Odin bless you.";
+		close;
 }
-
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 //
@@ -1021,7 +1080,7 @@ OnStart:
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 job_cru,23,42,0	script	CR_TST_2	139,8,8,{
 
-	if (CRUS_Q != 6) goto EXIT;
+	if (CRUS_Q != 5) goto EXIT;
 	set @CRU1,1;
 	mapannounce "job_cru","Please endure here and go to the exit.",8;
 
@@ -1078,7 +1137,7 @@ job_cru,23,42,0	script	CR_TST_2	139,8,8,{
 job_cru,23,109,0	script	CR_EXT_1	139,1,1,{
 
 if (@CRU1 == 0) goto JUMP;
-	set CRUS_Q,7;
+	set CRUS_Q,6;
 	killmonster "job_cru","CR_DEAD::OnStart";
 	enablenpc "CR_TST_2";
 JUMP:
@@ -1093,24 +1152,22 @@ JUMP:
 // By Black Dragon based on the information at RagnaInfo
 //
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
-
 job_cru,167,175,0	script	CR_KILL	-1,{
 
 OnStart:
-	if (@CRU2 == 43) goto good;
-
+	if (@CRU2 == 43) {
+	announce "You killed all monsters, you may go to the exit.",3;
+	set CRUS_Q, 10;
+	end;
+	}
 	set @CRU2,@CRU2 +1;
 	announce "You killed another monster.",3;
-	end;
-
-	good:
-	announce "You killed all monsters, you may go to the exit.",3;
 	end;
 }
 
 job_cru,167,175,0	script	CR_TST_4	139,1,1,{
 
-	if(CRUS_Q != 12) goto EXIT;
+	if(CRUS_Q != 9) goto EXIT;
 	set @CRU2,1;
 	announce "Defeat all the enemies.",3;
 	monster "job_cru",163,42,"Bongun",1188,1,"CR_KILL::OnStart";
@@ -1170,7 +1227,7 @@ job_cru,167,175,0	script	CR_TST_4	139,1,1,{
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 job_cru,167,17,0	script	CR_EXT_4	139,2,2,{
 	enablenpc "CR_TST_4";
-	warp "prt_in",81,100;
+	warp "prt_castle",39,151;
 }
 
 //==============================================================================
