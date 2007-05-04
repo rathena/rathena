@@ -171,6 +171,7 @@ char wisp_server_name[NAME_LENGTH] = "Server"; // can be modified in char-server
 
 int console = 0;
 int enable_spy = 0; //To enable/disable @spy commands, which consume too much cpu time when sending packets. [Skotlex]
+int enable_grf = 0;	//To enable/disable reading maps from GRF files, bypassing mapcache [blackhole89]
 
 /*==========================================
  * ‘SmapŽI?Œv‚Å‚ÌÚ??Ý’è
@@ -2499,6 +2500,94 @@ int map_delmap(char *mapname) {
 	return 0;
 }
 
+#define NO_WATER 1000000
+
+/* map_readwaterheight
+ * Reads from the .rsw for each map
+ * Returns water height (or NO_WATER if file doesn't exist)
+ * or other error is encountered.
+ * This receives a map-name, and changes the extension to rsw if it isn't set already.
+ * Assumed path for file is data/mapname.rsw
+ * Credits to LittleWolf
+ */
+int map_waterheight(char *mapname) {
+	char fn[256];
+ 	char *rsw, *found;
+	float whtemp;
+	int wh;
+
+	//Look up for the rsw
+	if(!strstr(mapname,"data\\"))
+		sprintf(fn,"data\\%s.rsw", mapname);
+	else
+		strcpy(fn, mapname);
+
+	found = grfio_find_file(fn);
+	if (!found)
+		; //Stick to the current fn
+	else if(!strstr(found,"data\\"))
+		sprintf(fn,"data\\%s.rsw", found);
+	else
+		strcpy(fn, found);
+	
+	rsw = strstr(fn, ".");
+	if (rsw && strstr(fn, ".rsw") == NULL)
+		sprintf(rsw,".rsw");
+	// read & convert fn
+	// again, might not need to be unsigned char
+	rsw = (char *) grfio_read (fn);
+	if (rsw)
+	{	//Load water height from file
+		whtemp = *(float*)(rsw+166);
+		wh = (int) whtemp;
+		aFree(rsw);
+		return wh;
+	}
+	ShowWarning("Failed to find water level for (%s)\n", mapname, fn);
+	return NO_WATER;
+}
+
+/*==================================
+ * .GAT format
+ *----------------------------------
+ */
+int map_readgat (struct map_data *m)
+{
+	char fn[256];
+	char *gat;
+	int wh,x,y,xs,ys;
+	struct gat_1cell {float high[4]; int type;} *p = NULL;
+
+	sprintf(fn,"data\\%s.gat",m->name);
+
+	// read & convert fn
+	// again, might not need to be unsigned char
+	gat = (char *) grfio_read (fn);
+	if (gat == NULL)
+		return 0;
+
+	xs = m->xs = *(int*)(gat+6);
+	ys = m->ys = *(int*)(gat+10);
+	m->gat = (unsigned char *)aMallocA((m->xs * m->ys)*sizeof(unsigned char));
+
+	wh = map_waterheight(m->name);
+	for (y = 0; y < ys; y++) {
+		p = (struct gat_1cell*)(gat+y*xs*20+14);
+		for (x = 0; x < xs; x++) {
+			if (wh != NO_WATER && p->type == 0)
+				// …ê”»’è
+				m->gat[x+y*xs] = (p->high[0]>wh || p->high[1]>wh || p->high[2]>wh || p->high[3]>wh) ? 3 : 0;
+			else
+				m->gat[x+y*xs] = p->type;
+			p++;
+		}
+	}
+
+	aFree(gat);
+
+	return 1;
+}
+
 /*======================================
  * Initiate maps loading stage
  *--------------------------------------
@@ -2515,7 +2604,8 @@ int map_readallmaps (void)
 		exit(1); //No use launching server if maps can't be read.
 	}
 
-	ShowStatus("Loading maps (using %s as map cache)...\n", map_cache_file);
+	if(enable_grf) ShowStatus("Loading maps (using GRF files)...\n");
+	else ShowStatus("Loading maps (using %s as map cache)...\n", map_cache_file);
 
 	for(i = 0; i < map_num; i++)
 	{
@@ -2547,7 +2637,11 @@ int map_readallmaps (void)
 			fflush(stdout);
 		}
 
-		if(!map_readfromcache(&map[i], fp)) {
+		if( !
+			(enable_grf?
+				 map_readgat(&map[i])
+				:map_readfromcache(&map[i], fp))
+			) {
 			map_delmapid(i);
 			maps_removed++;
 			i--;
@@ -2771,6 +2865,11 @@ int map_config_read(char *cfgName) {
 					enable_spy = 1;
 				else
 					enable_spy = 0;
+			} else if (strcmpi(w1, "use_grf") == 0) {	//[blackhole89]
+				if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 )
+					enable_grf = 1;
+				else
+					enable_grf = 0;
 			} else if (strcmpi(w1, "import") == 0) {
 				map_config_read(w2);
 			} else
@@ -3302,6 +3401,9 @@ int do_init(int argc, char *argv[])
 #endif /* not TXT_ONLY */
 
 	mapindex_init();
+	if(enable_grf)
+		grfio_init("conf/grf-files.txt");	//[blackhole89] - restore
+
 	map_readallmaps();
 
 	add_timer_func_list(map_freeblock_timer, "map_freeblock_timer");

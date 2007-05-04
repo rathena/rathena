@@ -1,0 +1,12 @@
+//-----------------------------------------
+// GRF List
+//-----------------------------------------
+// grf: C:\path\to\RO\data.grf
+// You may add more in this format
+// grf: <data file path>
+
+//------ Others ---------------------------
+
+// Data Directory (without the actual data\ though)
+// the below example would use C:\path\to\RO\data\
+//data_dir: C:\path\to\RO\
