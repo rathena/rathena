@@ -4,7 +4,7 @@
 //= Muad Dib (1.0) Darkchild (1.1) Muad Dib (1.2)
 //= Darkchild (1.3) DracoRPG (1.5)
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.0a
 //===== Compatible With: ===================================== 
 //= Any eAthena Mod
 //===== Description: ========================================= 
@@ -111,8 +111,8 @@ payon_in01,180,7,0	script	Waitress	90,{
 	mes "[Waitress]";
 	mes "So, how may I help you? ";
 	next;
-	menu "Have you ever heard of Zombies?",L_Menu1,"I want to have my fortune told.",L_Menu2,"I need some booze.",L_Menu3,"I'm good",L_Menu4;
-L_Menu1:
+	menu "Have you ever heard of Zombies?",-,"I want to have my fortune told.",L_Menu2,"I need some booze.",L_Menu3,"I'm good",L_Menu4;
+
 	mes "[Waitress]";
 	mes "Zombies are the walking dead. You can easily spot them in this village, Payon.";
 	mes "It's rumored that they fear holiness. That's why Archers prefer to use arrows made out of holy metal, silver against Zombies.";
@@ -184,8 +184,8 @@ payon,193,116,1	script	Woman#05	66,{
 	mes "I know of a cave near Archer Village.  Just take the exit north of town and follow the path to your left.";
     	mes "The cave is full of monsters and their spawn rate is very high.  Does it sound interesting to you?";
 	next;
-	menu "It sounds dangerous.",L_Menu1,"I think I need to fully prepare for that place.",L_Menu2,"Lady, you wear nice clothing~",L_Menu3;
-L_Menu1:
+	menu "It sounds dangerous.",-,"I think I need to fully prepare for that place.",L_Menu2,"Lady, you wear nice clothing~",L_Menu3;
+
 	mes "[Woman]";
 	mes "Oh don't be such a coward! It's just a simple cave filled with normal monsters.  Archer Village is near by so you shouldn't be worried~ hohoho~";
 	next;
@@ -265,18 +265,21 @@ payon,210,110,4	script	Drunk	120,{
 	mes "[Drunk]";
 	mes "Do you want to buy me a drink?";
 	next;
-	menu "Promise me you won't drink more than one jug.",L_Menu1,"No thanks,buddy.",L_Menu2,"Oh my god~ hell no~!",L_Menu3;
-L_Menu1:
+	menu "Promise me you won't drink more than one jug.",-,"No thanks,buddy.",L_Menu2,"Oh my god~ hell no~!",L_Menu3;
+
 	mes "[Drunk]";
 	if(BaseJob == Job_Archer)
 		mes "Thanksh brothaaa!... archerrrzzz are alwayssszz a generoushhh bunch!...(hicup!)";
 	else
 		mes "Thanksh!... shhtrangersszz are alwayssszz a generoushhh bunch!... archer guysh are penny pinchershh nowadayssszz!..(hicup!)";
 	next;
-	emotion e_thx;
-	if(Zeny < 200) goto L_SUB_1;
-	set Zeny,Zeny-200;
 	mes "[Drunk]";
+	if(Zeny < 200) {
+		mes "Cheapass, don't even have enough money. Move on young one, your waisting my time!";
+		close;
+	}
+	set Zeny,Zeny-200;
+	emotion e_thx;
 	mes "Thanks brother! Strangers are always generous without exception! Archer guys are pinch-pennies nowadays!";
 	mes "Muhahahaha! I wasn't like that when I was young.";
 	mes "Back then I was young, I used to fool around with girls! One of the grannies in this village and I was really hot back then!";
@@ -285,10 +288,6 @@ L_Menu1:
 	mes "[Drunk]";
 	mes "Gulp~Gulp~Man! This is great! Thank you may man! Thank you! Muhahahahaha!";
 	emotion e_no1;
-	close;
-L_SUB_1:
-	mes "[Drunk]";
-	mes "Cheapass, don't even have enough money. Move on young one, your waisting my time!";
 	close;
 L_Menu2:
 	mes "[Drunk]";
@@ -354,8 +353,8 @@ payon_in01,66,64,5	script	Archer Wolt	88,{
 	mes "I am Wolt the Archer. Just call me Wolt.";
 	mes "I know this is an expected question, do you tend to idle away your time?";
 	next;
-	menu "Hell no.",L_Menu1,"Yeah I guess.",L_Menu2;
-L_Menu1:
+	menu "Hell no.",-,"Yeah I guess.",L_Menu2;
+
 	mes "[Archer Wolt]";
 	mes "Hmm... You don't? You are born to be an archer then.";
 	next;
@@ -407,8 +406,8 @@ L_case:
 	mes "Heading west, you can see a cave. Inside the cave, enormous monsters keep spawning without limit.";
 	mes "We are here, to protect our territory against them in obedience to our chief's order.";
 	next;
-	menu "Cave?!",L_para1,"Chief?",L_para2,"Oh man I hate this stupid town~",L_para3;
-L_para1:
+	menu "Cave?!",-,"Chief?",L_para2,"Oh man I hate this stupid town~",L_para3;
+
 	mes "[Archer Wolt]";
 	mes "Head north of town, you can see the cave I told you about.";
 	mes "Inside there, you will encounter lots of ugly monsters such as bastard looking like a bat or the walking dead.";
@@ -499,8 +498,8 @@ pay_arche,77,131,2	script	Archer Joe	88,{
 	mes "[Archer Joe]";
 	mes "Hay you! Have you heard of our fame?";
 	next;
-	menu "Oh yeah!",L_Menu1,"Err Sorry?!",L_Menu2,"......",L_Menu3;
-L_Menu1:
+	menu "Oh yeah!",-,"Err Sorry?!",L_Menu2,"......",L_Menu3;
+
 	mes "[Archer Joe]";
 	mes "Oh! You my man buddy! Archers of Payon! You know who we are!";
 	emotion e_ok;
@@ -619,7 +618,7 @@ L_End:
 	close;
 }
 
-payon,158,246,4	script	Guardsman	708,{}
+payon,158,246,4	script	Guardsman#p0	708,{}
 payon,158,245,4	script	PayonGuard1TriggerArea	139,3,2,{
 	mes "[Guardsman]";
 	mes "This is the Central Palace of Payon. This place is open to the public, but in accordance with our laws, you must behave in an orderly fashion while inside.";
@@ -667,8 +666,8 @@ payon_in03,99,189,4	script	PayonChiefAreaTrigger	139,2,1,{
 	}
 	mes "[Chief]";
 	next;
-	menu "Please tell me about Payon.",L_Menu1,"Where the guards come from?",L_Menu2,"Please tell me about the cave.",L_Menu3,"I am wondering what archer does.",L_Menu4,"I am wondering what hunter does.",L_Menu5;
-L_Menu1:
+	menu "Please tell me about Payon.",-,"Where the guards come from?",L_Menu2,"Please tell me about the cave.",L_Menu3,"I am wondering what archer does.",L_Menu4,"I am wondering what hunter does.",L_Menu5;
+
 	mes "[Chief]";
 	mes "Payon is the city of highlanders, who'be been self-supporting and self-sufficient.";
 	mes "Although our ancestors couldn't take civilized cultural benefits as much as farmers or citizens did, they knew how to make their living without help.";

@@ -125,21 +125,21 @@ alberta,245,93,4	script	Sea Captain#01	709,{
 			mes "culture...Well, it is up to you.";
 			close;
 		Lgo:
-			if (Zeny < 10000) goto Lzeny;
+			if (Zeny < 10000) {
+				mes "[Walter Moers]";
+				mes "Did you forget what I said?";
+				mes "10,000 zeny. If you can't come up with enough zeny,";
+				mes "hunt around the Sunken Ship,";
+				mes "and hope for some luck hunting treasure...";
+				mes "and get enough zeny";
+				close;
+			}
 			set Zeny, Zeny-10000;
 			mes "[Walter Moers]";
 			mes "Alright, I will start the engine!";
 			close2;
 			warp "amatsu",197,83;
-			end;
-		Lzeny:
-			mes "[Walter Moers]";
-			mes "Did you forget what I said?";
-			mes "10,000 zeny. If you can't come up with enough zeny,";
-			mes "hunt around the Sunken Ship,";
-			mes "and hope for some luck hunting treasure...";
-			mes "and get enough zeny";
-			close;
+			end;		
 }
 //=====================================================================
 amatsu,194,79,4	script	Sea Captain#02	709,{
@@ -727,7 +727,6 @@ amatsu,261,197,4	script	Legendary Sakura Tree	111,{
 }
 
 ama_in02,61,27,6	script	Alchemist#amatsu	749,{
-
 	mes "[Laspuchin Gregory]";
 	mes "KeekeekeeKeheheh.";
 	mes "This is amazing!";
@@ -800,9 +799,7 @@ s_Got:
 	mes "[Laspuchin Gregory]";
 	mes "Uh-uh, what did you bring?";
 	next;
-	switch( select( "Mystic Frozen", "Great Nature", "Flame Heart", "Rough Wind" ) )
-		{
-
+	switch( select( "Mystic Frozen:Great Nature:Flame Heart:Rough Wind" ) ){
 		case 1:
 			set @stoneID,995;
 			set @stoneStr$,"Mystic Frozen";
@@ -823,8 +820,20 @@ s_Got:
 			set @stoneStr$,"Rough Wind";
 		break;
 
-		}
-	if(countitem(@stoneID) < 8)goto s_NEnough;
+	}
+	if(countitem(@stoneID) < 8){
+		mes "[Laspuchin Gregory]";
+		mes "Keheheh~ Check your pockets";
+		mes "before you tell me";
+		mes "how foolish you are.....";
+		next;
+		mes "[Laspuchin Gregory]";
+		mes "Bring me stones! You said you";
+		mes "were going to help me!";
+		mes "Keep your promises!";
+		mes "Kehehehkehkeh...";
+		close;
+	}
 	mes "[Laspuchin Gregory]";
 	mes "Kehekeh. I see you brought";
 	mes "enough stones! What kind of";
@@ -916,24 +925,4 @@ s_No:
 	mes "KEHEHEHEHEHEHE!";
 	close;
 
-s_NEnough:
-	mes "[Laspuchin Gregory]";
-	mes "Keheheh~ Check your pockets";
-	mes "before you tell me";
-	mes "how foolish you are.....";
-	next;
-	mes "[Laspuchin Gregory]";
-	mes "Bring me stones! You said you";
-	mes "were going to help me!";
-	mes "Keep your promises!";
-	mes "Kehehehkehkeh...";
-	close;
-
 }
-
-//| Ninja map portion dummy npcs, commented by default.
-//que_ng,27,18,3	script	Seaman	709,{end;}
-//que_ng,28,45,3	script	Man	86,{end;}
-//que_ng,28,50,3	script	Seaman2	709,{end;}
-//que_ng,22,62,3	script	Seaman2	709,{end;}
-//que_ng,30,65,3	script	Ninja Sensei	730,{end;}

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena dev team
 //===== Current Version: ===================================== 
-//= 1.9a
+//= 1.9b
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -572,8 +572,10 @@ aldeba_in,152,47,4	script	Giddy Fellow	97,{
 // Master ----------------------------------------------------------
 aldeba_in,156,179,4	script	Master#02	61,{
 	mes "[Master]";
-	if(sex==0) mes "Oh hello.  Don't mind me, I'm just a perverted old man.... la di da.......";
-	if(sex==0) close;
+	if(!sex) {
+		mes "Oh hello.  Don't mind me, I'm just a perverted old man.... la di da.......";
+		close;
+	}
 	mes "Did you know that the Kafra Main Office is located here, in Aldebaran?";
 	next;
 	mes "[Master]";
@@ -831,11 +833,10 @@ aldeba_in,79,161,6	script	Kafra#04	115,{
 	mes "The amount of special reserve points that you have is: ^FF0000"+RESRVPTS+"^000000 pts.  Please make a choice based on your point total.";
 M_Menu:
 	next;
-	menu 	"100- Sweet Potato 7 ea",M_1a, "200- Sweet Potato 15 ea",M_1b, "300- Sweet Potato 25 ea",M_1c, "400- Sweet Potato 35 ea",M_1d,
+	menu 	"100- Sweet Potato 7 ea",-, "200- Sweet Potato 15 ea",M_1b, "300- Sweet Potato 25 ea",M_1c, "400- Sweet Potato 35 ea",M_1d,
 		"500- Sweet Potato 50 ea",M_1e, "600- Sweet Potato 60 ea",M_1f, "700- Sweet Potato 75 ea",M_1g, "800- Sweet Potato 85 ea",M_1h,
 		"900- Sweet Potato 100 ea",M_1i, "1000- 1st Lottery Chance!",M_1j, "Next items",M_2, "Cancel",M_End;
 
-	M_1a:
 		if(RESRVPTS < 100) goto sL_LowPts1;
 		mes "[Kafra]";
 		mes "Here you are.";
@@ -914,12 +915,11 @@ M_Menu:
 		goto M_Menu;
 
 	M_2:
-		menu 	"1100- Red Potion 7 ea",M_2a, "1300- Red Potion 15 ea",M_2b, "1500- Red Potion 25 ea",M_2c,
+		menu 	"1100- Red Potion 7 ea",-, "1300- Red Potion 15 ea",M_2b, "1500- Red Potion 25 ea",M_2c,
 			"1700- Red Potion 35 ea",M_2d, "1900- Red Potion 50 ea",M_2e, "2100- Red Potion 60 ea",M_2f,
 			"2300- Red Potion 75 ea",M_2g, "2500- Red Potion 85 ea",M_2h, "2800- Red Potion 100 ea",M_2i,
 			"3000- 2nd Lotery Chance!",M_2j, "Previous List",M_Menu, "Cancel",M_End;
 		
-		M_2a:
 			if(RESRVPTS < 1100) goto sL_LowPts2;
 			mes "[Kafra]";
 			mes "Here you are.";
@@ -1021,9 +1021,8 @@ aldeba_in,88,161,3	script	Kafra#05	115,{
 		mes "You have the following amount of special reserve points: ^5544FF"+RESRVPTS+"^000000.";
 		mes "Make a choice and test your luck!";
 		next;
-		menu "5000pts = 1st Lottery Chance!",sM_1st, "7000pts = 2nd Lottery Chance!",sM_2nd, "10000pts = 3rd Lottery Chance!",sM_3rd, "Cancel",M_End; 
+		menu "5000pts = 1st Lottery Chance!",-, "7000pts = 2nd Lottery Chance!",sM_2nd, "10000pts = 3rd Lottery Chance!",sM_3rd, "Cancel",M_End; 
 
-		sM_1st:
 			if(RESRVPTS < 5000) goto sL_NotEnuf;
 			set RESRVPTS, RESRVPTS - 5000;
 			set @Lotto, 3;
@@ -1435,7 +1434,15 @@ c_tower3,10,249,4	script	Gatekeeper#01	84,{
 		close;
 	M_2:
 		mes "[Gatekeeper Riku]";
-		if(countitem(7026) < 1) goto L_Check_Key;
+		if(countitem(7026) < 1) {
+			mes ". . . . . .";
+			mes "Unfortunately you don't have a privilege";
+			mes "To enter this Gate ..";
+			mes "You won't be able to go through";
+			mes "As long as Ancient Alchemists";
+			mes " Don't approve you.";
+			close;
+			}
 		delitem 7026,1;
 		mes "Hmm! I already felt that you are not an Ordinary person,";
 		mes "Now it seems to be successful in Speculation.";
@@ -1445,14 +1452,6 @@ c_tower3,10,249,4	script	Gatekeeper#01	84,{
 		warp "c_tower4",185,44;
 		close;
 
-		L_Check_Key:
-			mes ". . . . . .";
-			mes "Unfortunately you don't have a privilege";
-			mes "To enter this Gate ..";
-			mes "You won't be able to go through";
-			mes "As long as Ancient Alchemists";
-			mes " Don't approve you.";
-			close;
 	M_End:
 		mes "[Gatekeeper Riku]";
 		mes "This Clock Tower";
@@ -1530,7 +1529,15 @@ alde_dun03,264,16,4	script	Gatekeeper#02	101,{
 		close;
 	M_2:
 		mes "[Gatekeeper Boy]";
-		if(countitem(7027) < 1) goto L_Check_Key;
+		if(countitem(7027) < 1) {
+			mes ". . . . . .";
+			mes "Unfortunately you don't have a privilege";
+			mes "To enter this Gate ..";
+			mes "You won't be able to go through";
+			mes "As long as Ancient Alchemists";
+			mes " Don't grant you.";
+			close;
+		}
 		delitem 7027,1;
 		mes "Hmm! I already felt that you are not an Ordinary person,";
 		mes "Now it seems to be successful in Speculation.";
@@ -1540,14 +1547,6 @@ alde_dun03,264,16,4	script	Gatekeeper#02	101,{
 		warp "alde_dun04",79,267;
 		close;
 
-		L_Check_Key:
-			mes ". . . . . .";
-			mes "Unfortunately you don't have a privilege";
-			mes "To enter this Gate ..";
-			mes "You won't be able to go through";
-			mes "As long as Ancient Alchemists";
-			mes " Don't grant you.";
-			close;
 	M_End:
 		mes "[Gatekeeper Boy]";
 		mes "This Clock Tower";

@@ -12,7 +12,7 @@
 //= 1.0 Converted from Aegis 10.4 [DZeroX]
 //============================================================
 
-alberta.gat,97,51,0	script	Fabian	84,{
+alberta,97,51,0	script	Fabian	84,{
 	mes "[Fabian]";
 	mes "Man... When you travel all around";
 	mes "the world, you'll hear of some";
@@ -37,7 +37,7 @@ alberta.gat,97,51,0	script	Fabian	84,{
 	close;
 }
 
-alberta.gat,53,39,0	script	Steiner	100,{
+alberta,53,39,0	script	Steiner	100,{
 	mes "[Steiner]";
 	mes "Oh...!";
 	mes "Welcome to Alberta,";
@@ -58,7 +58,7 @@ alberta.gat,53,39,0	script	Steiner	100,{
 	close;
 }
 
-alberta.gat,20,183,0	script	Chad	49,{
+alberta,20,183,0	script	Chad	49,{
 	mes "[Chad]";
 	mes "People say the legendary weapon";
 	mes "Gungnir never misses its target. I";
@@ -79,7 +79,7 @@ alberta.gat,20,183,0	script	Chad	49,{
 	close;
 }
 
-alberta.gat,189,151,5	script	Fisk	100,{
+alberta,189,151,5	script	Fisk	100,{
 	mes "[Fisk]";
 	mes "Ahoy mate,";
 	mes "where'd ya";
@@ -116,7 +116,7 @@ alberta.gat,189,151,5	script	Fisk	100,{
 	}
 }
 
-alb2trea.gat,39,50,6	script	Fisk#a2t	100,{
+alb2trea,39,50,6	script	Fisk#a2t	100,{
 	mes "[Fisk]";
 	mes "So you wanna head back to the";
 	mes "mainland in Alberta, eh?";
@@ -128,7 +128,7 @@ alb2trea.gat,39,50,6	script	Fisk#a2t	100,{
 	}
 }
 
-alberta.gat,131,139,2	script	Drunken Old Man	54,{
+alberta,131,139,2	script	Drunken Old Man	54,{
 	mes "[Deagle]";
 	mes "*^CCCCCCHiccup^000000*";
 	mes "Wh-what are you";
@@ -198,7 +198,7 @@ alberta.gat,131,139,2	script	Drunken Old Man	54,{
 	}
 }
 
-alberta.gat,58,80,2	script	Shakir	99,{
+alberta,58,80,2	script	Shakir	99,{
 	set .@random,rand(1,2);
 	if (.@random == 1) {
 		mes "[Shakir]";
@@ -246,7 +246,7 @@ alberta.gat,58,80,2	script	Shakir	99,{
 	}
 }
 
-alberta.gat,62,156,2	script	Sonya	102,{
+alberta,62,156,2	script	Sonya	102,{
 	set .@random,rand(1,3);
 	if (.@random == 1) {
 		mes "[Sonya]";
@@ -310,7 +310,7 @@ alberta.gat,62,156,2	script	Sonya	102,{
 	}
 }
 
-alberta.gat,93,174,2	script	Grandmother Alma	103,{
+alberta,93,174,2	script	Grandmother Alma	103,{
 	mes "[Grandmother Alma]";
 	mes "Some time ago,";
 	mes "a derelict ship";
@@ -346,7 +346,7 @@ alberta.gat,93,174,2	script	Grandmother Alma	103,{
 	close;
 }
 
-alberta.gat,195,151,2	script	Paul	86,{
+alberta,195,151,2	script	Paul	86,{
 	mes "[Paul]";
 	mes "Good day~";
 	mes "Would you like";
@@ -390,7 +390,7 @@ alberta.gat,195,151,2	script	Paul	86,{
 	}
 }
 
-alberta.gat,190,173,4	script	Phelix	85,{
+alberta,190,173,4	script	Phelix	85,{
 	set .@weight,MaxWeight-Weight;
 	if ((.@weight) < 10000) {
 		mes "[Phelix]";
@@ -570,7 +570,7 @@ alberta.gat,190,173,4	script	Phelix	85,{
 	}
 }
 
-alberta.gat,43,49,5	script	Poor-looking Merchant	89,{
+alberta,43,49,5	script	Poor-looking Merchant	89,{
 	mes "[Machen]";
 	mes "Why...?";
 	mes "How did my";
@@ -587,7 +587,7 @@ alberta.gat,43,49,5	script	Poor-looking Merchant	89,{
 	close;
 }
 
-alberta.gat,43,244,8	script	Tourist	99,{
+alberta,43,244,8	script	Tourist	99,{
 	mes "[Tourist]";
 	mes "Where am I...?";
 	mes "...Who am I?";
@@ -619,7 +619,7 @@ alberta.gat,43,244,8	script	Tourist	99,{
 	close;
 }
 
-alberta.gat,165,83,4	script	Fastidious Old Man	755,{
+alberta,165,83,4	script	Fastidious Old Man	755,{
 	mes "[Frank]";
 	mes "My back~";
 	mes "It's so sore!";
