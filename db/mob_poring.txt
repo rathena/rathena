@@ -4,15 +4,15 @@
 // MobID,DummyName,Rate
 
 0,Poring,1002
-1002,Poring,700000
+1002,Poring,1000000
+1031,Poporing,1000000
 1062,Santa Poring,200000
-1113,Drops,500000
-1031,Poporing,400000
-1242,Marin,300000
-1613,Metaling,250000
-1784,Stapo,200000
-1090,Mastering,100000
-1120,Ghostring,50000
-1096,Angeling,25000
-1582,Deviling,25000
-1388,Arc Angeling,10000
+1090,Mastering,400000
+1096,Angeling,200000
+1113,Drops,1000000
+1120,Ghostring,200000
+1242,Marin,1000000
+1388,Arc Angeling,200000
+1582,Deviling,200000
+1613,Metaling,1000000
+1784,Stapo,800000

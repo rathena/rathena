@@ -3629,7 +3629,7 @@ static int mob_read_randommonster(void)
 	const char* mobfile[] = {
 		"mob_branch.txt",
 		"mob_poring.txt",
-		"mob_boss.txt" 
+		"mob_boss.txt",
 		"mob_pouch.txt"};
 
 	for(i=0;i<MAX_RANDOMMONSTER;i++){

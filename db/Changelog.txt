@@ -49,6 +49,7 @@
 	----
 ========================
 05/04
+	* Added up-to-date monster summoning files thanks to Vicious_Pucca [Playtester]
 	* Small update on Magmaring [Playtester]
 05/03
 	* Fixed old id of Assassin Mask in OVB items [Playtester]
