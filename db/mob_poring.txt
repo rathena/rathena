@@ -10,6 +10,7 @@
 1031,Poporing,400000
 1242,Marin,300000
 1613,Metaling,250000
+1784,Stapo,200000
 1090,Mastering,100000
 1120,Ghostring,50000
 1096,Angeling,25000

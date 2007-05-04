@@ -3629,7 +3629,8 @@ static int mob_read_randommonster(void)
 	const char* mobfile[] = {
 		"mob_branch.txt",
 		"mob_poring.txt",
-		"mob_boss.txt" };
+		"mob_boss.txt" 
+		"mob_pouch.txt"};
 
 	for(i=0;i<MAX_RANDOMMONSTER;i++){
 		mob_db_data[0]->summonper[i] = 1002;	// İ’è‚µ–Y‚ê‚½ê‡‚Íƒ|ƒŠƒ“‚ªo‚é‚æ‚¤‚É‚µ‚Ä‚¨‚­
