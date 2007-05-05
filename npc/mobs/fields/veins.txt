@@ -29,7 +29,7 @@ ve_fild01,0,0,0,0	monster	Atros	1785,1,86400000,86000000,1
 ve_fild02,0,0,0,0	monster	Savage	1166,60,0,0,0
 ve_fild02,0,0,0,0	monster	Side Winder	1037,20,0,0,0
 ve_fild02,0,0,0,0	monster	Roween	1782,20,0,0,0
-ve_fild02,0,0,0,0	monster	Stapo	1784,10,0,0,0
+ve_fild02,0,0,0,0	monster	Stapo	1784,20,0,0,0
 ve_fild02,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
 ve_fild02,0,0,0,0	monster	Atros	1785,1,86400000,86000000,1
 
@@ -54,7 +54,7 @@ ve_fild05,0,0,0,0	monster	Sleeper	1386,40,0,0,0
 ve_fild05,0,0,0,0	monster	Sandman	1165,20,0,0,0
 ve_fild05,0,0,0,0	monster	Roween	1782,20,0,0,0
 ve_fild05,0,0,0,0	monster	Drosera	1781,10,0,0,0
-ve_fild05,0,0,0,0	monster	Galion	1783,10,0,0,0
+ve_fild05,0,0,0,0	monster	Galion	1783,5,0,0,0
 ve_fild05,0,0,0,0	monster	White Plant	1082,5,180000,90000,1
 ve_fild05,0,0,0,0	monster	Shining Plant	1083,1,1800000,900000,1
 

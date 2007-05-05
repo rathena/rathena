@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= $ephiroth
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //= 1.0 Initial version [$ephiroth]
 //= 1.1 Updated more warps [$ephiroth]
 //= 1.2 Removed some unofficial warps [Playtester]
+//= 1.3 Added random Veins exit [Playtester]
 //============================================================
 
 //= Veins Field (ve_fild) ====================================
@@ -33,5 +34,17 @@ ve_fild03,355,222,0	warp	veinswarp5015	1,1,ve_fild04,46,249
 ve_fild04,43,249,0	warp	veinswarp5016	1,1,ve_fild03,353,221
 ve_fild03,222,42,0	warp	veinswarp5017	1,1,ve_fild05,204,330
 ve_fild05,206,331,0	warp	veinswarp5018	1,1,ve_fild03,222,45
-ve_fild05,359,192,0	warp	veinswarp5019	1,1,ve_fild06,78,183
-ve_fild06,88,176,0	warp	veinswarp5020	1,1,ve_fild05,354,192
+
+ve_fild05,359,192,0	warp	veinswarp5019	1,1,ve_fild06,84,179
+ve_fild04,115,49,0	warp	veinswarp5020	1,1,ve_fild06,84,179
+
+ve_fild06,88,176,0	script	veinswarp5021	45,1,1,{
+	switch(rand(2)){
+		case 1:
+			warp "ve_fild04",115,52;
+			break;
+		default:
+			warp "ve_fild05",354,192;
+			break;
+	}
+}
