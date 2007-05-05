@@ -111,7 +111,7 @@
 70,9,6,2,6,0x21,0,10,1,yes,0,0,0,magic,1	//PR_SANCTUARY#Sanctuary#
 71,9,6,16,0,0x1,0,4,1,yes,0,0,0,magic,0	//PR_SLOWPOISON#Slow Poison#
 72,9,6,16,0,0x1,0,1,1,yes,0,0,0,magic,0	//PR_STRECOVERY#Status Recovery#
-73,9,6,16,0,0x1,0,10,1,yes,0,0x1000,0,magic,0	//PR_KYRIE#Kyrie Eleison#
+73,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0	//PR_KYRIE#Kyrie Eleison#
 74,0,6,4,0,0x3,-1,5,1,yes,0,0,0,magic,0	//PR_MAGNIFICAT#Magnificat#
 75,0,6,4,0,0x3,-1,5,1,yes,0,0,0,magic,0	//PR_GLORIA#Gloria#
 76,5,6,1,0,0x1,0:0:0:0:0:0:0:0:0:0:-1,10,0,yes,0,0,0,magic,0	//PR_LEXDIVINA#Lex Divina#
