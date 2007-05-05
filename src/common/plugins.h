@@ -4,12 +4,17 @@
 #ifndef	_PLUGINS_H_
 #define _PLUGINS_H_
 
+#ifndef _CBASETYPES_H_
+#include "../common/cbasetypes.h"
+#endif
+
 #include "../common/plugin.h"
 
 ////// Dynamic Link Library functions ///////////////
 
 #ifdef WIN32
 
+	#define WIN32_LEAN_AND_MEAN
 	#include <windows.h>
 	#define DLL_OPEN(x)		LoadLibrary(x)
 	#define DLL_SYM(x,y,z)	(FARPROC)(x) = GetProcAddress(y,z)

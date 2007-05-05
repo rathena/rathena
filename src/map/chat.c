@@ -1,18 +1,19 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <string.h>
-
+#include "../common/cbasetypes.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "battle.h"
-#include "chat.h"
 #include "map.h"
 #include "clif.h"
 #include "pc.h"
 #include "npc.h"
 #include "atcommand.h"
+#include "chat.h"
+
+#include <stdio.h>
+#include <string.h>
 
 int chat_triggerevent(struct chat_data *cd);
 
@@ -107,57 +108,58 @@ int chat_joinchat(struct map_session_data* sd, int chatid, char* pass)
 	return 0;
 }
 
-/*==========================================
- * チャットルームから抜ける
- *------------------------------------------
- */
-int chat_leavechat(struct map_session_data *sd)
+/// Removes the user from the chat room.
+int chat_leavechat(struct map_session_data* sd)
 {
-	struct chat_data *cd;
-	int i,leavechar;
+	struct chat_data* cd;
+	int i;
+	int leavechar;
 
 	nullpo_retr(1, sd);
 
-	cd=(struct chat_data*)map_id2bl(sd->chatID);
-	if(cd==NULL) {
-		sd->chatID = 0;
+	cd = (struct chat_data*)map_id2bl(sd->chatID);
+	if( cd == NULL )
+	{
+		pc_setchatid(sd, 0);
 		return 1;
 	}
 
-	for(i = 0,leavechar=-1;i < cd->users;i++){
+	for( i = 0, leavechar = -1; i < cd->users; i++ )
+	{
 		if(cd->usersd[i] == sd){
 			leavechar=i;
 			break;
 		}
 	}
-	if(leavechar<0)
-  	{	//Not found in the chatroom?
-		sd->chatID = 0;
+	if( leavechar < 0 )
+	{// Not found in the chatroom?
+		pc_setchatid(sd, 0);
 		return -1;
 	}
 
-	if(leavechar==0 && cd->users>1 && (*cd->owner)->type==BL_PC){
-		// 所有者だった&他に人が居る&PCのチャット
-		clif_changechatowner(cd,cd->usersd[1]);
-		clif_clearchat(cd,0);
+	if( leavechar == 0 && cd->users > 1 && (*cd->owner)->type == BL_PC )
+	{// Change ownership to the next user
+		clif_changechatowner(cd, cd->usersd[1]);
+		clif_clearchat(cd, 0);
 	}
 
 	// 抜けるPCにも送るのでusersを減らす前に実行
-	clif_leavechat(cd,sd);
+	clif_leavechat(cd, sd);
 
 	cd->users--;
-	pc_setchatid(sd,0);
+	pc_setchatid(sd, 0);
 
-	if(cd->users == 0 && (*cd->owner)->type==BL_PC){
-		//Delete empty chatroom
-		clif_clearchat(cd,0);
+	if( cd->users == 0 && (*cd->owner)->type==BL_PC )
+	{// Delete empty chatroom
+		clif_clearchat(cd, 0);
 		map_delobject(cd->bl.id);
 		return 1;
 	}
-	for(i=leavechar;i < cd->users;i++)
-		cd->usersd[i] = cd->usersd[i+1];
+	for( i = leavechar; i < cd->users; i++ )
+		cd->usersd[i] = cd->usersd[i + 1];
 
-	if(leavechar==0 && (*cd->owner)->type==BL_PC){
+	if( leavechar == 0 && (*cd->owner)->type==BL_PC )
+	{
 		//Adjust Chat location after owner has been changed.
 		map_delblock( &cd->bl );
 		cd->bl.x=cd->usersd[0]->bl.x;
@@ -272,11 +274,8 @@ int chat_kickchat(struct map_session_data *sd,char *kickusername)
 	return -1;
 }
 
-/*==========================================
- * npcチャットルーム作成
- *------------------------------------------
- */
-int chat_createnpcchat(struct npc_data *nd,int limit,int pub,int trigger,const char* title,int titlelen,const char *ev)
+/// Creates a chat room for the npc.
+int chat_createnpcchat(struct npc_data* nd,int limit,int pub,int trigger,const char* title,int titlelen,const char *ev)
 {
 	struct chat_data *cd;
 
@@ -285,45 +284,40 @@ int chat_createnpcchat(struct npc_data *nd,int limit,int pub,int trigger,const c
 	cd = (struct chat_data *) aMalloc(sizeof(struct chat_data));
 
 	cd->limit = cd->trigger = limit;
-	if(trigger>0)
+	if( trigger > 0 )
 		cd->trigger = trigger;
 	cd->pub = pub;
 	cd->users = 0;
-	memcpy(cd->pass,"",1);
-	if(titlelen>=sizeof(cd->title)-1) titlelen=sizeof(cd->title)-1;
-	memcpy(cd->title,title,titlelen);
-	cd->title[titlelen]=0;
+	cd->pass[0] = '\0';
+	if( titlelen > sizeof(cd->title) - 1 )
+		titlelen = sizeof(cd->title) - 1;
+	memcpy(cd->title, title, titlelen);
+	cd->title[titlelen] = '\0';
 
-	cd->bl.m = nd->bl.m;
-	cd->bl.x = nd->bl.x;
-	cd->bl.y = nd->bl.y;
+	cd->bl.m    = nd->bl.m;
+	cd->bl.x    = nd->bl.x;
+	cd->bl.y    = nd->bl.y;
 	cd->bl.type = BL_CHAT;
-	cd->bl.prev= cd->bl.next = NULL;
-	cd->owner_ = (struct block_list *)nd;
-	cd->owner = &cd->owner_;
-	if (strlen(ev) > 49)
-	{	//npc_event is a char[50]	[Skotlex]
-		memcpy(cd->npc_event,ev,49);
-		cd->npc_event[49] = '\0';
-	} else
-		memcpy(cd->npc_event,ev,strlen(ev)+1); //Include the \0
-
+	cd->bl.prev = cd->bl.next = NULL;
+	cd->owner_  = (struct block_list *)nd;
+	cd->owner   = &cd->owner_;
+	strncpy(cd->npc_event, ev, ARRAYLENGTH(cd->npc_event));
+	cd->npc_event[ARRAYLENGTH(cd->npc_event)-1] = '\0';
 	cd->bl.id = map_addobject(&cd->bl);	
-	if(cd->bl.id==0){
+	if( cd->bl.id == 0)
+	{
 		aFree(cd);
 		return 0;
 	}
-	nd->chat_id=cd->bl.id;
+	nd->chat_id = cd->bl.id;
 
-	clif_dispchat(cd,0);
+	clif_dispchat(cd, 0);
 
 	return 0;
 }
-/*==========================================
- * npcチャットルーム削除
- *------------------------------------------
- */
-int chat_deletenpcchat(struct npc_data *nd)
+
+/// Removes the chatroom from the npc.
+int chat_deletenpcchat(struct npc_data* nd)
 {
 	struct chat_data *cd;
 
@@ -331,9 +325,9 @@ int chat_deletenpcchat(struct npc_data *nd)
 	nullpo_retr(0, cd=(struct chat_data*)map_id2bl(nd->chat_id));
 	
 	chat_npckickall(cd);
-	clif_clearchat(cd,0);
+	clif_clearchat(cd, 0);
 	map_delobject(cd->bl.id);	// freeまでしてくれる
-	nd->chat_id=0;
+	nd->chat_id = 0;
 	
 	return 0;
 }
@@ -346,44 +340,38 @@ int chat_triggerevent(struct chat_data *cd)
 {
 	nullpo_retr(0, cd);
 
-	if(cd->users>=cd->trigger && cd->npc_event[0])
+	if( cd->users >= cd->trigger && cd->npc_event[0] )
 		npc_event_do(cd->npc_event);
 	return 0;
 }
 
-/*==========================================
- * イベントの有効化
- *------------------------------------------
- */
-int chat_enableevent(struct chat_data *cd)
+/// Enables the event of the chat room.
+/// At most, 127 users are needed to trigger the event.
+int chat_enableevent(struct chat_data* cd)
 {
 	nullpo_retr(0, cd);
 
-	cd->trigger&=0x7f;
+	cd->trigger &= 0x7f;
 	chat_triggerevent(cd);
 	return 0;
 }
-/*==========================================
- * イベントの無効化
- *------------------------------------------
- */
-int chat_disableevent(struct chat_data *cd)
+
+/// Disables the event of the chat room
+int chat_disableevent(struct chat_data* cd)
 {
 	nullpo_retr(0, cd);
 
-	cd->trigger|=0x80;
+	cd->trigger |= 0x80;
 	return 0;
 }
-/*==========================================
- * チャットルームから全員蹴り出す
- *------------------------------------------
- */
-int chat_npckickall(struct chat_data *cd)
+
+/// Kicks all the users for the chat room.
+int chat_npckickall(struct chat_data* cd)
 {
 	nullpo_retr(0, cd);
 
-	while(cd->users>0){
+	while( cd->users > 0 )
 		chat_leavechat(cd->usersd[cd->users-1]);
-	}
+
 	return 0;
 }

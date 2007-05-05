@@ -307,4 +307,8 @@ typedef char bool;
 #define TOLOWER(c) (tolower((unsigned char)(c)))
 #define TOUPPER(c) (toupper((unsigned char)(c)))
 
+//////////////////////////////////////////////////////////////////////////
+// length of a static array
+#define ARRAYLENGTH(A) ( sizeof(A)/sizeof((A)[0]) )
+
 #endif /* _CBASETYPES_H_ */

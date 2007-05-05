@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/05/06
+	* Removed the dependency on winsock.h for definitions, it's all winsock2.h now.
+	* Minor documentation/re-coding in chat.c.
+	* More work on ticket #41. [FLavioJS]
 	* Fixed Red Pouch overriding nobranch mapflag [Playtester]
 	* Attempt to fix Kyrie Eleison not castable on enemy players [Playtester]
 	- please test, I can't double client to test it in pvp

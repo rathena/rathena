@@ -3,11 +3,17 @@
 
 #include <sys/types.h>
 
-#ifdef __WIN32
-#define __USE_W32_SOCKETS
+#include "../common/cbasetypes.h"
+#include "../common/malloc.h"
+#include "../common/showmsg.h"
+#include "timer.h"
+
+#ifdef WIN32
+//#define __USE_W32_SOCKETS
 // Well, this won't last another 30++ years (where conversion will truncate).
 //#define _USE_32BIT_TIME_T	// use 32 bit time variables on 64bit windows
-#include <windows.h>
+//#include <windows.h>
+#include <winsock2.h>
 #else
 #include <sys/socket.h>
 #include <sys/time.h>
@@ -17,11 +23,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "timer.h"
 
 // タイマー間隔の最小値。モンスターの大量召還時、多数のクライアント接続時に
 // サーバーが反応しなくなる場合は、TIMER_MIN_INTERVAL を増やしてください。

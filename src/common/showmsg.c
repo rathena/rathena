@@ -1,16 +1,17 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "../common/cbasetypes.h"
+#include "../common/utils.h"
+#include "showmsg.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
 #include <time.h>
 #include <stdlib.h> // atexit
-#include "cbasetypes.h"
-#include "showmsg.h"
-#include "utils.h"
 
-#ifdef _WIN32
+#ifdef WIN32
 	#define WIN32_LEAN_AND_MEAN
 	#include <windows.h>
 

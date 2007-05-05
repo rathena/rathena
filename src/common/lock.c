@@ -1,6 +1,10 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "../common/cbasetypes.h"
+#include "../common/showmsg.h"
+#include "lock.h"
+
 #include <stdio.h>
 #include <errno.h>
 #include <string.h>
@@ -11,10 +15,8 @@
 #define F_OK   0x0
 #define R_OK   0x4
 #endif
-#include "lock.h"
-#include "showmsg.h"
 
-#ifndef _WIN32
+#ifndef WIN32
 	#define exists(filename) (!access(filename, F_OK))
 #else
 // could be speed up maybe?

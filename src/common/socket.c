@@ -1,14 +1,22 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "../common/cbasetypes.h"
+#include "../common/mmo.h"
+#include "../common/timer.h"
+#include "../common/malloc.h"
+#include "../common/showmsg.h"
+#include "../common/strlib.h"
+#include "socket.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 
-#ifdef __WIN32
-	#define WIN32_LEAN_AND_MEAN
-	#include <windows.h>
+#ifdef WIN32
+	//#define WIN32_LEAN_AND_MEAN
+	//#include <windows.h>
 	#include <winsock2.h>
 	#include <io.h>
 #else
@@ -29,7 +37,7 @@
 #endif
 
 // portability layer 
-#ifdef _WIN32
+#ifdef WIN32
 	typedef int socklen_t;
 
 	#define s_errno WSAGetLastError()
@@ -51,13 +59,6 @@
 	#define S_EWOULDBLOCK EAGAIN
 	#define S_ECONNABORTED ECONNABORTED
 #endif
-
-#include "../common/socket.h"
-#include "../common/mmo.h"
-#include "../common/timer.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
 
 fd_set readfds;
 int fd_max;
@@ -561,7 +562,7 @@ int do_sendrecv(int next)
 		fd_max = ret;
 	}
 
-#ifdef _WIN32
+#ifdef WIN32
 	// on windows, enumerating all members of the fd_set is way faster if we access the internals
 	for(i=0;i<(int)rfd.fd_count;i++)
 	{

@@ -4,13 +4,17 @@
 #ifndef _MAP_H_
 #define _MAP_H_
 
-#include <stdarg.h>
+#ifndef _CBASETYPES_H_
+#include "../common/cbasetypes.h"
+#endif
 #include "../common/mmo.h"
 #include "../common/mapindex.h"
 #include "../common/db.h"
 
 #include "itemdb.h" // MAX_ITEMGROUP
 #include "status.h" // SC_MAX
+
+#include <stdarg.h>
 
 //Uncomment to enable the Cell Stack Limit mod.
 //It's only config is the battle_config cell_stack_limit.
@@ -387,8 +391,10 @@ struct status_change_entry {
 struct status_change {
 	struct status_change_entry data[SC_MAX];
 	short count;
-	unsigned short opt1,opt2;
-	unsigned int opt3, option; //Note that older packet versions use short here.
+	unsigned short opt1;// body state
+	unsigned short opt2;// health state
+	unsigned int opt3;
+	unsigned int option;// effect state
 };
 
 struct vending {
@@ -1394,8 +1400,8 @@ extern char *map_server_dns;
 
 #ifndef TXT_ONLY
 
-#ifdef _WIN32
-#include <windows.h> // SOCKET
+#ifdef WIN32
+#include <winsock2.h>
 #endif
 #include <mysql.h>
 

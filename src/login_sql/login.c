@@ -22,6 +22,9 @@
 #include "login.h"
 
 //add include for DBMS(mysql)
+#ifdef WIN32
+#include <winsock2.h>
+#endif
 #include <mysql.h>
 
 struct Login_Config {

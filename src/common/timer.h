@@ -4,10 +4,15 @@
 #ifndef	_TIMER_H_
 #define	_TIMER_H_
 
-#ifdef __WIN32
+#ifndef _CBASETYPES_H_
+#include "../common/cbasetypes.h"
+#endif
+
+#ifdef WIN32
 /* We need winsock lib to have timeval struct - windows is weirdo */
-#define __USE_W32_SOCKETS
-#include <windows.h>
+//#define __USE_W32_SOCKETS
+//#include <windows.h>
+#include <winsock2.h>
 #endif
 
 #define BASE_TICK 5

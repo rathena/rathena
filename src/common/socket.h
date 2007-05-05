@@ -4,10 +4,12 @@
 #ifndef	_SOCKET_H_
 #define _SOCKET_H_
 
+#ifndef _CBASETYPES_H_
+#include "../common/cbasetypes.h"
+#endif
+
 #ifdef WIN32
-	#define WIN32_LEAN_AND_MEAN
-	#include <windows.h>
-	#include <winsock.h>
+	#include <winsock2.h>
 	typedef long in_addr_t;
 #else
 	#include <sys/types.h>
@@ -15,7 +17,6 @@
 	#include <netinet/in.h>
 #endif
 
-#include "../common/cbasetypes.h"
 #include <time.h>
 
 

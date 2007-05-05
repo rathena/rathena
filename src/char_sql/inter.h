@@ -4,6 +4,10 @@
 #ifndef _INTER_SQL_H_
 #define _INTER_SQL_H_
 
+#ifndef _CBASETYPES_H_
+#include "../common/cbasetypes.h"
+#endif
+
 int inter_init_sql(const char *file);
 void inter_final(void);
 int inter_parse_frommap(int fd);
@@ -21,9 +25,8 @@ int inter_log(char *fmt,...);
 extern unsigned int party_share_level;
 extern char inter_log_filename[1024];
 
-#ifdef __WIN32
-//Windows.h need to be included before mysql.h
-#include <windows.h>
+#ifdef WIN32
+#include <winsock2.h>
 #endif
 //add include for DBMS(mysql)
 #include <mysql.h>

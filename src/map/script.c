@@ -4026,12 +4026,12 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(skillpointcount,""),
 	BUILDIN_DEF(changebase,"i"),
 	BUILDIN_DEF(changesex,""),
-	BUILDIN_DEF(waitingroom,"si*"),
-	BUILDIN_DEF(delwaitingroom,"*"),
-	BUILDIN_DEF2(waitingroomkickall,"kickwaitingroomall","*"),
-	BUILDIN_DEF(enablewaitingroomevent,"*"),
-	BUILDIN_DEF(disablewaitingroomevent,"*"),
-	BUILDIN_DEF(getwaitingroomstate,"i*"),
+	BUILDIN_DEF(waitingroom,"si??"),
+	BUILDIN_DEF(delwaitingroom,"?"),
+	BUILDIN_DEF2(waitingroomkickall,"kickwaitingroomall","?"),
+	BUILDIN_DEF(enablewaitingroomevent,"?"),
+	BUILDIN_DEF(disablewaitingroomevent,"?"),
+	BUILDIN_DEF(getwaitingroomstate,"i?"),
 	BUILDIN_DEF(warpwaitingpc,"sii?"),
 	BUILDIN_DEF(attachrid,"i"),
 	BUILDIN_DEF(detachrid,""),
@@ -6797,11 +6797,12 @@ BUILDIN_FUNC(statusup2)
 }
 
 /// See 'doc/item_bonus.txt'
-/// bonus <bonus type>,<val1>
-/// bonus2 <bonus type>,<val1>,<val2>
-/// bonus3 <bonus type>,<val1>,<val2>,<val3>
-/// bonus4 <bonus type>,<val1>,<val2>,<val3>,<val4>
-/// bonus5 <bonus type>,<val1>,<val2>,<val3>,<val4>,<val5>
+///
+/// bonus <bonus type>,<val1>;
+/// bonus2 <bonus type>,<val1>,<val2>;
+/// bonus3 <bonus type>,<val1>,<val2>,<val3>;
+/// bonus4 <bonus type>,<val1>,<val2>,<val3>,<val4>;
+/// bonus5 <bonus type>,<val1>,<val2>,<val3>,<val4>,<val5>;
 BUILDIN_FUNC(bonus)
 {
 	int type;
@@ -6856,8 +6857,13 @@ BUILDIN_FUNC(bonus)
 }
 
 /// Changes the level of a player skill.
-/// skill <skill id>,<level>{,<flag>}
-/// @see pc_skill() for flag
+/// <flag> defaults to 1
+/// <flag>=0 : set the level of the skill
+/// <flag>=1 : set the temporary level of the skill
+/// <flag>=2 : add to the level of the skill
+///
+/// skill <skill id>,<level>,<flag>
+/// skill <skill id>,<level>
 BUILDIN_FUNC(skill)
 {
 	int id;
@@ -6879,8 +6885,12 @@ BUILDIN_FUNC(skill)
 }
 
 /// Changes the level of a player skill.
-/// addtoskill <skill id>,<level>{,<flag>}
-/// @see pc_skill() for flag
+/// like skill, but <flag> defaults to 2
+///
+/// addtoskill <skill id>,<amount>,<flag>
+/// addtoskill <skill id>,<amount>
+///
+/// @see skill
 BUILDIN_FUNC(addtoskill)
 {
 	int id;
@@ -6901,8 +6911,9 @@ BUILDIN_FUNC(addtoskill)
 	return 0;
 }
 
-/// Increases the level of the guild skill.
-/// guildskill <skill id>,<level>
+/// Increases the level of a guild skill.
+///
+/// guildskill <skill id>,<amount>;
 BUILDIN_FUNC(guildskill)
 {
 	int id;
@@ -6923,6 +6934,7 @@ BUILDIN_FUNC(guildskill)
 }
 
 /// Returns the level of the player skill.
+///
 /// getskilllv(<skill id>) -> <level>
 BUILDIN_FUNC(getskilllv)
 {
@@ -6940,6 +6952,7 @@ BUILDIN_FUNC(getskilllv)
 }
 
 /// Returns the level of the guild skill.
+///
 /// getgdskilllv(<guild id>,<skill id>) -> <level>
 BUILDIN_FUNC(getgdskilllv)
 {
@@ -6959,7 +6972,10 @@ BUILDIN_FUNC(getgdskilllv)
 }
 
 /// Returns the 'basic_skill_check' setting.
-/// basicskillcheck() -> <setting>
+/// This config determines if the server check the skill level of NV_BASIC 
+/// before alowing the basic actions.
+///
+/// basicskillcheck() -> <bool>
 BUILDIN_FUNC(basicskillcheck)
 {
 	script_pushint(st, battle_config.basic_skill_check);
@@ -6967,6 +6983,7 @@ BUILDIN_FUNC(basicskillcheck)
 }
 
 /// Returns the GM level of the player.
+///
 /// getgmlevel() -> <level>
 BUILDIN_FUNC(getgmlevel)
 {
@@ -6982,6 +6999,7 @@ BUILDIN_FUNC(getgmlevel)
 }
 
 /// Terminates the execution of this script instance.
+///
 /// end
 BUILDIN_FUNC(end)
 {
@@ -6989,7 +7007,8 @@ BUILDIN_FUNC(end)
 	return 0;
 }
 
-/// Checks if the player has that option.
+/// Checks if the player has that effect state (option).
+///
 /// checkoption(<option>) -> <bool>
 BUILDIN_FUNC(checkoption)
 {
@@ -7009,7 +7028,8 @@ BUILDIN_FUNC(checkoption)
 	return 0;
 }
 
-/// Checks if the player is in that opt1 state.
+/// Checks if the player is in that body state (opt1).
+///
 /// checkoption1(<opt1>) -> <bool>
 BUILDIN_FUNC(checkoption1)
 {
@@ -7029,7 +7049,8 @@ BUILDIN_FUNC(checkoption1)
 	return 0;
 }
 
-/// Checks if the player has that opt2.
+/// Checks if the player has that health state (opt2).
+///
 /// checkoption2(<opt2>) -> <bool>
 BUILDIN_FUNC(checkoption2)
 {
@@ -7049,8 +7070,13 @@ BUILDIN_FUNC(checkoption2)
 	return 0;
 }
 
-/// Changes the option of the player.
-/// setoption <option number>{,<flag>}
+/// Changes the effect state (option) of the player.
+/// <flag> defaults to 1
+/// <flag>=0 : removes the option
+/// <flag>=other : adds the option
+///
+/// setoption <option>,<flag>;
+/// setoption <option>;
 BUILDIN_FUNC(setoption)
 {
 	int option;
@@ -7079,7 +7105,9 @@ BUILDIN_FUNC(setoption)
 }
 
 /// Returns if the player has a cart.
+///
 /// checkcart() -> <bool>
+///
 /// @author Valaris
 BUILDIN_FUNC(checkcart)
 {
@@ -7098,7 +7126,16 @@ BUILDIN_FUNC(checkcart)
 }
 
 /// Sets the cart of the player.
-/// setcart {<type>}
+/// <type> defaults to 1
+/// <type>=0 : removes the cart
+/// <type>=1 : Normal cart
+/// <type>=2 : Wooden cart
+/// <type>=3 : Covered cart with flowers and ferns
+/// <type>=4 : Wooden cart with a Panda doll on the back
+/// <type>=5 : Normal cart with bigger wheels, a roof and a banner on the back
+///
+/// setcart <type>;
+/// setcart;
 BUILDIN_FUNC(setcart)
 {
 	int type = 1;
@@ -7116,7 +7153,9 @@ BUILDIN_FUNC(setcart)
 }
 
 /// Returns if the player has a falcon.
+///
 /// checkfalcon() -> <bool>
+///
 /// @author Valaris
 BUILDIN_FUNC(checkfalcon)
 {
@@ -7135,7 +7174,10 @@ BUILDIN_FUNC(checkfalcon)
 }
 
 /// Sets if the player has a falcon or not.
-/// setfalcon {<flag>}
+/// <flag> defaults to 1
+///
+/// setfalcon <flag>;
+/// setfalcon;
 BUILDIN_FUNC(setfalcon)
 {
 	int flag = 1;
@@ -7154,7 +7196,9 @@ BUILDIN_FUNC(setfalcon)
 }
 
 /// Returns if the player is riding.
+///
 /// checkriding() -> <bool>
+///
 /// @author Valaris
 BUILDIN_FUNC(checkriding)
 {
@@ -7173,7 +7217,10 @@ BUILDIN_FUNC(checkriding)
 }
 
 /// Sets if the player is riding.
-/// setriding {<flag>}
+/// <flag> defaults to 1
+///
+/// setriding <flag>;
+/// setriding;
 BUILDIN_FUNC(setriding)
 {
 	int flag = 1;
@@ -7191,6 +7238,7 @@ BUILDIN_FUNC(setriding)
 }
 
 /// Sets the save point of the player.
+///
 /// save "<map name>",<x>,<y>
 /// savepoint "<map name>",<x>,<y>
 BUILDIN_FUNC(savepoint)
@@ -8186,30 +8234,6 @@ BUILDIN_FUNC(disablenpc)
 	return 0;
 }
 
-BUILDIN_FUNC(enablearena)	// Added by RoVeRT
-{
-	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
-	struct chat_data *cd;
-
-
-	if(nd==NULL || (cd=(struct chat_data *)map_id2bl(nd->chat_id))==NULL)
-		return 0;
-
-	npc_enable(nd->name,1);
-	nd->arenaflag=1;
-
-	if(cd->users>=cd->trigger && cd->npc_event[0])
-		npc_timer_event(cd->npc_event);
-
-	return 0;
-}
-BUILDIN_FUNC(disablearena)	// Added by RoVeRT
-{
-	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
-	nd->arenaflag=0;
-
-	return 0;
-}
 /*==========================================
  * 隠れているNPCの表示
  *------------------------------------------
@@ -8587,40 +8611,6 @@ BUILDIN_FUNC(changesex)
 }
 
 /*==========================================
- * npcチャット作成
- *------------------------------------------
- */
-BUILDIN_FUNC(waitingroom)
-{
-	const char *name,*ev="";
-	int limit, trigger = 0,pub=1;
-	name=script_getstr(st,2);
-	limit= script_getnum(st,3);
-	if(limit==0)
-		pub=3;
-
-	if( script_hasdata(st,5) ){
-		struct script_data* data=script_getdata(st,5);
-		get_val(st,data);
-		if( data_isstring(data) ){
-			// eathena仕様
-			trigger=script_getnum(st,4);
-			ev=script_getstr(st,5);
-		}else{
-			// 新Athena仕様(旧Athena仕様と互換性あり)
-			ev=script_getstr(st,4);
-			trigger=script_getnum(st,5);
-		}
-	}else{
-		// 旧Athena仕様
-		if( script_hasdata(st,4) )
-			ev=script_getstr(st,4);
-	}
-	chat_createnpcchat( (struct npc_data *)map_id2bl(st->oid),
-		limit,pub,trigger,name,(int)strlen(name)+1,ev);
-	return 0;
-}
-/*==========================================
  * Works like 'announce' but outputs in the common chat window
  *------------------------------------------
  */
@@ -8643,164 +8633,281 @@ BUILDIN_FUNC(globalmes)
 
 	return 0;
 }
-/*==========================================
- * npcチャット削除
- *------------------------------------------
- */
+
+/////////////////////////////////////////////////////////////////////
+// NPC waiting room (chat room)
+//
+
+/// Creates a waiting room (chat room) for this npc.
+///
+/// waitingroom "<title>",<limit>,<trigger>,"<event>";
+/// waitingroom "<title>",<limit>,"<event>",<trigger>;
+/// waitingroom "<title>",<limit>,"<event>";
+/// waitingroom "<title>",<limit>;
+BUILDIN_FUNC(waitingroom)
+{
+	struct npc_data* nd;
+	const char* title;
+	const char* ev = "";
+	int limit;
+	int trigger = 0;
+	int pub = 1;
+
+	title = script_getstr(st, 2);
+	limit = script_getnum(st, 3);
+	if( limit == 0 )
+		pub = 3;
+
+	if( script_hasdata(st,5) )
+	{
+		struct script_data* data = script_getdata(st, 5);
+		get_val(st, data);
+		if( data_isstring(data) )
+		{// ,"<event>",<trigger>
+			trigger = script_getnum(st, 4);
+			ev = script_getstr(st, 5);
+		}
+		else
+		{// ,<trigger>,"<event>"
+			ev = script_getstr(st, 4);
+			trigger=script_getnum(st,5);
+		}
+	}
+	else if( script_hasdata(st,4) )
+	{// ,"<event>"
+		ev = script_getstr(st, 4);
+	}
+	if( (nd=(struct npc_data *)map_id2bl(st->oid)) != NULL )
+		chat_createnpcchat(nd, limit, pub, trigger, title, (int)strlen(title), ev);
+	return 0;
+}
+
+/// Removes the waiting room of the current or target npc.
+///
+/// delwaitingroom "<npc_name>";
+/// delwaitingroom;
 BUILDIN_FUNC(delwaitingroom)
 {
-	struct npc_data *nd;
+	struct npc_data* nd;
 	if( script_hasdata(st,2) )
-		nd=npc_name2id(script_getstr(st,2));
+		nd = npc_name2id(script_getstr(st, 2));
 	else
-		nd=(struct npc_data *)map_id2bl(st->oid);
-	chat_deletenpcchat(nd);
+		nd = (struct npc_data *)map_id2bl(st->oid);
+	if( nd != NULL )
+		chat_deletenpcchat(nd);
 	return 0;
 }
-/*==========================================
- * npcチャット全員蹴り出す
- *------------------------------------------
- */
+
+/// Kicks all the players from the waiting room of the current or target npc.
+///
+/// kickwaitingroomall "<npc_name>";
+/// kickwaitingroomall;
 BUILDIN_FUNC(waitingroomkickall)
 {
-	struct npc_data *nd;
-	struct chat_data *cd;
+	struct npc_data* nd;
+	struct chat_data* cd;
 
 	if( script_hasdata(st,2) )
-		nd=npc_name2id(script_getstr(st,2));
+		nd = npc_name2id(script_getstr(st,2));
 	else
-		nd=(struct npc_data *)map_id2bl(st->oid);
+		nd = (struct npc_data *)map_id2bl(st->oid);
 
-	if(nd==NULL || (cd=(struct chat_data *)map_id2bl(nd->chat_id))==NULL )
-		return 0;
-	chat_npckickall(cd);
+	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL )
+		chat_npckickall(cd);
 	return 0;
 }
 
-/*==========================================
- * npcチャットイベント有効化
- *------------------------------------------
- */
+/// Enables the waiting room event of the current or target npc.
+///
+/// enablewaitingroomevent "<npc_name>";
+/// enablewaitingroomevent;
 BUILDIN_FUNC(enablewaitingroomevent)
 {
-	struct npc_data *nd;
-	struct chat_data *cd;
+	struct npc_data* nd;
+	struct chat_data* cd;
 
 	if( script_hasdata(st,2) )
-		nd=npc_name2id(script_getstr(st,2));
+		nd = npc_name2id(script_getstr(st, 2));
 	else
-		nd=(struct npc_data *)map_id2bl(st->oid);
+		nd = (struct npc_data *)map_id2bl(st->oid);
 
-	if(nd==NULL || (cd=(struct chat_data *)map_id2bl(nd->chat_id))==NULL )
-		return 0;
-	chat_enableevent(cd);
+	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL )
+		chat_enableevent(cd);
 	return 0;
 }
 
-/*==========================================
- * npcチャットイベント無効化
- *------------------------------------------
- */
+/// Disables the waiting room event of the current or target npc.
+///
+/// disablewaitingroomevent "<npc_name>";
+/// disablewaitingroomevent;
 BUILDIN_FUNC(disablewaitingroomevent)
 {
 	struct npc_data *nd;
 	struct chat_data *cd;
 
 	if( script_hasdata(st,2) )
-		nd=npc_name2id(script_getstr(st,2));
+		nd = npc_name2id(script_getstr(st, 2));
 	else
-		nd=(struct npc_data *)map_id2bl(st->oid);
+		nd = (struct npc_data *)map_id2bl(st->oid);
 
-	if(nd==NULL || (cd=(struct chat_data *)map_id2bl(nd->chat_id))==NULL )
-		return 0;
-	chat_disableevent(cd);
+	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL )
+		chat_disableevent(cd);
 	return 0;
 }
-/*==========================================
- * npcチャット状態所得
- *------------------------------------------
- */
+
+/// Returns info on the waiting room of the current or target npc.
+/// Returns -1 if the type unknown
+/// <type>=0 : current number of users
+/// <type>=1 : maximum number of users allowed
+/// <type>=2 : the number of users that trigger the event
+/// <type>=3 : if the trigger is disabled
+/// <type>=4 : the title of the waiting room
+/// <type>=5 : the password of the waiting room
+/// <type>=16 : the name of the waiting room event
+/// <type>=32 : if the waiting room is full
+/// <type>=33 : if there are enough users to trigger the event
+///
+/// getwaitingroomstate(<type>,"<npc_name>") -> <info>
+/// getwaitingroomstate(<type>) -> <info>
 BUILDIN_FUNC(getwaitingroomstate)
 {
 	struct npc_data *nd;
 	struct chat_data *cd;
-	int val=0,type;
-	type=script_getnum(st,2);
+	int val=0;
+	int type;
+
+	type = script_getnum(st,2);
 	if( script_hasdata(st,3) )
-		nd=npc_name2id(script_getstr(st,3));
+		nd = npc_name2id(script_getstr(st, 3));
 	else
-		nd=(struct npc_data *)map_id2bl(st->oid);
+		nd = (struct npc_data *)map_id2bl(st->oid);
 
-	if(nd==NULL || (cd=(struct chat_data *)map_id2bl(nd->chat_id))==NULL ){
-		script_pushint(st,-1);
+	if( nd == NULL || (cd=(struct chat_data *)map_id2bl(nd->chat_id)) == NULL )
+	{
+		script_pushint(st, -1);
 		return 0;
 	}
 
-	switch(type){
-	case 0: val=cd->users; break;
-	case 1: val=cd->limit; break;
-	case 2: val=cd->trigger&0x7f; break;
-	case 3: val=((cd->trigger&0x80)>0); break;
-	case 32: val=(cd->users >= cd->limit); break;
-	case 33: val=(cd->users >= cd->trigger); break;
-
-	case 4:
-		script_pushconststr(st,cd->title);
-		return 0;
-	case 5:
-		script_pushconststr(st,cd->pass);
-		return 0;
-	case 16:
-		script_pushconststr(st,cd->npc_event);
-		return 0;
+	switch(type)
+	{
+	case 0:  script_pushint(st, cd->users); break;
+	case 1:  script_pushint(st, cd->limit); break;
+	case 2:  script_pushint(st, cd->trigger&0x7f); break;
+	case 3:  script_pushint(st, ((cd->trigger&0x80)!=0)); break;
+	case 4:  script_pushconststr(st, cd->title); break;
+	case 5:  script_pushconststr(st, cd->pass); break;
+	case 16: script_pushconststr(st, cd->npc_event);break;
+	case 32: script_pushint(st, (cd->users >= cd->limit)); break;
+	case 33: script_pushint(st, (cd->users >= cd->trigger)); break;
+	default: script_pushint(st, -1); break;
 	}
-	script_pushint(st,val);
 	return 0;
 }
 
-/*==========================================
- * チャットメンバー(規定人数)ワープ
- *------------------------------------------
- */
+/// Warps the trigger or target amount of players to the target map and position.
+/// Players are automatically removed from the waiting room.
+/// Those waiting the longest will get warped first.
+/// The target map can be "Random" for a random position in the current map,
+/// and "SavePoint" for the savepoint map+position.
+/// The map flag noteleport of the current map is only considered when teleporting to the savepoint.
+///
+/// The id's of the teleported players are put into the array $@warpwaitingpc[]
+/// The total number of teleported players is put into $@warpwaitingpcnum
+///
+/// warpwaitingpc "<map name>",<x>,<y>,<number of players>;
+/// warpwaitingpc "<map name>",<x>,<y>;
 BUILDIN_FUNC(warpwaitingpc)
 {
-	int x,y,i,n;
-	const char *str;
-	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
-	struct chat_data *cd;
-	TBL_PC *sd;
+	int x;
+	int y;
+	int i;
+	int n;
+	const char* map_name;
+	struct npc_data* nd;
+	struct chat_data* cd;
+	TBL_PC* sd;
 
-	if(nd==NULL || (cd=(struct chat_data *)map_id2bl(nd->chat_id))==NULL )
+	nd = (struct npc_data *)map_id2bl(st->oid);
+	if( nd == NULL || (cd=(struct chat_data *)map_id2bl(nd->chat_id)) == NULL )
 		return 0;
 
-	n=cd->trigger&0x7f;
-	str=script_getstr(st,2);
-	x=script_getnum(st,3);
-	y=script_getnum(st,4);
+	map_name = script_getstr(st,2);
+	x = script_getnum(st,3);
+	y = script_getnum(st,4);
+	n = cd->trigger&0x7f;
 
 	if( script_hasdata(st,5) )
-		n=script_getnum(st,5);
+		n = script_getnum(st,5);
 
-	for(i=0;i<n;i++){
-		sd=cd->usersd[0];
-		if (!sd) continue; //Broken npc chat room?
-		
-		mapreg_setreg(add_str("$@warpwaitingpc")+(i<<24),sd->bl.id);
+	for( i = 0; i < n && cd->users > 0; i++ )
+	{
+		sd = cd->usersd[0];
+		if( sd != NULL )
+		{
+			ShowDebug("script:warpwaitingpc: no user in chat room position 0 (cd->users=%d,%d/%d)\n", cd->users, i, n);
+			mapreg_setreg(add_str("$@warpwaitingpc")+(i<<24), 0);
+			continue;// Broken npc chat room?
+		}
 
-		if(strcmp(str,"Random")==0)
+		mapreg_setreg(add_str("$@warpwaitingpc")+(i<<24), sd->bl.id);
+
+		if( strcmp(map_name,"Random") == 0 )
 			pc_randomwarp(sd,3);
-		else if(strcmp(str,"SavePoint")==0){
-			if(map[sd->bl.m].flag.noteleport)	// テレポ禁止
-				return 0;
+		else if( strcmp(map_name,"SavePoint") == 0 )
+		{
+			if( map[sd->bl.m].flag.noteleport )
+				return 0;// can't teleport on this map
 
 			pc_setpos(sd,sd->status.save_point.map,
-				sd->status.save_point.x,sd->status.save_point.y,3);
-		}else
-			pc_setpos(sd,mapindex_name2id(str),x,y,0);
+				sd->status.save_point.x, sd->status.save_point.y, 3);
+		}
+		else
+			pc_setpos(sd, mapindex_name2id(map_name), x, y, 0);
 	}
-	mapreg_setreg(add_str("$@warpwaitingpcnum"),n);
+	mapreg_setreg(add_str("$@warpwaitingpcnum"), i);
 	return 0;
 }
+
+/////////////////////////////////////////////////////////////////////
+// ...
+//
+
+/// TODO what is this suposed to do?
+///
+/// @author RoVeRT
+BUILDIN_FUNC(enablearena)
+{
+	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
+	struct chat_data *cd;
+
+
+	if(nd==NULL || (cd=(struct chat_data *)map_id2bl(nd->chat_id))==NULL)
+		return 0;
+
+	npc_enable(nd->name, 1);
+	nd->arenaflag = 1;
+
+	if( cd->users >= cd->trigger && cd->npc_event[0] )
+		npc_timer_event(cd->npc_event);
+
+	return 0;
+}
+
+/// TODO what is this suposed to do?
+///
+/// @author RoVeRT
+BUILDIN_FUNC(disablearena)
+{
+	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
+	nd->arenaflag=0;
+
+	return 0;
+}
+
+/////////////////////////////////////////////////////////////////////
+// ...
+//
+
 /*==========================================
  * RIDのアタッチ
  *------------------------------------------
