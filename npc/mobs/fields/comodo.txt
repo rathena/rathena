@@ -3,11 +3,12 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.2 Official kRO 10.1 spawns [Playtester]
+//= 1.3 More accurate spawns [Playtester]
 //============================================================
 
 //==================================================
@@ -45,12 +46,11 @@ cmd_fild02,0,0,0,0	monster	Galapago	1391,20,0,0,0
 //==================================================
 // cmd_fild03 - Zenhai Marsh
 //==================================================
-cmd_fild03,0,0,0,0	monster	Mutant Dragonoid	1262,1,3600000,1800000,1
+cmd_fild03,0,0,0,0	monster	Mutant Dragonoid	1262,1,0,0,1
 cmd_fild03,0,0,0,0	monster	Pest	1256,30,0,0,0
 cmd_fild03,0,0,0,0	monster	Poporing	1031,10,0,0,0
-cmd_fild03,0,0,0,0	monster	Anolian	1206,60,0,0,0
+cmd_fild03,0,0,0,0	monster	Anolian	1206,90,0,0,0
 cmd_fild03,0,0,0,0	monster	Toad	1089,1,3600000,1800000,1
-cmd_fild03,0,0,0,0	monster	Rotar Zairo	1392,30,0,0,0
 cmd_fild03,356,232,3,3	monster	Shining Plant	1083,1,1800000,900000,1
 cmd_fild03,262,289,3,3	monster	Shining Plant	1083,1,1800000,900000,1
 cmd_fild03,145,191,3,3	monster	Shining Plant	1083,1,1800000,900000,1
@@ -68,11 +68,11 @@ cmd_fild04,221,120,120,40	monster	Sea Otter	1323,20,0,0,0
 //==================================================
 // cmd_fild05 - Border of Papuchica Forest
 //==================================================
-cmd_fild05,0,0,0,0	monster	Frilldora	1119,15,0,0,0
-cmd_fild05,0,0,0,0	monster	Anolian	1206,20,0,0,0
-cmd_fild05,0,0,0,0	monster	Stem Worm	1215,30,0,0,0
+cmd_fild05,0,0,0,0	monster	Frilldora	1119,45,0,0,0
+cmd_fild05,0,0,0,0	monster	Alligator	1271,20,0,0,0
+cmd_fild05,0,0,0,0	monster	Stem Worm	1215,5,0,0,0
 cmd_fild05,0,0,0,0	monster	Poporing	1031,10,0,0,0
-cmd_fild05,0,0,0,0	monster	Pest	1256,20,0,0,0
+cmd_fild05,0,0,0,0	monster	Pest	1256,5,0,0,0
 cmd_fild05,63,158,10,10	monster	Shining Plant	1083,1,1800000,900000,1
 cmd_fild05,318,277,10,10	monster	Yellow Plant	1081,3,1800000,900000,1
 cmd_fild05,282,49,20,20	monster	Yellow Plant	1081,3,1800000,900000,1
@@ -81,15 +81,23 @@ cmd_fild05,0,0,0,0	monster	Green Plant	1080,5,1800000,900000,1
 //==================================================
 // cmd_fild06 - Fortress Saint Darmain (West)
 //==================================================
-cmd_fild06,357,299,80,70	monster	Kobold Archer	1282,5,0,0,0
-cmd_fild06,318,146,120,80	monster	Kobold Archer	1282,7,0,0,0
+cmd_fild06,0,0,0,0	monster	Kobold Archer	1282,5,0,0,0
+cmd_fild06,0,0,0,0	monster	Kobold Archer	1282,5,300000,0,0
+cmd_fild06,357,299,80,70	monster	Kobold Archer	1282,2,0,0,0
+cmd_fild06,357,299,80,70	monster	Kobold Archer	1282,2,120000,0,0
+cmd_fild06,318,146,120,80	monster	Kobold Archer	1282,4,0,0,0
+cmd_fild06,318,146,120,80	monster	Kobold Archer	1282,4,120000,0,0
 cmd_fild06,244,113,0,0	monster	Kobold Archer	1282,1,180000,0,0
 cmd_fild06,290,164,0,0	monster	Kobold Archer	1282,1,190000,0,0
 cmd_fild06,284,197,0,0	monster	Kobold Archer	1282,1,180000,0,0
 cmd_fild06,286,289,0,0	monster	Kobold Archer	1282,1,180000,0,0
 cmd_fild06,314,267,0,0	monster	Kobold Archer	1282,1,180000,0,0
-cmd_fild06,355,294,80,70	monster	Goblin Archer	1258,7,0,0,0
-cmd_fild06,307,97,70,200	monster	Goblin Archer	1258,7,0,0,0
+cmd_fild06,0,0,0,0	monster	Goblin Archer	1258,10,0,0,0
+cmd_fild06,0,0,0,0	monster	Goblin Archer	1258,10,30000,0,0
+cmd_fild06,355,294,80,70	monster	Goblin Archer	1258,3,0,0,0
+cmd_fild06,355,294,80,70	monster	Goblin Archer	1258,3,120000,0,0
+cmd_fild06,307,97,70,200	monster	Goblin Archer	1258,4,0,0,0
+cmd_fild06,307,97,70,200	monster	Goblin Archer	1258,4,120000,0,0
 cmd_fild06,100,265,10,40	monster	Goblin Archer	1258,3,130000,0,0
 cmd_fild06,244,110,0,0	monster	Goblin Archer	1258,1,180000,0,0
 cmd_fild06,292,169,0,0	monster	Goblin Archer	1258,1,180000,0,0
@@ -101,11 +109,6 @@ cmd_fild06,284,186,0,0	monster	Goblin Archer	1258,1,180000,0,0
 cmd_fild06,354,342,0,0	monster	Goblin Archer	1258,1,180000,0,0
 cmd_fild06,365,342,0,0	monster	Goblin Archer	1258,1,180000,0,0
 cmd_fild06,340,334,0,0	monster	Goblin Archer	1258,1,180000,0,0
-cmd_fild06,305,95,70,180	monster	Stem Worm	1215,30,0,0,0
-cmd_fild06,102,268,10,40	monster	Stem Worm	1215,3,0,0,0
-cmd_fild06,359,156,30,50	monster	Stem Worm	1215,1,0,0,0
-cmd_fild06,360,155,30,50	monster	Stem Worm	1215,1,0,0,0
-cmd_fild06,357,298,80,70	monster	Stem Worm	1215,20,0,0,0
 cmd_fild06,0,0,0,0	monster	Drops	1113,20,0,0,0
 cmd_fild06,0,0,0,0	monster	Harpy	1376,1,1500000,1000000,0
 cmd_fild06,293,235,5,5	monster	Yellow Plant	1081,2,1800000,900000,1
@@ -191,7 +194,7 @@ cmd_fild08,130,201,10,10	monster	Yellow Plant	1081,4,1800000,900000,1
 //==================================================
 cmd_fild09,0,0,0,0	monster	Steel Chonchon	1042,20,0,0,0
 cmd_fild09,0,0,0,0	monster	Drops	1113,20,0,0,0
-cmd_fild09,0,0,0,0	monster	Anacondaq	1030,20,0,0,0
-cmd_fild09,0,0,0,0	monster	Condor	1009,60,0,0,0
+cmd_fild09,0,0,0,0	monster	Anacondaq	1030,60,0,0,0
+cmd_fild09,0,0,0,0	monster	Condor	1009,20,0,0,0
 cmd_fild09,142,325,40,50	monster	Hode	1127,3,150000,0,0
 cmd_fild09,140,323,40,50	monster	Gargoyle	1253,2,150000,0,0

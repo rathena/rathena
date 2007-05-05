@@ -3,21 +3,22 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.1 Official kRO 10.1 spawns [Playtester]
-//= 1.2 Some 11.1 and 11.2 spawn changes [Playtester]
+//= 1.2 Some 11.1 spawn changes [Playtester]
+//= 1.3 More accurate spawns [Playtester]
 //============================================================
 
 //==================================================
 // pay_fild01 - Payon Forest
 //==================================================
-pay_fild01,0,0,0,0	monster	Willow	1010,50,0,0,0
+pay_fild01,0,0,0,0	monster	Willow	1010,10,0,0,0
 pay_fild01,0,0,0,0	monster	Poporing	1031,10,0,0,0
-pay_fild01,0,0,0,0	monster	Poring	1002,60,0,0,0
-pay_fild01,0,0,0,0	monster	Spore	1014,20,0,0,0
+pay_fild01,0,0,0,0	monster	Poring	1002,10,0,0,0
+pay_fild01,0,0,0,0	monster	Spore	1014,100,0,0,0
 pay_fild01,340,89,0,0	monster	Black Mushroom	1084,1,180000,90000,1
 pay_fild01,336,116,0,0	monster	Black Mushroom	1084,1,180000,90000,1
 pay_fild01,231,258,0,0	monster	Black Mushroom	1084,1,180000,90000,1
@@ -81,7 +82,7 @@ pay_fild05,86,90,5,5	monster	Green Plant	1080,4,900000,450000,1
 //==================================================
 // pay_fild06 - Payon Forest
 //==================================================
-pay_fild06,0,0,0,0	monster	Wormtail	1024,70,0,0,0
+pay_fild06,0,0,0,0	monster	Wormtail	1024,90,0,0,0
 pay_fild06,0,0,0,0	monster	Spore	1014,20,0,0,0
 pay_fild06,0,0,0,0	monster	Poporing	1031,20,0,0,0
 pay_fild06,0,0,0,0	monster	Thief Bug Female	1053,40,0,0,0
@@ -112,13 +113,9 @@ pay_fild08,143,156,40,40	monster	Shining Plant	1083,1,3600000,1800000,1
 //==================================================
 // pay_fild09 - Payon Forest
 //==================================================
-pay_fild09,0,0,0,0	monster	Spore	1014,20,0,0,0
-pay_fild09,0,0,0,0	monster	Wormtail	1024,20,0,0,0
 pay_fild09,0,0,0,0	monster	Poporing	1031,20,0,0,0
-pay_fild09,0,0,0,0	monster	Boa	1025,30,0,0,0
-pay_fild09,0,0,0,0	monster	Sohee	1170,3,0,0,0
-pay_fild09,0,0,0,0	monster	Smokie	1056,50,0,0,0
-pay_fild09,0,0,0,0	monster	Bigfoot	1060,50,0,0,0
+pay_fild09,0,0,0,0	monster	Smokie	1056,80,0,0,0
+pay_fild09,0,0,0,0	monster	Bigfoot	1060,70,0,0,0
 pay_fild09,198,217,30,30	monster	Green Plant	1080,10,360000,180000,0
 pay_fild09,198,217,30,30	monster	Shining Plant	1083,1,1800000,900000,1
 
@@ -126,10 +123,9 @@ pay_fild09,198,217,30,30	monster	Shining Plant	1083,1,1800000,900000,1
 // pay_fild10 - Payon Forest
 //==================================================
 pay_fild10,0,0,0,0	monster	Greatest General	1277,65,0,0,0
-pay_fild10,0,0,0,0	monster	Dokebi	1110,40,0,0,0
+pay_fild10,0,0,0,0	monster	Dokebi	1110,70,0,0,0
 pay_fild10,0,0,0,0	monster	Poison Spore	1077,20,0,0,0
-pay_fild10,0,0,0,0	monster	Poporing	1031,30,0,0,0
-pay_fild10,0,0,0,0	monster	Nine Tail	1180,3,0,0,0
+pay_fild10,0,0,0,0	monster	Nine Tail	1180,2,0,0,0
 pay_fild10,0,0,0,0	monster	Nine Tail	1180,1,1800000,900000,1
 pay_fild10,0,0,0,0	monster	Nine Tail	1180,1,900000,450000,1
 pay_fild10,213,157,10,10	monster	Green Plant	1080,5,360000,180000,1
@@ -142,10 +138,9 @@ pay_fild10,66,332,10,10	monster	Blue Plant	1079,1,360000,180000,1
 //==================================================
 // pay_fild11 - Payon Forest
 //==================================================
-pay_fild11,0,0,0,0	monster	Nine Tail	1180,50,0,0,0
 pay_fild11,0,0,0,0	monster	Greatest General	1277,30,0,0,0
-pay_fild11,0,0,0,0	monster	Dragon Tail	1321,30,0,0,0
-pay_fild11,0,0,0,0	monster	Poporing	1031,20,0,0,0
+pay_fild11,0,0,0,0	monster	Nine Tail	1180,60,180000,0,0
+pay_fild11,0,0,0,0	monster	Dragon Tail	1321,50,180000,0,0
 pay_fild11,0,0,0,0	monster	Eddga	1115,1,7200000,3600000,1
 pay_fild11,241,162,5,5	monster	Red Mushroom	1085,3,360000,180000,1
 pay_fild11,66,293,5,5	monster	Red Mushroom	1085,3,360000,180000,1

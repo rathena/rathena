@@ -3,13 +3,13 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.1 replaced Hydra -> G_Hydra (to fix drops exploit) [Lupus]
 //= 1.2 Official kRO 10.1 spawns [Playtester]
-//= Note: Please don't change spawns without official info
+//= 1.3 Small update [Playtester]
 //============================================================
 
 //==================================================
@@ -33,11 +33,6 @@ ama_fild01,169,314,0,0	monster	Hydra	1068,1,63000,31500,0
 ama_fild01,171,313,0,0	monster	Hydra	1068,1,66000,33000,0
 ama_fild01,173,313,0,0	monster	Hydra	1068,1,60000,30000,0
 ama_fild01,175,313,0,0	monster	Hydra	1068,1,66000,33000,0
-ama_fild01,175,312,0,0	monster	Hydra	1068,1,63000,31500,0
-ama_fild01,173,312,0,0	monster	Hydra	1068,1,60000,30000,0
-ama_fild01,171,312,0,0	monster	Hydra	1068,1,63000,31500,0
-ama_fild01,174,311,0,0	monster	Hydra	1068,1,63000,31500,0
-ama_fild01,172,311,0,0	monster	Hydra	1068,1,69000,36000,0
 ama_fild01,173,310,0,0	monster	Hydra	1068,1,60000,30000,0
 ama_fild01,0,0,0,0	monster	Kapha	1406,20,60000,30000,0
 ama_fild01,174,306,20,20	monster	Kapha	1406,10,300000,150000,0

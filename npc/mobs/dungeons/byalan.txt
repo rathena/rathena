@@ -3,11 +3,12 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.1 Official kRO 10.1 spawns for 1-4 [Playtester]
+//= 1.2 More accurate spawns [Playtester]
 //============================================================
 
 //==================================================
@@ -38,7 +39,7 @@ iz_dun02,0,0,0,0	monster	Hydra	1068,40,0,0,0
 iz_dun02,0,0,0,0	monster	Cornutus	1067,60,0,0,0
 iz_dun02,0,0,0,0	monster	Marse	1144,40,0,0,0
 iz_dun02,0,0,0,0	monster	Obeaune	1044,40,0,0,0
-iz_dun02,0,0,0,0	monster	Merman	1264,1,0,0,0
+iz_dun02,0,0,0,0	monster	Merman	1264,1,1800000,1200000,0
 iz_dun02,0,0,0,0	monster	Black Mushroom	1084,15,180000,90000,1
 
 //==================================================
@@ -79,15 +80,15 @@ iz_dun03,180,251,0,0	monster	Hydra	1068,1,300000,150000,0
 iz_dun03,178,253,0,0	monster	Hydra	1068,1,300000,150000,0
 iz_dun03,108,249,0,0	monster	Hydra	1068,1,300000,150000,0
 iz_dun03,80,163,0,0	monster	Hydra	1068,1,300000,150000,0
-iz_dun03,0,0,0,0	monster	Merman	1264,3,0,0,0
+iz_dun03,0,0,0,0	monster	Merman	1264,3,1800000,1200000,0
 
 //==================================================
 // iz_dun04 - Undersea Tunnel F5
 //==================================================
-iz_dun04,0,0,0,0	monster	Marine Sphere	1142,10,0,0,0
+iz_dun04,0,0,0,0	monster	Marine Sphere	1142,30,0,0,0
 iz_dun04,0,0,0,0	monster	Swordfish	1069,10,0,0,0
-iz_dun04,0,0,0,0	monster	Merman	1264,50,0,0,0
-iz_dun04,0,0,0,0	monster	Strouf	1065,50,0,0,0
+iz_dun04,0,0,0,0	monster	Merman	1264,40,0,0,0
+iz_dun04,0,0,0,0	monster	Strouf	1065,50,600000,300000,1
 iz_dun04,58,135,0,0	monster	Hydra	1068,1,305000,150000,0
 iz_dun04,61,135,0,0	monster	Hydra	1068,1,300000,150000,0
 iz_dun04,42,129,0,0	monster	Hydra	1068,1,312000,150000,0
@@ -106,4 +107,8 @@ iz_dun04,111,35,0,0	monster	Hydra	1068,1,300000,150000,0
 iz_dun04,69,243,0,0	monster	Hydra	1068,1,321000,150000,0
 iz_dun04,124,233,0,0	monster	Hydra	1068,1,300000,150000,0
 iz_dun04,134,233,0,0	monster	Hydra	1068,1,305000,150000,0
-iz_dun04,95,147,0,0	monster	Deviace	1108,3,600000,300000,0
+iz_dun04,0,0,0,0	monster	Deviace	1108,3,0,0,0
+iz_dun04,103,231,10,10	monster	Merman	1264,3,150000,0,0
+iz_dun04,160,231,10,10	monster	Merman	1264,3,170000,0,0
+iz_dun04,95,147,10,10	monster	Merman	1264,3,150000,0,0
+iz_dun04,130,216,15,15	monster	Merman	1264,3,160000,0,0

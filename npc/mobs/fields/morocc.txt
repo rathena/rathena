@@ -3,11 +3,12 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.1 Official kRO 10.1 spawns [Playtester]
+//= 1.2 More accurate spawns [Playtester]
 //============================================================
 
 //==================================================
@@ -81,21 +82,15 @@ moc_fild05,0,0,0,0	monster	Magnolia	1138,30,0,0,0
 moc_fild05,0,0,0,0	monster	Metaller	1058,20,0,0,0
 moc_fild05,0,0,0,0	monster	Golem	1040,70,0,0,0
 moc_fild05,0,0,0,0	monster	Ant Egg	1097,10,0,0,0
-moc_fild05,0,0,0,0	monster	Andre	1095,10,0,0,0
-moc_fild05,0,0,0,0	monster	Deniro	1105,10,0,0,0
-moc_fild05,0,0,0,0	monster	Piere	1160,10,0,0,0
 moc_fild05,208,233,10,10	monster	Yellow Plant	1081,5,360000,180000,1
 
 //==================================================
 // moc_fild06 - Sograt Desert
 //==================================================
-moc_fild06,0,0,0,0	monster	Peco Peco	1019,70,0,0,0
+moc_fild06,0,0,0,0	monster	Peco Peco	1019,85,0,0,0
 moc_fild06,0,0,0,0	monster	Muka	1055,30,0,0,0
 moc_fild06,0,0,0,0	monster	Condor	1009,50,0,0,0
 moc_fild06,0,0,0,0	monster	Magnolia	1138,10,0,0,0
-moc_fild06,0,0,0,0	monster	Andre	1095,5,0,0,0
-moc_fild06,0,0,0,0	monster	Deniro	1105,5,0,0,0
-moc_fild06,0,0,0,0	monster	Piere	1160,5,0,0,0
 moc_fild06,0,0,0,0	monster	Ant Egg	1097,10,0,0,0
 moc_fild06,193,203,10,10	monster	Yellow Plant	1081,10,900000,450000,1
 
@@ -174,9 +169,9 @@ moc_fild12,181,336,40,20	monster	Yellow Plant	1081,10,180000,90000,1
 // moc_fild13 - Sograt Desert
 //==================================================
 moc_fild13,0,0,0,0	monster	Desert Wolf	1106,30,0,0,0
-moc_fild13,0,0,0,0	monster	Anacondaq	1030,70,0,0,0
-moc_fild13,0,0,0,0	monster	Boa	1025,25,0,0,0
-moc_fild13,0,0,0,0	monster	Side Winder	1037,35,0,0,0
+moc_fild13,0,0,0,0	monster	Anacondaq	1030,75,0,0,0
+moc_fild13,0,0,0,0	monster	Boa	1025,30,0,0,0
+moc_fild13,0,0,0,0	monster	Side Winder	1037,5,0,0,0
 moc_fild13,0,0,0,0	monster	Poporing	1031,20,0,0,0
 moc_fild13,0,0,0,0	monster	Drops	1113,10,0,0,0
 moc_fild13,280,99,0,0	monster	Red Mushroom	1085,1,180000,90000,1
@@ -252,16 +247,12 @@ moc_fild16,0,0,0,0	monster	Ant Egg	1097,10,0,0,0
 //==================================================
 // moc_fild17 - Sograt Desert
 //==================================================
-moc_fild17,0,0,0,0	monster	Hode	1127,50,0,0,0
-moc_fild17,0,0,0,0	monster	Steel Chonchon	1042,40,0,0,0
+moc_fild17,0,0,0,0	monster	Hode	1127,100,0,0,0
+moc_fild17,0,0,0,0	monster	Steel Chonchon	1042,30,0,0,0
 moc_fild17,0,0,0,0	monster	Magnolia	1138,15,0,0,0
-moc_fild17,0,0,0,0	monster	Frilldora	1119,15,0,0,0
-moc_fild17,0,0,0,0	monster	Andre	1095,10,0,0,0
-moc_fild17,0,0,0,0	monster	Deniro	1105,20,0,0,0
-moc_fild17,0,0,0,0	monster	Piere	1160,20,0,0,0
+moc_fild17,0,0,0,0	monster	Frilldora	1119,25,0,0,0
 moc_fild17,0,0,0,0	monster	Ant Egg	1097,10,0,0,0
 moc_fild17,0,0,0,0	monster	Scorpion	1001,5,0,0,0
-moc_fild17,0,0,0,0	monster	Sandman	1165,5,0,0,0
 moc_fild17,40,258,0,0	monster	Yellow Plant	1081,1,180000,90000,1
 moc_fild17,144,151,0,0	monster	Yellow Plant	1081,1,180000,90000,1
 moc_fild17,243,138,0,0	monster	Yellow Plant	1081,1,180000,90000,1
@@ -277,10 +268,6 @@ moc_fild18,0,0,0,0	monster	Steel Chonchon	1042,70,0,0,0
 moc_fild18,0,0,0,0	monster	Chonchon	1011,40,0,0,0
 moc_fild18,0,0,0,0	monster	Muka	1055,40,0,0,0
 moc_fild18,0,0,0,0	monster	Metaller	1058,10,0,0,0
-moc_fild18,0,0,0,0	monster	Magnolia	1138,25,0,0,0
-moc_fild18,0,0,0,0	monster	Andre	1095,5,0,0,0
-moc_fild18,0,0,0,0	monster	Deniro	1105,5,0,0,0
-moc_fild18,0,0,0,0	monster	Piere	1160,5,0,0,0
 moc_fild18,0,0,0,0	monster	Ant Egg	1097,5,0,0,0
 moc_fild18,0,0,0,0	monster	Dragon Fly	1091,1,3600000,1800000,1
 moc_fild18,0,0,0,0	monster	Hunter Fly	1035,1,7200000,3600000,1

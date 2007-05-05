@@ -3,11 +3,12 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.1 Official kRO 10.1 spawns [Playtester]
+//= 1.2 More accurate spawns [Playtester]
 //============================================================
 
 //==================================================
@@ -22,17 +23,17 @@ moc_pryd01,0,0,0,0	monster	Poporing	1031,20,0,0,0
 moc_pryd02,0,0,0,0	monster	Poporing	1031,20,0,0,0
 moc_pryd02,0,0,0,0	monster	Drainliar	1111,20,0,0,0
 moc_pryd02,0,0,0,0	monster	Mummy	1041,30,0,0,0
-moc_pryd02,0,0,0,0	monster	Isis	1029,25,0,0,0
-moc_pryd02,0,0,0,0	monster	Soldier Skeleton	1028,20,0,0,0
-moc_pryd02,0,0,0,0	monster	Archer Skeleton	1016,20,0,0,0
+moc_pryd02,0,0,0,0	monster	Isis	1029,5,0,0,0
+moc_pryd02,0,0,0,0	monster	Soldier Skeleton	1028,30,0,0,0
+moc_pryd02,0,0,0,0	monster	Archer Skeleton	1016,30,0,0,0
 
 //==================================================
 // moc_pryd03 - Inside Pyramid F3
 //==================================================
-moc_pryd03,0,0,0,0	monster	Drainliar	1111,15,0,0,0
-moc_pryd03,0,0,0,0	monster	Mimic	1191,10,0,0,0
-moc_pryd03,0,0,0,0	monster	Matyr	1146,15,0,0,0
-moc_pryd03,0,0,0,0	monster	Mummy	1041,45,0,0,0
+moc_pryd03,0,0,0,0	monster	Drainliar	1111,5,0,0,0
+moc_pryd03,0,0,0,0	monster	Mimic	1191,5,0,0,0
+moc_pryd03,0,0,0,0	monster	Matyr	1146,10,0,0,0
+moc_pryd03,0,0,0,0	monster	Mummy	1041,70,0,0,0
 moc_pryd03,0,0,0,0	monster	Verit	1032,20,600000,300000,1
 
 //==================================================
