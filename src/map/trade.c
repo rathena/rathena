@@ -54,7 +54,7 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 	}
 
 	if ((target_sd->trade_partner != 0) || (sd->trade_partner != 0)) {
-		clif_tradestart(sd, 2); //  person is in another trade
+		clif_tradestart(sd, 2); // person is in another trade
 		return;
 	}
 

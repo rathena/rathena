@@ -258,14 +258,14 @@ enum {
 	SC_CHANGE,
 	SC_BLOODLUST,
 	SC_FLEET,
-	SC_SPEED,	//[orn]
-	SC_DEFENCE,	//[orn]
+	SC_SPEED,
+	SC_DEFENCE,
 	SC_INCAGIRATE,
 	SC_INCDEXRATE,
 	SC_JAILED,
 	SC_ENCHANTARMS,	//250
 	SC_MAGICALATTACK,
-	SC_MAX, //Automatically updated max, used in for's and at startup to check we are within bounds. [Skotlex]
+	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 int SkillStatusChangeTable(int skill);
 extern int StatusSkillChangeTable[SC_MAX];
@@ -314,8 +314,8 @@ enum {
 	//38: Again Aspd Potion
 	//39: Again Aspd Potion
 	//40: Again Aspd Potion
-	SI_SPEEDPOTION1	= 41,
-	SI_SPEEDPOTION2	= 42,
+	SI_SPEEDPOTION1		= 41,
+	SI_SPEEDPOTION2		= 42,
 	SI_STRIPWEAPON		= 50,
 	SI_STRIPSHIELD		= 51,
 	SI_STRIPARMOR		= 52,
@@ -336,7 +336,7 @@ enum {
 	SI_WATERWEAPON		= 91,
 	SI_WINDWEAPON		= 92,
 	SI_EARTHWEAPON		= 93,
-	SI_UNDEAD			= 97,
+	SI_UNDEAD		= 97,
 // 102 = again gloria - from what I saw on screenshots, I wonder if it isn't gospel... [DracoRPG]
 	SI_AURABLADE		= 103,
 	SI_PARRYING		= 104,
@@ -344,7 +344,7 @@ enum {
 	SI_TENSIONRELAX		= 106,
 	SI_BERSERK		= 107,
 	SI_ASSUMPTIO		= 110,
-	SI_LANDENDOW	= 112,
+	SI_LANDENDOW		= 112,
 	SI_MAGICPOWER		= 113,
 	SI_EDP			= 114,
 	SI_TRUESIGHT		= 115,
@@ -359,7 +359,7 @@ enum {
 	SI_BLEEDING		= 124,
 	SI_JOINTBEAT		= 125,
 	SI_BABY			= 130,
-	SI_AUTOBERSERK	= 132,
+	SI_AUTOBERSERK		= 132,
 	SI_RUN			= 133,
 	SI_BUMP			= 134,
 	SI_READYSTORM		= 135,
@@ -368,7 +368,7 @@ enum {
 	SI_READYCOUNTER		= 141,
 	SI_DODGE		= 143,
 	//SI_RUN		= 144,  //is not RUN. need info on what this is.
-	SI_SPURT			= 145,
+	SI_SPURT		= 145,
 	SI_SHADOWWEAPON		= 146,
 	SI_ADRENALINE2		= 147,
 	SI_GHOSTWEAPON		= 148,
@@ -378,7 +378,7 @@ enum {
 	SI_KAIZEL		= 156,
 	SI_KAAHI		= 157,
 	SI_KAUPE		= 158,
-	SI_SMA		= 159,
+	SI_SMA			= 159,
 	SI_NIGHT		= 160,
 	SI_ONEHAND		= 161,
 	SI_WARM			= 165,	
@@ -388,8 +388,8 @@ enum {
 	SI_MOON_COMFORT		= 170,	
 	SI_STAR_COMFORT		= 171,	
 	SI_PRESERVE		= 181,
-	SI_INCSTR	= 182,
-	SI_INTRAVISION	= 184,
+	SI_INCSTR		= 182,
+	SI_INTRAVISION		= 184,
 	SI_DOUBLECAST		= 186,
 	SI_MAXOVERTHRUST	= 188,
 	SI_TAROT		= 191, // the icon allows no doubt... but what is it really used for ?? [DracoRPG]
@@ -401,20 +401,20 @@ enum {
 	SI_MADNESSCANCEL	= 203,	//[blackhole89]
 	SI_GATLINGFEVER		= 204,
 	SI_TKREST = 205, // 205 = Gloria again (but TK- Happy State looks like it)
-	SI_UTSUSEMI			= 206,
+	SI_UTSUSEMI		= 206,
 	SI_BUNSINJYUTSU		= 207,
-	SI_NEN				= 208,
+	SI_NEN			= 208,
 	SI_ADJUSTMENT		= 209,
-	SI_ACCURACY			= 210,
-	SI_FOODSTR			= 241,
-	SI_FOODAGI			= 242,
-	SI_FOODVIT			= 243,
-	SI_FOODDEX			= 244,
-	SI_FOODINT			= 245,
-	SI_FOODLUK			= 246,
-	SI_FOODFLEE			= 247,
-	SI_FOODHIT			= 248,
-	SI_FOODCRI			= 249,
+	SI_ACCURACY		= 210,
+	SI_FOODSTR		= 241,
+	SI_FOODAGI		= 242,
+	SI_FOODVIT		= 243,
+	SI_FOODDEX		= 244,
+	SI_FOODINT		= 245,
+	SI_FOODLUK		= 246,
+	SI_FOODFLEE		= 247,
+	SI_FOODHIT		= 248,
+	SI_FOODCRI		= 249,
 };
 
 // JOINTBEAT stackable ailments

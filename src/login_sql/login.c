@@ -513,7 +513,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 	char t_uid[256];
 	char user_password[256], password[256];
 	long connect_until;
-	int encpasswdok = 0, state;
+	int state;
 
 	char ip[16];
 	uint32 ipl = session[fd]->client_addr;

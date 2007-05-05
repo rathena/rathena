@@ -2930,7 +2930,6 @@ static int npc_read_event_script_sub(DBKey key,void *data,va_list ap)
 void npc_read_event_script(void)
 {
 	int i;
-	unsigned char buf[64]="::";
 	struct {
 		char *name;
 		char *event_name;
@@ -2946,15 +2945,14 @@ void npc_read_event_script(void)
 	};
 
 	for (i = 0; i < NPCE_MAX; i++) {
-		if (script_event[i].nd)
-			script_event[i].nd = NULL;
-		if (script_event[i].event_count)
-			script_event[i].event_count = 0;
+		script_event[i].nd = NULL;
+		script_event[i].event_count = 0;
 		if (!script_config.event_script_type) {
 			//Use a single NPC as event source.
 			script_event[i].nd = npc_name2id(config[i].event_name);
 		} else {
 			//Use an array of Events
+			char buf[64]="::";
 			strncpy(buf+2,config[i].event_name,62);
 			ev_db->foreach(ev_db,npc_read_event_script_sub,buf,
 				&script_event[i].event,

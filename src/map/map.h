@@ -1271,12 +1271,6 @@ extern char db_path[256];
 int map_getcell(int,int,int,cell_t);
 int map_getcellp(struct map_data*,int,int,cell_t);
 void map_setcell(int,int,int,int);
-extern int map_read_flag; // 0: grf«Υ«΅«¤«E1: «­«γ«Γ«·«E2: «­«γ«Γ«·«E?υκ)
-enum {
-	READ_FROM_GAT, READ_FROM_AFM,
-	READ_FROM_BITMAP, CREATE_BITMAP,
-	READ_FROM_BITMAP_COMPRESSED, CREATE_BITMAP_COMPRESSED
-};
 
 extern char motd_txt[];
 extern char help_txt[];
@@ -1355,11 +1349,6 @@ struct map_session_data * map_nick2sd(const char*);
 int map_check_dir(int s_dir,int t_dir);
 int map_calc_dir( struct block_list *src,int x,int y);
 int map_random_dir(struct block_list *bl, short *x, short *y); // [Skotlex]
-
-// Water functions...
-// 
-int map_setwaterheight(int m, char *mapname, int height);
-int map_waterheight(char *mapname);
 
 // path.c‚ζ‚θ
 int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int flag,cell_t flag2);

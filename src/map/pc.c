@@ -2966,7 +2966,7 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	//Butterfly Wing (can't use noreturn flag is on)
 	if(nameid == 602 && map[sd->bl.m].flag.noreturn)
 		return 0;
-	//Dead Branch & Red Pouch & Bloody Branch & Porings Box (can't use at GVG and when nobranch flag is on)
+	//Dead Branch & Red Pouch & Bloody Branch & Poring Box (can't use at GVG and when nobranch flag is on)
 	if((nameid == 604 || nameid == 12024 || nameid == 12103 || nameid == 12109) && (map[sd->bl.m].flag.nobranch || map_flag_gvg(sd->bl.m)))
 		return 0;
 
