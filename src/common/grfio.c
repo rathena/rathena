@@ -713,7 +713,7 @@ static void grfio_resourcecheck(void)
 					FILELIST fentry;
 					memcpy(&fentry, entry, sizeof(FILELIST));
 					strncpy(fentry.fn, src, sizeof(fentry.fn) - 1);
-					fentry.fnd = strdup(dst);
+					fentry.fnd = aStrdup(dst);
 					filelist_modify(&fentry);
 					i++;
 				}
@@ -741,7 +741,7 @@ static void grfio_resourcecheck(void)
 					FILELIST fentry;
 					memcpy(&fentry, entry, sizeof(FILELIST));
 					strncpy(fentry.fn, src, sizeof(fentry.fn) - 1);
-					fentry.fnd = strdup(dst);
+					fentry.fnd = aStrdup(dst);
 					filelist_modify(&fentry);
 					i++;
 				}
@@ -768,7 +768,7 @@ static int grfio_add(char* fname)
 		memset(gentry_table + (gentry_maxentry - GENTRY_ADDS), 0, sizeof(char*) * GENTRY_ADDS);
 	}
 
-	gentry_table[gentry_entrys++] = strdup(fname);
+	gentry_table[gentry_entrys++] = aStrdup(fname);
 
 	return grfio_entryread(fname, gentry_entrys - 1);
 }
