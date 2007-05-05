@@ -2872,7 +2872,7 @@
 12218,Level_5_Assumptio_Scroll,Level_5_Assumptio_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 361,5; },{},{}
 12219,Level_10_Wind_Walk_Scroll,Level_10_Wind_Walk_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 383,10; },{},{}
 12220,Level_5_Adrenaline_Rush_Scroll,Level_5_Adrenaline_Rush_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 111,5; },{},{}
-12221,Megaphone_,Megaphone,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,"{ input @Megaphone$; announce strcharinfo(0) + " shouts '" + @megaphone$ + "'",bc_all,0xFF0000; end; },{},{}
+12221,Megaphone_,Megaphone,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ input @Megaphone$; announce strcharinfo(0) + " shouts '" + @megaphone$ + "'",bc_all,0xFF0000; end; },{},{}
 //Valentine's Day Event (2007)
 12234,Cacao99,Fierce Cacao 99%,0,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 25,0; },{},{}
 12235,Strawberry_Choco,Strawberry Chocolate,11,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,5; itemskill 34,5; },{},{}
@@ -3076,4 +3076,4 @@
 14524,Superb_Fish_Slice,Superb_Fish_Slice,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,100; },{},{}
 14525,Chewy_Ricecake,Chewy_Ricecake,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,180000,10; },{},{}
 14526,Oriental_Pastry,Oriental_Pastry,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,180000,10; },{},{}
-14527,Dungeon_Teleport_Scroll,Dungeon_Teleport_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{}{}{}
+14527,Dungeon_Teleport_Scroll,Dungeon_Teleport_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

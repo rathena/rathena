@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+05/06
+	* Fixed some syntax errors in the item_db and updated sql files [Playtester]
 05/04
 	* Added up-to-date monster summoning files thanks to Vicious_Pucca [Playtester]
 	* Small update on Magmaring [Playtester]
