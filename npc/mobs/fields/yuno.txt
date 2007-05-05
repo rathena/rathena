@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.8
+//= 1.9
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -19,6 +19,7 @@
 //= 1.6 Fixed Yuno Field 10. Mob amount sugested by Playtester [Poki#3]
 //= 1.7 Updated by using Tharis' Homun AI, by Tharis [Vicious]
 //= 1.8 Added kRO 10.1 spawns where they fit [Playtester]
+//= 1.9 More accurate spawns [Playtester]
 //============================================================
 
 //==================================================
@@ -40,13 +41,13 @@ yuno_fild01,0,0,0,0	monster	Green Plant	1080,20,1800000,900000,1
 //==================================================
 // yuno_fild02 - Kiel Khayr's Cottage
 //==================================================
-yuno_fild02,0,0,0,0	monster	Horn 	1128,40,0,0,0
-yuno_fild02,0,0,0,0	monster	Beetle King	1494,35,0,0,0
+yuno_fild02,0,0,0,0	monster	Beetle King	1494,40,0,0,0
+yuno_fild02,0,0,0,0	monster	Horn	1128,40,0,0,0
 yuno_fild02,0,0,0,0	monster	Dustiness	1114,20,0,0,0
 yuno_fild02,0,0,0,0	monster	Hunter Fly	1035,10,0,0,0
-yuno_fild02,0,0,0,0	monster	Petite	1155,10,0,0,0
-yuno_fild02,200,350,200,50	monster	Deleter	1384,10,0,0,0
-yuno_fild02,0,0,0,0	monster	Wild Rose	1261,5,0,0,0
+yuno_fild02,92,200,43,52	monster	Wild Rose	1261,5,0,0,0
+yuno_fild02,185,310,170,37	monster	Novus	1715,2,1200000,600000,0
+yuno_fild02,298,194,55,158	monster	Novus	1718,2,1200000,600000,0
 yuno_fild02,0,0,0,0	monster	Red Plant	1078,10,1800000,900000,1
 yuno_fild02,0,0,0,0	monster	Yellow Plant	1081,10,1800000,900000,1
 yuno_fild02,0,0,0,0	monster	Green Plant	1080,10,1800000,900000,1
@@ -99,7 +100,7 @@ yuno_fild05,300,280,5,5	monster	Blue Plant	1079,2,180000,90000,1
 //==================================================
 yuno_fild06,0,0,0,0	monster	Sleeper	1386,70,0,0,0
 yuno_fild06,0,0,0,0	monster	Goat	1372,40,0,0,0
-yuno_fild06,0,0,0,0	monster	Demon Pungus	1378,30,0,0,0
+yuno_fild06,0,0,0,0	monster	Demon Pungus	1378,20,120000,0,0
 yuno_fild06,0,0,0,0	monster	Red Plant	1078,10,0,0,0
 yuno_fild06,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
 yuno_fild06,0,0,0,0	monster	Green Plant	1080,10,0,0,0
@@ -110,7 +111,7 @@ yuno_fild06,0,0,0,0	monster	Green Plant	1080,10,0,0,0
 yuno_fild07,0,0,0,0	monster	Goat	1372,10,0,0,0
 yuno_fild07,0,0,0,0	monster	Geographer	1368,20,0,0,0
 yuno_fild07,0,0,0,0	monster	Driller	1380,10,0,0,0
-yuno_fild07,0,0,0,0	monster	Harpy	1376,40,1800000,900000,0
+yuno_fild07,0,0,0,0	monster	Harpy	1376,40,600000,300000,0
 yuno_fild07,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
 yuno_fild07,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
 yuno_fild07,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
@@ -135,8 +136,8 @@ yuno_fild08,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
 //==================================================
 // yuno_fild09 - Schwarzwald Guards Camp
 //==================================================
-yuno_fild09,0,0,0,0	monster	Horn 	1128,40,0,0,0
-yuno_fild09,0,0,0,0	monster	Beetle King 	1494,30,0,0,0
+yuno_fild09,0,0,0,0	monster	Beetle King	1494,40,0,0,0
+yuno_fild09,0,0,0,0	monster	Horn	1128,40,0,0,0
 yuno_fild09,0,0,0,0	monster	Stainer	1174,20,0,0,0
 yuno_fild09,0,0,0,0	monster	Dustiness	1114,20,0,0,0
 yuno_fild09,0,0,0,0	monster	Hunter Fly	1035,10,0,0,0
@@ -157,11 +158,11 @@ yuno_fild10,0,0,0,0	monster	Hunter Fly	1035,10,0,0,0
 //==================================================
 // yuno_fild11 - Yuno Field
 //==================================================
-yuno_fild11,0,0,0,0	monster	Sleeper	1386,10,0,0,0
-yuno_fild11,0,0,0,0	monster	Geographer	1368,3,0,0,0
-yuno_fild11,65,294,70,160	monster	Sleeper	1386,5,0,0,0
+yuno_fild11,0,0,0,0	monster	Demon Pungus	1378,10,120000,0,0
+yuno_fild11,0,0,0,0	monster	Geographer	1368,15,0,0,0
+yuno_fild11,65,294,70,160	monster	Sleeper	1386,3,0,0,0
 yuno_fild11,65,294,70,160	monster	Geographer	1368,2,0,0,0
-yuno_fild11,225,220,125,135	monster	Sleeper	1386,35,0,0,0
+yuno_fild11,225,220,125,135	monster	Sleeper	1386,30,0,0,0
 yuno_fild11,225,220,125,135	monster	Geographer	1368,15,0,0,0
 yuno_fild11,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
 yuno_fild11,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
@@ -171,6 +172,6 @@ yuno_fild11,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
 // yuno_fild12 - Border Checkpoint
 //==================================================
 yuno_fild12,0,0,0,0	monster	Dustiness	1114,30,0,0,0
-yuno_fild12,0,0,0,0	monster	Demon Pungus	1378,30,0,0,0
+yuno_fild12,0,0,0,0	monster	Demon Pungus	1378,20,0,0,0
 yuno_fild12,0,0,0,0	monster	Poporing	1031,15,0,0,0
 yuno_fild12,0,0,0,0	monster	Geographer	1368,5,0,0,0

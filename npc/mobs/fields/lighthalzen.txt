@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Muad_Dib (1.0)
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -13,13 +13,14 @@
 //=	the information [MasterOfMuppets]
 //= 1.3 Updated acordingly to Episode 10.4 [Poki#3]
 //= 1.4 Fully updated X.4 spawns [Playtester]
+//= 1.5 More accurate spawns [Playtester]
 //============================================================
 
 //==================================================
 // lhz_fild01 - Lighthalzen Field
 //==================================================
-lhz_fild01,0,0,0,0	monster	Metaling	1613,60,0,0,0
-lhz_fild01,0,0,0,0	monster	Holden	1628,60,0,0,0
+lhz_fild01,0,0,0,0	monster	Metaling	1613,70,0,0,0
+lhz_fild01,0,0,0,0	monster	Holden	1628,30,0,0,0
 lhz_fild01,0,0,0,0	monster	Caramel	1103,20,0,0,0
 lhz_fild01,0,0,0,0	monster	Red Plant	1078,10,60000,30000,0
 lhz_fild01,0,0,0,0	monster	Yellow Plant	1081,10,60000,30000,0
@@ -32,16 +33,15 @@ lhz_fild02,0,0,0,0	monster	Metaling	1613,50,0,0,0
 lhz_fild02,0,0,0,0	monster	Caramel	1103,30,0,0,0
 lhz_fild02,0,0,0,0	monster	Horn	1128,10,0,0,0
 lhz_fild02,0,0,0,0	monster	Holden	1628,10,0,0,0
-lhz_fild02,0,0,0,0	monster	Anopheles	1627,15,0,0,0
+lhz_fild02,0,0,0,0	monster	Anopheles	1627,10,0,0,0
 lhz_fild02,0,0,0,0	monster	Yellow Plant	1081,15,60000,30000,0
 lhz_fild02,0,0,0,0	monster	Green Plant	1080,15,60000,30000,0
 
 //==================================================
 // lhz_fild03 - Lighthalzen Field
 //==================================================
-lhz_fild03,262,233,74,140	monster	Stem Worm	1215,50,0,0,0
+lhz_fild03,262,233,74,140	monster	Stem Worm	1215,50,600000,0,0
 lhz_fild03,262,233,74,140	monster	Metaling	1613,20,0,0,0
-lhz_fild03,262,233,74,140	monster	Hill Wind	1680,2,0,0,1
 lhz_fild03,127,248,45,140	monster	Caramel	1103,20,0,0,0
 lhz_fild03,127,248,45,140	monster	Horn	1128,10,0,0,0
 lhz_fild03,127,248,45,140	monster	Rafflesia	1162,5,0,0,0

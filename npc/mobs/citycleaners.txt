@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= massdriller
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -12,7 +12,7 @@
 //= 0.1a Added a few more towns to spawn Wild rose [MasterOfMuppets]
 //= 0.1b And even more from Poki#3 [Komurka]
 //= 1.0 Removed unofficial city cleaners [Playtester]
-//= 1.0 Added other city spawns [Playtester]
+//= 1.1 Added other city spawns [Playtester]
 //============================================================
 
 prontera,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
@@ -31,8 +31,8 @@ gonryun,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
 //==================================================
 // einbech - Einbech, The Mining Village
 //==================================================
-einbech,0,0,0,0	monster	Tarou	1175,5,1800000,1500000,0
 einbech,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0
+einbech,0,0,0,0	monster	Tarou	1175,5,1800000,1500000,0
 
 //==================================================
 // payon_in02 - Inside Payon

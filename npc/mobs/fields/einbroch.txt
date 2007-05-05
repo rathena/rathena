@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -19,20 +19,28 @@
 //=	Thanks to Playtester and Emperium.org
 //= 1.4 Updated by using Tharis' Homun AI, by Tharis [Vicious]
 //= 1.5 Adjusted some spawns according to official info [Playtester]
+//= 1.6 More accurate spawns [Playtester]
 //============================================================
 
 //==================================================
 // ein_fild01 - Einbroch Field
 //==================================================
-ein_fild01,0,0,0,0	monster	Demon Pungus	1378,50,0,0,0
-ein_fild01,0,0,0,0	monster	Punk	1199,50,0,0,0
+ein_fild01,115,190,80,150	monster	Demon Pungus	1378,30,0,0,0
+ein_fild01,264,318,70,60	monster	Demon Pungus	1378,20,0,0,0
+ein_fild01,232,100,25,60	monster	Demon Pungus	1378,5,300000,60000,0
+ein_fild01,115,190,80,150	monster	Punk	1199,25,0,0,0
+ein_fild01,264,318,70,60	monster	Punk	1199,20,0,0,0
+ein_fild01,232,100,25,60	monster	Punk	1199,5,300000,60000,0
 
 //==================================================
 // ein_fild02 - Einbroch Field
 //==================================================
-ein_fild02,0,0,0,0	monster	Driller	1380,40,0,0,0
-ein_fild02,0,0,0,0	monster	Demon Pungus	1378,25,0,0,0
-ein_fild02,0,0,0,0	monster	Ungoliant	1618,1,86400000,86000000,0
+ein_fild02,105,250,70,80	monster	Driller	1380,10,0,0,0
+ein_fild02,259,269,90,70	monster	Driller	1380,15,0,0,0
+ein_fild02,287,117,55,70	monster	Driller	1380,10,0,0,0
+ein_fild02,108,88,60,60	monster	Driller	1380,10,0,0,0
+ein_fild02,0,0,0,0	monster	Demon Pungus	1378,30,0,0,0
+ein_fild02,0,0,0,0	monster	Ungoliant	1618,1,75600000,75000000,0
 
 //==================================================
 // ein_fild03 - Einbroch Field
@@ -50,12 +58,12 @@ ein_fild03,0,0,0,0	monster	Green Plant	1080,15,60000,30000,0
 //==================================================
 // ein_fild04 - Einbroch Field
 //==================================================
-ein_fild04,0,0,0,0	monster	Geographer	1368,15,0,0,0
-ein_fild04,0,0,0,0	monster	Holden	1628,5,0,0,0
-ein_fild04,200,295,125,65	monster	Geographer	1368,45,0,0,0
-ein_fild04,125,135,40,40	monster	Geographer	1368,5,0,0,0
-ein_fild04,260,70,20,30	monster	Geographer	1368,5,0,0,0
 ein_fild04,0,0,0,0	monster	Metaling	1613,50,0,0,0
+ein_fild04,0,0,0,0	monster	Geographer	1368,30,60000,30000,0
+ein_fild04,0,0,0,0	monster	Holden	1628,5,0,0,0
+ein_fild04,200,295,125,65	monster	Geographer	1368,40,60000,30000,0
+ein_fild04,125,135,40,40	monster	Geographer	1368,5,60000,30000,0
+ein_fild04,260,70,20,30	monster	Geographer	1368,5,60000,30000,0
 ein_fild04,285,240,35,90	monster	Giearth	1121,10,3600000,3000000,0
 ein_fild04,106,284,60,60	monster	Holden	1628,15,0,0,0
 ein_fild04,106,284,60,60	monster	Mineral	1614,5,3600000,3000000,0
@@ -66,8 +74,12 @@ ein_fild04,0,0,0,0	monster	Green Plant	1080,10,60000,30000,0
 //==================================================
 // ein_fild05 - Einbroch Field
 //==================================================
-ein_fild05,0,0,0,0	monster	Mineral	1614,35,0,0,0
-ein_fild05,0,0,0,0	monster	Obsidian	1615,20,0,0,0
+ein_fild05,205,300,50,50	monster	Mineral	1614,10,600000,360000,0
+ein_fild05,299,189,55,55	monster	Mineral	1614,15,600000,360000,0
+ein_fild05,145,195,30,50	monster	Mineral	1614,10,600000,360000,0
+ein_fild05,205,300,50,50	monster	Obsidian	1615,5,420000,360000,0
+ein_fild05,299,189,55,55	monster	Obsidian	1615,7,420000,360000,0
+ein_fild05,145,195,30,50	monster	Obsidian	1615,5,420000,360000,0
 ein_fild05,0,0,0,0	monster	Anopheles	1627,30,0,0,0
 ein_fild05,0,0,0,0	monster	Demon Pungus	1378,20,0,0,0
 ein_fild05,0,0,0,0	monster	Geographer	1368,10,0,0,0
@@ -76,12 +88,12 @@ ein_fild05,0,0,0,0	monster	Geographer	1368,10,0,0,0
 // ein_fild06 - Einbroch Field
 //==================================================
 ein_fild06,0,0,0,0	monster	Goat	1372,55,0,0,0
-ein_fild06,0,0,0,0	monster	Pupa	1008,15,0,0,0
+ein_fild06,0,0,0,0	monster	Pupa	1008,10,0,0,0
+ein_fild06,0,0,0,0	monster	Harpy	1376,5,1800000,1200000,0
 ein_fild06,0,0,0,0	monster	Giearth	1121,2,3600000,3000000,0
 ein_fild06,0,0,0,0	monster	Red Plant	1078,10,120000,60000,0
 ein_fild06,0,0,0,0	monster	Yellow Plant	1081,10,120000,60000,0
-ein_fild06,0,0,0,0	monster	Black Mushroom	1084,10,120000,60000,0
-ein_fild06,0,0,0,0	monster	Harpy	1376,5,0,0,0
+ein_fild06,0,0,0,0	monster	Black Mushroom	1084,5,120000,60000,0
 
 //==================================================
 // ein_fild07 - Einbroch Field
@@ -125,11 +137,11 @@ ein_fild09,260,85,50,20	monster	Flora	1118,5,300000,120000,0
 // ein_fild10 - Einbroch Field
 //==================================================
 ein_fild10,0,0,0,0	monster	Geographer	1368,5,0,0,0
-ein_fild10,0,0,0,0	monster	Porcellio	1619,10,0,0,1
-ein_fild10,152,314,130,30	monster	Porcellio	1619,20,0,0,1
+ein_fild10,0,0,0,0	monster	Porcellio	1619,20,0,0,1
+ein_fild10,152,314,130,30	monster	Porcellio	1619,10,0,0,1
 ein_fild10,0,0,0,0	monster	Red Plant	1078,20,120000,60000,0
 ein_fild10,0,0,0,0	monster	Yellow Plant	1081,20,120000,60000,0
-ein_fild10,0,0,0,0	monster	Blue Plant	1079,20,120000,60000,0
+ein_fild10,0,0,0,0	monster	Blue Plant	1079,20,600000,300000,0
 ein_fild10,225,95,30,45	monster	Yoyo	1057,6,30000,10000,0
 ein_fild10,320,130,40,40	monster	Yoyo	1057,4,30000,10000,0
 ein_fild10,225,95,30,45	monster	Flora	1118,10,300000,120000,0
