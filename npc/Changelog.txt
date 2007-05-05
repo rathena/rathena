@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/05/06
+	* Updated Food Seller to official [Playtester]
 	* Small Veins field spawn and warp adjustments [Playtester]
 	* Revised 1/3 of the cities scripts. Thanks to CAHTEXNIK [Lupus]
 2007/05/05
