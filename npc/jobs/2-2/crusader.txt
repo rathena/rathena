@@ -36,7 +36,6 @@
 
 
 //=============== Senior Crusader: 1º Collect Items Test============================
-
 prt_castle,45,169,3	script	Senior Crusader	752,5,5 {
 	if (Upper == 1) {
 		mes "[Michele Cantonyon]";
@@ -316,7 +315,7 @@ prt_castle,45,169,3	script	Senior Crusader	752,5,5 {
 }
 
 //===================== Suffering Man: 2º Endure Test ===============================================
-prt_castle,164,32,0	script	Suffering Man	733,5,5{
+prt_castle,164,32,7	script	Suffering Man	733,5,5{
 	if(Class != Job_Swordman) {
 		if (Class == Job_Crusader) {
 			mes "[Murnak Myjol]";
@@ -468,7 +467,7 @@ prt_castle,164,32,0	script	Suffering Man	733,5,5{
 }
 
 //===================== Catholic Knight: 3º Knoledge Test ====================================
-prt_church,95,127,0	script	Catholic Knight	745,{
+prt_church,95,127,3	script	Catholic Knight	745,{
 	if(Class != Job_Swordman) {
 		if(Class == Job_Crusader) {
 			mes "[Gabriel Valentine]";
@@ -898,7 +897,6 @@ C_Questions:
 }
 
 //===================== Crusader: 4º Purification Test =====================================================
-// Crusader - prt_castle 35 151
 prt_castle,35,151,7	script	Crusader#1	751,{
 	if(Class != Job_Swordman) {
 		if(Class == Job_Crusader) {
