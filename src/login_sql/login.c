@@ -809,7 +809,7 @@ int parse_fromchar(int fd)
 				if (sql_res) {
 					sql_row = mysql_fetch_row(sql_res);
 					connect_until_time = atol(sql_row[1]);
-					strcpy(email, sql_row[0]);
+					strncpy(email, sql_row[0], 40); email[39] = 0;
 					mysql_free_result(sql_res);
 				}
 				WFIFOW(fd,0) = 0x2713;
