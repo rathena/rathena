@@ -15,7 +15,7 @@
 // treasure01 - Sunken Ship F1
 //==================================================
 treasure01,0,0,0,0	monster	Kukre	1070,20,0,0,1
-treasure01,0,0,0,0	monster	Whisper	1179,7,0,0,1
+treasure01,0,0,0,0	monster	Whisper	1179,5,0,0,1
 treasure01,0,0,0,0	monster	Whisper	1179,5,120000,60000,1
 treasure01,107,39,15,15	monster	Poison Spore	1077,3,180000,90000,1
 treasure01,107,39,15,15	monster	Hydra	1068,1,180000,90000,1
@@ -23,7 +23,7 @@ treasure01,29,38,15,15	monster	Poison Spore	1077,3,180000,90000,1
 treasure01,68,66,13,11	monster	Hydra	1068,4,180000,90000,1
 treasure01,34,112,17,11	monster	Pirate Skeleton	1071,5,180000,90000,1
 treasure01,106,111,9,9	monster	Pirate Skeleton	1071,5,180000,90000,1
-treasure01,106,111,9,9	monster	Thara Frog	1034,5,180000,90000,1
+treasure01,106,111,9,9	monster	Pirate Skeleton	1071,5,180000,90000,1
 treasure01,67,161,0,0	monster	Hydra	1068,1,263000,100000,1
 treasure01,67,160,0,0	monster	Hydra	1068,1,293000,100000,1
 treasure01,68,161,0,0	monster	Hydra	1068,1,317000,100000,1

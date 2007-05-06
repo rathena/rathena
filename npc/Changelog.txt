@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/05/07
+	* Various spawn fixes here and there [Playtester]
 	* Revised 2/3 of the cities scripts. Thanks to CAHTEHHuK [Lupus]
 	- Fixed wrong usage (not a bug, but stil bad) | -> ||
 	* Fixed a bug in Hugel field spawns [Playtester]

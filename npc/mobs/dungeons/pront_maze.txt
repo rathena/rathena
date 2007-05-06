@@ -45,11 +45,6 @@ prt_maze01,19,180,21,21	monster	Savage	1166,3,120000,40000,1
 prt_maze01,19,180,21,21	monster	Savage	1166,5,120000,40000,1
 prt_maze01,0,0,0,0	monster	Hunter Fly	1035,1,0,0,0
 prt_maze01,0,0,0,0	monster	Vagabond Wolf	1092,1,3600000,1800000,0
-prt_maze01,0,0,0,0	monster	Shining Plant	1083,5,1800000,900000,1
-prt_maze01,0,0,0,0	monster	Red Plant	1078,5,180000,90000,1
-prt_maze01,0,0,0,0	monster	Blue Plant	1079,5,180000,90000,1
-prt_maze01,0,0,0,0	monster	Black Mushroom	1084,5,180000,90000,1
-prt_maze01,0,0,0,0	monster	Red Mushroom	1085,5,180000,90000,1
 prt_maze01,101,138,5,5	monster	Shining Plant	1083,1,1800000,900000,1
 prt_maze01,101,138,5,5	monster	White Plant	1082,1,1800000,900000,1
 prt_maze01,99,181,5,5	monster	White Plant	1082,2,1800000,900000,1
@@ -90,11 +85,6 @@ prt_maze03,170,170,70,70	monster	Eclipse	1093,1,1920000,150000,1
 prt_maze03,23,23,70,70	monster	Mastering	1090,1,1920000,150000,1
 prt_maze03,100,100,80,80	monster	Baphomet Jr.	1101,25,0,0,0
 prt_maze03,0,0,0,0	monster	Baphomet	1039,1,7200000,3600000,1
-prt_maze03,0,0,0,0	monster	Shining Plant	1083,5,1800000,900000,1
-prt_maze03,0,0,0,0	monster	Red Plant	1078,5,180000,90000,1
-prt_maze03,0,0,0,0	monster	Blue Plant	1079,5,180000,90000,1
-prt_maze03,0,0,0,0	monster	Black Mushroom	1084,5,180000,90000,1
-prt_maze03,0,0,0,0	monster	Red Mushroom	1085,5,180000,90000,1
 prt_maze03,61,98,10,10	monster	Shining Plant	1083,1,1800000,900000,1
 prt_maze03,61,98,10,10	monster	Blue Plant	1079,1,1800000,900000,1
 prt_maze03,61,98,10,10	monster	Yellow Plant	1081,1,1800000,900000,1

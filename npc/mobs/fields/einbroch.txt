@@ -81,7 +81,7 @@ ein_fild05,205,300,50,50	monster	Obsidian	1615,5,420000,360000,0
 ein_fild05,299,189,55,55	monster	Obsidian	1615,7,420000,360000,0
 ein_fild05,145,195,30,50	monster	Obsidian	1615,5,420000,360000,0
 ein_fild05,0,0,0,0	monster	Anopheles	1627,30,0,0,0
-ein_fild05,0,0,0,0	monster	Demon Pungus	1378,20,0,0,0
+ein_fild05,0,0,0,0	monster	Demon Pungus	1378,10,0,0,0
 ein_fild05,0,0,0,0	monster	Geographer	1368,10,0,0,0
 
 //==================================================

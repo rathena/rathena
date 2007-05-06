@@ -146,18 +146,18 @@ cmd_fild08,175,367,0,0	monster	Kobold Archer	1282,1,190000,0,0
 cmd_fild08,53,248,0,0	monster	Kobold Archer	1282,1,190000,0,0
 cmd_fild08,52,238,0,0	monster	Kobold Archer	1282,1,190000,0,0
 cmd_fild08,272,175,40,2	monster	Kobold Archer	1282,2,60000,0,0
-cmd_fild08,190,115,100,80	monster	Gargoyle	1253,10,0,0,0
-cmd_fild08,130,192,110,150	monster	Gargoyle	1253,7,0,0,0
-cmd_fild08,72,131,40,100	monster	Gargoyle	1253,8,0,0,0
-cmd_fild08,319,177,0,0	monster	Gargoyle	1253,1,180000,0,0
-cmd_fild08,319,172,0,0	monster	Gargoyle	1253,1,180000,0,0
-cmd_fild08,139,71,0,0	monster	Gargoyle	1253,1,180000,0,0
-cmd_fild08,136,64,0,0	monster	Gargoyle	1253,1,180000,0,0
-cmd_fild08,67,80,0,0	monster	Gargoyle	1253,1,180000,0,0
-cmd_fild08,132,149,0,0	monster	Gargoyle	1253,1,180000,0,0
-cmd_fild08,97,144,0,0	monster	Gargoyle	1253,1,180000,0,0
-cmd_fild08,79,140,0,0	monster	Gargoyle	1253,1,180000,0,0
-cmd_fild08,28,102,0,0	monster	Gargoyle	1253,1,180000,0,0
+cmd_fild08,190,115,100,80	monster	Kobold Archer	1282,10,0,0,0
+cmd_fild08,130,192,110,150	monster	Kobold Archer	1282,7,0,0,0
+cmd_fild08,72,131,40,100	monster	Kobold Archer	1282,8,0,0,0
+cmd_fild08,319,177,0,0	monster	Kobold Archer	1282,1,180000,0,0
+cmd_fild08,319,172,0,0	monster	Kobold Archer	1282,1,180000,0,0
+cmd_fild08,139,71,0,0	monster	Kobold Archer	1282,1,180000,0,0
+cmd_fild08,136,64,0,0	monster	Kobold Archer	1282,1,180000,0,0
+cmd_fild08,67,80,0,0	monster	Kobold Archer	1282,1,180000,0,0
+cmd_fild08,132,149,0,0	monster	Kobold Archer	1282,1,180000,0,0
+cmd_fild08,97,144,0,0	monster	Kobold Archer	1282,1,180000,0,0
+cmd_fild08,79,140,0,0	monster	Kobold Archer	1282,1,180000,0,0
+cmd_fild08,28,102,0,0	monster	Kobold Archer	1282,1,180000,0,0
 cmd_fild08,80,348,60,40	monster	Goblin Archer	1258,5,0,0,0
 cmd_fild08,130,192,110,150	monster	Goblin Archer	1258,5,0,0,0
 cmd_fild08,194,291,25,40	monster	Goblin Archer	1258,5,0,0,0

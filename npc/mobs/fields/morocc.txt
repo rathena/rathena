@@ -266,7 +266,7 @@ moc_fild17,359,258,0,0	monster	Yellow Plant	1081,1,180000,90000,1
 //==================================================
 moc_fild18,0,0,0,0	monster	Steel Chonchon	1042,70,0,0,0
 moc_fild18,0,0,0,0	monster	Chonchon	1011,40,0,0,0
-moc_fild18,0,0,0,0	monster	Muka	1055,40,0,0,0
+moc_fild18,0,0,0,0	monster	Muka	1055,80,0,0,0
 moc_fild18,0,0,0,0	monster	Metaller	1058,10,0,0,0
 moc_fild18,0,0,0,0	monster	Ant Egg	1097,5,0,0,0
 moc_fild18,0,0,0,0	monster	Dragon Fly	1091,1,3600000,1800000,1

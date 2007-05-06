@@ -60,7 +60,7 @@ yuno_fild03,0,0,0,0	monster	Drops	1113,40,0,0,0
 yuno_fild03,0,0,0,0	monster	Poring	1002,30,0,0,0
 yuno_fild03,0,0,0,0	monster	Marin	1242,20,0,0,0
 yuno_fild03,0,0,0,0	monster	Geographer	1368,15,0,0,0
-yuno_fild03,62,131,44,15	monster	Side Winder	1037,1,0,0,0
+yuno_fild03,62,131,44,15	monster	Side Winder	1037,1,300000,240000,0
 yuno_fild03,0,0,0,0	monster	Angeling	1096,1,3600000,1800000,1
 yuno_fild03,0,0,0,0	monster	Deviling	1582,1,3600000,1800000,1
 yuno_fild03,0,0,0,0	monster	Red Plant	1078,15,1800000,900000,1

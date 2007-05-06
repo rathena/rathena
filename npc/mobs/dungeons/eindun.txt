@@ -19,10 +19,10 @@
 // ein_dun01 - Mine Dungeon F1
 //==================================================
 ein_dun01,0,0,0,0	monster	Pitman	1616,70,0,0,0
-ein_dun01,0,0,0,0	monster	Noxious	1620,30,0,0,0
+ein_dun01,0,0,0,0	monster	Noxious	1620,30,300000,0,0
 ein_dun01,0,0,0,0	monster	Porcellio	1619,30,0,0,0
-ein_dun01,0,0,0,0	monster	Venomous	1621,20,0,0,0
-ein_dun01,0,0,0,0	monster	Old Stove	1617,5,120000,600000,0
+ein_dun01,0,0,0,0	monster	Venomous	1621,10,300000,0,0
+ein_dun01,0,0,0,0	monster	Old Stove	1617,1,1800000,600000,0
 ein_dun01,0,0,0,0	monster	Ungoliant	1618,1,3600000,3000000,0
 
 //==================================================
