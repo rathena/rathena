@@ -97,7 +97,7 @@ hu_fild05,286,144,82,90	monster	Novus	1715,2,0,0,0
 hu_fild05,286,144,82,90	monster	Novus	1718,2,0,0,0
 hu_fild05,286,144,82,90	monster	Anopheles	1627,10,0,0,0
 hu_fild05,286,144,82,90	monster	Mutant Dragonoid	1262,1,24000000,1800000,0
-hu_fild05,286,144,82,90	monster	Grove	1687,15,0,0,0
+hu_fild05,118,106,80,70	monster	Grove	1687,15,0,0,0
 hu_fild05,118,106,80,70	monster	Novus	1715,2,0,0,0
 hu_fild05,118,106,80,70	monster	Novus	1718,1,0,0,0
 hu_fild05,118,106,80,70	monster	Anopheles	1627,10,0,0,0

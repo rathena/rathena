@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/05/07
+	* Fixed a bug in Hugel field spawns [Playtester]
 	* Rev. 10487 Kiel Hyre bug squashage. 
 	- Lots of fixes (4ish) from Valandi. [L0ne_W0lf]
 	- Added a getmapuser check to the mapwarp in KHTimerEnd so it's not trying to warp out 0 users. [L0ne_W0lf]
