@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -39,6 +39,8 @@
 //= 2.1 Fifth door now checks for a variable HIGHER or EQUAL to 74 not 84, as pointed out by Stollen. [L0ne_W0lf]
 //= 2.2 Another fix for elly, no longer RESETS to 26 when you tak to her. [L0ne_W0lf]
 //= 2.3 Should NOT have been setting .KHQuestBusy at all. It's not used or accessed anymore. Removed. [L0ne_W0lf]
+//= 2.4 Lots of fixes (4ish) from Valandi. [L0ne_W0lf]
+//=	Added a getmapuser check to the mapwarp in KHTimerEnd so it's not trying to warp out 0 users. [L0ne_W0lf]
 //
 //============================================================ 
 
@@ -6694,6 +6696,7 @@ OnTimer30000:
 	stopnpctimer;
 	misceffect 215;
 	disablenpc "Big_Door_5_Warp";
+	set getvariableofnpc(.KHDoor5Opened,"Big Door#BigDoorKHQ5"),0;
 	end;
 
 OnInit:
@@ -7187,7 +7190,7 @@ kh_kiehl02,50,52,4	script	Kiehl#Original	902,{
 		end;
 	}
 
-OnTimer18050:
+OnTimer180050:
 	stopnpctimer;
 	mapwarp "kh_kiehl02","lighthalzen",193,202;
 	donpcevent "KiehlRoom::OnReset";
@@ -7243,7 +7246,10 @@ OnKiehlDead:
 	end;
 	
 OnKHTimerEnd:
-	mapwarp "kh_kiehl02","lighthalzen",193,202;
+	set $@KH_DoorInvoker$,"";
+	if (getmapusers("kh_kiehl02") > 0) {
+		mapwarp "kh_kiehl02","lighthalzen",193,202;
+	}
 	donpcevent "KiehlRoom::OnReset";
 	end;
 

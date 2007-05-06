@@ -1,5 +1,9 @@
 Date		Added
 ======
+2007/05/07
+	* Rev. 10487 Kiel Hyre bug squashage. 
+	- Lots of fixes (4ish) from Valandi. [L0ne_W0lf]
+	- Added a getmapuser check to the mapwarp in KHTimerEnd so it's not trying to warp out 0 users. [L0ne_W0lf]
 2007/05/06
 	* More "fixes" tot he Kiel Hyre quest, .KHQuestBusy was being set but was unused. No longer set. [L0ne_W0lf]
 	* Fixed some bugs in Einbech and Geffen spawns [Playtester]
