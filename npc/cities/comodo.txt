@@ -146,7 +146,6 @@ cmd_in02,178,86,4	script	Stonae	98,{
 
 //=============================================================
 cmd_in02,174,126,4	script	Loyar	83,{
-	set @TEMP,0;
 	mes "[Loyar]";
 	mes "The Comodo Casino has a very pleasing decor... It's quite clean and simple!";
 	mes "The atmosphere is perfect and makes you really want to play more!";
@@ -167,7 +166,6 @@ cmd_in02,174,126,4	script	Loyar	83,{
 
 //=============================================================
 cmd_in02,73,81,4	script	Martine	48,{
-	set @temp, 2;
 	mes "[Martine]";
 	mes "Gambling? Oh no, it's NOT gambling! Don't say that the Comodo 'CASINO' houses gambling.....";
 	emotion e_gasp;
@@ -267,9 +265,8 @@ cmd_fild07,192,58,4	script	Light House Guard#01	100,{
 	mes "^3355FF`lighthouses'^000000";
 	mes "Do you wish to learn more about these lighthouses?";
 	next;
-	menu "Learn more about these Lighthouses..",M0,"Cancel",MEnd;
+	menu "Learn more about these Lighthouses..",-,"Cancel",M_End;
 
-	M0:
 		mes "[Rahasu]";
 		mes "As you probably have noticed, there are two huge lighthouses located in this area.";
 		mes "Both of these lighthouses were used to signal nearby fortresses of incoming invasions many years ago.";
@@ -278,7 +275,7 @@ cmd_fild07,192,58,4	script	Light House Guard#01	100,{
 		mes "Too bad tourists can not enter these lighthouses yet, because they are still under heavy restrictions.";
 		mes "There are many, many beautiful paintings inside.";
 		close;
-	MEnd:
+	M_End:
 		mes "[Rahasu]";
 		mes "That's too bad, hope you could find some time to learn more about these ancient structures.";
 		close;
@@ -301,14 +298,13 @@ cmd_fild07,299,83,4	script	Sailor#01	100,{
 	mes "[Zain]";
 	mes "Hello my friend, where do you wish to go?";
 	next;
-	menu "Alberta = 600 Zeny",M0,"Izlude = 800 Zeny",M1,"Cancel",MEnd;
+	menu "Alberta = 600 Zeny",-,"Izlude = 800 Zeny",M_1,"Cancel",M_End;
 
-	M0:
 		if(Zeny < 600) goto NoZeny;
 		set Zeny, Zeny - 600;
 		warp "alberta",192,169;
 		close;
-	M1:
+	M_1:
 		if(Zeny < 800) goto NoZeny;
 		set Zeny, Zeny - 800;
 		warp "izlude",176,182;
@@ -318,7 +314,7 @@ cmd_fild07,299,83,4	script	Sailor#01	100,{
 			mes "[Zain]";
 			mes "Umm, you do not have enough zeny.";
 			close;
-	MEnd:
+	M_End:
 		mes "[Zain]";
 		mes "Thank you, come again";
 		close;
@@ -329,14 +325,13 @@ cmd_fild07,94,134,4	script	Sailor#02	100,{
 	mes "[Sarumane]";
 	mes "Hello my friend, where do you wish to go?";
 	next;
-	menu "Alberta = 600 Zeny",M0,"Izlude = 800 Zeny",M1,"Cancel",MEnd;
+	menu "Alberta = 600 Zeny",-,"Izlude = 800 Zeny",M_1,"Cancel",M_End;
 
-	M0:
 		if(Zeny < 600) goto NoZeny;
 		set Zeny, Zeny - 600;
 		warp "alberta",192,169;
 		close;
-	M1:
+	M_1:
 		if(Zeny < 800) goto NoZeny;
 		set Zeny, Zeny - 800;
 		warp "izlude",176,182;
@@ -346,7 +341,7 @@ cmd_fild07,94,134,4	script	Sailor#02	100,{
 			mes "[Sarumane]";
 			mes "Umm, you do not have enough zeny.";
 			close;
-	MEnd:
+	M_End:
 		mes "[Sarumane]";
 		mes "Thank you, come again.";
 		close;
@@ -396,15 +391,14 @@ moc_fild12,35,303,4	script	Saint Darmain Gatekeeper	59,{
 	mes "Good day, my name is Sertutero and I am the Gatekeeper for the road to Saint Darmain.";
 	mes "Do wish to proceed to Saint Darmain?";
 	next;
-	menu "Proceed to Saint Darmain",M0,"Learn more about Saint Darmain",M1,"Cancel",MEnd;
+	menu "Proceed to Saint Darmain",-,"Learn more about Saint Darmain",M_1,"Cancel",M_End;
 	
-	M0:
 		mes "[Serutero]";
 		mes "Good luck out there, things could get rough, so be extra careful.";
 		mes ". . . . .";
 		warp "cmd_fild08",331,319;
 		close;
-	M1:
+	M_1:
 		mes "[Serutero]";
 		mes "Long time ago, due to many waves of invasion by monsters in Saint Darmain, many defensive structures were constructed to keep the peace.";
 		mes "And slowly, Saint Darmain became a natural fortress.";
@@ -417,7 +411,7 @@ moc_fild12,35,303,4	script	Saint Darmain Gatekeeper	59,{
 		mes "[Serutero]";
 		mes "If you are looking for the lighthouse, proceed in the direction of south-west.";
 		close;
-	MEnd:
+	M_End:
 		mes "[Serutero]";
 		mes "If you ever become exhausted on your journey, you should stop by the nearby island of";
 		mes "^3355FF`Comodo'^000000 City.";

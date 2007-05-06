@@ -3,9 +3,9 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.71
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= eAthena 1.0
 //===== Description: ========================================= 
 //=
 //===== Additional Comments: ================================= 
@@ -18,6 +18,7 @@
 //= 1.5 Replaced iz_move_alberta with MISC_QUEST & 16 [Lupus]
 //= 1.6 Removed Duplicates [Silent]
 //= 1.7 Split quest to quests/quests_izlude.txt [Evera]
+//= 1.71 Optimized. Also thanks to CAHTEXHuK [Lupus]
 //============================================================
 
 
@@ -84,26 +85,8 @@ izlude,55,74,2	script	Bonne	90,{
 
 //Cuskoal-------------------------------------------------------------------------------------
 izlude,119,121,1	script	Cuskoal	124,{
-	set @TEMP, rand(2);
 	mes "[Cuskoal]";
-	if(@TEMP != 0) goto L_R0;
-	mes "The Arena here is THE place for";
-	mes "capable young people from all over";
-	mes "the Rune-Midgarts Kingdom to";
-	mes "challenge themsleves and test their";
-	mes "skills.";
-	next;
-	mes "[Cuskoal]";
-	mes "You can battle with monsters of";
-	mes "different levels. So, the number of";
-	mes "stages you survive will be a";
-	mes "testiment to you battle powers.";
-	next;
-	mes "[Cuskoal]";
-	mes "So, whaddya say?";
-	close;
-
-	L_R0:
+	if(rand(2)) {
 		mes "The pubs in Prontera are always";
 		mes "full of people from local areas and";
 		mes "from out-of-town. It can get pretty";
@@ -120,31 +103,28 @@ izlude,119,121,1	script	Cuskoal	124,{
 		mes "very useful information for";
 		mes "yourself.";
 		close;
+	}		
+	mes "The Arena here is THE place for";
+	mes "capable young people from all over";
+	mes "the Rune-Midgarts Kingdom to";
+	mes "challenge themsleves and test their";
+	mes "skills.";
+	next;
+	mes "[Cuskoal]";
+	mes "You can battle with monsters of";
+	mes "different levels. So, the number of";
+	mes "stages you survive will be a";
+	mes "testiment to you battle powers.";
+	next;
+	mes "[Cuskoal]";
+	mes "So, whaddya say?";
+	close;
 }
 
 //Charfri-------------------------------------------------------------------------------------
 izlude,135,78,2	script	Charfri	91,{
-	set @TEMP,rand(2);
 	mes "[Charfri]";
-	if(@TEMP != 0) goto L_R0;
-	mes "Some people may think Izlude is";
-	mes "just a satelite city of Prontera,";
-	mes "and not really that important...";
-	next;
-	mes "[Charfri]";
-	mes "But Izlude is a beautiful town";
-	mes "right next to the ocean, as well as";
-	mes "beautiful Byalan Island.";
-	next;
-	mes "[Charfri]";
-	mes "You'll have to board on a ship at";
-	mes "the port to get to Byalan Island.";
-	mes "There are dangerous dungeons on";
-	mes "that island, so don't go snooping";
-	mes "around just anywhere.";
-	close;
-
-	L_R0:
+	if(rand(2)) {
 		mes "Though it is very beautiful, Byalan";
 		mes "Island has a mysterious dungeon";
 		mes "that extends deep under the sea.";
@@ -175,13 +155,128 @@ izlude,135,78,2	script	Charfri	91,{
 		mes "Still, just once, I'd like to go";
 		mes "down there...";
 		close;
+	}		
+	mes "Some people may think Izlude is";
+	mes "just a satelite city of Prontera,";
+	mes "and not really that important...";
+	next;
+	mes "[Charfri]";
+	mes "But Izlude is a beautiful town";
+	mes "right next to the ocean, as well as";
+	mes "beautiful Byalan Island.";
+	next;
+	mes "[Charfri]";
+	mes "You'll have to board on a ship at";
+	mes "the port to get to Byalan Island.";
+	mes "There are dangerous dungeons on";
+	mes "that island, so don't go snooping";
+	mes "around just anywhere.";
+	close;
 }
 
 //Dega-------------------------------------------------------------------------------------
 izlude,150,118,3	script	Dega	84,{
-	set @TEMP,rand(3);
+	set @TEMP,;
 	mes "[Dega]";
-	if(@TEMP != 0) goto L_R0;
+	if(rand(2)) {
+		if(rand(2)) {
+			mes "There's a very delightful place";
+			mes "where you can find every";
+			mes "type of Poring.";
+			next;
+			mes "[Dega]";
+			mes "It's somewhere near the bridge";
+			mes "connecting the forest and the";
+			mes "desert, on the way to the city of";
+			mes "Payon which is Southeast from";
+			mes "here.";
+			next;
+			mes "[Dega]";
+			mes "There are not only pink Porings but";
+			mes "also Drops, which can be found at";
+			mes "the desert, and the green";
+			mes "Poporing.";
+			next;
+			mes "[Dega]";
+			mes "But be careful, before you realize";
+			mes "it, you may come face to face with";
+			mes "Ghostring, a deadly Poring that";
+			mes "floats around the air like a";
+			mes "ghost.";
+			next;
+			mes "[Dega]";
+			mes "Well, of course, they are all very";
+			mes "cute, but Ghostring is an";
+			mes "EXCEPTION. It is very very";
+			mes "dangerous.";
+			next;
+			mes "[Dega]";
+			mes "If you are lucky enough, you might";
+			mes "even bump into Angeling, the";
+			mes "Poring with Angel wings.";
+			next;
+			menu "Ghostring?",-,"Angeling?",M_1,"End Conversation.",M_End;	
+
+				mes "[Dega]";
+				mes "Ghostring is a grayish Poring that";
+				mes "floats around in the air like a";
+				mes "ghost. Just like other ghosts,";
+				mes "physical attacks can't do any";
+				mes "damage to it.";
+				next;
+				mes "[Dega]";
+				mes "Those whose main attack methods are";
+				mes "physical like Swordman and Archer";
+				mes "might have to run for their lives";
+				mes "when facing Ghostrings.";
+				next;
+				mes "[Dega]";
+				mes "But don't leave just yet~! There is";
+				mes "great news for people with those";
+				mes "jobs. Making a weapon of some";
+				mes "elemental property is the key.";
+				next;
+				mes "[Dega]";
+				mes "This way, even a Swordman or an";
+				mes "Archer can inflict damage, the way";
+				mes "Magic does, on Ghostrings.";
+				close;
+			M_1:
+				mes "[Dega]";
+				mes "Angelings are immune to Magic";
+				mes "attacks. If people who can only";
+				mes "attack with Magic face an";
+				mes "Angeling, then it's time for";
+				mes "them to run.";
+				next;
+				mes "[Dega]";
+				mes "If you've got an extra knife or";
+				mes "sword, you could give it a shot.";
+				mes "But it will be very difficult";
+				mes "alone, don't you think?";
+				close;
+			M_End:
+				mes "[Dega]";
+				mes "Good Luck~";
+				close;
+		}			
+		mes "Some monsters in the world have the.";
+		mes "unique ability to sense mystical";
+		mes "energy, and can detect Magic spells";
+		mes "before they are cast.";
+		next;
+		mes "[Dega]";
+		mes "Golem of the desert is one of them.";
+		mes "Don't underestimate it due to it's";
+		mes "sluggishness...";
+		next;
+		mes "[Dega]";
+		mes "If you try to cast magic near it,";
+		mes "it will notice and saunter over to";
+		mes "smash you. So you better watch out";
+		mes "for Golem.";
+		close;
+	}		
 	mes "Mt. Mjolnir, located north of";
 	mes "Prontera, is a tough";
 	mes "and steep climb.";
@@ -199,113 +294,29 @@ izlude,150,118,3	script	Dega	84,{
 	mes "your self for the challenge. Or you";
 	mes "could walk around it.";
 	close;
-
-	L_R0:
-		if(@TEMP != 1) goto L_R1;
-		mes "Some monsters in the world have the.";
-		mes "unique ability to sense mystical";
-		mes "energy, and can detect Magic spells";
-		mes "before they are cast.";
-		next;
-		mes "[Dega]";
-		mes "Golem of the desert is one of them.";
-		mes "Don't underestimate it due to it's";
-		mes "sluggishness...";
-		next;
-		mes "[Dega]";
-		mes "If you try to cast magic near it,";
-		mes "it will notice and saunter over to";
-		mes "smash you. So you better watch out";
-		mes "for Golem.";
-		close;
-	L_R1:
-		mes "There's a very delightful place";
-		mes "where you can find every";
-		mes "type of Poring.";
-		next;
-		mes "[Dega]";
-		mes "It's somewhere near the bridge";
-		mes "connecting the forest and the";
-		mes "desert, on the way to the city of";
-		mes "Payon which is Southeast from";
-		mes "here.";
-		next;
-		mes "[Dega]";
-		mes "There are not only pink Porings but";
-		mes "also Drops, which can be found at";
-		mes "the desert, and the green";
-		mes "Poporing.";
-		next;
-		mes "[Dega]";
-		mes "But be careful, before you realize";
-		mes "it, you may come face to face with";
-		mes "Ghostring, a deadly Poring that";
-		mes "floats around the air like a";
-		mes "ghost.";
-		next;
-		mes "[Dega]";
-		mes "Well, of course, they are all very";
-		mes "cute, but Ghostring is an";
-		mes "EXCEPTION. It is very very";
-		mes "dangerous.";
-		next;
-		mes "[Dega]";
-		mes "If you are lucky enough, you might";
-		mes "even bump into Angeling, the";
-		mes "Poring with Angel wings.";
-		next;
-		menu "Ghostring?",-,"Angeling?",M1,"End Conversation.",MEnd;
-
-			mes "[Dega]";
-			mes "Ghostring is a grayish Poring that";
-			mes "floats around in the air like a";
-			mes "ghost. Just like other ghosts,";
-			mes "physical attacks can't do any";
-			mes "damage to it.";
-			next;
-			mes "[Dega]";
-			mes "Those whose main attack methods are";
-			mes "physical like Swordman and Archer";
-			mes "might have to run for their lives";
-			mes "when facing Ghostrings.";
-			next;
-			mes "[Dega]";
-			mes "But don't leave just yet~! There is";
-			mes "great news for people with those";
-			mes "jobs. Making a weapon of some";
-			mes "elemental property is the key.";
-			next;
-			mes "[Dega]";
-			mes "This way, even a Swordman or an";
-			mes "Archer can inflict damage, the way";
-			mes "Magic does, on Ghostrings.";
-			close;
-		M1:
-			mes "[Dega]";
-			mes "Angelings are immune to Magic";
-			mes "attacks. If people who can only";
-			mes "attack with Magic face an";
-			mes "Angeling, then it's time for";
-			mes "them to run.";
-			next;
-			mes "[Dega]";
-			mes "If you've got an extra knife or";
-			mes "sword, you could give it a shot.";
-			mes "But it will be very difficult";
-			mes "alone, don't you think?";
-			close;
-		MEnd:
-			mes "[Dega]";
-			mes "Good Luck~";
-			close;
 }
 
 //Kylick-------------------------------------------------------------------------------------
 izlude,150,143,4	script	Kylick	97,{
-	set @TEMP,rand(2);
 	mes "[Kylick]";
-	if (@TEMP != 0) goto L_R0;
-
+	if (rand(2)) {
+		mes "I was thinking, even though the";
+		mes "people of Izlude live so close to";
+		mes "the ocean...";
+		next;
+		mes "[Kylick]";
+		mes "There are other cultures that have";
+		mes "completely developed by living off";
+		mes "of the sea. Of course, I'm talking";
+		mes "about Amatsu.";
+		next;
+		mes "[Kylick]";
+		mes "I hear the cuisine there is really";
+		mes "good! Although the idea of eating";
+		mes "raw fish is new to me, I would love";
+		mes "to go there, and try it just once!";
+		close;
+	}
 	mes "Don't you think Binoculars";
 	mes "are really COOL?! You can";
 	mes "see all sorts of places...!";
@@ -326,24 +337,6 @@ izlude,150,143,4	script	Kylick	97,{
 	mes "a pound of cure";
 	mes "after all, right?";
 	close;
-
-	L_R0:
-		mes "I was thinking, even though the";
-		mes "people of Izlude live so close to";
-		mes "the ocean...";
-		next;
-		mes "[Kylick]";
-		mes "There are other cultures that have";
-		mes "completely developed by living off";
-		mes "of the sea. Of course, I'm talking";
-		mes "about Amatsu.";
-		next;
-		mes "[Kylick]";
-		mes "I hear the cuisine there is really";
-		mes "good! Although the idea of eating";
-		mes "raw fish is new to me, I would love";
-		mes "to go there, and try it just once!";
-		close;
 }
 
 // Soldier ------------------------------------------------------------------------------
@@ -361,9 +354,8 @@ izlude,124,178,4	script	Soldier	105,{
 		mes "items dropped by monsters. But you";
 		mes "knew that, right?";
 		next;
-		menu "Of course",sM_0, "Eh? Really?",sM_1;
+		menu "Of course",-, "Eh? Really?",sM_1;
 		
-		sM_0:
 			mes "[Soldier]";
 			mes "Haha, in fact, that used to be part";
 			mes "of our job. But there were more and";
@@ -454,138 +446,8 @@ izlude,124,178,4	script	Soldier	105,{
 		close;
 }
 
-//Red-------------------------------------------------------------------------------------
-izlude,58,126,1	script	Red	98,{
-
-	mes "[Red]";
-	mes "The only skill that's needed for a";
-	mes "Swordman is ^FF0000Bash^000000! Bash, Bash and";
-	mes "ONLY ^FF0000BASH^000000! No need to waste time";
-	mes "and effort for smaller skills!";
-	mes "Everything else is for cowards and";
-	mes "wusses!";
-	next;
-	mes "[Cebalis]";
-	mes "What are you talking about!? The";
-	mes "ideal Swordman resolutely stands";
-	mes "alone, surrounded by countless";
-	mes "enemies and smashing them all with";
-	mes "one awesome attack.";
-	next;
-	mes "[Cebalis]";
-	mes "^FF0000MAGNUM BREAK^000000";
-	mes "That's right, Magnum Break";
-	mes "is the skill that does";
-	mes "the job right~!!";
-	next;
-	mes "[Cebalis]";
-	mes "Well... Sometimes the explosive";
-	mes "damage might accidentally hit some";
-	mes "wandering monsters, and those guys";
-	mes "end up coming after you, but that's";
-	mes "a risk a Swordman should be willing";
-	mes "to take!!";
-	next;
-	mes "[Red]";
-	mes "That's exactly why you're dumb, you";
-	mes "idiot! And what's this about the";
-	mes "'the ideal Swordman?' I still";
-	mes "remember the last time you used";
-	mes "Magnum Break...";
-	next;
-	mes "[Red]";
-	mes "You ended up running away from all";
-	mes "those monsters you hit with that";
-	mes "stupid skill! Weakling! All those";
-	mes "Porings around you got hit and they";
-	mes "all tried to kill you.";
-	next;
-	mes "[Cebalis]";
-	mes "Hmpf. As I recall, you were running";
-	mes "away too, apparently too busy to";
-	mes "use your precious bash. In any";
-	mes "case, Magnum Break is THE skill for";
-	mes "a Swordman~!!";
-	next;
-	mes "[Cebalis]";
-	mes "Something simplistic like Bash";
-	mes "is just one of the little steps";
-	mes "towards Magnum Break.";
-	next;
-	mes "[Red]";
-	mes "Oh man~";
-	mes "Hey, I know you just";
-	mes "heard everything.";
-	mes "So what do you think?";
-	next;
-	mes "[Red]";
-	mes "Which one do you think is better?";
-	mes "The critical damage skill, ^FF0000Bash^000000, or";
-	mes "the Splash damage skill, ^FF0000Magnum^000000";
-	mes "^FF0000Break^000000?";
-	next;
-	menu "Bash",-,"Magnum Break",L1;
-	
-		mes "[Red]";
-		if( baseClass == Job_Swordman ) goto L00;
-		mes "Hahahaha!! See!? Someone who";
-		mes "pursues a different job agrees with";
-		mes "me~! You really are a great guy!";
-		mes "Hahaha!! Undoubtedly, only ^FF0000Bash^000000";
-		mes "suits a Swordman. Please tell that";
-		mes "to this NIMROD over here~ Hahaha!";
-		close;
-		
-		L00:
-			mes "Hahahaha!!! I knew you'd see things";
-			mes "my way! You ARE a great guy!!";
-			mes "Undoubtedly, only ^FF0000Bash^000000 suits a";
-			mes "Swordman. Please tell that to this";
-			mes "BONEHEAD over here~ Hahaha!";
-			next;
-			mes "[Red]";
-			mes "Hmm, let me give you a bit of";
-			mes "advice. After you achieve level 5";
-			mes "Bash', the amount of SP consumed";
-			mes "by the skill increased greatly, so";
-			mes "watch out for your SP.";
-			close;
-	L1:
-		mes "[Cebalis]";
-		if( baseClass == Job_Swordman ) goto L01;
-		mes "Right?! ^FF0000Magnum Break^000000 is THE BEST!!!";
-		mes "You know what you're talking about,";
-		mes "eh? I don't know why this jerk face";
-		mes "is being sooooo stubborn.";
-		close;
-
-		L01:
-			mes "Alright!! ^FF0000Magnum Break^000000 is the";
-			mes "BEST!! Now you're talking~!! You";
-			mes "know the stuff~Hahaha!";
-			next;
-			mes "[Cebalis]";
-			mes "You wanna know some useful";
-			mes "information? Okay, lemme tell";
-			mes "ya! Magnum Break has Fire";
-			mes "Property.";
-			next;
-			mes "[Cebalis]";
-			mes "So it won't be too effective";
-			mes "against monsters with the Water";
-			mes "property, but this is THE skill to";
-			mes "use against Undead and Earth";
-			mes "property monsters!";
-			next;
-			mes "[Cebalis]";
-			mes "And most importantly, look around";
-			mes "before you use it. Otherwise you'll";
-			mes "be in BIG trouble~";
-			close;
-}
-
 //Cebalis-------------------------------------------------------------------------------------
-izlude,56,126,7	script	Cebalis	85,{
+izlude,56,126,7	script	Cebalis::RedCebalis	85,{
 
 	mes "[Red]";
 	mes "The only slill that's needed for a";
@@ -654,65 +516,65 @@ izlude,56,126,7	script	Cebalis	85,{
 	mes "the Splash damage skill, ^FF0000Magnum^000000";
 	mes "^FF0000Break^000000?";
 	next;
-	menu "Bash",-,"Magnum Break",L1;
+	menu "Bash",-,"Magnum Break",M_1;
 	
 		mes "[Red]";
-		if( baseClass == Job_Swordman ) goto L00;
-		mes "Hahahaha!! See!? Someone who";
-		mes "pursues a different job agrees with";
-		mes "me~! You really are a great guy!";
-		mes "Hahaha!! Undoubtedly, only ^FF0000Bash^000000";
-		mes "suits a Swordman. Please tell that";
-		mes "to this NIMROD over here~ Hahaha!";
-		close;
-		
-		L00:
-			mes "Hahahaha!!! I knew you'd see things";
-			mes "my way! You ARE a great guy!!";
-			mes "Undoubtedly, only ^FF0000Bash^000000 suits a";
-			mes "Swordman. Please tell that to this";
-			mes "BONEHEAD over here~ Hahaha!";
-			next;
-			mes "[Red]";
-			mes "Hmm, let me give you a bit of";
-			mes "advice. After you achieve level 5";
-			mes "Bash', the amount of SP consumed";
-			mes "by the skill increased greatly, so";
-			mes "watch out for your SP.";
+		if( baseClass != Job_Swordman ){
+			mes "Hahahaha!! See!? Someone who";
+			mes "pursues a different job agrees with";
+			mes "me~! You really are a great guy!";
+			mes "Hahaha!! Undoubtedly, only ^FF0000Bash^000000";
+			mes "suits a Swordman. Please tell that";
+			mes "to this NIMROD over here~ Hahaha!";
 			close;
-	L1:
+		}
+		mes "Hahahaha!!! I knew you'd see things";
+		mes "my way! You ARE a great guy!!";
+		mes "Undoubtedly, only ^FF0000Bash^000000 suits a";
+		mes "Swordman. Please tell that to this";
+		mes "BONEHEAD over here~ Hahaha!";
+		next;
+		mes "[Red]";
+		mes "Hmm, let me give you a bit of";
+		mes "advice. After you achieve level 5";
+		mes "Bash', the amount of SP consumed";
+		mes "by the skill increased greatly, so";
+		mes "watch out for your SP.";
+		close;
+	M_1:
 		mes "[Cebalis]";
-		if( baseClass == Job_Swordman ) goto L01;
-		mes "Right?! ^FF0000Magnum Break^000000 is THE BEST!!!";
-		mes "You know what you're talking about,";
-		mes "eh? I don't know why this jerk face";
-		mes "is being sooooo stubborn.";
-		close;
-
-		L01:
-			mes "Alright!! ^FF0000Magnum Break^000000 is the";
-			mes "BEST!! Now you're talking~!! You";
-			mes "know the stuff~HaHaHa!";
-			next;
-			mes "[Cebalis]";
-			mes "You wanna know some useful";
-			mes "information? Okay, lemme tell";
-			mes "ya! Magnum Break has Fire";
-			mes "Property.";
-			next;
-			mes "[Cebalis]";
-			mes "So it won't be too effective";
-			mes "against monsters with the Water";
-			mes "property, but this is THE skill to";
-			mes "use against Undead and Earth";
-			mes "property monsters!";
-			next;
-			mes "[Cebalis]";
-			mes "And most importantly, look around";
-			mes "before you use it. Otherwise you'll";
-			mes "be in BIG trouble~";
+		if( baseClass != Job_Swordman ){
+			mes "Right?! ^FF0000Magnum Break^000000 is THE BEST!!!";
+			mes "You know what you're talking about,";
+			mes "eh? I don't know why this jerk face";
+			mes "is being sooooo stubborn.";
 			close;
+		}
+		mes "Alright!! ^FF0000Magnum Break^000000 is the";
+		mes "BEST!! Now you're talking~!! You";
+		mes "know the stuff~HaHaHa!";
+		next;
+		mes "[Cebalis]";
+		mes "You wanna know some useful";
+		mes "information? Okay, lemme tell";
+		mes "ya! Magnum Break has Fire";
+		mes "Property.";
+		next;
+		mes "[Cebalis]";
+		mes "So it won't be too effective";
+		mes "against monsters with the Water";
+		mes "property, but this is THE skill to";
+		mes "use against Undead and Earth";
+		mes "property monsters!";
+		next;
+		mes "[Cebalis]";
+		mes "And most importantly, look around";
+		mes "before you use it. Otherwise you'll";
+		mes "be in BIG trouble~";
+		close;
 }
+//Cebalis-------------------------------------------------------------------------------------------------------------------------------------------
+izlude,58,126,1	duplicate(RedCebalis)	Cebalis	98
 
 //Aaron-------------------------------------------------------------------------------------
 izlude_in,125,164,5	script	Aaron	65,{
@@ -760,7 +622,7 @@ izlude_in,125,164,5	script	Aaron	65,{
 	mes "Are you bored by all this talk? Or";
 	mes "do you want me to go on?";
 	next;
-	menu "Tell me more please.",-,"End conversation",LEnd;
+	menu "Tell me more please.",-,"End conversation",M_End;
 	
 		mes "[Aaron]";
 		mes "Hmm...";
@@ -778,7 +640,7 @@ izlude_in,125,164,5	script	Aaron	65,{
 		mes "various skills... but it's really";
 		mes "up to you.";
 		close;
-	LEnd:
+	M_End:
 		mes "[Aaron]";
 		mes "Okay then,";
 		mes "train hard~~";
@@ -794,27 +656,27 @@ izlude,201,181,2	script	Sailor#06	100,{
 	mes "on a Fantastic Ship!";
 	mes "Hurry, hurry";
 	next;
-	menu "Byalan Island -> 150 Zeny.",-,"Alberta Marina -> 500 Zeny.",L1,"Cancel",LEnd;
+	menu "Byalan Island -> 150 Zeny.",-,"Alberta Marina -> 500 Zeny.",L_Alb,"Cancel",M_End;
 	
-		if(Zeny < 150) goto sl_NoZenyBya;
+		if(Zeny < 150){
+			mes "[Sailor]";
+			mes "150 Zeny!";
+			mes "Only 150 Zeny to ride!";
+			close;
+		}
 		set Zeny, Zeny - 150;
 		warp "izlu2dun",107,50;
 		close;
-	L1:
-		if(Zeny < 500) goto sl_NoZenyMar;
+	L_Alb:
+		if(Zeny < 500){
+			mes "[Sailor]";
+			mes "500 Zeny!";
+			mes "Only 500 Zeny to ride!";
+			close;
+		}
 		set Zeny, Zeny - 500;
 		warp "alberta",188,169;
-	LEnd:
-		close;
-	sl_NoZenyBya:
-		mes "[Sailor]";
-		mes "150 Zeny!";
-		mes "Only 150 Zeny to ride!";
-		close;
-	sl_NoZenyMar:
-		mes "[Sailor]";
-		mes "500 Zeny!";
-		mes "Only 500 Zeny to ride!";
+	M_End:
 		close;
 }
 
@@ -824,10 +686,10 @@ izlu2dun,108,27,4	script	Sailor#07	100,{
 	mes "Wanna";
 	mes "head back?";
 	next;
-	menu "Yeah, I am Tired to Death.",-,"Nope I love this place.",L1;
+	menu "Yeah, I am Tired to Death.",-,"Nope I love this place.",M_1;
 	
 		warp "izlude",176,182;
-	L1:
+	M_1:
 		close;
 }
 
@@ -838,55 +700,52 @@ izlude,171,185,3	script	Honeymoon Helper#Izlude I	71,{
 	mes "You can go to the imaginary recreational area anytime.";
 	mes "Welcome to Jawaii!";
 	next;
-	menu "'Jawaii'?",-,"Let's go to 'Jawaii'~",s_Go,"Cancel",s_Cancel;
+	menu "'Jawaii'?",-,"Let's go to 'Jawaii'~",M_Go,"Cancel",M_End;
 
+		mes "[Marry Happy]";
+		mes "A distant island from the continent of Rune Midgard... ";
+		mes "there is a peaceful and charming recreational area,";
+		mes "that can't be easily reached by people.";
+		mes "Since it is a famous spot for honeymoon,";
+		mes "only married couples are allowed to go there.";
+		next;
+		mes "[Marry Happy]";
+		mes "Since it's a special journey,";
+		mes "the payment will be a bit expensive than normal. It will cost you 10,000z !!";
+		mes "And that's what lets you enjoy";
+		mes "a peaceful and fascinating";
+		mes "honey moon trip...?";
+		close;
+
+	M_Go:
+		if(!getpartnerid()){
 			mes "[Marry Happy]";
-			mes "A distant island from the continent of Rune Midgard... ";
-			mes "there is a peaceful and charming recreational area,";
-			mes "that can't be easily reached by people.";
-			mes "Since it is a famous spot for honeymoon,";
-			mes "only married couples are allowed to go there.";
-			next;
-			mes "[Marry Happy]";
-			mes "Since it's a special journey,";
-			mes "the payment will be a bit expensive than normal. It will cost you 10,000z !!";
-			mes "And that's what lets you enjoy";
-			mes "a peaceful and fascinating";
-			mes "honey moon trip...?";
+			mes "UhOh, I'm sorry.";
+			mes "You can't go there if you're not married...";
+			mes "Why don't you go to the Prontera Inn,";
+			mes "and cheer yourself up?";
 			close;
-
-s_Go:
-			if(getpartnerid() == 0)
-{
-				mes "[Marry Happy]";
-				mes "UhOh, I'm sorry.";
-				mes "You can't go there if you're not married...";
-				mes "Why don't you go to the Prontera Inn,";
-				mes "and cheer yourself up?";
-				close;
-}
-			else if(Zeny < 10000)
-{
-					mes "[Marry Happy]";
-					mes "I've explained about the trip to 'Jawaii'.";
-					mes "You'll need 10,000 z.";
-					mes "If you do not have enough zeny,";
-					mes "why don't you seek help from your partner...?";
-					close;
-}
-				set Zeny,Zeny - 10000;
-				mes "[Marry Happy]";
-				mes "Enjoy your trip...!!";
-				mes "Let's go to 'Jawaii'...!!";
-				close2;
-				warp "jawaii",241,115;
-				end;
-
-s_Cancel:
+		} else if(Zeny < 10000){
 			mes "[Marry Happy]";
-			mes "There's nothing that is as exciting as";
-			mes "travelling together, especially when";
-			mes "you're travelling with your loved ones.";
-			mes "You must be very happy, aren't you?";
+			mes "I've explained about the trip to 'Jawaii'.";
+			mes "You'll need 10,000 z.";
+			mes "If you do not have enough zeny,";
+			mes "why don't you seek help from your partner...?";
 			close;
+		}
+		set Zeny,Zeny - 10000;
+		mes "[Marry Happy]";
+		mes "Enjoy your trip...!!";
+		mes "Let's go to 'Jawaii'...!!";
+		close2;
+		warp "jawaii",241,115;
+		end;
+
+	M_End:
+		mes "[Marry Happy]";
+		mes "There's nothing that is as exciting as";
+		mes "travelling together, especially when";
+		mes "you're travelling with your loved ones.";
+		mes "You must be very happy, aren't you?";
+		close;
 }

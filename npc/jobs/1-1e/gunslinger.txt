@@ -7,7 +7,7 @@
 //= DON'T REMOVE THIS! (by request of him, he provided all
 //= the info regarding the quests and shops.)
 //===== Current Version: ===================================== 
-//= 1.10
+//= 1.10a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -29,12 +29,12 @@
 
 que_ng.gat,152,167,3	script	Master Miller	901,{
 
+	mes "[Master Miller]";
 	if(Class == Job_Novice && JobLevel > 9)
 	{
 		switch(GUNS_Q)
 		{
 			case 0:
-				mes "[Master Miller]";
 				mes "I'm a Security Chief and also";
 				mes "a Gunslinger Instructor, you may call me";
 				mes "Master Miller.";
@@ -101,14 +101,12 @@ que_ng.gat,152,167,3	script	Master Miller	901,{
 				}
 
 			case 1:	
-				mes "[Master Miller]";
 				mes "Hurry up and get moving.";
 				mes "'The Wise Bull Horn' is";
 				mes "currently in Payon.";
 				close;
 
 			case 2:
-				mes "[Master Miller]";
 				mes "I guess he gave you";
 				mes "some errands to run.";
 				next;
@@ -118,7 +116,6 @@ que_ng.gat,152,167,3	script	Master Miller	901,{
 				close;
 
 			case 3:
-				mes "[Master Miller]";
 				mes "That's a lot of errands";
 				mes "I already told you, the";
 				mes "old man is pretty serious.";
@@ -126,20 +123,16 @@ que_ng.gat,152,167,3	script	Master Miller	901,{
 				close;
 
 			case 4:
-				mes "[Master Miller]";
 				mes "Mm~ I'll be waiting for your news.";
 				mes "I hope you'll become one of us.";
 				mes "We'll be practically family..";
 				close;
 
 			case 5:
-				if (skillpoint > 0)
-				{
-					mes "[Master Miller]";
+				if (skillpoint > 0)	{
 					mes "Learn all your Basic Skills first!!";
 					close;
 				}
-				mes "[Master Miller]";
 				mes "Ohh, I see you got something from the old man";
 				mes "This is rare.";
 				mes "Under normal circumstances...";
@@ -202,29 +195,20 @@ que_ng.gat,152,167,3	script	Master Miller	901,{
 				if(@gun_ex == 1) getitem 13100,1; else getitem 13150,1;
 				close;
 		}
-	}
-	else if(Class == Job_Novice && JobLevel < 10)
-	{
-		mes "[Master Miller]";
+	} else if(Class == Job_Novice && JobLevel < 10) {
 		mes "Hmm, I think you";
 		mes "have the potential";
 		mes "but you're not yet strong enough.";
 		mes "Keep getting stronger and";
 		mes "come back later.";
 		close;
-	}
-	else if(Class == Job_Gunslinger)
-	{
-		mes "[Master Miller]";
+	} else if(Class == Job_Gunslinger) {
 		mes "Oh~ It's been a long time~";
 		mes "So, how have your travels been?";
 		mes "Remember, always take care";
 		mes "of your gun.";
 		close;
-	}
-	else if(Class == Job_Baby)
-	{
-		mes "[Master Miller]";
+	} else if(Class == Job_Baby) {
 		mes "Ouch~";
 		mes "How did a baby come here~";
 		mes "Peekaboo~";
@@ -235,10 +219,7 @@ que_ng.gat,152,167,3	script	Master Miller	901,{
 		mes "It's a dangerous place here.";
 		mes "Go play somewhere else.";
 		close;
-	}
-	else
-	{
-		mes "[Master Miller]";
+	} else {
 		mes "Don't get distracted with me.";
 		mes "Get on with your traveling.";
 		close;

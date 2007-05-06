@@ -91,9 +91,8 @@ nif_in,156,93,5	script	Child	793,{
 	mes "have you seen my mommy, hmm? ... sob...";
 	mes "I want to go home...";
 	next;
-	menu "About the witch...",L_Wizzard,"About the curse...",L_Curse,"Stop conversation",L_end;
+	menu "About the witch...",-,"About the curse...",L_Curse,"Stop conversation",L_end;
 
-L_Wizzard:
 	mes "[Alakina Ann]";
 	mes "A witch? I don't know any witches...";
 	mes "although I read about them in storybooks,";
@@ -102,8 +101,10 @@ L_Wizzard:
 	next;
 	mes "[Alakina Ann]";
 	mes "But why is it so cold?";
-	if (sex == 1) mes "Aren't you cold, brother? Wierd... Hu~";
-	if (sex == 0) mes "Aren't you cold, sister? Wierd... Hu~";
+	if (sex == 1)
+		mes "Aren't you cold, brother? Wierd... Hu~";
+	else
+		mes "Aren't you cold, sister? Wierd... Hu~";
 	mes "I miss my warm home,";
 	mes "Can you help me please? Hmmm? Hmmm?";
 	close;

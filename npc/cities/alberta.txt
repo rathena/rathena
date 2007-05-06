@@ -3,13 +3,14 @@
 //===== By: ================================================== 
 //= DZeroX
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.01
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
 //= Town-specific Alberta NPCs
 //===== Additional Comments: ================================= 
 //= 1.0 Converted from Aegis 10.4 [DZeroX]
+//= 1.01 Optimized, missing next, etc [Lupus]
 //============================================================
 
 alberta,97,51,0	script	Fabian	84,{
@@ -89,8 +90,8 @@ alberta,189,151,5	script	Fisk	100,{
 			next;
 			if (Zeny < 250) {
 				mes "[Fisk]";
-				mes "Hey now, don't try to cheat me! I";
-				mes "said 250 zeny!";
+				mes "Hey now, don't try to cheat me!";
+				mes "I said 250 zeny!";
 				close;
 			}
 			set Zeny,Zeny - 250;
@@ -120,12 +121,9 @@ alb2trea,39,50,6	script	Fisk#a2t	100,{
 	mes "[Fisk]";
 	mes "So you wanna head back to the";
 	mes "mainland in Alberta, eh?";
-	switch(select("Yes please.","I changed my mind.")) {
-	case 1:
+	if(select("Yes please.","I changed my mind.")==1)
 		warp "alberta.gat",192,169;
-	case 2:
-		close;
-	}
+	close;
 }
 
 alberta,131,139,2	script	Drunken Old Man	54,{
@@ -199,9 +197,8 @@ alberta,131,139,2	script	Drunken Old Man	54,{
 }
 
 alberta,58,80,2	script	Shakir	99,{
-	set .@random,rand(1,2);
-	if (.@random == 1) {
-		mes "[Shakir]";
+	mes "[Shakir]";
+	if (rand(2)) {
 		mes "We Merchants have our own";
 		mes "negotiating skill when we sell";
 		mes "goods. This skill can get us more";
@@ -219,9 +216,7 @@ alberta,58,80,2	script	Shakir	99,{
 		mes "with this incredible skill. But";
 		mes "remember to train hard to acquire";
 		mes "it!";
-		close;
 	} else {
-		mes "[Shakir]";
 		mes "We Merchants can";
 		mes "open roadside stands";
 		mes "to do business.";
@@ -242,14 +237,14 @@ alberta,58,80,2	script	Shakir	99,{
 		mes "convenient and safe. Don't fall";
 		mes "asleep, although it's too easy to";
 		mes "do that.";
-		close;
 	}
+	close;
 }
 
 alberta,62,156,2	script	Sonya	102,{
-	set .@random,rand(1,3);
-	if (.@random == 1) {
-		mes "[Sonya]";
+	mes "[Sonya]";
+	switch(rand(3)){
+	case 0:
 		mes "You know those lazy looking bears";
 		mes "that live in the forest on the way";
 		mes "to Payon?";
@@ -266,9 +261,7 @@ alberta,62,156,2	script	Sonya	102,{
 		mes "never provoke an animal for fun";
 		mes "again!";
 		close;
-	}
-	if (.@random == 2) {
-		mes "[Sonya]";
+	case 1:
 		mes "Hey, you know, this one time I was";
 		mes "walking through the forest and I";
 		mes "saw this little green stem moving";
@@ -289,9 +282,7 @@ alberta,62,156,2	script	Sonya	102,{
 		mes "the smallest animal can be";
 		mes "dangerous if angered.";
 		close;
-	}
-	if (.@random == 3) {
-		mes "[Sonya]";
+	case 2:
 		mes "I once saw a pack of wolves take on";
 		mes "one of those huge, lazy bears!";
 		next;
@@ -392,17 +383,16 @@ alberta,195,151,2	script	Paul	86,{
 
 alberta,190,173,4	script	Phelix	85,{
 	set .@weight,MaxWeight-Weight;
+	mes "[Phelix]";
 	if ((.@weight) < 10000) {
-		mes "[Phelix]";
 		mes "Wait a moment!!";
 		mes "You have brought too many things!";
 		mes "You cannot accept any more items!";
 		mes "Please reduce the amount of items,";
-		mes "then come see me again";
+		mes "then come see me again.";
 		close;
 	}
 	if (@event_zelopy == 0) {
-		mes "[Phelix]";
 		mes "The hell are you doing here?";
 		mes "There is nothing you can get for";
 		mes "free on this ship, if you want";
@@ -419,153 +409,146 @@ alberta,190,173,4	script	Phelix	85,{
 		mes "[Phelix]";
 		mes "If you're interested in my offer,";
 		mes "get me the stuff I mentioned.";
-		set @event_zelopy,1;;
+		set @event_zelopy,1;
 		close;
 	} else {
-		mes "[Phelix]";
 		mes "Hmm... you want to exchange";
 		mes "jellopies for Red Potions or some";
 		mes "Carrots eh? Well... which one?";
 		switch(select("Red Potions please.","Carrots please.")) {
-			case 1:
-				next;
-				mes "[Phelix]";
-				mes "Alright...";
-				mes "Let's see";
-				mes "what'cha got...";
-				next;
-				if (countitem(909) < 10) {
+		case 1:
+			next;
+			mes "[Phelix]";
+			mes "Alright...";
+			mes "Let's see";
+			mes "what'cha got...";
+			next;
+			mes "[Phelix]";
+			if (countitem(909) < 10) {
+				mes "Hey! Weren't you listening? I said";
+				mes "10 jellopies for 1 Red Potion.. are";
+				mes "ya deaf?";
+				close;
+			} else {
+				set .@max,countitem(909)/10;
+				mes "Hmm, not bad...";
+				mes "How many potions";
+				mes "do you want to get?";
+				switch(select("As many as I can, please.","I want this many.","Never mind, I like my jellopy.")) {
+				case 1:
+					delitem 909,.@max*10;
+					next;
+					getitem 501,.@max;
 					mes "[Phelix]";
-					mes "Hey! Weren't you listening? I said";
-					mes "10 jellopies for 1 Red Potion.. are";
-					mes "ya deaf?";
+					mes "There you go! As I promised. Don't";
+					mes "go suckin' them all down at once.";
 					close;
-				} else {
-					set .@max,countitem(909)/10;
+				case 2:
+					next;
 					mes "[Phelix]";
-					mes "Hmm, not bad...";
-					mes "How many potions";
-					mes "do you want to get?";
-					switch(select("As many as I can, please.","I want this many.","Never mind, I like my jellopy.")) {
-						case 1:
-							next;
-							delitem 909,.@max*10;
-							getitem 501,.@max;
-							mes "[Phelix]";
-							mes "There you go! As I promised. Don't";
-							mes "go suckin' them all down at once.";
-							close;
-						case 2:
-							next;
-							mes "[Phelix]";
-							mes "I'm not giving you more than 100";
-							mes "at a time so don't bother, OK? If";
-							mes "you don't want any, just say '0'.";
-							mes "Right now, the most you can get is";
-							mes ""+.@max+" but remember, 100 at most,";
-							mes "you want to break my back?";
-							input .@amount;
-								if (.@amount <= 0) {
-									mes "[Phelix]";
-									mes "Much obliged, come again anytime.";
-									close;
-								}
-								if (.@amount > 100) {
-									mes "[Phelix]";
-									mes "Hey, what'd I say? 100 at a time at";
-									mes "most, you're trying to kill me";
-									mes "aren't you!";
-									close;
-								}
-								if (countitem(909) < .@amount*10) {
-									mes "[Phelix]";
-									mes "Hmmm, it looks like you don't have";
-									mes "enough. Go get more jellopies if";
-									mes "you want anything else from me.";
-									close;
-								}
-							delitem 909,.@amount*10;
-							getitem 501,.@amount;
-							next;
-							mes "[Phelix]";
-							mes "There you go! As I promised. Don't";
-							mes "go suckin' them all down at once.";
-							close;
-						case 3:
-							next;
-							mes "[Phelix]";
-							mes "No problem,";
-							mes "see you next time.";
-							close;
-					}
-				}
-			case 2:
-				next;
-				mes "[Phelix]";
-				mes "Alright, let's see what ya got...";
-				next;
-				if (countitem(909) < 3) {
+					mes "I'm not giving you more than 100";
+					mes "at a time so don't bother, OK? If";
+					mes "you don't want any, just say '0'.";
+					mes "Right now, the most you can get is";
+					mes ""+.@max+" but remember, 100 at most,";
+					mes "you want to break my back?";
+					input .@amount;
+					next;
 					mes "[Phelix]";
-					mes "Hmm, look pansy ass, I said 3";
-					mes "jellopies for 1 Carrot.. got it?";
-					close;
-				} else {
-					set .@max,countitem(909)/3;
-					mes "[Phelix]";
-					mes "Not too bad pansy...";
-					mes "How many do you want?";
-					switch(select("As many as I can get, please","I want this many.","Never mind, I like my jellopy.")) {
-					case 1:
-						next;
-						delitem 909,.@max*3;
-						getitem 515,.@max;
-						mes "[Phelix]";
-						mes "There you go~! As I promised. Try";
-						mes "not to stuff yer face.";
-						close;
-					case 2:
-						next;
-						mes "[Phelix]";
-						mes "Right I'm not giving you more than";
-						mes "100 at a time so don't bother,";
-						mes "okay? If you don't want any, just";
-						mes "say '0'.";
-						input .@amount;
-						next;
-							if (.@amount == 0) {
-								mes "[Phelix]";
-								mes "Alright then, see you next time.";
-								close;
-							}
-							if (.@amount > 100) {
-								mes "[Phelix]";
-								mes "Hey pansy ass, I said 100 at most,";
-								mes "no more than that! I'm not going to";
-								mes "break my back for the likes of";
-								mes "you!";
-								close;
-							}
-							if (countitem(909) < .@amount*10) {
-								mes "[Phelix]";
-								mes "Seems you don't have enough. Go get";
-								mes "some more if you want anything";
-								mes "else.";
-								close;
-							}
-						delitem 909,.@amount*3;
-						getitem 515,.@amount;
-						next;
-						mes "[Phelix]";
-						mes "There you go~! As I promised. Try";
-						mes "not to stuff yer face.";
-						close;
-					case 3:
-						next;
-						mes "[Phelix]";
-						mes "Catch'ya later.";
+					if (.@amount <= 0) {
+						mes "Much obliged, come again anytime.";
 						close;
 					}
+					if (.@amount > 100) {
+						mes "Hey, what'd I say? 100 at a time at";
+						mes "most, you're trying to kill me";
+						mes "aren't you!";
+						close;
+					}
+					if (countitem(909) < .@amount*10) {
+						mes "Hmmm, it looks like you don't have";
+						mes "enough. Go get more jellopies if";
+						mes "you want anything else from me.";
+						close;
+					}
+					delitem 909,.@amount*10;
+					next;
+					getitem 501,.@amount;
+					mes "[Phelix]";
+					mes "There you go! As I promised. Don't";
+					mes "go suckin' them all down at once.";
+					close;
+				case 3:
+					next;
+					mes "[Phelix]";
+					mes "No problem,";
+					mes "see you next time.";
+					close;
 				}
+			}
+		case 2:
+			next;
+			mes "[Phelix]";
+			mes "Alright, let's see what ya got...";
+			next;
+			mes "[Phelix]";
+			if (countitem(909) < 3) {
+				mes "Hmm, look pansy ass, I said 3";
+				mes "jellopies for 1 Carrot.. got it?";
+				close;
+			} else {
+				set .@max,countitem(909)/3;
+				mes "Not too bad pansy...";
+				mes "How many do you want?";
+				switch(select("As many as I can get, please","I want this many.","Never mind, I like my jellopy.")) {
+				case 1:
+					delitem 909,.@max*3;
+					next;
+					getitem 515,.@max;
+					mes "[Phelix]";
+					mes "There you go~! As I promised. Try";
+					mes "not to stuff yer face.";
+					close;
+				case 2:
+					next;
+					mes "[Phelix]";
+					mes "Right I'm not giving you more than";
+					mes "100 at a time so don't bother,";
+					mes "okay? If you don't want any, just";
+					mes "say '0'.";
+					input .@amount;
+					next;
+					mes "[Phelix]";
+					if (.@amount == 0) {
+						mes "Alright then, see you next time.";
+						close;
+					}
+					if (.@amount > 100) {
+						mes "Hey pansy ass, I said 100 at most,";
+						mes "no more than that! I'm not going to";
+						mes "break my back for the likes of you!";
+						close;
+					}
+					if (countitem(909) < .@amount*10) {
+						mes "Seems you don't have enough. Go get";
+						mes "some more if you want anything";
+						mes "else.";
+						close;
+					}
+					delitem 909,.@amount*3;
+					next;
+					getitem 515,.@amount;
+					mes "[Phelix]";
+					mes "There you go~! As I promised. Try";
+					mes "not to stuff yer face.";
+					close;
+				case 3:
+					next;
+					mes "[Phelix]";
+					mes "Catch'ya later.";
+					close;
+				}
+			}
 		}
 	}
 }
@@ -587,7 +570,7 @@ alberta,43,49,5	script	Poor-looking Merchant	89,{
 	close;
 }
 
-alberta,43,244,8	script	Tourist	99,{
+alberta,43,244,8	script	Tourist#al	99,{
 	mes "[Tourist]";
 	mes "Where am I...?";
 	mes "...Who am I?";

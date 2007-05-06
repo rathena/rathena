@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/05/07
+	* Revised 2/3 of the cities scripts. Thanks to CAHTEHHuK [Lupus]
+	- Fixed wrong usage (not a bug, but stil bad) | -> ||
 	* Fixed a bug in Hugel field spawns [Playtester]
 	* Rev. 10487 Kiel Hyre bug squashage. 
 	- Lots of fixes (4ish) from Valandi. [L0ne_W0lf]
@@ -15,7 +17,7 @@ Date		Added
 	* Updated Facing of NPCs from Crusader Quest [Samuray22]
 	* Updated Food Seller to official [Playtester]
 	* Small Veins field spawn and warp adjustments [Playtester]
-	* Revised 1/3 of the cities scripts. Thanks to CAHTEXNIK [Lupus]
+	* Revised 1/3 of the cities scripts. Thanks to CAHTEXHuK [Lupus]
 2007/05/05
 	* Updated Crusader Job quest to the official one [Samuray22]
 	- Added Folder "old" for old quest of jobs.

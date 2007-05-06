@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= DZeroX
 //===== Current Version: =====================================
-//= 1.0
+//= 1.0a
 //===== Compatible With: =====================================
 //= eAthena SVN Trunk
 //===== Description: =========================================
@@ -50,7 +50,7 @@ alberta_in.gat,16,28,4	script	Grandpa Pharmacist	61,{
 						} else {
 							set .@max,countitem(713);
 						}
-						if ((countitem(507) < 1) | (countitem(508) < 1) | (countitem(713) == 0)) {
+						if ((countitem(507) < 1) || (countitem(508) < 1) || (countitem(713) == 0)) {
 							mes "You are silly! How can you make a potion if you don't even have ingredients?!";
 							mes "Go away!";
 							close;
@@ -64,7 +64,7 @@ alberta_in.gat,16,28,4	script	Grandpa Pharmacist	61,{
 						switch(select("As many as I can","I will set the amounts.","Nah, forget about it.")) {
 							case 1:
 								next;
-								if ((countitem(507) < .@max) | (countitem(508) < .@max) | (countitem(713) < .@max) | (Zeny < .@max*3)) {
+								if ((countitem(507) < .@max) || (countitem(508) < .@max) || (countitem(713) < .@max) || (Zeny < .@max*3)) {
 									mes "[Grandpa Pharmacist]";
 									mes "You punk! Do you want me to make stuff from insufficient ingredients?";
 									close;
@@ -95,7 +95,7 @@ alberta_in.gat,16,28,4	script	Grandpa Pharmacist	61,{
 									mes "Are you a deaf of something? I can't make more than 100.";
 									close;
 								}
-								if ((countitem(507) < .@amount) | (countitem(508) < .@amount) | (countitem(713) < .@amount) | (Zeny < .@amount*3)) {
+								if ((countitem(507) < .@amount) || (countitem(508) < .@amount) || (countitem(713) < .@amount) || (Zeny < .@amount*3)) {
 									next;
 									mes "[Grandpa Pharmacist]";
 									mes "You punk! Do you want me to make stuff from insufficient ingredients?";
@@ -173,7 +173,7 @@ L_making:
 	} else {
 		set .@max,countitem(713);
 	}
-	if ((countitem(getarg(0)) < 2) | (countitem(713) == 0)) {
+	if ((countitem(getarg(0)) < 2) || (countitem(713) == 0)) {
 		mes "You are silly! How can you make a potion if you don't even have ingredients?!";
 		mes "Go away!";
 		close;
@@ -187,7 +187,7 @@ L_making:
 	switch(select("As many as I can","I will set the amounts.","Nah, forget about it.")) {
 		case 1:
 			next;
-			if ((countitem(getarg(0)) < .@max*2) | (countitem(713) < .@max) | (Zeny < .@max*getarg(1))) {
+			if ((countitem(getarg(0)) < .@max*2) || (countitem(713) < .@max) || (Zeny < .@max*getarg(1))) {
 				mes "[Grandpa Pharmacist]";
 				mes "You punk! Do you want me to make stuff from insufficient ingredients?";
 				close;
@@ -218,7 +218,7 @@ L_making:
 				mes "Are you a deaf of something? I can't make more than 100.";
 				close;
 			}
-			if ((countitem(getarg(0)) < .@amount*2) | (countitem(713) < .@amount) | (Zeny < .@amount*getarg(1))) {
+			if ((countitem(getarg(0)) < .@amount*2) || (countitem(713) < .@amount) || (Zeny < .@amount*getarg(1))) {
 				next;
 				mes "[Grandpa Pharmacist]";
 				mes "You punk! Do you want me to make stuff from insufficient ingredients?";
