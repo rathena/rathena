@@ -210,6 +210,7 @@ gef_fild12,0,0,0,0	monster	Kobold	1134,30,0,0,0
 gef_fild12,0,0,0,0	monster	Kobold	1135,30,0,0,0
 gef_fild12,0,0,0,0	monster	Kobold Archer	1282,40,0,0,0
 gef_fild12,0,0,0,0	monster	Poporing	1031,20,0,0,0
+gef_fild12,0,0,0,0	monster	Kobold Leader	1296,1,1800000,1200000,0
 
 //==================================================
 // gef_fild13 - Britoniah
