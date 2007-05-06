@@ -9683,6 +9683,8 @@ int skill_enchant_elemental_end (struct block_list *bl, int type)
 		status_change_end(bl, SC_SHADOWWEAPON, -1);
 	if (type != SC_GHOSTWEAPON && sc->data[SC_GHOSTWEAPON].timer != -1)
 		status_change_end(bl, SC_GHOSTWEAPON, -1);
+	if (type != SC_ENCHANTARMS && sc->data[SC_ENCHANTARMS].timer != -1)
+		status_change_end(bl, SC_ENCHANTARMS, -1);
 	return 0;
 }
 

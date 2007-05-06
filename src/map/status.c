@@ -5755,6 +5755,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				val2 = val2%ELE_MAX;
 			else if (val2 < 0)
 				val2 = rand()%ELE_MAX;
+				skill_enchant_elemental_end(bl,type);
 			break;
 		case SC_ARMOR_ELEMENT:
 			//Place here SCs that have no SCB_* data, no skill associated, no ICON
