@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -38,6 +38,7 @@
 //= 2.0 Changed the labels on the "Big Doors" to "Identifier Names" to prevent an error with using getvariableofnpc [L0ne_W0lf]
 //= 2.1 Fifth door now checks for a variable HIGHER or EQUAL to 74 not 84, as pointed out by Stollen. [L0ne_W0lf]
 //= 2.2 Another fix for elly, no longer RESETS to 26 when you tak to her. [L0ne_W0lf]
+//= 2.3 Should NOT have been setting .KHQuestBusy at all. It's not used or accessed anymore. Removed. [L0ne_W0lf]
 //
 //============================================================ 
 
@@ -6637,7 +6638,7 @@ kh_kiehl01,166,187,0	script	Big Door#BigDoorKHQ5	111,{
 					set $@KH_DoorInvoker$,strcharinfo(0);
 					donpcevent "Big_Door_5_Warp::OnEnable";
 					enablenpc"Big_Door_5_Warp";
-					set .KHDoor5Opened,1;					set .KHQuestBusy,"";
+					set .KHDoor5Opened,1;
 					end;
 
 				case 2:
