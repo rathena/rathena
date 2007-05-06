@@ -8773,7 +8773,6 @@ BUILDIN_FUNC(getwaitingroomstate)
 {
 	struct npc_data *nd;
 	struct chat_data *cd;
-	int val=0;
 	int type;
 
 	type = script_getnum(st,2);
