@@ -6972,8 +6972,8 @@ BUILDIN_FUNC(getgdskilllv)
 }
 
 /// Returns the 'basic_skill_check' setting.
-/// This config determines if the server check the skill level of NV_BASIC 
-/// before alowing the basic actions.
+/// This config determines if the server checks the skill level of NV_BASIC 
+/// before allowing the basic actions.
 ///
 /// basicskillcheck() -> <bool>
 BUILDIN_FUNC(basicskillcheck)
@@ -8660,15 +8660,15 @@ BUILDIN_FUNC(waitingroom)
 
 	if( script_hasdata(st,5) )
 	{
-		struct script_data* data = script_getdata(st, 5);
-		get_val(st, data);
-		if( data_isstring(data) )
-		{// ,"<event>",<trigger>
+		struct script_data* last = script_getdata(st, 5);
+		get_val(st, last);
+		if( data_isstring(last) )
+		{// ,<trigger>,"<event>"
 			trigger = script_getnum(st, 4);
 			ev = script_getstr(st, 5);
 		}
 		else
-		{// ,<trigger>,"<event>"
+		{// ,"<event>",<trigger>
 			ev = script_getstr(st, 4);
 			trigger=script_getnum(st,5);
 		}
@@ -8841,7 +8841,7 @@ BUILDIN_FUNC(warpwaitingpc)
 	for( i = 0; i < n && cd->users > 0; i++ )
 	{
 		sd = cd->usersd[0];
-		if( sd != NULL )
+		if( sd == NULL )
 		{
 			ShowDebug("script:warpwaitingpc: no user in chat room position 0 (cd->users=%d,%d/%d)\n", cd->users, i, n);
 			mapreg_setreg(add_str("$@warpwaitingpc")+(i<<24), 0);

@@ -149,7 +149,7 @@ int chat_leavechat(struct map_session_data* sd)
 	cd->users--;
 	pc_setchatid(sd, 0);
 
-	if( cd->users == 0 && (*cd->owner)->type==BL_PC )
+	if( cd->users == 0 && (*cd->owner)->type == BL_PC )
 	{// Delete empty chatroom
 		clif_clearchat(cd, 0);
 		map_delobject(cd->bl.id);
@@ -158,7 +158,7 @@ int chat_leavechat(struct map_session_data* sd)
 	for( i = leavechar; i < cd->users; i++ )
 		cd->usersd[i] = cd->usersd[i + 1];
 
-	if( leavechar == 0 && (*cd->owner)->type==BL_PC )
+	if( leavechar == 0 && (*cd->owner)->type == BL_PC )
 	{
 		//Adjust Chat location after owner has been changed.
 		map_delblock( &cd->bl );
