@@ -2762,21 +2762,21 @@
 12112,Tropical_Sograt,Tropical Sograt,0,,500,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Curse,10000,1; },{},{}
 12113,Vermilion_The_Beach,Vermilion on the Beach,0,,500,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Stun,10000,1; },{},{}
 // Elemental Converters
-12114,Flame_Converter,Flame Elemental Converter,11,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,4; },{},{}
-12115,Frost_Converter,Frost Elemental Converter,11,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,2; },{},{}
-12116,Seismic_Converter,Seismic Elemental Converter,11,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,3; },{},{}
-12117,Lighting_Converter,Lightning Elemental Converter,11,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,5; },{},{}
+12114,Elemental_Fire,Flame Elemental Converter,11,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,4; },{},{}
+12115,Elemental_Water,Frost Elemental Converter,11,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,2; },{},{}
+12116,Elemental_Earth,Seismic Elemental Converter,11,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,3; },{},{}
+12117,Elemental_Wind,Lightning Elemental Converter,11,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,5; },{},{}
 // Elemental Resistance Potions
-12118,Resist_Fire_Potion,Fire Resist Potion,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Fire,20,Ele_Water,-15; },{},{}
-12119,Resist_Cold_Potion,Cold Resist Potion,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Water,20,Ele_Wind,-15; },{},{}
-12120,Resist_Earth_Potion,Earth Resist Potion,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Earth,20,Ele_Fire,-15; },{},{}
-12121,Resist_Wind_Potion,Thunder Resist Potion,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Wind,20,Ele_Earth,-15; },{},{}
+12118,Resist_Fire,Fire Resist Potion,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Fire,20,Ele_Water,-15; },{},{}
+12119,Resist_Water,Cold Resist Potion,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Water,20,Ele_Wind,-15; },{},{}
+12120,Resist_Earth,Earth Resist Potion,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Earth,20,Ele_Fire,-15; },{},{}
+12121,Resist_Wind,Thunder Resist Potion,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,Ele_Wind,20,Ele_Earth,-15; },{},{}
 12122,Sesame_Pastry,Sesame Pastry,0,,1,70,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_HitFood,1200000,30; },{},{}
 12123,Honey_Pastry,Honey Pastry,0,,1,70,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FleeFood,1200000,30; },{},{}
 12124,Rainbow_Cake,Rainbow Cake,0,,1,70,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_BATKFood,1200000,10; sc_start SC_MATKFood,120000,10; },{},{}
 // Cooking Sets
-12125,Outdoor_Cooker,Outdoor Cooking Kit,2,500,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 11; },{},{}
-12126,Home_Cooking_Set,Home Cooking Kit,2,1000,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 12; },{},{}
+12125,Outdoor_Cooking_Kits,Outdoor Cooking Kit,2,500,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 11; },{},{}
+12126,Indoor_Cooking_Kits,Home Cooking Kit,2,1000,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 12; },{},{}
 12127,High_end_Cooking_Kits,Professional Cooking Kit,2,2000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 13; },{},{}
 12128,Imperial_Cooking_Kits,Royal Cooking Kit,2,5000,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 14; },{},{}
 12129,Fantastic_Cooking_Kits,Fantastic Cooking Kit,2,10000,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ produce 15; },{},{}
