@@ -19,6 +19,7 @@
 //= 1.6 Removed Duplicates [Silent]
 //= 1.7 Split quest to quests/quests_izlude.txt [Evera]
 //= 1.71 Optimized. Also thanks to CAHTEXHuK [Lupus]
+//= 1.72 Small bugfix [Paradox924X]
 //============================================================
 
 
@@ -176,7 +177,6 @@ izlude,135,78,2	script	Charfri	91,{
 
 //Dega-------------------------------------------------------------------------------------
 izlude,150,118,3	script	Dega	84,{
-	set @TEMP,;
 	mes "[Dega]";
 	if(rand(2)) {
 		if(rand(2)) {

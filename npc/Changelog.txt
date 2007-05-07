@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/05/07
+	* Removed an unnecessary/buggy line in cities/izlude.txt [Paradox924X]
 	* Various spawn fixes here and there [Playtester]
 	* Revised 2/3 of the cities scripts. Thanks to CAHTEHHuK [Lupus]
 	- Fixed wrong usage (not a bug, but stil bad) | -> ||
