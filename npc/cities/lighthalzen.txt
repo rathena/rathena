@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA, Au{R}oN (Translated by Alan), $ephiroth
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 1.0b npcid fix [KarLaeda]
 //= 1.1 Added new NPC by $ephiroth and merged other NPCs
 //=	from npc\other\lighthalzen_???.txt [Lupus]
+//= 1.2 Moved some NPCs to Lighthalzen quests. [SinSloth]
 //=============================================================
 
 lighthalzen,198,285,5	script	Jiwon	862,{
@@ -1476,111 +1477,6 @@ lhz_in01,93,45,4	script	Researcher#02	865,{
 
 // ---------------------------------------------------------------------------
 
-lhz_in01,286,226,2	script	Secretary Slierre#Secretary_Slierre	831,{
-
-	mes "[Sueii Slierre]";
-	mes "Excuse me, but you are";
-	mes "not allowed to be in here.";
-	mes "Please visit the Help Desk";
-	mes "if you have any questions about";
-	mes "the Rekenber Corporation.";
-	mes "Thank you for cooperating.";
-	close;
-}
-
-// ---------------------------------------------------------------------------
-
-lhz_in03,32,162,2	script	Crippled Girl#Crippled_Girl	53,{
-
-	mes "[Crippled Girl]";
-	mes "...";
-	mes "......";
-	mes "*Sigh...*";
-	next;
-	menu "Hello, how are you?",-;
-	mes "[Crippled Girl]";
-	mes "Oh, I'm fine,";
-	mes "thanks for asking.";
-	mes "I'm just waiting for";
-	mes "somebody, that's all.";
-	close;
-}
-
-// ---------------------------------------------------------------------------
-
-lighthalzen,346,263,2	script	Elder	846,{
-
-	mes "[Elder]";
-	mes "Predators are always";
-	mes "on the lookout for easy";
-	mes "prey. Be careful, youngster!";
-	mes "You look innocent enough";
-	mes "to become a victim in the city.";
-	next;
-	menu "About Lighthalzen",L_lighthalzen,"About the Slum",L_slum,"????",-;
-	mes "[Elder]";
-	mes "Well, if you need any";
-	mes "help around here or have";
-	mes "any questions, come back";
-	mes "and ask me. I get the feeling";
-	mes "that we'll probably meet again.";
-	close;
-
-L_lighthalzen:
-	mes "[Elder]";
-	mes "Lighthalzen might seem";
-	mes "like a splendid city at first,";
-	mes "but you'll learn quickly that";
-	mes "the poor are segregated from";
-	mes "the rich and treated as less";
-	mes "than second class citizens.";
-	next;
-	mes "[Elder]";
-	mes "At first, separation between";
-	mes "the rich and poor districts was";
-	mes "subtly enforced. They built the";
-	mes "railroad right between the two";
-	mes "districts to make it easier for";
-	mes "the rich to ignore the poor.";
-	next;
-	mes "[Elder]";
-	mes "But now they even have";
-	mes "guards to make sure that";
-	mes "the poor can't bother the";
-	mes "rich. I'm pretty sure that";
-	mes "this segregation won't be";
-	mes "ending anytime soon...";
-	next;
-	mes "[Elder]";
-	mes "Now, I've heard that the";
-	mes "Rekenber Corporation is";
-	mes "actually providing jobs for";
-	mes "people in the slums. Beggars";
-	mes "can't be choosers, so I'm sure";
-	mes "these jobs aren't that great.";
-	close;
-
-L_slum:
-	mes "[Elder]";
-	mes "To live in the slum is to";
-	mes "be familiar with poverty,";
-	mes "disease, condemnation";
-	mes "and contempt. But we're all";
-	mes "still people, you know, so let";
-	mes "go of any of your misgivings.";
-	next;
-	mes "[Elder]";
-	mes "We're struggling just";
-	mes "to survive here. At the";
-	mes "very least, please respect";
-	mes "that. It's a fact that the";
-	mes "people in the rich district";
-	mes "seem to keep forgetting.";
-	close;
-}
-
-// ---------------------------------------------------------------------------
-
 lighthalzen,326,249,5	script	Grinnel	870,{
 
 	mes "[Grinnel]";
@@ -1832,80 +1728,6 @@ lhz_in03,184,38,2	script	Loudmouth	55,{
 
 }
 // ---------------------------------------------------------------------------
-
-lhz_in01,114,181,3	script	Representative::LhzRep	71,{
-
-	mes "[Representative]";
-	mes "Greetings, and welcome";
-	mes "to the Rekenber Corporation.";
-	mes "How may I be of service today?";
-	next;
-	menu "Building Information.",-;
-
-loopback:
-	mes "[Representative]";
-	mes "Please tell me";
-	mes "which floor you'd like";
-	mes "to know more about.";
-	next;
-	menu "1F",s_1,"2F",s_2,"B1",s_B,"Cancel",-;
-
-	mes "[Representative]";
-	mes "We are always doing our";
-	mes "best to provide the best";
-	mes "services to our customers.";
-	mes "Remember that Rekenber";
-	mes "is the name you can trust.";
-	mes "Thank you and have a nice day.";
-	close;
-
-s_1:
-	mes "[Representative]";
-	mes "The ^3131FFRekenber Library^000000 can";
-	mes "be found at the end of the";
-	mes "left hallway. Our library is";
-	mes "a great resource of innovative";
-	mes "ideas and information for our";
-	mes "system development employees.";
-	next;
-	mes "[Representative]";
-	mes "The ^3131FFBall Room^000000, where";
-	mes "various official events are";
-	mes "usually held, can be accessed";
-	mes "through the right hallway.";
-	next;
-	goto loopback;
-
-s_2:
-	mes "[Representative]";
-	mes "Please use the stairs";
-	mes "located on both sides of";
-	mes "the Help Desk to go to the";
-	mes "Second Floor. The Second";
-	mes "Floor is mostly used for";
-	mes "administrative purposes.";
-	next;
-	mes "[Representative]";
-	mes "There, you can find";
-	mes "the ^3131FFConference Room^000000,";
-	mes "^3131FFSecretary Office^000000, the";
-	mes "^3131FFAuditorium^000000 and the";
-	mes "^3131FFChairman's Office^000000.";
-	next;
-	goto loopback;
-s_B:
-	mes "[Representative]";
-	mes "The first underground floor";
-	mes "is used by the ^3131FFRegenshirm^000000,";
-	mes "our laboratory affiliate. For";
-	mes "security reasons, this floor";
-	mes "is not accessible to visitors";
-	next;
-	goto loopback;
-	
-}
-
-lhz_in01,26,247,2	duplicate(LhzRep)	Representative	71
 
 lhz_in01,173,28,4	script	Guard#01::LhzRekGuard	868,{
 

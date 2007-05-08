@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Sara-chan (1.0)
 //===== Current Version: =====================================
-//= 1.5
+//= 1.8
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 8+
 //===== Description: =========================================
@@ -16,6 +16,7 @@
 //= 1.5 Added a few missing warps, thanks to Kargha [MasterOfMuppets]
 //= 1.6 Added a few more missing warps. [MasterOfMuppets]
 //= 1.7 Yet more missing warps implemented :P [MasterOfMuppets]
+//= 1.8 Added missing warps and moved some related to quests. [SinSloth]
 //============================================================
 
 lighthalzen,196,46,0	warp	lhz010	1,1,lhz_in02,282,83
@@ -132,14 +133,11 @@ lhz_in01,15,129,0	warp	lhz046a	1,1,lhz_in01,34,224
 lhz_in01,58,130,0	warp	lhz047	1,1,lhz_in01,193,127
 lhz_in01,191,127,0	warp	lhz047a	1,1,lhz_in01,56,130
 
-lhz_in01,43,115,0	warp	lhz048	1,1,lhz_in01,278,130
-lhz_in01,278,132,0	warp	lhz048a	1,1,lhz_in01,43,117
-
 //lhz_in01,275,235,0	warp	lhz049	1,1,lhz_in01,275,242  //not sure
 //lhz_in01,275,238,0	warp	lhz049a	1,1,lhz_in01,275,232  //not sure
 
 lighthalzen,324,301,0	warp	lhz050	1,1,lhz_in03,239,101
 lhz_in03,237,101,0	warp	lhz050a	1,1,lighthalzen,324,299
 
-lighthalzen,323,322,0	warp	lhz051	1,1,lhz_in03,15,162
-lhz_in03,13,162,0	warp	lhz051a	1,1,lighthalzen,321,322
+lhz_in01,44,144,0	warp	lhz051	1,1,lhz_in01,277,159
+lhz_in01,277,156,0	warp	lhz051a	1,1,lhz_in01,44,141
