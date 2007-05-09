@@ -1,13 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h> // for stat/lstat/fstat
-#include <signal.h>
-#include <fcntl.h>
-#include <string.h>
-
 #include "../common/cbasetypes.h"
 #include "../common/core.h"
 #include "../common/socket.h"
@@ -20,6 +13,13 @@
 #include "../common/version.h"
 #include "../common/md5calc.h"
 #include "login.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h> // for stat/lstat/fstat
+#include <signal.h>
+#include <fcntl.h>
+#include <string.h>
 
 //add include for DBMS(mysql)
 #ifdef WIN32
@@ -735,7 +735,7 @@ int parse_fromchar(int fd)
 		if (server_fd[id] == fd)
 			break;
 	if (id == MAX_SERVERS) { // not a char server
-		session[fd]->eof = 1;
+		set_eof(fd);
 		do_close(fd);
 		return 0;
 	}
@@ -1236,7 +1236,7 @@ int parse_fromchar(int fd)
 
 		default:
 			ShowError("parse_fromchar: Unknown packet 0x%x from a char-server! Disconnecting!\n", RFIFOW(fd,0));
-			session[fd]->eof = 1;
+			set_eof(fd);
 			return 0;
 		}
 	}
@@ -1354,7 +1354,7 @@ int parse_login(int fd)
 				WFIFOB(fd,2) = 3; // 3 = Rejected from Server
 				WFIFOSET(fd,23);
 				RFIFOSKIP(fd,packet_len);
-				session[fd]->eof = 1;
+				set_eof(fd);
 				break;
 			}
 
@@ -1541,7 +1541,7 @@ int parse_login(int fd)
 			struct login_session_data* ld;
 			if (session[fd]->session_data) {
 				ShowWarning("login: abnormal request of MD5 key (already opened session).\n");
-				session[fd]->eof = 1;
+				set_eof(fd);
 				return 0;
 			}
 
@@ -1655,12 +1655,12 @@ int parse_login(int fd)
 
 		case 0x7532:	// Request to end connection
 			ShowStatus ("End of connection (ip: %s)" RETCODE, ip);
-			session[fd]->eof = 1;
+			set_eof(fd);
 			break;
 
 		default:
 			ShowStatus ("Abnormal end of connection (ip: %s): Unknown packet 0x%x " RETCODE, ip, RFIFOW(fd,0));
-			session[fd]->eof = 1;
+			set_eof(fd);
 			return 0;
 		}
 	}

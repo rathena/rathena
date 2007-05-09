@@ -1,12 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/types.h>
-#include <time.h>
-
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/socket.h"
@@ -16,13 +10,19 @@
 
 #include "map.h"
 #include "battle.h"
-#include "chrif.h"
 #include "clif.h"
 #include "intif.h"
 #include "npc.h"
 #include "pc.h"
 #include "status.h"
 #include "mercenary.h"
+#include "chrif.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <time.h>
 
 struct dbt *auth_db;
 
@@ -1424,7 +1424,7 @@ int chrif_parse(int fd)
 			if (r == 1) continue;	// intifで処理した
 			if (r == 2) return 0;	// intifで処理したが、データが足りない
 
-			session[fd]->eof = 1;
+			set_eof(fd);
 			ShowWarning("chrif_parse: session #%d, intif_parse failed -> disconnected.\n", fd);
 			return 0;
 		}
@@ -1465,7 +1465,7 @@ int chrif_parse(int fd)
 		default:
 			if (battle_config.error_log)
 				ShowError("chrif_parse : unknown packet (session #%d): 0x%x. Disconnecting.\n", fd, cmd);
-			session[fd]->eof = 1;
+			set_eof(fd);
 			return 0;
 		}
 		if (fd == char_fd) //There's the slight chance we lost the connection during parse, in which case this would segfault if not checked [Skotlex]

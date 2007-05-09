@@ -4,12 +4,6 @@
 #define DUMP_UNKNOWN_PACKET	0
 #define DUMP_ALL_PACKETS	0
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-#include <time.h>
-
 #include "../common/cbasetypes.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
@@ -21,7 +15,6 @@
 
 #include "map.h"
 #include "chrif.h"
-#include "clif.h"
 #include "pc.h"
 #include "status.h"
 #include "npc.h"
@@ -44,6 +37,13 @@
 #include "mercenary.h"	//[orn]
 #include "log.h"
 #include "irc.h"
+#include "clif.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
+#include <time.h>
 
 struct Clif_Config {
 	int packet_db_ver;	//Preferred packet version.
@@ -1622,7 +1622,7 @@ void clif_quitsave(int fd,struct map_session_data *sd)
  */
 static int clif_waitclose(int tid, unsigned int tick, int id, int data) {
 	if (session[id] && session[id]->func_parse == clif_parse) //Avoid disconnecting non-players, as pointed out by End of Exam [Skotlex]
-		session[id]->eof = 1;
+		set_eof(id);
 
 	return 0;
 }
@@ -11873,7 +11873,7 @@ int clif_parse(int fd)
 		packet_ver = sd->packet_ver;
 		if (packet_ver < 0 || packet_ver > MAX_PACKET_VER) {	// This should never happen unless we have some corrupted memory issues :X [Skotlex]
 			ShowWarning("clif_parse: Disconnecting session #%d (AID:%d/CID:%d) for having invalid packet_ver=%d.", fd, sd->status.account_id, sd->status.char_id, packet_ver);
-			session[fd]->eof = 1;
+			set_eof(fd);
 			return 0;
 		}
 	} else {
@@ -11909,7 +11909,7 @@ int clif_parse(int fd)
 	// ゲーム用以外パケットか、認証を終える前に0072以外が来たら、切断する
 	if (cmd > MAX_PACKET_DB || packet_db[packet_ver][cmd].len == 0) {	// if packet is not inside these values: session is incorrect?? or auth packet is unknown
 		ShowWarning("clif_parse: Received unsupported packet (packet 0x%04x, %d bytes received), disconnecting session #%d.\n", cmd, RFIFOREST(fd), fd);
-		session[fd]->eof = 1;
+		set_eof(fd);
 		return 0;
 	}
 
@@ -11922,7 +11922,7 @@ int clif_parse(int fd)
 		packet_len = RFIFOW(fd,2);
 		if (packet_len < 4 || packet_len > 32768) {
 			ShowWarning("clif_parse: Packet 0x%04x specifies invalid packet_len (%d), disconnecting session #%d.\n", cmd, packet_len, fd);
-			session[fd]->eof =1;
+			set_eof(fd);
 			return 0;
 		}
 	}

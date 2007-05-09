@@ -1,13 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h> // for stat/lstat/fstat
-#include <signal.h>
-#include <fcntl.h>
-#include <string.h>
-
 #include "../common/cbasetypes.h"
 #include "../common/core.h"
 #include "../common/socket.h"
@@ -21,6 +14,13 @@
 #include "../common/version.h"
 #include "../common/md5calc.h"
 #include "login.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h> // for stat/lstat/fstat
+#include <signal.h>
+#include <fcntl.h>
+#include <string.h>
 
 uint32 account_id_count = START_ACCOUNT_NUM;
 bool new_account_flag = true;
@@ -1367,7 +1367,7 @@ int parse_fromchar(int fd)
 		if (server_fd[id] == fd)
 			break;
 	if (id == MAX_SERVERS) { // not a char server
-		session[fd]->eof = 1;
+		set_eof(fd);
 		do_close(fd);
 		return 0;
 	}
@@ -1946,7 +1946,7 @@ int parse_fromchar(int fd)
 				}
 			}
 			ShowError("parse_fromchar: Unknown packet 0x%x from a char-server! Disconnecting!\n", command);
-			session[fd]->eof = 1;
+			set_eof(fd);
 			return 0;
 		}
 	}
@@ -2001,7 +2001,7 @@ int parse_admin(int fd)
 		case 0x7532:	// Request of end of connection
 			login_log("'ladmin': End of connection (ip: %s)" RETCODE, ip);
 			RFIFOSKIP(fd,2);
-			session[fd]->eof = 1;
+			set_eof(fd);
 			break;
 
 		case 0x7920:	// Request of an accounts list
@@ -2915,7 +2915,7 @@ int parse_admin(int fd)
 				}
 			}
 			login_log("'ladmin': End of connection, unknown packet (ip: %s)" RETCODE, ip);
-			session[fd]->eof = 1;
+			set_eof(fd);
 			ShowWarning("Remote administration has been disconnected (unknown packet).\n");
 			return 0;
 		}
@@ -3012,7 +3012,7 @@ int parse_login(int fd)
 				WFIFOB(fd,2) = 3; // 3 = Rejected from Server
 				WFIFOSET(fd,23);
 				RFIFOSKIP(fd,packet_len);
-				session[fd]->eof = 1;
+				set_eof(fd);
 				break;
 			}
 
@@ -3123,7 +3123,7 @@ int parse_login(int fd)
 			struct login_session_data* ld;
 			if (session[fd]->session_data) {
 				ShowWarning("login: abnormal request of MD5 key (already opened session).\n");
-				session[fd]->eof = 1;
+				set_eof(fd);
 				return 0;
 			}
 
@@ -3243,7 +3243,7 @@ int parse_login(int fd)
 
 		case 0x7532:	// Request to end connection
 			login_log("End of connection (ip: %s)" RETCODE, ip);
-			session[fd]->eof = 1;
+			set_eof(fd);
 			return 0;
 
 		case 0x7918:	// Request for administation login
@@ -3340,7 +3340,7 @@ int parse_login(int fd)
 				}
 			}
 			login_log("Abnormal end of connection (ip: %s): Unknown packet 0x%x " RETCODE, ip, command);
-			session[fd]->eof = 1;
+			set_eof(fd);
 			return 0;
 		}
 	}

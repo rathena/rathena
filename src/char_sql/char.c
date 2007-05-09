@@ -1,9 +1,22 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "../common/cbasetypes.h"
+#include "../common/utils.h"
+#include "../common/strlib.h"
+#include "../common/showmsg.h"
+#include "../common/db.h"
+#include "../common/malloc.h"
+
+#include "itemdb.h"
+#include "inter.h"
+#include "int_guild.h"
+#include "int_homun.h"
+#include "char.h"
+
 #include <sys/types.h>
 
-#ifdef _WIN32
+#ifdef WIN32
 #include <winsock2.h>
 #else
 #include <sys/socket.h>
@@ -18,19 +31,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "../common/cbasetypes.h"
-#include "../common/utils.h"
-#include "../common/strlib.h"
-#include "../common/showmsg.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-
-#include "itemdb.h"
-#include "inter.h"
-#include "int_guild.h"
-#include "int_homun.h"
-#include "char.h"
 
 #ifndef TXT_SQL_CONVERT
 static struct dbt *char_db_;
@@ -1853,7 +1853,7 @@ int parse_tologin(int fd) {
 	// so, if it isn't the login-server, we disconnect the session.
 	//session eof check!
 	if(fd != login_fd)
-		session[fd]->eof = 1;
+		set_eof(fd);
 	if(session[fd]->eof) {
 		if (fd == login_fd) {
 			ShowWarning("Connection to login-server lost (connection #%d).\n", fd);
@@ -2261,7 +2261,7 @@ int parse_tologin(int fd) {
 		}
 		default:
 			ShowError("Unknown packet 0x%04x from login server, disconnecting.\n", RFIFOW(fd, 0));
-			session[fd]->eof = 1;
+			set_eof(fd);
 			return 0;
 		}
 	}
@@ -2453,7 +2453,7 @@ int parse_frommap(int fd)
 		if (server_fd[id] == fd)
 			break;
 	if(id == MAX_MAP_SERVERS)
-		session[fd]->eof = 1;
+		set_eof(fd);
 	if(session[fd]->eof) {
 		if (id < MAX_MAP_SERVERS) {
 			unsigned char buf[16384];
@@ -3092,7 +3092,7 @@ int parse_frommap(int fd)
 
 			// no inter server packet. no char server packet -> disconnect
 			ShowError("Unknown packet 0x%04x from map server, disconnecting.\n", RFIFOW(fd,0));
-			session[fd]->eof = 1;
+			set_eof(fd);
 			return 0;
 		}
 	}
@@ -3157,7 +3157,7 @@ int parse_char(int fd)
 	sd = (struct char_session_data*)session[fd]->session_data;
 
 	if(login_fd < 0)
-		session[fd]->eof = 1;
+		set_eof(fd);
 	if(session[fd]->eof) { // disconnect any player (already connected to char-server or coming back from map-server) if login-server is diconnected.
 		if (fd == login_fd)
 			login_fd = -1;
@@ -3582,7 +3582,7 @@ int parse_char(int fd)
 		}
 		case 0x7532:	// disconnect(default also disconnect)
 		default:
-			session[fd]->eof = 1;
+			set_eof(fd);
 			return 0;
 		}
 	}

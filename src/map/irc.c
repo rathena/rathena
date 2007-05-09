@@ -1,10 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
 #include "../common/core.h"
 #include "../common/socket.h"
 #include "../common/malloc.h"
@@ -18,8 +14,12 @@
 
 #include "map.h"
 #include "pc.h"
-#include "irc.h"
 #include "intif.h" //For GM Broadcast [Zido]
+#include "irc.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 short use_irc=0;
 
@@ -252,7 +252,7 @@ void irc_parse_sub(int fd, char *incoming_string)
 	        	sprintf(send_string, "QUIT");
 			irc_send(send_string);
 			if(session[fd])
-				session[fd]->eof=1;
+				set_eof(fd);
 		}
 	}
 	else if (irc_si->state == 2){

@@ -140,4 +140,26 @@ int socket_getips(uint32* ips, int max);
 extern uint32 addr_[16];   // ip addresses of local host (host byte order)
 extern int naddr_;   // # of ip addresses
 
+void set_eof(int fd);
+
+/// Use a shortlist of sockets instead of iterating all sessions for sockets 
+/// that have data to send or need eof processing.
+///
+/// @author Buuyo-tama
+//#define SEND_SHORTLIST
+
+#ifdef SEND_SHORTLIST
+struct send_shortlist_node {
+	struct send_shortlist_node *next; // Next node in the linked list
+	struct send_shortlist_node *prev; // Previous node in the linked list
+	int fd; // FD that needs sending.
+};
+
+// Add a fd to the shortlist so that it'll be recognized as a fd that needs
+// sending done on it.
+void send_shortlist_add_fd(int fd);
+// Do pending network sends (and eof handling) from the shortlist.
+void send_shortlist_do_sends();
+#endif
+
 #endif /* _SOCKET_H_ */
