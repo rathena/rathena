@@ -1,13 +1,13 @@
 //===== eAthena Script ======================================= 
 //= Blacksmith Skills Quests
 //===== By: ================================================== 
-//= Lupus, Reddozen
+//= Lupus, Reddozen, Samuray22
 //===== Current Version: ===================================== 
-//= 1.3a
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3800+
 //===== Description: ========================================= 
-//= Temp quests for new skills for 2nd classes
+//= Oficial quests for new skills for 2nd classes
 //===== Additional Comments: ================================= 
 //= 1.0 for fully working skills only [Lupus]
 //= 1.1 Added more new skill quests for more classes [Lupus]
@@ -19,124 +19,696 @@
 //= 1.3a fixed an item ID typo, thx 2Spiritual Kid
 //= 1.3b Splitted into different files [DracoRPG]
 //= 1.3c Inverted the weight check for Greed [DracoRPG]
+//= 1.4 Updated to the official One [Samuray22]
 //============================================================
 
-
 //============================================================
-// BLACKSMITH SKILL - GREED + UNFAIR TRICK
+// BLACKSMITH SKILL - UNFAIR TRICK
 //============================================================
-//== GOODDAY - GREED SKILL ===================================
-geffen,172,53,7	script	Goodday	826,{
-	mes "[Goodday]";
-	if(BaseJob!=Job_Blacksmith) goto L_nosmith;
-	if(getskilllv(1013)) goto L_alreadyhave;
-	if(Weight < MaxWeight-5000) goto L_notstrong; // You must carry so much that you cannot add 500 more (weight is x10!)
-
-	mes "You look pretty strong, so I'll";
-	mes "teach you a little trick I found";
-	mes "while watching some wizards move";
-	mes "things around without lifting a";
-	mes "finger!";
-	skill 1013,1,0;
-	close;
-
-L_notstrong:
-	mes "Come back when you're strong";
-	mes "enough to handle the weight";
-	mes "of my ability. You will need";
-	mes "to carry so much that you won't";
-	mes "be able to add 500 more weight.";
-	close;
-
-L_nosmith:
-	mes "Geffen is such a great town.";
-	mes "Don't you think so too?";
+//== AKKI - UNFAIR TRICK ===================================
+geffen,178,72,5	script	Akki	726,{
+	if(Class == Job_Whitesmith && BLACK_SK >= 7 && getskilllv(1012) == 0) {
+			mes "[Akki]";
+			mes "Woah~";
+			mes "It's been a really long time~";
+			mes "Maybe it's because you've trained so much";
+			mes "but you are looking good~";
+			mes "I will teach you the skill";
+			mes "you learned before again~";
+			skill 1012,1,0;
+			set BLACK_SK, 8;
+			close;
+		} else if(BLACK_SK == 8) {
+			mes "[Akki]";
+			mes "It's been a long time~";
+			mes "if you find time again";
+			mes "feel free to drop by again~";
+			mes "it's been planned me for to";
+			mes "remain in this spot, hehe~";
+			mes "Then, good luck on our travels.";
+			mes "Bye bye~";
+			close;
+	} else if(Class == Job_Whitesmith || Class == Job_Blacksmith) {
+		if(JobLevel > 29) {
+			if (BLACK_SK == 0) {
+				mes "[Akki]";
+				mes "Hello~";
+				mes "The weather is wonderful today.";
+				mes "In a weather like this,";
+				mes "vending is very good,";
+				mes "but hunting is";
+				mes "extraordinary as well.";
+				next;
+				mes "[Akki]";
+				mes "I am blacksmith Akki,";
+				mes "hired to teach ^ff0000 Unfairly Trick^000000 to fellow smiths";
+				mes "of the Blacksmith";
+				mes "Guild.";
+				next;
+				mes "[Akki]";
+				mes "The quest skill I teach,";
+				mes " -^ff0000Unfairly Trick^000000 is-";
+				mes "-^ff0000a skill that decreases^000000-";
+				mes "-^ff0000zeny required for Mammonite by 10%^000000-";
+				mes "-^ff0000 and it is a passive skill.^000000-.";
+				next;
+				mes "[Akki]";
+				mes "Seeing from a professional's view,";
+				mes " "+strcharinfo(0)+", you will";
+				mes "find this skill useful";
+				mes "if you get it.";
+				next;
+				mes "[Akki]";
+				mes "How is it?";
+				mes "Take a chance and learn it.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes ".............";
+				mes "- Akki appears to be reading-";
+				mes "-to me from a book called-";
+				mes "-'Blacksmith Guild Guide.-";
+				mes "-Can you put your faith in the blacksmith?-";
+				mes "..................";
+				next;
+				switch( select( "Learn it.", "Refuse.")) {
+				case 1:
+					mes "["+strcharinfo(0)+"]";
+					mes "I will learn it.";
+					next;
+					mes "[Akki]";
+					mes "Good choice~!";
+					mes "There is a skill,";
+					mes "a sneaky one, that the guild";
+					mes "was able to produce... hehe~~";
+					next;
+					mes "[Akki]";
+					mes "Well, then I will explain to you";
+					mes "the basics of the skill.";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "-Akki reopens the booklet-";
+					mes "-and starts reading it.-";
+					next;
+					mes "[Akki]";
+					mes "The zeny used in";
+					mes "Mammonite can be saved while";
+					mes "still preserving the power with";
+					mes "the skill.-^ff0000 Unfairly Trick^000000-is";
+					mes "a trick skill that uses counterfeit";
+					mes "zeny for your Mammonite";
+					mes "during battles.";
+					next;
+					mes "[Akki]";
+					mes "To learn this skill, you must";
+					mes "make counterfeit zeny first,";
+					mes "so get every material";
+					mes "I list and then";
+					mes "come back to me.";
+					next;
+					mes "[Akki]";
+					mes "The items needed are...";
+					mes "One 1 Steel, Five 5 Coal, One 1 Iron Hammer,";
+					mes "And... um... hmm... um...";
+					mes "um~~~~~~~~~~~";
+					next;
+					mes "[Akki]";
+					mes "Um~! Just a moment.";
+					mes "I'm still new here...";
+					mes "I underlined it somewhere...";
+					mes "Where is it....";
+					mes "Where is it~?!!!~~~";
+					next;
+					mes "[Akki]";
+					mes "-She turns pages frantically-";
+					next;
+					mes "[Akki]";
+					mes "Oh yay, I found it!";
+					mes "Found it, I found it~";
+					mes "Then I will list it again.";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "............";
+					next;
+					mes "[Akki]";
+					mes "1 Steel, 5 Coal, 1 Iron Hammer,";
+					mes "500 zeny to use as prints.";
+					mes "and 1 Detrimindexta required";
+					mes "are listed here, hehe";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "-......-";
+					mes "-Could this girl-";
+					mes "-really teach the skill...-";
+					next;
+					mes "[Akki]";
+					mes "Telling by "+strcharinfo(0)+"'s face";
+					mes "you don't seem to trust me!!";
+					mes "You, standing there!!!";
+					mes "Is that really how";
+					mes "you're thinking?!";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "Yes. That is so.";
+					next;
+					mes "[Akki]";
+					mes "Wahh, of course...";
+					mes "But it's been only";
+					mes "3 months since I joined!!!!!!";
+					mes "I, Akki, do not give up.";
+					mes "Worry not, hang on~!!!";
+					mes "Mwhahahahaha~";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "-......-";
+					next;
+					mes "[Akki]";
+					mes "Just bring the material";
+					mes "and I will teach them to you.";
+					next;
+					mes "[Akki]";
+					mes "Well, then go get the";
+					mes "things I listed~";
+					set BLACK_SK, 1;
+					next;
+					mes "[Akki]";
+					mes "I'll list them again.";
+					mes "1 Steel, 5 Coals";
+					mes "1 Iron Hammer, 500 zeny, 1 Detrimindexta";
+					mes "are needed.";
+					mes "Don't forget~";
+					next;
+					mes "[Akki]";
+					mes "Then~! Go began~!";
+					mes "Meanwhile, I will be eating";
+					mes "this melon bread I bought.";
+					mes "Yum...";
+					close;
+				case 2:
+					mes "[Akki]";
+					mes "Huh? What?!!";
+					mes "You do not trust me";
+					mes "yet?~";
+					next;
+					mes "[Akki]";
+					mes "Waaah! Please learn it~";
+					mes "I will try hard~!!!";
+					mes "Please~ Please~";
+					next;
+					mes "[Akki]";
+					mes "The blacksmith master";
+					mes "told me to raise my";
+					mes "reputation more~";
+					mes "WAaaaah~~~";
+					mes "Just one more time.. I....";
+					mes "Waaaaaah~";
+					next;
+					mes "[Akki]";
+					mes "Too bad.";
+					mes "I'll get in trouble again.";
+					mes "Sobs~";
+					close;
+				}
+			} else if(BLACK_SK == 1) {
+				if(countitem("Steel") > 0 && countitem("Coal") > 4 && countitem("Detrimindexta") > 0 && countitem("Iron_Hammer") > 0) {
+					if (Zeny >= 500) {
+						mes "[Akki]";
+						mes "Oh yay~ you got all the materials?";
+						mes "Let me see them~~";
+						mes "Hmmm~~";
+						next;
+						mes "[Akki]";
+						mes "Wow, perfect~";
+						mes "Alright~!!";
+						next;
+						mes "[Akki]";
+						mes "First, I will test";
+						mes "the skill myself with";
+						mes "the materials, so";
+						mes "wait a few";
+						mes "moments~";
+						delitem "Coal", 5;
+						delitem "Steel", 1;
+						delitem "Detrimindexta", 1;
+						delitem "Iron_Hammer", 1;
+						set Zeny, Zeny-500;
+						set BLACK_SK, 2;
+						close;
+					}
+					mes "[Akki]";
+					mes "You need 500 zeny to use as prints";
+					mes "but you haven't enough.";
+					mes "Go make yourself 500 zeny~";
+					close;
+				}
+				mes "[Akki]";
+				mes "Did you get everything?";
+				mes "Hmm, let's see...";
+				mes "Uhoh, you're short~";
+				next;
+				mes "[Akki]";
+				mes "I will say it again,";
+				mes "1 Steel, 5 Coals";
+				mes "1 Iron Hammer, 500 zeny, 1 Detrimindexta";
+				mes "are needed.";
+				mes "Don't forget~";
+				close;
+			} else if(BLACK_SK == 2) {
+				mes "[Akki]";
+				mes "Oh~!!!";
+				mes "You're here again~";
+				mes "........";
+				mes "Um~ Uummmm...";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "............";
+				next;
+				mes "[Akki]";
+				mes "The truth is...";
+				mes "I was making counterfeit";
+				mes "and I failed... WAaah~!";
+				mes "Sorry~ Just don't";
+				mes "tell the guild master~~";
+				mes "Wah wah~";
+				next;
+				mes "[Akki]";
+				mes "Give me one more chance~";
+				mes "I really cann do well~";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Oh really...";
+				next;
+				mes "[Akki]";
+				mes "Please please~";
+				mes "1 Steel and 3 Coals";
+				mes "Get it one more time~";
+				mes "Pleeeaaassseee~";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "I guess...";
+				mes "Is that all you need?";
+				next;
+				mes "[Akki]";
+				mes "Yes~!!! You're a kind person!";
+				mes "You will live a long life~";
+				mes "Hehe~";
+				next;
+				mes "[Akki]";
+				mes "To say it again,";
+				mes "1 Steel";
+				mes "and 3 Coals~!!!";
+				mes "Good luck, have fun~!!!";
+				mes "Go, go~!!!";
+				set BLACK_SK, 3;
+				close;
+			} else if(BLACK_SK == 3) {
+				if (countitem("Steel") > 0 && countitem("Coal") > 2) {
+					mes "[Akki]";
+					mes "Oh~ You brought them~!";
+					mes "Yay~ Really, thanks~";
+					mes "I'll do better this time.";
+					mes "Wait a few moments.";
+					delitem "Steel", 1;
+					delitem "Coal", 3;
+					set BLACK_SK, 4;
+					close;
+				}
+					mes "[Akki]";
+					mes "To list the needed";
+					mes "materials again..";
+					mes "1 Steel and";
+					mes "3 Coals~!";
+					mes "Good luck, have fun~!!!";
+					mes "Go, go~!!!";
+					close;
+			} else if(BLACK_SK == 4) {
+				mes "[Akki]";
+				mes "...........";
+				mes "........";
+				mes "...........";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "...?";
+				next;
+				mes "[Akki]";
+				mes ".........";
+				mes ".......";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "What...no!!!";
+				mes "again?!!!";
+				next;
+				mes "[Akki]";
+				mes "Waaah~";
+				mes "While I was forging";
+				mes "the Iron Hammer broke";
+				mes "so I couldn't do it~";
+				mes "Waaaaah sobs~~~~";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "-I need to get her another Iron Hammer-";
+				mes "-I guess. argh.-";
+				mes "-.......Why is..-";
+				mes "-argh...tiring...-";
+				set BLACK_SK, 5;
+				close;
+			} else if(BLACK_SK == 5) {
+				if (countitem("Iron_Hammer") > 0) {
+					mes "[Akki]";
+					mes "Oh~!!";
+					mes "You brought it~!";
+					mes "So kind~";
+					next;
+					mes "[Akki]";
+					mes "Then I will really really";
+					mes "teach you, so just";
+					mes "wait a little~";
+					delitem Iron_Hammer, 1;
+					set BLACK_SK, 6;
+					close;
+				}
+				mes "[Akki]";
+				mes "Iron Hammer is gone~";
+				mes "Waaah~ What do I do~";
+				mes "If you bring it one more time";
+				mes "I promise to";
+				mes "do my best~";
+				close;
+			} else if(BLACK_SK == 6) {
+				mes "[Akki]";
+				mes "WAAAAAAAAH~!!!";
+				mes "AWwwwwn~";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "OMG~!!!";
+				mes "Not again?!!";
+				next;
+				mes "[Akki]";
+				mes "Tada~!!! Done~!!";
+				mes "Hehehe~!!!";
+				mes "I just wanted to scare you~";
+				mes "haha~";
+				next;
+				mes "[Akki]";
+				mes "I finished the skill";
+				mes "and tested it myself.";
+				mes "Now, with counterfeit I will teach,";
+				mes "-^ff0000 Unfairly Trick^000000-skill";
+				mes "to you, hehe~.";
+				next;
+				mes "[Akki]";
+				mes "As a bonus, after you learn this,";
+				mes "you can go to our teacher";
+				mes "pay a visit to Goodday and have";
+				mes "-^ff0000 Greed^000000- skill taught";
+				mes "to you as well~.";
+				next;
+				mes "[Akki]";
+				mes "Then I will teach you right away...";
+				mes "Lend me a paper to write on";
+				mes "and your ear~";
+				mes "-whisper whisper~ whisper whisper~";
+				next;
+				mes "[Akki]";
+				mes "Use it as I taught you,";
+				mes "hope it'll help.";
+				mes "I apologize for";
+				mes "making so many mistakes";
+				mes "in the process~.";
+				next;
+				mes "[Akki]";
+				mes "Then, if you find time again";
+				mes "come and visit me~";
+				mes "I will probably be stuck here";
+				mes "until I get promoted";
+				mes "elsewhere, hehe~";
+				mes "Then, bon voyage and.";
+				mes "bye bye~";
+				set BLACK_SK, 7;
+				skill 1012,1,0;
+				close;
+			}
+				set @teach, rand(1,2);
+				if(@teach == 1) {
+					mes "[Akki]";
+					mes "To achieve the new job quest";
+					mes "-^ff0000Greed^000000- in your list";
+					mes "go visit Goodday at Einbroch's";
+					mes "blacksmith guild~.";
+					close;
+				}
+				mes "[Akki]";
+				mes "It's been a while~";
+				mes "I will probably be stuck here";
+				mes "until I get promoted";
+				mes "elsewhere, hehe~";
+				mes "Visit me often~";
+				mes "Then, bon voyage and.";
+				mes "bye bye~";
+				close;
+		}	
+		mes "[Akki]";
+		mes "My name is Akki, was hired by ";
+		mes "the Blacksmith Guild to teach.";
+		mes "and pass down the skills.";
+		mes "I apologize, but";
+		mes ""+strcharinfo(0)+" is listed as low";
+		mes "Job Level. You cannot learn it yet.";
+		close;
+	}
+	mes "[Akki]";
+	mes "Good weather, isn't it?";
+	mes "It is an excellent day for";
+	mes "forging items.";
 	next;
-	emotion e_omg;
-	mes "[Goodday]";
-	mes "WHAT...";
-	mes "You don't!";	
-	close;
-
-L_alreadyhave:
-	mes "I've already taught you";
-	mes "everything I know, so I";
-	mes "need to get back to my";
-	mes "work.";
+	mes "[Akki]";
+	mes "I want to go by a shining stream";
+	mes "with ultimate materials and";
+	mes "blazing fire and forget myself";
+	mes "something special~";
 	close;
 }
 
-//== AKI - UNFAIR TRICK SKILL ==================================
-geffen,178,72,7	script	Aki	726,{
-	mes "[Aki]";
-	if(BaseJob!=Job_Blacksmith) goto L_nosmith;
-	if(getskilllv(1012)) goto L_alreadyhave;
-	if(getskilllv(1013)<1) goto L_nogreed;
-	if(JobLevel<30) goto L_nojob;
-	mes "We're going to need a few things";
-	mes "for this lesson. Bring me:";
-	mes "2 Steel";
-	mes "8 Coal";
-	mes "2 Iron Hammers";
-	mes "1 Detrimindexta";
-	mes "500 Zeny";
-	next;
-	
-	mes "[Aki]";
-	mes "Let me check your items.";
-	next;
-	
-	if(countitem(999)<2 || countitem(1003)<8 || countitem(613)<2 || countitem(971)<1 || zeny<500) goto L_noitems;//Items: Steel, Coal, Iron_Hammer, Detrimindexta,
-	delitem 999, 2;//Items: Steel,
-	delitem 1003, 8;//Items: Coal,
-	delitem 613, 2;//Items: Iron_Hammer,
-	delitem 971, 1;//Items: Detrimindexta,
-	set zeny, zeny-500;
-	
-	mes "[Aki]";
-	mes "Good, You brought everything";
-	mes "with you already! We'll start";
-	mes "the process now.";
-	skill 1012,1,0;
-	next;
-	
-	specialeffect 183;
-	mes "Wow, you're a fast learner.";
-	mes "Enjoy your new talents!";
-	close;
-
-L_noitems:
-	mes "[Aki]";
-	mes "You don't have enough items.";
-	mes "Come back when you have all";
-	mes "the required items for me.";
-	close;
-	
-L_nosmith:
-	mes "Don't mind Goodday over there.";
-	mes "He thinks everyone should like";
-	mes "this boring place!";
-	emotion e_laugh;
-	close;
-
-L_nogreed:
-	mes "If you're looking for more";
-	mes "to learn, then you should";
-	mes "talk to Goodday over there";
-	close;
-
-L_alreadyhave:
-	mes "WOW, I guess you've learned";
-	mes "all that the Blacksmiths of";
-	mes "Geffen can teach. Good luck";
-	mes "with your travels.";
-	close;
-	
-L_nojob:
-	mes "Come back when you've learned";
-	mes "more about being a Blacksmith.";
-	mes "You will need a Job level of at";
-	mes "least lv 30 to learn what I";
-	mes "know.";
+//============================================================
+// BLACKSMITH SKILL - GREED
+//============================================================
+//== GOODDAY - GREED SKILL ===================================
+geffen,172,52,7	script	Goodday	826,{
+	if(Class == Job_WhiteSmith || Class == Job_Blacksmith) {
+		if(BLACK_SK2 >= 2 && getskilllv(1013) == 0) {
+			mes "[Goodday]";
+			mes "Oh ho~";
+			mes "It's been a long time~";
+			mes "Is it because you transcended?";
+			mes "You look amazing~";
+			mes "I will give you the skill you";
+			mes "learned before again~";
+			skill 1013,1,0;
+			set BLACK_SK2, 3;
+			close;
+		} else if(BLACK_SK2 == 3) {
+			mes "[Goodday]";
+			mes "I wonder if you are using your skill";
+			mes "properly now.";
+			mes "Don't get too greedy as you live";
+			mes "and travel around, looking";
+			mes "and learning new things.";
+			close;
+		} else if(BLACK_SK2 == 0) {
+			mes "[Goodday]";
+			mes "I am the one who is in charge";
+			mes "of the quest-skills of Blacksmith.";
+			mes "My name is Master Gooday.";
+			mes "Most prefer just Gooday, though.";
+			next;
+			mes "[Goodday]";
+			mes "A new skill was invented with";
+			mes "Merchant Guild. Now, the Blacksmith guild";
+			mes "is having an event to";
+			mes "pass down teh skill to";
+			mes "fellow members.";
+			next;
+			mes "[Goodday]";
+			mes "Because of this event,";
+			mes "We have to send even untrained";
+			mes "blacksmiths out to teach skills.";
+			mes "Causes me intense troubles";
+			mes "sometimes.";
+			next;
+			mes "[Goodday]";
+			mes "Hmm, you look like a Blacksmith yourself.";
+			mes "Why don't you treat yourself to";
+			mes "the new -^ff0000 Greed^000000-skill";
+			mes "today?";
+			mes "Whether you learn or not";
+			mes "is your choice, but I think";
+			mes "it's one very good";
+			mes "skill~";
+			next;
+			mes "[Goodday]";
+			mes "If you want to learn, I will";
+			mes "explain the skill to you and teach";
+			mes "you all the basics of it.";
+			mes "How is it?";
+			next;
+			switch( select( "Sure, I'd like to learn.", "Later~")) {
+			case 1:
+				mes "[Goodday]";
+				mes "Mm, Good thinking.";
+				mes "The newly invented skill";
+				mes "-^ff0000Greed^000000- allows you to";
+				mes "automatically loot the items";
+				mes "not picked up within 5x5 radius";
+				mes "and place them into your inventory.";
+				mes "It's a very useful and convinient skill,";
+				mes "I believe.";
+				next;
+				mes "[Goodday]";
+				mes "While travelling, all kinds of items";
+				mes "including rare and important ones";
+				mes "can be achieved very quickly";
+				mes "and put into your inventory.";
+				mes "Every merchant's dream,";
+				mes "wouldn't you agree?";
+				next;
+				mes "[Goodday]";
+				mes "Since you decided to learn,";
+				mes "before starting, you must";
+				mes "go through a simple test";
+				mes "to see if you qualify.";
+				mes "So listen carefully and follow";
+				mes "directions.";
+				next;
+				mes "[Goodday]";
+				mes "Now, go out and";
+				mes "-^ff0000 Not mattering whether it is^000000-";
+				mes "-^ff0000 Armour, Potion, Misc items, etc^000000-";
+				mes "-^ff0000 Fill your inventory up^000000-";
+				mes "-^ff0000 so that you cannot put^000000-";
+				mes "-^ff0000 anything 500 weight or more into^000000-";
+				mes "-^ff0000 your invenory and^000000-";
+				mes "-^ff0000 return to me.^000000-";
+				next;
+				mes "[Goodday]";
+				mes "That is all that is";
+				mes "required for teh skill.";
+				mes "Now get started.";
+				set BLACK_SK2, 1;
+				close;
+			case 2:
+				mes "[Goodday]";
+				mes "Mm. Is that so?";
+				mes "Ah, it is good to";
+				mes "live your life busy";
+				mes "when you're young.";
+				mes "Just use your time";
+				mes "wisely.";
+				close;
+			}
+		} else if(BLACK_SK2 == 1) {
+			// Check if you can carry 25 golds (Gold weight 20 = 20*25 = 500),
+			if(checkweight("Gold",25) == 1) { 
+				mes "[Goodday]";
+				mes "Mm~ back already.";
+				mes "Well, without checking, I can tell";
+				mes "you're quite off from";
+				mes "what I asked for.";
+				mes "This is what I wanted.";
+				next;
+				mes "[Goodday]";
+				mes "-^ff0000 Not mattering whether it is^000000-";
+				mes "-^ff0000 Armour, Potion, Misc items, etc^000000-";
+				mes "-^ff0000 Fill your inventory up^000000-";
+				mes "-^ff0000 so that you cannot put^000000-";
+				mes "-^ff0000 anything 500 weight or more into^000000-";
+				mes "-^ff0000 your invenory and^000000-";
+				mes "-^ff0000 return to me.^000000-";
+				close;
+			}
+				mes "[Goodday]";
+				mes "Mm, back already?";
+				mes "You came back earlier than expected.";
+				mes "Well, then allow me to see";
+				mes "your bag.";
+				mes "Hmm~~~~~";
+				next;
+				mes "[Goodday]";
+				mes "Ah~ Hmm~";
+				mes "Mm~ You did just as";
+				mes "I asked you to. Good.";
+				mes "Alright, you pass the test.";
+				next;
+				mes "[Goodday]";
+				mes "The time spent and experience";
+				mes "gained while collecting the items";
+				mes "are more important than the";
+				mes "price that comes out when you";
+				mes "sell the items.";
+				mes "I wanted to let you know that.";
+				next;
+				mes "[Goodday]";
+				mes "Of course, as a blacksmith,";
+				mes "you are expected to look at every";
+				mes "item as a possibility to bring you zeny,";
+				mes "but you are also capable";
+				mes "personally of knowledge and";
+				mes "honour, in my opinion.";
+				next;
+				mes "[Goodday]";
+				mes "You may not think the test";
+				mes "and the skill have any relationship";
+				mes "to each other, but.";
+				mes "That was the test and teaching";
+				mes "that my Master passed to me";
+				mes "when I first became a";
+				mes "blacksmith.";
+				next;
+				mes "[Goodday]";
+				mes "There are too many people";
+				mes "trying to gain money";
+				mes "before anything in this world,";
+				mes "and it pains me to see people";
+				mes "living to see only money";
+				mes "in their items and forgetting";
+				mes "about honour and love of life.";
+				next;
+				mes "[Goodday]";
+				mes "Forging items and weapons";
+				mes "that your friends and others need";
+				mes "and travelling the world to";
+				mes "venture out and face danger yourself";
+				mes "to seek the materials for refining";
+				mes "is the purpose and honour";
+				mes "of blacksmith.";
+				next;
+				mes "[Goodday]";
+				mes "The name of the skill";
+				mes "I will give to you is called";
+				mes "-^ff0000 Greed^000000- but";
+				mes "I hope it will be used as";
+				mes "another meaning to you";
+				mes "once you receive it.";
+				next;
+				mes "[Goodday]";
+				mes "Then here is your skill.";
+				skill 1013,1,0;
+				set BLACK_SK2, 2;
+				close;
+		} else if(BLACK_SK2 == 2) {
+			mes "[Goodday]";
+			mes "I wonder if you are using your skill";
+			mes "properly now.";
+			mes "Don't get too greedy as you live";
+			mes "and travel around, looking";
+			mes "and learning new things.";
+			close;
+		}
+	}
+	mes "[Goodday]";
+	mes "On a day like this, I want to put";
+	mes "my backpack on and climb a dangerous";
+	mes "mountain where all kinds of goods lie";
+	mes "and go off collecting them.";
+	mes "Why don't you become a";
+	mes "blacksmith someday?";
 	close;
 }

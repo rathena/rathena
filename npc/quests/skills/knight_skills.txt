@@ -1,13 +1,13 @@
 //===== eAthena Script ======================================= 
 //= Knight Skills Quests
 //===== By: ================================================== 
-//= Lupus, Reddozen
+//= Lupus, Reddozen, Samuray22
 //===== Current Version: ===================================== 
-//= 1.3a
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3800+
 //===== Description: ========================================= 
-//= Temp quests for new skills for 2nd classes
+//= Oficial quests for new skills for 2nd classes
 //===== Additional Comments: ================================= 
 //= 1.0 for fully working skills only [Lupus]
 //= 1.1 Added more new skill quests for more classes [Lupus]
@@ -18,50 +18,388 @@
 //= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
 //= 1.3a fixed an item ID typo, thx 2Spiritual Kid
 //= 1.3b Splitted into different files [DracoRPG]
+//= 1.4 Updated to the Official One. [Samuray22]
 //============================================================
-
 
 //============================================================
 // KNIGHT - CHARGE ATTACK
 //============================================================
-prt_in,84,98,3	script	Esope	734,{
-	mes "[Esope]";
-	if(BaseJob!=Job_Knight) goto L_noknight;
-	if(getskilllv(1001)) goto L_alreadyhave;
-
-	mes "I'll teach you all I know for:";
-	mes "5 Candy canes";
-	mes "3 Witherless Roses";
+//== AESOP - CHARGE ATTACK ===================================
+prt_in,85,99,6	script	Aesop	734,{
+	if(Class == Job_Knight || Class == Job_Lord_Knight) {
+		if(KNGT_SK > 10) {
+			mes "[Aesop]";
+			mes "Work hard, because world";
+			mes "is not to be underestimated.";
+			mes "Trying and pushing to your";
+			mes "limits is never a bad thing.";
+			close;
+		} else if(KNGT_SK == 10 && getskilllv(1001) == 0) {
+			mes "[Aesop]";
+			mes "Hmm? You are...";
+			mes "Ah, you want to learn about";
+			mes "Charge Attack again? Alright, then";
+			mes "I will teach you.";
+			set KNGT_SK, 11;
+			next;
+			goto K_Learn;
+		} else if(KNGT_SK >= 9) {
+			mes "[Aesop]";
+			mes "Work hard, because world";
+			mes "is not to be underestimated.";
+			mes "Trying and pushing to your";
+			mes "limits is never a bad thing.";
+			set KNGT_SK, 10;
+			close;
+		} else if(KNGT_SK == 8) {
+			set KNGT_SK, 9;
+			goto K_Learn;
+		} else if(KNGT_SK == 7 && countitem("Candy_Striper") > 4 && countitem("Witherless_Rose") > 2) {
+			mes "[Aesop]";
+			mes "...The Candy cane and Witherless Rose";
+			mes "you brought, can you please";
+			mes "show them to me?";
+			next;
+			switch( select( "Show them", "Don't show them")) {
+			case 1:
+				mes "[Aesop]";
+				mes "... I remember them. Back when";
+				mes "I lived in the jaws of death, suffering.";
+				mes "It was extremely painful, but ah,";
+				mes "the happiness experienced as";
+				mes "I became stronger.";
+				next;
+				mes "[Aesop]";
+				mes "Is it so... the beginning. Free from";
+				mes "thoughts of inconfidence and";
+				mes "striving to be the best";
+				mes "in the world...";
+				next;
+				mes "[Aesop]";
+				mes "I want to return back to the";
+				mes "beginning and try my best";
+				mes "once more. Even though";
+				mes "I may lose everything, to seek";
+				mes "my meaning seems worth it.";
+				next;
+				mes "[Aesop]";
+				mes "Life may betray me,";
+				mes "But then, I will try even harder";
+				mes "and never give up.";
+				next;
+				mes "[Aesop]";
+				mes "I sincerely thank you,";
+				mes "my young knight.";
+				mes "In return, I present you";
+				mes "a skill I discovered in my days.";
+				next;
+				delitem "Candy_Striper", 5;
+				delitem "Witherless_Rose", 3;
+				set KNGT_SK, 8;
+				mes "[Aesop]";
+				mes "It's not much, but";
+				mes "it will be of help in the future.";
+				mes "Talk to me when you are ready.";
+				close;
+			case 2:
+				mes "[Aesop]";
+				mes "Is that so? Too bad.";
+				mes "See me again if you";
+				mes "change your mind.";
+				close;
+			}
+		} else if(KNGT_SK == 7) {
+			mes "[Aesop]";
+			mes "Back when I was your age,";
+			mes "I dived and threw myself";
+			mes "in face of danger.";
+			next;
+			mes "[Aesop]";
+			mes "That's all a boring old tale and";
+			mes "I cannot return to such time, and yet,";
+			mes "life was much more thrilling then.";
+			close;
+		} else if(KNGT_SK == 6) {
+			mes "[Aesop]";
+			mes "Those eyes... Ah, you must have";
+			mes "seen the ways of our cavalry.";
+			mes "I won't ask you how you felt";
+			mes "or what you thought.";
+			next;
+			mes "[Aesop]";
+			mes "What am I a knight of? What";
+			mes "am I training for? I can no longer";
+			mes "recollect.";
+			next;
+			mes "[Aesop]";
+			mes "Back when I was your age,";
+			mes "I dived and threw myself";
+			mes "in face of danger.";
+			next;
+			set KNGT_SK, 7;
+			mes "[Aesop]";
+			mes "...It's a boring life tale. Past";
+			mes "or not, I have no answer";
+			mes "of now. That is the destiny";
+			mes "of one who lost freedom in a mass.";
+			close;
+		} else if(KNGT_SK == 1) {
+			mes "[Aesop]";
+			mes "Observation? That is good.";
+			mes "You can observe training as well,";
+			mes "so go out to the training area if you want to.";
+			mes "Sir Meroze is probably out there";
+			mes "training the cavalry.";
+			close;
+		} else if(KNGT_SK == 0) {
+			mes "[Aesop]";
+			mes "...a new faced knight.";
+			mes "Which division are you from?";
+			mes "I am knight of the 7th Cavalry Division,";
+			mes "Aesop Razia.";
+			next;
+			mes "[Aesop]";
+			mes "Ah, not part of the Cavalry Division?";
+			mes "A knight of liberty... how envious.";
+			mes "Better than being caged within walls";
+			mes "and not being able to do anything";
+			mes "or just plain not doing anything.";
+			next;
+			mes "[Aesop]";
+			mes "I do not know what you think of";
+			mes "the Division, but matters are";
+			mes "worse than what others think.";
+			next;
+			mes "[Aesop]";
+			mes "If you want to see what I mean,";
+			mes "go observe as the others train.";
+			mes "They are probably training in the area";
+			mes "to the side. Go watch them.";
+			mes "Go confirm the misery";
+			mes "with your own two eyes.";
+			next;
+			set KNGT_SK, 1;
+			mes "[Aesop]";
+			mes "A knight of liberty like yourself might now know,";
+			mes "but realize that there are those who";
+			mes "forget their identity while training in a cage";
+			mes "like those here.";
+			close;
+		}		
+	}
+	mes "[Aesop]";
+	mes "I am the noble Prontera's";
+	mes "Aesop Razia of 7th Cavalry Division.";
+	mes "If you want to call me, you have";
+	mes "no need to call me by my surname.";
+	mes "Call me Aesop.";
 	next;
-	
-	mes "[Esope]";
-	mes "Let me check your items.";
+	mes "[Aesop]";
+	mes "Still, should you want to observe,";
+	mes "do so with respect and honour";
+	mes "of a proud knight.";
+	close;
+K_Learn:
+	mes "[Aesop]";
+	mes "This skill that I will teach you";
+	mes "^FF0000has no effect on the skill tree";
+	mes "^FF0000and is earned only as a quest skill";
+	mes "^FF0000and is able to be used as an active skill.^000000";
 	next;
-	
-	if(countitem(530)<5 || countitem(748)<3)goto L_noitems;//Items: Candy_Cane, Witherless_Rose,
-	delitem 530, 5;//Items: Candy_Cane,
-	delitem 748, 3;//Items: Witherless_Rose,
-	
-	mes "[Esope]";
-	mes "I see you have what you need,";
-	mes "so I'll teach you my talent.";
+	mes "[Aesop]";
+	mes "^FF0000It requires 40 sp each time";
+	mes "^FF0000and is used against one opponent.";
+	mes "The distance to your enemy is";
+	mes "the key to the damage, and the";
+	mes "furthur you are to you opponent,";
+	mes "stronger that attack.";
+	next;
+	mes "[Aesop]";
+	mes "But according to those terms,";
+	mes "you require a moment to recover";
+	mes "after a charge. Thus, it cannot";
+	mes "be abused frequently.";
+	next;
+	mes "[Aesop]";
+	mes "Rest information can be gathered";
+	mes "yourself. Yes... the";
+	mes "skill's name is ^FF0000Charge Attack^000000.";
+	mes "It's not a fancy name,";
+	mes "but you instantly get the";
+	mes "image of the attack, so that's good.";
+	next;
 	skill 1001,1,0;
+	if(KNGT_SK == 8) {
+		mes "[Aesop]";
+		mes "Then use it well.";
+		mes "I will not give up and";
+		mes "strive in honour of Knighthood as well.";
+		mes "FOR THE HONOUR OF KNIGHTHOOD!.";
+		close;
+	}
+	mes "[Aesop]";
+	mes "Then use it well.";
 	close;
+}
 
-L_noitems:
-	mes "[Esope]";
-	mes "You don't have enough items.";
-	mes "Come back when you have all";
-	mes "the required items for me.";
+prontera,69,351,0	script	#Observer	111,{
+	if(KNGT_SK == 1 || KNGT_SK == 2) {
+		mes "[?]";
+		mes "HIIYAH!!";
+		next;
+		mes "[?]";
+		mes "TAAA!";
+		next;
+		mes "- You can hear the shoutings -";
+		mes "- of training. They seem to be the -";
+		mes "- knights that Aesop was talking about. -";
+		next;
+		if(KNGT_SK == 1) {
+			set KNGT_SK, 2;
+		}
+		mes "- They were working very hard. -";
+		mes "- Just looking at them is -";
+		mes "- enough. -";
+		close;
+	}
+	mes "- You can see the Calvary Division -";
+	mes "- training very hard. -";
+	mes "- The loud shoutings are quite annoying, -";
+	mes "- but they are working hard -";
+	mes "- and looking good. -";
 	close;
-		
-L_noknight:
-	mes "Looking for your master?";
-	emotion e_gasp;
-	close;
+}
 
-L_alreadyhave:
-	mes "I've already taught you";
-	mes "everything I know...";
+prontera,72,352,1	script	Sir Meroze	733,{
+	if(KNGT_SK == 2 || KNGT_SK == 3) {
+		mes "[Sir Meroze]";
+		mes "Work, work! We still have a long";
+		mes "time until break! No one notices";
+		mes "if you die during training,";
+		mes "so adapt yourself accordingly!";
+		next;
+		if(KNGT_SK == 2) {
+		set KNGT_SK, 3;
+		}
+		mes "[Sir Meroze]";
+		mes "You always train and nothing's changed!";
+		mes "Training is still training, so work hard!";
+		mes "You're all still young grasshoppers!";
+		mes "You have a wide future";
+		mes "ahead of yourselves!";
+		close;
+	}
+	mes "[Sir Meroze]";
+	mes "Work hard! The future of";
+	mes "Prontera rests on our shoulders!";
+	mes "Our goal is to protect the people";
+	mes "of Prontera at all times!";
+	close;
+}
+
+prontera,78,354,5	script	Knight#1	734,{
+	if(KNGT_SK == 3 || KNGT_SK == 4) {
+		mes "[Knight]";
+		mes "Since a knight was hired by the nation,";
+		mes "the salary is very high, you know.";
+		mes "You don't even have to do anything.";
+		mes "Just train and money rolls right in.";
+		next;
+		mes "[Knight]";
+		mes "I'm gonna spend a few years here";
+		mes "and when I have crazy amount of money,";
+		mes "I'm gonna retire and play.";
+		next;
+		if(KNGT_SK == 3) {
+		set KNGT_SK, 4;
+		}
+		mes "[Knight]";
+		mes "Eek, I have to pretend I'm working";
+		mes "really hard. Go away.";
+		close;
+	}
+	mes "[Knight]";
+	mes "HIYA! HEEYA! HOOHAH!!";
+	mes "Humph, gives so much pressure.";
+	mes "Hurray for Prontera Knights!";
+	close;
+}
+
+prontera,73,357,7	script	Knight#2	734,{
+	if(KNGT_SK == 4 || KNGT_SK == 5) {
+		mes "[Knight]";
+		mes "When I get my paycheck,";
+		mes "I'm gonna get my wife a jeweled necklace.";
+		mes "She'll love it!";
+		next;
+		if(KNGT_SK == 4) {
+			set KNGT_SK, 5;
+		}
+		mes "[Knight]";
+		mes "Let's see... how long until payday?";
+		mes "Calculating date itself is";
+		mes "quite entertaining, too..";
+		close;
+	}
+	mes "[Knight]";
+	mes "Everyday brings money~";
+	mes "It was a good idea to join knights, hahaha.";
+	close;
+}
+
+prontera,78,357,5	script	Knight#3	734,{
+	if(KNGT_SK == 5 || KNGT_SK == 6) {
+		mes "[Soarer]";
+		mes "Yep... the Cavalry has no future...";
+		mes "Well since I have nowhere to go,";
+		mes "might as well as spend time here,";
+		mes "I guess...";
+		next;
+		if(KNGT_SK == 5) {
+			set KNGT_SK, 6;
+		}
+		mes "[Soarer]";
+		mes "Just do what they tell me to do...";
+		mes "Nothing much to see in life.";
+		close;
+	}
+	mes "[Knight]";
+	mes "...No talking while training!";
+	close;
+}
+
+prontera,66,358,7	script	Knight#4	733,{
+	if(KNGT_SK == 7) {
+		mes "[Knight]";
+		mes "Hey wait.. Why doesn't";
+		mes "Aesop ever train with us?";
+		mes "If you fought ^FF0000Wild Rose^000000 or ^FF0000Myst Case^000000";
+		mes "in the past, do you not have";
+		mes "to spend time training?";
+		next;
+		mes "[Knight]";
+		mes "All he ever talks about is";
+		mes "when he caught them two";
+		mes "monsters. So annoying!";
+		next;
+		mes "[Knight]";
+		mes "Does a knight have to get ^FF0000five Candy Canes^000000 and";
+		mes "^FF0000 three witherless roses^000000";
+		mes "to be useful in this world?";
+		mes "Dangit, I heard it so much,";
+		mes "I memorized the darn thing.";
+		next;
+		mes "[Knight]";
+		mes "And he just encages himself";
+		mes "talking about some new technique or something";
+		mes "all the time. What a weirdo.";
+		close;
+	}
+	mes "[Knight]";
+	mes "Training..is....so...(pant) hard.";
+	mes "(pant pant) You have to consider";
+	mes "us knights with no strength! We";
+	mes "have to live together...just because we're...";
+	mes "out of shape...its...not a sin. (pant)";
 	close;
 }
