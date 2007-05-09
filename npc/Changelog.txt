@@ -1,7 +1,18 @@
 Date		Added
 ======
+2007/05/10
+	* Rev. 10507 Large update to the Kiel Hyre Quest. [L0ne_W0lf]
+	- FIxed several small issues (and large one) such as typos in cutins, typos in dialog, etc.
+	- Added some of the missing dialogs for several NPCs, and fixed a few NPC locations.
+	- ALL books can now trigger the wall.
+	- Allysia will now summon 4 (was 2) G_CONSTANTS instead of REGULAR constants.
+	- Fixed where Golden_Key and Exquisite_Button are deleted.
+	- Removed KHTimerEnd, and instead use OnReset.
+	- Fixed typo in the second NPC that gives Black Keycards.
+	- Added and Monster Warps. (Keeps monsters from being in dungeon quest area.) Non-functional though.
+	* Removed Yuno_fild02 -> kh_vila warp. (Exploit) [L0ne_W0lf]
 2007/05/09
-	* Added Cursed Spirit Quest. [SinSloth]
+	- Added Cursed Spirit Quest. [SinSloth]
 	- Moved some NPCs and warps related to the quest in proper file.
 2007/05/07
 	* Removed an unnecessary/buggy line in cities/izlude.txt [Paradox924X]

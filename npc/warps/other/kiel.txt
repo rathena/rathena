@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 8+
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= 1.1 Added more warps thanks to Celestria [Playtester]
 //= 1.2 Added warps according to Kiel quest [Playtester]
 //= 1.3 Removed and altered exploitable warps for Kiel Hyre Quest. [L0ne_W0lf]
+//= 1.4 Removed FIELD entrance into Kiel Hyre's Villa. [L0ne_W0lf
 //============================================================
 
 //============================================================
@@ -49,8 +50,6 @@ kh_school,118,139,0	warp	school13	1,1,kh_dun01,231,92
 //============================================================
 // kh_vila
 //============================================================
-//Entrance
-yuno_fild02,92,213,0	warp	vila18	1,1,kh_vila,79,14
 //Entrance Hall
 kh_vila,79,10,0	warp	vila01	1,1,yuno_fild02,92,208
 kh_vila,70,38,0	warp	vila02	1,1,kh_vila,43,38
