@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/05/10
+	* Rev. 10508 Stupid mistake, accidentally had 4 copies of the same script in 1... [L0ne_W0lf the bonehead]
 	* Rev. 10507 Large update to the Kiel Hyre Quest. [L0ne_W0lf]
 	- FIxed several small issues (and large one) such as typos in cutins, typos in dialog, etc.
 	- Added some of the missing dialogs for several NPCs, and fixed a few NPC locations.
