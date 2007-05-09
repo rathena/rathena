@@ -7368,7 +7368,6 @@ kh_kiehl02,1,1,0	script	KiehlRoom	-1,{
 	end;
 
 OnKiehlMobDead:
-debugmes "KLol: "+.KHKilled;
 	set .KHKilled,.KHKilled+1;
 	if (.KHKilled == 5) { 
 		donpcevent "Kiehl#Original::OnChangeState";
