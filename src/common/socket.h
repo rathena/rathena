@@ -143,10 +143,11 @@ extern int naddr_;   // # of ip addresses
 void set_eof(int fd);
 
 /// Use a shortlist of sockets instead of iterating all sessions for sockets 
-/// that have data to send or need eof processing.
+/// that have data to send or need eof handling.
+/// Adapted to use a static array instead of a linked list.
 ///
 /// @author Buuyo-tama
-//#define SEND_SHORTLIST
+#define SEND_SHORTLIST
 
 #ifdef SEND_SHORTLIST
 struct send_shortlist_node {

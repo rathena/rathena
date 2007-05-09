@@ -15,8 +15,6 @@
 #include <sys/types.h>
 
 #ifdef WIN32
-	//#define WIN32_LEAN_AND_MEAN
-	//#include <windows.h>
 	#include <winsock2.h>
 	#include <io.h>
 #else
@@ -79,8 +77,9 @@ size_t wfifo_size = (16*1024);
 struct socket_data* session[FD_SETSIZE];
 
 #ifdef SEND_SHORTLIST
-struct send_shortlist_node *send_shortlist = NULL;
-fd_set send_shortlist_fd_set;
+int send_shortlist_array[FD_SETSIZE];// we only support FD_SETSIZE sockets, limit the array to that
+int send_shortlist_count = 0;// how many fd's are in the shortlist
+fd_set send_shortlist_fd_set;// to know if specific fd's are already in the shortlist
 #endif
 
 int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse);
@@ -153,13 +152,14 @@ void setsocketopts(int fd)
  *--------------------------------------*/
 void set_eof(int fd)
 {
+	if( session_isActive(fd) )
+	{
 #ifdef SEND_SHORTLIST
-	// Add this socket to the shortlist for eof handling.
-	send_shortlist_add_fd(fd);
+		// Add this socket to the shortlist for eof handling.
+		send_shortlist_add_fd(fd);
 #endif
-
-	if (session_isActive(fd))
 		session[fd]->eof = 1;
+	}
 }
 
 int recv_to_fifo(int fd)
@@ -521,8 +521,8 @@ int do_sendrecv(int next)
 
 	last_tick = time(0);
 
-	//PRESEND Need to do this to ensure that the clients get something to do
-	//which hopefully will cause them to send packets. [Meruru]
+	// PRESEND Timers are executed before do_sendrecv and can send packets 
+	// and/or set sessions to eof. Send remaining data and handle eof sessions.
 #ifdef SEND_SHORTLIST
 	send_shortlist_do_sends();
 #else
@@ -536,6 +536,7 @@ int do_sendrecv(int next)
 	}
 #endif
 
+	// can timeout until the next tick
 	timeout.tv_sec  = next/1000;
 	timeout.tv_usec = next%1000*1000;
 
@@ -597,6 +598,7 @@ int do_sendrecv(int next)
 	}
 #endif
 
+	// POSTSEND Send remaining data and handle eof sessions.
 #ifdef SEND_SHORTLIST
 	send_shortlist_do_sends();
 #else
@@ -946,7 +948,7 @@ int socket_config_read(const char* cfgName)
 }
 
 
-void socket_final (void)
+void socket_final(void)
 {
 	int i;
 #ifndef MINICORE
@@ -1106,7 +1108,6 @@ void socket_init(void)
 
 	// session[0] is now currently used for disconnected sessions of the map server, and as such,
 	// should hold enough buffer (it is a vacuum so to speak) as it is never flushed. [Skotlex]
-	// ##TODO "flush" this session periodically O.O [FlavioJS]
 	create_session(0, null_recv, null_send, null_parse);
 
 #ifndef MINICORE
@@ -1159,83 +1160,55 @@ uint16 ntows(uint16 neshort)
 
 #ifdef SEND_SHORTLIST
 // Add a fd to the shortlist so that it'll be recognized as a fd that needs
-// sending (or eof handling) done on it.
+// sending or eof handling.
 void send_shortlist_add_fd(int fd)
 {
-	struct send_shortlist_node* new_node;
-
-	if (FD_ISSET(fd, &send_shortlist_fd_set))
-		// Refuse to add duplicate FDs to the shortlist
-		return;
-
-	new_node = aMalloc(sizeof(*new_node));
+	if( FD_ISSET(fd, &send_shortlist_fd_set) )
+		return;// Refuse to add duplicate FDs to the shortlist
 
 	FD_SET(fd, &send_shortlist_fd_set);
 
-	// Add the new node to the beginning of the shortlist linked list.
-	new_node->fd = fd;
-	new_node->prev = NULL;
-	new_node->next = send_shortlist;
-	if (new_node->next)
-		new_node->next->prev = new_node;
-
-	send_shortlist = new_node;
+	// Add to the end of the shortlist array.
+	send_shortlist_array[send_shortlist_count++] = fd;
 }
 
-// Do pending network sends (and eof handling) from the shortlist.
+// Do pending network sends and eof handling from the shortlist.
 void send_shortlist_do_sends()
 {
-	struct send_shortlist_node
-		*current_node = send_shortlist,
-		*next_node;
+	int i = 0;
 
-	while (current_node)
+	// Assume all or most of the fd's don't remain in the shortlist
+	FD_ZERO(&send_shortlist_fd_set);
+
+	while( i < send_shortlist_count )
 	{
-		int delete_current_node = 1;
-
-		next_node = current_node->next;
+		int fd = send_shortlist_array[i];
 
 		// If this session still exists, perform send operations on it and
 		// check for the eof state.
-		if (session[ current_node->fd ])
+		if( session[fd] )
 		{
-			if (session[ current_node->fd ]->wdata_size)
-				session[ current_node->fd ]->func_send( current_node->fd );
+			// Send data
+			if( session[fd]->wdata_size )
+				session[fd]->func_send(fd);
 
 			// If it's been marked as eof, call the parse func on it so that
 			// the socket will be immediately closed.
-			if (session[ current_node->fd ]->eof)
-				session[ current_node->fd ]->func_parse( current_node->fd );
+			if( session[fd]->eof )
+				session[fd]->func_parse(fd);
 
 			// If the session still exists, is not eof and has things left to
-			// be sent from it we'll keep it in the send shortlist.
-			if (session[ current_node->fd ] &&
-					!session[ current_node->fd ]->eof &&
-					session[ current_node->fd ]->wdata_size)
-				delete_current_node = 0;
+			// be sent from it we'll keep it in the shortlist.
+			if( session[fd] && !session[fd]->eof && session[fd]->wdata_size )
+			{
+				FD_SET(fd, &send_shortlist_fd_set);
+				++i;
+				continue;
+			}
 		}
 
-		// If this session has been marked for removal from the short list,
-		// we'll proceed in doing this.
-		if (delete_current_node)
-		{
-			FD_CLR(current_node->fd, &send_shortlist_fd_set);
-
-			// Remove its link entry
-			if (!current_node->prev)
-				send_shortlist = next_node;
-			else
-				current_node->prev->next = next_node;
-
-			if (current_node->next)
-				current_node->next->prev = current_node->prev;
-
-			// and free its memory
-			aFree(current_node);
-		}
-
-		// Iterate to the next node (session) in the short list
-		current_node = next_node;
+		// Remove fd from shortlist, move the last fd to the current position
+		send_shortlist_array[i] = send_shortlist_array[--send_shortlist_count];
 	}
 }
 #endif
