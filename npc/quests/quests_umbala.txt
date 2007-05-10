@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= sabernet09 & eAthena Team
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -29,6 +29,7 @@
 //= 1.8 Added official chance of failure to Create Essence/Dismantle Stone [Lupus]
 //= 1.9 Added functionality to allow players to dismantle more
 //= than a stone at once, up to 10. [SinSloth]
+//= 2.0 Updated hack check and added a weight check to dismantling. [SinSloth]
 //============================================================ 
 
 
@@ -948,12 +949,19 @@ L_Dismantle:
 		mes "Onbaruzu Zan Kata!  Unba Ka!";
 		next;
 		mes "[Putsuchiritan]";
-		if(countitem(.@need)<1){
+		if(countitem(.@need)<.@delete){
 			mes "You're An Amba HacK0R!";
 			mes "I'm clearing your mind!";
 			//we reset the whole quest for the hacker			
 			set event_umbala,0;
 			emotion e_swt,1;
+			close;
+		}
+		if(checkweight(.@gain,.@result) != 1)
+		{
+			mes "You are overweight.";
+			mes "Please clear your inventory";
+			mes "or make some empty slots.";
 			close;
 		}
 		delitem .@need,.@delete;
