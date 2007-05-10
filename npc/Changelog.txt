@@ -1,5 +1,6 @@
 Date		Added
 ======
+2007/05/11
 	* Rev. 10515 More Kiel Hyre quest related updates
 	- Fixed the wrong name being displayed for Kiel Hyre in one dialog. 
 	- Removed $@KH_DoorInvoker entirely. The quest is now working like it should according to iRO.
