@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= sabernet09 & eAthena Team
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -27,6 +27,8 @@
 //= 1.7 Moved Umbala Event, Create Essence/Dismantle Stone, and Skeletal Gate from npc/cities/umbala.txt [Evera]
 //= 1.7a Removed all custom quests to custom folder [Lupus]
 //= 1.8 Added official chance of failure to Create Essence/Dismantle Stone [Lupus]
+//= 1.9 Added functionality to allow players to dismantle more
+//= than a stone at once, up to 10. [SinSloth]
 //============================================================ 
 
 
@@ -843,6 +845,42 @@ um_in,44,71,2	script	Utan Tribe Shaman	782,{
 			close;
 		}
 		mes "[Putsuchiritan]";
+		mes "Also, my power is strong";
+		mes "enough to break more than";
+		mes "stone at once. How many of";
+		mes "them would you like me to";
+		mes "work on? Yet, I don't intend";
+		mes "to work on more than 10.";
+		next;
+		input .@want;
+		if(.@want <= 0)
+		{
+			mes "[Putsuchiritan]";
+			mes "If you don't wish my help at the moment,";
+			mes "that's fine.  When you do, please come";
+			mes "by again.";
+			close;
+		}
+		if(.@want > 10)
+		{
+			mes "[Putsuchiritan]";
+			mes "I'm not responsible of what";
+			mes "can happen if I work on";
+			mes "more than 10 stones at once.";
+			mes "I don't even want to try.";
+			close;
+		}
+		if(countitem(.@need) < .@want)
+		{
+			mes "[Putsuchiritan]";
+			mes "I can't dismantle something";
+			mes "that doesn't even exist. Please";
+			mes "come back when you'll have the";
+			mes "number of stones you want me to";
+			mes "break.";
+			close;
+		}
+		mes "[Putsuchiritan]";
 		switch(.@need) {
 			case 997: mes "I will dismantle your earth crystal";	break;
 			case 995: mes "I will dismantle your frozen crystal";	break;
@@ -853,6 +891,15 @@ um_in,44,71,2	script	Utan Tribe Shaman	782,{
 		mes "Choose a number between 1 and 9.";
 		mes "If you don't want me to dismantle the";
 		mes "stone, choose 0.";
+		if(.@want > 1)
+		{
+			next;
+			mes "[Putsuchiritan]";
+			mes "Choose well your number.";
+			mes "It will affect my potential";
+			mes "and your spirit for all the";
+			mes "stones at once.";
+		}
 		while(1) {
 			next;
 			input .@num;
@@ -873,6 +920,7 @@ um_in,44,71,2	script	Utan Tribe Shaman	782,{
 			}
 			break;
 		}
+L_Dismantle:
 		set .@num,rand(1,10);	//official amount chance
 		if(.@num == 1)
 			set .@num,10;
@@ -882,6 +930,10 @@ um_in,44,71,2	script	Utan Tribe Shaman	782,{
 			set .@num,7;
 		else
 			set .@num,6;
+		set .@want,.@want -1;
+		set .@result,.@result + .@num;
+		set .@delete,.@delete +1;
+		if(.@want) goto L_Dismantle;
 		mes "[Putsuchiritan]";
 		mes "Please place the elemental stone";
 		mes "inside this holy circle.  I will chant a";
@@ -904,8 +956,8 @@ um_in,44,71,2	script	Utan Tribe Shaman	782,{
 			emotion e_swt,1;
 			close;
 		}
-		delitem .@need,1;
-		getitem .@gain,.@num;
+		delitem .@need,.@delete;
+		getitem .@gain,.@result;
 		mes "The elemental stone has been";
 		mes "dismantled into its natural";
 		mes "essence.  Please put it to";

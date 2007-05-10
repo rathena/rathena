@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Team
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.2 Reddozen's fixes of typos. added optional Elemental
 //= Potion Guide. [Lupus]
 //= 1.3 Deleted Elemental Potions Guide due to original quest [Lupus]
+//= 1.4 Alchemists can now purchase 2000 Medicine Bowls at once. [SinSloth]
 //============================================================ 
 
 
@@ -34,7 +35,7 @@ alde_alche,24,188,3	script	Gever AI Sharp	740,{
 			mes "Enter '0' if you want to quit.";
 			next;
 			input @num;
-			if((@num < 1) || (@num > 1000)) goto M_Bye;
+			if((@num < 1) || (@num > 2000)) goto M_Bye;
 			set @price,@num * 8;
 			mes "[Gever AI Sharp]";
 			if(Zeny < @price) goto sL_NoZeny;
