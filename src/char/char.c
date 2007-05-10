@@ -1850,7 +1850,7 @@ int disconnect_player(int account_id) {
 	for(i = 0; i < fd_max; i++) {
 		if (session[i] && (sd = (struct char_session_data*)session[i]->session_data)) {
 			if (sd->account_id == account_id) {
-				session[i]->eof = 1;
+				set_eof(i);
 				return 1;
 			}
 		}

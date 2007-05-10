@@ -2077,7 +2077,7 @@ int parse_tologin(int fd) {
 				for(i = 0; i < fd_max; i++) {
 					if (session[i] && (sd = (struct char_session_data*)session[i]->session_data)) {
 						if (sd->account_id == acc) {
-							session[i]->eof = 1;
+							set_eof(i);
 							break;
 						}
 					}
@@ -2122,7 +2122,7 @@ int parse_tologin(int fd) {
 			for(i = 0; i < fd_max; i++) {
 				if (session[i] && (sd = (struct char_session_data*)session[i]->session_data)) {
 					if (sd->account_id == RFIFOL(fd,2)) {
-						session[i]->eof = 1;
+						set_eof(i);
 						break;
 					}
 				}
