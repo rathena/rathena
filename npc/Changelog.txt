@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/05/11
+	* Made Veins spawns slightly more mobby [Playtester]
 	* Players can now dismantle more than one elemental stone at once from Umbala Shaman. [SinSloth]
 	* Alchemists are now able to purchase up to 2000 Medicine Bowl. [SinSloth]
 	* Rev. 10515 More Kiel Hyre quest related updates
