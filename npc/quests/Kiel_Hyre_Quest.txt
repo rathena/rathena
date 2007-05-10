@@ -41,7 +41,7 @@
 //= 2.3 Should NOT have been setting .KHQuestBusy at all. It's not used or accessed anymore. Removed. [L0ne_W0lf]
 //= 2.4 Lots of fixes (4ish) from Valandi. [L0ne_W0lf]
 //=	Added a getmapuser check to the mapwarp in KHTimerEnd so it's not trying to warp out 0 users. [L0ne_W0lf]
-//= 2.5 FIxed several small issues (and large one) such as typos in cutins, typos in dialog, etc. [L0ne_W0lf]
+//= 2.5 Fixed several small issues (and large one) such as typos in cutins, typos in dialog, etc. [L0ne_W0lf]
 //=	Added some of the missing dialogs for several NPCs, and fixed a few NPC locations.
 //=	ALL books can now trigger the wall.
 //=	Allysia will now summon 4 (was 2) G_CONSTANTS instead of REGULAR constants.
@@ -50,8 +50,11 @@
 //=	Fixed typo in the second NPC that gives Black Keycards.
 //=	Added and Monster Warps. (Keeps monsters from being in dungeon quest area.) Non-functional though.
 //= 2.6 Stupid mistake, accidentally had 4 copies of the same script in 1... [L0ne_W0lf the bonehead]
+//= 2.7 Fixed the wrong name being displayed for Kiel Hyre in one dialog. 
+//=	Removed $@KH_DoorInvoker entirely. The quest is now working like it should according to iRO.
+//=	Fixed up a few more NPC headers. Facing direction fixes mostly this time.
+//=	More progression changes to Kiehl Hyre. He no longer stops dialog after the agents appear.
 //============================================================ 
-
 
 //============================================================================
 // Kiel Hyre Quest/Robotic Lab Dungeon
@@ -78,7 +81,7 @@
 //  - Possible missing dialog for "Odd Grandma"
 //  - Possible missing dialog for "Shelf"
 //  - Near the end I finshed the quest with some people. Used packet logging to get dialog.
-//  - Because of the above mentioned, NPC placement and dialog is a little sloppier.
+//    Because of the above mentioned, NPC placement and dialog is a little sloppier.
 //  - Possible missing dialog for "Kiel Hyre" (Accept and Okay responses)
 //  - Parties are *NOT REQUIRED* as per Doddler's Wiki information.
 //  - Possible missing dialog for "Kiel Hyre" if you don't have Allysia's Ring.
@@ -97,7 +100,7 @@
 //
 //----------------------------------------------------------------------------
 // [Variables in Use]
-//  KielHyreQuest 	- Main quest tracking variable
+//  KielHyreQuest 	- Main quest tracking variable (Quest finished at 106)
 //
 //  KHPubMasterEnd	- Finished with Pun Master if set to 1
 //			- Deleted once no longer needed.
@@ -153,9 +156,7 @@
 //
 //  .KHKilledBoss	- 0/1 depending on if the boss has been killed.
 //
-//  $@KHQuestBusy$	- Holds strcharinfo(0) for "locking" reasons, so only that person can use the door. Variable is unset at boss room reset.
-//
-//  $@KH_DoorInvoker$	- Holds character name, so only that person can use certain NPCs.
+//  $@KHQuestBusy	- 0/1 depending on if the boss room has been set in motion.
 //
 //----------------------------------------------------------------------------
 // [NPCs]			 [Location]
@@ -3808,7 +3809,7 @@ kh_school,122,186,4	script	Beautiful lady	894,{
 //----------------------------------------------------------------------------
 // Signboard (another useless NPC?)
 //----------------------------------------------------------------------------
-kh_dun01,163,223,0	script	Signboard	857,{
+kh_dun01,163,223,4	script	Signboard	857,{
 	mes "[Notice]";
 	mes "Cute Pets are prohibited";
 	mes "in this area. (Cute Pets that";
@@ -4138,7 +4139,7 @@ kh_mansion,78,55,5	script	Steward::StewardKHQ1	109,{
 kh_mansion,22,28,4	script	Kiel Hyre	903,{
 	cutin "kh_kyel02",2;
 	if (KielHyreQuest < 46) {
-		mes "[Kiehl Hyre]";
+		mes "[Kiel Hyre]";
 		mes ".........";
 		close;
 	}
@@ -6722,7 +6723,6 @@ kh_kiehl01,166,187,0	script	Big Door#BigDoorKHQ5	111,{
 
 				case 1:
 					close2;
-					set $@KH_DoorInvoker$,strcharinfo(0);
 					donpcevent "Big_Door_5_Warp::OnEnable";
 					enablenpc"Big_Door_5_Warp";
 					set .KHDoor5Opened,1;
@@ -6853,442 +6853,431 @@ OnGlobalTimerOff:
 
 //----------------------------------------------------------------------------
 // Kiehl's Room; Kiehl
-// - Only the player who invoked the final door should progress this npc.
-// - Only the player who invoked the final door should be able to get ring.
 // - Timer will drop to 3 minutes once Kiehl is defeated.
 //----------------------------------------------------------------------------
 kh_kiehl02,50,52,4	script	Kiehl#Original	902,{
 	cutin "kh_kiel01",2;
-	if (KielHyreQuest < 94) {
+	if ((KielHyreQuest < 94) || (KielHyreQuest >= 106)) {
 		mes "[Kiehl]";
 		mes ".........";
 		close;
 	}
 
-	if ($@KH_DoorInvoker$ == strcharinfo(0)) {
-		if ((KielHyreQuest == 94) && (getvariableofnpc(.KHKilled,"KiehlRoom") < 5)) {
-			mes "[Kiehl]";
-			mes "I'm surprised you made";
-			mes "it this far, adventurer~";
-			mes "I bid you welcome to my";
-			mes "humble room. I assume that";
-			mes "you've come for the Condensed";
-			mes "Memory Scroll... my mind.";
-			next;
-			mes "[Kiehl]";
-			mes "You can understand";
-			mes "why I can't let you have it,";
-			mes "so if you really want the";
-			mes "Condensed Memory Scroll,";
-			mes "then show me what you've got!";
-			close2;
-			cutin "",255;
-			set getvariableofnpc(.KHKilled,"KiehlRoom"),0;
-			monster "kh_kiehl02",49,48,"Aliot",1740,1,"KiehlRoom::OnKiehlMobDead";
-			monster "kh_kiehl02",46,50,"Alicel",1739,1,"KiehlRoom::OnKiehlMobDead";
-			monster "kh_kiehl02",49,50,"Constant",1745,1,"KiehlRoom::OnKiehlMobDead";
-			monster "kh_kiehl02",53,53,"Aliot",1740,1,"KiehlRoom::OnKiehlMobDead";
-			monster "kh_kiehl02",49,55,"Alicel",1739,1,"KiehlRoom::OnKiehlMobDead";
-			monster "kh_kiehl02",49,53,"Constant",1745,1,"KiehlRoom::OnKiehlMobDead";
-			monster "kh_kiehl02",46,53,"Aliot",1740,1,"KiehlRoom::OnKiehlMobDead";
-			donpcevent "Kiehl#Original::OnChangeState";
-			disablenpc "Kiehl#Original";
-			end;
-		}
+	if ((KielHyreQuest == 94) && (getvariableofnpc(.KHKilled,"KiehlRoom") < 5)) {
+		mes "[Kiehl]";
+		mes "I'm surprised you made";
+		mes "it this far, adventurer~";
+		mes "I bid you welcome to my";
+		mes "humble room. I assume that";
+		mes "you've come for the Condensed";
+		mes "Memory Scroll... my mind.";
+		next;
+		mes "[Kiehl]";
+		mes "You can understand";
+		mes "why I can't let you have it,";
+		mes "so if you really want the";
+		mes "Condensed Memory Scroll,";
+		mes "then show me what you've got!";
+		close2;
+		cutin "",255;
+		set getvariableofnpc(.KHKilled,"KiehlRoom"),0;
+		monster "kh_kiehl02",49,48,"Aliot",1740,1,"KiehlRoom::OnKiehlMobDead";
+		monster "kh_kiehl02",46,50,"Alicel",1739,1,"KiehlRoom::OnKiehlMobDead";
+		monster "kh_kiehl02",49,50,"Constant",1745,1,"KiehlRoom::OnKiehlMobDead";
+		monster "kh_kiehl02",53,53,"Aliot",1740,1,"KiehlRoom::OnKiehlMobDead";
+		monster "kh_kiehl02",49,55,"Alicel",1739,1,"KiehlRoom::OnKiehlMobDead";
+		monster "kh_kiehl02",49,53,"Constant",1745,1,"KiehlRoom::OnKiehlMobDead";
+		monster "kh_kiehl02",46,53,"Aliot",1740,1,"KiehlRoom::OnKiehlMobDead";
+		donpcevent "Kiehl#Original::OnChangeState";
+		disablenpc "Kiehl#Original";
+		end;
+	}
 
-		else if ((KielHyreQuest == 94) && (getvariableofnpc(.KHKilled,"KiehlRoom") >= 5)) {
-			cutin "kh_kiel03",2;
-			mes "[Kiehl]";
-			mes "Hmpf! You're pretty good.";
-			mes "Father must have spent";
-			mes "a lot of money to hire";
-			mes "you. So has he sent";
-			mes "you to kill me?";
-			next;
-			mes "["+strcharinfo(0)+"]";
-			mes "Kiel Hyre sent me to ask";
-			mes "you to stop turning all of";
-			mes "the Third Generation robots";
-			mes "into killing machines! How";
-			mes "can do something like that";
-			mes "to other robots like you?";
-			next;
-			cutin "kh_kiel01",2;
-			mes "[Kiehl]";
-			mes "Why not? It's said that man";
-			mes "was made in the image of God.";
-			mes "Well, robots were made in the";
-			mes "image of man. You humans kill";
-			mes "each other as much as you";
-			mes "like, as far as I can tell.";
-			next;
-			mes "[Kiehl]";
-			mes "It might not be ethical";
-			mes "for me to provide weapons";
-			mes "to humans that need them...";
-			mes "But that's what they are.";
-			mes "Weapons. It's more humane";
-			mes "for robots to fight than humans.";
-			next;
-			mes "[Kiehl]";
-			mes "Robots don't naturally";
-			mes "feel pain or emotions.";
-			mes "Not unless they're specially";
-			mes "programmed. Sorry, but I don't";
-			mes "plans to stop what I'm doing.";
-			next;
-			cutin "kh_kiel04",2;
-			mes "["+strcharinfo(0)+"]";
-			mes "Humankind may not be";
-			mes "perfect, but think about";
-			mes "who you're working with!";
-			mes "Rekenber is the epitome of";
-			mes "human evil! How can you";
-			mes "support them like this?";
-			next;
-			cutin "kh_kiel02",2;
-			mes "[Kiehl]";
-			mes "I've had a long relationship";
-			mes "with Rekenber. I'm fully aware";
-			mes "of their capabilities. Do you";
-			mes "remember the first room you";
-			mes "passed on your way here, the";
-			mes "one with all the toys?";
-			next;
-			mes "[Kiehl]";
-			mes "I bet you didn't know that there";
-			mes "were 5 Second Generation";
-			mes "robots. Me, and my four other";
-			mes "brothers and sisters. Father";
-			mes "built that room so that all";
-			mes "five of us could live together.";
-			next;
-			cutin "kh_kiel03",2;
-			mes "[Kiehl]";
-			mes "I was the only one to";
-			mes "survive. I returned to";
-			mes "Father and even got a";
-			mes "name. But yes, I know";
-			mes "how bad Rekenber really is.";
-			next;
-			mes "[Kiehl]";
-			mes "I don't... I don't want";
-			mes "to talk about this any more";
-			mes "You've made me... Just leave.";
-			mes "I think I will let you live.";
-			next;
-			cutin "",255;
-			mes "[Mitchell]";
-			mes "Freeze!";
-			mes "Kiehl Hyre, you're";
-			mes "under arrest for creating";
-			mes "and trading illegal weapons!";
-			set KielHyreQuest,100;
-			donpcevent "::OnKHAgent";
-			enablenpc "Mitchell#KiehlRoom";
-			enablenpc "Agent#KHAgent1";
-			enablenpc "Agent#KHAgent2";
-			enablenpc "Agent#KHAgent3";
-			enablenpc "Agent#KHAgent4";
-			close;
-		}
+	else if ((KielHyreQuest == 94) && (getvariableofnpc(.KHKilled,"KiehlRoom") >= 5)) {
+		cutin "kh_kiel03",2;
+		mes "[Kiehl]";
+		mes "Hmpf! You're pretty good.";
+		mes "Father must have spent";
+		mes "a lot of money to hire";
+		mes "you. So has he sent";
+		mes "you to kill me?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Kiel Hyre sent me to ask";
+		mes "you to stop turning all of";
+		mes "the Third Generation robots";
+		mes "into killing machines! How";
+		mes "can do something like that";
+		mes "to other robots like you?";
+		next;
+		cutin "kh_kiel01",2;
+		mes "[Kiehl]";
+		mes "Why not? It's said that man";
+		mes "was made in the image of God.";
+		mes "Well, robots were made in the";
+		mes "image of man. You humans kill";
+		mes "each other as much as you";
+		mes "like, as far as I can tell.";
+		next;
+		mes "[Kiehl]";
+		mes "It might not be ethical";
+		mes "for me to provide weapons";
+		mes "to humans that need them...";
+		mes "But that's what they are.";
+		mes "Weapons. It's more humane";
+		mes "for robots to fight than humans.";
+		next;
+		mes "[Kiehl]";
+		mes "Robots don't naturally";
+		mes "feel pain or emotions.";
+		mes "Not unless they're specially";
+		mes "programmed. Sorry, but I don't";
+		mes "plans to stop what I'm doing.";
+		next;
+		cutin "kh_kiel04",2;
+		mes "["+strcharinfo(0)+"]";
+		mes "Humankind may not be";
+		mes "perfect, but think about";
+		mes "who you're working with!";
+		mes "Rekenber is the epitome of";
+		mes "human evil! How can you";
+		mes "support them like this?";
+		next;
+		cutin "kh_kiel02",2;
+		mes "[Kiehl]";
+		mes "I've had a long relationship";
+		mes "with Rekenber. I'm fully aware";
+		mes "of their capabilities. Do you";
+		mes "remember the first room you";
+		mes "passed on your way here, the";
+		mes "one with all the toys?";
+		next;
+		mes "[Kiehl]";
+		mes "I bet you didn't know that there";
+		mes "were 5 Second Generation";
+		mes "robots. Me, and my four other";
+		mes "brothers and sisters. Father";
+		mes "built that room so that all";
+		mes "five of us could live together.";
+		next;
+		cutin "kh_kiel03",2;
+		mes "[Kiehl]";
+		mes "I was the only one to";
+		mes "survive. I returned to";
+		mes "Father and even got a";
+		mes "name. But yes, I know";
+		mes "how bad Rekenber really is.";
+		next;
+		mes "[Kiehl]";
+		mes "I don't... I don't want";
+		mes "to talk about this any more";
+		mes "You've made me... Just leave.";
+		mes "I think I will let you live.";
+		next;
+		cutin "",255;
+		mes "[Mitchell]";
+		mes "Freeze!";
+		mes "Kiehl Hyre, you're";
+		mes "under arrest for creating";
+		mes "and trading illegal weapons!";
+		set KielHyreQuest,100;
+		donpcevent "::OnKHAgent";
+		enablenpc "Mitchell#KiehlRoom";
+		enablenpc "Agent#KHAgent1";
+		enablenpc "Agent#KHAgent2";
+		enablenpc "Agent#KHAgent3";
+		enablenpc "Agent#KHAgent4";
+		next;
+		goto L_Continue;
+	}
 
-		else if ((KielHyreQuest == 100) && (getvariableofnpc(.KHKilledBoss,"KiehlRoom") < 1)) {
-			set getvariableofnpc(.KHKilledBoss,"KiehlRoom"),0;
-			cutin "kh_kiel01",2;
-			mes "[Kiehl]";
-			mes "Ah, Schwaltzvalt Republic";
-			mes "agents. Heh. I haven't had";
-			mes "this many guests before.";
-			mes "Well, I guess this means";
-			mes "we'll have to fight after";
-			mes "all, you and I. *Sigh* Pity...";
-			next;
-			mes "[Kiehl]";
-			mes "First, in all fairness,";
-			mes "let me take care of these";
-			mes "nuisances. They're just";
-			mes "mindlessly doing their";
-			mes "jobs--sort of like robots-- but";
-			mes "don't worry, they won't be hurt.";
-			next;
-			donpcevent "::OnKHSpiderWeb";
-			mes "[Mitchell]";
-			mes "Nooooo!";
-			next;
-			cutin "kh_kiel03",2;
-			mes "[Kiehl]";
-			mes "And now, you and I can";
-			mes "have a proper duel, human";
-			mes "I'm interested in seeing just";
-			mes "how strong you really are~";
-			close2;
-			cutin "",255;
-			monster "kh_kiehl02",50,52,"Kiehl",1733,1,"KiehlRoom::OnKiehlDead";
-			donpcevent "Kiehl#Original::OnChangeState";
-			disablenpc "Kiehl#Original";
-			end;
-		}
+	else if ((KielHyreQuest == 100) && (getvariableofnpc(.KHKilledBoss,"KiehlRoom") < 1)) {
+		L_Continue:
+		set getvariableofnpc(.KHKilledBoss,"KiehlRoom"),0;
+		cutin "kh_kiel01",2;
+		mes "[Kiehl]";
+		mes "Ah, Schwaltzvalt Republic";
+		mes "agents. Heh. I haven't had";
+		mes "this many guests before.";
+		mes "Well, I guess this means";
+		mes "we'll have to fight after";
+		mes "all, you and I. *Sigh* Pity...";
+		next;
+		mes "[Kiehl]";
+		mes "First, in all fairness,";
+		mes "let me take care of these";
+		mes "nuisances. They're just";
+		mes "mindlessly doing their";
+		mes "jobs--sort of like robots-- but";
+		mes "don't worry, they won't be hurt.";
+		next;
+		donpcevent "::OnKHSpiderWeb";
+		mes "[Mitchell]";
+		mes "Nooooo!";
+		next;
+		cutin "kh_kiel03",2;
+		mes "[Kiehl]";
+		mes "And now, you and I can";
+		mes "have a proper duel, human";
+		mes "I'm interested in seeing just";
+		mes "how strong you really are~";
+		close2;
+		cutin "",255;
+		monster "kh_kiehl02",50,52,"Kiehl",1733,1,"KiehlRoom::OnKiehlDead";
+		donpcevent "Kiehl#Original::OnChangeState";
+		disablenpc "Kiehl#Original";
+		end;
+	}
 
-		else if ((KielHyreQuest == 100) && (getvariableofnpc(.KHKilledBoss,"KiehlRoom") == 1)) {
-			cutin "kh_kiel02",2;
-			mes "[Kiehl]";
-			mes "D-damn...!";
-			mes "Well played, adventurer";
-			mes "Well played. I should have";
-			mes "known that Father would send";
-			mes "the very best after me. Still,";
-			mes "you've failed to truly defeat me.";
-			next;
-			mes "[Kiehl]";
-			mes "I still have a few";
-			mes "trump cards left";
-			mes "I think... I'll take you";
-			mes "to hell with me... Well";
-			mes "if robots can go there~";
-			announce "*Jeeeezzzgggg~ Geezzz~ Grrrr~ Clank~*",bc_map,0xFF0000;
-			next;
-			mes "[Mitchell]";
-			mes "No...! We're locked";
-			mes "in the room! We're";
-			mes "We're trapped in here!";
-			next;
-			mes "[Kiehl]";
-			mes "Yay~ Let's burn";
-			mes "everything down~";
-			next;
-			mes "[Mitchell]";
-			mes "Quick, "+strcharinfo(0)+",";
-			mes "use Kiel Hyre's power";
-			mes "device, the one that's";
-			mes "supposed to mess with";
-			mes "Kiehl's power supply!";
-			mes "Hurry, use it right now!";
-			next;
-			delitem 7504,1; //Power_Source
-			announce "*Gzzzz~ Gzzzz~*",bc_map,0xFF0000;
-			next;
-			mes "[Kiehl]";
-			mes "Wh-what? I c-can't";
-			mes "move! This day is just";
-			mes "full of surprises. Oh, well.";
-			mes "I guess it's time for me to";
-			mes "use my other trump card.";
-			next;
-			mes "[Mitchell]";
-			mes "What...?";
-			mes "How many trump";
-			mes "cards do you have?";
-			next;
-			mes "[????]";
-			mes "I'm so disappointed...";
-			mes "I can't believe none";
-			mes "of you thought of this...";
-			next;
-			mes "[Mitchell]";
-			mes "Who are you...?";
-			mes "Show yourself!";
-			next;
-			donpcevent "Kiehl#Copy::OnChangeState";
-			enablenpc "Kiehl#Copy";
-			mes "[????]";
-			mes "Please.";
-			mes "Don't insult me.";
-			mes "You know this voice.";
-			mes "It's been talking to";
-			mes "you this entire time~";
-			next;
-			mes "[Mitchell]";
-			mes "Impossible!";
-			mes "How can there";
-			mes "be two of you...?!";
-			next;
-			cutin "kh_kiel01",0;
-			mes "[Kiehl]";
-			mes "Hahahahaha!";
-			mes "I'm a robot!";
-			mes "I can make extra";
-			mes "bodies, switch brains";
-			mes "with them. It's awfully";
-			mes "convenient, let me tell you.";
-			next;
-			cutin "kh_kiel03",2;
-			mes "[Kiehl]";
-			mes "Anyway, I don't mean to show";
-			mes "off, but I suppose I better";
-			mes "reveal to you my final trump";
-			mes "card. First of all, I know all";
-			mes "about you, Ms. Mitchell Layla~";
-			next;
-			mes "[Mitchell]";
-			mes "What? How do you";
-			mes "know my name?";
-			next;
-			mes "[Kiehl]";
-			mes "Well, I have a few";
-			mes "spies of my own...";
-			mes "I'll allow him to explain.";
-			next;
-			mes "[Masked Man]";
-			mes "Mitchell...";
-			mes "I'm sorry that";
-			mes "you had to get";
-			mes "involved in all this.";
-			next;
-			mes "[Mitchell]";
-			mes "Wolkeus? Wolkeus Kaiser?!";
-			mes "You're the spy?! But you risked";
-			mes "your life to save our president!";
-			mes "No! Oh, God! How can this be";
-			mes "happening?! Everything's just...";
-			mes "This is all crazy! All of it!";
-			next;
-			mes "[Wolkeus]";
-			mes "This is just the result";
-			mes "of elaborate plans that";
-			mes "were made years ago. I didn't";
-			mes "expect you to be this surprised,";
-			mes "Mitchell. It's the way the game";
-			mes "is played. You know that.";
-			next;
-			mes "[Mitchell]";
-			mes "Mister President...";
-			mes "I failed you... I'm sorry...";
-			next;
-			mes "[Kiehl]";
-			mes "Well, Kaiser, she took";
-			mes "it pretty badly, but at least";
-			mes "you're being gentlemanly";
-			mes "about it. Well, I'd like for";
-			mes "all of us to get better";
-			mes "acquainted, but...";
-			next;
-			cutin "kh_kiel01",2;
-			mes "[Kiehl]";
-			mes "We'd better say our";
-			mes "farewells here. This";
-			mes "place will be gone in";
-			mes "five minutes. Ah, and";
-			mes "Ms. Layla, you're coming";
-			mes "with us. We have questions~";
-			next;
-			mes "[Kiehl]";
-			mes "I'm curious as to what";
-			mes "the president's plans are";
-			mes "Mister Kaiser, if you'll";
-			mes "escort Ms. Layla, please.";
-			next;
-			mes "[Wolkeus Kaiser]";
-			mes "Sorry, Mitchell.";
-			mes "I gotta do it...";
-			next;
-			mes "[Mitchell]";
-			mes "No, get away! Let me go!";
-			mes "Let go of me, Wolkeus!";
-			donpcevent "::OnKHAgent";
-			disablenpc "Mitchell#KiehlRoom";
-			disablenpc "Agent#KHAgent1";
-			disablenpc "Agent#KHAgent2";
-			disablenpc "Agent#KHAgent3";
-			disablenpc "Agent#KHAgent4";
-			next;
-			cutin "kh_kiel02",2;
-			mes "[Kiehl]";
-			mes "Great, we're done with";
-			mes "that ugly business. Now,";
-			mes "where was I? Ah, right.";
-			mes "Yes. I'm sorry. We don't";
-			mes "have any more time to play.";
-			next;
-			mes "[Kiehl]";
-			mes "Here, adventurer.";
-			mes "I'm aware that my father";
-			mes "sent you here to get this.";
-			mes "Consider it my final gift";
-			mes "to him. I'm surprised he left";
-			mes "this ring inside me, though.";
-			next;
-			cutin "kh_kiel04",2;
-			mes "[Kiehl]";
-			mes "I imagine that it must";
-			mes "be precious to him. But";
-			mes "I wonder why he placed";
-			mes "it inside me? Well, anyway,";
-			mes "I have a message I'd like";
-			mes "for you to deliver to him.";
-			next;
-			cutin "kh_kiel01",2;
-			mes "[Kiehl]";
-			mes "First... I guess we";
-			mes "should get rid of this";
-			mes "old thing. It was a good";
-			mes "body, and it's served me";
-			mes "well for 23 years. I'll miss";
-			mes "it. Rest well, old Kiehl.";
-			next;
-			mes "[Kiehl]";
-			mes "Now, this was the body";
-			mes "that my father made.";
-			mes "Please tell him that";
-			mes "this means that we're";
-			mes "no longer related to";
-			mes "each other at all.";
-			next;
-			mes "[Kiehl]";
-			mes "The body I'm using right now?";
-			mes "I made it myself with the most";
-			mes "advanced technology. Consider";
-			mes "it... a Fourth Generation robot";
-			mes "body if you will. Father will";
-			mes "understand what I mean.";
-			next;
-			mes "[Kiehl]";
-			mes "Anyway, please tell him";
-			mes "that, and get his old ring";
-			mes "out of my old robot body,";
-			mes "and then give it to him. For";
-			mes "now, let's get out of here: we";
-			mes "just have 3 minutes to evacuate.";
-			next;
-			mes "[Kiehl]";
-			mes "You're a worthy opponent,";
-			mes "and a human I respect.";
-			mes "I don't know if we'll meet";
-			mes "again, but who knows?";
-			mes "Anyway, I'll open up the";
-			mes "exit for you. Farewell~";
-			set KielHyreQuest,104;
-			donpcevent "Kiehl_Room_Exit::OnEnable";			
-			enablenpc "Kiehl_Room_Exit";
-			close2;
-			cutin "",255;
-			donpcevent "Kiehl#Copy::OnChangeState";
-			disablenpc "Kiehl#Copy";
-			initnpctimer;
-			end;
-		}
+	else if ((KielHyreQuest == 100) && (getvariableofnpc(.KHKilledBoss,"KiehlRoom") == 1)) {
+		cutin "kh_kiel02",2;
+		mes "[Kiehl]";
+		mes "D-damn...!";
+		mes "Well played, adventurer";
+		mes "Well played. I should have";
+		mes "known that Father would send";
+		mes "the very best after me. Still,";
+		mes "you've failed to truly defeat me.";
+		next;
+		mes "[Kiehl]";
+		mes "I still have a few";
+		mes "trump cards left";
+		mes "I think... I'll take you";
+		mes "to hell with me... Well";
+		mes "if robots can go there~";
+		announce "*Jeeeezzzgggg~ Geezzz~ Grrrr~ Clank~*",bc_map,0xFF0000;
+		next;
+		mes "[Mitchell]";
+		mes "No...! We're locked";
+		mes "in the room! We're";
+		mes "We're trapped in here!";
+		next;
+		mes "[Kiehl]";
+		mes "Yay~ Let's burn";
+		mes "everything down~";
+		next;
+		mes "[Mitchell]";
+		mes "Quick, "+strcharinfo(0)+",";
+		mes "use Kiel Hyre's power";
+		mes "device, the one that's";
+		mes "supposed to mess with";
+		mes "Kiehl's power supply!";
+		mes "Hurry, use it right now!";
+		next;
+		delitem 7504,1; //Power_Source
+		announce "*Gzzzz~ Gzzzz~*",bc_map,0xFF0000;
+		next;
+		mes "[Kiehl]";
+		mes "Wh-what? I c-can't";
+		mes "move! This day is just";
+		mes "full of surprises. Oh, well.";
+		mes "I guess it's time for me to";
+		mes "use my other trump card.";
+		next;
+		mes "[Mitchell]";
+		mes "What...?";
+		mes "How many trump";
+		mes "cards do you have?";
+		next;
+		mes "[????]";
+		mes "I'm so disappointed...";
+		mes "I can't believe none";
+		mes "of you thought of this...";
+		next;
+		mes "[Mitchell]";
+		mes "Who are you...?";
+		mes "Show yourself!";
+		next;
+		donpcevent "Kiehl#Copy::OnChangeState";
+		enablenpc "Kiehl#Copy";
+		mes "[????]";
+		mes "Please.";
+		mes "Don't insult me.";
+		mes "You know this voice.";
+		mes "It's been talking to";
+		mes "you this entire time~";
+		next;
+		mes "[Mitchell]";
+		mes "Impossible!";
+		mes "How can there";
+		mes "be two of you...?!";
+		next;
+		cutin "kh_kiel01",0;
+		mes "[Kiehl]";
+		mes "Hahahahaha!";
+		mes "I'm a robot!";
+		mes "I can make extra";
+		mes "bodies, switch brains";
+		mes "with them. It's awfully";
+		mes "convenient, let me tell you.";
+		next;
+		cutin "kh_kiel03",2;
+		mes "[Kiehl]";
+		mes "Anyway, I don't mean to show";
+		mes "off, but I suppose I better";
+		mes "reveal to you my final trump";
+		mes "card. First of all, I know all";
+		mes "about you, Ms. Mitchell Layla~";
+		next;
+		mes "[Mitchell]";
+		mes "What? How do you";
+		mes "know my name?";
+		next;
+		mes "[Kiehl]";
+		mes "Well, I have a few";
+		mes "spies of my own...";
+		mes "I'll allow him to explain.";
+		next;
+		mes "[Masked Man]";
+		mes "Mitchell...";
+		mes "I'm sorry that";
+		mes "you had to get";
+		mes "involved in all this.";
+		next;
+		mes "[Mitchell]";
+		mes "Wolkeus? Wolkeus Kaiser?!";
+		mes "You're the spy?! But you risked";
+		mes "your life to save our president!";
+		mes "No! Oh, God! How can this be";
+		mes "happening?! Everything's just...";
+		mes "This is all crazy! All of it!";
+		next;
+		mes "[Wolkeus]";
+		mes "This is just the result";
+		mes "of elaborate plans that";
+		mes "were made years ago. I didn't";
+		mes "expect you to be this surprised,";
+		mes "Mitchell. It's the way the game";
+		mes "is played. You know that.";
+		next;
+		mes "[Mitchell]";
+		mes "Mister President...";
+		mes "I failed you... I'm sorry...";
+		next;
+		mes "[Kiehl]";
+		mes "Well, Kaiser, she took";
+		mes "it pretty badly, but at least";
+		mes "you're being gentlemanly";
+		mes "about it. Well, I'd like for";
+		mes "all of us to get better";
+		mes "acquainted, but...";
+		next;
+		cutin "kh_kiel01",2;
+		mes "[Kiehl]";
+		mes "We'd better say our";
+		mes "farewells here. This";
+		mes "place will be gone in";
+		mes "five minutes. Ah, and";
+		mes "Ms. Layla, you're coming";
+		mes "with us. We have questions~";
+		next;
+		mes "[Kiehl]";
+		mes "I'm curious as to what";
+		mes "the president's plans are";
+		mes "Mister Kaiser, if you'll";
+		mes "escort Ms. Layla, please.";
+		next;
+		mes "[Wolkeus Kaiser]";
+		mes "Sorry, Mitchell.";
+		mes "I gotta do it...";
+		next;
+		mes "[Mitchell]";
+		mes "No, get away! Let me go!";
+		mes "Let go of me, Wolkeus!";
+		donpcevent "::OnKHAgent";
+		disablenpc "Mitchell#KiehlRoom";
+		disablenpc "Agent#KHAgent1";
+		disablenpc "Agent#KHAgent2";
+		disablenpc "Agent#KHAgent3";
+		disablenpc "Agent#KHAgent4";
+		next;
+		cutin "kh_kiel02",2;
+		mes "[Kiehl]";
+		mes "Great, we're done with";
+		mes "that ugly business. Now,";
+		mes "where was I? Ah, right.";
+		mes "Yes. I'm sorry. We don't";
+		mes "have any more time to play.";
+		next;
+		mes "[Kiehl]";
+		mes "Here, adventurer.";
+		mes "I'm aware that my father";
+		mes "sent you here to get this.";
+		mes "Consider it my final gift";
+		mes "to him. I'm surprised he left";
+		mes "this ring inside me, though.";
+		next;
+		cutin "kh_kiel04",2;
+		mes "[Kiehl]";
+		mes "I imagine that it must";
+		mes "be precious to him. But";
+		mes "I wonder why he placed";
+		mes "it inside me? Well, anyway,";
+		mes "I have a message I'd like";
+		mes "for you to deliver to him.";
+		next;
+		cutin "kh_kiel01",2;
+		mes "[Kiehl]";
+		mes "First... I guess we";
+		mes "should get rid of this";
+		mes "old thing. It was a good";
+		mes "body, and it's served me";
+		mes "well for 23 years. I'll miss";
+		mes "it. Rest well, old Kiehl.";
+		next;
+		mes "[Kiehl]";
+		mes "Now, this was the body";
+		mes "that my father made.";
+		mes "Please tell him that";
+		mes "this means that we're";
+		mes "no longer related to";
+		mes "each other at all.";
+		next;
+		mes "[Kiehl]";
+		mes "The body I'm using right now?";
+		mes "I made it myself with the most";
+		mes "advanced technology. Consider";
+		mes "it... a Fourth Generation robot";
+		mes "body if you will. Father will";
+		mes "understand what I mean.";
+		next;
+		mes "[Kiehl]";
+		mes "Anyway, please tell him";
+		mes "that, and get his old ring";
+		mes "out of my old robot body,";
+		mes "and then give it to him. For";
+		mes "now, let's get out of here: we";
+		mes "just have 3 minutes to evacuate.";
+		next;
+		mes "[Kiehl]";
+		mes "You're a worthy opponent,";
+		mes "and a human I respect.";
+		mes "I don't know if we'll meet";
+		mes "again, but who knows?";
+		mes "Anyway, I'll open up the";
+		mes "exit for you. Farewell~";
+		set KielHyreQuest,104;
+		donpcevent "Kiehl_Room_Exit::OnEnable";			
+		enablenpc "Kiehl_Room_Exit";
+		close2;
+		cutin "",255;
+		donpcevent "Kiehl#Copy::OnChangeState";
+		disablenpc "Kiehl#Copy";
+		initnpctimer;
+		end;
+	}
 
-		if (KielHyreQuest == 104) {
-			cutin "kh_kiel02",2;
-			mes "^3355FFYou retrieve the";
-			mes "ring from the heart of";
-			mes "Kiehl's old robotic body.^000000";
-			getitem 7508,1; //Elisia's_Ring
-			set KielHyreQuest,106;
-			enablenpc "Kiehl_Room_Exit";
-			close2;
-			cutin "",255;
-			end;
-		}
-
-		else {
-			mes "......";
-			close2;
-			cutin "",255;
-			end;
-		}
-
-
+	if (KielHyreQuest == 104) {
+		cutin "kh_kiel02",2;
+		mes "^3355FFYou retrieve the";
+		mes "ring from the heart of";
+		mes "Kiehl's old robotic body.^000000";
+		getitem 7508,1; //Elisia's_Ring
+		set KielHyreQuest,106;
+		enablenpc "Kiehl_Room_Exit";
+		close2;
+		cutin "",255;
+		end;
 	}
 
 	else {
@@ -7399,7 +7388,6 @@ OnReset:
 	set .KHKilled,0;
 	set getvariableofnpc(.KHTrapSprung,"Kiehl_Room_Trap"),0;
 	set $@KHQuestBusy,0;
-	set $@KH_DoorInvoker$,"";
 	end;
 }
 
@@ -7419,11 +7407,11 @@ OnKHSpiderWeb:
 }
 
 
-kh_kiehl02,49,55,7	duplicate(KHAgent)	Mitchell#KiehlRoom	727
+kh_kiehl02,49,55,6	duplicate(KHAgent)	Mitchell#KiehlRoom	727
 
 kh_kiehl02,53,52,4	duplicate(KHAgent)	Agent#KHAgent1	880
 
-kh_kiehl02,51,49,0	duplicate(KHAgent)	Agent#KHAgent2	880
+kh_kiehl02,51,49,1	duplicate(KHAgent)	Agent#KHAgent2	880
 
 kh_kiehl02,47,50,0	duplicate(KHAgent)	Agent#KHAgent3	880
 
@@ -7433,7 +7421,7 @@ kh_kiehl02,46,53,6	duplicate(KHAgent)	Agent#KHAgent4	880
 //----------------------------------------------------------------------------
 // Kiehl's Room; Copy of Kiehl.
 //----------------------------------------------------------------------------
-kh_kiehl02,48,53,7	script	Kiehl#Copy	902,{
+kh_kiehl02,48,53,6	script	Kiehl#Copy	902,{
 	end;
 
 OnChangeState:

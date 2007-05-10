@@ -1,5 +1,13 @@
 Date		Added
 ======
+	* Rev. 10515 More Kiel Hyre quest related updates
+	- Fixed the wrong name being displayed for Kiel Hyre in one dialog. 
+	- Removed $@KH_DoorInvoker entirely. The quest is now working like it should according to iRO.
+	- Fixed up a few more NPC headers. Facing direction fixes mostly this time.
+	- More progression changes to Kiehl Hyre. He no longer stops dialog after the agents appear.
+	* Rev. 10515 Updates to the Kiel Hyre Dungeon warps. [L0ne_W0lf]
+	- Added second floor exit.
+	- Corrected coordinated for some of the other warps.
 2007/05/10
 	* Updated Knight Skill Quest to the oficial. [Samuray22]
 	* Updated Blacksmith Skill Quest to the Oficial. [Samuray22]
