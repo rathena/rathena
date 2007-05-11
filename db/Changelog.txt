@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+05/12
+	* Added some monsters and fixed some items [Playtester]
 05/08
 	* Fixed some aegis names [Playtester]
 05/06
