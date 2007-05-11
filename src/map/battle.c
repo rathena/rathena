@@ -1102,14 +1102,14 @@ static struct Damage battle_calc_weapon_attack(
 		if(battle_config.agi_penalty_type &&
 			battle_config.agi_penalty_target&target->type)
 		{	
-			unsigned char target_count; //256 max targets should be a sane max
-			target_count = unit_counttargeted(target,battle_config.agi_penalty_count_lv);
-			if(target_count >= battle_config.agi_penalty_count)
+			unsigned char attacker_count; //256 max targets should be a sane max
+			attacker_count = unit_counttargeted(target,battle_config.agi_penalty_count_lv);
+			if(attacker_count >= battle_config.agi_penalty_count)
 			{
 				if (battle_config.agi_penalty_type == 1)
-					flee = (flee * (100 - (target_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num))/100;
+					flee = (flee * (100 - (attacker_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num))/100;
 				else //asume type 2: absolute reduction
-					flee -= (target_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num;
+					flee -= (attacker_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num;
 				if(flee < 1) flee = 1;
 			}
 		}
@@ -2585,14 +2585,14 @@ struct Damage  battle_calc_misc_attack(
 			if(battle_config.agi_penalty_type && 
 				battle_config.agi_penalty_target&target->type)
 			{	
-				unsigned char target_count; //256 max targets should be a sane max
-				target_count = unit_counttargeted(target,battle_config.agi_penalty_count_lv);
-				if(target_count >= battle_config.agi_penalty_count)
+				unsigned char attacker_count; //256 max targets should be a sane max
+				attacker_count = unit_counttargeted(target,battle_config.agi_penalty_count_lv);
+				if(attacker_count >= battle_config.agi_penalty_count)
 				{
 					if (battle_config.agi_penalty_type == 1)
-						flee = (flee * (100 - (target_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num))/100;
+						flee = (flee * (100 - (attacker_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num))/100;
 					else //asume type 2: absolute reduction
-						flee -= (target_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num;
+						flee -= (attacker_count - (battle_config.agi_penalty_count - 1))*battle_config.agi_penalty_num;
 					if(flee < 1) flee = 1;
 				}
 			}

@@ -1521,15 +1521,14 @@ void unit_dataset(struct block_list *bl) {
 }
 
 /*==========================================
- * 自分をロックしているユニットの数を数える(foreachclient)
- *------------------------------------------
- */
-static int unit_counttargeted_sub(struct block_list *bl, va_list ap)
+ * Returns 1 if this unit is attacking target 'id'
+ *------------------------------------------*/
+static int unit_counttargeted_sub(struct block_list* bl, va_list ap)
 {
-	int id, target_lv;
-	struct unit_data *ud;
-	id = va_arg(ap,int);
-	target_lv = va_arg(ap,int);
+	int id = va_arg(ap, int);
+	int target_lv = va_arg(ap, int); // extra condition
+	struct unit_data* ud;
+
 	if(bl->id == id)
 		return 0;
 
@@ -1539,6 +1538,15 @@ static int unit_counttargeted_sub(struct block_list *bl, va_list ap)
 		return 1;
 
 	return 0;	
+}
+
+/*==========================================
+ * Counts the number of units attacking 'bl'
+  *------------------------------------------*/
+int unit_counttargeted(struct block_list* bl, int target_lv)
+{
+	nullpo_retr(0, bl);
+	return (map_foreachinrange(unit_counttargeted_sub, bl, AREA_SIZE, BL_CHAR, bl->id, target_lv));
 }
 
 /*==========================================
@@ -1553,17 +1561,6 @@ int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int
 		return 0;
 	
 	return status_fix_damage(src,target,damage+damage2,clif_damage(target,target,tick,sdelay,ddelay,damage,div,type,damage2));
-}
-/*==========================================
- * 自分をロックしている対象の数を返す
- * 戻りは整数で0以上
- *------------------------------------------
- */
-int unit_counttargeted(struct block_list *bl,int target_lv)
-{
-	nullpo_retr(0, bl);
-	return (map_foreachinrange(unit_counttargeted_sub, bl, AREA_SIZE, BL_CHAR,
-		bl->id, target_lv));
 }
 
 /*==========================================

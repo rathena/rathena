@@ -1033,7 +1033,12 @@ struct pet_data {
 	struct map_session_data *msd;
 };
 
-enum { ATK_LUCKY=1,ATK_FLEE,ATK_DEF};	// 囲まれペナルティ計算用
+// state of a single attack attempt; used in flee/def penalty calculations when mobbed
+enum {
+	ATK_LUCKY=1,	// attack was lucky-dodged
+	ATK_FLEE,		// attack was dodged
+	ATK_DEF			// attack connected
+};
 
 struct map_data {
 	char name[MAP_NAME_LENGTH];
