@@ -39,12 +39,9 @@ ve_fild05,359,192,0	warp	veinswarp5019	1,1,ve_fild06,84,179
 ve_fild04,115,49,0	warp	veinswarp5020	1,1,ve_fild06,84,179
 
 ve_fild06,88,176,0	script	veinswarp5021	45,1,1,{
-	switch(rand(2)){
-		case 1:
-			warp "ve_fild04",115,52;
-			break;
-		default:
-			warp "ve_fild05",354,192;
-			break;
-	}
+	if (rand(2))
+		warp "ve_fild04",115,52;
+	else
+		warp "ve_fild05",354,192;
+	end;
 }

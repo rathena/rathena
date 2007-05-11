@@ -1,11 +1,12 @@
 //===== Athena Doc ========================================
-//= Client Effect List
+//= Client Effects List
 //===== By ================================================
 //= Valaris, Spira, Au{R}oN, Tharis, HiddenDragon
 //===== Version ===========================================
-//= 1.0
+//= 1.1
 //=========================================================
 //= 1.0 - Formatted to the standard
+//= 1.1 - New effects, from 2007/05/07 Sakexe [Au{R}oN]
 //===== Description =======================================
 //= A list of client-side effects sorted by their ID
 //=========================================================
@@ -17,7 +18,7 @@ You can produce these effects ingame by doing "@effect <number> 22" (22=self).
 It's also possible to attach effects to item/npc scripts by using 'misceffect'.
 
 number	description
-------  -----------
+------	-----------
 0.	Regular Hit
 1.	Melee Skill Hit (Bash)
 2.	Melee Skill Hit
@@ -221,7 +222,7 @@ number	description
 200.	(nothing)
 201.	(nothing)
 202.	Lv 99 Aura Bubble
-203.	Mental Strenght Lightning (Without Sound)
+203.	Mental Strength Lightning (Without Sound)
 204.	Red Herb/Potion
 205.	Orange Potion
 206.	Yellow Potion
@@ -339,14 +340,14 @@ number	description
 318.	Something Like Big Square Beam
 319.	Another Small Basilica
 320.	Offensive Heal
-321.	Warp NPC °_°
+321.	Warp NPC O.O
 322.	Big Sunlight Through The Roof
 323.	Small Sunlight Through The Roof
 324.	Medium Sunlight Through The Roof
 325.	Another Heal Effect
 326.	Chase Walk Left Foot
 327.	Chse Walk Right Foot
-328.	Asura Strike Word
+328.	Monk Asura Strike
 329.	Triple Strike
 330.	Combo Finish
 331.	Natural HP Regeneration
@@ -354,7 +355,7 @@ number	description
 333.	Autumn Leaves
 334.	Blind
 335.	Poison
-336.	Kirye Eleison/Parring/Defender Shield
+336.	Kyrie Eleison/Parrying Shield
 337.	Class Change
 338.	Super Novice/Taekwon Level Up Angel
 339.	Spiral Pierce
@@ -413,7 +414,7 @@ number	description
 392.	Reject Sword
 393.	Arrow Vulcan
 394.	Sheltering Bliss
-395.	Soul Change (The same of 384)
+395.	Soul Change (the same as 384)
 396.	Marionette Control
 397.	(nothing)
 398.	(nothing)
@@ -447,9 +448,9 @@ number	description
 426.	Running Hit Effect
 427.	(nothing)
 428.	(nothing)
-429.	Taekwon Normal Kick
-430.	The Same of 429
-431.	The Same of 429 and 430
+429.	Taekwon Normal Kicks
+430.	Taekwon Normal Kicks
+431.	Taekwon Normal Kicks
 432.	Star Gladiator Map Recognize
 433.	Something like 432
 434.	Like 429, 430 and 431
@@ -481,7 +482,7 @@ number	description
 460.	Green tornado (unused)
 461.	Blue tornado (unused)
 462.	Kaupe Dodge Effect
-463.	The Same of 462
+463.	Kaupe Dodge Effect
 464.	White tornado (unused)
 465.	Purple tornado (unused)
 466.	Another Round Kick
@@ -503,8 +504,8 @@ number	description
 482.	Demon of The Sun Moon And Stars (Level 8)
 483.	Demon of The Sun Moon And Stars (Level 9)
 484.	Demon of The Sun Moon And Stars (Level 10)
-485.	Lightning like Mental Strenght but White
-486.	Like Mental Strenght but White
+485.	Mental Strength Lightning but White
+486.	Mental Strength Lightning
 487.	Demon of The Sun Moon And Stars Ground Effect
 488.	Comfort Skills
 489.	(nothing)
@@ -518,9 +519,9 @@ number	description
 497.	Twilight Alchemy 1
 498.	Twilight Alchemy 2
 499.	Twilight Alchemy 3
-500.	Need More Test Skill
-501.	WTF?
-502.	Need More Test Skill
+500.	Player Become Blue with Blue Aura
+501.	Chase Walk Animation
+502.	Player Become Yellow with Yellow Aura
 503.	Soul Link Word
 504.	(nothing)
 505.	Memorize
@@ -528,18 +529,18 @@ number	description
 507.	Authoritative Badge
 508.	Fire Cracker
 509.	Valentine Day Hearth (Wings)
-510.	WOOH! Another Ashura Strike Word (Its the opposite of the original 328!!)
+510.	Champion Asura Strike
 511.	(nothing)
-512.	Chain Crush COmbo
-513.	O_O Like Area Cast Target
-514.	O_O I Really don't know this
+512.	Chain Crush Combo
+513.	Area Cast
+514.	Really Big Circle O.O
 515.	Einbroch Fog
 516.	Airship Cloud
 517.	(nothing)
 518.	Cart Termination
 519.	Speed Down Potion
 520.	Shield Bumerang
-521.	O_O I Really don't know this
+521.	Player Become Red with Red Aura
 522.	Gravitation Field
 523.	Tarot Card of Fate (The Fool)
 524.	Tarot Card of Fate (The Magician)
@@ -555,21 +556,21 @@ number	description
 534.	Tarot Card of Fate (The Tower)
 535.	Tarot Card of Fate (The Star)
 536.	Tarot Card of Fate (The Sun)
-537.	O_O I Really don't know this
-538.	O_O I Really don't know this
+537.	Acid Demonstration
+538.	Player Become Green with Green Aura
 539.	Throw Random Bottle
 540.	Instant Small->Normal
 541.	(nothing)
 542.	KA-Spell (1st Part)
 543.	Kahii
 544.	Warmth Red Sprite
-545.	Sound and... PUFF Crash Client :P
+545.	Sound and... PUFF Client Crash :P
 546.	Another HP/SP Regeneration
 547.	Estin
 548.	Istant Red Sprite
 549.	Istant Blue Sprite
 550.	Another Effect like Running Hit
-551.	O_O Effect Like Estun but with Circle
+551.	Effect Like Estun but with Circle
 552.	(nothing)
 553.	Esma
 554.	(nothing)
@@ -603,10 +604,10 @@ number	description
 582.	Another Super Novice/Taekwon Angel
 583.	Warmth Hit
 584.	Full Buster
-585.	A Gunslinger Skill
+585.	5 Medium Size Explosion
 586.	Somatology Lab Mobs Aura
-587.	WTF?
-588.	WTF?
+587.	Big Purple Flame
+588.	Little Red Flame
 589.	Eswoo
 590.	Running Stop
 591.	(nothing)
@@ -617,7 +618,7 @@ number	description
 596.	Food Effect (AGI)
 597.	Food Effect (DEX)
 598.	Food Effect (LUK)
-599.	O_O I Really don't know this
+599.	Cast Time Sound and Flashing Animation on Player
 600.	Something Happen Near Shadow Sprite
 601.	Sight Blaster
 602.	Something About 2nd Class New Skills
@@ -630,7 +631,7 @@ number	description
 609.	Cooking Failed
 610.	Success
 611.	Failed
-612.	-?-
+612.	Korean Words and /no1 Smile O.O
 613.	Throw Shuriken
 614.	Throw Kunai
 615.	Throw Fumma Shuriken
@@ -673,8 +674,8 @@ number	description
 652.	Like Regeneration Number but Red with a Sound
 653.	Like Regeneration Number but Red
 654.	Like Regeneration Number but Purple
-655.	Player Become Green slooooooowly
-656.	Green FLash
+655.	Mobs Skill (Change to Undead Element)
+656.	Final animation for Change Undead Element
 657.	(nothing)
 658.	(nothing)
 659.	(nothing)
@@ -684,8 +685,16 @@ number	description
 663.	(nothing)
 664.	(nothing)
 665.	Little Blue Ball Falling From Sky
-666.	New Mobs Skill (Earthquake)
+666.	Mobs Skill (Earthquake)
 667.	(nothing)
-668.	New Mobs Skill (Unamed)
-669.	New Mobs Skill (Unamed)
-670.+	No More Effects
+668.	Mobs Skill (Scream)
+669.	Mobs Skill (Critical Slash)
+670.	Mobs Skill (Scream Without Sound)
+671.	The Japan Earth Symbol (Like 'Seven Wind LV 1' but is in the Ground)
+672.	The Japan Wind Symbol (Like 'Seven Wind LV 2' but is in the Ground)
+673.	(nothing)
+674.	Like Curse Effect
+675.	Like Parrying/Kyrie Eleison barrier but is Yellow with small Cross in every barrier piece
+676.	Mobs Skill (Maybe is Full Screen Slow Down, or something like Slow Cast)
+677.	Mobs Skill (Unamed)
+678+.	No More Effects in 2007/05/07 Sakexe

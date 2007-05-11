@@ -450,7 +450,7 @@ izlude,124,178,4	script	Soldier	105,{
 izlude,56,126,7	script	Cebalis::RedCebalis	85,{
 
 	mes "[Red]";
-	mes "The only slill that's needed for a";
+	mes "The only skill that's needed for a";
 	mes "Swordman is ^FF0000Bash^000000! Bash, Bash and";
 	mes "ONLY ^FF0000BASH^000000! No need to waste time";
 	mes "and effort for smaller skills!";

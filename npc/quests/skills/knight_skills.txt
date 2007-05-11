@@ -262,7 +262,7 @@ prontera,69,351,0	script	#Observer	111,{
 		mes "- enough. -";
 		close;
 	}
-	mes "- You can see the Calvary Division -";
+	mes "- You can see the Cavalry Division -";
 	mes "- training very hard. -";
 	mes "- The loud shoutings are quite annoying, -";
 	mes "- but they are working hard -";
