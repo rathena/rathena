@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 2.6
+//= 2.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -54,6 +54,10 @@
 //=	Removed $@KH_DoorInvoker entirely. The quest is now working like it should according to iRO.
 //=	Fixed up a few more NPC headers. Facing direction fixes mostly this time.
 //=	More progression changes to Kiehl Hyre. He no longer stops dialog after the agents appear.
+//= 2.8 Fixed the weight checking in Vandt, and added official dialog. [L0ne_W0lf]
+//=	Added weight checks for all NPCs that give items. Semi-official dialog.
+//=	Got the missing portion of dialog for Mills'.
+//=	Will add further improper dialogs as I get to them on the second runthrough of the quest.
 //============================================================ 
 
 //============================================================================
@@ -68,10 +72,8 @@
 //  - Let it be noted that ALL DIALOG IS OFFICIAL TO IRO UNLESS SPECIFIED.
 //  - I've fixed a few of iRO's mistakes, but I'm sure I made some of my own. 
 //  - Will probably require a major optimizing.
-//  - Accidentally progressed Mills' dialog. Improvising.
 //  - Accidentally progressed Elly's dialog while reading 'Letter to Elly'. Improvising.
-//  - Possible missing dialog for all getitems when overweight.
-//  - Possible missing dialog for absense of Green Key item in "Bookshelf" NPC
+//  - Possible missing dialog for some getitem weight checks.
 //  - Possible missing dialog for "Test Tube" if you haven't read the second poem.
 //  - Possible missing dialog for Elly in Dromitory if you don't have "Grey Box"
 //  - Possible missing dialog for "Grave" if you don't have "Yellow Keycard"
@@ -267,12 +269,14 @@
 // Juno Pub Master/Starting point.
 //----------------------------------------------------------------------------
 yuno_in01,35,179,1	script	Pub Master	46,4,4,{
-	if (checkweight(7487,1) == 1) {
-		mes "^3355FF- Wait!! -";
-		mes "- You are carrying too many items-";
-		mes "- so you can't receive any more items -";
-		mes "- please take off some items -";
-		mes "- and come for the challenge again -^000000";
+	if (checkweight(7487,1) == 0) {
+		mes "[Vandt]";
+		mes "Just a second! You're";
+		mes "carrying too many items";
+		mes "right now. You'd better";
+		mes "put your stuff in Kafra";
+		mes "Storage or you won't be";
+		mes "able to pick up anything new...";
 		close;
 	}
 
@@ -572,6 +576,17 @@ yuno,217,114,4	script	Little Kid	96,{
 // Lighthalzen WindMill Owner.
 //----------------------------------------------------------------------------
 lighthalzen,365,300,2	script	Windmill Owner	46,{
+	if (checkweight(7488,1) == 0) {
+		mes "[Mills]";
+		mes "Hey, you've got too much";
+		mes "stuff on you right now. ";
+		mes "Put your junk in Kafra Storage";
+		mes "if you expect me to give you";
+		mes "anything. That's why you came";
+		mes "here to the miss, didn't you?";
+		close;
+	}
+
 	if (KHToastGirlEnd < 1) {
 		mes "[Mills]";
 		mes "Hey, whaddya want?";
@@ -598,7 +613,9 @@ lighthalzen,365,300,2	script	Windmill Owner	46,{
 			mes "Oh, Cezu from the";
 			mes "toast stand? Okay,";
 			mes "I've got everything";
-			mes "here, let me just get";
+			mes "that kid needs right";
+			mes "here. There's eggs inside,";
+			mes "so be really careful with it.";
 			mes "it ready for you...";
 			next;
 			mes "[Mills]";
@@ -943,6 +960,18 @@ kh_school,176,60,4	script	Lady::LadyKHQ	101,{
 // Elly (In school)
 //----------------------------------------------------------------------------
 kh_school,179,39,1	script	Cute Student	895,{
+	set @now_weight,MaxWeight-Weight;
+	if (@now_weight < 2000) {
+		mes "[Elly]";
+		mes "I'm sorry, but would you";
+		mes "put some of your things in";
+		mes "your kafra Storage first or";
+		mes "soemthing? I can't really";
+		mes "help you whne you're";
+		mes "carrying so much stuff.";
+		close;
+	}
+
 	cutin "kh_elly01",2;
 	if (KielHyreQuest < 4) { 
 		cutin "kh_elly03",2;
@@ -976,7 +1005,6 @@ kh_school,179,39,1	script	Cute Student	895,{
 			switch(select("What can I do to help you?","Oh, I'm so sorry.")) {
 
 			case 1: 
-				L_Accept:
 				cutin "kh_elly02",2;
 				mes "[Elly]";
 				mes "What was that...?";
@@ -984,6 +1012,7 @@ kh_school,179,39,1	script	Cute Student	895,{
 				mes "me? That's wonderful!";
 				mes "Thank you! Thank you so much!";
 				next;
+				L_Accept:
 				cutin "kh_elly04",2;
 				mes "[Elly]";
 				mes "Well, I guess the only way";
@@ -1037,6 +1066,7 @@ kh_school,179,39,1	script	Cute Student	895,{
 				goto KH_Elly_end;
 
 			Case 2:
+				mes "[Elly]";
 				mes "What, you don't go";
 				mes "to this school, don't";
 				mes "you? Y-you're one of";
@@ -1053,7 +1083,14 @@ kh_school,179,39,1	script	Cute Student	895,{
 					switch(select("Accept","Decline")) {
 		
 					case 1:
-						//Missing text, needs another run through.
+						//bigsmile
+						mes "How Wonderful!";
+						mes "Thank you! Thank you";
+						mes "so much! I'm supposed to";
+						mes "finish baking this batch of";
+						mes "cookies soon, but I spilled";
+						mes "all of the ingredients...";
+						next;
 						goto L_Accept;
 
 					case 2:
@@ -1590,6 +1627,16 @@ yuno_fild08,69,185,0	script	Window::WindowKHQ1	111,{
 // Elly (In Dormitory)
 //----------------------------------------------------------------------------
 kh_school,178,180,5	script	Elly	895,{
+	set @now_weight,MaxWeight-Weight;
+	if (@now_weight < 2000) {
+		mes "^3355FF- Wait!! -";
+		mes "- You are carrying too many items";
+		mes "- and are unable to accept any more. -";
+		mes "- Please make some space avaliable";
+		mes "- in your inventory before returning. -^000000";
+		close;
+	}
+
 	if (KielHyreQuest <= 30) {
 		mes "[Elly]";
 		mes "Oh~!";
@@ -2212,6 +2259,14 @@ kh_vila,175,19,0	duplicate(BookKHQ1)	Book#4::BookKHQ4	111
 kh_vila,179,11,0	script	KH_Letter_Trigger	-1,2,2,{
 OnTouch:
 	if (KielHyreQuest == 18) {
+		if (checkweight(7490,1) == 0) {
+			mes "^3355FF- Wait!! -";
+			mes "- You are carrying too many items";
+			mes "- and are unable to accept any more. -";
+			mes "- Please make some space avaliable";
+			mes "- in your inventory before returning. -^000000";
+			close;
+		}
 		mes "^3355FFYou've found a letter^000000";
 		mes "^3355FFon the floor. Naturally,^000000";
 		mes "^3355FFyou pick i up, despite^000000";
@@ -2488,6 +2543,16 @@ kh_vila,33,184,0	script	Pot	111,{
 //----------------------------------------------------------------------------
 kh_vila,14,55,0	script	Calabash	111,{
 	if ((countitem(7329) < 1) && (countitem(7516) < 1) && (countitem(7491) < 1) && (KielHyreQuest < 38)) {
+		if (checkweight(7329,1) == 0) {
+			mes "^3355FFThat's a nice looking";
+			mes "calabash. You might even";
+			mes "get something from it...";
+			mes "But first you better get";
+			mes "rid of all your extra weight.";
+			mes "And by weight, I mean items.^000000";
+			close;
+		}
+
 		mes "^3355FFIt's an expensive^000000";
 		mes "^3355FFlooking calabash--^000000";
 		mes "^3355FFor in less fancy^000000";
@@ -2718,6 +2783,15 @@ OnTouch:
 // Cottage interior, upstairs; Drawer, first room nightstand
 //----------------------------------------------------------------------------
 kh_vila,115,186,0	script	Drawer::DrawerKHQ1	111,{
+	if (checkweight(7492,1) == 0) {
+		mes "^3355FFThere's something inside";
+		mes "this drawer, but you can't";
+		mes "take it since you're carrying";
+		mes "to many items with you. Maybe";
+		mes "you should pay a visit to your";
+		mes "trusty Kafra Storage first.^000000";
+		close;
+	}
 	if ((countitem(7492) < 1) && (KielHyreQuest < 36)) {
 		mes "^3355FFyou find an old drawer^000000";
 		mes "^3355FFthat has been closed.^000000";
@@ -2783,8 +2857,8 @@ kh_vila,107,126,0	script	Box::BoxKHQ2	111,{
 			mes "^3355FFopen the inner box and^000000";
 			mes "^3355FFobtain the Green Keycard^000000";
 			mes "^3355FFthat was locked inside.^000000";
-			getitem 7516,1;
-			delitem 7329,1;
+			getitem 7516,1;	//Green_Keycard
+			delitem 7329,1;	//Old_Bronze_Key
 			close;
 
 
@@ -2812,8 +2886,18 @@ kh_vila,107,126,0	script	Box::BoxKHQ2	111,{
 //----------------------------------------------------------------------------
 // Cottage interior, upstairs; Bookshelf.
 //----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
+// Cottage interior, upstairs; Bookshelf.
+//----------------------------------------------------------------------------
 kh_vila,181,138,0	script	Bookshelf::BookshelfKHQ1	111,{
-	if ((countitem(7491) < 1) && (countitem(7516) >= 1)) {
+	if (checkweight(7492,1) == 0) {
+		mes "^3355FFYou've found a";
+		mes "bookshelf that's";
+		mes "crammed with books.^000000";
+		close;
+	}
+
+	if ((countitem(7491) < 1) && (countitem(7329) >= 1) || (countitem(7516) >= 1)) {
 		mes "^3355FFOne of the books on^000000";
 		mes "^3355FFthis crammed bookshell^000000";
 		mes "^3355FFis labeled with the note,^000000";
@@ -2850,52 +2934,84 @@ kh_vila,181,138,0	script	Bookshelf::BookshelfKHQ1	111,{
 					mes "^3355FFthe first keyhole?^000000";
 					next;
 
-					switch(select("Green keycard","Cottage Key")) {
+					if (countitem(7329) >= 1) {
+						switch(select("Old Bronze Key","Cottage Key")) {
 
-					case 1:
-						set @KHFirstKeyhole,1;
-						break;
+						case 1:
+							break;
 
-					case 2:
-						set @KHFirstKeyhole,2;
-						break;
+						case 2:
+							break;
+
+						}
+
+						mes "^3355FFWhich key will^000000";
+						mes "^3355FFyou insert into^000000";
+						mes "^3355FFthe second keyhole?^000000";
+						next;
+
+						switch(select("Old Bronze Key","Cottage Key")) {
+
+						case 1:
+							break;
+
+						case 2:
+							break;
+
+						}
 
 					}
 
-					mes "^3355FFWhich key will^000000";
-					mes "^3355FFyou insert into^000000";
-					mes "^3355FFthe second keyhole?^000000";
-					next;
 
-					switch(select("Green keycard","Cottage Key")) {
+					else if (countitem(7516) >= 1) {
 
-					case 1:
-						set @KHSecondKeyhole,1;
-						break;
+						switch(select("Green keycard","Cottage Key")) {
 
-					case 2:
-						set @KHSecondKeyhole,2;
-						break;
+						case 1:
+							set @KHFirstKeyhole,1;
+							break;
+
+						case 2:
+							set @KHFirstKeyhole,2;
+							break;
+
+						}
+
+						mes "^3355FFWhich key will^000000";
+						mes "^3355FFyou insert into^000000";
+						mes "^3355FFthe second keyhole?^000000";
+						next;
+
+						switch(select("Green keycard","Cottage Key")) {
+
+						case 1:
+							set @KHSecondKeyhole,1;
+							break;
+
+						case 2:
+							set @KHSecondKeyhole,2;
+							break;
+
+						}
+
+						if (@KHFirstKeyhole == 2) && (@KHSecondKeyhole == 1) {
+							mes "^3355FFThe safe opens with^000000";
+							mes "^3355FFa click and you see^000000";
+							mes "^3355FFa Grey Box inside.^000000";
+							mes "^3355FFYou take the Grey Box^000000";
+							mes "^3355FFwith you, hoping that^000000";
+							mes "^3355FFwill come in handy later.^000000";
+							delitem 7489,1; //Cottage Key
+							delitem 7516,1; //Green_Keycard
+							getitem 7491,1; //Iron_Box
+							close;
+						}
 
 					}
 
-					if (@KHFirstKeyhole == 2) && (@KHSecondKeyhole == 1) {
-						mes "^3355FFThe safe opens with^000000";
-						mes "^3355FFa click and you see^000000";
-						mes "^3355FFa Grey Box inside.^000000";
-						mes "^3355FFYou take the Grey Box^000000";
-						mes "^3355FFwith you, hoping that^000000";
-						mes "^3355FFwill come in handy later.^000000";
-						delitem 7489,1; //Cottage Key
-						delitem 7516,1; //Green_Keycard
-						getitem 7491,1; //Iron_Box
-						close;
-					}
+					mes "^3355FFThe safe won't open.^000000";
+					close;
 
-					else {
-						mes "^3355FFThe safe won't open.^000000";
-						close;
-					}
 
 				case 2:
 					mes "^3355FFIt's probably a better^000000";
@@ -2924,7 +3040,10 @@ kh_vila,181,138,0	script	Bookshelf::BookshelfKHQ1	111,{
 	}
 
 	else {
-		end;
+		mes "^3355FFYou've found a";
+		mes "bookshelf that's";
+		mes "crammed with books.^000000";
+		close;
 	}
 
 }
@@ -3641,6 +3760,15 @@ kh_school,121,149,4	duplicate(BeatifulLadyKHQ1)	Beautiful lady::BeatifulLadyKHQ5
 // Beautiful Lady "Allysia"
 //----------------------------------------------------------------------------
 kh_school,122,186,4	script	Beautiful lady	894,{
+	if (checkweight(7496,1) == 0) {
+		mes "^3355FF- Wait!! -";
+		mes "- You are carrying too many items";
+		mes "- and are unable to accept any more. -";
+		mes "- Please make some space avaliable";
+		mes "- in your inventory before returning. -^000000";
+		close;
+	}
+
 	cutin "kh_ellisia",2;
 	if (KielHyreQuest <= 38) {
 		mes "[Allysia]";
@@ -3881,6 +4009,15 @@ kh_dun01,162,206,0	duplicate(KHKeyardReader)	Mechanical Device	111
 kh_dun01,224,233,0	script	Kiel_Hyre_Door	-1,5,5,{
 OnTouch:
 	if (KielHyreQuest == 40) {
+		if (checkweight(7497,1) == 0) {
+			mes "^3355FF- Wait!! -";
+			mes "- You are carrying too many items";
+			mes "- and are unable to accept any more. -";
+			mes "- Please make some space avaliable";
+			mes "- in your inventory before returning. -^000000";
+			close;
+		}
+
 		mes "^3355FFyou can faintly hear^000000";
 		mes "^3355FFa voice from the other^000000";
 		mes "^3355FFside of this door.^000000";
@@ -4137,6 +4274,17 @@ kh_mansion,78,55,5	script	Steward::StewardKHQ1	109,{
 // Kiel Hyre
 //----------------------------------------------------------------------------
 kh_mansion,22,28,4	script	Kiel Hyre	903,{
+	set @now_weight,MaxWeight-Weight;
+	if (@now_weight < 2000) {
+		mes "^3355FFJust as econd...";
+		mes "You're carrying too";
+		mes "many items with you";
+		mes "right now, so you'll";
+		mes "need to free up more";
+		mes "inventory space first...^000000";
+		close;
+	}
+
 	cutin "kh_kyel02",2;
 	if (KielHyreQuest < 46) {
 		mes "[Kiel Hyre]";
@@ -5644,6 +5792,15 @@ yuno,250,132,2	script	Old Lady	711,{
 	}
 
 	else if (KielHyreQuest == 56) {
+		if (checkweight(7498,1) == 0) {
+			mes "^3355FF- Wait!! -";
+			mes "- You are carrying too many items";
+			mes "- and are unable to accept any more. -";
+			mes "- Please make some space avaliable";
+			mes "- in your inventory before returning. -^000000";
+			close;
+		}
+
 		mes "[Old Lady]";
 		mes "Goodness, I hate this";
 		mes "weather! Reminds me";
@@ -5785,7 +5942,7 @@ yuno,250,132,2	script	Old Lady	711,{
 			mes "Time went by, and he";
 			mes "was forced to marry his";
 			mes "fiancee. Allysia was pretty";
-			mes "devistated. I htink maybe";
+			mes "devistated. I think maybe";
 			mes "that's wht she... you know...";
 			next;
 			mes "[Old Lady]";
@@ -5839,6 +5996,15 @@ OnTouch:
 //----------------------------------------------------------------------------
 kh_rossi,23,23,0	script	Table	111,{
 	if (countitem(7499) < 1) {
+		if (checkweight(7499,1) == 0) {
+			mes "^3355FF- Wait!! -";
+			mes "- You are carrying too many items";
+			mes "- and are unable to accept any more. -";
+			mes "- Please make some space avaliable";
+			mes "- in your inventory before returning. -^000000";
+			close;
+		}
+
 		cutin "kh_family_port",1;
 		mes "^3355FFYou examine the table,^000000";
 		mes "^3355FFand find a frames portait^000000";
@@ -5861,6 +6027,15 @@ kh_rossi,23,23,0	script	Table	111,{
 //----------------------------------------------------------------------------
 kh_rossi,92,40,0	script	Shelf::ShelfKHQ1	111,{
 	if (countitem(7500) < 1) {
+		if (checkweight(7500,1) == 0) {
+			mes "^3355FF- Wait!! -";
+			mes "- You are carrying too many items";
+			mes "- and are unable to accept any more. -";
+			mes "- Please make some space avaliable";
+			mes "- in your inventory before returning. -^000000";
+			close;
+		}
+
 		mes "^3355FFThere are locked^000000";
 		mes "^3355FFboxes on these bookshelves.^000000";
 		mes "^3355FFPerhaps if you used this^000000";
@@ -5921,6 +6096,15 @@ kh_rossi,92,40,0	script	Shelf::ShelfKHQ1	111,{
 // Rosimier Mansion, top floor; Desk
 //----------------------------------------------------------------------------
 kh_rossi,144,287,0	script	Desk::DeskKHQ2	111,{
+	if (checkweight(7501,1) == 0) {
+		mes "^3355FF- Wait!! -";
+		mes "- You are carrying too many items";
+		mes "- and are unable to accept any more. -";
+		mes "- Please make some space avaliable";
+		mes "- in your inventory before returning. -^000000";
+		close;
+	}
+
 	mes "^3355FFThe desk has^000000";
 	mes "^3355FFthree drawers^000000";
 	next;
@@ -5972,6 +6156,15 @@ kh_rossi,144,287,0	script	Desk::DeskKHQ2	111,{
 //----------------------------------------------------------------------------
 kh_rossi,149,288,0	script	Bookshelf::BookshelfKHQ2	111,{
 	if (countitem(7502) < 1) {
+		if (checkweight(7502,1) == 0) {
+			mes "^3355FF- Wait!! -";
+			mes "- You are carrying too many items";
+			mes "- and are unable to accept any more. -";
+			mes "- Please make some space avaliable";
+			mes "- in your inventory before returning. -^000000";
+			close;
+		}
+
 		mes "^3355FFYou encounter a dusty ^000000";
 		mes "^3355FFbookshelf filled with^000000";
 		mes "^3355FFnumerous books. You^000000";
@@ -6120,6 +6313,15 @@ yuno_fild09,158,217,0	script		Wooden Board	111,{
 	}
 
 	else if (KielHyreQuest == 62) {
+		if (checkweight(7503,1) == 0) {
+			mes "^3355FF- Wait!! -";
+			mes "- You are carrying too many items";
+			mes "- and are unable to accept any more. -";
+			mes "- Please make some space avaliable";
+			mes "- in your inventory before returning. -^000000";
+			close;
+		}
+
 		mes "^000oFFYou found a long^000000";
 		mes "^3355FFwooden board carved^000000";
 		mes "^3355FFwith the initials, 'K.H.'^000000";
@@ -6248,6 +6450,15 @@ kh_kiehl01,13,40,0	script	Flower Vase	111,{
 //----------------------------------------------------------------------------
 kh_kiehl01,19,25,0	script	Box::BoxKHQ3	111,{
 	if (countitem(7505) < 1) {
+		if (checkweight(7505,1) == 0) {
+			mes "^3355FF- Wait!! -";
+			mes "- You are carrying too many items";
+			mes "- and are unable to accept any more. -";
+			mes "- Please make some space avaliable";
+			mes "- in your inventory before returning. -^000000";
+			close;
+		}
+
 		mes "^3355FFYou found a box with";
 		mes "a button for each letter";
 		mes "of the alphabet on top of it.^000000";
@@ -6856,6 +7067,16 @@ OnGlobalTimerOff:
 // - Timer will drop to 3 minutes once Kiehl is defeated.
 //----------------------------------------------------------------------------
 kh_kiehl02,50,52,4	script	Kiehl#Original	902,{
+	set @now_weight,MaxWeight-Weight;
+	if (@now_weight < 2000) {
+		mes "^3355FF- Wait!! -";
+		mes "- You are carrying too many items";
+		mes "- and are unable to accept any more. -";
+		mes "- Please make some space avaliable";
+		mes "- in your inventory before returning. -^000000";
+		close;
+	}
+
 	cutin "kh_kiel01",2;
 	if ((KielHyreQuest < 94) || (KielHyreQuest >= 106)) {
 		mes "[Kiehl]";
@@ -7459,4 +7680,3 @@ OnInit:
 }
 
 //============================================================================
-

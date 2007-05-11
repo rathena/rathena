@@ -1,5 +1,10 @@
 Date		Added
 ======
+2007/05/12
+	* Rev. 10526 Fixed the weight checking in Vandt, and added official dialog. [L0ne_W0lf]
+	- Added weight checks for all NPCs that give items. Semi-official dialog.
+	- Got the missing portion of dialog for Mills'.
+	- Will add further improper dialogs as I get to them on the second runthrough of the quest.
 2007/05/11
 	* Updated hack check and added a weight check to Umbala Elemental Dismantler. [SinSloth]
 	* Made Veins spawns slightly more mobby [Playtester]
