@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/05/13
+	* Updated Monk Skill QUest to the Official One. [Samuray22]
 2007/05/12
 	* Rev. 10526 Fixed the weight checking in Vandt, and added official dialog. [L0ne_W0lf]
 	- Added weight checks for all NPCs that give items. Semi-official dialog.
