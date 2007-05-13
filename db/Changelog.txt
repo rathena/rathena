@@ -48,6 +48,12 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+05/14
+	* Blocked expired event items bonuses from Bunch of Carnation, [Lupus]
+	  Woman Glory, Lord Ring, Republic Anniversary Ring, Carnival Jester,
+	  2nd Anniversary Party Hat, Australian Flag Hat,
+	NOTE: If u want to use outdated item bonuses then just use item_db2.txt or
+		use setitemscript() function for events
 05/12
 	* Added some monsters and fixed some items [Playtester]
 05/08
