@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 2.8
+//= 2.8a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -58,6 +58,7 @@
 //=	Added weight checks for all NPCs that give items. Semi-official dialog.
 //=	Got the missing portion of dialog for Mills'.
 //=	Will add further improper dialogs as I get to them on the second runthrough of the quest.
+//= 2.8a minor optimization with extra goto, else or empty switch [Lupus]
 //============================================================ 
 
 //============================================================================
@@ -2276,10 +2277,7 @@ OnTouch:
 		set KielHyreQuest,20;
 		close;
 	} 
-
-	else { 
-		end; 
-	}
+	end; 
 }
 
 //----------------------------------------------------------------------------
@@ -3546,11 +3544,7 @@ kh_vila,185,68,0	script	Test Tube::TestTubeKHQ2	111,{
 		mes "^3355FFso you should return to Elly.^000000";
 		close;
 	}
-
-	else {
-		end;
-	}
-
+	end;
 }
 
 //============================================================================
@@ -3977,7 +3971,7 @@ kh_dun01,166,223,0	script	Mechanical Device::KHKeyardReader	111,{
 			warp "kh_dun01",170,227;
 			end;
 		}
-			else {
+		else {
 			mes "^3355FFNothing happened.^000000";
 			close;
 		}
@@ -4932,18 +4926,7 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 
 			next;
 
-			switch(select("Accept","Okay","Nod")) {
-
-			case 1:
-				break;
-
-			case 2:
-				break;
-
-			case 3:
-				break;
-
-			}
+			select("Accept","Okay","Nod");
 
 			mes "[Kiel Hyre]";
 			mes "Thank you so much!";
@@ -5313,12 +5296,8 @@ OnTouch:
 		close2;
 		percentheal -99,0;
 		warp "kh_mansion",30,75;
-		end;
 	}
-
-	else {
-		end;
-	}
+	end;
 }
 
 //----------------------------------------------------------------------------
@@ -5358,10 +5337,6 @@ L_StartDialog:
 		next;
 
 		switch(select("I'll tell you everything!","I don't know nuthin'!")) {
-
-		case 1:
-			goto L_TellEverything;
-			break;
 
 		case 2:
 			mes "[??????]";
@@ -5472,7 +5447,7 @@ L_StartDialog:
 			mes "good people. Tell me what";
 			mes "you know about them!";
 			next;
-			L_TellEverything:
+		case 1:
 			mes "^3355FFYou tell the woman^000000";
 			mes "^3355FFeverything you know^000000";
 			mes "^3355FFabout Kiel Hyre. Your^000000";
@@ -5511,16 +5486,8 @@ L_StartDialog:
 				mes "What does that mean?";
 				mes "Are you threatening me?";
 				next;
-
-				switch(select("Just do what she says.")) {
-
-				case 1:
-					goto L_Help;
-					break;
-
-				}
-
-			}	
+				menu "Just do what she says.",L_Help;
+			}
 
 		}
 
@@ -5980,15 +5947,11 @@ yuno,250,132,2	script	Old Lady	711,{
 //----------------------------------------------------------------------------
 yuno,273,141,0	script	Rosimmir_Entrance	45,2,2,{
 OnTouch:
-	if (countitem(7498) < 1) {
+	if (countitem(7498) < 1)
 		warp "yuno",270,141;
-		end;
-	}
-
-	else {
+	else 
 		warp "kh_rossi",20,92;
-	}
-
+	end;
 }
 
 //----------------------------------------------------------------------------
@@ -6998,13 +6961,10 @@ OnInit:
 
 OnTouch:
 
-	if (KielHyreQuest >= 46) {
+	if (KielHyreQuest >= 46)
 		warp "kh_kiehl02",50,6;
-	}
-	else {
+	else
 		warp "kh_kiehl01",166,183;
-	}
-
 	end;
 }
 
@@ -7025,26 +6985,12 @@ OnTouch:
 		monster "kh_kiehl02",51,13,"Aliot",1740,1;
 		monster "kh_kiehl02",53,13,"Alicel",1739,1;
 		monster "kh_kiehl02",49,13,"Constant",1745,1;
-		end;
 	}
-
 	end;
 
 
 OnTimer300000:
-	if (getmapusers("kh_kiehl02") == 0) {
-		donpcevent "KiehlRoom::OnReset";
-		stopnpctimer;
-	}
-	end;
-
 OnTimer600000:
-	if (getmapusers("kh_kiehl02") == 0) {
-		donpcevent "KiehlRoom::OnReset";
-		stopnpctimer;
-	}
-	end;
-
 OnTimer900000:
 	if (getmapusers("kh_kiehl02") == 0) {
 		donpcevent "KiehlRoom::OnReset";
@@ -7593,9 +7539,8 @@ OnKiehlDead:
 	
 OnReset:
 	donpcevent "Kiehl_Room_Trap::OnGlobalTimerOff";
-	if (getmapusers("kh_kiehl02") > 0) {
+	if (getmapusers("kh_kiehl02") > 0)
 		mapwarp "kh_kiehl02","lighthalzen",192,200;
-	}
 	killmonsterall "kh_kiehl02";
 	disablenpc "Kiehl_Room_Exit";
 	disablenpc "Mitchell#KiehlRoom";
@@ -7659,15 +7604,9 @@ OnInit:
 //----------------------------------------------------------------------------
 kh_kiehl02,50,59,0	script	Kiehl_Room_Exit	45,1,1,{
 OnTouch:
-	if (getmapusers("kh_kiehl02") < 1) {
+	if (getmapusers("kh_kiehl02") < 1)
 		donpcevent "KiehlRoom::OnReset";
-		warp "lighthalzen",193,202;
-	}
-
-	else {
-		warp "lighthalzen",193,202;
-	}
-
+	warp "lighthalzen",193,202;
 	end;
 
 OnEnable:
