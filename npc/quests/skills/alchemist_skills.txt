@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
-//= 1.5a
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3800+
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 1.4 Added Creators + Baby Alchemists can pass Bio Ethics
 //= 	Quest too [Lupus]
 //= 1.5 Removed duplicates [Toms] 1.5a fixed typo [Lupus]
+//= 1.6 Moved some NPCs related to Lighthalzen quests. [SinSloth]
 //============================================================
 
 
@@ -114,23 +115,7 @@ lhz_in01,46,125,6	script	Rekenber Guard	867,{
 		close;
 	}
 }
-lhz_in01,282,172,0	script	BioEthTrg1::BETrg1	-1,1,1{
-	OnTouch:
-		mes "[Researcher]";
-		mes "This is a restricted";
-		mes "area. Please leave";
-		mes "immediately.";
-		close2;
-		warp "lhz_in01",199,131;
-		end;
-}
-		
-lhz_in01,285,169,7	script	Researcher#2	865,{
-//Unknown Text
-	mes "[Researcher]";
-	mes "Hmm... I wonder...";
-	close;
-}
+
 lhz_in01,199,137,8	script	Scientist#2	865,{
 	mes "[Scientist]";
 	mes "Whoa whoa~!";

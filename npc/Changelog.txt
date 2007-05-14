@@ -1,6 +1,9 @@
 Date		Added
 ======
 2007/05/15
+	* Added President quest aka. Schwartzvalt Trilogy. Please encourage your players to test it. [SinSloth]
+	- Moved some NPC and fixed some typos in Lighthalzen and Einbroch due to the quest.
+	- Updated Yuno Government Buildings warps according to the quest.
 	* Fixed some bugs in Crusader Job change quest. [SinSloth]
 	* Minor fix on NPC name in Swordman tutorial quest. [SinSloth]
 	* Minor Kiel Hyre Quest optimization with extra goto, else or empty switch [Lupus]

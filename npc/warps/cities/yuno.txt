@@ -4,7 +4,7 @@
 //= Nana (1.0)
 //= Sara-chan (1.1)
 //===== Current Version: =====================================
-//= 1.8
+//= 1.9
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 5+
 //===== Description: =========================================
@@ -18,6 +18,8 @@
 //= 1.6 Corrected duplicate warps [Musashiden]
 //= 1.7 Yet another missing warp [Musashiden]
 //= 1.8 Added Yuno Government Buildings warps
+//= 1.9 Updated Yuno Government Buildings warps according
+//= to Schwartzvalt Trilogy quest. [SinSloth]
 //============================================================
 
 //= Yuno City ================================================
@@ -84,8 +86,6 @@ yuno_in01,88,36,0	warp	yun59	1,1,yuno_in01,173,34
 yuno_in01,176,34,0	warp	yun60	1,1,yuno_in01,91,36
 yuno_in02,82,14,0	warp	yun61	1,1,yuno_in05,192,194
 yuno_in05,196,194,0	warp	yun62	1,1,yuno_in02,85,14
-yuno,157,320,0	warp	yun63	1,1,yuno_pre,69,13
-yuno_pre,69,10,0	warp	yun64	1,1,yuno,157,317
 yuno,245,147,0	warp	yun65	1,1,yuno_in01,101,88
 yuno_in01,101,85,0	warp	yun66	1,1,yuno,245,144
 
@@ -208,12 +208,10 @@ yuno_pre,87,22,0	warp	yungvn02	1,1,yuno_pre,102,22
 yuno_pre,41,23,0	warp	yungvn03	1,1,yuno_pre,56,22
 yuno_pre,18,35,0	warp	yungvn04	1,1,yuno_pre,18,53
 yuno_pre,98,22,0	warp	yungvn05	1,1,yuno_pre,83,22
-yuno_pre,112,35,0	warp	yungvn06	1,1,yuno_pre,112,52
-yuno_pre,18,48,0	warp	yungvn07	1,1,yuno_pre,18,31
-yuno_pre,18,77,0	warp	yungvn08	1,1,yuno_pre,18,96
-yuno_pre,37,69,0	warp	yungvn09	1,1,yuno_pre,64,69
-yuno_pre,112,48,0	warp	yungvn10	1,1,yuno_pre,112,31
-yuno_pre,94,69,0	warp	yungvn11	1,1,yuno_pre,77,69
-yuno_pre,60,69,0	warp	yungvn12	1,1,yuno_pre,33,69
-yuno_pre,81,69,0	warp	yungvn13	1,1,yuno_pre,98,69
-yuno_pre,18,92,0	warp	yungvn14	1,1,yuno_pre,18,73
+yuno_pre,18,48,0	warp	yungvn06	1,1,yuno_pre,18,31
+yuno_pre,18,77,0	warp	yungvn07	1,1,yuno_pre,18,96
+yuno_pre,113,48,0	warp	yungvn08	1,1,yuno_pre,84,22
+yuno_pre,81,68,0	warp	yungvn09	1,1,yuno_pre,95,68
+yuno_pre,18,92,0	warp	yungvn10	1,1,yuno_pre,18,73
+yuno,157,322,0	warp	yungvn11	1,1,yuno_pre,69,13
+yuno_pre,69,10,0	warp	yungvn12	1,1,yuno,157,317

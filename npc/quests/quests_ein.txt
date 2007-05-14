@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.5.2
+//= 1.5.3
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.5 Fixed double levelup bug [Lupus]
 //= 1.5.1 Fixed exploit [KarLaeda]
 //= 1.5.2 Updated Shino Quest to leave no grabage vars [Lupus]
+//= 1.5.3 Fixed some typos regarding Schwartzvalt Trilogy [SinSloth]
 //============================================================ 
 
 
@@ -44,7 +45,7 @@ ein_in01,231,163,1	script	Sick Old Man	849,6,6,{
 		mes "Came... back...";
 		mes "Even... if... it's";
 		mes "already... Too late.";
-		mes "*Couhg Cough*";
+		mes "*Cough Cough*";
 		next;
 	 	mes "^3131FFYou help Shinokas";
 	 	mes "sit up, but find that";
@@ -182,6 +183,7 @@ ein_in01,231,163,1	script	Sick Old Man	849,6,6,{
 				next;
 				break;
 			case 4: //repairshop
+				mes "[Shinokas]";
 				mes "The Airship? Hm, it does";
 				mes "fly through some mysterious";
 				mes "power... But I already checked";
@@ -1337,6 +1339,7 @@ L_IM:
 	mes "forget the face";
 	mes "of the person who";
 	mes "shattered my life?!";
+	next;
 	goto L_HOW;
 	
 L_P2:
@@ -3030,6 +3033,7 @@ ein_in01,67,243,3	script	Zelmeto	851,{
 	mes "the current situation. However, the";
 	mes "rest of the workforce doesn't enjoy";
 	mes "all of the benefits he receives.";
+	next;
 	mes "[Zelmeto]";
 	mes "Many people have already";
 	mes "quit and there are only a few";
