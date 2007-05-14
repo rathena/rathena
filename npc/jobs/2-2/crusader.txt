@@ -5,7 +5,7 @@
 //= Converted by: Shin
 //=
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena  0.5.2 +
 //===== Description: ========================================= 
@@ -32,6 +32,7 @@
 //= 2.2 Updated All NPCs to the officials one [Samuray22]
 //=	-Based on the ASB 4.0 Package.
 //=	-Maybe need be checked the monsters in the test 2 and 4.
+//= 2.3 Fixed some bugs that prevented from going further. [SinSloth]
 //============================================================
 
 
@@ -360,7 +361,7 @@ prt_castle,164,32,7	script	Suffering Man	733,5,5{
 			mes "Your name is..." + strcharinfo(0) + "...right?";
 			mes "Come over; let me see your face.";
 			next;
-			if(getequipname(7) != "Rosary" || getequipname(8) != "Rosary") {
+			if((getequipid(7) != 2608 ) && (getequipid(8) != 2608 )) {
 				mes "[Murnak Myjol]";
 				mes "Oh, you don't even have a Rosary, how to become a Crusader?";
 				mes "I don't want to see the guy like you, go out and buy a Carrot.";
@@ -389,7 +390,7 @@ prt_castle,164,32,7	script	Suffering Man	733,5,5{
 			mes "[Murnak Myjol]";
 			mes "Let's start then.";
 			close2;
-			warp job_cru,23,42;
+			warp "job_cru",23,42;
 			break;
 		case 2:
 			mes "[Murnak Myjol]";

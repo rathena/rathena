@@ -12,6 +12,7 @@
 //= 1.0 Fully working
 //= 1.1 optimized [Lupus]
 //=	TODO: Test, Add correct misceffects numbers
+//= 1.2 Fixed a typo on NPC name. [SinSloth]
 //============================================================ 
 
 
@@ -660,7 +661,6 @@ izlude_in,82,163,3	script	Shurank	733,{
 		close;
 		break;
 	case 3:
-		mes "[Shurank]";
 		mes "If you want to be";
 		mes "able to use the full";
 		mes "power of the Bash skill,";
