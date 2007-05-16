@@ -1,0 +1,249 @@
+//===== eAthena Script =======================================
+//= Old Pharmacist
+//===== By: ==================================================
+//= DZeroX
+//===== Current Version: =====================================
+//= 1.0a
+//===== Compatible With: =====================================
+//= eAthena SVN Trunk
+//===== Description: =========================================
+//= Trade in items for potions
+//===============================
+//= Breakdown of arguments used
+//= arg(0): Herb required.
+//= arg(1): Zeny cost.
+//= arg(2): Potion given.
+//===== Additional Comments: =================================
+//= 1.0 - Fully working. [DZeroX]
+//= 1.0a - Minor fixes [Lupus]
+//= 1.1 - Added changed the dialogs and name to fit the
+//=       the official information. [DZeroX]
+//============================================================
+
+alberta_in.gat,16,28,4	script	Old Pharmacist	61,{
+	mes "[Old Pharmacist]";
+	mes "Err....Are you a customer...?";
+	switch(select("Make Potion","Talk.","Instruction of making potions","Cancel")) {
+		case 1:
+			next;
+			set .@weight,MaxWeight-Weight;
+			if ((.@weight) < 10000) {
+				mes "[Old Pharmacist]";
+				mes "Why are you carrying these so many!";
+				mes "Don't be greedy, carry only as much you need!";
+				next;
+				mes "[Old Pharmacist]";
+				mes "You are too heavy to receive potions from me...";
+				mes "Go store some items in your storage first!";
+				close;
+			} else {
+				mes "[Old Pharmacist]";
+				mes "You have all the stuff ready, right? Which one would you like?";
+				switch(select("Red Potion.","Orange Potion.","Yellow Potion.","White Potion.","Blue Potion.","Green Potion.","Actually, I don't want anything.")) {
+					case 1:
+						callsub L_making,507,3,501;
+					case 2:
+						next;
+						mes "[Old Pharmacist]";
+						if (countitem(507) < countitem(713)) {
+							set .@max,countitem(507);
+						}
+						if (countitem(508) < countitem(713)) {
+							set .@max,countitem(508);
+						} else {
+							set .@max,countitem(713);
+						}
+						if ((countitem(507) < 1) || (countitem(508) < 1) || (countitem(713) == 0)) {
+							mes "You rascal! What did you expect?! Coming here with nothing. Tsk!";
+							mes "Get lost!";
+							close;
+						}
+						if (Zeny < 3) {
+							mes "You rascal! What did you expect?! Coming here with nothing. Tsk!";
+							mes "Get lost!";
+							close;
+						}
+						mes "How many?";
+						switch(select("Make as many as I can.","I want to choose an amount.","Actually, I don't want anything.")) {
+							case 1:
+								next;
+								if ((countitem(507) < .@max) || (countitem(508) < .@max) || (countitem(713) < .@max) || (Zeny < .@max*3)) {
+									mes "[Old Pharmacist]";
+									mes "You punk! Do you want me to make stuff from insufficient ingridients?";
+									close;
+								}
+								set Zeny,Zeny-(.@max*getarg(1));
+								delitem getarg(0),.@max*2;
+								delitem 713,.@max;
+								getitem getarg(2),.@max; 
+								mes "[Old Pharmacist]";
+								mes "Here. Take them.";
+								mes "Here you go. It's all done so you can take it. But remember! Abusing medicine is not good.";
+								close;
+							case 2:
+								next;
+								mes "[Old Pharmacist]";
+								mes "Then pick a number below 100. If you don't want any, just enter '0'. With the materials you have, you can make about "+.@max+" potions.";
+								input .@amount;
+								if (.@amount == 0) {
+									next;
+									mes "[Old Pharmacist]";
+									mes "Make up your mind, will you?!";
+									close;
+								}
+								if (.@amount > 100) {
+									next;
+									mes "[Old Pharmacist]";
+									mes "Are you deaf? I said less than 100!";
+									close;
+								}
+								if ((countitem(507) < .@amount) || (countitem(508) < .@amount) || (countitem(713) < .@amount) || (Zeny < .@amount*3)) {
+									next;
+									mes "[Old Pharmacist]";
+									mes "You punk! Do you want me to make stuff from insufficient ingridients?";
+									close;
+								}
+								next;
+								set Zeny,Zeny-(.@amount*getarg(1));
+								delitem getarg(0),.@amount*2;
+								delitem 713,.@amount;
+								getitem getarg(2),.@amount; 
+								mes "[Old Pharmacist]";
+								mes "Here you go. It's all done so you can take it. But remember! Abusing medicine is not good.";
+								close;
+							case 3:
+								next;
+								mes "[Old Pharmacist]";
+								mes "What?!";
+								mes "Grrr...";
+								mes "Bleh!";
+								mes "Get lost!";
+								close;
+						}
+					case 3:
+						callsub L_making,508,10,503;
+					case 4:
+						callsub L_making,509,20,504;
+					case 5:
+						callsub L_making,510,30,505;
+					case 6:
+						callsub L_making,511,3,506;
+					case 7:
+						mes "[Old Pharmacist]";
+						mes "What?!";
+						mes "Grrr...";
+						mes "Bleh!";
+						mes "Get lost!";
+						close;
+					}
+				}
+		case 2:
+			mes "[Old Pharmacist]";
+			mes "With medicine, you can increase a person's ability to regenerate. But, they're only good up to a point. *Sigh* I'm starting to think of the days when I was young. I must be getting old.";
+			next;
+			mes "[Old Pharmacist]";
+			mes "Anyways, a potion is merely a potion. Nothing more and nothing less.";
+			close;
+		case 3:
+			mes "[Old Pharmacist]";
+			mes "Hrrrmm...";
+			mes "You young ones can be quite annoying. But, since you asked, I'll explain.";
+			next;
+			mes "[Old Pharmacist]";
+			mes "Herbs work well by themselves, but if you use my special techniques and skills to make potions out of them, the effect is much much greater.";
+			next;
+			mes "[Old Pharmacist]";
+			mes "If you ask eagerly and politely, I will make them for you. But, not for free... Don't worry though, I only charge a small fee, so it's not that expensive.";
+			next;
+			mes "[Old Pharmacist]";
+			mes "Red Potion - ^0098E52 Red Herbs, 1 Empty Bottle, 2 zeny fee.^000000";
+			mes "Orange Potion - ^0098E51 Red Herb, 1 Yellow Herb, 1 Empty Bottle, 5 zeny fee.^000000";
+			mes "Yellow Potion - ^0098E52 Yellow Herbs, 1 Empty Bottle, 10 zeny.^000000";
+			next;
+			mes "[Old Pharmacist]";
+			mes "White Potion - ^0098E52 White Herbs, 1 Empty Bottle, 20 zeny fee.^000000";
+			mes "Blue Potion - ^0098E52 Blue Herbs, 1 Empty Bottle, 30 zeny fee.^000000";
+			mes "Green Potion - ^0098E52 Green Herbs, 1 Empty Bottle, 3 zeny fee.^000000";
+			close;
+		case 4:
+			mes "[Old Pharmacist]";
+			mes "What a boring person. If you have something to say, why don't you say it?!";
+			close;
+	}
+	
+L_making:
+	next;
+	mes "[Old Pharmacist]";
+	if ((countitem(getarg(0))/2) < countitem(713)) {
+		set .@max,countitem(getarg(0))/2;
+	} else {
+		set .@max,countitem(713);
+	}
+	if ((countitem(getarg(0)) < 2) || (countitem(713) == 0)) {
+		mes "You rascal! What did you expect?! Coming here with nothing. Tsk!";
+		mes "Get lost!";
+		close;
+	}
+	if (Zeny < 3) {
+		mes "You rascal! What did you expect?! Coming here with nothing. Tsk!";
+		mes "Get lost!";
+		close;
+	}
+	mes "How many?";
+	switch(select("Make as many as I can.","I want to choose an amount.","Actually, I don't want anything.")) {
+		case 1:
+			next;
+			if ((countitem(getarg(0)) < .@max*2) || (countitem(713) < .@max) || (Zeny < .@max*getarg(1))) {
+				mes "[Old Pharmacist]";
+				mes "You punk! Do you want me to make stuff from insufficient ingridients?";
+				close;
+			}
+			set Zeny,Zeny-(.@max*getarg(1));
+			delitem getarg(0),.@max*2;
+			delitem 713,.@max;
+			getitem getarg(2),.@max; 
+			mes "[Old Pharmacist]";
+			mes "Here. Take them.";
+			mes "Here you go. It's all done so you can take it. But remember! Abusing medicine is not good.";
+			close;
+		case 2:
+			next;
+			mes "[Old Pharmacist]";
+			mes "Then pick a number below 100. If you don't want any, just enter '0'. With the materials you have, you can make about "+.@max+" potions.";
+			input .@amount;
+			if (.@amount == 0) {
+				next;
+				mes "[Old Pharmacist]";
+				mes "Make up your mind, will you?!";
+				close;
+			}
+			if (.@amount > 100) {
+				next;
+				mes "[Old Pharmacist]";
+				mes "Are you deaf? I said less than 100!";
+				close;
+			}
+			if ((countitem(getarg(0)) < .@amount*2) || (countitem(713) < .@amount) || (Zeny < .@amount*getarg(1))) {
+				next;
+				mes "[Old Pharmacist]";
+				mes "You punk! Do you want me to make stuff from insufficient ingridients?";
+				close;
+			}
+			next;
+			set Zeny,Zeny-(.@amount*getarg(1));
+			delitem getarg(0),.@amount*2;
+			delitem 713,.@amount;
+			getitem getarg(2),.@amount; 
+			mes "[Old Pharmacist]";
+			mes "Here you go. It's all done so you can take it. But remember! Abusing medicine is not good.";
+			close;
+		case 3:
+			next;
+			mes "[Old Pharmacist]";
+			mes "What?!";
+			mes "Grrr...";
+			mes "Bleh!";
+			mes "Get lost!";
+			close;
+	}
+}
