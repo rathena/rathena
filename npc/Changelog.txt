@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/05/16
+	* Renamed Grandpa Pharmacist to Old Pharmacist, updated dialogs [DZeroX]
 	* Minor spawn fixes [Playtester]
 2007/05/15
 	* Added President quest aka. Schwartzvalt Trilogy. Please encourage your players to test it. [SinSloth]
