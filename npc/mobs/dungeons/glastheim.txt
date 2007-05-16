@@ -96,7 +96,7 @@ gl_prison,0,0,0,0	monster	Rybio	1201,15,0,0,0
 // gl_prison1 - Glast Heim Underprison F2
 //==================================================
 gl_prison1,0,0,0,0	monster	Skeleton Prisoner	1196,30,0,0,0
-gl_prison1,0,0,0,0	monster	Cramp	1209,20,0,0,0
+gl_prison1,0,0,0,0	monster	Cramp	1209,5,0,0,0
 gl_prison1,0,0,0,0	monster	Hunter Fly	1035,10,0,0,0
 gl_prison1,0,0,0,0	monster	Injustice	1257,40,0,0,0
 gl_prison1,0,0,0,0	monster	Zealotus	1200,1,3600000,1800000,1

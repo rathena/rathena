@@ -104,9 +104,9 @@ pay_fild07,171,331,20,20	monster	Green Plant	1080,8,900000,450000,1
 // pay_fild08 - Payon Forest
 //==================================================
 pay_fild08,0,0,0,0	monster	Poring	1002,30,0,0,0
-pay_fild08,0,0,0,0	monster	Willow	1010,70,0,0,0
+pay_fild08,0,0,0,0	monster	Willow	1010,50,0,0,0
 pay_fild08,0,0,0,0	monster	Pupa	1008,20,0,0,0
-pay_fild08,0,0,0,0	monster	Spore	1014,50,0,0,0
+pay_fild08,0,0,0,0	monster	Spore	1014,70,0,0,0
 pay_fild08,0,0,0,0	monster	Green Plant	1080,10,60000,30000,1
 pay_fild08,143,156,40,40	monster	Shining Plant	1083,1,3600000,1800000,1
 

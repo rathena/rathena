@@ -35,8 +35,8 @@ lou_dun02,0,0,0,0	monster	Mimic	1191,5,0,0,0
 //==================================================
 // lou_dun03 - Suei Long Gon
 //==================================================
-lou_dun03,0,0,0,0	monster	Yao Jun	1512,25,0,0,0
-lou_dun03,0,0,0,0	monster	Zhu Po Long	1514,25,0,0,0
+lou_dun03,0,0,0,0	monster	Yao Jun	1512,25,120000,60000,0
+lou_dun03,0,0,0,0	monster	Zhu Po Long	1514,25,120000,60000,0
 lou_dun03,0,0,0,0	monster	Mao Guai	1513,15,0,0,0
 lou_dun03,0,0,0,0	monster	Green Maiden	1631,5,3000000,1800000,1
 lou_dun03,0,0,0,0	monster	White Lady	1630,1,7000000,5000000,1

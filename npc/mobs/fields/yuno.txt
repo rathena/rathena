@@ -158,6 +158,7 @@ yuno_fild10,0,0,0,0	monster	Hunter Fly	1035,10,0,0,0
 //==================================================
 // yuno_fild11 - Yuno Field
 //==================================================
+yuno_fild11,0,0,0,0	monster	Sleeper	1386,10,0,0,0
 yuno_fild11,0,0,0,0	monster	Demon Pungus	1378,10,120000,0,0
 yuno_fild11,0,0,0,0	monster	Geographer	1368,15,0,0,0
 yuno_fild11,65,294,70,160	monster	Sleeper	1386,3,0,0,0
