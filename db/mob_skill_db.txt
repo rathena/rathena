@@ -4138,4 +4138,5 @@
 1814,Moonlight Flower@MG_FIREWALL,chase,18,10,1000,500,5000,yes,target,always,0,,,,,,
 1814,Moonlight Flower@SA_DISPELL,attack,289,5,500,500,5000,no,target,always,0,,,,,,6
 1814,Moonlight Flower@SA_DISPELL,chase,289,5,500,500,5000,no,target,always,0,,,,,,6
-1836,Magmaring@NPC_FIREATTACK,attack,186,2,2000,0,5000,no,target,always,0,,,,,,
+1836,Magmaring@SM_MAGNUM,attack,7,9,500,500,5000,no,self,always,0,,,,,,
+1836,Magmaring@NPC_FIREATTACK,attack,186,1,2000,0,5000,no,target,always,0,,,,,,

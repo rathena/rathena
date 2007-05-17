@@ -49,6 +49,7 @@
 	----
 ========================
 05/17
+	* Added Magnum Break to Magmaring [Playtester]
 	* Fixed Earthen and Gale Bow being all mixed up [Playtester]
 	* Updated price and weight of some etc items [Playtester]
 	- removed weight on The Sign quest items
