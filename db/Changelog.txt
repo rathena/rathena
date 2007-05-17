@@ -18,12 +18,12 @@
 	12017 Speed Decreasing Potion: A potion which decreases the moving speed of a character for a duration.
 	-----
 	Incomplete or missing bonuses:
-	1269 Inverse_Scare;		Missing Area Effect (Ramdom status effects in 5x5 area)
+	1269 Inverse_Scare		Missing Area Effect (Ramdom status effects in 5x5 area)
 	1270 Drill_Katar		Full stripping target without applying "Stripped" status.
-	1271 Bloody_Blade;		Missing Area Effect (Bleeding in a 5x5 area. 11x11 if +10)
-	1565 Book_of_the_Dead;		Missing Area Effect (Fullscreen Curse and damage to enemies)
-	1919 Bass_Guitar;		Missing Area Effect (Chaos in a 5x5 area)
-	1973 Foot_of_the_Sea_Witch;	Missing Area Effect (Silence in a 5x5 area)
+	1271 Bloody_Blade		Missing Area Effect (Bleeding in a 5x5 area. 11x11 if +10)
+	1565 Book_of_the_Dead		Missing Area Effect (Fullscreen Curse and damage to enemies)
+	1919 Bass_Guitar		Missing Area Effect (Chaos in a 5x5 area)
+	1973 Foot_of_the_Sea_Witch	Missing Area Effect (Silence in a 5x5 area)
 	1377 Hurricane's_Fury		Area effect knock back (all enemies in a 7x7 area around user are knocked back 15x15)
 	1565 Book_of_the_Dead		Cause Coma status to Demi-human
 	2000 Staff_of_Destruction	Reduce cast-rime of Mystical Amplification by 50%
@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+05/16
+	* Rev. 10551 Corrected weight for hunting spear (420 -> 4200) as pointed out by Samueloa. [L0ne_W0lf]
 05/14
 	* Blocked expired event items bonuses from Bunch of Carnation, [Lupus]
 	  Woman Glory, Lord Ring, Republic Anniversary Ring, Carnival Jester,
