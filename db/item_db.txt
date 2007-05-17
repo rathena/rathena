@@ -804,8 +804,8 @@
 1729,Refined_Bow_Of_Rudra,Refined Rudra Bow,4,,,0,185,,5,0,0x000A0808,7,2,34,4,1,0,11,{ bonus bAtkEle,Ele_Holy; bonus bInt,5; skill 35,1; skill 28,1; },{},{}
 1730,Burning_Bow,Burning Bow,4,,10,1400,95,,5,1,0x00020800,7,2,34,3,55,1,11,{ bonus2 bSubEle,Ele_Fire,10; if(isequipped(1752)) bonus bLongAtkRate,25; },{},{}
 1731,Freezing_Bow,Freezing Bow,4,,10,1400,100,,5,1,0x00020800,7,2,34,3,55,1,11,{ bonus2 bAddEff,Eff_Freeze,500; if(isequipped(1754)) bonus bLongAtkRate,25; },{},{}
-1732,Gale_Bow,Gale Bow,4,,10,1400,105,,5,1,0x00020800,7,2,34,3,55,1,11,{ if(readparam(bInt)>40) { bonus4 bAutoSpell,540,5,20,1; } else bonus4 bAutoSpell,540,5,50,1; if(isequipped(1755)) bonus bLongAtkRate,25; },{},{}
-1733,Earthen_Bow,Earthen Bow,4,,10,1400,95,,5,1,0x00020800,7,2,34,3,55,1,11,{ bonus2 bAddEff,Eff_Blind,500; if(isequipped(1756)) bonus bLongAtkRate,25; },{},{}
+1732,Earthen_Bow,Earthen Bow,4,,10,1400,105,,5,1,0x00020800,7,2,34,3,55,1,11,{ bonus2 bAddEff,Eff_Blind,500; if(isequipped(1756)) bonus bLongAtkRate,25; },{},{}
+1733,Gale_Bow,Gale Bow,4,,10,1400,95,,5,1,0x00020800,7,2,34,3,55,1,11,{ if(readparam(bInt)>40) { bonus4 bAutoSpell,540,5,50,1; } else bonus4 bAutoSpell,540,5,20,1; if(isequipped(1755)) bonus bLongAtkRate,25; },{},{}
 1734,Orc_Archer's_Bow,Orc Archer's Bow,4,,10,1600,120,,5,1,0x00020800,7,2,34,3,55,1,11,{ bonus2 bAddMonsterDropItem,1770,200; if(isequipped(1770)) bonus bLongAtkRate,25; },{},{}
 // Arrows
 1750,Arrow,Arrow,10,1,,1,25,,,,0x000A1848,7,2,32768,,1,,1,{},{},{}
