@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= DZeroX
 //===== Current Version: =====================================
-//= 1.0a
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN Trunk
 //===== Description: =========================================
@@ -69,7 +69,7 @@ alberta_in.gat,16,28,4	script	Old Pharmacist	61,{
 								next;
 								if ((countitem(507) < .@max) || (countitem(508) < .@max) || (countitem(713) < .@max) || (Zeny < .@max*3)) {
 									mes "[Old Pharmacist]";
-									mes "You punk! Do you want me to make stuff from insufficient ingridients?";
+									mes "You rascal! You don't even have all the materials and you want me to make you potions?!";
 									close;
 								}
 								set Zeny,Zeny-(.@max*getarg(1));
@@ -100,7 +100,7 @@ alberta_in.gat,16,28,4	script	Old Pharmacist	61,{
 								if ((countitem(507) < .@amount) || (countitem(508) < .@amount) || (countitem(713) < .@amount) || (Zeny < .@amount*3)) {
 									next;
 									mes "[Old Pharmacist]";
-									mes "You punk! Do you want me to make stuff from insufficient ingridients?";
+									mes "You rascal! You don't even have all the materials and you want me to make you potions?!";
 									close;
 								}
 								next;
@@ -195,7 +195,7 @@ L_making:
 			next;
 			if ((countitem(getarg(0)) < .@max*2) || (countitem(713) < .@max) || (Zeny < .@max*getarg(1))) {
 				mes "[Old Pharmacist]";
-				mes "You punk! Do you want me to make stuff from insufficient ingridients?";
+				mes "You rascal! You don't even have all the materials and you want me to make you potions?!";
 				close;
 			}
 			set Zeny,Zeny-(.@max*getarg(1));
@@ -226,7 +226,7 @@ L_making:
 			if ((countitem(getarg(0)) < .@amount*2) || (countitem(713) < .@amount) || (Zeny < .@amount*getarg(1))) {
 				next;
 				mes "[Old Pharmacist]";
-				mes "You punk! Do you want me to make stuff from insufficient ingridients?";
+				mes "You rascal! You don't even have all the materials and you want me to make you potions?!";
 				close;
 			}
 			next;
