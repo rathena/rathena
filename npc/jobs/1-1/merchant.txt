@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 1.5.1 Removed Duplicates [Silent]
 //= 1.5.2 Now saves/restores all quest skills [Lupus]
 //= 1.6 Merged back JFunc, CHANGED NUMBERS TO CONSTANTS [Lupus]
+//= 1.7 Updated to use Free Ticket for Kafra [Lupus]
 //============================================================ 
 
 
@@ -730,9 +731,14 @@ L_Other:
 	menu "Warp.",M_Warp, "Cancel.",M_End;
 
 	M_Warp:
-		if(Zeny < 600) goto sL_NdZeny;
-		set Zeny, Zeny - 600;
-		set RESRVPTS, RESRVPTS + 37;
+		// we'll use Free Ticket for Kafra Transportation if available
+		if(countitem(7060)){
+			delitem 7060,1;
+		} else {
+			if(Zeny < 600) goto sL_NdZeny;
+			set Zeny, Zeny - 600;
+			set RESRVPTS, RESRVPTS + 37;
+		}
 		warp "izlude",91,105;
 		cutin "kafra_03",255;
 		end;
@@ -743,19 +749,6 @@ L_Other:
 			cutin "kafra_03",255;
 			close;
 
-	M_Pass:
-		if(countitem(1084)<1) goto sL_NdPass;//Items: Kafra_Pass,
-		mes "[Kafra]";
-		mes "You are now using a Kafra Pass.";
-		delitem 1084,1;//Items: Kafra_Pass,
-		cutin "kafra_03",255;
-		close;
-
-		sL_NdPass:
-			mes "[Kafra]";
-			mes "I'm sorry but you have no pass....";
-			cutin "kafra_03",255;
-			close;
 	M_End:
 		mes "[Kafra]";
 		mes "Thank you for using Kafra Corp. Services.  We will be with you wherever you go.";

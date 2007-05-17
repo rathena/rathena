@@ -2,6 +2,7 @@ Date		Added
 ======
 2007/05/17
 	* Removed .GAT -s from some recent scripts. Please, don't add them in the scripts [Lupus]
+	- Fixed Merchan Job Quest Kafra (used old ID for Free Ticket)
 2007/05/16
 	* Rev. 10548 Kiel Hyre Quest fix. Fixed the missing spaces in some of the enablenpc commands. [L0ne_W0lf]
 	* Renamed Grandpa Pharmacist to Old Pharmacist, updated dialogs [DZeroX]
