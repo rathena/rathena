@@ -2128,25 +2128,25 @@
 7170,Tuxedo,Tuxedo,5,43000,,10,,0,,0,0xFFFFFFFE,7,1,16,,0,1,0,{},{ setoption Option_Wedding,1; },{ setoption Option_Wedding,0; }
 7171,Leopard_Skin,Leopard Skin,3,,141,10,,,,,,,,,,,,,{},{},{}
 7172,Leopard_Talon,Leopard Claw,3,,145,10,,,,,,,,,,,,,{},{},{}
-7173,BurnBuster_Bag,Bun Buster Bag,3,,10,10,,,,,,,,,,,,,{},{},{}
-7174,Packing_Ribbon,Wrapping Lace,3,,10,10,,,,,,,,,,,,,{},{},{}
-7175,Packing_Paper,Wrapping Paper,3,,10,10,,,,,,,,,,,,,{},{},{}
-7176,XMAS_Coupon,Royal Certificate,3,,10,10,,,,,,,,,,,,,{},{},{}
-7177,Part_Of_Star's_Sob,Crumb of Sobbing Starlight,3,,10,10,,,,,,,,,,,,,{},{},{}
-7178,Star's_Sob,Sobbing Starlight,3,,10,10,,,,,,,,,,,,,{},{},{}
-7179,Donation_Card,Proof of Donation,3,,10,10,,,,,,,,,,,,,{},{},{}
-7180,Introduction_Of_Mr.Han,Hahn Sukbong's Recommendation,3,,10,10,,,,,,,,,,,,,{},{},{}
-7181,Receipt_01,Receipt,3,,10,10,,,,,,,,,,,,,{},{},{}
+7173,BurnBuster_Bag,Bun Buster Bag,3,,0,0,,,,,,,,,,,,,{},{},{}
+7174,Packing_Ribbon,Wrapping Lace,3,,0,0,,,,,,,,,,,,,{},{},{}
+7175,Packing_Paper,Wrapping Paper,3,,0,0,,,,,,,,,,,,,{},{},{}
+7176,XMAS_Coupon,Royal Certificate,3,,0,0,,,,,,,,,,,,,{},{},{}
+7177,Part_Of_Star's_Sob,Crumb of Sobbing Starlight,3,,0,0,,,,,,,,,,,,,{},{},{}
+7178,Star's_Sob,Sobbing Starlight,3,,0,0,,,,,,,,,,,,,{},{},{}
+7179,Donation_Card,Proof of Donation,3,,0,0,,,,,,,,,,,,,{},{},{}
+7180,Introduction_Of_Mr.Han,Hahn Sukbong's Recommendation,3,,0,0,,,,,,,,,,,,,{},{},{}
+7181,Receipt_01,Receipt,3,,0,0,,,,,,,,,,,,,{},{},{}
 7182,Cacao,Cacao,3,,100,20,,,,,,,,,,,,,{},{},{}
-7183,Sister_Letter,Letter from Sister,3,,10,10,,,,,,,,,,,,,{},{},{}
-7184,Piano_Keyboard,Piano Key,3,,10,10,,,,,,,,,,,,,{},{},{}
-7185,Quiz_Ticket,Quiz Entry,3,,10,10,,,,,,,,,,,,,{},{},{}
-7186,Thin_Stem,Thin Trunk,3,,109,10,,,,,,,,,,,,,{},{},{}
+7183,Sister_Letter,Letter from Sister,3,,0,0,,,,,,,,,,,,,{},{},{}
+7184,Piano_Keyboard,Piano Key,3,,0,0,,,,,,,,,,,,,{},{},{}
+7185,Quiz_Ticket,Quiz Entry,3,,0,0,,,,,,,,,,,,,{},{},{}
+7186,Thin_Stem,Thin Trunk,3,,190,10,,,,,,,,,,,,,{},{},{}
 7187,Festival_Mask,Festival Mask,3,,50,10,,,,,,,,,,,,,{},{},{}
 7188,Browny_Root,Brown_Root,3,,280,10,,,,,,,,,,,,,{},{},{}
 7189,Heart_Of_Tree,Wooden Heart,3,,340,10,,,,,,,,,,,,,{},{},{}
 7190,Solid_Peeling,Solid Husk,3,,70,10,,,,,,,,,,,,,{},{},{}
-7191,Lamplight,Lamp,3,,10,10,,,,,,,,,,,,,{},{},{}
+7191,Lamplight,Lamp,3,,0,0,,,,,,,,,,,,,{},{},{}
 7192,Blade_Of_Pinwheel,Vane,3,,80,10,,,,,,,,,,,,,{},{},{}
 7193,Germinating_Sprout,Sprout,3,,115,10,,,,,,,,,,,,,{},{},{}
 7194,Soft_Leaf,Soft Blade of Grass,3,,200,10,,,,,,,,,,,,,{},{},{}
@@ -2154,15 +2154,15 @@
 7196,Shoulder_Protection,Shoulder Protector,3,,115,10,,,,,,,,,,,,,{},{},{}
 7197,Tough_Vines,Tough Vines,3,,250,10,,,,,,,,,,,,,{},{},{}
 7198,Great_Leaf,Huge Leaf,3,,305,10,,,,,,,,,,,,,{},{},{}
-7199,Coupon,Unknown_Coupon,3,,10,10,,,,,,,,,,,,,{},{},{}
+7199,Coupon,Unknown_Coupon,3,,0,0,,,,,,,,,,,,,{},{},{}
 7200,Flexible_String,Elastic Band,3,,190,10,,,,,,,,,,,,,{},{},{}
 7201,Log,Log,3,,125,10,,,,,,,,,,,,,{},{},{}
 7202,Beetle_Nipper,Pincher of Beetle,3,,145,10,,,,,,,,,,,,,{},{},{}
 7203,Solid_Twig,Strong Branch,3,,95,10,,,,,,,,,,,,,{},{},{}
-7204,Gunpowder,Gunpowder,3,,10,10,,,,,,,,,,,,,{},{},{}
+7204,Gunpowder,Gunpowder,3,,160,10,,,,,,,,,,,,,{},{},{}
 7205,Piece_Of_Black_Cloth,Piece of Black Cloth,3,,263,10,,,,,,,,,,,,,{},{},{}
 7206,Black_Kitty_Doll,Black Cat Doll,3,,720,10,,,,,,,,,,,,,{},{},{}
-7207,Old_Manteau,Old Manteau,3,,640,10,,,,,,,,,,,,,{},{},{}
+7207,Old_Manteau,Old Manteau,3,,525,10,,,,,,,,,,,,,{},{},{}
 7208,Rusty_Cleaver,Rusty Kitchen Knife,3,,890,10,,,,,,,,,,,,,{},{},{}
 7209,Dullahan's_Helm,Helm of Dullahan,3,,675,10,,,,,,,,,,,,,{},{},{}
 7210,Dullahan_Armor,Armor Piece of Dullahan,3,,395,10,,,,,,,,,,,,,{},{},{}
@@ -2179,37 +2179,37 @@
 7221,Tangled_Chain,Tangled Chains,3,,370,10,,,,,,,,,,,,,{},{},{}
 7222,Tree_Knot,Wooden Gnarl,3,,234,10,,,,,,,,,,,,,{},{},{}
 7223,Distorted_Portrait,Contorted Self-Portrait,3,,1016,10,,,,,,,,,,,,,{},{},{}
-7224,Stone_Of_Intelligence,Stone of Sage,3,,50000,10,,,,,,,,,,,,,{},{},{}
+7224,Stone_Of_Intelligence,Stone of Sage,3,,0,10,,,,,,,,,,,,,{},{},{}
 7225,Pumpkin_Bucket,Pumpkin Lantern,3,,243,10,,,,,,,,,,,,,{},{},{}
-7226,Pill,Pellet,0,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Hallucination,10000,0; },{},{}
-7227,TCG_Card,TCG Card,3,,10,10,,,,,,,,,,,,,{},{},{}
-7228,Gold_Bullion,Gold Bullion,3,,10,300,,,,,,,,,,,,,{},{},{}
-7229,Silver_Bullion,Silver Bullion,3,,10,300,,,,,,,,,,,,,{},{},{}
-7230,White_Gold_Bullion,Platinum Bullion,3,,10,300,,,,,,,,,,,,,{},{},{}
+7226,Pill,Pellet,0,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Hallucination,10000,0; },{},{}
+7227,TCG_Card,TCG Card,3,,0,0,,,,,,,,,,,,,{},{},{}
+7228,Gold_Bullion,Gold Bullion,3,100000,,300,,,,,,,,,,,,,{},{},{}
+7229,Silver_Bullion,Silver Bullion,3,50000,,300,,,,,,,,,,,,,{},{},{}
+7230,White_Gold_Bullion,Platinum Bullion,3,200000,,300,,,,,,,,,,,,,{},{},{}
 7231,Gold_Ore,Gold Ore,3,,10,150,,,,,,,,,,,,,{},{},{}
 7232,Silver_Ore,Silver Ore,3,,10,150,,,,,,,,,,,,,{},{},{}
 7233,Mithril_Ore,Mithril Ore,3,,10,150,,,,,,,,,,,,,{},{},{}
-7234,Soul_Of_Guild,Spirit of Guild,3,,10,10,,,,,,,,,,,,,{},{},{}
-7235,Soul_Of_Courage,Spirit of Charge,3,,10,10,,,,,,,,,,,,,{},{},{}
-7236,Soul_Of_Guard,Spirit of Protection,3,,10,10,,,,,,,,,,,,,{},{},{}
-7237,Soul_Of_Partnership,Spirit of Association,3,,10,10,,,,,,,,,,,,,{},{},{}
-7238,Soul_Of_Correspondence,Spirit of Coordination,3,,10,10,,,,,,,,,,,,,{},{},{}
-7239,Soul_Of_Proceeding,Spirit of Advance,3,,10,10,,,,,,,,,,,,,{},{},{}
-7240,Soul_Of_Confidence,Spirit of Trust,3,,10,10,,,,,,,,,,,,,{},{},{}
-7241,Soul_Of_Agreement,Spirit of Union,3,,10,10,,,,,,,,,,,,,{},{},{}
-7242,Soul_Of_Harmony,Spirit of Combination,3,,10,10,,,,,,,,,,,,,{},{},{}
-7243,Soul_Of_Cooperate,Spirit of Cooperation,3,,10,10,,,,,,,,,,,,,{},{},{}
-7244,Soul_Of_Unity,Spirit of Solidarity,3,,10,10,,,,,,,,,,,,,{},{},{}
-7245,Soul_Of_Friendship,Spirit of Friendship,3,,10,10,,,,,,,,,,,,,{},{},{}
-7246,Soul_Of_Peace,Spirit of Peace,3,,10,10,,,,,,,,,,,,,{},{},{}
-7247,Soul_Of_Spirit,Spirit of Determination,3,,10,10,,,,,,,,,,,,,{},{},{}
-7248,Soul_Of_Honor,Spirit of Honor,3,,10,10,,,,,,,,,,,,,{},{},{}
-7249,Soul_Of_Service,Spirit of Service,3,,10,10,,,,,,,,,,,,,{},{},{}
-7250,Soul_Of_Glory,Spirit of Glory,3,,10,10,,,,,,,,,,,,,{},{},{}
-7251,Soul_Of_Victory,Spirit of Victory,3,,10,10,,,,,,,,,,,,,{},{},{}
-7252,Herb_Medicine,Herbal Medicine,3,,10,10,,,,,,,,,,,,,{},{},{}
-7253,Taeguk_Flag,Golden Korean Flag,3,,10,10,,,,,,,,,,,,,{},{},{}
-7254,Digital_Print_Ticket,Digital Picture Printing Coupon,3,,10,10,,,,,,,,,,,,,{},{},{}
+7234,Soul_Of_Guild,Spirit of Guild,3,,0,10,,,,,,,,,,,,,{},{},{}
+7235,Soul_Of_Courage,Spirit of Charge,3,,0,10,,,,,,,,,,,,,{},{},{}
+7236,Soul_Of_Guard,Spirit of Protection,3,,0,10,,,,,,,,,,,,,{},{},{}
+7237,Soul_Of_Partnership,Spirit of Association,3,,0,10,,,,,,,,,,,,,{},{},{}
+7238,Soul_Of_Correspondence,Spirit of Coordination,3,,0,10,,,,,,,,,,,,,{},{},{}
+7239,Soul_Of_Proceeding,Spirit of Advance,3,,0,10,,,,,,,,,,,,,{},{},{}
+7240,Soul_Of_Confidence,Spirit of Trust,3,,0,10,,,,,,,,,,,,,{},{},{}
+7241,Soul_Of_Agreement,Spirit of Union,3,,0,10,,,,,,,,,,,,,{},{},{}
+7242,Soul_Of_Harmony,Spirit of Combination,3,,0,10,,,,,,,,,,,,,{},{},{}
+7243,Soul_Of_Cooperate,Spirit of Cooperation,3,,0,10,,,,,,,,,,,,,{},{},{}
+7244,Soul_Of_Unity,Spirit of Solidarity,3,,0,10,,,,,,,,,,,,,{},{},{}
+7245,Soul_Of_Friendship,Spirit of Friendship,3,,0,10,,,,,,,,,,,,,{},{},{}
+7246,Soul_Of_Peace,Spirit of Peace,3,,0,10,,,,,,,,,,,,,{},{},{}
+7247,Soul_Of_Spirit,Spirit of Determination,3,,0,10,,,,,,,,,,,,,{},{},{}
+7248,Soul_Of_Honor,Spirit of Honor,3,,0,10,,,,,,,,,,,,,{},{},{}
+7249,Soul_Of_Service,Spirit of Service,3,,0,10,,,,,,,,,,,,,{},{},{}
+7250,Soul_Of_Glory,Spirit of Glory,3,,0,10,,,,,,,,,,,,,{},{},{}
+7251,Soul_Of_Victory,Spirit of Victory,3,,0,10,,,,,,,,,,,,,{},{},{}
+7252,Herb_Medicine,Herbal Medicine,3,,0,10,,,,,,,,,,,,,{},{},{}
+7253,Taeguk_Flag,Golden Korean Flag,3,,0,10,,,,,,,,,,,,,{},{},{}
+7254,Digital_Print_Ticket,Digital Picture Printing Coupon,3,,0,10,,,,,,,,,,,,,{},{},{}
 //7255,China_Marble01,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
 //7256,China_Marble02,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
 //7257,China_Marble03,Mystic Orb,3,,10,100,,,,,,,,,,,,,{},{},{}
@@ -2226,24 +2226,24 @@
 7268,Little_Blacky_Ghost,Little Ghost Doll,3,,605,10,,,,,,,,,,,,,{},{},{}
 7269,Bib,Pinafore,3,,480,10,,,,,,,,,,,,,{},{},{}
 7270,Milk_Bottle,Nursing_Bottle,3,,550,10,,,,,,,,,,,,,{},{},{}
-7271,Figure,Novice Figure,3,,10,10,,,,,,,,,,,,,{},{},{}
-7272,Meat_Dumpling_Doll,Rice Ball Doll,3,,10,10,,,,,,,,,,,,,{},{},{}
-7273,Golden_Necklace,RWC Necklace,3,,10,10,,,,,,,,,,,,,{},{},{}
-7274,Ancient_Translator,Translated Ancient Language,3,,10,10,,,,,,,,,,,,,{},{},{}
-7275,Ancient_Document,Record of Ancient Language,3,,10,10,,,,,,,,,,,,,{},{},{}
-7276,Picture_Letter,Doodled Message,3,,10,10,,,,,,,,,,,,,{},{},{}
+7271,Figure,Novice Figure,3,10000,,10,,,,,,,,,,,,,{},{},{}
+7272,Meat_Dumpling_Doll,Rice Ball Doll,3,500,,10,,,,,,,,,,,,,{},{},{}
+7273,Golden_Necklace,RWC Necklace,3,,1,10,,,,,,,,,,,,,{},{},{}
+7274,Ancient_Translator,Translated Ancient Language,3,,0,10,,,,,,,,,,,,,{},{},{}
+7275,Ancient_Document,Record of Ancient Language,3,,0,10,,,,,,,,,,,,,{},{},{}
+7276,Picture_Letter,Doodled Message,3,,0,10,,,,,,,,,,,,,{},{},{}
 7277,Munak_Doll,Munak Doll,3,,4450,10,,,,,,,,,,,,,{},{},{}
-7278,Wellbeing_Letter,Letter to Wife,3,,10,10,,,,,,,,,,,,,{},{},{}
-7279,Vita500_Lid,Vita500 Lid,3,,10,10,,,,,,,,,,,,,{},{},{}
-7280,Quiz_Ticket01,1st Quiz Entry,3,,10,10,,,,,,,,,,,,,{},{},{}
-7281,Quiz_Ticket02,2nd Quiz Entry,3,,10,10,,,,,,,,,,,,,{},{},{}
-7282,Quiz_Ticket03,3rd Quiz Entry,3,,10,10,,,,,,,,,,,,,{},{},{}
-7283,Quiz_Ticket04,4th Quiz Entry,3,,10,10,,,,,,,,,,,,,{},{},{}
-7284,Quiz_Ticket05,5th Quiz Entry,3,,10,10,,,,,,,,,,,,,{},{},{}
+7278,Wellbeing_Letter,Letter to Wife,3,,0,10,,,,,,,,,,,,,{},{},{}
+7279,Vita500_Lid,Vita500 Lid,3,,5,10,,,,,,,,,,,,,{},{},{}
+7280,Quiz_Ticket01,1st Quiz Entry,3,,0,10,,,,,,,,,,,,,{},{},{}
+7281,Quiz_Ticket02,2nd Quiz Entry,3,,0,10,,,,,,,,,,,,,{},{},{}
+7282,Quiz_Ticket03,3rd Quiz Entry,3,,0,10,,,,,,,,,,,,,{},{},{}
+7283,Quiz_Ticket04,4th Quiz Entry,3,,0,10,,,,,,,,,,,,,{},{},{}
+7284,Quiz_Ticket05,5th Quiz Entry,3,,0,10,,,,,,,,,,,,,{},{},{}
 7285,Thread_Skein,Holy Threads,3,,1,10,,,,,,,,,,,,,{},{},{}
 7286,Chilli,Red Chile,3,,10,10,,,,,,,,,,,,,{},{},{}
 7287,Thread_Skein_,Holier Threads,3,,1,10,,,,,,,,,,,,,{},{},{}
-7288,Thai_Ring,Engagement Ring,3,,10,10,,,,,,,,,,,,,{},{},{}
+7288,Thai_Ring,Engagement Ring,3,,1,10,,,,,,,,,,,,,{},{},{}
 7289,Olivine,Peridot,3,,1500,100,,,,,,,,,,,,,{},{},{}
 7290,Phlogopite,Phlogopite,3,,1500,100,,,,,,,,,,,,,{},{},{}
 7291,Agate,Agate,3,,1500,100,,,,,,,,,,,,,{},{},{}
@@ -2257,19 +2257,19 @@
 7299,Bamboo_Basket,Straw Basket,3,,316,10,,,,,,,,,,,,,{},{},{}
 7300,Gemstone,Gemstone,3,,710,10,,,,,,,,,,,,,{},{},{}
 7301,Sword_Accessory,Tassel,3,,399,10,,,,,,,,,,,,,{},{},{}
-7302,KRATHONG,Krathong,3,,10,10,,,,,,,,,,,,,{},{},{}
+7302,KRATHONG,Krathong,3,,1,10,,,,,,,,,,,,,{},{},{}
 7303,Bag_Of_Rice,Straw Rice Bag,3,,0,800,,,,,,,,,,,,,{},{},{}
 7304,Witch's_Spell_Book,Witch's Spell Scroll,3,,0,0,,,,,,,,,,,,,{},{},{}
-7305,Authority_Of_Nine_World,Symbol of the Nine Realms,3,,0,10,,,,,,,,,,,,,{},{},{}
-7306,Fragment_Of_Soul,Piece of Spirit,3,,0,10,,,,,,,,,,,,,{},{},{}
-7307,Whisper_Of_Soul,Spiritual Whispers,3,,0,10,,,,,,,,,,,,,{},{},{}
-7308,Witch's_Potion,Witch's Tonic,3,,0,10,,,,,,,,,,,,,{},{},{}
-7309,Wing_Of_Crow,Crow Wing,3,,0,10,,,,,,,,,,,,,{},{},{}
+7305,Authority_Of_Nine_World,Symbol of the Nine Realms,3,,0,0,,,,,,,,,,,,,{},{},{}
+7306,Fragment_Of_Soul,Piece of Spirit,3,,0,0,,,,,,,,,,,,,{},{},{}
+7307,Whisper_Of_Soul,Spiritual Whispers,3,,0,0,,,,,,,,,,,,,{},{},{}
+7308,Witch's_Potion,Witch's Tonic,3,,0,0,,,,,,,,,,,,,{},{},{}
+7309,Wing_Of_Crow,Crow Wing,3,,0,0,,,,,,,,,,,,,{},{},{}
 7310,Free_Peco_Ticket,Free Ticket for Peco Ride,3,,10,10,,,,,,,,,,,,,{},{},{}
 7311,Free_Flying_Ship_Ticket,Free Ticket for Flyship,3,,10,10,,,,,,,,,,,,,{},{},{}
 7312,Jubilee,Jubilee,3,,16,10,,,,,,,,,,,,,{},{},{}
-7313,Seal_Of_Witch,Witch's Medal,3,,10,10,,,,,,,,,,,,,{},{},{}
-7314,The_Sign,The Sign,3,,0,10,,,,,,,,,,,,,{},{},{}
+7313,Seal_Of_Witch,Witch's Medal,3,,1,0,,,,,,,,,,,,,{},{},{}
+7314,The_Sign,The Sign,3,,1,0,,,,,,,,,,,,,{},{},{}
 7315,Dark_Crystal_Fragment,Dark Crystal Fragment,3,,211,10,,,,,,,,,,,,,{},{},{}
 7316,Long_Limb,Insect Leg,3,,329,10,,,,,,,,,,,,,{},{},{}
 7317,Screw,Rusty Screw,3,,267,10,,,,,,,,,,,,,{},{},{}

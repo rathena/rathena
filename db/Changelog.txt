@@ -48,6 +48,9 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+05/17
+	* Updated price and weight of some etc items [Playtester]
+	- removed weight on The Sign quest items
 05/16
 	* Rev. 10551 Corrected weight for hunting spear (420 -> 4200) as pointed out by Samueloa. [L0ne_W0lf]
 05/14
