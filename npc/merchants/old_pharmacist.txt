@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= DZeroX
 //===== Current Version: =====================================
-//= 1.1
+//= 1.1a
 //===== Compatible With: =====================================
 //= eAthena SVN Trunk
 //===== Description: =========================================
@@ -18,9 +18,10 @@
 //= 1.0a - Minor fixes [Lupus]
 //= 1.1 - Added changed the dialogs and name to fit the
 //=       the official information. [DZeroX]
+//= 1.1a Removed .GATs [Lupus]
 //============================================================
 
-alberta_in.gat,16,28,4	script	Old Pharmacist	61,{
+alberta_in,16,28,4	script	Old Pharmacist	61,{
 	mes "[Old Pharmacist]";
 	mes "Err....Are you a customer...?";
 	switch(select("Make Potion","Talk.","Instruction of making potions","Cancel")) {

@@ -3,14 +3,14 @@
 //===== By: ================================================== 
 //= DZeroX
 //===== Current Version: ===================================== 
-//= 1.01
+//= 1.02
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
 //= Town-specific Alberta NPCs
 //===== Additional Comments: ================================= 
 //= 1.0 Converted from Aegis 10.4 [DZeroX]
-//= 1.01 Optimized, missing next, etc [Lupus]
+//= 1.02 Optimized, missing next, REMOVED .GATs! again [Lupus]
 //============================================================
 
 alberta,97,51,0	script	Fabian	84,{
@@ -95,7 +95,7 @@ alberta,189,151,5	script	Fisk	100,{
 				close;
 			}
 			set Zeny,Zeny - 250;
-			warp "alb2trea.gat",43,53;
+			warp "alb2trea",43,53;
 			end;
 		case 2:
 			next;
@@ -106,7 +106,7 @@ alberta,189,151,5	script	Fisk	100,{
 				close;
 			}
 			set Zeny,Zeny - 500;
-			warp "izlude.gat",176,182;
+			warp "izlude",176,182;
 			end;
 		case 3:
 			next;
@@ -122,7 +122,7 @@ alb2trea,39,50,6	script	Fisk#a2t	100,{
 	mes "So you wanna head back to the";
 	mes "mainland in Alberta, eh?";
 	if(select("Yes please.","I changed my mind.")==1)
-		warp "alberta.gat",192,169;
+		warp "alberta",192,169;
 	close;
 }
 
@@ -367,7 +367,7 @@ alberta,195,151,2	script	Paul	86,{
 				close;
 			} else {
 				set Zeny,Zeny - 200;
-				warp "alb2trea.gat",62,69;
+				warp "alb2trea",62,69;
 				close;
 			}
 		case 2:

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena dev team
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.01
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -24,9 +24,10 @@
 //= 1.9a Now Pavianne doesn't sell Kafra Passes. She refunds them [Lupus]
 //= 2.0	Re-made all the dialog-only NPCs with official dialogs.
 //=		Kafra and Clock Tower NPCs pending remake. [DZeroX]
+//= 2.01 removed all .GATs [Lupus]
 //============================================================
 
-aldebaran.gat,113,70,4	script	Forger Munster	48,{
+aldebaran,113,70,4	script	Forger Munster	48,{
 	mes "[Munster]";
 	mes "My family used to live in Geffen.";
 	mes "So I guess it was natural that we";
@@ -76,7 +77,7 @@ aldebaran.gat,113,70,4	script	Forger Munster	48,{
 	}
 }
 
-aldebaran.gat,64,104,4	script	Smithing Guy	55,{
+aldebaran,64,104,4	script	Smithing Guy	55,{
 	mes "[Quatro]";
 	mes "Have you heard that a famous";
 	mes "Blacksmith moved here from Geffen?";
@@ -121,7 +122,7 @@ aldebaran.gat,64,104,4	script	Smithing Guy	55,{
 	}
 }
 
-aldebaran.gat,49,93,4	script	Young Man	83,{
+aldebaran,49,93,4	script	Young Man	83,{
 	mes "[Miller]";
 	mes "Aren't level 4 weapons cool!";
 	mes "I can't believe such powerful";
@@ -135,7 +136,7 @@ aldebaran.gat,49,93,4	script	Young Man	83,{
 	close;
 }
 
-aldebaran.gat,81,61,4	script	Shell Gathering Lady	101,{
+aldebaran,81,61,4	script	Shell Gathering Lady	101,{
 	mes "[Joanne]";
 	mes "I enjoy gathering shells from the";
 	mes "sea. It's really fun and relaxing~";
@@ -172,7 +173,7 @@ aldebaran.gat,81,61,4	script	Shell Gathering Lady	101,{
 	}
 }
 
-aldebaran.gat,46,129,4	script	Canal Guy	97,{
+aldebaran,46,129,4	script	Canal Guy	97,{
 	mes "[Panama]";
 	mes "Al De Baran is known world wide as";
 	mes "the City of Canals. The waterways";
@@ -198,7 +199,7 @@ aldebaran.gat,46,129,4	script	Canal Guy	97,{
 	}
 }
 
-aldebaran.gat,67,154,4	script	Forest Guy	98,{
+aldebaran,67,154,4	script	Forest Guy	98,{
 	mes "[Isenberg]";
 	mes "Mt. Mjolnir and Payon Forest.";
 	mes "Both of those places are tough";
@@ -252,7 +253,7 @@ aldebaran.gat,67,154,4	script	Forest Guy	98,{
 	}
 }
 
-aldebaran.gat,90,170,4	script	Slot Guy	47,{
+aldebaran,90,170,4	script	Slot Guy	47,{
 	mes "[Epthiel]";
 	mes "Some weapons or armour have Slots";
 	mes "where you can insert Cards obtained";
@@ -342,7 +343,7 @@ aldebaran.gat,90,170,4	script	Slot Guy	47,{
 	}
 }
 
-aldebaran.gat,117,181,4	script	Phracon Guy	48,{
+aldebaran,117,181,4	script	Phracon Guy	48,{
 	mes "[Joy]";
 	mes "Level 1 weapons, which are the";
 	mes "lowest grade, need a metal named";
@@ -389,7 +390,7 @@ aldebaran.gat,117,181,4	script	Phracon Guy	48,{
 	}
 }
 
-aldebaran.gat,121,231,4	script	Alchemy Guy	49,{
+aldebaran,121,231,4	script	Alchemy Guy	49,{
 	mes "[Chemirre]";
 	mes "Alchemists, one of the 2nd Jobs,";
 	mes "are able to create items out of";
@@ -442,7 +443,7 @@ aldebaran.gat,121,231,4	script	Alchemy Guy	49,{
 	}
 }
 
-aldebaran.gat,86,228,4	script	Little Kid	62,{
+aldebaran,86,228,4	script	Little Kid	62,{
 	mes "[Bebe]";
 	mes "A whil ago I went out for a walk";
 	mes "toward Mt. Mjolnir with my pet";
@@ -497,7 +498,7 @@ aldebaran.gat,86,228,4	script	Little Kid	62,{
 	}
 }
 
-aldebaran.gat,159,242,4	script	Insect Guy	119,{
+aldebaran,159,242,4	script	Insect Guy	119,{
 	mes "[Stromme]";
 	mes "Even to a strong Swordman, the";
 	mes "Insects of Mt. Mjolnir pose a";
@@ -540,7 +541,7 @@ aldebaran.gat,159,242,4	script	Insect Guy	119,{
 	}
 }
 
-aldeba_in.gat,232,241,4	script	Reynolds	48,{
+aldeba_in,232,241,4	script	Reynolds	48,{
 	mes "[Reynolds]";
 	mes "Hello,";
 	mes "can I Help you?";
@@ -665,7 +666,7 @@ aldeba_in.gat,232,241,4	script	Reynolds	48,{
 	}
 }
 
-aldeba_in.gat,223,121,4	script	Harold	63,{
+aldeba_in,223,121,4	script	Harold	63,{
 	mes "[Harold]";
 	mes "You...";
 	mes "You remind me of myself when I was";
@@ -683,7 +684,7 @@ aldeba_in.gat,223,121,4	script	Harold	63,{
 	close;
 }
 
-aldeba_in.gat,219,61,4	script	Cipriano	109,{
+aldeba_in,219,61,4	script	Cipriano	109,{
 	mes "[Cipriano]";
 	mes "Welcome...";
 	mes "Allow me to introduce myself.";
@@ -721,7 +722,7 @@ aldeba_in.gat,219,61,4	script	Cipriano	109,{
 	close;
 }
 
-aldeba_in.gat,152,47,4	script	Lionel	97,{
+aldeba_in,152,47,4	script	Lionel	97,{
 	mes "[Lionel]";
 	mes "Have you heard about the Super";
 	mes "Novice Society? Their headquarters";
@@ -749,7 +750,7 @@ aldeba_in.gat,152,47,4	script	Lionel	97,{
 	close;
 }
 
-aldeba_in.gat,156,179,4	script	Master	61,{
+aldeba_in,156,179,4	script	Master	61,{
 	mes "[Master]";
 	mes "The Kafra Corporation Headquaters";
 	mes "is located here in Al De Baran.";
@@ -879,7 +880,7 @@ aldeba_in.gat,156,179,4	script	Master	61,{
 	}
 }
 
-aldebaran.gat,60,70,4	script	Sylvia	69,{
+aldebaran,60,70,4	script	Sylvia	69,{
 	mes "[Sylvia]";
 	mes "I came all the way here from";
 	mes "Prontera because I heard the Kafra";
@@ -934,7 +935,7 @@ aldebaran.gat,60,70,4	script	Sylvia	69,{
 	}
 }
 
-aldebaran.gat,93,80,4	script	Issei	48,{
+aldebaran,93,80,4	script	Issei	48,{
 	mes "[Issei]";
 	mes "Al De Baran is such a wonderful";
 	mes "place with its romantic canals and";
@@ -976,7 +977,7 @@ aldebaran.gat,93,80,4	script	Issei	48,{
 	}
 }
 
-aldebaran.gat,180,46,4	script	Joo Jahk	88,{
+aldebaran,180,46,4	script	Joo Jahk	88,{
 	mes "[Joo Jahk]";
 	mes "I'm a tourist";
 	mes "from Payon,";
@@ -1021,7 +1022,7 @@ aldebaran.gat,180,46,4	script	Joo Jahk	88,{
 	}
 }
 
-aldebaran.gat,212,122,4	script	Citizen	97,{
+aldebaran,212,122,4	script	Citizen	97,{
 	mes "[Gavin]";
 	mes "Welcome!";
 	mes "The town of";
@@ -1071,7 +1072,7 @@ aldebaran.gat,212,122,4	script	Citizen	97,{
 	}
 }
 
-aldebaran.gat,146,124,4	script	Town Girl	101,{
+aldebaran,146,124,4	script	Town Girl	101,{
 	mes "[Nastasia]";
 	mes "Somewhere in the world there is an";
 	mes "^3355FFAssassin Guild^000000, where they teach";
@@ -1114,7 +1115,7 @@ aldebaran.gat,146,124,4	script	Town Girl	101,{
 	}
 }
 
-aldebaran.gat,143,136,4	script	Bell Keeper	89,{
+aldebaran,143,136,4	script	Bell Keeper	89,{
 	mes "[Bell Keeper]";
 	mes "I have been charged by the";
 	mes "Committee of 'Heaven on Earth' to";

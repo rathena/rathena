@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= erKURITA
 //===== Current Version: =====================================
-//= 1.3
+//= 1.3a
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= 1.1 Removed Duplicates [Silent]
 //= 1.2 Fixed tab - missing pillar's appeared [Lupus]
 //= 1.3 Updated Abyss Lake entrance based on official [SinSloth]
+//= 1.3a Removed .GATs [Lupus]
 //============================================================
 
 hu_fild05,168,304,0	script	Column	111,{
@@ -61,7 +62,7 @@ hu_fild05,168,304,0	script	Column	111,{
 				delitem 1036,1;
 				delitem 1037,1;
 				close2;
-				warp "hu_fild05.gat",184,204;
+				warp "hu_fild05",184,204;
 				end;
 
 			case 2:
@@ -117,7 +118,7 @@ hu_fild05,171,211,0	script	Column	111,1,1,{
 			specialeffect 73;
 			specialeffect2 36;
 			close2;
-			warp "hu_fild05.gat",169,305;
+			warp "hu_fild05",169,305;
 			end;
 
 		case 2:
@@ -139,7 +140,7 @@ hu_fild05,171,211,0	script	Column	111,1,1,{
 			specialeffect 73;
 			specialeffect2 36;
 			close2;
-			warp "hu_fild05.gat",157,284;
+			warp "hu_fild05",157,284;
 			end;
 	}
 }
@@ -151,7 +152,7 @@ OnInit:
 	end;
 
 OnTouch:
-	warp "abyss_01.gat",260,268;
+	warp "abyss_01",260,268;
 	end;
 
 OnWarp:

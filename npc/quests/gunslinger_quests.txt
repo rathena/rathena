@@ -1,7 +1,7 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.6
+//= 1.6a
 //===== Compatible With: =====================================
 //= SVN eA
 //===== Description: =========================================
@@ -16,12 +16,13 @@
 //= 1.5 Updated Inferno Quest to official version [SinSloth]
 //= 1.6 Updated Garrison Quest - Credits to Lazarus^ for
 //= making the first official version. [SinSloth]
+//= 1.6a Removed .GATs [Lupus]
 //============================================================
 
 
 //===================== Garrison =====================================================
 
-que_ng.gat,182,85,3	script	Garrison	109,{
+que_ng,182,85,3	script	Garrison	109,{
 
 	if(BaseJob != Job_Gunslinger)
 	{
@@ -376,7 +377,7 @@ SubGarrison_:
 	}
 }
 
-lighthalzen.gat,322,247,6	script	Ravey	 86,{
+lighthalzen,322,247,6	script	Ravey	 86,{
 
 	if(gun_gs == 2)
 	{

@@ -7,7 +7,7 @@
 //= DON'T REMOVE THIS! (by request of him, he provided all
 //= the info regarding the quests and shops.)
 //===== Current Version: ===================================== 
-//= 1.10a
+//= 1.10b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -24,10 +24,10 @@
 //= 1.8 Fixed the reward you can get [Playtester]
 //= 1.9 Removed some 'clever' script constructs [ultramage]
 //= 1.10 Updated to official version - Thanks to Omega for
-//= his first try [SinSloth]
+//= his first try [SinSloth] 1.10b - removed .GATs [Lupus]
 //============================================================ 
 
-que_ng.gat,152,167,3	script	Master Miller	901,{
+que_ng,152,167,3	script	Master Miller	901,{
 
 	mes "[Master Miller]";
 	if(Class == Job_Novice && JobLevel > 9)
@@ -226,7 +226,7 @@ que_ng.gat,152,167,3	script	Master Miller	901,{
 	}
 }
 
-payon.gat,184,65,3	script	The Wise Bull Horn	866,{
+payon,184,65,3	script	The Wise Bull Horn	866,{
 
 	switch(GUNS_Q)
 	{
