@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/05/16
+	* Rev. 10548 Kiel Hyre Quest fix. Fixed the missing spaces in some of the enablenpc commands. [L0ne_W0lf]
 	* Renamed Grandpa Pharmacist to Old Pharmacist, updated dialogs [DZeroX]
 	* Minor spawn fixes [Playtester]
 2007/05/15

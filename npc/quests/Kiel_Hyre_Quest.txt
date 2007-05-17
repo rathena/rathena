@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 2.8a
+//= 2.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -59,6 +59,7 @@
 //=	Got the missing portion of dialog for Mills'.
 //=	Will add further improper dialogs as I get to them on the second runthrough of the quest.
 //= 2.8a minor optimization with extra goto, else or empty switch [Lupus]
+//= 2.9 Fixed the "enablenpc problem with the missing spaces. No idea how it happened. [L0ne_W0lf]
 //============================================================ 
 
 //============================================================================
@@ -6473,7 +6474,7 @@ kh_kiehl01,44,33,0	script	Big Door#BigDoorKHQ1	111,{
 				mes "unlock and open the door.^000000";
 				delitem 7506,1; //Black_Keycard
 				donpcevent "Big_Door_1_Warp::OnEnable";
-				enablenpc"Big_Door_1_Warp";
+				enablenpc "Big_Door_1_Warp";
 				set .KHDoor1Opened,1;
 				close;
 			}
@@ -6536,7 +6537,7 @@ kh_kiehl01,174,40,0	script	Big Door#BigDoorKHQ2	111,{
 				mes "you turn the key.^000000";
 				delitem 7505,1; //Toy_Key
 				donpcevent "Big_Door_2_Warp::OnEnable";
-				enablenpc"Big_Door_2_Warp";
+				enablenpc "Big_Door_2_Warp";
 				set .KHDoor2Opened,1;
 				close;
 			}
@@ -6600,7 +6601,7 @@ kh_kiehl01,77,108,0	script	Big Door#BigDoorKHQ3	111,{
 				mes "unlock and open the door.^000000";
 				delitem 7506,1; //Black_Keycard
 				donpcevent "Big_Door_3_Warp::OnEnable";
-				enablenpc"Big_Door_3_Warp";
+				enablenpc "Big_Door_3_Warp";
 				set .KHDoor3Opened,1;
 				close;
 			}
@@ -6663,7 +6664,7 @@ kh_kiehl01,42,177,0	script	Big Door#BigDoorKHQ4	111,{
 				mes "unlock and open the door.^000000";
 				delitem 7506,2; //Black_Keycard
 				donpcevent "Big_Door_4_Warp::OnEnable";
-				enablenpc"Big_Door_4_Warp";
+				enablenpc "Big_Door_4_Warp";
 				set .KHDoor4Opened,1;
 				close;
 			}
@@ -6898,7 +6899,7 @@ kh_kiehl01,166,187,0	script	Big Door#BigDoorKHQ5	111,{
 				case 1:
 					close2;
 					donpcevent "Big_Door_5_Warp::OnEnable";
-					enablenpc"Big_Door_5_Warp";
+					enablenpc "Big_Door_5_Warp";
 					set .KHDoor5Opened,1;
 					end;
 
