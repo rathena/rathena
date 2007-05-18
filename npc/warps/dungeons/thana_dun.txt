@@ -11,120 +11,50 @@
 //===== Additional Comments: =================================
 //= 1.0 - First Release [Ishizu-chan]
 //= 1.1 - Added Entrance Warp Guard
+//= 1.2 - Updated warps to official and moved Entrance Guard
+//= to proper quest file. [SinSloth]
 //============================================================
 
-
-// Tour Guide - Thanatos Tower
-hu_fild01,140,163,5	script	Thanatos Tower Guard	852,{
-
-  mes "[Thanatos Tower Guard]";
-  mes "Are you sure you want to go to the Thanatos Tower?";
-  mes "You can't go back, and I'll have to charge 5000 Zeny.";
-  next;
-  menu "Yes.",-,
-       "No.",L_End;
-
-  if (Zeny < 5000) goto L_Zeny;
-  set Zeny, Zeny - 5000;
-  warp "tha_scene01",131,224;
-  end;
-
-  L_Zeny:
-  mes "[Thanatos Tower Guard]";
-  mes "You don't have enough Zeny.";
-  close;
-
-  L_End:
-  mes "[Thanatos Tower Guard]";
-  mes "Goodbye.";
-  close;
-
-}
-
 // Thanatos Scene (tha_scene01)
-tha_scene01,144,200,0	warp	WarpThana0a	1,1,tha_t01,150,39
-tha_t01,150,32,0	warp	WarpThana0b	1,1,tha_scene01,142,200
+tha_scene01,144,198,0	warp	WarpThana0a	1,1,tha_t01,149,38
+tha_t01,149,33,0	warp	WarpThana0b	1,1,hu_fild01,140,158
 
 // Thanatos Tower Level 1 (tha_t01)
-tha_t01,150,149,0	warp	WarpThana1a	1,1,tha_t02,150,129
-tha_t02,150,126,0	warp	WarpThana1b	1,1,tha_t01,150,146
+tha_t01,150,150,0	warp	WarpThana1a	1,1,tha_t02,149,130
+tha_t02,149,125,0	warp	WarpThana1b	1,1,tha_t01,150,145
 
 // Thanatos Tower Level 2 (tha_t02)
-tha_t03,218,167,0	warp	WarpThana2a	1,1,tha_t02,227,159
+tha_t03,217,165,0	warp	WarpThana2a	1,1,tha_t02,227,157
 
 // Thanatos Tower Level 3 (tha_t03)
-tha_t03,60,141,0	warp	WarpThana3a	1,1,tha_t04,60,141
-tha_t04,60,138,0	warp	WarpThana3b	1,1,tha_t03,60,138
+tha_t03,59,140,0	warp	WarpThana3a	1,1,tha_t04,60,142
+tha_t04,60,137,0	warp	WarpThana3b	1,1,tha_t03,59,135
 
 // Thanatos Tower Level 4 (tha_t04)
-tha_t04,82,36,0	warp	WarpThana4a	1,1,tha_t05,62,6
+tha_t04,81,36,0		warp	WarpThana4a	1,1,tha_t05,62,8
 
 // Thanatos Tower Level 5 (tha_t05)
-tha_t05,61,157,0	warp	WarpThana5a	1,1,tha_t05,211,97
-tha_t05,208,97,0	warp	WarpThana5b	1,1,tha_t05,61,162
-tha_t05,186,236,0	warp	WarpThana5c	1,1,tha_t06,207,6
-
-// Thanatos Tower Level 6 (tha_t06)
-tha_t06,119,120,4	script	WarpThana6a	45,2,2,{
-
-  if (ThanaQuest < 31) {
-
-    mes "[Seal]";
-    mes "It seems this portal will only open when 4 Keys are placed in the Keyholes around it.";
-    close;
-
-  }
-
-  warp "thana_step",73,372;
-  end;
-
-}
-thana_step,70,372,0	warp	WarpThana6b	1,1,tha_t06,236,120
-thana_step,173,372,0	warp	WarpThana6c	1,1,tha_t07,28,166
-tha_t07,25,166,0	warp	WarpThana6d	1,1,thana_step,170,372
-
-// Thanatos Tower Level 7 (tha_t07)
-tha_t07,114,166,0	warp	WarpThana7a	1,1,tha_t08,28,44
-tha_t08,25,44,0	warp	WarpThana7b	1,1,tha_t07,111,166
+tha_t05,62,157,0	warp	WarpThana5a	1,1,tha_t05,213,97
+tha_t05,208,97,0	warp	WarpThana5b	1,1,tha_t05,62,162
+tha_t05,185,235,0	warp	WarpThana5c	1,1,tha_t06,206,11
+thana_step,174,288,0	warp	WarpThana6b	1,1,tha_t08,28,43
+thana_step,173,372,0	warp	WarpThana6c	1,1,tha_t07,30,166
+tha_t07,114,166,0	warp	WarpThana6d	1,1,thana_step,69,287
 
 // Thanatos Tower Level 8 (tha_t08)
-tha_t08,114,44,0	warp	WarpThana8a	1,1,thana_step,33,223
-thana_step,30,223,0	warp	WarpThana8b	1,1,tha_t08,111,44
+tha_t08,114,43,0	warp	WarpThana8a	1,1,thana_step,30,223
+thana_step,32,166,0	warp	WarpThana8b	1,1,tha_t09,20,96
 
 // Thanatos Tower Level 9 (tha_t09)
-thana_step,32,165,0	warp	WarpThana9a	1,1,tha_t09,89,146
-tha_t09,92,146,0	script	WarpThana9b	45,1,1,{
-
-  if (ThanaSteps & 1) warp "thana_step",183,223;
-  else warp "thana_step",35,165;
-  end;
-
-}
-thana_step,180,223,0	warp	WarpThana9c	1,1,tha_t09,89,146
+tha_t09,92,146,0	warp	WarpThana9b	1,1,thana_step,180,223
 
 // Thanatos Tower Level 10 (tha_t10)
-thana_step,182,165,0	warp	WarpThana10a	1,1,tha_t10,167,138
-tha_t10,170,138,0	script	WarpThana10b	45,1,1,{
-
-  if (ThanaSteps & 4) warp "thana_step",17,73;
-  else warp "thana_step",185,165;
-  end;
-
-}
-thana_step,14,73,0	warp	WarpThana10c	1,1,tha_t10,167,138
+thana_step,182,166,0	warp	WarpThana10a	1,1,tha_t10,155,100
+tha_t10,170,138,0	warp	WarpThana10b	1,1,thana_step,14,73
 
 // Thanatos Tower Level 11 (tha_t11)
-thana_step,16,15,0	warp	WarpThana11a	1,1,tha_t11,89,36
-tha_t11,92,36,0	script	WarpThana11b	45,1,1,{
-
-  if (ThanaSteps & 64) warp "thana_step",183,73;
-  else warp "thana_step",19,15;
-  end;
-
-}
-thana_step,180,73,0	warp	WarpThana11c	1,1,tha_t11,89,36
+thana_step,15,15,0	warp	WarpThana11a	1,1,tha_t11,50,17
+tha_t11,92,36,0		warp	WarpThana11b	1,1,thana_step,180,73
 
 // Thanatos Tower Level 12 (tha_t12)
-thana_step,182,15,0	warp	WarpThana12a	1,1,tha_t12,129,51
-thana_step,70,288,0	warp	WarpThana12b	1,1,tha_t12,129,51
-thana_step,173,288,0	warp	WarpThana12c	1,1,thana_boss,135,128
+thana_step,181,15,0	warp	WarpThana12a	1,1,tha_t12,115,16
