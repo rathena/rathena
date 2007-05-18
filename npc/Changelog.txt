@@ -1,6 +1,7 @@
 Date		Added
 ======
-2007/05.18
+2007/05/18
+	* Sage Job Quest Item name fix: Mantis Scythe [Lupus]
  	* Rev 10561 Kiel Hyre quest fixes. [L0ne_W0lf]
 	- Fixed a typo in Elly, in her room. (<= should have been <) 
 	- Added an 'end;' to the cookie basket. Kiel Hyre's final dialog will now delete all quest-related items.

@@ -5,7 +5,7 @@
 //= Unknown Translator (1.0)
 //= Darkchild (1.2)
 //===== Current Version: ===================================== 
-//= 2.0a
+//= 2.0b
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -22,7 +22,7 @@
 //= 1.7 Fixed tuition fee. Fixed some answers, names & typos, added missing labels [Lupus]
 //= 1.7a Moved JFunc back in the main file, fixed typos [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
-//= 2.0a Fixed double warp [KarLaeda]
+//= 2.0a Fixed double warp [KarLaeda] 2.0b Mantis Scythe Item name fix
 //============================================================ 
 
 
@@ -774,7 +774,7 @@ L_Menu3_4:
 		goto L_Menu2_6;
 	L_Menu3_11:
 		set SAGE_Q2,6;
-		mes "^3051FD5x Mantis Leg^000000";
+		mes "^3051FD5x Mantis Scythe^000000";
 		mes "^3051FD5x Worm Peeling^000000";
 		mes "^3051FD5x Rainbow Shell^000000";
 //==================================
@@ -801,7 +801,7 @@ L_Menu4_1:
 		mes "^3051FD5x Horn^000000";
 		close;
 	L_Menu4_3:
-		mes "^3051FD5x Mantis Leg^000000";
+		mes "^3051FD5x Mantis Scythe^000000";
 		mes "^3051FD5x Worm Peeling^000000";
 		mes "^3051FD5x Rainbow Shell^000000";
 		close;
