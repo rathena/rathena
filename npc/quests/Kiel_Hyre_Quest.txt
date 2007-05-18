@@ -62,7 +62,7 @@
 //= 2.9 Fixed the "enablenpc problem with the missing spaces. No idea how it happened. [L0ne_W0lf]
 //= 3.0 Fixed a typo in Elly, in her room. (<= should have been <) [L0ne_W0lf]
 //=	Added an 'end;' to the cookie basket. Kiel Hyre's final dialog will now delete all quest-related items.
-//=	
+//= 3.1 Moved hte "delitem" for all related quest items to the poroper NPC. [L0ne_W0lf
 //============================================================ 
 
 //============================================================================
@@ -5095,6 +5095,26 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 		mes "your help, "+@KHTitle+". "+strcharinfo(0)+".";
 		getitem 616,1;  //Old card Album
 		delitem 7508,1; //Elisia's_Ring
+		delitem 7487,1; //Culinary_Wine
+		delitem 7488,1; //Delivery_Package
+		delitem 7489,1; //Cottage Key
+		delitem 7493,1; //Golden_Key
+		delitem 7494,1; //Exquisite_Button
+		delitem 7495,1; //Blue_Keycard
+		delitem 7490,1; //Letter to Elly
+		delitem 7492,1; //Yellow_Keycard
+		delitem 7516,1;	//Green_Keycard
+		delitem 7491,1; //Iron_Box
+		delitem 7496,1; //Red_Keycard
+		delitem 7497,1; //Metal_Fragment
+		delitem 7504,1; //Power_Source
+		delitem 7498,1; //Losimier's_House_Key
+		delitem 7499,1; //Portrait_of_a_Family
+		delitem 7500,1; //Portrait_of_a_Lady
+		delitem 7501,1; //K.H's_Letter
+		delitem 7502,1; //James's_Memo
+		delitem 7503,1;	//Portrait_of_a_Guy
+		delitem 7505,1; //Toy_Key
 		getexp 1000000,0;
 	}
 
@@ -7455,27 +7475,6 @@ kh_kiehl02,50,52,4	script	Kiehl#Original	902,{
 	else {
 		mes "......";
 		close2;
-		delitem 7487,1; //Culinary_Wine
-		delitem 7488,1; //Delivery_Package
-		delitem 7489,1; //Cottage Key
-		delitem 7493,1; //Golden_Key
-		delitem 7494,1; //Exquisite_Button
-		delitem 7495,1; //Blue_Keycard
-		delitem 7490,1; //Letter to Elly
-		delitem 7492,1; //Yellow_Keycard
-		delitem 7516,1;	//Green_Keycard
-		delitem 7491,1; //Iron_Box
-		delitem 7496,1; //Red_Keycard
-		delitem 7497,1; //Metal_Fragment
-		delitem 7504,1; //Power_Source
-		delitem 7498,1; //Losimier's_House_Key
-		delitem 7499,1; //Portrait_of_a_Family
-		delitem 7500,1; //Portrait_of_a_Lady
-		delitem 7501,1; //K.H's_Letter
-		delitem 7502,1; //James's_Memo
-		delitem 7503,1;	//Portrait_of_a_Guy
-		delitem 7505,1; //Toy_Key
-		delitem 7508,1; //Elisia's_Ring
 		cutin "",255;
 		end;
 	}
