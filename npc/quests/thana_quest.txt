@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 - First Release [Ishizu-chan]
 //= 1.1 - Updated Thanatos Tower Quest to official. [SinSloth]
+//= 1.2 - Fixed a bug where Reward NPC didn't give you Zeny and Exp. [SinSloth]
 //============================================================
 
 hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
@@ -524,9 +525,9 @@ function	script	Func_Thana	{
 			mes ""+ countitem(getarg(0)) * 2000 +" EXP. Thank you,";
 			mes "and please keep up";
 			mes "the good work~";
-			delitem getarg(0),countitem(getarg(0));
 			set Zeny,Zeny + countitem(getarg(0)) * 1000;
 			set BaseExp,BaseExp + countitem(getarg(0)) * 2000;
+			delitem getarg(0),countitem(getarg(0));
 			close;
 			
 		case 2:
