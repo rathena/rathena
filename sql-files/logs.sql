@@ -1,4 +1,4 @@
-#Pick_Log types (M)onsters Drop, (P)layers Drop/Take, Mobs Drop (L)oot Drop/Take,
+#PickLog types (M)onsters Drop, (P)layers Drop/Take, Mobs Drop (L)oot Drop/Take,
 # Players (T)rade Give/Take, Players (V)ending Sell/Take, (S)hop Sell/Take, (N)PC Give/Take,
 # (C)onsumable Items, (A)dministrators Create/Delete, Sto(R)age, (G)uild Storage
 
@@ -93,11 +93,13 @@ CREATE TABLE `npclog` (
   INDEX (`char_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
-#ChatLOG
+#ChatLog types Gl(O)bal,(W)hisper,(P)arty,(G)uild,(M)ain chat
+#Database: log
+#Table: chatlog
 CREATE TABLE `chatlog` (
   `id` bigint(20) NOT NULL auto_increment,
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
-  `type` enum('W','P','G') NOT NULL default 'W',
+  `type` enum('O','W','P','G','M') NOT NULL default 'O',
   `type_id` int(11) NOT NULL default '0',
   `src_charid` int(11) NOT NULL default '0',
   `src_accountid` int(11) NOT NULL default '0',

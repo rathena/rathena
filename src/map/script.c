@@ -5572,7 +5572,7 @@ BUILDIN_FUNC(countitem2)
 			sd->status.inventory[i].amount > 0 && sd->status.inventory[i].nameid == nameid &&
 			sd->status.inventory[i].identify == iden && sd->status.inventory[i].refine == ref &&
 			sd->status.inventory[i].attribute == attr && sd->status.inventory[i].card[0] == c1 &&
-			sd->status.inventory[i].card[1] == c2 && sd->status.inventory[i].card[2] ==c3 &&
+			sd->status.inventory[i].card[1] == c2 && sd->status.inventory[i].card[2] == c3 &&
 			sd->status.inventory[i].card[3] == c4
 		)
 			count += sd->status.inventory[i].amount;

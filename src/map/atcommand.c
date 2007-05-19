@@ -9487,8 +9487,7 @@ int atcommand_clone(const int fd, struct map_session_data* sd, const char* comma
 /*===================================
  * Main chat [LuzZza]
  * Usage: @main <on|off|message>
- *-----------------------------------
- */
+ *-----------------------------------*/
 int atcommand_main(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	if(strlen(message) > 0) {
@@ -9521,6 +9520,10 @@ int atcommand_main(const int fd, struct map_session_data* sd, const char* comman
 			// main chat message. 0xFE000000 is invalid color, same using
 			// 0xFF000000 for simple (not colored) GM messages. [LuzZza]
 			intif_announce(atcmd_output, strlen(atcmd_output) + 1, 0xFE000000, 0);
+
+			// Chat logging type 'M' / Main Chat
+			if( log_config.chat&16 && !(agit_flag && log_config.chat&32) )
+				log_chat("M", 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, message);
 		}
 		
 	} else {

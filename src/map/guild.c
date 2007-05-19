@@ -989,11 +989,9 @@ int guild_send_message(struct map_session_data *sd,char *mes,int len)
 	intif_guild_message(sd->status.guild_id,sd->status.account_id,mes,len);
 	guild_recv_message(sd->status.guild_id,sd->status.account_id,mes,len);
 
-	//Chatlogging type 'G'
-	if(log_config.chat&1 //we log everything then
-		|| ( log_config.chat&8 //if Guild bit is on
-		&& ( !agit_flag || !(log_config.chat&16) ))) //if WOE ONLY flag is off or AGIT is OFF
-		log_chat("G", sd->status.guild_id, sd->status.char_id, sd->status.account_id, (char*)mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, mes);
+	// Chat logging type 'G' / Guild Chat
+	if( log_config.chat&8 && !(agit_flag && log_config.chat&32) )
+		log_chat("G", sd->status.guild_id, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, mes);
 
 	return 0;
 }

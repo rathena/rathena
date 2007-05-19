@@ -573,11 +573,10 @@ int party_send_message(struct map_session_data *sd,char *mes,int len)
 		return 0;
 	intif_party_message(sd->status.party_id,sd->status.account_id,mes,len);
 	party_recv_message(sd->status.party_id,sd->status.account_id,mes,len);
-	//Chat Logging support Type 'P'
-	if(log_config.chat&1 //we log everything then
-		|| (log_config.chat&4 //if Party bit is on
-		&& ( !agit_flag || !(log_config.chat&16) ))) //if WOE ONLY flag is off or AGIT is OFF
-		log_chat("P", sd->status.party_id, sd->status.char_id, sd->status.account_id, (char*)mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, mes);
+
+	// Chat logging type 'P' / Party Chat
+	if( log_config.chat&4 && !(agit_flag && log_config.chat&32) )
+		log_chat("P", sd->status.party_id, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, mes);
 
 	return 0;
 }

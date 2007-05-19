@@ -18,7 +18,7 @@ int log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount, 
 int log_zeny(struct map_session_data *sd, char *type, struct map_session_data *src_sd, int amount);
 
 int log_npc(struct map_session_data *sd, const char *message);
-int log_chat(char *type, int type_id, int src_charid, int src_accid, char *map, int x, int y, char *dst_charname, char *message);
+int log_chat(const char* type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message);
 int log_atcommand(struct map_session_data *sd, const char *message);
 
 //Old, but useful logs

@@ -472,7 +472,7 @@ CREATE TABLE `memo` (
 DROP TABLE IF EXISTS `party`;
 CREATE TABLE `party` (
   `party_id` int(11) unsigned NOT NULL auto_increment,
-  `name` varchar(100) NOT NULL default '',
+  `name` varchar(24) NOT NULL default '',
   `exp` tinyint(11) unsigned NOT NULL default '0',
   `item` tinyint(11) unsigned NOT NULL default '0',
   `leader_id` int(11) unsigned NOT NULL default '0',

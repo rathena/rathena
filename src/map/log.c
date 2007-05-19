@@ -343,25 +343,21 @@ int log_npc(struct map_session_data *sd, const char *message)
 	return 1;
 }
 
-//ChatLogging
-// Log CHAT (currently only: Party, Guild, Whisper)
-// LOGGING FILTERS [Lupus]
-//=============================================================
-//0 = Don't log at all
-//1 = Log any chat messages
-//Advanced Filter Bits: ||
-//2 - Log Whisper messages
-//3 - Log Party messages
-//4 - Log Guild messages
-//5 - Log Common messages (not implemented)
-//6 - Don't log when WOE is on
-//Example:
-//log_chat: 1	= logs ANY messages
-//log_chat: 6	= logs both Whisper & Party messages
-//log_chat: 8	= logs only Guild messages
-//log_chat: 18	= logs only Whisper, when WOE is off
 
-int log_chat(char *type, int type_id, int src_charid, int src_accid, char *map, int x, int y, char *dst_charname, char *message){
+int log_chat(const char* type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message)
+{
+	// Log CHAT (Global, Whisper, Party, Guild, Main chat)
+	// LOGGING FILTERS [Lupus]
+	//=============================================================
+	//00 = Don't log at all
+	//Advanced Filter Bits: ||
+	//01 - Log Global messages
+	//02 - Log Whisper messages
+	//04 - Log Party messages
+	//08 - Log Guild messages
+	//16 - Log Main chat messages
+	//32 - Don't log anything when WOE is on
+
 	FILE *logfp;
 #ifndef TXT_ONLY
 	char t_charname[NAME_LENGTH*2];
@@ -395,7 +391,6 @@ int log_chat(char *type, int type_id, int src_charid, int src_accid, char *map, 
 		return 0;
 	time(&curtime);
 	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-	//DATE - type,type_id,src_charid,src_accountid,src_map,src_x,src_y,dst_charname,message
 	fprintf(logfp, "%s - %s,%d,%d,%d,%s,%d,%d,%s,%s%s", 
 		timestring, type, type_id, src_charid, src_accid, map, x, y, dst_charname, message, RETCODE);
 	fclose(logfp);
