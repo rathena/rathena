@@ -185,7 +185,6 @@ typedef unsigned long long	uint64;
 #define strncasecmp			strnicmp
 #define strncmpi			strnicmp
 #define snprintf			_snprintf
-#define vsnprintf			_vsnprintf
 #else
 #define strcmpi				strcasecmp
 #define stricmp				strcasecmp
