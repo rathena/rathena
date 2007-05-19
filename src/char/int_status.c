@@ -23,8 +23,7 @@ static void* create_scdata(DBKey key, va_list args) {
 
 /*==========================================
  * Loads status change data of the player given. [Skotlex]
- *------------------------------------------
- */
+ *------------------------------------------*/
 struct scdata* status_search_scdata(int aid, int cid)
 {
 	struct scdata *data;
@@ -35,8 +34,7 @@ struct scdata* status_search_scdata(int aid, int cid)
 /*==========================================
  * Deletes status change data of the player given. [Skotlex]
  * Should be invoked after the data of said player was successfully loaded.
- *------------------------------------------
- */
+ *------------------------------------------*/
 void status_delete_scdata(int aid, int cid)
 {
 	struct scdata *scdata = idb_remove(scdata_db, cid);
@@ -87,8 +85,7 @@ static int inter_scdata_fromstr(char *line, struct scdata *sc_data)
 }
 /*==========================================
  * Loads all scdata from the given filename.
- *------------------------------------------
- */
+ *------------------------------------------*/
 void status_load_scdata(const char* filename)
 {
 	FILE *fp;
@@ -138,8 +135,7 @@ static int inter_status_save_sub(DBKey key, void *data, va_list ap) {
 
 /*==========================================
  * Saves all scdata to the given filename.
- *------------------------------------------
- */
+ *------------------------------------------*/
 void inter_status_save()
 {
 	FILE *fp;
@@ -155,8 +151,7 @@ void inter_status_save()
 
 /*==========================================
  * Initializes db.
- *------------------------------------------
- */
+ *------------------------------------------*/
 void status_init()
 {
 	scdata_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
@@ -165,8 +160,7 @@ void status_init()
 
 /*==========================================
  * Frees up memory.
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int scdata_db_final(DBKey k,void *d,va_list ap)
 {
 	struct scdata *data = (struct scdata*)d;
@@ -178,10 +172,10 @@ static int scdata_db_final(DBKey k,void *d,va_list ap)
 
 /*==========================================
  * Final cleanup.
- *------------------------------------------
- */
+ *------------------------------------------*/
 void status_final(void)
 {
 	scdata_db->destroy(scdata_db, scdata_db_final);
 }
+
 #endif //ENABLE_SC_SAVING

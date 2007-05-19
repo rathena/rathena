@@ -189,7 +189,8 @@ static void   block_free(struct block* p);
 static void memmgr_info(void);
 static unsigned int memmgr_usage_bytes = 0;
 
-void* _mmalloc(size_t size, const char *file, int line, const char *func ) {
+void* _mmalloc(size_t size, const char *file, int line, const char *func )
+{
 	int i;
 	struct block *block;
 	size_t size_hash;
@@ -291,13 +292,15 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func ) {
 	return NULL;
 };
 
-void* _mcalloc(size_t num, size_t size, const char *file, int line, const char *func ) {
+void* _mcalloc(size_t num, size_t size, const char *file, int line, const char *func )
+{
 	void *p = _mmalloc(num * size,file,line,func);
 	memset(p,0,num * size);
 	return p;
 }
 
-void* _mrealloc(void *memblock, size_t size, const char *file, int line, const char *func ) {
+void* _mrealloc(void *memblock, size_t size, const char *file, int line, const char *func )
+{
 	size_t old_size;
 	if(memblock == NULL) {
 		return _mmalloc(size,file,line,func);
@@ -318,7 +321,8 @@ void* _mrealloc(void *memblock, size_t size, const char *file, int line, const c
 	}
 }
 
-char* _mstrdup(const char *p, const char *file, int line, const char *func ) {
+char* _mstrdup(const char *p, const char *file, int line, const char *func )
+{
 	if(p == NULL) {
 		return NULL;
 	} else {
@@ -329,7 +333,8 @@ char* _mstrdup(const char *p, const char *file, int line, const char *func ) {
 	}
 }
 
-void _mfree(void *ptr, const char *file, int line, const char *func ) {
+void _mfree(void *ptr, const char *file, int line, const char *func )
+{
 	struct unit_head *head;
 	size_t size_hash;
 
@@ -420,7 +425,8 @@ void _mfree(void *ptr, const char *file, int line, const char *func ) {
 }
 
 /* 現在の状況を表示する */
-static void memmgr_info(void) {
+static void memmgr_info(void)
+{
 	int i;
 	struct block *p;
 	ShowInfo("** Memory Manager Information **\n");
@@ -461,7 +467,8 @@ static void memmgr_info(void) {
 }
 
 /* ブロックを確保する */
-static struct block* block_malloc(void) {
+static struct block* block_malloc(void)
+{
 	if(block_unused != NULL) {
 		/* ブロック用の領域は確保済み */
 		struct block* ret = block_unused;
@@ -523,7 +530,8 @@ static struct block* block_malloc(void) {
 	}
 }
 
-static void block_free(struct block* p) {
+static void block_free(struct block* p)
+{
 	/* free() せずに、未使用フラグを付けるだけ */
 	p->unit_size = 0;
 	/* 未使用ポインターを更新する */

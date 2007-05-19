@@ -23,8 +23,7 @@ struct item_data dummy_item; //This is the default dummy item used for non-exist
 
 /*==========================================
  * 名前で検索用
- *------------------------------------------
- */
+ *------------------------------------------*/
 // name = item alias, so we should find items aliases first. if not found then look for "jname" (full name)
 int itemdb_searchname_sub(DBKey key,void *data,va_list ap)
 {
@@ -49,8 +48,7 @@ int itemdb_searchname_sub(DBKey key,void *data,va_list ap)
 
 /*==========================================
  * 名前で検索
- *------------------------------------------
- */
+ *------------------------------------------*/
 struct item_data* itemdb_searchname(const char *str)
 {
 	struct item_data *item=NULL, *item2=NULL;
@@ -75,8 +73,7 @@ static int itemdb_searchname_array_sub(DBKey key,void * data,va_list ap)
 
 /*==========================================
  * Founds up to N matches. Returns number of matches [Skotlex]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 {
 	return item_db->getall(item_db,(void**)data,size,itemdb_searchname_array_sub,str);
@@ -85,8 +82,7 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 
 /*==========================================
  * 箱系アイテム検索
- *------------------------------------------
- */
+ *------------------------------------------*/
 int itemdb_searchrandomid(int group)
 {
 	if(group<1 || group>=MAX_ITEMGROUP) {
@@ -124,8 +120,7 @@ int itemdb_group_bonus(const int itemgrouphealrate[MAX_ITEMGROUP], int itemid)
 
 /*==========================================
  * DBの存在確認
- *------------------------------------------
- */
+ *------------------------------------------*/
 struct item_data* itemdb_exists(int nameid)
 {
 	struct item_data* id;
@@ -140,8 +135,7 @@ struct item_data* itemdb_exists(int nameid)
 /*==========================================
  * Converts the jobid from the format in itemdb 
  * to the format used by the map server. [Skotlex]
- *------------------------------------------
- */
+ *------------------------------------------*/
 static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 {
 	int i;
@@ -199,7 +193,8 @@ static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 		bclass[0] |= 1<<MAPID_NINJA;
 }
 
-static void create_dummy_data(void) {
+static void create_dummy_data(void)
+{
 	memset(&dummy_item, 0, sizeof(struct item_data));
 	dummy_item.nameid=500;
 	dummy_item.weight=1;
@@ -210,7 +205,8 @@ static void create_dummy_data(void) {
 	dummy_item.view_id = UNKNOWN_ITEM_ID;
 }
 
-static void* create_item_data(DBKey key, va_list args) {
+static void* create_item_data(DBKey key, va_list args)
+{
 	struct item_data *id;
 	id=(struct item_data *)aCalloc(1,sizeof(struct item_data));
 	id->nameid = key.i;
@@ -221,8 +217,7 @@ static void* create_item_data(DBKey key, va_list args) {
 
 /*==========================================
  * Loads (and creates if not found) an item from the db.
- *------------------------------------------
- */
+ *------------------------------------------*/
 struct item_data* itemdb_load(int nameid)
 {
 	struct item_data *id = idb_ensure(item_db,nameid,create_item_data);
@@ -237,7 +232,8 @@ struct item_data* itemdb_load(int nameid)
 	return id;
 }
 
-static void* return_dummy_data(DBKey key, va_list args) {
+static void* return_dummy_data(DBKey key, va_list args)
+{
 	if (battle_config.error_log)
 		ShowWarning("itemdb_search: Item ID %d does not exists in the item_db. Using dummy data.\n", key.i);
 	dummy_item.nameid = key.i;
@@ -246,8 +242,7 @@ static void* return_dummy_data(DBKey key, va_list args) {
 
 /*==========================================
  * Loads an item from the db. If not found, it will return the dummy item.
- *------------------------------------------
- */
+ *------------------------------------------*/
 struct item_data* itemdb_search(int nameid)
 {
 	return idb_ensure(item_db,nameid,return_dummy_data);
@@ -255,8 +250,7 @@ struct item_data* itemdb_search(int nameid)
 
 /*==========================================
  * Returns if given item is a player-equippable piece.
- *------------------------------------------
- */
+ *------------------------------------------*/
 int itemdb_isequip(int nameid)
 {
 	int type=itemdb_type(nameid);
@@ -272,8 +266,7 @@ int itemdb_isequip(int nameid)
 
 /*==========================================
  * Alternate version of itemdb_isequip
- *------------------------------------------
- */
+ *------------------------------------------*/
 int itemdb_isequip2(struct item_data *data)
 { 
 	nullpo_retr(0, data);
@@ -288,9 +281,8 @@ int itemdb_isequip2(struct item_data *data)
 }
 
 /*==========================================
-* Returns if given item's type is stackable.
-*------------------------------------------
-*/
+ * Returns if given item's type is stackable.
+ *------------------------------------------*/
 int itemdb_isstackable(int nameid)
 {
   int type=itemdb_type(nameid);
@@ -306,9 +298,8 @@ int itemdb_isstackable(int nameid)
 }
 
 /*==========================================
-* Alternate version of itemdb_isstackable
-*------------------------------------------
-*/
+ * Alternate version of itemdb_isstackable
+ *------------------------------------------*/
 int itemdb_isstackable2(struct item_data *data)
 {
   nullpo_retr(0, data);
@@ -326,8 +317,7 @@ int itemdb_isstackable2(struct item_data *data)
 
 /*==========================================
  * Trade Restriction functions [Skotlex]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int itemdb_isdropable_sub(struct item_data *item, int gmlv, int unused)
 {
 	return (item && (!(item->flag.trade_restriction&1) || gmlv >= item->gm_lv_trade_override));
@@ -384,8 +374,7 @@ int itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, int (*func)(stru
 
 /*==========================================
  *	Specifies if item-type should drop unidentified.
- *------------------------------------------
- */
+ *------------------------------------------*/
 int itemdb_isidentified(int nameid)
 {
 	int type=itemdb_type(nameid);
@@ -401,8 +390,7 @@ int itemdb_isidentified(int nameid)
 
 /*==========================================
  * アイテム使用可能フラグのオーバーライド
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int itemdb_read_itemavail (void)
 {
 	FILE *fp;
@@ -520,8 +508,7 @@ static void itemdb_read_itemgroup(void)
 
 /*==========================================
  * 装備制限ファイル読み出し
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int itemdb_read_noequip(void)
 {
 	FILE *fp;
@@ -566,8 +553,7 @@ static int itemdb_read_noequip(void)
 
 /*==========================================
  * Reads item trade restrictions [Skotlex]
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int itemdb_read_itemtrade(void)
 {
 	FILE *fp;
@@ -612,8 +598,7 @@ static int itemdb_read_itemtrade(void)
 
 /*======================================
  * Applies gender restrictions according to settings. [Skotlex]
- *======================================
- */
+ *======================================*/
 static int itemdb_gendercheck(struct item_data *id)
 {
 	if (id->nameid == WEDDING_RING_M) //Grom Ring
@@ -630,9 +615,8 @@ static int itemdb_gendercheck(struct item_data *id)
 #ifndef TXT_ONLY
 
 /*======================================
-* SQL
-*===================================
-*/
+ * SQL
+ *======================================*/
 static int itemdb_read_sqldb(void)
 {
 	unsigned short nameid;
@@ -812,8 +796,7 @@ static int itemdb_read_sqldb(void)
 
 /*==========================================
  * アイテムデータベースの読み込み
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int itemdb_readdb(void)
 {
 	FILE *fp;
@@ -989,8 +972,7 @@ static int itemdb_readdb(void)
 
 /*====================================
  * Removed item_value_db, don't re-add
- *------------------------------------
- */
+ *------------------------------------*/
 static void itemdb_read(void)
 {
 #ifndef TXT_ONLY
@@ -1008,8 +990,7 @@ static void itemdb_read(void)
 
 /*==========================================
  * Initialize / Finalize
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int itemdb_final_sub (DBKey key,void *data,va_list ap)
 {
 	int flag;

@@ -42,7 +42,8 @@ time_t curtime;
 //12 - Log rare items (if their drop chance <= rare_log )
 
 //check if this item should be logged according the settings
-int should_log_item(int filter, int nameid, int amount) {
+int should_log_item(int filter, int nameid, int amount)
+{
 	struct item_data *item_data;
 	if ((item_data= itemdb_exists(nameid)) == NULL) return 0;
 	if ((filter&1) || // Filter = 1, we log any item

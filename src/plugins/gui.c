@@ -31,7 +31,8 @@ int (*add_timer_interval)(unsigned int,int (*)(int,unsigned int,int,int),int,int
 //Used to output 'I'm Alive' every few seconds
 //Intended to let frontends know if the app froze
 //-----------------------------------------------------
-int imalive_timer(int tid, unsigned int tick, int id, int data){
+int imalive_timer(int tid, unsigned int tick, int id, int data)
+{
 	printf("I'm Alive\n");
 	return 0;
 }
@@ -40,7 +41,8 @@ int imalive_timer(int tid, unsigned int tick, int id, int data){
 //Flush stdout
 //stdout buffer needs flushed to be seen in GUI
 //-----------------------------------------------------
-int flush_timer(int tid, unsigned int tick, int id, int data){
+int flush_timer(int tid, unsigned int tick, int id, int data)
+{
 	fflush(stdout);
 	return 0;
 }

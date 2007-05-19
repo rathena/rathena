@@ -25,8 +25,7 @@ static struct dbt *guild_storage_db;
 
 /*==========================================
  * 倉庫内アイテムソート
- *------------------------------------------
- */
+ *------------------------------------------*/
 int storage_comp_item(const void *_i1, const void *_i2)
 {
 	struct item *i1 = (struct item *)_i1;
@@ -55,8 +54,7 @@ void storage_gsortitem (struct guild_storage* gstor)
 
 /*==========================================
  * 初期化とか
- *------------------------------------------
- */
+ *------------------------------------------*/
 int do_init_storage(void) // map.c::do_init()から呼ばれる
 {
 	storage_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
@@ -95,7 +93,8 @@ void do_reconnect_storage(void)
 	guild_storage_db->foreach(guild_storage_db, storage_reconnect_sub, 1);
 }
 
-static void* create_storage(DBKey key, va_list args) {
+static void* create_storage(DBKey key, va_list args)
+{
 	struct storage *stor;
 	stor = (struct storage *) aCallocA (sizeof(struct storage), 1);
 	stor->account_id = key.i;
@@ -123,8 +122,7 @@ int storage_delete(int account_id)
  * 0 - success
  * 1 - fail
  * 2 - Storage requested from char-server (will open automatically later)
- *------------------------------------------
- */
+ *------------------------------------------*/
 int storage_storageopen(struct map_session_data *sd)
 {
 	struct storage *stor;
@@ -159,8 +157,8 @@ int storage_storageopen(struct map_session_data *sd)
 }
 
 // helper function
-int compare_item(struct item *a, struct item *b) {
-
+int compare_item(struct item *a, struct item *b)
+{
 	if (a->nameid == b->nameid &&
 		a->identify == b->identify &&
 		a->refine == b->refine &&
@@ -175,8 +173,7 @@ int compare_item(struct item *a, struct item *b) {
 
 /*==========================================
  * Internal add-item function.
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int storage_additem(struct map_session_data *sd,struct storage *stor,struct item *item_data,int amount)
 {
 	struct item_data *data;
@@ -228,8 +225,7 @@ static int storage_additem(struct map_session_data *sd,struct storage *stor,stru
 }
 /*==========================================
  * Internal del-item function
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int storage_delitem(struct map_session_data *sd,struct storage *stor,int n,int amount)
 {
 
@@ -251,8 +247,7 @@ static int storage_delitem(struct map_session_data *sd,struct storage *stor,int 
 }
 /*==========================================
  * Add an item to the storage from the inventory.
- *------------------------------------------
- */
+ *------------------------------------------*/
 int storage_storageadd(struct map_session_data *sd,int index,int amount)
 {
 	struct storage *stor;
@@ -282,8 +277,7 @@ int storage_storageadd(struct map_session_data *sd,int index,int amount)
 
 /*==========================================
  * Retrieve an item from the storage.
- *------------------------------------------
- */
+ *------------------------------------------*/
 int storage_storageget(struct map_session_data *sd,int index,int amount)
 {
 	struct storage *stor;
@@ -311,8 +305,7 @@ int storage_storageget(struct map_session_data *sd,int index,int amount)
 }
 /*==========================================
  * Move an item from cart to storage.
- *------------------------------------------
- */
+ *------------------------------------------*/
 int storage_storageaddfromcart(struct map_session_data *sd,int index,int amount)
 {
 	struct storage *stor;
@@ -340,8 +333,7 @@ int storage_storageaddfromcart(struct map_session_data *sd,int index,int amount)
 
 /*==========================================
  * Get from Storage to the Cart
- *------------------------------------------
- */
+ *------------------------------------------*/
 int storage_storagegettocart(struct map_session_data *sd,int index,int amount)
 {
 	struct storage *stor;
@@ -370,8 +362,7 @@ int storage_storagegettocart(struct map_session_data *sd,int index,int amount)
 
 /*==========================================
  * Modified By Valaris to save upon closing [massdriller]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int storage_storageclose(struct map_session_data *sd)
 {
 	struct storage *stor;
@@ -394,8 +385,7 @@ int storage_storageclose(struct map_session_data *sd)
 
 /*==========================================
  * When quitting the game.
- *------------------------------------------
- */
+ *------------------------------------------*/
 int storage_storage_quit(struct map_session_data *sd, int flag)
 {
 	struct storage *stor;
@@ -473,7 +463,8 @@ int storage_storage_saved(int account_id)
 	return 0;
 }
 
-static void* create_guildstorage(DBKey key, va_list args) {
+static void* create_guildstorage(DBKey key, va_list args)
+{
 	struct guild_storage *gs = NULL;
 	gs = (struct guild_storage *) aCallocA(sizeof(struct guild_storage), 1);
 	gs->guild_id=key.i;

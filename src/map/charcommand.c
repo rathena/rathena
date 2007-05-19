@@ -107,8 +107,7 @@ CCMD_FUNC(hominfo);
 
 /*==========================================
  *CharCommandInfo charcommand_info[]構造体の定義
- *------------------------------------------
- */
+ *------------------------------------------*/
 
 // First char of commands is configured in charcommand_athena.conf. Leave # in this list for default value.
 // to set default level, read charcommand_athena.conf first please.
@@ -212,7 +211,8 @@ static CharCommandInfo charcommand_info[] = {
 	{ CharCommand_Unknown, 		            NULL, 				       1, NULL }
 };
 
-int get_charcommand_level(const CharCommandType type) {
+int get_charcommand_level(const CharCommandType type)
+{
 	int i;
 
 	for (i = 0; charcommand_info[i].type != CharCommand_None; i++)
@@ -222,7 +222,8 @@ int get_charcommand_level(const CharCommandType type) {
 	return 100; // 100: command can not be used
 }
 
-CharCommandType is_charcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl) {
+CharCommandType is_charcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl)
+{
 	CharCommandInfo info;
 	CharCommandType type;
 
@@ -271,9 +272,9 @@ CharCommandType is_charcommand_sub(const int fd, struct map_session_data* sd, co
 
 /*==========================================
  *is_charcommand @コマンドに存在するかどうか確認する
- *------------------------------------------
- */
-CharCommandType is_charcommand(const int fd, struct map_session_data* sd, const char* message) {
+ *------------------------------------------*/
+CharCommandType is_charcommand(const int fd, struct map_session_data* sd, const char* message)
+{
 	const char* str = message;
 	int s_flag = 0;
 
@@ -303,9 +304,9 @@ CharCommandType is_charcommand(const int fd, struct map_session_data* sd, const 
 
 /*==========================================
  *
- *------------------------------------------
- */
-CharCommandType charcommand(struct map_session_data* sd, const int level, const char* message, CharCommandInfo* info) {
+ *------------------------------------------*/
+CharCommandType charcommand(struct map_session_data* sd, const int level, const char* message, CharCommandInfo* info)
+{
 	char* p = (char *)message; 
 
 	if (!info)
@@ -352,9 +353,9 @@ CharCommandType charcommand(struct map_session_data* sd, const int level, const 
 
 /*==========================================
  *
- *------------------------------------------
- */
-static CharCommandInfo* get_charcommandinfo_byname(const char* name) {
+ *------------------------------------------*/
+static CharCommandInfo* get_charcommandinfo_byname(const char* name)
+{
 	int i;
 
 	for (i = 0; charcommand_info[i].type != CharCommand_Unknown; i++)
@@ -366,9 +367,9 @@ static CharCommandInfo* get_charcommandinfo_byname(const char* name) {
 
 /*==========================================
  *
- *------------------------------------------
- */
-int charcommand_config_read(const char *cfgName) {
+ *------------------------------------------*/
+int charcommand_config_read(const char *cfgName)
+{
 	char line[1024], w1[1024], w2[1024];
 	CharCommandInfo* p;
 	FILE* fp;
@@ -409,11 +410,8 @@ int charcommand_config_read(const char *cfgName) {
 
 /*==========================================
  * 対象キャラクターを転職させる upper指定で転生や養子も可能
- *------------------------------------------
- */
-int charcommand_jobchange(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_jobchange(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[100];
 	struct map_session_data* pl_sd;
@@ -478,11 +476,8 @@ int charcommand_jobchange(
 
 /*==========================================
  *
- *------------------------------------------
- */
-int charcommand_petrename(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_petrename(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 	struct map_session_data *pl_sd;
@@ -521,11 +516,8 @@ int charcommand_petrename(
 
 /*==========================================
  * 
- *------------------------------------------
- */
-int charcommand_petfriendly(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_petfriendly(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int friendly = 0;
 	char character[NAME_LENGTH];
@@ -576,11 +568,8 @@ int charcommand_petfriendly(
 
 /*==========================================
  *
- *------------------------------------------
- */
-int charcommand_stats(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_stats(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 	char job_jobname[100];
@@ -653,11 +642,8 @@ int charcommand_stats(
 
 /*==========================================
  * Character Reset
- *------------------------------------------
- */
-int charcommand_reset(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_reset(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 	char output[200];
@@ -693,11 +679,8 @@ int charcommand_reset(
 
 /*==========================================
  *
- *------------------------------------------
- */
-int charcommand_option(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_option(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 	int opt1 = 0, opt2 = 0, opt3 = 0;
@@ -734,11 +717,8 @@ int charcommand_option(
 
 /*==========================================
  *
- *------------------------------------------
- */
-int charcommand_save(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_save(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char map_name[MAP_NAME_LENGTH_EXT];
 	char character[NAME_LENGTH];
@@ -789,8 +769,7 @@ int charcommand_save(
 
 /*==========================================
  *
- *------------------------------------------
- */
+ *------------------------------------------*/
 //** Character Stats All by fritz
 int charcommand_stats_all(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
@@ -835,8 +814,7 @@ int charcommand_stats_all(const int fd, struct map_session_data* sd, const char*
 
 /*==========================================
  * CharSpiritBall Function by PalasX
- *------------------------------------------
- */
+ *------------------------------------------*/
 int charcommand_spiritball(const int fd, struct map_session_data* sd,const char* command, const char* message)
 {
 	struct map_session_data *pl_sd;
@@ -876,11 +854,8 @@ int charcommand_spiritball(const int fd, struct map_session_data* sd,const char*
 
 /*==========================================
  * #itemlist <character>: Displays the list of a player's items.
- *------------------------------------------
- */
-int charcommand_itemlist(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_itemlist(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd;
 	struct item_data *item_data, *item_temp;
@@ -1005,10 +980,8 @@ int charcommand_itemlist(
  * #effect by [MouseJstr]
  *
  * Create a effect localized on another character
- *------------------------------------------
- */
-int charcommand_effect(const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_effect(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd = NULL;
 	char character[NAME_LENGTH];
@@ -1034,12 +1007,8 @@ int charcommand_effect(const int fd, struct map_session_data* sd,
 
 /*==========================================
  * #storagelist <character>: Displays the items list of a player's storage.
- *------------------------------------------
- */
-int
-charcommand_storagelist(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_storagelist(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct storage *stor;
 	struct map_session_data *pl_sd;
@@ -1119,8 +1088,7 @@ charcommand_storagelist(
 	return 0;
 }
 
-static void 
-charcommand_giveitem_sub(struct map_session_data *sd,struct item_data *item_data,int number)
+static void charcommand_giveitem_sub(struct map_session_data *sd,struct item_data *item_data,int number)
 {
 	int flag = 0;
 	int loop = 1, get_count = number,i;
@@ -1150,11 +1118,8 @@ charcommand_giveitem_sub(struct map_session_data *sd,struct item_data *item_data
 /*==========================================
  * #item command (usage: #item <name/id_of_item> <quantity> <player>)
  * by MC Cameri
- *------------------------------------------
- */
-int charcommand_item(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_item(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char item_name[100];
 	char character[NAME_LENGTH];
@@ -1249,11 +1214,8 @@ int charcommand_item(
 
 /*==========================================
  * #warp/#rura/#rura+ <mapname> <x> <y> <char name>
- *------------------------------------------
- */
-int charcommand_warp(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_warp(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char map_name[MAP_NAME_LENGTH_EXT];
 	char character[NAME_LENGTH];
@@ -1308,11 +1270,8 @@ int charcommand_warp(
 
 /*==========================================
  * #zeny <charname>
- *------------------------------------------
- */
-int charcommand_zeny(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_zeny(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd;
 	char character[NAME_LENGTH];
@@ -1353,12 +1312,8 @@ int charcommand_zeny(
 
 /*==========================================
  * #fakename <char name> <fake name>
- *------------------------------------------
- */
-
-int charcommand_fakename(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_fakename(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd;
 	char name[NAME_LENGTH];
@@ -1405,11 +1360,8 @@ int charcommand_fakename(
 /*==========================================
  * #baselvl <#> <nickname> 
  * Transferred by: Kevin
- *------------------------------------------
-*/
-int charcommand_baselevel(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_baselevel(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd;
 	char player[NAME_LENGTH];
@@ -1480,11 +1432,8 @@ int charcommand_baselevel(
 /*==========================================
  * #jlvl <#> <nickname> 
  * Transferred by: Kevin
- *------------------------------------------
- */
-int charcommand_joblevel(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_joblevel(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd;
 	char player[NAME_LENGTH];
@@ -1556,11 +1505,8 @@ int charcommand_joblevel(
 /*==========================================
  * #questskill <skill_#> <nickname>
  * Transferred by: Kevin
- *------------------------------------------
- */
-int charcommand_questskill(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_questskill(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd;
 	char player[NAME_LENGTH];
@@ -1602,11 +1548,8 @@ int charcommand_questskill(
 /*==========================================
  * #lostskill <skill_#> <nickname>
  * Transferred by: Kevin
- *------------------------------------------
- */
-int charcommand_lostskill(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_lostskill(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd;
 	char player[NAME_LENGTH];
@@ -1648,11 +1591,8 @@ int charcommand_lostskill(
 
 /*==========================================
  * Character Skill Reset
- *------------------------------------------
- */
-int charcommand_skreset(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_skreset(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd;
 	char player[NAME_LENGTH];
@@ -1683,11 +1623,8 @@ int charcommand_skreset(
 
 /*==========================================
  * Character Stat Reset
- *------------------------------------------
- */
-int charcommand_streset(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_streset(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd;
 	char player[NAME_LENGTH];
@@ -1718,11 +1655,8 @@ int charcommand_streset(
 
 /*==========================================
  * Character Model by chbrules
- *------------------------------------------
- */
-int charcommand_model(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_model(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int hair_style = 0, hair_color = 0, cloth_color = 0;
 	struct map_session_data *pl_sd;
@@ -1741,19 +1675,10 @@ int charcommand_model(
 		if (hair_style >= MIN_HAIR_STYLE && hair_style <= MAX_HAIR_STYLE &&
 			hair_color >= MIN_HAIR_COLOR && hair_color <= MAX_HAIR_COLOR &&
 			cloth_color >= MIN_CLOTH_COLOR && cloth_color <= MAX_CLOTH_COLOR) {
-			/* Removed this check for being too strange. [Skotlex]
-			if (cloth_color != 0 &&
-				pl_sd->status.sex == 1 &&
-				(pl_sd->status.class_ == JOB_ASSASSIN ||  pl_sd->status.class_ == JOB_ROGUE)) {
-				clif_displaymessage(fd, msg_txt(35)); // You can't use this command with this class.
-				return -1;
-			} else {
-			*/
 				pc_changelook(pl_sd, LOOK_HAIR, hair_style);
 				pc_changelook(pl_sd, LOOK_HAIR_COLOR, hair_color);
 				pc_changelook(pl_sd, LOOK_CLOTHES_COLOR, cloth_color);
 				clif_displaymessage(fd, msg_txt(36)); // Appearence changed.
-//			}
 		} else {
 			clif_displaymessage(fd, msg_txt(37)); // An invalid number was specified.
 			return -1;
@@ -1768,11 +1693,8 @@ int charcommand_model(
 
 /*==========================================
  * Character Skill Point (Rewritten by [Yor])
- *------------------------------------------
- */
-int charcommand_skpoint(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_skpoint(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd;
 	char player[NAME_LENGTH];
@@ -1813,11 +1735,8 @@ int charcommand_skpoint(
 
 /*==========================================
  * Character Status Point (rewritten by [Yor])
- *------------------------------------------
- */
-int charcommand_stpoint(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_stpoint(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd;
 	char player[NAME_LENGTH];
@@ -1858,11 +1777,8 @@ int charcommand_stpoint(
 
 /*==========================================
  * charchangesex command (usage: charchangesex <player_name>)
- *------------------------------------------
- */
-int charcommand_changesex(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_changesex(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char player[NAME_LENGTH];
 	nullpo_retr(-1, sd);
@@ -1889,11 +1805,8 @@ int charcommand_changesex(
 
 /*==========================================
  * Feel (SG save map) Reset
- *------------------------------------------
- */
-int charcommand_feelreset(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_feelreset(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 	char output[200];
@@ -1926,11 +1839,8 @@ int charcommand_feelreset(
 
 /*==========================================
  * #help - Char commands [Kayla]
- *------------------------------------------
- */
-int charcommand_help(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_help(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char buf[2048], w1[2048], w2[2048];
 	int i, gm_level;
@@ -1967,11 +1877,8 @@ int charcommand_help(
 
 /*==========================================
  * Loads a character back to their save point [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_load(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_load(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int m;
 	char character[NAME_LENGTH];
@@ -2015,11 +1922,8 @@ int charcommand_load(
 
 /*==========================================
  * Changes the targets speed [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_speed(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_speed(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int speed;
 	char character[NAME_LENGTH];
@@ -2063,11 +1967,8 @@ int charcommand_speed(
 
 /*==========================================
  * Opens their storage [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_storage(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_storage(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 
@@ -2109,11 +2010,8 @@ int charcommand_storage(
 
 /*==========================================
  * Opens their guild storage
- *------------------------------------------
- */
-int charcommand_guildstorage(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_guildstorage(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct storage *stor; //changes from Freya/Yor
 	char character[NAME_LENGTH];
@@ -2164,11 +2062,8 @@ int charcommand_guildstorage(
 
 /*==========================================
  * Applies GM Hide to a character [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_hide(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_hide(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 
@@ -2215,11 +2110,8 @@ int charcommand_hide(
 
 /*==========================================
  * Resurrects a dead character [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_alive(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_alive(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 
@@ -2254,11 +2146,8 @@ int charcommand_alive(
 
 /*==========================================
  * Heals someone's HP and SP [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_heal(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_heal(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int hp = 0, sp = 0; // [Valaris] thanks to fov
 	char character[NAME_LENGTH];
@@ -2340,11 +2229,8 @@ int charcommand_heal(
 
 /*==========================================
  * Creates items as specified [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_item2(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_item2(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct item item_tmp;
 	struct item_data *item_data;
@@ -2436,11 +2322,8 @@ int charcommand_item2(
 
 /*==========================================
  * Reset a character's items [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_itemreset(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_itemreset(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int i, count = 0;
 	char character[NAME_LENGTH];
@@ -2487,11 +2370,8 @@ int charcommand_itemreset(
 
 /*==========================================
  * Refine their items [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_refine(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_refine(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int i,j, position = 0, refine = 0, current_position, final_refine;
 	int count;
@@ -2595,11 +2475,8 @@ int charcommand_refine(
 
 /*==========================================
  * Produce a manufactured item in their inventory [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_produce(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_produce(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char item_name[100];
 	int item_id, attribute = 0, star = 0;
@@ -2679,11 +2556,8 @@ int charcommand_produce(
 
 /*==========================================
  * Changes a character's stats [HiddenDragon
- *------------------------------------------
- */
-int charcommand_param(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_param(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int index, value = 0, new_value;
 	char character[NAME_LENGTH];
@@ -2758,11 +2632,8 @@ int charcommand_param(
 
 /*==========================================
  * Levels up a character's guild [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_guildlevelup(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_guildlevelup(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int level = 0;
 	short added_level;
@@ -2818,11 +2689,8 @@ int charcommand_guildlevelup(
 
 /*==========================================
  * Opens a hatch window for them [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_hatch(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_hatch(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 	struct map_session_data *pl_sd;
@@ -2856,11 +2724,8 @@ int charcommand_hatch(
 
 /*==========================================
  * Change target pet's hunger [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_pethungry(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_pethungry(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int hungry;
 	struct pet_data *pd;
@@ -2911,11 +2776,8 @@ int charcommand_pethungry(
 
 /*==========================================
  * Give all skills to target [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_allskill(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_allskill(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 
@@ -2951,8 +2813,7 @@ int charcommand_allskill(
 
 /*==========================================
  * Change target's clothing color [HiddenDragon]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int charcommand_dye(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int cloth_color = 0;
@@ -2994,8 +2855,7 @@ int charcommand_dye(const int fd, struct map_session_data* sd, const char* comma
 
 /*==========================================
  * Change target's hair style [HiddenDragon]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int charcommand_hair_style(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int hair_style = 0;
@@ -3023,17 +2883,10 @@ int charcommand_hair_style(const int fd, struct map_session_data* sd, const char
 	}
 
 	if (hair_style >= MIN_HAIR_STYLE && hair_style <= MAX_HAIR_STYLE) {
-		/* Removed because this check is TOO strange. [Skotlex]
-		if (hair_style != 0 && sd->status.sex == 1 && (sd->status.class_ == JOB_ASSASSIN || sd->status.class_ == JOB_ROGUE)) { //???
-			clif_displaymessage(fd, msg_txt(35)); // You can't use this command with this class.
-			return -1;
-		} else {
-		*/
 			pc_changelook(pl_sd, LOOK_HAIR, hair_style);
 			clif_displaymessage(pl_sd->fd, msg_txt(36)); // Appearence changed.
 			if (pl_sd->fd != fd)
 				clif_displaymessage(fd, msg_txt(36)); // Appearence changed.
-//		}
 	} else {
 		clif_displaymessage(fd, msg_txt(37)); // An invalid number was specified.
 		return -1;
@@ -3044,8 +2897,7 @@ int charcommand_hair_style(const int fd, struct map_session_data* sd, const char
 
 /*==========================================
  * Change target's hair color [HiddenDragon]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int charcommand_hair_color(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int hair_color = 0;
@@ -3075,17 +2927,10 @@ int charcommand_hair_color(const int fd, struct map_session_data* sd, const char
 	}
 
 	if (hair_color >= MIN_HAIR_COLOR && hair_color <= MAX_HAIR_COLOR) {
-		/* Removed for being such a strange check. [Skotlex]
-		if (hair_color != 0 && sd->status.sex == 1 && (sd->status.class_ == JOB_ASSASSIN || sd->status.class_ == JOB_ROGUE)) {
-			clif_displaymessage(fd, msg_txt(35)); // You can't use this command with this class.
-			return -1;
-		} else {
-		*/
 			pc_changelook(pl_sd, LOOK_HAIR_COLOR, hair_color);
 			clif_displaymessage(pl_sd->fd, msg_txt(36)); // Appearence changed.
 			if (pl_sd->fd != fd)
 				clif_displaymessage(fd, msg_txt(36)); // Appearence changed.
-//		}
 	} else {
 		clif_displaymessage(fd, msg_txt(37)); // An invalid number was specified.
 		return -1;
@@ -3096,11 +2941,8 @@ int charcommand_hair_color(const int fd, struct map_session_data* sd, const char
 
 /*==========================================
  * Change all target's stats [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_allstats(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_allstats(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int index, count, value = 0, max, new_value;
 	short* status[6];
@@ -3174,11 +3016,8 @@ int charcommand_allstats(
 
 /*==========================================
  * Gives/Removes a peco from a player [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_mount_peco(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_mount_peco(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd;
 	char character[NAME_LENGTH];
@@ -3235,10 +3074,8 @@ int charcommand_mount_peco(
 
 /*==========================================
  * Remove items from a player (now a char command) [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_delitem(const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_delitem(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct map_session_data *pl_sd;
 	char item_name[100];
@@ -3342,12 +3179,9 @@ static void get_jail_time(int jailtime, int* year, int* month, int* day, int* ho
 
 /*==========================================
  * Jail a player for a certain amount of time [Coltaro]
- *------------------------------------------
- */
-int charcommand_jailtime(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
-	{  
+ *------------------------------------------*/
+int charcommand_jailtime(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{  
 	struct map_session_data* pl_sd;
 	int year, month, day, hour, minute;
 	char character[NAME_LENGTH];
@@ -3392,11 +3226,8 @@ int charcommand_jailtime(
 
 /*==========================================
  * Disguises a player [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_disguise(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_disguise(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int mob_id;
 	char mob_name[NAME_LENGTH];
@@ -3460,11 +3291,8 @@ int charcommand_disguise(
 
 /*==========================================
  * Undisguises a player [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_undisguise(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_undisguise(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 	struct map_session_data* pl_sd;
@@ -3506,11 +3334,8 @@ int charcommand_undisguise(
 
 /*==========================================
  * Displays contents of target's cart [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_cart_list(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_cart_list(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char outputtmp[200];
 	char output[200];
@@ -3598,11 +3423,8 @@ static int charcommand_stopattack(struct block_list *bl,va_list ap)
 
 /*==========================================
  * Enable a player to kill players even when not in pvp [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_killer(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_killer(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 	struct map_session_data *pl_sd;
@@ -3646,11 +3468,8 @@ int charcommand_killer(
 
 /*==========================================
  * Enable other players to kill target even when not in pvp [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_killable(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_killable(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 	struct map_session_data *pl_sd;
@@ -3694,11 +3513,8 @@ int charcommand_killable(
 
 /*==========================================
  * Refreshes target [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_refresh(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_refresh(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 	struct map_session_data *pl_sd;
@@ -3728,11 +3544,8 @@ int charcommand_refresh(
 
 /*==========================================
  * View target's exp [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_exp(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_exp(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char output[200];
 	double nextb, nextj;
@@ -3775,12 +3588,8 @@ int charcommand_exp(
 
 /*==========================================
  * Makes monsters ignore target [HiddenDragon]
- *------------------------------------------
- */
- 
-int charcommand_monsterignore(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/ 
+int charcommand_monsterignore(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 	struct map_session_data *pl_sd;
@@ -3821,11 +3630,8 @@ int charcommand_monsterignore(
 
 /*==========================================
  * Change target's size [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_size(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_size(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int size=0;
 	char character[NAME_LENGTH];
@@ -3880,11 +3686,8 @@ int charcommand_size(
 
 /*==========================================
  * Level up target's homunculus [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_homlevel(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_homlevel(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	TBL_HOM * hd;
 	int level = 0, i = 0;
@@ -3934,11 +3737,8 @@ int charcommand_homlevel(
 
 /*==========================================
  * Evolve target's homunculus [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_homevolution(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_homevolution(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char character[NAME_LENGTH];
 	struct map_session_data *pl_sd;
@@ -3983,11 +3783,8 @@ int charcommand_homevolution(
 
 /*==========================================
  * Create a homunculus for target [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_makehomun(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_makehomun(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int homunid;
 	
@@ -4034,11 +3831,8 @@ int charcommand_makehomun(
 
 /*==========================================
  * Change Target's homunculus' friendlyness [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_homfriendly(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_homfriendly(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int friendly = 0;
 
@@ -4085,11 +3879,8 @@ int charcommand_homfriendly(
 
 /*==========================================
  * Modify target's homunculus hunger [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_homhungry(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_homhungry(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int hungry = 0;
 
@@ -4139,11 +3930,8 @@ int charcommand_homhungry(
 
 /*==========================================
  * Show target's homunculus stats [HiddenDragon]
- *------------------------------------------
- */
-int charcommand_hominfo(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+ *------------------------------------------*/
+int charcommand_hominfo(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct homun_data *hd;
 	struct status_data *status;

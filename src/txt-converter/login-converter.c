@@ -161,7 +161,8 @@ int mmo_auth_init(void)
 	return 0;
 }
 
-int login_config_read(const char *cfgName){
+int login_config_read(const char *cfgName)
+{
 	int i;
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;

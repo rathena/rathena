@@ -13,8 +13,7 @@ static void nullpo_info_core(const char *file, int line, const char *func,
 
 /*======================================
  * Nullチェック 及び 情報出力
- *--------------------------------------
- */
+ *--------------------------------------*/
 int nullpo_chk_f(const char *file, int line, const char *func, const void *target,
                  const char *fmt, ...)
 {
@@ -41,8 +40,7 @@ int nullpo_chk(const char *file, int line, const char *func, const void *target)
 
 /*======================================
  * nullpo情報出力(外部呼出し向けラッパ)
- *--------------------------------------
- */
+ *--------------------------------------*/
 void nullpo_info_f(const char *file, int line, const char *func, 
                  const char *fmt, ...)
 {
@@ -61,8 +59,7 @@ void nullpo_info(const char *file, int line, const char *func)
 
 /*======================================
  * nullpo情報出力(Main)
- *--------------------------------------
- */
+ *--------------------------------------*/
 static void nullpo_info_core(const char *file, int line, const char *func, 
                              const char *fmt, va_list ap)
 {

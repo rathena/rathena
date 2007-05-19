@@ -261,7 +261,8 @@ int already_exit_function = 0; // sometimes, the exit function is called twice..
 //------------------------------
 // Writing function of logs file
 //------------------------------
-int ladmin_log(char *fmt, ...) {
+int ladmin_log(char *fmt, ...)
+{
 	FILE *logfp;
 	va_list ap;
 	struct timeval tv;
@@ -289,7 +290,8 @@ int ladmin_log(char *fmt, ...) {
 //---------------------------------------------
 // Function to return ordonal text of a number.
 //---------------------------------------------
-char* makeordinal(int number) {
+char* makeordinal(int number)
+{
 	if (defaultlanguage == 'F') {
 		if (number == 0)
 			return "";
@@ -315,7 +317,8 @@ char* makeordinal(int number) {
 //-----------------------------------------------------------------------------------------
 // Function to test of the validity of an account name (return 0 if incorrect, and 1 if ok)
 //-----------------------------------------------------------------------------------------
-int verify_accountname(char* account_name) {
+int verify_accountname(char* account_name)
+{
 	int i;
 
 	for(i = 0; account_name[i]; i++) {
@@ -359,7 +362,8 @@ int verify_accountname(char* account_name) {
 //----------------------------------
 // Sub-function: Input of a password
 //----------------------------------
-int typepasswd(char * password) {
+int typepasswd(char * password)
+{
 	char password1[1023], password2[1023];
 	int letter;
 	int i;
@@ -415,7 +419,8 @@ int typepasswd(char * password) {
 //------------------------------------------------------------------------------------
 // Sub-function: Test of the validity of password (return 0 if incorrect, and 1 if ok)
 //------------------------------------------------------------------------------------
-int verify_password(char * password) {
+int verify_password(char * password)
+{
 	int i;
 
 	for(i = 0; password[i]; i++) {
@@ -459,7 +464,8 @@ int verify_password(char * password) {
 //------------------------------------------------------------------
 // Sub-function: Check the name of a command (return complete name)
 //-----------------------------------------------------------------
-int check_command(char * command) {
+int check_command(char * command)
+{
 // help
 	if (strncmp(command, "aide", 2) == 0 && strncmp(command, "aide", strlen(command)) == 0) // not 1 letter command: 'aide' or 'add'?
 		strcpy(command, "aide");
@@ -561,7 +567,8 @@ int check_command(char * command) {
 //-----------------------------------------
 // Sub-function: Display commands of ladmin
 //-----------------------------------------
-void display_help(char* param, int language) {
+void display_help(char* param, int language)
+{
 	char command[1023];
 	int i;
 
@@ -1087,7 +1094,8 @@ void display_help(char* param, int language) {
 //-----------------------------
 // Sub-function: add an account
 //-----------------------------
-int addaccount(char* param, int emailflag) {
+int addaccount(char* param, int emailflag)
+{
 	char name[1023], sex[1023], email[1023], password[1023];
 //	int i;
 	WFIFOHEAD(login_fd,91);
@@ -1132,19 +1140,6 @@ int addaccount(char* param, int emailflag) {
 	if (verify_accountname(name) == 0) {
 		return 102;
 	}
-
-/*	for(i = 0; name[i]; i++) {
-		if (strchr("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_", name[i]) == NULL) {
-			if (defaultlanguage == 'F') {
-				ShowMessage("Caractère interdit (%c) trouvé dans le nom du compte (%d%s caractère).\n", name[i], i+1, makeordinal(i+1));
-				ladmin_log("Caractère interdit (%c) trouvé dans le nom du compte (%d%s caractère)." RETCODE, name[i], i+1, makeordinal(i+1));
-			} else {
-				ShowMessage("Illegal character (%c) found in the account name (%d%s character).\n", name[i], i+1, makeordinal(i+1));
-				ladmin_log("Illegal character (%c) found in the account name (%d%s character)." RETCODE, name[i], i+1, makeordinal(i+1));
-			}
-			return 101;
-		}
-	}*/
 
 	sex[0] = TOUPPER(sex[0]);
 	if (strchr("MF", sex[0]) == NULL) {
@@ -1216,7 +1211,8 @@ int addaccount(char* param, int emailflag) {
 //---------------------------------------------------------------------------------
 // Sub-function: Add/substract time to the final date of a banishment of an account
 //---------------------------------------------------------------------------------
-int banaddaccount(char* param) {
+int banaddaccount(char* param)
+{
 	char name[1023], modif[1023];
 	int year, month, day, hour, minute, second;
 	char * p_modif;
@@ -1420,7 +1416,8 @@ int banaddaccount(char* param) {
 // Sub-function of sub-function banaccount, unbanaccount or bansetaccount
 // Set the final date of a banishment of an account
 //-----------------------------------------------------------------------
-int bansetaccountsub(char* name, char* date, char* time) {
+int bansetaccountsub(char* name, char* date, char* time)
+{
 	int year, month, day, hour, minute, second;
 	time_t ban_until_time; // # of seconds 1/1/1970 (timestamp): ban time limit of the account (0 = no ban)
 	struct tm *tmtime;
@@ -1564,7 +1561,8 @@ int bansetaccountsub(char* name, char* date, char* time) {
 //---------------------------------------------------------------------
 // Sub-function: Set the final date of a banishment of an account (ban)
 //---------------------------------------------------------------------
-int banaccount(char* param) {
+int banaccount(char* param)
+{
 	char name[1023], date[1023], time[1023];
 
 	memset(name, '\0', sizeof(name));
@@ -1600,7 +1598,8 @@ int banaccount(char* param) {
 //------------------------------------------------------------------------
 // Sub-function: Set the final date of a banishment of an account (banset)
 //------------------------------------------------------------------------
-int bansetaccount(char* param) {
+int bansetaccount(char* param)
+{
 	char name[1023], date[1023], time[1023];
 
 	memset(name, '\0', sizeof(name));
@@ -1639,7 +1638,8 @@ int bansetaccount(char* param) {
 //-------------------------------------------------
 // Sub-function: unbanishment of an account (unban)
 //-------------------------------------------------
-int unbanaccount(char* param) {
+int unbanaccount(char* param)
+{
 	char name[1023];
 
 	memset(name, '\0', sizeof(name));
@@ -1676,7 +1676,8 @@ int unbanaccount(char* param) {
 // Sub-function: Asking to check the validity of a password
 // (Note: never send back a password with login-server!! security of passwords)
 //---------------------------------------------------------
-int checkaccount(char* param) {
+int checkaccount(char* param)
+{
 	char name[1023], password[1023];
 	WFIFOHEAD(login_fd,50);
 
@@ -1727,7 +1728,8 @@ int checkaccount(char* param) {
 //------------------------------------------------
 // Sub-function: Asking for deletion of an account
 //------------------------------------------------
-int delaccount(char* param) {
+int delaccount(char* param)
+{
 	char name[1023];
 	char letter;
 	char confirm[1023];
@@ -1798,7 +1800,8 @@ int delaccount(char* param) {
 //----------------------------------------------------------
 // Sub-function: Asking to modification of an account e-mail
 //----------------------------------------------------------
-int changeemail(char* param) {
+int changeemail(char* param)
+{
 	char name[1023], email[1023];
 	WFIFOHEAD(login_fd,66);
 
@@ -1873,7 +1876,8 @@ int changeemail(char* param) {
 //-----------------------------------------------------
 // Sub-function: Asking of the number of online players
 //-----------------------------------------------------
-int getlogincount(void) {
+int getlogincount(void)
+{
 	WFIFOHEAD(login_fd,2);
 	if (defaultlanguage == 'F') {
 		ladmin_log("Envoi d'un requête au serveur de logins pour obtenir le nombre de joueurs en jeu." RETCODE);
@@ -1891,7 +1895,8 @@ int getlogincount(void) {
 //----------------------------------------------------------
 // Sub-function: Asking to modify the GM level of an account
 //----------------------------------------------------------
-int changegmlevel(char* param) {
+int changegmlevel(char* param)
+{
 	char name[1023];
 	int GM_level;
 	WFIFOHEAD(login_fd,27);
@@ -1947,7 +1952,8 @@ int changegmlevel(char* param) {
 //---------------------------------------------
 // Sub-function: Asking to obtain an account id
 //---------------------------------------------
-int idaccount(char* param) {
+int idaccount(char* param)
+{
 	char name[1023];
 	WFIFOHEAD(login_fd,26);
 
@@ -1991,7 +1997,8 @@ int idaccount(char* param) {
 //----------------------------------------------------------------------------
 // Sub-function: Asking to displaying information about an account (by its id)
 //----------------------------------------------------------------------------
-int infoaccount(int account_id) {
+int infoaccount(int account_id)
+{
 	WFIFOHEAD(login_fd,6);
 	if (account_id < 0) {
 		if (defaultlanguage == 'F') {
@@ -2021,7 +2028,8 @@ int infoaccount(int account_id) {
 //---------------------------------------
 // Sub-function: Send a broadcast message
 //---------------------------------------
-int sendbroadcast(short type, char* message) {
+int sendbroadcast(short type, char* message)
+{
 	int len = strlen(message);
 	WFIFOHEAD(login_fd,9+len);
 	if (len == 0) {
@@ -2058,7 +2066,8 @@ int sendbroadcast(short type, char* message) {
 //--------------------------------------------
 // Sub-function: Change language of displaying
 //--------------------------------------------
-int changelanguage(char* language) {
+int changelanguage(char* language)
+{
 	if (strlen(language) == 0) {
 		if (defaultlanguage == 'F') {
 			ShowMessage("Entrez une langue svp.\n");
@@ -2100,7 +2109,8 @@ int changelanguage(char* language) {
 //--------------------------------------------------------
 // Sub-function: Asking to Displaying of the accounts list
 //--------------------------------------------------------
-int listaccount(char* param, int type) {
+int listaccount(char* param, int type)
+{
 //int list_first, list_last, list_type; // parameter to display a list of accounts
 	int i;
 	WFIFOHEAD(login_fd,10);
@@ -2165,7 +2175,8 @@ int listaccount(char* param, int type) {
 //--------------------------------------------
 // Sub-function: Asking to modify a memo field
 //--------------------------------------------
-int changememo(char* param) {
+int changememo(char* param)
+{
 	char name[1023], memo[1023];
 	WFIFOHEAD(login_fd,28+255);
 
@@ -2224,7 +2235,8 @@ int changememo(char* param) {
 //-----------------------------------------------
 // Sub-function: Asking to obtain an account name
 //-----------------------------------------------
-int nameaccount(int id) {
+int nameaccount(int id)
+{
 	WFIFOHEAD(login_fd,6);
 	if (id < 0) {
 		if (defaultlanguage == 'F') {
@@ -2254,7 +2266,8 @@ int nameaccount(int id) {
 // Sub-function: Asking to modify a password
 // (Note: never send back a password with login-server!! security of passwords)
 //------------------------------------------
-int changepasswd(char* param) {
+int changepasswd(char* param)
+{
 	char name[1023], password[1023];
 	WFIFOHEAD(login_fd,50);
 
@@ -2306,7 +2319,8 @@ int changepasswd(char* param) {
 // Sub-function: Request to login-server to reload GM configuration file
 // this function have no answer
 //----------------------------------------------------------------------
-int reloadGM(void) {
+int reloadGM(void)
+{
 	WFIFOHEAD(login_fd,2);
 	WFIFOW(login_fd,0) = 0x7955;
 	WFIFOSET(login_fd,2);
@@ -2329,7 +2343,8 @@ int reloadGM(void) {
 //-----------------------------------------------------
 // Sub-function: Asking to modify the sex of an account
 //-----------------------------------------------------
-int changesex(char* param) {
+int changesex(char* param)
+{
 	char name[1023], sex[1023];
 	WFIFOHEAD(login_fd,27);
 
@@ -2386,7 +2401,8 @@ int changesex(char* param) {
 // Sub-function of sub-function changestate, blockaccount or unblockaccount
 // Asking to modify the state of an account
 //-------------------------------------------------------------------------
-int changestatesub(char* name, int state, char* error_message7) {
+int changestatesub(char* name, int state, char* error_message7)
+{
 	char error_message[1023]; // need to use, because we can modify error_message7
 	WFIFOHEAD(login_fd,50);
 
@@ -2470,7 +2486,8 @@ int changestatesub(char* name, int state, char* error_message7) {
 //-------------------------------------------------------
 // Sub-function: Asking to modify the state of an account
 //-------------------------------------------------------
-int changestate(char* param) {
+int changestate(char* param)
+{
 	char name[1023], error_message[1023];
 	int state;
 
@@ -2504,7 +2521,8 @@ int changestate(char* param) {
 //-------------------------------------------
 // Sub-function: Asking to unblock an account
 //-------------------------------------------
-int unblockaccount(char* param) {
+int unblockaccount(char* param)
+{
 	char name[1023];
 
 	memset(name, '\0', sizeof(name));
@@ -2538,7 +2556,8 @@ int unblockaccount(char* param) {
 //-------------------------------------------
 // Sub-function: Asking to unblock an account
 //-------------------------------------------
-int blockaccount(char* param) {
+int blockaccount(char* param)
+{
 	char name[1023];
 
 	memset(name, '\0', sizeof(name));
@@ -2572,7 +2591,8 @@ int blockaccount(char* param) {
 //---------------------------------------------------------------------
 // Sub-function: Add/substract time to the validity limit of an account
 //---------------------------------------------------------------------
-int timeaddaccount(char* param) {
+int timeaddaccount(char* param)
+{
 	char name[1023], modif[1023];
 	int year, month, day, hour, minute, second;
 	char * p_modif;
@@ -2775,7 +2795,8 @@ int timeaddaccount(char* param) {
 //-------------------------------------------------
 // Sub-function: Set a validity limit of an account
 //-------------------------------------------------
-int timesetaccount(char* param) {
+int timesetaccount(char* param)
+{
 	char name[1023], date[1023], time[1023];
 	int year, month, day, hour, minute, second;
 	time_t connect_until_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
@@ -2941,7 +2962,8 @@ int timesetaccount(char* param) {
 //------------------------------------------------------------------------------
 // Sub-function: Asking to displaying information about an account (by its name)
 //------------------------------------------------------------------------------
-int whoaccount(char* param) {
+int whoaccount(char* param)
+{
 	char name[1023];
 	WFIFOHEAD(login_fd,26);
 
@@ -2984,7 +3006,8 @@ int whoaccount(char* param) {
 //--------------------------------------------------------
 // Sub-function: Asking of the version of the login-server
 //--------------------------------------------------------
-int checkloginversion(void) {
+int checkloginversion(void)
+{
 	WFIFOHEAD(login_fd,2);
 	if (defaultlanguage == 'F')
 		ladmin_log("Envoi d'un requête au serveur de logins pour obtenir sa version." RETCODE);
@@ -3003,7 +3026,8 @@ int checkloginversion(void) {
 // this function wait until user type a command
 // and analyse the command.
 //---------------------------------------------
-int prompt(void) {
+int prompt(void)
+{
 	int i, j;
 	char buf[1024];
 	char *p;
@@ -4162,7 +4186,8 @@ int parse_fromlogin(int fd)
 //------------------------------------
 // Function to connect to login-server
 //------------------------------------
-int Connect_login_server(void) {
+int Connect_login_server(void)
+{
 	if (defaultlanguage == 'F') {
 		ShowMessage("Essai de connection au server de logins...\n");
 		ladmin_log("Essai de connection au server de logins..." RETCODE);
@@ -4211,7 +4236,8 @@ int Connect_login_server(void) {
 //-----------------------------------
 // Reading general configuration file
 //-----------------------------------
-int ladmin_config_read(const char *cfgName) {
+int ladmin_config_read(const char *cfgName)
+{
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
 
@@ -4291,13 +4317,15 @@ int ladmin_config_read(const char *cfgName) {
 // Function called when the server
 // has received a crash signal.
 //------------------------------
-void do_abort(void) {}
+void do_abort(void)
+{
+}
 
 //--------------------------------------
 // Function called at exit of the server
 //--------------------------------------
-void do_final(void) {
-
+void do_final(void)
+{
 	if (already_exit_function == 0) {
 
 		if (defaultlanguage == 'F') {

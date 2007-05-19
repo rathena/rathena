@@ -300,7 +300,8 @@ struct party_data *inter_party_fromsql(int party_id)
 	return p;
 }
 
-int inter_party_sql_init(void){
+int inter_party_sql_init(void)
+{
 	//memory alloc
 	party_db_ = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
 	party_pt = (struct party_data*)aCalloc(sizeof(struct party_data), 1);

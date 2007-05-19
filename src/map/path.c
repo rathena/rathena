@@ -32,8 +32,7 @@ const char walk_choices [3][3] =
 
 /*==========================================
  * Œo˜H’Tõ•â•heap push
- *------------------------------------------
- */
+ *------------------------------------------*/
 static void push_heap_path(int *heap,struct tmp_path *tp,int index)
 {
 	int i,h;
@@ -50,8 +49,7 @@ static void push_heap_path(int *heap,struct tmp_path *tp,int index)
 /*==========================================
  * Œo˜H’Tõ•â•heap update
  * cost‚ªŒ¸‚Á‚½‚Ì‚Åª‚Ì•û‚ÖˆÚ“®
- *------------------------------------------
- */
+ *------------------------------------------*/
 static void update_heap_path(int *heap,struct tmp_path *tp,int index)
 {
 	int i,h;
@@ -72,8 +70,7 @@ static void update_heap_path(int *heap,struct tmp_path *tp,int index)
 
 /*==========================================
  * Œo˜H’Tõ•â•heap pop
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int pop_heap_path(int *heap,struct tmp_path *tp)
 {
 	int i,h,k;
@@ -104,8 +101,7 @@ static int pop_heap_path(int *heap,struct tmp_path *tp)
 
 /*==========================================
  * Œ»İ‚Ì“_‚ÌcostŒvZ
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int calc_cost(struct tmp_path *p,int x1,int y1)
 {
 	int xd,yd;
@@ -119,8 +115,7 @@ static int calc_cost(struct tmp_path *p,int x1,int y1)
 
 /*==========================================
  * •K—v‚È‚çpath‚ğ’Ç‰Á/C³‚·‚é
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int add_path(int *heap,struct tmp_path *tp,int x,int y,int dist,int before,int cost)
 {
 	int i;
@@ -159,8 +154,7 @@ static int add_path(int *heap,struct tmp_path *tp,int x,int y,int dist,int befor
 /*==========================================
  * (x,y)‚ªˆÚ“®•s‰Â”\’n‘Ñ‚©‚Ç‚¤‚©
  * flag 0x10000 ‰“‹——£UŒ‚”»’è
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int can_place(struct map_data *m,int x,int y,int flag)
 {
 	if(map_getcellp(m,x,y,CELL_CHKPASS))
@@ -177,8 +171,7 @@ static int can_place(struct map_data *m,int x,int y,int flag)
 
 /*==========================================
  * (x0,y0)‚©‚ç(x1,y1)‚Ö1•à‚ÅˆÚ“®‰Â”\‚©ŒvZ
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int can_move(struct map_data *m,int x0,int y0,int x1,int y1,int flag)
 {
 	if(x1<0 || y1<0 || x1>=m->xs || y1>=m->ys)
@@ -202,8 +195,7 @@ static int can_move(struct map_data *m,int x0,int y0,int x1,int y1,int flag)
 /*==========================================
  * (x0,y0)‚©‚ç(dx,dy)•ûŒü‚ÖcountƒZƒ‹•ª
  * ‚«”ò‚Î‚µ‚½‚ ‚Æ‚ÌÀ•W‚ğŠ“¾
- *------------------------------------------
- */
+ *------------------------------------------*/
 int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 {
 	struct map_data *md;
@@ -243,8 +235,7 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 
 /*==========================================
  *  ‰“‹——£UŒ‚‚ª‰Â”\‚©‚Ç‚¤‚©‚ğ•Ô‚·
- *------------------------------------------
- */
+ *------------------------------------------*/
 int path_search_long_real(struct shootpath_data *spd,int m,int x0,int y0,int x1,int y1,cell_t flag)
 {
 	int dx, dy;
@@ -312,9 +303,7 @@ int path_search_long_real(struct shootpath_data *spd,int m,int x0,int y0,int x1,
 
 /*==========================================
  * path’Tõ (x0,y0)->(x1,y1)
- *------------------------------------------
- */
-
+ *------------------------------------------*/
 int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int flag,cell_t flag2)
 {
 	int heap[MAX_HEAP+1];
@@ -483,12 +472,8 @@ int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1
 }
 
 /*==========================================
-
  * path’Tõ (x0,y0)->(x1,y1)
-
- *------------------------------------------
- 
- */
+ *------------------------------------------*/
 
 #ifdef PATH_STANDALONETEST
 char gat[64][64]={
@@ -502,8 +487,7 @@ struct map_data map[1];
 
 /*==========================================
  * Œo˜H’Tõƒ‹[ƒ`ƒ“’P‘ÌƒeƒXƒg—pmainŠÖ”
- *------------------------------------------
- */
+ *------------------------------------------*/
 void main(int argc,char *argv[])
 {
 	struct walkpath_data wpd;

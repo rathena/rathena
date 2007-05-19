@@ -30,9 +30,9 @@ int party_send_xy_timer(int tid,unsigned int tick,int id,int data);
 /*==========================================
  * Fills the given party_member structure according to the sd provided. 
  * Used when creating/adding people to a party. [Skotlex]
- *------------------------------------------
- */
-static void party_fill_member(struct party_member *member, struct map_session_data *sd) {
+ *------------------------------------------*/
+static void party_fill_member(struct party_member *member, struct map_session_data *sd)
+{
   	member->account_id = sd->status.account_id;
 	member->char_id    = sd->status.char_id;
 	memcpy(member->name, sd->status.name, NAME_LENGTH);
@@ -45,8 +45,7 @@ static void party_fill_member(struct party_member *member, struct map_session_da
 
 /*==========================================
  * I—¹
- *------------------------------------------
- */
+ *------------------------------------------*/
 void do_final_party(void)
 {
 	party_db->destroy(party_db,NULL);
@@ -182,7 +181,8 @@ int party_recv_noinfo(int party_id)
 	return 0;
 }
 
-static void* create_party(DBKey key, va_list args) {
+static void* create_party(DBKey key, va_list args)
+{
 	struct party_data *p;
 	p=(struct party_data *)aCalloc(1,sizeof(struct party_data));
 	return p;

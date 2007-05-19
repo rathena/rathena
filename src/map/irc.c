@@ -366,7 +366,8 @@ void do_init_irc(void)
 }
 
 //NAMES Packet(353) parser [Zido]
-int parse_names_packet(char *str) {
+int parse_names_packet(char *str)
+{
 	char *tok;
 	char source[256];
 	char numeric[10];
@@ -395,7 +396,8 @@ int parse_names_packet(char *str) {
 }
 
 //User access level prefix parser [Zido]
-int parse_names(char *str) {
+int parse_names(char *str)
+{
 	char *tok;
 	if (str == NULL)  return 0; //Nothing to parse!
 	tok=strtok(str," ");
@@ -447,7 +449,8 @@ int parse_names(char *str) {
 }
 
 //Store user's access level [Zido]
-int set_access(char *nick,int newlevel) {
+int set_access(char *nick,int newlevel)
+{
 	int i=0;
 	
 	for(i=0;i<=MAX_CHANNEL_USERS;i++) {
@@ -465,7 +468,8 @@ int set_access(char *nick,int newlevel) {
 }
 
 //Returns users access level [Zido]
-int get_access(char *nick) {
+int get_access(char *nick)
+{
 	int i=0;
 	
 	for(i=0;i<=MAX_CHANNEL_USERS;i++) {
@@ -477,7 +481,8 @@ int get_access(char *nick) {
 	return -1;
 }
 
-int irc_rmnames() {
+int irc_rmnames()
+{
 	int i=0;
 	
 	for(i=0;i<=MAX_CHANNEL_USERS;i++) {
@@ -491,7 +496,8 @@ int irc_rmnames() {
 	return 0;
 }
 
-int irc_read_conf(char *file) {
+int irc_read_conf(char *file)
+{
 	FILE *fp=NULL;
 	char w1[256];
 	char w2[256];

@@ -23,9 +23,9 @@
 
 /*==========================================
  * Initiates a trade request.
- *------------------------------------------
- */
-void trade_traderequest(struct map_session_data *sd, struct map_session_data *target_sd) {
+ *------------------------------------------*/
+void trade_traderequest(struct map_session_data *sd, struct map_session_data *target_sd)
+{
 	int level;
 
 	nullpo_retv(sd);
@@ -89,9 +89,9 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
  * 4: Cancel
  * Weird enough, the client should only send 3/4
  * and the server is the one that can reply 0~2
- *------------------------------------------
- */
-void trade_tradeack(struct map_session_data *sd, int type) {
+ *------------------------------------------*/
+void trade_tradeack(struct map_session_data *sd, int type)
+{
 	struct map_session_data *tsd;
 	nullpo_retv(sd);
 
@@ -159,9 +159,9 @@ void trade_tradeack(struct map_session_data *sd, int type) {
  * Check here hacker for duplicate item in trade
  * normal client refuse to have 2 same types of item (except equipment) in same trade window
  * normal client authorise only no equiped item and only from inventory
- *------------------------------------------
- */
-int impossible_trade_check(struct map_session_data *sd) {
+ *------------------------------------------*/
+int impossible_trade_check(struct map_session_data *sd)
+{
 	struct item inventory[MAX_INVENTORY];
 	char message_to_gm[200];
 	int i, index;
@@ -221,9 +221,9 @@ int impossible_trade_check(struct map_session_data *sd) {
 
 /*==========================================
  * Checks if trade is possible (against zeny limits, inventory limits, etc)
- *------------------------------------------
- */
-int trade_check(struct map_session_data *sd, struct map_session_data *tsd) {
+ *------------------------------------------*/
+int trade_check(struct map_session_data *sd, struct map_session_data *tsd)
+{
 	struct item inventory[MAX_INVENTORY];
 	struct item inventory2[MAX_INVENTORY];
 	struct item_data *data;
@@ -310,9 +310,9 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd) {
 
 /*==========================================
  * Adds an item/qty to the trade window [rewrite by Skotlex] 
- *------------------------------------------
- */
-void trade_tradeadditem(struct map_session_data *sd, int index, int amount) {
+ *------------------------------------------*/
+void trade_tradeadditem(struct map_session_data *sd, int index, int amount)
+{
 	struct map_session_data *target_sd;
 	struct item *item;
 	int trade_i, trade_weight;
@@ -402,9 +402,9 @@ void trade_tradeadditem(struct map_session_data *sd, int index, int amount) {
 
 /*==========================================
  * 'Ok' button on the trade window is pressed.
- *------------------------------------------
- */
-void trade_tradeok(struct map_session_data *sd) {
+ *------------------------------------------*/
+void trade_tradeok(struct map_session_data *sd)
+{
 	struct map_session_data *target_sd;
 
 	if(sd->state.deal_locked || !sd->state.trading)
@@ -422,9 +422,9 @@ void trade_tradeok(struct map_session_data *sd) {
 
 /*==========================================
  * 'Cancel' is pressed. (or trade was force-cancelled by the code)
- *------------------------------------------
- */
-void trade_tradecancel(struct map_session_data *sd) {
+ *------------------------------------------*/
+void trade_tradecancel(struct map_session_data *sd)
+{
 	struct map_session_data *target_sd;
 	int trade_i;
 
@@ -472,9 +472,9 @@ void trade_tradecancel(struct map_session_data *sd) {
 
 /*==========================================
  * Žæˆø‹–‘ø(trade‰Ÿ‚µ)
- *------------------------------------------
- */
-void trade_tradecommit(struct map_session_data *sd) {
+ *------------------------------------------*/
+void trade_tradecommit(struct map_session_data *sd)
+{
 	struct map_session_data *tsd;
 	int trade_i;
 	int flag;

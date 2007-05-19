@@ -171,8 +171,7 @@ int inter_accreg_save(void) {
 #endif //TXT_SQL_CONVERT
 /*==========================================
  * İ’èƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int inter_config_read(const char *cfgName) {
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
@@ -533,14 +532,6 @@ int mapif_parse_WisRequest(int fd) {
 	}
 	//Not found.
 	return mapif_wis_fail(fd, RFIFOP(fd, 4));
-
-/* Scrapped since now we know where characters are online in. [Skotlex]
-	wd = mapif_create_whisper(fd, RFIFOP(fd, 4), RFIFOP(fd,28), RFIFOP(fd,52), RFIFOW(fd,2)-52);
-	if (!wd) return 0;
-	idb_put(wis_db, wd->id, wd);
-	mapif_wis_message(wd);
-	return 0;
-*/
 }
 
 // Wisp/page transmission result

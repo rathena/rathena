@@ -130,8 +130,7 @@ int pet_unlocktarget(struct pet_data *pd)
 
 /*==========================================
  * Pet Attack Skill [Skotlex]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int pet_attackskill(struct pet_data *pd, int target_id)
 {
 	struct block_list *bl;
@@ -204,8 +203,7 @@ int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type)
 }
 /*==========================================
  * Pet SC Check [Skotlex]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int pet_sc_check(struct map_session_data *sd, int type)
 {	
 	struct pet_data *pd;
@@ -1109,8 +1107,7 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 
 /*==========================================
  * pet bonus giving skills [Valaris] / Rewritten by [Skotlex]
- *------------------------------------------
- */ 
+ *------------------------------------------*/ 
 int pet_skill_bonus_timer(int tid,unsigned int tick,int id,int data)
 {
 	struct map_session_data *sd=map_id2sd(id);
@@ -1155,8 +1152,7 @@ int pet_skill_bonus_timer(int tid,unsigned int tick,int id,int data)
 
 /*==========================================
  * pet recovery skills [Valaris] / Rewritten by [Skotlex]
- *------------------------------------------
- */ 
+ *------------------------------------------*/ 
 int pet_recovery_timer(int tid,unsigned int tick,int id,int data)
 {
 	struct map_session_data *sd=map_id2sd(id);
@@ -1224,8 +1220,7 @@ int pet_heal_timer(int tid,unsigned int tick,int id,int data)
 
 /*==========================================
  * pet support skills [Skotlex]
- *------------------------------------------
- */ 
+ *------------------------------------------*/ 
 int pet_skill_support_timer(int tid,unsigned int tick,int id,int data)
 {
 	struct map_session_data *sd=map_id2sd(id);
@@ -1274,8 +1269,7 @@ int pet_skill_support_timer(int tid,unsigned int tick,int id,int data)
 
 /*==========================================
  *ペットデータ読み込み
- *------------------------------------------
- */ 
+ *------------------------------------------*/ 
 int read_petdb()
 {
 	FILE *fp;
@@ -1370,8 +1364,7 @@ int read_petdb()
 
 /*==========================================
  * スキル関係初期化処理
- *------------------------------------------
- */
+ *------------------------------------------*/
 int do_init_pet(void)
 {
 	memset(pet_db,0,sizeof(pet_db));

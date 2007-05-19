@@ -113,7 +113,8 @@ struct npc_parse {
  * This does NOT do the list management
  */
 
-void finalize_pcrematch_entry(struct pcrematch_entry *e) {
+void finalize_pcrematch_entry(struct pcrematch_entry *e)
+{
 //TODO: For some odd reason this causes a already-free'd error under Windows, but not *nix! [Skotlex]
 #ifndef _WIN32
 	if (e->pcre_) {
@@ -176,7 +177,8 @@ static struct pcrematch_set * lookup_pcreset(struct npc_data *nd,int setid)
  * if the setid does not exist, this will silently return
  */
 
-static void activate_pcreset(struct npc_data *nd,int setid) {
+static void activate_pcreset(struct npc_data *nd,int setid)
+{
     struct pcrematch_set *pcreset;
     struct npc_parse *npcParse = (struct npc_parse *) nd->chatdb;
     if (npcParse == NULL) 
@@ -209,7 +211,8 @@ static void activate_pcreset(struct npc_data *nd,int setid) {
  * if the setid does not exist, this will silently return
  */
 
-static void deactivate_pcreset(struct npc_data *nd,int setid) {
+static void deactivate_pcreset(struct npc_data *nd,int setid)
+{
     struct pcrematch_set *pcreset;
     struct npc_parse *npcParse = (struct npc_parse *) nd->chatdb;
     if (npcParse == NULL) 
@@ -244,7 +247,8 @@ static void deactivate_pcreset(struct npc_data *nd,int setid) {
 /**
  * delete a set of patterns.
  */
-static void delete_pcreset(struct npc_data *nd,int setid) {
+static void delete_pcreset(struct npc_data *nd,int setid)
+{
     int active = 1;
     struct pcrematch_set *pcreset;
     struct npc_parse *npcParse = (struct npc_parse *) nd->chatdb;
@@ -294,7 +298,8 @@ static void delete_pcreset(struct npc_data *nd,int setid) {
 /**
  * create a new pattern entry 
  */
-static struct pcrematch_entry *create_pcrematch_entry(struct pcrematch_set * set) {
+static struct pcrematch_entry *create_pcrematch_entry(struct pcrematch_set * set)
+{
     struct pcrematch_entry * e =  (struct pcrematch_entry *)
         aCalloc(sizeof(struct pcrematch_entry), 1);
     struct pcrematch_entry * last = set->head_;
@@ -476,7 +481,8 @@ int mob_chat_sub(struct block_list *bl, va_list ap){
 
 // Various script builtins used to support these functions
 
-int buildin_defpattern(struct script_state *st) {
+int buildin_defpattern(struct script_state *st)
+{
     int setid=conv_num(st,& (st->stack->stack_data[st->start+2]));
     const char *pattern=conv_str(st,& (st->stack->stack_data[st->start+3]));
     const char *label=conv_str(st,& (st->stack->stack_data[st->start+4]));
@@ -487,7 +493,8 @@ int buildin_defpattern(struct script_state *st) {
     return 0;
 }
 
-int buildin_activatepset(struct script_state *st) {
+int buildin_activatepset(struct script_state *st)
+{
     int setid=conv_num(st,& (st->stack->stack_data[st->start+2]));
     struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
 
@@ -496,7 +503,8 @@ int buildin_activatepset(struct script_state *st) {
     return 0;
 }
 
-int buildin_deactivatepset(struct script_state *st) {
+int buildin_deactivatepset(struct script_state *st)
+{
     int setid=conv_num(st,& (st->stack->stack_data[st->start+2]));
     struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
 
@@ -505,7 +513,8 @@ int buildin_deactivatepset(struct script_state *st) {
     return 0;
 }
 
-int buildin_deletepset(struct script_state *st) {
+int buildin_deletepset(struct script_state *st)
+{
     int setid=conv_num(st,& (st->stack->stack_data[st->start+2]));
     struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
 

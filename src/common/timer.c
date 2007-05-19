@@ -137,8 +137,7 @@ unsigned int gettick(void)
 
 /*======================================
  * 	CORE : Timer Heap
- *--------------------------------------
- */
+ *--------------------------------------*/
 /// Adds a timer to the timer_heap
 static void push_timer_heap(int tid)
 {
@@ -197,8 +196,7 @@ static void push_timer_heap(int tid)
 
 /*==========================
  * 	Timer Management
- *--------------------------
- */
+ *--------------------------*/
 
 /// Returns a free timer id.
 static int acquire_timer(void)

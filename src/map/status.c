@@ -88,7 +88,8 @@ static void set_sc(int skill, int sc, int icon, unsigned int flag)
 
 //Initializes the StatusIconChangeTable variable. May seem somewhat slower than directly defining the array,
 //but it is much less prone to errors. [Skotlex]
-void initChangeTables(void) {
+void initChangeTables(void)
+{
 	int i;
 	for (i = 0; i < SC_MAX; i++)
 		StatusIconChangeTable[i] = SI_BLANK;
@@ -485,7 +486,8 @@ int SkillStatusChangeTable(int skill)
 	return SkillStatusChangeTableArray[sk];
 }
 int StatusIconChangeTable[SC_MAX]; //Stores the icon that should be associated to this status change.
-static void initDummyData(void) {
+static void initDummyData(void)
+{
 	memset(&dummy_status, 0, sizeof(dummy_status));
 	dummy_status.hp = 
 	dummy_status.max_hp = 
@@ -507,8 +509,7 @@ static void initDummyData(void) {
 
 /*==========================================
  * 精錬ボーナス
- *------------------------------------------
- */
+ *------------------------------------------*/
 int status_getrefinebonus(int lv,int type)
 {
 	if (lv >= 0 && lv < 5 && type >= 0 && type < 3)
@@ -933,8 +934,7 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
  * src MAY be null to indicate we shouldn't check it, this is a ground-based skill attack.
  * target MAY Be null, in which case the checks are only to see 
  * whether the source can cast or not the skill on the ground.
- *------------------------------------------
- */
+ *------------------------------------------*/
 int status_check_skilluse(struct block_list *src, struct block_list *target, int skill_num, int flag)
 {
 	struct status_data *status;
@@ -1435,7 +1435,6 @@ int status_calc_mob(struct mob_data* md, int first)
 //Skotlex: Calculates the stats of the given pet.
 int status_calc_pet(struct pet_data *pd, int first)
 {
-
 	nullpo_retr(0, pd);
 
 	if (first) {
@@ -3111,8 +3110,7 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 }
 /*==========================================
  * Apply shared stat mods from status changes [DracoRPG]
- *------------------------------------------
- */
+ *------------------------------------------*/
 static unsigned short status_calc_str(struct block_list *bl, struct status_change *sc, int str)
 {
 	if(!sc || !sc->count)
@@ -3923,8 +3921,7 @@ static unsigned short status_calc_mode(struct block_list *bl, struct status_chan
 
 /*==========================================
  * Quick swap of adelay/speed when starting ending SA_FREECAST
- *------------------------------------------
- */
+ *------------------------------------------*/
 void status_freecast_switch(struct map_session_data *sd)
 {
 	struct status_data *status;
@@ -3969,8 +3966,7 @@ const char * status_get_name(struct block_list *bl)
 /*==========================================
  * 対象のClassを返す(汎用)
  * 戻りは整数で0以上
- *------------------------------------------
- */
+ *------------------------------------------*/
 int status_get_class(struct block_list *bl)
 {
 	nullpo_retr(0, bl);
@@ -3987,8 +3983,7 @@ int status_get_class(struct block_list *bl)
 /*==========================================
  * 対象のレベルを返す(汎用)
  * 戻りは整数で0以上
- *------------------------------------------
- */
+ *------------------------------------------*/
 int status_get_lv(struct block_list *bl)
 {
 	nullpo_retr(0, bl);
@@ -4522,8 +4517,7 @@ int status_get_sc_def(struct block_list *bl, int type, int rate, int tick, int f
  * &2: Tick should not be reduced (by vit, luk, lv, etc)
  * &4: sc_data loaded, no value has to be altered.
  * &8: rate should not be reduced
- *------------------------------------------
- */
+ *------------------------------------------*/
 int status_change_start(struct block_list *bl,int type,int rate,int val1,int val2,int val3,int val4,int tick,int flag)
 {
 	struct map_session_data *sd = NULL;
@@ -6008,8 +6002,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 }
 /*==========================================
  * ステータス異常全解除
- *------------------------------------------
- */
+ *------------------------------------------*/
 int status_change_clear(struct block_list *bl,int type)
 {
 	struct status_change* sc;
@@ -6066,8 +6059,7 @@ int status_change_clear(struct block_list *bl,int type)
 
 /*==========================================
  * ステータス異常終了
- *------------------------------------------
- */
+ *------------------------------------------*/
 int status_change_end( struct block_list* bl , int type,int tid )
 {
 	struct map_session_data *sd;
@@ -6534,8 +6526,7 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, int data)
 
 /*==========================================
  * ステータス異常終了タイマー
- *------------------------------------------
- */
+ *------------------------------------------*/
 int status_change_timer(int tid, unsigned int tick, int id, int data)
 {
 	int type = data;
@@ -6916,8 +6907,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 
 /*==========================================
  * ステータス異常タイマー範囲処理
- *------------------------------------------
- */
+ *------------------------------------------*/
 int status_change_timer_sub(struct block_list *bl, va_list ap )
 {
 	struct block_list *src;
@@ -6980,8 +6970,7 @@ int status_change_timer_sub(struct block_list *bl, va_list ap )
 /*==========================================
  * Clears buffs/debuffs of a character.
  * type&1 -> buffs, type&2 -> debuffs
- *------------------------------------------
- */
+ *------------------------------------------*/
 int status_change_clear_buffs (struct block_list *bl, int type)
 {
 	int i;
@@ -7280,7 +7269,8 @@ static int status_calc_sigma(void)
 	return 0;
 }
 
-int status_readdb(void) {
+int status_readdb(void)
+{
 	int i,j;
 	FILE *fp;
 	char line[1024], path[1024],*p;
@@ -7417,8 +7407,7 @@ int status_readdb(void) {
 
 /*==========================================
  * スキル関係初期化処理
- *------------------------------------------
- */
+ *------------------------------------------*/
 int do_init_status(void)
 {
 	add_timer_func_list(status_change_timer,"status_change_timer");

@@ -189,9 +189,9 @@ int inter_accreg_sql_init(void)
 
 /*==========================================
  * read config file
- *------------------------------------------
- */
-static int inter_config_read(const char *cfgName) {
+ *------------------------------------------*/
+static int inter_config_read(const char *cfgName)
+{
 	int i;
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;

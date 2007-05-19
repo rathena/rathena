@@ -15,7 +15,8 @@ char *account_txt = "../save/account.txt";
 //-----------------------------------------------------
 // Function to suppress control characters in a string.
 //-----------------------------------------------------
-int remove_control_chars(unsigned char *str) {
+int remove_control_chars(unsigned char *str)
+{
 	int i;
 	int change = 0;
 
@@ -29,8 +30,8 @@ int remove_control_chars(unsigned char *str) {
 	return change;
 }
 
-int main(int argc, char *argv[]) {
-
+int main(int argc, char *argv[])
+{
 	char username[24];
 	char password[24];
 	char sex[2];

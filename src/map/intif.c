@@ -45,7 +45,8 @@ extern int char_fd;		// inter serverのfdはchar_fdを使う
 //-----------------------------------------------------------------
 // inter serverへの送信
 
-int CheckForCharServer(void) {
+int CheckForCharServer(void)
+{
 	return ((char_fd <= 0) || session[char_fd] == NULL || session[char_fd]->wdata == NULL);
 }
 
@@ -176,7 +177,8 @@ int intif_announce(const char* mes,int len, unsigned long color, int flag)
 }
 
 // The transmission of Wisp/Page to inter-server (player not found on this server)
-int intif_wis_message(struct map_session_data *sd, char *nick, char *mes, int mes_len) {
+int intif_wis_message(struct map_session_data *sd, char *nick, char *mes, int mes_len)
+{
 	nullpo_retr(0, sd);
 	if (CheckForCharServer())
 		return 0;
@@ -202,7 +204,8 @@ int intif_wis_message(struct map_session_data *sd, char *nick, char *mes, int me
 }
 
 // The reply of Wisp/page
-int intif_wis_replay(int id, int flag) {
+int intif_wis_replay(int id, int flag)
+{
 	if (CheckForCharServer())
 		return 0;
 	WFIFOHEAD(inter_fd,7);
@@ -218,7 +221,8 @@ int intif_wis_replay(int id, int flag) {
 }
 
 // The transmission of GM only Wisp/Page from server to inter-server
-int intif_wis_message_to_gm(char *Wisp_name, int min_gm_level, char *mes) {
+int intif_wis_message_to_gm(char *Wisp_name, int min_gm_level, char *mes)
+{
 	int mes_len;
 	if (CheckForCharServer())
 		return 0;
@@ -237,7 +241,8 @@ int intif_wis_message_to_gm(char *Wisp_name, int min_gm_level, char *mes) {
 	return 0;
 }
 
-int intif_regtostr(char* str, struct global_reg *reg, int qty) {
+int intif_regtostr(char* str, struct global_reg *reg, int qty)
+{
 	int len =0, i;
 
 	for (i = 0; i < qty; i++) {
@@ -837,8 +842,9 @@ int intif_homunculus_requestdelete(int homun_id)
 //-----------------------------------------------------------------
 // Packets receive from inter server
 
-// Wisp/Page reception
-int intif_parse_WisMessage(int fd) { // rewritten by [Yor]
+// Wisp/Page reception // rewritten by [Yor]
+int intif_parse_WisMessage(int fd)
+{ 
 	struct map_session_data* sd;
 	char *wisp_source;
 	char name[NAME_LENGTH];
@@ -876,7 +882,8 @@ int intif_parse_WisMessage(int fd) { // rewritten by [Yor]
 }
 
 // Wisp/page transmission result reception
-int intif_parse_WisEnd(int fd) {
+int intif_parse_WisEnd(int fd)
+{
 	struct map_session_data* sd;
 	RFIFOHEAD(fd);
 
@@ -889,7 +896,8 @@ int intif_parse_WisEnd(int fd) {
 	return 0;
 }
 
-static int mapif_parse_WisToGM_sub(struct map_session_data* sd,va_list va) {
+static int mapif_parse_WisToGM_sub(struct map_session_data* sd,va_list va)
+{
 	int min_gm_level = va_arg(va, int);
 	char *wisp_name;
 	char *message;
@@ -903,7 +911,9 @@ static int mapif_parse_WisToGM_sub(struct map_session_data* sd,va_list va) {
 }
 
 // Received wisp message from map-server via char-server for ALL gm
-int mapif_parse_WisToGM(int fd) { // 0x3003/0x3803 <packet_len>.w <wispname>.24B <min_gm_level>.w <message>.?B
+// 0x3003/0x3803 <packet_len>.w <wispname>.24B <min_gm_level>.w <message>.?B
+int mapif_parse_WisToGM(int fd)
+{
 	int min_gm_level, mes_len;
 	char Wisp_name[NAME_LENGTH];
 	char mbuf[255];
@@ -927,7 +937,8 @@ int mapif_parse_WisToGM(int fd) { // 0x3003/0x3803 <packet_len>.w <wispname>.24B
 }
 
 // アカウント変数通知
-int intif_parse_Registers(int fd) {
+int intif_parse_Registers(int fd)
+{
 	int j,p,len,max, flag;
 	struct map_session_data *sd;
 	struct global_reg *reg;
@@ -979,7 +990,8 @@ int intif_parse_Registers(int fd) {
 }
 
 // 倉庫データ受信
-int intif_parse_LoadStorage(int fd) {
+int intif_parse_LoadStorage(int fd)
+{
 	struct storage *stor;
 	struct map_session_data *sd;
 	RFIFOHEAD(fd);

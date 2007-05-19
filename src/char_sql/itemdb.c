@@ -34,8 +34,7 @@ static void* create_item(DBKey key, va_list args) {
 }
 /*==========================================
  * DBの検索
- *------------------------------------------
- */
+ *------------------------------------------*/
 struct item_data* itemdb_search(int nameid)
 {
 	return idb_ensure(item_db,nameid,create_item);
@@ -43,8 +42,7 @@ struct item_data* itemdb_search(int nameid)
 
 /*==========================================
  *
- *------------------------------------------
- */
+ *------------------------------------------*/
 int itemdb_isequip(int nameid)
 {
 	int type=itemdb_type(nameid);
@@ -54,8 +52,7 @@ int itemdb_isequip(int nameid)
 }
 /*==========================================
  *
- *------------------------------------------
- */
+ *------------------------------------------*/
 int itemdb_isequip2(struct item_data *data)
 {
 	if(data) {
@@ -72,8 +69,7 @@ int itemdb_isequip2(struct item_data *data)
 
 /*==========================================
  * アイテムデータベースの読み込み
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int itemdb_readdb(void)
 {
 	FILE *fp;
@@ -202,8 +198,7 @@ static int itemdb_read_sqldb(void) // sql item_db read, shortened version of map
 
 /*==========================================
  *
- *------------------------------------------
- */
+ *------------------------------------------*/
 void do_final_itemdb(void)
 {
 	if(item_db){

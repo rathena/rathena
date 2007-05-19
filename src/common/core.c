@@ -69,8 +69,7 @@ sigfunc *compat_signal(int signo, sigfunc *func)
 
 /*======================================
  *	CORE : Signal Sub Function
- *--------------------------------------
- */
+ *--------------------------------------*/
 static void sig_proc(int sn)
 {
 	static int is_called = 0;
@@ -174,8 +173,7 @@ const char* get_svn_revision(void)
 
 /*======================================
  *	CORE : Display title
- *--------------------------------------
- */
+ *--------------------------------------*/
 static void display_title(void)
 {
 	//ClearScreen(); // clear screen and go up/left (0, 0 position in text)
@@ -213,8 +211,7 @@ void usercheck(void)
 
 /*======================================
  *	CORE : MAINROUTINE
- *--------------------------------------
- */
+ *--------------------------------------*/
 int main (int argc, char **argv)
 {
 	{// initialize program arguments

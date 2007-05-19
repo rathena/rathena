@@ -166,7 +166,8 @@ int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len);
 //------------------------------
 // Writing function of logs file
 //------------------------------
-int login_log(char *fmt, ...) {
+int login_log(char *fmt, ...)
+{
 	if (log_login) {
 		va_list ap;
 		time_t raw_time;
@@ -257,7 +258,8 @@ static int sync_ip_addresses(int tid, unsigned int tick, int id, int data)
 // Determine if an account (id) is a GM account
 // and returns its level (or 0 if it isn't a GM account or if not found)
 //----------------------------------------------------------------------
-int isGM(int account_id) {
+int isGM(int account_id)
+{
 	unsigned int i;
 	for(i=0; i < GM_num; i++)
 		if(gm_account_db[i].account_id == account_id)
@@ -309,7 +311,8 @@ void addGM(uint32 account_id, int level)
 //-------------------------------------------------------
 // Reading function of GM accounts file (and their level)
 //-------------------------------------------------------
-int read_gm_account(void) {
+int read_gm_account(void)
+{
 	char line[512];
 	FILE *fp;
 	int account_id, level;
@@ -494,7 +497,8 @@ int check_ladminip(uint32 ip)
 //   and returns index if only 1 account is found
 //   and similar to the searched name.
 //-----------------------------------------------
-int search_account_index(char* account_name) {
+int search_account_index(char* account_name)
+{
 	unsigned int i, quantity;
 	int index;
 
@@ -523,7 +527,8 @@ int search_account_index(char* account_name) {
 //--------------------------------------------------------
 // Create a string to save the account in the account file
 //--------------------------------------------------------
-int mmo_auth_tostr(char* str, struct auth_data* p) {
+int mmo_auth_tostr(char* str, struct auth_data* p)
+{
 	int i;
 	char *str_p = str;
 
@@ -946,7 +951,8 @@ void mmo_auth_sync(void)
 //       immediatly and set  the minimum of
 //       authentifications to its initialization value.
 //-----------------------------------------------------
-int check_auth_sync(int tid, unsigned int tick, int id, int data) {
+int check_auth_sync(int tid, unsigned int tick, int id, int data)
+{
 	// we only save if necessary:
 	// we have do some authentifications without do saving
 	if (auth_before_save_file < AUTH_BEFORE_SAVE_FILE ||
@@ -1009,7 +1015,8 @@ void send_GM_accounts(void)
 //-----------------------------------------------------
 // Check if GM file account have been changed
 //-----------------------------------------------------
-int check_GM_file(int tid, unsigned int tick, int id, int data) {
+int check_GM_file(int tid, unsigned int tick, int id, int data)
+{
 	struct stat file_stat;
 	long new_time;
 
@@ -3656,7 +3663,8 @@ int login_config_read(const char* cfgName)
 //-------------------------------------
 // Displaying of configuration warnings
 //-------------------------------------
-void display_conf_warnings(void) {
+void display_conf_warnings(void)
+{
 	if (admin_state != 0 && admin_state != 1) {
 		ShowWarning("Invalid value for admin_state parameter -> setting to 0 (no remote admin).\n");
 		admin_state = 0;
@@ -3768,7 +3776,8 @@ void display_conf_warnings(void) {
 //-------------------------------
 // Save configuration in log file
 //-------------------------------
-void save_config_in_log(void) {
+void save_config_in_log(void)
+{
 	int i;
 
 	// a newline in the log...
@@ -3906,7 +3915,8 @@ void save_config_in_log(void) {
 //--------------------------------------
 // Function called at exit of the server
 //--------------------------------------
-void do_final(void) {
+void do_final(void)
+{
 	int i, fd;
 	ShowInfo("Terminating...\n");
 	fflush(stdout);

@@ -412,8 +412,8 @@ void set_all_offline(int id) {
 /*---------------------------------------------------
   Make a data line for friends list
  --------------------------------------------------*/
-
-int mmo_friends_list_data_str(char *str, struct mmo_charstatus *p) {
+int mmo_friends_list_data_str(char *str, struct mmo_charstatus *p)
+{
 	int i;
 	char *str_p = str;
 	str_p += sprintf(str_p, "%d", p->char_id);
@@ -435,14 +435,6 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 	int i,j;
 	char *str_p = str;
 
-	/* We shouldn't need this anymore... [Skotlex]
-	// on multi-map server, sometimes it's posssible that last_point become void. (reason???) We check that to not lost character at restart.
-	if (!p->last_point.map) {
-		p->last_point.map = mapindex_name2id(MAP_PRONTERA);
-		p->last_point.x = 273;
-		p->last_point.y = 354;
-	}
-	*/
 	str_p += sprintf(str_p,
 		"%d\t%d,%d\t%s\t%d,%d,%d\t%u,%u,%d" //Up to Zeny field
 		"\t%d,%d,%d,%d\t%d,%d,%d,%d,%d,%d\t%d,%d" //Up to Skill Point
@@ -648,33 +640,6 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	p->account_id = tmp_int[1];
 	p->char_num = tmp_int[2];
 	p->class_ = tmp_int[3];
-/* Unneeded unless you are running a real old character database now.
-	//Temporal fix until all chars are reverted from peco-flying-class to 
-	//normal classes. [Skotlex]
-	switch (p->class_) {
-		case JOB_KNIGHT2: //Job_Knight2
-			p->class_ = JOB_KNIGHT;
-			break;
-		case JOB_CRUSADER2: //Job_Crusader2
-			p->class_ = JOB_CRUSADER;
-			break;
-		case JOB_LORD_KNIGHT2: //Job_Lord_Knight2
-			p->class_	= JOB_LORD_KNIGHT;
-			break;
-		case JOB_PALADIN2: //Job_Paladin2
-			p->class_ = JOB_PALADIN;
-			break;
-		case JOB_BABY_KNIGHT2: //Job_Baby_Knight2
-			p->class_ = JOB_BABY_KNIGHT;
-			break;
-		case JOB_BABY_CRUSADER2: //Job_Baby_Crusader2
-			p->class_ = JOB_BABY_CRUSADER;
-			break;
-		case JOB_STAR_GLADIATOR2: //Job_Star_Gladiator2
-			p->class_ = JOB_STAR_GLADIATOR;
-			break;
-	}
-*/
 	p->base_level = tmp_int[4];
 	p->job_level = tmp_int[5];
 	p->base_exp = tmp_uint[0];

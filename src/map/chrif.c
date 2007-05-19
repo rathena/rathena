@@ -378,8 +378,7 @@ int chrif_connectack(int fd)
 
 /*==========================================
  *
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_sendmapack(int fd)
 {
 	RFIFOHEAD(fd);
@@ -403,8 +402,7 @@ int chrif_sendmapack(int fd)
 
 /*==========================================
  * Request sc_data from charserver [Skotlex]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_scdata_request(int account_id, int char_id)
 {
 #ifdef ENABLE_SC_SAVING
@@ -421,8 +419,7 @@ int chrif_scdata_request(int account_id, int char_id)
 
 /*==========================================
  * new auth system [Kevin]
- *------------------------------------------
- */
+ *------------------------------------------*/
 void chrif_authreq(struct map_session_data *sd)
 {
 	struct auth_node *auth_data;
@@ -454,7 +451,8 @@ void chrif_authreq(struct map_session_data *sd)
 }
 
 //character selected, insert into auth db
-void chrif_authok(int fd) {
+void chrif_authok(int fd)
+{
 	struct auth_node *auth_data;
 	TBL_PC* sd;
 	RFIFOHEAD(fd);
@@ -520,15 +518,15 @@ int auth_db_cleanup_sub(DBKey key,void *data,va_list ap)
 	return 0;
 }
 
-int auth_db_cleanup(int tid, unsigned int tick, int id, int data) {
+int auth_db_cleanup(int tid, unsigned int tick, int id, int data)
+{
 	auth_db->foreach(auth_db, auth_db_cleanup_sub);
 	return 0;
 }
 
 /*==========================================
  *
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_charselectreq(struct map_session_data* sd, uint32 s_ip)
 {
 	nullpo_retr(-1, sd);
@@ -550,8 +548,7 @@ int chrif_charselectreq(struct map_session_data* sd, uint32 s_ip)
 
 /*==========================================
  * キャラ名問い合わせ
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_searchcharid(int char_id)
 {
 	if( !char_id )
@@ -568,8 +565,7 @@ int chrif_searchcharid(int char_id)
 
 /*==========================================
  * GMに変化要求
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_changegm(int id, const char *pass, int len)
 {
 	if (battle_config.etc_log)
@@ -589,8 +585,7 @@ int chrif_changegm(int id, const char *pass, int len)
 
 /*==========================================
  * Change Email
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_changeemail(int id, const char *actual_email, const char *new_email)
 {
 	if (battle_config.etc_log)
@@ -617,8 +612,7 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email)
  *   3: unblock
  *   4: unban
  *   5: changesex
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_char_ask_name(int id, char * character_name, short operation_type, int year, int month, int day, int hour, int minute, int second)
 {
 	chrif_check(-1);
@@ -644,9 +638,9 @@ int chrif_char_ask_name(int id, char * character_name, short operation_type, int
 
 /*==========================================
  * 性別変化要求
- *------------------------------------------
- */
-int chrif_changesex(int id, int sex) {
+ *------------------------------------------*/
+int chrif_changesex(int id, int sex)
+{
 	chrif_check(-1);
 
         WFIFOHEAD(char_fd, 9);
@@ -672,8 +666,7 @@ int chrif_changesex(int id, int sex) {
  *   1: player not found
  *   2: gm level too low
  *   3: login-server offline
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_char_ask_name_answer(int fd)
 {
 	int acc;
@@ -776,8 +769,7 @@ int chrif_char_ask_name_answer(int fd)
 
 /*==========================================
  * End of GM change (@GM) (modified by Yor)
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_changedgm(int fd)
 {
 	int acc, level;
@@ -803,8 +795,7 @@ int chrif_changedgm(int fd)
 
 /*==========================================
  * 性別変化終了 (modified by Yor)
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_changedsex(int fd)
 {
 	int acc, sex, i;
@@ -875,8 +866,7 @@ int chrif_changedsex(int fd)
 
 /*==========================================
  * 離婚情報同期要求
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_divorce(int char_id, int partner_id)
 {
 	struct map_session_data *sd = NULL;
@@ -901,8 +891,7 @@ int chrif_divorce(int char_id, int partner_id)
 
 /*==========================================
  * Disconnection of a player (account has been deleted in login-server) by [Yor]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_accountdeletion(int fd)
 {
 	int acc;
@@ -929,8 +918,7 @@ int chrif_accountdeletion(int fd)
 
 /*==========================================
  * Disconnection of a player (account has been banned of has a status, from login-server) by [Yor]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_accountban(int fd)
 {
 	int acc;
@@ -1047,8 +1035,7 @@ int chrif_disconnectplayer(int fd)
 
 /*==========================================
  * Request to reload GM accounts and their levels: send to char-server by [Yor]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_reloadGMdb(void)
 {
 	chrif_check(-1);
@@ -1062,8 +1049,7 @@ int chrif_reloadGMdb(void)
 
 /*==========================================
  * Receiving GM accounts and their levels from char-server by [Yor]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_recvgmaccounts(int fd)
 {
 	ShowInfo("From login-server: receiving information of '"CL_WHITE"%d"CL_RESET"' GM accounts.\n", pc_read_gm_account(fd));
@@ -1072,8 +1058,7 @@ int chrif_recvgmaccounts(int fd)
 
 /*==========================================
  * Request/Receive top 10 Fame character list
- *------------------------------------------
- */
+ *------------------------------------------*/
 
 int chrif_updatefamelist(struct map_session_data *sd)
 {
@@ -1261,8 +1246,7 @@ int chrif_load_scdata(int fd)
 
 /*==========================================
  * Send rates and motd to char server [Wizputer]
- *------------------------------------------
- */
+ *------------------------------------------*/
  int chrif_ragsrvinfo(int base_rate, int job_rate, int drop_rate)
 {
 	char buf[256];
@@ -1301,9 +1285,7 @@ int chrif_load_scdata(int fd)
 
 /*=========================================
  * Tell char-server charcter disconnected [Wizputer]
- *-----------------------------------------
- */
-
+ *-----------------------------------------*/
 int chrif_char_offline(struct map_session_data *sd)
 {
 	chrif_check(-1);
@@ -1319,9 +1301,9 @@ int chrif_char_offline(struct map_session_data *sd)
 
 /*=========================================
  * Tell char-server to reset all chars offline [Wizputer]
- *-----------------------------------------
- */
-int chrif_flush_fifo(void) {
+ *-----------------------------------------*/
+int chrif_flush_fifo(void)
+{
 	chrif_check(-1);
 
 	set_nonblocking(char_fd, 0);
@@ -1333,9 +1315,9 @@ int chrif_flush_fifo(void) {
 
 /*=========================================
  * Tell char-server to reset all chars offline [Wizputer]
- *-----------------------------------------
- */
-int chrif_char_reset_offline(void) {
+ *-----------------------------------------*/
+int chrif_char_reset_offline(void)
+{
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd, 2);
@@ -1347,8 +1329,7 @@ int chrif_char_reset_offline(void) {
 
 /*=========================================
  * Tell char-server charcter is online [Wizputer]
- *-----------------------------------------
- */
+ *-----------------------------------------*/
 
 int chrif_char_online(struct map_session_data *sd)
 {
@@ -1363,7 +1344,8 @@ int chrif_char_online(struct map_session_data *sd)
 	return 0;
 }
 
-int chrif_disconnect(int fd) {
+int chrif_disconnect(int fd)
+{
 	if(fd == char_fd) {
 		char_fd = 0;
 		ShowWarning("Map Server disconnected from Char Server.\n\n");
@@ -1395,8 +1377,7 @@ void chrif_update_ip(int fd)
 
 /*==========================================
  *
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chrif_parse(int fd)
 {
 	int packet_len, cmd;
@@ -1475,7 +1456,8 @@ int chrif_parse(int fd)
 	return 0;
 }
 
-int send_usercount_tochar(int tid, unsigned int tick, int id, int data) {
+int send_usercount_tochar(int tid, unsigned int tick, int id, int data)
+{
 	int count;
 	static int last_count = 0;
 
@@ -1497,9 +1479,9 @@ int send_usercount_tochar(int tid, unsigned int tick, int id, int data) {
 /*==========================================
  * timer関数
  * 今このmap鯖に繋がっているクライアント人数をchar鯖へ送る
- *------------------------------------------
- */
-int send_users_tochar(int tid, unsigned int tick, int id, int data) {
+ *------------------------------------------*/
+int send_users_tochar(int tid, unsigned int tick, int id, int data)
+{
 	int count, users=0, i;
 	struct map_session_data **all_sd;
 
@@ -1523,9 +1505,9 @@ int send_users_tochar(int tid, unsigned int tick, int id, int data) {
 /*==========================================
  * timer関数
  * char鯖との接続を確認し、もし切れていたら再度接続する
- *------------------------------------------
- */
-int check_connect_char_server(int tid, unsigned int tick, int id, int data) {
+ *------------------------------------------*/
+int check_connect_char_server(int tid, unsigned int tick, int id, int data)
+{
 	static int displayed = 0;
 	if (char_fd <= 0 || session[char_fd] == NULL) {
 		if (!displayed) {
@@ -1567,7 +1549,8 @@ int check_connect_char_server(int tid, unsigned int tick, int id, int data) {
 	return 0;
 }
 
-int auth_db_final(DBKey k,void *d,va_list ap) {
+int auth_db_final(DBKey k,void *d,va_list ap)
+{
 	struct auth_node *node=(struct auth_node*)d;
 	if (node->char_dat)
 		aFree(node->char_dat);
@@ -1576,8 +1559,7 @@ int auth_db_final(DBKey k,void *d,va_list ap) {
 
 /*==========================================
  * 終了
- *------------------------------------------
- */
+ *------------------------------------------*/
 int do_final_chrif(void)
 {
 	if (char_fd > 0)
@@ -1588,8 +1570,7 @@ int do_final_chrif(void)
 
 /*==========================================
  *
- *------------------------------------------
- */
+ *------------------------------------------*/
 int do_init_chrif(void)
 {
 	add_timer_func_list(check_connect_char_server, "check_connect_char_server");

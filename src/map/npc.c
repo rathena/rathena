@@ -82,8 +82,7 @@ struct view_data* npc_get_viewdata(int class_)
  * NPCの無効化/有効化
  * npc_enable
  * npc_enable_sub 有効時にOnTouchイベントを実行
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_enable_sub( struct block_list *bl, va_list ap )
 {
 	struct map_session_data *sd;
@@ -141,8 +140,7 @@ int npc_enable(const char *name,int flag)
 
 /*==========================================
  * NPCを名前で探す
- *------------------------------------------
- */
+ *------------------------------------------*/
 struct npc_data* npc_name2id(const char *name)
 {
 	return (struct npc_data *) strdb_get(npcname_db,(unsigned char*)name);
@@ -150,8 +148,7 @@ struct npc_data* npc_name2id(const char *name)
 
 /*==========================================
  * イベントキューのイベント処理
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_event_dequeue(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
@@ -187,8 +184,7 @@ int npc_event_dequeue(struct map_session_data *sd)
 
 /*==========================================
  * イベントの遅延実行
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_event_timer(int tid,unsigned int tick,int id,int data)
 {
 	unsigned char *eventname = (unsigned char *)data;
@@ -278,11 +274,11 @@ int npc_timer(int tid,unsigned int tick,int id,int data)	// Added by RoVeRT
 	aFree((void*)data);
 	return 0;
 }*/
+
 /*==========================================
  * イベント用ラベルのエクスポート
  * npc_parse_script->strdb_foreachから呼ばれる
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_event_export(char *lname,void *data,va_list ap)
 {
 	int pos=(int)data;
@@ -315,8 +311,7 @@ int npc_event_export(char *lname,void *data,va_list ap)
 int npc_event_sub(struct map_session_data *, struct event_data *, const unsigned char *); //[Lance]
 /*==========================================
  * 全てのNPCのOn*イベント実行
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_event_doall_sub(DBKey key,void *data,va_list ap)
 {
 	const char*p = key.str;
@@ -393,8 +388,7 @@ int npc_event_do(const unsigned char *name)
 
 /*==========================================
  * 時計イベント実行
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_event_do_clock(int tid,unsigned int tick,int id,int data)
 {
 	time_t timer;
@@ -437,8 +431,7 @@ int npc_event_do_clock(int tid,unsigned int tick,int id,int data)
 }
 /*==========================================
  * OnInitイベント実行(&時計イベント開始)
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_event_do_oninit(void)
 {
 //	int c = npc_event_doall("OnInit");
@@ -452,8 +445,7 @@ int npc_event_do_oninit(void)
 }
 /*==========================================
  * OnTimer NPC event - by RoVeRT
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_addeventtimer(struct npc_data *nd,int tick,const char *name)
 {
 	int i;
@@ -542,8 +534,7 @@ int npc_do_ontimer(int npc_id, int option)
 /*==========================================
  * タイマーイベント用ラベルの取り込み
  * npc_parse_script->strdb_foreachから呼ばれる
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_timerevent_import(char *lname,void *data,va_list ap)
 {
 	int pos=(int)data;
@@ -582,8 +573,7 @@ struct timer_event_data {
 
 /*==========================================
  * タイマーイベント実行
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_timerevent(int tid,unsigned int tick,int id,int data)
 {
 	int next,t,old_rid,old_timer;
@@ -643,8 +633,7 @@ int npc_timerevent(int tid,unsigned int tick,int id,int data)
 }
 /*==========================================
  * タイマーイベント開始
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_timerevent_start(struct npc_data *nd, int rid)
 {
 	int j,n, next;
@@ -700,8 +689,7 @@ int npc_timerevent_start(struct npc_data *nd, int rid)
 }
 /*==========================================
  * タイマーイベント終了
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_timerevent_stop(struct npc_data *nd)
 {
 	struct map_session_data *sd =NULL;
@@ -733,9 +721,9 @@ int npc_timerevent_stop(struct npc_data *nd)
 }
 /*==========================================
  * Aborts a running npc timer that is attached to a player.
- *------------------------------------------
- */
-void npc_timerevent_quit(struct map_session_data *sd) {
+ *------------------------------------------*/
+void npc_timerevent_quit(struct map_session_data *sd)
+{
 	struct TimerData *td;
 	struct npc_data* nd;
 	struct timer_event_data *ted;
@@ -787,8 +775,7 @@ void npc_timerevent_quit(struct map_session_data *sd) {
 
 /*==========================================
  * タイマー値の所得
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_gettimerevent_tick(struct npc_data *nd)
 {
 	int tick;
@@ -801,8 +788,7 @@ int npc_gettimerevent_tick(struct npc_data *nd)
 }
 /*==========================================
  * タイマー値の設定
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_settimerevent_tick(struct npc_data *nd,int newtimer)
 {
 	int flag;
@@ -829,8 +815,8 @@ int npc_settimerevent_tick(struct npc_data *nd,int newtimer)
 	return 0;
 }
 
-int npc_event_sub(struct map_session_data *sd, struct event_data *ev, const unsigned char *eventname){
-
+int npc_event_sub(struct map_session_data *sd, struct event_data *ev, const unsigned char *eventname)
+{
 	if ( sd->npc_id!=0) {
 		//Enqueue the event trigger.
 		int i;
@@ -854,8 +840,7 @@ int npc_event_sub(struct map_session_data *sd, struct event_data *ev, const unsi
 
 /*==========================================
  * イベント型のNPC処理
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_event (struct map_session_data *sd, const unsigned char *eventname, int mob_kill)
 {
 	struct event_data *ev=strdb_get(ev_db,(unsigned char*)eventname);
@@ -932,8 +917,7 @@ int npc_command(struct map_session_data* sd, const char* npcname, const char* co
 }
 /*==========================================
  * 接触型のNPC処理
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_touch_areanpc(struct map_session_data *sd,int m,int x,int y)
 {
 	int i,f=1;
@@ -1098,8 +1082,7 @@ int npc_check_areanpc(int flag,int m,int x,int y,int range)
 
 /*==========================================
  * 近くかどうかの判定
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_checknear2(struct map_session_data *sd,struct block_list *bl)
 {
 	nullpo_retr(1, sd);
@@ -1144,8 +1127,7 @@ TBL_NPC *npc_checknear(struct map_session_data *sd,struct block_list *bl)
 
 /*==========================================
  * NPCのオープンチャット発言
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_globalmessage(const char *name,const char *mes)
 {
 	struct npc_data *nd=(struct npc_data *) strdb_get(npcname_db,(unsigned char*)name);
@@ -1162,8 +1144,7 @@ int npc_globalmessage(const char *name,const char *mes)
 
 /*==========================================
  * クリック時のNPC処理
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_click(struct map_session_data *sd,struct npc_data *nd)
 {
 	nullpo_retr(1, sd);
@@ -1195,8 +1176,7 @@ int npc_click(struct map_session_data *sd,struct npc_data *nd)
 
 /*==========================================
  *
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_scriptcont(struct map_session_data *sd,int id)
 {
 	nullpo_retr(1, sd);
@@ -1223,8 +1203,7 @@ int npc_scriptcont(struct map_session_data *sd,int id)
 
 /*==========================================
  *
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_buysellsel(struct map_session_data *sd,int id,int type)
 {
 	struct npc_data *nd;
@@ -1254,9 +1233,7 @@ int npc_buysellsel(struct map_session_data *sd,int id,int type)
 }
 
 //npc_buylist for script-controlled shops.
-static int npc_buylist_sub(
-	struct map_session_data *sd,int n,
-	unsigned short *item_list, struct npc_data *nd)
+static int npc_buylist_sub(struct map_session_data *sd, int n, unsigned short *item_list, struct npc_data *nd)
 {
 	unsigned char npc_ev[51];
 	int i;
@@ -1273,8 +1250,7 @@ static int npc_buylist_sub(
 
 /*==========================================
  *
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_buylist(struct map_session_data *sd,int n,unsigned short *item_list)
 {
 	struct npc_data *nd;
@@ -1371,8 +1347,7 @@ int npc_buylist(struct map_session_data *sd,int n,unsigned short *item_list)
 
 /*==========================================
  *
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_selllist(struct map_session_data *sd,int n,unsigned short *item_list)
 {
 	double z;
@@ -1498,7 +1473,8 @@ int npc_remove_map(struct npc_data *nd)
 	return 0;
 }
 
-static int npc_unload_ev(DBKey key,void *data,va_list ap) {
+static int npc_unload_ev(DBKey key,void *data,va_list ap)
+{
 	struct event_data *ev=(struct event_data *)data;
 	unsigned char *npcname=va_arg(ap,unsigned char *);
 
@@ -1654,8 +1630,7 @@ void npc_delsrcfile(const char* name)
 
 /*==========================================
  * warp行解析
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_parse_warp (char *w1,char *w2,char *w3,char *w4)
 {
 	int x, y, xs, ys, to_x, to_y, m;
@@ -1717,8 +1692,7 @@ int npc_parse_warp (char *w1,char *w2,char *w3,char *w4)
 
 /*==========================================
  * shop行解析
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int npc_parse_shop (char *w1, char *w2, char *w3, char *w4)
 {
 	#define MAX_SHOPITEM 100
@@ -1816,8 +1790,7 @@ static int npc_parse_shop (char *w1, char *w2, char *w3, char *w4)
 
 /*==========================================
  * NPCのラベルデータコンバート
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_convertlabel_db (DBKey key, void *data, va_list ap)
 {
 	const char *lname = (const char*)key.str;
@@ -1861,9 +1834,9 @@ int npc_convertlabel_db (DBKey key, void *data, va_list ap)
 
 /*==========================================
  * script行解析
- *------------------------------------------
- */
-static void npc_parse_script_line(unsigned char *p,int *curly_count,int line) {
+ *------------------------------------------*/
+static void npc_parse_script_line(unsigned char *p,int *curly_count,int line)
+{
 	int i = strlen((char *)p),j;
 	int string_flag = 0;
 	static int comment_flag = 0;
@@ -2277,8 +2250,7 @@ void npc_movenpc(struct npc_data *nd, int x, int y)
 }
 /*==========================================
  * function行解析
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *first_line, FILE *fp, int *lines,const char* file)
 {
 	unsigned char *srcbuf, *p;
@@ -2360,8 +2332,7 @@ static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *fir
  * If cached =1, it is a dynamic cached mob
  * index points to the index in the mob_list of the map_data cache.
  * -1 indicates that it is not stored on the map.
- *------------------------------------------
- */
+ *------------------------------------------*/
 int npc_parse_mob2 (struct spawn_data *mob, int index)
 {
 	int i;
@@ -2511,8 +2482,7 @@ int npc_parse_mob (char *w1, char *w2, char *w3, char *w4)
 
 /*==========================================
  * マップフラグ行の解析
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 {
 	int m;
@@ -2765,8 +2735,7 @@ static int npc_parse_mapflag (char *w1, char *w2, char *w3, char *w4)
 
 /*==========================================
  * Setting up map cells
- *------------------------------------------
- */
+ *------------------------------------------*/
 static int npc_parse_mapcell (char *w1, char *w2, char *w3, char *w4)
 {
 	int m, cell, x, y, x0, y0, x1, y1;
@@ -2976,10 +2945,9 @@ void npc_read_event_script(void)
 
 /*==========================================
  *
- *------------------------------------------
- */
-
-static int npc_cleanup_sub (struct block_list *bl, va_list ap) {
+ *------------------------------------------*/
+static int npc_cleanup_sub (struct block_list *bl, va_list ap)
+{
 	nullpo_retr(0, bl);
 
 	switch(bl->type) {
@@ -2994,7 +2962,8 @@ static int npc_cleanup_sub (struct block_list *bl, va_list ap) {
 	return 0;
 }
 
-static int npc_cleanup_dbsub(DBKey key,void * data,va_list ap) {
+static int npc_cleanup_dbsub(DBKey key,void * data,va_list ap)
+{
 	return npc_cleanup_sub((struct block_list*)data, 0);
 }
 
@@ -3073,8 +3042,7 @@ int npc_reload (void)
 
 /*==========================================
  * 終了
- *------------------------------------------
- */
+ *------------------------------------------*/
 int do_final_npc(void)
 {
 	int i;
@@ -3134,8 +3102,7 @@ static void npc_debug_warps(void)
 
 /*==========================================
  * npc初期化
- *------------------------------------------
- */
+ *------------------------------------------*/
 int do_init_npc(void)
 {
 	struct npc_src_list *file;
@@ -3223,7 +3190,8 @@ int do_init_npc(void)
 	return 0;
 }
 // [Lance]
-int npc_changename(const char *name, const char *newname, short look){
+int npc_changename(const char *name, const char *newname, short look)
+{
 	struct npc_data *nd= (struct npc_data *) strdb_remove(npcname_db,(unsigned char*)name);
 	if (nd==NULL)
 		return 0;

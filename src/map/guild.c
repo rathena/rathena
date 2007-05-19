@@ -86,8 +86,7 @@ int guild_checkskill(struct guild *g,int id)
 
 /*==========================================
  * guild_skill_tree.txt reading - from jA [Komurka]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int guild_read_guildskill_tree_db(void)
 {
 	int i,k,id=0,ln=0;
@@ -131,8 +130,7 @@ int guild_read_guildskill_tree_db(void)
 
 /*==========================================
  * Guild skill check - from jA [Komurka]
- *------------------------------------------
- */
+ *------------------------------------------*/
 int guild_check_skill_require(struct guild *g,int id)
 {
 	int i;
@@ -1118,7 +1116,8 @@ int guild_emblem_changed(int len,int guild_id,int emblem_id,const char *data)
 	return 0;
 }
 
-static void* create_expcache(DBKey key, va_list args) {
+static void* create_expcache(DBKey key, va_list args)
+{
 	struct guild_expcache *c;
 	struct map_session_data *sd = va_arg(args, struct map_session_data*);
 
@@ -1233,7 +1232,8 @@ int guild_get_alliance_count(struct guild *g,int flag)
 }
 
 // Blocks all guild skills which have a common delay time.
-void guild_block_skill(struct map_session_data *sd, int time) {
+void guild_block_skill(struct map_session_data *sd, int time)
+{
 	int skill_num[] = { GD_BATTLEORDER, GD_REGENERATION, GD_RESTORE, GD_EMERGENCYCALL };
 	int i;
 	for (i = 0; i < 4; i++)

@@ -19,8 +19,7 @@ int chat_triggerevent(struct chat_data *cd);
 
 /*==========================================
  * chatroom creation
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chat_createchat(struct map_session_data* sd,int limit, int pub, char* pass, char* title, int titlelen)
 {
 	struct chat_data *cd;
@@ -68,8 +67,7 @@ int chat_createchat(struct map_session_data* sd,int limit, int pub, char* pass, 
 
 /*==========================================
  * 既存チャットルームに参加
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chat_joinchat(struct map_session_data* sd, int chatid, char* pass)
 {
 	struct chat_data *cd;
@@ -173,8 +171,7 @@ int chat_leavechat(struct map_session_data* sd)
 
 /*==========================================
  * チャットルームの持ち主を譲る
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chat_changechatowner(struct map_session_data *sd,char *nextownername)
 {
 	struct chat_data *cd;
@@ -219,8 +216,7 @@ int chat_changechatowner(struct map_session_data *sd,char *nextownername)
 
 /*==========================================
  * チャットの状態(タイトル等)を変更
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chat_changechatstatus(struct map_session_data *sd,int limit,int pub,char* pass,char* title,int titlelen)
 {
 	struct chat_data *cd;
@@ -247,8 +243,7 @@ int chat_changechatstatus(struct map_session_data *sd,int limit,int pub,char* pa
 
 /*==========================================
  * チャットルームから蹴り出す
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chat_kickchat(struct map_session_data *sd,char *kickusername)
 {
 	struct chat_data *cd;
@@ -334,8 +329,7 @@ int chat_deletenpcchat(struct npc_data* nd)
 
 /*==========================================
  * 規定人数以上でイベントが定義されてるなら実行
- *------------------------------------------
- */
+ *------------------------------------------*/
 int chat_triggerevent(struct chat_data *cd)
 {
 	nullpo_retr(0, cd);
