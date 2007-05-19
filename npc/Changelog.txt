@@ -10,6 +10,7 @@ Date		Added
 	- Fixed a typo in Elly, in her room. (<= should have been <) 
 	- Added an 'end;' to the cookie basket. Kiel Hyre's final dialog will now delete all quest-related items.
  	* Rev 10561 Complete rewrite of the Kiel Hyre warps. (warps/other/kiel.txt) [L0ne_W0lf]
+	* Rev 10572 Updated Bard quest to the official one. [Samuray22]
 2007/05/17
 	* Removed .GAT -s from some recent scripts. Please, don't add them in the scripts [Lupus]
 	- Fixed Merchan Job Quest Kafra (used old ID for Free Ticket)
