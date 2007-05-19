@@ -1,6 +1,3 @@
--- MySQL dump 9.11
--- Server version	4.0.24
-
 --
 -- Table structure for table `cart_inventory`
 --
@@ -66,10 +63,10 @@ CREATE TABLE `char` (
   `head_top` smallint(6) unsigned NOT NULL default '0',
   `head_mid` smallint(6) unsigned NOT NULL default '0',
   `head_bottom` smallint(6) unsigned NOT NULL default '0',
-  `last_map` varchar(20) NOT NULL default 'prontera.gat',
+  `last_map` varchar(11) NOT NULL default '',
   `last_x` smallint(4) unsigned NOT NULL default '53',
   `last_y` smallint(4) unsigned NOT NULL default '111',
-  `save_map` varchar(20) NOT NULL default 'prontera.gat',
+  `save_map` varchar(11) NOT NULL default '',
   `save_x` smallint(4) unsigned NOT NULL default '53',
   `save_y` smallint(4) unsigned NOT NULL default '111',
   `partner_id` int(11) unsigned NOT NULL default '0',
@@ -389,9 +386,9 @@ CREATE TABLE `login` (
   `userid` varchar(255) NOT NULL default '',
   `user_pass` varchar(32) NOT NULL default '',
   `lastlogin` datetime NOT NULL default '0000-00-00 00:00:00',
-  `sex` char(1) NOT NULL default 'M',
+  `sex` enum('M','F','S') NOT NULL default 'M',
   `logincount` mediumint(9) unsigned NOT NULL default '0',
-  `email` varchar(60) NOT NULL default '',
+  `email` varchar(39) NOT NULL default '',
   `level` tinyint(3) NOT NULL default '0',
   `error_message` smallint(11) unsigned NOT NULL default '0',
   `connect_until` int(11) unsigned NOT NULL default '0',
@@ -461,9 +458,9 @@ DROP TABLE IF EXISTS `memo`;
 CREATE TABLE `memo` (
   `memo_id` int(11) unsigned NOT NULL auto_increment,
   `char_id` int(11) unsigned NOT NULL default '0',
-  `map` varchar(255) NOT NULL default '',
-  `x` smallint(9) unsigned NOT NULL default '0',
-  `y` smallint(9) unsigned NOT NULL default '0',
+  `map` varchar(11) NOT NULL default '',
+  `x` smallint(4) unsigned NOT NULL default '0',
+  `y` smallint(4) unsigned NOT NULL default '0',
   PRIMARY KEY  (`memo_id`),
   KEY `char_id` (`char_id`)
 ) TYPE=MyISAM;
@@ -475,7 +472,7 @@ CREATE TABLE `memo` (
 DROP TABLE IF EXISTS `party`;
 CREATE TABLE `party` (
   `party_id` int(11) unsigned NOT NULL auto_increment,
-  `name` char(100) NOT NULL default '',
+  `name` varchar(100) NOT NULL default '',
   `exp` tinyint(11) unsigned NOT NULL default '0',
   `item` tinyint(11) unsigned NOT NULL default '0',
   `leader_id` int(11) unsigned NOT NULL default '0',

@@ -1,6 +1,6 @@
 #Pick_Log types (M)onsters Drop, (P)layers Drop/Take, Mobs Drop (L)oot Drop/Take,
 # Players (T)rade Give/Take, Players (V)ending Sell/Take, (S)hop Sell/Take, (N)PC Give/Take,
-# (C)onsumable Items, (A)dministrators Create/Delete
+# (C)onsumable Items, (A)dministrators Create/Delete, Sto(R)age, (G)uild Storage
 
 #Database: log
 #Table: picklog
@@ -8,7 +8,7 @@ CREATE TABLE `picklog` (
   `id` int(11) NOT NULL auto_increment,
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
   `char_id` int(11) NOT NULL default '0',
-  `type` set('M','P','L','T','V','S','N','C','A','R','G') NOT NULL default 'P',
+  `type` enum('M','P','L','T','V','S','N','C','A','R','G') NOT NULL default 'P',
   `nameid` int(11) NOT NULL default '0',
   `amount` int(11) NOT NULL default '1',
   `refine` tinyint(3) unsigned NOT NULL default '0',
@@ -16,7 +16,7 @@ CREATE TABLE `picklog` (
   `card1` int(11) NOT NULL default '0',
   `card2` int(11) NOT NULL default '0',
   `card3` int(11) NOT NULL default '0',
-  `map` varchar(20) NOT NULL default 'prontera.gat',
+  `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`id`),
   INDEX (`type`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
@@ -29,9 +29,9 @@ CREATE TABLE `zenylog` (
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
   `char_id` int(11) NOT NULL default '0',
   `src_id` int(11) NOT NULL default '0',
-  `type` set('M','T','V','S','N','A') NOT NULL default 'S',
+  `type` enum('M','T','V','S','N','A') NOT NULL default 'S',
   `amount` int(11) NOT NULL default '0',
-  `map` varchar(20) NOT NULL default 'prontera.gat',
+  `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`id`),
   INDEX (`type`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
@@ -44,7 +44,7 @@ CREATE TABLE `branchlog` (
   `account_id` int(11) NOT NULL default '0',
   `char_id` int(11) NOT NULL default '0',
   `char_name` varchar(30) NOT NULL default '',
-  `map` varchar(20) NOT NULL default 'prontera.gat',
+  `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`branch_id`),
   INDEX (`account_id`),
   INDEX (`char_id`)
@@ -59,7 +59,7 @@ CREATE TABLE `mvplog` (
   `monster_id` smallint(6) NOT NULL default '0',
   `prize` int(11) NOT NULL default '0',
   `mvpexp` mediumint(9) NOT NULL default '0',
-  `map` varchar(20) NOT NULL default 'prontera.gat',
+  `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`mvp_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -71,7 +71,7 @@ CREATE TABLE `atcommandlog` (
   `account_id` int(11) unsigned NOT NULL default '0',
   `char_id` int(11) unsigned NOT NULL default '0',
   `char_name` varchar(30) NOT NULL default '',
-  `map` varchar(20) NOT NULL default 'prontera.gat',
+  `map` varchar(11) NOT NULL default '',
   `command` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`atcommand_id`),
   INDEX (`account_id`),
@@ -86,7 +86,7 @@ CREATE TABLE `npclog` (
   `account_id` int(11) unsigned NOT NULL default '0',
   `char_id` int(11) unsigned NOT NULL default '0',
   `char_name` varchar(30) NOT NULL default '',
-  `map` varchar(20) NOT NULL default 'prontera.gat',
+  `map` varchar(11) NOT NULL default '',
   `mes` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`npc_id`),
   INDEX (`account_id`),
@@ -97,11 +97,11 @@ CREATE TABLE `npclog` (
 CREATE TABLE `chatlog` (
   `id` bigint(20) NOT NULL auto_increment,
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
-  `type` set('W','P','G') NOT NULL default 'W',
+  `type` enum('W','P','G') NOT NULL default 'W',
   `type_id` int(11) NOT NULL default '0',
   `src_charid` int(11) NOT NULL default '0',
   `src_accountid` int(11) NOT NULL default '0',
-  `src_map` varchar(17) NOT NULL default 'prontera.gat',
+  `src_map` varchar(11) NOT NULL default '',
   `src_map_x` smallint(4) NOT NULL default '0',
   `src_map_y` smallint(4) NOT NULL default '0',
   `dst_charname` varchar(25) NOT NULL default '',
