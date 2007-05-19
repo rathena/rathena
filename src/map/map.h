@@ -180,8 +180,6 @@ enum {
 #define map_flag_gvg(m) (map[m].flag.gvg || (agit_flag && map[m].flag.gvg_castle))
 //Specifies if the map is tagged as GvG/WoE (regardless of agit_flag status)
 #define map_flag_gvg2(m) (map[m].flag.gvg || map[m].flag.gvg_castle)
-//Caps values to min/max
-#define cap_value(a, min, max) (a>=max?max:a<=min?min:a)
 
 //This stackable implementation does not means a BL can be more than one type at a time, but it's 
 //meant to make it easier to check for multiple types at a time on invocations such as

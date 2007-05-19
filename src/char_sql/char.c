@@ -870,108 +870,100 @@ int memitemdata_to_sql(struct itemtmp mapitem[], int count, int char_id, int tab
 	}
 	return 0;
 }
+
 #ifndef TXT_SQL_CONVERT
 //=====================================================================================================
-int mmo_char_fromsql(int char_id, struct mmo_charstatus *p){
+int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything)
+{
 	int i,j, n;
-	double exp;
-	char t_msg[128];
-	char *str_p = tmp_sql;
-	struct mmo_charstatus *cp;
+	char t_msg[128] = "";
+	char* str_p = tmp_sql;
+	struct mmo_charstatus* cp;
 
 	memset(p, 0, sizeof(struct mmo_charstatus));
-	t_msg[0]= '\0';
 	
 	p->char_id = char_id;
-	if (save_log)
-		ShowInfo("Char load request (%d)\n", char_id);
-	//`char`( `char_id`,`account_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`, //9
-	//`str`,`agi`,`vit`,`int`,`dex`,`luk`, //15
-	//`max_hp`,`hp`,`max_sp`,`sp`,`status_point`,`skill_point`, //21
-	//`option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`, //27
-	//`hair`,`hair_color`,`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`, //35
-	//`last_map`,`last_x`,`last_y`,`save_map`,`save_x`,`save_y`)
-	//splite 2 parts. cause veeeery long SQL syntax
+	if (save_log) ShowInfo("Char load request (%d)\n", char_id);
 
-	sprintf(tmp_sql, "SELECT `char_id`,`account_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,"
-		"`str`,`agi`,`vit`,`int`,`dex`,`luk`, `max_hp`,`hp`,`max_sp`,`sp`,`status_point`,`skill_point` FROM `%s` WHERE `char_id` = '%d'",char_db, char_id); // TBR
+	// read char data
+	sprintf(tmp_sql, "SELECT "
+		"`char_id`,`account_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,"
+		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`max_hp`,`hp`,`max_sp`,`sp`,"
+		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`homun_id`,`hair`,"
+		"`hair_color`,`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`last_map`,`last_x`,`last_y`,"
+		"`save_map`,`save_x`,`save_y`,`partner_id`,`father`,`mother`,`child`,`fame`"
+		" FROM `%s` WHERE `char_id` = '%d'", char_db, char_id);
 
 	if (mysql_query(&mysql_handle, tmp_sql)) {
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		return 0;
 	}
 
 	sql_res = mysql_store_result(&mysql_handle);
+	if (!sql_res) {
+		ShowError("Load char failed (%d - table %s).\n", char_id, char_db);
+		return 0;
+	}
 
-	if (sql_res) {
-		sql_row = mysql_fetch_row(sql_res);
-		if (!sql_row)
-		{	//Just how does this happens? [Skotlex]
-			ShowError("Requested non-existant character id: %d!\n", char_id);
-			return 0;	
-		}
-
-		p->char_id = char_id;
-		p->account_id = atoi(sql_row[1]);
-		p->char_num = atoi(sql_row[2]);
-		strcpy(p->name, sql_row[3]);
-		p->class_ = atoi(sql_row[4]);
-		p->base_level = atoi(sql_row[5]);
-		p->job_level = atoi(sql_row[6]);
-		exp = atof(sql_row[7]);
-		p->base_exp = exp<0?0:(exp>UINT_MAX?UINT_MAX:(unsigned int)exp);
-		exp = atof(sql_row[8]);
-		p->job_exp = exp<0?0:(exp>UINT_MAX?UINT_MAX:(unsigned int)exp);
-		p->zeny = atoi(sql_row[9]);
-		p->str = atoi(sql_row[10]);
-		p->agi = atoi(sql_row[11]);
-		p->vit = atoi(sql_row[12]);
-		p->int_ = atoi(sql_row[13]);
-		p->dex = atoi(sql_row[14]);
-		p->luk = atoi(sql_row[15]);
-		p->max_hp = atoi(sql_row[16]);
-		p->hp = atoi(sql_row[17]);
-		p->max_sp = atoi(sql_row[18]);
-		p->sp = atoi(sql_row[19]);
-		p->status_point = atoi(sql_row[20]) > USHRT_MAX ? USHRT_MAX : atoi(sql_row[20]);
-		p->skill_point = atoi(sql_row[21]) > USHRT_MAX ? USHRT_MAX : atoi(sql_row[21]);
-		//free mysql result.
+	sql_row = mysql_fetch_row(sql_res);
+	if (!sql_row) { //Just how does this happens? [Skotlex]
+		ShowError("Requested non-existant character id: %d!\n", char_id);
 		mysql_free_result(sql_res);
-		strcat (t_msg, " status");
-	} else
-		ShowError("Load char failed (%d - table %s).\n", char_id, char_db);	//Error?! ERRRRRR WHAT THAT SAY!?
-
-	sprintf(tmp_sql, "SELECT `option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`hair`,`hair_color`,"
-		"`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,"
-		"`last_map`,`last_x`,`last_y`,`save_map`,`save_x`,`save_y`, `partner_id`, `father`, `mother`, `child`, `fame`, `homun_id`"	//[orn] homun_id
-		"FROM `%s` WHERE `char_id` = '%d'",char_db, char_id); // TBR
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		return 0;	
 	}
 
-	sql_res = mysql_store_result(&mysql_handle);
-	sql_row = sql_res?mysql_fetch_row(sql_res):NULL;
-	if (sql_row) {
-
-		p->option = atoi(sql_row[0]);	p->karma = atoi(sql_row[1]);	p->manner = atoi(sql_row[2]);
-			p->party_id = atoi(sql_row[3]);	p->guild_id = atoi(sql_row[4]);	p->pet_id = atoi(sql_row[5]);
-
-		p->hair = atoi(sql_row[6]);	p->hair_color = atoi(sql_row[7]);	p->clothes_color = atoi(sql_row[8]);
-		p->weapon = atoi(sql_row[9]);	p->shield = atoi(sql_row[10]);
-		p->head_top = atoi(sql_row[11]);	p->head_mid = atoi(sql_row[12]);	p->head_bottom = atoi(sql_row[13]);
-		p->last_point.map = mapindex_name2id(sql_row[14]); p->last_point.x = atoi(sql_row[15]);	p->last_point.y = atoi(sql_row[16]);
-		p->save_point.map = mapindex_name2id(sql_row[17]); p->save_point.x = atoi(sql_row[18]);	p->save_point.y = atoi(sql_row[19]);
-		p->partner_id = atoi(sql_row[20]); p->father = atoi(sql_row[21]); p->mother = atoi(sql_row[22]); p->child = atoi(sql_row[23]);
-		p->fame = atoi(sql_row[24]);
-		p->hom_id = atoi(sql_row[25]);	//[orn] homunculus id
-
-		strcat (t_msg, " status2");
-	} else
-		ShowError("Char load failed (%d - table %s)\n", char_id, char_db);	//Error?! ERRRRRR WHAT THAT SAY!?
+	p->char_id = char_id;
+	p->account_id = atoi(sql_row[1]);
+	p->char_num = atoi(sql_row[2]);
+	strncpy(p->name, sql_row[3], NAME_LENGTH-1);
+	p->class_ = atoi(sql_row[4]);
+	p->base_level = atoi(sql_row[5]);
+	p->job_level = atoi(sql_row[6]);
+	p->base_exp = (unsigned int)cap_value(atof(sql_row[7]), 0, UINT_MAX);
+	p->job_exp = (unsigned int)cap_value(atof(sql_row[8]), 0, UINT_MAX);
+	p->zeny = atoi(sql_row[9]);
+	p->str = atoi(sql_row[10]);
+	p->agi = atoi(sql_row[11]);
+	p->vit = atoi(sql_row[12]);
+	p->int_ = atoi(sql_row[13]);
+	p->dex = atoi(sql_row[14]);
+	p->luk = atoi(sql_row[15]);
+	p->max_hp = atoi(sql_row[16]);
+	p->hp = atoi(sql_row[17]);
+	p->max_sp = atoi(sql_row[18]);
+	p->sp = atoi(sql_row[19]);
+	p->status_point = (unsigned short)cap_value(atoi(sql_row[20]), 0, USHRT_MAX);
+	p->skill_point = (unsigned short)cap_value(atoi(sql_row[21]), 0, USHRT_MAX);
+	p->option = atoi(sql_row[22]);
+	p->karma = atoi(sql_row[23]);
+	p->manner = atoi(sql_row[24]);
+	p->party_id = atoi(sql_row[25]);
+	p->guild_id = atoi(sql_row[26]);
+	p->pet_id = atoi(sql_row[27]);
+	p->hom_id = atoi(sql_row[28]);
+	p->hair = atoi(sql_row[29]);
+	p->hair_color = atoi(sql_row[30]);
+	p->clothes_color = atoi(sql_row[31]);
+	p->weapon = atoi(sql_row[32]);
+	p->shield = atoi(sql_row[33]);
+	p->head_top = atoi(sql_row[34]);
+	p->head_mid = atoi(sql_row[35]);
+	p->head_bottom = atoi(sql_row[36]);
+	p->last_point.map = mapindex_name2id(sql_row[37]); p->last_point.x = atoi(sql_row[38]);	p->last_point.y = atoi(sql_row[39]);
+	p->save_point.map = mapindex_name2id(sql_row[40]); p->save_point.x = atoi(sql_row[41]);	p->save_point.y = atoi(sql_row[42]);
+	p->partner_id = atoi(sql_row[43]);
+	p->father = atoi(sql_row[44]);
+	p->mother = atoi(sql_row[45]);
+	p->child = atoi(sql_row[46]);
+	p->fame = atoi(sql_row[47]);
+	
 	//free mysql result.
-	if (sql_res)
-		mysql_free_result(sql_res);
+	mysql_free_result(sql_res);
+	strcat (t_msg, " status");
+
+	if (!load_everything) // For quick selection of data when displaying the char menu
+		return 1;
 
 	//read memo data
 	//`memo` (`memo_id`,`char_id`,`map`,`x`,`y`)
@@ -987,7 +979,6 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p){
 			p->memo_point[i].map = mapindex_name2id(sql_row[0]);
 			p->memo_point[i].x=atoi(sql_row[1]);
 			p->memo_point[i].y=atoi(sql_row[2]);
-			//i ++;
 		}
 		mysql_free_result(sql_res);
 		strcat (t_msg, " memo");
@@ -1023,14 +1014,11 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p){
 		strcat (t_msg, " inventory");
 	}
 
-	//read cart.
+	//read cart
 	//`cart_inventory` (`id`,`char_id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`)
 	str_p = tmp_sql;
 	str_p += sprintf(str_p, "SELECT `id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`");
-
-	for (j=0; j<MAX_SLOTS; j++)
-		str_p += sprintf(str_p, ", `card%d`", j);
-
+	for (j = 0; j < MAX_SLOTS; j++) str_p += sprintf(str_p, ", `card%d`", j);
 	str_p += sprintf(str_p, " FROM `%s` WHERE `char_id`='%d'", cart_db, char_id);
 
 	if (mysql_query(&mysql_handle, tmp_sql)) {
@@ -1071,28 +1059,9 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p){
 		mysql_free_result(sql_res);
 		strcat (t_msg, " skills");
 	}
-/* Global-reg loading is now handled by the inter-server.
-	//global_reg
-	//`global_reg_value` (`char_id`, `str`, `value`)
-	sprintf(tmp_sql, "SELECT `str`, `value` FROM `%s` WHERE `type`=3 AND `char_id`='%d'",reg_db, char_id); // TBR
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
-	i = 0;
-	sql_res = mysql_store_result(&mysql_handle);
-	if (sql_res) {
-		for(i=0;(sql_row = mysql_fetch_row(sql_res));i++){
-			strcpy (p->global_reg[i].str, sql_row[0]);
-			strcpy (p->global_reg[i].value, sql_row[1]);
-		}
-		mysql_free_result(sql_res);
-		strcat (t_msg, " reg_values");
-	}
-	p->global_reg_num=i;
-*/
-	//Shamelessly stolen from its_sparky (ie: thanks) and then assimilated by [Skotlex]
+
 	//Friend list 
+	//Shamelessly stolen from its_sparky (ie: thanks) and then assimilated by [Skotlex]
 	sprintf(tmp_sql, "SELECT f.friend_account, f.friend_id, c.name FROM `%s` f LEFT JOIN `%s` c ON f.friend_account=c.account_id AND f.friend_id=c.char_id WHERE f.char_id='%d'", friend_db, char_db, char_id);
 
 	if(mysql_query(&mysql_handle, tmp_sql)){
@@ -1117,108 +1086,13 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus *p){
 		strcat (t_msg, " friends");
 	}
 
-	if (save_log)
-		ShowInfo("Loaded char (%d - %s): %s\n", char_id, p->name, t_msg);	//ok. all data load successfuly!
+	if (save_log) ShowInfo("Loaded char (%d - %s): %s\n", char_id, p->name, t_msg);	//ok. all data load successfuly!
 
 	cp = idb_ensure(char_db_, char_id, create_charstatus);
   	memcpy(cp, p, sizeof(struct mmo_charstatus));
 	return 1;
 }
 
-// For quick selection of data when displaying the char menu. [Skotlex]
-// 
-int mmo_char_fromsql_short(int char_id, struct mmo_charstatus *p){
-	char t_msg[128];
-	double exp;
-	memset(p, 0, sizeof(struct mmo_charstatus));
-	t_msg[0]= '\0';
-	
-	p->char_id = char_id;
-//	ShowInfo("Quick Char load request (%d)\n", char_id);
-	//`char`( `char_id`,`account_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`, //9
-	//`str`,`agi`,`vit`,`int`,`dex`,`luk`, //15
-	//`max_hp`,`hp`,`max_sp`,`sp`,`status_point`,`skill_point`, //21
-	//`option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`, //27
-	//`hair`,`hair_color`,`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`, //35
-	//`last_map`,`last_x`,`last_y`,`save_map`,`save_x`,`save_y`)
-	//splite 2 parts. cause veeeery long SQL syntax
-
-	sprintf(tmp_sql, "SELECT `char_id`,`account_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,"
-		"`str`,`agi`,`vit`,`int`,`dex`,`luk`, `max_hp`,`hp`,`max_sp`,`sp`,`status_point`,`skill_point` FROM `%s` WHERE `char_id` = '%d'",char_db, char_id); // TBR
-
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
-
-	sql_res = mysql_store_result(&mysql_handle);
-
-	if (sql_res) {
-		sql_row = mysql_fetch_row(sql_res);
-		if (!sql_row)
-		{	//Just how does this happens? [Skotlex]
-			ShowError("Requested non-existant character id: %d!\n", char_id);
-		   mysql_free_result(sql_res); 
-			return 0;	
-		}
-		p->char_id = char_id;
-		p->account_id = atoi(sql_row[1]);
-		p->char_num = atoi(sql_row[2]);
-		strcpy(p->name, sql_row[3]);
-		p->class_ = atoi(sql_row[4]);
-		p->base_level = atoi(sql_row[5]);
-		p->job_level = atoi(sql_row[6]);
-		exp = atof(sql_row[7]);
-		p->base_exp = exp<0?0:(exp>UINT_MAX?UINT_MAX:(unsigned int)exp);
-		exp = atof(sql_row[8]);
-		p->job_exp = exp<0?0:(exp>UINT_MAX?UINT_MAX:(unsigned int)exp);
-		p->zeny = atoi(sql_row[9]);
-		p->str = atoi(sql_row[10]);
-		p->agi = atoi(sql_row[11]);
-		p->vit = atoi(sql_row[12]);
-		p->int_ = atoi(sql_row[13]);
-		p->dex = atoi(sql_row[14]);
-		p->luk = atoi(sql_row[15]);
-		p->max_hp = atoi(sql_row[16]);
-		p->hp = atoi(sql_row[17]);
-		p->max_sp = atoi(sql_row[18]);
-		p->sp = atoi(sql_row[19]);
-		p->status_point = atoi(sql_row[20]) > USHRT_MAX ? USHRT_MAX : atoi(sql_row[20]);
-		p->skill_point = atoi(sql_row[21]) > USHRT_MAX ? USHRT_MAX : atoi(sql_row[21]);
-		//free mysql result.
-		mysql_free_result(sql_res);
-		strcat (t_msg, " status");
-	} else
-		ShowError("Load char failed (%d - table %s).\n", char_id, char_db);	//Error?! ERRRRRR WHAT THAT SAY!?
-
-	sprintf(tmp_sql, "SELECT `option`,`karma`,`manner`,`hair`,`hair_color`,"
-		"`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`"
-		"FROM `%s` WHERE `char_id` = '%d'",char_db, char_id); // TBR
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
-
-	sql_res = mysql_store_result(&mysql_handle);
-	sql_row = sql_res?mysql_fetch_row(sql_res):NULL;
-	if (sql_row) {
-
-		p->option = atoi(sql_row[0]);	p->karma = atoi(sql_row[1]);	p->manner = atoi(sql_row[2]);
-		p->hair = atoi(sql_row[3]);	p->hair_color = atoi(sql_row[4]);	p->clothes_color = atoi(sql_row[5]);
-		p->weapon = atoi(sql_row[6]);	p->shield = atoi(sql_row[7]);
-		p->head_top = atoi(sql_row[8]);	p->head_mid = atoi(sql_row[9]);	p->head_bottom = atoi(sql_row[10]);
-
-		strcat (t_msg, " status2");
-	} else
-		ShowError("Char load failed (%d - table %s)\n", char_id, char_db);	//Error?! ERRRRRR WHAT THAT SAY!?
-	//free mysql result.
-	if (sql_res)
-		mysql_free_result(sql_res);
-//	if (save_log) //Too much spam :/
-//		ShowInfo("Quick Loaded char (%d - %s): %s\n", char_id, p->name, t_msg);	//ok. all data load successfuly!
-
-	return 1;
-}
 //==========================================================================================================
 int mmo_char_sql_init(void) {
 	ShowInfo("Begin Initializing.......\n");
@@ -1787,7 +1661,7 @@ int mmo_char_send006b(int fd, struct char_session_data *sd) {
 		memset(WFIFOP(fd,4), 0, 20);// unknown bytes
 		for(i = 0; i < found_num; i++)
 		{
-			mmo_char_fromsql_short(sd->found_char[i], &char_dat);
+			mmo_char_fromsql(sd->found_char[i], &char_dat, false);
 			j += mmo_char_tobuf(WFIFOP(fd,j), &char_dat);
 		}
 		WFIFOW(fd,2) = j;// packet len
@@ -2737,7 +2611,7 @@ int parse_frommap(int fd)
 				char_data = uidb_get(char_db_,RFIFOL(fd,14));
 				if (char_data == NULL) 
 				{	//Really shouldn't happen.
-					mmo_char_fromsql(RFIFOL(fd,14), &char_dat);
+					mmo_char_fromsql(RFIFOL(fd,14), &char_dat, true);
 					char_data = &char_dat;
 				}
 				//Tell the new map server about this player using Kevin's new auth packet. [Skotlex]
@@ -3271,7 +3145,7 @@ int parse_char(int fd)
 			{
 				int char_id = atoi(sql_row[0]);
 				mysql_free_result(sql_res); //Free'd as soon as possible
-				mmo_char_fromsql(char_id, &char_dat);
+				mmo_char_fromsql(char_id, &char_dat, true);
 				char_dat.sex = sd->sex;
 			} else {
 				mysql_free_result(sql_res);
@@ -3419,7 +3293,7 @@ int parse_char(int fd)
 			int len;
 			WFIFOHEAD(fd,110);
 			WFIFOW(fd,0) = 0x6d;
-			mmo_char_fromsql_short(i, &char_dat); //Only the short data is needed.
+			mmo_char_fromsql(i, &char_dat, false); //Only the short data is needed.
 			len = 2 + mmo_char_tobuf(WFIFOP(fd,2), &char_dat);
 			WFIFOSET(fd,len);
 

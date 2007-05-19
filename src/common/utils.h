@@ -31,6 +31,9 @@ void StringBuf_Free(struct StringBuf *);
 
 void findfile(const char *p, const char *pat, void (func)(const char*));
 
+//Caps values to min/max
+#define cap_value(a, min, max) ((a >= max) ? max : (a <= min) ? min : a)
+
 //////////////////////////////////////////////////////////////////////////
 // byte word dword access [Shinomori]
 //////////////////////////////////////////////////////////////////////////
