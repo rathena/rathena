@@ -5488,101 +5488,96 @@ BUILDIN_FUNC(viewpoint)
  */
 BUILDIN_FUNC(countitem)
 {
-	int nameid=0,count=0,i;
-	TBL_PC *sd;
+	int nameid, i;
+	int count = 0;
+	struct script_data* data;
 
-	struct script_data *data;
-
-	sd = script_rid2sd(st);
-
+	TBL_PC* sd = script_rid2sd(st);
 	if (!sd) {
 		script_pushint(st,0);
 		return 0;
 	}
 
-	data=script_getdata(st,2);
+	data = script_getdata(st,2);
 	get_val(st,data);
-	if( data_isstring(data) ){
-		const char *name=conv_str(st,data);
-		struct item_data *item_data;
-		if( (item_data = itemdb_searchname(name)) != NULL)
-			nameid=item_data->nameid;
-	}else
-		nameid=conv_num(st,data);
+	if( data_isstring(data) ) {
+		const char* name = conv_str(st,data);
+		struct item_data* item_data;
+		if((item_data = itemdb_searchname(name)) != NULL)
+			nameid = item_data->nameid;
+		else
+			nameid = 0;
+	} else
+		nameid = conv_num(st,data);
 
-	if (nameid>=500) //if no such ID then skip this iteration
-		for(i=0;i<MAX_INVENTORY;i++){
-			if(sd->status.inventory[i].nameid==nameid)
-				count+=sd->status.inventory[i].amount;
-		}
-	else{
-		if(battle_config.error_log)
-			ShowError("wrong item ID : countitem(%i)\n",nameid);
+	if (nameid < 500) {
+		if(battle_config.error_log) ShowError("wrong item ID : countitem(%i)\n", nameid);
 		script_pushint(st,0);
 		return 1;
 	}
+
+	for(i = 0; i < MAX_INVENTORY; i++)
+		if(sd->status.inventory[i].nameid == nameid)
+			count += sd->status.inventory[i].amount;
+
 	script_pushint(st,count);
 	return 0;
 }
 
 /*==========================================
  * countitem2(nameID,Identified,Refine,Attribute,Card0,Card1,Card2,Card3)	[Lupus]
- *	returns number of items that met the conditions
- *------------------------------------------
- */
+ *	returns number of items that meet the conditions
+ *------------------------------------------*/
 BUILDIN_FUNC(countitem2)
 {
-	int nameid=0,count=0,i;
-	int iden,ref,attr,c1,c2,c3,c4;
-	TBL_PC *sd;
-
-	struct script_data *data;
-
-	sd = script_rid2sd(st);
-
+	int nameid, iden, ref, attr, c1, c2, c3, c4;
+	int count = 0;
+	int i;	
+	struct script_data* data;
+	
+	TBL_PC* sd = script_rid2sd(st);
 	if (!sd) {
 		script_pushint(st,0);
 		return 0;
 	}
-
-	data=script_getdata(st,2);
+	
+	data = script_getdata(st,2);
 	get_val(st,data);
-	if( data_isstring(data) ){
-		const char *name=conv_str(st,data);
-		struct item_data *item_data;
-		if( (item_data = itemdb_searchname(name)) != NULL)
-			nameid=item_data->nameid;
-	}else
-		nameid=conv_num(st,data);
-
-	iden=script_getnum(st,3);
-	ref=script_getnum(st,4);
-	attr=script_getnum(st,5);
-	c1=script_getnum(st,6);
-	c2=script_getnum(st,7);
-	c3=script_getnum(st,8);
-	c4=script_getnum(st,9);
-
-	if (nameid>=500) //if no such ID then skip this iteration
-		for(i=0;i<MAX_INVENTORY;i++){
-		if(sd->status.inventory[i].nameid<=0 || sd->inventory_data[i] == NULL ||
-			sd->status.inventory[i].amount<=0 || sd->status.inventory[i].nameid!=nameid ||
-			sd->status.inventory[i].identify!=iden || sd->status.inventory[i].refine!=ref ||
-			sd->status.inventory[i].attribute!=attr || sd->status.inventory[i].card[0]!=c1 ||
-			sd->status.inventory[i].card[1]!=c2 || sd->status.inventory[i].card[2]!=c3 ||
-			sd->status.inventory[i].card[3]!=c4)
-			continue;
-
-			count+=sd->status.inventory[i].amount;
-		}
-	else{
-		if(battle_config.error_log)
-			ShowError("wrong item ID : countitem2(%i)\n",nameid);
+	if( data_isstring(data) ) {
+		const char* name = conv_str(st,data);
+		struct item_data* item_data;
+		if((item_data = itemdb_searchname(name)) != NULL)
+			nameid = item_data->nameid;
+		else
+			nameid = 0;
+	} else
+		nameid = conv_num(st,data);
+	
+	iden = script_getnum(st,3);
+	ref  = script_getnum(st,4);
+	attr = script_getnum(st,5);
+	c1 = (short)script_getnum(st,6);
+	c2 = (short)script_getnum(st,7);
+	c3 = (short)script_getnum(st,8);
+	c4 = (short)script_getnum(st,9);
+	
+	if (nameid < 500) {
+		if(battle_config.error_log) ShowError("wrong item ID : countitem2(%i)\n", nameid);
 		script_pushint(st,0);
 		return 1;
 	}
-	script_pushint(st,count);
+	
+	for(i = 0; i < MAX_INVENTORY; i++)
+		if (sd->status.inventory[i].nameid > 0 && sd->inventory_data[i] != NULL &&
+			sd->status.inventory[i].amount > 0 && sd->status.inventory[i].nameid == nameid &&
+			sd->status.inventory[i].identify == iden && sd->status.inventory[i].refine == ref &&
+			sd->status.inventory[i].attribute == attr && sd->status.inventory[i].card[0] == c1 &&
+			sd->status.inventory[i].card[1] == c2 && sd->status.inventory[i].card[2] ==c3 &&
+			sd->status.inventory[i].card[3] == c4
+		)
+			count += sd->status.inventory[i].amount;
 
+	script_pushint(st,count);
 	return 0;
 }
 
