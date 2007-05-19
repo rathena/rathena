@@ -57,7 +57,7 @@ char tmp_sql[65535]="";
 char default_codepage[32] = "";
 
 int map_server_port = 3306;
-char map_server_ip[16] = "127.0.0.1";
+char map_server_ip[32] = "127.0.0.1";
 char map_server_id[32] = "ragnarok";
 char map_server_pw[32] = "ragnarok";
 char map_server_db[32] = "ragnarok";
@@ -74,7 +74,7 @@ char mob_db2_db[32] = "mob_db2";
 char char_db[32] = "char";
 
 // log database
-char log_db_ip[16] = "127.0.0.1";
+char log_db_ip[32] = "127.0.0.1";
 int log_db_port = 3306;
 char log_db_id[32] = "ragnarok";
 char log_db_pw[32] = "ragnarok";
@@ -85,7 +85,7 @@ MYSQL_ROW logsql_row;
 
 // mail system
 int mail_server_enable = 0;
-char mail_server_ip[16] = "127.0.0.1";
+char mail_server_ip[32] = "127.0.0.1";
 int mail_server_port = 3306;
 char mail_server_id[32] = "ragnarok";
 char mail_server_pw[32] = "ragnarok";

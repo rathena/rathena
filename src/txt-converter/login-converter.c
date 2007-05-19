@@ -38,7 +38,7 @@ char login_db[256]="login";
 static struct dbt *gm_account_db;
 
 int db_server_port = 3306;
-char db_server_ip[16] = "127.0.0.1";
+char db_server_ip[32] = "127.0.0.1";
 char db_server_id[32] = "ragnarok";
 char db_server_pw[32] = "ragnarok";
 char db_server_logindb[32] = "ragnarok";
