@@ -9301,9 +9301,7 @@ int atcommand_request(const int fd, struct map_session_data* sd, const char* com
 /*==========================================
  * Feel (SG save map) Reset [HiddenDragon]
  *------------------------------------------*/
-int atcommand_feelreset(
-	const int fd, struct map_session_data* sd,
-	const char* command, const char* message)
+int atcommand_feelreset(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	pc_resetfeel(sd);
 	clif_displaymessage(fd, "Reset 'Feeling' maps.");

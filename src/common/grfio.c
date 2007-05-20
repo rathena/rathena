@@ -445,7 +445,7 @@ void* grfio_reads(char* fname, int* size)
 				lentry.declen = ftell(in);
 			}
 			fseek(in,0,SEEK_SET);
-			buf2 = (unsigned char *)malloc(lentry.declen + 1024);
+			buf2 = (unsigned char *)aMallocA(lentry.declen + 1024);
 			fread(buf2, 1, lentry.declen, in);
 			fclose(in);
 			strncpy(lentry.fn, fname, sizeof(lentry.fn) - 1);

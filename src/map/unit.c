@@ -1546,7 +1546,7 @@ static int unit_counttargeted_sub(struct block_list* bl, va_list ap)
 
 /*==========================================
  * Counts the number of units attacking 'bl'
-  *------------------------------------------*/
+ *------------------------------------------*/
 int unit_counttargeted(struct block_list* bl, int target_lv)
 {
 	nullpo_retr(0, bl);
@@ -1784,7 +1784,7 @@ int unit_free(struct block_list *bl, int clrtype)
 					status_change_end(bl,SC_REGENERATION,-1);
 			}
 			if (battle_config.debuff_on_logout&2)
-			{	//Food items are removed on logout.
+			{
 				if(sd->sc.data[SC_MAXIMIZEPOWER].timer!=-1)
 					status_change_end(bl,SC_MAXIMIZEPOWER,-1);
 				if(sd->sc.data[SC_MAXOVERTHRUST].timer!=-1)

@@ -2375,7 +2375,7 @@ int isstr(struct script_data *c)
 	return 0;
 }
 
-/// Triary operators
+/// Ternary operators
 /// test ? if_true : if_false
 void op_3(struct script_state* st, int op)
 {
@@ -3825,9 +3825,7 @@ BUILDIN_FUNC(sleep);
 BUILDIN_FUNC(sleep2);
 BUILDIN_FUNC(awake);
 BUILDIN_FUNC(getvariableofnpc);
-// [blackhole89] -->
 BUILDIN_FUNC(warpportal);
-// <-- [blackhole89]
 BUILDIN_FUNC(homunculus_evolution) ;	//[orn]
 BUILDIN_FUNC(eaclass);
 BUILDIN_FUNC(roclass);
