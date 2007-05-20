@@ -3114,7 +3114,7 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 static unsigned short status_calc_str(struct block_list *bl, struct status_change *sc, int str)
 {
 	if(!sc || !sc->count)
-		return cap_value(str,1,USHRT_MAX);
+		return cap_value(str,0,USHRT_MAX);
 
 	if(sc->data[SC_INCALLSTATUS].timer!=-1)
 		str += sc->data[SC_INCALLSTATUS].val1;
@@ -3147,13 +3147,13 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 	if(sc->data[SC_SPIRIT].timer!=-1 && sc->data[SC_SPIRIT].val2 == SL_HIGH && str < 50)
 		str = 50;
 
-	return cap_value(str,1,USHRT_MAX);
+	return cap_value(str,0,USHRT_MAX);
 }
 
 static unsigned short status_calc_agi(struct block_list *bl, struct status_change *sc, int agi)
 {
 	if(!sc || !sc->count)
-		return cap_value(agi,1,USHRT_MAX);
+		return cap_value(agi,0,USHRT_MAX);
 
 	if(sc->data[SC_CONCENTRATE].timer!=-1 && sc->data[SC_QUAGMIRE].timer == -1)
 		agi += (agi-sc->data[SC_CONCENTRATE].val3)*sc->data[SC_CONCENTRATE].val2/100;
@@ -3186,13 +3186,13 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 	if(sc->data[SC_SPIRIT].timer!=-1 && sc->data[SC_SPIRIT].val2 == SL_HIGH && agi < 50)
 		agi = 50;
 
-	return cap_value(agi,1,USHRT_MAX);
+	return cap_value(agi,0,USHRT_MAX);
 }
 
 static unsigned short status_calc_vit(struct block_list *bl, struct status_change *sc, int vit)
 {
 	if(!sc || !sc->count)
-		return cap_value(vit,1,USHRT_MAX);
+		return cap_value(vit,0,USHRT_MAX);
 
 	if(sc->data[SC_INCALLSTATUS].timer!=-1)
 		vit += sc->data[SC_INCALLSTATUS].val1;
@@ -3215,13 +3215,13 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 	if(sc->data[SC_SPIRIT].timer!=-1 && sc->data[SC_SPIRIT].val2 == SL_HIGH && vit < 50)
 		vit = 50;
 
-	return cap_value(vit,1,USHRT_MAX);
+	return cap_value(vit,0,USHRT_MAX);
 }
 
 static unsigned short status_calc_int(struct block_list *bl, struct status_change *sc, int int_)
 {
 	if(!sc || !sc->count)
-		return cap_value(int_,1,USHRT_MAX);
+		return cap_value(int_,0,USHRT_MAX);
 
 	if(sc->data[SC_INCALLSTATUS].timer!=-1)
 		int_ += sc->data[SC_INCALLSTATUS].val1;
@@ -3252,13 +3252,13 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 	if(sc->data[SC_SPIRIT].timer!=-1 && sc->data[SC_SPIRIT].val2 == SL_HIGH && int_ < 50)
 		int_ = 50;
 
-	return cap_value(int_,1,USHRT_MAX);
+	return cap_value(int_,0,USHRT_MAX);
 }
 
 static unsigned short status_calc_dex(struct block_list *bl, struct status_change *sc, int dex)
 {
 	if(!sc || !sc->count)
-		return cap_value(dex,1,USHRT_MAX);
+		return cap_value(dex,0,USHRT_MAX);
 
 	if(sc->data[SC_CONCENTRATE].timer!=-1 && sc->data[SC_QUAGMIRE].timer == -1)
 		dex += (dex-sc->data[SC_CONCENTRATE].val4)*sc->data[SC_CONCENTRATE].val2/100;
@@ -3294,13 +3294,13 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 	if(sc->data[SC_SPIRIT].timer!=-1 && sc->data[SC_SPIRIT].val2 == SL_HIGH && dex < 50)
 		dex  = 50;
 
-	return cap_value(dex,1,USHRT_MAX);
+	return cap_value(dex,0,USHRT_MAX);
 }
 
 static unsigned short status_calc_luk(struct block_list *bl, struct status_change *sc, int luk)
 {
 	if(!sc || !sc->count)
-		return cap_value(luk,1,USHRT_MAX);
+		return cap_value(luk,0,USHRT_MAX);
 
 	if(sc->data[SC_CURSE].timer!=-1)
 		return 0;
@@ -3321,7 +3321,7 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 	if(sc->data[SC_SPIRIT].timer!=-1 && sc->data[SC_SPIRIT].val2 == SL_HIGH && luk < 50)
 		luk = 50;
 
-	return cap_value(luk,1,USHRT_MAX);
+	return cap_value(luk,0,USHRT_MAX);
 }
 
 static unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc, int batk)

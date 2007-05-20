@@ -946,35 +946,39 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 	
 	switch(skill_num){
 	case ALL_RESURRECTION:
-		if(battle_check_undead(tstatus->race,tstatus->def_ele)){	
-			temp=1;
+		if(battle_check_undead(tstatus->race,tstatus->def_ele)) {	
+			temp = 1;
 			casttime = skill_castfix(src, PR_TURNUNDEAD, skill_lv);
 		} else if (!status_isdead(target))
 			return 0; //Can't cast on non-dead characters.
-		break;
+	break;
 	case MO_FINGEROFFENSIVE:
 		if(sd)
 			casttime += casttime * ((skill_lv > sd->spiritball)? sd->spiritball:skill_lv);
-		break;
+	break;
 	case MO_EXTREMITYFIST:
 		if (sc && sc->data[SC_COMBO].timer != -1 &&
-			(sc->data[SC_COMBO].val1 == MO_COMBOFINISH ||
+		   (sc->data[SC_COMBO].val1 == MO_COMBOFINISH ||
 			sc->data[SC_COMBO].val1 == CH_TIGERFIST ||
 			sc->data[SC_COMBO].val1 == CH_CHAINCRUSH))
 			casttime = 0;
 		temp = 1;
-		break;
+	break;
+	case SA_SPELLBREAKER:
+		temp = 1;
+	break;
+	case ST_CHASEWALK:
+		if (sc && sc->data[ST_CHASEWALK].timer != -1)
+			casttime = 0;
+	break;
 	case TK_RUN:
 		if (sc && sc->data[SC_RUN].timer != -1)
 			casttime = 0;
-		break;
-	case SA_SPELLBREAKER:
-		temp =1;
-		break;
+	break;
 	case KN_CHARGEATK:
 		//Taken from jA: Casttime is increased by dist/3*100%
 		casttime+= casttime * (distance_bl(src,target)-1)/3;
-		break;
+	break;
 	}
   	
 	if (!(skill_get_castnodex(skill_num, skill_lv)&2))
