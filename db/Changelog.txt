@@ -48,6 +48,9 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+05/20
+	* Chase Walk's casting time is now 1200ms [Playtester]
+	- also fixed movement speed of Sword Master
 05/17
 	* Updated Knocker [Playtester]
 	* Added Magnum Break to Magmaring [Playtester]
