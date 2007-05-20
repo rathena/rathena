@@ -6298,6 +6298,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 			if (sc && sc->data[type].timer != -1)
 				status_change_end(src,type,-1); //Was under someone else's Gospel. [Skotlex]
 			sc_start4(src,type,100,skilllv,0,(int)sg,BCT_SELF,skill_get_time(skillid,skilllv));
+			clif_skill_poseffect(src, skillid, skilllv, 0, 0, tick); // PA_GOSPEL music packet
 		}
 		break;
 	case NJ_TATAMIGAESHI:
