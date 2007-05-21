@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/05/21
+	* Fixed some bugs in Cursed Spirit Quest. [SinSloth]
 2007/05/18
 	* Fixed a bug in Thanatos Tower Quest, which didn't allow you to get rewards. [SinSloth]
  	* Rev 10569 Kiel Hyre quest update, moved delitems to the proper NPC. [L0ne_W0lf]

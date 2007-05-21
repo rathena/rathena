@@ -3602,12 +3602,12 @@ lhz_que01,99,74,5	script	#pecomaster	48,{
 		set lhz_curse,17;
 		getitem 7341,1;
 		close2;
-		warp "lhz_in01",278,162;
+		warp "lhz_in01",278,161;
 		end;
 	}
 	else
 	{
-		warp "lhz_in01",278,162;
+		warp "lhz_in01",278,161;
 		end;
 	}
 }
@@ -4179,7 +4179,7 @@ lhz_in03,32,162,3	script	Crippled Girl	53,{
 							mes "Sheesh.";
 							mes "Don't kill the";
 							mes "messenger.";
-							set lhz_curse,20;
+							set lhz_curse,23;
 							close2;
 							warp "lighthalzen",322,323;
 							end;
@@ -4407,9 +4407,9 @@ OnTouch:
 		mes "Corporation^000000 and that";
 		mes "^FF0000Regenschirm Laboratory^000000.";
 		set lhz_curse,26;
-		if(BaseJob < 70) getexp 800000,300000;
-		else if(BaseJob < 80) getexp 1000000,500000;
-		else if(BaseJob < 90) getexp 1500000,800000;
+		if(BaseLevel < 70) getexp 800000,300000;
+		else if(BaseLevel < 80) getexp 1000000,500000;
+		else if(BaseLevel < 90) getexp 1500000,800000;
 		else getexp 2000000,1000000;
 		close;
 	}
