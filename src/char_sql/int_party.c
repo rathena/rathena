@@ -34,16 +34,6 @@ int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id);
 int party_check_exp_share(struct party_data *p);
 int mapif_party_optionchanged(int fd,struct party *p, int account_id, int flag);
 
-#ifndef SQL_DEBUG
-
-#define mysql_query(_x, _y) mysql_real_query(_x, _y, strlen(_y)) //supports ' in names and runs faster [Kevin]
-
-#else 
-
-#define mysql_query(_x, _y) debug_mysql_query(__FILE__, __LINE__, _x, _y)
-
-#endif
-
 //Updates party's level range and unsets even share if broken.
 static int int_party_check_lv(struct party_data *p) {
 	int i;

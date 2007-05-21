@@ -101,8 +101,6 @@ extern struct gm_account *gm_account;
 extern int guild_exp_rate;
 extern int log_inter;
 
-extern int debug_mysql_query(char *file, int line, void *mysql, const char *q);
-
 //Exported for use in the TXT-SQL converter.
 int mmo_char_tosql(int char_id, struct mmo_charstatus *p);
 void sql_config_read(const char *cfgName);

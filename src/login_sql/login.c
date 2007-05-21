@@ -225,13 +225,13 @@ void read_gm_account(void)
 }
 
 //-----------------------------------------------------
-// Send GM accounts to all char-server
+// Send GM accounts to one or all char-servers
 //-----------------------------------------------------
 void send_GM_accounts(int fd)
 {
 	unsigned int i;
-	unsigned char buf[32767];
-	int len;
+	uint8 buf[32767];
+	uint16 len;
 
 	if(!login_config.login_gm_read)
 		return;
@@ -242,7 +242,7 @@ void send_GM_accounts(int fd)
 		// send only existing accounts. We can not create a GM account when server is online.
 		if (gm_account_db[i].level > 0) {
 			WBUFL(buf,len) = gm_account_db[i].account_id;
-			WBUFB(buf,len+4) = (unsigned char)gm_account_db[i].level;
+			WBUFB(buf,len+4) = (uint8)gm_account_db[i].level;
 			len += 5;
 			if (len >= 32000) {
 				ShowWarning("send_GM_accounts: Too many accounts! Only %d out of %d were sent.\n", i, GM_num);
@@ -251,14 +251,14 @@ void send_GM_accounts(int fd)
 		}
 
 	WBUFW(buf,2) = len;
-	if (fd == -1)
+	if (fd == -1) // send to all charservers
 		charif_sendallwos(-1, buf, len);
-	else
-	{
+	else { // send only to target
 		WFIFOHEAD(fd,len);
 		memcpy(WFIFOP(fd,0), buf, len);
 		WFIFOSET(fd,len);
 	}
+
 	return;
 }
 
@@ -455,6 +455,7 @@ int mmo_auth_new(struct mmo_account* account, char sex)
 	return 0;
 }
 
+
 //--------------------------------------------------------------------
 // Packet send to all char-servers, except one (wos: without our self)
 //--------------------------------------------------------------------
@@ -465,8 +466,6 @@ int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len)
 	for(i = 0, c = 0; i < MAX_SERVERS; i++) {
 		if ((fd = server_fd[i]) > 0 && fd != sfd) {
 			WFIFOHEAD(fd,len);
-			if (WFIFOSPACE(fd) < len) //Increase buffer size.
-				realloc_writefifo(fd, len);
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
 			c++;
@@ -727,9 +726,6 @@ int parse_fromchar(int fd)
 
 	uint32 ipl = session[fd]->client_addr;
 	char ip[16];
-	RFIFOHEAD(fd);
-
-	ip2str(ipl, ip);
 
 	for(id = 0; id < MAX_SERVERS; id++)
 		if (server_fd[id] == fd)
@@ -739,6 +735,8 @@ int parse_fromchar(int fd)
 		do_close(fd);
 		return 0;
 	}
+
+	ip2str(ipl, ip);
 
 	if(session[fd]->eof) {
 		ShowStatus("Char-server '%s' has disconnected.\n", server[id].name);
@@ -774,14 +772,13 @@ int parse_fromchar(int fd)
 			// send GM accounts to all char-servers
 			send_GM_accounts(-1);
 			RFIFOSKIP(fd,2);
-			break;
+		break;
 
 		case 0x2712: // request from char-server to authenticate an account
 			if (RFIFOREST(fd) < 19)
 				return 0;
 		{
 			int account_id;
-			WFIFOHEAD(fd,51);
 			account_id = RFIFOL(fd,2); // speed up
 			for(i = 0; i < AUTH_FIFO_SIZE; i++) {
 				if( auth_fifo[i].account_id == account_id &&
@@ -812,6 +809,7 @@ int parse_fromchar(int fd)
 					strncpy(email, sql_row[0], 40); email[39] = 0;
 					mysql_free_result(sql_res);
 				}
+				WFIFOHEAD(fd,51);
 				WFIFOW(fd,0) = 0x2713;
 				WFIFOL(fd,2) = account_id;
 				WFIFOB(fd,6) = 0;
@@ -819,19 +817,21 @@ int parse_fromchar(int fd)
 				WFIFOL(fd,47) = (unsigned long) connect_until_time;
 				WFIFOSET(fd,51);
 			} else {
+				WFIFOHEAD(fd,51);
 				WFIFOW(fd,0) = 0x2713;
 				WFIFOL(fd,2) = account_id;
 				WFIFOB(fd,6) = 1;
 				WFIFOSET(fd,51);
 			}
-		}
+
 			RFIFOSKIP(fd,19);
-			break;
-		
+		}
+		break;
 
 		case 0x2714:
 			if (RFIFOREST(fd) < 6)
 				return 0;
+
 			// how many users on world? (update)
 			if (server[id].users != RFIFOL(fd,2))
 			{
@@ -845,13 +845,13 @@ int parse_fromchar(int fd)
 					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 				}
 			}
-		{	// send some answer
+			// send some answer
 			WFIFOHEAD(fd,6);
 			WFIFOW(fd,0) = 0x2718;
 			WFIFOSET(fd,2);
-		}
+
 			RFIFOSKIP(fd,6);
-			break;
+		break;
 
 		case 0x2716: // received an e-mail/limited time request, because a player comes back from a map-server to the char-server
 			if (RFIFOREST(fd) < 6)
@@ -860,8 +860,7 @@ int parse_fromchar(int fd)
 			int account_id;
 			time_t connect_until_time = 0;
 			char email[40] = "";
-			WFIFOHEAD(fd,50);
-			account_id=RFIFOL(fd,2);
+			account_id = RFIFOL(fd,2);
 			sprintf(tmpsql,"SELECT `email`,`connect_until` FROM `%s` WHERE `%s`='%d'",login_db, login_db_account_id, account_id);
 			if(mysql_query(&mysql_handle, tmpsql)) {
 				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
@@ -875,14 +874,16 @@ int parse_fromchar(int fd)
 			}
 			mysql_free_result(sql_res);
 			//printf("parse_fromchar: E-mail/limited time request from '%s' server (concerned account: %d)\n", server[id].name, RFIFOL(fd,2));
+			WFIFOHEAD(fd,50);
 			WFIFOW(fd,0) = 0x2717;
 			WFIFOL(fd,2) = RFIFOL(fd,2);
 			memcpy(WFIFOP(fd, 6), email, 40);
 			WFIFOL(fd,46) = (unsigned long) connect_until_time;
 			WFIFOSET(fd,50);
-		}
+
 			RFIFOSKIP(fd,6);
-			break;
+		}
+		break;
 
 		case 0x2720: // Request to become a GM (TXT only!)
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
@@ -891,14 +892,13 @@ int parse_fromchar(int fd)
 			ShowWarning("change GM isn't supported in this login server version.\n");
 			ShowError("change GM error 0 %s\n", RFIFOP(fd, 8));
 
-			RFIFOSKIP(fd, RFIFOW(fd, 2));
-		{
 			WFIFOHEAD(fd,10);
 			WFIFOW(fd,0) = 0x2721;
 			WFIFOL(fd,2) = RFIFOL(fd,4); // oldacc;
 			WFIFOL(fd,6) = 0; // newacc;
 			WFIFOSET(fd,10);
-		}
+
+			RFIFOSKIP(fd, RFIFOW(fd, 2));
 			return 0;
 
 		// Map server send information to change an email of an account via char-server
@@ -944,9 +944,10 @@ int parse_fromchar(int fd)
 				}
 
 			}
+
 			RFIFOSKIP(fd, 86);
-			break;
 		}
+		break;
 
 		case 0x2724: // Receiving of map-server via char-server a status change resquest
 			if (RFIFOREST(fd) < 10)
@@ -978,9 +979,10 @@ int parse_fromchar(int fd)
 				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 			}
+
 			RFIFOSKIP(fd,10);
-			break;
 		}
+		break;
 
 		case 0x2725: // Receiving of map-server via char-server a ban resquest
 			if (RFIFOREST(fd) < 18)
@@ -1033,9 +1035,10 @@ int parse_fromchar(int fd)
 					}
 				}
 			}
+
 			RFIFOSKIP(fd,18);
-			break;
 		}
+		break;
 
 		case 0x2727: // Change of sex (sex is reversed)
 			if (RFIFOREST(fd) < 6)
@@ -1043,7 +1046,7 @@ int parse_fromchar(int fd)
 		{
 			int acc,sex;
 			unsigned char buf[16];
-			acc=RFIFOL(fd,2);
+			acc = RFIFOL(fd,2);
 			sprintf(tmpsql,"SELECT `sex` FROM `%s` WHERE `%s` = '%d'",login_db,login_db_account_id,acc);
 
 			if(mysql_query(&mysql_handle, tmpsql)) {
@@ -1076,9 +1079,10 @@ int parse_fromchar(int fd)
 			WBUFL(buf,2) = acc;
 			WBUFB(buf,6) = sex;
 			charif_sendallwos(-1, buf, 7);
+
 			RFIFOSKIP(fd,6);
-			break;
 		}
+		break;
 
 		case 0x2728:	// save account_reg2
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
@@ -1090,7 +1094,7 @@ int parse_fromchar(int fd)
 				char temp_str2[512];
 				char value[256];
 				unsigned char *buf;
-				acc=RFIFOL(fd,4);
+				acc = RFIFOL(fd,4);
 				buf = (unsigned char*)aCalloc(RFIFOW(fd,2)+1, sizeof(unsigned char));
 				//Delete all global account variables....
 				sprintf(tmpsql,"DELETE FROM `%s` WHERE `type`='1' AND `account_id`='%d';",reg_db,acc);
@@ -1121,46 +1125,47 @@ int parse_fromchar(int fd)
 				if (buf) aFree(buf);
 			}
 			RFIFOSKIP(fd,RFIFOW(fd,2));
-			break;
+		break;
 
 		case 0x272a:	// Receiving of map-server via char-server a unban resquest
 			if (RFIFOREST(fd) < 6)
 				return 0;
-			{
-				int acc;
-				acc = RFIFOL(fd,2);
-				sprintf(tmpsql,"SELECT `ban_until` FROM `%s` WHERE `%s` = '%d'",login_db,login_db_account_id,acc);
+		{
+			int acc;
+			acc = RFIFOL(fd,2);
+			sprintf(tmpsql,"SELECT `ban_until` FROM `%s` WHERE `%s` = '%d'",login_db,login_db_account_id,acc);
+			if(mysql_query(&mysql_handle, tmpsql)) {
+				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
+			}
+			sql_res = mysql_store_result(&mysql_handle) ;
+			if (sql_res && mysql_num_rows(sql_res) > 0) { //Found a match
+				sprintf(tmpsql,"UPDATE `%s` SET `ban_until` = '0' WHERE `%s` = '%d'", login_db,login_db_account_id,acc);
+				//query
 				if(mysql_query(&mysql_handle, tmpsql)) {
 					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 				}
-				sql_res = mysql_store_result(&mysql_handle) ;
-				if (sql_res && mysql_num_rows(sql_res) > 0) { //Found a match
-					sprintf(tmpsql,"UPDATE `%s` SET `ban_until` = '0' WHERE `%s` = '%d'", login_db,login_db_account_id,acc);
-					//query
-					if(mysql_query(&mysql_handle, tmpsql)) {
-						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
-					}
-				}
-				if (sql_res) mysql_free_result(sql_res);
-				RFIFOSKIP(fd,6);
 			}
+			if (sql_res) mysql_free_result(sql_res);
+
+			RFIFOSKIP(fd,6);
 			return 0;
+		}
 
 		case 0x272b:    // Set account_id to online [Wizputer]
 			if (RFIFOREST(fd) < 6)
 				return 0;
 			add_online_user(id, RFIFOL(fd,2));
 			RFIFOSKIP(fd,6);
-			break;
+		break;
 
 		case 0x272c:   // Set account_id to offline [Wizputer]
 			if (RFIFOREST(fd) < 6)
 				return 0;
 			remove_online_user(RFIFOL(fd,2));
 			RFIFOSKIP(fd,6);
-			break;
+		break;
 
 		case 0x272d:	// Receive list of all online accounts. [Skotlex]
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
@@ -1182,43 +1187,46 @@ int parse_fromchar(int fd)
 				}
 			}
 			RFIFOSKIP(fd,RFIFOW(fd,2));
-			break;
+
+		break;
 		case 0x272e: //Request account_reg2 for a character.
 			if (RFIFOREST(fd) < 10)
 				return 0;
-			{
-				int account_id = RFIFOL(fd, 2);
-				int char_id = RFIFOL(fd, 6);
-				int p;
-				WFIFOHEAD(fd,10000);
-				RFIFOSKIP(fd,10);
-				sprintf(tmpsql, "SELECT `str`,`value` FROM `%s` WHERE `type`='1' AND `account_id`='%d'",reg_db, account_id);
-				if (mysql_query(&mysql_handle, tmpsql)) {
-					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
-					break;
-				}
-				sql_res = mysql_store_result(&mysql_handle) ;
-				if (!sql_res) {
-					break;
-				}
-				WFIFOW(fd,0) = 0x2729;
-				WFIFOL(fd,4) = account_id;
-				WFIFOL(fd,8) = char_id;
-				WFIFOB(fd,12) = 1; //Type 1 for Account2 registry
-				for(p = 13; (sql_row = mysql_fetch_row(sql_res)) && p < 9000;){
-					if (sql_row[0][0]) {
-						p+= sprintf(WFIFOP(fd,p), "%s", sql_row[0])+1; //We add 1 to consider the '\0' in place.
-						p+= sprintf(WFIFOP(fd,p), "%s", sql_row[1])+1;
-					}
-				}
-				if (p >= 9000)
-					ShowWarning("Too many account2 registries for AID %d. Some registries were not sent.\n", account_id);
-				WFIFOW(fd,2) = p;
-				WFIFOSET(fd,WFIFOW(fd,2));
-				mysql_free_result(sql_res);
+		{
+			int account_id = RFIFOL(fd, 2);
+			int char_id = RFIFOL(fd, 6);
+			int p;
+			sprintf(tmpsql, "SELECT `str`,`value` FROM `%s` WHERE `type`='1' AND `account_id`='%d'",reg_db, account_id);
+			if (mysql_query(&mysql_handle, tmpsql)) {
+				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
+				break;
 			}
-			break;
+			sql_res = mysql_store_result(&mysql_handle) ;
+			if (!sql_res) {
+				break;
+			}
+			WFIFOHEAD(fd,10000);
+			WFIFOW(fd,0) = 0x2729;
+			WFIFOL(fd,4) = account_id;
+			WFIFOL(fd,8) = char_id;
+			WFIFOB(fd,12) = 1; //Type 1 for Account2 registry
+			p = 13;
+			while ((sql_row = mysql_fetch_row(sql_res)) && p < 9000) {
+				if (sql_row[0][0]) {
+					p+= sprintf(WFIFOP(fd,p), "%s", sql_row[0])+1; //We add 1 to consider the '\0' in place.
+					p+= sprintf(WFIFOP(fd,p), "%s", sql_row[1])+1;
+				}
+			}
+			mysql_free_result(sql_res);
+			if (p >= 9000)
+				ShowWarning("Too many account2 registries for AID %d. Some registries were not sent.\n", account_id);
+			WFIFOW(fd,2) = p;
+			WFIFOSET(fd,WFIFOW(fd,2));
+
+			RFIFOSKIP(fd,10);
+		}
+		break;
 
 		case 0x2736: // WAN IP update from char-server
 			if (RFIFOREST(fd) < 6)
@@ -1226,20 +1234,20 @@ int parse_fromchar(int fd)
 			server[id].ip = ntohl(RFIFOL(fd,2));
 			ShowInfo("Updated IP of Server #%d to %d.%d.%d.%d.\n",id, CONVIP(server[id].ip));
 			RFIFOSKIP(fd,6);
-			break;
+		break;
 
 		case 0x2737: //Request to set all offline.
 			ShowInfo("Setting accounts from char-server %d offline.\n", id);
 			online_db->foreach(online_db,online_db_setoffline,id);
 			RFIFOSKIP(fd,2);
-			break;
+		break;
 
 		default:
 			ShowError("parse_fromchar: Unknown packet 0x%x from a char-server! Disconnecting!\n", RFIFOW(fd,0));
 			set_eof(fd);
 			return 0;
-		}
-	}
+		} // switch
+	} // while
 
 	RFIFOSKIP(fd,RFIFOREST(fd));
 	return 0;
@@ -1311,11 +1319,8 @@ int parse_login(int fd)
 	int result, i;
 	uint32 ipl = session[fd]->client_addr;
 	char ip[16];
-	RFIFOHEAD(fd);
 
 	ip2str(ipl, ip);
-
-	memset(&account, 0, sizeof(account));
 
 	if (session[fd]->eof) {
 		do_close(fd);
@@ -1332,13 +1337,13 @@ int parse_login(int fd)
 			if (RFIFOREST(fd) < 26)
 				return 0;
 			RFIFOSKIP(fd,26);
-			break;
+		break;
 
 		case 0x0204:		// New alive packet: structure: 0x204 <encrypted.account.userid>.16B. (new ragexe from 22 june 2004)
 			if (RFIFOREST(fd) < 18)
 				return 0;
 			RFIFOSKIP(fd,18);
-			break;
+		break;
 
 		case 0x0064:		// request client login
 		case 0x0277:		// New login packet (layout is same as 0x64 but different length)
@@ -1367,6 +1372,7 @@ int parse_login(int fd)
 			// S 0277 ??
 			// S 01dd <version>.l <account name>.24B <md5 binary>.16B <version2>.B
 
+			memset(&account, 0, sizeof(account));
 			account.version = RFIFOL(fd,2);
 			if (!account.version) account.version = 1; //Force some version...
 			memcpy(account.userid,RFIFOP(fd,6),NAME_LENGTH); account.userid[23] = '\0';
@@ -1382,7 +1388,6 @@ int parse_login(int fd)
 					WFIFOB(fd,2) = 1; // 01 = Server closed
 					WFIFOSET(fd,3);
 				} else {
-					WFIFOHEAD(fd,47+32*MAX_SERVERS);
 					if (login_config.log_login) {
 						sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s','100', 'login ok')", loginlog_db, ipl, t_uid);
 						//query
@@ -1397,6 +1402,7 @@ int parse_login(int fd)
 						ShowStatus("Connection of the account '%s' accepted.\n", account.userid);
 
 					server_num = 0;
+					WFIFOHEAD(fd,47+32*MAX_SERVERS);
 					for(i = 0; i < MAX_SERVERS; i++) {
 						if (server_fd[i] >= 0) {
 							// Advanced subnet check [LuzZza]
@@ -1436,7 +1442,6 @@ int parse_login(int fd)
 					}
 				}
 			} else { // auth failed
-				WFIFOHEAD(fd,23);
 				if (login_config.log_login)
 				{
 					const char* error;
@@ -1519,6 +1524,7 @@ int parse_login(int fd)
 				sql_row = sql_res?mysql_fetch_row(sql_res):NULL;
 
 				//cannot connect login failed
+				WFIFOHEAD(fd,23);
 				memset(WFIFOP(fd,0), '\0', 23);
 				WFIFOW(fd,0) = 0x6a;
 				WFIFOB(fd,2) = (uint8)result;
@@ -1532,9 +1538,10 @@ int parse_login(int fd)
 
 				if (sql_res) mysql_free_result(sql_res);
 			}
+
 			RFIFOSKIP(fd,packet_len);
-			break;
 		}
+		break;
 
 		case 0x01db:	// Sending request of the coding key
 		{
@@ -1554,87 +1561,91 @@ int parse_login(int fd)
 			for(i = 0; i < ld->md5keylen; i++)
 				ld->md5key[i] = (char)(1 + rand() % 255);
 
-			RFIFOSKIP(fd,2);
 			WFIFOHEAD(fd,4 + ld->md5keylen);
 			WFIFOW(fd,0) = 0x01dc;
 			WFIFOW(fd,2) = 4 + ld->md5keylen;
 			memcpy(WFIFOP(fd,4), ld->md5key, ld->md5keylen);
 			WFIFOSET(fd,WFIFOW(fd,2));
+
+			RFIFOSKIP(fd,2);
 		}
 		break;
 
 		case 0x2710:	// Connection request of a char-server
 			if (RFIFOREST(fd) < 86)
 				return 0;
+		{
+			char* server_name;
+			uint32 server_ip;
+			uint16 server_port;
+
+			memset(&account, 0, sizeof(account));
+			memcpy(account.userid,RFIFOP(fd,2),NAME_LENGTH); account.userid[23] = '\0';
+			memcpy(account.passwd,RFIFOP(fd,26),NAME_LENGTH); account.passwd[23] = '\0';
+			account.passwdenc = 0;
+			server_name = (char*)RFIFOP(fd,60); server_name[20] = '\0';
+			server_ip = ntohl(RFIFOL(fd,54));
+			server_port = ntohs(RFIFOW(fd,58));
+			ShowInfo("Connection request of the char-server '%s' @ %d.%d.%d.%d:%d (ip: %s)\n",
+				server_name, CONVIP(server_ip), server_port, ip);
+			jstrescapecpy(t_uid, server_name);
+			if (login_config.log_login)
 			{
-				char* server_name;
-				uint32 server_ip;
-				uint16 server_port;
+				char t_login[50];
+				jstrescapecpy(t_login,account.userid);
+				sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s@%s','100', 'charserver - %s@%u.%u.%u.%u:%d')",
+					loginlog_db, ipl, t_login, t_uid, t_uid, CONVIP(server_ip), server_port);
 
-				WFIFOHEAD(fd,3);
-				memcpy(account.userid,RFIFOP(fd,2),NAME_LENGTH); account.userid[23] = '\0';
-				memcpy(account.passwd,RFIFOP(fd,26),NAME_LENGTH); account.passwd[23] = '\0';
-				account.passwdenc = 0;
-				server_name = (char*)RFIFOP(fd,60); server_name[20] = '\0';
-				server_ip = ntohl(RFIFOL(fd,54));
-				server_port = ntohs(RFIFOW(fd,58));
-				ShowInfo("Connection request of the char-server '%s' @ %d.%d.%d.%d:%d (ip: %s)\n",
-					server_name, CONVIP(server_ip), server_port, ip);
-				jstrescapecpy(t_uid, server_name);
-				if (login_config.log_login)
-				{
-					char t_login[50];
-					jstrescapecpy(t_login,account.userid);
-					sprintf(tmpsql,"INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s@%s','100', 'charserver - %s@%u.%u.%u.%u:%d')",
-						loginlog_db, ipl, t_login, t_uid, t_uid, CONVIP(server_ip), server_port);
-
-					//query
-					if(mysql_query(&mysql_handle, tmpsql)) {
-						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
-					}
-				}
-
-				result = mmo_auth(&account, fd);
-				if (result == -1 && account.sex == 2 && account.account_id < MAX_SERVERS && server_fd[account.account_id] == -1) {
-					ShowStatus("Connection of the char-server '%s' accepted.\n", server_name);
-					memset(&server[account.account_id], 0, sizeof(struct mmo_char_server));
-					server[account.account_id].ip = ntohl(RFIFOL(fd,54));
-					server[account.account_id].port = ntohs(RFIFOW(fd,58));
-					memcpy(server[account.account_id].name, server_name, 20);
-					server[account.account_id].users = 0;
-					server[account.account_id].maintenance = RFIFOW(fd,82);
-					server[account.account_id].new_ = RFIFOW(fd,84);
-					server_fd[account.account_id] = fd;
-					sprintf(tmpsql,"DELETE FROM `sstatus` WHERE `index`='%d'", account.account_id);
-					//query
-					if(mysql_query(&mysql_handle, tmpsql)) {
-						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
-					}
-
-					sprintf(tmpsql,"INSERT INTO `sstatus`(`index`,`name`,`user`) VALUES ( '%d', '%s', '%d')",
-						account.account_id, t_uid,0);
-					//query
-					if(mysql_query(&mysql_handle, tmpsql)) {
-						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
-					}
-					WFIFOW(fd,0) = 0x2711;
-					WFIFOB(fd,2) = 0;
-					WFIFOSET(fd,3);
-					session[fd]->func_parse = parse_fromchar;
-					realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
-					// send GM account to char-server
-					send_GM_accounts(fd);
-				} else {
-					WFIFOW(fd,0) = 0x2711;
-					WFIFOB(fd,2) = 3;
-					WFIFOSET(fd,3);
+				//query
+				if(mysql_query(&mysql_handle, tmpsql)) {
+					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 				}
 			}
+
+			result = mmo_auth(&account, fd);
+			if (result == -1 && account.sex == 2 && account.account_id < MAX_SERVERS && server_fd[account.account_id] == -1) {
+				ShowStatus("Connection of the char-server '%s' accepted.\n", server_name);
+				memset(&server[account.account_id], 0, sizeof(struct mmo_char_server));
+				server[account.account_id].ip = ntohl(RFIFOL(fd,54));
+				server[account.account_id].port = ntohs(RFIFOW(fd,58));
+				memcpy(server[account.account_id].name, server_name, 20);
+				server[account.account_id].users = 0;
+				server[account.account_id].maintenance = RFIFOW(fd,82);
+				server[account.account_id].new_ = RFIFOW(fd,84);
+				server_fd[account.account_id] = fd;
+				sprintf(tmpsql,"DELETE FROM `sstatus` WHERE `index`='%d'", account.account_id);
+				//query
+				if(mysql_query(&mysql_handle, tmpsql)) {
+					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
+				}
+				
+				sprintf(tmpsql,"INSERT INTO `sstatus`(`index`,`name`,`user`) VALUES ( '%d', '%s', '%d')",
+					account.account_id, t_uid,0);
+				//query
+				if(mysql_query(&mysql_handle, tmpsql)) {
+					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
+				}
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x2711;
+				WFIFOB(fd,2) = 0;
+				WFIFOSET(fd,3);
+				session[fd]->func_parse = parse_fromchar;
+				realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
+				
+				send_GM_accounts(fd); // send GM account to char-server
+			} else {
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x2711;
+				WFIFOB(fd,2) = 3;
+				WFIFOSET(fd,3);
+			}
+
 			RFIFOSKIP(fd,86);
 			return 0;
+		}
 
 		case 0x7530:	// Server version information request
 		{
@@ -1649,14 +1660,15 @@ int parse_login(int fd)
 			WFIFOB(fd,7) = ATHENA_SERVER_LOGIN;
 			WFIFOW(fd,8) = ATHENA_MOD_VERSION;
 			WFIFOSET(fd,10);
+
 			RFIFOSKIP(fd,2);
-			break;
 		}
+		break;
 
 		case 0x7532:	// Request to end connection
 			ShowStatus ("End of connection (ip: %s)" RETCODE, ip);
 			set_eof(fd);
-			break;
+		break;
 
 		default:
 			ShowStatus ("Abnormal end of connection (ip: %s): Unknown packet 0x%x " RETCODE, ip, RFIFOW(fd,0));

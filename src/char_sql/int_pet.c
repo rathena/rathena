@@ -15,16 +15,6 @@
 
 struct s_pet *pet_pt;
 
-#ifndef SQL_DEBUG
-
-#define mysql_query(_x, _y) mysql_real_query(_x, _y, strlen(_y)) //supports ' in names and runs faster [Kevin]
-
-#else 
-
-#define mysql_query(_x, _y) debug_mysql_query(__FILE__, __LINE__, _x, _y)
-
-#endif
-
 //---------------------------------------------------------
 int inter_pet_tosql(int pet_id, struct s_pet *p) {
 	//`pet` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`)

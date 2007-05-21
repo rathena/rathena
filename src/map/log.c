@@ -14,12 +14,6 @@
 #include "log.h"
 #include "battle.h"
 
-#ifndef SQL_DEBUG
-	#define mysql_query(_x, _y) mysql_real_query(_x, _y, strlen(_y)) //supports ' in names and runs faster [Kevin]
-#else 
-	#define mysql_query(_x, _y) debug_mysql_query(__FILE__, __LINE__, _x, _y)
-#endif
-
 struct Log_Config log_config;
 
 char timestring[255];

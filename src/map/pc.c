@@ -7012,7 +7012,6 @@ int pc_autosave(int tid,unsigned int tick,int id,int data)
 int pc_read_gm_account(int fd)
 {
 	int i = 0;
-	RFIFOHEAD(fd);
 	if (gm_account != NULL)
 		aFree(gm_account);
 	GM_num = 0;

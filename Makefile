@@ -33,9 +33,6 @@ endif
 # OPT += -DPACKETVER=8
 # Makes map-wide script variables be saved to SQL instead of TXT files.
 # OPT += -DMAPREGSQL
-# Turbo is an alternate socket access implementation which should be faster.
-# DO NOT ENABLE YET as it isn't quite ready for general usage.
-# OPT += -DTURBO
 # Enable the perl regular expression support for scripts
 # OPT += -DPCRE_SUPPORT
 # OPT += -DGCOLLECT

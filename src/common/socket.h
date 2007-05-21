@@ -21,19 +21,10 @@
 
 
 // socket I/O macros
-#ifdef TURBO
-#define RFIFOVAR(fd) rbPtr ## fd
-#define WFIFOVAR(fd) wbPtr ## fd
-#define RFIFOHEAD(fd) uint8 *RFIFOVAR(fd) = session[fd]->rdata+session[fd]->rdata_pos
-#define WFIFOHEAD(fd, x) uint8 *WFIFOVAR(fd) = ( (fd) > 0 && session[fd] ? session[fd]->wdata+session[fd]->wdata_size : NULL )
-#define RFIFOP(fd,pos) ( &RFIFOVAR(fd) + (pos) )
-#define WFIFOP(fd,pos) ( &WFIFOVAR(fd) + (pos) )
-#else
 #define RFIFOHEAD(fd)
 #define WFIFOHEAD(fd, size) do{ if((fd) && session[fd]->wdata_size + (size) > session[fd]->max_wdata ) realloc_writefifo(fd, size); }while(0)
 #define RFIFOP(fd,pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
 #define WFIFOP(fd,pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
-#endif
 
 #define RFIFOB(fd,pos) (*(uint8*)RFIFOP(fd,pos))
 #define WFIFOB(fd,pos) (*(uint8*)WFIFOP(fd,pos))

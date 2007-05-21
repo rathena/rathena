@@ -4,8 +4,6 @@
 #ifndef	_CORE_H_
 #define	_CORE_H_
 
-//#define SQL_DEBUG //uncomment for debug_mysql_query instead of mysql_real_query
-	
 extern int arg_c;
 extern char **arg_v;
 

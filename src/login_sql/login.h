@@ -13,12 +13,6 @@
 // supported encryption types: 1- passwordencrypt, 2- passwordencrypt2, 3- both
 #define PASSWORDENC 3
 
-#ifndef SQL_DEBUG
-	#define mysql_query(_x, _y) mysql_query(_x, _y)
-#else 
-	#define mysql_query(_x, _y) debug_mysql_query(__FILE__, __LINE__, _x, _y)
-#endif
-
 struct mmo_account {
 	int version;
 	char userid[NAME_LENGTH];

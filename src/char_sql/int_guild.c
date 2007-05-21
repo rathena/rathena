@@ -49,8 +49,6 @@ int mapif_guild_info(int fd,struct guild *g);
 int guild_break_sub(int key,void *data,va_list ap);
 int inter_guild_tosql(struct guild *g,int flag);
 
-#define mysql_query(_x, _y)  debug_mysql_query(__FILE__, __LINE__, _x, _y)
-
 static int guild_save(DBKey key, void *data, va_list ap) {
 	struct guild *g = (struct guild*) data;
 	int *last_id = va_arg(ap, int *);

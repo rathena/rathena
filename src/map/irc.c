@@ -147,7 +147,6 @@ int irc_parse(int fd)
 	}
 	if(RFIFOREST(fd) > 0){
 		char *incoming_string=aMalloc(RFIFOREST(fd)*sizeof(char));
-		RFIFOHEAD(fd);
 		memcpy(incoming_string,RFIFOP(fd,0),RFIFOREST(fd));
 		send_to_parser(fd,incoming_string,"\n");
 		RFIFOSKIP(fd,RFIFOREST(fd));

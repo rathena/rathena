@@ -24,18 +24,6 @@
 #include "pc.h"
 #include "mail.h"
 
-#ifndef TXT_ONLY
-	#ifndef SQL_DEBUG
-
-		#define mysql_query(_x, _y) mysql_real_query(_x, _y, strlen(_y))
-
-	#else 
-
-		#define mysql_query(_x, _y) debug_mysql_query(__FILE__, __LINE__, _x, _y)
-
-	#endif
-#endif
-
 int MAIL_CHECK_TIME = 120000;
 int mail_timer;
 //extern char *msg_table[1000]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)

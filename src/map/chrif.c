@@ -207,7 +207,7 @@ int chrif_save(struct map_session_data *sd, int flag)
 int chrif_connect(int fd)
 {
 	ShowStatus("Logging in to char server...\n", char_fd);
-	WFIFOHEAD(fd, 60);
+	WFIFOHEAD(fd,60);
 	WFIFOW(fd,0) = 0x2af8;
 	memcpy(WFIFOP(fd,2), userid, NAME_LENGTH);
 	memcpy(WFIFOP(fd,26), passwd, NAME_LENGTH);
@@ -240,7 +240,6 @@ int chrif_recvmap(int fd)
 	int i, j;
 	uint32 ip;
 	uint16 port;
-	RFIFOHEAD(fd);
 	ip = ntohl(RFIFOL(fd,4));
 	port = ntohs(RFIFOW(fd,8));
 	for(i = 10, j = 0; i < RFIFOW(fd,2); i += 4, j++) {
@@ -259,7 +258,6 @@ int chrif_removemap(int fd)
 	int i, j;
 	uint32 ip;
 	uint16 port;
-	RFIFOHEAD(fd);
 
 	ip = RFIFOL(fd, 4);
 	port = RFIFOW(fd, 8);
@@ -278,7 +276,6 @@ int chrif_removemap(int fd)
 int chrif_save_ack(int fd)
 {
 	struct map_session_data *sd;
-	RFIFOHEAD(fd);
 	sd = map_id2sd(RFIFOL(fd,2));
 
 	if (sd && sd->status.char_id == RFIFOL(fd,6))
@@ -306,7 +303,7 @@ int chrif_changemapserver(struct map_session_data *sd, short map, int x, int y, 
 	else //Not connected? Can't retrieve IP
 		s_ip = 0;
 
-	WFIFOHEAD(char_fd, 35);
+	WFIFOHEAD(char_fd,35);
 	WFIFOW(char_fd, 0) = 0x2b05;
 	WFIFOL(char_fd, 2) = sd->bl.id;
 	WFIFOL(char_fd, 6) = sd->login_id1;
@@ -329,7 +326,6 @@ int chrif_changemapserverack(int fd)
 {
 	struct map_session_data *sd;
 	char mapname[MAP_NAME_LENGTH_EXT];
-	RFIFOHEAD(fd);
 	sd = map_id2sd(RFIFOL(fd,2));
 
 	if (sd == NULL || sd->status.char_id != RFIFOL(fd,14))
@@ -355,7 +351,6 @@ int chrif_changemapserverack(int fd)
  *------------------------------------------*/
 int chrif_connectack(int fd)
 {
-	RFIFOHEAD(fd);
 	if (RFIFOB(fd,2)) {
 		ShowFatalError("Connection to char-server failed %d.\n", RFIFOB(fd,2));
 		exit(1);
@@ -381,7 +376,6 @@ int chrif_connectack(int fd)
  *------------------------------------------*/
 int chrif_sendmapack(int fd)
 {
-	RFIFOHEAD(fd);
 	if (RFIFOB(fd,2)) {
 		ShowFatalError("chrif : send map list to char server failed %d\n", RFIFOB(fd,2));
 		exit(1);
@@ -408,10 +402,10 @@ int chrif_scdata_request(int account_id, int char_id)
 #ifdef ENABLE_SC_SAVING
 	chrif_check(-1);
 
-	WFIFOHEAD(char_fd, 10);
-	WFIFOW(char_fd, 0) = 0x2afc;
-	WFIFOL(char_fd, 2) = account_id;
-	WFIFOL(char_fd, 6) = char_id;
+	WFIFOHEAD(char_fd,10);
+	WFIFOW(char_fd,0) = 0x2afc;
+	WFIFOL(char_fd,2) = account_id;
+	WFIFOL(char_fd,6) = char_id;
 	WFIFOSET(char_fd,10);
 #endif
 	return 0;
@@ -455,7 +449,6 @@ void chrif_authok(int fd)
 {
 	struct auth_node *auth_data;
 	TBL_PC* sd;
-	RFIFOHEAD(fd);
 	//Check if we don't already have player data in our server
 	//(prevents data that is to be saved from being overwritten by
 	//this received status data if this auth is later successful) [Skotlex]
@@ -535,7 +528,7 @@ int chrif_charselectreq(struct map_session_data* sd, uint32 s_ip)
 		return -1;
 	chrif_check(-1);
 
-	WFIFOHEAD(char_fd, 18);
+	WFIFOHEAD(char_fd,18);
 	WFIFOW(char_fd, 0) = 0x2b02;
 	WFIFOL(char_fd, 2) = sd->bl.id;
 	WFIFOL(char_fd, 6) = sd->login_id1;
@@ -555,7 +548,7 @@ int chrif_searchcharid(int char_id)
 		return -1;
 	chrif_check(-1);
 
-	WFIFOHEAD(char_fd, 6);
+	WFIFOHEAD(char_fd,6);
 	WFIFOW(char_fd,0) = 0x2b08;
 	WFIFOL(char_fd,2) = char_id;
 	WFIFOSET(char_fd,6);
@@ -593,7 +586,7 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email)
 
 	chrif_check(-1);
 
-        WFIFOHEAD(char_fd, 86);
+	WFIFOHEAD(char_fd,86);
 	WFIFOW(char_fd,0) = 0x2b0c;
 	WFIFOL(char_fd,2) = id;
 	memcpy(WFIFOP(char_fd,6), actual_email, 40);
@@ -643,7 +636,7 @@ int chrif_changesex(int id, int sex)
 {
 	chrif_check(-1);
 
-        WFIFOHEAD(char_fd, 9);
+	WFIFOHEAD(char_fd,9);
 	WFIFOW(char_fd,0) = 0x2b11;
 	WFIFOW(char_fd,2) = 9;
 	WFIFOL(char_fd,4) = id;
@@ -673,7 +666,6 @@ int chrif_char_ask_name_answer(int fd)
 	struct map_session_data *sd;
 	char output[256];
 	char player_name[NAME_LENGTH];
-	RFIFOHEAD(fd);
 
 	acc = RFIFOL(fd,2); // account_id of who has asked (-1 if nobody)
 	memcpy(player_name, RFIFOP(fd,6), NAME_LENGTH-1);
@@ -774,7 +766,6 @@ int chrif_changedgm(int fd)
 {
 	int acc, level;
 	struct map_session_data *sd = NULL;
-	RFIFOHEAD(fd);
 
 	acc = RFIFOL(fd,2);
 	level = RFIFOL(fd,6);
@@ -800,7 +791,6 @@ int chrif_changedsex(int fd)
 {
 	int acc, sex, i;
 	struct map_session_data *sd;
-	RFIFOHEAD(fd);
 
 	acc = RFIFOL(fd,2);
 	sex = RFIFOL(fd,6);
@@ -896,7 +886,6 @@ int chrif_accountdeletion(int fd)
 {
 	int acc;
 	struct map_session_data *sd;
-	RFIFOHEAD(fd);
 
 	acc = RFIFOL(fd,2);
 	if (battle_config.etc_log)
@@ -923,7 +912,6 @@ int chrif_accountban(int fd)
 {
 	int acc;
 	struct map_session_data *sd;
-	RFIFOHEAD(fd);
 
 	acc = RFIFOL(fd,2);
 	if (battle_config.etc_log)
@@ -991,7 +979,6 @@ int chrif_accountban(int fd)
 int chrif_disconnectplayer(int fd)
 {
 	struct map_session_data *sd;
-	RFIFOHEAD(fd);
 
 	sd = map_id2sd(RFIFOL(fd, 2));
 
@@ -1040,9 +1027,9 @@ int chrif_reloadGMdb(void)
 {
 	chrif_check(-1);
 
-	WFIFOHEAD(char_fd, 2);
+	WFIFOHEAD(char_fd,2);
 	WFIFOW(char_fd,0) = 0x2af7;
-	WFIFOSET(char_fd, 2);
+	WFIFOSET(char_fd,2);
 
 	return 0;
 }
@@ -1080,12 +1067,12 @@ int chrif_updatefamelist(struct map_session_data *sd)
 	}
 
 	WFIFOHEAD(char_fd, 12);
-	WFIFOW(char_fd, 0) = 0x2b10;
-	WFIFOL(char_fd, 2) = sd->status.char_id;
-	WFIFOL(char_fd, 6) = sd->status.fame;
-	WFIFOB(char_fd, 10) = type;
-	WFIFOB(char_fd, 11) = pc_famerank(sd->status.char_id, sd->class_&MAPID_UPPERMASK);
-	WFIFOSET(char_fd, 12);
+	WFIFOW(char_fd,0) = 0x2b10;
+	WFIFOL(char_fd,2) = sd->status.char_id;
+	WFIFOL(char_fd,6) = sd->status.fame;
+	WFIFOB(char_fd,10) = type;
+	WFIFOB(char_fd,11) = pc_famerank(sd->status.char_id, sd->class_&MAPID_UPPERMASK);
+	WFIFOSET(char_fd,12);
 
 	return 0;
 }
@@ -1094,9 +1081,9 @@ int chrif_buildfamelist(void)
 {
 	chrif_check(-1);
 
-	WFIFOHEAD(char_fd, 2);
-	WFIFOW(char_fd, 0) = 0x2b1a;
-	WFIFOSET(char_fd, 2);
+	WFIFOHEAD(char_fd,2);
+	WFIFOW(char_fd,0) = 0x2b1a;
+	WFIFOSET(char_fd,2);
 
 	return 0;
 }
@@ -1105,7 +1092,6 @@ int chrif_recvfamelist(int fd)
 {
 	int num, size;
 	int total = 0, len = 8;
-	RFIFOHEAD(fd);
 
 	memset (smith_fame_list, 0, sizeof(smith_fame_list));
 	memset (chemist_fame_list, 0, sizeof(chemist_fame_list));
@@ -1141,7 +1127,6 @@ int chrif_updatefamelist_ack(int fd)
 {
 	struct fame_list *list;
 	char index;
-	RFIFOHEAD(fd);
 	switch (RFIFOB(fd, 2))
 	{
 		case 1:
@@ -1213,7 +1198,6 @@ int chrif_load_scdata(int fd)
 	struct map_session_data *sd;
 	struct status_change_data *data;
 	int aid, cid, i, count;
-	RFIFOHEAD(fd);
 
 	aid = RFIFOL(fd,4); //Player Account ID
 	cid = RFIFOL(fd,8); //Player Char ID
@@ -1290,7 +1274,7 @@ int chrif_char_offline(struct map_session_data *sd)
 {
 	chrif_check(-1);
 
-	WFIFOHEAD(char_fd, 10);
+	WFIFOHEAD(char_fd,10);
 	WFIFOW(char_fd,0) = 0x2b17;
 	WFIFOL(char_fd,2) = sd->status.char_id;
 	WFIFOL(char_fd,6) = sd->status.account_id;
@@ -1320,7 +1304,7 @@ int chrif_char_reset_offline(void)
 {
 	chrif_check(-1);
 
-	WFIFOHEAD(char_fd, 2);
+	WFIFOHEAD(char_fd,2);
 	WFIFOW(char_fd,0) = 0x2b18;
 	WFIFOSET(char_fd,2);
 
@@ -1335,7 +1319,7 @@ int chrif_char_online(struct map_session_data *sd)
 {
 	chrif_check(-1);
 
-        WFIFOHEAD(char_fd, 10);
+	WFIFOHEAD(char_fd,10);
 	WFIFOW(char_fd,0) = 0x2b19;
 	WFIFOL(char_fd,2) = sd->status.char_id;
 	WFIFOL(char_fd,6) = sd->status.account_id;
@@ -1363,16 +1347,16 @@ int chrif_disconnect(int fd)
 void chrif_update_ip(int fd)
 {
 	uint32 new_ip;
-	WFIFOHEAD(fd, 6);
+	WFIFOHEAD(fd,6);
 	new_ip = host2ip(char_ip_str);
 	if (new_ip && new_ip != char_ip)
 		char_ip = new_ip; //Update char_ip
 
 	new_ip = clif_refresh_ip();
 	if (!new_ip) return; //No change
-	WFIFOW(fd, 0) = 0x2736;
-	WFIFOL(fd, 2) = htonl(new_ip);
-	WFIFOSET(fd, 6);
+	WFIFOW(fd,0) = 0x2736;
+	WFIFOL(fd,2) = htonl(new_ip);
+	WFIFOSET(fd,6);
 }
 
 /*==========================================
@@ -1395,7 +1379,6 @@ int chrif_parse(int fd)
 	}
 
 	while (RFIFOREST(fd) >= 2) { //Infinite loop on broken pipe fix. [Skotlex]
-		RFIFOHEAD(fd);
 		cmd = RFIFOW(fd,0);
 		if (cmd < 0x2af8 || cmd >= 0x2af8 + (sizeof(packet_len_table) / sizeof(packet_len_table[0])) ||
 		    packet_len_table[cmd-0x2af8] == 0) {
@@ -1469,7 +1452,7 @@ int send_usercount_tochar(int tid, unsigned int tick, int id, int data)
 		return 0;
 	last_count = count;
 
-	WFIFOHEAD(char_fd, 4);
+	WFIFOHEAD(char_fd,4);
 	WFIFOW(char_fd,0) = 0x2afe;
 	WFIFOW(char_fd,2) = count;
 	WFIFOSET(char_fd,4);

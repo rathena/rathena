@@ -179,11 +179,9 @@ int enable_grf = 0;	//To enable/disable reading maps from GRF files, bypassing m
  *------------------------------------------*/
 void map_setusers(int fd)
 {
-	RFIFOHEAD(fd);
-	WFIFOHEAD(fd, 2);
-
 	map_users = RFIFOL(fd,2);
 	// send some answer
+	WFIFOHEAD(fd, 2);
 	WFIFOW(fd,0) = 0x2718;
 	WFIFOSET(fd,2);
 }
