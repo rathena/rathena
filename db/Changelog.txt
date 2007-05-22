@@ -49,6 +49,11 @@
 	----
 ========================
 05/22
+	* Made Thor Volcano mobs safe to use [Playtester]
+	- raised their DEF/MDEF
+	- raised their speed
+	- removed 11.3 drops (using 11.2 drops)
+	- added most of their skills thanks to Doddler
 	* Rev. 10602 Poison Bottle now reduces SP to 0 as well. [L0ne_W0lf]
 05/20
 	* Chase Walk's casting time is now 1200ms [Playtester]
