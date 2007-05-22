@@ -170,7 +170,7 @@
 675,Silver_Coin,Silver Coin,2,5000,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
 676,Silver_Coin_Moneybag,Bag of Silver Coins,2,50000,,400,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
 677,White_Gold_Coin,Platinum Coin,2,2000,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-678,Poison_Bottle,Poison Bottle,0,5000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(Class == Job_Assassin_Cross) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION3,60000,0; } else percentheal -100,0; },{},{}
+678,Poison_Bottle,Poison Bottle,0,5000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(Class == Job_Assassin_Cross) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION3,60000,0; } else percentheal -100,-100; },{},{}
 679,Gold_Pill,Pilule,0,5000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; },{},{}
 680,Magical_Carnation,Magic Carnation,0,,0,1000,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,20; },{},{}
 681,Memory_Of_Wedding,Sweet Memory of Marriage,2,50000,,10,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}

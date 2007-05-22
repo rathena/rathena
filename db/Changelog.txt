@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+05/22
+	* Rev. 10602 Poison Bottle now reduces SP to 0 as well. [L0ne_W0lf]
 05/20
 	* Chase Walk's casting time is now 1200ms [Playtester]
 	- also fixed movement speed of Sword Master
