@@ -40,15 +40,9 @@ alberta,30,65,3	script	Akagi#nq	730,{
 				mes "Very well, I'll send you over right away.";
 				close2;
 				switch (rand(3)) {
-					case 1:
-						warp "amatsu", 170, 229;
-						break;
-					case 2:
-						warp "amatsu", 216, 188;
-						break;
-					default:
-						warp "amatsu", 178, 176;
-						break;
+					case 1:  warp "amatsu", 170, 229; break;
+					case 2:  warp "amatsu", 216, 188; break;
+					default: warp "amatsu", 178, 176; break;
 				}
 				end;
 			}

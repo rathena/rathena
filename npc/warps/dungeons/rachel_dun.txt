@@ -15,16 +15,10 @@
 //========================================================
 
 ra_san01,139,13,0	script	sanctuary01	45,1,1,{
-	switch(rand(3)){
-		case 1:
-			warp "ra_san02",213,275;
-			break;
-		case 2:
-			warp "ra_san03",119,283;
-			break;
-		default:
-			warp "ra_san04",119,110;
-			break;
+	switch(rand(3)) {
+		case 1:  warp "ra_san02",213,275; break;
+		case 2:  warp "ra_san03",119,283; break;
+		default: warp "ra_san04",119,110; break;
 	}
 }
 

@@ -1,6 +1,10 @@
 Date		Added
 ======
 2007/05/22
+	* Tweaked some recent npcs [ultramage]
+	- I find using close; to exit a switched callsub/callfunc a major wtf,
+	  similarly when using switch witout absolutely no break statements;
+	  please consider using more proper code structuring in the future.
 	* Added Thor Volcano spawns [Playtester]
 	* Updated Socket Enchant NPC to official. [SinSloth]
 	* Moved Munak's Grandma quest to monstertamers.txt, it didn't require another file. [SinSloth]

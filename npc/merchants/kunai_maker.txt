@@ -1,9 +1,9 @@
 //===== eAthena Script =======================================
 //= Kunai "Trader" @ que_ng
 //===== By: ==================================================
-//= erKURITA
+//= eAthena dev team
 //===== Current Version: =====================================
-//= 1.0
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena 1.0
 //===== Description: =========================================
@@ -14,10 +14,13 @@
 //=	  id of the 2 required items plus the amount. Can trade
 //= 	  up to 500 units (5,000 kunais) at once. [erKURITA]
 //= 1.1 Officialized script [Playtester]
+//= 1.2 Optimized/cleaned up a bit [ultramage]
 //============================================================
-que_ng,72,29,3	script	Kunai Merchant Kashin	83,{
 
-	if(BaseJob != Job_Ninja){
+que_ng,72,29,3	script	Kunai Merchant Kashin	83,{
+	
+	if(BaseJob != Job_Ninja)
+	{
 		mes "[Kashin]";
 		mes "I am Kashin of the Wind. I distribute trade items to the shadows.";
 		next;
@@ -25,6 +28,7 @@ que_ng,72,29,3	script	Kunai Merchant Kashin	83,{
 		mes "It doesn't seem like you are a Ninja... Just take a good look around and be on your way.";
 		close;
 	}
+	
 	mes "[Kashin]";
 	mes "I'm Kashin!";
 	mes "If you're ever short on Shurikens, come and see me.";
@@ -34,32 +38,27 @@ que_ng,72,29,3	script	Kunai Merchant Kashin	83,{
 	mes "Choose what you want.";
 	next;
 
-	switch(select("Poison Kunais:Frost Kunais:Wind Kunais:Earth Kunais:Fire Kunais:Cancel")) {
-
-//Callfunc usage: callfunc "Kunai_Trade",itemreqid1,itemreqct1,itemreqid2,itemreqct2,itemidtrade;
-	case 1:
-		callfunc "Kunai_Trade",13250,20,7524,1,13259;
-	case 2:
-		callfunc "Kunai_Trade",13251,8,7522,2,13255;
-	case 3:
-		callfunc "Kunai_Trade",13252,4,7523,2,13257;
-	case 4:
-		callfunc "Kunai_Trade",13253,2,7524,1,13256;
-	case 5:
-		callfunc "Kunai_Trade",13254,1,7521,2,13258;
+	switch(select("Poison Kunais:Frost Kunais:Wind Kunais:Earth Kunais:Fire Kunais:Cancel"))
+	{
+	//usage: callfunc "Kunai_Trade",itemreqid1,itemreqct1,itemreqid2,itemreqct2,itemidtrade;
+	case 1: callfunc "Kunai_Trade",13250,20,7524,1,13259; break;
+	case 2: callfunc "Kunai_Trade",13251,8,7522,2,13255; break;
+	case 3: callfunc "Kunai_Trade",13252,4,7523,2,13257; break;
+	case 4: callfunc "Kunai_Trade",13253,2,7524,1,13256; break;
+	case 5: callfunc "Kunai_Trade",13254,1,7521,2,13258; break;
 	case 6:
-		goto L_Bye;
+	default:
+		mes "[Kashin]";
+		mes "Hmm~ Ok~";
+		mes "Come again~";
+		mes "I, Kashin of the Wind, will always be at this place.";
+		close;
 	}
-L_Bye:
-	mes "[Kashin]";
-	mes "Hmm~ Ok~";
-	mes "Come again~";
-	mes "I, Kashin of the Wind, will always be at this place.";
 	close;
 }
 
 function	script	Kunai_Trade	{
-
+	
 	mes "[Kashin]";
 	mes "If you give me "+getarg(1)+" "+getitemname(getarg(0))+" and "+getarg(3)+" "+getitemname(getarg(2))+", I'll give you a pack of 10 "+getitemname(getarg(4))+".";
 	next;
@@ -68,29 +67,33 @@ function	script	Kunai_Trade	{
 	mes "If you don't want to trade, just enter 0 as the amount.";
 	next;
 
-	input @trade;
+	input .@trade;
 
-	if(@trade < 1){
+	if(.@trade < 1)
+	{
 		mes "[Kashin]";
 		mes "Hmm~ Ok~";
 		mes "Come again~";
 		mes "I, Kashin of the Wind, will always be at this place.";
 		close;
 	}
-	if(@trade > 500){
+	if(.@trade > 500)
+	{
 		mes "[Kashin]";
 		mes "You've exceeded the input amount!";
 		mes "Enter a valid number next time~!";
 		close;
 	}
-	if(countitem(getarg(0)) < @trade*getarg(1) || countitem(getarg(2)) < @trade*getarg(3)){
+	if(countitem(getarg(0)) < .@trade*getarg(1) || countitem(getarg(2)) < .@trade*getarg(3))
+	{
 		mes "[Kashin]";
 		mes "Hmm... this is no good~";
 		mes "You don't have enough materials to trade in for the amount of Kunai's that you want.";
 		mes "Bring some more if you want this amount.";
 		close;
  	}
-	if(checkweight(getarg(4),@trade*10) == 0){
+	if(checkweight(getarg(4), .@trade*10) == 0)
+	{
 		mes "[Kashin]";
 		mes "Your bag is too full to carry the trade items. Come back after you made room for the traded items.";
 		close;
@@ -99,8 +102,8 @@ function	script	Kunai_Trade	{
 	mes "Ok~ Very well!";
 	mes "Amount verified!";
 	mes "Here are your traded items.";
-	delitem getarg(0),getarg(1)*@trade;
-	delitem getarg(2),getarg(3)*@trade;
-	getitem getarg(4),10*@trade;
+	delitem getarg(0),getarg(1)*.@trade;
+	delitem getarg(2),getarg(3)*.@trade;
+	getitem getarg(4),10*.@trade;
 	close;
 }

@@ -15,6 +15,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version, needs testing. [L0ne_W0lf]
 //============================================================ 
+
 geffen,132,38,3	script	Bard#2	51,{
 	set @name$,strcharinfo(0);
 	if (bard_q > 29) {

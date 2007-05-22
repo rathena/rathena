@@ -1,9 +1,9 @@
 //===== eAthena Script =======================================
 //= Socket Enchant
 //===== By: ==================================================
-//= Sousuke_PL
+//= eAthena dev team
 //===== Current Version: =====================================
-//= 1.1
+//= 1.1b
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -16,6 +16,7 @@
 //= 0.3 Fixed Zweihander[+] id [Lupus]
 //= 1.0 Fixed ingredients check [Lupus]
 //= 1.1	Updated to official. [SinSloth]
+//= 1.1b Optimized/cleaned [ultramage]
 //============================================================
 
 payon,140,151,5		script	Seiyablem	84,{
@@ -46,15 +47,11 @@ payon,140,151,5		script	Seiyablem	84,{
 					next;
 					switch( select( "Trident","Rope","Violin" ) )
 					{
-						case 1:
-							callfunc "Func_Socket",1,1460,1461,40,66,200,1010,10;
-						
-						case 2:
-							callfunc "Func_Socket",1,1950,1951,40,66,200,1010,10;
-							
-						case 3:
-							callfunc "Func_Socket",1,1901,1902,40,66,200,1010,10;
+						case 1: callfunc "Func_Socket",1,1460,1461,40,66,200,1010,10; break;
+						case 2: callfunc "Func_Socket",1,1950,1951,40,66,200,1010,10; break;
+						case 3: callfunc "Func_Socket",1,1901,1902,40,66,200,1010,10; break;
 					}
+				break;
 				
 				case 2:
 					mes "[Seiyablem]";
@@ -64,33 +61,17 @@ payon,140,151,5		script	Seiyablem	84,{
 					next;
 					switch( select( "Chain","Gladius","Gakkung Bow","Pike","Haedonggum","Lute","Wire","Waghnakh","Arbalest Bow" ) )
 					{
-						case 1:
-							callfunc "Func_Socket",1,1519,1520,40,61,300,1010,10;
-							
-						case 2:
-							callfunc "Func_Socket",2,1219,1220,40,61,300,984,1,999,5;
-							
-						case 3:
-							callfunc "Func_Socket",2,1714,1716,40,61,300,984,2,999,5;
-							
-						case 4:
-							callfunc "Func_Socket",1,1407,1408,40,61,300,1010,10;
-							
-						case 5:
-							callfunc "Func_Socket",2,1123,1128,40,61,300,984,2,999,5;
-							
-						case 6:
-							callfunc "Func_Socket",1,1905,1906,40,61,300,1011,10;
-							
-						case 7:
-							callfunc "Func_Socket",1,1954,1955,40,61,300,1011,10;
-							
-						case 8:
-							callfunc "Func_Socket",1,1801,1802,40,61,300,1010,10;
-							
-						case 9:
-							callfunc "Func_Socket",2,1713,1715,40,61,300,984,2,999,5;
+						case 1: callfunc "Func_Socket",1,1519,1520,40,61,300,1010,10; break;
+						case 2: callfunc "Func_Socket",2,1219,1220,40,61,300,984,1,999,5; break;
+						case 3: callfunc "Func_Socket",2,1714,1716,40,61,300,984,2,999,5; break;
+						case 4: callfunc "Func_Socket",1,1407,1408,40,61,300,1010,10; break;
+						case 5: callfunc "Func_Socket",2,1123,1128,40,61,300,984,2,999,5; break;
+						case 6: callfunc "Func_Socket",1,1905,1906,40,61,300,1011,10; break;
+						case 7: callfunc "Func_Socket",1,1954,1955,40,61,300,1011,10; break;
+						case 8: callfunc "Func_Socket",1,1801,1802,40,61,300,1010,10; break;
+						case 9: callfunc "Func_Socket",2,1713,1715,40,61,300,984,2,999,5; break;
 					}
+				break;
 				
 				case 3:
 					mes "[Seiyablem]";
@@ -100,33 +81,17 @@ payon,140,151,5		script	Seiyablem	84,{
 					next;
 					switch( select( "Hunter Bow","Survivor's Rod(INT)","Zweihander","Flamberge","Infiltrator","Ballista","Stunner","Berserk","Claymore" ) )
 					{
-						case 1:
-							callfunc "Func_Socket",2,1718,1726,40,61,500,984,2,999,10;
-							
-						case 2:
-							callfunc "Func_Socket",2,1619,1620,40,61,500,984,2,999,10;
-							
-						case 3:
-							callfunc "Func_Socket",2,1168,1171,40,61,800,984,5,999,10;
-						
-						case 4:
-							callfunc "Func_Socket",2,1129,1149,40,61,500,984,2,999,10;
-						
-						case 5:
-							callfunc "Func_Socket",2,1261,1266,40,61,700,984,5,999,10;
-						
-						case 6:
-							callfunc "Func_Socket",2,1722,1727,40,61,500,984,5,999,10;
-						
-						case 7:
-							callfunc "Func_Socket",2,1522,1532,40,61,700,984,2,999,10;
-							
-						case 8:
-							callfunc "Func_Socket",2,1814,1816,40,61,700,984,5,999,10;
-							
-						case 9:
-							callfunc "Func_Socket",2,1163,1172,40,61,700,984,5,999,10;
+						case 1: callfunc "Func_Socket",2,1718,1726,40,61,500,984,2,999,10; break;
+						case 2: callfunc "Func_Socket",2,1619,1620,40,61,500,984,2,999,10; break;
+						case 3: callfunc "Func_Socket",2,1168,1171,40,61,800,984,5,999,10; break;
+						case 4: callfunc "Func_Socket",2,1129,1149,40,61,500,984,2,999,10; break;
+						case 5: callfunc "Func_Socket",2,1261,1266,40,61,700,984,5,999,10; break;
+						case 6: callfunc "Func_Socket",2,1722,1727,40,61,500,984,5,999,10; break;
+						case 7: callfunc "Func_Socket",2,1522,1532,40,61,700,984,2,999,10; break;
+						case 8: callfunc "Func_Socket",2,1814,1816,40,61,700,984,5,999,10; break;
+						case 9: callfunc "Func_Socket",2,1163,1172,40,61,700,984,5,999,10; break;
 					}
+				break;
 				
 				case 4:
 					mes "[Seiyablem]";
@@ -137,31 +102,18 @@ payon,140,151,5		script	Seiyablem	84,{
 					next;
 					switch( select( "Gungnir","Poison Knife","Ice Pick","Sucsamad","Ginnungagap","Cutlas","Crescent Scythe","Survivor's Rod(DEX)" ) )
 					{
-						case 1:
-							callfunc "Func_Socket",2,1413,1418,40,51,1000,984,5,999,10;
-							
-						case 2:
-							callfunc "Func_Socket",2,1239,13016,40,51,1000,984,5,999,10;
-							
-						case 3:
-							callfunc "Func_Socket",2,1230,13017,40,51,1000,984,5,999,10;
-							
-						case 4:
-							callfunc "Func_Socket",2,1236,13018,40,51,1000,984,5,999,10;
-							
-						case 5:
-							callfunc "Func_Socket",2,13002,13019,40,51,1000,984,5,999,10;
-							
-						case 6:
-							callfunc "Func_Socket",2,1135,13400,40,51,1000,984,5,999,10;
-							
-						case 7:
-							callfunc "Func_Socket",2,1466,1476,40,51,1000,984,5,999,10;
-							
-						case 8:
-							callfunc "Func_Socket",2,1618,1619,40,51,2000,984,5,999,10;
+						case 1: callfunc "Func_Socket",2,1413,1418,40,51,1000,984,5,999,10; break;
+						case 2: callfunc "Func_Socket",2,1239,13016,40,51,1000,984,5,999,10; break;
+						case 3: callfunc "Func_Socket",2,1230,13017,40,51,1000,984,5,999,10; break;
+						case 4: callfunc "Func_Socket",2,1236,13018,40,51,1000,984,5,999,10; break;
+						case 5: callfunc "Func_Socket",2,13002,13019,40,51,1000,984,5,999,10; break;
+						case 6: callfunc "Func_Socket",2,1135,13400,40,51,1000,984,5,999,10; break;
+						case 7: callfunc "Func_Socket",2,1466,1476,40,51,1000,984,5,999,10; break;
+						case 8: callfunc "Func_Socket",2,1618,1619,40,51,2000,984,5,999,10; break;
 					}
+				break;
 			}
+		break;
 		
 		case 2:
 			mes "[Seiyablem]";
@@ -182,18 +134,12 @@ payon,140,151,5		script	Seiyablem	84,{
 					next;
 					switch( select( "Mantle","Coat","Circlet","Biretta" ) )
 					{
-						case 1:
-							callfunc "Func_Socket",1,2307,2308,40,66,200,999,3;
-							
-						case 2:
-							callfunc "Func_Socket",1,2309,2310,40,66,200,999,3;
-							
-						case 3:
-							callfunc "Func_Socket",1,2232,2233,40,66,200,999,3;
-							
-						case 4:
-							callfunc "Func_Socket",1,2216,2217,40,66,200,999,3;
+						case 1: callfunc "Func_Socket",1,2307,2308,40,66,200,999,3; break;
+						case 2: callfunc "Func_Socket",1,2309,2310,40,66,200,999,3; break;
+						case 3: callfunc "Func_Socket",1,2232,2233,40,66,200,999,3; break;
+						case 4: callfunc "Func_Socket",1,2216,2217,40,66,200,999,3; break;
 					}
+				break;
 				
 				case 2:
 					mes "[Seiyablem]";
@@ -202,40 +148,20 @@ payon,140,151,5		script	Seiyablem	84,{
 					next;
 					switch( select( "Mirror Shield","Chain Mail","Saint Robe","Silk Robe","Boots","Shoes","Muffler","Guard","Buckler","Shield","Bongun Hat" ) )
 					{
-						case 1:
-							callfunc "Func_Socket",1,2107,2108,40,61,250,999,5;
-							
-						case 2:
-							callfunc "Func_Socket",1,2314,2315,40,61,250,999,5;
-						
-						case 3:
-							callfunc "Func_Socket",1,2326,2327,40,61,300,999,5;
-						
-						case 4:
-							callfunc "Func_Socket",1,2321,2322,40,61,300,999,5;
-						
-						case 5:
-							callfunc "Func_Socket",1,2405,2406,40,61,300,999,5;
-						
-						case 6:
-							callfunc "Func_Socket",1,2403,2404,40,61,300,999,5;
-						
-						case 7:
-							callfunc "Func_Socket",1,2503,2504,40,61,300,999,5;
-						
-						case 8:
-							callfunc "Func_Socket",1,2101,2102,40,61,300,999,5;
-						
-						case 9:
-							callfunc "Func_Socket",1,2103,2104,40,61,300,999,5;
-						
-						case 10:
-							callfunc "Func_Socket",1,2105,2106,40,61,250,999,5;
-						
-						case 11:
-							callfunc "Func_Socket",1,5046,5168,40,61,250,999,5;
+						case 1:  callfunc "Func_Socket",1,2107,2108,40,61,250,999,5; break;
+						case 2:  callfunc "Func_Socket",1,2314,2315,40,61,250,999,5; break;
+						case 3:  callfunc "Func_Socket",1,2326,2327,40,61,300,999,5; break;
+						case 4:  callfunc "Func_Socket",1,2321,2322,40,61,300,999,5; break;
+						case 5:  callfunc "Func_Socket",1,2405,2406,40,61,300,999,5; break;
+						case 6:  callfunc "Func_Socket",1,2403,2404,40,61,300,999,5; break;
+						case 7:  callfunc "Func_Socket",1,2503,2504,40,61,300,999,5; break;
+						case 8:  callfunc "Func_Socket",1,2101,2102,40,61,300,999,5; break;
+						case 9:  callfunc "Func_Socket",1,2103,2104,40,61,300,999,5; break;
+						case 10: callfunc "Func_Socket",1,2105,2106,40,61,250,999,5; break;
+						case 11: callfunc "Func_Socket",1,5046,5168,40,61,250,999,5; break;
 					}
-					
+				break;
+				
 				case 3:
 					mes "[Seiyablem]";
 					mes "Ooh, A Class.";
@@ -244,60 +170,26 @@ payon,140,151,5		script	Seiyablem	84,{
 					next;
 					switch( select( "Gemmed Sallet","Bucket Hat","Memory Book","Tights","Legion Plate Armor","Full Plate","Thief Clothes","Greaves","Coif","Manteau","Helm","Ninja Suit","Orc Helm","Ancient Cape","Monk Hat","Golden Gear","Brooch","Munak Hat" ) )
 					{
-						case 1:
-							callfunc "Func_Socket",1,2230,2231,40,61,400,985,1;
-							
-						case 2:
-							callfunc "Func_Socket",1,5114,5120,40,61,400,985,1;
-						
-						case 3:
-							callfunc "Func_Socket",1,2109,2121,40,61,400,985,1;
-						
-						case 4:
-							callfunc "Func_Socket",1,2330,2331,40,61,400,985,1;
-						
-						case 5:
-							callfunc "Func_Socket",1,2341,2342,40,61,400,985,1;
-						
-						case 6:
-							callfunc "Func_Socket",1,2316,2317,40,61,400,985,1;
-						
-						case 7:
-							callfunc "Func_Socket",1,2335,2336,40,61,400,985,1;
-						
-						case 8:
-							callfunc "Func_Socket",1,2411,2412,40,61,400,985,1;
-						
-						case 9:
-							callfunc "Func_Socket",1,5092,5093,40,61,400,985,1;
-						
-						case 10:
-							callfunc "Func_Socket",1,2505,2506,40,61,400,985,1;
-						
-						case 11:
-							callfunc "Func_Socket",1,2228,2229,40,61,400,985,1;
-						
-						case 12:
-							callfunc "Func_Socket",1,2337,2359,40,61,400,985,1;
-						
-						case 13:
-							callfunc "Func_Socket",1,2299,5157,40,61,400,985,1;
-						
-						case 14:
-							callfunc "Func_Socket",1,2507,2525,40,61,400,985,1;
-						
-						case 15:
-							callfunc "Func_Socket",1,2251,5158,40,61,400,985,1;
-						
-						case 16:
-							callfunc "Func_Socket",1,2246,5159,40,61,400,985,1;
-						
-						case 17:
-							callfunc "Func_Socket",1,2605,2625,40,61,400,985,1;
-						
-						case 18:
-							callfunc "Func_Socket",1,2264,5167,40,61,400,985,1;
+						case 1:  callfunc "Func_Socket",1,2230,2231,40,61,400,985,1; break;
+						case 2:  callfunc "Func_Socket",1,5114,5120,40,61,400,985,1; break;
+						case 3:  callfunc "Func_Socket",1,2109,2121,40,61,400,985,1; break;
+						case 4:  callfunc "Func_Socket",1,2330,2331,40,61,400,985,1; break;
+						case 5:  callfunc "Func_Socket",1,2341,2342,40,61,400,985,1; break;
+						case 6:  callfunc "Func_Socket",1,2316,2317,40,61,400,985,1; break;
+						case 7:  callfunc "Func_Socket",1,2335,2336,40,61,400,985,1; break;
+						case 8:  callfunc "Func_Socket",1,2411,2412,40,61,400,985,1; break;
+						case 9:  callfunc "Func_Socket",1,5092,5093,40,61,400,985,1; break;
+						case 10: callfunc "Func_Socket",1,2505,2506,40,61,400,985,1; break;
+						case 11: callfunc "Func_Socket",1,2228,2229,40,61,400,985,1; break;
+						case 12: callfunc "Func_Socket",1,2337,2359,40,61,400,985,1; break;
+						case 13: callfunc "Func_Socket",1,2299,5157,40,61,400,985,1; break;
+						case 14: callfunc "Func_Socket",1,2507,2525,40,61,400,985,1; break;
+						case 15: callfunc "Func_Socket",1,2251,5158,40,61,400,985,1; break;
+						case 16: callfunc "Func_Socket",1,2246,5159,40,61,400,985,1; break;
+						case 17: callfunc "Func_Socket",1,2605,2625,40,61,400,985,1; break;
+						case 18: callfunc "Func_Socket",1,2264,5167,40,61,400,985,1; break;
 					}
+				break;
 				
 				case 4:
 					mes "[Seiyablem]";
@@ -307,41 +199,22 @@ payon,140,151,5		script	Seiyablem	84,{
 					next;
 					switch( select( "Majestic Goat","Spiky Band","Bone Helm","Corsair","Crown","Tiara","Sphinx Hat","Robe of Cast","Earring","Ring","Bow Thimble" ) )
 					{
-						case 1:
-							callfunc "Func_Socket",1,2256,5160,40,51,2000,985,2;
-							
-						case 2:
-							callfunc "Func_Socket",1,2258,5161,40,51,2000,985,2;
-						
-						case 3:
-							callfunc "Func_Socket",1,5017,5162,40,51,2000,985,2;
-						
-						case 4:
-							callfunc "Func_Socket",1,5019,5163,40,51,2000,985,2;
-						
-						case 5:
-							callfunc "Func_Socket",1,2235,5165,40,51,2000,985,2;
-						
-						case 6:
-							callfunc "Func_Socket",1,2234,5164,40,51,2000,985,2;
-						
-						case 7:
-							callfunc "Func_Socket",1,5063,5166,40,51,1000,985,2;
-						
-						case 8:
-							callfunc "Func_Socket",1,2343,2360,40,51,1000,985,2;
-						
-						case 9:
-							callfunc "Func_Socket",1,2602,2622,40,51,1000,985,2;
-						
-						case 10:
-							callfunc "Func_Socket",1,2601,2621,40,51,1000,985,2;
-						
-						case 11:
-							callfunc "Func_Socket",1,2619,2671,40,51,1000,985,2;
+						case 1:  callfunc "Func_Socket",1,2256,5160,40,51,2000,985,2; break;
+						case 2:  callfunc "Func_Socket",1,2258,5161,40,51,2000,985,2; break;
+						case 3:  callfunc "Func_Socket",1,5017,5162,40,51,2000,985,2; break;
+						case 4:  callfunc "Func_Socket",1,5019,5163,40,51,2000,985,2; break;
+						case 5:  callfunc "Func_Socket",1,2235,5165,40,51,2000,985,2; break;
+						case 6:  callfunc "Func_Socket",1,2234,5164,40,51,2000,985,2; break;
+						case 7:  callfunc "Func_Socket",1,5063,5166,40,51,1000,985,2; break;
+						case 8:  callfunc "Func_Socket",1,2343,2360,40,51,1000,985,2; break;
+						case 9:  callfunc "Func_Socket",1,2602,2622,40,51,1000,985,2; break;
+						case 10: callfunc "Func_Socket",1,2601,2621,40,51,1000,985,2; break;
+						case 11: callfunc "Func_Socket",1,2619,2671,40,51,1000,985,2; break;
 					}
+				break;
 			}
-			
+		break;
+		
 		case 3:
 			mes "[Seiyablem]";
 			mes "Well, I haven't really refined the art of Slot Addition.";
@@ -377,24 +250,15 @@ payon,140,151,5		script	Seiyablem	84,{
 				
 function	script	Func_Socket	{
 
-	switch(getarg(0))
-	{
-		case 1:
-			mes "[Seiyablem]";
-			mes "You want to add a Slot to a " +getitemname(getarg(1))+ "?";
-			mes "Alright, please bring me ^FF0000" +getarg(7)+ " " +getitemname(getarg(6))+ "s^000000, and my^FF0000 " +getarg(5)+",000 zeny^000000 service fee.";
-			mes "Ah, and don't forget to bring that " +getitemname(getarg(1))+ "!";
-			next;
-			break;
-		
-		case 2:
-			mes "[Seiyablem]";
-			mes "You want to add a Slot to a " +getitemname(getarg(1))+ "?";
-			mes "Alright, please bring me ^FF0000" +getarg(7)+ " " +getitemname(getarg(6))+ "^000000, ^FF0000" +getarg(9)+ " " +getitemname(getarg(8))+ "^000000 and my^FF0000 " +getarg(5)+",000 zeny^000000 service fee.";
-			mes "Ah, and don't forget to bring that " +getitemname(getarg(1))+ "!";
-			next;
-			break;
-	}
+	mes "[Seiyablem]";
+	mes "You want to add a Slot to a " +getitemname(getarg(1))+ "?";
+	if (getarg(0) == 1)
+		mes "Alright, please bring me ^FF0000" +getarg(7)+ " " +getitemname(getarg(6))+ "s^000000, and my^FF0000 " +getarg(5)+",000 zeny^000000 service fee.";
+	else if (getarg(0) == 2)
+		mes "Alright, please bring me ^FF0000" +getarg(7)+ " " +getitemname(getarg(6))+ "^000000, ^FF0000" +getarg(9)+ " " +getitemname(getarg(8))+ "^000000 and my^FF0000 " +getarg(5)+",000 zeny^000000 service fee.";
+	mes "Ah, and don't forget to bring that " +getitemname(getarg(1))+ "!";
+	next;
+
 	if(@sockettype == 1)
 	{
 		mes "[Seiyablem]";
@@ -418,74 +282,77 @@ function	script	Func_Socket	{
 		mes "Do you still want to try to add a Slot?";
 		next;
 	}
-	switch( select( "Attempt Slot Addition","Cancel" ) ) 
+
+	if ( select("Attempt Slot Addition","Cancel") == 2 )
 	{
-		case 1:
-			switch(getarg(0))
+		mes "[Seiyablem]";
+		mes "Need some time to think about it, huh?";
+		mes "Alright, I can understand.";
+		mes "Just remember that life's no fun if you're always playing it safe~";
+		close;
+	}
+
+	switch(getarg(0))
+	{
+		case 1:		
+			if((Zeny < getarg(5)*1000) || (countitem(getarg(6)) < getarg(7)) || (!countitem(getarg(1))))
 			{
-				case 1:		
-					if((Zeny < getarg(5)*1000) || (countitem(getarg(6)) < getarg(7)) || (!countitem(getarg(1))))
-					{
-						mes "[Seiyablem]";
-						mes "I'd like to go ahead with this Slot Addition attempt, but you're missing a few things.";
-						mes "You sure that you have the equipment, required materials and the zeny?";
-						close;
-					}
-					break;
-			
-				case 2:
-					if((Zeny < getarg(5)*1000) || (countitem(getarg(6)) < getarg(7)) || (countitem(getarg(8)) < getarg(9)) || (!countitem(getarg(1))))
-					{
-						mes "[Seiyablem]";
-						mes "I'd like to go ahead with this Slot Addition attempt, but you're missing a few things.";
-						mes "You sure that you have the equipment, required materials and the zeny?";
-						close;
-					}
-					break;
-			}
-			mes "[Seiyablem]";
-			mes "Alright then, let the work begin!";
-			mes "You'd better pray for a successful result.";
-			next;
-			set .@socketrand,rand(1,100);
-			if((.@socketrand > getarg(3)) && (.@socketrand < getarg(4)))
-			{
-				if(getarg(4) == 51) specialeffect 90;
-				else specialeffect 83;
 				mes "[Seiyablem]";
-				mes "Great, it seems to be successful.";
-				mes "It looks pretty well done. Congratulations!";
-				delitem getarg(1),1;
-				delitem getarg(6),getarg(7);
-				if(getarg(0) == 2) delitem getarg(8),getarg(9);
-				set Zeny,Zeny - getarg(5)*1000;
-				getitem getarg(2),1;
-				next;
-				mes "[Seiyablem]";
-				mes "See you again, buddy!";
+				mes "I'd like to go ahead with this Slot Addition attempt, but you're missing a few things.";
+				mes "You sure that you have the equipment, required materials and the zeny?";
 				close;
 			}
-			specialeffect 108;
-			mes "[Seiyablem]";
-			mes "Wah! ...I am so sorry, it failed.";
-			mes "However, I am completely innocent.";
-			mes "This is your luck, and it is destined by god, okay?";
-			mes "Don't be so disappointed, and try next time.";
-			delitem getarg(1),1;
-			delitem getarg(6),getarg(7);
-			if(getarg(0) == 2) delitem getarg(8),getarg(9);
-			set Zeny,Zeny - getarg(5)*1000;
-			next;
-			mes "[Seiyablem]";
-			mes "I wish you good luck next time!";
-			close;
-				
+			break;
+	
 		case 2:
-			mes "[Seiyablem]";
-			mes "Need some time to think about it, huh?";
-			mes "Alright, I can understand.";
-			mes "Just remember that life's no fun if you're always playing it safe~";
-			close;
+			if((Zeny < getarg(5)*1000) || (countitem(getarg(6)) < getarg(7)) || (countitem(getarg(8)) < getarg(9)) || (!countitem(getarg(1))))
+			{
+				mes "[Seiyablem]";
+				mes "I'd like to go ahead with this Slot Addition attempt, but you're missing a few things.";
+				mes "You sure that you have the equipment, required materials and the zeny?";
+				close;
+			}
+			break;
+	}
+	
+	mes "[Seiyablem]";
+	mes "Alright then, let the work begin!";
+	mes "You'd better pray for a successful result.";
+	next;
+	set .@socketrand,rand(1,100);
+	if((.@socketrand > getarg(3)) && (.@socketrand < getarg(4)))
+	{
+		if(getarg(4) == 51) specialeffect 90;
+		else specialeffect 83;
+		mes "[Seiyablem]";
+		mes "Great, it seems to be successful.";
+		mes "It looks pretty well done. Congratulations!";
+		delitem getarg(1),1;
+		delitem getarg(6),getarg(7);
+		if(getarg(0) == 2) delitem getarg(8),getarg(9);
+		set Zeny,Zeny - getarg(5)*1000;
+		getitem getarg(2),1;
+		next;
+		mes "[Seiyablem]";
+		mes "See you again, buddy!";
+		close;
+	}
+	else
+	{
+		specialeffect 108;
+		mes "[Seiyablem]";
+		mes "Wah! ...I am so sorry, it failed.";
+		mes "However, I am completely innocent.";
+		mes "This is your luck, and it is destined by god, okay?";
+		mes "Don't be so disappointed, and try next time.";
+		delitem getarg(1),1;
+		delitem getarg(6),getarg(7);
+		if(getarg(0) == 2) delitem getarg(8),getarg(9);
+		set Zeny,Zeny - getarg(5)*1000;
+		next;
+		mes "[Seiyablem]";
+		mes "I wish you good luck next time!";
+		close;
 	}
 }
 
