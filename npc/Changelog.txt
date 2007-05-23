@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/05/23
+	* Added a check in Thanatos Boss room to reset event if there's no player inside. [SinSloth]
 2007/05/22
 	* Tweaked some recent npcs [ultramage]
 	- I find using close; to exit a switched callsub/callfunc a major wtf,
