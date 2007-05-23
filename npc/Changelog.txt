@@ -1,6 +1,9 @@
 Date		Added
 ======
 2007/05/23
+	* Fixed Bug in Bard Quest (not the Job Quest), optimized: 50kb less [Lupus]
+		Not a final version yet
+	- What's correct? a swordman or a sdordSman (we have both words mixed in all scripts)
 	* Added a check in Thanatos Boss room to reset event if there's no player inside. [SinSloth]
 2007/05/22
 	* Tweaked some recent npcs [ultramage]
