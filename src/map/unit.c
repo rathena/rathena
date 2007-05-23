@@ -968,7 +968,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 		temp = 1;
 	break;
 	case ST_CHASEWALK:
-		if (sc && sc->data[ST_CHASEWALK].timer != -1)
+		if (sc && sc->data[SC_CHASEWALK].timer != -1)
 			casttime = 0;
 	break;
 	case TK_RUN:
