@@ -43,7 +43,7 @@
 #include <stdlib.h>
 
 #ifndef TXT_SQL_CONVERT
-struct mmo_map_server{
+struct mmo_map_server {
 	uint32 ip;
 	uint16 port;
 	int users;
@@ -57,16 +57,16 @@ char passwd[24];
 char server_name[20];
 char wisp_server_name[NAME_LENGTH] = "Server";
 char login_ip_str[128];
-uint32 login_ip;
+uint32 login_ip = 0;
 uint16 login_port = 6900;
 char char_ip_str[128];
-uint32 char_ip;
+uint32 char_ip = 0;
 char bind_ip_str[128];
 uint32 bind_ip = INADDR_ANY;
 uint16 char_port = 6121;
-int char_maintenance;
-int char_new;
-int char_new_display;
+int char_maintenance = 0;
+int char_new = 1;
+int char_new_display = 0;
 int email_creation = 0; // disabled by default
 #endif
 char char_txt[1024]="save/athena.txt";
@@ -364,7 +364,7 @@ void set_char_offline(int char_id, int account_id)
 			character->waiting_disconnect = -1;
 		}
 	}
-
+	
 	if (login_fd > 0 && !session[login_fd]->eof)
 	{
 		WFIFOHEAD(login_fd,6);
@@ -652,7 +652,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 		tmp_int[46] = mapindex_name2id(tmp_str[2]);
 	}	// Char structure of version 1500 (homun + mapindex maps)
 
-	memcpy(p->name, tmp_str[0], NAME_LENGTH-1); //Overflow protection [Skotlex]
+	memcpy(p->name, tmp_str[0], NAME_LENGTH); //Overflow protection [Skotlex]
 	p->char_id = tmp_int[0];
 	p->account_id = tmp_int[1];
 	p->char_num = tmp_int[2];
@@ -1946,7 +1946,7 @@ int parse_tologin(int fd)
 	struct char_session_data *sd;
 
 	// only login-server can have an access to here.
-	// so, if it isn't the login-server, we disconnect the session (fd != login_fd).
+	// so, if it isn't the login-server, we disconnect the session.
 	if (fd != login_fd)
 		set_eof(fd);
 	if(session[fd]->eof) {
@@ -2360,7 +2360,7 @@ int parse_tologin(int fd)
 					if (GM_num == 0) {
 						gm_account = (struct gm_account*)aMalloc(sizeof(struct gm_account));
 					} else {
-						gm_account = (struct gm_account*)aRealloc(gm_account, sizeof(struct gm_account) * (GM_num + 1));						
+						gm_account = (struct gm_account*)aRealloc(gm_account, sizeof(struct gm_account) * (GM_num + 1));
 					}
 					gm_account[GM_num].account_id = RFIFOL(fd,2);
 					gm_account[GM_num].level = (int)RFIFOB(fd,6);
@@ -3005,7 +3005,7 @@ int parse_frommap(int fd)
 		{
 			char character_name[NAME_LENGTH];
 			int acc = RFIFOL(fd,2); // account_id of who ask (-1 if nobody)
-			memcpy(character_name, RFIFOP(fd,6), NAME_LENGTH-1);
+			memcpy(character_name, RFIFOP(fd,6), NAME_LENGTH);
 			character_name[NAME_LENGTH-1] = '\0';
 			// prepare answer
 			WFIFOHEAD(fd,34);
@@ -3155,7 +3155,7 @@ int parse_frommap(int fd)
 
 			// Find the position where the player has to be inserted
 			for(i = 0; i < size && fame < list[i].fame; i++);
-			if(i >= size) break;//Out of ranking.
+			if(i >= size) break; //Out of ranking.
 			// When found someone with less or as much fame, insert just above
 			memmove(list+i+1, list+i, (size-i-1) * sizeof(struct fame_list));
 			list[i].id = cid;
@@ -3190,7 +3190,7 @@ int parse_frommap(int fd)
 			set_all_offline(id);
 			RFIFOSKIP(fd,2);
 		break;
-
+		
 		case 0x2b19: // Character set online [Wizputer]
 			if (RFIFOREST(fd) < 6)
 				return 0;
@@ -3239,8 +3239,8 @@ int parse_frommap(int fd)
 		break;
 
 		default:
-			// inter server - packet
 		{
+			// inter server - packet
 			int r = inter_parse_frommap(fd);
 			if (r == 1) break;		// processed
 			if (r == 2) return 0;	// need more packet
@@ -3252,6 +3252,7 @@ int parse_frommap(int fd)
 		}
 		} // switch
 	} // while
+	
 	return 0;
 }
 
@@ -3566,7 +3567,7 @@ int parse_char(int fd)
 			if (i < 0)
 			{
 				WFIFOHEAD(fd,3);
-				WFIFOW(fd, 0) = 0x6e;
+				WFIFOW(fd,0) = 0x6e;
 				switch (i) {
 				case -1: WFIFOB(fd,2) = 0x00; break;
 				case -2: WFIFOB(fd,2) = 0x02; break;
@@ -3891,7 +3892,7 @@ static int send_accounts_tologin_sub(DBKey key, void* data, va_list ap)
 		return 0; //This is an error that shouldn't happen....
 	if(character->server > -1) {
 		WFIFOHEAD(login_fd,8+count*4);
-		WFIFOL(login_fd, 8+(*i)*4) =character->account_id;
+		WFIFOL(login_fd,8+(*i)*4) = character->account_id;
 		(*i)++;
 		return 1;
 	}
@@ -3939,7 +3940,7 @@ int check_connect_login_server(int tid, unsigned int tick, int id, int data)
 	memcpy(WFIFOP(login_fd,60), server_name, 20);
 	WFIFOW(login_fd,80) = 0;
 	WFIFOW(login_fd,82) = char_maintenance;
-	WFIFOW(login_fd,84) = char_new_display; //only display (New) if they want to [Kevin]	
+	WFIFOW(login_fd,84) = char_new_display; //only display (New) if they want to [Kevin]
 	WFIFOSET(login_fd,86);
 	
 	return 1;
@@ -4206,7 +4207,7 @@ int char_config_read(const char *cfgName)
 	}
 	fclose(fp);
 
-	ShowInfo("done reading %s.\n", cfgName);
+	ShowInfo("Done reading %s.\n", cfgName);
 	return 0;
 }
 

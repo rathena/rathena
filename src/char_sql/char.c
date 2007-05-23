@@ -70,13 +70,12 @@ int lowest_gm_level = 1;
 
 char *SQL_CONF_NAME = "conf/inter_athena.conf";
 
-struct mmo_map_server{
-  uint32 ip;
-  uint16 port;
-  int users;
-  unsigned short map[MAX_MAP_PER_SERVER];
+struct mmo_map_server {
+	uint32 ip;
+	uint16 port;
+	int users;
+	unsigned short map[MAX_MAP_PER_SERVER];
 } server[MAX_MAP_SERVERS];
-
 int server_fd[MAX_MAP_SERVERS];
 
 int login_fd, char_fd;
@@ -93,10 +92,11 @@ char bind_ip_str[128];
 uint32 bind_ip = INADDR_ANY;
 uint16 char_port = 6121;
 int char_maintenance = 0;
-int char_new;
-int char_new_display;
+int char_new = 1;
+int char_new_display = 0;
 int name_ignoring_case = 0; // Allow or not identical name for characters but with a different case by [Yor]
 int char_name_option = 0; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
+char unknown_char_name[NAME_LENGTH] = "Unknown";
 char char_name_letters[1024] = ""; // list of letters/symbols used to authorise or not a name of a character. by [Yor]
 //The following are characters that are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 #define TRIM_CHARS "\032\t\x0A\x0D "
@@ -116,7 +116,6 @@ struct _subnet {
 
 int subnet_count = 0;
 
-char unknown_char_name[NAME_LENGTH] = "Unknown";
 char db_path[1024]="db";
 
 //These are used to aid the map server in identifying valid clients. [Skotlex]
@@ -185,8 +184,6 @@ struct online_char_data {
 
 struct dbt *online_char_db; //Holds all online characters.
 
-static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, int data);
-
 static void * create_online_char_data(DBKey key, va_list args)
 {
 	struct online_char_data* character;
@@ -199,6 +196,8 @@ static void * create_online_char_data(DBKey key, va_list args)
 	return character;
 }
 
+static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, int data);
+
 //-------------------------------------------------
 // Set Character online/offline [Wizputer]
 //-------------------------------------------------
@@ -206,7 +205,7 @@ static void * create_online_char_data(DBKey key, va_list args)
 void set_char_online(int map_id, int char_id, int account_id)
 {
 	struct online_char_data* character;
-
+	
 	if ( char_id != 99 ) {
 		sprintf(tmp_sql, "UPDATE `%s` SET `online`='1' WHERE `char_id`='%d'",char_db,char_id);
 		if (mysql_query(&mysql_handle, tmp_sql)) {
@@ -1732,7 +1731,6 @@ int parse_tologin(int fd)
 	struct char_session_data *sd;
 	// only login-server can have an access to here.
 	// so, if it isn't the login-server, we disconnect the session.
-	//session eof check!
 	if(fd != login_fd)
 		set_eof(fd);
 	if(session[fd]->eof) {
@@ -2597,7 +2595,7 @@ int parse_frommap(int fd)
 			auth_fifo_pos++;
 			WFIFOHEAD(fd,7);
 			WFIFOW(fd,0) = 0x2b03;
-			WFIFOL(fd,2) = RFIFOL(fd, 2);
+			WFIFOL(fd,2) = RFIFOL(fd,2);
 			WFIFOB(fd,6) = 0;
 			WFIFOSET(fd,7);
 			RFIFOSKIP(fd,18);
@@ -2968,8 +2966,8 @@ int parse_frommap(int fd)
 		break;
 
 		default:
-		// inter server - packet
 		{
+			// inter server - packet
 			int r = inter_parse_frommap(fd);
 			if (r == 1) break;		// processed
 			if (r == 2) return 0;	// need more packet
@@ -2981,6 +2979,7 @@ int parse_frommap(int fd)
 		}
 		} // switch
 	} // while
+	
 	return 0;
 }
 
@@ -3223,7 +3222,7 @@ int parse_char(int fd)
 				char_dat.last_point.map = j;
 			}
 			{
-				//Send player to map.
+				//Send player to map
 				uint32 subnet_map_ip;
 				char map_name[MAP_NAME_LENGTH_EXT];
 				snprintf(map_name, MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(char_dat.last_point.map));	
@@ -3252,11 +3251,11 @@ int parse_char(int fd)
 			//Send NEW auth packet [Kevin]
 			if ((map_fd = server_fd[i]) < 1 || session[map_fd] == NULL)
 			{	
-				WFIFOHEAD(fd,3);
 				ShowError("parse_char: Attempting to write to invalid session %d! Map Server #%d disconnected.\n", map_fd, i);
 				server_fd[i] = -1;
 				memset(&server[i], 0, sizeof(struct mmo_map_server));
 				//Send server closed.
+				WFIFOHEAD(fd,3);
 				WFIFOW(fd,0) = 0x81;
 				WFIFOB(fd,2) = 1; // 01 = Server closed
 				WFIFOSET(fd,3);
@@ -3276,7 +3275,7 @@ int parse_char(int fd)
 
 			set_char_online(i, auth_fifo[auth_fifo_pos].char_id, auth_fifo[auth_fifo_pos].account_id);
 			auth_fifo_pos++;
-			break;
+		break;
 
 		case 0x67:	// make new
 			FIFOSD_CHECK(37);
@@ -3317,7 +3316,7 @@ int parse_char(int fd)
 					break;
 				}
 			}
-			break;
+		break;
 
 		case 0x68:	// delete char
 			FIFOSD_CHECK(46);
@@ -3394,8 +3393,8 @@ int parse_char(int fd)
 			/* Char successfully deleted.*/
 			WFIFOW(fd,0) = 0x6f;
 			WFIFOSET(fd,2);
-			break;
 		}
+		break;
 
 		case 0x2af8: // login as map-server
 			if (RFIFOREST(fd) < 60)
@@ -3441,14 +3440,14 @@ int parse_char(int fd)
 				WFIFOW(fd,2) = len;
 				WFIFOSET(fd,len);
 			}
-			break;
 		}
+		break;
 
 		case 0x187:	// Alive?
 			if (RFIFOREST(fd) < 6)
 				return 0;
 			RFIFOSKIP(fd, 6);
-			break;
+		break;
 
 		case 0x7530:	// Athena info get
 		{
@@ -3465,6 +3464,7 @@ int parse_char(int fd)
 			RFIFOSKIP(fd,2);
 			return 0;
 		}
+
 		case 0x7532:	// disconnect(default also disconnect)
 		default:
 			set_eof(fd);
@@ -3588,7 +3588,7 @@ static int send_accounts_tologin_sub(DBKey key, void* data, va_list ap)
 		return 0; //This is an error that shouldn't happen....
 	if(character->server > -1) {
 		WFIFOHEAD(login_fd,8+count*4);
-		WFIFOL(login_fd,8+(*i)*4) =character->account_id;
+		WFIFOL(login_fd,8+(*i)*4) = character->account_id;
 		(*i)++;
 		return 1;
 	}
@@ -3613,7 +3613,7 @@ int send_accounts_tologin(int tid, unsigned int tick, int id, int data)
 
 int check_connect_login_server(int tid, unsigned int tick, int id, int data)
 {
-	if (login_fd > 0 && session[login_fd] != NULL) 
+	if (login_fd > 0 && session[login_fd] != NULL)
 		return 0;
 
 	ShowInfo("Attempt to connect to login-server...\n");
@@ -3811,7 +3811,7 @@ void sql_config_read(const char *cfgName)
 
 	}
 	fclose(fp);
-	ShowInfo("done reading %s.\n", cfgName);
+	ShowInfo("Done reading %s.\n", cfgName);
 }
 #ifndef TXT_SQL_CONVERT
 
@@ -4098,11 +4098,11 @@ int do_init(int argc, char **argv)
 			ShowStatus("Defaulting to %s as our IP address\n", ip_str);
 		if (!login_ip) {
 			strcpy(login_ip_str, ip_str);
-			login_ip = ntohl(inet_addr(login_ip_str));
+			login_ip = str2ip(login_ip_str);
 		}
 		if (!char_ip) {
 			strcpy(char_ip_str, ip_str);
-			char_ip = ntohl(inet_addr(char_ip_str));
+			char_ip = str2ip(char_ip_str);
 		}
 	}
 

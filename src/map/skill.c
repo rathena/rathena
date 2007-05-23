@@ -683,7 +683,7 @@ int	skill_get_maxcount( int id ){ skill_get (skill_db[id].maxcount, id, 1); }
 int	skill_get_blewcount( int id ,int lv ){ skill_get (skill_db[id].blewcount[lv-1], id, lv); }
 int	skill_get_mhp( int id ,int lv ){ skill_get (skill_db[id].mhp[lv-1], id, lv); }
 int	skill_get_castnodex( int id ,int lv ){ skill_get (skill_db[id].castnodex[lv-1], id, lv); }
-int	skill_get_delaynodex( int id ,int lv ){ skill_get (skill_db[id].delaynoagi[lv-1], id, lv); }
+int	skill_get_delaynodex( int id ,int lv ){ skill_get (skill_db[id].delaynodex[lv-1], id, lv); }
 int	skill_get_nocast ( int id ){ skill_get (skill_db[id].nocast, id, 1); }
 int	skill_get_type( int id ){ skill_get (skill_db[id].skill_type, id, 1); }
 int	skill_get_unit_id ( int id, int flag ){ skill_get (skill_db[id].unit_id[flag], id, 1); }
@@ -858,11 +858,11 @@ int skillnotok (int skillid, struct map_session_data *sd)
 	if (i > MAX_SKILL || i < 0)
 		return 1;
 	
-	if (sd->blockskill[i] > 0)
-		return 1;
-
 	if (battle_config.gm_skilluncond && pc_isGM(sd) >= battle_config.gm_skilluncond)
 		return 0;  // gm's can do anything damn thing they want
+
+	if (sd->blockskill[i] > 0)
+		return 1;
 
 	// Check skill restrictions [Celest]
 	if(!map_flag_vs(m) && skill_get_nocast (skillid) & 1)
@@ -8671,7 +8671,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 }
 
 /*==========================================
- * 
+ * Does cast-time reductions based on dex, item bonuses and config setting
  *------------------------------------------*/
 int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
 {
@@ -8689,9 +8689,10 @@ int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
 		else return 0;	// instant cast
 	}
 
-	// calculate cast time reduced by card bonuses
-	if (sd && sd->castrate != 100)
-		time = time * sd->castrate / 100;
+	// calculate cast time reduced by item/card bonuses
+	if (!(skill_get_castnodex(skill_id, skill_lv)&4))
+		if (sd && sd->castrate != 100)
+			time = time * sd->castrate / 100;
 
 	// config cast time multiplier
 	if (battle_config.cast_rate != 100)
@@ -8725,11 +8726,11 @@ int skill_castfix_sc (struct block_list *bl, int time)
 }
 
 /*==========================================
- *
+ * Does delay reductions based on dex, 
  *------------------------------------------*/
 int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 {
-	int delaynochange = skill_get_delaynodex(skill_id, skill_lv);
+	int delaynodex = skill_get_delaynodex(skill_id, skill_lv);
 	int time = skill_get_delay(skill_id, skill_lv);
 	
 	nullpo_retr(0, bl);
@@ -8756,9 +8757,9 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 		time -= 4*status_get_agi(bl) - 2*status_get_dex(bl);
 		break;
 	default:
-		if (battle_config.delay_dependon_agi && !(delaynochange&1))
-		{	// if skill casttime is allowed to be reduced by agi 
-			int scale = battle_config.castrate_dex_scale - status_get_agi(bl);
+		if (battle_config.delay_dependon_dex && !(delaynodex&1))
+		{	// if skill delay is allowed to be reduced by dex 
+			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
 			if (scale > 0)
 				time = time * scale / battle_config.castrate_dex_scale;
 			else //To be capped later to minimum.
@@ -8766,13 +8767,7 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 		}
 	}
 
-	if (bl->type == BL_PC && ((TBL_PC*)bl)->delayrate != 100)
-		time = time * ((TBL_PC*)bl)->delayrate / 100;
-
-	if (battle_config.delay_rate != 100)
-		time = time * battle_config.delay_rate / 100;
-
-	if (!(delaynochange&2))
+	if (!(delaynodex&2))
 	{
 		struct status_change *sc;
 		sc= status_get_sc(bl);
@@ -8793,8 +8788,14 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 		}
 	}
 
-	return (time < battle_config.min_skill_delay_limit)?
-		battle_config.min_skill_delay_limit:time;
+	if (!(delaynodex&4))
+		if (bl->type == BL_PC && ((TBL_PC*)bl)->delayrate != 100)
+			time = time * ((TBL_PC*)bl)->delayrate / 100;
+
+	if (battle_config.delay_rate != 100)
+		time = time * battle_config.delay_rate / 100;
+
+	return max(time, battle_config.min_skill_delay_limit);
 }
 
 /*=========================================
@@ -11553,7 +11554,7 @@ int skill_readdb (void)
 		skill_split_atoi(split[1],skill_db[i].castnodex);
 		if (!split[2])
 			continue;
-		skill_split_atoi(split[2],skill_db[i].delaynoagi);
+		skill_split_atoi(split[2],skill_db[i].delaynodex);
 	}
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);

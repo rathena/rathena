@@ -123,8 +123,8 @@ int inter_guild_fromstr(char *str, struct guild *g) {
 #ifndef TXT_SQL_CONVERT
 	g->castle_id = tmp_int[5];
 #endif
-	memcpy(g->name, tmp_str[0], NAME_LENGTH-1);
-	memcpy(g->master, tmp_str[1], NAME_LENGTH-1);
+	memcpy(g->name, tmp_str[0], NAME_LENGTH);
+	memcpy(g->master, tmp_str[1], NAME_LENGTH);
 	memcpy(g->mes1, tmp_str[2], 60);
 	memcpy(g->mes2, tmp_str[3], 120);
 	g->mes1[strlen(g->mes1)-1] = 0;
@@ -152,7 +152,7 @@ int inter_guild_fromstr(char *str, struct guild *g) {
 		m->exp = exp;
 		m->exp_payper = tmp_int[8];
 		m->position = tmp_int[9];
-		memcpy(m->name, tmp_str[0], NAME_LENGTH-1);
+		memcpy(m->name, tmp_str[0], NAME_LENGTH);
 
 		for(j = 0; j < 2 && str != NULL; j++)	// 位置スキップ
 			str = strchr(str + 1, '\t');
@@ -167,7 +167,7 @@ int inter_guild_fromstr(char *str, struct guild *g) {
 		p->mode = tmp_int[0];
 		p->exp_mode = tmp_int[1];
 		tmp_str[0][strlen(tmp_str[0])-1] = 0;
-		memcpy(p->name, tmp_str[0], NAME_LENGTH-1);
+		memcpy(p->name, tmp_str[0], NAME_LENGTH);
 
 		for(j = 0; j < 2 && str != NULL; j++)	// 位置スキップ
 			str = strchr(str+1, '\t');
@@ -204,7 +204,7 @@ int inter_guild_fromstr(char *str, struct guild *g) {
 			return 1;
 		a->guild_id = tmp_int[0];
 		a->opposition = tmp_int[1];
-		memcpy(a->name, tmp_str[0], NAME_LENGTH-1);
+		memcpy(a->name, tmp_str[0], NAME_LENGTH);
 
 		for(j = 0; j < 2 && str != NULL; j++)	// 位置スキップ
 			str = strchr(str + 1, '\t');
@@ -224,7 +224,7 @@ int inter_guild_fromstr(char *str, struct guild *g) {
 		e->rsv1 = tmp_int[1];
 		e->rsv2 = tmp_int[2];
 		e->rsv3 = tmp_int[3];
-		memcpy(e->name, tmp_str[0], NAME_LENGTH-1);
+		memcpy(e->name, tmp_str[0], NAME_LENGTH);
 		memcpy(e->acc, tmp_str[1], 24);
 		tmp_str[2][strlen(tmp_str[2])-1] = 0;
 		memcpy(e->mes, tmp_str[2], 40);
@@ -980,8 +980,8 @@ int mapif_parse_CreateGuild(int fd, int account_id, char *name, struct guild_mem
 	}
 //	memset(g, 0, sizeof(struct guild)); Meh...
 	g->guild_id = guild_newid++;
-	memcpy(g->name, name, NAME_LENGTH-1);
-	memcpy(g->master, master->name, NAME_LENGTH-1);
+	memcpy(g->name, name, NAME_LENGTH);
+	memcpy(g->master, master->name, NAME_LENGTH);
 	memcpy(&g->member[0], master, sizeof(struct guild_member));
 
 	g->position[0].mode = 0x11;
@@ -1071,8 +1071,8 @@ int mapif_parse_GuildLeave(int fd, int guild_id, int account_id, int char_id, in
 						j = MAX_GUILDEXPULSION - 1;
 					}
 					g->expulsion[j].account_id = account_id;
-					memcpy(g->expulsion[j].acc, "dummy", NAME_LENGTH-1);
-					memcpy(g->expulsion[j].name, g->member[i].name, NAME_LENGTH-1);
+					strncpy(g->expulsion[j].acc, "dummy", NAME_LENGTH);
+					memcpy(g->expulsion[j].name, g->member[i].name, NAME_LENGTH);
 					memcpy(g->expulsion[j].mes, mes, 40);
 				}
 
@@ -1344,7 +1344,7 @@ int mapif_parse_GuildAlliance(int fd, int guild_id1, int guild_id2, int account_
 			for(j = 0; j < MAX_GUILDALLIANCE; j++)
 				if (g[i]->alliance[j].guild_id == 0) {
 					g[i]->alliance[j].guild_id = g[1-i]->guild_id;
-					memcpy(g[i]->alliance[j].name, g[1-i]->name, NAME_LENGTH-1);
+					memcpy(g[i]->alliance[j].name, g[1-i]->name, NAME_LENGTH);
 					g[i]->alliance[j].opposition = flag & 1;
 					break;
 				}

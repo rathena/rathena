@@ -204,7 +204,7 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	md->bl.y = data->y;
 	md->class_ = data->class_;
 	md->db = mob_db(md->class_);
-	memcpy(md->name, data->name, NAME_LENGTH-1);
+	memcpy(md->name, data->name, NAME_LENGTH);
 	if (data->state.ai)
 		md->special_state.ai = data->state.ai;
 	if (data->state.size)
@@ -2338,9 +2338,9 @@ int mob_class_change (struct mob_data *md, int class_)
 	md->class_ = class_;
 	md->db = mob_db(class_);
 	if (battle_config.override_mob_names==1)
-		memcpy(md->name,md->db->name,NAME_LENGTH-1);
+		memcpy(md->name,md->db->name,NAME_LENGTH);
 	else
-		memcpy(md->name,md->db->jname,NAME_LENGTH-1);
+		memcpy(md->name,md->db->jname,NAME_LENGTH);
 
 	mob_stop_attack(md);
 	mob_stop_walking(md, 0);
@@ -3210,9 +3210,9 @@ int mob_parse_dbrow(char** str)
 	status = &db->status;
 	
 	db->vd.class_ = class_;
-	memcpy(db->sprite, str[1], NAME_LENGTH-1);
-	memcpy(db->jname, str[2], NAME_LENGTH-1);
-	memcpy(db->name, str[3], NAME_LENGTH-1);
+	strncpy(db->sprite, str[1], NAME_LENGTH);
+	strncpy(db->jname, str[2], NAME_LENGTH);
+	strncpy(db->name, str[3], NAME_LENGTH);
 	db->lv = atoi(str[4]);
 	db->lv = cap_value(db->lv, 1, USHRT_MAX);
 	status->max_hp = atoi(str[5]);

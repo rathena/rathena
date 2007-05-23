@@ -2464,7 +2464,7 @@ int map_addmap(char *mapname)
 		return 1;
 	}
 
-	memcpy(map[map_num].name, mapindex_normalize_name(mapname), MAP_NAME_LENGTH-1);
+	memcpy(map[map_num].name, mapindex_normalize_name(mapname), MAP_NAME_LENGTH);
 	map_num++;
 	return 0;
 }

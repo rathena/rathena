@@ -147,7 +147,7 @@ int mapif_load_homunculus(int fd){
 
 		homun_pt->hom_id = RFIFOL(fd,6) ; //RFIFOL(fd,2);
 		homun_pt->class_ = atoi(sql_row[2]);
-		memcpy(homun_pt->name, sql_row[3],NAME_LENGTH-1);
+		strncpy(homun_pt->name, sql_row[3], NAME_LENGTH);
 		homun_pt->char_id = atoi(sql_row[1]);
 		homun_pt->level = atoi(sql_row[4]);
 		homun_pt->exp = atoi(sql_row[5]);

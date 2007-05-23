@@ -1,9 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-// original code from athena
-// SQL conversion by hack
-
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -1439,8 +1436,8 @@ int mapif_parse_GuildLeave(int fd,int guild_id,int account_id,int char_id,int fl
 					}
 					// Save the expulsion
 					g->expulsion[j].account_id=account_id;
-					memcpy(g->expulsion[j].acc,"dummy",NAME_LENGTH-1);
-					memcpy(g->expulsion[j].name,g->member[i].name,NAME_LENGTH-1);
+					strncpy(g->expulsion[j].acc,"dummy",NAME_LENGTH);
+					memcpy(g->expulsion[j].name,g->member[i].name,NAME_LENGTH);
 					memcpy(g->expulsion[j].mes,mes,40);
 				}
 
@@ -1860,7 +1857,7 @@ int mapif_parse_GuildAlliance(int fd,int guild_id1,int guild_id2,
 				if(g[i]->alliance[j].guild_id==0)
 				{
 					g[i]->alliance[j].guild_id=g[1-i]->guild_id;
-					memcpy(g[i]->alliance[j].name,g[1-i]->name,NAME_LENGTH-1);
+					memcpy(g[i]->alliance[j].name,g[1-i]->name,NAME_LENGTH);
 					// Set alliance type
 					g[i]->alliance[j].opposition = flag&GUILD_ALLIANCE_TYPE_MASK;
 					break;

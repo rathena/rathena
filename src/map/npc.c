@@ -464,7 +464,7 @@ int npc_addeventtimer(struct npc_data *nd,int tick,const char *name)
 		if(evname==NULL){
 			ShowFatalError("npc_addeventtimer: out of memory !\n");exit(1);
 		}
-		memcpy(evname,name,NAME_LENGTH-1);
+		strncpy(evname,name,NAME_LENGTH);
 		evname[NAME_LENGTH-1] = '\0';
 		nd->eventtimer[i]=add_timer(gettick()+tick,
 			npc_event_timer,nd->bl.id,(int)evname);
@@ -1660,8 +1660,8 @@ int npc_parse_warp (char *w1,char *w2,char *w3,char *w4)
 	nd->bl.m = m;
 	nd->bl.x = x;
 	nd->bl.y = y;
-	memcpy(nd->name, w3, NAME_LENGTH-1);
-	memcpy(nd->exname, w3, NAME_LENGTH-1);
+	strncpy(nd->name, w3, NAME_LENGTH);
+	strncpy(nd->exname, w3, NAME_LENGTH);
 
 	if (!battle_config.warp_point_debug)
 		nd->class_ = WARP_CLASS;
@@ -1761,7 +1761,7 @@ static int npc_parse_shop (char *w1, char *w2, char *w3, char *w4)
 	nd->bl.x = x;
 	nd->bl.y = y;
 	nd->bl.id = npc_get_new_npc_id();
-	memcpy(nd->name, w3, NAME_LENGTH-1);
+	memcpy(nd->name, w3, NAME_LENGTH);
 	nd->name[NAME_LENGTH-1] = '\0';
 	nd->class_ = m==-1?-1:atoi(w4);
 	nd->speed = 200;
@@ -2036,11 +2036,11 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 	}
 	if (p) {
 		*p = 0;
-		memcpy(nd->name, w3, NAME_LENGTH-1);
-		memcpy(nd->exname, p+2, NAME_LENGTH-1);
+		memcpy(nd->name, w3, NAME_LENGTH);
+		memcpy(nd->exname, p+2, NAME_LENGTH);
 	} else {
-		memcpy(nd->name, w3, NAME_LENGTH-1);
-		memcpy(nd->exname, w3, NAME_LENGTH-1);
+		memcpy(nd->name, w3, NAME_LENGTH);
+		memcpy(nd->exname, w3, NAME_LENGTH);
 	}
 
 	if((dnd = npc_name2id(nd->exname))){

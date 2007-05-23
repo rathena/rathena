@@ -1,9 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-// original code from athena
-// SQL conversion by hack
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -247,7 +244,7 @@ struct party_data *inter_party_fromsql(int party_id)
 		return NULL;
 	}
 	p->party.party_id = party_id;
-	memcpy(&p->party.name, sql_row[1], NAME_LENGTH-1);
+	strncpy(&p->party.name, sql_row[1], NAME_LENGTH);
 	p->party.exp = atoi(sql_row[2])?1:0;
 	p->party.item = atoi(sql_row[3]);
 	leader_id = atoi(sql_row[4]);

@@ -668,7 +668,7 @@ int chrif_char_ask_name_answer(int fd)
 	char player_name[NAME_LENGTH];
 
 	acc = RFIFOL(fd,2); // account_id of who has asked (-1 if nobody)
-	memcpy(player_name, RFIFOP(fd,6), NAME_LENGTH-1);
+	memcpy(player_name, RFIFOP(fd,6), NAME_LENGTH);
 	player_name[NAME_LENGTH-1] = '\0';
 
 	sd = map_id2sd(acc);

@@ -58,7 +58,7 @@ int inter_pet_fromstr(char *str,struct s_pet *p)
 
 	p->pet_id = tmp_int[0];
 	p->class_ = tmp_int[1];
-	memcpy(p->name,tmp_str,NAME_LENGTH-1);
+	memcpy(p->name,tmp_str,NAME_LENGTH);
 	p->account_id = tmp_int[2];
 	p->char_id = tmp_int[3];
 	p->level = tmp_int[4];
@@ -234,7 +234,7 @@ int mapif_create_pet(int fd,int account_id,int char_id,short pet_class,short pet
 	}
 //	memset(p,0,sizeof(struct s_pet)); unnecessary after aCalloc [Skotlex]
 	p->pet_id = pet_newid++;
-	memcpy(p->name,pet_name,NAME_LENGTH-1);
+	memcpy(p->name,pet_name,NAME_LENGTH);
 	if(incuvate == 1)
 		p->account_id = p->char_id = 0;
 	else {

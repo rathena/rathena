@@ -709,7 +709,7 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 		clif_send_petstatus(sd); //Send status so client knows oet name change got rejected.
 		return 0;
 	}
-	memcpy(pd->pet.name, name, NAME_LENGTH-1);
+	memcpy(pd->pet.name, name, NAME_LENGTH);
 	clif_charnameack (0,&pd->bl);
 	pd->pet.rename_flag = 1;
 	clif_pet_equip(pd);
@@ -1327,8 +1327,8 @@ int read_petdb()
 			}
 
 			pet_db[j].class_ = nameid;
-			memcpy(pet_db[j].name,str[1],NAME_LENGTH-1);
-			memcpy(pet_db[j].jname,str[2],NAME_LENGTH-1);
+			strncpy(pet_db[j].name,str[1],NAME_LENGTH);
+			strncpy(pet_db[j].jname,str[2],NAME_LENGTH);
 			pet_db[j].itemID=atoi(str[3]);
 			pet_db[j].EggID=atoi(str[4]);
 			pet_db[j].AcceID=atoi(str[5]);

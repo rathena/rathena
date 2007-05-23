@@ -4578,9 +4578,9 @@ int pc_allskillup(struct map_session_data *sd)
 	//pc_calc_skilltree takes care of setting the ID to valid skills. [Skotlex]
 	if (battle_config.gm_allskill > 0 && pc_isGM(sd) >= battle_config.gm_allskill)
 	{	//Get ALL skills except npc/guild ones. [Skotlex]
-		//and except SG_DEVIL [Komurka]
+		//and except SG_DEVIL [Komurka] and MO_TRIPLEATTACK and RG_SNATCHER [ultramage]
 		for(i=0;i<MAX_SKILL;i++){
-			if(!(skill_get_inf2(i)&(INF2_NPC_SKILL|INF2_GUILD_SKILL)) && i!=SG_DEVIL)
+			if(!(skill_get_inf2(i)&(INF2_NPC_SKILL|INF2_GUILD_SKILL)) && i!=SG_DEVIL && i!=MO_TRIPLEATTACK && i!=RG_SNATCHER)
 				sd->status.skill[i].lv=skill_get_max(i); //Nonexistant skills should return a max of 0 anyway.
 		}
 	}

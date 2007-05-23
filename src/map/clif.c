@@ -10825,7 +10825,7 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd)
 			return;
 		}
 		//Insert in position i
-		memcpy(sd->ignore[i].name, nick, NAME_LENGTH-1);
+		memcpy(sd->ignore[i].name, nick, NAME_LENGTH);
 		WFIFOB(fd,3) = 0; // success
 		WFIFOSET(fd, packet_len(0x0d1));
 		if (strcmp(wisp_server_name, nick) == 0)

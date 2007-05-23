@@ -954,7 +954,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 	break;
 	case MO_FINGEROFFENSIVE:
 		if(sd)
-			casttime += casttime * ((skill_lv > sd->spiritball)? sd->spiritball:skill_lv);
+			casttime += casttime * min(skill_lv, sd->spiritball);
 	break;
 	case MO_EXTREMITYFIST:
 		if (sc && sc->data[SC_COMBO].timer != -1 &&
@@ -981,6 +981,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 	break;
 	}
   	
+	// moved here to prevent Suffragium from ending if skill fails
 	if (!(skill_get_castnodex(skill_num, skill_lv)&2))
 		casttime = skill_castfix_sc(src, casttime);
 
@@ -1116,7 +1117,7 @@ int unit_skilluse_pos2( struct block_list *src, int skill_x, int skill_y, int sk
 	unit_stop_attack(src);
 	ud->state.skillcastcancel = castcancel;
 
-
+	// moved here to prevent Suffragium from ending if skill fails
 	if (!(skill_get_castnodex(skill_num, skill_lv)&2))
 		casttime = skill_castfix_sc(src, casttime);
 

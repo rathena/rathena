@@ -68,7 +68,7 @@ int inter_homun_fromstr(char *str,struct s_homunculus *p)
 
 	p->hom_id = tmp_int[0];
 	p->class_ = tmp_int[1];
-	memcpy(p->name, tmp_str, NAME_LENGTH-1);
+	memcpy(p->name, tmp_str, NAME_LENGTH);
 
 	p->char_id = tmp_int[2];
   	p->hp = tmp_int[3];

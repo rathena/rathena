@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/05/23
+	* Added new flag to skill_castnodex.txt, to allow per-skill tweaking 
+	  of cast time and delay reducibility by item scripts (cards and such)
+	* Fixed Martyr's Reckoning never triggering for gms with all skills
+	* Added MO_TRIPLEATTACK and RG_SNATCHER to @skillall's skill filter 
+	* Made gm_skill_unconditional bypass skill blocking (guild timer, etc)
+	* Reverted the weird delay_dependon_agi thing (r8923, r9055, r9059)
+	* Changed a few memsets to strncpy (reading past buffer is a bad idea)
+	* Sped up some memset operations (multiples of 4 are faster)
 	* Fixed a typo in Chase Walk code, /thx to zephyrus_cr [ultramage]
 2007/05/22
 	* Updated sql files [Playtester]

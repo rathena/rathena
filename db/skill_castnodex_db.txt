@@ -1,31 +1,37 @@
-//<Skill id>,<Cast: 1 or 0>,<Delay (Optional): 1 or 0>
-// Cast: With 1, dex does not affect the skill's cast rate
-// Cast: With 2, cast-rate cannot be reduced by Suffragium and the like
-// Cast: With 3, same effect as 1 + 2
-// Cast: With 0, dex affects the skill's cast rate
-// Delay: With 1, agi does not affect the skill's delay rate
-// Delay: With 2, delay cannot be reduced by Suffragium and the like
-// Delay: With 0, agi affects the skill's delay rate
-// Example - 46,1,1 = Double Strafe's casting time and delay is not affected by dex/agi.
-// By default, agi NEVER affects after-cast delay, so no need of putting 'x,0,1' in this file
-263,0,2 //MO_TRIPLEATTACK
-272,0,2 //MO_CHAINCOMBO
-273,0,2 //MO_COMBOFINISH
+// <Skill id>,<Cast>,<Delay (optional)>
+//
+// Cast:  0 - everything affects the skill's cast time
+//        1 - skill's cast time is not affected by dex
+//        2 - skill's cast time is not affected by statuses (Suffragium, etc)
+//        4 - skill's cast time cannot be reduced by items (equip, cards, etc)
+//
+// Delay: 0 - everything affects the skill's delay
+//        1 - skill's delay is not affected by dex
+//        2 - skill's delay cannot be reduced by statuses (Magic Strings, etc)
+//        4 - skill's delay cannot be reduced by items (equip, cards, etc)
+//
+// Note: Values are bit fields, add them up to combine their effects.
+// Note: Delay setting 2 only makes sense when delay_dependon_dex is enabled.
+// Example: 46,1,1 = Double Strafe's cast time and delay is not affected by dex.
+
+263,0,2	//MO_TRIPLEATTACK
+272,0,2	//MO_CHAINCOMBO
+273,0,2	//MO_COMBOFINISH
 336,1	//WE_CALLPARTNER
 366,1	//HW_MAGICPOWER
 370,1	//CH_PALMSTRIKE
-371,0,2 //CH_TIGERFIST
-372,0,2 //CH_CHAINCRUSH
+371,0,2	//CH_TIGERFIST
+372,0,2	//CH_CHAINCRUSH
 403,3	//PF_MEMORIZE
 408,1	//WE_BABY
 409,1	//WE_CALLPARENT
 410,1	//WE_CALLBABY
 482,1	//PF_DOUBLECASTING
-462,1 //SL_KAIZEL
-496,1 //AM_TWILIGHT1
-497,1 //AM_TWILIGHT2
-498,1 //AM_TWILIGHT3
-512,3 //GS_TRACKING
+462,1	//SL_KAIZEL
+496,1	//AM_TWILIGHT1
+497,1	//AM_TWILIGHT2
+498,1	//AM_TWILIGHT3
+512,3	//GS_TRACKING
 1014,1	//PR_REDEMPTIO
 10010,3	//GD_BATTLEORDER
 10011,3	//GD_REGENERATION

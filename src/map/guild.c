@@ -182,9 +182,9 @@ static int guild_read_castledb(void)
 
 		gc=(struct guild_castle *)aCalloc(1,sizeof(struct guild_castle));
 		gc->castle_id=atoi(str[0]);
-		memcpy(gc->map_name,mapindex_normalize_name(str[1]),MAP_NAME_LENGTH-1);
-		memcpy(gc->castle_name,str[2],NAME_LENGTH-1);
-		memcpy(gc->castle_event,str[3],NAME_LENGTH-1);
+		memcpy(gc->map_name,mapindex_normalize_name(str[1]),MAP_NAME_LENGTH);
+		memcpy(gc->castle_name,str[2],NAME_LENGTH);
+		memcpy(gc->castle_event,str[3],NAME_LENGTH);
 
 		idb_put(castle_db,gc->castle_id,gc);
 
@@ -336,7 +336,7 @@ void guild_makemember(struct guild_member *m,struct map_session_data *sd)
 //	m->exp_payper	=0;
 	m->online		=1;
 	m->position		=MAX_GUILDPOSITION-1;
-	memcpy(m->name,sd->status.name,NAME_LENGTH-1);
+	memcpy(m->name,sd->status.name,NAME_LENGTH);
 	return;
 }
 // ƒMƒ‹ƒh‹£‡Šm”F
@@ -1032,7 +1032,7 @@ int guild_change_position(int guild_id,int idx,
 	//Mode 0x10 <- Expel.
 	p.mode=mode&0x11;
 	p.exp_mode=exp_mode;
-	memcpy(p.name,name,NAME_LENGTH-1);
+	memcpy(p.name,name,NAME_LENGTH);
 	p.name[NAME_LENGTH-1] = '\0'; //Security check... [Skotlex]
 	return intif_guild_position(guild_id,idx,&p);
 }
@@ -1462,7 +1462,7 @@ int guild_allianceack(int guild_id1,int guild_id2,int account_id1,int account_id
 				for(j=0;j<MAX_GUILDALLIANCE;j++)
 					if(g[i]->alliance[j].guild_id==0){
 						g[i]->alliance[j].guild_id=guild_id[1-i];
-						memcpy(g[i]->alliance[j].name,guild_name[1-i],NAME_LENGTH-1);
+						memcpy(g[i]->alliance[j].name,guild_name[1-i],NAME_LENGTH);
 						g[i]->alliance[j].opposition=flag&1;
 						break;
 					}

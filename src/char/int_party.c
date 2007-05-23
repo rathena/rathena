@@ -132,7 +132,7 @@ int inter_party_fromstr(char *str, struct party *p) {
 		return 1;
 
 	p->party_id = tmp_int[0];
-	memcpy(p->name, tmp_str, NAME_LENGTH-1);
+	memcpy(p->name, tmp_str, NAME_LENGTH);
 	p->exp = tmp_int[1]?1:0;
 	p->item = tmp_int[2];
 //	printf("%d [%s] %d %d\n", tmp_int[0], tmp_str[0], tmp_int[1], tmp_int[2]);

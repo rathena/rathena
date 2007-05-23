@@ -1933,7 +1933,7 @@ void sql_config_read(const char* cfgName)
 			sql_config_read(w2);
 	}
 	fclose(fp);
-	ShowInfo("done reading %s.\n", cfgName);
+	ShowInfo("Done reading %s.\n", cfgName);
 }
 
 void login_set_defaults()

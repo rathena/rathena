@@ -6132,7 +6132,7 @@ char *buildin_getpartyname_sub(int party_id)
 	if(p!=NULL){
 		char *buf;
 		buf=(char *)aMallocA(NAME_LENGTH*sizeof(char));
-		memcpy(buf, p->party.name, NAME_LENGTH-1);
+		memcpy(buf, p->party.name, NAME_LENGTH);
 		buf[NAME_LENGTH-1] = '\0';
 		return buf;
 	}
@@ -6248,7 +6248,7 @@ char *buildin_getguildname_sub(int guild_id)
 	if(g!=NULL){
 		char *buf;
 		buf=(char *)aMallocA(NAME_LENGTH*sizeof(char));
-		memcpy(buf, g->name, NAME_LENGTH-1);
+		memcpy(buf, g->name, NAME_LENGTH);
 		buf[NAME_LENGTH-1] = '\0';
 		return buf;
 	}
@@ -6277,7 +6277,7 @@ char *buildin_getguildmaster_sub(int guild_id)
 	if(g!=NULL){
 		char *buf;
 		buf=(char *)aMallocA(NAME_LENGTH*sizeof(char));
-		memcpy(buf, g->master, NAME_LENGTH-1);
+		memcpy(buf, g->master, NAME_LENGTH);
 		buf[NAME_LENGTH-1] = '\0';
 		return buf;
 	}
