@@ -1371,7 +1371,7 @@ S_StorySong:
 						mes "[Errende]";
 						mes "*Sigh...*";
 						mes "I can't remember the 8th part of this song if my life depended on it. And it does~! *Wahhhh~*";
-						if(bard_q==2) set bard_q,7;
+						if(bard_q==1) set bard_q,7;
 						if(bard_q==21) set bard_q,27;
 					}
 					goto L_End;
