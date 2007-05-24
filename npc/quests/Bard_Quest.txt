@@ -1307,7 +1307,7 @@ S_StorySong:
 				// For 3 and 4 cases we set more chance earlier on @random
 				if(getarg(0) == 3 || getarg(0) == 4){
 					mes "[Errende]";
-					if (sex) {
+					if (sex)
 						mes "Heroic warrior,";
 					else
 						mes "My fair lady,";
