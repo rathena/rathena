@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/05/25
+	* Changed the way the Thanatos Portal works. [SinSloth]
 2007/05/23
 	* Fixed Bug in Bard Quest (not the Job Quest), optimized: 50kb less [Lupus]
 		Not a final version yet

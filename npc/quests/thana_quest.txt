@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Any eAthena Version i guess?
 //===== Description: =========================================
@@ -13,6 +13,8 @@
 //= 1.1 - Updated Thanatos Tower Quest to official. [SinSloth]
 //= 1.2 - Fixed a bug where Reward NPC didn't give you Zeny and Exp. [SinSloth]
 //= 1.3 - Added a checking in boss map to reset event if there's no player. [SinSloth]
+//= 1.4 - Changed the way the Thanatos Portal works to allow people to enter
+//= as long as Thanatos is alive. [SinSloth]
 //============================================================
 
 hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
@@ -2506,7 +2508,6 @@ thana_boss,5,5,0	script	#thanasummon	-1,{
 
 OnSummon:
 	monster "thana_boss",139,129,"Thanatos Phantom",1708,1,"#Death::OnThanaDead";
-	donpcevent "thanareset::OnCheck";
 	end;
 
 }
@@ -2568,40 +2569,15 @@ OnWave:
 	set $@thana_wave,$@thana_wave -1;
 	if($@thana_wave < 1)
 	{
-		set $@thana_summon,6;
 		donpcevent "#thanasummon::OnSummon";
 	}
 	end;
 	
 OnThanaDead:
 	donpcevent "#thanatimer::OnActive";
+	set $@thana_summon,6;
 	end;
-
 }
-
-thana_boss,2,2,0	script	thanareset	-1,{
-
-OnCheck:
-	initnpctimer;
-	end;
-
-OnTimer300000:
-	if(!getmapusers("thana_boss"))
-	{
-		killmonsterall "thana_boss";
-		enablenpc "Crest#1";
-		enablenpc "Crest#2";
-		enablenpc "Crest#3";
-		enablenpc "Crest#4";
-		enablenpc "Crest#5";
-		set $@thana_summon,0;
-		stopnpctimer;
-		end;
-	}
-	stopnpctimer;
-	goto OnCheck;
-}
-		
 
 tha_t06,119,120,0	script	thana6-7	45,1,1,{
 
