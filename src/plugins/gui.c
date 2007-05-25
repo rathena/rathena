@@ -1,3 +1,5 @@
+// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #include <stdio.h>
 #include <string.h>
@@ -70,7 +72,8 @@ void gui_init ()
 		if (fp == NULL)
 			break;
 
-		while(fgets(line, sizeof(line) -1, fp)) {
+		while(fgets(line, sizeof(line), fp))
+		{
 			if (line[0] == '/' && line[1] == '/')
 				continue;
 			if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) == 2) {

@@ -115,7 +115,8 @@ void mapindex_init(void)
 		ShowFatalError("Unable to read mapindex config file %s!\n", mapindex_cfgfile);
 		exit(1); //Server can't really run without this file.
 	}
-	while(fgets(line,1020,fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		if(line[0] == '/' && line[1] == '/')
 			continue;
 

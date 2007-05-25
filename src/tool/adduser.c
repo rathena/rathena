@@ -50,7 +50,8 @@ int main(int argc, char *argv[])
 	}
 
 	next_id = 2000000;
-	while(fgets(line, sizeof(line)-1, FPaccin)) {
+	while(fgets(line, sizeof(line), FPaccin))
+	{
 		if (line[0] == '/' && line[1] == '/') { continue; }
 		if (sscanf(line, "%d\t%%newid%%\n", &id) == 1) {
 			if (next_id < id) {

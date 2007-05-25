@@ -719,7 +719,8 @@ int inter_guild_ReadEXP(void)
 		return 1;
 	}
 	i=0;
-	while(fgets(line,256,fp) && i<100){
+	while(fgets(line, sizeof(line), fp) && i < 100)
+	{
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		guild_exp[i]=(unsigned int)atof(line);

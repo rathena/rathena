@@ -3053,8 +3053,7 @@ int prompt(void)
 		// get command and parameter
 		memset(buf, '\0', sizeof(buf));
 		fflush(stdin);
-		fgets(buf, 1023, stdin);
-		buf[1023] = '\0';
+		fgets(buf, sizeof(buf), stdin);
 
 		ShowMessage("\033[0m");
 		fflush(stdout);
@@ -4256,11 +4255,11 @@ int ladmin_config_read(const char *cfgName)
 	} else {
 		ShowMessage("\033[0m---Start reading of Ladmin configuration file (%s)\n", cfgName);
 	}
-	while(fgets(line, sizeof(line)-1, fp)) {
+	while(fgets(line, sizeof(line), fp))
+	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 
-		line[sizeof(line)-1] = '\0';
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) == 2) {
 			remove_control_chars(w1);
 			remove_control_chars(w2);

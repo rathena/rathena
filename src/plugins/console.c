@@ -406,7 +406,7 @@ WORKER_FUNC_START(getinput)
 	{// get input
 		input_setstate(INPUT_READING);
 		buf.arr[0] = '\0';
-		fgets(buf.arr, INPUT_BUFSIZE-1, stdin);
+		fgets(buf.arr, INPUT_BUFSIZE, stdin);
 		buf.len = strlen(buf.arr);
 		input_setstate(INPUT_READY);
 	}

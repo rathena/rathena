@@ -183,7 +183,8 @@ int inter_party_init() {
 	if ((fp = fopen(party_txt, "r")) == NULL)
 		return 1;
 
-	while(fgets(line, sizeof(line) - 1, fp)) {
+	while(fgets(line, sizeof(line), fp))
+	{
 		j = 0;
 		if (sscanf(line, "%d\t%%newid%%\n%n", &i, &j) == 1 && j > 0 && party_newid <= i) {
 			party_newid = i;

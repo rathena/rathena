@@ -823,7 +823,7 @@ int read_homunculusdb(void)
 			return -1;
 		}
 
-		while(fgets(line,sizeof(line)-1,fp) && j < MAX_HOMUNCULUS_CLASS)
+		while(fgets(line, sizeof(line), fp) && j < MAX_HOMUNCULUS_CLASS)
 		{
 			if(line[0] == '/' && line[1] == '/')
 				continue;
@@ -924,7 +924,7 @@ int read_homunculus_skilldb(void)
 		return 1;
 	}
 
-	while(fgets(line, sizeof(line)-1, fp))
+	while(fgets(line, sizeof(line), fp))
 	{
 		int minJobLevelPresent = 0;
 
@@ -993,7 +993,7 @@ void read_homunculus_expdb(void)
 			ShowError("can't read %s\n",line);
 			return;
 		}
-		while(fgets(line,sizeof(line)-1,fp) && j < MAX_LEVEL)
+		while(fgets(line, sizeof(line), fp) && j < MAX_LEVEL)
 		{
 			if(line[0] == '/' && line[1] == '/')
 				continue;

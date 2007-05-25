@@ -1246,7 +1246,8 @@ int chrif_load_scdata(int fd)
 	WFIFOW(char_fd,6) = drop_rate;
 
 	if ((fp = fopen(motd_txt, "r")) != NULL) {
-		if (fgets(buf, 250, fp) != NULL) {
+		if (fgets(buf, sizeof(buf), fp) != NULL)
+		{
 			for(i = 0; buf[i]; i++) {
 				if (buf[i] == '\r' || buf[i] == '\n') {
 					buf[i] = 0;

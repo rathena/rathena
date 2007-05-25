@@ -822,7 +822,8 @@ int msg_config_read(const char *cfgName)
 
 	if ((--called) == 0)
 		memset(msg_table, 0, sizeof(msg_table[0]) * MAX_MSG);
-	while(fgets(line, sizeof(line)-1, fp)) {
+	while(fgets(line, sizeof(line), fp))
+	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) == 2) {
@@ -884,7 +885,8 @@ int atcommand_config_read(const char *cfgName)
 		return 1;
 	}
 
-	while (fgets(line, sizeof(line)-1, fp)) {
+	while(fgets(line, sizeof(line), fp))
+	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 
@@ -2713,7 +2715,7 @@ int atcommand_help(const int fd, struct map_session_data* sd, const char* comman
 	if ((fp = fopen(help_txt, "r")) != NULL) {
 		clif_displaymessage(fd, msg_txt(26)); // Help commands:
 		gm_level = pc_isGM(sd);
-		while(fgets(buf, sizeof(buf) - 1, fp) != NULL) {
+		while(fgets(buf, sizeof(buf), fp) != NULL) {
 			if (buf[0] == '/' && buf[1] == '/')
 				continue;
 			for (i = 0; buf[i] != '\0'; i++) {
@@ -2751,7 +2753,7 @@ int atcommand_help2(const int fd, struct map_session_data* sd, const char* comma
 	if ((fp = fopen(help2_txt, "r")) != NULL) {
 		clif_displaymessage(fd, msg_txt(26)); // Help commands:
 		gm_level = pc_isGM(sd);
-		while(fgets(buf, sizeof(buf) - 1, fp) != NULL) {
+		while(fgets(buf, sizeof(buf), fp) != NULL) {
 			if (buf[0] == '/' && buf[1] == '/')
 				continue;
 			for (i = 0; buf[i] != '\0'; i++) {
@@ -7778,13 +7780,14 @@ int atcommand_gmotd(const int fd, struct map_session_data* sd, const char* comma
 		char buf[256];
 		FILE *fp;
 	nullpo_retr(-1, sd);
-		if(	(fp = fopen(motd_txt, "r"))!=NULL){
-			while (fgets(buf, 250, fp) != NULL){
+		if((fp = fopen(motd_txt, "r"))!=NULL){
+			while(fgets(buf, sizeof(buf), fp) != NULL)
+			{
 				int i;
 				if (buf[0] == '/' && buf[1] == '/')
 					continue;
-				for( i=0; buf[i]; i++){
-					if( buf[i]=='\r' || buf[i]=='\n'){
+				for(i=0; buf[i]; i++){
+					if(buf[i]=='\r' || buf[i]=='\n'){
 						buf[i]=0;
 						break;
 					}

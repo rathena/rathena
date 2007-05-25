@@ -515,7 +515,8 @@ int irc_read_conf(char *file)
 		return 0;
 	}
 
-	while(fgets(row,1023,fp)!=NULL) {
+	while(fgets(row, sizeof(row), fp) != NULL)
+	{
 		if(row[0]=='/'&&row[1]=='/')
 			continue;
 		sscanf(row,"%[^:]: %255[^\r\n]",w1,w2);

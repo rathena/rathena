@@ -404,7 +404,8 @@ static int itemdb_read_itemavail (void)
 		return -1;
 	}
 
-	while (fgets(line, sizeof(line) - 1, fp)) {
+	while(fgets(line, sizeof(line), fp))
+	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 		memset(str, 0, sizeof(str));
@@ -449,7 +450,8 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 		return;
 	}
 
-	while(fgets(line,1020,fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		ln++;
 		if(line[0]=='/' && line[1]=='/')
 			continue;
@@ -523,7 +525,8 @@ static int itemdb_read_noequip(void)
 		ShowError("can't read %s\n", line);
 		return -1;
 	}
-	while(fgets(line,1020,fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		memset(str,0,sizeof(str));
@@ -567,7 +570,8 @@ static int itemdb_read_itemtrade(void)
 		return -1;
 	}
 
-	while (fgets(line, sizeof(line) - 1, fp)) {
+	while(fgets(line, sizeof(line), fp))
+	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 		memset(str, 0, sizeof(str));
@@ -819,7 +823,8 @@ static int itemdb_readdb(void)
 		}
 
 		lines=0;
-		while(fgets(line,1020,fp)){
+		while(fgets(line, sizeof(line), fp))
+		{
 			lines++;
 			if(line[0]=='/' && line[1]=='/')
 				continue;

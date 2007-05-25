@@ -204,7 +204,8 @@ int inter_storage_init()
 		ShowError("can't read : %s\n",storage_txt);
 		return 1;
 	}
-	while(fgets(line,65535,fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		sscanf(line,"%d",&tmp_int);
 		s = (struct storage*)aCalloc(sizeof(struct storage), 1);
 		if(s==NULL){
@@ -232,7 +233,8 @@ int inter_storage_init()
 		ShowError("can't read : %s\n",guild_storage_txt);
 		return 1;
 	}
-	while(fgets(line,65535,fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		sscanf(line,"%d",&tmp_int);
 		gs = (struct guild_storage*)aCalloc(sizeof(struct guild_storage), 1);
 		if(gs==NULL){

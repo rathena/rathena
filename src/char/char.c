@@ -830,10 +830,10 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 
 	return 1;
 }
+
 //---------------------------------
 // Function to read friend list
 //---------------------------------
-
 int parse_friend_txt(struct mmo_charstatus *p)
 {
 	char line[1024], temp[1024];
@@ -847,8 +847,8 @@ int parse_friend_txt(struct mmo_charstatus *p)
 	if(fp == NULL)
 		return -1;
 	
-	while(fgets(line, sizeof(line)-1, fp)) {
-
+	while(fgets(line, sizeof(line), fp))
+	{
 		if(line[0] == '/' && line[1] == '/')
 			continue;
 		if (sscanf(line, "%d%n",&i, &pos) < 1 || i != p->char_id)
@@ -888,6 +888,7 @@ int parse_friend_txt(struct mmo_charstatus *p)
 	fclose(fp);
 	return count;
 }
+
 #ifndef TXT_SQL_CONVERT
 //---------------------------------
 // Function to read characters file
@@ -896,15 +897,11 @@ int mmo_char_init(void)
 {
 	char line[65536];
 	int ret, line_count;
-	FILE *fp;
+	FILE* fp;
 
-	char_max = 256;
-	char_dat = (struct character_data*)aCalloc(sizeof(struct character_data) * 256, 1);
-	if (!char_dat) {
-		ShowFatalError("out of memory: mmo_char_init (calloc of char_dat).\n");
-		exit(1);
-	}
 	char_num = 0;
+	char_max = 0;
+	char_dat = NULL;
 
 	fp = fopen(char_txt, "r");
 
@@ -916,13 +913,13 @@ int mmo_char_init(void)
 	}
 
 	line_count = 0;
-	while(fgets(line, sizeof(line)-1, fp)) {
+	while(fgets(line, sizeof(line), fp))
+	{
 		int i, j;
 		line_count++;
 
 		if (line[0] == '/' && line[1] == '/')
 			continue;
-		line[sizeof(line)-1] = '\0';
 
 		j = 0;
 		if (sscanf(line, "%d\t%%newid%%%n", &i, &j) == 1 && j > 0) {
@@ -3978,13 +3975,12 @@ int char_lan_config_read(const char *lancfgName)
 
 	ShowInfo("Reading the configuration file %s...\n", lancfgName);
 
-	while(fgets(line, sizeof(line)-1, fp)) {
-
+	while(fgets(line, sizeof(line), fp))
+	{
 		line_num++;		
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n' || line[1] == '\n')
 			continue;
 
-		line[sizeof(line)-1] = '\0';
 		if(sscanf(line,"%[^:]: %[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4) != 4) {
 	
 			ShowWarning("Error syntax of configuration file %s in line %d.\n", lancfgName, line_num);	
@@ -4029,11 +4025,11 @@ int char_config_read(const char *cfgName)
 	}
 
 	ShowInfo("Reading configuration file %s...\n", cfgName);
-	while(fgets(line, sizeof(line)-1, fp)) {
+	while(fgets(line, sizeof(line), fp))
+	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 
-		line[sizeof(line)-1] = '\0';
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
 			continue;
 

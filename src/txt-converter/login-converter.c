@@ -67,7 +67,8 @@ int read_gm_account()
 
 	if( (fp=fopen("conf/GM_account.txt","r"))==NULL )
 		return 1;
-	while(fgets(line,sizeof(line),fp)){
+	while(fgets(line,sizeof(line),fp))
+	{
 		if(line[0] == '/' || line[1] == '/' || line[2] == '/')
 			continue;
 
@@ -124,8 +125,8 @@ int mmo_auth_init(void)
 	auth_dat = (struct auth_dat_*)malloc(sizeof(auth_dat[0])*256);
 	if(fp==NULL)
 		return 0;
-	while(fgets(line,1023,fp)!=NULL){
-
+	while(fgets(line,1023,fp)!=NULL)
+	{
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 
@@ -175,7 +176,8 @@ int login_config_read(const char *cfgName)
 		return 1;
 	}
 
-	while(fgets(line, 1020, fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		if(line[0] == '/' && line[1] == '/')
 			continue;
 

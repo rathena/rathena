@@ -122,7 +122,8 @@ int inter_homun_init()
 
 	if( (fp=fopen(homun_txt,"r"))==NULL )
 		return 1;
-	while(fgets(line,sizeof(line),fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		p = (struct s_homunculus*)aCalloc(sizeof(struct s_homunculus), 1);
 		if(p==NULL){
 			ShowFatalError("int_homun: out of memory!\n");

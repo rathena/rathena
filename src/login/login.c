@@ -321,8 +321,8 @@ int read_gm_account(void)
 	int start_range = 0, end_range = 0, is_range = 0, current_id = 0;
 
 	if(gm_account_db) aFree(gm_account_db);
-	GM_num = 0;
 	gm_account_db = (struct gm_account*)aCalloc(GM_max, sizeof(struct gm_account));
+	GM_num = 0;
 
 	// get last modify time/date
 	if (stat(GM_account_filename, &file_stat))
@@ -341,7 +341,8 @@ int read_gm_account(void)
 	line_counter = 0;
 	// limited to 4000, because we send information to char-servers (more than 4000 GM accounts???)
 	// int (id) + int (level) = 8 bytes * 4000 = 32k (limit of packets in windows)
-	while(fgets(line, sizeof(line)-1, fp) && GM_num < 4000) {
+	while(fgets(line, sizeof(line), fp) && GM_num < 4000)
+	{
 		line_counter++;
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
 			continue;
@@ -572,13 +573,11 @@ int mmo_auth_init(void)
 		return 0;
 	}
 
-	while(fgets(line, sizeof(line)-1, fp) != NULL) {
+	while(fgets(line, sizeof(line), fp) != NULL)
+	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
-		line[sizeof(line)-1] = '\0';
-		// remove carriage return if exist
-		while(line[0] != '\0' && (line[strlen(line)-1] == '\n' || line[strlen(line)-1] == '\r'))
-			line[strlen(line)-1] = '\0';
+
 		p = line;
 
 		memset(userid, 0, sizeof(userid));
@@ -2394,9 +2393,10 @@ int parse_admin(int fd)
 									strftime(tmpstr, 23, date_format, localtime(&raw_time));
 									modify_flag = 0;
 									// read/write GM file
-									while(fgets(line, sizeof(line)-1, fp)) {
+									while(fgets(line, sizeof(line), fp))
+									{
 										while(line[0] != '\0' && (line[strlen(line)-1] == '\n' || line[strlen(line)-1] == '\r'))
-											line[strlen(line)-1] = '\0';
+											line[strlen(line)-1] = '\0'; // TODO: remove this
 										if ((line[0] == '/' && line[1] == '/') || line[0] == '\0')
 											fprintf(fp2, "%s" RETCODE, line);
 										else {
@@ -3421,15 +3421,14 @@ int login_lan_config_read(const char *lancfgName)
 
 	ShowInfo("Reading the configuration file %s...\n", lancfgName);
 
-	while(fgets(line, sizeof(line)-1, fp)) {
-
+	while(fgets(line, sizeof(line), fp))
+	{
 		line_num++;
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n' || line[1] == '\n')
 			continue;
 
-		line[sizeof(line)-1] = '\0';
-		if(sscanf(line,"%[^:]: %[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4) != 4) {
-
+		if(sscanf(line,"%[^:]: %[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4) != 4)
+		{
 			ShowWarning("Error syntax of configuration file %s in line %d.\n", lancfgName, line_num);
 			continue;
 		}
@@ -3472,12 +3471,11 @@ int login_config_read(const char* cfgName)
 		return 1;
 	}
 	ShowInfo("Reading configuration file %s...\n", cfgName);
-	while (fgets(line, sizeof(line)-1, fp))
+	while(fgets(line, sizeof(line), fp))
 	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 
-		line[sizeof(line)-1] = '\0';
 		memset(w2, 0, sizeof(w2));
 
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) < 2)

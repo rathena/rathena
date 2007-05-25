@@ -98,7 +98,8 @@ void status_load_scdata(const char* filename)
 		return;
 	}
 
-	while(fgets(line, sizeof(line) - 1, fp)) {
+	while(fgets(line, sizeof(line), fp))
+	{
 		sc = (struct scdata*)aCalloc(1, sizeof(struct scdata));
 		if (inter_scdata_fromstr(line, sc)) {
 			sd_count++;

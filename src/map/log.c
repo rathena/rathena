@@ -1,7 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-// Logging functions by Azndragon & Codemaster
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -419,7 +418,7 @@ int log_config_read(char *cfgName)
 		return 1;
 	}	
 
-	while(fgets(line, sizeof(line) -1, fp))
+	while(fgets(line, sizeof(line), fp))
 	{
 		if(line[0] == '/' && line[1] == '/')
 			continue;

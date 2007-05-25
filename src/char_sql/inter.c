@@ -1,9 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-// original code from athena
-// SQL conversion by Jioh L. Jung
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -204,7 +201,8 @@ static int inter_config_read(const char *cfgName)
 
 	ShowInfo("reading file %s...\n",cfgName);
 
-	while(fgets(line, 1020, fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);
 		if(i!=2)
 			continue;

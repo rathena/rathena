@@ -1299,8 +1299,8 @@ int read_petdb()
 			return -1;
 		}
 		lines = 0;
-		while(fgets(line,1020,fp) && j < MAX_PET_DB){
-			
+		while(fgets(line, sizeof(line), fp) && j < MAX_PET_DB)
+		{			
 			lines++;
 
 			if(line[0] == '/' && line[1] == '/')

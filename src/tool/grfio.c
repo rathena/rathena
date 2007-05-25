@@ -703,7 +703,8 @@ static void grfio_resourcecheck(void)
 
 	fp = fopen(restable, "rb");
 	if (fp) {
-		while (fgets(line, sizeof(line) - 1, fp)) {
+		while(fgets(line, sizeof(line), fp))
+		{
 			if (sscanf(line, "%[^#]#%[^#]#", w1, w2) == 2 &&
 				// we only need the maps' GAT and RSW files
 				(strstr(w2, ".gat") || strstr(w2, ".rsw")))
@@ -806,7 +807,8 @@ void grfio_init(char* fname)
 	data_conf = fopen(fname, "r");
 	// It will read, if there is grf-files.txt.
 	if (data_conf) {
-		while(fgets(line, sizeof(line) - 1, data_conf)) {
+		while(fgets(line, sizeof(line), data_conf))
+		{
 			if (line[0] == '/' && line[1] == '/')
 				continue;
 			if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)

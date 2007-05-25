@@ -1680,7 +1680,8 @@ static void read_constdb(void)
 		ShowError("can't read %s\n", line);
 		return ;
 	}
-	while(fgets(line,1020,fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		type=0;
@@ -3079,7 +3080,8 @@ static int script_load_mapreg(void)
 	if( (fp=fopen(mapreg_txt,"rt"))==NULL )
 		return -1;
 
-	while(fgets(line,sizeof(line),fp)){
+	while(fgets(line,sizeof(line),fp))
+	{
 		char buf1[256],buf2[1024],*p;
 		int n,v,s,i;
 		if( sscanf(line,"%255[^,],%d\t%n",buf1,&i,&n)!=2 &&
@@ -3273,7 +3275,8 @@ int script_config_read_sub(char *cfgName)
 		ShowError("file not found: [%s]\n", cfgName);
 		return 1;
 	}
-	while(fgets(line,sizeof(line)-1,fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		if(line[0] == '/' && line[1] == '/')
 			continue;
 		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);

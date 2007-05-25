@@ -303,7 +303,8 @@ static int plugins_config_read(const char *cfgName)
 		ShowError("File not found: %s\n", cfgName);
 		return 1;
 	}
-	while( fgets(line, 1020, fp) ){
+	while( fgets(line, sizeof(line), fp) )
+	{
 		if( line[0] == '/' && line[1] == '/' )
 			continue;
 		if( sscanf(line,"%[^:]: %[^\r\n]",w1,w2) != 2 )

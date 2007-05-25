@@ -139,7 +139,7 @@ const char* get_svn_revision(void)
 		char line[1024];
 		int rev;
 		// Check the version
-		if (fgets(line,sizeof(line),fp))
+		if (fgets(line, sizeof(line), fp))
 		{
 			if(!ISDIGIT(line[0]))
 			{
@@ -153,9 +153,9 @@ const char* get_svn_revision(void)
 			else
 			{
 				// Bin File format
-				fgets(line,sizeof(line),fp); // Get the name
-				fgets(line,sizeof(line),fp); // Get the entries kind
-				if(fgets(line,sizeof(line),fp)) // Get the rev numver
+				fgets(line, sizeof(line), fp); // Get the name
+				fgets(line, sizeof(line), fp); // Get the entries kind
+				if(fgets(line, sizeof(line), fp)) // Get the rev numver
 				{
 					snprintf(eA_svn_version, sizeof(eA_svn_version), "%d", atoi(line));
 				}

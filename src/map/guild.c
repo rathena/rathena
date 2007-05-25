@@ -99,7 +99,8 @@ int guild_read_guildskill_tree_db(void)
 		ShowError("can't read %s\n", line);
 		return -1;
 	}
-	while(fgets(line,1020,fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		char *split[50];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
@@ -165,7 +166,8 @@ static int guild_read_castledb(void)
 		return -1;
 	}
 
-	while(fgets(line,1020,fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		memset(str,0,sizeof(str));

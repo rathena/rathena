@@ -114,9 +114,8 @@ int inter_accreg_init(void) {
 
 	if( (fp = fopen(accreg_txt, "r")) == NULL)
 		return 1;
-	while(fgets(line, sizeof(line)-1, fp)){
-		line[sizeof(line)-1] = '\0';
-
+	while(fgets(line, sizeof(line), fp))
+	{
 		reg = (struct accreg*)aCalloc(sizeof(struct accreg), 1);
 		if (reg == NULL) {
 			ShowFatalError("inter: accreg: out of memory!\n");
@@ -181,10 +180,10 @@ static int inter_config_read(const char *cfgName) {
 		ShowError("file not found: %s\n", cfgName);
 		return 1;
 	}
-	while(fgets(line, sizeof(line) - 1, fp)) {
+	while(fgets(line, sizeof(line), fp))
+	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
-		line[sizeof(line)-1] = '\0';
 
 		if (sscanf(line,"%[^:]: %[^\r\n]", w1, w2) != 2)
 			continue;

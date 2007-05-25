@@ -55,7 +55,8 @@ int convert_init(void)
 			return 0;
 		}
 		lineno = count = 0;
-		while(fgets(line, 65535, fp)){
+		while(fgets(line, sizeof(line), fp))
+		{
 			lineno++;
 			memset(&char_dat, 0, sizeof(char_dat));
 			ret=mmo_char_fromstr(line, &char_dat.status, char_dat.global, &char_dat.global_num);
@@ -82,8 +83,9 @@ int convert_init(void)
 			ShowError("Unable to open file %s!", accreg_txt);
 			return 1;
 		}
-		lineno=count=0;
-		while(fgets(line, sizeof(line), fp)){
+		lineno = count = 0;
+		while(fgets(line, sizeof(line), fp))
+		{
 			lineno++;
 			memset (&reg, 0, sizeof(struct accreg));
 			if(inter_accreg_fromstr(line, &reg) == 0 && reg.account_id > 0) {
@@ -110,8 +112,9 @@ int convert_init(void)
 			ShowError("can't read : %s\n",storage_txt);
 			return 0;
 		}
-		lineno=count=0;
-		while(fgets(line,65535,fp)){
+		lineno = count = 0;
+		while(fgets(line, sizeof(line), fp))
+		{
 			lineno++;
 			set=sscanf(line,"%d,%d",&tmp_int[0],&tmp_int[1]);
 			if(set==2) {
@@ -142,8 +145,9 @@ int convert_init(void)
 			ShowError("Unable to open file %s!", pet_txt);
 			return 1;
 		}
-		lineno=count=0;
-		while(fgets(line, sizeof(line), fp)){
+		lineno = count = 0;
+		while(fgets(line, sizeof(line), fp))
+		{
 			lineno++;
 			memset (&p, 0, sizeof(struct s_pet));
 			if(inter_pet_fromstr(line, &p)==0 && p.pet_id>0){
@@ -170,8 +174,9 @@ int convert_init(void)
 			ShowError("Unable to open file %s!", party_txt);
 			return 1;
 		}
-		lineno=count=0;
-		while(fgets(line, sizeof(line), fp)){
+		lineno = count = 0;
+		while(fgets(line, sizeof(line), fp))
+		{
 			lineno++;
 			memset (&p, 0, sizeof(struct party));
 			if(inter_party_fromstr(line, &p) == 0 &&
@@ -200,8 +205,9 @@ int convert_init(void)
 			ShowError("Unable to open file %s!", guild_txt);
 			return 1;
 		}
-		lineno=count=0;
-		while(fgets(line, sizeof(line), fp)){
+		lineno = count = 0;
+		while(fgets(line, sizeof(line), fp))
+		{
 			lineno++;
 			memset (&g, 0, sizeof(struct guild));
 			if (inter_guild_fromstr(line, &g) == 0 &&
@@ -219,8 +225,9 @@ int convert_init(void)
 			ShowError("Unable to open file %s!", castle_txt);
 			return 1;
 		}
-		lineno=count=0;
-		while(fgets(line, sizeof(line), fp)){
+		lineno = count = 0;
+		while(fgets(line, sizeof(line), fp))
+		{
 			lineno++;
 			memset (&gc, 0, sizeof(struct guild_castle));
 			if (inter_guildcastle_fromstr(line, &gc) == 0) {
@@ -247,8 +254,9 @@ int convert_init(void)
 			ShowError("can't read : %s\n",guild_storage_txt);
 			return 0;
 		}
-		lineno=count=0;
-		while(fgets(line,65535,fp)){
+		lineno = count = 0;
+		while(fgets(line, sizeof(line), fp))
+		{
 			lineno++;
 			memset(&storage_, 0, sizeof(struct guild_storage));
 			if (sscanf(line,"%d",&storage_.guild_id) == 1 &&

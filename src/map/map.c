@@ -2777,7 +2777,8 @@ int map_config_read(char *cfgName)
 		ShowFatalError("Map configuration file not found at: %s\n", cfgName);
 		exit(1);
 	}
-	while(fgets(line, sizeof(line) -1, fp)) {
+	while(fgets(line, sizeof(line), fp))
+	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 
@@ -2877,7 +2878,8 @@ int inter_config_read(char *cfgName)
 		ShowError("File not found: '%s'.\n",cfgName);
 		return 1;
 	}
-	while(fgets(line,1020,fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		if(line[0] == '/' && line[1] == '/')
 			continue;
 		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);

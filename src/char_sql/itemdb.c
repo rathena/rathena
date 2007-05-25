@@ -92,7 +92,8 @@ static int itemdb_readdb(void)
 		}
 
 		lines=0;
-		while(fgets(line,1020,fp)){
+		while(fgets(line, sizeof(line), fp))
+		{
 			lines++;
 			if(line[0]=='/' && line[1]=='/')
 				continue;

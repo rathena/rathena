@@ -7344,7 +7344,8 @@ int pc_readdb(void)
 		ShowError("can't read %s\n", line);
 		return 1;
 	}
-	while(fgets(line, sizeof(line)-1, fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		int jobs[MAX_PC_CLASS], job_count, job;
 		int type;
 		unsigned int ui,maxlv;
@@ -7422,7 +7423,8 @@ int pc_readdb(void)
 		return 1;
 	}
 
-	while(fgets(line, sizeof(line)-1, fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		char *split[50];
 		int f=0, m=3;
 		if(line[0]=='/' && line[1]=='/')
@@ -7472,7 +7474,8 @@ int pc_readdb(void)
 		ShowError("can't read %s\n", line);
 		return 1;
 	}
-	while(fgets(line, sizeof(line)-1, fp)){
+	while(fgets(line, sizeof(line), fp))
+	{
 		char *split[10];
 		int lv,n;
 		if(line[0]=='/' && line[1]=='/')
@@ -7486,7 +7489,7 @@ int pc_readdb(void)
 		n=atoi(split[1]);
 
 		for(i=0;i<n && i<ELE_MAX;){
-			if( !fgets(line, sizeof(line)-1, fp) )
+			if( !fgets(line, sizeof(line), fp) )
 				break;
 			if(line[0]=='/' && line[1]=='/')
 				continue;
@@ -7517,7 +7520,8 @@ int pc_readdb(void)
 		ShowStatus("Can't read '"CL_WHITE"%s"CL_RESET"'... Generating DB.\n",line);
 		//return 1;
 	} else {
-		while(fgets(line, sizeof(line)-1, fp)){
+		while(fgets(line, sizeof(line), fp))
+		{
 			if(line[0]=='/' && line[1]=='/')
 				continue;
 			if ((j=atoi(line))<0)

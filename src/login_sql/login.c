@@ -1743,13 +1743,12 @@ int login_lan_config_read(const char *lancfgName)
 
 	ShowInfo("Reading the configuration file %s...\n", lancfgName);
 
-	while(fgets(line, sizeof(line)-1, fp)) {
-
+	while(fgets(line, sizeof(line), fp))
+	{
 		line_num++;
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n' || line[1] == '\n')
 			continue;
 
-		line[sizeof(line)-1] = '\0';
 		if(sscanf(line,"%[^:]: %[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4) != 4) {
 
 			ShowWarning("Error syntax of configuration file %s in line %d.\n", lancfgName, line_num);
@@ -1807,7 +1806,7 @@ int login_config_read(const char* cfgName)
 		return 1;
 	}
 	ShowInfo("Reading configuration file %s...\n", cfgName);
-	while (fgets(line, sizeof(line)-1, fp))
+	while(fgets(line, sizeof(line), fp))
 	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
@@ -1894,7 +1893,7 @@ void sql_config_read(const char* cfgName)
 		exit(1);
 	}
 	ShowInfo("reading configuration file %s...\n", cfgName);
-	while (fgets(line, sizeof(line)-1, fp))
+	while(fgets(line, sizeof(line), fp))
 	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;

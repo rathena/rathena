@@ -353,7 +353,8 @@ int inter_guild_readdb(void) {
 		return 1;
 	}
 	i = 0;
-	while(fgets(line, sizeof(line)-1, fp) && i < 100){
+	while(fgets(line, sizeof(line), fp) && i < 100)
+	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 		guild_exp[i] = (unsigned int)atof(line);
@@ -379,7 +380,8 @@ int inter_guild_init() {
 
 	if ((fp = fopen(guild_txt,"r")) == NULL)
 		return 1;
-	while(fgets(line, sizeof(line)-1, fp)) {
+	while(fgets(line, sizeof(line), fp))
+	{
 		j = 0;
 		if (sscanf(line, "%d\t%%newid%%\n%n", &i, &j) == 1 && j > 0 && guild_newid <= i) {
 			guild_newid = i;
@@ -413,7 +415,8 @@ int inter_guild_init() {
 		return 1;
 	}
 
-	while(fgets(line, sizeof(line)-1, fp)) {
+	while(fgets(line, sizeof(line), fp))
+	{
 		gc = (struct guild_castle *) aCalloc(sizeof(struct guild_castle), 1);
 		if(gc == NULL){
 			ShowFatalError("int_guild: out of memory!\n");

@@ -379,7 +379,8 @@ int charcommand_config_read(const char *cfgName)
 		return 1;
 	}
 
-	while (fgets(line, sizeof(line)-1, fp)) {
+	while (fgets(line, sizeof(line), fp))
+	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
 
@@ -1852,7 +1853,8 @@ int charcommand_help(const int fd, struct map_session_data* sd, const char* comm
 	if ((fp = fopen(charhelp_txt, "r")) != NULL) {
 		clif_displaymessage(fd, msg_txt(26)); /* Help commands: */
 		gm_level = pc_isGM(sd);
-		while(fgets(buf, sizeof(buf) - 1, fp) != NULL) {
+		while(fgets(buf, sizeof(buf), fp) != NULL)
+		{
 			if (buf[0] == '/' && buf[1] == '/')
 				continue;
 			for (i = 0; buf[i] != '\0'; i++) {

@@ -1900,7 +1900,7 @@ static int npc_skip_script (char *w1,char *w2,char *w3,char *w4,char *first_line
 		srcbuf[0] = 0;
 	npc_parse_script_line(srcbuf,&curly_count,*lines);
 	while (curly_count > 0) {
-		fgets ((char *)line, 1020, fp);
+		fgets ((char *)line, sizeof(line), fp);
 		(*lines)++;
 		npc_parse_script_line(line,&curly_count,*lines);
 		if (feof(fp))
@@ -1964,7 +1964,7 @@ static int npc_parse_script(char *w1,char *w2,char *w3,char *w4,char *first_line
 			srcbuf[0] = 0;
 		npc_parse_script_line(srcbuf,&curly_count,*lines);
 		while (curly_count > 0) {
-			fgets ((char *)line, 1020, fp);
+			fgets((char *)line, sizeof(line), fp);
 			(*lines)++;
 			npc_parse_script_line(line,&curly_count,*lines);
 			if (feof(fp))
@@ -2272,7 +2272,7 @@ static int npc_parse_function (char *w1, char *w2, char *w3, char *w4, char *fir
 	npc_parse_script_line(srcbuf,&curly_count,*lines);
 
 	while (curly_count > 0) {
-		fgets(line, sizeof(line) - 1, fp);
+		fgets(line, sizeof(line), fp);
 		(*lines)++;
 		npc_parse_script_line(line,&curly_count,*lines);
 		if (feof(fp))
@@ -2780,7 +2780,8 @@ void npc_parsesrcfile(const char* name)
 	}
 	current_file = name;
 
-	while (fgets(line, sizeof(line) - 1, fp)) {
+	while (fgets(line, sizeof(line), fp))
+	{
 		char w1[2048], w2[2048], w3[2048], w4[2048], mapname[2048];
 		int i, w4pos, count;
 		lines++;

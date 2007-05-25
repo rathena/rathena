@@ -898,7 +898,7 @@ int socket_config_read(const char* cfgName)
 		return 1;
 	}
 
-	while(fgets(line,1020,fp))
+	while(fgets(line, sizeof(line), fp))
 	{
 		if(line[0] == '/' && line[1] == '/')
 			continue;

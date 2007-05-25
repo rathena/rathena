@@ -11924,7 +11924,7 @@ static int packetdb_readdb(void)
 
 	clif_config.packet_db_ver = MAX_PACKET_VER;
 	packet_ver = MAX_PACKET_VER;	// read into packet_db's version by default
-	while( fgets(line,sizeof(line),fp) )
+	while( fgets(line, sizeof(line), fp) )
 	{
 		ln++;
 		if(line[0]=='/' && line[1]=='/')

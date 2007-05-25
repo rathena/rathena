@@ -296,8 +296,8 @@ int main(int argc, char *argv[])
 	}
 
 	// Read and process the map list
-	while(fgets(line, 1020, list)){
-
+	while(fgets(line, sizeof(line), list))
+	{
 		if(line[0] == '/' && line[1] == '/')
 			continue;
 
