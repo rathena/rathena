@@ -3950,7 +3950,7 @@ int atcommand_param(const int fd, struct map_session_data* sd, const char* comma
  *------------------------------------------*/
 int atcommand_stat_all(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	int index, count, value = 0, max, new_value;
+	int index, count, value, max, new_value;
 	short* status[6];
  	//we don't use direct initialization because it isn't part of the c standard.
 	nullpo_retr(-1, sd);
@@ -3962,11 +3962,14 @@ int atcommand_stat_all(const int fd, struct map_session_data* sd, const char* co
 	status[4] = &sd->status.dex;
 	status[5] = &sd->status.luk;
 
-	if (!message || !*message || sscanf(message, "%d", &value) < 1 || value == 0)
+	if (!message || !*message || sscanf(message, "%d", &value) < 1 || value == 0) {
 		value = pc_maxparameter(sd);
+		max = pc_maxparameter(sd);
+	} else {
+		max = SHRT_MAX;
+	}
 
 	count = 0;
-	max = SHRT_MAX;
 	for (index = 0; index < (int)(sizeof(status) / sizeof(status[0])); index++) {
 
 		if (value > 0 && *status[index] > max - value)
@@ -7315,18 +7318,18 @@ int atcommand_npctalk(const int fd, struct map_session_data* sd, const char* com
 		(sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)))
 		return -1;
 
-	if (!message || !*message || sscanf(message, "%23[^,],%99[^\n]", name, mes) < 2) {
-		clif_displaymessage(fd, "Please, enter the correct info (usage: @npctalk <npc name> <message>).");
+	if (!message || !*message || sscanf(message, "%23[^,], %99[^\n]", name, mes) < 2) {
+		clif_displaymessage(fd, "Please, enter the correct info (usage: @npctalk <npc name>, <message>).");
 		return -1;
 	}
 
-	if (!(nd = npc_name2id(name)))
-	{
+	if (!(nd = npc_name2id(name))) {
 		clif_displaymessage(fd, msg_txt(111)); // This NPC doesn't exist
 		return -1;
 	}
 	
-	snprintf(temp, sizeof temp ,"%s: %s",name,mes);
+	strtok(name, "#"); // discard extra name identifier if present
+	snprintf(temp, sizeof(temp), "%s : %s", name, mes);
 	clif_message(&nd->bl, temp);
 
 	return 0;

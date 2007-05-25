@@ -11006,16 +11006,17 @@ BUILDIN_FUNC(message)
  *------------------------------------------*/
 BUILDIN_FUNC(npctalk)
 {
-	const char *str;
+	const char* str;
 	char message[255];
 
-	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
-	str=script_getstr(st,2);
+	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
+	str = script_getstr(st,2);
 
 	if(nd) {
 		memcpy(message, nd->name, NAME_LENGTH);
-		strcat(message," : ");
-		strncat(message,str, 254); //Prevent overflow possibility. [Skotlex]
+		strtok(message, "#"); // discard extra name identifier if present
+		strcat(message, " : ");
+		strncat(message, str, 254); //Prevent overflow possibility. [Skotlex]
 		clif_message(&(nd->bl), message);
 	}
 
