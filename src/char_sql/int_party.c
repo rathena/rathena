@@ -244,7 +244,7 @@ struct party_data *inter_party_fromsql(int party_id)
 		return NULL;
 	}
 	p->party.party_id = party_id;
-	strncpy(&p->party.name, sql_row[1], NAME_LENGTH);
+	strncpy(p->party.name, sql_row[1], NAME_LENGTH);
 	p->party.exp = atoi(sql_row[2])?1:0;
 	p->party.item = atoi(sql_row[3]);
 	leader_id = atoi(sql_row[4]);

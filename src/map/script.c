@@ -363,7 +363,7 @@ static void check_event(struct script_state *st, const char *evt)
  * 文字列のハッシュを計算
  *------------------------------------------*/
 #define calc_hash(x) (calc_hash2(x)%SCRIPT_HASH_SIZE)
-static unsigned int calc_hash2(const unsigned char *p)
+static unsigned int calc_hash2(const char* p)
 {
 #if defined(SCRIPT_HASH_DJB2)
 	unsigned int h = 5381;
@@ -2862,7 +2862,7 @@ void run_script_main(struct script_state *st)
 			push_val(stack,c,0);
 			break;
 		case C_STR:
-			push_str(stack,C_CONSTSTR,(st->script->script_buf+st->pos));
+			push_str(stack,C_CONSTSTR,(char*)(st->script->script_buf+st->pos));
 			while(st->script->script_buf[st->pos++]);
 			break;
 		case C_FUNC:
@@ -4553,7 +4553,7 @@ BUILDIN_FUNC(callfunc)
 	struct script_code *scr, *oldscr;
 	const char *str=script_getstr(st,2);
 
-	if( (scr=strdb_get(userfunc_db,(unsigned char*)str)) ){
+	if( (scr = strdb_get(userfunc_db, str)) ){
 		int i,j;
 		struct linkdb_node **oldval = st->stack->var_function;
 		for(i=st->start+3,j=0;i<st->end;i++,j++)
@@ -10258,7 +10258,7 @@ BUILDIN_FUNC(petloot)
 BUILDIN_FUNC(getinventorylist)
 {
 	TBL_PC *sd=script_rid2sd(st);
-	unsigned char card_var[NAME_LENGTH];
+	char card_var[NAME_LENGTH];
 	
 	int i,j=0,k;
 	if(!sd) return 0;

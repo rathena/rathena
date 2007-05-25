@@ -1454,7 +1454,7 @@ int clif_homskillinfoblock(struct map_session_data *sd)
 			WFIFOW(fd,len+6) = hd->homunculus.hskill[j].lv ;
 			WFIFOW(fd,len+8) = skill_get_sp(id,hd->homunculus.hskill[j].lv) ;
 			WFIFOW(fd,len+10)= skill_get_range2(&sd->hd->bl, id,hd->homunculus.hskill[j].lv) ;
-			strncpy(WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH) ;
+			strncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH) ;
 			WFIFOB(fd,len+36) = (hd->homunculus.hskill[j].lv < merc_skill_tree_get_max(id, hd->homunculus.class_))?1:0;
 			len+=37;
 		}
@@ -4161,7 +4161,7 @@ int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range)
 		range = skill_get_range2(&sd->bl, id,sd->status.skill[skillid].lv);
 
 	WFIFOW(fd,12)= range;
-	strncpy(WFIFOP(fd,14), skill_get_name(id), NAME_LENGTH);
+	strncpy((char*)WFIFOP(fd,14), skill_get_name(id), NAME_LENGTH);
 	if(sd->status.skill[skillid].flag ==0)
 		WFIFOB(fd,38)= (sd->status.skill[skillid].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
 	else
@@ -4194,7 +4194,7 @@ int clif_skillinfoblock(struct map_session_data *sd)
 			WFIFOW(fd,len+6) = sd->status.skill[i].lv;
 			WFIFOW(fd,len+8) = skill_get_sp(id,sd->status.skill[i].lv);
 			WFIFOW(fd,len+10)= skill_get_range2(&sd->bl, id,sd->status.skill[i].lv);
-			strncpy(WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH);
+			strncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH);
 			if(sd->status.skill[i].flag ==0)
 				WFIFOB(fd,len+36)= (sd->status.skill[i].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
 			else
@@ -6511,7 +6511,7 @@ int clif_guild_memberlogin_notice(struct guild *g,int idx,int flag)
 int clif_guild_send_onlineinfo(struct map_session_data *sd)
 {
 	struct guild *g;
-	char buf[14*128];
+	unsigned char buf[14*128];
 	int i, count=0, p_len;
 	
 	nullpo_retr(0, sd);
@@ -6534,7 +6534,7 @@ int clif_guild_send_onlineinfo(struct map_session_data *sd)
 		}
 	}
 	
-	clif_send(buf,p_len*count,&sd->bl,SELF);
+	clif_send(buf, p_len*count, &sd->bl, SELF);
 
 	return 0;
 }
@@ -6815,7 +6815,7 @@ int clif_guild_skillinfo(struct map_session_data *sd)
 			WFIFOW(fd,c*37+12) = g->skill[i].lv;
 			WFIFOW(fd,c*37+14) = skill_get_sp(id,g->skill[i].lv);
 			WFIFOW(fd,c*37+16) = skill_get_range(id,g->skill[i].lv);
-			strncpy(WFIFOP(fd,c*37+18), skill_get_name(id), NAME_LENGTH);
+			strncpy((char*)WFIFOP(fd,c*37+18), skill_get_name(id), NAME_LENGTH);
 			if(g->skill[i].lv < guild_skill_get_max(id) && (sd == g->member[0].sd))
 				up = 1;
 			else
@@ -7785,9 +7785,9 @@ void clif_hate_info(struct map_session_data *sd, unsigned char hate_level,int cl
 	WFIFOHEAD(fd,packet_len(0x20e));
 	WFIFOW(fd,0)=0x20e;
 	if (pcdb_checkid(class_))
-		strncpy(WFIFOP(fd,2),job_name(class_), NAME_LENGTH);
+		strncpy((char*)WFIFOP(fd,2),job_name(class_), NAME_LENGTH);
 	else if (mobdb_checkid(class_))
-		strncpy(WFIFOP(fd,2),mob_db(class_)->jname, NAME_LENGTH);
+		strncpy((char*)WFIFOP(fd,2),mob_db(class_)->jname, NAME_LENGTH);
 	else //Really shouldn't happen...
 		memset(WFIFOP(fd,2), 0, NAME_LENGTH);
 	WFIFOL(fd,26)=sd->bl.id;
@@ -7804,7 +7804,7 @@ void clif_mission_info(struct map_session_data *sd, int mob_id, unsigned char pr
 	int fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0x20e));
 	WFIFOW(fd,0)=0x20e;
-	strncpy(WFIFOP(fd,2),mob_db(mob_id)->jname, NAME_LENGTH);
+	strncpy((char*)WFIFOP(fd,2),mob_db(mob_id)->jname, NAME_LENGTH);
 	WFIFOL(fd,26)=mob_id;
 	WFIFOB(fd,30)=progress; //Message to display
 	WFIFOB(fd,31)=20;
@@ -8381,7 +8381,7 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd)
 		//Asked name of invisible player, this shouldn't be possible!
 		//Possible bot? Thanks to veider and qspirit
 		//FIXME: Still isn't perfected as clients keep asking for this on legitimate situations.
-		unsigned char gm_msg[256];
+		char gm_msg[256];
 		sprintf(gm_msg, "Hack on NameRequest: character '%s' (account: %d) requested the name of an invisible target.", sd->status.name, sd->status.account_id);
 		ShowWarning(gm_msg);
 		 // information is sended to all online GM
@@ -8549,7 +8549,7 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd)
 	if(pc_isGM(sd) < get_atcommand_level(AtCommand_MapMove))
 		return;
 
-	map_name = RFIFOP(fd,2);
+	map_name = (char*)RFIFOP(fd,2);
 	map_name[MAP_NAME_LENGTH_EXT-1]='\0';
 	sprintf(output, "%s %d %d", map_name, RFIFOW(fd,18), RFIFOW(fd,20));
 	atcommand_rura(fd, sd, "@rura", output);
@@ -8960,7 +8960,7 @@ void clif_parse_GMmessage(int fd, struct map_session_data *sd)
 		return;
 
 	size = RFIFOW(fd,2)-4;
-	mes = RFIFOP(fd,4);
+	mes = (char*)RFIFOP(fd,4);
 	mes_len_check(mes, size, CHAT_SIZE);
 
 	intif_GMmessage(mes, size, 0);
@@ -9926,7 +9926,7 @@ void clif_parse_LGMmessage(int fd, struct map_session_data *sd)
 		return;
 
 	len = RFIFOW(fd,2) - 4;
-	mes = RFIFOP(fd,4);
+	mes = (char*)RFIFOP(fd,4);
 	mes_len_check(mes, len, CHAT_SIZE);
 
 	WBUFW(buf,0) = 0x9a;
@@ -10149,7 +10149,7 @@ void clif_parse_PartyMessage(int fd, struct map_session_data *sd)
 	int len;
 
 	len = RFIFOW(fd,2) - 4;
-	mes = RFIFOP(fd,4);
+	mes = (char*)RFIFOP(fd,4);
 	mes_len_check(mes, len, CHAT_SIZE);
 
 	if (is_charcommand(fd, sd, mes) != CharCommand_None ||
@@ -10333,7 +10333,7 @@ void clif_parse_GuildChangeNotice(int fd,struct map_session_data *sd)
 	}
 	// compensate for the client's adding of an extra space at the end of the message
 	if (RFIFOB(fd, 66) == '|') {
-		memset(RFIFOP(fd, 66 + strnlen(RFIFOP(fd, 66), 120)-1), 0x00, 1); // delete extra space at the end
+		memset(RFIFOP(fd, 66 + strnlen((char*)RFIFOP(fd, 66), 120)-1), 0x00, 1); // delete extra space at the end
 	}
 
 	guild_change_notice(sd,RFIFOL(fd,2),(char*)RFIFOP(fd,6),(char*)RFIFOP(fd,66));
@@ -10406,7 +10406,7 @@ void clif_parse_GuildMessage(int fd,struct map_session_data *sd)
 	int len;
 
 	len = RFIFOW(fd,2) - 4;
-	mes = RFIFOP(fd,4);
+	mes = (char*)RFIFOP(fd,4);
 	mes_len_check(mes, len, CHAT_SIZE);
 
 	if (is_charcommand(fd, sd, mes) != CharCommand_None ||
@@ -10611,7 +10611,7 @@ void clif_parse_Shift(int fd, struct map_session_data *sd)
 	if (pc_isGM(sd) < (lv=get_atcommand_level(AtCommand_JumpTo)))
 		return;
 
-	player_name = RFIFOP(fd,2);
+	player_name = (char*)RFIFOP(fd,2);
 	player_name[NAME_LENGTH-1] = '\0';
 	atcommand_jumpto(fd, sd, "@jumpto", player_name); // as @jumpto
 	if(log_config.gm && lv >= log_config.gm) {
@@ -10636,7 +10636,7 @@ void clif_parse_Recall(int fd, struct map_session_data *sd)
 	if (pc_isGM(sd) < (lv=get_atcommand_level(AtCommand_Recall)))
 		return;
 
-	player_name = RFIFOP(fd,2);
+	player_name = (char*)RFIFOP(fd,2);
 	player_name[NAME_LENGTH-1] = '\0';
 	atcommand_recall(fd, sd, "@recall", player_name); // as @recall
 	if(log_config.gm && lv >= log_config.gm) {
@@ -10659,7 +10659,7 @@ void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd)
 	if (battle_config.atc_gmonly && !pc_isGM(sd))
 		return;
 
-	monster_item_name = RFIFOP(fd,2);
+	monster_item_name = (char*)RFIFOP(fd,2);
 	monster_item_name[NAME_LENGTH-1] = '\0';
 
 	if (mobdb_searchname(monster_item_name)) {
@@ -11421,7 +11421,7 @@ void clif_parse_AdoptRequest(int fd,struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_ChangeHomunculusName(int fd, struct map_session_data *sd)
 {
-	merc_hom_change_name(sd,RFIFOP(fd,2));
+	merc_hom_change_name(sd,(char*)RFIFOP(fd,2));
 }
 
 void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd)

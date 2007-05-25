@@ -39,7 +39,7 @@ char irc_channel[32]="";
 char irc_channel_pass[32]="";
 char irc_trade_channel[32]="";
 
-unsigned char irc_ip_str[128]="";
+char irc_ip_str[128]="";
 unsigned long irc_ip=0;
 unsigned short irc_port = 6667;
 int irc_fd=0;

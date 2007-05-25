@@ -2442,7 +2442,7 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 				return 0;
 			break;
 		case HVAN_EXPLOSION:
-			if(hd->homunculus.intimacy < battle_config.hvan_explosion_intimate)
+			if(hd->homunculus.intimacy < (unsigned int)battle_config.hvan_explosion_intimate)
 				return 0;
 			break;
 	}
@@ -6115,7 +6115,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case WZ_METEOR:
 		{
 			int flag=0, area = skill_get_splash(skillid, skilllv);
-			short tmpx, tmpy, x1 = 0, y1 = 0;
+			short tmpx = 0, tmpy = 0, x1 = 0, y1 = 0;
 			if (sc && sc->data[SC_MAGICPOWER].timer != -1)
 				flag = flag|2; //Store the magic power flag for future use. [Skotlex]
 			for(i=0;i<2+(skilllv>>1);i++) {

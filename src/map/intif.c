@@ -293,8 +293,8 @@ int intif_saveregistry(struct map_session_data *sd, int type)
 		int i,p;
 		for (p=13,i = 0; i < count; i++) {
 			if (reg[i].str[0] && reg[i].value != 0) {
-				p+= sprintf(WFIFOP(inter_fd,p), "%s", reg[i].str)+1; //We add 1 to consider the '\0' in place.
-				p+= sprintf(WFIFOP(inter_fd,p), "%s", reg[i].value)+1;
+				p+= sprintf((char*)WFIFOP(inter_fd,p), "%s", reg[i].str)+1; //We add 1 to consider the '\0' in place.
+				p+= sprintf((char*)WFIFOP(inter_fd,p), "%s", reg[i].value)+1;
 			}
 		}
 		WFIFOW(inter_fd,2)=p;
@@ -971,10 +971,10 @@ int intif_parse_Registers(int fd)
 			return 0;
 	}
 	for(j=0,p=13;j<max && p<RFIFOW(fd,2);j++){
-		sscanf(RFIFOP(fd,p), "%31c%n", reg[j].str,&len);
+		sscanf((char*)RFIFOP(fd,p), "%31c%n", reg[j].str,&len);
 		reg[j].str[len]='\0';
 		p += len+1; //+1 to skip the '\0' between strings.
-		sscanf(RFIFOP(fd,p), "%255c%n", reg[j].value,&len);
+		sscanf((char*)RFIFOP(fd,p), "%255c%n", reg[j].value,&len);
 		reg[j].value[len]='\0';
 		p += len+1;
 	}
@@ -1399,10 +1399,10 @@ int intif_parse_ChangeNameOk(int fd)
 	case 0: //Players [NOT SUPPORTED YET]
 		break;
 	case 1: //Pets
-		pet_change_name_ack(sd, RFIFOP(fd,12), RFIFOB(fd,11));
+		pet_change_name_ack(sd, (char*)RFIFOP(fd,12), RFIFOB(fd,11));
 		break;
 	case 2: //Hom
-		merc_hom_change_name_ack(sd, RFIFOP(fd,12), RFIFOB(fd,11));
+		merc_hom_change_name_ack(sd, (char*)RFIFOP(fd,12), RFIFOB(fd,11));
 		break;
 	}
 	return 0;
