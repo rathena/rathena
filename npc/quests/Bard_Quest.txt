@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Riotblade and L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //=		@inputstr$ : temp var 
 //=
 //= This Quest has relation with brisingamen_seal.txt (Seals)
+//= 1.2 Fixed a little bug. [Samuray22]
 //============================================================ 
 
 geffen,132,38,3	script	Bard#2	51,{
@@ -1307,10 +1308,11 @@ S_StorySong:
 				// For 3 and 4 cases we set more chance earlier on @random
 				if(getarg(0) == 3 || getarg(0) == 4){
 					mes "[Errende]";
-					if (sex)
+					if (sex) {
 						mes "Heroic warrior,";
-					else
+					} else {
 						mes "My fair lady,";
+					}
 					mes "Please listen to my song. If you have a flower in hand and are in love, let's count the flower petals as we go along.";
 					next;
 					mes "^483D8BAt One, I fall in love.";
@@ -1348,7 +1350,6 @@ S_StorySong:
 					mes "You're an adventurer, aren't you? So you must travel quite a bit? It's embarassing for me to ask,";
 					mes "but I have a favor to ask...!";
 					next;
-
 					if(select("Sure, no problem.:I ain't gonna help you.")==1) {
 						cutin "bard_eland01",2;
 						mes "[Errende]";
