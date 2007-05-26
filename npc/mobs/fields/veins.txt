@@ -23,7 +23,7 @@ ve_fild01,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
 ve_fild01,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
 ve_fild01,0,0,0,0	monster	Blue Plant	1079,3,1800000,900000,1
 ve_fild01,0,0,0,0	monster	Shining Plant	1083,1,1800000,900000,1
-ve_fild01,0,0,0,0	monster	Atros	1785,1,86400000,86000000,1
+ve_fild01,0,0,0,0	monster	Atroce	1785,1,86400000,86000000,1
 
 //======== [Veins Field-02] =======================================
 ve_fild02,0,0,0,0	monster	Savage	1166,60,0,0,0
@@ -31,7 +31,7 @@ ve_fild02,0,0,0,0	monster	Side Winder	1037,20,0,0,0
 ve_fild02,0,0,0,0	monster	Roween	1782,20,0,0,0
 ve_fild02,0,0,0,0	monster	Stapo	1784,30,0,0,0
 ve_fild02,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
-ve_fild02,0,0,0,0	monster	Atros	1785,1,86400000,86000000,1
+ve_fild02,0,0,0,0	monster	Atroce	1785,1,86400000,86000000,1
 
 //======== [Veins Field-03] =======================================
 ve_fild03,0,0,0,0	monster	Sandman	1165,20,600000,300000,1

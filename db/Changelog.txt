@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+05/26
+	* Fixed mob name Atros -> Atroce [Playtester]
 05/25
 	* Some minor Thor Volcano mob skill changes [Playtester]
 05/22
