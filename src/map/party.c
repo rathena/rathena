@@ -427,6 +427,7 @@ int party_member_leaved(int party_id,int account_id,int char_id)
 		sd->status.party_id=0;
 		sd->state.party_sent=0;
 		clif_charnameupdate(sd); //Update name display [Skotlex]
+		//TODO: hp bars should be cleared too
 	}
 	return 0;
 }
@@ -532,12 +533,15 @@ void party_send_movemap(struct map_session_data *sd)
 		}
 	}
 
-	if (sd->fd) { //Send dots of other party members to this char. [Skotlex]
+	if (sd->fd) { // synchronize minimap positions with the rest of the party
 		for(i=0; i < MAX_PARTY; i++) {
-			if (p->data[i].sd &&
+			if (p->data[i].sd && 
 				p->data[i].sd != sd &&
 				p->data[i].sd->bl.m == sd->bl.m)
+			{
 				clif_party_xy_single(sd->fd, p->data[i].sd);
+				clif_party_xy_single(p->data[i].sd->fd, sd);
+			}
 		}
 	}
 	return;

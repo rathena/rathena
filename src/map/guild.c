@@ -715,10 +715,10 @@ int guild_reply_invite(struct map_session_data *sd,int guild_id,int flag)
 			return 0;
 		}
 
-
 		//interI‚Ö’Ç‰Á—v‹
 		guild_makemember(&m,sd);
 		intif_guild_addmember( sd->guild_invite, &m );
+		//TODO: send a minimap update to this player
 		return 0;
 	}else{		// ‹‘”Û
 		sd->guild_invite=0;
@@ -756,8 +756,10 @@ int guild_member_added(int guild_id,int account_id,int char_id,int flag)
 	}
 
 		// ¬Œ÷
-	sd->state.guild_sent=0;
-	sd->status.guild_id=guild_id;
+	sd->state.guild_sent = 0;
+	sd->status.guild_id = g->guild_id;
+	sd->guild_emblem_id = g->emblem_id;
+	//TODO: send new emblem info to others
 
 	if( sd2!=NULL )
 		clif_guild_inviteack(sd2,2);
@@ -770,8 +772,7 @@ int guild_member_added(int guild_id,int account_id,int char_id,int flag)
 }
 
 // ƒMƒ‹ƒh’E‘Ş—v‹
-int guild_leave(struct map_session_data *sd,int guild_id,
-	int account_id,int char_id,const char *mes)
+int guild_leave(struct map_session_data* sd, int guild_id, int account_id, int char_id, const char* mes)
 {
 	struct guild *g;
 
@@ -790,9 +791,9 @@ int guild_leave(struct map_session_data *sd,int guild_id,
 	intif_guild_leave(sd->status.guild_id, sd->status.account_id, sd->status.char_id,0,mes);
 	return 0;
 }
+
 // ƒMƒ‹ƒh’Ç•ú—v‹
-int guild_expulsion(struct map_session_data *sd,int guild_id,
-	int account_id,int char_id,const char *mes)
+int guild_expulsion(struct map_session_data* sd, int guild_id, int account_id, int char_id, const char* mes)
 {
 	struct map_session_data *tsd;
 	struct guild *g;
@@ -829,47 +830,51 @@ int guild_expulsion(struct map_session_data *sd,int guild_id,
 	return 0;
 }
 
-int guild_member_leaved(int guild_id,int account_id,int char_id,int flag,
-	const char *name,const char *mes) // rewrote [LuzZza]
+int guild_member_leaved(int guild_id, int account_id, int char_id, int flag, const char* name, const char* mes)
 {
 	int i;
-	struct guild *g = guild_search(guild_id);
-	struct map_session_data *sd = map_charid2sd(char_id);
-	struct map_session_data *online_member_sd;
+	struct guild* g = guild_search(guild_id);
+	struct map_session_data* sd = map_charid2sd(char_id);
+	struct map_session_data* online_member_sd;
 
 	if(g == NULL)
-		return 0;
+		return 0; // no such guild (error!)
 	
-	for(i=0;i<g->max_member;i++) {
-		if( g->member[i].account_id == account_id &&
-			g->member[i].char_id == char_id ){
+	for(i = 0; i < g->max_member; i++)
+		if( g->member[i].account_id == account_id && g->member[i].char_id == char_id )
+			break;
 
-				if((online_member_sd = guild_getavailablesd(g)) == NULL)
-					return 0;
+	if (i == g->max_member)
+		return 0; // not a member (inconsistency!)
 
-				if(!flag)
-					clif_guild_leave(online_member_sd, name, mes);
-				else
-					clif_guild_expulsion(online_member_sd, name, mes, account_id);
+	online_member_sd = guild_getavailablesd(g);
+	if(online_member_sd == NULL)
+		return 0; // noone online to inform
 
-				memset(&g->member[i],0,sizeof(struct guild_member));
-				clif_guild_memberlist(online_member_sd);
+	if(!flag)
+		clif_guild_leave(online_member_sd, name, mes);
+	else
+		clif_guild_expulsion(online_member_sd, name, mes, account_id);
 
-				if(sd != NULL && sd->status.guild_id == guild_id) {
-					if (sd->state.storage_flag == 2) //Close the guild storage.
-						storage_guild_storageclose(sd);
-					sd->status.guild_id=0;
-					sd->guild_emblem_id=0;
-					sd->state.guild_sent=0;
-					
-					guild_send_dot_remove(sd);
-					clif_charnameupdate(sd); //Update display name [Skotlex]
-				}
-				return 0;
-		}
-					
+	// remove member from guild
+	memset(&g->member[i],0,sizeof(struct guild_member));
+	clif_guild_memberlist(online_member_sd);
+
+	// update char, if online
+	if(sd != NULL && sd->status.guild_id == guild_id)
+	{
+		// do stuff that needs the guild_id first, BEFORE we wipe it
+		if (sd->state.storage_flag == 2) //Close the guild storage.
+			storage_guild_storageclose(sd);
+		guild_send_dot_remove(sd);
+
+		sd->status.guild_id = 0;
+		sd->guild_emblem_id = 0;
+		sd->state.guild_sent = 0;
+		
+		clif_charnameupdate(sd); //Update display name [Skotlex]
+		//TODO: send emblem update to self and people around
 	}
-
 	return 0;
 }
 
@@ -975,6 +980,7 @@ int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int onlin
 			continue;
 
 		clif_guild_xy_single(g->member[idx].sd->fd, g->member[i].sd);
+		clif_guild_xy_single(g->member[i].sd->fd, g->member[idx].sd);
 	}			
 
 	return 0;
