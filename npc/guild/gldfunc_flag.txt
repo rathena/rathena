@@ -4,7 +4,7 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.3a
+//= 1.4
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -17,18 +17,22 @@
 //=   arg(2): x1 coordinate for warp
 //=   arg(3): y1 coordinate for warp
 //=   arg(4): Teleportable (0/1) 
+//=   arg(5): Display Flag Dialog (0/1)
 //===== Additional Comments: =================================
 //= v1.2: All Guild flags scripts use this function. [kobra_k88]
 //= v1.3: Can now only flag in from outside the castle [Kayla]
 //= v1.3a: Implemented k3dt's exploit fix [Vicious]
+//= v1.4: By default town flags are set to no longer show text. [L0ne_W0lf]
 //============================================================
 
 function	script	F_Flags	{
 
+	if (getarg(5) == 0) return;
+
 	set @GID, GetCastleData(getarg(1),1);
 	if (@GID != 0) goto L_Startg;
 
-	mes "[ Edict of the Divine Rune Midgard Kingdom of " + getarg(0) + " ]";
+	mes "[ Edict of the Divine Rune Midgard Kingdom of ]";
 	mes " ";
 	mes "1. Honoring the ordinance of the Divine Rune Midgard Kingdom of " + getarg(0) + ", this guild base has not been taken by any guild yet";
 	mes " ";
@@ -36,17 +40,17 @@ function	script	F_Flags	{
 	return;
 L_Startg:
 	if ((getcharid(2) == @GID) && (getarg(4) == 1)) goto L_Startg2;
-	mes "[ Edict of the Divine Rune Midgard Kingdom of "+ getarg(0) +" ]";
+	mes "[ Edict of the Divine Rune Midgard Kingdom ]";
 	mes " ";
-	mes "1. Honoring the ordinance of the";
-	mes "Divine Rune Midgard Kingdom of ";
-	mes getarg(0) +", we approve that this";
-	mes "base is in the private possession";
-	mes "of the ^ff0000" + GetGuildName(@GID) + "^000000 guild.";
+	mes "1. Following the ordinance of the";
+	mes "Divine Rune Midgard Kingdom,";
+	mes "we approve that this place is in";
+	mes "private possession of ^ff0000" + GetGuildName(@GID) + "^000000 Guild.";
 	mes " ";
-	mes "2. The guild master of the";
-	mes "^ff0000"+ GetGuildName(@GID) + "^000000 guild, is ^0000FF" + GetGuildMaster(@GID) + "^000000.";
-	mes "If anyone objects to that, raise your sword to honor yourself.";
+	mes "2. The guild Master of ^ff0000"+ GetGuildName(@GID) + "^000000 Guild is";
+	mes "^0000FF" + GetGuildMaster(@GID) + "^000000";
+	mes "If there is anyone who objects to this,";
+	mes " prove your strength and honor with a steel blade in your hand.";
 	return;
 L_Startg2:
 	mes "[ Ringing Voice ]";

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 // Based off existing guild scripts.  Do not know if it is accurate.[kobra_k88]
 // 1.1 Inner Flags don't teleport you to your HQ anymore [Lupus]
+// 1.2 updated flags to use the new arguments. [L0ne__W0lf]
 //============================================================
 
 
@@ -18,7 +19,7 @@
 // 			Castle 1
 //============================================================================//
 n_castle,110,96,1	script	NGuild Aldebaran#a1-1	722,{
-	callfunc "F_Flags","Al De Baran","nguild_alde",218,170,1;
+	callfunc "F_Flags","Al De Baran","nguild_alde",218,170,1,1;
 	close;
 
 OnRecvCastleN01:
@@ -27,7 +28,7 @@ OnRecvCastleN01:
 }
 
 nguild_alde,30,248,4	script	NGuild Aldebaran#a1-6::NGuildAlde	722,{
-	callfunc "F_Flags","Al De Baran","nguild_alde",218,170,0;
+	callfunc "F_Flags","Al De Baran","nguild_alde",218,170,0,1;
 	close;
 
 OnRecvCastleN01:
@@ -57,7 +58,7 @@ nguild_alde,210,150,4	duplicate(NGuildAlde)	NGuild Aldebaran#a1-20	722
 // 			Castle 2
 //============================================================================//
 n_castle,110,109,3	script	NGuild Geffen#g1-1	722,{
-	callfunc "F_Flags","Geffen","nguild_gef",83,47,1;
+	callfunc "F_Flags","Geffen","nguild_gef",83,47,1,1;
 	close;
 
 OnRecvCastleN02:
@@ -66,7 +67,7 @@ OnRecvCastleN02:
 }
 
 nguild_gef,28,157,4	script	NGuild Geffen#g1-6::NGuildGef	722,{
-	callfunc "F_Flags","Geffen","nguild_gef",83,47,0;
+	callfunc "F_Flags","Geffen","nguild_gef",83,47,0,1;
 	close;
 
 OnRecvCastleN02:
@@ -87,7 +88,7 @@ nguild_gef,64,16,4	duplicate(NGuildGef)	NGuild Geffen#g1-12	722
 // 			Castle 3
 //============================================================================//
 n_castle,94,109,5	script	NGuild Payon#f1-1	722,{
-	callfunc "F_Flags","Payon","nguild_pay",87,29,1;
+	callfunc "F_Flags","Payon","nguild_pay",87,29,1,1;
 	close;
 
 OnRecvCastleN03:
@@ -96,7 +97,7 @@ OnRecvCastleN03:
 }
 
 nguild_pay,238,67,4	script	NGuild Payon#f1-6::NGuildPay	722,{
-	callfunc "F_Flags","Payon","nguild_pay",87,29,0;
+	callfunc "F_Flags","Payon","nguild_pay",87,29,0,1;
 	close;
 
 OnRecvCastleN03:
@@ -118,7 +119,7 @@ nguild_pay,212,108,4	duplicate(NGuildPay)	NGuild Payon#f1-11	722
 // 			Castle 4
 //=============================================================================//
 n_castle,94,96,7	script	NGuild Prontera#p1-1	722,{
-	callfunc "F_Flags","Prontera","nguild_prt",97,174,1;
+	callfunc "F_Flags","Prontera","nguild_prt",97,174,1,1;
 	close;
 
 OnRecvCastleN04:
@@ -127,7 +128,7 @@ OnRecvCastleN04:
 }
 
 nguild_prt,58,56,4	script	NGuild Prontera#p1-7::NGuildPrt	722,{
-	callfunc "F_Flags","Prontera","nguild_prt",97,174,0;
+	callfunc "F_Flags","Prontera","nguild_prt",97,174,0,1;
 	close;
 
 OnRecvCastleN04:

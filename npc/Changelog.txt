@@ -1,6 +1,12 @@
 Date		Added
 ======
 2007/05/26
+	* Rev. 10632 Guild flag update. [L0ne_W0lf]
+	- Guild flags in town by default will no longer show dialog.
+	- Updated several guild flag positions and rotations, and removed some others all together.
+	- Added the second set of Payon town guild flags in the northern section
+	- Updated novice WoE flags with the new argument.
+2007/05/26
 	*  Fixed a little bug on "Bard Quest" (Not Job). [Samuray22]
 	- Maybe will be a good idea change the variables, for something more original.
 2007/05/25
