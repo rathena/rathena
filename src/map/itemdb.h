@@ -147,8 +147,8 @@ struct item_data* itemdb_exists(int nameid);
 #define itemdb_available(n) (itemdb_exists(n) && itemdb_search(n)->flag.available)
 #define itemdb_viewid(n) (itemdb_search(n)->view_id)
 #define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
-int itemdb_group_bonus(const int itemgrouphealrate[MAX_ITEMGROUP], int itemid);
 
+int itemdb_group_bonus(struct map_session_data* sd, int itemid);
 int itemdb_searchrandomid(int flags);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
