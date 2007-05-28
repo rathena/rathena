@@ -1071,8 +1071,7 @@ int chrif_updatefamelist(struct map_session_data *sd)
 	WFIFOL(char_fd,2) = sd->status.char_id;
 	WFIFOL(char_fd,6) = sd->status.fame;
 	WFIFOB(char_fd,10) = type;
-	WFIFOB(char_fd,11) = pc_famerank(sd->status.char_id, sd->class_&MAPID_UPPERMASK);
-	WFIFOSET(char_fd,12);
+	WFIFOSET(char_fd,11);
 
 	return 0;
 }

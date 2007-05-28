@@ -2816,64 +2816,73 @@ int parse_frommap(int fd)
 //		case 0x2b0f: Not used anymore, available for future use
 
 		case 0x2b10: // Update and send fame ranking list
-			if (RFIFOREST(fd) < 12)
+			if (RFIFOREST(fd) < 11)
 				return 0;
 		{
 			int cid = RFIFOL(fd, 2);
 			int fame = RFIFOL(fd, 6);
 			char type = RFIFOB(fd, 10);
-			char pos = RFIFOB(fd, 11);
 			int size;
 			struct fame_list *list = NULL;
 			
-			switch(type) {
-				case 1:
-					size = fame_list_size_smith;
-					list = smith_fame_list;
-					break;
-				case 2:
-					size = fame_list_size_chemist;
-					list = chemist_fame_list;
-					break;
-				case 3:
-					size = fame_list_size_taekwon;
-					list = taekwon_fame_list;
-					break;
-				default:
-					size = 0;
-					break;
-			}
-			if(!size) break; //No list.
-			if(pos)
+			switch(type)
 			{
-			 	pos--; //Convert from pos to index.
-				if(
-					(pos == 0 || fame < list[pos-1].fame) &&
-					(pos == size-1 || fame > list[pos+1].fame)
-				) { //No change in order.
-					list[(int)pos].fame = fame;
-					char_update_fame_list(type, pos, fame);
-					break;
+				case 1 : size = fame_list_size_smith;   list = smith_fame_list; break;
+				case 2 : size = fame_list_size_chemist; list = chemist_fame_list; break;
+				case 3 : size = fame_list_size_taekwon; list = taekwon_fame_list; break;
+				default: size = 0; break;
+			}
+			if( size == 0 )
+				break;// No list
+			for( i = 0; i < size; ++i )
+			{
+				if( list[i].id != cid )
+					continue;
+				// player found, update position
+				if( i > 0 && fame >= list[i - 1].fame )
+				{// moved up
+					struct fame_list entry;
+					int t;
+					for( t = 0; fame < list[t].fame ; ++t )
+						;// get target position (always < i)
+					memcpy(&entry, &list[i], sizeof(struct fame_list));
+					entry.fame = fame;
+					memmove(&list[t + 1], &list[t], (t - i)*sizeof(struct fame_list));
+					memcpy(&list[t], &entry, sizeof(struct fame_list));
+					char_send_fame_list(-1);
 				}
-				// If the player's already in the list, remove the entry and shift the following ones 1 step up
-				memmove(list+pos, list+pos+1, (size-pos-1) * sizeof(struct fame_list));
-				//Clear out last entry.
-				list[size-1].id = 0;
-				list[size-1].fame = 0;
+				else if( i < size - 1 && fame < list[i + 1].fame )
+				{// moved down - always stays in the list
+					struct fame_list entry;
+					int t;
+					for( t = i + 2; t < size && fame < list[t].fame ; ++t )
+						;// get target position
+					--t;
+					memcpy(&entry, &list[i], sizeof(struct fame_list));
+					entry.fame = fame;
+					memmove(&list[i], &list[i + 1], (t - i)*sizeof(struct fame_list));
+					memcpy(&list[t], &entry, sizeof(struct fame_list));
+					char_send_fame_list(-1);
+				}
+				else
+				{// same position
+					list[i].fame = fame;
+					char_update_fame_list(type, i, fame);
+				}
+				break;
 			}
 
-			// Find the position where the player has to be inserted
-			for(i = 0; i < size && fame < list[i].fame; i++);
-			if(i >= size) break; //Out of ranking.
-			// When found someone with less or as much fame, insert just above
-			memmove(list+i+1, list+i, (size-i-1) * sizeof(struct fame_list));
-			list[i].id = cid;
-			list[i].fame = fame;
-			// Look for the player's name
-			char_loadName(list[i].id, list[i].name);
-			char_send_fame_list(-1);
+			if( i == size && fame >= list[size - 1].fame )
+			{// not on list and has enough fame
+				for( i = 0; fame < list[i].fame; ++i )
+					;// get target position
+				list[i].id = cid;
+				list[i].fame = fame;
+				char_loadName(list[i].id, list[i].name);
+				char_send_fame_list(-1);
+			}
 
-			RFIFOSKIP(fd,12);
+			RFIFOSKIP(fd,11);
 		}
 		break;
 

@@ -3,6 +3,12 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/05/28
+	* RFIFOREST returns 0 when the session is eof (input data is implicitly 
+	  discarted).
+	* Reworked the player fame update: [FlavioJS]
+	- would crash if an invalid pos was received
+	- the wrong player could be updated on certain conditions
 2007/05/26
 	* Identified several more glitches, too tired to fix these...
 	* Fixed server not removing member minimap dot when you leave a guild

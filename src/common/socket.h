@@ -35,7 +35,7 @@
 #define RFIFOSPACE(fd) (session[fd]->max_rdata - session[fd]->rdata_size)
 #define WFIFOSPACE(fd) (session[fd]->max_wdata - session[fd]->wdata_size)
 
-#define RFIFOREST(fd)  (session[fd]->rdata_size - session[fd]->rdata_pos)
+#define RFIFOREST(fd)  (session[fd]->eof ? 0 : session[fd]->rdata_size - session[fd]->rdata_pos)
 #define RFIFOFLUSH(fd) \
 	do { \
 		if(session[fd]->rdata_size == session[fd]->rdata_pos){ \
