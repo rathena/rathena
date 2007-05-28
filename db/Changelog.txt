@@ -49,7 +49,9 @@
 	----
 ========================
 05/28
+	* Fixed Black Leather Boots and Thorny Shield [Playtester]
 	* Fixed Orc Archer's Bow and Silver Shotel [Playtester]
+	- info from Doddler's wiki for both
 05/26
 	* Fixed mob name Atros -> Atroce [Playtester]
 05/25
