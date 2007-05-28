@@ -43,12 +43,9 @@ enum {
 	TABLE_STORAGE,
 	TABLE_GUILD_STORAGE,
 };
-struct itemtemp{
-	struct itemtmp equip[MAX_GUILD_STORAGE],notequip[MAX_GUILD_STORAGE];
-};
+
 int memitemdata_to_sql(struct itemtmp mapitem[], int count, int char_id,int tableswitch);
 
-//int memitemdataNEW_to_sql(struct itemtmp mapitem[], int count, int char_id,int tableswitch);
 int mapif_sendall(unsigned char *buf,unsigned int len);
 int mapif_sendallwos(int fd,unsigned char *buf,unsigned int len);
 int mapif_send(int fd,unsigned char *buf,unsigned int len);
@@ -56,8 +53,6 @@ int mapif_send(int fd,unsigned char *buf,unsigned int len);
 int char_married(int pl1,int pl2);
 int char_child(int parent_id, int child_id);
 int char_family(int pl1,int pl2,int pl3);
-
-int char_loadName(int char_id, char* name);
 
 int request_accreg2(int account_id, int char_id);
 int save_accreg2(unsigned char* buf, int len);

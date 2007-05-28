@@ -96,7 +96,7 @@ int char_new = 1;
 int char_new_display = 0;
 int name_ignoring_case = 0; // Allow or not identical name for characters but with a different case by [Yor]
 int char_name_option = 0; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
-char unknown_char_name[NAME_LENGTH] = "Unknown";
+char unknown_char_name[NAME_LENGTH] = "Unknown"; // Name to use when the requested name cannot be determined
 char char_name_letters[1024] = ""; // list of letters/symbols used to authorise or not a name of a character. by [Yor]
 //The following are characters that are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 #define TRIM_CHARS "\032\t\x0A\x0D "
@@ -2296,8 +2296,6 @@ void char_update_fame_list(int type, int index, int fame)
 	mapif_sendall(buf, 8);
 }
 
-int search_mapserver(unsigned short map, uint32 ip, uint16 port);
-				
 //Loads a character's name and stores it in the buffer given (must be NAME_LENGTH in size)
 //Returns 1 on found, 0 on not found (buffer is filled with Unknown char name)
 int char_loadName(int char_id, char* name)
@@ -2316,9 +2314,11 @@ int char_loadName(int char_id, char* name)
 	else
 		memcpy(name, unknown_char_name, NAME_LENGTH);
 	if (sql_res) mysql_free_result(sql_res);
-	return sql_row?1:0;
+
+	return (sql_row) ? 1 : 0;
 }
 
+int search_mapserver(unsigned short map, uint32 ip, uint16 port);
 
 int parse_frommap(int fd)
 {
@@ -2659,19 +2659,17 @@ int parse_frommap(int fd)
 		}
 		break;
 
-		case 0x2b08: // char name check
+		case 0x2b08: // char name request
 			if (RFIFOREST(fd) < 6)
 				return 0;
-		{
-			char name[NAME_LENGTH];
-			char_loadName((int)RFIFOL(fd,2), name);
+
 			WFIFOHEAD(fd,30);
 			WFIFOW(fd,0) = 0x2b09;
 			WFIFOL(fd,2) = RFIFOL(fd,2);
-			memcpy(WFIFOP(fd,6), name, NAME_LENGTH);
+			char_loadName((int)RFIFOL(fd,2), (char*)WFIFOP(fd,6));
 			WFIFOSET(fd,30);
+
 			RFIFOSKIP(fd,6);
-		}
 		break;
 
 		case 0x2b0a: // request to become GM
@@ -2823,17 +2821,20 @@ int parse_frommap(int fd)
 			int fame = RFIFOL(fd, 6);
 			char type = RFIFOB(fd, 10);
 			int size;
-			struct fame_list *list = NULL;
-			
+			struct fame_list* list;
+
 			switch(type)
 			{
-				case 1 : size = fame_list_size_smith;   list = smith_fame_list; break;
-				case 2 : size = fame_list_size_chemist; list = chemist_fame_list; break;
-				case 3 : size = fame_list_size_taekwon; list = taekwon_fame_list; break;
-				default: size = 0; break;
+				case 1:  size = fame_list_size_smith;   list = smith_fame_list;   break;
+				case 2:  size = fame_list_size_chemist; list = chemist_fame_list; break;
+				case 3:  size = fame_list_size_taekwon; list = taekwon_fame_list; break;
+				default: size = 0;                      list = NULL;              break;
 			}
 			if( size == 0 )
-				break;// No list
+			{// No list
+				RFIFOSKIP(fd,11);
+				break; 
+			}
 			for( i = 0; i < size; ++i )
 			{
 				if( list[i].id != cid )

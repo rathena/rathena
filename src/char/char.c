@@ -74,7 +74,7 @@ char backup_txt[1024]="save/backup.txt"; //By zanetheinsane
 char friends_txt[1024]="save/friends.txt"; // davidsiaw
 #ifndef TXT_SQL_CONVERT
 char backup_txt_flag = 0; // The backup_txt file was created because char deletion bug existed. Now it's finish and that take a lot of time to create a second file when there are a lot of characters. => option By [Yor]
-char unknown_char_name[1024] = "Unknown";
+char unknown_char_name[1024] = "Unknown"; // Name to use when the requested name cannot be determined
 char char_log_filename[1024] = "log/char.log";
 char db_path[1024]="db";
 
@@ -2658,6 +2658,21 @@ void char_update_fame_list(int type, int index, int fame)
 	mapif_sendall(buf, 8);
 }
 
+//Loads a character's name and stores it in the buffer given (must be NAME_LENGTH in size)
+//Returns 1 on found, 0 on not found (buffer is filled with Unknown char name)
+int char_loadName(int char_id, char* name)
+{
+	int j;
+	for( j = 0; j < char_num && char_dat[j].status.char_id != char_id; ++j )
+		;// find char
+	if( j < char_num )
+		strncpy(name, char_dat[j].status.name, NAME_LENGTH);
+	else
+		strncpy(name, unknown_char_name, NAME_LENGTH);
+
+	return (j < char_num) ? 1 : 0;
+}
+
 int search_mapserver(unsigned short map, uint32 ip, uint16 port);
 
 int parse_frommap(int fd)
@@ -2948,20 +2963,16 @@ int parse_frommap(int fd)
 		}
 		break;
 
-		case 0x2b08: // char name check
+		case 0x2b08: // char name request
 			if (RFIFOREST(fd) < 6)
 				return 0;
-			for(i = 0; i < char_num; i++) {
-				if (char_dat[i].status.char_id == RFIFOL(fd,2))
-					break;
-			}
+
+			WFIFOHEAD(fd,30);
 			WFIFOW(fd,0) = 0x2b09;
 			WFIFOL(fd,2) = RFIFOL(fd,2);
-			if (i != char_num)
-				memcpy(WFIFOP(fd,6), char_dat[i].status.name, NAME_LENGTH);
-			else
-				memcpy(WFIFOP(fd,6), unknown_char_name, NAME_LENGTH);
-			WFIFOSET(fd,6+NAME_LENGTH);
+			char_loadName((int)RFIFOL(fd,2), (char*)WFIFOP(fd,6));
+			WFIFOSET(fd,30);
+
 			RFIFOSKIP(fd,6);
 		break;
 
@@ -3111,17 +3122,20 @@ int parse_frommap(int fd)
 			int fame = RFIFOL(fd, 6);
 			char type = RFIFOB(fd, 10);
 			int size;
-			struct fame_list *list = NULL;
+			struct fame_list* list;
 			
 			switch(type)
 			{
-				case 1 : size = fame_list_size_smith;   list = smith_fame_list; break;
-				case 2 : size = fame_list_size_chemist; list = chemist_fame_list; break;
-				case 3 : size = fame_list_size_taekwon; list = taekwon_fame_list; break;
-				default: size = 0; break;
+				case 1:  size = fame_list_size_smith;   list = smith_fame_list;   break;
+				case 2:  size = fame_list_size_chemist; list = chemist_fame_list; break;
+				case 3:  size = fame_list_size_taekwon; list = taekwon_fame_list; break;
+				default: size = 0;                      list = NULL;              break;
 			}
 			if( size == 0 )
-				break;// No list
+			{// No list
+				RFIFOSKIP(fd,11);
+				break; 
+			}
 			for( i = 0; i < size; ++i )
 			{
 				if( list[i].id != cid )
@@ -3162,17 +3176,11 @@ int parse_frommap(int fd)
 
 			if( i == size && fame >= list[size - 1].fame )
 			{// not on list and has enough fame
-				size_t j;
 				for( i = 0; fame < list[i].fame; ++i )
 					;// get target position
 				list[i].id = cid;
 				list[i].fame = fame;
-				for( j = 0; j < char_num && char_dat[j].status.char_id != cid; ++j )
-					;// find char
-				if( j < char_num )
-					strncpy(list[i].name, char_dat[j].status.name, NAME_LENGTH);
-				else
-					strncpy(list[i].name, "Unknown", NAME_LENGTH);
+				char_loadName(list[i].id, list[i].name);
 				char_send_fame_list(-1);
 			}
 
