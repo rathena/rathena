@@ -1,4 +1,4 @@
-//===== eAthena Script ========================================
+//===== eAthena Script =======================================
 //= Casing Pack Dealer Kenny
 //===== By: ==================================================
 //= eAthena dev team
@@ -11,7 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First version. [SinSloth]
 //= 1.1 Optimized version - Reduced to only one function [SinSloth]
-//= 1.2 Optimized^2 [ultramage]
+//= 1.2 Optimized^2, corrected npc's name [ultramage]
 //============================================================
 
 que_ng,187,149,3	script	Magazine Dealer Kenny	83,{

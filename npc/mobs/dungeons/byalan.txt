@@ -1,5 +1,5 @@
 //===== eAthena Script =======================================
-//= Byalan Island Dungeon Monster Spawn Script
+//= Byalan Dungeon Monster Spawn Script
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================

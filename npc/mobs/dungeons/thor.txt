@@ -1,18 +1,18 @@
-//===== Athena Script =============================================
-//= Thor Volcano Monster Spawn Script.
-//===== By: =======================================================
+//===== Athena Script ========================================
+//= Thor Volcano Monster Spawn Script
+//===== By: ==================================================
 //= Playtester
-//===== Current Version: ==========================================
+//===== Current Version: =====================================
 //= 1.0
-//===== Compatible With: ==========================================
-//= Any Athena Version 
-//===== Description: ==============================================
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
 //= Official monster spawn in Thor Volcano Dungeon.
-//===== Additional Comments: ======================================
+//===== Additional Comments: =================================
 //= 1.0 Spawns according to RO Monthly and Doddler [Playtester]
-//=================================================================
+//============================================================
 
-// ================= [Thor Volcano - 01] ==========================
+// ================= [Thor Volcano - 01] =====================
 thor_v01,0,0,0,0	monster	Kasa	1833,30,0,0,0
 thor_v01,0,0,0,0	monster	Fire Imp	1837,20,0,0,0
 thor_v01,0,0,0,0	monster	Magmaring	1836,10,0,0,0
@@ -20,7 +20,7 @@ thor_v01,0,0,0,0	monster	Salamander	1831,5,0,0,0
 thor_v01,0,0,0,0	monster	Sword Master	1829,1,0,0,0
 thor_v01,0,0,0,0	monster	Bow Master	1830,1,0,0,0
 
-// ================= [Thor Volcano - 02] ==========================
+// ================= [Thor Volcano - 02] =====================
 thor_v02,0,0,0,0	monster	Knocker	1838,70,0,0,0
 thor_v02,0,0,0,0	monster	Fire Imp	1837,10,0,0,0
 thor_v02,0,0,0,0	monster	Magmaring	1836,10,0,0,0
@@ -28,7 +28,7 @@ thor_v02,0,0,0,0	monster	Salamander	1831,5,0,0,0
 thor_v02,0,0,0,0	monster	Sword Master	1829,1,0,0,0
 thor_v02,0,0,0,0	monster	Bow Master	1830,1,0,0,0
 
-// ================= [Thor Volcano - 03] ==========================
+// ================= [Thor Volcano - 03] =====================
 thor_v03,0,0,0,0	monster	Salamander	1831,30,0,0,0
 thor_v03,0,0,0,0	monster	Kasa	1833,20,0,0,0
 thor_v03,0,0,0,0	monster	Sword Master	1829,3,0,0,0

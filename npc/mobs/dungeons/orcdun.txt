@@ -1,5 +1,5 @@
 //===== eAthena Script =======================================
-//= Orcs Dungeon Monster Spawn Script
+//= Orc Dungeon Monster Spawn Script
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================

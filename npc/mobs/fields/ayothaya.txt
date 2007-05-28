@@ -1,5 +1,5 @@
 //===== eAthena Script =======================================
-//= Ayothana Field Monster Spawn Script
+//= Ayothaya Fields Monster Spawn Script
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
@@ -7,8 +7,9 @@
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
-//= Currently using EuRO data provided by Ishizu.
-//= 1.3 Removed Choco
+//= 1.1 Using EuRO data [Ishizu]
+//= 1.2 According the guide book, added a Choco [Lupus&VP]
+//= 1.3 Removed Choco [Lupus]
 //= 1.4 Official kRO 10.1 spawns [Playtester]
 //============================================================
 

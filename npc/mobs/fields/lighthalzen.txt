@@ -1,7 +1,7 @@
 //===== eAthena Script =======================================
-//= Lighthalzen Fields - Monster Spawn Locations
+//= Lighthalzen Fields Monster Spawn Script
 //===== By: ==================================================
-//= Muad_Dib (1.0)
+//= Muad_Dib, eAthena dev team
 //===== Current Version: =====================================
 //= 1.5
 //===== Compatible With: =====================================

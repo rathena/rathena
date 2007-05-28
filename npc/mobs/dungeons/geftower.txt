@@ -1,5 +1,5 @@
 //===== eAthena Script =======================================
-//= Geffen Tower Dungeon Monster Spawn Script
+//= Geffen Dungeon Monster Spawn Script
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================

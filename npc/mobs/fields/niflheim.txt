@@ -1,5 +1,5 @@
 //===== eAthena Script =======================================
-//= Niflheim Temporary Monster Spawn Script
+//= Niflheim Monster Spawn Script
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================

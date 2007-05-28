@@ -1,5 +1,5 @@
 //===== eAthena Script =======================================
-//= Mob Spawn in cities
+//= City Monster Spawn Script
 //===== By: ==================================================
 //= massdriller
 //===== Current Version: =====================================

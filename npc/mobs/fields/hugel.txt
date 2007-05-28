@@ -1,5 +1,5 @@
 //===== eAthena Script =======================================
-//= Hugel Field Monster Spawn Script
+//= Hugel Fields Monster Spawn Script
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================

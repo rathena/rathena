@@ -1,5 +1,5 @@
 //===== eAthena Script ======================================= 
-//= Umbala Monster Spawn 
+//= Umbala Fields Monster Spawn Script
 //===== By: ================================================== 
 //= Darkchild (1.0)
 //===== Current Version: ===================================== 

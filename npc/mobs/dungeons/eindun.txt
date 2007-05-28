@@ -1,5 +1,5 @@
 //===== eAthena Script =======================================
-//= Einbroch Dungeon (Mine) Monster Spawn Script
+//= Einbech Mine Dungeon Monster Spawn Script
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================

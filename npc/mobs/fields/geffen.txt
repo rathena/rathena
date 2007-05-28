@@ -1,5 +1,5 @@
 //===== eAthena Script =======================================
-//= Geffen Field Monster Spawn Script
+//= Geffen Fields Monster Spawn Script
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================

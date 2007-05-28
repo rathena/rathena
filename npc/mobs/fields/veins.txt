@@ -1,20 +1,20 @@
-//===== eAthena Script ===========================================
-//= Veins Field Monster Spawn Script.
-//===== By: ======================================================
+//===== eAthena Script =======================================
+//= Veins Fields Monster Spawn Script
+//===== By: ==================================================
 //= $ephiroth
-//===== Current Version: =========================================
+//===== Current Version: =====================================
 //= 1.4
-//===== Compatible With: =========================================
+//===== Compatible With: =====================================
 //= Any Athena Version
-//===== Additional Comments: =====================================
+//===== Additional Comments: =================================
 //= 1.0 Temp. monster spawn in Veins Field. [$ephiroth]
 //= 1.1 Updated monster spawn based on kRO website. [$ephiroth]
 //= 1.2 Updated mobs based on info jAthena. [$ephiroth]
 //= 1.3 Fixed some typos and Atros spawn [Playtester]
 //= 1.4 Updated spawns with info from RO Monthly [Playtester]
-//================================================================
+//============================================================
 
-//======== [Veins Field-01] ======================================
+//======== [Veins Field-01] ==================================
 ve_fild01,0,0,0,0	monster	Muka	1055,70,0,0,0
 ve_fild01,0,0,0,0	monster	Drops	1113,20,0,0,0
 ve_fild01,0,0,0,0	monster	Stapo	1784,20,0,0,0
@@ -25,7 +25,7 @@ ve_fild01,0,0,0,0	monster	Blue Plant	1079,3,1800000,900000,1
 ve_fild01,0,0,0,0	monster	Shining Plant	1083,1,1800000,900000,1
 ve_fild01,0,0,0,0	monster	Atroce	1785,1,86400000,86000000,1
 
-//======== [Veins Field-02] =======================================
+//======== [Veins Field-02] ===================================
 ve_fild02,0,0,0,0	monster	Savage	1166,60,0,0,0
 ve_fild02,0,0,0,0	monster	Side Winder	1037,20,0,0,0
 ve_fild02,0,0,0,0	monster	Roween	1782,20,0,0,0
@@ -33,7 +33,7 @@ ve_fild02,0,0,0,0	monster	Stapo	1784,30,0,0,0
 ve_fild02,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
 ve_fild02,0,0,0,0	monster	Atroce	1785,1,86400000,86000000,1
 
-//======== [Veins Field-03] =======================================
+//======== [Veins Field-03] ===================================
 ve_fild03,0,0,0,0	monster	Sandman	1165,20,600000,300000,1
 ve_fild03,0,0,0,0	monster	Sleeper	1386,20,600000,300000,1
 ve_fild03,0,0,0,0	monster	Stapo	1784,10,600000,300000,1
@@ -41,7 +41,7 @@ ve_fild03,200,250,100,50	monster	Magmaring	1836,10,600000,300000,1
 ve_fild03,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
 ve_fild03,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
 
-//======== [Veins Field-04] =======================================
+//======== [Veins Field-04] ===================================
 ve_fild04,0,0,0,0	monster	Desert Wolf	1106,50,0,0,0
 ve_fild04,0,0,0,0	monster	Roween	1782,40,0,0,0
 ve_fild04,0,0,0,0	monster	Muscipular	1780,10,0,0,0
@@ -49,7 +49,7 @@ ve_fild04,0,0,0,0	monster	Stapo	1784,10,0,0,0
 ve_fild04,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
 ve_fild04,0,0,0,0	monster	Blue Plant	1079,3,1800000,900000,1
 
-//======== [Veins Field-05] =======================================
+//======== [Veins Field-05] ===================================
 ve_fild05,0,0,0,0	monster	Sleeper	1386,40,0,0,0
 ve_fild05,0,0,0,0	monster	Sandman	1165,20,0,0,0
 ve_fild05,0,0,0,0	monster	Roween	1782,20,0,0,0
@@ -58,11 +58,11 @@ ve_fild05,0,0,0,0	monster	Galion	1783,5,0,0,0
 ve_fild05,0,0,0,0	monster	White Plant	1082,5,180000,90000,1
 ve_fild05,0,0,0,0	monster	Shining Plant	1083,1,1800000,900000,1
 
-//======== [Veins Field-06] =======================================	
+//======== [Veins Field-06] ===================================	
 ve_fild06,0,0,0,0	monster	Stapo	1784,5,600000,300000,1
 ve_fild06,0,0,0,0	monster	Shining Plant	1083,1,1800000,900000,1
 
-//======== [Veins Field-07] =======================================
+//======== [Veins Field-07] ===================================
 ve_fild07,0,0,0,0	monster	Side Winder	1037,50,0,0,0
 ve_fild07,0,0,0,0	monster	Shellfish	1074,20,0,0,0
 ve_fild07,0,0,0,0	monster	Raggler	1254,20,0,0,0
