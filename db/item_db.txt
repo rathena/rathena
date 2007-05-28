@@ -806,7 +806,7 @@
 1731,Freezing_Bow,Freezing Bow,4,,10,1400,100,,5,1,0x00020800,7,2,34,3,55,1,11,{ bonus2 bAddEff,Eff_Freeze,500; if(isequipped(1754)) bonus bLongAtkRate,25; },{},{}
 1732,Earthen_Bow,Earthen Bow,4,,10,1400,105,,5,1,0x00020800,7,2,34,3,55,1,11,{ bonus2 bAddEff,Eff_Blind,500; if(isequipped(1756)) bonus bLongAtkRate,25; },{},{}
 1733,Gale_Bow,Gale Bow,4,,10,1400,95,,5,1,0x00020800,7,2,34,3,55,1,11,{ if(readparam(bInt)>40) { bonus4 bAutoSpell,540,5,50,1; } else bonus4 bAutoSpell,540,5,20,1; if(isequipped(1755)) bonus bLongAtkRate,25; },{},{}
-1734,Orc_Archer's_Bow,Orc Archer's Bow,4,,10,1600,120,,5,1,0x00020800,7,2,34,3,55,1,11,{ bonus2 bAddMonsterDropItem,1770,200; if(isequipped(1770)) bonus bLongAtkRate,25; },{},{}
+1734,Orc_Archer's_Bow,Orc Archer's Bow,4,,10,1600,120,,5,0,0x00020800,7,2,34,4,65,1,11,{ bonus2 bAddMonsterDropItem,1770,200; if(isequipped(1770)) bonus bLongAtkRate,50; },{},{}
 // Arrows
 1750,Arrow,Arrow,10,1,,1,25,,,,0x000A1848,7,2,32768,,1,,1,{},{},{}
 1751,Silver_Arrow,Silver Arrow,10,3,,2,30,,,,0x000A1848,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Holy; },{},{}
@@ -3029,8 +3029,8 @@
 13401,Refined_Excalibur,Refined Excalibur,4,,,0,199,,1,0,0x000654E2,7,2,2,4,1,0,2,{ bonus bInt,10; bonus bLuk,10; bonus bAtkEle,Ele_Holy; },{},{}
 13402,Refined_Cutlas,Refined Cutlus,4,,,0,185,,1,0,0x000654E2,7,2,2,4,1,0,2,{ skill 5,5; bonus bStr,2; bonus bDef,1; },{},{}
 13403,Refined_Solar_Sword,Refined Solar Sword,4,,,0,120,,1,0,0x000654E2,7,2,2,4,1,0,2,{ bonus bAtkEle,Ele_Fire; bonus2 bHPDrainRate,1000,1; bonus2 bSPLossRate,15,10000; },{},{}
-13404,Silver_Shotel,Silver Shotel,4,,10,1500,130,,1,1,0x000654E3,7,2,2,4,55,1,2,{ bonus bCritical,10; },{},{}
-13405,Thin_Blade,Thin Blade,4,,10,80,125,,1,2,0x000654E3,7,2,2,4,55,1,2,{ bonus bAspdRate,10; bonus2 bAddEff,Eff_Curse,100; },{},{}
+13404,Silver_Shotel,Silver Shotel,4,,10,1300,130,,1,1,0x000654E2,7,2,2,4,55,1,2,{ bonus bCritical,50; },{},{}
+13405,Thin_Blade,Thin Blade,4,,10,80,125,,1,2,0x000654E2,7,2,2,4,55,1,2,{ bonus bAspdRate,10; bonus2 bAddEff,Eff_Curse,100; },{},{}
 // More Cash Shop Items
 13502,Refined_Drooping_Cat_Box,Refined_Drooping_Cat_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5279,1; },{},{}
 13503,Refined_Majestic_Goat_Box,Refined_Majestic_Goat_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5280,1; },{},{}
