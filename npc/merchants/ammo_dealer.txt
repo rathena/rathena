@@ -1,16 +1,18 @@
 //===== Athena Script =====================================
 //= Bullet Merchant, Tony.
 //===== By ================================================
-//= Legionaire
+//= Playtester, Paradox924X, Legionaire
 //===== Version ===========================================
-//= 1.01
+//= 1.2a
 //===== Compatible With ===================================
 //= eAthena SVN with jAthena scripting engine and . variables.
 //===== Description =======================================
 //= Bullet trader.
 //===== Comments ==========================================
-//= Converted from Aegis 10.4
-//= 1.01 Removed .GATs [Lupus]
+//= 1.0 First version [Playtester]
+//= 1.1 Converted from Aegis [Paradox924X]
+//= 1.2 More optimized conversion [Legionaire]
+//= 1.2a Removed .GATs [Lupus]
 //=========================================================
 que_ng,187,156,3	script	Bullet Dealer Tony	86,{
 
