@@ -14,7 +14,7 @@
 //= 1.2 Optimized^2 [ultramage]
 //============================================================
 
-que_ng,187,149,3	script	Casing Pack Dealer Kenny	83,{
+que_ng,187,149,3	script	Magazine Dealer Kenny	83,{
 	
 	if(BaseJob != Job_Gunslinger)
 	{

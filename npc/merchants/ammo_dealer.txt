@@ -12,7 +12,7 @@
 //= Converted from Aegis 10.4
 //= 1.01 Removed .GATs [Lupus]
 //=========================================================
-que_ng,187,156,3	script	Bullet Merchant Tony	86,{
+que_ng,187,156,3	script	Bullet Dealer Tony	86,{
 
 	if(BaseJob != Job_Gunslinger){
 		mes "[Tony]";
