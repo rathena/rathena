@@ -8,7 +8,7 @@
 //= MasterOfMuppets (2.0)
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.7b
+//= 2.7ñ
 //===== Compatible With: ===================================== 
 //= Any eAthena Version
 //===== Description: ========================================= 
@@ -34,7 +34,7 @@
 //= 2.6a Updated a few names with new item_db.txt names [Evera]
 //= 2.7 Split quests to quests/quests_louyang.txt [Evera]
 //= 2.7a Minor optimizations before Louyang quests [Lupus]
-//= 2.7b Moved guides to the Guides folder [Lupus]
+//= 2.7b Moved guides to the Guides folder. 2.7ñ more typos [Lupus]
 //============================================================
 
 alberta,245,45,4	script	Girl#02	815,{
@@ -86,7 +86,7 @@ M_GOTO:
 	if(Zeny < 10000){
 		mes "...";
 		mes "You don't seem";
-		mes "to have 10,100 zeny...";
+		mes "to have 10,000 zeny...";
 		mes "Go get some money first!";
 		close;
 	}
@@ -337,7 +337,6 @@ louyang,272,133,0	script	Trainee::trainees	819,{
 		mes "Huh...";
 		close;
 	case 1:
-		mes "[Trainee]";
 		mes "Woh~!";
 		mes "Hai~!!";
 		mes "Huh huh...";
