@@ -25,7 +25,7 @@ quiz_00,49,31,4	script	MVP Arena Guide	778,{
 quiz_00,56,31,4	script	Alpha MVP	770,{
 mes "[ ^0065DFAlpha MVP^000000 ]";
 mes "I am the first Keeper, are you ready?.";
-menu "Yes!",L_Yes,"Urrr No.",L_No;
+menu "Yes!",L_Yes,"Urrr No.",Lcancel;
 
 L_Yes:
 mes "[ ^0065DFAlpha MVP^000000 ]";
@@ -40,7 +40,7 @@ mes "Which Arena you want to go to??";
 	"Arena 8 [" + getmapusers("pvp_n_4-2") + " / 15]",Larena8,
 	"Quit",Lcancel;
 
-L_No:
+Lcancel:
 close;
 
 Larena1:
@@ -101,7 +101,7 @@ close;
 quiz_00,58,31,4	script	Beta MVP	773,{
 mes "[ ^0065DFAlpha MVP^000000 ]";
 mes "I am the first Keeper, are you ready?.";
-menu "Yes!",L_Yes,"Urrr No.",L_No;
+menu "Yes!",L_Yes,"Urrr No.",Lcancel;
 
 L_Yes:
 mes "[ ^0065DFBeta MVP^000000 ]";
@@ -115,9 +115,6 @@ mes "Which Arena you want to go to??";
 	"Arena 7 [" + getmapusers("pvp_n_3-3") + " / 15]",Larena7,
 	"Arena 8 [" + getmapusers("pvp_n_4-3") + " / 15]",Larena8,
 	"Quit",Lcancel;
-
-L_No:
-close;
 
 Lcancel:
 close;
@@ -196,7 +193,7 @@ mes "Which Arena you want to go to??";
 	"Arena 8 [" + getmapusers("pvp_n_4-4") + " / 15]",Larena8,
 	"Quit",Lcancel;
 
-L_No:
+Lcancel:
 close;
 
 Larena1:
@@ -274,7 +271,7 @@ mes "Which Arena you want to go to??";
 	"Arena 8 [" + getmapusers("pvp_n_4-5") + " / 15]",Larena8,
 	"Quit",Lcancel;
 
-L_No:
+Lcancel:
 close;
 
 Larena1:
