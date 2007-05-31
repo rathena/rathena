@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+05/31
+	* Fixed duration of Authorative Badge [Playtester]
 05/28
 	* Fixed Black Leather Boots and Thorny Shield [Playtester]
 	* Fixed Orc Archer's Bow and Silver Shotel [Playtester]

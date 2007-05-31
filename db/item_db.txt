@@ -152,7 +152,7 @@
 659,Heart_Of_Her,Her Heart,11,500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1188; },{},{}
 660,Prohibition_Red_Candle,Forbidden Red Candle,11,20000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1200; },{},{}
 661,Sway_Apron,Soft Apron,11,20000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1275; },{},{}
-662,Inspector_Certificate,Authoritative Badge,2,1450,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 507; sc_start SC_SpeedUp0,240000,0; },{},{}
+662,Inspector_Certificate,Authoritative Badge,2,1450,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 507; sc_start SC_SpeedUp0,180000,0; },{},{}
 663,Korea_Rice_Cake,Songpyun,0,1,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 10,0; },{},{}
 // Item Givers
 664,Gift_Box_1,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox_1),1; },{},{}
