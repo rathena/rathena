@@ -1,5 +1,14 @@
 Date		Added
 ======
+2007/05/31
+	* Rev. 10651 Updated Crusader quest. [L0ne_W0lf]
+	- Updated NPC dialogs using Aegis 10.3 file.
+	- Fixed logic error with job change reward for job 50 swordies.
+	- Completely redid the 1st and 3rd tests.
+	- Optimized first four NPC scripts slightly.
+	- Alternatively, the tests themselves need work.
+	- Temporary character variables "@" are now ".@"
+	- Fixed some indentation.
 2007/05/29
 	* Changed little typos error on MVP Arena, Thanks to Sinoco. [Samuray22]
 2007/05/28
