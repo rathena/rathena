@@ -49,6 +49,7 @@
 	----
 ========================
 05/31
+	* Some small item fixes [Playtester]
 	* Fixed duration of Authorative Badge [Playtester]
 05/28
 	* Fixed Black Leather Boots and Thorny Shield [Playtester]

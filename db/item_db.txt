@@ -145,7 +145,7 @@
 644,Gift_Box,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
 // ASPD Potions
 645,Center_Potion,Concentration Potion,2,800,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,0; },{},{}
-656,Awakening_Potion,Awakening Potion,2,1500,,150,,,,,0xFFF7FEEF,7,2,,,40,,,{ sc_end SC_Sleep; sc_start SC_ASPDPOTION1,1800000,0; },{},{}
+656,Awakening_Potion,Awakening Potion,2,1500,,150,,,,,0xFFF7FEEF,7,2,,,40,,,{ sc_start SC_ASPDPOTION1,1800000,0; },{},{}
 657,Berserk_Potion,Berserk Potion,2,3000,,200,,,,,0x01E646A6,7,2,,,85,,,{ sc_start SC_ASPDPOTION2,1800000,0; },{},{}
 658,Union_Of_Tribe,Tribal Solidarity,2,,1,500,,,,,0xFFFFFFFF,7,2,,,,,,{ guildgetexp rand(600000,1200000); },{},{}
 // New Pet Tames
@@ -170,7 +170,7 @@
 675,Silver_Coin,Silver Coin,2,5000,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
 676,Silver_Coin_Moneybag,Bag of Silver Coins,2,50000,,400,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
 677,White_Gold_Coin,Platinum Coin,2,2000,,40,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
-678,Poison_Bottle,Poison Bottle,0,5000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(Class == Job_Assassin_Cross) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION3,60000,0; } else percentheal -100,-100; },{},{}
+678,Poison_Bottle,Poison Bottle,0,5000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(Class == Job_Assassin_Cross) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION2,60000,0; } else percentheal -100,-100; },{},{}
 679,Gold_Pill,Pilule,0,5000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; },{},{}
 680,Magical_Carnation,Magic Carnation,0,,0,1000,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,20; },{},{}
 681,Memory_Of_Wedding,Sweet Memory of Marriage,2,50000,,10,,,,,0xFFFFFFFF,7,3,,,,,,{},{},{}
@@ -2671,14 +2671,14 @@
 12025,Egg_Boy,Dano Festival Egg,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_EggBoy),1; },{},{}
 12026,Egg_Girl,Dano Festival Egg,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_EggGirl),1; },{},{}
 // Effect Boxes
-12027,Giggling_Box,Giggling Box,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 9,0; if(rand(100)<30) sc_start SC_Curse,30000,0; },{},{}
+12027,Giggling_Box,Giggling Box,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 9,0; if(rand(1000)<300) sc_start SC_Curse,30000,0; },{},{}
 12028,Box_Of_Thunder,Box of Thunder,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SpeedUp0,20000,0; },{},{}
 12029,Gloomy_Box,Box of Gloom,11,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 45,1; },{},{}
 12030,Box_Of_Grudge,Box of Resentment,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,20; },{},{}
 12031,Sleepy_Box,Box of Drowsiness,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,60000,20; },{},{}
 12032,Box_Of_Storm,Box of Storms,11,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 492,2; },{},{}
 12033,Box_Of_Sunlight,Box of Sunlight,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Intravision,20000,0; },{},{}
-12034,Painting_Box,Box of Panting,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,9; if(rand(100)<30) sc_start SC_Silence,30000,0; },{},{}
+12034,Painting_Box,Box of Panting,2,,500,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,9; if(rand(1000)<300) sc_start SC_Silence,30000,0; },{},{}
 12035,Lotto_Box01,Lotto Box 01,2,,0,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7361,7370),1; },{},{}
 12036,Lotto_Box02,Lotto Box 02,2,,0,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7371,7380),1; },{},{}
 12037,Lotto_Box03,Lotto Box 03,2,,0,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(7381,7390),1; },{},{}
