@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/05/31
+	* Rev. 10653 Fixced some spelling and grammar in crusader quest. [L0ne_W0lf]
 	* Rev. 10651 Updated Crusader quest. [L0ne_W0lf]
 	- Updated NPC dialogs using Aegis 10.3 file.
 	- Fixed logic error with job change reward for job 50 swordies.

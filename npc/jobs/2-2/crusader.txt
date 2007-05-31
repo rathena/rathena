@@ -5,7 +5,7 @@
 //= Converted by: Shin
 //=
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
 //= eAthena  0.5.2 +
 //===== Description: ========================================= 
@@ -39,6 +39,7 @@
 //=	- Optimized first four NPC scripts slightly.
 //=	- Temporary character variables "@" are now ".@"
 //=	- Fixed some indentation.
+//= 2.5 Fixed some spelling and grammar in crusader quest. [L0ne_W0lf]
 //============================================================
 
 
@@ -50,7 +51,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		next;
 		mes "[Michael Halig]";
 		mes "You don't belong here, my friend.";
-		mes "Be adviced to continue practicing yourself.";
+		mes "Be advised to continue practicing yourself.";
 		close;
 	} 
 	else if(Class != Job_Swordman) {
@@ -78,7 +79,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		mes "to fight in the Holy War.";
 		next;
 		mes "[Michael Halig]";
-		mes "As it happened one thousand years ago, evil forces will one day attacking in droves in an attempt to take over the world once again.";
+		mes "As it happened one thousand years ago, evil forces will one day attack in droves in an attempt to take over the world once again.";
 		close;
 	} 
 	else if((CRUS_Q >= 0 && CRUS_Q <= 3) && (countitem(1004) && countitem(1009))) {
@@ -113,7 +114,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 			mes "I am Michael Halig. I am one of but many Crusaders preparing for the Holy War. We continuously train ourselves with sincere faith and endless loyalty.";
 			next;
 			mes "[Michael Halig]";
-			mes "We recruit Swordsman that express exceptional faith, or those who were born as warriors";
+			mes "We recruit Swordsmen that express exceptional faith, or those who were born as warriors";
 			mes "by Odin's will.";
 			next;
 			mes "[Michael Halig]";
