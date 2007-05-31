@@ -178,7 +178,7 @@ close;
 quiz_00,60,31,4	script	Theta MVP	774,{
 mes "[ ^0065DFTheta MVP^000000 ]";
 mes "I am the first Keeper, are you ready?.";
-menu "Yes!",L_Yes,"Urrr No.",L_No;
+menu "Yes!",L_Yes,"Urrr No.",Lcancel;
 
 L_Yes:
 mes "[ ^0065DFTheta MVP^000000 ]";
@@ -256,7 +256,7 @@ close;
 quiz_00,62,31,4	script	Epsilon MVP	776,{
 mes "[ ^0065DFEpsilon MVP^000000 ]";
 mes "I am the first Keeper, are you ready?.";
-menu "Yes!",L_Yes,"Urrr No.",L_No;
+menu "Yes!",L_Yes,"Urrr No.",Lcancel;
 
 L_Yes:
 mes "[ ^0065DFEpsilon MVP^000000 ]";
