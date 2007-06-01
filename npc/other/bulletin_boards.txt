@@ -523,7 +523,7 @@ xmas,147,311,5	script	Bulletin Board#23	837,{
 	mes "[Toy Factory]";
 	mes "In 1st level, you will encounter a boss monster, ^6B1312Angeling^000000.";
 	mes "In 2nd level, you will encounter 2 dangrous boss monsters which are";
-	mes "^6B1312Stormy Knight^000000 and ^6B1312Hatii^000000. It is adviced to be attentive while venturing.";
+	mes "^6B1312Stormy Knight^000000 and ^6B1312Hatii^000000. It is advised to be attentive while venturing.";
 	mes "For your reference, ^6B1312Myst Cases^000000, ^6B1312Cruisers^000000 and ^6B1312Cookies^000000 only appear in this dungeon.";
 	close;
 }

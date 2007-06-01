@@ -655,7 +655,7 @@ int chrif_changesex(int id, int sex)
  *   4: unban
  *   5: changesex
  * type of answer:
- *   0: login-server resquest done
+ *   0: login-server request done
  *   1: player not found
  *   2: gm level too low
  *   3: login-server offline
@@ -679,7 +679,7 @@ int chrif_char_ask_name_answer(int fd)
 			switch(RFIFOW(fd, 30)) {
 			case 1: // block
 				switch(RFIFOW(fd, 32)) {
-				case 0: // login-server resquest done
+				case 0: // login-server request done
 					sprintf(output, "Login-server has been asked to block the player '%s'.", player_name);
 					break;
 				//case 1: // player not found
@@ -693,7 +693,7 @@ int chrif_char_ask_name_answer(int fd)
 				break;
 			case 2: // ban
 				switch(RFIFOW(fd, 32)) {
-				case 0: // login-server resquest done
+				case 0: // login-server request done
 					sprintf(output, "Login-server has been asked to ban the player '%s'.", player_name);
 					break;
 				//case 1: // player not found
@@ -707,7 +707,7 @@ int chrif_char_ask_name_answer(int fd)
 				break;
 			case 3: // unblock
 				switch(RFIFOW(fd, 32)) {
-				case 0: // login-server resquest done
+				case 0: // login-server request done
 					sprintf(output, "Login-server has been asked to unblock the player '%s'.", player_name);
 					break;
 				//case 1: // player not found
@@ -721,7 +721,7 @@ int chrif_char_ask_name_answer(int fd)
 				break;
 			case 4: // unban
 				switch(RFIFOW(fd, 32)) {
-				case 0: // login-server resquest done
+				case 0: // login-server request done
 					sprintf(output, "Login-server has been asked to unban the player '%s'.", player_name);
 					break;
 				//case 1: // player not found
@@ -735,7 +735,7 @@ int chrif_char_ask_name_answer(int fd)
 				break;
 			case 5: // changesex
 				switch(RFIFOW(fd, 32)) {
-				case 0: // login-server resquest done
+				case 0: // login-server request done
 					sprintf(output, "Login-server has been asked to change the sex of the player '%s'.", player_name);
 					break;
 				//case 1: // player not found

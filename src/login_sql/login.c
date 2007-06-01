@@ -949,7 +949,7 @@ int parse_fromchar(int fd)
 		}
 		break;
 
-		case 0x2724: // Receiving of map-server via char-server a status change resquest
+		case 0x2724: // Receiving an account state update request from a map-server (relayed via char-server)
 			if (RFIFOREST(fd) < 10)
 				return 0;
 		{
@@ -984,7 +984,7 @@ int parse_fromchar(int fd)
 		}
 		break;
 
-		case 0x2725: // Receiving of map-server via char-server a ban resquest
+		case 0x2725: // Receiving of map-server via char-server a ban request
 			if (RFIFOREST(fd) < 18)
 				return 0;
 		{
@@ -1127,7 +1127,7 @@ int parse_fromchar(int fd)
 			RFIFOSKIP(fd,RFIFOW(fd,2));
 		break;
 
-		case 0x272a:	// Receiving of map-server via char-server a unban resquest
+		case 0x272a:	// Receiving of map-server via char-server an unban request
 			if (RFIFOREST(fd) < 6)
 				return 0;
 		{

@@ -2724,7 +2724,7 @@ int parse_frommap(int fd)
 				if (mysql_num_rows(sql_res)) {
 					sql_row = mysql_fetch_row(sql_res);
 					memcpy(WFIFOP(fd,6), sql_row[1], NAME_LENGTH); // put correct name if found
-					WFIFOW(fd,32) = 0; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+					WFIFOW(fd,32) = 0; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
 					switch(RFIFOW(fd, 30)) {
 					case 1: // block
 						if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
@@ -2735,9 +2735,9 @@ int parse_frommap(int fd)
 								WFIFOL(login_fd,6) = 5; // status of the account
 								WFIFOSET(login_fd,10);
 							} else
-								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+								WFIFOW(fd,32) = 3; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
 						} else
-							WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+							WFIFOW(fd,32) = 2; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
 						break;
 					case 2: // ban
 						if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
@@ -2753,9 +2753,9 @@ int parse_frommap(int fd)
 								WFIFOW(login_fd,16) = RFIFOW(fd,42); // second
 								WFIFOSET(login_fd,18);
 							} else
-								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+								WFIFOW(fd,32) = 3; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
 						} else
-							WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+							WFIFOW(fd,32) = 2; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
 						break;
 					case 3: // unblock
 						if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
@@ -2766,9 +2766,9 @@ int parse_frommap(int fd)
 								WFIFOL(login_fd,6) = 0; // status of the account
 								WFIFOSET(login_fd,10);
 							} else
-								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+								WFIFOW(fd,32) = 3; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
 						} else
-							WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+							WFIFOW(fd,32) = 2; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
 						break;
 					case 4: // unban
 						if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
@@ -2778,9 +2778,9 @@ int parse_frommap(int fd)
 								WFIFOL(login_fd,2) = atoi(sql_row[0]); // account value
 								WFIFOSET(login_fd,6);
 							} else
-								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+								WFIFOW(fd,32) = 3; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
 						} else
-							WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+							WFIFOW(fd,32) = 2; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
 						break;
 					case 5: // changesex
 						if (acc == -1 || isGM(acc) >= isGM(atoi(sql_row[0]))) {
@@ -2790,15 +2790,15 @@ int parse_frommap(int fd)
 								WFIFOL(login_fd,2) = atoi(sql_row[0]); // account value
 								WFIFOSET(login_fd,6);
 							} else
-								WFIFOW(fd,32) = 3; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+								WFIFOW(fd,32) = 3; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
 						} else
-							WFIFOW(fd,32) = 2; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+							WFIFOW(fd,32) = 2; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
 						break;
 					}
 				} else {
 					// character name not found
 					memcpy(WFIFOP(fd,6), character_name, NAME_LENGTH);
-					WFIFOW(fd,32) = 1; // answer: 0-login-server resquest done, 1-player not found, 2-gm level too low, 3-login-server offline
+					WFIFOW(fd,32) = 1; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
 				}
 				// send answer if a player ask, not if the server ask
 				if (acc != -1) {

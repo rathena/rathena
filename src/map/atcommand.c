@@ -6693,21 +6693,18 @@ int atcommand_skilltree(const int fd, struct map_session_data* sd, const char* c
 }
 
 // Hand a ring with partners name on it to this char
-void getring (struct map_session_data *sd)
+void getring (struct map_session_data* sd)
 {
-	int flag,item_id = 0;
+	int flag, item_id;
 	struct item item_tmp;
-	if(sd->status.sex==0)
-		item_id = 2635;
-	else
-		item_id = 2634;
+	item_id = (sd->status.sex) ? WEDDING_RING_M : WEDDING_RING_F;
 
-	memset(&item_tmp,0,sizeof(item_tmp));
-	item_tmp.nameid=item_id;
-	item_tmp.identify=1;
-	item_tmp.card[0]=255;
-	item_tmp.card[2]=sd->status.partner_id;
-	item_tmp.card[3]=sd->status.partner_id >> 16;
+	memset(&item_tmp, 0, sizeof(item_tmp));
+	item_tmp.nameid = item_id;
+	item_tmp.identify = 1;
+	item_tmp.card[0] = 255;
+	item_tmp.card[2] = sd->status.partner_id;
+	item_tmp.card[3] = sd->status.partner_id >> 16;
 
 	//Logs (A)dmins items [Lupus]
 	if(log_config.enable_logs&0x400)
@@ -6717,7 +6714,6 @@ void getring (struct map_session_data *sd)
 		clif_additem(sd,0,0,flag);
 		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
 	}
-
 }
 
 /*==========================================
