@@ -40,13 +40,15 @@
 //=	- Temporary character variables "@" are now ".@"
 //=	- Fixed some indentation.
 //= 2.5 Fixed some spelling and grammar in crusader quest. [L0ne_W0lf]
+//= 2.6 Fixed bug (about totally blocked baby class), optimized,
+//=		made some NPC more unique names: Monster Summon#Cr1 [Lupus]
 //============================================================
 
 
 //=============== Senior Crusader: 1º Collect Items Test============================
 prt_castle,45,169,5	script	Senior Crusader	752,{
-	if (Upper) {
-		mes "[Michael Halig]";
+	mes "[Michael Halig]";
+	if (Upper == 1) { //the baby classes were totally blocked... due to missing == 1
 		mes "Go and train yourself in preparation for the holy war that is coming. Victory will be in the hands of those who are most ready to receive it.";
 		next;
 		mes "[Michael Halig]";
@@ -56,7 +58,6 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 	} 
 	else if(Class != Job_Swordman) {
 		if(Class == Job_Crusader) {
-			mes "[Michael Halig]";
 			mes "Go and train yourself in preparation for the holy war that is coming. Victory will be in the hands of those who are most ready to receive it.";
 			next;
 			mes "[Michael Halig]";
@@ -64,7 +65,6 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 			close;
 		}
 		else if(Class == Job_Novice) {
-			mes "[Michael Halig]";
 			mes "We are Crusaders,";
 			mes "warriors preparing";
 			mes "to fight in the Holy War.";
@@ -73,7 +73,6 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 			mes "If you wish to join us, you must first learn the Swordsman discipline and train yourself thoroughly...";
 			close;
 		}
-		mes "[Michael Halig]";
 		mes "We are Crusaders,";
 		mes "warriors preparing";
 		mes "to fight in the Holy War.";
@@ -82,8 +81,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		mes "As it happened one thousand years ago, evil forces will one day attack in droves in an attempt to take over the world once again.";
 		close;
 	} 
-	else if((CRUS_Q >= 0 && CRUS_Q <= 3) && (countitem(1004) && countitem(1009))) {
-		mes "[Michael Halig]";
+	else if(CRUS_Q <= 3 && countitem(1004) && countitem(1009)) {
 		mes "Ah...";
 		mes "I see that you have been called to become a Crusader. We are assured of your will, but now we must test your capabilities.";
 		next;
@@ -98,7 +96,6 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		close;
 	}
 	else if(CRUS_Q == 0) {
-		mes "[Michael Halig]";
 		mes "We are Crusaders, warriors preparing for the Holy War.";
 		mes "What brings you";
 		mes "to this place?";
@@ -221,7 +218,6 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		close;
 	}
 	else if(CRUS_Q >= 1 && CRUS_Q <= 3) {
-		mes "[Michael Halig]";
 		mes "Have you proven your determination with the task I have given you, or do you possess the items proving that you have received your calling?";
 		next;
 		switch(CRUS_Q) {
@@ -276,11 +272,9 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 	}
 	else if(CRUS_Q == 10) {
 		if(SkillPoint) {
-			mes "[Michael Halig]";
 			mes "You haven't finished learning everything as a Swordsman. Use all of your remaining skill points, and then return to me.";
 			close;
 		}
-		mes "[Michael Halig]";
 		mes "Congratulations on completing all of your tests. You are truly worthy of fighting alongside side us in the Holy War as a Crusader.";
 		next;
 		mes "[Michael Halig]";
@@ -309,7 +303,6 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		mes "Never forget that the Holy War is approaching. We must be prepare for the inevitable tide of evil that will sweep this world. Now, go forth and fight for the principles of freedom and justice!";
 		close;
 	}
-	mes "[Michael Halig]";
 	mes "It seems that you have not yet completed all of the testing. You will not be ready to become a Crusader until you have completed the tests set before you.";
 	next;
 	mes "[Michael Halig]";
@@ -319,14 +312,13 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 
 //===================== Suffering Man: 2º Endurance Test ===============================================
 prt_castle,164,32,1	script	Man in Anguish	733,{
+	mes "[Murnak Mijoul]";
 	if(Class != Job_Swordman) {
 		if (Class == Job_Crusader) {
-			mes "[Murnak Mijoul]";
 			mes "Don't linger around in a place like this and forge your own path towards discovering your own strengths. The day that we will join hands in battle will come soon.";
 			close;
 		}
 		else if(Class == Job_Novice) {
-			mes "[Murnak Mijoul]";
 			mes "A Novice...?";
 			mes "So green, and yet,";
 			mes "so much potential.";
@@ -335,12 +327,10 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 			mes "Let me assure you that I'm no criminal. I'm here merely to train myself. Perhaps as you become stronger, you will understand.";
 			close;
 		}
-		mes "[Murnak Mijoul]";
 		mes "Hm. You have no business in a place like this. Please leave, and do not interrupt my training.";
 		close;
 	}
 	else if(CRUS_Q >= 0 && CRUS_Q <= 3) {
-		mes "[Murnak Mijoul]";
 		mes "What do you want...?";
 		mes "If you have no business here,";
 		mes "then please leave. A tranquil state of mind is essential in self training...";
@@ -350,7 +340,6 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 		close;
 	}
 	else if(CRUS_Q == 4) {
-		mes "[Murnak Mijoul]";
 		mes "What is it...?";
 		mes "Do you have business";
 		if (sex) mes "with me, man of the sword?";
@@ -366,7 +355,7 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 			mes "Let me take";
 			mes "a look at your face.";
 			next;
-			if((getequipid(7) != 2608 ) && (getequipid(8) != 2608 )) {
+			if(getequipid(7) != 2608 && getequipid(8) != 2608) {
 				mes "[Murnak Mijoul]";
 				mes "Hmm. You wish to become a Crusader, but do not wear a Rosary? I have no business with you if you cannot uphold our customs.";
 				close;
@@ -398,7 +387,6 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 		close;
 	}
 	else if(CRUS_Q == 5) {
-		mes "[Murnak Mijoul]";
 		mes "What is it...?";
 		mes "You're the Swordman from before. What happened, did you fail?";
 		next;
@@ -407,7 +395,7 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 			mes "I'll let you retake the test as much as you like. But if you continuously fail, there's an inherent problem with your";
 			mes "state of mind.";
 			next;
-			if((getequipid(7) != 2608 ) && (getequipid(8) != 2608 )) {
+			if(getequipid(7) != 2608 && getequipid(8) != 2608) {
 				mes "[Murnak Mijoul]";
 				mes "Wait...";
 				mes "Where have you left your Rosary? You can't let that lie around just anywhere. We are supposed to be warriors of holiness.";
@@ -442,7 +430,6 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 		close;
 	}
 	else if(CRUS_Q == 6) {
-		mes "[Murnak Mijoul]";
 		mes "Hmm, seems like you did well. It shouldn't have been too hard. You no longer have any business";
 		mes "with me.";
 		next;
@@ -450,7 +437,6 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 		mes "For your next test, go look for Gabriel Valentine in the Prontera Sanctuary. Well then, I'll see you around.";
 		close;
 	}
-	mes "[Murnak Mijoul]";
 	mes "Hmmm...";
 	mes "You still have tests to complete if you want to become a Crusader, don't you?";
 	close;
@@ -458,9 +444,9 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 
 //===================== Gabriel Valentine: 3º Knowledge Test =================================
 prt_church,95,127,3	script	Crusader	745,{
+	mes "[Gabriel Valentine]";
 	if(Class != Job_Swordman) {
 		if (Class == Job_Crusader) {
-			mes "[Gabriel Valentine]";
 			mes "Welcome, fellow Crusader.";
 			mes "How is your training";
 			mes "coming along?";
@@ -470,7 +456,6 @@ prt_church,95,127,3	script	Crusader	745,{
 			close;
 		}
 		else if(Class == Job_Novice) {
-			mes "[Gabriel Valentine]";
 			mes "Welcome, I am a Crusader.";
 			mes "I am preparing for the";
 			mes "foretold Holy War";
@@ -483,7 +468,6 @@ prt_church,95,127,3	script	Crusader	745,{
 			mes "We are located in the Prontera Central Palace, so if you have time, it wouldn't hurt to stop by.";
 			close;
 		}
-		mes "[Gabriel Valentine]";
 		mes "Welcome, we are Crusaders.";
 		mes "We are preparing for the";
 		mes "foretold Holy War";
@@ -494,7 +478,6 @@ prt_church,95,127,3	script	Crusader	745,{
 		close;
 	}
 	else if(CRUS_Q == 0) {
-		mes "[Gabriel Valentine]";
 		mes "Welcome. We are Crusaders.";
 		mes "We are preparing for the";
 		mes "foretold Holy War";
@@ -505,7 +488,6 @@ prt_church,95,127,3	script	Crusader	745,{
 		close;
 	}
 	else if(CRUS_Q == 6) {
-		mes "[Gabriel Valentine]";
 		mes "Welcome.";
 		mes "Did you do well";
 		mes "on those painful tests?";
@@ -526,7 +508,6 @@ prt_church,95,127,3	script	Crusader	745,{
 		goto C_Questions;
 	} 
 	else if(CRUS_Q == 7) {
-		mes "[Gabriel Valentine]";
 		mes "Welcome back~";
 		mes "Did you prepare";
 		mes "well for this test?";
@@ -780,19 +761,16 @@ C_Questions:
 		close;
 	}
 	else if(CRUS_Q == 8 || CRUS_Q == 9) {
-		mes "[Gabriel Valentine]";
 		mes "Like I mentioned before, you should go to Prontera Castle and meet with Bliant Piyord to take your next test. Good luck, and become a Crusder soon, alright?";
 		close;
 	}
 	else if(CRUS_Q == 10) {
-		mes "[Gabriel Valentine]";
 		mes "What are you still doing here? You've already completed all the tests. Go talk to our leader, you're pretty much ready to become a Crusader now.";
 		next;
 		mes "[Gabriel Valentine]";
 		mes "You will soon join us in our preparations for the Holy War. Continue to live with faith after becoming a Crusader.";
 		close;
 	}
-	mes "[Gabriel Valentine]";
 	mes "Mmm...?";
 	mes "It seems that you're";
 	mes "an aspiring Crusader...";
@@ -809,10 +787,10 @@ C_Questions:
 
 //===================== Crusader: 4º Purification Test =====================================================
 prt_castle,35,151,5	script	Patron Knight	751,{
+	mes "[Bliant Piyord]";
+	mes "Welcome.";
 	if(Class != Job_Swordman) {
 		if(Class == Job_Crusader) {
-			mes "[Bliant Piyord]";
-			mes "Welcome.";
 			mes "How goes";
 			mes "your training?";
 			next;
@@ -821,8 +799,6 @@ prt_castle,35,151,5	script	Patron Knight	751,{
 			close;
 		}
 		else if(Class == Job_Novice) {
-			mes "[Bliant Piyord]";
-			mes "Welcome.";
 			mes "We are Crusaders,";
 			mes "warriors of holiness preparing for the great Holy War that is to come.";
 			next;
@@ -837,8 +813,6 @@ prt_castle,35,151,5	script	Patron Knight	751,{
 			mes "Train as a Swordsman and come to us when you think you are ready. If you have been called by Odin to become a Crusader, that would be even better.";
 			close;
 		}
-		mes "[Bliant Piyord]";
-		mes "Welcome.";
 		mes "We are Crusaders,";
 		mes "warriors of holiness preparing for the great Holy War that is to come.";
 		next;
@@ -847,8 +821,6 @@ prt_castle,35,151,5	script	Patron Knight	751,{
 		close;
 	}
 	else if(CRUS_Q == 0) {
-		mes "[Bliant Piyord]";
-		mes "Welcome.";
 		mes "We are Crusaders,";
 		mes "warriors of holiness preparing for the great Holy War that is to come.";
 		next;
@@ -869,8 +841,6 @@ prt_castle,35,151,5	script	Patron Knight	751,{
 	}
 	else if(CRUS_Q == 8 || CRUS_Q == 9) {
 		if (CRUS_Q == 8) {
-			mes "[Bliant Piyord]";
-			mes "Welcome. ";
 			mes "It's nice";
 			mes "to meet you.";
 			mes "It is now time";
@@ -894,8 +864,6 @@ prt_castle,35,151,5	script	Patron Knight	751,{
 			mes "to prepare yourself?";
 		}
 		else {
-			mes "[Bliant Piyord]";
-			mes "Welcome.";
 			mes "Are you prepared";
 			mes "for the test now?";
 			next;
@@ -904,7 +872,7 @@ prt_castle,35,151,5	script	Patron Knight	751,{
 		}
 		next;
 		if (select("I would like to begin.:Give me some time to prepare.") == 1) {
-			if((getequipid(7) != 2608 ) && (getequipid(8) != 2608 )) {
+			if(getequipid(7) != 2608 && getequipid(8) != 2608) {
 				mes "[Bliant Piyord]";
 				mes "Just a second, you do not have a Rosary equipped. As a Crusader, you must always have a Rosary on your person.";
 				next;
@@ -958,7 +926,6 @@ prt_castle,35,151,5	script	Patron Knight	751,{
 		close;
 	} 
 	else if(CRUS_Q == 10) {
-		mes "[Bliant Piyord]";
 		mes "Congratulations.";
 		mes "You have completed";
 		mes "all the tests to";
@@ -973,8 +940,6 @@ prt_castle,35,151,5	script	Patron Knight	751,{
 		mes "coming Holy War.";
 		close;
 	}
-	mes "[Bliant Piyord]";
-	mes "Welcome.";
 	mes "Are you not one of the ones in the process of becoming a Crusader?";
 	next;
 	mes "[Bliant Piyord]";
@@ -994,232 +959,232 @@ prt_castle,35,151,5	script	Patron Knight	751,{
 
 //=== Actual tests ========================================
 //=== Endurance Test ======================================
-job_cru,1,1,1	script	Summoner#1	-1,{
+job_cru,1,1,1	script	Summoner#cr1	-1,{
 OnTimer300000:
-	donpcevent "Summoner#1::OnReset";
+	donpcevent "Summoner#cr1::OnReset";
 	end;
 
 OnTimer300500:
-	donpcevent "Summoner#1::OnEnd";
+	donpcevent "Summoner#cr1::OnEnd";
 	end;
 
 OnTimer301000:
-	donpcevent "Summoner#1::OnStart";
+	donpcevent "Summoner#cr1::OnStart";
 	stopnpctimer;
 	end;
 
 OnInit:
-	enablenpc "Summoner#1";
-	monster "job_cru",94,45,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",94,55,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",94,65,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",94,75,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",94,85,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",94,95,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",101,45,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",101,55,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",101,65,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",101,75,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",101,85,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",101,95,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
+	enablenpc "Summoner#cr1";
+	monster "job_cru",94,45,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",94,55,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",94,65,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",94,75,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",94,85,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",94,95,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",101,45,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",101,55,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",101,65,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",101,75,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",101,85,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",101,95,"Mandragora",1020,1,"Summoner#cr1::OnDead";
 	initnpctimer;
 	end;
 
 OnStart:
-	enablenpc "Summoner#1";
-	monster "job_cru",94,45,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",94,55,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",94,65,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",94,75,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",94,85,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",94,95,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",101,45,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",101,55,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",101,65,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",101,75,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",101,85,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
-	monster "job_cru",101,95,"Mandragora",1020,1,"Summoner#1::OnMyMobDead";
+	enablenpc "Summoner#cr1";
+	monster "job_cru",94,45,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",94,55,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",94,65,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",94,75,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",94,85,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",94,95,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",101,45,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",101,55,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",101,65,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",101,75,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",101,85,"Mandragora",1020,1,"Summoner#cr1::OnDead";
+	monster "job_cru",101,95,"Mandragora",1020,1,"Summoner#cr1::OnDead";
 	initnpctimer;
 	end;
 
 OnReset:
-	killmonster "job_cru","Summoner#1::OnMyMobDead";
+	killmonster "job_cru","Summoner#cr1::OnDead";
 	end;
 
 OnEnd:
-	disablenpc "Summoner#1";
+	disablenpc "Summoner#cr1";
 	end;
 
-OnMyMobDead:
+OnDead:
 	warp "prt_fild05",353,251;
 	end;
 }
 
-job_cru,1,2,1	script	Summoner#2	-1,{
+job_cru,1,2,1	script	Summoner#cr2	-1,{
 OnTimer345000:
-	donpcevent "Summoner#2::OnReset";
+	donpcevent "Summoner#cr2::OnReset";
 	end;
 
 OnTimer345500:
-	donpcevent "Summoner#2::OnEnd";
+	donpcevent "Summoner#cr2::OnEnd";
 	end;
 
 OnTimer346000:
-	donpcevent "Summoner#2::OnStart";
+	donpcevent "Summoner#cr2::OnStart";
 	stopnpctimer;
 	end;
 
 OnInit:
-	enablenpc "Summoner#2";
-	monster "job_cru",98,50,"Flora",1118,1,"Summoner#2::OnMyMobDead";
-	monster "job_cru",92,60,"Flora",1118,1,"Summoner#2::OnMyMobDead";
-	monster "job_cru",104,60,"Flora",1118,1,"Summoner#2::OnMyMobDead";
-	monster "job_cru",98,70,"Flora",1118,1,"Summoner#2::OnMyMobDead";
-	monster "job_cru",92,80,"Flora",1118,1,"Summoner#2::OnMyMobDead";
-	monster "job_cru",104,90,"Flora",1118,1,"Summoner#2::OnMyMobDead";
-	monster "job_cru",98,90,"Flora",1118,1,"Summoner#2::OnMyMobDead";
+	enablenpc "Summoner#cr2";
+	monster "job_cru",98,50,"Flora",1118,1,"Summoner#cr2::OnDead";
+	monster "job_cru",92,60,"Flora",1118,1,"Summoner#cr2::OnDead";
+	monster "job_cru",104,60,"Flora",1118,1,"Summoner#cr2::OnDead";
+	monster "job_cru",98,70,"Flora",1118,1,"Summoner#cr2::OnDead";
+	monster "job_cru",92,80,"Flora",1118,1,"Summoner#cr2::OnDead";
+	monster "job_cru",104,90,"Flora",1118,1,"Summoner#cr2::OnDead";
+	monster "job_cru",98,90,"Flora",1118,1,"Summoner#cr2::OnDead";
 	initnpctimer;
 	end;
 
 OnStart:
-	enablenpc "Summoner#2";
-	monster "job_cru",98,50,"Flora",1118,1,"Summoner#2::OnMyMobDead";
-	monster "job_cru",92,60,"Flora",1118,1,"Summoner#2::OnMyMobDead";
-	monster "job_cru",104,60,"Flora",1118,1,"Summoner#2::OnMyMobDead";
-	monster "job_cru",98,70,"Flora",1118,1,"Summoner#2::OnMyMobDead";
-	monster "job_cru",92,80,"Flora",1118,1,"Summoner#2::OnMyMobDead";
-	monster "job_cru",104,90,"Flora",1118,1,"Summoner#2::OnMyMobDead";
-	monster "job_cru",98,90,"Flora",1118,1,"Summoner#2::OnMyMobDead";
+	enablenpc "Summoner#cr2";
+	monster "job_cru",98,50,"Flora",1118,1,"Summoner#cr2::OnDead";
+	monster "job_cru",92,60,"Flora",1118,1,"Summoner#cr2::OnDead";
+	monster "job_cru",104,60,"Flora",1118,1,"Summoner#cr2::OnDead";
+	monster "job_cru",98,70,"Flora",1118,1,"Summoner#cr2::OnDead";
+	monster "job_cru",92,80,"Flora",1118,1,"Summoner#cr2::OnDead";
+	monster "job_cru",104,90,"Flora",1118,1,"Summoner#cr2::OnDead";
+	monster "job_cru",98,90,"Flora",1118,1,"Summoner#cr2::OnDead";
 	initnpctimer;
 	end;
 
 OnReset:
-	killmonster "job_cru","Summoner#2::OnMyMobDead";
+	killmonster "job_cru","Summoner#cr2::OnDead";
 	end;
 
 OnEnd:
-	disablenpc "Summoner#2";
+	disablenpc "Summoner#cr2";
 	end;
 
-OnMyMobDead:
+OnDead:
 	warp "prt_fild05",353,251;
 	end;
 }
 
-job_cru,1,3,1	script	Summoner#3	-1,{
+job_cru,1,3,1	script	Summoner#cr3	-1,{
 OnTimer345000:
-	donpcevent "Summoner#3::OnReset";
+	donpcevent "Summoner#cr3::OnReset";
 	end;
 
 OnTimer345500:
-	donpcevent "Summoner#3::OnEnd";
+	donpcevent "Summoner#cr3::OnEnd";
 	end;
 
 OnTimer346000:
-	donpcevent "Summoner#3::OnStart";
+	donpcevent "Summoner#cr3::OnStart";
 	stopnpctimer;
 	end;
 
 OnInit:
-	enablenpc "Summoner#3";
-	monster "job_cru",92,50,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",104,50,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,50,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",92,70,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",104,70,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,80,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",92,90,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",104,90,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
+	enablenpc "Summoner#cr3";
+	monster "job_cru",92,50,"Greatest General",1277,1,"Summoner#cr3::OnDead";
+	monster "job_cru",104,50,"Greatest General",1277,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,50,"Greatest General",1277,1,"Summoner#cr3::OnDead";
+	monster "job_cru",92,70,"Greatest General",1277,1,"Summoner#cr3::OnDead";
+	monster "job_cru",104,70,"Greatest General",1277,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,80,"Greatest General",1277,1,"Summoner#cr3::OnDead";
+	monster "job_cru",92,90,"Greatest General",1277,1,"Summoner#cr3::OnDead";
+	monster "job_cru",104,90,"Greatest General",1277,1,"Summoner#cr3::OnDead";
 	Initnpctimer;
 	end;
 
 OnStart:
-	enablenpc "Summoner#3";
-	monster "job_cru",92,50,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",104,50,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,50,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",92,70,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",104,70,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,80,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",92,90,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",104,90,"Greatest General",1277,1,"Summoner#3::OnMyMobDead";
+	enablenpc "Summoner#cr3";
+	monster "job_cru",92,50,"Greatest General",1277,1,"Summoner#cr3::OnDead";
+	monster "job_cru",104,50,"Greatest General",1277,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,50,"Greatest General",1277,1,"Summoner#cr3::OnDead";
+	monster "job_cru",92,70,"Greatest General",1277,1,"Summoner#cr3::OnDead";
+	monster "job_cru",104,70,"Greatest General",1277,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,80,"Greatest General",1277,1,"Summoner#cr3::OnDead";
+	monster "job_cru",92,90,"Greatest General",1277,1,"Summoner#cr3::OnDead";
+	monster "job_cru",104,90,"Greatest General",1277,1,"Summoner#cr3::OnDead";
 	Initnpctimer;
 	end;
 
 OnReset:
-	killmonster "job_cru","Summoner#3::OnMyMobDead";
+	killmonster "job_cru","Summoner#cr3::OnDead";
 	end;
 
 OnEnd:
-	disablenpc "Summoner#3";
+	disablenpc "Summoner#cr3";
 	end;
 
-OnMyMobDead:
+OnDead:
 	warp "prt_fild05",353,251;
 	end;
 }
 
-job_cru,1,4,1	script	Summoner#4	-1,{
+job_cru,1,4,1	script	Summoner#cr4	-1,{
 OnTimer345000:
-	donpcevent "Summoner#4::OnReset";
+	donpcevent "Summoner#cr4::OnReset";
 	end;
 
 OnTimer345500:
-	donpcevent "Summoner#4::OnEnd";
+	donpcevent "Summoner#cr4::OnEnd";
 	end;
 
 OnTimer346000:
-	donpcevent "Summoner#4::OnStart";
+	donpcevent "Summoner#cr4::OnStart";
 	stopnpctimer;
 	end;
 
 OnInit:
-	enablenpc "Summoner#4";
-	monster "job_cru",98,50,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,55,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,60,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,65,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,70,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,75,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,80,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,85,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,90,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",90,34,"Mushroom",1182,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",105,34,"Mushroom",1182,1,"Summoner#3::OnMyMobDead";
+	enablenpc "Summoner#cr4";
+	monster "job_cru",98,50,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,55,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,60,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,65,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,70,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,75,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,80,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,85,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,90,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",90,34,"Mushroom",1182,1,"Summoner#cr3::OnDead";
+	monster "job_cru",105,34,"Mushroom",1182,1,"Summoner#cr3::OnDead";
 	initnpctimer;
 	end;
 
 OnStart:
-	enablenpc "Summoner#4";
-	monster "job_cru",98,50,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,55,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,60,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,65,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,70,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,75,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,80,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,85,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",98,90,"Familiar",1005,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",90,34,"Mushroom",1182,1,"Summoner#3::OnMyMobDead";
-	monster "job_cru",105,34,"Mushroom",1182,1,"Summoner#3::OnMyMobDead";
+	enablenpc "Summoner#cr4";
+	monster "job_cru",98,50,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,55,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,60,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,65,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,70,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,75,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,80,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,85,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",98,90,"Familiar",1005,1,"Summoner#cr3::OnDead";
+	monster "job_cru",90,34,"Mushroom",1182,1,"Summoner#cr3::OnDead";
+	monster "job_cru",105,34,"Mushroom",1182,1,"Summoner#cr3::OnDead";
 	initnpctimer;
 	end;
 
 OnReset:
-	killmonster "job_cru","Summoner#4::OnMyMobDead";
+	killmonster "job_cru","Summoner#cr4::OnDead";
 	end;
 
 OnEnd:
-	disablenpc "Summoner#4";
+	disablenpc "Summoner#cr4";
 	end;
 
-OnMyMobDead:
+OnDead:
 	warp "prt_fild05",353,251;
 	end;
 }
 
 
-job_cru,98,105,4	script	 Summoner#5	45,3,3,{
+job_cru,98,105,4	script	 Summoner#cr5	45,3,3,{
 OnTouch:
 	set CRUS_Q,6;
 	warp "prt_castle",164,28;
@@ -1244,19 +1209,19 @@ job_cru,24,187,4	script	Patron Knight	751,{
 	close;
 }
 
-job_cru,24,187,2	script	Waiting Room#1	700,{
+job_cru,24,187,2	script	Waiting Room#cr1	700,{
 	end;
 
 OnInit:
-	disablenpc "Waiting Room#1";
-	waitingroom "Waiting Room",20,"Waiting Room#1::OnStart",1;
+	disablenpc "Waiting Room#cr1";
+	waitingroom "Waiting Room",20,"Waiting Room#cr1::OnStart",1;
 	end;
 
 OnStart:
 	if (getareausers("job_cru", 160, 16, 190, 190)) end;
-	if ((getwaitingroomstate(33)) == 0) end;
+	if (!getwaitingroomstate(33)) end;
 	warpwaitingpc "job_cru",168,17;
-	donpcevent "Monster Summon#0::OnStart";
+	donpcevent "Monster Summon#cr0::OnStart";
 	end;
 
 }
@@ -1276,211 +1241,211 @@ OnTouch:
 	close;
 }
 
-job_cru,2,1,1	script	Monster Summon#0	-1,{
+job_cru,2,1,1	script	Monster Summon#cr0	-1,{
 OnInit:
-	disablenpc "Monster Summon#0";
+	disablenpc "Monster Summon#cr0";
 	end;
 
 OnStart:
 	set .MyMobCount,0;
-	enablenpc "Monster Summon#0";
-	donpcevent "Monster Summon#1::OnStart";
-	donpcevent "Monster Summon#2::OnStart";
-	donpcevent "Monster Summon#3::OnStart";
-	donpcevent "Monster Summon#4::OnStart";
-	donpcevent "Monster Summon#6::OnStart";
+	enablenpc "Monster Summon#cr0";
+	donpcevent "Monster Summon#cr1::OnStart";
+	donpcevent "Monster Summon#cr2::OnStart";
+	donpcevent "Monster Summon#cr3::OnStart";
+	donpcevent "Monster Summon#cr4::OnStart";
+	donpcevent "Monster Summon#cr6::OnStart";
 	end;
 
 OnMonster1:
-	monster "job_cru",168,45,"Zombie",1015,1,"Monster Summon#0::OnMyMobDead";
-	monster "job_cru",168,45,"Zombie",1015,1,"Monster Summon#0::OnMyMobDead";
-	monster "job_cru",168,45,"Zombie",1015,1,"Monster Summon#0::OnMyMobDead";
-	monster "job_cru",168,45,"Zombie",1015,1,"Monster Summon#0::OnMyMobDead";
-	monster "job_cru",168,45,"Zombie",1015,1,"Monster Summon#0::OnMyMobDead";
-	monster "job_cru",168,45,"Zombie",1015,1,"Monster Summon#0::OnMyMobDead";
+	monster "job_cru",168,45,"Zombie",1015,1,"Monster Summon#cr0::OnDead";
+	monster "job_cru",168,45,"Zombie",1015,1,"Monster Summon#cr0::OnDead";
+	monster "job_cru",168,45,"Zombie",1015,1,"Monster Summon#cr0::OnDead";
+	monster "job_cru",168,45,"Zombie",1015,1,"Monster Summon#cr0::OnDead";
+	monster "job_cru",168,45,"Zombie",1015,1,"Monster Summon#cr0::OnDead";
+	monster "job_cru",168,45,"Zombie",1015,1,"Monster Summon#cr0::OnDead";
 	end;
 
 OnMonster2:
-	monster "job_cru",168,80,"Soldier Skeleton",1028,1,"Monster Summon#0::OnMyMobDead";
-	monster "job_cru",168,80,"Soldier Skeleton",1028,1,"Monster Summon#0::OnMyMobDead";
-	monster "job_cru",168,80,"Soldier Skeleton",1028,1,"Monster Summon#0::OnMyMobDead";
+	monster "job_cru",168,80,"Soldier Skeleton",1028,1,"Monster Summon#cr0::OnDead";
+	monster "job_cru",168,80,"Soldier Skeleton",1028,1,"Monster Summon#cr0::OnDead";
+	monster "job_cru",168,80,"Soldier Skeleton",1028,1,"Monster Summon#cr0::OnDead";
 	end;
 
 OnMonster3:
-	monster "job_cru",168,115,"Mummy",1041,1,"Monster Summon#0::OnMyMobDead";
+	monster "job_cru",168,115,"Mummy",1041,1,"Monster Summon#cr0::OnDead";
 	end;
 
-OnMyMobDead:
+OnDead:
 	set .MyMonsterCount,.MyMonsterCount+1;
 	if (.MyMonsterCount >= 10) set CRUS_Q,10;
 	end;
 
 OnEnd:
-	disablenpc "Monster Summon#0";
+	disablenpc "Monster Summon#cr0";
 	end;
 
 OnReset:
-	killmonster "job_cru","Monster Summon#0::OnMyMobDead";
+	killmonster "job_cru","Monster Summon#cr0::OnDead";
 	end;
 }
 
-job_cru,168,45,0	script	Monster Summon#1	-1,15,1,{
+job_cru,168,45,0	script	Monster Summon#cr1	-1,15,1,{
 OnInit:
-	disablenpc "Monster Summon#1";
+	disablenpc "Monster Summon#cr1";
 	end;
 
 OnTouch:
-	donpcevent "Monster Summon#0::OnMonster1";
-	donpcevent "Monster Summon#1::OnEnd";
+	donpcevent "Monster Summon#cr0::OnMonster1";
+	donpcevent "Monster Summon#cr1::OnEnd";
 	end;
 
 OnStart:
-	enablenpc "Monster Summon#1";
+	enablenpc "Monster Summon#cr1";
 	end;
 
 OnEnd:
-	disablenpc "Monster Summon#1";
+	disablenpc "Monster Summon#cr1";
 	end;
 }
 
-job_cru,168,80,0	script	Monster Summon#2	-1,15,1,{
+job_cru,168,80,0	script	Monster Summon#cr2	-1,15,1,{
 OnInit:
-	disablenpc "Monster Summon#2";
+	disablenpc "Monster Summon#cr2";
 	end;
 
 OnTouch:
-	donpcevent "Monster Summon#0::OnMonster2";
-	donpcevent "Monster Summon#2::OnEnd";
+	donpcevent "Monster Summon#cr0::OnMonster2";
+	donpcevent "Monster Summon#cr2::OnEnd";
 	end;
 
 OnStart:
-	enablenpc "Monster Summon#2";
+	enablenpc "Monster Summon#cr2";
 	end;
 
 OnEnd:
-	disablenpc "Monster Summon#2";
+	disablenpc "Monster Summon#cr2";
 	end;
 }
 
-job_cru,165,115,0	script	Monster Summon#3	-1,15,1,{
+job_cru,165,115,0	script	Monster Summon#cr3	-1,15,1,{
 OnInit:
-	disablenpc "Monster Summon#3";
+	disablenpc "Monster Summon#cr3";
 	end;
 
 OnTouch:
 	monster "job_cru",168,110,"Archer Skeleton",1016,1;
-	donpcevent "Monster Summon#0::OnMonster3";
-	donpcevent "Monster Summon#3::OnEnd";
+	donpcevent "Monster Summon#cr0::OnMonster3";
+	donpcevent "Monster Summon#cr3::OnEnd";
 	end;
 
 OnStart:
-	enablenpc "Monster Summon#3";
+	enablenpc "Monster Summon#cr3";
 	end;
 
 OnEnd:
-	disablenpc "Monster Summon#3";
+	disablenpc "Monster Summon#cr3";
 	end;
 }
 
-job_cru,168,150,0	script	Monster Summon#4	-1,15,1,{
+job_cru,168,150,0	script	Monster Summon#cr4	-1,15,1,{
 OnInit:
-	disablenpc "Monster Summon#4";
+	disablenpc "Monster Summon#cr4";
 	end;
 
 OnTouch:
-	monster "job_cru",168,150,strcharinfo(0),1036,1,"Monster Summon#4-a::OnMyMobDead";
-	donpcevent "Monster Summon#4::OnEnd";
+	monster "job_cru",168,150,strcharinfo(0),1036,1,"Monster Summon#cr4-a::OnDead";
+	donpcevent "Monster Summon#cr4::OnEnd";
 	end;
 
-OnMyMobDead:
-	donpcevent "Monster Summon#5::OnStart";
+OnDead:
+	donpcevent "Monster Summon#cr5::OnStart";
 	end;
 
 OnStart:
-	enablenpc "Monster Summon#4";
+	enablenpc "Monster Summon#cr4";
 	end;
 
 OnReset:
-	killmonster "job_cru","Monster Summon#4-a::OnMyMobDead";
+	killmonster "job_cru","Monster Summon#cr4-a::OnDead";
 	end;
 
 OnEnd:
-	disablenpc "Monster Summon#4";
+	disablenpc "Monster Summon#cr4";
 	end;
 
 }
 
-job_cru,168,150,0	script	Monster Summon#4-a	-1,{
-OnMyMobDead:
-	donpcevent "Monster Summon#5::OnStart";
+job_cru,168,150,0	script	Monster Summon#cr4-a	-1,{
+OnDead:
+	donpcevent "Monster Summon#cr5::OnStart";
 	end;
 }
 
-job_cru,168,180,4	script	Monster Summon#5	45,3,3,{
+job_cru,168,180,4	script	Monster Summon#cr5	45,3,3,{
 OnInit:
-	disablenpc "Monster Summon#5";
+	disablenpc "Monster Summon#cr5";
 	end;
 
 OnTouch:
 	warp "prt_castle",35,147;
-	donpcevent "Monster Summon#0::OnReset";
-	donpcevent "Monster Summon#0::OnEnd";
-	donpcevent "Monster Summon#6::OnStop";
-	donpcevent "Monster Summon#6::OnEnd";
-	donpcevent "Monster Summon#5::OnEnd";
-	donpcevent "Waiting Room#1::OnStart";
+	donpcevent "Monster Summon#cr0::OnReset";
+	donpcevent "Monster Summon#cr0::OnEnd";
+	donpcevent "Monster Summon#cr6::OnStop";
+	donpcevent "Monster Summon#cr6::OnEnd";
+	donpcevent "Monster Summon#cr5::OnEnd";
+	donpcevent "Waiting Room#cr1::OnStart";
 	end;
 
 OnStart:
-	enablenpc "Monster Summon#5";
+	enablenpc "Monster Summon#cr5";
 	end;
 
 OnEnd:
-	disablenpc "Monster Summon#5";
+	disablenpc "Monster Summon#cr5";
 	end;
 }
 
-job_cru,2,2,1	script	Monster Summon#6	-1,{
+job_cru,2,2,1	script	Monster Summon#cr6	-1,{
 OnTimer60000:
-	donpcevent "Monster Summon#8::OnStart";
+	donpcevent "Monster Summon#cr8::OnStart";
 	end;
 
 OnTimer61000:
-	donpcevent "Monster Summon#8::OnEnd";
+	donpcevent "Monster Summon#cr8::OnEnd";
 	end;
 
 OnTimer240000:
-	donpcevent "Monster Summon#7::OnStart";
+	donpcevent "Monster Summon#cr7::OnStart";
 	end;
 
 OnTimer241000:
-	donpcevent "Monster Summon#0::OnReset";
-	donpcevent "Monster Summon#4::OnReset";
+	donpcevent "Monster Summon#cr0::OnReset";
+	donpcevent "Monster Summon#cr4::OnReset";
 	end;
 
 OnTimer242000:
-	donpcevent "Monster Summon#0::OnEnd";
-	donpcevent "Monster Summon#4::OnEnd";
-	donpcevent "Monster Summon#7::OnEnd";
+	donpcevent "Monster Summon#cr0::OnEnd";
+	donpcevent "Monster Summon#cr4::OnEnd";
+	donpcevent "Monster Summon#cr7::OnEnd";
 	end;
 
 OnTimer243000:
-	donpcevent "Monster Summon#6::OnEnd";
-	donpcevent "Waiting Room#1::OnStart";
+	donpcevent "Monster Summon#cr6::OnEnd";
+	donpcevent "Waiting Room#cr1::OnStart";
 	stopnpctimer;
 	end;
 
 OnInit:
-	disablenpc "Monster Summon#6";
+	disablenpc "Monster Summon#cr6";
 	end;
 
 OnStart:
-	enablenpc "Monster Summon#6";
+	enablenpc "Monster Summon#cr6";
 	initnpctimer;
 	end;
 
 OnEnd:
-	disablenpc "Monster Summon#6";
+	disablenpc "Monster Summon#cr6";
 	end;
 
 OnStop:
@@ -1488,9 +1453,9 @@ OnStop:
 	end;
 }
 
-job_cru,168,110,0	script	Monster Summon#7	-1,14,82,{
+job_cru,168,110,0	script	Monster Summon#cr7	-1,14,82,{
 OnInit:
-	disablenpc "Monster Summon#7";
+	disablenpc "Monster Summon#cr7";
 	end;
 
 OnTouch:
@@ -1498,17 +1463,17 @@ OnTouch:
 	end;
 
 OnStart:
-	enablenpc "Monster Summon#7";
+	enablenpc "Monster Summon#cr7";
 	end;
 
 OnEnd:
-	disablenpc "Monster Summon#7";
+	disablenpc "Monster Summon#cr7";
 	end;
 }
 
-job_cru,168,17,0	script	Monster Summon#8	-1,14,5,{
+job_cru,168,17,0	script	Monster Summon#cr8	-1,14,5,{
 OnInit:
-	disablenpc "Monster Summon#8";
+	disablenpc "Monster Summon#cr8";
 	end;
 
 OnTouch:
@@ -1516,11 +1481,11 @@ OnTouch:
 	end;
 
 OnStart:
-	enablenpc "Monster Summon#8";
+	enablenpc "Monster Summon#cr8";
 	end;
 
 OnEnd:
-	disablenpc "Monster Summon#8";
+	disablenpc "Monster Summon#cr8";
 	end;
 
 }
