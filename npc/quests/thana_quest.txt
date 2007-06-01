@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
-//= 1.4
+//= 1.4a
 //===== Compatible With: =====================================
 //= Any eAthena Version i guess?
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.3 - Added a checking in boss map to reset event if there's no player. [SinSloth]
 //= 1.4 - Changed the way the Thanatos Portal works to allow people to enter
 //= as long as Thanatos is alive. [SinSloth]
+//= 1.4a You may enter either "Charmstone" or "Charm Stone" [Lupus]
 //============================================================
 
 hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
@@ -1380,7 +1381,7 @@ tha_t09,19,158,0	script	Machine Device	111,{
 	mes "your keys and Charm Stones.";
 	next;
 	input @input$;
-	if ((@input$ == "Key") || (@input$ == "Charmstone"))
+	if (@input$ == "Key" || @input$ == "Charmstone" || @input$ == "Charm stone" || @input$ == "Charm Stone")
 	{
 		mes "^3355FFYou insert the keys into the";
 		mes "keyholes, matching them by";
