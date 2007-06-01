@@ -49,6 +49,7 @@
 	----
 ========================
 05/31
+	* Fixed some 11.3 equips [Playtester]
 	* Some small item fixes [Playtester]
 	* Fixed duration of Authorative Badge [Playtester]
 05/28
