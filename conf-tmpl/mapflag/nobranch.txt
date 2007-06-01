@@ -109,6 +109,7 @@ kh_vila	mapflag	nobranch
 kh_kiehl01	mapflag	nobranch
 kh_kiehl02	mapflag	nobranch
 que_rachel	mapflag	nobranch
+que_san04	mapflag	nobranch
 que_thor	mapflag	nobranch
 
 // Guild Castles ==================

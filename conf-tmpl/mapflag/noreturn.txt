@@ -97,7 +97,6 @@ que_god01	mapflag	noreturn
 que_god02	mapflag	noreturn
 que_bingo	mapflag	noreturn
 que_hugel	mapflag	noreturn
-que_rachel	mapflag	noreturn
 que_thor	mapflag	noreturn
 poring_c01	mapflag	noreturn
 poring_c02	mapflag	noreturn

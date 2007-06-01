@@ -1,5 +1,7 @@
 Date	Added
 
+2007/06/01
+	* Rev. 10663 Updated map flags for Rachel quest maps. [L0ne_W0lf]
 2007/05/23
 	* Reverted delay_dependon_agi -> delay_dependon_dex
 2007/05/19

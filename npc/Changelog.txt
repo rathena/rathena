@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/06/01
+	* Rev. 10663 Rachel update. Official (to iRO) quests and town NPCs. [L0ne_W0lf]
+	- Added a few missing warps as well to both town and dungeon warps for Rachel.
 	* Rev. 10659 Bard job quest updates. [L0ne_W0lf]
 	- Updated NPC dialogs and cutins using Aegis 10.3 files.
 	- Fixed error with the present checking. (Lupus beat me to commiting)
