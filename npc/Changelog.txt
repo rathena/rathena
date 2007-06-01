@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/06/01
+	* Rev. 10664 Removed Ktullanux spawn, since the quest is implemented now. [L0ne_W0lf]
 	* Rev. 10663 Rachel update. Official (to iRO) quests and town NPCs. [L0ne_W0lf]
 	- Added a few missing warps as well to both town and dungeon warps for Rachel.
 	* Rev. 10659 Bard job quest updates. [L0ne_W0lf]

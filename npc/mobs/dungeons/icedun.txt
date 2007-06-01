@@ -3,12 +3,13 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.0 First version from jAthena [Playtester]
 //= 1.1 More accurate spawns [Playtester]
+//= 1.2 Removed Ktullanux spawn, since the quest been implemneted. [L0ne_W0lf]
 //============================================================
 
 //==================================================
@@ -66,4 +67,4 @@ ice_dun03,45,150,25,20	monster	Iceicle	1789,3,960000,300000,0
 ice_dun03,61,59,33,33	monster	Iceicle	1789,7,1080000,300000,0
 ice_dun03,150,55,24,36	monster	Iceicle	1789,6,1080000,300000,0
 ice_dun03,247,54,24,28	monster	Iceicle	1789,3,840000,300000,0
-ice_dun03,0,0,0,0	monster	Ktullanux	1779,1,86400000,86000000,1
+
