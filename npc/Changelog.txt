@@ -3,6 +3,7 @@ Date		Added
 2007/06/01
 	* In thana Quest you may enter either "Charmstone" or "Charm Stone" [Lupus]
 	- Fixed bug in new Crusader Quest, optimized, changed common NPC names to more unique.
+	- Fixed 2 bugs in Bard Job Quest
 2007/05/31
 	* Rev. 10653 Fixced some spelling and grammar in crusader quest. [L0ne_W0lf]
 	* Rev. 10651 Updated Crusader quest. [L0ne_W0lf]

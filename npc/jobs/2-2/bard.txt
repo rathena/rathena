@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Muad_Dib(The Prometheus Project), Lupus, Samuray22
 //===== Current Version: ===================================== 
-//= 2.1b
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena Final
 //===== Description: ========================================= 
@@ -20,6 +20,8 @@
 // prize, too. Added Izidor flower [Lupus]
 // 2.0 Changed numbers to constants. [Vicious]
 // 2.1b Updated to the Official One. [Samuray22]
+// 2.2 Fixed BUG when baby classes weren't able to get a job,
+//	fixed bug with final prize [Lupus] HAVE TO CHANE ALL ITEMS to numeric IDs
 //============================================================
 
 //=============== Ayealo ============================
@@ -37,8 +39,8 @@ comodo,211,155,3	script	Wandering Bard	741,5,5{
 		mes "Thou should not live this destinty...";
 		mes "Thou have forgotten your destinty...";
 		close;
-	} else if(Class != Job_Archer) {
-		if(Class == Job_Bard) {
+	} else if(BaseJob != Job_Archer) {
+		if(BaseJob == Job_Bard) {
 			mes "[Ayealo]";
 			mes "Hey friends! You must be good at singing or roaming?";
 			mes "Have you improved your singing?";
@@ -51,7 +53,7 @@ comodo,211,155,3	script	Wandering Bard	741,5,5{
 			mes "Don't forget to stay happy always.";
 			mes "Our singing is to bring happiness and pleasant to everyone.";
 			close;
-		} else if(Class == Job_Novice) {
+		} else if(BaseJob == Job_Novice) {
 			mes "[Ayealo]";
 			mes "Let all the sadness";
 			mes "incomplete wishes.";
@@ -73,7 +75,7 @@ comodo,211,155,3	script	Wandering Bard	741,5,5{
 			mes "A place with all the happiness things.";
 			next;
 			mes "[Ayealo]";
-			if(Sex == 1) {
+			if(Sex) {
 				mes "Hope that you can forget all the things that happened today.";
 				mes "Enjoy yourself!";
 			} else {
@@ -84,7 +86,7 @@ comodo,211,155,3	script	Wandering Bard	741,5,5{
 		}
 	} else if(BARD_Q == 0) {
 		mes "[Ayealo]";
-		if(Sex == 1) {
+		if(Sex) {
 			mes "Hello! The joyful Archer,";
 		} else {
 			mes "Hello! Lovely Miss Archer,";
@@ -144,7 +146,7 @@ comodo,211,155,3	script	Wandering Bard	741,5,5{
 				mes "[Ayealo]" ;
 				mes "Thank you. I'm very happy if you're feeling happy with my singing.";
 				next;
-				if (Sex == 1 && JobLevel > 39) {
+				if (Sex && JobLevel > 39) {
 					mes "[Ayealo]";
 					mes "It's wonderful if there are more people can sing as well.";
 					mes "It's OK, it's not bad like this, He-he.";
@@ -422,7 +424,7 @@ B_Sing:
 			next;
 			input @song$;
 			if(@song$ != "There was a fellow named.") {
-			set @w_point, 1;
+				set @w_point, 1;
 			}
 			mes "^3377FFThere was a fellow named.";
 			mes "Invulnerable.^000000";
@@ -433,7 +435,7 @@ B_Sing:
 			next;
 			input @song$; 
 			if( @song$ != "Invulnerable.") {
-			set @w_point, @w_point + 1;
+				set @w_point, @w_point + 1;
 			}
 			mes "^3377FFThere was a fellow named.";
 			mes "Invulnerable.";
@@ -444,7 +446,7 @@ B_Sing:
 			next;
 			input @song$;
 			if( @song$ != "His name is Siegfried,") {
-			set @w_point, @w_point + 1;
+				set @w_point, @w_point + 1;
 			}
 			mes "^3377FFThere was a fellow named.";
 			mes "Invulnerable.";
@@ -455,7 +457,7 @@ B_Sing:
 			next;
 			input @song$;
 			if( @song$ != "son of the hero Siegmen,") {
-			set @w_point, @w_point + 1;
+				set @w_point, @w_point + 1;
 			}
 			mes "^3377FFThere was a fellow named.";
 			mes "Invulnerable.";
@@ -466,7 +468,7 @@ B_Sing:
 			next;
 			input @song$;
 			if( @song$ != "the fiery giant Puff,") {
-			set @w_point, @w_point + 1;
+				set @w_point, @w_point + 1;
 			}
 			mes "^3377FFThere was a fellow named.";
 			mes "Invulnerable.";
@@ -477,7 +479,7 @@ B_Sing:
 			next;
 			input @song$;
 			if( @song$ != "turned into dragon to challenge him.") {
-			set @w_point, @w_point + 1;
+				set @w_point, @w_point + 1;
 			}
 		} else if(@bard_s == 2) {
 			mes "^3377FFA Merchant without money and equipment. ^000000";
@@ -489,7 +491,7 @@ B_Sing:
 			next;
 			input @song$;
 			if( @song$ != "A Merchant without money and equipment.") { 
-			set @w_point, @w_point + 1;
+				set @w_point, @w_point + 1;
 			}
 			mes "^3377FFA Merchant without money and equipment. ";
 			mes "Merchant also not afford to vending.^000000";
@@ -500,7 +502,7 @@ B_Sing:
 			next;
 			input @song$;
 			if( @song$ != "Merchant also not afford to vending.") {
-			set @w_point, @w_point + 1;
+				set @w_point, @w_point + 1;
 			}
 			mes "^3377FFA Merchant without money and equipment. ";
 			mes "Merchant also not afford to vending.";
@@ -511,7 +513,7 @@ B_Sing:
 			next;
 			input @song$;
 			if( @song$ != "He never beg from others.") {
-			set @w_point, @w_point + 1;
+				set @w_point, @w_point + 1;
 			}
 			mes "^3377FFA Merchant without money and equipment. ";
 			mes "Merchant also not afford to vending.";
@@ -522,7 +524,7 @@ B_Sing:
 			next;
 			input @song$;
 			if( @song$ != "Selling equipment to get money.") {
-			set @w_point, @w_point + 1;
+				set @w_point, @w_point + 1;
 			}
 			mes "^3377FFA Merchant without money and equipment. ";
 			mes "Merchant also not afford to vending.";
@@ -533,7 +535,7 @@ B_Sing:
 			next;
 			input @song$;
 			if( @song$ != "Firstly, he sells the Red Potion.") {
-			set @w_point, @w_point + 1;
+				set @w_point, @w_point + 1;
 			}
 			mes "^3377FFA Merchant without money and equipment. ";
 			mes "Merchant also not afford to vending.";
@@ -544,7 +546,7 @@ B_Sing:
 			next;
 			input @song$;
 			if( @song$ != "Then he sells the Sweet Potato." ) {
-			set @w_point, @w_point + 1;
+				set @w_point, @w_point + 1;
 			}
 		} else if(@bard_s == 3) {
 			mes "^3377FFAll gods will never grow old, ^000000";
@@ -556,7 +558,7 @@ B_Sing:
 			next;
 			input @song$;
 			if( @song$ != "All gods will never grow old," ) {
-			set @w_point, @w_point + 1;
+				set @w_point, @w_point + 1;
 			}
 			mes "^3377FFAll gods will never grow old, ";
 			mes "This is because of goddess Idun,^000000";
@@ -578,7 +580,7 @@ B_Sing:
 			next;
 			input @song$;
 			if( @song$ != "Beauty, fair, wealthy godness Idun.") {
-			set @w_point, @w_point + 1;
+				set @w_point, @w_point + 1;
 			}
 			mes "^3377FFAll gods will never grow old, ";
 			mes "This is because of goddess Idun,";
@@ -589,8 +591,8 @@ B_Sing:
 			next;
 			input @song$;
 			if( @song$ != "Daughter-in-law of Odin, Mrs.Braqi.") {
-			set @w_point, @w_point + 1;
-	                }
+				set @w_point, @w_point + 1;
+			}
 			mes "^3377FFAll gods will never grow old, ";
 			mes "This is because of goddess Idun,";
 			mes "Beauty, fair, wealthy godness Idun.";
@@ -625,7 +627,7 @@ B_Sing:
 			if( @song$ != "Bragi, Bragi." ) {
 				set @w_point, @w_point + 1;
 			}
-        		mes "^3377FFBragi, Bragi.";
+			mes "^3377FFBragi, Bragi.";
 			mes "Always call the Bard with this name,^000000";
 			mes "My singing is his breathe,";
 			mes "My spirit is his will power,";
@@ -764,7 +766,7 @@ B_Sing:
 		mes "[Ayealo]";
 		mes "It's amazing! It's not so simple at once?";
 		mes "You can be a good singer to a certain extent.";
-	        next;
+		next;
 		mes "[Ayealo]";
 		mes "In that case, you are a Bard from now on.";
 		mes "But, I would like to present a souvenir for you.";
@@ -820,61 +822,61 @@ B_Change:
 			next;
 			mes "[Ayealo]";
 			mes "And, I had prepared some souvenirs for you.";
-	       		mes "Can you please bring some Wooden Block?";
+       		mes "Can you please bring some Wooden Block?";
 			mes "We're not restricted to any materials, as long as the quantities of a same type item are 60.";
 			close;
 		}
-			mes "[Ayealo]";
-			mes "Its must be a tough job, I'll make use of this material to make a souvenir after you had changed the job.";
-			mes "Hold on please.";
-			next;
-			mes "[Ayealo]";
-			mes "^3355FFSoo-sha Soo-sha Tung-tang tung-tang^000000";
-			mes "^3355FFKiwi Kiwi Pitt Pitt^000000";
-			next;
-			if(countitem("Wooden_Block") > 59) {
-				delitem "Wooden_Block", 60;
-				getitem "Violin", 1;
-			} else if(countitem("Tree_Of_Archer_3") > 59) {
-				delitem "Tree_Of_Archer_3", 60;
-				getitem "Mandolin", 1;
-			} else if(Tree_Of_Archer_2 > 59) {
-				delitem "Tree_Of_Archer_2", 60;
-				getitem "Mandolin", 1;
-			} else if(countitem("Tree_Of_Archer_1") > 59) {
-				if(JobLevel > 49) {
-					delitem "Tree_Of_Archer_1", 60;
-					getitem "Harp_", 1;
-				} else {
-					delitem "Tree_Of_Archer_1", 60;
-					getitem "Lute", 1;
-				}
+		mes "[Ayealo]";
+		mes "Its must be a tough job, I'll make use of this material to make a souvenir after you had changed the job.";
+		mes "Hold on please.";
+		next;
+		mes "[Ayealo]";
+		mes "^3355FFSoo-sha Soo-sha Tung-tang tung-tang^000000";
+		mes "^3355FFKiwi Kiwi Pitt Pitt^000000";
+		next;
+		if(countitem("Wooden_Block") > 59) {
+			delitem "Wooden_Block", 60;
+			getitem "Violin", 1;
+		} else if(countitem("Tree_Of_Archer_3") > 59) {
+			delitem "Tree_Of_Archer_3", 60;
+			getitem "Mandolin", 1;
+		} else if(countitem("Tree_Of_Archer_2") > 59) {
+			delitem "Tree_Of_Archer_2", 60;
+			getitem "Mandolin", 1;
+		} else if(countitem("Tree_Of_Archer_1") > 59) {
+			if(JobLevel > 49) {
+				delitem "Tree_Of_Archer_1", 60;
+				getitem "Harp_", 1;
 			} else {
-				mes "[Ayealo]";
-				mes "Mmm? It's better that you collect more Wooden Block.";
-				mes "Can I change the job now?";
-				next;
-				menu "Please let me change the job directly.",B_Change,"It's OK, I'll come again after well prepare.",-;
-				mes "[Ayealo]";
-				mes "Mmm, OK. Can you please bring some ^3355FF Wooden Block^000000?";
-				mes "We're not restricted to any materials, as long as the quantities of a same type item are 60.";
-				next;
-				mes "[Ayealo]";
-				mes "If you can bring all the materials, I'll reward you with a present.";
-				mes "Be careful on the road.";
-				close;
+				delitem "Tree_Of_Archer_1", 60;
+				getitem "Lute", 1;
 			}
-			callfunc "Job_Change",Job_Bard;
-			callfunc "F_ClearJobVar";		//clears all job variables for the current player
+		} else {
 			mes "[Ayealo]";
-			mes "C'mon, this is the souvenir. It's useful while singing.";
-			mes "Hope that you can sing more cheerful songs.";
+			mes "Mmm? It's better that you collect more Wooden Block.";
+			mes "Can I change the job now?";
+			next;
+			menu "Please let me change the job directly.",B_Change,"It's OK, I'll come again after well prepare.",-;
+			mes "[Ayealo]";
+			mes "Mmm, OK. Can you please bring some ^3355FF Wooden Block^000000?";
+			mes "We're not restricted to any materials, as long as the quantities of a same type item are 60.";
 			next;
 			mes "[Ayealo]";
-			mes "See you next time.";
+			mes "If you can bring all the materials, I'll reward you with a present.";
+			mes "Be careful on the road.";
 			close;
+		}
+		callfunc "Job_Change",Job_Bard;
+		callfunc "F_ClearJobVar";		//clears all job variables for the current player
+		mes "[Ayealo]";
+		mes "C'mon, this is the souvenir. It's useful while singing.";
+		mes "Hope that you can sing more cheerful songs.";
+		next;
+		mes "[Ayealo]";
+		mes "See you next time.";
+		close;
 	}
 	mes "[Ayealo]";
 	mes "Em Hm...";
-        close;
+	close;
 }
