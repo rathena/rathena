@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/06/01
+	* Rev. 10666 Updated Knight Peco, Crusader Peco, and Falcon breeders to Aegis 10.3 standards. [L0ne_W0lf]
 	* Rev. 10664 Removed Ktullanux spawn, since the quest is implemented now. [L0ne_W0lf]
 	* Rev. 10663 Rachel update. Official (to iRO) quests and town NPCs. [L0ne_W0lf]
 	- Added a few missing warps as well to both town and dungeon warps for Rachel.
