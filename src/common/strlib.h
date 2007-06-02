@@ -4,7 +4,9 @@
 #ifndef _STRLIB_H_
 #define _STRLIB_H_
 
-#include <stddef.h> // size_t
+#ifndef _CBASETYPES_H_
+#include "../common/cbasetypes.h"
+#endif
 
 char* jstrescape (char* pt);
 char* jstrescapecpy (char* pt, const char* spt);
@@ -15,7 +17,7 @@ char* trim(char* str);
 char* normalize_name(char* str,const char* delims);
 const char *stristr(const char *haystack, const char *needle);
 
-#ifdef __WIN32
+#ifdef WIN32
 #define HAVE_STRTOK_R
 #define strtok_r(s,delim,save_ptr) _strtok_r((s),(delim),(save_ptr))
 char* _strtok_r(char* s1, const char* s2, char** lasts);
@@ -27,5 +29,8 @@ size_t strnlen (const char* string, size_t maxlen);
 
 int e_mail_check(char* email);
 int config_switch(const char* str);
+
+/// always nul-terminates the string
+char* safestrncpy(char* dst, const char* src, size_t n);
 
 #endif /* _STRLIB_H_ */

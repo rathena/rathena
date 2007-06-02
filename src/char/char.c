@@ -3123,7 +3123,9 @@ int parse_frommap(int fd)
 			char type = RFIFOB(fd, 10);
 			int size;
 			struct fame_list* list;
-			
+			int player_pos;
+			int fame_pos;
+
 			switch(type)
 			{
 				case 1:  size = fame_list_size_smith;   list = smith_fame_list;   break;
@@ -3131,56 +3133,33 @@ int parse_frommap(int fd)
 				case 3:  size = fame_list_size_taekwon; list = taekwon_fame_list; break;
 				default: size = 0;                      list = NULL;              break;
 			}
-			if( size == 0 )
-			{// No list
-				RFIFOSKIP(fd,11);
-				break; 
+
+			ARR_FIND(0, size, player_pos, list[player_pos].id == cid);
+			ARR_FIND(0, size, fame_pos, list[fame_pos].fame <= fame);
+
+			if( player_pos == size && fame_pos == size )
+				;// not on list and not enough fame to get on it
+			else if( fame_pos == player_pos )
+			{// same position
+				list[player_pos].fame = fame;
+				char_update_fame_list(type, player_pos, fame);
 			}
-			for( i = 0; i < size; ++i )
-			{
-				if( list[i].id != cid )
-					continue;
-				// player found, update position
-				if( i > 0 && fame >= list[i - 1].fame )
-				{// moved up
-					struct fame_list entry;
-					int t;
-					for( t = 0; fame < list[t].fame ; ++t )
-						;// get target position (always < i)
-					memcpy(&entry, &list[i], sizeof(struct fame_list));
-					entry.fame = fame;
-					memmove(&list[t + 1], &list[t], (t - i)*sizeof(struct fame_list));
-					memcpy(&list[t], &entry, sizeof(struct fame_list));
-					char_send_fame_list(-1);
-				}
-				else if( i < size - 1 && fame < list[i + 1].fame )
-				{// moved down - always stays in the list
-					struct fame_list entry;
-					int t;
-					for( t = i + 2; t < size && fame < list[t].fame ; ++t )
-						;// get target position
-					--t;
-					memcpy(&entry, &list[i], sizeof(struct fame_list));
-					entry.fame = fame;
-					memmove(&list[i], &list[i + 1], (t - i)*sizeof(struct fame_list));
-					memcpy(&list[t], &entry, sizeof(struct fame_list));
-					char_send_fame_list(-1);
+			else
+			{// move in the list
+				if( player_pos == size )
+				{// new ranker - not in the list
+					ARR_MOVE(size - 1, fame_pos, list, struct fame_list);
+					list[fame_pos].id = cid;
+					list[fame_pos].fame = fame;
+					char_loadName(cid, list[fame_pos].name);
 				}
 				else
-				{// same position
-					list[i].fame = fame;
-					char_update_fame_list(type, i, fame);
+				{// already in the list
+					if( fame_pos == size )
+						--fame_pos;// move to the end of the list
+					ARR_MOVE(player_pos, fame_pos, list, struct fame_list);
+					list[fame_pos].fame = fame;
 				}
-				break;
-			}
-
-			if( i == size && fame >= list[size - 1].fame )
-			{// not on list and has enough fame
-				for( i = 0; fame < list[i].fame; ++i )
-					;// get target position
-				list[i].id = cid;
-				list[i].fame = fame;
-				char_loadName(list[i].id, list[i].name);
 				char_send_fame_list(-1);
 			}
 

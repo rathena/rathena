@@ -691,4 +691,81 @@ void* linkdb_search ( struct linkdb_node** head, void *key);
 void* linkdb_erase  ( struct linkdb_node** head, void *key);
 void  linkdb_final  ( struct linkdb_node** head );
 
+
+
+/// Finds an entry in an array.
+/// ex: ARR_FIND(0, size, i, list[i] == target);
+///
+/// @param __start   Starting index (ex: 0)
+/// @param __end     End index (ex: size of the array)
+/// @param __var     Index variable
+/// @param __cmp     Expression that returns true when the target entry is found
+#define ARR_FIND(__start, __end, __var, __cmp) \
+	do{ \
+		for( (__var) = (__start); (__var) < (__end); ++(__var) ) \
+			if( __cmp ) \
+				break; \
+	}while(0)
+
+
+
+/// Moves an entry of the array.
+/// Use ARR_MOVERIGHT/ARR_MOVELEFT if __from and __to are direct numbers.
+/// ex: ARR_MOVE(i, 0, list, int);// move index i to index 0
+///
+///
+/// @param __from   Initial index of the entry
+/// @param __end    Target index of the entry
+/// @param __arr    Array
+/// @param __type   Type of entry
+#define ARR_MOVE(__from, __to, __arr, __type) \
+	do{ \
+		if( (__from) != (__to) ) \
+		{ \
+			__type __backup__; \
+			memmove(&__backup__, (__arr)+(__from), sizeof(__type)); \
+			if( (__from) < (__to) ) \
+				memmove((__arr)+(__from), (__arr)+(__from)+1, ((__to)-(__from))*sizeof(__type)); \
+			else if( (__from) > (__to) ) \
+				memmove((__arr)+(__to)+1, (__arr)+(__to), ((__from)-(__to))*sizeof(__type)); \
+			memmove((__arr)+(__to), &__backup__, sizeof(__type)); \
+		} \
+	}while(0)
+
+
+
+/// Moves an entry of the array to the right.
+/// ex: ARR_MOVERIGHT(1, 4, list, int);// move index 1 to index 4
+///
+/// @param __from   Initial index of the entry
+/// @param __end    Target index of the entry
+/// @param __arr    Array
+/// @param __type   Type of entry
+#define ARR_MOVERIGHT(__from, __to, __arr, __type) \
+	do{ \
+		__type __backup__; \
+		memmove(&__backup__, (__arr)+(__from), sizeof(__type)); \
+		memmove((__arr)+(__from), (__arr)+(__from)+1, ((__to)-(__from))*sizeof(__type)); \
+		memmove((__arr)+(__to), &__backup__, sizeof(__type)); \
+	}while(0)
+
+
+
+/// Moves an entry of the array to the left.
+/// ex: ARR_MOVELEFT(3, 0, list, int);// move index 3 to index 0
+///
+/// @param __from   Initial index of the entry
+/// @param __end    Target index of the entry
+/// @param __arr    Array
+/// @param __type   Type of entry
+#define ARR_MOVELEFT(__from, __to, __arr, __type) \
+	do{ \
+		__type __backup__; \
+		memmove(&__backup__, (__arr)+(__from), sizeof(__type)); \
+		memmove((__arr)+(__to)+1, (__arr)+(__to), ((__from)-(__to))*sizeof(__type)); \
+		memmove((__arr)+(__to), &__backup__, sizeof(__type)); \
+	}while(0)
+
+
+
 #endif /* _DB_H_ */

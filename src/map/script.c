@@ -314,6 +314,56 @@ enum {
 	MF_GUILDLOCK
 };
 
+const char* script_op2name(int op)
+{
+#define RETURN_OP_NAME(type) case type: return #type
+	switch( op )
+	{
+	RETURN_OP_NAME(C_NOP);
+	RETURN_OP_NAME(C_POS);
+	RETURN_OP_NAME(C_INT);
+	RETURN_OP_NAME(C_PARAM);
+	RETURN_OP_NAME(C_FUNC);
+	RETURN_OP_NAME(C_STR);
+	RETURN_OP_NAME(C_CONSTSTR);
+	RETURN_OP_NAME(C_ARG);
+	RETURN_OP_NAME(C_NAME);
+	RETURN_OP_NAME(C_EOL);
+	RETURN_OP_NAME(C_RETINFO);
+	RETURN_OP_NAME(C_USERFUNC);
+	RETURN_OP_NAME(C_USERFUNC_POS);
+
+	// operators
+	RETURN_OP_NAME(C_OP3);
+	RETURN_OP_NAME(C_LOR);
+	RETURN_OP_NAME(C_LAND);
+	RETURN_OP_NAME(C_LE);
+	RETURN_OP_NAME(C_LT);
+	RETURN_OP_NAME(C_GE);
+	RETURN_OP_NAME(C_GT);
+	RETURN_OP_NAME(C_EQ);
+	RETURN_OP_NAME(C_NE);
+	RETURN_OP_NAME(C_XOR);
+	RETURN_OP_NAME(C_OR);
+	RETURN_OP_NAME(C_AND);
+	RETURN_OP_NAME(C_ADD);
+	RETURN_OP_NAME(C_SUB);
+	RETURN_OP_NAME(C_MUL);
+	RETURN_OP_NAME(C_DIV);
+	RETURN_OP_NAME(C_MOD);
+	RETURN_OP_NAME(C_NEG);
+	RETURN_OP_NAME(C_LNOT);
+	RETURN_OP_NAME(C_NOT);
+	RETURN_OP_NAME(C_R_SHIFT);
+	RETURN_OP_NAME(C_L_SHIFT);
+
+	default:
+		ShowDebug("script_op2name: unexpected op=%d\n", op);
+		return "???";
+	}
+#undef RETURN_OP_NAME
+}
+
 //Reports on the console the src of a script error.
 static void report_src(struct script_state *st)
 {
@@ -2392,7 +2442,7 @@ void op_3(struct script_state* st, int op)
 		flag = data->u.num;
 	else
 	{
-		ShowError("script:op_3: invalid type of data op:%d data:%d\n", op, data->type);
+		ShowError("script:op_3: invalid type of data op:%s data:%s\n", script_op2name(op), script_op2name(data->type));
 		report_src(st);
 		script_removetop(st, -3, 0);
 		script_pushnil(st);
@@ -2433,7 +2483,7 @@ void op_2str(struct script_state* st, int op, const char* s1, const char* s2)
 			return;
 		}
 	default:
-		ShowError("script:op2_str: unexpected string operator op:%d\n", op);
+		ShowError("script:op2_str: unexpected string operator op:%s\n", script_op2name(op));
 		report_src(st);
 		script_pushnil(st);
 		st->state = END;
@@ -2469,7 +2519,7 @@ void op_2num(struct script_state* st, int op, int i1, int i2)
 	case C_MOD:
 		if( i2 == 0 )
 		{
-			ShowError("script:op_2num: division by zero detected op:%d\n", op);
+			ShowError("script:op_2num: division by zero detected op:%s\n", script_op2name(op));
 			report_src(st);
 			script_pushnil(st);
 			st->state = END;
@@ -2487,20 +2537,20 @@ void op_2num(struct script_state* st, int op, int i1, int i2)
 		case C_SUB: ret = i1 - i2; ret_double = (double)i1 - (double)i2; break;
 		case C_MUL: ret = i1 * i2; ret_double = (double)i1 * (double)i2; break;
 		default:
-			ShowError("script:op_2num: unexpected number operator op:%d\n", op);
+			ShowError("script:op_2num: unexpected number operator op:%s\n", script_op2name(op));
 			report_src(st);
 			script_pushnil(st);
 			return;
 		}
 		if( ret_double < INT_MIN )
 		{
-			ShowWarning("script:op_2num: underflow detected op:%d\n", op);
+			ShowWarning("script:op_2num: underflow detected op:%s\n", script_op2name(op));
 			report_src(st);
 			ret = INT_MIN;
 		}
 		else if( ret_double > INT_MAX )
 		{
-			ShowWarning("script:op_2num: overflow detected op:%d\n", op);
+			ShowWarning("script:op_2num: overflow detected op:%s\n", script_op2name(op));
 			report_src(st);
 			ret = INT_MAX;
 		}
@@ -2546,7 +2596,7 @@ void op_2(struct script_state *st, int op)
 	}
 	else
 	{// invalid argument
-		ShowError("script:op_2: invalid type of data op:%d left:%d right:%d\n", op, left->type, right->type);
+		ShowError("script:op_2: invalid type of data op:%s left:%s right:%s\n", script_op2name(op), script_op2name(left->type), script_op2name(right->type));
 		report_src(st);
 		script_removetop(st, -2, 0);
 		script_pushnil(st);
@@ -2568,7 +2618,7 @@ void op_1(struct script_state* st, int op)
 
 	if( !data_isint(data) )
 	{// not a number
-		ShowError("script:op_1: invalid type of data op:%d data:%d\n", op, data->type);
+		ShowError("script:op_1: invalid type of data op:%s data:%s\n", script_op2name(op), script_op2name(data->type));
 		report_src(st);
 		script_pushnil(st);
 		st->state = END;
@@ -2583,7 +2633,7 @@ void op_1(struct script_state* st, int op)
 	case C_NOT: i1 = ~i1; break;
 	case C_LNOT: i1 = !i1; break;
 	default:
-		ShowError("script:op_1: unexpected operator op:%d\n", op);
+		ShowError("script:op_1: unexpected operator op:%s\n", script_op2name(op));
 		report_src(st);
 		script_pushnil(st);
 		st->state = END;

@@ -1,14 +1,15 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "../common/cbasetypes.h"
+#include "../common/malloc.h"
+#include "../common/utils.h"
+#include "strlib.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "strlib.h"
-#include "../common/cbasetypes.h"
-#include "../common/utils.h"
-#include "../common/malloc.h"
 
 
 #define J_MAX_MALLOC_SIZE 65535
@@ -298,4 +299,14 @@ int config_switch(const char* str)
 		return 0;
 
 	return (int)strtol(str, NULL, 0);
+}
+
+/// always nul-terminates the string
+char* safestrncpy(char* dst, const char* src, size_t n)
+{
+	char* ret;
+	ret = strncpy(dst, src, n);
+	if( ret != NULL )
+		ret[n - 1] = '\0';
+	return ret;
 }
