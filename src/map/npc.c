@@ -126,7 +126,7 @@ int npc_enable(const char* name, int flag)
 	if (nd->class_ == WARP_CLASS || nd->class_ == FLAG_CLASS)
 	{	//Client won't display option changes for these classes [Toms]
 		if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE))
-			clif_clearchar(&nd->bl, 0);
+			clif_clearunit_area(&nd->bl, 0);
 		else
 			clif_spawn(&nd->bl);
 	} else
@@ -156,7 +156,7 @@ int npc_event_dequeue(struct map_session_data* sd)
 	if(sd->npc_id)
 	{	//Current script is aborted.
 		if(sd->state.using_fake_npc){
-			clif_clearchar_id(sd->npc_id, 0, sd->fd);
+			clif_clearunit_single(sd->npc_id, 0, sd->fd);
 			sd->state.using_fake_npc = 0;
 		}
 		if (sd->st) {
@@ -1443,7 +1443,7 @@ int npc_remove_map(struct npc_data* nd)
 #ifdef PCRE_SUPPORT
 	npc_chat_finalize(nd);
 #endif
-	clif_clearchar_area(&nd->bl,2);
+	clif_clearunit_area(&nd->bl,2);
 	strdb_remove(npcname_db, (nd->bl.subtype < SCRIPT) ? nd->name : nd->exname);
 	//Remove corresponding NPC CELLs
 	if (nd->bl.subtype == WARP) {

@@ -17,17 +17,16 @@ struct packet_db {
 };
 
 // local define
-enum {
+enum send_target {
 	ALL_CLIENT,
 	ALL_SAMEMAP,
-	AREA,
-	AREA_WOS,
-	AREA_WOC,
-	AREA_WOSC,
-	AREA_CHAT_WOC,
-	CHAT,
-	CHAT_WOS,
-	CHAT_MAINCHAT,
+	AREA,				// area
+	AREA_WOS,			// area, without self
+	AREA_WOC,			// area, without chatrooms
+	AREA_WOSC,			// area, without own chatroom
+	AREA_CHAT_WOC,		// hearable area, without chatrooms
+	CHAT,				// current chatroom
+	CHAT_WOS,			// current chatroom, without self
 	PARTY,
 	PARTY_WOS,
 	PARTY_SAMEMAP,
@@ -36,13 +35,14 @@ enum {
 	PARTY_AREA_WOS,
 	GUILD,
 	GUILD_WOS,
-	GUILD_SAMEMAP,	// [Valaris]
+	GUILD_SAMEMAP,
 	GUILD_SAMEMAP_WOS,
 	GUILD_AREA,
-	GUILD_AREA_WOS,	// end additions [Valaris]
-	SELF,
+	GUILD_AREA_WOS,
 	DUEL,
-	DUEL_WOS
+	DUEL_WOS,
+	CHAT_MAINCHAT,		// everyone on main chat
+	SELF,
 };
 
 // packet_db[SERVER] is reserved for server use
@@ -67,10 +67,10 @@ int clif_charselectok(int);
 void check_fake_id(int fd, struct map_session_data *sd, int target_id);
 int clif_dropflooritem(struct flooritem_data *);
 int clif_clearflooritem(struct flooritem_data *,int);
-int clif_clearchar(struct block_list*,int);	// area or fd
-int clif_clearchar_delay(unsigned int,struct block_list *,int);
-#define clif_clearchar_area(bl,type) clif_clearchar(bl,type)
-int clif_clearchar_id(int,int,int);
+
+int clif_clearunit_single(int id, uint8 type, int fd);
+int clif_clearunit_area(struct block_list* bl, uint8 type);
+int clif_clearunit_delayed(struct block_list* bl, unsigned int tick);
 int clif_spawn(struct block_list*);	//area
 int clif_walkok(struct map_session_data*);	// self
 void clif_move(struct unit_data *ud); //area
@@ -127,14 +127,14 @@ int clif_fame_blacksmith(struct map_session_data *, int);
 int clif_fame_alchemist(struct map_session_data *, int);
 int clif_fame_taekwon(struct map_session_data *, int);
 
+void clif_sitting(struct map_session_data* sd, enum send_target target);
+void clif_standing(struct map_session_data* sd, enum send_target target);
 void clif_emotion(struct block_list *bl,int type);
 void clif_talkiebox(struct block_list* bl, const char* talkie);
 void clif_wedding_effect(struct block_list *bl);
 void clif_divorced(struct map_session_data* sd, const char* name);
-//void clif_sitting(int fd, struct map_session_data *sd);
 //void clif_callpartner(struct map_session_data *sd);
 void clif_adopt_process(struct map_session_data *sd);
-void clif_sitting(struct map_session_data *sd);
 void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,const char *name,int type);
 int clif_soundeffectall(struct block_list *bl, const char *name, int type, int coverage);
 void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, int target_id, unsigned int tick);
@@ -299,7 +299,7 @@ int clif_guild_xy_remove(struct map_session_data *sd);
 // atcommand
 int clif_displaymessage(const int fd,const char* mes);
 int clif_disp_onlyself(struct map_session_data *sd,const char *mes,int len);
-void clif_disp_message(struct block_list* src, const char* mes, int len, int type);
+void clif_disp_message(struct block_list* src, const char* mes, int len, enum send_target target);
 int clif_GMmessage(struct block_list* bl, const char* mes, int len, int flag);
 void clif_MainChatMessage(const char* message); //luzza
 int clif_announce(struct block_list *bl, const char* mes, int len, unsigned long color, int flag);

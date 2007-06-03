@@ -1711,7 +1711,7 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 		if(pd->pet.intimate <= 0 &&
 			!(pd->msd && pd->msd->state.waitingdisconnect)
 		) {	//If logging out, this is deleted on unit_free
-			clif_clearchar_area(bl,clrtype);
+			clif_clearunit_area(bl,clrtype);
 			map_delblock(bl);
 			unit_free(bl,0);
 			map_freeblock_unlock();
@@ -1723,14 +1723,14 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 			!(hd->master && hd->master->state.waitingdisconnect)
 		) {	//If logging out, this is deleted on unit_free
 			clif_emotion(bl, 28) ;	//sob
-			clif_clearchar_area(bl,clrtype);
+			clif_clearunit_area(bl,clrtype);
 			map_delblock(bl);
 			unit_free(bl,0);
 			map_freeblock_unlock();
 			return 0;
 		}
 	}
-	clif_clearchar_area(bl,clrtype);
+	clif_clearunit_area(bl,clrtype);
 	map_delblock(bl);
 	map_freeblock_unlock();
 	return 1;

@@ -2205,7 +2205,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			md->vd->dead_sit = 1;
 			return 1; // Let the dead body stay there.. we have something to do with it :D
 		} else
-			clif_clearchar_delay(tick+3000,&md->bl,0);
+			clif_clearunit_delayed(&md->bl, tick+3000);
 	}
 
 	if(!md->spawn) //Tell status_damage to remove it from memory.

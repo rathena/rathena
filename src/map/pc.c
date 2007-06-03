@@ -333,10 +333,12 @@ int pc_makesavestatus(struct map_session_data *sd)
 		
 	if (sd->sc.count && sd->sc.data[SC_JAILED].timer != -1)
 	{	//When Jailed, do not move last point.
-		if(pc_isdead(sd))
+		if(pc_isdead(sd)){
 			pc_setrestartvalue(sd,0);
-		sd->status.hp = sd->battle_status.hp;
-		sd->status.sp = sd->battle_status.sp;
+		} else {
+			sd->status.hp = sd->battle_status.hp;
+			sd->status.sp = sd->battle_status.sp;
+		}
 		sd->status.last_point.map = sd->mapindex;
 		sd->status.last_point.x = sd->bl.x;
 		sd->status.last_point.y = sd->bl.y;
@@ -1196,7 +1198,7 @@ int pc_disguise(struct map_session_data *sd, int class_)
 	}
 	
 	pc_stop_walking(sd, 0);
-	clif_clearchar(&sd->bl, 0);
+	clif_clearunit_area(&sd->bl, 0);
 
 	if (!class_) {
 		sd->disguise = 0;
@@ -3622,8 +3624,7 @@ int pc_checkallowskill(struct map_session_data *sd)
 	for (i = 0; i < sizeof(scw_list)/sizeof(scw_list[0]); i++)
 	{	// Skills requiring specific weapon types
 		if(sd->sc.data[scw_list[i]].timer!=-1 &&
-			!pc_check_weapontype(sd,
-			  	skill_get_weapontype(StatusSkillChangeTable[scw_list[i]])))
+			!pc_check_weapontype(sd,skill_get_weapontype(StatusSkillChangeTable[scw_list[i]])))
 			status_change_end(&sd->bl,scw_list[i],-1);
 	}
 	
@@ -3633,7 +3634,7 @@ int pc_checkallowskill(struct map_session_data *sd)
 	
 	if(sd->status.shield <= 0) { // Skills requiring a shield
 		for (i = 0; i < sizeof(scs_list)/sizeof(scs_list[0]); i++)
-			if(sd->sc.data[scs_list[i]].timer!=-1)	// Guard
+			if(sd->sc.data[scs_list[i]].timer!=-1)
 				status_change_end(&sd->bl,scs_list[i],-1);
 	}
 	return 0;
@@ -4869,7 +4870,9 @@ static int pc_respawn(int tid,unsigned int tick,int id,int data)
 	{	//Auto-respawn [Skotlex]
 		pc_setstand(sd);
 		pc_setrestartvalue(sd,3);
-		pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,0);
+		if(pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 0))
+			clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
+
 	}
 	return 0;
 }

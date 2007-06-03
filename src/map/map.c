@@ -1944,7 +1944,7 @@ void map_removenpc(void)
 	for(m=0;m<map_num;m++) {
 		for(i=0;i<map[m].npc_num && i<MAX_NPC_PER_MAP;i++) {
 			if(map[m].npc[i]!=NULL) {
-				clif_clearchar_area(&map[m].npc[i]->bl,2);
+				clif_clearunit_area(&map[m].npc[i]->bl,2);
 				map_delblock(&map[m].npc[i]->bl);
 				idb_remove(id_db,map[m].npc[i]->bl.id);
 				if(map[m].npc[i]->bl.subtype==SCRIPT) {

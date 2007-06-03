@@ -745,7 +745,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 		unit_stop_attack(target);
 		unit_stop_walking(target,0);
 		unit_skillcastcancel(target,0);
-		clif_clearchar_area(target,1);
+		clif_clearunit_area(target,1);
 		skill_unit_move(target,gettick(),4);
 		skill_cleartimerskill(target);
 	}
@@ -5285,7 +5285,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_TENSIONRELAX:
 			if (sd) {
 				pc_setsit(sd);
-				clif_sitting(sd);
+				clif_sitting(sd, AREA);
 			}
 			val2 = 12; //SP cost
 			val4 = 10000; //Decrease at 10secs intervals.

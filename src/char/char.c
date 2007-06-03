@@ -3007,7 +3007,7 @@ int parse_frommap(int fd)
 			RFIFOSKIP(fd, 86);
 		break;
 
-		case 0x2b0e: // Request from map-server to change a char's status (all operations are transmitted to login-server)
+		case 0x2b0e: // Request from map-server to change an account's status (all operations are transmitted to login-server)
 			if (RFIFOREST(fd) < 44)
 				return 0;
 		{

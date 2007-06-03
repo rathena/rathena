@@ -237,22 +237,23 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 	nullpo_retr(0, src_bl = va_arg(ap,struct block_list*));
 	type = va_arg(ap,int);
 
-	switch(type) {
+	switch(type)
+	{
 	case AREA_WOS:
 		if (bl == src_bl)
 			return 0;
-		break;
+	break;
 	case AREA_WOC:
 		if (sd->chatID || bl == src_bl)
 			return 0;
-		break;
+	break;
 	case AREA_WOSC:
-		{
-			struct map_session_data *ssd = (struct map_session_data *)src_bl;
-			if (ssd && (src_bl->type == BL_PC) && sd->chatID && (sd->chatID == ssd->chatID))
-				return 0;
-		}
-		break;
+	{
+		struct map_session_data *ssd = (struct map_session_data *)src_bl;
+		if (ssd && (src_bl->type == BL_PC) && sd->chatID && (sd->chatID == ssd->chatID))
+			return 0;
+	}
+	break;
 	}
 
 	if (session[fd] != NULL) {
@@ -277,7 +278,7 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 /*==========================================
  *
  *------------------------------------------*/
-int clif_send (const unsigned char *buf, int len, struct block_list *bl, int type)
+int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target type)
 {
 	int i;
 	struct map_session_data *sd = NULL;
@@ -665,9 +666,33 @@ int clif_clearflooritem(struct flooritem_data *fitem, int fd)
 }
 
 /*==========================================
- *
+ * make a unit (char, npc, mob, homun) disappear to one client
+ * id  : the id of the unit
+ * type: 0 - moved out of sight
+ *       1 - died
+ *       2 - logged out
+ *       3 - teleported / winged away
+ * fd  : the target client
  *------------------------------------------*/
-int clif_clearchar(struct block_list *bl, int type)
+int clif_clearunit_single(int id, uint8 type, int fd)
+{
+	WFIFOHEAD(fd, packet_len(0x80));
+	WFIFOW(fd,0) = 0x80;
+	WFIFOL(fd,2) = id;
+	WFIFOB(fd,6) = type;
+	WFIFOSET(fd, packet_len(0x80));
+
+	return 0;
+}
+
+/*==========================================
+ * make a unit (char, npc, mob, homun) disappear to all clients in area
+ * type: 0 - moved out of sight
+ *       1 - died
+ *       2 - logged out
+ *       3 - teleported / winged away
+ *------------------------------------------*/
+int clif_clearunit_area(struct block_list* bl, uint8 type)
 {
 	unsigned char buf[16];
 
@@ -678,6 +703,7 @@ int clif_clearchar(struct block_list *bl, int type)
 	WBUFB(buf,6) = type;
 
 	clif_send(buf, packet_len(0x80), bl, type == 1 ? AREA : AREA_WOS);
+
 	if(disguised(bl)) {
 		WBUFL(buf,2) = -bl->id;
 		clif_send(buf, packet_len(0x80), bl, SELF);
@@ -686,36 +712,20 @@ int clif_clearchar(struct block_list *bl, int type)
 	return 0;
 }
 
-static int clif_clearchar_delay_sub(int tid, unsigned int tick, int id, int data)
+static int clif_clearunit_delayed_sub(int tid, unsigned int tick, int id, int data)
 {
 	struct block_list *bl = (struct block_list *)id;
-
-	clif_clearchar(bl,data);
+	clif_clearunit_area(bl, 0);
 	aFree(bl);
 	return 0;
 }
 
-int clif_clearchar_delay(unsigned int tick, struct block_list *bl, int type)
+int clif_clearunit_delayed(struct block_list* bl, unsigned int tick)
 {
 	struct block_list *tbl;
 	tbl = aMalloc(sizeof (struct block_list));
 	memcpy (tbl, bl, sizeof (struct block_list));
-	add_timer(tick, clif_clearchar_delay_sub, (int)tbl, type);
-
-	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-int clif_clearchar_id(int id, int type, int fd)
-{
-	WFIFOHEAD(fd, packet_len(0x80));
-	WFIFOW(fd,0) = 0x80;
-	WFIFOL(fd,2) = id;
-	WFIFOB(fd,6) = (char)type; // Why use int for a char in the first place?
-	WFIFOSET(fd, packet_len(0x80));
-
+	add_timer(tick, clif_clearunit_delayed_sub, (int)tbl, 0);
 	return 0;
 }
 
@@ -4070,7 +4080,7 @@ int clif_outsight(struct block_list *bl,va_list ap)
 		switch(bl->type){
 		case BL_PC:
 			if (((TBL_PC*)bl)->vd.class_ != INVISIBLE_CLASS)
-				clif_clearchar_id(bl->id,0,tsd->fd);
+				clif_clearunit_single(bl->id,0,tsd->fd);
 			if(sd->chatID){
 				struct chat_data *cd;
 				cd=(struct chat_data*)map_id2bl(sd->chatID);
@@ -4088,14 +4098,14 @@ int clif_outsight(struct block_list *bl,va_list ap)
 			break;
 		default:
 			if ((vd=status_get_viewdata(bl)) && vd->class_ != INVISIBLE_CLASS)
-				clif_clearchar_id(bl->id,0,tsd->fd);
+				clif_clearunit_single(bl->id,0,tsd->fd);
 			break;
 		}
 	}
 	if (sd && sd->fd)
 	{	//sd is watching tbl go out of view.
 		if ((vd=status_get_viewdata(tbl)) && vd->class_ != INVISIBLE_CLASS)
-			clif_clearchar_id(tbl->id,0,sd->fd);
+			clif_clearunit_single(tbl->id,0,sd->fd);
 	}
 	return 0;
 }
@@ -7235,18 +7245,33 @@ void clif_parse_ReqMarriage(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * À‚é
+ * inform target(s) that `sd` is sitting
  *------------------------------------------*/
-void clif_sitting(struct map_session_data *sd)
+void clif_sitting(struct map_session_data* sd, enum send_target target)
 {
-	unsigned char buf[64];
+	unsigned char buf[32];
 
 	nullpo_retv(sd);
 
 	WBUFW(buf, 0) = 0x8a;
 	WBUFL(buf, 2) = sd->bl.id;
 	WBUFB(buf,26) = 2;
-	clif_send(buf, packet_len(0x8a), &sd->bl, AREA);
+	clif_send(buf, packet_len(0x8a), &sd->bl, target);
+}
+
+/*==========================================
+ * inform target(s) that `sd` is standing
+ *------------------------------------------*/
+void clif_standing(struct map_session_data* sd, enum send_target target)
+{
+	unsigned char buf[32];
+
+	nullpo_retv(sd);
+
+	WBUFW(buf, 0) = 0x8a;
+	WBUFL(buf, 2) = sd->bl.id;
+	WBUFB(buf,26) = 3;
+	clif_send(buf, packet_len(0x8a), &sd->bl, target);
 }
 
 /*==========================================
@@ -7269,14 +7294,14 @@ int clif_disp_onlyself(struct map_session_data *sd, const char *mes, int len)
 /*==========================================
  * Displays a message using the guild-chat colors to the specified targets. [Skotlex]
  *------------------------------------------*/
-void clif_disp_message(struct block_list* src, const char* mes, int len, int type)
+void clif_disp_message(struct block_list* src, const char* mes, int len, enum send_target target)
 {
 	unsigned char buf[1024];
 	if (!len) return;
 	WBUFW(buf, 0) = 0x17f;
 	WBUFW(buf, 2) = len + 5;
 	memcpy(WBUFP(buf,4), mes, len);
-	clif_send(buf, WBUFW(buf,2), src, type);
+	clif_send(buf, WBUFW(buf,2), src, target);
 	return;
 }
 
@@ -8181,7 +8206,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
   	// If player is dead, and is spawned (such as @refresh) send death packet. [Valaris]
 	if(pc_isdead(sd))
-		clif_clearchar_area(&sd->bl,1);
+		clif_clearunit_area(&sd->bl, 1);
 // Uncomment if you want to make player face in the same direction he was facing right before warping. [Skotlex]
 //	else
 //		clif_changed_dir(&sd->bl, SELF);
@@ -8216,7 +8241,7 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 	int cmd;
 
 	if (pc_isdead(sd)) {
-		clif_clearchar_area(&sd->bl, 1);
+		clif_clearunit_area(&sd->bl, 1);
 		return;
 	}
 
@@ -8639,9 +8664,8 @@ void clif_parse_HowManyConnections(int fd, struct map_session_data *sd)
 
 void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, int target_id, unsigned int tick)
 {
-	unsigned char buf[64];
 	if (pc_isdead(sd)) {
-		clif_clearchar_area(&sd->bl, 1);
+		clif_clearunit_area(&sd->bl, 1);
 		return;
 	}
 
@@ -8657,7 +8681,8 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 	if(target_id<0 && -target_id == sd->bl.id) // for disguises [Valaris]
 		target_id = sd->bl.id;
 
-	switch(action_type) {
+	switch(action_type)
+	{
 	case 0x00: // once attack
 	case 0x07: // continuous attack
 
@@ -8677,7 +8702,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		pc_delinvincibletimer(sd);
 		sd->idletime = last_tick;
 		unit_attack(&sd->bl, target_id, action_type != 0);
-		break;
+	break;
 	case 0x02: // sitdown
 		if (battle_config.basic_skill_check && pc_checkskill(sd, NV_BASIC) < 3) {
 			clif_skill_fail(sd, 1, 0, 2);
@@ -8685,10 +8710,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		}
 		if(pc_issit(sd)) {
 			//Bugged client? Just refresh them.
-			WBUFW(buf, 0) = 0x8a;
-			WBUFL(buf, 2) = sd->bl.id;
-			WBUFB(buf,26) = 2;
-			clif_send(buf, packet_len(0x8a), &sd->bl, SELF);
+			clif_sitting(sd, SELF);
 			return;
 		}
 
@@ -8702,24 +8724,18 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		break;
 		pc_setsit(sd);
 		skill_sit(sd, 1);
-		clif_sitting(sd);
-		break;
+		clif_sitting(sd, AREA);
+	break;
 	case 0x03: // standup
 		if (!pc_issit(sd)) {
 			//Bugged client? Just refresh them.
-			WBUFW(buf, 0) = 0x8a;
-			WBUFL(buf, 2) = sd->bl.id;
-			WBUFB(buf,26) = 3;
-			clif_send(buf, packet_len(0x8a), &sd->bl, SELF);
+			clif_standing(sd, SELF);
 			return;
 		}
 		pc_setstand(sd);
 		skill_sit(sd, 0); 
-		WBUFW(buf, 0) = 0x8a;
-		WBUFL(buf, 2) = sd->bl.id;
-		WBUFB(buf,26) = 3;
-		clif_send(buf, packet_len(0x8a), &sd->bl, AREA);
-		break;
+		clif_standing(sd, AREA);
+	break;
 	}
 }
 
@@ -8746,9 +8762,8 @@ void clif_parse_Restart(int fd, struct map_session_data *sd)
 			break;
 		pc_setstand(sd);
 		pc_setrestartvalue(sd, 3);
-		//If warping fails, send a normal stand up packet.
 		if (pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 2))
-			clif_resurrection(&sd->bl, 1);
+			clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
 		break;
 	case 0x01:
 		/*	Rovert's Prevent logout option - Fixed [Valaris]	*/
@@ -8985,7 +9000,7 @@ void clif_parse_TakeItem(int fd, struct map_session_data *sd)
 
 	do {
 		if (pc_isdead(sd)) {
-			clif_clearchar_area(&sd->bl, 1);
+			clif_clearunit_area(&sd->bl, 1);
 			break;
 		}
 
@@ -9022,7 +9037,7 @@ void clif_parse_DropItem(int fd, struct map_session_data *sd)
 	int item_index, item_amount;
 
 	if (pc_isdead(sd)) {
-		clif_clearchar_area(&sd->bl, 1);
+		clif_clearunit_area(&sd->bl, 1);
 		return;
 	}
 
@@ -9052,7 +9067,7 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd)
 	int n;
 
 	if (pc_isdead(sd)) {
-		clif_clearchar_area(&sd->bl, 1);
+		clif_clearunit_area(&sd->bl, 1);
 		return;
 	}
 
@@ -9087,7 +9102,7 @@ void clif_parse_EquipItem(int fd,struct map_session_data *sd)
 	int index;
 
 	if(pc_isdead(sd)) {
-		clif_clearchar_area(&sd->bl,1);
+		clif_clearunit_area(&sd->bl,1);
 		return;
 	}
 	index = RFIFOW(fd,2)-2; 
@@ -9133,7 +9148,7 @@ void clif_parse_UnequipItem(int fd,struct map_session_data *sd)
 	int index;
 
 	if(pc_isdead(sd)) {
-		clif_clearchar_area(&sd->bl,1);
+		clif_clearunit_area(&sd->bl,1);
 		return;
 	}
 
@@ -9155,7 +9170,7 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 	struct block_list *bl;
 
 	if(pc_isdead(sd)) {
-		clif_clearchar_area(&sd->bl,1);
+		clif_clearunit_area(&sd->bl,1);
 		return;
 	}
 
@@ -12082,7 +12097,7 @@ int do_init_clif(void)
 	}
 
 	add_timer_func_list(clif_waitclose, "clif_waitclose");
-	add_timer_func_list(clif_clearchar_delay_sub, "clif_clearchar_delay_sub");
+	add_timer_func_list(clif_clearunit_delayed_sub, "clif_clearunit_delayed_sub");
 	add_timer_func_list(clif_delayquit, "clif_delayquit");
 	return 0;
 }

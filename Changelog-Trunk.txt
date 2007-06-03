@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/06/03
+	* Fixed a bad copy-paste from r10028 letting players escape jail
+          (char was dead on login, so statuses (SC_JAILED) couln't be applied)
+	* Fixed missing client update when 'return to savepoint' fails [ultramage]
 2007/06/02
 	* Displaying op names instead of numbers in script engine errors.
 	* Fixed a bug introduced in the last rework of the fame ranking.

@@ -3003,7 +3003,7 @@ void run_script_main(struct script_state *st)
 		if (sd)
 		{	//Restore previous stack and save char.
 			if(sd->state.using_fake_npc){
-				clif_clearchar_id(sd->npc_id, 0, sd->fd);
+				clif_clearunit_single(sd->npc_id, 0, sd->fd);
 				sd->state.using_fake_npc = 0;
 			}
 			//Restore previous script if any.
