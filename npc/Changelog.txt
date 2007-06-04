@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/06/04
+	* Added missing OnTouch to Prontera "Guild Treasure room guard" [Lupus]
 2007/06/03
 	* Rev. 10669 Updated 2006 headgear quests to semi-official dialog. [L0ne_W0lf]
 	* Various updates to the various guild Castle scripts. [L0ne_W0lf[

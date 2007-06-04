@@ -96,6 +96,5 @@ function	script	F_GldTreasSw	{
 //  Treasure Room Protrection
 //===============================================================
 function	script	F_TreasProtect	{
-	set @GID, GetCastleData(getarg(0),1);
-	if (strcharinfo(0) != getguildmaster(@GID)) warp getarg(1),getarg(2),getarg(3);
+	if (strcharinfo(0) != getguildmaster( GetCastleData(getarg(0),1) )) warp getarg(1),getarg(2),getarg(3);
 }
