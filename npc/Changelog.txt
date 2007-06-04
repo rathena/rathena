@@ -1,5 +1,13 @@
 Date		Added
 ======
+2007/06/03
+	* Rev. 10669 Updated 2006 headgear quests to semi-official dialog. [L0ne_W0lf]
+	* Various updates to the various guild Castle scripts. [L0ne_W0lf[
+	- Added Guild Master Room protection. Further security so only the master of the current castle can enter the treasure room.
+	- Updated Guild Castle Flags  again. Updated remaining dialogs to official.
+	- Updated a couple announces for when the Emperium breaks. Both are now up to par with iRO.
+	- Moved nguild to the events folder and commented it out, as it was a kRO event that was used twice. Updated .confs to reflect this change.
+	* Added the first class skill resetter into Prontera. She resets players under base level 40 who are first or expanded class. [L0ne_W0lf[
 2007/06/01
 	* Rev. 10666 Updated Knight Peco, Crusader Peco, and Falcon breeders to Aegis 10.3 standards. [L0ne_W0lf]
 	* Rev. 10664 Removed Ktullanux spawn, since the quest is implemented now. [L0ne_W0lf]

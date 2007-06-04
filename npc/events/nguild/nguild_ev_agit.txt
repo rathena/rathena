@@ -1,0 +1,119 @@
+//===== eAthena Script =======================================
+//= War of Emperium - NGuild Wars Events
+//===== By: ==================================================
+//= kobra_k88
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= eAthena 0.1+; RO Episode 4+
+//===== Description: =========================================
+//= Event Triggers for NGuild Wars
+//===== Additional Comments: =================================
+// Based off existing guild scripts.  Do not know if it is accurate.[kobra_k88]
+//= 1.3 Added code for abandoning captured castles on /breakguild [Lupus]
+//============================================================
+
+
+// Castle 1 ================================================================
+nguild_alde,0,0,0	script	Agit_N01	-1,{
+OnInterIfInitOnce:
+	GetCastleData "nguild_alde",0,"::OnRecvCastleN01";
+	end;
+OnRecvCastleN01:
+	RequestGuildInfo GetCastleData("nguild_alde",1);
+	end;
+OnAgitStart:
+	callfunc "F_AgitStart","nguild_alde","N01",216,24;
+	end;
+OnAgitBreak:
+	callfunc "F_AgitBreak","nguild_alde","N01";
+	end;
+OnGuildBreak:
+	callfunc "F_GuildBreak","nguild_alde","N01";
+	end;
+OnAgitEliminate:
+	MapRespawnGuildID "nguild_alde",GetCastleData("nguild_alde",1),6;
+	Monster "nguild_alde",216,24,"EMPERIUM",1288,1,"Agit_N01::OnAgitBreak";
+	end;
+OnAgitEnd:
+	callfunc "F_AgitEnd","nguild_alde","N01";
+	end;
+}
+
+// Castle 2 ================================================================
+nguild_gef,0,0,0	script	Agit_N02	-1,{
+OnInterIfInitOnce:
+	GetCastleData "nguild_gef",0,"::OnRecvCastleN02";
+	end;
+OnRecvCastleN02:
+	RequestGuildInfo GetCastleData("nguild_gef",1);
+	end;
+OnAgitStart:
+	callfunc "F_AgitStart","nguild_gef","N02",198,182;
+	end;
+OnAgitBreak:
+	callfunc "F_AgitBreak","nguild_gef","N02";
+	end;
+OnGuildBreak:
+	callfunc "F_GuildBreak","nguild_gef","N02";
+	end;
+OnAgitEliminate:
+	MapRespawnGuildID "nguild_gef",GetCastleData("nguild_gef",1),6;
+	Monster "nguild_gef",198,182,"EMPERIUM",1288,1,"Agit_N02::OnAgitBreak";
+	end;
+OnAgitEnd:
+	callfunc "F_AgitEnd","nguild_gef","N02";
+	end;
+}
+
+// Castle 3 ================================================================
+nguild_pay,0,0,0	script	Agit_N03	-1,{
+OnInterIfInitOnce:
+	GetCastleData "nguild_pay",0,"::OnRecvCastleN03";
+	end;
+OnRecvCastleN03:
+	RequestGuildInfo GetCastleData("nguild_pay",1);
+	end;
+OnAgitStart:
+	callfunc "F_AgitStart","nguild_pay","N03",139,139;
+	end;
+OnAgitBreak:
+	callfunc "F_AgitBreak","nguild_pay","N03";
+	end;
+OnGuildBreak:
+	callfunc "F_GuildBreak","nguild_pay","N03";
+	end;
+OnAgitEliminate:
+	MapRespawnGuildID "nguild_pay",GetCastleData("nguild_pay",1),6;
+	Monster "nguild_pay",139,139,"EMPERIUM",1288,1,"Agit_N03::OnAgitBreak";
+	end;
+OnAgitEnd:
+	callfunc "F_AgitEnd","nguild_pay","N03";
+	end;
+}
+
+// Castle 4 ================================================================
+nguild_prt,0,0,0	script	Agit_N04	-1,{
+OnInterIfInitOnce:
+	GetCastleData "nguild_prt",0,"::OnRecvCastleN04";
+	end;
+OnRecvCastleN04:
+	RequestGuildInfo GetCastleData("nguild_prt",1);
+	end;
+OnAgitStart:
+	callfunc "F_AgitStart","nguild_prt","N04",197,197;
+	end;
+OnAgitBreak:
+	callfunc "F_AgitBreak","nguild_prt","N04";
+	end;
+OnGuildBreak:
+	callfunc "F_GuildBreak","nguild_prt","N04";
+	end;
+OnAgitEliminate:
+	MapRespawnGuildID "nguild_prt",GetCastleData("nguild_prt",1),6;
+	Monster "nguild_prt",197,197,"EMPERIUM",1288,1,"Agit_N04::OnAgitBreak";
+	end;
+OnAgitEnd:
+	callfunc "F_AgitEnd","nguild_prt","N04";
+	end;
+}

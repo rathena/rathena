@@ -39,6 +39,12 @@ prtg_cas01,15,209,0	script	Switch#TresPt01	111,{
 	end;
 }
 
+// Treasure Room Protection ------------------------------------------------
+prtg_cas01,11,208,0	script	ban_warp#1	-1,6,6,{
+OnTouch:
+	callfunc "F_TreasProtect", "prtg_cas01", "prontera",109,179;
+	end;
+}
 
 //<================================= Castle 2 ===============================>\\
 
@@ -65,6 +71,12 @@ prtg_cas02,207,228,0	script	Switch#TresPt02	111,{
 	end;
 }
 
+// Treasure Room Protection ------------------------------------------------
+prtg_cas02,202,228,0	script	ban_warp#2	-1,6,6,{
+OnTouch:
+	callfunc "F_TreasProtect", "prtg_cas02", "prontera",109,179;
+	end;
+}
 
 //<================================ Castle 3 ================================>\\
 
@@ -91,6 +103,11 @@ prtg_cas03,193,130,0	script	Switch#TresPt03	111,{
 	end;
 }
 
+// Treasure Room Protection ------------------------------------------------
+prtg_cas03,189,132,0	script	ban_warp#3	-1,6,6,{
+	callfunc "F_TreasProtect", "prtg_cas03", "prontera",109,179;
+	end;
+}
 
 //<================================ Castle 4 ================================>\\
 
@@ -117,6 +134,12 @@ prtg_cas04,275,160,0	script	Switch#TresPt04	111,{
 	end;
 }
 
+// Treasure Room Protection ------------------------------------------------
+prtg_cas04,271,162,0	script	ban_warp#4	-1,6,6,{
+OnTouch:
+	callfunc "F_TreasProtect", "prtg_cas04", "prontera",109,179;
+	end;
+}
 
 //<================================ Castle 5 ================================>\\
 
@@ -140,5 +163,12 @@ OnDied:
 // Treasure Room Switch ----------------------------------------------------
 prtg_cas05,281,176,0	script	Switch#TresPt05	111,{
 	callfunc "F_GldTreasSw", "prtg_cas05",34,30;
+	end;
+}
+
+// Treasure Room Protection ------------------------------------------------
+prtg_cas05,276,178,0	script	ban_warp#5	-1,6,6,{
+OnTouch:
+	callfunc "F_TreasProtect", "prtg_cas05", "prontera",109,179;
 	end;
 }

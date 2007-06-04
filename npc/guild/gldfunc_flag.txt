@@ -4,7 +4,7 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -23,6 +23,7 @@
 //= v1.3: Can now only flag in from outside the castle [Kayla]
 //= v1.3a: Implemented k3dt's exploit fix [Vicious]
 //= v1.4: By default town flags are set to no longer show text. [L0ne_W0lf]
+//= v1.5: Updated remaining dialog to iRO standards. [L0ne_W0lf]
 //============================================================
 
 function	script	F_Flags	{
@@ -32,11 +33,17 @@ function	script	F_Flags	{
 	set @GID, GetCastleData(getarg(1),1);
 	if (@GID != 0) goto L_Startg;
 
-	mes "[ Edict of the Divine Rune Midgard Kingdom of ]";
+	mes " [ Edict of the Divine Rune Midgard Kingdom ]";
 	mes " ";
-	mes "1. Honoring the ordinance of the Divine Rune Midgard Kingdom of " + getarg(0) + ", this guild base has not been taken by any guild yet";
+	mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+	mes "We declare that";
+	mes "there is no formal master of this castle.";
 	mes " ";
-	mes "2. In order to take this guild base, you must defeat all the guardians that are protecting the guild base and eliminate the Emperium.";
+	mes "2. To the one who can ";
+	mes "overcome all trials";
+	mes "and destroy the Emperium,";
+	mes "the king will endow the one with";
+	mes "ownership of this castle.";
 	return;
 L_Startg:
 	if ((getcharid(2) == @GID) && (getarg(4) == 1)) goto L_Startg2;
@@ -45,18 +52,18 @@ L_Startg:
 	mes "1. Following the ordinance of the";
 	mes "Divine Rune Midgard Kingdom,";
 	mes "we approve that this place is in";
-	mes "private possession of ^ff0000" + GetGuildName(@GID) + "^000000 Guild.";
+	mes "the private possession of ^ff0000" + GetGuildName(@GID) + "^000000 Guild.";
 	mes " ";
 	mes "2. The guild Master of ^ff0000"+ GetGuildName(@GID) + "^000000 Guild is";
-	mes "^0000FF" + GetGuildMaster(@GID) + "^000000";
+	mes "^FF0000" + GetGuildMaster(@GID) + "^000000";
 	mes "If there is anyone who objects to this,";
 	mes " prove your strength and honor with a steel blade in your hand.";
 	return;
 L_Startg2:
-	mes "[ Ringing Voice ]";
-	mes "Brave one... would you return to your honorable be?";
+	mes "Brave ones...";
+	mes "Do you wish to return to your honorable place?";
 	next;
-	menu "Return.",M_Enter,"Cancel.",-;
+	menu "Return to the guild castle.",M_Enter,"Quit.",-;
 	return;
 
 	M_Enter:

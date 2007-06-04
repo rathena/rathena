@@ -4,7 +4,7 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.3a
+//= 1.4
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -26,6 +26,7 @@
 //= v1.2a: Added OnAgitEnd function.[kobra_k88]
 //= 1.3 Added code for abandoning captured castles on /breakguild [Lupus]
 //= 1.3a fixed Defence / Economy underflow [Lupus] thanks2 kyoki
+//= 1.4 updated a couple mapannounces in OnAgitBreak. [L0ne_W0lf]
 //============================================================
 
 
@@ -138,8 +139,8 @@ function	script	F_AgitBreak	{
 	SetCastleData getarg(0),3, @Defence;
 
 	SetCastleData getarg(0),1, @GID;
-	MapAnnounce getarg(0),"The emperium has been destroyed.",17;
-	Announce "Guild Base [" + GetCastleName(getarg(0)) + "] has been taken by the [" + GetGuildName(@GID) + "] guild.",0;
+	MapAnnounce getarg(0),"The emperium has been destroyed.",bc_map,0x00CCFF;
+	Announce "The [" + GetCastleName(getarg(0)) + "] castle has been conquered by the [" + GetGuildName(@GID) + "] guild.",bc_map;
 	GetCastleData getarg(0),0,"::OnRecvCastle"+getarg(1);
 
 	disablenpc "Kafra Service#"+getarg(1);

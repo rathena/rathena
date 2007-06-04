@@ -3,12 +3,13 @@
 //===== By: ==================================================
 //= holyAngelX (1.0) Akaru and ho|yAnge|X (1.1)
 //===== Current Version: =====================================
-//= 1.8
+//= 1.9
 //===== Compatible With: =====================================
 //= eAthena 1+; RO Episode 4+
 //===== Description: =========================================
 //= F_GldTreas spawns treasure chests used by the guild master.
 //= F_GldTreasSw allows the player to get out of the treasure room.
+//= F_TreasProtect removes non-guild master players from treasure room.
 //==============================================
 //= Break down of arguments used in the F_GldTreas:
 //=   arg(0): name of guild castle
@@ -26,6 +27,12 @@
 //=   arg(0): name of guild castle.
 //=   arg(1): x1 coordinate for warp back to guild castle
 //=   arg(2): y1 coordinate for warp back to guild castle
+//
+//= Break down of arguments used in the F_TreasProtect:
+//=   arg(0): name of guild castle.
+//=   arg(1): name of warp-to city 
+//=   arg(2): x1 coordinate for warp-to city
+//=   arg(3): y1 coordinate for warp-to city
 //===== Additional Comments: =================================
 //= 1.2 Treasure room Spawn, and Treasure room Switch scripts now use these functions.[kobra_k88]
 //= 1.2a Function now returns to script that called it.  Removed TreasureSpawn2.
@@ -38,6 +45,7 @@
 //= 1.6 to Aegis X.2 formula 4..24 Treasure Chests [Lupus]
 //= 1.7 Box Count fix by Zoc. Now it spawns 1st/2nd Treasure Chest 50%/50% [Lupus]
 //= 1.8 Official Treasure Spawn in Novice Castles. Had to add +1 in odd/even formula to leave correct ID of NG Treasure Box 8) [Lupus]
+//= 1.9 Added F_TreasProtect to remove players who are not guild master from treasure room. [L0ne_W0lf]
 //============================================================
 
 
@@ -82,4 +90,12 @@ function	script	F_GldTreasSw	{
 	M_1:
 		warp getarg(0),getarg(1),getarg(2);
 		return;
+}
+
+//==============================================================
+//  Treasure Room Protrection
+//===============================================================
+function	script	F_TreasProtect	{
+	set @GID, GetCastleData(getarg(0),1);
+	if (strcharinfo(0) != getguildmaster(@GID)) warp getarg(1),getarg(2),getarg(3);
 }
