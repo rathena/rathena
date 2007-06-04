@@ -5616,20 +5616,19 @@ ra_temin,170,46,3	script	Panno#rachel	920,{
 					set .@bonus_donate,rand(100);
 					if (.@bonus_donate == 99) {
 						set .@bonus_donate2,rand(100);
-						if (.@bonus_donate2 > 0 && .@bonus_donate2 < 11) getitem 616,1;		//Old Card Album - 0.1%
-						else if (.@bonus_donate2 > 10 && .@bonus_donate2 < 31) getitem 617,1;	//Old_Violet_Box - 0.2%
-						else if (.@bonus_donate2 > 30 && .@bonus_donate2 < 61) getitem 603,1;	//Old_Blue_Box - 0.3%
-						else
- getitem 607,1; //Yggdrasilberry - +0.4%
+						if (.@bonus_donate2 > 0 && .@bonus_donate2 < 11) getitem 616,1;		//Old Card Album 0.1%
+						else if (.@bonus_donate2 > 10 && .@bonus_donate2 < 31) getitem 617,1;	//Old Violet Box 0.2%
+						else if (.@bonus_donate2 > 30 && .@bonus_donate2 < 61) getitem 603,1;	//Old Blue Box 0.3%
+						else getitem 607,1; //Yggdrasil Berry 0.4%
 					}
-					else if (.@bonus_donate > 88 && .@bonus_donate < 96) getitem 644,1;	//Gift Box
-					else if (.@bonus_donate > 76 && .@bonus_donate < 89) getitem 607,1;	//Yggdrasil Berry
-					else if (.@bonus_donate > 65 && .@bonus_donate < 77) getitem 505,1;	//Blue Potion
-					else if (.@bonus_donate > 57 && .@bonus_donate < 66) getitem 604,1;	//Dead Branch
-					else if (.@bonus_donate > 45 && .@bonus_donate < 58) getitem 608,1;	//Yggdrasil Seed
-					else if (.@bonus_donate > 5 && .@bonus_donate < 11) getitem 518,1;	//Honey
-					else if (.@bonus_donate > 0 && .@bonus_donate < 6) getitem 526,1;	//Royal Jelly 
-					else getitem 547,1; //White Condensed Potion 39%
+					else if (.@bonus_donate > 88 && .@bonus_donate < 96) getitem 644,1;	//Gift Box 7%
+					else if (.@bonus_donate > 76 && .@bonus_donate < 89) getitem 607,1;	//Yggdrasil Berry 12%
+					else if (.@bonus_donate > 65 && .@bonus_donate < 77) getitem 505,1;	//Blue Potion 11%
+					else if (.@bonus_donate > 57 && .@bonus_donate < 66) getitem 604,1;	//Dead Branch 8%
+					else if (.@bonus_donate > 45 && .@bonus_donate < 58) getitem 608,1;	//Yggdrasil Seed 12%
+					else if (.@bonus_donate > 5 && .@bonus_donate < 11) getitem 518,1;	//Honey 5%
+					else if (.@bonus_donate > 0 && .@bonus_donate < 6) getitem 526,1;	//Royal Jelly 5%
+					else getitem 547,1; //Condensed White Potion 39%
 					goto L_End;
 				}
 

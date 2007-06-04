@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/06/04
+	* Cleaned up Rachel donation prizes a bit [Playtester]
 	* Added 11.2 guns to gunslinger shop [Playtester]
 	* Reverted Bullet Dealer Tony to Stable [Playtester]
 	- current version was bugged and no one fixed it
