@@ -84,7 +84,7 @@ comodo,226,123,5	script	Wandering Bard	741,{
 		else {
 			cutin "job_bard_aiolo01",2;
 			mes "[Lalo]";
-			mes "Lalala, lalala. Beautif ul Comodo.";
+			mes "Lalala, lalala. Beautiful Comodo.";
 			mes "Always full of happy moments~";
 			next;
 			mes "[Lalo]";

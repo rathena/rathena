@@ -1,11 +1,11 @@
-//===== Freya Script =========================================
+//===== eAthena Script ======================================= 
 //= Refining NPCs
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
 //= 2.1
 //===== Compatible With: =====================================
-//= Any Freya Version
+//= Any Athena Version
 //===== Description: =========================================
 //= Refining NPCs and Metal Salesmen.
 //===== Additional Comments: =================================
