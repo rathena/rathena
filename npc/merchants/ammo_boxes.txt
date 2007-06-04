@@ -1,5 +1,5 @@
 //===== eAthena Script =======================================
-//= Casing Pack Dealer Kenny
+//= Magazine Dealer Kenny
 //===== By: ==================================================
 //= eAthena dev team
 //===== Current Version: =====================================

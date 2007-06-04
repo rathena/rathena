@@ -1,5 +1,5 @@
 //===== Athena Script ========================================
-//= Bullet Dealer, Tony
+//= Bullet Dealer Tony
 //===== By ===================================================
 //= Playtester, Paradox924X
 //===== Version ==============================================
@@ -14,7 +14,8 @@
 //============================================================
 
 que_ng,187,156,3	script	Bullet Dealer Tony	86,{
-	if (BaseJob == JOB_GUNSLINGER) {
+
+	if (BaseJob == Job_Gunslinger) {
 		mes "[Tony]";
 		mes "I'm Bullet-tooth Tony!";
 		mes "Whenever your out of bullets,";
