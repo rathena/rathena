@@ -66,6 +66,7 @@ auction_02	mapflag	nobranch
 p_track01	mapflag	nobranch
 p_track02	mapflag	nobranch
 ra_in01	mapflag	nobranch
+ra_temin	mapflag	nobranch
 ra_temple	mapflag	nobranch
 ra_temsky	mapflag	nobranch
 ve_in	mapflag	nobranch
