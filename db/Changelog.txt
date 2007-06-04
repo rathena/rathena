@@ -48,6 +48,9 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+06/04
+	* Updated 11.2 gun prices [Playtester]
+	- also updated sql files
 05/31
 	* Fixed some 11.3 equips [Playtester]
 	* Some small item fixes [Playtester]

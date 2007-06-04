@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/06/04
+	* Added 11.2 guns to gunslinger shop [Playtester]
 	* Reverted Bullet Dealer Tony to Stable [Playtester]
 	- current version was bugged and no one fixed it
 	* Added missing OnTouch to Prontera "Guild Treasure room guard" [Lupus]

@@ -111,7 +111,7 @@ einbroch,138,66,3	shop	Head Gear Dealer	850,5114:-1,2218:-1
 einbroch,82,199,3	shop	Paddler	855,512:-1,645:-1,1750:-1,501:-1
 einbroch,224,207,5	shop	Chef Assistant	83,7457:-1
 //Official Gunslingers shops.
-que_ng,179,91,3	shop	Chivas Regal	900,13150:-1,13102:-1,13151:-1,13154:-1,13155:-1
+que_ng,179,91,3	shop	Chivas Regal	900,13150:-1,13102:-1,13151:-1,13154:-1,13155:-1,13163:-1,13165:-1,13168:-1
 que_ng,180,79,3	shop	Johnny Walker	900,13200:-1,13201:-1,13202:-1
 
 //=======================================================
