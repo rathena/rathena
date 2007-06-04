@@ -321,7 +321,6 @@ int clif_pet_emotion(struct pet_data *pd,int param);
 int clif_pet_performance(struct block_list *bl,int param);
 int clif_pet_equip(struct pet_data *pd);
 int clif_pet_food(struct map_session_data *sd,int foodid,int fail);
-int clif_send(const unsigned char *buf, int len, struct block_list *bl, int type);
 
 //friends list
 int clif_friendslist_toggle_sub(struct map_session_data *sd,va_list ap);
@@ -339,11 +338,7 @@ int clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd,int ty
 int clif_GM_silence(struct map_session_data *sd,struct map_session_data *tsd,int type);
 int clif_timedout(struct map_session_data *sd);
 
-int clif_foreachclient(int (*)(struct map_session_data*,va_list),...);
 int clif_disp_overhead(struct map_session_data *sd, const char* mes);
-
-int do_final_clif(void);
-int do_init_clif(void);
 
 void clif_get_weapon_view(TBL_PC* sd, unsigned short *rhand, unsigned short *lhand);
 
@@ -363,5 +358,11 @@ void clif_homskillup(struct map_session_data *sd, int skill_num) ;	//[orn]
 int clif_hom_food(struct map_session_data *sd,int foodid,int fail);	//[orn]
 void clif_send_homdata(struct map_session_data *sd, int type, int param);	//[orn]
 int clif_hwalkok(struct homun_data *hd);	//[orn]
+
+int clif_foreachclient(int (*)(struct map_session_data*,va_list),...);
+int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target type);
+int do_final_clif(void);
+int do_init_clif(void);
+
 
 #endif /* _CLIF_H_ */
