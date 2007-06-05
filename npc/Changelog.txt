@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/06/05
+	* Fixed a bug in Thanatos Tower quest. [SinSloth]
 2007/06/04
 	* Updated versions in some merchants scripts [Lupus]
 	* Cleaned up Rachel donation prizes a bit [Playtester]

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
-//= 1.4a
+//= 1.5
 //===== Compatible With: =====================================
 //= Any eAthena Version i guess?
 //===== Description: =========================================
@@ -16,6 +16,7 @@
 //= 1.4 - Changed the way the Thanatos Portal works to allow people to enter
 //= as long as Thanatos is alive. [SinSloth]
 //= 1.4a You may enter either "Charmstone" or "Charm Stone" [Lupus]
+//= 1.5 Fixed a bug in the number part of the quest. [SinSloth]
 //============================================================
 
 hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
@@ -940,7 +941,7 @@ L_Input:
 	if(@thanainput1 == @thanacode1) set @strike,@strike +1;
 	if(@thanainput2 == @thanacode2) set @strike,@strike +1;
 	if(@thanainput3 == @thanacode3) set @strike,@strike +1;
-	if((@thanainput1 == @thanacode2) || (@thanainput1 == @thanacode2)) set @ball,@ball +1;
+	if((@thanainput1 == @thanacode2) || (@thanainput1 == @thanacode3)) set @ball,@ball +1;
 	if((@thanainput2 == @thanacode1) || (@thanainput2 == @thanacode3)) set @ball,@ball +1;
 	if((@thanainput3 == @thanacode1) || (@thanainput3 == @thanacode2)) set @ball,@ball +1;
 	if(@strike == 3)
