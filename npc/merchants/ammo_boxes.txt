@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena dev team
 //===== Current Version: =====================================
-//= 1.2
+//= 1.2a
 //===== Compatible With: =====================================
 //= eAthena 1.0+
 //===== Description: =========================================
@@ -12,14 +12,14 @@
 //= 1.0 First version. [SinSloth]
 //= 1.1 Optimized version - Reduced to only one function [SinSloth]
 //= 1.2 Optimized^2, corrected npc's name [ultramage]
+//= 1.2a Optimized. Please, ommit extra NPC names [Lupus]
 //============================================================
 
 que_ng,187,149,3	script	Magazine Dealer Kenny	83,{
-	
-	if(BaseJob != Job_Gunslinger)
-	{
-		mes "[Kenny]";
-		mes "I am the Casing Dealer, Kenny!";
+
+	mes "[Kenny]";	
+	mes "I am the Casing Dealer, Kenny!";
+	if(BaseJob != Job_Gunslinger) {
 		mes "I'm here to package the Shells";
 		mes "and Bullets for Gunslingers.";
 		next;
@@ -30,9 +30,6 @@ que_ng,187,149,3	script	Magazine Dealer Kenny	83,{
 		mes "after you're done looking around.";
 		close;
 	}
-	
-	mes "[Kenny]";
-	mes "I am the Casing Dealer, Kenny!";
 	mes "If your bullets are getting";
 	mes "too heavy, come to me!";
 	next;
@@ -70,7 +67,10 @@ function	script		Func_Casing	{
 	next;
 	mes "[Kenny]";
 	mes "" +getitemname(getarg(1))+ " will";
-	if(getarg(0) == 13202) { mes "cost 500 Shells of Blood"; } else mes "cost 500 " +getitemname(getarg(0))+ "s";
+	if(getarg(0) == 13202) 
+		mes "cost 500 Shells of Blood";
+	else
+		mes "cost 500 " +getitemname(getarg(0))+ "s";
 	mes "and 500 zeny each.";
 	next;
 	mes "[Kenny]";
@@ -78,17 +78,14 @@ function	script		Func_Casing	{
 	mes "Input 0 if you want to cancel.";
 	next;
 	input .@caser_amount;
-	if(.@caser_amount < 1)
-	{
-		mes "[Kenny]";
+	mes "[Kenny]";
+	if(.@caser_amount < 1) {
 		mes "Alright. If there's";
 		mes "something else I can help";
 		mes "you with, please tell me.";
 		close;
 	}
-	if(.@caser_amount > 50)
-	{
-		mes "[Kenny]";
+	if(.@caser_amount > 50)	{
 		mes "You've exceeded the limit!";
 		mes "Try again next time?";
 		close;
@@ -96,18 +93,14 @@ function	script		Func_Casing	{
 	set .@caser_bullet, .@caser_amount * 500;
 	
 	//Weight checking
-	if(checkweight(getarg(1), .@caser_amount) != 1)
-	{
-		mes "[Kenny]";
+	if(checkweight(getarg(1), .@caser_amount) != 1)	{
 		mes "You are overweight.";
 		mes "Please clear your inventory.";
 		close;
 	}
 	
 	//Materials checking
-	if(countitem(getarg(0)) < .@caser_bullet)
-	{
-		mes "[Kenny]";
+	if(countitem(getarg(0)) < .@caser_bullet) {
 		mes "Huh......";
 		mes "You don't have enough";
 		mes "materials to trade for";
@@ -118,20 +111,19 @@ function	script		Func_Casing	{
 	}
 	
 	//Zeny checking
-	if(Zeny < .@caser_bullet)
-	{
-		mes "[Kenny]";
+	if(Zeny < .@caser_bullet) {
 		mes "Erm... You don't have enough money.";
 		mes "The fee is 500 zeny";
 		mes "Check your zeny and come again.";
 		close;
 	}
-	
-	mes "[Kenny]";
+
 	mes "Ah very well!";
 	mes "The number is confirmed!";
-	if(getarg(1) < 12149) mes "I'll get you the Packs right away.";
-	else mes "I'll get you the Casings right away.";
+	if(getarg(1) < 12149)
+		mes "I'll get you the Packs right away.";
+	else
+		mes "I'll get you the Casings right away.";
 	set Zeny, Zeny - .@caser_bullet;
 	delitem getarg(0), .@caser_bullet;
 	getitem getarg(1), .@caser_amount;

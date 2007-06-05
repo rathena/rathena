@@ -3,9 +3,9 @@
 //===== By: ================================================== 
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.9a
+//= 1.9b
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= eAthena 1.0+
 //===== Description: ========================================= 
 //=
 //===== Additional Comments: ================================= 
@@ -24,6 +24,7 @@
 //= 1.8 Added Rachel Official shops. Special Thanks to RockmanEXE. [erKURITA]
 //= 1.9 Uncommented Homunculus shop, since Homunculus is working on trunk now. [Evera]
 //= 1.9a Pet Merchant -> Lighthalzen [erKURITA]
+//= 1.9b Added items to Chivas Regal
 //============================================================ 
 
 

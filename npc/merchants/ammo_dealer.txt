@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= Playtester, Paradox924X
 //===== Version ==============================================
-//= 1.1
+//= 1.3
 //===== Compatible With ======================================
 //= eAthena SVN with jAthena scripting engine and . variables
 //===== Description ==========================================
@@ -11,12 +11,15 @@
 //===== Comments =============================================
 //= 1.0 First version [Playtester]
 //= 1.1 Converted from Aegis [Paradox924X]
+//= 1.2 More optimized conversion [Legionaire]
+//= 1.2a Removed .GATs [Lupus]
+//= 1.3 Fixed [Playtester]
 //============================================================
 
 que_ng,187,156,3	script	Bullet Dealer Tony	86,{
 
+	mes "[Tony]";
 	if (BaseJob == Job_Gunslinger) {
-		mes "[Tony]";
 		mes "I'm Bullet-tooth Tony!";
 		mes "Whenever your out of bullets,";
 		mes "Visit me!!!";
@@ -28,16 +31,11 @@ que_ng,187,156,3	script	Bullet Dealer Tony	86,{
 		mes "And pay money~!";
 		next;
 		switch(select("Poison Sphere:Flare Sphere:Lighting Sphere:Blind Sphere:Freezing Sphere:Cancel")) {
-			case 1:
-				callfunc "Bullet_Trade",937,10,13205;
-			case 2:
-				callfunc "Bullet_Trade",7097,2,13203;
-			case 3:
-				callfunc "Bullet_Trade",7053,3,13204;
-			case 4:
-				callfunc "Bullet_Trade",1024,5,13206;
-			case 5:
-				callfunc "Bullet_Trade",7054,2,13207;
+			case 1: callfunc "Bullet_Trade",937,10,13205; break;
+			case 2: callfunc "Bullet_Trade",7097,2,13203; break;
+			case 3: callfunc "Bullet_Trade",7053,3,13204; break;
+			case 4: callfunc "Bullet_Trade",1024,5,13206; break;
+			case 5: callfunc "Bullet_Trade",7054,2,13207; break;
 			case 6:
 				mes "[Tony]";
 				mes "Mmm~ Okay~";
@@ -46,18 +44,16 @@ que_ng,187,156,3	script	Bullet Dealer Tony	86,{
 				mes "Will always be here~!!!";
 				close;
 		}
-	} else {
-		mes "[Tony]";
-		mes "I'm a trader who supplies";
-		mes "Gunslingers with trade items.";
-		mes "I am called Bullet-tooth Tony.";
-		next;
-		mes "[Tony]";
-		mes "I don't think you are a Gunslinger";
-		mes "So just look around";
-		mes "and go.";
-		close;
 	}
+	mes "I'm a trader who supplies";
+	mes "Gunslingers with trade items.";
+	mes "I am called Bullet-tooth Tony.";
+	next;
+	mes "[Tony]";
+	mes "I don't think you are a Gunslinger";
+	mes "So just look around";
+	mes "and go.";
+	close;
 }
 
 function	script	Bullet_Trade	{
@@ -78,18 +74,16 @@ function	script	Bullet_Trade	{
 	set @tony,.@input;
 	set @tony1,.@input;
 	set @tony2,.@input * getarg(1);
+	mes "[Tony]";
 	if (.@input < 1 || .@input > 500) {
-		mes "[Tony]";
 		mes "Invalid Amount!";
 		mes "Enter again~!";
 		close;
 	} else if ((countitem(1010) >= @tony) && (countitem(1011) >= @tony1) && (countitem(getarg(0)) >= @tony2)) {
 		if (checkweight(getarg(2),.@input * 30) == 0) {
-			mes "[Tony]";
 			mes "I cannot give it to you because your inventory is full. Come back after your inventory has more space.";
 			close;
 		} else {
-			mes "[Tony]";
 			mes "Oh~ Good!";
 			mes "Trade number checked!";
 			mes "I'll trade immediately.";
@@ -100,7 +94,6 @@ function	script	Bullet_Trade	{
 			close;
 		}
 	} else {
-		mes "[Tony]";
 		mes "Tsk Tsk~";
 		mes "You do not have";
 		mes "enough items for the";
