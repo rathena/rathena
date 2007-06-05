@@ -13,7 +13,7 @@
 //= 1.1 Converted from Aegis [Paradox924X]
 //= 1.2 More optimized conversion [Legionaire]
 //= 1.2a Removed .GATs [Lupus]
-//= 1.3 Fixed [Playtester]
+//= 1.3 Fixed [Playtester] Optimized. Got rid of @vars [Lupus]
 //============================================================
 
 que_ng,187,156,3	script	Bullet Dealer Tony	86,{
@@ -31,18 +31,18 @@ que_ng,187,156,3	script	Bullet Dealer Tony	86,{
 		mes "And pay money~!";
 		next;
 		switch(select("Poison Sphere:Flare Sphere:Lighting Sphere:Blind Sphere:Freezing Sphere:Cancel")) {
-			case 1: callfunc "Bullet_Trade",937,10,13205; break;
-			case 2: callfunc "Bullet_Trade",7097,2,13203; break;
-			case 3: callfunc "Bullet_Trade",7053,3,13204; break;
-			case 4: callfunc "Bullet_Trade",1024,5,13206; break;
-			case 5: callfunc "Bullet_Trade",7054,2,13207; break;
-			case 6:
-				mes "[Tony]";
-				mes "Mmm~ Okay~";
-				mes "Please visit again~";
-				mes "I, Bullet-tooth Tony,";
-				mes "Will always be here~!!!";
-				close;
+		case 1: callfunc "Bullet_Trade",937,10,13205; break;
+		case 2: callfunc "Bullet_Trade",7097,2,13203; break;
+		case 3: callfunc "Bullet_Trade",7053,3,13204; break;
+		case 4: callfunc "Bullet_Trade",1024,5,13206; break;
+		case 5: callfunc "Bullet_Trade",7054,2,13207; break;
+		default:
+			mes "[Tony]";
+			mes "Mmm~ Okay~";
+			mes "Please visit again~";
+			mes "I, Bullet-tooth Tony,";
+			mes "Will always be here~!!!";
+			close;
 		}
 	}
 	mes "I'm a trader who supplies";
@@ -70,27 +70,24 @@ function	script	Bullet_Trade	{
 	mes "The maximum number you can trade is 500.";
 	mes "If you want to cancel, input 0.";
 	next;
-	input .@input;
-	set @tony,.@input;
-	set @tony1,.@input;
-	set @tony2,.@input * getarg(1);
+	input .@amount;
 	mes "[Tony]";
-	if (.@input < 1 || .@input > 500) {
+	if (.@amount < 1 || .@amount > 500) {
 		mes "Invalid Amount!";
 		mes "Enter again~!";
 		close;
-	} else if ((countitem(1010) >= @tony) && (countitem(1011) >= @tony1) && (countitem(getarg(0)) >= @tony2)) {
-		if (checkweight(getarg(2),.@input * 30) == 0) {
+	} else if (countitem(1010) >= .@amount && countitem(1011) >= .@amount && countitem(getarg(0)) >= (.@amount*getarg(1))) {
+		if (checkweight(getarg(2),.@amount * 30) == 0) {
 			mes "I cannot give it to you because your inventory is full. Come back after your inventory has more space.";
 			close;
 		} else {
 			mes "Oh~ Good!";
 			mes "Trade number checked!";
 			mes "I'll trade immediately.";
-			delitem 1010,@tony;
-			delitem 1011,@tony1;
-			delitem getarg(0),@tony2;
-			getitem getarg(2),.@input * 30;
+			delitem 1010,.@amount;
+			delitem 1011,.@amount;
+			delitem getarg(0),.@amount * getarg(1);
+			getitem getarg(2),.@amount * 30;
 			close;
 		}
 	} else {

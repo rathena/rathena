@@ -39,23 +39,21 @@ que_ng,187,149,3	script	Magazine Dealer Kenny	83,{
 	mes "Spheres at a lower weight!";
 	mes "Come on! Take a look!";
 	next;
-	switch( select( "Lightning Sphere Pack","Blind Sphere Pack","Poison Sphere Pack","Freezing Sphere Pack","Flare Sphere Pack","Bullet Casing","Shell of Blood Casing","Silver Bullet Casing","Cancel" ))
-	{
-		case 1: callfunc "Func_Casing",13204,12144; break;
-		case 2: callfunc "Func_Casing",13206,12145; break;
-		case 3: callfunc "Func_Casing",13205,12146; break;
-		case 4: callfunc "Func_Casing",13207,12147; break;
-		case 5: callfunc "Func_Casing",13203,12148; break;
-		case 6: callfunc "Func_Casing",13200,12149; break;
-		case 7: callfunc "Func_Casing",13202,12150; break;
-		case 8: callfunc "Func_Casing",13201,12151; break;
-		case 9: 
-		default:
-			mes "[Kenny]";
-			mes "Alright. If there's";
-			mes "something else I can help";
-			mes "you with, please tell me.";
-			close;
+	switch(select("Lightning Sphere Pack","Blind Sphere Pack","Poison Sphere Pack","Freezing Sphere Pack","Flare Sphere Pack","Bullet Casing","Shell of Blood Casing","Silver Bullet Casing","Cancel")) {
+	case 1: callfunc "Func_Casing",13204,12144; break;
+	case 2: callfunc "Func_Casing",13206,12145; break;
+	case 3: callfunc "Func_Casing",13205,12146; break;
+	case 4: callfunc "Func_Casing",13207,12147; break;
+	case 5: callfunc "Func_Casing",13203,12148; break;
+	case 6: callfunc "Func_Casing",13200,12149; break;
+	case 7: callfunc "Func_Casing",13202,12150; break;
+	case 8: callfunc "Func_Casing",13201,12151; break;
+	default:
+		mes "[Kenny]";
+		mes "Alright. If there's";
+		mes "something else I can help";
+		mes "you with, please tell me.";
+		close;
 	}
 	close;
 }
@@ -77,30 +75,28 @@ function	script		Func_Casing	{
 	mes "You can trade a maximum of 50.";
 	mes "Input 0 if you want to cancel.";
 	next;
-	input .@caser_amount;
+	input .@amount;
 	mes "[Kenny]";
-	if(.@caser_amount < 1) {
+	if(.@amount < 1) {
 		mes "Alright. If there's";
 		mes "something else I can help";
 		mes "you with, please tell me.";
 		close;
 	}
-	if(.@caser_amount > 50)	{
+	if(.@amount > 50)	{
 		mes "You've exceeded the limit!";
 		mes "Try again next time?";
 		close;
 	}
-	set .@caser_bullet, .@caser_amount * 500;
-	
 	//Weight checking
-	if(checkweight(getarg(1), .@caser_amount) != 1)	{
+	if(checkweight(getarg(1), .@amount) != 1)	{
 		mes "You are overweight.";
 		mes "Please clear your inventory.";
 		close;
 	}
 	
 	//Materials checking
-	if(countitem(getarg(0)) < .@caser_bullet) {
+	if(countitem(getarg(0)) < .@amount * 500) {
 		mes "Huh......";
 		mes "You don't have enough";
 		mes "materials to trade for";
@@ -111,7 +107,7 @@ function	script		Func_Casing	{
 	}
 	
 	//Zeny checking
-	if(Zeny < .@caser_bullet) {
+	if(Zeny < .@amount * 500) {
 		mes "Erm... You don't have enough money.";
 		mes "The fee is 500 zeny";
 		mes "Check your zeny and come again.";
@@ -124,8 +120,8 @@ function	script		Func_Casing	{
 		mes "I'll get you the Packs right away.";
 	else
 		mes "I'll get you the Casings right away.";
-	set Zeny, Zeny - .@caser_bullet;
-	delitem getarg(0), .@caser_bullet;
-	getitem getarg(1), .@caser_amount;
+	set Zeny, Zeny - .@amount * 500;
+	delitem getarg(0), .@amount * 500;
+	getitem getarg(1), .@amount;
 	close;
 }
