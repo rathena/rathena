@@ -83,7 +83,7 @@ prontera,232,318,3	script	Peco Peco Breeder	105,{
 	if(Upper==2) set @price,3500; //Baby Peco
 
 	mes "[PecoPeco Breeder]";
-	if (BaseClass == Job_Crusader) {
+	if (BaseJob == Job_Crusader) {
 		if (Class == Job_Crusader && Upper == 0 || Upper == 1) mes "Welcome, Crusader.";
 		else 
 mes "Welcome, Paladin.";

@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/06/05
+	* Fixed Grand Peco breeder [Playtester]
 	* Optimized, commonized and got rid of extra @vars: ammo_boxes.txt,ammo_dealer.txt,kunai_maker.txt [Lupus]
 	* Fixed a bug in Thanatos Tower quest. [SinSloth]
 2007/06/04
