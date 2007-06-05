@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+06/05
+	* Fixed two items thanks to zephyrus [Playtester]
 06/04
 	* Updated Anubis stats [Playtester]
 	* Updated 11.2 gun prices [Playtester]
