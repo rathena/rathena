@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/06/06
+	* Added Dandelion's Request / Morroc Invasion quest. [SinSloth]
 2007/06/05
 	* Updated Arena warp, thanks to diedlikeahero [Lupus]
 	- removed old temp shop scrolls_arrows [Lupus]
