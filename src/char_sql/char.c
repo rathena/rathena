@@ -2833,8 +2833,8 @@ int parse_frommap(int fd)
 				default: size = 0;                      list = NULL;              break;
 			}
 
-			ARR_FIND(0, size, player_pos, list[player_pos].id == cid);
-			ARR_FIND(0, size, fame_pos, list[fame_pos].fame <= fame);
+			ARR_FIND(0, size, player_pos, list[player_pos].id == cid);// position of the player
+			ARR_FIND(0, size, fame_pos, list[fame_pos].fame <= fame);// where the player should be
 
 			if( player_pos == size && fame_pos == size )
 				;// not on list and not enough fame to get on it

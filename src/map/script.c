@@ -4382,7 +4382,7 @@ BUILDIN_FUNC(menu)
 			if( data_isstring(data) && data_isint(data) )
 			{// not a string (or compatible)
 				StringBuf_Free(buf);
-				ShowError("script:menu: argument #%d (from 1) is not a string or compatible.\n", (i - 1));
+				ShowError("script:menu: argument #%d (from 1) is not a string or compatible (op=%s).\n", (i - 1), script_op2name(data->type));
 				st->state = END;
 				return 1;
 			}
@@ -4393,7 +4393,7 @@ BUILDIN_FUNC(menu)
 			if( !data_islabel(data) )
 			{// not a label
 				StringBuf_Free(buf);
-				ShowError("script:menu: label argument of menu option #%d (from 1) is not a label.\n", (script_lastdata(st) - 1));
+				ShowError("script:menu: argument #%d (from 1) is not a label or label not found (op=%s).\n", i, script_op2name(data->type));
 				st->state = END;
 				return 1;
 			}

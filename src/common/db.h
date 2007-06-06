@@ -715,7 +715,7 @@ void  linkdb_final  ( struct linkdb_node** head );
 ///
 ///
 /// @param __from   Initial index of the entry
-/// @param __end    Target index of the entry
+/// @param __to     Target index of the entry
 /// @param __arr    Array
 /// @param __type   Type of entry
 #define ARR_MOVE(__from, __to, __arr, __type) \
@@ -738,7 +738,7 @@ void  linkdb_final  ( struct linkdb_node** head );
 /// ex: ARR_MOVERIGHT(1, 4, list, int);// move index 1 to index 4
 ///
 /// @param __from   Initial index of the entry
-/// @param __end    Target index of the entry
+/// @param __to     Target index of the entry
 /// @param __arr    Array
 /// @param __type   Type of entry
 #define ARR_MOVERIGHT(__from, __to, __arr, __type) \
