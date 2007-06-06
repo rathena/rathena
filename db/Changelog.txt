@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+06/06
+	* Added some 11.3 mobs [Playtester]
 06/05
 	* Fixed Spirited Guitar [Playtester]
 	* Fixed two items thanks to zephyrus [Playtester]
