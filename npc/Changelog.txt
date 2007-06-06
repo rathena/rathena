@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/06/05
+	* Updated Arena warp, thanks to diedlikeahero [Lupus]
+	- removed old temp shop scrolls_arrows [Lupus]
 	* Fixed Grand Peco breeder [Playtester]
 	* Optimized, commonized and got rid of extra @vars: ammo_boxes.txt,ammo_dealer.txt,kunai_maker.txt [Lupus]
 	* Fixed a bug in Thanatos Tower quest. [SinSloth]

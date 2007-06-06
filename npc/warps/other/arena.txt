@@ -4,16 +4,17 @@
 //===== By: ==================================================
 //= SinSloth
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Warp Points related to Izlude Arena && Control Panel(to come)
 //===== Additional Comments: =================================
 //= 1.0 First version, done by SinSloth. [MasterOfMuppets]
+//= 1.1 updated welcome_arena warp coords (was 128,126) [Lupus]
 //============================================================
 
-izlude,128,126,0	warp	welcome_arena	1,1,arena_room,100,30
+izlude,128,226,0	warp	welcome_arena	1,1,arena_room,100,30
 arena_room,99,24,0	warp	bye_arena	2,2,izlude,128,220
 arena_room,84,103,0	warp	arn_room_11_1	1,1,arena_room,63,130
 arena_room,63,126,0	warp	arn_room_11_2	1,1,arena_room,87,100

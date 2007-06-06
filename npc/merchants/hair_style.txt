@@ -10,11 +10,7 @@
 //= Allows you to change your hairstyle.
 //===== Additional Comments: =================================
 //= 07/06/05 : Added 1st Version. [Muad_Dib]
-//= Converted to eAthena format by Dr.Evil
-//= Change NPC coords according to 
-//= http://www.nattsumi.com/roquest/miscellaneousquest.html
-//= Fixed typos [Nexon]
-//= TODO: Fix exploits V_V [Lupus]
+//= Converted to eAthena format by Dr.Evil Fixed typos [Nexon]
 //= 1.1 Removed Duplicates [Silent]
 //============================================================
 
@@ -754,16 +750,16 @@ mhair9:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,9;
+	if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+	set Zeny,Zeny-99800;
+	delitem 973,3;
+	delitem 974,3;
+	delitem 901,100;
+	delitem 1094,100;
+	delitem 1020,100;
+	delitem 1060,100;
+	delitem 7152,100;
+	setlook 1,9;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (9) style.";
@@ -771,21 +767,21 @@ mhair9:
 	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
 	close;
 M_NO9:
-		cutin "",255;
+	cutin "",255;
 	mes "[Veronica]";
 	mes "Well~ choose again please~";
 	mes "There should be a style you like.";
 	mes "Just remember the number you like the most and tell me.";
 	close;
 mhair10:
-		cutin "hair_m_10",4;
+	cutin "hair_m_10",4;
 	mes "[Veronica]";
 	mes "This is the (10) style.";
 	mes "I will change your Hair with this Again.";
 	mes "Is that OK for you??";
 	next;
 	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO10;
-		cutin "",255;
+	cutin "",255;
 	mes "[Veronica]";
 	mes "Now it begins~. Hold still~";
 	mes "If you move, you will have very bad style.";
@@ -796,16 +792,16 @@ mhair10:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,10;
+	if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+	set Zeny,Zeny-99800;
+	delitem 973,3;
+	delitem 974,3;
+	delitem 901,100;
+	delitem 1094,100;
+	delitem 1020,100;
+	delitem 1060,100;
+	delitem 7152,100;
+	setlook 1,10;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (10) style.";
@@ -838,16 +834,16 @@ mhair11:
 	mes "- Klit klit Klit klit -";
 	mes "- Snap snap Snap snap -";
 	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,11;
+	if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
+	set Zeny,Zeny-99800;
+	delitem 973,3;
+	delitem 974,3;
+	delitem 901,100;
+	delitem 1094,100;
+	delitem 1020,100;
+	delitem 1060,100;
+	delitem 7152,100;
+	setlook 1,11;
 	mes "[Veronica]";
 	mes "Wow~ it came out very well~~";
 	mes "I hope you like this (11) style.";
@@ -855,21 +851,21 @@ mhair11:
 	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
 	close;
 M_NO11:
-		cutin "",255;
+	cutin "",255;
 	mes "[Veronica]";
 	mes "Well~ choose again please~";
 	mes "There should be a style you like.";
 	mes "Just remember the number you like the most and tell me.";
 	close;
 mhair12:
-		cutin "hair_m_12",4;
+	cutin "hair_m_12",4;
 	mes "[Veronica]";
 	mes "This is the (12) style.";
 	mes "I will change your Hair with this Again.";
 	mes "Is that OK for you??";
 	next;
 	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO12;
-		cutin "",255;
+	cutin "",255;
 	mes "[Veronica]";
 	mes "Now it begins~. Hold still~";
 	mes "If you move, you will have very bad style.";
