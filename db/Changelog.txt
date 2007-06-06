@@ -49,6 +49,7 @@
 	----
 ========================
 06/05
+	* Fixed Spirited Guitar [Playtester]
 	* Fixed two items thanks to zephyrus [Playtester]
 06/04
 	* Updated Anubis stats [Playtester]
