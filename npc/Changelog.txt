@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/06/06
+	* More Breeder fixes [Playtester]
 	* Added Dandelion's Request / Morroc Invasion quest. [SinSloth]
 2007/06/05
 	* Updated Arena warp, thanks to diedlikeahero [Lupus]

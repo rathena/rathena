@@ -78,9 +78,9 @@ prontera,55,350,5	script	Peco Peco Breeder	105,{
 
 // Grand PecoPeco Breeder (for Crusaders)-------------------------------------------
 prontera,232,318,3	script	Peco Peco Breeder	105,{
-	if(Upper==0) set @price,3500; //Normal Peco - default price
-	if(Upper==1) set @price,3500; //Armored Peco
-	if(Upper==2) set @price,3500; //Baby Peco
+	if(Upper==0) set .@price,3500; //Normal Peco - default price
+	if(Upper==1) set .@price,3500; //Armored Peco
+	if(Upper==2) set .@price,3500; //Baby Peco
 
 	mes "[PecoPeco Breeder]";
 	if (BaseJob == Job_Crusader) {
@@ -93,7 +93,7 @@ mes "Welcome, Paladin.";
 		mes "will cost "+.@price+" zeny.";
 		next;
 		if (select("Rent a PecoPeco:Quit") ==1) {
-			if (zeny < .@Price) {
+			if (zeny < .@price) {
 				mes "[Peco Peco Breeder]";
 				mes "You do not";
 				mes "have enough zeny.";
@@ -133,9 +133,9 @@ mes "Welcome, Paladin.";
 
 // Falcon Master--------------------------------------------------------------
 hu_in01,381,304,5	script	Falcon Breeder	105,{
-	if(Upper==0) set @price,2500; //Normal Falcon - default price
-	if(Upper==1) set @price,2500; //Scarf Falcon
-	if(Upper==2) set @price,2500; //Baby Falcon
+	if(Upper==0) set .@price,2500; //Normal Falcon - default price
+	if(Upper==1) set .@price,2500; //Scarf Falcon
+	if(Upper==2) set .@price,2500; //Baby Falcon
 
 	mes "[Falcon Breeder]";
 	if (BaseJob == Job_Hunter) {
@@ -173,7 +173,7 @@ hu_in01,381,304,5	script	Falcon Breeder	105,{
 				mes "there, can't you see it?";
 				close;
 			}
-			set zeny,zeny-.@Price;
+			set zeny,zeny-.@price;
 			setfalcon;
 			close;
 		}
