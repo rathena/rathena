@@ -654,7 +654,14 @@ abbey03
 poring_w01
 poring_w02
 que_san04
-
+moscovia
+mosk_in
+mosk_ship
+mosk_fild01
+mosk_fild02
+mosk_dun01
+mosk_dun02
+mosk_dun03
 
 // Only add maps under this line if they are not standard maps!
 
