@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena dev team
 //===== Current Version: =====================================
-//= 1.1b
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -17,6 +17,7 @@
 //= 1.0 Fixed ingredients check [Lupus]
 //= 1.1	Updated to official. [SinSloth]
 //= 1.1b Optimized/cleaned [ultramage]
+//= 1.2 Fixed some typos and a nasty bug. [SinSloth]
 //============================================================
 
 payon,140,151,5		script	Seiyablem	84,{
@@ -57,7 +58,7 @@ payon,140,151,5		script	Seiyablem	84,{
 					mes "[Seiyablem]";
 					mes "B Class?";
 					mes "Alright, this is the average equipment category.";
-					mes "Please choose the weapon to wich you'd like me to try to add a Slot.";
+					mes "Please choose the weapon to which you'd like me to try to add a Slot.";
 					next;
 					switch( select( "Chain","Gladius","Gakkung Bow","Pike","Haedonggum","Lute","Wire","Waghnakh","Arbalest Bow" ) )
 					{
@@ -77,7 +78,7 @@ payon,140,151,5		script	Seiyablem	84,{
 					mes "[Seiyablem]";
 					mes "Ooh, A Class.";
 					mes "This is some high risk territory!";
-					mes "Alright, wich weapon would you like me to try adding a Slot?";
+					mes "Alright, which weapon would you like me to try adding a Slot?";
 					next;
 					switch( select( "Hunter Bow","Survivor's Rod(INT)","Zweihander","Flamberge","Infiltrator","Ballista","Stunner","Berserk","Claymore" ) )
 					{
@@ -109,7 +110,7 @@ payon,140,151,5		script	Seiyablem	84,{
 						case 5: callfunc "Func_Socket",2,13002,13019,40,51,1000,984,5,999,10; break;
 						case 6: callfunc "Func_Socket",2,1135,13400,40,51,1000,984,5,999,10; break;
 						case 7: callfunc "Func_Socket",2,1466,1476,40,51,1000,984,5,999,10; break;
-						case 8: callfunc "Func_Socket",2,1618,1619,40,51,2000,984,5,999,10; break;
+						case 8: callfunc "Func_Socket",2,1617,1618,40,51,2000,984,5,999,10; break;
 					}
 				break;
 			}
@@ -166,7 +167,7 @@ payon,140,151,5		script	Seiyablem	84,{
 					mes "[Seiyablem]";
 					mes "Ooh, A Class.";
 					mes "This is some high risk territory!";
-					mes "Alright, wich armor would you like me to try adding a Slot?";
+					mes "Alright, which armor would you like me to try adding a Slot?";
 					next;
 					switch( select( "Gemmed Sallet","Bucket Hat","Memory Book","Tights","Legion Plate Armor","Full Plate","Thief Clothes","Greaves","Coif","Manteau","Helm","Ninja Suit","Orc Helm","Ancient Cape","Monk Hat","Golden Gear","Brooch","Munak Hat" ) )
 					{
@@ -253,9 +254,15 @@ function	script	Func_Socket	{
 	mes "[Seiyablem]";
 	mes "You want to add a Slot to a " +getitemname(getarg(1))+ "?";
 	if (getarg(0) == 1)
-		mes "Alright, please bring me ^FF0000" +getarg(7)+ " " +getitemname(getarg(6))+ "s^000000, and my^FF0000 " +getarg(5)+",000 zeny^000000 service fee.";
+	{
+		if(getarg(5) > 999) mes "Alright, please bring me ^FF0000" +getarg(7)+ " " +getitemname(getarg(6))+ "s^000000, and my^FF0000 " +getarg(5) / 1000+",000,000 zeny^000000 service fee.";
+		else mes "Alright, please bring me ^FF0000" +getarg(7)+ " " +getitemname(getarg(6))+ "s^000000, and my^FF0000 " +getarg(5)+",000 zeny^000000 service fee.";
+	}
 	else if (getarg(0) == 2)
-		mes "Alright, please bring me ^FF0000" +getarg(7)+ " " +getitemname(getarg(6))+ "^000000, ^FF0000" +getarg(9)+ " " +getitemname(getarg(8))+ "^000000 and my^FF0000 " +getarg(5)+",000 zeny^000000 service fee.";
+	{
+		if(getarg(5) > 999) mes "Alright, please bring me ^FF0000" +getarg(7)+ " " +getitemname(getarg(6))+ "^000000, ^FF0000" +getarg(9)+ " " +getitemname(getarg(8))+ "^000000 and my^FF0000 " +getarg(5) / 1000+",000,000 zeny^000000 service fee.";
+		else mes "Alright, please bring me ^FF0000" +getarg(7)+ " " +getitemname(getarg(6))+ "^000000, ^FF0000" +getarg(9)+ " " +getitemname(getarg(8))+ "^000000 and my^FF0000 " +getarg(5)+",000 zeny^000000 service fee.";
+	}
 	mes "Ah, and don't forget to bring that " +getitemname(getarg(1))+ "!";
 	next;
 

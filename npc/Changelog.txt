@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/06/07
+	* Fixed a bug and some typos to Socket Enchant NPC. [SinSloth]
 2007/06/06
 	* More Breeder fixes [Playtester]
 	* Added Dandelion's Request / Morroc Invasion quest. [SinSloth]
