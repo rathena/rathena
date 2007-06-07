@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -28,12 +28,13 @@
 //= Sanctuary Quest:
 //= - Actually two quests in one. Donation and dungeon quest.
 //= - Requires 10000 donations before players can start the quest.
-//= - Variable in use: ra_tem_q (max 22) (unset at end)
+//= - Variable in use: ra_tem_q (max 23) (unset at end)
 //= - Variable in use: Once completed MISC_QUEST bit 8192 is set
 //= - Variable in use: ra_have_donated (0 no/1 yes)
 //= - Variable in use: $rachel_donate (max 10000)
 //===== Additional Comments: ================================= 
 //= 1.0 First version, needs testing. [L0ne_W0lf]
+//= 1.1 Some slight optimization. [L0ne_W0lf]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -1266,7 +1267,7 @@ rachel,263,32,3	script	Kid#ra_in01	931,{
 //End of Lost Child quest
 //============================================================ 
 
-//Bruspetti Quest (Continuation of Lighthalzen "Friendship" quest)
+//Bruspetti Quest (Perequisite: Lighthalzen "Friendship" quest)
 //============================================================ 
 ra_in01,235,194,5	script	Katinshuell	931,{
 	if (rach_vice > 21) {
@@ -3128,6 +3129,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "any ideas on breaking";
 		mes "this cold prison of ice?";
 		next;
+		//Need proper check for Hammer_of_Wind and Gray_Necklace
 		mes "["+strcharinfo(0)+"]";
 		mes "Well, he made this";
 		mes "magic hammer which is";
@@ -3864,10 +3866,9 @@ OnTouch:
 			mes "Please don't do that!";
 			close;
 		}
-
-		warp "ra_temin",169,23;
-		end;
 	}
+	warp "ra_temin",169,23;
+	end;
 }
 
 ra_temple,116,174,3	script	Nemma#ra_temple	920,{
@@ -3955,85 +3956,15 @@ ra_temple,116,174,3	script	Nemma#ra_temple	920,{
 			switch(select("50,000z - 1 Lottery Ticket:100,000z - 2 Lottery Ticket:150,000z - 3 Lottery Ticket:Cancel")) {
 
 			case 1:
-				cutin "ra_nemma01",2;
-				mes "[Priestess Nemma]";
-				mes "So, " + strcharinfo(0) + "...";
-				mes "I just want to make sure:";
-				mes "you want to donate 50,000 ";
-				mes "zeny, and receive 1 Lottery ";
-				mes "Ticket. Is that correct?";
-				next;
-				if (select("No:Yes") == 1) goto L_DoNotDonate;
-				if (zeny >= 50000) {
-					set .@now_weight,MaxWeight-Weight;
-					if (.@now_weight < 10) {
-						goto L_OverWeight;
-					}
-					set $rachel_donate,$rachel_donate+1;
-					getitem 7570,1; //Temple_Lottery_Ticket
-					set zeny,zeny-50000;
-					set ra_have_donated,1;
-					if ($rachel_donate > 9999) goto L_ProgressReport1;
-					else goto L_ProgressReport2;
-				}
-				else {
-					set .@Donate$,"50,000";
-					goto L_NotEnoughZeny;
-				}
+				callsub S_Donate,50000,"50,000",1;
 				break;
 
 			case 2:
-				mes "[Priestess Nemma]";
-				mes "So, " + strcharinfo(0) + "...";
-				mes "I just want to make sure:";
-				mes "you want to donate 100,000 ";
-				mes "zeny, and receive 2 Lottery ";
-				mes "Ticket. Is that correct?";
-				next;
-				if (select("No:Yes") == 1) goto L_DoNotDonate;
-				if (zeny >= 100000) {
-					set .@now_weight,MaxWeight-Weight;
-					if (.@now_weight < 20) {
-						goto L_OverWeight;
-					}
-					set $rachel_donate,$rachel_donate+2;
-					getitem 7570,2; //Temple_Lottery_Ticket
-					set zeny,zeny-100000;
-					set ra_have_donated,1;
-					if ($rachel_donate > 9999) goto L_ProgressReport1;
-					else goto L_ProgressReport2;
-				}
-				else {
-					set .@Donate$,"100,000";
-					goto L_NotEnoughZeny;
-				}
+				callsub S_Donate,100000,"100,000",3;
 				break;
 
 			case 3:
-				mes "[Priestess Nemma]";
-				mes "So, " + strcharinfo(0) + "...";
-				mes "I just want to make sure:";
-				mes "you want to donate 150,000 ";
-				mes "zeny, and receive 3 Lottery ";
-				mes "Ticket. Is that correct?";
-				next;
-				if (select("No:Yes") == 1) goto L_DoNotDonate;
-				if (zeny >= 150000) {
-					set .@now_weight,MaxWeight-Weight;
-					if (.@now_weight < 30) {
-						goto L_OverWeight;
-					}
-					set $rachel_donate,$rachel_donate+3;
-					getitem 7570,3; //Temple_Lottery_Ticket
-					set zeny,zeny-150000;
-					set ra_have_donated,1;
-					if ($rachel_donate > 9999) goto L_ProgressReport1;
-					else goto L_ProgressReport2;
-				}
-				else {
-					set .@Donate$,"150,000";
-					goto L_NotEnoughZeny;
-				}
+				callsub S_Donate,150000,"150,000",3;
 				break;
 
 			case 4:
@@ -4077,82 +4008,15 @@ ra_temple,116,174,3	script	Nemma#ra_temple	920,{
 				switch(select("50,000z - 1 Lottery Ticket:100,000z - 2 Lottery Ticket:150,000z - 3 Lottery Ticket:Cancel")) {
 
 				case 1:
-					cutin "ra_nemma01",2;
-					mes "[Priestess Nemma]";
-					mes "So, " + strcharinfo(0) + "...";
-					mes "I just want to make sure:";
-					mes "you want to donate 50,000 ";
-					mes "zeny, and receive 1 Lottery ";
-					mes "Ticket. Is that correct?";
-					next;
-					if (select("No:Yes") == 1) goto L_DoNOtDonate;
-					if (zeny >= 50000) {
-						set .@now_weight,MaxWeight-Weight;
-						if (.@now_weight < 10) {
-							goto L_OverWeight;
-						}
-						set $rachel_donate,$rachel_donate+1;
-						getitem 7570,1; //Temple_Lottery_Ticket
-						set zeny,zeny-50000;
-						if ($rachel_donate > 9999) goto L_ProgressReport1;
-						else goto L_ProgressReport2;
-					}
-					else {
-						set .@Donate$,"50,000";
-						goto L_NotEnoughZeny;
-					}
+					callsub S_Donate,50000,"50,000",1;
 					break;
 
 				case 2:
-					mes "[Priestess Nemma]";
-					mes "So, " + strcharinfo(0) + "...";
-					mes "I just want to make sure:";
-					mes "you want to donate 100,000 ";
-					mes "zeny, and receive 2 Lottery ";
-					mes "Ticket. Is that correct?";
-					next;
-					if (select("No:Yes") == 1) goto L_DoNotDonate;
-					if (zeny >= 100000) {
-						set .@now_weight,MaxWeight-Weight;
-						if (.@now_weight < 20) {
-							goto L_OverWeight;
-						}
-						set $rachel_donate,$rachel_donate+2;
-						getitem 7570,2; //Temple_Lottery_Ticket
-						set zeny,zeny-100000;
-						if ($rachel_donate > 9999) goto L_ProgressReport1;
-						else goto L_ProgressReport2;
-					}
-					else {
-						set .@Donate$,"100,000";
-						goto L_NotEnoughZeny;
-					}
+					callsub S_Donate,100000,"100,000",3;
 					break;
 
 				case 3:
-					mes "[Priestess Nemma]";
-					mes "So, " + strcharinfo(0) + "...";
-					mes "I just want to make sure:";
-					mes "you want to donate 150,000 ";
-					mes "zeny, and receive 3 Lottery ";
-					mes "Ticket. Is that correct?";
-					next;
-					if (select("No:Yes") == 1) goto L_DoNotDonate;
-					if (zeny >= 150000) {
-						set .@now_weight,MaxWeight-Weight;
-						if (.@now_weight < 30) {
-							goto L_OverWeight;
-						}
-						set $rachel_donate,$rachel_donate+3;
-						getitem 7570,3; //Temple_Lottery_Ticket
-						set zeny,zeny-150000;
-						if ($rachel_donate > 9999) goto L_ProgressReport1;
-						else goto L_ProgressReport2;
-					}
-					else {
-						set .@Donate$,"150,000";
-						goto L_NotEnoughZeny;
-					}
+					callsub S_Donate,150000,"150,000",3;
 					break;
 
 				case 4:
@@ -4398,76 +4262,6 @@ ra_temple,116,174,3	script	Nemma#ra_temple	920,{
 
 	}
 
-L_DoNotDonate:
-	mes "[Priestess Nemma]";
-	mes "Oh, I see. Well, if you";
-	mes "don't have enough zeny with";
-	mes "you, then you can just come";
-	mes "back and donate later. Our";
-	mes "goddess Freya smiles on the";
-	mes "generous and rewards the patient!";
-	goto L_End;
-
-L_NotEnoughZeny:
-	mes "[Priestess Nemma]";
-	mes "I'm sorry, but you have";
-	mes "less than "+@Donate$+" zeny...";
-	mes "I know it's asking a lot,";
-	mes "but those are the rules that";
-	mes "I've been told to follow, so...";
-	mes "Well, maybe another time, yes?";
-	goto L_End;
-
-
-L_OverWeight:
-	cutin "ra_nemma02",2;
-	mes "[Priestess Nemma]";
-	mes "I can scarcely believe it...";
-	mes "You're carrying so much stuff,";
-	mes "you don't even have enough";
-	mes "room for a Lottery Ticket.";
-	mes "You'd better put some of";
-	mes "your things in Storage, yes?";
-	next;
-	cutin "ra_nemma01",2;
-	mes "[Priestess Nemma]";
-	mes "Don't worry, I'll still be";
-	mes "here after you make more";
-	mes "space available in your";
-	mes "Inventory. Hurry back, and";
-	mes "donate if you can, okay?";
-	goto L_End;
-
-L_ProgressReport1:
-	cutin "ra_nemma03",2;
-	mes "[Priestess Nemma]";
-	mes "There you are~";
-	mes "Thanks so much for";
-	mes "your donation! I'm sure";
-	mes "that Freya is smiling down";
-	mes "upon you, and will reward";
-	mes "you for your generosity~";
-	goto L_End;
-
-L_ProgressReport2:
-	set .@Remaining,10000-$rachel_donate;
-	cutin "ra_nemma03",2;
-	mes "[Priestess Nemma]";
-	mes "Thank you so much! We'll be";
-	mes "continuing to accept donations";
-	mes "until we reach our target. Once";
-	mes "we receive "+.@Remaining+" more donations";
-	mes "in increments of 50,000 zeny,";
-	mes "our fundraiser will finish.";
-	next;
-	mes "[Priestess Nemma]";
-	mes "If you're feeling so";
-	mes "inclined, come back later";
-	mes "and make another contribution.";
-	mes "Thanks again, and may Freya";
-	mes "always watch over you.";
-	goto L_End;
-
 L_End:
 	close2;
 	cutin "",255;
@@ -4476,6 +4270,91 @@ L_End:
 OnEmotion:
 	emotion e_omg;
 	end;
+
+S_Donate:
+	cutin "ra_nemma01",2;
+	mes "[Priestess Nemma]";
+	mes "So, " + strcharinfo(0) + "...";
+	mes "I just want to make sure:";
+	mes "you want to donate "+getarg(1);
+	mes "zeny, and receive 1 Lottery ";
+	mes "Ticket. Is that correct?";
+	next;
+	if (select("No:Yes") == 1) {
+		mes "[Priestess Nemma]";
+		mes "Oh, I see. Well, if you";
+		mes "don't have enough zeny with";
+		mes "you, then you can just come";
+		mes "back and donate later. Our";
+		mes "goddess Freya smiles on the";
+		mes "generous and rewards the patient!";
+		return;
+	}
+	if (zeny >= getarg(0)) {
+		if (!checkweight(7570,getarg(2))) {
+			cutin "ra_nemma02",2;
+			mes "[Priestess Nemma]";
+			mes "I can scarcely believe it...";
+			mes "You're carrying so much stuff,";
+			mes "you don't even have enough";
+			mes "room for a Lottery Ticket.";
+			mes "You'd better put some of";
+			mes "your things in Storage, yes?";
+			next;
+			cutin "ra_nemma01",2;
+			mes "[Priestess Nemma]";
+			mes "Don't worry, I'll still be";
+			mes "here after you make more";
+			mes "space available in your";
+			mes "Inventory. Hurry back, and";
+			mes "donate if you can, okay?";
+			return;
+		}
+		set $rachel_donate,$rachel_donate+getarg(2);
+		getitem 7570,getarg(2); //Temple_Lottery_Ticket
+		set zeny,zeny-getarg(0);
+		set ra_have_donated,1;
+		if ($rachel_donate > 9999) {
+			cutin "ra_nemma03",2;
+			mes "[Priestess Nemma]";
+			mes "There you are~";
+			mes "Thanks so much for";
+			mes "your donation! I'm sure";
+			mes "that Freya is smiling down";
+			mes "upon you, and will reward";
+			mes "you for your generosity~";
+			return;
+		}
+		else {
+			set .@Remaining,10000-$rachel_donate;
+			cutin "ra_nemma03",2;
+			mes "[Priestess Nemma]";
+			mes "Thank you so much! We'll be";
+			mes "continuing to accept donations";
+			mes "until we reach our target. Once";
+			mes "we receive "+.@Remaining+" more donations";
+			mes "in increments of 50,000 zeny,";
+			mes "our fundraiser will finish.";
+			next;
+			mes "[Priestess Nemma]";
+			mes "If you're feeling so";
+			mes "inclined, come back later";
+			mes "and make another contribution.";
+			mes "Thanks again, and may Freya";
+			mes "always watch over you.";
+			return;
+		}
+	}
+	else {
+		mes "[Priestess Nemma]";
+		mes "I'm sorry, but you have";
+		mes "less than "+@Donate$+" zeny...";
+		mes "I know it's asking a lot,";
+		mes "but those are the rules that";
+		mes "I've been told to follow, so...";
+		mes "Well, maybe another time, yes?";
+		return;
+	}
 
 }
 
@@ -5567,8 +5446,6 @@ L_End:
 
 ra_temin,170,46,3	script	Panno#rachel	920,{
 	cutin "ra_fano03",2;
-	if (MISC_QUEST & 8192) goto L_Redeem_Tickets;
-
 	if (ra_tem_q == 10) {
 		mes "[Priestess Panno]";
 		mes "Good day.";
@@ -5594,67 +5471,13 @@ ra_temin,170,46,3	script	Panno#rachel	920,{
 			mes "know, in case you were saving";
 			mes "them for some weird reason.";
 			next;
-			if (select("Yes:No") == 1) {
-				mes "[Priestess Panno]";
-				mes "Here we go";
-				mes "Excited? Mm";
-				mes "I can redeem only";
-				mes "1 Lottery Ticket at";
-				mes "a time. Your reward";
-				mes "for this ticket is...";
-				next;
-				cutin "ra_fano02",2;
-				if (countitem(7570) > 0) {
-					mes "[Priestess Panno]";
-					mes "^FF0000This^000000. It's been in our";
-					mes "storage for a while, but";
-					mes "I hope this is acceptable";
-					mes "as a token of the temple's";
-					mes "gratitude. May Freya smile";
-					mes "upon you for your generosity...";
-					delitem 7570,1;
-					set .@bonus_donate,rand(100);
-					if (.@bonus_donate == 99) {
-						set .@bonus_donate2,rand(100);
-						if (.@bonus_donate2 > 0 && .@bonus_donate2 < 11) getitem 616,1;		//Old Card Album 0.1%
-						else if (.@bonus_donate2 > 10 && .@bonus_donate2 < 31) getitem 617,1;	//Old Violet Box 0.2%
-						else if (.@bonus_donate2 > 30 && .@bonus_donate2 < 61) getitem 603,1;	//Old Blue Box 0.3%
-						else getitem 607,1; //Yggdrasil Berry 0.4%
-					}
-					else if (.@bonus_donate > 88 && .@bonus_donate < 96) getitem 644,1;	//Gift Box 7%
-					else if (.@bonus_donate > 76 && .@bonus_donate < 89) getitem 607,1;	//Yggdrasil Berry 12%
-					else if (.@bonus_donate > 65 && .@bonus_donate < 77) getitem 505,1;	//Blue Potion 11%
-					else if (.@bonus_donate > 57 && .@bonus_donate < 66) getitem 604,1;	//Dead Branch 8%
-					else if (.@bonus_donate > 45 && .@bonus_donate < 58) getitem 608,1;	//Yggdrasil Seed 12%
-					else if (.@bonus_donate > 5 && .@bonus_donate < 11) getitem 518,1;	//Honey 5%
-					else if (.@bonus_donate > 0 && .@bonus_donate < 6) getitem 526,1;	//Royal Jelly 5%
-					else getitem 547,1; //Condensed White Potion 39%
-					goto L_End;
-				}
-
-				mes "[Priestess Panno]";
-				mes "You...";
-				mes "Don't have any Lottery";
-				mes "Tickets to redeem";
-				mes "We're not distributing";
-				mes "them now, but maybe you";
-				mes "can ask your friends for one.";
-				next;
-				cutin "ra_fano03",2;
-				mes "[Priestess Panno]";
-				mes "May Freya be with you.";
-				goto L_End;
-			}
-
-			else {
-				mes "[Priestess Panno]";
-				mes "You can redeem your";
-				mes "Lottery Tickets at any";
-				mes "time, so please visit";
-				mes "me at your leisure.";
-				mes "Go with Freya.";
-				goto L_End;
-			}
+			if (select("Yes:No") == 1) goto L_Lottery;
+			mes "[Priestess Panno]";
+			mes "You can redeem your";
+			mes "Lottery Tickets at any";
+			mes "time, so please visit";
+			mes "me at your leisure.";
+			mes "Go with Freya.";
 			goto L_End;
 
 		case 2:
@@ -5882,86 +5705,31 @@ ra_temin,170,46,3	script	Panno#rachel	920,{
 		goto L_End;
 	}
 
-	else if (ra_tem_q >= 12) {
-		L_Redeem_Tickets:
+	else if (ra_tem_q >= 12 || MISC_QUEST & 8192) {
 		cutin "ra_fano03",2;
 		mes "[Priestess Panno]";
 		mes "Good day.";
 		mes "Have you come to";
 		mes "redeem Lottery Tickets?";
 		next;
-		if (select("Yes:No") == 1) {
+		if (select("Yes:No") == 1) goto L_Lottery;
+		if (ra_tem_q == 12) {
+			cutin "ra_fano01",2;
 			mes "[Priestess Panno]";
-			mes "Here we go";
-			mes "Excited? Mm";
-			mes "I can redeem only";
-			mes "1 Lottery Ticket at";
-			mes "a time. Your reward";
-			mes "for this ticket is...";
-			next;
-			cutin "ra_fano02",2;
-			if (countitem(7570) > 0) {
-				mes "[Priestess Panno]";
-				mes "^FF0000This^000000. It's been in our";
-				mes "storage for a while, but";
-				mes "I hope this is acceptable";
-				mes "as a token of the temple's";
-				mes "gratitude. May Freya smile";
-				mes "upon you for your generosity...";
-				delitem 7570,1;
-				set .@bonus_donate,rand(100);
-				if (.@bonus_donate == 99) {
-					set .@bonus_donate2,rand(100);
-					if (.@bonus_donate2 > 0 && .@bonus_donate2 < 11) getitem 616,1;		//Old Card Album 0.1%
-					else if (.@bonus_donate2 > 10 && .@bonus_donate2 < 31) getitem 617,1;	//Old Violet Box 0.2%
-					else if (.@bonus_donate2 > 30 && .@bonus_donate2 < 61) getitem 603,1;	//Old Blue Box 0.3%
-					else getitem 607,1; //Yggdrasil Berry 0.4%
-				}
-				else if (.@bonus_donate > 88 && .@bonus_donate < 96) getitem 644,1;	//Gift Box 7%
-				else if (.@bonus_donate > 76 && .@bonus_donate < 89) getitem 607,1;	//Yggdrasil Berry 12%
-				else if (.@bonus_donate > 65 && .@bonus_donate < 77) getitem 505,1;	//Blue Potion 11%
-				else if (.@bonus_donate > 57 && .@bonus_donate < 66) getitem 604,1;	//Dead Branch 8%
-				else if (.@bonus_donate > 45 && .@bonus_donate < 58) getitem 608,1;	//Yggdrasil Seed 12%
-				else if (.@bonus_donate > 5 && .@bonus_donate < 11) getitem 518,1;	//Honey 5%
-				else if (.@bonus_donate > 0 && .@bonus_donate < 6) getitem 526,1;	//Royal Jelly 5%
-				else getitem 547,1; //Condensed White Potion 39%
-				goto L_End;
-			}
-
-			mes "[Priestess Panno]";
-			mes "You...";
-			mes "Don't have any Lottery";
-			mes "Tickets to redeem";
-			mes "We're not distributing";
-			mes "them now, but maybe you";
-			mes "can ask your friends for one.";
-			next;
-			cutin "ra_fano03",2;
-			mes "[Priestess Panno]";
-			mes "May Freya be with you.";
-			goto L_End;
+			mes "I already told you";
+			mes "everything I know.";
+			mes "Remember to keep";
+			mes "quiet about what I said.";
 		}
-
 		else {
-			if (ra_tem_q == 12) {
-				cutin "ra_fano01",2;
-				mes "[Priestess Panno]";
-				mes "I already told you";
-				mes "everything I know.";
-				mes "Remember to keep";
-				mes "quiet about what I said.";
-			}
-
-			else {
-				cutin "ra_fano02",2;
-				mes "[Priestess Panno]";
-				mes "This is a holy place";
-				mes "Behave yourself, and";
-				mes "respect those who have";
-				mes "come here just to worship.";
-			}
-
+			cutin "ra_fano02",2;
+			mes "[Priestess Panno]";
+			mes "This is a holy place";
+			mes "Behave yourself, and";
+			mes "respect those who have";
+			mes "come here just to worship.";
 		}
+		goto L_End;
 
 	}
 
@@ -5972,7 +5740,59 @@ ra_temin,170,46,3	script	Panno#rachel	920,{
 		mes "Behave yourself, and";
 		mes "respect those who have";
 		mes "come here just to worship.";
+		goto L_End;
 	}
+
+L_Lottery:
+	mes "[Priestess Panno]";
+	mes "Here we go";
+	mes "Excited? Mm";
+	mes "I can redeem only";
+	mes "1 Lottery Ticket at";
+	mes "a time. Your reward";
+	mes "for this ticket is...";
+	next;
+	cutin "ra_fano02",2;
+	if (countitem(7570) > 0) {
+		mes "[Priestess Panno]";
+		mes "^FF0000This^000000. It's been in our";
+		mes "storage for a while, but";
+		mes "I hope this is acceptable";
+		mes "as a token of the temple's";
+		mes "gratitude. May Freya smile";
+		mes "upon you for your generosity...";
+		delitem 7570,1;
+		set .@bonus_donate,rand(100);
+		if (.@bonus_donate == 99) {
+			set .@bonus_donate2,rand(100);
+			if (.@bonus_donate2 > 0 && .@bonus_donate2 < 11) getitem 616,1;		//Old Card Album 0.1%
+			else if (.@bonus_donate2 > 10 && .@bonus_donate2 < 31) getitem 617,1;	//Old Violet Box 0.2%
+			else if (.@bonus_donate2 > 30 && .@bonus_donate2 < 61) getitem 603,1;	//Old Blue Box 0.3%
+			else getitem 607,1; //Yggdrasil Berry 0.4+%
+		}
+		else if (.@bonus_donate > 88 && .@bonus_donate < 96) getitem 644,1;	//Gift Box 7%
+		else if (.@bonus_donate > 76 && .@bonus_donate < 89) getitem 607,1;	//Yggdrasil Berry 12%
+		else if (.@bonus_donate > 65 && .@bonus_donate < 77) getitem 505,1;	//Blue Potion 11%
+		else if (.@bonus_donate > 57 && .@bonus_donate < 66) getitem 604,1;	//Dead Branch 8%
+		else if (.@bonus_donate > 45 && .@bonus_donate < 58) getitem 608,1;	//Yggdrasil Seed 12%
+		else if (.@bonus_donate > 5 && .@bonus_donate < 11) getitem 518,1;	//Honey 5%
+		else if (.@bonus_donate > 0 && .@bonus_donate < 6) getitem 526,1;	//Royal Jelly 5%
+		else getitem 547,1; //Condensed White Potion 39%
+		goto L_End;
+	}
+	mes "[Priestess Panno]";
+	mes "You...";
+	mes "Don't have any Lottery";
+	mes "Tickets to redeem";
+	mes "We're not distributing";
+	mes "them now, but maybe you";
+	mes "can ask your friends for one.";
+	next;
+	cutin "ra_fano03",2;
+	mes "[Priestess Panno]";
+	mes "May Freya be with you.";
+	goto L_End;
+
 L_End:
 	close2;
 	cutin "",255;

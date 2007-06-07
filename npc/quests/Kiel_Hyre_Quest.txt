@@ -37,7 +37,7 @@
 //=	Made .KHQuestBusy$ into a temp global variable. $@KHQuestBusy$. 
 //= 2.0 Changed the labels on the "Big Doors" to "Identifier Names" to prevent an error with using getvariableofnpc [L0ne_W0lf]
 //= 2.1 Fifth door now checks for a variable HIGHER or EQUAL to 74 not 84, as pointed out by Stollen. [L0ne_W0lf]
-//= 2.2 Another fix for elly, no longer RESETS to 26 when you tak to her. [L0ne_W0lf]
+//= 2.2 Another fix for Elly, no longer RESETS to 26 when you talk to her. [L0ne_W0lf]
 //= 2.3 Should NOT have been setting .KHQuestBusy at all. It's not used or accessed anymore. Removed. [L0ne_W0lf]
 //= 2.4 Lots of fixes (4ish) from Valandi. [L0ne_W0lf]
 //=	Added a getmapuser check to the mapwarp in KHTimerEnd so it's not trying to warp out 0 users. [L0ne_W0lf]
@@ -48,7 +48,7 @@
 //=	Fixed where Golden_Key and Exquisite_Button are deleted.
 //=	Removed KHTimerEnd, and instead use OnReset.
 //=	Fixed typo in the second NPC that gives Black Keycards.
-//=	Added and Monster Warps. (Keeps monsters from being in dungeon quest area.) Non-functional though.
+//=	Added Monster Warps. (Keeps monsters from being in dungeon quest area.) [Non-functional]
 //= 2.6 Stupid mistake, accidentally had 4 copies of the same script in 1... [L0ne_W0lf the bonehead]
 //= 2.7 Fixed the wrong name being displayed for Kiel Hyre in one dialog. 
 //=	Removed $@KH_DoorInvoker entirely. The quest is now working like it should according to iRO.
@@ -57,12 +57,12 @@
 //= 2.8 Fixed the weight checking in Vandt, and added official dialog. [L0ne_W0lf]
 //=	Added weight checks for all NPCs that give items. Semi-official dialog.
 //=	Got the missing portion of dialog for Mills'.
-//=	Will add further improper dialogs as I get to them on the second runthrough of the quest.
+//=	Will add further proper dialogs as I get to them on the second runthrough of the quest.
 //= 2.8a minor optimization with extra goto, else or empty switch [Lupus]
-//= 2.9 Fixed the "enablenpc problem with the missing spaces. No idea how it happened. [L0ne_W0lf]
-//= 3.0 Fixed a typo in Elly, in her room. (<= should have been <) [L0ne_W0lf]
+//= 2.9 Fixed the "enablenpc" problem with the missing spaces. No idea how it happened. [L0ne_W0lf]
+//= 3.0 Fixed a typo in Elly, in her room. (was <= should have been <) [L0ne_W0lf]
 //=	Added an 'end;' to the cookie basket. Kiel Hyre's final dialog will now delete all quest-related items.
-//= 3.1 Moved hte "delitem" for all related quest items to the poroper NPC. [L0ne_W0lf
+//= 3.1 Moved the "delitem" for all related quest items to the proper NPC. [L0ne_W0lf]
 //============================================================ 
 
 //============================================================================
