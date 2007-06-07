@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/06/07
+	* Rev. 10717 Fixed Man Stuck in Ice only giving 1 Freezing Snow Powder. [L0ne_W0lf]
 	* Rev. 10716 Forgot the standard script header in the Rachel guide. [L0ne_W0lf]
 	* Rev. 10714 Implemented Official Cooking Quest. [L0ne_W0lf]
 	- Optimized Rachel donation quest, and added Rachel Guide.

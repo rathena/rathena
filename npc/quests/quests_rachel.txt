@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -35,6 +35,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version, needs testing. [L0ne_W0lf]
 //= 1.1 Some slight optimization. [L0ne_W0lf]
+//= 1.2 Fixed Man Stuck in Ice only giving 1 Freezing Snow Powder. [L0ne_W0lf]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -3208,7 +3209,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "And please don't mention";
 		mes "the fact that I trapped myself";
 		mes "in ice to anyone else, okay?";
-		getitem 7574,1; //Freezing Snow Powder
+		getitem 7574,4; //Freezing Snow Powder
 		getitem 7573,1; //Sparkling Necklace
 		delitem 7572,1; //Ashy_Necklace
 		delitem 7569,1; //Wind Hammer
