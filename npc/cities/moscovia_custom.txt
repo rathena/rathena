@@ -1,0 +1,23 @@
+//===== eAthena Script ==================================================
+//= Moscovia Dungeon / Field Warp Script.
+//===== By: =============================================================
+//= Azazel
+//===== Current Version: ================================================
+//= 1.0
+//===== Compatible With: ================================================
+//= Any Athena Version
+//===== Description: ====================================================
+//= 
+//===== Additional Comments: ============================================
+//= 1.0 100% Custom (just to walk and check)
+//=======================================================================
+
+//= Moscovia ================================================
+mosk_fild02.gat,190,257,0	warp	moscovia008	1,1,mosk_dun01.gat,189,45
+
+//= Deep Wood ================================================
+mosk_dun01.gat,189,42,0	warp	moscovia009	1,1,mosk_fild02.gat,190,254
+mosk_dun01.gat,200,273,0	warp	moscovia010	1,1,mosk_dun02.gat,164,31
+mosk_dun02.gat,167,28,0	warp	moscovia011	1,1,mosk_dun01.gat,200,270
+mosk_dun02.gat,267,117,0	warp	moscovia012	1,1,mosk_dun03.gat,32,135
+mosk_dun03.gat,29,132,0	warp	moscovia013	1,1,mosk_dun02.gat,264,117
