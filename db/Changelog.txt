@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+06/08
+	* Updated Moscovia mobs levels,hp,exp (no more info yet) [Lupus]
 06/06
 	* Added some 11.3 mobs [Playtester]
 	* Added Moscovia mobs with poring stats [Lupus]
