@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= eAthena Dev Team
 //===== Current Version: =====================================
-//= 1.3 [Lupus]
+//= 1.3a [Lupus]
 //===== Compatible With: =====================================
 //=
 //===== Description: =========================================
@@ -17,6 +17,7 @@ gef_tower	mapflag	indoors
 geffen_in	mapflag	indoors
 moc_castle	mapflag	indoors
 morocc_in	mapflag	indoors
+mosk_in	mapflag	indoors
 payon_in01	mapflag	indoors
 payon_in02	mapflag	indoors
 payon_in03	mapflag	indoors
@@ -26,6 +27,7 @@ prt_church	mapflag	indoors
 in_orcs01	mapflag	indoors
 aldeba_in	mapflag	indoors
 monk_in	mapflag	indoors
+nameless_in	mapflag	indoors
 prt_are_in	mapflag	indoors
 arena_room	mapflag	indoors
 job_sword1	mapflag	indoors

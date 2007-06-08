@@ -1,5 +1,7 @@
 Date	Added
 
+2007/06/08
+	* Added Moscovia maps into mapflags [Lupus]
 2007/06/06
 	* Added Moscovia maps in the map index [Lupus]
 2007/06/01

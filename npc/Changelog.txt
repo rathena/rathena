@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/06/08
+	* Added real Moscovia warps, thanks to $ephiroth [Lupus]
 2007/06/07
 	* Rev. 10717 Fixed Man Stuck in Ice only giving 1 Freezing Snow Powder. [L0ne_W0lf]
 	* Rev. 10716 Forgot the standard script header in the Rachel guide. [L0ne_W0lf]

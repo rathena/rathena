@@ -2,7 +2,7 @@
 //= Map flags that disable use of fly wings
 //===== By: ==================================================
 //= eAthena Dev Team
-//= 1.6 [Lupus]
+//= 1.6a [Lupus]
 //===== Notes: ===============================================
 //= For disabling Butterfly wings use noreturn
 //===== Current Version: =====================================
@@ -31,6 +31,7 @@ lou_in01	mapflag	noteleport
 lou_in02	mapflag	noteleport
 moc_castle	mapflag	noteleport
 morocc_in	mapflag	noteleport
+mosk_in	mapflag	noteleport
 new_zone01	mapflag	noteleport
 new_zone02	mapflag	noteleport
 new_zone03	mapflag	noteleport

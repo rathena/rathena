@@ -1,0 +1,45 @@
+//===== Athena Script ========================================
+//= Moscovia City Warp Script
+//===== By: ==================================================
+//= $ephiroth
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any Athena Version
+//===== Description: =========================================
+//= Warp Points for Moscovia City
+//===== Additional Comments: =================================
+//= 1.0 Initial version [$ephiroth]
+//============================================================
+
+// Mansion
+moscovia.gat,224,235,0	warp	moskwarp1001	1,1,mosk_in.gat,96,91
+mosk_in.gat,93,91,0	warp	moskwarp1002	1,1,moscovia.gat,224,232
+mosk_in.gat,100,126,0	warp	moskwarp1003	1,1,mosk_in.gat,21,116
+mosk_in.gat,21,113,0	warp	moskwarp1004	1,1,mosk_in.gat,100,123
+// Weapon House
+moscovia.gat,185,189,0	warp	moskwarp1005	1,1,mosk_in.gat,16,179
+mosk_in.gat,13,179,0	warp	moskwarp1006	1,1,moscovia.gat,188,193
+moscovia.gat,203,171,0	warp	moskwarp1007	1,1,mosk_in.gat,85,179
+mosk_in.gat,88,179,0	warp	moskwarp1008	1,1,moscovia.gat,205,168
+// Instrument House
+moscovia.gat,223,174,0	warp	moskwarp1009	1,1,mosk_in.gat,14,245
+mosk_in.gat,11,245,0	warp	moskwarp1010	1,1,moscovia.gat,220,177
+// Inn
+moscovia.gat,229,207,0	warp	moskwarp1011	1,1,mosk_in.gat,141,178
+mosk_in.gat,141,175,0	warp	moskwarp1012	1,1,moscovia.gat,226,204
+mosk_in.gat,150,191,0	warp	moskwarp1013	1,1,mosk_in.gat,206,187
+mosk_in.gat,203,187,0	warp	moskwarp1014	1,1,mosk_in.gat,147,191
+// Mansion
+moscovia.gat,256,138,0	warp	moskwarp1015	1,1,mosk_in.gat,211,114
+mosk_in.gat,211,111,0	warp	moskwarp1016	1,1,moscovia.gat,254,141
+mosk_in.gat,221,128,0	warp	moskwarp1017	1,1,mosk_in.gat,287,120
+mosk_in.gat,287,117,0	warp	moskwarp1018	1,1,mosk_in.gat,221,125
+// Private House
+moscovia.gat,195,80,0	warp	moskwarp1019	1,1,mosk_in.gat,215,40
+mosk_in.gat,215,37,0	warp	moskwarp1020	1,1,moscovia.gat,194,78
+// Private House
+moscovia.gat,146,112,0	warp	moskwarp1021	1,1,mosk_in.gat,213,256
+mosk_in.gat,213,253,0	warp	moskwarp1022	1,1,moscovia.gat,146,109
+mosk_in.gat,219,272,0	warp	moskwarp1023	1,1,mosk_in.gat,151,276
+mosk_in.gat,151,273,0	warp	moskwarp1024	1,1,mosk_in.gat,219,269

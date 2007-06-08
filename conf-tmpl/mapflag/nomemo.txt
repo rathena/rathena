@@ -2,7 +2,7 @@
 //= Map flags that disable warp portal memory
 //===== By: ==================================================
 //= eAthena Dev Team
-//= 1.6 added up to Hugel maps. [Lupus]
+//= 1.6a added up to Hugel maps. [Lupus]
 //===== Current Version: =====================================
 
 
@@ -28,6 +28,14 @@ lou_in01	mapflag	nomemo
 lou_in02	mapflag	nomemo
 moc_castle	mapflag	nomemo
 morocc_in	mapflag	nomemo
+mosk_in	mapflag	nomemo
+mosk_ship	mapflag	nomemo
+mosk_fild01	mapflag	nomemo
+mosk_fild02	mapflag	nomemo
+mosk_dun01	mapflag	nomemo
+mosk_dun02	mapflag	nomemo
+mosk_dun03	mapflag	nomemo
+nameless_in	mapflag	nomemo
 niflheim	mapflag	nomemo
 nif_in	mapflag	nomemo
 new_zone01	mapflag	nomemo

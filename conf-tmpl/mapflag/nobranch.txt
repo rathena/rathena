@@ -4,7 +4,7 @@
 //= eAthena Dev Team
 //= 1.2 [Lupus]
 //= 1.3 [massdriller]
-//= 1.6 [Lupus]
+//= 1.6a [Lupus]
 //===== Current Version: =====================================
 
 // Cities ================>\\
@@ -29,6 +29,8 @@ lou_in01	mapflag	nobranch
 lou_in02	mapflag	nobranch
 moc_castle	mapflag	nobranch
 morocc_in	mapflag	nobranch
+moscovia	mapflag	nobranch
+mosk_in	mapflag	nobranch
 new_zone01	mapflag	nobranch
 new_zone02	mapflag	nobranch
 new_zone03	mapflag	nobranch

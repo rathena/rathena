@@ -1,7 +1,7 @@
 ///===== Description: =============================================
 //= pvp	off: Disables Player versus Player mode.
 //= To disable PvP mode on a specific map add the mapname here.
-//= v 1.1
+//= v 1.1a
 //============================================================
 
 ayo_in01	mapflag	pvp	off
@@ -42,6 +42,7 @@ moc_castle	mapflag	pvp	off
 monk_in	mapflag	pvp	off
 morocc_in	mapflag	pvp	off
 morocc	mapflag	pvp	off
+mosk_in	pvp	off
 nif_in	mapflag	pvp	off
 payon_in01	mapflag	pvp	off
 payon_in02	mapflag	pvp	off

@@ -5,7 +5,7 @@
 //=============================================================
 //= noicewall: Disables Icewall skill.
 //= To disable Icewall on a specific map add the mapname here.
-//= 1.6 Re-enabled icewalls for cities [Lupus]
+//= 1.6a Re-enabled icewalls for cities [Lupus]
 //============================================================
 
 ayo_in01	mapflag	noicewall
@@ -40,6 +40,7 @@ moc_castle	mapflag	noicewall
 monk_in	mapflag	noicewall
 morocc_in	mapflag	noicewall
 //morocc	mapflag	noicewall
+mosk_in	mapflag	noicewall
 payon_in01	mapflag	noicewall
 payon_in02	mapflag	noicewall
 payon_in03	mapflag	noicewall
