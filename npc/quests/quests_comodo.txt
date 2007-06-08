@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.2a
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //===== Additional Comments: ================================= 
 //= 1.1 Fixed exploits [Lupus]
 //= 1.2 Added more quest from cities/comodo.txt [Evera]
+//= 1.2a missing label [Lupus]
 //============================================================ 
 
 
@@ -287,7 +288,7 @@ comodo,206,310,4	script	Rochito	48,{
 	if(dmdswrd_Q == 3) goto sL_2;
 	if(dmdswrd_Q == 4) goto L_3;
 	if(dmdswrd_Q == 5 || dmdswrd_Q == 6) goto sL_3;
-L_0:
+
 	mes "[Rochito]";
 	mes "Meat, meat, meat... I LOVE MEAT!! Eat, eat, eat... ALL I eat is MEAT!! I'm sooo obsessed with meat..... I'm... I.. I... I'm a MEAT MAN!!";
 	emotion e_lv;
@@ -411,17 +412,34 @@ L_3:
 
 //=======================================================
 comodo,204,310,4	script	Rockha	98,{
-	if(dmdswrd_Q == 3) goto L_1;
-	if(dmdswrd_Q == 4 || dmdswrd_Q==5) goto L_2;
-L_0:
 	mes "[Rockha]";
+	if(dmdswrd_Q == 3) {
+		mes "Oh, and by the way.... Could you give him this message as well?";
+		mes "Tell him, 'For as long as you have remembered us, we will not forget you.  Friends forever.'.....";
+		close;
+	}
+	if(dmdswrd_Q == 4 || dmdswrd_Q==5) {
+		mes "Ha ha ha..... aaaahhh.... THIS is FRIENDSHIP!!";
+		emotion e_heh;
+		next;
+		mes "[Rockha]";
+		mes "Let us take a moment to make a toast to our good friend.  Let us eat and drink until we can eat no more!!";
+		next;
+		mes "[Rockha]";
+		mes "~!!Yippeeeeee!!~!!Wooohooooo!!~";
+		close;
+		mes "[Rockha]";
+		mes "Thank you for your assistance.  You have shown us that you are truly a good person.  We now consider you as a friend.";
+		next;
+		mes "[Rockha]";
+		mes "If you ever need any help, just come and look for me, ^3355FF'Rockha'^000000.  We are forever in your debt.";
+		close;
+	}
 	mes ". . . . . . . . . .";
 	mes "My friends and I always wanted to have our BBQ eat out.....";
 	mes ". . . . . . . . . .";
 	next;
-	menu "About the ^3355FFChief^000000.",M_0, "End Conversation.",M_End;
-
-	M_0:
+	if(select("About the ^3355FFChief^000000.:End Conversation.")==1) {
 		mes "[Rockha]";
 		mes "Yeah... I recently discovered that a friend I thought I lost during the ^FF4444'War with the Witch'^000000, is still alive.";
 		mes "Now he's the ^5555FFChief of Comodo^000000....";
@@ -435,30 +453,7 @@ L_0:
 		mes "[Rockha]";
 		mes "Although my friend and I now live in different worlds, his new life hasn't changed him.";
 		mes "Thankfully we can still be friends after all that's happened.";
-		close;
-
-L_1:
-	mes "[Rockha]";
-	mes "Oh, and by the way.... Could you give him this message as well?";
-	mes "Tell him, 'For as long as you have remembered us, we will not forget you.  Friends forever.'.....";
-	close;
-
-L_2:
-	mes "[Rockha]";
-	mes "Ha ha ha..... aaaahhh.... THIS is FRIENDSHIP!!";
-	emotion e_heh;
-	next;
-	mes "[Rockha]";
-	mes "Let us take a moment to make a toast to our good friend.  Let us eat and drink until we can eat no more!!";
-	next;
-	mes "[Rockha]";
-	mes "~!!Yippeeeeee!!~!!Wooohooooo!!~";
-	close;
-	mes "[Rockha]";
-	mes "Thank you for your assistance.  You have shown us that you are truly a good person.  We now consider you as a friend.";
-	next;
-	mes "[Rockha]";
-	mes "If you ever need any help, just come and look for me, ^3355FF'Rockha'^000000.  We are forever in your debt.";
+	}
 	close;
 }
 
@@ -585,7 +580,6 @@ cmd_in02,32,140,4	script	Chief Tausupa	49,{
 	if(dmdswrd_Q == 3) goto L_2;
 	if(dmdswrd_Q == 4) goto sL_2;
 
-L_0:
 	mes "[Chief Tausupa]";
 	mes "Hello, I am the Chief of Comodo.  You may call me Tausupa.  Comodo is a place of pleasure, enjoyment, love, and beauty.";
 	mes "Welcome, and have a pleasant and relaxing stay here.";
