@@ -10,6 +10,7 @@
 //= Hugel Bingo game
 //===== Additional Comments: =================================
 //= 1.0 - First version. Please report bugs you find out. [SinSloth]
+//= 1.1 - Fixed a minor bug. [SinSloth]
 //============================================================
 
 que_bingo,48,84,5	script	Bingo Waiting Room	124,{
@@ -977,7 +978,7 @@ OnInit:
 	end;
 	
 OnTouch:
-	warp que_bingo,40,121;
+	warp "que_bingo",40,121;
 	end;
 }
 
