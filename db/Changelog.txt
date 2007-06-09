@@ -50,6 +50,7 @@
 ========================
 06/09
 	* Slightly adjusted Thor Volcano mob def and mdef [Playtester]
+	- Updated Moscovia mobs stats, thanks to Qwadrat [Lupus]
 06/08
 	* Small fixes on Moscovia mobs [Playtester]
 	- removed poring drops and exp
