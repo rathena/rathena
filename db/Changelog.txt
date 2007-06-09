@@ -49,6 +49,8 @@
 	----
 ========================
 06/09
+	* Added some official Thor Volcano mob stats [Playtester]
+	- also updated sql files
 	* Fixed some bugs on Moscovia mobs [Playtester]
 	- fixed Mavka and Lesavka being exchanged
 	- reverted kRO names back to kRO

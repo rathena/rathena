@@ -688,7 +688,7 @@ REPLACE INTO `item_db` VALUES (1415,'Skewer','Brocca',4,NULL,10,850,100,NULL,3,0
 REPLACE INTO `item_db` VALUES (1416,'Tjungkuletti','Tjungkuletti',4,NULL,10,1000,95,NULL,3,0,0x00004082,7,2,2,4,48,1,4,' bonus2 bSPDrainValue,1,1; bonus bSPGainValue,5; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1417,'Pole_Axe','Pole Axe',4,NULL,10,3800,160,NULL,3,1,0x00004082,7,2,2,3,71,1,4,' bonus bStr,1; bonus bInt,2; bonus bDex,1; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1418,'Gungnir_','Gungnir',4,NULL,10,500,120,NULL,3,2,0x00004082,7,2,2,4,4,1,4,' bonus bAtkEle,Ele_Wind; bonus bPerfectHitRate,25; bonus bHit,30; ',NULL,NULL);
-REPLACE INTO `item_db` VALUES (1419,'Refined_Pole_Axe','Refined Pole Axe',4,NULL,NULL,4800,159,NULL,3,1,0x00004082,7,2,2,3,1,0,4,' bonus bStr,1; bonus bInt,2; bonus bDex,1; ',NULL,NULL);
+REPLACE INTO `item_db` VALUES (1419,'Refined_Pole_Axe','Refined Pole Axe',4,NULL,NULL,4800,159,NULL,3,0,0x00004082,7,2,2,3,1,0,4,' bonus bStr,1; bonus bInt,2; bonus bDex,1; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1420,'Long_Horn','Long Horn',4,NULL,10,1000,150,NULL,3,1,0x00004082,7,2,2,4,65,1,4,' bonus2 bAddEff,Eff_Bleeding,10; skill 93,1; bonus3 bAutoSpellWhenHit,361,2,10; bonus bUnbreakableWeapon,0; bonus bAtkEle,Ele_Holy; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1421,'Battle_Hook','Battle Hook',4,NULL,10,900,140,NULL,3,1,0x00004082,7,2,2,4,65,1,4,' bonus2 bAddEff,Eff_Stun,500; bonus2 bAddRace,RC_DemiHuman,20; skill 56,3; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1422,'Hunting_Spear','Hunting Spear',4,NULL,10,4200,180,NULL,3,1,0x00004082,2,2,2,4,60,1,4,' bonus bIgnoreDefRace,RC_Brute; bonus3 bAddMonsterDropItem,517,RC_Brute,100; bonus4 bAutoSpell,399,3,50,1; ',NULL,NULL);
@@ -905,7 +905,7 @@ REPLACE INTO `item_db` VALUES (1916,'Guitar_Of_Vast_Land','Green Acre Guitar',4,
 REPLACE INTO `item_db` VALUES (1917,'Guitar_Of_Gentle_Breeze','Gentle Breeze Guitar',4,NULL,10,900,110,NULL,1,0,0x00080000,7,1,2,3,27,1,13,' bonus bAtkEle,Ele_Wind; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1918,'Oriental_Lute','Oriental Lute',4,NULL,10,1200,150,NULL,1,0,0x00080000,7,1,2,4,65,1,13,' bonus2 bSkillAtk,394,10; bonus2 bSkillAtk,316,10; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1919,'Bass_Guitar','Bass Guitar',4,NULL,10,1500,150,NULL,1,1,0x00080000,2,1,2,3,70,1,13,' bonus bSPGainValue,3; bonus4 bAutoSpell,283,3,50,1; bonus2 bAddEff,Eff_Confusion,100; ',NULL,NULL);
-REPLACE INTO `item_db` VALUES (1920,'Spirited_Guitar','Spirited Guitar',4,NULL,10,1800,10,NULL,1,0,0x00080000,2,1,2,4,70,1,13,' bonus bAspdRate,100; bonus bNoRegen,1; bonus2 bHPLossRate,50,5000; bonus bDex,-99; ',NULL,NULL);
+REPLACE INTO `item_db` VALUES (1920,'Spirited_Guitar','Spirited Guitar',4,NULL,10,1800,10,NULL,1,0,0x00080000,2,1,2,4,70,1,13,' bonus bAspdRate,100; bonus bNoRegen,1; bonus2 bHPLossRate,50,5000; bonus bDex,-readparam(bDex); ',NULL,NULL);
 # // Whips
 REPLACE INTO `item_db` VALUES (1950,'Rope','Rope',4,2500,NULL,400,45,NULL,2,3,0x00080000,7,0,2,1,3,1,14,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (1951,'Rope_','Rope',4,2500,NULL,400,45,NULL,2,4,0x00080000,7,0,2,1,3,1,14,NULL,NULL,NULL);
@@ -3078,7 +3078,7 @@ REPLACE INTO `item_db` VALUES (13513,'Refined_Moonlight_Dagger_Box','Refined_Moo
 REPLACE INTO `item_db` VALUES (13514,'Refined_Wrench_Box','Refined_Wrench_Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,' getitem 1534,1; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (13538,'Meteor_Storm_Scroll_Box','Meteor_Storm_Scroll_Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,' getitem 14512,10; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (13539,'Storm_Gust_Scroll_Box','Storm_Gust_Scroll_Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,' getitem 14513,10; ',NULL,NULL);
-REPLACE INTO `item_db` VALUES (13540,'Lord_of_Vermilion_Scroll_Box','Lord_of_Vermilion_Scroll_Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,' getitem 14154,10; ',NULL,NULL);
+REPLACE INTO `item_db` VALUES (13540,'Lord_of_Vermilion_Scroll_Box','Lord_of_Vermilion_Scroll_Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,' getitem 14514,10; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (13541,'Lex_Aeterna_Scroll_Box','Lex_Aeterna_Scroll_Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,' getitem 14515,10; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (13542,'Magnificat_Scroll_Box','Magnificat_Scroll_Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,' getitem 14516,10; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (13543,'Chemical_Protection_Helm_Scroll_Box','Chemical_Protection_Helm_Scroll_Box',2,NULL,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,' getitem 14517,10; ',NULL,NULL);
