@@ -49,6 +49,7 @@
 	----
 ========================
 06/09
+	* Fixed some bugs on Moscovia mobs [Playtester]
 	* Slightly adjusted Thor Volcano mob def and mdef [Playtester]
 	- Updated Moscovia mobs stats, thanks to Qwadrat [Lupus]
 06/08
