@@ -5135,7 +5135,7 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 // Allysia
 //----------------------------------------------------------------------------
 kh_mansion,18,30,4	script	Allysia	894,{
-	cutin "kh_ellisia",2;
+	
 	if (KielHyreQuest < 46) {
 		mes "[Allysia]";
 		mes "Who are you?";
@@ -5144,7 +5144,9 @@ kh_mansion,18,30,4	script	Allysia	894,{
 		close;
 	}
 
-	else if (KielHyreQuest >= 46) {
+	cutin "kh_ellisia",2;
+
+	if (KielHyreQuest < 70) {
 		mes "[Allysia]";
 		mes "You must be surprised";
 		mes "by everything that's been";
@@ -5295,7 +5297,7 @@ kh_mansion,18,30,4	script	Allysia	894,{
 
 	}
 
-	else if (KielHyreQuest >= 70) {
+	else {
 		mes "[Allysia]";
 		mes "......";
 		mes ".........";
