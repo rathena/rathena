@@ -218,14 +218,17 @@ lhz_dun03,138,138,36,34	monster	High Wizard Kathryne	1645,1,2580000,2460000,1
 
 lhz_dun03,1,1,0	script	Lhzdun03monster	-1,{
 OnInit:
-	while(1){	
-		set $@metaspawn,rand(1,6);
-		if($@metaspawn == 1)areamonster "lhz_dun03",1,1,300,300,"Lord Knight Seyren",1646,1,"Lhzdun03monster::OnMonsterDead";
-		if($@metaspawn == 2)areamonster "lhz_dun03",1,1,300,300,"Assassin Cross Eremes",1647,1,"Lhzdun03monster::OnMonsterDead";
-		if($@metaspawn == 3)areamonster "lhz_dun03",1,1,300,300,"Whitesmith Horward",1648,1,"Lhzdun03monster::OnMonsterDead";
-		if($@metaspawn == 4)areamonster "lhz_dun03",1,1,300,300,"High Priest Margaretha",1649,1,"Lhzdun03monster::OnMonsterDead";
-		if($@metaspawn == 5)areamonster "lhz_dun03",1,1,300,300,"Sniper Cecil",1650,1,"Lhzdun03monster::OnMonsterDead";
-		if($@metaspawn == 6)areamonster "lhz_dun03",1,1,300,300,"High Wizard Kathryne",1651,1,"Lhzdun03monster::OnMonsterDead";
+	while(1)
+	{
+		switch(rand(1,6))
+		{
+		case 1: areamonster "lhz_dun03",1,1,300,300,"Lord Knight Seyren",1646,1,"Lhzdun03monster::OnMonsterDead"; break;
+		case 2: areamonster "lhz_dun03",1,1,300,300,"Assassin Cross Eremes",1647,1,"Lhzdun03monster::OnMonsterDead"; break;
+		case 3: areamonster "lhz_dun03",1,1,300,300,"Whitesmith Horward",1648,1,"Lhzdun03monster::OnMonsterDead"; break;
+		case 4: areamonster "lhz_dun03",1,1,300,300,"High Priest Margaretha",1649,1,"Lhzdun03monster::OnMonsterDead"; break;
+		case 5: areamonster "lhz_dun03",1,1,300,300,"Sniper Cecil",1650,1,"Lhzdun03monster::OnMonsterDead"; break;
+		case 6: areamonster "lhz_dun03",1,1,300,300,"High Wizard Kathryne",1651,1,"Lhzdun03monster::OnMonsterDead"; break;
+		}
 		end;
 	OnMonsterDead:
 		initnpctimer;

@@ -10491,4 +10491,3 @@ sec_in02,38,162,0	script	Morroc Invasion Manager	882,{
 		close;
 	}
 }
-

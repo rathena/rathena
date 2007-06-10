@@ -355,13 +355,13 @@ ra_temple,115,148,7	script	Follower Yakum	917,{
 }
 
 ra_temin,287,88,7	script	Follower Lekua	927,{
-	mes "[Follower Lekua[";
+	mes "[Follower Lekua]";
 	mes "Look at these flowers.";
 	mes "Aren't they so beautiful?";
 	mes "I've spent a lot of time";
 	mes "cultivating this flower garden.";
 	next;
-	mes "[Follower Lekua[";
+	mes "[Follower Lekua]";
 	mes "I think it's Freya's";
 	mes "will for us to";
 	mes "bring as much beauty into";

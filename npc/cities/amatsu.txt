@@ -924,5 +924,4 @@ s_No:
 	mes "at you. Kehehehehe...";
 	mes "KEHEHEHEHEHEHE!";
 	close;
-
 }

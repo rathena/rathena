@@ -99,4 +99,3 @@ kh_rossi,204,238,0	warp	kh_rossi_17a	1,1,kh_rossi,204,283
 kh_rossi,204,279,0	warp	kh_rossi_17b	1,1,kh_rossi,204,235
 kh_rossi,220,238,0	warp	kh_rossi_18a	1,1,kh_rossi,261,283
 kh_rossi,260,279,0	warp	kh_rossi_18b	1,1,kh_rossi,220,235
-
