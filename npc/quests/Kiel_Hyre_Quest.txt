@@ -63,8 +63,8 @@
 //= 3.0 Fixed a typo in Elly, in her room. (was <= should have been <) [L0ne_W0lf]
 //=	Added an 'end;' to the cookie basket. Kiel Hyre's final dialog will now delete all quest-related items.
 //= 3.1 Moved the "delitem" for all related quest items to the proper NPC. [L0ne_W0lf]
+//= 3.2 Fixed error with Allysia teling yout o "Go away." maybe. [L0ne_W0lf]
 //============================================================ 
-
 //============================================================================
 // Kiel Hyre Quest/Robotic Lab Dungeon
 //
@@ -5136,7 +5136,7 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 //----------------------------------------------------------------------------
 kh_mansion,18,30,4	script	Allysia	894,{
 	cutin "kh_ellisia",2;
-	if (KielHyreQuest <= 68) {
+	if (KielHyreQuest < 46) {
 		mes "[Allysia]";
 		mes "Who are you?";
 		mes "How did you get here?";
@@ -5144,7 +5144,7 @@ kh_mansion,18,30,4	script	Allysia	894,{
 		close;
 	}
 
-	else if (KielHyreQuest < 70) {
+	else if (KielHyreQuest >= 46) {
 		mes "[Allysia]";
 		mes "You must be surprised";
 		mes "by everything that's been";

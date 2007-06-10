@@ -2373,7 +2373,7 @@ OnTouch:
 		mes "Hey, master! Do you";
 		mes "know this guy?";
 		next;
-		if(mao_curse == 24)
+		if(prt_curse == 24)
 		{
 			mes "[" + strcharinfo(0) + "]";
 			mes "I, um, I'm looking";
@@ -2841,7 +2841,7 @@ OnInit:
 	end;
 	
 OnTouch:
-	if(mao_request == 2 || mao_request == 24 || mao_request == 28 || mao_request == 29 || mao_request == 123 || mao_request == 126 || mao_request == 127 || mao_curse == 24)
+	if(mao_request == 2 || mao_request == 24 || mao_request == 28 || mao_request == 29 || mao_request == 123 || mao_request == 126 || mao_request == 127 || prt_curse == 24)
 	{
 		if(!$maobar_room)
 		{
@@ -2865,7 +2865,7 @@ OnTouch:
 				donpcevent "Lin#2::OnEnter";
 				donpcevent "#mao_table::OnEnter";
 			}
-			else if(mao_curse == 24) donpcevent "Marjana::OnEnter";
+			else if(prt_curse == 24) donpcevent "Marjana#poison::OnEnable";
 			mes "[Tao]";
 			mes "Ah, that place is protected";
 			mes "by security magic, so you'll";
@@ -2912,7 +2912,7 @@ OnStop:
 	donpcevent "Lin#2::OnInit";
 	donpcevent "Kidd#1::OnInit";
 	donpcevent "Kidd#2::OnInit";
-	donpcevent "Marjana::OnInit";
+	donpcevent "Marjana#poison::OnInit";
 	donpcevent "#mao_table::OnInit";
 	donpcevent "#roombar1::OnInit";
 	stopnpctimer;
@@ -2930,7 +2930,7 @@ OnTimer245000:
 	donpcevent "Lin#2::OnInit";
 	donpcevent "Kidd#1::OnInit";
 	donpcevent "Kidd#2::OnInit";
-	donpcevent "Marjana::OnInit";
+	donpcevent "Marjana#poison::OnInit";
 	donpcevent "#mao_table::OnInit";
 	end;
 	

@@ -1,6 +1,17 @@
 Date		Added
 ======
 2007/06/09
+	* Rev. 10736 Updated several Prontera NPCs. [L0ne_W0lf]
+	- Updated Prontera town NPCs, and Prontera Library.
+	- Updated the Prontera Milk Merchant. 
+	- Updated the inn dialogs slightly, and corrected information for Prontera.
+	- Added Gaebolg Family Curse quest.
+	- Commented out old Clothes_dyer npc.
+	* Updated Rachel's guide's while loop to be a bit nicer looking.
+	* Added the ability to redeem lottery tickets before max donation is met.
+	* Changed conflicting warps to the "Adoption" room in the church.
+	* Fixed a bug in Kiel Hyre warps and quest.
+	* Updated Dandelion Request quest for Gaebolg compatibility.
 	* Added Hugel Bingo game system. Please test it and report any bugs. [SinSloth]
 	- 'nosave' mapflag added to the map.
 2007/06/08

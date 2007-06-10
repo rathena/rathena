@@ -1,9 +1,9 @@
 //===== Athena Script ========================================
 //= Kiel Warp Script (Kiel Buildings)
 //===== By: ==================================================
-//= Playtester
+//= Playtester; L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 8+
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.3 Removed and altered exploitable warps for Kiel Hyre Quest. [L0ne_W0lf]
 //= 1.4 Removed FIELD entrance into Kiel Hyre's Villa. [L0ne_W0lf]
 //= 1.5 Rewrite of the warps. No more exploits/bugs should be present after this. [L0ne_W0lf]
+//= 1.6 Thanks Tsuyuki for pointing out that bug! Bah! [L0ne_W0lf]
 //============================================================
 
 //============================================================
@@ -43,7 +44,7 @@ kh_vila,46,54,0		warp	kh_vila_03b	1,1,kh_vila,75,54
 kh_vila,34,66,0		warp	kh_vila_04a	1,1,kh_vila,20,108
 kh_vila,20,103,0	warp	kh_vila_04b	1,1,kh_vila,34,61
 kh_vila,84,66,0		warp	kh_vila_05a	1,1,kh_vila,44,107
-kh_vila,44,103,,0	warp	kh_vila_05b	1,1,kh_vila,84,62
+kh_vila,44,103,0	warp	kh_vila_05b	1,1,kh_vila,84,62
 kh_vila,32,128,0	warp	kh_vila_06a	1,1,kh_vila,23,171
 kh_vila,22,167,0	warp	kh_vila_06b	1,1,kh_vila,32,123
 kh_vila,90,47,0		warp	kh_vila_07a	1,1,kh_vila,119,47

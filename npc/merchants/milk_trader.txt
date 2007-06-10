@@ -1,61 +1,82 @@
 //===== eAthena Script =======================================
 //= Milk Trader
 //===== By: ==================================================
-//= kobra_k88
+//= kobra_k88; L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.2a
+//= 1.3
 //===== Compatible With: =====================================
-//= eAthena 7.15 +
+//= eAthena SVN
 //===== Description: =========================================
+//= [Aegis Conversion]
 //= trades bottles for milk
 //===== Additional Comments: =================================
 //= Fully working
 //= 1.1 Negative input bug fixed [Lupus]
 //= 1.2 Raised the price to close zeny exploit [Lupus]
 //= 1.2a Switched to Lupus's "loopless" technique.[kobra_k88]
+//= 1.3 Rescripted from the ground up. [L0ne_W0lf]
 //============================================================
 
-
-// Milk Trader -------------------------------------------------------------
-prontera,71,131,7	script	Milk Trader	86,{
-	mes "[Milk Trader]";
-	mes "If you bring me an empty bottle and 20 Zeny, I will exchange it for 1 bottle of milk.";
+prontera,73,140,0	script	Milk Vendor	86,{
+	//Supposedly this is to make sure the character 
+	//has room to accept items in their inventory.
+	//var max_max_c = CheckMaxCount 1201 1
+	//if max_max_c == 1
+	//	mes "^3355FFJust a minute!";
+	//	mes "I can't offer any of my";
+	//	mes "services to you because";
+	//	mes "you're carrying too much";
+	//	mes "stuff. Put your extra items in";
+	//	mes "Kafra Storage and come again~";
+	//	close;
+	//}
+	mes "[Milk Vendor]";
+	mes "Hey, hey...";
+	mes "If you bring me";
+	mes "1 Empty Bottle and";
+	mes "15 Zeny, I'll exchange";
+	mes "them for 1 Milk. How";
+	mes "does that sound?";
 	next;
-	menu "-Exchange as many as possible.",M_0, "-Let me set the amount.",M_1, "-Cancel",M_End;
-
-	M_0:
-		set @amount, 1000;
-		if(zeny/20 < @amount) set @amount, zeny/20;
-		if(countitem(713) < @amount) set @amount, countitem(713);
-		if(@amount > 0) goto L_Milk;
-		mes "[Milk Trader]";
-		mes "..... Are you trying to make a fool of me.... ?";
+	if (select("Exchange all empty bottles.:Cancel") == 1) {
+		if (countitem(713) <= 0) {
+			mes "[Milk Vendor]";
+			mes "Hey...";
+			mes "You don't have";
+			mes "any Empty Bottles.";
+			mes "I can't really give you";
+			mes "this milk any other";
+			mes "way, you know...";
+			close;
+		}
+		set .@bottles,countitem(713);
+		set .@total_weight,.@bottles * 50;
+		set .@total_cost,.@bottles * 15;
+		set .@now_weight,maxweight-weight;
+		if (zeny < .@Total_cost) {
+			mes "[Milk Vendor]";
+			mes "Oh, whoa~!";
+			mes "You don't have enough";
+			mes "zeny to exchange all";
+			mes "these Empty Bottles for";
+			mes "Milk. You need to have";
+			mes "at least " + gap + " zeny.";
+			close;
+		}
+		if (.@now_weight < .@total_weight) {
+			mes "[Milk Vendor]";
+			mes "Hmm...";
+			mes "Would you make";
+			mes "a little more room";
+			mes "in your inventory";
+			mes "before I give you";
+			mes "all of this milk?";
+			close;
+		}
+		set zeny,zeny-.@total_cost;
+		delitem 713,.@bottles; //Empty Bottles
+		getitem 519,.@bottles; //Milk
 		close;
-
-	M_1:
-		input @amount;
-		if(@amount < 1 || @amount > 1000) goto M_End;
-		if(countitem(713) < @amount) goto L_NoBottle;
-		if(zeny < (@amount*20)) goto L_NoZeny;
-
-	L_Milk:
-		set zeny, zeny - (@amount*20);
-		delitem 713, @amount;
-		getitem 519, @amount;
-
-	M_End:
-		mes "[Milk Trader]";
-		mes "Come back anytime.";
-		close;
-
-	L_NoBottle:
-		mes "[Milk Trader]";
-		mes "Ok, empty bottle please! Empty Bottle!!";
-		mes "... Aww.. you don't have enough...?";
-		close;
-
-	L_NoZeny:
-		mes "[Milk Trader]";
-		mes "You need more zeny.";
-		close;
+	}
+	close;
 }

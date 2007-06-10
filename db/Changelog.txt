@@ -49,6 +49,7 @@
 	----
 ========================
 06/09
+	* Rev. 10736 Updated (and added) item_trade entries. (Converted from Aegis.) [L0ne_W0lf]
 	* Added some official Thor Volcano mob stats [Playtester]
 	- also updated sql files
 	* Fixed some bugs on Moscovia mobs [Playtester]

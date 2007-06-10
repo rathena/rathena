@@ -3,6 +3,7 @@
 //===== By ================================================
 //= Fredzilla with help from Kamari,Acky
 //===== Version ===========================================
+//= 1.7 Moved warps to the southern exit of the main chappel. [L0ne_W0lf]
 //= 1.6a Fixed wrong label name [KarLaeda]
 //= 1.6 Removed call to function Is_Taekwon_Class in favor of baseClass == Job_Taekwon [Silentdragon]
 //= 1.5 Added GM menu to reset current adoption [Lupus]
@@ -49,8 +50,8 @@
 //= 	Use "Upper==2" insread of event_adopted
 //=========================================================
 
-prt_church,115,122,0	warp	prtch03	1,2,prt_church,164,171
-prt_church,162,171,0	warp	prtch01-3	1,2,prt_church,113,122
+prt_church,83,122,0	warp	prtch03	1,2,prt_church,164,171
+prt_church,162,171,0	warp	prtch01-3	1,2,prt_church,86,122
 
 prt_church,166,176,3	script	Adoption Man	61,{
 
