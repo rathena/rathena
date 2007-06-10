@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //= 1.4 Moved Culvert from cities/prontera.txt [Evera]
 //= 1.5 Culvert has been rescripted from the ground up. [L0ne_W0lf]
 //= 1.6 Added Gaebolg Family Curse quest. [L0ne_W0lf]
+//= 1.6a Fixed a couple spelling mistakes. [L0ne_W0lf]
 //============================================================ 
 
 // Prontera Culvert
@@ -411,8 +412,8 @@ prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 		mes "[Busy-Looking Boy]";
 		mes "Ack! Would you leave";
 		mes "me alone and let me work?";
-		mes "I've got somehing important";
-		mes "to do! When Ifinish arranging";
+		mes "I've got something important";
+		mes "to do! When I finish arranging";
 		mes "these books,  need to... I need to make some preparations!";
 		close;
 	}

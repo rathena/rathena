@@ -49,6 +49,9 @@
 	----
 ========================
 06/09
+	* Rev. 10745 Added Old_Bleu_Box and added corrisponding item group entries. [L0ne_W0lf]
+	* Updated Red_Box_ and added corrisponding item group entries.
+	* Updated constants to include IG_BleuBox and IG_Red_Box_2.
 	* Rev. 10736 Updated (and added) item_trade entries. (Converted from Aegis.) [L0ne_W0lf]
 	* Added some official Thor Volcano mob stats [Playtester]
 	- also updated sql files

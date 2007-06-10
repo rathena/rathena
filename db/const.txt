@@ -486,6 +486,9 @@ IG_GiftBoxChina	34
 IG_LottoBox	35
 IG_FoodBag	36
 IG_Potion	37
+IG_RedBox_2	38
+IG_BleuBox	39
+
 
 SC_ALL -1
 SC_STONE	0

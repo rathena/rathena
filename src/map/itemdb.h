@@ -65,6 +65,8 @@ enum item_group_list {
 	IG_LOTTOBOX,	//35
 	IG_FOODBAG,	//36
 	IG_POTION,	//37
+	IG_REDBOX_2,	//38
+	IG_BLEUBOX,	//39
 	MAX_ITEMGROUP,
 };
 

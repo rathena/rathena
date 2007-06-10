@@ -330,3 +330,20 @@
 37,502,1	//Orange Potion
 37,503,1	//Yellow Potion
 37,504,1	//White Potion
+// Red_Box_
+38,5137,1	//Alice Doll
+38,5138,9	//Magic Eyes
+38,5139,10	//Lotus
+38,5140,10	//Kawaii Ribbon
+// Old_Bleu_Box
+39,687,1	//Level 5 Earth Spike
+39,689,1	//Level 5 Cold Bolt
+39,691,1	//Level 5 Fire Bolt
+39,693,1	//Level 5 Lightening Bolt
+39,697,1	//Level 5 Fire Ball
+39,699,1	//Level 5 Fire Wall
+39,12002,1	//Level 5 Heal
+39,12000,1	//Level 5 Frost Diver
+39,644,1	//Gift Box
+39,519,1	//Milk
+39,538,1	//Well-baked Cookie

@@ -1,7 +1,7 @@
 Date	Added
 
 2007/06/10
-	* Rev. 10743 Fixed nopvp mapflag entry for mosk_in. [L0ne_W0lf]
+	* Rev. 10744 Fixed nopvp mapflag entry for mosk_in. [L0ne_W0lf]
 2007/06/08
 	* Added Moscovia maps into mapflags [Lupus]
 2007/06/06

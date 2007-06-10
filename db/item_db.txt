@@ -2840,7 +2840,7 @@
 12186,Red_Box,Old Red Box,2,50000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12187,Green_Box,Old Green Box,2,50000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12188,Moon_Snack,Fantastic Moon Snack,2,,10,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; },{},{}
-12189,Red_Box_,Old Red Box,2,50000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12189,Red_Box_,Old Red Box,2,50000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_RedBox_2),1; },{},{}
 12190,Moon_Cake,Moon Cake,2,,1,300,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12191,Special_Moon_Cake,Special Moon Cake,2,,1,500,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12192,Pumpkin_Pie,Pumpkin Pie,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
@@ -2872,7 +2872,7 @@
 12218,Level_5_Assumptio_Scroll,Level_5_Assumptio_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 361,5; },{},{}
 12219,Level_10_Wind_Walk_Scroll,Level_10_Wind_Walk_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 383,10; },{},{}
 12220,Level_5_Adrenaline_Rush_Scroll,Level_5_Adrenaline_Rush_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 111,5; },{},{}
-12221,Megaphone_,Megaphone,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ input @Megaphone$; announce strcharinfo(0) + " shouts '" + @megaphone$ + "'",bc_all,0xFF0000; end; },{},{}
+12221,Megaphone_,Megaphone,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ input @Megaphone$; announce strcharinfo(0) + ": " + @megaphone$,bc_all,0xFF0000; end; },{},{}
 //Valentine's Day Event (2007)
 12234,Cacao99,Fierce Cacao 99%,0,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 25,0; },{},{}
 12235,Strawberry_Choco,Strawberry Chocolate,11,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,5; itemskill 34,5; },{},{}
@@ -2880,6 +2880,8 @@
 12237,Choco_Lump,Dollop of Chocolate,2,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,5; sc_start SC_Poison,18000,0; sc_start SC_Bleeding,18000,0; },{},{}
 //St patrick's day Event (2007)
 12245,Green_Ale_,Green Ale,0,,10,500,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,0; },{},{}
+//April Fools Day Event (2007)
+12702,Old_Bleu_Box,Old Bleu Box,2,0,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_BleuBox),1; getitem groupranditem(IG_BleuBox),1; },{},{}
 //Cash Shop Box Items
 12900,Field_Manual_Box,Field_Manual_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{  getitem 12208,10; },{},{}
 12901,Life_Insurrance_Box,Life_Insurrance_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{  getitem 12209,10; },{},{}
