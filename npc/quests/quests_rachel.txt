@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -37,6 +37,7 @@
 //= 1.1 Some slight optimization. [L0ne_W0lf]
 //= 1.2 Fixed Man Stuck in Ice only giving 1 Freezing Snow Powder. [L0ne_W0lf]
 //= 1.3 Added hte ability to redeem lottery tickets before donation max is met. [L0ne_W0lf]
+//= 1.4 Removed an erroneous "case". Thanks, Jet. [L0ne_W0lf]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -5467,7 +5468,6 @@ ra_temin,170,46,3	script	Panno#rachel	920,{
 			mes "them for some weird reason.";
 			next;
 			if (select("Yes:No") == 1) {
-			case 1:
 				set .@now_weight,MaxWeight-Weight;
 				if (.@now_weight < 300) {
 					cutin "ra_fano02",2;

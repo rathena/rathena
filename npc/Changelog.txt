@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/06/09
+	* Rev. 10737 Removed an erroneous "case" in Rachel quest. Thanks, Jet. [L0ne_W0lf]
 	* Rev. 10736 Updated several Prontera NPCs. [L0ne_W0lf]
 	- Updated Prontera town NPCs, and Prontera Library.
 	- Updated the Prontera Milk Merchant. 
