@@ -4151,6 +4151,41 @@ int status_get_guild_id(struct block_list *bl)
 	return 0;
 }
 
+int status_get_emblem_id(struct block_list *bl)
+{
+	nullpo_retr(0, bl);
+	switch (bl->type) {
+	case BL_PC:
+		return ((TBL_PC*)bl)->guild_emblem_id;
+	case BL_PET:
+		if (((TBL_PET*)bl)->msd)
+			return ((TBL_PET*)bl)->msd->guild_emblem_id;
+		break;
+	case BL_MOB:
+	{
+		struct map_session_data *msd;
+		struct mob_data *md = (struct mob_data *)bl;
+		if (md->guardian_data)	//Guardian's guild [Skotlex]
+			return md->guardian_data->emblem_id;
+		if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != NULL)
+			return msd->guild_emblem_id; //Alchemist's mobs [Skotlex]
+	}
+		break;
+	case BL_HOM:
+	  	if (((TBL_HOM*)bl)->master)
+			return ((TBL_HOM*)bl)->master->guild_emblem_id;
+		break;
+	case BL_NPC:
+		if (bl->subtype == SCRIPT && ((TBL_NPC*)bl)->u.scr.guild_id > 0) {
+			struct guild *g = guild_search(((TBL_NPC*)bl)->u.scr.guild_id);
+			if (g)
+				return g->emblem_id;
+		}
+		break;
+	}
+	return 0;
+}
+
 int status_get_mexp(struct block_list *bl)
 {
 	nullpo_retr(0, bl);

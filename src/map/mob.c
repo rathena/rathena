@@ -3631,7 +3631,7 @@ static int mob_readskilldb(void)
 	} cond1[] = {
 		{	"always",			MSC_ALWAYS				},
 		{	"myhpltmaxrate",	MSC_MYHPLTMAXRATE		},
-		{  "myhpinrate",		MSC_MYHPINRATE 		},
+		{	"myhpinrate",		MSC_MYHPINRATE 		},
 		{	"friendhpltmaxrate",MSC_FRIENDHPLTMAXRATE	},
 		{	"friendhpinrate",	MSC_FRIENDHPINRATE	},
 		{	"mystatuson",		MSC_MYSTATUSON			},
@@ -3651,7 +3651,7 @@ static int mob_readskilldb(void)
 		{	"masterhpltmaxrate",MSC_MASTERHPLTMAXRATE	},
 		{	"masterattacked",	MSC_MASTERATTACKED		},
 		{	"alchemist",		MSC_ALCHEMIST			},
-		{	"onspawn",		MSC_SPAWN},
+		{	"onspawn",			MSC_SPAWN},
 	}, cond2[] ={
 		{	"anybad",		-1				},
 		{	"stone",		SC_STONE		},
@@ -3666,14 +3666,14 @@ static int mob_readskilldb(void)
 		{	"hiding",		SC_HIDING		},
 		{	"sight",		SC_SIGHT		},
 	}, state[] = {
-		{	"any",		MSS_ANY	}, //All states except Dead
+		{	"any",		MSS_ANY		}, //All states except Dead
 		{	"idle",		MSS_IDLE	},
 		{	"walk",		MSS_WALK	},
 		{	"loot",		MSS_LOOT	},
 		{	"dead",		MSS_DEAD	},
 		{	"attack",	MSS_BERSERK	}, //Retaliating attack
-		{	"angry",		MSS_ANGRY	}, //Preemptive attack (aggressive mobs)
-		{	"chase",		MSS_RUSH		}, //Chase escaping target
+		{	"angry",	MSS_ANGRY	}, //Preemptive attack (aggressive mobs)
+		{	"chase",	MSS_RUSH	}, //Chase escaping target
 		{	"follow",	MSS_FOLLOW	}, //Preemptive chase (aggressive mobs)
 		{	"anytarget",MSS_ANYTARGET	}, //Berserk+Angry+Rush+Follow
 	}, target[] = {

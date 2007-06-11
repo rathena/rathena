@@ -342,8 +342,9 @@ void map_delblcell(struct block_list *bl)
 
 /*==========================================
  * Adds a block to the map.
- * If flag is 1, then the block was just added
+ * If flag is 1, then the block was just added,
  * otherwise it is part of a transition.
+ * Returns 0 on success, 1 on failure (illegal coordinates).
  *------------------------------------------*/
 int map_addblock_sub (struct block_list *bl, int flag)
 {

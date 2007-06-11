@@ -325,13 +325,13 @@ static int pet_performance(struct map_session_data *sd, struct pet_data *pd)
 
 	if (pd->pet.intimate > 900)
 		val = (pd->petDB->s_perfor > 0)? 4:3;
-	else if(pd->pet.intimate > 750)
+	else if(pd->pet.intimate > 750) //TODO: this is way too high
 		val = 2;
 	else
 		val = 1;
 
 	pet_stop_walking(pd,2000<<8);
-	clif_pet_performance(&pd->bl,rand()%val + 1);
+	clif_pet_performance(pd, rand()%val + 1);
 	pet_lootitem_drop(pd,NULL);
 	return 1;
 }
@@ -556,7 +556,7 @@ int pet_catch_process2(struct map_session_data *sd,int target_id)
 	
 	if (sd->menuskill_id != SA_TAMINGMONSTER) 
 	{	//Exploit?
-		clif_pet_rulet(sd,0);
+		clif_pet_roulette(sd,0);
 		sd->catch_target_class = -1;
 		return 1;
 	}
@@ -566,7 +566,7 @@ int pet_catch_process2(struct map_session_data *sd,int target_id)
 		i=pc_search_inventory(sd,sd->menuskill_lv);
 		if (i < 0)
 		{	//they tried an exploit?
-			clif_pet_rulet(sd,0);
+			clif_pet_roulette(sd,0);
 			sd->catch_target_class = -1;
 			return 1;
 		}
@@ -584,7 +584,7 @@ int pet_catch_process2(struct map_session_data *sd,int target_id)
 		sd->catch_target_class = md->class_;
 	if(i < 0 || sd->catch_target_class != md->class_) {
 		clif_emotion(&md->bl, 7);	//mob will do /ag if wrong lure is used on them.
-		clif_pet_rulet(sd,0);
+		clif_pet_roulette(sd,0);
 		sd->catch_target_class = -1;
 		return 1;
 	}
@@ -597,16 +597,16 @@ int pet_catch_process2(struct map_session_data *sd,int target_id)
 	if(rand()%10000 < pet_catch_rate) {
 		unit_remove_map(&md->bl,0);
 		status_kill(&md->bl);
-		clif_pet_rulet(sd,1);
+		clif_pet_roulette(sd,1);
 //		if(battle_config.etc_log)
-//			printf("rulet success %d\n",target_id);
+//			printf("roulette success %d\n",target_id);
 		intif_create_pet(sd->status.account_id,sd->status.char_id,pet_db[i].class_,mob_db(pet_db[i].class_)->lv,
 			pet_db[i].EggID,0,pet_db[i].intimate,100,0,1,pet_db[i].jname);
 	}
 	else
 	{
 		sd->catch_target_class = -1;
-		clif_pet_rulet(sd,0);
+		clif_pet_roulette(sd,0);
 	}
 
 	return 0;

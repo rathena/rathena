@@ -614,6 +614,7 @@ unsigned char status_get_attack_lelement(struct block_list *bl);
 #define status_get_mode(bl) status_get_status_data(bl)->mode
 int status_get_party_id(struct block_list *bl);
 int status_get_guild_id(struct block_list *bl);
+int status_get_emblem_id(struct block_list *bl);
 int status_get_mexp(struct block_list *bl);
 int status_get_race2(struct block_list *bl);
 

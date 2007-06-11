@@ -79,7 +79,6 @@ int clif_changemapserver(struct map_session_data* sd, const char* mapname, int x
 int clif_blown(struct block_list *); // area
 int clif_slide(struct block_list *,int,int); // area
 int clif_fixpos(struct block_list *);	// area
-int clif_fixpos2(struct block_list *);	// area
 int clif_npcbuysell(struct map_session_data*,int);	//self
 int clif_buylist(struct map_session_data*,struct npc_data*);	//self
 int clif_selllist(struct map_session_data*);	//self
@@ -313,13 +312,14 @@ void clif_upgrademessage(int fd, int result, int item_id);
 
 //petsystem
 int clif_catch_process(struct map_session_data *sd);
-int clif_pet_rulet(struct map_session_data *sd,int data);
+int clif_pet_roulette(struct map_session_data *sd,int data);
 int clif_sendegg(struct map_session_data *sd);
-int clif_send_petdata(struct map_session_data *sd,int type,int param);
 int clif_send_petstatus(struct map_session_data *sd);
+int clif_send_petdata(struct map_session_data* sd, int type, int param);
+int clif_send_petdata_area(struct pet_data* pd, int type, int param);
+#define clif_pet_equip(pd) clif_send_petdata_area(pd, 3, (pd)->vd.head_bottom)
+#define clif_pet_performance(pd, param) clif_send_petdata_area(pd, 4, param)
 int clif_pet_emotion(struct pet_data *pd,int param);
-int clif_pet_performance(struct block_list *bl,int param);
-int clif_pet_equip(struct pet_data *pd);
 int clif_pet_food(struct map_session_data *sd,int foodid,int fail);
 
 //friends list
@@ -330,7 +330,7 @@ void clif_friendslist_reqack(struct map_session_data *sd, struct map_session_dat
 // [Valaris]
 int clif_mob_hp(struct mob_data *md);
 int clif_weather(int m); // [Valaris]
-int clif_specialeffect(struct block_list *bl,int type, int flag); // special effects [Valaris]
+int clif_specialeffect(struct block_list* bl, int type, enum send_target target); // special effects [Valaris]
 int clif_message(struct block_list *bl, const char* msg); // messages (from mobs/npcs) [Valaris]
 
 int clif_GM_kickack(struct map_session_data *sd,int id);
