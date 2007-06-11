@@ -305,14 +305,14 @@
 1060,Bigfoot@NPC_GROUNDATTACK,attack,185,1,2000,0,5000,yes,target,always,0,,,,,,
 1060,Bigfoot@NPC_STUNATTACK,attack,179,2,500,1500,5000,no,target,always,0,,,,,,
 1060,Bigfoot@SM_ENDURE,chase,8,1,5000,0,10000,yes,self,longrangeattacked,,,,,,,6
-1062,Santa Poring@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,
-1062,Santa Poring@NPC_HOLYATTACK,attack,189,1,2000,0,5000,yes,target,always,0,,,,,,
-1063,Lunatic@AL_HEAL,idle,28,1,100,2000,60000,yes,self,always,0,,,,,,
-1063,Lunatic@NPC_PROVOCATION,idle,194,1,20,0,0,yes,self,always,0,,,,,,
 1061,Nightmare@NPC_BLINDATTACK,attack,177,3,500,0,5000,yes,target,always,0,,,,,,
 1061,Nightmare@NPC_CURSEATTACK,attack,181,3,500,800,5000,no,target,always,0,,,,,,
 1061,Nightmare@NPC_MENTALBREAKER,attack,159,1,500,800,5000,no,target,always,0,,,,,,
 1061,Nightmare@NPC_TELEKINESISATTACK,attack,191,5,500,0,5000,yes,target,always,0,,,,,,
+1062,Santa Poring@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,
+1062,Santa Poring@NPC_HOLYATTACK,attack,189,1,2000,0,5000,yes,target,always,0,,,,,,
+1063,Lunatic@AL_HEAL,idle,28,1,100,2000,60000,yes,self,always,0,,,,,,
+1063,Lunatic@NPC_PROVOCATION,idle,194,1,20,0,0,yes,self,always,0,,,,,,
 1064,Megalodon@NPC_CHANGETELEKINESIS,attack,169,1,500,2000,5000,no,self,myhpltmaxrate,30,,,,,,7
 1064,Megalodon@NPC_UNDEADATTACK,attack,347,2,500,0,5000,yes,target,always,0,,,,,,
 1065,Strouf@MG_FROSTDIVER,attack,15,9,500,1000,5000,yes,target,always,0,,,,,,

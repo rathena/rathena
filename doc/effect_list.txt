@@ -155,7 +155,7 @@ number	description
 133.	Probably the old Frost Diver Effect
 134.	Probably the old Frost Diver Effect Without the Blue Circle
 135.	Probably the old Frost Diver Effect with Explosion
-136.	Poison
+136.	Slow Poison
 137.	Small pulsating green square (unused)
 138.	Fire pillar
 139.	Sandman Trap
@@ -675,7 +675,7 @@ number	description
 653.	Like Regeneration Number but Red
 654.	Like Regeneration Number but Purple
 655.	Mobs Skill (Change to Undead Element)
-656.	Final animation for Change Undead Element
+656.	Last animation before Change Undead Element finish
 657.	(nothing)
 658.	(nothing)
 659.	(nothing)
@@ -684,7 +684,7 @@ number	description
 662.	(nothing)
 663.	(nothing)
 664.	(nothing)
-665.	Little Blue Ball Falling From Sky
+665.	Little Blue Ball Falling From the Sky
 666.	Mobs Skill (Earthquake)
 667.	(nothing)
 668.	Mobs Skill (Scream)
@@ -695,6 +695,6 @@ number	description
 673.	(nothing)
 674.	Like Curse Effect
 675.	Like Parrying/Kyrie Eleison barrier but is Yellow with small Cross in every barrier piece
-676.	Mobs Skill (Maybe is Full Screen Slow Down, or something like Slow Cast)
+676.	Slow Poison (Clock Only)
 677.	Mobs Skill (Unamed)
 678+.	No More Effects in 2007/05/07 Sakexe
