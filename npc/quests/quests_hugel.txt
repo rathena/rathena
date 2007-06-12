@@ -1,0 +1,2088 @@
+//===== eAthena Script =======================================
+//= Hugel Quest NPCs
+//===== By: ==================================================
+//= MasterOfMuppets
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eAthena
+//===== Description: =========================================
+//= Quest NPC's related to Hugel
+//===== Additional Comments: =================================
+//= 1.0 First version. [MasterOfMuppets]
+//============================================================
+
+//-------------------------------------------------------------------------
+// Medicine Quest
+//-------------------------------------------------------------------------
+
+hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
+
+	if(BaseLevel > 49)
+	{
+		if(hg_herb == 0)
+		{
+			mes "[Allen]";
+			mes "*Groooooan~*";
+			mes "Arrrgh, my back hurts...";
+			mes "And my stomach... Why do";
+			mes "I have to suffer like this";
+			mes "while other people get to";
+			mes "live happy, luxurious lives?";
+			next;
+			mes "[Allen]";
+			mes "My son is the only family";
+			mes "I've got. He used to be such";
+			mes "a good obedient kid, but now";
+			mes "I doubt whether he cares about";
+			mes "his father! I told that lazy kid^FFFFFF ^000000 to hurry and bring me my meds...";
+			next;
+			mes "[Allen]";
+			mes "But does he worry about";
+			mes "his father's suffering?! No!";
+			mes "I bet you he's hanging out with";
+			mes "his no good hoodlum friends!";
+			mes "Argh! The pain is getting worse!^FFFFFF ^000000 I... I need my medication!";
+			next;
+			mes "[Allen]";
+			mes "Oh! I can definitely feel";
+			mes "it getting worse! Please,";
+			mes "adventurer, would you help";
+			mes "a sick man? I need you to";
+			mes "find my son Postell and to";
+			mes "tell him to bring my medicine!";
+			next;
+			switch( select( "Sure.:No, I'm sorry." ) )
+			{
+			case 1:
+				mes "[Allen]";
+				mes "Th-thank you so much!";
+				mes "Please head east, go";
+				mes "outside of town, and";
+				mes "you should be able to";
+				mes "find Postell. Tell him that";
+				mes "I need my ''Kolbun A'' now!";
+				set hg_herb,1;
+				next;
+				mes "[Allen]";
+				mes "And let him know that";
+				mes "if he doesn't shape up...";
+				mes "Well, I just might have";
+				mes "to disown my own son!";
+				mes "He's dead to me if he";
+				mes "doesn't love his father!";
+				close;
+			break;
+			case 2:
+				mes "[Allen]";
+				mes "I... I don't understand...!";
+				mes "How can you leave a sick";
+				mes "man alone with his suffering?";
+				mes "I-I desperately need help!";
+				mes "No! Please, d-don't go away!";
+				close;
+			break;
+			}
+		}
+		else if(hg_herb == 2)
+		{
+			mes "[Allen]";
+			mes "Postell... My son...";
+			mes "Why have you forsaken me?";
+			mes "I'm lying here at the brink";
+			mes "of death, and the boy won't";
+			mes "even come to see his father!";
+			next;
+			mes "[Allen]";
+			mes "But you... I can count on you.";
+			mes "Even in Lighthazlen, I'd never";
+			mes "find anyone as dependable as";
+			mes "you. This time, I've decided to";
+			mes "discipline my degenerate son.";
+			mes "Will you help me once more?";
+			next;
+			mes "[" +strcharinfo(0)+ "]";
+			mes "Wait, wait...";
+			mes "Lighthalzen?";
+			mes "Did you used to";
+			mes "live there or something?";
+			next;
+			mes "[Allen]";
+			mes "Uh? Er, well, that's just";
+			mes "an expression I use. You";
+			mes "know, like an example.";
+			mes "I-I--^333333*Cough!*^000000 Oh, oh no.";
+			mes "My ^333333*Hack!*^000000 pancreas! Or liver!";
+			mes "I'm having another attack!";
+			next;
+			mes "[" +strcharinfo(0)+ "]";
+			mes "......";
+			mes ".........";
+			mes "............";
+			next;
+			mes "[Allen]";
+			mes "Oh, everything's getting";
+			mes "so dark! P-please, if you";
+			mes "have any mercy at all, any";
+			mes "shred of human decency,";
+			mes "would you please let me";
+			mes "have a White P-Potion?";
+			next;
+			switch( select( "Give White Potion:Ignore" ) )
+			{
+			case 1:
+				if(!countitem(504)) //White potion
+				{
+					mes "[Allen]";
+					mes "Oh... Oh no...! You";
+					mes "don't have any White";
+					mes "Potions either?! Wh-what";
+					mes "what am I gonna--?! Help me,";
+					mes "please! Bring me a White Potion";
+					mes "as soon as you can! ^333333*Cough!*^000000";
+					close;
+				}
+				else
+				{
+					delitem 504,1; //White potion
+					mes "[Allen]";
+					mes "Oh, thank you!";
+					mes "I-It hurts so much...";
+					mes "A White Potion just has";
+					mes "to help. I-It has to work!";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "......";
+					mes ".........";
+					mes "............";
+					next;
+					mes "[Allen]";
+					mes "Ah, that... *Whew*";
+					mes "Thank you so much. Now,";
+					mes "all I need to do is wait for";
+					mes "my son to bring my medicine.";
+					mes "Wait. What if he takes too long";
+					mes "to get here. No, no, what if...";
+					next;
+					mes "[Allen]";
+					mes "Wh-what if I have another";
+					mes "ulcer attack before Postell";
+					mes "can bring my meds?! I might";
+					mes "not survive! A-adventurer, would^FFFFFF ^000000 you please stay by my side until";
+					mes "my son arrives? P-please?";
+					next;
+					set hg_herb,3;
+					mes "[" +strcharinfo(0)+ "]";
+					mes "......";
+					mes ".........";
+					mes "............";
+					close;
+				}
+			break;
+			case 2:
+				mes "[Allen]";
+				mes "W-wait! A-are you just";
+				mes "going to let me d-die?";
+				mes "Noo! ^333333*Cough*^000000 Arrgh! A plague!";
+				mes "A plague on both your houses!";
+				close;
+			break;
+			}
+		}
+		else if(hg_herb == 3)
+		{
+			mes "[Allen]";
+			mes "*Gasp* I... I can";
+			mes "feel it! I think I'm";
+			mes "gonna have another";
+			mes "neutron attack! Argh, it's";
+			mes "already effecting all of the";
+			mes "neutrons in my nervous system!";
+			next;
+			mes "[Allen]";
+			mes "C-can't... Lift...";
+			mes "Legs and fingers...";
+			mes "But... Must... Get...";
+			mes "''Withstander'' medicine...";
+			mes "from... Drawer... H-heeelp me!";
+			mes "Adventurer! H-Heeeeelp~!";
+			set hg_herb,4;
+			close;
+		}
+		else if(hg_herb == 4)
+		{
+			mes "[Allen]";
+			mes "No...!";
+			mes "There's a light at the";
+			mes "the end of the tunnel!";
+			mes "Please, adventurer! C-come";
+			mes "a little closer to me! Don't";
+			mes "let me step into the light!";
+			close;
+		}
+		else if(hg_herb == 6)
+		{
+			mes "^3355FFYou have given the";
+			mes "Withstander medicine";
+			mes "to Allen who guzzles";
+			mes "it down very quickly.^000000";
+			next;
+			mes "[Allen]";
+			mes "Blood... circulating...";
+			mes "through limbs... Clarity...";
+			mes "of thought... returning...";
+			next;
+			mes "[Allen]";
+			mes "Ah, wh-what a relief. It looks";
+			mes "like I-I live to see another";
+			mes "day. Th-thank you so much...";
+			set hg_herb,7;
+			close;
+		}
+		else if(hg_herb == 7)
+		{
+			mes "[Allen]";
+			mes "I... I can't...!";
+			mes "I can barely breathe!";
+			mes "A-adventurer, I need you";
+			mes "again! Please, c-come closer";
+			mes "to me! I-I think I need CPR!";
+			close;
+		}
+		else if(hg_herb == 9)
+		{
+			mes "^3355FFYou give another dose";
+			mes "of Withstander to Allen.^000000";
+			next;
+			if(rand(1,3) == 3)
+			{
+				mes "[Allen]";
+				mes "Oh... Thank you...";
+				mes "I feel much b-better now.";
+				mes "My son Postell, he should";
+				mes "be coming soon. Thank you";
+				mes "for being so patient with me...";
+				set hg_herb,10;
+				close;
+			}
+				mes "[Allen]";
+				mes "Oh... Thank you...";
+				mes "Y-you're an angel, a regular";
+				mes "Florence Nightingale. Please";
+				mes "stay with m-me until my son";
+				mes "arrives. You wouldn't abandon";
+				mes "this sick man now, would you?";
+				next;
+				mes "[" +strcharinfo(0)+ "]";
+				mes "(^333333Your son Postell";
+				mes "better get here soon!^000000)";
+				set hg_herb,7;
+				close;
+		}
+		else if(hg_herb == 10)
+		{
+			mes "[Allen]";
+			mes "Arrrgh! My ligaments!";
+			mes "They're in such pain!";
+			mes "Oh, oh no! I think my";
+			mes "bones are infected!";
+			mes "Help me, oh help me!";
+			next;
+			donpcevent "Postell Schuwell#D::OnEnable";
+			mes "[Allen]";
+			mes "Oh...";
+			mes "My son...!";
+			mes "P-Postell!";
+			next;
+			mes "[Postell]";
+			mes "Uh... Hey, dad.";
+			mes "I brought that";
+			mes "medicine you're";
+			mes "supposed to";
+			mes "need so badly.";
+			donpcevent "Postell Schuwell#D::OnEffect";
+			next;
+			mes "[Allen]";
+			mes "Thank goodness...";
+			mes "G-give it to me!";
+			mes "^333333*Gulp gulp gulp*^000000";
+			next;
+			mes "[Allen]";
+			mes "W-wait...";
+			mes "Something's not";
+			mes "right. Bunkoll A";
+			mes "doesn't taste like this...";
+			donpcevent "Postell Schuwell#D::OnSweat";
+			next;
+			mes "[Postell]";
+			mes "Bunkoll A...?";
+			mes "I thougt you said that";
+			mes "you wanted Kolbun A?";
+			next;
+			mes "[Allen]";
+			mes "My own son, lying to";
+			mes "me! Are you trying to";
+			mes "trick me, Postell?!";
+			mes "I told you get Bunkoll A!";
+			next;
+			mes "[" +strcharinfo(0)+ "]";
+			mes "(^333333Wait, wait...";
+			mes "Allen did say that";
+			mes "he wanted Kolbun A...^000000)";
+			next;
+			mes "[Postell]";
+			mes "Right. Okay, I guess";
+			mes "I made a mistake? Um,";
+			mes "Dad, I'll be right back with";
+			mes "the medicine that you want.";
+			mes "It won't take long, so don't";
+			mes "stress yourself about it.";
+			close2;
+			set hg_herb,11;
+			disablenpc "Postell Schuwell#D";
+			emotion e_swt,1;
+			emotion e_swt;
+			end;
+		}
+		else if(hg_herb == 11)
+		{
+			mes "[Allen]";
+			mes "*Sniff* I should have known";
+			mes "that Postell really does care";
+			mes "about me deep down inside.";
+			mes "I wish I had never gotten";
+			mes "myself sick in Lighthalzen...";
+			mes "Then we both wouldn't suffer...";
+			next;
+			mes "[Allen]";
+			mes "Don't worry, adventurer.";
+			mes "I haven't forgotten about";
+			mes "you. Please take a look inside";
+			mes "the medicine drawer, and help";
+			mes "yourself to whatever you like~";
+			set hg_herb,12;
+			close;
+		}
+		else if(hg_herb == 12)
+		{
+			mes "[Allen]";
+			mes "Don't worry, adventurer.";
+			mes "I haven't forgotten about";
+			mes "you. Please take a look inside";
+			mes "the medicine drawer, and help";
+			mes "yourself to whatever you like~";
+			close;
+		}
+		else if(hg_herb == 13)
+		{
+			mes "[Allen]";
+			mes "So did you find the";
+			mes "Old Blue Box I put in";
+			mes "my medicine drawer? It's";
+			mes "not much, but I hope you";
+			mes "like it. Consider my way";
+			mes "of thanking you for your help~";
+			close;
+		}
+		else
+		{
+			mes "[Allen]";
+			mes "*Groooooan~*";
+			mes "Arrrgh, my back hurts...";
+			mes "And my stomach... Why do";
+			mes "I have to suffer like this";
+			mes "while other people get to";
+			mes "live happy, luxurious lives?";
+			close;
+		}
+	}
+	else
+	{
+		mes "[Allen]";
+		mes "*Groooooan~*";
+		mes "Arrrgh, my back hurts...";
+		mes "And my stomach... Why do";
+		mes "I have to suffer like this";
+		mes "while other people get to";
+		mes "live happy, luxurious lives?";
+		close;
+	}
+
+OnTouch:
+	if(hg_herb == 4)
+	{
+		mes "[Allen]";
+		mes "^333333*Cough cough!*^000000";
+		mes "W-Withstander...!";
+		mes "I need m-my Withstander!";
+		mes "P-please! ^333333*Cough cough!*^000000";
+		set hg_herb,5;
+		donpcevent "#DrawerOpener::OnEnable";
+		close;
+	}
+	else if(hg_herb == 7)
+	{
+		mes "[Allen]";
+		mes "^333333*Whew*^000000";
+		mes "I... I can breathe again!";
+		mes "B-but what if I have another";
+		mes "attack?! Please, g-get me";
+		mes "another dose of Withstander,";
+		mes "just to be on the safe side!";
+		set hg_herb,8;
+		donpcevent "#DrawerOpener::OnEnable";
+		close;
+	}
+	
+}
+
+hu_in01,385,247,5	script	Postell Schuwell#D	97,{
+
+	mes "[Postell]";
+	mes "Hey, uh...";
+	mes "I'm in the middle";
+	mes "of something here.";
+	close;
+
+OnInit:
+	disablenpc "Postell Schuwell#D";
+	end;
+
+OnEnable:
+	enablenpc "Postell Schuwell#D";
+	initnpctimer;
+	end;
+
+OnTimer100000:
+	disablenpc "Postell Schuwell#D";
+	stopnpctimer;
+	end;
+	
+OnSweat:
+	emotion e_swt;
+	end;
+
+OnEffect:
+	specialeffect 174;
+	end;
+
+}
+
+hu_fild06,34,123,3	script	Postell Schuwell	97,{
+
+	if(hg_herb == 1)
+	{
+		mes "[Postell]";
+		mes "I really like living";
+		mes "in Hugel. Fresh air,";
+		mes "clean water, everyone's";
+		mes "friendly and nice. What";
+		mes "more could I want?";
+		next;
+		mes "[Postell]";
+		mes "Oh, what's that?";
+		mes "My dad wants me to";
+		mes "bring him some medicine?";
+		mes "Again? Well, he was really";
+		mes "sick a long time ago, but";
+		mes "nowadays, I'm not so sure.";
+		next;
+		mes "[Postell]";
+		mes "I mean, I'm pretty sure";
+		mes "his illnesses are all, you";
+		mes "know, psychosomatic.";
+		mes "Besides, I'm worried that";
+		mes "all the medicines he's taking";
+		mes "are habit forming, you know?";
+		next;
+		switch( select( "But your father needs you!:Habit forming?" ) )
+		{
+		case 1:
+			mes "[Allen's Voice]";
+			mes "Yeah, I guess you're right.";
+			mes "Even if I think he's nuts,";
+			mes "and I don't agree with him,";
+			mes "I should at least show that";
+			mes "I care about my dad. What";
+			mes "medicine did he say he needed?";
+			next;
+			mes "[Postell]";
+			mes "''Kolbun A?'' Alright,";
+			mes "I better make sure that";
+			mes "it's safe for him to take.";
+			mes "Who knows, that stuff might";
+			mes "make him worse. Anyway,";
+			mes "I'll try to get it to him soon.";
+			next;
+			mes "[Postell]";
+			mes "Hey, would you do";
+			mes "me a favor and make";
+			mes "sure that my dad doesn't";
+			mes "get himself into any";
+			mes "more trouble? I'd really";
+			mes "appreciate it if you do.";
+			set hg_herb,2;
+			close;
+		break;
+		case 2:
+			mes "[Postell]";
+			mes "Yeah, like he's addicted";
+			mes "to the medicine. That's why";
+			mes "I'm trying to make sure he";
+			mes "gets as little of it as possible! Honestly, I think he drinks";
+			mes "too much medicine already...";
+			close;
+		break;
+		}
+	}
+	else if(hg_herb > 1)
+	{
+		mes "[Postell]";
+		mes "Kolbun A, Kolbun A...";
+		mes "Let's see, is it really";
+		mes "safe for my dad to take?";
+		mes "If it isn't, I better come up";
+		mes "with some replacement...";
+		close;
+	}
+	else
+	{
+		mes "[Postell]";
+		mes "I really like living";
+		mes "in Hugel. Fresh air,";
+		mes "clean water, everyone's";
+		mes "friendly and nice. What";
+		mes "more could I want?";
+		close;
+	}
+	
+}
+
+hu_in01,370,255,3	script	Upper Drawer#First	139,2,2,{
+
+OnTouch:
+	set @randvar,rand(1,7);
+	if(hg_herb < 5)
+	{
+		mes "^3355FFThere are several";
+		mes "books and a few";
+		mes "liquid medicines";
+		mes "inside this drawer.^000000";
+		close;
+	}
+	else if(hg_herb == 5)
+	{
+		mes "[Allen]";
+		mes "Oh... Oh...";
+		mes "Oooh... The pain";
+		mes "is gone! It's a miracle!";
+		mes "Maybe I'll just take the";
+		mes "Withstander later...";
+		set hg_herb,4;
+		next;
+		if(@randvar == 4)
+		{
+			mes "^3355FFYou find an old book";
+			mes "inside the drawer.^000000";
+			next;
+			mes "[Welcome to Lighthalzen!]";
+			mes "Author: Tupetso Iltekka";
+			next;
+			mes "......";
+			mes ".........";
+			mes "............";
+			next;
+			mes "[" +strcharinfo(0)+ "]";
+			mes "(^333333I guess Allen used";
+			mes "to live in Lighthalzen.";
+			mes "I guess that's why he'd";
+			mes "keep this old PR brochure...^000000)";
+			close;
+		}
+		else if(@randvar == 5)
+		{
+			mes "^3355FFYou find Allen's";
+			mes "journal inside the";
+			mes "drawer and quickly";
+			mes "leaf through its pages.";
+			mes "It's difficult to read since";
+			mes "the pages are old and worn.^000000";
+			next;
+			mes "[" +strcharinfo(0)+ "]";
+			mes "Let's see, let's see...";
+			mes "Rekenber Corporation...";
+			mes "Something about the Slums....";
+			mes "Enormous funds... Experiments.";
+			mes "Lab... Escape... Hugel... Um...";
+			mes "Dr. Morriphen... Side effects?";
+			close;
+		}
+		else
+		{
+			mes "[" +strcharinfo(0)+ "]";
+			mes "Wh-what...?";
+			mes "Do you really";
+			mes "need that medicine?!";
+			close;
+		}
+	}
+	else if(hg_herb == 6)
+		end;
+	else if(hg_herb == 8)
+	{
+		mes "[Allen]";
+		mes "Oh... Oh...";
+		mes "Oooh... The pain";
+		mes "is gone! It's a miracle!";
+		mes "Maybe I'll just take the";
+		mes "Withstander later...";
+		set hg_herb,7;
+		next;
+		if(@randvar == 4)
+		{
+			mes "^3355FFYou find an old book";
+			mes "inside the drawer.^000000";
+			next;
+			mes "[Welcome to Lighthalzen!]";
+			mes "Author: Tupetso Iltekka";
+			next;
+			mes "......";
+			mes ".........";
+			mes "............";
+			next;
+			mes "[" +strcharinfo(0)+ "]";
+			mes "(^333333I guess Allen used";
+			mes "to live in Lighthalzen.";
+			mes "I guess that's why he'd";
+			mes "keep this old PR brochure...^000000)";
+			close;
+		}
+		else if(@randvar == 5)
+		{
+			mes "^3355FFYou find Allen's";
+			mes "journal inside the";
+			mes "drawer and quickly";
+			mes "leaf through its pages.";
+			mes "It's difficult to read since";
+			mes "the pages are old and worn.^000000";
+			next;
+			mes "[" +strcharinfo(0)+ "]";
+			mes "Let's see, let's see...";
+			mes "Rekenber Corporation...";
+			mes "Something about the Slums....";
+			mes "Enormous funds... Experiments.";
+			mes "Lab... Escape... Hugel... Um...";
+			mes "Dr. Morriphen... Side effects?";
+			close;
+		}
+		else
+		{
+			mes "[" +strcharinfo(0)+ "]";
+			mes "Wh-what...?";
+			mes "Do you really";
+			mes "need that medicine?!";
+			close;
+		}
+	}
+	else if(hg_herb == 9)
+		end;
+	else if(hg_herb == 12)
+	{
+		mes "^3355FFYou find an";
+		mes "Old Blue Box deep";
+		mes "inside the drawer.^000000";
+		close2;
+		specialeffect 71;
+		set hg_herb,13;
+		getitem 603,1; //Old blue box
+		set BaseExp,BaseExp+50000;
+	}
+	else
+	{
+		if(@randvar > 3)
+		{
+			mes "^3355FFYou find an old book";
+			mes "inside the drawer.^000000";
+			next;
+			mes "[Welcome to Lighthalzen!]";
+			mes "Author: Tupetso Iltekka";
+			next;
+			mes "......";
+			mes ".........";
+			mes "............";
+			next;
+			mes "[" +strcharinfo(0)+ "]";
+			mes "(^333333I guess Allen used";
+			mes "to live in Lighthalzen.";
+			mes "I guess that's why he'd";
+			mes "keep this old PR brochure...^000000)";
+			close;
+		}
+		else
+		{
+			mes "^3355FFYou find Allen's";
+			mes "journal inside the";
+			mes "drawer and quickly";
+			mes "leaf through its pages.";
+			mes "It's difficult to read since";
+			mes "the pages are old and worn.^000000";
+			next;
+			mes "[" +strcharinfo(0)+ "]";
+			mes "Let's see, let's see...";
+			mes "Rekenber Corporation...";
+			mes "Something about the Slums....";
+			mes "Enormous funds... Experiments.";
+			mes "Lab... Escape... Hugel... Um...";
+			mes "Dr. Morriphen... Side effects?";
+			close;
+		}
+	}
+	
+}
+
+hu_in01,370,255,3	script	Upper Drawer#Second	139,2,2,{
+OnInit:
+	disablenpc "Upper Drawer#Second";
+	end;
+
+	OnTouch:
+		if(hg_herb == 5)
+		{
+			mes "^3355FFYou take out one dose of";
+			mes "Withstander from the drawer.^000000";
+			set hg_herb,6;
+			close;
+		}
+		else if(hg_herb == 8)
+		{
+			mes "^3355FFYou take out one dose of";
+			mes "Withstander from the drawer.^000000";
+			set hg_herb,9;
+			close;
+		}
+		else
+		{
+			mes "^3355FFThere are several books";
+			mes "kept inside this drawer.^000000";
+			close;
+		}
+		
+}
+
+hu_in01,1,1,0	script	#DrawerOpener	-1,{
+OnInit:
+	disablenpc "#DrawerOpener";
+	end;
+
+OnEnable:
+	enablenpc "#DrawerOpener";
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	enablenpc "Upper Drawer#Second";
+	disablenpc "Upper Drawer#First";
+	end;
+
+OnTimer4500:
+	enablenpc "Upper Drawer#First";
+	disablenpc "Upper Drawer#Second";
+	disablenpc "#DrawerOpener";
+	stopnpctimer;
+	end;
+	
+}
+
+//-------------------------------------------------------------------------
+// Biological Weapon Quest
+//-------------------------------------------------------------------------
+
+ein_in01,16,36,3	script	Morriphen	86,{
+
+	if(hg_bio == 0)
+	{
+		if(hg_herb == 13)
+		{
+			mes "[Morriphen]";
+			mes "Wh-who are you, and what are";
+			mes "you looking for? If you're here";
+			mes "for the stuff, then you came";
+			mes "too early. As you can see,";
+			mes "I don't feel well enough to";
+			mes "speak to you right now.";
+			next;
+			mes "[Morriphen]";
+			mes "^333333*Cough Cough*";
+			mes "*Cough Cough*^000000";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Holy--! Are you alright?";
+			mes "Y-you're coughing up blood!";
+			mes "Relax, I was just passing by!";
+			next;
+			mes "[Morriphen]";
+			mes "R-really? Well then, I'm";
+			mes "sorry to have bothered you,";
+			mes "then. I guess I'm just a little";
+			mes "jumpy is all. ^333333*Cough, cough~*^000000";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Hey... You don't sound";
+			mes "too good. Do you want me";
+			mes "to bring you to a hospital?";
+			mes "That's a really nasty cough";
+			mes "you've got there, so maybe";
+			mes "you should get it checked.";
+			next;
+			mes "[Morriphen]";
+			mes "No, thanks, I'm fine.";
+			mes "I just haven't gone home";
+			mes "for a few months and wasn't";
+			mes "able to get my prescription";
+			mes "refilled, that's all. ^333333*Haaak*";
+			mes "*Cough-cough-cooooooough!*^000000";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Hmm...";
+			mes "What should I do?";
+			next;
+			switch( select( "Leave him:Help him" ) )
+			{
+			case 1:
+				mes "["+strcharinfo(0)+"]";
+				mes "You know, I'm a little";
+				mes "worried about your coughing,";
+				mes "but I don't think there's any";
+				mes "way that I can help you...";
+				next;
+				mes "[Morriphen]";
+				mes "^333333*Cough cough*^000000";
+				mes "Don't worry, I'll be";
+				mes "just fine. You take care";
+				mes "of yourself, you hear?";
+				close;
+			break;
+			case 2:
+				mes "["+strcharinfo(0)+"]";
+				mes "Hey...";
+				mes "Are you sure that";
+				mes "you'll be alright?";
+				next;
+				mes "[Morriphen]";
+				mes "^333333*Cough cough*^000000";
+				mes "Don't worry, I'll be";
+				mes "just fine. You take care";
+				mes "of yourself, you hear?";
+				mes "^333333*Haaaak* *Reeetch*^000000";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "...";
+				mes "......";
+				mes ".........";
+				next;
+				mes "[Morriphen]";
+				mes "^333333*Reeeeetch*";
+				mes "*Cooooough Cough*";
+				mes "*Hhhh, Hhhhh, Hhhh*";
+				mes "*Haaaaack* *Retch*^000000";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Please, mister.";
+				mes "Let me help you.";
+				mes "I can't just leave";
+				mes "you alone if you";
+				mes "sound like that.";
+				next;
+				mes "[Morriphen]";
+				mes "...............................";
+				mes "I didn't, I didn't want to";
+				mes "bother you, b-but if you insist";
+				mes "oh h-helping me, then maybe";
+				mes "I'll ask you to do me a favor.";
+				next;
+				mes "[Morriphen]";
+				mes "Would you visit my home in";
+				mes "Hugel and ask my wife, Siria,";
+				mes "for my medication? She knows";
+				mes "where to find it, and will give";
+				mes "it to you. Oh, and please don't";
+				mes "tell her anything else, okay?";
+				next;
+				mes "[Morriphen]";
+				mes "She's always worried about";
+				mes "me getting worse, and I don't";
+				mes "want to give her any reason to";
+				mes "get stressed. Please just tell";
+				mes "her that I ran out of medicine.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Alright.";
+				mes "I'll come back here";
+				mes "as soon as I can.";
+				next;
+				mes "[Morriphen]";
+				mes "Thanks so much.";
+				mes "^333333*Cough Cough*";
+				mes "*Cough Cough*^000000";
+				set hg_bio,1;
+				close;
+			break;
+			}
+		}
+		else
+		{
+			mes "[Morriphen]";
+			mes "Ugh... I don't feel";
+			mes "very well. I guess";
+			mes "I better call it a day...";
+			close;
+		}
+	}
+	else if(hg_bio == 1)
+	{
+		mes "[Morriphen]";
+		mes "Please ask my ^333333*Cough*^000000";
+		mes "wife Siria in my home in";
+		mes "^333333*Reeetch*^000000 Hugel for m-my";
+		mes "medicine. Th-thank you...";
+		mes "^333333*Haaaaack* *Hhh, haaaack*^000000";
+		close;
+	}
+	else if(hg_bio == 2)
+	{
+		mes "["+strcharinfo(0)+"]";
+		mes "Oh no... Morriphen";
+		mes "doesn't look good at all!";
+		mes "I better hurry and bring";
+		mes "him medicine from Siria";
+		mes "in Hugel as soon as I can!";
+		close;
+	}
+	else if(hg_bio == 3)
+	{
+		mes "["+strcharinfo(0)+"]";
+		mes "Oh no... Morriphen";
+		mes "doesn't look good at all!";
+		mes "I better hurry and bring";
+		mes "him medicine from Dono";
+		mes "in Hugel as soon as I can!";
+		close;
+	}
+	else if(hg_bio == 4)
+	{
+		mes "["+strcharinfo(0)+"]";
+		mes "Oh no... Morriphen";
+		mes "doesn't look good at all!";
+		mes "I better hurry and bring";
+		mes "him medicine from Dono";
+		mes "in Hugel as soon as I can!";
+		close;
+	}
+	else if(hg_bio == 5)
+	{
+		mes "["+strcharinfo(0)+"]";
+		mes "Oh no... Morriphen";
+		mes "doesn't look good at all!";
+		mes "I better hurry and bring";
+		mes "him medicine from Dono";
+		mes "in Hugel as soon as I can!";
+		close;
+	}
+	else if(hg_bio == 6)
+	{
+		mes "^3355FFYou administer the";
+		mes "medicine to Morriphen,";
+		mes "who slowly regains";
+		mes "consciousness.^000000";
+		next;
+		mes "[Morriphen]";
+		mes "^333333*Cough, cough*^000000";
+		mes "Wh-where am I?";
+		mes "I'm... not dead yet?";
+		mes "Oh, you! It seems I was";
+		mes "right to trust you. So did my";
+		mes "wife give you my medicine?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Actually, Siria also ran";
+		mes "out of your medicine when";
+		mes "I arrived at your house, so";
+		mes "she told me to go get some";
+		mes "from your friend, Dono.";
+		next;
+		mes "[Morriphen]";
+		mes "Oh, no, what have you done?";
+		mes "My wife's life depends on that";
+		mes "medicine too! Oh no, if she";
+		mes "doesn't get any, she'll die";
+		mes "from my stupidity! Please!";
+		mes "I beg you, bring this to her!";
+		next;
+		mes "[Morriphen]";
+		mes "That woman is everything";
+		mes "to me. If she's gone, then";
+		mes "I don't know what I'll do.";
+		mes "Please take this medicine";
+		mes "to her as soon as you can!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Don't worry, I'm on my";
+		mes "way. I'll hurry as fast as";
+		mes "I can back to Hugel to";
+		mes "give Siria this medicine.";
+		set hg_bio,7;
+		close;
+	}
+	else if(hg_bio == 7)
+	{
+		mes "["+strcharinfo(0)+"]";
+		mes "What am I doing...?";
+		mes "I need to return to";
+		mes "Hugel and deliver this";
+		mes "medicine to Siria as";
+		mes "soon as possible!";
+		close;
+	}
+	else if(hg_bio == 8)
+	{
+		mes "[Morriphen]";
+		mes "You're back! So, have you";
+		mes "seen my wife? She's okay,";
+		mes "isn't she? Why aren't you";
+		mes "saying--oh no. Oh dear God,";
+		mes "no. D-don't tell me she's dead!";
+		next;
+		mes "[Morriphen]";
+		mes "She has to be fine...!";
+		mes "If anything happened";
+		mes "to her, I... I won't forgive";
+		mes "you! No one would find your";
+		mes "body! No, wait, wait... No, I'm";
+		mes "sorry, I'm just so anxious...!";
+		next;
+		mes "[Morriphen]";
+		mes "^333333*Sob*^000000 Please forgive me!";
+		mes "Please tell me my wife is";
+		mes "okay. I'm sorry, everything";
+		mes "is just so overwhelming right";
+		mes "now. ^333333*Sob*^000000 Please, please...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Siria is fine.";
+		mes "Now are you satisfied?";
+		mes "If you're that worried about";
+		mes "her, you ought to see her";
+		mes "more often. Geez...";
+		next;
+		mes "[Morriphen]";
+		mes "Hallelujah! I'm so";
+		mes "relieved! She's alive!";
+		mes "I'm sorry, I'd be home";
+		mes "more often, but I'm always";
+		mes "struggling here to make ends";
+		mes "meet. Thank you so much!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Don't sweat it.";
+		mes "It was just the right";
+		mes "thing to do, that's all.";
+		next;
+		mes "[Morriphen]";
+		mes "You're such a kind person...";
+		mes "You save my life and my wife's";
+		mes "life. I'll do anything you ask me^FFFFFF ^000000 to do to repay you! Consider me";
+		mes "your humble servant from now on. What is your command, oh master?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "That's...";
+		mes "That's going too far.";
+		mes "Becoming my servant for";
+		mes "life isn't necessary, you know.";
+		next;
+		mes "[Morriphen]";
+		mes "Wait, I know! If you won't";
+		mes "accept my life, then I can";
+		mes "give you someone else's. Do";
+		mes "you have any enemies! I'll go";
+		mes "out and kill someone for you!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "...That's fine.";
+		mes "Actually, I'm more interested";
+		mes "in hearing how you, Siria, and";
+		mes "Dono are all connected. When";
+		mes "I spoke to Siria, she told me";
+		mes "that you two weren't married...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Siria did mention";
+		mes "that she's greatly";
+		mes "indebted to you for";
+		mes "some reason, and she'll";
+		mes "never be able to fully repay";
+		mes "you, not even with her life.";
+		next;
+		mes "[Morriphen]";
+		mes "She said that? ^333333*Sigh*^000000";
+		mes "Poor girl, I've asked so";
+		mes "many times not to think";
+		mes "that way. Alright, if that's";
+		mes "what you really want, then";
+		mes "I will tell you our story.";
+		next;
+		mes "[Morriphen]";
+		mes "Dono and I have been friends";
+		mes "since childhood. We did almost";
+		mes "everything together. Even when";
+		mes "we started our professional";
+		mes "careers, we both decided to work^FFFFFF ^000000 for the Rekenber Corporation.";
+		next;
+		mes "[Morriphen]";
+		mes "Dono eventually became in";
+		mes "charge of Rekenber's Medical";
+		mes "Experimental Research, while";
+		mes "I spearheaded projects for";
+		mes "Rekenber's weapon research.";
+		next;
+		mes "[Morriphen]";
+		mes "Although our areas of expertise";
+		mes "are different, Dono and I found";
+		mes "that our collaborations were";
+		mes "productive for both of us. But";
+		mes "then, one day, I dropped by";
+		mes "Dono's office and saw her.";
+		next;
+		mes "[Morriphen]";
+		mes "She was floating in a giant";
+		mes "test tube, and I couldn't take";
+		mes "my eyes off her: she was the";
+		mes "most beautiful thing I'd ever";
+		mes "seen. But Dono said she was";
+		mes "nothing but an experiment...";
+		next;
+		mes "[Morriphen]";
+		mes "He told me not to be so";
+		mes "curious, but I didn't listen.";
+		mes "Ever since then, I went to his^FFFFFF ^000000 office as often as I could, making";
+		mes "stupid excuses to see her. I just couldn't help it. I was in love.";
+		next;
+		mes "[Morriphen]";
+		mes "Then, I heard news that Dono's";
+		mes "research wasn't producing the";
+		mes "expected results, and that he";
+		mes "would be shutting everything";
+		mes "down. All experiments would";
+		mes "be efficiently disposed.";
+		next;
+		mes "[Morriphen]";
+		mes "There was a snowstorm";
+		mes "that night, but I braved the";
+		mes "freezing cold to sneak into the";
+		mes "Rekenber Laboratory. I broke her^FFFFFF ^000000 out of her test tube, set the lab";
+		mes "on fire, and got the hell out.";
+		next;
+		mes "[Morriphen]";
+		mes "I couldn't know it at the";
+		mes "time, but I was exposed to";
+		mes "some chemicals during the fire.";
+		mes "They damaged my tissues badly,";
+		mes "so that's why I'm so dependent";
+		mes "on these medicines now.";
+		next;
+		mes "[Morriphen]";
+		mes "Anyway, we ran from the lab,";
+		mes "escaping to the mountains.";
+		mes "I just carried her on my back,";
+		mes "as far as I could go. Finally,";
+		mes "I couldn't fight the dizziness,";
+		mes "and I suddenly blacked out.";
+		next;
+		mes "[Morriphen]";
+		mes "I remember seeing a tall, robed";
+		mes "man right before I fainted. He";
+		mes "said something about bringing";
+		mes "us to Hugel, a resting place";
+		mes "for the lost, those born from^FFFFFF ^000000 Odin's shadow. It was strange...";
+		next;
+		mes "[Morriphen]";
+		mes "I couldn't see his face.";
+		mes "His hood was covering it,";
+		mes "but I think his name was, um...";
+		mes "Mawon... Mawong? Anyway, when";
+		mes "we woke up, we were lying in";
+		mes "warm beds inside Hugel Village.";
+		next;
+		mes "[Morriphen]";
+		mes "The people we met were very";
+		mes "accomdating, welcome, and";
+		mes "friendly. They also didn't";
+		mes "ask us any questions: we were";
+		mes "just accepted. The girl I saved^FFFFFF ^000000 didn't know how to speak then...";
+		next;
+		mes "[Morriphen]";
+		mes "As soon as I got better,";
+		mes "I taught her our language,";
+		mes "and even gave her a name,";
+		mes "Siria. She was no longer an";
+		mes "experiment, but my beloved. Still, we didn't live happily ever after.";
+		next;
+		mes "[Morriphen]";
+		mes "I had to make living for the";
+		mes "two of us to survive, so I found work in Einbroch and Lighthalzen.";
+		mes "Eventually, I bumped into Dono";
+		mes "inside a shabby herb shop in Lighthalzen. I felt so ashamed...";
+		next;
+		mes "[Morriphen]";
+		mes "I burned up his lab, which";
+		mes "must've hurt his reputation";
+		mes "in the company. Still, when";
+		mes "I told him what happened, he";
+		mes "seemed to understand. He";
+		mes "even started to help me...";
+		next;
+		mes "[Morriphen]";
+		mes "You know, Siria was supposed";
+		mes "to become a mass murder weapon.";
+		mes "The reason why Dono's experiment failed was became she resisted";
+		mes "their plans. She's more than just^FFFFFF ^000000 an experiment or weapon, you know.";
+		next;
+		mes "[Morriphen]";
+		mes "If everything had turned out";
+		mes "as Dono planned, Siria would";
+		mes "become a soldier, and I would";
+		mes "be supplying her armaments,";
+		mes "cutting edge weapons at the pinnacle of military development.";
+		next;
+		mes "[Morriphen]";
+		mes "While I was working for Rekenber,^FFFFFF ^000000 I was working on mass producing";
+		mes "imitations of the legendary sword, ''Executioner.'' They wouldn't be";
+		mes "perfect copies, but imagine what would've happened if I succeeded.";
+		next;
+		mes "[Morriphen]";
+		mes "When I think about it, we all";
+		mes "could have been rich. I was in";
+		mes "charge of weapon manufacturing";
+		mes "after all, and our biggest";
+		mes "customer, Arunafeltz, would";
+		mes "have given us good business.";
+		next;
+		mes "[Morriphen]";
+		mes "I made my choice, and I have";
+		mes "no regrets. In fact, I wouldn't";
+		mes "change my life or give away";
+		mes "Siria for the world. However,";
+		mes "Dono would probably think";
+		mes "differently: work was his life.";
+		next;
+		mes "[Morriphen]";
+		mes "I get the feeling that Dono";
+		mes "would never tell Rekenber about";
+		mes "me and Siria. I can never repay";
+		mes "him for the helping us now, but";
+		mes "I'm sure that he must hate me";
+		mes "deep down inside.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Don't think like that.";
+		mes "I'm sure Dono still thinks";
+		mes "of you as his friend. He's";
+		mes "bitter about what happened,";
+		mes "but he won't abandon you.";
+		mes "Why don't you go see him?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Besides, you have an";
+		mes "excuse to go see him now,";
+		mes "your medicine, right? I'm";
+		mes "sure you can repay him by";
+		mes "visiting him, and living";
+		mes "happily with your Seria.";
+		next;
+		mes "[Morriphen]";
+		mes "^333333*Sob*^000000 You're right...";
+		mes "I'm so sorry Dono! ^333333*Sniff*^000000";
+		mes "Thank you so much. If you";
+		mes "ever visit Hugel again, come";
+		mes "by and see me. You've really";
+		mes "helped me and Seria so much.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Don't worry about it.";
+		mes "Just get better so that";
+		mes "I won't have to worry";
+		mes "about you. Take care~";
+		set hg_bio,9;
+		set BaseExp,BaseExp+700000;
+		close;
+	}
+	else if(hg_bio == 9)
+	{
+		mes "[Morriphen]";
+		mes "Oh, long time no see~";
+		mes "Yes, my wife and I can't";
+		mes "possibly be any happier.";
+		mes "We've been taking it easy,";
+		mes "and managed to make full";
+		mes "recoveries. Amazing, isn't it?";
+		next;
+		mes "[Morriphen]";
+		mes "Oh, and we finally got";
+		mes "married in a small ceremony";
+		mes "here in Hugel. Why don't you";
+		mes "come visit our house sometime?";
+		close;
+	}
+	else
+	{
+		mes "[Morriphen]";
+		mes "Oh, long time no see~";
+		mes "Yes, my wife and I can't";
+		mes "possibly be any happier.";
+		mes "We've been taking it easy,";
+		mes "and managed to make full";
+		mes "recoveries. Amazing, isn't it?";
+		next;
+		mes "[Morriphen]";
+		mes "Oh, and we finally got";
+		mes "married in a small ceremony";
+		mes "here in Hugel. Why don't you";
+		mes "come visit our house sometime?";
+		close;
+	}
+	
+}
+
+hu_in01,326,307,3	script	Siria	90,{
+
+	if(hg_bio == 1)
+	{
+		mes "[Siria]";
+		mes "Oh, hello there.";
+		mes "Can I help you";
+		mes "with anything?";
+		mes "It looks like you want";
+		mes "to ask me something...";
+		next;
+		mes "^3355FFHow can a woman this";
+		mes "young be Morriphen's wife?^000000";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Yes, um, Morriphen sent";
+		mes "me here so that I can bring";
+		mes "him his medicine. I was wo--";
+		next;
+		mes "[Siria]";
+		mes "Oh my God! Is he alright?";
+		mes "Please, oh dear Lord, don't";
+		mes "let him be dead! No! D-did";
+		mes "anything bad happen to him?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "(She is being panicky, and doesn't seem to know what she should do.";
+		mes "She absent-mindedly steps forward and then stumbles on the floor.)";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Are you okay?!";
+		mes "(Her eyes look blank. She seems to have a hard time to see things.)";
+		next;
+		mes "[Siria]";
+		mes "Oh, I am fine, thank you.";
+		mes "I am just...I am just having a vision problem.";
+		mes "So...what happened to him?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "He's just not feeling";
+		mes "well, that's all. All he";
+		mes "told me was that he ran";
+		mes "out of his medicine, and";
+		mes "needs some more.";
+		next;
+		mes "[Siria]";
+		mes "Oh, thank God! Okay, well,";
+		mes "I just ran out of the medicine.";
+		mes "Morriphen's friend, and get";
+		mes "it from him. He's supposed to";
+		mes "be in Lighthalzen, somewhere...";
+		next;
+		mes "[Siria]";
+		mes "^333333*Cough cough!*^000000";
+		mes "Ugh, excuse me.";
+		mes "Let me sit down for";
+		mes "a moment. *Cough!*";
+		next;
+		mes "^3355FFSiria's face grows";
+		mes "pale, and she starts";
+		mes "to sweat profusely.^000000";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Um...";
+		mes "Are you feeling";
+		mes "alright? You're not";
+		mes "sick too, are you?";
+		next;
+		mes "[Siria]";
+		mes "Oh, no, no... I'm just";
+		mes "so worried about Morriphen.";
+		mes "*Sob* I can't live without him,";
+		mes "he's everything in the world";
+		mes "to me. I owe him everything,";
+		mes "I have to go see Dono, I hav--";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "You know what? You better";
+		mes "relax and rest here, and I'll";
+		mes "go visit this Dono person in";
+		mes "Lighthalzen. You don't sound";
+		mes "well enough to be traveling.";
+		next;
+		mes "[Siria]";
+		mes "I'm... I'm sorry to";
+		mes "trouble you. But if";
+		mes "Morriphen can trust you";
+		mes "to come here, then I'll";
+		mes "trust you too. ^333333*Cough*^000000";
+		mes "Thank you so much...";
+		set hg_bio,2;
+		close;
+	}
+	else if(hg_bio == 2)
+	{
+		mes "[Siria]";
+		mes "^333333*Sniff*^000000 Please";
+		mes "go to Lighthalzen and";
+		mes "get ^333333*Cough*^000000 Morriphen's";
+		mes "medicine from his friend,";
+		mes "Dono, as soon as you can.";
+		close;
+	}
+	else if(hg_bio == 3)
+	{
+		mes "[Siria]";
+		mes "Oh, have you met Dono?";
+		mes "I'm so grateful for all of";
+		mes "his help. He really is a";
+		mes "good friend to Morriphen,";
+		mes "no matter what he says.";
+		close;
+	}
+	else if(hg_bio == 4)
+	{
+		mes "[Siria]";
+		mes "Oh, have you met Dono?";
+		mes "I'm so grateful for all of";
+		mes "his help. He really is a";
+		mes "good friend to Morriphen,";
+		mes "no matter what he says.";
+		close;
+	}
+	else if(hg_bio == 5)
+	{
+		mes "[Siria]";
+		mes "Oh, have you met Dono?";
+		mes "I'm so grateful for all of";
+		mes "his help. He really is a";
+		mes "good friend to Morriphen,";
+		mes "no matter what he says.";
+		close;
+	}
+	else if(hg_bio == 6)
+	{
+		mes "[Siria]";
+		mes "*Cough* I-I'm fine,";
+		mes "so please don't worry";
+		mes "about me. Just bring the";
+		mes "medicine to Morriphen as";
+		mes "fast as you can for me.";
+		close;
+	}
+	else if(hg_bio == 7)
+	{
+		mes "^3355FFYou gently administered";
+		mes "the medicine to Siria, who";
+		mes "slow regained consciousness.^000000";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Hey, are you alright?";
+		mes "How are you feeling?";
+		mes "Morriphen asked me to";
+		mes "come here and give you";
+		mes "this medicine right away.";
+		next;
+		mes "[Siria]";
+		mes "...Ah... I can't...";
+		mes "I don't know... I...";
+		mes "Where is...? Oh, it's";
+		mes "you. I think... I think";
+		mes "you just saved my life.";
+		mes "I'm sorry for being a burden...";
+		next;
+		mes "[Siria]";
+		mes "All I've been is a nuisance";
+		mes "to both Morriphen and Dono.";
+		mes "You don't understand how I've";
+		mes "destroyed their lives. I just--";
+		mes "I just... I just need to relax.";
+		mes "Thank you for everything...";
+		set hg_bio,8;
+		set BaseExp,BaseExp+500000;
+		close;
+	}
+	else if(hg_bio == 8)
+	{
+		mes "[Siria]";
+		mes "Oh, please go back";
+		mes "to Morriphen and let";
+		mes "him know that I'm much";
+		mes "better. I don't want him";
+		mes "to worry about me!";
+		close;
+	}
+	else if(v[hg_bio] == 9)
+	{
+		mes "[Siria]";
+		mes "Oh, welcome~";
+		mes "Thank you so much";
+		mes "for helping me and";
+		mes "Morriphen. You've been";
+		mes "a real godsend, you know?";
+		close;
+	}
+	else
+	{
+		mes "[Siria]";
+		mes "Oh, hello there.";
+		mes "Can I help you";
+		mes "with anything?";
+		close;
+	}
+	
+}
+
+lighthalzen,88,79,7	script	Dono	85,{
+
+	if(hg_bio == 2)
+	{
+		mes "[Dono]";
+		mes "What do you want?";
+		mes "Spit it out, I don't";
+		mes "have all day.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Excuse me, but";
+		mes "I'm looking for a";
+		mes "man named Dono.";
+		next;
+		mes "[Dono]";
+		mes "Yeah, that's me,";
+		mes "but who the heck";
+		mes "are you, anyway?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Oh, I'm just here";
+		mes "to get some medicine";
+		mes "for Morriphen. Um, his";
+		mes "wife Siria said that";
+		mes "you would have it?";
+		next;
+		mes "[Dono]";
+		mes "Wife? Hurmph! Not likely.";
+		mes "Alright, I see. He must've";
+		mes "run out of medicine. Jesus,";
+		mes "they're both still alive? It's";
+		mes "a miracle that they've both";
+		mes "lasted this long. Eh, oh well.";
+		next;
+		mes "[Dono]";
+		mes "It's his own fault his body";
+		mes "got messed up. Now let's";
+		mes "see how much medicine we";
+		mes "got here... Hmm... Dang. This";
+		mes "isn't good. Hey, you said you";
+		mes "work for Morriphen, that right?";
+		next;
+		mes "[Dono]";
+		mes "I have the medicine, but it's";
+		mes "not enough for one person, much";
+		mes "less the two of them. I need you^FFFFFF ^000000 to help me make some more.";
+		mes "Now, listen carefully, these";
+		mes "are the ingredients I need...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Wait, wait, I thought I was";
+		mes "only getting medicine for";
+		mes "Morriphen. Are you saying";
+		mes "that his wife Siria needs";
+		mes "the medicine too?";
+		next;
+		mes "[Dono]";
+		mes "Why do you keep calling";
+		mes "Siria his wife? Yeah, she's";
+		mes "sick too. If you met her, you'd";
+		mes "see for yourself, right? Well,";
+		mes "I'm getting pretty worried about them, so you better hurry this up.";
+		next;
+		mes "[Dono]";
+		mes "Go get";
+		mes "^3355FF5 Coal^000000,";
+		mes "^3355FF5 Brigan^000000,";
+		mes "^3355FF5 Cyfar^000000,";
+		mes "^3355FF1 Unripe Apple^000000,";
+		mes "^3355FF3 Detrimindexta^000000...";
+		next;
+		mes "[Dono]";
+		mes "...^3355FF20 Shells^000000,";
+		mes "^3355FF1 Red Herb^000000,";
+		mes "^3355FF1 Blue Herb^000000,";
+		mes "^3355FF1 Green Herb^000000,";
+		mes "^3355FF1 White Herb^000000, and";
+		mes "^3355FF1 Yellow Herb^000000.";
+		next;
+		mes "[Dono]";
+		mes "I know this is sudden,";
+		mes "I know I'm pushing you";
+		mes "hard, but I've got no choice.";
+		mes "If you don't hurry, then";
+		mes "those two will die, simple^FFFFFF ^000000 as that. I'll wait for you here.";
+		set hg_bio,3;
+		close;
+	}
+	else if(hg_bio == 1)
+	{
+		mes "[Dono]";
+		mes "Store's closed.";
+		mes "Get outta here, and";
+		mes "come back later to";
+		mes "buy something, got it?";
+		close;
+	}
+	else if(hg_bio == 3)
+	{
+		if (countitem(971) > 2 && countitem(1003) > 4 && countitem(619) && countitem(507) && countitem(508) && countitem(511) && countitem(509) && countitem(510) && countitem(7053) > 4 && countitem(7054) > 4 && countitem(935) > 19)
+		{
+			delitem 971,3;
+			delitem 1003,5;
+			delitem 619,1;
+			delitem 507,1;
+			delitem 508,1;
+			delitem 511,1;
+			delitem 509,1;
+			delitem 510,1;
+			delitem 7053,5;
+			delitem 7054,5;
+			delitem 935,20;
+			set hg_bio,4;
+			mes "[Dono]";
+			mes "Good, good, you've brought";
+			mes "everything I've asked. Give";
+			mes "me a moment to process these";
+			mes "materials and make the medicine. ^333333*Sigh*^000000 I used to have assistants";
+			mes "do this kind of work for me...";
+			next;
+			mes "[Dono]";
+			mes "Back when I used to work for";
+			mes "the Rekenber Corporation, I was";
+			mes "a department head! Oh well, it";
+			mes "can't be helped now. Ah, it's";
+			mes "done. Now, let me test this";
+			mes "out before I give it to you.";
+			next;
+			mes "^3355FFDono reveals that he has";
+			mes "grinded the materials into";
+			mes "a fine powder. He sprinkles";
+			mes "a small amount into a glass";
+			mes "of water, and the liquid turns";
+			mes "blue after he mixes it.^000000";
+			next;
+			mes "[Dono]";
+			mes "Damn! I used the right";
+			mes "proportions! Why isn't it";
+			mes "working?! Morriphen, I hate";
+			mes "you! Grrr...! Hey, kid, I need";
+			mes "you to help me again!";
+			next;
+			mes "[Dono]";
+			mes "Go to the Lighthalzen";
+			mes "Makkie. Tell him I sent you";
+			mes "to get some Red Plant Stem^FFFFFF ^000000 Powder for Morriphen's medicine.";
+			next;
+			mes "[Dono]";
+			mes "Look, I know it's a pain,";
+			mes "but hurry and get it for me";
+			mes "as fast as you can. I need";
+			mes "that stuff to correct some";
+			mes "chemical impurities in this";
+			mes "medicine. Go, go now!";
+			close;
+		}
+		else
+		{
+			mes "[Dono]";
+			mes "If you don't hurry and";
+			mes "gather the materials for";
+			mes "the medicine, Morriphen";
+			mes "and Siria are gonna be";
+			mes "in big trouble. Listen";
+			mes "up, this is what I need...";
+			next;
+			mes "[Dono]";
+			mes "Go get";
+			mes "^3355FF5 Coal^000000,";
+			mes "^3355FF5 Brigan^000000,";
+			mes "^3355FF5 Cyfar^000000,";
+			mes "^3355FF1 Unripe Apple^000000,";
+			mes "^3355FF3 Detrimindexta^000000...";
+			next;
+			mes "[Dono]";
+			mes "...^3355FF20 Shells^000000,";
+			mes "^3355FF1 Red Herb^000000,";
+			mes "^3355FF1 Blue Herb^000000,";
+			mes "^3355FF1 Green Herb^000000,";
+			mes "^3355FF1 White Herb^000000, and";
+			mes "^3355FF1 Yellow Herb^000000.";
+			close;
+		}
+	}
+	else if(hg_bio == 4)
+	{
+		mes "[Dono]";
+		mes "Hey, you should be able";
+		mes "to find Makkie inside the";
+		mes "pub across the street. Hurry";
+		mes "up and bring me some Red";
+		mes "Plant Stem Power from him.^FFFFFF ^000000 Come on, Morriphen's in trouble!";
+		close;
+	}
+	else if(hg_bio == 5)
+	{
+		mes "[Dono]";
+		mes "Where is it?!";
+		mes "Okay, good, you brought";
+		mes "it. Huh. This isn't a lot of";
+		mes "Red Plant Stem Powder,";
+		mes "but this should do. Alright,";
+		mes "let's see if it works now.";
+		next;
+		mes "^3355FFDono sprinkles the";
+		mes "red powder into the";
+		mes "glass of blue water.";
+		mes "The liquid immediately";
+		mes "becomes red.^000000";
+		next;
+		mes "[Dono]";
+		mes "Great, the medicine is";
+		mes "finally ready! By the way,";
+		mes "how is Makkie doing? I know";
+		mes "he's got a big mouth, so did";
+		mes "he tell you anything stupid?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Er, he did mention that";
+		mes "both you and Morriphen used";
+		mes "to work together for Rekenber.";
+		next;
+		mes "[Dono]";
+		mes "He did, huh? Yeah, that's";
+		mes "true. Morriphen and I used";
+		mes "to be researchers... those";
+		mes "were the best damn days";
+		mes "of my life. Afterwards, it";
+		mes "pretty much went downhill.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "What do you mean?";
+		mes "Did something happen?";
+		next;
+		mes "[Dono]";
+		mes "Oh, hell yeah. That dumb";
+		mes "romanticist Morriphen caused";
+		mes "huge trouble for the company.";
+		mes "It's pretty much his fault that";
+		mes "I got fired from Rekenber.";
+		mes "Grr! Let's not talk about it!";
+		next;
+		mes "[Dono]";
+		mes "Just thinking about what";
+		mes "happened makes me so angry!";
+		mes "I swear, I'd kill him if he wasn't my best friend! Ah, speaking";
+		mes "of which, you better get this";
+		mes "medicine to Morriphen now!";
+		next;
+		mes "[Dono]";
+		mes "Right, and don't";
+		mes "mention anything";
+		mes "I said to him, willya?";
+		mes "If he gets upset, and";
+		mes "stresses himself to death,";
+		mes "my work will be for nothing.";
+		set hg_bio,6;
+		close;
+	}
+	else if(hg_bio == 6)
+	{
+		mes "[Dono]";
+		mes "Whoa, what are you still";
+		mes "doing here?! Hurry and";
+		mes "get that medicine over to";
+		mes "Morriphen, or he'll die soon!";
+		close;
+	}
+	else if(hg_bio == 7)
+	{
+		mes "[Dono]";
+		mes "Oh, hey, do you know";
+		mes "how Morriphen's doing?";
+		mes "Tell that jerk to come";
+		mes "by more often. He's the";
+		mes "only guy that can offer me";
+		mes "a decent challenge at chess...";
+		close;
+	}
+	else if(hg_bio == 8)
+	{
+		mes "[Dono]";
+		mes "Oh, hey, do you know";
+		mes "how Morriphen's doing?";
+		mes "Tell that jerk to come";
+		mes "by more often. He's the";
+		mes "only guy that can offer me";
+		mes "a decent challenge at chess...";
+		close;
+	}
+	else if(hg_bio == 9)
+	{
+		mes "[Dono]";
+		mes "Oh, hey, do you know";
+		mes "how Morriphen's doing?";
+		mes "Tell that jerk to come";
+		mes "by more often. He's the";
+		mes "only guy that can offer me";
+		mes "a decent challenge at chess...";
+		close;
+	}
+	else
+	{
+		mes "[Dono]";
+		mes "Hey, store's closed!";
+		mes "I'll open when I feel";
+		mes "like it, so until then,";
+		mes "I'm not selling you";
+		mes "anything! Now, scram!";
+		close;
+	}
+	
+}
+
+lhz_in03,193,28,3	script	Makkie	83,{
+
+	if(hg_bio == 4)
+	{
+		mes "[Makkie]";
+		mes "Hello, how may";
+		mes "I help you today?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Hi, I'm here to get";
+		mes "some Red Plant Stem";
+		mes "Powder for Dono. It's";
+		mes "pretty important, actually.";
+		next;
+		mes "[Makkie]";
+		mes "Ah, I see. He must need";
+		mes "it to prepare medicine for";
+		mes "Morriphen and Siria, am";
+		mes "I right? Okay, just give me";
+		mes "a moment. While you're waiting,^FFFFFF ^000000 go ahead and relax, look around...";
+		next;
+		mes "^3355FFMakkie sifted the powder";
+		mes "into a bag for you, you see";
+		mes "a picture of Makkie, Dono,";
+		mes "and Morriphen wearing white";
+		mes "lab coats on the table.^000000";
+		next;
+		mes "[Makkie]";
+		mes "Oh, that? Yeah, that was";
+		mes "taken when Dono, Morriphen";
+		mes "Rekenber Corporation. I know";
+		mes "they look eccentric, but they're really good guys, trust me.";
+		next;
+		mes "[Makkie]";
+		mes "Yeah, I used to work under";
+		mes "Dono, actually. He was head";
+		mes "of the Genetic Engineering";
+		mes "Department, and Morriphen";
+		mes "was doing other research.";
+		mes "Those were some good times.";
+		next;
+		mes "[Makkie]";
+		mes "Suddenly, me, Dono, and";
+		mes "everyone else working under";
+		mes "him was just fired! I was new";
+		mes "at the time, so I was only able";
+		mes "to learn why we were fired much";
+		mes "later than everyone else.";
+		next;
+		mes "[Makkie]";
+		mes "It turns out that there";
+		mes "was a fire, possibly arson,";
+		mes "in the Rekenber genetic labs.";
+		mes "Dono assumed full responsibility, though everyone who worked for";
+		mes "him just knows he didn't do it.";
+		next;
+		mes "[Makkie]";
+		mes "So that's how we ended";
+		mes "up at our current jobs.";
+		mes "Strangely enough, Morriphen";
+		mes "disappeared at the same time.";
+		mes "I don't know what happened to^FFFFFF ^000000 him since our days at Rekenber...";
+		next;
+		mes "[Makkie]";
+		mes "Anyway, when Morriphen";
+		mes "showed up again, he ended up";
+		mes "needing the medicine we're";
+		mes "making. I sure wish I had a";
+		mes "best friend like Dono or";
+		mes "Morriphen. Those two are close.";
+		next;
+		mes "[Makkie]";
+		mes "Yeah, Dono sure is a nice guy.";
+		mes "He even helped me get this job~";
+		mes "Anyway, if you see him, or if";
+		mes "you visit Morriphen, please";
+		mes "give them my regards. Here you";
+		mes "are: Red Plant Stem Powder.";
+		next;
+		mes "^3355FFYou receive a small bag";
+		mes "of Red Plant Stem Powder.^000000";
+		set hg_bio,5;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Oh! Thanks so much";
+		mes "for the powder. Now,";
+		mes "I better hurry and give";
+		mes "this to Dono. Goodbye~";
+		close;
+	}
+	else if(hg_bio == 1)
+	{
+		mes "[Makkie]";
+		mes "Gosh, I'm so bored~";
+		mes "I wouldn't even mind";
+		mes "having some work to do.";
+		close;
+	}
+	else if(hg_bio == 2)
+	{
+		mes "[Makkie]";
+		mes "Gosh, I'm so bored~";
+		mes "I wouldn't even mind";
+		mes "having some work to do.";
+		close;
+	}
+	else if(hg_bio == 3)
+	{
+		mes "[Makkie]";
+		mes "Gosh, I'm so bored~";
+		mes "I wouldn't even mind";
+		mes "having some work to do.";
+		close;
+	}
+	else if(hg_bio == 5)
+	{
+		mes "[Makkie]";
+		mes "Hm? Shouldn't you hurry";
+		mes "and get that bag of Red";
+		mes "Plant Stem Powder to";
+		mes "Dono as soon as you can?";
+		close;
+	}
+	else if(hg_bio == 6)
+	{
+		mes "[Makkie]";
+		mes "Hey, have you seen";
+		mes "Morriphen and Dono";
+		mes "lately? I hope they're";
+		mes "doing alright. Maybe";
+		mes "I should go see them";
+		mes "soon, for old time's sake.";
+		close;
+	}
+	else if(hg_bio == 7)
+	{
+		mes "[Makkie]";
+		mes "Hey, have you seen";
+		mes "Morriphen and Dono";
+		mes "lately? I hope they're";
+		mes "doing alright. Maybe";
+		mes "I should go see them";
+		mes "soon, for old time's sake.";
+		close;
+	}
+	else if(hg_bio == 8)
+	{
+		mes "[Makkie]";
+		mes "Hey, have you seen";
+		mes "Morriphen and Dono";
+		mes "lately? I hope they're";
+		mes "doing alright. Maybe";
+		mes "I should go see them";
+		mes "soon, for old time's sake.";
+		close;
+	}
+	else if(hg_bio == 9)
+	{
+		mes "[Makkie]";
+		mes "Hey, have you seen";
+		mes "Morriphen and Dono";
+		mes "lately? I hope they're";
+		mes "doing alright. Maybe";
+		mes "I should go see them";
+		mes "soon, for old time's sake.";
+		close;
+	}
+	else
+	{
+		mes "[Makkie]";
+		mes "Hey, welcome to the";
+		mes "Lighthalzen Pub. Relax,";
+		mes "and make yourself at home~";
+		close;
+	}
+	
+}
+
+hugel,71,197,3	script	Lisa#HuQuest	90,{
+
+	mes "[Lisa]";
+	mes "Hugel is a pretty";
+	mes "small, homely village.";
+	mes "Everyone knows everyone,";
+	mes "everybody knows what";
+	mes "everybody else is doing.";
+	mes "It's so suffocating!";
+	next;
+	mes "[Lisa]";
+	mes "There's no privacy in";
+	mes "small towns. Someday,";
+	mes "I wanna go out and";
+	mes "live in the big city~";
+	close;
+	
+}
+
+hugel,126,151,3	script	Emily#HuQuest	90,{
+
+	mes "[Emily]";
+	mes "I feel so blessed to";
+	mes "live in this quaint, little";
+	mes "town. It's so beautiful, and";
+	mes "everyone here is so nice~";
+	next;
+	mes "[Emily]";
+	mes "For some reason, my older";
+	mes "sister wants to move out of";
+	mes "Hugel as soon as she can. She";
+	mes "says that she's getting creeped";
+	mes "out by the people that live here. Don't you think that sounds weird?";
+	close;
+	
+}
