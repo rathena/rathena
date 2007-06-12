@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/06/11
+	* Updated dialogs from Binoculars Quest. [Samuray22]
 2007/06/10
 	* Fixed some small typos in the Gaebolg family curse quest. [L0ne_W0lf]
 	* Small fix to Kiel Quest [Playtester]

@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 1.1 Fixed exploits [Lupus]
 //= 1.2 Added Dandelion's Request / Morroc Invasion quest. [SinSloth]
+//= 1.3 Updated dialogs from Binoculars Quest. [Samuray22]
 //============================================================ 
 
 
@@ -66,64 +67,75 @@ morocc_in,142,100,4	script	William	89,{
 //==================================================================================//
 //				Binoculars Quest
 //==================================================================================//
-morocc_in,76,163,4	script	Alchemist	64,{
+morocc_in,76,163,4	script	Marius	64,5,5{
 	mes "[Marius]";
-	mes "Howdy! A new customer........ Wait!!! I know what you're here for....... You're interested in those magical goggles aren't you?";
+	mes "Ha! Ha! Ha! Another customer coming!";
+	mes "I know what you are gonna say.";
+	mes "You are here for the magic glasses, right?";
 	next;
-	menu "What is that ?",-, "Make",M_Make, "Ignore him",M_End;
-
+	switch(select( "What is magic glasses?","Making magic glasses.","Skip.")) {
+	case 1:
 		mes "[Marius]";
-		mes "It is actually called ^3355FF'Binoculars'^000000! It is an opitcal device that allows the wearer to see far away objects.";
+		mes "Right! Its proper name is ' ^3355FFBinoculars^000000 '!";
+		mes "It is like a cylinder with...";
+		mes "A lot of lens piled together inside!";
+		mes "Using the effect of light reflection...";
+		mes "To see something far away.";
+		mes "It is not for something near to you!";
 		next;
 		mes "[Marius]";
-		mes "You see, when two lens are placed next to each other in front of your eyes, your brain interperets this image........ blah blah...... blah....";
+		mes "WHat do you think? Is it great?";
+		mes "Ha! Ha! Ha!";
+		mes ".........";
+		mes "... WHat? You don't look convinced!";
+		mes "I am telling the truth!!";
 		next;
 		mes "[Marius]";
-		mes "............... What's this? You don't seem interested in what I have to say?? I don't think you realize what I'm talking about!";
-		emotion e_hmm;
-		next;
-		mes "[Marius]";
-		mes "For us to make you a ^3355FF'Binoculars'^000000, we will need:";
-		mes "^3355FF50,000 Zeny,";
-		mes "100 Steel,";
-		mes "and 1 Geek Glasses.^000000.";
-		next;
-		mes "[Marius]";
-		mes "Oh c'mon! Don't be a jerk! What I'm talking about is REALLY COOL!!";
+		mes "Mark down the items you need to make a Binoculars.";
+		mes "One by one...";
+		mes "One ^3355FFGeek Glasses^000000! 100 ^3355FFSteel^000000! And ^3355FF50.000 Zeny^000000!";
 		close;
-
-	M_Make:
-		mes "[Marius]";
-		if(countitem(2243) < 1 || countitem(999) < 100 || Zeny < 50000) goto sL_NotEnuf;
-		delitem 2243,1;
-		delitem 999,100;
-		set Zeny, Zeny - 50000;
-		mes "Gr~~~~eat ! You'll definitely enjoy a pair of these!";
-		next;
-		mes "[Marius]";
-		mes "Here it is ! The Binoculars!";
-		getitem 2296,1;
-		next;
-		mes "[Marius]";
-		mes "But before you go out and use them I have to tell you......";
-		if(sex==0) mes "DON'T USE THEM TO BE A PEEPING TOM!!!";
-		if(sex==1) mes "Becarefull where you look..... you might see someting you didn't want to........";
-		close;
-
-		sL_NotEnuf:
-			mes "Argggghhhhhhh !! You didn't bring enough items!! You need:";
-			mes "^3355FF1 pair of Geek Glasses, 50,000 Zeny and 100 Steel^000000.";
-			emotion e_an;
+	case 2:
+		if (countitem("Spinning_Eyes") > 0 && countitem("Steel") > 99 && Zeny > 49999) {
+			mes "[Marius]";
+			mes "Great! It is great!";
+			mes "I made one Binoculars!";
+			mes "And I found the right owner for it!";
+			next;
+			delitem "Spinning_Eyes",1;
+			delitem "Steel", 100;
+			set Zeny,Zeny-50000;
+			next;
+			mes "[Marius]";
+			mes "Here you are... Binoculars!";
+			getitem "Binoculars",1;
+			next;
+			mes "[Marius]";
+			mes "I hope you won't need to use this Binoculars...";
+			mes "To see something tHat you shouldn't...";
+			mes "Ha! Ha! Ha!";
 			close;
-
-	M_End:
+		}
+			mes "[Marius]";
+			mes "Not enough! Insufficient items!";
+			mes "How can you disrespect the world's best alchemist? ";
+			mes "You have serious attitude problems!";
+			mes "This is ridiculous!";
+			close;
+	case 3:
 		mes "[Marius]";
-		mes "Hey you! You DARE IGNORE ME!! I am MARIUS the alchemist of ALCHEMISTS!!!!!";
-		emotion e_omg;
+		mes "Hey! You!";
+		mes "You are talking to...";
+		mes "the world famous...";
+		mes "Optics master... Marius!";
+		mes "This is not the right attitude!";
 		close;
+	}
 }
 
-//Dandelion's Request / Morocc Invasion quest
+//==================================================================================//
+//			Dandelion's Request / Morocc Invasion quest
+//==================================================================================//
 
 izlude,103,106,3	script	Guildsman	48,3,3,{
 
