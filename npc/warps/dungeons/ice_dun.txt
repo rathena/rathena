@@ -1,4 +1,4 @@
-//===== Athena Script ========================================
+//===== eAthena Script =======================================
 //= Ice Dungeon Warp Script
 //===== By: ==================================================
 //= Playtester
@@ -11,7 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 Initial version [Playtester]
 //= 1.1 Official warps [Playtester]
-//= 1.2 Added quest warp. FLoor 4 to floor 3. [L0ne_W0lf[
+//= 1.2 Added quest warp. FLoor 4 to floor 3. [L0ne_W0lf]
 //============================================================
 
 ice_dun01,157,10,0	warp	ice001	1,1,ra_fild01,233,327

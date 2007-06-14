@@ -1,27 +1,27 @@
-//===== Athena Script =====================================
+//===== eAthena Script =======================================
 //= Treasure Hunter Script
-//===== Converted By ======================================
+//===== Converted By =========================================
 //= Fredzilla
 //= Original
-///////////////////////////////////////////////////////////
-//         Treasure Hunter Quests                        //
-//         By: Ezekial                                   //
-//         for the use on nRO run by Newbe5              //
-//         revised By Warlock                            //
-///////////////////////////////////////////////////////////
-//===== Version ===========================================
+//////////////////////////////////////////////////////////////
+//                  Treasure Hunter Quests                  //
+//                       By: Ezekial                        //
+//             for the use on nRO run by Newbe5             //
+//                    revised By Warlock                    //
+//////////////////////////////////////////////////////////////
+//===== Version ==============================================
 //= 1.1
-//===== Compatible With ===================================
+//===== Compatible With ======================================
 //= eAthena 1.0
-//===== Description =======================================
+//===== Description ==========================================
 //= Start for Treasure hunter quests
-//===== Comments ==========================================
-//= Event_THQS - Used to check if you have already registerd
+//===== Comments =============================================
+//= Event_THQS - Used to check if you have already registered
 //= #Treasure_Token - used to keep track of tokens
 //= v1.0 - Straight conversion of Aegis NPC file
 //= v1.1 - balanced some prices, fixed 1 missing label
 //= 	removed Executioner&Mysteltain swords [Lupus]
-//////////////////////////////////////////////////////////
+//============================================================
 
 prt_in,159,172,0	warp	thqwrp	3,3,yuno_in01,123,155
 

@@ -1,27 +1,27 @@
-//===== Athena Script =====================================
+//===== eAthena Script =======================================
 //= Treasure Hunter Script
-//===== Converted By ======================================
+//===== Converted By =========================================
 //= Fredzilla
 //= Original
-///////////////////////////////////////////////////////////
-//           Treasure Hunter Quests                      //
-//             By: Ezekial                               //
-//      for the use on nRO run by Newbe5                 //
-//         revised By Warlock                            //
-///////////////////////////////////////////////////////////
-//===== Version ===========================================
+//////////////////////////////////////////////////////////////
+//                  Treasure Hunter Quests                  //
+//                       By: Ezekial                        //
+//             for the use on nRO run by Newbe5             //
+//                    revised By Warlock                    //
+//////////////////////////////////////////////////////////////
+//===== Version ==============================================
 //= 1.2
-//===== Compatible With ===================================
+//===== Compatible With ======================================
 //= eAthena 1.0
-//===== Description =======================================
+//===== Description ==========================================
 //= Start for Treasure hunter quests
-//===== Comments ==========================================
-//= Event_THQS - Used to check if you have already registerd
+//===== Comments =============================================
+//= Event_THQS - Used to check if you have already registered
 //= #Treasure_Token - used to keep track of tokens
 //= 1.0 - Straight conversionof Aegis NPC file
 //= 1.1 Added time penalty to prevent get quests to often [Lupus]
 //= 1.2 Fixed not working penalty, added anti-cheat [Lupus]
-//////////////////////////////////////////////////////////
+//============================================================
 
 
 yuno_in01,112,151,6	script	Quest Manager	62,{

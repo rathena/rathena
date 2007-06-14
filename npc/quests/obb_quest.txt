@@ -1,16 +1,16 @@
-//===== Athena Script =======================================
+//===== eAthena Script =======================================
 //= Old Blue Box Quest
-//===== By ================================================
+//===== By ===================================================
 //= Celesta, Lupus
-//===== Version ===========================================
+//===== Version ==============================================
 //= 1.6a
-//===== Compatible With ===================================
+//===== Compatible With ======================================
 //= SVN3000+
-//===== Description =======================================
+//===== Description ==========================================
 //= Official OBB Quest. You can pass it any times you want.
 //= 1.6 Updated, fixed, optimized and translated into English [Lupus]
 //= 1.6a Halved the required items to make an obb, thanks to marquis007 [MasterOfMuppets]
-//===== Description =======================================
+//===== Description ==========================================
 
 alberta,115,204,5	script	Tourist	97,{
 	mes "[Tourist]";

@@ -47,7 +47,7 @@ L_RNameLoop:
 	mes "I am very sorry if you have lost items";
 	close;
 
-// If the Auction has started, it will run this, during this time items can be registerd and registerd items retrieved
+// If the Auction has started, it will run this, during this time items can be registered and registered items retrieved
 
 L_Register:
 	mes "Welcome to the auction, you may register you items at this time";
@@ -166,7 +166,7 @@ L_Sorry:
 	close;
 L_Already:
 	mes "[Auctioneer]";
-	mes "It seems you already have have an item registerd here, would you like to retrieve your item?";
+	mes "It seems you already have have an item registered here, would you like to retrieve your item?";
 	next;
 	menu "Yes",-,"No",L_End;
 	getitem $AItems[@num],$AAmount[@num];
@@ -185,7 +185,7 @@ L_NotEnough:
 	mes "[Auctioneer]";
 	mes "Seems you don't have that much "+getitemname(@setitem)+"'s";
 	close;
-// If the Auction has enterd phase 2, it will run this, during this time items you can bid on registerd
+// If the Auction has enterd phase 2, it will run this, during this time items you can bid on registered
 // No items can be retrieved during this time, they are now stuck
 
 L_Bid:

@@ -1,15 +1,15 @@
-//===== Athena Script =======================================
+//===== eAthena Script =======================================
 //= Quest NPCs related to Ayothaya
-//===== By ================================================
+//===== By ===================================================
 //= Fredzilla
-//===== Version ===========================================
+//===== Version ==============================================
 //= 1.6
-//===== Compatible With ===================================
+//===== Compatible With ======================================
 //= eAthena 1.0
-//===== Description =======================================
+//===== Description ==========================================
 //= Ayothaya Clue Quest, Ayothaya Shrimp Quest, Ayothaya
 //= Dungeon Quest, Tom Yum Goong Quest,
-//===== Comments ==========================================
+//===== Comments =============================================
 //= List or Variables used
 //= @fishing - 	Checks for if you have caught a fish or not, 
 //=	       	1/10 chance you will get the wedding ring if 
@@ -28,7 +28,7 @@
 //= 1.5 Removed Duplicates [Silent]
 //= 1.6 Moved quests from cities/ to here:
 //= Shrimp, Dungeon, Tom Yum Goong [Evera]
-//=========================================================
+//============================================================
 
 //============================================================
 //============================================== Ayothaya Clue

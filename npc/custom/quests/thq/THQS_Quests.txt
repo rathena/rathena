@@ -1,27 +1,27 @@
-//===== Athena Script =====================================
+//===== eAthena Script =======================================
 //= Treasure Hunter Script
-//===== Converted By ======================================
+//===== Converted By =========================================
 //= Fredzilla
 //= Original
-///////////////////////////////////////////////////////////
-//                 Treasure Hunter Quests                //
-//                      By: Ezekial                      //
-//                 for the use on nRO run by Newbe5      //
-//                   revised By Warlock                  //
-///////////////////////////////////////////////////////////
-//===== Version ===========================================
+//////////////////////////////////////////////////////////////
+//                  Treasure Hunter Quests                  //
+//                       By: Ezekial                        //
+//             for the use on nRO run by Newbe5             //
+//                    revised By Warlock                    //
+//////////////////////////////////////////////////////////////
+//===== Version ==============================================
 //= 1.3
-//===== Compatible With ===================================
+//===== Compatible With ======================================
 //= eAthena 1.0
-//===== Description =======================================
+//===== Description ==========================================
 //= Start for Treasure hunter quests
-//===== Comments ==========================================
-//= Event_THQS - Used to check if you have already registerd
+//===== Comments =============================================
+//= Event_THQS - Used to check if you have already registered
 //= #Treasure_Token - used to keep track of tokens
 //= 1.0 - Straight conversionof Aegis NPC file
 //= 1.2 some bugfixes, typos [Lupus]
 //= 1.3 Removed Duplicates [Silent]
-//////////////////////////////////////////////////////////
+//============================================================
 
 
 ///////Job list 1///////

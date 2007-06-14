@@ -1,8 +1,8 @@
-//===== Athena Script =======================================
+//===== eAthena Script =======================================
 //= Simple Adoption Script
-//===== By ================================================
+//===== By ===================================================
 //= Fredzilla with help from Kamari,Acky
-//===== Version ===========================================
+//===== Version ==============================================
 //= 1.7 Moved warps to the southern exit of the main chappel. [L0ne_W0lf]
 //= 1.6a Fixed wrong label name [KarLaeda]
 //= 1.6 Removed call to function Is_Taekwon_Class in favor of baseClass == Job_Taekwon [Silentdragon]
@@ -21,13 +21,13 @@
 //= 1.1 - Minor correction, replaced missing close; and mes :D
 //= 1.0 - First Release, most likely going to have some bugs
 //=	  Is using @adopt instead of proper NPC script command 
-//===== Compatible With ===================================
+//===== Compatible With ======================================
 //= eAthena Final (SVN), any version that contained the GM command @adopt
 //= This is any version released after 03/29/05, don't know the number
-//===== Description =======================================
+//===== Description ==========================================
 //= A simple adoption script that lets couples adopt a 
 //= lvl 1/1 novice without the help of a GM there
-//===== Comments ==========================================
+//===== Comments =============================================
 //= List or Variables used
 //= $@AdoptionActive = Stops other people trying to use 
 //= the adoption NPC's intill the currant one is over.
@@ -48,7 +48,7 @@
 //= 	*event_adopted = Put on baby so it can't be adopted again.
 //= 	Use "getchildid()>0" insread of event_adopt
 //= 	Use "Upper==2" insread of event_adopted
-//=========================================================
+//============================================================
 
 prt_church,83,122,0	warp	prtch03	1,2,prt_church,164,171
 prt_church,162,171,0	warp	prtch01-3	1,2,prt_church,86,122
@@ -415,7 +415,7 @@ A_FinalYesB:
 	close;
 A_SameFail:
 	mes "[Inanna]";
-	mes "Sorry, it seems you have registerd as both parents, this isn't allowed";
+	mes "Sorry, it seems you have registered as both parents, this isn't allowed";
 	callfunc "AdoptReset","both parents are the same person";
 	close;
 

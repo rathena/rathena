@@ -1,8 +1,8 @@
-//===== Athena Script =======================================
+//===== eAthena Script =======================================
 //= Donation NPC
-//===== By ==================================================
+//===== By ===================================================
 //= Josh
-//===== Version =============================================
+//===== Version ==============================================
 //= 1.0 - First release. Probably contains bugs/security
 //=	  risks
 //= 1.1 - Added a check for whether the account exists when
@@ -26,26 +26,26 @@
 //= 3.3 - Optimized query speeds by combining a few select 
 //=	  queries into one. Requires Trunk 7975 OR
 //=	  Stable 8637.
-//===== Compatible With =====================================
+//===== Compatible With ======================================
 //= eAthena - any version that contains the new query_sql
 //=	      command (Stable 8637 OR Trunk 7975).
-//===== Description =========================================
+//===== Description ==========================================
 //= A script that lets a player claim an item for donating.
 //= Allows a GM to input each donation.
-//===== Comments ============================================
+//===== Comments =============================================
 //= This script uses SQL tables to store variables for the
 //= amount donated by users and the items claimable.
-//===== Installation ========================================
+//===== Installation =========================================
 //= You must execute donate.sql and donate_item_db.sql before
 //= using this script.
-//===========================================================
+//============================================================
 //= Thanks to Vich for helping me with the SQL syntax.
 //= Thanks to Lance for helping me with the the arrays and 
 //= for implementing query_sql.
 //= Thanks to Skotlex for implementing escape_sql.
 //= Thanks to Toms for implementing the new multi-column 
 //= query_sql command.
-//===========================================================
+//============================================================
 
 prontera,145,179,5	script	Donation Girl	714,{
 

@@ -1,20 +1,20 @@
-//===== Athena Script =======================================
+//===== eAthena Script =======================================
 //= Penal Servitude Script
-//===== By ================================================
+//===== By ===================================================
 //= Lupus
-//===== Version ===========================================
+//===== Version ==============================================
 //= 1.2
-//===== Compatible With ===================================
+//===== Compatible With ======================================
 //= eAthena Final (SVN)
-//===== Description =======================================
+//===== Description ==========================================
 //= A simple Penal Servitude Script.
 //= It could cheer up your prisoners a bit.
-//===== Comments ==========================================
+//===== Comments =============================================
 // This script uses CHEQUES of the 2nd KAFRA_BANK.TXT
 // var PRISON - it counts number of your imprisonments.
 // 1.1 English translation
 // 1.2 Stricted the conditions a bit
-//=========================================================
+//============================================================
 
 sec_pri,36,58,1	script	Chief Warder	105,{ 
 	mes "[Saddeus]";

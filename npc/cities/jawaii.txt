@@ -1,5 +1,5 @@
-//===== eAthena script =======================================
-//= Jawaii (The Lovers Paradise) Town script
+//===== eAthena Script =======================================
+//= Jawaii (The Lovers' Paradise) Town script
 //===== By: ==================================================
 //= jAthena (1.0)
 //= DNett123 (1.1 - 1.5)

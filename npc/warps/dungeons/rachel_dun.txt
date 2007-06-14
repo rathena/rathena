@@ -1,20 +1,20 @@
-//==== Athena Script =====================================
+//===== eAthena Script =======================================
 //= Rachel Sanctuary Dungeon Warp Script
-//==== By ================================================
+//===== By ===================================================
 //= Playtester
-//==== Current Version :==================================
+//===== Current Version :=====================================
 //= 1.4
-//==== Compatible With :==================================
+//===== Compatible With :=====================================
 //= Any Athena Version
-//==== Description :======================================
+//===== Description :=========================================
 //= Warp Points For Rachel Sanctuary Dungeon
-//==== Additional Comment:================================
+//===== Additional Comment:===================================
 //= 1.1 Added $ephiroth's warps [Playtester]
 //= 1.2 Replaced old versions with jAthena's [Playtester]
 //= 1.3 Official warps [Playtester]
 //= 1.4 Added quest map warp to random warp. [L0ne_W0lf]
 //=	Added Dungeon exit back into temple.
-//========================================================
+//============================================================
 
 ra_san01,139,13,0	script	sanctuary01	45,1,1,{
 	if (ra_tem_q == 21) { warp "que_san04",119,110; end; }
