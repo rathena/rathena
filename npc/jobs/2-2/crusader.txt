@@ -4,7 +4,7 @@
 //= Made by: Black Dragon
 //= Converted by: Shin
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.6
 //===== Compatible With: ===================================== 
 //= eAthena  0.5.2 +
 //===== Description: ========================================= 
@@ -40,11 +40,11 @@
 //=	- Fixed some indentation.
 //= 2.5 Fixed some spelling and grammar in crusader quest. [L0ne_W0lf]
 //= 2.6 Fixed bug (about totally blocked baby class), optimized,
-//=		made some NPC more unique names: Monster Summon#Cr1 [Lupus]
+//=		made some NPC more unique names: Monster Summon#cr1 [Lupus]
 //============================================================
 
 
-//=============== Senior Crusader: 1º Collect Items Test============================
+//=============== Senior Crusader: 1st Collect Items Test============================
 prt_castle,45,169,5	script	Senior Crusader	752,{
 	mes "[Michael Halig]";
 	if (Upper == 1) { //the baby classes were totally blocked... due to missing == 1
@@ -309,7 +309,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 	close;
 }
 
-//===================== Suffering Man: 2º Endurance Test ===============================================
+//===================== Suffering Man: 2nd Endurance Test ===============================================
 prt_castle,164,32,1	script	Man in Anguish	733,{
 	mes "[Murnak Mijoul]";
 	if(BaseJob != Job_Swordman) {
@@ -441,7 +441,7 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 	close;
 }
 
-//===================== Gabriel Valentine: 3º Knowledge Test =================================
+//===================== Gabriel Valentine: 3rd Knowledge Test =================================
 prt_church,95,127,3	script	Crusader	745,{
 	mes "[Gabriel Valentine]";
 	if(BaseJob != Job_Swordman) {
@@ -784,7 +784,7 @@ C_Questions:
 	close;
 }
 
-//===================== Crusader: 4º Purification Test =====================================================
+//===================== Crusader: 4th Purification Test =====================================================
 prt_castle,35,151,5	script	Patron Knight	751,{
 	mes "[Bliant Piyord]";
 	mes "Welcome.";

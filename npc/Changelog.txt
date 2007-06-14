@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/06/14
+	* Added initial mob spawn of Abbey Dun, thanks to $ephiroth
 2007/06/12
 	* Added first part of Hugel quests. Credits go to MasterOfMuppets. [SinSloth]
 	- Moved some Hugel NPCs to proper quest file. [SinSloth]
