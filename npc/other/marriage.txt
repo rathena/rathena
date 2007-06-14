@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= - Variab;e in use: $wed_groom$ $wed_bride$
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Fixed a missing ")" [L0ne_W0lf]
 //============================================================
 
 prt_church,97,100,4	script	Wedding Staff#w	71,{
@@ -697,7 +698,7 @@ prt_church,100,128,4	script	Bishop#w	60,{
 							mes "Will you marry "+$wed_groom$+"?";
 							next;
 							if (select("Yes, I do.:^FF0000No.^000000") == 1) {
-								if (isloggedin(getcharid(3,$wed_groom$)) {
+								if (isloggedin(getcharid(3,$wed_groom$))) {
 									if (marriage($wed_groom$)) {
 										//Call Wedding effect
 										wedding;
