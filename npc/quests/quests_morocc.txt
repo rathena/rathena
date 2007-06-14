@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3a
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= 1.1 Fixed exploits [Lupus]
 //= 1.2 Added Dandelion's Request / Morroc Invasion quest. [SinSloth]
 //= 1.3 Updated dialogs from Binoculars Quest. [Samuray22]
+//= 1.3a added GM lvl check as in other invansion quests [Lupus]
 //============================================================ 
 
 
@@ -10436,70 +10437,61 @@ que_job01,70,84,1	duplicate(Simon#mao)	Kimmie	882,0,0
 
 sec_in02,38,162,0	script	Morroc Invasion Manager	882,{
 
-	mes "Enter password.";
+	if(getgmlevel() < 80) end;
+
+	mes "A total of " + $maoattack + " users completed";
+	mes "the Satan Morroc: Lin Quest.";
+	mes "There are 2 requirements to";
+	mes "summon Satan Morroc's troops.";
+	mes "1) 50 users must complete";
+	mes "this Satan Morroc: Lin Quest.";
 	next;
-	input .@mao;
-	if(.@mao == 1854)
+	mes "2) One of these users that";
+	mes "completed the Lin Quest must";
+	mes "approach the Dandelion Org";
+	mes "NPCs at the outskirts of Morroc to trigger the monster invasion.";
+	mes "Change the GlobalVar to affect status of Satan Morroc invasation?";
+	next;
+	switch( select( "Set Globalvar","Cancel" ) )
 	{
-		mes "A total of " + $maoattack + " users completed";
-		mes "the Satan Morroc: Lin Quest.";
-		mes "There are 2 requirements to";
-		mes "summon Satan Morroc's troops.";
-		mes "1) 50 users must complete";
-		mes "this Satan Morroc: Lin Quest.";
-		next;
-		mes "2) One of these users that";
-		mes "completed the Lin Quest must";
-		mes "approach the Dandelion Org";
-		mes "NPCs at the outskirts of Morroc to trigger the monster invasion.";
-		mes "Change the GlobalVar to affect status of Satan Morroc invasation?";
-		next;
-		switch( select( "Set Globalvar","Cancel" ) )
-		{
-			case 1:
-				mes "Please choose the number";
-				mes "of times that the Lin Quest";
-				mes "will be recorded as completed";
-				mes "on the server. 0 is essentially";
-				mes "a reset; 50 will immediately";
-				mes "make the invasion available.";
-				next;
-				switch( select( "49","50","0" ) )
-				{
-					case 1:
-						mes "The GlobalVar has been";
-						mes "set to 49. The Lin Quest";
-						mes "must be completed 1 more";
-						mes "time before the Satan Morroc";
-						mes "invasion can be triggered.";
-						set $maoattack,49;
-						close;
+		case 1:
+			mes "Please choose the number";
+			mes "of times that the Lin Quest";
+			mes "will be recorded as completed";
+			mes "on the server. 0 is essentially";
+			mes "a reset; 50 will immediately";
+			mes "make the invasion available.";
+			next;
+			switch( select( "49","50","0" ) )
+			{
+				case 1:
+					mes "The GlobalVar has been";
+					mes "set to 49. The Lin Quest";
+					mes "must be completed 1 more";
+					mes "time before the Satan Morroc";
+					mes "invasion can be triggered.";
+					set $maoattack,49;
+					close;
 
-					case 2:
-						mes "The GlobalVar has been";
-						mes "set to 50. The Satan Morroc";
-						mes "invasion can now be triggered.";
-						set $maoattack,50;
-						close;
-					
-					case 3:
-						mes "The GlobalVar has been";
-						mes "set to 0. The Lin Quest";
-						mes "must be completed 1 more";
-						mes "time before the Satan Morroc";
-						mes "invasion can be triggered.";
-						set $maoattack,0;
-						close;
-				}
+				case 2:
+					mes "The GlobalVar has been";
+					mes "set to 50. The Satan Morroc";
+					mes "invasion can now be triggered.";
+					set $maoattack,50;
+					close;
+				
+				case 3:
+					mes "The GlobalVar has been";
+					mes "set to 0. The Lin Quest";
+					mes "must be completed 1 more";
+					mes "time before the Satan Morroc";
+					mes "invasion can be triggered.";
+					set $maoattack,0;
+					close;
+			}
 
-			case 2:
-				mes "You have canceled.";
-				close;
-		}
-	}
-	else
-	{
-		mes "Do it again.";
-		close;
+		case 2:
+			mes "You have canceled.";
+			close;
 	}
 }
