@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.8a
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -18,7 +18,8 @@
 //= 1.6 Replaced sewer_prt with (MISC_QUEST & 8) [Lupus]
 //= 1.7 Removed Duplicates [Silent]
 //= 1.8 Moved Culvert to quests/quests_prontera.txt
-//= 1.9 Rescript from the ground up. [L0ne_W0lf]
+//= 1.9 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 2.0 Removed "Hans Solo", as he is a Jawaii NPC. [L0ne_W0lf]
 //============================================================
 
 // Prontera
@@ -758,111 +759,4 @@ prt_maze02,110,69,0	script	Soldier#2pront	105,{
 	mes "[Soldier]";
 	mes "Whaaaat a stupid guy. Why would anyone want to throw his life away just to collect some silly Herbs?";
 	close;
-}
-
-// Drunken man in the inn -----------------------------------------------
-prt_in,173,13,4	script	Customer#Hans Solo	86,{
-
-	set @number_drink,0;
-	set @number_place,0;
-	mes "[Hans Solo]";
-	mes "UhOh... I'm drunk. hiccups!";
-	mes "Hey, you. You look lonely!";
-	next;
-	mes "[Hans Solo]";
-	mes "You must be angry seeing others busy getting marry too? You're upset, aren't you?";
-	next;
-	mes "[Hans Solo]";
-	mes "You must be upset with the couples who ignore everyone and drown themselves in happiness,";
-	mes "aren't you?";
-	next;
-	mes "[Hans Solo]";
-	mes "I wonder since when everybody starts praising only themselves?";
-	mes "It used to be peaceful before that...";
-	next;
-	mes "[Hans Solo]";
-	mes "Anyway, it's ok even if you're not married, friend!!";
-	mes "Come, I'll buy you a drink.";
-	next;
-	mes "- How do I become his friend all of a sudden?! -";
-	mes "- Anyway, a free drink won't do any harm.... -";
-	next;
-	mes "- Gulu Gulu GuLu -";
-	percentheal -10,0;
-	next;
-	mes "[Hans Solo]";
-	mes "It's good, isn't it? I know a great place to hang out.";
-	mes "Do you want to tag along?";
-	next;
-	Loopback:
-		menu "...Give me another drink",-,"........What place is that?",s_What;
-
-			mes "[Hans Solo]";
-			mes "Well then, another drink it is.";
-			mes "Hey,BaZooKa...let's have a drink!";
-			next;
-			mes "[Hans Solo]";
-			mes "Cheers to the dateless adventurers!";
-			next;
-			mes "- Gulu Gulu GuLu -";
-			percentheal -10,0;
-			next;
-			set @number_drink,@number_drink + 1;
-			if (@number_drink == 5)goto s_Five;
-			goto s_While;
-s_What:
-			mes "[Hans Solo]";
-			mes "Eat and drink as much as you like!";
-			mes "Still don't have enough!";
-			mes "Come, have more!";
-			next;
-			mes "[Hans Solo]";
-			mes "Cheers for the dateless adventurers!";
-			next;
-			mes "- Gulu Gulu GuLu -";
-			percentheal -10,0;
-			next;
-			set @number_place,@number_place + 1;
-			goto s_While;
-
-s_Five:
-			mes "[Hans Solo]";
-			mes "UhOh... Are you alright?";
-			mes "Come, sign your name here.";
-			mes "I'll take you to a wonderful place!";
-			next;
-			menu "Sign it",-,"Don't sign it",s_Dont;
-
-				mes "[Hans Solo]";
-				mes "Good! Let me send you to that place now...Hehe..";
-				percentheal 100,0;
-				close2;
-				warp "jawaii_in",44,124;
-				end;
-
-s_Dont:
-				mes "[Hans Solo]";
-				mes "....Hey!";
-				close;
-s_While:
-		if (@number_drink >= 4 && @number_place >= 1 || @number_place >= 4)
-{
-			mes "[Hans Solo]";
-			mes "Hiccups... So you finally decide to go there?";
-			mes "Come... Sign your name here,";
-			mes "I'll take you to a great place!";
-			next;
-			menu "Sign it",-,"Don't sign it",s_Dont2; 
-			mes "[Hans Solo]";
-				mes "Good! I'll send you there now...Hehe..";
-				mes "Grumble about your pityful life while you can...Hehe...";
-				percentheal 100,0;
-				warp "jawaii_in",44,124;
-				close;
-s_Dont2:
-				mes "[Hans Solo]";
-				mes "....Hey!";
-				close;
-}
-goto Loopback;
 }

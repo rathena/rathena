@@ -1,6 +1,14 @@
 Date		Added
 ======
 2007/06/14
+	* Rev. 10766 Updated cities: Morroc, Jawaii, and Izlude [L0ne_W0lf]
+	- Moved an NPC out of Prontera because of the Jawaii update.
+	* Updated Wedding script to official. (Moved previous to custom.)
+	- Updated the Divorce NPC to Official as well.
+	* Changed some dialog in the Kafra Functions.
+	* Updated the Message boards to iRO standards.
+	* Added the Mail box NPCs even though the mail system is not implemented.
+	* Near total rewrite of the shops.txt file. Lots of corrections and such.
 	* Removed Cursey Abbey spawns from the conf file [Playtester]
 	- fixed a bug in the spawn file
 	- it will be readded once the mobs are actually usable

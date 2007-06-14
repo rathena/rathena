@@ -10,6 +10,10 @@
 //===== Description: =========================================
 //= These functions handle save, storage, cart rental, teleport,
 //= and Free Teleport/Warp/Rent Cart options for all Kafra NPCs.
+//=
+//= Kafra's will need a lot of work. The Welcome Message argument
+//= may become obsolete, as most kafras have a slightly differing
+//= Welcome message.
 //===== Additional Comments: ================================= 
 //= v1.1 Now using functions v2.1 Added Cart Rent for Classes: Whitesmith, Professor.
 //= Replaced checkoption(x) into checkcart(0) [Lupus] v2.1b Added Fix Kafra Pass Func [Kobra_k88]
@@ -39,6 +43,8 @@
 //=	Need all coords for all guides.. and somehow pass their coords to kafra.
 //=	Removed universal Kafra Pass, added 3 new Kafra Tickets [Lupus]
 //= 5.4b temporary moved "-Guide" from the 1st menu punct [Lupus]
+//= 5.5 Added proper Niflheim welcome message.	[L0ne_W0lf]
+//=	Cleaned up the menus a bit. Got rid of the proceeding "-" prefix.
 //============================================================ 
 
 
@@ -54,15 +60,22 @@ function	script	F_Kafra	{
 	switch(getarg(0)){
 		default:
 		case 0:
-			mes "Welcome to Kafra Corp.  We will stay with you wherever you go.";
+			mes "Welcome to the";
+			mes "Kafra Corporartion.";
+			mes "The Kafra services";
+			mes "are always on your side.";
+			mes "How may I assist you?";
 			break;
 		//Niflheim
 		case 1:
-			mes "Welcome... Kafra Services.... Will be with you even if you die.....";
+			mes "^666666W-weeeelc-c-come";
+			mes "to th-the K-kaaafrrrra";
+			mes "C-coorpoor-r-ratioooonn...^000000";
 			break;
 		//Guilds Castles
 		case 2:
-			mes "Welcome, ^5533FF" + GetGuildName(@GID) + "^000000 members.  We will stay with you wherever you go";
+	 		mes "Welcome. ^ff0000" + GetGuildName(@GID) + "^000000 Member.";
+			mes "The Kafra Coporation will stay with you wherever you go.";
 			break;
 		//Amatsu
 		case 3:
@@ -85,34 +98,34 @@ function	script	F_Kafra	{
 	switch(getarg(1)){
 		//only Save & Storage
 		case 1:
-			setarray @K_Menu0$[0],"-Save","-Use Storage","-Cancel";
+			setarray @K_Menu0$[0],"Save","Use Storage","Cancel";
 			break;
 		//only Storage
 		case 2:
-			setarray @K_Menu0$[0],"-Use Storage","-Cancel";
+			setarray @K_Menu0$[0],"Use Storage","Cancel";
 			break;
 		//Common w/o teleport
 		case 3: 
-			setarray @K_Menu0$[0],"-Save","-Use Storage","-Rent a Cart","-Guide","-Other Information Check","-Cancel";
+			setarray @K_Menu0$[0],"Save","Use Storage","Rent a Pushcart","Guide","Check Other Information","Cancel";
 			break;
 		//Case 4 is Einbroch no tele message.
 		//Common w/o save and teleport
 		case 5:
-			setarray @K_Menu0$[0],"-Use Storage","-Rent a Cart","-Other Information Check","-Guide","-Cancel";
+			setarray @K_Menu0$[0],"Use Storage","Rent a Pushcart","Check Other Information","Guide","Cancel";
 			break;
 		//Only storage and other info check
 		case 6:
-			setarray @K_Menu0$[0],"-Use Storage","-Guide","-Other Information Check","-Cancel";
+			setarray @K_Menu0$[0],"Use Storage","Guide","Check Other Information","Cancel";
 			break;
 		//Common Kafra
 		default:
-			setarray @K_Menu0$[0],"-Save","-Use Storage","-Use Teleport Service","-Rent a Cart","-Guide","-Other Information Check","-Cancel";
+			setarray @K_Menu0$[0],"Save","Use Storage","Use Teleport Service","Rent a Pushcart","Guide","Check Other Information","Cancel";
 			break;
 	}
 	if(getarg(0)==2) {
 	//Guilds Kafra (free Teleport, free Storage, Free Cart)
 		cleararray @K_Menu0$[0],"",7;
-		setarray @K_Menu0$[0],"-Use Storage","-Use Guild Storage","-Rent a Cart","-Use Teleport Service","-Cancel";
+		setarray @K_Menu0$[0],"Use Storage","Use Guild Storage","Rent a Cart","Use Teleport Service","Cancel";
 	}
 	menu 	@K_Menu0$[0],K_Menu0,@K_Menu0$[1],K_Menu1,@K_Menu0$[2],K_Menu2,
 		@K_Menu0$[3],K_Menu3,@K_Menu0$[4],K_Menu4,@K_Menu0$[5],K_Menu5,
@@ -141,8 +154,8 @@ function	script	F_Kafra	{
 	K_Menu7:
 		set @num,7;
 	K_Menuf:
-		if (@K_Menu0$[@num] == "-Save") return;
-		if (@K_Menu0$[@num] == "-Use Storage"){
+		if (@K_Menu0$[@num] == "Save") return;
+		if (@K_Menu0$[@num] == "Use Storage"){
 			//Don't charge for a common Kafra Storage in your Castle
 			if(getarg(0) == 2) callfunc "F_KafStor",2;
 			else callfunc "F_KafStor",0;
@@ -165,24 +178,24 @@ function	script	F_Kafra	{
 			callfunc "F_KafTele",getarg(0);
 			goto M_Menu;
 		}
-		if (@K_Menu0$[@num] == "-Rent a Cart"){
+		if (@K_Menu0$[@num] == "Rent a Pushcart"){
 			if(callfunc("F_KafCart",getarg(0)) == 1) next;
 			goto M_Menu;
 		}
-		if (@K_Menu0$[@num] == "-Guide"){
+		if (@K_Menu0$[@num] == "Guide"){
 			callfunc "F_KafGuide";
 			next;
 			goto M_Menu;
 		}
-		if (@K_Menu0$[@num] == "-Other Information Check"){
+		if (@K_Menu0$[@num] == "Check Other Information"){
 			callfunc "F_KafInfo",getarg(2);
 			goto M_Menu;
 		}
-		if (@K_Menu0$[@num] == "-Cancel"){
+		if (@K_Menu0$[@num] == "Cancel"){
 			callfunc "F_KafEnd",getarg(0),0;
 			end;
 		}
-		if (@K_Menu0$[@num] == "-Use Guild Storage"){
+		if (@K_Menu0$[@num] == "Use Guild Storage"){
 			callfunc "F_KafStor",1;
 			next;
 			goto M_Menu;

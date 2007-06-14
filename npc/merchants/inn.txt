@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -28,18 +28,20 @@
 //= 1.5 Added "end;" after warping the player. [L0ne_W0lf]
 //=	- Small corrections to the prontera Inns.
 //=	- Removed the Cancel dialog.
+//= 1.6 More fixed, changed progression of "Rest"ing.
+//=	- Corrected Morroc NPCs. [L0ne_W0lf]
 //============================================================ 
 
 
 //======================== Prontera ===================================
 // West Side Inn -------------------
-prt_in,244,135,2	script	Inn Maid::Sammy	53,{
+prt_in,244,135,2	script	Inn Employee::Sammy	53,{
 
 	callfunc "F_InnMaid","[Employee Sammy]","Nenkaras","prt_in",238,130;
 	warp "prt_in",247,104; end;
 }
 // East Side Inn ------------------
-prt_in,61,141,2	script	Inn Maid::Ahlma#01	53,{
+prt_in,61,141,2	script	Inn Employee::Ahlma#01	53,{
 
 	callfunc "F_InnMaid","[Emplyee Ahlma]","Nenkaras","prt_in",64,136;
 	warp "prt_in",64,136; end;
@@ -75,16 +77,16 @@ payon_in01,131,62,5	script	Inn Maid::SunHee	53,{
 
 //======================== Morocc ====================================
 // North East --------------------------
-morocc_in,147,138,5	script	Inn Maid::Suzie	53,{
+morocc_in,147,141,3	script	Inn Employee::Hasna	53,{
 
-	callfunc "F_InnMaid","[Suzie]","North East Inn","morocc_in",142,140;
-	warp "morocc_in",174,144; end;
+	callfunc "F_InnMaid","[Employee Hasna]","Morroc Inn","morocc_in",142,140;
+	warp "morocc_in",173,135; end;
 }
 // South --------------------------------
-morocc_in,80,100,5	script	Inn Maid::Shala	53,{
+morocc_in,80,100,5	script	Inn Employee::Manar	53,{
 
-	callfunc "F_InnMaid","[Shala]","South Inn","morocc_in",78,95;
-	warp "morocc_in",74,128; end;
+	callfunc "F_InnMaid","[Employee Manar]","Morroc Inn","morocc_in",78,95;
+	warp "morocc_in",79,123; end;
 }
 
 //======================== Rachel ====================================
@@ -127,12 +129,12 @@ function	script	F_InnMaid	{
 			mes "in next time, okay?";
 			close;
 		}
-		set Zeny,Zeny - 5000;
-		percentheal 100,100;
 		mes "Thank you.";
 		mes "I hope you";
 		mes "enjoy your rest~";
 		close2;
+		set Zeny,Zeny - 5000;
+		percentheal 100,100;
 		return;
 
 	Mend:

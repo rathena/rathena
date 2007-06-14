@@ -18,350 +18,618 @@
 //= 1.5 Added a lvl 4 weapon quest related NPC [MasterOfMuppets]
 //= 1.6 Added Bartender NPC, made by Persian69 [Vicious_Pucca]
 //= 1.7 Removed Duplicates [Silent]
+//= 1.8 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
 //============================================================
 
+// Morroc
+//============================================================
+morocc,68,260,0	script	Towner#Spencer	99,{
+	switch(rand(3)) {
+	case 1:
+	case 2:
+		mes "[Spencer]";
+		mes "You know...";
+		mes "Those giant, triangular buildings at the NorthWest corner of Morroc known are known to us as Pyramids...";
+		next;
+		mes "[Spencer]";
+		mes "Those things have been around here for thousands and thousands of years. No one knows when and why they were built, or who built them.";
+		next;
+		mes "[Spencer]";
+		mes "All we know is that tons of monsters live inside those weird buildings. You might wanna stay away from those really dangerous places.";
+		close;
 
-//==================================================== Town of Morroc ====================================================\\
+	Default:
+		mes "[Spencer]";
+		mes "Man...";
+		next;
+		mes "[Spencer]";
+		mes "Oh...";
+		mes "Oh man...";
+		next;
+		mes "[Spencer]";
+		mes "Man, I'm freaking bored!";
+		next;
+		mes "[Spencer]";
+		mes "Hey.";
+		mes "Let's play...";
+		mes "Rock, paper, scissors, yeah?";
+		next;
+		mes "[Spencer]";
+		mes "I feel it's fair to warn you, though, that here I'm the official regional champion of this time honored game of intellectual strategy.";
+		next;
+		if (select("Alright~:What...?!") == 1) {
+			mes "[Spencer]";
+			mes "Alright...";
+			mes "One, two...";
+			mes "Three!";
+			next;
+			switch(select("Rock:Paper:Scissors")) {
+			case 1:
+				switch(rand(3)) {
+				case 1:
+					Emotion e_rock;
+					mes "["+strcharinfo(0)+"]";
+					mes "Rock...!";
+					next;
+					mes "[Spencer]";
+					mes "What the...?!";
+					mes "I see great minds think alike! But then again, so do stupid minds...";
+					close;
+				case 2:
+					Emotion e_paper;
+					mes "["+strcharinfo(0)+"]";
+					mes "Rock...!";
+					next;
+					mes "[Spencer]";
+					mes "Looks like I win!";
+					mes "Heh heh~ Still got it.";
+					close;
+				Default:
+					Emotion e_scissors;
+					mes "["+strcharinfo(0)+"]";
+					mes "Rock...!";
+					next;
+					mes "[Spencer]";
+					mes "...What?!";
+					mes "No way!";
+					mes "How did I lose?!";
+					next;
+					mes "[Spencer]";
+					mes "So...";
+					mes "I see you're";
+					mes "not just a";
+					mes "mere rookie...";
+					close;
+				}
+			case 2:
+				switch(rand(3)) {
+				case 1:
+					Emotion e_rock;
+					mes "["+strcharinfo(0)+"]";
+					mes "Paper...!";
+					next;
+					mes "[Spencer]";
+					mes "It can't be...";
+					mes "Impossible...";
+					mes "I lost?!";
+					next;
+					mes "[Spencer]";
+					mes "You're not able";
+					mes "to read minds...";
+					mes "Are you?";
+					close;
+				case 2:
+					Emotion e_paper;
+					mes "["+strcharinfo(0)+"]";
+					mes "Paper...!";
+					next;
+					mes "[Spencer]";
+					mes "So...";
+					mes "It seems we are";
+					mes "evenly matched...";
+					next;
+					mes "[Spencer]";
+					mes "You are truly a";
+					mes "worthy opponent...";
+					close;
+				case 3:
+					Emotion e_scissors;
+					mes "["+strcharinfo(0)+"]";
+					mes "Paper...!";
+					next;
+					mes "[Spencer]";
+					mes "Bwah Hah Hah!";
+					mes "You lose!";
+					next;
+					mes "[Spencer]";
+					mes "Still...";
+					mes "That was too";
+					mes "close for comfort...";
+					next;
+					mes "[Spencer]";
+					mes "I...";
+					mes "I almost chose Rock...";
+					close;
+				}
+			case 3:
+				switch(rand(3)) {
+				case 1:
+					Emotion e_rock;
+					mes "["+strcharinfo(0)+"]";
+					mes "Scissors...!";
+					next;
+					mes "[Spencer]";
+					mes "BAM...!";
+					mes "Smashed you up!";
+					mes "Who's your daddy?!";
+					close;
+				case 2:
+					Emotion e_paper;
+					mes "["+strcharinfo(0)+"]";
+					mes "Scissors...!";
+					next;
+					mes "[Spencer]";
+					mes "It can't be...!";
+					mes "I've spent seven years training to get a black belt in this game!";
+					close;
+				case 3:
+					Emotion e_scissors;
+					mes "["+strcharinfo(0)+"]";
+					mes "Scissors...!";
+					next;
+					mes "[Spencer]";
+					mes "Uh oh...";
+					mes "Looks like";
+					mes "you've got the";
+					mes "eye of the tiger.";
+					next;
+					mes "[Spencer]";
+					mes "It may be a tie,";
+					mes "But next time...";
+					mes "I will crush you.";
+					close;
+				}
+			}
+		}
+		mes "[Spencer]";
+		mes "That's fine...";
+		mes "I understand if you're a little intimidated to take on ^7A378BThe Master^000000.";
+		close;
+	}
+}
 
-// Old Scholar ===============================
-morocc_in,112,122,2	script	Old Scholar	61,{
+morocc,116,266,0	script	Towner#moc	85,{
+	if (BaseLevel > 98) {
+		mes "[Ogleson]";
+		mes "Oh man...";
+		next;
+		mes "[Ogleson]";
+		mes "That blueish glow around you! You're really, really strong! That's soooo cool! You must not be afraid of anything, not even Desert Wolves.";
+		next;
+		mes "[Ogleson]";
+		mes "I'm so jealous!";
+		mes "Everyone must like you!";
+		close;
+	}
+	mes "[Ogleson]";
+	mes "If you have to go through the desert, you have to look out for the Desert Wolves. Those things are so mean and vicious...";
+	next;
+	mes "[Ogleson]";
+	mes "Those wolves are always traveling around in a pack. If they find that you're threatening one of them, you'll have to take all of them on.";
+	next;
+	mes "[Ogleson]";
+	mes "I'm just so glad that, somehow, they keep those wild creatures out of the city. Otherwise, none of us would be able to sleep at night.";
+	close;
+}
+
+morocc,208,85,0	script	Towner#2moc	83,{
+	mes "[Silas]";
+	mes "I work in the trading business, so I always have to cross the hot, dry Morroc Desert on business.";
+	next;
+	mes "[Silas]";
+	mes "One time, while I was in the middle of the desert, I was so thirsty that I caught a cactus. As you may know, you can find water inside of those things.";
+	next;
+	mes "[Silas]";
+	mes "But before I was able to cut it, it slapped me! Then it shot me in the arse with all these needles. Man, did that smart!";
+	next;
+	mes "[Silas]";
+	mes "The worst part of it all? I had to buy some Holy Water from a stingy Merchant. Man, I hate it when they know Overcharge!";
+	next;
+	mes "[Silas]";
+	mes "Later, I learned that it wasn't a normal cactus I found, but the monster we call 'Muka.' So, try to bring water on your long trips, it might save you some pain.";
+	close;
+}
+
+morocc,150,50,0	script	Towner#3moc	99,{
+	mes "[Lapidary]";
+	mes "The undisputed queen of jewels has to be the Diamond. After looking at it just once, no one can deny its beauty.";
+	next;
+	mes "[Lapidary]";
+	mes "Many factors determine its value, but the most important thing is its size.";
+	next;
+	mes "[Lapidary]";
+	mes "It should also be a perfect crystal, not cracked or chipped, if you want to sell the Diamond for a lot of zeny.";
+	close;
+}
+
+morocc,44,180,0	script	Towner#4moc	89,{
+	switch(rand(2))  {
+	case 1:
+		mes "[Trevor]";
+		mes "Hey guy.";
+		mes "What are you doing here all the way in Morroc? You know, this place is full of Thieves, Rogues and Assassins, right?";
+		next;
+		if (BaseClass == Job_Thief) {
+			mes "[Trevor]";
+			mes "Heh heh~";
+			mes "I guess that means you fit right in! It's nice to be in your element, don't you agree?";
+		}
+		else {
+			mes "[Trevor]";
+			mes "Wait a second...";
+			mes "Only people of bravery, or maybe even greed, would wander around here for fun. You must be an adventurer, right?";
+		}
+		next;
+		mes "[Trevor]";
+		mes "Anyway, there's this dagger that brings incredible luck to however possesses it. Luck... I'm use we can all use more of that. Supposedly, the Thief that used to own it has never been caught!";
+		next;
+		mes "[Trevor]";
+		mes "I guess that could be a helpful tip to someone like you.";
+		close;
+	Default:
+		mes "[Trevor]";
+		mes "There's some guy around here that's making these toootally funky hats. Yeah, they're pretty weird.";
+		next;
+		mes "[Trevor]";
+		mes "Supposedly, he's studied science, and he's making these hats that you can wear to beat the heat on hot days. But the way they look is totally ridiculous.";
+		next;
+		mes "[Trevor]";
+		mes "Actually, to tell the truth, some of them might actually be cute. But I saw someone leave him wearing a fish on his head! It was soooo weird!";
+		close;
+	}
+}
+
+morocc,79,111,4	script	Picky Lady#moc	66,{
+	mes "[Syvia]";
+	mes "The fields of Rune-Midgard are infested with wild and dangerous monsters that threaten the lives of traveling adventurers...";
+	next;
+	mes "[Syvia]";
+	mes "But, you've got to admit a bunch of them are soooo cute!";
+	next;
+	mes "[Syvia]";
+	mes "You know, like how Spore sticks out its tongue after you kill it, or how little Picky wears that tiny egg shell sometimes?";
+	next;
+	mes "[Syvia]";
+	mes "And you certainly can't deny that ^F08080Poring^000000 is the cutest of them all!";
+	next;
+	switch(select("What about Angeling?:How about Ghostring?:Quit Conversation")) {
+	case 1:
+		mes "[Syvia]";
+		mes "Ooh! Angeling is even cuter! It's just like Poring, except it has angel wings! Of course, I don't know if they can actually fly...";
+		next;
+		mes "[Syvia]";
+		mes "Angelings are rarely seen, but can be found among large groups of Porings living in one of the fields south of Prontera.";
+		next;
+		mes "[Syvia]";
+		mes "Angeling is a high level monster with Holy property, so it's immune to most magic, aside from spells that have Neutral or Shadow attack properties.";
+		next;
+		mes "[Syvia]";
+		mes "Hehe~ Don't you think I know a lot about Porings? I love them soooo much~";
+		close;
+	case 2:
+		mes "[Syvia]";
+		mes "Ghostring?!";
+		mes "Yeah, that";
+		mes "little guy";
+		mes "is kind of... ";
+		mes "gnarly looking.";
+		next;
+		mes "[Syvia]";
+		mes "Ghostring is an evil ghost Poring. It's rarely seen, but can be found among mass groups of Porings living in one of the fields south of Prontera.";
+		next;
+		mes "[Syvia]";
+		mes "Ghostring is a high-leveled monster with the Ghost property, so it can withstand all physical attacks.";
+		next;
+		mes "[Syvia]";
+		mes "Damage can only be caused to Ghostring through magic spells or weapons with an a specific property.";
+		next;
+		mes "[Syvia]";
+		mes "Hehe~ Don't you think I know a lot about Porings? I love them soooo much~";
+		close;
+	case 3:
+		mes "[Syvia]";
+		mes "Huh?! Where are you going? I was just about to tell you how cute Porings are! W-Wait~!";
+		close;
+	}
+}
+
+morocc,76,75,4	script	Ant Man#moc	47,{
+	mes "[Akira]";
+	mes "When you walk through the desert about one map North and 3 maps East, you'll find the entrance to Ant Hell.";
+	next;
+	switch(select("Ant Hell?:Ants?:End Conversation")) {
+	case 1:
+		mes "[Akira]";
+		mes "Ant Hell seems to be a colony of giant ant monsters. If you wander in there, look out. They can be pretty dangerous.";
+		next;
+		mes "[Akira]";
+		mes "Giearth, the elderly fairy, also roams around Ant Hill mining for Ores. If you bother him, you'll be in trouble, so watch out for him too.";
+		next;
+		mes "[Akira]";
+		mes "To get to Ant Hell, you can head east till you see the bridge which connects to the Payon Forest. In the map right before that bridge, head north to find the entrance to Ant Hell.";
+		close;
+	case 2:
+		mes "[Akira]";
+		mes "Ant Hell is swarming with Ant monsters. You'll notice that they all classed with different names.";
+		next;
+		mes "[Akira]";
+		mes "Andre is the weakest, Piere is comparatively average, and Deniro is the strongest Ant. Keep that in mind so you can fight the Ants suitable to your level.";
+		next;
+		mes "[Akira]";
+		mes "Oh, and you should be especially careful not to drop items. Those ants will grab anything on the ground in a flash!";
+		close;
+	case 3:
+		close;
+	}
+}
+
+morocc,123,58,4	script	Assassin Boy#moc	118,{
+	mes "[Timmy]";
+	mes "Unbeatable in man-to-man fights, Assassins always overcome their enemies! Erm, always overcome their enemies without a trace.";
+	next;
+	switch(select("Say what?:Where I can find the Assassin clan?:End Conversation")) {
+	case 1:
+		mes "[Timmy]";
+		mes "I hear Assassins practice killing people, quietly and stealthfully of course, everyday! I want to become one so bad!";
+		next;
+		mes "[Timmy]";
+		mes "But...";
+		mes "I left home three months ago, and have been searching for their secret base ever since. Are they really that invisible?!";
+		close;
+	case 2:
+		mes "[Timmy]";
+		mes "Well, I hear that if you leave this town and go 2 maps east, and then 2 maps South, you should be able to find it.";
+		next;
+		mes "[Timmy]";
+		mes "The 'Mirage Tower,' the head building of Sograt Desert, is supposed to appear in this awesome sandstorm! But, I still haven't found it.";
+		next;
+		mes "[Timmy]";
+		mes "If you find them, and the clan master thinks you're qualified, you can become an Assassin! Or, at least, I think...";
+		next;
+		mes "[Timmy]";
+		mes "Oh..!";
+		mes "And I hear the coolest Assassin of them all is the Assassin Cross! But, that's even a bigger mystery~";
+		close;
+	case 3:
+		mes "[Timmy]";
+		mes "Assassin is one of the advanced jobs for Thief, and specializes in fighting with Neutral and Poison property attacks.";
+		next;
+		mes "[Timmy]";
+		mes "They're also very sneaky! I hear that they're able to cloak so that no one can see them!";
+		close;
+	}
+}
+
+morocc,180,155,4	script	Dimitri#moc	49,{
+	mes "[Dimitri]";
+	mes "Man, this place is so hot! You would think they would sell Deodorant, maybe even some cologne in this city, but noooooo...";
+	next;
+	switch(Select("About the desert sands:About the remedy for Fatigue:End Conversation")) {
+	case 1:
+		mes "[Dimitri]";
+		mes "The desert?!";
+		mes "It's definitely";
+		mes "much hotter than";
+		mes "this city.";
+		next;
+		mes "[Dimitri]";
+		mes "Still, you can sit down and take a rest whenever you need to and your ass won't burn. I guess the Morroc sand doesn't conduct heat as much as it should.";
+		next;
+		mes "[Dimitri]";
+		mes "I mean, when I sit down, it does feel ^EE2C2Cpleasantly toasty^000000. I get almost a guilty sensation when I do that.";
+		next;
+		mes "[Dimitri]";
+		mes "Try it when you're in the desert sometime. You'll see that you can still recover your HP and SP.";
+		close;
+	case 2:
+		mes "[Dimitri]";
+		mes "When you're tired, just drink a Potion. Those things taste great!";
+		next;
+		mes "[Dimitri]";
+		mes "I know, the Pharmacist who can make them always says ^EE3B3BDon't drink too much, it's abuse, blah blah blah^000000, but whatever.";
+		next;
+		mes "[Dimitri]";
+		mes "Red Potions have become steadily popular since they're so affordable, even though they only recover a little bit of HP.";
+		next;
+		mes "[Dimitri]";
+		mes "So...";
+		mes "Just know that you should try to carry Potions in case you run into some sort of crazy situation, alright?";
+		close;
+	case 3:
+		mes "[Dimitri]";
+		mes "Sometimes 'Milk' comes out of 'PecoPeco's Egg.' Now...";
+		next;
+		mes "[Dimitri]";
+		mes "I may not be a man of science, but how is that even possible?";
+		next;
+		mes "[Dimitri]";
+		mes "I mean, did the Milk come prepackaged with the egg, or did it get in there somehow?";
+		close;
+	}
+}
+
+morocc,234,273,4	script	Fly Man#moc	54,{
+	mes "[Armani]";
+	mes "I really saw it...";
+	mes "The Fly Lord!";
+	mes "Why doesn't anyone";
+	mes "believe me?!";
+	next;
+	if (select("The Fly Lord?!:Isn't that a book?") == 1) {
+		mes "[Armani]";
+		mes "Yes, yes! I'm talking about the Dragon Fly, master of all flies!";
+		next;
+		mes "[Armani]";
+		mes "It's much stronger than the other flies, and when you kill it, there's even a chance that you might earn a ^880000Clip^000000 item!";
+		next;
+		mes "[Armani]";
+		mes "You can insert certain monster cards into the Clip item. Those Clip accessories seem pretty valuable to you adventurers...";
+		next;
+		mes "[Armani]";
+		mes "Anyhow, why don't you go search for it? I'm sure if you're lucky, you'll find a Dragon Fly around here!";
+		close;
+	}
+	mes "[Armani]";
+	mes "Yes...";
+	mes "Yes, it is.";
+	next;
+	mes "[Armani]";
+	mes "It's a pretty good novel, even though 'The Fly Lord' isn't really the exact title. It's actually Lord of the--Wait, why are we talking about this?";
+	close;
+}
+
+morocc,277,213,4	script	Uncle Morroc#moc	48,{
+	mes "[Phlanette]";
+	mes "Morroc is located in an extremely dry region, surrounded by desert. No place in the world is as hot as Morroc.";
+	next;
+	if (select("Tell me about the desert.:Quit Conversation") == 1) {
+		mes "[Phlanette]";
+		mes "You want to";
+		mes "know about";
+		mes "the desert?";
+		mes "Well, um...";
+		next;
+		mes "[Phlanette]";
+		mes "Due to low annual rainfall, low humidity and high evaporation rate, little vegetation can be found in the desert.";
+		next;
+		mes "[Phlanette]";
+		mes "Nonetheless, there are a few hardy plants that can survive and grow in the desert. I learned all that in the Juno Library.";
+		next;
+		mes "[Phlanette]";
+		mes "Unfortunately some of those plants growing around Morroc have been mutated into monsters. One of those is Muka, the mutated cactus.";
+		next;
+		mes "[Phlanette]";
+		mes "Although it can be pretty uncomfortable for us, other creatures can thrive in the desert near Morroc.";
+		close;
+	}
+	close;
+}
+
+// Inside Morroc
+//============================================================
+morocc_in,112,122,0	script	Grampa#moc	61,{
 	mes "[Old Scholar]";
-	mes "I've devoted my Life to researching the Pyramids.  Although I not found anything significant yet, I am confident that I will find the Tomb of Ancient King, Osiris!";
+	mes "I've devoted my life to researching the mysterious pyramids near Morroc. I haven't been able to concretely confirm anything yet, but...";
 	next;
 	mes "[Old Scholar]";
-	mes "It is within the largest of the Morroc Pyramids, that the Greatest King in History sleeps the eternal sleep.  That is... if my memory serves me correctly......";
+	mes "I'm sure that the largest pyramid contains the tomb of the ancient king, Osiris! I'm willing to stake my life on it!";
+	next;
+	mes "[Old Scholar]";
+	mes "According to my notes, Osiris, one of the greatest kings in history, sleeps eternally within the depths of that pyramid. If only I were younger, I could see it for myself...";
+	next;
+	if (countitem(1030) > 0) {
+		mes "[Old Scholar]";
+		mes "Wait...";
+		mes "Do I smell...?";
+		mes "It is! That's the scent of ^993300Tiger's Footskin^000000!";
+		next;
+		mes "[Old Scholar]";
+		mes "One glance at it can restore your strength, one sniff and your blood boils with vigorous pleasure...";
+		next;
+		mes "[Old Scholar]";
+		mes "Just one bite... Will revive my virility!!!! The Tiger's Footskin~!! Ohhhh! Ohh My God !! Please!!! Please give me that... Please...";
+		next;
+		mes "[Old Scholar]";
+		mes "It's just...";
+		mes "If you gave it to me, I would give you absolutely nothing in return. ^EE0000Nothing at all^000000...";
+		close;
+	}
+	mes "[Old Scholar]";
+	mes "I guess it'll be up to the younger generation to explore the mysteries of the past firsthand...";
 	close;
 }
 
-// Drunk Man =================================
-morocc,44,180,8	script	Drunk Man	89,{
-	mes "[Drunk Man]";
-	mes "Heh Heh... (Hiccup)! Oh, Are you new here? Nice to meet ya, Buddy! So how was your trip?";
-	mes "This was predestined that you and I meet here, I tell you what (Hiccup). Let me tell you something I just heard from the pub....";
+
+// Morroc Field
+//============================================================
+moc_fild16,199,212,4	script	Uncle Assassin#moc	55,{
+	mes "[Hashisid]";
+	mes "Assassins are trained to approach their enemies steathily, as well as to shroad their intent. For this purpose, we never look our targets in the eye.";
 	next;
-	mes "[Drunk Man]";
-	mes "It's rumored that there is a special Dagger that can bring great fortune to its owner.";
-	mes "There is a well-know Thief in Rune-Midgard that possesses this Dagger, and has never been caught";
+	if (select("Notion of Assassin:Quit Conversation") == 1) {
+		mes "[Hashisid]";
+		mes "Assassins may be commonly known as infiltrators and murderers who kill without remorse.";
+		next;
+		mes "[Hashisid]";
+		mes "In actuality, the Assassin clan is forbidden to harm innocent people, or at least, not without good reason.";
+		next;
+		mes "[Hashisid]";
+		mes "Our true directive is to assassinate evil creatures, and to use our stealth to gather intelligence for the good of all Rune-Midgard.";
+		close;
+	}
+	mes "[Hashisid]";
+	mes "Once upon a time, our ancestors would smoke tobacco before performing their duties.";
 	next;
-	mes "[Drunk Man]";
-	mes "What I would give to get my hands something like that(Hiccup).  But only in my dreams....";
+	mes "[Hashisid]";
+	mes "However, we no longer do so, since insect or animal monsters are very senstive to the smell.";
 	next;
-	mes "[Drunk Man]";
-	mes "How about you? Why don't you Look for it? It shouldn't be a problem for someone as brave as yourself?";
-	mes "Kekeke keke(Hiccup)! Buy me a drink later if you ever find that dagger.  Promise me, alright?(Hiccup!)";
-	emotion e_hmm;
+	mes "[Hashisid]";
+	mes "There are many factors that contribute to successful stealth. Depending on your opponent, it's not enough to just be invisible sometimes...";
 	close;
 }
 
-// Towner =================================
-morocc,68,260,8	script	Towner	99,{
-	mes "[Towner]";
-	mes "Those giant, Triangular Buildings North West of town are called Pyramids... They have been there for thousands and thousands of years.";
+moc_fild16,177,246,4	script	Assassin#moc	118,{
+	mes "[La Conte]";
+	mes "Once Thiefs are promoted to Assassins, they will be able to vary their battle style.";
 	next;
-	mes "[Towner]";
-	mes "Nobody knows when and why they were built or who built them.  All we know for sure is that there are tons of Horrendous Monsters inside of them.";
+	mes "[La Conte]";
+	mes "There are 2 main battle styles available to Assassins. They may either wield dual daggers, or fight with a set of Katars.";
 	next;
-	mes "[Towner]";
-	mes "I think you'd better stay away from them.  The monsters in the Pyramid LOVE to feed on strangers.  Kekekekek...";
-	close;
-}
-
-// Ant Man Akira =============================
-morocc,76,75,4	script	Ant Man Akira	47,{
-	mes "[Ant Man Akira]";
-	mes "About 1 map north and 3 maps east of Morroc, there lies the entrance to a cave known as ^ff0000ANTHELL^000000 ...";
-M_Menu:
-	next;
-	menu "'Anthell ?'",M_Anthell,"Ants?",M_Ants,"End conversation",M_End;
-	
-	M_Anthell:
-		mes "[Ant Man Akira]";
-		mes "Anthell gets it's name from the fact that the cave is home to the largest colony of giant ants in Rune-Midgard.";
-		mes "There are literally thousands of ants performing work for the colony while their queens lay hundreds and hundreds of eggs.";
+	switch(select("Specialty of Katar:Specialty of Dual Daggers:Quit Conversation")) {
+	case 1:
+		mes "[La Conte]";
+		mes "A set of Katars is worn on both of the hands, and allows Assassins to quickly slash their enemies.";
 		next;
-		mes "[Ant Man Akira]";
-		mes "Many people go there to train because of the numerous amounts of ant eggs.  But be careful...";
+		mes "[La Conte]";
+		mes "Anyone can actually buy a basic set of Katars in Morroc somewhere. Of course, only Assassins can use them.";
 		next;
-		mes "[Ant Man Akira]";
-		mes "Attack an ant by mistake, and you'll find yourself surrounded by a swarm of them before you can even use a fly wing!";
-		emotion e_gasp;
-		goto M_Menu;
-	M_Ants:
-		mes "[Ant Man Akira]";
-		mes "There are 3 different kinds of Ant, each with a unique color and name.  Each one has a different role in the colony.";
-		mes "Andres are white, Pieres are green, and Deniros are red colored.  Their differences are not merely cosmetic however.";
+		mes "[La Conte]";
+		mes "The right Katar usually does more damage, while the left Katar is used for the follow-through.";
 		next;
-		mes "[Ant Man Akira]";
-		mes "Andres are the weakest of the ants while Deniros are the most fierce some of the ants.  Pieres lay somewhere in the middle.";
+		mes "[La Conte]";
+		mes "But since Katars are equipped on both hands, you can't equip a shield or an extra weapon.";
 		next;
-		mes "[Ant Man Akira]";
-		mes "Be careful when your around them.  If you hit 1 Andre the other Andres in the area with swarm and attack you.";
-		mes "The same goes for Deniros and Pieres.  You should also know that ants are looters so watch out for your items.";
-		goto M_Menu;
-	M_End:
-		mes "[Ant Man Akira]";
-		mes "Before you go, let me tell you about Giearths.  They are not ants but they live in Anthell.  Don't underestimate them because of their small size.";
-		mes "They are extremely tough and should only be handled by high level wariors.";
+		mes "[La Conte]";
+		mes "Compared to Dual Daggers, Katars have faster attack speed. Also, the ^663399Sonic Blow^000000 skill can only be used with Katars.";
 		next;
-		mes "[Ant Man Akira]";
-		mes "Well see ya around.";
+		mes "[La Conte]";
+		mes "You can learn the Sonic Blow skill at ^663399Level 4 Katar Mastery^000000. If you're an Assassin, it's a handy skill to know.";
 		close;
-}
-
-// Poring Lady Syvia ==================================
-morocc,79,111,2	script	Poring Lady Syvia	700,{
-	mes "[Poring Lady Syvia]";
-	mes "All over Rune-Midgard you can see lots of cute monsters such as Spores, the mushroom type creature....";
-	next;
-	mes "[Poring Lady Syvia]";
-	mes "Or Pickys, desert chicks that wear egg shells on their heads and jump around in the Morroc Desert..!";
-	mes "However you can't deny that the ^FF8888Poring^000000 is the cutest and most popular creature in all of Rune-Midgard.";
-	next;
-	mes "[Poring Lady Syvia]";
-	mes "Although everybody knows about the common pink Poring, there are 2 Rare porings that live near Prontera and are getting a lot of attention.";
-	next;
-	mes "[Poring Lady Syvia]";
-	mes "They are the ^ffaa00Angeling^000000 and the ^5555ffGhostring^000000";
-M_Menu:
-	next;
-	menu "Angeling?",M_Angel,"Ghostring?",M_Ghost,"Quit Conversation",M_Quit;
-	
-	M_Angel:
-		mes "[Poring Lady Syvia]";
-		mes "The Angeling is a poring with angel wings.  It is rarely seen but it is quite a sight.  Don't not be fooled by it's angelic look however.";
-		mes "It is a high level monster armed with the Holy property.  It is immune to almost all magic attacks except those of the neutral & shadow property.";
+	case 2:
+		mes "[La Conte]";
+		mes "Dual Daggers enables you to equip 2 different kinds of Daggers at the same time.";
 		next;
-		mes "[Poring Lady Syvia]";
-		mes "Physical attacks are definitely the way to go against these monsters.";
+		mes "[La Conte]";
+		mes "Of course, there are other weapons you can equip aside from daggers, but they'll probably be lacking in attack speed.";
 		next;
-		mes "[Poring Lady Syvia]";
-		mes "Don't I know a lot about porings?  Quite frankly I'm in love with them.... =P";
-		goto M_Menu;
-
-	M_Ghost:
-		mes "[Poring Lady Syvia]";
-		mes "The Ghostring is an evil ghost poring.  It is rarely seen and luckly so.";
+		mes "[La Conte]";
+		mes "Also, without a dagger in your right hand, you won't be able to use the ^663399Double Attack^000000 skill.";
 		next;
-		mes "[Poring Lady Syvia]";
-		mes "It is a high-level monster armed with the ghost property.  This makes it immune to physical attacks.  So Archers, Swordsman, and Thieves beware!";
-		mes "Only weapons with elemental properties will work on Ghostrings.  Of course magic attacks work very well on them also.";
+		mes "[La Conte]";
+		mes "So with Dual Daggers, you would have a double attack with the right hand dagger, and a single attack with your left hand weapon.";
 		next;
-		mes "[Poring Lady Syvia]";
-		mes "Don't I know a lot about porings?  Quite frankly I'm in love with them.... =P";
-		goto M_Menu;
-
-	M_Quit:
-		mes "[Poring Lady Syvia]";
-		mes "OMG!";
-		emotion e_omg;
-		next;
-		mes "[Poring Lady Syvia]";
-		mes "You dare dismiss a poring expert such as myself? I am proud of my knowledge about all things poring!!";
-		next;
-		mes "[Poring Lady Syvia]";
-		mes "Hmf!";
-		emotion e_pif;
+		mes "[La Conte]";
+		mes "So that's three strikes in one blow! You can't argue against that kind of damage!";
 		close;
-}
-
-// Slayer Kid ====================================
-morocc,123,58,4	script	Slayer Kid	118,{
-	mes "[Slayer Kid]";
-	mes ".... An expert in hand to hand combat who polishes off enemies quickly and quietly....";
-	next;
-	mes "[Slayer Kid]";
-	mes "That is the ^ff00ffAssassin^000000!!";
-M_Menu:
-	next;
-	menu "Hmm??",M_0,"Where can I find the Assassin Clan?",M_1,"End conversation",M_End;
-	
-	M_0:
-		mes "[Slayer Kid]";
-		mes "Assassins are a secretive group of elite killers.  People say Assassins are highly trained in 'eliminating' their targets without leaving a trace.";
-		next;
-		mes "[Slayer Kid]";
-		mes "It's been 3 months since I left home to search for the Assassin clan.... Just where are they??!!!";
-		goto M_Menu;
-	M_1:
-		mes "[Slayer Kid]";
-		mes "People say that if you go 2 maps on the east of Morroc, then 2 maps south, you'll be able to find the Assassin Clan.";
-		next;
-		mes "[Slayer Kid]";
-		mes "If you are granted an Assassin Cross, the emblem of the clan master, you will be allowed to become an Assassin.";
-		mes "The Assassin Cross is a high honor and is given to the best Assassin among Assassins!";
-		next;
-		mes "[Slayer Kid]";
-		mes "To tell you the truth however... I don't think they the clan really exists...";
-		next;
-		mes "[Slayer Kid]";
-		mes "I've been searching for them for over 3 months now and nothing.  It seems almost impossible for me to become an Assassin now......";
-		goto M_Menu;
-	M_End:
+	case 3:
+		mes "[La Conte]";
+		mes "Hopefully you will make good use of the weapons at your disposal. Remember the importance of strategy and planning your attacks.";
 		close;
-
+	}
 }
 
-// Lapidary =======================================
-morocc,150,50,8	script	Lapidary	99,{
-	mes "[Lapidary]";
-	mes "The Queen of Jewelry is the Diamond.  No one can deny its beautiful appearance.  That's why it cost so much to buy...";
-	next;
-	mes "[Lapidary]";
-	mes "Many factors increase its value, with the most important factor being size.";
-	next;
-	mes "[Lapidary]";
-	mes "A high quality Diamond should be perfect and not chipped or cracked in any way.";
-	close;
-}
-
-// Uncle Dimitrii ==========================================
-morocc,180,155,4	script	Uncle Dimitri	49,{
-	mes "[Uncle Dimitrii]";
-	mes "The avarage temperature in the Morroc Desert is many times higher than anywhere else in the Rune-Midgard Kingdom.";
-	next;
-	mes "[Uncle Dimitrii]";
-	mes "Be careful of where you choose to sit down and rest.  Choose the wrong spot and your butt may catch on fire!!";
-M_Menu:
-	next;
-	menu "About the Desert sand",M_1,"About the remedy for Fatigue",M_2,"End conversation",M_End;
-	
-	M_1:
-		mes "[Uncle Dimitri]";
-		mes ". . . . . Well";
-		next;
-		mes "[Uncle Dimitri]";
-		mes "It's SUPPOSED to be HOT!!! But it actually isn't really that hot.....";
-		next;
-		mes "[Uncle Dimitri]";
-		mes "For some odd reason the sand in the Morroc desert doesn't conduct as much heat as the sand in other deserts.";
-		mes "Instead of being scorching hot, the sand just feels warm.... so it's ok for you to sit down for a good rest";
-		next;
-		mes "[Uncle Dimitri]";
-		mes "So everybody can recover their HP and SP without fear of catching on fire.";
-		goto M_Menu;
-	M_2:
-		mes "[Uncle Dimitri]";
-		mes "Aaaaahhh!!!!";
-		next;
-		mes "[Uncle Dimitri]";
-		mes "Nothing beats desert fatigue like a couple of potions! The ^ff0000Red^000000 ones are especially popular because of their low cost and light weight.";
-		next;
-		mes "[Uncle Dimitri]";
-		mes "They only recover a small amount of hp, but combined with a dip in a desert oasis, a couple ^ff0000Reds^000000 are all you need.";
-		goto M_Menu;
-	M_End:
-		mes "[Uncle Dimitri]";
-		mes "Did you know that you can get ^0000bb'Milk'^000000 from a 'PecoPeco's Egg'? I wonder how that works......?";
-		close;
-}
-
-// Trader Joe =====================================
-morocc,208,85,7	script	Trader Joe	83,{
-	mes "[Trader Joe]";
-	mes "I earn a living as a Trader so I'm constantly traveling between Morroc and Prontera.";
-	mes "I can't even count how many times I've been across the Hot, Dry desert.";
-	next;
-	mes "[Trader Joe]";
-	mes "One day, while I was out in the Desert, I unexpectedly ran out of water and became extremely thirsty.";
-	mes "I was desperate so I decided to try to get some water out of a cactus when.......";
-	next;
-	mes "[Trader Joe]";
-	mes "ALL OF THE SUDDEN!!! The cactus let out this LOUD SCREAM and started to SHOOT its NEEDLES at me!!";
-	emotion e_omg;
-	next;
-	mes "[Trader Joe]";
-	mes "It was THE WORST experience of my ENTIRE LIFE.";
-	next;
-	mes "[Trader Joe]";
-	mes "I figured out later that it wasn't a normal cactus that attacked me but it was ^00cc00Muka^000000, the cactus monster.";
-	next;
-	mes "[Trader Joe]";
-	mes "So be careful the next time you're out in the desert.  You don't want to make the same mistake I made. (~Sigh~)";
-	close;
-}
-
-// Fly Man Armani ===============================
-morocc,234,273,3	script	Fly Man Armani	54,{
-	mes "[Fly Man Armani]";
-	mes "I SAW IT!! I SAW IT!!!";
-	emotion e_ic;
-	next;
-	mes "[Fly Man Armani]";
-	mes "I saw the rare ^ff0000Dragon Fly^000000 just South of here! It was incredible!!";
-	next;
-	menu "What... Dragon Fly?!",M_0,"So what?",M_1;
-	
-	M_0:
-		mes "[Fly Man Armani]";
-		mes "It is the boss of desert flies and its much stronger than any other ordinary fly.";
-		mes "It's a rare sight to behold, and for anybody strong enough and lucky enough to defeat it.... ";
-		next;
-		mes "[Fly Man Armani]";
-		mes "The Dragon Fly may even drop an UTLRA RARE item called a ^0000ddClip^000000!";
-		mes "Clips are items that you can attach to weapons, armor, and almost every kind of accessory.";
-		next;
-		mes "[Fly Man Armani]";
-		mes "Clips are ^ffaa00slotted^000000 and therefore you can insert cards into them.  That's what makes them so valuable.";
-		mes "It seems like everyone is yearning for a clip these days.";
-		next;
-		mes "[Fly Man Armani]";
-		mes "Say.... why don't YOU challenge the Dragon Fly?";
-		emotion e_hmm;
-		close;
-	M_1:
-		mes "[Fly Man Armani]";
-		mes "SO WHAT!!??";
-		emotion e_omg;
-		next;
-		mes "[Fly Man Armani]";
-		mes "Do you dare underestimate the Dragon Fly??  Bleh! It may be a fly, but I guarantee you THIS FLY is more than you can handle!";
-		emotion e_pif;
-		next;
-		mes "[Fly Man Armani]";
-		mes "No matter.  If you ARE fortunate enough to run into it, you'll quickly see what I mean.  After all, it IS the FLY of ALL FLIES!!!!";
-		next;
-		mes "[Fly Man Armani]";
-		mes "^ff0000Dragon Fly^000000.  Remember this name well!!";
-		close;
-}
-
-// Uncle Phlanette ================================
-morocc,277,213,4	script	Uncle Phlanette	48,{
-	mes "[Uncle Phlanette]";
-	mes "Morroc is a highly dry region surrounded by desert.  There isn't a place as hot or dry as Morroc anywhere in Rune-Midgard.";
-M_Menu:
-	next;
-	menu "Desert Story",M_0,"Quit Coversation",M_End;
-	
-	M_0:
-		mes "[Uncle Phlanette]";
-		mes "Let me tell you a little about the desert.....";
-		next;
-		mes "[Uncle Phlanette]";
-		mes "You see the desert is a place that is bare of vegetation due to low rainfall and a high evaporation rate.";
-		mes "Even so there are plants that seem to thrive in the desert.  And where there are plants, there are animals.";
-		next;
-		mes "[Uncle Phlanette]";
-		mes "So even with the high temperatures, and limited water, living creatures still find a way to survive in the desert."; 
-		next;
-		mes "[Uncle Phlanette]";
-		mes "Unfortunately, for unknown reasons, some of the plants and animals in the desert have turned into dangerous monsters.";
-		mes "The ^00cc00'Mukas'^000000 are one of those monsters.  They were originally cactus plants.";
-		goto M_Menu;
-	M_End:
-		mes "[Uncle Phlanette]";
-		mes "Sand HERE! Sand THERE! Sand EVERYWHERE!!!!";
-		emotion e_gasp;
-		next;
-		mes "[Uncle Phlanette]";
-		mes "(~Sigh~) I'm SICK and TIRED of this sand and desert...";
-		next;
-		mes "[Uncle Phlantette]";
-		mes "Morroc......!! I HATE YOU!!!!!!";
-		emotion e_pif;
-		close;
-}
-
+// Other NPCs
+//============================================================
 //Bartender
 morocc_in,166,76,3	script	Bartender#02	46,{
 	mes "[Bartender]";

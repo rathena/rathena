@@ -10,7 +10,7 @@
 //= [Aegis Conversion]
 //= Various Books found in Prontera Library
 //===== Additional Comments: =================================
-//= 1.0 First Version, rescripted from the ground up. [L0ne_W0lf]
+//= 1.0 First Version, rescripted to Aegis 10.3 standard. [L0ne_W0lf]
 //============================================================
 
 // Prontera
