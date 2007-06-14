@@ -1,6 +1,9 @@
 Date		Added
 ======
 2007/06/14
+	* Removed Cursey Abbey spawns from the conf file [Playtester]
+	- fixed a bug in the spawn file
+	- it will be readded once the mobs are actually usable
 	* Added initial mob spawn of Abbey Dun, thanks to $ephiroth
 2007/06/12
 	* Added first part of Hugel quests. Credits go to MasterOfMuppets. [SinSloth]
