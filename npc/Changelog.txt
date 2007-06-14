@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/06/14
+	* Red. 10769 Fixed central Kafra position (146,86 -> 146,98) [L0ne_W0lf]
 	* Rev. 10767 Fixed a missing ")" in the new wedding script. [L0ne_W0lf]
 	* Forgot to upload the mail.txt file. 
 	* Rev. 10766 Updated cities: Morroc, Jawaii, and Izlude [L0ne_W0lf]

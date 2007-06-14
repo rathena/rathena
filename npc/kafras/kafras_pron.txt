@@ -23,6 +23,7 @@
 //= 2.4 Updated Kafras locations for the mini-map [Lupus]
 //= 2.41 New prices [Evera]
 //= 2.5 Can't save outside city [Evera]
+//= 2.6 Fixed central Kafra position (146,86 -> 146,98) [L0ne_W0lf]
 //=====================================================================
 
 
@@ -70,7 +71,7 @@ prontera,282,200,4	script	Kafra::kaf_prontera4	115,{
 }
 
 // Center ===========================================
-prontera,146,86,6	script	Kafra::kaf_prontera5	117,{
+prontera,146,89,6	script	Kafra::kaf_prontera5	117,{
 	cutin "kafra_01",2;
 	callfunc "F_KafSetPront";
 	callfunc "F_Kafra",0,0,0;
