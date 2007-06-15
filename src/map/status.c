@@ -6072,9 +6072,9 @@ int status_change_clear(struct block_list *bl,int type)
 		case SC_JAILED:
 			continue;
 		}
-		status_change_end(bl, i, -1);
+		status_change_end(bl, i, INVALID_TIMER);
 
-		if (type == 1 && sc->data[i].timer != -1)
+		if( type == 1 && sc->data[i].timer != INVALID_TIMER )
 		{	//If for some reason status_change_end decides to still keep the status when quitting. [Skotlex]
 			(sc->count)--;
 			delete_timer(sc->data[i].timer, status_change_timer);

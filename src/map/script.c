@@ -51,6 +51,16 @@
 #include <time.h>
 #include <setjmp.h>
 
+///////////////////////////////////////////////////////////////////////////////
+//## TODO possible enhancements:
+// - 'callfunc' supporting labels in the current npc "::LabelName"
+// - 'callfunc' supporting labels in other npcs "NpcName::LabelName"
+// - 'function FuncName;' function declarations reverting to global functions 
+//   if local label isn't found
+// - join callfunc and callsub's functionality
+
+
+
 //
 // struct script_state* st;
 //
@@ -3910,7 +3920,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(callsub,"i*"),
 	BUILDIN_DEF(callfunc,"s*"),
 	BUILDIN_DEF(return,"?"),
-	BUILDIN_DEF(getarg,"i"),
+	BUILDIN_DEF(getarg,"i?"),
 	BUILDIN_DEF(jobchange,"i*"),
 	BUILDIN_DEF(jobname,"i"),
 	BUILDIN_DEF(input,"v"),
@@ -4031,10 +4041,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(disablearena,""),	// Added by RoVeRT
 	BUILDIN_DEF(hideoffnpc,"s"),
 	BUILDIN_DEF(hideonnpc,"s"),
-	BUILDIN_DEF(sc_start,"iii*"),
-	BUILDIN_DEF(sc_start2,"iiii*"),
-	BUILDIN_DEF(sc_start4,"iiiiii*"),
-	BUILDIN_DEF(sc_end,"i"),
+	BUILDIN_DEF(sc_start,"iii?"),
+	BUILDIN_DEF(sc_start2,"iiii?"),
+	BUILDIN_DEF(sc_start4,"iiiiii?"),
+	BUILDIN_DEF(sc_end,"i?"),
 	BUILDIN_DEF(getscrate,"ii*"),
 	BUILDIN_DEF(debugmes,"s"),
 	BUILDIN_DEF2(catchpet,"pet","i"),
@@ -4685,26 +4695,38 @@ BUILDIN_FUNC(callsub)
 	return 0;
 }
 
-/*==========================================
- * 引数の所得
- *------------------------------------------*/
+/// Retrieves an argument provided to callfunc/callsub.
+/// If the argument doesn't exist
+///
+/// getarg(<index>{,<default_value>}) -> <value>
 BUILDIN_FUNC(getarg)
 {
-	int num=script_getnum(st,2);
-	int max,stsp;
-	if( st->stack->defsp<5 || st->stack->stack_data[st->stack->defsp-1].type!=C_RETINFO ){
-		ShowWarning("script:getarg without callfunc or callsub!\n");
-		st->state=END;
+	int idx;
+	int count;
+	int stsp;
+
+	if( st->stack->defsp < 5 || st->stack->stack_data[st->stack->defsp - 1].type != C_RETINFO )
+	{
+		ShowWarning("script:getarg: no callfunc or callsub!\n");
+		st->state = END;
 		return 1;
 	}
-	max=conv_num(st,& (st->stack->stack_data[st->stack->defsp-5]));
-	stsp=st->stack->defsp - max -5;
-	if( num >= max ){
-		ShowWarning("script:getarg arg1(%d) out of range(%d) !\n",num,max);
-		st->state=END;
+	count = conv_num(st, &(st->stack->stack_data[st->stack->defsp - 5]));
+	stsp = st->stack->defsp - count - 5;
+
+	idx = script_getnum(st,2);
+
+	if( idx < count )
+		push_copy(st->stack, stsp + idx);
+	else if( script_hasdata(st,3) )
+		script_pushcopy(st, 3);
+	else
+	{
+		ShowWarning("script:getarg: index (idx=%d) out of range (count=%d) and no default value found\n", idx, count);
+		st->state = END;
 		return 1;
 	}
-	push_copy(st->stack,stsp+num);
+
 	return 0;
 }
 
@@ -8175,133 +8197,153 @@ BUILDIN_FUNC(hideonnpc)
 	npc_enable(str,4);
 	return 0;
 }
-/*==========================================
- * 状態異常にかかる
- *------------------------------------------*/
+
+/// Starts a status effect on the target unit or on the attached player.
+///
+/// sc_start <effect_id>,<duration>,<val1>{,<unit_id>};
 BUILDIN_FUNC(sc_start)
 {
-	struct block_list *bl;
-	int type,tick,val1,val4=0;
-	type=script_getnum(st,2);
-	tick=script_getnum(st,3);
-	val1=script_getnum(st,4);
-	if( script_hasdata(st,5) ) //指定したキャラを状態異常にする
+	struct block_list* bl;
+	int type;
+	int tick;
+	int val1;
+	int val4 = 0;
+
+	type = script_getnum(st,2);
+	tick = script_getnum(st,3);
+	val1 = script_getnum(st,4);
+	if( script_hasdata(st,5) )
 		bl = map_id2bl(script_getnum(st,5));
 	else
 		bl = map_id2bl(st->rid);
 
-	if (potion_flag==1 && potion_target) {
+	if( tick == 0 && val1 > 0 && type >= 0 && type < SC_MAX && StatusSkillChangeTable[type] != 0 )
+	{// When there isn't a duration specified, try to get it from the skill_db
+		tick = skill_get_time(StatusSkillChangeTable[type], val1);
+	}
+
+	if( potion_flag == 1 && potion_target )
+	{//##TODO how does this work [FlavioJS]
 		bl = map_id2bl(potion_target);
-		tick/=2; //Thrown potions only last half.
-		val4 = 1; //Mark that this was a thrown sc_effect
+		tick /= 2;// Thrown potions only last half.
+		val4 = 1;// Mark that this was a thrown sc_effect
 	}
-	if (type >= 0 && type < SC_MAX && val1 && !tick)
-	{	//When there isn't a duration specified, try to get it from the skill_db
-		tick = StatusSkillChangeTable[type];
-		if (tick)
-			tick = skill_get_time(tick,val1);
-		else	//Failed to retrieve duration, reset to what it was.
-			tick = 0;
-	}
-	if (bl)
-		status_change_start(bl,type,10000,val1,0,0,val4,tick,11);
+
+	if( bl )
+		status_change_start(bl, type, 10000, val1, 0, 0, val4, tick, 1|2|8);
 	return 0;
 }
 
-/*==========================================
- * 状態異常にかかる(確率指定)
- *------------------------------------------*/
+/// Starts a status effect on the target unit or on the attached player.
+///
+/// sc_start2 <effect_id>,<duration>,<val1>,<percent chance>{,<unit_id>};
 BUILDIN_FUNC(sc_start2)
 {
-	struct block_list *bl;
-	int type,tick,val1,val4=0,per;
-	type=script_getnum(st,2);
-	tick=script_getnum(st,3);
-	val1=script_getnum(st,4);
-	per=script_getnum(st,5);
-	if( script_hasdata(st,6) ) //指定したキャラを状態異常にする
+	struct block_list* bl;
+	int type;
+	int tick;
+	int val1;
+	int val4 = 0;
+	int rate;
+
+	type = script_getnum(st,2);
+	tick = script_getnum(st,3);
+	val1 = script_getnum(st,4);
+	rate = script_getnum(st,5);
+	if( script_hasdata(st,6) )
 		bl = map_id2bl(script_getnum(st,6));
 	else
 		bl = map_id2bl(st->rid);
 
-	if (type >= 0 && type < SC_MAX && val1 && !tick)
-	{	//When there isn't a duration specified, try to get it from the skill_db
-		tick = StatusSkillChangeTable[type];
-		if (tick)
-			tick = skill_get_time(tick,val1);
-		else	//Failed to retrieve duration, reset to what it was.
-			tick = 0;
+	if( tick == 0 && val1 > 0 && type >= 0 && type < SC_MAX && StatusSkillChangeTable[type] != 0 )
+	{// When there isn't a duration specified, try to get it from the skill_db
+		tick = skill_get_time(StatusSkillChangeTable[type], val1);
 	}
 
-	if (potion_flag==1 && potion_target) {
+	if( potion_flag == 1 && potion_target )
+	{//##TODO how does this work [FlavioJS]
 		bl = map_id2bl(potion_target);
-		tick/=2;
-		val4 = 1;
+		tick /= 2;// Thrown potions only last half.
+		val4 = 1;// Mark that this was a thrown sc_effect
 	}
 
-	if(bl)
-		status_change_start(bl,type,per,val1,0,0,val4,tick,11);
+	if( bl )
+		status_change_start(bl, type, rate, val1, 0, 0, val4, tick, 1|2|8);
+
 	return 0;
 }
 
-/*==========================================
- * Starts a SC_ change with the four values passed. [Skotlex]
- * Final optional argument is the ID of player to affect.
- * sc_start4 type, duration, val1, val2, val3, val4, <id>;
- *------------------------------------------*/
+/// Starts a status effect on the target unit or on the attached player.
+///
+/// sc_start4 <effect_id>,<duration>,<val1>,<val2>,<val3>,<val4>{,<unit_id>};
 BUILDIN_FUNC(sc_start4)
 {
-	struct block_list *bl;
-	int type,tick,val1,val2,val3,val4;
-	type=script_getnum(st,2);
-	tick=script_getnum(st,3);
-	val1=script_getnum(st,4);
-	val2=script_getnum(st,5);
-	val3=script_getnum(st,6);
-	val4=script_getnum(st,7);
+	struct block_list* bl;
+	int type;
+	int tick;
+	int val1;
+	int val2;
+	int val3;
+	int val4;
+
+	type = script_getnum(st,2);
+	tick = script_getnum(st,3);
+	val1 = script_getnum(st,4);
+	val2 = script_getnum(st,5);
+	val3 = script_getnum(st,6);
+	val4 = script_getnum(st,7);
 	if( script_hasdata(st,8) )
 		bl = map_id2bl(script_getnum(st,8));
 	else
 		bl = map_id2bl(st->rid);
 
-	if (type >= 0 && type < SC_MAX && val1 && !tick)
-	{	//When there isn't a duration specified, try to get it from the skill_db
-		tick = StatusSkillChangeTable[type];
-		if (tick)
-			tick = skill_get_time(tick,val1);
-		else	//Failed to retrieve duration, reset to what it was.
-			tick = 0;
+	if( tick == 0 && val1 > 0 && type >= 0 && type < SC_MAX && StatusSkillChangeTable[type] != 0 )
+	{// When there isn't a duration specified, try to get it from the skill_db
+		tick = skill_get_time(StatusSkillChangeTable[type], val1);
 	}
 
-	if (potion_flag==1 && potion_target) {
+	if( potion_flag == 1 && potion_target )
+	{//##TODO how does this work [FlavioJS]
 		bl = map_id2bl(potion_target);
-		tick/=2;
+		tick /= 2;// Thrown potions only last half.
 	}
-	if (bl)
-		status_change_start(bl,type,10000,val1,val2,val3,val4,tick,11);
+
+	if( bl )
+		status_change_start(bl, type, 10000, val1, val2, val3, val4, tick, 1|2|8);
+
 	return 0;
 }
 
-/*==========================================
- * 状態異常が直る
- *------------------------------------------*/
+/// Ends one or all status effects on the target unit or on the attached player.
+///
+/// sc_end <effect_id>{,<unit_id>};
 BUILDIN_FUNC(sc_end)
 {
-	struct block_list *bl;
+	struct block_list* bl;
 	int type;
-	type=script_getnum(st,2);
-	bl = map_id2bl(st->rid);
-	
-	if (potion_flag==1 && potion_target)
-		bl = map_id2bl(potion_target);
 
-	if (!bl) return 0;
-	if (type >= 0)
-		status_change_end(bl,type,-1);
+	type = script_getnum(st,2);
+	if( script_hasdata(st,3) )
+		bl = map_id2bl(script_getnum(st,3));
 	else
-		status_change_clear(bl, 2);
+		bl = map_id2bl(st->rid);
+	
+	if( potion_flag==1 && potion_target )
+	{//##TODO how does this work [FlavioJS]
+		bl = map_id2bl(potion_target);
+	}
+
+	if( bl )
+	{
+		if( type >= 0 )
+			status_change_end(bl, type, INVALID_TIMER);
+		else
+			status_change_clear(bl, 2);// remove all effects
+	}
+
 	return 0;
 }
+
 /*==========================================
  * 状態異常耐性を計算した確率を返す
  *------------------------------------------*/
@@ -13050,12 +13092,13 @@ BUILDIN_FUNC(unittalk)
 	bl = map_id2bl(unit_id);
 	if( bl != NULL )
 	{
-		struct StringBuf* buf = StringBuf_Malloc();
-		StringBuf_Printf(buf, "%s : %s", status_get_name(bl), message);
-		clif_message(bl, StringBuf_Value(buf));
+		struct StringBuf sbuf;
+		StringBuf_Init(&sbuf);
+		StringBuf_Printf(&sbuf, "%s : %s", status_get_name(bl), message);
+		clif_message(bl, StringBuf_Value(&sbuf));
 		if( bl->type == BL_PC )
-			clif_displaymessage(((TBL_PC*)bl)->fd, StringBuf_Value(buf));
-		StringBuf_Free(buf);
+			clif_displaymessage(((TBL_PC*)bl)->fd, StringBuf_Value(&sbuf));
+		StringBuf_Destroy(&sbuf);
 	}
 
 	return 0;
