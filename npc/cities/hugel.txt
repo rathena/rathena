@@ -24,55 +24,9 @@
 //= 1.3 Moved some quests-related NPCs to proper file. [SinSloth]
 //============================================================
 
-
-//-------------------------------------------------------------------------
-// Hugel Field NPCs
-//-------------------------------------------------------------------------
-
-//Torpy's Mom
-//---------------------------------------------------------------------------
-hu_fild06,190,367,3	script	Torpy's Mom	701,{
-
-	mes "[Torpy's Mom]";
-	mes "Where did he go this time?!";
-	mes "If my husband doesn't have";
-	mes "a good excuse for not coming";
-	mes "home, then he better come";
-	mes "up with one or he'll be sorry!";
-	close;
-}
-
 //---------------------------------------------------------------------------
 // Hugel Town NPCs  - Outside
 //---------------------------------------------------------------------------
-
-// Manainne
-//--------------------------------------------------------------------------
-hugel,191,172,5	script	Manainne	893,{
-
-	mes "[Manainne]";
-	mes "You know, even though";
-	mes "it's not a wealthy area,";
-	mes "I really love this small";
-	mes "and quiet town. Even if";
-	mes "I could live anywhere in";
-	mes "the world, I'd live right here~";
-	close;
-}
-
-//El Schatt
-//---------------------------------------------------------------------------
-hugel,196,164,5	script	El Schatt	50,{
-
-	mes "[El Schatt]";
-	mes "Father was right...";
-	mes "This area is the perfect";
-	mes "place to build some stores.";
-	mes "All that's left is to chop down";
-	mes "that old tree. It's in the way";
-	mes "of a whole lot of things...";
-	close;
-}
 
 //Young Man
 //---------------------------------------------------------------------------
@@ -137,48 +91,6 @@ hugel,85,93,3	script	Mudie	866,{
 	close;
 }
 
-//Perfitz
-//---------------------------------------------------------------------------
-hugel,100,103,3	script	Perfitz	866,{
-
-	mes "[Perfitz]";
-	mes "Money is very dependable...";
-	mes "But it's value is relative, and";
-	mes "can change at any moment.";
-	mes "Still, at my age, you can't";
-	mes "live without it. Make sure you";
-	mes "financially prepare of old age.";
-	next;
-	mes "[Perfitz]";
-	mes "Now, most people assume that";
-	mes "I have very few friends because";
-	mes "I trust money more than people.";
-	mes "That's somewhat true: money";
-	mes "will never betray you, and few";
-	mes "friends can be so dependable.";
-	next;
-	mes "[Perfitz]";
-	mes "However, friends that can";
-	mes "be trusted for life are worth";
-	mes "more than all the money in the";
-	mes "world. To a rich man like me,";
-	mes "those are the only friends";
-	mes "that are worth having.";
-	close;
-}
-
-//Torpy
-//---------------------------------------------------------------------------
-hugel,107,67,3	script	Torpy	706,{
-
-	mes "[Torpy]";
-	mes "Waaah~!";
-	mes "I have to find";
-	mes "my Daddy! Daddy...!";
-	mes "Where are yoooooou?!";
-	close;
-}
-
 //Kayplas
 //---------------------------------------------------------------------------
 hugel,86,165,5	script	Kayplas	896,{
@@ -190,33 +102,6 @@ hugel,86,165,5	script	Kayplas	896,{
 	mes "to buy me one. It doesn't";
 	mes "look too expensive, does it?";
 	close;
-}
-
-//Erjan
-//---------------------------------------------------------------------------
-hugel,102,161,3	script	Erjan	100,{
-
-	mes "[Erjan]";
-	mes "I am Erjan, first son of";
-	mes "the noble Franchefeschu";
-	mes "family. Commoner, if you";
-	mes "do not have any business";
-	mes "with me, then leave me be,";
-	mes "and do whatever it is you do.";
-	close;
-}
-
-//Barrel 
-//---------------------------------------------------------------------------
-hugel,100,175,0	script	Suspicious Barrel	111,{
-
-	mes "^CD00CDYou hear something bustling from";
-	mes "the hole in the barrel.";
-	mes "However, it doesn't seem to be a";
-	mes "big deal.^000000";
-	emotion e_dots;
-	close;
-
 }
 
 //Lisa
@@ -281,64 +166,28 @@ hugel,168,183,5	script	Bismarc	118,{
 	close;
 }
 
-//Tree ~Completely missed this on iRO; full credit to Tsuyuki ~Munin
-//---------------------------------------------------------------------------
-hugel,198,171,0	script	#oldtree	139,1,1,{
+hugel,175,115,5	script	Marius	897,{
 
-	end;
-
-OnTouch:
-	mes "^3131FFFor some reason, you";
-	mes "feel very warm, safe,";
-	mes "and secure near this";
-	mes "tree. Just being near";
-	mes "it brings you a sense";
-	mes "of overwhelming comfort.^000000";
+	mes "[Marius]";
+	mes "Yes, I'm an old man, but";
+	mes "I can lick a whippersnapper";
+	mes "like you any day of the week!";
+	mes "You know, Hugel's got a longer";
+	mes "life expectancy than all the other towns. You wanna know why?";
+	next;
+	mes "[Marius]";
+	mes "It's because the old";
+	mes "coots in this town refuse";
+	mes "to just lay down and die!";
+	mes "Now, c'mon! Lemme show";
+	mes "you how strong I am! Let's";
+	mes "wrestle or something, kid~";
 	close;
 }
 
 //-------------------------------------------------------------------------
 // Hugel Town NPCs - Inside 
 //-------------------------------------------------------------------------
-
-//Siria
-//---------------------------------------------------------------------------
-hu_in01,326,307,3	script	Siria	90,{
-
-	mes "[Siria]";
-	mes "Oh, hello there.";
-	mes "Can I help you";
-	mes "with anything?";
-	close;
-}
-
-//Furniture Drawer
-//---------------------------------------------------------------------------
-hu_in01,370,254,0	script	Upper Drawer	111,1,1,{
-
-	end;
-
-OnTouch:
-	mes "^3131FFThere are several";
-	mes "books and a few";
-	mes "liquid medicines";
-	mes "inside this drawer.^000000";
-	close;
-}
-
-//Girl
-//---------------------------------------------------------------------------
-hu_in01,310,380,5	script	Girl	891,{
-
-	mes "[Girl]";
-	mes "Oh... I'm so bored!";
-	mes "I need someone to play with...";
-	mes "Maybe... Maybe that's what";
-	mes "school is for? Oh, no wonder";
-	mes "people go there everyday!";
-	mes "I wanna go to school right now!";
-	close;
-}
 
 //Chris
 //---------------------------------------------------------------------------
@@ -359,21 +208,6 @@ hu_in01,111,386,4	script	Chris	86,{
 	close;
 }
 
-//Herico  - Has Cut-In!
-//---------------------------------------------------------------------------
-hu_in01,256,40,3	script	Herico	897,{
-
-	cutin "heri1",2;
-	mes "[Herico]";
-	mes "Oh, the weather looks so";
-	mes "nice outside today. But these";
-	mes "old bones of mine just hurt";
-	mes "too much for me to get out...";
-	close2;
-	cutin "",255;
-	end;
-}
-
 //Rachel
 //---------------------------------------------------------------------------
 hu_in01,365,170,5	script	Rachel	793,{
@@ -384,20 +218,6 @@ hu_in01,365,170,5	script	Rachel	793,{
 	mes "stove on a cold night. I just";
 	mes "feel so fuzzy and comfortable,";
 	mes "and it's so relaxing!";
-	close;
-}
-
-//Shaomei
-//---------------------------------------------------------------------------
-hu_in01,377,106,5	script	Shaomei	892,{
-
-	mes "[Shaomei]";
-	mes "We didn't use to get";
-	mes "so many tourists, but";
-	mes "now they come in droves!";
-	mes "They make me pretty busy,";
-	mes "but I do like it when I can";
-	mes "see them enjoy my food. Har!";
 	close;
 }
 
@@ -440,49 +260,64 @@ hu_in01,23,311,4	script	Party Supplies Shop	898,{
 		close;
 }
 
+hu_in01,18,94,0	script	A Part-Timer#1	49,{
+
+	mes "[Luda]";
+	mes "Welcome to the";
+	mes "Shrine Expedition Office.";
+	mes "I'm Luda, a part-time";
+	mes "assistant. My job is to";
+	mes "keep this office neat and";
+	mes "clean, but look at this place!";
+	next;
+	mes "[Luda]";
+	mes "Still, I think I can";
+	mes "handle this difficult task~";
+	mes "This room is the office for";
+	mes "the Schwaltzvalt Republic team,";
+	mes "and the other is for the Rune-";
+	mes "Midgarts Kingdom team.";
+	next;
+	mes "[Luda]";
+	mes "I have to clean both rooms,";
+	mes "so they keep me pretty busy.";
+	mes "Why don't you volunteer for";
+	mes "their expedition? I know they";
+	mes "can't really pay you, but it's";
+	mes "a great chance to explore~";
+	close;
+}
+
+hu_in01,26,77,4	script	A Part-Timer#2	50,{
+
+	mes "^3355FFThis part-timer is";
+	mes "completely engrossed";
+	mes "in his task of organizing";
+	mes "files and books.^000000";
+	close;
+}
+
 //Should be moved later on to Bulletin Boards.txt
 //hugel,91,152,4	script	Bulletin Board	837,{end;}
 
 
 //= New Npcs
-//hugel,76,134,4	script	Yahna	101,{end;}
 //hugel,71,137,5	script	Jamira	879,{end;}
-
-//hugel,175,115,5	script	Anhi Anh	897,{end;}
 //hugel,191,172,4	script	Yanhe	895,{end;}
 //hugel,196,164,3	script	Amnot	50,{end;}
-//hugel,203,166,0	script	Star#1	111,{
-//invisible but clickeable npc
-//end;
-//}
-//hugel,209,164,0	script	Star#2	111,{
-//invisible but clickeable npc
-//end;
-//}
-//hugel,216,158,0	script	Shellfish	111,{
-//invisible but clickeable npc
-//end;
-//}
 //hugel,168,183,5	script	Thief	118,{end;}
 //hugel,126,151,4	script	Tanyee	90,{end;}
 //hugel,88,168,4	script	Zondaman	874,{end;}
 //hugel,71,198,3	script	Kampia	90,{end;}
-//hugel,84,125,4	script	Anzian	700,{end;}
 //= End of new npcs
 
-//hugel,102,161,3	script	Young Sailor	100,{end;}
-//hugel,85,139,3	script	Yoko	86,{end;}
 //hugel,100,102,3	script	Grandpa Hohi	866,{end;}
 //hugel,85,93,3	script	Grandpa Hiho	866,{end;}
 //hugel,85,165,5	script	Cudy	896,{end;}
 //hugel,107,67,3	script	Kiddy the Kid	706,{end;}
 
 //hugel,71,83,4	script	Hon Kiki	900,{end;}
-//hugel,56,103,4	script	Sarko	709,{end;}
-//hugel,68,99,2	script	Billy the Bull	889,{end;}
 //hugel,169,112,5	script	Sani	892,{end;}
-//hu_in01,26,77,4	script	Bokie	50,{end;}
-//hu_in01,18,94,2	script	Katsuki	95,{end;}
 //hu_in01,16,20,4	script	Jamie	70,{end;}
 //hu_in01,14,11,4	script	Jana	49,{end;}
 //hu_in01,19,161,2	script	Matilda	803,{end;}

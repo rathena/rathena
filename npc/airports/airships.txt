@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 0.7
+//= 0.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 0.7 Implemented Few Missings NPCs like (Pilot, Aanos, etc...).
 //=	Corrected Dialogs from some NPCs.
 //=	Added sistem to work with the "How Does the Airship Work" Quest [Samuray22]
+//= 0.8 Moved Gambling NPC Kaci since it's part of a quest. [SinSloth]
 //============================================================ 
 
 //============================================================ 
@@ -362,19 +363,6 @@ s_Material:
 	mes "and 1 Empty Bottle to do it.";
 	close;
 
-}
-
-airplane,33,69,4	script	Kaci	73,{
-	callfunc "applegamble","Kaci";
-	end;
-
-	OnLose:
-	emotion e_wah;
-	end;
-
-	OnWin:
-	emotion e_no1;
-	end;
 }
 
 airplane,80,71,4	script	Zerta	834,{
@@ -757,7 +745,7 @@ OnTimer195000:
 OnReturn:
 	killmonsterall "airplane_01";
 	set $@mobinv, 0;
-	mapannounce "airplane_01","Monster thread nullfied. The Airship is now returning to normal operation.",1,0x00FF00;
+	mapannounce "airplane_01","Monster threat nullfied. The Airship is now returning to normal operation.",1,0x00FF00;
 	startnpctimer;
 	end;
 }
@@ -813,6 +801,12 @@ airplane_01,69,63,2	script	Old Man#06	55,{
 }
 
 airplane_01,33,68,4	script	Clarice	74,{
+	mes "[Clarice]";
+	mes "Hi, I'm Clarice~";
+	mes "How would you like";
+	mes "to wager some Apples";
+	mes "in a friendly game of Dice?";
+	next;
 	callfunc "applegamble","Clarice";
 	end;
 }
@@ -1042,12 +1036,7 @@ yuno,88,263,5	duplicate(Airship Staff)	Airship Staff#yuno02	91
 //============================================================
 
 function	script	applegamble	{
-	mes "["+getarg(0)+"]";
-	mes "Hi, I'm "+getarg(0)+"~";
-	mes "How would you like";
-	mes "to wager some Apples";
-	mes "in a friendly game of Dice?";
-	next;
+
 	switch(select("Play Dice Game:Learn Dice Game Rules:Cancel")){
 	case 3:
 		mes "["+getarg(0)+"]";

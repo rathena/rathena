@@ -1,13 +1,13 @@
 //===== eAthena Script =======================================
 //= Quest NPCs related to Ayothaya
 //===== By ===================================================
-//= Fredzilla
+//= Fredzilla, MasterOfMuppets
 //===== Version ==============================================
-//= 1.6
+//= 1.7
 //===== Compatible With ======================================
 //= eAthena 1.0
 //===== Description ==========================================
-//= Ayothaya Clue Quest, Ayothaya Shrimp Quest, Ayothaya
+//= Ayothaya Ring Quest, Ayothaya Shrimp Quest, Ayothaya
 //= Dungeon Quest, Tom Yum Goong Quest,
 //===== Comments =============================================
 //= List or Variables used
@@ -28,302 +28,1374 @@
 //= 1.5 Removed Duplicates [Silent]
 //= 1.6 Moved quests from cities/ to here:
 //= Shrimp, Dungeon, Tom Yum Goong [Evera]
+//= 1.7 Updated the Ayothaya Ring quest to the official one [MasterOfMuppets]
 //============================================================
 
 //============================================================
-//============================================== Ayothaya Clue
+//============================================== Ayothaya Ring
 //====================================================== Quest
-ayo_dun02,277,178,1	script	OBB	139,4,4,{
-	if(AyoOBB==1 || weddingring!=3) end;
-	mes "["+strcharinfo(0)+"]";
-	mes "Huh what is this?, not foot prints, this is an Old Blue coloured Box";
-	next;
-	set AyoOBB,1;
-	getitem 603,1;
-	logmes "Q_AYOTH1: got OBB";
-	mes "["+strcharinfo(0)+"]";
-	mes "I think I will keep it";
-	close;
-}
-//Dungeon 1 foot prints x 5
-ayo_dun01,30,149,1	script	Clue#01	139,5,5,{
-	if(weddingring!=3) end;
-	npctalk "There are some foot prints here, they head off to the East.";
-	set @footprints1,1;
-	close;
-}
-ayo_dun01,70,149,1	script	Clue#02	139,5,5,{
-	if(weddingring!=3) end;
-	npctalk "There are some more foot prints, they are heading off to the East too!";
-	set @footprints2,1;
-	close;
-}
-ayo_dun01,100,149,1	script	Clue#03	139,5,5,{
-	if(weddingring!=3) end;
-	npctalk "More foot prints heading to the East, who do they belong too?";
-	set @footprints3,1;
-	close;
-}
-ayo_dun01,190,149,1	script	Clue#04	139,5,5,{
-	if(weddingring!=3) end;
-	npctalk "More foot prints, but these are going North.";
-	set @footprints4,1;
-	close;
-}
-ayo_dun01,261,263,1	script	Clue#05	139,5,5,{
-	if(weddingring!=3) end;
-	npctalk "There are some foot prints, they seem to head into that hole there.";
-	set @footprints5,1;
-	close;
-}
+ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 
-//Dungeon 2 foot prints x 4 + 1 fake
-ayo_dun02,222,204,1	script	Clue#06	139,5,5,{
-	if(weddingring!=3) end;
-	npctalk "Yet more foot prints, they are either going South or West.";
-	set @footprints6,1;
-	close;
-}
-ayo_dun02,169,212,1	script	Clue#07	139,5,5,{
-	if(weddingring!=3) end;
-	npctalk "Looks like there are foot print going to the West.";
-	set @footprints7,1;
-	close;
-}
-ayo_dun02,129,212,1	script	Clue#08	139,5,5,{
-	if(weddingring!=3) end;
-	npctalk "Ok these foot prints are either going to the North or West.";
-	set @footprints8,1;
-	close;
-}
-ayo_dun02,79,212,1	script	Clue#09	139,7,7,{
-	if(weddingring!=3) end;
-	npctalk "These are very new, they are going North.";
-	set @footprints9,1;
-	close;
-}
-//FAKE
-ayo_dun02,245,166,1	script	Clue#10	139,7,7,{
-	if(weddingring!=3) end;
-	npctalk "Seems something came by this way, to the East.";
-	close;
-}
-
-ayothaya,233,105,7	script	Shuda	838,{
-	mes "[Shuda]";
-	if(BaseLevel<50) {
-		mes "Where is my ring!?!";
+	if(thai_find == 14)
+	{
+		mes "[Shuda]";
+		mes "Have you";
+		mes "found Annon?";
+		next;
+		mes "[Shuda]";
+		mes "You haven't";
+		mes "found him yet?";
+		mes "Then where the";
+		mes "is he, then?!";
+		next;
+		mes "[Shuda]";
+		mes "Oh well...";
+		mes "I'm not sure if I can believe everything you said, but since you found the ring for me, that's good enough. Thank you for your help.";
+		next;
+		mes "[Shuda]";
+		mes "If you happen to meet Annon during your travels, tell him to come back right away. You can go ahead and continue your adventures now~";
+		next;
+		mes "[Shuda]";
+		mes "If I ever";
+		mes "see him again...";
+		mes "He will be ^660000punished^000000...";
+		mes "^666666*grinds teeth*^000000";
 		close;
 	}
-	if(weddingring==2) goto L_Quest2;
-	if(weddingring==3) goto L_OnQ2;
-	if(weddingring==4) goto L_QuestComplete;
-	if(weddingring==5) goto L_QuestOver;
-	if(countitem(7288)>=1) goto L_RingFound;
-	mes "Oh please won't you help me, my partner has gone missing, but not before droping our ^FF0000Engagement Ring^000000 maybe there is a way of ^0000FFfishing^000000 it out of the sea.";
-	set weddingring,1;
-	close;
-L_RingFound:
-	mes "Oh is that my ring!?!";
-	next;
-	mes "[Shuda]";
-	mes "Can I please have it back?";
-	next;
-	menu "Yes, here you go",N_Yes,"No, I found it, it's mine",-;
-	mes "[Shuda]";
-	mes "Think what you want, but that ring is mine, and without it I can never marry my true love.";
-	mes "";
-	mes "Where ever he may be.";
-	close;
-N_Yes:
-	mes "[Shuda]";
-	if(countitem(7288)<1) {
-		mes "Go away, cheater!";
+	else if(thai_find > 2 && thai_find < 14)
+	{
+		mes "[Shuda]";
+		mes "^666666*Sigh...*^000000";
+		mes "You haven't";
+		mes "found Annon yet?";
+		mes "I see. Oh well, it's alright.";
+		mes "Time isn't an issue for us.";
+		next;
+		mes "[Shuda]";
+		mes "And by 'us,' I mean '^660000you^000000.' I don't care about your plans or whatever else you may have scheduled, because you're going to make";
+		mes "time for me! Oho ho ho ho ho!";
 		close;
 	}
-	delitem 7288,1;
-	mes "Thank you so much, now I have this back maybe my partner will return.";
-	set weddingring,2;
-	next;
-	mes "[Shuda]";
-	mes "Come back to me when you have time, I need you to do something else for me.";
-	close;
-L_Quest2:
-	mes "It seems even though I have my ring back my partner ^FF0000Annon^000000 doesn't seem to want to come back to me";
-	mes "Maybe he has gotten lost somewhere";
-	mes "";
-	mes "Will you please go and look for him";
-	next;
-	menu "Yes, I would be glad to",L_YesQ2,"No, he will come back on his own",-;
-	mes "[Shuda]";
-	mes "Well he might, but I still need someone to find him, I am afraid something might have happened to him.";
-	close;
-L_YesQ2:
-	set weddingring,3;
-	mes "[Shuda]";
-	mes "Oh thank you so much, I think someone in the town might have seen where he went, maybe he can give you a clue";
-	close;
-L_OnQ2:
-	mes "Have you been able to find my love yet?";
-	mes " ";
-	mes "Please hurry.";
-	mes "*tear*";
-	close;
-L_QuestComplete:
-	mes "You have found him ?!?";
-	mes "Then where is he???";
-	next;
-	mes "You explain the situation.";
-	next;
-	mes "[Shuda]";
-	mes "Well, I thought he was my one.";
-	mes "I don't think I will ever find another like him.";
-	mes "*tear*";
-	next;
-	set weddingring,5;
-	mes "[Shuda]";
-	mes "I can understand, but why not come and talk to me about it, we might have been able to talk it out.";
-	close;
-L_QuestOver:
-	mes "Nice to see you again "+strcharinfo(0)+". How have you been?";
-	close;
-}
+	else if(thai_find == 2)
+	{
+		if(countitem(7288)) //Engagement Ring
+		{
+			mes "[Shuda]";
+			mes "Ah... Is it...?!!";
+			mes "Yes, that's it!";
+			mes "My engagement ring that was";
+			mes "thrown into the water by that stupid Annon!";
+			next;
+			mes "[Shuda]";
+			mes "Thank you so much! In your honor, our first seven kids will be named after you! Oho ho ho ho ho ho ho~";
+			next;
+			mes "[Shuda]";
+			mes "Now...";
+			mes "All I gotta do";
+			mes "is find Annon.";
+			mes "Where the hell";
+			mes "did that moron go?!";
+			next;
+			mes "[Shuda]";
+			mes "^666666*Ahem*^000000";
+			mes "I-I didn't mean";
+			mes "to scare him, all I wanted was";
+			mes "my engagement ring back.";
+			next;
+			mes "[Shuda]";
+			mes "^666666*Sigh*^000000";
+			mes "I guess the days";
+			mes "of being a happy bride";
+			mes "are still far away from me...";
+			next;
+			mes "^3355FFShuda gazes directly";
+			mes "at you with a puppy eyed look.^000000";
+			next;
+			switch( select( "D-Don't look at me that way!:Alright, alright." ) )
+			{
+			case 1:
+				mes "[Shuda]";
+				mes "Oh come on, you know everything that happened, and I know you're gonna continue adventuring";
+				mes "around this area.";
+				next;
+				mes "[Shuda]";
+				mes "I was just asking you to find Annon while you do that. Now, isn't that such a small favor? Thank you for doing this for me~";
+				next;
+				mes "[Shuda]";
+				mes "In the meantime, I'll think of how I'm gonna pay back Annon for leaving me in misery! So hurry and find Annon! Hoo ho ho ho ho!";
+				emotion e_heh;
+				next;
+				emotion e_dots,1;
+				mes "["+strcharinfo(0)+"]";
+				mes "(She's so scary!";
+				mes "Making me do stuff";
+				mes "for her again...)";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "(Why am I always";
+				mes "doing things for other";
+				mes "people anyway?!)";
+				delitem 7288,1; //Engagement Ring
+				set thai_find,3;
+				close;
+			break;
+			case 2:
+				mes "[Shuda]";
+				mes "Yes, I knew I could count on you! So find Annon! It's my destiny to make him ^660000mine^000000. Hoo ho ho ho ho!";
+				next;
+				mes "[Shuda]";
+				mes "I haven't seen him around the village for a while. And I don't think he jumped into the water to find my ring, since he's too sissy for that. He probably doesn't have the guts to see me without it.";
+				next;
+				mes "[Shuda]";
+				mes "Will you please tell Annon that";
+				mes "I got my ring back so he can come back to me now? I hope you'll remember that for me, adventurer.";
+				delitem 7288,1; //Engagement Ring
+				set thai_find,3;
+				close;
+			break;
+			}
+		}
+		else
+		{
+			mes "[Shuda]";
+			mes "Huh...?";
+			mes "Did you find my ring?";
+			mes "Show me, show it to me!";
+			next;
+			mes "[Shuda]";
+			mes "What the...";
+			mes "You got nothing!";
+			mes "Don't lie to me,";
+			mes "bring me my ring!";
+			next;
+			mes "[Shuda]";
+			mes "Hurry up and find";
+			mes "my ring. I'll be waiting";
+			mes "here for the good news.";
+			mes "Oho ho ho ho ho~!";
+			close;
+		}
+	}
+	else if(thai_find == 1)
+	{
+		mes "[Shuda]";
+		mes "I feel a little bad asking you this, especially since you're";
+		mes "an outsider.";
+		next;
+		mes "[Shuda]";
+		mes "But that ring is really important to me. If you could find it for me, I'd be the happiest woman in the whole world.";
+		next;
+		mes "[Shuda]";
+		mes "So please, I beg you.";
+		mes "Please bring my ring back to me.";
+		mes "I want to live with Annon as a happy couple forever. Can't you understand that?!";
+		close;
+	}
+	else
+	{
+		mes "[Powerful-Looking Woman]";
+		mes "Umm...?";
+		mes "Ah, you must be one of the tourists. I'd guide you around and listen to your stories about the outside world, but...";
+		next;
+		if(rand(0,1))
+		{
+			mes "[Powerful-Looking Woman]";
+			mes "I'm reeeally";
+			mes "busy right now.";
+			mes "So very busy.";
+			next;
+			mes "[Powerful-Looking Woman]";
+			mes "Huh...?";
+			mes "You don't think I look busy just because I'm standing on one spot and not moving at all?! Oh. My. God. You're so rude!";
+			next;
+			mes "[Powerful-Looking Woman]";
+			mes "Now, I've got to find my";
+			mes "engagement ring. If only";
+			mes "my fiancee hadn't";
+			mes "thrown it...";
+			next;
+			switch( select( "What...?:Lies~!" ) )
+			{
+			case 1:
+				mes "[Powerful-Looking Woman]";
+				mes "What 'what?'";
+				mes "You still think I'm";
+				mes "standing around for my";
+				mes "own amusement or something?!";
+				next;
+				emotion e_gg,1;
+				mes "["+strcharinfo(0)+"]";
+				mes "No no no no...";
+				mes "I meant, I can't";
+				mes "believe that you're";
+				mes "engaged to someone!";
+				next;
+				mes "[Powerful-Looking Woman]";
+				mes "Wwwwaaaaaahhhhh!";
+				mes "Wh-who are you to say";
+				mes "something so rude to such a nice lady like myself. Go away, I don't wanna talk to you!";
+				close;
+			break;
+			case 2:
+				mes "[Powerful-Looking Woman]";
+				mes "What lies?";
+				mes "I'm not gonna put up with crap";
+				mes "if you're gonna say something like 'I can't believe you're engaged to someone!'";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Whoa whoa whoa~";
+				mes "Calm down, lady.";
+				mes "Hear me out first.";
+				mes "What I'm wondering is...";
+				next;
+				mes "[Powerful-Looking Woman]";
+				mes "I know, I know.";
+				mes "You're wondering why I'm";
+				mes "standing near the water, right? Well, it's because my ring was thrown there and I've gotta";
+				mes "get it back.";
+				next;
+				mes "[Powerful-Looking Woman]";
+				mes "What am I doing, talking to a tourist like this? ^666666*Sigh...*^000000 Well, you learned what you wanted to know. I hope you're satisfied now.";
+				next;
+				mes "[Powerful-Looking Woman]";
+				mes "...";
+				next;
+				mes "[Powerful-Looking Woman]";
+				mes "...";
+				mes "......";
+				next;
+				mes "[Powerful-Looking Woman]";
+				mes "...";
+				mes "......";
+				mes "........Hey.";
+				next;
+				mes "[Powerful-Looking Woman]";
+				mes "Why are you staring at me?";
+				mes "Don't you have anything to do?";
+				next;
+				switch( select( "No.:No~ and you are an interesting girl." ) )
+				{
+				case 1:
+					mes "[Powerful-Looking Woman]";
+					mes "I see. Hmmm...";
+					mes "You're kind of my type.";
+					if(sex)
+					{
+						mes "No no, that doesn't mean I'm interested in you. Plus I'm";
+						mes "already engaged.";
+					}
+					else
+						mes "Before you think of anything weird, I meant that I think you and me are a lot alike.";
+					next;
+					mes "[Powerful-Looking Woman]";
+					mes "Let me introduce myself.";
+					mes "My name is Shuda, I've lived in Ayotaya all my life. Since you don't have anything to do, I have";
+					mes "a favor to ask of you.";
+					next;
+					mes "[Shuda]";
+					mes "My fiance Annon is always interested in things other than me. I don't understand why, and I don't think I deserve to be ignored!";
+					next;
+					mes "[Shuda]";
+					mes "^666666*Sigh...*^000000";
+					mes "Anyways, we're engaged";
+					mes "and we got rings for each other...";
+					next;
+					mes "[Shuda]";
+					mes "I thought being engaged would improve our relationship. But he just took my ring and threw it into the water.";
+					next;
+					mes "[Shuda]";
+					mes "I got upset and yelled at him to get my ring back for me, and then";
+					mes "I never saw him after that.";
+					mes "So what I want to ask is...";
+					next;
+					mes "[" +strcharinfo(0)+ "]";
+					mes "You want me";
+					mes "to find your";
+					mes "ring, don't you?";
+					next;
+					mes "[Shuda]";
+					mes "Ah...";
+					mes "So you know";
+					mes "what I want.";
+					mes "That makes it";
+					mes "much simpler.";
+					next;
+					mes "[Shuda]";
+					mes "And once I retrieve";
+					mes "the ring, I'll make";
+					mes "him treat me to a much";
+					mes "deserved vacation in Jawaii...";
+					next;
+					mes "[Shuda]";
+					mes "...Where I will";
+					mes "^660000enslave^000000 him.";
+					mes "^666666*Grinds teeth*^000000";
+					next;
+					emotion e_gasp,1;
+					mes "[" +strcharinfo(0)+ "]";
+					mes "(...H-Horrifying!)";
+					next;
+					mes "[Shuda]";
+					mes "So anyway, I want you to go out and find my engagement ring. Since the water is calm and still around here, the ring is probably still under the water, and hasn't been swept away yet.";
+					next;
+					mes "[Shuda]";
+					mes "And so, that is my quest for you. It should keep you entertained for a while. So get into the water, and I'll supervise from here.";
+					mes "Oho ho ho ho ho!";
+					emotion e_heh;
+					set thai_find,1;
+					close;
+				break;
+				case 2:
+					mes "[Powerful-Looking Woman]";
+					mes "^666666*Sigh...*^000000";
+					mes "Are you gonna just stare and";
+					mes "not help at all? I thought the word adventurer was synonymous";
+					mes "with 'hero,' not 'lazy.'";
+					next;
+					mes "[Powerful-Looking Woman]";
+					mes "Oh I see...";
+					mes "Don't help strangers, do you?";
+					mes "Well, my name is Shuda, a beautiful damsel waiting for her engagement ring to rise up from the water.";
+					next;
+					mes "[Powerful-Looking Woman]";
+					mes "There...!";
+					mes "We're not";
+					mes "strangers anymore!";
+					mes "Oho ho ho ho ho!";
+					next;
+					mes "[Shuda]";
+					mes "Don't you pity me, and my tragic situation? If someone were to help this precious maiden find her ring, she'd be the happiest bride in the whole world.";
+					next;
+					mes "[Shuda]";
+					mes "And her savior";
+					mes "would be known as";
+					mes "the hero of Ayotaya.";
+					next;
+					mes "[" +strcharinfo(0)+ "]";
+					mes " ...Say what?!";
+					next;
+					mes "[Shuda]";
+					mes "Basically, you're gonna find my engagement ring, and I'll be the happiest bride in the whole world and I'll live happily ever after. What's so hard to understand";
+					mes "about that?";
+					next;
+					mes "[Shuda]";
+					mes "Sure, Annon, he's my fiancee, is spineless and disappears whenever";
+					mes "I say something a little too harsh. What a little girl! Can't he see I'm trying to make him a better man?!";
+					next;
+					mes "[" +strcharinfo(0)+ "]";
+					mes "He ran away";
+					mes "from you, didn't he?";
+					next;
+					mes "[Shuda]";
+					mes "Eh...?";
+					mes "What was that?";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "^666666*Ahem*^000000";
+					mes "You're way";
+					mes "too good for him.";
+					mes "(I'd have run away myself!)";
+					next;
+					mes "[Shuda]";
+					mes "Yes, yes, I know.";
+					mes "But what's important";
+					mes "is that once I get my ring back, Annon will be permanently mine. Till ^660000death do we part^000000.";
+					next;
+					mes "[Shuda]";
+					mes "So, are you";
+					mes "gonna help me or what?!";
+					mes "If you do, me and Annon are gonna name our first seven children after you.";
+					next;
+					mes "[Shuda]";
+					mes "So go and look under the water! There's no water current, so I'm sure it's still there! What are you waiting for, it's should be an easy swim for you! Oho ho ho ho ho!";
+					set thai_find,1;
+					close;
+				break;
+				}
+			break;
+			}
+		}
+		else
+		{
+			mes "[Powerful-Looking Woman]";
+			mes "^666666*Sigh...*^000000";
+			mes "Why isn't it coming up from the water? Maybe if I stirred around with a wooden stick...?";
+			next;
+			mes "[Powerful-Looking Woman]";
+			mes "...?!";
+			mes "What are you";
+			mes "looking at?!";
+			mes "I'm busy, so if you";
+			mes "want something";
+			mes "I can't help you!";
+			next;
+			mes "[Powerful-Looking Woman]";
+			mes "^666666Stupid tourists, running";
+			mes "around all over Ayotalla,";
+			mes "pestering and bothering";
+			mes "beautiful girls like me...^000000";
+			close;
+		}
+	}
 
-ayothaya,253,99,3	script	Fisherman#01	843,{
-	mes "[Dannai]";
-	mes "This place is known to be teeming with fish. The fish here tend to eat anything they find, so it's easy to catch them.";
-	next;
-	mes "[Dannai]";
-	mes "We are providing a fishing rod rental service. Every time you fish, you'll need ^4466771 Monster's Food^000000 to use as bait, and pay a rod rental fee of ^44667750 Zeny^000000.";
-	next;
-	mes "[Dannai]";
-	mes "Would you";
-	mes "like to try?";
-	next;
-	menu "Yes",-,"No",L_No;
-	if(countitem(528) < 1 || zeny < 50) goto L_Fail;
-	delitem 528,1;
-	set zeny,zeny-50;
-	mes "[Fisher Man]";
-	mes "Ok give it a good swing.";
-	mes "Lets see if you got anything.";
-	next;
-	set @fishing, rand(1,10);
-	mes "[Fisher Man]";
-	if(@fishing<5) goto L_Nothing;
-	if(@fishing<10) goto L_Fish;
-	if(@fishing==10) goto L_RingCheck;
-L_No:
-	mes "[Dannai]";
-	mes "Come back anytime.";
-	close;
-L_Fail:
-	mes "[Dannai]";
-	mes "Seems you don't have what I need";
-	mes "Come back when you have some Monster Feed, and 50 zeny.";
-	close;
-L_Nothing:
-	mes "Sorry it seems like you didn't get anything, try again anytime.";
-	close;
-L_Fish:
-	getitem 544,1;
-	mes "Look at this you got yourself a fish, well done.";
-	close;
-L_RingCheck:
-	if(weddingring!=1 || recoveredring==1) goto L_Fish;
-	mes "What is this, some sort of ring!!!";
-	mes "Well I guess since you fished it out you can keep it";
-	next;
-	getitem 7288,1;
-	mes "[Fisher Man]";
-	mes "Come back anytime";
-	set weddingring,0;
-	set recoveredring,1;
-	close;
-}
-
-ayothaya,192,171,4	script	Old Man#10	824,{
-	mes "[Tham]";
-	if(weddingring==3) goto L_OnQ2;
-	mes "What a nice day it is today, don't you agree?";
-	close;
-L_OnQ2:
-	mes "What! Annon is missing, I only saw him a few minutes ago.";
-	next;
-	mes "[Tham]";
-	mes "He was heading for Ayothaya's dungeon, I thought this kind of odd, and now you say he hasn't come back?!?";
-	mes "I think you should follow him in there, just in case something has happened to him";
-	next;
-	mes "[Tham]";
-	mes "Maybe he has left something inside the dungeon, something that can lead you to him";
-	mes "But thats just me";
-	next;
-	mes "[Tham]";
-	mes "You can get to the dungeon through the old temple, it is one map to the right of here, and down the hill.";
-	close;
-}
-
-ayo_dun02,91,264,4	script	Guy	822,{
-	if(weddingring==4) goto L_QuestComplete;
-	if(weddingring==5) goto L_TalkedShuda;
-	if(weddingring==3 && @footprints1==1 && @footprints2==1 && @footprints3==1 && @footprints4==1 && @footprints5==1 && @footprints6==1 && @footprints7==1 && @footprints8==1 && @footprints9==1) goto L_Groom;
-	mes "[Guy]";
-	mes "She won't find me here,she won't...";
-	close;
-L_Groom:
+OnTouch:
+	if(thai_find == 0)
+	{
+		mes "[Powerful-Looking Woman]";
+		mes "^666666*Sigh...*^000000";
+		mes "Where the";
+		mes "hell is it!?";
+		next;
+		mes "[Powerful-Looking Woman]";
+		mes "What are";
+		mes "you looking at?";
+		mes "Haven't you ever seen a delicate damsel sigh before? Leave me the hell alone!";
+		close;
+	}
 	
-	mes "[Annon]";
-	mes "Help me please...";
-	next;
-	mes "["+strcharinfo(0)+"]";
-	mes "^He seems to be injured very bad...";
-	next;
-	menu "Treat his wounds",-,"Leave him alone",L_Go;
-	if(countitem(504) < 1) goto L_Need;
-	delitem 504,1;
-	mes "[Annon]";
-	mes "Who are you";
-	mes "Have you been sent to follow me?";
-	next;
-	mes "[Annon]";
-	mes "So I see now, my ex-partner has sent you to see if I'm OK.";
-	mes " ";
-	mes "Can you go and tell her I'm ok, but I can't go through with the marriage.";
-	next;
-	mes "[Annon]";
-	mes "I can't really give a reason, just tell her that I love her, but not enough to spend the rest of my life with her.";
-	next;
-	mes "[Annon]";
-	mes "I hope she will understand.";
-	mes " ";
-	mes "I guess you will want something in return.";
-	next;
-	mes "[Annon]";
-	mes "I can train you, and make you gain some exp.";
-	mes " ";
-	mes "I will do this now.";
-	next;
-	set BaseExp,BaseExp+100000;
-	set weddingring,4;
-	mes "[Annon]";
-	mes "It is done, please make you way back to Shuda, and please try not to make her cry";
-	close;
-L_Need:
-	mes "["+strcharinfo(0)+"]";
-	mes "I need a White potion to be able to cure him.";
-	close;
-L_Go:
-	mes "["+strcharinfo(0)+"]";
-	mes "Someone else will probably find him.I have other things to do.";
-	close;
-L_QuestComplete:
-	mes "[Annon]";
-	mes "Have you seen Shuda yet?";
-	close;
-L_TalkedShuda:
-	mes "[Annon]";
-	mes "Did she take it OK?";
-	close;
+}
+	
+ayo_dun02,91,263,0	script	#Annonblood	111,2,3,{
+
+if(!$annonactive)
+{
+	if(thai_find == 13)
+	{
+		mes "["+strcharinfo(0)+"]";
+		mes "A blood stain?";
+		mes "What's going on?";
+		mes "I should take a look...";
+		next;
+		mes "^3355FFUnder a giant tree,";
+		mes "you find some bushes with";
+		mes "blood smudged on some";
+		mes "of the leaves.^000000";
+		next;
+		mes "^3355FFWithin the bushes, you see";
+		mes "that the trail of blood continues, almost as if a bleeding animal struggled to find refuge within";
+		mes "the bushes.^000000";
+		next;
+		mes "[" +strcharinfo(0)+ "]";
+		mes "Hmmm....";
+		next;
+		switch( select( "Scatter the bushes.:Dig up the bushes." ) )
+		{
+		case 1:
+			if(!rand(0,2))
+			{
+				mes "[" +strcharinfo(0)+ "]";
+				mes "^666666*Cough cough*^000000";
+				mes "It's so dusty!";
+				next;
+				mes "[?]";
+				mes "...Awwww";
+				mes "Oh... Oh God...!";
+				next;
+				emotion e_gasp,1;
+				mes "[" +strcharinfo(0)+ "]";
+				mes "Huh...?";
+				mes "I heard something";
+				mes "from below! Let's";
+				mes "dig it up!";
+				next;
+				mes "^3355FFYou pull up the bushes,";
+				mes "^3355FFand beneath the dust and";
+				mes "^3355FFshrubbery, you find";
+				mes "a small burrow.^000000";
+				next;
+				set $annonactive,1;
+				enablenpc "Haggard Man";
+				mes "[Haggard Man]";
+				mes "^666666*Cough cough!*^000000";
+				mes "Wh...who's there?";
+				mes "Shuda?! If that's you,";
+				mes "stay back, or I'll kill myself!";
+				emotion e_omg,1;
+				next;
+				switch( select( "What are you doing here?:I'm not Shuda!" ) )
+				{
+				case 1:
+					mes "["+strcharinfo(0)+"]";
+					mes "Hey...";
+					mes "What are you doi--";
+					next;
+					set $annonactive,0;
+					disablenpc "Haggard Man";
+					mes "^3355FFHe vanished!^000000";
+					close;
+				break;
+				case 2:
+					mes "[Haggard Man]";
+					mes "Hmmm...?";
+					mes "I sense kindess, sincerity and a general love for mankind in your voice. Verily, you are not Shuda.";
+					next;
+					mes "[Haggard Man]";
+					mes "You are unfamiliar to me, outsider. I'm unsure of how you found my hiding place, but if you have something to say, make it short!";
+					close;
+				break;
+				}
+			}
+			else
+			{
+				mes "^3355FFYou dig up the bushes, stirring";
+				mes "up a large, choking cloud of dust.^000000";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "^666666*Cough cough!*^000000";
+				mes "What a large,";
+				mes "choking cloud";
+				mes "of dust!";
+				close;
+			}
+		break;
+		case 2:
+			mes "^3355FFAs you dig up the bushes, the ground beneath one of the bushes crumbles and you hear a scream";
+			mes "from beneath.^000000";
+			next;
+			if(!rand(0,2))
+			{
+				set $annonactive,1;
+				enablenpc "Haggard Man";
+				mes "[?]";
+				mes "^666666*Cough cough*^000000";
+				mes "...M-my legs!";
+				close;
+			}
+			else
+			{
+				mes "[" +strcharinfo(0)+ "]";
+				mes "Hmmm...?";
+				mes "What was that noise?";
+				mes "Ugh, it's awfully dusty.";
+				mes "I better stop digging.";
+				mes "^666666*cough cough cough*^000000";
+				close;
+			}
+		break;
+		}
+	}
+	else if(thai_find == 14)
+	{
+		mes "^3355FFYou find that the burrow is empty. It seems Annon has found a new hiding place.^000000";
+		close;
+	}
+	else
+	{
+		mes "^3355FFYou find a pile of dead bushes under a large tree. The area around the bushes seems awfully dusty.^000000";
+		close;
+	}
+
+	OnTouch:
+	if(thai_find == 12)
+	{
+		if(!rand(0,2))
+		{
+			emotion e_gasp,1;
+			mes "[" +strcharinfo(0)+ "]";;
+			mes "Huh...?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "That looks";
+			mes "like blood!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Hmm...";
+			mes "Yes...";
+			mes "That's definitely blood.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Strange to see";
+			mes "a blood stain in";
+			mes "this kind of place...";
+			set thai_find,13;
+			close;
+		}
+	}
+
+}
+	
+}
+	
+ayo_dun02,91,264,3	script	Haggard Man	841,{
+
+	if(thai_find == 13)
+	{
+		mes "[Haggard Man]";
+		mes "^666666*...Cough cough*^000000";
+		mes "No...! My hiding place!";
+		next;
+		mes "[Haggard Man]";
+		mes "Hmmm...?";
+		mes "I'm bleeding?!";
+		mes "Oh, how did this happen?";
+		mes "My spiritual training wasn't supposed to go like this...!";
+		next;
+		switch( select( "Treat his wound first.:Is that you, Annon?" ) )
+		{
+		case 1:
+			mes "[" +strcharinfo(0)+ "]";
+			mes "Anyway, I think you need to be treated. Let me check if I have some potions.";
+			next;
+			if(countitem(504)) //White potion
+			{
+				mes "["+strcharinfo(0)+"]";
+				mes "Ah...";
+				mes "Here we are,";
+				mes "a White Potion.";
+				delitem 504,1; //White potion
+				next;
+				mes "[Haggard Man]";
+				mes "You mean the White Potion,";
+				mes "the ultimate drink for healing?";
+				mes "I appreciate you doing me this favor. ^666666*Phew*^000000 Now, I feel much better.";
+				next;
+				mes "[Annon]";
+				mes "Ah, my apologies for not introducing myself earlier.";
+				mes "I am called Annon. You must wondering what I must be doing";
+				mes "here under the ground.";
+				next;
+				mes "[Annon]";
+				mes "Well, I'm performing a special exercise for my spiritual training. Though, it may be hard to believe.";
+				next;
+				mes "[Annon]";
+				mes "What...?";
+				mes "Shuda sent you?! Oh well...";
+				mes "I thank you for curing me. Now, it's time for me to resume my training.";
+				next;
+				mes "[" +strcharinfo(0)+ "]";
+				specialeffect 120;
+				mes "Wait, I can't let you go! You don't know how hard it was for me to find you! You can't just leave!";
+				next;
+				mes "[Annon]";
+				mes "Hm? Then what is it that you want? I implore you, do not tell Shuda that you have found me. No matter what, I am not going back to her!";
+				next;
+				mes "[Annon]";
+				mes "Eh...?";
+				mes "Did you find";
+				mes "her ring already?";
+				mes "Ooh, I was hoping it";
+				mes "would never be found.";
+				next;
+				mes "[Annon]";
+				mes "She probably told you that I ran away out of shame for losing the ring, and that if you got the ring back, I'd be happy to return, right?";
+				next;
+				mes "[Annon]";
+				mes "Well...";
+				mes "I threw away";
+				mes "that ring on purpose!";
+				mes "I'm serious about not";
+				mes "going back to Shuda.";
+				next;
+				mes "[Annon]";
+				mes "It looks like you wish to know more. If you promise me that you will not mention my whereabouts";
+				mes "to Shuda, then I'll explain.";
+				next;
+				switch( select( "You think the world revolves around you?:What do you want me to do?" ) )
+				{
+				case 1:
+					mes "[" +strcharinfo(0)+ "]";
+					mes "You think the world";
+					mes "revolves around you?";
+					mes "You can't just run away!";
+					next;
+					mes "[Annon]";
+					mes "Oh, I know, I know!";
+					mes "But you don't understand. Obviously, Shuda is beautiful.";
+					next;
+					mes "[Annon]";
+					mes "But our parents arranged our marriage when we were babies.";
+					mes "That kind of arrangement doesn't matter to me, but she obviously cares about it.";
+					next;
+					mes "[Annon]";
+					mes "In all honesty, she scares me";
+					mes "to death. Whenever I'm with her,";
+					mes "I can't help but break into a cold sweat. And when she's near, I have nightmares about her. ^666666*Brrr...*^000000";
+					next;
+					mes "[Annon]";
+					mes "She thinks it's funny to electrocute me. and ties me up in";
+					mes "a darkened room and feeds me only Jellopy whenever I don't listen to her. Now can you see why I crave freedom?";
+					next;
+					mes "[Annon]";
+					mes "Of course, if you reveal to her that you've found me, I'll repay your favor. I implore you, just pretend you haven't found me, please?";
+					next;
+					menu "...Alright, alright.",-;
+					mes "[Annon]";
+					mes "Thank you so much!";
+					mes "Now, to pay you back, let me use one of the skills I've learned in my spiritual training.";
+					next;
+					mes "[Annon]";
+					mes "Let's see...";
+					mes "Let me twist your";
+					mes "arm this way, and";
+					mes "apply pressure here...";
+					next;
+					mes "[" +strcharinfo(0)+ "]";
+					mes "Wahhh~!";
+					mes "What the hell";
+					mes "are you doing!";
+					mes "You're hurting me, man!";
+					next;
+					mes "[Annon]";
+					mes "Oh, this is a special kind of massage. Don't worry, it'll relieve you of fatigue. It's quite heavenly, actually. You'll see~";
+					next;
+					mes "^3355FF*Snap snap snap*";
+					mes "*Snap snap snap*";
+					mes "*Crack crack crack*";
+					mes "*Crack crack crack*^000000";
+					next;
+					mes "^3355FFYou feel as though Annon";
+					mes "realigned every bone in your skeleton, placing them in the right spots. Strangely, you feel intense relaxation and refreshment instead of excruciating pain.";
+					set thai_find,14;
+					if(BaseLevel < 56)
+						set BaseExp,BaseExp+9000;
+					else if(BaseLevel > 55 && BaseLevel < 61)
+						set BaseExp,BaseExp+10500;
+					else if(BaseLevel > 60 && BaseLevel < 66)
+						set BaseExp,BaseExp+18684;
+					else if(BaseLevel > 65 && BaseLevel < 71)
+						set BaseExp,BaseExp+27411;
+					else if(BaseLevel > 70 && BaseLevel < 76)
+						set BaseExp,BaseExp+70757;
+					else if(BaseLevel > 75 && BaseLevel < 81)
+						set BaseExp,BaseExp+130246;
+					else if(BaseLevel > 80 && BaseLevel < 86)
+						set BaseExp,BaseExp+150340;
+					else if(BaseLevel > 85 && BaseLevel < 91)
+						set BaseExp,BaseExp+182052;
+					else if(BaseLevel > 90)
+						set BaseExp,BaseExp+406786;
+					next;
+					mes "[" +strcharinfo(0)+ "]";
+					mes "Whoa...?";
+					mes "That felt was so great~";
+					mes "It even feels like my mind";
+					mes "has been cleansed too!";
+					mes "You've got a deal!";
+					next;
+					mes "[Annon]";
+					mes "Thank you, thank you so much.";
+					mes "Now I can avoid being tied to Shuda, at least for a little longer.";
+					next;
+					mes "[Annon]";
+					mes "Now, if you'll excuse me,";
+					mes "I must make good my escape";
+					mes "before others find me.";
+					mes "Good day~!";
+					close2;
+					set $annonactive,0;
+					disablenpc "Haggard Man";
+					end;
+				break;
+				case 2:
+					mes "[Annon]";
+					mes "Of course, what I want you to do is to keep me a secret from Shuda. Just forget that you've ever met me, and let Shuda know it was impossible to find me.";
+					next;
+					mes "[Annon]";
+					mes "Besides, even if you help her, all she'll do is offer to name her kids after you. Now... Do you really want that? I know for sure that she and I won't be having children. There's enough evil in the world.";
+					next;
+					mes "[Annon]";
+					mes "Now, you must be wondering";
+					mes "how I would repay you for your silence. Well, let me show you one of the skills I've learned in my spiritual training.";
+					next;
+					mes "[Annon]";
+					mes "Let's see...";
+					mes "Let me twist your";
+					mes "arm this way, and";
+					mes "apply pressure here...";
+					next;
+					mes "[" +strcharinfo(0)+ "]";
+					mes "Wahhh~!";
+					mes "What the hell";
+					mes "are you doing!";
+					mes "You're hurting me, man!";
+					next;
+					mes "[Annon]";
+					mes "Oh, this is a special kind";
+					mes "of massage. Don't worry, it'll";
+					mes "relieve you of fatigue. It's quite heavenly, actually. You'll see~";
+					next;
+					mes "^3355FF*Snap snap snap*";
+					mes "*Snap snap snap*";
+					mes "*Crack crack crack*";
+					mes "*Crack crack crack*^000000";
+					next;
+					mes "^3355FFYou feel as though Annon";
+					mes "realigned every bone in your skeleton, placing them in the right spots. Strangely, you feel intense relaxation and refreshment instead of excruciating pain.";
+					set thai_find,14;
+					if(BaseLevel < 56)
+						set BaseExp,BaseExp+9000;
+					else if(BaseLevel > 55 && BaseLevel < 61)
+						set BaseExp,BaseExp+10500;
+					else if(BaseLevel > 60 && BaseLevel < 66)
+						set BaseExp,BaseExp+18684;
+					else if(BaseLevel > 65 && BaseLevel < 71)
+						set BaseExp,BaseExp+27411;
+					else if(BaseLevel > 70 && BaseLevel < 76)
+						set BaseExp,BaseExp+70757;
+					else if(BaseLevel > 75 && BaseLevel < 81)
+						set BaseExp,BaseExp+130246;
+					else if(BaseLevel > 80 && BaseLevel < 86)
+						set BaseExp,BaseExp+150340;
+					else if(BaseLevel > 85 && BaseLevel < 91)
+						set BaseExp,BaseExp+182052;
+					else if(BaseLevel > 90)
+						set BaseExp,BaseExp+406786;
+					next;
+					mes "[" +strcharinfo(0)+ "]";
+					mes "Whoa...?";
+					mes "That felt was so great~";
+					mes "It even feels like my mind";
+					mes "has been cleansed too!";
+					mes "You've got a deal!";
+					next;
+					mes "[Annon]";
+					mes "Thank you, thank you so much.";
+					mes "Now I can avoid being tied to Shuda, at least for a little longer.";
+					next;
+					mes "[Annon]";
+					mes "Now, if you'll excuse me,";
+					mes "I must make good my escape";
+					mes "before others find me.";
+					mes "Good day~!";
+					close2;
+					set $annonactive,0;
+					disablenpc "Haggard Man";
+					end;
+				break;
+				}
+			}
+			else
+			{
+				mes "[" +strcharinfo(0)+ "]";
+				mes "No way, no way.";
+				mes "He's too seriously";
+				mes "wounded to be cured";
+				mes "with the normal potions";
+				mes "that I have. I'll need";
+				mes "a stronger potion...";
+				next;
+				mes "[" +strcharinfo(0)+ "]";
+				mes "Okay, you stay";
+				mes "here for a while.";
+				mes "I'll bring you some";
+				mes "medicine and treat";
+				mes "your wound.";
+				next;
+				mes "[Haggard Man]";
+				mes "No, you don't have to...";
+				mes "^666666*Cough cough cough*^000000";
+				mes "W-wait, don't push";
+				mes "me back inside!";
+				mes "Wahhhhhh~!";
+				next;
+				set $annonactive,0;
+				disablenpc "Haggard Man";
+				mes "[" +strcharinfo(0)+ "]";
+				mes "Okay, it's time";
+				mes "for me to play doctor!";
+				mes "I don't have much time!";
+				mes "My mission: Bring back an";
+				mes "ultra powerful potion for";
+				mes "this poor guy~";
+				emotion e_no1,1;
+				close;
+			}
+		break;
+		case 2:
+			mes "[Haggard Man]";
+			mes "Annon...?";
+			mes "Who's that?";
+			mes "I've never heard of him!";
+			mes "I don't know him, okay!";
+			mes "Stop disturbing my training!";
+			next;
+			mes "[" +strcharinfo(0)+ "]";
+			mes "Uh...";
+			mes "Hmm, it doesn't seem like you should be yelling with that kind of wound. You sure you're not Annon?";
+			next;
+			mes "[Haggard Man]";
+			mes "I told you!";
+			mes "I've never";
+			mes "heard of him!";
+			mes "L-leave me alone!";
+			next;
+			mes "[Haggard Man]";
+			mes "I have to";
+			mes "hide from Shuda.";
+			mes "^666666*Cries*^000000";
+			close2;
+			set $annonactive,0;
+			disablenpc "Haggard Man";
+			end;
+		break;
+		}
+	}
+	else
+	{
+		mes "[Haggard Man]";
+		mes "Huh? Who are you?";
+		mes "This isn't a safe place for a tourists! You should leave right away!";
+		close2;
+		set $annonactive,0;
+		disablenpc "Haggard Man";
+		end;
+	}
+	
+OnInit:
+	set $annonactive,0;
+	disablenpc "Haggard Man";
+	end;
+	
+}
+		
+ayothaya,253,99,3	script	Fisherman	843,{
+
+	if(thai_find == 1)
+	{
+		mes "[Dannai]";
+		mes "This place is known to be";
+		mes "teeming with fish. The fish here tend to eat anything they find,";
+		mes "so it's easy to catch them.";
+		next;
+		mes "[Dannai]";
+		mes "We are providing a fishing rod rental service. Every time you fish, you'll need ^3355FF 1 Monster's Feed^000000 to use as bait, and pay";
+		mes "a rod rental fee of ^3355FF50 Zeny^000000.";
+		next;
+		mes "[Dannai]";
+		mes "Would you";
+		mes "like to try?";
+		next;
+		switch( select( "Yes.:No, thanks." ) )
+		{
+		case 1:
+			if(countitem(528) && Zeny > 49) //Monster food
+			{
+				mes "^3355FFYou cast your";
+				mes "fishing line";
+				mes "into the water.^000000";
+				next;
+				mes "...";
+				next;
+				mes "...";
+				mes "......";
+				next;
+				mes "^3355FFYou've hooked a Phen!^000000";
+				next;
+				delitem 528,1; //Monster food
+				set Zeny,Zeny-50;
+				set @randfish,rand(1,100);
+				if(@randfish > 0 && @randfish < 40)
+				{
+					mes "^3355FFWhile cooking the Phen, you";
+					mes "find that it's swallowed a Stone.^000000";
+					close2;
+					getitem 7049,1; //Stone
+					end;
+				}
+				else if(@randfish > 39 && @randfish < 60)
+				{
+					mes "^3355FFInside of the Phen,";
+					mes "you find a Red Potion.^000000";
+					close2;
+					getitem 501,1; //Red potion
+					end;
+				}
+				else if(@randfish > 59 && @randfish < 70)
+				{
+					mes "^3355FFInside of the Phen,";
+					mes "you find a Yellow Potion.^000000";
+					close2;
+					getitem 503,1; //Yellow potion
+					end;
+				}
+				else if(@randfish > 69 && @randfish < 80)
+				{
+					mes "^3355FFThere's nothing inside...";
+					mes "But now you can eat Sushi!^000000";
+					close2;
+					getitem 551,1; //Sushi
+					end;
+				}
+				else if(@randfish > 79 && @randfish < 90)
+				{
+					mes "^3355FFYou find";
+					mes "a Flower Ring";
+					mes "inside the Phen.^000000";
+					close2;
+					getitem 2612,1; //Flower ring
+					end;
+				}
+				else if(@randfish == 90)
+				{
+					mes "^3355FFYou find";
+					mes "a Diamond Ring";
+					mes "inside the Phen.^000000";
+					close2;
+					getitem 2613,1; //Diamond ring
+					end;
+				}
+				else if(@randfish > 90 && @randfish < 101)
+				{
+					mes "^3355FFYou find a ring";
+					mes "with a name engraved";
+					mes "inside the band.^000000";
+					next;
+					mes "^3355FFYou take the";
+					mes "engagement ring.^000000";
+					close2;
+					set thai_find,2;
+					getitem 7288,1; //Engagement ring
+					end;
+				}
+			}
+			else
+			{
+				mes "[Dannai]";
+				mes "Remember, you need ^3355FF1 Monster's Feed^000000 to use as bait and ^3355FF50 zeny^000000 to rend a rod.";
+				close;
+			}
+		break;
+		case 2:
+			mes "[Dannai]";
+			mes "No problem,";
+			mes "come back anytime you";
+			mes "want. Fishing relaxes";
+			mes "the mind and makes you";
+			mes "feel at peace...";
+			close;
+		break;
+		}
+		close;
+	}
+	else if(thai_find < 1)
+	{
+		mes "[Dannai]";
+		mes "The fish here tend";
+		mes "to eat anything they find.";
+		mes "When you gut them, you can";
+		mes "often find interesting things inside.";
+		next;
+		mes "[Dannai]";
+		mes "So when you get a chance,";
+		mes "why don't you sit down, relax";
+		mes "and enjoy some quiet fishing?";
+		close;
+	}
+	else
+	{
+		mes "[Dannai]";
+		mes "Welcome, long time no see!";
+		mes "It seems people learned that you found some kind of fortune from fishing here. After word got around, I've been getting lots";
+		mes "of customers.";
+		next;
+		mes "[Dannai]";
+		mes "I understand that you want";
+		mes "fish, but right now there";
+		mes "aren't any fishing spots";
+		mes "for you at the moment.";
+		next;
+		mes "[Dannai]";
+		mes "Please let other";
+		mes "people have their";
+		mes "chance to find their";
+		mes "own fortunes.";
+		close;
+	}
+	
+}
+	
+ayo_dun01,255,62,0	script	AyoFootprint1	139,2,0,{
+OnTouch:
+	if(thai_find == 4)
+	{
+		if(rand(1,3) < 2)
+		{
+			emotion e_gasp,1;
+			mes "^3355FFYou find footprints heading to the ^5C3317North^3355FF. It looks like somebody was in quite a hurry, just like the villager said!^000000";
+			set thai_find,5;
+			close;
+		}
+	}
+	
+}
+	
+ayo_dun01,74,132,0	script	AyoFootprint2	139,2,0,{
+OnTouch:
+	if(thai_find == 5)
+	{
+		if(rand(1,3) < 2)
+		{
+			emotion e_dots,1;
+			mes "^3355FFYou find another set of footprints. It seems that somebody was running away from something. These prints are heading to the ^5C3317East^3355FF. You'd better follow them to see what";
+			mes "you can find.^000000";
+			set thai_find,6;
+			close;
+		}
+	}
+	
+}
+	
+ayo_dun01,244,256,2	script	AyoFootprint3	139,2,0,{
+OnTouch:
+	if(thai_find == 6)
+	{
+		if(rand(1,3) < 2)
+		{
+			emotion e_no,1;
+			mes "^3355FFThe footprints end around this area. Whoever was running must";
+			mes "have been exhausted and stumbled on something. Perhaps the owner of the footprints is nearby...^000000";
+			set thai_find,7;
+			close;
+		}
+	}
+	
+}
+	
+ayo_dun01,17,257,0	script	AyoFootprint4	139,2,0,{
+OnTouch:
+	if(thai_find == 7)
+	{
+		if(rand(1,3) < 2)
+		{
+			emotion e_ic,1;
+			mes "^3355FFAs you follow the footprints,";
+			mes "you arrive at the '^5C3317Entrance of the Shrine^3355FF.' Whoever this person was, he just ran into the second level.^000000";
+			set thai_find,8;
+			close;
+		}
+	}
+	
+}
+	
+ayo_dun02,145,120,0	script	AyoFootprint5	139,2,0,{
+OnTouch:
+	if(thai_find == 8)
+	{
+		if(rand(1,3) < 2)
+		{
+			mes "^3355FFYou find the same footprints";
+			mes "in this place. It seems pretty";
+			mes "dangerous, and you wonder why";
+			mes "anyone would come here. The";
+			mes "footprints continue towards";
+			mes "the ^5C3317North^3355FF.^000000";
+			set thai_find,9;
+			close;
+		}
+	}
+	
+}
+	
+	
+ayo_dun02,135,168,0	script	AyoFootprint6	139,0,2,{
+OnTouch:
+	if(thai_find == 9)
+	{
+		if (rand(1,3) == 1)
+		{
+			emotion e_gasp,1;
+			mes "^3355FFThe trail of footprints";
+			mes "continue here, and seem";
+			mes "to look more freshly made.^000000.";
+			next;
+			mes "^3355FFHmm...?";
+			mes "There's something here...^000000";
+			next;
+			switch( select( "Ignore.:^5C3317Investigate.^000000" ) )
+			{
+			case 1:
+				mes "["+strcharinfo(0)+"]";
+				mes "Well, it's probably nothing. But which way should I go now?";
+				set thai_find,10;
+				close;
+			break;
+			case 2:
+				set @randayo,rand(1,10);
+				if(@randayo < 2)
+				{
+					mes "["+strcharinfo(0)+"]";
+					mes "Why, this is a pack of White Potions. Whoever owned these must have dropped these by accident. Hmm, I could use these for later...";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "Wait...";
+					mes "There are more";
+					mes "footprints heading";
+					mes "toward the ^5C3317East^000000.";
+					mes "I better look";
+					mes "into this.";
+					set thai_find,10;
+					getitem 504,10; //White potion
+					close;
+				}
+				else if(@randayo > 2 && @randayo < 5)
+				{
+					mes "["+strcharinfo(0)+"]";
+					mes "Why, this is a pack of Yellow Potions. Whoever owned these must have dropped these by accident. Hmm, I could use these for later...";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "Wait...";
+					mes "There are more";
+					mes "footprints heading";
+					mes "toward the ^5C3317East^000000.";
+					mes "I better look";
+					mes "into this.";
+					set thai_find,10;
+					getitem 503,10; //Yellow potion
+					close;
+				}
+				else
+				{
+					mes "[Rat]";
+					mes "^FF0000Squeak!";
+					mes "^FF0000Squeak Squeak!^000000";
+					emotion e_omg,1;
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "^8C1717Wah^000000!";
+					mes "What was that?!";
+					next;
+					mes "^3355FFIt was just a rat.";
+					mes "It feels awful silly to be scared by just a little rat, does it not?^000000";
+					next;
+					mes "^3355FFYou find another trail";
+					mes "of footprints that heads";
+					mes "towards the ^5C3317East^3355FF.^000000";
+					set thai_find,10;
+					close;
+				}
+			break;
+			}
+			close;
+		}
+	}
+	
+}
+	
+ayo_dun02,77,213,0	script	AyoFootprint7	139,1,1,{
+OnTouch:
+	if(thai_find == 10)
+	{
+		if(rand(1,3) < 2)
+		{
+			emotion e_gasp,1;
+			mes "^3355FFWhere is he...?";
+			mes "He seems to have gone";
+			mes "deep into the dungeon.";
+			mes "Just looking for this";
+			mes "guy is exhausting...^000000";
+			set thai_find,11;
+			close;
+		}
+	}
+	
+}
+	
+ayo_dun02,86,254,0	script	AyoFootprint8	139,1,1,{
+OnTouch:
+	if(thai_find == 11)
+	{
+		if(rand(1,3) < 2)
+		{
+			emotion e_gasp,1;
+			mes "^3355FFYou find traces of blood. Whoever was running in this direction may have been wounded. The trail of blood leads to the ^5C3317North^3355FF.^000000";
+			set thai_find,12;
+			close;
+		}
+	}
+	
+}
+	
+ayothaya,193,171,3	script	Old Man#02	842,{
+
+	if(thai_find == 3)
+	{
+		mes "[Tham]";
+		mes "Weird...";
+		mes "Why was that guy";
+		mes "running into the";
+		mes "shrine like that?";
+		mes "That really";
+		mes "bothers me...";
+		next;
+		mes "[Tham]";
+		emotion e_gasp;
+		mes "Oh, aren't you";
+		mes "from Rune-Midgard?";
+		mes "Hello there~";
+		next;
+		mes "[Tham]";
+		mes "Ah...";
+		mes "You heard me talking to myself? Well, I didn't see who he was but, some guy ran into the forest which leads to the shrine. He seemed really terrified of something.";
+		next;
+		mes "[Tham]";
+		mes "He came from out of nowhere, so he scared the crap out of me. Do you think he could be a criminal?";
+		next;
+		mes "[Tham]";
+		emotion e_ic;
+		mes "Ah! I think, in his intense fear, he was screaming something about some kind of '^FF0000Shuda^000000,' or whatever. But what could it possibly mean?";
+		next;
+		mes "[Tham]";
+		mes "Oh well, don't worry. All of our villagers aren't like that. Anyway, I hope you enjoy your travels in Ayotaya.";
+		set thai_find,4;
+		close;
+	}
+	else
+	{
+		set @randayo,rand(1,7);
+		if(@randayo < 5)
+		{
+			mes "[Tham]";
+			mes "Oh hello~";
+			mes "I can tell from your clothes that you must be from Rune-Midgard.";
+			next;
+			mes "[Tham]";
+			mes "Recently, it seems that";
+			mes "our village has been receiving";
+			mes "more tourism, and I can see that";
+			mes "our village is being influenced";
+			mes "in a positive way.";
+			next;
+			mes "[Tham]";
+			mes "Ah...";
+			mes "While you're here,";
+			mes "why don't you taste some";
+			mes "authentic Ayotayan cuisine";
+			mes "for yourself?";
+			next;
+			mes "[Tham]";
+			mes "We're known for our";
+			mes "spicy and sweet seafood,";
+			mes "and there are some nice";
+			mes "restaurants around here.";
+			next;
+			mes "[Tham]";
+			mes "Anyway, I'm sure that you'll like it. I hope that you come visit Ayotaya as often as you can~";
+			close;
+		}
+		else if(@randayo > 4 && @randayo < 7)
+		{
+			mes "[Tham]";
+			mes "Ah~";
+			mes "I've got this craving for Ms. Mali the Spicy's food, especially her 'Tom Yum Goong.'";
+			next;
+			mes "[Tham]";
+			mes "I think it's the";
+			mes "most delicious dish";
+			mes "in the entire world!";
+			close;
+		}
+		else
+		{
+			mes "[Tham]";
+			mes "Oh hello~";
+			mes "I can tell from your clothes that you must be from Rune-Midgard.";
+			next;
+			mes "[Tham]";
+			mes "I hope that you enjoy your stay here, and that you come visit Ayotaya as often as you can~";
+			close;
+		}
+	}
+	
 }
 
 //============================================================

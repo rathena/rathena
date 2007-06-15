@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.5.3
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 1.5.1 Fixed exploit [KarLaeda]
 //= 1.5.2 Updated Shino Quest to leave no grabage vars [Lupus]
 //= 1.5.3 Fixed some typos regarding Schwartzvalt Trilogy [SinSloth]
+//= 1.6 Updated Laboratory Entrance regarding Heart Fragment quest. [SinSloth]
 //============================================================ 
 
 
@@ -553,7 +554,7 @@ ein_in01,32,133,6	script	Maid	850,{
 }
 
 einbroch,51,52,1	script	lab_warp	45,2,2{
-	if(Shinokas_Quest != 7){
+	if(Shinokas_Quest != 7 && lhz_heart != 9){
 		mes "^3131FFThe door is locked.";
 		mes "You cannot enter.";
 		close;
@@ -654,7 +655,7 @@ einbroch,51,52,1	script	lab_warp	45,2,2{
 		mes "^990066uNflAPPaBLe LoVaBLe SeCreTs AnD";
 		mes "^990066BoWLiNg aGaINST tHe KarMA of YoUtH";
 		input @str$;
-		if(@str$ != "uNflAPPaBLe LoVaBLe SeCreTs AnD BoWLiNg aGaINST tHe KarMA if YoUtH") goto L_SCFail;
+		if(@str$ != "uNflAPPaBLe LoVaBLe SeCreTs AnD BoWLiNg aGaINST tHe KarMA of YoUtH") goto L_SCFail;
 		goto L_Suc;
 	case 9:
 		mes "^00CCFFBy the power of^000000";
@@ -668,13 +669,13 @@ einbroch,51,52,1	script	lab_warp	45,2,2{
 		mes "^00CCFFsoul mate... wonder. enigma...";
 		mes "^00CCFFcloud.^000000";
 		input @str$;
-		if(@str$ != "...silence. quiet benevolence... soul mate... wonder. enigma... cloud") goto L_SCFail;
+		if(@str$ != "...silence. quiet benevolence... soul mate... wonder. enigma... cloud.") goto L_SCFail;
 		goto L_Suc;
 	case 11:
 		mes "^FF33CCopeN,Open!op3n.openOpen0p3nOpEn0pen";
 		mes "^FF33CC`open'0Pen open?open!111OPENSESAME";
 		input @str$;
-		if(@str$ != "opeN,Open!op3n.openOpenOp3nIoEnOpen`open'0Pen open?open!111OPENSESAME") goto L_SCFail;
+		if(@str$ != "opeN,Open!op3n.openOpen0p3nOpEn0pen`open'0Pen open?open!111OPENSESAME") goto L_SCFail;
 		goto L_Suc;
 	}
 L_Suc:
@@ -785,7 +786,7 @@ ein_in01,254,35,1	script	Scientist	749,{
 	mes "flirting with that";
 	mes "woman. God...!";
 	mes "I'm like, so teed off!";
-	if(Shinokas_Quest < 8) set ein_scientist,1;
+	if(Shinokas_Quest == 7) set ein_scientist,1;
 	close;
 	
 L_P2:
@@ -808,7 +809,7 @@ ein_in01,266,26,1	script	Unknown Stuff	111,{
 	mes "attached to a huge";
 	mes "machine with many cords";
 	mes "and folds of barbed wire";
-	if(Shinokas_Quest < 8) set ein_stuff,1;
+	if(Shinokas_Quest == 7) set ein_stuff,1;
 	close;
 }
 

@@ -1,5 +1,13 @@
 Date		Added
 ======
+2007/06/15
+	* Added all Hugel-related quests. Thanks to MasterOfMuppets for scripting most of them. [SinSloth]
+	- Updated some Hugel, Lighthalzen, Einbroch and Airship NPCs regarding those new quests.
+	- Moved a lot of Hugel NPCs to proper quest file.
+	* Added Odin Temple Excavation quest. [SinSloth]
+	- Updated Hugel warps and Odin Temple Sailor according to the quest.
+	* Added Heart Fragment quest. [SinSloth]
+	* Updated Ayothaya's Ring quest to official. Credits to MasterOfMuppets. [SinSloth]
 2007/06/14
 	* Fixed many bugs in Jawaii [Lupus]
 	* Fixed bug in divorce.txt [Lupus]

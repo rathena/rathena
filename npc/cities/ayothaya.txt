@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= Any eAthena +
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 1.2 Fixed exploits [Lupus]
 //= 1.3 Removed Duplicates [Silent]
 //= 1.4 Moved quests to quests/quests_ayothaya.txt [Evera]
+//= 1.5 Moved a few NPC's to quests/quests_ayothaya.txt [MasterOfMuppets]
 //============================================================ 
 
 ayothaya,152,68,1	script	Aibakthing#01	843,{
@@ -155,16 +156,6 @@ s_Yes:
 	end;
 }
 
-ayothaya,193,171,3	script	Old Man#02	842,{
-	mes "[Tham]";
-	mes "Ah~";
-	mes "I've got this craving for Ms. Mali the Spicy's food, especially her 'Tom Yum Goong.'";
-	next;
-	mes "[Tham]";
-	mes "I think it's the most delicious dish in the entire world!";
-	close;
-}
-
 ayothaya,171,152,5	script	Girl	838,{
 	mes "[Lalitha]";
 	mes "When you go East from this village, you will arrive at the ruins of an old shrine. It is now a nest full of fearsome monsters.";
@@ -244,28 +235,6 @@ ayothaya,213,142,5	script	Young Man#03	843,{
 	next;
 	mes "[Detzi]";
 	mes "Why don't you learn our martial arts? I guarantee that it will help you greatly in you travels.";
-	close;
-}
-
-//This might not get fixed, feel free to submit a fix in the forum to apply though.
-ayothaya,253,99,3	script	Fisherman	843,{
-	mes "[Dannai]";
-	mes "This place is known to be teeming with fish. The fish here tend to eat anything they find, so it's easy to catch them.";
-	next;
-	mes "[Dannai]";
-	mes "We are providing a fishing rod rental service. Every time you fish, you'll need ^4466771 Monster's Food^000000 to use as bait, and pay a rod rental fee of ^44667750 Zeny^000000.";
-	next;
-	mes "[Dannai]";
-	mes "Would you";
-	mes "like to try?";
-	next;
-	menu "Yes.",s_Yes,"No, thanks.",-;
-
-	mes "[Dannai]";
-	mes "No problem,";
-	mes "come back anytime you want. Fishing relaxes the mind and makes you feel at peace...";
-s_Yes:
-	mes "Sorry this script isn't finished.";
 	close;
 }
 

@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 - First version. Please report bugs you find out. [SinSloth]
 //= 1.1 - Fixed a minor bug. [SinSloth]
+//= 1.2 - Added some Bingo Staff NPCs. [SinSloth]
 //============================================================
 
 que_bingo,48,84,5	script	Bingo Waiting Room	124,{
@@ -1118,4 +1119,118 @@ function	script	Func_BingoResult	{
 	enablenpc ""+getarg(0)+"e#bingo";
 	set getarg(0),getarg(0) +1;
 	end;
+}
+
+que_bingo,49,31,4	script	Arcade Helper#1	47,{
+
+	mes "[Helper]";
+	mes "If you'd like to play";
+	mes "a game of bingo, then";
+	mes "please proceed this way.";
+	close;	
+}
+
+que_bingo,42,31,4	script	Arcade Helper#2	66,{
+
+	mes "[Helper]";
+	mes "If you'd like to play";
+	mes "a game of bingo, then";
+	mes "please proceed this way.";
+	close;
+	
+}
+
+que_bingo,54,17,5	script	Arcade Owner	712,{
+
+	mes "[Arcade Owner]";
+	mes "Welcome to the";
+	mes "Bingo Game Arcade.";
+	mes "Care to play a game of";
+	mes "bingo? If you have any";
+	mes "questions, feel free to ask.";
+	next;
+	switch( select( "Rules for Bingo:Bingo Room:Marvelous Medals" ) )
+	{
+	case 1:
+		mes "[Arcade Owner]";
+		mes "The rules for playing bingo";
+		mes "are simple. First, take a board";
+		mes "with 25 boxes organized so that";
+		mes "there are five rows and five";
+		mes "columns. Then, number the";
+		mes "boxes in any order you like.";
+		next;
+		mes "[Arcade Owner]";
+		mes "Of course, you must use";
+		mes "the numbers 1 through 25.";
+		mes "When everyone's bingo board";
+		mes "is ready, the game will begin.";
+		mes "Our game coordinator will call out a number from 1 to 25 at random.";
+		next;
+		mes "[Arcade Owner]";
+		mes "Each time the coordinator";
+		mes "calls out a number, make sure";
+		mes "that you mark the corresponding";
+		mes "numbered square on your bingo";
+		mes "board. Now, these are the";
+		mes "conditions for winning...";
+		next;
+		mes "[Arcade Owner]";
+		mes "If you can make a line of";
+		mes "5 squares in a row, horizontally, vertically, or diagonally, using";
+		mes "the numbers called out by the";
+		mes "coordinator, you quickly yell";
+		mes "the word, ''Bingo.''";
+		next;
+		mes "[Arcade Owner]";
+		mes "If you are the first to yell";
+		mes "the word, ''Bingo,'' you'll";
+		mes "win! But if someone beats you";
+		mes "to it, then it can't be helped.";
+		mes "Anyway, it costs 1,000 zeny";
+		mes "to play each bingo game~";
+		close;
+	break;
+	case 2:
+		mes "[Arcade Owner]";
+		mes "Ah, if you want to join a";
+		mes "bingo game, enter the right";
+		mes "door. There must be at least";
+		mes "5 people to play a game, so";
+		mes "you may need to wait until";
+		mes "that requirement is fulfilled.";
+		next;
+		mes "[Arcade Owner]";
+		mes "If you just want to";
+		mes "watch the bingo game,";
+		mes "then you may enter the";
+		mes "left door as a spectator";
+		mes "in the Bingo Room.";
+		close;
+	break;
+	case 3:
+		mes "[Arcade Owner]";
+		mes "When you win a bingo";
+		mes "game, you will be rewarded";
+		mes "with ''Marvelous Medals,''";
+		mes "which can only be used within";
+		mes "this arcade. You also can't^FFFFFF ^000000 trade medals with other players.";
+		next;
+		mes "[Arcade Owner]";
+		mes "You usually get 1 Marvelous";
+		mes "Medal for winning a bingo game,";
+		mes "but you can win 50 at one time";
+		mes "under special conditions. You";
+		mes "can also play Monster Racing";
+		mes "games to win more medals.";
+		next;
+		mes "[Arcade Owner]";
+		mes "Collect as many Marvelous";
+		mes "Medals as you can, and trade";
+		mes "them for products in the Monster^FFFFFF ^000000 Racing Arena. I hear there's also";
+		mes "a place in Einbroch where you can^FFFFFF ^000000 use them, but I wouldn't know.";
+		close;
+	break;
+	}
+	
 }
