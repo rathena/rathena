@@ -5,7 +5,7 @@
 //= DNett123 (1.1 - 1.5)
 //= L0ne_w0lf
 //===== Current Version: =====================================
-//= 3.0
+//= 3.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -26,8 +26,9 @@
 //= 2.01 fixed missing @ at randomdrink, thanks to theultramage [Lupus]
 //= 2.02 Fixed Classic Suite NPC warping directly above a warp [Evera]
 //= 3.0 Rescripted to Aegis 10.3 standard. Contains all Jawaii-related NPCs. [L0ne_W0lf]
+//= 3.1 Fixed bugs with getpartnerid() (it never returns 1), fixed some conditons,
+//=		replaced getpartnerid() with ispartneron() at some tri-forks [Lupus]
 //============================================================
-
 // Jawaii
 //============================================================
 jawaii,239,112,7	script	Mariner#toizu	100,{
@@ -225,8 +226,8 @@ jawaii,141,200,3	script	Employee#sroom	798,{
 	mes "^333333Beat me to death...^000000";
 	next;
 	if (select("Use.:Cancel.") == 1) {
+		mes "[Alowa]";
 		if (zeny > 999) {
-			mes "[Alowa]";
 			mes "T-Thank you ssso much!";
 			mes "L-Let open the room door";
 			mes "ffffor you. Thank y-you.";
@@ -236,7 +237,6 @@ jawaii,141,200,3	script	Employee#sroom	798,{
 			warp "jawaii_in",116,64;
 			end;
 		}
-		mes "[Alowa]";
 		mes "Oh no! Oh no no no no no.";
 		mes "Th-This isn't enough money?";
 		mes "I-I'm ssssorry, but my b-boss w-will beat me if I l-let you";
@@ -273,8 +273,8 @@ jawaii,108,199,5	script	Employee#antroom	74,{
 	mes "I will guide you there.";
 	next;
 	if (select("Use.:Cancel.") == 1) {
+		mes "[Pine Oran]";
 		if (zeny > 999) {
-			mes "[Pine Oran]";
 			mes "Thank you";
 			mes "for using";
 			mes "our services.";
@@ -286,7 +286,6 @@ jawaii,108,199,5	script	Employee#antroom	74,{
 			warp "jawaii_in",129,110;
 			end;
 		}
-		mes "[Pine Oran]";
 		mes "I am sorry, but you don't seem to have enough money. If it's alright, why don't you check your current funds and see what you can do";
 		mes "about this situation?";
 		close;
@@ -309,8 +308,8 @@ jawaii,107,189,5	script	Employee#horoom	93,{
 	mes "So you wanna go?";
 	next;
 	if (select("Use.:Cancel.") == 1) {
+		mes "[Sharkie Rania]";
 		if (zeny > 999) {
-			mes "[Sharkie Rania]";
 			mes "Eh, alright.";
 			mes "Let's get going.";
 			close2;
@@ -318,7 +317,6 @@ jawaii,107,189,5	script	Employee#horoom	93,{
 			warp "jawaii_in",86,117;
 			end;
 		}
-		mes "[Sharkie Rania]";
 		mes "You...";
 		mes "Don't have";
 		mes "enough money.";
@@ -353,8 +351,8 @@ jawaii,112,173,7	script	Employee#villroom	93,{
 	mes "like to stay?";
 	next;
 	if (select("Use.:Cancel.") == 1) {
+		mes "[Larks Rania]";
 		if (zeny > 999) {
-			mes "[Larks Rania]";
 			mes "Thank you~";
 			mes "Enjoy your stay.";
 			close2;
@@ -362,7 +360,6 @@ jawaii,112,173,7	script	Employee#villroom	93,{
 			warp "jawaii_in",87,75;
 			end;
 		}
-		mes "[Larks Rania]";
 		mes "Oh what a shame!";
 		mes "You don't seem";
 		mes "to have enough money...?";
@@ -402,10 +399,10 @@ jawaii,214,168,5	script	Honeymoon Helper#Jawaii	71,{
 	mes "And it only costs 50,000 zeny...";
 	next;
 	if (select("I shall buy it.:No, thanks.") == 1) {
+		mes "[Helper]";
 		if (zeny > 49999) {
 			set zeny,zeny-50000;
 			getitem 681,1; //Memory_Of_Wedding 
-			mes "[Helper]";
 			mes "Thank you very much~!";
 			mes "Please remember, you";
 			mes "should use this with your";
@@ -413,7 +410,6 @@ jawaii,214,168,5	script	Honeymoon Helper#Jawaii	71,{
 			mes "special to the both of you.";
 			close;
 		}
-		mes "[Helper]";
 		mes "'Sweet Memory of Marriage' is 50,000 zeny. But don't seem to have enough money with you right now. Maybe you and your partner could help each other to buy the Sweet Memory of Marriage?";
 		close;
 	}
@@ -428,7 +424,7 @@ jawaii,214,168,5	script	Honeymoon Helper#Jawaii	71,{
 jawaii_in,25,94,0	script	Employee#jaw1	724,{
 	mes "[Employee Tryteh]";
 	mes "Welcome to Jawaii Tavern~";
-	if (getpartnerid() == 1) {
+	if (ispartneron()) {
 		mes "Anyway, I am so glad that you two have gotten married. I hope you both will live happily ever after~";
 		next;
 		mes "[Employee Tryteh]";
@@ -437,7 +433,7 @@ jawaii_in,25,94,0	script	Employee#jaw1	724,{
 		mes "how it is...";
 		close;
 	}
-	else if (getpartnerid() == 0) {
+	else if (!getpartnerid()) {
 		mes "I hope you enjoy your stay";
 		mes "over here. But try not";
 		mes "to drink too much~";
@@ -457,7 +453,7 @@ OnSolo:
 jawaii_in,25,96,0	script	Employee#jaw2	724,{
 	mes "[Employee Fey]";
 	mes "Welcome to Jawaii Tavern~";
-	if (getpartnerid() == 1) {
+	if (ispartneron()) {
 		next;
 		mes "[Employee Fey]";
 		mes "We hope that you enjoy your time here with the one that you love. Isn't this place nice and cozy,";
@@ -468,7 +464,7 @@ jawaii_in,25,96,0	script	Employee#jaw2	724,{
 		mes "a few of those dorks found their way here. To hell with them!";
 		close;
 	}
-	else if (getpartnerid() == 0) {
+	else if (!getpartnerid()) {
 		mes "Have a good time! But please,";
 		mes "try not to interrupt the happily married people here!";
 		close;
@@ -487,24 +483,21 @@ OnSolo:
 jawaii_in,25,98,0	script	Employee#jaw3	724,{
 	mes "[Employee Buffy]";
 	mes "Welcome to Jawaii Tavern~";
-	if (getpartnerid() == 1) {
+	if (ispartneron()) {
 		next;
 		mes "[Employee Buffy]";
 		mes "Oh~";
 		mes "Look at you...";
-		if (sex) {
-			mes "You look perfect";
+		mes "You look perfect";
+		if (sex)
 			mes "for your wife~";
-		}
-		else {
-			mes "You look perfect";
+		else
 			mes "with your husband~";
-		}
 		mes "Awwww, I want to";
 		mes "get married soon~!";
 		close;
 	}
-	else if (getpartnerid() == 0) {
+	else if (!getpartnerid()) {
 		next;
 		mes "[Employee Buffy]";
 		mes "Hmm...?";
@@ -535,7 +528,7 @@ jawaii_in,25,100,0	script	Employee#jaw4	724,{
 	mes "[Employee Itere]";
 	mes "Welcome to";
 	mes "Jawaii Tavern~";
-	if (getpartnerid() == 1) {
+	if (ispartneron()) {
 		next;
 		mes "[Employee Itere]";
 		mes "Oh~";
@@ -544,7 +537,7 @@ jawaii_in,25,100,0	script	Employee#jaw4	724,{
 		mes "partner! How precious~";
 		close;
 	}
-	else if (getpartnerid() == 0) {
+	else if (!getpartnerid()) {
 		mes "I hope you";
 		mes "enjoy your st--";
 		mes "Wait a minute...!";
@@ -573,7 +566,7 @@ OnSolo:
 jawaii_in,30,94,4	script	Employee#jaw5	724,{
 	mes "[Employee Tonia]";
 	mes "Welcome to Jawaii Tavern~";
-	if (getpartnerid() == 1) {
+	if (ispartneron()) {
 		next;
 		mes "[Employee Tonia]";
 		mes "Congratulations to both of you!";
@@ -583,7 +576,7 @@ jawaii_in,30,94,4	script	Employee#jaw5	724,{
 		mes "^333333I hope those Single Army morons don't get drunk and do something stupid again...";
 		close;
 	}
-	else if (getpartnerid() == 0) {
+	else if (!getpartnerid()) {
 		mes "Wait a sec. You're...!";
 		next;
 		mes "[Employee Tonia]";
@@ -606,14 +599,14 @@ OnSolo:
 jawaii_in,30,96,4	script	Employee#jaw6	724,{
 	mes "[Employee Kay]";
 	mes "Welcome to Jawaii Tavern~";
-	if (getpartnerid() == 1) {
+	if (ispartneron()) {
 		next;
 		mes "[Employee Kay]";
 		mes "Oh gosh...!";
 		mes "Lately, I've been dealing with too many drunks in this place! It's been really hard for me to take care of it all...";
 		close;
 	}
-	else if (getpartnerid() == 0) {
+	else if (!getpartnerid()) {
 		mes "I understand that you want to relax and take a break, but please be careful and don't drink too much.";
 		close;
 	}
@@ -631,7 +624,7 @@ OnSolo:
 jawaii_in,30,98,4	script	Employee#jaw7	724,{
 	mes "[Employee Amy]";
 	mes "Welcome to Jawaii Tavern~";
-	if (getpartnerid() == 1) {
+	if (ispartneron()) {
 		mes "Oh! You and your partner look perfect for each other. Like, um,";
 		mes "a gun and a bullet! No...?";
 		next;
@@ -644,7 +637,7 @@ jawaii_in,30,98,4	script	Employee#jaw7	724,{
 		mes "Ummmm....";
 		close;
 	}
-	else if (getpartnerid() == 0) {
+	else if (!getpartnerid()) {
 		next;
 		mes "[Employee Amy]";
 		mes "Hmm, I don't think this place is for you. But, I see no problem in letting you drink and have a good time, so long as you don't";
@@ -665,11 +658,11 @@ OnSolo:
 jawaii_in,30,100,4	script	Employee#jaw8	724,{
 	mes "[Employee Yasmine]";
 	mes "Welcome to Jawaii Tavern~";
-	if (getpartnerid() == 1) {
+	if (ispartneron()) {
 		mes "Just like the moon and the stars, you and your partner look perfect together. I'm really happy for you!";
 		close;
 	}
-	else if (getpartnerid() == 0) {
+	else if (!getpartnerid()) {
 		next;
 		mes "[Employee Yasmine]";
 		mes "You don't look like you belong here, but I hope you find your perfect match one of these days. Have fun!";
@@ -718,7 +711,7 @@ jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 	//	close
 	//	return
 	//}
-	if (getpartnerid() == 1) {
+	if (getpartnerid()) {
 		mes "[Waitress]";
 		mes "Hello,";
 		mes "how can I help you?";
@@ -732,15 +725,14 @@ jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 			mes "Would you like one?";
 			next;
 			if (select("Yes.:Wha--! It's too expensive!") == 1) {
+				mes "[Waitress]";
 				if (zeny > 999) {
 					set zeny,zeny-1000;
 					getitem 517,1; //Meat
-					mes "[Waitress]";
 					mes "There you go~";
 					mes "Enjoy your meal~!";
 					close;
 				}
-				mes "[Waitress]";
 				mes "I'm sorry but...";
 				mes "This isn't enough money...";
 				close;
@@ -759,15 +751,14 @@ jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 			mes "Would you like one?";
 			next;
 			if (select("Yes.:Wha--! It's too expensive!") == 1) {
+				mes "[Waitress]";
 				if (zeny > 999) {
 					set zeny,zeny-1000;
 					getitem 503,1; //Yelow_Potion
-					mes "[Waitress]";
 					mes "There you go~";
 					mes "Enjoy your meal~!";
 					close;
 				}
-				mes "[Waitress]";
 				mes "I am sorry but you don't have enough money?!";
 				close;
 			}
@@ -837,15 +828,14 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 	next;
 	if (zeny < 99) {
 		set .@r_jaw,rand(1,100);
+		mes "[Bartender]";
 		if (.@r_jaw > 29) {
-			mes "[Bartender]";
 			mes "Hm, I'm sorry";
 			mes "but you do not";
 			mes "have enough";
 			mes "money for a drink.";
 			close;
 		}
-		mes "[Bartender]";
 		mes "....Hmm...";
 		next;
 		mes "["+strcharinfo(0)+"]";
@@ -1168,14 +1158,14 @@ jawaii_in,43,115,0	script	Customer#jaw_1	97,{
 }
 
 jawaii_in,41,106,3	script	Customer#Cage	98,{
+	mes "[Cage]";
 	if (getpartnerid()) {
-		mes "[Cage]";
 		mes "....Bah!";
 		mes "What are you so happy about?";
 		mes "After all, everyone knows marriage is a sham for desperate, lonely people!";
 		next;
+		mes "[Cage]";
 		if (sex) {
-			mes "[Cage]";
 			mes "I don't trust anybody!";
 			mes "You're a fool for chaining";
 			mes "yourself to some gorgeous";
@@ -1184,7 +1174,6 @@ jawaii_in,41,106,3	script	Customer#Cage	98,{
 			mes "A FOOL!";
 		}
 		else {
-			mes "[Cage]";
 			mes "Look at you!";
 			mes "You're a fool for";
 			mes "chaining yourself to";
@@ -1200,7 +1189,6 @@ jawaii_in,41,106,3	script	Customer#Cage	98,{
 		mes "MY FREEDOM!";
 		close;
 	}
-	mes "[Cage]";
 	mes "Drink, drink...!!";
 	mes "Eat, eat...!!";
 	mes "Join me,";
@@ -1219,8 +1207,8 @@ jawaii_in,41,106,3	script	Customer#Cage	98,{
 // Inside Prontera
 //============================================================
 prt_in,173,13,4	script	Customer#SoloHan	86,{
+	mes "[SoloHan]";
 	if (!getpartnerid()) {
-		mes "[SoloHan]";
 		mes "Oh man...";
 		mes "I think I'm drunk~";
 		mes "^666666*Hiccup...!*^000000";
@@ -1284,8 +1272,8 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 				percentheal -10,0;
 				next;
 				set .@jaw_roof,.@jaw_roof+2;
+				mes "[SoloHan]";
 				if (.@jaw_roof > 8) {
-					mes "[SoloHan]";
 					mes "Whoa...";
 					mes "You alright?";
 					mes "You seem kind of drunk...";
@@ -1351,8 +1339,7 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 		warp "jawaii_in",44,124;
 		end;
 	}
-	else if (getpartnerid()) {
-		mes "[SoloHan]";
+	else if (ispartneron()) {
 		mes "Oh man...";
 		mes "I think I'm drunk~";
 		mes "*Hiccup!*";
@@ -1383,7 +1370,6 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 		donpcevent "Customer#Bachewcca::OnEffect2";
 		close;
 	}
-	mes "[SoloHan]";
 	mes "Oh man...";
 	mes "I think I'm drunk~";
 	mes "^666666*Hiccup!*^000000";
@@ -1439,15 +1425,14 @@ izlude,171,185,3	script	Honeymoon Helper#Izlude	71,{
 		close;
 
 	case 2:
+		mes "[Helper]";
 		if (!getpartnerid()) {
-			mes "[Helper]";
 			mes "Errm...";
 			mes "Unfortunately, singles are not allowed on the island. Why don't you go forget your loneliness in the Prontera pub?";
 			close;
 		}
 		else if (zeny > 99999) {
 			set zeny,zeny-100000;
-			mes "[Helper]";
 			mes "Bon Voyage...!!";
 			mes "Let me guide";
 			mes "you to 'Jawaii!'";
@@ -1455,7 +1440,6 @@ izlude,171,185,3	script	Honeymoon Helper#Izlude	71,{
 			warp "jawaii",245,125;
 			end;
 		}
-		mes "[Helper]";
 		mes "As I explained, you must have 100,000 zeny in order to visit Jawaii. Why don't you ask your partner for help in gathering the zeny for this trip?";
 		close;
 

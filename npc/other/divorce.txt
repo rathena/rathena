@@ -4,7 +4,7 @@
 //= Perkka, Scriptor, LightFighter
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.2a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -17,26 +17,28 @@
 //= Fixed menu [Lupus]
 //= 1.1 Added check if the patner's online, added effects [Lupus]
 //= 1.2 Updated to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.2a Commented out check of 'wedding_sign' to let
+//=		old married players divorcing, optimized, fixed a bug [Lupus]
 //============================================================ 
 
 nif_in,190,112,5	script	Deviruchi#divorce	738,{
-	if (wedding_sign == 0) {
-		mes "[Deviruchi]";
-		mes "Heh heh...";
-		mes "Look at that depressed face.";
-		mes "You must be feeling very lonely.";
-		mes "But that's something everyone";
-		mes "has to deal with.";
-		next;
-		mes "[Deviruchi]";
-		mes "If you feel that lonely,";
-		mes "how about raising a Pet?";
-		mes "I hear that my kind is very";
-		mes "popular nowadays, heh heh~";
-		close;
-	}
-	else if (!getpartnerid()) {
-		mes "[Deviruchi]";
+	mes "[Deviruchi]";
+//	if (wedding_sign == 0) {
+//		mes "Heh heh...";
+//		mes "Look at that depressed face.";
+//		mes "You must be feeling very lonely.";
+//		mes "But that's something everyone";
+//		mes "has to deal with.";
+//		next;
+//		mes "[Deviruchi]";
+//		mes "If you feel that lonely,";
+//		mes "how about raising a Pet?";
+//		mes "I hear that my kind is very";
+//		mes "popular nowadays, heh heh~";
+//		close;
+//	}
+//	else 
+  	if (!getpartnerid()) {
 		mes "Bwah hah hah~!";
 		mes "That look in your eyes~!";
 		if (sex) {
@@ -60,7 +62,6 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 		mes "of darkness.";
 		close;
 	}
-	mes "[Deviruchi]";
 	mes "You look awfully depressed...";
 	mes "Lucky for you, I could care";
 	mes "less about happy people...";
@@ -147,8 +148,9 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 		mes "if you think you're happy,";
 		mes "then I'll have nothing";
 		mes "to do with you--!";
-		close;
+		close2;
 		warp "niflheim",169,162;
+		end;
 	}
 	mes "[Deviruchi]";
 	mes "Good, good...";
@@ -179,9 +181,9 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 		}
 		close;
 	}
-	if (isloggedin(getpartnerid())) {
+	mes "[Deviruchi]";
+	if (ispartneron()) {
 		if (Zeny > 2499999) {
-			mes "[Deviruchi]";
 			mes "Excellent choice~";
 			mes "Let's get started right";
 			mes "away! This may take some";
@@ -202,7 +204,6 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 			mes "Ah, bachelorhood...";
 			close;
 		}
-		mes "[Deviruchi]";
 		mes "Hmmm...I did tell you to bring";
 		mes "2,500,000 zeny, right?";
 		mes "No one else in this world can";
@@ -211,7 +212,6 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 		mes "peace of mind, can you?";
 		close;
 	}
-	mes "[Deviruchi]";
 	mes "Hmmm...your spouse isn't online...";
 	close;
 }
