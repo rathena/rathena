@@ -45,6 +45,7 @@
 //= 5.4b temporary moved "-Guide" from the 1st menu punct [Lupus]
 //= 5.5 Added proper Niflheim welcome message.	[L0ne_W0lf]
 //=	Cleaned up the menus a bit. Got rid of the proceeding "-" prefix.
+//= 5.5b Missed a preceeding hyphen, which was screwing up teleporting. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -162,7 +163,7 @@ function	script	F_Kafra	{
 			next;
 			goto M_Menu;
 		}
-		if (@K_Menu0$[@num] == "-Use Teleport Service"){
+		if (@K_Menu0$[@num] == "Use Teleport Service"){
 			if(getarg(1) == 4){				//Check for Einbroch Tele notice
 				mes "[Kafra]";
 				mes "Because of the ^FF0000Limited Transport Agreement^000000, the Kafra Corporation cannot provide Teleport Services in the Schwarzwald Republic.";

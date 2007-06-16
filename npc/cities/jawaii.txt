@@ -5,7 +5,7 @@
 //= DNett123 (1.1 - 1.5)
 //= L0ne_w0lf
 //===== Current Version: =====================================
-//= 3.1
+//= 3.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -28,6 +28,8 @@
 //= 3.0 Rescripted to Aegis 10.3 standard. Contains all Jawaii-related NPCs. [L0ne_W0lf]
 //= 3.1 Fixed bugs with getpartnerid() (it never returns 1), fixed some conditons,
 //=		replaced getpartnerid() with ispartneron() at some tri-forks [Lupus]
+//= 3.2 Reverted ispartneron() BACK to getpartnerid(). [L0ne_W0lf]
+//=	None of the NPCs need the player's partner to be online.
 //============================================================
 // Jawaii
 //============================================================
@@ -424,7 +426,7 @@ jawaii,214,168,5	script	Honeymoon Helper#Jawaii	71,{
 jawaii_in,25,94,0	script	Employee#jaw1	724,{
 	mes "[Employee Tryteh]";
 	mes "Welcome to Jawaii Tavern~";
-	if (ispartneron()) {
+	if (getpartnerid()) {
 		mes "Anyway, I am so glad that you two have gotten married. I hope you both will live happily ever after~";
 		next;
 		mes "[Employee Tryteh]";
@@ -453,7 +455,7 @@ OnSolo:
 jawaii_in,25,96,0	script	Employee#jaw2	724,{
 	mes "[Employee Fey]";
 	mes "Welcome to Jawaii Tavern~";
-	if (ispartneron()) {
+	if (getpartnerid()) {
 		next;
 		mes "[Employee Fey]";
 		mes "We hope that you enjoy your time here with the one that you love. Isn't this place nice and cozy,";
@@ -483,7 +485,7 @@ OnSolo:
 jawaii_in,25,98,0	script	Employee#jaw3	724,{
 	mes "[Employee Buffy]";
 	mes "Welcome to Jawaii Tavern~";
-	if (ispartneron()) {
+	if (getpartnerid()) {
 		next;
 		mes "[Employee Buffy]";
 		mes "Oh~";
@@ -528,7 +530,7 @@ jawaii_in,25,100,0	script	Employee#jaw4	724,{
 	mes "[Employee Itere]";
 	mes "Welcome to";
 	mes "Jawaii Tavern~";
-	if (ispartneron()) {
+	if (getpartnerid()) {
 		next;
 		mes "[Employee Itere]";
 		mes "Oh~";
@@ -566,7 +568,7 @@ OnSolo:
 jawaii_in,30,94,4	script	Employee#jaw5	724,{
 	mes "[Employee Tonia]";
 	mes "Welcome to Jawaii Tavern~";
-	if (ispartneron()) {
+	if (getpartnerid()) {
 		next;
 		mes "[Employee Tonia]";
 		mes "Congratulations to both of you!";
@@ -599,7 +601,7 @@ OnSolo:
 jawaii_in,30,96,4	script	Employee#jaw6	724,{
 	mes "[Employee Kay]";
 	mes "Welcome to Jawaii Tavern~";
-	if (ispartneron()) {
+	if (getpartnerid()) {
 		next;
 		mes "[Employee Kay]";
 		mes "Oh gosh...!";
@@ -624,7 +626,7 @@ OnSolo:
 jawaii_in,30,98,4	script	Employee#jaw7	724,{
 	mes "[Employee Amy]";
 	mes "Welcome to Jawaii Tavern~";
-	if (ispartneron()) {
+	if (getpartnerid()) {
 		mes "Oh! You and your partner look perfect for each other. Like, um,";
 		mes "a gun and a bullet! No...?";
 		next;
@@ -658,7 +660,7 @@ OnSolo:
 jawaii_in,30,100,4	script	Employee#jaw8	724,{
 	mes "[Employee Yasmine]";
 	mes "Welcome to Jawaii Tavern~";
-	if (ispartneron()) {
+	if (getpartnerid()) {
 		mes "Just like the moon and the stars, you and your partner look perfect together. I'm really happy for you!";
 		close;
 	}
@@ -1339,7 +1341,7 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 		warp "jawaii_in",44,124;
 		end;
 	}
-	else if (ispartneron()) {
+	else if (getpartnerid()) {
 		mes "Oh man...";
 		mes "I think I'm drunk~";
 		mes "*Hiccup!*";

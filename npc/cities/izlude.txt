@@ -26,6 +26,9 @@
 //=	Removed Honeymoon Helper, as she is a Jawaii NPC.
 //=	Moved Signs to the msg_boards file.
 //= 1.8a Made Red/Cebalis as a single NPC + duplicate [Lupus]
+//= 1.9 Fixed a small problem with Dega. (Ne default case) [L0ne_W0lf]
+//=	Re-added NPC dialog for Cebalis. The dialog differs
+//=	(even if slightly,) after the five or so lines.
 //============================================================
 
 // Izlude
@@ -145,7 +148,7 @@ izlude,119,121,2	script	Cuskoal#izlude	124,{
 
 izlude,150,118,2	script	Dega#izlude	84,{
 	mes "[Dega]";
-	switch(rand(4)) {
+	switch(rand(3)) {
 	case 1:
 		mes "Mt. Mjornir, located north of Prontera, is a tough";
 		mes "and steep climb.";
@@ -165,7 +168,7 @@ izlude,150,118,2	script	Dega#izlude	84,{
 		mes "[Dega]";
 		mes "If you try to cast magic near it, it will notice and saunter over to smash you. So you better watch out for Golem.";
 		close;
-	case 3:
+	Default:
 		mes "There's a very delightful place where you can find every";
 		mes "type of Poring.";
 		next;
@@ -321,7 +324,82 @@ izlude,56,126,2	script	Red#izlude::RedCebalis	85,{
 	close;
 }
 	
-izlude,58,126,2	duplicate(RedCebalis)	Cebalis#izlude	98
+izlude,58,126,2	script	Cebalis#izlude	98,{
+	mes "[Red]";
+	mes "The only skill that's needed for a Swordman is ^FF2400Bash^000000! Bash, Bash and ONLY ^FF2400Bash^000000! No need to waste time and effort on smaller skills~~ Everything else is for cowards and wusses!";
+	next;
+	mes "[Cebalis]";
+	mes "What are you talking about!? The ideal Swordman resolutely stands alone, surrounded by countless foes, smashing them all with one awesome attack...";
+	next;
+	mes "[Cebalis]";
+	mes "^EE0000MAGNUM BREAK!^000000";
+	mes "That's right, Magnum Break";
+	mes "is the perfect";
+	mes "Swordman skill.";
+	next;
+	mes "[Cebalis]";
+	mes "Well...";
+	mes "Sometimes the explosion accidentally hits some monsters that are just wandering around.";
+	next;
+	mes "[Cebalis]";
+	mes "Then they all end up coming after you, but that's a risk a true Swordman should be willing to take.";
+	next;
+	mes "[Red]";
+	mes "That's exactly why you're dumb, you idiot! And what was that about the 'ideal Swordman?' You remember the last time you used Magnum Break?!";
+	next;
+	mes "[Red]";
+	mes "You had to run away from all those Porings hit by that stupid skill! You weakling! All those Porings that you hit tried to kill you! ";
+	next;
+	mes "[Cebalis]";
+	mes "Oh shut up. And those were Poporings. As I recall, you were running away too, apparently too busy to use your precious Bash.";
+	next;
+	mes "[Cebalis]";
+	mes "In any case, Magnum Break is THE skill for a Swordman~!! Something simplistic like Bash is just one of those little steps towards Magnum Break.";
+	next;
+	mes "[Red]";
+	mes "Oh man~";
+	mes "Hey, I know you";
+	mes "heard everything.";
+	mes "So what do you think?";
+	next;
+	mes "[Red]";
+	mes "Which one do you think is better? The critical damage skill, ^FF2400Bash^000000, or the Splash damage skill, ^EE0000Magnum Break^000000?";
+	next;
+	if (select("Bash:Magnum Break") == 1) {
+		if (BaseClass == Job_Swordman) {
+			mes "[Red]";
+			mes "Hahahaha!!! I knew you'd see things my way!! You ARE a great guy!! Without a doubt, only ^FF2400Bash^000000 suits a Swordman. Please tell that to FUNBOY over here!! Hahaha.";
+			next;
+			mes "[Red]";
+			mes "Hmm, let me give you a bit of advice. After you achieve level 5 Bash, the amount of SP consumed by the skill increases greatly, so watch out for your SP.";
+			close;
+		}
+		mes "[Red]";
+		mes "Hahahaha!!";
+		mes "See!? Someone who pursues a different job agrees with me~! You really are a great guy! Hahaha!!";
+		next;
+		mes "[Red]";
+		mes "Without a doubt, only ^FF2400Bash^000000 suits a Swordman. Please tell that to this MORON over here!! Hahaha~";
+		close;
+	}
+	if (BaseClass == Job_Swordman) {
+		mes "[Cebalis]";
+		mes " Alright!! ^EE0000Magnum Break^000000 is the BEST!! Now you're talking~!! You know your stuff, kid. HaHaHa~!";
+		next;
+		mes "[Cebalis]";
+		mes "You wanna know some useful information? Okay, okay lemme tell ya! The explosion from 'Magnum Break' has the Fire Property.";
+		next;
+		mes "[Cebalis]";
+		mes "So it won't be very effective against Water property monsters, but this is THE skill to use against Undead and Earth property monsters.!";
+		next;
+		mes "[Cebalis]";
+		mes "And most importantly, look around before you use it. Otherwise you'll be in BIG trouble~ ";
+		close;
+	}
+	mes "[Cebalis]";
+	mes "I'm right, aren't I?! ^EE0000Magnum Break^000000 is THE BEST!!! You know what you're talking about, eh? I don't know why this LARDFACE is sooooo stubborn.";
+	close;
+}
 
 izlude,124,178,2	script	Soldier#izlude	105,{
 	mes "[Soldier]";
