@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+06/16
+	* Removed Mdef bonus on Ph.D Hat [Playtester]
 06/09
 	* Rev. 10745 Added Old_Bleu_Box and added corrisponding item group entries. [L0ne_W0lf]
 	* Updated Red_Box_ and added corrisponding item group entries.
