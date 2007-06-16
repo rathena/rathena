@@ -49,6 +49,9 @@
 	----
 ========================
 06/16
+	* Updated Ifrit and Byorgue drops [Playtester]
+	- removed incomplete items from drops
+	- updated Ganbantein on Ifrit and Kasa
 	* Removed Mdef bonus on Ph.D Hat [Playtester]
 06/09
 	* Rev. 10745 Added Old_Bleu_Box and added corrisponding item group entries. [L0ne_W0lf]
