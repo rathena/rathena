@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Nana (1.0)
 //===== Current Version: =====================================
-//= 1.2
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version 6.0+
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //=     Some players used to stuck there after warps
 //= 1.2 Added a few missing warps [MasterOfMuppets]
 //= 1.3 Fixed a few warp-back [erKURITA]
+//= 1.4 Moved some quest-related warps to proper file. [SinSloth]
 //============================================================
 
 //= Louyang Town =============================================
@@ -32,8 +33,6 @@ louyang,133,245,0	warp	louwarp020	1,1,lou_in01,25,19
 lou_in01,27,19,0	warp	louwarp020a	1,1,louyang,135,245
 lou_in01,125,141,0	warp	louwarp016	3,3,lou_in01,156,141
 lou_in01,152,141,0	warp	louwarp016a	3,3,lou_in01,120,141
-lou_in01,78,141,0	warp	louwarp017	3,3,lou_in01,47,141
-lou_in01,51,141,0	warp	louwarp017a	3,3,lou_in01,82,141
 lou_in01,101,118,0	warp	louwarp005a	3,3,louyang,218,249
 lou_in01,14,18,0	warp	louwarp021	1,1,louyang,90,253
 lou_in02,57,170,0	warp	louwarp006a	3,3,louyang,279,164

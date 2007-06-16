@@ -8,7 +8,7 @@
 //= MasterOfMuppets (2.0)
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 2.7ñ
+//= 2.8
 //===== Compatible With: ===================================== 
 //= Any eAthena Version
 //===== Description: ========================================= 
@@ -35,6 +35,7 @@
 //= 2.7 Split quests to quests/quests_louyang.txt [Evera]
 //= 2.7a Minor optimizations before Louyang quests [Lupus]
 //= 2.7b Moved guides to the Guides folder. 2.7ñ more typos [Lupus]
+//= 2.8 Moved some quest-related NPCs to proper file. [SinSloth]
 //============================================================
 
 alberta,245,45,4	script	Girl#02	815,{
@@ -446,23 +447,6 @@ lou_in01,91,151,4	script	Soldier#12	825,{
 	mes "...";
 	mes "......";
 	mes "....z..Z..z...";
-	close;
-}
-
-lou_in01,82,139,6	script	Soldier#13	825,{
-	mes "[Soldier]";
-	mes "There is nothing much, but if you";
-	mes "wish to look around this room,";
-	mes "please be my guest.";
-	close;
-}
-
-lou_in01,45,138,4	script	Soldier#14	825,{
-	mes "[Soldier]";
-	mes "It's strange to see outsiders in";
-	mes "this kind of place. We don't have";
-	mes "any business with you,";
-	mes "so move along.";
 	close;
 }
 

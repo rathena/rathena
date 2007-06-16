@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 Initial Release [Evera]
 //= 1.1 Fixed double levelup bug [Lupus]
+//= 1.2 Added Revolution Quest. [SinSloth]
 //============================================================ 
 
 //============================================================
@@ -1121,7 +1122,7 @@ L_CHECKITM:
 	delitem 7188,20; //Brown Root
 	delitem 7193,10; //Sprout
 	delitem 7121,5; //Honey Pot
-	//These following dialogs are made up, I didn't finish the quest =/
+	//These following mess are made up, I didn't finish the quest =/
 	mes "[Hua Tuo]";
 	mes "Thank you so much, now I can treat my patients.";
 	next;
@@ -1832,7 +1833,7 @@ s_MaterialCheck:
 	}
 
 s_NEnoughItems2:
-	//Made up dialog
+	//Made up mes
 	mes "[Song Zhi Du]";
 	mes "You seem to be missing some";
 	mes "of the materials that I need,";
@@ -3156,4 +3157,466 @@ s_Save:
 	set QL_POISONKING,14;
 	close;
 
+}
+
+//===================================================================
+// Revolution Quest
+//===================================================================
+
+lou_in02,77,37,7	script	Hermit	824,{
+
+	if(!QL_REVOL)
+	{
+		mes "[Sun Mao]";
+		mes "Where there's a will,";
+		mes "there's a way. When we";
+		mes "work together, there's";
+		mes "nothing we cannot do.";
+		next;
+		mes "[Sun Mao]";
+		mes "Will you lend us your power, and help us build a better future? Will you join our movement for social reform in Louyang?";
+		next;
+		mes "[Sun Mao]";
+		mes "It doesn't matter if you're a local or a foreigner. So long as we share the same goal of creating a better Louyang, where everyone is treated as an equal.";
+		next;
+		mes "[Sun Mao]";
+		mes "My name...";
+		mes "is Sun Mao.";
+		mes "This invitation may be sudden, but I am a man of action. I see in your face that you too despise injustice.";
+		next;
+		switch( select( "What am I supposed to do?","I will join you!","Well, I'm just another tourist..." ) )
+		{
+			case 1:
+				mes "[Sun Mao]";
+				mes "For now, we must recruit as many members as we can. When we're ready, we'll start a movement that will change Louyang, and even the world!";
+				next;
+				mes "[Sun Mao]";
+				mes "However, we currently do not have the manpower to carry out the plans we have laid out. We've been lucky the lord hasn't found us out yet.";
+				next;
+				mes "[Sun Mao]";
+				mes "I wish everyone would understand our intentions, but the people of this city are disunited. This is not the first time I have approached a foreigner for help...";
+				next;
+				mes "[Sun Mao]";
+				mes "I suppose you understand the urgency of our cause, and our need to gather others who see the merit of our goals!";
+				close;
+
+			case 2:
+				mes "[Sun Mao]";
+				mes "Oh, God must be on my side today and has sent you to me. Thank you for making the big decision...";
+				next;
+				mes "[Sun Mao]";
+				mes "I shall then engrave your name";
+				mes "on this bloody pledge board. But before I do so, I shall ask once more. Do you truly wish to join us, through pain and bloodshed?";
+				next;
+				switch( select( "No, wait!","I am 100% sure." ) )
+				{
+					case 1:
+						mes "[Sun Mao]";
+						mes "I understand if you need time to decide. If you do decide to join us, please return. Time is on our side, after all.";
+						close;
+
+					case 2:
+						set QL_REVOL,1;
+						mes "[Sun Mao]";
+						mes "" +strcharinfo(0)+ "...!";
+						mes "Your name is now engraved on this bloody pledge board. We will fight together to the death for Louyang's future!";
+						next;
+						getpartymember(getcharid(1));
+						set @partymember,$@partymembercount;
+						if (getpartyleader(getcharid(1),1) == getcharid(0) || !@partymember)
+						{
+							mes "[Sun Mao]";
+							mes "Now, the most important thing for our cause is to gather more recruits and increase our numbers. Please find others who will join us in our fight.";
+							next;
+							mes "[Sun Mao]";
+							mes "However, as to not arouse suspicion, bring only one new recruit at a time. Also, we suggest not to bring a friend in a party with you.";
+							next;
+							mes "[Sun Mao]";
+							mes "Now, I will wait for you here. Go forth and find others who wish for a better future for Louyang!";
+							close;
+						}
+						mes "[Sun Mao]";
+						mes "Please assist the people who fight behind you. As more are gathered, one of our comrades will inform you of further instructions.";
+						close;
+				}
+
+			case 3:
+				mes "[Sun Mao]";
+				mes "Are you...? I see, you may leave now. Do not reveal what you have seen or heard in this place.";
+				next;
+				mes "[Sun Mao]";
+				mes "If you're a real tourist, you do not want to get involved in our business, one way or another.";
+				close;
+		}
+	}
+	else if(getpartyleader(getcharid(1),2) == getcharid(0))
+	{
+		if(QL_REVOL == 9)
+		{
+			mes "[Sun Mao]";
+			mes "Once again,";
+			mes "thank you for";
+			mes "your trouble.";
+			mes "Go back safe.";
+			close;
+		}
+		getpartymember(getcharid(1));
+		set @partymember,$@partymembercount;
+		if(QL_REVOL < 8)
+		{
+			if(@partymember == QL_REVOL +1)
+			{
+				if(@partymember != 8)
+				{
+					set QL_REVOL,QL_REVOL +1;
+					mes "[Sun Mao]";
+					mes "Oh, you brought a new comrade! Welcome. Please help your friend understand our intentions before joining us.";
+					next;
+					mes "[Sun Mao]";
+					switch(QL_REVOL)
+					{
+						case 2:
+							mes "Please bring another friend that both of you can trust. Remember, add one person at a time into your party.";
+							next;
+							mes "[Sun Mao]";
+							mes "Otherwise, other people may learn of what we are doing, and that will lead to trouble.";
+							close;
+
+						case 3:
+							mes "The three of you may all move together for our cause. Please try to find another recruit to be your fourth member, invite him to your party and bring him to this place.";
+							close;
+
+						case 4:
+							mes "Ah, now there are four of you. However, we must continue to strengthen our ranks at a cautious pace. Please go and find one new recruit, and only one, to add to your party.";
+							close;
+
+						case 5:
+							mes "Now, there are five of you. Needless to say, we still require more manpower. Please go out and seek another new member for our cause. Remember, only add one more person to your party and return to me.";
+							close;
+
+						case 6:
+							mes "There are now six of you. So far, so good. Please go forth and find just one more person to add to your party and bring him to me so that we may recruit him.";
+							close;
+
+						case 7:
+							mes "Now, there are seven of you, but we still lack the manpower we need. Please go forth and seek out one, and only one, more person to add to your party and then return to me.";
+							close;
+					}
+				}
+				mes "[Sun Mao]";
+				mes "Great work, you've brought another new comrade! Welcome! Please explain our goals and the righteousness of our cause to our new friend so that he may fully join us.";
+				next;
+				if(BaseLevel < 50)
+				{
+					mes "[Sun Mao]";
+					mes "It is almost time to take the action...";
+					next;
+					mes "[Sun Mao]";
+					mes "I recognize your pledge to fight for us, but I fear that you are not yet ready for the task I have available for you.";
+					next;
+					mes "[Sun Mao]";
+					mes "However, we still have time. Go out and train with the party members you have gathered to gain more experience.";
+					next;
+					mes "[Sun Mao]";
+					mes "Together, all of you will be able to train faster than if you were to go train alone. Come back when you feel that you are ready for this task.";
+					close;
+				}
+				mes "[Sun Mao]";
+				mes "At long last, there are eight of you. Now, I believe there is among manpower amongst you to carry out this mission. Please listen carefully.";
+				next;
+				mes "[Sun Mao]";
+				mes "The martial arts organizations of Louyang, as you may well know, have been divided between those that fight for justice, and those that serve evil purposes.";
+				next;
+				mes "[Sun Mao]";
+				mes "Recently, some of the evil organizations have conspired with corrupt government officials in the interest to expand their power.";
+				next;
+				mes "[Sun Mao]";
+				mes "These corrupt government officials have been suspicious of our gunpowder research and arrested our comrade, ^3355FFHao Chenryu^000000, our gunpowder expert, under the pretext of investigation.";
+				next;
+				mes "[Sun Mao]";
+				mes "Without him, we cannot continue the gunpowder research, or produce the gunpowder we'll need for our movement. We must contact him so that he may make gunpowder for us.";
+				next;
+				mes "[Sun Mao]";
+				mes "Unfortunately, many of us cannot contact him, as our identities are known to the officials. However, since you are new recruits, as well as Rune-Midgardians, they will not know how you are.";
+				next;
+				mes "[Sun Mao]";
+				mes "Your mission will be to deliver these chemicals to our comrade Hao Chenryu who is held captive by the government.";
+				next;
+				mes "[Sun Mao]";
+				mes "Since flammable chemicals are not allowed inside government offices, you must keep them well hidden. If the chemicals are equally divided among the eight of you, we might succeed!";
+				next;
+				set QL_REVOL,8;
+				getitem 7068,8;
+				getitem 7096,8;
+				getitem 7004,8;
+				mes "[Sun Mao]";
+				mes "There you go. Now, divide these materials equally among the eight of you. The eight of you must fully cooperate with each other, or our plan will fail. Understood?";
+				close;
+
+			}
+			else if(@partymember < QL_REVOL +1)
+			{
+				mes "[Sun Mao]";
+				switch(QL_REVOL)
+				{
+					case 1:
+						mes "You made a party. Now, why don't you go recruit more followers? For now, just add one more person, lest we arouse the suspicion of our enemies.";
+						close;
+
+					case 2:
+						mes "Hmmm...";
+						mes "Having trouble finding a third person to add to your party? It's important that you find someone that is trustworthy. Be careful and don't get caught!";
+						close;
+
+					case 3:
+						mes "Hmmm...";
+						mes "Having trouble finding a forth person to add to your party? I understand that it's important that you find someone you can trust. Be careful and don't get caught!";
+						close;
+
+					case 4:
+						mes "Having trouble finding a fifth person to add to your party? I understand that it's important that you find someone you can trust. Be careful and don't get caught!";
+						close;
+
+					case 5:
+						mes "Having trouble finding a six person to add to your party? It's important that you find someone that is trustworthy. Be careful and don't get caught!";
+						close;
+
+					case 6:
+						mes "Having trouble finding a seventh person to add to your party? It's important that you find someone that is trustworthy. Be careful and don't get caught!";
+						close;
+
+					case 7:
+						mes "Hmmm...";
+						mes "Having trouble finding an eighth person to add to your party? It's important that you find someone that is trustworthy. Be careful and don't get caught!";
+						close;
+				}
+			}
+			else
+			{
+				mes "[Sun Mao]";
+				mes "Oh no! You've brought more than one more person to join us! We can't do any recruiting now, it will bring unnecessary attention to our activities!";
+				next;
+				mes "[Sun Mao]";
+				switch(QL_REVOL)
+				{
+					case 1:	
+						mes "Please make sure that there is a total of two members in your party so that we can recruit your friend. I believe that will look natural.";
+						close;
+
+					case 2:
+						mes "At this stage in our plan, we cannot afford any unnecessary attention to our activities! Please make sure that there is a total of three members in your party so that we can recruit your friend.";
+						close;
+					case 3:
+						mes "Please make sure that there is a total of four members in your party so that we can recruit your friend. I believe that will look natural.";
+						close;
+					case 4:
+						mes "Please make sure that there is a total of five members in your party so that we can recruit your friend. I believe that will look natural.";
+						close;
+					case 5:
+					case 6:
+						mes "By this time, you should know that you should only bring one more person at a time. You know that it is crucial that we do not attract any undue attention before we can take action!";
+						close;
+					case 7:
+						mes "At this stage in our plan, we cannot afford any unnecessary attention to our activities! Please make sure that there is a total of eight members in your party so that we can recruit your friend.";
+						close;
+				}
+			}
+		}
+		else if(QL_REVOL == 8)
+		{
+			if(@partymember == 8)
+			{
+				if(countitem(7204) > 7)
+				{
+					mes "[Sun Mao]";
+					mes "Welcome back! I see that the mission has been successfully accomplished! Great work, men!";
+					next;
+					mes "[Sun Mao]";
+					mes "Finally, we have a weapon to mete out severe retribution to our enemies, the corrupt government officials and the evil martial arts organizations! I appreciate your help, comrades.";
+					next;
+					delitem 7204,countitem(7204);
+					set ch_make,0;
+					set QL_REVOL,9;
+					getitem 668,8;
+					mes "[Sun Mao]";
+					mes "Please take these funds and share them with your party members. I hope that all of you will lend your power to our cause once again.";
+					next;
+					mes "[Sun Mao]";
+					mes "Once again, I thank you for your help. Now, go in safety.";
+					close;
+				}
+				mes "[Sun Mao]";
+				mes "Your mission is to take the materials I have given you and your party members, and to smuggle them to Hao Chenryu.";
+				next;
+				mes "[Sun Mao]";
+				mes "Hao Chenryu is currently held captive by corrupt members of the government. Remember to divide the materials equally among your party members so that the officials do find them.";
+				close;
+			}
+			mes "[Sun Mao]";
+			mes "Huh, where are all your members? Come back to me with all of your recruits.";
+			next;
+			mes "[Sun Mao]";
+			mes "Remember that you move together with your comrades. There isn't a traitor amongst you, is there?";
+			close;
+		}
+	}
+	else
+	{
+		if(ch_make == 1)
+		{
+			set ch_make,0;
+			mes "[Sun Mao]";
+			mes "Ah...";
+			mes "You have";
+			mes "returned!";
+			mes "Ha ha ha ha!";
+			next;
+			mes "[Sun Mao]";
+			mes "I would like to commend you and your comrades for your excellent performance in the last mission. Come back anytime if you wish to be assigned to another task for our cause.";
+			close;
+		}
+		mes "[Sun Mao]";
+		mes "Remember that the authoritative center of the party is its leader. The party members must act as one in order to accomplish their goals.";
+		close;
+	}
+}
+
+lou_in01,43,147,3	script	Gunpowder Expert	750,{
+
+	if(ch_make == 0)
+	{
+		getpartymember(getcharid(1));
+		set @partymember,$@partymembercount;
+		if(!QL_REVOL)
+		{
+			mes "[Hao Chenryu]";
+			mes "Who...";
+			mes "Are you?";
+			next;
+			mes "[Hao Chenryu]";
+			mes "I only trust my comrades in the cause for Louyang, so leave me alone. Death before oppression! Freedom for Louyang!";
+			close;
+		}
+		else if(@partymember != 8)
+		{
+			mes "[Hao Chenryu]";
+			mes "Mao told me that eight Rune-Midgardians";
+			mes "would be coming.";
+			mes "But what happened?";
+			mes "I'm confused...";
+			next;
+			mes "[Hao Chenryu]";
+			mes "Mao's plans are flawless,";
+			mes "so I'm sticking to the scenario he's drawn up. You're either improvising needlessly, or you're not really my comrade...";
+			close;
+		}
+		else if(countitem(7068) && countitem(7096) && countitem(7004))
+		{
+			mes "[Hao Chenryu]";
+			mes "Ah, I see that Mao";
+			mes "has sent you. I'm sorry";
+			mes "for the trouble you've";
+			mes "gone through to smuggle";
+			mes "the chemicals to me, comrade.";
+			next;
+			mes "[Hao Chenryu]";
+			mes "Please give me";
+			mes "a minute so that";
+			mes "I may quickly make";
+			mes "the gunpowder.";
+			next;
+			switch( select( "Make Gunpowder.","Cancel." ) )
+			{
+				case 1:
+					delitem 7068,1;
+					delitem 7096,1;
+					delitem 7004,1;
+					mes "[Hao Chenryu]";
+					mes "I don't want you to be caught if the soldiers inspect your goods. It will be better if one of you carry a Cart and hide the gunpowder in there.";
+					set ch_make,1;
+					getitem 7204,1;
+					close;
+
+				case 2:
+					mes "[Hao Chenryu]";
+					mes "Is...";
+					mes "Something wrong?!";
+					next;
+					mes "[Hao Chenryu]";
+					mes "I guess we must";
+					mes "be extra careful,";
+					mes "as there is much";
+					mes "surveillance in";
+					mes "this place.";
+					close;
+			}
+		}
+		else
+		{
+			mes "[Hao Chenryu]";
+			mes "Hmmm...";
+			mes "It seems like";
+			mes "you're one of us.";
+			next;
+			mes "[Hao Chenryu]";
+			mes "If you came for the";
+			mes "gunpowder, you should";
+			mes "get some chemcials";
+			mes "from your party leader.";
+			close;
+		}
+	}
+	else if(countitem(7204))
+	{
+		mes "[Hao Chenryu]";
+		mes "Be careful!";
+		mes "It's easy for";
+		mes "gunpowder to be";
+		mes "found during the";
+		mes "inspection process!";
+		mes "Hide it well...!";
+		close;
+	}
+	else
+	{
+		mes "[Hao Chenryu]";
+		mes "I hope you bring the gunpowder to Mao safely. The next time you see him, please give him my thanks.";
+		close;
+	}
+}
+
+lou_in01,45,138,3	script	Soldier	825,{
+
+	if(countitem(7204))
+	{
+		mes "[Soldier]";
+		mes "Hold on there!";
+		next;
+		mes "[Soldier]";
+		mes "You're not allowed to bring any gunpowder out of here. Now go";
+		mes "and put it back, Rune-Midgardian! Move!";
+		close;
+	}
+	mes "[Soldier]";
+	mes "It's strange to see outsiders in this kind of place. We don't have any business with you,";
+	mes "so move along.";
+	close2;
+	warp "lou_in01",82,141;
+	end;
+}
+
+lou_in01,82,139,7	script	Soldier	825,{
+
+	if(countitem(7068) || countitem(7096) || countitem(7004))
+	{
+		mes "[Soldier]";
+		mes "I am sorry, but it is prohibited to enter with some of the products";
+		mes "you are carrying. I cannot let you in.";
+		close;
+	}
+	mes "[Soldier]";
+	mes "There is nothing much, but if you wish to look around this room, please be my guest.";
+	close2;
+	warp "lou_in01",47,141;
+	end;
 }

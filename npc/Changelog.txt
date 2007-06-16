@@ -1,5 +1,8 @@
 Date		Added
 ======
+2007/06/16
+	* Added Louyang Revolution quest. [SinSloth]
+	- Moved some city NPCs and warps to proper quest file.
 2007/06/15
 	* Added all Hugel-related quests. Thanks to MasterOfMuppets for scripting most of them. [SinSloth]
 	- Updated some Hugel, Lighthalzen, Einbroch and Airship NPCs regarding those new quests.
