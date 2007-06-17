@@ -1,5 +1,8 @@
 Date		Added
 ======
+2007/06/17
+	* Fixed a Little Bug with the "How Does the Airship Work" Quest. [Samuray22]
+	-Thanks to Playtester ^^U.
 2007/06/16
 	* Rev. 10777 Fixed the Kafra function, which was screwing up teleporting. [L0ne_W0lf]
 	* Undid come of the changes to the Jawaii and Izlude NPCs.
