@@ -20,48 +20,46 @@
 //==================================================================================//
 // 				Stop Post Quest
 //==================================================================================//
-morocc_in,142,100,4	script	William	89,{
-	mes "[William]";
-	mes "Welcome to MacMillan's ^3355FF'Post'^000000 Workshop .";
+morocc_in,142,100,4	script	Pierce	89,{
+	mes "[Pierce]";
+	mes "Welcome to the most famous shop for ^3355FF'Stop Post'^000000... the Brosnan's";
 	next;
-	mes "[William]";
-	mes "My Clan, MacMillan, Has been producing professional grade Traffic Signal Posts for more than 250 years.";
-	mes "Nowadays we are taking special orders for our very unique, ^3355FF'Stop Post'^000000.";
+	mes "[Pierce]";
+	mes "Have you heard about our family?";
+	mes "We have been producing traffic signs for 250 years when people were still traveling by carriage.";
+	mes "And I have been getting many orders for ^3355FF'Stop Post'^000000 recently. It is in fashion now as accessories.";
 	next;
-	menu "Could I order a ^3355FF'Stop Post'^000000?",-, "I'm not interested.",M_End;
-
-		mes "[William]";
-		mes "MacMillan's one of a kind ^3355FF'Stop Post'^000000 fits comfortably on a persons head.";
-		mes "Not only does it make an interesting head accessory, but it can actually be used as a stop sign as well.";
+	switch( select( "Order ^3355FF' Stop Post '^000000.","End conversation.")) {
+	case 1:
+		mes "[Pierce]";
+		mes "Accessories made from the famous ^3355FF'Stop Post'^000000 by a family of 250 years old...";
+		mes "With our years of experience in traffic signs, we guarantee you the long lasting usage.";
+		mes "Satisfaction guarantee for all customers!";
 		next;
-		mes "[William]";
-		mes "I garauntee that our ^3355FF'Stop Post'^000000 will last for well over 100 years, or my name isn't MacMillan!!";
+		mes "[Pierce]";
+		mes "For producing ^3355FF'Stop Post'^000000, we need ^3355FF' 91100 Zeny '^000000";
+		mes "And 50 ^3355FF' Trunk '^000000 and one ^3355FF' Black Dyestuffs'^000000.";
 		next;
-		mes "[William]";
-		mes "For us to make you a ^3355FF'Stop Post'^000000, we will need:";
-		mes "^3355FF91100 Zeny,";
-		mes "50 Trunks,";
-		mes "and 1 Black Dyestuff^000000.";
-		next;
-		if(countitem(1019) >= 50 && countitem(983) >= 1 && Zeny >= 91100) goto sL_GetPost;
-		mes "[William]";
-		mes "Come back when you have all of the items.";
-		close;
-
-		sL_GetPost:
-			delitem 1019,50;
-			delitem 983,1;
-			set Zeny, Zeny - 91100;
-			mes "[William]";
-			mes "Here you are! A hand made, one of a kind, ^3355FF'Stop Post '^000000! Thank you for your patronage!";
-			getitem 2272,1;
-			emotion e_thx;
+		if(countitem("Wooden_Block") > 49 && countitem("Black_Dyestuffs") > 0 && Zeny > 91099) {
+			delitem "Wooden_Block",50;
+			delitem "Black_Dyestuffs",1;
+			set Zeny,Zeny-91100;
+			mes "[Pierce]";
+			mes "Alright! This is the famous ^3355FF'Stop Post '^000000 of 250 years history!";
+			mes "Thank you for shopping here! See you soon!";
+			getitem "Stop_Post",1;
 			close;
-
-	M_End:
-		mes "[William]";
-		mes "Thanks for stopping by the MacMillan's Workshop.  I hope to see you soon.";
+		}
+			mes "[Pierce]";
+			mes "You don't have enough items...";
+			mes "Please check it again!";
+			close;
+	case 2:
+		mes "[Pierce]";
+		mes "Thank you for shopping at the Brosnan's.";
+		mes "All the best to you!";
 		close;
+	}
 }
 
 

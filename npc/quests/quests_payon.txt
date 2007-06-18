@@ -14,6 +14,7 @@
 //= 1.2 Fixed skirt of virgin [Lupus]
 //= 1.3 Fixed exploits [Lupus]
 //= 1.4 Removed Duplicates [Silent]
+//= 1.5 Updated Dialogs from "Pretend Murdered Quest" [Samuray22]
 //============================================================ 
 
 
@@ -22,53 +23,42 @@
 //				Pretend Murdered quest
 //==========================================================================================//
 payon,154,170,4	script	Granny	78,{
-	mes "[Granny]";
-	if(countitem(1049) >= 4) goto L_Get;
-
-	mes "Oh deary me.  What to do... what to do........  You see I want to nitt some special clothes for my family but I don't have the right cloth to do so.";
-	next;
-	mes "[Granny]";
-	mes ".....sigggghhhhhh........";
-	next;
-	mes "[Granny]";
-	mes "Why what's this? Mushrooms? Oh yes I remember now, I pick these mushrooms on the Payon Mountain side.";
-	mes "Ho ho, I have such a hard time remembering things now.";
-	next;
-	mes "[Granny]";
-	mes "What was I saying before? Oh yes! I need some special cloth to make clothes for my family.";
-	mes "If you happen to come across some ^5555FF'Skirt of Virgin'^000000, please let me know.";
-	emotion e_hmm;
-	next;
-	mes "[Granny]";
-	mes "I need ^5555FF'4 Skirt of Virgin'^000000 to make the clothes.  I will be very greatfull if you could bring me some.";
-	close;
-
-L_Get:
-	mes "Oh! You have 4 Skirt of Virgin.  Would you be willing to give them to me dear?";
-	next;
-	menu "Why of course granny",-,"Heck no ya old bag!",M_No;
-
-		if(countitem(1049) < 4) goto M_No;
-		mes "[Granny]";
-		mes "Bless your kind heart.  Now I can make some special clothes for my family.  Let me give you a reward for being so genrous dear.";
-		emotion e_lv2;
+	if(countitem("Skirt_Of_Virgin") > 3 ) {
+		mes "[Granny in Payon]";
+		mes "Hey... Is this the item for Skirt of Virgin tHat my children will wear for the coming festival...";
+		mes "Could you give me some ^3355FF' Skirt of Virgin '^000000 for young girl... I need four of it... please ?";
+		mes "I am begging you, please!";
 		next;
-		getitem 2293,1;
-		delitem 1049,4;
-		mes "[Granny]";
-		mes "There you are.  It's something I kept from my younger days as an actress.  I was quite fetching and very popular back then.";
-		mes "I've kept it as a reminder of my days as an actress, but with my memory as bad as it is, it's really of no use to me anymore.";
+		switch(select( "Give it to her.","No way!")) {
+		case 1:
+			delitem "Skirt_Of_Virgin",4;
+			mes "[Granny in Payon]";
+			mes "Uh-uh... Thank you very much! Now I can make Skirt of Virgin for my children.";
+			mes "Hey... Oh! Yeah! I was in a stage play when I was young...";
+			mes "This is the overcoat I kept when I left the troupe after I got married...";
+			next;
+			mes "[Granny in Payon]";
+			mes "Take it if you like it... please!";
+			mes "Good bye! Nice meeting you...";
+			getitem "Pretend_Murdered",1;
+			close;
+		case 2:
+			mes "[Granny in Payon]";
+			mes "Uh-uh... How can I get  ^3355FF'Skirt of Virgin '^000000 by myself... I am so weak and tired.";
+			mes "It's such a cold world...";
+			close;
+		}
+	}
+		mes "[Granny in Payon]";
+		mes "I gather Mushrooms on the Mountain of Payon Everyday for my living. I don't know how I will survive this month.";
+		mes "... But festive is coming next month!";
+		mes "My children requested for Skirt of Virgin for this festival.";
+		mes "For Skirt of Virgin, I need ^3355FF' Skirt of Virgin '^000000 ...";
 		next;
-		mes "[Granny]";
-		mes "I'm sure you'll have fun using it at parties."; 
+		mes "[Granny in Payon]";
+		mes "Young man, I have a favor to ask... If you ever find ^3355FF' Skirt of Virgin '^000000... ";
+		mes "Please come back to me. I will never forget your kindness...";
 		close;
-		
-	M_No:
-		mes "[Granny]";
-		mes "Well I never!!! Kids these days just have no respect or compasion for their elders!";
-		emotion e_pif;
-		close;
-
 }
 
 
