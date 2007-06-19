@@ -41,7 +41,7 @@
 //= 2.5 Fixed some spelling and grammar in crusader quest. [L0ne_W0lf]
 //= 2.6 Fixed bug (about totally blocked baby class), optimized,
 //=		made some NPC more unique names: Monster Summon#cr1 [Lupus]
-//= 2.7 Fixed Some variables like "@item", and changed to ".@item". [Samuray22] (Thanks to BrainStorm)
+//= 2.7 Fixed Some variables like ".@item", and changed to "@item". [Samuray22]
 //============================================================
 
 
@@ -222,25 +222,25 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		next;
 		switch(CRUS_Q) {
 		case 1:
-			set .@item1, 957;
-			set .@item2, 959;
-			set .@item3, 1099;
-			set .@item4, 901;
+			set @item1, 957;
+			set @item2, 959;
+			set @item3, 1099;
+			set @item4, 901;
 			break;
 		Case 2:
-			set .@item1, 932;
-			set .@item2, 1043;
-			set .@item3, 1098;
-			set .@item4, 1094;
+			set @item1, 932;
+			set @item2, 1043;
+			set @item3, 1098;
+			set @item4, 1094;
 			break;
 		Case 3:
-			set .@item1, 958;
-			set .@item2, 930;
-			set .@item3, 1041;
-			set .@item4, 1062;
+			set @item1, 958;
+			set @item2, 930;
+			set @item3, 1041;
+			set @item4, 1062;
 			break;
 		}
-		if (countitem(.@item1) > 9 && countitem(.@item2) > 9 && countitem(.@item3) > 9 && countitem(.@item4) > 9) {
+		if (countitem(@item1) > 9 && countitem(@item2) > 9 && countitem(@item3) > 9 && countitem(@item4) > 9) {
 			mes "[Michael Halig]";
 			mes "Ah, well done.";
 			mes "I must acknowledge your efforts and determination. You may now proceed to take the next test.";
@@ -248,10 +248,10 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 			mes "[Michael Halig]";
 			mes "Meet with Moorenak Miyol who is training in the underground dungeon of the Prontera Castle. Go, and speak with him first.";
 			next;
-			delitem .@item1, 10;
-			delitem .@item2, 10;
-			delitem .@item3, 10;
-			delitem .@item4, 10;
+			delitem @item1, 10;
+			delitem @item2, 10;
+			delitem @item3, 10;
+			delitem @item4, 10;
 			set CRUS_Q, 4;
 			mes "[Michael Halig]";
 			mes "Moorenak and others like him will test the limits of your capabilities and help you find your path. Return to me after you have completed their tests...";
@@ -261,10 +261,10 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		mes "Ah, you still have not completed the task I have given to you. Bring me the following items, and prove your will to become a Crusader to me...";
 		next;
 		mes "[Michael Halig]";
-		mes "10 ^3355FF"+getitemname(.@item1)+"^000000";
-		mes "10 ^3355FF"+getitemname(.@item2)+"^000000";
-		mes "10 ^3355FF"+getitemname(.@item3)+"^000000";
-		mes "10 ^3355FF"+getitemname(.@item4)+"^000000";
+		mes "10 ^3355FF"+getitemname(@item1)+"^000000";
+		mes "10 ^3355FF"+getitemname(@item2)+"^000000";
+		mes "10 ^3355FF"+getitemname(@item3)+"^000000";
+		mes "10 ^3355FF"+getitemname(@item4)+"^000000";
 		next;
 		mes "[Michael Halig]";
 		mes "If you put forth the effort, you'll be able to accomplish this task. May Odin protect you on your journeys.";
