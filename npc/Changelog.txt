@@ -2,6 +2,8 @@ Date		Added
 ======
 2007/06/20
 	* Reverted wrong fix in Ninja Job quest. [SinSloth]
+	* Updated "Ph.D Quest" Dialogs. [Samuray22]
+	* Updated "Elemental Potion Creation Quest" to the official one. [Samuray22]
 2007/06/19
 	* Fixed Some variables like ".@item", and changed to "@item". [Samuray22]
 	* Fixed another minor bug for Ninja Quest. [Samuray22]
