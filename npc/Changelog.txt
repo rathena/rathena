@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/06/20
+	* Reverted wrong fix in Ninja Job quest. [SinSloth]
 2007/06/19
 	* Fixed Some variables like ".@item", and changed to "@item". [Samuray22]
 	* Fixed another minor bug for Ninja Quest. [Samuray22]
