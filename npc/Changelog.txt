@@ -2,6 +2,8 @@ Date		Added
 ======
 2007/06/19
 	* Fixed Some variables like ".@item", and changed to "@item". [Samuray22]
+	* Fixed another minor bug for Ninja Quest. [Samuray22]
+	-Thanks to Soul of Linkers for the fix.
 2007/06/18
 	* Updated Dialogs from "Pretend Murdered Quest". [Samuray22]
 	* Updated Dialogs from "Stop Post Quest". [Samuray22]
