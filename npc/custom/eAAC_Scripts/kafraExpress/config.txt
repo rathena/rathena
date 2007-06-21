@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Skotlex 
 //===== Current Version: ===================================== 
-//= 1.8
+//= 2.4
 //===== Compatible With: ===================================== 
 //= Any eAthena Version with function support
 //===== Description: ========================================= 
@@ -26,8 +26,8 @@ OnInit:
 	set $@kegs_cost,500;	//Cost of opening the guild storage
 
 	//Kafra Pass Options:
-	set $@kekp_reset,1; //Kafra passes Expire when you speak to a Kafra?
-	                    //(otherwise duration is as long as a temporary variable)
+	set $@kekp_reset,1; //How many uses a kafra pass has before expiring?
+		//(if 0, duration is as long as a temporary variable)
 	set $@kekp_reserveCost,100;	//Cost of each Reserve Point in Zeny (0 disable)
 	set $@kekp_minReserve,1;	//Min Reserve Points you can earn in a single transaction
 	set $@kekp_maxReserve,150;	//Max Reserve Points you can earn in a single transaction
@@ -75,7 +75,6 @@ OnLoadDye:
 	set $@kedy_clothJ1ST,77;	//1st Jobs (+High/Baby)
 	set $@kedy_clothJ2ND,77;	//2nd Jobs (+High/Baby)
 	set $@kedy_clothJSN,77;	//Super Novice (+Baby)
-	set $@kedy_clothJWED,77;	//Wedding Class
 	end;
 	//-------------------------------------------------------------------------------
 	//Config for the Job Changer Module
@@ -94,6 +93,12 @@ OnLoadJobChange:
 	set $@kejc_resetDye,1;	//Set to 1 to reset cloth dye upon change
 	set $@kejc_skipNovice,0;	//0: Novice needs Job 10 to change, 1: Can Skip Novice Class
 	set $@kejc_baseSN,30;	//Base lv required to become a Super Novice
+
+	set $@kejc_disable,0;	//Disable certain jobs from the changer:
+		//1: Super Novice
+		//2: Taekwon/Star Gladiator/Soul Linker
+		//4: GunSlinger
+		//8: Ninja
 
 	//Note that the change costs can be converted into rewards by specifying a negative amount.
 	set $@kejc_base2ND,1;	//Base lv required to change into a second class
@@ -114,59 +119,69 @@ OnLoadJobChange:
 	
 	//Weapons awarded to each job upon change (use 0 to disable for a particular class)
 	//First classes:
-	set $@kejc_wAcolyte,1501;	//Club
-	set $@kejc_wArcher,1701;	//Bow
-	set $@kejc_wMage,1601;		//Rod
-	set $@kejc_wMerchant,1301;	//Axe
-	set $@kejc_wSwordman,1101;	//Sword
-	set $@kejc_wThief,1201;		//Knife
-	set $@kejc_wTaekwon,0;		//Nothing (they don't wield weapons)
-	set $@kejc_wSuperNovice,1202;	//Knife
+	setarray $@kejc_weapon1[0],
+		1501,	//Acolyte/Club
+		1701,	//Archer/Bow
+		1601,	//Mage/Rod
+		1301,	//Merchant/Axe
+		1101,	//Swordman/Sword
+		1201,	//Thief/Knife
+		0,		//Taekwon/Nothing (they don't wield weapons)
+		1202,	//Super Novice/Knife
+		13010, //GunSlinger/Six Shooter
+		1201; //Ninja/Knife
 	
 	//Normal Weapons for Second classes
-	set $@kejc_wPriest,1551;	//Bible
-	set $@kejc_wMonk,1801;		//Waghnak
-	set $@kejc_wHunter,1704;	//Composite Bow
-	set $@kejc_wBard,1901;		//Violin
-	set $@kejc_wDancer,1950;	//Rope
-	set $@kejc_wWizard,1602;	//Rod
-	set $@kejc_wSage,1550;		//Book
-	set $@kejc_wBlacksmith,1351;	//Battle Axe
-	set $@kejc_wAlchemist,1351;	//Battle Axe
-	set $@kejc_wKnight,1116;	//Katana
-	set $@kejc_wCrusader,1107;	//Blade
-	set $@kejc_wAssassin,1250;	//Jur
-	set $@kejc_wRogue,1210;		//Cutter
-	set $@kejc_wStarGladiator,1550;	//Book
-	set $@kejc_wSoulLinker,1602;	//Rod
+	setarray $@kejc_weapon_21[0],
+		1551,	//Priest/Bible
+		1704,	//Hunter/Composite Bow
+		1602,	//Wizard/Rod
+		1351,	//Blacksmith/Battle Axe
+		1116,	//Knight/Katana
+		1250,	//Assassin/Jur
+		1550;	//Star Gladiator/Book
+
+	setarray $@kejc_weapon_22[0],
+		1801,	//Monk/Waghnak
+		1704,	//Bard/Dancer/Composite Bow
+		1550,	//Sage/Book
+		1351,	//Alchemist/Battle Axe
+		1107,	//Crusader/Blade
+		1210,	//Rogue/Cutter
+		1602;	//Soul Linker/Rod
 	
 	if ($@kejc_wBonusLv == 0)	//Don't touch.
 		end;
 
 	//Improved versions awarded to second classes
-	set $@kejc_w2Priest,1519;	//Chain
-	set $@kejc_w2Monk,1811;		//Finger
-	set $@kejc_w2Hunter,1714;	//Gakkung
-	set $@kejc_w2Bard,1911;		//Guh Moon Goh
-	set $@kejc_w2Dancer,1960;	//Whip
-	set $@kejc_w2Wizard,1610;	//Arc Wand
-	set $@kejc_w2Sage,1552;		//Tablet
-	set $@kejc_w2Blacksmith,1360;	//Two-Handed Axe
-	set $@kejc_w2Alchemist,1360;	//Two-Handed Axe
-	set $@kejc_w2Knight,1160;	//Broad-Sword
-	set $@kejc_w2Crusader,1119;	//Tsurugi
-	set $@kejc_w2Assassin,1254;	//Jamadhar
-	set $@kejc_w2Rogue,1222;		//Damascus
-	set $@kejc_w2StarGladiator,1552;	//Tablet
-	set $@kejc_w2SoulLinker,1610;	//Arc Wand
+	setarray $@kejc_weapon2_21[0],
+		1519,	//Priest/Chain
+		1714,	//Hunter/Gakkung
+		1610,	//Wizard/Arc Wand
+		1360,	//Blacksmith/Two-Handed Axe
+		1160,	//Knight/Broad-Sword
+		1254,	//Assassin/Jamadhar
+		1552;	//Star Gladiator/Tablet
+
+	setarray $@kejc_weapon2_22[0],
+		1811,	//Monk/Finger
+		1714,	//Bard/Dancer/Gakkung
+		1552,	//Sage/Tablet
+		1360,	//Alchemist/Two-Handed Axe
+		1119,	//Crusader/Tsurugi
+		1222,	//Rogue/Damascus
+		1610;	//Soul Linker/Arc Wand
+
 	end;
 	//-------------------------------------------------------------------------------
 	//Config for the Job Swapping Module
 	//-------------------------------------------------------------------------------
 OnLoadJobSwap:
-	set $@kejs_SNpolicy,0;	//Super Novice is considered as...
-		//0: Super Novices can't swap job.
-		//1: 1st Class Range: Can only be swapped with First classes (including baby)
+	set $@kejs_disable,0;	//Disable certain jobs from the swapper:
+		//1: Super Novice
+		//2: Taekwon/Star Gladiator/Soul Linker
+		//4: GunSlinger
+		//8: Ninja
 
 	set $@kejs_revertPolicy,1;	//Allows reverting to the last Class one changed from...
 		// 0: do not allow reverting
@@ -319,34 +334,38 @@ OnLoadWarpDungeon:
 	                         //entrance of the cave, not the Island's shore.
 
 	//Dungeon Costs
-	set $@kewd_abyssLake,5000;	//Abyss Lake base cost
+	set $@kewd_abyssLake,3250;	//Abyss Lake base cost
 	set $@kewd_amatsu,2500;	//Amatsu Dungeon base cost
-	set $@kewd_antHell,1750;	//Anthell base cost
-	set $@kewd_ayothaya,1750;	//Ayothaya Dungeon base cost
-	set $@kewd_byalan,1250;	//Byalan base cost
-	set $@kewd_comodo,2500;	//Comodo Caves base cost
-	set $@kewd_clockTower,6250;	//Clock Tower base cost
-	set $@kewd_coalMines,3750;	//Coal Mines base cost
-	set $@kewd_culvert,500;	//Prontera Culvert base cost
-	set $@kewd_einbech,5000;	//Einbech Mines base cost
-	set $@kewd_gefenia,25000;	//Gefenia base cost
-	set $@kewd_geffen,5000;	//Geffen Dungeon base cost
-	set $@kewd_glastHeim,10000;	//Glast Heim base cost
-	set $@kewd_gonRyun,3750;	//Gonryun Dungeon base cost
-	set $@kewd_hiddenTemple,250;	//Hidden Temple base cost
-	set $@kewd_juperos,7500;	//Juperos base cost
-	set $@kewd_lightHalzen,15000;	//LightHalzen Rekkenber base cost
+	set $@kewd_antHell,750;	//Anthell base cost
+	set $@kewd_ayothaya,2000;	//Ayothaya Dungeon base cost
+	set $@kewd_byalan,1000;	//Byalan base cost
+	set $@kewd_comodo,1500;	//Comodo Caves base cost
+	set $@kewd_clockTower,2250;	//Clock Tower base cost
+	set $@kewd_coalMines,1000;	//Coal Mines base cost
+	set $@kewd_culvert,0500;	//Prontera Culvert base cost
+	set $@kewd_einbech,2250;	//Einbech Mines base cost
+	set $@kewd_gefenia,7000;	//Gefenia base cost
+	set $@kewd_geffen,1500;	//Geffen Dungeon base cost
+	set $@kewd_glastHeim,2500;	//Glast Heim base cost
+	set $@kewd_gonRyun,2250;	//Gonryun Dungeon base cost
+	set $@kewd_hiddenTemple,750;	//Hidden Temple base cost
+	set $@kewd_juperos,3750;	//Juperos base cost
+	set $@kewd_kiehl,3400;	//Kiehl Doll Factory base cost
+	set $@kewd_iceCave,3750;	//Ice Cave base cost
+	set $@kewd_lightHalzen,4500;	//LightHalzen Rekkenber base cost
 	set $@kewd_louYang,2500;	//Louyang Dungeon base cost
-	set $@kewd_magma,3750;	//Magma Dungeon base cost
-	set $@kewd_orc,2500;	//Orc Dungeon base cost
-	set $@kewd_payon,1100;	//Payon Dungeon base cost
-	set $@kewd_pyramid,2500;	//Pyramids base cost
+	set $@kewd_magma,3000;	//Magma Dungeon base cost
+	set $@kewd_odin,2750;	//Odin Temple base cost
+	set $@kewd_orc,1000;	//Orc Dungeon base cost
+	set $@kewd_payon,1000;	//Payon Dungeon base cost
+	set $@kewd_pyramid,2000;	//Pyramids base cost
+	set $@kewd_rachel,3000;	//Rachel Sanctuary base cost
 	set $@kewd_sphinx,1750;	//Sphinx base cost
-	set $@kewd_sunkenShip,1000;	//Sunken Ship base cost
-	set $@kewd_thanatosTower,15000;	//Thanatos Tower base cost
-	set $@kewd_toyFactory,2500;	//Toy Factory base cost
-	set $@kewd_turtleIsland,12500;	//Turtle Island base cost
-	set $@kewd_umbala,3550;	//Umbala Dungeon base cost
+	set $@kewd_sunkenShip,1250;	//Sunken Ship base cost
+	set $@kewd_thanatosTower,3250;	//Thanatos Tower base cost
+	set $@kewd_toyFactory,1250;	//Toy Factory base cost
+	set $@kewd_turtleIsland,3250;	//Turtle Island base cost
+	set $@kewd_umbala,1750;	//Umbala Dungeon base cost
 	end;
 	//-------------------------------------------------------------------------------
 	//Config for the Pvp Warps Module

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Skotlex 
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN R3424+
 //===== Description: ========================================= 
@@ -13,7 +13,7 @@
 //= See config.txt for configuration.
 //============================================================ 
 
--	script	keInit_uncard	-1,{
+-	script	keInit_uncard	{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadUncard";
 	end;

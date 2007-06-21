@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Skotlex 
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN R3524+
 //===== Description: ========================================= 
@@ -14,7 +14,7 @@
 //= See config.txt for configuration.
 //============================================================ 
 
--	script	keInit_bank	-1,{
+-	script	keInit_bank	{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadBank";
 	end;
@@ -156,7 +156,12 @@ function	SF_calcInterest {
 	}
 	set @qty,0;
 	if (#ke_bank > $@kebk_monMaintenance && #ke_bank < $@kebk_capacity)
-		set @qty,#ke_bank*$@kebk_dayInterest*(@banktick-#ke_banktick)/10000;
+	{
+		if (#ke_bank > 1000000) //Overflow protection
+			set @qty,(#ke_bank/10000)*$@kebk_dayInterest*(@banktick-#ke_banktick);
+		else
+			set @qty,#ke_bank*$@kebk_dayInterest*(@banktick-#ke_banktick)/10000;
+	}
 	set #ke_banktick,@banktick;
 	if (@qty == 0) return;
 	if (@qty < 0) {
@@ -172,3 +177,4 @@ function	SF_calcInterest {
 }	//SF end
 
 }
+

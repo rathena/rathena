@@ -3,9 +3,9 @@
 //===== By: ==================================================
 //= Skotlex
 //===== Current Version: =====================================
-//= 1.9
+//= 2.0
 //===== Compatible With: =====================================
-//= eAthena SVN 3424+
+//= eAthena SVN8637+
 //===== Description: =========================================
 //= Part of the Kafra Express Script Package.
 //= Offers dying of hair, clothes and hair-style adjusts
@@ -13,7 +13,7 @@
 //= See config.txt for configuration.
 //============================================================
 
--	script	keInit_dye	-1,{
+-	script	keInit_dye	{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadDye";
 	end;
@@ -24,26 +24,21 @@ function	script	F_keStylist	{
 	function SF_inputpalette;
 	function SF_wheelpalette;
 
-	set @jobClass,callfunc("GF_getJobLevel",class);
-	set @maxCDye,0;
-	
-	switch (@jobClass) {
-	case 0:
-		set @maxCDye, $@kedy_clothJN;
-		break;
-	case 1:
-		set @maxCDye, $@kedy_clothJ1ST;
-		break;
-	case 2:
-		set @maxCDye, $@kedy_clothJ2ND;
-		break;
-	case 3:	
-		set @maxCDye, $@kedy_clothJSN;
-		break;
-	case 4:
-		set @maxCDye, $@kedy_clothJWED;
-		break;
-	}
+	set @jobClass,eaclass(class);
+	if (@jobClass == -1)
+		set @maxCDye,0;
+	else {
+	if ((@jobClass&EAJ_BASEMASK) == EAJ_NOVICE) {
+		if (@jobClass&EAJL_2)
+			set @maxCDye, $@kedy_clothJSN;
+		else
+			set @maxCDye, $@kedy_clothJN;
+	} else {
+		if (@jobClass&EAJL_2)
+			set @maxCDye, $@kedy_clothJ2ND;
+		else
+			set @maxCDye, $@kedy_clothJ1ST;
+	} }
 	do {
 		if ($@kedy_enableHairstyle) {
 			set @kmenu, select(

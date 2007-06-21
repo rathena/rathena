@@ -3,9 +3,9 @@
 //===== By: ================================================== 
 //= Skotlex 
 //===== Current Version: ===================================== 
-//= 3.0
+//= 3.1
 //===== Compatible With: ===================================== 
-//= eAthena SVN3424+
+//= eAthena SVN8637+
 //===== Description: ========================================= 
 //= Part of the Kafra Express Script Package.
 //= Offers broadcasting for party requests, pvp, general
@@ -17,7 +17,7 @@
 //= Module are used.
 //============================================================ 
 
--	script	keInit_broadcast	-1,{
+-	script	keInit_broadcast	{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadBroadcast";
 	end;
@@ -70,7 +70,7 @@ function	SF_broadcasts	{
 			"- General Anonymous Broadcast ("+@anoncost+"z)"
 		)) {
 		case 2:	//Party
-			SF_doBroadcast $@kebc_partyCost,@map$,"The "+callfunc("GF_getJobName",class)+" "+strcharinfo(0)+" (levels "+baselevel+"/"+joblevel+") is looking for a party to join.",0;
+			SF_doBroadcast $@kebc_partyCost,@map$,"The "+jobname(class)+" "+strcharinfo(0)+" (levels "+baselevel+"/"+joblevel+") is looking for a party to join.",0;
 			break;
 		case 3:	//Pvp
 			if ($@kewp_advanced == 0)
@@ -204,19 +204,19 @@ function	SF_bcPvp {
 		"- advertise 'Room Compass'"
 	)) {
 	case 2:	//Sandwich
-		SF_doBroadcast @pvpcost,@map$,"The "+callfunc("GF_getJobName", class)+" "+strcharinfo(0)+" is looking for PvP challengers "+@lvls$+"in the 'Room Sandwich'!",0;
+		SF_doBroadcast @pvpcost,@map$,"The "+jobname(class)+" "+strcharinfo(0)+" is looking for PvP challengers "+@lvls$+"in the 'Room Sandwich'!",0;
 		break;
 	case 3:	//Rockon
-		SF_doBroadcast @pvpcost,@map$,"The "+callfunc("GF_getJobName", class)+" "+strcharinfo(0)+" is looking for PvP challengers "+@lvls$+"in the 'Room Rock On'!",0;
+		SF_doBroadcast @pvpcost,@map$,"The "+jobname(class)+" "+strcharinfo(0)+" is looking for PvP challengers "+@lvls$+"in the 'Room Rock On'!",0;
 		break;
 	case 4:	//Room Four
-		SF_doBroadcast @pvpcost,@map$,"The "+callfunc("GF_getJobName", class)+" "+strcharinfo(0)+" is looking for PvP challengers "+@lvls$+"in the 'Four Room'!",0;
+		SF_doBroadcast @pvpcost,@map$,"The "+jobname(class)+" "+strcharinfo(0)+" is looking for PvP challengers "+@lvls$+"in the 'Four Room'!",0;
 		break;
 	case 5:	//Undercross
-		SF_doBroadcast @pvpcost,@map$,"The "+callfunc("GF_getJobName", class)+" "+strcharinfo(0)+" is looking for PvP challengers "+@lvls$+"in the 'Room Undercross'!",0;
+		SF_doBroadcast @pvpcost,@map$,"The "+jobname(class)+" "+strcharinfo(0)+" is looking for PvP challengers "+@lvls$+"in the 'Room Undercross'!",0;
 		break;
 	case 6:	//Compass
-		SF_doBroadcast @pvpcost,@map$,"The "+callfunc("GF_getJobName", class)+" "+strcharinfo(0)+" is looking for PvP challengers "+@lvls$+"in the 'Room Compass'!",0;
+		SF_doBroadcast @pvpcost,@map$,"The "+jobname(class)+" "+strcharinfo(0)+" is looking for PvP challengers "+@lvls$+"in the 'Room Compass'!",0;
 		break;
 	}
 } //SF_ end

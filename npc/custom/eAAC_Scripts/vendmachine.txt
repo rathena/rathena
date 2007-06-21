@@ -1,10 +1,12 @@
 //=====================================
 // Vending Machine Script
-// v2.3
+// v2.4
 //=====================================
 // by Celestria
 //=====================================
 // Changelog:
+// 2.4 - Made optimizations according to suggestions made by erKURITA. Script is now significantly shorter.
+//
 // 2.3 - Added in "Slam" feature, as well as admin ability to turn machine on and off.
 // - Added admin menu. Allows GMs to put machines in/out of service, and to clear
 // all jammed items.
@@ -46,16 +48,8 @@ p_track01,45,58,4	script	Vending Machine#1	910,{
 	setarray @item[0], 12143, 519, 565;
 	setarray @price[0], 100, 50, 200;
 
-	set @itemn$[0], getitemname(@item[0]);
-	set @itemn$[1], getitemname(@item[1]);
-	set @itemn$[2], getitemname(@item[2]);
-	set @itemn$[3], getitemname(@item[3]);
-	set @itemn$[4], getitemname(@item[4]);
-	set @itemn$[5], getitemname(@item[5]);
-	set @itemn$[6], getitemname(@item[6]);
-	set @itemn$[7], getitemname(@item[7]);
-	set @itemn$[8], getitemname(@item[8]);
-	set @itemn$[9], getitemname(@item[9]);
+	for (set @i,0; @i < 10; set @i,@i+1)
+	set @itemn$[@i],getitemname(@item[@i]);
 
 	set @menu$[0], @itemn$[0]+" - "+@price[0];
 	set @menu$[1], @itemn$[1]+" - "+@price[1];
@@ -127,32 +121,16 @@ M_Ooo3:
 	close;
 
 M_Fix:
-	set $itemjam0$[@machine],"0";
-	set $itemjam1$[@machine],"0";
-	set $itemjam2$[@machine],"0";
-	set $itemjam3$[@machine],"0";
-	set $itemjam4$[@machine],"0";
-	set $itemjam5$[@machine],"0";
-	set $itemjam6$[@machine],"0";
-	set $itemjam7$[@machine],"0";
-	set $itemjam8$[@machine],"0";
-	set $itemjam9$[@machine],"0";
+	for (set @i,0; @i < 10; set @i,@i+1)
+	setd "$itemjam"+@i+"$[@machine]","";
 	mes "All jammed items have been fixed.";
 	close;
 }
 
 function	script	F_Vend2	{
 
-		if(strcharinfo(0)==$itemjam0$[@machine]) goto B_StillJammed;
-		if(strcharinfo(0)==$itemjam1$[@machine]) goto B_StillJammed;
-		if(strcharinfo(0)==$itemjam2$[@machine]) goto B_StillJammed;
-		if(strcharinfo(0)==$itemjam3$[@machine]) goto B_StillJammed;
-		if(strcharinfo(0)==$itemjam4$[@machine]) goto B_StillJammed;
-		if(strcharinfo(0)==$itemjam5$[@machine]) goto B_StillJammed;
-		if(strcharinfo(0)==$itemjam6$[@machine]) goto B_StillJammed;
-		if(strcharinfo(0)==$itemjam7$[@machine]) goto B_StillJammed;
-		if(strcharinfo(0)==$itemjam8$[@machine]) goto B_StillJammed;
-		if(strcharinfo(0)==$itemjam9$[@machine]) goto B_StillJammed;
+	for (set @i,0; @i < 10; set @i,@i+1)
+	if(strcharinfo(0)==getd("$itemjam"+@i+"$[@machine]")) goto B_StillJammed;
 	set @jammed,rand(1,@jamrate);
 	mes "You peek inside the vending machine to see what's available.";
 	next;
@@ -214,16 +192,8 @@ B_Broke:
 
 B_Buy:
 	if (@menu$[@num] == "Cancel") goto B_Cancel;
-		if(@num==0){if($itemjam0$[@machine]!="0") set @jammed,0;}
-		if(@num==1){if($itemjam1$[@machine]!="0") set @jammed,0;}
-		if(@num==2){if($itemjam2$[@machine]!="0") set @jammed,0;}
-		if(@num==3){if($itemjam3$[@machine]!="0") set @jammed,0;}
-		if(@num==4){if($itemjam4$[@machine]!="0") set @jammed,0;}
-		if(@num==5){if($itemjam5$[@machine]!="0") set @jammed,0;}
-		if(@num==6){if($itemjam6$[@machine]!="0") set @jammed,0;}
-		if(@num==7){if($itemjam7$[@machine]!="0") set @jammed,0;}
-		if(@num==8){if($itemjam8$[@machine]!="0") set @jammed,0;}
-		if(@num==9){if($itemjam9$[@machine]!="0") set @jammed,0;}
+		for (set @i,0; @i < 10; set @i,@i+1) 
+		if(@num==@i) if(getd("$itemjam"+@i+"$[@machine]")) set @jammed,0;
 	if(Zeny < @price[@num]) goto B_Broke;
 	set Zeny,Zeny-@price[@num];
 	if(@jammed == 1) goto B_Jamitem;
@@ -239,16 +209,8 @@ B_Get2:
 	mes "What the!?";
 	mes "Two "+@itemn$[@num]+"s popped out!";
 	mes "It must be your lucky day.";
-		if(@num==0) set $itemjam0$[@machine],"0";
-		if(@num==1) set $itemjam1$[@machine],"0";
-		if(@num==2) set $itemjam2$[@machine],"0";
-		if(@num==3) set $itemjam3$[@machine],"0";
-		if(@num==4) set $itemjam4$[@machine],"0";
-		if(@num==5) set $itemjam5$[@machine],"0";
-		if(@num==6) set $itemjam6$[@machine],"0";
-		if(@num==7) set $itemjam7$[@machine],"0";
-		if(@num==8) set $itemjam8$[@machine],"0";
-		if(@num==9) set $itemjam9$[@machine],"0";
+		for (set @i,0; @i < 10; set @i,@i+1)
+		if(@num==@i) setd "$itemjam"+@i+"$[@machine]","";
 	close;
 B_Jamitem:
 	mes "Vrrrrrrrr~";
@@ -257,16 +219,8 @@ B_Jamitem:
 	mes "["+strcharinfo(0)+"]";
 	mes "Dammit!";
 	mes "I hate it when these damn things jam!";
-		if(@num==0) set $itemjam0$[@machine],strcharinfo(0);
-		if(@num==1) set $itemjam1$[@machine],strcharinfo(0);
-		if(@num==2) set $itemjam2$[@machine],strcharinfo(0);
-		if(@num==3) set $itemjam3$[@machine],strcharinfo(0);
-		if(@num==4) set $itemjam4$[@machine],strcharinfo(0);
-		if(@num==5) set $itemjam5$[@machine],strcharinfo(0);
-		if(@num==6) set $itemjam6$[@machine],strcharinfo(0);
-		if(@num==7) set $itemjam7$[@machine],strcharinfo(0);
-		if(@num==8) set $itemjam8$[@machine],strcharinfo(0);
-		if(@num==9) set $itemjam9$[@machine],strcharinfo(0);
+		for (set @i,0; @i < 10; set @i,@i+1)
+		if(@num==@i) setd "$itemjam"+@i+"$[@machine]",strcharinfo(0);
 	close;
 }
 

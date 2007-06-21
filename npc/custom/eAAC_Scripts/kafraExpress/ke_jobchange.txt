@@ -3,9 +3,9 @@
 //===== By: ==================================================
 //= Skotlex
 //===== Current Version: =====================================
-//= 3.5
+//= 4.0
 //===== Compatible With: =====================================
-//= eAthena SVN R3579+
+//= eAthena SVN R8840+
 //===== Description: =========================================
 //= Part of the Kafra Express Script Package.
 //= Enables job changing through the class trees.
@@ -13,10 +13,10 @@
 //===== Additional Comments: =================================
 //= See config.txt for configuration.
 //= When using Upper Job policy, previous jobs are stored in
-//= the server wide variables kej_class1 and kej_class2
+//= the permanent variables kej_class1 and kej_class2
 //============================================================
 
--	script	keInit_jobchange	-1,{
+-	script	keInit_jobchange	{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadJobChange";
 	end;
@@ -26,157 +26,116 @@ function	script	F_keJobChange	{
 	
 	function SF_to1stJob;
 	function SF_to2ndJob;
+	function SF_getJobIndex;
 	function SF_getJobNames;
 	function SF_testChangeJob;
 	function SF_changeJob;
-	
-	set @job, callfunc("GF_getJobLevel", class);
-	set @upper, Upper; //Because it is changed when rebirthing
+
+	set @job, eaClass(class);
+	set @type, @job&~EAJ_UPPERMASK; //Because it is changed when rebirthing
 	set @reset, 0;	//Base Level is reset only on rebirths
-	switch (@job) {
-	case 0: //Novices
+	if ((@job&EAJ_BASEMASK) == EAJ_NOVICE) 
+	{	//Novices
+		if (@job&EAJL_2) //S. Novices
+			goto L_FAIL;
 		if ($@kejc_skipNovice)
 			set @jobLv, 0; //jobLv is used again when checking for S.Novice's base level restriction.
 		else
 			set @jobLv, 10;
 		if (SF_testChangeJob(0,0,@jobLv))
 			SF_to1stJob(0);
-		break;
-	case 1: //First Classes
+	} else
+	if(@job&EAJL_2){
+		//Second classes
+		if (@job&~EAJ_UPPERMASK) //rebirth/baby
+			goto L_FAIL;
+		if (SF_testChangeJob($@kejc_costRebirth,$@kejc_baseRebirth,$@kejc_jobRebirth)) {
+			set @type, EAJL_UPPER;
+			if ($@kejc_skipNovice)
+				SF_to1stJob(1);
+			else
+				SF_changeJob @job,EAJ_NOVICE_HIGH,0,0,$@kejc_costRebirth,1,$@kejc_rebirthReset;
+		}
+	} else {
+		//First classes
 		if (SF_testChangeJob($@kejc_cost2ND,$@kejc_base2ND,$@kejc_job2ND))
 			SF_to2ndJob();
-		break;
-	case 2: //Second Classes
-		if (Upper == 0 && BaseClass != Job_Taekwon) {
-			if (SF_testChangeJob($@kejc_costRebirth,$@kejc_baseRebirth,$@kejc_jobRebirth)) {
-				set @upper, 1;
-				if ($@kejc_skipNovice)
-					SF_to1stJob(1);
-				else
-					SF_changeJob @job,Upper,Job_Novice,1,0,0,$@kejc_costRebirth,1,$@kejc_rebirthReset;
-			}
-			break;
-		}
-	default:	//Dead End
-		callfunc "F_keIntro", e_swt2, "I cannot change you from your current job.";
-		break;
 	}
+	return;
+L_FAIL:
+	//Dead End
+	callfunc "F_keIntro", e_swt2, "I cannot change you from your current job.";
 	return;
 
 //Handles changing to 1st job.
 function SF_to1stJob {
+	setarray @classes[0],
+		EAJ_Acolyte|@type,
+		EAJ_Archer|@type,
+		EAJ_Mage|@type,
+		EAJ_Merchant|@type,
+		EAJ_Swordman|@type,
+		EAJ_Thief|@type,
+		EAJ_Taekwon|@type,
+		EAJ_Super_Novice|@type,
+		EAJ_GunSlinger|@type,
+		EAJ_Ninja|@type;
+
 	do {
-		set @submenu, 1;	
-		if (@upper == 1 && $@kejc_upperPolicy && kej_class1) {
-			switch (kej_class1) {
-			case Job_Acolyte:
-				set @submenu, 2;
-				break;
-			case Job_Archer:
-				set @submenu, 3;
-				break;
-			case Job_Mage:
-				set @submenu, 4;
-				break;
-			case Job_Merchant:
-				set @submenu, 5;
-				break;
-			case Job_Swordman:
-				set @submenu, 6;
-				break;
-			case Job_Thief:
-				set @submenu, 7;
-				break;
-			case Job_Taekwon:
-				set @submenu, 8;
-				break;
+		set @newjob, -1;
+		if (@type == EAJL_UPPER && $@kejc_upperPolicy && kej_class1) {
+			set @newjob, eaclass(kej_class1);
+			set @newjob, (@newjob&EAJ_UPPERMASK)|@type;
+			if (roclass(@newjob) == -1)
+				set @newjob, -1;
+			set @submenu, 1;
+		}
+		if (@newjob == -1) {
+			SF_getJobNames getarraysize(@classes);
+			if (@type&EAJL_UPPER || $@kejc_disable&1)
+				set @names$[7], ""; //No S.Novice
+	
+			if (@type&~EAJ_UPPERMASK)
+			{	//No TK/NJ/GS for Baby/Advanced
+				set @names$[6], "";
+				set @names$[8], "";
+				set @names$[9], "";
+			} else {
+				if ($@kejc_disable&2) //No TK
+					set @names$[6], "";
+				if ($@kejc_disable&4) //No GS
+					set @names$[8], "";
+				if ($@kejc_disable&8) //No NJ
+					set @names$[9], "";
+			}
+
+			set @submenu, select(
+				"- Cancel job change",
+				@names$[0], @names$[1], @names$[2],
+				@names$[3], @names$[4], @names$[5],
+				@names$[6], @names$[7], @names$[8],
+				@names$[9]
+				);
+
+			if (@submenu > 1) {
+				if (@submenu == 9 && //S. Novice's own change check.
+					SF_testChangeJob(0,$@kejc_baseSN,@jobLv) == 0)
+					return;
+				set @newjob, @classes[@submenu-2];
 			}
 		}
-		if (@submenu == 1) {
-			SF_getJobNames 8,Job_Acolyte,Job_Archer,Job_Mage,Job_Merchant,Job_Swordman,Job_Thief,Job_Taekwon,Job_SuperNovice;
-			switch (@upper) {
-			case 0: //All
-				set @submenu, select(
-					"- Cancel job change",
-					"- "+@name1$,
-					"- "+@name2$,
-					"- "+@name3$,
-					"- "+@name4$,
-					"- "+@name5$,
-					"- "+@name6$,
-					"- "+@name7$,
-					"- "+@name8$
-				);
-				break;
-			case 1: //No Taekwon/S.Novice
-				set @submenu, select(
-					"- Cancel job change",
-					"- "+@name1$,
-					"- "+@name2$,
-					"- "+@name3$,
-					"- "+@name4$,
-					"- "+@name5$,
-					"- "+@name6$
-				);
-				break;
-			case 2: //No Taekwon
-				set @submenu, select(
-					"- Cancel job change",
-					"- "+@name1$,
-					"- "+@name2$,
-					"- "+@name3$,
-					"- "+@name4$,
-					"- "+@name5$,
-					"- "+@name6$,
-					"- "+@name8$
-				);
-				if (@submenu == 8)
-					set @submenu, 9;
-				break;
-			}
-		}
-		switch (@submenu) {
-		case 2: //Acolyte
-			set @newJob,Job_Acolyte;
-			set @weapon, $@kejc_wAcolyte;
-			break;
-		case 3: //Archer
-			set @newJob,Job_Archer;
-			set @weapon, $@kejc_wArcher;
-			break;
-		case 4: //Mage
-			set @newJob,Job_Mage;
-			set @weapon, $@kejc_wMage;
-			break;	
-		case 5: //Merchant
-			set @newJob,Job_Merchant;
-			set @weapon, $@kejc_wMerchant;
-			break;
-		case 6: //Swordman
-			set @newJob,Job_Swordman;
-			set @weapon, $@kejc_wSwordman;
-			break;
-		case 7: //Thief
-			set @newJob,Job_Thief;
-			set @weapon, $@kejc_wThief;
-			break;
-		case 8: //Taekwon
-			set @newJob,Job_Taekwon;
-			set @weapon, $@kejc_wTaekwon;
-			break;
-		case 9: //S. Novice
-			set @newJob,Job_SuperNovice;
-			set @weapon, $@kejc_wSuperNovice;
-			if (SF_testChangeJob(0,$@kejc_baseSN,@jobLv) == 0)
-				return;
-			break;
-		}
-		if (@submenu > 1) {
+
+		if (@newjob > -1) {
+			set @i, SF_getJobIndex(@newjob);
+			if (@i > -1)
+				set @weapon, $@kejc_weapon1[@i];
+			else
+				set @weapon, 0;
 			if (getarg(0)) { //Skipping High Novice, charge rebirth costs.
-				if (SF_changeJob(@job,Upper,@newJob,1,@weapon,0,$@kejc_costRebirth,2,$@kejc_rebirthReset))
+				if (SF_changeJob(@job,@newJob,@weapon,0,$@kejc_costRebirth,2,$@kejc_rebirthReset))
 					return;
 			} else {
-				if (SF_changeJob(@job,Upper,@newJob,@upper,@weapon,0,0,2,0))
+				if (SF_changeJob(@job,@newJob,@weapon,0,0,2,0))
 					return;
 			}
 		}
@@ -185,179 +144,50 @@ function SF_to1stJob {
 
 function SF_to2ndJob {
 	do {
-		set @submenu, 1;	
-		if (@upper == 1 && $@kejc_upperPolicy && kej_class2) {
-			switch (kej_class2) {
-			case Job_Priest:
-			case Job_Hunter:
-			case Job_Wizard:
-			case Job_Blacksmith:
-			case Job_Knight:
-			case Job_Knight2:
-			case Job_Assassin:
-			case Job_Star_Gladiator:
-			case Job_Star_Gladiator2:
-				set @submenu, 2;
-				break;
-			case Job_Monk:
-			case Job_Bard:
-			case Job_Dancer:
-			case Job_Sage:
-			case Job_Alchem:
-			case Job_Crusader:
-			case Job_Crusader2:
-			case Job_Rogue:
-			case Job_Soul_Linker:
-				set @submenu, 3;
-				break;
-			}
+		set @newjob, -1;	
+		if (@type == EAJL_UPPER && $@kejc_upperPolicy && kej_class2) {
+			set @newjob, eaclass(kej_class2);
+			set @newjob, (@newjob&EAJ_UPPERMASK)|@type;
+			if (roclass(@newjob) == -1)
+				set @newjob, -1; //Invalid class.
+			else
+			if ((@newjob&EAJ_BASEMASK) != (@job&EAJ_BASEMASK))
+				set @newjob, -1; //Saved next job does not corresponds to current 1st!
 		}
-		if (@submenu == 1) { //Fetch from menu.
-			switch (BaseClass) {
-			case Job_Acolyte:
-				SF_getJobNames 2,Job_Priest,Job_Monk;
-				break;
-			case Job_Archer:
-				SF_getJobNames 3,Job_Hunter,Job_Bard,Job_Dancer;
-				if (sex == 0)
-					set @name2$, @name3$;
-				break;
-			case Job_Mage:
-				SF_getJobNames 2,Job_Wizard,Job_Sage;
-				break;
-			case Job_Merchant:
-				SF_getJobNames 2,Job_Blacksmith,Job_Alchem;
-				break;
-			case Job_Swordman:
-				SF_getJobNames 2,Job_Knight,Job_Crusader;
-				break;
-			case Job_Thief:
-				SF_getJobNames 2,Job_Assassin,Job_Rogue;
-				break;
-			case Job_Taekwon:
-				SF_getJobNames 2,Job_Star_Gladiator,Job_Soul_Linker;
-				break;
-			default:
-				callfunc "F_keIntro", e_swt2, "I don't know how to change you from your current job.";
+		if (@newjob == -1) { //Fetch from menu.
+			setarray @classes[0],
+			(@job&EAJ_UPPERMASK)|@type|EAJL_2_1,
+			(@job&EAJ_UPPERMASK)|@type|EAJL_2_2;
+
+			if (roclass(@classes[0]) == -1)
+			{	//Can't upgrade?
+				callfunc "F_keIntro", e_swt2, "I cant' change you from your current job.";
 				return;
 			}
+
+			SF_getJobNames 2;
 			set @submenu, select(
 				"- Cancel job change",
-				"- "+@name1$,
-				"- "+@name2$
+				@names$[0],@names$[1]
 			);
+			if (@submenu > 1)
+				set @newjob, @classes[@submenu-2];
 		}
-		switch (BaseClass) {
-		case Job_Acolyte:
-			switch (@submenu) {
-			case 2: //Priest
-				set @newJob,Job_Priest;
-				set @weapon,$@kejc_wPriest;
-				set @weapon2,$@kejc_w2Priest;
-				break;
-			case 3: //Monk
-				set @newJob,Job_Monk;
-				set @weapon,$@kejc_wMonk;
-				set @weapon2,$@kejc_w2Monk;
-				break;
-			}
-			break;
-		case Job_Archer:
-			switch (@submenu) {
-			case 2: //Hunter
-				set @newJob,Job_Hunter;
-				set @weapon,$@kejc_wHunter;
-				set @weapon2,$@kejc_w2Hunter;
-				break;
-			case 3: //Bard/Dancer
-				if (sex == 1) { //Bard
-					set @newJob,Job_Bard;
-					set @weapon,$@kejc_wBard;
-					set @weapon2,$@kejc_w2Bard;
-				} else { //Dancer
-					set @newJob,Job_Dancer;
-					set @weapon,$@kejc_wDancer;
-					set @weapon2,$@kejc_w2Dancer;
+		if (@newjob > -1) {
+			set @i, SF_getJobIndex(@newjob);
+			if (@i > -1) {
+				if (@newjob&EAJL_2_2) { //2-2 classes
+					set @weapon, $@kejc_weapon_22[@i];
+					set @weapon2,$@kejc_weapon2_22[@i];
+				} else { //2-1 classes
+					set @weapon, $@kejc_weapon_21[@i];
+					set @weapon2,$@kejc_weapon2_21[@i];
 				}
-				break;
+			} else {
+				set @weapon, 0;
+				set @weapon2, 0;
 			}
-			break;
-		case Job_Mage:
-			switch (@submenu) {
-			case 2: //Wizard
-				set @newJob,Job_Wizard;
-				set @weapon,$@kejc_wWizard;
-				set @weapon2,$@kejc_w2Wizard;
-				break;
-			case 3: //Sage
-				set @newJob,Job_Sage;
-				set @weapon,$@kejc_wSage;
-				set @weapon2,$@kejc_w2Sage;
-				break;
-			}
-			break;
-		case Job_Merchant:
-			switch (@submenu) {
-			case 2: //Blacksmith
-				set @newJob,Job_Blacksmith;
-				set @weapon,$@kejc_wBlacksmith;
-				set @weapon2,$@kejc_w2Blacksmith;
-				break;
-			case 3: //Alchemist
-				set @newJob,Job_Alchem;
-				set @weapon,$@kejc_wAlchemist;
-				set @weapon2,$@kejc_w2Alchemist;
-				break;
-			}
-			break;
-		case Job_Swordman:
-			switch (@submenu) {
-			case 2: //Knight
-				set @newJob,Job_Knight;
-				set @weapon,$@kejc_wKnight;
-				set @weapon2,$@kejc_w2Knight;
-				break;
-			case 3: //Crusader
-				set @newJob,Job_Crusader;
-				set @weapon,$@kejc_wCrusader;
-				set @weapon2,$@kejc_w2Crusader;
-				break;
-			default:
-				mes "uh oh";
-				break;
-			}
-			break;
-		case Job_Thief:
-			switch (@submenu) {
-			case 2: //Assassin
-				set @newJob,Job_Assassin;
-				set @weapon,$@kejc_wAssassin;
-				set @weapon2,$@kejc_w2Assassin;
-				break;
-			case 3: //Rogue
-				set @newJob,Job_Rogue;
-				set @weapon,$@kejc_wRogue;
-				set @weapon2,$@kejc_w2Rogue;
-				break;
-			}
-			break;
-		case Job_Taekwon:
-			switch (@submenu) {
-			case 2: //Star Gladiator
-				set @newJob,Job_Star_Gladiator;
-				set @weapon,$@kejc_wStarGladiator;
-				set @weapon2,$@kejc_w2StarGladiator;
-				break;
-			case 3: //Soul Linker
-				set @newJob,Job_Soul_Linker;
-				set @weapon,$@kejc_wSoulLinker;
-				set @weapon2,$@kejc_w2SoulLinker;
-				break;
-			}
-			break;
-		}
-		if (@submenu > 1) {
-			if (SF_changeJob(@job,Upper,@newJob,@upper,@weapon,@weapon2,$@kejc_cost2ND,0,0))
+			if (SF_changeJob(@job,@newJob,@weapon,@weapon2,$@kejc_cost2ND,0,0))
 				return;
 		}
 	} while (@submenu > 1);
@@ -370,9 +200,9 @@ function SF_testChangeJob {
 	if (Zeny < getarg(0))
 		set @fail, 1;
 	if (BaseLevel < getarg(1))
-		set @fail, @fail+2;
+		set @fail, @fail|2;
 	if (JobLevel < getarg(2))
-		set @fail, @fail+4;	
+		set @fail, @fail|4;	
 	if (@fail > 0) {
 		if (@fail&1)
 			mes "You need "+getarg(0)+"z for the conversion process.";
@@ -391,11 +221,11 @@ function SF_testChangeJob {
 	return 1;
 }
 
-//SubFunction: SF_changeJob (CurrentJobLv, CurrentJobType, NewJobBase, NewJobType
-//Weapon, Weapon2, Zeny, WipeSkills, ResetLv)
+//SubFunction: SF_changeJob (CurrentJob, NewJob, Weapon, Weapon2,
+// Zeny, WipeSkills, ResetLv)
 //Attempts to change to the Jobgiven.
-//CurrentJobLv is 0-3 (novice, 1st class, 2nd class, s.novice)
-//Type is 0-2 (Normal, Advanced Class, Baby)
+//CurrentJob is actual job in eA format.
+//NewJob is job to change to in eA format.
 //Weapon is the ID of the weapon to grant
 //Weapon2 is the alternative weapon granted when your job level is above $@kejc_wBonusLv
 //Zeny is the money required (if negative, it is money awarded)
@@ -404,18 +234,23 @@ function SF_testChangeJob {
 //Reset Level indicates the base lv must be reset to 1.
 //Note: Zeny/Base/Job requirements should had been checked with SF_testChangeJob already!
 function SF_changeJob {
-	set @newjob,getarg(2);
-	set @newtype,getarg(3);
-	set @weapon,getarg(4);
-	set @weapon2,getarg(5);
-	set @cost,getarg(6);
-	set @wipeSkill,getarg(7);
-	set @resetLv,getarg(8);
+	set @job, getarg(0);
+	set @newjob,getarg(1);
+	set @weapon,getarg(2);
+	set @weapon2,getarg(3);
+	set @cost,getarg(4);
+	set @wipeSkill,getarg(5);
+	set @resetLv,getarg(6);
 
-	set @jobStr$, callfunc("GF_getJobName2",@newjob, @newtype);
+	if (roclass(@newjob) == -1) { //Invalid job?
+		callfunc "F_keIntro", -1, "I can't change you to this job...";
+		return 0;
+	}
+
+	set @jobStr$, jobname(roclass(@newjob));
 	if (@wipeSkill == 0 && SkillPoint > 0 && $@kejc_skillsPolicy == 1) {
 		set @selection, select(
-			"- Do not change yet",
+			"- Do not change yet.",
 			"- Change to "+@jobStr$+" (skill points lost)",
 			"- View details"
 		);
@@ -441,14 +276,14 @@ function SF_changeJob {
 			if (@cost > 0)
 				mes "- You will be charged "+@cost+"z.";
 			else if (@cost < 0)
-				mes "- You will be aided with "+(0-@cost)+"z.";
+				mes "- You will be awarded with "+(0-@cost)+"z.";
 			if (@weapon > 0) {
 				if (@weapon2 > 0 && $@kejc_wBonusLv) {
 					if (JobLevel < $@kejc_wBonusLv) {
 						mes "- You will receive a "+getitemname(@weapon)+"["+getitemslots(@weapon)+"].";
-						mes "- If you wait until Job Lv"+$@kejc_wBonusLv+", you can receive instead a "+getitemname(@weapon2)+"["+getitemslots(@weapon)+"].";
+						mes "- If you wait until Job Lv"+$@kejc_wBonusLv+", you can receive instead a "+getitemname(@weapon2)+"["+getitemslots(@weapon2)+"].";
 					} else {
-						mes "- You will receive a "+getitemname(@weapon2)+"["+getitemslots(@weapon)+"] for reaching Job Lv"+$@kejc_wBonusLv+".";
+						mes "- You will receive a "+getitemname(@weapon2)+"["+getitemslots(@weapon2)+"] for reaching Job Lv"+$@kejc_wBonusLv+".";
 					}
 				} else
 					mes "- You will receive a "+getitemname(@weapon)+".";
@@ -465,16 +300,15 @@ function SF_changeJob {
 		case 2: //Change
 			//Set/Unset job path variables as needed.
 			if($@kejc_upperPolicy) {
-				set @class,getarg(0);
-				set @type, getarg(1);
-				if(@class == 1 && @type == 0)
+				if((@job&EAJ_BASEMASK) == @job && @job != EAJ_NOVICE)
 					set kej_class1,class; //Advancing to second class, so...
-				if(@class == 2)
+				if(@job&EAJL_2)
 					set kej_class2,class; //Only way of being here is by doing a rebirth
-				if(@type > 0)
+				if(@job&~EAJ_UPPERMASK) {
 					set kej_class1,0;	//Clear when one is a high class
-				if(@type > 0 && @class == 1)
-					set kej_class2,0;	//Clear when leaving high 1st class
+					if(@job&~EAJL_2 && @job&EAJ_BASEMASK != EAJ_NOVICE)
+						set kej_class2,0;	//Clear when leaving high 1st class
+				}
 			}
 			if (@resetLv) {
 				jobchange Job_Novice_High; //Done to give players those 100 points from High classes
@@ -490,44 +324,62 @@ function SF_changeJob {
 				skill 1,9,0;
 			if($@kejc_resetDye)
 				setlook 7,0;
-			jobchange @newjob, @newtype;
+			if ($@kejc_weaponPolicy && @weapon > 0) {
+				if ($@kejc_wBonusLv && @weapon2 > 0 && JobLevel >= $@kejc_wBonusLv)
+					getitem @weapon2,1;
+				else
+					getitem @weapon,1;
+			}
+			jobchange roclass(@newjob);
 			if ($@kejc_announce)
 				announce strcharinfo(0)+" has been promoted to "+@jobStr$+"!",8;
 			set Zeny,Zeny-@cost;
-			if ($@kejc_weaponPolicy && @weapon > 0) {
-				if ($@kejc_wBonusLv && @weapon2 > 0) {
-					if (JobLevel < $@kejc_wBonusLv)
-						getitem @weapon,1;
-					else
-						getitem @weapon2,1;
-				} else
-					getitem @weapon,1;
-			}
 			emotion e_grat;	
 			return 1;
 		default: //Cancel...
-			callfunc "F_keIntro", e_dots, "...alright.";
 			return 0;	
 	}
 }
-//SubFunction: SF_getJobNames(Qty, Jobid1, Jobid2,...)
-//Workaround until eA gets a fix for the bug where you can't use callfunc or
-//callsub within a menu
-function SF_getJobNames {
-	switch (getarg(0)) {
-	case 8:
-		set @name8$, callfunc("GF_getJobName2",getarg(8),@upper);
-		set @name7$, callfunc("GF_getJobName2",getarg(7),@upper);
-		set @name6$, callfunc("GF_getJobName2",getarg(6),@upper);
-		set @name5$, callfunc("GF_getJobName2",getarg(5),@upper);
-		set @name4$, callfunc("GF_getJobName2",getarg(4),@upper);
-	case 3:
-		set @name3$, callfunc("GF_getJobName2",getarg(3),@upper);
-	case 2:
-		set @name2$, callfunc("GF_getJobName2",getarg(2),@upper);
-		set @name1$, callfunc("GF_getJobName2",getarg(1),@upper);
+
+//SubFunction: SF_getJobIndex(Job)
+//Given a job in eA format, retrieves the basic index which is used for the
+//config arrays.
+function SF_getJobIndex {
+	set @i, getarg(0);
+	set @i, @i&EAJ_BASEMASK;
+	switch (@i) {
+		case EAJ_ACOLYTE:
+			return 0;
+		case EAJ_ARCHER:
+			return 1;
+		case EAJ_MAGE:
+			return 2;
+		case EAJ_MERCHANT:
+			return 3;
+		case EAJ_SWORDMAN:
+			return 4;
+		case EAJ_THIEF:
+			return 5;
+		case EAJ_TAEKWON:
+			return 6;
+		case EAJ_NOVICE: //Super Novice, actually
+			return 7;
+		case EAJ_GUNSLINGER:
+			return 8;
+		case EAJ_NINJA:
+			return 9;
+		default:
+			return -1;
 	}
-	return;
+}
+
+//SubFunction: SF_getJobNames(Qty)
+//Fills an array @names$ with the job names taken from the array "classes",
+// making each entry start with "- " followed by the job name.
+function SF_getJobNames	{
+	set @size, getarg(0);
+	for (set @i, 0; @i < @size; set @i, @i+1)
+		setd "@names$["+@i+"]", "- "+jobname(roclass(@classes[@i]));
 }
 
 }

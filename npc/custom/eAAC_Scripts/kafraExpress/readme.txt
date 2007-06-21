@@ -6,7 +6,7 @@ This file's purpose is to give an indepth explanation about setting up, and
 configuring the Kafra Express Script Package (KESP). It is intended to be
 viewed by a text editor using fixed-width font and 80-character long lines.
 
-Document Version v1.9 (15/June/2006)
+Document Version v2.0 (27/September/2006)
 ////////////////////////////////////////////////////////////////////////////////
 Table of Contents
 ////////////////////////////////////////////////////////////////////////////////
@@ -231,11 +231,14 @@ costs 100z to heal 1000.
 -------------
 The cost of using the storage, guild storage (respectively)
 
-(1) kekp_reset
+(#) kekp_reset
 --------------
-For Kafra Passes. When 1, the Pass expires when starting a chat with the
-Kafra. Otherwise the variable remains active a pretty long time (probably all
-session).
+For Kafra Passes. When set, the Pass expires after starting a chat with the
+Kafra the amount of times specified. Otherwise the variable remains active a
+pretty long time (probably all session). For example, if set to 2, after
+activating the pass and opening the storage, the Pass will still be active
+the next time you speak to a kafra, it will expire on the "third" time you
+speak to her.
 
 ($) kekp_reserveCost 
 --------------------
@@ -387,10 +390,12 @@ Specificies the number of hair dyes
 (#) kedy_clothJ1ST
 (#) kedy_clothJ2ND
 (#) kedy_clothJSN
-(#) kedy_clothJWED
 ------------------
 Specifies the number of cloth dyes based on job-type: Novices, First Classes,
-Second Classes, Super Novices, Wedding Class.
+Second Classes, Super Novices.
+Note that special classes like Xmas or Wedding tend to not have palettes, and
+it should be handled server-side so that switching palettes with this module
+will not cause you client crashes.
 
 ////////////////////////////////////////////////////////////////////////////////
 [06] Module: Job Changer (ke_jobchange.txt)
@@ -425,6 +430,15 @@ What to do about the advanced classes?
 	1: Force mode, classes are auto-selected from the previous path. In the
 	case the path could not be determined (players changed jobs previously
 	using other npcs), players will be able to select their next job.
+
+(#) kejc_disable
+----------------
+Permits disabling some job trees from the changer (add as required):
+	1: You can't change to a S. Novice
+	2: You can't change to Taekwon (but if you are a Taekwon already, you can
+	   still change to Soul Linker/Star Gladiator)
+	4: Can't change to GunSlinger
+	8: Can't change to Ninja
 
 (1) kejc_announce
 -----------------
@@ -473,46 +487,21 @@ one.
 -----------------
 When characters reach this job level, they will receive the premium weapon instead of the normal one. If 0, premium weapons are disabled.
 
-(#) 	kejc_wAcolyte
-(#) 	kejc_wArcher
-(#) 	kejc_wMage
-(#) 	kejc_wMerchant
-(#) 	kejc_wSwordman
-(#) 	kejc_wThief
-(#) 	kejc_wSuperNovice
-(#) 	kejc_wPriest
-(#) 	kejc_wMonk
-(#) 	kejc_wHunter
-(#) 	kejc_wBard
-(#) 	kejc_wDancer
-(#) 	kejc_wWizard
-(#) 	kejc_wSage
-(#) 	kejc_wBlacksmith
-(#) 	kejc_wAlchemist
-(#) 	kejc_wKnight
-(#) 	kejc_wCrusader
-(#) 	kejc_wAssassin
-(#) 	kejc_wRogue
+(#) 	kejc_weapon1[]
+(#) 	kejc_weapon_21[]
+(#) 	kejc_weapon_22[]
 -----------------------
-ID of the normal weapons received upon job change (if weapon policy is in
-effect).
+These arrays contain the IDs of the normal weapons received upon job change
+for first, 2-1 and 2-2 classes (if weapon policy is in effect). Refer to the
+comments in the config file for identifying which position is for which job.
 
-(#) kejc_w2Priest
-(#) kejc_w2Monk
-(#) kejc_w2Hunter
-(#) kejc_w2Bard
-(#) kejc_w2Dancer
-(#) kejc_w2Wizard
-(#) kejc_w2Sage
-(#) kejc_w2Blacksmith
-(#) kejc_w2Alchemist
-(#) kejc_w2Knight
-(#) kejc_w2Crusader
-(#) kejc_w2Assassin
-(#) kejc_w2Rogue
+(#) 	kejc_weapon2_21[]
+(#) 	kejc_weapon2_22[]
 --------------------
-ID of the premium weapons received upon job chane (if bonus weapon policy is
-in effect). Note that first classes can't get a bonus weapon.
+These arrays contain the ID of the premium weapons received upon job change
+(if bonus weapon policy is in effect). Note that first classes can't get a
+bonus weapon, and that Bard/Dancers both receive the same weapon. Refer to the
+comments in the config file for identifying which position is for which job.
 
 ////////////////////////////////////////////////////////////////////////////////
 [07] Module: Job Swapper (ke_jobswap.txt)
@@ -531,10 +520,17 @@ classes, they can't change back to a normal one.
 Variables
 ================================================================================
 
-(1) kejs_SNpolicy
+(#) kejs_disable
 -----------------
-Determines what to do with Super Novices. if 0, they can't swap jobs, if 1,
-they are considered first classes.
+You can disable some classes from swapping using this setting (add numbers as
+appropiate):
+	1: Super Novices may not swap/swap to.
+	2: Disable swapping for Taekwon/Star Gladiator/Soul Linker classes.
+	4: Disable swapping to/from GunSlinger.
+	8: Disable swapping to/from Ninja.
+For example, if you set it to 12 (8+4), the swap menu will not include
+Gunslinger nor Ninja, and they will find that they can't swap to other classes
+neither.
 
 (#) kejs_revertPolicy
 ---------------------
@@ -965,9 +961,8 @@ saves, all charaters of the corresponding account have the warp unlocked).
 
 (1) kewd_deep
 -------------
-This variable decides whether deep or short warps will be used. There's no
-need to set it as it will be set automatically based on which file was
-included (ke_warp_short.txt or ke_warp_deep.txt).
+This variable decides whether deep or short warps will be used. As explained
+on the description, enabling deep warps allows warping to any dungeon level.
 
 (%) kewd_levelCost
 ------------------
@@ -989,31 +984,10 @@ Only used on short warps. If 1, then warping to Turtle Dungeon should lead
 directly to the cave's entrance, otherwise it warps you to the Island's
 entrance.
 
-($) kewd_amatsu
-($) kewd_antHell
-($) kewd_ayothaya
-($) kewd_byalan
-($) kewd_comodo
-($) kewd_clockTower
-($) kewd_coalMines
-($) kewd_culvert
-($) kewd_gefenia
-($) kewd_geffen
-($) kewd_glastHeim
-($) kewd_gonRyun
-($) kewd_hiddenTemple
-($) kewd_louYang
-($) kewd_magma
-($) kewd_orc
-($) kewd_payon
-($) kewd_pyramids
-($) kewd_sphinx
-($) kewd_sunkenShip
-($) kewd_toyFactory
-($) kewd_turtleIsland
-($) kewd_umbala
+($) kewd_<dungeon name>
 ---------------------
-Base cost of warping to each dungeon, that is, the entrance level cost.
+There is a config variable for every dungeon, it specifies the base cost of
+warping to that dungeon (which is, the entrance level cost).
 
 ////////////////////////////////////////////////////////////////////////////////
 [16] Module: PvP Warping (ke_pvp.txt)
@@ -1021,9 +995,9 @@ Base cost of warping to each dungeon, that is, the entrance level cost.
 
 Description
 ================================================================================
-The PvP warping module leads to the pvp maps named pvp_n_*-*. It has two
+The PvP warping module leads to the pvp maps named pvp_n_*-*.gat. It has two
 modes: simple and advanced. On simple mode, every player of every level gets
-thrown into the pvp_n_1-* maps to nuke it out, on advanced mode each of
+thrown into the pvp_n_1-*.gat maps to nuke it out, on advanced mode each of
 the map groups gets their own range of permissible levels to enter. Since
 there is no sure way how characters should escape from a pvp map, they are
 currently given a butterfly wing when they warp.
@@ -1136,15 +1110,15 @@ sprite on-screen that characters speak with. An enabled kafra may look like
 this:
 
 //Alberta
-alberta,113,53,7 script   Kafra Express  116,{
-   callfunc "F_KafraExpress","Kafra Express","kafra_02",0,"alberta",116,57;
+alberta.gat,113,53,7 script   Kafra Express  116,{
+   callfunc "F_KafraExpress","Kafra Express","kafra_02",0,"alberta.gat",116,57;
 }
 
 And a disabled/commented Kafra would look like this:
 
 //Prontera Guild Grounds
-//prt_gld,127,163,5   script   Kafra Express  115,{
-//   callfunc "F_KafraExpress","Kafra Express","kafra_03",1,"prt_gld",129,170;
+//prt_gld.gat,127,163,5   script   Kafra Express  115,{
+//   callfunc "F_KafraExpress","Kafra Express","kafra_03",1,"prt_gld.gat",129,170;
 //}
 
 For scripters, the way to define an NPC is not new, and beyond the scope of

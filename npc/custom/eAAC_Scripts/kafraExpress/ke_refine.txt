@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Skotlex
 //===== Current Version: =====================================
-//= 2.7
+//= 2.8
 //===== Compatible With: =====================================
 //= eAthena SVN R3424+
 //===== Description: =========================================
@@ -14,7 +14,7 @@
 //= See config.txt for configuration.
 //============================================================
 
--	script	keInit_refine	-1,{
+-	script	keInit_refine	{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadRefine";
 	end;

@@ -10,7 +10,7 @@ L_Menu01:
 mes "[Robert]";
 mes "What would you like to do??";
 next;
-if((getgmlevel(0) >= 90)) menu "Public board",L_pubgmmenu,"Gm Board",L_gmmenu,"Close Public Board",L_clospub,"Open Public Board",L_openpub;
+if((getgmlevel() >= 90)) menu "Public board",L_pubgmmenu,"Gm Board",L_gmmenu,"Close Public Board",L_clospub,"Open Public Board",L_openpub;
 if(($messagepubclose == 1)) goto L_pubclosed;
 menu "Read messages!",L_readmsg,"Post a message!",L_Postmsg,"Leave",L_leave;
 L_pubgmmenu:
@@ -326,8 +326,8 @@ mes "Posted By: "+$messageboardpostname$[@tempview]+".";
 mes "On: "+$messageboardpostdate$[@tempview]+".";
 mes $messageboardpost$[@tempview]+".";
 next;
-if(($mymessage[@tempview] == 5) && (getgmlevel()>=99)) menu "Next Message",L_top2,"Delete My Message",L_delmy,"Edit my message",L_editmy,"Delete This message",L_Del;
-if((getgmlevel()>=99))  menu "Next Message",L_top2,"Delete This message",L_Del;
+if(($mymessage[@tempview] == 5) && (getgmlevel()>0)) menu "Next Message",L_top2,"Delete My Message",L_delmy,"Edit my message",L_editmy,"Delete This message",L_Del;
+if((getgmlevel()>0))  menu "Next Message",L_top2,"Delete This message",L_Del;
 if(($mymessage[@tempview] == 5)) menu "Next Message",L_top2,"Delete My Message",L_delmy,"Edit my message",L_editmy;
 menu "Next message",L_top2;
 close;
