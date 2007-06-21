@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/06/21
+	* Fixed a small bug in Dandelion's Request. [SinSloth]
 2007/06/20
 	* Reverted wrong fix in Ninja Job quest. [SinSloth]
 	* Updated "Ph.D Quest" Dialogs. [Samuray22]

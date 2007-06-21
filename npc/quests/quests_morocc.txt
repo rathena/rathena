@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.3a
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.2 Added Dandelion's Request / Morroc Invasion quest. [SinSloth]
 //= 1.3 Updated dialogs from Binoculars Quest. [Samuray22]
 //= 1.3a added GM lvl check as in other invansion quests [Lupus]
+//= 1.4 Fixed a small bug in Dandelion's Request. [SinSloth]
 //============================================================ 
 
 
@@ -7902,7 +7903,7 @@ moc_castle,40,20,3	script	Man	849,{
 		mes "For the s-sacrifice!";
 		mes "^333333*Cough Cough!*^000000";
 		close2;
-		if(!$mao_gate)
+		if(!$mao_gate1)
 		{
 			warp "que_job02",14,182;
 			set $mao_gate1,1;
