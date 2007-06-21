@@ -4,7 +4,7 @@
 //= Made by: Black Dragon
 //= Converted by: Shin
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.8
 //===== Compatible With: ===================================== 
 //= eAthena  0.5.2 +
 //===== Description: ========================================= 
@@ -42,6 +42,7 @@
 //= 2.6 Fixed bug (about totally blocked baby class), optimized,
 //=		made some NPC more unique names: Monster Summon#cr1 [Lupus]
 //= 2.7 Fixed Some variables like ".@item", and changed to "@item". [Samuray22]
+//= 2.8 Fixed a little minor bug. [Samuray22]
 //============================================================
 
 
@@ -1220,7 +1221,7 @@ OnInit:
 OnStart:
 	if (getareausers("job_cru", 160, 16, 190, 190)) end;
 	if (!getwaitingroomstate(33)) end;
-	warpwaitingpc "job_cru",168,17;
+	warpwaitingpc "job_cru",168,21;
 	donpcevent "Monster Summon#cr0::OnStart";
 	end;
 

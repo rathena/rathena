@@ -1,9 +1,9 @@
 //===== eAthena Script ======================================= 
 //= Alchemist Skills Quests
 //===== By: ================================================== 
-//= Lupus, Reddozen
+//= Lupus, Reddozen, Samuray22
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3800+
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 1.5 Removed duplicates [Toms] 1.5a fixed typo [Lupus]
 //= 1.6 Moved some NPCs related to Lighthalzen quests. [SinSloth]
 //= 1.7 Updated "Elemental Potion Creation Quest" to the official one. [Samuray22]
+//= 1.8 Added some missing NPCs from the Laboratory. [Samuray22]
 //============================================================
 
 
@@ -796,6 +797,43 @@ L_return:
 	case 2:
 		goto L_do;
 	}
+}
+
+yuno_in04,22,107,3	script	Irahae	740,{
+	mes "[Irahae]";
+	mes "....";
+	mes ".....";
+	mes "Ha Ha";
+	mes "I've finally made it,";
+	mes "A cursed chemical which";
+	mes "Can dissolve anything...";
+	next;
+	mes "[Irahae]";
+	mes "....But test tube isn't melting...";
+	mes "Did I fail again.";
+	close;
+}
+
+yuno_in04,27,107,4	script	Degas	748,{
+	mes "[Degas]";
+	mes "Ugh, only if I had money";
+	mes "Person next to me always mutters about curses.";
+	mes "And the other four-eyed idiot";
+	mes "Always coughs. Sigh";
+	next;
+	mes "[Degas]";
+	mes "Only if I had some money";
+	mes "I wouldn't have to go through this.";
+	mes "Sigh...";
+	close;
+}
+
+yuno_in04,33,106,4	script	Pile of Books	111,{
+	mes "== There is a messy pile of ==";
+	mes "== Books and papers lying around. ==";
+	mes "== But the owner of the table still ==";
+	mes "== manages to find things that are needed. ==";
+	close;
 }
 
 //============================================================
