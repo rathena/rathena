@@ -884,11 +884,11 @@ prt_castle,35,151,5	script	Patron Knight	751,{
 				close;
 			}
 			else if(countitem(523) < 1) {
-				mes "[Briten Pyrod]";
+				mes "[Bliant Piyord]";
 				mes "For the battle test, please prepare one ^3355FFHoly water^000000.";
 				mes "I told you just to purify the candidates.";
 				next;
-				mes "[Briten Pyrod]";
+				mes "[Bliant Piyord]";
 				mes "Get prepares and come back to here.";
 				mes "I will wait for you.";
 				close;
@@ -1193,7 +1193,7 @@ OnTouch:
 }
 
 //=== Purification Test ===================================
-job_cru,24,187,4	script	Patron Knight	751,{
+job_cru,24,187,4	script	Patron Knight#2	751,{
 	mes "[Bliant Piyord]";
 	mes "Welcome.";
 	mes "You will take";
