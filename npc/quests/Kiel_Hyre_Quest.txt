@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 3.0
+//= 3.2b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -64,6 +64,7 @@
 //=	Added an 'end;' to the cookie basket. Kiel Hyre's final dialog will now delete all quest-related items.
 //= 3.1 Moved the "delitem" for all related quest items to the proper NPC. [L0ne_W0lf]
 //= 3.2 Fixed error with Allysia teling you to "Go away." maybe. [L0ne_W0lf]
+//= 3.2b Fixed some typos and grammar mistakes. [SinSloth]
 //============================================================ 
 //============================================================================
 // Kiel Hyre Quest/Robotic Lab Dungeon
@@ -292,7 +293,7 @@ yuno_in01,35,179,1	script	Pub Master	46,4,4,{
 		mes "would you like to have?";
 		next;
 
-		switch(select("Beer, please","A coctail, please","Soju, please.","You look worried, what's up?","Cancel")) {
+		switch(select("Beer, please","A cocktail, please","Soju, please.","You look worried, what's up?","Cancel")) {
  
 		case 1:
 			mes "[Vandt]";
@@ -341,8 +342,8 @@ yuno_in01,35,179,1	script	Pub Master	46,4,4,{
 			mes "that I need to send to";
 			mes "the Kiel Hyre Academy,";
 			mes "but I can't find anyone";
-			mes "that's avaliable for this";
-			mes "kind of temporaty job.";
+			mes "that's available for this";
+			mes "kind of temporary job.";
 			next;
 
 			switch(select("I'm sorry to hear that","Do you want me to help you?")) {
@@ -513,7 +514,7 @@ yuno,217,114,4	script	Little Kid	96,{
 				mes "Listen, can you help me out?";
 				next;
 				mes "[Cezu]"; 
-				mes "would you please go get";
+				mes "Would you please go get";
 				mes "some flour and eggs for me";
 				mes "from the ^3355FFLighthalzen Windmill^000000";
 				mes "Then, when you come back, I can";
@@ -621,7 +622,7 @@ lighthalzen,365,300,2	script	Windmill Owner	46,{
 			mes "that kid needs right";
 			mes "here. There's eggs inside,";
 			mes "so be really careful with it.";
-			mes "it ready for you...";
+			mes "It's ready for you...";
 			next;
 			mes "[Mills]";
 			mes "Kid's one of my regular";
@@ -1323,7 +1324,7 @@ kh_school,179,39,1	script	Cute Student	895,{
 		mes "What's this,";
 		mes "a letter for me?";
 		next;
-		mes "^3355FFElly opened the envelopre^000000";
+		mes "^3355FFElly opened the envelope^000000";
 		mes "^3355FFand started reading the letter^000000";
 		next;
 		mes "Dearest Elly";
@@ -1337,11 +1338,11 @@ kh_school,179,39,1	script	Cute Student	895,{
 		mes "trouble. Don't trust anyone";
 		mes "at the Academy, Elly.";
 		mes "I've left something for you";
-		mes "In the Study.";
+		mes "in the Study.";
 		next;
 		cutin "kh_elly03",2;
 		mes "[Elly]";
-		mes "What? oh no, it's been";
+		mes "What? Oh no, it's been";
 		mes "ten days since he wrote";
 		mes "this letter! Ah, does this";
 		mes "mean that he's in danger?!";
@@ -1829,7 +1830,7 @@ kh_school,175,175,0	script	Cookie Basket	111,{
 		case 1:
 			mes ""+strcharinfo(0)+", help!";
 			mes "There's this guy dressed in";
-			mes "black who;s walking around,";
+			mes "black who's walking around,";
 			mes "and casting this weird spell!";
 			mes "He's the one that's been making";
 			mes "people cold and lifeless as";
@@ -2048,7 +2049,7 @@ yuno_fild02,93,210,3	script	Cottage Keeper	85,{
 		mes "area unless you're authorized.";
 		next;
 
-		switch(select("I have an apointment with Kiel Hyre.","Alright.")) {
+		switch(select("I have an appointment with Kiel Hyre.","Alright.")) {
 
 		case 1:
 			mes "[Cottage Keeper]";
@@ -2064,7 +2065,7 @@ yuno_fild02,93,210,3	script	Cottage Keeper	85,{
 				mes "There must be some sort";
 				mes "of mistake. Mister Hyre";
 				mes "wouldn't have left if he";
-				mes "was suposed to keep";
+				mes "was supposed to keep";
 				mes "an appointment...";
 				set KielHyreQuest,14;
 				close;
@@ -2108,11 +2109,11 @@ yuno_fild02,75,218,0	script	Door::DoorKHQ1	111,{
 		switch(select("Unlock","Cancel")) {
 
 		case 1:
-			mes "^3355FFYou unlock the door with the.^000000";
-			mes "^3355FFkey that Elly gave you, and.^000000";
-			mes "^3355FFas you push it open, a folded.^000000";
-			mes "^3355FFnote dropped from the top of the.^000000";
-			mes "^3355FFdoor. The following words.^000000";
+			mes "^3355FFYou unlock the door with the^000000";
+			mes "^3355FFkey that Elly gave you, and^000000";
+			mes "^3355FFas you push it open, a folded^000000";
+			mes "^3355FFnote dropped from the top of the^000000";
+			mes "^3355FFdoor. The following words^000000";
 			mes "^3355FFare written on this crude note.^000000";
 			next;
 			mes "6 Forward,";
@@ -2275,7 +2276,7 @@ OnTouch:
 		}
 		mes "^3355FFYou've found a letter^000000";
 		mes "^3355FFon the floor. Naturally,^000000";
-		mes "^3355FFyou pick i up, despite^000000";
+		mes "^3355FFyou pick it up, despite^000000";
 		mes "^3355FFthe fact that it's not^000000";
 		mes "^3355FFaddressed to you.^000000";
 		getitem 7490,1; //Letter to Elly
@@ -2302,8 +2303,8 @@ kh_vila,16,175,0	script	Box::BoxKHQ1	111,{
 
 		case 1:
 			mes "^3355FF1,100 zeny seems kind";
-			mes "^3355FFor expensive for Pet Food,";
-			mes "^3355FFbut if it's better t han the";
+			mes "^3355FFof expensive for Pet Food,";
+			mes "^3355FFbut if it's better than the";
 			mes "^3355FFnormal stuff, it might";
 			mes "^3355FFbe worth a shot.";
 			next;
@@ -2326,7 +2327,7 @@ kh_vila,16,175,0	script	Box::BoxKHQ1	111,{
 		case 2:
 			mes "^3355FFThis vending machine^000000";
 			mes "^3355FFseems really shady and^000000";
-			mes "^3355FFsuspicious for some reason^000000";
+			mes "^3355FFsuspicious for some reason.^000000";
 			close;
 		}
 
@@ -2382,7 +2383,7 @@ kh_vila,44,126,0	script	Map	111,{
 		mes "^3355FFbeen hidden underneath it.^000000";
 		next;
 
-		switch(select("ignore","Examine")) {
+		switch(select("Ignore","Examine")) {
 
 		case 1:
 			mes "^3355FFWhatever might be^000000";
@@ -2563,7 +2564,7 @@ kh_vila,14,55,0	script	Calabash	111,{
 		mes "^3355FFWhat do you do?^000000";
 		next;
 
-		switch(select("Break Open Calabash","Look Inside Calabash","ignore")) {
+		switch(select("Break Open Calabash","Look Inside Calabash","Ignore")) {
 
 		case 1:
 			mes "^3355FFYou can't break^000000";
@@ -2581,7 +2582,7 @@ kh_vila,14,55,0	script	Calabash	111,{
 			mes "^3355FFcalabash, and gently^000000";
 			mes "^3355FFfeel around with your^000000";
 			mes "^3355FFfingers until you retrieve^000000";
-			mes "^3355FFan Old Bronze Key^000000";
+			mes "^3355FFan Old Bronze Key.^000000";
 			getitem 7329,1; //Old_Bronze_Key
 			close;
 
@@ -2607,7 +2608,7 @@ kh_vila,14,55,0	script	Calabash	111,{
 //----------------------------------------------------------------------------
 // Cottage interior, garden; Pool
 //----------------------------------------------------------------------------
-kh_vila,39,41,0	script	pool	111,{
+kh_vila,39,41,0	script	Pool	111,{
 	if ((KHCottagePoem1 < 3) && (KielHyreQuest < 30)) {
 		mes "^3355FFYou find a fancy pool^000000";
 		mes "^3355FFfilled with fresh water.^000000";
@@ -2617,11 +2618,11 @@ kh_vila,39,41,0	script	pool	111,{
 	else if ((KHCottagePoem1 == 3) && (KielHyreQuest < 30)) {
 		mes "^3355FFYou find a fancy pool^000000";
 		mes "^3355FFfilled with fresh water.^000000";
-		mes "^3355FFalong with a conscpicuous^000000";
-		mes "^3355FFlion statue with two handles^000000";
+		mes "^3355FFalong with a conspicuous^000000";
+		mes "^3355FFlion statue with two handles.^000000";
 		next;
 
-		switch(select("Pull handles","cancel")) {
+		switch(select("Pull Handles","Cancel")) {
 
 		case 1:
 			mes "Which handle would^000000";
@@ -2730,7 +2731,7 @@ OnTouch:
 			mes "^3355FFFood and see what happens?^000000";
 			next;
 
-			switch(select("Give pet Food","It won't work!")) {
+			switch(select("Give Pet Food","It won't work!")) {
 
 			case 1:
 				mes "^3355FFYou gingerly throw the^000000";
@@ -2760,7 +2761,7 @@ OnTouch:
 				next;
 				mes "^3355FFThe dog chases you^000000";
 				mes "^3355FFdownstairs like the^000000";
-				mes "^3355FFsuckah chump you are^000000";
+				mes "^3355FFsuckah chump you are.^000000";
 				close2;
 				warp "kh_vila",126,70;
 				end;
@@ -2796,7 +2797,7 @@ kh_vila,115,186,0	script	Drawer::DrawerKHQ1	111,{
 		close;
 	}
 	if ((countitem(7492) < 1) && (KielHyreQuest < 36)) {
-		mes "^3355FFyou find an old drawer^000000";
+		mes "^3355FFYou find an old drawer^000000";
 		mes "^3355FFthat has been closed.^000000";
 		mes "^3355FFIf you open it, then you^000000";
 		mes "^3355FFmight find something^000000";
@@ -2847,7 +2848,7 @@ kh_vila,107,126,0	script	Box::BoxKHQ2	111,{
 		mes "^3355FFon the floor in which^000000";
 		mes "^3355FFa smaller, locked box^000000";
 		mes "^3355FFhas been placed inside.^000000";
-		mes "^3355FFperhaps you can use your^000000";
+		mes "^3355FFPerhaps you can use your^000000";
 		mes "^3355FFOld Bronze Key to unlock it.^000000";
 		next;
 
@@ -2918,7 +2919,7 @@ kh_vila,181,138,0	script	Bookshelf::BookshelfKHQ1	111,{
 			mes "^3355FFshelf as you place the book back.^000000";
 			next;
 
-			switch(select("Examine The steel surface","Ignore")) {
+			switch(select("Examine the steel surface","Ignore")) {
 
 			case 1:
 				mes "^3355FFYou remove more of the^000000";
@@ -2968,7 +2969,7 @@ kh_vila,181,138,0	script	Bookshelf::BookshelfKHQ1	111,{
 
 					else if (countitem(7516) >= 1) {
 
-						switch(select("Green keycard","Cottage Key")) {
+						switch(select("Green Keycard","Cottage Key")) {
 
 						case 1:
 							set @KHFirstKeyhole,1;
@@ -2985,7 +2986,7 @@ kh_vila,181,138,0	script	Bookshelf::BookshelfKHQ1	111,{
 						mes "^3355FFthe second keyhole?^000000";
 						next;
 
-						switch(select("Green keycard","Cottage Key")) {
+						switch(select("Green Keycard","Cottage Key")) {
 
 						case 1:
 							set @KHSecondKeyhole,1;
@@ -3508,7 +3509,7 @@ kh_vila,185,68,0	script	Test Tube::TestTubeKHQ2	111,{
 				mes "have to remember these";
 				mes "numbers, okay? D-don't";
 				mes "forget, they'll be important...";
-				mes "^FF00004^000000, ^FF00007^000000, ^FF00002^000000, ^FF00009^000000, ^FF00006^000000, ^FF00001^000000. That's all...";
+				mes "^FF00004^000000, ^FF00007^000000, ^FF00007^000000, ^FF00002^000000, ^FF00009^000000, ^FF00006^000000, ^FF00001^000000. That's all...";
 				next;
 				mes "^3355FF4772961^000000";
 				mes "^3355FFWhat could^000000";
@@ -3564,7 +3565,7 @@ kh_vila,185,68,0	script	Test Tube::TestTubeKHQ2	111,{
 kh_dun01,235,48,0	script	Heavy Door::HeavyDoorKHQ1	111,{
 	if ((KielHyreQuest >= 38) && (KielHyreQuest < 46)) {
 		mes "^3355FFThere is a large, heavy^000000";
-		mes "^3355FFdoor infront of you^000000";
+		mes "^3355FFdoor infront of you.^000000";
 		next;
 
 		switch(select("Open Door","Cancel")) {
@@ -3611,7 +3612,7 @@ kh_dun01,235,48,0	script	Heavy Door::HeavyDoorKHQ1	111,{
 kh_dun01,76,233,0	script	Heavy Door::HeavyDoorKHQ2	111,{
 	if ((KielHyreQuest >= 38) && (KielHyreQuest < 46)) {
 		mes "^3355FFThere is a large, heavy^000000";
-		mes "^3355FFdoor infront of you^000000";
+		mes "^3355FFdoor infront of you.^000000";
 		next;
 
 		switch(select("Open Door","Cancel")) {
@@ -3662,13 +3663,13 @@ kh_school,119,149,4	script	Beautiful lady::BeatifulLadyKHQ1	894,{
 		mes "[Allysia]";
 		mes "Hm? I don't think";
 		mes "I know you. Kiel Hyre";
-		mes "has only authroized Elly,";
+		mes "has only authorized Elly,";
 		mes "and a trusted friend that";
 		mes "may be helping her, to";
 		mes "be admitted to this area.";
 		next;
 		mes "[Allysia]";
-		mes "I cannot see ^FF0000Elly^000000";
+		mes "I cannot see ^FF0000Elly^000000.";
 		mes "Has she been attacked as well?";
 		mes "Are you ^FF0000Elly's friend^000000?";
 		next;
@@ -3676,7 +3677,7 @@ kh_school,119,149,4	script	Beautiful lady::BeatifulLadyKHQ1	894,{
 		mes "I don't see Elly anywhere";
 		mes "around here. I can only let";
 		mes "you enter if you can identify";
-		mes "youtself as Elly's friend.";
+		mes "yourself as Elly's friend.";
 		mes "Is there anything that you";
 		mes "can present to me as proof?";
 		next;
@@ -3690,6 +3691,7 @@ kh_school,119,149,4	script	Beautiful lady::BeatifulLadyKHQ1	894,{
 			break;
 
 		case 3:
+			mes "[Allysia]";
 			mes "Ah, isn't this the";
 			mes "key that Kiel Hyre gave";
 			mes "to Elly? Yes, I'm convinced";
@@ -3796,7 +3798,7 @@ kh_school,122,186,4	script	Beautiful lady	894,{
 			mes "are actually robots, not humans.";
 			next;
 			mes "[Allysia]";
-			mes "The Kiel Hyre Foundations's";
+			mes "The Kiel Hyre Foundation's";
 			mes "ultimate goal is to develop";
 			mes "superior robots that will help";
 			mes "human society. As robots, we";
@@ -3870,8 +3872,8 @@ kh_school,122,186,4	script	Beautiful lady	894,{
 		mes "...Kiel Hyre's secret code";
 		mes "confirmed. B_2_3 area.";
 		mes "Vital signs are normal.";
-		mes "Envelope recieved. Sending";
-		mes "Modified Puppet Designs...";
+		mes "Envelope received. Sending";
+		mes "modified Puppet Designs...";
 		next;
 		mes "[Allysia]";
 		mes "Alright, I've recieved";
@@ -3898,7 +3900,7 @@ kh_school,122,186,4	script	Beautiful lady	894,{
 		mes "Secondly, meet me at the Kiel";
 		mes "Hyre Mansion in Lighthalzen.";
 		mes "Present the Golden Key to";
-		mes "be admitted to the premises";
+		mes "be admitted to the premises.";
 		delitem 7492,1; //Yellow_Keycard
 		delitem 7495,1; //Blue_Keycard
 		delitem 7496,1; //Red_Keycard
@@ -3909,7 +3911,7 @@ kh_school,122,186,4	script	Beautiful lady	894,{
 		mes "is sudden, and I'm not";
 		mes "giving you a thorough";
 		mes "explanation, but something";
-		mes "horrible will happen if i don't";
+		mes "horrible will happen if I don't";
 		mes "hurry as quickly as possible.";
 		close2;
 		warp "yuno_fild08",73,172;
@@ -4017,7 +4019,7 @@ OnTouch:
 			close;
 		}
 
-		mes "^3355FFyou can faintly hear^000000";
+		mes "^3355FFYou can faintly hear^000000";
 		mes "^3355FFa voice from the other^000000";
 		mes "^3355FFside of this door.^000000";
 		next;
@@ -4170,7 +4172,7 @@ kh_mansion,78,55,5	script	Steward::StewardKHQ1	109,{
 			mes "[Steward]";
 			mes "Ah, Master "+strcharinfo(0)+".";
 			mes "I've been expecting your";
-			mes "arival. Please, this way.";
+			mes "arrival. Please, this way.";
 			close2;
 			warp "kh_mansion",21,14;
 			end;
@@ -4195,7 +4197,7 @@ kh_mansion,78,55,5	script	Steward::StewardKHQ1	109,{
 		mes "[Steward]";
 		mes "Ah, Master "+strcharinfo(0)+".";
 		mes "It is a pleasure to";
-		mes "recieve your company";
+		mes "receive your company";
 		mes "once again. Would you";
 		mes "like to see my master?";
 		next;
@@ -4225,7 +4227,7 @@ kh_mansion,78,55,5	script	Steward::StewardKHQ1	109,{
 		mes "[Steward]";
 		mes "Ah, Master "+strcharinfo(0)+".";
 		mes "It is a pleasure to";
-		mes "recieve your company";
+		mes "receive your company";
 		mes "once again. Would you";
 		mes "like to see my master, or...?";
 		next;
@@ -4252,7 +4254,7 @@ kh_mansion,78,55,5	script	Steward::StewardKHQ1	109,{
 			next;
 			mes "[Steward]";
 			mes "I believe it should";
-			mes "be save enough to let";
+			mes "be safe enough to let";
 			mes "you go see him now...";
 			mes "Please, hurry this way.";
 			close2;
@@ -4275,7 +4277,7 @@ kh_mansion,78,55,5	script	Steward::StewardKHQ1	109,{
 kh_mansion,22,28,4	script	Kiel Hyre	903,{
 	set @now_weight,MaxWeight-Weight;
 	if (@now_weight < 2000) {
-		mes "^3355FFJust as econd...";
+		mes "^3355FFJust a second...";
 		mes "You're carrying too";
 		mes "many items with you";
 		mes "right now, so you'll";
@@ -4380,6 +4382,7 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 		}
 
 		if ((@KHQ1Read == 1) && (@KHQ2Read == 1) && (@KHQ3Read == 1)) {
+			next;
 			mes "[Kiel Hyre]";
 			mes "If you don't have";
 			mes "anymore questions for me,";
@@ -4400,6 +4403,7 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 	}
 
 	else if (KielHyreQuest == 48) {
+		mes "[Kiel Hyre]";
 		mes "Ah, I almost forgot.";
 		mes "Please, take this as";
 		mes "a little reward for";
@@ -4521,7 +4525,7 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 			mes "[Kiel Hyre]";
 			mes "Hahahahahahaha!";
 			mes "Oh, what an imagination~";
-			mes "That's bery ridiculous...";
+			mes "That's very ridiculous...";
 			mes "Though, I admit, maybe";
 			mes "I did design Allysia after";
 			mes "seeing that woman long ago.";
@@ -4565,8 +4569,8 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 				mes "You got me, you got me.";
 				mes "I didn't want you to learn";
 				mes "the truth. You are correct.";
-				mes "I loved Alysia, and designed";
-				mes "my robot to look jus tlike her.";
+				mes "I loved Allysia, and designed";
+				mes "my robot to look just like her.";
 				next;
 				mes "[Kiel Hyre]";
 				mes "I could never forget her.";
@@ -4589,7 +4593,7 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 				mes "evidence shows otherwise.";
 				next;
 
-				switch(select("Reveal Portait of Rosimiers")) {
+				switch(select("Reveal Portrait of Rosimiers")) {
 
 				case 1:
 					mes "["+strcharinfo(0)+"]";
@@ -4601,7 +4605,7 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 					next;
 					cutin "kh_Kyel03",2;
 					mes "[Kiel Hyre]";
-					mes "ASide from that";
+					mes "Aside from that";
 					mes "James Rosimier, you";
 					mes "mean? No! I don't see";
 					mes "anything wrong with";
@@ -4699,7 +4703,7 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 							mes "According to this note,";
 							mes "you told Allysia that you";
 							mes "wanted to see her again";
-							mes "at the place you first med.";
+							mes "at the place you first met.";
 							mes "I think you did see her again...";
 							mes "on August 19th, the day she died!";
 							next;
@@ -5092,7 +5096,7 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 		mes "be, I've got to stop him! Oh,";
 		mes "and here, please take this";
 		mes "with my thanks for all of";
-		mes "your help, "+@KHTitle+". "+strcharinfo(0)+".";
+		mes "your help, "+@KHTitle$+" "+strcharinfo(0)+".";
 		getitem 616,1;  //Old card Album
 		delitem 7508,1; //Elisia's_Ring
 		delitem 7487,1; //Culinary_Wine
@@ -5188,7 +5192,7 @@ kh_mansion,18,30,4	script	Allysia	894,{
 				next;
 				mes "[Allysia]";
 				mes "My central processing unit,";
-				mes "equivilent to your brain, is";
+				mes "equivalent to your brain, is";
 				mes "essentially a Memory Scroll";
 				mes "based on the design of the";
 				mes "Magic Spell Scrolls that you";
@@ -5201,6 +5205,7 @@ kh_mansion,18,30,4	script	Allysia	894,{
 				mes "process a limited amount of";
 				mes "data. Therefore, I can't express";
 				mes "emotion similarly to a human.";
+				next;
 				break;
 
 			case 2:
@@ -5234,7 +5239,7 @@ kh_mansion,18,30,4	script	Allysia	894,{
 				mes "more powerful than ordinary";
 				mes "Memory Scrolls, they were";
 				mes "problematic and were prone";
-				mes "to too many error problems";
+				mes "to too many error problems.";
 				next;
 				mes "[Allysia]";
 				mes "Second Generation robots";
@@ -5243,6 +5248,7 @@ kh_mansion,18,30,4	script	Allysia	894,{
 				mes "production halted after six";
 				mes "years because they were";
 				mes "considered faulty.";
+				next;
 				break;
 
 			case 3:
@@ -5283,6 +5289,7 @@ kh_mansion,18,30,4	script	Allysia	894,{
 				mes "robots can interact just like";
 				mes "real humans is proof of our";
 				mes "success in robotics.";
+				next;
 				break;
 
 			}
@@ -5318,8 +5325,8 @@ OnTouch:
 		mes "^3355FFAs you walked out of^000000";
 		mes "^3355FFthe mansion, something^000000";
 		mes "^3355FFsmashed the top of your^000000";
-		mes "^3355FFhead, and you instnatly^000000";
-		mes "^3355FFlose consiousness...^000000";
+		mes "^3355FFhead, and you instantly^000000";
+		mes "^3355FFlose consciousness...^000000";
 		close2;
 		percentheal -99,0;
 		warp "kh_mansion",30,75;
@@ -5340,7 +5347,7 @@ L_StartDialog:
 		next;
 		mes "[??????]";
 		mes "Hm? Oh, you're awake";
-		mes "earlier than I though.";
+		mes "earlier than I thought.";
 		mes "You must feel confused,";
 		mes "but listen carefully. If you";
 		mes "don't, then I can't guarantee";
@@ -5490,7 +5497,7 @@ L_StartDialog:
 			mes "in our investigation.";
 			next;
 
-			switch(select("OKay","......")) {
+			switch(select("Okay","......")) {
 
 			case 1:
 				L_Help:
@@ -5830,7 +5837,7 @@ yuno,250,132,2	script	Old Lady	711,{
 				mes "Oh, Allysia was such";
 				mes "a beautiful girl. So many";
 				mes "men wanted her, especially";
-				mes "that dashing Games Rosimier.";
+				mes "that dashing James Rosimier.";
 				mes "I remember hearing that they";
 				mes "were going to get married...";
 				next;
@@ -5862,7 +5869,7 @@ yuno,250,132,2	script	Old Lady	711,{
 					mes "key to the Rosimier Mansion.";
 					next;
 
-					switch(select("may I borrow the Master Key?")) { 
+					switch(select("May I borrow the Master Key?")) { 
 
 					case 1:
 						mes "[Old Lady]";
@@ -5936,8 +5943,8 @@ yuno,250,132,2	script	Old Lady	711,{
 			mes "Time went by, and he";
 			mes "was forced to marry his";
 			mes "fiancee. Allysia was pretty";
-			mes "devistated. I think maybe";
-			mes "that's wht she... you know...";
+			mes "devastated. I think maybe";
+			mes "that's what she... you know...";
 			next;
 			mes "[Old Lady]";
 			mes "Listen, if you want to learn";
@@ -5975,7 +5982,14 @@ yuno,250,132,2	script	Old Lady	711,{
 yuno,273,141,0	script	Rosimmir_Entrance	45,2,2,{
 OnTouch:
 	if (countitem(7498) < 1)
-		warp "yuno",270,141;
+	{
+		mes "That mansion seems to have";
+		mes "been destroyed by the time.";
+		mes "However, the door looks like";
+		mes "it'd be still operational if";
+		mes "you had the right key.";
+		close;
+	}
 	else 
 		warp "kh_rossi",20,92;
 	end;
@@ -6096,10 +6110,10 @@ kh_rossi,144,287,0	script	Desk::DeskKHQ2	111,{
 	}
 
 	mes "^3355FFThe desk has^000000";
-	mes "^3355FFthree drawers^000000";
+	mes "^3355FFthree drawers.^000000";
 	next;
 
-	switch(select("First Drawer","Second Drawer","Third Drawer","Cance;")) {
+	switch(select("First Drawer","Second Drawer","Third Drawer","Cancel")) {
 
 	case 1:
 		mes "^3355FFThe first drawer is locked.^000000";
@@ -6167,7 +6181,7 @@ kh_rossi,149,288,0	script	Bookshelf::BookshelfKHQ2	111,{
 	else {
 		mes "^3355FFYou encounter a dusty ^000000";
 		mes "^3355FFbookshelf filled with^000000";
-		mes "^3355FFnumerous books. You^000000";
+		mes "^3355FFnumerous books.^000000";
 		close;
 	}
 
@@ -7054,7 +7068,9 @@ kh_kiehl02,50,52,4	script	Kiehl#Original	902,{
 	if ((KielHyreQuest < 94) || (KielHyreQuest >= 106)) {
 		mes "[Kiehl]";
 		mes ".........";
-		close;
+		close2;
+		cutin "",255;
+		end;
 	}
 
 	if ((KielHyreQuest == 94) && (getvariableofnpc(.KHKilled,"KiehlRoom") < 5)) {

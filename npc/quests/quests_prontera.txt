@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.7b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -29,6 +29,7 @@
 //= 1.6 Added Gaebolg Family Curse quest. [L0ne_W0lf]
 //= 1.6a Fixed a couple spelling mistakes. [L0ne_W0lf]
 //= 1.7 Updated "Ph.D Quest" Dialogs. [Samuray22]
+//= 1.7b Fixed some minor typos. [SinSloth]
 //============================================================ 
 
 // Prontera Culvert
@@ -798,7 +799,7 @@ yuno,311,195,3	script	Historian#prt01	754,{
 		mes "With the return of peace,";
 		mes "the 7 warriors established";
 		mes "the Rune-Midgarts Kingdom,";
-		mes "choosing Tritram Gaebolg III";
+		mes "choosing Tristram Gaebolg III";
 		mes "as the kingdom's first ruler. ";
 		next;
 		mes "[Historian]";
@@ -962,7 +963,7 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 		mes "have to be so hot? This";
 		mes "can't be good for my skin...";
 		mes "Ooh, I wish I were back home";
-		mes "in the Scwaltzvalt Republic~";
+		mes "in the Schwaltzvalt Republic~";
 		Emotion e_sob;
 		next;
 		mes "[Historian Rodafrian]";
@@ -1052,6 +1053,8 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 				mes "^FF0000*The eagle of the rainbow*^000000";
 				mes "^FF0000*swallowed the serpent.*^000000";
 				mes "......................";
+				next;
+				input .@answer$;
 				if (.@answer$ == "Then the eagle built its nest.") {
 					mes "[Historian Rodafrian]";
 					mes "Really? That makes";
@@ -2315,7 +2318,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "Tristram would become the";
 		mes "first king of the Rune-Midgarts";
 		mes "Kingdom, but his family would";
-		mes "suffer from the cursed placed";
+		mes "suffer from the curse placed";
 		mes "by Jormungand before its defeat. ";
 		next;
 		mes "[Father Bamph]";
@@ -2901,7 +2904,7 @@ prt_church,16,114,4	script	Father Bamph#tomb	60,{
 	if (prt_curse == 18) {
 		mes "[Father Bamph]";
 		mes "There are the bodies";
-		mes "of the Gaeblog princes";
+		mes "of the Gaebolg princes";
 		mes "that were killed during";
 		mes "the exorcism. Please take";
 		mes "a look at the body to the left.";

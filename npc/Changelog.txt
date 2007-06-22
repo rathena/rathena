@@ -1,5 +1,7 @@
 Date		Added
 ======
+2004/06/22
+	* Fixed some typos to Kiel Hyre and Curse of Gaebolg quest. [SinSloth]
 2007/06/21
 	* Update to the eAAC Scripts (don't ask...) [eAAC]
 	* Fixed a small bug in Dandelion's Request. [SinSloth]
