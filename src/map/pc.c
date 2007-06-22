@@ -877,10 +877,11 @@ int pc_reg_received(struct map_session_data *sd)
 	if (sd->status.guild_id > 0 && (g=guild_search(sd->status.guild_id)) == NULL)
 		guild_request_info(sd->status.guild_id);
 	else if (g && strcmp(sd->status.name,g->master) == 0)
-	{	//Block Guild Skills to prevent logout/login reuse exploiting. [Skotlex]
-		guild_block_skill(sd, 300000);
-		//Also set the Guild Master flag.
+	{
+		// set the Guild Master flag
 		sd->state.gmaster_flag = g;
+		// (optionally) block Guild Skills to prevent logout/login reuse
+		//guild_block_skill(sd, 300000);
 	}
 
 	status_calc_pc(sd,1);

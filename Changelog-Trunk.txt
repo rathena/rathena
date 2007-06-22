@@ -3,6 +3,16 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/06/22
+	* Changed behavior of some guild-related code (according to X.4 tests):
+	- removed code that prevented Homunculus Resurrection during WoE
+	- logging in doesn't activate the 5 minute guild skill block anymore
+	- non-Urgent guild skills can now only be cast on WoE grounds during WoE
+	- all guild skills now have no cast delay (previously was 1 second)
+	- casting guild skills will now block FreeCast sages from walking
+	- Battle Orders and Regeneration are now instacast
+	- Restoration now has a 10 second cast time, reducible only by dex
+	- Urgent Call's cast cannot be reduced anymore (not even by items)
 2007/06/15
 	* Fixed script command sc_end not supporting the extra argument as stated 
 	  in script_commands.txt.

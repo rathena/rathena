@@ -909,10 +909,9 @@ int skillnotok (int skillid, struct map_session_data *sd)
 			}
 			break;
 		case GD_EMERGENCYCALL:
-			if ( //No use map_flag_gvg since config already takes that into account
+			if (
 				!(battle_config.emergency_call&(agit_flag?2:1)) ||
-				!(battle_config.emergency_call&
-					(map[m].flag.gvg || map[m].flag.gvg_castle?8:4)) ||
+				!(battle_config.emergency_call&(map[m].flag.gvg || map[m].flag.gvg_castle?8:4)) ||
 				(battle_config.emergency_call&16 && map[m].flag.nowarpto && !map[m].flag.gvg_castle)
 			)	{
 				clif_skill_fail(sd,skillid,0,0);
@@ -3469,7 +3468,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				per = sper = 100;
 			if (status_revive(bl, per, sper))
 			{
-				clif_skill_nodamage(src,bl,ALL_RESURRECTION,skilllv,1); //Both Redemption and Res show this skill-animation.
+				clif_skill_nodamage(src,bl,ALL_RESURRECTION,skilllv,1); //Both Redemptio and Res show this skill-animation.
 				if(sd && dstsd && battle_config.resurrection_exp > 0) 
 				{
 					int exp = 0,jexp = 0;
@@ -3503,10 +3502,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					23+skilllv*4 +status_get_lv(src) -status_get_lv(bl),
 					skilllv,60000);
 		} else {
-			map_foreachinrange(skill_area_sub, src,
-				skill_get_splash(skillid, skilllv), BL_CHAR,
-				src, skillid, skilllv, tick, flag|BCT_ENEMY|1,
-				skill_castend_nodamage_id);
+			map_foreachinrange(skill_area_sub, src, skill_get_splash(skillid, skilllv), BL_CHAR,
+				src, skillid, skilllv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 			clif_skill_nodamage(src, bl, skillid, skilllv, 1);
 		}
 		break;
@@ -3524,8 +3521,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		}
 		//Affect all targets on splash area.
 		map_foreachinrange(skill_area_sub, bl, i, BL_CHAR,
-			src, skillid, skilllv, tick, flag|1,
-			skill_castend_damage_id);
+			src, skillid, skilllv, tick, flag|1, skill_castend_damage_id);
 		break;
 	case SA_ABRACADABRA:
 		{
@@ -3565,12 +3561,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					if (ud->target)
 						target_id = ud->target;
 					else switch (src->type) {
-						case BL_MOB:
-							target_id = ((TBL_MOB*)src)->target_id;
-							break;
-						case BL_PET:
-							target_id = ((TBL_PET*)src)->target_id;
-							break;
+						case BL_MOB: target_id = ((TBL_MOB*)src)->target_id; break;
+						case BL_PET: target_id = ((TBL_PET*)src)->target_id; break;
 					}
 					if (!target_id)
 						break;
@@ -3749,28 +3741,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case TK_SEVENWIND:
-		switch(skill_get_pl(skillid,skilllv)){
-			case ELE_EARTH:
-				type=SC_EARTHWEAPON;
-				break;
-			case ELE_WIND:
-				type=SC_WINDWEAPON;
-				break;
-			case ELE_WATER:
-				type=SC_WATERWEAPON;
-				break;
-			case ELE_FIRE:
-				type=SC_FIREWEAPON;
-				break;
-			case ELE_GHOST:
-				type=SC_GHOSTWEAPON;
-				break;
-			case ELE_DARK:
-				type=SC_SHADOWWEAPON;
-				break;
-			case ELE_HOLY:
-				type=SC_ASPERSIO;
-				break;
+		switch(skill_get_pl(skillid,skilllv)) {
+			case ELE_EARTH : type = SC_EARTHWEAPON;  break;
+			case ELE_WIND  : type = SC_WINDWEAPON;   break;
+			case ELE_WATER : type = SC_WATERWEAPON;  break;
+			case ELE_FIRE  : type = SC_FIREWEAPON;   break;
+			case ELE_GHOST : type = SC_GHOSTWEAPON;  break;
+			case ELE_DARK  : type = SC_SHADOWWEAPON; break;
+			case ELE_HOLY  : type = SC_ASPERSIO;     break;
 		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
@@ -3783,11 +3761,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	//Passive Magnum, should had been casted on yourself.
 	case SM_MAGNUM:
 		skill_area_temp[1] = 0;
-		map_foreachinrange(skill_area_sub, src,
-			skill_get_splash(skillid, skilllv),BL_CHAR,
-			src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
-			skill_castend_damage_id);
- //Initiate 10% of your damage becomes fire element.
+		map_foreachinrange(skill_area_sub, src, skill_get_splash(skillid, skilllv),BL_CHAR,
+			src,skillid,skilllv,tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
+		//Initiate 10% of your damage becomes fire element.
 		clif_skill_nodamage (src,src,skillid,skilllv,1);
 		sc_start4(src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skillid, skilllv));
 		if (sd) skill_blockpc_start (sd, skillid, skill_get_time(skillid, skilllv));
@@ -3820,12 +3796,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case WS_CARTBOOST:
 	case SN_SIGHT:
 	case WS_MELTDOWN:
-	case WS_OVERTHRUSTMAX:	// Overthrust Max [Celest]
+	case WS_OVERTHRUSTMAX:
 	case ST_REJECTSWORD:
 	case HW_MAGICPOWER:
 	case PF_MEMORIZE:
 	case PA_SACRIFICE:
-	case ASC_EDP:			// [Celest]
+	case ASC_EDP:
 	case NPC_STOP:
 	case WZ_SIGHTBLASTER:
 	case PF_DOUBLECASTING:
@@ -3881,7 +3857,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case AS_ENCHANTPOISON: // Prevent spamming [Valaris]
 		if (sd && dstsd && dstsd->sc.count) {
-			if(dstsd->sc.data[SC_FIREWEAPON].timer != -1 ||
+			if (dstsd->sc.data[SC_FIREWEAPON].timer != -1 ||
 				dstsd->sc.data[SC_WATERWEAPON].timer != -1 ||
 				dstsd->sc.data[SC_WINDWEAPON].timer != -1 ||
 				dstsd->sc.data[SC_EARTHWEAPON].timer != -1 ||
@@ -6308,8 +6284,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case AM_RESURRECTHOMUN:	//[orn]
 		if (sd)
 		{
-			if (map_flag_gvg(src->m) || //No reviving in WoE grounds!
-				!merc_resurrect_homunculus(sd, 20*skilllv, x, y))
+			if (!merc_resurrect_homunculus(sd, 20*skilllv, x, y))
 			{
 				clif_skill_fail(sd,skillid,0,0);
 				break;
@@ -8419,12 +8394,12 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	case GD_BATTLEORDER:
 	case GD_REGENERATION:
 	case GD_RESTORE:
-		//Emergency Recall is handled on skillnotok
-		if (!agit_flag) {
+		if (!map_flag_gvg(sd->bl.m)) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}
 	case GD_EMERGENCYCALL:
+		// other checks were already done in skillnotok()
 		if (!sd->status.guild_id || !sd->state.gmaster_flag)
 			return 0;
 		break;

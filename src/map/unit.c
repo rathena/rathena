@@ -698,9 +698,9 @@ int unit_can_move(struct block_list *bl)
 	
 	if (!ud)
 		return 0;
-	
-	if (ud->skilltimer != -1 && (!sd || pc_checkskill(sd, SA_FREECAST) <= 0))
-		return 0;
+
+	if (ud->skilltimer != -1 && (!sd || !pc_checkskill(sd, SA_FREECAST) || skill_get_inf2(ud->skillid)&INF2_GUILD_SKILL))
+		return 0; // prevent moving while casting
 		
 	if (DIFF_TICK(ud->canmove_tick, gettick()) > 0)
 		return 0;
