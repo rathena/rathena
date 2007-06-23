@@ -378,7 +378,7 @@ ra_temin,228,303,5	script	Freya's Follower#in1	927,{
 	mes "praying so hard for Freya's";
 	mes "second coming. I'm exhausted,";
 	mes "but I feel pretty good about";
-	mes "making that small sacrafice.";
+	mes "making that small sacrifice.";
 	close;
 }
 

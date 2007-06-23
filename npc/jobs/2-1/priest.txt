@@ -1278,7 +1278,7 @@ L_Test3:
 	M_2c:
 
 	mes "[Sister Cecile]";
-	mes "Will you sacrafice yourself for others?";
+	mes "Will you sacrifice yourself for others?";
 	next;
 	menu "Yes.",M_2d, "No.",-;
 

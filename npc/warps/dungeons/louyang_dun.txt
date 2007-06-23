@@ -1,5 +1,5 @@
-//===== Athena Script ========================================
-//= Lou Yang Dungeon Warp Script
+//===== eAthena Script =======================================
+//= Louyang Dungeon Warp Script
 //===== By: ==================================================
 //= Nana (1.0)
 //===== Current Version: =====================================
@@ -7,12 +7,12 @@
 //===== Compatible With: =====================================
 //= Any Athena Version 6.0+
 //===== Description: =========================================
-//= Warp Points for Lou Yang
+//= Warp Points for Louyang
 //===== Additional Comments: =================================
 //= No comment!
 //============================================================
 
-//= Loy Yang Dungeon =========================================
+//= Louyang Dungeon ==========================================
 lou_dun01,222,196,0	warp	louwarp002a	3,3,louyang,41,270
 lou_dun01,38,205,0	warp	louwarp003	3,3,lou_dun02,282,20
 lou_dun02,286,20,0	warp	louwarp003a	3,3,lou_dun01,38,209

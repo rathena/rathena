@@ -2,13 +2,13 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/cbasetypes.h"
+#include "../common/mmo.h"
 #include "../common/core.h"
 #include "../common/socket.h"
 #include "../common/db.h"
 #include "../common/timer.h"
 #include "../common/malloc.h"
 #include "../common/strlib.h"
-#include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/version.h"
 #include "../common/md5calc.h"

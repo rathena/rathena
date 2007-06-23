@@ -1,5 +1,5 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
-// For more information, see LI3CENCE in the main folder
+// For more information, see LICENCE in the main folder
 
 #define DUMP_UNKNOWN_PACKET	0
 #define DUMP_ALL_PACKETS	0
