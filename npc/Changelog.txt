@@ -1,6 +1,16 @@
 Date		Added
 ======
-2004/06/22
+2007/06/25
+	* Rev. 10810 Rather large Kafra update. (May need further testing) [L0ne_W0lf]
+	- Updated a good portion of the kafra functions.
+	- Added proper dialog for most functions.
+	- Updated guild Kafras and some o f their locations. 
+	* Updated all Guide NPCs. They are now mostly 100% official.
+	- Renamed some of the old files to make them look better, IE: yun to juno.
+	- Added Kunlun and Ayotaya guides.
+	* Added the Einbech tool Dealer since it seemed to had gotten lost when I updated shops.
+	* Updated Dye Maker and Hair Dyer to official. 
+2007/06/22
 	* Fixed some typos to Kiel Hyre and Curse of Gaebolg quest. [SinSloth]
 	* Fixed a bug in Bruspetti quest. [SinSloth]
 2007/06/21

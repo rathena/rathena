@@ -18,6 +18,8 @@
 //===== Additional Comments: =================================
 //= v1.2: All Guild kafra scripts use this function. [kobra_k88]
 //= 1.2a Added extra check for Contract with Kafra Guild Skill [Lupus]
+//= 1.2 Kafra's not charge for use of Cart Rentals [L0ne_W0lf]
+//=	Updated dialog and names.
 //============================================================
 
 function	script	F_GKafra	{
@@ -26,13 +28,13 @@ function	script	F_GKafra	{
 	if (getcharid(2) == @GID && getgdskilllv(@GID,10001)) goto L_StartG;
 
 	mes "[Kafra Service]";
-	mes "I am here to serve only ^5533FF" + GetGuildName(@GID) + "^000000 members. Please use different Kafra Service. Thank you.";
+	mes "I am contracted to provide service only for the ^ff0000" + GetGuildName(@GID) + "^000000 Guild. Please use another Kafra Corporation staff member around here. I am Sorry for your inconvenience.";
 	cutin "",255;
 	close;
 L_StartG:
-	set @wrpP[0], 0;
+	set @wrpP[0], 200;
 	set @wrpD$[0], getarg(1);
-	setarray @wrpC$[0], @wrpD$[0], "Cancel", "", "", "","";
-	callfunc "F_Kafra",2,0,0;
+	setarray @wrpC$[0], @wrpD$[0]+" ^880000"+@wrpP[0]+"^000000 z", "Cancel", "", "", "","";
+	callfunc "F_Kafra",2,0,0,0,800;
 	end;
 }

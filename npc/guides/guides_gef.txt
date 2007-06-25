@@ -1,130 +1,168 @@
 //===== eAthena Script ======================================= 
 //= Geffen Guides
 //===== By: ================================================== 
-//= kobra_k88
+//= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
-//= eAthena  0.5.2 +
+//= eAthena  SVN
 //===== Description: ========================================= 
-//=
+//= [Aegis COnversion]
+//= Guides for hte City of Geffen
 //===== Additional Comments: ================================= 
 //= Fully working.  Added a guide at every exit.
 //= v1.1 Now using duplicate command.
 //= 1.2 Optimized, updated common guide names [Lupus]
 //= 1.2a Small note that the BS guild moved to Einbroch [Poki#3]
 //= 1.3 Removed Duplicates [Silent]
+//= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //============================================================
 
-
-// North --------------------------------------------
-geffen,123,202,5	script	Guide#1::Gef_Guide	705,{
+geffen,203,116,0	script	Guide#gef::GefGuide	705,{
 	cutin "gef_soldier",2;
-	mes "[Geffen Soldier]";
-	mes "Welcome to Geffen, the City of Magic.";
-	next;
-	mes "[Geffen Soldier]";
-	mes "We are here to help you find your way.  Please feel free to speak to us anytime you need help.";
-M_Menu:
-	next;
-	menu "View Buildings",-, "Notice",M_2, "Cancel",M_End;
-
-		mes "[Geffen Soldier]";
-		mes "Do you want me to leave indications on the Mini-Map?";
+	mes "[Geffen Guide]";
+	mes "Welcome to Geffen,";
+	mes "the City of Magic. If you";
+	mes "need any guidance around";
+	mes "the city, feel free to ask me";
+	mes "and I'll do my best to assist you. ^FFFFFFcobo^000000";
+	set .@loop1,1;
+	while (.@loop1) {
 		next;
-		menu "No Thanks",-,"Yes Please",sM_1b;
-		
-			set @COMPASS_CHECK,0;
-			goto L_Cont;
-
-		sM_1b:
-			set @COMPASS_CHECK,1;
-
-		L_Cont:
-		mes "[Geffen Soldier]";
-		mes "Please choose a building to view.";
-		next;
-	sM_Menu:
-		menu "^FF0000Magic Acadamy^000000",-, "^00A500Blacksmith Workshop^000000",M_1_2, "^4444FFGeffen Tower^000000",M_1_3,
-			"Armory",M_1_4, "Item Shop",M_1_5, "Pub",M_1_6, "Inn",M_1_7, "Wipe all indications from mini-map",M_1_8, "Cancel", M_End;
-
-			mes "[Geffen Soldier]";
-			mes "'The 'Magic Acadamy' is the home of magical theorists, and the place for would be Mages.";
-			viewpoint 1,61,180,1,0xFF5555;
-			goto sL_Wipe;
-		M_1_2:
-			mes "[Geffen Soldier]";
-			mes "The 'Blacksmith Workshop' is SouthEast of Geffen Tower.";
-			mes "Please note that the Blacksmith training has bean moved to Einbroch.";
-			viewpoint 1,182,59,2,0x44FF44;
-			goto sL_Wipe;
-		M_1_3:
-			mes "[Geffen Soldier]";
-			mes "The lower levels of 'Geffen Tower' are spawning grounds for monsters.  People go there to train.";
-			mes "The top floor of the Tower is home to the ^0000FF'Wizard's Guild'^000000.  Mages can go there to become Wizards.";
-			viewpoint 1,120,120,3,0x5555FF;
-			goto sL_Wipe;
-		M_1_4:
-			mes "[Geffen Soldier]";
-			mes "Head over to the 'Armory' to equip yourself with a variety of weapons and armor.";
-			viewpoint 1,99,140,4,0xFF00FF;
-			goto sL_Wipe;
-		M_1_5:
-			mes "[Geffen Soldier]";
-			mes "The 'Item Shop' is the place to go when you need to stock up on things like potions and fly-wings.";
-			viewpoint 1,44,86,5,0xFF00FF;
-			goto sL_Wipe;
-		M_1_6:
-			mes "[Geffen Soldier]";
-			mes "The 'Pub' is a great place to meet people and have fun.";
-			viewpoint 1,138,138,6,0xF0C40F;
-			goto sL_Wipe;
-		M_1_7:
-			mes "[Geffen Soldier]";
-			mes "The 'Inn' is a good place to rest and replenish your hp and sp.";
-			viewpoint 1,172,174,7,0xFF8000;
-			goto sL_Wipe;
-		M_1_8:
-			set @COMPASS_CHECK, 2;
-
-		sL_Wipe:
-			if(@COMPASS_CHECK != 2) next;	// avoids a double 'next' when 'wipe indications' is chosen
-			if(@COMPASS_CHECK == 1) goto sM_Menu;
-			viewpoint 2,61,180,1,0xFF5555;
-			viewpoint 2,182,59,2,0x44FF44;
-			viewpoint 2,120,120,3,0x5555FF;
-			viewpoint 2,99,140,4,0xFF00FF;
-			viewpoint 2,44,86,5,0xFF00FF;
-			viewpoint 2,138,138,6,0xF0C40F;
-			viewpoint 2,172,174,7,0xFF8000;
-			if (@COMPASS_CHECK == 0) goto sM_Menu;
-			mes "[Geffen Soldier]";
-			mes "All indications have been removed";
-			cutin "gef_soldier",255;
-			close;
-
-	M_2:
-		mes "[Geffen Soldier]";
-		mes "We upgraded the Location Guide to the Newest Digital Style.  We hope you like this gorgeous new system.";
-		next;
-		mes "[Geffen Soldier]";
-		mes "Don't forget to refer to the Mini-Map on the Upper-Right corner of your screen.";
-		next;
-		mes "[Geffen Soldier]";
-		mes "If you can't see the Mini-Map, just hit ^0000ff'ctrl+tab'^000000 or Click the ^0000ff'map'^000000 button in the Basic Information Window";
-		mes "Remeber to use the ^ff0000+,-^000000 buttons to adjust the map to your liking.";
-		goto M_Menu;
-
-	M_End:
-		mes "[Geffen Soldier]";
-		mes "Have a nice day.";
-		cutin "gef_soldier",255;
-		close;
+		switch(select("City Guide:Remove Marks from Mini-Map:Notice.:Cancel")) {
+		case 1:
+			mes "[Geffen Guide]";
+			mes "Please select";
+			mes "a location from";
+			mes "the following menu.";
+			if (compass_check == 0) {
+				mes "Would you like me";
+				mes "to mark locations";
+				mes "on your Mini-Map?";
+				if (select("Yes:No") == 1) set .@compass_check,1;
+			}
+			set .@loop2,1;
+			while (.@loop2) {
+				next;
+				switch(select("^FF0000Magic Acedemy^000000:Forge Shop:Weapon Shop:Tool Shop:Pub:Inn:Geffen Tower:Cancel")) {
+				case 1:
+					mes "[Geffen Guide]";
+					mes "The Magic Academy in";
+					mes "northwest Geffen handles";
+					mes "Job Changes to the Mage class.";
+					if (.@compass_check)
+						viewpoint 1,61,180,2,0xFF0000;
+					break;
+				case 2:
+					mes "[Geffen Guide]";
+					mes "The Forge Shop is";
+					mes "located just southeast";
+					mes "from the center of Geffen.";
+					if (.@compass_check)
+						viewpoint 1,182,59,3,0x00FF00;
+					break;
+				case 3:
+					mes "[Geffen Guide]";
+					mes "The Weapon Shop";
+					mes "can be found northwest";
+					mes "from the center of Geffen.";
+					if (.@compass_check)
+						viewpoint 1,99,140,4,0xFF00FF;
+					break;
+				case 4:
+					mes "[Geffen Guide]";
+					mes "You can find the";
+					mes "Tool Shop by heading";
+					mes "southwest from the";
+					mes "center of Geffen.";
+					if (.@compass_check)
+						viewpoint 1,44,86,5,0xFF00FF;
+					break;
+				case 5:
+					mes "[Geffen Guide]";
+					mes "The Pub can be";
+					mes "found northeast";
+					mes "from the Geffen Tower.";
+					if (.@compass_check)
+						viewpoint 1,138,138,6,0xFF00FF;
+					break;
+				case 6:
+					mes "[Geffen Guide]";
+					mes "The Inn can be";
+					mes "found by traveling";
+					mes "northeast from the";
+					mes "center of Geffen.";
+					if (.@compass_check)
+						viewpoint 1,172,174,7,0xFF00FF;
+					break;
+				case 7:
+					mes "[Geffen Guide]";
+					mes "Geffen Tower is found";
+					mes "in the center of the city.";
+					mes "The Wizard Guild is at the";
+					mes "top, and there's even a dungeon";
+					mes "underneath it. There's many a";
+					mes "mystery surrounding that tower...";
+					if (.@compass_check)
+						viewpoint 1,120,114,8,0x00FF00;
+					break;
+				case 8:
+					mes "[Geffen Guide]";
+					mes "Please ask me to ''Remove";
+					mes "Marks from Mini-Map'' if you";
+					mes "no longer wish to have the";
+					mes "location marks displayed";
+					mes "on your Mini-Map.";
+					set .@loop2,0;
+				}
+			}
+			break;
+		case 2:
+			viewpoint 2,237,41,2,0xFF0000;
+			viewpoint 2,237,41,3,0x00FF00;
+			viewpoint 2,46,345,4,0xFF00FF;
+			viewpoint 2,175,220,5,0xFF00FF;
+			viewpoint 2,134,221,6,0xFF00FF;
+			viewpoint 2,204,214,7,0xFF00FF;
+			viewpoint 2,204,214,8,0x00FF00;
+			set .@compass_check,0;
+			break;
+		case 3:
+			mes "[Geffen Guide]";
+			mes "Advances in sorcery and";
+			mes "technology have allowed";
+			mes "us to update our information";
+			mes "system, enabling up to mark";
+			mes "locations on your Mini-Map";
+			mes "for easier navigation.";
+			next;
+			mes "[Geffen Guide]";
+			mes "Your Mini-Map is located";
+			mes "in the upper right corner";
+			mes "of the screen. If you can't";
+			mes "see it, press the Ctrl + Tab";
+			mes "keys or click the ''Map'' button in your Basic Info Window.";
+			next;
+			mes "[Geffen Guide]";
+			mes "On your Mini-Map,";
+			mes "click on the ''+'' and ''-''";
+			mes "symbols to zoom in and";
+			mes "our of your Mini-Map. We";
+			mes "hope you enjoy your travels";
+			mes "here in the city of Geffen.";
+			break;
+		case 4:
+			mes "[Geffen Guide]";
+			mes "Alright, adventurer.";
+			mes "I wish you safety on";
+			mes "your journeys through";
+			mes "the lands you may travel...";
+			close2;
+			set .@loop1,0;
+		}
+	}
+	cutin "gef_soldier",255;
+	end;
 }
 
-// South ------------------------------------------
-geffen,118,62,0	duplicate(Gef_Guide)	Guide#Gef2	705
-// East -----------------------------------------------------
-geffen,203,116,2	duplicate(Gef_Guide)	Guide#Gef3	705
-// West ----------------------------------------------
-geffen,37,123,5	duplicate(Gef_Guide)	Guide#Gef4	705
+geffen,118,62,0	duplicate(GefGuide)	Guide#2gef	705

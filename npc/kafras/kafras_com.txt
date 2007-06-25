@@ -3,7 +3,7 @@
 //===== By: ============================
 //= eAthena Dev Team
 //===== Current Version: =======================
-//= 2.21
+//= 2.3
 //===== Compatible With: ============================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -13,6 +13,8 @@
 //=  When set to 2 the Guild Kafra message is displayed. 
 //=  arg(1): Set to 1 to disable teleport menu option. Otherwise set to 0.
 //=  arg(2): Set to 1 to disable info menu.  Otherwise set to 0.
+//=  arg(3): Cost of Storage service
+//=  arg(4): Cost of Rent a Pushcart service
 //===== Additional Comments: ==========================================
 //= v1.1 Now using functions :)
 //= v2.1b Minor changes to function calls. Using arguments.
@@ -20,28 +22,36 @@
 //= Corrected savepoint for in town kafra.[kobra_k88]
 //= 2.2 New teleport destinations, prices [Lupus]
 //= 2.21 from Pharos, both warps are now 1200z [Evera]
+//= 2.3 Updated function calls with new arguments. [L0ne_W0lf]
+//=	Added unique Kafra Welcome message2.
 //=====================================================================
 
 
 // In Town ==============================================>\\
-comodo,200,148,4	script	Kafra::kaf_comodo	721,{
+comodo,195,150,4	script	Kafra Employee::kaf_comodo	721,{
 	cutin "kafra_07",2;
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
-	setarray @wrpD$[0], "Morroc", "Comodo Pharos Lighthouse", "Umbala";
+	setarray @wrpD$[0], "Morroc", "Comodo Pharos Beacon", "Umbala";
 	setarray @wrpP[0], 1800, 1200, 1800;
 	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
 	set @wrpC$[1], @wrpD$[1]+" -> "+@wrpP[1];
 	set @wrpC$[2], @wrpD$[2]+" -> "+@wrpP[2];
 	set @wrpC$[3], "Cancel";
-	callfunc "F_Kafra",0,0,1;
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "You know that our";
+	mes "service is always";
+	mes "on your side~";
+	callfunc "F_Kafra",5,0,1,80,1000;
 
 	M_Save:
 		savepoint "comodo",204,143;
-		callfunc "F_KafEnd",0,1;
+		callfunc "F_KafEnd",0,1,"in Pyros Lighthouse";
 }
 
 // Comodo Pharos Lighthouse (Beacon Island) ===================>\\
-cmd_fild07,135,134,4	script	Kafra::kaf_cmd_fild07	721,{
+cmd_fild07,136,134,4	script	Kafra Employee::kaf_cmd_fild07	721,{
 	cutin "kafra_07",2;
 	cleararray @wrpC$[0],"",getarraysize(@wrpC$);
 	setarray @wrpD$[0], "Comodo", "Morroc";
@@ -49,9 +59,15 @@ cmd_fild07,135,134,4	script	Kafra::kaf_cmd_fild07	721,{
 	set @wrpC$[0], @wrpD$[0]+" -> "+@wrpP[0];
 	set @wrpC$[1], @wrpD$[1]+" -> "+@wrpP[1];
 	set @wrpC$[2], "Cancel";
-	callfunc "F_Kafra",0,0,1;
+	mes "[Kafra Employee]";
+	mes "Welcome to the";
+	mes "Kafra Corporation.";
+	mes "You know that our";
+	mes "service is always";
+	mes "on your side~";
+	callfunc "F_Kafra",5,0,1,80,1000;
 
 	M_Save:
 		savepoint "cmd_fild07",127,134;
-		callfunc "F_KafEnd",0,1;
+		callfunc "F_KafEnd",0,1,"in the town of Comodo";
 }

@@ -1,13 +1,14 @@
 //===== eAthena Script ======================================= 
 //= Alberta Guides
 //===== By: ================================================== 
-//= kobra_k88
+//= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
-//= eAthena  0.5.2 +
+//= eAthena  SVN
 //===== Description: ========================================= 
-//=
+//= [Aegis Conversion]
+//= Guides for the city of Alberta
 //===== Additional Comments: ================================= 
 //= Fully working
 //= 1.1 Fixed Armory coords, thanks to Freya team
@@ -15,97 +16,140 @@
 //= 1.3 Updated the guide according to how it is on iRO, thanks [MasterOfMuppets]
 //=     to Muad_Dib
 //= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
+//= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //============================================================ 
 
-//North
-alberta,23,238,4	script	Guide::Alb_Guide	105,{
+alberta,23,238,4	script	Guide#alb::AlbGuide	105,{
 	cutin "prt_soldier",2;
 	mes "[Alberta Guide]";
-	mes "Welcome to Alberta, the Port City.";
-	mes "Feel free to ask me if you're having trouble finding anything in town, or if you just need guidance around the city.";
-L_MENU:
-	next;
-	menu "City Guide",L_CITY,"Remove Marks from Mini-Map",L_REMOVE,"Notice",L_NOTICE,"Cancel",L_END;
-L_CITY:
-	mes "[Alberta Guide]";
-  	mes "Please select a location from the following menu.";
-  	mes "Would you like me to mark locations on your Mini-Map?";
-  	next;
-  	menu "Yes.",L_YES,"No.",L_NO;
-L_NO:
-  		set @COMPASS_CHECK,0;
-	goto L_CONT;
-L_YES:
-  		set @COMPASS_CHECK,1;
-L_CONT:
-L_MENU_2:
-	menu "^FF0000Merchant Guild^000000",L_MERCHANT,"Weapon Shop",L_WEAPON,"Tool Shop",L_TOOL,"Inn",L_INN,"Forge",L_FORGE,"Cancel",-;
-	mes "[Alberta Guide]";
- 	mes "Please ask me to Remove marks from Mini-Map if you no longer wish to have the location marks displayed on your Mini-Map.";
- 	goto L_MENU;
-L_MERCHANT:
-	mes "[Alberta Guide]";
-	mes "The Merchant Guild, handles Job Changes to the Merchant Class, and is located in the southwest corner of Alberta.";
-	viewpoint 1,33,41,1,0xFF0000;
-	next; 
-	goto L_WIPE;
-L_WEAPON:
-	mes "[Alberta Guide]";
-	mes "The Weapon Shop can be found in the southern end of Alberta.";
-	viewpoint 1,117,37,2,0xFF00FF;
-	next; 
-	goto L_WIPE;
-L_TOOL:
-	mes "[Alberta Guide]";
-	mes "The Tool Shop is kind of close to the center of Alberta. It shouldn't be too hard to find.";
-	viewpoint 1,98,154,3,0xFF00FF;
-	next; 
-	goto L_WIPE;
-L_INN:
-	mes "[Alberta Guide]";
-	mes "There's and Inn at the northern end of Alberta where you can rest.";
-	viewpoint 1,65,233,4,0xFF00FF;
-	next; 
-	goto L_WIPE;
-L_FORGE:
-	mes "[Alberta Guide]";
-	mes "The Forge in Alberta is in the same building as the Merchant Guild. It's to the southwest.";
-	viewpoint 1,33,41,5,0xFF00FF;
-	next; 
-	goto L_WIPE;
-L_WIPE:
- 		if(@COMPASS_CHECK == 1)goto L_MENU_2;
-		viewpoint 2,33,41,1,0xFF0000;
-		viewpoint 2,117,37,2,0xFF00FF;
-		viewpoint 2,98,154,3,0xFF00FF;
-		viewpoint 2,65,233,4,0xFF00FF;
-		viewpoint 2,33,41,5,0xFF00FF;
-	goto L_MENU_2;
-L_REMOVE:
-		viewpoint 2,33,41,1,0xFF0000;
-		viewpoint 2,117,37,2,0xFF00FF;
-		viewpoint 2,98,154,3,0xFF00FF;
-		viewpoint 2,65,233,4,0xFF00FF;
-		viewpoint 2,33,41,5,0xFF00FF;
-  	goto L_MENU;
-L_NOTICE:
- 	mes "[Alberta Guide]";
- 	mes "Advances in sorcery and technology have allowed us to update our information system, enabling up to mark locations on your Mini-Map for easier navigation.";
-  	next;
-  	mes "[Alberta Guide]";
-  	mes "Your Mini-Map is located in the upper right corner of the screen.";
-	mes "If you can't see it, press the Ctrl + Tab keys or click the 'Map' button in your Basic Information Window.";
-  	next;
-  	mes "[Alberta Guide]";
- 	mes "On your Mini-Map, click on the '+' and '-' symbols to zoom in and out of your Mini-Map.";
-	mes "We hope you enjoy your travels here in the city of Alberta.";
- 	goto L_MENU;
-L_END:
- 	mes "[Alberta Guide]";
- 	mes "Be safe when you travel and don't hesitate to ask me if you have any questions about Alberta.";
-	cutin "prt_soldier",255; 
- 	close;
+	mes "Welcome to Alberta,";
+	mes "the Port City. Feel free";
+	mes "to ask me if you're having";
+	mes "trouble finding anything in";
+	mes "town, or if you just need";
+	mes "guidance around the city.";
+	set .@loop1,1;
+	while (.@loop1) {
+		next;
+		switch(select("City Guide:Remove Marks from Mini-Map:Notice:Cancel")) {
+		case 1:
+			mes "[Alberta Guide]";
+			mes "Please select";
+			mes "a location from";
+			mes "the following menu.";
+			if (.@compass_check == 0) {
+				mes "Would you like me";
+				mes "to mark locations";
+				mes "on your Mini-Map?";
+				next;
+				if (select("Yes:No") == 1) set .@compass_check,1;
+			}
+			set .@loop2,1;
+			while (.@loop2) {
+				next;
+				switch(select("^FF0000Merchant Guild^000000:Weapon Shop:Tool Shop:Inn:Forge:Cancel")) {
+				case 1:
+					mes "[Alberta Guide]";
+					mes "The Merchant Guild";
+					mes "handles Job Changes";
+					mes "to the Merchant Class,";
+					mes "and is located in the";
+					mes "southwest corner";
+					mes "of Alberta.";
+					if (.@compass_check)
+						viewpoint 1,33,41,2,0xFF0000;
+					break;
+				case 2:
+					mes "[Alberta Guide]";
+					mes "The Weapon Shop";
+					mes "can be found in the";
+					mes "southern end of Alberta.";
+					if (.@compass_check)
+						viewpoint 1,117,37,3,0xFF00FF;
+					break;
+				case 3:
+					mes "[Alberta Guide]";
+					mes "The Tool Shop";
+					mes "is kind of close";
+					mes "to the center of";
+					mes "Alberta. It shouldn't";
+					mes "be too hard to find.";
+					if (.@compass_check)
+						viewpoint 1,98,154,4,0xFFFF00FF;
+					break;
+				case 4:
+					mes "[Alberta Guide]";
+					mes "There's an Inn";
+					mes "at the northern";
+					mes "end of Alberta";
+					mes "where you can rest.";
+					if (.@compass_check)
+						viewpoint 1,65,233,5,0xFF00FF;
+					break;
+				case 5:
+					mes "[Alberta Guide]";
+					mes "The Forge in Alberta";
+					mes "is in the same building";
+					mes "as the Merchant Guild.";
+					mes "It's to the southwest.";
+					if (.@compass_check)
+						viewpoint 1,35,41,6,0xFF00FF;
+					break;
+				case 6:
+					mes "[Alberta Guide]";
+					mes "Please ask me to ''Remove";
+					mes "Marks from Mini-Map'' if you";
+					mes "no longer wish to have the";
+					mes "location marks displayed";
+					mes "on your Mini-Map.";
+					set .@loop2,0;
+				}
+			}
+			break;
+		case 2:
+			viewpoint 2,237,41,2,0xFF0000;
+			viewpoint 2,237,41,3,0xFF00FF;
+			viewpoint 2,46,345,4,0xFF00FF;
+			viewpoint 2,175,220,5,0xFF00FF;
+			viewpoint 2,175,220,6,0xFF00FF;
+			set .@compass_check,0;
+			break;
+		case 3:
+			mes "[Alberta Guide]";
+			mes "Advances in sorcery and";
+			mes "technology have allowed";
+			mes "us to update our information";
+			mes "system, enabling up to mark";
+			mes "locations on your Mini-Map";
+			mes "for easier navigation.";
+			next;
+			mes "[Alberta Guide]";
+			mes "Your Mini-Map is located";
+			mes "in the upper right corner";
+			mes "of the screen. If you can't";
+			mes "see it, press the Ctrl + Tab";
+			mes "keys or click the ''Map'' button in your Basic Info Window.";
+			next;
+			mes "[Alberta Guide]";
+			mes "On your Mini-Map,";
+			mes "click on the ''+'' and ''-''";
+			mes "symbols to zoom in and";
+			mes "our of your Mini-Map. We";
+			mes "hope you enjoy your travels";
+			mes "here in the city of Alberta.";
+			break;
+		case 4:
+			mes "[Alberta Guide]";
+			mes "Be safe when you";
+			mes "travel and don't hesitate";
+			mes "to ask me if you have any";
+			mes "questions about Alberta.";
+			close2;
+			set .@loop1,0;
+		}
+	}
+	cutin "prt_soldier",255;
+	end;
 }
 
-// South --------------------------------------------------------
-alberta,120,60,3	duplicate(Alb_Guide)	Guide#2	105
+alberta,120,60,3	duplicate(AlbGuide)	Guide#2alb	105

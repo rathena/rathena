@@ -4,7 +4,7 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -27,6 +27,7 @@
 //= 1.3 Added code for abandoning captured castles on /breakguild [Lupus]
 //= 1.3a fixed Defence / Economy underflow [Lupus] thanks2 kyoki
 //= 1.4 updated a couple mapannounces in OnAgitBreak. [L0ne_W0lf]
+//= 1.5 Changed hte names of the Kafra from "Service" to "Staff" [L0ne_W0lf]
 //============================================================
 
 
@@ -118,7 +119,7 @@ function	script	F_GuildBreak	{
 	killmonsterall getarg(0);
 
 	Announce "Guild Base [" + GetCastleName(getarg(0)) + "] has been abandoned.",0;
-	disablenpc "Kafra Service#"+getarg(1);
+	disablenpc "Kafra Staff#"+getarg(1);
 
 	SetCastleData getarg(0),0,0;
 	return;
@@ -143,7 +144,7 @@ function	script	F_AgitBreak	{
 	Announce "The [" + GetCastleName(getarg(0)) + "] castle has been conquered by the [" + GetGuildName(@GID) + "] guild.",bc_map;
 	GetCastleData getarg(0),0,"::OnRecvCastle"+getarg(1);
 
-	disablenpc "Kafra Service#"+getarg(1);
+	disablenpc "Kafra Staff#"+getarg(1);
 	set @i, 3;
 
 	L_Loop:

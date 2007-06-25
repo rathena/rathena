@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= jAthena - kalen (1.0) & eAthena Team
 //===== Current Version: =====================================
-//= 1.6b
+//= 1.7
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -30,6 +30,7 @@
 //= 1.6 According to recent info u can re-install Guardians during WoE [Lupus]
 //= 1.6a Fix for guild manager recognizing [KarLaeda]
 //= 1.6b Fixed the chance for double invest, now 50% instead of 49% [Lupus]
+//= 1.7 Changed hte names of the Kafra from "Service" to "Staff" [L0ne_W0lf]
 //============================================================
 
 
@@ -58,11 +59,11 @@ function	script	F_GldManager	{
 
 	//Novice Castles. (we don't need ELSE here. Menu has direct labels)
 	if(getarg(1) == "nguild_prt" || getarg(1) == "nguild_alde" || getarg(1) == "nguild_gef" || getarg(1) == "nguild_pay" )
-		menu "Kafra Service Employment / Dismissal",M_Kaf, "Enter Treasure Room",M_Treas, "Cancel",M_End;
+		menu "Kafra Staff Employment / Dismissal",M_Kaf, "Enter Treasure Room",M_Treas, "Cancel",M_End;
 
 	//Common WoE Castles	
 	menu 	"Guild Base Briefing",M_Base, "Commerce Investment",M_Comrc, "Defence Investment",M_Def, "Guardian Installation",M_Guard, 
-		"Kafra Service Employment / Dismissal",M_Kaf, "Enter Treasure Room",M_Treas, "Cancel",M_End;
+		"Kafra Staff Employment / Dismissal",M_Kaf, "Enter Treasure Room",M_Treas, "Cancel",M_End;
 
 	//========================
 	M_Base:
@@ -325,7 +326,7 @@ function	script	F_GldManager	{
 		mes "[ "+getarg(0)+" ]";
 		if (GetCastleData(getarg(1),9) == 1) goto L_Dismiss;
 		if (getgdskilllv(@GID,10001) == 0){
-			mes "Master, you don't have a contract with the Kafra Service Company.";
+			mes "Master, you don't have a contract with the Kafra Staff Company.";
 			mes "In order to hire a Kafra, you must first learn the Guild skill ^5533FFContract With Kafra^000000.";
 			return 0;
 		}
@@ -341,18 +342,18 @@ function	script	F_GldManager	{
 					return 0;
 				}
 				set Zeny,Zeny-10000;
-				enablenpc "Kafra Service#"+getarg(4);
+				enablenpc "Kafra Staff#"+getarg(4);
 				SetCastleData getarg(1),9,1;
-				mes "You have created a contract with the Kafra Service Company.";
+				mes "You have created a contract with the Kafra Staff Company.";
 				next;
 				cutin "kafra_01",2;
-				mes "[ Kafra Service ]";
+				mes "[ Kafra Staff ]";
 				mes "How do you do? I'm here to provide you with helpful service! I'll do the best I can to serve you.";
 				next;
 				cutin "kafra_01",255;
 				mes "[ "+getarg(0)+" ]";
 				//mes "Your employment contract lasts ^5533FF1 month^000000.  After this term is over you will have to create a new contract.";
-				mes "I think the Kafra Service will benefit our guild members.";
+				mes "I think the Kafra Staff will benefit our guild members.";
 				return 0;
 
 			sM_KafEnd:
@@ -366,28 +367,28 @@ function	script	F_GldManager	{
 			menu "Dismissal",-,"Cancel",sM_KafEnd2;
 
 				cutin "kafra_01",2;
-				mes "[ Kafra Service ]";
+				mes "[ Kafra Staff ]";
 				mes "Have I done anything wrong? If I did, will you please forgive me?";
 				next;
 				menu "Dismiss",-,"Cancel",ssM_KafEnd2;
 
-					mes "[ Kafra Service ]";
+					mes "[ Kafra Staff ]";
 					mes "It's unfortunate that I won't be able to serve your guild anymore....";
 					next;
-					disablenpc "Kafra Service#"+getarg(4);
+					disablenpc "Kafra Staff#"+getarg(4);
 					SetCastleData getarg(1),9,0;
 					cutin "kafra_01",255;
 					mes "[ "+getarg(0)+" ]";
 					mes "The Kafra has been dismissed.  But... we should really get a Kafra as soon as possible!";
 					return 0;
 				ssM_KafEnd2:
-					mes "[ Kafra Service ]";
+					mes "[ Kafra Staff ]";
 					mes "Thank you master, I'll do my best! ^^.";
 					cutin "kafra_01",255;
 					return 0;
 			sM_KafEnd2:
 				mes "[ "+getarg(0)+" ]";
-				mes "Master, I think you should keep the current Kafra Service because she is already trying her best to serve us";
+				mes "Master, I think you should keep the current Kafra Staff because she is already trying her best to serve us";
 				return 0;
 
 	//=========================

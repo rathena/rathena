@@ -1,0 +1,66 @@
+//===== eAthena Script ======================================= 
+//= Kunlun Guides
+//===== By: ================================================== 
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena  SVN
+//===== Description: ========================================= 
+//= [Aegis COnversion]
+//= Guides for the City of Kunlun
+//===== Additional Comments: ================================= 
+//= 1.0 First version [L0ne_W0lf]
+//============================================================
+
+gonryun,163,60,4	script	Kunlun Guide#gon	780,{
+	mes "[He Yuen Zhe]";
+	mes "Ni Hao!";
+	mes "Welcome to Kunlun~";
+	mes "Take a walk around and experience";
+	mes "the ancient history and tradition";
+	mes "of our breath taking city.";
+	next;
+	mes "[He Yuen Zhe]";
+	mes "I am responsible for helping you";
+	mes "with any questions you may have.";
+	mes "Please feel free to ask me anything.";
+	next;
+	switch(select("Residence of the Chief:Tool Dealer:Weapon Dealer:Armor Dealer:Wine Maker")) {
+	case 1:
+		viewpoint 1,109,131,0,0xFF3355;
+		mes "[He Yuen Zhe]";
+		mes "Please follow your minimap, and head over to the ^FF3355+^000000 mark.";
+		mes "There, you'll get to the residence of the Chief. Enjoy your stay in lovely Kunlun!";
+		mes "Xie Xie!";
+		close;
+	case 2:
+		viewpoint 1,147,82,1,0xCE6300;
+		mes "[He Yuen Zhe]";
+		mes "Please follow your minimap, and head over to the ^CE6300+^000000 mark.";
+		mes "There, you'll get to the Tool Dealer. Enjoy your stay in lovely Kunlun!";
+		mes "Xie Xie!";
+		close;
+	case 3:
+		viewpoint 1,174,104,2,0x55FF33;
+		mes "[He Yuen Zhe]";
+		mes "Please follow your minimap, and head over to the ^55FF33+^000000 mark.";
+		mes "There, you'll get to the Weapon Dealer. Enjoy your stay in lovely Kunlun!";
+		mes "Xie Xie!";
+		close;
+	case 4:
+		viewpoint 1,173,84,3,0x3355FF;
+		mes "[He Yuen Zhe]";
+		mes "Please follow your minimap, and head over to the ^3355FF+^000000 mark.";
+		mes "There, you'll get to the Armor Dealer. Enjoy your stay in lovely Kunlun!";
+		mes "Xie Xie!";
+		close;
+	case 5:
+		viewpoint 1,215,114,3,0xCD69C9;
+		mes "[He Yuen Zhe]";
+		mes "Please follow your minimap, and head over to the ^CD69C9+^000000 mark.";
+		mes "There, you'll get to the Wine Maker. Enjoy your stay in lovely Kunlun!";
+		mes "Xie Xie!";
+		close;
+	}
+}
