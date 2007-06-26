@@ -5,6 +5,7 @@
 //#define DEBUG_DISP
 //#define DEBUG_DISASM
 //#define DEBUG_RUN
+//#define DEBUG_HASH
 
 #include "../common/cbasetypes.h"
 #include "../common/socket.h"
@@ -82,7 +83,7 @@
 
 #define script_getnum(st,val) conv_num(st, script_getdata(st,val))
 #define script_getstr(st,val) conv_str(st, script_getdata(st,val))
-#define script_getref(st,val) ((st)->stack->stack_data[(st)->start+(val)].ref)
+#define script_getref(st,val) ( data_varref(script_getdata(st,val)) )
 
 // Note: "top" functions/defines use indexes relative to the top of the stack
 //       -1 is the index of the data at the top
@@ -109,8 +110,18 @@
 /// Returns if the script data is an internal script function label
 #define data_isfunclabel(data) ( (data)->type == C_USERFUNC_POS )
 
-/// Returns the name of the reference
-#define data_referencename(data) ( str_buf + str_data[(data)->u.num&0x00ffffff].str )
+/// Returns the unique id of the variable (id and index)
+#define data_varuid(data) ( (data)->u.num )
+/// Returns the id of the variable
+#define data_varid(data) ( (int32)(data_varuid(data) & 0x00ffffff) )
+/// Returns the array index of the variable
+#define data_varindex(data) ( (int32)(((uint32)(data_varuid(data) & 0xff000000)) >> 24) )
+/// Returns the name of the variable
+#define data_varname(data) ( str_buf + str_data[data_varid(data)].str )
+/// Returns the reference of the variable (linked list of variables, can be NULL)
+#define data_varref(data) ( (data)->ref )
+
+#define variable_uid(id,idx) ( (int32)((((uint32)(id)) & 0x00ffffff) | (((uint32)(idx)) << 24)) )
 
 #define FETCH(n, t) \
 		if( script_hasdata(st,n) ) \
@@ -141,7 +152,7 @@ int str_num=LABEL_START,str_data_size;
 #define SCRIPT_HASH_SIZE 1021
 int str_hash[SCRIPT_HASH_SIZE];
 //#define SCRIPT_HASH_DJB2
-//#define SCRIPT_HASH_SDBM
+#define SCRIPT_HASH_SDBM
 //#define SCRIPT_HASH_ELF
 //#define SCRIPT_HASH_PJW
 
@@ -223,7 +234,9 @@ extern struct script_function {
 } buildin_func[];
 
 static struct linkdb_node *sleep_db;
-#define not_server_variable(prefix) (prefix != '$' && prefix != '.')
+#define not_server_variable(prefix) ( (prefix) != '$' && (prefix) != '.')
+#define not_array_variable(prefix) ( (prefix) != '$' && (prefix) != '@' && (prefix) != '.' )
+#define is_string_variable(name) ( (name)[strlen(name) - 1] == '$' )
 
 /*==========================================
  * ローカルプロトタイプ宣言 (必要な物のみ)
@@ -374,26 +387,66 @@ const char* script_op2name(int op)
 #undef RETURN_OP_NAME
 }
 
-//Reports on the console the src of a script error.
-static void report_src(struct script_state *st)
+/// Reports on the console the src of a script error.
+static void script_reportsrc(struct script_state *st)
 {
-	struct block_list *bl;
-	if (!st->oid) return; //Can't report source.
+	struct block_list* bl;
+
+	if( st->oid == 0 )
+		return; //Can't report source.
+
 	bl = map_id2bl(st->oid);
-	if (!bl) return;
-	switch (bl->type) {
-		case BL_NPC:
-			if (bl->m >=0)
-				ShowDebug("Source (NPC): %s at %s (%d,%d)\n", ((struct npc_data *)bl)->name, map[bl->m].name, bl->x, bl->y);
-			else
-				ShowDebug("Source (NPC): %s (invisible/not on a map)\n", ((struct npc_data *)bl)->name);
-				
+	if( bl == NULL )
+		return;
+
+	switch( bl->type )
+	{
+	case BL_NPC:
+		if( bl->m >= 0 )
+			ShowDebug("Source (NPC): %s at %s (%d,%d)\n", ((struct npc_data *)bl)->name, map[bl->m].name, bl->x, bl->y);
+		else
+			ShowDebug("Source (NPC): %s (invisible/not on a map)\n", ((struct npc_data *)bl)->name);
 		break;
-		default:
-			if (bl->m >=0)
-				ShowDebug("Source (Non-NPC type %d): name %s at %s (%d,%d)\n", bl->type, status_get_name(bl), map[bl->m].name, bl->x, bl->y);
+	default:
+		if( bl->m >= 0 )
+			ShowDebug("Source (Non-NPC type %d): name %s at %s (%d,%d)\n", bl->type, status_get_name(bl), map[bl->m].name, bl->x, bl->y);
+		else
+			ShowDebug("Source (Non-NPC type %d): name %s (invisible/not on a map)\n", bl->type, status_get_name(bl));
+		break;
+	}
+}
+
+/// Reports on the console information about the script data.
+static void script_reportdata(struct script_data* data)
+{
+	if( data == NULL )
+		return;
+	switch( data->type )
+	{
+	case C_NOP:// no value
+		ShowDebug("Data: no value (nil)\n");
+		break;
+	case C_INT:// number
+		ShowDebug("Data: number=%d\n", data->u.num);
+		break;
+	case C_STR:
+	case C_CONSTSTR:// string
+		ShowDebug("Data: string=%s\n", data->u.str);
+		break;
+	case C_NAME:// variable
+		{
+			char* name = data_varname(data);
+			if( not_array_variable(*name) )
+				ShowDebug("Data: variable=%s\n", name);
 			else
-				ShowDebug("Source (Non-NPC type %d): name %s (invisible/not on a map)\n", bl->type, status_get_name(bl));
+				ShowDebug("Data: variable=%s index=%u\n", name, data_varindex(data));
+		}
+		break;
+	case C_POS:// label
+		ShowDebug("Data: label pos=%d\n", data->u.num);
+		break;
+	default:
+		ShowDebug("Data: %s\n", script_op2name(data->type));
 		break;
 	}
 }
@@ -415,7 +468,7 @@ static void check_event(struct script_state *st, const char *evt)
 {
 	if( evt != NULL && *evt != '\0' && !stristr(evt,"::On") ){
 		ShowError("NPC event parameter deprecated! Please use 'NPCNAME::OnEVENT' instead of '%s'.\n",evt);
-		report_src(st);
+		script_reportsrc(st);
 	}
 }
 
@@ -440,8 +493,9 @@ static unsigned int calc_hash2(const char* p)
 	unsigned int g;
 	while( *p ){ // UNIX ELF hash
 		h = ( h << 4 ) + ((unsigned char)TOLOWER(*p++));
-		if ( g = h & 0xF0000000 )
-		h ^= g >> 24;
+		g = h & 0xF0000000;
+		if( g )
+			h ^= g >> 24;
 		h &= ~g;
 	}
 	return h;
@@ -450,7 +504,9 @@ static unsigned int calc_hash2(const char* p)
 	unsigned int g;
 	while( *p ){
 		h = ( h << 4 ) + ((unsigned char)TOLOWER(*p++));
-		if ( (g=h&0xF0000000) ) {
+		g = h & 0xF0000000;
+		if( g )
+		{
 			h ^= g>>24;
 			h ^= g;
 		}
@@ -460,7 +516,7 @@ static unsigned int calc_hash2(const char* p)
 	unsigned int h = 0;
 	while( *p ){
 		h = ( h << 1 ) + ( h >> 3 ) + ( h >> 5 ) + ( h >> 8 );
-		h+=(unsigned char)TOLOWER(*p++);
+		h += (unsigned char)TOLOWER(*p++);
 	}
 	return h;
 #endif
@@ -2447,13 +2503,14 @@ void op_3(struct script_state* st, int op)
 	get_val(st, data);
 
 	if( data_isstring(data) )
-		flag = data->u.str[0];
+		flag = data->u.str[0];// "" -> false
 	else if( data_isint(data) )
-		flag = data->u.num;
+		flag = data->u.num;// 0 -> false
 	else
 	{
-		ShowError("script:op_3: invalid type of data op:%s data:%s\n", script_op2name(op), script_op2name(data->type));
-		report_src(st);
+		ShowError("script:op_3: invalid data for the ternary operator test\n");
+		script_reportdata(data);
+		script_reportsrc(st);
 		script_removetop(st, -3, 0);
 		script_pushnil(st);
 		return;
@@ -2493,8 +2550,8 @@ void op_2str(struct script_state* st, int op, const char* s1, const char* s2)
 			return;
 		}
 	default:
-		ShowError("script:op2_str: unexpected string operator op:%s\n", script_op2name(op));
-		report_src(st);
+		ShowError("script:op2_str: unexpected string operator %s\n", script_op2name(op));
+		script_reportsrc(st);
 		script_pushnil(st);
 		st->state = END;
 		return;
@@ -2529,8 +2586,8 @@ void op_2num(struct script_state* st, int op, int i1, int i2)
 	case C_MOD:
 		if( i2 == 0 )
 		{
-			ShowError("script:op_2num: division by zero detected op:%s\n", script_op2name(op));
-			report_src(st);
+			ShowError("script:op_2num: division by zero detected op=%s i1=%d i2=%d\n", script_op2name(op), i1, i2);
+			script_reportsrc(st);
 			script_pushnil(st);
 			st->state = END;
 			return;
@@ -2547,21 +2604,21 @@ void op_2num(struct script_state* st, int op, int i1, int i2)
 		case C_SUB: ret = i1 - i2; ret_double = (double)i1 - (double)i2; break;
 		case C_MUL: ret = i1 * i2; ret_double = (double)i1 * (double)i2; break;
 		default:
-			ShowError("script:op_2num: unexpected number operator op:%s\n", script_op2name(op));
-			report_src(st);
+			ShowError("script:op_2num: unexpected number operator %s i1=%d i2=%d\n", script_op2name(op), i1, i2);
+			script_reportsrc(st);
 			script_pushnil(st);
 			return;
 		}
-		if( ret_double < INT_MIN )
+		if( ret_double < (double)INT_MIN )
 		{
-			ShowWarning("script:op_2num: underflow detected op:%s\n", script_op2name(op));
-			report_src(st);
+			ShowWarning("script:op_2num: underflow detected op=%s i1=%d i2=%d\n", script_op2name(op), i1, i2);
+			script_reportsrc(st);
 			ret = INT_MIN;
 		}
-		else if( ret_double > INT_MAX )
+		else if( ret_double > (double)INT_MAX )
 		{
-			ShowWarning("script:op_2num: overflow detected op:%s\n", script_op2name(op));
-			report_src(st);
+			ShowWarning("script:op_2num: overflow detected op=%s i1=%d i2=%d\n", script_op2name(op), i1, i2);
+			script_reportsrc(st);
 			ret = INT_MAX;
 		}
 	}
@@ -2584,9 +2641,12 @@ void op_2(struct script_state *st, int op)
 	switch( op )
 	{
 	case C_ADD:
-		if( data_isstring(left) || data_isstring(right) )
-		{// convert to string
+		if( data_isint(left) && data_isstring(right) )
+		{// convert int-string to string-string
 			conv_str(st, left);
+		}
+		else if( data_isstring(left) && data_isint(right) )
+		{// convert string-int to string-string
 			conv_str(st, right);
 		}
 		break;
@@ -2606,8 +2666,10 @@ void op_2(struct script_state *st, int op)
 	}
 	else
 	{// invalid argument
-		ShowError("script:op_2: invalid type of data op:%s left:%s right:%s\n", script_op2name(op), script_op2name(left->type), script_op2name(right->type));
-		report_src(st);
+		ShowError("script:op_2: invalid data for operator %s\n", script_op2name(op));
+		script_reportdata(left);
+		script_reportdata(right);
+		script_reportsrc(st);
 		script_removetop(st, -2, 0);
 		script_pushnil(st);
 		st->state = END;
@@ -2628,8 +2690,9 @@ void op_1(struct script_state* st, int op)
 
 	if( !data_isint(data) )
 	{// not a number
-		ShowError("script:op_1: invalid type of data op:%s data:%s\n", script_op2name(op), script_op2name(data->type));
-		report_src(st);
+		ShowError("script:op_1: argument is not a number (op=%s)\n", script_op2name(op));
+		script_reportdata(data);
+		script_reportsrc(st);
 		script_pushnil(st);
 		st->state = END;
 		return;
@@ -2643,8 +2706,8 @@ void op_1(struct script_state* st, int op)
 	case C_NOT: i1 = ~i1; break;
 	case C_LNOT: i1 = !i1; break;
 	default:
-		ShowError("script:op_1: unexpected operator op:%s\n", script_op2name(op));
-		report_src(st);
+		ShowError("script:op_1: unexpected operator %s i1=%d\n", script_op2name(op), i1);
+		script_reportsrc(st);
 		script_pushnil(st);
 		st->state = END;
 		return;
@@ -2667,7 +2730,7 @@ int run_func(struct script_state *st)
 			ShowError("function not found\n");
 //		st->stack->sp=0;
 		st->state=END;
-		report_src(st);
+		script_reportsrc(st);
 		return 1;
 	}
 	start_sp=i-1;
@@ -2711,7 +2774,7 @@ int run_func(struct script_state *st)
 		ShowMessage ("run_func: '"CL_WHITE"%s"CL_RESET"' (type %d) is not function and command!\n", str_buf+str_data[func].str, str_data[func].type);
 //		st->stack->sp=0;
 		st->state=END;
-		report_src(st);
+		script_reportsrc(st);
 		return 1;
 	}
 #ifdef DEBUG_RUN
@@ -2721,12 +2784,12 @@ int run_func(struct script_state *st)
 #endif
 	if(str_data[func].func){
 		if (str_data[func].func(st)) //Report error
-			report_src(st);
+			script_reportsrc(st);
 	} else {
 		if(battle_config.error_log)
 			ShowError("run_func : %s? (%d(%d))\n",str_buf+str_data[func].str,func,str_data[func].type);
 		script_pushint(st,0);
-		report_src(st);
+		script_reportsrc(st);
 	}
 
 	// Stack's datum are used when re-run functions [Eoe]
@@ -2743,7 +2806,7 @@ int run_func(struct script_state *st)
 		if(st->stack->defsp<5 || st->stack->stack_data[st->stack->defsp-1].type!=C_RETINFO){
 			ShowWarning("script:run_func(return) return without callfunc or callsub!\n");
 			st->state=END;
-			report_src(st);
+			script_reportsrc(st);
 			return 1;
 		}
 		script_free_vars( st->stack->var_function );
@@ -2795,7 +2858,7 @@ void run_script(struct script_code *rootscript,int pos,int rid,int oid)
 	st->pos = pos;
 	st->rid = rid;
 	st->oid = oid;
-	st->sleep.timer = -1;
+	st->sleep.timer = INVALID_TIMER;
 	run_script_main(st);
 }
 
@@ -2931,7 +2994,7 @@ void run_script_main(struct script_state *st)
 				st->state = RUN;
 				if( gotocount>0 && (--gotocount)<=0 ){
 					ShowError("run_script: infinity loop !\n");
-					report_src(st);
+					script_reportsrc(st);
 					st->state=END;
 				}
 			}
@@ -2980,7 +3043,7 @@ void run_script_main(struct script_state *st)
 		}
 		if( cmdcount>0 && (--cmdcount)<=0 ){
 			ShowError("run_script: infinity loop !\n");
-			report_src(st);
+			script_reportsrc(st);
 			st->state=END;
 		}
 	}
@@ -3004,9 +3067,9 @@ void run_script_main(struct script_state *st)
 			ShowWarning("Unable to restore stack! Double continuation!\n");
 			//Report BOTH scripts to see if that can help somehow.
 			ShowDebug("Previous script (lost):\n");
-			report_src(bk_st);
+			script_reportsrc(bk_st);
 			ShowDebug("Current script:\n");
-			report_src(st);
+			script_reportsrc(st);
 		}
 	} else {
 		//Dispose of script.
@@ -3443,7 +3506,7 @@ static int do_final_userfunc_sub (DBKey key,void *data,va_list ap)
  *------------------------------------------*/
 int do_final_script()
 {
-#ifdef DEBUG_RUN
+#ifdef DEBUG_HASH
 	if (battle_config.etc_log)
 	{
 		FILE *fp = fopen("hash_dump.txt","wt");
@@ -3931,12 +3994,12 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
 	BUILDIN_DEF(setlook,"ii"),
 	BUILDIN_DEF(set,"ii"),
-	BUILDIN_DEF(setarray,"ii*"),
-	BUILDIN_DEF(cleararray,"iii"),
-	BUILDIN_DEF(copyarray,"iii"),
-	BUILDIN_DEF(getarraysize,"i"),
-	BUILDIN_DEF(deletearray,"ii"),
-	BUILDIN_DEF(getelementofarray,"ii"),
+	BUILDIN_DEF(setarray,"rv*"),
+	BUILDIN_DEF(cleararray,"rvi"),
+	BUILDIN_DEF(copyarray,"rri"),
+	BUILDIN_DEF(getarraysize,"r"),
+	BUILDIN_DEF(deletearray,"r?"),
+	BUILDIN_DEF(getelementofarray,"ri"),
 	BUILDIN_DEF(getitem,"vi?"),
 	BUILDIN_DEF(getitem2,"iiiiiiiii*"),
 	BUILDIN_DEF(getnameditem,"is"),
@@ -4374,7 +4437,7 @@ BUILDIN_FUNC(menu)
 	// TODO detect multiple scripts waiting for input at the same time, and what to do when that happens
 	if( sd->state.menu_or_input == 0 )
 	{
-		struct StringBuf* buf;
+		struct StringBuf buf;
 		struct script_data* data;
 
 		if( script_lastdata(st) % 2 == 0 )
@@ -4383,7 +4446,7 @@ BUILDIN_FUNC(menu)
 			st->state = END;
 			return 1;
 		}
-		buf = StringBuf_Malloc();
+		StringBuf_Init(&buf);
 		for( i = 2, sd->npc_menu = 0; i < script_lastdata(st); i += 2 )
 		{
 			// menu options
@@ -4391,8 +4454,9 @@ BUILDIN_FUNC(menu)
 			get_val(st, data);
 			if( data_isstring(data) && data_isint(data) )
 			{// not a string (or compatible)
-				StringBuf_Free(buf);
-				ShowError("script:menu: argument #%d (from 1) is not a string or compatible (op=%s).\n", (i - 1), script_op2name(data->type));
+				StringBuf_Destroy(&buf);
+				ShowError("script:menu: argument #%d (from 1) is not a string or compatible.\n", (i - 1));
+				script_reportdata(data);
 				st->state = END;
 				return 1;
 			}
@@ -4402,8 +4466,9 @@ BUILDIN_FUNC(menu)
 			data = script_getdata(st, i+1);
 			if( !data_islabel(data) )
 			{// not a label
-				StringBuf_Free(buf);
-				ShowError("script:menu: argument #%d (from 1) is not a label or label not found (op=%s).\n", i, script_op2name(data->type));
+				StringBuf_Destroy(&buf);
+				ShowError("script:menu: argument #%d (from 1) is not a label or label not found.\n", i);
+				script_reportdata(data);
 				st->state = END;
 				return 1;
 			}
@@ -4412,14 +4477,14 @@ BUILDIN_FUNC(menu)
 			if( text[0] == '\0' )
 				continue;// empty string, ignore
 			if( sd->npc_menu > 0 )
-				StringBuf_AppendStr(buf, ":");
-			StringBuf_AppendStr(buf, text);
+				StringBuf_AppendStr(&buf, ":");
+			StringBuf_AppendStr(&buf, text);
 			sd->npc_menu += menu_countoptions(text, 0, NULL);
 		}
 		st->state = RERUNLINE;
 		sd->state.menu_or_input = 1;
-		clif_scriptmenu(sd, st->oid, StringBuf_Value(buf));
-		StringBuf_Free(buf);
+		clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+		StringBuf_Destroy(&buf);
 		//TODO what's the maximum number of options that can be displayed and/or received? -> give warning
 	}
 	else if( sd->npc_menu == 0xff )
@@ -4449,14 +4514,16 @@ BUILDIN_FUNC(menu)
 		}
 		if( sd->npc_menu > 0 )
 		{// Invalid selection
-			ShowDebug("script:menu: selection is out of range, expected %d extra menu options\n", sd->npc_menu);
+			ShowDebug("script:menu: selection is out of range (%d pairs are missing?) - please report this\n", sd->npc_menu);
 			st->state = END;
 			return 1;
 		}
 		if( !data_islabel(script_getdata(st, i + 1)) )
 		{// TODO remove this temporary crash-prevention code (fallback for multiple scripts requesting user input)
+			ShowError("script:menu: unexpected data in label argument\n");
+			script_reportdata(script_getdata(st, i + 1));
 			st->state = END;
-			return 0;
+			return 1;
 		}
 		pc_setreg(sd, add_str("@menu"), menu);
 		st->pos = script_getnum(st, i + 1);
@@ -4483,22 +4550,22 @@ BUILDIN_FUNC(select)
 
 	if( sd->state.menu_or_input == 0 )
 	{
-		struct StringBuf* buf;
+		struct StringBuf buf;
 
-		buf = StringBuf_Malloc();
+		StringBuf_Init(&buf);
 		for( i = 2, sd->npc_menu = 0; i <= script_lastdata(st); ++i )
 		{
 			text = script_getstr(st, i);
 			if( sd->npc_menu > 0 )
-				StringBuf_AppendStr(buf, ":");
-			StringBuf_AppendStr(buf, script_getstr(st, i));
+				StringBuf_AppendStr(&buf, ":");
+			StringBuf_AppendStr(&buf, text);
 			sd ->npc_menu += menu_countoptions(text, 0, NULL);
 		}
 
 		st->state = RERUNLINE;
 		sd->state.menu_or_input = 1;
-		clif_scriptmenu(sd, st->oid, StringBuf_Value(buf));
-		StringBuf_Free(buf);
+		clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+		StringBuf_Destroy(&buf);
 	}
 	else if( sd->npc_menu == 0xff )
 	{// Cancel was pressed
@@ -4543,22 +4610,22 @@ BUILDIN_FUNC(prompt)
 
 	if( sd->state.menu_or_input == 0 )
 	{
-		struct StringBuf* buf;
+		struct StringBuf buf;
 
-		buf = StringBuf_Malloc();
+		StringBuf_Init(&buf);
 		for( i = 2, sd->npc_menu = 0; i <= script_lastdata(st); ++i )
 		{
 			text = script_getstr(st, i);
 			if( sd->npc_menu > 0 )
-				StringBuf_AppendStr(buf, ":");
-			StringBuf_AppendStr(buf, script_getstr(st, i));
+				StringBuf_AppendStr(&buf, ":");
+			StringBuf_AppendStr(&buf, text);
 			sd ->npc_menu += menu_countoptions(text, 0, NULL);
 		}
 
 		st->state = RERUNLINE;
 		sd->state.menu_or_input = 1;
-		clif_scriptmenu(sd, st->oid, StringBuf_Value(buf));
-		StringBuf_Free(buf);
+		clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+		StringBuf_Destroy(&buf);
 	}
 	else if( sd->npc_menu == 0xff )
 	{// Cancel was pressed
@@ -4595,7 +4662,8 @@ BUILDIN_FUNC(goto)
 {
 	if( !data_islabel(script_getdata(st,2)) )
 	{
-		ShowError("script:goto: not label!\n");
+		ShowError("script:goto: not a label\n");
+		script_reportdata(script_getdata(st,2));
 		st->state = END;
 		return 1;
 	}
@@ -4646,7 +4714,7 @@ BUILDIN_FUNC(callfunc)
 			}
 		}
 	}else{
-		ShowWarning("script:callfunc: function not found! [%s]\n",str);
+		ShowError("script:callfunc: function not found! [%s]\n",str);
 		st->state=END;
 		return 1;
 	}
@@ -4660,7 +4728,8 @@ BUILDIN_FUNC(callsub)
 	int pos=script_getnum(st,2);
 	int i,j;
 	if(!data_islabel(script_getdata(st,2)) && !data_isfunclabel(script_getdata(st,2))) {
-		ShowError("script: callsub: not label !\n");
+		ShowError("script:callsub: argument is not a label\n");
+		script_reportdata(script_getdata(st,2));
 		st->state=END;
 		return 1;
 	} else {
@@ -4707,7 +4776,7 @@ BUILDIN_FUNC(getarg)
 
 	if( st->stack->defsp < 5 || st->stack->stack_data[st->stack->defsp - 1].type != C_RETINFO )
 	{
-		ShowWarning("script:getarg: no callfunc or callsub!\n");
+		ShowError("script:getarg: no callfunc or callsub!\n");
 		st->state = END;
 		return 1;
 	}
@@ -4722,7 +4791,7 @@ BUILDIN_FUNC(getarg)
 		script_pushcopy(st, 3);
 	else
 	{
-		ShowWarning("script:getarg: index (idx=%d) out of range (count=%d) and no default value found\n", idx, count);
+		ShowError("script:getarg: index (idx=%d) out of range (count=%d) and no default value found\n", idx, count);
 		st->state = END;
 		return 1;
 	}
@@ -4744,7 +4813,7 @@ BUILDIN_FUNC(return)
 		data = script_getdatatop(st, -1);
 		if( data_isreference(data) )
 		{
-			char* name = data_referencename(data);
+			char* name = data_varname(data);
 			if( name[0] == '.' && name[1] == '@' )
 			{// temporary script variable, convert to value
 				get_val(st, data);
@@ -5185,7 +5254,8 @@ BUILDIN_FUNC(input)
 	if (!sd) return 1;
 
 	if( !data_isreference(data) ){
-		ShowError("script: buildin_input: given argument is not a variable!\n");
+		ShowError("script:input: not a variable\n");
+		script_reportdata(data);
 		return 1;
 	}
 
@@ -5227,7 +5297,9 @@ BUILDIN_FUNC(set)
 	char postfix=name[strlen(name)-1];
 
 	if( !data_isreference(script_getdata(st,2)) ){
-		ShowError("script: buildin_set: not name\n");
+		ShowError("script:set: not a variable\n");
+		script_reportdata(script_getdata(st,2));
+		st->state = END;
 		return 1;
 	}
 
@@ -5247,216 +5319,402 @@ BUILDIN_FUNC(set)
 	return 0;
 }
 
-/*==========================================
- * 配列変数設定
- *------------------------------------------*/
+/////////////////////////////////////////////////////////////////////
+/// Array variables
+///
+
+/// Returns the size of the specified array
+static int32 getarraysize(struct script_state* st, int32 id, int32 idx, int isstring, struct linkdb_node** ref)
+{
+	int32 ret = idx;
+
+	if( isstring )
+	{
+		for( ; idx < 128; ++idx )
+		{
+			char* str = (char*)get_val2(st, variable_uid(id, idx), ref);
+			if( str && *str )
+				ret = idx + 1;
+		}
+	}
+	else
+	{
+		for( ; idx < 128; ++idx )
+		{
+			int32 num = (int32)get_val2(st, variable_uid(id, idx), ref);
+			if( num )
+				ret = idx + 1;
+		}
+	}
+	return ret;
+}
+
+/// Sets values of an array, from the starting index.
+/// ex: setarray arr[1],1,2,3;
+///
+/// setarray <array variable>,<value1>{,<value2>...};
 BUILDIN_FUNC(setarray)
 {
-	TBL_PC *sd=NULL;
-	int num=st->stack->stack_data[st->start+2].u.num;
-	char *name=str_buf+str_data[num&0x00ffffff].str;
-	char prefix=*name;
-	char postfix=name[strlen(name)-1];
-	int i,j;
+	struct script_data* data;
+	char* name;
+	int32 start;
+	int32 end;
+	int32 id;
+	int32 i;
+	TBL_PC* sd = NULL;
 
-	if( prefix!='$' && prefix!='@' && prefix!='.'){
-		ShowWarning("buildin_setarray: illegal scope !\n");
-		return 1;
+	data = script_getdata(st, 2);
+	if( !data_isreference(data) )
+	{
+		ShowError("script:setarray: not a variable\n");
+		script_reportdata(data);
+		st->state = END;
+		return 1;// not a variable
 	}
-	if(not_server_variable(prefix))
-		sd=script_rid2sd(st);
 
-	for(j=0,i=st->start+3; i<st->end && j<128;i++,j++){
-		void *v;
-		if( postfix=='$' )
-			v=(void*)conv_str(st,& (st->stack->stack_data[i]));
-		else
-			v=(void*)conv_num(st,& (st->stack->stack_data[i]));
-		set_reg(st, sd, num+(j<<24), name, v, script_getref(st,2));
+	id = data_varid(data);
+	start = data_varindex(data);
+	name = data_varname(data);
+	if( not_array_variable(*name) )
+	{
+		ShowError("script:setarray: illegal scope\n");
+		script_reportdata(data);
+		st->state = END;
+		return 1;// not supported
+	}
+
+	if( not_server_variable(*name) )
+	{
+		sd = script_rid2sd(st);
+		if( sd == NULL )
+			return 1;// no player attached
+	}
+
+	end = start + script_lastdata(st) - 2;
+	if( end > 127 )
+		end = 127;
+
+	if( is_string_variable(name) )
+	{// string array
+		for( i = 3; start < end; ++start, ++i )
+		{
+			void* v = (void*)script_getstr(st,i);
+			set_reg(st, sd, variable_uid(id, start), name, v, data_varref(data));
+		}
+	}
+	else
+	{// int array
+		for( i = 3; start < end; ++start, ++i )
+		{
+			void* v = (void*)script_getnum(st,i);
+			set_reg(st, sd, variable_uid(id, start), name, v, data_varref(data));
+		}
 	}
 	return 0;
 }
-/*==========================================
- * 配列変数クリア
- *------------------------------------------*/
+
+/// Sets count values of an array, from the starting index.
+/// ex: cleararray arr[0],0,1;
+///
+/// cleararray <array variable>,<value>,<count>;
 BUILDIN_FUNC(cleararray)
 {
-	TBL_PC *sd=NULL;
-	int num=st->stack->stack_data[st->start+2].u.num;
-	char *name=str_buf+str_data[num&0x00ffffff].str;
-	char prefix=*name;
-	char postfix=name[strlen(name)-1];
-	int sz=script_getnum(st,4);
-	int i;
-	void *v;
+	struct script_data* data;
+	char* name;
+	int32 start;
+	int32 end;
+	int32 id;
+	void* v;
+	TBL_PC* sd = NULL;
 
-	if( prefix!='$' && prefix!='@' && prefix!='.'){
-		ShowWarning("buildin_cleararray: illegal scope !\n");
-		return 1;
+	data = script_getdata(st, 2);
+	if( !data_isreference(data) )
+	{
+		ShowError("script:cleararray: not a variable\n");
+		script_reportdata(data);
+		st->state = END;
+		return 1;// not a variable
 	}
-	if( not_server_variable(prefix) )
-		sd=script_rid2sd(st);
 
-	if( postfix=='$' )
-		v=(void*)script_getstr(st,3);
+	id = data_varid(data);
+	start = data_varindex(data);
+	name = data_varname(data);
+	if( not_array_variable(*name) )
+	{
+		ShowError("script:cleararray: illegal scope\n");
+		script_reportdata(data);
+		st->state = END;
+		return 1;// not supported
+	}
+
+	if( not_server_variable(*name) )
+	{
+		sd = script_rid2sd(st);
+		if( sd == NULL )
+			return 1;// no player attached
+	}
+
+	if( is_string_variable(name) )
+		v = (void*)script_getstr(st, 3);
 	else
-		v=(void*)script_getnum(st,3);
+		v = (void*)script_getnum(st, 3);
 
-	for(i=0;i<sz;i++)
-		set_reg(st,sd,num+(i<<24),name,v,script_getref(st,2));
+	end = start + script_getnum(st, 4);
+	if( end > 127 )
+		end = 127;
+
+	for( ; start < end; ++start )
+		set_reg(st, sd, variable_uid(id, start), name, v, script_getref(st,2));
 	return 0;
 }
-/*==========================================
- * 配列変数コピー
- *------------------------------------------*/
+
+/// Copies data from one array to another.
+/// ex: copyarray arr[0],arr[2],2;
+///
+/// copyarray <destination array variable>,<source array variable>,<count>;
 BUILDIN_FUNC(copyarray)
 {
-	TBL_PC *sd=NULL;
-	int num=st->stack->stack_data[st->start+2].u.num;
-	char *name=str_buf+str_data[num&0x00ffffff].str;
-	char prefix=*name;
-	char postfix=name[strlen(name)-1];
-	int num2=st->stack->stack_data[st->start+3].u.num;
-	char *name2=str_buf+str_data[num2&0x00ffffff].str;
-	char prefix2=*name2;
-	char postfix2=name2[strlen(name2)-1];
-	int sz=script_getnum(st,4);
-	int i;
+	struct script_data* data1;
+	struct script_data* data2;
+	char* name1;
+	char* name2;
+	int32 idx1;
+	int32 idx2;
+	int32 id1;
+	int32 id2;
+	void* v;
+	int32 i;
+	int32 count;
+	TBL_PC* sd = NULL;
 
-	if( prefix!='$' && prefix!='@' && prefix!='.' ){
-		printf("buildin_copyarray: illeagal scope !\n");
-		return 0;
+	data1 = script_getdata(st, 2);
+	data2 = script_getdata(st, 3);
+	if( !data_isreference(data1) || !data_isreference(data2) )
+	{
+		ShowError("script:copyarray: not a variable\n");
+		script_reportdata(data1);
+		script_reportdata(data2);
+		st->state = END;
+		return 1;// not a variable
 	}
-	if( prefix2!='$' && prefix2!='@' && prefix2!='.' ) {
-		printf("buildin_copyarray: illeagal scope !\n");
-		return 0;
-	}
-	if( (postfix=='$' || postfix2=='$') && postfix!=postfix2 ){
-		printf("buildin_copyarray: type mismatch !\n");
-		return 0;
-	}
-	if( not_server_variable(prefix) || not_server_variable(prefix2) )
-		sd=script_rid2sd(st);
 
-	if((num & 0x00FFFFFF) == (num2 & 0x00FFFFFF) && (num & 0xFF000000) > (num2 & 0xFF000000)) {
-		// 同じ配列で、num > num2 の場合大きい方からコピーしないといけない
-		for(i=sz-1;i>=0;i--)
-			set_reg(
-				st,sd,num+(i<<24),name,
-				get_val2(st,num2+(i<<24),script_getref(st,3)),
-				script_getref(st,2)
-			);
-	} else {
-		for(i=0;i<sz;i++)
-			set_reg(
-				st,sd,num+(i<<24),name,
-				get_val2(st,num2+(i<<24),script_getref(st,3)),
-				script_getref(st,2)
-			);
+	id1 = data_varid(data1);
+	id2 = data_varid(data2);
+	idx1 = data_varindex(data1);
+	idx2 = data_varindex(data2);
+	name1 = data_varname(data1);
+	name2 = data_varname(data2);
+	if( not_array_variable(*name1) || not_array_variable(*name2) )
+	{
+		ShowError("script:copyarray: illegal scope\n");
+		script_reportdata(data1);
+		script_reportdata(data2);
+		st->state = END;
+		return 1;// not supported
+	}
+
+	if( is_string_variable(name1) != is_string_variable(name2) )
+	{
+		ShowError("script:copyarray: type mismatch\n");
+		script_reportdata(data1);
+		script_reportdata(data2);
+		st->state = END;
+		return 1;// data type mismatch
+	}
+
+	if( not_server_variable(*name1) || not_server_variable(*name2) )
+	{
+		sd = script_rid2sd(st);
+		if( sd == NULL )
+			return 1;// no player attached
+	}
+
+	count = script_getnum(st, 4);
+	if( count > 128 - idx1 )
+		count = 128 - idx1;
+	if( count <= 0 || (id1 == id2 && idx1 == idx2) )
+		return 0;// nothing to copy
+
+	if( id1 == id2 && idx1 > idx2 )
+	{// destination might be overlapping the source - copy in reverse order
+		for( i = count - 1; i >= 0; --i )
+		{
+			v = get_val2(st, variable_uid(id2, idx2 + i), data_varref(data2));
+			set_reg(st, sd, variable_uid(id1, idx1 + i), name1, v, data_varref(data1));
+		}
+	}
+	else
+	{// normal copy
+		for( i = 0; i < count; ++i )
+		{
+			if( id2 + i < 128 )
+				v = get_val2(st, variable_uid(id2, idx2 + i), data_varref(data2));
+			else// out of range - assume ""/0
+				v = (void*)(is_string_variable(name1) ? "" : 0);
+			set_reg(st, sd, variable_uid(id1, idx1 + i), name1, v, data_varref(data1));
+		}
 	}
 	return 0;
 }
 
-/*==========================================
- * Returns the size of the specified array
- *------------------------------------------*/
-static int getarraysize(struct script_state* st, int num, int postfix, struct linkdb_node** ref)
-{
-	//TODO: unreadable; remove +-1 trick, remove weird for loop, remove typecast
-	int i = (num>>24), c = (i==0?-1:i); // Moded to -1 because even if the first element is 0, it will still report as 1 [Lance]
-	
-	if(postfix == '$') {
-		for(; i < 128; i++) {
-			void* v = get_val2(st, (num & 0x00FFFFFF) + (i<<24), ref);
-			if(*((char*)v)) c = i;
-		}
-	} else {
-		for(; i < 128; i++) {
-			void* v = get_val2(st, (num & 0x00FFFFFF) + (i<<24), ref);
-			if((int)v) c = i;
-		}
-	}
-	return c + 1;
-}
-
+/// Returns the size of the array.
+/// Assumes that everything before the starting index exists.
+/// ex: getarraysize(arr[3])
+///
+/// getarraysize(<array variable>) -> <int>
 BUILDIN_FUNC(getarraysize)
 {
-	int num = st->stack->stack_data[st->start+2].u.num;
-	char* name = str_buf + str_data[num&0x00ffffff].str;
-	char prefix = name[0], postfix = name[strlen(name)-1];
+	struct script_data* data;
+	char* name;
 
-	if( prefix != '$' && prefix != '@' && prefix != '.' ) {
-		ShowWarning("buildin_getarraysize: illegal scope !\n");
-		script_pushint(st,0);
-		return 1;
+	data = script_getdata(st, 2);
+	if( !data_isreference(data) )
+	{
+		ShowError("script:getarraysize: not a variable\n");
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return 1;// not a variable
 	}
 
-	script_pushint(st,getarraysize(st, num, postfix, script_getref(st,2)));
+	name = data_varname(data);
+	if( not_array_variable(*name) )
+	{
+		ShowError("script:getarraysize: illegal scope\n");
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return 1;// not supported
+	}
+
+	script_pushint(st, getarraysize(st, data_varid(data), data_varindex(data), is_string_variable(name), data_varref(data)));
 	return 0;
 }
-/*==========================================
- * 配列変数から要素削除
- *------------------------------------------*/
+
+/// Deletes count or all the elements in an array, from the starting index.
+/// ex: deletearray arr[4],2;
+///
+/// deletearray <array variable>;
+/// deletearray <array variable>,<count>;
 BUILDIN_FUNC(deletearray)
 {
-	TBL_PC *sd=NULL;
-	int num=st->stack->stack_data[st->start+2].u.num;
-	char *name=str_buf+str_data[num&0x00ffffff].str;
-	char prefix=*name;
-	char postfix=name[strlen(name)-1];
-	int count=1;
-	int i,sz=getarraysize(st,num,postfix,script_getref(st,2))-(num>>24)-count+1;
+	struct script_data* data;
+	char* name;
+	int start;
+	int end;
+	int id;
+	TBL_PC *sd = NULL;
 
+	data = script_getdata(st, 2);
+	if( !data_isreference(data) )
+	{
+		ShowError("script:deletearray: not a variable\n");
+		script_reportdata(data);
+		st->state = END;
+		return 1;// not a variable
+	}
+
+	id = data_varid(data);
+	start = data_varindex(data);
+	name = data_varname(data);
+	if( not_array_variable(*name) )
+	{
+		ShowError("script:deletearray: illegal scope\n");
+		script_reportdata(data);
+		st->state = END;
+		return 1;// not supported
+	}
+
+	if( not_server_variable(*name) )
+	{
+		sd = script_rid2sd(st);
+		if( sd == NULL )
+			return 1;// no player attached
+	}
+
+	end = getarraysize(st, id, start, is_string_variable(name), data_varref(data));
+	if( start >= end )
+		return 0;// nothing to free
 
 	if( script_hasdata(st,3) )
-		count=script_getnum(st,3);
+	{
+		int count = script_getnum(st, 3);
+		if( count > end - start )
+			count = end - start;
+		if( count <= 0 )
+			return 0;// nothing to free
 
-	if( prefix!='$' && prefix!='@' && prefix!='.' ){
-		ShowWarning("buildin_deletearray: illegal scope !\n");
-		return 1;
-	}
-	if( not_server_variable(prefix) )
-		sd=script_rid2sd(st);
-
-	for(i=0;i<sz;i++){
-		set_reg(
-			st,sd,num+(i<<24),name,
-			get_val2(st,num+((i+count)<<24),script_getref(st,2)),
-			script_getref(st,2)
-		);
+		// move rest of the elements backward
+		for( ; start + count < end; ++start )
+		{
+			void* v = get_val2(st, variable_uid(id, start + count), data_varref(data));
+			set_reg(st, sd, variable_uid(id, start), name, v, data_varref(data));
+		}
 	}
 
-	if(postfix != '$'){
-		for(;i<(128-(num>>24));i++)
-			set_reg(st,sd,num+(i<<24),name, 0,script_getref(st,2));
-	} else {
-		for(;i<(128-(num>>24));i++)
-			set_reg(st,sd,num+(i<<24),name, (void *) "",script_getref(st,2));
+	// clear the rest of the array
+	if( is_string_variable(name) )
+	{
+		for( ; start < end; ++start )
+			set_reg(st, sd, variable_uid(id, start), name, (void*)0, data_varref(data));
+	}
+	else 
+	{
+		for( ; start < end; ++start )
+			set_reg(st, sd, variable_uid(id, start), name, (void *)"", data_varref(data));
 	}
 	return 0;
 }
 
-/*==========================================
- * 指定要素を表す値(キー)を所得する
- *------------------------------------------*/
+/// Returns a reference to the target index of the array variable.
+/// Equivalent to var[index].
+///
+/// getelementofarray(<array variable>,<index>) -> <variable reference>
 BUILDIN_FUNC(getelementofarray)
 {
-	if( data_isreference(script_getdata(st, 2)) ){
-		int i=script_getnum(st,3);
-		if(i>127 || i<0){
-			ShowWarning("script: getelementofarray (operator[]): param2 illegal number %d\n",i);
-			script_pushint(st,0);
-			return 1;
-		}else{
-			push_val2(st->stack,C_NAME,
-				(i<<24) | st->stack->stack_data[st->start+2].u.num, script_getref(st,2) );
-		}
-	}else{
-		ShowError("script: getelementofarray (operator[]): param1 not name !\n");
-		script_pushint(st,0);
+	struct script_data* data;
+	char* name;
+	int32 id;
+	int i;
+
+	data = script_getdata(st, 2);
+	if( !data_isreference(data) )
+	{
+		ShowError("script:getelementofarray: not a variable\n");
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return 1;// not a variable
 	}
+
+	id = data_varid(data);
+	name = data_varname(data);
+	if( not_array_variable(*name) )
+	{
+		ShowError("script:getelementofarray: illegal scope\n");
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return 1;// not supported
+	}
+
+	i = script_getnum(st, 3);
+	if( i < 0 || i >= 128 )
+	{
+		ShowWarning("script:getelementofarray: index out of range (%d)\n", i);
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return 1;// out of range
+	}
+
+	push_val2(st->stack, C_NAME, variable_uid(id, i), data_varref(data));
 	return 0;
 }
+
+/////////////////////////////////////////////////////////////////////
+/// ...
+///
 
 /*==========================================
  *
@@ -5664,7 +5922,6 @@ BUILDIN_FUNC(getitem)
 		struct item_data *item_data = itemdb_searchname(name);
 		if( item_data == NULL ){
 			ShowError("buildin_getitem: Nonexistant item %s requested.\n", name);
-			report_src(st);
 			return 1; //No item created.
 		}
 		nameid=item_data->nameid;
@@ -5678,12 +5935,10 @@ BUILDIN_FUNC(getitem)
 		}
 		if( nameid <= 0 || !itemdb_exists(nameid) ){
 			ShowError("buildin_getitem: Nonexistant item %d requested.\n", nameid);
-			report_src(st);
 			return 1; //No item created.
 		}
 	} else {
 		ShowError("buildin_getitem: invalid data type for argument #1 (%d).", data->type);
-		report_src(st);
 		return 1;
 	}
 
@@ -6831,7 +7086,7 @@ BUILDIN_FUNC(bonus)
 		pc_bonus5(sd, type, type2, type3, type4, type5, val);
 		break;
 	default:
-		ShowDebug("buildin_bonus: unexpected last data (%d)\n", script_lastdata(st));
+		ShowDebug("buildin_bonus: unexpected number of arguments (%d)\n", (script_lastdata(st) - 2));
 	}
 
 	return 0;
@@ -10074,8 +10329,8 @@ BUILDIN_FUNC(guardian)
 		{// <guardian index>
 			guardian=script_getnum(st,7);
 		} else {
-			ShowError("buildin_guardian: invalid data type for argument #8 (%d).", data->type);
-			report_src(st);
+			ShowError("script:guardian: invalid data type for argument #6 (from 1)\n");
+			script_reportdata(data);
 			return 1;
 		}
 	}
@@ -13049,7 +13304,7 @@ BUILDIN_FUNC(unitattack)
 	default:
 		ShowError("script:unitattack: unsupported source unit type %d\n", unit_bl->type);
 		script_pushint(st, 0);
-		return  0;
+		return 1;
 	}
 	script_pushint(st, unit_walktobl(unit_bl, target_bl, 65025, 2));
 	return 0;
@@ -13152,7 +13407,7 @@ BUILDIN_FUNC(unitdeadsit)
 		} else
 		{
 			ShowWarning("script:unitdeadsit: %d is not a valid action\n", action);
-			report_src(st);
+			return 1;
 		}
 	}
 
@@ -13320,34 +13575,39 @@ BUILDIN_FUNC(awake)
 BUILDIN_FUNC(getvariableofnpc)
 {
 	struct script_data* data;
+	char* name;
+	struct npc_data* nd;
 
 	data = script_getdata(st,2);
 	if( !data_isreference(data) )
 	{// Not a reference (aka varaible name)
-		ShowError("script: getvariableofnpc: first argument is not a variable name\n");
+		ShowError("script:getvariableofnpc: not a variable\n");
+		script_reportdata(data);
+		script_pushnil(st);
 		st->state = END;
 		return 1;
 	}
-	else
-	{
-		int num = data->u.num;
-		char* var_name = str_buf + str_data[num&0x00ffffff].str;
-		const char* npc_name = script_getstr(st, 3);
-		struct npc_data* nd = npc_name2id(npc_name);
-		if( var_name[0] != '.' || var_name[1] == '@' )
-		{// not a npc variable
-			ShowError("script: getvariableofnpc: invalid scope %s (not npc variable)\n", var_name);
-			st->state = END;
-			return 1;
-		}
-		if( nd == NULL || nd->bl.subtype != SCRIPT || nd->u.scr.script == NULL )
-		{// NPC not found or has no script
-			ShowError("script: getvariableofnpc: can't find npc %s\n", npc_name);
-			st->state = END;
-			return 1;
-		}
-		push_val2(st->stack, C_NAME, num, &nd->u.scr.script->script_vars );
+
+	name = data_varname(data);
+	if( *name != '.' || name[1] == '@' )
+	{// not a npc variable
+		ShowError("script:getvariableofnpc: invalid scope (not npc variable)\n");
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return 1;
 	}
+
+	nd = npc_name2id(script_getstr(st,3));
+	if( nd == NULL || nd->bl.subtype != SCRIPT || nd->u.scr.script == NULL )
+	{// NPC not found or has no script
+		ShowError("script:getvariableofnpc: can't find npc %s\n", script_getstr(st,3));
+		script_pushnil(st);
+		st->state = END;
+		return 1;
+	}
+
+	push_val2(st->stack, C_NAME, data_varuid(data), &nd->u.scr.script->script_vars );
 	return 0;
 }
 
@@ -13370,7 +13630,7 @@ BUILDIN_FUNC(warpportal)
 	bl = map_id2bl(st->oid);
 	if( bl == NULL )
 	{
-		ShowError("script:warpportal: npc is needed");
+		ShowError("script:warpportal: npc is needed\n");
 		return 1;
 	}
 

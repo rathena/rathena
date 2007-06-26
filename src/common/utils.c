@@ -294,30 +294,35 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 }
 #endif
 
-unsigned char GetByte(unsigned long val, size_t num)
+uint8 GetByte(uint32 val, size_t num)
 {
-	switch(num) {
-	case 0:  return (unsigned char)((val & 0x000000FF)      );
-	case 1:	 return (unsigned char)((val & 0x0000FF00)>>0x08);
-	case 2:	 return (unsigned char)((val & 0x00FF0000)>>0x10);
-	case 3:	 return (unsigned char)((val & 0xFF000000)>>0x18);
+	switch( num )
+	{
+	case 0:  return (uint8)((val & 0x000000FF)        );
+	case 1:	 return (uint8)((val & 0x0000FF00) >> 0x08);
+	case 2:	 return (uint8)((val & 0x00FF0000) >> 0x10);
+	case 3:	 return (uint8)((val & 0xFF000000) >> 0x18);
 	default: return 0;	//better throw something here
 	}
 }
-unsigned short GetWord(unsigned long val, size_t num)
+uint16 GetWord(uint32 val, size_t num)
 {
-	switch(num) {
-	case 0:  return (unsigned short)((val & 0x0000FFFF)      );
-	case 1:  return (unsigned short)((val & 0xFFFF0000)>>0x10);
+	switch( num )
+	{
+	case 0:  return (uint16)((val & 0x0000FFFF)        );
+	case 1:  return (uint16)((val & 0xFFFF0000) >> 0x10);
 	default: return 0;	//better throw something here
 	}
 }
-unsigned short MakeWord(unsigned char byte0, unsigned char byte1)
+uint16 MakeWord(uint8 byte0, uint8 byte1)
 {
-	return byte0 | (byte1<<0x08);
+	return
+		((uint16)(byte0        ))|
+		((uint16)(byte1 << 0x08));
 }
-unsigned long MakeDWord(unsigned short word0, unsigned short word1)
+uint32 MakeDWord(uint16 word0, uint16 word1)
 {
-	return 	  ((unsigned long)word0)
-			| ((unsigned long)word1<<0x10);
+	return
+		((uint32)(word0        ))|
+		((uint32)(word1 << 0x10));
 }

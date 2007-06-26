@@ -44,8 +44,10 @@ struct script_code {
 };
 
 struct script_stack {
-	int sp,sp_max,defsp;
-	struct script_data *stack_data;
+	int sp;// number of entries in the stack
+	int sp_max;// capacity of the stack
+	int defsp;
+	struct script_data *stack_data;// stack
 	struct linkdb_node **var_function;	// ŠÖ”ˆË‘¶•Ï”
 };
 

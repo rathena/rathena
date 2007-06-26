@@ -38,9 +38,9 @@ void findfile(const char *p, const char *pat, void (func)(const char*));
 // byte word dword access [Shinomori]
 //////////////////////////////////////////////////////////////////////////
 
-extern unsigned char GetByte(unsigned long val, size_t num);
-extern unsigned short GetWord(unsigned long val, size_t num);
-extern unsigned short MakeWord(unsigned char byte0, unsigned char byte1);
-extern unsigned long MakeDWord(unsigned short word0, unsigned short word1);
+extern uint8 GetByte(uint32 val, size_t num);
+extern uint16 GetWord(uint32 val, size_t num);
+extern uint16 MakeWord(uint8 byte0, uint8 byte1);
+extern uint32 MakeDWord(uint16 word0, uint16 word1);
 
 #endif /* _UTILS_H_ */
