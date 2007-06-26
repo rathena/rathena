@@ -64,7 +64,7 @@ L_ITEM_1c:
 	close;
 L_ITEM_2c:
 	mes "[Zac]";
-	mes "Oh, dear. You need 1 Cobaltblue Dyestuff...";
+	mes "Oh, dear. You need 1 Cobaltblue Dyestuffs...";
 	close;
 L_ITEM_3c:
 	mes "[Zac]";
@@ -77,7 +77,7 @@ L2:
 	menu "Bongun Hat",L2_4;
 L2_4:
 	mes "[Zac]";
-	mes "You need 10 Amulets, 1 Cobaltblue Dyestuff and 1 Munak Hat for Bongun Hat.";
+	mes "You need 10 Amulets, 1 Cobaltblue Dyestuffs and 1 Munak Hat for Bongun Hat.";
 	close;
 L3:
 	mes "[Zac]";
@@ -292,11 +292,11 @@ L_ITEM_1d:
 	close;
 L_ITEM_2d:
 	mes "[Pac]";
-	mes "Oh, dear. You need 1 DarkGreen Dyestuff...";
+	mes "Oh, dear. You need 1 DarkGreen Dyestuffs...";
 	close;
 L_ITEM_3d:
 	mes "[Pac]";
-	mes "Oh, dear. You need 1 Lemon Dyestuff...";
+	mes "Oh, dear. You need 1 Lemon Dyestuffs...";
 	close;
 L_ITEM_4d:
 	mes "[Pac]";
@@ -317,7 +317,7 @@ L2_26:
 	close;
 L2_29:
 	mes "[Pac]";
-	mes "You need 25 Steels, 1 DarkGreen Dyestuff, 1 Lemon Dyestuff, 150 Fabric and 2 Gold Bar's for Sphinx Hat.";
+	mes "You need 25 Steels, 1 DarkGreen Dyestuffs, 1 Lemon Dyestuffs, 150 Fabric and 2 Gold Bar's for Sphinx Hat.";
 	close;
 L3:
 	mes "[Pac]";

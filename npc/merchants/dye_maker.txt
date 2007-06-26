@@ -15,8 +15,7 @@
 //============================================================ 
 
 morocc_in,146,99,3	script	Java Dullihan	58,{
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_Weight < 200) {
+	if (MaxWeight-Weight < 200) {
 		mes "- Wait a moment! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";

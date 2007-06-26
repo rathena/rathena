@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/06/26
+	* Changed all 'dyestuff' words -> 'Dyestuffs' which's correct [Lupus]
 2007/06/25
 	* Rev. 10810 Rather large Kafra update. (May need further testing) [L0ne_W0lf]
 	- Updated a good portion of the kafra functions.

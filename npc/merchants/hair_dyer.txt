@@ -123,14 +123,14 @@ prt_in,243,168,4	script	Jovovich	91,{
 			mes "When you're feeling down , when you get dumped, when you want to impress someone, or even when you just want to stand out...";
 			next;
 			mes "[Hairdresser Jovovich]";
-			mes "For that special place and time, wouldn't you want a hairstyle of your very own? As long as you have the appropriate dyestuff, I will make your hair look wonderful.";
+			mes "For that special place and time, wouldn't you want a hairstyle of your very own? As long as you have the appropriate dyestuffs, I will make your hair look wonderful.";
 			next;
 			mes "[Hairdresser Jovovich]";
 			mes "And try not to worry too much about the fee. Acquiring beauty is the same as acquiring everything. Hehe~";
 			next;
 			mes "[Hairdresser Jovovich]";
 			mes "* Fees and Information *";
-			mes "- 1 Dyestuff item of the color of hair you want.";
+			mes "- 1 Dyestuffs item of the color of hair you want.";
 			mes "- 1000 zeny fee.";
 			break;
 

@@ -44,7 +44,7 @@ M_INFO:
 	mes "[Fashionable Glasses Quest]";
 	mes "Ok all you have to do is collect"; 
 	mes "^CC66331 Jack'a Dandy^000000"; 
-	mes "and ^CC66331 Scalet Dyestuff^000000.";
+	mes "and ^CC66331 Scalet Dyestuffs^000000.";
 	next;
 	menu "Accept",-,"Leave",M_LEAVE;
 	

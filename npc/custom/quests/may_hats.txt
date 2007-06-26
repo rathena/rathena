@@ -142,8 +142,8 @@ M_5:
  next;
  mes "[Yakima]";
  mes "Well... we construct it from some common items:";
- mes "1 Scarlet Dyestuff,";
- mes "1 Orange Dyestuff,";
+ mes "1 Scarlet Dyestuffs,";
+ mes "1 Orange Dyestuffs,";
  mes "2 Stop Posts,";
  mes "3 Clown Noses,";
  mes "180 Fig Leaves and";

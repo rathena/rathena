@@ -360,7 +360,7 @@ sL_Zeny:
 	close;
 
 sL_NoDye:
-	mes "For me to dye your clothes, I'll need the appropriate Dyestuff. Please check my price list for the information.";
+	mes "For me to dye your clothes, I'll need the appropriate Dyestuffs. Please check my price list for the information.";
 	next;
 
 L_Busy:
@@ -371,14 +371,14 @@ L_PriceList:
 	mes "[Dyer Ginedin Rephere]";
 	mes "Here is the list of colors you can choose from and their prices:";
 	mes " ";
-	mes " - ^FF4422Red^000000: 10000 zeny, 1 Scarlet Dyestuff";
-	mes " - ^D5A500Yellow^000000: 10000 zeny, 1 Lemon Dyestuff";
-	mes " - ^AA00AAViolet^000000: 10000 zeny, 1 Violet Dyestuff";
-	mes " - ^FF8800Orange^000000: 10000 zeny, 1 Orange Dyestuff";
-	mes " - ^4422FFBlue^000000: 10000 zeny, 1 CobaltBlue Dyestuff";
-	mes " - ^009500Green^000000: 10000 zeny, 1 DarkGreen Dyestuff";
-	mes " - Black: 10000 zeny, 1 Black Dyestuff";
-	mes " - White: 10000 zeny, 1 White Dyestuff";
+	mes " - ^FF4422Red^000000: 10000 zeny, 1 Scarlet Dyestuffs";
+	mes " - ^D5A500Yellow^000000: 10000 zeny, 1 Lemon Dyestuffs";
+	mes " - ^AA00AAViolet^000000: 10000 zeny, 1 Violet Dyestuffs";
+	mes " - ^FF8800Orange^000000: 10000 zeny, 1 Orange Dyestuffs";
+	mes " - ^4422FFBlue^000000: 10000 zeny, 1 CobaltBlue Dyestuffs";
+	mes " - ^009500Green^000000: 10000 zeny, 1 DarkGreen Dyestuffs";
+	mes " - Black: 10000 zeny, 1 Black Dyestuffs";
+	mes " - White: 10000 zeny, 1 White Dyestuffs";
 	goto M_Menu;
 
 L_End:
