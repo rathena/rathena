@@ -30,7 +30,7 @@
 //= 1.6 According to recent info u can re-install Guardians during WoE [Lupus]
 //= 1.6a Fix for guild manager recognizing [KarLaeda]
 //= 1.6b Fixed the chance for double invest, now 50% instead of 49% [Lupus]
-//= 1.7 Changed hte names of the Kafra from "Service" to "Staff" [L0ne_W0lf]
+//= 1.7 Changed the names of the Kafra from "Service" to "Staff" [L0ne_W0lf]
 //============================================================
 
 

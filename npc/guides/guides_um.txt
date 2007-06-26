@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
-//= Guide for hte City of Umbala
+//= Guide for the City of Umbala
 //===== Additional Comments: ================================= 
 //= 1.1 Fixed location command format [Lupus]
 //= 1.2 Optimized, updated common guide names [Lupus]

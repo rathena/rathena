@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
-//= Guides for hte City of Louyang
+//= Guides for the City of Louyang
 //===== Additional Comments: =================================
 //= Fully working
 //= 0.5 Added first, Japanese version [Tsuyuki]

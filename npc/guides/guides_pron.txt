@@ -8,7 +8,7 @@
 //= eAthena  SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
-//= Guides for hte City of Prontera
+//= Guides for the City of Prontera
 //===== Additional Comments: ================================= 
 //= Fully working
 //= v1.1 Now using duplicate command.

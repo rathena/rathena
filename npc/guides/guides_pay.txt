@@ -8,7 +8,7 @@
 //= eAthena  SVN
 //===== Description: ========================================= 
 //= [Aegis COnversion]
-//= Guides for hte City of Payon
+//= Guides for the City of Payon
 //===== Additional Comments: ================================= 
 //= Fully working
 //= v1.1 Now using duplicate command.New Payon Locations [Darkchild]

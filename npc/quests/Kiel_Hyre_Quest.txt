@@ -3991,7 +3991,7 @@ kh_dun01,162,206,0	duplicate(KHKeyardReader)	Mechanical Device	111
 
 //----------------------------------------------------------------------------
 // Keep monsters out of the quest area.
-// Silly really sinc ehte rest of it's a dungeon
+// Silly really since the rest of it's a dungeon
 //----------------------------------------------------------------------------
 //kh_dun01,180,220,0	script	Monster Warp#kh1::KHMobWarp	-1,5,20,{
 //OnTouchNPC:

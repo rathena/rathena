@@ -36,7 +36,7 @@
 //= 1.0 First version, needs testing. [L0ne_W0lf]
 //= 1.1 Some slight optimization. [L0ne_W0lf]
 //= 1.2 Fixed Man Stuck in Ice only giving 1 Freezing Snow Powder. [L0ne_W0lf]
-//= 1.3 Added hte ability to redeem lottery tickets before donation max is met. [L0ne_W0lf]
+//= 1.3 Added the ability to redeem lottery tickets before donation max is met. [L0ne_W0lf]
 //= 1.4 Removed an erroneous "case". Thanks, Jet. [L0ne_W0lf]
 //= 1.5 Fixed a bug in Bruspetti quest. [SinSloth]
 //============================================================ 

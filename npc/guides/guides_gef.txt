@@ -8,7 +8,7 @@
 //= eAthena  SVN
 //===== Description: ========================================= 
 //= [Aegis COnversion]
-//= Guides for hte City of Geffen
+//= Guides for the City of Geffen
 //===== Additional Comments: ================================= 
 //= Fully working.  Added a guide at every exit.
 //= v1.1 Now using duplicate command.

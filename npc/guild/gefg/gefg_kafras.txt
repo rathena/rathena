@@ -13,7 +13,7 @@
 //===== Additional Comments: =================================
 //= v1.2 Optimized with functions.[kobra_k88]
 //= v1.3 Changed "Kafra Service" to "Kafra Staff" [L0ne_W0lf]
-//=	Corrected hte location of Castle 1's kafra.
+//=	Corrected the location of Castle 1's kafra.
 //============================================================
 
 
