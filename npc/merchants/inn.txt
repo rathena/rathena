@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -30,6 +30,7 @@
 //=	- Removed the Cancel dialog.
 //= 1.6 More fixed, changed progression of "Rest"ing.
 //=	- Corrected Morroc NPCs. [L0ne_W0lf]
+//= 1.7 Corrected Payon NPC. [L0ne_W0lf] 
 //============================================================ 
 
 
@@ -69,10 +70,10 @@ geffen_in,70,64,5	script	Inn Maid::Betty	53,{
 }
 
 //======================= Payon ======================================
-payon_in01,131,62,5	script	Inn Maid::SunHee	53,{
+payon_in01,132,62,5	script	Inn Employee::Ahee	53,{
 
-	callfunc "F_InnMaid","[Sun Hee]","Payon Inn","payon_in01",132,56;
-	warp "payon_in01",140,15; end;
+	callfunc "F_InnMaid","[Employee Ahee]","Payon Inn","payon_in01",136,61;
+	warp "payon_in01",132,11; end;
 }
 
 //======================== Morocc ====================================

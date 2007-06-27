@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 3.2
+//= 3.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -54,6 +54,8 @@
 //=	Moved a book non-related to Lighthalzen quests.
 //= 3.1 Added Schwartzvalt Trilogy Quest. [SinSloth]
 //= 3.2 Updated some NPCs regarding Hugel Rebellion Quest. [SinSloth]
+//= 3.2 Removed hte NPC "#kiz03-4" as I couldn't find any [L0ne_W0lf]
+//=	reference to it in the Aegis script.
 //============================================================ 
 
 lighthalzen,1,1,7	script	sneakAddSuber	-1,{
@@ -2727,7 +2729,6 @@ OnTouch:
 
 lhz_dun03,123,191,0	duplicate(#kiz03-1)	#kiz03-2	-1,3,3
 lhz_dun03,74,140,0	duplicate(#kiz03-1)	#kiz03-3	-1,3,3
-lhz_dun03,344,278,0	duplicate(#kiz03-1)	#kiz03-4	-1,3,3
 
 lighthalzen,344,278,0	script	#kiz03	-1,2,2,{
 

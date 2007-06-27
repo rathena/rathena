@@ -3,8 +3,9 @@
 //===== By: ================================================== 
 //= eAthena Dev Team
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
+//= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 5.5b
+//= 5.6a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: =========================================
@@ -48,6 +49,7 @@
 //= 5.5b Missed a preceeding hyphen, which was screwing up teleporting. [L0ne_W0lf]
 //= 5.6 Further dialog updates, added  dynamic costs for cart and storage use. [L0ne_W0lf]
 //=	Updated some functions to handle Guild Kafras the way they should. 
+//= 5.6a Corrected a few wrong name sin the teleport function. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -387,11 +389,11 @@ function	script	F_KafTele	{
 		if (@wrpD$[@num] == "Morroc") warp "morocc", 156, 46;
 		if (@wrpD$[@num] == "Payon") warp "payon", 168, 103;
 		if (@wrpD$[@num] == "Prontera") warp "prontera", 116, 72;
-		if (@wrpD$[@num] == "Coal Mine(Dead Pit)") warp "mjolnir_02", 82, 347;
-		if (@wrpD$[@num] == "Comodo Pharos Lighthouse") warp "cmd_fild07", 127, 134;
+		if (@wrpD$[@num] == "Mjolnir Dead Pit") warp "mjolnir_02", 82, 347;
+		if (@wrpD$[@num] == "Comodo Pharos Beacon") warp "cmd_fild07", 127, 134;
 		if (@wrpD$[@num] == "Orc Dungeon") warp "gef_fild10", 52, 326;
 		if (@wrpD$[@num] == "Umbala") warp "umbala", 130, 130;
-		if (@wrpD$[@num] == "Yuno") warp "yuno", 157, 123;
+		if (@wrpD$[@num] == "Juno") warp "yuno", 157, 123;
 		cutin "", 255;
 		end;
 }
