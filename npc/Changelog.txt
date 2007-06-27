@@ -2,13 +2,13 @@ Date		Added
 ======
 2007/06/26
 	* Rev 10815 Updated NPC for Payon. [L0ne_W0lf]
-	- Added in the comeplete fortune teller. 
+	- Added in the complete fortune teller NPC. 
 	- Rewrote the Arrow quiver and Gemstone trader NPCs.
-	  Moved the Gemstone trader intot he '/merchants' folder.
+	  Moved the Gemstone trader into the '/merchants' folder.
 	- Updated the information for the Payon Inn accordingly.
 	* Removed an NPC from the Lighthalzen quests. Should fix the
-	  "NPC not removed." message when reloading scripts. .Removed
-	  because I couldn't find this NPC anywhere it he official file.
+	  "NPC not removed" message when reloading scripts. Removed
+	  because I couldn't find this NPC anywhere in the official file.
 	* Fixed a few over-looked names in the Kafra teleport function.
 	* Changed all 'dyestuff' words -> 'Dyestuffs' which's correct [Lupus]
 2007/06/25
