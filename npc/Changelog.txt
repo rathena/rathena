@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/06/28
+	* Fixed a bug in Hugel Bingo game system which prevented players from launch another game after a game has been canceled. [SinSloth]
 2007/06/26
 	* Rev 10815 Updated NPC for Payon. [L0ne_W0lf]
 	- Added in the complete fortune teller NPC. 

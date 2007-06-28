@@ -12,6 +12,8 @@
 //= 1.0 - First version. Please report bugs you find out. [SinSloth]
 //= 1.1 - Fixed a minor bug. [SinSloth]
 //= 1.2 - Added some Bingo Staff NPCs. [SinSloth]
+//= 1.3 - Fixed a bug where an AFK-player wasn't warped out of the game,
+//= preventing players from launching another. [SinSloth]
 //============================================================
 
 que_bingo,48,84,5	script	Bingo Waiting Room	124,{
@@ -20,7 +22,7 @@ que_bingo,48,84,5	script	Bingo Waiting Room	124,{
 OnInit:
 	set $hu_bingoa,0;
 	set $hu_bingob,0;
-	waitingroom "Bingo Waiting Room - 5 People",50,"Bingo Waiting Room::OnWarp",5;
+	waitingroom "Bingo Waiting Room - 5 People",50,"Bingo Waiting Room::OnWarp",2;
 	end;
 	
 OnWarp:
@@ -115,7 +117,7 @@ OnStart:
 	end;
 	
 OnEnter:
-	if($hu_bingoa == 4)
+	if($hu_bingoa == 1)
 	{
 		set $hu_bingoa,5;
 		donpcevent "start2#bingo::OnStart";
@@ -154,98 +156,14 @@ OnTimer202000:
 	end;
 	
 OnTimer203000:
-	donpcevent "player1#bingo::OnOut";
-	donpcevent "player2#bingo::OnOut";
-	donpcevent "player3#bingo::OnOut";
-	donpcevent "player4#bingo::OnOut";
-	donpcevent "player5#bingo::OnOut";
+	areawarp "que_bingo",44,115,54,126,"que_bingo",40,124;
 	enablenpc "out3#bingo";
 	end;
 
-OnTimer201000:
-	donpcevent "player1#bingo::OnInit";
-	donpcevent "player2#bingo::OnInit";
-	donpcevent "player3#bingo::OnInit";
-	donpcevent "player4#bingo::OnInit";
-	donpcevent "player5#bingo::OnInit";
+OnTimer204000:
 	disablenpc "out3#bingo";
 	set $hu_bingoa,0;
 	donpcevent "Bingo Waiting Room::OnStart";
-	end;
-}
-
-que_bingo,49,125,0	script	player1#bingo	139,1,1,{
-
-OnInit:
-	disablenpc "player1#bingo";
-	end;
-	
-OnOut:
-	enablenpc "player1#bingo";
-	end;
-	
-OnTouch:
-	warp "que_bingo",40,124;
-	end;
-}
-
-que_bingo,53,121,0	script	player2#bingo	139,1,1,{
-
-OnInit:
-	disablenpc "player2#bingo";
-	end;
-	
-OnOut:
-	enablenpc "player2#bingo";
-	end;
-	
-OnTouch:
-	warp "que_bingo",40,124;
-	end;
-}
-
-que_bingo,51,116,0	script	player3#bingo	139,1,1,{
-
-OnInit:
-	disablenpc "player3#bingo";
-	end;
-	
-OnOut:
-	enablenpc "player3#bingo";
-	end;
-	
-OnTouch:
-	warp "que_bingo",40,124;
-	end;
-}
-
-que_bingo,46,116,0	script	player4#bingo	139,1,1,{
-
-OnInit:
-	disablenpc "player4#bingo";
-	end;
-	
-OnOut:
-	enablenpc "player4#bingo";
-	end;
-	
-OnTouch:
-	warp "que_bingo",40,124;
-	end;
-}
-
-que_bingo,45,121,0	script	player5#bingo	139,1,1,{
-
-OnInit:
-	disablenpc "player5#bingo";
-	end;
-	
-OnOut:
-	enablenpc "player5#bingo";
-	end;
-	
-OnTouch:
-	warp "que_bingo",40,124;
 	end;
 }
 
