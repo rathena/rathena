@@ -469,6 +469,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_Storeall,			"@storeall",		40, atcommand_storeall }, // MouseJstr
 	{ AtCommand_Skillid,			"@skillid", 		40, atcommand_skillid }, // MouseJstr
 	{ AtCommand_Useskill,			"@useskill",		40, atcommand_useskill }, // MouseJstr
+	{ AtCommand_DisplaySkill,		"@displayskill",	99, atcommand_displayskill }, // Skotlex
 	{ AtCommand_Snow,				"@snow",			99, atcommand_snow },
 	{ AtCommand_Sakura, 			"@sakura",			99, atcommand_sakura },
 	{ AtCommand_Clouds, 			"@clouds",			99, atcommand_clouds },
