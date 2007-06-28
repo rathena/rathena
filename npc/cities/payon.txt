@@ -4,7 +4,7 @@
 //= Muad Dib (1.0) Darkchild (1.1) Muad Dib (1.2)
 //= Darkchild (1.3) DracoRPG (1.5) L0ne_W0lf (2.1)
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.1b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //= 2.1 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //=	Moved Gemstone Trader "Jade" to /merchants/gemstone.txt
 //=	Moved Fortune Teller to /other/fortune.txt
+//= 2.1b Added a missing close in the Monster Scholar. [L0ne_W0lf]
 //============================================================ 
 
 // Payon
@@ -367,6 +368,7 @@ payon,132,235,3	script	Monster Scholar#02	98,{
 		mes "^666666*Ahem*^000000 My apologies, I get too excited sometimes. But if you happen to meet other scholars such as myself, please treat them well. Our jobs are very difficult!";
 		break;
 	}
+	close;
 }
 
 // Inside Payon

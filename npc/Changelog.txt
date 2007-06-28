@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/06/28
+	* Rev. 10823 Added missing "close;" to the Payon Monster Scholar. [L0ne_W0lf]
+	* Fixed the display names for the Payon Kafra's.
 	* Fixed a bug in Hugel Bingo game system which prevented players from launch another game after a game has been canceled. [SinSloth]
 2007/06/26
 	* Rev 10815 Updated NPC for Payon. [L0ne_W0lf]
