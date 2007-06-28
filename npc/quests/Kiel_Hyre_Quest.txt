@@ -65,6 +65,7 @@
 //= 3.1 Moved the "delitem" for all related quest items to the proper NPC. [L0ne_W0lf]
 //= 3.2 Fixed error with Allysia teling you to "Go away." maybe. [L0ne_W0lf]
 //= 3.2b Fixed some typos and grammar mistakes. [SinSloth]
+//= 3.3 Fixed the receiver log out bugs. [L0ne_W0lf]
 //============================================================ 
 //============================================================================
 // Kiel Hyre Quest/Robotic Lab Dungeon
@@ -6367,7 +6368,6 @@ yuno_fild09,158,217,0	script		Wooden Board	111,{
 //----------------------------------------------------------------------------
 kh_kiehl01,17,39,0	script	Receiver	111,{
 	if (.KHKilled < 1) {
-		set .KHKilled,.KHKilled+1;
 		mes "^333333*BBBZZZ*^000000";
 		if (KielHyreQuest == 74) {
 			next;
@@ -6380,8 +6380,8 @@ kh_kiehl01,17,39,0	script	Receiver	111,{
 			mes "try to find me, adventurer.^000000.";
 			set KielHyreQuest,76;
 		}
-
 		close2;
+		set .KHKilled,.KHKilled+1;
 		monster "kh_kiehl01",16,32,"Alicel",1739,1,"Receiver::OnMyMobDead";
 		monster "kh_kiehl01",18,31,"Aliot",1740,1,"Receiver::OnMyMobDead";
 		end;
@@ -6752,12 +6752,12 @@ OnTouch:
 //----------------------------------------------------------------------------
 kh_kiehl01,15,179,0	script	Robots#kh1	111,{
 	if (.KHKilled < 1) {
-		set .KHKilled,.KHKilled+1;
 		mes "^3355FFAs soon as you";
 		mes "touch the test tube,";
 		mes "a bunch of robots";
 		mes "suddenly appeared.^000000.";
 		close2;
+		set .KHKilled,.KHKilled+1;
 		monster "kh_kiehl01",18,181,"Aliot",1740,1,"Robots#kh1::OnMyMobDead";
 		monster "kh_kiehl01",18,180,"Alicel",1739,1,"Robots#kh1::OnMyMobDead";
 		monster "kh_kiehl01",18,179,"Aliot",1740,1,"Robots#kh1::OnMyMobDead";
