@@ -3,12 +3,13 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.2
+//= 1.2a
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
 //= 1.1 Official kRO 10.1 spawns [Playtester]
 //= 1.2 More accurate spawns [Playtester]
+//= 1.2a Updated Cramp resp time [Lupus]
 //============================================================
 
 //==================================================
@@ -30,7 +31,7 @@ alde_dun02,0,0,0,0	monster	Arclouze	1194,20,0,0,0
 //==================================================
 alde_dun03,0,0,0,0	monster	Cramp	1209,25,0,0,0
 alde_dun03,0,0,0,0	monster	Drainliar	1111,20,0,0,0
-alde_dun03,77,28,5,5	monster	Cramp	1209,3,40000,20000,0
+alde_dun03,77,28,5,5	monster	Cramp	1209,3,300000,150000,0
 alde_dun03,0,0,0,0	monster	Penomena	1216,45,180000,120000,0
 alde_dun03,184,61,30,30	monster	Cramp	1209,10,300000,150000,0
 alde_dun03,184,61,30,30	monster	Drainliar	1111,10,300000,150000,0
