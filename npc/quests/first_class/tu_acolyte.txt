@@ -1014,7 +1014,7 @@ prt_monk,226,257,6	script	Ill Girl#tu	93,{
 		mes "Are you alright?";
 		next;
 		//misceffect EF_CURSEATTACK ;
-		soundeffectall "_curse.wav",0;
+		//soundeffectall "_curse.wav",0;
 		emotion e_omg;
 		mes "["+strcharinfo(0)+"]";
 		mes "This is....!";
