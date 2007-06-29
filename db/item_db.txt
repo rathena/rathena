@@ -2873,6 +2873,7 @@
 12219,Level_10_Wind_Walk_Scroll,Level_10_Wind_Walk_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 383,10; },{},{}
 12220,Level_5_Adrenaline_Rush_Scroll,Level_5_Adrenaline_Rush_Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 111,5; },{},{}
 12221,Megaphone_,Megaphone,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ input @Megaphone$; announce strcharinfo(0) + ": " + @megaphone$,bc_all,0xFF0000; end; },{},{}
+12225,Sweet_Candy_Cane,Sweet Candy Cane,11,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1245; },{},{}
 //Valentine's Day Event (2007)
 12234,Cacao99,Fierce Cacao 99%,0,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 25,0; },{},{}
 12235,Strawberry_Choco,Strawberry Chocolate,11,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,5; itemskill 34,5; },{},{}

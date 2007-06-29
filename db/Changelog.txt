@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+06/29
+	* Added Christmas Goblin taming item [Playtester]
 06/28
 	* Updated Kasa skill usage thanks to Doddler [Playtester]
 06/27
