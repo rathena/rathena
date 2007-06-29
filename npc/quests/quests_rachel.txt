@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -39,6 +39,7 @@
 //= 1.3 Added the ability to redeem lottery tickets before donation max is met. [L0ne_W0lf]
 //= 1.4 Removed an erroneous "case". Thanks, Jet. [L0ne_W0lf]
 //= 1.5 Fixed a bug in Bruspetti quest. [SinSloth]
+//= 1.5b Fixed some typos in various quests. [SinSloth]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -3111,8 +3112,9 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "be found near Freya's Spring:";
 		mes "beseech him on my behalf!";
 		set ice_necklace_q,2;
+		close2;
 		cutin "",255;
-		close;
+		end;
 	}
 
 	else if ((ice_necklace_q == 2) || (ice_necklace_q == 3)) {
@@ -5041,7 +5043,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				mes "I explain the task, you must";
 				mes "accept my request.";
 				next;
-				if (select("Let me think about it.:Yes, sure.") == 1) {
+				if (select("Let me think about it.:Yes, sure.") == 2) {
 					cutin "ra_gman",2;
 					mes "[High Priest Zhed]";
 					mes "Ah, I'm relieved to see";
@@ -6066,6 +6068,7 @@ ra_temsky,99,99,5	script	Pope#rachel	936,{
 		mes "religion, but there's a sacred";
 		mes "place that even I'm not allowed";
 		mes "to visit. Isn't that so weird?";
+		next;
 		select("R-really...?");
 		mes "[Pope]";
 		mes "...Yeah. I don't know";
@@ -6410,7 +6413,7 @@ que_san04,119,133,0	script	imir2#rachel	-1,20,5,{
 OnTouch:
 	if (ra_tem_q == 21) {
 		mes "^3355FFThere's something here";
-		mes "beneaththe water. This";
+		mes "beneath the water. This";
 		mes "may warrant a closer look.^000000";
 		close;
 	}
