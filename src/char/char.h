@@ -10,10 +10,6 @@
 #define START_CHAR_NUM 150000
 #define MAX_MAP_SERVERS 30
 
-#define CHAR_CONF_NAME	"conf/char_athena.conf"
-
-#define LOGIN_LAN_CONF_NAME	"conf/subnet_athena.conf"
-
 #define DEFAULT_AUTOSAVE_INTERVAL 300*1000
 
 struct character_data {

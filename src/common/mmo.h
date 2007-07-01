@@ -97,8 +97,6 @@
 //Room for initial 100k characters
 #define DEFAULT_MAX_CHAR_ID 250000
 
-#define CHAR_CONF_NAME  "conf/char_athena.conf"
-
 //Base Homun skill.
 #define HM_SKILLBASE 8000
 #define MAX_HOMUNSKILL 16

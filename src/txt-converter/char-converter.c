@@ -1,10 +1,7 @@
 // (c) eAthena Dev Team - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
+#include "../common/cbasetypes.h"
 #include "../common/mmo.h"
 #include "../common/core.h"
 #include "../common/strlib.h"
@@ -25,12 +22,15 @@
 #include "../char_sql/int_guild.h"
 #include "../char_sql/inter.h"
 
-char t_name[256];
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define CHAR_CONF_NAME "conf/char_athena.conf"
 #define SQL_CONF_NAME "conf/inter_athena.conf"
 #define INTER_CONF_NAME "conf/inter_athena.conf"
 //--------------------------------------------------------
+
 int convert_init(void)
 {
 	char line[65536];
@@ -41,16 +41,17 @@ int convert_init(void)
 
 	ShowWarning("Make sure you backup your databases before continuing!\n");
 	printf("\n");
+
 	ShowNotice("Do you wish to convert your Character Database to SQL? (y/n) : ");
-	input=getchar();
-	if(input == 'y' || input == 'Y'){
+	input = getchar();
+	if(input == 'y' || input == 'Y')
+	{
 		struct character_data char_dat;
 		struct accreg reg;
 
 		ShowStatus("Converting Character Database...\n");
-		fp = fopen(char_txt, "r");
-		memset (&char_dat, 0, sizeof(struct character_data));
-		if(fp==NULL) {
+		if( (fp = fopen(char_txt, "r")) == NULL )
+		{
 			ShowError("Unable to open file [%s]!\n", char_txt);
 			return 0;
 		}
@@ -58,9 +59,9 @@ int convert_init(void)
 		while(fgets(line, sizeof(line), fp))
 		{
 			lineno++;
-			memset(&char_dat, 0, sizeof(char_dat));
+			memset(&char_dat, 0, sizeof(struct character_data));
 			ret=mmo_char_fromstr(line, &char_dat.status, char_dat.global, &char_dat.global_num);
-			if(ret > 0){
+			if(ret > 0) {
 				count++;
 				parse_friend_txt(&char_dat.status); //Retrieve friends.
 				mmo_char_tosql(char_dat.status.char_id , &char_dat.status);
@@ -78,7 +79,7 @@ int convert_init(void)
 		ShowStatus("Converted %d characters.\n", count);
 		fclose(fp);
 		ShowStatus("Converting Account variables Database...\n");
-		if( (fp=fopen(accreg_txt,"r")) ==NULL )
+		if( (fp = fopen(accreg_txt, "r")) == NULL )
 		{
 			ShowError("Unable to open file %s!", accreg_txt);
 			return 1;
@@ -91,7 +92,7 @@ int convert_init(void)
 			if(inter_accreg_fromstr(line, &reg) == 0 && reg.account_id > 0) {
 				count++;
 				inter_accreg_tosql(reg.account_id, 0, &reg, 2); //Type 2: Account regs
-			}else{
+			} else {
 				ShowError("accreg reading: broken data [%s] at %s:%d\n", line, accreg_txt, lineno);
 			}
 		}
@@ -102,14 +103,15 @@ int convert_init(void)
 	while(getchar() != '\n');
 	printf("\n");
 	ShowNotice("Do you wish to convert your Storage Database to SQL? (y/n) : ");
-	input=getchar();
-	if(input == 'y' || input == 'Y') {
+	input = getchar();
+	if(input == 'y' || input == 'Y')
+	{
 		struct storage storage_;
 		printf("\n");
 		ShowStatus("Converting Storage Database...\n");
-		fp=fopen(storage_txt,"r");
-		if(fp==NULL){
-			ShowError("can't read : %s\n",storage_txt);
+		if( (fp = fopen(storage_txt,"r")) == NULL )
+		{
+			ShowError("can't read : %s\n", storage_txt);
 			return 0;
 		}
 		lineno = count = 0;
@@ -132,15 +134,18 @@ int convert_init(void)
 		fclose(fp);
 	}
 
+	//FIXME: CONVERT STATUS DATA HERE!!!
+
 	while(getchar() != '\n');
 	printf("\n");
 	ShowNotice("Do you wish to convert your Pet Database to SQL? (y/n) : ");
 	input=getchar();
-	if(input == 'y' || input == 'Y') {
+	if(input == 'y' || input == 'Y')
+	{
 		struct s_pet p;
 		printf("\n");
 		ShowStatus("Converting Pet Database...\n");
-		if( (fp=fopen(pet_txt,"r")) ==NULL )
+		if( (fp = fopen(pet_txt, "r")) == NULL )
 		{
 			ShowError("Unable to open file %s!", pet_txt);
 			return 1;
@@ -150,10 +155,10 @@ int convert_init(void)
 		{
 			lineno++;
 			memset (&p, 0, sizeof(struct s_pet));
-			if(inter_pet_fromstr(line, &p)==0 && p.pet_id>0){
+			if(inter_pet_fromstr(line, &p)==0 && p.pet_id>0) {
 				count++;
 				inter_pet_tosql(p.pet_id,&p);
-			}else{
+			} else {
 				ShowError("pet reading: broken data [%s] at %s:%d\n", line, pet_txt, lineno);
 			}
 		}
@@ -161,15 +166,18 @@ int convert_init(void)
 		fclose(fp);
 	}
 
+	//FIXME: CONVERT HOMUNCULUS DATA AND SKILLS HERE!!!
+
 	while(getchar() != '\n');
 	printf("\n");
 	ShowNotice("Do you wish to convert your Party Database to SQL? (y/n) : ");
 	input=getchar();
-	if(input == 'y' || input == 'Y') {
+	if(input == 'y' || input == 'Y')
+	{
 		struct party p;
 		printf("\n");
 		ShowStatus("Converting Party Database...\n");
-		if( (fp=fopen(party_txt,"r")) ==NULL )
+		if( (fp = fopen(party_txt, "r")) == NULL )
 		{
 			ShowError("Unable to open file %s!", party_txt);
 			return 1;
@@ -193,14 +201,15 @@ int convert_init(void)
 
 	while(getchar() != '\n');
 	printf("\n");
-	ShowNotice("Do you wish to convert your Guilds/Guild Castles Database to SQL? (y/n) : ");
+	ShowNotice("Do you wish to convert your Guilds and Castles Database to SQL? (y/n) : ");
 	input=getchar();
-	if(input == 'y' || input == 'Y') {
+	if(input == 'y' || input == 'Y')
+	{
 		struct guild g;
 		struct guild_castle gc;
 		printf("\n");
 		ShowStatus("Converting Guild Database...\n");
-		if( (fp=fopen(guild_txt,"r")) ==NULL )
+		if( (fp = fopen(guild_txt, "r")) == NULL )
 		{
 			ShowError("Unable to open file %s!", guild_txt);
 			return 1;
@@ -220,7 +229,7 @@ int convert_init(void)
 		ShowStatus("Converted %d guilds.\n", count);
 		fclose(fp);
 		ShowStatus("Converting Guild Castles Database...\n");
-		if( (fp=fopen(castle_txt,"r")) ==NULL )
+		if( (fp = fopen(castle_txt, "r")) == NULL )
 		{
 			ShowError("Unable to open file %s!", castle_txt);
 			return 1;
@@ -229,7 +238,7 @@ int convert_init(void)
 		while(fgets(line, sizeof(line), fp))
 		{
 			lineno++;
-			memset (&gc, 0, sizeof(struct guild_castle));
+			memset(&gc, 0, sizeof(struct guild_castle));
 			if (inter_guildcastle_fromstr(line, &gc) == 0) {
 				inter_guildcastle_tosql(&gc);
 				count++;
@@ -245,13 +254,14 @@ int convert_init(void)
 	printf("\n");
 	ShowNotice("Do you wish to convert your Guild Storage Database to SQL? (y/n) : ");
 	input=getchar();
-	if(input == 'y' || input == 'Y') {
+	if(input == 'y' || input == 'Y')
+	{
 		struct guild_storage storage_;
 		printf("\n");
 		ShowStatus("Converting Guild Storage Database...\n");
-		fp=fopen(guild_storage_txt,"r");
-		if(fp==NULL){
-			ShowError("can't read : %s\n",guild_storage_txt);
+		if( (fp = fopen(guild_storage_txt, "r")) == NULL )
+		{
+			ShowError("can't read : %s\n", guild_storage_txt);
 			return 0;
 		}
 		lineno = count = 0;
@@ -271,20 +281,23 @@ int convert_init(void)
 		ShowStatus("Converted %d guild storages.\n", count);
 		fclose(fp);
 	}
+
+	//FIXME: CONVERT MAPREG HERE! (after enforcing MAPREGSQL for sql)
+
 	return 0;
 }
 
-int do_init(int argc, char **argv)
+int do_init(int argc, char** argv)
 {
-	char_config_read((argc>1)?argv[1]:CHAR_CONF_NAME);
+	char_config_read( (argc > 1) ? argv[1] : CHAR_CONF_NAME);
 	mapindex_init();
-	sql_config_read((argc>2)?argv[2]:SQL_CONF_NAME);
-	inter_init_txt((argc > 3) ? argv[3] :INTER_CONF_NAME);
-	inter_init_sql((argc > 3) ? argv[3] :INTER_CONF_NAME);
+	sql_config_read( (argc > 2) ? argv[2] : SQL_CONF_NAME);
+	inter_init_txt( (argc > 3) ? argv[3] : INTER_CONF_NAME);
+	inter_init_sql( (argc > 3) ? argv[3] : INTER_CONF_NAME);
 	convert_init();
 	ShowStatus("Everything's been converted!\n");
 	mapindex_final();
-	exit (0);
+	return 0;
 }
 
 void do_abort(void) {}

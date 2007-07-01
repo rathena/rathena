@@ -22,8 +22,6 @@
 #define START_CHAR_NUM 150000
 #define MAX_MAP_SERVERS 30
 
-#define LAN_CONF_NAME	"conf/subnet_athena.conf"
-
 #define DEFAULT_AUTOSAVE_INTERVAL 300*1000
 
 struct itemtmp {

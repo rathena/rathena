@@ -32,6 +32,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// private declarations
+#define CHAR_CONF_NAME  "conf/char_athena.conf"
+#define LAN_CONF_NAME	"conf/subnet_athena.conf"
+#define SQL_CONF_NAME	"conf/inter_athena.conf"
+
 #ifndef TXT_SQL_CONVERT
 static struct dbt *char_db_;
 #endif
@@ -67,8 +72,6 @@ char login_db_account_id[32] = "account_id";
 char login_db_level[32] = "level";
 
 int lowest_gm_level = 1;
-
-char *SQL_CONF_NAME = "conf/inter_athena.conf";
 
 struct mmo_map_server {
 	uint32 ip;
@@ -509,8 +512,8 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 {	//Insert the barebones to then update the rest.
 	char t_name[NAME_LENGTH*2];
 	jstrescapecpy(t_name, p->name);
-	sprintf(tmp_sql, "REPLACE INTO `%s` (`account_id`, `char_num`, `name`)  VALUES ('%d', '%d', '%s')",
-		char_db, p->account_id, p->char_num, t_name);
+	sprintf(tmp_sql, "REPLACE INTO `%s` (`char_id`, `account_id`, `char_num`, `name`)  VALUES ('%d', '%d', '%d', '%s')",
+		char_db, p->char_id, p->account_id, p->char_num, t_name);
 	if(mysql_query(&mysql_handle, tmp_sql))
 	{
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));

@@ -289,7 +289,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 	ShowFatalError("Memory manager::memmgr_malloc() serious error (allocating %d+%d bytes at %s:%d)\n", sizeof(struct unit_head_large), size, file, line);
 	memmgr_info();
 	exit(1);
-	return NULL;
+	//return NULL;
 };
 
 void* _mcalloc(size_t num, size_t size, const char *file, int line, const char *func )

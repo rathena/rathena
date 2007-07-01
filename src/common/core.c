@@ -134,7 +134,7 @@ const char* get_svn_revision(void)
 	if(*eA_svn_version)
 		return eA_svn_version;
 
-	if ((fp = fopen(".svn/entries", "r")))
+	if ((fp = fopen(".svn/entries", "r")) != NULL)
 	{
 		char line[1024];
 		int rev;

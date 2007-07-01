@@ -1,39 +1,26 @@
 // (c) eAthena Dev Team - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "cbasetypes.h"
-#ifdef __WIN32
-#include <my_global.h>
-#include <my_sys.h>
-#endif
-#include <mysql.h>
-
+#include "../common/cbasetypes.h"
 #include "../common/mmo.h"
 #include "../common/core.h"
 #include "../common/db.h"
+#include "../common/showmsg.h"
 
-struct auth_dat_ {
-	int account_id, sex;
-	char userid[24], pass[24], lastlogin[24];
-	int logincount;
-	int state; // packet 0x006a value + 1 (0: compte OK)
-	char email[40]; // e-mail (by default: a@a.com)
-	char error_message[20]; // Message of error code #6 = You are Prohibited to log in until %s (packet 0x006a)
-	time_t ban_until_time; // # of seconds 1/1/1970 (timestamp): ban time limit of the account (0 = no ban)
-	time_t connect_until_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
-	char last_ip[16]; // save of last IP of connection
-	char memo[255]; // a memo field
-	int account_reg2_num;
-	struct global_reg account_reg2[ACCOUNT_REG2_NUM];
-} *auth_dat;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#ifdef WIN32
+#include <winsock2.h>
+#endif
+#include <mysql.h>
 
 char login_account_id[256]="account_id";
 char login_userid[256]="userid";
 char login_user_pass[256]="user_pass";
 char login_db[256]="login";
+char globalreg_db[256]="global_reg_value";
 
 static struct dbt *gm_account_db;
 
@@ -44,6 +31,9 @@ char db_server_pw[32] = "ragnarok";
 char db_server_logindb[32] = "ragnarok";
 
 #define INTER_CONF_NAME "conf/inter_athena.conf"
+#define GM_ACCOUNT_NAME "conf/GM_account.txt"
+#define ACCOUNT_TXT_NAME "save/account.txt"
+//--------------------------------------------------------
 
 int isGM(int account_id)
 {
@@ -59,120 +49,122 @@ int read_gm_account()
 	char line[8192];
 	struct gm_account *p;
 	FILE *fp;
-	int c=0;
-
-	gm_account_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
-
-	printf("Starting reading gm_account\n");
-
-	if( (fp=fopen("conf/GM_account.txt","r"))==NULL )
+	int line_counter = 0, gm_counter = 0;
+	
+	ShowStatus("Starting reading gm_account\n");
+	
+	if( (fp = fopen(GM_ACCOUNT_NAME,"r")) == NULL )
 		return 1;
+	
+	gm_account_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int)); //FIXME: never deallocated
+	
 	while(fgets(line,sizeof(line),fp))
 	{
-		if(line[0] == '/' || line[1] == '/' || line[2] == '/')
+		line_counter++;
+		if ((line[0] == '/' && line[1] == '/') || line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
 			continue;
-
+		
 		p = (struct gm_account*)malloc(sizeof(struct gm_account));
 		if(p==NULL){
-			printf("gm_account: out of memory!\n");
+			ShowFatalError("gm_account: out of memory!\n");
 			exit(0);
 		}
-
+		
 		if(sscanf(line,"%d %d",&p->account_id,&p->level) != 2 || p->level <= 0) {
-			printf("gm_account: broken data [conf/GM_account.txt] line %d\n",c);
+			ShowWarning("gm_account: unsupported data format [conf/GM_account.txt] on line %d\n", line_counter);
 			continue;
 		}
 		else {
 			if(p->level > 99)
 				p->level = 99;
 			idb_put(gm_account_db,p->account_id,p);
-			c++;
-			printf("GM ID: %d Level: %d\n",p->account_id,p->level);
+			gm_counter++;
+			ShowInfo("GM ID: %d Level: %d\n",p->account_id,p->level);
 		}
 	}
+
 	fclose(fp);
-	printf("%d ID of gm_accounts read.\n",c);
+	ShowStatus("%d ID of gm_accounts read.\n", gm_counter);
 	return 0;
 }
 
-int mmo_auth_init(void)
+int convert_login(void)
 {
 	MYSQL mysql_handle;
 	char tmpsql[1024];
-	MYSQL_RES* 	sql_res ;
-	MYSQL_ROW	sql_row ;
+	int line_counter = 0;
 	FILE *fp;
 	int account_id, logincount, user_level, state, n, i;
 	char line[2048], userid[2048], pass[2048], lastlogin[2048], sex, email[2048], error_message[2048], last_ip[2048], memo[2048];
 	time_t ban_until_time;
 	time_t connect_until_time;
-	char t_uid[256];
+	char dummy[2048];
 
 	mysql_init(&mysql_handle);
-	if(!mysql_real_connect(&mysql_handle, db_server_ip, db_server_id, db_server_pw,
-		db_server_logindb ,db_server_port, (char *)NULL, 0)) {
+	if(!mysql_real_connect(&mysql_handle, db_server_ip, db_server_id, db_server_pw, db_server_logindb ,db_server_port, (char *)NULL, 0)) {
 			//pointer check
 			printf("%s\n",mysql_error(&mysql_handle));
 			exit(1);
 	}
-	else {
-		printf ("Connect: Success!\n");
-	}
-	printf ("Convert start...\n");
-
-
-	fp=fopen("save/account.txt","r");
-	auth_dat = (struct auth_dat_*)malloc(sizeof(auth_dat[0])*256);
-	if(fp==NULL)
+	ShowStatus("Connect: Success!\n");
+	
+	ShowStatus("Convert start...\n");
+	fp = fopen(ACCOUNT_TXT_NAME,"r");
+	if(fp == NULL)
 		return 0;
-	while(fgets(line,1023,fp)!=NULL)
+
+	while(fgets(line,sizeof(line),fp) != NULL)
 	{
+		line_counter++;
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 
-		i = sscanf(line, "%d\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%d\t"
-			"%[^\t]\t%[^\t]\t%ld\t%[^\t]\t%[^\t]\t%ld%n",
+		i = sscanf(line, "%d\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%d\t%[^\t]\t%[^\t]\t%ld\t%[^\t]\t%[^\t]\t%ld\t%[^\r\n]%n",
 			&account_id, userid, pass, lastlogin, &sex, &logincount, &state,
-			email, error_message, &connect_until_time, last_ip, memo, &ban_until_time, &n);
+			email, error_message, &connect_until_time, last_ip, memo, &ban_until_time, dummy, &n);
 
-		sprintf(tmpsql, "SELECT `%s`,`%s`,`%s`,`lastlogin`,`logincount`,`sex`,`connect_until`,`last_ip`,`ban_until`,`state`"
-			" FROM `%s` WHERE `%s`='%s'", login_account_id, login_userid, login_user_pass, login_db, login_userid, t_uid);
+		if (i < 13) {
+			ShowWarning("Skipping incompatible data on line %d\n", line_counter);
+			continue;
+ 		}
 
-		if(mysql_query(&mysql_handle, tmpsql) ) {
-			printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
-		}
+		if (i > 13)
+			ShowWarning("Reading login account variables is not implemented, data will be lost! (line %d)\n", line_counter);
+
 		user_level = isGM(account_id);
-		printf ("userlevel: %s (%d)- %d\n",userid, account_id, user_level);
-		sql_res = mysql_store_result(&mysql_handle) ;
-		sql_row = mysql_fetch_row(sql_res);	//row fetching
-		if (!sql_row) //no row -> insert
-			sprintf(tmpsql, "INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `lastlogin`, `sex`, `logincount`, `email`, `level`) VALUES (%d, '%s', '%s', '%s', '%c', %d, 'user@athena', %d);",account_id , userid, pass,lastlogin,sex,logincount, user_level);
-		else //row reside -> updating
-			sprintf(tmpsql, "UPDATE `login` SET `account_id`='%d', `userid`='%s', `user_pass`='%s', `lastlogin`='%s', `sex`='%c', `logincount`='%d', `email`='user@athena', `level`='%d'\nWHERE `account_id`='%d';",account_id , userid, pass,lastlogin,sex,logincount, user_level, account_id);
-		printf ("Query: %s\n",tmpsql);
-		mysql_free_result(sql_res) ; //resource free
+		ShowInfo("Converting user (id: %d, name: %s, gm level: %d)\n", account_id, userid, user_level);
+		sprintf(tmpsql,
+			"REPLACE INTO `login` "
+			"(`account_id`, `userid`, `user_pass`, `lastlogin`, `sex`, `logincount`, `email`, `level`, `error_message`, `connect_until`, `last_ip`, `memo`, `ban_until`, `state`) "
+			"VALUES "
+			"(%d, '%s', '%s', '%s', '%c', %d, '%s', %d, '%s', %u, '%s', '%s', %u, %d)",
+			account_id , userid, pass, lastlogin, sex, logincount, email, user_level, error_message, (uint32)connect_until_time, last_ip, memo, (uint32)ban_until_time, state);
 		if(mysql_query(&mysql_handle, tmpsql) ) {
-			printf("DB server Error - %s\n", mysql_error(&mysql_handle) );
+			ShowError("DB server Error - %s\n", mysql_error(&mysql_handle) );
+			ShowError("Query: %s\n", tmpsql);
 		}
+	
+		//TODO: parse the rest of the line to read the login-stored account variables, and import them to `global_reg_value`
+		//      then remove the 'dummy' buffer
 	}
 	fclose(fp);
 
-	printf ("Convert end...\n");
+	ShowStatus("Convert end...\n");
 
 	return 0;
 }
 
-int login_config_read(const char *cfgName)
+int login_config_read(const char* cfgName)
 {
 	int i;
 	char line[1024], w1[1024], w2[1024];
 	FILE *fp;
 
-	printf ("Start reading interserver configuration: %s\n",cfgName);
+	ShowStatus("Start reading interserver configuration: %s\n", cfgName);
 
 	fp=fopen(cfgName,"r");
 	if(fp==NULL){
-		printf("File not found: %s\n", cfgName);
+		ShowError("File not found: %s\n", cfgName);
 		return 1;
 	}
 
@@ -188,23 +180,23 @@ int login_config_read(const char *cfgName)
 		//add for DB connection
 		if(strcmpi(w1,"db_server_ip")==0){
 			strcpy(db_server_ip, w2);
-			printf ("set db_server_ip : %s\n",w2);
+			ShowStatus("set db_server_ip : %s\n",w2);
 		}
 		else if(strcmpi(w1,"db_server_port")==0){
 			db_server_port=atoi(w2);
-			printf ("set db_server_port : %s\n",w2);
+			ShowStatus("set db_server_port : %s\n",w2);
 		}
 		else if(strcmpi(w1,"db_server_id")==0){
 			strcpy(db_server_id, w2);
-			printf ("set db_server_id : %s\n",w2);
+			ShowStatus("set db_server_id : %s\n",w2);
 		}
 		else if(strcmpi(w1,"db_server_pw")==0){
 			strcpy(db_server_pw, w2);
-			printf ("set db_server_pw : %s\n",w2);
+			ShowStatus("set db_server_pw : %s\n",w2);
 		}
 		else if(strcmpi(w1,"db_server_logindb")==0){
 			strcpy(db_server_logindb, w2);
-			printf ("set db_server_logindb : %s\n",w2);
+			ShowStatus("set db_server_logindb : %s\n",w2);
 		}
 		//support the import command, just like any other config
 		else if(strcmpi(w1,"import")==0){
@@ -212,23 +204,22 @@ int login_config_read(const char *cfgName)
 		}
 	}
 	fclose(fp);
-	printf ("End reading interserver configuration...\n");
+	ShowStatus("End reading interserver configuration...\n");
 	return 0;
 }
 
-int do_init(int argc,char **argv)
+int do_init(int argc, char** argv)
 {
-	char input;
-	login_config_read( (argc>1)?argv[1]:INTER_CONF_NAME );
+	int input;
+	login_config_read( (argc > 1) ? argv[1] : INTER_CONF_NAME );
 	read_gm_account();
 
-	printf("\nWarning : Make sure you backup your databases before continuing!\n");
-	printf("\nDo you wish to convert your Login Database to SQL? (y/n) : ");
-	input=getchar();
+	ShowInfo("\nWarning : Make sure you backup your databases before continuing!\n");
+	ShowInfo("\nDo you wish to convert your Login Database to SQL? (y/n) : ");
+	input = getchar();
 	if(input == 'y' || input == 'Y')
-		mmo_auth_init();
-	printf ("Everything's been converted!\n");
-	exit (0);
+		convert_login();
+	return 0;
 }
 
 void do_abort(void) {}

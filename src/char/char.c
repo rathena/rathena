@@ -42,6 +42,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// private declarations
+#define CHAR_CONF_NAME	"conf/char_athena.conf"
+#define LAN_CONF_NAME	"conf/subnet_athena.conf"
+
 #ifndef TXT_SQL_CONVERT
 struct mmo_map_server {
 	uint32 ip;
@@ -4018,8 +4022,8 @@ int char_config_read(const char *cfgName)
 	FILE* fp = fopen(cfgName, "r");
 
 	if (fp == NULL) {
-		ShowFatalError("Configuration file not found: %s.\n", cfgName);
-		exit(1);
+		ShowError("Configuration file not found: %s.\n", cfgName);
+		return 1;
 	}
 
 	ShowInfo("Reading configuration file %s...\n", cfgName);
@@ -4278,7 +4282,7 @@ int do_init(int argc, char **argv)
 	mapindex_init(); //Needed here for the start-point reading.
 	start_point.map = mapindex_name2id("new_zone01");
 	char_config_read((argc < 2) ? CHAR_CONF_NAME : argv[1]);
-	char_lan_config_read((argc > 3) ? argv[3] : LOGIN_LAN_CONF_NAME);
+	char_lan_config_read((argc > 3) ? argv[3] : LAN_CONF_NAME);
 
 	if (strcmp(userid, "s1")==0 && strcmp(passwd, "p1")==0) {
 		ShowError("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");
