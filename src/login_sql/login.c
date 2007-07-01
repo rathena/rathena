@@ -726,6 +726,7 @@ int parse_fromchar(int fd)
 
 	uint32 ipl = session[fd]->client_addr;
 	char ip[16];
+	ip2str(ipl, ip);
 
 	for(id = 0; id < MAX_SERVERS; id++)
 		if (server_fd[id] == fd)
@@ -735,8 +736,6 @@ int parse_fromchar(int fd)
 		do_close(fd);
 		return 0;
 	}
-
-	ip2str(ipl, ip);
 
 	if(session[fd]->eof) {
 		ShowStatus("Char-server '%s' has disconnected.\n", server[id].name);
@@ -1889,8 +1888,8 @@ void sql_config_read(const char* cfgName)
 	char line[1024], w1[1024], w2[1024];
 	FILE* fp = fopen(cfgName, "r");
 	if(fp == NULL) {
-		ShowFatalError("file not found: %s\n", cfgName);
-		exit(1);
+		ShowError("file not found: %s\n", cfgName);
+		return;
 	}
 	ShowInfo("reading configuration file %s...\n", cfgName);
 	while(fgets(line, sizeof(line), fp))

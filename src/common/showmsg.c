@@ -690,12 +690,12 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 		return 1;
 	}
 	if ((flag == MSG_DEBUG && !SHOW_DEBUG_MSG) ||
-			(flag == MSG_INFORMATION && msg_silent&1) ||
-			(flag == MSG_STATUS && msg_silent&2) ||
-			(flag == MSG_NOTICE && msg_silent&4) ||
-			(flag == MSG_WARNING && msg_silent&8) ||
-			(flag == MSG_ERROR && msg_silent&16) ||
-			(flag == MSG_SQL && msg_silent&16))
+	    (flag == MSG_INFORMATION && msg_silent&1) ||
+	    (flag == MSG_STATUS && msg_silent&2) ||
+	    (flag == MSG_NOTICE && msg_silent&4) ||
+	    (flag == MSG_WARNING && msg_silent&8) ||
+	    (flag == MSG_ERROR && msg_silent&16) ||
+	    (flag == MSG_SQL && msg_silent&16))
 		return 0; //Do not print it.
 
 	if (timestamp_format[0])

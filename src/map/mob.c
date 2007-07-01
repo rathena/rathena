@@ -999,7 +999,7 @@ int mob_unlocktarget(struct mob_data *md,int tick)
 	default:
 		mob_stop_attack(md);
 		if (battle_config.mob_ai&0x8)
-			mob_stop_walking(md,1); //Inmediately stop chasing.
+			mob_stop_walking(md,1); //Immediately stop chasing.
 		md->state.skillstate = MSS_IDLE;
 		md->next_walktime=tick+rand()%3000+3000;
 		break;
@@ -2085,7 +2085,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				exp += exp*(battle_config.exp_bonus_attacker*(count-1))/100.; //[Gengar]
 		}
 		
-		mexp = (exp > UINT_MAX)?UINT_MAX:(exp<1?1:(unsigned int)exp);
+		mexp = (unsigned int)cap_value(exp, 1, UINT_MAX);
 
 		if(use_irc && irc_announce_mvp_flag)
 			irc_announce_mvp(mvp_sd,md);

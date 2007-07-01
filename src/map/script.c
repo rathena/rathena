@@ -3859,7 +3859,6 @@ BUILDIN_FUNC(charcommand); // [MouseJstr]
 BUILDIN_FUNC(movenpc); // [MouseJstr]
 BUILDIN_FUNC(message); // [MouseJstr]
 BUILDIN_FUNC(npctalk); // [Valaris]
-BUILDIN_FUNC(hasitems); // [Valaris]
 BUILDIN_FUNC(getlook);	//Lorky [Lupus]
 BUILDIN_FUNC(getsavepoint);	//Lorky [Lupus]
 BUILDIN_FUNC(npcspeed); // [Valaris]
@@ -4193,7 +4192,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(movenpc,"sii"), // [MouseJstr]
 	BUILDIN_DEF(message,"s*"), // [MouseJstr]
 	BUILDIN_DEF(npctalk,"*"), // [Valaris]
-	BUILDIN_DEF(hasitems,"*"), // [Valaris]
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i"),
 	BUILDIN_DEF(getsavepoint,"i"),
@@ -11370,29 +11368,6 @@ BUILDIN_FUNC(npctalk)
 	return 0;
 }
 
-/*==========================================
- * hasitems (checks to see if player has any
- * items on them, if so will return a 1)
- * [Valaris]
- *------------------------------------------*/
-BUILDIN_FUNC(hasitems)
-{
-	int i;
-	TBL_PC *sd;
-
-	sd=script_rid2sd(st);
-
-	for(i=0; i<MAX_INVENTORY; i++) {
-		if(sd->status.inventory[i].amount && sd->status.inventory[i].nameid!=2364 && sd->status.inventory[i].nameid!=2365) {
-			script_pushint(st,1);
-			return 0;
-		}
-	}
-
-	script_pushint(st,0);
-
-	return 0;
-}
 // change npc walkspeed [Valaris]
 BUILDIN_FUNC(npcspeed)
 {

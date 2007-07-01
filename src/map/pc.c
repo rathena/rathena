@@ -2920,8 +2920,8 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 			}
 		}
 	}
-	//This function takes care of giving the item to whoever should have it
-	//considering party-share options.
+
+	//This function takes care of giving the item to whoever should have it, considering party-share options.
 	if ((flag = party_share_loot(p,sd,&fitem->item_data, fitem->first_get_id))) {
 		clif_additem(sd,0,0,flag);
 		return 1;
@@ -2929,7 +2929,6 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 
 	//Display pickup animation.
 	pc_stop_attack(sd);
-
 	clif_takeitem(&sd->bl,&fitem->bl);
 	map_clearflooritem(fitem->bl.id);
 	return 1;
@@ -3050,7 +3049,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	sd->itemindex = n;
 	amount = sd->status.inventory[n].amount;
 	script = sd->inventory_data[n]->script;
-	//Check if the item is to be consumed inmediately [Skotlex]
+	//Check if the item is to be consumed immediately [Skotlex]
 	if (sd->inventory_data[n]->flag.delay_consume)
 		clif_useitemack(sd,n,amount,1);
 	else {

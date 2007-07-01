@@ -39,7 +39,7 @@ int storage_guild_storagesaved(int guild_id); //Ack from char server that guild 
 
 int storage_comp_item(const void *_i1, const void *_i2);
 //int storage_comp_item(const struct item* i1, const struct item* i2);
-void sortage_sortitem(struct storage* stor);
-void sortage_gsortitem(struct guild_storage* gstor);
+void storage_sortitem(struct storage* stor);
+void storage_gsortitem(struct guild_storage* gstor);
 
 #endif /* _STORAGE_H_ */

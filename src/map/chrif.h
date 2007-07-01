@@ -18,7 +18,7 @@ void chrif_checkdefaultlogin(void);
 int chrif_setip(const char* ip);
 void chrif_setport(uint16 port);
 
-int chrif_isconnect(void);
+int chrif_isconnected(void);
 
 extern int chrif_connected;
 extern int other_mapserver_count;

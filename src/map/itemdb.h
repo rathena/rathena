@@ -116,7 +116,7 @@ struct item_data {
 		unsigned value_notoc : 1;
 		short no_equip;
 		unsigned no_refine : 1;	// [celest]
-		unsigned delay_consume : 1;	// Signifies items that are not consumed inmediately upon double-click [Skotlex]
+		unsigned delay_consume : 1;	// Signifies items that are not consumed immediately upon double-click [Skotlex]
 		unsigned trade_restriction : 7;	//Item restrictions mask [Skotlex]
 		unsigned autoequip: 1;
 	} flag;

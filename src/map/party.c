@@ -761,43 +761,46 @@ int party_exp_share(struct party_data *p,struct block_list *src,unsigned int bas
 }
 
 //Does party loot. first holds the id of the player who has time priority to take the item.
-int party_share_loot(struct party_data *p, TBL_PC *sd, struct item *item_data, int first)
+int party_share_loot(struct party_data* p, TBL_PC* sd, struct item* item_data, int first)
 {
-	TBL_PC *target=NULL;
+	TBL_PC* target = NULL;
 	int i;
-	if (p && p->party.item&2 && (first || !(battle_config.party_share_type&1))) {
+	if (p && p->party.item&2 && (first || !(battle_config.party_share_type&1)))
+	{
 		//item distribution to party members.
-		if (battle_config.party_share_type&2) { //Round Robin
-			TBL_PC *psd;
+		if (battle_config.party_share_type&2)
+		{	//Round Robin
+			TBL_PC* psd;
 			i = p->itemc;
 			do {
 				i++;
 				if (i >= MAX_PARTY)
 					i = 0;	// reset counter to 1st person in party so it'll stop when it reaches "itemc"
-				if ((psd=p->data[i].sd)==NULL || sd->bl.m != psd->bl.m ||
-					pc_isdead(psd) || (battle_config.idle_no_share && (
-					psd->chatID || psd->vender_id || (psd->idletime < (last_tick - battle_config.idle_no_share)))
-				))
+
+				if( (psd = p->data[i].sd) == NULL || sd->bl.m != psd->bl.m || pc_isdead(psd) ||
+					(battle_config.idle_no_share && (psd->chatID || psd->vender_id || last_tick - battle_config.idle_no_share > psd->idletime)) )
 					continue;
 				
 				if (pc_additem(psd,item_data,item_data->amount))
 					continue; //Chosen char can't pick up loot.
+
 				//Successful pick.
 				p->itemc = i;
 				target = psd;
 				break;
 			} while (i != p->itemc);
-		} else { //Random pick
-			TBL_PC *psd[MAX_PARTY];
-			int count=0;
+		}
+		else
+		{	//Random pick
+			TBL_PC* psd[MAX_PARTY];
+			int count = 0;
 			//Collect pick candidates
 			for (i = 0; i < MAX_PARTY; i++) {
-				if ((psd[count]=p->data[i].sd) && psd[count]->bl.m == sd->bl.m &&
-					!pc_isdead(psd[count]) && (!battle_config.idle_no_share || (
-						!psd[count]->chatID && !psd[count]->vender_id &&
-					  	(psd[count]->idletime >= (last_tick - battle_config.idle_no_share)))
-				))
-					count++;
+				if( (psd[count] = p->data[i].sd) == NULL || psd[count]->bl.m != sd->bl.m || pc_isdead(psd[count]) ||
+					(battle_config.idle_no_share && (psd[count]->chatID || psd[count]->vender_id || last_tick - battle_config.idle_no_share > psd[count]->idletime)) )
+					continue;
+
+				count++;
 			}
 			while (count > 0) { //Pick a random member.
 				i = rand()%count;
@@ -812,16 +815,17 @@ int party_share_loot(struct party_data *p, TBL_PC *sd, struct item *item_data, i
 			}
 		}
 	}
-	if (!target) { //Give it to the owner.
-		target = sd;
+
+	if (!target) { 
+		target = sd; //Give it to the char that picked it up
 		if ((i=pc_additem(sd,item_data,item_data->amount)))
 			return i;
 	}
 
 	if(log_config.enable_logs&0x8) //Logs items, taken by (P)layers [Lupus]
 		log_pick_pc(target, "P", item_data->nameid, item_data->amount, item_data);
-	//Logs
-	if(battle_config.party_show_share_picker && target != sd){
+	
+	if(battle_config.party_show_share_picker && target != sd) {
 		char output[80];
 		sprintf(output, "%s acquired %s.",target->status.name, itemdb_jname(item_data->nameid));
 		clif_disp_onlyself(sd,output,strlen(output));

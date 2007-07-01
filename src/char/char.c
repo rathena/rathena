@@ -676,8 +676,8 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	p->int_ = tmp_int[16];
 	p->dex = tmp_int[17];
 	p->luk = tmp_int[18];
-	p->status_point = tmp_int[19] > USHRT_MAX ? USHRT_MAX : tmp_int[19];
-	p->skill_point = tmp_int[20] > USHRT_MAX ? USHRT_MAX : tmp_int[20];
+	p->status_point = min(tmp_int[19], USHRT_MAX);
+	p->skill_point = min(tmp_int[20], USHRT_MAX);
 	p->option = tmp_int[21];
 	p->karma = tmp_int[22];
 	p->manner = tmp_int[23];
@@ -1032,13 +1032,13 @@ void mmo_char_sync(void)
 	// Data save
 	fp = lock_fopen(char_txt, &lock);
 	if (fp == NULL) {
-		ShowWarning("Server can't not save characters.\n");
-		char_log("WARNING: Server can't not save characters." RETCODE);
+		ShowWarning("Server cannot save characters.\n");
+		char_log("WARNING: Server cannot save characters." RETCODE);
 	} else {
 		for(i = 0; i < char_num; i++) {
 			// create only once the line, and save it in the 2 files (it's speeder than repeat twice the loop and create twice the line)
 			mmo_char_tostr(line, &char_dat[id[i]].status, char_dat[id[i]].global, char_dat[id[i]].global_num); // use of sorted index
-				fprintf(fp, "%s" RETCODE, line);
+			fprintf(fp, "%s" RETCODE, line);
 		}
 		fprintf(fp, "%d\t%%newid%%" RETCODE, char_id_count);
 		lock_fclose(fp, char_txt, &lock);
@@ -1057,7 +1057,7 @@ void mmo_char_sync(void)
 		for(i = 0; i < char_num; i++) {
 			// create only once the line, and save it in the 2 files (it's speeder than repeat twice the loop and create twice the line)
 			mmo_char_tostr(line, &char_dat[id[i]].status,char_dat[id[i]].global, char_dat[id[i]].global_num); // use of sorted index
-				fprintf(fp, "%s" RETCODE, line);
+			fprintf(fp, "%s" RETCODE, line);
 		}
 		fprintf(fp, "%d\t%%newid%%" RETCODE, char_id_count);
 		lock_fclose(fp, backup_txt, &lock);
@@ -1668,9 +1668,9 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p)
 		return 0;
 
 	WBUFL(buf,0) = p->char_id;
-	WBUFL(buf,4) = p->base_exp>LONG_MAX?LONG_MAX:p->base_exp;
+	WBUFL(buf,4) = min(p->base_exp, LONG_MAX);
 	WBUFL(buf,8) = p->zeny;
-	WBUFL(buf,12) = p->job_exp>LONG_MAX?LONG_MAX:p->job_exp;
+	WBUFL(buf,12) = min(p->job_exp, LONG_MAX);
 	WBUFL(buf,16) = p->job_level;
 
 	WBUFL(buf,20) = 0;// probably opt1
@@ -1680,17 +1680,17 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p)
 	WBUFL(buf,32) = p->karma;
 	WBUFL(buf,36) = p->manner;
 
-	WBUFW(buf,40) = (p->status_point > SHRT_MAX) ? SHRT_MAX : p->status_point;
-	WBUFW(buf,42) = (p->hp > SHRT_MAX) ? SHRT_MAX : p->hp;
-	WBUFW(buf,44) = (p->max_hp > SHRT_MAX) ? SHRT_MAX : p->max_hp;
-	WBUFW(buf,46) = (p->sp > SHRT_MAX) ? SHRT_MAX : p->sp;
-	WBUFW(buf,48) = (p->max_sp > SHRT_MAX) ? SHRT_MAX : p->max_sp;
+	WBUFW(buf,40) = min(p->status_point, SHRT_MAX);
+	WBUFW(buf,42) = min(p->hp, SHRT_MAX);
+	WBUFW(buf,44) = min(p->max_hp, SHRT_MAX);
+	WBUFW(buf,46) = min(p->sp, SHRT_MAX);
+	WBUFW(buf,48) = min(p->max_sp, SHRT_MAX);
 	WBUFW(buf,50) = DEFAULT_WALK_SPEED; // p->speed;
 	WBUFW(buf,52) = p->class_;
 	WBUFW(buf,54) = p->hair;
 	WBUFW(buf,56) = p->option&0x20 ? 0 : p->weapon; //When the weapon is sent and your option is riding, the client crashes on login!?
 	WBUFW(buf,58) = p->base_level;
-	WBUFW(buf,60) = (p->skill_point > SHRT_MAX) ? SHRT_MAX : p->skill_point;
+	WBUFW(buf,60) = min(p->skill_point, SHRT_MAX);
 	WBUFW(buf,62) = p->head_bottom;
 	WBUFW(buf,64) = p->shield;
 	WBUFW(buf,66) = p->head_top;
@@ -1700,12 +1700,12 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p)
 
 	memcpy(WBUFP(buf,74), p->name, NAME_LENGTH);
 
-	WBUFB(buf,98) = (p->str > UCHAR_MAX) ? UCHAR_MAX : p->str;
-	WBUFB(buf,99) = (p->agi > UCHAR_MAX) ? UCHAR_MAX : p->agi;
-	WBUFB(buf,100) = (p->vit > UCHAR_MAX) ? UCHAR_MAX : p->vit;
-	WBUFB(buf,101) = (p->int_ > UCHAR_MAX) ? UCHAR_MAX : p->int_;
-	WBUFB(buf,102) = (p->dex > UCHAR_MAX) ? UCHAR_MAX : p->dex;
-	WBUFB(buf,103) = (p->luk > UCHAR_MAX) ? UCHAR_MAX : p->luk;
+	WBUFB(buf,98) = min(p->str, UCHAR_MAX);
+	WBUFB(buf,99) = min(p->agi, UCHAR_MAX);
+	WBUFB(buf,100) = min(p->vit, UCHAR_MAX);
+	WBUFB(buf,101) = min(p->int_, UCHAR_MAX);
+	WBUFB(buf,102) = min(p->dex, UCHAR_MAX);
+	WBUFB(buf,103) = min(p->luk, UCHAR_MAX);
 	//Updated packet structure with rename-button included. Credits to Sara-chan
 #if PACKETVER > 7 
 	WBUFW(buf,104) = p->char_num;
@@ -1941,7 +1941,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 
 int send_accounts_tologin(int tid, unsigned int tick, int id, int data);
 
-int parse_tologin(int fd)
+int parse_fromlogin(int fd)
 {
 	int i;
 	struct char_session_data *sd;
@@ -1962,7 +1962,7 @@ int parse_tologin(int fd)
 	sd = (struct char_session_data*)session[fd]->session_data;
 
 	while(RFIFOREST(fd) >= 2) {
-//		printf("parse_tologin: connection #%d, packet: 0x%x (with being read: %d bytes).\n", fd, RFIFOW(fd,0), RFIFOREST(fd));
+//		printf("parse_fromlogin: connection #%d, packet: 0x%x (with being read: %d bytes).\n", fd, RFIFOW(fd,0), RFIFOREST(fd));
 
 		switch(RFIFOW(fd,0)) {
 		case 0x2711:
@@ -2078,7 +2078,7 @@ int parse_tologin(int fd)
 			WBUFL(buf,2) = RFIFOL(fd,2); // account
 			WBUFL(buf,6) = RFIFOL(fd,6); // GM level
 			mapif_sendall(buf,10);
-//			printf("parse_tologin: To become GM answer: char -> map.\n");
+//			printf("parse_fromlogin: To become GM answer: char -> map.\n");
 
 			RFIFOSKIP(fd,10);
 		}
@@ -2941,8 +2941,8 @@ int parse_frommap(int fd)
 				WFIFOHEAD(map_fd, 20 + sizeof(struct mmo_charstatus));
 				WFIFOW(map_fd,0) = 0x2afd;
 				WFIFOW(map_fd,2) = 20 + sizeof(struct mmo_charstatus);
-				WFIFOL(map_fd,4) = RFIFOL(fd, 2); //Account ID
-				WFIFOL(map_fd,8) = RFIFOL(fd, 6); //Login1
+				WFIFOL(map_fd,4) = RFIFOL(fd,2); //Account ID
+				WFIFOL(map_fd,8) = RFIFOL(fd,6); //Login1
 				WFIFOL(map_fd,16) = RFIFOL(fd,10); //Login2
 				WFIFOL(map_fd,12) = (unsigned long)0; //TODO: connect_until_time, how do I figure it out right now?
 				memcpy(WFIFOP(map_fd,20), char_data, sizeof(struct mmo_charstatus));
@@ -3255,20 +3255,23 @@ int parse_frommap(int fd)
 	return 0;
 }
 
+// Searches for the mapserver that has a given map (and optionally ip/port, if not -1).
+// If found, returns the server's index in the 'server' array (otherwise returns -1).
 int search_mapserver(unsigned short map, uint32 ip, uint16 port)
 {
 	int i, j;
 	
 	for(i = 0; i < MAX_MAP_SERVERS; i++)
-		if (server_fd[i] > 0)
+	{
+		if (server_fd[i] > 0
+		&& (ip == (uint32)-1 || server[i].ip == ip)
+		&& (port == (uint16)-1 || server[i].port == port))
+		{
 			for (j = 0; server[i].map[j]; j++)
-				if (server[i].map[j] == map) {
-					if (ip != (uint32)-1 && server[i].ip != ip)
-						continue;
-					if (port != (uint16)-1 && server[i].port != port)
-						continue;
+				if (server[i].map[j] == map)
 					return i;
-				}
+		}
+	}
 
 	return -1;
 }
@@ -3442,8 +3445,7 @@ int parse_char(int fd)
 				break;
 			}
 			cd = &char_dat[sd->found_char[ch]].status;
-			char_log("Character Selected, Account ID: %d, Character Slot: %d, Character Name: %s." RETCODE,
-	         sd->account_id, char_num, cd->name);
+			char_log("Character Selected, Account ID: %d, Character Slot: %d, Character Name: %s." RETCODE, sd->account_id, char_num, cd->name);
 
 			cd->sex = sd->sex;
 			
@@ -3926,7 +3928,7 @@ int check_connect_login_server(int tid, unsigned int tick, int id, int data)
 		login_fd = 0;
 		return 0;
 	}
-	session[login_fd]->func_parse = parse_tologin;
+	session[login_fd]->func_parse = parse_fromlogin;
 	realloc_fifo(login_fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 	
 	WFIFOHEAD(login_fd,86);
@@ -4332,8 +4334,6 @@ int do_init(int argc, char **argv)
 
 	set_defaultparse(parse_char);
 
-	char_fd = make_listen_bind(bind_ip, char_port);
-
 	add_timer_func_list(check_connect_login_server, "check_connect_login_server");
 	add_timer_func_list(send_users_tologin, "send_users_tologin");
 	add_timer_func_list(send_accounts_tologin, "send_accounts_tologin");
@@ -4353,6 +4353,8 @@ int do_init(int argc, char **argv)
 	{
 		//##TODO invoke a CONSOLE_START plugin event
 	}
+
+	char_fd = make_listen_bind(bind_ip, char_port);
 
 	char_log("The char-server is ready (Server is listening on the port %d)." RETCODE, char_port);
 

@@ -51,29 +51,29 @@ char main_chat_nick[16] = "Main";
 
 // sending packet list
 // NOTE: This variable ain't used at all! And it's confusing.. where do I add that the length of packet 0x2b07 is 10? x.x [Skotlex]
-int inter_send_packet_length[]={
-	-1,-1,27,-1, -1, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
-	-1, 7, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0,
-	35,-1,11,15, 34,29, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0,
-	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1,
-	 9, 9,-1, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
-	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
-	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
-	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
-	11,-1, 7, 3, 36, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
+int inter_send_packet_length[] = {
+	-1,-1,27,-1, -1, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3800-
+	-1, 7, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0,	// 3810-
+	35,-1,11,15, 34,29, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0,	// 3820-
+	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1,	// 3830-
+	 9, 9,-1, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3840-
+	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3850-
+	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3860-
+	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3870-
+	11,-1, 7, 3, 36, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3880-
 };
 // recv. packet list
-int inter_recv_packet_length[]={
-	-1,-1, 7,-1, -1,13,36, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3000-0x300f
-	 6,-1, 0, 0,  0, 0, 0, 0, 10,-1, 0, 0,  0, 0,  0, 0, //0x3010-0x301f
-	-1, 6,-1,14, 14,19, 6,-1, 14,14, 0, 0,  0, 0,  0, 0, //0x3020-0x302f
-	-1, 6,-1,-1, 55,19, 6,-1, 14,-1,-1,-1, 14,19,186,-1, //0x3030-0x303f
-	 5, 9, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
-	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
-	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
-	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
-	48,14,-1, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3080-0x308f
-	-1,10,-1, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // 0x3090 - 0x309f  Homunculus packets [albator]
+int inter_recv_packet_length[] = {
+	-1,-1, 7,-1, -1,13,36, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3000-
+	 6,-1, 0, 0,  0, 0, 0, 0, 10,-1, 0, 0,  0, 0,  0, 0,	// 3010-
+	-1, 6,-1,14, 14,19, 6,-1, 14,14, 0, 0,  0, 0,  0, 0,	// 3020-
+	-1, 6,-1,-1, 55,19, 6,-1, 14,-1,-1,-1, 14,19,186,-1,	// 3030-
+	 5, 9, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3040-
+	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3050-
+	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3060-
+	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3070-
+	48,14,-1, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3080-
+	-1,10,-1, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3090-  Homunculus packets [albator]
 };
 
 struct WisData {
@@ -187,86 +187,83 @@ int inter_accreg_sql_init(void)
 /*==========================================
  * read config file
  *------------------------------------------*/
-static int inter_config_read(const char *cfgName)
+static int inter_config_read(const char* cfgName)
 {
 	int i;
 	char line[1024], w1[1024], w2[1024];
-	FILE *fp;
+	FILE* fp;
 
-	fp=fopen(cfgName,"r");
-	if(fp==NULL){
+	fp = fopen(cfgName, "r");
+	if(fp == NULL) {
 		ShowError("file not found: %s\n", cfgName);
 		return 1;
 	}
 
-	ShowInfo("reading file %s...\n",cfgName);
+	ShowInfo("reading file %s...\n", cfgName);
 
 	while(fgets(line, sizeof(line), fp))
 	{
-		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);
-		if(i!=2)
+		i = sscanf(line, "%[^:]: %[^\r\n]", w1, w2);
+		if(i != 2)
 			continue;
 
-		if(strcmpi(w1,"char_server_ip")==0){
-			strcpy(char_server_ip, w2);
-			ShowStatus ("set char_server_ip : %s\n",w2);
-		}
-		else if(strcmpi(w1,"char_server_port")==0){
-			char_server_port=atoi(w2);
-			ShowStatus ("set char_server_port : %s\n",w2);
-		}
-		else if(strcmpi(w1,"char_server_id")==0){
-			strcpy(char_server_id, w2);
-			ShowStatus ("set char_server_id : %s\n",w2);
-		}
-		else if(strcmpi(w1,"char_server_pw")==0){
-			strcpy(char_server_pw, w2);
-			ShowStatus ("set char_server_pw : %s\n",w2);
-		}
-		else if(strcmpi(w1,"char_server_db")==0){
-			strcpy(char_server_db, w2);
-			ShowStatus ("set char_server_db : %s\n",w2);
-		}
-		else if(strcmpi(w1,"default_codepage")==0){
-			strcpy(default_codepage, w2);
-			ShowStatus ("set default_codepage : %s\n",w2);
+		if(!strcmpi(w1,"char_server_ip")) {
+			strcpy(char_server_ip,w2);
+			ShowStatus ("set char_server_ip : %s\n", w2);
+		} else
+		if(!strcmpi(w1,"char_server_port")) {
+			char_server_port = atoi(w2);
+			ShowStatus ("set char_server_port : %s\n", w2);
+		} else
+		if(!strcmpi(w1,"char_server_id")) {
+			strcpy(char_server_id,w2);
+			ShowStatus ("set char_server_id : %s\n", w2);
+		} else
+		if(!strcmpi(w1,"char_server_pw")) {
+			strcpy(char_server_pw,w2);
+			ShowStatus ("set char_server_pw : %s\n", w2);
+		} else
+		if(!strcmpi(w1,"char_server_db")) {
+			strcpy(char_server_db,w2);
+			ShowStatus ("set char_server_db : %s\n", w2);
+		} else
+		if(!strcmpi(w1,"default_codepage")) {
+			strcpy(default_codepage,w2);
+			ShowStatus ("set default_codepage : %s\n", w2);
 		}
 		//Logins information to be read from the inter_athena.conf
 		//for character deletion (checks email in the loginDB)
-		else if(strcmpi(w1,"login_server_ip")==0){
+		else
+		if(!strcmpi(w1,"login_server_ip")) {
 			strcpy(login_server_ip, w2);
-			ShowStatus ("set login_server_ip : %s\n",w2);
-		}
-		else if(strcmpi(w1,"login_server_port")==0){
-			login_server_port=atoi(w2);
-			ShowStatus ("set login_server_port : %s\n",w2);
-		}
-		else if(strcmpi(w1,"login_server_id")==0){
+			ShowStatus ("set login_server_ip : %s\n", w2);
+		} else
+		if(!strcmpi(w1,"login_server_port")) {
+			login_server_port = atoi(w2);
+			ShowStatus ("set login_server_port : %s\n", w2);
+		} else
+		if(!strcmpi(w1,"login_server_id")) {
 			strcpy(login_server_id, w2);
-			ShowStatus ("set login_server_id : %s\n",w2);
-		}
-		else if(strcmpi(w1,"login_server_pw")==0){
+			ShowStatus ("set login_server_id : %s\n", w2);
+		} else
+		if(!strcmpi(w1,"login_server_pw")) {
 			strcpy(login_server_pw, w2);
-			ShowStatus ("set login_server_pw : %s\n",w2);
-		}
-		else if(strcmpi(w1,"login_server_db")==0){
+			ShowStatus ("set login_server_pw : %s\n", w2);
+		} else
+		if(!strcmpi(w1,"login_server_db")) {
 			strcpy(login_server_db, w2);
-			ShowStatus ("set login_server_db : %s\n",w2);
+			ShowStatus ("set login_server_db : %s\n", w2);
 		}
 #ifndef TXT_SQL_CONVERT
-		else if(strcmpi(w1,"party_share_level")==0){
-			party_share_level=(unsigned int)atof(w2);
-		}
-		else if(strcmpi(w1,"log_inter")==0){
+		else if(!strcmpi(w1,"party_share_level"))
+			party_share_level = atoi(w2);
+		else if(!strcmpi(w1,"log_inter"))
 			log_inter = atoi(w2);
-		}
-		else if(strcmpi(w1, "main_chat_nick")==0){	// Main chat nick [LuzZza]
-			strcpy(main_chat_nick, w2);				// 			
-		}
+		else if(!strcmpi(w1,"main_chat_nick"))
+			strcpy(main_chat_nick, w2);
 #endif //TXT_SQL_CONVERT
-		else if(strcmpi(w1,"import")==0){
+		else if(!strcmpi(w1,"import"))
 			inter_config_read(w2);
-		}
 	}
 	fclose(fp);
 
@@ -277,7 +274,7 @@ static int inter_config_read(const char *cfgName)
 #ifndef TXT_SQL_CONVERT
 
 // Save interlog into sql
-int inter_log(char *fmt,...)
+int inter_log(char* fmt, ...)
 {
 	char str[255];
 	char temp_str[510]; //Needs be twice as long as str[] //Skotlex
@@ -438,7 +435,8 @@ int inter_sql_test (void)
 }
 
 // finalize
-void inter_final(void) {
+void inter_final(void)
+{
 	wis_db->destroy(wis_db, NULL);
 
 	inter_guild_sql_final();
@@ -451,7 +449,8 @@ void inter_final(void) {
 	return;
 }
 
-int inter_mapif_init(int fd) {
+int inter_mapif_init(int fd)
+{
 	inter_guild_mapif_init(fd);
 
 	return 0;
@@ -461,20 +460,22 @@ int inter_mapif_init(int fd) {
 //--------------------------------------------------------
 
 // GM message sending
-int mapif_GMmessage(unsigned char *mes, int len, unsigned long color, int sfd) {
+int mapif_GMmessage(unsigned char *mes, int len, unsigned long color, int sfd)
+{
 	unsigned char buf[2048];
 
 	if (len > 2048) len = 2047; //Make it fit to avoid crashes. [Skotlex]
-	WBUFW(buf, 0) = 0x3800;
-	WBUFW(buf, 2) = len;
-	WBUFL(buf, 4) = color;
-	memcpy(WBUFP(buf, 8), mes, len-8);
+	WBUFW(buf,0) = 0x3800;
+	WBUFW(buf,2) = len;
+	WBUFL(buf,4) = color;
+	memcpy(WBUFP(buf,8), mes, len - 8);
 	mapif_sendallwos(sfd, buf, len);
 	return 0;
 }
 
 // Wis sending
-int mapif_wis_message(struct WisData *wd) {
+int mapif_wis_message(struct WisData *wd)
+{
 	unsigned char buf[2048];
 	if (wd->len > 2047-56) wd->len = 2047-56; //Force it to fit to avoid crashes. [Skotlex]
 
@@ -549,11 +550,11 @@ int mapif_send_gmaccounts()
 	WBUFW(buf,0) = 0x2b15;
 				
 	for(i = 0; i < GM_num; i++) {
-		WBUFL(buf, len) = gm_account[i].account_id;
-		WBUFB(buf, len+4) = (unsigned char)gm_account[i].level;
+		WBUFL(buf,len) = gm_account[i].account_id;
+		WBUFB(buf,len+4) = (uint8)gm_account[i].level;
 		len += 5;
 	}
-	WBUFW(buf, 2) = len;
+	WBUFW(buf,2) = len;
 	mapif_sendall(buf, len);
 
 	return 0;
@@ -588,7 +589,8 @@ int mapif_disconnectplayer(int fd, int account_id, int char_id, int reason)
 //--------------------------------------------------------
 
 // Existence check of WISP data
-int check_ttl_wisdata_sub(DBKey key, void *data, va_list ap) {
+int check_ttl_wisdata_sub(DBKey key, void *data, va_list ap)
+{
 	unsigned long tick;
 	struct WisData *wd = (struct WisData *)data;
 	tick = va_arg(ap, unsigned long);
@@ -599,7 +601,8 @@ int check_ttl_wisdata_sub(DBKey key, void *data, va_list ap) {
 	return 0;
 }
 
-int check_ttl_wisdata(void) {
+int check_ttl_wisdata(void)
+{
 	unsigned long tick = gettick();
 	int i;
 
@@ -623,18 +626,18 @@ int check_ttl_wisdata(void) {
 // GM message sending
 int mapif_parse_GMmessage(int fd)
 {
-	RFIFOHEAD(fd);
-	mapif_GMmessage(RFIFOP(fd, 8), RFIFOW(fd, 2), RFIFOL(fd, 4), fd);
+	mapif_GMmessage(RFIFOP(fd,8), RFIFOW(fd,2), RFIFOL(fd,4), fd);
 	return 0;
 }
 
 
 // Wisp/page request to send
-int mapif_parse_WisRequest(int fd) {
+int mapif_parse_WisRequest(int fd)
+{
 	struct WisData* wd;
 	static int wisid = 0;
 	char name[NAME_LENGTH], t_name[NAME_LENGTH*2]; //Needs space to allocate names with escaped chars [Skotlex]
-	RFIFOHEAD(fd);
+
 	if ( fd <= 0 ) {return 0;} // check if we have a valid fd
 
 	if (RFIFOW(fd,2)-52 >= sizeof(wd->msg)) {
@@ -676,7 +679,7 @@ int mapif_parse_WisRequest(int fd) {
 			mapif_send(fd, buf, 27);
 		} else {
 
-	CREATE(wd, struct WisData, 1);
+			CREATE(wd, struct WisData, 1);
 
 			// Whether the failure of previous wisp/page transmission (timeout)
 			check_ttl_wisdata();
@@ -703,10 +706,11 @@ int mapif_parse_WisRequest(int fd) {
 
 
 // Wisp/page transmission result
-int mapif_parse_WisReply(int fd) {
+int mapif_parse_WisReply(int fd)
+{
 	int id, flag;
 	struct WisData *wd;
-	RFIFOHEAD(fd);
+
 	id = RFIFOL(fd,2);
 	flag = RFIFOB(fd,6);
 	wd = idb_get(wis_db, id);
@@ -722,9 +726,10 @@ int mapif_parse_WisReply(int fd) {
 }
 
 // Received wisp message from map-server for ALL gm (just copy the message and resends it to ALL map-servers)
-int mapif_parse_WisToGM(int fd) {
+int mapif_parse_WisToGM(int fd)
+{
 	unsigned char buf[2048]; // 0x3003/0x3803 <packet_len>.w <wispname>.24B <min_gm_level>.w <message>.?B
-	RFIFOHEAD(fd);
+	
 	ShowDebug("Sent packet back!\n");
 	memcpy(WBUFP(buf,0), RFIFOP(fd,0), RFIFOW(fd,2));
 	WBUFW(buf, 0) = 0x3803;
@@ -738,7 +743,7 @@ int mapif_parse_Registry(int fd)
 {
 	int j,p,len, max;
 	struct accreg *reg=accreg_pt;
-	RFIFOHEAD(fd);	
+	
 	memset(accreg_pt,0,sizeof(struct accreg));
 	switch (RFIFOB(fd, 12)) {
 	case 3: //Character registry
@@ -770,26 +775,23 @@ int mapif_parse_Registry(int fd)
 // Request the value of all registries.
 int mapif_parse_RegistryRequest(int fd)
 {
-	RFIFOHEAD(fd);
 	//Load Char Registry
-	if (RFIFOB(fd,12))
-		mapif_account_reg_reply(fd,RFIFOL(fd,2),RFIFOL(fd,6),3);
+	if (RFIFOB(fd,12)) mapif_account_reg_reply(fd,RFIFOL(fd,2),RFIFOL(fd,6),3);
 	//Load Account Registry
-	if (RFIFOB(fd,11))
-		mapif_account_reg_reply(fd,RFIFOL(fd,2),RFIFOL(fd,6),2);
+	if (RFIFOB(fd,11)) mapif_account_reg_reply(fd,RFIFOL(fd,2),RFIFOL(fd,6),2);
 	//Ask Login Server for Account2 values.
-	if (RFIFOB(fd,10))
-		request_accreg2(RFIFOL(fd,2),RFIFOL(fd,6)-2);
+	if (RFIFOB(fd,10)) request_accreg2(RFIFOL(fd,2),RFIFOL(fd,6)-2);
 	return 1;
 }
 
-static void mapif_namechange_ack(int fd, int account_id, int char_id, int type, int flag, char *name){
+static void mapif_namechange_ack(int fd, int account_id, int char_id, int type, int flag, char *name)
+{
 	WFIFOHEAD(fd, NAME_LENGTH+13);
-	WFIFOW(fd, 0) =0x3806;
-	WFIFOL(fd, 2) =account_id;
-	WFIFOL(fd, 6) =char_id;
-	WFIFOB(fd,10) =type;
-	WFIFOB(fd,11) =flag;
+	WFIFOW(fd, 0) = 0x3806;
+	WFIFOL(fd, 2) = account_id;
+	WFIFOL(fd, 6) = char_id;
+	WFIFOB(fd,10) = type;
+	WFIFOB(fd,11) = flag;
 	memcpy(WFIFOP(fd, 12), name, NAME_LENGTH);
 	WFIFOSET(fd, NAME_LENGTH+13);
 }
@@ -800,11 +802,10 @@ int mapif_parse_NameChangeRequest(int fd)
 	char* name;
 	int i;
 
-	RFIFOHEAD(fd);
-	account_id = RFIFOL(fd, 2);
-	char_id = RFIFOL(fd, 6);
-	type = RFIFOB(fd, 10);
-	name = RFIFOP(fd, 11);
+	account_id = RFIFOL(fd,2);
+	char_id = RFIFOL(fd,6);
+	type = RFIFOB(fd,10);
+	name = RFIFOP(fd,11);
 
 	// Check Authorised letters/symbols in the name
 	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
@@ -833,22 +834,17 @@ int mapif_parse_NameChangeRequest(int fd)
 int inter_parse_frommap(int fd)
 {
 	int cmd;
-	int len=0;
-	RFIFOHEAD(fd);
-	cmd=RFIFOW(fd,0);
+	int len = 0;
+	cmd = RFIFOW(fd,0);
 	// inter鯖管轄かを調べる
-	if(cmd < 0x3000 || cmd >= 0x3000 + (sizeof(inter_recv_packet_length)/
-		sizeof(inter_recv_packet_length[0]) ) )
+	if(cmd < 0x3000 || cmd >= 0x3000 + ARRAYLENGTH(inter_recv_packet_length) || inter_recv_packet_length[cmd - 0x3000] == 0)
 		return 0;
 
-	if (inter_recv_packet_length[cmd-0x3000] == 0) //This is necessary, because otherwise we return 2 and the char server will just hang waiting for packets! [Skotlex]
-		return 0;
-	
 	// パケット長を調べる
 	if((len = inter_check_length(fd, inter_recv_packet_length[cmd - 0x3000])) == 0)
 		return 2;
 
-	switch(cmd){
+	switch(cmd) {
 	case 0x3000: mapif_parse_GMmessage(fd); break;
 	case 0x3001: mapif_parse_WisRequest(fd); break;
 	case 0x3002: mapif_parse_WisReply(fd); break;
@@ -857,17 +853,15 @@ int inter_parse_frommap(int fd)
 	case 0x3005: mapif_parse_RegistryRequest(fd); break;
 	case 0x3006: mapif_parse_NameChangeRequest(fd); break;
 	default:
-		if(inter_party_parse_frommap(fd))
+		if(  inter_party_parse_frommap(fd)
+		  || inter_guild_parse_frommap(fd)
+		  || inter_storage_parse_frommap(fd)
+		  || inter_pet_parse_frommap(fd)
+		  || inter_homunculus_parse_frommap(fd)
+		   )
 			break;
-		if(inter_guild_parse_frommap(fd))
-			break;
-		if(inter_storage_parse_frommap(fd))
-			break;
-		if(inter_pet_parse_frommap(fd))
-			break;
-		if(inter_homunculus_parse_frommap(fd)) //albator
-			break;
-		return 0;
+		else
+			return 0;
 	}
 
 	RFIFOSKIP(fd, len);
@@ -877,9 +871,8 @@ int inter_parse_frommap(int fd)
 // RFIFO check
 int inter_check_length(int fd, int length)
 {
-	RFIFOHEAD(fd);
-	if(length==-1){	// v-len packet
-		if(RFIFOREST(fd)<4)	// packet not yet
+	if(length == -1) {	// v-len packet
+		if(RFIFOREST(fd) < 4)	// packet not yet
 			return 0;
 		length = RFIFOW(fd, 2);
 	}

@@ -3118,14 +3118,6 @@ not.
 
 ---------------------------------------
 
-*hasitems(0)
-
-This function will return 1 if the invoking character has anything at all in 
-their inventory and 0 if they do not. Even though the argument is not used for 
-anything, it is required.
-
----------------------------------------
-
 *getequipisidentify(<equipment slot>)
 
 This function will return 1 if an item in the specified equipment slot is 

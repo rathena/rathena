@@ -743,27 +743,15 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 int memitemdata_to_sql(struct itemtmp mapitem[], int count, int char_id, int tableswitch)
 {
 	int i,j, flag, id;
-	char *tablename;
+	char* tablename;
 	char selectoption[16];
-	char * str_p = tmp_sql;
+	char* str_p = tmp_sql;
 
 	switch (tableswitch) {
-	case TABLE_INVENTORY:
-		tablename = inventory_db; // no need for sprintf here as *_db are char*.
-		sprintf(selectoption,"char_id");
-		break;
-	case TABLE_CART:
-		tablename = cart_db;
-		sprintf(selectoption,"char_id");
-		break;
-	case TABLE_STORAGE:
-		tablename = storage_db;
-		sprintf(selectoption,"account_id");
-		break;
-	case TABLE_GUILD_STORAGE:
-		tablename = guild_storage_db;
-		sprintf(selectoption,"guild_id");
-		break;
+	case TABLE_INVENTORY:     tablename = inventory_db;     sprintf(selectoption,"char_id"); break;
+	case TABLE_CART:          tablename = cart_db;          sprintf(selectoption,"char_id"); break;
+	case TABLE_STORAGE:       tablename = storage_db;       sprintf(selectoption,"account_id"); break;
+	case TABLE_GUILD_STORAGE: tablename = guild_storage_db; sprintf(selectoption,"guild_id"); break;
 	default:
 		ShowError("Invalid table name!\n");
 		return 1;
@@ -1578,50 +1566,45 @@ int count_users(void)
 /// Writes char data to the buffer in the format used by the client.
 /// Used in packets 0x6b (chars info) and 0x6d (new char info)
 /// Returns the size (106 or 108)
-int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p)
+int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
 {
 	if( buf == NULL || p == NULL )
 		return 0;
 
 	WBUFL(buf,0) = p->char_id;
-	WBUFL(buf,4) = p->base_exp>LONG_MAX?LONG_MAX:p->base_exp;
+	WBUFL(buf,4) = min(p->base_exp, LONG_MAX);
 	WBUFL(buf,8) = p->zeny;
-	WBUFL(buf,12) = p->job_exp>LONG_MAX?LONG_MAX:p->job_exp;
+	WBUFL(buf,12) = min(p->job_exp, LONG_MAX);
 	WBUFL(buf,16) = p->job_level;
-
-	WBUFL(buf,20) = 0;// probably opt1
-	WBUFL(buf,24) = 0;// probably opt2
+	WBUFL(buf,20) = 0; // probably opt1
+	WBUFL(buf,24) = 0; // probably opt2
 	WBUFL(buf,28) = p->option;
-
 	WBUFL(buf,32) = p->karma;
 	WBUFL(buf,36) = p->manner;
-
-	WBUFW(buf,40) = (p->status_point > SHRT_MAX) ? SHRT_MAX : p->status_point;
-	WBUFW(buf,42) = (p->hp > SHRT_MAX) ? SHRT_MAX : p->hp;
-	WBUFW(buf,44) = (p->max_hp > SHRT_MAX) ? SHRT_MAX : p->max_hp;
-	WBUFW(buf,46) = (p->sp > SHRT_MAX) ? SHRT_MAX : p->sp;
-	WBUFW(buf,48) = (p->max_sp > SHRT_MAX) ? SHRT_MAX : p->max_sp;
+	WBUFW(buf,40) = min(p->status_point, SHRT_MAX);
+	WBUFW(buf,42) = min(p->hp, SHRT_MAX);
+	WBUFW(buf,44) = min(p->max_hp, SHRT_MAX);
+	WBUFW(buf,46) = min(p->sp, SHRT_MAX);
+	WBUFW(buf,48) = min(p->max_sp, SHRT_MAX);
 	WBUFW(buf,50) = DEFAULT_WALK_SPEED; // p->speed;
 	WBUFW(buf,52) = p->class_;
 	WBUFW(buf,54) = p->hair;
 	WBUFW(buf,56) = p->option&0x20 ? 0 : p->weapon; //When the weapon is sent and your option is riding, the client crashes on login!?
 	WBUFW(buf,58) = p->base_level;
-	WBUFW(buf,60) = (p->skill_point > SHRT_MAX) ? SHRT_MAX : p->skill_point;
+	WBUFW(buf,60) = min(p->skill_point, SHRT_MAX);
 	WBUFW(buf,62) = p->head_bottom;
 	WBUFW(buf,64) = p->shield;
 	WBUFW(buf,66) = p->head_top;
 	WBUFW(buf,68) = p->head_mid;
 	WBUFW(buf,70) = p->hair_color;
 	WBUFW(buf,72) = p->clothes_color;
-
 	memcpy(WBUFP(buf,74), p->name, NAME_LENGTH);
-
-	WBUFB(buf,98) = (p->str > UCHAR_MAX) ? UCHAR_MAX : p->str;
-	WBUFB(buf,99) = (p->agi > UCHAR_MAX) ? UCHAR_MAX : p->agi;
-	WBUFB(buf,100) = (p->vit > UCHAR_MAX) ? UCHAR_MAX : p->vit;
-	WBUFB(buf,101) = (p->int_ > UCHAR_MAX) ? UCHAR_MAX : p->int_;
-	WBUFB(buf,102) = (p->dex > UCHAR_MAX) ? UCHAR_MAX : p->dex;
-	WBUFB(buf,103) = (p->luk > UCHAR_MAX) ? UCHAR_MAX : p->luk;
+	WBUFB(buf,98) = min(p->str, UCHAR_MAX);
+	WBUFB(buf,99) = min(p->agi, UCHAR_MAX);
+	WBUFB(buf,100) = min(p->vit, UCHAR_MAX);
+	WBUFB(buf,101) = min(p->int_, UCHAR_MAX);
+	WBUFB(buf,102) = min(p->dex, UCHAR_MAX);
+	WBUFB(buf,103) = min(p->luk, UCHAR_MAX);
 	//Updated packet structure with rename-button included. Credits to Sara-chan
 #if PACKETVER > 7 
 	WBUFW(buf,104) = p->char_num;
@@ -1633,11 +1616,11 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p)
 #endif
 }
 
-int mmo_char_send006b(int fd, struct char_session_data *sd)
+int mmo_char_send006b(int fd, struct char_session_data* sd)
 {
 	int i, j, found_num = 0;
 
-	set_char_online(-1, 99,sd->account_id);
+	set_char_online(-1, 99, sd->account_id);
 
 	//search char.
 	sprintf(tmp_sql, "SELECT `char_id` FROM `%s` WHERE `account_id` = '%d' AND `char_num` < '%d'",char_db, sd->account_id, MAX_CHARS);
@@ -1664,19 +1647,17 @@ int mmo_char_send006b(int fd, struct char_session_data *sd)
 		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
 
 
-	j = 24;// offset
+	j = 24; // offset
+	WFIFOHEAD(fd, j + found_num*108);
+	WFIFOW(fd,0) = 0x6b;
+	memset(WFIFOP(fd,4), 0, 20); // unknown bytes
+	for(i = 0; i < found_num; i++)
 	{
-		WFIFOHEAD(fd, j + found_num*108);
-		WFIFOW(fd,0) = 0x6b;
-		memset(WFIFOP(fd,4), 0, 20);// unknown bytes
-		for(i = 0; i < found_num; i++)
-		{
-			mmo_char_fromsql(sd->found_char[i], &char_dat, false);
-			j += mmo_char_tobuf(WFIFOP(fd,j), &char_dat);
-		}
-		WFIFOW(fd,2) = j;// packet len
-		WFIFOSET(fd,j);
+		mmo_char_fromsql(sd->found_char[i], &char_dat, false);
+		j += mmo_char_tobuf(WFIFOP(fd,j), &char_dat);
 	}
+	WFIFOW(fd,2) = j; // packet len
+	WFIFOSET(fd,j);
 
 	return 0;
 }
@@ -1728,7 +1709,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 
 int send_accounts_tologin(int tid, unsigned int tick, int id, int data);
 
-int parse_tologin(int fd)
+int parse_fromlogin(int fd)
 {
 	int i;
 	struct char_session_data *sd;
@@ -1749,8 +1730,9 @@ int parse_tologin(int fd)
 
 	// hehe. no need to set user limit on SQL version. :P
 	// but char limitation is good way to maintain server. :D
-	while(RFIFOREST(fd) >= 2) {
-//		printf("parse_tologin : %d %d %x\n", fd, RFIFOREST(fd), RFIFOW(fd, 0));
+	while(RFIFOREST(fd) >= 2)
+	{
+//		printf("parse_fromlogin : %d %d %x\n", fd, RFIFOREST(fd), RFIFOW(fd, 0));
 
 		switch(RFIFOW(fd,0)) {
 		case 0x2711:
@@ -2608,13 +2590,11 @@ int parse_frommap(int fd)
 			if (RFIFOREST(fd) < 35)
 				return 0;
 		{
-			unsigned short name;
 			int map_id, map_fd = -1;
 			struct online_char_data* data;
 			struct mmo_charstatus* char_data;
 
-			name = RFIFOW(fd,18);
-			map_id = search_mapserver(name, ntohl(RFIFOL(fd,24)), ntohs(RFIFOW(fd,28))); //Locate mapserver by ip and port.
+			map_id = search_mapserver(RFIFOW(fd,18), ntohl(RFIFOL(fd,24)), ntohs(RFIFOW(fd,28))); //Locate mapserver by ip and port.
 			if (map_id >= 0)
 				map_fd = server_fd[map_id];
 			//Char should just had been saved before this packet, so this should be safe. [Skotlex]
@@ -2975,20 +2955,23 @@ int parse_frommap(int fd)
 	return 0;
 }
 
+// Searches for the mapserver that has a given map (and optionally ip/port, if not -1).
+// If found, returns the server's index in the 'server' array (otherwise returns -1).
 int search_mapserver(unsigned short map, uint32 ip, uint16 port)
 {
 	int i, j;
-
+	
 	for(i = 0; i < MAX_MAP_SERVERS; i++)
-		if (server_fd[i] > 0)
+	{
+		if (server_fd[i] > 0
+		&& (ip == (uint32)-1 || server[i].ip == ip)
+		&& (port == (uint16)-1 || server[i].port == port))
+		{
 			for (j = 0; server[i].map[j]; j++)
-				if (server[i].map[j] == map) {
-					if (ip != (uint32)-1 && server[i].ip != ip)
-						continue;
-					if (port != (uint16)-1 && server[i].port != port)
-						continue;
+				if (server[i].map[j] == map)
 					return i;
-				}
+		}
+	}
 
 	return -1;
 }
@@ -3615,7 +3598,7 @@ int check_connect_login_server(int tid, unsigned int tick, int id, int data)
 		login_fd = 0;
 		return 0;
 	}
-	session[login_fd]->func_parse = parse_tologin;
+	session[login_fd]->func_parse = parse_fromlogin;
 	realloc_fifo(login_fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 	
 	WFIFOHEAD(login_fd,86);
@@ -3705,16 +3688,16 @@ int char_lan_config_read(const char *lancfgName)
 }
 #endif //TXT_SQL_CONVERT
 
-void sql_config_read(const char *cfgName)
+void sql_config_read(const char* cfgName)
 {
 	char line[1024], w1[1024], w2[1024];
-	FILE *fp;
+	FILE* fp;
 
 	ShowInfo("Reading file %s...\n", cfgName);
 
 	if ((fp = fopen(cfgName, "r")) == NULL) {
-		ShowFatalError("file not found: %s\n", cfgName);
-		exit(1);
+		ShowError("file not found: %s\n", cfgName);
+		return;
 	}
 
 	while(fgets(line, sizeof(line), fp))
@@ -3725,96 +3708,93 @@ void sql_config_read(const char *cfgName)
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
 			continue;
 
-		if(strcmpi(w1,"char_db")==0){
+		if(!strcmpi(w1,"char_db"))
 			strcpy(char_db,w2);
 #ifndef TXT_SQL_CONVERT
-		} else if(strcmpi(w1, "gm_read_method") == 0) {
-			if(atoi(w2) != 0)
-				char_gm_read = true;
-			else
-				char_gm_read = false;
+		else if(!strcmpi(w1,"gm_read_method"))
+			char_gm_read = config_switch(w2);
 		//custom columns for login database
-		}else if(strcmpi(w1,"login_db")==0){
-			strcpy(login_db, w2);
-		}else if(strcmpi(w1,"login_db_level")==0){
+		else if(!strcmpi(w1,"login_db"))
+			strcpy(login_db,w2);
+		else if(!strcmpi(w1,"login_db_level"))
 			strcpy(login_db_level,w2);
-		}else if(strcmpi(w1,"login_db_account_id")==0){
+		else if(!strcmpi(w1,"login_db_account_id"))
 			strcpy(login_db_account_id,w2);
-		}else if(strcmpi(w1,"lowest_gm_level")==0){
+		else if(!strcmpi(w1,"lowest_gm_level")) {
 			lowest_gm_level = atoi(w2);
-			ShowStatus("set lowest_gm_level : %s\n",w2);
+			ShowStatus("set lowest_gm_level : %s\n", w2);
+		}
 #endif
-		}else if(strcmpi(w1,"scdata_db")==0){
+		else if(!strcmpi(w1,"scdata_db"))
 			strcpy(scdata_db,w2);
-		}else if(strcmpi(w1,"cart_db")==0){
+		else if(!strcmpi(w1,"cart_db"))
 			strcpy(cart_db,w2);
-		}else if(strcmpi(w1,"inventory_db")==0){
-			strcpy(inventory_db,w2);
-		}else if(strcmpi(w1,"charlog_db")==0){
+		else if(!strcmpi(w1,"inventory_db"))
+			strcpy(inventory_db, w2);
+		else if(!strcmpi(w1,"charlog_db"))
 			strcpy(charlog_db,w2);
-		}else if(strcmpi(w1,"storage_db")==0){
+		else if(!strcmpi(w1,"storage_db"))
 			strcpy(storage_db,w2);
-		}else if(strcmpi(w1,"reg_db")==0){
+		else if(!strcmpi(w1,"reg_db"))
 			strcpy(reg_db,w2);
-		}else if(strcmpi(w1,"skill_db")==0){
+		else if(!strcmpi(w1,"skill_db"))
 			strcpy(skill_db,w2);
-		}else if(strcmpi(w1,"interlog_db")==0){
+		else if(!strcmpi(w1,"interlog_db"))
 			strcpy(interlog_db,w2);
-		}else if(strcmpi(w1,"memo_db")==0){
+		else if(!strcmpi(w1,"memo_db"))
 			strcpy(memo_db,w2);
-		}else if(strcmpi(w1,"guild_db")==0){
+		else if(!strcmpi(w1,"guild_db"))
 			strcpy(guild_db,w2);
-		}else if(strcmpi(w1,"guild_alliance_db")==0){
+		else if(!strcmpi(w1,"guild_alliance_db"))
 			strcpy(guild_alliance_db,w2);
-		}else if(strcmpi(w1,"guild_castle_db")==0){
+		else if(!strcmpi(w1,"guild_castle_db"))
 			strcpy(guild_castle_db,w2);
-		}else if(strcmpi(w1,"guild_expulsion_db")==0){
+		else if(!strcmpi(w1,"guild_expulsion_db"))
 			strcpy(guild_expulsion_db,w2);
-		}else if(strcmpi(w1,"guild_member_db")==0){
+		else if(!strcmpi(w1,"guild_member_db"))
 			strcpy(guild_member_db,w2);
-		}else if(strcmpi(w1,"guild_skill_db")==0){
+		else if(!strcmpi(w1,"guild_skill_db"))
 			strcpy(guild_skill_db,w2);
-		}else if(strcmpi(w1,"guild_position_db")==0){
+		else if(!strcmpi(w1,"guild_position_db"))
 			strcpy(guild_position_db,w2);
-		}else if(strcmpi(w1,"guild_storage_db")==0){
+		else if(!strcmpi(w1,"guild_storage_db"))
 			strcpy(guild_storage_db,w2);
-		}else if(strcmpi(w1,"party_db")==0){
+		else if(!strcmpi(w1,"party_db"))
 			strcpy(party_db,w2);
-		}else if(strcmpi(w1,"pet_db")==0){
+		else if(!strcmpi(w1,"pet_db"))
 			strcpy(pet_db,w2);
-		}else if(strcmpi(w1,"friend_db")==0){
+		else if(!strcmpi(w1,"friend_db"))
 			strcpy(friend_db,w2);
 #ifndef TXT_SQL_CONVERT
-		}else if(strcmpi(w1,"db_path")==0){
+		else if(!strcmpi(w1,"db_path"))
 			strcpy(db_path,w2);
-		//Map server option to use SQL db or not
-		}else if(strcmpi(w1,"use_sql_db")==0){ // added for sql item_db read for char server [Valaris]
+		//Map server option to use SQL item/mob-db or not
+		else if(!strcmpi(w1,"use_sql_db")==0){
 			db_use_sqldbs = config_switch(w2);
 			ShowStatus("Using SQL dbs: %s\n",w2);
-		}else if(strcmpi(w1,"item_db_db")==0){
+		}
+		else if(!strcmpi(w1,"item_db_db"))
 			strcpy(item_db_db,w2);
-		}else if(strcmpi(w1,"item_db2_db")==0){
+		else if(!strcmpi(w1,"item_db2_db"))
 			strcpy(item_db2_db,w2);
 #endif
 		//support the import command, just like any other config
-		}else if(strcmpi(w1,"import")==0){
+		else if(!strcmpi(w1,"import"))
 			sql_config_read(w2);
-		}
-
 	}
 	fclose(fp);
 	ShowInfo("Done reading %s.\n", cfgName);
 }
 #ifndef TXT_SQL_CONVERT
 
-int char_config_read(const char *cfgName)
+int char_config_read(const char* cfgName)
 {
 	char line[1024], w1[1024], w2[1024];
 	FILE* fp = fopen(cfgName, "r");
 
 	if (fp == NULL) {
-		ShowFatalError("Configuration file not found: %s.\n", cfgName);
-		exit(1);
+		ShowError("Configuration file not found: %s.\n", cfgName);
+		return 1;
 	}
 
 	ShowInfo("Reading configuration file %s...\n", cfgName);
@@ -3968,7 +3948,6 @@ int char_config_read(const char *cfgName)
 void do_final(void)
 {
 	ShowInfo("Doing final stage...\n");
-	//inter_save();
 	do_final_itemdb();
 	//check SQL save progress.
 	//wait until save char complete
@@ -4074,10 +4053,7 @@ int do_init(int argc, char **argv)
 	mmo_char_sql_init();
 	ShowInfo("char server initialized.\n");
 
-//	ShowDebug("set parser -> parse_char()...\n");
 	set_defaultparse(parse_char);
-
-//	ShowDebug("set terminate function -> do_final().....\n");
 
 	if ((naddr_ != 0) && (!login_ip || !char_ip))
 	{
@@ -4124,32 +4100,32 @@ int do_init(int argc, char **argv)
 	{
 		//##TODO invoke a CONSOLE_START plugin event
 	}
-
+	
 	//Cleaning the tables for NULL entrys @ startup [Sirius]
-         //Chardb clean
-        	ShowInfo("Cleaning the '%s' table...\n", char_db);
-         sprintf(tmp_sql,"DELETE FROM `%s` WHERE `account_id` = '0'", char_db);
-         if(mysql_query(&mysql_handle, tmp_sql)){
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-         }
-
-         //guilddb clean
-         ShowInfo("Cleaning the '%s' table...\n", guild_db);
-         sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_lv` = '0' AND `max_member` = '0' AND `exp` = '0' AND `next_exp` = '0' AND `average_lv` = '0'", guild_db);
-         if(mysql_query(&mysql_handle, tmp_sql)){
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-         }
-
-         //guildmemberdb clean
-         ShowInfo("Cleaning the '%s' table...\n", guild_member_db);
-         sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '0' AND `account_id` = '0' AND `char_id` = '0'", guild_member_db);
-         if(mysql_query(&mysql_handle, tmp_sql)){
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			}
-
+	//Chardb clean
+	ShowInfo("Cleaning the '%s' table...\n", char_db);
+	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `account_id` = '0'", char_db);
+	if(mysql_query(&mysql_handle, tmp_sql)){
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	}
+	
+	//guilddb clean
+	ShowInfo("Cleaning the '%s' table...\n", guild_db);
+	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_lv` = '0' AND `max_member` = '0' AND `exp` = '0' AND `next_exp` = '0' AND `average_lv` = '0'", guild_db);
+	if(mysql_query(&mysql_handle, tmp_sql)){
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	}
+	
+	//guildmemberdb clean
+	ShowInfo("Cleaning the '%s' table...\n", guild_member_db);
+	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '0' AND `account_id` = '0' AND `char_id` = '0'", guild_member_db);
+	if(mysql_query(&mysql_handle, tmp_sql)){
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	}
+	
 	ShowInfo("End of char server initilization function.\n");
 	ShowStatus("The char-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", char_port);
 	return 0;
@@ -4157,47 +4133,47 @@ int do_init(int argc, char **argv)
 
 int char_child(int parent_id, int child_id)
 {
-		int tmp_id = 0;
-		sprintf (tmp_sql, "SELECT `child` FROM `%s` WHERE `char_id` = '%d'", char_db, parent_id);
-		if (mysql_query (&mysql_handle, tmp_sql)) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-		sql_res = mysql_store_result (&mysql_handle);
-		sql_row = sql_res?mysql_fetch_row (sql_res):NULL;
-		if (sql_row)
-			tmp_id = atoi (sql_row[0]);
-		else
-			ShowError("CHAR: child Failed!\n");
-		if (sql_res) mysql_free_result (sql_res);
-		if ( tmp_id == child_id )
-			return 1;
-		else
-			return 0;
+	int tmp_id = 0;
+	sprintf (tmp_sql, "SELECT `child` FROM `%s` WHERE `char_id` = '%d'", char_db, parent_id);
+	if (mysql_query (&mysql_handle, tmp_sql)) {
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	}
+	sql_res = mysql_store_result (&mysql_handle);
+	sql_row = sql_res?mysql_fetch_row (sql_res):NULL;
+	if (sql_row)
+		tmp_id = atoi (sql_row[0]);
+	else
+		ShowError("CHAR: child Failed!\n");
+	if (sql_res) mysql_free_result (sql_res);
+	if ( tmp_id == child_id )
+		return 1;
+	else
+		return 0;
 }
 
-int char_married(int pl1,int pl2)
+int char_married(int pl1, int pl2)
 {
-		int tmp_id = 0;
-		sprintf (tmp_sql, "SELECT `partner_id` FROM `%s` WHERE `char_id` = '%d'", char_db, pl1);
-		if (mysql_query (&mysql_handle, tmp_sql)) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
-		sql_res = mysql_store_result (&mysql_handle);
-		sql_row = sql_res?mysql_fetch_row (sql_res):NULL;
-		if (sql_row)
-			tmp_id = atoi (sql_row[0]);
-		else
-			ShowError("CHAR: married Failed!\n");
-		if (sql_res) mysql_free_result (sql_res);
-		if ( tmp_id == pl2 )
-			return 1;
-		else
-			return 0;
+	int tmp_id = 0;
+	sprintf (tmp_sql, "SELECT `partner_id` FROM `%s` WHERE `char_id` = '%d'", char_db, pl1);
+	if (mysql_query (&mysql_handle, tmp_sql)) {
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	}
+	sql_res = mysql_store_result (&mysql_handle);
+	sql_row = sql_res?mysql_fetch_row (sql_res):NULL;
+	if (sql_row)
+		tmp_id = atoi (sql_row[0]);
+	else
+		ShowError("CHAR: married Failed!\n");
+	if (sql_res) mysql_free_result (sql_res);
+	if ( tmp_id == pl2 )
+		return 1;
+	else
+		return 0;
 }
 
-int char_family(int pl1,int pl2,int pl3)
+int char_family(int pl1, int pl2, int pl3)
 {
 	int charid, partnerid, childid;
 	sprintf (tmp_sql, "SELECT `char_id`,`partner_id`,`child` FROM `%s` WHERE `char_id` IN ('%d','%d','%d')", char_db, pl1, pl2, pl3);

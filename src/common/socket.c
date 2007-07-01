@@ -612,7 +612,7 @@ int do_sendrecv(int next)
 
 		if(session[i]->eof) //func_send can't free a session, this is safe.
 		{	//Finally, even if there is no data to parse, connections signalled eof should be closed, so we call parse_func [Skotlex]
-			session[i]->func_parse(i); //This should close the session inmediately.
+			session[i]->func_parse(i); //This should close the session immediately.
 		}
 	}
 #endif

@@ -132,7 +132,7 @@ struct auth_data {
 	char last_ip[16]; // save of last IP of connection
 	char memo[255]; // a memo field
 	int account_reg2_num;
-	struct global_reg account_reg2[ACCOUNT_REG2_NUM]; // account script variables
+	struct global_reg account_reg2[ACCOUNT_REG2_NUM]; // account script variables (stored on login server)
 } *auth_dat = NULL;
 
 uint32 auth_num = 0, auth_max = 0;
@@ -1367,8 +1367,10 @@ int parse_fromchar(int fd)
 {
 	uint32 i;
 	int j, id;
+
 	uint32 ipl = session[fd]->client_addr;
 	char ip[16];
+	ip2str(ipl, ip);
 
 	for(id = 0; id < MAX_SERVERS; id++)
 		if (server_fd[id] == fd)
@@ -1378,8 +1380,6 @@ int parse_fromchar(int fd)
 		do_close(fd);
 		return 0;
 	}
-
-	ip2str(ipl, ip);
 
 	if(session[fd]->eof) {
 		ShowStatus("Char-server '%s' has disconnected.\n", server[id].name);

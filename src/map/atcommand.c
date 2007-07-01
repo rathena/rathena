@@ -8358,7 +8358,7 @@ int atcommand_makehomun(const int fd, struct map_session_data* sd, const char* c
 
 /*==========================================
  * modify homunculus intimacy [orn]
- *------------------------------------------o */
+ *------------------------------------------*/
 int atcommand_homfriendly(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	int friendly = 0;

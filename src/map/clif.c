@@ -550,7 +550,7 @@ int clif_authok(struct map_session_data *sd)
  *  4 - server full -> MsgStringTable[264]
  *  5 - underaged -> MsgStringTable[305]
  *  9 - too many connections from this ip -> MsgStringTable[529]
- *  10 - payed time has ended -> MsgStringTable[530]
+ *  10 - out of available time paid for -> MsgStringTable[530]
  *  15 - disconnected by a GM -> if( servicetype == taiwan ) MsgStringTable[579]
  *  other - disconnected -> MsgStringTable[3]
  */
@@ -581,17 +581,14 @@ void clif_updatemaxid(int account_id, int char_id)
  *------------------------------------------*/
 int clif_charselectok(int id)
 {
-	struct map_session_data *sd;
+	struct map_session_data* sd;
 	int fd;
 
-	if ((sd = map_id2sd(id)) == NULL)
-		return 1;
-
-	if (!sd->fd)
+	if ((sd = map_id2sd(id)) == NULL || !sd->fd)
 		return 1;
 
 	fd = sd->fd;
-	WFIFOHEAD(fd, packet_len(0xb3));
+	WFIFOHEAD(fd,packet_len(0xb3));
 	WFIFOW(fd,0) = 0xb3;
 	WFIFOB(fd,2) = 1;
 	WFIFOSET(fd,packet_len(0xb3));
@@ -2809,18 +2806,18 @@ int clif_initialstatus(struct map_session_data *sd)
 	buf=WFIFOP(fd,0);
 
 	WBUFW(buf,0)=0xbd;
-	WBUFW(buf,2)=(sd->status.status_point > SHRT_MAX)? SHRT_MAX:sd->status.status_point;
-	WBUFB(buf,4)=(sd->status.str > UCHAR_MAX)? UCHAR_MAX:sd->status.str;
+	WBUFW(buf,2)=min(sd->status.status_point, SHRT_MAX);
+	WBUFB(buf,4)=min(sd->status.str, UCHAR_MAX);
 	WBUFB(buf,5)=pc_need_status_point(sd,SP_STR);
-	WBUFB(buf,6)=(sd->status.agi > UCHAR_MAX)? UCHAR_MAX:sd->status.agi;
+	WBUFB(buf,6)=min(sd->status.agi, UCHAR_MAX);
 	WBUFB(buf,7)=pc_need_status_point(sd,SP_AGI);
-	WBUFB(buf,8)=(sd->status.vit > UCHAR_MAX)? UCHAR_MAX:sd->status.vit;
+	WBUFB(buf,8)=min(sd->status.vit, UCHAR_MAX);
 	WBUFB(buf,9)=pc_need_status_point(sd,SP_VIT);
-	WBUFB(buf,10)=(sd->status.int_ > UCHAR_MAX)? UCHAR_MAX:sd->status.int_;
+	WBUFB(buf,10)=min(sd->status.int_, UCHAR_MAX);
 	WBUFB(buf,11)=pc_need_status_point(sd,SP_INT);
-	WBUFB(buf,12)=(sd->status.dex > UCHAR_MAX)? UCHAR_MAX:sd->status.dex;
+	WBUFB(buf,12)=min(sd->status.dex, UCHAR_MAX);
 	WBUFB(buf,13)=pc_need_status_point(sd,SP_DEX);
-	WBUFB(buf,14)=(sd->status.luk > UCHAR_MAX)? UCHAR_MAX:sd->status.luk;
+	WBUFB(buf,14)=min(sd->status.luk, UCHAR_MAX);
 	WBUFB(buf,15)=pc_need_status_point(sd,SP_LUK);
 
 	WBUFW(buf,16) = sd->battle_status.batk + sd->battle_status.rhw.atk + sd->battle_status.lhw->atk;
@@ -3797,7 +3794,7 @@ int clif_damage(struct block_list *src,struct block_list *dst,unsigned int tick,
 		WBUFW(buf,22)=damage?div:0;
 		WBUFW(buf,27)=damage2?div:0;
 	} else {
-		WBUFW(buf,22)=(damage > SHRT_MAX)?SHRT_MAX:damage;
+		WBUFW(buf,22)=min(damage, SHRT_MAX);
 		WBUFW(buf,27)=damage2;
 	}
 	WBUFW(buf,24)=div;
@@ -4457,7 +4454,7 @@ int clif_skill_nodamage(struct block_list *src,struct block_list *dst,int skill_
 
 	WBUFW(buf,0)=0x11a;
 	WBUFW(buf,2)=skill_id;
-	WBUFW(buf,4)=(heal > SHRT_MAX)? SHRT_MAX:heal;
+	WBUFW(buf,4)=min(heal, SHRT_MAX);
 	WBUFL(buf,6)=dst->id;
 	WBUFL(buf,10)=src?src->id:0;
 	WBUFB(buf,14)=fail;
@@ -6734,42 +6731,43 @@ int clif_guild_emblem(struct map_session_data *sd,struct guild *g)
 	WFIFOSET(fd,WFIFOW(fd,2));
 	return 0;
 }
+
 /*==========================================
- * ギルドスキル送信
+ * Send guild skills
  *------------------------------------------*/
-int clif_guild_skillinfo(struct map_session_data *sd)
+int clif_guild_skillinfo(struct map_session_data* sd)
 {
 	int fd;
-	int i,id,c,up=1;
-	struct guild *g;
+	struct guild* g;
+	int i,c;
 
 	nullpo_retr(0, sd);
 
-	fd=sd->fd;
-	g=guild_search(sd->status.guild_id);
-	if(g==NULL)
+	fd = sd->fd;
+	g = guild_search(sd->status.guild_id);
+	if(g == NULL)
 		return 0;
+
 	WFIFOHEAD(fd, MAX_GUILDSKILL * 37 + 6);
-	WFIFOW(fd,0)=0x0162;
-	WFIFOW(fd,4)=g->skill_point;
-	for(i=c=0;i<MAX_GUILDSKILL;i++){
-		if(g->skill[i].id>0 && guild_check_skill_require(g,g->skill[i].id)){
-			WFIFOW(fd,c*37+ 6) = id = g->skill[i].id;
+	WFIFOW(fd,0) = 0x0162;
+	WFIFOW(fd,4) = g->skill_point;
+	for(i = 0, c = 0; i < MAX_GUILDSKILL; i++)
+	{
+		if(g->skill[i].id > 0 && guild_check_skill_require(g, g->skill[i].id))
+		{
+			int id = g->skill[i].id;
+			WFIFOW(fd,c*37+ 6) = id; 
 			WFIFOW(fd,c*37+ 8) = skill_get_inf(id);
 			WFIFOW(fd,c*37+10) = 0;
 			WFIFOW(fd,c*37+12) = g->skill[i].lv;
-			WFIFOW(fd,c*37+14) = skill_get_sp(id,g->skill[i].lv);
-			WFIFOW(fd,c*37+16) = skill_get_range(id,g->skill[i].lv);
+			WFIFOW(fd,c*37+14) = skill_get_sp(id, g->skill[i].lv);
+			WFIFOW(fd,c*37+16) = skill_get_range(id, g->skill[i].lv);
 			strncpy((char*)WFIFOP(fd,c*37+18), skill_get_name(id), NAME_LENGTH);
-			if(g->skill[i].lv < guild_skill_get_max(id) && (sd == g->member[0].sd))
-				up = 1;
-			else
-				up = 0;
-			WFIFOB(fd,c*37+42)= up;
+			WFIFOB(fd,c*37+42)= (g->skill[i].lv < guild_skill_get_max(id) && sd == g->member[0].sd) ? 1 : 0;
 			c++;
 		}
 	}
-	WFIFOW(fd,2)=c*37+6;
+	WFIFOW(fd,2) = c*37 + 6;
 	WFIFOSET(fd,WFIFOW(fd,2));
 	return 0;
 }
@@ -6778,7 +6776,7 @@ int clif_guild_skillinfo(struct map_session_data *sd)
  * Sends guild notice to client
  * R 016f <str1z>.60B <str2z>.120B
  *------------------------------------------*/
-int clif_guild_notice(struct map_session_data *sd,struct guild *g)
+int clif_guild_notice(struct map_session_data* sd, struct guild* g)
 {
 	int fd;
 
@@ -6787,17 +6785,16 @@ int clif_guild_notice(struct map_session_data *sd,struct guild *g)
 
 	fd = sd->fd;
 
-	if ( !session_isActive(fd) )  //null pointer right here [Kevin]
+	if ( !session_isActive(fd) )
 		return 0;
  
-	if (fd <= 0)
+	if(g->mes1[0] == '\0' && g->mes2[0] == '\0')
 		return 0;
-	if(*g->mes1==0 && *g->mes2==0)
-		return 0;
+
 	WFIFOHEAD(fd,packet_len(0x16f));
-	WFIFOW(fd,0)=0x16f;
-	memcpy(WFIFOP(fd,2),g->mes1,60);
-	memcpy(WFIFOP(fd,62),g->mes2,120);
+	WFIFOW(fd,0) = 0x16f;
+	memcpy(WFIFOP(fd,2), g->mes1, 60);
+	memcpy(WFIFOP(fd,62), g->mes2, 120);
 	WFIFOSET(fd,packet_len(0x16f));
 	return 0;
 }
@@ -8960,6 +8957,7 @@ void clif_parse_TakeItem(int fd, struct map_session_data *sd)
 
 		if (!pc_takeitem(sd, fitem))
 			break;
+
 		return;
 	} while (0);
 	// Client REQUIRES a fail packet or you can no longer pick items.
@@ -11717,10 +11715,10 @@ static int packetdb_readdb(void)
 	//#0x0240
 	   -1, -1,  -1, -1, -1,  3,  4,  8,  -1,  3, 70,  4,  8,12,  4, 10,
 	    3, 32,  -1,  3,  3,  5,  5,  8,   2,  3, -1, -1,  4,-1,  4,  0,
-		 0,  0,   0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0, 0,  0,  0,
-		 0,  0,   0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0, 0,  0,  0,
+	    0,  0,   0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0, 0,  0,  0,
+	    0,  0,   0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0, 0,  0,  0,
 	//#0x0280
-		 0,  0,   0,  0,  0,  0,  0,  0,   0,  0, 18,  0,  0, 0,  0,  0
+	    0,  0,   0,  0,  0,  0,  0,  0,   0,  0, 18,  0,  0, 0,  0,  0
 	};
 	struct {
 		void (*func)(int, struct map_session_data *);

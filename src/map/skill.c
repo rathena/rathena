@@ -3537,7 +3537,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				)
 					abra_skillid = 0;	// reset to get a new id
 			} while (abra_skillid == 0);
-			abra_skilllv = skill_get_max(abra_skillid) >  skilllv ? skilllv : skill_get_max(abra_skillid);
+			abra_skilllv = min(skilllv, skill_get_max(abra_skillid));
 			clif_skill_nodamage (src, bl, skillid, skilllv, 1);
 			
 			if (sd)
