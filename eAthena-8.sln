@@ -16,9 +16,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mapcache", "vcproj-8\mapcac
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ladmin", "vcproj-8\ladmin.vcproj", "{D356871D-58E1-450B-967A-E8E9646175AF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "txt-converter-login", "vcproj-9\txt-converter-login.vcproj", "{D356871D-58E1-450B-967A-E9E9646175AF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "txt-converter-login", "vcproj-8\txt-converter-login.vcproj", "{D356871D-58E1-450B-967A-E9E9646175AF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "txt-converter-char", "vcproj-9\txt-converter-char.vcproj", "{D356871D-58E1-450B-967A-EAE9646175AF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "txt-converter-char", "vcproj-8\txt-converter-char.vcproj", "{D356871D-58E1-450B-967A-EAE9646175AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
