@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/07/01
+	* Rev. 10839 Fixed a few errors with the kafra functions. [L0ne_W0lf]
 2007/06/29
 	* Fixed some typos in various Rachel quests. [SinSloth]
 	* Fixed a minor bug in Hugel Bingo game system. [SinSloth]

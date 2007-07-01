@@ -5,7 +5,7 @@
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 5.6a
+//= 5.7
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: =========================================
@@ -50,6 +50,8 @@
 //= 5.6 Further dialog updates, added  dynamic costs for cart and storage use. [L0ne_W0lf]
 //=	Updated some functions to handle Guild Kafras the way they should. 
 //= 5.6a Corrected a few wrong name sin the teleport function. [L0ne_W0lf]
+//= 5.7 Correced end message no longer displaying, and the duplicate names [L0ne_W0lf]
+//=	Thanks to Barron-Monster for pointing out the issues.
 //============================================================ 
 
 
@@ -64,11 +66,11 @@ function	script	F_Kafra	{
 	callfunc "F_ClearGarbage"; //Clear outdated, unused variables
 
 	//Display Kafra Welcome Message
-	mes "[Kafra Employee]";
 	switch(getarg(0)){
 		//Default message (obsolete)
 		default:
 		case 0:
+			mes "[Kafra Employee]";
 			mes "Welcome to the";
 			mes "Kafra Corporartion.";
 			mes "The Kafra services";
@@ -78,6 +80,7 @@ function	script	F_Kafra	{
 
 		//Niflheim specific message
 		case 1:
+			mes "[Kafra Employee]";
 			mes "^666666W-weeeelc-c-come";
 			mes "to th-the K-kaaafrrrra";
 			mes "C-coorpoor-r-ratioooonn...^000000";
@@ -85,12 +88,14 @@ function	script	F_Kafra	{
 
 		//Guild Castle Kafra message
 		case 2:
+			mes "[Kafra Employee]";
 	 		mes "Welcome. ^ff0000" + GetGuildName(@GID) + "^000000 Member.";
 			mes "The Kafra Coporation will stay with you wherever you go.";
 			break;
 
 		//Amatsu specific message (obsolete)
 		case 3:
+			mes "[Kafra Employee]";
 			mes "So, have you come from a faraway land to study our culture, or are you just sightseeing?";
 			mes "In either case, why not stay awhile?";
 			mes "The air is eternally heavy with the";
@@ -99,6 +104,7 @@ function	script	F_Kafra	{
 
 		//Louyang and Ayothaya specific message (obsolete)
 		case 4:
+			mes "[Kafra Employee]";
 			mes "With our many Kafra";
 			mes "service locations, you're never";
 			mes "far from home.";
@@ -520,7 +526,7 @@ function	script	F_KafEnd	{
 	}
 
 	// Generic End
-	else if(getarg(0)==0) {
+	else if(getarg(0)==0 || getarg(0)==5) {
 		mes "We, here at Kafra Corporation,";
 		mes "are always endeavoring to provide you with the best services. We hope that we meet your adventuring needs and standards of excellence.";
 	}
