@@ -48,6 +48,15 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+07/02
+	* Rev. 10841 Updated some AEGIS names. (Still more to do) [L0ne_W0lf]
+	* Updated Flame Lord Ring, Ring of Resonance, and their set skills.
+	* Updated Spiritual Ring, effect and rates.
+	* Updated Lesser_Elemental_Ring, added auto-cast skills.
+	* Adjusted some other auto-cast skills.
+	* Adjusted Doom_Slayer's chance to break armor (1% -> 5%)
+	* There are no longer any items that use the item-type (use delay) 11.
+	* Modified Cash shop scroll items to use "unitskilluseid"
 06/29
 	* Added Christmas Goblin taming item [Playtester]
 06/28
