@@ -51,9 +51,10 @@
 #endif
 #include <time.h>
 #include <setjmp.h>
+#include <errno.h>
 
 ///////////////////////////////////////////////////////////////////////////////
-//## TODO possible enhancements:
+//## TODO possible enhancements: [FlavioJS]
 // - 'callfunc' supporting labels in the current npc "::LabelName"
 // - 'callfunc' supporting labels in other npcs "NpcName::LabelName"
 // - 'function FuncName;' function declarations reverting to global functions 
@@ -83,7 +84,7 @@
 
 #define script_getnum(st,val) conv_num(st, script_getdata(st,val))
 #define script_getstr(st,val) conv_str(st, script_getdata(st,val))
-#define script_getref(st,val) ( data_varref(script_getdata(st,val)) )
+#define script_getref(st,val) ( script_getdata(st,val)->ref )
 
 // Note: "top" functions/defines use indexes relative to the top of the stack
 //       -1 is the index of the data at the top
@@ -110,18 +111,30 @@
 /// Returns if the script data is an internal script function label
 #define data_isfunclabel(data) ( (data)->type == C_USERFUNC_POS )
 
-/// Returns the unique id of the variable (id and index)
-#define data_varuid(data) ( (data)->u.num )
-/// Returns the id of the variable
-#define data_varid(data) ( (int32)(data_varuid(data) & 0x00ffffff) )
-/// Returns the array index of the variable
-#define data_varindex(data) ( (int32)(((uint32)(data_varuid(data) & 0xff000000)) >> 24) )
-/// Returns the name of the variable
-#define data_varname(data) ( str_buf + str_data[data_varid(data)].str )
-/// Returns the reference of the variable (linked list of variables, can be NULL)
-#define data_varref(data) ( (data)->ref )
+/// Returns if this is a reference to a constant
+#define reference_toconstant(data) ( str_data[reference_getid(data)].type == C_INT )
+/// Returns if this a reference to a param
+#define reference_toparam(data) ( str_data[reference_getid(data)].type == C_PARAM )
+/// Returns if this a reference to a variable
+//##TODO confirm it's C_NAME [FlavioJS]
+#define reference_tovariable(data) ( str_data[reference_getid(data)].type == C_NAME )
+/// Returns the unique id of the reference (id and index)
+#define reference_getuid(data) ( (data)->u.num )
+/// Returns the id of the reference
+#define reference_getid(data) ( (int32)(reference_getuid(data) & 0x00ffffff) )
+/// Returns the array index of the reference
+#define reference_getindex(data) ( (int32)(((uint32)(reference_getuid(data) & 0xff000000)) >> 24) )
+/// Returns the name of the reference
+#define reference_getname(data) ( str_buf + str_data[reference_getid(data)].str )
+/// Returns the linked list of uid-value pairs of the reference (can be NULL)
+#define reference_getref(data) ( (data)->ref )
+/// Returns the value of the constant
+#define reference_getconstant(data) ( str_data[reference_getid(data)].val )
+/// Returns the type of param
+#define reference_getparamtype(data) ( str_data[reference_getid(data)].val )
 
-#define variable_uid(id,idx) ( (int32)((((uint32)(id)) & 0x00ffffff) | (((uint32)(idx)) << 24)) )
+/// Composes the uid of a reference from the id and the index
+#define reference_uid(id,idx) ( (int32)((((uint32)(id)) & 0x00ffffff) | (((uint32)(idx)) << 24)) )
 
 #define FETCH(n, t) \
 		if( script_hasdata(st,n) ) \
@@ -424,22 +437,35 @@ static void script_reportdata(struct script_data* data)
 	switch( data->type )
 	{
 	case C_NOP:// no value
-		ShowDebug("Data: no value (nil)\n");
+		ShowDebug("Data: nothing (nil)\n");
 		break;
 	case C_INT:// number
-		ShowDebug("Data: number=%d\n", data->u.num);
+		ShowDebug("Data: number value=%d\n", data->u.num);
 		break;
 	case C_STR:
 	case C_CONSTSTR:// string
-		ShowDebug("Data: string=%s\n", data->u.str);
+		ShowDebug("Data: string value=\"%s\"\n", data->u.str);
 		break;
-	case C_NAME:// variable
-		{
-			char* name = data_varname(data);
+	case C_NAME:// reference
+		if( reference_tovariable(data) )
+		{// variable
+			char* name = reference_getname(data);
 			if( not_array_variable(*name) )
-				ShowDebug("Data: variable=%s\n", name);
+				ShowDebug("Data: variable name='%s'\n", name);
 			else
-				ShowDebug("Data: variable=%s index=%u\n", name, data_varindex(data));
+				ShowDebug("Data: variable name='%s' index=%d\n", name, reference_getindex(data));
+		}
+		else if( reference_toconstant(data) )
+		{// constant
+			ShowDebug("Data: constant name='%s' value=%d\n", reference_getname(data), reference_getconstant(data));
+		}
+		else if( reference_toparam(data) )
+		{// param
+			ShowDebug("Data: param name='%s' type=%d\n", reference_getname(data), reference_getparamtype(data));
+		}
+		else
+		{// ???
+			ShowDebug("Data: reference name='%s' type=%s\n", reference_getname(data), script_op2name(data->type));
 		}
 		break;
 	case C_POS:// label
@@ -2056,7 +2082,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 }
 
 //
-// ŽÀsŒn
+// Script state
 //
 enum {RUN = 0,STOP,END,RERUNLINE,GOTO,RETFUNC};
 
@@ -2072,96 +2098,136 @@ TBL_PC *script_rid2sd(struct script_state *st)
 	return sd;
 }
 
-
-/*==========================================
- * Retrieves the value of a script variable
- *------------------------------------------*/
+/// Retrieves the value of a script data
 int get_val(struct script_state* st, struct script_data* data)
 {
+	char* name;
+	char prefix;
+	char postfix;
 	TBL_PC* sd = NULL;
-	char *name, prefix, postfix;
-	
-	if(!data_isreference(data)) return 0;
 
-	name = str_buf + str_data[data->u.num&0x00ffffff].str;
-	prefix = name[0]; postfix = name[strlen(name)-1];
+	if( !data_isreference(data) )
+		return 0;// not a variable
 
-	if(not_server_variable(prefix)) {
+	name = reference_getname(data);
+	prefix = name[0];
+	postfix = name[strlen(name) - 1];
+
+	//##TODO use reference_tovariable(data) when it's confirmed that it works [FlavioJS]
+	if( !reference_toconstant(data) && !reference_toparam(data) && not_server_variable(prefix) )
+	{
 		sd = script_rid2sd(st);
-		if (!sd) { // needs player attached
-			// throw error, load some meaningful default values and return
-			ShowError("get_val error, cannot access player variable '%s'\n", name);
-			if (postfix == '$') { data->type = C_CONSTSTR; data->u.str = ""; } else { data->type = C_INT; data->u.num = 0; }
+		if( sd == NULL )
+		{// needs player attached
+			if( postfix == '$' )
+			{// string variable
+				ShowError("script:get_val: cannot access player variable '%s', defaulting to \"\"\n", name);
+				data->type = C_CONSTSTR;
+				data->u.str = "";
+			}
+			else
+			{// integer variable
+				ShowError("script:get_val: cannot access player variable '%s', defaulting to 0\n", name);
+				data->type = C_INT;
+				data->u.num = 0;
+			}
 			return 0;
-		}			
+		}
 	}
 
-	if(postfix == '$') { // string variable
+	if( postfix == '$' )
+	{// string variable
 
 		data->type = C_CONSTSTR;
 
-		switch (prefix) {
+		switch( prefix )
+		{
 		case '@':
-			data->u.str = pc_readregstr(sd, data->u.num); break;
+			data->u.str = pc_readregstr(sd, data->u.num);
+			break;
 		case '$':
-			data->u.str = (char *)idb_get(mapregstr_db,data->u.num); break;
+			data->u.str = (char *)idb_get(mapregstr_db, data->u.num);
+			break;
 		case '#':
-			data->u.str = (name[1] == '#') ? pc_readaccountreg2str(sd, name) : pc_readaccountregstr(sd, name); break;
-		case '.': {
-			struct linkdb_node** n;
-			n = (data->ref) ? data->ref : (name[1] == '@') ? st->stack->var_function : &st->script->script_vars;
-			data->u.str = linkdb_search(n, (void*)data->u.num);
+			if( name[1] == '#' )
+				data->u.str = pc_readaccountreg2str(sd, name);// global
+			else
+				data->u.str = pc_readaccountregstr(sd, name);// local
+			break;
+		case '.':
+			{
+				struct linkdb_node** n =
+					data->ref      ? data->ref:
+					name[1] == '@' ? st->stack->var_function:// instance/scope variable
+					                 &st->script->script_vars;// npc variable
+				data->u.str = linkdb_search(n, (void*)reference_getuid(data));
 			}
 			break;
 		default:
-			data->u.str = pc_readglobalreg_str(sd, name); break;
+			data->u.str = pc_readglobalreg_str(sd, name);
+			break;
 		}
 
 		if( data->u.str == NULL )
 			data->u.str = "";
 
-	} else { // integer variable
+	}
+	else
+	{// integer variable
 
 		data->type = C_INT;
 
-		if(str_data[data->u.num&0x00ffffff].type == C_INT) {
-			data->u.num = str_data[data->u.num&0x00ffffff].val;
-		} else if(str_data[data->u.num&0x00ffffff].type == C_PARAM) {
-			data->u.num = pc_readparam(sd, str_data[data->u.num&0x00ffffff].val);
+		if( reference_toconstant(data) )
+		{
+			data->u.num = reference_getconstant(data);
+		}
+		else if( reference_toparam(data) )
+		{
+			data->u.num = pc_readparam(sd, reference_getparamtype(data));
 		}
 		else
-		switch (prefix) {
+		switch( prefix )
+		{
 		case '@':
-			data->u.num = pc_readreg(sd, data->u.num); break;
+			data->u.num = pc_readreg(sd, data->u.num);
+			break;
 		case '$':
-			data->u.num = (int)idb_get(mapreg_db, data->u.num); break;
+			data->u.num = (int)idb_get(mapreg_db, data->u.num);
+			break;
 		case '#':
-			data->u.num = (name[1] == '#') ? pc_readaccountreg2(sd, name) : pc_readaccountreg(sd, name); break;
-		case '.': {
-			struct linkdb_node** n;
-			n = (data->ref) ? data->ref : (name[1] == '@') ? st->stack->var_function : &st->script->script_vars;
-			data->u.num = (int)linkdb_search(n, (void*)data->u.num);
+			if( name[1] == '#' )
+				data->u.str = pc_readaccountreg2str(sd, name);// global
+			else
+				data->u.str = pc_readaccountregstr(sd, name);// local
+			break;
+		case '.':
+			{
+				struct linkdb_node** n =
+					data->ref      ? data->ref:
+					name[1] == '@' ? st->stack->var_function:// instance/scope variable
+					                 &st->script->script_vars;// npc variable
+				data->u.num = (int)linkdb_search(n, (void*)reference_getuid(data));
 			}
 			break;
 		default:
-			data->u.num = pc_readglobalreg(sd, name); break;
+			data->u.num = pc_readglobalreg(sd, name);
+			break;
 		}
 
 	}
 
 	return 0;
 }
-/*==========================================
- * Retrieves the value of a script variable
- *------------------------------------------*/
-void* get_val2(struct script_state* st, int num, struct linkdb_node** ref)
+
+/// Retrieves the value of a reference identified by uid (variable, constant, param)
+void* get_val2(struct script_state* st, int uid, struct linkdb_node** ref)
 {
-	struct script_data dat;
-	dat.type = C_NAME;
-	dat.u.num = num;
-	dat.ref = ref;
-	get_val(st, &dat);
-	return (dat.type == C_INT) ? (void*)dat.u.num : (void*)dat.u.str;
+	struct script_data data;
+	data.type = C_NAME;
+	data.u.num = uid;
+	data.ref = ref;
+	get_val(st, &data);
+	return (data.type == C_INT ? (void*)data.u.num : (void*)data.u.str);
 }
 
 /*==========================================
@@ -2235,43 +2301,88 @@ int set_var(TBL_PC* sd, char* name, void* val)
     return set_reg(NULL, sd, add_str(name), name, val, NULL);
 }
 
-/*==========================================
- * •¶Žš—ñ‚Ö‚Ì•ÏŠ·
- *------------------------------------------*/
-const char* conv_str(struct script_state *st,struct script_data *data)
+/// Converts the data to a string
+const char* conv_str(struct script_state* st, struct script_data* data)
 {
-	get_val(st,data);
-	if(data_isint(data)){
-		char *buf;
-		CREATE(buf,char,ITEM_NAME_LENGTH);
-		snprintf(buf,ITEM_NAME_LENGTH, "%d",data->u.num);
-		buf[ITEM_NAME_LENGTH-1]=0;
-		data->type=C_STR;
-		data->u.str=buf;
-	} else if(data_islabel(data)) {
-		// Protect from crashes by passing labels to string-expected args [jA2200]
+	char* p;
+
+	get_val(st, data);
+	if( data_isstring(data) )
+	{// nothing to convert
+	}
+	else if( data_isint(data) )
+	{// int -> string
+		CREATE(p, char, ITEM_NAME_LENGTH);
+		snprintf(p, ITEM_NAME_LENGTH, "%d", data->u.num);
+		p[ITEM_NAME_LENGTH-1] = '\0';
+		data->type = C_STR;
+		data->u.str = p;
+	}
+	else if( data_isreference(data) )
+	{// reference -> string
+		//##TODO when does this happen (check get_val) [FlavioJS]
 		data->type = C_CONSTSTR;
-		data->u.str = "** SCRIPT ERROR **";
-	} else if(data_isreference(data)){
-		data->type=C_CONSTSTR;
-		data->u.str=str_buf+str_data[data->u.num].str;
+		data->u.str = reference_getname(data);
+	}
+	else
+	{// unsupported data type
+		ShowError("script:conv_str: cannot convert to string, defaulting to \"\"\n");
+		script_reportdata(data);
+		script_reportsrc(st);
+		data->type = C_CONSTSTR;
+		data->u.str = "";
 	}
 	return data->u.str;
 }
 
-/*==========================================
- * ”’l‚Ö•ÏŠ·
- *------------------------------------------*/
-int conv_num(struct script_state *st,struct script_data *data)
+/// Converts the data to an int
+int conv_num(struct script_state* st, struct script_data* data)
 {
-	char *p;
-	get_val(st,data);
-	if(data_isstring(data)){
-		p=data->u.str;
-		data->u.num = atoi(p);
-		if(data->type==C_STR)
+	char* p;
+	long num;
+
+	get_val(st, data);
+	if( data_isint(data) )
+	{// nothing to convert
+	}
+	else if( data_isstring(data) )
+	{// string -> int
+		// the result does not overflow or underflow, it is capped instead
+		// ex: 999999999999 is capped to INT_MAX (2147483647)
+		p = data->u.str;
+		errno = 0;
+		num = strtol(data->u.str, NULL, 10);// change radix to 0 to support octal numbers "o377" and hex numbers "0xFF"
+		if( errno == ERANGE
+#if LONG_MAX > INT_MAX
+			|| num < INT_MIN || num > INT_MAX
+#endif
+			)
+		{
+			if( num <= INT_MIN )
+			{
+				num = INT_MIN;
+				ShowError("script:conv_num: underflow detected, capping to %ld\n", num);
+			}
+			else//if( num >= INT_MAX )
+			{
+				num = INT_MAX;
+				ShowError("script:conv_num: overflow detected, capping to %ld\n", num);
+			}
+			script_reportdata(data);
+			script_reportsrc(st);
+		}
+		if( data->type == C_STR )
 			aFree(p);
-		data->type=C_INT;
+		data->type = C_INT;
+		data->u.num = (int)num;
+	}
+	else
+	{// unsupported data type
+		ShowError("script:conv_num: cannot convert to number, defaulting to 0\n");
+		script_reportdata(data);
+		script_reportsrc(st);
+		data->type = C_INT;
+		data->u.num = 0;
 	}
 	return data->u.num;
 }
@@ -4307,7 +4418,6 @@ struct script_function buildin_func[] = {
 
 /// Appends a message to the npc dialog.
 /// If a dialog doesn't exist yet, one is created.
-/// TODO does the client support dialogs with different oid's at the same time?
 ///
 /// mes "<message>";
 BUILDIN_FUNC(mes)
@@ -4448,17 +4558,7 @@ BUILDIN_FUNC(menu)
 		for( i = 2, sd->npc_menu = 0; i < script_lastdata(st); i += 2 )
 		{
 			// menu options
-			data = script_getdata(st, i);
-			get_val(st, data);
-			if( data_isstring(data) && data_isint(data) )
-			{// not a string (or compatible)
-				StringBuf_Destroy(&buf);
-				ShowError("script:menu: argument #%d (from 1) is not a string or compatible.\n", (i - 1));
-				script_reportdata(data);
-				st->state = END;
-				return 1;
-			}
-			text = conv_str(st, data);// convert to string
+			text = script_getstr(st, i);
 
 			// target label
 			data = script_getdata(st, i+1);
@@ -4811,7 +4911,7 @@ BUILDIN_FUNC(return)
 		data = script_getdatatop(st, -1);
 		if( data_isreference(data) )
 		{
-			char* name = data_varname(data);
+			char* name = reference_getname(data);
 			if( name[0] == '.' && name[1] == '@' )
 			{// temporary script variable, convert to value
 				get_val(st, data);
@@ -5330,7 +5430,7 @@ static int32 getarraysize(struct script_state* st, int32 id, int32 idx, int isst
 	{
 		for( ; idx < 128; ++idx )
 		{
-			char* str = (char*)get_val2(st, variable_uid(id, idx), ref);
+			char* str = (char*)get_val2(st, reference_uid(id, idx), ref);
 			if( str && *str )
 				ret = idx + 1;
 		}
@@ -5339,7 +5439,7 @@ static int32 getarraysize(struct script_state* st, int32 id, int32 idx, int isst
 	{
 		for( ; idx < 128; ++idx )
 		{
-			int32 num = (int32)get_val2(st, variable_uid(id, idx), ref);
+			int32 num = (int32)get_val2(st, reference_uid(id, idx), ref);
 			if( num )
 				ret = idx + 1;
 		}
@@ -5370,9 +5470,9 @@ BUILDIN_FUNC(setarray)
 		return 1;// not a variable
 	}
 
-	id = data_varid(data);
-	start = data_varindex(data);
-	name = data_varname(data);
+	id = reference_getid(data);
+	start = reference_getindex(data);
+	name = reference_getname(data);
 	if( not_array_variable(*name) )
 	{
 		ShowError("script:setarray: illegal scope\n");
@@ -5397,7 +5497,7 @@ BUILDIN_FUNC(setarray)
 		for( i = 3; start < end; ++start, ++i )
 		{
 			void* v = (void*)script_getstr(st,i);
-			set_reg(st, sd, variable_uid(id, start), name, v, data_varref(data));
+			set_reg(st, sd, reference_uid(id, start), name, v, reference_getref(data));
 		}
 	}
 	else
@@ -5405,7 +5505,7 @@ BUILDIN_FUNC(setarray)
 		for( i = 3; start < end; ++start, ++i )
 		{
 			void* v = (void*)script_getnum(st,i);
-			set_reg(st, sd, variable_uid(id, start), name, v, data_varref(data));
+			set_reg(st, sd, reference_uid(id, start), name, v, reference_getref(data));
 		}
 	}
 	return 0;
@@ -5434,9 +5534,9 @@ BUILDIN_FUNC(cleararray)
 		return 1;// not a variable
 	}
 
-	id = data_varid(data);
-	start = data_varindex(data);
-	name = data_varname(data);
+	id = reference_getid(data);
+	start = reference_getindex(data);
+	name = reference_getname(data);
 	if( not_array_variable(*name) )
 	{
 		ShowError("script:cleararray: illegal scope\n");
@@ -5462,7 +5562,7 @@ BUILDIN_FUNC(cleararray)
 		end = 127;
 
 	for( ; start < end; ++start )
-		set_reg(st, sd, variable_uid(id, start), name, v, script_getref(st,2));
+		set_reg(st, sd, reference_uid(id, start), name, v, script_getref(st,2));
 	return 0;
 }
 
@@ -5496,12 +5596,12 @@ BUILDIN_FUNC(copyarray)
 		return 1;// not a variable
 	}
 
-	id1 = data_varid(data1);
-	id2 = data_varid(data2);
-	idx1 = data_varindex(data1);
-	idx2 = data_varindex(data2);
-	name1 = data_varname(data1);
-	name2 = data_varname(data2);
+	id1 = reference_getid(data1);
+	id2 = reference_getid(data2);
+	idx1 = reference_getindex(data1);
+	idx2 = reference_getindex(data2);
+	name1 = reference_getname(data1);
+	name2 = reference_getname(data2);
 	if( not_array_variable(*name1) || not_array_variable(*name2) )
 	{
 		ShowError("script:copyarray: illegal scope\n");
@@ -5537,8 +5637,8 @@ BUILDIN_FUNC(copyarray)
 	{// destination might be overlapping the source - copy in reverse order
 		for( i = count - 1; i >= 0; --i )
 		{
-			v = get_val2(st, variable_uid(id2, idx2 + i), data_varref(data2));
-			set_reg(st, sd, variable_uid(id1, idx1 + i), name1, v, data_varref(data1));
+			v = get_val2(st, reference_uid(id2, idx2 + i), reference_getref(data2));
+			set_reg(st, sd, reference_uid(id1, idx1 + i), name1, v, reference_getref(data1));
 		}
 	}
 	else
@@ -5546,10 +5646,10 @@ BUILDIN_FUNC(copyarray)
 		for( i = 0; i < count; ++i )
 		{
 			if( id2 + i < 128 )
-				v = get_val2(st, variable_uid(id2, idx2 + i), data_varref(data2));
+				v = get_val2(st, reference_uid(id2, idx2 + i), reference_getref(data2));
 			else// out of range - assume ""/0
 				v = (void*)(is_string_variable(name1) ? "" : 0);
-			set_reg(st, sd, variable_uid(id1, idx1 + i), name1, v, data_varref(data1));
+			set_reg(st, sd, reference_uid(id1, idx1 + i), name1, v, reference_getref(data1));
 		}
 	}
 	return 0;
@@ -5575,7 +5675,7 @@ BUILDIN_FUNC(getarraysize)
 		return 1;// not a variable
 	}
 
-	name = data_varname(data);
+	name = reference_getname(data);
 	if( not_array_variable(*name) )
 	{
 		ShowError("script:getarraysize: illegal scope\n");
@@ -5585,7 +5685,7 @@ BUILDIN_FUNC(getarraysize)
 		return 1;// not supported
 	}
 
-	script_pushint(st, getarraysize(st, data_varid(data), data_varindex(data), is_string_variable(name), data_varref(data)));
+	script_pushint(st, getarraysize(st, reference_getid(data), reference_getindex(data), is_string_variable(name), reference_getref(data)));
 	return 0;
 }
 
@@ -5612,9 +5712,9 @@ BUILDIN_FUNC(deletearray)
 		return 1;// not a variable
 	}
 
-	id = data_varid(data);
-	start = data_varindex(data);
-	name = data_varname(data);
+	id = reference_getid(data);
+	start = reference_getindex(data);
+	name = reference_getname(data);
 	if( not_array_variable(*name) )
 	{
 		ShowError("script:deletearray: illegal scope\n");
@@ -5630,7 +5730,7 @@ BUILDIN_FUNC(deletearray)
 			return 1;// no player attached
 	}
 
-	end = getarraysize(st, id, start, is_string_variable(name), data_varref(data));
+	end = getarraysize(st, id, start, is_string_variable(name), reference_getref(data));
 	if( start >= end )
 		return 0;// nothing to free
 
@@ -5645,8 +5745,8 @@ BUILDIN_FUNC(deletearray)
 		// move rest of the elements backward
 		for( ; start + count < end; ++start )
 		{
-			void* v = get_val2(st, variable_uid(id, start + count), data_varref(data));
-			set_reg(st, sd, variable_uid(id, start), name, v, data_varref(data));
+			void* v = get_val2(st, reference_uid(id, start + count), reference_getref(data));
+			set_reg(st, sd, reference_uid(id, start), name, v, reference_getref(data));
 		}
 	}
 
@@ -5654,12 +5754,12 @@ BUILDIN_FUNC(deletearray)
 	if( is_string_variable(name) )
 	{
 		for( ; start < end; ++start )
-			set_reg(st, sd, variable_uid(id, start), name, (void*)0, data_varref(data));
+			set_reg(st, sd, reference_uid(id, start), name, (void*)0, reference_getref(data));
 	}
 	else 
 	{
 		for( ; start < end; ++start )
-			set_reg(st, sd, variable_uid(id, start), name, (void *)"", data_varref(data));
+			set_reg(st, sd, reference_uid(id, start), name, (void *)"", reference_getref(data));
 	}
 	return 0;
 }
@@ -5685,8 +5785,8 @@ BUILDIN_FUNC(getelementofarray)
 		return 1;// not a variable
 	}
 
-	id = data_varid(data);
-	name = data_varname(data);
+	id = reference_getid(data);
+	name = reference_getname(data);
 	if( not_array_variable(*name) )
 	{
 		ShowError("script:getelementofarray: illegal scope\n");
@@ -5706,7 +5806,7 @@ BUILDIN_FUNC(getelementofarray)
 		return 1;// out of range
 	}
 
-	push_val2(st->stack, C_NAME, variable_uid(id, i), data_varref(data));
+	push_val2(st->stack, C_NAME, reference_uid(id, i), reference_getref(data));
 	return 0;
 }
 
@@ -13563,7 +13663,7 @@ BUILDIN_FUNC(getvariableofnpc)
 		return 1;
 	}
 
-	name = data_varname(data);
+	name = reference_getname(data);
 	if( *name != '.' || name[1] == '@' )
 	{// not a npc variable
 		ShowError("script:getvariableofnpc: invalid scope (not npc variable)\n");
@@ -13582,7 +13682,7 @@ BUILDIN_FUNC(getvariableofnpc)
 		return 1;
 	}
 
-	push_val2(st->stack, C_NAME, data_varuid(data), &nd->u.scr.script->script_vars );
+	push_val2(st->stack, C_NAME, reference_getuid(data), &nd->u.scr.script->script_vars );
 	return 0;
 }
 
