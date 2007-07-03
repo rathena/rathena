@@ -49,6 +49,7 @@
 	----
 ========================
 07/03
+	* Thor Volcano mob updates [Playtester]
 	* Rev. 10846 More updates to AEGIS name fields. [L0ne_W0lf]
 	* Fixed job code error with Spiritual Ring.
 	* Added several new items, and Updated various fields in others.
