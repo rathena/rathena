@@ -1749,7 +1749,7 @@ prontera,126,335,5	script	Arthail	51,{
 		next;
 		mes "[???]";
 		mes "...";
-		//soundeffectall "se_littlewaves02.wav",0;
+		soundeffectall "se_littlewaves02.wav",0;
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Huh?";

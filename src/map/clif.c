@@ -7347,42 +7347,36 @@ int clif_wisall(struct map_session_data *sd,int type,int flag)
 /*==========================================
  * サウンドエフェクト
  *------------------------------------------*/
-void clif_soundeffect(struct map_session_data *sd,struct block_list *bl,const char *name,int type)
+void clif_soundeffect(struct map_session_data* sd, struct block_list* bl, const char* name, int type)
 {
 	int fd;
 
 	nullpo_retv(sd);
 	nullpo_retv(bl);
 
-	fd=sd->fd;
+	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0x1d3));
-	WFIFOW(fd,0)=0x1d3;
-	memcpy(WFIFOP(fd,2),name,NAME_LENGTH);
-	WFIFOB(fd,26)=type;
-	WFIFOL(fd,27)=0;
-	WFIFOL(fd,31)=bl->id;
+	WFIFOW(fd,0) = 0x1d3;
+	safestrncpy((char*)WFIFOP(fd,2), name, NAME_LENGTH);
+	WFIFOB(fd,26) = type;
+	WFIFOL(fd,27) = 0;
+	WFIFOL(fd,31) = bl->id;
 	WFIFOSET(fd,packet_len(0x1d3));
 
 	return;
 }
 
-int clif_soundeffectall(struct block_list *bl, const char *name, int type, int coverage)
+int clif_soundeffectall(struct block_list* bl, const char* name, int type, enum send_target coverage)
 {
 	unsigned char buf[40];
-	memset(buf, 0, packet_len(0x1d3));
-
-	if(coverage < 0 || coverage > 22){
-		ShowError("clif_soundeffectall: undefined coverage.\n");
-		return 0;
-	}
 
 	nullpo_retr(0, bl);
 
-	WBUFW(buf,0)=0x1d3;
-	memcpy(WBUFP(buf,2), name, NAME_LENGTH);
-	WBUFB(buf,26)=type;
-	WBUFL(buf,27)=0;
-	WBUFL(buf,31)=bl->id;
+	WBUFW(buf,0) = 0x1d3;
+	safestrncpy((char*)WBUFP(buf,2), name, NAME_LENGTH);
+	WBUFB(buf,26) = type;
+	WBUFL(buf,27) = 0;
+	WBUFL(buf,31) = bl->id;
 	clif_send(buf, packet_len(0x1d3), bl, coverage);
 
 	return 0;

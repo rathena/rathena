@@ -5647,23 +5647,22 @@ those that actually work may differ greatly between client versions.
 
 ---------------------------------------
 
-*soundeffect "<effect filename>",<number>
-*soundeffectall "<effect filename>",<number>
+*soundeffect "<effect filename>",<type>
+*soundeffectall "<effect filename>",<type>{,"<map name>"}{,<x0>,<y0>,<x1>,<y1>}
 
 These two commands will play a sound effect to either the invoking character 
-only 'soundeffect' or everyone around ('soundeffectall'). If the running code 
-does not have an object ID (a 'floating' npc) or is not running from an NPC 
+only ('soundeffect') or multiple characters ('soundeffectall'). If the running 
+code does not have an object ID (a 'floating' npc) or is not running from an NPC 
 object at all (an item script) the sound will be centered on the character who's 
 RID got attached to the script, if any. If it does, it will be centered on that 
 object. (an NPC sprite)
 
-Effect filename is the filename of the wav in GRF. It must have an extension.
+Effect filename is the filename in a GRF. It must have the .wav extension.
 
-It's not quite certain what the number actually does, it is sent to the client 
-directly, probably it determines which directory of the GRF the effect is played 
-from - the sound effect type. It's certain that giving 0 for the number will 
-play sound files from 'data/wav', but where the other numbers will read from is 
-unclear.
+It's not quite certain what the 'type' actually does, it is sent to the client 
+directly. It probably determines which directory to play the effect from.
+It's certain that giving 0 for the number will play sound files from 'data/wav',
+but where the other numbers will read from is unclear.
 
 You can add your own effects this way, naturally.
 

@@ -1300,14 +1300,13 @@ int map_delblock_sub(struct block_list *, int);
 #define map_addblock(bl) map_addblock_sub(bl,1)
 #define map_delblock(bl) map_delblock_sub(bl,1)
 int map_moveblock(struct block_list *, int, int, unsigned int);
-int map_foreachinrange(int (*)(struct block_list*,va_list),struct block_list *,int,int,...);
-int map_foreachinshootrange(int (*)(struct block_list*,va_list),struct block_list *,int,int,...);
-int map_foreachinarea(int (*)(struct block_list*,va_list),int,int,int,int,int,int,...);
-// -- moonsoul (added map_foreachincell)
-int map_foreachincell(int (*)(struct block_list*,va_list),int,int,int,int,...);
-int map_foreachinmovearea(int (*)(struct block_list*,va_list),struct block_list*,int,int,int,int,...);
-int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y0,int x1,int y1,int range,int type,...); // Celest
-int map_foreachinmap(int (*)(struct block_list*,va_list),int,int,...);
+int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int type, ...);
+int map_foreachinshootrange(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int type, ...);
+int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int type, ...);
+int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int dx, int dy, int type, ...);
+int map_foreachincell(int (*func)(struct block_list*,va_list), int m, int x, int y, int type, ...);
+int map_foreachinpath(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int range, int type, ...);
+int map_foreachinmap(int (*func)(struct block_list*,va_list), int m, int type, ...);
 int map_countnearpc(int,int,int);
 //blockŠÖ˜A‚É’Ç‰Á
 int map_count_oncell(int m,int x,int y,int type);

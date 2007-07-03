@@ -608,7 +608,7 @@ struct skill_unit *map_find_skill_unit_oncell(struct block_list *target,int x,in
 /*==========================================
  * Adapted from foreachinarea for an easier invocation. [Skotlex]
  *------------------------------------------*/
-int map_foreachinrange(int (*func)(struct block_list*,va_list),struct block_list *center, int range,int type,...)
+int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int type, ...)
 {
 	va_list ap;
 	int bx,by,m;
@@ -682,7 +682,7 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list),struct block_list
 /*==========================================
  * Same as foreachinrange, but there must be a shoot-able range between center and target to be counted in. [Skotlex]
  *------------------------------------------*/
-int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block_list *center, int range,int type,...)
+int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block_list* center, int range, int type,...)
 {
 	va_list ap;
 	int bx,by,m;
@@ -762,7 +762,7 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
  * funcを呼ぶ
  * type!=0 ならその種類のみ
  *------------------------------------------*/
-int map_foreachinarea(int (*func)(struct block_list*,va_list),int m,int x0,int y0,int x1,int y1,int type,...)
+int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int type, ...)
 {
 	va_list ap;
 	int bx,by;
@@ -838,7 +838,7 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list),int m,int x0,int y
  *
  * dx,dyは-1,0,1のみとする（どんな値でもいいっぽい？）
  *------------------------------------------*/
-int map_foreachinmovearea(int (*func)(struct block_list*,va_list),struct block_list *center,int range, int dx,int dy,int type,...)
+int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int dx, int dy, int type, ...)
 {
 	int bx,by,m;
 	int returnCount =0;  //total sum of returned values of func() [Skotlex]
@@ -977,7 +977,7 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list),struct block_l
 //			 which only checks the exact single x/y passed to it rather than an
 //			 area radius - may be more useful in some instances)
 //
-int map_foreachincell(int (*func)(struct block_list*,va_list),int m,int x,int y,int type,...)
+int map_foreachincell(int (*func)(struct block_list*,va_list), int m, int x, int y, int type, ...)
 {
 	int bx,by;
 	int returnCount =0;  //total sum of returned values of func() [Skotlex]
@@ -1215,7 +1215,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 }
 
 // Copy of map_foreachincell, but applied to the whole map. [Skotlex]
-int map_foreachinmap(int (*func)(struct block_list*,va_list),int m,int type,...)
+int map_foreachinmap(int (*func)(struct block_list*,va_list), int m, int type,...)
 {
 	int b, bsize;
 	int returnCount =0;  //total sum of returned values of func() [Skotlex]

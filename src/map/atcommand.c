@@ -7197,7 +7197,7 @@ int atcommand_clearweather(const int fd, struct map_session_data* sd, const char
 }
 
 /*===============================================================
- * Sound Command - plays a sound for everyone! [Codemaster]
+ * Sound Command - plays a sound for everyone around! [Codemaster]
  *---------------------------------------------------------------*/
 int atcommand_sound(const int fd, struct map_session_data *sd, const char *command, const char *message)
 {
@@ -7213,7 +7213,7 @@ int atcommand_sound(const int fd, struct map_session_data *sd, const char *comma
 	if(strstr(sound_file, ".wav") == NULL)
 		strcat(sound_file, ".wav");
 
-	clif_soundeffectall(&sd->bl, sound_file,0,2);
+	clif_soundeffectall(&sd->bl, sound_file, 0, AREA);
 
 	return 0;
 }
