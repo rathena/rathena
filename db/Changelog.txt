@@ -49,6 +49,8 @@
 	----
 ========================
 07/03
+	* Rev. 10849 Reverted some preciously item-type 11 items back to 11. [L0ne_W0lf]
+	  Itemskill apparently depends on item-type 11 or it won't work.
 	* Thor Volcano mob updates [Playtester]
 	* Rev. 10846 More updates to AEGIS name fields. [L0ne_W0lf]
 	* Fixed job code error with Spiritual Ring.
