@@ -48,6 +48,10 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+07/03
+	* Rev. 10846 More updates to AEGIS name fields. [L0ne_W0lf]
+	* Fixed job code error with Spiritual Ring.
+	* Added several new items, and Updated various fields in others.
 07/02
 	* Rev. 10841 Updated some AEGIS names. (Still more to do) [L0ne_W0lf]
 	* Updated Flame Lord Ring, Ring of Resonance, and their set skills.
