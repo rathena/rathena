@@ -8449,13 +8449,6 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			return 0;
 		}
 		break;
-	case AM_RESURRECTHOMUN: // Can't resurrect homun if you don't have a dead homun
-		if (!sd->status.hom_id || !sd->hd || sd->hd->homunculus.hp)
-		{
-			clif_skill_fail(sd,skill,0,0);
-			return 0;
-		}
-		break;
 	}
 
 	if(!(type&2)){

@@ -735,12 +735,13 @@ int merc_create_homunculus_request(struct map_session_data *sd, int class_)
 	return 1;
 }
 
-int merc_resurrect_homunculus(struct map_session_data *sd, unsigned char per, short x, short y)
+int merc_resurrect_homunculus(struct map_session_data* sd, unsigned char per, short x, short y)
 {
-	struct homun_data *hd;
+	struct homun_data* hd;
 	nullpo_retr(0, sd);
+
 	if (!sd->status.hom_id)
-		return 0;
+		return 0; // no homunculus
 
 	if (!sd->hd) //Load homun data;
 		return intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id);
@@ -748,10 +749,10 @@ int merc_resurrect_homunculus(struct map_session_data *sd, unsigned char per, sh
 	hd = sd->hd;
 
   	if (hd->homunculus.vaporize)
-		return 0;
+		return 0; // vaporized homunculi need to be 'called'
 
 	if (!status_isdead(&hd->bl))
-		return 0;
+		return 0; // already alive
 
 	merc_hom_init_timers(hd);
 
