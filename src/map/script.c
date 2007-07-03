@@ -2114,7 +2114,7 @@ int get_val(struct script_state* st, struct script_data* data)
 	postfix = name[strlen(name) - 1];
 
 	//##TODO use reference_tovariable(data) when it's confirmed that it works [FlavioJS]
-	if( !reference_toconstant(data) && !reference_toparam(data) && not_server_variable(prefix) )
+	if( !reference_toconstant(data) && not_server_variable(prefix) )
 	{
 		sd = script_rid2sd(st);
 		if( sd == NULL )
