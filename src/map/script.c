@@ -2376,6 +2376,9 @@ int conv_num(struct script_state* st, struct script_data* data)
 		data->type = C_INT;
 		data->u.num = (int)num;
 	}
+#if 0
+	// FIXME this function is being used to retrieve the position of labels and 
+	// probably other stuff [FlavioJS]
 	else
 	{// unsupported data type
 		ShowError("script:conv_num: cannot convert to number, defaulting to 0\n");
@@ -2384,6 +2387,7 @@ int conv_num(struct script_state* st, struct script_data* data)
 		data->type = C_INT;
 		data->u.num = 0;
 	}
+#endif
 	return data->u.num;
 }
 
