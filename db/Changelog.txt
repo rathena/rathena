@@ -49,6 +49,7 @@
 	----
 ========================
 07/04
+	* Fixed spiritual ring [Playtester]
 	* Cursey Abbey mob updates [Playtester]
 	- fixed some bugs in the item_db
 	- updated sql files
