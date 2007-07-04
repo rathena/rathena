@@ -37,7 +37,7 @@ prt_in,88,101,3	script	Chivalry Captain Herman	56,{
 	if (BaseJob == Job_Swordman && KNIGHT_Q > 0) goto L_Check;
 
 	mes "[Chivalry Captain Herman]";
-	mes "Good Day.  This is the Prontera Chivarly, home of the famous Prontera Knights.";
+	mes "Good Day.  This is the Prontera Chivalry, home of the famous Prontera Knights.";
 M_Menu:
 	next;
 	menu "I am ready for Knighthood.",M_0,"The Requirements.",M_1,"Quit.",M_End;

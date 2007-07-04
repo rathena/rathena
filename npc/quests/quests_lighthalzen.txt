@@ -54,7 +54,7 @@
 //=	Moved a book non-related to Lighthalzen quests.
 //= 3.1 Added Schwartzvalt Trilogy Quest. [SinSloth]
 //= 3.2 Updated some NPCs regarding Hugel Rebellion Quest. [SinSloth]
-//= 3.2 Removed hte NPC "#kiz03-4" as I couldn't find any [L0ne_W0lf]
+//= 3.2 Removed the NPC "#kiz03-4" as I couldn't find any [L0ne_W0lf]
 //=	reference to it in the Aegis script.
 //============================================================ 
 

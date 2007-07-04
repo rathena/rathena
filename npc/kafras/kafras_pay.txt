@@ -25,7 +25,7 @@
 //= 2.32 Minor fix to Payon Archer Kafra [SinSloth]
 //= 2.4 Updated function calls with new arguments. [L0ne_W0lf]
 //=	Added unique Kafra Welcome message.
-//= 2.4b Updated hte remaning names for the Kafra's. [L0ne_W0lf]
+//= 2.4b Updated the remaning names for the Kafras. [L0ne_W0lf]
 //==========================================================================
 
 
