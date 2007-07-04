@@ -3025,12 +3025,12 @@
 12986,Pet_Egg_Scroll_Box9,Pet Egg Scroll Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12987,Pet_Egg_Scroll_Box10,Pet Egg Scroll Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12988,Pet_Egg_Scroll_Box11,Pet Egg Scroll Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12989,Pet_Egg_Scroll6,Pet Egg Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{}{}{},
-12990,Pet_Egg_Scroll7,Pet Egg Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{}{}{},
-12991,Pet_Egg_Scroll8,Pet Egg Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{}{}{},
-12992,Pet_Egg_Scroll9,Pet Egg Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{}{}{},
-12993,Pet_Egg_Scroll10,Pet Egg Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{}{}{},
-12994,Pet_Egg_Scroll11,Pet Egg Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{}{}{},
+12989,Pet_Egg_Scroll6,Pet Egg Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12990,Pet_Egg_Scroll7,Pet Egg Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12991,Pet_Egg_Scroll8,Pet Egg Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12992,Pet_Egg_Scroll9,Pet Egg Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12993,Pet_Egg_Scroll10,Pet Egg Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12994,Pet_Egg_Scroll11,Pet Egg Scroll,11,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12995,White_Herb_Box,White Herb Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12996,Blue_Herb_Box,Blue Herb Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12997,Elunium_Box,Elunium Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
