@@ -2196,9 +2196,9 @@ int get_val(struct script_state* st, struct script_data* data)
 			break;
 		case '#':
 			if( name[1] == '#' )
-				data->u.str = pc_readaccountreg2str(sd, name);// global
+				data->u.num = pc_readaccountreg2(sd, name);// global
 			else
-				data->u.str = pc_readaccountregstr(sd, name);// local
+				data->u.num = pc_readaccountreg(sd, name);// local
 			break;
 		case '.':
 			{

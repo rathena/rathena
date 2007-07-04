@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/07/04
+	* Fixed a copy-paste typo messing up script variables pretty bad D:
 2007/07/03
 	* Fixed a typo in script engine erroring when working with char params
 	* Made Homun Resurrection only fail on cast-end (see topic:155223)
