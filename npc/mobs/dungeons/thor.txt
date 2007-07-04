@@ -20,7 +20,7 @@ thor_v01,0,0,0,0	monster	Magmaring	1836,10,0,0,0
 thor_v01,0,0,0,0	monster	Salamander	1831,5,0,0,0
 thor_v01,0,0,0,0	monster	Sword Master	1829,1,0,0,0
 thor_v01,0,0,0,0	monster	Bow Master	1830,1,0,0,0
-thor_v01,0,0,0,0	monster	Byorgue	1839,1,1800000,1200000,1
+thor_v01,0,0,0,0	monster	Byorgue	1839,1,0,0,0
 
 // ================= [Thor Volcano - 02] =====================
 thor_v02,0,0,0,0	monster	Knocker	1838,70,0,0,0
@@ -29,12 +29,12 @@ thor_v02,0,0,0,0	monster	Magmaring	1836,10,0,0,0
 thor_v02,0,0,0,0	monster	Salamander	1831,5,0,0,0
 thor_v02,0,0,0,0	monster	Sword Master	1829,1,0,0,0
 thor_v02,0,0,0,0	monster	Bow Master	1830,1,0,0,0
-thor_v02,0,0,0,0	monster	Byorgue	1839,1,1800000,1200000,1
+thor_v02,0,0,0,0	monster	Byorgue	1839,1,0,0,0
 
 // ================= [Thor Volcano - 03] =====================
 thor_v03,0,0,0,0	monster	Salamander	1831,30,0,0,0
 thor_v03,0,0,0,0	monster	Kasa	1833,20,0,0,0
 thor_v03,0,0,0,0	monster	Sword Master	1829,3,0,0,0
 thor_v03,0,0,0,0	monster	Bow Master	1830,3,0,0,0
-thor_v03,0,0,0,0	monster	Byorgue	1839,1,1800000,1200000,1
+thor_v03,0,0,0,0	monster	Byorgue	1839,1,0,0,0
 thor_v03,0,0,0,0	monster	Ifrit	1832,1,39600000,39000000,1
