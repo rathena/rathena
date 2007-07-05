@@ -336,6 +336,7 @@ enum {
 	SI_WATERWEAPON		= 91,
 	SI_WINDWEAPON		= 92,
 	SI_EARTHWEAPON		= 93,
+	SI_STOP			= 95,
 	SI_UNDEAD		= 97,
 // 102 = again gloria - from what I saw on screenshots, I wonder if it isn't gospel... [DracoRPG]
 	SI_AURABLADE		= 103,

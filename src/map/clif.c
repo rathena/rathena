@@ -869,9 +869,11 @@ static int clif_set0078(struct block_list* bl, unsigned char* buf)
 		WBUFW(buf,30)=vd->cloth_color;
 		WBUFW(buf,32)=sd?sd->head_dir:0;
 		WBUFL(buf,34)=guild_id;
-		WBUFL(buf,38)=emblem_id;
-		if (sd)
+		WBUFW(buf,38)=emblem_id;
+		if (sd) {
+			WBUFW(buf,40)=sd->status.manner;
 			WBUFB(buf,44)=sd->status.karma;
+		}
 		WBUFB(buf,45)=vd->sex;
 		WBUFPOS(buf,46,bl->x,bl->y,dir);
 		WBUFB(buf,49)=5;
@@ -894,9 +896,9 @@ static int clif_set0078(struct block_list* bl, unsigned char* buf)
 		WBUFW(buf,42)=sc->opt3;
 	}
 	WBUFW(buf,14)=vd->class_;
-	WBUFW(buf,16)=vd->hair_style;  //Required for pets.
+	WBUFW(buf,16)=vd->hair_style;  //Required for pets (removes attack cursor)
 	//18W: Weapon
-	WBUFW(buf,20)=vd->head_bottom;	//Pet armor
+	WBUFW(buf,20)=vd->head_bottom;	//Pet armor (ignored by client)
 	if (bl->type == BL_NPC && vd->class_ == FLAG_CLASS)
 	{	//The hell, why flags work like this?
 		WBUFL(buf,22)=emblem_id;
@@ -907,22 +909,22 @@ static int clif_set0078(struct block_list* bl, unsigned char* buf)
 	//26W: Head mid
 	//28W: Hair color
 	//30W: Clothes color
-	WBUFW(buf,32)=dir;
+	//32W: Head dir
 	WBUFL(buf,34)=guild_id;
-	WBUFL(buf,38)=emblem_id;
-	//42W: Manner
+	WBUFW(buf,38)=emblem_id;
+	//40W: Manner
 	//44B: Karma
 	//45B: Sex
 	WBUFPOS(buf,46,bl->x,bl->y,dir);
-	//WBUFB(buf,49)=5;
-	//WBUFB(buf,50)=5;
+	//49B: ???
+	//50B: ???
 	//51B: Sit/Stand
 	WBUFW(buf,52)=clif_setlevel(lv);
 	return packet_len(0x78);
 }
 
 /*==========================================
- *
+ * Prepares 'unit walking' packet
  *------------------------------------------*/
 static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit_data *ud, unsigned char *buf)
 {
@@ -972,8 +974,8 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 		}
 		WBUFB(buf,53)=vd->sex;
 		WBUFPOS2(buf,54,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
-		WBUFB(buf,60)=0;
-		WBUFB(buf,61)=0;
+		WBUFB(buf,60)=5;
+		WBUFB(buf,61)=5;
 		WBUFW(buf,62)=clif_setlevel(lv);
 
 		return packet_len(0x22c);	
@@ -1037,9 +1039,11 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 		WBUFW(buf,34)=vd->cloth_color;
 		WBUFW(buf,36)=sd?sd->head_dir:0;
 		WBUFL(buf,38)=guild_id;
-		WBUFL(buf,42)=emblem_id;
-		if (sd)
+		WBUFW(buf,42)=emblem_id;
+		if (sd) {
+			WBUFW(buf,44)=sd->status.manner;
 			WBUFB(buf,48)=sd->status.karma;
+		}
 		WBUFB(buf,49)=vd->sex;
 		WBUFPOS2(buf,50,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
 		WBUFB(buf,56)=5;
@@ -1063,15 +1067,23 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 		WBUFL(buf,48)=sc->opt3;
 	}
 	WBUFW(buf,16)=vd->class_;
-	WBUFW(buf,18)=vd->hair_style; //For pets
+	WBUFW(buf,18)=vd->hair_style; //Required for pets (removes attack cursor)
+	//20L: Weapon/Shield
 	WBUFW(buf,24)=vd->head_bottom;	//Pet armor
 	WBUFL(buf,26)=gettick();
-	WBUFW(buf,38)=unit_getdir(bl);
+	//30W: Head top
+	//32W: Head mid
+	//34W: Hair color
+	//36W: Cloth color
+ 	//38W: Head dir
 	WBUFL(buf,40)=guild_id;
-	WBUFL(buf,44)=emblem_id;
+	WBUFW(buf,44)=emblem_id;
+	//46W: Manner
+	//52B: Karma
+	//53B: Sex
 	WBUFPOS2(buf,54,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
-	WBUFB(buf,60)=0;
-	WBUFB(buf,61)=0;
+	//60B: ???
+	//61B: ???
 	WBUFW(buf,62)=clif_setlevel(lv);
 	return packet_len(0x22c);
 #else
@@ -1088,11 +1100,21 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 	}
 	WBUFW(buf,14)=vd->class_;
 	WBUFW(buf,16)=vd->hair_style; //For pets
-	WBUFW(buf,20)=vd->head_bottom;	//Pet armor
+	//18W: Weapon
+	WBUFW(buf,20)=vd->head_bottom; //Pet armor
 	WBUFL(buf,22)=gettick();
-	WBUFW(buf,36)=unit_getdir(bl);
+	//26W: Shield
+	//28W: Head top
+	//30W: Head mid
+	//32W: Hair color
+	//34W: Cloth color
+ 	//36W: Head dir
 	WBUFL(buf,38)=guild_id;
-	WBUFL(buf,42)=emblem_id;
+	WBUFW(buf,42)=emblem_id;
+	//44W: Manner
+	//46W: Opt3
+	//48B: Karma
+	//49B: Sex
 	WBUFPOS2(buf,50,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
 	WBUFB(buf,56)=5;
 	WBUFB(buf,57)=5;
@@ -1109,6 +1131,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 static void clif_setdisguise(struct map_session_data *sd, unsigned char *buf,int len, int flag)
 {
 	if (flag) {
+		WBUFL(buf,2)=sd->bl.id;
 #if PACKETVER > 6
 		switch (WBUFW(buf,0)) {
 		case 0x22c:
@@ -1119,7 +1142,6 @@ static void clif_setdisguise(struct map_session_data *sd, unsigned char *buf,int
 			break;
 		default:
 #endif
-			WBUFL(buf,2)=sd->bl.id;
 			WBUFW(buf,12)=OPTION_INVISIBLE;
 			WBUFW(buf,14)=sd->status.class_;
 #if PACKETVER > 6
@@ -1259,7 +1281,7 @@ int clif_spawn(struct block_list *bl)
 		return 0;
 
 	if (pcdb_checkid(vd->class_))
-	{	//Player spawn packet.
+	{	// player spawn packet
 		clif_set0078(bl, buf);
 		switch(WBUFW(buf,0))
 		{
@@ -1289,7 +1311,7 @@ int clif_spawn(struct block_list *bl)
 				break;
 #endif
 		}
-	} else {	//Mob spawn packet.
+	} else {	// npc/mob/pet/homun spawn packet
 		struct status_change *sc = status_get_sc(bl);
 		memset(buf,0,sizeof(buf));
 		WBUFW(buf,0)=0x7c;
@@ -1300,9 +1322,21 @@ int clif_spawn(struct block_list *bl)
 			WBUFW(buf,10)=sc->opt2;
 			WBUFW(buf,12)=sc->option;
 		}
+		//14W: Hair Style
+		//16W: Weapon
+		//18W: Head bottom 
 		WBUFW(buf,20)=vd->class_;
-
+		//22W: Shield
+		//24W: Head top
+		//26W: Head mid
+		//28W: Hair color
+		//30W: Cloth color
+		//32W: Head dir
+		//34B: karma
+		//35B: Sex
 		WBUFPOS(buf,36,bl->x,bl->y,unit_getdir(bl));
+		//39B: ???
+		//40B: ???
 		clif_send(buf,packet_len(0x7c),bl,AREA_WOS);
 		if (disguised(bl)) {
 			WBUFL(buf,2)=-bl->id;
@@ -1337,9 +1371,9 @@ int clif_spawn(struct block_list *bl)
 	break;
 	case BL_PET:
 		{
-			unsigned char buf[64];
-			int len = clif_set0078(bl, buf);
-			clif_send(buf, len, bl, AREA_WOS);
+			TBL_PET* pd = (TBL_PET*)bl;
+			clif_pet_equip(pd); // needed to display pet equip properly
+			clif_send_petdata_area(pd, 5, battle_config.pet_hair_style); // removes the attack cursor
 		}
 		break;
 	}
@@ -3728,9 +3762,16 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		break;
 	case BL_PET:
 		{
-			unsigned char buf[64];
-			int len = clif_set0078(bl, buf);
-			clif_send(buf, len, &sd->bl, SELF);
+			// needed to display pet equip properly
+			//TODO: adjust clif_pet_equip() to support a 'target', then rewrite this mess into a function call
+			TBL_PET* pd = (TBL_PET*)bl;
+			int fd = sd->fd;
+			WFIFOHEAD(fd,packet_len(0x1a4));
+			WFIFOW(fd,0) = 0x1a4;
+			WFIFOB(fd,2) = 3;
+			WFIFOL(fd,3) = pd->bl.id;
+			WFIFOL(fd,7) = pd->vd.head_bottom;
+			WFIFOSET(fd,packet_len(0x1a4));
 		}
 		break;
 	}
@@ -8023,7 +8064,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		map_addblock(&sd->pd->bl);
 		clif_spawn(&sd->pd->bl);
 		clif_send_petdata(sd,0,0);
-		clif_send_petdata(sd,5,battle_config.pet_hair_style);
 		clif_send_petstatus(sd);
 //		skill_unit_move(&sd->pd->bl,gettick(),1);
 	}
@@ -9420,11 +9460,6 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	int skillnum, skilllv, tmp, target_id;
 	unsigned int tick = gettick();
 
-	if (clif_cant_act(sd))
-		return;
-	if (pc_issit(sd))
-		return;
-
 	skilllv = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 	if (skilllv < 1) skilllv = 1; //No clue, I have seen the client do this with guild skills :/ [Skotlex]
 	skillnum = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
@@ -9441,6 +9476,11 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 		clif_parse_UseSkillToId_homun(sd->hd, sd, tick, skillnum, skilllv, target_id);
 		return;
 	}
+
+	if (clif_cant_act(sd))
+		return;
+	if (pc_issit(sd))
+		return;
 
 	if (skillnotok(skillnum, sd))
 		return;
