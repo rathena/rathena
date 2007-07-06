@@ -3,6 +3,12 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/07/06
+	* Cleaned up some nasty code related to skill_blown
+	- split 'direction' value from flags
+	- moved (almost) entire direction calculating code to the outside
+	- bowling bash now has the 'suck-in' effect (knockback is now done
+	  in the direction you were last facing, not in your-target direction)
 2007/07/05
 	* Fixed pet equip and pet hairstyle packet sends [ultramage]
 	* Fixed NPC_STOP's visual effect not clearing when the status ends

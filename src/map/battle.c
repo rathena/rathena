@@ -307,7 +307,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 	
 		if(sc->data[SC_AUTOGUARD].timer != -1 && flag&BF_WEAPON &&
 			!(skill_get_nk(skill_num)&NK_NO_CARDFIX_ATK) &&
-			rand()%100 < sc->data[SC_AUTOGUARD].val2) {
+			rand()%100 < sc->data[SC_AUTOGUARD].val2)
+		{
 			int delay;
 			clif_skill_nodamage(bl,bl,CR_AUTOGUARD,sc->data[SC_AUTOGUARD].val1,1);
 			// different delay depending on skill level [celest]
@@ -320,7 +321,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			unit_set_walkdelay(bl, gettick(), delay, 1);
 
 			if(sc->data[SC_SHRINK].timer != -1 && rand()%100<5*sc->data[SC_AUTOGUARD].val1)
-				skill_blown(bl,src,skill_get_blewcount(CR_SHRINK,1));
+				skill_blown(bl,src,skill_get_blewcount(CR_SHRINK,1),-1,0);
 			return 0;
 		}
 
@@ -366,8 +367,8 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 		{
 			if (sc->data[SC_UTSUSEMI].timer != -1) {
 				clif_specialeffect(bl, 462, AREA);
-				skill_blown (src, bl, sc->data[SC_UTSUSEMI].val3);
-			};
+				skill_blown(src,bl,sc->data[SC_UTSUSEMI].val3,-1,0);
+			}
 			//Both need to be consumed if they are active.
 			if (sc->data[SC_UTSUSEMI].timer != -1 &&
 				--sc->data[SC_UTSUSEMI].val2 <= 0)

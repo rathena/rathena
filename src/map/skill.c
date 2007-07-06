@@ -1759,25 +1759,25 @@ int skill_strip_equip(struct block_list *bl, unsigned short where, int rate, int
 
 /*=========================================================================
  Used to knock back players, monsters, traps, etc
- If count&0xf00000, the direction is send in the 6th byte.
- If count&0x10000, the direction is to the back of the target, otherwise is away from the src.
- If count&0x20000, position update packets must not be sent.
- IF count&0X40000, direction is random.
---------------------------------------------------------------------------*/
-int skill_blown (struct block_list *src, struct block_list *target, int count)
+ - 'count' is the number of squares to knock back
+ - 'direction' indicates the way OPPOSITE to the knockback direction (or -1 for default behavior)
+ - if 'flag&0x1', position update packets must not be sent.
+ -------------------------------------------------------------------------*/
+int skill_blown(struct block_list* src, struct block_list* target, int count, int direction, int flag)
 {
-	int dx=0,dy=0,nx,ny;
-	int dir,ret;
-	struct skill_unit *su=NULL;
+	int dx = 0, dy = 0, nx, ny;
+	int ret;
+	struct skill_unit* su = NULL;
 
 	nullpo_retr(0, src);
 
 	if (src != target && map_flag_gvg(target->m))
 		return 0; //No knocking back in WoE
-	if (!(count&0xffff))
+	if (count == 0)
 		return 0; //Actual knockback distance is 0.
 	
-	switch (target->type) {
+	switch (target->type)
+	{
 		case BL_MOB:
 			if (((TBL_MOB*)target)->class_ == MOBID_EMPERIUM)
 				return 0;
@@ -1789,26 +1789,22 @@ int skill_blown (struct block_list *src, struct block_list *target, int count)
 				return 0;
 			break;
 		case BL_SKILL:
-			su=(struct skill_unit *)target;
+			su = (struct skill_unit *)target;
 			break;
 	}
 
-	if (count&0xf00000)
-		dir = (count>>20)&0xf;
-	else if (count&0x10000 || (target->x==src->x && target->y==src->y))
-		dir = unit_getdir(target);
-	else if (count&0x40000) //Flag for random pushing.
-		dir = rand()%8;
-	else
-		dir = map_calc_dir(target,src->x,src->y);
-	if (dir>=0 && dir<8){
-		dx = -dirx[dir];
-		dy = -diry[dir];
+	if (direction == -1) // <optimized>: do the computation here instead of outside
+		direction = map_calc_dir(target, src->x, src->y); // direction from src to target, reversed
+
+	if (direction >= 0 && direction < 8)
+	{	// take the reversed 'direction' and reverse it
+		dx = -dirx[direction];
+		dy = -diry[direction];
 	}
 
-	ret=path_blownpos(target->m,target->x,target->y,dx,dy,count&0xffff);
-	nx=ret>>16;
-	ny=ret&0xffff;
+	ret=path_blownpos(target->m,target->x,target->y,dx,dy,count);
+	nx = ret>>16;
+	ny = ret&0xffff;
 
 	if (!su)
 		unit_stop_walking(target,0); 
@@ -1819,25 +1815,22 @@ int skill_blown (struct block_list *src, struct block_list *target, int count)
 	if (!dx && !dy) //Could not knockback.
 		return 0;
 
-	map_foreachinmovearea(clif_outsight, target, AREA_SIZE,
-		dx, dy, target->type==BL_PC?BL_ALL:BL_PC, target);
+	map_foreachinmovearea(clif_outsight, target, AREA_SIZE, dx, dy, target->type == BL_PC ? BL_ALL : BL_PC, target);
 
 	if(su)
 		skill_unit_move_unit_group(su->group,target->m,dx,dy);
 	else
 		map_moveblock(target, nx, ny, gettick());
 
-	map_foreachinmovearea(clif_insight, target, AREA_SIZE,
-		-dx, -dy, target->type==BL_PC?BL_ALL:BL_PC, target);
+	map_foreachinmovearea(clif_insight, target, AREA_SIZE, -dx, -dy, target->type == BL_PC ? BL_ALL : BL_PC, target);
 
-	if(!(count&0x20000)) 
+	if(!(flag&0x1)) 
 		clif_blown(target);
 
-	if(target->type == BL_PC &&
-		map_getcell(target->m, target->x, target->y, CELL_CHKNPC))
+	if(target->type == BL_PC && map_getcell(target->m, target->x, target->y, CELL_CHKNPC))
 		npc_touch_areanpc((TBL_PC*)target, target->m, target->x, target->y); //Invoke area NPC
 
-	return (count&0xFFFF); //Return amount of knocked back cells.
+	return count; //Return amount of knocked back cells.
 }
 
 /*
@@ -2148,7 +2141,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	//Only knockback if it's still alive, otherwise a "ghost" is left behind. [Skotlex]
 	if (dmg.blewcount > 0 && !status_isdead(bl))
-		skill_blown(dsrc,bl,dmg.blewcount);
+		skill_blown(dsrc,bl,dmg.blewcount,-1,0);
 	
 	//Delayed damage must be dealt after the knockback (it needs to know actual position of target)
 	if (dmg.amotion)
@@ -3043,23 +3036,20 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		} else {
 			int i,c;
 			c = skill_get_blewcount(skillid,skilllv);
+			// keep moving target in the direction that src is looking, square by square
 			for(i=0;i<c;i++){
-				if (!skill_blown(src,bl,0x20000|1))
+				if (!skill_blown(src,bl,1,(unit_getdir(src)+4)%8,0x1))
 					break; //Can't knockback
 				skill_area_temp[0]=0;
-				map_foreachinrange(skill_area_sub,bl,
-					skill_get_splash(skillid, skilllv),BL_CHAR,
-					src,skillid,skilllv,tick, flag|BCT_ENEMY,
-					skill_area_sub_count);
-				if(skill_area_temp[0]>1) break;
+				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), BL_CHAR,
+					src, skillid, skilllv, tick, flag|BCT_ENEMY, skill_area_sub_count);
+				if(skill_area_temp[0]>1) break; // collision
 			}
 			clif_blown(bl); //Update target pos.
 			if (i!=c) { //Splash
 				skill_area_temp[1]=bl->id;
-				map_foreachinrange(skill_area_sub,bl,
-					skill_get_splash(skillid, skilllv),BL_CHAR,
-					src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
-					skill_castend_damage_id);
+				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), BL_CHAR,
+					src, skillid, skilllv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
 			}
 			//Weirdo dual-hit property, two attacks for 500%
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0);
@@ -3068,22 +3058,22 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case KN_SPEARSTAB:
-		if(flag&1){
+		if(flag&1) {
 			if (bl->id==skill_area_temp[1])
 				break;
 			if (skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,SD_ANIMATION))
-				skill_blown(src,bl,skill_area_temp[2]);
+				skill_blown(src,bl,skill_area_temp[2],-1,0);
 		} else {
 			int x=bl->x,y=bl->y,i,dir;
 			dir = map_calc_dir(bl,src->x,src->y);
 			skill_area_temp[1] = bl->id;
-			skill_area_temp[2] = skill_get_blewcount(skillid,skilllv)|dir<<20;
+			skill_area_temp[2] = skill_get_blewcount(skillid,skilllv);
+			// all the enemies between the caster and the target are hit, as well as the target
 			if (skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0))
-				skill_blown(src,bl,skill_area_temp[2]);
+				skill_blown(src,bl,skill_area_temp[2],-1,0);
 			for (i=0;i<4;i++) {
 				map_foreachincell(skill_area_sub,bl->m,x,y,BL_CHAR,
-					src,skillid,skilllv,tick,flag|BCT_ENEMY|1,
-					skill_castend_damage_id);
+					src,skillid,skilllv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 				x += dirx[dir];
 				y += diry[dir];
 			}
@@ -4003,7 +3993,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case TK_TURNKICK:
 	case MO_BALKYOUNG: //Passive part of the attack. Splash knock-back+stun. [Skotlex]
 		if (skill_area_temp[1] != bl->id) {
-			skill_blown(src,bl,skill_get_blewcount(skillid,skilllv));
+			skill_blown(src,bl,skill_get_blewcount(skillid,skilllv),-1,0);
 			skill_additional_effect(src,bl,skillid,skilllv,BF_MISC,tick); //Use Misc rather than weapon to signal passive pushback
 		}
 		break;	
@@ -4701,7 +4691,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case TF_BACKSLIDING: //This is the correct implementation as per packet logging information. [Skotlex]
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		skill_blown(src,bl,skill_get_blewcount(skillid,skilllv)|0x10000);
+		skill_blown(src,bl,skill_get_blewcount(skillid,skilllv),unit_getdir(bl),0);
 		break;
 
 	case TK_HIGHJUMP:
@@ -7056,7 +7046,7 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 			break;
 		if (ss == bl) //Also needed to prevent infinite loop crash.
 			break;
-		skill_blown(ss, bl, 0x10000|skill_get_blewcount(sg->skill_id,sg->skill_lv));
+		skill_blown(ss,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),unit_getdir(bl),0);
 		break;
 	}
 	return skillid;
@@ -7225,7 +7215,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 		case UNT_SKIDTRAP:
 			{
-				skill_blown(&src->bl,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv)|0x10000);
+				skill_blown(&src->bl,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),unit_getdir(bl),0);
 				sg->unit_id = UNT_USED_TRAPS;
 				clif_changetraplook(&src->bl, UNT_USED_TRAPS);
 				sg->limit=DIFF_TICK(tick,sg->tick)+1500;
@@ -9561,7 +9551,7 @@ int skill_trap_splash (struct block_list *bl, va_list ap)
 			break;
 		case UNT_GROUNDDRIFT_FIRE:
 			if(skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
-				skill_blown(src,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv));
+				skill_blown(src,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),-1,0);
 			break;
 		default:
 			return 0;

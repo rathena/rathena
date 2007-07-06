@@ -2146,36 +2146,46 @@ int map_check_dir(int s_dir,int t_dir)
 }
 
 /*==========================================
- * Returns the direction of the given cell in absolute relation to the char
- * (regardless of where the char is facing)
+ * Returns the direction of the given cell, relative to 'src'
  *------------------------------------------*/
-int map_calc_dir( struct block_list *src,int x,int y)
+int map_calc_dir(struct block_list* src, int x, int y)
 {
-	int dir=0;
-	int dx,dy;
-
+	int dir = 0;
+	int dx, dy;
+	
 	nullpo_retr(0, src);
-
-	dx=x-src->x;
-	dy=y-src->y;
-	if( dx==0 && dy==0 ){	// 彼我の場所一致
-		dir=0;	// 上
-	}else if( dx>=0 && dy>=0 ){	// 方向的に右上
-		dir=7;						// 右上
-		if( dx*2-1<dy ) dir=0;		// 上
-		if( dx>dy*2 ) dir=6;		// 右
-	}else if( dx>=0 && dy<=0 ){	// 方向的に右下
-		dir=5;						// 右下
-		if( dx*2-1<-dy ) dir=4;		// 下
-		if( dx>-dy*2 ) dir=6;		// 右
-	}else if( dx<=0 && dy<=0 ){ // 方向的に左下
-		dir=3;						// 左下
-		if( dx*2+1>dy ) dir=4;		// 下
-		if( dx<dy*2 ) dir=2;		// 左
-	}else{						// 方向的に左上
-		dir=1;						// 左上
-		if( -dx*2-1<dy ) dir=0;		// 上
-		if( -dx>dy*2 ) dir=2;		// 左
+	
+	dx = x-src->x;
+	dy = y-src->y;
+	if( dx == 0 && dy == 0 )
+	{	// both are standing on the same spot
+		//dir = 6; // aegis-style, causes knockback to the left
+		dir = unit_getdir(src); // athena-style, causes knockback opposite to src's current direction
+	}
+	else if( dx >= 0 && dy >=0 )
+	{	// upper-right
+		if( dx*2-1 < dy )     dir = 0;	// up
+		else if( dx > dy*2 )  dir = 6;	// right
+		else                  dir = 7;	// up-right
+	}
+	else if( dx >= 0 && dy <= 0 )
+	{	// lower-right
+		if( dx*2-1 < -dy )    dir = 4;	// down
+		else if( dx > -dy*2 ) dir = 6;	// right
+		else                  dir = 5;	// down-right
+	}
+	else if( dx <= 0 && dy <= 0 )
+	{	// lower-left
+		if( dx*2+1 > dy )     dir = 4;	// down
+		else if( dx < dy*2 )  dir = 2;	// left
+		else                  dir = 3;	// down-left
+	}
+	else
+	{	// upper-left
+		if( -dx*2-1 < dy )    dir = 0;	// up
+		else if( -dx > dy*2 ) dir = 2;	// left
+		else                  dir = 1;	// up-left
+	
 	}
 	return dir;
 }
