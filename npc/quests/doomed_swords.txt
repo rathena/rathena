@@ -1,682 +1,1182 @@
 //===== eAthena Script =======================================
 //= Doomed Swords Quest
 //===== By: ==================================================
-//= kobra_k88
+//= kobra_k88; L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
-//= eAthena 7.15 +
+//= eAthena SVN
 //===== Description: =========================================
-//= Quest for Doomed Swords, Grimtooth, Mysteltain, Executioner.
-//= Based off mRO version. Part 1 and 2 of the quest can be
-//= found in cities\comodo.txt.  Message text for Part 6 and 7
-//= is made up.
+//= [Aegis Conversion]
+//= Doomed Swords Quest:
+//= - Quest for Doomed Swords: Grimtooth, Mysteltain, Executioner.
+//=   Although this quest is enabled on iRO, the Mysteltainn
+//=   portion is NOT completable as the item "Young Twig" does
+//=   not drop.
+//= - Variable in use: event_magum (max 6)
+//= - Variable in use: dmdswrd_Q2 (bits 1 - 32)
 //===== Additional Comments: =================================
-//=95% done
 //= 1.1 Fixed items count check. For all 3 swords... [Lupus]
 //= 1.3 Fixed exploit [Lupus]
+//= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//=	Moved all non-related NPCs to their repsective files.
 //============================================================
 
-
-//=============================================================================
-//			Doomed Swords Part 3
-//=============================================================================
-// Moet Leng Good: Tablet Of Power
-aldebaran,44,53,4	script	Wizard in Training	64,{
-	if(dmdswrd_Q == 15) goto L_1;
-	if(dmdswrd_Q == 16) goto L_2;
-	if(dmdswrd_Q == 17) goto L_3;
-	if(dmdswrd_Q == 18) goto L_4;
-	mes "[Moet Leng Good]";
-	mes "Did you know that some people signed contract in shadows with the Dark Lord with the";
-	mes "^3355FF`Tablet of Power'^000000?!";
-	next;
-	mes "[Moet Leng Good]";
-	mes "As a result of their greed for power, it brought disasters for the entire world.";
-	mes "So please, be happy with what you already have and do not give in to the dark side.";
-	close;
-
-L_1:
-	mes "[Moet Leng Good]";
-	mes "I guess you are the possessor of the 'Stone of Awakening' and also the one seeking for the 'Tablet of Power'.";
-	next;
-	mes "[Moet Leng Good]";
-	mes "Very well then, I will help you to make a 'Tablet of Power'.";
-	mes "However, it is not a simple task, I will need a number of materials in order to succeed.";
-	next;
-	mes "[Moet Leng Good]";
-	mes "I will need one of these stones, gems, and ores.";
-	mes "^3355FF`Blue Gemstone'^000000";
-	mes "^3355FF`Sapphire'^000000";
-	mes "^3355FF`Aquarmarine'^000000";
-	mes "^3355FF`Shining Stone'^000000";
-	mes "and ^3355FF`Rough Elunium'^000000";
-	next;
-	mes "[Moet Leng Good]";
-	mes "In other words, the 'Tablet of Power' is very valuable, and might take you a while to gather the resources for it.";
-	set dmdswrd_Q,16;
-	close;
-L_2:
-	if((countitem(717) < 1) || (countitem(726) < 1) || (countitem(720) < 1) || (countitem(640) < 1) || (countitem(757) < 1)) goto L_1; 
-	mes "[Moet Leng Good]";
-	mes ". . . . . ! !";
-	mes "I can hardly believe that you actually gathered all the resources for the 'Tablet of Power'";
-	mes "Because you have worked so hard, let me make the tablet for you now.";
-	next;
-	delitem 717,1;
-	delitem 726,1;
-	delitem 720,1;
-	delitem 640,1;
-	delitem 757,1;
-	mes "^3355FF- Gives him all the stones -^000000";
-	set dmdswrd_Q,17;
-	next;
-	mes "[Moet Leng Good]";
-	mes "Now, I'll just need you to gather a few ingredients for the fininshing touch of the tablet.";
-	next;
-	mes "[Moet Leng Good]";
-	mes "I will need just one ^3355FF`Cobweb'^000000";
-	mes "You could easily obtain them through argos in Mt. Mjolnir";
-	next;
-	mes "^3355FF- Moet Leng Good's-^000000";
-	mes "^3355FF- working hard on the tablet -^000000";
-	close;
-L_3:
-	if(countitem(1025) > 0) goto sL_3;
-	mes "[Moet Leng Good]";
-	mes "The tablet will be done when I finish!";
-	mes "Please do not bother me for now, I need to concentrate";
-	next;
-	mes "[Moet Leng Good]";
-	mes "Meanwhile, please go find a cobweb so I could use it to provide some finishing touches to the tablet, thanks.";
-	close;
-
-	sL_3:
-		mes "[Moet Leng Good]";
-		mes "Ah, very good, you got a cobweb, please just leave it over there.";
+prt_in,162,11,2	script	Ghatu#magum	86,{
+	if (event_magum == 0) {
+		if (dmdswrd_Q2 & 1 || dmdswrd_Q2 & 2 || dmdswrd_Q2 & 4 || dmdswrd_Q2 & 8 || dmdswrd_Q2 & 16 || dmdswrd_Q2 & 32) {
+			mes "[Ghatu]";
+			mes "I've heard of a strange";
+			mes "blacksmith who lives in";
+			mes "seclusion deep in the";
+			mes "Payon Forest. The man";
+			mes "was once famous for his";
+			mes "legendary smithing skill...";
+			next;
+			mes "[Ghatu]";
+			mes "Rumor has it that he's";
+			mes "hiding in the mountains";
+			mes "since too many people want^FFFFFF ^000000 to use his talents for the wrong";
+			mes "purposes. Apparently, there is^FFFFFF ^000000 a godly quality to his weapons...";
+			set event_magum,1;
+			close;
+		}
+		mes "[Ghatu]";
+		mes "Remember that blacksmith";
+		mes "I told you about last time? It";
+		mes "seems that his weapons were";
+		mes "in such great demand because";
+		mes "he would enchant them with ";
+		mes "tremendously powerful magic.";
 		next;
-		mes "^3355FF- Gives cobweb to him-^000000";
-		delitem 1025,1;
+		mes "[Ghatu]";
+		mes "However, the man was forced";
+		mes "by the power hungry and the";
+		mes "oppressive to create weapons";
+		mes "for selfish and immoral ends.";
+		mes "It's no surprise that he went";
+		mes "into hiding in the end...";
 		next;
-		mes "[Moet Leng Good]";
-		mes "Alright, here we go !!";
+		mes "[Ghatu]";
+		mes "It's sad, really.";
+		mes "That smith used to be";
+		mes "a pretty easy going guy";
+		mes "until he was forced to work";
+		mes "against his will. Slowly, he^FFFFFF ^000000 became gloomy and intimidating...";
 		next;
-		mes "^3355FF- Clang ! Clang ! Clunk ! -^000000";
-		mes "^3355FF- Boom ! ! -^000000";
-		next;
-		mes "^3355FF- `Tablet of Power'-^000000";
-		mes "^3355FF- is forged -^000000";
-		next;
-		mes "^3355FF- Received 'Tablet of Power'-^000000";
-		set dmdswrd_Q,18;
-		next;
-		mes "[Moet Leng Good]";
-		mes "Even though you possess the 'Tablet of Power' now, the tablet would not be effective without";
-		mes "the ^3355FF` Book of the Tiresome Sheep'^000000??";
-		next;
-		mes "[Moet Leng Good]";
-		mes "^3355FF`Book of the Tiresome Sheep'^000000";
-		mes "was originally crafted by demons located in the desert and now the crafting skill have been passed down to a few wanderers near Morroc.";
-		next;
-		mes "[Moet Leng Good]";
-		mes "So if you wish to obatin the 'Book of the Tiresome Sheep', Morroc would be a smart place to look";
+		mes "[Ghatu]";
+		mes "But I suppose blacksmiths";
+		mes "can never really give up the";
+		mes "hammer. If you can manage to";
+		mes "find him, perhaps you can ask";
+		mes "him to forge something for you?";
+		set event_magum,5;
 		close;
-L_4:
-	mes "[Moet Leng Good]";
-	mes "Head to Morroc then! There's someone there that will tell you about";
-	mes "the 'Book of the Tiresome Sheep'.  I do not remember his name, but";
-	mes "now that you have the 'Tablet of Power', I'm sure you'll find him.";
+
+	}
+	else if (event_magum == 1) {
+		mes "[Ghatu]";
+		mes "Remember that blacksmith";
+		mes "I told you about last time? It";
+		mes "seems that his weapons were";
+		mes "in such great demand because";
+		mes "he would enchant them with ";
+		mes "tremendously powerful magic.";
+		next;
+		mes "[Ghatu]";
+		mes "However, the man was forced";
+		mes "by the power hungry and the";
+		mes "oppressive to create weapons";
+		mes "for selfish and immoral ends.";
+		mes "It's no surprise that he went";
+		mes "into hiding in the end...";
+		next;
+		mes "[Ghatu]";
+		mes "It's sad, really.";
+		mes "That smith used to be";
+		mes "a pretty easy going guy";
+		mes "until he was forced to work";
+		mes "against his will. Slowly, he^FFFFFF ^000000 became gloomy and intimidating...";
+		next;
+		mes "[Ghatu]";
+		mes "But I suppose blacksmiths";
+		mes "can never really give up the";
+		mes "hammer. If you can manage to";
+		mes "find him, perhaps you can ask";
+		mes "him to forge something for you?";
+		set event_magum,5;
+		close;
+	}
+	mes "[Ghatu]";
+	mes "That mysterious blacksmith...";
+	mes "I wonder how he made those";
+	mes "enchanted weapons of his.";
+	mes "I've heard that he might have";
+	mes "been dabbling in the dark arts,";
+	mes "but that doesn't seem right...";
 	close;
 }
 
-
-//=============================================================================
-//			Doomed Swords Part 4
-//=============================================================================
-// Zaka: Book of Tiresome Sheep
-morocc,202,33,4	script	ZAKA	99,{
-	if(dmdswrd_Q == 18) goto L_1;
-	if(dmdswrd_Q == 19) goto L_2;
-	if(dmdswrd_Q == 20) goto L_3;
-	if(dmdswrd_Q == 21) goto L_4;
-	if(dmdswrd_Q == 22) goto L_5;
-	if(dmdswrd_Q == 23) goto L_6;
-
-	mes "[ZAKA]";
-	mes "...... The sun sets over another day.  The moon rises to take it's nightly place.";
-	mes "As darkness creeps across the desert, the people of Morroc huddle together.";
-	mes "The never ending well is the life blood of the wandering nomads..... This is Morroc....";
-	next;
-	mes "[ZAKA]";
-	mes "Eh hem.... Say... Have you ever heard of the ^FF4444Doomed Swords^000000, or ^5555FFSwords of Power^000000?";
-	mes "It is believed that these swords are so powerful that whoever weilds them could rule the world!";
-	next;
-	mes "[ZAKA]";
-	mes "The three swords I speak of are the ^5555FFMysteltainn, Ogre Tooth, and Executioner^000000.";
-	next;
-	mes "[ZAKA]";
-	mes "These swords are hidden somewhere in this world.... have you seen any?";
-	close;
-
-L_1:
-	mes "[ZAKA]";
-	mes ". . . . .";
-	next;
-	mes "[ZAKA]";
-	mes "! ! ! ! ! ! !";
-	next;
-	mes "[ZAKA]";
-	mes "Isn't that ?! That tablet?!";
-	mes "^3355FF`Tablet of Power'^000000";
-	mes "Right?! Wha ! !";
-	next;
-	mes "[ZAKA]";
-	mes "Who are you? Why do you possess the 'Tablet of Power'?";
-	mes "Bah, nevermind, it doesn't matter who you are.";
-	mes "Whoever possesses the 'Tablet of Power' is a natural-born leader.";
-	next;
-	mes "[ZAKA]";
-	mes "Well, we are one of the wanderers of Morroc.";
-	mes "It is tradition and duty to make the possessor of^3355FF` Tablet of Power '^000000";
-	mes "a ^3355FF`Book of the Tiresome Sheep'^000000";
-	next;
-	mes "[ZAKA]";
-	mes "I will craft you a 'Book of the Tiresome Sheep', only for your personal use.";
-	mes "As you might have expected, I will need various ingredients to make you the book.";
-	next;
-	mes "[ZAKA]";
-	mes "The first thing will need are two ^3355FF`Snake Scale'^000000 , please bring them to me.";
-	set dmdswrd_Q,19;
-	close;
-L_2:
-	if(countitem(926) > 1) goto sL_2;
-	mes "[ZAKA]";
-	mes "If you want the 'Book of the Tiresome Sheep', I will need^3355FF 2 'Snake Scales'^000000.";
-	close;
-
-	sL_2:		
-		mes "Gives Zaka two^3355FF'Snake Scales'^000000";
-		delitem 926,2;
-		set dmdswrd_Q,20;
-		next;
-		mes "[ZAKA]";
-		mes "Now I can construct the basic layout of the book witht the snake scales, but I now need 1 piece of";
-		mes "^3355FF'Scale Shell'^000000 in order to block only negative energies from the book.";
-		close;
-L_3:
-	if(countitem(936) > 0) goto sL_3;
-	mes "[ZAKA]";
-	mes "Please bring me the next ingredient needed for the 'Book of the Tiresome Sheep', I will need one";
-	mes "^3355FF'Scale Shell'^000000 ??";
-	mes ". . . . .";
-	close;
-
-	sL_3:
-		mes "Gives^3355FF'Scale Shell^000000";
-		mes "to Zaka";
-		delitem 936,1;
-		set dmdswrd_Q,21;
-		next;
-		mes "[ZAKA]";
-		mes "Alright, good.";
-		mes "Next, I will need one piece of ^3355FF'Shining Scale'^000000 in order to distribute the magical power equally throughout the book.";
-		next;
-		mes "[ZAKA]";
-		mes "While you are getting the scale, I will continue to the next phase of crafting, good luck.";
-		close;
-L_4:
-	if(countitem(954) > 0) goto sL_4;
-	mes "[ZAKA]";
-	mes "In order to finish crafting the 'Book of the Tiresome Sheep', I will need you to gather me one piece of ^3355FF'Shining Scale'^000000, okay?";
-	close;
-
-	sL_4:
-		mes "Gives^3355FF'Shining Scale'^000000";
-		mes "to Zaka";
-		delitem 954,1;
-		set dmdswrd_Q,22;
-		next;
-		mes "[ZAKA]";
-		mes "Great job!";
-		mes "Finally, the last ingredient I need is one ^3355FF'Stinky Scale'^000000 to complete the book, please bring it to me";
-		close;
-L_5:
-	if(countitem(959) > 0) goto sL_5;
-	mes "[ZAKA]";
-	mes "All I need to craft the 'Book of the Tiresome Sheep' is one piece of ^3355FF'Stinky Scale'^000000 now, please bring one to me.";
-	close;
-
-	sL_5:
-		mes "Gives^3355FF'Stinky Scale'^000000";
-		mes "to Zaka";
-		delitem 959,1;
-		next;
-		mes "[ZAKA]";
-		mes "Ooo. this is all I need to finish up the book, thank you.";
-		next;
-		mes "^3355FF-Zaka is working hard in-^000000";
-		mes "^3355FF-finalizing the book-^000000";
-		next;
-		mes "^3355FF- You receive the Book of-^000000";
-		mes "^3355FF- the Tiresome Sheep from Zaka-^000000";
-		set dmdswrd_Q,23;
-		next;
-		mes "[ZAKA]";
-		mes "There, that's for you..";
-		mes "I guess you have the required items to summon and use the Doomed Swords.";
-		mes "But if you are really going to use the Doomed Swords please go talk to ^5533FFWon^000000, a wandering swordsman, he might have some important advice.";
-		next;
-		mes "[ZAKA]";
-		mes "Legend has it that Won's sword fighting skills is already at god-like level, and he is also one of the ten most influential people in the world.";
-		next;
-		mes "[Zaka]";
-		mes "Right now, he might be training inside Comodo Town, so you might be able to find him there.";
-		close;
-L_6:
-	mes "[ZAKA]";
-	mes "The wandering swordsman ^3355FF`Won'^000000";
-	mes "should be training somwhere in Comodo, look for him very carefully.";
-	close;
-}
-
-
-//=============================================================================
-//			Doomed Swords Part 5
-//=============================================================================
-// Won: Voucher of Power
-comodo,232,87,4	script	Wandering Swordsman WON	106,{
-	if(dmdswrd_Q == 23) goto L_1;
-	if(dmdswrd_Q == 24) goto L_2;
-	if(dmdswrd_Q == 25) goto L_3;
-
-	mes "[WON]";
-	mes "My name is ^3355FF'Won'^000000.  I have searched far and wide, across the oceans and the mountains, to find one who is worthy.......";
-	next;
-	mes "[WON]";
-	mes "It has been many years since the Evil Witch was defeated in that legendary battle..... It is now a story of the past.......";
-	mes "Still, the quest must continue!  This is what the heavens desire of me.....";
-	next;
-	mes "[Won]";
-	mes "I must stay here in Comodo..... It is my fate.... I must stay here and wait.........";
-	mes ". . . . . . . . . . . . . . . . . . . .";
-	mes ". . . . . . . . . . . . . . .";
-	mes ". . . . . . . . . .";
-	mes ". . . . .";
-	close;
-		
-L_1:
-	mes "^3355FF- The swordsman examines you -^000000";
-	mes "^3355FF- for a few seconds -^000000";
-	next;
-	mes "[Swordsman]";
-	mes "Heh, you're just a normal fella.";
-	mes "I am a wandering swordsman,";
-	mes "^3355FF`WON'^000000";
-	next;
-	mes "[WON]";
-	mes "What? You say you are gonna summon the Doomed Swords?";
-	mes "Psh, I don't care what you say, I will be the judge on whether or not you are worthy.";
-	mes "Let me explain...";
-	next;
-	mes "[WON]";
-	mes "Even though you do have all the required materials to summon the Doomed Swords but that does not mean that you could withstand the energy drained during one summoning.";
-	next;
-	mes "[WON]";
-	mes "Without careful control of energy transfer from the normal world to the Dark World, many disasters could arise upon the world or even unforeseen consequences.";
-	next;
-	mes "[WON]";
-	mes "I am sure that you have heard that the three different Doomed Swords are:";
-	mes "^3355FF` Mysteltain '^000000";
-	mes "^3355FF` Grimtooth '^000000";
-	mes "and ^3355FF` Executioner '^000000.";
-	mes "Each of them with very distinct specialties.";
-	next;
-	mes "[WON]";
-	mes "Now that you understand these, let us start the summoning then.";
-	next;
-	mes "- `Won'-";
-	mes "- draws his sword -";
-	mes "- and starts to swing it around -";
-	next;
-	mes "- You notice something -";
-	mes "- a blue light descending -";
-	mes "- from the sky -";
-	next;
-	mes "^3355FF-You got-^000000";
-	mes "^3355FF-Voucher of Power-^000000";
-	set dmdswrd_Q,24;
-	next;
-	mes "[WON]";
-	mes ". . . . .";
-	next;
-L_2:
-	mes "[WON]";
-	mes "Hmm, it seems like the Dark World is not ready to give you the Doomed Sword just yet...even though you have what it takes to be the master of the swords.";
-	next;
-	mes "[WON]";
-	mes "However, when the day is as long as the night, when the sunlight is as bright as solar sword.";
-	mes "Only during that time, you will have the opportunity to receive the Doomed Swords.";
-	next;
-	mes "[WON]";
-	mes "Head to Morocc and look for a man by the name of ^5533FFCetsu^000000.  He has information about one of the swords.";
-//	mes "When that time comes, visit the East for a quiet city name Payon, and you shall find yourself in a new journey for the Doomed Swords.";
-	close;
-L_3:
-	mes "123456789101112131415";
-	close;
-}
-
-
-//==============================================================================
-//			Doomed Swords Part 6
-//==============================================================================
-
-// Cetsu --------------------------------------------
-morocc,281,178,8	script	Cetsu	97,{
-	if(dmdswrd_Q == 25) goto M_Yes;
-	if(dmdswrd_Q > 25) goto L_1;
-
-	mes "[Cetsu]";
-	mes "It is rumored that there was once a dagger made out of the tooth of an ogre.  This made the dagger much stronger than those made out of steel.";
-	next;
-	mes "[Cetsu]";
-	mes "It became known as the ^ff0000Grimtooth^000000.  What made the Grimtooth truly special was the fact that it was enchanted with a magic spell.";
-	next;
-	mes "[Cetsu]";
-	mes "Many have tried to re-create the Grimtooth but have faild.  Only one blacksmith, who once lived in Prontera, knows how to do this.";
-	next;
-	mes "[Cetsu]";
-	mes "Unfortunalety he left Prontera long ago and has not been seen since...";
-	if(dmdswrd_Q == 24) goto L_0;
-	close;
-
-L_0:
-	next;
-	mes"[Cetsu]";
-	mes "Say,.... are you really interested in this dagger?";
-	next;
-	menu "Yes",M_Yes,"Not really",M_No;
-	
-	M_Yes:
-		mes "[Cetsu]";
-		mes "You should speak with ^5533FFVeeyop^000000 then.  He seems to know alot about the ^00aa00Legendary Blacksmith^000000.";
-		mes "You can find him in Prontera.  With his help you may even be able to track down the Legendary Blacksmith.  Good luck.";
-		set dmdswrd_Q, 25;
-		close;
-	M_No:
-		mes "[Cetsu]";
-		mes "Oh, I see.";
-		close;
-
-L_1:
-	mes "[Cetsu]";
-	mes "Wow! So you're gonna try to re-create the legendary, doomed dagger Grimtooth? You should becarefull though, that's one powerfull dagger.";
-	close;
-}
-
-// Veeyop --------------------------------------------------
-prontera,197,188,4	script	Veeyop	50,{
-	if(dmdswrd_Q == 26) goto M_Yes;
-	if(dmdswrd_Q > 26) goto L_1;
-
-	mes "[Veeyop]";
-	mes "Have you ever heard of a doomed sword, ^ff0000Mysteltain^000000? It's named after ^0000bba legendary Young Twig^000000 that was used to murder Balder, the God of Light...";
-	next;
-	mes "[Veeyop]";
-	mes "According to the legend, it was a weak, little twig. Other than that I know nothing more of the sword.";
-	next;
-	mes "[Veeyop]";
-	mes "Whatever the legend may be, people say there is a way to re-construct the legendary sword.";
-	mes "I've heard that there was once a Blacksmith who had the knowledge to re-create the legendary sword living in Prontera.";
-	next;
-	mes "[Veeyop]";
-	mes "Unfortunately he's disapeared from this town.  Anywho its just heresay.";
-	if(dmdswrd_Q == 25) goto L_0;
-	close;
-
-L_0:
-	next;
-	mes"[Veeyop]";
-	mes "Say,.... are you really interested in this sword?";
-	next;
-	menu "Yes",M_Yes,"Not really",M_No;
-	
-	M_Yes:
+prontera,197,188,2	script	Veeyop#magum	50,{
+	if (dmdswrd_Q2 & 1) {
 		mes "[Veeyop]";
-		mes "You should speak with ^FF5533Nain^000000 then.  She seems to know alot about the ^00aa00Legendary Blacksmith^000000.";
-		mes "You can find her in Izlude.  With her help you may even be able to track down the Legendary Blacksmith.  Good luck.";
-		set dmdswrd_Q, 26;
+		mes "You know, talking";
+		mes "about Mysteltainn and";
+		mes "the death of Baldur just...";
+		mes "It didn't occur to me until";
+		mes "now just how morbid it all";
+		mes "sounds. Yeah, yeah, I know.";
 		close;
-	M_No:
-		mes "[Veeyop]";
-		mes "Oh, I see.";
-		close;
-
-L_1:
+	}
 	mes "[Veeyop]";
-	mes "Wow! So you're gonna try to re-create the legendary, doomed sword Mysteltain? You should becarefull though, that's one powerfull sword.";
+	mes "Have you heard the";
+	mes "legend of Mysteltainn?";
+	mes "It's a tree, known for being";
+	mes "the only thing able to harm";
+	mes "Baldur, god of light. In fact,";
+	mes "just a twig from it killed him.";
+	next;
+	mes "[Veeyop]";
+	mes "Now, I'm not sure if this";
+	mes "is true, but I've heard that";
+	mes "someone actually forged";
+	mes "a sword so powerful, it's";
+	mes "worthy of the name,";
+	mes "''Mysteltainn.''";
+	next;
+	mes "[Veeyop]";
+	mes "There's only one person";
+	mes "in the world who can forge";
+	mes "that Mysteltainn sword. I...";
+	mes "I think he used to live in";
+	mes "Prontera, but then he moved";
+	mes "away for some weird reason.";
+	if (event_magum == 1)
+		set event_magum,5;
+	set dmdswrd_Q2,dmdswrd_Q2 | 1;
 	close;
 }
 
-// Nain  -------------------------------------------------------------
-izlude_in,173,88,2	script	Nain	102,{
-	if(dmdswrd_Q == 27) goto M_Yes;
-	if(dmdswrd_Q > 27) goto L_1;
-
-	mes "[Nain]";
-	mes "I was once told a legend about a powerfull sword that was used only for executions.";
+morocc,281,178,2	script	Cetsu#magum	97,{
+	if (dmdswrd_Q2 & 2) {
+		mes "[Cetsu]";
+		mes "I keep thinking about";
+		mes "Grimtooth, and it occurred";
+		mes "to me that the spell used to";
+		mes "to endow that dagger with its";
+		mes "strength probably isn't magic";
+		mes "that we're familiar with.";
+		next;
+		mes "[Cetsu]";
+		mes "There's all sorts of";
+		mes "creepy stories going";
+		mes "around. I even hear";
+		mes "that the Grimtooth";
+		mes "might have some";
+		mes "sort of weird curse?";
+		close;
+	}
+	mes "[Cetsu]";
+	mes "You know, there are";
+	mes "stories of an incredibly";
+	mes "powerful dagger that's";
+	mes "stronger than steel.";
+	mes "I think it was made";
+	mes "out of ogre teeth?";
 	next;
-	mes "[Nain]";
-	mes "For years and years, this mighty sword was used to be-head heinous criminals, but it also took the lives of great warriors as well.";
-	mes "It is said that the overtime the government became corrupt and hence innocent lives fell victim to the sword.";
+	mes "[Cetsu]";
+	mes "Anyway, it wasn't just";
+	mes "the ogre teeth that gave";
+	mes "the dagger its power. I think";
+	mes "it had to be enchanted with";
+	mes "a special spell or something.";
 	next;
-	mes "[Nain]";
-	mes "This caused the sword to become corrupted with an emense evil power making it almost impossible to weild.";
-	mes "Those who did try to weild it became possed with an dark aura that drove them to blood lust.";
+	mes "[Cetsu]";
+	mes "This dagger, the Grimtooth,";
+	mes "can only be made by one person";
+	mes "in the entire world. This guy used to live in Prontera, but then he";
+	mes "moved away for some reason.";
 	next;
-	mes "[Nain]";
-	mes "This ancient civilization eventually collapsed and faded away.  The powerfull sword also vanished.";
-	mes "The sword would later be named the ^ff0000Executioner^000000.  An appropriate name considering its history.";
-	next;
-	mes "[Nain]";
-	mes "Recently there have been rumors of a Legendary Blacksmith that has the skill to re-create the lost sword.";
-	next;
-	mes "[Nain]";
-	mes "Just thinking about it sends shivers down my spine.";
-	mes "No matter how powerfull a sword it is, to think that it is possessed with thousands and thousands of angry ghosts...";
-	mes "I would rather see the Doomed sword stay lost to history.";
-	if(dmdswrd_Q == 26) goto L_0;
+	mes "[Cetsu]";
+	mes "I wonder...";
+	mes "Did he go into";
+	mes "hiding? His weapons";
+	mes "did seem to be pretty";
+	mes "high in demand back then...";
+	if (event_magum == 1)
+		set event_magum,5;
+	set dmdswrd_Q2,dmdswrd_Q2 | 2;
 	close;
+}
 
-L_0:
-	next;
-	mes"[Nain]";
-	mes "Say,.... are you really interested in this sword?";
-	next;
-	menu "Yes",M_Yes,"Not really",M_No;
-	
-	M_Yes:
+izlude_in,173,88,2	script	Nain#magum	102,{
+	if (dmdswrd_Q2 == 4) {
 		mes "[Nain]";
-		mes "You should speak with ^aa00aaRupeto^000000 then.  He seems to know alot about the ^00aa00Legendary Blacksmith^000000.";
-		mes "You can find him inside the Pub in Prontera.  With his help you may even be able to track down the Legendary Blacksmith.  Good luck.";
-		set dmdswrd_Q, 27;
+		mes "It doesn't matter how";
+		mes "powerful the Executioner";
+		mes "is: if it were to end up in";
+		mes "my hands, I would get rid";
+		mes "of it right away. I'd never risk losing my mind to that curse...";
 		close;
-	
-	M_No:
-		mes "[Nain]";
-		mes "Oh, I see.";
-		close;
-
-L_1:
+	}
 	mes "[Nain]";
-	mes "Wow! So you're gonna try to re-create the legendary, doomed sword Executioner? You should becarefull though, that's one powerfull sword.";
+	mes "Long ago, one sword";
+	mes "was used to behead all";
+	mes "the criminals that had been";
+	mes "sentenced to death. That";
+	mes "accursed blade is known";
+	mes "as the Executioner.";
+	next;
+	mes "[Nain]";
+	mes "As the Executioner slayed";
+	mes "more criminals, the rage and";
+	mes "bloodlust of its victims began";
+	mes "to accumulate upon the blade.";
+	mes "Although the sword gained great^FFFFFF ^000000 strength, it was tainted by evil.";
+	next;
+	mes "[Nain]";
+	mes "The last person to wield";
+	mes "the Executioner almost lost";
+	mes "his mind to the sword. He saved^FFFFFF ^000000 himself by giving it to a talented";
+	mes "blacksmith who would destroy^FFFFFF ^000000 it for him, thus saving his soul.";
+	next;
+	mes "[Nain]";
+	mes "This mysterious blacksmith";
+	mes "was never seen again in the";
+	mes "city of Prontera, but rumor has";
+	mes "it that if you can find him, he";
+	mes "can forge that accursed";
+	mes "Executioner anew...";
+	if (event_magum == 1)
+		set event_magum,5;
+	set dmdswrd_Q2,dmdswrd_Q2 | 4;
 	close;
 }
 
-// Rupeto ---------------------------------------------------------
-prt_in,169,16,3	script	Rupeto	86,{
-	if(dmdswrd_Q == 27) goto L_0;
-	mes "[Rupeto]";
-	mes "Hello.";
-	close;
-
-L_0:
-	mes "[Rupeto]";
-	mes "Looking for the Legendary Blacksmith? Go to the payon field just east of the town of Payon.";
-	mes "It's said that the field looks alot like an Elder Willow....";
-	close;
-}
-
-
-//=============================================================================
-//		Doomed Swords Final Part
-//=============================================================================
-
-// Legendary Blacksmith ----------------------------------------------
-pay_fild08,217,273,4	script	Legendary Blacksmith	63,{
-
-	if(dmdswrd_Q == 27) goto L_Start;
-	if(dmdswrd_Q == 28) goto L_Forge;
-	mes "[Legendary Blacksmith]";
-	mes "I wonder what's going on in ^ff0000Prontera^000000?  It's been so long since I've been there.";
-	close;
-
-L_Start:
-	mes "[Legendary Blacksmith]";
-	mes "Hmm... what's this about Doomed Swords?? I have no idea what you're";
-	mes "talking about.....";
-	next;
-	mes "[Legendary Blacksmith]";
-	mes "..... I see... so you've spoken to everyone who was involved with in";
-	mes "the war with the witch... you've also gathered all of the items of";
-	mes "power......";
-	next;
-	mes "[Legendary Blacksmith]";
-	mes "I never thought the day would come when I would make one of these";
-	mes "dreadfull swords again... but you have proven yourself so I can not";
-	mes "turn you down.";
-	next;
-	L_Forge:
-	mes "[Legendary Blacksmith]";
-	mes "What sword do you want me to forge?";
-	set dmdswrd_Q, 28;
-	next;
-	menu "Executioner",M_Exec, "Grimtooth",M_Grim, "Mysteltain",M_Myst;
-
-	M_Exec:	//1169
-		if(countitem(7017)>=2 && countitem(7024)>=10 && countitem(1008)>=3 && countitem(609)>=50 && countitem(714)>=1) goto L_GetExec;
-		mes "[Legendary Blacksmith]";
-		mes "So you're interested in making the legendary Executioner Sword heh?.....";
-		next;
-		mes "[Legendary Blacksmith]";
-		mes "It's been sometime since I've forged any weapons,... but since it";
-		mes "is a special challenge for me to make this sword.....";
-		next;
-		mes "[Legendary Blacksmith]";
-		mes "I'll do it! I will re-create the Executioner Sword! I must warn you";
-		mes "however, this is a very powerfull and dangerous sword.  Be carefull.";
-		next;
-		mes "[Legendary Blacksmith]";
-		mes "For the Executioner Sword I will need the following items:";
-		mes "- ^0000ff2 Executioners Mitten^000000";		//7017
-		mes "- ^0000ff10 Bloody Edge^000000";		//7024
-		mes "- ^0000ff3 Necklace of Oblivion^000000";		//1008
-		mes "- ^0000ff50 Amulet^000000";			//609
-		mes "- and ^0000ff1 Emperium^000000";		//714
-		close;
-
-		L_GetExec:
-			delitem 7017,2;
-			delitem 7024,10;
-			delitem 1008,3;
-			delitem 609,50;
-			delitem 714,1;
-			mes "[Legendary Blacksmith]";
-			mes "Good! You have brought me all the necessary items.";
-			mes "Please wait a moment while I forge the Executioner Sword.";
+pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
+	//if (max_max_c == 1) {
+	//	mes "[Mysterious Man]";
+	//	mes "Hold it.";
+	//	mes "You're carrying";
+	//	mes "far too many items";
+	//	mes "with you. Speak to me";
+	//	mes "after you've placed your";
+	//	mes "goods into Kafra Storage.";
+	//	close;
+	//}
+	if (event_magum == 0) {
+		if (dmdswrd_Q2 & 1 || dmdswrd_Q2 & 2 || dmdswrd_Q2 & 4 || dmdswrd_Q2 & 8 || dmdswrd_Q2 & 16 || dmdswrd_Q2 & 32) {
+			mes "[Mysterious Man]";
+			mes "Well...?";
+			mes "What the hell";
+			mes "are you looking at?";
 			next;
-			mes "(cling-clang!~ klonk!~ klank!~ cling-clang!)";
+			if (select("Have you heard of the Doomed Swords?:I... I...") == 1) {
+				mes "[Mysterious Man]";
+				mes "...!";
+				mes "How the hell would";
+				mes "I know about that?";
+				mes "Leave me alone!";
+				close;
+			}
+			mes "[Mysterious Man]";
+			mes "...";
 			next;
-			mes "[Legendary Blacksmith]";
-			mes "Phew! Once again a perfect sword! Hahaha! Here you are my friend, enjoy.";
-			getitem 1169,1;
+			mes "[Mysterious Man]";
+			mes "...";
+			mes "......";
+			next;
+			mes "[Mysterious Man]";
+			mes "Get lost.";
 			close;
-
-	M_Grim:	//1237
-		if(countitem(7023)>=10 && countitem(724)>=5 && countitem(7002)>=100 && countitem(7022)>=1 && countitem(714)>=1) goto L_GetGrim;
-		mes "[Legendary Blacksmith]";
-		mes "So you're interested in making the legendary Grimtooth Dagger heh?.....";
-		next;
-		mes "[Legendary Blacksmith]";
-		mes "It's been sometime since I've forged any weapons,... but since it";
-		mes "is a special challenge for me to make this dagger.....";
-		next;
-		mes "[Legendary Blacksmith]";
-		mes "I'll do it! I will re-create the Grimtooth Dagger! I must warn you";
-		mes "however, this is a very powerfull and dangerous dagger.  Be carefull.";
-		next;
-		mes "[Legendary Blacksmith]";
-		mes "For the Grimtooth Dagger I will need the following items:";
-		mes "- ^0000ff10 Blade Lost in Darkness^000000";		//7023
-		mes "- ^0000ff5 Cursed Ruby^000000";			//724
-		mes "- ^0000ff100 Ogre Tooth^000000";			//7002
-		mes "- ^0000ff1 Old Hilt^000000";				//7022
-		mes "- and ^0000ff1 Emperium^000000";
-		close;
-
-		L_GetGrim:
-			delitem 7023,10;
-			delitem 724,5;
-			delitem 7002,100;
-			delitem 7022,1;
-			delitem 714,1;
-			mes "[Legendary Blacksmith]";
-			mes "Good! You have brought me all the necessary items.";
-			mes "Please wait a moment while I forge the Grimtooth Dagger.";
+		}
+		else {
+			mes "[Mysterious Man]";
+			mes "Well...?";
+			mes "What the hell";
+			mes "are you looking at?";
 			next;
-			mes "(cling-clang!~ klonk!~ klank!~ cling-clang!)";
-			next;
-			mes "[Legendary Blacksmith]";
-			mes "Phew! Once again a perfect dagger! Hahaha! Here you are my friend, enjoy.";
-			getitem 1237,1;
+			if (select("Um, er...:Nothing, sir.") == 1) {
+				mes "[Mysterious Man]";
+				mes "What...?!";
+				next;
+				mes "^3355FFThis guy is";
+				mes "really intimidating!^000000";
+				close;
+			}
+			mes "[Mysterious Man]";
+			mes "Nothing, huh?";
+			mes "Well, right now, I'm";
+			mes "looking at a bothersome";
+			mes "adventurer! Get outta here";
+			mes "and leave me the hell alone!";
 			close;
-
-	M_Myst:	//1138
-		if(countitem(7021)>=1 && countitem(7019)>=1 && countitem(7020)>=1 && countitem(7018)>=1 && countitem(714)>=1) goto L_GetMyst;
-		mes "[Legendary Blacksmith]";
-		mes "So you're interested in making the legendary Mysteltain Sword heh?.....";
+		}
+	}
+	else if (event_magum == 1) {
+		mes "[Mysterious Man]";
+		mes "Well...?";
+		mes "What the hell";
+		mes "are you looking at?";
 		next;
-		mes "[Legendary Blacksmith]";
-		mes "It's been sometime since I've forged any weapons,... but since it";
-		mes "is a special challenge for me to make this sword.....";
-		next;
-		mes "[Legendary Blacksmith]";
-		mes "I'll do it! I will re-create the Mysteltain Sword! I must warn you";
-		mes "however, this is a very powerfull and dangerous sword.  Be carefull.";
-		next;
-		mes "[Legendary Blacksmith]";
-		mes "For the Mysteltain Sword I will need the following items:";
-		mes "- ^0000ff1 Foolishness of the Blind^000000";		//7021
-		mes "- ^0000ff1 Loki's Whispers^000000";			//7019
-		mes "- ^0000ff1 Mother's Nightmare^000000";			//7020
-		mes "- ^0000ff1 Young Twig^000000";			//7018
-		mes "- and ^0000ff1 Emperium^000000";
-		close;
-	
-		L_GetMyst:
-			delitem 7021,1;
-			delitem 7019,1;
-			delitem 7020,1;
-			delitem 7018,1;
-			delitem 714,1;
-			mes "[Legendary Blacksmith]";
-			mes "Good! You have brought me all the necessary items.";
-			mes " Please wait a moment while I forge the Mysteltain Sword.";
-			next;
-			mes "(cling-clang!~ klonk!~ klank!~ cling-clang!)";
-			next;
-			mes "[Legendary Blacksmith]";
-			mes "Phew! Once again a perfect sword! Hahaha! Here you are my friend, enjoy.";
-			getitem 1138,1;
+		if (select("Do you happen to be a blacksmith?:No-Nothing!") == 1) {
+			mes "[Mysterious Blacksmith]";
+			mes "Hmpf. So you're not";
+			mes "a total fool after all. Yes,";
+			mes "I used to do smithing, but";
+			mes "I don't do the simple work";
+			mes "that most Blacksmiths";
+			mes "can do nowadays...";
 			close;
+		}
+		mes "[Mysterious Blacksmith]";
+		mes "...";
+		mes "......";
+		next;
+		mes "[Mysterious Blacksmith]";
+		mes "Get outta my sight.";
+		close;
+	}
+	else if (event_magum == 5) {
+		mes "[Mysterious Blacksmith]";
+		mes "Well...?";
+		mes "What the hell";
+		mes "are you looking at?";
+		next;
+		if (select("I want you to make me a Doomed Sword.:Er, nothing!") == 1) {
+			mes "[Mysterious Blacksmith]";
+			mes "Hm. I don't know where";
+			mes "the hell you may have heard";
+			mes "of me, but I guess one of you";
+			mes "adventurers would find me soon";
+			mes "enough. Now, which doomed";
+			mes "sword did you wish to possess?";
+			next;
+			switch(select("Mysteltainn.:Grimtooth.:Executioner.:I ch-changed my mind!")) {
+			case 1:
+				if (dmdswrd_Q2 & 1) {
+					mes "[Mysterious Blacksmith]";
+					mes "You want...";
+					mes "that sword?";
+					mes "Don't speak its";
+					mes "name so lightly!";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Do you understand the curse";
+					mes "on that sword? The Mysteltainn";
+					mes "derives its dark power from the";
+					mes "twig that was used to kill Baldur, god of light. Let me relate the";
+					mes "story as briefly as I can...";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "In the era of the gods,";
+					mes "the beautiful, pure and";
+					mes "joyful Baldur was loved by";
+					mes "all living creatures, save for";
+					mes "one: Loki, the god of trickery.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "When Loki, out of jealousy,";
+					mes "decided to kill Baldur, the";
+					mes "goddess Freyja had a dream";
+					mes "about Baldur's death. Fearing";
+					mes "the realization of her dream,";
+					mes "she counseled with the gods.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "To protect Baldur, the gods";
+					mes "decided to extract an oath";
+					mes "to never harm Baldur from";
+					mes "every creature, object and";
+					mes "natural force. All who were";
+					mes "asked agreed to make this oath.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Of all the beings and objects";
+					mes "in the universe, Freya only";
+					mes "neglected to ask one tree to";
+					mes "make this oath: the Mysteltainn. Freyja believed it was far too";
+					mes "small and insignificant to ask.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Believing that everything";
+					mes "in the universe had sworn";
+					mes "not to harm Baldur, the gods";
+					mes "made it their new pastime to";
+					mes "throw daggers and knives at";
+					mes "the now nigh invincible god.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "However, Loki was determined";
+					mes "to kill Baldur and, disguising";
+					mes "himself, politely asked Freyja";
+					mes "if there was any object in the";
+					mes "world that did not take the";
+					mes "oath to not harm Baldur.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Freyja suspected nothing and";
+					mes "told Loki about the secret of";
+					mes "Mysteltainn. The next time the^FFFFFF ^000000 gods played their game of throwing";
+					mes "objects at Baldur, Loki was there with a small Mysteltainn twig.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Then, to compound his";
+					mes "treachery, Loki tricked";
+					mes "Hod, Baldur's blind twin";
+					mes "brother, into throwing the";
+					mes "twig into Baldur's heart. And";
+					mes "so, the god of light was slain.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Over the years,";
+					mes "Mysteltainn has been";
+					mes "fashioned into the sword";
+					mes "that you may be familiar";
+					mes "with today. Its power is";
+					mes "strictly forbidden by the gods.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "However, if you're willing";
+					mes "to risk that sword's curse";
+					mes "for the sake of its power,";
+					mes "I will forge it for you if you";
+					mes "can bring me the following";
+					mes "items. They'll make sense...";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "^0099FF1 Young Twig^000000,";
+					mes "^0099FF1 Emperium^000000,";
+					mes "^0099FF1 Loki's Whispers^000000,";
+					mes "^0099FF1 Mother's Nightmare^000000 and";
+					mes "^0099FF1 Foolishness of the Blind^000000.";
+					mes "That is what I need.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "I'm not asking for much.";
+					mes "You are only bringing the raw";
+					mes "materials to forge the sword,";
+					mes "and an Emperium to prove your";
+					mes "worthiness to me. I will wait";
+					mes "for your return, adventurer.";
+					set dmdswrd_Q2,dmdswrd_Q2 | 8;
+					set event_magum,6;
+					close;
+				}
+				mes "[Mysterious Blacksmith]";
+				mes "Just by looking at you,";
+				mes "I can tell that you don't know";
+				mes "enough about the Mysteltainn";
+				mes "to fully understand all of the";
+				mes "risks that come with wielding^FFFFFF ^000000 that sword. Yes, you're too green.";
+				next;
+				mes "[Mysterious Blacksmith]";
+				mes "I can't take the risk";
+				mes "of creating that accursed";
+				mes "sword for you if you haven't";
+				mes "learned enough about it to";
+				mes "be fully prepared for any of";
+				mes "the consequences...";
+				close;
+			case 2:
+				if (dmdswrd_Q2 & 2) {
+					mes "[Mysterious Blacksmith]";
+					mes "Ah, yes. You must be";
+					mes "wondering how such a small";
+					mes "dagger can contain such power.";
+					mes "It's simple. I cast forbidden";
+					mes "curse magic to inbue the dagger^FFFFFF ^000000 with its awesome destructiveness.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "The curse I cast is so";
+					mes "powerful that if I use it on";
+					mes "a metal dagger, it would";
+					mes "immediately melt down. Ogre";
+					mes "tooth is the only material that";
+					mes "can withstand the curse magic.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Of course, it's only";
+					mes "fair to warn you that";
+					mes "the power of the curse";
+					mes "is such that the more you";
+					mes "use the Grimtooth, the more^FFFFFF ^000000 it burns away at your very soul...";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "I am willing to forge";
+					mes "the Grimtooth if you can";
+					mes "prove worthy to wield its";
+					mes "power and provide all of the";
+					mes "materials I need to create it.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "I will need...";
+					mes "^0099FF1 Emperium^000000,";
+					mes "^0099FF100 Ogre Teeth^000000,";
+					mes "^0099FF10 Blades of Darkness^000000,";
+					mes "^0099FF5 Cursed Rubies^000000 and";
+					mes "^0099FF1 Broken Sword Handle^000000.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "I don't need the";
+					mes "Emperium to create";
+					mes "the accursed sword, but I do";
+					mes "require you to prove that you";
+					mes "are worthy of the Grimtooth's";
+					mes "power. Can you truly handle it?";
+					set dmdswrd_Q2,dmdswrd_Q2 | 16;
+					set event_magum,6;
+					close;
+				}
+				mes "[Mysterious Blacksmith]";
+				mes "Hmpf. You don't really";
+				mes "know what you're asking";
+				mes "for, do you? I won't create";
+				mes "that kind of weapon for any";
+				mes "ignorant fool. Learn more about";
+				mes "Grimtooth before you ask again!";
+				close;
+			case 3:
+				if (dmdswrd_Q2 & 4) {
+					mes "[Mysterious Blacksmith]";
+					mes "So you're telling me that";
+					mes "you want a sword that's been";
+					mes "cursed by all the souls that've";
+					mes "died from the thousands of death sentences it has carried out?";
+					mes "Ha ha ha! Very interesting!";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Yes... Each time this";
+					mes "sword cut down a guilty";
+					mes "criminal, the blade was";
+					mes "cursed by the rage and";
+					mes "regret of the slain.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Over time, the Executioner";
+					mes "accumulated a truly dreadful";
+					mes "power from the hatred of those";
+					mes "it had killed. However, he who";
+					mes "uses this sword risks becoming consumed by insanity and hatred.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "The last person for whom";
+					mes "I created this sword asked";
+					mes "me to destroy it, fearing that";
+					mes "it would corrupt his mind with";
+					mes "its bloodlust. But if you think^FFFFFF ^000000 you can endure, I may forge it...";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Just bring me...";
+					mes "^0099FF50 Amulets^000000,";
+					mes "^0099FF1 Emperium^000000,";
+					mes "^0099FF2 Executioner's Gloves^000000,";
+					mes "^0099FF10 Bloody Edges^000000 and";
+					mes "^0099FF3 Necklaces of Oblivion^000000.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Those are the items I need";
+					mes "to create a sword imbued with";
+					mes "evil power. As for the Emperium, consider it my test to see if you";
+					mes "are truly capable of wielding";
+					mes "the accursed Executioner...";
+					set dmdswrd_Q2,dmdswrd_Q2 | 32;
+					set event_magum,6;
+					close;
+				}
+				mes "[Mysterious Blacksmith]";
+				mes "Do you even know what";
+				mes "you are asking of me...?";
+				mes "Fool! Go and learn more";
+				mes "about the Executioner! Then,";
+				mes "maybe you'll understand how";
+				mes "dangerous that sword truly is!";
+				close;
+			case 4:
+				mes "[Mysterious Blacksmith]";
+				mes "Hmm...?";
+				mes "That a fact?";
+				close;
+			}
+		}
+		close;
+	}
+	else if (event_magum == 6) {
+		mes "[Mysterious Blacksmith]";
+		mes "Hmmm...";
+		mes "Have you brought";
+		mes "the required items?";
+		mes "Or did you forget what";
+		mes "you needed to bring to me?";
+		next;
+		switch(select("Er, what were the items again?:Yes, I brought all the required items.:Oh! Um, never mind!")) {
+		case 1:
+			mes "[Mysterious Blacksmith]";
+			mes "Hmpf. I thought so.";
+			mes "Now, which sword did";
+			mes "you want me to forge?";
+			next;
+			switch(select("Mysteltainn.:Grimtooth.:Executioner.:Wait! I just remembered!")) {
+			case 1:
+				if (dmdswrd_Q2 & 1 || dmdswrd_Q2 & 8) {
+					mes "[Mysterious Blacksmith]";
+					mes "^0099FF1 Young Twig^000000,";
+					mes "^0099FF1 Emperium^000000,";
+					mes "^0099FF1 Loki's Whispers^000000,";
+					mes "^0099FF1 Mother's Nightmare^000000 and";
+					mes "^0099FF1 Foolishness of the Blind^000000.";
+					mes "That is what I need.";
+					close;
+				}
+				mes "[Mysterious Blacksmith]";
+				mes "Hmm. You don't understand";
+				mes "enough about Mysteltainn for";
+				mes "me to risk forging that sword";
+				mes "for you. Think again: which";
+				mes "sword did you ask me to create?";
+				close;
+			case 2:
+				if (dmdswrd_Q2 & 2 || dmdswrd_Q2 & 16) {
+					mes "[Mysterious Blacksmith]";
+					mes "I will need...";
+					mes "^0099FF1 Emperium^000000,";
+					mes "^0099FF100 Ogre Teeth^000000,";
+					mes "^0099FF10 Blades of Darkness^000000,";
+					mes "^0099FF5 Cursed Rubies^000000 and";
+					mes "^0099FF1 Broken Sword Handle^000000.";
+					close;
+				}
+				mes "[Mysterious Blacksmith]";
+				mes "Hmm. You don't know enough";
+				mes "about the Grimtooth for me to";
+				mes "risk forging it for you. Learn";
+				mes "more about that dagger if you";
+				mes "really want to possess it...";
+				close;
+			case 3:
+				if (dmdswrd_Q2 & 4 || dmdswrd_Q2 & 32) {
+					mes "[Mysterious Blacksmith]";
+					mes "Just bring me...";
+					mes "^0099FF50 Amulets^000000,";
+					mes "^0099FF1 Emperium^000000,";
+					mes "^0099FF2 Executioner's Gloves^000000,";
+					mes "^0099FF10 Bloody Edges^000000 and";
+					mes "^0099FF3 Necklaces of Oblivion^000000.";
+					close;
+				}
+				mes "[Mysterious Blacksmith]";
+				mes "You don't know anything";
+				mes "about the Executioner. Learn";
+				mes "more about that sword before";
+				mes "you consider asking me to";
+				mes "forge that monstrocity.";
+				close;
+			case 4:
+				mes "[Mysterious Blacksmith]";
+				mes "Fine.";
+				mes "Then bring all";
+				mes "the items I require";
+				mes "when you are ready.";
+				close;
+			}
+		case 2:
+			mes "[Mysterious Blacksmith]";
+			mes "So you think you're";
+			mes "ready. Now, which sword";
+			mes "did you want me to craft?";
+			next;
+			switch(select("Mysteltainn:Grimtooth:Executioner:I ch-changed my mind!")) {
+			case 1:
+				if (dmdswrd_Q2 & 8) {
+					mes "[Mysterious Blacksmith]";
+					mes "Mysteltainn. Hm.";
+					mes "Let me make sure";
+					mes "that you brought";
+					mes "everything I need to";
+					mes "create this sword...";
+					next;
+					if (countitem(7018) < 1) {
+						mes "[Mysterious Blacksmith]";
+						mes "Well, well.";
+						mes "You've forgotten";
+						mes "to bring ^0099FF1 Young Twig^000000,";
+						mes "the embodiment of the";
+						mes "Mysteltainn twig used to^FFFFFF ^000000 kill Baldur. Hurry and bring it...";
+						close;
+					}
+					if (countitem(7019) < 1) {
+						mes "[Mysterious Blacksmith]";
+						mes "Hm. You forgot to bring";
+						mes "^0099FF1 Loki's Whispers^000000. We need";
+						mes "that to imbue the sword with";
+						mes "immense, evil power. Go and";
+						mes "find that as quickly as you can! ^FFFFFF ^000000";
+						close;
+					}
+					if (countitem(7020) < 1) {
+						mes "[Mysterious Blacksmith]";
+						mes "Hm, you still need to";
+						mes "bring ^0099FF1 Mother's Nightmare^000000";
+						mes "to instill the power of misery";
+						mes "and grave portent to this blade... ^FFFFFF ^000000";
+						close;
+					}
+					if (countitem(7021) < 1) {
+						mes "[Mysterious Blacksmith]";
+						mes "Hm, you still need to";
+						mes "bring ^0099FF1 Foolishness";
+						mes "of the Blind^000000 to instill the";
+						mes "energy of tragic regret into";
+						mes "the curse imbued into the blade... ^FFFFFF ^000000";
+						close;
+					}
+					if (countitem(714) < 1) {
+						mes "[Mysterious Blacksmith]";
+						mes "You have everything";
+						mes "I require to forge the";
+						mes "Mysteltainn, but you must";
+						mes "still prove yourself capable";
+						mes "of wielding it. Bring ^0099FF1 Emperium^000000 and I will recognize your worth.";
+						close;
+					}
+					if (countitem(7018) > 0 && countitem(7019) > 0 && countitem(7020) > 0 && countitem(7021) > 0 && countitem(714) > 0) {
+						mes "[Mysterious Blacksmith]";
+						mes "Well done, adventurer.";
+						mes "All seems to be in readiness.";
+						mes "Give me a minute to summon";
+						mes "the dark power to forge the";
+						mes "forbidden sword, Mysteltainn.";
+						next;
+						mes "[Mysterious Blacksmith]";
+						mes "I... I never thought";
+						mes "I would ever see this";
+						mes "sword again. Take it,";
+						mes "quickly! I d-don't want";
+						mes "to touch it if I can avoid it.";
+						delitem 7018,1; //Young_Twig
+						delitem 7019,1; //Loki's_Whispers
+						delitem 7020,1; //Mother's_Nightmare
+						delitem 7021,1; //Foolishness_Of_Blind
+						delitem 714,1; //Emperium
+						getitem 1138,1; //Mysteltainn_
+						next;
+						mes "[Mysterious Blacksmith]";
+						mes "Be very careful.";
+						mes "Don't let yourself";
+						mes "be consumed by the";
+						mes "power of that sword!";
+						mes "By all means, resist";
+						mes "Mysteltainn's tragic curse!";
+						close;
+					}
+				}
+				else if (dmdswrd_Q2 & 1) {
+					mes "[Mysterious Blacksmith]";
+					mes "You want...";
+					mes "that sword?";
+					mes "Don't speak its";
+					mes "name so lightly!";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Do you understand the curse";
+					mes "on that sword? The Mysteltainn";
+					mes "derives its dark power from the";
+					mes "twig that was used to kill Baldur, god of light. Let me relate the";
+					mes "story as briefly as I can...";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "In the era of the gods,";
+					mes "the beautiful, pure and";
+					mes "joyful Baldur was loved by";
+					mes "all living creatures, save for";
+					mes "one: Loki, the god of trickery.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "When Loki, out of jealousy,";
+					mes "decided to kill Baldur, the";
+					mes "goddess Freyja had a dream";
+					mes "about Baldur's death. Fearing";
+					mes "the realization of her dream,";
+					mes "she counseled with the gods.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "To protect Baldur, the gods";
+					mes "decided to extract an oath";
+					mes "to never harm Baldur from";
+					mes "every creature, object and";
+					mes "natural force. All who were";
+					mes "asked agreed to make this oath.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Of all the beings and objects";
+					mes "in the universe, Freya only";
+					mes "neglected to ask one tree to";
+					mes "make this oath: the Mysteltainn. Freyja believed it was far too";
+					mes "small and insignificant to ask.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Believing that everything";
+					mes "in the universe had sworn";
+					mes "not to harm Baldur, the gods";
+					mes "made it their new pastime to";
+					mes "throw daggers and knives at";
+					mes "the now nigh invincible god.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "However, Loki was determined";
+					mes "to kill Baldur and, disguising";
+					mes "himself, politely asked Freyja";
+					mes "if there was any object in the";
+					mes "world that did not take the";
+					mes "oath to not harm Baldur.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Freyja suspected nothing and";
+					mes "told Loki about the secret of";
+					mes "Mysteltainn. The next time the^FFFFFF ^000000 gods played their game of throwing";
+					mes "objects at Baldur, Loki was there with a small Mysteltainn twig.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Then, to compound his";
+					mes "treachery, Loki tricked";
+					mes "Hod, Baldur's blind twin";
+					mes "brother, into throwing the";
+					mes "twig into Baldur's heart. And";
+					mes "so, the god of light was slain.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Over the years,";
+					mes "Mysteltainn has been";
+					mes "fashioned into the sword";
+					mes "that you may be familiar";
+					mes "with today. Its power is";
+					mes "strictly forbidden by the gods.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "However, if you're willing";
+					mes "to risk that sword's curse";
+					mes "for the sake of its power,";
+					mes "I will forge it for you if you";
+					mes "can bring me the following";
+					mes "items. They'll make sense...";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "^0099FF1 Young Twig^000000,";
+					mes "^0099FF1 Emperium^000000,";
+					mes "^0099FF1 Loki's Whispers^000000,";
+					mes "^0099FF1 Mother's Nightmare^000000 and";
+					mes "^0099FF1 Foolishness of the Blind^000000.";
+					mes "That is what I need.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "I'm not asking for much.";
+					mes "You are only bringing the raw";
+					mes "materials to forge the sword,";
+					mes "and an Emperium to prove your";
+					mes "worthiness to me. I will wait";
+					mes "for your return, adventurer.";
+					set dmdswrd_Q2,dmdswrd_Q2 | 8;
+					close;
+				}
+				mes "[Mysterious Blacksmith]";
+				mes "Hm. If you truly want";
+				mes "Mysteltainn, I advise you";
+				mes "to learn more about it. You";
+				mes "must know the risks involved";
+				mes "in wielding that sort of power... ^FFFFFF ^000000";
+				close;
+			case 2:
+				if (dmdswrd_Q2 & 16) {
+					mes "[Mysterious Blacksmith]";
+					mes "You want to me";
+					mes "to forge Grimtooth.";
+					mes "First, let me check";
+					mes "if you brought all";
+					mes "the items I require.";
+					next;
+					if (countitem(7002) < 100) {
+						mes "[Mysterious Blacksmith]";
+						mes "Hm. I still need";
+						mes "^0099FF100 Ogre Teeth^000000 to";
+						mes "create a blade that can";
+						mes "withstand the might of the";
+						mes "Grimtooth's curse magic.";
+						mes "Go and bring them soon.";
+						close;
+					}
+					if (countitem(724) < 5) {
+						mes "[Mysterious Blacksmith]";
+						mes "In order to place";
+						mes "the curse that grants";
+						mes "the Grimtooth its immense";
+						mes "power, I need you to bring";
+						mes "^0099FF5 Cursed Rubies^000000. Hurry";
+						mes "and bring them to me soon.";
+						close;
+					}
+					if (countitem(7023) < 10) {
+						mes "[Mysterious Blacksmith]";
+						mes "Hm. I still need";
+						mes "^0099FF10 Blades of Darkness^000000";
+						mes "in order to for me to forge";
+						mes "the Grimtooth. Bring those";
+						mes "here as soon as you can.";
+						close;
+					}
+					if (countitem(7022) < 1) {
+						mes "[Mysterious Blacksmith]";
+						mes "Hm. You almost have";
+						mes "everything ready, but";
+						mes "I'll need ^0099FF1 Broken Sword";
+						mes "Handle^000000 in order to forge";
+						mes "the Grimtooth. Hurry and";
+						mes "bring me one of those...";
+						close;
+					}
+					if (countitem(714) < 1) {
+						mes "[Mysterious Blacksmith]";
+						mes "You have everything I need";
+						mes "to create the sword, but I won't forge it until you prove that you";
+						mes "are capable of controlling its";
+						mes "power. Bring me 1 Emperium";
+						mes "as proof of your worthiness.";
+						close;
+					}
+					if (countitem(7002) > 99 && countitem(724) > 4 && countitem(7023) > 9 && countitem(7022) > 0 && countitem(714) > 0) {
+						mes "[Mysterious Blacksmith]";
+						mes "I see that you have";
+						mes "come fully prepared.";
+						mes "Perhaps you have grave";
+						mes "need of Grimtooth's power.";
+						mes "Give me a moment as I forge";
+						mes "this accursed sword for you...";
+						next;
+						mes "[Mysterious Blacksmith]";
+						mes "There, it's finished!";
+						mes "Now hurry and take it!";
+						mes "I, I don't want to handle";
+						mes "the Grimtooth longer than";
+						mes "I have to! You'll understand";
+						mes "soon enough once you use it...";
+						delitem 7002,100; //Ogre_Tooth
+						delitem 724,5; //Cardinal_Jewel_
+						delitem 7023,10; //Blade_Lost_In_Darkness
+						delitem 7022,1; //Old_Hilt
+						delitem 714,1; //Emperium
+						getitem 1237,1; //Grimtooth_
+						next;
+						mes "[Mysterious Blacksmith]";
+						mes "I know that you might";
+						mes "have good intentions for";
+						mes "Grimtooth's power, but do";
+						mes "not overestimate yourself!";
+						mes "Always be wary of Grimtooth,";
+						mes "and don't let it eat your soul!";
+						close;
+					}
+				}
+				else if (dmdswrd_Q2 & 2) {
+					mes "[Mysterious Blacksmith]";
+					mes "Ah, yes. You must be";
+					mes "wondering how such a small";
+					mes "dagger can contain such power.";
+					mes "It's simple. I cast forbidden";
+					mes "curse magic to inbue the dagger^FFFFFF ^000000 with its awesome destructiveness.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "The curse I cast is so";
+					mes "powerful that if I use it on";
+					mes "a metal dagger, it would";
+					mes "immediately melt down. Ogre";
+					mes "tooth is the only material that";
+					mes "can withstand the curse magic.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Of course, it's only";
+					mes "fair to warn you that";
+					mes "the power of the curse";
+					mes "is such that the more you";
+					mes "use the Grimtooth, the more^FFFFFF ^000000 it burns away at your very soul...";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "I am willing to forge";
+					mes "the Grimtooth if you can";
+					mes "prove worthy to wield its";
+					mes "power and provide all of the";
+					mes "materials I need to create it.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "I will need...";
+					mes "^0099FF1 Emperium^000000,";
+					mes "^0099FF100 Ogre Teeth^000000,";
+					mes "^0099FF10 Blades of Darkness^000000,";
+					mes "^0099FF5 Cursed Rubies^000000 and";
+					mes "^0099FF1 Broken Sword Handle^000000.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "I don't need the";
+					mes "Emperium to create";
+					mes "the accursed sword, but I do";
+					mes "require you to prove that you";
+					mes "are worthy of the Grimtooth's";
+					mes "power. Can you truly handle it?";
+					set dmdswrd_Q2,dmdswrd_Q2 | 16;
+					close;
+				}
+				mes "[Mysterious Blacksmith]";
+				mes "Hm. I can't even consider";
+				mes "forging Grimtooth for you";
+				mes "when you know so very little";
+				mes "about it. You better learn more";
+				mes "about that sword before you";
+				mes "ask me about it again.";
+				close;
+			case 3:
+				if (dmdswrd_Q2 & 32) {
+					mes "[Mysterious Blacksmith]";
+					mes "The Executioner sword.";
+					mes "Let me see if you've come";
+					mes "prepared to wield that blade";
+					mes "with your own two hands...";
+					next;
+					if (countitem(7017) < 2) {
+						mes "[Mysterious Blacksmith]";
+						mes "Hm. In order for me";
+						mes "to forge the Executioner,";
+						mes "I need you to bring me";
+						mes "^0099FF2 Executioner's Gloves^000000.";
+						close;
+					}
+					if (countitem(7024) < 10) {
+						mes "[Mysterious Blacksmith]";
+						mes "In order to craft the";
+						mes "blade, I need at least";
+						mes "^0099FF10 Bloody Edges^000000. Find";
+						mes "those as quickly as you";
+						mes "can and bring them to me.";
+						close;
+					}
+					if (countitem(1008) < 3) {
+						mes "[Mysterious Blacksmith]";
+						mes "In order to enchant";
+						mes "the Executioner with";
+						mes "its dark power, I will";
+						mes "need you to bring me";
+						mes "^0099FF3 Necklaces of Oblivion^000000.";
+						mes "Go, hurry and get them!";
+						close;
+					}
+					if (countitem(609) < 50) {
+						mes "[Mysterious Blacksmith]";
+						mes "Hm. You've forgotten to";
+						mes "bring me ^0099FF50 Amulets^000000. I need";
+						mes "those in order to imbue the";
+						mes "incredible energies that";
+						mes "give the Executioner its";
+						mes "monstrous strength...";
+						close;
+					}
+					if (countitem(714) < 1) {
+						mes "[Mysterious Blacksmith]";
+						mes "You have everything I need";
+						mes "to forge the Executioner, but";
+						mes "I'm still unsure of whether you";
+						mes "are capable of handling its";
+						mes "power. My fears will be allayed";
+						mes "if you bring ^0099FF1 Emperium^000000.";
+						close;
+					}
+					if (countitem(7017) > 1 && countitem(7024) > 9 && countitem(1008) > 2 && countitem(609) > 49 && countitem(714) > 0) {
+						mes "[Mysterious Blacksmith]";
+						mes "Great, I see that you've";
+						mes "prepared everything that";
+						mes "I asked. Give me a moment";
+						mes "while I summon the dark";
+						mes "forces required to forge";
+						mes "the Executioner...";
+						next;
+						mes "[Mysterious Blacksmith]";
+						mes "It's been a long time";
+						mes "since I've seen this";
+						mes "terrifying sword. Now";
+						mes "take it! Be wary, and don't";
+						mes "let its bloodlust consume you!";
+						delitem 7017,2; //Executioner's_Mitten
+						delitem 7024,10; //Bloody_Edge
+						delitem 1008,3; //Frozen_Heart
+						delitem 609,50; //Amulet
+						getitem 1169,1; //Executioner_
+						close;
+					}
+				}
+				else if (dmdswrd_Q2 & 4) {
+					mes "[Mysterious Blacksmith]";
+					mes "So you're telling me that";
+					mes "you want a sword that's been";
+					mes "cursed by all the souls that've";
+					mes "died from the thousands of death sentences it has carried out?";
+					mes "Ha ha ha! Very interesting!";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Yes... Each time this";
+					mes "sword cut down a guilty";
+					mes "criminal, the blade was";
+					mes "cursed by the rage and";
+					mes "regret of the slain.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Over time, the Executioner";
+					mes "accumulated a truly dreadful";
+					mes "power from the hatred of those";
+					mes "it had killed. However, he who";
+					mes "uses this sword risks becoming consumed by insanity and hatred.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "The last person for whom";
+					mes "I created this sword asked";
+					mes "me to destroy it, fearing that";
+					mes "it would corrupt his mind with";
+					mes "its bloodlust. But if you think^FFFFFF ^000000 you can endure, I may forge it...";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Just bring me...";
+					mes "^0099FF50 Amulets^000000,";
+					mes "^0099FF1 Emperium^000000,";
+					mes "^0099FF2 Executioner's Gloves^000000,";
+					mes "^0099FF10 Bloody Edges^000000 and";
+					mes "^0099FF3 Necklaces of Oblivion^000000.";
+					next;
+					mes "[Mysterious Blacksmith]";
+					mes "Those are the items I need";
+					mes "to create a sword imbued with";
+					mes "evil power. As for the Emperium, consider it my test to see if you";
+					mes "are truly capable of wielding";
+					mes "the accursed Executioner...";
+					set dmdswrd_Q2,dmdswrd_Q2 | 4;
+					close;
+				}
+				mes "[Mysterious Blacksmith]";
+				mes "Hmpf. I don't think";
+				mes "you understand enough";
+				mes "about the Executioner to";
+				mes "ask me to forge it. You better";
+				mes "learn more about that accursed";
+				mes "sword if you really want it...";
+				close;
+			case 4:
+				mes "[Mysterious Blacksmith]";
+				mes "Hmm...?";
+				mes "That a fact?";
+				close;
+			}
+		case 3:
+			mes "[Mysterious Blacksmith]";
+			mes "Hmpf...";
+			mes "Well then, come";
+			mes "back when you know";
+			mes "exactly what you want";
+			mes "from me, adventurer.";
+			close;
+		}
+	}
 }

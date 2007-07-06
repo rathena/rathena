@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (any)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= Split off npc_warp.txt
 //= 1.1 Fixed Prontera Arena warp [Yor]
+//= 1.2 Added addition warps for PvP Nightmare Mode maps.
 //============================================================
 
 //Battle Ordeal Mode
@@ -167,3 +168,16 @@ ordeal_3-4,180,154,0	warp	ord348	1,1,ordeal_3-4,284,164
 //ordeal_a04,172,135,0	warp	orda6	0,0,ordeal_a04,284,24
 //ordeal_a04,172,172,0	warp	orda7	0,0,ordeal_a04,284,284
 //ordeal_a04,180,154,0	warp	orda8	0,0,ordeal_a04,284,164
+
+// PvP Nightmare More warps
+pvp_n_8-4,33,122,0	warp	Link#pt_link_1-11	0,2,pvp_n_8-4,0,0
+pvp_n_8-4,62,84,0	warp	Link#pt_link_1-12	1,1,pvp_n_8-4,0,0
+pvp_n_8-4,49,71,0	warp	Link#pt_link_1-21	1,1,pvp_n_8-4,0,0
+pvp_n_8-4,56,166,0	warp	Link#pt_link_1-22	1,1,pvp_n_8-4,0,0
+pvp_n_8-4,99,180,0	warp	Link#pt_link_1-31	2,1,pvp_n_8-4,0,0
+pvp_n_8-4,137,84,0	warp	Link#pt_link_1-32	1,1,pvp_n_8-4,0,0
+pvp_n_8-4,150,71,0	warp	Link#pt_link_1-41	1,1,pvp_n_8-4,0,0
+pvp_n_8-4,144,166,0	warp	Link#pt_link_1-42	1,1,pvp_n_8-4,0,0
+// Invalid Warp
+//pvp_n_8-5,30,30,0	warp	 a	3,3,pvp_n_8-5,100,100
+

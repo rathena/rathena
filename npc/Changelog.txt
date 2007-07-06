@@ -1,6 +1,15 @@
 Date		Added
 ======
 2007/07/06
+	* Rev. 10857 Updated Juno and Comodo NPCs. [L0ne_W0lf]
+	- Updated Monster Museum NPCs as well.
+	- Updated doomed swords quest, moved unrelated NPCs to proper files.
+	- Added the end of the Comodo and Juno doomed swords quests.
+	* Fixed "[Kafra Employee]" being shown twice at one instance.
+	* Fixed the Geffen Inn NPC.
+	* Updated the NPC names for the Geffen Kafra.
+	* Updated the PVP script to official. Includes Event mode.
+	- Added warps for the PVP Cross room.
 	* Fixed Kiel Hyre Quest (u could stuck) thx 2X-Siro [Lupus]
 2007/07/04
 	* Removed respawn time on Byorgue [Playtester]

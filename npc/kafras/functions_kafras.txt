@@ -5,7 +5,7 @@
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 5.7
+//= 5.8
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: =========================================
@@ -52,6 +52,7 @@
 //= 5.6a Corrected a few wrong names in the teleport function. [L0ne_W0lf]
 //= 5.7 Correced end message no longer displaying, and the duplicate names [L0ne_W0lf]
 //=	Thanks to Barron-Monster for pointing out the issues.
+//= 5.8 Fixed another double name bing shown when "saving" [L0ne_W0lf]
 //============================================================ 
 
 
@@ -517,7 +518,6 @@ function	script	F_KafEnd	{
 	mes "[Kafra Employee]";
 	//Save
 	if(getarg(1)==1) {
-		mes "[Kafra Employee]";
 		mes "Your Respawn Point";
 		mes "has been saved here";
 		mes getarg(2)+".";

@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -28,9 +28,10 @@
 //= 1.5 Added "end;" after warping the player. [L0ne_W0lf]
 //=	- Small corrections to the prontera Inns.
 //=	- Removed the Cancel dialog.
-//= 1.6 More fixed, changed progression of "Rest"ing.
+//= 1.6 More fixes, changed progression of "Rest"ing.
 //=	- Corrected Morroc NPCs. [L0ne_W0lf]
 //= 1.7 Corrected Payon NPC. [L0ne_W0lf] 
+//= 1.8 Corrected Geffen NPC. [L0ne_W0lf] 
 //============================================================ 
 
 
@@ -63,10 +64,10 @@ alberta_in,55,142,8	script	Inn Maid::Tina	53,{
 }
 
 //====================== Geffen ======================================
-geffen_in,70,64,5	script	Inn Maid::Betty	53,{
+geffen_in,70,64,5	script	Inn Employee::Cena	53,{
 
-	callfunc "F_InnMaid","[Betty]","Geffen Inn","geffen_in",74,60;
-	warp "geffen_in",106,106; end;
+	callfunc "F_InnMaid","[Employee Cena]","'Ifrit,' the only Inn in the city of Geffen.","geffen_in",70,59;
+	warp "geffen_in",31,31; end;
 }
 
 //======================= Payon ======================================

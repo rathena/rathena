@@ -3,7 +3,7 @@
 //===== By: =========================
 //= eAthena Dev Team
 //===== Current Version: ===================
-//= 2.4
+//= 2.5
 //===== Compatible With: =====================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -24,11 +24,12 @@
 //= 2.4 Updated function calls with new arguments. [L0ne_W0lf]
 //=	Added unique Kafra Welcome messages.
 //=	Removed North and West Kafra
+//= 2.5 Fixed Kafra NPC names. [L0ne_W0lf]
 //=====================================================================
 
 
 // South =====================================
-geffen,120,62,0	script	Kafra::kaf_geffen	115,{
+geffen,120,62,0	script	Kafra Employee::kaf_geffen	115,{
 	cutin "kafra_03",2;
 	callfunc "F_KafSetGef";
 	mes "[Kafra Employee]";
@@ -44,7 +45,7 @@ geffen,120,62,0	script	Kafra::kaf_geffen	115,{
 }
 
 // East ==============================================
-geffen,203,123,2	script	Kafra::geffen2	114,{
+geffen,203,123,2	script	Kafra Employee::geffen2	114,{
 	cutin "kafra_04",2;
 	callfunc "F_KafSetGef";
 	mes "[Kafra Employee]";

@@ -3,11 +3,12 @@
 //===== By: ================================================== 
 //= eAthena dev team
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
-//= eAthena 1.0
+//= eAthena SVN
 //===== Description: ========================================= 
-//=
+//= [Aegis Conversion]
+//= Comodo Town NPCs
 //===== Additional Comments: ================================= 
 //= Not complete.
 //= 1.1 Rolled back from the wrong Kashy's fix
@@ -17,404 +18,475 @@
 //= 1.4 Fixed typos [Nexon]
 //= 1.5 Removed Duplicates [Silent]
 //= 1.6 Split doomed sword quest to quests/quests_comodo.txt [Evera]
+//= 1.7 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //============================================================
 
-
-
-//============================================================================//
-//			BBQ Camp Grounds
-//============================================================================//
-
-//====================================================
-comodo,216,310,4	script	BBQ Papa	85,{
-OnStart:
-	mes "[BBQ Son]";
-	mes "Daddy! Daddy!... Is it true that an ^FF4444Evil Witch^000000 once lived in our village?? Does she still live here???";
-	next;
-	mes "[BBQ Mama]";
-	mes "Son, where did you hear about that?";
-	next;
-	mes "[BBQ Papa]";
-	mes "Ha ha... are you scared of the Evil Witch? It's just an old story......";
-	next;
-	mes "[BBQ Son]";
-	mes "No daddy! If the Witch really lived on our island, her home must be around here still.... She had to have a place to sleep in... Right??";
-	next;
-	mes "[BBQ Mama]";
-	mes "Ho ho ho... now if all of this were true don't you think the ^5555FFChief^000000 would know about it?";
-	mes "Anyway, we better start eating before the meat gets overcooked.";
-	next;
-	mes "[BBQ Son]";
-	mes "Okay.... (~crunch~chew~) Yum Yum!!. I'm... I'm...... (~chomp~chomp~).... going to find out the truth!! (~crunch~chomp~) Mmmmm......";
-	close;
-}
-
-//=======================================================
-comodo,215,307,4	script	BBQ Mama	66,{
-	doevent "BBQ Papa::OnStart";
-	end;
-}
-
-//=======================================================
-comodo,213,310,4	script	BBQ Son	706,{
-	doevent "BBQ Papa::OnStart";
-	end;
-}
-
-//=======================================================
-comodo,221,310,4	script	Rinta	89,{
-	mes "[Rinta]";
-	mes "I was 'accidentally' eavesdropping on those people having the BBQ over there.";
-	mes "It seems that they are long time friends of Comodo's ^5555FFChief^000000.";
-	next;
-	mes "[Rinta]";
-	mes "If this is true, then this means that they can have as much meat and seasoning as they want......";
-	emotion e_ic;
-	close;
-}
-
-//=======================================================
-comodo,218,309,4	script	Razy	69,{
-	mes "[Razy]";
-	mes "I really dislike people who constantly reminisce about the past.  Like that group of people over there.  They're really starting to bug me.";
-	next;
-	mes "[Razy]";
-	mes "However, the lady in that group looks really beautiful.... her skin is so light and her complexion is wonderful.";
-	mes "If only she didn't have that scar on her face.... she would be perfect...........";
-	close;
-}
-
-
-
-//============================================================================//
-//				Casino
-//============================================================================//
-
-//=============================================================
-cmd_in02,172,105,4	script	G . J	86,{
-	mes "[G . J]";
-	mes "The more I think about it, the more I realize that it is easier and quicker to get rich by working a steady job and saving my money";
-	mes "than it is to gamble it away on false hopes of hitting the jackpot. ";
-	next;
-	mes "[G . J]";
-	mes "It just seems like a smarter choice.  I can still earn a good living even after paying my bills and taxes.";
-	mes "I feel that it is much more respectable to earn your living through hard work than it is to try to make a living on easy money.";
-	next;
-	mes "[G . J]";
-	mes "Wouldn't you agree? Think about it in this way: You and your friend have been gambling and your friend hits the jackpot.";
-	mes "You would want your friend to buy you dinner or even lend you some of the prize money right?";
-	next;
-	mes "[G . J]";
-	mes "After all it's not like your friend EARNED the money.... he/she just got lucky that’s all.";
-	mes "Your friend shouldn't mind sharing money that really isn't his/hers.";
-	next;
-	mes "[G . J]";
-	mes "On the other hand, if that same friend had a steady job and worked hard for every penny he/she earned......";
-	mes "would you be comfortable asking your friend for some of that hard earned money?";
-	next;
-	mes "[G . J]";
-	mes "You wouldn't dare would you! That money was well earned and represents your friends hard work.";
-	mes "You have respect for you friend because of that, and value his/her money more than some prize money.";
-	close;
-}
-
-//=============================================================
-cmd_in02,178,92,4	script	Shalone	101,{
-	mes "[Shalone]";
-	mes "Ok, ok............ A-4!! Looks like you've lost again sir.... Hoo hoo, if you'd like a little advice, you shouldn't play when your luck's this bad.";
-	next;
-	mes "[Shalone]";
-	mes "( This costumer just can't seem to win! I feel so sorry for him... ~sigh~)";
-	close;
-}
-
-//=============================================================
-cmd_in02,178,86,4	script	Stonae	98,{
-	mes "[Stonae]";
-	mes "WHAT!! Dang it!! AGAIN!! Arghhhhhhh!!!............";
-	emotion e_omg;
-	next;
-	mes "[Stonae]";
-	mes "Sheesh! I can't quit after losing this badly! I won't quit until I win!";
-	emotion e_ag;
-	next;
-	mes "[Stonae]";
-	mes "Let's go!!";
-	emotion e_go;
-	close;
-}
-
-//=============================================================
-cmd_in02,174,126,4	script	Loyar	83,{
-	mes "[Loyar]";
-	mes "The Comodo Casino has a very pleasing decor... It's quite clean and simple!";
-	mes "The atmosphere is perfect and makes you really want to play more!";
-	emotion e_ok;
-	next;
-	mes "[Loyar]";
-	mes "Atmosphere is everything when it comes to gaming.";
-	next;
-	mes "[Loyar]";
-	mes "No matter how much fun a game is, no one would be willing to play for a long time if the environment was dirty.";
-	mes "A shabby interior and bad odors can wreck a good casino!";
-	next;
-	mes "[Loyar]";
-	mes "The Comodo Casino is the best... NOTHING can beat it! The interior design might even change the mood of a sensitive player.";
-	mes "Isn't it great?!";
-	close;
-}
-
-//=============================================================
-cmd_in02,73,81,4	script	Martine	48,{
+// Inside Comodo
+//============================================================
+cmd_in02,73,81,4	script	Martine#cmd	48,{
 	mes "[Martine]";
-	mes "Gambling? Oh no, it's NOT gambling! Don't say that the Comodo 'CASINO' houses gambling.....";
-	emotion e_gasp;
+	mes "Gambling...? The games";
+	mes "provided here in the Comodo";
+	mes "Casino are a higher form of";
+	mes "entertainment than gambling.";
+	mes "Do you know what I mean?";
 	next;
 	mes "[Martine]";
-	mes "We provide some of the greatest 'GAMES' in the world. It's much more of a sophisticated form of 'GAMING' than it is 'GAMBLING'.....";
-	mes "You know what I mean?? (~wink~)";
+	mes "Granted, I did lose";
+	mes "all of my zeny playing";
+	mes "in this Casino, but I have";
+	mes "no regrets. I'll simply earn";
+	mes "more money, then blow it all";
+	mes "again. Or I just might win big!";
 	next;
 	mes "[Martine]";
-	mes "What?......... Don't look at me like that!...";
-	emotion e_gasp;
-	next;
-	mes "[Martine]";
-	mes "..... Ok, FINE! I see how it is.  I don't care what you think.  I've lost all my zeny playing in this casino and I have NO regrets whatsoever!";
-	emotion e_ag;
-	next;
-	mes "[Martine]";
-	mes "Today's competition is over! I'll have to go to the ^5555FFComodo Dungeon^000000 and kill some monsters to earn back the zeny I lost.";
-	mes "But no worries here cause after I've made some zeny, I'll be right back were I left off!!";
-	next;
-	mes "[Martine]";
-	mes "WOO HOO!! I'm going to have a blast!! HAHAHA!";
-	emotion e_gg;
+	mes "Bwahahahaahah~!";
+	mes "Yes, I can only lose so";
+	mes "many times until I hit the";
+	mes "jackpot! You see, you see?";
+	mes "I'm playing the freakin' odds.";
 	close;
 }
 
-//=============================================================
-cmd_in02,64,43,4	script	Roberto#01	709,{
+cmd_in02,48,55,4	script	Scoursege#cmd	51,{
+	mes "[Scoursege]";
+	mes "Damn it! Where did that";
+	mes "guy go? He promised me that";
+	mes "he'd easily double my money!";
+	mes "Wait. Oh, wait. Oh... Oh no...";
+	next;
+	mes "[Scoursege]";
+	mes "Don't tell me that I just got";
+	mes "conned out of my money!";
+	mes "Oh no! Still, I better report";
+	mes "this to the proper authorities,";
+	mes "no matter how ashamed I feel...";
+	close;
+}
+
+cmd_in02,64,43,4	script	Roberto#cmd	709,{
 	mes "[Roberto]";
-	mes "Muhahaha... What a stupid man! Now that's easy money! (~counts his money~)";
-	emotion e_gg;
-	next;
-	mes "[Roberto]";
-	mes "Hey you! What are you looking at!? Get out of here!! What... you've never seen someone count money before??";
-	emotion e_what;
+	mes "Heh heh heh...";
+	mes "Whaaaat a gullible";
+	mes "guy. I took his money";
+	mes "so easily! I mean, I didn't";
+	mes "even come up with that great";
+	mes "of a lie, and he gave it to me!";
 	close;
 }
 
-//=============================================================
-cmd_in02,89,72,4	script	Deniroz	89,{
+cmd_in02,89,72,4	script	Deniroz#cmd	89,{
 	mes "[Deniroz]";
-	mes "If the bead falls in this time, I'll hit the JACKPOT!! All I have to do is put this small bead into that little hole.";
-	emotion e_gasp;
+	mes "All I need is for this";
+	mes "little steel bead to fall";
+	mes "into the right hole. Then,";
+	mes "I'll win the jackpot. Alright.";
+	mes "Here goes. One last time...";
 	next;
 	mes "[Deniroz]";
-	mes "Most people give up after a few tries, but not me..... *whispers*(the can of beer in my hand is actually a powerful magnet)...";
-	next;
-	mes "[Deniroz]";
-	mes "Keee hee hee hee!! I'm going to get rich with my secret plan!!";
-	emotion e_gg;
+	mes "No! No, I was so close!";
+	mes "Alright, next time I should";
+	mes "be even closer, right? Yeah.";
+	mes "Okay, this time will be the";
+	mes "last time. Not again! Alright,";
+	mes "j-just one more t-time...";
 	close;
 }
 
-//=============================================================
-cmd_in02,57,62,4	script	Casino Manager Moo	109,{
-	mes "[Casino Manager Moo]";
-	mes "I am the manager of Comodo Casino.  My name is ^3355FF'Moo'^000000.";
-	next;
-	mes "[Casino Manager Moo]";
-	mes "Here at the Comodo Casino, we strive to serve our customers and accommodate their needs as best we can.";
-	mes "Please let us know if you need anything.";
-	next;
-	mes "[Casino Manager Moo]";
-	mes "This area is for the VIP guest at our Casino.  Our VIP program facilitates a more sophisticated level of gaming.";
-	mes "If you're interested in a more easy going gaming environment, I recommend choosing a more general gaming area.";
-	next;
-	mes "[Casino Manager Moo]";
-	mes "We are continually expanding and trying to develop a more enjoyable environment for our guests here so check back with us often.";
+cmd_in02,178,92,4	script	Shalone#cmd	101,{
+	mes "[Shalone]";
+	mes "Oh, I'm sorry, sir,";
+	mes "but it looks like you";
+	mes "lost again. Maybe you";
+	mes "should quit for now...";
+	mes "You've been having quite";
+	mes "a run of really bad luck...";
 	close;
 }
 
-//====================================================
-cmd_in02,48,55,4	script	Scoursege	51,{
-	mes "[Scoursege]";
-	mes "Darn it, where is that guy who borrowed my zeny? He better not be hiding from me, he told me he would double my money!";
-	emotion e_swt2;
-	next;
-	mes "[Scoursege]";
-	mes "He was positive that he could double my money and make a little for himself! Where is he!...";
-	next;
-	mes "[Scoursege]";
-	mes "Have I been scammed!?? On no! What should I do?? My zeny..... (~sob~sob~)";
-	emotion e_sob;
+cmd_in02,178,86,4	script	Stonae#cmd	98,{
+	mes "[Stonae]";
+	mes "N-no...";
+	mes "I lost again?!";
+	mes "But I can't quit like";
+	mes "this! I'm gonna keep";
+	mes "going, and I'm gonna";
+	mes "leave this place a winner!";
 	close;
 }
 
-
-
-//============================================================================//
-//			Comodo Pharos Lighthouse (Beacon Island)
-//============================================================================//
-
-//==================================================
-cmd_fild07,192,58,4	script	Light House Guard#01	100,{
-	mes "[Rahasu]";
-	mes "Good morning, I am Rahasu, your guide to the";
-	mes "^3355FF`lighthouses'^000000";
-	mes "Do you wish to learn more about these lighthouses?";
+cmd_in02,172,105,4	script	G . J#cmd	86,{
+	mes "[G . J]";
+	mes "The more I think about it,";
+	mes "it seems easier to become";
+	mes "rich by working, saving, and";
+	mes "making wise investments than";
+	mes "to, you know... Rely on some";
+	mes "kind of huge jackpot prize.";
 	next;
-	menu "Learn more about these Lighthouses..",-,"Cancel",M_End;
+	mes "[G . J]";
+	mes "Gambling seems fun, but";
+	mes "it seems smarter to make";
+	mes "money in other ways. Sure,";
+	mes "working hard is no fun, but";
+	mes "there are ways to use your^FFFFFF ^000000 money to make more of it, right?";
+	next;
+	mes "[G . J]";
+	mes "There's also the matter of";
+	mes "being smart and responsible";
+	mes "about your money--I mean, you're more likely to blow all your cash";
+	mes "if you win it, right? Yeah, you";
+	mes "gotta be wise about it all...";
+	close;
+}
 
-		mes "[Rahasu]";
-		mes "As you probably have noticed, there are two huge lighthouses located in this area.";
-		mes "Both of these lighthouses were used to signal nearby fortresses of incoming invasions many years ago.";
+cmd_in02,174,126,4	script	Loyar#cmd	83,{
+	mes "[Loyar]";
+	mes "Comodo Casino's interior";
+	mes "design is so pleasing to the";
+	mes "eyes, so clean and simple.";
+	mes "The atmosphere here is perfect,";
+	mes "and it makes me want to play ";
+	mes "some more. Alright, let's go!";
+	next;
+	switch(rand(1,3)) {	
+	case 1:
+		mes "[Loyar]";
+		mes "Hmm... Maybe I better";
+		mes "go home soon. I didn't";
+		mes "spend all the money that";
+		mes "I set aside for gambling";
+		mes "quite yet, but it's not a good";
+		mes "idea to stay out too long.";
+		close;
+	case 2:
+		mes "[Loyar]";
+		mes "I have to admit, the";
+		mes "atmosphere of this place";
+		mes "is exciting and addictive.";
+		mes "Even when you're tired, the";
+		mes "energy of this place just";
+		mes "gets into you, you know?";
 		next;
-		mes "[Rahasu]";
-		mes "Too bad tourists can not enter these lighthouses yet, because they are still under heavy restrictions.";
-		mes "There are many, many beautiful paintings inside.";
+		mes "[Loyar]";
+		mes "Although this kind of place";
+		mes "may encourage people with";
+		mes "serious gambling problems,";
+		mes "it's much nicer to gamble";
+		mes "here than in a place that's";
+		mes "dirtier and more questionable.";
 		close;
-	M_End:
-		mes "[Rahasu]";
-		mes "That's too bad, hope you could find some time to learn more about these ancient structures.";
+	case 3:
+		mes "[Loyar]";
+		mes "Whoa whoa whoa...";
+		mes "Why did that guy make";
+		mes "that bet? What an amateur...";
+		mes "Er, I guess you don't know";
+		mes "too much about this game.";
+		mes "As for me, I'm just a fan~";
+		next;
+		mes "[Loyar]";
+		mes "I'm a big fan of a lot";
+		mes "of these games, but I'll";
+		mes "admit that I'm an even bigger";
+		mes "fan of winning! Still, I have";
+		mes "enough sense to stay out of";
+		mes "those high stakes games.";
 		close;
+	}
 }
 
-//=========================================================
-cmd_fild07,52,280,4	script	Light House Guard#02	100,{
-	mes "[Hallosu]";
-	mes "That's correct, this is one of the two lighthouses in this area.";
-	mes "However, I can not let anyone go in yet because the lighthouse's interior is still under reconstruction.";
-	next;
-	mes "[Hallosu]";
-	mes "We hope to have a grand opening soon, thank you for your time!";
-	mes "^3355FF(The guard is very nervous)^000000";
-	close;
+cmd_in02,57,62,4	script	Moo#cmd	109,{
+	set mooz,rand(1,10);
+	if (mooz == 1) {
+		mes "[Moo]";
+		mes "Those cheating punks!";
+		mes "They'll never show their";
+		mes "faces here again: otherwise";
+		mes "they're gonna hafta get new";
+		mes "ones! Oh--Sorry, I didn't";
+		mes "see you there~ Hahahaha~";
+		close;
+	}
+	else {
+		mes "[Moo]";
+		mes "Greetings, I am Moo,";
+		mes "manager of the Comodo";
+		mes "Casino. We pride ourselves in";
+		mes "serving all of our customers'";
+		mes "needs, doing all we can so that^FFFFFF ^000000 your visit here is unforgettable.";
+		next;
+		mes "[Moo]";
+		mes "All of our guests can enjoy";
+		mes "our general gaming area, and";
+		mes "we also provide a VIP area";
+		mes "where high rollers can play";
+		mes "exciting high stakes games.";
+		next;
+		mes "[Moo]";
+		mes "We always welcome all of";
+		mes "your suggestions, and are";
+		mes "always seeking to improve";
+		mes "your experience here in";
+		mes "the Comodo Casino.";
+		close;
+	}
 }
 
-//=========================================================
-cmd_fild07,299,83,4	script	Sailor#01	100,{
-	mes "[Zain]";
-	mes "Hello my friend, where do you wish to go?";
-	next;
-	menu "Alberta = 600 Zeny",-,"Izlude = 800 Zeny",M_1,"Cancel",M_End;
-
-		if(Zeny < 600) goto NoZeny;
-		set Zeny, Zeny - 600;
-		warp "alberta",192,169;
-		close;
-	M_1:
-		if(Zeny < 800) goto NoZeny;
-		set Zeny, Zeny - 800;
-		warp "izlude",176,182;
-		close;
-
-		NoZeny:
-			mes "[Zain]";
-			mes "Umm, you do not have enough zeny.";
-			close;
-	M_End:
-		mes "[Zain]";
-		mes "Thank you, come again";
-		close;
-}
-
-//=========================================================
-cmd_fild07,94,134,4	script	Sailor#02	100,{
-	mes "[Sarumane]";
-	mes "Hello my friend, where do you wish to go?";
-	next;
-	menu "Alberta = 600 Zeny",-,"Izlude = 800 Zeny",M_1,"Cancel",M_End;
-
-		if(Zeny < 600) goto NoZeny;
-		set Zeny, Zeny - 600;
-		warp "alberta",192,169;
-		close;
-	M_1:
-		if(Zeny < 800) goto NoZeny;
-		set Zeny, Zeny - 800;
-		warp "izlude",176,182;
-		close;
-
-		NoZeny:
-			mes "[Sarumane]";
-			mes "Umm, you do not have enough zeny.";
-			close;
-	M_End:
-		mes "[Sarumane]";
-		mes "Thank you, come again.";
-		close;
-}
-
-
-//============================================================================//
-//			Kokomo Beach
-//============================================================================//
-
-//=============================================================
-cmd_fild04,188,74,4	script	Zyosegirl	93,{
+// Comodo Field
+//============================================================
+cmd_fild04,188,74,4	script	Zyosegirl#cmd	93,{
 	mes "[Zyosegirl]";
-	mes "Hello, I am Zyosegirl, I gather seashells in the sea all day and sell them to make a living.";
+	mes "People call me the";
+	mes "Sea Lady because I'm";
+	mes "always here working,";
+	mes "gathering clams and other";
+	mes "sea creatures to sell. It's";
+	mes "a pretty good living, actually.";
 	next;
 	mes "[Zyosegirl]";
-	mes "Even though it seems to be a simple lifestyle, I absolutely love it here.";
+	mes "It's nice to be able to work";
+	mes "outdoors, but someday, I want";
+	mes "to save enough money and move";
+	mes "to the city. I'm still young, you^FFFFFF ^000000 know, and I've got dreams";
+	mes "that I want to fulfill~";
 	close;
 }
 
-//=========================================================
-cmd_fild04,248,86,4	script	Ziyaol	709,{
+cmd_fild04,248,86,4	script	Ziyaol#cmd	709,{
 	mes "[Ziyaol]";
-	mes "I don't care what you think of me, I am a fisherman, and it is a very tough profession.";
+	mes "Ahhh, it's nice being";
+	mes "a fisherman. You just";
+	mes "relax and let the fish";
+	mes "come to you. Well, it takes";
+	mes "some skill to catch as much";
+	mes "fish as I do with no effort~";
 	next;
 	mes "[Ziyaol]";
-	mes "I am just taking a short break right now, then I will resume fishing again in a few minutes...";
+	mes "I like the leisure involved";
+	mes "in my job, but if it's not one";
+	mes "thing, it's another. Yeah, that";
+	mes "daughter of mine over there";
+	mes "won't stop harping about ";
+	mes "moving to the biiig city.";
+	next;
+	mes "[Ziyaol]";
+	mes "Why does she want to leave";
+	mes "me so badly?! But if I don't";
+	mes "let her go, she'll run away.";
+	mes "What am I going to do with";
+	mes "that girl? Well, I can't really";
+	mes "stop her from dreaming...";
 	close;
 }
 
-//=========================================================
-cmd_fild04,267,137,4	script	Kid	703,{
+cmd_fild04,267,137,4	script	Daeguro#cmd	703,{
 	mes "[Daeguro]";
-	mes "The sand here are so gentle and the smell of the ocean is great.";
-	mes "I hope one day I could get on one of those boats and head to Alberta.";
+	mes "I love playing in";
+	mes "the sand-- it's so soft";
+	mes "and clean and pretty!";
+	mes "But when I grow up,";
+	mes "I wanna go to Alberta";
+	mes "and see everything I can!";
 	close;
 }
 
-
-//============================================================================//
-//						Others
-//============================================================================//
-
-//============================================================
-moc_fild12,35,303,4	script	Saint Darmain Gatekeeper	59,{
-	mes "[Serutero]";
-	mes "Good day, my name is Sertutero and I am the Gatekeeper for the road to Saint Darmain.";
-	mes "Do wish to proceed to Saint Darmain?";
+cmd_fild07,192,58,4	script	Rahasu#cmd	100,{
+	mes "[Rahasu]";
+	mes "Hey, I'm Rahasu.";
+	mes "If you want to learn";
+	mes "a little more about";
+	mes "Paros Lighthouse, I'll";
+	mes "be happy to tell you.";
 	next;
-	menu "Proceed to Saint Darmain",-,"Learn more about Saint Darmain",M_1,"Cancel",M_End;
-	
+	if (select("Paros Lighthouse?:Cancel") == 1) {
+		mes "[Rahasu]";
+		mes "For many years, this";
+		mes "lighthouse guided many";
+		mes "ships to shore. That was";
+		mes "a long time ago: now this";
+		mes "lighthouse sits quietly,";
+		mes "unused, but never unloved.";
+		next;
+		mes "[Rahasu]";
+		mes "Although this place";
+		mes "isn't the center of";
+		mes "trade and commerce that";
+		mes "it used to be, plenty of";
+		mes "people still wander to this";
+		mes "area. I wonder why, exactly...";
+		close;
+	}
+	mes "[Rahasu]";
+	mes "Hey, before you leave,";
+	mes "you really ought to check";
+	mes "the view from the lighthouse.";
+	mes "It's... It's breathtaking...";
+	close;
+}
+
+cmd_fild07,52,280,4	script	Hallosu#cmd	100,{
+	mes "[Hallosu]";
+	mes "Hello, this is one of the";
+	mes "lighthouses that make up";
+	mes "Paros Lighthouse. However,";
+	mes "right now it's undergoing";
+	mes "renovation, so it's not";
+	mes "open to the public.";
+	close;
+}
+
+cmd_fild07,299,83,4	script	Zain#cmd	100,{
+	mes "[Zain]";
+	mes "Would you like to";
+	mes "board a ship on the";
+	mes "Reudelus route? You";
+	mes "can travel on Reudelus";
+	mes "to Alberta or Izlude.";
+	next;
+	switch(select("Alberta - 600 Zeny:Izlude - 800 Zeny:Cancel")) {
+	case 1:
+		if (Zeny < 600) {
+			mes "[Zain]";
+			mes "I'm sorry, but you";
+			mes "don't have enough";
+			mes "zeny for the boarding fare.";
+			close;
+		}
+		set zeny,zeny-600;
+		warp "alberta",192,169;
+		end;
+	case 2:
+		if (Zeny < 800) {
+			mes "[Zain]";
+			mes "I'm sorry, but you";
+			mes "don't have enough";
+			mes "zeny for the boarding fare.";
+			close;
+		}
+		set zeny,zeny-800;
+		warp "izlude",176,182;
+		end;
+	case 3:
+		mes "[Zain]";
+		mes "Travel by ship is";
+		mes "still one of the safest and";
+		mes "dependable methods of";
+		mes "transportation. I invite you";
+		mes "to try Reudelus travel soon~";
+		close;
+	}
+}
+
+cmd_fild07,94,134,4	script	Sarumane#cmd	100,{
+	mes "[Sarumane]";
+	mes "Would you like to";
+	mes "board a ship on the";
+	mes "Reudelus route? You";
+	mes "can travel on Reudelus";
+	mes "to Alberta or Izlude.";
+	next;
+	switch(select("Alberta - 600 Zeny:Izlude - 800 Zeny:Cancel")) {
+	case 1:
+		if (Zeny < 600) {
+			mes "[Sarumane]";
+			mes "I'm sorry, but you";
+			mes "don't have enough";
+			mes "zeny for the boarding fare.";
+			close;
+		}
+		set zeny,zeny-600;
+		warp "alberta",192,169;
+		end;
+	case 2:
+		if (Zeny < 800) {
+			mes "[Sarumane]";
+			mes "I'm sorry, but you";
+			mes "don't have enough";
+			mes "zeny for the boarding fare.";
+			close;
+		}
+		set zeny,zeny-800;
+		warp "izlude",176,182;
+		end;
+	case 3:
+		mes "[Sarumane]";
+		mes "Travel by ship is";
+		mes "still one of the safest and";
+		mes "dependable methods of";
+		mes "transportation. I invite you";
+		mes "to try Reudelus travel soon~";
+		close;
+	}
+}
+
+
+// Morroc Field
+//============================================================
+moc_fild12,35,303,4	script	Serutero#cmd	59,{
+	mes "[Serutero]";
+	mes "Hello, I'm Serutero,";
+	mes "guardian of the roads that";
+	mes "lead to Sandaruman Fortress.";
+	mes "If you really want to go there,";
+	mes "I'll permit you to continue, but^FFFFFF ^000000 you must beware of its dangers...";
+	next;
+	switch(select("I'm going there!:Sandaruman Fortress?:Cancel")) {
+	case 1:
 		mes "[Serutero]";
-		mes "Good luck out there, things could get rough, so be extra careful.";
-		mes ". . . . .";
+		mes "So you're really going";
+		mes "to go to Sandaruman";
+		mes "Fortress. Alright then,";
+		mes "good luck, and be careful!";
+		close;
 		warp "cmd_fild08",331,319;
-		close;
-	M_1:
+		end;
+	case 2:
 		mes "[Serutero]";
-		mes "Long time ago, due to many waves of invasion by monsters in Saint Darmain, many defensive structures were constructed to keep the peace.";
-		mes "And slowly, Saint Darmain became a natural fortress.";
-		mes "During an invasion, the southern edge of Saint Darmain's lighthouse also sends warning signals to surrounding cities.";
+		mes "Although Sandaruman";
+		mes "Fortress is infested with";
+		mes "monsters now, it used to be";
+		mes "a province where people lived.";
+		mes "However, they were always";
+		mes "invaded and pillaged...";
 		next;
 		mes "[Serutero]";
-		mes "Because of the vastness of all the defensive structures, Saint Darmain is also commonly known as";
-		mes "^3355FF` Fortress Saint Darmain '^000000.";
+		mes "Sandaruman's inhabitants";
+		mes "eventually adapted to the";
+		mes "invasions, developing smoke";
+		mes "signals and fortifications to";
+		mes "withstand the ravages of war.";
+		mes "Then, Comodo was built...";
 		next;
 		mes "[Serutero]";
-		mes "If you are looking for the lighthouse, proceed in the direction of south-west.";
-		close;
-	M_End:
+		mes "Comodo grew in power and";
+		mes "influence and eventually annexed Sandaruman. More and more people";
+		mes "moved from the fortress to Comodo until Sandaruman Fotress was";
+		mes "essentially abandoned.";
+		next;
 		mes "[Serutero]";
-		mes "If you ever become exhausted on your journey, you should stop by the nearby island of";
-		mes "^3355FF`Comodo'^000000 City.";
-		mes "The tropical weather over there is a brand new experience for most people.";
+		mes "There were a few people";
+		mes "remaining in Sandaruman,";
+		mes "but they revolted and some";
+		mes "fledging government came into";
+		mes "power there. The monsters took";
+		mes "the chance to take over...";
+		next;
+		mes "[Serutero]";
+		mes "There's nothing around";
+		mes "Sandaruman now. Well, nothing";
+		mes "except maybe Paros Lighthouse,";
+		mes "which is southwest of here. That place might be of interest to";
+		mes "aspiring Rogues, I hear...";
 		close;
+	case 3:
+		mes "[Serutero]";
+		mes "You know, if you're";
+		mes "tired of traveling, you";
+		mes "can rest in ^3355FFComodo^000000. That";
+		mes "place is a pretty popular";
+		mes "tourist attraction, especially";
+		mes "for you adventurer types.";
+		close;
+	}
 }
