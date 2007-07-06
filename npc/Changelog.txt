@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/07/06
+	* Fixed Kiel Hyre Quest (u could stuck) thx 2X-Siro [Lupus]
 2007/07/04
 	* Removed respawn time on Byorgue [Playtester]
 2007/07/01

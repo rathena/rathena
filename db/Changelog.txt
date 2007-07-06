@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+07/06
+	* Updated messed Kiel_Hyre_Quest.txt item names, accordinly [Lupus]
 07/05
 	* Updated the SC constant listing in db/const.txt [Skotlex]
 07/04
