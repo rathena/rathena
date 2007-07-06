@@ -1,7 +1,9 @@
 Date		Added
 ======
 2007/07/06
-	* Rev. 10857 Updated Juno and Comodo NPCs. [L0ne_W0lf]
+	* Rev. 10859 Forgot to add the third part of the doomed swords quest. [L0ne_W0lf]
+	* Forgot to update the conf files accordingly. (added doomed_swords_quest deleted metto_quest)
+	* Rev. 10858 Updated Juno and Comodo NPCs. [L0ne_W0lf]
 	- Updated Monster Museum NPCs as well.
 	- Updated doomed swords quest, moved unrelated NPCs to proper files.
 	- Added the end of the Comodo and Juno doomed swords quests.
