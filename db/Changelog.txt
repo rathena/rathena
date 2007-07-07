@@ -17,7 +17,7 @@
 	7458 Fortune Horn:	It's a custom name ^^;
 	12017 Speed Decreasing Potion: A potion which decreases the moving speed of a character for a duration.
 	-----
-	Incomplete or missing bonuses:
+	Incomplete or missing bonuses (Can be completed with NPC skill update):
 	1269 Inverse_Scare		Missing Area Effect (Ramdom status effects in 5x5 area)
 	1270 Drill_Katar		Full stripping target without applying "Stripped" status.
 	1271 Bloody_Blade		Missing Area Effect (Bleeding in a 5x5 area. 11x11 if +10)
@@ -48,6 +48,14 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+07/07
+	* Rev. 10864 Rather large update to mob_skill_db. [L0ne_W0lf]
+	- Update to biolab monster skill list, and boss monster skill lists.
+	- Updated 11.2 monster skills to official.
+	- Monsters that summon mobs that are NOT mini-bosses only summon when IDLE now.
+	- Due to lack of support for new NPC skills, they have been commented out.
+	- Removed skills (with the exception of NPC_REVENGE from alchemist plants)
+	- Additional minor changes.
 07/06
 	* Updated messed Kiel_Hyre_Quest.txt item names, accordinly [Lupus]
 07/05
