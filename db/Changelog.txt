@@ -49,12 +49,13 @@
 	----
 ========================
 07/07
+	* Rev. 10865 Commented out NPC_EARTHQUAKE in Randgris' skill list. [L0ne_W0lf]
 	* Rev. 10864 Rather large update to mob_skill_db. [L0ne_W0lf]
 	- Update to biolab monster skill list, and boss monster skill lists.
 	- Updated 11.2 monster skills to official.
 	- Monsters that summon mobs that are NOT mini-bosses only summon when IDLE now.
 	- Due to lack of support for new NPC skills, they have been commented out.
-	- Removed skills (with the exception of NPC_REVENGE from alchemist plants)
+	- Removed skills (with the exception of NPC_REVENGE) from alchemist plants.
 	- Additional minor changes.
 07/06
 	* Updated messed Kiel_Hyre_Quest.txt item names, accordinly [Lupus]

@@ -3959,8 +3959,8 @@
 1751,Valkyrie Randgris@CR_HOLYCROSS,attack,253,10,2000,0,5000,yes,target,always,0,,,,,,
 1751,Valkyrie Randgris@KN_BRANDISHSPEAR,attack,57,20,1000,0,5000,yes,target,always,0,,,,,,
 1751,Valkyrie Randgris@MG_THUNDERSTORM,attack,21,15,1000,1500,5000,no,target,attackpcge,2,,,,,,
-1751,Valkyrie Randgris@NPC_EARTHQUAKE,chase,649,5,10000,1000,25000,no,self,myhpltmaxrate,30,,,,,,
-1751,Valkyrie Randgris@NPC_EARTHQUAKE,attack,649,5,10000,1000,25000,no,self,myhpltmaxrate,30,,,,,,
+//1751,Valkyrie Randgris@NPC_EARTHQUAKE,chase,650,5,10000,1000,25000,no,self,myhpltmaxrate,30,,,,,,
+//1751,Valkyrie Randgris@NPC_EARTHQUAKE,attack,650,5,10000,1000,25000,no,self,myhpltmaxrate,30,,,,,,
 1751,Valkyrie Randgris@WZ_VERMILION,attack,85,20,1000,1000,5000,no,target,always,0,,,,,,
 1751,Valkyrie Randgris@WZ_VERMILION,chase,85,20,2000,1000,5000,no,target,always,0,,,,,,
 1752,Skogul@TF_HIDING,idle,51,1,2000,0,180000,no,self,always,0,,,,,,9
