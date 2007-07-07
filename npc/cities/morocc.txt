@@ -1,13 +1,14 @@
 //===== eAthena Script ======================================= 
 //= Morroc Town
 //===== By: ================================================== 
-//= kobra_k88
+//= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= eAthena SVN
 //===== Description: ========================================= 
-//=
+//= [Aegis Conversion]
+//= Morroc Town NPCs
 //===== Additional Comments: ================================= 
 //= Fully working
 //= Fixed Lapidary sprite, Implemented ANTHELL trigger

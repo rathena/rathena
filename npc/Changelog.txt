@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/07/07
+	* Rev. 10863 Updated header for Morroc City. [L0ne_W0lf]
+	* Finished updating Geffen awhile back, and forgot to commit it.
 	* Rev. 10862 Fixed various errors in the Bajin NPC in quests_yuno. [L0ne_W0lf]
 2007/07/06
 	* Rev. 10859 Forgot to add the third part of the doomed swords quest. [L0ne_W0lf]
