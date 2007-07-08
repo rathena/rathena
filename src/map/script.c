@@ -5758,12 +5758,12 @@ BUILDIN_FUNC(deletearray)
 	if( is_string_variable(name) )
 	{
 		for( ; start < end; ++start )
-			set_reg(st, sd, reference_uid(id, start), name, (void*)0, reference_getref(data));
+			set_reg(st, sd, reference_uid(id, start), name, (void *)"", reference_getref(data));
 	}
 	else 
 	{
 		for( ; start < end; ++start )
-			set_reg(st, sd, reference_uid(id, start), name, (void *)"", reference_getref(data));
+			set_reg(st, sd, reference_uid(id, start), name, (void*)0, reference_getref(data));
 	}
 	return 0;
 }

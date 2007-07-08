@@ -2494,11 +2494,17 @@ int pc_skill(TBL_PC* sd, int id, int level, int flag)
 {
 	nullpo_retr(0, sd);
 
-	if( level > MAX_SKILL_LEVEL ){
+	if( id <= 0 || id >= MAX_SKILL || skill_db[id].name == NULL) {
 		if( battle_config.error_log )
-			ShowError("pc_skill: Skill level %d too high. Max lv supported is MAX_SKILL_LEVEL (%d)\n", level, MAX_SKILL_LEVEL);
+			ShowError("pc_skill: Skill with id %d does not exist in the skill database\n", id);
 		return 0;
 	}
+	if( level > MAX_SKILL_LEVEL ) {
+		if( battle_config.error_log )
+			ShowError("pc_skill: Skill level %d too high. Max lv supported is %d\n", level, MAX_SKILL_LEVEL);
+		return 0;
+	}
+
 	switch( flag ){
 	case 0: //Set skill data overwriting whatever was there before.
 		sd->status.skill[id].id   = id;
