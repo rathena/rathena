@@ -339,10 +339,10 @@ const struct skill_name_db skill_names[] = {
  { NPC_BARRIER, "NPC_BARRIER", "NPC_BARRIER" } ,
  { NPC_BLINDATTACK, "NPC_BLINDATTACK", "NPC_BLINDATTACK" } ,
  { NPC_BLOODDRAIN, "NPC_BLOODDRAIN", "NPC_BLOODDRAIN" } ,
- { NPC_BREAKARMOR, "NPC_BREAKARMOR", "NPC_BREAKARMOR" } ,
- { NPC_BREAKHELM, "NPC_BREAKHELM", "NPC_BREAKHELM" } ,
- { NPC_BREAKSHIELD, "NPC_BREAKSHIELD", "NPC_BREAKSHIELD" } ,
- { NPC_BREAKWEAPON, "NPC_BREAKWEAPON", "NPC_BREAKWEAPON" } ,
+ { NPC_ARMORBRAKE, "NPC_ARMORBRAKE", "Break_Armor" } ,
+ { NPC_HELMBRAKE, "NPC_HELMBRAKE", "Break_Helm" } ,
+ { NPC_SHIELDBRAKE, "NPC_SHIELDBRAKE", "Break_Shield" } ,
+ { NPC_WEAPONBRAKER, "NPC_WEAPONBRAKER", "Break_Weapon" } ,
  { NPC_CALLSLAVE, "NPC_CALLSLAVE", "NPC_CALLSLAVE" } ,
  { NPC_CHANGEDARKNESS, "NPC_CHANGEDARKNESS", "NPC_CHANGEDARKNESS" } ,
  { NPC_CHANGEFIRE, "NPC_CHANGEFIRE", "NPC_CHANGEFIRE" } ,
@@ -1255,16 +1255,16 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 	}
 	// Equipment breaking monster skills [Celest]
-	case NPC_BREAKWEAPON:
+	case NPC_WEAPONBRAKER:
 		skill_break_equip(bl, EQP_WEAPON, 150*skilllv, BCT_ENEMY);
 		break;
-	case NPC_BREAKARMOR:
+	case NPC_ARMORBRAKE:
 		skill_break_equip(bl, EQP_ARMOR, 150*skilllv, BCT_ENEMY);
 		break;
-	case NPC_BREAKHELM:
+	case NPC_HELMBRAKE:
 		skill_break_equip(bl, EQP_HELM, 150*skilllv, BCT_ENEMY);
 		break;
-	case NPC_BREAKSHIELD:
+	case NPC_SHIELDBRAKE:
 		skill_break_equip(bl, EQP_SHIELD, 150*skilllv, BCT_ENEMY);
 		break;
 
@@ -2762,10 +2762,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case NPC_DARKNESSATTACK:
 	case NPC_TELEKINESISATTACK:
 	case NPC_UNDEADATTACK:
-	case NPC_BREAKARMOR:
-	case NPC_BREAKWEAPON:
-	case NPC_BREAKHELM:
-	case NPC_BREAKSHIELD:
+	case NPC_ARMORBRAKE:
+	case NPC_WEAPONBRAKER:
+	case NPC_HELMBRAKE:
+	case NPC_SHIELDBRAKE:
 	case LK_AURABLADE:
 	case LK_SPIRALPIERCE:
 	case LK_HEADCRUSH:
