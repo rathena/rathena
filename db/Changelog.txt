@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+07/08
+	* Rev. 10865 Corrected the new NPC skill IDs in the mob_skill_db. [L0ne_W0lf]
 07/07
 	* Rev. 10865 Commented out NPC_EARTHQUAKE in Randgris' skill list. [L0ne_W0lf]
 	* Rev. 10864 Rather large update to mob_skill_db. [L0ne_W0lf]
