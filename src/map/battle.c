@@ -2166,18 +2166,14 @@ struct Damage battle_calc_magic_attack(
 	switch(skill_num)
 	{
 		case MG_FIREWALL:
+			ad.dmotion = 0; //No flinch animation.
 			if(mflag) //mflag has a value when it was checked against an undead in skill.c [Skotlex]
 				ad.blewcount = 0; //No knockback
-			else
-				ad.blewcount |= 0x10000;
+			break;
 		case HW_GRAVITATION:
 			ad.dmotion = 0; //No flinch animation.
 			break;
-		case WZ_STORMGUST: //Should knockback randomly.
-			ad.blewcount|=0x40000;
-			break;
 		case PR_SANCTUARY:
-			ad.blewcount|=0x10000;
 			ad.dmotion = 0; //No flinch animation.
 			break;
 	}

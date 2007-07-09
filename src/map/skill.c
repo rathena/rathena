@@ -2141,7 +2141,16 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	//Only knockback if it's still alive, otherwise a "ghost" is left behind. [Skotlex]
 	if (dmg.blewcount > 0 && !status_isdead(bl))
-		skill_blown(dsrc,bl,dmg.blewcount,-1,0);
+	{
+		int direction = -1; // default
+		switch(skillid)
+		{
+			case MG_FIREWALL:  direction = unit_getdir(bl); break; // backwards
+			case WZ_STORMGUST: direction = rand()%8;        break; // randomly
+			case PR_SANCTUARY: direction = unit_getdir(bl); break; // backwards
+		}
+		skill_blown(dsrc,bl,dmg.blewcount,direction,0);
+	}
 	
 	//Delayed damage must be dealt after the knockback (it needs to know actual position of target)
 	if (dmg.amotion)
