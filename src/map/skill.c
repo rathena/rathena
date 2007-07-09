@@ -6146,7 +6146,8 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case AM_SPHEREMINE:
 	case AM_CANNIBALIZE:
 		{
-			int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
+			int summons[5] = { 1589, 1579, 1575, 1555, 1590 };
+			//int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
 			int class_ = skillid==AM_SPHEREMINE?1142:summons[skilllv-1];
 			struct mob_data *md;
 
@@ -6875,7 +6876,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 					alive=0;
 				else
 					clif_changemapcell(src->m,ux,uy,5,0);
-			}
+			//}
 		}
 
 		if(alive){
@@ -8255,7 +8256,8 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 	case AM_SPHEREMINE:
 		if(type&1){
 			int c=0;
-			int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
+			int summons[5] = { 1589, 1579, 1575, 1555, 1590 };
+			//int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
 			int maxcount = (skill==AM_CANNIBALIZE)? 6-lv : skill_get_maxcount(skill);
 			int mob_class = (skill==AM_CANNIBALIZE)? summons[lv-1] :1142;
 			if(battle_config.land_skill_limit && maxcount>0 && (battle_config.land_skill_limit&BL_PC)) {
