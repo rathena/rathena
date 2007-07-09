@@ -49,7 +49,8 @@
 	----
 ========================
 07/09
-	* Rev. 10871 More mob_skill_db.txt updates. [L0ne_W0lf]
+	* Rev. 10874 Commented out two questionable Marine Sphere skills. [L0ne_W0lf]
+	* Rev. 10872 More mob_skill_db.txt updates. [L0ne_W0lf]
 	- Added Fiber Lock to Argos and Close Confine to Drosera.
 	- Fixed monsters in Thanatos Tower and past using "Bash" instead of "Provoke"
 	- Added Two-hand Quicken to Incantation Samurai.
