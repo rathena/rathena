@@ -6876,7 +6876,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 					alive=0;
 				else
 					clif_changemapcell(src->m,ux,uy,5,0);
-			//}
+			}
 		}
 
 		if(alive){
