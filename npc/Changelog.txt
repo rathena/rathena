@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/07/10
+	* Rev. 10874 Added the gemstone trader into script_athena.conf [L0ne_W0lf]
 2007/07/07
 	* Rev. 10863 Updated header for Morroc City. [L0ne_W0lf]
 	* Finished updating Geffen awhile back, and forgot to commit it.
