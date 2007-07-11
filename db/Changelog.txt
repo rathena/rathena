@@ -48,8 +48,11 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+07/10
+	* Rev. 10876 G_Bacsojin will summon G_Spring_Rabbit now instead of Green Iguana. [L0ne_W0lf]
+	* Fixed some of the episode 11.2 monsters not using the proper level for some of their skills. 
 07/09
-	* Rev. 10874 Commented out two questionable Marine Sphere skills. [L0ne_W0lf]
+	* Rev. 10873 Commented out two questionable Marine Sphere skills. [L0ne_W0lf]
 	* Rev. 10872 More mob_skill_db.txt updates. [L0ne_W0lf]
 	- Added Fiber Lock to Argos and Close Confine to Drosera.
 	- Fixed monsters in Thanatos Tower and past using "Bash" instead of "Provoke"
