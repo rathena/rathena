@@ -1,6 +1,11 @@
 Date		Added
 ======
 2007/07/11
+	* Rev. 10878 Updated NPCs for Al De Baran [L0ne_W0lf]
+	- Added Inn NPC for Al De Baran
+	* Fixed problems with Hahoe/Lion/Bride masks quests.
+	* Added Zairik's fix for the wizard quest.
+2007/07/11
 	* Fixed a bug in the socket enchanter [Playtester]
 2007/07/10
 	* Rev. 10874 Added the gemstone trader into script_athena.conf [L0ne_W0lf]

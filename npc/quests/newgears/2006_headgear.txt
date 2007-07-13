@@ -8,8 +8,8 @@
 //= SVN eA
 //===== Description: =========================================
 //= [Aegis Conversion]
-//= Anonymous Mask, Feather Beret, Valk. Helm, Smiling Mask,
-//= Lion Masquerade, Bride Mask, Judge Hat and A-Yam Hat
+//= Censor Bar, Feather Beret, Valk. Helm, Hahoe Mask,
+//= Mythical Lion Mask, Bride Mask, Magistrate Hat and Ayam
 //===== Additional Comments: =================================
 //= NPC id's and dialog are custom, please replace
 //= 1.0a fixed typos, added missing names, more cleaned and
@@ -17,10 +17,11 @@
 //= 1.0b fixed Helm of Valkyries ingredients
 //= 1.0c corrected item names according to item_db [Lupus]
 //= 1.1 Full update. EuRO (?) dialogs, and positions. [L0ne_W0lf]
+//= 1.2 Fixed bugs in the Hahoe/Lion/Bride Mask NPC. [L0ne_W0lf]
+//=	Fixed some of the names to iRO.
 //============================================================
 
-
-//===================== Anonymous Mask =====================================================
+//===================== Censor Bar =====================================================
 rachel,91,273,8	script	?	930,{
 	if (countitem(983) > 0 && countitem(7111) > 99 && countitem(938) > 98 && Zeny > 99999) {
 		mes "[?]";
@@ -558,71 +559,21 @@ hugel,147,130,3	script	Ghenirhemin	897,{
 	mes "when you show me your money. Hahahaha!";
 	close;
 }
-
-//======================= Smiling Mask / Lion Masquerade / Bride Mask ===============================
+//======================= Hahoe Mask / Mythical Lion Mask / Bride Mask ===============================
 payon,135,320,3	script	Chungwolmang	97,{
 	if (moza_tal == 2) {
-		if (countitem(7015) > 19 && countitem(952) > 99 && countitem(1028) > 99 || countitem(1048) > 499 && countitem(1053) > 1 && countitem(980) > 0 || countitem(1049) > 19 && countitem(1059) > 499 && countitem(1054) > 1 && countitem(1024) > 99) {
-			mes "[Chungwolmang]";
-			mes "Oh, you have brought everything";
-			mes "to make a Mythical Lion Mask. Excellent.";
-			mes "Please give me the materials. I will make the mask right away.";
-			next;
-			if (select("Give him the items.:Don't give him the items.") == 1) {
-				mes "[Chungwolmang]";
-				mes "Great, I like your unhesitating attitude!";
-				mes "Alright then, I will make the mask as quickly as I can!";
-				next;
-				mes "[Chungwolmang]";
-				mes "- Fumble Fumble Fumble -";
-				mes "- Fumble Fumble Fumble -";
-				mes "- Fumble Fumble Fumble -";
-				mes "- Thud Thud Thud Thud -";
-				next;
-				mes "[Chungwolmang]";
-				mes "- Fumble Fumble Fumble -";
-				mes "- Fumble Fumble Fumble -";
-				mes "- Fumble Fumble Fumble -";
-				mes "- Thud Thud Thud Thud -";
-				next;
-
-				if (countitem(7015) > 19 && countitem(952) > 99 && countitem(1028) > 99) {
-					delitem 7015,20; //Bookclip_In_Memory
-					delitem 952,100; //Cactus_Needle
-					delitem 1028,100; //Wild_Boar's_Mane
-					getitem 5176,1; //Smiling_Mask
-				}
-				else if (countitem(1049) > 19 && countitem(1059) > 499 && countitem(1054) > 1 && countitem(1024) > 99) {
-					delitem 1049,20; //Skirt_Of_Virgin
-					delitem 1059,500; //Transparent_Cloth
-					delitem 1054,2; //Lip_Of_Ancient_Fish
-					delitem 1024,100; //Chinese_Ink
-					getitem 5169,1; //Bride_Mask
-				}
-				else if (countitem(1048) > 499 && countitem(1053) > 1 && countitem(980) > 0) {
-					delitem 1048,500; //Slender_Snake
-					delitem 1053,2; //Tooth_Of_Ancient_Fish
-					delitem 980,1; //Orange_Dyestuffs
-					getitem 5177,1; //Lion_Masquerade
-				}
-				set moza_tal,0;
-				mes "[Chungwolmang]";
-				mes "Wow, it was a piece of cake!";
-				mes "You know, I am not an artisan only in title.";
-				mes "Hahaha, here, take your Mythical Lion Mask.";
-				mes "I hope that you will wear it with pride, hahaha!";
-				next;
-				mes "[Chungwolmang]";
-				mes "Aright, I need to take a rest";
-				mes "until I have next customer. Hahaha, bye!";
-				close;
-			}
-			mes "[Chungwolmang]";
-			mes "Err? Don't you want Mythical Lion Mask?";
-			mes "Alright then...coward.";
-			close;
+		if (countitem(7015) > 19 && countitem(952) > 99 && countitem(1028) > 99) {
+			//Hahoe_Mask: Bookclip_In_Memory, Cactus_Needle, Wild_Boar's_Mane
+			callsub S_MakeMask,5176,7015,20,952,100,1028,100,0,0;
 		}
-
+		if (countitem(1048) > 499 && countitem(1053) > 1 && countitem(980) > 0) {
+			//Guardian_Lion_Mask: Slender_Snake, Tooth_Of_Ancient_Fishm Orange_Dyestuffs
+			callsub S_MakeMask,5177,1048,500,1053,2,980,1,0,0;
+		}
+		if (countitem(1049) > 19 && countitem(1059) > 499 && countitem(1054) > 1 && countitem(1024) > 99) {
+			//Bride_Mask: Skirt_Of_Virgin, Transparent_Cloth, Lip_Of_Ancient_Fish, Chinese_Ink
+			callsub S_MakeMask,5169,1049,20,1059,500,1054,2,1024,100;
+		}
 		mes "[Chungwolmang]";
 		mes "Well well, have you not gathered the materials yet?";
 		mes "You'd better hurry because I can't wait so long!";
@@ -688,9 +639,6 @@ payon,135,320,3	script	Chungwolmang	97,{
 		next;
 		switch(select("Hahoe Mask:Bride Mask:Mythical Lion Mask")) {
 		case 1:
-			delitem 7201,500; //Log
-			delitem 7200,10; //Flexible_String
-			set moza_tal,2;
 			mes "[Chungwolmang]";
 			mes "Great, you want Hahoe Mask, eh? That's easy!";
 			mes "Then you need to bring... ^FF000020 Bookclip in Memory^000000,";
@@ -699,6 +647,7 @@ payon,135,320,3	script	Chungwolmang	97,{
 			mes "Bring the exact amount of materials, then I will give you the mask right away.";
 			break;
 		case 2:
+			mes "[Chungwolmang]";
 			mes "Great, you want Bride Mask, eh? That's easy!";
 			mes "Then you need to bring... ^FF000020 Skirt of Virgin^000000,";
 			mes "^FF0000500 Fabric^000000, ^FF00002 Ancient Lips^000000,";
@@ -706,6 +655,7 @@ payon,135,320,3	script	Chungwolmang	97,{
 			mes "Bring the exact amount of materials, then I will give you the mask right away.";
 			break;
 		case 3:
+			mes "[Chungwolmang]";
 			mes "Great, you want Mythical Lion Mask, eh? That's easy!";
 			mes "Then you need to bring... ^FF0000500 Horrendous Hair^000000,";
 			mes "^FF00002 Ancient Tooth^000000, and";
@@ -713,6 +663,9 @@ payon,135,320,3	script	Chungwolmang	97,{
 			mes "Bring the exact amount of materials, then I will give you the mask right away.";
 			break;
 		}
+		delitem 7201,500; //Log
+		delitem 7200,10; //Flexible_String
+		set moza_tal,2;
 		next;
 		mes "[Chungwolmang]";
 		mes "...Why are you eyeing at me?";
@@ -799,9 +752,55 @@ payon,135,320,3	script	Chungwolmang	97,{
 	mes "I need a ^FF0000Four Leaf Clover^000000!";
 	mes "Somebody, please bring me a Four Leaf Clover!";
 	close;
+
+S_MakeMask:
+	mes "[Chungwolmang]";
+	mes "Oh, you have brought everything";
+	mes "to make a "+getitemname(getarg(0))+". Excellent.";
+	mes "Please give me the materials. I will make the mask right away.";
+	next;
+	if (select("Give him the items.:Don't give him the items.") == 1) {
+		mes "[Chungwolmang]";
+		mes "Great, I like your unhesitating attitude!";
+		mes "Alright then, I will make the mask as quickly as I can!";
+		next;
+		mes "[Chungwolmang]";
+		mes "- Fumble Fumble Fumble -";
+		mes "- Fumble Fumble Fumble -";
+		mes "- Fumble Fumble Fumble -";
+		mes "- Thud Thud Thud Thud -";
+		next;
+		mes "[Chungwolmang]";
+		mes "- Fumble Fumble Fumble -";
+		mes "- Fumble Fumble Fumble -";
+		mes "- Fumble Fumble Fumble -";
+		mes "- Thud Thud Thud Thud -";
+		next;
+		delitem getarg(1),getarg(2);
+		delitem getarg(3),getarg(4);
+		delitem getarg(5),getarg(6);
+		delitem getarg(7),getarg(8);
+		getitem getarg(0),1;
+		set moza_tal,0;
+		mes "[Chungwolmang]";
+		mes "Wow, it was a piece of cake!";
+		mes "You know, I am not an artisan only in title.";
+		mes "Hahaha, here, take your "+getitemname(getarg(0))+".";
+		mes "I hope that you will wear it with pride, hahaha!";
+		next;
+		mes "[Chungwolmang]";
+		mes "Aright, I need to take a rest";
+		mes "until I have next customer. Hahaha, bye!";
+		close;
+	}
+	mes "[Chungwolmang]";
+	mes "Err? Don't you want "+getitemname(getarg(0))+"?";
+	mes "Alright then...coward.";
+	close;
 }
 
-//====================== Judge Hat / A-Yam Hat =============================================
+
+//====================== Magistrate Hat / Ayam =============================================
 payon_in03,139,124,3	script	Han Garam	88,{
 	if (moza_korea == 2 && countitem(954) > 299 && countitem(733) > 4 && countitem(975) > 0 && countitem(7166) > 49) {
 		mes "[Han Garam]";

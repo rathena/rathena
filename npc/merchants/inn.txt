@@ -32,6 +32,7 @@
 //=	- Corrected Morroc NPCs. [L0ne_W0lf]
 //= 1.7 Corrected Payon NPC. [L0ne_W0lf] 
 //= 1.8 Corrected Geffen NPC. [L0ne_W0lf] 
+//= 1.9 Added the Inn for Al De baran [L0ne_W0lf]
 //============================================================ 
 
 
@@ -89,6 +90,14 @@ morocc_in,80,100,5	script	Inn Employee::Manar	53,{
 
 	callfunc "F_InnMaid","[Employee Manar]","Morroc Inn","morocc_in",78,95;
 	warp "morocc_in",79,123; end;
+}
+
+
+//====================== Aldebaran ===================================
+aldeba_in,92,58,5	script	Inn Maid	53,{
+
+	callfunc "F_InnMaid","[Rilim]","Al De Baran Inn","aldeba_in",92,50;
+	warp "aldeba_in",92,112; end;
 }
 
 //======================== Rachel ====================================

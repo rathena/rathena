@@ -49,6 +49,7 @@
 	----
 ========================
 07/13
+	* Rev. 10878 Updated "Name" fields for 11.2 headgears. [L0ne_W0lf]
 	* Rev. 10877 Fixed Blue Drooping Kitty. (Missing comma) Thanks to diedlikeahero [L0ne_W0lf]
 07/10
 	* Rev. 10876 G_Bacsojin will summon G_Spring_Rabbit now instead of Green Iguana. [L0ne_W0lf]

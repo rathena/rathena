@@ -25,6 +25,7 @@
 //= 1.8 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
 //= 2.1 Changed numbers to constants. [Vicious]
 //= 2.2 Merged back JFunc [Lupus] 2.2a Removed extra MES, added missing NEXT
+//= 2.3 Bigfoot monster summon corrected [Zairik]
 //============================================================ 
 
 
@@ -1305,7 +1306,7 @@ OnStart:
 	monster "job_wiz",120,102,"Hode",1127,1,"EarthRm::OnMyMobDead1";
 	monster "job_wiz",111,93,"Savage",1166,1,"EarthRm::OnMyMobDead1";
 	monster "job_wiz",120,93,"Giearth",1121,1,"EarthRm::OnMyMobDead1";
-	monster "job_wiz",107,98,"Bigfoot",1160,1,"EarthRm::OnMyMobDead1";
+	monster "job_wiz",107,98,"Bigfoot",1060,1,"EarthRm::OnMyMobDead1";
 	monster "job_wiz",124,98,"Orc Warrior",1023,1,"EarthRm::OnMyMobDead1";
 	monster "job_wiz",104,86,"Vitata",1176,1,"EarthRm::OnMyMobDead1";
 	monster "job_wiz",127,86,"Mantis",1139,1,"EarthRm::OnMyMobDead1";
