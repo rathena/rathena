@@ -1920,7 +1920,7 @@
 5230,White_Drooping_Kitty,White Drooping Cat,5,250000,,500,,1,,0,0xFFFFFFFE,7,2,256,,0,1,274,{ bonus2 bResEff,Eff_Curse,3000; bonus bMdef,15; },{},{}
 5231,Gray_Drooping_Kitty,Gray Drooping Cat,5,250000,,500,,1,,0,0xFFFFFFFE,7,2,256,,0,1,275,{ bonus2 bResEff,Eff_Curse,3000; bonus bMdef,15; },{},{}
 5232,Pink_Drooping_Kitty,Pink Drooping Cat,5,250000,,500,,1,,0,0xFFFFFFFE,7,2,256,,0,1,276,{ bonus2 bResEff,Eff_Curse,3000; bonus bMdef,15; },{},{}
-5233,Blue_Drooping_Kitty,Blue Drooping Cat,5250000,,,500,,1,,0,0xFFFFFFFE,7,2,256,,0,1,277,{ bonus2 bResEff,Eff_Curse,3000; bonus bMdef,15; },{},{}
+5233,Blue_Drooping_Kitty,Blue Drooping Cat,5,250000,,,500,,1,,0,0xFFFFFFFE,7,2,256,,0,1,277,{ bonus2 bResEff,Eff_Curse,3000; bonus bMdef,15; },{},{}
 5234,Yellow_Drooping_Kitty,Yellow Drooping Cat,5,250000,,500,,1,,0,0xFFFFFFFE,7,2,256,,0,1,278,{ bonus2 bResEff,Eff_Curse,3000; bonus bMdef,15; },{},{}
 5235,Gray_Fur_Hat,Gray Beanie,5,,10,350,,2,,0,0xFFFFFFFF,7,2,256,,0,1,279,{ bonus bLuk,1; },{},{}
 5236,Blue_Fur_Hat,Blue Beanie,5,,10,350,,2,,0,0xFFFFFFFF,7,2,256,,0,1,280,{ bonus bLuk,1; },{},{}
