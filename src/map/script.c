@@ -5649,7 +5649,7 @@ BUILDIN_FUNC(copyarray)
 	{// normal copy
 		for( i = 0; i < count; ++i )
 		{
-			if( id2 + i < 128 )
+			if( idx2 + i < 128 )
 				v = get_val2(st, reference_uid(id2, idx2 + i), reference_getref(data2));
 			else// out of range - assume ""/0
 				v = (void*)(is_string_variable(name1) ? "" : 0);
