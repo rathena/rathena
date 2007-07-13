@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.5b
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -40,6 +40,7 @@
 //= 1.4 Removed an erroneous "case". Thanks, Jet. [L0ne_W0lf]
 //= 1.5 Fixed a bug in Bruspetti quest. [SinSloth]
 //= 1.5b Fixed some typos in various quests. [SinSloth]
+//= 1.6 Fixed a couple bugs with the Pope's Office Guards... [L0ne_W0lf]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -5898,7 +5899,7 @@ ra_temin,134,128,3	script	Pope's Office Guard#rac::raofficeguard	927,{
 		close;
 	}
 
-	if ((ra_tem_q < 15) || (ra_tem_q == 15) && (countitem(7561) > 40)) {
+	if ((ra_tem_q < 15) || (ra_tem_q == 15) && (countitem(7561) < 40)) {
 		mes "[Pope's Office Guard]";
 		mes "I'm sorry, but outsiders";
 		mes "typically aren't allowed";
@@ -5923,8 +5924,9 @@ ra_temin,134,128,3	script	Pope's Office Guard#rac::raofficeguard	927,{
 			mes "those to me, and I'll let you";
 			mes "enter and see the pope";
 			mes "Welcome, brave "+strcharinfo(0)+".";
+			close2;
 			set ra_tem_q,16;
-			close;
+			delitem 7561,40; //Ice_Heart
 		}
 
 		if (ra_tem_q == 16) {
