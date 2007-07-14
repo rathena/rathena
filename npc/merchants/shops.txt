@@ -32,6 +32,7 @@
 //=	Re-alphabetized sections. Some of them were out of place.
 //=	Removed commented out shops.
 //= 2.0b Einbech tool dealer got lost somewhere along the way, re-added. [L0ne_W0lf]
+//= 2.1 Fixed missing item from "Fresh Fish" from cooking addition shops. [L0ne_W0lf]
 //============================================================ 
 
 //=======================================================
@@ -281,14 +282,14 @@ prontera,156,212,1	shop	Chef Assistant	700,7454:-1,7456:-1,7482:-1,580:-1
 payon,206,119,5	shop	Chef Assistant	89,7455:-1
 morocc,120,97,5	shop	Chef Assistant	86,7455:-1,7453:-1,7454:-1,7456:-1,7452:-1
 geffen,196,111,3	shop	Chef Assistant	85,7482:-1
-alberta,167,135,5	shop	Chef Assistant	712,:-1
+alberta,167,135,5	shop	Chef Assistant	712,579:-1
 aldebaran,165,107,2	shop	Chef Assistant	97,7456:-1,7452:-1,580:-1
-comodo,225,164,3	shop	Chef Assistant	83,7455:-1,7453:-1,7454:-1,:-1
+comodo,225,164,3	shop	Chef Assistant	83,7455:-1,7453:-1,7454:-1,579:-1
 umbala,102,154,3	shop	Chef Assistant	83,7456:-1,577:-1
 yuno,130,173,3	shop	Chef Assistant	83,7457:-1,7482:-1
 einbroch,224,207,5	shop	Chef Assistant	83,7457:-1
 lighthalzen,126,126,3	shop	Chef Assistant	83,7456:-1,7452:-1
-amatsu,206,150,3	shop	Chef Assistant	83,7453:-1,:-1
+amatsu,206,150,3	shop	Chef Assistant	83,7453:-1,579:-1
 louyang,256,123,5	shop	Chef Assistant	820,7454:-1,577:-1
 gonryun,147,101,5	shop	Chef Assistant	83,7452:-1,580:-1
 ayothaya,203,178,3	shop	Chef Assistant	83,7455:-1,577:-1

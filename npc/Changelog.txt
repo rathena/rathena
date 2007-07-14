@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/07.14
+	* Rev. 10882 Fixed missing item from "Fresh Fish" from cooking addition shops. [L0ne_W0lf]
 2007/07/11
 	* Rev. 10880 Fixed error in Rachel's Sanctuary quest. [L0ne_W0lf]
 	* Rev. 10879 Updated NPCs for Al De Baran [L0ne_W0lf]
