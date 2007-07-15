@@ -48,6 +48,9 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+
+07/15
+	* Rev. 10883 Fixed Blue Drooping Kitty again (extra comma.) [L0ne_W0lf]
 07/13
 	* Rev. 10879 Updated "Name" fields for 11.2 headgears. [L0ne_W0lf]
 	* Rev. 10877 Fixed Blue Drooping Kitty. (Missing comma) Thanks to diedlikeahero [L0ne_W0lf]
