@@ -3658,7 +3658,7 @@
 1708,Thanatos@NPC_CALLSLAVE,idle,352,1,10000,0,60000,yes,self,always,0,,,,,,
 1708,Thanatos@NPC_SUMMONSLAVE,attack,196,6,10000,700,30000,no,self,slavele,0,1711,1710,1709,1712,,
 1708,Thanatos@NPC_SUMMONSLAVE,idle,196,6,10000,700,30000,no,self,slavele,0,1711,1710,1709,1712,,
-//1708,Thanatos@NPC_EXPULSION,attack,676,1,1000,1000,10000,no,self,myhpltmaxrate,60,,,,,,
+//1708,Thanatos@NPC_EXPULSION,attack,674,1,1000,1000,10000,no,self,myhpltmaxrate,60,,,,,,
 1708,Thanatos@KN_TWOHANDQUICKEN,attack,60,20,3000,0,300000,yes,self,myhpltmaxrate,30,,,,,,2
 1708,Thanatos@KN_BOWLINGBASH,attack,62,10,1000,0,10000,yes,target,always,0,,,,,,
 1708,Thanatos@SM_BASH,attack,5,10,1000,0,5000,yes,target,always,0,,,,,,

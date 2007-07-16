@@ -50,6 +50,7 @@
 ========================
 
 07/15
+	* Rev. 10884 Fixed fixed incorrect skill ID for Thanatos's Expulsion [L0ne_W0lf]
 	* Rev. 10883 Fixed Blue Drooping Kitty again (extra comma.) [L0ne_W0lf]
 07/13
 	* Rev. 10879 Updated "Name" fields for 11.2 headgears. [L0ne_W0lf]
