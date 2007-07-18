@@ -3746,10 +3746,10 @@ int parse_char(int fd)
 		}
 		break;
 
-		case 0x187:	// Alive?
+		case 0x187:	// R 0187 <account ID>.l - client keep-alive packet (every 12 seconds)
 			if (RFIFOREST(fd) < 6)
 				return 0;
-			RFIFOSKIP(fd, 6);
+			RFIFOSKIP(fd,6);
 		break;
 
 		case 0x7530:	// Athena info get

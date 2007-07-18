@@ -50,7 +50,7 @@ struct Clif_Config {
 	int connect_cmd[MAX_PACKET_VER + 1]; //Store the connect command for all versions. [Skotlex]
 } clif_config;
 
-struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB + 1];
+struct packet_db_t packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB + 1];
 
 //Converts item type in case of pet eggs.
 #define itemtype(a) (a == IT_PETEGG)?IT_WEAPON:a
@@ -1372,7 +1372,7 @@ int clif_spawn(struct block_list *bl)
 	case BL_PET:
 		{
 			TBL_PET* pd = (TBL_PET*)bl;
-			clif_pet_equip(pd); // needed to display pet equip properly
+			if (pd->vd.head_bottom) clif_pet_equip(pd); // needed to display pet equip properly
 			clif_send_petdata_area(pd, 5, battle_config.pet_hair_style); // removes the attack cursor
 		}
 		break;
@@ -3763,15 +3763,18 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 	case BL_PET:
 		{
 			// needed to display pet equip properly
-			//TODO: adjust clif_pet_equip() to support a 'target', then rewrite this mess into a function call
 			TBL_PET* pd = (TBL_PET*)bl;
-			int fd = sd->fd;
-			WFIFOHEAD(fd,packet_len(0x1a4));
-			WFIFOW(fd,0) = 0x1a4;
-			WFIFOB(fd,2) = 3;
-			WFIFOL(fd,3) = pd->bl.id;
-			WFIFOL(fd,7) = pd->vd.head_bottom;
-			WFIFOSET(fd,packet_len(0x1a4));
+			if (pd->vd.head_bottom)
+			{
+				//TODO: adjust clif_pet_equip() to support a 'target', then rewrite this mess into a function call
+        			int fd = sd->fd;
+				WFIFOHEAD(fd,packet_len(0x1a4));
+				WFIFOW(fd,0) = 0x1a4;
+				WFIFOB(fd,2) = 3;
+				WFIFOL(fd,3) = pd->bl.id;
+				WFIFOL(fd,7) = pd->vd.head_bottom;
+				WFIFOSET(fd,packet_len(0x1a4));
+			}
 		}
 		break;
 	}
@@ -7924,6 +7927,7 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 			(packet_ver <= 9 && (battle_config.packet_ver_flag & 1) == 0) || // older than 6sept04
 			(packet_ver > 9 && (battle_config.packet_ver_flag & 1<<(packet_ver-9)) == 0)) // version not allowed
 	{// packet version rejected
+		ShowInfo("Rejected connection attempt, wrong packet version (AID/CID: '"CL_WHITE"%d/%d"CL_RESET"', Packet Ver: '"CL_WHITE"%d"CL_RESET"', IP: '"CL_WHITE"%s"CL_RESET"').\n", account_id, char_id, packet_ver, ip2str(session[fd]->client_addr, NULL));
 		WFIFOHEAD(fd,packet_len(0x6a));
 		WFIFOW(fd,0) = 0x6a;
 		WFIFOB(fd,2) = 5; // Your Game's EXE file is not the latest version
@@ -11518,15 +11522,9 @@ int clif_parse(int fd)
 
 	cmd = RFIFOW(fd,0);
 
-	// get packet version before to parse
-	packet_ver = 0;
+	// identify client's packet version
 	if (sd) {
 		packet_ver = sd->packet_ver;
-		if (packet_ver < 0 || packet_ver > MAX_PACKET_VER) {	// This should never happen unless we have some corrupted memory issues :X [Skotlex]
-			ShowWarning("clif_parse: Disconnecting session #%d (AID:%d/CID:%d) for having invalid packet_ver=%d.", fd, sd->status.account_id, sd->status.char_id, packet_ver);
-			set_eof(fd);
-			return 0;
-		}
 	} else {
 		// check authentification packet to know packet version
 		packet_ver = clif_guess_PacketVer(fd, 0, &err);
@@ -12005,7 +12003,7 @@ static int packetdb_readdb(void)
 					for(i=0;i<=MAX_PACKET_DB;i++){
 						if (packet_db[packet_ver][i].func == clif_parse_func[j].func)
 						{	
-							memset(&packet_db[packet_ver][i], 0, sizeof(struct packet_db));
+							memset(&packet_db[packet_ver][i], 0, sizeof(struct packet_db_t));
 							break;
 						}
 					}

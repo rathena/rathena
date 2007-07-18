@@ -1824,9 +1824,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if (!battle_config.exp_calc_type && md->tdmg)
 			//jAthena's exp formula based on total damage.
 			per = (double)md->dmglog[i].dmg/(double)md->tdmg;
-		else
+		else {
 			//eAthena's exp formula based on max hp.
 			per = (double)md->dmglog[i].dmg/(double)status->max_hp;
+			if (per > 2) per = 2; // prevents unlimited exp gain
+		}
 	
 		if (count>1 && battle_config.exp_bonus_attacker) {
 			//Exp bonus per additional attacker.

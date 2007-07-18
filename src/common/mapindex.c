@@ -12,9 +12,9 @@
 
 #define MAX_MAPINDEX 2000
 
-struct indexes {
+struct _indexes {
 	char name[MAP_NAME_LENGTH]; //Stores map name
-	char exists; //Set to 1 if index exists
+	bool exists; //Set to 1 if index exists
 } indexes[MAX_MAPINDEX];
 
 static unsigned short max_index = 0;
@@ -58,7 +58,7 @@ int mapindex_addmap(int index, const char *name)
 		ShowWarning("(mapindex_add) Overriding index %d: map \"%s\" -> \"%s\"\n", index, indexes[index].name, map_name);
 
 	snprintf(indexes[index].name, MAP_NAME_LENGTH, "%s", map_name);
-	indexes[index].exists = 1;
+	indexes[index].exists = true;
 	if (max_index <= index)
 		max_index = index+1;
 	return 1;

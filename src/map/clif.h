@@ -10,11 +10,16 @@
 #define MAX_PACKET_DB		0x300
 #define MAX_PACKET_VER		21
 
-struct packet_db {
+struct packet_db_t {
 	short len;
 	void (*func)(int, struct map_session_data *);
 	short pos[20];
 };
+
+// packet_db[SERVER] is reserved for server use
+#define SERVER 0
+#define packet_len(x) packet_db[SERVER][x].len
+extern struct packet_db_t packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB + 1];
 
 // local define
 enum send_target {
@@ -44,11 +49,6 @@ enum send_target {
 	CHAT_MAINCHAT,		// everyone on main chat
 	SELF,
 };
-
-// packet_db[SERVER] is reserved for server use
-#define SERVER 0
-#define packet_len(x) packet_db[SERVER][x].len
-extern struct packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB + 1];
 
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);

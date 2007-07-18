@@ -3,10 +3,11 @@
 //===== By ================================================
 //= Valaris, Spira, Au{R}oN, Tharis, HiddenDragon
 //===== Version ===========================================
-//= 1.1
+//= 1.2
 //=========================================================
 //= 1.0 - Formatted to the standard
-//= 1.1 - New effects, from 2007/05/07 Sakexe [Au{R}oN]
+//= 1.1 - New effects, up to 2007/05/07 Sakexe [Au{R}oN]
+//= 1.2 - New effects, up to 2007/07/12 Sakexe [Au{R}oN]
 //===== Description =======================================
 //= A list of client-side effects sorted by their ID
 //=========================================================
@@ -152,9 +153,9 @@ number	description
 130.	Two-Hand Quicken
 131.	Auto-Counter Hit
 132.	Grimtooth Hit
-133.	Probably the old Frost Diver Effect
-134.	Probably the old Frost Diver Effect Without the Blue Circle
-135.	Probably the old Frost Diver Effect with Explosion
+133.	Big Piece of Ice
+134.	Big Piece of Ice Without the Blue Circle
+135.	Big Piece of Ice Explosion
 136.	Slow Poison
 137.	Small pulsating green square (unused)
 138.	Fire pillar
@@ -687,14 +688,17 @@ number	description
 665.	Little Blue Ball Falling From the Sky
 666.	Mobs Skill (Earthquake)
 667.	(nothing)
-668.	Mobs Skill (Scream)
+668.	Mobs Skill (Dragonfear)
 669.	Mobs Skill (Critical Slash)
-670.	Mobs Skill (Scream Without Sound)
+670.	Mobs Skill (Dragonfear Without Sound)
 671.	The Japan Earth Symbol (Like 'Seven Wind LV 1' but is in the Ground)
 672.	The Japan Wind Symbol (Like 'Seven Wind LV 2' but is in the Ground)
 673.	(nothing)
 674.	Like Curse Effect
-675.	Like Parrying/Kyrie Eleison barrier but is Yellow with small Cross in every barrier piece
+675.	Like Parrying/Kyrie Eleison barrier but Yellow with small Cross in every barrier piece
 676.	Slow Poison (Clock Only)
 677.	Mobs Skill (Unamed)
-678+.	No More Effects in 2007/05/07 Sakexe
+678.	Another Aura Bubbles but White
+679.	Green Aura
+680.	Green Aura Area Ground
+681+.	No More effects from 2007/7/12 Sakexe
