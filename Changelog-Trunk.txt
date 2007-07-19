@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/07/18
+	* Added delay_dependon_agi since people actually use and need it...
 	* Small update to the effects list (new exe's effects by Au{R}oN)
 	* No sending of the pet_equip packet when pet has no equip (thx2Skotlex)
 	* Added back exp gain limiting for old formula to stop exploits (see r8177)

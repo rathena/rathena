@@ -8694,7 +8694,7 @@ int skill_castfix_sc (struct block_list *bl, int time)
 }
 
 /*==========================================
- * Does delay reductions based on dex, sc data, item bonuses, ...
+ * Does delay reductions based on dex/agi, sc data, item bonuses, ...
  *------------------------------------------*/
 int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 {
@@ -8728,6 +8728,14 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 		if (battle_config.delay_dependon_dex && !(delaynodex&1))
 		{	// if skill delay is allowed to be reduced by dex 
 			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
+			if (scale > 0)
+				time = time * scale / battle_config.castrate_dex_scale;
+			else //To be capped later to minimum.
+				time = 0;
+		}
+		if (battle_config.delay_dependon_agi && !(delaynodex&1))
+		{	// if skill delay is allowed to be reduced by agi 
+			int scale = battle_config.castrate_dex_scale - status_get_agi(bl);
 			if (scale > 0)
 				time = time * scale / battle_config.castrate_dex_scale;
 			else //To be capped later to minimum.
