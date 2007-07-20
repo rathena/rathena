@@ -97,6 +97,7 @@ int char_name_option = 0; // Option to know which letters/symbols are authorised
 //The following are characters that are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 #define TRIM_CHARS "\032\t\x0A\x0D "
 char char_name_letters[1024] = ""; // list of letters/symbols authorised (or not) in a character name. by [Yor]
+bool char_rename = true;
 
 int log_char = 1;	// loggin char or not [devil]
 int log_inter = 1;	// loggin inter or not [devil]
@@ -1697,25 +1698,20 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p)
 	WBUFW(buf,68) = p->head_mid;
 	WBUFW(buf,70) = p->hair_color;
 	WBUFW(buf,72) = p->clothes_color;
-
 	memcpy(WBUFP(buf,74), p->name, NAME_LENGTH);
-
 	WBUFB(buf,98) = min(p->str, UCHAR_MAX);
 	WBUFB(buf,99) = min(p->agi, UCHAR_MAX);
 	WBUFB(buf,100) = min(p->vit, UCHAR_MAX);
 	WBUFB(buf,101) = min(p->int_, UCHAR_MAX);
 	WBUFB(buf,102) = min(p->dex, UCHAR_MAX);
 	WBUFB(buf,103) = min(p->luk, UCHAR_MAX);
-	//Updated packet structure with rename-button included. Credits to Sara-chan
-#if PACKETVER > 7 
 	WBUFW(buf,104) = p->char_num;
-	WBUFW(buf,106) = 1;// Rename bit (0=rename,1=no rename)
-	return 108;
-#else
-	WBUFB(buf,104) = p->char_num;
-	return 106;
-#endif
-
+	if (char_rename) {
+		WBUFW(buf,106) = 1;// Rename bit (0=rename,1=no rename)
+		return 108;
+	} else {
+		return 106;
+	}
 }
 
 //----------------------------------------
@@ -1738,18 +1734,14 @@ int mmo_char_send006b(int fd, struct char_session_data *sd)
 	for(i = found_num; i < MAX_CHARS; i++)
 		sd->found_char[i] = -1;
 
-
 	j = 24;// offset
-	{
-		WFIFOHEAD(fd,j + found_num*108);
-		WFIFOW(fd,0) = 0x6b;
-		memset(WFIFOP(fd,4), 0, 20);// unknown bytes
-
-		for(i = 0; i < found_num; i++)
-			j += mmo_char_tobuf(WFIFOP(fd,j), &char_dat[sd->found_char[i]].status);
-		WFIFOW(fd,2) = j;// packet len
-		WFIFOSET(fd,j);
-	}
+	WFIFOHEAD(fd,j + found_num*108); // or 106(!)
+	WFIFOW(fd,0) = 0x6b;
+	memset(WFIFOP(fd,4), 0, 20);// unknown bytes
+	for(i = 0; i < found_num; i++)
+		j += mmo_char_tobuf(WFIFOP(fd,j), &char_dat[sd->found_char[i]].status);
+	WFIFOW(fd,2) = j;// packet len
+	WFIFOSET(fd,j);
 
 	return 0;
 }
@@ -3390,7 +3382,7 @@ int parse_char(int fd)
 			for(i = 0; i < AUTH_FIFO_SIZE && !(
 				auth_fifo[i].account_id == sd->account_id &&
 				auth_fifo[i].login_id1 == sd->login_id1 &&
-				auth_fifo[i].login_id2 == sd->login_id2 && // relate to the versions higher than 18
+				auth_fifo[i].login_id2 == sd->login_id2 &&
 				auth_fifo[i].ip == session[fd]->client_addr &&
 				auth_fifo[i].delflag == 2)
 				; i++);
@@ -3404,7 +3396,7 @@ int parse_char(int fd)
 					WFIFOW(login_fd,0) = 0x2712; // ask login-server to authentify an account
 					WFIFOL(login_fd,2) = sd->account_id;
 					WFIFOL(login_fd,6) = sd->login_id1;
-					WFIFOL(login_fd,10) = sd->login_id2; // relate to the versions higher than 18
+					WFIFOL(login_fd,10) = sd->login_id2;
 					WFIFOB(login_fd,14) = sd->sex;
 					WFIFOL(login_fd,15) = htonl(session[fd]->client_addr);
 					WFIFOSET(login_fd,19);
@@ -4158,6 +4150,8 @@ int char_config_read(const char *cfgName)
 			char_name_option = atoi(w2);
 		} else if (strcmpi(w1, "char_name_letters") == 0) {
 			strcpy(char_name_letters, w2);
+		} else if (strcmpi(w1, "char_rename") == 0) {
+			char_rename = config_switch(w2);
 // online files options
 		} else if (strcmpi(w1, "online_txt_filename") == 0) {
 			strcpy(online_txt_filename, w2);

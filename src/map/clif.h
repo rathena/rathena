@@ -6,9 +6,15 @@
 
 #include "map.h"
 
+// server->client protocol version
+// v7 - 2005-04-11aSakexe+ - 0x229, 0x22a, 0x22b, 0x22c
+#ifndef PACKETVER
+	#define PACKETVER	7
+#endif
+
 // packet DB
 #define MAX_PACKET_DB		0x300
-#define MAX_PACKET_VER		21
+#define MAX_PACKET_VER		22
 
 struct packet_db_t {
 	short len;

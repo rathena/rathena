@@ -1,5 +1,7 @@
 Date	Added
 
+2007/07/20
+	* Adjusted client.conf's packetver table (latest now uses new value)
 2007/07/18
 	* Added delay_dependon_agi, both options are available now [ultramage]
 2007/06/10

@@ -103,6 +103,7 @@ char unknown_char_name[NAME_LENGTH] = "Unknown"; // Name to use when the request
 char char_name_letters[1024] = ""; // list of letters/symbols used to authorise or not a name of a character. by [Yor]
 //The following are characters that are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 #define TRIM_CHARS "\032\t\x0A\x0D "
+bool char_rename = true;
 int char_per_account = 0; //Maximum charas per account (default unlimited) [Sirius]
 int char_del_level = 0; //From which level u can delete character [Lupus]
 
@@ -1605,15 +1606,13 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
 	WBUFB(buf,101) = min(p->int_, UCHAR_MAX);
 	WBUFB(buf,102) = min(p->dex, UCHAR_MAX);
 	WBUFB(buf,103) = min(p->luk, UCHAR_MAX);
-	//Updated packet structure with rename-button included. Credits to Sara-chan
-#if PACKETVER > 7 
 	WBUFW(buf,104) = p->char_num;
-	WBUFW(buf,106) = 1;// Rename bit (0=rename,1=no rename)
-	return 108;
-#else
-	WBUFB(buf,104) = p->char_num;
-	return 106;
-#endif
+	if (char_rename) {
+		WBUFW(buf,106) = 1;// Rename bit (0=rename,1=no rename)
+		return 108;
+	} else {
+		return 106;
+	}
 }
 
 int mmo_char_send006b(int fd, struct char_session_data* sd)
@@ -3083,7 +3082,7 @@ int parse_char(int fd)
 			for(i = 0; i < AUTH_FIFO_SIZE && !(
 				auth_fifo[i].account_id == sd->account_id &&
 				auth_fifo[i].login_id1 == sd->login_id1 &&
-				auth_fifo[i].login_id2 == sd->login_id2 && // relate to the versions higher than 18
+				auth_fifo[i].login_id2 == sd->login_id2 &&
 				auth_fifo[i].ip == session[fd]->client_addr &&
 				auth_fifo[i].delflag == 2)
 				; i++);
@@ -3908,6 +3907,8 @@ int char_config_read(const char* cfgName)
 			char_name_option = atoi(w2);
 		} else if (strcmpi(w1, "char_name_letters") == 0) {
 			strcpy(char_name_letters, w2);
+		} else if (strcmpi(w1, "char_rename") == 0) {
+			char_rename = config_switch(w2);
 		} else if (strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			char_per_account = atoi(w2);
 		} else if (strcmpi(w1, "char_del_level") == 0) { //disable/enable char deletion by its level condition [Lupus]

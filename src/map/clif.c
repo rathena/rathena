@@ -776,7 +776,7 @@ static int clif_set0078(struct block_list* bl, unsigned char* buf)
 		struct map_session_data* sd;
 		BL_CAST(BL_PC, bl, sd);
 
-#if PACKETVER > 6
+#if PACKETVER >= 7
 		memset(buf,0,packet_len(0x22a));
 
 		WBUFW(buf,0)=0x22a;
@@ -943,7 +943,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 		struct map_session_data* sd;
 		BL_CAST(BL_PC, bl, sd);
 
-#if PACKETVER > 6
+#if PACKETVER >= 7
 		memset(buf,0,packet_len(0x22c));
 
 		WBUFW(buf,0)=0x22c;
@@ -1054,7 +1054,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 #endif
 	}
 	//Non-player sprites only require a few fields.
-#if PACKETVER > 6
+#if PACKETVER >= 7
 	memset(buf,0,packet_len(0x22c));
 
 	WBUFW(buf,0)=0x22c;
@@ -1132,7 +1132,7 @@ static void clif_setdisguise(struct map_session_data *sd, unsigned char *buf,int
 {
 	if (flag) {
 		WBUFL(buf,2)=sd->bl.id;
-#if PACKETVER > 6
+#if PACKETVER >= 7
 		switch (WBUFW(buf,0)) {
 		case 0x22c:
 		case 0x22b:
@@ -1144,7 +1144,7 @@ static void clif_setdisguise(struct map_session_data *sd, unsigned char *buf,int
 #endif
 			WBUFW(buf,12)=OPTION_INVISIBLE;
 			WBUFW(buf,14)=sd->status.class_;
-#if PACKETVER > 6
+#if PACKETVER >= 7
 			break;
 		}
 #endif
@@ -1301,7 +1301,7 @@ int clif_spawn(struct block_list *bl)
 					clif_setdisguise((TBL_PC*)bl, buf, packet_len(0x1d9), 0);
 				break;
 #endif
-#if PACKETVER > 6
+#if PACKETVER >= 7
 			case 0x22a: //Convert to 0x22b
 				WBUFW(buf, 0) = 0x22b;
 				WBUFW(buf,55) = WBUFW(buf,56); //Lv is placed on offset 56
@@ -3071,7 +3071,7 @@ int clif_changeoption(struct block_list* bl)
 	sc = status_get_sc(bl);
 	if (!sc) return 0; //How can an option change if there's no sc?
 	
-#if PACKETVER > 6
+#if PACKETVER >= 7
 	WBUFW(buf,0) = 0x229;
 	WBUFL(buf,2) = bl->id;
 	WBUFW(buf,6) = sc->opt1;
@@ -3709,7 +3709,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 	ud = unit_bl2ud(bl);
 	if (ud && ud->walktimer != -1)
 	{
-#if PACKETVER > 6
+#if PACKETVER >= 7
 		WFIFOHEAD(fd, packet_len(0x22c));
 #elif PACKETVER > 3
 		WFIFOHEAD(fd, packet_len(0x1da));
@@ -3719,7 +3719,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		len = clif_set007b(bl,vd,ud,WFIFOP(fd,0));
 		WFIFOSET(fd,len);
 	} else {
-#if PACKETVER > 6
+#if PACKETVER >= 7
 		WFIFOHEAD(fd,packet_len(0x22a));
 #elif PACKETVER > 3
 		WFIFOHEAD(fd,packet_len(0x1d8));

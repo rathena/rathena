@@ -1418,7 +1418,7 @@ int parse_fromchar(int fd)
 			{
 				if (auth_fifo[i].account_id == RFIFOL(fd,2) &&
 				    auth_fifo[i].login_id1  == RFIFOL(fd,6) &&
-				    auth_fifo[i].login_id2  == RFIFOL(fd,10) && // relate to the versions higher than 18
+				    auth_fifo[i].login_id2  == RFIFOL(fd,10) &&
 				    auth_fifo[i].sex        == RFIFOB(fd,14) &&
 				    auth_fifo[i].ip         == ntohl(RFIFOL(fd,15)) &&
 				    !auth_fifo[i].delflag)

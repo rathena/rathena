@@ -8,11 +8,6 @@
 #include "cbasetypes.h"
 #include "utils.h" // _WIN32
 
-// server protocol version
-#ifndef PACKETVER
-	#define PACKETVER			8
-#endif
-
 #define FIFOSIZE_SERVERLINK	256*1024
 
 //Remove/Comment this line to disable sc_data saving. [Skotlex]
