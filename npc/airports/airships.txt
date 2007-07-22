@@ -816,7 +816,7 @@ airplane_01,33,68,4	script	Clarice	74,{
 airplane_01,71,31,6	script	Swordman Shimizu	106,{
 	mes "[Swordsman Shimizu]";
 	mes "Finally, after five";
-	mes "years of next;ing...";
+	mes "years of waiting...";
 	mes "I can have my revenge!";
 	next;
 	mes "[Swordsman Shimizu]";

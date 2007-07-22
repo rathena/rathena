@@ -583,7 +583,7 @@ lighthalzen,143,68,0	script	Strange Guy#LhzHat	47,{
 				mes "[Morris]";
 				mes "Now, remember everything";
 				mes "that you need this time, okay?";
-				mes "I'll be next;ing to welcome";
+				mes "I'll be waiting to welcome";
 				mes "you into the elite ranks of ";
 				mes "the Young Detective's Club.";
 				close;
@@ -1358,7 +1358,7 @@ lighthalzen,182,89,0	script	Rich Girl#LhzHat	91,{
 	{
 		mes "[Achiha]";
 		mes "Oh, good, you're here.";
-		mes "I've been next;ing for you.";
+		mes "I've been waiting for you.";
 		mes "Did you bring everything that";
 		mes "you need to make a ^0000FFRed Bonnet^000000?";
 		next;

@@ -9307,7 +9307,7 @@ hu_in01,14,11,4	script	Laura	70,{
 				set hg_odin,14;
 				mes "[Laura]";
 				mes "That's what I've been";
-				mes "next;ing to hear! Alright,";
+				mes "waiting to hear! Alright,";
 				mes "please fetch me ^3355FF5 Runes of";
 				mes "the Darkness^000000 from the Odin";
 				mes "Shrine. Go now, adventurer~";

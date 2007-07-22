@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/07/22
+	* Rev. 10893 Correct some typos error like "next;ing". [Samuray22]
+	-Thank to theultradamage
 	* Rev. 10891 Fixed a Little bug on "How does the Airship Works" Quest. [Samuray22]
 	-Thanks to Tantarian
 2007/07/21

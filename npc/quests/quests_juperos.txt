@@ -1353,7 +1353,7 @@ juperos_01,99,112,4	script	Bronze Statue	844,{
 	{
 		mes "^3355FF''Do you wish to see";
 		mes "the end of the madness?";
-		mes "He is next;ing where the three";
+		mes "He is waiting where the three";
 		mes "columns were destroyed, where";
 		mes "two hundred illusions wander.''^000000";
 		close;
