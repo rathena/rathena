@@ -1,5 +1,8 @@
 Date		Added
 ======
+2007/07/22
+	* Rev. 10891 Fixed a Little bug on "How does the Airship Works" Quest. [Samuray22]
+	-Thanks to Tantarian
 2007/07/21
 	* Rev. 10889 Updated "Titicupe: Headgears" Quest to the Official One. [Samuray22]
 	- Blush, Cake Hat, Candle, Chef Hat, Raccoon Hat, Rainbow Eggshell,
