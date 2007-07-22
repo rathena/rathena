@@ -16,6 +16,8 @@
 //= Adapted to eAthena Scripting Language by [Lance] 
 //= 1.1a Fixed typos [Haplo]
 //= 1.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.3 Added a Missing "case 1:". [Samuray22]
+//	-Thanks to Dr.Evil
 //============================================================ 
 
 yuno_in03,32,15,3	script	Museum Guide	67,{
@@ -23,6 +25,7 @@ yuno_in03,32,15,3	script	Museum Guide	67,{
 	mes "Welcome to the Monster Museum.";
 	next;
 	switch(select("Monster Museum?:Tips")) {
+	case 1:
 		mes "[Cenia]";
 		mes "The Monster Museum was founded by";
 		mes "the Sages of the Schweicherbil";
