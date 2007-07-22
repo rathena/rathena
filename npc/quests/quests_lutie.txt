@@ -1,9 +1,9 @@
 //===== eAthena Script ======================================= 
 //= Quest NPCs related to Lutie
 //===== By: ================================================== 
-//= TonyMan
+//= TonyMan & Samuray22
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -12,167 +12,345 @@
 //===== Additional Comments: ================================= 
 //= 1.1 Optimized [Lupus]
 //= 1.2 Fixed Chef Hat items [Lupus]
+//= 1.3 Update NPC to the Official One. [Samuray22]
 //============================================================ 
 
-xmas,117,295,3	script	Titicupe	704,{
-	mes "[^469ED2Titicupe^000000]";
-	mes "I am the well known ^27BEB7Vending Machine Man Titicupe^000000, I am also a Wizard of the great ^9A3CA2Geffen Mage Guild^000000. I can use my special magic to make some rare items, but I need ingridients. Choose an item you want.";
+xmas,117,295,3	script	Vending Machine Man	704,{
+	mes "[Titicupe]";
+	mes "Ha ha ha ha ha ha";
+	mes "..You arrived";
+	mes "I'm a manager";
+	mes "of toy factory!!";
+	mes "I've opened my eyes";
+	mes "on new business!";
 	next;
-	menu "Blush",-,"Cake Hat",cake_hat,"Candle",candle,"Chef Hat",chef_hat,"Raccoon Hat",raccoon_hat,"Rainbow Eggshell",rainbow_egg,"Spore Hat",spore_hat,"Wonder Nutshell",wonder_nut,"Cancel",M_Cancel;
-	
-	mes "[^469ED2Titicupe^000000]";
-	mes "Hmm... spell ingridients are...";
- 	mes "100 Alice's Apron";
- 	next;
-	menu "Here. Now do your magic!",-,"Cancel",M_Cancel;
-	
-	if(countitem(7047)<100) goto L_NoItem;
-	delitem 7047,100;
-	getitem 5040,1;
-	mes "[^469ED2Titicupe^000000]";
-	mes "^4599A3Abra ^66A73FKa ^C7A82EDabra, ^64826BSim ^E9239ESa ^B7EB01La ^8080C0Bim^000000!! ^45A8C9*poof*^000000 I succeeded! Here take this ^D6294BBlush^000000, it's yours.";
-	close;
-	
-cake_hat:
-	mes "[^469ED2Titicupe^000000]";
-	mes "Hmm... spell ingridients are...";
- 	mes "10 Candy";
- 	mes "5 Candy Cane";
- 	mes "20 Piece of Cake";
- 	mes "10 Steel";
- 	mes "15 Well-baked Cookie";
- 	next;
-	menu "Here. Now do your magic!",-,"Cancel",M_Cancel;
-	
-	if(countitem(529)<10 || countitem(530)<5 || countitem(539)<20 || countitem(999)<10 || countitem(538)<15) goto L_NoItem;
-	delitem 529,10;
-	delitem 530,5;
-	delitem 539,20;
-	delitem 999,10;
-	delitem 538,15;
-	getitem 5024,1;
-	mes "[^469ED2Titicupe^000000]";
-	mes "^4599A3Abra ^66A73FKa ^C7A82EDabra, ^64826BSim ^E9239ESa ^B7EB01La ^8080C0Bim^000000!! ^45A8C9*poof*^000000 I succeeded! Here take this ^BD3CBACake Hat^000000, it's yours.";
-	close;
-	
-candle:
-	mes "[^469ED2Titicupe^000000]";
-	mes "Hmm... spell ingridients are...";
-	mes "1 Bomb Wick";
- 	mes "50 Matchstick";
- 	mes "100 Royal Jelly";
- 	next;
-	menu "Here. Now do your magic!",-,"Cancel",M_Cancel;
-	
-	if(countitem(2279)<1 || countitem(7035)<50 || countitem(526)<100) goto L_NoItem;
-	delitem 2279,1;
-	delitem 7035,50;
-	delitem 526,100;
-	getitem 5028,1;
-	mes "[^469ED2Titicupe^000000]";
-	mes "^4599A3Abra ^66A73FKa ^C7A82EDabra, ^64826BSim ^E9239ESa ^B7EB01La ^8080C0Bim^000000!! ^45A8C9*poof*^000000 I succeeded! Here take this ^BD3CBACandle^000000, it's yours.";
-	close;
-	
-chef_hat:
-	mes "[^469ED2Titicupe^000000]";
-	mes "Hmm... spell ingridients are...";
-	mes "450 Dragon Scale";
- 	mes "330 Feather";
- 	mes "120 Piece of Cake";
- 	mes "  1 White Dyestuffs";
- 	next;
-	menu "Here. Now do your magic!",-,"Cancel",M_Cancel;
-	
-	if(countitem(1036)<450 || countitem(949)<330 || countitem(539)<120 || countitem(982)<1) goto L_NoItem;
-	delitem 1036,450;
-	delitem 949,330;
-	delitem 539,120;
-	delitem 982,1;
-	getitem 5026,1;
-	mes "[^469ED2Titicupe^000000]";
-	mes "^4599A3Abra ^66A73FKa ^C7A82EDabra, ^64826BSim ^E9239ESa ^B7EB01La ^8080C0Bim^000000!! ^45A8C9*poof*^000000 I succeeded! Here take this ^BD3CBAChef Hat^000000, it's yours.";
-	close;
+	switch(select( "Talk to him about the vending machine", "Items in the vending machine", "Stop talking")) {
+	case 1:
+		mes "[Titicupe]";
+		mes "Can you see a little snowman";
+		mes "left side of me. can you?";
+		mes "If you look at his mouth cautiously";
+		mes "you can find out";
+		mes "that it was builted to";
+		mes "huge size as it can";
+		next;
+		mes "[Titicupe]";
+		mes "swallow any thing.";
+		mes ".. feel bad hah?";
+		mes "Try to put your";
+		mes "hand,legs,and even your head inside.";
+		mes "Everything goes in.";
+		mes "Hohoho . However";
+		next;
+		mes "[Titicupe]";
+		mes "this is a";
+		mes "vending machine";
+		mes "which is you can get";
+		mes "fashionable decorating item.";
+		mes "You have to provide";
+		mes "some items when you want to get.";
+		next;
+		mes "[Titicupe]";
+		mes "Pour out to snowman's mouth!!";
+		mes "If you do that";
+		mes "You can get";
+		mes "fancy items wHat";
+		mes "you dreamed for";
+		mes "Ha ha ha ha ha~~~";
+		next;
+		goto L_end2;
+	case 2:
+		mes "[Titicupe]";
+		mes "Ho ho ho ho~";
+		mes "Do you have";
+		mes "any question?";
+		mes "then ask me";
+		mes "I'm genius.ha ha~";
+		next;
+		switch( select( "Raccoon Hat", "Spore Hat", "Wonder Nutshell", "Rainbow Egg Shell", "Blush", "Chef Hat", "Candle", "Cake Hat", "Stop talking")) {
+		case 1:
+			mes "[Titicupe]";
+			mes "Raccoon Hat ?";
+			mes "Kitty Band 1";
+			mes "Dragon Scale 20";
+			mes "Tough Scalelike stem 200";
+			mes "Sea-Otter Fur 300";
+			goto L_end;
+		case 2:
+			mes "[Titicupe]";
+			mes "Spore Hat ?";
+			mes "Poison Spore 850";
+			mes "Burnt Tree 300";
+			mes "Long Tongue 1";
+			goto L_end;
+		case 3:
+			mes "[Titicupe]";
+			mes "Wonder Nutshell ?";
+			mes "Fruit Shell 1";
+			mes "Wing of Dragonfly 500";
+			goto L_end;
+		case 4:
+			mes "[Titicupe]";
+			mes "Rainbow Egg Shell ?";
+			mes "Egg Shell 1";
+			mes "Cobaltblue Dyestuffs 1";
+			mes "Claw Of Desert Wolf 50";
+			goto L_end;
+		case 5:
+			mes "[Titicupe]";
+			mes "Blush ?!";
+			mes "You !";
+			mes "You know something ha ha ?!";
+			mes "he he . anyway";
+			mes "- Alice's Apron 100 -";
+			goto L_end;
+		case 6:
+			mes "[Titicupe]";
+			mes "Chef Hat ?";
+			mes "Piece Of Cake 120";
+			mes "White Dyestuffs 1";
+			mes "Feather 330";
+			mes "Dragon Scale 450";
+			goto L_end;
+		case 7:
+			mes "[Titicupe]";
+			mes "Candle ?";
+			mes "Bomb Wick 1";
+			mes "Matchstick 50";
+			mes "Royal Jelly 100";
+			goto L_end;
+		case 8:
+			mes "[Titicupe]";
+			mes "Cake Hat ?";
+			mes "Candy 10";
+			mes "Candy Cane 5";
+			mes "Well Baked Cookie 15";
+			mes "Piece Of Cake 20";
+			mes "steel 10";
+			goto L_end;
+		case 9:
+			mes "[Titicupe]";
+			mes "Ask me any time";
+			mes " Actually you know?";
+			mes "'Genius' knows everything ";
+			mes "My brain is number one";
+			mes "in the whole universe!";
+			mes "Just So Goooooood!";
+			goto L_end;
+		}
+	case 3:
+		goto L_end2;
+	}
 
-raccoon_hat:
-	mes "[^469ED2Titicupe^000000]";
-	mes "Hmm... spell ingridients are...";
-	mes "20 Dragon Scale";
- 	mes "1 Kitty Band";
- 	mes "300 Sea-otter Fur";
- 	mes "200 Tough Scalelike Stem";
- 	next;
-	menu "Here. Now do your magic!",-,"Cancel",M_Cancel;
-	
-	if(countitem(1036)<20 || countitem(2213)<1 || countitem(7065)<300 || countitem(7012)<200) goto L_NoItem;
-	delitem 1036,20;
-	delitem 2213,1;
-	delitem 7065,300;
-	delitem 7012,200;
-	getitem 5033,1;
-	mes "[^469ED2Titicupe^000000]";
-	mes "^4599A3Abra ^66A73FKa ^C7A82EDabra, ^64826BSim ^E9239ESa ^B7EB01La ^8080C0Bim^000000!! ^45A8C9*poof*^000000 I succeeded! Here take this ^7D4E31Raccoon Hat^000000, it's yours.";
+L_end:
+	next;
+	mes "[Titicupe]";
+	mes "So happy!!";
+	mes "I'm a genius";
+	mes "Ho ho ho";
+	mes "Ho ho ho ho";
 	close;
-	
-rainbow_egg:
-	mes "[^469ED2Titicupe^000000]";
-	mes "Hmm... spell ingridients are...";
-	mes "50 Claw of Desert Wolf";
- 	mes "1 Cobaltblue Dyestuffs";
- 	mes "1 Egg Shell";
- 	next;
-	menu "Here. Now do your magic!",-,"Cancel",M_Cancel;
-	
-	if(countitem(7030)<50 || countitem(978)<1 || countitem(5015)<1) goto L_NoItem;
-	delitem 7030,50;
-	delitem 978,1;
-	delitem 5015,1;
-	getitem 5039,1;
-	mes "[^469ED2Titicupe^000000]";
-	mes "^4599A3Abra ^66A73FKa ^C7A82EDabra, ^64826BSim ^E9239ESa ^B7EB01La ^8080C0Bim^000000!! ^45A8C9*poof*^000000 I succeeded! Here take this ^8D4178Rainbow Egg^000000, it's yours.";
-	close;
-	
-spore_hat:
-	mes "[^469ED2Titicupe^000000]";
-	mes "Hmm... spell ingridients are...";
-	mes "300 Burnt Tree";
- 	mes "850 Poison Spore";
- 	mes "1 Tongue";
- 	next;
-	menu "Here. Now do your magic!",-,"Cancel",M_Cancel;
-	
-	if(countitem(7068)<300 || countitem(7033)<850 || countitem(1015)<1) goto L_NoItem;
-	delitem 7068,300;
-	delitem 7033,850;
-	delitem 1015,1;
-	getitem 5029,1;
-	mes "[^469ED2Titicupe^000000]";
-	mes "^4599A3Abra ^66A73FKa ^C7A82EDabra, ^64826BSim ^E9239ESa ^B7EB01La ^8080C0Bim^000000!! ^45A8C9*poof*^000000 I succeeded! Here take this ^7D4E31Spore Hat^000000, it's yours.";
-	close;
-	
-wonder_nut:
-	mes "[^469ED2Titicupe^000000]";
-	mes "Hmm... spell ingridients are...";
-	mes "1 Nut Shell";
- 	mes "500 Wing of Dragonfly";
-
- 	next;
-	menu "Here. Now do your magic!",-,"Cancel",M_Cancel;
-	
-	if(countitem(5037)<1 || countitem(7064)<500) goto L_NoItem;
-	delitem 5037,1;
-	delitem 7064,500;
-	getitem 5050,1;
-	mes "[^469ED2Titicupe^000000]";
-	mes "^4599A3Abra ^66A73FKa ^C7A82EDabra, ^64826BSim ^E9239ESa ^B7EB01La ^8080C0Bim^000000!! ^45A8C9*poof*^000000 I succeeded! Here take this ^7D4E31Wonder Nutshell^000000, it's yours.";
-	close;
-	
-M_Cancel:
-	mes "[^469ED2Titicupe^000000]";
-	mes "I bid you farewell, try not to catch a cold out here. It's ^5A9FD8freezing out here!^000000";
-	close;
-	
-L_NoItem:
-	mes "[^469ED2Titicupe^000000]";
-	mes "I can't cast since you don't seem to have all I need...";
+L_end2:
+	mes "[Titicupe]";
+	mes "I'm a genius!!";
+	mes "The world will suprise!";
+	mes "for my magnificient creation";
+	mes "of these beautiful";
+	mes "and so cool items";
+	mes "Ke-ke-ke";
+	next;
+	mes "- Toy factory manager -";
+	mes "- Titicupe is jumping -";
+	mes "- around and pointing -";
+	mes "- the vending machine -";
+	mes "- snowman with very -";
+	mes "- uproarious attitude-";
+	mes "- and he looks very very happy -";
 	close;
 }
+
+xmas,115,297,3	script	Vending Machine	111,{
+	mes "[Audi]";
+	mes "- Exciting item vending machine. -";
+	mes "- Thanks to find Audi. -";
+	mes "- Select a item that you want -";
+	mes "- and -";
+	mes "- Put required item to -";
+	mes "- my mouth. -";
+	next;
+	switch( select( "^FF3355- notice (must read) -^000000", "Raccoon Hat", "Spore Hat", "Wonder Nutshell", "Rainbow Egg Shell", "Blush", "Hat Of Cooker", "Candle", "Cake Hat", "Cancel")) {
+	case 1:
+		mes "[Audi]";
+		mes "Hi~ !";
+		mes "I need to tell you";
+		mes "one important thing";
+		mes "This vending mashine is";
+		mes "not equipted to differentiate";
+		mes "special items and ordinary item";
+		next;
+		mes "[Audi]";
+		mes "So If you use item that";
+		mes "^FF3355already applied valuable";
+		mes "Monster card in it^000000 or";
+		next;
+		mes "[Audi]";
+		mes "^FF3355high level of";
+		mes "forged items^000000 will";
+		mes "^3355FFtreated as normal";
+		mes "item^000000 so. When you";
+		mes "try to exchange + generate item";
+		mes "Please put away valiable items";
+		next;
+		mes "[Audi]";
+		mes "to Kafre warehouse";
+		mes "or seperate from";
+		mes "your body.";
+		mes "This is very important.";
+		mes "Because if when you use";
+		mes "this vending machine and";
+		next;
+		mes "[Audi]";
+		mes "your valiable items";
+		mes "have used by vending machine.";
+		mes "There will be no";
+		mes "refund and recover";
+		mes "to that item.";
+		next;
+		mes "[Audi]";
+		mes "Have a good time";
+		mes "Thank you";
+		close;
+	case 2:
+		if (countitem("Cat_Hairband") > 0 && countitem("Dragon_Scale") > 19 && countitem("Tough_Scalelike_Stem") > 199 && countitem("Sea_Otter_Leather") > 299) {
+			callfunc "Vending Machine","good";
+			next;
+			delitem "Cat_Hairband", 1;
+			delitem "Dragon_Scale", 20;
+			delitem "Tough_Scalelike_Stem", 200;
+			delitem "Sea_Otter_Leather", 300;
+			getitem "Smokie_Hat", 1;
+			callfunc "Vending Machine","finish";
+		}
+			callfunc "Vending Machine","bad";
+	case 3:
+		if (countitem("Poison_Spore") > 849 && countitem("Burn_Tree") > 299 && countitem("Thin_N'_Long_Tongue") > 0) {
+			callfunc "Vending Machine","good";
+			next;
+			delitem "Poison_Spore", 850;
+			delitem "Burn_Tree", 300;
+			delitem "Thin_N'_Long_Tongue", 1;
+			getitem "Spore_Hat", 1;
+			callfunc "Vending Machine","finish";
+		}
+			callfunc "Vending Machine","bad";
+	case 4:
+		if (countitem("Fruit_Shell") > 0 && countitem("Dragon_Fly_Wing") > 499) {
+			callfunc "Vending Machine","good";
+			next;
+			delitem "Fruit_Shell", 1;
+			delitem "Dragon_Fly_Wing", 500;
+			getitem "Mystery_Fruit_Shell", 1;
+			callfunc "Vending Machine","finish";
+		}
+			callfunc "Vending Machine","bad";
+	case 5:
+		if (countitem("Egg_Shell") > 0 && countitem("Cobaltblue_Dyestuffs") > 0 && countitem("Claw_Of_Desert_Wolf") > 49) {
+			callfunc "Vending Machine","good";
+			next;
+			delitem "Egg_Shell", 1;
+			delitem "Cobaltblue_Dyestuffs", 1;
+			delitem "Claw_Of_Desert_Wolf", 50;
+			getitem "Mottled_Egg_Shell", 1;
+			callfunc "Vending Machine","finish";
+		}
+			callfunc "Vending Machine","bad";
+	case 6:
+		if (countitem("Alice's_Apron") > 99) {
+			callfunc "Vending Machine","good";
+			next;
+			delitem "Alice's_Apron", 100;
+			getitem "Blush", 1;
+			callfunc "Vending Machine","finish";
+		}
+			callfunc "Vending Machine","bad";
+	case 7:
+		if (countitem("Piece_Of_Cake") > 119 && countitem("White_Dyestuffs") > 0 && countitem("Feather") > 329 && countitem("Dragon_Scale") > 449) {
+			callfunc "Vending Machine","good";
+			next;
+			delitem "Piece_Of_Cake", 120;
+			delitem "White_Dyestuffs", 1;
+			delitem "Feather", 330;
+			delitem "Dragon_Scale", 450;
+			getitem "Hat_Of_Cook", 1;
+			callfunc "Vending Machine","finish";
+		}
+			callfunc "Vending Machine","bad";
+	case 8:
+		if (countitem("Bomb_Wick") > 0 && countitem("Matchstick") > 49 && countitem("Royal_Jelly") > 99) {
+			callfunc "Vending Machine","good";
+			next;
+			delitem "Bomb_Wick", 1;
+			delitem "Matchstick", 50;
+			delitem "Royal_Jelly", 100;
+			getitem "Candle", 1;
+			callfunc "Vending Machine","finish";
+		}
+			callfunc "Vending Machine","bad";
+	case 9:
+		if (countitem("Candy") > 9 && countitem("Candy_Striper") > 4 && countitem("Well_Baked_Cookie") > 14 && countitem("Piece_Of_Cake") > 19 && countitem("Steel") > 9) {
+			callfunc "Vending Machine","good";
+			next;
+			delitem "Candy", 10;
+			delitem "Candy_Striper", 5;
+			delitem "Well_Baked_Cookie", 15;
+			delitem "Piece_Of_Cake", 20;
+			delitem "Steel", 10;
+			getitem "Hat_Of_Cake", 1;
+			callfunc "Vending Machine","finish";
+		}
+			callfunc "Vending Machine","bad";
+	case 10:
+		mes "[Audi]";
+		mes "- Thank you so much -";
+		mes "- for use me -";
+		mes "- . . . . . -";
+		mes "- But you didn't use";
+		mes "- anything. hummmmm-";
+		mes "- Well see you again ! -";
+		close;
+	}
+}
+
+function	script	Vending Machine	{
+	if(getarg(0) == "good") {
+		mes "- You put items -";
+		mes "- that is required to -";
+		mes "- generate new item, -";
+		mes "- inside of me. hehe -";
+		return;
+	} else if(getarg(0) == "bad") {
+		mes "[Audi]";
+		mes "- Piiiiii !! -";
+		mes "- Ups ! Ups ! -";
+		mes "- lack of items -";
+		mes "- Ups ! Ups ! -";
+		mes "Don't think I'm fool.";
+		close;
+	}
+		mes "[Audi]";
+		mes "- broook boom -";
+		mes "- boooom!! -";
+		mes "- weck weck !! -";
+		mes "- boom!! -";
+		mes "- ugh ! -";
+		if(countitem("Blush") > 0) {
+			mes "- Wow . Blush !! -";
+			mes "- You are so cool -";
+			mes "- you know real fashion ! -";
+			mes "- ah so cute Blush -";
+			mes "- Wanna touch .. -";
+		}
+		mes "- Thanks for use! -";
+		close;
+}
+
