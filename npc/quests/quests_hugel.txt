@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets & SinSloth
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= eAthena
 //===== Description: =========================================
@@ -13,6 +13,8 @@
 //= 1.1 Added most of Hugel quests. Thanks to MasterOfMuppets
 //= for scripting most of them. [SinSloth]
 //= 1.2 Added Odin Temple Excavation quest. [SinSloth]
+//= 1.3 Added a Missing "close;". [Samuray22]
+//=	-Thanks to Elfange
 //============================================================
 
 //-------------------------------------------------------------------------
@@ -3803,6 +3805,7 @@ einbech,208,124,3	script	Bomb Maker	851,{
 		mes "Hey, what's up?";
 		mes "I am a professional Marine Sphere Bottle maker.";
 		mes "You can call me Boomer.";
+		close;
 	}
 	
 }
