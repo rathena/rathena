@@ -4656,22 +4656,24 @@ int clif_skill_delunit(struct skill_unit *unit)
 /*==========================================
  * ƒ[ƒvêŠ‘I‘ð
  *------------------------------------------*/
-int clif_skill_warppoint(struct map_session_data *sd,int skill_num,int skill_lv,
-	const char *map1,const char *map2,const char *map3,const char *map4)
+int clif_skill_warppoint(struct map_session_data* sd, int skill_num, int skill_lv, int map1, int map2, int map3, int map4)
 {
 	int fd;
 
 	nullpo_retr(0, sd);
+	fd = sd->fd;
 
-	fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0x11c));
-	WFIFOW(fd,0)=0x11c;
-	WFIFOW(fd,2)=skill_num;
-	strncpy((char*)WFIFOP(fd, 4),map1,MAP_NAME_LENGTH_EXT);
-	strncpy((char*)WFIFOP(fd,20),map2,MAP_NAME_LENGTH_EXT);
-	strncpy((char*)WFIFOP(fd,36),map3,MAP_NAME_LENGTH_EXT);
-	strncpy((char*)WFIFOP(fd,52),map4,MAP_NAME_LENGTH_EXT);
+	WFIFOW(fd,0) = 0x11c;
+	WFIFOW(fd,2) = skill_num;
+	memset(WFIFOP(fd,4), 0x00, 4*MAP_NAME_LENGTH_EXT);
+	if (map1 == -1) strcpy((char*)WFIFOP(fd, 4), "Random");
+	if (map1 > 0) snprintf((char*)WFIFOP(fd, 4), MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(map1));
+	if (map2 > 0) snprintf((char*)WFIFOP(fd,20), MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(map2));
+	if (map3 > 0) snprintf((char*)WFIFOP(fd,36), MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(map3));
+	if (map4 > 0) snprintf((char*)WFIFOP(fd,52), MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(map4));
 	WFIFOSET(fd,packet_len(0x11c));
+
 	sd->menuskill_id = skill_num;
 	if (skill_num == AL_WARP)
 		sd->menuskill_lv = (sd->ud.skillx<<16)|sd->ud.skilly; //Store warp position here.

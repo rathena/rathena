@@ -4436,7 +4436,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case AL_TELEPORT:
-		if(sd) {
+		if(sd)
+		{
 			if (map[bl->m].flag.noteleport) {
 				clif_skill_teleportmessage(sd,0);
 				break;
@@ -4448,21 +4449,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if(skilllv == 1) {
 				// possibility to skip menu [LuzZza]
-				if(!battle_config.skip_teleport_lv1_menu &&
-					sd->skillitem != AL_TELEPORT) //If skillid is not teleport, this was auto-casted! [Skotlex]
-					clif_skill_warppoint(sd,skillid,skilllv,"Random","","","");
+				if(!battle_config.skip_teleport_lv1_menu && sd->skillitem != AL_TELEPORT)
+					clif_skill_warppoint(sd,skillid,skilllv, -1,0,0,0);
 				else
 					pc_randomwarp(sd,3);
 			} else {
 				if (sd->skillitem != AL_TELEPORT)
-				{
-					char save_map[MAP_NAME_LENGTH_EXT];
-					snprintf(save_map, MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(sd->status.save_point.map));
-					clif_skill_warppoint(sd,skillid,skilllv,"Random",save_map,"","");
-				}
+					clif_skill_warppoint(sd,skillid,skilllv, -1,sd->status.save_point.map,0,0);
 				else //Autocasted Teleport level 2??
-					pc_setpos(sd,sd->status.save_point.map,
-						sd->status.save_point.x,sd->status.save_point.y,3);
+					pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
 			}
 		} else
 			unit_warp(bl,-1,-1,-1,3);
@@ -6111,17 +6106,13 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 		break;
 
 	case AL_WARP:
-		if(sd) {
-			char memo[4][MAP_NAME_LENGTH_EXT] = {"", "", "", ""};
-			snprintf(memo[0], MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(sd->status.save_point.map));
-			if (skilllv>1 && sd->status.memo_point[0].map)
-				snprintf(memo[1], MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(sd->status.memo_point[0].map));
-			if (skilllv>2 && sd->status.memo_point[1].map)
-				snprintf(memo[2], MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(sd->status.memo_point[1].map));
-			if (skilllv>3 && sd->status.memo_point[2].map)
-				snprintf(memo[3], MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(sd->status.memo_point[2].map));
-
-			clif_skill_warppoint(sd,skillid,skilllv, memo[0],memo[1],memo[2],memo[3]);
+		if(sd)
+		{
+			clif_skill_warppoint(sd, skillid, skilllv, sd->status.save_point.map,
+				(skilllv >= 2) ? sd->status.memo_point[0].map : 0,
+				(skilllv >= 3) ? sd->status.memo_point[1].map : 0,
+				(skilllv >= 4) ? sd->status.memo_point[1].map : 0
+			);
 		}
 		break;
 

@@ -8,7 +8,7 @@ Date		Added
 	* Added a Missing "close;" in "Bomb Maker" from "quests_hugel". [Samuray22]
 	-Thanks to Elfange
 	* Correct some typos error like "next;ing". [Samuray22]
-	-Thanks to theultradamage
+	-Thanks to theultramage
 	* Fixed a Little bug on "How does the Airship Works" Quest. [Samuray22]
 	-Thanks to Tantarian
 2007/07/21

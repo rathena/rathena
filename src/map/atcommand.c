@@ -1357,7 +1357,7 @@ int atcommand_jump(const int fd, struct map_session_data* sd, const char* comman
 		x = -1;
 	if (y <= 0)
 		y = -1;
-	if (sd->bl.m >= 0 && (map[sd->bl.m].flag.nowarp || map[sd->bl.m].flag.nowarpto) && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+	if (sd->bl.m >= 0 && map[sd->bl.m].flag.noteleport && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
 		clif_displaymessage(fd, msg_txt(248));	// You are not authorized to warp from your current map.
 		return -1;
 	}

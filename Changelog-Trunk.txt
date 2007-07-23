@@ -3,6 +3,9 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/07/23
+	* Changed the restricting mapflag for @jump from nowarp/nowarpto
+	  to noteleport. Adjust your scripts if you were using it this way.
 2007/07/20
 	* Corrected packet_db.txt. See topic:158382 for details.
 	  As a side-effect, the latest packet version is now 22 instead of 21.
