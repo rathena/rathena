@@ -1,9 +1,9 @@
 //===== eAthena Script ======================================= 
 //= Quest NPCs related to Geffen
 //===== By: ================================================== 
-//= kobra_k88
+//= kobra_k88 & Samuray22
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: ================================= 
 //= 1.1 Fixed exploits [Lupus]
 //= 1.2 Removed Duplicates [Silent]
+//= 1.3 Updated "Welding Mask" Quest to the Official one. [Samuray22]
 //============================================================ 
 
 
@@ -18,68 +19,56 @@
 //==============================================================================================//
 // 					Blacksmith: 'Welding Mask' Quest
 //==============================================================================================//
-geffen_in,144,166,4	script	Blacksmith#01	63,{
+geffen_in,144,166,5	script	Blacksmith	63,{
 	mes "[Blacksmith]";
-	mes "Who am I?!........";
-	emotion e_gasp;
+	mes "I am the best Blacksmith! Do you know that?";
+	mes "I've been working for 30 years in this hot, bloody Hellfire!";
+	mes " I have been a Blacksmith for many years, I invented something really incredible. Wanna Know about it?";
 	next;
-	mes "[Blacksmith]";
-	mes "Iam the one and only Veteran Blacksmith here!! Haven't you heard???";
-	mes "I've been working for 30 years in this hot, bloody, Hellfire!";
-	emotion e_no1;
-	next;
-	mes "[Blacksmith]";
-	mes "Since I became a Blacksmith, I invented something really incredible..... wanna hear about it?";
-	next;
-	menu "I'd love to.",-, "Well, not really....",M_No;
-
+	switch( select( "Tip", "Not much help to me though...")) {
+	case 1:
 		mes "[Blacksmith]";
-		mes "Blacksmiths are always welding metals under the HOTEST and must grueling conditions!";
-		mes "The tremendous heat from the metals is so intense that it almost feels as if your face is going to burn off....";
-		emotion e_omg;
+		mes "As Blacksmith, we melt steel into various metal product with incredible high temperature.";
+		mes "So we have to face the heat and metallic fluid all the time, our face are almost burnt down and sometimes injured during working... ";
+		mes "But with this new item... You don't have to worry any more. Introducing ^3355FF' Welding Mask '^000000 !!";
 		next;
 		mes "[Blacksmith]";
-		mes "But with my great invention, Blacksmiths no longer have to fear their faces catching on fire! I call it the ^3355FF' Welding Mask'^000000!!";
-		emotion e_ic;
+		mes "It protect your face from the burning heat.";
+		mes "This is the most wanted item for anyone!";
+		mes "So? If you offer me  ^2244FF'50 Steel '^000000 and ^4422FF2000 Zeny^000000, I will make it for you right away!";
 		next;
-		mes "[Blacksmith]";
-		mes "By wearing this over ones face, one will be fully protected from scorching heat and flying debirs.";
-		next;
-		mes "[Blacksmith]";
-		mes "So what do you think? For ^4455FF'50 Steels'^000000 and only ^4455FF2000 Zeny^000000, I can make you one.";
-		next;
-		menu "Hm.. Not bad. Alright.",-, "No thanks.  I'd have no use for it.",sM_No;
-
-			mes "[Blacksmith]";
-			if(countitem(999) < 50 || Zeny < 2000) goto sL_NotEnuf;
-			delitem 999,50;
-			set Zeny, Zeny - 2000;
-			mes "Great! I'll make one right away.......";
-			next;	
-			mes "~!clonk!~!clank!~!bang!~ ~!clonk!~!clank!~!bang!~";
-			next;
-			mes "[Blacksmith]";
-			mes "Here you are, your very own Welding Mask! It was a pleasure doing buisness with you!";
-			getitem 2292,1;
-			close;
-
-			sL_NotEnuf:
-				mes "Listen here.... I said I needed ^4455FF'50 Steels'^000000 and ^4455FF2000 Zeny^000000 to make you a Welding Mask.";
-				emotion e_swt;
+		switch( select( "Not bad! I will take one.", "It doesn't seem useful.")) {
+			case 1:
+				if (countitem("Steel") > 49 && Zeny > 1999) {
+					mes "Blacksmith";
+					mes "Great! I will do it right now!!";
+					next;
+					delitem "Steel", 50;
+					set Zeny, Zeny-2000;
+					getitem "Welding_Mask", 1;
+					mes "[Blacksmith]";
+					mes "Now you can enjoy the heat!";
+					mes "Good bye...";
+					close;
+				}
+					mes "[Blacksmith]";
+					mes "Look! You don't have enough steel and zeny. I can't do it!";
+					mes "Do you know about alchemy? It is wHat you need now!";
+					mes "Find the steel and zeny quickly then you can do alchemy.";
+					close;
+			case 2:
+				mes "[Blacksmith]";
+				mes "Uh-uh... You don't know wHat you have missed!";
+				mes "Young man, you should take good care of your face before it gets shrinking.";
 				close;
-
-		sM_No:
-			mes "[Blacksmith]";
-			mes "Oh man... Your gonna regret not getting one.  Trust me sooner or later you're gonna need a ^5555FFWelding Mask^000000.";
-			mes "Everybody does.....";
-			close;
-
-	M_No:
+			}
+	case 2:
 		mes "[Blacksmith]";
-		mes "Well then, stop wasting my time!";
-		emotion e_pif;
+		mes "Never mind... I am not ganna waste any more my time talking to you! Leave now! ";
 		close;
+	}
 }
+
 
 
 //=============================================================================================//

@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/07/23
+	* Updated "Welding Mask" Quest to the Official one. [Samuray22]
 	* Rev. 10900 Corrected bugs in the Rachel Quests. [L0ne_W0lf]
 2007/07/22
 	* Added a Missing "case 1:" on monster_museum. [Samuray22]
