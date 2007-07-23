@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -41,6 +41,8 @@
 //= 1.5 Fixed a bug in Bruspetti quest. [SinSloth]
 //= 1.5b Fixed some typos in various quests. [SinSloth]
 //= 1.6 Fixed a couple bugs with the Pope's Office Guards... [L0ne_W0lf]
+//= 1.7 Fixed Maheo, he will revert to his frozen state when clicked. [L0ne_W0lf]
+//=	Replaced  instances of "+name+", with "+strcharinfo(0)".
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -1601,7 +1603,7 @@ ra_in01,235,194,5	script	Katinshuell	931,{
 			mes "house for some reason.";
 			mes "Now, why would you do that?";
 			next;
-			mes "["+name+"]";
+			mes "["+ strcharinfo(0) +"]";
 			mes "You recognized";
 			mes "Bruspetti's diary";
 			mes "pretty quickly...";
@@ -2087,7 +2089,7 @@ ra_in01,250,19,3	script	Mr. Shendar	929,{
 		mes "guy, the one that might";
 		mes "be Bruspetti's boyfriend...";
 		next;
-		mes "["+name+"]";
+		mes "["+ strcharinfo(0) +"]";
 		mes "Right, his name was";
 		mes "Katinshuell. That guy's";
 		mes "been acting really funny.";
@@ -2574,7 +2576,7 @@ OnTouch:
 		mes "the feeling that she";
 		mes "caved in to despair.";
 		next;
-		mes "["+name+"]";
+		mes "["+ strcharinfo(0) +"]";
 		mes "The water's not that";
 		mes "cold, or very deep...";
 		mes "And Katinshuell mentioned";
@@ -2582,7 +2584,7 @@ OnTouch:
 		mes "But she was still looking";
 		mes "at him. It's haunting...";
 		next;
-		mes "["+name+"]";
+		mes "["+ strcharinfo(0) +"]";
 		mes "I suppose she was torn...";
 		mes "She loved him, but couldn't";
 		mes "bear to live with his secret.";
@@ -3404,6 +3406,8 @@ rachel,265,98,3	script	Hamion#aru	930,{
 }
 
 ice_dun02,120,105,3	script	Maheo#cave	937,{
+	enablenpc "Man Stuck in Ice#cave";
+	disablenpc "Maheo#cave";
 	end;
 OnInit:
 	disablenpc "Maheo#cave";
