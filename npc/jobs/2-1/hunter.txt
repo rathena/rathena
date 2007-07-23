@@ -33,6 +33,10 @@
 //= 2.3a 7 official sets of Demon Hunter,thx to Dr.Evil [Lupus]
 //= 2.4a Added missing next;, missing NPC names [Lupus]
 //= 2.5 "strcharinfo" -> "strcharinfo(0)" [FlavioJS]
+//= 2.6 Fixed 3º Test. [Samuray22]
+//	-Changed Timers from 3 to 1 minute.
+//	-Changed "Job Change Monsters".
+//	-Thanks to ultradamage.
 //============================================================ 
 
 //<====================================== Job Changer ========================================>\\
@@ -719,8 +723,6 @@ OnStart:
 	monster "job_hunte",114,78,"Job Change Monster",1015,1,"Ev_HntRm::OnMyMobDead1"; 
 	monster "job_hunte",89,127,"Job Change Monster",1002,1,"Ev_HntRm::OnMyMobDead1";
 	monster "job_hunte",53,73,"Job Change Monster",1041,1,"Ev_HntRm::OnMyMobDead1";
-	monster "job_hunte",125,70,"Job Change Monster",1016,1,"Ev_HntRm::OnMyMobDead1";
-	monster "job_hunte",90,92,"Job Change Monster",1015,1,"Ev_HntRm::OnMyMobDead1";
 	donpcevent "Ev_HntRm2::OnStart";
 	initnpctimer "TimerHnt";
 	end;
@@ -791,50 +793,36 @@ OnTimer4000:
 	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]: Don't forget to AVOID the TRAPS!!!",8;
 	end;
 OnTimer10000:
-	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  ******The clock will start now! 3 minutes left! ****** ",8;
+	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  ******The clock will start now! 1 minute left! ****** ",8;
 	donpcevent "HntTG::OnStart";
 	end;
 OnTimer40000:
-	donpcevent "HntTG::OnStart";
-	end;
-OnTimer70000:
-	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  ****** 2 minutes left! ****** ",8;
-	donpcevent "HntTG::OnStart";
-	end;
-OnTimer100000:
-	donpcevent "HntTG::OnStart";
-	end;
-OnTimer130000:
-	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  ****** 1 minute left! ****** ",8;
-	donpcevent "HntTG::OnStart";
-	end;
-OnTimer160000:
 	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  ****** 30 sec left! ****** ",8;
 	donpcevent "HntTG::OnStart";
 	end;
-OnTimer185000:
+OnTimer65000:
 	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  5 . . . .",8;
 	donpcevent "HntTG::OnStart";
 	end;
-OnTimer186000:
+OnTimer66000:
 	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  4. . . .",8;
 	end;
-OnTimer187000:
+OnTimer67000:
 	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  3. . .",8;
 	end;
-OnTimer188000:
+OnTimer68000:
 	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  2. .",8;
 	end;
-OnTimer189000:
+OnTimer69000:
 	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  1...",8;
 	end;
-OnTimer190000:
+OnTimer70000:
 	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  0! ",8;
 	end;
-OnTimer193000:
+OnTimer73000:
 	areaannounce "job_hunte", 50, 64, 123, 143, "[Test Guide]:  You ran out of time! You can challenge again later!.",8;
 	end;
-OnTimer196000:
+OnTimer76000:
 	stopnpctimer;
 	areawarp "job_hunte", 50, 64, 123, 143, "payon_in02", 16, 26;
 	killmonsterall "job_hunte";
