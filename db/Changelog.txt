@@ -49,6 +49,8 @@
 	----
 ========================
 
+07/24
+	* Added Job_Alchemist constant, Job_Alchem should now be considered deprecated [DracoRPG]
 07/15
 	* Rev. 10885 Fixed incorrect skill ID for Lady Tany's Expulsion. [L0ne_W0lf]
 	* Corrected the AegisName for "Fresh Fish." Should have been "Delicious_Fish"

@@ -17,6 +17,7 @@ Job_Monk	15
 Job_Sage	16
 Job_Rogue	17
 Job_Alchem	18
+Job_Alchemist	18
 Job_Bard	19
 Job_Dancer	20
 Job_Crusader2	21
