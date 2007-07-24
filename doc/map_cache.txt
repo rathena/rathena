@@ -47,7 +47,7 @@ Here are the command-line arguments you can provide to the map cache builder to 
    Allows to specify the file containing the list of maps to add to the map cache
  -cache path/to/map/cache
    Allows to specify the path to the generated map cache
- - rebuild
+ -rebuild
    Allows to force the rebuild mode (map cache will be overwritten even if it already exists)
 
 

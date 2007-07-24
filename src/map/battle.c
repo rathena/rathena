@@ -528,9 +528,8 @@ int battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int dama
 	
 	if(md && md->guardian_data) {
 		if(class_ == MOBID_EMPERIUM && flag&BF_SKILL)
-		//SKill inmunity.
+		//Skill immunity.
 			switch (skill_num) {
-			case PA_PRESSURE:
 			case MO_TRIPLEATTACK:
 			case HW_GRAVITATION:
 				break;
@@ -1067,8 +1066,8 @@ static struct Damage battle_calc_weapon_attack(
 		if (skill_num && !flag.hit)
 			switch(skill_num)
 			{
-				case AS_SPLASHER: //Reports say it always hits?
-					if (wflag) //Only if you were the one exploding.
+				case AS_SPLASHER:
+					if (wflag) // Always hits the one exploding.
 						break;
 					flag.hit = 1;
 					break;
@@ -1247,14 +1246,14 @@ static struct Damage battle_calc_weapon_attack(
 					(sc && sc->data[SC_WEAPONPERFECTION].timer!=-1?8:0);
 				if (flag.arrow && sd)
 				switch(sd->status.weapon) {
-				case W_BOW:
-				case W_REVOLVER:
-				case W_SHOTGUN:
-				case W_GATLING:
-				case W_GRENADE:
-				  break;
-				default:
-				  i |= 16; // for ex. shuriken must not be influenced by DEX
+					case W_BOW:
+					case W_REVOLVER:
+					case W_SHOTGUN:
+					case W_GATLING:
+					case W_GRENADE:
+						break;
+					default:
+						i |= 16; // for ex. shuriken must not be influenced by DEX
 				}
 				wd.damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, i);
 				if (flag.lh)
@@ -1477,15 +1476,13 @@ static struct Damage battle_calc_weapon_attack(
 					break;
 				case AS_SPLASHER:
 					i = 400+50*skill_lv;
-					if (sd) i += 20*pc_checkskill(sd,AS_POISONREACT);
-					if (wflag>1) i/=wflag; //Splash damage is half.
+					if (wflag>1) i /= 4; // FIXME: Should be 25% of damage inflicted to target, not 25% of skillratio bonus
 					skillratio += i;
 					break;
 				case ASC_BREAKER:
 					skillratio += 100*skill_lv-100;
 					break;
 				case PA_SACRIFICE:
-					//40% less effective on siege maps. [Skotlex]
 					skillratio += 10*skill_lv-10;
 					break;
 				case PA_SHIELDCHAIN:
@@ -1615,6 +1612,7 @@ static struct Damage battle_calc_weapon_attack(
 			if(sc->data[SC_EDP].timer != -1 &&
 			  	skill_num != ASC_BREAKER &&
 				skill_num != ASC_METEORASSAULT &&
+				skill_num != AS_SPLASHER &&
 				skill_num != AS_VENOMKNIFE)
 				ATK_ADDRATE(sc->data[SC_EDP].val3);
 		}

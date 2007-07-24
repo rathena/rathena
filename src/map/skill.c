@@ -1088,12 +1088,6 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 				sc_start4(bl,SC_DPOISON,sc->data[SC_EDP].val2,
 					sc->data[SC_EDP].val1,0,0,0,skill_get_time2(ASC_EDP,sc->data[SC_EDP].val1));
 		}
-		if (tsc->count) {
-			if (tsc->data[SC_SPLASHER].timer != -1)
-				sc_start4(bl,SC_POISON,2*tsc->data[SC_SPLASHER].val1+10,
-					tsc->data[SC_SPLASHER].val1,0,0,0,
-					skill_get_time2(tsc->data[SC_SPLASHER].val2,tsc->data[SC_SPLASHER].val1));
-		}
 	}
 	break;
 
@@ -1110,7 +1104,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			skilllv = pc_checkskill(sd, TF_POISON);
 	case TF_POISON:
 	case AS_SPLASHER:
-		if(!sc_start(bl,SC_POISON,(2*skilllv+10),skilllv,skill_get_time2(skillid,skilllv))
+		if(!sc_start(bl,SC_POISON,(4*skilllv+10),skilllv,skill_get_time2(skillid,skilllv))
 			&&	sd && skillid==TF_POISON
 		)
 			clif_skill_fail(sd,skillid,0,0);
@@ -5116,7 +5110,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case AS_SPLASHER:
-		if(tstatus->max_hp*3/4 < tstatus->hp) {
+		if(tstatus->mode&MD_BOSS || tstatus-> hp > tstatus->max_hp*3/4) {
+			if (sd) clif_skill_fail(sd,skillid,0,0);
 			map_freeblock_unlock();
 			return 1;
 		}

@@ -50,6 +50,7 @@
 ========================
 
 07/24
+	* Updated Venom Splasher's bomb timer [DracoRPG]
 	* Added Job_Alchemist constant, Job_Alchem should now be considered deprecated [DracoRPG]
 07/15
 	* Rev. 10885 Fixed incorrect skill ID for Lady Tany's Expulsion. [L0ne_W0lf]
