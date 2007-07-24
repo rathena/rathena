@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/07/24
+	* Rev. 10906 Fixed the Kafra Welcome message for guilds. Thanks Barron-Monster. [L0ne_W0lf]
 2007/07/23
 	* Fixed 3º Test in Hunter Job Quest. [Samuray22]
 	-Thanks to ultradamage.
