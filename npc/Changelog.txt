@@ -1,10 +1,12 @@
 Date		Added
 ======
 2007/07/24
+	* Changed name from "Emvertacon" to "Emveretarcon" in refine.txt. [Samuray22]
+	- Thanks to Barron-Monster.
 	* Rev. 10906 Fixed the Kafra Welcome message for guilds. Thanks Barron-Monster. [L0ne_W0lf]
 2007/07/23
 	* Fixed 3º Test in Hunter Job Quest. [Samuray22]
-	-Thanks to ultradamage.
+	-Thanks to ultramage.
 	* Fixed a little bug in "Dandelion Quest" with "Job_Alchemist" changed to "Job_Alchem". [Samuray22]
 	-Thanks to Nobuo
 	* Updated "Welding Mask" Quest to the Official one. [Samuray22]
