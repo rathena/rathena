@@ -2,28 +2,26 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/cbasetypes.h"
-#include "../common/utils.h"
-#include "../common/strlib.h"
-#include "../common/showmsg.h"
 #include "../common/db.h"
 #include "../common/malloc.h"
+#include "../common/showmsg.h"
+#include "../common/strlib.h"
+#include "../common/utils.h"
 
-#include "itemdb.h"
 #include "inter.h"
 #include "int_guild.h"
 #include "int_homun.h"
+#include "itemdb.h"
 #include "char.h"
 
 #include <sys/types.h>
-
 #ifdef WIN32
 #include <winsock2.h>
 #else
 #include <sys/socket.h>
-#include <netinet/in.h> 
+#include <netinet/in.h>
 #include <arpa/inet.h>
 #endif
-
 #include <time.h>
 #include <signal.h>
 #include <fcntl.h>
@@ -33,13 +31,10 @@
 #include <stdlib.h>
 
 // private declarations
-#define CHAR_CONF_NAME  "conf/char_athena.conf"
+#define CHAR_CONF_NAME	"conf/char_athena.conf"
 #define LAN_CONF_NAME	"conf/subnet_athena.conf"
 #define SQL_CONF_NAME	"conf/inter_athena.conf"
 
-#ifndef TXT_SQL_CONVERT
-static struct dbt *char_db_;
-#endif
 char char_db[256] = "char";
 char scdata_db[256] = "sc_data";
 char cart_db[256] = "cart_inventory";
@@ -61,10 +56,12 @@ char guild_storage_db[256] = "guild_storage";
 char party_db[256] = "party";
 char pet_db[256] = "pet";
 char friend_db[256] = "friends";
-#ifdef TXT_SQL_CONVERT
-int save_log = 0; //Have the logs be off by default when converting
-#else
-int save_log = 1;
+
+#ifndef TXT_SQL_CONVERT
+static struct dbt *char_db_;
+
+char db_path[1024] = "db";
+
 int db_use_sqldbs;
 
 char login_db[256] = "login";
@@ -97,18 +94,29 @@ uint16 char_port = 6121;
 int char_maintenance = 0;
 int char_new = 1;
 int char_new_display = 0;
+
 int name_ignoring_case = 0; // Allow or not identical name for characters but with a different case by [Yor]
 int char_name_option = 0; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
 char unknown_char_name[NAME_LENGTH] = "Unknown"; // Name to use when the requested name cannot be determined
+#define TRIM_CHARS "\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 char char_name_letters[1024] = ""; // list of letters/symbols used to authorise or not a name of a character. by [Yor]
-//The following are characters that are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
-#define TRIM_CHARS "\032\t\x0A\x0D "
 bool char_rename = true;
+
 int char_per_account = 0; //Maximum charas per account (default unlimited) [Sirius]
 int char_del_level = 0; //From which level u can delete character [Lupus]
 
 int log_char = 1;	// loggin char or not [devil]
 int log_inter = 1;	// loggin inter or not [devil]
+
+#ifdef TXT_SQL_CONVERT
+int save_log = 0; //Have the logs be off by default when converting
+#else
+int save_log = 1;
+#endif
+
+//These are used to aid the map server in identifying valid clients. [Skotlex]
+static int max_account_id = DEFAULT_MAX_ACCOUNT_ID, max_char_id = DEFAULT_MAX_CHAR_ID;
+static int online_check = 1; //If one, it won't let players connect when their account is already registered online and will send the relevant map server a kick user request. [Skotlex]
 
 // Advanced subnet check [LuzZza]
 struct _subnet {
@@ -117,14 +125,7 @@ struct _subnet {
 	uint32 char_ip;
 	uint32 map_ip;
 } subnet[16];
-
 int subnet_count = 0;
-
-char db_path[1024]="db";
-
-//These are used to aid the map server in identifying valid clients. [Skotlex]
-static int max_account_id = DEFAULT_MAX_ACCOUNT_ID, max_char_id = DEFAULT_MAX_CHAR_ID;
-static int online_check = 1; //If one, it won't let players connect when their account is already registered online and will send the relevant map server a kick user request. [Skotlex]
 
 struct char_session_data{
 	int account_id, login_id1, login_id2, sex;
@@ -144,7 +145,7 @@ struct {
 int auth_fifo_pos = 0;
 
 struct mmo_charstatus char_dat;
-int char_num,char_max;
+int char_num, char_max;
 int max_connect_user = 0;
 int gm_allow_level = 99;
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
@@ -168,7 +169,7 @@ struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 // other is char_id
 unsigned int save_flag = 0;
 
-// start point (you can reset point on conf file)
+// Initial position (it's possible to set it in conf file)
 struct point start_point = { 0, 53, 111 };
 
 bool char_gm_read = false;
@@ -1647,7 +1648,7 @@ int mmo_char_send006b(int fd, struct char_session_data* sd)
 
 
 	j = 24; // offset
-	WFIFOHEAD(fd, j + found_num*108);
+	WFIFOHEAD(fd,j + found_num*108); // or 106(!)
 	WFIFOW(fd,0) = 0x6b;
 	memset(WFIFOP(fd,4), 0, 20); // unknown bytes
 	for(i = 0; i < found_num; i++)
@@ -3031,33 +3032,17 @@ int parse_char(int fd)
 		return 0;
 	}
 
-	while(RFIFOREST(fd) >= 2) {
-		cmd = RFIFOW(fd,0);
-		// crc32のスキップ用
-		if(	sd==NULL			&&	// 未ログインor管理パケット
-			RFIFOREST(fd)>=4	&&	// 最低バイト数制限 ＆ 0x7530,0x7532管理パケ除去
-			RFIFOREST(fd)<=21	&&	// 最大バイト数制限 ＆ サーバーログイン除去
-			cmd!=0x20b	&&	// md5通知パケット除去
-			(RFIFOREST(fd)<6 || RFIFOW(fd,4)==0x65)	){	// 次に何かパケットが来てるなら、接続でないとだめ
-			RFIFOSKIP(fd,4);
-			cmd = RFIFOW(fd,0);
-			ShowDebug("parse_char : %d crc32 skipped\n",fd);
-			if(RFIFOREST(fd)==0)
-				return 0;
-		}
+	while(RFIFOREST(fd) >= 2)
+	{
+		//For use in packets that depend on an sd being present [Skotlex]
+		#define FIFOSD_CHECK(rest) { if(RFIFOREST(fd) < rest) return 0; if (sd==NULL) { RFIFOSKIP(fd,rest); return 0; } }
 
-//For use in packets that depend on an sd being present [Skotlex]
-#define FIFOSD_CHECK(rest) { if(RFIFOREST(fd) < rest) return 0; if (sd==NULL) { RFIFOSKIP(fd,rest); return 0; } }
-		
-		switch(cmd) {
-		case 0x20b: //20040622 encryption ragexe correspondence
-			if (RFIFOREST(fd) < 19)
-				return 0;
-			RFIFOSKIP(fd,19);
-		break;
+		cmd = RFIFOW(fd,0);
+		switch(cmd)
+		{
 
 		case 0x65: // request to connect
-			ShowInfo("request connect - account_id:%d/login_id1:%d/login_id2:%d\n", RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOL(fd, 10));
+			ShowInfo("request connect - account_id:%d/login_id1:%d/login_id2:%d\n", RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10));
 			if (RFIFOREST(fd) < 17)
 				return 0;
 		{
@@ -3067,6 +3052,7 @@ int parse_char(int fd)
 				RFIFOSKIP(fd,17);
 				break;
 			}
+			
 			CREATE(session[fd]->session_data, struct char_session_data, 1);
 			sd = (struct char_session_data*)session[fd]->session_data;
 			sd->connect_until_time = 0; // unknow or illimited (not displaying on map-server)
@@ -3224,7 +3210,7 @@ int parse_char(int fd)
 
 			//Send NEW auth packet [Kevin]
 			if ((map_fd = server_fd[i]) < 1 || session[map_fd] == NULL)
-			{	
+			{
 				ShowError("parse_char: Attempting to write to invalid session %d! Map Server #%d disconnected.\n", map_fd, i);
 				server_fd[i] = -1;
 				memset(&server[i], 0, sizeof(struct mmo_map_server));
@@ -3235,18 +3221,17 @@ int parse_char(int fd)
 				WFIFOSET(fd,3);
 				break;
 			}	
-			{	//Send auth ok to map server
-				WFIFOHEAD(map_fd,20 + sizeof(struct mmo_charstatus));
-				WFIFOW(map_fd,0) = 0x2afd;
-				WFIFOW(map_fd,2) = 20 + sizeof(struct mmo_charstatus);
-				WFIFOL(map_fd,4) = auth_fifo[auth_fifo_pos].account_id;
-				WFIFOL(map_fd,8) = auth_fifo[auth_fifo_pos].login_id1;
-				WFIFOL(map_fd,16) = auth_fifo[auth_fifo_pos].login_id2;
-				WFIFOL(map_fd,12) = (unsigned long)auth_fifo[auth_fifo_pos].connect_until_time;
-				memcpy(WFIFOP(map_fd,20), &char_dat, sizeof(struct mmo_charstatus));
-				WFIFOSET(map_fd, WFIFOW(map_fd,2));
-			}
-
+			//Send auth ok to map server
+			WFIFOHEAD(map_fd,20 + sizeof(struct mmo_charstatus));
+			WFIFOW(map_fd,0) = 0x2afd;
+			WFIFOW(map_fd,2) = 20 + sizeof(struct mmo_charstatus);
+			WFIFOL(map_fd,4) = auth_fifo[auth_fifo_pos].account_id;
+			WFIFOL(map_fd,8) = auth_fifo[auth_fifo_pos].login_id1;
+			WFIFOL(map_fd,16) = auth_fifo[auth_fifo_pos].login_id2;
+			WFIFOL(map_fd,12) = (unsigned long)auth_fifo[auth_fifo_pos].connect_until_time;
+			memcpy(WFIFOP(map_fd,20), &char_dat, sizeof(struct mmo_charstatus));
+			WFIFOSET(map_fd, WFIFOW(map_fd,2));
+			
 			set_char_online(i, auth_fifo[auth_fifo_pos].char_id, auth_fifo[auth_fifo_pos].account_id);
 			auth_fifo_pos++;
 		break;
@@ -3293,13 +3278,15 @@ int parse_char(int fd)
 		break;
 
 		case 0x68:	// delete char
-			FIFOSD_CHECK(46);
+		case 0x1fb:	// 2004-04-19aSakexe+ langtype 12 char deletion packet
+			if (cmd == 0x68) FIFOSD_CHECK(46);
+			if (cmd == 0x1fb) FIFOSD_CHECK(56);
 		{
 			int cid = RFIFOL(fd,2);
-			WFIFOHEAD(fd,46);
-			ShowInfo(CL_RED" Request Char Deletion:"CL_GREEN"%d (%d)"CL_RESET"\n", sd->account_id, cid);
+
+			ShowInfo(CL_RED"Request Char Deletion: "CL_GREEN"%d (%d)"CL_RESET"\n", sd->account_id, cid);
 			memcpy(email, RFIFOP(fd,6), 40);
-			RFIFOSKIP(fd,46);
+			RFIFOSKIP(fd,RFIFOREST(fd)); // hack to make the other deletion packet work
 			
 			// Check if e-mail is correct 
 			if(strcmpi(email, sd->email) && //email does not matches and 
@@ -3307,9 +3294,10 @@ int parse_char(int fd)
 				strcmp("a@a.com", sd->email) || //it is not default email, or
 				(strcmp("a@a.com", email) && strcmp("", email)) //email sent does not matches default
 			)) {	//Fail
-				WFIFOW(fd, 0) = 0x70;
-				WFIFOB(fd, 2) = 0; // 00 = Incorrect Email address
-				WFIFOSET(fd, 3);
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x70;
+				WFIFOB(fd,2) = 0; // 00 = Incorrect Email address
+				WFIFOSET(fd,3);
 				break;
 			}
 			
@@ -3322,6 +3310,7 @@ int parse_char(int fd)
 				}
 			}
 			if (i == MAX_CHARS) { // Such a character does not exist in the account
+				WFIFOHEAD(fd,3);
 				WFIFOW(fd,0) = 0x70;
 				WFIFOB(fd,2) = 0;
 				WFIFOSET(fd,3);
@@ -3351,9 +3340,10 @@ int parse_char(int fd)
 					//can't delete the char
 					//either SQL error or can't delete by some CONFIG conditions
 					//del fail
-					WFIFOW(fd, 0) = 0x70;
-					WFIFOB(fd, 2) = 0;
-					WFIFOSET(fd, 3);
+					WFIFOHEAD(fd,3);
+					WFIFOW(fd,0) = 0x70;
+					WFIFOB(fd,2) = 0;
+					WFIFOSET(fd,3);
 					break;
 				}
 				if (char_pid != 0)
@@ -3365,65 +3355,72 @@ int parse_char(int fd)
 				}
 			}
 			/* Char successfully deleted.*/
+			WFIFOHEAD(fd,2);
 			WFIFOW(fd,0) = 0x6f;
 			WFIFOSET(fd,2);
 		}
+		break;
+
+		case 0x187:	// R 0187 <account ID>.l - client keep-alive packet (every 12 seconds)
+			if (RFIFOREST(fd) < 6)
+				return 0;
+			RFIFOSKIP(fd,6);
+		break;
+
+		case 0x28d: // R 028d <account ID>.l <char ID>.l <new name>.24B - char rename request
+			if (RFIFOREST(fd) < 34)
+				return 0;
+			//not implemented
+			RFIFOSKIP(fd,34);
 		break;
 
 		case 0x2af8: // login as map-server
 			if (RFIFOREST(fd) < 60)
 				return 0;
 		{
-			char *l_user = RFIFOP(fd,2);
-			char *l_pass = RFIFOP(fd,26);
-			WFIFOHEAD(fd,4+5*GM_num); 
+			char* l_user = RFIFOP(fd,2);
+			char* l_pass = RFIFOP(fd,26);
 			l_user[23] = '\0';
 			l_pass[23] = '\0';
-			WFIFOW(fd,0) = 0x2af9;
 			for(i = 0; i < MAX_MAP_SERVERS; i++) {
 				if (server_fd[i] <= 0)
 					break;
 			}
-			if (i == MAX_MAP_SERVERS ||
-				strcmp(l_user, userid) ||
-				strcmp(l_pass, passwd)) {
+			if (i == MAX_MAP_SERVERS || strcmp(l_user, userid) || strcmp(l_pass, passwd)) {
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x2af9;
 				WFIFOB(fd,2) = 3;
 				WFIFOSET(fd,3);
-				RFIFOSKIP(fd,60);
 			} else {
-				int len;
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x2af9;
 				WFIFOB(fd,2) = 0;
 				WFIFOSET(fd,3);
+
 				session[fd]->func_parse = parse_frommap;
 				server_fd[i] = fd;
-				server[i].ip = ntohl(RFIFOL(fd, 54));
-				server[i].port = ntohs(RFIFOW(fd, 58));
+				server[i].ip = ntohl(RFIFOL(fd,54));
+				server[i].port = ntohs(RFIFOW(fd,58));
 				server[i].users = 0;
 				memset(server[i].map, 0, sizeof(server[i].map));
-				RFIFOSKIP(fd,60);
 				realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 				char_mapif_init(fd);
 				// send gm acccounts level to map-servers
-				len = 4;
+				WFIFOHEAD(fd,4+5*GM_num); 
 				WFIFOW(fd,0) = 0x2b15;
 				for(i = 0; i < GM_num; i++) {
-					WFIFOL(fd,len) = gm_account[i].account_id;
-					WFIFOB(fd,len+4) = (unsigned char)gm_account[i].level;
-					len += 5;
+					WFIFOL(fd,4+5*i) = gm_account[i].account_id;
+					WFIFOB(fd,4+5*i+4) = (unsigned char)gm_account[i].level;
 				}
-				WFIFOW(fd,2) = len;
-				WFIFOSET(fd,len);
+				WFIFOW(fd,2) = 4+5*GM_num;
+				WFIFOSET(fd,WFIFOW(fd,2));
 			}
+			
+			RFIFOSKIP(fd,60);
 		}
 		break;
 
-		case 0x187:	// Alive?
-			if (RFIFOREST(fd) < 6)
-				return 0;
-			RFIFOSKIP(fd, 6);
-		break;
-
-		case 0x7530:	// Athena info get
+		case 0x7530: // Athena info get
 		{
 			WFIFOHEAD(fd,10);
 			WFIFOW(fd,0) = 0x7531;
@@ -3439,12 +3436,17 @@ int parse_char(int fd)
 			return 0;
 		}
 
-		case 0x7532:	// disconnect(default also disconnect)
-		default:
+		case 0x7532: // disconnect request from login server
+			set_eof(fd);
+			return 0;
+
+		default: // unknown packet received
+			ShowError("parse_char: Received unknown packet "CL_WHITE"0x%x"CL_RESET" from ip '"CL_WHITE"%s"CL_RESET"'! Disconnecting!\n", RFIFOW(fd,0), ip2str(ipl, NULL));
 			set_eof(fd);
 			return 0;
 		}
 	}
+
 	RFIFOFLUSH(fd);
 	return 0;
 }
@@ -4075,9 +4077,6 @@ int do_init(int argc, char **argv)
 		}
 	}
 
-	ShowInfo("open port %d.....\n",char_port);
-	char_fd = make_listen_bind(bind_ip, char_port);
-
 	add_timer_func_list(check_connect_login_server, "check_connect_login_server");
 	add_timer_func_list(send_users_tologin, "send_users_tologin");
 	add_timer_func_list(send_accounts_tologin, "send_accounts_tologin");
@@ -4128,6 +4127,9 @@ int do_init(int argc, char **argv)
 	}
 	
 	ShowInfo("End of char server initilization function.\n");
+
+	ShowInfo("open port %d.....\n",char_port);
+	char_fd = make_listen_bind(bind_ip, char_port);
 	ShowStatus("The char-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", char_port);
 	return 0;
 }

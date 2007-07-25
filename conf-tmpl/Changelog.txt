@@ -1,5 +1,8 @@
 Date	Added
 
+2007/07/25
+	* Adjusted motd.txt to not crash new clients
+	* Removed backup_txt code since it's not needed anymore
 2007/07/20
 	* Adjusted client.conf's packetver table (latest now uses new value)
 2007/07/18

@@ -3,6 +3,12 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/07/25
+	* Added support for character rename packet (only dummy code for now)
+	* Added support for langtype-12 char deletion packet (tested, works)
+	* Synchronized txt/sql charserver code a bit
+	* Adjusted motd.txt to not crash new clients
+	* Removed some dead code from the charserver (see r352)
 2007/07/24
 	* Fixes on Venom Splasher and the like (see topic:152975) [DracoRPG]
 	- VS / Envenom / Throw Venom Knife poison chance raised to 10+4*lv %

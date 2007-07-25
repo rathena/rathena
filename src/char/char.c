@@ -2,21 +2,21 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/cbasetypes.h"
-#include "../common/strlib.h"
+#include "../common/db.h"
+#include "../common/lock.h"
+#include "../common/malloc.h"
+#include "../common/mmo.h"
 #include "../common/core.h"
 #include "../common/socket.h"
-#include "../common/timer.h"
-#include "../common/mmo.h"
-#include "../common/db.h"
-#include "../common/version.h"
-#include "../common/lock.h"
+#include "../common/strlib.h"
 #include "../common/showmsg.h"
-#include "../common/malloc.h"
+#include "../common/timer.h"
+#include "../common/version.h"
 
 #include "inter.h"
-#include "int_pet.h"
-#include "int_homun.h"
 #include "int_guild.h"
+#include "int_homun.h"
+#include "int_pet.h"
 #include "int_party.h"
 #include "int_storage.h"
 #ifdef ENABLE_SC_SAVING
@@ -25,7 +25,6 @@
 #include "char.h"
 
 #include <sys/types.h>
-
 #ifdef WIN32
 #include <winsock2.h>
 #else
@@ -33,7 +32,6 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #endif
-
 #include <time.h>
 #include <signal.h>
 #include <fcntl.h>
@@ -46,7 +44,15 @@
 #define CHAR_CONF_NAME	"conf/char_athena.conf"
 #define LAN_CONF_NAME	"conf/subnet_athena.conf"
 
+char char_txt[1024] = "save/athena.txt";
+char friends_txt[1024] = "save/friends.txt";
+char char_log_filename[1024] = "log/char.log";
+
+int save_log = 1;	// show loading/saving messages
+
 #ifndef TXT_SQL_CONVERT
+char db_path[1024] = "db";
+
 struct mmo_map_server {
 	uint32 ip;
 	uint16 port;
@@ -71,16 +77,20 @@ uint16 char_port = 6121;
 int char_maintenance = 0;
 int char_new = 1;
 int char_new_display = 0;
+
 int email_creation = 0; // disabled by default
-#endif
-char char_txt[1024]="save/athena.txt";
-char backup_txt[1024]="save/backup.txt"; //By zanetheinsane
-char friends_txt[1024]="save/friends.txt"; // davidsiaw
-#ifndef TXT_SQL_CONVERT
-char backup_txt_flag = 0; // The backup_txt file was created because char deletion bug existed. Now it's finish and that take a lot of time to create a second file when there are a lot of characters. => option By [Yor]
+
+int name_ignoring_case = 0; // Allow or not identical name for characters but with a different case by [Yor]
+int char_name_option = 0; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
 char unknown_char_name[1024] = "Unknown"; // Name to use when the requested name cannot be determined
-char char_log_filename[1024] = "log/char.log";
-char db_path[1024]="db";
+#define TRIM_CHARS "\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
+char char_name_letters[1024] = ""; // list of letters/symbols authorised (or not) in a character name. by [Yor]
+bool char_rename = true;
+
+int log_char = 1;	// loggin char or not [devil]
+int log_inter = 1;	// loggin inter or not [devil]
+
+static int online_check = 1; //If one, it won't let players connect when their account is already registered online and will send the relevant map server a kick user request. [Skotlex]
 
 // Advanced subnet check [LuzZza]
 struct _subnet {
@@ -89,18 +99,7 @@ struct _subnet {
 	uint32 char_ip;
 	uint32 map_ip;
 } subnet[16];
-
 int subnet_count = 0;
-
-int name_ignoring_case = 0; // Allow or not identical name for characters but with a different case by [Yor]
-int char_name_option = 0; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
-//The following are characters that are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
-#define TRIM_CHARS "\032\t\x0A\x0D "
-char char_name_letters[1024] = ""; // list of letters/symbols authorised (or not) in a character name. by [Yor]
-bool char_rename = true;
-
-int log_char = 1;	// loggin char or not [devil]
-int log_inter = 1;	// loggin inter or not [devil]
 
 struct char_session_data{
 	int account_id, login_id1, login_id2, sex;
@@ -119,8 +118,6 @@ struct {
 } auth_fifo[AUTH_FIFO_SIZE];
 int auth_fifo_pos = 0;
 
-static int online_check = 1; //If one, it won't let players connect when their account is already registered online and will send the relevant map server a kick user request. [Skotlex]
-
 int char_id_count = START_CHAR_NUM;
 struct character_data *char_dat;
 
@@ -128,7 +125,6 @@ int char_num, char_max;
 int max_connect_user = 0;
 int gm_allow_level = 99;
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
-int save_log = 1;
 int start_zeny = 500;
 int start_weapon = 1201;
 int start_armor = 2301;
@@ -161,6 +157,7 @@ int online_gm_display_min_level = 20; // minimum GM level to display 'GM' when w
 //These are used to aid the map server in identifying valid clients. [Skotlex]
 static int max_account_id = DEFAULT_MAX_ACCOUNT_ID, max_char_id = DEFAULT_MAX_CHAR_ID;
 
+//Structure for holding in memory which characters are online on the map servers connected.
 struct online_char_data {
 	int account_id;
 	int char_id;
@@ -1045,25 +1042,6 @@ void mmo_char_sync(void)
 		lock_fclose(fp, char_txt, &lock);
 	}
 
-	// Data save (backup)
-	if (backup_txt_flag) { // The backup_txt file was created because char deletion bug existed. Now it's finish and that take a lot of time to create a second file when there are a lot of characters. => option By [Yor]
-		fp = lock_fopen(backup_txt, &lock);
-		if (fp == NULL) {
-			ShowWarning("Server can't not create backup of characters file.\n");
-			char_log("WARNING: Server can't not create backup of characters file." RETCODE);
-			//aFree(id); // free up the memory before leaving -.- [Ajarn]
-			DELETE_BUFFER(id);
-			return;
-		}
-		for(i = 0; i < char_num; i++) {
-			// create only once the line, and save it in the 2 files (it's speeder than repeat twice the loop and create twice the line)
-			mmo_char_tostr(line, &char_dat[id[i]].status,char_dat[id[i]].global, char_dat[id[i]].global_num); // use of sorted index
-			fprintf(fp, "%s" RETCODE, line);
-		}
-		fprintf(fp, "%d\t%%newid%%" RETCODE, char_id_count);
-		lock_fclose(fp, backup_txt, &lock);
-	}
-
 	// Friends List data save (davidsiaw)
 	f_fp = lock_fopen(friends_txt, &lock);
 	for(i = 0; i < char_num; i++) {
@@ -1663,7 +1641,7 @@ int count_users(void)
 /// Writes char data to the buffer in the format used by the client.
 /// Used in packets 0x6b (chars info) and 0x6d (new char info)
 /// Returns the size (106 or 108)
-int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p)
+int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
 {
 	if( buf == NULL || p == NULL )
 		return 0;
@@ -1673,14 +1651,11 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p)
 	WBUFL(buf,8) = p->zeny;
 	WBUFL(buf,12) = min(p->job_exp, LONG_MAX);
 	WBUFL(buf,16) = p->job_level;
-
-	WBUFL(buf,20) = 0;// probably opt1
-	WBUFL(buf,24) = 0;// probably opt2
+	WBUFL(buf,20) = 0; // probably opt1
+	WBUFL(buf,24) = 0; // probably opt2
 	WBUFL(buf,28) = p->option;
-
 	WBUFL(buf,32) = p->karma;
 	WBUFL(buf,36) = p->manner;
-
 	WBUFW(buf,40) = min(p->status_point, SHRT_MAX);
 	WBUFW(buf,42) = min(p->hp, SHRT_MAX);
 	WBUFW(buf,44) = min(p->max_hp, SHRT_MAX);
@@ -1717,7 +1692,7 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus *p)
 //----------------------------------------
 // Function to send characters to a player
 //----------------------------------------
-int mmo_char_send006b(int fd, struct char_session_data *sd)
+int mmo_char_send006b(int fd, struct char_session_data* sd)
 {
 	int i, j, found_num;
 
@@ -1734,13 +1709,13 @@ int mmo_char_send006b(int fd, struct char_session_data *sd)
 	for(i = found_num; i < MAX_CHARS; i++)
 		sd->found_char[i] = -1;
 
-	j = 24;// offset
+	j = 24; // offset
 	WFIFOHEAD(fd,j + found_num*108); // or 106(!)
 	WFIFOW(fd,0) = 0x6b;
-	memset(WFIFOP(fd,4), 0, 20);// unknown bytes
+	memset(WFIFOP(fd,4), 0, 20); // unknown bytes
 	for(i = 0; i < found_num; i++)
 		j += mmo_char_tobuf(WFIFOP(fd,j), &char_dat[sd->found_char[i]].status);
-	WFIFOW(fd,2) = j;// packet len
+	WFIFOW(fd,2) = j; // packet len
 	WFIFOSET(fd,j);
 
 	return 0;
@@ -3302,7 +3277,7 @@ int parse_char(int fd)
 	char email[40];
 	unsigned short cmd;
 	int map_fd;
-	struct char_session_data *sd;
+	struct char_session_data* sd;
 	uint32 ipl = session[fd]->client_addr;
 	
 	sd = (struct char_session_data*)session[fd]->session_data;
@@ -3324,32 +3299,17 @@ int parse_char(int fd)
 		return 0;
 	}
 
-	while(RFIFOREST(fd) >= 2) {
+	while(RFIFOREST(fd) >= 2)
+	{
+		//For use in packets that depend on an sd being present [Skotlex]
+		#define FIFOSD_CHECK(rest) { if(RFIFOREST(fd) < rest) return 0; if (sd==NULL) { RFIFOSKIP(fd,rest); return 0; } }
+
 		cmd = RFIFOW(fd,0);
-		// crc32のスキップ用
-		if(	sd==NULL			&&	// 未ログインor管理パケット
-			RFIFOREST(fd)>=4	&&	// 最低バイト数制限 ＆ 0x7530,0x7532管理パケ除去
-			RFIFOREST(fd)<=21	&&	// 最大バイト数制限 ＆ サーバーログイン除去
-			cmd!=0x20b	&&	// md5通知パケット除去
-			(RFIFOREST(fd)<6 || RFIFOW(fd,4)==0x65)	){	// 次に何かパケットが来てるなら、接続でないとだめ
-			RFIFOSKIP(fd,4);
-			cmd = RFIFOW(fd,0);
-			ShowDebug("parse_char : %d crc32 skipped\n",fd);
-			if(RFIFOREST(fd)==0)
-				return 0;
-		}
+		switch(cmd)
+		{
 
-//For use in packets that depend on an sd being present [Skotlex]
-#define FIFOSD_CHECK(rest) { if(RFIFOREST(fd) < rest) return 0; if (sd==NULL) { RFIFOSKIP(fd,rest); return 0; } }
-
-		switch(cmd) {
-		case 0x20b:	//20040622暗号化ragexe対応
-			if (RFIFOREST(fd) < 19)
-				return 0;
-			RFIFOSKIP(fd,19);
-		break;
-
-		case 0x65:	// 接続要求
+		case 0x65: // request to connect
+			ShowInfo("request connect - account_id:%d/login_id1:%d/login_id2:%d\n", RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10));
 			if (RFIFOREST(fd) < 17)
 				return 0;
 		{
@@ -3365,9 +3325,9 @@ int parse_char(int fd)
 				ShowInfo("Account Logged On; Account ID: %d (GM level %d).\n", RFIFOL(fd,2), GM_value);
 			else
 				ShowInfo("Account Logged On; Account ID: %d.\n", RFIFOL(fd,2));
+			
 			CREATE(session[fd]->session_data, struct char_session_data, 1);
 			sd = (struct char_session_data*)session[fd]->session_data;
-			session[fd]->session_data = sd;
 			strncpy(sd->email, "no mail", 40); // put here a mail without '@' to refuse deletion if we don't receive the e-mail
 			sd->connect_until_time = 0; // unknow or illimited (not displaying on map-server)
 			sd->account_id = RFIFOL(fd,2);
@@ -3550,7 +3510,7 @@ int parse_char(int fd)
 
 		case 0x67:	// make new
 			FIFOSD_CHECK(37);
-				
+
 			if(char_new == 0) //turn character creation on/off [Kevin]
 				i = -2;
 			else
@@ -3590,13 +3550,15 @@ int parse_char(int fd)
 		break;
 
 		case 0x68:	// delete char
-			FIFOSD_CHECK(46);
+		case 0x1fb:	// 2004-04-19aSakexe+ langtype 12 char deletion packet
+			if (cmd == 0x68) FIFOSD_CHECK(46);
+			if (cmd == 0x1fb) FIFOSD_CHECK(56);
 		{
 			int cid = RFIFOL(fd,2);
 			struct mmo_charstatus* cs = NULL;
-			ShowInfo(CL_RED" Request Char Deletion:"CL_GREEN"%d (%d)"CL_RESET"\n", sd->account_id, cid);
+			ShowInfo(CL_RED"Request Char Deletion: "CL_GREEN"%d (%d)"CL_RESET"\n", sd->account_id, cid);
 			memcpy(email, RFIFOP(fd,6), 40);
-			RFIFOSKIP(fd,46);
+			RFIFOSKIP(fd,RFIFOREST(fd)); // hack to make the other deletion packet work
 
 			if (e_mail_check(email) == 0)
 				strncpy(email, "a@a.com", 40); // default e-mail
@@ -3692,6 +3654,19 @@ int parse_char(int fd)
 		}
 		break;
 
+		case 0x187:	// R 0187 <account ID>.l - client keep-alive packet (every 12 seconds)
+			if (RFIFOREST(fd) < 6)
+				return 0;
+			RFIFOSKIP(fd,6);
+		break;
+
+		case 0x28d: // R 028d <account ID>.l <char ID>.l <new name>.24B - char rename request
+			if (RFIFOREST(fd) < 34)
+				return 0;
+			//not implemented
+			RFIFOSKIP(fd,34);
+		break;
+
 		case 0x2af8: // login as map-server
 			if (RFIFOREST(fd) < 60)
 				return 0;
@@ -3738,13 +3713,7 @@ int parse_char(int fd)
 		}
 		break;
 
-		case 0x187:	// R 0187 <account ID>.l - client keep-alive packet (every 12 seconds)
-			if (RFIFOREST(fd) < 6)
-				return 0;
-			RFIFOSKIP(fd,6);
-		break;
-
-		case 0x7530:	// Athena info get
+		case 0x7530: // Athena info get
 		{
 			WFIFOHEAD(fd,10);
 			WFIFOW(fd,0) = 0x7531;
@@ -3760,8 +3729,12 @@ int parse_char(int fd)
 			return 0;
 		}
 
-		case 0x7532:	// disconnect(default also disconnect)
-		default:
+		case 0x7532: // disconnect request from login server
+			set_eof(fd);
+			return 0;
+
+		default: // unknown packet received
+			ShowError("parse_char: Received unknown packet "CL_WHITE"0x%x"CL_RESET" from ip '"CL_WHITE"%s"CL_RESET"'! Disconnecting!\n", RFIFOW(fd,0), ip2str(ipl, NULL));
 			set_eof(fd);
 			return 0;
 		}
@@ -4090,13 +4063,9 @@ int char_config_read(const char *cfgName)
 #endif
 		} else if (strcmpi(w1, "char_txt") == 0) {
 			strcpy(char_txt, w2);
-		} else if (strcmpi(w1, "backup_txt") == 0) { //By zanetheinsane
-			strcpy(backup_txt, w2);
 		} else if (strcmpi(w1, "friends_txt") == 0) { //By davidsiaw
 			strcpy(friends_txt, w2);
 #ifndef TXT_SQL_CONVERT
-		} else if (strcmpi(w1, "backup_txt_flag") == 0) { // The backup_txt file was created because char deletion bug existed. Now it's finish and that take a lot of time to create a second file when there are a lot of characters. By [Yor]
-			backup_txt_flag = config_switch(w2);
 		} else if (strcmpi(w1, "max_connect_user") == 0) {
 			max_connect_user = atoi(w2);
 			if (max_connect_user < 0)
@@ -4277,6 +4246,7 @@ int do_init(int argc, char **argv)
 
 	mapindex_init(); //Needed here for the start-point reading.
 	start_point.map = mapindex_name2id("new_zone01");
+
 	char_config_read((argc < 2) ? CHAR_CONF_NAME : argv[1]);
 	char_lan_config_read((argc > 3) ? argv[3] : LAN_CONF_NAME);
 
@@ -4349,9 +4319,7 @@ int do_init(int argc, char **argv)
 	}
 
 	char_fd = make_listen_bind(bind_ip, char_port);
-
 	char_log("The char-server is ready (Server is listening on the port %d)." RETCODE, char_port);
-
 	ShowStatus("The char-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", char_port);
 
 	return 0;
