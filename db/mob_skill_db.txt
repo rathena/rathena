@@ -1831,8 +1831,8 @@
 //1396,Earth Crystal@NPC_ARMORBRAKE,attack,344,10,2000,0,5000,no,target,always,0,,,,,,6
 //1397,Fire Crystal@MG_FIREBOLT,chase,19,5,2000,0,5000,no,target,always,0,,,,,,0
 //1397,Fire Crystal@MG_FIREBOLT,chase,19,5,4000,0,5000,no,target,skillused,18,,,,,,0
-//1397,Fire Crystal@MG_FIREBALL,chase,17,10,4000,0,0,no,target,always,0,,,,,,0
-//1397,Fire Crystal@MG_FIREBALL,chase,17,10,10000,0,0,no,target,skillused,18,,,,,,0
+//1397,Fire Crystal@MG_FIREBALL,chase,17,20,4000,0,0,no,target,always,0,,,,,,0
+//1397,Fire Crystal@MG_FIREBALL,chase,17,20,10000,0,0,no,target,skillused,18,,,,,,0
 //1397,Fire Crystal@MG_FIREBALL,attack,17,10,4000,0,0,no,target,always,0,,,,,,0
 //1397,Fire Crystal@WZ_METEOR,chase,83,10,2000,500,5000,no,target,always,0,,,,,,21
 //1397,Fire Crystal@WZ_METEOR,chase,83,10,10000,500,5000,no,target,skillused,18,,,,,,21
@@ -4441,8 +4441,8 @@
 1836,Magmaring@MG_FIREBALL,chase,17,2,500,0,5000,yes,target,always,,,,,,,
 1836,Magmaring@SM_MAGNUM,attack,7,5,500,500,5000,no,self,always,,,,,,,6
 1837,Fire Imp@KN_BRANDISHSPEAR,attack,57,8,1000,1000,5000,no,target,always,,,,,,,
-1837,Fire Imp@MG_FIREWALL,chase,18,20,3000,1000,10000,no,target,always,,,,,,,
-1837,Fire Imp@MG_FIREWALL,attack,18,20,3000,1000,10000,no,target,always,,,,,,,
+1837,Fire Imp@MG_FIREWALL,chase,18,10,3000,1000,10000,no,target,always,,,,,,,
+1837,Fire Imp@MG_FIREWALL,attack,18,10,3000,1000,10000,no,target,always,,,,,,,
 1837,Fire Imp@MG_FIREBOLT,attack,19,20,3000,1000,10000,no,target,always,,,,,,,
 1837,Fire Imp@MG_FIREBALL,attack,17,20,3000,500,10000,no,target,always,,,,,,,
 1837,Fire Imp@MG_FIREBALL,chase,17,20,3000,500,10000,no,target,always,,,,,,,

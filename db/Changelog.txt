@@ -48,7 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
-
+07/26
+	* Fixed Fireball and Firewall mob skill level [Playtester]
 07/24
 	* Updated Venom Splasher's bomb timer [DracoRPG]
 	* Added Job_Alchemist constant, Job_Alchem should now be considered deprecated [DracoRPG]
