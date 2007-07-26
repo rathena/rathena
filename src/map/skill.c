@@ -6106,7 +6106,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 			clif_skill_warppoint(sd, skillid, skilllv, sd->status.save_point.map,
 				(skilllv >= 2) ? sd->status.memo_point[0].map : 0,
 				(skilllv >= 3) ? sd->status.memo_point[1].map : 0,
-				(skilllv >= 4) ? sd->status.memo_point[1].map : 0
+				(skilllv >= 4) ? sd->status.memo_point[2].map : 0
 			);
 		}
 		break;

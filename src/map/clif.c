@@ -10787,75 +10787,63 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd)
 	nick[NAME_LENGTH-1] = '\0'; // to be sure that the player name have at maximum 23 characters
 
 	WFIFOHEAD(fd,packet_len(0xd1));
-	WFIFOW(fd,0) = 0x0d1; // R 00d1 <type>.B <fail>.B: type: 0: deny, 1: allow, fail: 0: success, 1: fail
+	WFIFOW(fd,0) = 0x0d1; // R 00d1 <type>.B <result>.B: type: 0: deny, 1: allow, result: 0: success, 1: fail 2: list full
 	WFIFOB(fd,2) = RFIFOB(fd,26);
-	// deny action (we add nick only if it's not already exist
-	if (RFIFOB(fd,26) == 0) { // Add block
-		for(i = 0; i < MAX_IGNORE_LIST &&
-			sd->ignore[i].name[0] != '\0' &&
-			strcmp(sd->ignore[i].name, nick) != 0
-			; i++);
+	
+	if (RFIFOB(fd,26) == 0)
+	{	// Add name to ignore list (block)
 
-		if (i == MAX_IGNORE_LIST) { //Full List
+		// Bot-check...
+		if (strcmp(wisp_server_name, nick) == 0)
+		{	// to find possible bot users who automaticaly ignore people
+			sprintf(output, "Character '%s' (account: %d) has tried to block wisps from '%s' (wisp name of the server). Bot user?", sd->status.name, sd->status.account_id, wisp_server_name);
+			intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, output);
 			WFIFOB(fd,3) = 1; // fail
 			WFIFOSET(fd, packet_len(0x0d1));
-			if (strcmp(wisp_server_name, nick) == 0)
-			{	// to found possible bot users who automaticaly ignore people.
-				sprintf(output, "Character '%s' (account: %d) has tried to block wisps from '%s' (wisp name of the server). Bot user?", sd->status.name, sd->status.account_id, wisp_server_name);
-				intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, output);
-			}
 			return;
 		}
-		if(sd->ignore[i].name[0] != '\0')
-		{	//Name already exists.
+
+		// try to find a free spot, while checking for duplicates at the same time
+		for(i = 0; i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0' && strcmp(sd->ignore[i].name, nick) != 0; i++);
+
+		if (i == MAX_IGNORE_LIST) { // no space for new entry
+			WFIFOB(fd,3) = 2; // fail
+			WFIFOSET(fd, packet_len(0x0d1));
+			return;
+		}
+		if(sd->ignore[i].name[0] != '\0') { // name already exists
 			WFIFOB(fd,3) = 0; // Aegis reports success.
 			WFIFOSET(fd, packet_len(0x0d1));
-			if (strcmp(wisp_server_name, nick) == 0) { // to found possible bot users who automaticaly ignore people.
-				sprintf(output, "Character '%s' (account: %d) has tried AGAIN to block wisps from '%s' (wisp name of the server). Bot user?", sd->status.name, sd->status.account_id, wisp_server_name);
-				intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, output);
-			}
 			return;
 		}
 		//Insert in position i
 		memcpy(sd->ignore[i].name, nick, NAME_LENGTH);
 		WFIFOB(fd,3) = 0; // success
 		WFIFOSET(fd, packet_len(0x0d1));
-		if (strcmp(wisp_server_name, nick) == 0)
-		{	// to found possible bot users who automaticaly ignore people.
-			sprintf(output, "Character '%s' (account: %d) has tried to block wisps from '%s' (wisp name of the server). Bot user?", sd->status.name, sd->status.account_id, wisp_server_name);
-			intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, output);
-			// send something to be inform and force bot to ignore twice... If GM receiving block + block again, it's a bot :)
-			clif_wis_message(fd, wisp_server_name,
-				"Adding me in your ignore list will not block my wisps.",
-				strlen("Adding me in your ignore list will not block my wisps.") + 1);
-		}
+
 		//Sort the ignore list.
+		//FIXME: why not just use a simple shift-and-insert scheme instead?
 		qsort (sd->ignore[0].name, MAX_IGNORE_LIST, sizeof(sd->ignore[0].name), pstrcmp);
-		return;
 	}
-	//Remove name
-	for(i = 0; i < MAX_IGNORE_LIST &&
-		sd->ignore[i].name[0] != '\0' &&
-		strcmp(sd->ignore[i].name, nick) != 0
-		; i++);
+	else
+	{	// Remove name from ignore list (unblock)
+		
+		for(i = 0; i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0' && strcmp(sd->ignore[i].name, nick) != 0; i++);
 
-	if (i == MAX_IGNORE_LIST || sd->ignore[i].name[i] == '\0')
-	{	//Not found
-		WFIFOB(fd,3) = 1; // fail
+		if (i == MAX_IGNORE_LIST || sd->ignore[i].name[i] == '\0') { //Not found
+			WFIFOB(fd,3) = 1; // fail
+			WFIFOSET(fd, packet_len(0x0d1));
+			return;
+		}
+		//Move everything one place down to overwrite removed entry.
+		memmove(sd->ignore[i].name, sd->ignore[i+1].name, (MAX_IGNORE_LIST-i-1)*sizeof(sd->ignore[0].name));
+		memset(sd->ignore[MAX_IGNORE_LIST-1].name, 0, sizeof(sd->ignore[0].name));
+		WFIFOB(fd,3) = 0; // success
 		WFIFOSET(fd, packet_len(0x0d1));
-		return;
 	}
-	//Move everything one place down to overwrite removed entry.
-	memmove(sd->ignore[i].name, sd->ignore[i+1].name,
-		(MAX_IGNORE_LIST-i-1)*sizeof(sd->ignore[0].name));
-	memset(sd->ignore[MAX_IGNORE_LIST-1].name, 0, sizeof(sd->ignore[0].name));
-	// success
-	WFIFOB(fd,3) = 0;
-	WFIFOSET(fd, packet_len(0x0d1));
 
-// for debug only
-//	for(i = 0; i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0'; i++) /
-//		ShowDebug("Ignored player: '%s'\n", sd->ignore[i].name);
+	//for(i = 0; i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0'; i++)
+	//	ShowDebug("Ignored player: '%s'\n", sd->ignore[i].name);
 	return;
 }
 

@@ -1807,8 +1807,7 @@ int unit_free(struct block_list *bl, int clrtype)
 		}
 		if (sd->followtimer != -1)
 			pc_stop_following(sd);
-		// Force exiting from duel and rejecting
-	// all duel invitations when player quit [LuzZza]
+		// Force exiting from duel and rejecting all duel invitations when player quit [LuzZza]
 		if(sd->duel_group > 0)
 			duel_leave(sd->duel_group, sd);
 			

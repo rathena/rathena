@@ -1447,7 +1447,7 @@ static struct item_drop* mob_setlootitem(struct item* item)
 /*==========================================
  * item drop with delay (timer function)
  *------------------------------------------*/
-static int mob_delay_item_drop(int tid,unsigned int tick,int id,int data)
+static int mob_delay_item_drop(int tid, unsigned int tick, int id, int data)
 {
 	struct item_drop_list *list;
 	struct item_drop *ditem, *ditem_prev;
@@ -1697,13 +1697,14 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 }
 
 /*==========================================
- * Signals death of mob. type&1 -> no drops, type&2 -> no exp
+ * Signals death of mob.
+ * type&1 -> no drops, type&2 -> no exp
  *------------------------------------------*/
 int mob_dead(struct mob_data *md, struct block_list *src, int type)
 {
 	struct status_data *status;
-	struct map_session_data *sd = NULL,*tmpsd[DAMAGELOG_SIZE],
-		*mvp_sd = NULL, *second_sd = NULL,*third_sd = NULL;
+	struct map_session_data *sd = NULL, *tmpsd[DAMAGELOG_SIZE];
+	struct map_session_data *mvp_sd = NULL, *second_sd = NULL, *third_sd = NULL;
 	
 	struct {
 		struct party_data *p;
@@ -1738,7 +1739,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 	map_freeblock_lock();
 
-	memset(tmpsd,0,sizeof(tmpsd));
 	memset(pt,0,sizeof(pt));
 
 	if(src && src->type == BL_MOB)
@@ -1765,33 +1765,31 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 	}
 
-	for(i=count=0,mvp_damage=0;i<DAMAGELOG_SIZE && md->dmglog[i].id;i++)
+	// filter out entries not eligible for exp distribution
+	memset(tmpsd,0,sizeof(tmpsd));
+	for(i = 0, count = 0, mvp_damage = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++)
 	{
-		tmpsd[i] = map_charid2sd(md->dmglog[i].id);
-		if(tmpsd[i] == NULL)
-			continue;
-		if(tmpsd[i]->bl.m != m)
-		{
-			tmpsd[i] = NULL;
-			continue;
-		}
+		struct map_session_data* tsd = map_charid2sd(md->dmglog[i].id);
+
+		if(tsd == NULL)
+			continue; // skip empty entries
+		if(tsd->bl.m != m)
+			continue; // skip players not on this map
 		count++; //Only logged into same map chars are counted for the total.
-		if (pc_isdead(tmpsd[i]))
+		if (pc_isdead(tsd))
+			continue; // skip dead players
+		if(md->dmglog[i].flag && !merc_is_hom_active(tsd->hd))
+			continue; // skip homunc's share if inactive
+
+		if(md->dmglog[i].dmg > mvp_damage)
 		{
-			tmpsd[i] = NULL;
-			continue;
-		}
-		if(md->dmglog[i].flag && !merc_is_hom_active(tmpsd[i]->hd))
-		{	//Homunc's share.
-			tmpsd[i] = NULL;
-			continue;
-		}
-		if(mvp_damage<md->dmglog[i].dmg){
 			third_sd = second_sd;
 			second_sd = mvp_sd;
-			mvp_sd=tmpsd[i];
-			mvp_damage=md->dmglog[i].dmg;
+			mvp_sd = tsd;
+			mvp_damage = md->dmglog[i].dmg;
 		}
+
+		tmpsd[i] = tsd; // record as valid damage-log entry
 	}
 
 	if(!battle_config.exp_calc_type && count > 1)
@@ -1812,7 +1810,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		(!map[m].flag.nobaseexp || !map[m].flag.nojobexp) //Gives Exp
 	) { //Experience calculation.
 
-	for(i=0;i<DAMAGELOG_SIZE && md->dmglog[i].id;i++){
+	for(i = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++)
+	{
 		int flag=1,zeny=0;
 		unsigned int base_exp,job_exp;
 		double per; //Your share of the mob's exp
@@ -1837,7 +1836,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			per += per*((count-1)*battle_config.exp_bonus_attacker)/100.;
 		}
 
-		if(md->special_state.size==1)	// change experience for different sized monsters [Valaris]
+		// change experience for different sized monsters [Valaris]
+		if(md->special_state.size==1)
 			per /=2.;
 		else if(md->special_state.size==2)
 			per *=2.;
@@ -1859,46 +1859,28 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		jper = per;
 
 		if (map[m].flag.nobaseexp || !md->db->base_exp)
-			base_exp=0; 
+			base_exp = 0; 
 		else {
-			temp = bonus; //Do not alter bonus for the jExp section below.
 			if (map[m].bexp != 100)
-				temp = map[m].bexp*temp/100;
+				temp = map[m].bexp*bonus/100;
 			if (temp != 100)
 				per = per*temp/100.;
-	
-			base_exp = md->db->base_exp;
-	
-			if (base_exp*per > UINT_MAX)
-				base_exp = UINT_MAX;
-			else
-				base_exp = (unsigned int)(base_exp*per);
-		
-			if (base_exp < 1)
-				base_exp = 1;
+			
+			base_exp = (unsigned int)cap_value(md->db->base_exp * per, 1, UINT_MAX);
 		}
-		//Homun earned job-exp is always lost.
-		if (map[m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag)
-			job_exp=0; 
+		if (map[m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag) //Homun earned job-exp is always lost.
+			job_exp = 0; 
 		else {
 			if (map[m].jexp != 100)
-				bonus = map[m].jexp*bonus/100;
-			if (bonus != 100)
-				jper = jper*bonus/100.;
-	
-			job_exp = md->db->job_exp;
+				temp = map[m].jexp*bonus/100;
+			if (temp != 100)
+				jper = jper*temp/100.;
 			
-			if (job_exp*jper > UINT_MAX)
-				job_exp = UINT_MAX;
-			else
-				job_exp = (unsigned int)(job_exp*jper);
-			
-			if (job_exp < 1)
-				job_exp = 1;
+			job_exp = (unsigned int)cap_value(md->db->job_exp * jper, 1, UINT_MAX);
 		}
  		
-		if((temp = tmpsd[i]->status.party_id )>0 && !md->dmglog[i].flag)
-		{	//Homun-done damage (flag 1) is not given to party 
+		if((temp = tmpsd[i]->status.party_id )>0 && !md->dmglog[i].flag) //Homun-done damage (flag 1) is not given to party
+		{
 			int j;
 			for(j=0;j<pnum && pt[j].id!=temp;j++); //Locate party.
 
@@ -1940,6 +1922,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	
 	for(i=0;i<pnum;i++) //Party share.
 		party_exp_share(pt[i].p, &md->bl, pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
+
 	} //End EXP giving.
 	
 	if (!(type&1) &&
@@ -1961,7 +1944,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->third_sd = third_sd;
 		dlist->item = NULL;
 	
-		for (i = 0; i < MAX_MOB_DROP; i++) {
+		for (i = 0; i < MAX_MOB_DROP; i++)
+		{
 			if (md->db->dropitem[i].nameid <= 0)
 				continue;
 			drop_rate = md->db->dropitem[i].p;
@@ -1987,8 +1971,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				(int)(md->level - sd->status.base_level) >= 20)
 				drop_rate = (int)(drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
 
-//			if (10000 < rand()%10000+drop_rate) //May be better if MAX_RAND is too low?
-			if (drop_rate < rand() % 10000 + 1) //fixed 0.01% impossible drops bug [Lupus]
+			// attempt to drop the item
+			if (rand() % 10000 >= drop_rate)
 				continue;
 
 			ditem = mob_setdropitem(md->db->dropitem[i].nameid, 1);
@@ -2014,46 +1998,46 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 
 		if(sd) {
+			// process script-granted extra drop bonuses
 			int itemid = 0;
-			for (i = 0; i < sd->add_drop_count; i++) {
+			for (i = 0; i < sd->add_drop_count; i++)
+			{
 				if (sd->add_drop[i].id < 0)
 					continue;
 				if (sd->add_drop[i].race & (1<<status->race) ||
 					sd->add_drop[i].race & 1<<(status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS))
 				{
 					//check if the bonus item drop rate should be multiplied with mob level/10 [Lupus]
-					if(sd->add_drop[i].rate<0) {
+					if(sd->add_drop[i].rate < 0) {
 						//it's negative, then it should be multiplied. e.g. for Mimic,Myst Case Cards, etc
 						// rate = base_rate * (mob_level/10) + 1
 						drop_rate = -sd->add_drop[i].rate*(md->level/10)+1;
-						if (drop_rate < battle_config.item_drop_adddrop_min)
-							drop_rate = battle_config.item_drop_adddrop_min;
-						else if (drop_rate > battle_config.item_drop_adddrop_max)
-							drop_rate = battle_config.item_drop_adddrop_max;
+						drop_rate = cap_value(drop_rate, battle_config.item_drop_adddrop_min, battle_config.item_drop_adddrop_max);
 						if (drop_rate > 10000) drop_rate = 10000;
 					}
 					else
 						//it's positive, then it goes as it is
 						drop_rate = sd->add_drop[i].rate;
-					if (drop_rate < rand()%10000 +1)
+					
+					if (rand()%10000 >= drop_rate)
 						continue;
-					itemid = (sd->add_drop[i].id > 0) ? sd->add_drop[i].id :
-						itemdb_searchrandomid(sd->add_drop[i].group);
-
+					itemid = (sd->add_drop[i].id > 0) ? sd->add_drop[i].id : itemdb_searchrandomid(sd->add_drop[i].group);
 					mob_item_drop(md, dlist, mob_setdropitem(itemid,1), 0, drop_rate);
 				}
 			}
-				
-			if(sd->get_zeny_num && rand()%100 < sd->get_zeny_rate) //Gets get_zeny_num per level +/-10% [Skotlex]
+			
+			// process script-granted zeny bonus (get_zeny_num per level +/-10%) [Skotlex]
+			if(sd->get_zeny_num && rand()%100 < sd->get_zeny_rate)
 				pc_getzeny(sd,md->level*sd->get_zeny_num*(90+rand()%21)/100);
 		}
+		
+		// process items looted by the mob
 		if(md->lootitem) {
-			for(i=0;i<md->lootitem_count;i++)
+			for(i = 0; i < md->lootitem_count; i++)
 				mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000);
 		}
 		if (dlist->item) //There are drop items.
-			add_timer(tick + (!battle_config.delay_battle_damage?500:0),
-				mob_delay_item_drop, (int)dlist, 0);
+			add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, (int)dlist, 0);
 		else //No drops
 			ers_free(item_drop_list_ers, dlist);
 	} else if (md->lootitem && md->lootitem_count) {	//Loot MUST drop!
@@ -2065,13 +2049,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->second_sd = second_sd;
 		dlist->third_sd = third_sd;
 		dlist->item = NULL;
-		for(i=0;i<md->lootitem_count;i++)
+		for(i = 0; i < md->lootitem_count; i++)
 			mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000);
-		add_timer(tick + (!battle_config.delay_battle_damage?500:0),
-			mob_delay_item_drop, (int)dlist, 0);
+		add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, (int)dlist, 0);
 	}
 
-	if(mvp_sd && md->db->mexp > 0 && !md->special_state.ai){
+	if(mvp_sd && md->db->mexp > 0 && !md->special_state.ai)
+	{
 		int log_mvp[2] = {0};
 		int j;
 		unsigned int mexp;
@@ -2099,7 +2083,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if(map[m].flag.nomvploot || type&1)
 			; //No drops.
 		else
-		for(j=0;j<3;j++){
+		for(j=0;j<3;j++)
+		{
 			i = rand() % 3;
 			
 			if(md->db->mvpitem[i].nameid <= 0)
@@ -2167,7 +2152,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	if(md->nd)
 		mob_script_callback(md, src, CALLBACK_DEAD);
 	else
-	if(md->npc_event[0]){
+	if(md->npc_event[0])
+	{
 		md->status.hp = 0; //So that npc_event invoked functions KNOW that I am dead.
 		if(src) 
 		switch (src->type) {

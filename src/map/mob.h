@@ -129,21 +129,15 @@ enum {
 };
 
 
-/*==========================================
- * The structure object for item drop with delay
- * Since it is only two being able to pass [ int ] a timer function
- * Data is put in and passed to this structure object.
- *------------------------------------------
- */
+// The data structures for storing delayed item drops
 struct item_drop {
 	struct item item_data;
-	struct item_drop *next;
+	struct item_drop* next;
 };
-
 struct item_drop_list {
-	int m,x,y;
-	struct map_session_data *first_sd,*second_sd,*third_sd;
-	struct item_drop *item;
+	int m, x, y;                       // coordinates
+	struct map_session_data *first_sd, *second_sd, *third_sd; // sd's of players with higher pickup priority
+	struct item_drop* item;            // linked list of drops
 };
 
 struct mob_db* mob_db(int class_);
