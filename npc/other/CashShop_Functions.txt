@@ -1,0 +1,94 @@
+//===== eAthena Script ======================================= 
+//= Cash Shop  Functions
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= Used explicitly in the Item Database for Cash shop items
+//= - Kafra Card
+//= - Giant Fly Wing
+//= - Neuralizer
+//= - Dungeon Teleport Scroll
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [L0ne_W0lf]
+//=	F_CashPartyCall Optimized by Trancid.
+//============================================================ 
+
+// Kafra Card
+//============================================================ 
+// - Open player's storage.
+// - No arguments.
+function	script	F_CashStore	{
+	cutin "kafra_01",2;
+	mes "[Kafra Employee]";
+	mes "Welcome to the Kafra Corporation.";
+	mes "Here, let me open your Storage for you.";
+	close2;
+	openstorage;
+	cutin "",255;
+	return;
+}
+
+
+// Giant Fly Wing
+//============================================================ 
+// - Warp party leader to random spot on the map.
+// - Summon Party members on party leader map to that location.
+// - No arguments.
+function	script	F_CashPartyCall	{
+	warp "Random",0,0;
+	if(getpartyleader(getcharid(1),2) == getcharid(0)) {
+		getmapxy .@mapl$, .@xl, .@yl, 0;
+		getpartymember getcharid(1);
+		set .@partymembercount, $@partymembercount;
+		copyarray .@partymembername$[0], $@partymembername$[0], .@partymembercount;
+		for(set .@i, 0; .@i < .@partymembercount; set .@i, .@i + 1)
+		if(!(getmapxy(.@mapm$, .@xm, .@ym, 0, .@partymembername$[.@i])) && (.@mapm$ == .@mapl$))
+		warpchar .@mapl$, .@xl, .@yl, getcharid(0, .@partymembername$[.@i]);
+	}
+	return;
+}
+
+// Neuralizer
+//============================================================ 
+// - Reset players skills. Weight must be 0, options must be off.
+// - No arguments.
+function	script	F_CashReset	{
+	if (Class != Job_Novice) {
+		if (Weight < 1) { 
+			if (checkriding() || checkfalcon() || checkcart()) return;
+			else {
+				resetskill;
+				sc_end SC_ALL;
+			}
+		}
+	}
+	return;
+}
+
+// Dungeon Teleport Scroll
+//============================================================ 
+// - Warp player to random location of selected dungeon
+//   due to lack of information.
+// - No arguments.
+function	script	F_CashDungeon	{
+	switch(select("Nogg Road:Mjolnir Dead Pit:Umbala Dungeon:Einbroch Mine Dungeon:Payon Dungeon:Toy Dungeon:Glast Heim Underprison:Louyang Dungeon:Hermit's Checkers:Izlude Dungeon:Turtle Island Dungeon:Clock Tower B3f:Clock Tower")) {
+	case 1: warp "mag_dun01",0,0; end;
+	case 2: warp "mjolnir_02",0,0; end;
+	case 3: warp "um_dun01",0,0; end;
+	case 4: warp "ein_dun01",0,0; end;
+	case 5: warp "pay_dun00",0,0; end;
+	case 6: warp "xmas_dun01",0,0; end;
+	case 7: warp "gl_prison",0,0; end;
+	case 8: warp "lou_dun01",0,0; end;
+	case 9: warp "gon_dun02",0,0; end;
+	case 10: warp "iz_dun00",0,0; end;
+	case 11: warp "tur_dun02",0,0; end;
+	case 12: warp "alde_dun03",0,0; end;
+	case 13: warp "c_tower1",0,0; end;
+	}
+	return;
+}

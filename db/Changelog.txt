@@ -49,6 +49,11 @@
 	----
 ========================
 07/26
+	* Rev. 10917 Updated Cash Shop Skill Scrolls to behave more like official scrolls. [L0ne_W0lf]
+	- Kafra Card, Neuralizer, Giant Fly Wing and Dungeon teleport scroll now call functions.
+	  The functions for these items are found in /npc/other/CashShop_Functions.txt
+	* Fixed Tidal Shoes missing HP bonus. (Thanks to ZephyrShakuraus)
+	* Reverted change of Taming items item-type back to 11 because of a bug.
 	* Fixed Fireball and Firewall mob skill level [Playtester]
 07/24
 	* Updated Venom Splasher's bomb timer [DracoRPG]

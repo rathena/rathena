@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/07/26
+	* Rev 10917 Added Cash Shop item fucntions. (/other/CashShop_Functions.txt) [L0ne_W0lf]
 2007/07/24
 	* Changed name from "Emvertacon" to "Emveretarcon" in refine.txt. [Samuray22]
 	- Thanks to Barron-Monster.
