@@ -1110,18 +1110,19 @@ static struct Damage battle_calc_weapon_attack(
 
 		if(wd.flag&BF_LONG && !skill_num && //Fogwall's hit penalty is only for normal ranged attacks.
 			tsc && tsc->data[SC_FOGWALL].timer!=-1)
-			hitrate-=50;
+			hitrate -= 50;
 
 		if(sd && flag.arrow)
 			hitrate += sd->arrow_hit;
 		if(skill_num)
 			switch(skill_num)
 		{	//Hit skill modifiers
+			//It is proven that bonus is applied on final hitrate, not hit.
 			case SM_BASH:
-				hitrate += 5*skill_lv;
+				hitrate += hitrate * 5 * skill_lv / 100;
 				break;
 			case SM_MAGNUM:
-				hitrate += 10*skill_lv;
+				hitrate += hitrate * 10 * skill_lv / 100;
 				break;
 			case KN_AUTOCOUNTER:
 			case PA_SHIELDCHAIN:
@@ -1134,20 +1135,20 @@ static struct Damage battle_calc_weapon_attack(
 			case NPC_DARKNESSATTACK:
 			case NPC_UNDEADATTACK:
 			case NPC_TELEKINESISATTACK:
-				hitrate += 20;
+				hitrate += hitrate * 20 / 100;
 				break;
 			case KN_PIERCE:
-				hitrate += hitrate*(5*skill_lv)/100;
+				hitrate += hitrate * 5 * skill_lv / 100;
 				break;
 			case AS_SONICBLOW:
 				if(sd && pc_checkskill(sd,AS_SONICACCEL)>0)
-					hitrate += 50;
+					hitrate += hitrate * 50 / 100;
 				break;
 		}
 
 		// Weaponry Research hidden bonus
 		if (sd && (skill = pc_checkskill(sd,BS_WEAPONRESEARCH)) > 0)
-			hitrate += hitrate*(2*skill)/100;
+			hitrate += hitrate * ( 2 * skill ) / 100;
 
 		if (hitrate > battle_config.max_hitrate)
 			hitrate = battle_config.max_hitrate;
@@ -1157,7 +1158,7 @@ static struct Damage battle_calc_weapon_attack(
 		if(rand()%100 >= hitrate)
 			wd.dmg_lv = ATK_FLEE;
 		else
-			flag.hit =1;
+			flag.hit = 1;
 	}	//End hit/miss calculation
 
 	if (flag.hit && !flag.infdef) //No need to do the math for plants
