@@ -1813,9 +1813,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	for(i = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++)
 	{
 		int flag=1,zeny=0;
-		unsigned int base_exp,job_exp;
+		unsigned int base_exp, job_exp;
 		double per; //Your share of the mob's exp
-		double jper; //For the job-exp
 		int bonus; //Bonus on top of your share.
 
 		if (!tmpsd[i]) continue;
@@ -1856,28 +1855,16 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if(md->db->mexp > 0)
 				zeny*=rand()%250;
 		}
-		jper = per;
 
 		if (map[m].flag.nobaseexp || !md->db->base_exp)
 			base_exp = 0; 
-		else {
-			if (map[m].bexp != 100)
-				temp = map[m].bexp*bonus/100;
-			if (temp != 100)
-				per = per*temp/100.;
-			
-			base_exp = (unsigned int)cap_value(md->db->base_exp * per, 1, UINT_MAX);
-		}
+		else
+			base_exp = (unsigned int)cap_value(md->db->base_exp * per * bonus/100. * map[m].bexp/100., 1, UINT_MAX);
+		
 		if (map[m].flag.nojobexp || !md->db->job_exp || md->dmglog[i].flag) //Homun earned job-exp is always lost.
 			job_exp = 0; 
-		else {
-			if (map[m].jexp != 100)
-				temp = map[m].jexp*bonus/100;
-			if (temp != 100)
-				jper = jper*temp/100.;
-			
-			job_exp = (unsigned int)cap_value(md->db->job_exp * jper, 1, UINT_MAX);
-		}
+		else
+			job_exp = (unsigned int)cap_value(md->db->job_exp * per * bonus/100. * map[m].jexp/100., 1, UINT_MAX);
  		
 		if((temp = tmpsd[i]->status.party_id )>0 && !md->dmglog[i].flag) //Homun-done damage (flag 1) is not given to party
 		{

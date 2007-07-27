@@ -2919,7 +2919,7 @@
 12210,Bubble_Gum,Bubble Gum,3,,,10,,,,,,,,,,,,,{},{},{}
 12211,Kafra_Card,Kafra Card,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashStore"; },{},{}
 12212,Giant_Fly_Wing,Giant Fly Wing,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashPartyCall"; },{},{}
-12213,Neuralizer,Neuralizer,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "C_CashReset"; },{},{}
+12213,Neuralizer,Neuralizer,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashReset"; },{},{}
 12214,Convex_Mirror,Convex Mirror,3,20,,10,,,,,,,,,,,,,{},{},{}
 12215,Blessing_10_Scroll,LV10 Blessing Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ skilleffect 34,0; sc_start SC_BLESSING,600000,10; },{},{}
 12216,Inc_Agi_10_Scroll,LV10 Agil Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ skilleffect 29,0; sc_start SC_INCREASEAGI,600000,10; },{},{}

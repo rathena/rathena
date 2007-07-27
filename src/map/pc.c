@@ -4230,17 +4230,8 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 	if (!bonus)
 	  	return;
 	
-	temp = *base_exp*bonus/100;
-	if (*base_exp > UINT_MAX - temp)
-		*base_exp = UINT_MAX;
-	else
-		*base_exp += temp;
-
-	temp = *job_exp*bonus/100;
-	if (*job_exp > UINT_MAX - temp)
-		*job_exp = UINT_MAX;
-	else
-		*job_exp += temp;
+	*base_exp += (unsigned int) cap_value((double)*base_exp * bonus/100., 1, UINT_MAX);
+	*job_exp += (unsigned int) cap_value((double)*job_exp * bonus/100., 1, UINT_MAX);
 
 	return;
 }
