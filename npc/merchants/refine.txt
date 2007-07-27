@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
-//= 2.2
+//= 2.2b
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -39,6 +39,8 @@
 //= 2.0b - Fixed the names of Lighthalzen and Einbroch refiners thanks to Maud_Dib [Kargha]
 //= 2.1 - Removed Duplicates [Silent]
 //= 2.2 - Changed name from "Emvertacon" to "Emveretarcon". [Samuray22]
+//	- Thanks to Barron-Monster.
+//= 2.2b - Changed name from "Pharacon" to "Phracon". [Samuray22]
 //	- Thanks to Barron-Monster.
 //============================================================
 
@@ -610,12 +612,12 @@ function	script	phramain	{
 	if(@chris == 1) goto M_Menu;
 	mes "[" + @name$ + "]";
 	mes "Hello, Im selling metals I just mined.";
-	mes "They are Pharacon and Emveretarcon.";
+	mes "They are Phracon and Emveretarcon.";
 	mes "Would you like to buy some?";
 	M_Menu:
 	set @chris, 0;
 	next;
-	menu"Pharacon - 200z",PHARA,"Emveretarcon - 1000z",EMVER;
+	menu"Phracon - 200z",PHARA,"Emveretarcon - 1000z",EMVER;
 
 	PHARA:
 		set @itemid,1010;
