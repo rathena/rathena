@@ -181,8 +181,6 @@ static int parse_options=0;
 struct dbt* script_get_label_db(){ return scriptlabel_db; }
 struct dbt* script_get_userfunc_db(){ return userfunc_db; }
 
-static char pos[11][100] = {"Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3","Not Equipped"};
-
 struct Script_Config script_config;
 
 static jmp_buf     error_jump;
@@ -3152,7 +3150,7 @@ void run_script_main(struct script_state *st)
 
 		default:
 			if(battle_config.error_log)
-				ShowError("unknown command : %d @ %d\n",c,pos);
+				ShowError("unknown command : %d @ %d\n",c,st->pos);
 			st->state=END;
 			break;
 		}
@@ -3479,28 +3477,6 @@ static int script_autosave_mapreg(int tid,unsigned int tick,int id,int data)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
-static int set_posword(char *p)
-{
-	char* np,* str[15];
-	int i=0;
-	for(i=0;i<11;i++) {
-		if((np=strchr(p,','))!=NULL) {
-			str[i]=p;
-			*np=0;
-			p=np+1;
-		} else {
-			str[i]=p;
-			p+=strlen(p);
-		}
-		if(str[i])
-			strcpy(pos[i],str[i]);
-	}
-	return 0;
-}
-
 int script_config_read_sub(char *cfgName)
 {
 	int i;
@@ -3520,10 +3496,8 @@ int script_config_read_sub(char *cfgName)
 		i=sscanf(line,"%[^:]: %[^\r\n]",w1,w2);
 		if(i!=2)
 			continue;
-		if(strcmpi(w1,"refine_posword")==0) {
-			set_posword(w2);
-		}
-		else if(strcmpi(w1,"verbose_mode")==0) {
+
+		if(strcmpi(w1,"verbose_mode")==0) {
 			script_config.verbose_mode = config_switch(w2);
 		}
 		else if(strcmpi(w1,"warn_func_mismatch_paramnum")==0) {
@@ -4988,11 +4962,9 @@ BUILDIN_FUNC(warp)
 	if(strcmp(str,"Random")==0)
 		pc_randomwarp(sd,3);
 	else if(strcmp(str,"SavePoint")==0){
-		pc_setpos(sd,sd->status.save_point.map,
-			sd->status.save_point.x,sd->status.save_point.y,3);
+		pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
 	}else if(strcmp(str,"Save")==0){
-		pc_setpos(sd,sd->status.save_point.map,
-			sd->status.save_point.x,sd->status.save_point.y,3);
+		pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
 	}else
 		pc_setpos(sd,mapindex_name2id(str),x,y,0);
 	return 0;
@@ -5071,8 +5043,7 @@ BUILDIN_FUNC(warpchar)
 				pc_randomwarp(sd, 3);
 				
 			else if(strcmp(str, "SavePoint") == 0)
-				pc_setpos(sd, sd->status.save_point.map,
-					sd->status.save_point.x, sd->status.save_point.y, 3);
+				pc_setpos(sd, sd->status.save_point.map,sd->status.save_point.x, sd->status.save_point.y, 3);
 			
 			else	
 				pc_setpos(sd, mapindex_name2id(str), x, y, 3);
@@ -6542,14 +6513,18 @@ BUILDIN_FUNC(getcharid)
 		script_pushint(st,0);	//return 0, according docs
 		return 0;
 	}
-	if(num==0)
-		script_pushint(st,sd->status.char_id);
-	if(num==1)
-		script_pushint(st,sd->status.party_id);
-	if(num==2)
-		script_pushint(st,sd->status.guild_id);
-	if(num==3)
-		script_pushint(st,sd->status.account_id);
+
+	switch (num) {
+	case 0: script_pushint(st,sd->status.char_id); break;
+	case 1: script_pushint(st,sd->status.party_id); break;
+	case 2: script_pushint(st,sd->status.guild_id); break;
+	case 3: script_pushint(st,sd->status.account_id); break;
+	default:
+		ShowError("buildin_getcharid: invalid .\n");
+		script_pushconststr(st,"");
+		break;
+	}
+		
 	return 0;
 }
 /*==========================================
@@ -6647,24 +6622,12 @@ BUILDIN_FUNC(getpartyleader)
 	}
 
 	switch (type) {
-		case 1:
-			script_pushint(st,p->party.member[i].account_id);
-		break;
-		case 2:
-			script_pushint(st,p->party.member[i].char_id);
-		break;
-		case 3:
-			script_pushint(st,p->party.member[i].class_);
-		break;
-		case 4:
-			script_pushstr(st,aStrdup(mapindex_id2name(p->party.member[i].map)));
-		break;
-		case 5:
-			script_pushint(st,p->party.member[i].lv);
-		break;
-		default:
-			script_pushstr(st,aStrdup(p->party.member[i].name));
-		break;
+		case 1: script_pushint(st,p->party.member[i].account_id); break;
+		case 2: script_pushint(st,p->party.member[i].char_id); break;
+		case 3: script_pushint(st,p->party.member[i].class_); break;
+		case 4: script_pushstr(st,aStrdup(mapindex_id2name(p->party.member[i].map))); break;
+		case 5: script_pushint(st,p->party.member[i].lv); break;
+		default: script_pushstr(st,aStrdup(p->party.member[i].name)); break;
 	}
 	return 0;
 }
@@ -6828,6 +6791,8 @@ BUILDIN_FUNC(getequipname)
 	TBL_PC *sd;
 	struct item_data* item;
 	char *buf;
+
+	static char pos[11][100] = {"Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3","Not Equipped"};
 
 	buf=(char *)aMallocA(64*sizeof(char));
 	sd=script_rid2sd(st);
@@ -9159,8 +9124,7 @@ BUILDIN_FUNC(warpwaitingpc)
 			if( map[sd->bl.m].flag.noteleport )
 				return 0;// can't teleport on this map
 
-			pc_setpos(sd,sd->status.save_point.map,
-				sd->status.save_point.x, sd->status.save_point.y, 3);
+			pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 3);
 		}
 		else
 			pc_setpos(sd, mapindex_name2id(map_name), x, y, 0);
@@ -9277,139 +9241,50 @@ BUILDIN_FUNC(setmapflag)
 	m = map_mapname2mapid(str);
 	if(m >= 0) {
 		switch(i) {
-			case MF_NOMEMO:
-				map[m].flag.nomemo=1;
-				break;
-			case MF_NOTELEPORT:
-				map[m].flag.noteleport=1;
-				break;
-			case MF_NOBRANCH:
-				map[m].flag.nobranch=1;
-				break;
-			case MF_NOPENALTY:
-				map[m].flag.noexppenalty=1;
-				map[m].flag.nozenypenalty=1;
-				break;
-			case MF_NOZENYPENALTY:
-				map[m].flag.nozenypenalty=1;
-				break;
-			case MF_PVP:
-				map[m].flag.pvp=1;
-				break;
-			case MF_PVP_NOPARTY:
-				map[m].flag.pvp_noparty=1;
-				break;
-			case MF_PVP_NOGUILD:
-				map[m].flag.pvp_noguild=1;
-				break;
-			case MF_GVG:
-				map[m].flag.gvg=1;
-				break;
-			case MF_GVG_NOPARTY:
-				map[m].flag.gvg_noparty=1;
-				break;
-			case MF_GVG_DUNGEON:
-				map[m].flag.gvg_dungeon=1;
-				break;
-			case MF_GVG_CASTLE:
-				map[m].flag.gvg_castle=1;
-				break;
-			case MF_NOTRADE:
-				map[m].flag.notrade=1;
-				break;
-			case MF_NODROP:
-				map[m].flag.nodrop=1;
-				break;
-			case MF_NOSKILL:
-				map[m].flag.noskill=1;
-				break;
-			case MF_NOWARP:
-				map[m].flag.nowarp=1;
-				break;
-			case MF_NOICEWALL: // [Valaris]
-				map[m].flag.noicewall=1;
-				break;
-			case MF_SNOW: // [Valaris]
-				map[m].flag.snow=1;
-				break;
-			case MF_CLOUDS:
-				map[m].flag.clouds=1;
-				break;
-			case MF_CLOUDS2: // [Valaris]
-				map[m].flag.clouds2=1;
-				break;
-			case MF_FOG: // [Valaris]
-				map[m].flag.fog=1;
-				break;
-			case MF_FIREWORKS:
-				map[m].flag.fireworks=1;
-				break;
-			case MF_SAKURA: // [Valaris]
-				map[m].flag.sakura=1;
-				break;
-			case MF_LEAVES: // [Valaris]
-				map[m].flag.leaves=1;
-				break;
-			case MF_RAIN: // [Valaris]
-				map[m].flag.rain=1;
-				break;
-			case MF_INDOORS: // celest
-				map[m].flag.indoors=1;
-				break;
-			case MF_NIGHTENABLED:
-				map[m].flag.nightenabled=1;
-				break;
-			case MF_NOGO: // celest
-				map[m].flag.nogo=1;
-				break;
-			case MF_NOBASEEXP:
-				map[m].flag.nobaseexp=1;
-				break;
-			case MF_NOJOBEXP:
-				map[m].flag.nojobexp=1;
-				break;
-			case MF_NOMOBLOOT:
-				map[m].flag.nomobloot=1;
-				break;
-			case MF_NOMVPLOOT:
-				map[m].flag.nomvploot=1;
-				break;
-			case MF_NORETURN:
-				map[m].flag.noreturn=1;
-				break;
-			case MF_NOWARPTO:
-				map[m].flag.nowarpto=1;
-				break;
-			case MF_NIGHTMAREDROP:
-				map[m].flag.pvp_nightmaredrop=1;
-				break;
-			case MF_RESTRICTED:
-				map[m].flag.restricted=1;
-				break;
-			case MF_NOCOMMAND:
-				map[m].nocommand = (!val || atoi(val) <= 0) ? 100 : atoi(val);
-				break;
-			case MF_JEXP:
-				map[m].jexp = (!val || atoi(val) < 0) ? 100 : atoi(val);
-				break;
-			case MF_BEXP:
-				map[m].bexp = (!val || atoi(val) < 0) ? 100 : atoi(val);
-				break;
-			case MF_NOVENDING:
-				map[m].flag.novending=1;
-				break;
-			case MF_LOADEVENT:
-				map[m].flag.loadevent=1;
-				break;
-			case MF_NOCHAT:
-				map[m].flag.nochat=1;
-				break;
-			case MF_PARTYLOCK:
-				map[m].flag.partylock=1;
-				break;
-			case MF_GUILDLOCK:
-				map[m].flag.guildlock=1;
-				break;
+			case MF_NOMEMO:        map[m].flag.nomemo=1; break;
+			case MF_NOTELEPORT:    map[m].flag.noteleport=1; break;
+			case MF_NOBRANCH:      map[m].flag.nobranch=1; break;
+			case MF_NOPENALTY:     map[m].flag.noexppenalty=1; map[m].flag.nozenypenalty=1; break;
+			case MF_NOZENYPENALTY: map[m].flag.nozenypenalty=1; break;
+			case MF_PVP:           map[m].flag.pvp=1; break;
+			case MF_PVP_NOPARTY:   map[m].flag.pvp_noparty=1; break;
+			case MF_PVP_NOGUILD:   map[m].flag.pvp_noguild=1; break;
+			case MF_GVG:           map[m].flag.gvg=1; break;
+			case MF_GVG_NOPARTY:   map[m].flag.gvg_noparty=1; break;
+			case MF_GVG_DUNGEON:   map[m].flag.gvg_dungeon=1; break;
+			case MF_GVG_CASTLE:    map[m].flag.gvg_castle=1; break;
+			case MF_NOTRADE:       map[m].flag.notrade=1; break;
+			case MF_NODROP:        map[m].flag.nodrop=1; break;
+			case MF_NOSKILL:       map[m].flag.noskill=1; break;
+			case MF_NOWARP:        map[m].flag.nowarp=1; break;
+			case MF_NOICEWALL:     map[m].flag.noicewall=1; break;
+			case MF_SNOW:          map[m].flag.snow=1; break;
+			case MF_CLOUDS:        map[m].flag.clouds=1; break;
+			case MF_CLOUDS2:       map[m].flag.clouds2=1; break;
+			case MF_FOG:           map[m].flag.fog=1; break;
+			case MF_FIREWORKS:     map[m].flag.fireworks=1; break;
+			case MF_SAKURA:        map[m].flag.sakura=1; break;
+			case MF_LEAVES:        map[m].flag.leaves=1; break;
+			case MF_RAIN:          map[m].flag.rain=1; break;
+			case MF_INDOORS:       map[m].flag.indoors=1; break;
+			case MF_NIGHTENABLED:  map[m].flag.nightenabled=1; break;
+			case MF_NOGO:          map[m].flag.nogo=1; break;
+			case MF_NOBASEEXP:     map[m].flag.nobaseexp=1; break;
+			case MF_NOJOBEXP:      map[m].flag.nojobexp=1; break;
+			case MF_NOMOBLOOT:     map[m].flag.nomobloot=1; break;
+			case MF_NOMVPLOOT:     map[m].flag.nomvploot=1; break;
+			case MF_NORETURN:      map[m].flag.noreturn=1; break;
+			case MF_NOWARPTO:      map[m].flag.nowarpto=1; break;
+			case MF_NIGHTMAREDROP: map[m].flag.pvp_nightmaredrop=1; break;
+			case MF_RESTRICTED:    map[m].flag.restricted=1; break;
+			case MF_NOCOMMAND:     map[m].nocommand = (!val || atoi(val) <= 0) ? 100 : atoi(val); break;
+			case MF_JEXP:          map[m].jexp = (!val || atoi(val) < 0) ? 100 : atoi(val); break;
+			case MF_BEXP:          map[m].bexp = (!val || atoi(val) < 0) ? 100 : atoi(val); break;
+			case MF_NOVENDING:     map[m].flag.novending=1; break;
+			case MF_LOADEVENT:     map[m].flag.loadevent=1; break;
+			case MF_NOCHAT:        map[m].flag.nochat=1; break;
+			case MF_PARTYLOCK:     map[m].flag.partylock=1; break;
+			case MF_GUILDLOCK:     map[m].flag.guildlock=1; break;
 		}
 	}
 
@@ -9426,142 +9301,51 @@ BUILDIN_FUNC(removemapflag)
 	m = map_mapname2mapid(str);
 	if(m >= 0) {
 		switch(i) {
-			case MF_NOMEMO:
-				map[m].flag.nomemo=0;
-				break;
-			case MF_NOTELEPORT:
-				map[m].flag.noteleport=0;
-				break;
-			case MF_NOSAVE:
-				map[m].flag.nosave=0;
-				break;
-			case MF_NOBRANCH:
-				map[m].flag.nobranch=0;
-				break;
-			case MF_NOPENALTY:
-				map[m].flag.noexppenalty=0;
-				map[m].flag.nozenypenalty=0;
-				break;
-			case MF_PVP:
-				map[m].flag.pvp=0;
-				break;
-			case MF_PVP_NOPARTY:
-				map[m].flag.pvp_noparty=0;
-				break;
-			case MF_PVP_NOGUILD:
-				map[m].flag.pvp_noguild=0;
-				break;
-			case MF_GVG:
-				map[m].flag.gvg=0;
-				break;
-			case MF_GVG_NOPARTY:
-				map[m].flag.gvg_noparty=0;
-				break;
-			case MF_GVG_DUNGEON:
-				map[m].flag.gvg_dungeon=0;
-				break;
-			case MF_GVG_CASTLE:
-				map[m].flag.gvg_castle=0;
-				break;
-			case MF_NOZENYPENALTY:
-				map[m].flag.nozenypenalty=0;
-				break;
-			case MF_NOTRADE:
-				map[m].flag.notrade=0;
-				break;
-			case MF_NODROP:
-				map[m].flag.nodrop=0;
-				break;
-			case MF_NOSKILL:
-				map[m].flag.noskill=0;
-				break;
-			case MF_NOWARP:
-				map[m].flag.nowarp=0;
-				break;
-			case MF_NOICEWALL: // [Valaris]
-				map[m].flag.noicewall=0;
-				break;
-			case MF_SNOW: // [Valaris]
-				map[m].flag.snow=0;
-				break;
-			case MF_CLOUDS:
-				map[m].flag.clouds=0;
-				break;
-			case MF_CLOUDS2: // [Valaris]
-				map[m].flag.clouds2=0;
-				break;
-			case MF_FOG: // [Valaris]
-				map[m].flag.fog=0;
-				break;
-			case MF_FIREWORKS:
-				map[m].flag.fireworks=0;
-				break;
-			case MF_SAKURA: // [Valaris]
-				map[m].flag.sakura=0;
-				break;
-			case MF_LEAVES: // [Valaris]
-				map[m].flag.leaves=0;
-				break;
-			case MF_RAIN: // [Valaris]
-				map[m].flag.rain=0;
-				break;
-			case MF_INDOORS: // celest
-				map[m].flag.indoors=0;
-				break;
-			case MF_NIGHTENABLED:
-				map[m].flag.nightenabled=0;
-				break;
-			case MF_NOGO: // celest
-				map[m].flag.nogo=0;
-				break;
-			case MF_NOBASEEXP:
-				map[m].flag.nobaseexp=0;
-				break;
-			case MF_NOJOBEXP:
-				map[m].flag.nojobexp=0;
-				break;
-			case MF_NOMOBLOOT:
-				map[m].flag.nomobloot=0;
-				break;
-			case MF_NOMVPLOOT:
-				map[m].flag.nomvploot=0;
-				break;
-			case MF_NORETURN:
-				map[m].flag.noreturn=0;
-				break;
-			case MF_NOWARPTO:
-				map[m].flag.nowarpto=0;
-				break;
-			case MF_NIGHTMAREDROP:
-				map[m].flag.pvp_nightmaredrop=0;
-				break;
-			case MF_RESTRICTED:
-				map[m].flag.restricted=0;
-				break;
-			case MF_NOCOMMAND:
-				map[m].nocommand=0;
-				break;
-			case MF_JEXP:
-				map[m].jexp=100;
-				break;
-			case MF_BEXP:
-				map[m].bexp=100;
-				break;
-			case MF_NOVENDING:
-				map[m].flag.novending=0;
-				break;
-			case MF_LOADEVENT:
-				map[m].flag.loadevent=0;
-				break;
-			case MF_NOCHAT:
-				map[m].flag.nochat=0;
-				break;
-			case MF_PARTYLOCK:
-				map[m].flag.partylock=0;
-				break;
-			case MF_GUILDLOCK:
-				map[m].flag.guildlock=0;
-				break;
+			case MF_NOMEMO:        map[m].flag.nomemo=0; break;
+			case MF_NOTELEPORT:    map[m].flag.noteleport=0; break;
+			case MF_NOSAVE:        map[m].flag.nosave=0; break;
+			case MF_NOBRANCH:      map[m].flag.nobranch=0; break;
+			case MF_NOPENALTY:     map[m].flag.noexppenalty=0; map[m].flag.nozenypenalty=0; break;
+			case MF_PVP:           map[m].flag.pvp=0; break;
+			case MF_PVP_NOPARTY:   map[m].flag.pvp_noparty=0; break;
+			case MF_PVP_NOGUILD:   map[m].flag.pvp_noguild=0; break;
+			case MF_GVG:           map[m].flag.gvg=0; break;
+			case MF_GVG_NOPARTY:   map[m].flag.gvg_noparty=0; break;
+			case MF_GVG_DUNGEON:   map[m].flag.gvg_dungeon=0; break;
+			case MF_GVG_CASTLE:    map[m].flag.gvg_castle=0; break;
+			case MF_NOZENYPENALTY: map[m].flag.nozenypenalty=0; break;
+			case MF_NOTRADE:       map[m].flag.notrade=0; break;
+			case MF_NODROP:        map[m].flag.nodrop=0; break;
+			case MF_NOSKILL:       map[m].flag.noskill=0; break;
+			case MF_NOWARP:        map[m].flag.nowarp=0; break;
+			case MF_NOICEWALL:     map[m].flag.noicewall=0; break;
+			case MF_SNOW:          map[m].flag.snow=0; break;
+			case MF_CLOUDS:        map[m].flag.clouds=0; break;
+			case MF_CLOUDS2:       map[m].flag.clouds2=0; break;
+			case MF_FOG:           map[m].flag.fog=0; break;
+			case MF_FIREWORKS:     map[m].flag.fireworks=0; break;
+			case MF_SAKURA:        map[m].flag.sakura=0; break;
+			case MF_LEAVES:        map[m].flag.leaves=0; break;
+			case MF_RAIN:          map[m].flag.rain=0; break;
+			case MF_INDOORS:       map[m].flag.indoors=0; break;
+			case MF_NIGHTENABLED:  map[m].flag.nightenabled=0; break;
+			case MF_NOGO:          map[m].flag.nogo=0; break;
+			case MF_NOBASEEXP:     map[m].flag.nobaseexp=0; break;
+			case MF_NOJOBEXP:      map[m].flag.nojobexp=0; break;
+			case MF_NOMOBLOOT:     map[m].flag.nomobloot=0; break;
+			case MF_NOMVPLOOT:     map[m].flag.nomvploot=0; break;
+			case MF_NORETURN:      map[m].flag.noreturn=0; break;
+			case MF_NOWARPTO:      map[m].flag.nowarpto=0; break;
+			case MF_NIGHTMAREDROP: map[m].flag.pvp_nightmaredrop=0; break;
+			case MF_RESTRICTED:    map[m].flag.restricted=0; break;
+			case MF_NOCOMMAND:     map[m].nocommand=0; break;
+			case MF_JEXP:          map[m].jexp=100; break;
+			case MF_BEXP:          map[m].bexp=100; break;
+			case MF_NOVENDING:     map[m].flag.novending=0; break;
+			case MF_LOADEVENT:     map[m].flag.loadevent=0; break;
+			case MF_NOCHAT:        map[m].flag.nochat=0; break;
+			case MF_PARTYLOCK:     map[m].flag.partylock=0; break;
+			case MF_GUILDLOCK:     map[m].flag.guildlock=0; break;
 		}
 	}
 
@@ -10373,27 +10157,13 @@ BUILDIN_FUNC(strmobinfo)
 	}
 
 	switch (num) {
-	case 1:
-		script_pushconststr(st,mob_db(class_)->name);
-		break;
-	case 2:
-		script_pushconststr(st,mob_db(class_)->jname);
-		break;
-	case 3:
-		script_pushint(st,mob_db(class_)->lv);
-		break;
-	case 4:
-		script_pushint(st,mob_db(class_)->status.max_hp);
-		break;
-	case 5:
-		script_pushint(st,mob_db(class_)->status.max_sp);
-		break;
-	case 6:
-		script_pushint(st,mob_db(class_)->base_exp);
-		break;
-	case 7:
-		script_pushint(st,mob_db(class_)->job_exp);
-		break;
+	case 1: script_pushconststr(st,mob_db(class_)->name); break;
+	case 2: script_pushconststr(st,mob_db(class_)->jname); break;
+	case 3: script_pushint(st,mob_db(class_)->lv); break;
+	case 4: script_pushint(st,mob_db(class_)->status.max_hp); break;
+	case 5: script_pushint(st,mob_db(class_)->status.max_sp); break;
+	case 6: script_pushint(st,mob_db(class_)->base_exp); break;
+	case 7: script_pushint(st,mob_db(class_)->job_exp); break;
 	default:
 		script_pushint(st,0);
 		break;
@@ -11286,27 +11056,12 @@ BUILDIN_FUNC(getpetinfo)
 	if(sd && sd->status.pet_id && sd->pd){
 		pd = sd->pd;
 		switch(type){
-			case 0:
-				script_pushint(st,sd->status.pet_id);
-				break;
-			case 1:
-				script_pushint(st,pd->pet.class_);
-				break;
-			case 2:
-				if(pd->pet.name)
-					script_pushconststr(st,pd->pet.name);
-				else
-					script_pushconststr(st,"null");
-				break;
-			case 3:
-				script_pushint(st,pd->pet.intimate);
-				break;
-			case 4:
-				script_pushint(st,pd->pet.hungry);
-				break;
-			case 5:
-				script_pushint(st,pd->pet.rename_flag);
-				break;
+			case 0: script_pushint(st,sd->status.pet_id); break;
+			case 1: script_pushint(st,pd->pet.class_); break;
+			case 2: script_pushstr(st,aStrdup(pd->pet.name)); break;
+			case 3: script_pushint(st,pd->pet.intimate); break;
+			case 4: script_pushint(st,pd->pet.hungry); break;
+			case 5: script_pushint(st,pd->pet.rename_flag); break;
 			default:
 				script_pushint(st,0);
 				break;
@@ -11526,33 +11281,16 @@ BUILDIN_FUNC(getlook)
 
         type=script_getnum(st,2);
         val=-1;
-        switch(type){
-        case LOOK_HAIR:	//1
-                val=sd->status.hair;
-                break;
-        case LOOK_WEAPON: //2
-                val=sd->status.weapon;
-                break;
-        case LOOK_HEAD_BOTTOM: //3
-                val=sd->status.head_bottom;
-                break;
-        case LOOK_HEAD_TOP: //4
-                val=sd->status.head_top;
-                break;
-        case LOOK_HEAD_MID: //5
-                val=sd->status.head_mid;
-                break;
-        case LOOK_HAIR_COLOR: //6
-                val=sd->status.hair_color;
-                break;
-        case LOOK_CLOTHES_COLOR: //7
-                val=sd->status.clothes_color;
-                break;
-        case LOOK_SHIELD: //8
-                val=sd->status.shield;
-                break;
-        case LOOK_SHOES: //9
-                break;
+        switch(type) {
+        case LOOK_HAIR: val=sd->status.hair; break; //1
+        case LOOK_WEAPON: val=sd->status.weapon; break; //2
+        case LOOK_HEAD_BOTTOM: val=sd->status.head_bottom; break; //3
+        case LOOK_HEAD_TOP: val=sd->status.head_top; break; //4
+        case LOOK_HEAD_MID: val=sd->status.head_mid; break; //5
+        case LOOK_HAIR_COLOR: val=sd->status.hair_color; break; //6
+        case LOOK_CLOTHES_COLOR: val=sd->status.clothes_color; break; //7
+        case LOOK_SHIELD: val=sd->status.shield; break; //8
+        case LOOK_SHOES: break; //9
         }
 
         script_pushint(st,val);
@@ -11564,32 +11302,24 @@ BUILDIN_FUNC(getlook)
  *------------------------------------------*/
 BUILDIN_FUNC(getsavepoint)
 {
-	int x,y,type;
-	char *mapname;
-	TBL_PC *sd;
+	TBL_PC* sd;
+	int type;
 
-	sd=script_rid2sd(st);
+	sd = script_rid2sd(st);
+	if (sd == NULL) {
+		script_pushint(st,0);
+		return 0;
+	}
 
-	type=script_getnum(st,2);
+	type = script_getnum(st,2);
 
-	x=sd->status.save_point.x;
-	y=sd->status.save_point.y;
-	switch(type){
-		case 0:
-			mapname=(char *) aMallocA((MAP_NAME_LENGTH)*sizeof(char));
-			memcpy(mapname, mapindex_id2name(sd->status.save_point.map), MAP_NAME_LENGTH);
-			mapname[MAP_NAME_LENGTH-1]='\0';
-			script_pushstr(st,mapname);
-		break;
-		case 1:
-			script_pushint(st,x);
-		break;
-		case 2:
-			script_pushint(st,y);
-		break;
+	switch(type) {
+		case 0: script_pushstr(st,aStrdup(mapindex_id2name(sd->status.save_point.map))); break;
+		case 1: script_pushint(st,sd->status.save_point.x); break;
+		case 2: script_pushint(st,sd->status.save_point.y); break;
 		default:
 			script_pushint(st,0);
-		break;
+			break;
 	}
 	return 0;
 }
@@ -11643,7 +11373,7 @@ BUILDIN_FUNC(getmapxy)
 		return 1;
 	}
 
-	//??????????? >>>  Possible needly check function parameters on C_STR,C_INT,C_INT <<< ???????????//
+	// Possible needly check function parameters on C_STR,C_INT,C_INT
 	type=script_getnum(st,5);
 
 	switch (type){
@@ -12220,22 +11950,17 @@ BUILDIN_FUNC(atoi)
 	return 0;
 }
 
-//-----------------------------------------------------------------------//
-//         BRING STRSTR TO SCRIPTING ENGINE         - LORDALFA  START    //
-//-----------------------------------------------------------------------//
+// case-insensitive substring search [lordalfa]
 BUILDIN_FUNC(compare)
 {
 	const char *message;
-   const char *cmpstring;
-   message = script_getstr(st,2);
-   cmpstring = script_getstr(st,3);
-   script_pushint(st,(stristr(message,cmpstring) != NULL));
-   return 0;
+	const char *cmpstring;
+	message = script_getstr(st,2);
+	cmpstring = script_getstr(st,3);
+	script_pushint(st,(stristr(message,cmpstring) != NULL));
+	return 0;
 }
 
-//-----------------------------------------------------------------------//
-//         BRING STRSTR TO SCRIPTING ENGINE         - LORDALFA  END      //
-//-----------------------------------------------------------------------//
 // [zBuffer] List of mathematics commands --->
 BUILDIN_FUNC(sqrt)
 {
@@ -12431,34 +12156,22 @@ BUILDIN_FUNC(petstat)
 {
 	TBL_PC *sd = NULL;
 	struct pet_data *pd;
-	char *tmp;
 	int flag = script_getnum(st,2);
 	sd = script_rid2sd(st);
 	if(!sd || !sd->status.pet_id || !sd->pd){
 		if(flag == 2)
-			push_str(st->stack, C_CONSTSTR, "");
+			script_pushconststr(st, "");
 		else
 			script_pushint(st,0);
 		return 0;
 	}
 	pd = sd->pd;
 	switch(flag){
-		case 1:
-			script_pushint(st,(int)pd->pet.class_);
-			break;
-		case 2:
-			tmp = aStrdup(pd->pet.name);
-			push_str(st->stack, C_STR, tmp);
-			break;
-		case 3:
-			script_pushint(st,(int)pd->pet.level);
-			break;
-		case 4:
-			script_pushint(st,(int)pd->pet.hungry);
-			break;
-		case 5:
-			script_pushint(st,(int)pd->pet.intimate);
-			break;
+		case 1: script_pushint(st,(int)pd->pet.class_); break;
+		case 2: script_pushstr(st, aStrdup(pd->pet.name)); break;
+		case 3: script_pushint(st,(int)pd->pet.level); break;
+		case 4: script_pushint(st,(int)pd->pet.hungry); break;
+		case 5: script_pushint(st,(int)pd->pet.intimate); break;
 		default:
 			script_pushint(st,0);
 			break;
@@ -12748,74 +12461,29 @@ BUILDIN_FUNC(getmonsterinfo)
 	}
 	mob = mob_db(mob_id);
 	switch ( script_getnum(st,3) ) {
-		case 0: //Name
-			script_pushconststr(st,mob->jname);
-			break;
-		case 1: //Lvl
-			script_pushint(st,mob->lv);
-			break;
-		case 2: //MaxHP
-			script_pushint(st,mob->status.max_hp);
-			break;
-		case 3: //Base EXP
-			script_pushint(st,mob->base_exp);
-			break;
-		case 4: //Job EXP
-			script_pushint(st,mob->job_exp);
-			break;
-		case 5: //Atk1
-			script_pushint(st,mob->status.rhw.atk);
-			break;
-		case 6: //Atk2
-			script_pushint(st,mob->status.rhw.atk2);
-			break;
-		case 7: //Def
-			script_pushint(st,mob->status.def);
-			break;
-		case 8: //Mdef
-			script_pushint(st,mob->status.mdef);
-			break;
-		case 9: //Str
-			script_pushint(st,mob->status.str);
-			break;
-		case 10: //Agi
-			script_pushint(st,mob->status.agi);
-			break;
-		case 11: //Vit
-			script_pushint(st,mob->status.vit);
-			break;
-		case 12: //Int
-			script_pushint(st,mob->status.int_);
-			break;
-		case 13: //Dex
-			script_pushint(st,mob->status.dex);
-			break;
-		case 14: //Luk
-			script_pushint(st,mob->status.luk);
-			break;
-		case 15: //Range
-			script_pushint(st,mob->status.rhw.range);
-			break;
-		case 16: //Range2
-			script_pushint(st,mob->range2);
-			break;
-		case 17: //Range3
-			script_pushint(st,mob->range3);
-			break;
-		case 18: //Size
-			script_pushint(st,mob->status.size);
-			break;
-		case 19: //Race
-			script_pushint(st,mob->status.race);
-			break;
-		case 20: //Element
-			script_pushint(st,mob->status.def_ele);
-			break;
-		case 21: //Mode
-			script_pushint(st,mob->status.mode);
-			break;
-		default: //wrong Index
-			script_pushint(st,-1);
+		case 0:  script_pushconststr(st,mob->jname); break;
+		case 1:  script_pushint(st,mob->lv); break;
+		case 2:  script_pushint(st,mob->status.max_hp); break;
+		case 3:  script_pushint(st,mob->base_exp); break;
+		case 4:  script_pushint(st,mob->job_exp); break;
+		case 5:  script_pushint(st,mob->status.rhw.atk); break;
+		case 6:  script_pushint(st,mob->status.rhw.atk2); break;
+		case 7:  script_pushint(st,mob->status.def); break;
+		case 8:  script_pushint(st,mob->status.mdef); break;
+		case 9:  script_pushint(st,mob->status.str); break;
+		case 10: script_pushint(st,mob->status.agi); break;
+		case 11: script_pushint(st,mob->status.vit); break;
+		case 12: script_pushint(st,mob->status.int_); break;
+		case 13: script_pushint(st,mob->status.dex); break;
+		case 14: script_pushint(st,mob->status.luk); break;
+		case 15: script_pushint(st,mob->status.rhw.range); break;
+		case 16: script_pushint(st,mob->range2); break;
+		case 17: script_pushint(st,mob->range3); break;
+		case 18: script_pushint(st,mob->status.size); break;
+		case 19: script_pushint(st,mob->status.race); break;
+		case 20: script_pushint(st,mob->status.def_ele); break;
+		case 21: script_pushint(st,mob->status.mode); break;
+		default: script_pushint(st,-1); //wrong Index
 	}
 	return 0;
 }
@@ -12901,23 +12569,14 @@ BUILDIN_FUNC(rid2name)
 {
 	struct block_list *bl = NULL;
 	int rid = script_getnum(st,2);
-	if((bl = map_id2bl(rid))){
-		switch(bl->type){
-			case BL_MOB:
-				script_pushconststr(st,((TBL_MOB*)bl)->name);
-				break;
-			case BL_PC:
-				script_pushconststr(st,((TBL_PC*)bl)->status.name);
-				break;
-			case BL_NPC:
-				script_pushconststr(st,((TBL_NPC*)bl)->exname);
-				break;
-			case BL_PET:
-				script_pushconststr(st,((TBL_PET*)bl)->pet.name);
-				break;
-			case BL_HOM:
-				script_pushconststr(st,((TBL_HOM*)bl)->homunculus.name);
-				break;
+	if((bl = map_id2bl(rid)))
+	{
+		switch(bl->type) {
+			case BL_MOB: script_pushconststr(st,((TBL_MOB*)bl)->name); break;
+			case BL_PC:  script_pushconststr(st,((TBL_PC*)bl)->status.name); break;
+			case BL_NPC: script_pushconststr(st,((TBL_NPC*)bl)->exname); break;
+			case BL_PET: script_pushconststr(st,((TBL_PET*)bl)->pet.name); break;
+			case BL_HOM: script_pushconststr(st,((TBL_HOM*)bl)->homunculus.name); break;
 			default:
 				ShowError("buildin_rid2name: BL type unknown.\n");
 				script_pushconststr(st,"");
@@ -13089,87 +12748,33 @@ BUILDIN_FUNC(setmobdata)
 
 		switch( type )
 		{
-		case 0:
-			md->class_ = (short)value;
-			break;
-		case 1:
-			md->level = (unsigned short)value;
-			break;
-		case 2:
-			md->status.hp = (unsigned int)value;
-			break;
-		case 3:
-			md->status.max_hp = (unsigned int)value;
-			break;
-		case 4:
-			md->master_id = value;
-			break;
-		case 5:
-			md->bl.m = (short)value;
-			break;
-		case 6:
-			md->bl.x = (short)value;
-			break;
-		case 7:
-			md->bl.y = (short)value;
-			break;
-		case 8:
-			md->status.speed = (unsigned short)value;
-			break;
-		case 9:
-			md->status.mode = (unsigned short)value;
-			break;
-		case 10:
-			md->special_state.ai = (unsigned int)value;
-			break;
-		case 11:
-			md->sc.option = (unsigned short)value;
-			break;
-		case 12:
-			md->vd->sex = (char)value;
-			break;
-		case 13:
-			md->vd->class_ = (unsigned short)value;
-			break;
-		case 14:
-			md->vd->hair_style = (unsigned short)value;
-			break;
-		case 15:
-			md->vd->hair_color = (unsigned short)value;
-			break;
-		case 16:
-			md->vd->head_bottom = (unsigned short)value;
-			break;
-		case 17:
-			md->vd->head_mid = (unsigned short)value;
-			break;
-		case 18:
-			md->vd->head_top = (unsigned short)value;
-			break;
-		case 19:
-			md->vd->cloth_color = (unsigned short)value;
-			break;
-		case 20:
-			md->vd->shield = (unsigned short)value;
-			break;
-		case 21:
-			md->vd->weapon = (unsigned short)value;
-			break;
-		case 22:
-			md->vd->shield = (unsigned short)value;
-			break;
-		case 23:
-			md->ud.dir = (unsigned char)value;
-			break;
-		case 24:
-			md->state.killer = value > 0 ? 1 : 0;
-			break;
-		case 25:
-			md->callback_flag = (short)value;
-			break;
-		case 26:
-			md->state.no_random_walk = value > 0 ? 1 : 0;
-			break;
+		case 0:  md->class_ = (short)value; break;
+		case 1:  md->level = (unsigned short)value; break;
+		case 2:  md->status.hp = (unsigned int)value; break;
+		case 3:  md->status.max_hp = (unsigned int)value; break;
+		case 4:  md->master_id = value; break;
+		case 5:  md->bl.m = (short)value; break;
+		case 6:  md->bl.x = (short)value; break;
+		case 7:  md->bl.y = (short)value; break;
+		case 8:  md->status.speed = (unsigned short)value; break;
+		case 9:  md->status.mode = (unsigned short)value; break;
+		case 10: md->special_state.ai = (unsigned int)value; break;
+		case 11: md->sc.option = (unsigned short)value; break;
+		case 12: md->vd->sex = (char)value; break;
+		case 13: md->vd->class_ = (unsigned short)value; break;
+		case 14: md->vd->hair_style = (unsigned short)value; break;
+		case 15: md->vd->hair_color = (unsigned short)value; break;
+		case 16: md->vd->head_bottom = (unsigned short)value; break;
+		case 17: md->vd->head_mid = (unsigned short)value; break;
+		case 18: md->vd->head_top = (unsigned short)value; break;
+		case 19: md->vd->cloth_color = (unsigned short)value; break;
+		case 20: md->vd->shield = (unsigned short)value; break;
+		case 21: md->vd->weapon = (unsigned short)value; break;
+		case 22: md->vd->shield = (unsigned short)value; break;
+		case 23: md->ud.dir = (unsigned char)value; break;
+		case 24: md->state.killer = value > 0 ? 1 : 0; break;
+		case 25: md->callback_flag = (short)value; break;
+		case 26: md->state.no_random_walk = value > 0 ? 1 : 0; break;
 		default:
 			ShowError("script:setmobdata: unknown data identifier %d\n", type);
 			return 1;

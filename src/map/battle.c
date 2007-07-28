@@ -1150,10 +1150,7 @@ static struct Damage battle_calc_weapon_attack(
 		if (sd && (skill = pc_checkskill(sd,BS_WEAPONRESEARCH)) > 0)
 			hitrate += hitrate * ( 2 * skill ) / 100;
 
-		if (hitrate > battle_config.max_hitrate)
-			hitrate = battle_config.max_hitrate;
-		else if (hitrate < battle_config.min_hitrate)
-			hitrate = battle_config.min_hitrate;
+		hitrate = cap_value(hitrate, battle_config.min_hitrate, battle_config.max_hitrate); 
 
 		if(rand()%100 >= hitrate)
 			wd.dmg_lv = ATK_FLEE;

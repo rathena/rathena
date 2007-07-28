@@ -1,5 +1,7 @@
 Date	Added
 
+2007/07/28
+	* Removed useless refine_posword setting from script_athena.conf
 2007/07/25
 	* Adjusted motd.txt to not crash new clients
 	* Removed backup_txt code since it's not needed anymore

@@ -4053,7 +4053,7 @@ int atcommand_makeegg(const int fd, struct map_session_data* sd, const char* com
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message) {
-		clif_displaymessage(fd, "Please, enter a monter/egg name/id (usage: @makeegg <pet_id>).");
+		clif_displaymessage(fd, "Please, enter a monster/egg name/id (usage: @makeegg <pet_id>).");
 		return -1;
 	}
 
@@ -4073,7 +4073,7 @@ int atcommand_makeegg(const int fd, struct map_session_data* sd, const char* com
 			(short)pet_db[pet_id].EggID, 0, (short)pet_db[pet_id].intimate,
 			100, 0, 1, pet_db[pet_id].jname);
 	} else {
-		clif_displaymessage(fd, msg_txt(180)); // The monter/egg name/id doesn't exist.
+		clif_displaymessage(fd, msg_txt(180)); // The monster/egg name/id doesn't exist.
 		return -1;
 	}
 
