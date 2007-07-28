@@ -49,6 +49,7 @@
 	----
 ========================
 07/27
+	* Rev 10922 Fixed Black Ribbon's Aegis Name. (Ribbon -> Ribbon_Black) Thanks emc2boi. [L0ne_W0lf]
 	* Fixed Neuralizer item script typo [ultramage]
 07/26
 	* Rev. 10917 Updated Cash Shop Skill Scrolls to behave more like official scrolls. [L0ne_W0lf]

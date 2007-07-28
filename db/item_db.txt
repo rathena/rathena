@@ -1878,7 +1878,7 @@
 5188,Minstrel_Hat,Wandering Minstrel Hat,5,20,,500,,2,,0,0xFFFFFFFF,7,2,256,,50,1,240,{ bonus bInt,1; bonus bDex,1; },{},{}
 5189,Fallen_Leaves,Autumn Leaves,5,20,,100,,0,,0,0xFFFFFFFF,7,2,256,,0,1,241,{ bonus bMaxHP,40; bonus bMaxSP,40; },{},{}
 5190,Indep_Anniversary_Hat,Independence Memorial Hat,5,20,,20,,3,,1,0xFFFFFFFF,7,2,256,,0,1,216,{},{},{}
-5191,Ribbon_,Black Ribbon,5,800,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,242,{ bonus bMdef,3; },{},{}
+5191,Ribbon_Black,Black Ribbon,5,800,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,242,{ bonus bMdef,3; },{},{}
 5192,Ribbon_Yellow,Yellow Ribbon,5,800,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,243,{ bonus bMdef,3; },{},{}
 5193,Ribbon_Green,Green Ribbon,5,800,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,244,{ bonus bMdef,3; },{},{}
 5194,Ribbon_Pink,Pink Ribbon,5,800,,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,245,{ bonus bMdef,3; },{},{}
