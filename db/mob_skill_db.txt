@@ -3276,7 +3276,7 @@
 1654,Armeyer Dinze@NPC_EMOTION,attack,197,1,10000,0,5000,yes,self,skillused,28,15,,,,,
 1654,Armeyer Dinze@NPC_EMOTION,chase,197,1,10000,0,5000,yes,self,skillused,28,15,,,,,
 1654,Armeyer Dinze@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1655,Errende Ebecee@AL_PNEUMA,idle,25,1,5000,0,10000,yes,target,longrangeattacked,,,,,,,22
+1655,Errende Ebecee@AL_PNEUMA,idle,25,1,5000,0,10000,yes,self,longrangeattacked,,,,,,,22
 1655,Errende Ebecee@AL_HEAL,attack,28,5,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,3
 1655,Errende Ebecee@AL_HEAL,attack,28,5,10000,500,5000,yes,self,myhpltmaxrate,30,,,,,,3
 1655,Errende Ebecee@AL_HEAL,idle,28,5,10000,500,5000,yes,friend,friendhpltmaxrate,60,,,,,,3
@@ -4379,7 +4379,7 @@
 1831,Salamander@NPC_CRITICALSLASH,attack,170,1,2000,0,5000,yes,target,always,,,,,,,
 //1831,Salamander@NPC_WIDEBLEEDING,attack,665,2,10000,500,100000,no,self,myhpltmaxrate,20,,,,,,
 1832,Ifrit@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1832,Ifrit@AL_PNEUMA,idle,25,1,10000,0,1000,yes,target,longrangeattacked,,,,,,,
+1832,Ifrit@AL_PNEUMA,idle,25,1,10000,0,1000,yes,self,longrangeattacked,,,,,,,
 1832,Ifrit@AL_HEAL,idle,28,10,10000,0,5000,yes,self,myhpltmaxrate,50,,,,,,
 1832,Ifrit@AL_HEAL,idle,28,1,10000,0,10000,yes,self,myhpltmaxrate,99,,,,,,
 1832,Ifrit@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,20,,,,,,6
