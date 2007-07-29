@@ -10,6 +10,8 @@
 //= Warp Points for Moscovia City
 //===== Additional Comments: =================================
 //= 1.0 Initial version [$ephiroth]
+//= 1.1 Fixed "Private House" Warps. [Samuray22]
+//	-Thanks to $ephiroth
 //============================================================
 
 // ---[ Mansion ]--- 
@@ -39,7 +41,7 @@ mosk_in,287,117,0	warp	moskwarp1018	1,1,mosk_in,221,125
 moscovia,195,80,0	warp	moskwarp1019	1,1,mosk_in,215,40
 mosk_in,215,37,0	warp	moskwarp1020	1,1,moscovia,194,78
 // ---[ Private House ]--- 
-moscovia,146,112,0	warp	moskwarp1021	1,1,mosk_in,213,256
-mosk_in,213,253,0	warp	moskwarp1022	1,1,moscovia,146,109
+moscovia,205,98,0	warp	moskwarp1021	1,1,mosk_in,213,256
+mosk_in,213,253,0	warp	moskwarp1022	1,1,moscovia,202,96
 mosk_in,219,272,0	warp	moskwarp1023	1,1,mosk_in,151,276
 mosk_in,151,273,0	warp	moskwarp1024	1,1,mosk_in,219,269
