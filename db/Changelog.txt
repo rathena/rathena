@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+07/30
+	* Rev. 10929 Added 1 slot to all coloured ribbons as pointed out by Elfange. [L0ne_W0lf]
 07/28
 	* Fixed monsters using Pneuma on target instead of self [Playtester]
 07/27
