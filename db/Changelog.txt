@@ -49,6 +49,8 @@
 	----
 ========================
 07/30
+	* Rev. 10932 Added several localized quest items to item_trade. [L0ne_W0lf]
+	- Added some Rachel quest items as well as cash shop specific items to item_trade
 	* Rev. 10931 Additional Pet Tames reverted again back to item-type 2 (recent commit by Ultramage fixes double-consumption) [L0ne_W0lf]
 	* Rev. 10929 Added 1 slot to all coloured ribbons as pointed out by Elfange. [L0ne_W0lf]
 07/28

@@ -125,3 +125,132 @@
 // Poring Coin items
 7538,115,100	// Sifted_Sand
 7539,115,100	// Poring_Coin
+
+// Europe Tiara Event
+5149,115,100	// Silver_Tiara
+5179,115,100	// Golden_Tiara
+
+// Brazillian Event items
+7547,115,100	// Soccer_Ball
+7548,115,100	// Soccer_Shoes
+7549,115,100	// Braziianl_Flag
+7550,115,100	// Ticket01
+7551,115,100	// Ticket02
+7552,115,100	// Ticket03
+
+// Taiwan Besark's Day Event items
+7553,115,100	// Lotus
+7554,115,100	// Striped_Candle
+7555,115,100	// Green_Incense
+
+// Taiwan 'Pink Yearning' Event items
+7556,91,100	// Longing_Heart
+7557,91,100	// Invitation_Letter
+7558,91,100	// Invitation_Ticket
+7559,91,100	// Key_to_Secret_Garden
+2670,91,100	// Ring_of_Longing
+2358,91,100	// Angel_Dress
+
+// India Father's Day Event items
+5154,91,100	// Sunglasses_F
+5155,91,100	// Granpa_Beard_F
+5156,91,100	// Flu_Mask_F
+
+// Indonesia Jewel Event items
+7575,115,100	// Red-coloured_Gem
+7576,115,100	// Blue-coloured_Gem
+7577,115,100	// Yellow-coloured_Gem
+
+// Rachel Quest items
+// * Aruna First (Katullanux quest)
+7572,91,100	// Gray_Necklace
+7573,91,100	// Shiny_Necklace
+7569,91,100	// Hammer_of_Wind
+
+// Unknown
+7275,123,100	// Ancient_Document
+7276,123,100	// Picture_Letter
+
+// 2006 Chinese Event items
+7579,115,100	// Silk_Handkerchief_of_Zhi
+
+// Unknown
+// This item is currently commented out in eAthena.
+//7580,115,100	// Black_Marble
+
+// Taiwan 4th Anniversary Memorial items
+7583,115,100	// Evil_Heart
+7584,115,100	// Guard's_1st_Proof
+7585,115,100	// Guard's_2nd_Proof
+7586,115,100	// Guard's_3rd_Proof
+7587,115,100	// Guard's_4th_Proof
+2673,123,100	// Warrior_Radiating_Ring
+1533,123,100	// Warrior's_Balmung
+13020,123,100	// Warrior's_Balmung_
+
+// Vietnam Event item
+7588,115,100	// IPOD_Coupon
+
+// 2006 Brazilian 2nd Anniversary items
+7603,115,100	// RO_Party_Ticket
+5201,115,100	// Party_Hat_B
+
+// 2006 Indonesia Honor Ring item 
+2674,123,100	// Ring_Of_Honor
+
+// 2006 Korean Harvest Moon Day Event item
+12199,123,100	// Rice_Scroll
+
+// 2006 Indonesia Event
+//These two items have not been implemented in eathena.
+//7614,115,100	// Wrapping_Paper
+//7618,115,100	// Monster_Crystal
+2676,123,100	// Hunter_Earring
+
+// Cash Shop Related Items
+12900,73,100	// Field_Manual_Box
+12901,73,100	// Life_Insurrance_Box
+12902,73,100	// Bubble_Gum_Box
+12903,73,100	// Steamed_Tongue_Box
+12904,73,100	// Steamed_Desert_Scorpions_Box
+12905,73,100	// Dragon_Breath_Cocktail_Box
+12906,73,100	// Hwergelmir's_Tonic_Box
+12907,73,100	// Cooked_Nine_Tail_Box
+12908,73,100	// Immortal_Stew_Box
+12909,73,100	// Kafra_Card_Box
+12910,73,100	// Giant_Fly_Wing_Box
+12911,73,100	// Glittering_Wand_Box
+12912,73,100	// Convex_Mirror_Box
+12913,73,100	// Blessing_Scroll_Box
+12914,73,100	// Increase_Agility_Scroll_Box
+12915,73,100	// Aspersio_Scroll_Box
+12916,73,100	// Assumptio_Scroll_Box
+12917,73,100	// Wind_Walk_Scroll_Box
+12918,73,100	// Adrenaline_Rush_Scroll_Box
+12919,73,100	// Megaphone_Box
+12920,73,100	// Enriched_Elunium_Box
+12921,73,100	// Enriched_Oridecon_Box
+12922,73,100	// Token_of_Ziegfried_Box
+12202,91,100	// STR_Dish
+12203,91,100	// AGI_Dish
+12204,91,100	// INT_Dish
+12205,91,100	// DEX_Dish
+12206,91,100	// LUK_Dish
+12207,91,100	// VIT_Dish
+12208,91,100	// Battle_Manual
+12209,91,100	// Insurance
+12210,91,100	// Bubble_Gum
+12211,91,100	// Kafra_Card
+12212,91,100	// Giant_Fly_Wing
+12213,91,100	// Neuralizer
+12214,91,100	// Convex_Mirror
+12215,91,100	// Blessing_10_Scroll
+12216,91,100	// Inc_Agi_10_Scroll
+12217,91,100	// Aspersio_5_Scroll
+12218,91,100	// Assumptio_5_Scroll
+12219,91,100	// Wind_Walk_10_Scroll
+12220,91,100	// Adrenaline_Scroll
+12221,91,100	// Megaphone_
+7619,91,100	// Enriched_Elunium
+7620,91,100	// Enriched_Oridecon
+7621,91,100	// Token_of_Siegfried
