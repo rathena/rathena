@@ -1,13 +1,14 @@
 //===== eAthena Script ======================================= 
 //= Acolyte Job Quest
 //===== By: ================================================== 
-//= kobra_k88
+//= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
-//= eAthena 1.0 +
+//= eAthena SVN
 //===== Description: ========================================= 
-//= <Description> 
+//= [Aegis Conversion]
+//= Job quest for Acolyte classes
 //===== Additional Comments: ================================= 
 //= v1.0 Fully working.
 //= v1.1 Added function calls for Priest Quest.
@@ -17,333 +18,588 @@
 //= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
 //= 1.5 Now saves/restores all quest skills [Lupus]
 //= 1.6 Merged back JFunc [Lupus]
+//= 1.7 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//=	No longer uses function "F_ToHigh"
+//=	Proper dialog for Priest job quest is unused (for now.)
 //============================================================ 
 
-
-// -- Father Mareusis --
-prt_church,184,41,4	script	Father Mareusis	60,{
-	callfunc "F_ToHigh",Job_Acolyte_High,"Acolyte High",Job_High_Priest,"Father Mareusis";
+prt_church,184,41,4	script	Cleric#aco	60,{
+	if (Upper == 1) {
+		if (ADVJOB == Job_High_Priest || ADVJOB == Job_Champion) {
+			if (Class == Job_Novice_High) {
+				mes "[Father Mareusis]";
+				mes "Ah, I sense you have endured";
+				mes "a past life experience. You must have learned many things before entering Valhalla.";
+				next;
+				if (getskilllv(1) < 9) {
+					mes "[Father Mareusis]";
+					mes "Unfortunately, I don't think you're ready to become an Acolyte yet. Please finish learning all of the Basic Skills first.";
+					next;
+					mes "[Father Mareusis]";
+					mes "In the meantime,";
+					mes "I will wait until";
+					mes "you are ready.";
+					mes "May God be";
+					mes "with you.";
+					close;
+				}
+				mes "[Father Mareusis]";
+				mes "Well, I welcome you";
+				mes "back from Valhalla and";
+				mes "wish you luck on your";
+				mes "new life's journey.";
+				next;
+				skill 143,0,0;
+				jobchange Job_Acolyte_High;
+				skill 142,1,0;
+				mes "[Father Mareusis]";
+				mes "Now, venture forth and seek those who need your help. May God light your path.";
+				close;
+			}
+			else {
+				mes "[Father Mareusis]";
+				mes "Now, venture forth to seek people who need your help. May God enlighten your way.";
+				close;
+			}
+		}
+		else {
+			mes "[Father Mareusis]";
+			mes "I sense that you have endured a past life experience. You must have learned many things before entering Valhalla.";
+			next;
+			mes "[Father Mareusis]";
+			mes "However, I can tell that you are not suited to be an Acolyte. Please remember who you were in your past life and find your path.";
+			close;
+		}
+	}
 	mes "[Father Mareusis]";
-	if(BaseJob == Job_Novice && job_acolyte_q > 0) goto L_Check;
-	mes "What is it you are looking for?";
+	mes "What is it that you seek?";
 	next;
-	menu "Father, I want to become an Acolyte.",M_0,"The Requirements.",M_1,"I'm just looking around that's all",M_End;
-	close;
-
-	M_0:
+	switch(select("Father, I want to be a Acolyte.:Acolyte Requirements.:Just looking around.")) {
+	case 1:
 		mes "[Father Mareusis]";
-		if(BaseJob == Job_Acolyte) {
-			mes "Are you feeling okay?....";
-			emotion e_hmm;
-			next;
-			mes "[Father Mareusis]";
-			mes "...your attire...";
-			next;
-			mes "[Father Mareusis]";
-			mes "You're already are an Acolyte.....";
-			next;
-			mes "[Father Mareusis]";
-			mes "You are not joking with me, are you? Hoho!!..kids these days.";
-			emotion e_heh;
+		if (BaseJob == Job_Acolyte) {
+			mes "Are you feeling okay today? I can tell by your attire that you are already an Acolyte. You're not joking around, are you?";
 			close;
 		}
-		if(BaseJob != Job_Novice) {
-			mes "I am sorry child.  You have already devoted your life to another profession.  I am afraid that you will no longer be able to devote it to God.";
+		else if (BaseJob != Job_Novice) {
+			mes "I'm sorry, but we can only accept Novices as applicants for the job change to Acolyte.";
 			close;
 		}
-		if(JobLevel < 10) {
-			mes "My child you do not yet possess the necessary skills to serve the lord.";
-			mes "Please come back when your faith in God has become stronger";
+		if (job_acolyte_q == 0) {
+			mes "Do you truly";
+			mes "wish to become";
+			mes "a servant of God?";
 			next;
-			mes "[Father Mareusis]";
-			mes "May God bless you.";
-			close;
-		}
-		mes "Do you truly wish to become a servant of God?";
-		next;
-		menu "Yes, Father, I do.",sM_0,"Nope, I lied.",sM_1;
-		close;
-
-		sM_0:
-			mes "[Father Mareusis]";
-			mes "Good. I accept your will to become an Acolyte.";
-			mes "You understand that you need to do penance before you become a servant of God, don't you?";
-			next;
-			mes "[Father Mareusis]";
-			mes "Well then, here is your Divine Quest.....";
-			next;
-			mes "[Father Mareusis]";
-			set job_acolyte_q, rand(1,3);
-			if(job_acolyte_q == 2) goto sR_2;
-			if(job_acolyte_q == 3) goto sR_3;
-
-			sR_1:
-				mes "Please visit ^0000ffFather Rubalkabara^000000, a member of the Prontera Parish and report back here.";
-				mes "He has been Practicing Asceticism near the ^0000ffSt. Capitolina Abbey, 1 map North, and 2 maps East of Prontera City.^000000.";
-				goto sL_End;
-
-			sR_2:
-				mes "Please Visit ^0000ffMother Marthilda^000000 and report back here.";
-				mes "She has been Practicing Asceticism in the ^0000ffSograt Desert, one map north from the town of Morroc^000000.  Morroc is SouthWest from Prontera.";
-				goto sL_End;
-
-			sR_3:
-				mes "Please Visit ^0000ffFather Yosuke^000000 and report back here.";
-				mes "He has been Practicing Asceticism on ^0000ffa very small island 2 maps West, and 1 map North, of Prontera City.^000000.";
-
-			sL_End:
+			if (select("Yes Father, I do.:Nope, I lied.") == 1) {
+				mes "[Father Mareusis]";
+				mes "Good. I accept " + strcharinfo(0) + "'s will to become an Acolyte. You understand that you must do penance before you can become a servant of God, right?";
 				next;
 				mes "[Father Mareusis]";
-				mes "May the Grace of God enlighten your path.";
+				mes "Well, I will";
+				mes "give you a mission...";
+				switch(rand(2)) {
+				default:
+					set job_acolyte_q,2;
+					mes "Please visit ^000077Father Rubalkabara^000000, a member of the Prontera Parish, and return here. He has been practicing asceticism in the ^000077Relics NorthEast of Prontera City^000000.";
+					break;
+				case 1:
+					set job_acolyte_q,3;
+					mes "Please visit ^000077Mother Mathilda^000000 and then return to me. She has been practicing asceticism near ^000077Morroc Town, SouthWest of Prontera City^000000.";
+					break;
+				case 2:
+					set job_acolyte_q,4;
+					mes "Please visit ^000077Father Yosuke^000000 and return here. He has been practicing asceticism around ^000077a bridge somewhere NorthWest of Prontera^000000.";
+					break;
+				}
+				next;
+				mes "[Father Mareusis]";
+				mes "May the grace of God light your path and guide you during your journey of penance.";
 				close;
-
-		sM_1:
+			}
 			mes "[Father Mareusis]";
-			mes "Lying is a sin my child!";
-			mes "Please come back when you are ready";
-			emotion e_swt2;
+			mes "You lied?";
+			mes "It is good that you";
+			mes "have confessed your";
+			mes "wrongdoing. Go in";
+			mes "peace, my son.";
 			close;
-
-	M_1:
-		mes "[Father Mareusis]";
-		if(BaseJob == Job_Acolyte) goto M1b;
-		if(BaseJob != Job_Novice) goto M1a;
-		
-		mes "So you wish to become an Acolyte do you?";
-		mes "Here are the two requirements you must fullfill first in order to do so.";
+		}
+		mes "Oh, you've come back. Let me check and see if you are ready to serve God. Let's see...";
 		next;
 		mes "[Father Mareusis]";
-		mes "First of all, you have to reach ^0000ffnovice job Level 9^000000 and learn the ^0000ffBasic Skills^000000 that come with it.";
-		next;
-		mes "[Father Mareusis]";
-		mes "Secondly, you have to embark on a Divine Quest!!";
-		next;
-		mes "[Father Mareusis]";
-		mes "You'll will become an Acolyte in no time if, from the bottom of your heart, you are truly eager to become a servant of God.";
-		close;
-
-		M1a:
-			mes "You have already devoted your life to another profession....";
+		if (getskilllv(1) < 9) {
+			mes "Good Lord! Haven't you accomplished the Basic Training yet?! It's important that you finish that!";
+			next;
+			mes "[Father Mareusis]";
+			mes "You should have trained more! Go back and make sure you reach Novice Job Level 9 and learn all of the Basic Skills!";
 			close;
-		M1b:
-			mes "You have already devoted your life to the lord my child.  Please go with God's blessing.";
+		}
+		if (job_acolyte_q < 5) {
+			mes "Oh? I can't find your name on the Registration List.";
+			next;
+			switch(job_acolyte_q) {
+			case 2:
+				mes "[Father Mareusis]";
+				mes "Please visit ^000077Father Rubalkabara^000000, a member of the Prontera Parish, and return here.";
+				next;
+				mes "[Father Mareusis]";
+				mes "He has been practicing asceticism in the ^000077Relics at the NorthEast of Prontera City^000000.";
+				break;
+			case 3:
+				mes "[Father Mareusis]";
+				mes "Please Visit ^000077Mother Mathilda^000000 and return here to me.";
+				next;
+				mes "[Father Mareusis]";
+				mes "She has been practicing asceticism near ^000077Morroc Town, located SouthWest of Prontera City^000000.";
+				break;
+			case 4:
+				mes "[Father Mareusis]";
+				mes "Please visit ^000077 Father Yosuke ^000000 and return here to me.";
+				next;
+				mes "[Father Mareusis]";
+				mes "He has been practicing asceticism near a ^000077bridge somewhere to the NorthWest of Prontera^000000.";
+				break;
+			}
+			next;
+			mes "[Father Mareusis]";
+			mes "May the grace of God brighten your path and guide you on your journey of penance.";
 			close;
-
-	M_End:	
-		mes "[Father Mareusis]";
-		mes "I see.  I pray for your salvation.";
-		close;
-
-L_Check:
-	mes "Oh, You've come back. Let me check to see if you are ready to serve God... Let's see...";
-	next;
-	mes "[Father Mareusis]";
-	if(job_acolyte_q < 4) goto sL_NotRdy;
-	if(SkillPoint > 0) goto sL_Skpoint;
-	mes "Your prayers have been answered my child.  That which has been asked of you has been fullfilled!!.";
-	next;
-	mes "[Father Mareusis]";
-	mes "With the powers vested in me I hearby make you, ^0000ff"+strcharinfo(0)+"^000000, an Acolyte!!!";
-	next;
-	mes "(whispers a prayer)";
-	next;
-	callfunc "Job_Change",Job_Acolyte;
-	callfunc "F_ClearJobVar";		// clears all job variables for the current player
-	mes "[Father Mareusis]";
-	mes "Remember to be thankful to God, who is taking care of us all of the time.";  
-	mes "That you have the unique chance to serve him...you should feel very fortunate and blessed."; 
-	next;
-	mes "[Father Mareusis]";
-	mes "Now go forth my child and VANQUISH the EVILS of this world.  You have my blessing and the blessing of the church.";
-	close;
-
-	sL_NotRdy:
-		mes "Hmm... you don't seem to have finished your Divine Quest my child.";
+		}
+		mes "Hmm...";
+		mes "Your name is on the list and you've proven your qualification.";
 		next;
 		mes "[Father Mareusis]";
-		if(job_acolyte_q == 1) goto sR_1;
-		if(job_acolyte_q == 2) goto sR_2;
-		if(job_acolyte_q == 3) goto sR_3;
+		mes "I am proud to say that you are now ready to become an Acolyte!";
+		next;
+		set job_acolyte_q,0;
+		skill 143,0,0;
+		callfunc "Job_Change",Job_Acolyte;
+		callfunc "F_ClearJobVar";
+		mes "[Father Mareusis]";
+		mes "Always remember to be thankful to God, who is taking care of us all the time.";
+		next;
+		mes "[Father Mareusis]";
+		mes "Always use your gifts to serve Him by helping others. In chaos and times of difficulty, face your hardships with unwavering faith.";
+		next;
+		mes "[Father Mareusis]";
+		mes "Lastly, I want to sincerely congratulate you on persevering through your trial of penance.";
 		close;
-
-	sL_Skpoint:
-		mes "Before we can move on, please use up all of your skill points my child.";
+	case 2:
+		mes "[Father Mareusis]";
+		mes "Do you wish to become an Acolyte? You must fulfill two requirements.";
+		next;
+		mes "[Father Mareusis]";
+		mes "First, you have to reach at least Novice Job Level 9 and learn all of the Basic Skills. Second, you will be given a trial of penance to overcome.";
+		next;
+		mes "[Father Mareusis]";
+		if (job_acolyte_q != 0) {
+			switch(job_acolyte_q) {
+			case 2:
+				mes "For your trial, please visit ^000077Father Rubalkabara ^000000 and then return here to me.";
+				next;
+				mes "[Father Mareusis]";
+				mes "He is practicing asceticism in the ^000077Relics at the NorthEast of Prontera City^000000.";
+				break;
+			case 3:
+				mes "For your trial, please visit ^000077Mother Mathilda^000000 and return here to me.";
+				next;
+				mes "[Father Mareusis]";
+				mes "She has been practicing asceticism near ^000077Morroc, located to the SouthWest of Prontera City^000000.";
+				break;
+			default:
+				mes "For your trial, please visit ^000077Father Yosuke^000000 and return here to me.";
+				next;
+				mes "[Father Mareusis]";
+				mes "He has been practicing asceticism around a bridge somewhere ^000077NorthWest of Prontera^000000.";
+				break;
+			}
+			next;
+			mes "[Father Mareusis]";
+			mes "May the grace of God light your path and guide you on your journey of penance.";
+		}
+		else {
+			mes "The destination for this trial will be decided once you fill the application form.";
+		}
+		next;
+		mes "[Father Mareusis]";
+		mes "Please come back after fulfilling the two requirements I've asked of you. As long as your desire to serve God and others is sincere, you will be able to make it.";
 		close;
+	case 3:
+		close;
+	}
 }
 
-
-// == Devine Quest ==
-// -- Father Rubalkabara --
-prt_fild03,365,259,2	script	Father Rubalkabara	110,{
+prt_fild03,365,255,2	script	Ascetic#aco	89,{
 	mes "[Father Rubalkabara]";
-	if(BaseJob == Job_Acolyte || BaseJob == Job_Priest) callfunc "F_FatherRub";
-	if(BaseJob == Job_Novice) goto L_Novice;
-
-L_Other:
-	mes "Oh.. Have you come here to train Or are you just a Wanderer..?";
-	next;
-	mes "[Father Rubalkabara]";
-	mes "Whoever you are, please take care of yourself. Monsters in here are shockingly Strong contrary to their Cute apprearance.";
-	close;
-
-L_Novice:
-	if(job_acolyte_q==4) goto QuestOver;
-	if(job_acolyte_q > 0) goto L_Start;
-	mes "Huh..? What brings you here? This is a Very dangerous place for a Novice like you. Please Go back quickly.";
-	emotion e_gasp;
-	close;
-
-L_Start:
-	mes "Oh... Are you the young one who wishes to become an Acolyte...? I've already received the news of your comming from the Santuary.";
-	next;
-	mes "[Father Rubalkabara]";
-	mes "Let me just check my list of candidates here to make sure you are at the right place......";
-	next;
-	mes "[Father Rubalkabara]";
-	if(job_acolyte_q != 1) goto Goback;
-	mes "You're ^0000ff"+strcharinfo(0)+"^000000, right? Thank you for comming to vist me.";
-	next;
-	mes "[Father Rubalkabara]";
-	mes "I believe you have already been informed about Acolytes from Father Mareusis.  So I won't bother to bore you with any futher lectures on the subject.";
-	next;
-	mes "[Father Rubalkabara]";
-	mes "Besides, I know your generation doesn't like to be lectured by old men like myself. Hahaha...";
-	emotion e_heh;
-	next;
-	mes "[Father Rubalkabara]";
-	mes "But you might have to learn to endure what your elders say, because God loves to teach his children. You will see.";
-	next;
-	mes "[Father Rubalkabara]";
-	mes "I will send a message to Father Mareusis stating that you visted me as proof of the completion of your Divine Quest.";
-	next;
-	mes "[Father Rubalkabara]";
-	mes "You may go back to Prontera now.  Farewell and may God bless you.";
-	set job_acolyte_q,4;
-	close;
-
-	QuestOver:
-		mes "Your Divine Quest is has been completed.  You may continue in your journey to serve God.";
-		close;
-
-	Goback:
-		mes "Hmmm... I do not think you name is on my list of candidates.";
-		emotion e_hmm;
-		next;
-		mes "[Father Rubalkabara]";
-		mes "...... Why don't you go back to the Santuary and check again.";
-		close;
+	if (BaseJob == Job_Novice) {
+		if (job_acolyte_q == 6) {
+			mes "Please take care. They should know that you've met me by the time you arrive at the Prontera Sanctuary.";
+			next;
+			mes "[Father Rubalkabara]";
+			mes "I've sent a carrier pigeon with a message. I hope it will arrive there safely...";
+			close;
+		}
+		if (job_acolyte_q != 0) {
+			if (job_acolyte_q == 2) {
+				mes "Oh...? You must be the one who aspires to become an Acolyte. I've already received news from the Sanctuary that you might be coming.";
+				next;
+				mes "[Father Rubalkabara]";
+				mes "Now, your name was " + strcharinfo(0) + ", right? Excellent, thank you for visiting me.";
+				next;
+				mes "[Father Rubalkabara]";
+				mes "I believe you've been told much about Acolytes from Friar Mareusis. Plus, there's plenty of helpful people in the Prontera Sanctuary.";
+				next;
+				mes "[Father Rubalkabara]";
+				mes "I guess there's really no need for me to teach you much. Besides, I'm sure your someone from your generation may have trouble listening to an old man like me. Hahaha~";
+				next;
+				mes "[Father Rubalkabara]";
+				mes "Still, lessons may come from the places you'd least expect. God loves to teach his children in strange ways. You'll see.";
+				next;
+				mes "[Father Rubalkabara]";
+				mes "Well, I'll send the message telling them that you've come to visit me. So, you may now return to the Prontera Sanctuary.";
+				next;
+				mes "[Father Rubalkabara]";
+				mes "Farewell.";
+				close;
+				savepoint "prt_fild03",361,255;
+				set job_acolyte_q,6;
+				end;
+			}
+			else {
+				mes "Oh...";
+				mes "Are you one of the";
+				mes "Acolyte applicants...?";
+				mes "Let's see...";
+				next;
+				mes "[Father Rubalkabara]";
+				mes "Your name is " + strcharinfo(0) + "?";
+				mes "I don't think your name";
+				mes "is on my list. Hmmm...";
+				next;
+				mes "[Father Rubalkabara]";
+				mes "Why don't you go back to the Prontera Sanctuary and check again?";
+				close;
+			}
+		}
+		else {
+			mes "Huh? What brings you here? This is a very dangerous place for a Novice like yourself!";
+			close;
+		}
+	}
+	else if (BaseJob == Job_Acolyte) {
+		callfunc "F_FatherRub";
+		end;
+		//Official Dialog is as follows, however it requires rewriting the priest quest.
+		if (job_priest_q != 0) {
+			if (job_priest_q == 1) {
+				mes "Ah yes, so you're the young Acolyte who wishes to become a Priest.";
+				next;
+				mes "[Father Rubalkabara]";
+				mes "I've received the message from Bishop Paul. Since you made the pilgrimage, I hope you accomplish your goal of becoming a Priest.";
+				next;
+				mes "[Father Rubalkabara]";
+				mes "Also, if you have a chance, please visit this abbey again. It's a sacred place for our Church.";
+				next;
+				mes "[Father Rubalkabara]";
+				mes "Well then, please head to your next destination for your pilgrimage. Be safe in your travels.";
+				close2;
+				savepoint "prt_fild03",361,255;
+				set job_priest_q,2;
+				end;
+			}
+			else if (job_priest_q == 2) {
+				mes "Please be hurry to the next destination for your pilgrimage. I hope you become a Priest soon.";
+				close;
+			}
+			else {
+				mes "May I ask why you have returned? Please go back and continue your religious practice.";
+				close;
+			}
+		}
+		else {
+			mes "I have no idea what brought you here, but please excuse me.";
+			close;
+		}
+	}
+	else {
+		if (BaseJob == Job_Priest) {
+			mes "Greetings.";
+			next;
+			mes "[Father Rubalkabara]";
+			mes "Welcome to the Deep. Feel free to sit and contemplate God's message with me. This place is beautiful, even if danger accompanies its sense of serenity...";
+			close;
+		}
+		else {
+			mes "Oh ho...";
+			mes "Have you come into the Deep here for training? Or are you just a Wanderer?";
+			next;
+			mes "[Father Rubalkabara]";
+			mes "Whoever you are, please take care of yourself. The monsters in here are shockingly strong, contrary to their cute appearance.";
+			close;
+		}
+	}
 }
 
-// -- Mother Marthilda --
-moc_fild07,36,354,4	script	Mother Marthilda	79,{
+moc_fild07,41,355,4	script	Ascetic#2aco	95,{
 	mes "[Mother Marthilda]";
-	if(BaseJob == Job_Acolyte || BaseJob == Job_Priest) callfunc "F_MotherMart";
-	if(BaseJob == Job_Novice) goto L_Novice;
-
-L_Other:
-	mes "Hello and welcome.  I am Mother Marthilda.  Are you a weary traveler or a mighty warrior?";
-	mes "Whoever you are please make sure to keep your faith in God.";
-	close;
-
-L_Novice:
-	if(job_acolyte_q == 5) goto QuestOver;
-	if(job_acolyte_q > 0) goto L_Start;
-	mes "My!! Aren't you a little far from your town?  A novice like you could get hurt.  Please be safe.";
-	emotion e_gasp;
-	close;
-L_Start:
-	mes "Ah, You are one of the Acolyte Applicants. I sincerely welcome you.";
-	next;
-	mes "[Mother Marthilda]";
-	mes "Let me just check my list of candidates here to make sure you are at the right place......";
-	next;
-	if(job_acolyte_q != 2) goto Goback;
-	mes "[Mother Marthilda]";
-	mes ".... ^0000ff"+strcharinfo(0)+"^000000, Yes! I found you.";
-	next;
-	mes "[Mother Marthilda]";
-	mes "I will send a message to 'Father Mareusis' stating that you visted me as proof of the completion of your Divine Quest.";
-	next;
-	mes "[Mother Marthilda]";
-	mes "Thank you for visiting me.  I am even more greatfull that you chose to follow your heart and devote your life to the divinity.";
-	mes "God is only as powerfull as our devotion to him.  Remember that.";
-	next;
-	mes "[Mother Marthilda]";
-	mes "You may go back to Prontera now.";
-	mes "Be safe and may God bless.";
-	set job_acolyte_q,5;
-	close;
-
-	Goback:
-		mes "[Mother Marthilda]";
-		mes "Hmm....let's see....";
-		mes "..Well... I can't find your name on the List ....";
-		emotion e_hmm;
-		next;
-		mes "[Mother Marthilda]";
-		mes "I recommend that you to return to the Santuary and Check again.";
-		close;
-
-	QuestOver:
-		mes "Your Divine Quest is has been completed.  You may continue in your journey to serve God.";
-		close;
+	if (BaseJob == Job_Novice) {
+		if (job_acolyte_q == 7) {
+			mes "I will send a carrier pigeon to the Prontera Sanctuary. When you return, the Priest there should already have received my message.";
+			next;
+			mes "[Mother Marthilda]";
+			mes "I will pray to God, and hope that you become an Acolyte soon.";
+			close;
+		}
+		if (job_acolyte_q != 0) {
+			if (job_acolyte_q == 3) {
+				mes "Ah, you must be one of the Acolyte applicants. I sincerely welcome you.";
+				next;
+				mes "[Mother Marthilda]";
+				mes "What is your name? " + strcharinfo(0) + "? Let's see... Ah, you're on my list.";
+				next;
+				mes "[Mother Marthilda]";
+				mes "I will send a message to the Sanctuary confirming that you, " + strcharinfo(0) + " visited me and completed your penance.";
+				next;
+				mes "[Mother Marthilda]";
+				mes "Please return to the Prontera Sanctuary and speak to the Priest in charge.";
+				close2;
+				savepoint "moc_fild07",35,355;
+				set job_acolyte_q,7;
+				end;
+			}
+			else {
+				mes "Ah...!";
+				mes "You must be one";
+				mes "of the Acolyte applicants.";
+				mes "I sincerely welcome you.";
+				next;
+				mes "[Mother Marthilda]";
+				mes "Now, what is your name?";
+				mes "" + strcharinfo(0) + "? Let's see...";
+				next;
+				mes "[Mother Marthilda]";
+				mes "Hmm...";
+				mes "It seems your name";
+				mes "is not on my list...";
+				next;
+				mes "[Mother Marthilda]";
+				mes "Perhaps you should return to the Prontera Sanctuary and check the destination for your penance trial once again.";
+				close;
+			}
+		}
+		else {
+			mes "...";
+			close;
+		}
+	}
+	else if (BaseJob == Job_Acolyte) {
+		callfunc "F_MotherMart";
+		end;
+		//Official Dialog is as follows, however it requires rewriting the priest quest.
+		if (job_priest_q != 0) {
+			if (job_priest_q == 1) {
+				mes "Hmm...";
+				mes "It seems you're";
+				mes "training to become";
+				mes "a Priest.";
+				next;
+				mes "[Mother Marthilda]";
+				mes "However, at this point in your pilgrimage, I am not the person that you should be visiting.";
+				next;
+				mes "[Mother Marthilda]";
+				mes "Perhaps you should ask Bishop Paul or Sister Cecilia once again. Well, may God be with you...";
+				close;
+			}
+			else if (job_priest_q == 2) {
+				mes "Ah, are you";
+				mes "a Priest trainee...?";
+				mes "Welcome!";
+				next;
+				mes "[Mother Marthilda]";
+				mes "We Priests are obliged to spread the message of God to";
+				mes "the peoples of the Earth.";
+				next;
+				mes "[Mother Marthilda]";
+				mes "After you become a Priest, your travels may take you to the Morroc Pyramids. I hope that you may release the Undead there from the evil to which they are bound.";
+				next;
+				mes "[Mother Marthilda]";
+				mes "Well then...";
+				mes "I shall pray to";
+				mes "God for safety";
+				mes "on your journey.";
+				close;
+				savepoint "moc_fild07",35,355;
+				set job_priest_q,3;
+				end;
+			}
+			else if (job_priest_q == 3) {
+				mes "Please leave soon, and";
+				mes "continue your training.";
+				close;
+			}
+			else {
+				mes "May I ask you the reason you came back? Please continue your training.";
+				close;
+			}
+		}
+		else {
+			mes "May God";
+			mes "be with you...";
+			close;
+		}
+	}
+	else {
+		if (BaseJob == Job_Priest) {
+			mes "Hello there~";
+			next;
+			mes "[Mother Marthilda]";
+			mes "How is your practice coming along? I certainly hope you're enjoying living in the grace of God.";
+			close;
+		}
+		else {
+			mes "May God";
+			mes "be with you...";
+			close;
+		}
+	}
 }
 
-// -- Father Yosuke --
-prt_fild00,208,218,6	script	Father Yosuke	120,{
+prt_fild00,208,218,6	script	Ascetic#3aco	98,{
 	mes "[Father Yosuke]";
-	if(BaseJob == Job_Acolyte || BaseJob == Job_Priest) callfunc "F_FatherYos";
-	if(BaseJob == Job_Novice) goto L_Novice;
-
-L_Other:
-	mes "What brings you to this place.  Try not to bother me ok.";
-	close;
-
-L_Novice:
-	if(job_acolyte_q == 6) goto QuestOver;
-	if(job_acolyte_q > 0) goto L_Start;
-	mes "You, Novice...wanna tell me something?";
-	mes "If not go back home.";
-	close;
-
-L_Start:
-	mes "Hey!! You there.";
-	next;
-	mes "[Father Yosuke]";
-	mes "You look like an Acolyte Applicant...am I right?";
-	next;
-	mes "[Father Yosuke]";
-	mes "Let me just check my list of candidates here to make sure you are at the right place......";
-	next;
-	if(job_acolyte_q != 3) goto Goback;
-	mes "[Father Yosuke]";
-	mes "Here we are,  ^0000ff"+strcharinfo(0)+"^000000, correct? Not bad, Not bad. You withstood the long journey to get here pretty well.";
-	next;
-	mes "[Father Yosuke]";
-	mes "I will send a message to 'Father Mareusis' stating that you visted me as proof of the completion of your Divine Quest.";
-	next;
-	mes "[Father Yosuke]";
-	mes "Now go back to the Sanctuary and don't forget to carry God's teachings with you where ever you go!";
-	emotion e_go;
-	set job_acolyte_q,6;
-	close;
-
-	Goback:
-		mes "[Father Yosuke]";
-		mes "Interesting.. I can't find your name on my list..";
-		emotion e_hmm;
-		next;
-		mes "[Father Yosuke]";
-		mes "I think you've come here by mistake.";
-		mes "Go back to the Santuary and check with Father Mareusis.";
-		close;
-
-	QuestOver:
-		mes "What ? You Have more Business with me?";
-		emotion e_what;
-		next;
-		mes "[Father Yosuke]";
-		mes "Your Divine Quest is complete.  Go back to the Sanctuary Now!";
-		emotion e_go;
-		close;
+	if (BaseJob == Job_Novice) {
+		if (job_acolyte_q == 8) {
+			mes "What?";
+			next;
+			mes "[Father Yosuke]";
+			mes "Have you any more business with me?! You don't! Go back to the Sanctuary now!";
+			close;
+		}
+		if (job_acolyte_q != 0) {
+			if (job_acolyte_q == 4) {
+				mes "Hey.";
+				mes "Whatever you are,";
+				mes "you look like an";
+				mes "Acolyte applicant.";
+				mes "Right?";
+				next;
+				mes "[Father Yosuke]";
+				mes "Not bad, not bad. You withstood the penance trial pretty well.";
+				mes "So what's your name?";
+				next;
+				mes "[Father Yosuke]";
+				mes "" + strcharinfo(0) + ", huh?";
+				next;
+				mes "[Father Yosuke]";
+				mes "Okay. I'll send a message to the Sanctuary that you, " + strcharinfo(0) + ", came to visit me.";
+				next;
+				mes "[Father Yosuke]";
+				mes "Now go back to the Santuary and finish becoming an Acolyte, kid.";
+				close;
+				savepoint "prt_fild00",206,230;
+				set job_acolyte_q,8;
+				end;
+			}
+			else {
+				mes "Hey.";
+				mes "You look like an Acolyte Applicant. Am I right?";
+				next;
+				mes "[Father Yosuke]";
+				mes "Not bad at all, you've made it all the way here from Prontera. So what's your name, kid?";
+				next;
+				mes "[Father Yosuke]";
+				mes "" + strcharinfo(0) + ", huh? Why isn't your name on my list?";
+				next;
+				mes "[Father Yosuke]";
+				mes "You probably made a mistake. Go back to the Santuary, and check with the Bishop.";
+				close;
+			}
+		}
+		else {
+			mes "You...";
+			mes "Novice.";
+			mes "There something";
+			mes "you wanna tell me?";
+			close;
+		}
+	}
+	else if (BaseJob == Job_Acolyte) {
+		callfunc "F_FatherYos";
+		end;
+		//Official Dialog is as follows, however it requires rewriting the priest quest.
+		if (job_priest_q != 0) {
+			if (job_priest_q == 1) {
+				mes "Hmm...";
+				mes "A Priest trainee, eh?";
+				next;
+				mes "[Father Yosuke]";
+				mes "Well, you got the wrong person. If you're supposed to meet up with me at all, it'd be later.";
+				next;
+				mes "[Father Yosuke]";
+				mes "But that's your own fault.";
+				mes "Now, go back to Church, kid.";
+				close;
+			}
+			else if (job_priest_q == 2) {
+				mes "Hmm...";
+				mes "A Priest trainee, eh?";
+				next;
+				mes "[Father Yosuke]";
+				mes "Well, you got the wrong person. If you're supposed to meet up with me at all, it'd be later.";
+				next;
+				mes "[Father Yosuke]";
+				mes "But that's your own fault. Go back to Church.";
+				close;
+			}
+			else if (job_priest_q == 3) {
+				mes "Hmm.";
+				mes "A Priest";
+				mes "trainee, eh? ";
+				mes "Welcome.";
+				next;
+				mes "[Father Yosuke]";
+				mes "I won't say";
+				mes "anything more.";
+				mes "Just devote your";
+				mes "life to God.";
+				next;
+				mes "[Father Yosuke]";
+				mes "Now go back to church.";
+				mes "Hereby, the first of";
+				mes "your trials is now";
+				mes "completed.";
+				close2;
+				savepoint "prt_fild00",206,230;
+				set job_priest_q,4;
+				end;
+			}
+			else if (job_priest_q == 4) {
+				mes "I told you to go back to church.";
+				mes "Or do you want to live with me here for the rest of your life...?";
+				close;
+			}
+			else {
+				mes "Just go be a Priest. This isn't a playground for kids.";
+				close;
+			}
+		}
+		else {
+			mes "...Acolyte, you don't have any business with me here.";
+			close;
+		}
+	}
+	else {
+		if (BaseJob == Job_Priest) {
+			mes "Hey...";
+			next;
+			mes "[Father Yosuke]";
+			mes "If you like, come sit here with me and meditate the great truths. God's majesty is truly inspiring...";
+			close;
+		}
+		else {
+			mes "Do you have anything to say? Because unfortunately for you,";
+			mes "I don't any replies.";
+			close;
+		}
+	}
 }
+

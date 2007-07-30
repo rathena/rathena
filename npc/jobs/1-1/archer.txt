@@ -1,13 +1,14 @@
 //===== eAthena Script ======================================= 
 //= Archer Job Quest
 //===== By: ================================================== 
-//= kobra_k88
+//= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
-//= eAthena 1.0 +
+//= eAthena SVN
 //===== Description: ========================================= 
-//= <Description> 
+//= [Aegis Conversion]
+//= Job quest for Archer classes
 //===== Additional Comments: ================================= 
 //= Fully working
 //= v1.1 Added instant job change for High Novice [Lupus]
@@ -15,169 +16,226 @@
 //= v1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
 //= 1.5 Now saves/restores all quest skills [Lupus]
 //= 1.6 Merged back JFunc [Lupus]
+//= 1.7 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//=	Arrow reward is now equal to the type sof trunks brought.
+//=	No longer uses function "F_ToHigh"
 //============================================================ 
 
-
-// -- Archer Guildsman -- 
-payon_in02,64,71,4	script	Archer Guildsman	59,{
-	callfunc "F_ToHigh",Job_Archer_High,"High Archer",Job_Sniper,"Archer Guildsman";
-	mes "[Archer Guildsman]";
-	if(BaseJob == Job_Novice && job_archer_q == 1) goto L_Check;
-	mes "Good Day. How may I help you?";
-	next;
-	menu "I would like to become an Archer.",M_0,"What are the Requirements?",M_1,"Never mind.",M_End;
-
-	M_0:
-		mes "[Archer Guildsman]";
-		if(BaseJob == Job_Archer) {
-			mes "Your free spirited nature tells me that you're already an archer....that and the bow and arrow in your hands...Haha";
-			emotion e_heh;
+payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
+	if (Upper == 1) {
+		if (Class == Job_Novice_High && ADVJOB == Job_Sniper || ADVJOB == Job_Clown || ADVJOB == Job_Gypsy) {
+			mes "[Archer Guildsman]";
+			mes "Hey, I know you.";
+			mes "You took this test";
+			mes "before, didn't you?";
+			next;
+			mes "[Archer Guildsman]";
+			mes "Ah, you must have been";
+			mes "to Valhalla and been reborn.";
+			mes "Wow, that's so impressive!";
+			next;
+			if (getskilllv(1) < 9) {
+				mes "[Archer Guildsman]";
+				mes "Err...";
+				mes "You'd better learn all the Basic Skills first before you can become an Archer.";
+				next;
+				mes "[Archer Guildsman]";
+				mes "Alright, see you later.";
+				close;
+			}
+			mes "[Archer Guildsman]";
+			mes "Well then. I don't";
+			mes "need to say anything else.";
+			mes "I know you'll make a great Archer...";
+			next;
+			skill 143,0,0;
+			jobchange Job_Archer_high;
+			skill 147,1,0;
+			skill 148,1,0;
+			mes "[Archer Guildsman]";
+			mes "Although there's no special";
+			mes "reward for you this time, I hope you understand. Take care of yourself.";
 			close;
 		}
-		if(BaseJob != Job_Novice) {
-			mes "I'm sorry but you cannot leave your current job to become an Archer...though I can understand why you would want to do so."; 
+		else {
+			mes "[Archer Guildsman]";
+			mes "Oh...?";
+			mes "Hey, what are";
+			mes "you doing here...?";
+			next;
+			mes "[Archer Guildsman]";
+			mes "I can tell that you're not cut out to be an Archer. It sort of feels like you're meant to do";
+			mes "something else...";
 			close;
 		}
-		mes "You have made an excellent job choice.";
-		mes "Please submit your resume so that I can check your qualifications.";
-		next;
-		mes "(You hand over your resume)";
-		next;
-		mes "[Archer Guildsman]";
-		if(JobLevel < 10) {
-			mes "It seems that you are not qualified to become an Archer yet.  Please take a look at the job requirements once more.";
+	}
+	mes "[Archer Guildsman]";
+	mes "Good day. How may I help you?";
+	next;
+	switch(select("I want to be an Archer.:I need the requirements, please.:Nothing, thanks.")) {
+	case 1:
+		if (BaseJob == Job_Archer) {
+			mes "[Archer Guildsman]";
+			mes "You've already become an Archer...";
 			close;
 		}
-		set job_archer_q,1;
-		mes "Looks good.  You have the necesssary skills to become an archer....";
-		next;
-		mes "[Archer Guildsman]";
-		mes "but.... ";
-		next;
-		mes "[Archer Guildsman]";
-		mes "you must first pass a test in order to do so.  I hope you didn't think becoming an archer was going to be that easy.  Ha ha!";
-		next;
-		mes "[Archer Guildsman]";
-		mes "A well made bow is essential for a good archer, and high quality wood is in turn essential for a well made bow.";
-		mes "You will be tested on how well you are able to gather high quality wood.";
-		next;
-		mes "[Archer Guildsman]";
-		mes "The higher the quality of the wood you gather the higher your score.";
-		mes "You must receive a score of ^ff0000at least 25^000000 in order to ^ff0000pass the test^000000.";
-		next;
-		mes "[Archer Guildsman]";
-		mes "You can find wood by battling ^0000ff'Willows'^000000, a type of tree monster found outside of town in Payon forest.";
-		mes "They drop the wood in the form of^0000ff 'Trunks'^000000.";
-		next;
-		mes "[Archer Guildsman]";
-		mes "There are a total of 4 different kind of trunks each with a different point value.  Gather a variety of trunks and bring them back here for me to grade.";
-		next;
-		mes "[Archer Guildsman]";
-		mes "I must warn you, the Willows can be tough monsters so be carefull and remember to rest and use your healing items.  Good luck!";
-		close;
-
-	M_1:
-		mes "[Archer Guildsman]";
-		if(BaseJob == Job_Archer) goto sM_1a;
-		if(BaseJob != Job_Novice) goto sM_1b;
-		mes "Let me explain the requirements for becoming an archer to you:";
-		next;
-		mes "[Archer Guildsman]";
-		mes "First of all, you have to have a job level of 9 and you must learn all of the skills that come with that job level.";
-		next;
-		mes "[Archer Guildsman]";
-		mes "Secondly, you will have to take a test that will determine whether or not you have the skills to become an archer.";
-		next;
-		mes "[Archer Guildsman]";
-		mes "Those are the requirements.  Fullfill them and you will be able to live life as only an Archer can.";
-		close;
-
-		sM_1a:
-			mes "Have you already forgotten how you became an Archer?....";
-			emotion 1;
+		else if (BaseJob != Job_Archer && BaseJob != Job_Novice) {
+			mes "[Archer Guildsman]";
+			mes "Hmm...";
+			mes "You don't look much like a Novice at all...";
+			next;
+			mes "[Archer Guildsman]";
+			mes "Anyway, whatever you are, you can't choose a job as an Archer because you have a job already.";
 			close;
-		sM_1b:
-			mes "Telling you the requirements won't help you become an Archer since you already have another job.";
-			close;	
-
-	M_End:
+		}
+		if (job_archer_q == 0) {
+			mes "[Archer Guildsman]";
+			mes "Do you want to be an Archer?";
+			mes "If so, you need to fill out this application form.";
+			next;
+			if (select("Apply.:Cancel") == 1) {
+				set job_archer_q,1;
+				mes "[Archer Guildsman]";
+				mes "Okay, sign here. Alright, um, I'll promote you once you meet the requirements.";
+				next;
+				mes "[Archer Guildsman]";
+				mes "If you think you've met them already, we can check that now.";
+				mes "Are you ready?";
+				next;
+				if (select("Yes, I am.:No, not yet.") == 1) {
+					mes "[Archer Guildsman]";
+					mes "Alright, let me check.";
+					next;
+				}
+				else {
+					mes "[Archer Guildsman]";
+					mes "I understand. Be my guest if you want to look at the requirements.";
+					close;
+				}
+			}
+			mes "[Archer Guildsman]";
+			mes "Well, alright.";
+			mes "See you next time.";
+			close;
+		}
 		mes "[Archer Guildsman]";
-		mes "Ok then, take care.";
-		close;
-
-L_Check:
-	mes "Oh, I see you've come back.";
-	next;
-	mes "[Archer Guildsman]";	
-	if((countitem(1066) == 0) && (countitem(1067) == 0) && (countitem(1068) == 0) && (countitem(1019) == 0)) goto sL_NotRdy;
-	if(SkillPoint > 0) goto sL_SkPoints;
-	set @Trunk1, countitem(1066)*5;
-	set @Trunk2, countitem(1067)*3;
-	set @Trunk3, countitem(1068)*2;
-	set @Trunk4, countitem(1019);
-	set @TrunkTotal, @Trunk1 + @Trunk2 + @Trunk3 + @Trunk4;
-
-	mes "Lets see.....";
-	next;
-	mes "[Archer Guildsman]";
-	mes "You have:";
-	mes "^0000FF" +countitem(1066)+ "^000000 Fine grained trunks for ^ff0000" +@Trunk1+ "^000000 points,";
-	mes "^0000FF" +countitem(1067)+ "^000000 Solid trunks for ^ff0000" +@Trunk2+ "^000000 points,";
-	mes "^0000FF" +countitem(1068)+ "^000000 Barren trunks for ^ff0000" +@Trunk3+ "^000000 points,";
-	mes "^0000FF" +countitem(1019)+ "^000000 Trunks for ^ff0000" +@Trunk4+ "^000000 points.....";
-	next;
-	mes "[Archer Guildsman]";
-	mes "That gives you a total score of: ^ff0000" +@TrunkTotal+"^000000";
-	next;
-	mes "[Archer Guildsman]";
-	if(@TrunkTotal < 25) goto sL_Failed;
-
-	mes "Very good!  You have passed the test.  Congratulations, you are now fully qualified to become an archer.";
-	emotion 21;
-	next;
-	mes "[Archer Guildsman]";
-	mes "I will now transform you...";
-	next;
-	callfunc "Job_Change",Job_Archer;
-	callfunc "F_ClearJobVar";		// clears all job variables for the current player
-	mes "[Archer Guildsman]";
-	mes "In exchange for the trunks you brought in I will give you this Bow and some arrows.  Please take them.";
-	next;
-	getitem 1702,1;//Items: Bow_,
-	getitem 1750,200;//Items: Arrow,
-	delitem 1066, countitem(1066);//Items: Fine-grained_Trunk,
-	delitem 1067, countitem(1067);//Items: Solid_Trunk,
-	delitem 1068, countitem(1068);//Items: Barren_Trunk,
-	delitem 1019, countitem(1019);//Items: Trunk,
-	mes "[Archer Guildsman]";
-	mes "An Archer knows no bounds so live your life to its fullest.  I know you will make an exellent archer.";
-	next;
-	mes "[Archer Guildsman]";
-	mes "Farewell and good luck on your journey.";
-	close;
-
-	sL_NotRdy:
-		mes "What?  You didn't bring any trunks back for me to grade?  Let me explain the test requirements again just in case you forgot...";
-		emotion 1;
+		mes "Are you..." + strcharinfo(0) + "?";
+		next;
+		if (getskilllv(1) < 9) {
+			mes "[Archer Guildsman]";
+			mes "Well, you're not at the right job level. Please check the requirements again.";
+			next;
+			mes "[Archer Guildsman]";
+			mes "Your job level must be at least 10, and don't forget you should learn all of the Basic Skills. Once you've done that, come back.";
+			close;
+		}
+		if (job_archer_q == 1) {
+			set .@archer_item1,countitem(1066) * 5;
+			set .@archer_item2,countitem(1067) * 3;
+			set .@archer_item3,countitem(1068) * 2;
+			set .@archer_item4,countitem(1019);
+			set .@total_archer,.@archer_item1 + .@archer_item2 + .@archer_item3 + .@archer_item4;
+			set .@total_archer2,(((.@archer_item2 + .@archer_item3) * 2) + .@archer_item4);
+			mes "[Archer Guildsman]";
+			mes "Excellent!";
+			mes "Now then,";
+			mes "let's see...";
+			next;
+			mes "[Archer Guildsman]";
+			mes "I will appraise the value of the various types of Trunks, needed to produce a Bow, that you've brought.";
+			next;
+			if (countitem(1066) == 0 && countitem(1067) == 0 && countitem(1068) == 0 && countitem(1019) == 0) {
+				mes "[Archer Guildsman]";
+				mes "Um...";
+				mes "Unfortunately you didn't bring any of the required items. There's nothing for me to appraise.";
+				close;
+			}
+			mes "[Archer Guildsman]";
+			if (countitem(1066) != 0) mes " Grade S : " + countitem(1066) + " ea, Grade: " + .@archer_item1 + " . ";
+			if (countitem(1067) != 0) mes " Grade A : " + countitem(1067) + " ea, Grade : " + .@archer_item2 + " . ";
+			if (countitem(1068) != 0) mes " Grade B : " + countitem(1068) + " ea, Grade : " + .@archer_item3 + " . ";
+			if (countitem(1019) != 0) mes " Grade C : " + countitem(1019) + " ea, Grade : " + .@archer_item4 + " . ";
+			if (.@total_archer < 25) {
+				mes "Total Grades: ^FF0000" + .@total_archer + "^000000 / 40";
+				next;
+				mes "[Archer Guildsman]";
+				mes "Less than 25!? You have to get a grade of at least 25! Come on, try harder!";
+				close;
+			}
+			else {
+				mes "Total Grades: ^0000FF" + .@total_archer + "^000000 / 40";
+				next;
+				mes "[Archer Guildsman]";
+				if (.@total_archer > 40) {
+					mes "Wow! More than 40!";
+					mes "Excellent! Congratulations!";
+				}
+				else if (.@total_archer > 30) {
+					mes "More than 30! Nice job!";
+					mes "Congratulations!";
+				}
+				else if (.@total_archer > 25) {
+					mes "*Sigh* Well, you just barely passed... Anyway, well done.";
+				}
+			}
+			next;
+			mes "[Archer Guildsman]";
+			mes "I'll transfer these Trunks to our Bow Production Department. Now that you've met the requirements, let me promote you right away!";
+			if (countitem(1066) != 0) delitem 1066,countitem(1066); //Tree_Of_Archer_1
+			if (countitem(1067) != 0) delitem 1067,countitem(1067); //Tree_Of_Archer_2
+			if (countitem(1068) != 0) delitem 1068,countitem(1068); //Tree_Of_Archer_3
+			if (countitem(1019) != 0) delitem 1019,countitem(1019); //Wooden_Block
+		}
+		next;
+		callfunc "Job_Change",Job_Archer;
+		callfunc "F_ClearJobVar";
+		mes "[Archer Guildsman]";
+		mes "Congratulations!";
+		mes "You are now an Archer!";
 		next;
 		mes "[Archer Guildsman]";
-		mes "There are a total of ^5555FF4 different kind of Trunks^000000 each with a different point value.";
-		mes "Gather a variety of Trunks and bring them back here for me to grade.";
+		mes "Of course, we expect that you will help contribute towards the future of the Archer Guild with your efforts.";
 		next;
 		mes "[Archer Guildsman]";
-		mes "You can find Trunks by battling ^0000ff'Willows'^000000, a type of tree monster found outside of town in Payon forest.";
-		close;
-	sL_SkPoints:
-		mes "You need to use up all of your skill points before I can make you an Archer.";
-		close;
-	sL_Failed:
-		mes "I'm sorry but your score is too low.  I'm afraid that you have failed the test.";
+		mes "Ah, your bow has arrived from the Bow Production Department. Here, take it! It's yours~";
+		getitem 1702,1; //Bow_
+		getitem 1750,.@total_archer2; //Arrow
 		next;
 		mes "[Archer Guildsman]";
-		mes "Fortunatley for you I'm somewhat softhearted so I'll give you another chance.  Go gather some more trunks and come back.";
+		mes "Now, off you go. Hunt with pride, knowing you were trained by one of the best!";
+		close;
+	case 2:
+		mes "[Archer Guildsman]";
+		mes "I will explain the requirements for being an Archer.";
+		if (BaseJob != Job_Novice) {
+			if (BaseJob == Job_Archer) {
+				next;
+				mes "[Archer Guildsman]";
+				mes "But...";
+				mes "You're already an Archer. You should know these already...";
+			}
+			else {
+				next;
+				mes "[Archer Guildsman]";
+				mes "Wait a second. You've chosen a different job already. You don't need to know this~";
+			}
+			mes "So...Yeah...no real reason to tell you the requirements...";
+		}
 		next;
 		mes "[Archer Guildsman]";
-		mes "Hopefull they will be of a high enough quality for you to pass the test.";
+		mes "First of all, you have to the Job Level 9 as a Novice, and know all of the Basic Skills.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "An Archer needs extremely high concentration and reflexes, so we do not accept those who have little patience.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "You also have to gather ^FF0000Trunks^000000. There are 4 different types of Trunks, each of differing quality. You'll be given different grades for your Trunks, depending on their quality.";
+		next;
+		mes "[Archer Guildsman]";
+		mes "In order to become an Archer, you must receive a grade of at least ^0000FF25^000000 points out of 40. You can get Trunks from 'Willow,' the tree. Be careful, though. They can be tough monsters.";
 		close;
-
+	case 3:
+		close;
+	}
 }
+

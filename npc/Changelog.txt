@@ -1,5 +1,8 @@
 Date		Added
 ======
+2007/07/30
+	* Rev. 10926 Updated Job quests for 1-1 classes and Rebirthed classes. [L0ne_W0lf]
+	- Moved valkyrie.txt from ../cities/ to ../jobs/. It's not a city. Doofus. 
 2007/07/29
 	* Fixed warps "Private House", from Moscovia. [Samuray22]
 	- Thanks to $ephiroth for the fix.
