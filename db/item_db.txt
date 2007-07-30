@@ -126,30 +126,30 @@
 617,Old_Violet_Box,Old Purple Box,2,10000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_VioletBox),1; },{},{}
 618,Worn_Out_Scroll,Worn Out Scroll,2,50,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_ScrollBox),1; },{},{}
 // Pet Tames
-619,Unripe_Apple,Unripe Apple,11,1000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1002; },{},{}
-620,Orange_Juice,Orange Juice,11,1500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1113; },{},{}
-621,Bitter_Herb,Bitter Herb,11,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1031; },{},{}
-622,Rainbow_Carrot,Rainbow Carrot,11,2500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1063; },{},{}
-623,Earthworm_The_Dude,Earthworm the Dude,11,4000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1049; },{},{}
-624,Rotten_Fish,Rotten Fish,11,2500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1011; },{},{}
-625,Lusty_Iron,Rusty Iron,11,100,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1042; },{},{}
-626,Monster_Juice,Monster Juice,11,1500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1035; },{},{}
-627,Sweet_Milk,Sweet Milk,11,7000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1167; },{},{}
-628,Well_Dried_Bone,Well-Dried Bone,11,10000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1107; },{},{}
-629,Singing_Flower,Singing Flower,11,300,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1052; },{},{}
-630,Dew_Laden_Moss,Dew Laden Moss,11,10,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1014; },{},{}
-631,Deadly_Noxious_Herb,Deadly Noxious Herb,11,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1077; },{},{}
-632,Fatty_Chubby_Earthworm,Fatty Chubby Earthworm,11,5000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1019; },{},{}
-633,Baked_Yam,Sweet Potato,11,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1056; },{},{}
-634,Tropical_Banana,Tropical Banana,11,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1057; },{},{}
-635,Horror_Of_Tribe,Orc Trophy,11,300,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1023; },{},{}
-636,No_Recipient,No Recipient,11,100,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1026; },{},{}
-637,Old_Broom,Old Broom,11,350,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1110; },{},{}
-638,Silver_Knife_Of_Chaste,Silver Knife of Chastity,11,12000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1170; },{},{}
-639,Armlet_Of_Obedience,Armlet of Obedience,11,18000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1029; },{},{}
-640,Shining_Stone,Shining Stone,11,3000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1155; },{},{}
-641,Contracts_In_Shadow,Contracts in Shadow,11,100,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1109; },{},{}
-642,Book_Of_Devil,Book of the Devil,11,1800,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1101; },{},{}
+619,Unripe_Apple,Unripe Apple,2,1000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1002; },{},{}
+620,Orange_Juice,Orange Juice,2,1500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1113; },{},{}
+621,Bitter_Herb,Bitter Herb,2,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1031; },{},{}
+622,Rainbow_Carrot,Rainbow Carrot,2,2500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1063; },{},{}
+623,Earthworm_The_Dude,Earthworm the Dude,2,4000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1049; },{},{}
+624,Rotten_Fish,Rotten Fish,2,2500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1011; },{},{}
+625,Lusty_Iron,Rusty Iron,2,100,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1042; },{},{}
+626,Monster_Juice,Monster Juice,2,1500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1035; },{},{}
+627,Sweet_Milk,Sweet Milk,2,7000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1167; },{},{}
+628,Well_Dried_Bone,Well-Dried Bone,2,10000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1107; },{},{}
+629,Singing_Flower,Singing Flower,2,300,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1052; },{},{}
+630,Dew_Laden_Moss,Dew Laden Moss,2,10,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1014; },{},{}
+631,Deadly_Noxious_Herb,Deadly Noxious Herb,2,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1077; },{},{}
+632,Fatty_Chubby_Earthworm,Fatty Chubby Earthworm,2,5000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1019; },{},{}
+633,Baked_Yam,Sweet Potato,2,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1056; },{},{}
+634,Tropical_Banana,Tropical Banana,2,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1057; },{},{}
+635,Horror_Of_Tribe,Orc Trophy,2,300,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1023; },{},{}
+636,No_Recipient,No Recipient,2,100,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1026; },{},{}
+637,Old_Broom,Old Broom,2,350,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1110; },{},{}
+638,Silver_Knife_Of_Chaste,Silver Knife of Chastity,2,12000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1170; },{},{}
+639,Armlet_Of_Obedience,Armlet of Obedience,2,18000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1029; },{},{}
+640,Shining_Stone,Shining Stone,2,3000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1155; },{},{}
+641,Contracts_In_Shadow,Contracts in Shadow,2,100,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1109; },{},{}
+642,Book_Of_Devil,Book of the Devil,2,1800,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1101; },{},{}
 643,Pet_Incubator,Pet Incubator,2,3000,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ bpet; },{},{}
 644,Gift_Box,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_GiftBox),1; },{},{}
 // ASPD Potions

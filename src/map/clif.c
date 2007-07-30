@@ -6036,11 +6036,6 @@ int clif_catch_process(struct map_session_data *sd)
 	WFIFOHEAD(fd,packet_len(0x19e));
 	WFIFOW(fd,0)=0x19e;
 	WFIFOSET(fd,packet_len(0x19e));
-	sd->menuskill_id = SA_TAMINGMONSTER;
-	if (sd->ud.skillid == SA_TAMINGMONSTER)
-		sd->menuskill_lv = 0;	//Free catch
-	else
-		sd->menuskill_lv = sd->itemid;	//Consume catch
 	return 0;
 }
 
