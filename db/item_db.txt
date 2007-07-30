@@ -158,9 +158,9 @@
 657,Berserk_Potion,Berserk Potion,2,3000,,200,,,,,0x01E646A6,7,2,,,85,,,{ sc_start SC_ASPDPOTION2,1800000,0; },{},{}
 658,Union_Of_Tribe,Tribal Solidarity,2,,1,500,,,,,0xFFFFFFFF,7,2,,,,,,{ guildgetexp rand(600000,1200000); },{},{}
 // New Pet Tames
-659,Heart_Of_Her,Her Heart,11,500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1188; },{},{}
-660,Prohibition_Red_Candle,Forbidden Red Candle,11,20000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1200; },{},{}
-661,Sway_Apron,Soft Apron,11,20000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1275; },{},{}
+659,Heart_Of_Her,Her Heart,2,500,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1188; },{},{}
+660,Prohibition_Red_Candle,Forbidden Red Candle,2,20000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1200; },{},{}
+661,Sway_Apron,Soft Apron,2,20000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1275; },{},{}
 662,Inspector_Certificate,Authoritative Badge,2,1450,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 507; sc_start SC_SpeedUp0,180000,0; },{},{}
 663,Korea_Rice_Cake,Songpyun,0,1,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 10,0; },{},{}
 // Item Givers
@@ -2928,7 +2928,7 @@
 12219,Wind_Walk_10_Scroll,LV10 Windwalk Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ skilleffect 383,0; sc_start SC_WINDWALK,250000,5; },{},{}
 12220,Adrenaline_Scroll,LV5 Adrenaline Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ skilleffect 111,0; sc_start SC_ADRENALINE,150000,5; },{},{}
 12221,Megaphone_,Megaphone,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ input @Megaphone$; announce strcharinfo(0) + ": " + @megaphone$,bc_all,0xFF0000; end; },{},{}
-12225,Sweet_Candy_Cane,Sweet Candy Cane,11,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1245; },{},{}
+12225,Sweet_Candy_Cane,Sweet Candy Cane,2,,10,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1245; },{},{}
 12232,GingerBread,Ginger Bread,0,,,150,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12233,Kvass,Kvass,0,,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 //Valentine's Day Event (2007)
