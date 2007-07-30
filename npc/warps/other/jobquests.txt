@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Version Ep4+
 //===== Description: =========================================
@@ -18,6 +18,7 @@
 //= 1.3b activated Dancer JQ warp [Lupus]
 //= 1.4 Imported damn noobie warps from jAthena (because it's broken since last year)
 //= 1.5 Replaced clone maps with the real ones [Lupus]
+//= 1.6 removed swordman quest map warps. They are now contained in the swordman quest. [L0ne_W0lf]
 //============================================================
 
 
@@ -30,20 +31,6 @@ new_zone02,126,106,0	warp	newwarp6003	2,2,new_zone02,160,171
 new_zone02,156,171,0	warp	newwarp6004	2,2,new_zone02,123,106
 new_zone02,73,106,0	warp	newwarp6005	2,2,new_zone02,41,172
 new_zone02,46,172,0	warp	newwarp6006	2,2,new_zone02,78,106
-
-//==============================================================================
-//Swordman
-//==============================================================================
-job_sword1,192,244,0	warp	SwordWarp0	2,2,job_sword1,215,244
-job_sword1,223,243,0	warp	SwordWarp1	2,2,job_sword1,12,206
-job_sword1,192,206,0	warp	SwordWarp2	2,2,job_sword1,215,205
-job_sword1,223,205,0	warp	SwordWarp3	2,2,job_sword1,12,168
-job_sword1,192,168,0	warp	SwordWarp4	2,2,job_sword1,215,167
-// Underground cave
-job_sword1,65,117,0	warp	swd101	1,1,job_sword1,10,245
-job_sword1,98,27,0	warp	swd102	1,1,job_sword1,11,207
-job_sword1,161,27,0	warp	swd103	1,1,job_sword1,11,207
-job_sword1,239,117,0	warp	swd106	1,1,job_sword1,11,169
 
 //==============================================================================
 //Thief
