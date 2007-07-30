@@ -4,7 +4,7 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -28,6 +28,7 @@
 //= 1.3a fixed Defence / Economy underflow [Lupus] thanks2 kyoki
 //= 1.4 updated a couple mapannounces in OnAgitBreak. [L0ne_W0lf]
 //= 1.5 Changed the names of the Kafra from "Service" to "Staff" [L0ne_W0lf]
+//= 1.6 Fixed the OnAgitBreak message being map-only and not global. (Lil DomX) [L0ne_W0lf]
 //============================================================
 
 
@@ -141,7 +142,7 @@ function	script	F_AgitBreak	{
 
 	SetCastleData getarg(0),1, @GID;
 	MapAnnounce getarg(0),"The emperium has been destroyed.",bc_map,0x00CCFF;
-	Announce "The [" + GetCastleName(getarg(0)) + "] castle has been conquered by the [" + GetGuildName(@GID) + "] guild.",bc_map;
+	Announce "The [" + GetCastleName(getarg(0)) + "] castle has been conquered by the [" + GetGuildName(@GID) + "] guild.",0;
 	GetCastleData getarg(0),0,"::OnRecvCastle"+getarg(1);
 
 	disablenpc "Kafra Staff#"+getarg(1);

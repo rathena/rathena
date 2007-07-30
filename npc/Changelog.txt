@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/07/30
+	* Rev. 10936 Fixed the OnAgitBreak message being map-only and not global when a castle is taken. (Lil DomX) [L0ne_W0lf]
 	* Rev. 10928 Removed  "Load Balancing" from the swordman job quest. [L0ne_W0lf]
 	- Swordman quest map warps are now contained within the swordman job quest file.
 	* Rev. 10926 Updated Job quests for 1-1 classes and Rebirthed classes. [L0ne_W0lf]
