@@ -55,7 +55,7 @@ function	script	F_ClearJobVar	{
 	// Super Novice
 	set SUPNOV_Q,0;
 	// 2-1 Jobs ------------------------------
-	set ASSIN_Q,0; set ASSIN_Q2,0;
+	set ASSIN_Q,0; set ASSIN_Q2,0; set ASSIN_Q3,0;
 	set BSMITH_Q,0; set BSMITH_Q2,0;
 	set HNTR_Q,0; set HNTR_Q2,0;
 	set KNIGHT_Q,0; set KNIGHT_Q2,0;

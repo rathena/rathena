@@ -1566,6 +1566,7 @@ OnTouch:
 	mes "[Guild Master]";
 	mes "... I think I've said enough.  Here please take this........";
 	next;
+	if(ASSIN_Q3 == 1) goto L_Cont1;
 	if(JBLVL == 40) goto L_LowLvl;
 
 	L_HighLvl:
@@ -1591,6 +1592,7 @@ OnTouch:
 		if(@temp==3) getitem 1252, 1;
 
 	L_Cont1:
+	set ASSIN_Q3,1;
 	mes "[Guild Master]";
 	mes "Now go talk to ^5533FFAssassin Huey^000000 back at the guild entrance.";
 	mes "For some reason he always looks like he's ^5533FFangry^000000 about something......";

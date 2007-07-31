@@ -1,5 +1,9 @@
 Date		Added
 ======
+2007/07/31
+	* Rev. 10938 Added the "F_BlockHigh" function back in, as it's still used by 2-x job quests. [L0ne_W0lf]
+	- Fix the assassin job quest item reward bug. Cheap fix until it's rewritten. 
+	* Added official Pang Voice skill quest for bards. Further official 2-x skill quests to come.
 2007/07/30
 	* Rev. 10936 Fixed the OnAgitBreak message being map-only and not global when a castle is taken. (Lil DomX) [L0ne_W0lf]
 	* Rev. 10928 Removed  "Load Balancing" from the swordman job quest. [L0ne_W0lf]
