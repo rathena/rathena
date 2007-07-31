@@ -617,7 +617,7 @@ LSecondClass2:
 		mes "[ ^0065DFJobra^000000 ]";
 		if(class !=5) goto LNotMerc2;
 		mes "Cool! Go make some potions! Open a Pharmacy! yeah yeah yeah! ^_^";
-		jobchange 18;// Job: Job_Alchem
+		jobchange 18;// Job: Job_Alchemist
 		cutin "kafra_01",255;
 		close;
 

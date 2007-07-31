@@ -43,7 +43,7 @@ prontera,153,193,6	script	Job Master	123,{
 					case Job_Priest:
 						set @target_job, Job_Acolyte_High;
 						break;
-					case Job_Alchem:
+					case Job_Alchemist:
 					case Job_Blacksmith:
 						set @target_job, Job_Merchant_High;
 						break;
@@ -91,7 +91,7 @@ prontera,153,193,6	script	Job Master	123,{
 			mes "Are you sure you want to change to " + JobName(@target_job) + "?";
 			if(select("No","Yes") == 2){
 				callfunc "Job_Change", @target_job;
-				if(@target_job == Job_Gunsliger || @target_job == Job_Ninja || @target_job == Job_Taekwon) {
+				if(@target_job == Job_Gunslinger || @target_job == Job_Ninja || @target_job == Job_Taekwon) {
 					callfunc "F_ClearJobVar";
 				} else {
 					if($@JC_Plat) goto L_GivePlat;
@@ -138,7 +138,7 @@ prontera,153,193,6	script	Job Master	123,{
 						case Job_Baby_Merchant:
 						case Job_Merchant:
 							set @job_opt[0], Job_Blacksmith;
-							set @job_opt[1], Job_Alchem;
+							set @job_opt[1], Job_Alchemist;
 							break;
 						case Job_Thief_High:
 						case Job_Baby_Thief:

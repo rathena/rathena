@@ -148,7 +148,7 @@ function	script	Is_Magic_Class	{
 //////////////////////////////////////////////////////////////////////////////////
 
 function	script	Is_Merc_Class	{
-	return ( BaseJob==Job_Merchant || BaseJob==Job_Blacksmith || BaseJob==Job_Alchem );
+	return ( BaseJob==Job_Merchant || BaseJob==Job_Blacksmith || BaseJob==Job_Alchemist );
 }
 
 

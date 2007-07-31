@@ -142,7 +142,7 @@ function	script	F_AgitBreak	{
 
 	SetCastleData getarg(0),1, @GID;
 	MapAnnounce getarg(0),"The emperium has been destroyed.",bc_map,0x00CCFF;
-	Announce "The [" + GetCastleName(getarg(0)) + "] castle has been conquered by the [" + GetGuildName(@GID) + "] guild.",0;
+	Announce "The [" + GetCastleName(getarg(0)) + "] castle has been conquered by the [" + GetGuildName(@GID) + "] guild.",bc_all;
 	GetCastleData getarg(0),0,"::OnRecvCastle"+getarg(1);
 
 	disablenpc "Kafra Staff#"+getarg(1);

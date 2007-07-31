@@ -34,6 +34,7 @@
 // North ==================================
 prontera,152,326,3	script	Kafra Employee::kaf_prontera	112,{
 	cutin "kafra_06",2;
+	callfunc "F_KafSetPront";
 	mes "[Kafra Employee]";
 	mes "Welcome to the";
 	mes "Kafra Corporation~";

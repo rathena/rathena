@@ -1,6 +1,12 @@
 Date		Added
 ======
 2007/07/31
+	* Fixed north prontera kafra having an empty warp list
+	* Removed junk &#1038;A text from the 2004 headgears
+	* Changed deprecated Job_Alchem to Job_Alchemist (see r10904)
+	* Fixed a typo in a geffen city npc (Job_Merhcant)
+	* Fixed a typo in the Jobmaster custom script (Job_Gunsliger)
+	* Fixed one old eAAC Quest Warper bug (warp to nonwalkable coords) [ultramage]
 	* Rev. 10938 Added the "F_BlockHigh" function back in, as it's still used by 2-x job quests. [L0ne_W0lf]
 	- Fix the assassin job quest item reward bug. Cheap fix until it's rewritten. 
 	* Added official Pang Voice skill quest for bards. Further official 2-x skill quests to come.

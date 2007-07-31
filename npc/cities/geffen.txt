@@ -901,8 +901,8 @@ geffen_in,114,73,5	script	Hadenheim	709,{
 	mes "[Hans Hadenheim]";
 	mes "I mean, all these new cities are being discovered by explorers, so import and export trade is really booming!";
 	next;
-	mes "[Hans Handenheim]";	
-	if (BaseJob == Job_Merhcant)
+	mes "[Hans Handenheim]";
+	if (BaseJob == Job_Merchant)
 		mes "You're in the trading business yourself, right? So of course you'd understand that we're in a Golden Age of trade!";
 	else if (Class == Job_Novice) {
 		mes "I guess...";
@@ -910,6 +910,7 @@ geffen_in,114,73,5	script	Hadenheim	709,{
 	}
 	else
 		mes "Anyway...";
+	next;
 	mes "[Hans Hadenheim]";
 	mes "Have you been some of these new lands? They're really interesting and you can learn a lot of new things from these foreign cultures.";
 	next;

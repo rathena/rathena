@@ -10,7 +10,7 @@
 //= [Aegis Conversion]
 //= Job quest for Swordman classes
 //= Uses Job_sword1 as opposed to sword_1-1 -> sword_3-1.
-//= EXPLAOITABLE in a sense because while the sword_x-1 maps
+//= EXPLOITABLE in a sense because while the sword_x-1 maps
 //= are marked as "inside" by the client, job_sword1 is not.
 //= giving players FREE camera rotation while doing the job quest.
 //===== Additional Comments: ================================= 

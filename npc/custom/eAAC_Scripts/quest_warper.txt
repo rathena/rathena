@@ -1182,8 +1182,8 @@ function	script	QWS_Darray	{
 
 	setarray @DGat$[@Dref], "c_tower1.gat", "c_tower2.gat", "c_tower3.gat", "c_tower4.gat", "alde_dun01.gat", "alde_dun02.gat", "alde_dun03.gat", "alde_dun04.gat";
 	setarray @DLevelName$[@Dref], "Clock Tower Level 1", "Clock Tower Level 2", "Clock Tower Level 3", "Clock Tower Level 4", "Basement 1F", "Basement 2F", "Basement 3F", "Basement 4F";
-	setarray @DXcoords[@Dref], 200, 268, 64, 32, 197, 262, 276, 130;
-	setarray @DYcoords[@Dref], 163, 26, 148, 63, 25, 41, 53, 130;
+	setarray @DXcoords[@Dref], 200, 268, 64, 32, 197, 262, 276, 122;
+	setarray @DYcoords[@Dref], 163, 26, 148, 63, 25, 41, 53, 125;
 	setarray @DDepth[@Dref], 0, 1, 2, 3, 1, 2, 3, 4;
 
 	QWS_Make_Dungeon_Menu 5;
@@ -1505,7 +1505,7 @@ function	script	QWS_Darray	{
 	setarray @DGat$[@Dref], "um_dun01.gat", "um_dun02.gat", "yggdrasil01.gat";
 	setarray @DLevelName$[@Dref], "Carpenter's Shop in The Tree", "Passage to a Foreign World", "Hvergelmir's Fountain";
 	setarray @DXcoords[@Dref], 205, 48, 40;
-	setarray @DYcoords[@Dref], 16, 30, 63;
+	setarray @DYcoords[@Dref], 26, 30, 63;
 	setarray @DDepth[@Dref], 0, 1, 2;
 
 	QWS_Make_Dungeon_Menu 27;

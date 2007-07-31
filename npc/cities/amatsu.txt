@@ -284,7 +284,7 @@ amatsu,205,163,4	script	Mimi	759,{
 }
 //=====================================================================
 amatsu,230,160,4	script	Lady	757,{
-	mes "[Yorukoc]";
+	mes "[Yoruko]";
 	mes "Although I come to the well for water everyday,";
 	mes "if it's misty or rainy,";
 	mes "I will not come out here.";

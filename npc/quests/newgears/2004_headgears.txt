@@ -882,12 +882,12 @@ yuno,241,52,3	script	Old Blacksmith	813,{
 			mes "Oh yes,";
 			mes "I need to tell you the details about the materials.";
 			mes "Angel Wing Ears requires ^4d4dffAngel Wings^000000 and";
-			mes "^4d4dffElven Ears^000000 &#1038;Aand the cost for other materials is";
+			mes "^4d4dffElven Ears^000000 and the cost for other materials is";
 			mes "approximatedly ^4d4dff20000 zeny^000000";
 			next;
 			mes "[Habir Moah]";
 			mes "Devil Wing Ears requires ^4d4dffEvil Wing^000000 and";
-			mes "^4d4dffElven Ears^000000 &#1038;Awhile the cost for other materials is";
+			mes "^4d4dffElven Ears^000000 while the cost for other materials is";
 			mes "approximately ^4d4dff20000 zeny";
 			next;
 			mes "[Habir Moah]";

@@ -37,7 +37,7 @@ alde_alche,27,185,4	script	Parmry Gianino	744,{
 
 	mes "[Parmry Gianino]";
 	if(baseJob == Job_Merchant) goto L_Merc;
-	if(baseJob == Job_Alchem){
+	if(baseJob == Job_Alchemist){
 		mes "Hey there fellow Alchemist.  How's the business going?  Good I hope, well good luck to you.";
 		close;
 	}
@@ -1020,7 +1020,7 @@ L_Done:
 alde_alche,101,184,4	script	Vincent Carsciallo	122,{
 	mes "[Vincent Carsciallo]";
 	if(baseJob == Job_Merchant) goto L_Merc;
-	if(baseJob == Job_Alchem){
+	if(baseJob == Job_Alchemist){
 		mes "How Alchemy going? Make sure to be carefull and think about safety at all times.";
 		mes "I wouldn't want you blowing yourself up or anything.....";
 		close;
@@ -1059,7 +1059,7 @@ L_Change:
 	mes "Oh, Ok. You joined and learned the basics, too. Well done.";
 	next;
 	set @gift,JBLVL;
-	callfunc "Job_Change",Job_Alchem;
+	callfunc "Job_Change",Job_Alchemist;
 	callfunc "F_ClearJobVar";
 	emotion e_grat;
 	mes "[Vincent Carsciallo]";

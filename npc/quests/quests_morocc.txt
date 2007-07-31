@@ -919,7 +919,7 @@ alberta,129,59,3	script	Guildsman	49,3,3,{
 			getitem 7416,1;
 			close;
 		}
-		else if((Class == Job_Alchem) || (Class == Job_Creator))
+		else if((Class == Job_Alchemist) || (Class == Job_Creator))
 		{
 			mes "[Guildsman]";
 			mes "Hey, " + strcharinfo(0) + "?";
@@ -1015,7 +1015,7 @@ alberta,129,59,3	script	Guildsman	49,3,3,{
 			mes "inside Morroc. Good luck~";
 			close;
 		}
-		else if((Class == Job_Alchem) || (Class == Job_Creator))
+		else if((Class == Job_Alchemist) || (Class == Job_Creator))
 		{
 			mes "[Guildsman]";
 			mes "Ah, I almost forgot to";
@@ -1067,7 +1067,7 @@ alberta,129,59,3	script	Guildsman	49,3,3,{
 			mes "influences behind all of this... ";
 			close;
 		}
-		else if((Class == Job_Alchem) || (Class == Job_Creator))
+		else if((Class == Job_Alchemist) || (Class == Job_Creator))
 		{
 			mes "[Guildsman]";
 			mes "I'm glad to hear that";
@@ -1110,7 +1110,7 @@ alberta,129,59,3	script	Guildsman	49,3,3,{
 			mes "may happen soon, you know?";
 			close;
 		}
-		else if((Class == Job_Alchem) || (Class == Job_Creator))
+		else if((Class == Job_Alchemist) || (Class == Job_Creator))
 		{
 			mes "[Guildsman]";
 			mes "Ah, it's a nice day...";
@@ -1259,7 +1259,7 @@ OnTouch:
 				getitem 7416,1;
 				close;
 			}
-			else if((Class == Job_Alchem) || (Class == Job_Creator))
+			else if((Class == Job_Alchemist) || (Class == Job_Creator))
 			{
 				mes "[Guildsman]";
 				mes "Hey, " + strcharinfo(0) + "?";

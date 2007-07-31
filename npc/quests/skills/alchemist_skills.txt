@@ -31,8 +31,8 @@
 // ALCHEMIST - ELEMENTAL POTION CREATION
 //============================================================
 yuno_in04,33,108,6	script	Pisruik Quv	883,{
-	if (Class == Job_Alchem || Class == Job_Creator) {
-		if (JobLevel < 40 && Class == Job_Alchem) {
+	if (Class == Job_Alchemist || Class == Job_Creator) {
+		if (JobLevel < 40 && Class == Job_Alchemist) {
 			mes "[Pisruik]";
 			mes "Achoo!";
 			mes "Sigh";
@@ -964,7 +964,7 @@ lhz_in01,224,140,8	script	Kellasus	57,{
 		mes "[Kellasus]";
 		mes "I already taught you";
 		mes "skills of the homunculus...";
-		if(getskilllv(238) == 0 && BaseJob == Job_Alchem) skill 238,1,0;
+		if(getskilllv(238) == 0 && BaseJob == Job_Alchemist) skill 238,1,0;
 		close;
 	}
 	switch(bioeth){
@@ -1061,7 +1061,7 @@ lhz_in01,224,140,8	script	Kellasus	57,{
 		mes "He wants me to get back? Okay, well...";
 		mes "I guess you've deserved it.";
 		mes "Here you are, secrets of homunculus are yours now~";
-		if(BaseJob == Job_Alchem) skill 238,1,0;
+		if(BaseJob == Job_Alchemist) skill 238,1,0;
 		set MISC_QUEST,MISC_QUEST|64;
 		set bioeth,0;
 		close;
@@ -1105,7 +1105,7 @@ lhz_in01,224,140,8	script	Kellasus	57,{
 		mes "meant to be known and what";
 		mes "secrets were never intended";
 		mes "for mankind to understand?";
-		if(BaseJob == Job_Alchem) set @keltalk,1;
+		if(BaseJob == Job_Alchemist) set @keltalk,1;
 		close;
 		break;
 	}

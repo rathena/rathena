@@ -57,7 +57,7 @@ function	script	GF_getJobName	{
 		return "sage";
 	case Job_BlackSmith:
 		return "blacksmith";
-	case Job_Alchem:
+	case Job_Alchemist:
 		return "alchemist";
 	case Job_Knight:
 	case Job_Knight2:
@@ -305,7 +305,7 @@ function	script	GF_getJobClass	{
 
 	case Job_Merchant:
 	case Job_BlackSmith:
-	case Job_Alchem:
+	case Job_Alchemist:
 		return Job_Merchant;
 	
 	case Job_Swordman:
