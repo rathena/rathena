@@ -6302,7 +6302,7 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 	nullpo_retr(0, sd);
 
 //Simplify skill_failed code.
-#define skill_failed(sd) { sd->menuskill_id = sd->menuskill_lv = 0; }
+#define skill_failed(sd) { sd->menuskill_id = sd->menuskill_val = 0; }
 	if(skill_num != sd->menuskill_id) 
 		return 0;
 
@@ -6351,9 +6351,8 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 	case AL_TELEPORT:
 		if(strcmp(map,"Random")==0)
 			pc_randomwarp(sd,3);
-		else if (sd->menuskill_lv > 1) //Need lv2 to be able to warp here.
-			pc_setpos(sd,sd->status.save_point.map,
-				sd->status.save_point.x,sd->status.save_point.y,3);
+		else if (sd->menuskill_val > 1) //Need lv2 to be able to warp here.
+			pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
 		break;
 
 	case AL_WARP:
@@ -6388,8 +6387,8 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 		
 			//When it's an item-used warp-portal, the skill-lv used is lost.. assume max level.
 			lv = sd->skillitem==skill_num?skill_get_max(skill_num):pc_checkskill(sd,skill_num);
-			wx = sd->menuskill_lv>>16;
-			wy = sd->menuskill_lv&0xffff;
+			wx = sd->menuskill_val>>16;
+			wy = sd->menuskill_val&0xffff;
 			
 			if(lv <= 0) return 0;
 			for(i=0;i<lv;i++){
@@ -6426,7 +6425,7 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 		break;
 	}
 
-	sd->menuskill_id = sd->menuskill_lv = 0;
+	sd->menuskill_id = sd->menuskill_val = 0;
 	return 0;
 #undef skill_failed
 }
@@ -6991,8 +6990,7 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 	case UNT_SIEGFRIED:
 	case UNT_HERMODE:
 		 //Needed to check when a dancer/bard leaves their ensemble area.
-		if (sg->src_id==bl->id &&
-			!(sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_BARDDANCER))
+		if (sg->src_id==bl->id && !(sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_BARDDANCER))
 			return skillid;
 		if (sc && sc->data[type].timer==-1)
 			sc_start4(bl,type,100,sg->skill_lv,sg->val1,sg->val2,0,sg->limit);
@@ -7005,7 +7003,7 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 	case UNT_DONTFORGETME:
 	case UNT_FORTUNEKISS:
 	case UNT_SERVICEFORYOU:
-		if (sg->src_id==bl->id && (!sc || sc->data[SC_SPIRIT].timer == -1 || sc->data[SC_SPIRIT].val2 != SL_BARDDANCER))
+		if (sg->src_id==bl->id && !(sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_BARDDANCER))
 			return 0;
 		if (!sc) return 0;
 		if (sc->data[type].timer==-1)
@@ -7017,6 +7015,7 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 			sc->data[type].timer = add_timer(tick+sg->limit, status_change_timer, bl->id, type);
 		}
 		break;
+	
 	case UNT_FOGWALL:
 		if (sc && sc->data[type].timer==-1)
 		{
@@ -7036,6 +7035,7 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 		if(src->limit + sg->tick > tick + 700)
 			src->limit = DIFF_TICK(tick+700,sg->tick);
 		break;
+	
 	case UNT_MOONLIT:
 	//Knockback out of area if affected char isn't in Moonlit effect
 		if (sc && sc->data[SC_DANCING].timer!=-1 && (sc->data[SC_DANCING].val1&0xFFFF) == CG_MOONLIT)
@@ -8907,7 +8907,7 @@ void skill_repairweapon (struct map_session_data *sd, int idx)
 	struct map_session_data *target_sd;
 
 	nullpo_retv(sd);
-	target_sd = map_id2sd(sd->menuskill_lv);
+	target_sd = map_id2sd(sd->menuskill_val);
 	if (!target_sd) //Failed....
 		return;
 	if(idx==0xFFFF) // No item selected ('Cancel' clicked)
@@ -8970,15 +8970,18 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 
 	nullpo_retv(sd);
 
-	if (idx >= 0 && idx < MAX_INVENTORY) {
+	if (idx >= 0 && idx < MAX_INVENTORY)
+	{
 		struct item_data *ditem = sd->inventory_data[idx];
 		item = &sd->status.inventory[idx];
 
-		if(item->nameid > 0 && ditem->type == 4) {
-			if (item->refine >= sd->menuskill_lv ||
-				item->refine >= MAX_REFINE ||		// if it's no longer refineable
-				ditem->flag.no_refine ||	// if the item isn't refinable
-				(i = pc_search_inventory(sd, material [ditem->wlv])) < 0 ) { //fixed by Lupus (item pos can be = 0!)
+		if(item->nameid > 0 && ditem->type == 4)
+		{
+			if( item->refine >= sd->menuskill_val
+			||  item->refine >= MAX_REFINE		// if it's no longer refineable
+			||  ditem->flag.no_refine 	// if the item isn't refinable
+			||  (i = pc_search_inventory(sd, material [ditem->wlv])) < 0 )
+			{
 				clif_skill_fail(sd,sd->menuskill_id,0,0);
 				return;
 			}
@@ -9038,7 +9041,7 @@ int skill_autospell (struct map_session_data *sd, int skillid)
 
 	nullpo_retr(0, sd);
 
-	skilllv = sd->menuskill_lv;
+	skilllv = sd->menuskill_val;
 	lv=pc_checkskill(sd,skillid);
 
 	if(skilllv <= 0 || !lv) return 0; // Player must learn the skill before doing auto-spell [Lance]
@@ -10009,13 +10012,12 @@ int skill_unit_timer_sub (struct block_list *bl, va_list ap)
 	nullpo_retr(0, group);
 
 	flag = skill_dance_switch(unit, group, 0);
-	if (unit->range>=0 && group->interval!=-1) {
+	if (unit->range>=0 && group->interval!=-1)
+	{
 		if (battle_config.skill_wall_check)
-			map_foreachinshootrange(skill_unit_timer_sub_onplace, bl, unit->range,
-				group->bl_flag,bl,tick);
+			map_foreachinshootrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl,tick);
 		else
-			map_foreachinrange(skill_unit_timer_sub_onplace, bl, unit->range,
-				group->bl_flag,bl,tick);
+			map_foreachinrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl,tick);
 		if (!unit->alive)
 		{
 			if (flag)
@@ -10026,7 +10028,8 @@ int skill_unit_timer_sub (struct block_list *bl, va_list ap)
   	if (flag)
 		skill_dance_switch(unit, group, 1);
 
-	if((DIFF_TICK(tick,group->tick)>=group->limit || DIFF_TICK(tick,group->tick)>=unit->limit)){
+	if((DIFF_TICK(tick,group->tick)>=group->limit || DIFF_TICK(tick,group->tick)>=unit->limit))
+	{
 		switch(group->unit_id){
 			case UNT_BLASTMINE:
 			case UNT_GROUNDDRIFT_WIND:
@@ -10048,29 +10051,31 @@ int skill_unit_timer_sub (struct block_list *bl, va_list ap)
 			case UNT_FREEZINGTRAP:
 			case UNT_CLAYMORETRAP:
 			case UNT_TALKIEBOX:
-				{
-					struct block_list *src=map_id2bl(group->src_id);
-					if(src && src->type==BL_PC && !group->state.into_abyss)
-					{	//Avoid generating trap items when it did not cost to create them. [Skotlex]
-						struct item item_tmp;
-						memset(&item_tmp,0,sizeof(item_tmp));
-						item_tmp.nameid=1065;
-						item_tmp.identify=1;
-						map_addflooritem(&item_tmp,1,bl->m,bl->x,bl->y,NULL,NULL,NULL,0);
-					}
-					skill_delunit(unit, 0);
+			{
+				struct block_list *src=map_id2bl(group->src_id);
+				if(src && src->type==BL_PC && !group->state.into_abyss)
+				{	//Avoid generating trap items when it did not cost to create them. [Skotlex]
+					struct item item_tmp;
+					memset(&item_tmp,0,sizeof(item_tmp));
+					item_tmp.nameid=1065;
+					item_tmp.identify=1;
+					map_addflooritem(&item_tmp,1,bl->m,bl->x,bl->y,NULL,NULL,NULL,0);
 				}
+				skill_delunit(unit, 0);
 				break;
+			}
 			default:
 				skill_delunit(unit, 0);
 		}
 	}
 
-	if(group->unit_id == UNT_ICEWALL) {
+	if(group->unit_id == UNT_ICEWALL)
+	{
 		unit->val1 -= 5;
 		if(unit->val1 <= 0 && unit->limit + group->tick > tick + 700)
 			unit->limit = DIFF_TICK(tick+700,group->tick);
-	} else
+	}
+	else
 	if (group->unit_id == UNT_TATAMIGAESHI && unit->range>=0)
 	{	//Disable processed cell.
 		unit->range = -1;
@@ -10227,8 +10232,7 @@ int skill_unit_move (struct block_list *bl, unsigned int tick, int flag)
 	if (flag&2 && flag&1)
 	{ //Onplace, check any skill units you have left.
 		int i;
-		for (i=0; i < (sizeof(skill_unit_temp)/sizeof(int)) &&
-			skill_unit_temp[i]; i++)
+		for (i=0; i < (sizeof(skill_unit_temp)/sizeof(int)) && skill_unit_temp[i]; i++)
 			skill_unit_onleft(skill_unit_temp[i], bl, tick);
 	}
 
@@ -10543,12 +10547,12 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 				break;
 			default:
 				if (sd->menuskill_id ==	AM_PHARMACY &&
-					sd->menuskill_lv > 10 && sd->menuskill_lv <= 20)
+					sd->menuskill_val > 10 && sd->menuskill_val <= 20)
 				{	//Assume Cooking Dish
-					if (sd->menuskill_lv >= 15) //Legendary Cooking Set.
+					if (sd->menuskill_val >= 15) //Legendary Cooking Set.
 						make_per = 10000; //100% Success
 					else
-						make_per = 1200*(sd->menuskill_lv-10) //12% chance per set level.
+						make_per = 1200*(sd->menuskill_val-10) //12% chance per set level.
 							+ 7000 - 700*(skill_produce_db[idx].itemlv-10); //70% - 7% per dish level
 					break;
 				}

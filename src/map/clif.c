@@ -2959,7 +2959,7 @@ int clif_arrow_create_list(struct map_session_data *sd)
 	WFIFOSET(fd, WFIFOW(fd,2));
 	if (c > 0) {
 		sd->menuskill_id = AC_MAKINGARROW;
-		sd->menuskill_lv = c;
+		sd->menuskill_val = c;
 	}
 
 	return 0;
@@ -4676,9 +4676,9 @@ int clif_skill_warppoint(struct map_session_data* sd, int skill_num, int skill_l
 
 	sd->menuskill_id = skill_num;
 	if (skill_num == AL_WARP)
-		sd->menuskill_lv = (sd->ud.skillx<<16)|sd->ud.skilly; //Store warp position here.
+		sd->menuskill_val = (sd->ud.skillx<<16)|sd->ud.skilly; //Store warp position here.
 	else
-		sd->menuskill_lv = skill_lv;
+		sd->menuskill_val = skill_lv;
 	return 0;
 }
 /*==========================================
@@ -4778,7 +4778,7 @@ int clif_skill_produce_mix_list(struct map_session_data *sd, int trigger)
 	WFIFOSET(fd,WFIFOW(fd,2));
 	if(c > 0) {
 		sd->menuskill_id = AM_PHARMACY;
-		sd->menuskill_lv = trigger;
+		sd->menuskill_val = trigger;
 		return 1;
 	}
 	return 0;
@@ -5229,7 +5229,7 @@ int clif_item_identify_list(struct map_session_data *sd)
 		WFIFOW(fd,2)=c*2+4;
 		WFIFOSET(fd,WFIFOW(fd,2));
 		sd->menuskill_id = MC_IDENTIFY;
-		sd->menuskill_lv = c;
+		sd->menuskill_val = c;
 	}
 	return 0;
 }
@@ -5282,7 +5282,7 @@ int clif_item_repair_list(struct map_session_data *sd,struct map_session_data *d
 		WFIFOW(fd,2)=c*13+4;
 		WFIFOSET(fd,WFIFOW(fd,2));
 		sd->menuskill_id = BS_REPAIRWEAPON;
-		sd->menuskill_lv = dstsd->bl.id;
+		sd->menuskill_val = dstsd->bl.id;
 	}else
 		clif_skill_fail(sd,sd->ud.skillid,0,0);
 
@@ -5347,7 +5347,7 @@ int clif_item_refine_list(struct map_session_data *sd)
 	WFIFOSET(fd,WFIFOW(fd,2));
 	if (c > 0) {
 		sd->menuskill_id = WS_WEAPONREFINE;
-		sd->menuskill_lv = skilllv;
+		sd->menuskill_val = skilllv;
 	}
 	return 0;
 }
@@ -6086,7 +6086,7 @@ int clif_sendegg(struct map_session_data *sd)
 	WFIFOSET(fd,WFIFOW(fd,2));
 
 	sd->menuskill_id = SA_TAMINGMONSTER;
-	sd->menuskill_lv = -1;
+	sd->menuskill_val = -1;
 	return 0;
 }
 
@@ -6243,7 +6243,7 @@ int clif_autospell(struct map_session_data *sd,int skilllv)
 
 	WFIFOSET(fd,packet_len(0x1cd));
 	sd->menuskill_id = SA_AUTOSPELL;
-	sd->menuskill_lv = skilllv;
+	sd->menuskill_val = skilllv;
 	
 	return 0;
 }
@@ -9508,7 +9508,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	if(sd->menuskill_id)
 	{
 		if (sd->menuskill_id == SA_TAMINGMONSTER)
-			sd->menuskill_id = sd->menuskill_lv = 0; //Cancel pet capture.
+			sd->menuskill_id = sd->menuskill_val = 0; //Cancel pet capture.
 		else
 		if (sd->menuskill_id != SA_AUTOSPELL)
 			return; //Can't use skills while a menu is open.
@@ -9611,7 +9611,7 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, int skilll
 	if(sd->menuskill_id)
 	{
 		if (sd->menuskill_id == SA_TAMINGMONSTER)
-			sd->menuskill_id = sd->menuskill_lv = 0; //Cancel pet capture.
+			sd->menuskill_id = sd->menuskill_val = 0; //Cancel pet capture.
 		else
 		if (sd->menuskill_id != SA_AUTOSPELL)
 			return; //Can't use skills while a menu is open.
@@ -9678,7 +9678,7 @@ void clif_parse_UseSkillMap(int fd,struct map_session_data *sd)
 
 	if (clif_cant_act(sd))
 	{
-		sd->menuskill_id = sd->menuskill_lv = 0;
+		sd->menuskill_id = sd->menuskill_val = 0;
 		return;
 	}
 
@@ -9704,11 +9704,11 @@ void clif_parse_ProduceMix(int fd,struct map_session_data *sd)
 	if (clif_trading(sd)) {
 		//Make it fail to avoid shop exploits where you sell something different than you see.
 		clif_skill_fail(sd,sd->ud.skillid,0,0);
-		sd->menuskill_lv = sd->menuskill_id = 0;
+		sd->menuskill_val = sd->menuskill_id = 0;
 		return;
 	}
 	skill_produce_mix(sd,0,RFIFOW(fd,2),RFIFOW(fd,4),RFIFOW(fd,6),RFIFOW(fd,8), 1);
-	sd->menuskill_lv = sd->menuskill_id = 0;
+	sd->menuskill_val = sd->menuskill_id = 0;
 }
 /*==========================================
  * 武器修理
@@ -9720,11 +9720,11 @@ void clif_parse_RepairItem(int fd, struct map_session_data *sd)
 	if (clif_trading(sd)) {
 		//Make it fail to avoid shop exploits where you sell something different than you see.
 		clif_skill_fail(sd,sd->ud.skillid,0,0);
-		sd->menuskill_lv = sd->menuskill_id = 0;
+		sd->menuskill_val = sd->menuskill_id = 0;
 		return;
 	}
 	skill_repairweapon(sd,RFIFOW(fd,2));
-	sd->menuskill_lv = sd->menuskill_id = 0;
+	sd->menuskill_val = sd->menuskill_id = 0;
 }
 
 /*==========================================
@@ -9739,12 +9739,12 @@ void clif_parse_WeaponRefine(int fd, struct map_session_data *sd)
 	if (clif_trading(sd)) {
 		//Make it fail to avoid shop exploits where you sell something different than you see.
 		clif_skill_fail(sd,sd->ud.skillid,0,0);
-		sd->menuskill_lv = sd->menuskill_id = 0;
+		sd->menuskill_val = sd->menuskill_id = 0;
 		return;
 	}
 	idx = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 	skill_weaponrefine(sd, idx-2);
-	sd->menuskill_lv = sd->menuskill_id = 0;
+	sd->menuskill_val = sd->menuskill_id = 0;
 }
 
 /*==========================================
@@ -9821,7 +9821,7 @@ void clif_parse_ItemIdentify(int fd,struct map_session_data *sd)
 	if (sd->menuskill_id != MC_IDENTIFY)
 		return;
 	skill_identify(sd,RFIFOW(fd,2)-2);
-	sd->menuskill_lv = sd->menuskill_id = 0;
+	sd->menuskill_val = sd->menuskill_id = 0;
 }
 /*==========================================
  * 矢作成
@@ -9833,11 +9833,11 @@ void clif_parse_SelectArrow(int fd,struct map_session_data *sd)
 	if (clif_trading(sd)) {
 	//Make it fail to avoid shop exploits where you sell something different than you see.
 		clif_skill_fail(sd,sd->ud.skillid,0,0);
-		sd->menuskill_lv = sd->menuskill_id = 0;
+		sd->menuskill_val = sd->menuskill_id = 0;
 		return;
 	}
 	skill_arrow_create(sd,RFIFOW(fd,2));
-	sd->menuskill_lv = sd->menuskill_id = 0;
+	sd->menuskill_val = sd->menuskill_id = 0;
 }
 /*==========================================
  * オートスペル受信
@@ -9847,7 +9847,7 @@ void clif_parse_AutoSpell(int fd,struct map_session_data *sd)
 	if (sd->menuskill_id != SA_AUTOSPELL)
 		return;
 	skill_autospell(sd,RFIFOW(fd,2));
-	sd->menuskill_lv = sd->menuskill_id = 0;
+	sd->menuskill_val = sd->menuskill_id = 0;
 }
 /*==========================================
  * カード使用
@@ -10520,10 +10520,10 @@ void clif_parse_CatchPet(int fd, struct map_session_data *sd)
 
 void clif_parse_SelectEgg(int fd, struct map_session_data *sd)
 {
-	if (sd->menuskill_id != SA_TAMINGMONSTER || sd->menuskill_lv != -1)
+	if (sd->menuskill_id != SA_TAMINGMONSTER || sd->menuskill_val != -1)
 		return;
 	pet_select_egg(sd,RFIFOW(fd,2)-2);
-	sd->menuskill_lv = sd->menuskill_id = 0;
+	sd->menuskill_val = sd->menuskill_id = 0;
 }
 
 void clif_parse_SendEmotion(int fd, struct map_session_data *sd)
@@ -11346,7 +11346,7 @@ void clif_parse_FeelSaveOk(int fd,struct map_session_data *sd)
 	int i;
 	if (sd->menuskill_id != SG_FEEL)
 		return;
-	i = sd->menuskill_lv-1;
+	i = sd->menuskill_val-1;
 	if (i<0 || i > 2) return; //Bug?
 
 	sd->feel_map[i].index = map[sd->bl.m].index;
@@ -11357,7 +11357,7 @@ void clif_parse_FeelSaveOk(int fd,struct map_session_data *sd)
 //	clif_misceffect2(&sd->bl, 0x1b0);
 //	clif_misceffect2(&sd->bl, 0x21f);
 	clif_feel_info(sd, i, 0);
-	sd->menuskill_lv = sd->menuskill_id = 0;
+	sd->menuskill_val = sd->menuskill_id = 0;
 }
 
 /*==========================================
@@ -11368,8 +11368,8 @@ void clif_parse_ReqFeel(int fd, struct map_session_data *sd, int skilllv)
 	WFIFOHEAD(fd,packet_len(0x253));
 	WFIFOW(fd,0)=0x253;
 	WFIFOSET(fd, packet_len(0x253));
-	sd->menuskill_id=SG_FEEL;
-	sd->menuskill_lv=skilllv;
+	sd->menuskill_id = SG_FEEL;
+	sd->menuskill_val = skilllv;
 }
 
 void clif_parse_AdoptRequest(int fd,struct map_session_data *sd)

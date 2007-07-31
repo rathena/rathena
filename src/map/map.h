@@ -626,7 +626,7 @@ struct map_session_data {
 	short skillid_dance,skilllv_dance;
 	char blockskill[MAX_SKILL];	// [celest]
 	int cloneskill_id;
-	int menuskill_id, menuskill_lv;
+	int menuskill_id, menuskill_val;
 
 	int invincible_timer;
 	unsigned int canlog_tick;
