@@ -2131,7 +2131,7 @@
 7161,Black_Bear's_Skin,Black Bear Skin,3,,192,10,,,,,,,,,,,,,{},{},{}
 7162,Cloud_Piece,Cloud Crumb,3,,195,10,,,,,,,,,,,,,{},{},{}
 7163,Sharp_Feeler,Hard Feeler,3,,285,10,,,,,,,,,,,,,{},{},{}
-7164,Hard_Peach,Solid_Peach,3,,200,10,,,,,,,,,,,,,{},{},{}
+7164,Hard_Peach,Solid Peach,3,,200,10,,,,,,,,,,,,,{},{},{}
 7165,Limpid_Celestial_Robe,Transparent Celestial Robe,3,,325,10,,,,,,,,,,,,,{},{},{}
 7166,Soft_Silk_Cloth,Soft Silk,3,,600,10,,,,,,,,,,,,,{},{},{}
 7167,Mystery_Iron_Bit,Strange Steel Piece,3,,215,10,,,,,,,,,,,,,{},{},{}

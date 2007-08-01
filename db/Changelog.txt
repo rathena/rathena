@@ -48,6 +48,11 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+08/01
+	* Added some of the new arrow craftings for testing purposes [Playtester]
+	- some item names are still unknown, help needed
+	- fixed an item name
+	- more to come
 07/30
 	* Rev. 10932 Added several localized quest items to item_trade. [L0ne_W0lf]
 	- Added some Rachel quest items as well as cash shop specific items to item_trade

@@ -193,3 +193,53 @@
 7035,1752,3000
 // Fang of Garm --> 300 Crystal Arrows
 7036,1754,300
+
+//New Ingredients
+
+//Ice Cubic --> 100 Crystal Arrows
+7066,1754,100
+//Stone Fragment --> 150 Stone Arrows
+7067,1756,150
+//Burnt Tree --> 250 Fire Arrows
+7068,1752,250
+//Destroyed Armor --> 150 Steel Arrows
+7069,1753,150
+//Burning Heart --> 150 Fire Arrows
+7097,1752,150
+//Sharp Leaf --> 30 Sharp Arrows
+7100,1764,30
+//Piece of Shield --> 100 Steel Arrows, 100 Oridecon Arrows, 300 Immaterial Arrows
+7108,1753,100,1765,100,1757,300
+//Shining Spear Blade --> 100 Oridecon Arrows
+7109,1765,100
+//Burning Horseshoe --> 100 Steel Arrows
+7120,1753,100
+//Piece of Bamboo --> 100 Arrows
+7150,1750,100
+//Poisonous Toad Skin --> 20 Poison Arrows
+7155,1763,20
+//Hard Feeler --> 20 Sharp Arrows
+7163,1764,20
+//Solid Peach --> 30 Stun Arrows
+7164,1758,30
+//Leopard Claw --> 10 Sharp Arrows
+7172,1764,10
+//Armor Piece of Dullahan --> 150 Arrows of Shadow
+7210,1767,150
+//Cat's Eye Stone --> 200 Arrows of Wind
+7263,1755,200
+//Dark Crystal Fragment --> 30 Cursed Arrows, 50 Arrows of Shadow
+7315,1761,30,1767,50
+//Battered Kettle --> 50 Steel Arrows
+7323,1753,50
+//Golden Ornament --> 200 Silver Arrows, 300 Holy Arrows
+7435,1751,200,1772,300
+//Rune of Darkness -> 300 Arrows of Shadow, 150 Flash Arrows
+7511,1767,300,1760,150
+
+//Unknown
+//Piece of Fire -> Fire Arrow 100 EA
+//Cursed One -> CUrsed Arrow 50, Silence Arrow 50 EA
+//Piece of Rock Crystal -> Flash Arrow 10, Sleep Arrow 30 EA
+//Will of the Darkness (1) -> Cursed Arrow 30, Poison Arrow 30, Shadow Arrow 50 EA
+//Will of the Darkness (2) -> Cursed Arrow 200, Poison Arrow 200, Shadow Arrow 100 EA
