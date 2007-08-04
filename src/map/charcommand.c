@@ -2381,7 +2381,7 @@ int charcommand_refine(const int fd, struct map_session_data* sd, const char* co
 	char output[200];
 	struct map_session_data *pl_sd;
 
-	if (!message || !*message || sscanf(message, "%d %d %s", &position, &refine, character) < 3) {
+	if (!message || !*message || sscanf(message, "%d %d %23[^\n]", &position, &refine, character) < 3) {
 		clif_displaymessage(fd, "Please, enter a position and a amount (usage: #refine <equip position> <+/- amount> <player>).");
 		sprintf(output, "%d: Left Accessory", EQI_ACC_L);
 		clif_displaymessage(fd, output);

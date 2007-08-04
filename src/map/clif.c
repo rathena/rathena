@@ -90,7 +90,7 @@ struct packet_db_t packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB + 1];
 #define clif_trading(sd) (sd->npc_id || sd->vender_id || sd->state.trading )
 
 //To idenfity disguised characters.
-#define disguised(bl) (bl->type==BL_PC && ((TBL_PC*)bl)->disguise)
+#define disguised(bl) ((bl)->type==BL_PC && ((TBL_PC*)bl)->disguise)
 
 //Guarantees that the given string does not exceeds the allowed size, as well as making sure it's null terminated. [Skotlex\]
 #define mes_len_check(mes, len, max) if (len > max) { mes[max-1] = '\0'; len = max; } else mes[len-1] = '\0';
@@ -7220,9 +7220,9 @@ void clif_parse_ReqMarriage(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * inform target(s) that `sd` is sitting
+ * inform clients in area that `sd` is sitting
  *------------------------------------------*/
-void clif_sitting(struct map_session_data* sd, enum send_target target)
+void clif_sitting(struct map_session_data* sd)
 {
 	unsigned char buf[32];
 
@@ -7231,13 +7231,18 @@ void clif_sitting(struct map_session_data* sd, enum send_target target)
 	WBUFW(buf, 0) = 0x8a;
 	WBUFL(buf, 2) = sd->bl.id;
 	WBUFB(buf,26) = 2;
-	clif_send(buf, packet_len(0x8a), &sd->bl, target);
+	clif_send(buf, packet_len(0x8a), &sd->bl, AREA);
+
+	if(disguised(&sd->bl)) {
+		WBUFL(buf, 2) = -sd->bl.id;
+		clif_send(buf, packet_len(0x8a), &sd->bl, SELF);
+	}
 }
 
 /*==========================================
- * inform target(s) that `sd` is standing
+ * inform clients in area that `sd` is standing
  *------------------------------------------*/
-void clif_standing(struct map_session_data* sd, enum send_target target)
+void clif_standing(struct map_session_data* sd)
 {
 	unsigned char buf[32];
 
@@ -7246,7 +7251,12 @@ void clif_standing(struct map_session_data* sd, enum send_target target)
 	WBUFW(buf, 0) = 0x8a;
 	WBUFL(buf, 2) = sd->bl.id;
 	WBUFB(buf,26) = 3;
-	clif_send(buf, packet_len(0x8a), &sd->bl, target);
+	clif_send(buf, packet_len(0x8a), &sd->bl, AREA);
+
+	if(disguised(&sd->bl)) {
+		WBUFL(buf, 2) = -sd->bl.id;
+		clif_send(buf, packet_len(0x8a), &sd->bl, SELF);
+	}
 }
 
 /*==========================================
@@ -8679,9 +8689,10 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			clif_skill_fail(sd, 1, 0, 2);
 			break;
 		}
+
 		if(pc_issit(sd)) {
 			//Bugged client? Just refresh them.
-			clif_sitting(sd, SELF);
+			clif_sitting(sd);
 			return;
 		}
 
@@ -8694,18 +8705,18 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		)) //No sitting during these states neither.
 		break;
 		pc_setsit(sd);
-		skill_sit(sd, 1);
-		clif_sitting(sd, AREA);
+		skill_sit(sd,1);
+		clif_sitting(sd);
 	break;
 	case 0x03: // standup
 		if (!pc_issit(sd)) {
 			//Bugged client? Just refresh them.
-			clif_standing(sd, SELF);
+			clif_standing(sd);
 			return;
 		}
 		pc_setstand(sd);
-		skill_sit(sd, 0); 
-		clif_standing(sd, AREA);
+		skill_sit(sd,0); 
+		clif_standing(sd);
 	break;
 	}
 }
@@ -11389,7 +11400,6 @@ void clif_parse_AdoptRequest(int fd,struct map_session_data *sd)
 		WFIFOSET(fd, packet_len(0x1f9));
 	}
 }
-
 
 /*==========================================
  * Homunculus packets

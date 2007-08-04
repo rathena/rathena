@@ -132,8 +132,8 @@ int clif_fame_blacksmith(struct map_session_data *, int);
 int clif_fame_alchemist(struct map_session_data *, int);
 int clif_fame_taekwon(struct map_session_data *, int);
 
-void clif_sitting(struct map_session_data* sd, enum send_target target);
-void clif_standing(struct map_session_data* sd, enum send_target target);
+void clif_sitting(struct map_session_data* sd);
+void clif_standing(struct map_session_data* sd);
 void clif_emotion(struct block_list *bl,int type);
 void clif_talkiebox(struct block_list* bl, const char* talkie);
 void clif_wedding_effect(struct block_list *bl);

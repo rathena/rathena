@@ -2099,9 +2099,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				intif_GMmessage(message,strlen(message)+1,0);
 			}
 
-			if((temp = mvp_sd->weight*2 > mvp_sd->max_weight))
-				map_addflooritem(&item,1,mvp_sd->bl.m,mvp_sd->bl.x,mvp_sd->bl.y,mvp_sd,second_sd,third_sd,1);
-			else if((temp = pc_additem(mvp_sd,&item,1))) {
+			if((temp = pc_additem(mvp_sd,&item,1)) != 0) {
 				clif_additem(sd,0,0,temp);
 				map_addflooritem(&item,1,mvp_sd->bl.m,mvp_sd->bl.x,mvp_sd->bl.y,mvp_sd,second_sd,third_sd,1);
 			}

@@ -1373,7 +1373,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	}
 
 	if(sd && attack_type&BF_WEAPON &&
-		skillid != MC_CARTREVOLUTION &&
+		skillid != WS_CARTTERMINATION &&
 		skillid != AM_DEMONSTRATION &&
 		skillid != CR_REFLECTSHIELD
 	){	//Trigger status effects

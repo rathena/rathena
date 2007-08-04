@@ -5324,7 +5324,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_TENSIONRELAX:
 			if (sd) {
 				pc_setsit(sd);
-				clif_sitting(sd, AREA);
+				clif_sitting(sd);
 			}
 			val2 = 12; //SP cost
 			val4 = 10000; //Decrease at 10secs intervals.
