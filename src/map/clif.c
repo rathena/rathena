@@ -1,9 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#define DUMP_UNKNOWN_PACKET	0
-#define DUMP_ALL_PACKETS	0
-
 #include "../common/cbasetypes.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
@@ -44,6 +41,8 @@
 #include <string.h>
 #include <stdarg.h>
 #include <time.h>
+
+#define DUMP_UNKNOWN_PACKET	0
 
 struct Clif_Config {
 	int packet_db_ver;	//Preferred packet version.
@@ -3805,9 +3804,20 @@ static int clif_calc_walkdelay(struct block_list *bl,int delay, int type, int da
 }
 
 /*==========================================
- * 通常攻撃エフェクト＆ダメージ
+ * Sends a 'damage' packet (src performs action on dst)
+ * R 008a <src ID>.l <dst ID>.l <server tick>.l <src speed>.l <dst speed>.l <param1>.w <param2>.w <type>.B <param3>.w
+ *
+ * type=00 damage [param1: total damage, param2: div, param3: assassin dual-wield damage]
+ * type=01 pick up item
+ * type=02 sit down
+ * type=03 stand up
+ * type=04 reflected/absorbed damage?
+ * type=08 double attack
+ * type=09 don't display flinch animation (endure)
+ * type=0a critical hit
+ * type=0b lucky dodge
  *------------------------------------------*/
-int clif_damage(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,int type,int damage2)
+int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int damage, int div, int type, int damage2)
 {
 	unsigned char buf[256];
 	struct status_change *sc;
@@ -3818,13 +3828,10 @@ int clif_damage(struct block_list *src,struct block_list *dst,unsigned int tick,
 	type = clif_calc_delay(type, ddelay); //Type defaults to 0 for normal attacks.
 
 	sc = status_get_sc(dst);
-
 	if(sc && sc->count) {
 		if(sc->data[SC_HALLUCINATION].timer != -1) {
-			if(damage > 0)
-				damage = damage*(5+sc->data[SC_HALLUCINATION].val1) + rand()%100;
-			if(damage2 > 0)
-				damage2 = damage2*(5+sc->data[SC_HALLUCINATION].val1) + rand()%100;
+			if(damage > 0) damage = damage*(5+sc->data[SC_HALLUCINATION].val1) + rand()%100;
+			if(damage2 > 0) damage2 = damage2*(5+sc->data[SC_HALLUCINATION].val1) + rand()%100;
 		}
 	}
 
@@ -3846,27 +3853,81 @@ int clif_damage(struct block_list *src,struct block_list *dst,unsigned int tick,
 	clif_send(buf,packet_len(0x8a),src,AREA);
 
 	if(disguised(src)) {
-		WBUFL(buf,2)=-src->id;
-		if(damage > 0)
-			WBUFW(buf,22)=-1;
-		if(damage2 > 0)
-			WBUFW(buf,27)=-1;
+		WBUFL(buf,2) = -src->id;
+		if(damage > 0) WBUFW(buf,22) = -1;
+		if(damage2 > 0) WBUFW(buf,27) = -1;
 		clif_send(buf,packet_len(0x8a),src,SELF);
 	}
 	if (disguised(dst)) {
-		WBUFL(buf,6)=-dst->id;
-		if (disguised(src))
-			WBUFL(buf,2)=src->id;
+		WBUFL(buf,6) = -dst->id;
+		if (disguised(src)) WBUFL(buf,2) = src->id;
 		else {
-			if(damage > 0)
-				WBUFW(buf,22)=-1;
-			if(damage2 > 0)
-				WBUFW(buf,27)=-1;
+			if(damage > 0) WBUFW(buf,22) = -1;
+			if(damage2 > 0) WBUFW(buf,27) = -1;
 		}
 		clif_send(buf,packet_len(0x8a),dst,SELF);
 	}
 	//Return adjusted can't walk delay for further processing.
 	return clif_calc_walkdelay(dst,ddelay,type,damage+damage2,div);
+}
+
+/*==========================================
+ * src picks up dst
+ *------------------------------------------*/
+void clif_takeitem(struct block_list* src, struct block_list* dst)
+{
+	//clif_damage(src,dst,0,0,0,0,0,1,0);
+	unsigned char buf[32];
+
+	nullpo_retv(src);
+	nullpo_retv(dst);
+
+	WBUFW(buf, 0) = 0x8a;
+	WBUFL(buf, 2) = src->id;
+	WBUFL(buf, 6) = dst->id;
+	WBUFB(buf,26) = 1;
+	clif_send(buf, packet_len(0x8a), src, AREA);
+
+}
+
+/*==========================================
+ * inform clients in area that `sd` is sitting
+ *------------------------------------------*/
+void clif_sitting(struct map_session_data* sd)
+{
+	unsigned char buf[32];
+
+	nullpo_retv(sd);
+
+	WBUFW(buf, 0) = 0x8a;
+	WBUFL(buf, 2) = sd->bl.id;
+	WBUFB(buf,26) = 2;
+	clif_send(buf, packet_len(0x8a), &sd->bl, AREA);
+
+	if(disguised(&sd->bl)) {
+		WBUFL(buf, 2) = -sd->bl.id;
+		clif_send(buf, packet_len(0x8a), &sd->bl, SELF);
+	}
+}
+
+/*==========================================
+ * inform clients in area that `sd` is standing
+ *------------------------------------------*/
+void clif_standing(struct map_session_data* sd)
+{
+	unsigned char buf[32];
+
+	nullpo_retv(sd);
+
+	WBUFW(buf, 0) = 0x8a;
+	WBUFL(buf, 2) = sd->bl.id;
+	WBUFB(buf,26) = 3;
+	clif_send(buf, packet_len(0x8a), &sd->bl, AREA);
+
+	if(disguised(&sd->bl)) {
+		WBUFL(buf, 2) = -sd->bl.id;
+		clif_send(buf, packet_len(0x8a), &sd->bl, SELF);
+	}
 }
 
 /*==========================================
@@ -7220,46 +7281,6 @@ void clif_parse_ReqMarriage(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * inform clients in area that `sd` is sitting
- *------------------------------------------*/
-void clif_sitting(struct map_session_data* sd)
-{
-	unsigned char buf[32];
-
-	nullpo_retv(sd);
-
-	WBUFW(buf, 0) = 0x8a;
-	WBUFL(buf, 2) = sd->bl.id;
-	WBUFB(buf,26) = 2;
-	clif_send(buf, packet_len(0x8a), &sd->bl, AREA);
-
-	if(disguised(&sd->bl)) {
-		WBUFL(buf, 2) = -sd->bl.id;
-		clif_send(buf, packet_len(0x8a), &sd->bl, SELF);
-	}
-}
-
-/*==========================================
- * inform clients in area that `sd` is standing
- *------------------------------------------*/
-void clif_standing(struct map_session_data* sd)
-{
-	unsigned char buf[32];
-
-	nullpo_retv(sd);
-
-	WBUFW(buf, 0) = 0x8a;
-	WBUFL(buf, 2) = sd->bl.id;
-	WBUFB(buf,26) = 3;
-	clif_send(buf, packet_len(0x8a), &sd->bl, AREA);
-
-	if(disguised(&sd->bl)) {
-		WBUFL(buf, 2) = -sd->bl.id;
-		clif_send(buf, packet_len(0x8a), &sd->bl, SELF);
-	}
-}
-
-/*==========================================
  *
  *------------------------------------------*/
 int clif_disp_onlyself(struct map_session_data *sd, const char *mes, int len)
@@ -8702,8 +8723,9 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		if (sd->sc.count && (
 			sd->sc.data[SC_DANCING].timer != -1 ||
 			(sd->sc.data[SC_GRAVITATION].timer != -1 && sd->sc.data[SC_GRAVITATION].val3 == BCT_SELF)
-		)) //No sitting during these states neither.
-		break;
+		)) //No sitting during these states either.
+			break;
+
 		pc_setsit(sd);
 		skill_sit(sd,1);
 		clif_sitting(sd);
@@ -8881,8 +8903,7 @@ void clif_parse_Wis(int fd, struct map_session_data *sd)
 	// if there are 'Test' player on an other map-server and 'test' player on this map-server,
 	// and if we ask for 'Test', we must not contact 'test' player
 	// so, we send information to inter-server, which is the only one which decide (and copy correct name).
-	if (dstsd == NULL ||
-		strcmp(dstsd->status.name, target) != 0)
+	if (dstsd == NULL || strcmp(dstsd->status.name, target) != 0)
 	{	// send message to inter-server
 		intif_wis_message(sd, target, msg, len);
 		aFree(command);
@@ -10315,26 +10336,24 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * ギルド告知変更
+ * Guild notice update request
+ * S 016E <guildID>.l <msg1>.60B <msg2>.120B
  *------------------------------------------*/
-void clif_parse_GuildChangeNotice(int fd,struct map_session_data *sd)
+void clif_parse_GuildChangeNotice(int fd, struct map_session_data* sd)
 {
+	int guild_id = RFIFOL(fd,2);
+	char* msg1 = (char*)RFIFOP(fd,6);
+	char* msg2 = (char*)RFIFOP(fd,66);
+
 	if(!sd->state.gmaster_flag)
 		return;
 
-	// compensate for the client's double marker bug (in both strings)
-	if ((RFIFOB(fd, 6) == '|') && (RFIFOB(fd, 6+3) == '|')) {
-		memmove(RFIFOP(fd, 6+3), RFIFOP(fd, 6+6), 60-6); memset(RFIFOP(fd, 60-3), 0x00, 3); // drop the duplicate marker
-	}
-	if ((RFIFOB(fd, 66) == '|') && (RFIFOB(fd, 66+3) == '|')) {
-		memmove(RFIFOP(fd, 66+3), RFIFOP(fd, 66+6), 180-6); memset(RFIFOP(fd, 180-3), 0x00, 3); // drop the duplicate marker
-	}
-	// compensate for the client's adding of an extra space at the end of the message
-	if (RFIFOB(fd, 66) == '|') {
-		memset(RFIFOP(fd, 66 + strnlen((char*)RFIFOP(fd, 66), 120)-1), 0x00, 1); // delete extra space at the end
-	}
+	// compensate for some client defects when using multilanguage mode
+	if (msg1[0] == '|' && msg1[3] == '|') msg1+= 3; // skip duplicate marker
+	if (msg2[0] == '|' && msg2[3] == '|') msg2+= 3; // skip duplicate marker
+	if (msg2[0] == '|') msg2[strnlen(msg2, 120)-1] = '\0'; // delete extra space at the end of string
 
-	guild_change_notice(sd,RFIFOL(fd,2),(char*)RFIFOP(fd,6),(char*)RFIFOP(fd,66));
+	guild_change_notice(sd, guild_id, msg1, msg2);
 }
 
 /*==========================================
@@ -11476,13 +11495,12 @@ void clif_parse_debug(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * クライアントからのパケット解析
- * socket.cのdo_parsepacketから呼び出される
+ * Main client packet processing function
  *------------------------------------------*/
 int clif_parse(int fd)
 {
-	int packet_len = 0, cmd, packet_ver, err, dump = 0;
-	TBL_PC *sd;
+	int packet_len = 0, cmd, packet_ver, err;
+	TBL_PC* sd;
 
 	sd = (TBL_PC *)session[fd]->session_data;
 	if (session[fd]->eof) {
@@ -11491,17 +11509,14 @@ int clif_parse(int fd)
 				//Disassociate character from the socket connection.
 				session[fd]->session_data = NULL;
 				sd->fd = 0;
-				ShowInfo("%sCharacter '"CL_WHITE"%s"CL_RESET"' logged off (using @autotrade).\n",
-					(pc_isGM(sd))?"GM ":"",sd->status.name);
+				ShowInfo("%sCharacter '"CL_WHITE"%s"CL_RESET"' logged off (using @autotrade).\n", (pc_isGM(sd))?"GM ":"", sd->status.name);
 			} else
 			if (sd->state.auth) {
 				 // Player logout display [Valaris]
-				ShowInfo("%sCharacter '"CL_WHITE"%s"CL_RESET"' logged off.\n",
-					(pc_isGM(sd))?"GM ":"",sd->status.name);
+				ShowInfo("%sCharacter '"CL_WHITE"%s"CL_RESET"' logged off.\n", (pc_isGM(sd))?"GM ":"", sd->status.name);
 				clif_quitsave(fd, sd);
 			} else {
-				ShowInfo("Player AID:%d/CID:%d (not authenticated) logged off.\n",
-					sd->bl.id, sd->status.char_id);
+				ShowInfo("Player AID:%d/CID:%d (not authenticated) logged off.\n", sd->bl.id, sd->status.char_id);
 				map_quit(sd);
 			}
 		} else {
@@ -11514,8 +11529,6 @@ int clif_parse(int fd)
 
 	if (RFIFOREST(fd) < 2)
 		return 0;
-
-//	printf("clif_parse: connection #%d, packet: 0x%x (with being read: %d bytes).\n", fd, RFIFOW(fd,0), RFIFOREST(fd));
 
 	cmd = RFIFOW(fd,0);
 
@@ -11547,63 +11560,28 @@ int clif_parse(int fd)
 		}
 	}
 
-	// ゲーム用以外パケットか、認証を終える前に0072以外が来たら、切断する
-	if (cmd > MAX_PACKET_DB || packet_db[packet_ver][cmd].len == 0) {	// if packet is not inside these values: session is incorrect?? or auth packet is unknown
+	// filter out invalid / unsupported packets
+	if (cmd > MAX_PACKET_DB || packet_db[packet_ver][cmd].len == 0) {
 		ShowWarning("clif_parse: Received unsupported packet (packet 0x%04x, %d bytes received), disconnecting session #%d.\n", cmd, RFIFOREST(fd), fd);
 		set_eof(fd);
 		return 0;
 	}
 
-	// パケット長を計算
+	// determine real packet length
 	packet_len = packet_db[packet_ver][cmd].len;
-	if (packet_len == -1) {
+	if (packet_len == -1) { // variable-length packet
 		if (RFIFOREST(fd) < 4)
-			return 0; // 可変長パケットで長さの所までデータが来てない
+			return 0;
 
 		packet_len = RFIFOW(fd,2);
 		if (packet_len < 4 || packet_len > 32768) {
-			ShowWarning("clif_parse: Packet 0x%04x specifies invalid packet_len (%d), disconnecting session #%d.\n", cmd, packet_len, fd);
+			ShowWarning("clif_parse: Received packet 0x%04x specifies invalid packet_len (%d), disconnecting session #%d.\n", cmd, packet_len, fd);
 			set_eof(fd);
 			return 0;
 		}
 	}
 	if ((int)RFIFOREST(fd) < packet_len)
-		return 0; // まだ1パケット分データが揃ってない
-
-#if DUMP_ALL_PACKETS
-	{
-		int i;
-		FILE *fp;
-		char packet_txt[256] = "save/packet.txt";
-		time_t now;
-		dump = 1;
-
-		if ((fp = fopen(packet_txt, "a")) == NULL) {
-			ShowError("clif.c: can't write [%s] !!! data is lost !!!\n", packet_txt);
-			return 1;
-		} else {
-			time(&now);
-			if (sd && sd->state.auth) {
-				if (sd->status.name != NULL)
-					fprintf(fp, "%sPlayer with account ID %d (character ID %d, player name %s) sent packet:\n",
-							  asctime(localtime(&now)), sd->status.account_id, sd->status.char_id, sd->status.name);
-				else
-					fprintf(fp, "%sPlayer with account ID %d sent wrong packet:\n", asctime(localtime(&now)), sd->bl.id);
-			} else if (sd) // not authentified! (refused by char-server or disconnect before to be authentified)
-				fprintf(fp, "%sPlayer with account ID %d sent wrong packet:\n", asctime(localtime(&now)), sd->bl.id);
-
-			fprintf(fp, "\tsession #%d, packet 0x%04x, length %d, version %d\n", fd, cmd, packet_len, packet_ver);
-			fprintf(fp, "\t---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
-			for(i = 0; i < packet_len; i++) {
-				if ((i & 15) == 0)
-					fprintf(fp, "\n\t%04X ", i);
-				fprintf(fp, "%02X ", RFIFOB(fd,i));
-			}
-			fprintf(fp, "\n\n");
-			fclose(fp);
-		}
-	}
-#endif
+		return 0; // not enough data received to form the packet
 
 	if (sd && sd->state.waitingdisconnect == 1) {
 		// 切断待ちの場合パケットを処理しない
@@ -11650,6 +11628,7 @@ int clif_parse(int fd)
 	}
 #endif
 
+	/* TODO: use utils.c :: dump()
 	if (dump) {
 		int i;
 		ShowDebug("\nclif_parse: session #%d, packet 0x%04x, length %d, version %d\n", fd, cmd, packet_len, packet_ver);
@@ -11668,7 +11647,7 @@ int clif_parse(int fd)
 				printf("\nAccount ID %d.\n", sd->bl.id);
 		} else if (sd) // not authentified! (refused by char-server or disconnect before to be authentified)
 			printf("\nAccount ID %d.\n", sd->bl.id);
-	}
+	}*/
 
 	RFIFOSKIP(fd, packet_len);
 
@@ -11890,7 +11869,7 @@ static int packetdb_readdb(void)
 		{NULL,NULL}
 	};
 
-	// Set server packet lengths - packet_db[SERVER]
+	// initialize packet_db[SERVER] from hardcoded packet_len_table[] values
 	memset(packet_db,0,sizeof(packet_db));
 	for( i = 0; i < sizeof(packet_len_table)/sizeof(packet_len_table[0]); ++i )
 		packet_len(i) = packet_len_table[i];
@@ -11947,17 +11926,11 @@ static int packetdb_readdb(void)
 				memcpy(&packet_db[packet_ver], &packet_db[prev_ver], sizeof(packet_db[0]));
 				continue;
 			} else if(strcmpi(w1,"packet_db_ver")==0) {
-				//This is the preferred version.
-				if(strcmpi(w2,"default")==0)
+				if(strcmpi(w2,"default")==0) //This is the preferred version.
 					clif_config.packet_db_ver = MAX_PACKET_VER;
-				else {
-					// to manually set the packet DB version
-					clif_config.packet_db_ver = atoi(w2);
-					// check for invalid version
-					if (clif_config.packet_db_ver > MAX_PACKET_VER ||
-						clif_config.packet_db_ver < 0)
-						clif_config.packet_db_ver = MAX_PACKET_VER;
-				}
+				else // to manually set the packet DB version
+					clif_config.packet_db_ver = cap_value(atoi(w2), 0, MAX_PACKET_VER);
+				
 				continue;
 			}
 		}
@@ -11992,8 +11965,7 @@ static int packetdb_readdb(void)
 			continue;
 		}
 		for(j=0;j<sizeof(clif_parse_func)/sizeof(clif_parse_func[0]);j++){
-			if(clif_parse_func[j].name != NULL &&
-				strcmp(str[2],clif_parse_func[j].name)==0)
+			if(clif_parse_func[j].name != NULL && strcmp(str[2],clif_parse_func[j].name)==0)
 			{
 				if (packet_db[packet_ver][cmd].func != clif_parse_func[j].func)
 				{	//If we are updating a function, we need to zero up the previous one. [Skotlex]

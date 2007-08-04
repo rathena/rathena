@@ -1,11 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -25,6 +20,11 @@
 #include "guild.h"
 #include "party.h"
 #include "battle.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
 
 int attr_fix_table[4][ELE_MAX][ELE_MAX];
 
@@ -87,18 +87,14 @@ struct block_list* battle_gettargeted(struct block_list *target)
 
 
 //Returns the id of the current targetted character of the passed bl. [Skotlex]
-int battle_gettarget(struct block_list *bl)
+int battle_gettarget(struct block_list* bl)
 {
 	switch (bl->type)
 	{
-		case BL_PC:
-			return ((struct map_session_data*)bl)->ud.target;
-		case BL_MOB:
-			return ((struct mob_data*)bl)->target_id;
-		case BL_PET:
-			return ((struct pet_data*)bl)->target_id;
-		case BL_HOM:
-			return ((struct homun_data*)bl)->ud.target;
+		case BL_PC:  return ((struct map_session_data*)bl)->ud.target;
+		case BL_MOB: return ((struct mob_data*)bl)->target_id;
+		case BL_PET: return ((struct pet_data*)bl)->target_id;
+		case BL_HOM: return ((struct homun_data*)bl)->ud.target;
 	}
 	return 0;
 }
@@ -2645,16 +2641,10 @@ struct Damage  battle_calc_misc_attack(
 struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,int skill_num,int skill_lv,int flag)
 {
 	struct Damage d;
-	switch(attack_type){
-	case BF_WEAPON:
-		d = battle_calc_weapon_attack(bl,target,skill_num,skill_lv,flag);
-		break;
-	case BF_MAGIC:
-		d = battle_calc_magic_attack(bl,target,skill_num,skill_lv,flag);
-		break;
-	case BF_MISC:
-		d = battle_calc_misc_attack(bl,target,skill_num,skill_lv,flag);
-		break;
+	switch(attack_type) {
+	case BF_WEAPON: d = battle_calc_weapon_attack(bl,target,skill_num,skill_lv,flag); break;
+	case BF_MAGIC:  d = battle_calc_magic_attack(bl,target,skill_num,skill_lv,flag);  break;
+	case BF_MISC:   d = battle_calc_misc_attack(bl,target,skill_num,skill_lv,flag);   break;
 	default:
 		if (battle_config.error_log)
 			ShowError("battle_calc_attack: unknown attack type! %d\n",attack_type);
@@ -2671,9 +2661,10 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 	return d;
 }
 
-int battle_calc_return_damage(struct block_list *bl, int *damage, int flag) {
-	struct map_session_data *sd=NULL;
-	struct status_change *sc;
+int battle_calc_return_damage(struct block_list* bl, int* damage, int flag)
+{
+	struct map_session_data* sd = NULL;
+	struct status_change* sc;
 	int rdamage = 0;
 
 	BL_CAST(BL_PC, bl, sd);
@@ -2703,8 +2694,7 @@ int battle_calc_return_damage(struct block_list *bl, int *damage, int flag) {
 	// magic_damage_return by [AppleGirl] and [Valaris]
 	if(flag&BF_MAGIC)
 	{
-		if(sd && sd->magic_damage_return &&
-			rand()%100 < sd->magic_damage_return)
+		if(sd && sd->magic_damage_return && rand()%100 < sd->magic_damage_return)
 		{	//Bounces back full damage, you take none.
 			rdamage = *damage;
 		 	*damage = 0;

@@ -675,14 +675,9 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 
 	switch (target->type)
 	{
-		case BL_MOB:
-			mob_damage((TBL_MOB*)target, src, hp);
-			break;
-		case BL_PC:
-			pc_damage((TBL_PC*)target,src,hp,sp);
-			break;
-		case BL_HOM:
-			merc_damage((TBL_HOM*)target,src,hp,sp);
+		case BL_PC:  pc_damage((TBL_PC*)target,src,hp,sp); break;
+		case BL_MOB: mob_damage((TBL_MOB*)target, src, hp); break;
+		case BL_HOM: merc_damage((TBL_HOM*)target,src,hp,sp); break;
 	}
 
 	if (status->hp)
@@ -698,17 +693,10 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 	//Non-zero: Standard death. Clear status, cancel move/attack, etc
 	//&2: Also remove object from map.
 	//&4: Also delete object from memory.
-	switch (target->type)
-	{
-		case BL_MOB:
-			flag = mob_dead((TBL_MOB*)target, src, flag&4?3:0);
-			break;
-		case BL_PC:
-			flag = pc_dead((TBL_PC*)target,src);
-			break;
-		case BL_HOM:
-			flag = merc_hom_dead((TBL_HOM*)target,src);
-			break;
+	switch (target->type) {
+		case BL_PC:  flag = pc_dead((TBL_PC*)target,src); break;
+		case BL_MOB: flag = mob_dead((TBL_MOB*)target, src, flag&4?3:0); break;
+		case BL_HOM: flag = merc_hom_dead((TBL_HOM*)target,src); break;
 		default:	//Unhandled case, do nothing to object.
 			flag = 0;
 			break;
@@ -806,15 +794,9 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 		status_change_end(bl,SC_PROVOKE,-1);
 
 	switch(bl->type) {
-	case BL_MOB:
-		mob_heal((TBL_MOB*)bl,hp);
-		break;
-	case BL_PC:
-		pc_heal((TBL_PC*)bl,hp,sp,flag&2?1:0);
-		break;
-	case BL_HOM:
-		merc_hom_heal((TBL_HOM*)bl,hp,sp);
-		break;
+	case BL_PC:  pc_heal((TBL_PC*)bl,hp,sp,flag&2?1:0); break;
+	case BL_MOB: mob_heal((TBL_MOB*)bl,hp); break;
+	case BL_HOM: merc_hom_heal((TBL_HOM*)bl,hp,sp); break;
 	}
 	return hp+sp;
 }
@@ -912,15 +894,9 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 	if (bl->prev) //Animation only if character is already on a map.
 		clif_resurrection(bl, 1);
 	switch (bl->type) {
-		case BL_MOB:
-			mob_revive((TBL_MOB*)bl, hp);
-			break;
-		case BL_PC:
-			pc_revive((TBL_PC*)bl, hp, sp);
-			break;
-		case BL_HOM:	//[orn]
-			merc_hom_revive((TBL_HOM*)bl, hp, sp);
-			break;
+		case BL_PC:  pc_revive((TBL_PC*)bl, hp, sp); break;
+		case BL_MOB: mob_revive((TBL_MOB*)bl, hp); break;
+		case BL_HOM: merc_hom_revive((TBL_HOM*)bl, hp, sp); break;
 	}
 	return 1;
 }
@@ -1920,24 +1896,12 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		if(!job_bonus[sd->status.class_][i])
 			continue;
 		switch(job_bonus[sd->status.class_][i]) {
-			case 1:
-				status->str++;
-				break;
-			case 2:
-				status->agi++;
-				break;
-			case 3:
-				status->vit++;
-				break;
-			case 4:
-				status->int_++;
-				break;
-			case 5:
-				status->dex++;
-				break;
-			case 6:
-				status->luk++;
-				break;
+			case 1: status->str++; break;
+			case 2: status->agi++; break;
+			case 3: status->vit++; break;
+			case 4: status->int_++; break;
+			case 5: status->dex++; break;
+			case 6: status->luk++; break;
 		}
 	}
 
@@ -3947,22 +3911,15 @@ void status_freecast_switch(struct map_session_data *sd)
 		clif_updatestatus(sd,SP_SPEED);
 }
 
-const char * status_get_name(struct block_list *bl)
+const char* status_get_name(struct block_list *bl)
 {
 	nullpo_retr(0, bl);
 	switch (bl->type) {
-	case BL_MOB:
-		return ((TBL_MOB*)bl)->name;
-	case BL_PC:
-		if(strlen(((TBL_PC *)bl)->fakename)>0)
-			return ((TBL_PC*)bl)->fakename;
-		return ((TBL_PC*)bl)->status.name;
-	case BL_PET:
-		return ((TBL_PET*)bl)->pet.name;
-	case BL_HOM:
-		return ((TBL_HOM*)bl)->homunculus.name;
-	case BL_NPC:
-		return ((TBL_NPC*)bl)->name;
+	case BL_PC:  return ((TBL_PC *)bl)->fakename[0] != '\0' ? ((TBL_PC*)bl)->fakename : ((TBL_PC*)bl)->status.name;
+	case BL_MOB: return ((TBL_MOB*)bl)->name;
+	case BL_PET: return ((TBL_PET*)bl)->pet.name;
+	case BL_HOM: return ((TBL_HOM*)bl)->homunculus.name;
+	case BL_NPC: return ((TBL_NPC*)bl)->name;
 	}
 	return "Unknown";
 }
@@ -3991,14 +3948,12 @@ int status_get_class(struct block_list *bl)
 int status_get_lv(struct block_list *bl)
 {
 	nullpo_retr(0, bl);
-	if(bl->type==BL_MOB)
-		return ((TBL_MOB*)bl)->level;
-	if(bl->type==BL_PC)
-		return ((TBL_PC*)bl)->status.base_level;
-	if(bl->type==BL_PET)
-		return ((TBL_PET*)bl)->pet.level;
-	if(bl->type==BL_HOM)
-		return ((TBL_HOM*)bl)->homunculus.level;
+	switch (bl->type) {
+		case BL_PC:  return ((TBL_PC*)bl)->status.base_level;
+		case BL_MOB: return ((TBL_MOB*)bl)->level;
+		case BL_PET: return ((TBL_PET*)bl)->pet.level;
+		case BL_HOM: return ((TBL_HOM*)bl)->homunculus.level;
+	}		
 	return 1;
 }
 
@@ -4006,10 +3961,8 @@ struct regen_data *status_get_regen_data(struct block_list *bl)
 {
 	nullpo_retr(NULL, bl);
 	switch (bl->type) {
-		case BL_PC:
-			return &((TBL_PC*)bl)->regen;
-		case BL_HOM:
-			return &((TBL_HOM*)bl)->regen;
+		case BL_PC:  return &((TBL_PC*)bl)->regen;
+		case BL_HOM: return &((TBL_HOM*)bl)->regen;
 		default:
 			return NULL;
 	}
@@ -4020,14 +3973,10 @@ struct status_data *status_get_status_data(struct block_list *bl)
 	nullpo_retr(&dummy_status, bl);
 		
 	switch (bl->type) {
-		case BL_PC:
-			return &((TBL_PC*)bl)->battle_status;
-		case BL_MOB:
-			return &((TBL_MOB*)bl)->status;
-		case BL_PET:
-			return &((TBL_PET*)bl)->status;
-		case BL_HOM:
-			return &((TBL_HOM*)bl)->battle_status;
+		case BL_PC:  return &((TBL_PC*)bl)->battle_status;
+		case BL_MOB: return &((TBL_MOB*)bl)->status;
+		case BL_PET: return &((TBL_PET*)bl)->status;
+		case BL_HOM: return &((TBL_HOM*)bl)->battle_status;
 		default:
 			return &dummy_status;
 	}
@@ -4037,16 +3986,10 @@ struct status_data *status_get_base_status(struct block_list *bl)
 {
 	nullpo_retr(NULL, bl);
 	switch (bl->type) {
-		case BL_PC:
-			return &((TBL_PC*)bl)->base_status;
-		case BL_MOB:
-			return ((TBL_MOB*)bl)->base_status?
-				((TBL_MOB*)bl)->base_status:
-				&((TBL_MOB*)bl)->db->status;
-		case BL_PET:
-			return &((TBL_PET*)bl)->db->status;
-		case BL_HOM:
-			return &((TBL_HOM*)bl)->base_status;
+		case BL_PC:  return &((TBL_PC*)bl)->base_status;
+		case BL_MOB: return ((TBL_MOB*)bl)->base_status ? ((TBL_MOB*)bl)->base_status : &((TBL_MOB*)bl)->db->status;
+		case BL_PET: return &((TBL_PET*)bl)->db->status;
+		case BL_HOM: return &((TBL_HOM*)bl)->base_status;
 		default:
 			return NULL;
 	}
@@ -4227,21 +4170,15 @@ int status_isimmune(struct block_list *bl)
 	return 0;
 }
 
-struct view_data *status_get_viewdata(struct block_list *bl)
+struct view_data* status_get_viewdata(struct block_list *bl)
 {
 	nullpo_retr(NULL, bl);
-	switch (bl->type)
-	{
-		case BL_PC:
-			return &((TBL_PC*)bl)->vd;
-		case BL_MOB:
-			return ((TBL_MOB*)bl)->vd;
-		case BL_PET:
-			return &((TBL_PET*)bl)->vd;
-		case BL_NPC:
-			return ((TBL_NPC*)bl)->vd;
-		case BL_HOM: //[blackhole89]
-			return ((TBL_HOM*)bl)->vd;
+	switch (bl->type) {
+		case BL_PC:  return &((TBL_PC*)bl)->vd;
+		case BL_MOB: return ((TBL_MOB*)bl)->vd;
+		case BL_PET: return &((TBL_PET*)bl)->vd;
+		case BL_NPC: return ((TBL_NPC*)bl)->vd;
+		case BL_HOM: return ((TBL_HOM*)bl)->vd;
 	}
 	return NULL;
 }
@@ -4364,14 +4301,10 @@ struct status_change *status_get_sc(struct block_list *bl)
 {
 	nullpo_retr(NULL, bl);
 	switch (bl->type) {
-	case BL_MOB:
-		return &((TBL_MOB*)bl)->sc;
-	case BL_PC:
-		return &((TBL_PC*)bl)->sc;
-	case BL_NPC:
-		return &((TBL_NPC*)bl)->sc;
-	case BL_HOM: //[blackhole89]
-		return &((TBL_HOM*)bl)->sc;
+	case BL_PC:  return &((TBL_PC*)bl)->sc;
+	case BL_MOB: return &((TBL_MOB*)bl)->sc;
+	case BL_NPC: return &((TBL_NPC*)bl)->sc;
+	case BL_HOM: return &((TBL_HOM*)bl)->sc;
 	}
 	return NULL;
 }

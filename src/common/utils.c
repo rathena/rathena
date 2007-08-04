@@ -20,41 +20,40 @@
 	#include <sys/stat.h>
 #endif
 
-#ifdef UTIL_DUMP
-void dump(const unsigned char* buffer, int num)
+// generate a hex dump of the first 'length' bytes of 'buffer'
+void dump(FILE* fp, const unsigned char* buffer, int length)
 {
-	int icnt, jcnt;
+	int i, j;
 
-	printf("         Hex                                                  ASCII\n");
-	printf("         -----------------------------------------------      ----------------");
+	fprintf(fp, "         Hex                                                  ASCII\n");
+	fprintf(fp, "         -----------------------------------------------      ----------------");
 
-	for (icnt = 0; icnt < num; icnt += 16)
+	for (i = 0; i < length; i += 16)
 	{
-		printf("\n%p ", &buffer[icnt]);
-		for (jcnt = icnt; jcnt < icnt + 16; ++jcnt)
+		fprintf(fp, "\n%p ", &buffer[i]);
+		for (j = i; j < i + 16; ++j)
 		{
-			if (jcnt < num)
-				printf("%02hX ", buffer[jcnt]);
+			if (j < length)
+				fprintf(fp, "%02hX ", buffer[j]);
 			else
-				printf("   ");
+				fprintf(fp, "   ");
 		}
 
-		printf("  |  ");
+		fprintf(fp, "  |  ");
 
-		for (jcnt = icnt; jcnt < icnt + 16; ++jcnt)
+		for (j = i; j < i + 16; ++j)
 		{
-			if (jcnt < num) {
-				if (buffer[jcnt] > 31 && buffer[jcnt] < 127)
-					printf("%c", buffer[jcnt]);
+			if (j < length) {
+				if (buffer[j] > 31 && buffer[j] < 127)
+					fprintf(fp, "%c", buffer[j]);
 				else
-					printf(".");
+					fprintf(fp, ".");
 			} else
-				printf(" ");
+				fprintf(fp, " ");
 		}
 	}
-	printf("\n");
+	fprintf(fp, "\n");
 }
-#endif
 
 // Allocate a StringBuf  [MouseJstr]
 struct StringBuf * StringBuf_Malloc() 

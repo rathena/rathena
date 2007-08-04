@@ -1366,21 +1366,17 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	ud->attacktimer=-1;
 	target=map_id2bl(ud->target);
 
-	if(src->prev == NULL || target==NULL || target->prev == NULL)
+	if(src == NULL || src->prev == NULL || target==NULL || target->prev == NULL)
 		return 0;
 
-	if(ud->skilltimer != -1 && (!sd || pc_checkskill(sd,SA_FREECAST) <= 0))
-		return 0;
-	
 	if(src->m != target->m || status_isdead(src) || status_isdead(target) || !status_check_skilluse(src, target, 0, 0))
-		return 0;
+		return 0; // can't attack under these conditions
 
-	sstatus = status_get_status_data(src);
-
-	if(!battle_config.sdelay_attack_enable &&
-		DIFF_TICK(ud->canact_tick,tick) > 0 && 
-		(!sd || pc_checkskill(sd,SA_FREECAST) <= 0)
-	) {
+	if(ud->skilltimer != -1 && !(sd && pc_checkskill(sd,SA_FREECAST) > 0))
+		return 0; // can't attack while casting
+	
+	if(!battle_config.sdelay_attack_enable && DIFF_TICK(ud->canact_tick,tick) > 0 && !(sd && pc_checkskill(sd,SA_FREECAST) > 0))
+	{	// attacking when under cast delay has restrictions:
 		if (tid == -1) { //requested attack.
 			if(sd) clif_skill_fail(sd,1,4,0);
 			return 0;
@@ -1394,6 +1390,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 		return 1;
 	}
 
+	sstatus = status_get_status_data(src);
 	range = sstatus->rhw.range;
 	
 	if(!sd || sd->status.weapon != W_BOW) range++; //Dunno why everyone but bows gets this extra range...
@@ -1420,9 +1417,9 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	//Non-players use the sync packet on the walk timer. [Skotlex]
 	if (tid == -1 && sd) clif_fixpos(src);
 
-	if(DIFF_TICK(ud->attackabletime,tick) <= 0) {
-		if (battle_config.attack_direction_change &&
-			(src->type&battle_config.attack_direction_change)) {
+	if(DIFF_TICK(ud->attackabletime,tick) <= 0)
+	{
+		if (battle_config.attack_direction_change && (src->type&battle_config.attack_direction_change)) {
 			ud->dir = map_calc_dir(src, target->x,target->y );
 		}
 		if(ud->walktimer != -1)
@@ -1433,8 +1430,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 			if (sstatus->mode&MD_ASSIST && DIFF_TICK(md->last_linktime, tick) < MIN_MOBLINKTIME)
 			{	// Link monsters nearby [Skotlex]
 				md->last_linktime = tick;
-				map_foreachinrange(mob_linksearch, src, md->db->range2,
-					BL_MOB, md->class_, target, tick);
+				map_foreachinrange(mob_linksearch, src, md->db->range2, BL_MOB, md->class_, target, tick);
 			}
 		}
 		if(src->type == BL_PET && pet_attackskill((TBL_PET*)src, target->id))

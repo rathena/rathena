@@ -4,13 +4,11 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
+#include <stdio.h>
 #include <stdarg.h>
 
-// Function that dumps the hex of the first num bytes of the buffer to the screen
-//#define UTIL_DUMP
-#ifdef UTIL_DUMP
-void dump(const unsigned char* buffer, int num);
-#endif
+// generate a hex dump of the first 'length' bytes of 'buffer'
+void dump(FILE* fp, const unsigned char* buffer, int length);
 
 struct StringBuf {
 	char *buf_;
