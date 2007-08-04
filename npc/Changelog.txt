@@ -1,6 +1,9 @@
 Date		Added
 ======
 2007/08/04
+	* Rev. 10948 Several bug-fixes to various Rachel quests (Gepard) [L0ne_W0lf]
+	* Small fix to the level 4 weapon quest.
+	* Small fix to the Thief Job Quest
 	* Fixed a nasty bug in Dandelion's Request. [SinSloth]
 2007/07/31
 	* Fixed north prontera kafra having an empty warp list
@@ -249,7 +252,7 @@ Date		Added
 	- Fixed bug in new Crusader Quest, optimized, changed common NPC names to more unique.
 	- Fixed 2 bugs in Bard Job Quest
 2007/05/31
-	* Rev. 10653 Fixced some spelling and grammar in crusader quest. [L0ne_W0lf]
+	* Rev. 10653 Fixed some spelling and grammar in crusader quest. [L0ne_W0lf]
 	* Rev. 10651 Updated Crusader quest. [L0ne_W0lf]
 	- Updated NPC dialogs using Aegis 10.3 file.
 	- Fixed logic error with job change reward for job 50 swordies.

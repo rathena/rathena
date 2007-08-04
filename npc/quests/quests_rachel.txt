@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -43,6 +43,10 @@
 //= 1.6 Fixed a couple bugs with the Pope's Office Guards... [L0ne_W0lf]
 //= 1.7 Fixed Maheo, he will revert to his frozen state when clicked. [L0ne_W0lf]
 //=	Replaced  instances of "+name+", with "+strcharinfo(0)".
+//= 1.8 Various fixes: Hamion will now delete items used for Wind Hammer. [L0ne_W0lf]
+//=	Fixed EXP reward in Ice Necklace quest, fixed a typo in an NPC header.
+//=	Another minor fix to Hamion. "< 1" -> "< 2". Added a missing close to
+//=	the ontouch "key". Thanks to Gepard for pointing them out.
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -2545,7 +2549,7 @@ rachel,266,35,3	script	Grandma#rachel	918,{
 	close;
 }
 
-lhz_in02,213,207,0	script	#ratrace1	111,4,4.{
+lhz_in02,213,207,0	script	#ratrace1	111,4,4,{
 OnTouch:
 	if (rach_vice == 5) {
 		set rach_vice,6;
@@ -2896,7 +2900,7 @@ rachel,157,183,3	script	Sincere Follower Urstia	917,{
 		mes "token of my appreication for";
 		mes " what you have done for me.";
 		delitem 7573,1; //Sparkling Necklace
-		set BaseExp,BaseExp+70000;
+		set BaseExp,BaseExp+700000;
 		set ice_necklace_q,6;
 		next;
 		mes "["+strcharinfo(0)+"]";
@@ -3262,7 +3266,7 @@ OnTimer10800000:
 }
 
 rachel,265,98,3	script	Hamion#aru	930,{
-	if (ice_necklace_q < 1) {
+	if (ice_necklace_q < 2) {
 		mes "[Hamion]";
 		mes "Hm? Did you need";
 		mes "something? If it's not too";
@@ -3387,7 +3391,10 @@ rachel,265,98,3	script	Hamion#aru	930,{
 		mes "This hammer will only work";
 		mes "once, so make sure that you";
 		mes "smash that ice properly!";
-		getitem 7569,1; //Wind Hammer
+		delitem 996,5; //Rough_Wind
+		delitem 1354,1; //Empty_Scroll
+		delitem 7433,1; //Hammer
+		getitem 7569,1; //Hammer_of_Wind
 		set ice_necklace_q,4;
 		close;
 	}
@@ -6356,8 +6363,8 @@ OnTouch:
 			mes "the small shining object,";
 			mes "no matter how important it";
 			mes "may be to you in the future.^000000";
+			close;
 		}
-
 		mes "^3355FFUpon picking up the";
 		mes "object, you are able to";
 		mes "identify it as a small key.";

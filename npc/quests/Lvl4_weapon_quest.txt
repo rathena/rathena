@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Vicious_Pucca, Reddozen & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.21
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.1 Many fixes to spelling, grammar, and sentence order. [Silent]
 //= 1.2 A small fix, thanks to vicious_pucca [MasterOfMuppets]
 //= 1.21 Fixing MoM's typos (Citrin -> Citrine) [erKURITA]
+//= 1.3 Redirected error message for "LV_16" to "LV_16_NOGEM" (Gepard) [L0ne_W0lf]
 //============================================================ 
 
 //---------------------------------------------------------------
@@ -1518,7 +1519,7 @@ LV4_16:
 	if(lv4_weapon == 16) set @gem, $@LV4_Phlogopite;
 	if(lv4_weapon == 17) set @gem, $@LV4_Olivine;
 	if(lv4_weapon == 18) set @gem, $@LV4_Rose_Quartz;
-	if(countitem(@gem) < 30) goto LV4_2_NOGEM; 
+	if(countitem(@gem) < 30) goto LV4_16_NOGEM; 
 	
 	mes "[Tabezthan]";
 	mes "Okay, let's get started!";

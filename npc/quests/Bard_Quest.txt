@@ -3,13 +3,14 @@
 //===== By: ================================================== 
 //= Riotblade and L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
 //= Help the bard remember how his song goes.
 //===== Comments: ============================================
-//= Aegis conversion. Needs optimizing.
+//= [Aegis Conversion]
+//= Needs optimizing.
 //= Reconverted with iRO Dialogs.
 //= Possible NPC conflict with "Representative"
 //===== Additional Comments: ================================= 
@@ -21,11 +22,14 @@
 //=		@inputstr$ : temp var 
 //=
 //= This Quest has relation with brisingamen_seal.txt (Seals)
+//= 1.2 Changed variable to "gef_bards_q" to avoid job quest conflict. [L0ne_W0lf]
+//=	Progress prior to the 5th+ step will be lost. Job quest takes priority.
 //============================================================ 
 
 geffen,132,38,3	script	Bard#2	51,{
+	if (bard_q > 5) set gef_bard_q,bard_q;
 	set @name$,strcharinfo(0);
-	if (bard_q > 29) {
+	if (gef_bard_q > 29) {
 		cutin "bard_eland02",2;
 		mes "[Errende]";
 		mes "Why, hello there~";
@@ -36,7 +40,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "Ah~ There are only two things that can make this picturesque moment even more beautiful: story and song. Now then, which would you like to hear?";
 		callsub S_StorySong,1;
 
-	} else if (bard_q == 15) {
+	} else if (gef_bard_q == 15) {
 		cutin "bard_eland01",2;
 		mes "[Errende]";
 		mes "Ah, so how did it go?";
@@ -101,7 +105,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		next;
 		specialeffect2 77; //EF_RESURRECTION
 		mes "^3355FFWhile listening to his song, you feel at ease, and your thoughts become clearer. You believe that you see the vision of an angel, and you gain some experience points.^000000";
-		set bard_q,31;
+		set gef_bard_q,31;
 		if (BaseLevel < 56) set BaseExp,BaseExp+4500;
 		else if ((BaseLevel > 55) && (BaseLevel < 61)) set BaseExp,BaseExp+5500;
 		else if ((BaseLevel > 60) && (BaseLevel < 66)) set BaseExp,BaseExp+9684;
@@ -123,7 +127,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "I hope that you'll always remain honest and respectful towards other people, and that you continue to ignore greed for fortune or power.";
 		goto L_End;
 
-	} else if (bard_q == 14) {
+	} else if (gef_bard_q == 14) {
 		cutin "bard_eland04",2;
 		mes "[Errende]";
 		mes "Hmmm?";
@@ -191,7 +195,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		next;
 		specialeffect2 77; //EF_RESURRECTION
 		mes "^3355FFWhile listening to his song, you feel at ease, and your thoughts become clearer. You believe that you see the vision of an angel, and you gain some experience points.^000000";
-		set bard_q,30;
+		set gef_bard_q,30;
 		if (BaseLevel < 56) set BaseExp,BaseExp+4500;
 		else if ((BaseLevel > 55) && (BaseLevel < 61)) set BaseExp,BaseExp+5500;
 		else if ((BaseLevel > 60) && (BaseLevel < 66)) set BaseExp,BaseExp+9684;
@@ -213,19 +217,19 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "I hope that you'll always remain honest and respectful towards other people, and that you continue to ignore greed for fortune or power.";
 		goto L_End;
 
-	} else if (bard_q > 11 && bard_q < 14) {
+	} else if (gef_bard_q > 11 && gef_bard_q < 14) {
 		cutin "bard_eland02",2;
 		mes "[Errende]";
 		mes "It seems you haven't found it yet. Well, take your time, I can wait as long as you want. It doesn't really bore me, since waiting seems to be a part of my profession.";
 		goto L_End;
 
-	} else if (bard_q == 11) {
+	} else if (gef_bard_q == 11) {
 		cutin "bard_eland01",2;
 		mes "[Errende]";
 		mes "Mr. Skezti has a small book store on the book street at the right side of Mineta in Juno. If you show him the seal, he'll help you out.";
 		goto L_End;
 
-	} else if (bard_q == 10) {
+	} else if (gef_bard_q == 10) {
 		cutin "bard_eland01",2;
 		mes "[Errende]";
 		mes "So, have you met Mr. Kitty?";
@@ -252,10 +256,10 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "There you go. Now, you may go to Mr. Sketzi. Remember, you must";
 		mes "show him the Seal of Friendship.";
 		mes "Good luck, now~";
-		set bard_q,11;
+		set gef_bard_q,11;
 		goto L_End;
 
-	} else if (bard_q == 20) {
+	} else if (gef_bard_q == 20) {
 		cutin "bard_eland03",2;
 		mes "[Bard]";
 		mes "^483D8BWhat day is";
@@ -295,7 +299,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "[Errende]";
 			mes "If you will let me, I will tell you of my travels. By your leave,";
 			mes "I will play a song that will help you forget your troubles.";
-			set bard_q,21;
+			set gef_bard_q,21;
 			callsub S_StorySong,2;
 
 		} else {
@@ -306,7 +310,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			goto L_End;
 		}
 
-	} else if (bard_q == 27) {
+	} else if (gef_bard_q == 27) {
 		cutin "bard_eland01",2;
 		mes "[Errende]";
 		mes "How could I forget the song?";
@@ -347,11 +351,11 @@ geffen,132,38,3	script	Bard#2	51,{
 			next;
 			mes "[Errende]";
 			mes "I beseech you, if you meet him, please ask him of the 8th love and inform me of that lyric immediately~";
-			set bard_q,22;
+			set gef_bard_q,22;
 		}
 		goto L_End;
 
-	} else if (bard_q == 26) {
+	} else if (gef_bard_q == 26) {
 		cutin "bard_eland01",2;
 		mes "[Errende]";
 		mes "Argh...!";
@@ -388,7 +392,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			if(select("No, thanks.:I can, so stop crying.")==1) {
 				mes "[Errende]";
 				mes "Ah, I guess it was too much to ask of you. My apologies. Don't worry about it, I'll find out some other way.";
-				set bard_q,25;
+				set gef_bard_q,25;
 
 			} else {
 				mes "[Errende]";
@@ -401,7 +405,7 @@ geffen,132,38,3	script	Bard#2	51,{
 				mes "I'll pay you back somehow!";
 				mes "Thank you for your trouble";
 				mes "in advance~";
-				set bard_q,24;
+				set gef_bard_q,24;
 			}
 			goto L_End;
 
@@ -434,11 +438,11 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "What was the line...?";
 			mes "How could I forget";
 			mes "the 8th love?";
-			set bard_q,26;
+			set gef_bard_q,26;
 			goto L_End;
 		}
 
-	} else if (bard_q == 25) {
+	} else if (gef_bard_q == 25) {
 		cutin "bard_eland04",2;
 		mes "[Errende]";
 		mes "Oh...!";
@@ -474,7 +478,7 @@ geffen,132,38,3	script	Bard#2	51,{
 				next;
 				mes "[Errende]";
 				mes "I promise to pay you back as best as I can! I'll wait for you here until you return!";
-				set bard_q,24;
+				set gef_bard_q,24;
 			} else {
 				cutin "bard_eland04",2;
 				mes "^3355FFYou ignore his";
@@ -495,7 +499,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			goto L_End;
 		}
 
-	} else if (bard_q == 24) {
+	} else if (gef_bard_q == 24) {
 		cutin "bard_eland02",2;
 		mes "[Errende]";
 		mes "Umm...";
@@ -520,7 +524,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "for your help.";
 		goto L_End;
 
-	} else if (bard_q == 22) {
+	} else if (gef_bard_q == 22) {
 		mes "[Errende]";
 		mes "*Sigh...*";
 		mes "Where can";
@@ -536,7 +540,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "Please ask ^483D8BGunther^000000 about the ^483D8B8th love^000000 in ^483D8BAt One, I Fall in Love^000000. Thank you in advance.";
 		goto L_End;
 
-	} else if (bard_q == 23) {
+	} else if (gef_bard_q == 23) {
 		cutin "bard_eland02",2;
 		mes "[Errende]";
 		mes "So...";
@@ -610,7 +614,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			if(select("No, thanks.:I can, so stop crying.")==1) {
 				mes "[Errende]";
 				mes "Ah, I guess it was too much to ask of you. My apologies. Don't worry about it, I'll find out some other way.";
-				set bard_q,25;
+				set gef_bard_q,25;
 			} else {
 				mes "[Errende]";
 				mes "Are you serious?";
@@ -622,20 +626,20 @@ geffen,132,38,3	script	Bard#2	51,{
 				mes "I'll pay you back somehow!";
 				mes "Thank you for your trouble";
 				mes "in advance~";
-				set bard_q,24;
+				set gef_bard_q,24;
 			}
 			goto L_End;	
 
 		} else if (@inputstr$ == "Gunther") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
-			set bard_q,26;
+			set gef_bard_q,26;
 			goto L_End;
 
 		} else if (@inputstr$ == "Gunther Doubleharmony") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
-			set bard_q,26;
+			set gef_bard_q,26;
 			goto L_End;
 
 		} else if (@inputstr$ == "Errende") {
@@ -645,7 +649,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "If I did, why would";
 			mes "I not know what this";
 			mes "song is about?";
-			set bard_q,26;
+			set gef_bard_q,26;
 			goto L_End;
 
 		} else {
@@ -658,11 +662,11 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "What was the line...?";
 			mes "How could I forget";
 			mes "the 8th love?";
-			set bard_q,26;
+			set gef_bard_q,26;
 			goto L_End;
 		}
 
-	} else if (bard_q == 21) {
+	} else if (gef_bard_q == 21) {
 		cutin "bard_eland01",2;
 		mes "[Errende]";
 		mes "Welcome back,";
@@ -673,7 +677,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "a tale or listen to a song?";
 		callsub S_StorySong,3;
 
-	} else if (bard_q == 7) {
+	} else if (gef_bard_q == 7) {
 		cutin "bard_eland04",2;
 		mes "[Errende]";
 		mes "How could I forget the song?";
@@ -707,11 +711,11 @@ geffen,132,38,3	script	Bard#2	51,{
 			next;
 			mes "[Errende]";
 			mes "I beseech you, if you meet him, please ask him of the 8th love and inform me of that lyric immediately~";
-			set bard_q,2;
+			set gef_bard_q,2;
 		}
 		goto L_End;
 
-	} else if (bard_q == 6) {
+	} else if (gef_bard_q == 6) {
 		cutin "bard_eland04",2;
 		mes "[Errende]";
 		mes "Who could have changed the lyrics to the song? I can't understand why such a thing would happen. I really wish I could ask the person who changed the words...";
@@ -744,14 +748,14 @@ geffen,132,38,3	script	Bard#2	51,{
 			if(select("No, thanks.:I can, so stop crying.")==1) {
 				mes "[Errende]";
 				mes "Ah, I guess it was too much to ask of you. My apologies. Don't worry about it, I'll find out some other way.";
-				set bard_q,5;
+				set gef_bard_q,5;
 			} else {
 				mes "[Errende]";
 				mes "Are you serious? Oh, thank you so much! You must be an angel! An angel that truly understands the heart of a poet!";
 				next;
 				mes "[Errende]";
 				mes "I'll pay you back somehow! Thank you for your trouble in advance~";
-				set bard_q,4;
+				set gef_bard_q,4;
 			}
 			goto L_End;
 
@@ -780,11 +784,11 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "What was the line...?";
 			mes "How could I forget";
 			mes "the 8th love?";
-			set bard_q,6;
+			set gef_bard_q,6;
 			goto L_End;
 		}
 
-	} else if (bard_q == 5) {
+	} else if (gef_bard_q == 5) {
 		cutin "bard_eland04",2;
 		mes "[Errende]";
 		mes "Oh...!";
@@ -812,7 +816,7 @@ geffen,132,38,3	script	Bard#2	51,{
 				next;
 				mes "[Errende]";
 				mes "I promise to pay you back as best as I can! I'll wait for you here until you return!";
-				set bard_q,4;
+				set gef_bard_q,4;
 			} else {
 				mes "^3355FFYou ignore his";
 				mes "heart wrenching song.";
@@ -832,7 +836,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			goto L_End;
 		}
 
-	} else if (bard_q == 4) {
+	} else if (gef_bard_q == 4) {
 		cutin "bard_eland01",2;
 		mes "[Errende]";
 		mes "Umm...";
@@ -856,7 +860,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "for your help.";
 		goto L_End;
 
-	} else if (bard_q == 2) {
+	} else if (gef_bard_q == 2) {
 		cutin "bard_eland04",2;
 		mes "[Errende]";
 		mes "*Sigh...* Where can I find the 8th love...? Have you met Gunther?";
@@ -869,7 +873,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "Please ask ^483D8BGunther^000000 about the ^483D8B8th love^000000 in ^483D8BAt One, I Fall in Love^000000. Thank you in advance.";
 		goto L_End;
 
-	} else if (bard_q == 3) {
+	} else if (gef_bard_q == 3) {
 		cutin "bard_eland02",2;
 		mes "[Errende]";
 		mes "So...";
@@ -943,35 +947,35 @@ geffen,132,38,3	script	Bard#2	51,{
 			if(select("No, thanks.:I can, so stop crying.")==1) {
 				mes "[Errende]";
 				mes "Ah, I guess it was too much to ask of you. My apologies. Don't worry about it, I'll find out some other way.";
-				set bard_q,5;
+				set gef_bard_q,5;
 			} else {
 				mes "[Errende]";
 				mes "Are you serious? Oh, thank you so much! You must be an angel! An angel that truly understands the heart of a poet!";
 				next;
 				mes "[Errende]";
 				mes "I'll pay you back somehow! Thank you for your trouble in advance~";
-				set bard_q,4;
+				set gef_bard_q,4;
 			}
 			goto L_End;
 
 		} else if (@inputstr$ == "Gunther") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
-			set bard_q,6;
+			set gef_bard_q,6;
 			goto L_End;
 		}
 
 		else if (@inputstr$ == "Gunther Doubleharmony") {
 			mes "[Errende]";
 			mes "Gunther? I don't think he would do this. He always puts lines in his songs like 'doubleharmony for you.' Plus, he's too silly for that.";
-			set bard_q,6;
+			set gef_bard_q,6;
 			goto L_End;
 
 		} else if (@inputstr$ == "Errende") {
 			cutin "bard_eland04",2;
 			mes "[Errende]";
 			mes "Surely you jest! If I did, why would I not know what this song is about?";
-			set bard_q,6;
+			set gef_bard_q,6;
 			goto L_End;
 
 		} else {
@@ -983,11 +987,11 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "What was the line...?";
 			mes "How could I forget";
 			mes "the 8th love?";
-			set bard_q,6;
+			set gef_bard_q,6;
 			goto L_End;
 		}
 
-	} else if (bard_q == 1) {
+	} else if (gef_bard_q == 1) {
 		cutin "bard_eland01",2;
 		mes "[Errende]";
 		mes "Welcome back,";
@@ -1037,7 +1041,7 @@ geffen,132,38,3	script	Bard#2	51,{
 			mes "[Errende]";
 			mes "If you will let me, I will tell you of my travels. By your leave,";
 			mes "I will play a song that will help you forget your troubles.";
-			set bard_q,1;
+			set gef_bard_q,1;
 			callsub S_StorySong,5;
 
 		} else {
@@ -1364,15 +1368,15 @@ S_StorySong:
 						next;
 						mes "[Errende]";
 						mes "I beseech you, if you meet him, please ask him of the 8th love and inform me of that lyric immediately~";
-						if(bard_q==1) set bard_q,2;
-						if(bard_q==21) set bard_q,22;
+						if(gef_bard_q==1) set gef_bard_q,2;
+						if(gef_bard_q==21) set gef_bard_q,22;
 
 					} else {
 						mes "[Errende]";
 						mes "*Sigh...*";
 						mes "I can't remember the 8th part of this song if my life depended on it. And it does~! *Wahhhh~*";
-						if(bard_q==1) set bard_q,7;
-						if(bard_q==21) set bard_q,27;
+						if(gef_bard_q==1) set gef_bard_q,7;
+						if(gef_bard_q==21) set gef_bard_q,27;
 					}
 					goto L_End;
 
@@ -1423,7 +1427,7 @@ S_StorySong:
 
 morocc,134,111,3	script	Bard#3	741,{
 	set @name$,strcharinfo(0);
-	if (bard_q == 31) {
+	if (gef_bard_q == 31) {
 		mes "[Kino Kitty]";
 		mes "Everything will be";
 		mes "fine in the end, right?";
@@ -1572,7 +1576,7 @@ morocc,134,111,3	script	Bard#3	741,{
 			close;
 		}
 
-	} else if (bard_q == 30) {
+	} else if (gef_bard_q == 30) {
 		mes "[Kino Kitty]";
 		mes "Everything will be";
 		mes "fine in the end, right?";
@@ -1716,12 +1720,12 @@ morocc,134,111,3	script	Bard#3	741,{
 			close;	
 		}
 
-	} else if (bard_q > 12 && bard_q < 16) {
+	} else if (gef_bard_q > 12 && gef_bard_q < 16) {
 		mes "[Kino Kitty]";
 		mes "Errende must be waiting for you. Although others would be in anguish if they were made to wait, and people like Errende and me wouldn't mind, it's still more polite to hurry when you can.";
 		close;
 
-	} else if (bard_q == 12) {
+	} else if (gef_bard_q == 12) {
 		mes "[Kino Kitty]";
 		mes "I guess you've met Mr. Sketzi.";
 		mes "By the way, why do you have that look on your face? Didn't find what you were looking for? Haha, would you show me your left hand?";
@@ -1742,7 +1746,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				mes "[Kino Kitty]";
 				mes "Ah, right.";
 				mes "You already have a seal marked by Errende. Oh well, if you don't want it, what can I do?";
-				set bard_q,13;
+				set gef_bard_q,13;
 				close;
 			
 			case 2:
@@ -1784,7 +1788,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				next;
 				mes "^3355FFKino Kitty hands you a letter that is labeled 'Dear Errende'";
 				mes "on the front.^000000";
-				set bard_q,14;
+				set gef_bard_q,14;
 				close;
 			}
 		
@@ -1796,7 +1800,7 @@ morocc,134,111,3	script	Bard#3	741,{
 			close;	
 		}
 
-	} else if (bard_q == 10) {
+	} else if (gef_bard_q == 10) {
 		mes "[Kino Kitty]";
 		mes "Didn't you leave already?";
 		mes "I'm sure you can find the lyrics in a bookstore in Juno.";
@@ -1814,7 +1818,7 @@ morocc,134,111,3	script	Bard#3	741,{
 		mes "Also, I'd like to thank you for helping Errende. He may be a little whiny, but he's a good person.";
 		close;
 
-	} else if (bard_q == 11) {
+	} else if (gef_bard_q == 11) {
 		mes "[Kino Kitty]";
 		mes "A silver seal...?";
 		mes "Well, welcome to the wanderer's club. I must say, the silver crescent suits you.";
@@ -1823,13 +1827,13 @@ morocc,134,111,3	script	Bard#3	741,{
 		mes "If you have that seal, Mr. Sketzi will permit you to read his books full of Norse songs.";
 		close;
 
-	} else if (bard_q > 19 && bard_q < 28) {
+	} else if (gef_bard_q > 19 && gef_bard_q < 28) {
 		mes "[Kino Kitty]";
 		mes "What business";
 		mes "do you have with me,";
 		mes "my friend?";
 		next;
-		if (bard_q == 24) {
+		if (gef_bard_q == 24) {
 			mes "^3355FFYou gave candy to the crying little girl, and relate the problem with the lyrics to Kino Kitty.^000000";
 			next;
 			mes "[Kino Kitty]";
@@ -1881,7 +1885,7 @@ morocc,134,111,3	script	Bard#3	741,{
 			mes "[Kino Kitty]";
 			mes "^333333^333333*Cough Cough*^000000^000000";
 			mes "Wh-why do I have to suffer? Are my final days as a Bard on this earth soon approaching? I feel so pathetic...";
-			set bard_q,10;
+			set gef_bard_q,10;
 			close;
 
 		} else {
@@ -1996,7 +2000,7 @@ morocc,134,111,3	script	Bard#3	741,{
 			close;
 		
 		} else {
-			if (bard_q == 2) {
+			if (gef_bard_q == 2) {
 				mes "[Mysterious Bard]";
 				mes "You're such a kind, young person. I will remember your name. I would much appreciate it if you would also remember mine.";
 				next;
@@ -2005,10 +2009,10 @@ morocc,134,111,3	script	Bard#3	741,{
 				next;
 				mes "[Kino Kitty]";
 				mes "When next we meet, I will tell you what I have heard and experienced. That is, I am willing to spend my time with you.";
-				set bard_q,22;
+				set gef_bard_q,22;
 				close;
 
-			} else if (bard_q == 3) {
+			} else if (gef_bard_q == 3) {
 				mes "[Mysterious Bard]";
 				mes "You're such a kind, young person. I will remember your name. I would much appreciate it if you would also remember mine.";
 				next;
@@ -2017,10 +2021,10 @@ morocc,134,111,3	script	Bard#3	741,{
 				next;
 				mes "[Kino Kitty]";
 				mes "When next we meet, I will tell you what I have heard and experienced. That is, I am willing to spend my time with you.";
-				set bard_q,23;
+				set gef_bard_q,23;
 				close;
 
-			} else if (bard_q == 4) {
+			} else if (gef_bard_q == 4) {
 				mes "[Mysterious Bard]";
 				mes "Oh, you're most admirable. You truly do respect Bards, don't you?";
 				next;
@@ -2082,7 +2086,7 @@ morocc,134,111,3	script	Bard#3	741,{
 					mes "[Kino Kitty]";
 					mes "^333333^333333*Cough Cough*^000000^000000";
 					mes "Wh-why do I have to suffer? Are my final days as a Bard on this earth soon approaching? I feel so pathetic...";
-					set bard_q,10;
+					set gef_bard_q,10;
 					close;
 
 				} else {
@@ -2103,7 +2107,7 @@ morocc,134,111,3	script	Bard#3	741,{
 					next;
 					mes "[Kino Kitty]";
 					mes "When next we meet, I will tell you what I have heard and experienced. That is, I am willing to spend my time with you.";
-					set bard_q,20;
+					set gef_bard_q,20;
 					close;
 
 				} else {
@@ -2112,7 +2116,7 @@ morocc,134,111,3	script	Bard#3	741,{
 					next;
 					mes "[Mysterious Bard]";
 					mes "My lady, fair as wisteria, whose beauty rivals that of the goddess Freya, let me introduce myself as the poor poet who wanders the earth, Kino Kitty. I hope you remember me.";
-					set bard_q,20;
+					set gef_bard_q,20;
 					close;
 				}
 			}
@@ -2121,7 +2125,7 @@ morocc,134,111,3	script	Bard#3	741,{
 }
 
 morocc,132,111,3	script	Little Girl#Jorti	703,{
-	if (bard_q > 9 && bard_q < 30) {
+	if (gef_bard_q > 9 && gef_bard_q < 30) {
 		mes "[Jorti]";
 		mes "Jorti tries not to cry anymore because it hurts Uncle Kino and then he coughs up more blood.";
 		next;
@@ -2138,7 +2142,7 @@ morocc,132,111,3	script	Little Girl#Jorti	703,{
 		mes "U-Uncle Kino says we can't go see her yet because there are no flying boats yet...";
 		close;
 
-	} else if (bard_q == 30) {
+	} else if (gef_bard_q == 30) {
 		mes "[Jorti]";
 		mes "La la la...";
 		mes "La la la...";
@@ -2152,7 +2156,7 @@ morocc,132,111,3	script	Little Girl#Jorti	703,{
 		mes "Hey... The shiny black cross on your hand means you're a friend of Uncle Kino's. So that means, you're my friend too!";
 		close;
 
-	} else if (bard_q > 30) {
+	} else if (gef_bard_q > 30) {
 		mes "[Jorti]";
 		mes "Jorti tries not to cry anymore because it hurts Uncle Kino and then he coughs up more blood.";
 		mes "I miss my mommy a lot, but when I'm worried, it makes Uncle Kino worry a lot too.";
@@ -2187,23 +2191,23 @@ morocc,132,111,3	script	Little Girl#Jorti	703,{
 }
 
 yuno_in01,172,100,3	script	Old Man#bq1	712,{
-	if (bard_q > 11 && bard_q < 20) {
+	if (gef_bard_q > 11 && gef_bard_q < 20) {
 		mes "[Sketzi Bundin]";
 		mes "Well, did you find what you were seeking for? Although all we have are old, dusty books, I hope you come by to visit. And please give my regards to your Bard friends.";
 		close;
 
-	} else if (bard_q == 30) {
+	} else if (gef_bard_q == 30) {
 		mes "[Sketzi Bundin]";
 		mes "Interesting...";
 		mes "You have a black cross seal on your hand. Is Kitty still around? I'm glad to see he's still alive. If you're a friend of his, then you are most welcome here.";
 		close;
 
-	} else if (bard_q == 31) {
+	} else if (gef_bard_q == 31) {
 		mes "[Sketzi Bundin]";
 		mes "Well, well, well. You're here again. So, what kind of books are you seeking today? Of course, all we have are old, dusty tomes full of eddas. Hahahaha~";
 		close;
 
-	} else if (bard_q == 11) {
+	} else if (gef_bard_q == 11) {
 		mes "[Sketzi Bundin]";
 		mes "Welcome.";
 		mes "You must be looking for something special. Well, we have almost every Norse poem, or 'edda.' This is the only place where you can find those kinds of old songs.";
@@ -2225,7 +2229,7 @@ yuno_in01,172,100,3	script	Old Man#bq1	712,{
 			mes "I hope you find";
 			mes "what you're";
 			mes "looking for.";
-			set bard_q,12;
+			set gef_bard_q,12;
 			close;
 
 		} else {
@@ -2251,7 +2255,7 @@ yuno_in01,172,100,3	script	Old Man#bq1	712,{
 
 yuno_in01,163,101,0	script	Old Book#bq	111,{
 	set @name$,strcharinfo(0);
-	if ((bard_q > 11) && (bard_q < 14)) {
+	if ((gef_bard_q > 11) && (gef_bard_q < 14)) {
 		if (!rand(5)) {
 			mes "^3355FFYou opened the book. There's a crisp brittleness to the pages, and the letters are faded and barely readable. You can't even identify the author's name.^000000";
 			next;
@@ -2288,7 +2292,7 @@ yuno_in01,163,101,0	script	Old Book#bq	111,{
 			mes "Love finally blossoms.";
 			next;
 			mes "^3355FFYou copy down the final lines, and keep them in a note inside your pocket.";
-			set bard_q,15;
+			set gef_bard_q,15;
 			close;
 
 		} else {
@@ -2306,7 +2310,7 @@ yuno_in01,163,101,0	script	Old Book#bq	111,{
 
 
 yuno_in01,173,96,0	script	Luke's Songs Vol.1	111,{
-	if (bard_q > 11) {
+	if (gef_bard_q > 11) {
 		mes "[Preface]";
 		mes "I, Luke of Izlude, greatest of Bards in my time, leave the lyrics of my essential songs for posterity.";
 		mes " ";
@@ -2412,7 +2416,7 @@ yuno_in01,173,96,0	script	Luke's Songs Vol.1	111,{
 }
 
 yuno_in01,173,94,0	script	Battle Songs	111,{
-	if (bard_q > 11) {
+	if (gef_bard_q > 11) {
 		mes "[Drumming in the battlefield]";
 		mes "This song was written to give courage to soldiers on the battlefield.";
 		next;
@@ -2457,7 +2461,7 @@ yuno_in01,173,94,0	script	Battle Songs	111,{
 
 
 yuno_in01,173,92,0	script	Apple of Idun	111,{
-	if (bard_q > 11) {
+	if (gef_bard_q > 11) {
 		mes "[Apple of Idun]";
 		mes "This song praises the golden apples of the goddess Idun. These were the source of the God's power, as it prevented them from growing old.";
 		next;
@@ -2523,7 +2527,7 @@ yuno_in01,173,92,0	script	Apple of Idun	111,{
 
 payon,181,172,3	script	Bard#4	51,{
 	set @name$,strcharinfo(0);
-	if (bard_q == 2 || bard_q == 22) {
+	if (gef_bard_q == 2 || gef_bard_q == 22) {
 		mes "[Gunther Doubleharmony]";
 		mes "Hahaha~!";
 		mes "Listen, listen!";
@@ -2562,8 +2566,8 @@ payon,181,172,3	script	Bard#4	51,{
 				next;
 				mes "[Gunther Doubleharmony]";
 				mes "There you go! Now you can go back to Minty Errende and show him your back and he will see what I wrote and then remember the lyrics!";
-				if (bard_q == 2) set bard_q,3;
-				if (bard_q == 22) set bard_q,23;
+				if (gef_bard_q == 2) set gef_bard_q,3;
+				if (gef_bard_q == 22) set gef_bard_q,23;
 				close;
 
 			} else {
@@ -2578,7 +2582,7 @@ payon,181,172,3	script	Bard#4	51,{
 			close;
 		}
 
-	} else if (bard_q == 6 || bard_q == 26) {
+	} else if (gef_bard_q == 6 || gef_bard_q == 26) {
 		mes "[Gunther Doubleharmony]";
 		mes "You came back again!";
 		mes "Huh, the song I wrote on your back? Hold on, hold on, let me think let me--ah, right, I got it!";
@@ -2894,7 +2898,7 @@ yuno_in04,20,123,7	script	Representative#bq	95,{
 	next;
 	mes "[Marlin Putiur]";
 	mes "You can use the report documentation form in this room at your convenience.";
-	if (bard_q == 4 || bard_q == 24) {
+	if (gef_bard_q == 4 || gef_bard_q == 24) {
 		next;
 		mes "[Marlin Putiur]";
 		mes "Hmmm?";

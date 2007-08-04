@@ -24,7 +24,7 @@
 moc_prydb1,39,129,2	script	Thief Guide	69,{
 	if (Upper == 1) {
 		if (ADVJOB == Job_Assassin_Cross || ADVJOB == Job_Stalker) {
-			if (BaseJob == Job_Novice_High) {
+			if (Class == Job_Novice_High) {
 				mes "[Thief Guide]";
 				mes "Huh? Do I know you? It's creepy that you seem so familiar. You don't have a twin, do you?";
 				next;
