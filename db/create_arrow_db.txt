@@ -206,6 +206,8 @@
 7069,1753,150
 //Burning Heart --> 150 Fire Arrows
 7097,1752,150
+//Live Coal --> 100 Fire Arrows
+7098,1752,100
 //Sharp Leaf --> 30 Sharp Arrows
 7100,1764,30
 //Piece of Shield --> 100 Steel Arrows, 100 Oridecon Arrows, 300 Immaterial Arrows
@@ -214,6 +216,8 @@
 7109,1765,100
 //Burning Horseshoe --> 100 Steel Arrows
 7120,1753,100
+//Dragon Skin --> 10 Steel Arrows, 50 Cursed Arrows, 50 Mute Arrows
+7123,1753,10,1761,50,1769,50
 //Piece of Bamboo --> 100 Arrows
 7150,1750,100
 //Poisonous Toad Skin --> 20 Poison Arrows
@@ -226,20 +230,51 @@
 7172,1764,10
 //Armor Piece of Dullahan --> 150 Arrows of Shadow
 7210,1767,150
+//Tangled Chain --> 50 Steel Arrows, 50 Arrows of Shadow
+7221,1753,50,1767,50
 //Cat's Eye Stone --> 200 Arrows of Wind
 7263,1755,200
 //Dark Crystal Fragment --> 30 Cursed Arrows, 50 Arrows of Shadow
 7315,1761,30,1767,50
+//Insect Leg --> 10 Sharp Arrows, 50 Poison Arrows
+7316,1764,10,1763,50
+//Old Pick --> 100 Rusty Arrows, 50 Steel Arrows
+7318,1762,100,1753,50
+//Used Iron Plate --> 100 Steel Arrows, 100 Rusty Arrows
+7319,1753,100,1762,100
+//Crystal Fragment --> 10 Flash Arrows, 30 Sleep Arrows
+7321,1760,10,1768,30
 //Battered Kettle --> 50 Steel Arrows
 7323,1753,50
+//Will of the Darkness --> 30 Cursed Arrows, 30 Poison Arrows, 50 Arrows of Shadow
+7340,1761,30,1763,30,1767,50
 //Golden Ornament --> 200 Silver Arrows, 300 Holy Arrows
 7435,1751,200,1772,300
-//Rune of Darkness -> 300 Arrows of Shadow, 150 Flash Arrows
+//Cursed Seal --> 50 Cursed Arrows, 50 Mute Arrows
+7442,1761,50,1769,50
+//Green Bijou --> 100 Stone Arrows, 80 Poison Arrows
+7445,1756,100,1763,80
+//Blue Bijou --> 50 Arrows of Wind, 50 Crystal Arrows, 80 Frozen Arrows
+7446,1755,50,1754,50,1759,80
+//Red Bijou --> 100 Fire Arrows, 80 Flash Arrows
+7447,1752,100,1760,80
+//Yellow Bijou --> 50 Silver Arrows, 50 Immaterial Arrows, 80 Sleep Arrows
+7448,1751,50,1757,50,1768,80
+//Skeletal Armor Piece --> 500 Immaterial Arrows, 200 Arrows of Shadow, 100 Oridecon Arrows
+7450,1757,500,1767,200,1765,100
+//Fire Dragon Scale --> 300 Fire Arrows, 300 Stun Arrows
+7451,1752,300,1758,300
+//Valhalla's Flower --> 600 Immaterial Arrows, 600 Holy Arrows, 600 Sharp Arrows
+7510,1757,600,1772,600,1764,600
+//Rune of Darkness --> 300 Arrows of Shadow, 150 Flash Arrows
 7511,1767,300,1760,150
+//Ice Heart --> 50 Crystal Arrows, 50 Frozen Arrows
+7561,1754,50,1759,50
+//Ice Scale --> 150 Crystal Arrows, 400 Frozen Arrows, 200 Mute Arrows
+7562,1754,150,1759,400,1769,200
+//Will of the Red Darkness --> 200 Cursed Arrows, 200 Poison Arrows, 100 Arrows of Shadow
+7566,1761,200,1763,200,1767,100
 
-//Unknown
-//Piece of Fire -> Fire Arrow 100 EA
-//Cursed One -> CUrsed Arrow 50, Silence Arrow 50 EA
-//Piece of Rock Crystal -> Flash Arrow 10, Sleep Arrow 30 EA
-//Will of the Darkness (1) -> Cursed Arrow 30, Poison Arrow 30, Shadow Arrow 50 EA
-//Will of the Darkness (2) -> Cursed Arrow 200, Poison Arrow 200, Shadow Arrow 100 EA
+//11.3 items
+//Crackling Skull -> Shadow Arrow 50, Cursed Arrow 50 EA
+//Broken Farm Tool -> Rusty Arrow 50, Iron Arrow 10, Cursed Arrow 20 EA

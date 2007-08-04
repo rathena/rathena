@@ -49,6 +49,7 @@
 	----
 ========================
 08/01
+	* Added the remaining arrow craftings [Playtester]
 	* Added some of the new arrow craftings for testing purposes [Playtester]
 	- some item names are still unknown, help needed
 	- fixed an item name
