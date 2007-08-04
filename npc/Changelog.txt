@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/08/04
+	* Fixed a nasty bug in Dandelion's Request. [SinSloth]
 2007/07/31
 	* Fixed north prontera kafra having an empty warp list
 	* Removed junk &#1038;A text from the 2004 headgears

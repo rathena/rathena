@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.4 Fixed a small bug in Dandelion's Request. [SinSloth]
 //= 1.5 Fixed a little bug with "Job_Alchemist" changed to "Job_Alchem". [Samuray22]
 //	-Thanks to Nobuo
+//= 1.6 Fixed a nasty bug in last part of the quest. [SinSloth]
 //============================================================ 
 
 
@@ -7904,13 +7905,13 @@ moc_castle,40,20,3	script	Man	849,{
 		mes "d-dedicate... Myself...";
 		mes "For the s-sacrifice!";
 		mes "^333333*Cough Cough!*^000000";
-		close2;
 		if(!$mao_gate1)
 		{
+			close2;
 			warp "que_job02",14,182;
 			set $mao_gate1,1;
+			end;
 		}
-		end;
 	}
 	else if(mao_request == 124 || mao_request == 125)
 	{
@@ -7922,14 +7923,15 @@ moc_castle,40,20,3	script	Man	849,{
 		mes "d-dedicate... Myself...";
 		mes "For the s-sacrifice!";
 		mes "^333333*Cough Cough!*^000000";
-		close2;
 		if(!$mao_gate2)
 		{
+			close2;
 			warp "que_job03",14,182;
 			set $mao_gate2,1;
+			end;
 		}
-		end;
 	}
+	close;
 
 OnInit:
 	set $mao_gate1,0;
