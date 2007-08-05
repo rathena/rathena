@@ -2,10 +2,10 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/cbasetypes.h"
+#include "../common/mmo.h"
 #include "../common/db.h"
 #include "../common/lock.h"
 #include "../common/malloc.h"
-#include "../common/mmo.h"
 #include "../common/core.h"
 #include "../common/socket.h"
 #include "../common/strlib.h"
@@ -1008,7 +1008,6 @@ void mmo_char_sync(void)
 	int i, j, k;
 	int lock;
 	FILE *fp,*f_fp;
-	//int *id = (int *) aMalloc(sizeof(int) * char_num);
 	CREATE_BUFFER(id, int, char_num);
 
 	// Sorting before save (by [Yor])
@@ -1034,7 +1033,6 @@ void mmo_char_sync(void)
 		char_log("WARNING: Server cannot save characters." RETCODE);
 	} else {
 		for(i = 0; i < char_num; i++) {
-			// create only once the line, and save it in the 2 files (it's speeder than repeat twice the loop and create twice the line)
 			mmo_char_tostr(line, &char_dat[id[i]].status, char_dat[id[i]].global, char_dat[id[i]].global_num); // use of sorted index
 			fprintf(fp, "%s" RETCODE, line);
 		}
