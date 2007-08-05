@@ -2728,9 +2728,9 @@ ra_in01,255,25,0	script	Book#ra_in	111,{
 //line below (npc header), and comment the line
 //under it, and then uncomment the cutin lines.
 
-//rachel,157,183,3	script	Sincere Follower Urstia	916,{
-rachel,157,183,3	script	Sincere Follower Urstia	917,{
-	//cutin "ra_usti1",2;
+//rachel,157,183,3	script	Sincere Follower Urstia	917,{
+rachel,157,183,3	script	Sincere Follower Urstia	916,{
+	cutin "ra_usti1",2;
 	if (ice_necklace_q < 1) {
 		mes "[Urstialla]";
 		mes "Oh, are you an adventurer";
@@ -2926,7 +2926,7 @@ rachel,157,183,3	script	Sincere Follower Urstia	917,{
 
 L_End:
 	close2;
-	//cutin "",255;
+	cutin "",255;
 	end;
 
 }
@@ -5900,7 +5900,7 @@ L_End:
 	end;
 }
 
-ra_temin,134,128,3	script	Pope's Office Guard#rac::raofficeguard	927,{
+ra_temin,134,128,3	script	Pope's Office Guard#rac::raofficeguard	926,{
 	if (MISC_QUEST & 8192) {
 		mes "[Pope's Office Guard]";
 		mes "I'm sorry, but the pope";
@@ -5961,7 +5961,7 @@ ra_temin,134,128,3	script	Pope's Office Guard#rac::raofficeguard	927,{
 
 }
 
-ra_temin,134,134,3	duplicate(raofficeguard)	Pope's Office Guard#2ra	927
+ra_temin,134,134,3	duplicate(raofficeguard)	Pope's Office Guard#2ra	926
 
 ra_temin,134,131,0	script	gyoin1#rachel	45,1,1,{
 OnTouch:
@@ -5991,14 +5991,14 @@ ra_temsky,95,99,6	script	Priest#1rachel	935,{
 	close;
 }
 
-ra_temsky,93,97,6	script	Male Follower#1rachel::ramale	927,{
+ra_temsky,93,97,6	script	Male Follower#1rachel::ramale	926,{
 	mes "[Male Follower]";
 	mes "May Freya be with you.";
 	close;
 }
 
-ra_temsky,90,95,6	duplicate(ramale)	Male Follower#2rachel	927
-ra_temsky,98,59,6	duplicate(ramale)	Male Follower#3rachel	927
+ra_temsky,90,95,6	duplicate(ramale)	Male Follower#2rachel	926
+ra_temsky,98,59,6	duplicate(ramale)	Male Follower#3rachel	926
 
 ra_temsky,104,99,4	script	Priestess#1rachel	920,{
 	mes "[Priestess]";
@@ -6006,14 +6006,14 @@ ra_temsky,104,99,4	script	Priestess#1rachel	920,{
 	close;
 }
 
-ra_temsky,106,97,4	script	Female Follower#1rachel::rafemale	917,{
+ra_temsky,106,97,4	script	Female Follower#1rachel::rafemale	916,{
 	mes "[Female Follower]";
 	mes "May Freya be with you.";
 	close;
 }
 
-ra_temsky,108,95,4	duplicate(rafemale)	Female Follower#2rachel	917
-ra_temsky,101,59,4	duplicate(rafemale)	Female Follower#3rachel	917
+ra_temsky,108,95,4	duplicate(rafemale)	Female Follower#2rachel	916
+ra_temsky,101,59,4	duplicate(rafemale)	Female Follower#3rachel	916
 
 ra_temsky,99,99,5	script	Pope#rachel	936,{
 	if (ra_tem_q == 16) {
@@ -6546,8 +6546,8 @@ OnTouch:
 	end;
 }
 
-//rachel,142,167,5	script	Seeking Follower#rachel	916,6,6,{
-rachel,142,167,5	script	Seeking Follower#rachel	917,6,6,{
+//rachel,142,167,5	script	Seeking Follower#rachel	917,6,6,{
+rachel,142,167,5	script	Seeking Follower#rachel	916,6,6,{
 	if ((lost_boy == 13) && (ra_tem_q == 20)) {
 		mes "[Arunafeltz Follower]";
 		mes "Excuse me, but";

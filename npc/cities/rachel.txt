@@ -210,9 +210,8 @@ ra_fild12,45,230,3	script	Airship Guide#Fild	934,{
 	close;
 }
 
-
-//rachel,201,174,3	script	Freya's Follower	926,{
-rachel,201,174,3	script	Freya's Follower	927,{
+//rachel,201,174,3	script	Freya's Follower	927,{
+rachel,201,174,3	script	Freya's Follower	926,{
 	mes "[Freya's Follower]";
 	mes "All of Arunafeltz believes";
 	mes "in the goddess Freya, but";
@@ -329,7 +328,7 @@ rachel,197,137,3	script	Bard#aru	51,{
 	close;
 }
 
-ra_temple,148,91,3	script	Follower Akarna	917,{
+ra_temple,148,91,3	script	Follower Akarna	916,{
 	mes "[Follower Akarna]";
 	mes "Cheshrumnir...";
 	mes "It is said that one";
@@ -340,7 +339,7 @@ ra_temple,148,91,3	script	Follower Akarna	917,{
 	close;
 }
 
-ra_temple,115,148,7	script	Follower Yakum	917,{
+ra_temple,115,148,7	script	Follower Yakum	916,{
 	mes "[Follower Yakum]";
 	mes "......";
 	mes ".........";
@@ -354,7 +353,7 @@ ra_temple,115,148,7	script	Follower Yakum	917,{
 	close;
 }
 
-ra_temin,287,88,7	script	Follower Lekua	927,{
+ra_temin,287,88,7	script	Follower Lekua	926,{
 	mes "[Follower Lekua]";
 	mes "Look at these flowers.";
 	mes "Aren't they so beautiful?";
@@ -370,8 +369,8 @@ ra_temin,287,88,7	script	Follower Lekua	927,{
 	close;
 }
 
-//ra_temin,228,303,5	script	Freya's Follower#in1	926,{
-ra_temin,228,303,5	script	Freya's Follower#in1	927,{
+//ra_temin,228,303,5	script	Freya's Follower#in1	927,{
+ra_temin,228,303,5	script	Freya's Follower#in1	926,{
 	mes "[Freya's Follower]";
 	mes "Once atain, I didn't get";
 	mes "any sleep yesterday... I'm";
@@ -382,8 +381,8 @@ ra_temin,228,303,5	script	Freya's Follower#in1	927,{
 	close;
 }
 
-//ra_temin,230,303,3	script	Freya's Follower#in2	926,{
-ra_temin,230,303,3	script	Freya's Follower#in2	927,{
+//ra_temin,230,303,3	script	Freya's Follower#in2	927,{
+ra_temin,230,303,3	script	Freya's Follower#in2	926,{
 	mes "[Freya's Follower]";
 	mes "You have done well,";
 	mes "my brother. I am certain";
