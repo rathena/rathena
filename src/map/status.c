@@ -46,7 +46,7 @@ unsigned long StatusChangeFlagTable[SC_MAX]; //Stores the flag specifying what t
 static int max_weight_base[MAX_PC_CLASS];
 static int hp_coefficient[MAX_PC_CLASS];
 static int hp_coefficient2[MAX_PC_CLASS];
-static int hp_sigma_val[MAX_PC_CLASS][MAX_LEVEL];
+static int hp_sigma_val[MAX_PC_CLASS][MAX_LEVEL+1];
 static int sp_coefficient[MAX_PC_CLASS];
 static int aspd_base[MAX_PC_CLASS][MAX_WEAPON_TYPE];	//[blackhole89]
 static int refinebonus[MAX_REFINE_BONUS][3];	// 精錬ボーナステーブル(refine_db.txt)
@@ -1469,26 +1469,50 @@ int status_calc_pet(struct pet_data *pd, int first)
 	return 1;
 }	
 
-static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct status_data *status)
+/// Helper function for status_base_pc_maxhp(), used to pre-calculate the hp_sigma_val[] array
+static void status_calc_sigma(void)
+{
+	int i,j;
+
+	for(i = 0; i < MAX_PC_CLASS; i++)
+	{
+		unsigned int k = 0;
+		hp_sigma_val[i][0] = hp_sigma_val[i][1] = 0;
+		for(j = 2; j <= MAX_LEVEL; j++)
+		{
+			k += (hp_coefficient[i]*j + 50) / 100;
+			hp_sigma_val[i][j] = k;
+			if (k >= INT_MAX)
+				break; //Overflow protection. [Skotlex]
+		}
+		for(; j <= MAX_LEVEL; j++)
+			hp_sigma_val[i][j] = INT_MAX;
+	}
+}
+
+/// Calculates base MaxHP value according to class and base level
+/// The recursive equation used to calculate level bonus is (using integer operations)
+///    f(0) = 35 | f(x+1) = f(x) + A + (x + B)*C/D
+/// which reduces to something close to
+///    f(x) = 35 + x*(A + B*C/D) + sum(i=2..x){ i*C/D }
+static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct status_data* status)
 {
 	unsigned int val;
-	val = (3500 + sd->status.base_level*hp_coefficient2[sd->status.class_]
-		+ hp_sigma_val[sd->status.class_][sd->status.base_level-1])/100
-		* (100 + status->vit)/100 + sd->param_equip[2];
-	if (sd->class_&JOBL_UPPER)
-		val += val * 25/100;
-	else if (sd->class_&JOBL_BABY)
-		val -= val * 30/100;
 
-	if((sd->class_&MAPID_UPPERMASK) == MAPID_NINJA || 
-		(sd->class_&MAPID_UPPERMASK) == MAPID_GUNSLINGER)
+	val = 35 + sd->status.base_level*hp_coefficient2[sd->status.class_]/100 + hp_sigma_val[sd->status.class_][sd->status.base_level];
+	val += val * status->vit/100; // +1% per each point of VIT
+
+	if (sd->class_&JOBL_UPPER)
+		val += val * 25/100; //Trans classes get a 25% hp bonus
+	else if (sd->class_&JOBL_BABY)
+		val -= val * 30/100; //Baby classes get a 30% hp penalty
+
+	if((sd->class_&MAPID_UPPERMASK) == MAPID_NINJA || (sd->class_&MAPID_UPPERMASK) == MAPID_GUNSLINGER)
 		val += 100; //Since their HP can't be approximated well enough without this.
-	if((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON &&
-		sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON))
+	if((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && sd->status.base_level >= 90 && pc_famerank(sd->status.char_id, MAPID_TAEKWON))
 		val *= 3; //Triple max HP for top ranking Taekwons over level 90.
-	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE &&
-		sd->status.base_level >= 99)
-		val += 2000;
+	if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
+		val += 2000; //Supernovice lvl99 hp bonus.
 
 	return val;
 }
@@ -1496,8 +1520,10 @@ static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct sta
 static unsigned int status_base_pc_maxsp(struct map_session_data* sd, struct status_data *status)
 {
 	unsigned int val;
-	val = (1000 + sd->status.base_level*sp_coefficient[sd->status.class_])/100
-		* (100 + status->int_)/100 + sd->param_equip[3];
+
+	val = 10 + sd->status.base_level*sp_coefficient[sd->status.class_]/100;
+	val += val * status->int_/100;
+
 	if (sd->class_&JOBL_UPPER)
 		val += val * 25/100;
 	else if (sd->class_&JOBL_BABY)
@@ -7218,26 +7244,6 @@ static int status_natural_heal_timer(int tid,unsigned int tick,int id,int data)
 	natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
 	map_foreachiddb(status_natural_heal);
 	natural_heal_prev_tick = tick;
-	return 0;
-}
-
-static int status_calc_sigma(void)
-{
-	int i,j;
-	unsigned int k;
-
-	for(i=0;i<MAX_PC_CLASS;i++) {
-		memset(hp_sigma_val[i],0,sizeof(hp_sigma_val[i]));
-		for(k=0,j=2;j<=MAX_LEVEL;j++) {
-			k += hp_coefficient[i]*j + 50;
-			k -= k%100;
-			hp_sigma_val[i][j-1] = k;
-			if (k >= INT_MAX)
-				break; //Overflow protection. [Skotlex]
-		}
-		for(;j<=MAX_LEVEL;j++)
-			hp_sigma_val[i][j-1] = INT_MAX;
-	}
 	return 0;
 }
 
