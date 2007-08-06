@@ -152,7 +152,7 @@ function	script	GF_getJobName	{
 		return "baby sage";
 	case Job_Baby_BlackSmith:
 		return "baby blacksmith";
-	case Job_Baby_Alchem:
+	case Job_Baby_Alchemist:
 		return "baby alchemist";
 	case Job_Baby_Knight:
 	case Job_Baby_Knight2:

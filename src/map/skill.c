@@ -9684,6 +9684,7 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 	struct skill_unit *unit;
 
 	nullpo_retr(NULL, group);
+	nullpo_retr(NULL, group->unit); // crash-protection against poor coding
 	nullpo_retr(NULL, unit=&group->unit[idx]);
 
 	if(!unit->alive)

@@ -48,8 +48,11 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+08/06
+	* Added custom Hollow Poring mob_db2 entry
+	* Added Job_Baby_Alchemist define to complement the Job_Alchemist update
 08/04
-	* Added missing /blackmith packet action to packet_db.txt
+	* Added missing /blacksmith packet action to packet_db.txt
 	* Removed "eathena's custom equipped mobs" from mob&skill db [ultramage]
 08/01
 	* Added the remaining arrow craftings [Playtester]

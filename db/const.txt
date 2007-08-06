@@ -69,6 +69,7 @@ Job_Baby_Monk	4038
 Job_Baby_Sage	4039
 Job_Baby_Rogue	4040
 Job_Baby_Alchem	4041
+Job_Baby_Alchemist	4041
 Job_Baby_Bard	4042
 Job_Baby_Dancer	4043
 Job_Baby_Crusader2	4044

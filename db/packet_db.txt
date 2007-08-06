@@ -995,7 +995,7 @@ packet_ver: 22
 //2007-05-07aSakexe
 0x01fd,15,repairitem,2
 
-//2007-07-11aSakexe (grouped changes between this and 2007-02-27aSakexe)
+//2007-07-31aSakexe (grouped changes between this and 2007-02-27aSakexe)
 0x0288,10
 0x0289,12
 0x02a6,22
@@ -1006,7 +1006,8 @@ packet_ver: 22
 0x02ae,10
 0x02af,2
 0x02b0,85
-0x02b3,7
+0x02b1,-1
+0x02b3,31
 0x02b4,6
 0x02b5,12
 0x02b6,7
