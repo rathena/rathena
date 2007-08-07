@@ -3766,7 +3766,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			if (pd->vd.head_bottom)
 			{
 				//TODO: adjust clif_pet_equip() to support a 'target', then rewrite this mess into a function call
-        			int fd = sd->fd;
+				int fd = sd->fd;
 				WFIFOHEAD(fd,packet_len(0x1a4));
 				WFIFOW(fd,0) = 0x1a4;
 				WFIFOB(fd,2) = 3;
@@ -7482,7 +7482,7 @@ int clif_refresh(struct map_session_data *sd)
 	nullpo_retr(-1, sd);
 	clif_changemap(sd,sd->mapindex,sd->bl.x,sd->bl.y);
 	clif_inventorylist(sd);
-	if(pc_iscarton(sd)){
+	if(pc_iscarton(sd)) {
 		clif_cartlist(sd);
 		clif_updatestatus(sd,SP_CARTINFO);
 	}

@@ -49,7 +49,7 @@
  60:@charblock/@block <char name> - Blocks definitively a account
  60:@charunblock/@unblock <char name> - Unblocks a account
  60:@charban/@ban/@banish/@charbanish <time> <name> - Ban temporarily a account
- 60:	time usage: adjustement (+/- value) and element (y/a, m, d/j, h, mn, s)
+ 60:	time usage: adjustment (+/- value) and element (y/a, m, d/j, h, mn, s)
  60:	Example: @ban +1m-2mn1s-6y testplayer
  60:@charunban/@unban/@unbanish/@charunbanish <name> - Unban a account
  60:@jail <char name> - Sends specified character in jails

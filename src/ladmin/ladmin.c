@@ -1337,7 +1337,7 @@ int banaddaccount(char* param)
 			ladmin_log("Ajustement de l'année hors norme (commande 'banadd')." RETCODE);
 		} else {
 			ShowMessage("Please give a correct adjustment for the years (from -127 to 127).\n");
-			ladmin_log("Abnormal adjustement for the year ('banadd' command)." RETCODE);
+			ladmin_log("Abnormal adjustment for the year ('banadd' command)." RETCODE);
 		}
 		return 137;
 	}
@@ -1347,7 +1347,7 @@ int banaddaccount(char* param)
 			ladmin_log("Ajustement du mois hors norme (commande 'banadd')." RETCODE);
 		} else {
 			ShowMessage("Please give a correct adjustment for the months (from -255 to 255).\n");
-			ladmin_log("Abnormal adjustement for the month ('banadd' command)." RETCODE);
+			ladmin_log("Abnormal adjustment for the month ('banadd' command)." RETCODE);
 		}
 		return 137;
 	}
@@ -1357,7 +1357,7 @@ int banaddaccount(char* param)
 			ladmin_log("Ajustement des jours hors norme (commande 'banadd')." RETCODE);
 		} else {
 			ShowMessage("Please give a correct adjustment for the days (from -32767 to 32767).\n");
-			ladmin_log("Abnormal adjustement for the days ('banadd' command)." RETCODE);
+			ladmin_log("Abnormal adjustment for the days ('banadd' command)." RETCODE);
 		}
 		return 137;
 	}
@@ -1367,7 +1367,7 @@ int banaddaccount(char* param)
 			ladmin_log("Ajustement des heures hors norme (commande 'banadd')." RETCODE);
 		} else {
 			ShowMessage("Please give a correct adjustment for the hours (from -32767 to 32767).\n");
-			ladmin_log("Abnormal adjustement for the hours ('banadd' command)." RETCODE);
+			ladmin_log("Abnormal adjustment for the hours ('banadd' command)." RETCODE);
 		}
 		return 137;
 	}
@@ -1377,7 +1377,7 @@ int banaddaccount(char* param)
 			ladmin_log("Ajustement des minutes hors norme (commande 'banadd')." RETCODE);
 		} else {
 			ShowMessage("Please give a correct adjustment for the minutes (from -32767 to 32767).\n");
-			ladmin_log("Abnormal adjustement for the minutes ('banadd' command)." RETCODE);
+			ladmin_log("Abnormal adjustment for the minutes ('banadd' command)." RETCODE);
 		}
 		return 137;
 	}
@@ -1387,7 +1387,7 @@ int banaddaccount(char* param)
 			ladmin_log("Ajustement des secondes hors norme (commande 'banadd')." RETCODE);
 		} else {
 			ShowMessage("Please give a correct adjustment for the seconds (from -32767 to 32767).\n");
-			ladmin_log("Abnormal adjustement for the seconds ('banadd' command)." RETCODE);
+			ladmin_log("Abnormal adjustment for the seconds ('banadd' command)." RETCODE);
 		}
 		return 137;
 	}
@@ -2717,7 +2717,7 @@ int timeaddaccount(char* param)
 			ladmin_log("Ajustement de l'année hors norme ('timeadd' command)." RETCODE);
 		} else {
 			ShowMessage("Please give a correct adjustment for the years (from -127 to 127).\n");
-			ladmin_log("Abnormal adjustement for the year ('timeadd' command)." RETCODE);
+			ladmin_log("Abnormal adjustment for the year ('timeadd' command)." RETCODE);
 		}
 		return 137;
 	}
@@ -2727,7 +2727,7 @@ int timeaddaccount(char* param)
 			ladmin_log("Ajustement du mois hors norme ('timeadd' command)." RETCODE);
 		} else {
 			ShowMessage("Please give a correct adjustment for the months (from -255 to 255).\n");
-			ladmin_log("Abnormal adjustement for the month ('timeadd' command)." RETCODE);
+			ladmin_log("Abnormal adjustment for the month ('timeadd' command)." RETCODE);
 		}
 		return 137;
 	}
@@ -2737,7 +2737,7 @@ int timeaddaccount(char* param)
 			ladmin_log("Ajustement des jours hors norme ('timeadd' command)." RETCODE);
 		} else {
 			ShowMessage("Please give a correct adjustment for the days (from -32767 to 32767).\n");
-			ladmin_log("Abnormal adjustement for the days ('timeadd' command)." RETCODE);
+			ladmin_log("Abnormal adjustment for the days ('timeadd' command)." RETCODE);
 		}
 		return 137;
 	}
@@ -2747,7 +2747,7 @@ int timeaddaccount(char* param)
 			ladmin_log("Ajustement des heures hors norme ('timeadd' command)." RETCODE);
 		} else {
 			ShowMessage("Please give a correct adjustment for the hours (from -32767 to 32767).\n");
-			ladmin_log("Abnormal adjustement for the hours ('timeadd' command)." RETCODE);
+			ladmin_log("Abnormal adjustment for the hours ('timeadd' command)." RETCODE);
 		}
 		return 137;
 	}
@@ -2757,7 +2757,7 @@ int timeaddaccount(char* param)
 			ladmin_log("Ajustement des minutes hors norme ('timeadd' command)." RETCODE);
 		} else {
 			ShowMessage("Please give a correct adjustment for the minutes (from -32767 to 32767).\n");
-			ladmin_log("Abnormal adjustement for the minutes ('timeadd' command)." RETCODE);
+			ladmin_log("Abnormal adjustment for the minutes ('timeadd' command)." RETCODE);
 		}
 		return 137;
 	}
@@ -2767,7 +2767,7 @@ int timeaddaccount(char* param)
 			ladmin_log("Ajustement des secondes hors norme ('timeadd' command)." RETCODE);
 		} else {
 			ShowMessage("Please give a correct adjustment for the seconds (from -32767 to 32767).\n");
-			ladmin_log("Abnormal adjustement for the seconds ('timeadd' command)." RETCODE);
+			ladmin_log("Abnormal adjustment for the seconds ('timeadd' command)." RETCODE);
 		}
 		return 137;
 	}

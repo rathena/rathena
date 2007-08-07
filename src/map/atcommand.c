@@ -2594,7 +2594,7 @@ int atcommand_baselevelup(const int fd, struct map_session_data* sd, const char*
 	level = atoi(message);
 
 	if (!message || !*message || !level) {
-		clif_displaymessage(fd, "Please, enter a level adjustement (usage: @lvup/@blevel/@baselvlup <number of levels>).");
+		clif_displaymessage(fd, "Please, enter a level adjustment (usage: @lvup/@blevel/@baselvlup <number of levels>).");
 		return -1;
 	}
 
@@ -2655,7 +2655,7 @@ int atcommand_joblevelup(const int fd, struct map_session_data* sd, const char* 
 	level = atoi(message);
 
 	if (!message || !*message || !level) {
-		clif_displaymessage(fd, "Please, enter a level adjustement (usage: @joblvup/@jlevel/@joblvlup <number of levels>).");
+		clif_displaymessage(fd, "Please, enter a level adjustment (usage: @joblvup/@jlevel/@joblvlup <number of levels>).");
 		return -1;
 	}
 	if (level > 0) {

@@ -4139,8 +4139,7 @@ int char_config_read(const char *cfgName)
 		} else if(strcmpi(w1,"db_path")==0) {
 			strcpy(db_path,w2);
 		} else if (strcmpi(w1, "console") == 0) {
-			if(strcmpi(w2,"on") == 0 || strcmpi(w2,"yes") == 0 )
-				console = 1;
+			console = config_switch(w2);
 		} else if (strcmpi(w1, "fame_list_alchemist") == 0) {
 			fame_list_size_chemist = atoi(w2);
 			if (fame_list_size_chemist > MAX_FAME_LIST) {

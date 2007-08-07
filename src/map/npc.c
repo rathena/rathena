@@ -2580,7 +2580,7 @@ static int npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4)
 	}
 	else if (strcmpi(w3,"gvg")==0) {
 		map[m].flag.gvg=state;
-		if (state && map[m].flag.pvp) 
+		if (state && map[m].flag.pvp)
 		{
 			map[m].flag.pvp=0;
 			ShowWarning("You can't set PvP and GvG flags for the same map! Removing PvP flag from %s\n", map[m].name);
