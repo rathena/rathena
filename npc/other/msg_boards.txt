@@ -21,6 +21,7 @@
 //= Fixed spelling mistakes. [Nexon]
 //= 1.3 Removed Duplicates [Silent]
 //= 1.4 Rescripted to Aegis 10.3 standard. [L0ne_W0lf]
+//= 1.5 Removed a duplicate related to the Sign Quest. [SinSloth]
 //============================================================
 
 // Prontera
@@ -82,13 +83,7 @@ prontera,165,305,1	script	Billboard#PrtSign6	111,{
 	close;
 }
 
-prontera,147,305,1	script	Sign#PrtSign7	111,{
-	mes "^993300- The Sign Reads -^000000";
-	mes "- Old, torn gibberish you can't read -";
-	close;
-}
-
-prontera,145,304,1	script	Sign#PrtSign8	111,{
+prontera,145,304,1	script	Sign#PrtSign7	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Note:";
 	mes "I lost my cart in Mt. Mjolnir, if someone finds it please tell me, my life was in that bucket of goods!";

@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/08/07
+	* Removed a duplicate related to the Sign Quest. [SinSloth]
 2007/08/05
 	* Set default Rachel NPCs as kRO ones (with mask).No more debate please. [SinSloth]
 	* Fixed a wrong item ID in Socket Enchant NPC. [SinSloth]
