@@ -4215,7 +4215,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(warpwaitingpc,"sii?"),
 	BUILDIN_DEF(attachrid,"i"),
 	BUILDIN_DEF(detachrid,""),
-	BUILDIN_DEF(isloggedin,"i"),
+	BUILDIN_DEF(isloggedin,"i?"),
 	BUILDIN_DEF(setmapflagnosave,"ssii"),
 	BUILDIN_DEF(setmapflag,"si*"),
 	BUILDIN_DEF(removemapflag,"si"),
@@ -5116,6 +5116,26 @@ BUILDIN_FUNC(warpparty)
 					continue;			
 				pc_setpos(pl_sd,mapindex,x,y,3);
 			}
+		}
+	}
+	else if(strcmp(str,"Leader")==0)
+	{
+		for(i = 0; i < MAX_PARTY && !p->party.member[i].leader; i++);
+		if (i == MAX_PARTY || !p->data[i].sd) //Leader not found / not online
+			return 0;
+		if(map[p->data[i].sd->bl.m].flag.nowarpto)
+			return 0;
+		mapindex = p->data[i].sd->mapindex;
+		x = p->data[i].sd->bl.x;
+		y = p->data[i].sd->bl.y;
+		for (i = 0; i < MAX_PARTY; i++)
+		{
+			pl_sd = p->data[i].sd;
+			if (!pl_sd)
+				continue;
+			if(map[pl_sd->bl.m].flag.noreturn || map[pl_sd->bl.m].flag.nowarp)
+				continue;
+			pc_setpos(pl_sd,mapindex,x,y,3);
 		}
 	}
 	else
@@ -9195,8 +9215,11 @@ BUILDIN_FUNC(detachrid)
  *------------------------------------------*/
 BUILDIN_FUNC(isloggedin)
 {
-	push_val(st->stack,C_INT, map_id2sd(
-		script_getnum(st,2) )!=NULL );
+	TBL_PC* sd = map_id2sd(script_getnum(st,2));
+	if (script_hasdata(st,3) && sd &&
+		sd->status.char_id != script_getnum(st,3))
+		sd = NULL;
+	push_val(st->stack,C_INT,sd!=NULL);
 	return 0;
 }
 

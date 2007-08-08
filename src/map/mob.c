@@ -56,6 +56,12 @@ struct mob_db *mob_db(int index) { if (index < 0 || index > MAX_MOB_DB || mob_db
 
 static struct eri *item_drop_ers; //For loot drops delay structures.
 static struct eri *item_drop_list_ers;
+
+static struct {
+	int qty;
+	int class_[150];
+} summon[MAX_RANDOMMONSTER];
+
 #define CLASSCHANGE_BOSS_NUM 21
 
 /*==========================================
@@ -249,7 +255,10 @@ int mob_get_random_id(int type, int flag, int lv)
 		return 0;
 	}
 	do {
-		class_ = rand() % MAX_MOB_DB;
+		if (type)
+			class_ = summon[type].class_[rand()%summon[type].qty];
+		else //Dead branch
+			class_ = rand() % MAX_MOB_DB;
 		mob = mob_db(class_);
 	} while ((mob == mob_dummy ||
 		mob_is_clone(class_) ||
@@ -986,7 +995,7 @@ int mob_unlocktarget(struct mob_data *md,int tick)
 		md->state.skillstate = MSS_IDLE;
 	case MSS_IDLE:
 		// Idle skill.
-		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) &&
+		if ((md->target_id || !(++md->ud.walk_count%IDLE_SKILL_INTERVAL)) &&
 			mobskill_use(md, tick, -1))
 			break;
 		//Random walk.
@@ -3555,6 +3564,8 @@ static int mob_read_randommonster(void)
 		"mob_boss.txt",
 		"mob_pouch.txt"};
 
+	memset(&summon, 0, sizeof(summon));
+
 	for(i=0;i<MAX_RANDOMMONSTER;i++){
 		mob_db_data[0]->summonper[i] = 1002;	// Ý’è‚µ–Y‚ê‚½ê‡‚Íƒ|ƒŠƒ“‚ªo‚é‚æ‚¤‚É‚µ‚Ä‚¨‚­
 		sprintf(line, "%s/%s", db_path, mobfile[i]);
@@ -3565,7 +3576,7 @@ static int mob_read_randommonster(void)
 		}
 		while(fgets(line, sizeof(line), fp))
 		{
-			int class_,per;
+			int class_;
 			if(line[0] == '/' && line[1] == '/')
 				continue;
 			memset(str,0,sizeof(str));
@@ -3579,9 +3590,22 @@ static int mob_read_randommonster(void)
 				continue;
 
 			class_ = atoi(str[0]);
-			per=atoi(str[2]);
-			if(mob_db(class_) != mob_dummy)
-				mob_db_data[class_]->summonper[i]=per;
+			if(mob_db(class_) == mob_dummy)
+				continue;
+			mob_db_data[class_]->summonper[i]=atoi(str[2]);
+			if (i) {
+				if (summon[i].qty < sizeof(summon[i].class_)/sizeof(summon[i].class_[0])) //MvPs
+					summon[i].class_[summon[i].qty++] = class_;
+				else {
+					ShowDebug("Can't store more random mobs from %s, increase size of mob.c:summon variable!\n", mobfile[i]);
+					break;
+				}
+			}
+		}
+		if (i && !summon[i].qty)
+		{ //At least have the default here.
+			summon[i].class_[0] = mob_db_data[0]->summonper[i];
+			summon[i].qty = 1;
 		}
 		fclose(fp);
 		ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",mobfile[i]);

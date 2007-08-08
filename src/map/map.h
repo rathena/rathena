@@ -981,7 +981,6 @@ struct pet_data {
 	struct pet_db *petDB;
 	int pet_hungry_timer;
 	int target_id;
-	short n;
 	struct {
 		unsigned skillbonus : 1;
 	} state;

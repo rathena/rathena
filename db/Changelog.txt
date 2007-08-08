@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+08/07
+	* Fixed some missing max levels for npc skills [Skotlex]
 08/06
 	* Added custom Hollow Poring mob_db2 entry
 	* Added Job_Baby_Alchemist define to complement the Job_Alchemist update

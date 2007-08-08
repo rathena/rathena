@@ -3,6 +3,15 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/08/07
+	* Expanded isloggedin script command to support an optional argument (char id)
+	* Expanded warpparty command to accept target "Leader", this will warp the
+	  party to the leader.
+	* Added a summon structure to handle non-dead-branch mob-groups since the
+	  current implementation totally fails for mob groups that don't have MANY
+	  integrants.
+	* Fixed mobs not attempting an IDLE skill right before unlocking a target.
+	  [Skotlex]
 2007/08/06
 	* Slightly deobfuscated the max-hp calculation functionality
 	- fixed hp/sp calc code adding extra few points from item bonuses
