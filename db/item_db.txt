@@ -831,7 +831,7 @@
 1761,Curse_Arrow,Cursed Arrow,10,10,,3,1,,,,0x000A1848,7,2,32768,,1,,1,{ bonus2 bAddEff,Eff_Curse,1000; },{},{}
 1762,Rusty_Arrow,Rusty Arrow,10,3,,2,30,,,,0x000A1848,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Poison; },{},{}
 1763,Poison_Arrow,Poison Arrow,10,10,,3,1,,,,0x000A1848,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,2000; },{},{}
-1764,Incisive_Arrow,Sharp Arrow,10,20,,3,10,,,,0x000A1848,7,2,32768,,1,,1,{ bonus bCritical,10; },{},{}
+1764,Incisive_Arrow,Sharp Arrow,10,20,,3,10,,,,0x000A1848,7,2,32768,,1,,1,{ bonus bCritical,20; },{},{}
 1765,Oridecon_Arrow,Oridecon Arrow,10,30,,3,50,,,,0x000A1848,7,2,32768,,1,,1,{},{},{}
 1766,Arrow_Of_Counter_Evil,Arrow of Counter Evil,10,40,,3,50,,,,0x000A1848,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Holy; },{},{}
 1767,Arrow_Of_Shadow,Shadow Arrow,10,3,,2,30,,,,0x000A1848,7,2,32768,,1,,1,{ bonus bAtkEle,Ele_Dark; },{},{}

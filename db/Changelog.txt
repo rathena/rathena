@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+08/08
+	* Sharp Arrow now gives Crit+20 [Playtester]
 08/07
 	* Fixed some missing max levels for npc skills [Skotlex]
 08/06
