@@ -3182,22 +3182,20 @@ int parse_char(int fd)
 				ShowWarning("Unable to find map-server for '%s', sending to major city '%s'.\n", mapindex_id2name(char_dat.last_point.map), mapindex_id2name(j));
 				char_dat.last_point.map = j;
 			}
-			{
-				//Send player to map
-				uint32 subnet_map_ip;
-				char map_name[MAP_NAME_LENGTH_EXT];
-				snprintf(map_name, MAP_NAME_LENGTH_EXT, "%s.gat", mapindex_id2name(char_dat.last_point.map));	
-				WFIFOHEAD(fd,28);
-				WFIFOW(fd,0) = 0x71;
-				WFIFOL(fd,2) = char_dat.char_id;
-				memcpy(WFIFOP(fd,6), map_name, MAP_NAME_LENGTH_EXT);
 
-				// Advanced subnet check [LuzZza]
-				subnet_map_ip = lan_subnetcheck(ipl);
-				WFIFOL(fd,22) = htonl((subnet_map_ip) ? subnet_map_ip : server[i].ip);
-				WFIFOW(fd,26) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
-				WFIFOSET(fd,28);
-			}
+			//Send player to map
+			WFIFOHEAD(fd,28);
+			WFIFOW(fd,0) = 0x71;
+			WFIFOL(fd,2) = char_dat.char_id;
+			safestrncpy((char*)WFIFOP(fd,6), mapindex_getmapname_ext(mapindex_id2name(char_dat.last_point.map),NULL), MAP_NAME_LENGTH_EXT);
+		{
+			// Advanced subnet check [LuzZza]
+			uint32 subnet_map_ip;
+			subnet_map_ip = lan_subnetcheck(ipl);
+			WFIFOL(fd,22) = htonl((subnet_map_ip) ? subnet_map_ip : server[i].ip);
+			WFIFOW(fd,26) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
+			WFIFOSET(fd,28);
+		}
 			if (auth_fifo_pos >= AUTH_FIFO_SIZE)
 				auth_fifo_pos = 0;
 			auth_fifo[auth_fifo_pos].account_id = sd->account_id;

@@ -24,8 +24,8 @@ struct guild *guild_search(int guild_id);
 struct guild *guild_searchname(char *str);
 struct guild_castle *guild_castle_search(int gcid);
 
-struct guild_castle *guild_mapname2gc(char *mapname);
-struct guild_castle *guild_mapindex2gc(short mapindex);
+struct guild_castle* guild_mapname2gc(const char* mapname);
+struct guild_castle* guild_mapindex2gc(short mapindex);
 
 struct map_session_data *guild_getavailablesd(struct guild *g);
 int guild_getindex(struct guild *g,int account_id,int char_id);

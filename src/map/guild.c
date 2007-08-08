@@ -12,6 +12,7 @@
 #include "../common/mapindex.h"
 #include "../common/showmsg.h"
 #include "../common/ers.h"
+#include "../common/strlib.h"
 
 #include "map.h"
 #include "guild.h"
@@ -184,9 +185,9 @@ static int guild_read_castledb(void)
 
 		gc=(struct guild_castle *)aCalloc(1,sizeof(struct guild_castle));
 		gc->castle_id=atoi(str[0]);
-		memcpy(gc->map_name,mapindex_normalize_name(str[1]),MAP_NAME_LENGTH);
-		memcpy(gc->castle_name,str[2],NAME_LENGTH);
-		memcpy(gc->castle_event,str[3],NAME_LENGTH);
+		safestrncpy(gc->map_name,mapindex_getmapname(str[1],NULL),MAP_NAME_LENGTH);
+		safestrncpy(gc->castle_name,str[2],NAME_LENGTH);
+		safestrncpy(gc->castle_event,str[3],NAME_LENGTH);
 
 		idb_put(castle_db,gc->castle_id,gc);
 
@@ -250,15 +251,13 @@ struct guild_castle *guild_castle_search(int gcid)
 }
 
 // mapname‚É‘Î‰ž‚µ‚½ƒAƒWƒg‚Ìgc‚ð•Ô‚·
-struct guild_castle *guild_mapname2gc(char *mapname)
+struct guild_castle* guild_mapname2gc(const char* mapname)
 {
 	int i;
-	struct guild_castle *gc=NULL;
-
-	mapindex_normalize_name(mapname);
-
-	for(i=0;i<MAX_GUILDCASTLE;i++){
-		gc=guild_castle_search(i);
+	for(i = 0; i < MAX_GUILDCASTLE; i++)
+	{
+		struct guild_castle* gc;
+		gc = guild_castle_search(i);
 		if(!gc) continue;
 		if(strcmp(gc->map_name,mapname)==0) return gc;
 	}

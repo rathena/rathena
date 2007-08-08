@@ -28,7 +28,7 @@ struct dbt *auth_db;
 
 static const int packet_len_table[0x3d] = { // U - used, F - free
 	60, 3,-1,27,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
-	 6,-1,18, 7,-1,49,30,10,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, U->2b07
+	 6,-1,18, 7,-1,35,30,10,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, U->2b07
 	 6,30,-1,10,86, 7,44,34,	// 2b08-2b0f: U->2b08, U->2b09, U->2b0a, U->2b0b, U->2b0c, U->2b0d, U->2b0e, U->2b0f
 	11,-1,10, 6,11,-1, 0,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, U->2b13, U->2b14, U->2b15, U->2b16, U->2b17
 	-1,-1,-1,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
@@ -310,25 +310,25 @@ int chrif_changemapserver(struct map_session_data* sd, short map, int x, int y, 
 	return 0;
 }
 
-// map-server change request acknowledgement (positive or negative)
-int chrif_changemapserverack(int fd)
+/// map-server change request acknowledgement (positive or negative)
+/// R 2b06 <account_id>.L <login_id1>.L <login_id2>.L <char_id>.L <map_index>.W <x>.W <y>.W <ip>.L <port>.W
+int chrif_changemapserverack(int account_id, int login_id1, int login_id2, int char_id, short map_index, short x, short y, uint32 ip, uint16 port)
 {
-	struct map_session_data *sd;
-	char mapname[MAP_NAME_LENGTH_EXT];
-	sd = map_id2sd(RFIFOL(fd,2));
 
-	if (sd == NULL || sd->status.char_id != RFIFOL(fd,14))
+	struct map_session_data *sd;
+	sd = map_id2sd(account_id);
+
+	if (sd == NULL || sd->status.char_id != char_id)
 		return -1;
 
-	if (RFIFOL(fd,6) == 1) {
+	if (login_id1 == 1) { //FIXME: charserver says '0'!
 		if (battle_config.error_log)
 			ShowError("map server change failed.\n");
 		clif_authfail_fd(sd->fd, 0);
 		return 0;
 	}
 
-	sprintf(mapname, "%s.gat", mapindex_id2name(RFIFOW(fd,18)));
-	clif_changemapserver(sd, mapname, RFIFOW(fd,20), RFIFOW(fd,22), ntohl(RFIFOL(fd,24)), ntohs(RFIFOW(fd,28)));
+	clif_changemapserver(sd, map_index, x, y, ntohl(ip), ntohs(port));
 
 	//Player has been saved already, remove him from memory. [Skotlex]	
 	map_quit(sd);
@@ -1297,7 +1297,7 @@ int chrif_parse(int fd)
 		case 0x2b00: map_setusers(fd); break;
 		case 0x2b03: clif_charselectok(RFIFOL(fd,2)); break;
 		case 0x2b04: chrif_recvmap(fd); break;
-		case 0x2b06: chrif_changemapserverack(fd); break;
+		case 0x2b06: chrif_changemapserverack(RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), RFIFOW(fd,18), RFIFOW(fd,20), RFIFOW(fd,22), RFIFOL(fd,24), RFIFOW(fd,28)); break;
 		case 0x2b07: clif_updatemaxid(RFIFOL(fd,2), RFIFOL(fd,6)); break;
 		case 0x2b09: map_addchariddb(RFIFOL(fd,2), (char*)RFIFOP(fd,6)); break;
 		case 0x2b0b: chrif_changedgm(fd); break;

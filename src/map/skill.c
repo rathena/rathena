@@ -6328,14 +6328,6 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 		return 0;
 	}
 
-	if (strlen(map) > MAP_NAME_LENGTH_EXT-1)
-	{	//Map_length check, as it is sent by the client and we shouldn't trust it [Skotlex]
-		if (battle_config.error_log)
-			ShowError("skill_castend_map: Received map name '%s' too long!\n", map);
-		skill_failed(sd);
-		return 0;
-	}
-
 	pc_stop_attack(sd);
 	pc_stop_walking(sd,0);
 
@@ -6419,7 +6411,7 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 				return 0;
 			}
 			//Now that there's a mapindex, use that in val3 rather than a string. [Skotlex]
-			group->val2=(x<<16)|y;
+			group->val2 = (x<<16)|y;
 			group->val3 = mapindex;
 		}
 		break;

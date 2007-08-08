@@ -311,10 +311,9 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m,
 /*==========================================
  * The MOB appearance for one time (for scripts)
  *------------------------------------------*/
-int mob_once_spawn (struct map_session_data *sd, const char *mapname,
-	short x, short y, const char *mobname, int class_, int amount, const char *event)
+int mob_once_spawn (struct map_session_data* sd, const char* mapname, short x, short y, const char* mobname, int class_, int amount, const char* event)
 {
-	struct mob_data *md = NULL;
+	struct mob_data* md = NULL;
 	int m, count, lv = 255;
 	
 	if(sd) lv = sd->status.base_level;
@@ -327,7 +326,8 @@ int mob_once_spawn (struct map_session_data *sd, const char *mapname,
 	if (m < 0 || amount <= 0)	// ’l‚ªˆÙí‚È‚ç¢Š«‚ðŽ~‚ß‚é
 		return 0;
 	
-	for (count = 0; count < amount; count++) {
+	for (count = 0; count < amount; count++)
+	{
 		md = mob_once_spawn_sub(sd?&sd->bl:NULL, m, x, y, mobname,
 			class_<0?
 				mob_get_random_id(-class_-1, battle_config.random_monster_checklv?3:1, lv):
@@ -336,8 +336,8 @@ int mob_once_spawn (struct map_session_data *sd, const char *mapname,
 		if (!md) continue;
 
 		if(class_ == MOBID_EMPERIUM) {
-			struct guild_castle *gc = guild_mapname2gc(map[md->bl.m].name);
-			struct guild *g = gc?guild_search(gc->guild_id):NULL;
+			struct guild_castle* gc = guild_mapname2gc(map[md->bl.m].name);
+			struct guild* g = gc?guild_search(gc->guild_id):NULL;
 			if(gc) {
 				md->guardian_data = aCalloc(1, sizeof(struct guardian_data));
 				md->guardian_data->castle = gc;

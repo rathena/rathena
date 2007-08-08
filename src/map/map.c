@@ -2462,7 +2462,7 @@ int map_readfromcache(struct map_data *m, FILE *fp)
 	return 0;
 }
 
-int map_addmap(char *mapname)
+int map_addmap(char* mapname)
 {
 	if (strcmpi(mapname,"clear")==0) {
 		map_num=0;
@@ -2475,7 +2475,7 @@ int map_addmap(char *mapname)
 		return 1;
 	}
 
-	memcpy(map[map_num].name, mapindex_normalize_name(mapname), MAP_NAME_LENGTH);
+	mapindex_getmapname(mapname, map[map_num].name);
 	map_num++;
 	return 0;
 }

@@ -15,46 +15,84 @@
 
 struct _indexes {
 	char name[MAP_NAME_LENGTH]; //Stores map name
-	bool exists; //Set to 1 if index exists
 } indexes[MAX_MAPINDEX];
 
 static unsigned short max_index = 0;
 
 char mapindex_cfgfile[80] = "db/map_index.txt";
 
-// Removes the extension from a map name
-char* mapindex_normalize_name(char* mapname)
+#define mapindex_exists(id) (indexes[id].name[0] != '\0')
+
+/// Retrieves the map name from 'string' (removing .gat extension if present).
+/// Result gets placed either into 'buf' or in a static local buffer.
+const char* mapindex_getmapname(const char* string, char* output)
 {
-	char* ptr = strrchr(mapname, '.');
-	if (ptr && stricmp(ptr, ".gat") == 0)
-		*ptr = '\0'; // remove extension
-	return mapname;
+	static char buf[MAP_NAME_LENGTH];
+	char* dest = (output != NULL) ? output : buf;
+	
+	size_t len = strnlen(string, MAP_NAME_LENGTH_EXT);
+	if (len == MAP_NAME_LENGTH_EXT) {
+		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!", 2*MAP_NAME_LENGTH_EXT, string);
+		len--;
+	}
+	if (len >= 4 && stricmp(&string[len-4], ".gat") == 0)
+		len -= 4; // strip .gat extension
+	
+	len = min(len, MAP_NAME_LENGTH-1);
+	safestrncpy(dest, string, len+1);
+	
+	return dest;
+}
+
+/// Retrieves the map name from 'string' (adding .gat extension if not already present).
+/// Result gets placed either into 'buf' or in a static local buffer.
+const char* mapindex_getmapname_ext(const char* string, char* output)
+{
+	static char buf[MAP_NAME_LENGTH_EXT];
+	char* dest = (output != NULL) ? output : buf;
+	
+	size_t len = strnlen(string, MAP_NAME_LENGTH);
+	if (len == MAP_NAME_LENGTH) {
+		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!", 2*MAP_NAME_LENGTH, string);
+		len--;
+	}
+	
+	safestrncpy(dest, string, len+1);
+	
+	if (len < 4 || stricmp(&dest[len-4], ".gat") != 0) {
+		strcpy(&dest[len], ".gat");
+		len += 4; // add .gat extension
+	}
+	
+	return dest;
 }
 
 /// Adds a map to the specified index
 /// Returns 1 if successful, 0 oherwise
 int mapindex_addmap(int index, const char* name)
 {
-	char map_name[MAP_NAME_LENGTH_EXT];
+	char map_name[MAP_NAME_LENGTH];
 
 	if (index < 0 || index >= MAX_MAPINDEX) {
 		ShowError("(mapindex_add) Map index (%d) for \"%s\" out of range (max is %d)\n", index, name, MAX_MAPINDEX);
 		return 0;
 	}
 
-	safestrncpy(map_name, name, MAP_NAME_LENGTH_EXT);
-	mapindex_normalize_name(map_name);
+	mapindex_getmapname(name, map_name);
 
-	if (strlen(map_name) >= MAP_NAME_LENGTH) {
-		ShowError("(mapindex_add) Map name %s is too long. Maps are limited to %d characters.\n", map_name, MAP_NAME_LENGTH);
+	if (map_name[0] == '\0') {
+		ShowError("(mapindex_add) Cannot add maps with no name.\n");
 		return 0;
 	}
+	//if (strlen(map_name) >= MAP_NAME_LENGTH) {
+	//	ShowError("(mapindex_add) Map name %s is too long. Maps are limited to %d characters.\n", map_name, MAP_NAME_LENGTH);
+	//	return 0;
+	//}
 
-	if (indexes[index].exists)
+	if (mapindex_exists(index))
 		ShowWarning("(mapindex_add) Overriding index %d: map \"%s\" -> \"%s\"\n", index, indexes[index].name, map_name);
 
 	safestrncpy(indexes[index].name, map_name, MAP_NAME_LENGTH);
-	indexes[index].exists = true;
 	if (max_index <= index)
 		max_index = index+1;
 
@@ -66,9 +104,8 @@ unsigned short mapindex_name2id(const char* name)
 	//TODO: Perhaps use a db to speed this up? [Skotlex]
 	int i;
 
-	char map_name[MAP_NAME_LENGTH_EXT];
-	safestrncpy(map_name, name, MAP_NAME_LENGTH_EXT);
-	mapindex_normalize_name(map_name);
+	char map_name[MAP_NAME_LENGTH];
+	mapindex_getmapname(name, map_name);
 
 	for (i = 1; i < max_index; i++)
 	{
@@ -91,7 +128,7 @@ unsigned short mapindex_name2id(const char* name)
 
 const char* mapindex_id2name(unsigned short id)
 {
-	if (id > MAX_MAPINDEX || !indexes[id].exists) {
+	if (id > MAX_MAPINDEX || !mapindex_exists(id)) {
 		ShowDebug("mapindex_id2name: Requested name for non-existant map index [%d] in cache.\n", id);
 		return indexes[0].name; // dummy empty string so that the callee doesn't crash
 	}
