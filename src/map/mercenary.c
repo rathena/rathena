@@ -37,7 +37,7 @@
 #include "mercenary.h"
 
 //Better equiprobability than rand()% [orn]
-#define rand(a, b) a+(int) ((float)(b-a+1)*rand()/(RAND_MAX+1.0))
+#define rand(a, b) (a+(int) ((float)(b-a+1)*rand()/(RAND_MAX+1.0)))
 
 struct homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
 struct skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_SKILL_TREE];
@@ -188,29 +188,31 @@ void merc_hom_skillup(struct homun_data *hd,int skillnum)
 	int i = 0 ;
 	nullpo_retv(hd);
 
-	if(!hd->homunculus.vaporize)
+	if(hd->homunculus.vaporize)
+		return;
+	
+	i = skillnum - HM_SKILLBASE - 1;
+	if(hd->homunculus.skillpts > 0 &&
+		hd->homunculus.hskill[i].id &&
+		hd->homunculus.hskill[i].flag == 0 && //Don't allow raising while you have granted skills. [Skotlex]
+		hd->homunculus.hskill[i].lv < merc_skill_tree_get_max(skillnum, hd->homunculus.class_)
+		)
 	{
-		i = skillnum - HM_SKILLBASE - 1 ;
-		if( hd->homunculus.skillpts > 0 &&
-			hd->homunculus.hskill[i].id &&
-			hd->homunculus.hskill[i].flag == 0 && //Don't allow raising while you have granted skills. [Skotlex]
-			hd->homunculus.hskill[i].lv < merc_skill_tree_get_max(skillnum, hd->homunculus.class_)
-			)
-		{
-			hd->homunculus.hskill[i].lv++ ;
-			hd->homunculus.skillpts-- ;
-			status_calc_homunculus(hd,0) ;
-			if (hd->master) {
-				clif_homskillup(hd->master, skillnum);
-				clif_hominfo(hd->master,hd,0);
-				clif_homskillinfoblock(hd->master);
-			}
+		hd->homunculus.hskill[i].lv++;
+		hd->homunculus.skillpts-- ;
+		status_calc_homunculus(hd,0);
+		if (hd->master) {
+			clif_homskillup(hd->master, skillnum);
+			clif_hominfo(hd->master,hd,0);
+			clif_homskillinfoblock(hd->master);
 		}
 	}
 }
 
 int merc_hom_levelup(struct homun_data *hd)
 {
+	struct s_homunculus *hom;
+	struct h_stats *min, *max;
 	int growth_str, growth_agi, growth_vit, growth_int, growth_dex, growth_luk ;
 	int growth_max_hp, growth_max_sp ;
 	char output[256] ;
@@ -218,21 +220,25 @@ int merc_hom_levelup(struct homun_data *hd)
 	if (hd->homunculus.level == MAX_LEVEL || !hd->exp_next || hd->homunculus.exp < hd->exp_next)
 		return 0 ;
 	
-	hd->homunculus.level++ ;
-	if (!(hd->homunculus.level % 3)) 
-		hd->homunculus.skillpts++ ;	//1 skillpoint each 3 base level
+	hom = &hd->homunculus;
+	hom->level++ ;
+	if (!(hom->level % 3)) 
+		hom->skillpts++ ;	//1 skillpoint each 3 base level
 
-	hd->homunculus.exp -= hd->exp_next ;
-	hd->exp_next = hexptbl[hd->homunculus.level - 1] ;
+	hom->exp -= hd->exp_next ;
+	hd->exp_next = hexptbl[hom->level - 1] ;
 	
-	growth_max_hp = rand(hd->homunculusDB->gminHP, hd->homunculusDB->gmaxHP) ;
-	growth_max_sp = rand(hd->homunculusDB->gminSP, hd->homunculusDB->gmaxSP) ;
-	growth_str = rand(hd->homunculusDB->gminSTR, hd->homunculusDB->gmaxSTR) ;
-	growth_agi = rand(hd->homunculusDB->gminAGI, hd->homunculusDB->gmaxAGI) ;
-	growth_vit = rand(hd->homunculusDB->gminVIT, hd->homunculusDB->gmaxVIT) ;
-	growth_dex = rand(hd->homunculusDB->gminDEX, hd->homunculusDB->gmaxDEX) ;
-	growth_int = rand(hd->homunculusDB->gminINT, hd->homunculusDB->gmaxINT) ;
-	growth_luk = rand(hd->homunculusDB->gminLUK, hd->homunculusDB->gmaxLUK) ;
+	max  = &hd->homunculusDB->gmax;
+	min  = &hd->homunculusDB->gmin;
+
+	growth_max_hp = rand(min->HP, max->HP);
+	growth_max_sp = rand(min->SP, max->SP);
+	growth_str = rand(min->str, max->str);
+	growth_agi = rand(min->agi, max->agi);
+	growth_vit = rand(min->vit, max->vit);
+	growth_dex = rand(min->dex, max->dex);
+	growth_int = rand(min->int_,max->int_);
+	growth_luk = rand(min->luk, max->luk);
 
 	//Aegis discards the decimals in the stat growth values!
 	growth_str-=growth_str%10;
@@ -242,14 +248,14 @@ int merc_hom_levelup(struct homun_data *hd)
 	growth_int-=growth_int%10;
 	growth_luk-=growth_luk%10;
 
-	hd->homunculus.max_hp += growth_max_hp;
-	hd->homunculus.max_sp += growth_max_sp;
-	hd->homunculus.str += growth_str;
-	hd->homunculus.agi += growth_agi;
-	hd->homunculus.vit += growth_vit;
-	hd->homunculus.dex += growth_dex;
-	hd->homunculus.int_+= growth_int;
-	hd->homunculus.luk += growth_luk;
+	hom->max_hp += growth_max_hp;
+	hom->max_sp += growth_max_sp;
+	hom->str += growth_str;
+	hom->agi += growth_agi;
+	hom->vit += growth_vit;
+	hom->dex += growth_dex;
+	hom->int_+= growth_int;
+	hom->luk += growth_luk;
 	
 	if ( battle_config.homunculus_show_growth ) {
 		sprintf(output,
@@ -277,6 +283,8 @@ int merc_hom_change_class(struct homun_data *hd, short class_)
 
 int merc_hom_evolution(struct homun_data *hd)
 {
+	struct s_homunculus *hom;
+	struct h_stats *max, *min;
 	struct map_session_data *sd;
 	nullpo_retr(0, hd);
 
@@ -289,16 +297,40 @@ int merc_hom_evolution(struct homun_data *hd)
 	if (!sd)
 		return 0;
 
-	merc_hom_vaporize(sd, 0);
-
+	
 	if (!merc_hom_change_class(hd, hd->homunculusDB->evo_class)) {
-		ShowError("merc_hom_evolution: Can't evoluate homunc from %d to %d", hd->homunculus.class_, hd->homunculusDB->evo_class);
+		ShowError("merc_hom_evolution: Can't evolve homunc from %d to %d", hd->homunculus.class_, hd->homunculusDB->evo_class);
 		return 0;
 	}
-	hd->homunculus.intimacy = 500;
-	merc_call_homunculus(sd);
+	//Apply evolution bonuses
+	hom = &hd->homunculus;
+	max = &hd->homunculusDB->emax;
+	min = &hd->homunculusDB->emin;
+	hom->max_hp += rand(min->HP, max->HP);
+	hom->max_sp += rand(min->SP, max->SP);
+	hom->str += 10*rand(min->str, max->str);
+	hom->agi += 10*rand(min->agi, max->agi);
+	hom->vit += 10*rand(min->vit, max->vit);
+	hom->int_+= 10*rand(min->int_,max->int_);
+	hom->dex += 10*rand(min->dex, max->dex);
+	hom->luk += 10*rand(min->luk, max->luk);
+	hom->intimacy = 500;
+
+	unit_remove_map(&hd->bl, 0);
+	map_addblock(&hd->bl);
+
+	clif_spawn(&hd->bl);
 	clif_emotion(&sd->bl, 21);	//no1
 	clif_misceffect2(&hd->bl,568);
+
+	//status_Calc flag&1 will make current HP/SP be reloaded from hom structure
+	hom->hp = hd->battle_status.hp;
+	hom->sp = hd->battle_status.sp;
+	status_calc_homunculus(hd,1);
+
+	if (!(battle_config.hom_setting&0x2))
+		skill_unit_move(&sd->hd->bl,gettick(),1); // apply land skills immediately
+				
 	return 1 ;
 }
 
@@ -373,7 +405,7 @@ void merc_save(struct homun_data *hd)
 	//calculation on login)
 	hd->homunculus.hp = hd->battle_status.hp;
 	hd->homunculus.sp = hd->battle_status.sp;
-	intif_homunculus_requestsave(sd->status.account_id, &hd->homunculus) ;
+	intif_homunculus_requestsave(sd->status.account_id, &hd->homunculus);
 }
 
 int merc_menu(struct map_session_data *sd,int menunum)
@@ -538,11 +570,12 @@ int search_homunculusDB_index(int key,int type)
 	int i;
 
 	for(i=0;i<MAX_HOMUNCULUS_CLASS;i++) {
-		if(homunculus_db[i].class_ <= 0)
+		if(homunculus_db[i].base_class <= 0)
 			continue;
 		switch(type) {
 			case HOMUNCULUS_CLASS:
-				if(homunculus_db[i].class_ == key)
+				if(homunculus_db[i].base_class == key ||
+					homunculus_db[i].evo_class == key)
 					return i;
 				break;
 			case HOMUNCULUS_FOOD:
@@ -699,6 +732,7 @@ int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag)
 int merc_create_homunculus_request(struct map_session_data *sd, int class_)
 {
 	struct s_homunculus homun;
+	struct h_stats *base;
 	int i;
 
 	nullpo_retr(1, sd);
@@ -711,24 +745,20 @@ int merc_create_homunculus_request(struct map_session_data *sd, int class_)
 	strncpy(homun.name, homunculus_db[i].name, NAME_LENGTH-1);
 	homun.class_ = class_;
 	homun.level = 1;
-// FIXME: Commented value is what the map-server had as initial value,
-// Uncommented value is what the char-server was overwriting it with
-// So which one is correct?
-//	homun.hunger = 50;
-	homun.hunger = 32;
-//	homun.intimacy = 500;
-	homun.intimacy = 21;
+	homun.hunger = 32; //32%
+	homun.intimacy = 2100; //21/1000
 	homun.char_id = sd->status.char_id;
 	
 	homun.hp = 10 ;
-	homun.max_hp = homunculus_db[i].basemaxHP;
-	homun.max_sp = homunculus_db[i].basemaxSP;
-	homun.str = homunculus_db[i].baseSTR * 10;
-	homun.agi = homunculus_db[i].baseAGI * 10;
-	homun.vit = homunculus_db[i].baseVIT * 10;
-	homun.int_ = homunculus_db[i].baseINT * 10;
-	homun.dex = homunculus_db[i].baseDEX * 10;
-	homun.luk = homunculus_db[i].baseLUK * 10;
+	base = &homunculus_db[i].base;
+	homun.max_hp = base->HP;
+	homun.max_sp = base->SP;
+	homun.str = base->str *10;
+	homun.agi = base->agi *10;
+	homun.vit = base->vit *10;
+	homun.int_= base->int_*10;
+	homun.dex = base->dex *10;
+	homun.luk = base->luk *10;
 
 	// Request homunculus creation
 	intif_homunculus_create(sd->status.account_id, &homun); 
@@ -784,18 +814,20 @@ void merc_reset_stats(struct homun_data *hd)
 {	//Resets a homunc stats back to zero (but doesn't touches hunger or intimacy)
 	struct homunculus_db *db;
 	struct s_homunculus *hom;
+	struct h_stats *base;
 	hom = &hd->homunculus;
 	db = hd->homunculusDB;
+	base = &db->base;
 	hom->level = 1;
 	hom->hp = 10;
-	hom->max_hp = db->basemaxHP;
-	hom->max_sp = db->basemaxSP;
-	hom->str = db->baseSTR*10;
-	hom->agi = db->baseAGI*10;
-	hom->vit = db->baseVIT*10;
-	hom->int_= db->baseINT*10;
-	hom->dex = db->baseDEX*10;
-	hom->luk = db->baseLUK*10;
+	hom->max_hp = base->HP;
+	hom->max_sp = base->SP;
+	hom->str = base->str *10;
+	hom->agi = base->agi *10;
+	hom->vit = base->vit *10;
+	hom->int_= base->int_*10;
+	hom->dex = base->dex *10;
+	hom->luk = base->luk *10;
 	hom->exp = 0;
 	hd->exp_next = hexptbl[0];
 	memset(&hd->homunculus.hskill, 0, sizeof hd->homunculus.hskill);
@@ -808,8 +840,8 @@ int read_homunculusdb(void)
 	char line[1024], *p;
 	int i, k, classid; 
 	int j = 0;
-	char *filename[]={"homunculus_db.txt","homunculus_db2.txt"};
-	char *str[36];
+	const char *filename[]={"homunculus_db.txt","homunculus_db2.txt"};
+	char *str[50];
 	struct homunculus_db *db;
 
 	memset(homunculus_db,0,sizeof(homunculus_db));
@@ -831,74 +863,122 @@ int read_homunculusdb(void)
 
 			k = 0;
 			p = strtok (line,",");
-			while (p != NULL && k < 36)
+			while (p != NULL && k < 50)
 			{
 				str[k++] = p;
 				p = strtok (NULL, ",");
 			}
-			
-			classid = atoi(str[0]);
-			if (k != 36 || classid < HM_CLASS_BASE || classid > HM_CLASS_MAX)
+			if (k < 50 )
 			{
-				ShowError("read_homunculusdb : Error reading %s", filename[i]);
+				ShowError("read_homunculusdb : Incorrect number of columns at %s, homunculus %d. Read %d columns, 50 are needed.\n", filename[i], j+1, k);
 				continue;
 			}
-
-			//Class,Homunculus,HP,SP,ATK,MATK,HIT,CRI,DEF,MDEF,FLEE,ASPD,STR,AGI,VIT,INT,DEX,LUK
+			
+			//Base Class,Evo Class
+			classid = atoi(str[0]);
+			if (classid < HM_CLASS_BASE || classid > HM_CLASS_MAX)
+			{
+				ShowError("read_homunculusdb : Invalid class %d (%s)\n", classid, filename[i]);
+				continue;
+			}
 			db = &homunculus_db[j];
-			db->class_ = classid;
-			strncpy(db->name,str[1],NAME_LENGTH-1);
-			db->basemaxHP = atoi(str[2]);
-			db->basemaxSP = atoi(str[3]);
-			db->baseSTR = atoi(str[4]);
-			db->baseAGI = atoi(str[5]);
-			db->baseVIT = atoi(str[6]);
-			db->baseINT = atoi(str[7]);
-			db->baseDEX = atoi(str[8]);
-			db->baseLUK = atoi(str[9]);
-			db->baseIntimacy = atoi(str[10]);
-			db->baseHungry = atoi(str[11]);
-			db->hungryDelay = atoi(str[12]);
-			db->foodID = atoi(str[13]);
-			db->gminHP = atoi(str[14]);
-			db->gmaxHP = atoi(str[15]);
-			db->gminSP = atoi(str[16]);
-			db->gmaxSP = atoi(str[17]);
-			db->gminSTR = atoi(str[18]);
-			db->gmaxSTR = atoi(str[19]);
-			db->gminAGI = atoi(str[20]);
-			db->gmaxAGI = atoi(str[21]);
-			db->gminVIT = atoi(str[22]);
-			db->gmaxVIT = atoi(str[23]);
-			db->gminINT = atoi(str[24]);
-			db->gmaxINT = atoi(str[25]);
-			db->gminDEX = atoi(str[26]);
-			db->gmaxDEX = atoi(str[27]);
-			db->gminLUK = atoi(str[28]);
-			db->gmaxLUK = atoi(str[29]);
-			db->evo_class = atoi(str[30]);
-			db->baseASPD = atoi(str[31]);
-			db->size = atoi(str[32]);
-			db->race = atoi(str[33]);
-			db->element = atoi(str[34]);
-			db->accessID = atoi(str[35]);
+			db->base_class = classid;
+			classid = atoi(str[1]);
+			if (classid < HM_CLASS_BASE || classid > HM_CLASS_MAX)
+			{
+				db->base_class = 0;
+				ShowError("read_homunculusdb : Invalid class %d (%s)\n", classid, filename[i]);
+				continue;
+			}
+			db->evo_class = classid;
+			//Name, Food, Hungry Delay, Base Size, Evo Size, Race, Element, ASPD
+			strncpy(db->name,str[2],NAME_LENGTH-1);
+			db->foodID = atoi(str[3]);
+			db->hungryDelay = atoi(str[4]);
+			db->base_size = atoi(str[5]);
+			db->evo_size = atoi(str[6]);
+			db->race = atoi(str[7]);
+			db->element = atoi(str[8]);
+			db->baseASPD = atoi(str[9]);
+			//base HP, SP, str, agi, vit, int, dex, luk
+			db->base.HP = atoi(str[10]);
+			db->base.SP = atoi(str[11]);
+			db->base.str = atoi(str[12]);
+			db->base.agi = atoi(str[13]);
+			db->base.vit = atoi(str[14]);
+			db->base.int_= atoi(str[15]);
+			db->base.dex = atoi(str[16]);
+			db->base.luk = atoi(str[17]);
+			//Growth Min/Max HP, SP, str, agi, vit, int, dex, luk
+			db->gmin.HP = atoi(str[18]);
+			db->gmax.HP = atoi(str[19]);
+			db->gmin.SP = atoi(str[20]);
+			db->gmax.SP = atoi(str[21]);
+			db->gmin.str = atoi(str[22]);
+			db->gmax.str = atoi(str[23]);
+			db->gmin.agi = atoi(str[24]);
+			db->gmax.agi = atoi(str[25]);
+			db->gmin.vit = atoi(str[26]);
+			db->gmax.vit = atoi(str[27]);
+			db->gmin.int_= atoi(str[28]);
+			db->gmax.int_= atoi(str[29]);
+			db->gmin.dex = atoi(str[30]);
+			db->gmax.dex = atoi(str[31]);
+			db->gmin.luk = atoi(str[32]);
+			db->gmax.luk = atoi(str[33]);
+			//Evolution Min/Max HP, SP, str, agi, vit, int, dex, luk
+			db->emin.HP = atoi(str[34]);
+			db->emax.HP = atoi(str[35]);
+			db->emin.SP = atoi(str[36]);
+			db->emax.SP = atoi(str[37]);
+			db->emin.str = atoi(str[38]);
+			db->emax.str = atoi(str[39]);
+			db->emin.agi = atoi(str[40]);
+			db->emax.agi = atoi(str[41]);
+			db->emin.vit = atoi(str[42]);
+			db->emax.vit = atoi(str[43]);
+			db->emin.int_= atoi(str[44]);
+			db->emax.int_= atoi(str[45]);
+			db->emin.dex = atoi(str[46]);
+			db->emax.dex = atoi(str[47]);
+			db->emin.luk = atoi(str[48]);
+			db->emax.luk = atoi(str[49]);
+
 			//Check that the min/max values really are below the other one.
-			if (db->gmaxHP <= db->gminHP)
-				db->gmaxHP = db->gminHP+1;
-			if (db->gmaxSP <= db->gminSP)
-				db->gmaxSP = db->gminSP+1;
-			if (db->gmaxSTR <= db->gminSTR)
-				db->gmaxSTR = db->gminSTR+1;
-			if (db->gmaxAGI <= db->gminAGI)
-				db->gmaxAGI = db->gminAGI+1;
-			if (db->gmaxVIT <= db->gminVIT)
-				db->gmaxVIT = db->gminVIT+1;
-			if (db->gmaxINT <= db->gminINT)
-				db->gmaxINT = db->gminINT+1;
-			if (db->gmaxDEX <= db->gminDEX)
-				db->gmaxDEX = db->gminDEX+1;
-			if (db->gmaxLUK <= db->gminLUK)
-				db->gmaxLUK = db->gminLUK+1;
+			if(db->gmin.HP > db->gmax.HP)
+				db->gmin.HP = db->gmax.HP;
+			if(db->gmin.SP > db->gmax.SP)
+				db->gmin.SP = db->gmax.SP;
+			if(db->gmin.str > db->gmax.str)
+				db->gmin.str = db->gmax.str;
+			if(db->gmin.agi > db->gmax.agi)
+				db->gmin.agi = db->gmax.agi;
+			if(db->gmin.vit > db->gmax.vit)
+				db->gmin.vit = db->gmax.vit;
+			if(db->gmin.int_> db->gmax.int_)
+				db->gmin.int_= db->gmax.int_;
+			if(db->gmin.dex > db->gmax.dex)
+				db->gmin.dex = db->gmax.dex;
+			if(db->gmin.luk > db->gmax.luk)
+				db->gmin.luk = db->gmax.luk;
+
+			if(db->emin.HP > db->emax.HP)
+				db->emin.HP = db->emax.HP;
+			if(db->emin.SP > db->emax.SP)
+				db->emin.SP = db->emax.SP;
+			if(db->emin.str > db->emax.str)
+				db->emin.str = db->emax.str;
+			if(db->emin.agi > db->emax.agi)
+				db->emin.agi = db->emax.agi;
+			if(db->emin.vit > db->emax.vit)
+				db->emin.vit = db->emax.vit;
+			if(db->emin.int_> db->emax.int_)
+				db->emin.int_= db->emax.int_;
+			if(db->emin.dex > db->emax.dex)
+				db->emin.dex = db->emax.dex;
+			if(db->emin.luk > db->emax.luk)
+				db->emin.luk = db->emax.luk;
+
 			j++;
 		}
 		if (j > MAX_HOMUNCULUS_CLASS)

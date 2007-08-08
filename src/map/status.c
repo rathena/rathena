@@ -2354,10 +2354,11 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	status->luk = hom->luk / 10;
 
 	if (first) {	//[orn]
-		status->def_ele =  hd->homunculusDB->element;
+		const struct homunculus_db *db = hd->homunculusDB;
+		status->def_ele =  db->element;
 		status->ele_lv = 1;
-		status->race = hd->homunculusDB->race ;
-		status->size = hd->homunculusDB->size ;
+		status->race = db->race;
+		status->size = (hom->class_ == db->evo_class)?db->evo_size:db->base_size;
 		status->rhw.range = 1 + status->size;
 		status->mode = MD_CANMOVE|MD_CANATTACK;
 		status->speed = DEFAULT_WALK_SPEED;

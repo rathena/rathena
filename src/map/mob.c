@@ -59,7 +59,7 @@ static struct eri *item_drop_list_ers;
 
 static struct {
 	int qty;
-	int class_[150];
+	int class_[350];
 } summon[MAX_RANDOMMONSTER];
 
 #define CLASSCHANGE_BOSS_NUM 21

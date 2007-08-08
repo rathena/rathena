@@ -1020,7 +1020,7 @@ int chrif_updatefamelist_ack(int fd)
 		default: return 0;
 	}
 	index = RFIFOB(fd, 3);
-	if (index < 0 || index >= MAX_FAME_LIST)
+	if (index >= MAX_FAME_LIST)
 		return 0;
 	list[index].fame = RFIFOL(fd,4);
 	return 1;

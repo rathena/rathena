@@ -5,40 +5,16 @@
 #define _MERCENARY_H_
 
 struct homunculus_db {
-	int class_ ;
+	int base_class, evo_class;
 	char name[NAME_LENGTH];
-	int basemaxHP ;
-	int basemaxSP ;
-	int baseSTR ;
-	int baseAGI ;
-	int baseVIT ;
-	int baseINT ;
-	int baseDEX ;
-	int baseLUK ;
+	struct h_stats {
+		unsigned int HP, SP;
+		unsigned short str, agi, vit, int_, dex, luk;
+	} base, gmin, gmax, emin, emax;
 	int foodID ;
-	int baseIntimacy ;
-	short baseHungry ;
-	long hungryDelay ;
-	int gminHP ;
-	int gmaxHP ;
-	int gminSP ;
-	int gmaxSP ;
-	int gminSTR ;
-	int gmaxSTR ;
-	int gminAGI ;
-	int gmaxAGI ;
-	int gminVIT ;
-	int gmaxVIT ;
-	int gminINT ;
-	int gmaxINT ;
-	int gminDEX ;
-	int gmaxDEX ;
-	int gminLUK ;
-	int gmaxLUK ;
-	int evo_class ;
 	int baseASPD ;
-	unsigned char element, race, size;
-	int accessID ;
+	long hungryDelay ;
+	unsigned char element, race, base_size, evo_size;
 };
 extern struct homunculus_db homuncumlus_db[MAX_HOMUNCULUS_CLASS];
 enum { HOMUNCULUS_CLASS, HOMUNCULUS_FOOD };

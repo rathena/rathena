@@ -49,6 +49,9 @@
 	----
 ========================
 08/08
+	* Changed the structure of the homunculus_db file so that the homunculus
+	  and its evolved version share the same line. Also added the evolution
+	  bonuses to it. [Skotlex]
 	* Sharp Arrow now gives Crit+20 [Playtester]
 08/07
 	* Fixed some missing max levels for npc skills [Skotlex]

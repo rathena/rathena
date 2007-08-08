@@ -8490,7 +8490,7 @@ int atcommand_homstats(const int fd, struct map_session_data* sd, const char* co
 	struct homun_data *hd;
 	struct homunculus_db *db;
 	struct s_homunculus *hom;
-	int lv;
+	int lv, min, max, evo;
 
 	nullpo_retr(-1, sd);
 
@@ -8510,36 +8510,45 @@ int atcommand_homstats(const int fd, struct map_session_data* sd, const char* co
 	clif_displaymessage(fd, atcmd_output);
 	lv--; //Since the first increase is at level 2.
 	
-	snprintf(atcmd_output, sizeof(atcmd_output) ,"Max HP: %d (%d~%d)",
-		hom->max_hp, db->basemaxHP +lv*db->gminHP, db->basemaxHP +lv*db->gmaxHP);
+	evo = (hom->class_ == db->evo_class);
+	min = db->base.HP +lv*db->gmin.HP +(evo?db->emin.HP:0);
+	max = db->base.HP +lv*db->gmax.HP +(evo?db->emax.HP:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Max HP: %d (%d~%d)", hom->max_hp, min, max);
 	clif_displaymessage(fd, atcmd_output);
 
-	snprintf(atcmd_output, sizeof(atcmd_output) ,"Max SP: %d (%d~%d)",
-		hom->max_sp, db->basemaxSP +lv*db->gminSP, db->basemaxSP +lv*db->gmaxSP);
+	min = db->base.SP +lv*db->gmin.SP +(evo?db->emin.SP:0);
+	max = db->base.SP +lv*db->gmax.SP +(evo?db->emax.SP:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Max SP: %d (%d~%d)", hom->max_sp, min, max);
 	clif_displaymessage(fd, atcmd_output);
 
-	snprintf(atcmd_output, sizeof(atcmd_output) ,"Str: %d (%d~%d)",
-		hom->str/10, db->baseSTR +lv*(db->gminSTR/10), db->baseSTR +lv*(db->gmaxSTR/10));
+	min = db->base.str +lv*(db->gmin.str/10) +(evo?db->emin.str:0);
+	max = db->base.str +lv*(db->gmax.str/10) +(evo?db->emax.str:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Str: %d (%d~%d)", hom->str/10, min, max);
 	clif_displaymessage(fd, atcmd_output);
 
-	snprintf(atcmd_output, sizeof(atcmd_output) ,"Agi: %d (%d~%d)",
-		hom->agi/10, db->baseAGI +lv*(db->gminAGI/10), db->baseAGI +lv*(db->gmaxAGI/10));
+	min = db->base.agi +lv*(db->gmin.agi/10) +(evo?db->emin.agi:0);
+	max = db->base.agi +lv*(db->gmax.agi/10) +(evo?db->emax.agi:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Agi: %d (%d~%d)", hom->agi/10, min, max);
 	clif_displaymessage(fd, atcmd_output);
 
-	snprintf(atcmd_output, sizeof(atcmd_output) ,"Vit: %d (%d~%d)",
-		hom->vit/10, db->baseVIT +lv*(db->gminVIT/10), db->baseVIT +lv*(db->gmaxVIT/10));
+	min = db->base.vit +lv*(db->gmin.vit/10) +(evo?db->emin.vit:0);
+	max = db->base.vit +lv*(db->gmax.vit/10) +(evo?db->emax.vit:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Vit: %d (%d~%d)", hom->vit/10, min, max);
 	clif_displaymessage(fd, atcmd_output);
 
-	snprintf(atcmd_output, sizeof(atcmd_output) ,"Int: %d (%d~%d)",
-		hom->int_/10, db->baseINT +lv*(db->gminINT/10), db->baseINT +lv*(db->gmaxINT/10));
+	min = db->base.int_ +lv*(db->gmin.int_/10) +(evo?db->emin.int_:0);
+	max = db->base.int_ +lv*(db->gmax.int_/10) +(evo?db->emax.int_:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Int: %d (%d~%d)", hom->int_/10, min, max);
 	clif_displaymessage(fd, atcmd_output);
 
-	snprintf(atcmd_output, sizeof(atcmd_output) ,"Dex: %d (%d~%d)",
-		hom->dex/10, db->baseDEX +lv*(db->gminDEX/10), db->baseDEX +lv*(db->gmaxDEX/10));
+	min = db->base.dex +lv*(db->gmin.dex/10) +(evo?db->emin.dex:0);
+	max = db->base.dex +lv*(db->gmax.dex/10) +(evo?db->emax.dex:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Dex: %d (%d~%d)", hom->dex/10, min, max);
 	clif_displaymessage(fd, atcmd_output);
 
-	snprintf(atcmd_output, sizeof(atcmd_output) ,"Luk: %d (%d~%d)",
-		hom->luk/10, db->baseLUK +lv*(db->gminLUK/10), db->baseLUK +lv*(db->gmaxLUK/10));
+	min = db->base.luk +lv*(db->gmin.luk/10) +(evo?db->emin.luk:0);
+	max = db->base.luk +lv*(db->gmax.luk/10) +(evo?db->emax.luk:0);;
+	snprintf(atcmd_output, sizeof(atcmd_output) ,"Luk: %d (%d~%d)", hom->luk/10, min, max);
 	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
