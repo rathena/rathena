@@ -164,6 +164,7 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data);
 int mob_spawn(struct mob_data *md);
 int mob_setdelayspawn(struct mob_data *md);
 int mob_parse_dataset(struct spawn_data *data);
+void mob_log_damage(struct mob_data *md, struct block_list *src, int damage);
 void mob_damage(struct mob_data *md, struct block_list *src, int damage);
 int mob_dead(struct mob_data *md, struct block_list *src, int type);
 void mob_revive(struct mob_data *md, unsigned int hp);

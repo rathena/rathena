@@ -5565,8 +5565,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		return 1;
 	}
 
-	if (dstmd) //Mob skill event for no damage skills (damage ones are handled in battle_calc_damage) [Skotlex]
+	if (dstmd) { //Mob skill event for no damage skills (damage ones are handled in battle_calc_damage) [Skotlex]
+		mob_log_damage(dstmd, src, 0); //Log interaction (counts as 'attacker' for the exp bonus)
 		mobskill_event(dstmd, src, tick, MSC_SKILLUSED|(skillid<<16));
+	}
 	
 	if (sd && !(flag&1) && sd->state.arrow_atk) //Consume arrow on last invocation to this skill.
 		battle_consume_ammo(sd, skillid, skilllv);

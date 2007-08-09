@@ -1587,91 +1587,66 @@ int mob_respawn(int tid, unsigned int tick, int id,int data )
 	return 1;
 }
 
-//Call when a mob has received damage.
-void mob_damage(struct mob_data *md, struct block_list *src, int damage)
+void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 {
 	int char_id = 0, flag = 0;
+	if(damage < 0) return; //Do nothing for absorbed damage.
 
-	if (damage > 0)
-	{	//Store total damage...
-		if (UINT_MAX - (unsigned int)damage > md->tdmg)
-			md->tdmg+=damage;
-		else if (md->tdmg == UINT_MAX)
-			damage = 0; //Stop recording damage once the cap has been reached.
-		else { //Cap damage log...
-			damage = (int)(UINT_MAX - md->tdmg);
-			md->tdmg = UINT_MAX;
-		}
-		if (md->state.aggressive)
-		{	//No longer aggressive, change to retaliate AI.
-			md->state.aggressive = 0;
-			if(md->state.skillstate== MSS_ANGRY)
-				md->state.skillstate = MSS_BERSERK;
-			if(md->state.skillstate== MSS_FOLLOW)
-				md->state.skillstate = MSS_RUSH;
-		}
-	}
-
-	if(md->guardian_data && md->guardian_data->number < MAX_GUARDIANS) // guardian hp update [Valaris] (updated by [Skotlex])
-		md->guardian_data->castle->guardian[md->guardian_data->number].hp = md->status.hp;
-
-	if (battle_config.show_mob_info&3)
-		clif_charnameack (0, &md->bl);
-	
-	if (!src)
-		return;
-	
-	if(md->nd)
-		mob_script_callback(md, src, CALLBACK_ATTACK);
+	if(!damage && !(src->type&DEFAULT_ENEMY_TYPE(md)))
+		return; //Do not log non-damaging effects from non-enemies.
 
 	switch (src->type) {
-		case BL_PC: 
-		{
-			struct map_session_data *sd = (TBL_PC*)src;
-			char_id = sd->status.char_id;
+	case BL_PC: 
+	{
+		struct map_session_data *sd = (TBL_PC*)src;
+		char_id = sd->status.char_id;
+		if (damage)
 			md->attacked_id = src->id;
-			break;
-		}
-		case BL_HOM:	//[orn]
-		{
-			struct homun_data *hd = (TBL_HOM*)src;
-			flag = 1;
-			if (hd->master)
-				char_id = hd->master->status.char_id;
+		break;
+	}
+	case BL_HOM:	//[orn]
+	{
+		struct homun_data *hd = (TBL_HOM*)src;
+		flag = 1;
+		if (hd->master)
+			char_id = hd->master->status.char_id;
+		if (damage)
 			md->attacked_id = src->id;
-			break;
+		break;
+	}
+	case BL_PET:
+	{
+		struct pet_data *pd = (TBL_PET*)src;
+		if (battle_config.pet_attack_exp_to_master && pd->msd) {
+			char_id = pd->msd->status.char_id;
+			damage=(damage*battle_config.pet_attack_exp_rate)/100; //Modify logged damage accordingly.
 		}
-		case BL_PET:
-		{
-			struct pet_data *pd = (TBL_PET*)src;
-			if (battle_config.pet_attack_exp_to_master && pd->msd) {
-				char_id = pd->msd->status.char_id;
-				damage=(damage*battle_config.pet_attack_exp_rate)/100; //Modify logged damage accordingly.
-			}
-			//Let mobs retaliate against the pet's master [Skotlex]
-			if(pd->msd)
-				md->attacked_id = pd->msd->bl.id;
-			break;
+		//Let mobs retaliate against the pet's master [Skotlex]
+		if(pd->msd && damage)
+			md->attacked_id = pd->msd->bl.id;
+		break;
+	}
+	case BL_MOB:
+	{
+		struct mob_data* md2 = (TBL_MOB*)src;
+		if(md2->special_state.ai && md2->master_id) {
+			struct map_session_data* msd = map_id2sd(md2->master_id);
+			if (msd) char_id = msd->status.char_id;
 		}
-		case BL_MOB:
-		{
-			struct mob_data* md2 = (TBL_MOB*)src;
-			if(md2->special_state.ai && md2->master_id) {
-				struct map_session_data* msd = map_id2sd(md2->master_id);
-				if (msd) char_id = msd->status.char_id;
-			}
-			//Let players decide whether to retaliate versus the master or the mob. [Skotlex]
-			if (md2->master_id && battle_config.retaliate_to_master)
-				md->attacked_id = md2->master_id;
-			else
-				md->attacked_id = src->id;
+		if (!damage)
 			break;
-		}
-		default: //For all unhandled types.
+		//Let players decide whether to retaliate versus the master or the mob. [Skotlex]
+		if (md2->master_id && battle_config.retaliate_to_master)
+			md->attacked_id = md2->master_id;
+		else
 			md->attacked_id = src->id;
+		break;
+	}
+	default: //For all unhandled types.
+		md->attacked_id = src->id;
 	}
 	//Log damage...
-	if (char_id && damage > 0) {
+	if(char_id) {
 		int i,minpos;
 		unsigned int mindmg;
 		for(i=0,minpos=DAMAGELOG_SIZE-1,mindmg=UINT_MAX;i<DAMAGELOG_SIZE;i++){
@@ -1697,6 +1672,44 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 			md->dmglog[minpos].dmg = damage;
 		}
 	}
+	return;
+}
+//Call when a mob has received damage.
+void mob_damage(struct mob_data *md, struct block_list *src, int damage)
+{
+	if (damage > 0)
+	{	//Store total damage...
+		if (UINT_MAX - (unsigned int)damage > md->tdmg)
+			md->tdmg+=damage;
+		else if (md->tdmg == UINT_MAX)
+			damage = 0; //Stop recording damage once the cap has been reached.
+		else { //Cap damage log...
+			damage = (int)(UINT_MAX - md->tdmg);
+			md->tdmg = UINT_MAX;
+		}
+		if (md->state.aggressive)
+		{	//No longer aggressive, change to retaliate AI.
+			md->state.aggressive = 0;
+			if(md->state.skillstate== MSS_ANGRY)
+				md->state.skillstate = MSS_BERSERK;
+			if(md->state.skillstate== MSS_FOLLOW)
+				md->state.skillstate = MSS_RUSH;
+		}
+		//Log damage
+		if (src) mob_log_damage(md, src, damage);
+	}
+
+	if(md->guardian_data && md->guardian_data->number < MAX_GUARDIANS) // guardian hp update [Valaris] (updated by [Skotlex])
+		md->guardian_data->castle->guardian[md->guardian_data->number].hp = md->status.hp;
+
+	if (battle_config.show_mob_info&3)
+		clif_charnameack (0, &md->bl);
+	
+	if (!src)
+		return;
+	
+	if(md->nd)
+		mob_script_callback(md, src, CALLBACK_ATTACK);
 	
 	if(md->special_state.ai==2/* && md->master_id == src->id*/)
 	{	//LOne WOlf explained that ANYONE can trigger the marine countdown skill. [Skotlex]
