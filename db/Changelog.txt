@@ -48,6 +48,9 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+08/09
+	* Fixed damage of NPC_COMBOATTACK [Playtester]
+	- also reverted some custom skill changes
 08/08
 	* Changed the structure of the homunculus_db file so that the homunculus
 	  and its evolved version share the same line. Also added the evolution

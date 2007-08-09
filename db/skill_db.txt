@@ -209,16 +209,16 @@
 168,0,0,4,7,0x1,0,1,1,no,0,0x2,0,magic,0	//NPC_CHANGEDARKNESS#Shadow Attribute Change#
 169,0,0,4,8,0x1,0,1,1,no,0,0x2,0,magic,0	//NPC_CHANGETELEKINESIS#Sense Attribute Change#
 170,-9,6,1,-1,0x20,0,10,1,no,0,0x2,0,weapon,0	//NPC_CRITICALSLASH#Defense disregard attack#
-171,-9,8,1,-1,0,0,10,2:3:4:5:6:7:8:9:10:11,no,0,0x2,0,weapon,0	//NPC_COMBOATTACK#Multi-stage Attack#
+171,-9,8,1,-1,0,0,10,-2:-3:-4:-5:-6:-7:-8:-9:-10:-11,no,0,0x2,0,weapon,0	//NPC_COMBOATTACK#Multi-stage Attack#
 172,-9,6,1,-1,0x40,0,10,1,no,0,0x2,0,weapon,0	//NPC_GUIDEDATTACK#On-target Impact Attack#
 173,5,6,4,3,0xD2,5,10,1,no,0,0x2,0,misc,3	//NPC_SELFDESTRUCTION#Suicide bombing#
 174,-9,6,1,-1,0x2,3,1,1,no,0,0x2,0,weapon,0	//NPC_SPLASHATTACK#Splash attack#
 175,0,0,4,0,0x41,0,10,1,no,0,0x2,0,misc,0	//NPC_SUICIDE#Suicide#
 176,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_POISON#Poison Attack#
 177,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_BLINDATTACK#Darkness Attack#
-178,-9,6,1,-1,0,0:0:0:0:0:-1,5,1,no,0,0x2,0,weapon,0	//NPC_SILENCEATTACK#Silence Attack#
+178,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_SILENCEATTACK#Silence Attack#
 179,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_STUNATTACK#Stun Attack#
-180,-9,6,1,-1,0,0:0:0:0:0:-1,5,1,no,0,0x2,0,weapon,0	//NPC_PETRIFYATTACK#Petrify Attack#
+180,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_PETRIFYATTACK#Petrify Attack#
 181,-9,6,1,7,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_CURSEATTACK#Cursing Attack #
 182,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	//NPC_SLEEPATTACK#Sleep attack#
 183,-9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	//NPC_RANDOMATTACK#Random Attack #
