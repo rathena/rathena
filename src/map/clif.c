@@ -1189,19 +1189,19 @@ static void clif_spiritball_single(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 static void clif_set0192(int fd, int m, int x, int y, int type)
 {
-	WFIFOHEAD(fd, packet_len(0x192));
+	WFIFOHEAD(fd,packet_len(0x192));
 	WFIFOW(fd,0) = 0x192;
 	WFIFOW(fd,2) = x;
 	WFIFOW(fd,4) = y;
 	WFIFOW(fd,6) = type;
-	safestrncpy((char*)WFIFOP(fd,8), mapindex_getmapname_ext(map[m].name,NULL), MAP_NAME_LENGTH_EXT);
+	mapindex_getmapname_ext(map[m].name, (char*)WFIFOP(fd,8));
 	WFIFOSET(fd,packet_len(0x192));
 }
 
 // new and improved weather display [Valaris]
 static void clif_weather_sub(int fd, int id, int type)
 {
-	WFIFOHEAD(fd, packet_len(0x1f3));
+	WFIFOHEAD(fd,packet_len(0x1f3));
 	WFIFOW(fd,0) = 0x1f3;
 	WFIFOL(fd,2) = id;
 	WFIFOL(fd,6) = type;
@@ -1650,12 +1650,12 @@ void clif_changemap(struct map_session_data *sd, short map, int x, int y)
 	nullpo_retv(sd);
 	fd = sd->fd;
 
-	WFIFOHEAD(fd, packet_len(0x91));
+	WFIFOHEAD(fd,packet_len(0x91));
 	WFIFOW(fd,0) = 0x91;
-	safestrncpy((char*)WFIFOP(fd,2), mapindex_getmapname_ext(mapindex_id2name(map),NULL), MAP_NAME_LENGTH_EXT);
+	mapindex_getmapname_ext(mapindex_id2name(map), (char*)WFIFOP(fd,2));
 	WFIFOW(fd,18) = x;
 	WFIFOW(fd,20) = y;
-	WFIFOSET(fd, packet_len(0x91));
+	WFIFOSET(fd,packet_len(0x91));
 }
 
 /*==========================================
@@ -1667,15 +1667,14 @@ void clif_changemapserver(struct map_session_data* sd, unsigned short map_index,
 	nullpo_retv(sd);
 	fd = sd->fd;
 
-	WFIFOHEAD(fd, packet_len(0x92));
+	WFIFOHEAD(fd,packet_len(0x92));
 	WFIFOW(fd,0) = 0x92;
-	safestrncpy((char*)WFIFOP(fd,2), mapindex_getmapname_ext(mapindex_id2name(map_index),NULL), MAP_NAME_LENGTH_EXT);
-	WFIFOB(fd,17) = 0;	//Null terminator for mapname
+	mapindex_getmapname_ext(mapindex_id2name(map_index), (char*)WFIFOP(fd,2));
 	WFIFOW(fd,18) = x;
 	WFIFOW(fd,20) = y;
 	WFIFOL(fd,22) = htonl(ip);
 	WFIFOW(fd,26) = ntows(htons(port)); // [!] LE byte order here [!]
-	WFIFOSET(fd, packet_len(0x92));
+	WFIFOSET(fd,packet_len(0x92));
 }
 
 int clif_blown(struct block_list *bl)
@@ -4710,11 +4709,11 @@ void clif_skill_warppoint(struct map_session_data* sd, int skill_num, int skill_
 	WFIFOW(fd,0) = 0x11c;
 	WFIFOW(fd,2) = skill_num;
 	memset(WFIFOP(fd,4), 0x00, 4*MAP_NAME_LENGTH_EXT);
-	if (map1 == -1) safestrncpy((char*)WFIFOP(fd, 4), "Random", MAP_NAME_LENGTH_EXT);
-	if (map1 > 0)   safestrncpy((char*)WFIFOP(fd, 4), mapindex_getmapname_ext(mapindex_id2name(map1),NULL), MAP_NAME_LENGTH_EXT);
-	if (map2 > 0)   safestrncpy((char*)WFIFOP(fd,20), mapindex_getmapname_ext(mapindex_id2name(map2),NULL), MAP_NAME_LENGTH_EXT);
-	if (map3 > 0)   safestrncpy((char*)WFIFOP(fd,36), mapindex_getmapname_ext(mapindex_id2name(map3),NULL), MAP_NAME_LENGTH_EXT);
-	if (map4 > 0)   safestrncpy((char*)WFIFOP(fd,52), mapindex_getmapname_ext(mapindex_id2name(map4),NULL), MAP_NAME_LENGTH_EXT);
+	if (map1 == -1) strcpy((char*)WFIFOP(fd,4), "Random");
+	if (map1 > 0) mapindex_getmapname_ext(mapindex_id2name(map1), (char*)WFIFOP(fd,4));
+	if (map2 > 0) mapindex_getmapname_ext(mapindex_id2name(map2), (char*)WFIFOP(fd,20));
+	if (map3 > 0) mapindex_getmapname_ext(mapindex_id2name(map3), (char*)WFIFOP(fd,36));
+	if (map4 > 0) mapindex_getmapname_ext(mapindex_id2name(map4), (char*)WFIFOP(fd,52));
 	WFIFOSET(fd,packet_len(0x11c));
 
 	sd->menuskill_id = skill_num;
@@ -5695,7 +5694,7 @@ int clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 	WBUFB(buf,14) = 0; //Unconfirmed byte, could be online/offline.
 	memcpy(WBUFP(buf,15), p->party.name, NAME_LENGTH);
 	memcpy(WBUFP(buf,39), sd->status.name, NAME_LENGTH);
-	safestrncpy((char*)WBUFP(buf,63), mapindex_getmapname_ext(mapindex_id2name(sd->mapindex),NULL), MAP_NAME_LENGTH_EXT);
+	mapindex_getmapname_ext(mapindex_id2name(sd->mapindex), (char*)WBUFP(buf,63));
 	WBUFB(buf,79) = (p->party.item&1)?1:0;
 	WBUFB(buf,80) = (p->party.item&2)?1:0;
 	clif_send(buf,packet_len(0x1e9),&sd->bl,PARTY);
@@ -5726,7 +5725,7 @@ int clif_party_info(struct party_data* p, struct map_session_data *sd)
 
 		WBUFL(buf,28+c*46) = m->account_id;
 		memcpy(WBUFP(buf,28+c*46+4), m->name, NAME_LENGTH);
-		safestrncpy((char*)WBUFP(buf,28+c*46+28), mapindex_getmapname_ext(mapindex_id2name(m->map),NULL), MAP_NAME_LENGTH_EXT);
+		mapindex_getmapname_ext(mapindex_id2name(m->map), (char*)WBUFP(buf,28+c*46+28));
 		WBUFB(buf,28+c*46+44) = (m->leader) ? 0 : 1;
 		WBUFB(buf,28+c*46+45) = (m->online) ? 0 : 1;
 		c++;
@@ -6005,7 +6004,7 @@ void clif_party_move(struct party* p, struct map_session_data* sd, int online)
 	WBUFB(buf,14) = !online;
 	memcpy(WBUFP(buf,15),p->name, NAME_LENGTH);
 	memcpy(WBUFP(buf,39),sd->status.name, NAME_LENGTH);
-	safestrncpy((char*)WBUFP(buf,63), mapindex_getmapname_ext(map[sd->bl.m].name,NULL), MAP_NAME_LENGTH_EXT);
+	mapindex_getmapname_ext(map[sd->bl.m].name, (char*)WBUFP(buf,63));
 	clif_send(buf,packet_len(0x104),&sd->bl,PARTY);
 }
 /*==========================================
@@ -6394,7 +6393,7 @@ void clif_changemapcell(short m, short x, short y, int cell_type, int type)
 	WBUFW(buf,2) = x;
 	WBUFW(buf,4) = y;
 	WBUFW(buf,6) = cell_type;
-	safestrncpy((char*)WBUFP(buf,8), mapindex_getmapname_ext(map[m].name,NULL), MAP_NAME_LENGTH_EXT);
+	mapindex_getmapname_ext(map[m].name,(char*)WBUFP(buf,8));
 	clif_send(buf,packet_len(0x192),&bl,(!type)?AREA:ALL_SAMEMAP);
 }
 
@@ -7754,7 +7753,7 @@ void clif_feel_info(struct map_session_data* sd, unsigned char feel_level, unsig
 
 	WFIFOHEAD(fd,packet_len(0x20e));
 	WFIFOW(fd,0) = 0x20e;
-	safestrncpy((char*)WFIFOP(fd,2), mapindex_getmapname_ext(mapindex_id2name(sd->feel_map[feel_level].index),NULL), MAP_NAME_LENGTH_EXT);
+	mapindex_getmapname_ext(mapindex_id2name(sd->feel_map[feel_level].index), (char*)WFIFOP(fd,2));
 	WFIFOL(fd,26) = sd->bl.id;
 	WFIFOB(fd,30) = feel_level;
 	WFIFOB(fd,31) = type?1:0;

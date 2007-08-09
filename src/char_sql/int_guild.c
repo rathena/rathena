@@ -441,6 +441,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	strncpy(g->mes2,sql_row[10],119);
 	g->emblem_len=atoi(sql_row[11]);
 	g->emblem_id=atoi(sql_row[12]);
+	//FIXME: check for sql_row[13]==NULL, just in case
 	for(i=0,pstr=sql_row[13],pEmblemData=g->emblem_data; i < g->emblem_len; i++,pstr+=2){
 		int c1=pstr[0],c2=pstr[1],x1=0,x2=0;
 		if(c1>='0' && c1<='9')

@@ -185,7 +185,7 @@ static int guild_read_castledb(void)
 
 		gc=(struct guild_castle *)aCalloc(1,sizeof(struct guild_castle));
 		gc->castle_id=atoi(str[0]);
-		safestrncpy(gc->map_name,mapindex_getmapname(str[1],NULL),MAP_NAME_LENGTH);
+		mapindex_getmapname(str[1],gc->map_name);
 		safestrncpy(gc->castle_name,str[2],NAME_LENGTH);
 		safestrncpy(gc->castle_event,str[3],NAME_LENGTH);
 

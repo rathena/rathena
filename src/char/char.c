@@ -3451,7 +3451,7 @@ int parse_char(int fd)
 			WFIFOHEAD(fd,28);
 			WFIFOW(fd,0) = 0x71;
 			WFIFOL(fd,2) = cd->char_id;
-			safestrncpy((char*)WFIFOP(fd,6), mapindex_getmapname_ext(mapindex_id2name(cd->last_point.map),NULL), MAP_NAME_LENGTH_EXT);
+			mapindex_getmapname_ext(mapindex_id2name(cd->last_point.map), (char*)WFIFOP(fd,6));
 		{
 			// Advanced subnet check [LuzZza]
 			uint32 subnet_map_ip;

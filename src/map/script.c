@@ -9650,10 +9650,11 @@ BUILDIN_FUNC(getcastledata)
 
 BUILDIN_FUNC(setcastledata)
 {
-	int index=script_getnum(st,3);
-	int value=script_getnum(st,4);
+	const char* mapname = mapindex_getmapname(script_getstr(st,2),NULL);
+	int index = script_getnum(st,3);
+	int value = script_getnum(st,4);
 	
-	struct guild_castle* gc = guild_mapname2gc( mapindex_getmapname(script_getstr(st,2),NULL) );
+	struct guild_castle* gc = guild_mapname2gc(mapname);
 
 	if(gc) {
 		// Save Data byself First

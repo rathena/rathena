@@ -39,7 +39,8 @@ const char* mapindex_getmapname(const char* string, char* output)
 		len -= 4; // strip .gat extension
 	
 	len = min(len, MAP_NAME_LENGTH-1);
-	safestrncpy(dest, string, len+1);
+	strncpy(dest, string, len+1);
+	memset(&dest[len], '\0', MAP_NAME_LENGTH-len);
 	
 	return dest;
 }
@@ -57,12 +58,14 @@ const char* mapindex_getmapname_ext(const char* string, char* output)
 		len--;
 	}
 	
-	safestrncpy(dest, string, len+1);
+	strncpy(dest, string, len+1);
 	
 	if (len < 4 || stricmp(&dest[len-4], ".gat") != 0) {
 		strcpy(&dest[len], ".gat");
 		len += 4; // add .gat extension
 	}
+
+	memset(&dest[len], '\0', MAP_NAME_LENGTH_EXT-len);
 	
 	return dest;
 }
