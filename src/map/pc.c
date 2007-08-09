@@ -3761,146 +3761,80 @@ int pc_jobid2mapid(unsigned short b_class)
 int pc_mapid2jobid(unsigned short class_, int sex)
 {
 	switch(class_) {
-		case MAPID_NOVICE:
-			return JOB_NOVICE;
-		case MAPID_SWORDMAN:
-			return JOB_SWORDMAN;
-		case MAPID_MAGE:
-			return JOB_MAGE;
-		case MAPID_ARCHER:
-			return JOB_ARCHER;
-		case MAPID_ACOLYTE:
-			return JOB_ACOLYTE;
-		case MAPID_MERCHANT:
-			return JOB_MERCHANT;
-		case MAPID_THIEF:
-			return JOB_THIEF;
-		case MAPID_TAEKWON:
-			return JOB_TAEKWON;
-		case MAPID_WEDDING:
-			return JOB_WEDDING;
-		case MAPID_GUNSLINGER:
-			return JOB_GUNSLINGER;
-		case MAPID_NINJA:
-			return JOB_NINJA;
-		case MAPID_XMAS: // [Valaris]
-			return JOB_XMAS;
+		case MAPID_NOVICE:          return JOB_NOVICE;
+		case MAPID_SWORDMAN:        return JOB_SWORDMAN;
+		case MAPID_MAGE:            return JOB_MAGE;
+		case MAPID_ARCHER:          return JOB_ARCHER;
+		case MAPID_ACOLYTE:         return JOB_ACOLYTE;
+		case MAPID_MERCHANT:        return JOB_MERCHANT;
+		case MAPID_THIEF:           return JOB_THIEF;
+		case MAPID_TAEKWON:         return JOB_TAEKWON;
+		case MAPID_WEDDING:         return JOB_WEDDING;
+		case MAPID_GUNSLINGER:      return JOB_GUNSLINGER;
+		case MAPID_NINJA:           return JOB_NINJA;
+		case MAPID_XMAS:            return JOB_XMAS;
 	//2_1 classes
-		case MAPID_SUPER_NOVICE:
-			return JOB_SUPER_NOVICE;
-		case MAPID_KNIGHT:
-			return JOB_KNIGHT;
-		case MAPID_WIZARD:
-			return JOB_WIZARD;
-		case MAPID_HUNTER:
-			return JOB_HUNTER;
-		case MAPID_PRIEST:
-			return JOB_PRIEST;
-		case MAPID_BLACKSMITH:
-			return JOB_BLACKSMITH;
-		case MAPID_ASSASSIN:
-			return JOB_ASSASSIN;
-		case MAPID_STAR_GLADIATOR:
-			return JOB_STAR_GLADIATOR;
+		case MAPID_SUPER_NOVICE:    return JOB_SUPER_NOVICE;
+		case MAPID_KNIGHT:          return JOB_KNIGHT;
+		case MAPID_WIZARD:          return JOB_WIZARD;
+		case MAPID_HUNTER:          return JOB_HUNTER;
+		case MAPID_PRIEST:          return JOB_PRIEST;
+		case MAPID_BLACKSMITH:      return JOB_BLACKSMITH;
+		case MAPID_ASSASSIN:        return JOB_ASSASSIN;
+		case MAPID_STAR_GLADIATOR:  return JOB_STAR_GLADIATOR;
 	//2_2 classes
-		case MAPID_CRUSADER:
-			return JOB_CRUSADER;
-		case MAPID_SAGE:
-			return JOB_SAGE;
-		case MAPID_BARDDANCER:
-			return sex?JOB_BARD:JOB_DANCER;
-		case MAPID_MONK:
-			return JOB_MONK;
-		case MAPID_ALCHEMIST:
-			return JOB_ALCHEMIST;
-		case MAPID_ROGUE:
-			return JOB_ROGUE;
-		case MAPID_SOUL_LINKER:
-			return JOB_SOUL_LINKER;
+		case MAPID_CRUSADER:        return JOB_CRUSADER;
+		case MAPID_SAGE:            return JOB_SAGE;
+		case MAPID_BARDDANCER:      return sex?JOB_BARD:JOB_DANCER;
+		case MAPID_MONK:            return JOB_MONK;
+		case MAPID_ALCHEMIST:       return JOB_ALCHEMIST;
+		case MAPID_ROGUE:           return JOB_ROGUE;
+		case MAPID_SOUL_LINKER:     return JOB_SOUL_LINKER;
 	//1-1: advanced
-		case MAPID_NOVICE_HIGH:
-			return JOB_NOVICE_HIGH;
-		case MAPID_SWORDMAN_HIGH:
-			return JOB_SWORDMAN_HIGH;
-		case MAPID_MAGE_HIGH:
-			return JOB_MAGE_HIGH;
-		case MAPID_ARCHER_HIGH:
-			return JOB_ARCHER_HIGH;
-		case MAPID_ACOLYTE_HIGH:
-			return JOB_ACOLYTE_HIGH;
-		case MAPID_MERCHANT_HIGH:
-			return JOB_MERCHANT_HIGH;
-		case MAPID_THIEF_HIGH:
-			return JOB_THIEF_HIGH;
+		case MAPID_NOVICE_HIGH:     return JOB_NOVICE_HIGH;
+		case MAPID_SWORDMAN_HIGH:   return JOB_SWORDMAN_HIGH;
+		case MAPID_MAGE_HIGH:       return JOB_MAGE_HIGH;
+		case MAPID_ARCHER_HIGH:     return JOB_ARCHER_HIGH;
+		case MAPID_ACOLYTE_HIGH:    return JOB_ACOLYTE_HIGH;
+		case MAPID_MERCHANT_HIGH:   return JOB_MERCHANT_HIGH;
+		case MAPID_THIEF_HIGH:      return JOB_THIEF_HIGH;
 	//2_1 advanced
-		case MAPID_LORD_KNIGHT:
-			return JOB_LORD_KNIGHT;
-		case MAPID_HIGH_WIZARD:
-			return JOB_HIGH_WIZARD;
-		case MAPID_SNIPER:
-			return JOB_SNIPER;
-		case MAPID_HIGH_PRIEST:
-			return JOB_HIGH_PRIEST;
-		case MAPID_WHITESMITH:
-			return JOB_WHITESMITH;
-		case MAPID_ASSASSIN_CROSS:
-			return JOB_ASSASSIN_CROSS;
+		case MAPID_LORD_KNIGHT:     return JOB_LORD_KNIGHT;
+		case MAPID_HIGH_WIZARD:     return JOB_HIGH_WIZARD;
+		case MAPID_SNIPER:          return JOB_SNIPER;
+		case MAPID_HIGH_PRIEST:     return JOB_HIGH_PRIEST;
+		case MAPID_WHITESMITH:      return JOB_WHITESMITH;
+		case MAPID_ASSASSIN_CROSS:  return JOB_ASSASSIN_CROSS;
 	//2_2 advanced
-		case MAPID_PALADIN:
-			return JOB_PALADIN;
-		case MAPID_PROFESSOR:
-			return JOB_PROFESSOR;
-		case MAPID_CLOWNGYPSY:
-			return sex?JOB_CLOWN:JOB_GYPSY;
-		case MAPID_CHAMPION:
-			return JOB_CHAMPION;
-		case MAPID_CREATOR:
-			return JOB_CREATOR;
-		case MAPID_STALKER:
-			return JOB_STALKER;
+		case MAPID_PALADIN:         return JOB_PALADIN;
+		case MAPID_PROFESSOR:       return JOB_PROFESSOR;
+		case MAPID_CLOWNGYPSY:      return sex?JOB_CLOWN:JOB_GYPSY;
+		case MAPID_CHAMPION:        return JOB_CHAMPION;
+		case MAPID_CREATOR:         return JOB_CREATOR;
+		case MAPID_STALKER:         return JOB_STALKER;
 	//1-1 baby
-		case MAPID_BABY:
-			return JOB_BABY;
-		case MAPID_BABY_SWORDMAN:
-			return JOB_BABY_SWORDMAN;
-		case MAPID_BABY_MAGE:
-			return JOB_BABY_MAGE;
-		case MAPID_BABY_ARCHER:
-			return JOB_BABY_ARCHER;
-		case MAPID_BABY_ACOLYTE:
-			return JOB_BABY_ACOLYTE;
-		case MAPID_BABY_MERCHANT:
-			return JOB_BABY_MERCHANT;
-		case MAPID_BABY_THIEF:
-			return JOB_BABY_THIEF;
+		case MAPID_BABY:            return JOB_BABY;
+		case MAPID_BABY_SWORDMAN:   return JOB_BABY_SWORDMAN;
+		case MAPID_BABY_MAGE:       return JOB_BABY_MAGE;
+		case MAPID_BABY_ARCHER:     return JOB_BABY_ARCHER;
+		case MAPID_BABY_ACOLYTE:    return JOB_BABY_ACOLYTE;
+		case MAPID_BABY_MERCHANT:   return JOB_BABY_MERCHANT;
+		case MAPID_BABY_THIEF:      return JOB_BABY_THIEF;
 	//2_1 baby
-		case MAPID_SUPER_BABY:
-			return JOB_SUPER_BABY;
-		case MAPID_BABY_KNIGHT:
-			return JOB_BABY_KNIGHT;
-		case MAPID_BABY_WIZARD:
-			return JOB_BABY_WIZARD;
-		case MAPID_BABY_HUNTER:
-			return JOB_BABY_HUNTER;
-		case MAPID_BABY_PRIEST:
-			return JOB_BABY_PRIEST;
-		case MAPID_BABY_BLACKSMITH:
-			return JOB_BABY_BLACKSMITH;
-		case MAPID_BABY_ASSASSIN:
-			return JOB_BABY_ASSASSIN;
+		case MAPID_SUPER_BABY:      return JOB_SUPER_BABY;
+		case MAPID_BABY_KNIGHT:     return JOB_BABY_KNIGHT;
+		case MAPID_BABY_WIZARD:     return JOB_BABY_WIZARD;
+		case MAPID_BABY_HUNTER:     return JOB_BABY_HUNTER;
+		case MAPID_BABY_PRIEST:     return JOB_BABY_PRIEST;
+		case MAPID_BABY_BLACKSMITH: return JOB_BABY_BLACKSMITH;
+		case MAPID_BABY_ASSASSIN:   return JOB_BABY_ASSASSIN;
 	//2_2 baby
-		case MAPID_BABY_CRUSADER:
-			return JOB_BABY_CRUSADER;
-		case MAPID_BABY_SAGE:
-			return JOB_BABY_SAGE;
-		case MAPID_BABY_BARDDANCER:
-			return sex?JOB_BABY_BARD:JOB_BABY_DANCER;
-		case MAPID_BABY_MONK:
-			return JOB_BABY_MONK;
-		case MAPID_BABY_ALCHEMIST:
-			return JOB_BABY_ALCHEMIST;
-		case MAPID_BABY_ROGUE:
-			return JOB_BABY_ROGUE;
+		case MAPID_BABY_CRUSADER:   return JOB_BABY_CRUSADER;
+		case MAPID_BABY_SAGE:       return JOB_BABY_SAGE;
+		case MAPID_BABY_BARDDANCER: return sex?JOB_BABY_BARD:JOB_BABY_DANCER;
+		case MAPID_BABY_MONK:       return JOB_BABY_MONK;
+		case MAPID_BABY_ALCHEMIST:  return JOB_BABY_ALCHEMIST;
+		case MAPID_BABY_ROGUE:      return JOB_BABY_ROGUE;
 		default:
 			return -1;
 	}
@@ -5250,100 +5184,42 @@ void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp)
 /*==========================================
  * script用PCステ?タス?み出し
  *------------------------------------------*/
-int pc_readparam(struct map_session_data *sd,int type)
+int pc_readparam(struct map_session_data* sd,int type)
 {
-	int val=0;
+	int val = 0;
 
 	nullpo_retr(0, sd);
 
-	switch(type){
-	case SP_SKILLPOINT:
-		val= sd->status.skill_point;
-		break;
-	case SP_STATUSPOINT:
-		val= sd->status.status_point;
-		break;
-	case SP_ZENY:
-		val= sd->status.zeny;
-		break;
-	case SP_BASELEVEL:
-		val= sd->status.base_level;
-		break;
-	case SP_JOBLEVEL:
-		val= sd->status.job_level;
-		break;
-	case SP_CLASS:
-		val= sd->status.class_;
-		break;
-	case SP_BASEJOB: //Base job, extracting upper type.
-		val= pc_mapid2jobid(sd->class_&MAPID_UPPERMASK, sd->status.sex);
-		break;
-	case SP_UPPER:
-		val= sd->class_&JOBL_UPPER?1:(sd->class_&JOBL_BABY?2:0);
-		break;
-	case SP_BASECLASS: //Extract base class tree. [Skotlex]
-		val= pc_mapid2jobid(sd->class_&MAPID_BASEMASK, sd->status.sex);
-		break;
-	case SP_SEX:
-		val= sd->status.sex;
-		break;
-	case SP_WEIGHT:
-		val= sd->weight;
-		break;
-	case SP_MAXWEIGHT:
-		val= sd->max_weight;
-		break;
-	case SP_BASEEXP:
-		val= sd->status.base_exp;
-		break;
-	case SP_JOBEXP:
-		val= sd->status.job_exp;
-		break;
-	case SP_NEXTBASEEXP:
-		val= pc_nextbaseexp(sd);
-		break;
-	case SP_NEXTJOBEXP:
-		val= pc_nextjobexp(sd);
-		break;
-	case SP_HP:
-		val= sd->battle_status.hp;
-		break;
-	case SP_MAXHP:
-		val= sd->battle_status.max_hp;
-		break;
-	case SP_SP:
-		val= sd->battle_status.sp;
-		break;
-	case SP_MAXSP:
-		val= sd->battle_status.max_sp;
-		break;
-	case SP_STR:
-		val= sd->status.str;
-		break;
-	case SP_AGI:
-		val= sd->status.agi;
-		break;
-	case SP_VIT:
-		val= sd->status.vit;
-		break;
-	case SP_INT:
-		val= sd->status.int_;
-		break;
-	case SP_DEX:
-		val= sd->status.dex;
-		break;
-	case SP_LUK:
-		val= sd->status.luk;
-		break;
-	case SP_KARMA:	// celest
-		val = sd->status.karma;
-		break;
-	case SP_MANNER:
-		val = sd->status.manner;
-		break;
-	case SP_FAME:
-		val= sd->status.fame;
-		break;
+	switch(type) {
+	case SP_SKILLPOINT:  val = sd->status.skill_point; break;
+	case SP_STATUSPOINT: val = sd->status.status_point; break;
+	case SP_ZENY:        val = sd->status.zeny; break;
+	case SP_BASELEVEL:   val = sd->status.base_level; break;
+	case SP_JOBLEVEL:    val = sd->status.job_level; break;
+	case SP_CLASS:       val = sd->status.class_; break;
+	case SP_BASEJOB:     val = pc_mapid2jobid(sd->class_&MAPID_UPPERMASK, sd->status.sex); break; //Base job, extracting upper type.
+	case SP_UPPER:       val = sd->class_&JOBL_UPPER?1:(sd->class_&JOBL_BABY?2:0); break;
+	case SP_BASECLASS:   val = pc_mapid2jobid(sd->class_&MAPID_BASEMASK, sd->status.sex); break; //Extract base class tree. [Skotlex]
+	case SP_SEX:         val = sd->status.sex; break;
+	case SP_WEIGHT:      val = sd->weight; break;
+	case SP_MAXWEIGHT:   val = sd->max_weight; break;
+	case SP_BASEEXP:     val = sd->status.base_exp; break;
+	case SP_JOBEXP:      val = sd->status.job_exp; break;
+	case SP_NEXTBASEEXP: val = pc_nextbaseexp(sd); break;
+	case SP_NEXTJOBEXP:  val = pc_nextjobexp(sd); break;
+	case SP_HP:          val = sd->battle_status.hp; break;
+	case SP_MAXHP:       val = sd->battle_status.max_hp; break;
+	case SP_SP:          val = sd->battle_status.sp; break;
+	case SP_MAXSP:       val = sd->battle_status.max_sp; break;
+	case SP_STR:         val = sd->status.str; break;
+	case SP_AGI:         val = sd->status.agi; break;
+	case SP_VIT:         val = sd->status.vit; break;
+	case SP_INT:         val = sd->status.int_; break;
+	case SP_DEX:         val = sd->status.dex; break;
+	case SP_LUK:         val = sd->status.luk; break;
+	case SP_KARMA:       val = sd->status.karma; break;
+	case SP_MANNER:      val = sd->status.manner; break;
+	case SP_FAME:        val = sd->status.fame; break;
 	}
 
 	return val;

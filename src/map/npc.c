@@ -1694,26 +1694,25 @@ static int npc_parse_shop(char* w1, char* w2, char* w3, char* w4)
 	#define MAX_SHOPITEM 100
 	char *p;
 	int x, y, dir, m, pos = 0;
-	char mapname[MAP_NAME_LENGTH_EXT];
 	struct npc_data *nd;
 
 	if (strcmp(w1, "-") == 0) {
 		x = 0; y = 0; dir = 0; m = -1;
 	} else {
 		// 引数の個数チェック
-		if (sscanf(w1, "%15[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4 ||
-	   	 strchr(w4, ',') == NULL) {
+		char mapname[MAP_NAME_LENGTH_EXT];
+		if (sscanf(w1, "%15[^,],%d,%d,%d", mapname, &x, &y, &dir) < 4 || strchr(w4, ',') == NULL) {
 			ShowError("bad shop line : %s\n", w3);
 			return 1;
 		}
 		m = map_mapname2mapid(mapname);
 	}
 
-	nd = (struct npc_data *) aCalloc (1, sizeof(struct npc_data) +
-		sizeof(nd->u.shop_item[0]) * (MAX_SHOPITEM + 1));
+	nd = (struct npc_data *) aCalloc (1, sizeof(struct npc_data) + sizeof(nd->u.shop_item[0]) * (MAX_SHOPITEM + 1));
 	p = strchr(w4, ',');
 
-	while (p && pos < MAX_SHOPITEM) {
+	while (p && pos < MAX_SHOPITEM)
+	{
 		int nameid, value;
 		struct item_data *id;
 		p++;
@@ -1722,12 +1721,7 @@ static int npc_parse_shop(char* w1, char* w2, char* w3, char* w4)
 		nd->u.shop_item[pos].nameid = nameid;
 		id = itemdb_search(nameid);
 		if (value < 0)
-		{
-			if (id->value_buy == 20)
-				ShowWarning ("Selling item %s [%d] with no buying price (defaults to %d) at %s\n",
-					id->name, id->nameid, id->value_buy, current_file);
 			value = id->value_buy;
-		}
 		nd->u.shop_item[pos].value = value;
 		// check for bad prices that can possibly cause exploits
 		if (value/124. < id->value_sell/75.) {  //Clened up formula to prevent overflows.
@@ -1762,8 +1756,7 @@ static int npc_parse_shop(char* w1, char* w2, char* w3, char* w4)
 	nd->class_ = m==-1?-1:atoi(w4);
 	nd->speed = 200;
 	
-	nd = (struct npc_data *)aRealloc(nd,
-		sizeof(struct npc_data) + sizeof(nd->u.shop_item[0]) * pos);
+	nd = (struct npc_data *)aRealloc(nd, sizeof(struct npc_data) + sizeof(nd->u.shop_item[0]) * pos);
 
 	npc_shop++;
 	nd->bl.type = BL_NPC;
@@ -2731,7 +2724,7 @@ static int npc_parse_mapcell(char* w1, char* w2, char* w3, char* w4)
 	if (m < 0)
 		return 1;
 
-	if (sscanf(w3, "%23[^,],%d,%d,%d,%d", type, &x0, &y0, &x1, &y1) < 4) {
+	if (sscanf(w3, "%23[^,],%d,%d,%d,%d", type, &x0, &y0, &x1, &y1) < 5) {
 		ShowError("Bad setcell line : %s\n",w3);
 		return 1;
 	}

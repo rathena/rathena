@@ -9602,7 +9602,7 @@ BUILDIN_FUNC(getcastledata)
 				int i;
 				for(i=1;i<26;i++) // Initialize[AgitInit]
 					guild_castledataload(gc->castle_id,i);
-					} break;
+				} break;
 			case 1:
 				script_pushint(st,gc->guild_id); break;
 			case 2:
@@ -9653,7 +9653,7 @@ BUILDIN_FUNC(setcastledata)
 	const char* mapname = mapindex_getmapname(script_getstr(st,2),NULL);
 	int index = script_getnum(st,3);
 	int value = script_getnum(st,4);
-	
+
 	struct guild_castle* gc = guild_mapname2gc(mapname);
 
 	if(gc) {

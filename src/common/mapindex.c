@@ -72,7 +72,7 @@ const char* mapindex_getmapname_ext(const char* string, char* output)
 
 /// Adds a map to the specified index
 /// Returns 1 if successful, 0 oherwise
-int mapindex_addmap(int index, const char* name)
+static int mapindex_addmap(int index, const char* name)
 {
 	char map_name[MAP_NAME_LENGTH];
 

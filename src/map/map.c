@@ -2470,8 +2470,7 @@ int map_addmap(char* mapname)
 	}
 
 	if (map_num >= MAX_MAP_PER_SERVER - 1) {
-		ShowError("Could not add map '"
-		CL_WHITE"%s"CL_RESET"', the limit of maps has been reached.\n",mapname);
+		ShowError("Could not add map '"CL_WHITE"%s"CL_RESET"', the limit of maps has been reached.\n",mapname);
 		return 1;
 	}
 
@@ -2487,7 +2486,7 @@ static void map_delmapid(int id)
 	map_num--;
 }
 
-int map_delmap(char *mapname)
+int map_delmap(char* mapname)
 {
 	int i;
 
@@ -2497,7 +2496,7 @@ int map_delmap(char *mapname)
 	}
 
 	for(i = 0; i < map_num; i++) {
-		if (strcmp(map[i].name, mapname) == 0) {
+		if (strcmp(map[i].name, mapname) <= 0) {
 			map_delmapid(i);
 			return 1;
 		}
@@ -2507,45 +2506,28 @@ int map_delmap(char *mapname)
 
 #define NO_WATER 1000000
 
-/* map_readwaterheight
+/*
  * Reads from the .rsw for each map
- * Returns water height (or NO_WATER if file doesn't exist)
- * or other error is encountered.
- * This receives a map-name, and changes the extension to rsw if it isn't set already.
+ * Returns water height (or NO_WATER if file doesn't exist) or other error is encountered.
  * Assumed path for file is data/mapname.rsw
  * Credits to LittleWolf
  */
-int map_waterheight(char *mapname)
+int map_waterheight(char* mapname)
 {
 	char fn[256];
  	char *rsw, *found;
-	float whtemp;
-	int wh;
 
 	//Look up for the rsw
-	if(!strstr(mapname,"data\\"))
-		sprintf(fn,"data\\%s.rsw", mapname);
-	else
-		strcpy(fn, mapname);
+	sprintf(fn,"data\\%s.rsw", mapname);
 
 	found = grfio_find_file(fn);
-	if (!found)
-		; //Stick to the current fn
-	else if(!strstr(found,"data\\"))
-		sprintf(fn,"data\\%s.rsw", found);
-	else
-		strcpy(fn, found);
+	if (found) strcpy(fn, found);
 	
-	rsw = strstr(fn, ".");
-	if (rsw && strstr(fn, ".rsw") == NULL)
-		sprintf(rsw,".rsw");
 	// read & convert fn
-	// again, might not need to be unsigned char
 	rsw = (char *) grfio_read (fn);
 	if (rsw)
 	{	//Load water height from file
-		whtemp = *(float*)(rsw+166);
-		wh = (int) whtemp;
+		int wh = (int) *(float*)(rsw+166);
 		aFree(rsw);
 		return wh;
 	}
@@ -2556,17 +2538,16 @@ int map_waterheight(char *mapname)
 /*==================================
  * .GAT format
  *----------------------------------*/
-int map_readgat (struct map_data *m)
+int map_readgat (struct map_data* m)
 {
 	char fn[256];
 	char *gat;
 	int wh,x,y,xs,ys;
 	struct gat_1cell {float high[4]; int type;} *p = NULL;
 
-	sprintf(fn,"data\\%s.gat",m->name);
+	sprintf(fn, "data\\%s.gat", m->name);
 
 	// read & convert fn
-	// again, might not need to be unsigned char
 	gat = (char *) grfio_read (fn);
 	if (gat == NULL)
 		return 0;
@@ -2619,7 +2600,7 @@ int map_readallmaps (void)
 		size_t size;
 
 		// show progress
-		if(j != lasti || last_time != time(0))
+		if (j != lasti || last_time != time(0))
 		{
 			char progress[21] = "                    ";
 			char c = '-';

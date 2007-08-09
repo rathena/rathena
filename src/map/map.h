@@ -1380,7 +1380,7 @@ unsigned int distance(int dx, int dy);
 int cleanup_sub(struct block_list *bl, va_list ap);
 
 void map_helpscreen(int flag); // [Valaris]
-int map_delmap(char *mapname);
+int map_delmap(char* mapname);
 
 int map_addmobtolist(unsigned short m, struct spawn_data *spawn);	// [Wizputer]
 void map_spawnmobs(int); // [Wizputer]
