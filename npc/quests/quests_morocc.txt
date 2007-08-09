@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 //= 1.5 Fixed a little bug with "Job_Alchemist" changed to "Job_Alchem". [Samuray22]
 //	-Thanks to Nobuo
 //= 1.6 Fixed a nasty bug in last part of the quest. [SinSloth]
+//= 1.7 Fixed a bug with XP rewards. [SinSloth]
 //============================================================ 
 
 
@@ -3407,9 +3408,9 @@ que_job01,16,21,5	script	Valdes#1	55,{
 		}
 		delitem 7416,countitem(7416);
 		delitem 7417,countitem(7417);
-		set mao_request,30;
 		if(mao_request == 28) getexp 1050000,0;
 		else if(mao_request == 29) getexp 1280000,0;
+		set mao_request,30;
 		getitem 12107,1;
 		next;
 		mes "[Valdes]";
@@ -3548,9 +3549,9 @@ que_job01,16,21,5	script	Valdes#1	55,{
 		}
 		delitem 7416,countitem(7416);
 		delitem 7418,countitem(7418);
-		set mao_request,128;
 		if(mao_request == 126) getexp 1050000,0;
 		else if(mao_request == 127) getexp 1280000,0;
+		set mao_request,128;
 		getitem 12106,1;
 		next;
 		mes "[Valdes]";
