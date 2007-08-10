@@ -143,7 +143,7 @@ rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
 		mes "[Cool Event Corp. Staff]";
 		mes "Your Respawn Point";
 		mes "has been saved here";
-		mes "in the village of Hugel.";
+		mes "in the town of Rachel.";
 		mes "Thank you for using the";
 		mes "Cool Event Corp. service~";
 		emotion e_thx;
