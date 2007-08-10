@@ -49,6 +49,9 @@
 	----
 ========================
 08/10
+	* Raised splash range of Focused Arrow Strike and First Wind [Playtester]
+	- temporary fix until the real area calculation is added
+	- also started adding some of the 11.2 skills
 	* Fixed a wrong(?) line for Venom Splasher in abra_db.txt [ultramage]
 08/09
 	* Fixed damage of NPC_COMBOATTACK [Playtester]
