@@ -1346,7 +1346,7 @@ int parse_login(int fd)
 
 		case 0x0064:		// request client login
 		case 0x01dd:		// request client login (encryption mode)
-		case 0x0277:		// New login packet (layout is same as 0x64 but different length)
+		case 0x0277:		// New login packet (kRO 2006-04-24aSakexe langtype 0)
 		case 0x02b0:		// New login packet (kRO 2007-05-14aSakexe langtype 0)
 		{
 			int packet_len = RFIFOREST(fd);
@@ -1371,8 +1371,8 @@ int parse_login(int fd)
 
 			// S 0064 <version>.l <account name>.24B <password>.24B <version2>.B
 			// S 01dd <version>.l <account name>.24B <md5 binary>.16B <version2>.B
-			// S 0277 ??
-			// S 02b0 <version>.l <account name>.24B <password>.24B <?>.B <ip address>.16B <?>.13 <version2>.B
+			// S 0277 <version>.l <account name>.24B <password>.24B <junk?>.29B <version2>.B
+			// S 02b0 <version>.l <account name>.24B <password>.24B <junk?>.30B <version2>.B
 
 			memset(&account, 0, sizeof(account));
 			account.version = RFIFOL(fd,2);

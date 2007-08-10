@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/08/10
+	* Removed .gat from the remaining npcs [ultramage]
 2007/08/09
 	* Rev. 10973 2-1 Job quest update. Needs in-depth testing. [L0ne_W0lf]
 	- Because of a change of variables, players currently undergoing the job change 

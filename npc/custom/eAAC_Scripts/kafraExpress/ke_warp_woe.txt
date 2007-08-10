@@ -37,20 +37,20 @@ function	script	F_keWarpWOE	{
 		if ($@kewg_showOnline) {
 			set @kmenu, select(
 				"- Cancel",
-				"- Al De Baran Guild ("+($@kewg_alDeBaran*@cost/100)+"z/"+(getmapusers("alde_gld.gat")
-					+getmapusers("aldeg_cas01.gat")+getmapusers("aldeg_cas02.gat")+getmapusers("aldeg_cas03.gat")
-					+getmapusers("aldeg_cas04.gat")+getmapusers("aldeg_cas05.gat"))+" "+$@ked_users$+")",
-				"- Geffen Guild ("+($@kewg_geffen*@cost/100)+"z/"+(getmapusers("gef_fild13.gat")
-					+getmapusers("gefg_cas01.gat")+getmapusers("gefg_cas02.gat")+getmapusers("gefg_cas03.gat")
-					+getmapusers("gefg_cas04.gat")+getmapusers("gefg_cas05.gat"))+" "+$@ked_users$+")",
-				"- Payon Guild ("+($@kewg_payon*@cost/100)+"z/"+(getmapusers("pay_gld.gat")
-					+getmapusers("payg_cas01.gat")+getmapusers("payg_cas02.gat")+getmapusers("payg_cas03.gat")
-					+getmapusers("payg_cas04.gat")+getmapusers("payg_cas05.gat"))+" "+$@ked_users$+")",
-				"- Prontera Guild ("+($@kewg_prontera*@cost/100)+"z/"+(getmapusers("prt_gld.gat")
-					+getmapusers("prtg_cas01.gat")+getmapusers("prtg_cas02.gat")+getmapusers("prtg_cas03.gat")
-					+getmapusers("prtg_cas04.gat")+getmapusers("prtg_cas05.gat"))+" "+$@ked_users$+")",
-//				"- Guild Dungeons ("+(getmapusers("gld_dun01.gat")+getmapusers("gld_dun02.gat")
-//					+getmapusers("gld_dun03.gat")+getmapusers("gld_dun04.gat"))+" "+$@ked_users$+")",
+				"- Al De Baran Guild ("+($@kewg_alDeBaran*@cost/100)+"z/"+(getmapusers("alde_gld")
+					+getmapusers("aldeg_cas01")+getmapusers("aldeg_cas02")+getmapusers("aldeg_cas03")
+					+getmapusers("aldeg_cas04")+getmapusers("aldeg_cas05"))+" "+$@ked_users$+")",
+				"- Geffen Guild ("+($@kewg_geffen*@cost/100)+"z/"+(getmapusers("gef_fild13")
+					+getmapusers("gefg_cas01")+getmapusers("gefg_cas02")+getmapusers("gefg_cas03")
+					+getmapusers("gefg_cas04")+getmapusers("gefg_cas05"))+" "+$@ked_users$+")",
+				"- Payon Guild ("+($@kewg_payon*@cost/100)+"z/"+(getmapusers("pay_gld")
+					+getmapusers("payg_cas01")+getmapusers("payg_cas02")+getmapusers("payg_cas03")
+					+getmapusers("payg_cas04")+getmapusers("payg_cas05"))+" "+$@ked_users$+")",
+				"- Prontera Guild ("+($@kewg_prontera*@cost/100)+"z/"+(getmapusers("prt_gld")
+					+getmapusers("prtg_cas01")+getmapusers("prtg_cas02")+getmapusers("prtg_cas03")
+					+getmapusers("prtg_cas04")+getmapusers("prtg_cas05"))+" "+$@ked_users$+")",
+//				"- Guild Dungeons ("+(getmapusers("gld_dun01")+getmapusers("gld_dun02")
+//					+getmapusers("gld_dun03")+getmapusers("gld_dun04"))+" "+$@ked_users$+")",
 				"- See "+$@ked_users$+" distribution"
 			);
 		} else {
@@ -65,16 +65,16 @@ function	script	F_keWarpWOE	{
 		}
 		switch (@kmenu) {
 		case 2: //Al De Baran
-			callfunc "F_keWarp",$@kewg_alDeBaran,$@kewg_discount,44,"alde_gld.gat",153,160;
+			callfunc "F_keWarp",$@kewg_alDeBaran,$@kewg_discount,44,"alde_gld",153,160;
 			break;
 		case 3: //Geffen
-			callfunc "F_keWarp",$@kewg_geffen,$@kewg_discount,44,"gef_fild13.gat",243,180;
+			callfunc "F_keWarp",$@kewg_geffen,$@kewg_discount,44,"gef_fild13",243,180;
 			break;
 		case 4: //Payon
-			callfunc "F_keWarp",$@kewg_payon,$@kewg_discount,44,"pay_gld.gat",249,177;
+			callfunc "F_keWarp",$@kewg_payon,$@kewg_discount,44,"pay_gld",249,177;
 			break;
 		case 5: //Prontera
-			callfunc "F_keWarp",$@kewg_prontera,$@kewg_discount,44,"prt_gld.gat",119,160;
+			callfunc "F_keWarp",$@kewg_prontera,$@kewg_discount,44,"prt_gld",119,160;
 			break;
 		case 6: //Guild Dungeons
 			SF_dungeons();
@@ -83,36 +83,36 @@ function	script	F_keWarpWOE	{
 			mes "The current distribution of "+$@ked_users$+" is as follows:";
 			next;
 			mes "[Al De Baran]";
-			mes "- Guild Grounds: "+getmapusers("alde_gld.gat");
-			mes "- Castle 1 - Noisyubantian: "+getmapusers("aldeg_cas01.gat");
-			mes "- Castle 2 - Hohensyubangawoo: "+getmapusers("aldeg_cas02.gat");
-			mes "- Castle 3 - Nyirenverk: "+getmapusers("aldeg_cas03.gat");
-			mes "- Castle 4 - Byirtsburi: "+getmapusers("aldeg_cas04.gat");
-			mes "- Castle 5 - Rotenburk: "+getmapusers("aldeg_cas05.gat");
+			mes "- Guild Grounds: "+getmapusers("alde_gld");
+			mes "- Castle 1 - Noisyubantian: "+getmapusers("aldeg_cas01");
+			mes "- Castle 2 - Hohensyubangawoo: "+getmapusers("aldeg_cas02");
+			mes "- Castle 3 - Nyirenverk: "+getmapusers("aldeg_cas03");
+			mes "- Castle 4 - Byirtsburi: "+getmapusers("aldeg_cas04");
+			mes "- Castle 5 - Rotenburk: "+getmapusers("aldeg_cas05");
 			next;
 			mes "[Geffen]";
-			mes "- Guild Grounds: "+getmapusers("gef_fild13.gat");
-			mes "- Castle 1 - Reprion: "+getmapusers("gefg_cas01.gat");
-			mes "- Castle 2 - Yolbriger: "+getmapusers("gefg_cas02.gat");
-			mes "- Castle 3 - Isinlife: "+getmapusers("gefg_cas03.gat");
-			mes "- Castle 4 - Berigel: "+getmapusers("gefg_cas04.gat");
-			mes "- Castle 5 - Melsedetsu: "+getmapusers("gefg_cas05.gat");
+			mes "- Guild Grounds: "+getmapusers("gef_fild13");
+			mes "- Castle 1 - Reprion: "+getmapusers("gefg_cas01");
+			mes "- Castle 2 - Yolbriger: "+getmapusers("gefg_cas02");
+			mes "- Castle 3 - Isinlife: "+getmapusers("gefg_cas03");
+			mes "- Castle 4 - Berigel: "+getmapusers("gefg_cas04");
+			mes "- Castle 5 - Melsedetsu: "+getmapusers("gefg_cas05");
 			next;
 			mes "[Payon]";
-			mes "- Guild Grounds: "+getmapusers("pay_gld.gat");
-			mes "- Castle 1 - Mingting: "+getmapusers("payg_cas01.gat");
-			mes "- Castle 2 - Tiantan: "+getmapusers("payg_cas02.gat");
-			mes "- Castle 3 - Fuying: "+getmapusers("payg_cas03.gat");
-			mes "- Castle 4 - Honglou: "+getmapusers("payg_cas04.gat");
-			mes "- Castle 5 - Zhulinxian: "+getmapusers("payg_cas05.gat");
+			mes "- Guild Grounds: "+getmapusers("pay_gld");
+			mes "- Castle 1 - Mingting: "+getmapusers("payg_cas01");
+			mes "- Castle 2 - Tiantan: "+getmapusers("payg_cas02");
+			mes "- Castle 3 - Fuying: "+getmapusers("payg_cas03");
+			mes "- Castle 4 - Honglou: "+getmapusers("payg_cas04");
+			mes "- Castle 5 - Zhulinxian: "+getmapusers("payg_cas05");
 			next;
 			mes "[Prontera]";
-			mes "- Guild Grounds: "+getmapusers("prt_gld.gat");
-			mes "- Castle 1 - Creamhilt: "+getmapusers("prtg_cas01.gat");
-			mes "- Castle 2 - Sbanhealt: "+getmapusers("prtg_cas02.gat");
-			mes "- Castle 3 - Lazrigees: "+getmapusers("prtg_cas03.gat");
-			mes "- Castle 4 - Squagul: "+getmapusers("prtg_cas04.gat");
-			mes "- Castle 5 - Guindull: "+getmapusers("prtg_cas05.gat");
+			mes "- Guild Grounds: "+getmapusers("prt_gld");
+			mes "- Castle 1 - Creamhilt: "+getmapusers("prtg_cas01");
+			mes "- Castle 2 - Sbanhealt: "+getmapusers("prtg_cas02");
+			mes "- Castle 3 - Lazrigees: "+getmapusers("prtg_cas03");
+			mes "- Castle 4 - Squagul: "+getmapusers("prtg_cas04");
+			mes "- Castle 5 - Guindull: "+getmapusers("prtg_cas05");
 			next;
 			callfunc "F_keIntro", -1, "";
 			break;
@@ -125,10 +125,10 @@ function SF_dungeons {
 		if ($@kewg_showOnline) {
 			set @submenu, select(
 				"- Cancel",
-				"- Baldur Dungeon ("+($@kewg_baldur*@cost/100)+"z/"+getmapusers("gld_dun01.gat")+" "+$@ked_users$+")",
-				"- Luina Dungeon ("+($@kewg_luina*@cost/100)+"z/"+getmapusers("gld_dun02.gat")+" "+$@ked_users$+")",
-				"- Valkyrie Dungeon ("+($@kewg_valkyrie*@cost/100)+"z/"+getmapusers("gld_dun03.gat")+" "+$@ked_users$+")",
-				"- Britoniah Dungeon ("+($@kewg_britoniah*@cost/100)+"z/"+getmapusers("gld_dun04.gat")+" "+$@ked_users$+")"
+				"- Baldur Dungeon ("+($@kewg_baldur*@cost/100)+"z/"+getmapusers("gld_dun01")+" "+$@ked_users$+")",
+				"- Luina Dungeon ("+($@kewg_luina*@cost/100)+"z/"+getmapusers("gld_dun02")+" "+$@ked_users$+")",
+				"- Valkyrie Dungeon ("+($@kewg_valkyrie*@cost/100)+"z/"+getmapusers("gld_dun03")+" "+$@ked_users$+")",
+				"- Britoniah Dungeon ("+($@kewg_britoniah*@cost/100)+"z/"+getmapusers("gld_dun04")+" "+$@ked_users$+")"
 			);
 		} else {
 			set @submenu, select(
@@ -141,16 +141,16 @@ function SF_dungeons {
 	}
 	switch (@submenu) {
 		case 2: //Baldur
-			callfunc "F_keWarp",$@kewg_baldur,$@kewg_discount,44,"gld_dun01.gat",119,18;
+			callfunc "F_keWarp",$@kewg_baldur,$@kewg_discount,44,"gld_dun01",119,18;
 			break;
 		case 3: //Luina
-			callfunc "F_keWarp",$@kewg_luina,$@kewg_discount,44,"gld_dun02.gat",174,113;
+			callfunc "F_keWarp",$@kewg_luina,$@kewg_discount,44,"gld_dun02",174,113;
 			break;
 		case 4: //Valkyrie
-			callfunc "F_keWarp",$@kewg_valkyrie,$@kewg_discount,44,"gld_dun03.gat",37,34;
+			callfunc "F_keWarp",$@kewg_valkyrie,$@kewg_discount,44,"gld_dun03",37,34;
 			break;
 		case 5: //Britoniah
-			callfunc "F_keWarp",$@kewg_britoniah,$@kewg_discount,44,"gld_dun04.gat",42,230;
+			callfunc "F_keWarp",$@kewg_britoniah,$@kewg_discount,44,"gld_dun04",42,230;
 			break;
 		}
 	} while (@submenu > 1);

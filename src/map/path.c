@@ -380,7 +380,7 @@ int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1
 	xs = md->xs-1; // ‚ ‚ç‚©‚¶‚ß‚PŒ¸ŽZ‚µ‚Ä‚¨‚­
 	ys = md->ys-1;
 	while(1){
-		int e=0,f=0,dist,cost,dc[4];
+		int e=0,f=0,dist,cost,dc[4]={0,0,0,0};
 
 		if(heap[0]==0)
 			return -1;

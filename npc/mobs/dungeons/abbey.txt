@@ -11,25 +11,25 @@
 //============================================================
 
 // Nameless Island
-nameless_n.gat,0,0,0,0	monster	Zombie Slaughter	1864,20,0,0,0
-nameless_n.gat,0,0,0,0	monster	Ragged Zombie	1865,20,0,0,0
-nameless_n.gat,0,0,0,0	monster	Hell Poodle	1866,20,0,0,0
+nameless_n,0,0,0,0	monster	Zombie Slaughter	1864,20,0,0,0
+nameless_n,0,0,0,0	monster	Ragged Zombie	1865,20,0,0,0
+nameless_n,0,0,0,0	monster	Hell Poodle	1866,20,0,0,0
 
 // Cursed Abbey Dungeon 1
-abbey01.gat,0,0,0,0	monster	Zombie Slaughter	1864,20,0,0,0
-abbey01.gat,0,0,0,0	monster	Ragged Zombie	1865,20,0,0,0
-abbey01.gat,0,0,0,0	monster	Flame Skull	1869,20,0,0,0
+abbey01,0,0,0,0	monster	Zombie Slaughter	1864,20,0,0,0
+abbey01,0,0,0,0	monster	Ragged Zombie	1865,20,0,0,0
+abbey01,0,0,0,0	monster	Flame Skull	1869,20,0,0,0
 
 // Cursed Abbey Dungeon 2
-abbey02.gat,0,0,0,0	monster	Zombie Slaughter	1864,20,0,0,0
-abbey02.gat,0,0,0,0	monster	Ragged Zombie	1865,20,0,0,0
-abbey02.gat,0,0,0,0	monster	Banshee	1867,20,0,0,0
-abbey02.gat,0,0,0,0	monster	Flame Skull	1869,20,0,0,0
-abbey02.gat,0,0,0,0	monster	Falling Bishop	1871,1,7200000,3600000,1
+abbey02,0,0,0,0	monster	Zombie Slaughter	1864,20,0,0,0
+abbey02,0,0,0,0	monster	Ragged Zombie	1865,20,0,0,0
+abbey02,0,0,0,0	monster	Banshee	1867,20,0,0,0
+abbey02,0,0,0,0	monster	Flame Skull	1869,20,0,0,0
+abbey02,0,0,0,0	monster	Falling Bishop	1871,1,7200000,3600000,1
 
 // Cursed Abbey Dungeon 3
-abbey03.gat,0,0,0,0	monster	Zombie Slaughter	1864,20,0,0,0
-abbey03.gat,0,0,0,0	monster	Ragged Zombie	1865,20,0,0,0
-abbey03.gat,0,0,0,0	monster	Banshee	1867,20,0,0,0
-abbey03.gat,0,0,0,0	monster	Necromancer	1870,20,0,0,0
-abbey03.gat,0,0,0,0	monster	Beelzebub	1873,1,39600000,19800000,1
+abbey03,0,0,0,0	monster	Zombie Slaughter	1864,20,0,0,0
+abbey03,0,0,0,0	monster	Ragged Zombie	1865,20,0,0,0
+abbey03,0,0,0,0	monster	Banshee	1867,20,0,0,0
+abbey03,0,0,0,0	monster	Necromancer	1870,20,0,0,0
+abbey03,0,0,0,0	monster	Beelzebub	1873,1,39600000,19800000,1

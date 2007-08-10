@@ -48,6 +48,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+08/10
+	* Fixed a wrong(?) line for Venom Splasher in abra_db.txt [ultramage]
 08/09
 	* Fixed damage of NPC_COMBOATTACK [Playtester]
 	- also reverted some custom skill changes

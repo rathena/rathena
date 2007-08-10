@@ -156,7 +156,7 @@
 138,Enchant Poison,2,4000
 139,Poison React,2,4000
 140,Venom Dust,4,4000
-141,Venom Splasher,4,40000
+141,Venom Splasher,4,4000
 
 //---JP2.0 Additional skill---
 142,First Aid,1,5000
