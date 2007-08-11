@@ -48,6 +48,9 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+08/11
+	* Implemented 11.2 skills in the skill_db [Playtester]
+	- note that the code for them is still missing
 08/10
 	* Raised splash range of Focused Arrow Strike and First Wind [Playtester]
 	- temporary fix until the real area calculation is added
