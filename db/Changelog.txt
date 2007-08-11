@@ -49,6 +49,7 @@
 	----
 ========================
 08/11
+	* Added remaining 11.2 skill db entries [Playtester]
 	* Implemented 11.2 skills in the skill_db [Playtester]
 	- note that the code for them is still missing
 08/10
