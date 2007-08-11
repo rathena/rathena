@@ -1,5 +1,12 @@
 Date		Added
 ======
+2007/08/11
+	* The Sign Quest is now more accurate, some bugs have been fixed and an exploit has been too. [SinSloth]
+	- It is no longer possible for players helping in the last part to complete the quest at the same time.
+	* Fixed some bugs in various quests. [SinSloth]
+	- Einbroch laboratory now correctly checks for players entrance
+	- Small fix with Laboratory device to make it more understandable.
+	- Fixed a misorder with some checkings of a Rachel quest.
 2007/08/10
 	* Fixed typos [Playtester]
 	* Removed .gat from the remaining npcs [ultramage]

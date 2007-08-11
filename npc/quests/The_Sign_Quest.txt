@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 1.7c
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -28,6 +28,8 @@
 //= 1.7 Fixed exploit [KarLaeda] 1.7a, fixed wrong dialogue [Lupus]
 //= 1.7b Fixed possible exploit [Lupus]
 //= 1.7c Reformatted for future bughunt. WIP [Lupus]
+//= 1.8 Fixed some bugs and exploit which allowed players helping in the final
+//= fight to finish the quest as well. Completely revamped quiz system. [SinSloth]
 //============================================================ 
 //===== Configuration : ======================================
 prontera,1,1,1	script	TheSignConfig	-1,{
@@ -840,18 +842,42 @@ morocc_in,114,162,4	script	Young Man#13	118,{
         mes "island. What is the very first";
         mes "thing that you should do?";
         next;
-        menu "Look for fresh water",-,"Just wait for rescue.",s_1W,"Forage for food.",s_1W,"Explore the island.",s_1W;
-        set gaananpoint,1;
-s_1W:
+        switch( select( "Look for fresh water","Just wait for rescue.","Forage for food.","Explore the island." ) )
+        {
+        	case 1:
+        		set gaananpoint,gaananpoint +7;
+        		break;
+        	case 2:
+        		set gaananpoint,gaananpoint +1;
+        		break;
+        	case 3:
+        		set gaananpoint,gaananpoint +4;
+        		break;
+        	case 4:
+        		set gaananpoint,gaananpoint +10;
+        		break;
+	}
         mes "[Gaanan]";
         mes "The second question is...";
         mes "You happen to be stuck in";
         mes "a narrow place inside some collapsed building. What";
         mes "do you plan to do first?";
         next;
-        menu "Scream for help",-,"Stay quiet.",s_2W,"Wait for death to come.",s_2W,"Find a way out.",s_2W;
-        set gaananpoint,gaananpoint + 1;
-s_2W:
+        switch( select( "Scream for help","Stay quiet.","Wait for death to come.","Find a way out." ) )
+        {
+        	case 1:
+        		set gaananpoint,gaananpoint +3;
+        		break;
+        	case 2:
+        		set gaananpoint,gaananpoint +7;
+        		break;
+        	case 3:
+        		set gaananpoint,gaananpoint +1;
+        		break;
+        	case 4:
+        		set gaananpoint,gaananpoint +7;
+        		break;
+        }
         mes "[Gaanan]";
         mes "Now, the third question.";
         mes "You're on some dungeon";
@@ -859,9 +885,21 @@ s_2W:
         mes "but you got lost somehow.";
         mes "How do you handle it?";
         next;
-        menu "Try to find my friends.",-,"Find a way out.",s_3W,"Stay put.",s_3W,"Continue exploring the dungeon.",s_3W;
-        set gaananpoint,gaananpoint + 1;
-s_3W:
+        switch( select( "Try to find my friends.","Find a way out.","Stay put.","Continue exploring the dungeon." ) )
+        {
+        	case 1:
+        		set gaananpoint,gaananpoint +0;
+        		break;
+        	case 2:
+        		set gaananpoint,gaananpoint +5;
+        		break;
+        	case 3:
+        		set gaananpoint,gaananpoint +10;
+        		break;
+        	case 4:
+        		set gaananpoint,gaananpoint +1;
+        		break;
+	}
         mes "[Gaanan]";
         mes "Here's the fourth question.";
         mes "You're with your friends inside";
@@ -869,9 +907,24 @@ s_3W:
         mes "you do first when a murder happens";
         mes "inside the mansion?";
         next;
-        menu "Wait for the case to get solved.",-,"Try to find my friends first.",s_4W,"Find a way out.",s_4W,"Solve the murder case on my own.",s_4W,"Kill the others before they kill me.",s_4W;
-        set gaananpoint,gaananpoint + 1;
-s_4W:
+        switch( select( "Wait for the case to get solved.","Try to find my friends first.","Find a way out.","Solve the murder case on my own.","Kill the others before they kill me." ) )
+        {
+        	case 1:
+        		set gaananpoint,gaananpoint +7;
+        		break;
+        	case 2:
+        		set gaananpoint,gaananpoint +5;
+        		break;
+        	case 3:
+        		set gaananpoint,gaananpoint +3;
+        		break;
+        	case 4:
+        		set gaananpoint,gaananpoint +1;
+        		break;
+        	case 5:
+        		set gaananpoint,gaananpoint +1;
+        		break;
+  	}
         mes "[Gaanan]";
         mes "The fifth question is";
         mes "You hear that the end of";
@@ -879,9 +932,24 @@ s_4W:
         mes "So what do you do during";
         mes "this final week?";
         next;
-        menu "Wait to see the end.",-,"Plant an apple tree.",s_5W,"Look to move to a different world.",s_5W,"What else? Save the world.",s_5W,"What else? Go on a crime spree.",s_5W;
-        set gaananpoint,gaananpoint + 1;
-s_5W:
+        switch( select( "Wait to see the end.","Plant an apple tree.","Look to move to a different world.","What else? Save the world.","What else? Go on a crime spree." ) )
+        {
+        	case 1:
+        		set gaananpoint,gaananpoint +5;
+        		break;
+        	case 2:
+        		set gaananpoint,gaananpoint +3;
+        		break;
+        	case 3:
+        		set gaananpoint,gaananpoint +7;
+        		break;
+        	case 4:
+        		set gaananpoint,gaananpoint +10;
+        		break;
+        	case 5:
+        		set gaananpoint,gaananpoint +1;
+        		break;
+	}
         mes "[Gaanan]";
         mes "Oh! We're done!";
         mes "Okay, let me give";
@@ -2316,20 +2384,17 @@ function	script	Sign_Alch_Summon	{
 Loopback:
 	if($signmazemonster == 0){
 		set $signmazemonster,5;
-		monster "prt_maze02",14,177,"Flora",1118,1,"Sign_Alch_Summon::OnMonsterDead";
-		monster "prt_maze02",17,171,"Flora",1118,1,"Sign_Alch_Summon::OnMonsterDead";
-		monster "prt_maze02",24,173,"Flora",1118,1,"Sign_Alch_Summon::OnMonsterDead";
-		monster "prt_maze02",17,175,"Marine Sphere",1142,1,"Sign_Alch_Summon::OnMonsterDead";
-		monster "prt_maze02",17,168,"Marine Sphere",1142,1,"Sign_Alch_Summon::OnMonsterDead";
+		monster "prt_maze02",14,177,"Flora",1118,1,"Gordon::OnMonsterDead";
+		monster "prt_maze02",17,171,"Flora",1118,1,"Gordon::OnMonsterDead";
+		monster "prt_maze02",24,173,"Flora",1118,1,"Gordon::OnMonsterDead";
+		monster "prt_maze02",17,175,"Marine Sphere",1142,1,"Gordon::OnMonsterDead";
+		monster "prt_maze02",17,168,"Marine Sphere",1142,1,"Gordon::OnMonsterDead";
 		return;
 	} else {
-		killmonster "prt_maze02","Sign_Alch_Summon::OnMonsterDead";
+		killmonster "prt_maze02","Gordon::OnMonsterDead";
 		set $signmazemonster,0;
 		goto Loopback;
 	}
-OnMonsterDead:
-	set $signmazemonster,$signmazemonster - 1;
-	end;
 }
 
 prt_maze02,16,183,3	script	Pleur	91,{
@@ -2549,6 +2614,9 @@ s_Scared:
         end;
     }
 
+OnMonsterDead:
+	set $signmazemonster,$signmazemonster - 1;
+	end;
 }
 
 geffen_in,59,74,3	script	Jesqurienne	803,{
@@ -2778,694 +2846,620 @@ L_startquiz:
     close;
 
 L_quiztime:
-    set @signquestions0$,"Choose the monster that is a different size than the others.";
-    set @signquestions1$,"What is the Bunny Band's DEF and its added ability?";
-    set @signquestions2$,"Choose the correct name of the rule of the Rune-Midgarts Kingdom.";
-    set @signquestions3$,"Choose the monster which does not drop the 'Yggdrasil Leaf' item.";
-    set @signquestions4$,"What is the city closest to Turtle Island?";
-    set @signquestions5$,"Fifty-one multiplied by fifteen, divided by three, plus five is equal to...?";
-    set @signquestions6$,"Choose the Hunter's Trap skill which does not inflict Property Damage.";
-    set @signquestions7$,"Choose the monster on which the mage skill,\"Stone Curse\", is ineffective.";
-    set @signquestions8$,"Choose the item that cannot be equipped by Novice class characters.";
-    set @signquestions9$,"Which NPC is not relevant to the Blacksmith Job Quest?";
-    set @signquestions10$,"Choose the Property that is unrelated to the Mage's Bolt type skills.";
-    set @signquestions11$,"Choose the correct DEF for the Indian Filet item.";
-    set @signquestions12$,"Which item is not relevant to the creation of a counteragent?";
-    set @signquestions13$,"Choose the level requirement for entering the PvP room.";
-    set @signquestions14$,"Three thousand one hundred two added to five hundred, plus four, divided by 6 equals...";
-    set @signquestions15$,"Choose the building that is the closest to the Item Upgrade Place in Yuno.";
-    set @signquestions16$,"What is the correct weight for 1 Empty Bottle?";
-    set @signquestions17$,"Choose the NPC that looks different than all others.";
-    set @signquestions18$,"Choose the material that is not related to the creation of a Condensed White Potion.";
-    set @signquestions19$,"Choose the monster that is a different type than the others.";
-    set @signquestions20$,"Choose the Job class that cannot equip Silk Robe.";
-    set @signquestions21$,"Four thousand five hundred sixty divided by four, divided by two, plus three is equal too...";
-    set @signquestions22$,"Which monster would receive the most damage from a Fire Property Dagger?";
-    set @signquestions23$,"Choose the skill related to the Priest's B.S. Sacramenti from the ones displayed in the list.";
-
-    set @playerpoints,0;
-    set @jesqpoints,0;
-
-    for ( set @i,1; @i <= 10; set @i,@i + 1 ) {
-loopback:
-                set @question,rand(23);
-                set @janswer,rand(3);
-
-                if (@question == 0) if (!@questiondone0) {
-                        mes @i + ". " + @signquestions0$;
-                    } else goto loopback;
-                if (@question == 1) if (!@questiondone1) {
-                        mes @i + ". " + @signquestions1$;
-                    } else goto loopback;
-                if (@question == 2) if (!@questiondone2) {
-                        mes @i + ". " + @signquestions2$;
-                    } else goto loopback;
-                if (@question == 3) if (!@questiondone3) {
-                        mes @i + ". " + @signquestions3$;
-                    } else goto loopback;
-                if (@question == 4) if (!@questiondone4) {
-                        mes @i + ". " + @signquestions4$;
-                    } else goto loopback;
-                if (@question == 5) if (!@questiondone5) {
-                        mes @i + ". " + @signquestions5$;
-                    } else goto loopback;
-                if (@question == 6) if (!@questiondone6) {
-                        mes @i + ". " + @signquestions6$;
-                    } else goto loopback;
-                if (@question == 7) if (!@questiondone7) {
-                        mes @i + ". " + @signquestions7$;
-                    } else goto loopback;
-                if (@question == 8) if (!@questiondone8) {
-                        mes @i + ". " + @signquestions8$;
-                    } else goto loopback;
-                if (@question == 9) if (!@questiondone9) {
-                        mes @i + ". " + @signquestions9$;
-                    } else goto loopback;
-                if (@question == 10) if (!@questiondone10) {
-                        mes @i + ". " + @signquestions10$;
-                    } else goto loopback;
-                if (@question == 11) if (!@questiondone11) {
-                        mes @i + ". " + @signquestions11$;
-                    } else goto loopback;
-                if (@question == 12) if (!@questiondone12) {
-                        mes @i + ". " + @signquestions12$;
-                    } else goto loopback;
-                if (@question == 13) if (!@questiondone13) {
-                        mes @i + ". " + @signquestions13$;
-                    } else goto loopback;
-                if (@question == 14) if (!@questiondone14) {
-                        mes @i + ". " + @signquestions14$;
-                    } else goto loopback;
-                if (@question == 15) if (!@questiondone15) {
-                        mes @i + ". " + @signquestions15$;
-                    } else goto loopback;
-                if (@question == 16) if (!@questiondone16) {
-                        mes @i + ". " + @signquestions16$;
-                    } else goto loopback;
-                if (@question == 17) if (!@questiondone17) {
-                        mes @i + ". " + @signquestions17$;
-                    } else goto loopback;
-                if (@question == 18) if (!@questiondone18) {
-                        mes @i + ". " + @signquestions18$;
-                    } else goto loopback;
-                if (@question == 19) if (!@questiondone19) {
-                        mes @i + ". " + @signquestions19$;
-                    } else goto loopback;
-                if (@question == 20) if (!@questiondone20) {
-                        mes @i + ". " + @signquestions20$;
-                    } else goto loopback;
-                if (@question == 21) if (!@questiondone21) {
-                        mes @i + ". " + @signquestions21$;
-                    } else goto loopback;
-                if (@question == 22) if (!@questiondone22) {
-                        mes @i + ". " + @signquestions22$;
-                    } else goto loopback;
-                if (@question == 23) if (!@questiondone23) {
-                        mes @i + ". " + @signquestions23$;
-                    } else goto loopback;
-                next;
-
-                switch ( @question ) {
-
-                case 0:
-                    menu "Giant Whisper",-,"Marin",a_correct,"Cornutus",-,"Kobold Archer",-;
-                    set @questiondone0,1;
-                    break;
-a_correct:
-                    set @questiondone0,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 1:
-                    menu "1 / LUK + 2",-,"1 / LUK + 5",-,"2 / LUK + 2",b_correct," 2 / LUK + 5",-;
-                    set @questiondone1,1;
-                    break;
-b_correct:
-                    set @questiondone1,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 2:
-                    menu "Tristan III",-,"Tristram III",c_correct,"Tristar III",-,"Trust III",-;
-                    set @questiondone2,1;
-                    break;
-c_correct:
-                    set @questiondone2,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 3:
-                    menu "Marduk",d_correct,"Baphomet Jr.",-,"Angeling",-,"Wanderer",-;
-                    set @questiondone3,1;
-                    break;
-d_correct:
-                    set @questiondone3,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 4:
-                    menu "Al De Baran",-,"Alberta",e_correct,"Comodo",-,"Izlude",-;
-                    set @questiondone4,1;
-                    break;
-e_correct:
-                    set @questiondone4,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 5:
-                    menu "250",-,"255",-,"260",f_correct,"265",-;
-                    set @questiondone5,1;
-                    break;
-f_correct:
-                    set @questiondone5,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 6:
-                    menu "Claymore Trap",-,"Freezing Trap",-,"Shockwave Trap",g_correct,"Land Mine",-;
-                    set @questiondone6,1;
-                    break;
-g_correct:
-                    set @questiondone6,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 7:
-                    menu "Elder Willow",-,"Evil Druid",h_correct,"Magnolia",-,"Marc",-;
-                    set @questiondone7,1;
-                    break;
-h_correct:
-                    set @questiondone7,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 8:
-                    menu "Funeral Hat",-,"Shackles",-,"Wooden Mail",i_correct,"Pantie",-;
-                    set @questiondone8,1;
-                    break;
-i_correct:
-                    set @questiondone8,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 9:
-                    menu "Baisulitst",-,"Wickebine",-,"Barcardi",j_correct,"Gromgast",-;
-                    set @questiondone9,1;
-                    break;
-j_correct:
-                    set @questiondone9,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 10:
-                    menu "Water",-,"Earth",k_correct,"Fire",-,"Wind",-;
-                    set @questiondone10,1;
-                    break;
-k_correct:
-                    set @questiondone10,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 11:
-                    menu "0",-,"1",-,"2",-,"3",l_correct;
-                    set @questiondone11,1;
-                    break;
-l_correct:
-                    set @questiondone11,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 12:
-                    menu "Karvodailnirol",m_correct,"Detrimindexta",-,"Alcohol",-;
-                    set @questiondone12,1;
-                    break;
-m_correct:
-                    set @questiondone12,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 13:
-                    menu "30",-,"31",n_correct,"32",-,"33",-;
-                    set @questiondone13,1;
-                    break;
-n_correct:
-                    set @questiondone13,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 14:
-                    menu "600",-,"601",o_correct,"602",-;
-                    set @questiondone14,1;
-                    break;
-o_correct:
-                    set @questiondone14,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 15:
-                    menu "Tavern",-,"Monster Library",-,"Tool Shop",-,"Weapon Shop",p_correct;
-                    set @questiondone15,1;
-                    break;
-p_correct:
-                    set @questiondone15,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 16:
-                    menu "1",q_correct,"2",-,"3",-;
-                    set @questiondone16,1;
-                    break;
-q_correct:
-                    set @questiondone16,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 17:
-                    menu "Prontera Hollengrhen",-,"Prontera Doll Merchant",-,"Izlude Meat Merchant",r_correct,"Morroc Tool Dealer",-;
-                    set @questiondone17,1;
-                    break;
-r_correct:
-                    set @questiondone17,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 18:
-                    menu "Medicine Bowl",-,"Witch Starsand",-,"Empty Bottle",s_correct,"Empty Potion Bottle",s_correct;
-                    set @questiondone18,1;
-                    break;
-s_correct:
-                    set @questiondone18,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 19:
-                    menu "Penomena",t_correct,"Hatii",-,"Pest",-,"Explosion",-;
-                    set @questiondone19,1;
-                    break;
-t_correct:
-                    set @questiondone19,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 20:
-                    menu "Swordman",-,"Merchant",-,"Hunter",u_correct,"Mage",-;
-                    set @questiondone20,1;
-                    break;
-u_correct:
-                    set @questiondone20,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 21:
-                    menu "573",v_correct,"574",-,"575",-,"576",-;
-                    set @questiondone21,1;
-                    break;
-v_correct:
-                    set @questiondone21,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 22:
-                    menu "Dagger Goblin",-,"Mace Goblin",-,"Morningstar Goblin",-,"Hammer Goblin",x_correct;
-                    set @questiondone22,1;
-                    break;
-x_correct:
-                    set @questiondone22,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-
-                case 23:
-                    menu "Lex Divina",-,"Gloria",y_correct,"Recovery",-,"Sanctuary",-;
-                    set @questiondone23,1;
-                    break;
-y_correct:
-                    set @questiondone23,1;
-                    set @playerpoints, @playerpoints + 1;
-                    break;
-
-                } //Switch END
-
-                if (@i == 1) {
-                    mes "[Jesqurienne]";
-                    mes "Heh heh...";
-                    mes "The first question";
-                    mes "is always too easy.";
-                    set @jesqpoints, @jesqpoints + 1;
-                    next;
-                }
-
-                if (@i == 2) {
-                    if (@janswer > 0) {
-                        mes "[Jesqurienne]";
-                        mes "Ho ho ho ho~!";
-                        mes "I know the answer.";
-                        mes "Any fool should know";
-                        mes "this. But do you?";
-                        set @jesqpoints, @jesqpoints + 1;
-                        emotion e_ho; // <--------------------------------------------------------
-                        next;
-                    }
-
-                    if (@janswer == 0) {
-                        mes "[Jesqurienne]";
-                        mes "z...z...Z";
-                        mes "W-what? Oh!";
-                        mes "Well, I don't need";
-                        mes "that point anyway...";
-                        next;
-                        emotion e_wah; // <--------------------------------------------------------
-                    }
-                }
-
-                if (@i == 3) {
-                    if (@janswer > 0) {
-                        set @jesqpoints, @jesqpoints + 1;
-                        goto checkpoint1;
-                        emotion e_ho; // <--------------------------------------------------------
-                    }
-
-                    if (@janswer == 0) {
-                        mes "[Jesqurienne]";
-                        mes "z...z...Z";
-                        mes "W-what? Oh!";
-                        mes "Well, I don't need";
-                        mes "that point anyway...";
-                        next;
-                        goto checkpoint1;
-                        emotion e_wah; // <--------------------------------------------------------
-                    }
-
-checkpoint1:
-                    mes "[Jesqurienne]";
-                    mes "Let's check our";
-                    mes "scores, shall we?";
-                    mes ".................";
-                    next;
-                    if (@playerpoints < @jesqpoints) {
-                        mes "[Jesqurienne]";
-                        mes "Heh heh...";
-                        mes "It looks like";
-                        mes "I'm beating you!";
-                        mes "But you shouldn't";
-                        mes "be suprised...";
-                        next;
-                    }
-                    if (@playerpoints >= @jesqpoints) {
-                        mes "[Jesqurienne]";
-                        mes "W-wait a minute!";
-                        mes "H-how could you";
-                        mes "have more points";
-                        mes "than me?! I better";
-                        mes "get serious!";
-                        next;
-                    }
-                    mes "[Aaron]";
-                    mes "*Ahem!*";
-                    mes "Question";
-                    mes "number four!";
-                    next;
-                }
-
-                if (@i == 4) {
-                    if (@janswer > 0) {
-                        mes "[Jesqurienne]";
-                        mes "That counts as";
-                        mes "a question? You're";
-                        mes "being too easy!";
-                        set @jesqpoints, @jesqpoints + 1;
-                        emotion e_ho;
-                        next;
-                        goto checkpoint2;
-                    }
-
-                    if (@janswer == 0) {
-                        mes "[Jesqurienne]";
-                        mes "I know the";
-                        mes "answer! W-why";
-                        mes "can't I think of";
-                        mes "it right now?!";
-                        emotion e_wah;
-                        next;
-                        goto checkpoint2;
-                    }
-
-checkpoint2:
-                    if (@playerpoints < @jesqpoints) {
-                        mes "[Jesqurienne]";
-                        mes "Heh heh~ It looks";
-                        mes "like I have the lead.";
-                        mes "But that's only natural for";
-                        mes "someone as brilliant as me~";
-                        next;
-                    }
-
-                    if (@playerpoints >= @jesqpoints) {
-                        mes "[Jesqurienne]";
-                        mes "I...";
-                        mes "I must be more";
-                        mes "drunk than I thought";
-                        mes "if I'm losing right now...";
-                        next;
-                    }
-                }
-
-                if (@i == 5) {
-                    if (@janswer > 0) {
-                        mes "[Jesqurienne]";
-                        mes "I didn't have";
-                        mes "to think very hard";
-                        mes "to know the answer.";
-                        mes "Are you still thinking?";
-                        mes "I wouldn't think you'd know!";
-                        set @jesqpoints, @jesqpoints + 1;
-                        emotion e_ho;
-                        next;
-                        goto checkpoint3;
-                    }
-
-                    if (@janswer == 0) {
-                        mes "[Jesqurienne]";
-                        mes "I...";
-                        mes "Hold on,";
-                        mes "I know this one...";
-                        mes "(Oh craaaaaap!)";
-                        emotion e_wah;
-                        next;
-                        goto checkpoint3;
-                    }
-
-checkpoint3:
-                    if (@playerpoints < @jesqpoints) {
-                        mes "[Jesqurienne]";
-                        mes "Oh? What a suprise.";
-                        mes "I'm in the lead. I know";
-                        mes "the suspense must be";
-                        mes "killing you, but I'm pretty";
-                        mes "sure who the winner will";
-                        mes "be. Me me me meee~";
-                        next;
-                    }
-
-                    if (@playerpoints >= @jesqpoints) {
-                        mes "[Jesqurienne]";
-                        mes "I don't understand.";
-                        mes "You have a higher sco--";
-                        mes "I don't-- How can yo--";
-                        mes "Why is this happening?";
-                        next;
-                    }
-                }
-
-                if (@i == 6) {
-                    if (@janswer > 0) {
-                        mes "[Jasqurienne]";
-                        mes "*Sigh...*";
-                        mes "Simple questions,";
-                        mes "simple answers.";
-                        mes "Did you get it?";
-                        set @jesqpoints, @jesqpoints + 1;
-                        emotion e_ho;
-                        next;
-                        goto checkpoint4;
-                    }
-
-                    if (@janswer == 0) {
-                        emotion e_wah;
-                        goto checkpoint4;
-                    }
-
-checkpoint4:
-                    if (@playerpoints < @jesqpoints) {
-                        mes "[Jesqurienne]";
-                        mes "Oh, look at that.";
-                        mes "I have more points";
-                        mes "than you. I know, it";
-                        mes "must be frustrating";
-                        mes "trying to keep up.";
-                        next;
-                    }
-
-                    if (@playerpoints >= @jesqpoints) {
-                        mes "[Jesqurienne]";
-                        mes "W-wait a minute!";
-                        mes "H-how could you";
-                        mes "have more points";
-                        mes "than me?! I better";
-                        mes "get serious!";
-                        next;
-                    }
-                }
-
-                if (@i == 7) {
-                    if (@janswer > 0) {
-                        set @jesqpoints, @jesqpoints + 1;
-                        goto checkpoint5;
-                    }
-
-                    if (@janswer == 0) {
-                        goto checkpoint5;
-                    }
-
-checkpoint5:
-                    if (@playerpoints < @jesqpoints) {
-                        mes "[Jesqurienne]";
-                        mes "Ah. Did I tell you";
-                        mes "I was in the lead";
-                        mes "right now? Well, let";
-                        mes "me remind you, in case";
-                        mes "I forgot. Ho ho ho ho~!";
-                        next;
-                    }
-
-                    if (@playerpoints >= @jesqpoints) {
-                        mes "[Jesqurienne]";
-                        mes "There's no other";
-                        mes "explanation! You've";
-                        mes "got to be using some";
-                        mes "sort of crib sheet! But";
-                        mes "where are you hiding it?";
-                        next;
-                    }
-                }
-
-                if (@i == 8) {
-                    if (@janswer > 0) {
-                        mes "[Jesqurienne]";
-                        mes "Hah hah~!";
-                        mes "That was a";
-                        mes "piece of cake!";
-                        set @jesqpoints, @jesqpoints + 1;
-                        emotion e_ho;
-                        next;
-                        goto checkpoint6;
-                    }
-
-                    if (@janswer == 0) {
-                        goto checkpoint6;
-                    }
-
-checkpoint6:
-                    if (@playerpoints < @jesqpoints) {
-                        mes "[Jesqurienne]";
-                        mes "I know, you're wondering";
-                        mes "how such an intelligent";
-                        mes "person can exist. Well";
-                        mes "I guess my intellect sort";
-                        mes "of balances the stupidity";
-                        mes "of the rest of the world...";
-                        next;
-                    }
-
-                    if (@playerpoints >= @jesqpoints) {
-                        mes "[Jesqurienne]";
-                        mes "I... I don't";
-                        mes "get it. H-how are";
-                        mes "you w-winning? M-my";
-                        mes "whole perception of";
-                        mes "reality is starting t-to...";
-                        next;
-                    }
-
-                }
-
-                if (@i == 9) {
-                    if (@janswer > 0) {
-                        mes "[Jesqurienne]";
-                        mes "Ahhh...";
-                        mes "I'm just breezing";
-                        mes "through this Quiz Challenge!";
-                        mes "Aren't you having a hard time?";
-                        set @jesqpoints, @jesqpoints + 1;
-                        emotion e_ho;
-                        next;
-                        goto checkpoint7;
-                    }
-
-                    if (@janswer == 0) {
-                        mes "[Jesqurienne]";
-                        mes "Huh...?";
-                        mes "I don't understand";
-                        mes "why I don't know this...";
-                        emotion e_wah;
-                        next;
-                        goto checkpoint7;
-                    }
-
-checkpoint7:
-                    mes "[Jesqurienne]";
-                    mes "Bwahahaha!";
-                    mes "Only one question";
-                    mes "left! You have to get";
-                    mes "this one right or I'll";
-                    mes "call you stupid forever!";
-                    next;
-                }
-
-                if (@i == 10) {
-                    if (@janswer > 0) {
-                        mes "[Jesqurienne]";
-                        mes "As usual, I got";
-                        mes "the last question";
-                        mes "absolutely right~";
-                        set @jesqpoints, @jesqpoints + 1;
-                        emotion e_ho;
-                        next;
-                    }
-
-                    if (@janswer == 0) {
-                        mes "[Jesqurienne]";
-                        mes "Huh...";
-                        mes "Wh-what was";
-                        mes "the question again?";
-                        mes "Nooo, I missed it!";
-                        next;
-                    }
-                }
-
-            } // For-Loop END
+set @playerpoints,0;
+set @jesqpoints,0;
+
+setarray @signarray[0],1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26;
+for ( set @i,1; @i <= 10; set @i,@i + 1 ) {
+
+L_Roll:
+	set @question,@signarray[rand(0,25)];
+	if(!@question) goto L_Roll;
+	cleararray @signarray[@question -1],0,1;
+	set @janswer,rand(1,10);
+	mes "[Aaron]";
+	switch(@question)
+	{
+		case 1:
+			mes @i + ". Choose the monster that is a different size than the others.";
+			next;
+			switch( select( "Giant Whisper","Marin","Cornutus","Kobold Archer" ) )
+			{
+				case 2:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 3:
+				case 4:
+					break;
+			}
+			break;
+			
+		case 2:
+			mes @i + ". What is the Bunny Band's DEF and its added ability?";
+			next;
+			switch( select( "1 / LUK + 2","1 / LUK + 5","2 / LUK + 2"," 2 / LUK + 5" ) )
+			{
+				case 3:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 2:
+				case 4:
+					break;
+			}
+			break;
+
+		case 3:
+			mes @i + ". Choose the correct name of the rule of the Rune-Midgarts Kingdom.";
+			next;
+			switch( select( "Tristan III","Tristram III","Tristar III","Trust III" ) )
+			{
+				case 2:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 3:
+				case 4:
+					break;
+			}
+			break;
+
+		case 4:
+			mes @i + ". Choose the monster which does not drop the 'Yggdrasil Leaf' item.";
+			next;
+			switch( select( "Marduk","Baphomet Jr.","Angeling","Wanderer" ) )
+			{
+				case 1:
+					set @playerpoints,@playerpoints +1;
+				case 2:
+				case 3:
+				case 4:
+					break;
+			}
+			break;
+
+		case 5:
+			mes @i + ". What is the city closest to Turtle Island?";
+			next;
+			switch( select( "Al De Baran","Alberta","Comodo","Izlude" ) )
+			{
+				case 2:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 3:
+				case 4:
+					break;
+			}
+			break;
+
+		case 6:
+			mes @i + ". Fifty-one multiplied by fifteen, divided by three, plus five is equal to...?";
+			next;
+			switch( select( "250","255","260","265" ) )
+			{
+				case 3:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 2:
+				case 4:
+					break;
+			}
+			break;
+
+		case 7:
+			mes @i + ". Choose the Hunter's Trap skill which does not inflict Property Damage.";
+			next;
+			switch( select( "Claymore Trap","Freezing Trap","Shockwave Trap","Land Mine" ) )
+			{
+				case 3:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 2:
+				case 4:
+					break;
+			}
+			break;
+
+		case 8:
+			mes @i + ". Choose the monster on which the mage skill,\"Stone Curse\", is ineffective.";
+			next;
+			switch( select( "Elder Willow","Evil Druid","Magnolia","Marc" ) )
+			{
+				case 2:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 3:
+				case 4:
+					break;
+			}
+			break;
+
+		case 9:
+			mes @i + ". Choose the item that cannot be equipped by Novice class characters.";
+			next;
+			switch( select( "Funeral Hat","Shackles","Wooden Mail","Pantie" ) )
+			{
+				case 3:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 2:
+				case 4:
+					break;
+			}
+			break;
+
+		case 10:
+			mes @i + ". Which NPC is not relevant to the Blacksmith Job Quest?";
+			next;
+			switch( select( "Baisulitst","Wickebine","Barcardi","Gromgast" ) )
+			{
+				case 3:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 2:
+				case 4:
+					break;
+			}
+			break;
+
+		case 11:
+			mes @i + ". Choose the Property that is unrelated to the Mage's Bolt type skills.";
+			next;
+			switch( select( "Water","Earth","Fire","Wind" ) )
+			{
+				case 2:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 3:
+				case 4:
+					break;
+			}
+			break;
+
+		case 12:
+			mes @i + ". Choose the correct DEF for the Indian Filet item.";
+			next;
+			switch( select( "0","1","2","3" ) )
+			{
+				case 4:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 2:
+				case 3:
+					break;
+			}
+			break;
+
+		case 13:
+			mes @i + ". Which item is not relevant to the creation of a counteragent?";
+			next;
+			switch( select( "Karvodailnirol","Detrimindexta","Alcohol" ) )
+			{
+				case 1:
+					set @playerpoints,@playerpoints +1;
+				case 2:
+				case 3:
+					break;
+			}
+			break;
+
+		case 14:
+			mes @i + ". Choose the level requirement for entering the PvP room.";
+			next;
+			switch( select( "30","31","32","33" ) )
+			{
+				case 2:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 3:
+				case 4:
+					break;
+			}
+			break;
+
+		case 15:
+			mes @i + ". Three thousand one hundred two added to five hundred, plus four, divided by 6 equals...";
+			next;
+			switch( select( "600","601","602" ) )
+			{
+				case 2:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 3:
+					break;
+			}
+			break;
+
+		case 16:
+			mes @i + ". Choose the building that is the closest to the Item Upgrade Place in Yuno.";
+			next;
+			switch( select( "Tavern","Monster Library","Tool Shop","Weapon Shop" ) )
+			{
+				case 4:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 2:
+				case 3:
+					break;
+			}
+			break;
+
+		case 17:
+			mes @i + ". What is the correct weight for 1 Empty Bottle?";
+			next;
+			switch( select( "1","2","3" ) )
+			{
+				case 2:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 3:
+					break;
+			}
+			break;
+
+		case 18:
+			mes @i + ". Choose the NPC that looks different than all others.";
+			next;
+			switch( select( "Prontera Hollengrhen","Prontera Doll Merchant","Izlude Meat Merchant","Morroc Tool Dealer" ) )
+			{
+				case 3:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 2:
+				case 4:
+					break;
+			}
+			break;
+
+		case 19:
+			mes @i + ". Choose the material that is not related to the creation of a Condensed White Potion.";
+			next;
+			switch( select( "Medicine Bowl","Witch Starsand","Empty Bottle","Empty Potion Bottle" ) )
+			{
+				case 3:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 2:
+				case 4:
+					break;
+			}
+			break;
+
+		case 20:
+			mes @i + ". Choose the monster that is a different type than the others.";
+			next;
+			switch( select( "Penomena","Hatii","Pest","Explosion" ) )
+			{
+				case 1:
+					set @playerpoints,@playerpoints +1;
+				case 2:
+				case 3:
+				case 4:
+					break;
+			}
+			break;
+
+		case 21:
+			mes @i + ". Choose the Job class that cannot equip Silk Robe.";
+			next;
+			switch( select( "Swordman","Merchant","Hunter","Mage" ) )
+			{
+				case 3:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 2:
+				case 4:
+					break;
+			}
+			break;
+
+		case 22:
+			mes @i + ". Four thousand five hundred sixty divided by four, divided by two, plus three is equal too...";
+			next;
+			switch( select( "573","574","575","576" ) )
+			{
+				case 1:
+					set @playerpoints,@playerpoints +1;
+				case 2:
+				case 3:
+				case 4:
+					break;
+			}
+			break;
+
+		case 23:
+			mes @i + ". Which monster would receive the most damage from a Fire Property Dagger?";
+			next;
+			switch( select( "Dagger Goblin","Mace Goblin","Morningstar Goblin","Hammer Goblin" ) )
+			{
+				case 4:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 2:
+				case 3:
+					break;
+			}
+			break;
+
+		case 24:
+			mes @i + ". Choose the skill related to the Priest's B.S. Sacramenti from the ones displayed in the list.";
+			next;
+			switch( select( "Lex Divina","Gloria","Recovery","Sanctuary" ) )
+			{
+				case 2:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 3:
+				case 4:
+					break;
+			}
+			break;
+			
+		case 25:
+			mes @i + ". Choose the item that is necessary for a Blacksmith to create a Gladius.";
+			next;
+			switch( select( "Sapphire","Zircon","Topaz","Cursed Ruby" ) )
+			{
+				case 1:
+					set @playerpoints,@playerpoints +1;
+				case 2:
+				case 3:
+				case 4:
+					break;
+			}
+			break;
+			
+		case 26:
+			mes @i + ". Choose the prefix or suffix that is incorrectly matched with his Monster Card name.";
+			next;
+			switch( select( "Hornet Card - Martyr","Requiem - Chaos","Wormtail - Clever","Golem - Immortal" ) )
+			{
+				case 4:
+					set @playerpoints,@playerpoints +1;
+				case 1:
+				case 2:
+				case 3:
+					break;
+			}
+			break;
+	}
+	if(@janswer < 9)
+	{
+		emotion e_oh;
+		switch(@i)
+		{
+			case 1:
+				mes "[Jesqurienne]";
+				mes "Heh heh...";
+				mes "The first question";
+				mes "is always too easy.";;
+				break;
+
+			case 2:
+				mes "[Jesqurienne]";
+				mes "Ho ho ho ho~!";
+				mes "I know the answer.";
+				mes "Any fool should know";
+				mes "this. But do you?";
+				break;
+			
+			case 3:
+				mes "[Jesqurienne]";
+				mes "Ah...";
+				mes "That's another";
+				mes "point for me!";
+				break;
+				
+			case 4:
+				mes "[Jesqurienne]";
+				mes "That counts as";
+				mes "a question? You're";
+				mes "being too easy!";
+				break;
+				
+			case 5:
+				mes "[Jesqurienne]";
+				mes "I didn't have";
+				mes "to think very hard";
+				mes "to know the answer.";
+				mes "Are you still thinking?";
+				mes "I wouldn't think you'd know!";
+				break;
+				
+			case 6:
+				mes "[Jesqurienne]";
+				mes "^333333*Sigh...*^000000";
+				mes "Simple questions,";
+				mes "simple answers.";
+				mes "Did you get it?";
+				break;
+
+			case 7:
+				mes "[Jesqurienne]";
+				mes "Ah...";
+				mes "That's another";
+				mes "point for me!";
+				break;
+				
+			case 8:
+				mes "[Jesqurienne]";
+				mes "Hah hah~!";
+				mes "That was a";
+				mes "piece of cake!";
+				break;
+				
+			case 9:
+				mes "[Jesqurienne]";
+				mes "Ahhh...";
+				mes "I'm just breezing";
+				mes "through this Quiz Challenge!";
+				mes "Aren't you having a hard time?";
+				break;
+				
+			case 10:
+				mes "[Jesqurienne]";
+				mes "As usual, I got";
+				mes "the last question";
+				mes "absolutely right~";
+				break;
+		}
+		set @jesqpoints,@jesqpoints +1;
+		next;
+	}
+	else
+	{
+		emotion e_wah;
+		switch(@i)
+		{
+			case 1:
+				mes "[Jesqurienne]";
+				mes "Huh...?";
+				mes "How can I not know";
+				mes "the answer to this?!";
+				break;
+
+			case 2:
+				mes "[Jesqurienne]";
+				mes "Oh...";
+				mes "I knew the answer";
+				mes "to this just yesterday!";
+				mes "Why can't I think of it now?!";
+				break;
+			
+			case 3:
+				mes "[Jesqurienne]";
+				mes "z...z...Z";
+				mes "W-what? Oh!";
+				mes "Well, I won't need";
+				mes "that point anyway...";
+				break;
+				
+			case 4:
+				mes "[Jesqurienne]";
+				mes "I know the";
+				mes "answer! W-why";
+				mes "can't I think of";
+				mes "it right now?!";
+				break;
+				
+			case 5:
+				mes "[Jesqurienne]";
+				mes "I...";
+				mes "Hold on,";
+				mes "I know this one...";
+				mes "(Oh craaaaaap!)";
+				break;
+				
+			case 6:
+				mes "[Jesqurienne]";
+				mes "W-wait...!";
+				mes "I know the";
+				mes "answer to this";
+				mes "one! Just let me";
+				mes "th-think...!";
+				break;
+
+			case 7:
+				mes "[Jesqurienne]";
+				mes "z...z...Z";
+				mes "W-what? Oh!";
+				mes "Well, I won't need";
+				mes "that point anyway...";
+				break;
+				
+			case 8:
+				mes "[Jesqurienne]";
+				mes "Grrr...";
+				mes "Why don't";
+				mes "I know this one?!";
+				break;
+				
+			case 9:
+				mes "[Jesqurienne]";
+				mes "Huh...?";
+				mes "I don't understand";
+				mes "why I don't know this...";
+				break;
+				
+			case 10:
+				mes "[Jesqurienne]";
+				mes "Huh...";
+				mes "Wh-what was";
+				mes "the question again?";
+				mes "Nooo, I missed it!";
+				break;
+		}
+		next;
+	}
+	if(@i == 3)
+	{
+		    mes "[Jesqurienne]";
+		    mes "Let's check our";
+		    mes "scores, shall we?";
+		    mes ".................";
+		    next;
+		    if (@playerpoints < @jesqpoints) {
+			mes "[Jesqurienne]";
+			mes "Heh heh...";
+			mes "It looks like";
+			mes "I'm beating you!";
+			mes "But you shouldn't";
+			mes "be suprised...";
+		    }
+		    if (@playerpoints >= @jesqpoints) {
+			mes "[Jesqurienne]";
+			mes "W-wait a minute!";
+			mes "H-how could you";
+			mes "have more points";
+			mes "than me?! I better";
+			mes "get serious!";
+		    }
+		    next;
+		    mes "[Aaron]";
+		    mes "*Ahem!*";
+		    mes "Question";
+		    mes "number four!";
+		    next;
+	}
+	if(@i == 4 || @i == 5 || @i == 6 || @i == 7 || @i == 8)
+	{
+		    if (@playerpoints < @jesqpoints) {
+			mes "[Jesqurienne]";
+			mes "Heh heh~ It looks";
+			mes "like I have the lead.";
+			mes "But that's only natural for";
+			mes "someone as brilliant as me~";
+			next;
+		    }
+		    if (@playerpoints >= @jesqpoints) {
+			mes "[Jesqurienne]";
+			mes "Heh heh~ It looks";
+			mes "like I have the lead.";
+			mes "But that's only natural for";
+			mes "someone as brilliant a--";
+			mes "Wait. How do you have";
+			mes "more points than me?!";
+			next;
+		    }
+	}
+	if(@i == 9)
+	{
+		    if (@playerpoints < @jesqpoints) {
+			mes "[Jesqurienne]";
+			mes "Bwahahaha!";
+			mes "Only one question";
+			mes "left! You have to get";
+			mes "this one right or I'll";
+			mes "call you stupid forever!";
+			next;
+		    }
+		    if (@playerpoints >= @jesqpoints) {
+			mes "[Jesqurienne]";
+			mes "I'm losing?!";
+			mes "And we're at the";
+			mes "last question already?!";
+			next;
+		    }
+	}
+}
 
     mes "[Aaron]";
     mes "Okay, the quiz";
@@ -7183,6 +7177,7 @@ L_BranchB:
     next;
     menu "Yes.",-,"No.",L_No;
     if (($signroom2full > 1) || getareausers("que_sign01",229,77,166,12) > 0) goto L_Full;
+    if(Sign_Branch8B == 2) set Sign_Branch8B,3;
     mes "[Serin]";
     mes "Please follow me";
     mes "......";
@@ -7809,7 +7804,7 @@ L_Chosen:
 	mes "Hmm...";
 	mes "I think it would";
 	mes "be a good idea if";
-	mes "you tald to someone";
+	mes "you talk to someone";
 	mes "in Niflheim named ^FF0000Gen^000000.";
 	set signquest,45;
 	close;
@@ -8005,7 +8000,7 @@ que_sign01,122,141,5	script	Witch#2	792,{
     if (Sign_Branch8B && Sign_Branch8B < 4)goto L_MustHurry;
     if (signquest > 56) goto L_NoMedal;
     if (signquest > 55) goto L_Success;
-    if ((countitem(7313) > 0) && Sign_Branch8A < 4) goto L_Medal;
+    if ((countitem(7313) > 0) && Sign_Branch8A < 4 ) goto L_Medal;
     if (Sign_Branch8A) goto L_BranchA;
     if (signquest > 54 && countitem(7305)) goto L_Symbol;
     if (signquest < 48) goto L_NoMedal;
@@ -8270,6 +8265,7 @@ L_Complete:
 
 L_Serin:
     if (($signroomfull > 1) || getmapusers("que_sign02") > 0 || getareausers("que_sign01",229,227,166,162) > 0) goto L_Full;
+    if (Sign_Branch8A == 7) set Sign_Branch8A,8;
     if (countitem(2643) < 1) goto L_NoRing;
     mes "[Kirkena]";
     mes "You're finally";
@@ -8285,6 +8281,7 @@ L_Serin:
     donpcevent "#signserin::OnCooldown";
     set $signroomfull,2;
     set $signparty,getcharid(1);
+    set $signplayer,getcharid(0);
     warp "que_sign01",195,189;
     end;
 
@@ -8346,44 +8343,6 @@ L_NoMedal:
     mes "[Kirkena]";
     mes "...";
     close;
-
-L_MedalOk:
-    mes "[Kirkena]";
-    mes "That Witch's Medal...";
-    mes "You must be here to";
-    mes "help your friend take";
-    mes "care of Serin. Are you";
-    mes "ready to go, " + strcharinfo(0) + "?";
-    next;
-    menu "Yes.",-,"Not yet...",L_Notyet;
-    menu "Go directly to Serin.",-,"Path towards Serin.",L_Path;
-    mes "[Kirkena]";
-    mes "Thank you";
-    mes "for your help.";
-    mes "Serin's threat may";
-    mes "be too much for just";
-    mes "one adventurer alone...";
-    close2;
-    warp "que_sign01",195,189;
-    end;
-
-
-L_Notyet:
-    mes "[Kirkena]";
-    mes "Please hurry...";
-    mes "Time is of the essence...";
-    close;
-
-L_Path:
-    mes "[Kirkena]";
-    mes "Thank you";
-    mes "for your help.";
-    mes "Serin's threat may";
-    mes "be too much for just";
-    mes "one adventurer alone...";
-    close2;
-    warp "que_sign02",35,313;
-    end;
 
 L_Success:
     if (countitem(7313) < 5 && Sign_Branch8A) goto L_Voucher;
@@ -8947,7 +8906,6 @@ OnSummon:
 OnSignDead:
 	set $@Sign_Summon,$@Sign_Summon -1;
 	if($@Sign_Summon > 0) end;
-	set Sign_Branch8A,8;
 	set $signroomfull,3;
 	stopnpctimer;
 	goto OnSerin;
@@ -8989,7 +8947,6 @@ OnSummon:
 OnSignDead:
 	set $@Sign_Summon2,$@Sign_Summon2 -1;
 	if($@Sign_Summon2 > 0) end;
-	set Sign_Branch8B,4;
 	set $signroom2full,3;
 	stopnpctimer;
 	goto OnSerin;
@@ -9010,8 +8967,8 @@ OnTimer600000:
 que_sign01,197,195,5	script	Serin#serin	90,{
 
 	if(signquest > 55) goto L_Done;
-	if(Sign_Branch8A > 7) goto L_Success;
-	if(Sign_Branch8A > 6) goto L_TryAgain;
+	if(Sign_Branch8A > 7) goto L_TryAgain;
+	if(Sign_Branch8A > 6) goto L_Success;
 	if(Sign_Branch8A > 4) goto L_Summon;
 	if(Sign_Branch8A < 4) goto L_NoWord;
 	mes "[Serin]";
@@ -9212,8 +9169,8 @@ L_Done:
 que_sign01,197,45,5	script	Serin#serin2	90,{
 
     if (signquest > 55) goto L_Done;
-    if (Sign_Branch8B > 3) goto L_Success;
-    if (Sign_Branch8B > 2) goto L_TryAgain;
+    if (Sign_Branch8B > 3) goto L_TryAgain;
+    if (Sign_Branch8B > 2) goto L_Success;
     if (Sign_Branch8B > 1) goto L_Summon;
     mes "[Serin]";
     mes "You're finally here.";

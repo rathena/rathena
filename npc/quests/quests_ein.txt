@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -22,6 +22,8 @@
 //= 1.5.2 Updated Shino Quest to leave no grabage vars [Lupus]
 //= 1.5.3 Fixed some typos regarding Schwartzvalt Trilogy [SinSloth]
 //= 1.6 Updated Laboratory Entrance regarding Heart Fragment quest. [SinSloth]
+//= 1.7 Changed the laboratory entrance checking to prevent players
+//= from being stuck in the quest. [SinSloth]
 //============================================================ 
 
 
@@ -554,7 +556,7 @@ ein_in01,32,133,6	script	Maid	850,{
 }
 
 einbroch,51,52,1	script	lab_warp	45,2,2{
-	if(Shinokas_Quest != 7 && lhz_heart != 9){
+	if(Shinokas_Quest != 7 && lhz_heart != 9 && lhz_heart != 10){
 		mes "^3131FFThe door is locked.";
 		mes "You cannot enter.";
 		close;

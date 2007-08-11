@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 // Samuray22
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -16,6 +16,8 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First Beta.
 //= 1.1 Added Heart Fragment quest. [SinSloth]
+//= 1.2 Change the laboratory code text to make it easier to
+//= understand. [SinSloth]
 //============================================================ 
 
 //=======================================================================================================//
@@ -3078,7 +3080,7 @@ L_Input:
 		mes " ";
 		mes "^333333Total of correct numbers";
 		mes "in correct sequence: ^ff0000"+@strike+"^333333";
-		mes "Total of correct numbers: ^ff0000"+@ball+"^333333.";
+		mes "Total of correct numbers misplaced: ^ff0000"+@ball+"^333333.";
 		mes "Please use these results";
 		mes "to make a more accurate guess.^000000";
 		next;
