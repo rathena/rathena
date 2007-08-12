@@ -3,7 +3,7 @@
 //===== By: ============================
 //= eAthena Dev Team
 //===== Current Version: =======================
-//= 2.6
+//= 2.7
 //===== Compatible With: ============================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -29,13 +29,14 @@
 //= 2.6 Updated function calls with new arguments. [L0ne_W0lf]
 //=	Added unique Kafra Welcome message.
 //=	Removed Ant Hell Kafra Employees.
+//= 2.7 Merchant quest in the Biliban kafra. (Barron-Monster) [L0ne_W0lf]
 //===============================================================
 
 //<============================= Byalan Island ============================>\\
 izlu2dun,106,58,8	script	Kafra Employee::kaf_izlu2dun	115,{
 
 	cutin "kafra_03",2;
-	if(BaseJob==Job_Novice && job_merchant_q3>0) callfunc "F_MercKafra";  //F_MercKafra found in merchant.txt
+	if(BaseJob==Job_Novice && job_merchant_q2>0) callfunc "F_MercKafra";  //F_MercKafra found in merchant.txt
 	mes "[Kafra Employee]";
 	mes "Welcome to the";
 	mes "Kafra Corporation.";

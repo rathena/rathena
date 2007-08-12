@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 1.7 Updated to use Free Ticket for Kafra [Lupus]
 //= 1.8 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=	No longer uses function "F_ToHigh"
+//= 1.9 Bugfixes, thanks to Barron-Monster. [L0ne_W0lf]
 //============================================================ 
 
 alberta_in,53,43,6	script	Merchant#mer	86,{
@@ -202,6 +203,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 			next;
 			mes "[Chief Mahnsoo]";
 			mes "You'll have to find Java Dullihan, the Dyemaker, so that you can deliver the product he ordered.";
+			next;
 			if (job_merchant_q2 == 5) {
 				mes "[Chief Mahnsoo]";
 				mes "But he's a little forgetful, so give it to one of his students. Remember, the package's Serial Number is ^3355FF3012685^000000.";
@@ -503,6 +505,7 @@ alberta_in,28,29,2	script	Merchant Guildsman#mer	83,{
 	else if (job_merchant_q == 8 || job_merchant_q == 7) {
 		mes "[Union Staff Kay]";
 		mes "Alright! Everything looks perfect! I'll report your success to the guildmaster. Now go talk to Chief Mahnsoo, yeah?";
+		close;
 	}
 	else if (job_merchant_q == 6 || job_merchant_q == 5) {
 		mes " [Union Staff Kay] ";
@@ -1060,7 +1063,7 @@ function	script	F_MercKafra	{
 		mes "the Merchant Guild?";
 		mes "Oh, yes, please set";
 		mes "it down right over there...";
-		if (countitem(1081) == 1 || v[Merchant_Box_2] == 1 || countitem(1091) == 1) {
+		if (countitem(1081) == 1 || countitem(1082) == 1 || countitem(1091) == 1) {
 			mes "You must be really tired";
 			mes "after carrying it for so long!";
 		}
