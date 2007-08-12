@@ -48,6 +48,10 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 	----
 ========================
+08/12
+	* Updated the mapcache with data for moscovia maps
+	* Removed "Crusader quest monsters" from mob_avail (not used anymore)
+	* Replaced some mob_avail.txt entries with a simple example entry [ultramage]
 08/11
 	* Added remaining 11.2 skill db entries [Playtester]
 	* Implemented 11.2 skills in the skill_db [Playtester]

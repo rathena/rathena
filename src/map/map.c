@@ -2109,38 +2109,14 @@ int map_check_dir(int s_dir,int t_dir)
 	if(s_dir == t_dir)
 		return 0;
 	switch(s_dir) {
-		case 0:
-			if(t_dir == 7 || t_dir == 1 || t_dir == 0)
-				return 0;
-			break;
-		case 1:
-			if(t_dir == 0 || t_dir == 2 || t_dir == 1)
-				return 0;
-			break;
-		case 2:
-			if(t_dir == 1 || t_dir == 3 || t_dir == 2)
-				return 0;
-			break;
-		case 3:
-			if(t_dir == 2 || t_dir == 4 || t_dir == 3)
-				return 0;
-			break;
-		case 4:
-			if(t_dir == 3 || t_dir == 5 || t_dir == 4)
-				return 0;
-			break;
-		case 5:
-			if(t_dir == 4 || t_dir == 6 || t_dir == 5)
-				return 0;
-			break;
-		case 6:
-			if(t_dir == 5 || t_dir == 7 || t_dir == 6)
-				return 0;
-			break;
-		case 7:
-			if(t_dir == 6 || t_dir == 0 || t_dir == 7)
-				return 0;
-			break;
+		case 0: if(t_dir == 7 || t_dir == 1 || t_dir == 0) return 0; break;
+		case 1: if(t_dir == 0 || t_dir == 2 || t_dir == 1) return 0; break;
+		case 2: if(t_dir == 1 || t_dir == 3 || t_dir == 2) return 0; break;
+		case 3: if(t_dir == 2 || t_dir == 4 || t_dir == 3) return 0; break;
+		case 4: if(t_dir == 3 || t_dir == 5 || t_dir == 4) return 0; break;
+		case 5: if(t_dir == 4 || t_dir == 6 || t_dir == 5) return 0; break;
+		case 6: if(t_dir == 5 || t_dir == 7 || t_dir == 6) return 0; break;
+		case 7: if(t_dir == 6 || t_dir == 0 || t_dir == 7) return 0; break;
 	}
 	return 1;
 }
@@ -2489,14 +2465,16 @@ static void map_delmapid(int id)
 int map_delmap(char* mapname)
 {
 	int i;
+	char map_name[MAP_NAME_LENGTH];
 
 	if (strcmpi(mapname, "all") == 0) {
 		map_num = 0;
 		return 0;
 	}
 
+	mapindex_getmapname(mapname, map_name);
 	for(i = 0; i < map_num; i++) {
-		if (strcmp(map[i].name, mapname) <= 0) {
+		if (strcmp(map[i].name, map_name) == 0) {
 			map_delmapid(i);
 			return 1;
 		}

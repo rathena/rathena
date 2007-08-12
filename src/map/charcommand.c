@@ -3278,7 +3278,8 @@ int charcommand_disguise(const int fd, struct map_session_data* sd, const char* 
 
 	if(pc_isriding(pl_sd))
 	{
-		clif_displaymessage(fd, msg_txt(228)); 	// Character cannot wear disguise while riding a PecoPeco.
+		//FIXME: wrong message
+		//clif_displaymessage(fd, msg_txt(228)); 	// Character cannot wear disguise while riding a PecoPeco.
 		return -1;
 	}
 
