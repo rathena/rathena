@@ -575,7 +575,7 @@
 1235,Azoth,Azoth,4,,10,700,110,,1,0,0x00040000,7,2,2,4,36,1,1,{ bonus bClassChange,300; },{},{}
 1236,Sucsamad,Sucsamad,4,,10,800,140,,1,0,0x028F5EEE,7,2,2,4,36,1,1,{ bonus2 bAddEle,Ele_Earth,10; bonus2 bAddEle,Ele_Wind,10; bonus bUnbreakableWeapon,0; },{},{}
 1237,Grimtooth_,Grimtooth,4,,10,800,180,,1,0,0x028F5EEE,7,2,2,4,36,1,1,{ bonus bFlee,10; bonus bFlee2,5; bonus bDefRate,-50; bonus bDef2Rate,-50; },{},{}
-1238,Zeny_Knife,Zeny Knife,4,,10,1200,64,,1,0,0x028F5EEE,7,2,2,3,70,1,1,{ bonus2 bGetZenyNum,10,100; },{},{}
+1238,Zeny_Knife,Zeny Knife,4,,10,1200,64,,1,0,0x028F5EEE,7,2,2,3,70,1,1,{ bonus2 bGetZenyNum,1,40; },{},{}
 1239,Poison_Knife,Poison Knife,4,,10,800,64,,1,0,0x028F5EEE,7,2,2,3,65,1,1,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,3000; },{},{}
 1240,Princess_Knife,Princess Knife,4,,10,400,84,,1,0,0x028F5EEE,7,2,2,4,1,1,1,{ bonus bAllStats,1; },{},{}
 1241,Cursed_Dagger,Cursed Dagger,4,80000,,400,55,,1,0,0x00810204,7,2,2,4,85,1,1,{ bonus2 bAddEff,Eff_Curse,500; },{},{}
@@ -1574,7 +1574,7 @@
 4293,Cookie_Card,Cookie Card,6,,10,10,,,,,,,,136,,,,,{ bonus bLuk,2; bonus2 bSkillAtk,156,10; },{},{}
 4294,Quve_Card,Quve Card,6,,10,10,,,,,,,,136,,,,,{ if(BaseJob==Job_Novice||BaseJob==Job_SuperNovice) bonus4 bAutoSpellWhenHit,29,1,100,0; if(isequipped(4193)) { bonus bMaxHP,300; bonus bMaxSP,60; } },{},{}
 4295,Kraben_Card,Kraben Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Blind,600; },{},{}
-4296,Cramp_Card,Cramp Card,6,,10,10,,,,,,,,769,,,,,{ bonus2 bGetZenyNum,10,3; if(isequipped(4028)) bonus bStr,3; },{},{}
+4296,Cramp_Card,Cramp Card,6,,10,10,,,,,,,,769,,,,,{ bonus2 bGetZenyNum,5,1; if(isequipped(4028)) bonus bStr,3; },{},{}
 4297,Cruiser_Card,Cruiser Card,6,,10,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,10; bonus2 bCriticalAddRace,RC_Brute,7; },{},{}
 4298,Cremy_Fear_Card,Creamy Fear Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Confusion,600; },{},{}
 4299,Clock_Card,Clock Card,6,,10,10,,,,,,,,16,,,,,{ bonus4 bAutoSpellWhenHit,249,3+7*(getskilllv(249)==10),30,0; },{},{}
@@ -2424,7 +2424,7 @@
 7455,Hot_Sauce,Spicy Sauce,3,700,,10,,,,,,,,,,,,,{},{},{}
 7456,Red_Spice,Red Spice,3,1000,,10,,,,,,,,,,,,,{},{},{}
 7457,Cooking_Oil,Cooking Oil,3,500,,10,,,,,,,,,,,,,{},{},{}
-7458,Fortune_Horn,Fortune Horn,3,,1,10,,,,,,,,,,,,,{},{},{}
+7458,Baphomet's_Horn,Fortune Horn,3,,1,10,,,,,,,,,,,,,{},{},{}
 7459,Ramadan_,Ramadan,3,,1,10,,,,,,,,,,,,,{},{},{}
 7460,Nifl_Express_Ticket,Niflheim Express Ticket,3,,1,10,,,,,,,,,,,,,{},{},{}
 7461,Blue_A_Card,Blue A Card,3,,0,10,,,,,,,,,,,,,{},{},{}
