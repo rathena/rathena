@@ -1,6 +1,7 @@
 Date		Added
 ======
-2007/08/11
+2007/08/12
+	* Rev. 10987 More bug fixes to the 2-1 quests. Priest and Blacksmith specifically. [L0ne_w0lf]
 	* Rev. 10985 Bug fixes to the updated 2-1 job quests. [L0ne_W0lf]
 	- Testing and fixes courtesy of Barron-Monster and Samaury22.
 	* Corrected the second "Line" selling in the Comodo shop to "Whip". [L0ne_W0lf]

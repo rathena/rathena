@@ -5,7 +5,7 @@
 //= Converted by: kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.3a
 //===== Compatible With: ===================================== 
 //= eAthena  SVN
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //= 2.1a Fixed typo [KarLaeda]
 //= 2.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.3 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
+//= 2.3a More bug fixes. [L0ne_W0lf]
 //==========================================================
 
 prt_church,16,41,4	script	High Bishop#prst	60,{
@@ -609,12 +610,11 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 			next;
 			mes "[Sister Cecilia]";
 			mes "If you experience a problem during any of your trials, feel free to visit me. I will help you as much as I can.";
-			break;
+			close;
 		case 2:
 			mes "[Sister Cecilia]";
 			mes "Make yourself at home. I insist that you recover and take a rest in this Sanctuary. May God bless you...";
 			close;
-			break;
 		}
 	}
 	else if (PRIEST_Q == 1) {
@@ -1373,7 +1373,7 @@ OnTouch:
 		mes "[Deviruchi]";
 		mes "But how about this...? Now, isn't this an attractive sight? A nice, shiny new card. Mint condition. Not too many people have this you know. But I happen to have soooo many, my pockets hurt.";
 		next;
-		cutin "미스트레스카탛E.bmp",4;
+		cutin "미스트레스카드.bmp",4;
 		mes "[Deviruchi]";
 		mes "Isn't it everyone's dream to have one of these? Think about it, being a Priest can only bring you suffering...";
 		next;
@@ -1383,7 +1383,7 @@ OnTouch:
 			mes "This card can";
 			mes "can be yours...";
 			next;
-			cutin "미스트레스카탛E.bmp",255;
+			cutin "미스트레스카드.bmp",255;
 			mes "[Deviruchi]";
 			mes "Theoretically!";
 			mes "BWAHAHAHAHAHAHAHA!";
@@ -1392,7 +1392,7 @@ OnTouch:
 			warp "mjolnir_05",200,200;
 			end;
 		}
-		cutin "미스트레스카탛E.bmp",255;
+		cutin "미스트레스카드.bmp",255;
 		mes "[Deviruchi]";
 		mes "Did...";
 		mes "Did you just tell";

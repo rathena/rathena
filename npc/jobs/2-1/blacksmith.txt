@@ -30,6 +30,7 @@
 //= 2.2 Merged Jfunc, changed job numbers to constants [Lupus]
 //= 2.3 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.4 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
+//= 2.4a Changed a BaseJob to baseclass. [L0ne_W0lf]
 //==============================================================
 
 ein_in01,18,28,4	script	Guildsman#BLS	731,{
@@ -99,7 +100,7 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 		mes "Oh! Am I correct in assuming you're a member of the Clergy? Would you please bless me before you leave!";
 		close;
 	}
-	else if (BaseJob == Job_Thief) {
+	else if (BaseClass == Job_Thief) {
 		mes "[Altiregen]";
 		mes "I'm sorry...";
 		mes "But there really isn't anything for you to steal here. Well, there are the Daggers we keep in the back, but...";
