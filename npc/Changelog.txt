@@ -1,7 +1,7 @@
 Date		Added
 ======
 2007/08/11
-	* Rev. 10985 Bug fixes to the updated 2-2 job quests. [L0ne_W0lf]
+	* Rev. 10985 Bug fixes to the updated 2-1 job quests. [L0ne_W0lf]
 	- Testing and fixes courtesy of Barron-Monster and Samaury22.
 	* Corrected the second "Line" selling in the Comodo shop to "Whip". [L0ne_W0lf]
 2007/08/11
