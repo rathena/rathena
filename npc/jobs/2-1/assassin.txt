@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.6
+//= 2.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -33,6 +33,7 @@
 //= 2.4 Fixed skipping of Nameless NPC [Lupus]
 //= 2.5 Fixed a Rogue exploit [Lupus]
 //= 2.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 2.7 Several bugfixes with the help of Samuray22 and Barron-Monster. [L0ne_W0lf]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -151,17 +152,17 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 		mes "What brings you here?";
 		mes "I don't think I like the way you're looking at me... Punk.";
 		next;
-		if (BaseJob == Job_Novice) {
+		if (BaseClass == Job_Novice) {
 			mes "[Ferocious-looking guy]";
 			mes "Hey Newbie. You should really get out of here as soon as you can. I can't guarantee your safety.";
 			close;
 		}
-		else if (BaseJob == Job_Swordman) {
+		else if (BaseClass == Job_Swordman) {
 			mes "[Ferocious-looking guy]";
 			mes "What brings a man of the sword to this place? Why don't you try smashing stuff somewhere else, ya lunkhead.";
 			close;
 		}
-		else if (BaseJob == Job_Mage) {
+		else if (BaseClass == Job_Mage) {
 			mes "[Ferocious-looking guy]";
 			mes "Now what would a magic user be doing here?";
 			next;
@@ -169,7 +170,7 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 			mes "There's a library in Prontera and Juno where you're welcome, so why don't you make like a magic trick and disappear?";
 			close;
 		}
-		else if (BaseJob == Job_Archer) {
+		else if (BaseClass == Job_Archer) {
 			mes "[Ferocious-looking guy]";
 			mes "Well well well.";
 			mes "Look at that purdy bow.";
@@ -178,12 +179,12 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 			mes "There aren't many Bowmen with the gall to even come close to this place. Well, what do you think you're doin' here?!";
 			close;
 		}
-		else if (BaseJob == Job_Acolyte) {
+		else if (BaseClass == Job_Acolyte) {
 			mes "[Ferocious-looking guy]";
 			mes "I thought something smelled funny. What's a servant of God doing in this place? You don't belong here.";
 			close;
 		}
-		else if (BaseJob == Job_Merchant) {
+		else if (BaseClass == Job_Merchant) {
 			mes "[Ferocious-looking guy]";
 			mes "We don't like greedy people around these parts. You better sell your stuff somewhere else, Moneybags.";
 			close;
@@ -683,7 +684,7 @@ OnTouch:
 		mes "I am not necessarily cruel. Before we proceed, is there anything you wish to know?";
 		next;
 		set ASSIN_Q2,0;
-		while(ASSIN_Q2 < 4) {
+		while(ASSIN_Q2 < 3) {
 		switch(select("...Skills?:...Stats?:Hmpf, I know it all.")) {
 			case 1:
 				mes "[The Anonymous One]";
@@ -2037,7 +2038,7 @@ OnTouch:
 				mes "A Jur...";
 				mes "Good choice. There you are. I hope it will serve you well.";
 				getitem 1251,1; //Jur_
-				next;
+				break;
 			case 2:
 				mes "[Guildmaster]";
 				mes "A Katar...";
@@ -2046,19 +2047,19 @@ OnTouch:
 				mes "I know it will";
 				mes "serve you well.";
 				getitem 1253,1; //Katar_
-				next;
+				break;
 			case 3:
 				mes "[Guildmaster]";
 				mes "I see. You want to use both hands. Here, take your Main Gauche.";
 				getitem 1208,1; //Main_Gauche_
-				next;
+				break;
 			case 4:
 				mes "[Guildmaster]";
 				mes "A Gladius...";
 				mes "It used to rule over the Assassin weapon market. Please take care of my gladius.";
 				getitem 1220,1; //Gladius_
-				next;
 			}
+			next;
 		}
 		else {
 			set ASSIN_Q,17;

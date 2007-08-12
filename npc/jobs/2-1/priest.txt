@@ -5,7 +5,7 @@
 //= Converted by: kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena  SVN
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 2.1 Merged JFunc [Lupus]
 //= 2.1a Fixed typo [KarLaeda]
 //= 2.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 2.3 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
 //==========================================================
 
 prt_church,16,41,4	script	High Bishop#prst	60,{
@@ -38,7 +39,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 			mes "Do not let evil conquer your soul. You have enough courage and power to overcome the hardest situation. May God bless you...";
 			close;
 	}
-	if (BaseClass != Job_Acolyte || BaseJob == Job_Priest) {
+	if (BaseJob != Job_Acolyte) {
 		if (BaseJob == Job_Priest) {
 			mes "[Bishop Paul]";
 			mes "Ah...";
@@ -484,46 +485,44 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 			mes "You have remaining skills points. Please use these skill points to upgrade your skills, and then return to me.";
 			close;
 		}
-		if (JobLevel == 50) {
-			mes "[Bishop Paul]";
-			mes "Congratulations, you have completed the trials required of all Priests. Let me promote you to the position of Priest right away.";
-			next;
-			mes "[Bishop Paul]";
-			mes "God, grant your power to your servant standing before you.";
-			if (sex)
-				mes "Let him send your message throughout the ends of the earth.";
-			else
-				mes "Let her send your message throughout the ends of the earth.";
-			next;
-			mes "[Bishop Paul]";
-			mes "Make this servant of yours an instrument of your miraculous works...";
-			next;
-			set .@joblvl,JobLevel;
-			callfunc "Job_Change",Job_Priest;
-			callfunc "F_ClearJobVar";		// clears all job variables for the current player
-			mes "[Bishop Paul]";
-			mes "Now you are born again as a Priest. I congratulate you, and hope you will greatly help other people for the rest of your life.";
-			next;
-			mes "[Bishop Paul]";
-			if (.@joblvl < 50) {
-				getitem 1550,1; //Book
-				mes "This book is for you. I hope it will aid you in spreading God's message on earth.";
-			}
-			else {
-				getitem 1551,1; //Bible
-				mes "In commemoration of your job change, I am giving you a bible. This will lighten your way to the path of righteousness.";
-			}
-			next;
-			mes "[Bishop Paul]";
-			mes "You've shown great effort, and have made admirable progress in your personal quest for holiness. Please lead your life as a sincere Priest...";
-			close;
+		mes "[Bishop Paul]";
+		mes "Congratulations, you have completed the trials required of all Priests. Let me promote you to the position of Priest right away.";
+		next;
+		mes "[Bishop Paul]";
+		mes "God, grant your power to your servant standing before you.";
+		if (sex)
+			mes "Let him send your message throughout the ends of the earth.";
+		else
+			mes "Let her send your message throughout the ends of the earth.";
+		next;
+		mes "[Bishop Paul]";
+		mes "Make this servant of yours an instrument of your miraculous works...";
+		next;
+		set .@joblvl,JobLevel;
+		callfunc "Job_Change",Job_Priest;
+		callfunc "F_ClearJobVar";		// clears all job variables for the current player
+		mes "[Bishop Paul]";
+		mes "Now you are born again as a Priest. I congratulate you, and hope you will greatly help other people for the rest of your life.";
+		next;
+		mes "[Bishop Paul]";
+		if (.@joblvl < 50) {
+			getitem 1550,1; //Book
+			mes "This book is for you. I hope it will aid you in spreading God's message on earth.";
 		}
+		else {
+			getitem 1551,1; //Bible
+			mes "In commemoration of your job change, I am giving you a bible. This will lighten your way to the path of righteousness.";
+		}
+		next;
+		mes "[Bishop Paul]";
+		mes "You've shown great effort, and have made admirable progress in your personal quest for holiness. Please lead your life as a sincere Priest...";
+		close;
 	}
 }
 
 prt_church,27,24,1	script	Sister Cecilia	79,{
 	mes "[Sister Cecilia]";
-	if (BaseClass != Job_Acolyte || BaseJob == Job_Priest) {
+	if (BaseJob != Job_Acolyte) {
 		if (BaseJob == Job_Priest) {
 			if (sex)
 				mes "May god bless you, brother. It brings my heart joy to see that you working hard to carry out the will of God.";
@@ -1197,7 +1196,7 @@ OnInit:
 	end;
 
 OnTouch:
-	if (BaseClass == Job_Acolyte || BaseJob != Job_Priest) {
+	if (BaseJob == Job_Acolyte) {
 		donpcevent "Zombie_Generator#prst::Onm1";
 		donpcevent "Zombie1_1::OnDisable";
 	}
@@ -1218,7 +1217,7 @@ OnInit:
 	end;
 
 OnTouch:
-	if (BaseClass == Job_Acolyte || BaseJob != Job_Priest) {
+	if (BaseJob == Job_Acolyte) {
 		donpcevent "Zombie_Generator#prst::Onm2";
 		donpcevent "Zombie2_1::OnDisable";
 	}
@@ -1239,7 +1238,7 @@ OnInit:
 	end;
 
 OnTouch:
-	if (BaseClass == Job_Acolyte || BaseJob != Job_Priest) {
+	if (BaseJob == Job_Acolyte) {
 		donpcevent "Zombie_Generator#prst::Onm3";
 		donpcevent "Zombie3_1::OnDisable";
 	}
@@ -1260,7 +1259,7 @@ OnInit:
 	end;
 
 OnTouch:
-	if (BaseClass == Job_Acolyte || BaseJob != Job_Priest) {
+	if (BaseJob == Job_Acolyte) {
 		donpcevent "Zombie_Generator#prst::Onm4";
 		donpcevent "Zombie4_1::OnDisable";
 	}
@@ -1280,7 +1279,7 @@ OnInit:
 	end;
 
 OnTouch:
-	if (BaseClass == Job_Acolyte || BaseJob != Job_Priest) {
+	if (BaseJob == Job_Acolyte) {
 		donpcevent "Zombie_Generator#prst::Onm5";
 		donpcevent "Zombie5_1::OnDisable";
 	}
@@ -1374,7 +1373,7 @@ OnTouch:
 		mes "[Deviruchi]";
 		mes "But how about this...? Now, isn't this an attractive sight? A nice, shiny new card. Mint condition. Not too many people have this you know. But I happen to have soooo many, my pockets hurt.";
 		next;
-		cutin "ｹﾌｽｺﾆｮｷｹｽｺﾄｫｵ・bmp",4;
+		cutin "ｹﾌｽｺﾆｮｷｹｽｺﾄｫｵ・.bmp",4;
 		mes "[Deviruchi]";
 		mes "Isn't it everyone's dream to have one of these? Think about it, being a Priest can only bring you suffering...";
 		next;
@@ -1384,7 +1383,7 @@ OnTouch:
 			mes "This card can";
 			mes "can be yours...";
 			next;
-			cutin "ｹﾌｽｺﾆｮｷｹｽｺﾄｫｵ・bmp",255;
+			cutin "ｹﾌｽｺﾆｮｷｹｽｺﾄｫｵ・.bmp",255;
 			mes "[Deviruchi]";
 			mes "Theoretically!";
 			mes "BWAHAHAHAHAHAHAHA!";
@@ -1393,7 +1392,7 @@ OnTouch:
 			warp "mjolnir_05",200,200;
 			end;
 		}
-		cutin "ｹﾌｽｺﾆｮｷｹｽｺﾄｫｵ・bmp",255;
+		cutin "ｹﾌｽｺﾆｮｷｹｽｺﾄｫｵ・.bmp",255;
 		mes "[Deviruchi]";
 		mes "Did...";
 		mes "Did you just tell";
@@ -1650,7 +1649,7 @@ OnInit:
 	end;
 
 OnTouch:
-	if (BaseClass == Job_Acolyte || BaseJob != Job_Priest) {
+	if (BaseJob == Job_Acolyte) {
 		donpcevent "Mummy_Generator::Onm1";
 		donpcevent "Mummy1_1::OnDisable";
 	}
@@ -1671,7 +1670,7 @@ OnInit:
 	end;
 
 OnTouch:
-	if (BaseClass == Job_Acolyte || BaseJob != Job_Priest) {
+	if (BaseJob == Job_Acolyte) {
 		donpcevent "Mummy_Generator::Onm2";
 		donpcevent "Mummy2_1::OnDisable";
 	}
@@ -1692,7 +1691,7 @@ OnInit:
 	end;
 
 OnTouch:
-	if (BaseClass == Job_Acolyte || BaseJob != Job_Priest) {
+	if (BaseJob == Job_Acolyte) {
 		donpcevent "Mummy_Generator::Onm3";
 		donpcevent "Mummy3_1::OnDisable";
 	}

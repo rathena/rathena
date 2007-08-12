@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Merged JFunc [Lupus]
 //= 2.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 2.3 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
 //============================================================ 
 
 prt_in,88,101,4	script	Chivalry Captain#knt	56,{
@@ -38,14 +39,14 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "May god bless your body and soul, warrior. I hope you will show your courage and protect those who are weaker than you.";
 		close;
 	}
-	if (BaseClass != Job_Swordman || BaseJob == Job_Knight) {
+	if (BaseJob != Job_Swordman) {
 		if (BaseJob == Job_Knight) {
 			mes "[Captain Herman]";
 			mes "Ah, a member of our Chivalry.";
 			mes "I hope you are living up to my expectations. We have vowed to be strong for our kingdom, even if death is upon us...";
 			close;
 		}
-		else if (BaseJob == Job_Novice) {
+		else if (BaseClass == Job_Novice) {
 			mes "[Captain Herman]";
 			mes "Welcome,";
 			mes "this is the";
@@ -543,7 +544,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 }
 
 prt_in,75,107,4	script	Sir Andrew#knt	65,{
-	if (BaseClass != Job_Swordman || BaseJob == Job_Knight) {
+	if (BaseJob != Job_Swordman) {
 		if (BaseJob == Job_Knight) {
 			mes "[Sir Andrew]";
 			mes "You must be";
@@ -561,7 +562,7 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 			mes "After all, we are Knights.";
 			close;
 		}
-		else if (BaseJob == Job_Novice) {
+		else if (BaseClass == Job_Novice) {
 			mes "[Sir Andrew]";
 			mes "Hey there,";
 			mes "little Novice.";
@@ -672,6 +673,7 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 			mes "you to bring the";
 			mes "items I've listed.";
 			mes "See you soon~";
+			close;
 		}
 		else {
 			mes "[Sir Andrew]";
@@ -693,7 +695,7 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 		//Short_Leg, Heart_Of_Mermaid. Blossom_Of_Maneater, Flesh_Of_Clam, Old_Frying_Pan, Snail's_Shell
 		case 3: setarray .@items[0], 1042,5, 950,5, 1032,5, 966,5, 7031,5, 946,5, 0; break;
 		}
-		if (countitem(.@items[0]) > .@items[1] && countitem(.@items[2]) > .@items[3] && countitem(.@items[4]) > .@items[5] && countitem(.@items[6]) > .@items[7] && countitem(.@items[8]) > .@items[9] && countitem(.@items[10]) > .@items[11]) {
+		if (countitem(.@items[0]) >= .@items[1] && countitem(.@items[2]) >= .@items[3] && countitem(.@items[4]) >= .@items[5] && countitem(.@items[6]) >= .@items[7] && countitem(.@items[8]) >= .@items[9] && countitem(.@items[10]) >= .@items[11]) {
 			mes "[Sir Andrew]";
 			mes "Perfect! We appreciate your effort in gathering these items. Thesee will be used to support the Chivalry's finances.";
 			next;
@@ -749,7 +751,7 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 }
 
 prt_in,71,91,0	script	Sir Siracuse#knt	65,{
-	if (BaseClass != Job_Swordman || BaseJob == Job_Knight) {
+	if (BaseJob != Job_Swordman) {
 		if (BaseJob == Job_Knight) {
 			mes "[Sir Siracuse]";
 			mes "Hey there!";
@@ -772,7 +774,7 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 			mes "If you catch any of the new guys acting in a way unbecoming of a Knight, scold them for me please?";
 			close;
 		}
-		else if (BaseJob == Job_Novice) {
+		else if (Baseclass == Job_Novice) {
 			mes "[Sir Siracuse]";
 			mes "Oh?";
 			mes "What is a Novice";
@@ -1150,12 +1152,12 @@ prt_in,79,94,4	script	Sir Windsor#knt	733,{
 	mes "......";
 	next;
 	mes "[Sir Windsor]";
-	if (BaseClass != Job_Swordman || BaseJob == Job_Knight) {
+	if (BaseJob != Job_Swordman) {
 		if (BaseJob == Job_Knight) {
 			mes "Protect.";
 			close;
 		}
-		else if (BaseJob == Job_Novice) {
+		else if (BaseClass == Job_Novice) {
 			mes "...Go play";
 			mes "outside.";
 			close;
@@ -1523,7 +1525,7 @@ OnTimer182000:
 // Test 3 (Manners)
 //==========================================================
 prt_in,69,107,6	script	Lady Amy#knt	728,{
-	if (BaseClass != Job_Swordman || BaseJob == Job_Knight) {
+	if (BaseJob != Job_Swordman) {
 		if (BaseJob == Job_Knight) {
 			mes "[Lady Amy]";
 			mes "Oh...!";
@@ -1543,7 +1545,7 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 			mes "the Prontera Chivalry~";
 			close;
 		}
-		else if (BaseJob == Job_Novice) {
+		else if (BaseClass == Job_Novice) {
 			mes "[Lady Amy]";
 			mes "Aww~";
 			mes "What a cute";
@@ -1896,7 +1898,7 @@ L_AskQuestions:
 // Test 4 (patience)
 //==========================================================
 prt_in,70,99,6	script	Sir Edmond#knt	734,{
-	if (BaseClass != Job_Swordman || BaseJob == Job_Knight) {
+	if (BaseJob != Job_Swordman) {
 		if (BaseJob == Job_Knight) {
 			mes "[Sir Edmond]";
 			mes "Think of your";
@@ -1915,7 +1917,7 @@ prt_in,70,99,6	script	Sir Edmond#knt	734,{
 			mes "any situation.";
 			close;
 		}
-		else if (BaseJob == Job_NOvice) {
+		else if (BaseClass == Job_NOvice) {
 			mes "[Sir Edmond]";
 			mes "Trees with deep roots don't sway with the wind. The fact that powerful skills must be built on strong basics is immutable...";
 			next;
@@ -2057,11 +2059,12 @@ prt_in,70,99,6	script	Sir Edmond#knt	734,{
 
 job_knt,1,1,1	script	Timer#knt	107,{
 OnTimer300000:
-	areawarp "job_knt", 122, 36, 165, 75, "prt_in",80,100;
+	enablenpc "Warp#knt";
 	end;
 
 OnTimer300500:
 	donpcevent "Timer#knt::OnDisable";
+	disablenpc "Warp#knt";
 	end;
 
 OnTimer301500:
@@ -2095,6 +2098,7 @@ OnEnable:
 OnDisable:
 	killmonsterall "job_knt";
 	disablenpc "Timer#knt";
+	disablenpc "Warp#knt";
 	end;
 
 OnMyMobDead:
@@ -2102,10 +2106,20 @@ OnMyMobDead:
 	end;
 }
 
+job_knt,145,57,1	script	Warp#knt	107,22,22,{
+OnInit:
+	disablenpc "Warp#knt";
+	end;
+OnTouch:
+	set KNIGHT_Q,12;
+	warp "prt_in",80,100;
+	end;
+}
+
 // Test 5, and creates Claymores for knights
 //==========================================================
 prt_in,87,92,4	script	Sir Gray#knt	119,{
-	if (BaseClass != Job_Swordman || BaseJob == Job_Knight) {
+	if (BaseJob != Job_Swordman) {
 		if (BaseJob == Job_Knight) {
 			mes "[Sir Gray]";
 			mes "The glint of light";
@@ -2188,7 +2202,7 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 				close;
 			}
 		}
-		else if (BaseJob == Job_Novice) {
+		else if (BaseClass == Job_Novice) {
 			mes "[Sir Gray]";
 			mes "Believe it";
 			mes "or not, I was";

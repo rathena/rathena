@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -39,6 +39,7 @@
 //	-Changed "Job Change Monsters".
 //	-Thanks to ultradamage.
 //= 2.7 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 2.8 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
 //============================================================ 
 
 // Notices in the old Hunter Guild.
@@ -90,34 +91,34 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 		mes "You can't change jobs without using all your skill points. Please use all of your skill points before applying to change jobs~";
 		close;
 	}
-	if (BaseJob == Job_Novice) {
+	if (BaseClass == Job_Novice) {
 		mes "[Hunter Guildsman]";
 		mes "You must be...";
 		mes "a Novice? Wow, you've got a long way ahead of you. I don't think there's much you can do here.";
 		close;
 	}
-	else if (BaseJob == Jo_Swordman) {
+	else if (BaseClass == Jo_Swordman) {
 		mes "[Hunter Guildsman]";
 		mes "You have chosen the path of the sword. I can respect the strength of your blade. Of course, from far away, you can't really afford to throw your sword at enemies, can you?";
 		close;
 	}
-	else if (BaseJob == Job_Mage) {
+	else if (BaseClass == Job_Mage) {
 		mes "[Hunter Guildsman]";
 		mes "You deal with magic? It must feel great to be able to wield mystic power.";
 		close;
 	}
-	else if (BaseJob == Job_Acolyte) {
+	else if (BaseClass == Job_Acolyte) {
 		mes "[Hunter Guildsman]";
 		mes "Oh, a person who serves God! Nice to meet you. There aren't many people like you that visit this place~ Hehe.";
 		close;
 	}
-	else if (BaseJob == Job_Merchant) {
+	else if (Baseclass == Job_Merchant) {
 		mes "[Hunter Guildsman]";
 		mes "Oh...";
 		mes "How's your business coming along?";
 		close;
 	}
-	else if (BaseJob == Job_Thief) {
+	else if (BaseClass == Job_Thief) {
 		mes "[Hunter Guildsman]";
 		mes "Agh?!";
 		mes "This place doesn't have anything worth stealing or anyone worth killing!!";
@@ -526,7 +527,7 @@ L_GiveQuestItems:
 		mes "[Demon Hunter]";
 		mes "Hmm?";
 		next;
-		if (countitem(.@items[0]) > .@items[1] && countitem(.@items[2]) > .@items[3] && countitem(.@items[4]) > .@items[5]) {
+		if (countitem(.@items[0]) >= .@items[1] && countitem(.@items[2]) >= .@items[3] && countitem(.@items[4]) >= .@items[5]) {
 			mes "[Demon Hunter]";
 			mes "You brought all of the necessary materials... You can get directions to the testing area from our Guildmaster who is currently in the Payon Central Palace.";
 			set HNTR_Q,.@items[6];

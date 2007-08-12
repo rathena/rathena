@@ -4,7 +4,7 @@
 //= (Aegis) Translated by yoshiki, converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -28,6 +28,7 @@
 //= 2.2 Merged back JFunc [Lupus] 2.2a Removed extra MES, added missing NEXT
 //= 2.3 Bigfoot monster summon corrected [Zairik]
 //= 2.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 2.5 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
 //============================================================ 
 
 gef_tower,111,37,4	script	Wizard Guildsman	70,{
@@ -41,7 +42,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "Congratulations and good luck with your life!";
 		close;
 	}
-	if (BaseClass != Job_Mage || BaseJob != Job_Wizard) {
+	if (BaseJob != Job_Mage) {
 		if (BaseJob == Job_Wizard) {
 			mes "[Catherine]";
 			mes "Since you're already a Wizard, you don't have any more business with me...?";
@@ -387,6 +388,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "[Catherine]";
 		mes "So, try harder this time...";
 		mes "He's waiting!";
+		close;
 	}
 	else if (WIZ_Q == 7) {
 		if (JobLevel < 40) {
@@ -443,7 +445,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 }
 
 gef_tower,102,24,2	script	Gloomy Wizard	735,{
-	if (BaseClass != Job_Mage || BaseJob == Job_Wizard) {
+	if (BaseJob != Job_Mage) {
 		if (BaseJob == Job_Wizard) {
 			mes "[Raulel]";
 			mes "*Cough* *cough* what do you want?";
@@ -466,7 +468,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			}
 			close;
 		}
-		else if (BaseBjob == Job_Priest) {
+		else if (BaseJob == Job_Priest) {
 			mes "[Raulel]";
 			mes "Go away, one who works for the Church!";
 			mes "Magic repels Holy power, jeez...your messing up my aura.";
@@ -476,7 +478,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			mes "Don't come any closer, just leave!";
 			close;
 		}
-		else if (Class == Job_Novice) {
+		else if (BaseClass == Job_Novice) {
 			mes "[Raulel]";
 			mes "Why did a little one like you come here?!";
 			mes "Get lost! ~Hahahahaha";
@@ -1639,7 +1641,7 @@ OnTimer9000:
 }
 
 gef_tower,107,36,4	script	White Dog#wiz	81,{
-	if (BaseClass != Job_Mage || BaseJob != JOb_Wizard) {
+	if (BaseJob != Job_Mage) {
 		if (BaseJob == Job_Wizard) {
 			mes "[Maria]";
 			mes "Instead of sticking around here, wouldn't it be better to go out and test how strong you've become?";
@@ -1650,7 +1652,7 @@ gef_tower,107,36,4	script	White Dog#wiz	81,{
 			cutin "job_wizard_maria01",255;
 			end;
 		}
-		else if (Class == Job_Novice) {
+		else if (BaseClass == Job_Novice) {
 			mes "[Dog]";
 			mes "What? Kiddo!";
 			mes "Is a Dog talking so amusing to you?";
