@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen, Samuray22
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3800+
 //===== Description: ========================================= 
@@ -20,6 +20,8 @@
 //= 1.3b Splitted into different files [DracoRPG]
 //= 1.3c Inverted the weight check for Greed [DracoRPG]
 //= 1.4 Updated to the official One [Samuray22]
+//= 1.5 replaced item "names" with item id. Fixed a bug with
+//=		item deletion [Lupus]
 //============================================================
 
 //============================================================
@@ -229,7 +231,7 @@ geffen,178,72,5	script	Akki	726,{
 					close;
 				}
 			} else if(BLACK_SK == 1) {
-				if(countitem("Steel") > 0 && countitem("Coal") > 4 && countitem("Detrimindexta") > 0 && countitem("Iron_Hammer") > 0) {
+				if(countitem(999) > 0 && countitem(1003) > 4 && countitem(971) > 0 && countitem(613) > 0) {
 					if (Zeny >= 500) {
 						mes "[Akki]";
 						mes "Oh yay~ you got all the materials?";
@@ -246,10 +248,10 @@ geffen,178,72,5	script	Akki	726,{
 						mes "the materials, so";
 						mes "wait a few";
 						mes "moments~";
-						delitem "Coal", 5;
-						delitem "Steel", 1;
-						delitem "Detrimindexta", 1;
-						delitem "Iron_Hammer", 1;
+						delitem 1003, 5;
+						delitem 999, 1;
+						delitem 971, 1;
+						delitem 613, 1;
 						set Zeny, Zeny-500;
 						set BLACK_SK, 2;
 						close;
@@ -321,14 +323,14 @@ geffen,178,72,5	script	Akki	726,{
 				set BLACK_SK, 3;
 				close;
 			} else if(BLACK_SK == 3) {
-				if (countitem("Steel") > 0 && countitem("Coal") > 2) {
+				if (countitem(999) > 0 && countitem(1003) > 2) {
 					mes "[Akki]";
 					mes "Oh~ You brought them~!";
 					mes "Yay~ Really, thanks~";
 					mes "I'll do better this time.";
 					mes "Wait a few moments.";
-					delitem "Steel", 1;
-					delitem "Coal", 3;
+					delitem 999, 1;
+					delitem 1003, 3;
 					set BLACK_SK, 4;
 					close;
 				}
@@ -372,7 +374,7 @@ geffen,178,72,5	script	Akki	726,{
 				set BLACK_SK, 5;
 				close;
 			} else if(BLACK_SK == 5) {
-				if (countitem("Iron_Hammer") > 0) {
+				if (countitem(613) > 0) {
 					mes "[Akki]";
 					mes "Oh~!!";
 					mes "You brought it~!";
@@ -382,7 +384,7 @@ geffen,178,72,5	script	Akki	726,{
 					mes "Then I will really really";
 					mes "teach you, so just";
 					mes "wait a little~";
-					delitem Iron_Hammer, 1;
+					delitem 613, 1;
 					set BLACK_SK, 6;
 					close;
 				}
@@ -606,7 +608,7 @@ geffen,172,52,7	script	Goodday	826,{
 			}
 		} else if(BLACK_SK2 == 1) {
 			// Check if you can carry 25 golds (Gold weight 20 = 20*25 = 500),
-			if(checkweight("Gold",25) == 1) { 
+			if(checkweight(969,25) == 1) { 
 				mes "[Goodday]";
 				mes "Mm~ back already.";
 				mes "Well, without checking, I can tell";

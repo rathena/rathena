@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen, Samuray22
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.8a
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3800+
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //= 1.6 Moved some NPCs related to Lighthalzen quests. [SinSloth]
 //= 1.7 Updated "Elemental Potion Creation Quest" to the official one. [Samuray22]
 //= 1.8 Added some missing NPCs from the Laboratory. [Samuray22]
+//= 1.8a replaced item "names" with item id [Lupus]
 //============================================================
 
 
@@ -176,11 +177,11 @@ yuno_in04,33,108,6	script	Pisruik Quv	883,{
 							mes "[Pisruik]";
 							mes "Let's see...";
 							next;
-							if (countitem("Yellow_Gemstone") > 4 && countitem("Empty_Potion") > 3 && countitem("Heart_Of_Mermaid") > 9 && countitem("Powder_Of_Butterfly") > 9) {
-								delitem "Yellow_Gemstone", 5;
-								delitem "Empty_Potion", 4;
-								delitem "Heart_Of_Mermaid", 10;
-								delitem "Powder_Of_Butterfly",10;
+							if (countitem(715) > 4 && countitem(1093) > 3 && countitem(950) > 9 && countitem(924) > 9) {
+								delitem 715, 5;
+								delitem 1093, 4;
+								delitem 950, 10;
+								delitem 924,10;
 								set ALCHE_SK, 3;
 								mes "[Pisruik]";
 								mes "Good.";
@@ -382,8 +383,8 @@ yuno_in04,33,108,6	script	Pisruik Quv	883,{
 				close;
 			}
 		} else if(ALCHE_SK == 6) { //Second Item
-			if (countitem("Blossom_Of_Maneater") > 19) {
-				delitem "Blossom_Of_Maneater", 20;
+			if (countitem(1032) > 19) {
+				delitem 1032, 20;
 				set ALCHE_SK, 7;
 				mes "[Pisruij]";
 				mes "...Thanks a lot.";
@@ -468,8 +469,8 @@ yuno_in04,33,108,6	script	Pisruik Quv	883,{
 			mes "Please..?";
 			close;
 		} else if(ALCHE_SK == 8) {
-			if (countitem("Blossom_Of_Maneater") > 0) {
-				delitem "Blossom_Of_Maneater", 1;
+			if (countitem(1032) > 0) {
+				delitem 1032, 1;
 				set ALCHE_SK, 7;
 				mes "[Pisruik]";
 				mes "...Thanks.";
@@ -554,10 +555,10 @@ yuno_in04,33,108,6	script	Pisruik Quv	883,{
 			mes " == he looks much, much better ==";
 			mes " == without his glasses. ==";
 			next;
-			switch( select( "Give'Something'.", "Don't give him anything.")) {
+			switch( select( "Give 'Something'.", "Don't give him anything.")) {
 			case 1:
-				if (countitem("Glasses") > 0) {
-					delitem "Glasses", 1;
+				if (countitem(2203) > 0) {
+					delitem 2203, 1;
 					set ALCHE_SK, 10;
 					mes " == I gave him the set of glasses ==";
 					next;
@@ -610,7 +611,7 @@ yuno_in04,33,108,6	script	Pisruik Quv	883,{
 						mes " == of the medicine ==";
 						next;
 						set ALCHE_SK, 11;
-						getitem "Elemental_Create_Book", 1;
+						getitem 7434, 1;
 						mes "[Pisruik]";
 						mes "...I think that";
 						mes "You can put this to a good use.";
@@ -676,7 +677,7 @@ yuno_in04,33,108,6	script	Pisruik Quv	883,{
 				mes " == of the medicine ==";
 				next;
 				set ALCHE_SK, 11;
-				getitem "Elemental_Create_Book", 1;
+				getitem 7434, 1;
 				mes "[Pisruik]";
 				mes "...I think that";
 				mes "You can put this to a good use.";
@@ -708,16 +709,16 @@ yuno_in04,33,108,6	script	Pisruik Quv	883,{
 				close;
 			}
 		} else if(ALCHE_SK == 11) {
-			if (countitem("Elemental_Create_Book") == 0) {
+			if (countitem(7434) == 0) {
 				mes "[Pisruik]";
 				mes "....I guess,";
 				mes "You haven't found much use for that item.";
 				close;
-			} else if(countitem("Elemental_Create_Book") == 1) {
+			} else if(countitem(7434) == 1) {
 				mes "[Pisruik]";
 				mes "Has the item been very helpful to you?";
 				close;
-			} else if(countitem("Elemental_Create_Book") > 1) {
+			} else if(countitem(7434) > 1) {
 				mes "[Pisruik]";
 				mes "....";
 				mes "Well....I'm selling these but";

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7b
+//= 1.7c
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -30,6 +30,7 @@
 //= 1.6a Fixed a couple spelling mistakes. [L0ne_W0lf]
 //= 1.7 Updated "Ph.D Quest" Dialogs. [Samuray22]
 //= 1.7b Fixed some minor typos. [SinSloth]
+//= 1.7c replaced item "names" with item id. [Lupus]
 //============================================================ 
 
 // Prontera Culvert
@@ -150,7 +151,7 @@ prt_fild05,270,212,5	script	Culvert Guardian	105,{
 // Ph.D Hat Quest
 //============================================================ 
 prt_in,38,108,3	script	Teacher	53,{
-	if(countitem("Illusion_Flower") > 0 && countitem("Hinalle") > 0 && countitem("Aloe") > 0 && countitem("Ment") > 0) {
+	if(countitem(710) > 0 && countitem(703) > 0 && countitem(704) > 0 && countitem(708) > 0) {
 		mes "[Teacher]";
 		mes "My God! The Flower you are holding...";
 		next;
@@ -164,12 +165,12 @@ prt_in,38,108,3	script	Teacher	53,{
 				mes "If you give them to me... I... I will give my precious item...";
 				close;
 			case 2:
-				if(countitem("Illusion_Flower") > 0 && countitem("Hinalle") > 0 && countitem("Aloe") > 0 && countitem("Ment") > 0) {
-					delitem "Illusion_Flower",1;
-					delitem "Hinalle",1;
-					delitem "Aloe",1;
-					delitem "Ment",1;
-					getitem "Ph.D_Hat",1;
+				if(countitem(710) > 0 && countitem(703) > 0 && countitem(704) > 0 && countitem(708) > 0) {
+					delitem 710,1;
+					delitem 703,1;
+					delitem 704,1;
+					delitem 708,1;
+					getitem 5012,1;
 					mes "[Teacher]";
 					mes "Thank you so much! First time in my life someone is nice to me!";
 					mes "I will give you my precious item like I promised you.";

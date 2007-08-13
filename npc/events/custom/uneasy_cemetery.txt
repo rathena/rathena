@@ -84,9 +84,9 @@ L_Undead_Walk:
 	next;
 	menu "Yes, have all my Holy Water!",-, "Nope, I need it.",M_NO, "I don't have any.",M_DONT_HAVE;
 
-	if ( countitem("Holy_Water")<1 ) goto M_DONT_HAVE;
-	set $UNEASY_BL,$UNEASY_BL-countitem("Holy_Water");
-	delitem "Holy_Water",countitem("Holy_Water");
+	if ( countitem(523)<1 ) goto M_DONT_HAVE;
+	set $UNEASY_BL,$UNEASY_BL-countitem(523);
+	delitem 523,countitem(523);
 
 	if ( $UNEASY_BL > 0 ) goto L_NEED_MORE;
 //set quiet days!!! no more undead for this period!

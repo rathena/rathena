@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5a
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -15,6 +15,7 @@
 //= 1.3 Fixed exploits [Lupus]
 //= 1.4 Removed Duplicates [Silent]
 //= 1.5 Updated Dialogs from "Pretend Murdered Quest" [Samuray22]
+//= 1.5a replaced item "names" with item id. [Lupus]
 //============================================================ 
 
 
@@ -23,7 +24,7 @@
 //				Pretend Murdered quest
 //==========================================================================================//
 payon,154,170,4	script	Granny	78,{
-	if(countitem("Skirt_Of_Virgin") > 3 ) {
+	if(countitem(1049) > 3 ) {
 		mes "[Granny in Payon]";
 		mes "Hey... Is this the item for Skirt of Virgin tHat my children will wear for the coming festival...";
 		mes "Could you give me some ^3355FF' Skirt of Virgin '^000000 for young girl... I need four of it... please ?";
@@ -31,7 +32,7 @@ payon,154,170,4	script	Granny	78,{
 		next;
 		switch(select( "Give it to her.","No way!")) {
 		case 1:
-			delitem "Skirt_Of_Virgin",4;
+			delitem 1049,4;
 			mes "[Granny in Payon]";
 			mes "Uh-uh... Thank you very much! Now I can make Skirt of Virgin for my children.";
 			mes "Hey... Oh! Yeah! I was in a stage play when I was young...";
@@ -40,7 +41,7 @@ payon,154,170,4	script	Granny	78,{
 			mes "[Granny in Payon]";
 			mes "Take it if you like it... please!";
 			mes "Good bye! Nice meeting you...";
-			getitem "Pretend_Murdered",1;
+			getitem 2293,1;
 			close;
 		case 2:
 			mes "[Granny in Payon]";
@@ -279,5 +280,4 @@ payon_in01,56,12,4	script	Young Man#12	89,{
 		mes "[Young Man]";
 		mes "Fine then.....";
 		close;
-
 }

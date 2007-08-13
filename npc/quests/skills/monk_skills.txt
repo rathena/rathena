@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen, Samuray22
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.4a
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3800+
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.3a fixed an item ID typo, thx 2Spiritual Kid
 //= 1.3b Splitted into different files [DracoRPG]
 //= 1.4 Updated to the official one. [Samuray22]
+//= 1.4a replaced item "names" with item id. [Lupus]
 //============================================================
 
 //============================================================
@@ -348,7 +349,7 @@ prt_monk,129,263,3	script	Monk	823,{
 			mes "while travelling, feel free to";
 			mes "return and tell me.";
 			close;
-		} else if(MONK_SK == 4 && countitem("Stem") > 19 && countitem("Shoot") > 2) {
+		} else if(MONK_SK == 4 && countitem(905) > 19 && countitem(711) > 2) {
 			mes "[Monk]";
 			mes "...Stubborn fool.";
 			mes "Over 20 stems and 3 Shoots.";
@@ -371,8 +372,8 @@ prt_monk,129,263,3	script	Monk	823,{
 			mes "used properly and the";
 			mes "knowledge goes to waste.";
 			next;
-			delitem "Stem",20;
-			delitem "Shoot", 3;
+			delitem 905,20;
+			delitem 711, 3;
 			set MONK_SK, 5;
 			mes "[Monk]";
 			mes "Hmm... you still want to learn?";

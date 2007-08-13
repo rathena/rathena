@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen, Samuray22
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.4a
 //===== Compatible With: ===================================== 
 //= eAthena Revision 3800+
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.3a fixed an item ID typo, thx 2Spiritual Kid
 //= 1.3b Splitted into different files [DracoRPG]
 //= 1.4 Updated to the Official One. [Samuray22]
+//= 1.4a replaced item "names" with item id [Lupus]
 //============================================================
 
 //============================================================
@@ -54,7 +55,7 @@ prt_in,85,99,6	script	Aesop	734,{
 		} else if(KNGT_SK == 8) {
 			set KNGT_SK, 9;
 			goto K_Learn;
-		} else if(KNGT_SK == 7 && countitem("Candy_Striper") > 4 && countitem("Witherless_Rose") > 2) {
+		} else if(KNGT_SK == 7 && countitem(530) > 4 && countitem(748) > 2) {
 			mes "[Aesop]";
 			mes "...The Candy cane and Witherless Rose";
 			mes "you brought, can you please";
@@ -93,8 +94,8 @@ prt_in,85,99,6	script	Aesop	734,{
 				mes "In return, I present you";
 				mes "a skill I discovered in my days.";
 				next;
-				delitem "Candy_Striper", 5;
-				delitem "Witherless_Rose", 3;
+				delitem 530, 5;
+				delitem 748, 3;
 				set KNGT_SK, 8;
 				mes "[Aesop]";
 				mes "It's not much, but";
