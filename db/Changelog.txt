@@ -43,6 +43,9 @@
 	Still need proper rates for most 11.3 Equipment that don't have their +rates/Status Infliction rates clearly defined.
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 ========================
+08/13
+	* Fixed some typos thanks to Christian [Playtester]
+	- also reduced aftercast delay of NJ_ISSEN
 08/12
 	* Resolved some issues mentioned above [Playtester]
 	* Updated the mapcache with data for moscovia maps
