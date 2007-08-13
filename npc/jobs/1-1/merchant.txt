@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.9
+//= 1.9a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -22,6 +22,7 @@
 //= 1.8 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=	No longer uses function "F_ToHigh"
 //= 1.9 Bugfixes, thanks to Barron-Monster. [L0ne_W0lf]
+//= 1.9a Added a missing next; (Barron-Monster) [L0ne_W0lf]
 //============================================================ 
 
 alberta_in,53,43,6	script	Merchant#mer	86,{
@@ -215,6 +216,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 		}
 		else if (job_merchant_q2 == 7 || job_merchant_q2 == 8) {
 			mes "First, get the package from the storehouse, and then give it to the Kafra Employee stationed on Byalan Island. Her name is Blossom.";
+			nextl
 			if (job_merchant_q2 == 7) {
 				mes "[Chief Mahnsoo]";
 				mes "Remember, the package's Serial Number is ^3355FF3318702^000000.";
