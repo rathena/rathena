@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/08/13
+	* Fixed a wrong negative value checking in Schwartzvalt Trilogy quest. [SinSloth]
 	* Changed "item names" into item ID constants, added missing [] and fixed a bug in bs skill quest [Lupus]
 2007/08/12
 	* Rev. 10989 Merchant job quest bug fixes. Thanks to Barron-Monster. [L0ne_W0lf]

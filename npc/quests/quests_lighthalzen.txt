@@ -56,6 +56,7 @@
 //= 3.2 Updated some NPCs regarding Hugel Rebellion Quest. [SinSloth]
 //= 3.2 Removed the NPC "#kiz03-4" as I couldn't find any [L0ne_W0lf]
 //=	reference to it in the Aegis script.
+//= 3.3 Fixed a wrong negative value checking in Schwartzvalt Trilogy quest. [SinSloth]
 //============================================================ 
 
 lighthalzen,1,1,7	script	sneakAddSuber	-1,{
@@ -7250,6 +7251,7 @@ L_Mission:
 			mes "find. I'm sorry that I can't";
 			mes "tell you more, but we've got";
 			mes "to protect our security...";
+			next;
 			mes "[Karl]";
 			mes "And don't worry...";
 			mes "She'll know exactly";
@@ -8645,7 +8647,7 @@ OnTouch:
 	if((lhz_boss > 27) && (lhz_boss < 35))
 	{
 		set @sneaktime,gettimetick(0) % 100;
-		if((@sneaktime < -10) && (@sneaktime > -59))
+		if((@sneaktime > 10) && (@sneaktime < 59))
 		{
 			mes "^3355FFAs you approach";
 			mes "the corner, you can";
