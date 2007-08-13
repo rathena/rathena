@@ -2015,7 +2015,7 @@ Example:
 
 ---------------------------------------
 
-*getpartyleader <party id>,{<type>};
+*getpartyleader(<party id>,{<type>});
 
 This function returns some information about the given party-id's leader.
 When type is ommitted, the default information retrieved is the leader's name.
