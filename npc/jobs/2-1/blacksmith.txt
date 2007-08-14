@@ -7,7 +7,7 @@
 //= Optimized and further edited by kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: =====================================
-//= 2.4
+//= 2.4b
 //===== Compatible With: =====================================
 //= eAthena  SVN
 //===== Description: =========================================
@@ -31,6 +31,7 @@
 //= 2.3 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.4 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
 //= 2.4a Changed a BaseJob to baseclass. [L0ne_W0lf]
+//= 2.4b Further bug fixes with teh hel of Barron-Monster. [L0ne_W0lf]
 //==============================================================
 
 ein_in01,18,28,4	script	Guildsman#BLS	731,{
@@ -580,7 +581,7 @@ L_AskQuestions:
 			mes "everything that";
 			mes "I requested?";
 			next;
-			if (countitem(.@items[0]) > .@items[1] && countitem(.@items[2]) > .@items[3] && countitem(.@items[4]) > .@items[5] && countitem(.@items[6]) > .@items[7]) {
+			if (countitem(.@items[0]) >= .@items[1] && countitem(.@items[2]) >= .@items[3] && countitem(.@items[4]) >= .@items[5] && countitem(.@items[6]) >= .@items[7]) {
 				mes "[Geschupenschte]";
 				mes "Wait...";
 				mes "Didn't I tell you";
@@ -593,7 +594,7 @@ L_AskQuestions:
 				mes "Now, just give me a second.";
 				next;
 				mes "[Geschupenschte]";
-				mes "Oh, you should make sure that you are not carrying ^FF0000more than one "+getitemname(.@items960)+"^000000, you should really only have an "+getitemname(.@items960)+" that you bought from an NPC shop in your inventory.";
+				mes "Oh, you should make sure that you are not carrying ^FF0000more than one "+getitemname(.@items[6])+"^000000, you should really only have an "+getitemname(.@items[6])+" that you bought from an NPC shop in your inventory.";
 				next;
 				if (select("Oh, could you give me a second?:Oh, I brought what you asked for.") == 1) {
 					mes "[Geschupenschte]";

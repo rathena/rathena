@@ -16,7 +16,7 @@
 //============================================================ 
 
 valkyrie,44,50,5	script	MasterSmith#Valkyrie	731,{
-	if (ADVO == 0 || Upper != 1) {
+	if (ADVJOB == 0 || Upper != 1) {
 		set .@karma_d,rand(1,10);
 		if (.@karma_d > 4) {
 			mes "[MasterSmith]";
