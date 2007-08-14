@@ -4,6 +4,21 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/08/13
+	* Modified map_foreachinrange so that you can also specify the max length
+	  of the path to use. The max_count field in the skill_db is used to specify
+	  this range for path-type skills (Sharpshooting, Kamaitachi and the NPC
+	  Breath skills.
+	* Implemented the 'new' NPC skills described here:
+	  http://ro.doddlercon.com/wiki/index.php?title=Monster_Skills . It is mostly
+	  complete, but the new status changes (slow cast, critical wounds, etc)
+	  don't have any visual effects yet (icon or opt changes? I don't know if
+	  they should have). Also I could not find the unit_id for Evil Land, so it
+	  looks just like Sanctuary for now. Apart from those, the only skills which
+	  I couldn't get to display properly are the Breath skills (with the
+	  exception of Fire Breath).
+	* Corrected gtb_sc_immunity setting not taking effect if your block value was
+	  the same (that is, if the config said 30%, then you would only get status
+	  change immunity at 31%, nor 30%) [Skotlex]
 	* Fixed a small error in the script_commands documentation about getpartyleader. [Paradox924X]
 	* Corrected skill-based hp/sp regen, expect slight increase [ultramage]
 2007/08/10

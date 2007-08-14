@@ -185,6 +185,7 @@ int	skill_get_unit_flag( int id );
 int	skill_get_unit_target( int id );
 int	skill_tree_get_max( int id, int b_class );	// Celest
 const char*	skill_get_name( int id ); 	// [Skotlex]
+const char*	skill_get_desc( int id ); 	// [Skotlex]
 
 int skill_isammotype(TBL_PC *sd, int skill);
 int skill_castend_id( int tid, unsigned int tick, int id,int data );
@@ -242,7 +243,7 @@ void skill_identify(struct map_session_data *sd,int idx);
 void skill_weaponrefine(struct map_session_data *sd,int idx); // [Celest]
 int skill_autospell(struct map_session_data *md,int skillid);
 
-int skill_calc_heal(struct block_list *bl, int skill_lv);
+int skill_calc_heal(struct block_list *src, struct block_list *target, int skill_lv);
 
 int skill_check_cloaking(struct block_list *bl, struct status_change *sc);
 
@@ -852,6 +853,35 @@ enum _skill {
 	NJ_KAMAITACHI,
 	NJ_NEN,
 	NJ_ISSEN,
+
+	NPC_EARTHQUAKE = 653,
+	NPC_FIREBREATH,
+	NPC_ICEBREATH,
+	NPC_THUNDERBREATH,
+	NPC_ACIDBREATH,
+	NPC_DARKNESSBREATH,
+	NPC_DRAGONFEAR,
+	NPC_BLEEDING,
+	NPC_PULSESTRIKE,
+	NPC_HELLJUDGEMENT,
+	NPC_WIDESILENCE,
+	NPC_WIDEFREEZE,
+	NPC_WIDEBLEEDING,
+	NPC_WIDESTONE,
+	NPC_WIDECONFUSE,
+	NPC_WIDESLEEP,
+	NPC_WIDESIGHT,
+	NPC_EVILLAND,
+	NPC_MAGICMIRROR,
+	NPC_SLOWCAST,
+	NPC_CRITICALWOUND,
+	NPC_EXPULSION,
+	NPC_STONESKIN,
+	NPC_ANTIMAGIC,
+	NPC_WIDECURSE,
+	NPC_WIDESTUN,
+	NPC_VAMPIRE_GIFT,
+	NPC_WIDESOULDRAIN,
 
 	KN_CHARGEATK = 1001,
 	CR_SHRINK,

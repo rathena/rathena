@@ -1035,7 +1035,7 @@ int map_foreachincell(int (*func)(struct block_list*,va_list), int m, int x, int
 /*============================================================
 * For checking a path between two points (x0, y0) and (x1, y1)
 *------------------------------------------------------------*/
-int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y0,int x1,int y1,int range,int type,...)
+int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y0,int x1,int y1,int range,int length, int type,...)
 {
 	int returnCount =0;  //total sum of returned values of func() [Skotlex]
 //////////////////////////////////////////////////////////////
@@ -1077,7 +1077,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 	struct block_list *bl;
 	int c, bx, by;
 	//method specific variables
-	int magnitude2; //The square of the magnitude
+	int magnitude2, len_limit; //The square of the magnitude
 	int k, xi, yi, xu, yu;
 	int mx0 = x0, mx1 = x1, my0 = y0, my1 = y1;
 	
@@ -1089,6 +1089,18 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 		
 	va_start(ap,type);
 
+	len_limit = magnitude2 = MAGNITUDE2(x0,y0, x1,y1);
+	if (magnitude2 < 1) //Same begin and ending point, can't trace path.
+		return 0;
+
+	if (length)
+	{	//Adjust final position to fit in the given area.
+		//TODO: Find an alternate method which does not requires a square root calculation.
+		k = sqrt(magnitude2);
+		mx1 = x0 + (x1 - x0)*length/k;
+		my1 = y0 + (y1 - y0)*length/k;
+		len_limit = MAGNITUDE2(x0,y0, mx1,my1);
+	}
 	//Expand target area to cover range.
 	if (mx0 > mx1)
 	{
@@ -1127,9 +1139,6 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 	if (my1 >= map[m].ys) my1 = map[m].ys-1;
 	
 	range*=range<<8; //Values are shifted later on for higher precision using int math.
-	magnitude2 = MAGNITUDE2(x0,y0, x1,y1);
-	if (magnitude2 < 1) //Same begin and ending point, can't trace path.
-		return 0;
 	
 	if (type & ~BL_MOB)
 		for (by = my0 / BLOCK_SIZE; by <= my1 / BLOCK_SIZE; by++) {
@@ -1143,7 +1152,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 						yi = bl->y;
 					
 						k = (xi-x0)*(x1-x0) + (yi-y0)*(y1-y0);
-						if (k < 0 || k > magnitude2) //Since more skills use this, check for ending point as well.
+						if (k < 0 || k > len_limit) //Since more skills use this, check for ending point as well.
 							continue;
 					
 						//All these shifts are to increase the precision of the intersection point and distance considering how it's
@@ -1175,7 +1184,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 						xi = bl->x;
 						yi = bl->y;
 						k = (xi-x0)*(x1-x0) + (yi-y0)*(y1-y0);
-						if (k < 0 || k > magnitude2)
+						if (k < 0 || k > len_limit)
 							continue;
 					
 						k = (k<<4)/magnitude2; //k will be between 1~16 instead of 0~1

@@ -42,591 +42,620 @@
 
 int skill_names_id[MAX_SKILL_DB];
 const struct skill_name_db skill_names[] = {
- { AC_CHARGEARROW, "AC_CHARGEARROW", "Arrow_Repel" } ,
- { AC_CONCENTRATION, "AC_CONCENTRATION", "Improve_Concentration" } ,
- { AC_DOUBLE, "AC_DOUBLE", "Double_Strafe" } ,
- { AC_MAKINGARROW, "AC_MAKINGARROW", "Arrow_Crafting" } ,
- { AC_OWL, "AC_OWL", "Owl's_Eye" } ,
- { AC_SHOWER, "AC_SHOWER", "Arrow_Shower" } ,
- { AC_VULTURE, "AC_VULTURE", "Vulture's_Eye" } ,
+ { AC_CHARGEARROW, "AC_CHARGEARROW", "Arrow Repel" } ,
+ { AC_CONCENTRATION, "AC_CONCENTRATION", "Improve Concentration" } ,
+ { AC_DOUBLE, "AC_DOUBLE", "Double Strafe" } ,
+ { AC_MAKINGARROW, "AC_MAKINGARROW", "Arrow Crafting" } ,
+ { AC_OWL, "AC_OWL", "Owl's Eye" } ,
+ { AC_SHOWER, "AC_SHOWER", "Arrow Shower" } ,
+ { AC_VULTURE, "AC_VULTURE", "Vulture's Eye" } ,
  { ALL_RESURRECTION, "ALL_RESURRECTION", "Resurrection" } ,
  { AL_ANGELUS, "AL_ANGELUS", "Angelus" } ,
  { AL_BLESSING, "AL_BLESSING", "Blessing" } ,
- { AL_CRUCIS, "AL_CRUCIS", "Signum_Crusis" } ,
+ { AL_CRUCIS, "AL_CRUCIS", "Signum Crusis" } ,
  { AL_CURE, "AL_CURE", "Cure" } ,
- { AL_DECAGI, "AL_DECAGI", "Decrease_AGI" } ,
- { AL_DEMONBANE, "AL_DEMONBANE", "Demon_Bane" } ,
- { AL_DP, "AL_DP", "Divine_Protection" } ,
+ { AL_DECAGI, "AL_DECAGI", "Decrease AGI" } ,
+ { AL_DEMONBANE, "AL_DEMONBANE", "Demon Bane" } ,
+ { AL_DP, "AL_DP", "Divine Protection" } ,
  { AL_HEAL, "AL_HEAL", "Heal" } ,
- { AL_HOLYLIGHT, "AL_HOLYLIGHT", "Holy_Light" } ,
- { AL_HOLYWATER, "AL_HOLYWATER", "Aqua_Benedicta" } ,
- { AL_INCAGI, "AL_INCAGI", "Increase_AGI" } ,
+ { AL_HOLYLIGHT, "AL_HOLYLIGHT", "Holy Light" } ,
+ { AL_HOLYWATER, "AL_HOLYWATER", "Aqua Benedicta" } ,
+ { AL_INCAGI, "AL_INCAGI", "Increase AGI" } ,
  { AL_PNEUMA, "AL_PNEUMA", "Pneuma" } ,
  { AL_RUWACH, "AL_RUWACH", "Ruwach" } ,
  { AL_TELEPORT, "AL_TELEPORT", "Teleport" } ,
- { AL_WARP, "AL_WARP", "Warp_Portal" } ,
- { AM_ACIDTERROR, "AM_ACIDTERROR", "Acid_Terror" } ,
- { AM_AXEMASTERY, "AM_AXEMASTERY", "Axe_Mastery" } ,
- { AM_BERSERKPITCHER, "AM_BERSERKPITCHER", "Aid_Berserk_Potion" } ,
+ { AL_WARP, "AL_WARP", "Warp Portal" } ,
+ { AM_ACIDTERROR, "AM_ACIDTERROR", "Acid Terror" } ,
+ { AM_AXEMASTERY, "AM_AXEMASTERY", "Axe Mastery" } ,
+ { AM_BERSERKPITCHER, "AM_BERSERKPITCHER", "Aid Berserk Potion" } ,
  { AM_BIOETHICS, "AM_BIOETHICS", "Bioethics" } ,
- { AM_CALLHOMUN, "AM_CALLHOMUN", "Call_Homunculus" } ,
- { AM_CANNIBALIZE, "AM_CANNIBALIZE", "Summon_Flora" } ,
- { AM_CP_ARMOR, "AM_CP_ARMOR", "Synthetic_Armor" } ,
- { AM_CP_HELM, "AM_CP_HELM", "Biochemical_Helm" } ,
- { AM_CP_SHIELD, "AM_CP_SHIELD", "Synthetized_Shield" } ,
- { AM_CP_WEAPON, "AM_CP_WEAPON", "Alchemical_Weapon" } ,
+ { AM_CALLHOMUN, "AM_CALLHOMUN", "Call Homunculus" } ,
+ { AM_CANNIBALIZE, "AM_CANNIBALIZE", "Summon Flora" } ,
+ { AM_CP_ARMOR, "AM_CP_ARMOR", "Synthetic Armor" } ,
+ { AM_CP_HELM, "AM_CP_HELM", "Biochemical Helm" } ,
+ { AM_CP_SHIELD, "AM_CP_SHIELD", "Synthetized Shield" } ,
+ { AM_CP_WEAPON, "AM_CP_WEAPON", "Alchemical Weapon" } ,
  { AM_CULTIVATION, "AM_CULTIVATION", "Cultivation" } ,
  { AM_DEMONSTRATION, "AM_DEMONSTRATION", "Bomb" } ,
- { AM_LEARNINGPOTION, "AM_LEARNINGPOTION", "Potion_Research" } ,
- { AM_PHARMACY, "AM_PHARMACY", "Prepare_Potion" } ,
- { AM_POTIONPITCHER, "AM_POTIONPITCHER", "Aid_Potion" } ,
+ { AM_LEARNINGPOTION, "AM_LEARNINGPOTION", "Potion Research" } ,
+ { AM_PHARMACY, "AM_PHARMACY", "Prepare Potion" } ,
+ { AM_POTIONPITCHER, "AM_POTIONPITCHER", "Aid Potion" } ,
  { AM_REST, "AM_REST", "Vaporize" } ,
- { AM_RESURRECTHOMUN, "AM_RESURRECTHOMUN", "Homunculus_Resurrection" } ,
- { AM_SPHEREMINE, "AM_SPHEREMINE", "Summon_Marine_Sphere" } ,
- { AM_TWILIGHT1, "AM_TWILIGHT1", "Twilight_Pharmacy_1" } ,
- { AM_TWILIGHT2, "AM_TWILIGHT2", "Twilight_Pharmacy_2" } ,
- { AM_TWILIGHT3, "AM_TWILIGHT3", "Twilight_Pharmacy_3" } ,
- { ASC_BREAKER, "ASC_BREAKER", "Soul_Destroyer" } ,
- { ASC_CDP, "ASC_CDP", "Create_Deadly_Poison" } ,
- { ASC_EDP, "ASC_EDP", "Enchant_Deadly_Poison" } ,
- { ASC_KATAR, "ASC_KATAR", "Advanced_Katar_Mastery" } ,
- { ASC_METEORASSAULT, "ASC_METEORASSAULT", "Meteor_Assault" } ,
+ { AM_RESURRECTHOMUN, "AM_RESURRECTHOMUN", "Homunculus Resurrection" } ,
+ { AM_SPHEREMINE, "AM_SPHEREMINE", "Summon Marine Sphere" } ,
+ { AM_TWILIGHT1, "AM_TWILIGHT1", "Twilight Pharmacy 1" } ,
+ { AM_TWILIGHT2, "AM_TWILIGHT2", "Twilight Pharmacy 2" } ,
+ { AM_TWILIGHT3, "AM_TWILIGHT3", "Twilight Pharmacy 3" } ,
+ { ASC_BREAKER, "ASC_BREAKER", "Soul Destroyer" } ,
+ { ASC_CDP, "ASC_CDP", "Create Deadly Poison" } ,
+ { ASC_EDP, "ASC_EDP", "Enchant Deadly Poison" } ,
+ { ASC_KATAR, "ASC_KATAR", "Advanced Katar Mastery" } ,
+ { ASC_METEORASSAULT, "ASC_METEORASSAULT", "Meteor Assault" } ,
  { AS_CLOAKING, "AS_CLOAKING", "Cloaking" } ,
- { AS_ENCHANTPOISON, "AS_ENCHANTPOISON", "Enchant_Poison" } ,
+ { AS_ENCHANTPOISON, "AS_ENCHANTPOISON", "Enchant Poison" } ,
  { AS_GRIMTOOTH, "AS_GRIMTOOTH", "Grimtooth" } ,
- { AS_KATAR, "AS_KATAR", "Katar_Mastery" } ,
- { AS_LEFT, "AS_LEFT", "Lefthand_Mastery" } ,
- { AS_POISONREACT, "AS_POISONREACT", "Poison_React" } ,
- { AS_RIGHT, "AS_RIGHT", "Righthand_Mastery" } ,
- { AS_SONICACCEL, "AS_SONICACCEL", "Sonic_Acceleration" } ,
- { AS_SONICBLOW, "AS_SONICBLOW", "Sonic_Blow" } ,
- { AS_SPLASHER, "AS_SPLASHER", "Venom_Splasher" } ,
- { AS_VENOMDUST, "AS_VENOMDUST", "Venom_Dust" } ,
- { AS_VENOMKNIFE, "AS_VENOMKNIFE", "Throw_Venom_Knife" } ,
- { BA_APPLEIDUN, "BA_APPLEIDUN", "Song_of_Lutie" } ,
- { BA_ASSASSINCROSS, "BA_ASSASSINCROSS", "Impressive_Riff" } ,
- { BA_DISSONANCE, "BA_DISSONANCE", "Unchained_Serenade" } ,
- { BA_FROSTJOKE, "BA_FROSTJOKE", "Unbarring_Octave" } ,
- { BA_MUSICALLESSON, "BA_MUSICALLESSON", "Music_Lessons" } ,
- { BA_MUSICALSTRIKE, "BA_MUSICALSTRIKE", "Melody_Strike" } ,
- { BA_PANGVOICE, "BA_PANGVOICE", "Pang_Voice" } ,
- { BA_POEMBRAGI, "BA_POEMBRAGI", "Magic_Strings" } ,
- { BA_WHISTLE, "BA_WHISTLE", "Perfect_Tablature" } ,
+ { AS_KATAR, "AS_KATAR", "Katar Mastery" } ,
+ { AS_LEFT, "AS_LEFT", "Lefthand Mastery" } ,
+ { AS_POISONREACT, "AS_POISONREACT", "Poison React" } ,
+ { AS_RIGHT, "AS_RIGHT", "Righthand Mastery" } ,
+ { AS_SONICACCEL, "AS_SONICACCEL", "Sonic Acceleration" } ,
+ { AS_SONICBLOW, "AS_SONICBLOW", "Sonic Blow" } ,
+ { AS_SPLASHER, "AS_SPLASHER", "Venom Splasher" } ,
+ { AS_VENOMDUST, "AS_VENOMDUST", "Venom Dust" } ,
+ { AS_VENOMKNIFE, "AS_VENOMKNIFE", "Throw Venom Knife" } ,
+ { BA_APPLEIDUN, "BA_APPLEIDUN", "Song of Lutie" } ,
+ { BA_ASSASSINCROSS, "BA_ASSASSINCROSS", "Impressive Riff" } ,
+ { BA_DISSONANCE, "BA_DISSONANCE", "Unchained Serenade" } ,
+ { BA_FROSTJOKE, "BA_FROSTJOKE", "Unbarring Octave" } ,
+ { BA_MUSICALLESSON, "BA_MUSICALLESSON", "Music Lessons" } ,
+ { BA_MUSICALSTRIKE, "BA_MUSICALSTRIKE", "Melody Strike" } ,
+ { BA_PANGVOICE, "BA_PANGVOICE", "Pang Voice" } ,
+ { BA_POEMBRAGI, "BA_POEMBRAGI", "Magic Strings" } ,
+ { BA_WHISTLE, "BA_WHISTLE", "Perfect Tablature" } ,
  { BD_ADAPTATION, "BD_ADAPTATION", "Amp" } ,
- { BD_DRUMBATTLEFIELD, "BD_DRUMBATTLEFIELD", "Battle_Theme" } ,
+ { BD_DRUMBATTLEFIELD, "BD_DRUMBATTLEFIELD", "Battle Theme" } ,
  { BD_ENCORE, "BD_ENCORE", "Encore" } ,	
- { BD_ETERNALCHAOS, "BD_ETERNALCHAOS", "Down_Tempo" } ,
- { BD_INTOABYSS, "BD_INTOABYSS", "Power_Cord" } ,
+ { BD_ETERNALCHAOS, "BD_ETERNALCHAOS", "Down Tempo" } ,
+ { BD_INTOABYSS, "BD_INTOABYSS", "Power Cord" } ,
  { BD_LULLABY, "BD_LULLABY", "Lullaby" } ,
- { BD_RICHMANKIM, "BD_RICHMANKIM", "Mental_Sensing" } ,
- { BD_RINGNIBELUNGEN, "BD_RINGNIBELUNGEN", "Harmonic_Lick" } ,
- { BD_ROKISWEIL, "BD_ROKISWEIL", "Classical_Pluck" } ,
- { BD_SIEGFRIED, "BD_SIEGFRIED", "Acoustic_Rhythm" } ,
- { BS_ADRENALINE, "BS_ADRENALINE", "Adrenaline_Rush" } ,
- { BS_ADRENALINE2, "BS_ADRENALINE2", "Advanced_Adrenaline_Rush" } ,
- { BS_AXE, "BS_AXE", "Smith_Axe" } ,
- { BS_DAGGER, "BS_DAGGER", "Smith_Dagger" } ,
- { BS_ENCHANTEDSTONE, "BS_ENCHANTEDSTONE", "Enchantedstone_Craft" } ,
- { BS_FINDINGORE, "BS_FINDINGORE", "Ore_Discovery" } ,
+ { BD_RICHMANKIM, "BD_RICHMANKIM", "Mental Sensing" } ,
+ { BD_RINGNIBELUNGEN, "BD_RINGNIBELUNGEN", "Harmonic Lick" } ,
+ { BD_ROKISWEIL, "BD_ROKISWEIL", "Classical Pluck" } ,
+ { BD_SIEGFRIED, "BD_SIEGFRIED", "Acoustic Rhythm" } ,
+ { BS_ADRENALINE, "BS_ADRENALINE", "Adrenaline Rush" } ,
+ { BS_ADRENALINE2, "BS_ADRENALINE2", "Advanced Adrenaline Rush" } ,
+ { BS_AXE, "BS_AXE", "Smith Axe" } ,
+ { BS_DAGGER, "BS_DAGGER", "Smith Dagger" } ,
+ { BS_ENCHANTEDSTONE, "BS_ENCHANTEDSTONE", "Enchantedstone Craft" } ,
+ { BS_FINDINGORE, "BS_FINDINGORE", "Ore Discovery" } ,
  { BS_GREED, "BS_GREED", "Greed" } ,
- { BS_HAMMERFALL, "BS_HAMMERFALL", "Hammer_Fall" } ,
- { BS_HILTBINDING, "BS_HILTBINDING", "Hilt_Binding" } ,
- { BS_IRON, "BS_IRON", "Iron_Tempering" } ,
- { BS_KNUCKLE, "BS_KNUCKLE", "Smith_Knucklebrace" } ,
- { BS_MACE, "BS_MACE", "Smith_Mace" } ,
- { BS_MAXIMIZE, "BS_MAXIMIZE", "Power_Maximize" } ,
- { BS_ORIDEOCON, "BS_ORIDEOCON", "Oridecon_Research" } ,
+ { BS_HAMMERFALL, "BS_HAMMERFALL", "Hammer Fall" } ,
+ { BS_HILTBINDING, "BS_HILTBINDING", "Hilt Binding" } ,
+ { BS_IRON, "BS_IRON", "Iron Tempering" } ,
+ { BS_KNUCKLE, "BS_KNUCKLE", "Smith Knucklebrace" } ,
+ { BS_MACE, "BS_MACE", "Smith Mace" } ,
+ { BS_MAXIMIZE, "BS_MAXIMIZE", "Power Maximize" } ,
+ { BS_ORIDEOCON, "BS_ORIDEOCON", "Oridecon Research" } ,
  { BS_OVERTHRUST, "BS_OVERTHRUST", "Power-Thrust" } ,
- { BS_REPAIRWEAPON, "BS_REPAIRWEAPON", "Weapon_Repair" } ,
- { BS_SKINTEMPER, "BS_SKINTEMPER", "Skin_Tempering" } ,
- { BS_SPEAR, "BS_SPEAR", "Smith_Spear" } ,
- { BS_STEEL, "BS_STEEL", "Steel_Tempering" } ,
- { BS_SWORD, "BS_SWORD", "Smith_Sword" } ,
- { BS_TWOHANDSWORD, "BS_TWOHANDSWORD", "Smith_Two-handed_Sword" } ,
- { BS_UNFAIRLYTRICK, "BS_UNFAIRLYTRICK", "Unfair_Trick" } ,
- { BS_WEAPONPERFECT, "BS_WEAPONPERFECT", "Weapon_Perfection" } ,
- { BS_WEAPONRESEARCH, "BS_WEAPONRESEARCH", "Weaponry_Research" } ,
- { CG_ARROWVULCAN, "CG_ARROWVULCAN", "Vulcan_Arrow" } ,
- { CG_HERMODE, "CG_HERMODE", "Wand_of_Hermode" } ,
- { CG_LONGINGFREEDOM, "CG_LONGINGFREEDOM", "Longing_for_Freedom" } ,
- { CG_MARIONETTE, "CG_MARIONETTE", "Marionette_Control" } ,
- { CG_MOONLIT, "CG_MOONLIT", "Sheltering_Bliss" } ,
- { CG_TAROTCARD, "CG_TAROTCARD", "Tarot_Card_of_Fate" } ,
- { CH_CHAINCRUSH, "CH_CHAINCRUSH", "Chain_Crush_Combo" } ,
- { CH_PALMSTRIKE, "CH_PALMSTRIKE", "Raging_Palm_Strike" } ,
+ { BS_REPAIRWEAPON, "BS_REPAIRWEAPON", "Weapon Repair" } ,
+ { BS_SKINTEMPER, "BS_SKINTEMPER", "Skin Tempering" } ,
+ { BS_SPEAR, "BS_SPEAR", "Smith Spear" } ,
+ { BS_STEEL, "BS_STEEL", "Steel Tempering" } ,
+ { BS_SWORD, "BS_SWORD", "Smith Sword" } ,
+ { BS_TWOHANDSWORD, "BS_TWOHANDSWORD", "Smith Two-handed Sword" } ,
+ { BS_UNFAIRLYTRICK, "BS_UNFAIRLYTRICK", "Unfair Trick" } ,
+ { BS_WEAPONPERFECT, "BS_WEAPONPERFECT", "Weapon Perfection" } ,
+ { BS_WEAPONRESEARCH, "BS_WEAPONRESEARCH", "Weaponry Research" } ,
+ { CG_ARROWVULCAN, "CG_ARROWVULCAN", "Vulcan Arrow" } ,
+ { CG_HERMODE, "CG_HERMODE", "Wand of Hermode" } ,
+ { CG_LONGINGFREEDOM, "CG_LONGINGFREEDOM", "Longing for Freedom" } ,
+ { CG_MARIONETTE, "CG_MARIONETTE", "Marionette Control" } ,
+ { CG_MOONLIT, "CG_MOONLIT", "Sheltering Bliss" } ,
+ { CG_TAROTCARD, "CG_TAROTCARD", "Tarot Card of Fate" } ,
+ { CH_CHAINCRUSH, "CH_CHAINCRUSH", "Chain Crush Combo" } ,
+ { CH_PALMSTRIKE, "CH_PALMSTRIKE", "Raging Palm Strike" } ,
  { CH_SOULCOLLECT, "CH_SOULCOLLECT", "Zen" } ,
- { CH_TIGERFIST, "CH_TIGERFIST", "Glacier_Fist" } ,
- { CR_ACIDDEMONSTRATION, "CR_ACIDDEMONSTRATION", "Acid_Demonstration" } ,
+ { CH_TIGERFIST, "CH_TIGERFIST", "Glacier Fist" } ,
+ { CR_ACIDDEMONSTRATION, "CR_ACIDDEMONSTRATION", "Acid Demonstration" } ,
  { CR_ALCHEMY, "CR_ALCHEMY", "Alchemy" } ,
  { CR_AUTOGUARD, "CR_AUTOGUARD", "Guard" } ,
- { CR_CULTIVATION, "CR_CULTIVATION", "Plant_Cultivation" } ,
- { CR_DEFENDER, "CR_DEFENDER", "Defending_Aura" } ,
+ { CR_CULTIVATION, "CR_CULTIVATION", "Plant Cultivation" } ,
+ { CR_DEFENDER, "CR_DEFENDER", "Defending Aura" } ,
  { CR_DEVOTION, "CR_DEVOTION", "Sacrifice" } ,
- { CR_FULLPROTECTION, "CR_FULLPROTECTION", "Full_Protection" } ,
- { CR_GRANDCROSS, "CR_GRANDCROSS", "Grand_Cross" } ,
- { CR_HOLYCROSS, "CR_HOLYCROSS", "Holy_Cross" } ,
- { CR_PROVIDENCE, "CR_PROVIDENCE", "Resistant_Souls" } ,
- { CR_REFLECTSHIELD, "CR_REFLECTSHIELD", "Shield_Reflect" } ,
- { CR_SHIELDBOOMERANG, "CR_SHIELDBOOMERANG", "Shield_Boomerang" } ,
+ { CR_FULLPROTECTION, "CR_FULLPROTECTION", "Full Protection" } ,
+ { CR_GRANDCROSS, "CR_GRANDCROSS", "Grand Cross" } ,
+ { CR_HOLYCROSS, "CR_HOLYCROSS", "Holy Cross" } ,
+ { CR_PROVIDENCE, "CR_PROVIDENCE", "Resistant Souls" } ,
+ { CR_REFLECTSHIELD, "CR_REFLECTSHIELD", "Shield Reflect" } ,
+ { CR_SHIELDBOOMERANG, "CR_SHIELDBOOMERANG", "Shield Boomerang" } ,
  { CR_SHIELDCHARGE, "CR_SHIELDCHARGE", "Smite" } ,
  { CR_SHRINK, "CR_SHRINK", "Shrink" } ,
- { CR_SLIMPITCHER, "CR_SLIMPITCHER", "Slim_Pitcher" } ,
- { CR_SPEARQUICKEN, "CR_SPEARQUICKEN", "Spear_Quicken" } ,
- { CR_SYNTHESISPOTION, "CR_SYNTHESISPOTION", "Potion_Synthesis" } ,
+ { CR_SLIMPITCHER, "CR_SLIMPITCHER", "Slim Pitcher" } ,
+ { CR_SPEARQUICKEN, "CR_SPEARQUICKEN", "Spear Quicken" } ,
+ { CR_SYNTHESISPOTION, "CR_SYNTHESISPOTION", "Potion Synthesis" } ,
  { CR_TRUST, "CR_TRUST", "Faith" } ,
- { DC_DANCINGLESSON, "DC_DANCINGLESSON", "Dance_Lessons" } ,
- { DC_DONTFORGETME, "DC_DONTFORGETME", "Slow_Grace" } ,
- { DC_FORTUNEKISS, "DC_FORTUNEKISS", "Lady_Luck" } ,
- { DC_HUMMING, "DC_HUMMING", "Focus_Ballet" } ,
+ { DC_DANCINGLESSON, "DC_DANCINGLESSON", "Dance Lessons" } ,
+ { DC_DONTFORGETME, "DC_DONTFORGETME", "Slow Grace" } ,
+ { DC_FORTUNEKISS, "DC_FORTUNEKISS", "Lady Luck" } ,
+ { DC_HUMMING, "DC_HUMMING", "Focus Ballet" } ,
  { DC_SCREAM, "DC_SCREAM", "Dazzler" } ,
- { DC_SERVICEFORYOU, "DC_SERVICEFORYOU", "Gypsy's_Kiss" } ,
- { DC_THROWARROW, "DC_THROWARROW", "Slinging_Arrow" } ,
- { DC_UGLYDANCE, "DC_UGLYDANCE", "Hip_Shaker" } ,
- { DC_WINKCHARM, "DC_WINKCHARM", "Sexy_Wink" } ,
- { GD_APPROVAL, "GD_APPROVAL", "Official_Guild_Approval" } ,
- { GD_BATTLEORDER, "GD_BATTLEORDER", "Battle_Command" } ,
- { GD_DEVELOPMENT, "GD_DEVELOPMENT", "Permanent_Development" } ,
- { GD_EMERGENCYCALL, "GD_EMERGENCYCALL", "Urgent_Call" } ,
- { GD_EXTENSION, "GD_EXTENSION", "Guild_Extension" } ,
- { GD_GLORYGUILD, "GD_GLORYGUILD", "Glory_of_Guild" } ,
- { GD_GLORYWOUNDS, "GD_GLORYWOUNDS", "Glorious_Wounds" } ,
- { GD_GUARDUP, "GD_GUARDUP", "Strengthen_Guardian" } ,
- { GD_HAWKEYES, "GD_HAWKEYES", "Sharp_Gaze" } ,
- { GD_KAFRACONTRACT, "GD_KAFRACONTRACT", "Contract_with_Kafra" } ,
- { GD_LEADERSHIP, "GD_LEADERSHIP", "Great_Leadership" } ,
+ { DC_SERVICEFORYOU, "DC_SERVICEFORYOU", "Gypsy's Kiss" } ,
+ { DC_THROWARROW, "DC_THROWARROW", "Slinging Arrow" } ,
+ { DC_UGLYDANCE, "DC_UGLYDANCE", "Hip Shaker" } ,
+ { DC_WINKCHARM, "DC_WINKCHARM", "Sexy Wink" } ,
+ { GD_APPROVAL, "GD_APPROVAL", "Official Guild Approval" } ,
+ { GD_BATTLEORDER, "GD_BATTLEORDER", "Battle Command" } ,
+ { GD_DEVELOPMENT, "GD_DEVELOPMENT", "Permanent Development" } ,
+ { GD_EMERGENCYCALL, "GD_EMERGENCYCALL", "Urgent Call" } ,
+ { GD_EXTENSION, "GD_EXTENSION", "Guild Extension" } ,
+ { GD_GLORYGUILD, "GD_GLORYGUILD", "Glory of Guild" } ,
+ { GD_GLORYWOUNDS, "GD_GLORYWOUNDS", "Glorious Wounds" } ,
+ { GD_GUARDUP, "GD_GUARDUP", "Strengthen Guardian" } ,
+ { GD_HAWKEYES, "GD_HAWKEYES", "Sharp Gaze" } ,
+ { GD_KAFRACONTRACT, "GD_KAFRACONTRACT", "Contract with Kafra" } ,
+ { GD_LEADERSHIP, "GD_LEADERSHIP", "Great Leadership" } ,
  { GD_REGENERATION, "GD_REGENERATION", "Regeneration" } ,
  { GD_RESTORE, "GD_RESTORE", "Restoration" } ,
- { GD_SOULCOLD, "GD_SOULCOLD", "Cold_Heart" } ,
+ { GD_SOULCOLD, "GD_SOULCOLD", "Cold Heart" } ,
  { GS_ADJUSTMENT, "GS_ADJUSTMENT", "Adjustment" } ,
- { GS_BULLSEYE, "GS_BULLSEYE", "Bulls_Eye" } ,
- { GS_CHAINACTION, "GS_CHAINACTION", "Chain_Action" } ,
+ { GS_BULLSEYE, "GS_BULLSEYE", "Bulls Eye" } ,
+ { GS_CHAINACTION, "GS_CHAINACTION", "Chain Action" } ,
  { GS_CRACKER, "GS_CRACKER", "Cracker" } ,
  { GS_DESPERADO, "GS_DESPERADO", "Desperado" } ,
  { GS_DISARM, "GS_DISARM", "Disarm" } ,
  { GS_DUST, "GS_DUST", "Dust" } ,
  { GS_FLING, "GS_FLING", "Fling" } ,
- { GS_FULLBUSTER, "GS_FULLBUSTER", "Full_Buster" } ,
- { GS_GATLINGFEVER, "GS_GATLINGFEVER", "Gatling_Fever" } ,
- { GS_GLITTERING, "GS_GLITTERING", "Flip_the_Coin" } ,
- { GS_GROUNDDRIFT, "GS_GROUNDDRIFT", "Ground_Drift" } ,
- { GS_INCREASING, "GS_INCREASING", "Increasing_Accuracy" } ,
- { GS_MADNESSCANCEL, "GS_MADNESSCANCEL", "Madness_Canceler" } ,
- { GS_MAGICALBULLET, "GS_MAGICALBULLET", "Magical_Bullet" } ,
- { GS_PIERCINGSHOT, "GS_PIERCINGSHOT", "Piercing_Shot" } ,
- { GS_RAPIDSHOWER, "GS_RAPIDSHOWER", "Rapid_Shower" } ,
- { GS_SINGLEACTION, "GS_SINGLEACTION", "Single_Action" } ,
- { GS_SNAKEEYE, "GS_SNAKEEYE", "Snake_Eye" } ,
- { GS_SPREADATTACK, "GS_SPREADATTACK", "Spread_Attack" } ,
+ { GS_FULLBUSTER, "GS_FULLBUSTER", "Full Buster" } ,
+ { GS_GATLINGFEVER, "GS_GATLINGFEVER", "Gatling Fever" } ,
+ { GS_GLITTERING, "GS_GLITTERING", "Flip the Coin" } ,
+ { GS_GROUNDDRIFT, "GS_GROUNDDRIFT", "Ground Drift" } ,
+ { GS_INCREASING, "GS_INCREASING", "Increasing Accuracy" } ,
+ { GS_MADNESSCANCEL, "GS_MADNESSCANCEL", "Madness Canceler" } ,
+ { GS_MAGICALBULLET, "GS_MAGICALBULLET", "Magical Bullet" } ,
+ { GS_PIERCINGSHOT, "GS_PIERCINGSHOT", "Piercing Shot" } ,
+ { GS_RAPIDSHOWER, "GS_RAPIDSHOWER", "Rapid Shower" } ,
+ { GS_SINGLEACTION, "GS_SINGLEACTION", "Single Action" } ,
+ { GS_SNAKEEYE, "GS_SNAKEEYE", "Snake Eye" } ,
+ { GS_SPREADATTACK, "GS_SPREADATTACK", "Spread Attack" } ,
  { GS_TRACKING, "GS_TRACKING", "Tracking" } ,
- { GS_TRIPLEACTION, "GS_TRIPLEACTION", "Triple_Action" } ,
+ { GS_TRIPLEACTION, "GS_TRIPLEACTION", "Triple Action" } ,
  { HP_ASSUMPTIO, "HP_ASSUMPTIO", "Assumptio" } ,
  { HP_BASILICA, "HP_BASILICA", "Basilica" } ,
- { HP_MANARECHARGE, "HP_MANARECHARGE", "Mana_Recharge" } ,
+ { HP_MANARECHARGE, "HP_MANARECHARGE", "Mana Recharge" } ,
  { HP_MEDITATIO, "HP_MEDITATIO", "Meditatio" } ,
- { HT_ANKLESNARE, "HT_ANKLESNARE", "Ankle_Snare" } ,
- { HT_BEASTBANE, "HT_BEASTBANE", "Beast_Bane" } ,
- { HT_BLASTMINE, "HT_BLASTMINE", "Blast_Mine" } ,
- { HT_BLITZBEAT, "HT_BLITZBEAT", "Blitz_Beat" } ,
- { HT_CLAYMORETRAP, "HT_CLAYMORETRAP", "Claymore_Trap" } ,
+ { HT_ANKLESNARE, "HT_ANKLESNARE", "Ankle Snare" } ,
+ { HT_BEASTBANE, "HT_BEASTBANE", "Beast Bane" } ,
+ { HT_BLASTMINE, "HT_BLASTMINE", "Blast Mine" } ,
+ { HT_BLITZBEAT, "HT_BLITZBEAT", "Blitz Beat" } ,
+ { HT_CLAYMORETRAP, "HT_CLAYMORETRAP", "Claymore Trap" } ,
  { HT_DETECTING, "HT_DETECTING", "Detect" } ,
- { HT_FALCON, "HT_FALCON", "Falconry_Mastery" } ,
+ { HT_FALCON, "HT_FALCON", "Falconry Mastery" } ,
  { HT_FLASHER, "HT_FLASHER", "Flasher" } ,
- { HT_FREEZINGTRAP, "HT_FREEZINGTRAP", "Freezing_Trap" } ,
- { HT_LANDMINE, "HT_LANDMINE", "Land_Mine" } ,
- { HT_PHANTASMIC, "HT_PHANTASMIC", "Phantasmic_Arrow" } ,
- { HT_POWER, "HT_POWER", "Beast_Strafing" } ,
- { HT_REMOVETRAP, "HT_REMOVETRAP", "Remove_Trap" } ,
+ { HT_FREEZINGTRAP, "HT_FREEZINGTRAP", "Freezing Trap" } ,
+ { HT_LANDMINE, "HT_LANDMINE", "Land Mine" } ,
+ { HT_PHANTASMIC, "HT_PHANTASMIC", "Phantasmic Arrow" } ,
+ { HT_POWER, "HT_POWER", "Beast Strafing" } ,
+ { HT_REMOVETRAP, "HT_REMOVETRAP", "Remove Trap" } ,
  { HT_SANDMAN, "HT_SANDMAN", "Sandman" } ,
- { HT_SHOCKWAVE, "HT_SHOCKWAVE", "Shockwave_Trap" } ,
- { HT_SKIDTRAP, "HT_SKIDTRAP", "Skid_Trap" } ,
- { HT_SPRINGTRAP, "HT_SPRINGTRAP", "Spring_Trap" } ,
- { HT_STEELCROW, "HT_STEELCROW", "Steel_Crow" } ,
- { HT_TALKIEBOX, "HT_TALKIEBOX", "Talkie_Box" } ,
+ { HT_SHOCKWAVE, "HT_SHOCKWAVE", "Shockwave Trap" } ,
+ { HT_SKIDTRAP, "HT_SKIDTRAP", "Skid Trap" } ,
+ { HT_SPRINGTRAP, "HT_SPRINGTRAP", "Spring Trap" } ,
+ { HT_STEELCROW, "HT_STEELCROW", "Steel Crow" } ,
+ { HT_TALKIEBOX, "HT_TALKIEBOX", "Talkie Box" } ,
  { HW_GANBANTEIN, "HW_GANBANTEIN", "Ganbantein" } ,
- { HW_GRAVITATION, "HW_GRAVITATION", "Gravitation_Field" } ,
- { HW_MAGICCRASHER, "HW_MAGICCRASHER", "Stave_Crasher" } ,
- { HW_MAGICPOWER, "HW_MAGICPOWER", "Mystical_Amplification" } ,
- { HW_NAPALMVULCAN, "HW_NAPALMVULCAN", "Napalm_Vulcan" } ,
- { HW_SOULDRAIN, "HW_SOULDRAIN", "Soul_Drain" } ,
+ { HW_GRAVITATION, "HW_GRAVITATION", "Gravitation Field" } ,
+ { HW_MAGICCRASHER, "HW_MAGICCRASHER", "Stave Crasher" } ,
+ { HW_MAGICPOWER, "HW_MAGICPOWER", "Mystical Amplification" } ,
+ { HW_NAPALMVULCAN, "HW_NAPALMVULCAN", "Napalm Vulcan" } ,
+ { HW_SOULDRAIN, "HW_SOULDRAIN", "Soul Drain" } ,
  { ITEM_ENCHANTARMS, "ITEM_ENCHANTARMS", "Weapon Enchantment" },
- { ITM_TOMAHAWK, "ITM_TOMAHAWK", "Tomahawk_Throwing" } ,
- { KN_AUTOCOUNTER, "KN_AUTOCOUNTER", "Counter_Attack" } ,
- { KN_BOWLINGBASH, "KN_BOWLINGBASH", "Bowling_Bash" } ,
- { KN_BRANDISHSPEAR, "KN_BRANDISHSPEAR", "Brandish_Spear" } ,
- { KN_CAVALIERMASTERY, "KN_CAVALIERMASTERY", "Cavalier_Mastery" } ,
- { KN_CHARGEATK, "KN_CHARGEATK", "Charge_Attack" } ,
- { KN_ONEHAND, "KN_ONEHAND", "Onehand_Quicken" } ,
+ { ITM_TOMAHAWK, "ITM_TOMAHAWK", "Tomahawk Throwing" } ,
+ { KN_AUTOCOUNTER, "KN_AUTOCOUNTER", "Counter Attack" } ,
+ { KN_BOWLINGBASH, "KN_BOWLINGBASH", "Bowling Bash" } ,
+ { KN_BRANDISHSPEAR, "KN_BRANDISHSPEAR", "Brandish Spear" } ,
+ { KN_CAVALIERMASTERY, "KN_CAVALIERMASTERY", "Cavalier Mastery" } ,
+ { KN_CHARGEATK, "KN_CHARGEATK", "Charge Attack" } ,
+ { KN_ONEHAND, "KN_ONEHAND", "Onehand Quicken" } ,
  { KN_PIERCE, "KN_PIERCE", "Pierce" } ,
- { KN_RIDING, "KN_RIDING", "Peco_Peco_Ride" } ,
- { KN_SPEARBOOMERANG, "KN_SPEARBOOMERANG", "Spear_Boomerang" } ,
- { KN_SPEARMASTERY, "KN_SPEARMASTERY", "Spear_Mastery" } ,
- { KN_SPEARSTAB, "KN_SPEARSTAB", "Spear_Stab" } ,
- { KN_TWOHANDQUICKEN, "KN_TWOHANDQUICKEN", "Twohand_Quicken" } ,
- { LK_AURABLADE, "LK_AURABLADE", "Aura_Blade" } ,
+ { KN_RIDING, "KN_RIDING", "Peco Peco Ride" } ,
+ { KN_SPEARBOOMERANG, "KN_SPEARBOOMERANG", "Spear Boomerang" } ,
+ { KN_SPEARMASTERY, "KN_SPEARMASTERY", "Spear Mastery" } ,
+ { KN_SPEARSTAB, "KN_SPEARSTAB", "Spear Stab" } ,
+ { KN_TWOHANDQUICKEN, "KN_TWOHANDQUICKEN", "Twohand Quicken" } ,
+ { LK_AURABLADE, "LK_AURABLADE", "Aura Blade" } ,
  { LK_BERSERK, "LK_BERSERK", "Frenzy" } ,
- { LK_CONCENTRATION, "LK_CONCENTRATION", "Spear_Dynamo" } ,
- { LK_HEADCRUSH, "LK_HEADCRUSH", "Traumatic_Blow" } ,
- { LK_JOINTBEAT, "LK_JOINTBEAT", "Vital_Strike" } ,
+ { LK_CONCENTRATION, "LK_CONCENTRATION", "Spear Dynamo" } ,
+ { LK_HEADCRUSH, "LK_HEADCRUSH", "Traumatic Blow" } ,
+ { LK_JOINTBEAT, "LK_JOINTBEAT", "Vital Strike" } ,
  { LK_PARRYING, "LK_PARRYING", "Parry" } ,
- { LK_SPIRALPIERCE, "LK_SPIRALPIERCE", "Clashing_Spiral" } ,
+ { LK_SPIRALPIERCE, "LK_SPIRALPIERCE", "Clashing Spiral" } ,
  { LK_TENSIONRELAX, "LK_TENSIONRELAX", "Relax" } ,
- { MC_CARTREVOLUTION, "MC_CARTREVOLUTION", "Cart_Revolution" } ,
- { MC_CHANGECART, "MC_CHANGECART", "Change_Cart" } ,
+ { MC_CARTREVOLUTION, "MC_CARTREVOLUTION", "Cart Revolution" } ,
+ { MC_CHANGECART, "MC_CHANGECART", "Change Cart" } ,
  { MC_DISCOUNT, "MC_DISCOUNT", "Discount" } ,
- { MC_IDENTIFY, "MC_IDENTIFY", "Item_Appraisal" } ,
- { MC_INCCARRY, "MC_INCCARRY", "Enlarge_Weight_Limit" } ,
- { MC_LOUD, "MC_LOUD", "Crazy_Uproar" } ,
+ { MC_IDENTIFY, "MC_IDENTIFY", "Item Appraisal" } ,
+ { MC_INCCARRY, "MC_INCCARRY", "Enlarge Weight Limit" } ,
+ { MC_LOUD, "MC_LOUD", "Crazy Uproar" } ,
  { MC_MAMMONITE, "MC_MAMMONITE", "Mammonite" } ,
  { MC_OVERCHARGE, "MC_OVERCHARGE", "Overcharge" } ,
  { MC_PUSHCART, "MC_PUSHCART", "Pushcart" } ,
  { MC_VENDING, "MC_VENDING", "Vending" } ,
- { MG_COLDBOLT, "MG_COLDBOLT", "Cold_Bolt" } ,
- { MG_ENERGYCOAT, "MG_ENERGYCOAT", "Energy_Coat" } ,
- { MG_FIREBALL, "MG_FIREBALL", "Fire_Ball" } ,
- { MG_FIREBOLT, "MG_FIREBOLT", "Fire_Bolt" } ,
- { MG_FIREWALL, "MG_FIREWALL", "Fire_Wall" } ,
- { MG_FROSTDIVER, "MG_FROSTDIVER", "Frost_Diver" } ,
- { MG_LIGHTNINGBOLT, "MG_LIGHTNINGBOLT", "Lightening_Bolt" } ,
- { MG_NAPALMBEAT, "MG_NAPALMBEAT", "Napalm_Beat" } ,
- { MG_SAFETYWALL, "MG_SAFETYWALL", "Safety_Wall" } ,
+ { MG_COLDBOLT, "MG_COLDBOLT", "Cold Bolt" } ,
+ { MG_ENERGYCOAT, "MG_ENERGYCOAT", "Energy Coat" } ,
+ { MG_FIREBALL, "MG_FIREBALL", "Fire Ball" } ,
+ { MG_FIREBOLT, "MG_FIREBOLT", "Fire Bolt" } ,
+ { MG_FIREWALL, "MG_FIREWALL", "Fire Wall" } ,
+ { MG_FROSTDIVER, "MG_FROSTDIVER", "Frost Diver" } ,
+ { MG_LIGHTNINGBOLT, "MG_LIGHTNINGBOLT", "Lightening Bolt" } ,
+ { MG_NAPALMBEAT, "MG_NAPALMBEAT", "Napalm Beat" } ,
+ { MG_SAFETYWALL, "MG_SAFETYWALL", "Safety Wall" } ,
  { MG_SIGHT, "MG_SIGHT", "Sight" } ,
- { MG_SOULSTRIKE, "MG_SOULSTRIKE", "Soul_Strike" } ,
- { MG_SRECOVERY, "MG_SRECOVERY", "Increase_SP_Recovery" } ,
- { MG_STONECURSE, "MG_STONECURSE", "Stone_Curse" } ,
+ { MG_SOULSTRIKE, "MG_SOULSTRIKE", "Soul Strike" } ,
+ { MG_SRECOVERY, "MG_SRECOVERY", "Increase SP Recovery" } ,
+ { MG_STONECURSE, "MG_STONECURSE", "Stone Curse" } ,
  { MG_THUNDERSTORM, "MG_THUNDERSTORM", "Thunderstorm" } ,
- { MO_ABSORBSPIRITS, "MO_ABSORBSPIRITS", "Spiritual_Sphere_Absorption" } ,
- { MO_BALKYOUNG, "MO_BALKYOUNG", "Ki_Explosion" } ,
+ { MO_ABSORBSPIRITS, "MO_ABSORBSPIRITS", "Spiritual Sphere Absorption" } ,
+ { MO_BALKYOUNG, "MO_BALKYOUNG", "Ki Explosion" } ,
  { MO_BLADESTOP, "MO_BLADESTOP", "Root" } ,
  { MO_BODYRELOCATION, "MO_BODYRELOCATION", "Snap" } ,
- { MO_CALLSPIRITS, "MO_CALLSPIRITS", "Summon_Spirit_Sphere" } ,
- { MO_CHAINCOMBO, "MO_CHAINCOMBO", "Raging_Quadruple_Blow" } ,
- { MO_COMBOFINISH, "MO_COMBOFINISH", "Raging_Thrust" } ,
+ { MO_CALLSPIRITS, "MO_CALLSPIRITS", "Summon Spirit Sphere" } ,
+ { MO_CHAINCOMBO, "MO_CHAINCOMBO", "Raging Quadruple Blow" } ,
+ { MO_COMBOFINISH, "MO_COMBOFINISH", "Raging Thrust" } ,
  { MO_DODGE, "MO_DODGE", "Flee" } ,
  { MO_EXPLOSIONSPIRITS, "MO_EXPLOSIONSPIRITS", "Fury" } ,
- { MO_EXTREMITYFIST, "MO_EXTREMITYFIST", "Guillotine_Fist" } ,
- { MO_FINGEROFFENSIVE, "MO_FINGEROFFENSIVE", "Throw_Spirit_Sphere" } ,
- { MO_INVESTIGATE, "MO_INVESTIGATE", "Occult_Impaction" } ,
- { MO_IRONHAND, "MO_IRONHAND", "Iron_Fists" } ,
- { MO_KITRANSLATION, "MO_KITRANSLATION", "Ki_Translation" } ,
- { MO_SPIRITSRECOVERY, "MO_SPIRITSRECOVERY", "Spiritual_Cadence" } ,
- { MO_STEELBODY, "MO_STEELBODY", "Mental_Strength" } ,
- { MO_TRIPLEATTACK, "MO_TRIPLEATTACK", "Raging_Trifecta_Blow" } ,
- { NJ_BAKUENRYU, "NJ_BAKUENRYU", "NJ_BAKUENRYU" } ,
- { NJ_BUNSINJYUTSU, "NJ_BUNSINJYUTSU", "NJ_BUNSINJYUTSU" } ,
- { NJ_HUUJIN, "NJ_HUUJIN", "NJ_HUUJIN" } ,
- { NJ_HUUMA, "NJ_HUUMA", "NJ_HUUMA" } ,
- { NJ_HYOUSENSOU, "NJ_HYOUSENSOU", "NJ_HYOUSENSOU" } ,
- { NJ_HYOUSYOURAKU, "NJ_HYOUSYOURAKU", "NJ_HYOUSYOURAKU" } ,
- { NJ_ISSEN, "NJ_ISSEN", "NJ_ISSEN" } ,
- { NJ_KAENSIN, "NJ_KAENSIN", "NJ_KAENSIN" } ,
- { NJ_KAMAITACHI, "NJ_KAMAITACHI", "NJ_KAMAITACHI" } ,
- { NJ_KASUMIKIRI, "NJ_KASUMIKIRI", "NJ_KASUMIKIRI" } ,
- { NJ_KIRIKAGE, "NJ_KIRIKAGE", "NJ_KIRIKAGE" } ,
- { NJ_KOUENKA, "NJ_KOUENKA", "NJ_KOUENKA" } ,
- { NJ_KUNAI, "NJ_KUNAI", "NJ_KUNAI" } ,
- { NJ_NEN, "NJ_NEN", "NJ_NEN" } ,
- { NJ_NINPOU, "NJ_NINPOU", "NJ_NINPOU" } ,
- { NJ_RAIGEKISAI, "NJ_RAIGEKISAI", "NJ_RAIGEKISAI" } ,
- { NJ_SHADOWJUMP, "NJ_SHADOWJUMP", "NJ_SHADOWJUMP" } ,
- { NJ_SUITON, "NJ_SUITON", "NJ_SUITON" } ,
- { NJ_SYURIKEN, "NJ_SYURIKEN", "NJ_SYURIKEN" } ,
- { NJ_TATAMIGAESHI, "NJ_TATAMIGAESHI", "NJ_TATAMIGAESHI" } ,
- { NJ_TOBIDOUGU, "NJ_TOBIDOUGU", "NJ_TOBIDOUGU" } ,
- { NJ_UTSUSEMI, "NJ_UTSUSEMI", "NJ_UTSUSEMI" } ,
- { NJ_ZENYNAGE, "NJ_ZENYNAGE", "NJ_ZENYNAGE" } ,
- { NPC_AGIUP, "NPC_AGIUP", "NPC_AGIUP" } ,
- { NPC_ATTRICHANGE, "NPC_ATTRICHANGE", "NPC_ATTRICHANGE" } ,
- { NPC_BARRIER, "NPC_BARRIER", "NPC_BARRIER" } ,
- { NPC_BLINDATTACK, "NPC_BLINDATTACK", "NPC_BLINDATTACK" } ,
- { NPC_BLOODDRAIN, "NPC_BLOODDRAIN", "NPC_BLOODDRAIN" } ,
- { NPC_ARMORBRAKE, "NPC_ARMORBRAKE", "Break_Armor" } ,
- { NPC_HELMBRAKE, "NPC_HELMBRAKE", "Break_Helm" } ,
- { NPC_SHIELDBRAKE, "NPC_SHIELDBRAKE", "Break_Shield" } ,
- { NPC_WEAPONBRAKER, "NPC_WEAPONBRAKER", "Break_Weapon" } ,
- { NPC_CALLSLAVE, "NPC_CALLSLAVE", "NPC_CALLSLAVE" } ,
- { NPC_CHANGEDARKNESS, "NPC_CHANGEDARKNESS", "NPC_CHANGEDARKNESS" } ,
- { NPC_CHANGEFIRE, "NPC_CHANGEFIRE", "NPC_CHANGEFIRE" } ,
- { NPC_CHANGEGROUND, "NPC_CHANGEGROUND", "NPC_CHANGEGROUND" } ,
- { NPC_CHANGEHOLY, "NPC_CHANGEHOLY", "NPC_CHANGEHOLY" } ,
- { NPC_CHANGEPOISON, "NPC_CHANGEPOISON", "NPC_CHANGEPOISON" } ,
- { NPC_CHANGETELEKINESIS, "NPC_CHANGETELEKINESIS", "NPC_CHANGETELEKINESIS" } ,
- { NPC_CHANGEUNDEAD, "NPC_CHANGEUNDEAD", "NPC_CHANGEUNDEAD" } ,
- { NPC_CHANGEWATER, "NPC_CHANGEWATER", "NPC_CHANGEWATER" } ,
- { NPC_CHANGEWIND, "NPC_CHANGEWIND", "NPC_CHANGEWIND" } ,
- { NPC_COMBOATTACK, "NPC_COMBOATTACK", "NPC_COMBOATTACK" } ,
- { NPC_CRITICALSLASH, "NPC_CRITICALSLASH", "NPC_CRITICALSLASH" } ,
- { NPC_CURSEATTACK, "NPC_CURSEATTACK", "NPC_CURSEATTACK" } ,
- { NPC_DARKBLESSING, "NPC_DARKBLESSING", "NPC_DARKBLESSING" } ,
- { NPC_DARKBREATH, "NPC_DARKBREATH", "NPC_DARKBREATH" } ,
- { NPC_DARKCROSS, "NPC_DARKCROSS", "NPC_DARKCROSS" } ,
- { NPC_DARKNESSATTACK, "NPC_DARKNESSATTACK", "NPC_DARKNESSATTACK" } ,
- { NPC_DARKSTRIKE, "NPC_DARKSTRIKE", "NPC_DARKSTRIKE" } ,
- { NPC_DARKTHUNDER, "NPC_DARKTHUNDER", "NPC_DARKTHUNDER" } ,
- { NPC_DEFENDER, "NPC_DEFENDER", "NPC_DEFENDER" } ,
- { NPC_EMOTION, "NPC_EMOTION", "NPC_EMOTION" } ,
- { NPC_EMOTION_ON, "NPC_EMOTION_ON", "NPC_EMOTION_ON" } ,
- { NPC_ENERGYDRAIN, "NPC_ENERGYDRAIN", "NPC_ENERGYDRAIN" } ,
- { NPC_FIREATTACK, "NPC_FIREATTACK", "NPC_FIREATTACK" } ,
- { NPC_GRANDDARKNESS, "NPC_GRANDDARKNESS", "NPC_GRANDDARKNESS" } ,
- { NPC_GROUNDATTACK, "NPC_GROUNDATTACK", "NPC_GROUNDATTACK" } ,
- { NPC_GUIDEDATTACK, "NPC_GUIDEDATTACK", "NPC_GUIDEDATTACK" } ,
- { NPC_HALLUCINATION, "NPC_HALLUCINATION", "NPC_HALLUCINATION" } ,
- { NPC_HOLYATTACK, "NPC_HOLYATTACK", "NPC_HOLYATTACK" } ,
- { NPC_INVISIBLE, "NPC_INVISIBLE", "NPC_INVISIBLE" } ,
- { NPC_KEEPING, "NPC_KEEPING", "NPC_KEEPING" } ,
- { NPC_LICK, "NPC_LICK", "NPC_LICK" } ,
- { NPC_MAGICALATTACK, "NPC_MAGICALATTACK", "NPC_MAGICALATTACK" } ,
- { NPC_MENTALBREAKER, "NPC_MENTALBREAKER", "NPC_MENTALBREAKER" } ,
- { NPC_METAMORPHOSIS, "NPC_METAMORPHOSIS", "NPC_METAMORPHOSIS" } ,
- { NPC_PETRIFYATTACK, "NPC_PETRIFYATTACK", "NPC_PETRIFYATTACK" } ,
- { NPC_PIERCINGATT, "NPC_PIERCINGATT", "NPC_PIERCINGATT" } ,
- { NPC_POISON, "NPC_POISON", "NPC_POISON" } ,
- { NPC_POISONATTACK, "NPC_POISONATTACK", "NPC_POISONATTACK" } ,
- { NPC_POWERUP, "NPC_POWERUP", "NPC_POWERUP" } ,
- { NPC_PROVOCATION, "NPC_PROVOCATION", "NPC_PROVOCATION" } ,
- { NPC_RANDOMATTACK, "NPC_RANDOMATTACK", "NPC_RANDOMATTACK" } ,
- { NPC_RANDOMMOVE, "NPC_RANDOMMOVE", "NPC_RANDOMMOVE" } ,
- { NPC_RANGEATTACK, "NPC_RANGEATTACK", "NPC_RANGEATTACK" } ,
- { NPC_REBIRTH, "NPC_REBIRTH", "NPC_REBIRTH" } ,
- { NPC_REVENGE, "NPC_REVENGE", "NPC_REVENGE" } ,
- { NPC_RUN, "NPC_RUN", "NPC_RUN" },
- { NPC_SELFDESTRUCTION, "NPC_SELFDESTRUCTION", "Kabooooom!" } ,
- { NPC_SIEGEMODE, "NPC_SIEGEMODE", "NPC_SIEGEMODE" } ,
- { NPC_SILENCEATTACK, "NPC_SILENCEATTACK", "NPC_SILENCEATTACK" } ,
- { NPC_SLEEPATTACK, "NPC_SLEEPATTACK", "NPC_SLEEPATTACK" } ,
- { NPC_SMOKING, "NPC_SMOKING", "NPC_SMOKING" } ,
- { NPC_SPEEDUP, "NPC_SPEEDUP", "NPC_SPEEDUP" } ,
- { NPC_SPLASHATTACK, "NPC_SPLASHATTACK", "NPC_SPLASHATTACK" } ,
- { NPC_STOP, "NPC_STOP", "NPC_STOP" } ,
- { NPC_STUNATTACK, "NPC_STUNATTACK", "NPC_STUNATTACK" } ,
- { NPC_SUICIDE, "NPC_SUICIDE", "NPC_SUICIDE" } ,
- { NPC_SUMMONMONSTER, "NPC_SUMMONMONSTER", "NPC_SUMMONMONSTER" } ,
- { NPC_SUMMONSLAVE, "NPC_SUMMONSLAVE", "NPC_SUMMONSLAVE" } ,
- { NPC_TELEKINESISATTACK, "NPC_TELEKINESISATTACK", "NPC_TELEKINESISATTACK" } ,
- { NPC_TRANSFORMATION, "NPC_TRANSFORMATION", "NPC_TRANSFORMATION" } ,
- { NPC_UNDEADATTACK, "NPC_UNDEADATTACK", "NPC_UNDEADATTACK" } ,
- { NPC_WATERATTACK, "NPC_WATERATTACK", "NPC_WATERATTACK" } ,
- { NPC_WINDATTACK, "NPC_WINDATTACK", "NPC_WINDATTACK" } ,
- { NV_BASIC, "NV_BASIC", "Basic_Skill" } ,
+ { MO_EXTREMITYFIST, "MO_EXTREMITYFIST", "Guillotine Fist" } ,
+ { MO_FINGEROFFENSIVE, "MO_FINGEROFFENSIVE", "Throw Spirit Sphere" } ,
+ { MO_INVESTIGATE, "MO_INVESTIGATE", "Occult Impaction" } ,
+ { MO_IRONHAND, "MO_IRONHAND", "Iron Fists" } ,
+ { MO_KITRANSLATION, "MO_KITRANSLATION", "Ki Translation" } ,
+ { MO_SPIRITSRECOVERY, "MO_SPIRITSRECOVERY", "Spiritual Cadence" } ,
+ { MO_STEELBODY, "MO_STEELBODY", "Mental Strength" } ,
+ { MO_TRIPLEATTACK, "MO_TRIPLEATTACK", "Raging Trifecta Blow" } ,
+ { NJ_BAKUENRYU, "NJ_BAKUENRYU", "Raging Fire Dragon" } ,
+ { NJ_BUNSINJYUTSU, "NJ_BUNSINJYUTSU", "Mirror Image" } ,
+ { NJ_HUUJIN, "NJ_HUUJIN", "Wind Blade" } ,
+ { NJ_HUUMA, "NJ_HUUMA", "Throw Huuma Shuriken" } ,
+ { NJ_HYOUSENSOU, "NJ_HYOUSENSOU", "Spear of Ice" } ,
+ { NJ_HYOUSYOURAKU, "NJ_HYOUSYOURAKU", "Ice Meteor" } ,
+ { NJ_ISSEN, "NJ_ISSEN", "Final Strike" } ,
+ { NJ_KAENSIN, "NJ_KAENSIN", "Crimson Fire Formation" } ,
+ { NJ_KAMAITACHI, "NJ_KAMAITACHI", "Kamaitachi" } ,
+ { NJ_KASUMIKIRI, "NJ_KASUMIKIRI", "Vanishing Slash" } ,
+ { NJ_KIRIKAGE, "NJ_KIRIKAGE", "Shadow Slash" } ,
+ { NJ_KOUENKA, "NJ_KOUENKA", "Crimson Fire Petal" } ,
+ { NJ_KUNAI, "NJ_KUNAI", "Throw Kunai" } ,
+ { NJ_NEN, "NJ_NEN", "Soul" } ,
+ { NJ_NINPOU, "NJ_NINPOU", "Spirit of the Blade" } ,
+ { NJ_RAIGEKISAI, "NJ_RAIGEKISAI", "Lightning Strike of Destruction" } ,
+ { NJ_SHADOWJUMP, "NJ_SHADOWJUMP", "Shadow Leap" } ,
+ { NJ_SUITON, "NJ_SUITON", "Hidden Water" } ,
+ { NJ_SYURIKEN, "NJ_SYURIKEN", "Throw Shuriken" } ,
+ { NJ_TATAMIGAESHI, "NJ_TATAMIGAESHI", "Improvised Defense" } ,
+ { NJ_TOBIDOUGU, "NJ_TOBIDOUGU", "Shuriken Training" } ,
+ { NJ_UTSUSEMI, "NJ_UTSUSEMI", "Cicada Skin Sheeding" } ,
+ { NJ_ZENYNAGE, "NJ_ZENYNAGE", "Zeny Nage" } ,
+ { NPC_ACIDBREATH, "NPC_ACIDBREATH", "Acid Breath" } ,
+ { NPC_AGIUP, "NPC_AGIUP", "Agility UP" } ,
+ { NPC_ANTIMAGIC, "NPC_ANTIMAGIC", "Anti Magic" } ,
+ { NPC_ATTRICHANGE, "NPC_ATTRICHANGE", "Attribute Change" } ,
+ { NPC_BARRIER, "NPC_BARRIER", "Barrier" } ,
+ { NPC_BLEEDING, "NPC_BLEEDING", "Bleeding" } ,
+ { NPC_BLINDATTACK, "NPC_BLINDATTACK", "Blind Attack" } ,
+ { NPC_BLOODDRAIN, "NPC_BLOODDRAIN", "Blood Drain" } ,
+ { NPC_ARMORBRAKE, "NPC_ARMORBRAKE", "Break Armor" } ,
+ { NPC_HELMBRAKE, "NPC_HELMBRAKE", "Break Helm" } ,
+ { NPC_SHIELDBRAKE, "NPC_SHIELDBRAKE", "Break Shield" } ,
+ { NPC_WEAPONBRAKER, "NPC_WEAPONBRAKER", "Break Weapon" } ,
+ { NPC_CALLSLAVE, "NPC_CALLSLAVE", "Recall Slaves" } ,
+ { NPC_CHANGEDARKNESS, "NPC_CHANGEDARKNESS", "Darkness Change" } ,
+ { NPC_CHANGEFIRE, "NPC_CHANGEFIRE", "Fire Change" } ,
+ { NPC_CHANGEGROUND, "NPC_CHANGEGROUND", "Earth Change" } ,
+ { NPC_CHANGEHOLY, "NPC_CHANGEHOLY", "Holy Change" } ,
+ { NPC_CHANGEPOISON, "NPC_CHANGEPOISON", "Poison Change" } ,
+ { NPC_CHANGETELEKINESIS, "NPC_CHANGETELEKINESIS", "Ghost Change" } ,
+ { NPC_CHANGEUNDEAD, "NPC_CHANGEUNDEAD", "Undead Change" } ,
+ { NPC_CHANGEWATER, "NPC_CHANGEWATER", "Water Change" } ,
+ { NPC_CHANGEWIND, "NPC_CHANGEWIND", "Wind Change" } ,
+ { NPC_COMBOATTACK, "NPC_COMBOATTACK", "Combo Attack" } ,
+ { NPC_CRITICALSLASH, "NPC_CRITICALSLASH", "Critical Slash" } ,
+ { NPC_CRITICALWOUND, "NPC_CRITICALWOUND", "Critical Wounds" } ,
+ { NPC_CURSEATTACK, "NPC_CURSEATTACK", "Curse Attack" } ,
+ { NPC_DARKBLESSING, "NPC_DARKBLESSING", "Dark Blessing" } ,
+ { NPC_DARKBREATH, "NPC_DARKBREATH", "Dark Breath" } ,
+ { NPC_DARKCROSS, "NPC_DARKCROSS", "Dark Cross" } ,
+ { NPC_DARKNESSATTACK, "NPC_DARKNESSATTACK", "Shadow Attack" } ,
+ { NPC_DARKNESSBREATH, "NPC_DARKNESSBREATH", "Darkness Breath" } ,
+ { NPC_DARKSTRIKE, "NPC_DARKSTRIKE", "DarkStrike" } ,
+ { NPC_DARKTHUNDER, "NPC_DARKTHUNDER", "DarkThunder" } ,
+ { NPC_DEFENDER, "NPC_DEFENDER", "Defender" } ,
+ { NPC_DRAGONFEAR, "NPC_DRAGONFEAR", "Dragon Fear" } ,
+ { NPC_EARTHQUAKE, "NPC_EARTHQUAKE", "Earthquake" } ,
+ { NPC_EMOTION, "NPC_EMOTION", "Emotion" } ,
+ { NPC_EMOTION_ON, "NPC_EMOTION_ON", "Emotion ON" } ,
+ { NPC_ENERGYDRAIN, "NPC_ENERGYDRAIN", "Energy Drain" } ,
+ { NPC_EVILLAND, "NPC_EVILLAND", "Evil Land" } ,
+ { NPC_EXPULSION, "NPC_EXPULSION", "Expulsion" } ,
+ { NPC_FIREATTACK, "NPC_FIREATTACK", "Fire Attack" } ,
+ { NPC_FIREBREATH, "NPC_FIREBREATH", "Fire Breath" } ,
+ { NPC_GRANDDARKNESS, "NPC_GRANDDARKNESS", "Grand Dark Cross" } ,
+ { NPC_GROUNDATTACK, "NPC_GROUNDATTACK", "Earth Attack" } ,
+ { NPC_GUIDEDATTACK, "NPC_GUIDEDATTACK", "Guided Attack" } ,
+ { NPC_HALLUCINATION, "NPC_HALLUCINATION", "Hallucination" } ,
+ { NPC_HELLJUDGEMENT, "NPC_HELLJUDGEMENT", "Hell's Judgement" } ,
+ { NPC_HOLYATTACK, "NPC_HOLYATTACK", "Holy Attack" } ,
+ { NPC_ICEBREATH, "NPC_ICEBREATH", "Ice Breath" } ,
+ { NPC_INVISIBLE, "NPC_INVISIBLE", "Invisible" } ,
+ { NPC_KEEPING, "NPC_KEEPING", "Keeping" } ,
+ { NPC_LICK, "NPC_LICK", "Lick" } ,
+ { NPC_MAGICALATTACK, "NPC_MAGICALATTACK", "Magical Attack" } ,
+ { NPC_MAGICMIRROR, "NPC_MAGICMIRROR", "Magic Mirror" } ,
+ { NPC_MENTALBREAKER, "NPC_MENTALBREAKER", "Mental Breaker" } ,
+ { NPC_METAMORPHOSIS, "NPC_METAMORPHOSIS", "Metamorphosis" } ,
+ { NPC_PETRIFYATTACK, "NPC_PETRIFYATTACK", "Petrify Attack" } ,
+ { NPC_PIERCINGATT, "NPC_PIERCINGATT", "Piercing Attack" } ,
+ { NPC_POISON, "NPC_POISON", "Poisoning" } ,
+ { NPC_POISONATTACK, "NPC_POISONATTACK", "Poison Attack" } ,
+ { NPC_POWERUP, "NPC_POWERUP", "Power Up" } ,
+ { NPC_PROVOCATION, "NPC_PROVOCATION", "Provocation" } ,
+ { NPC_PULSESTRIKE, "NPC_PULSESTRIKE", "Pulse Strike" } ,
+ { NPC_RANDOMATTACK, "NPC_RANDOMATTACK", "Random Attack" } ,
+ { NPC_RANDOMMOVE, "NPC_RANDOMMOVE", "Random Move" } ,
+ { NPC_RANGEATTACK, "NPC_RANGEATTACK", "Ranged attack" } ,
+ { NPC_REBIRTH, "NPC_REBIRTH", "Rebirth" } ,
+ { NPC_REVENGE, "NPC_REVENGE", "Revenge" } ,
+ { NPC_RUN, "NPC_RUN", "Run" } ,
+ { NPC_SELFDESTRUCTION, "NPC_SELFDESTRUCTION", "Self Destruction" } ,
+ { NPC_SIEGEMODE, "NPC_SIEGEMODE", "Siege Mode" } ,
+ { NPC_SILENCEATTACK, "NPC_SILENCEATTACK", "Silence Attack" } ,
+ { NPC_SLEEPATTACK, "NPC_SLEEPATTACK", "Sleep Attack" } ,
+ { NPC_SLOWCAST, "NPC_SLOWCAST", "Slow Cast" } ,
+ { NPC_SMOKING, "NPC_SMOKING", "Smoking" } ,
+ { NPC_SPEEDUP, "NPC_SPEEDUP", "Speed UP" } ,
+ { NPC_SPLASHATTACK, "NPC_SPLASHATTACK", "Splash Attack" } ,
+ { NPC_STONESKIN, "NPC_STONESKIN", "Stone Skin" } ,
+ { NPC_STOP, "NPC_STOP", "Stop" } ,
+ { NPC_STUNATTACK, "NPC_STUNATTACK", "Stun Attack" } ,
+ { NPC_SUICIDE, "NPC_SUICIDE", "Suicide" } ,
+ { NPC_SUMMONMONSTER, "NPC_SUMMONMONSTER", "Summon Monster" } ,
+ { NPC_SUMMONSLAVE, "NPC_SUMMONSLAVE", "Summon :Slave" } ,
+ { NPC_TELEKINESISATTACK, "NPC_TELEKINESISATTACK", "Ghost Attack" } ,
+ { NPC_THUNDERBREATH, "NPC_THUNDERBREATH", "Thunder Breath" } ,
+ { NPC_TRANSFORMATION, "NPC_TRANSFORMATION", "Transformation" } ,
+ { NPC_UNDEADATTACK, "NPC_UNDEADATTACK", "Undead Attack" } ,
+ { NPC_VAMPIRE_GIFT, "NPC_VAMPIRE_GIFT", "Vampire Gift" } ,
+ { NPC_WATERATTACK, "NPC_WATERATTACK", "Water Attack" } ,
+ { NPC_WIDEBLEEDING, "NPC_WIDEBLEEDING", "Wide Bleeding" } ,
+ { NPC_WIDECONFUSE, "NPC_WIDECONFUSE", "Wide Confusion" } ,
+ { NPC_WIDECURSE, "NPC_WIDECURSE", "Wide Curse" } ,
+ { NPC_WIDEFREEZE, "NPC_WIDEFREEZE", "Wide Freeze" } ,
+ { NPC_WIDESLEEP, "NPC_WIDESLEEP", "Wide Sleep" } ,
+ { NPC_WIDESIGHT, "NPC_WIDESIGHT", "Wide Sight" } ,
+ { NPC_WIDESILENCE, "NPC_WIDESILENCE", "Wide Silence" } ,
+ { NPC_WIDESOULDRAIN, "NPC_WIDESOULDRAIN", "Wide Soul Drain" } ,
+ { NPC_WIDESTONE, "NPC_WIDESTONE", "Wide Petrify" } ,
+ { NPC_WIDESTUN, "NPC_WIDESTUN", "Wide Stun" } ,
+ { NPC_WINDATTACK, "NPC_WINDATTACK", "Wind Attack" } ,
+ { NV_BASIC, "NV_BASIC", "Basic Skill" } ,
  { NV_FIRSTAID, "NV_FIRSTAID", "First Aid" } ,
- { NV_TRICKDEAD, "NV_TRICKDEAD", "Play_Dead" } ,
- { PA_GOSPEL, "PA_GOSPEL", "Battle_Chant" } ,
- { PA_PRESSURE, "PA_PRESSURE", "Gloria_Domini" } ,
- { PA_SACRIFICE, "PA_SACRIFICE", "Martyr's_Reckoning" } ,
- { PA_SHIELDCHAIN, "PA_SHIELDCHAIN", "Shield_Chain" } ,
- { PF_DOUBLECASTING, "PF_DOUBLECASTING", "Double_Casting" } ,
- { PF_FOGWALL, "PF_FOGWALL", "Blinding_Mist" } ,
+ { NV_TRICKDEAD, "NV_TRICKDEAD", "Play Dead" } ,
+ { PA_GOSPEL, "PA_GOSPEL", "Battle Chant" } ,
+ { PA_PRESSURE, "PA_PRESSURE", "Gloria Domini" } ,
+ { PA_SACRIFICE, "PA_SACRIFICE", "Martyr's Reckoning" } ,
+ { PA_SHIELDCHAIN, "PA_SHIELDCHAIN", "Shield Chain" } ,
+ { PF_DOUBLECASTING, "PF_DOUBLECASTING", "Double Casting" } ,
+ { PF_FOGWALL, "PF_FOGWALL", "Blinding Mist" } ,
  { PF_HPCONVERSION, "PF_HPCONVERSION", "Indulge" } ,
  { PF_MEMORIZE, "PF_MEMORIZE", "Foresight" } ,
- { PF_MINDBREAKER, "PF_MINDBREAKER", "Mind_Breaker" } ,
- { PF_SOULBURN, "PF_SOULBURN", "Soul_Siphon" } ,
- { PF_SOULCHANGE, "PF_SOULCHANGE", "Soul_Exhale" } ,
- { PF_SPIDERWEB, "PF_SPIDERWEB", "Fiber_Lock" } ,
+ { PF_MINDBREAKER, "PF_MINDBREAKER", "Mind Breaker" } ,
+ { PF_SOULBURN, "PF_SOULBURN", "Soul Siphon" } ,
+ { PF_SOULCHANGE, "PF_SOULCHANGE", "Soul Exhale" } ,
+ { PF_SPIDERWEB, "PF_SPIDERWEB", "Fiber Lock" } ,
  { PR_ASPERSIO, "PR_ASPERSIO", "Aspersio" } ,
- { PR_BENEDICTIO, "PR_BENEDICTIO", "B.S_Sacramenti" } ,
+ { PR_BENEDICTIO, "PR_BENEDICTIO", "B.S. Sacramenti" } ,
  { PR_GLORIA, "PR_GLORIA", "Gloria" } ,
- { PR_IMPOSITIO, "PR_IMPOSITIO", "Impositio_Manus" } ,
- { PR_KYRIE, "PR_KYRIE", "Kyrie_Eleison" } ,
- { PR_LEXAETERNA, "PR_LEXAETERNA", "Lex_Aeterna" } ,
- { PR_LEXDIVINA, "PR_LEXDIVINA", "Lex_Divina" } ,
- { PR_MACEMASTERY, "PR_MACEMASTERY", "Mace_Mastery" } ,
+ { PR_IMPOSITIO, "PR_IMPOSITIO", "Impositio Manus" } ,
+ { PR_KYRIE, "PR_KYRIE", "Kyrie Eleison" } ,
+ { PR_LEXAETERNA, "PR_LEXAETERNA", "Lex Aeterna" } ,
+ { PR_LEXDIVINA, "PR_LEXDIVINA", "Lex Divina" } ,
+ { PR_MACEMASTERY, "PR_MACEMASTERY", "Mace Mastery" } ,
  { PR_MAGNIFICAT, "PR_MAGNIFICAT", "Magnificat" } ,
- { PR_MAGNUS, "PR_MAGNUS", "Magnus_Exorcismus" } ,
+ { PR_MAGNUS, "PR_MAGNUS", "Magnus Exorcismus" } ,
  { PR_REDEMPTIO, "PR_REDEMPTIO", "Redemptio" } ,
  { PR_SANCTUARY, "PR_SANCTUARY", "Sanctuary" } ,
- { PR_SLOWPOISON, "PR_SLOWPOISON", "Slow_Poison" } ,
- { PR_STRECOVERY, "PR_STRECOVERY", "Status_Recovery" } ,
+ { PR_SLOWPOISON, "PR_SLOWPOISON", "Slow Poison" } ,
+ { PR_STRECOVERY, "PR_STRECOVERY", "Status Recovery" } ,
  { PR_SUFFRAGIUM, "PR_SUFFRAGIUM", "Suffragium" } ,
- { PR_TURNUNDEAD, "PR_TURNUNDEAD", "Turn_Undead" } ,
- { RG_BACKSTAP, "RG_BACKSTAP", "Back_Stab" } ,
+ { PR_TURNUNDEAD, "PR_TURNUNDEAD", "Turn Undead" } ,
+ { RG_BACKSTAP, "RG_BACKSTAP", "Back Stab" } ,
  { RG_CLEANER, "RG_CLEANER", "Remover" } ,
- { RG_CLOSECONFINE, "RG_CLOSECONFINE", "Close_Confine"} ,
+ { RG_CLOSECONFINE, "RG_CLOSECONFINE", "Close Confine"} ,
  { RG_COMPULSION, "RG_COMPULSION", "Haggle" } ,
  { RG_FLAGGRAFFITI, "RG_FLAGGRAFFITI", "Piece" } ,
  { RG_GANGSTER, "RG_GANGSTER", "Slyness" } ,
  { RG_GRAFFITI, "RG_GRAFFITI", "Scribble" } ,
  { RG_INTIMIDATE, "RG_INTIMIDATE", "Snatch" } ,
  { RG_PLAGIARISM, "RG_PLAGIARISM", "Intimidate" } ,
- { RG_RAID, "RG_RAID", "Sightless_Mind" } ,
+ { RG_RAID, "RG_RAID", "Sightless Mind" } ,
  { RG_SNATCHER, "RG_SNATCHER", "Gank" } ,
  { RG_STEALCOIN, "RG_STEALCOIN", "Mug" } ,
- { RG_STRIPARMOR, "RG_STRIPARMOR", "Divest_Armor" } ,
- { RG_STRIPHELM, "RG_STRIPHELM", "Divest_Helm" } ,
- { RG_STRIPSHIELD, "RG_STRIPSHIELD", "Divest_Shield" } ,
- { RG_STRIPWEAPON, "RG_STRIPWEAPON", "Divest_Weapon" } ,
+ { RG_STRIPARMOR, "RG_STRIPARMOR", "Divest Armor" } ,
+ { RG_STRIPHELM, "RG_STRIPHELM", "Divest Helm" } ,
+ { RG_STRIPSHIELD, "RG_STRIPSHIELD", "Divest Shield" } ,
+ { RG_STRIPWEAPON, "RG_STRIPWEAPON", "Divest Weapon" } ,
  { RG_TUNNELDRIVE, "RG_TUNNELDRIVE", "Stalk" } ,
  { SA_ABRACADABRA, "SA_ABRACADABRA", "Hocus-pocus" } ,
- { SA_ADVANCEDBOOK, "SA_ADVANCEDBOOK", "Advanced_Book" } ,
+ { SA_ADVANCEDBOOK, "SA_ADVANCEDBOOK", "Advanced Book" } ,
  { SA_AUTOSPELL, "SA_AUTOSPELL", "Hindsight" } ,
- { SA_CASTCANCEL, "SA_CASTCANCEL", "Cast_Cancel" } ,
- { SA_CLASSCHANGE, "SA_CLASSCHANGE", "Class_Change" } ,
+ { SA_CASTCANCEL, "SA_CASTCANCEL", "Cast Cancel" } ,
+ { SA_CLASSCHANGE, "SA_CLASSCHANGE", "Class Change" } ,
  { SA_COMA, "SA_COMA", "Coma" } ,
- { SA_CREATECON, "SA_CREATECON", "Create_Elemental_Converter" } ,
- { SA_DEATH, "SA_DEATH", "Grim_Reaper" } ,
+ { SA_CREATECON, "SA_CREATECON", "Create Elemental Converter" } ,
+ { SA_DEATH, "SA_DEATH", "Grim Reaper" } ,
  { SA_DELUGE, "SA_DELUGE", "Deluge" } ,
  { SA_DISPELL, "SA_DISPELL", "Dispell" } ,
  { SA_DRAGONOLOGY, "SA_DRAGONOLOGY", "Dragonology" } ,
- { SA_ELEMENTFIRE, "SA_ELEMENTFIRE", "Elemental_Change_Fire" } ,
- { SA_ELEMENTGROUND, "SA_ELEMENTGROUND", "Elemental_Change_Earth" } ,
- { SA_ELEMENTWATER, "SA_ELEMENTWATER", "Elemental_Change_Water" } ,
- { SA_ELEMENTWIND, "SA_ELEMENTWIND", "Elemental_Change_Wind" } ,
- { SA_FLAMELAUNCHER, "SA_FLAMELAUNCHER", "Endow_Blaze" } ,
- { SA_FORTUNE, "SA_FORTUNE", "Gold_Digger" } ,
- { SA_FREECAST, "SA_FREECAST", "Free_Cast" } ,
- { SA_FROSTWEAPON, "SA_FROSTWEAPON", "Endow_Tsunami" } ,
+ { SA_ELEMENTFIRE, "SA_ELEMENTFIRE", "Elemental Change Fire" } ,
+ { SA_ELEMENTGROUND, "SA_ELEMENTGROUND", "Elemental Change Earth" } ,
+ { SA_ELEMENTWATER, "SA_ELEMENTWATER", "Elemental Change Water" } ,
+ { SA_ELEMENTWIND, "SA_ELEMENTWIND", "Elemental Change Wind" } ,
+ { SA_FLAMELAUNCHER, "SA_FLAMELAUNCHER", "Endow Blaze" } ,
+ { SA_FORTUNE, "SA_FORTUNE", "Gold Digger" } ,
+ { SA_FREECAST, "SA_FREECAST", "Free Cast" } ,
+ { SA_FROSTWEAPON, "SA_FROSTWEAPON", "Endow Tsunami" } ,
  { SA_FULLRECOVERY, "SA_FULLRECOVERY", "Rejuvenation" } ,
  { SA_GRAVITY, "SA_GRAVITY", "Gravity" } ,
  { SA_INSTANTDEATH, "SA_INSTANTDEATH", "Suicide" } ,
- { SA_LANDPROTECTOR, "SA_LANDPROTECTOR", "Magnetic_Earth" } ,
+ { SA_LANDPROTECTOR, "SA_LANDPROTECTOR", "Magnetic Earth" } ,
  { SA_LEVELUP, "SA_LEVELUP", "Leveling" } ,
- { SA_LIGHTNINGLOADER, "SA_LIGHTNINGLOADER", "Endow_Tornado" } ,
- { SA_MAGICROD, "SA_MAGICROD", "Magic_Rod" } ,
- { SA_MONOCELL, "SA_MONOCELL", "Mono_Cell" } ,
+ { SA_LIGHTNINGLOADER, "SA_LIGHTNINGLOADER", "Endow Tornado" } ,
+ { SA_MAGICROD, "SA_MAGICROD", "Magic Rod" } ,
+ { SA_MONOCELL, "SA_MONOCELL", "Mono Cell" } ,
  { SA_QUESTION, "SA_QUESTION", "Questioning" } ,
- { SA_REVERSEORCISH, "SA_REVERSEORCISH", "Grampus_Morph" } ,
- { SA_SEISMICWEAPON, "SA_SEISMICWEAPON", "Endow_Quake" } ,
- { SA_SPELLBREAKER, "SA_SPELLBREAKER", "Spell_Breaker" } ,
- { SA_SUMMONMONSTER, "SA_SUMMONMONSTER", "Monster_Chant" } ,
- { SA_TAMINGMONSTER, "SA_TAMINGMONSTER", "Beastly_Hypnosis" } ,
+ { SA_REVERSEORCISH, "SA_REVERSEORCISH", "Grampus Morph" } ,
+ { SA_SEISMICWEAPON, "SA_SEISMICWEAPON", "Endow Quake" } ,
+ { SA_SPELLBREAKER, "SA_SPELLBREAKER", "Spell Breaker" } ,
+ { SA_SUMMONMONSTER, "SA_SUMMONMONSTER", "Monster Chant" } ,
+ { SA_TAMINGMONSTER, "SA_TAMINGMONSTER", "Beastly Hypnosis" } ,
  { SA_VIOLENTGALE, "SA_VIOLENTGALE", "Whirlwind" } ,
  { SA_VOLCANO, "SA_VOLCANO", "Volcano" } ,
- { SG_DEVIL, "SG_DEVIL", "Devil_of_the_Sun,_Moon_and_Stars" } ,
- { SG_FEEL, "SG_FEEL", "Feeling_of_the_Sun,_Moon_and_Star" } ,
- { SG_FRIEND, "SG_FRIEND", "Companion_of_the_Sun_and_Moon" } ,
- { SG_FUSION, "SG_FUSION", "Union_of_the_Sun,_Moon_and_Stars" } ,
- { SG_HATE, "SG_HATE", "Hatred_of_the_Sun,_Moon_and_Stars" } ,
- { SG_KNOWLEDGE, "SG_KNOWLEDGE", "Knowledge_of_the_Sun,_Moon_and_Stars" } ,
- { SG_MOON_ANGER, "SG_MOON_ANGER", "Fury_of_the_Moon" } ,
- { SG_MOON_BLESS, "SG_MOON_BLESS", "Bless_of_the_Moon" } ,
- { SG_MOON_COMFORT, "SG_MOON_COMFORT", "Comfort_of_the_Moon" } ,
- { SG_MOON_WARM, "SG_MOON_WARM", "Warmth_of_the_Moon" } ,
- { SG_STAR_ANGER, "SG_STAR_ANGER", "Fury_of_the_Stars" } ,
- { SG_STAR_BLESS, "SG_STAR_BLESS", "Bless_of_the_Stars" } ,
- { SG_STAR_COMFORT, "SG_STAR_COMFORT", "Comfort_of_the_Stars" } ,
- { SG_STAR_WARM, "SG_STAR_WARM", "Warmth_of_the_Stars" } ,
- { SG_SUN_ANGER, "SG_SUN_ANGER", "Fury_of_the_Sun" } ,
- { SG_SUN_BLESS, "SG_SUN_BLESS", "Bless_of_the_Sun" } ,
- { SG_SUN_COMFORT, "SG_SUN_COMFORT", "Comfort_of_the_Sun" } ,
- { SG_SUN_WARM, "SG_SUN_WARM", "Warmth_of_the_Sun" } ,
- { SL_ALCHEMIST, "SL_ALCHEMIST", "Spirit_of_Alchemist" } ,
- { SL_ASSASIN, "SL_ASSASIN", "Spirit_of_Assassin" } ,
- { SL_BARDDANCER, "SL_BARDDANCER", "Spirit_of_Bard_and_Dancer" } ,
- { SL_BLACKSMITH, "SL_BLACKSMITH", "Spirit_of_Blacksmith" } ,
- { SL_CRUSADER, "SL_CRUSADER", "Spirit_of_Crusader" } ,
- { SL_HIGH, "SL_HIGH", "Spirit_of_Advanced_1st_Class" } ,
- { SL_HUNTER, "SL_HUNTER", "Spirit_of_Hunter" } ,
+ { SG_DEVIL, "SG_DEVIL", "Devil of the Sun, Moon and Stars" } ,
+ { SG_FEEL, "SG_FEEL", "Feeling of the Sun, Moon and Star" } ,
+ { SG_FRIEND, "SG_FRIEND", "Companion of the Sun and Moon" } ,
+ { SG_FUSION, "SG_FUSION", "Union of the Sun, Moon and Stars" } ,
+ { SG_HATE, "SG_HATE", "Hatred of the Sun, Moon and Stars" } ,
+ { SG_KNOWLEDGE, "SG_KNOWLEDGE", "Knowledge of the Sun, Moon and Stars" } ,
+ { SG_MOON_ANGER, "SG_MOON_ANGER", "Fury of the Moon" } ,
+ { SG_MOON_BLESS, "SG_MOON_BLESS", "Bless of the Moon" } ,
+ { SG_MOON_COMFORT, "SG_MOON_COMFORT", "Comfort of the Moon" } ,
+ { SG_MOON_WARM, "SG_MOON_WARM", "Warmth of the Moon" } ,
+ { SG_STAR_ANGER, "SG_STAR_ANGER", "Fury of the Stars" } ,
+ { SG_STAR_BLESS, "SG_STAR_BLESS", "Bless of the Stars" } ,
+ { SG_STAR_COMFORT, "SG_STAR_COMFORT", "Comfort of the Stars" } ,
+ { SG_STAR_WARM, "SG_STAR_WARM", "Warmth of the Stars" } ,
+ { SG_SUN_ANGER, "SG_SUN_ANGER", "Fury of the Sun" } ,
+ { SG_SUN_BLESS, "SG_SUN_BLESS", "Bless of the Sun" } ,
+ { SG_SUN_COMFORT, "SG_SUN_COMFORT", "Comfort of the Sun" } ,
+ { SG_SUN_WARM, "SG_SUN_WARM", "Warmth of the Sun" } ,
+ { SL_ALCHEMIST, "SL_ALCHEMIST", "Spirit of Alchemist" } ,
+ { SL_ASSASIN, "SL_ASSASIN", "Spirit of Assassin" } ,
+ { SL_BARDDANCER, "SL_BARDDANCER", "Spirit of Bard and Dancer" } ,
+ { SL_BLACKSMITH, "SL_BLACKSMITH", "Spirit of Blacksmith" } ,
+ { SL_CRUSADER, "SL_CRUSADER", "Spirit of Crusader" } ,
+ { SL_HIGH, "SL_HIGH", "Spirit of Advanced 1st Class" } ,
+ { SL_HUNTER, "SL_HUNTER", "Spirit of Hunter" } ,
  { SL_KAAHI, "SL_KAAHI", "Kaahi" } ,
  { SL_KAINA, "SL_KAINA", "Kaina" } ,
  { SL_KAITE, "SL_KAITE", "Kaite" } ,
  { SL_KAIZEL, "SL_KAIZEL", "Kaizel" } ,
  { SL_KAUPE, "SL_KAUPE", "Kaupe" } ,
- { SL_KNIGHT, "SL_KNIGHT", "Spirit_of_Knight" } ,
- { SL_MONK, "SL_MONK", "Spirit_of_Monk" } ,
- { SL_PRIEST, "SL_PRIEST", "Spirit_of_Priest" } ,
- { SL_ROGUE, "SL_ROGUE", "Spirit_of_Rogue" } ,
- { SL_SAGE, "SL_SAGE", "Spirit_of_Sage" } ,
+ { SL_KNIGHT, "SL_KNIGHT", "Spirit of Knight" } ,
+ { SL_MONK, "SL_MONK", "Spirit of Monk" } ,
+ { SL_PRIEST, "SL_PRIEST", "Spirit of Priest" } ,
+ { SL_ROGUE, "SL_ROGUE", "Spirit of Rogue" } ,
+ { SL_SAGE, "SL_SAGE", "Spirit of Sage" } ,
  { SL_SKA, "SL_SKA", "Eska" } ,
  { SL_SKE, "SL_SKE", "Eske" } ,
  { SL_SMA, "SL_SMA", "Esma" } ,
- { SL_SOULLINKER, "SL_SOULLINKER", "Spirit_of_Soul_Linker" } ,
- { SL_STAR, "SL_STAR", "Spirit_of_Stars" } ,
+ { SL_SOULLINKER, "SL_SOULLINKER", "Spirit of Soul Linker" } ,
+ { SL_STAR, "SL_STAR", "Spirit of Stars" } ,
  { SL_STIN, "SL_STIN", "Estin" } ,
  { SL_STUN, "SL_STUN", "Estun" } ,
- { SL_SUPERNOVICE, "SL_SUPERNOVICE", "Spirit_of_Super_Novice" } ,
+ { SL_SUPERNOVICE, "SL_SUPERNOVICE", "Spirit of Super Novice" } ,
  { SL_SWOO, "SL_SWOO", "Eswoo" } ,
- { SL_WIZARD, "SL_WIZARD", "Spirit_of_Wizard" } ,
+ { SL_WIZARD, "SL_WIZARD", "Spirit of Wizard" } ,
  { SM_AUTOBERSERK, "SM_AUTOBERSERK", "Berserk" } ,
  { SM_BASH, "SM_BASH", "Bash" } ,
  { SM_ENDURE, "SM_ENDURE", "Endure" } ,
- { SM_FATALBLOW, "SM_FATALBLOW", "Fatal_Blow" } ,
- { SM_MAGNUM, "SM_MAGNUM", "Magnum_Break" } ,
- { SM_MOVINGRECOVERY, "SM_MOVINGRECOVERY", "HP_Recovery_While_Moving" } ,
+ { SM_FATALBLOW, "SM_FATALBLOW", "Fatal Blow" } ,
+ { SM_MAGNUM, "SM_MAGNUM", "Magnum Break" } ,
+ { SM_MOVINGRECOVERY, "SM_MOVINGRECOVERY", "HP Recovery While Moving" } ,
  { SM_PROVOKE, "SM_PROVOKE", "Provoke" } ,
- { SM_RECOVERY, "SM_RECOVERY", "Increase_HP_Recovery" } ,
- { SM_SWORD, "SM_SWORD", "Sword_Mastery" } ,
- { SM_TWOHAND, "SM_TWOHAND", "Two-Handed_Sword_Mastery" } ,
- { SN_FALCONASSAULT, "SN_FALCONASSAULT", "Falcon_Assault" } ,
- { SN_SHARPSHOOTING, "SN_SHARPSHOOTING", "Focused_Arrow_Strike" } ,
- { SN_SIGHT, "SN_SIGHT", "Falcon_Eyes" } ,
- { SN_WINDWALK, "SN_WINDWALK", "Wind_Walker" } ,
+ { SM_RECOVERY, "SM_RECOVERY", "Increase HP Recovery" } ,
+ { SM_SWORD, "SM_SWORD", "Sword Mastery" } ,
+ { SM_TWOHAND, "SM_TWOHAND", "Two-Handed Sword Mastery" } ,
+ { SN_FALCONASSAULT, "SN_FALCONASSAULT", "Falcon Assault" } ,
+ { SN_SHARPSHOOTING, "SN_SHARPSHOOTING", "Focused Arrow Strike" } ,
+ { SN_SIGHT, "SN_SIGHT", "Falcon Eyes" } ,
+ { SN_WINDWALK, "SN_WINDWALK", "Wind Walker" } ,
  { ST_CHASEWALK, "ST_CHASEWALK", "Stealth" } ,
- { ST_FULLSTRIP, "ST_FULLSTRIP", "Full_Divestment" } ,
+ { ST_FULLSTRIP, "ST_FULLSTRIP", "Full Divestment" } ,
  { ST_PRESERVE, "ST_PRESERVE", "Preserve" } ,
- { ST_REJECTSWORD, "ST_REJECTSWORD", "Counter_Instinct" } ,
- { TF_BACKSLIDING, "TF_BACKSLIDING", "Back_Slide" } ,
+ { ST_REJECTSWORD, "ST_REJECTSWORD", "Counter Instinct" } ,
+ { TF_BACKSLIDING, "TF_BACKSLIDING", "Back Slide" } ,
  { TF_DETOXIFY, "TF_DETOXIFY", "Detoxify" } ,
- { TF_DOUBLE, "TF_DOUBLE", "Double_Attack" } ,
+ { TF_DOUBLE, "TF_DOUBLE", "Double Attack" } ,
  { TF_HIDING, "TF_HIDING", "Hiding" } ,
- { TF_MISS, "TF_MISS", "Improve_Dodge" } ,
- { TF_PICKSTONE, "TF_PICKSTONE", "Find_Stone" } ,
+ { TF_MISS, "TF_MISS", "Improve Dodge" } ,
+ { TF_PICKSTONE, "TF_PICKSTONE", "Find Stone" } ,
  { TF_POISON, "TF_POISON", "Envenom" } ,
- { TF_SPRINKLESAND, "TF_SPRINKLESAND", "Sand_Attack" } ,
+ { TF_SPRINKLESAND, "TF_SPRINKLESAND", "Sand Attack" } ,
  { TF_STEAL, "TF_STEAL", "Steal" } ,
- { TF_THROWSTONE, "TF_THROWSTONE", "Stone_Fling" } ,
- { TK_COUNTER, "TK_COUNTER", "Spin_Kick" } ,
+ { TF_THROWSTONE, "TF_THROWSTONE", "Stone Fling" } ,
+ { TK_COUNTER, "TK_COUNTER", "Spin Kick" } ,
  { TK_DODGE, "TK_DODGE", "Sprint" } ,
- { TK_DOWNKICK, "TK_DOWNKICK", "Heel_Drop" } ,
- { TK_HIGHJUMP, "TK_HIGHJUMP", "Taekwon_Jump" } ,
- { TK_HPTIME, "TK_HPTIME", "Peaceful_Break" } ,
- { TK_JUMPKICK, "TK_JUMPKICK", "Flying_Kick" } ,
+ { TK_DOWNKICK, "TK_DOWNKICK", "Heel Drop" } ,
+ { TK_HIGHJUMP, "TK_HIGHJUMP", "Taekwon Jump" } ,
+ { TK_HPTIME, "TK_HPTIME", "Peaceful Break" } ,
+ { TK_JUMPKICK, "TK_JUMPKICK", "Flying Kick" } ,
  { TK_MISSION,  "TK_MISSION", "Mission" } ,
  { TK_POWER, "TK_POWER", "Kihop" } ,
- { TK_READYCOUNTER, "TK_READYCOUNTER", "Spin_Kick_Stance" } ,
- { TK_READYDOWN, "TK_READYDOWN", "Heel_Drop_Stance" } ,
- { TK_READYSTORM, "TK_READYSTORM", "Tornado_Stance" } ,
- { TK_READYTURN, "TK_READYTURN", "Roundhouse_Stance" } ,
+ { TK_READYCOUNTER, "TK_READYCOUNTER", "Spin Kick Stance" } ,
+ { TK_READYDOWN, "TK_READYDOWN", "Heel Drop Stance" } ,
+ { TK_READYSTORM, "TK_READYSTORM", "Tornado Stance" } ,
+ { TK_READYTURN, "TK_READYTURN", "Roundhouse Stance" } ,
  { TK_RUN, "TK_RUN", "Sprint" } ,
- { TK_SEVENWIND, "TK_SEVENWIND", "Mild_Wind" } ,
- { TK_SPTIME, "TK_SPTIME", "Happy_Break" } ,
- { TK_STORMKICK, "TK_STORMKICK", "Storm_Kick" } ,
- { TK_TURNKICK, "TK_TURNKICK", "Turn_Kick" } ,
- { WE_BABY, "WE_BABY", "Mom,_Dad,_I_love_you!" } ,
- { WE_CALLBABY, "WE_CALLBABY", "Come_to_me,_honey~" } ,
- { WE_CALLPARENT, "WE_CALLPARENT", "Mom,_Dad,_I_miss_you!" } ,
- { WE_CALLPARTNER, "WE_CALLPARTNER", "Romantic_Rendezvous" } ,
- { WE_FEMALE, "WE_FEMALE", "Loving_Touch" } ,
- { WE_MALE, "WE_MALE", "Undying_Love" } ,
- { WS_CARTBOOST, "WS_CARTBOOST", "Cart_Boost" } ,
- { WS_CARTTERMINATION, "WS_CARTTERMINATION", "Cart_Termination" } ,
- { WS_CREATECOIN, "WS_CREATECOIN", "Coin_Craft" } ,
- { WS_CREATENUGGET, "WS_CREATENUGGET", "Nugget_Craft" } ,
- { WS_MELTDOWN, "WS_MELTDOWN", "Shattering_Strike" } ,
- { WS_OVERTHRUSTMAX, "WS_OVERTHRUSTMAX", "Max_Power-Thust" } ,
- { WS_SYSTEMCREATE, "WS_SYSTEMCREATE", "Auto_Attacking_Machine_Craft" } ,
- { WS_WEAPONREFINE, "WS_WEAPONREFINE", "Weapon_Refine" } ,
- { WZ_EARTHSPIKE, "WZ_EARTHSPIKE", "Earth_Spike" } ,
+ { TK_SEVENWIND, "TK_SEVENWIND", "Mild Wind" } ,
+ { TK_SPTIME, "TK_SPTIME", "Happy Break" } ,
+ { TK_STORMKICK, "TK_STORMKICK", "Storm Kick" } ,
+ { TK_TURNKICK, "TK_TURNKICK", "Turn Kick" } ,
+ { WE_BABY, "WE_BABY", "Mom, Dad, I love you!" } ,
+ { WE_CALLBABY, "WE_CALLBABY", "Come to me, honey~" } ,
+ { WE_CALLPARENT, "WE_CALLPARENT", "Mom, Dad, I miss you!" } ,
+ { WE_CALLPARTNER, "WE_CALLPARTNER", "Romantic Rendezvous" } ,
+ { WE_FEMALE, "WE_FEMALE", "Loving Touch" } ,
+ { WE_MALE, "WE_MALE", "Undying Love" } ,
+ { WS_CARTBOOST, "WS_CARTBOOST", "Cart Boost" } ,
+ { WS_CARTTERMINATION, "WS_CARTTERMINATION", "Cart Termination" } ,
+ { WS_CREATECOIN, "WS_CREATECOIN", "Coin Craft" } ,
+ { WS_CREATENUGGET, "WS_CREATENUGGET", "Nugget Craft" } ,
+ { WS_MELTDOWN, "WS_MELTDOWN", "Shattering Strike" } ,
+ { WS_OVERTHRUSTMAX, "WS_OVERTHRUSTMAX", "Max Power-Thust" } ,
+ { WS_SYSTEMCREATE, "WS_SYSTEMCREATE", "Auto Attacking Machine Craft" } ,
+ { WS_WEAPONREFINE, "WS_WEAPONREFINE", "Weapon Refine" } ,
+ { WZ_EARTHSPIKE, "WZ_EARTHSPIKE", "Earth Spike" } ,
  { WZ_ESTIMATION, "WZ_ESTIMATION", "Sense" } ,
- { WZ_FIREPILLAR, "WZ_FIREPILLAR", "Fire_Pillar" } ,
- { WZ_FROSTNOVA, "WZ_FROSTNOVA", "Frost_Nova" } ,
- { WZ_HEAVENDRIVE, "WZ_HEAVENDRIVE", "Heaven's_Drive" } ,
- { WZ_ICEWALL, "WZ_ICEWALL", "Ice_Wall" } ,
- { WZ_JUPITEL, "WZ_JUPITEL", "Jupitel_Thunder" } ,
- { WZ_METEOR, "WZ_METEOR", "Meteor_Storm" } ,
+ { WZ_FIREPILLAR, "WZ_FIREPILLAR", "Fire Pillar" } ,
+ { WZ_FROSTNOVA, "WZ_FROSTNOVA", "Frost Nova" } ,
+ { WZ_HEAVENDRIVE, "WZ_HEAVENDRIVE", "Heaven's Drive" } ,
+ { WZ_ICEWALL, "WZ_ICEWALL", "Ice Wall" } ,
+ { WZ_JUPITEL, "WZ_JUPITEL", "Jupitel Thunder" } ,
+ { WZ_METEOR, "WZ_METEOR", "Meteor Storm" } ,
  { WZ_QUAGMIRE, "WZ_QUAGMIRE", "Quagmire" } ,
- { WZ_SIGHTBLASTER, "WZ_SIGHTBLASTER", "Sight_Blaster" } ,
+ { WZ_SIGHTBLASTER, "WZ_SIGHTBLASTER", "Sight Blaster" } ,
  { WZ_SIGHTRASHER, "WZ_SIGHTRASHER", "Sightrasher" } ,
- { WZ_STORMGUST, "WZ_STORMGUST", "Storm_Gust" } ,
- { WZ_VERMILION, "WZ_VERMILION", "Lord_of_Vermilion" } ,
- { WZ_WATERBALL, "WZ_WATERBALL", "Water_Ball" } ,
+ { WZ_STORMGUST, "WZ_STORMGUST", "Storm Gust" } ,
+ { WZ_VERMILION, "WZ_VERMILION", "Lord of Vermilion" } ,
+ { WZ_WATERBALL, "WZ_WATERBALL", "Water Ball" } ,
  //[blackhole89]
- { HLIF_HEAL, "HLIF_HEAL", "Healing_Touch" },
+ { HLIF_HEAL, "HLIF_HEAL", "Healing Touch" },
  { HLIF_AVOID, "HLIF_AVOID", "Avoid" },
- { HLIF_BRAIN, "HLIF_BRAIN", "Brain_Surgery" },
+ { HLIF_BRAIN, "HLIF_BRAIN", "Brain Surgery" },
  { HLIF_CHANGE, "HLIF_CHANGE", "Change" },
  { HAMI_CASTLE, "HAMI_CASTLE", "Castling" },
  { HAMI_DEFENCE, "HAMI_DEFENCE", "Defense" },
- { HAMI_SKIN, "HAMI_SKIN", "Adamantium_Skin" },
+ { HAMI_SKIN, "HAMI_SKIN", "Adamantium Skin" },
  { HAMI_BLOODLUST, "HAMI_BLOODLUST", "Bloodlust" },
  { HFLI_MOON, "HFLI_MOON", "Moonlight" },
- { HFLI_FLEET, "HFLI_FLEET", "Fleeting_Move" },
+ { HFLI_FLEET, "HFLI_FLEET", "Fleeting Move" },
  { HFLI_SPEED, "HFLI_SPEED", "Speed" },
  { HFLI_SBR44, "HFLI_SBR44", "S.B.R.44" },
  { HVAN_CAPRICE, "HVAN_CAPRICE", "Caprice" },
- { HVAN_CHAOTIC, "HVAN_CHAOTIC", "Benediction_of_Chaos" },
+ { HVAN_CHAOTIC, "HVAN_CHAOTIC", "Benediction of Chaos" },
  { HVAN_INSTRUCT, "HVAN_INSTRUCT", "Instruct" },
- { HVAN_EXPLOSION, "HVAN_EXPLOSION", "Bio_Explosion" },
+ { HVAN_EXPLOSION, "HVAN_EXPLOSION", "Bio Explosion" },
  { 0, "UNKNOWN_SKILL", "Unknown_Skill" }
-};
+
+ };
 
 static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
@@ -703,6 +732,17 @@ const char*	skill_get_name( int id ){
 	if (id < 1 || id > MAX_SKILL_DB || skill_db[id].name==NULL)
 		return "UNKNOWN_SKILL"; //Can't use skill_chk because we return a string.
 	return skill_db[id].name; 
+}
+const char*	skill_get_desc( int id ){
+	if (id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX)
+		return "Unknown Skill";
+	if (id >= GD_SKILLBASE)
+		id = GD_SKILLRANGEMIN + id - GD_SKILLBASE;
+	if (id >= HM_SKILLBASE)	//[orn]
+		id = HM_SKILLRANGEMIN + id - HM_SKILLBASE;
+	if (id < 1 || id > MAX_SKILL_DB || skill_db[id].desc==NULL)
+		return "Unknown Skill"; //Can't use skill_chk because we return a string.
+	return skill_db[id].desc; 
 }
 
 int skill_tree_get_max(int id, int b_class)
@@ -799,25 +839,29 @@ int skill_get_range2 (struct block_list *bl, int id, int lv)
 	return range;
 }
 
-int skill_calc_heal (struct block_list *bl, int skill_lv)
+int skill_calc_heal (struct block_list *src, struct block_list *target, int skill_lv)
 {
 	int skill, heal;
+	struct status_change* sc;
 
 	if (skill_lv >= battle_config.max_heal_lv)
 		return battle_config.max_heal;
 
-	heal = ( status_get_lv(bl)+status_get_int(bl) )/8 *(4+ skill_lv*8);
-	if(bl->type == BL_PC)
+	heal = ( status_get_lv(src)+status_get_int(src) )/8 *(4+ skill_lv*8);
+	if(src->type == BL_PC)
 	{
-		if ((skill = pc_checkskill((TBL_PC*)bl, HP_MEDITATIO)) > 0)
+		if ((skill = pc_checkskill((TBL_PC*)src, HP_MEDITATIO)) > 0)
 			heal += heal * skill * 2 / 100;
-		if ((skill = battle_skillatk_bonus((TBL_PC*)bl, AL_HEAL)) > 0)
+		if ((skill = battle_skillatk_bonus((TBL_PC*)src, AL_HEAL)) > 0)
 			heal += heal * skill / 100;
 	}
 
-	if(bl->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)bl), HLIF_BRAIN)) > 0)
+	if(src->type == BL_HOM && (skill = merc_hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0)
 		heal += heal * skill * 2 / 100;
 
+	sc = status_get_sc(target);
+	if (sc && sc->count && sc->data[SC_CRITICALWOUND].timer!=-1)
+		heal -= heal * sc->data[SC_CRITICALWOUND].val2/100;
 	return heal;
 }
 
@@ -1237,7 +1281,13 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case NPC_STUNATTACK:
 		sc_start(bl,SkillStatusChangeTable(skillid),50+10*skilllv,skilllv,skill_get_time2(skillid,skilllv));
 		break;
-
+	case NPC_ACIDBREATH:
+	case NPC_ICEBREATH:
+		sc_start(bl,SkillStatusChangeTable(skillid),70,skilllv,skill_get_time2(skillid,skilllv));
+		break;
+	case NPC_BLEEDING:
+		sc_start(bl,SC_BLEEDING,(20*skilllv),skilllv,skill_get_time2(skillid,skilllv));
+		break;
 	case NPC_MENTALBREAKER: 
 	{	//Based on observations by Tharis, Mental Breaker should do SP damage
 	  	//equal to Matk*skLevel.
@@ -1369,6 +1419,15 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			rate += (sstatus->dex - tstatus->dex)/5;
 		if (skill_strip_equip(bl, EQP_WEAPON, rate, skilllv, skill_get_time(skillid,skilllv)))
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		break;
+	case NPC_EVILLAND:
+		sc_start(bl,SC_BLIND,5*skilllv,skilllv,skill_get_time2(skillid,skilllv));
+		break;
+	case NPC_HELLJUDGEMENT:
+		sc_start(bl,SC_CURSE,100,skilllv,skill_get_time2(skillid,skilllv));
+		break;
+	case NPC_CRITICALWOUND:
+		sc_start(bl,SC_CRITICALWOUND,100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	}
 
@@ -1954,8 +2013,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	damage = dmg.damage + dmg.damage2;
 
-	if (damage > 0 && src != bl && src == dsrc && skillid != WS_CARTTERMINATION) // FIXME(?): Quick and dirty check, but HSCR does bypass Shield Reflect... so I make it bypass the whole reflect thing [DracoRPG]
-		rdamage = battle_calc_return_damage(bl, &damage, dmg.flag);
+	if (damage > 0 && src != bl && skillid != WS_CARTTERMINATION) // FIXME(?): Quick and dirty check, but HSCR does bypass Shield Reflect... so I make it bypass the whole reflect thing [DracoRPG]
+		rdamage = battle_calc_return_damage(bl, &damage, src == dsrc, dmg.flag);
 
 	//Skill hit type
 	type=(skillid==0)?5:skill_get_hit(skillid);
@@ -2769,6 +2828,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case NPC_WEAPONBRAKER:
 	case NPC_HELMBRAKE:
 	case NPC_SHIELDBRAKE:
+	case NPC_BLINDATTACK:
+	case NPC_SILENCEATTACK:
+	case NPC_STUNATTACK:
+	case NPC_PETRIFYATTACK:
+	case NPC_CURSEATTACK:
+	case NPC_SLEEPATTACK:
 	case LK_AURABLADE:
 	case LK_SPIRALPIERCE:
 	case LK_HEADCRUSH:
@@ -2800,21 +2865,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case ASC_BREAKER:
 	case HFLI_MOON:	//[orn]
 	case HFLI_SBR44:	//[orn]
+	case NPC_BLEEDING:
+	case NPC_CRITICALWOUND:
 		skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		break;
-	case NPC_BLINDATTACK:
-	case NPC_SILENCEATTACK:
-	case NPC_STUNATTACK:
-	case NPC_PETRIFYATTACK:
-	case NPC_CURSEATTACK:
-	case NPC_SLEEPATTACK:
-		if (flag&1 || skill_get_splash(skillid, skilllv) < 1)
-			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,flag);
-		else
-			map_foreachinrange(skill_area_sub, bl,
-				skill_get_splash(skillid, skilllv),BL_CHAR,
-				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
-				skill_castend_damage_id);
 		break;
 
 	case LK_JOINTBEAT: // decide the ailment first (affects attack damage and effect)
@@ -2871,7 +2924,18 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		//line of sight between caster and target.
 		skill_area_temp[1] = bl->id;
 		map_foreachinpath (skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,
-			skill_get_splash(skillid, skilllv),BL_CHAR,
+			skill_get_splash(skillid, skilllv),skill_get_maxcount(skillid), BL_CHAR,
+			skill_get_type(skillid),src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
+		break;
+
+	case NPC_ACIDBREATH:
+	case NPC_DARKNESSBREATH:
+	case NPC_FIREBREATH:
+	case NPC_ICEBREATH:
+	case NPC_THUNDERBREATH:
+		skill_area_temp[1] = bl->id;
+		map_foreachinpath(skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,
+			skill_get_splash(skillid, skilllv),skill_get_maxcount(skillid), BL_CHAR,
 			skill_get_type(skillid),src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
 		break;
 
@@ -2968,6 +3032,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	//Splash attack skills.
+	case NPC_PULSESTRIKE:
+	case NPC_HELLJUDGEMENT:
+		skill_attack(skill_get_type(skillid), src, src, bl,
+			skillid, skilllv, tick, skill_area_temp[0]|(flag&SD_LEVEL));
+		break;
+
 	case AS_SPLASHER:
 	case AS_GRIMTOOTH:
 	case SM_MAGNUM:
@@ -2984,6 +3054,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case ASC_METEORASSAULT:
 	case GS_DESPERADO:
 	case GS_SPREADATTACK:
+	case NPC_EARTHQUAKE:
 		if (flag&1)
 		{	//Invoked from map_foreachinarea, skill_area_temp[0] holds number of targets to divide damage by.
 			if (skill_area_temp[1] != bl->id)
@@ -3368,7 +3439,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case HLIF_HEAL:	//[orn]
 	case AL_HEAL:
 		{
-			int heal = skill_calc_heal(src, skilllv);
+			int heal = skill_calc_heal(src, bl, skilllv);
 			int heal_get_jobexp;
 	
 			if (status_isimmune(bl) || (dstmd && dstmd->class_ == MOBID_EMPERIUM))
@@ -3502,20 +3573,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case PR_LEXDIVINA:
-		if (flag&1 || (i = skill_get_splash(skillid, skilllv)) < 1)
-		{
-			if (tsc && tsc->count && tsc->data[type].timer != -1) {
-				status_change_end(bl,type, -1);
-				clif_skill_nodamage (src, bl, skillid, skilllv, 1);
-			} else 
-				clif_skill_nodamage (src, bl, skillid, skilllv, 
-					sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
-			break;
-		}
-		//Affect all targets on splash area.
-		map_foreachinrange(skill_area_sub, bl, i, BL_CHAR,
-			src, skillid, skilllv, tick, flag|1, skill_castend_damage_id);
+		if (tsc && tsc->count && tsc->data[type].timer != -1) {
+			status_change_end(bl,type, -1);
+			clif_skill_nodamage (src, bl, skillid, skilllv, 1);
+		} else 
+			clif_skill_nodamage (src, bl, skillid, skilllv, 
+				sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
+
 	case SA_ABRACADABRA:
 		{
 			int abra_skillid = 0, abra_skilllv;
@@ -3778,7 +3843,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case AS_POISONREACT:
 	case MC_LOUD:
 	case MG_ENERGYCOAT:
-	case MG_SIGHT:
 	case AL_RUWACH:
 	case MO_EXPLOSIONSPIRITS:
 	case MO_STEELBODY:
@@ -3796,7 +3860,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case PA_SACRIFICE:
 	case ASC_EDP:
 	case NPC_STOP:
-	case WZ_SIGHTBLASTER:
 	case PF_DOUBLECASTING:
 	case SG_SUN_COMFORT:
 	case SG_MOON_COMFORT:
@@ -3810,8 +3873,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NJ_UTSUSEMI:
 	case NJ_NEN:
 	case NPC_DEFENDER:
+	case NPC_MAGICMIRROR:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
+		break;
+	case MG_SIGHT:
+	case WZ_SIGHTBLASTER:
+	case NPC_WIDESIGHT:
+	case NPC_STONESKIN:
+	case NPC_ANTIMAGIC:
+		clif_skill_nodamage(src,bl,skillid,skilllv,
+			sc_start2(bl,type,100,skilllv,skillid,skill_get_time(skillid,skilllv)));
 		break;
 	case HLIF_AVOID:
 		if (hd)
@@ -4051,9 +4123,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		status_change_end(src, SC_HIDING, -1);
 		break;
 
+	case NPC_EARTHQUAKE:
+		if (skill_get_nk(skillid)&NK_SPLASHSPLIT)
+			map_foreachinrange(skill_area_sub, bl, 
+				skill_get_splash(skillid, skilllv), BL_CHAR,
+				src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
+		else
+			skill_area_temp[0] = 0;
 	case ASC_METEORASSAULT:
 	case GS_SPREADATTACK:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+	case NPC_HELLJUDGEMENT:
+	case NPC_PULSESTRIKE:
 		skill_area_temp[1] = bl->id;
 		//Mob casted skills should also hit skills.
 		map_foreachinrange(skill_area_sub, bl,
@@ -4457,6 +4538,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			unit_warp(bl,-1,-1,-1,3);
 		break;
 
+	case NPC_EXPULSION:
+		clif_skill_nodamage(src,bl,skillid,skilllv,1);
+		unit_warp(bl,-1,-1,-1,3);
+		break;
+
 	case AL_HOLYWATER:
 		if(sd) {
 			if (skill_produce_mix(sd, skillid, 523, 0, 0, 0, 1))
@@ -4589,8 +4675,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if(dstsd)
 					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
 			}
+			if (tsc && tsc->count && tsc->data[SC_CRITICALWOUND].timer!=-1)
+			{
+				hp -= hp * tsc->data[SC_CRITICALWOUND].val2 / 100;
+				sp -= sp * tsc->data[SC_CRITICALWOUND].val2 / 100;
+			}
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if(hp > 0 || (skillid == AM_POTIONPITCHER && hp <= 0 && sp <= 0))
+			if(hp > 0 || (skillid == AM_POTIONPITCHER && sp <= 0))
 				clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
 			if(sp > 0)
 				clif_skill_nodamage(NULL,bl,MG_SRECOVERY,sp,1);
@@ -5195,6 +5286,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if (sp)
 					sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10)/100;
 			}
+			if (tsc && tsc->count && tsc->data[SC_CRITICALWOUND].timer!=-1)
+			{
+				hp -= hp * tsc->data[SC_CRITICALWOUND].val2 / 100;
+				sp -= sp * tsc->data[SC_CRITICALWOUND].val2 / 100;
+			}
 			if(hp > 0)
 				clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
 			if(sp > 0)
@@ -5539,7 +5635,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				bl = map_id2bl(battle_gettarget(src));
 
 			if (!bl) bl = src;
-			i = skill_calc_heal( src, 1+rand()%skilllv);
+			i = skill_calc_heal( src, bl, 1+rand()%skilllv);
 			//Eh? why double skill packet?
 			clif_skill_nodamage(src,bl,AL_HEAL,i,1);
 			clif_skill_nodamage(src,bl,skillid,i,1);
@@ -5557,6 +5653,31 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		if (hd)
 			skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv));
+		break;
+	case NPC_DRAGONFEAR:
+		if (flag&1) {
+			const int sc[] = { SC_STUN, SC_CURSE, SC_SILENCE, SC_BLEEDING };
+			sc_start(bl,rand()%ARRAYLENGTH(sc),100,skilllv,skill_get_time2(skillid,skilllv));
+			break;
+		}
+	case NPC_WIDEBLEEDING:
+	case NPC_WIDECONFUSE:
+	case NPC_WIDECURSE:
+	case NPC_WIDEFREEZE:
+	case NPC_WIDESLEEP:
+	case NPC_WIDESILENCE:
+	case NPC_WIDESTONE:
+	case NPC_WIDESTUN:
+	case NPC_SLOWCAST:
+		if (flag&1)
+			sc_start(bl,type,100,skilllv,skill_get_time2(skillid,skilllv));
+		else {
+			clif_skill_nodamage(src,bl,skillid,skilllv,1);
+			map_foreachinrange(skill_area_sub, bl,
+				skill_get_splash(skillid, skilllv),BL_CHAR,
+				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
+				skill_castend_nodamage_id);
+		}
 		break;
 	default:
 		ShowWarning("skill_castend_nodamage_id: Unknown skill used:%d\n",skillid);
@@ -6051,6 +6172,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case NJ_HYOUSYOURAKU:
 	case NJ_RAIGEKISAI:
 	case NJ_KAMAITACHI:
+	case NPC_EVILLAND:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 	case GS_GROUNDDRIFT: //Ammo should be deleted right away.
 		skill_unitsetting(src,skillid,skilllv,x,y,0);
@@ -6573,8 +6695,9 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		break;
 
 	case PR_SANCTUARY:
+	case NPC_EVILLAND:
 		val1=(skilllv+3)*2;
-		val2=(skilllv>6)?777:skilllv*100;
+		val2=(skilllv>6)?(skillid == PR_SANCTUARY?777:666):skilllv*100;
 		if (sd && (i = battle_skillatk_bonus(sd, skillid)) > 0)
 			val2 += val2 * i / 100;
 		break;
@@ -7134,6 +7257,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			}
 
 		case UNT_SANCTUARY:
+		if (sg->skill_id == PR_SANCTUARY) {
 			if (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race==RC_DEMON)
 			{	//Only damage enemies with offensive Sanctuary. [Skotlex]
 				if(battle_check_target(&src->bl,bl,BCT_ENEMY)>0 &&
@@ -7144,6 +7268,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				int heal = sg->val2;
 				if (tstatus->hp >= tstatus->max_hp)
 					break;
+				if (tsc && tsc->count && tsc->data[SC_CRITICALWOUND].timer!=-1)
+					heal -= heal * tsc->data[SC_CRITICALWOUND].val2 / 100;
 				if (status_isimmune(bl))
 					heal = 0;	/* 黄金蟲カード（ヒール量０） */
 				clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);
@@ -7153,6 +7279,24 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			}
 			if (sg->val1 <= 0)
 				skill_delunitgroup(NULL,sg, 0);
+			break;
+		}
+			//Evil Land
+			if (!battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race!=RC_DEMON)
+			{	//Damage enemies
+				if(battle_check_target(&src->bl,bl,BCT_ENEMY)>0)
+					skill_attack(BF_MAGIC, ss, &src->bl, bl, sg->skill_id, sg->skill_lv, tick, 0);
+			} else {
+				int heal = sg->val2;
+				if (tstatus->hp >= tstatus->max_hp)
+					break;
+				if (tsc && tsc->count && tsc->data[SC_CRITICALWOUND].timer!=-1)
+					heal -= heal * tsc->data[SC_CRITICALWOUND].val2 / 100;
+				if (status_isimmune(bl))
+					heal = 0;
+				clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);
+				status_heal(bl, heal, 0, 0);
+			}
 			break;
 
 		case UNT_MAGNUS:
@@ -7302,6 +7446,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			if (sg->src_id == bl->id)
 				break;
 			heal = sg->val2;
+			if(tsc && tsc->count && tsc->data[SC_CRITICALWOUND].timer!=-1)
+				heal -= heal * tsc->data[SC_CRITICALWOUND].val2 / 100;
 			clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);
 			status_heal(bl, heal, 0, 0);
 			break;	
@@ -8658,6 +8804,9 @@ int skill_castfix_sc (struct block_list *bl, int time)
 	struct status_change *sc = status_get_sc(bl);
 
 	if (sc && sc->count) {
+		if (sc->data[SC_SLOWCAST].timer != -1)
+			time+= time * sc->data[SC_SLOWCAST].val2 / 100;
+
 		if (sc->data[SC_SUFFRAGIUM].timer != -1) {
 			time -= time * (sc->data[SC_SUFFRAGIUM].val1 * 15) / 100;
 			status_change_end(bl, SC_SUFFRAGIUM, -1);
@@ -9253,12 +9402,20 @@ int skill_attack_area (struct block_list *bl, va_list ap)
 	if(battle_check_target(dsrc,bl,type) <= 0 ||
 		!status_check_skilluse(NULL, bl, skillid, 2))
 		return 0;
-	
-	if (skillid == WZ_FROSTNOVA) //Only skill that doesn't requires the animation to be removed :X
-		return skill_attack(atk_type,src,dsrc,bl,skillid,skilllv,tick,flag);
 
-	//Area-splash, disable skill animation.
-	return skill_attack(atk_type,src,dsrc,bl,skillid,skilllv,tick,flag|SD_ANIMATION);
+
+	switch (skillid) {
+	case WZ_FROSTNOVA: //Skills that don't require the animation to be removed
+	case NPC_ACIDBREATH:
+	case NPC_DARKNESSBREATH:
+	case NPC_FIREBREATH:
+	case NPC_ICEBREATH:
+	case NPC_THUNDERBREATH:
+		return skill_attack(atk_type,src,dsrc,bl,skillid,skilllv,tick,flag);
+	default:
+		//Area-splash, disable skill animation.
+		return skill_attack(atk_type,src,dsrc,bl,skillid,skilllv,tick,flag|SD_ANIMATION);
+	}
 }
 /*==========================================
  *
@@ -10923,6 +11080,7 @@ void skill_init_unit_layout (void)
 			case WZ_ICEWALL:
 				break;
 			case PR_SANCTUARY:
+			case NPC_EVILLAND:
 			{
 				static const int dx[] = {
 					-1, 0, 1,-2,-1, 0, 1, 2,-2,-1,

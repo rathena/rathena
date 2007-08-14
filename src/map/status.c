@@ -369,6 +369,26 @@ void initChangeTables(void)
 	set_sc(NJ_NEN, SC_NEN, SI_NEN, SCB_STR|SCB_INT);
 	set_sc(NJ_UTSUSEMI, SC_UTSUSEMI, SI_UTSUSEMI,SCB_NONE);
 	set_sc(NJ_BUNSINJYUTSU, SC_BUNSINJYUTSU, SI_BUNSINJYUTSU, SCB_DYE);
+
+	add_sc(NPC_ICEBREATH, SC_FREEZE);
+	add_sc(NPC_ACIDBREATH, SC_POISON);
+	add_sc(NPC_HELLJUDGEMENT, SC_CURSE);
+	add_sc(NPC_WIDESILENCE, SC_SILENCE);
+	add_sc(NPC_WIDEFREEZE, SC_FREEZE);
+	add_sc(NPC_WIDEBLEEDING, SC_BLEEDING);
+	add_sc(NPC_WIDESTONE, SC_STONE);
+	add_sc(NPC_WIDECONFUSE, SC_CONFUSION);
+	add_sc(NPC_WIDESLEEP, SC_SLEEP);
+	add_sc(NPC_WIDESIGHT, SC_SIGHT);
+	add_sc(NPC_EVILLAND, SC_BLIND);
+	add_sc(NPC_MAGICMIRROR, SC_MAGICMIRROR);
+	add_sc(NPC_SLOWCAST, SC_SLOWCAST);
+	add_sc(NPC_CRITICALWOUND, SC_CRITICALWOUND);
+	set_sc(NPC_STONESKIN, SC_ARMORCHANGE, SI_BLANK, SCB_DEF|SCB_MDEF|SCB_DEF2|SCB_MDEF2);
+	add_sc(NPC_ANTIMAGIC, SC_ARMORCHANGE);
+	add_sc(NPC_WIDECURSE, SC_CURSE);
+	add_sc(NPC_WIDESTUN, SC_STUN);
+
 	set_sc(CR_SHRINK, SC_SHRINK, SI_SHRINK, SCB_NONE);
 	set_sc(RG_CLOSECONFINE, SC_CLOSECONFINE2, SI_CLOSECONFINE2, SCB_NONE);
 	set_sc(RG_CLOSECONFINE, SC_CLOSECONFINE, SI_CLOSECONFINE, SCB_FLEE);
@@ -3523,9 +3543,11 @@ static signed char status_calc_def(struct block_list *bl, struct status_change *
 		return 90;
 	if(sc->data[SC_STEELBODY].timer!=-1)
 		return 90;
+	if(sc->data[SC_ARMORCHANGE].timer!=-1)
+		def += def * sc->data[SC_ARMORCHANGE].val2/100;
 	if(sc->data[SC_DRUMBATTLE].timer!=-1)
 		def += sc->data[SC_DRUMBATTLE].val3;
-	if (sc->data[SC_DEFENCE].timer != -1)	//[orn]
+	if(sc->data[SC_DEFENCE].timer != -1)	//[orn]
 		def += sc->data[SC_DEFENCE].val2 ;
 	if(sc->data[SC_INCDEFRATE].timer!=-1)
 		def += def * sc->data[SC_INCDEFRATE].val1/100;
@@ -3558,6 +3580,8 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		return 0;
 	if(sc->data[SC_ETERNALCHAOS].timer!=-1)
 		return 0;
+	if(sc->data[SC_ARMORCHANGE].timer!=-1)
+		def2 += def2 * sc->data[SC_ARMORCHANGE].val2/100;
 	if(sc->data[SC_SUN_COMFORT].timer!=-1)
 		def2 += sc->data[SC_SUN_COMFORT].val2;
 	if(sc->data[SC_ANGELUS].timer!=-1)
@@ -3596,6 +3620,8 @@ static signed char status_calc_mdef(struct block_list *bl, struct status_change 
 		return 90;
 	if(sc->data[SC_SKA].timer != -1) // [marquis007]
 		return 90;
+	if(sc->data[SC_ARMORCHANGE].timer!=-1)
+		mdef += mdef * sc->data[SC_ARMORCHANGE].val3/100;
 	if(sc->data[SC_STONE].timer!=-1 && sc->opt1 == OPT1_STONE)
 		mdef += 25*mdef/100;
 	if(sc->data[SC_FREEZE].timer!=-1)
@@ -3613,6 +3639,8 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 
 	if(sc->data[SC_BERSERK].timer!=-1)
 		return 0;
+	if(sc->data[SC_ARMORCHANGE].timer!=-1)
+		mdef2 += mdef2 * sc->data[SC_ARMORCHANGE].val3/100;
 	if(sc->data[SC_MINDBREAKER].timer!=-1)
 		mdef2 -= mdef2 * sc->data[SC_MINDBREAKER].val3/100;
 
@@ -4192,7 +4220,7 @@ int status_isimmune(struct block_list *bl)
 		return 100;
 
 	if (bl->type == BL_PC &&
-		((TBL_PC*)bl)->special_state.no_magic_damage > battle_config.gtb_sc_immunity)
+		((TBL_PC*)bl)->special_state.no_magic_damage >= battle_config.gtb_sc_immunity)
 		return ((TBL_PC*)bl)->special_state.no_magic_damage;
 	return 0;
 }
@@ -5227,6 +5255,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_SIGHT:			/* サイト/ルアフ */
 		case SC_RUWACH:
 		case SC_SIGHTBLASTER:
+			val3 = skill_get_splash(val2, val1); //Val2 should bring the skill-id.
 			val2 = tick/250;
 			tick = 10;
 			break;
@@ -5750,6 +5779,26 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				val2 = val2%ELE_MAX;
 			else if (val2 < 0)
 				val2 = rand()%ELE_MAX;
+			break;
+		case SC_CRITICALWOUND:
+			val2 = 10*val1; //Heal effectiveness decrease
+			break;
+		case SC_MAGICMIRROR:
+		case SC_SLOWCAST:
+			val2 = 20*val1; //Magic reflection/cast rate
+			break;
+
+		case SC_ARMORCHANGE:
+			if (val2 == NPC_ANTIMAGIC)
+			{	//Boost mdef
+				val2 =-20;
+				val3 = 20;
+			} else { //Boost def
+				val2 = 20;
+				val3 =-20;
+			}
+			val2*=val1; //20% per level
+			val3*=val1;
 			break;
 		case SC_ARMOR_ELEMENT:
 			//Place here SCs that have no SCB_* data, no skill associated, no ICON
@@ -6614,9 +6663,8 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_RUWACH:
 	case SC_SIGHTBLASTER:
 		{
-			map_foreachinrange( status_change_timer_sub, bl, 
-				skill_get_splash(StatusSkillChangeTable[type], sc->data[type].val1),
-				BL_CHAR, bl,sc,type,tick);
+			map_foreachinrange( status_change_timer_sub, bl,
+				sc->data[type].val3, BL_CHAR, bl,sc,type,tick);
 
 			if( (--sc->data[type].val2)>0 ){
 				sc->data[type].timer=add_timer(	/* タイマ?再設定 */

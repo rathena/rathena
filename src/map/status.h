@@ -265,6 +265,10 @@ enum {
 	SC_JAILED,
 	SC_ENCHANTARMS,	//250
 	SC_MAGICALATTACK,
+	SC_ARMORCHANGE,
+	SC_CRITICALWOUND,
+	SC_MAGICMIRROR,
+	SC_SLOWCAST,
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 int SkillStatusChangeTable(int skill);

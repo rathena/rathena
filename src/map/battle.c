@@ -1131,6 +1131,7 @@ static struct Damage battle_calc_weapon_attack(
 			case NPC_DARKNESSATTACK:
 			case NPC_UNDEADATTACK:
 			case NPC_TELEKINESISATTACK:
+			case NPC_BLEEDING:
 				hitrate += hitrate * 20 / 100;
 				break;
 			case KN_PIERCE:
@@ -1382,6 +1383,12 @@ static struct Damage battle_calc_weapon_attack(
 				case NPC_UNDEADATTACK:
 				case NPC_TELEKINESISATTACK:
 				case NPC_BLOODDRAIN:
+				case NPC_ACIDBREATH:
+				case NPC_DARKNESSBREATH:
+				case NPC_FIREBREATH:
+				case NPC_ICEBREATH:
+				case NPC_THUNDERBREATH:
+				case NPC_HELLJUDGEMENT:
 					skillratio += 100*(skill_lv-1);
 					break;
 				case RG_BACKSTAP:
@@ -2184,13 +2191,16 @@ struct Damage battle_calc_magic_attack(
 		{	//Calc base damage according to skill
 			case AL_HEAL:
 			case PR_BENEDICTIO:
-				ad.damage = skill_calc_heal(src,skill_lv)/2;
+				ad.damage = skill_calc_heal(src, target, skill_lv)/2;
 				break;
 			case PR_ASPERSIO:
 				ad.damage = 40;
 				break;
 			case PR_SANCTUARY:
 				ad.damage = (skill_lv>6)?388:skill_lv*50;
+				break;
+			case NPC_EVILLAND:
+				ad.damage = (skill_lv>6)?666:skill_lv*100;
 				break;
 			case ALL_RESURRECTION:
 			case PR_TURNUNDEAD:
@@ -2211,6 +2221,12 @@ struct Damage battle_calc_magic_attack(
 				break;
 			default:
 			{
+				if (skill_num == NPC_EARTHQUAKE) {
+					if (sstatus->rhw.atk2 > sstatus->rhw.atk)
+						MATK_ADD(sstatus->rhw.atk + rand()%(1+sstatus->rhw.atk2-sstatus->rhw.atk))
+					else
+						MATK_ADD(sstatus->rhw.atk);
+				} else
 				if (sstatus->matk_max > sstatus->matk_min) {
 					MATK_ADD(sstatus->matk_min+rand()%(1+sstatus->matk_max-sstatus->matk_min));
 				} else {
@@ -2301,6 +2317,9 @@ struct Damage battle_calc_magic_attack(
 					case NJ_KAMAITACHI:
 					case NPC_ENERGYDRAIN:
 						skillratio += 100*skill_lv;
+						break;
+					case NPC_EARTHQUAKE:
+						skillratio += 400 + 500*skill_lv;
 						break;
 				}
 
@@ -2661,7 +2680,8 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 	return d;
 }
 
-int battle_calc_return_damage(struct block_list* bl, int* damage, int flag)
+//Calculates returned damage. direct is true if the skill was a direct attack (that is, not from another source, like a land spell
+int battle_calc_return_damage(struct block_list* bl, int* damage, int direct, int flag)
 {
 	struct map_session_data* sd = NULL;
 	struct status_change* sc;
@@ -2669,8 +2689,10 @@ int battle_calc_return_damage(struct block_list* bl, int* damage, int flag)
 
 	BL_CAST(BL_PC, bl, sd);
 	sc = status_get_sc(bl);
+	if(sc && !sc->count)
+		sc = NULL;
 
-	if(flag&BF_WEAPON) {
+	if(flag&BF_WEAPON && direct) {
 		//Bounces back part of the damage.
 		if (flag & BF_SHORT) {
 			if (sd && sd->short_weapon_damage_return)
@@ -2694,7 +2716,10 @@ int battle_calc_return_damage(struct block_list* bl, int* damage, int flag)
 	// magic_damage_return by [AppleGirl] and [Valaris]
 	if(flag&BF_MAGIC)
 	{
-		if(sd && sd->magic_damage_return && rand()%100 < sd->magic_damage_return)
+		if(
+			(sd && sd->magic_damage_return && direct && rand()%100 < sd->magic_damage_return)
+			|| (sc && sc->data[SC_MAGICMIRROR].timer != -1 && rand()%100 < sc->data[SC_MAGICMIRROR].val2)
+			)
 		{	//Bounces back full damage, you take none.
 			rdamage = *damage;
 		 	*damage = 0;
@@ -2886,7 +2911,7 @@ int battle_weapon_attack(struct block_list* src, struct block_list* target, unsi
 
 	damage = wd.damage + wd.damage2;
 	if (damage > 0 && src != target) {
-		rdamage = battle_calc_return_damage(target, &damage, wd.flag);
+		rdamage = battle_calc_return_damage(target, &damage, 1, wd.flag);
 		if (rdamage > 0) {
 			rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
 			//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]

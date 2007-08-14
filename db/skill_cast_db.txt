@@ -678,7 +678,7 @@
 404,0,0,0,20000,10000
 //-- PF_SPIDERWEB
 405,0,0,0,30000,8000
-//-- ASC_METEORASSAULT (Upkeep2 times are duration of: blind(lv1), stun(lv2) or bleeding (lv3)
+//-- ASC_METEORASSAULT (Upkeep2 times are duration of: blind(lv1), stun(lv2) or bleeding (lv3))
 406,500,500,0,0,10000:5000:120000
 //-- ASC_CDP
 407,0,500,0,0,0
@@ -930,8 +930,8 @@
 655,0,0,0,0,30000
 //-- NPC_ACIDBREATH
 657,0,0,0,0,30000
-//-- NPC_DRAGONFEAR
-659,0,0,0,0,30000
+//-- NPC_DRAGONFEAR (Upkeep2 times are duration of: Stun(lv1), Curse(lv2), Silence(lv3) and Bleeding (lv4))
+659,0,0,0,0,5000:30000:30000:30000
 //-- NPC_BLEEDING
 660,0,0,0,0,30000
 //-- NPC_HELLJUDGEMENT

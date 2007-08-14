@@ -44,6 +44,8 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 ========================
 08/13
+	* Uncommented the 'new' npc skills from mob_skill_db as they are
+	  implemented now. [Skotlex]
 	* Fixed some typos thanks to Christian [Playtester]
 	- also reduced aftercast delay of NJ_ISSEN
 08/12

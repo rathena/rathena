@@ -5403,6 +5403,13 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 		if(bonus != 100)
 			sp = sp * bonus / 100;
 	}
+
+	if (sd->sc.count && sd->sc.data[SC_CRITICALWOUND].timer!=-1)
+	{
+		hp -= hp * sd->sc.data[SC_CRITICALWOUND].val2 / 100;
+		sp -= sp * sd->sc.data[SC_CRITICALWOUND].val2 / 100;
+	}
+
 	return status_heal(&sd->bl, hp, sp, 1);
 }
 
