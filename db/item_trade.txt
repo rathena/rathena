@@ -49,6 +49,9 @@
 7417,91,100	// Mission_ScrollA
 7418,91,100	// Mission_ScrollB
 
+// PVP Item
+//7420,115,100	// Skull_
+
 // "10.3 Quest items"
 // * "Gaebolg family Curse" items
 7431,115,100	// Books
@@ -64,7 +67,8 @@
 7428,115,100	// Blue_Magic_Stone
 7429,115,100	// Green_Magic_Stone
 7430,115,100	// Black_Magic_Stone
-7420,115,100	// Skull_
+
+// Chinese New Year
 7484,123,100	// Warrior_Symbol
 7485,123,100	// 2nd_Floor_Pass
 7486,123,100	// 3rd_Floor_Pass
@@ -92,8 +96,10 @@
 7506,115,100	// Black_Key_Card
 7508,123,100	// Elysia_Ring
 7509,83,100	// Fancy_Key_Card
-7515,115,100	// Marvelous_Medal
 7516,115,100	// Green_Key_Card
+
+// Hugel Race Track token
+7515,115,100	// Marvelous_Medal
 
 // Chinese ????? related items
 7518,115,100	// Women's_Medal
@@ -203,8 +209,8 @@
 
 // 2006 Indonesia Event
 //These two items have not been implemented in eathena.
-//7614,115,100	// Wrapping_Paper
-//7618,115,100	// Monster_Crystal
+7614,115,100	// Wrapping_Paper
+7618,115,100	// Monster_Crystal
 2676,123,100	// Hunter_Earring
 
 // Cash Shop Related Items
@@ -254,3 +260,13 @@
 7619,91,100	// Enriched_Elunium
 7620,91,100	// Enriched_Oridecon
 7621,91,100	// Token_of_Siegfried
+//12923,73,100	// Pet_Egg_Scroll_Box
+//12924,73,100	// Pet_Egg_Scroll_Box
+//12925,91,100	// Pet_Egg_Scroll
+//12926,91,100	// Pet_Egg_Scroll
+//12929,73,100	// Pet_Egg_Scroll_Box
+//12930,73,100	// Pet_Egg_Scroll_Box
+//12931,73,100	// Pet_Egg_Scroll_Box
+//12932,91,100	// Pet_Egg_Scroll
+//12933,91,100	// Pet_Egg_Scroll
+//12934,91,100	// Pet_Egg_Scroll

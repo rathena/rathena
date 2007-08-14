@@ -277,4 +277,6 @@
 
 //11.3 items
 //Crackling Skull -> Shadow Arrow 50, Cursed Arrow 50 EA
+7752,1767,50,1761,50
 //Broken Farm Tool -> Rusty Arrow 50, Iron Arrow 10, Cursed Arrow 20 EA
+7753,1762,50,1770,10,1761,20
