@@ -44,6 +44,7 @@
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 ========================
 08/14
+	* Fixed the damage area of the "path damage" skills [Playtester]
 	* Fixed some entries in the mob_skill_db [Playtester]
 08/13
 	* Uncommented the 'new' npc skills from mob_skill_db as they are
