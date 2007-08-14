@@ -43,6 +43,8 @@
 	Still need proper rates for most 11.3 Equipment that don't have their +rates/Status Infliction rates clearly defined.
 	13107 Western_Outlaw		Need correct HIT and ASPD Rate
 ========================
+08/14
+	* Fixed some entries in the mob_skill_db [Playtester]
 08/13
 	* Uncommented the 'new' npc skills from mob_skill_db as they are
 	  implemented now. [Skotlex]

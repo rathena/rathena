@@ -332,16 +332,16 @@
 1065,Strouf@MG_LIGHTNINGBOLT,chase,20,3,500,1500,5000,yes,target,always,0,,,,,,
 1065,Strouf@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,32,,,,,
 1065,Strouf@NPC_WATERATTACK,attack,184,1,2000,0,5000,yes,target,always,0,,,,,,
-1065,Strouf@SA_DISPELL,attack,289,5,0,0,30000,yes,target,always,0,,,,,,9
-1065,Strouf@SA_DISPELL,chase,289,5,0,0,30000,yes,target,always,0,,,,,,9
+//1065,Strouf@SA_DISPELL,attack,289,5,0,0,30000,yes,target,always,0,,,,,,9
+//1065,Strouf@SA_DISPELL,chase,289,5,0,0,30000,yes,target,always,0,,,,,,9
 1065,Strouf@WZ_WATERBALL,attack,86,3,500,1500,5000,yes,target,always,0,,,,,,6
 1065,Strouf@MG_FROSTDIVER,angry,15,9,1000,1000,5000,yes,target,always,0,,,,,,
 1065,Strouf@MG_FROSTDIVER,follow,15,9,1000,1000,5000,yes,target,always,0,,,,,,
 1065,Strouf@MG_LIGHTNINGBOLT,angry,20,3,500,1500,5000,yes,target,always,0,,,,,,
 1065,Strouf@MG_LIGHTNINGBOLT,follow,20,3,500,1500,5000,yes,target,always,0,,,,,,
 1065,Strouf@NPC_WATERATTACK,angry,184,1,2000,0,5000,yes,target,always,0,,,,,,
-1065,Strouf@SA_DISPELL,angry,289,5,0,0,30000,yes,target,always,0,,,,,,9
-1065,Strouf@SA_DISPELL,follow,289,5,0,0,30000,yes,target,always,0,,,,,,9
+//1065,Strouf@SA_DISPELL,angry,289,5,0,0,30000,yes,target,always,0,,,,,,9
+//1065,Strouf@SA_DISPELL,follow,289,5,0,0,30000,yes,target,always,0,,,,,,9
 1065,Strouf@WZ_WATERBALL,angry,86,3,500,1500,5000,yes,target,always,0,,,,,,6
 1066,Vadon@NPC_STUNATTACK,attack,179,2,500,1500,5000,no,target,always,0,,,,,,6
 1066,Vadon@NPC_WATERATTACK,attack,184,1,2000,0,5000,yes,target,always,0,,,,,,
@@ -710,8 +710,8 @@
 1142,Marine Sphere@NPC_SELFDESTRUCTION,any,173,1,10000,3000,0,no,self,afterskill,354,,,,,,
 1142,Marine Sphere@NPC_SELFDESTRUCTION,idle,173,1,500,2000,5000,no,self,myhpltmaxrate,99,,,,,,
 1142,Marine Sphere@NPC_SELFDESTRUCTION,idle,173,1,10000,2000,5000,no,self,skillused,173,,,,,,
-1142,Marine Sphere@NPC_SELFDESTRUCTION,idle,173,1,10000,0,0,yes,self,always,0,,,,,,
-1142,Marine Sphere@NPC_SPEEDUP,any,332,1,10000,0,700,yes,self,always,0,,,,,,
+//1142,Marine Sphere@NPC_SELFDESTRUCTION,idle,173,1,10000,0,0,yes,self,always,0,,,,,,
+//1142,Marine Sphere@NPC_SPEEDUP,any,332,1,10000,0,700,yes,self,always,0,,,,,,
 1143,Marionette@HT_FREEZINGTRAP,idle,121,5,500,0,300000,yes,around2,always,0,,,,,,29
 1143,Marionette@MG_FIREWALL,chase,18,5,500,500,5000,yes,target,always,0,,,,,,2
 1143,Marionette@NPC_TELEKINESISATTACK,attack,191,5,500,0,5000,yes,target,always,0,,,,,,6
@@ -1600,7 +1600,7 @@
 1372,Goat@NPC_STUNATTACK,attack,179,3,500,1500,5000,no,target,always,0,,,,,,6
 1373,Lord of Death@AL_DECAGI,chase,30,10,2000,0,60000,no,target,always,0,,,,,,
 1373,Lord of Death@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
-1373,Lord of the Dead@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,6
+//1373,Lord of the Dead@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,30,,,,,,6
 1373,Lord of the Dead@NPC_HELLJUDGEMENT,chase,662,10,10000,1000,10000,no,self,always,0,,,,,,36
 1373,Lord of the Dead@NPC_HELLJUDGEMENT,attack,662,10,10000,1000,10000,no,self,always,0,,,,,,36
 1373,Lord of Death@KN_BRANDISHSPEAR,attack,57,20,2000,500,5000,no,target,always,0,,,,,,
@@ -3499,7 +3499,7 @@
 1688,Lady Tany@AM_POTIONPITCHER,attack,231,4,2000,0,0,yes,friend,friendhpltmaxrate,90,,,,,,2
 1688,Lady Tany@AL_TELEPORT,idle,26,1,1000,0,30000,yes,self,always,0,,,,,,
 1688,Lady Tany@AL_TELEPORT,attack,26,1,1000,0,30000,yes,self,always,0,,,,,,
-//1688,Lady Tanee@NPC_EXPULSION,attack,674,1,1000,1000,10000,no,self,myhpltmaxrate,60,,,,,,
+1688,Lady Tanee@NPC_EXPULSION,attack,674,1,1000,1000,10000,no,self,myhpltmaxrate,60,,,,,,
 1688,Lady Tany@AC_CHARGEARROW,attack,148,1,2000,0,5000,yes,randomtarget,always,0,,,,,,6
 1688,Lady Tany@NPC_COMBOATTACK,attack,171,1,1000,0,5000,no,randomtarget,always,0,,,,,,
 1688,Lady Tany@NPC_CRITICALSLASH,attack,170,1,500,500,5000,no,randomtarget,always,0,,,,,,6
