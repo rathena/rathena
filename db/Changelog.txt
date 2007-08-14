@@ -4,33 +4,37 @@
 					  And revive with 1 HP / 1 SP at the place of your death.
 				[Komurka] From where this info is? ... Mine: On your death you'll loose this ring and get 50% HP.
 				[Poki#3]  Theres no official desc! <.< Although you might wanna make it a custom item or something...
-	1475 Cavalry Lance:		NEED INFO.
+	1308 Golden Axe:		NEED INFO
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
-	1308 Golden Axe:		NEED INFO.
 	-----
-	1238 Zeny Knife:	Should be 40% chance to get 1-100 Zeny
-	4296 Cramp Card:	Should be 1% chance to get 1-500 Zeny
-	12017 Speed Decreasing Potion: A potion which decreases the moving speed of a character for a duration.
+	1238 Zeny Knife:		Should be 40% chance to get 1-100 Zeny
+	4296 Cramp Card:		Should be 1% chance to get 1-500 Zeny
+	12017 Speed Decreasing Potion:	A potion which decreases the moving speed of a character for a duration.
+	-----
+	4352 B_Ygnizem_Card:		Recover 50 HP and 10 SP every 10 seconds
+	4374 Apocalips_H_Card:		Ignore 30% Mdef on Boss monsters
 	-----
 	Incomplete or missing bonuses (Can be completed with NPC skill update):
-	1270 Drill_Katar		Full strip target without applying "Stripped" status.
-	1565 Book_of_the_Dead		Cause Coma status to Demi-human
-	2000 Staff_of_Destruction	Reduce cast-time of Mystical Amplification by 50%
-	1535 Holgrehenn's_Hammer	Breaking your own gear at low rate when compounded with Whitesmith_card
+	1270 Drill_Katar:		Full strip target without applying "Stripped" status.
+	1535 Holgrehenn's_Hammer:	Breaking your own gear at low rate when compounded with Whitesmith_card
+	1565 Book_of_the_Dead:		Cause Coma status to Demi-human
+	1626 Staff_of_Piercing:		Ignore 10% Mdef
+	2000 Staff_of_Destruction:	Reduce cast-time of Mystical Amplification by 50%
 
 	Missing Status Effects:
-	12209 Life_Insurrance		No EXP penetly on death (Recommend constant: SC_NoPenelty - Has status icon)
-	12208 Field_Manual		Increased EXP rate (Recommend constant: SC_IncreasedEXP - Has status icon)
-	12210 Bubble_Gum		Increased Drop rate (Recommend constant: SC_IncreasedDropRate - Has status icon)
-	12214 Convex_Mirror		Detect MVP spawn on minimap; doesn't work with special condition MVPs. (Recommend constant: SC_DetectMVPSpawn)
+	12209 Life_Insurrance:		No EXP penetly on death (Recommend constant: SC_NoPenelty - Has status icon)
+	12208 Field_Manual:		Increased EXP rate (Recommend constant: SC_IncreasedEXP - Has status icon)
+	12210 Bubble_Gum:		Increased Drop rate (Recommend constant: SC_IncreasedDropRate - Has status icon)
+	12214 Convex_Mirror:		Detect MVP spawn on minimap; doesn't work with special condition MVPs. (Recommend constant: SC_DetectMVPSpawn)
 
 	Possible Improper bonuses:
-	12212 Giant_Fly_Wing		Summons all party members to leader using script.
-	12213 Glittering_Wand		Simple script to ensure weight is 0 and then resets characters skills.	
-	7621 Token_of_Ziegfried		Revive player on death (if item is in inventoy? Needs a clearer description)
+	12212 Giant_Fly_Wing:		Summons all party members to leader using script.
+	12213 Glittering_Wand:		Simple script to ensure weight is 0 and then resets characters skills.	
+	7621 Token_of_Ziegfried:	Revive player on death (if item is in inventoy? Needs a clearer description)
+
 	Still need proper rates for most 11.3 Equipment that don't have their +rates/Status Infliction rates clearly defined.
-	13107 Western_Outlaw		Need correct HIT and ASPD Rate
+	13107 Western_Outlaw:		Need correct HIT and ASPD Rate
 ========================
 08/14
 	* Rev. 11007 Implemented bonuses for several 11.3 equips. [L0ne_W0lf]
