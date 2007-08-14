@@ -1178,8 +1178,8 @@
 2528,Wool_Scarf,Wool Scarf,5,,10,50,,3,,1,0xFFFFFFFE,2,2,4,,55,1,0,{ bonus bMdef,4;},{},{}
 2529,Decoration_of_the_Rider,Decoration of the Rider,5,,10,500,,4,,0,0xFFFFFFFE,2,2,4,,55,1,0,{ bonus bAgi,2; if (isequipped(2425)) bonus bFlee,10; },{},{}
 2530,Decoration_of_the_Rider_,Decoration of the Rider,5,,10,500,,4,,1,0xFFFFFFFE,2,2,4,,55,1,0,{ bonus bAgi,2; },{},{}
-2531,Wolfhedin,Wolfhedin,5,,10,700,,3,,1,0x000654E2,2,2,4,,70,1,0,{ bonus4 bAutoSpellWhenHit,675,1,10,0; },{},{}
-2532,Mithril_Magic_Cape,Mithril Magic Cape,5,,10,400,,3,,1,0x00198B1C,2,2,4,,70,1,0,{ bonus4 bAutoSpellWhenHit,676,1,10,0; bonus bMdef,3; },{},{}
+2531,Wolfhedin,Wolfhedin,5,,10,700,,3,,1,0x000654E2,2,2,4,,70,1,0,{ bonus5 bAutoSpellWhenHit,675,1,10,BF_WEAPON,0; },{},{}
+2532,Mithril_Magic_Cape,Mithril Magic Cape,5,,10,400,,3,,1,0x00098B1C,2,2,4,,70,1,0,{ bonus bMdef,3; bonus5 bAutoSpellWhenHit,676,1,10,BF_MAGIC,0; },{},{}
 2533,Freya's_Manteau,Freya's_Manteau,5,,10,200,,10,,0,0xFFFFFFFE,7,2,4,,0,1,0,{},{},{}
 // Accessories
 //===================================================================
