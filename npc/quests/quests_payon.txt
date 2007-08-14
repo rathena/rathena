@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.5a
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.4 Removed Duplicates [Silent]
 //= 1.5 Updated Dialogs from "Pretend Murdered Quest" [Samuray22]
 //= 1.5a replaced item "names" with item id. [Lupus]
+//= 1.6 Updated Dialogs from "Oxygen Mask Quest" [Samuray22]
 //============================================================ 
 
 
@@ -123,94 +124,78 @@ payon_in01,18,10,4	script	Mystic Lady	75,{
 //========================================================================================//
 //					Oxygen Mask Quest
 //========================================================================================//
-payon_in02,25,71,4	script	Young Man#11	86,{
-	mes "[Young Man]";
-	if(countitem(701) >= 5) goto L_GotOra;
-	mes "Blahhhhhh! I... I... I JUST CAN'T take it anymore!! You little stinky, filthy, BASTARDS!!!";
-	emotion e_an;
-	next;
-	menu "Continue.",M_Cont, "End Conversation.",M_End;
-	
-	M_Cont:
-		mes "[Young Man]";
-		mes "~Sigh~ I've had a rough life.  You see, both my parents passed away when I was a kid, so I had to work to support myself at a young age.";
+payon_in02,25,71,3	script	Young man#11	86,{
+	if(countitem(701) > 4) {
+		mes "[Young man]";
+		mes "What! Oh! No! No way!";
+		mes "Huh... You think that guy is cut... No! No way!!";
 		next;
-		mes "[Young Man]";
-		mes "It sure was rough.  But after 10 years of hard work I was able to save up and finally buy myself a home!";
+		switch(select( "Show him Ora Ora.","Give him Ora Ora.","Cancel.")) {
+		case 1:
+			mes "[Young man]";
+			mes "Wow! Wow! Wow!";
+			mes "This is Ora Ora...";
+			mes "I will speak frankly! If you are giving me this I will give you my treasure!";
+			mes "How about it? Don't you want it?";
+			close;
+		case 2:
+			delitem 701, 5;
+			mes "[Young man]";
+			mes "Ha! Ha! Ha! I finally got it! Ora_Ora!";
+			mes "Damn Thief Bug!! Now I can kill you all!";
+			next;
+			mes "[Young man]";
+			mes "Ha! Ha! ... Ha! Ha!";
+			mes "I am sorry! I am too excited... Mm... I will give you my treasure as I promised!";
+			next;
+			getitem 5004, 1;
+			mes "[Young man]";
+			mes "If you breathe through this mouth piece... you can have fresh air all the time!";
+			mes "I used to worked by the sea and I brought one back with me.";
+			mes "I will give it to you for your kindness since I don't need it any more.";
+			next;
+			mes "[Young man]";
+			mes "Hey! Hey! THat's it! I want to try Ora Ora now!";
+			close;
+		case 3:
+			mes "[Young man]";
+			mes "Uh... If it doesn't work on Thief bug...";
+			mes "Then I will have no choice but try to like Thief Bug... Hey...";
+			close;
+		}
+	}
+		mes "[Young man]";
+		mes "Uh...Ah! I can't take it any more!";
+		mes "Damn Thief Bug!!";
 		next;
-		mes "[Young Man]";
-		mes "Unfortunately I didn't have that much money, so I couldn't buy the home I really wanted.";
-		mes "Instead, I found this house..... It was big and cheap.... so I bought without really thinking my decision through.....";
-		next;
-		mes "[Young Man]";
-		mes "Jeez was that a mistake...... The house turned out to be a HAVEN for THIEF BUGS!!!";
-		emotion e_omg;
-		next;
-		mes "[Young Man]";
-		mes "I tried EVERYTHING to get rid of them! I sprayed them, I smashed them, I lured them out with food.........";
-		mes "Finally as a last resort.... I even tried to burn the house down!!";
-		next;
-		mes "[Young Man]";
-		mes "Grrr! What will it take to get rid of these vile creatures???";
-		emotion e_pif;
-		next;
-		mes "[Young Man]";
-		mes "I've heard there is something called ^3355FF'Ora Ora'^000000, that people in other countries use to fight bugs.....";
-		mes "But will it work for my situation?";
-		next;
-		mes "[Young Man]";
-		mes "I'm willing to give anything a try at this point.  I don't have much money so I can only afford ^5555FF'5 Ora Oras'^000000.";
-		mes "If you happen to come across some 'Ora Ora' please let me know.";
-		close;
-
-	M_End:
-		mes "[Young Man]";
-		mes "I'm just so tired of fighting this never ending battle against these bugs...... those dirty scumbags!!";
-		emotion e_pif;
-		close;
-
-L_GotOra:
-		mes "ArrrGgghhh!! No!... It can't be!..... I think I'm going mad... they're starting to look so cute... ArrrGgghhh!!... Nooooooo!!";
-		emotion e_omg;
-	M_Menu:
-		next;
-		menu "Continue",M_Cont, "Show Ora Ora",-, "Give Ora Ora",M_Give, "Cancel",M_End2;
-
-		mes "[Young Man]";
-		mes "Oooooohhhh..... is.. is this... is this... Ora Ora...??? If you give it to me I'll give you my prized treasure in return!";
-		mes "What do you say?? Is it a deal?";
-		goto M_Menu;
-
-	M_Give:
-		if(countitem(701) < 5) goto L_Cheater;
-		delitem 701,5;
-		mes "[Young Man]";
-		mes "Muhahahahah!!! Finally, I have it.... Ora Ora! Stupid and distgusting Thief Bugs.... you'll pay for invading MY HOME!!!";
-		emotion e_gg;
-		next;
-		mes "[Young Man]";
-		mes "..... Eh em... sorry.  I was a little outa control there.... Ah, let me give you my valuable treasure......";	
-		emotion e_swt;
-		next;
-		getitem 5004,1;
-		mes "[Young Man]";
-		mes "By wearing this over your mouth, the air you breathe will be filltered so that you can breathe clean air.";
-		mes "I picked it up while I was a Sailor out at sea.  I really have no need for it.";
-		next;
-		mes "[Young Man]";
-		mes "Hehehehe!! I can't wait to use this Ora Ora!!!";
-		close;
-
-	L_Cheater:
-		mes "Oh... Where is it?!";
-		next;
-
-	M_End2:
-		mes "[Young Man]";
-		mes "What if I CAN'T get rid of these thief bugs???... I guess the only other thing I could do is fall in love with them...... heh... heh... heh....";
-		emotion e_swt;
-		close;
-
+		if( select( "Continue talking.","Cancel.") == 1) {
+			mes "[Young man]";
+			mes "My life was really rough.";
+			mes "My parents died when I was little... I had to work really hard to earn my living.";
+			next;
+			mes "[Young man]";
+			mes "It's been ten years now... I got some saving... I dream to have my own house.";
+			next;
+			mes "[Young man]";
+			mes "I can't afford a nice house even I spend all my saving on it...";
+			mes "However... I have a big but cheap house now... There weren't many choices for me...";
+			next;
+			mes "[Young man]";
+			mes "And now it is taken over by the damn Thief Bug as their den.";
+			next;
+			mes "[Young man]";
+			mes "I tried anything I could... To hunt them... To drive them away... Nothing really worked. They always come back!";
+			mes "I even burned my own house.";
+			next;
+			mes "[Young man]";
+			mes "Ah... I really want them to disappear... Do you think^3355FF Ora Ora^000000 is the answer?";
+			mes "I heard it is possible to find it in other countries...";
+			mes "If only I got five of it... I can get rid of them forever...";
+			close;
+		}
+			mes "[Young man]";
+			mes "I just can't make them disappear no matter how... I am so tired of it... I can't take it any more... WHatever...";
+			close;
 }
 
 

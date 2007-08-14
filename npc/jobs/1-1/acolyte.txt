@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7a
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -22,6 +22,7 @@
 //=	No longer uses function "F_ToHigh"
 //=	Proper dialog for Priest job quest is unused (for now.)
 //= 1.7a Functions now make use of proper priest quest dialog [L0ne_W0lf]
+//= 1.8 Removed an Unnecessary "set job_acolyte_q,0;" [Samuray22]
 //============================================================ 
 
 prt_church,184,41,4	script	Cleric#aco	60,{
@@ -172,7 +173,6 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 		mes "[Father Mareusis]";
 		mes "I am proud to say that you are now ready to become an Acolyte!";
 		next;
-		set job_acolyte_q,0;
 		skill 143,0,0;
 		callfunc "Job_Change",Job_Acolyte;
 		callfunc "F_ClearJobVar";
