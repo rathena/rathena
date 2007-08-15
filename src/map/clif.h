@@ -144,6 +144,7 @@ void clif_soundeffect(struct map_session_data* sd, struct block_list* bl, const 
 int clif_soundeffectall(struct block_list* bl, const char *name, int type, enum send_target coverage);
 void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, int target_id, unsigned int tick);
 void clif_parse_LoadEndAck(int fd,struct map_session_data *sd);
+void clif_hotkeys_send(struct map_session_data *sd);
 
 // trade
 int clif_traderequest(struct map_session_data* sd, const char* name);

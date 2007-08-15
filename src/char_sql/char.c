@@ -57,6 +57,7 @@ char guild_storage_db[256] = "guild_storage";
 char party_db[256] = "party";
 char pet_db[256] = "pet";
 char friend_db[256] = "friends";
+char hotkey_db[256] = "hotkey";
 
 #ifndef TXT_SQL_CONVERT
 static struct dbt *char_db_;
@@ -731,7 +732,28 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus *p){
 			strcat(save_status, " friends");
 
 	}
-
+#ifdef HOTKEY_SAVING
+	// hotkeys
+	tmp_ptr = tmp_sql;
+	tmp_ptr += sprintf(tmp_ptr, "REPLACE INTO `%s` (`char_id`, `hotkey`, `type`, `itemskill_id`, `skill_lvl`) VALUES ", hotkey_db);
+	diff = 0;
+	for(i = 0; i < ARRAYLENGTH(p->hotkeys); i++){
+		if(memcmp(&p->hotkeys[i], &cp->hotkeys[i], sizeof(struct hotkey)))
+		{
+			tmp_ptr += sprintf(tmp_ptr, "('%d','%d','%d','%d','%d'),", char_id, i, p->hotkeys[i].type, p->hotkeys[i].id , p->hotkeys[i].lv);
+			diff = 1;
+		}
+	}
+	if(diff) {
+		tmp_ptr[-1] = 0;
+		if(mysql_query(&mysql_handle, tmp_sql)){
+			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		} else {
+			strcat(save_status, " hotkeys");
+		}
+	}
+#endif
 	if (save_status[0]!='\0' && save_log)
 		ShowInfo("Saved char %d - %s:%s.\n", char_id, p->name, save_status);
 #ifndef TXT_SQL_CONVERT
@@ -1082,6 +1104,29 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 		mysql_free_result(sql_res);
 		strcat (t_msg, " friends");
 	}
+
+#ifdef HOTKEY_SAVING
+	//Hotkeys
+	sprintf(tmp_sql, "SELECT `hotkey`, `type`, `itemskill_id`, `skill_lvl` FROM `%s` WHERE `char_id`=%d ORDER BY `hotkey` LIMIT %d;", hotkey_db, char_id, HOTKEY_SAVING);
+	if(mysql_query(&mysql_handle, tmp_sql)){
+		ShowSQL("DB error - %s\n", mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__, __LINE__, tmp_sql);
+	}
+	sql_res = mysql_store_result(&mysql_handle);
+
+	if (sql_res) {
+		while ((sql_row = mysql_fetch_row(sql_res))) {
+			n = atoi(sql_row[0]);
+			if( n < 0 || n >= HOTKEY_SAVING)
+				continue;
+			p->hotkeys[n].type = atoi(sql_row[1]);
+			p->hotkeys[n].id = atoi(sql_row[2]);
+			p->hotkeys[n].lv = atoi(sql_row[3]);
+		}
+		mysql_free_result(sql_res);
+		strcat (t_msg, " hotkeys");
+	}
+#endif
 
 	if (save_log) ShowInfo("Loaded char (%d - %s): %s\n", char_id, p->name, t_msg);	//ok. all data load successfuly!
 
@@ -3765,6 +3810,8 @@ void sql_config_read(const char* cfgName)
 			strcpy(pet_db,w2);
 		else if(!strcmpi(w1,"friend_db"))
 			strcpy(friend_db,w2);
+		else if(!strcmpi(w1,"hotkey_db"))
+			strcpy(hotkey_db,w2);
 #ifndef TXT_SQL_CONVERT
 		else if(!strcmpi(w1,"db_path"))
 			strcpy(db_path,w2);

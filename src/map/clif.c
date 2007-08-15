@@ -8083,6 +8083,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_updatestatus(sd,SP_NEXTJOBEXP);
 		clif_updatestatus(sd,SP_SKILLPOINT);
 		clif_initialstatus(sd);
+		clif_hotkeys_send(sd);
 
 		if (sd->sc.option&OPTION_FALCON)
 			clif_status_load(&sd->bl, SI_FALCON, 1);
@@ -8191,6 +8192,38 @@ void clif_parse_TickSend(int fd, struct map_session_data *sd)
 	// removed until the socket problems are fixed. [FlavioJS]
 	//flush_fifo(fd); // try to send immediatly so the client gets more accurate "pings"
 	return;
+}
+
+void clif_hotkeys_send(struct map_session_data *sd) {
+#ifdef HOTKEY_SAVING
+	const int fd = sd->fd;
+	int i;
+	if (!fd) return;
+	WFIFOHEAD(fd, 2+HOTKEY_SAVING*7);
+	WFIFOW(fd, 0) = 0x02b9;
+	for(i = 0; i < HOTKEY_SAVING; i++) {
+		WFIFOB(fd, 2 + 0 + i * 7) = sd->status.hotkeys[i].type; // type: 0: item, 1: skill
+		WFIFOL(fd, 2 + 1 + i * 7) = sd->status.hotkeys[i].id; // item or skill ID
+		WFIFOW(fd, 2 + 5 + i * 7) = sd->status.hotkeys[i].lv; // skill level
+	}
+	WFIFOSET(fd, packet_len(0x02b9));
+#endif
+}
+
+void clif_parse_Hotkey(int fd, struct map_session_data *sd) {
+#ifdef HOTKEY_SAVING
+	unsigned short idx;
+	int cmd;
+
+	cmd = RFIFOW(fd, 0);
+	idx = RFIFOW(fd, packet_db[sd->packet_ver][cmd].pos[0]);
+	if (idx >= HOTKEY_SAVING) return;
+
+	sd->status.hotkeys[idx].type = RFIFOB(fd, packet_db[sd->packet_ver][cmd].pos[1]);
+	sd->status.hotkeys[idx].id = RFIFOL(fd, packet_db[sd->packet_ver][cmd].pos[2]);
+	sd->status.hotkeys[idx].lv = RFIFOW(fd, packet_db[sd->packet_ver][cmd].pos[3]);
+	return;
+#endif
 }
 
 /*==========================================
@@ -11705,7 +11738,7 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0, 18,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  0,  0,   0,191,  0,  0,  0,  0,  0,  0,
 	//#0x02C0
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
@@ -11843,13 +11876,13 @@ static int packetdb_readdb(void)
 		{clif_parse_FeelSaveOk,"feelsaveok"},
 		{clif_parse_AdoptRequest,"adopt"},
 		{clif_parse_debug,"debug"},
-		//[blackhole89]	//[orn]
 		{clif_parse_ChangeHomunculusName,"changehomunculusname"},
 		{clif_parse_HomMoveToMaster,"hommovetomaster"},
 		{clif_parse_HomMoveTo,"hommoveto"},
 		{clif_parse_HomAttack,"homattack"},
 		{clif_parse_HomMenu,"hommenu"},
 		{clif_parse_StoragePassword,"storagepassword"},
+		{clif_parse_Hotkey,"hotkey"},
 		{NULL,NULL}
 	};
 

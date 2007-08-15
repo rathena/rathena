@@ -13,6 +13,11 @@
 //Remove/Comment this line to disable sc_data saving. [Skotlex]
 #define ENABLE_SC_SAVING 
 
+//Remove/Comment this line to disable server-side hot-key saving support [Skotlex]
+//Note that newer clients no longer save hotkeys in the registry!
+//The number is the max number of hotkeys to save (27 = 9 skills x 3 bars)
+#define HOTKEY_SAVING 27
+
 #define MAX_MAP_PER_SERVER 1024
 #define MAX_INVENTORY 100
 //Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
@@ -180,6 +185,14 @@ struct friend {
 	char name[NAME_LENGTH];
 };
 
+#ifdef HOTKEY_SAVING
+struct hotkey {
+	unsigned int id;
+	unsigned short lv;
+	unsigned char type; // 0: item, 1: skill
+};
+#endif
+
 struct mmo_charstatus {
 	int char_id;
 	int account_id;
@@ -217,6 +230,9 @@ struct mmo_charstatus {
 	struct skill skill[MAX_SKILL];
 
 	struct friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
+#ifdef HOTKEY_SAVING
+	struct hotkey hotkeys[HOTKEY_SAVING];
+#endif
 };
 
 struct registry {

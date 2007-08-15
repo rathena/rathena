@@ -46,6 +46,7 @@
 
 char char_txt[1024] = "save/athena.txt";
 char friends_txt[1024] = "save/friends.txt";
+char hotkeys_txt[1024] = "save/hotkeys.txt";
 char char_log_filename[1024] = "log/char.log";
 
 int save_log = 1;	// show loading/saving messages
@@ -445,6 +446,22 @@ int mmo_friends_list_data_str(char *str, struct mmo_charstatus *p)
 	return 0;
 }
 
+/*---------------------------------------------------
+  Make a data line for hotkeys list
+ --------------------------------------------------*/
+int mmo_hotkeys_tostr(char *str, struct mmo_charstatus *p)
+{
+	int i;
+	char *str_p = str;
+	str_p += sprintf(str_p, "%d", p->char_id);
+#ifdef HOTKEY_SAVING
+	for (i=0;i<HOTKEY_SAVING;i++)
+		str_p += sprintf(str_p, ",%d,%d,%d", p->hotkeys[i].type, p->hotkeys[i].id, p->hotkeys[i].lv);
+#endif
+	str_p += '\0';
+
+	return 0;
+}
 //-------------------------------------------------
 // Function to create the character line (for save)
 //-------------------------------------------------
@@ -891,6 +908,53 @@ int parse_friend_txt(struct mmo_charstatus *p)
 	return count;
 }
 
+//---------------------------------
+// Function to read hotkey list
+//---------------------------------
+int parse_hotkey_txt(struct mmo_charstatus *p)
+{
+#ifdef HOTKEY_SAVING
+	char line[1024];
+	int pos = 0, count = 0, next;
+	int i,len;
+	int type, id, lv;
+	FILE *fp;
+
+	// Open the file and look for the ID
+	fp = fopen(hotkeys_txt, "r");
+	if(fp == NULL)
+		return -1;
+	
+	while(fgets(line, sizeof(line), fp))
+	{
+		if(line[0] == '/' && line[1] == '/')
+			continue;
+		if (sscanf(line, "%d%n",&i, &pos) < 1 || i != p->char_id)
+			continue; //Not this line...
+		//Read hotkeys 
+		len = strlen(line);
+		next = pos;
+		for (count = 0; next < len && count < HOTKEY_SAVING; count++)
+		{
+			if (sscanf(line+next, ",%d,%d,%d%n",&type,&id,&lv, &pos) < 3)
+				//Invalid entry?
+				break;
+			p->hotkeys[count].type = type;
+			p->hotkeys[count].id = id;
+			p->hotkeys[count].lv = lv;
+			next+=pos;
+		}
+		break; //Found hotkeys.
+	}
+	fclose(fp);
+	return count;
+#else
+	return 0;
+#endif
+}
+
+
+
 #ifndef TXT_SQL_CONVERT
 //---------------------------------
 // Function to read characters file
@@ -944,7 +1008,9 @@ int mmo_char_init(void)
 
 		// Initialize friends list
 		parse_friend_txt(&char_dat[char_num].status);  // Grab friends for the character
-
+		// Initialize hotkey list
+		parse_hotkey_txt(&char_dat[char_num].status);  // Grab hotkeys for the character
+		
 		if (ret > 0) { // negative value or zero for errors
 			if (char_dat[char_num].status.char_id >= char_id_count)
 				char_id_count = char_dat[char_num].status.char_id + 1;
@@ -1049,7 +1115,17 @@ void mmo_char_sync(void)
 
 	lock_fclose(f_fp, friends_txt, &lock);
 
-	//aFree(id);
+#ifdef HOTKEY_SAVING
+	// Hotkey List data save (Skotlex)
+	f_fp = lock_fopen(hotkeys_txt, &lock);
+	for(i = 0; i < char_num; i++) {
+		mmo_hotkeys_tostr(f_line, &char_dat[id[i]].status);
+		fprintf(f_fp, "%s" RETCODE, f_line);
+	}
+
+	lock_fclose(f_fp, hotkeys_txt, &lock);
+#endif
+
 	DELETE_BUFFER(id);
 
 	return;
@@ -4059,6 +4135,8 @@ int char_config_read(const char *cfgName)
 			strcpy(char_txt, w2);
 		} else if (strcmpi(w1, "friends_txt") == 0) { //By davidsiaw
 			strcpy(friends_txt, w2);
+		} else if (strcmpi(w1, "hotkeys_txt") == 0) { //By davidsiaw
+			strcpy(hotkeys_txt, w2);
 #ifndef TXT_SQL_CONVERT
 		} else if (strcmpi(w1, "max_connect_user") == 0) {
 			max_connect_user = atoi(w2);
