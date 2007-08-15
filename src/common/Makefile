@@ -18,7 +18,7 @@ obj/mini%.o: %.c
 
 clean:
 	rm -rf *.o obj GNUmakefile
-
+	rm -rf svnversion.h
 HAVESVN = $(shell which svnversion)
 
 ifeq ($(findstring /,$(HAVESVN)), /)
