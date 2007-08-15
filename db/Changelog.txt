@@ -37,6 +37,7 @@
 	13107 Western_Outlaw:		Need correct HIT and ASPD Rate
 ========================
 08/14
+	* Rev. 11015 Added Autocast of Greed to Lesser Elemental Ring. [L0ne_W0lf]
 	* Rev. 11011 Changed the rest of the Western_Outlaw bonus. (/3 -> /6) [L0ne_W0lf]
 	* Rev. 11010 Added bonus for Hunter_Earring, as well as it's DEF bonus. [L0ne_W0lf]
 	* Changed ASPD bonus for Western Outlaw at Playtester's request.
