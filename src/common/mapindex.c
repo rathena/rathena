@@ -118,13 +118,13 @@ unsigned short mapindex_name2id(const char* name)
 #ifdef MAPINDEX_AUTOADD
 	if( mapindex_addmap(i,map_name) )
 	{
-		ShowDebug("mapindex_name2id: Auto-added map \"%s\" to position %d\n", indexes[i], i);
+		ShowDebug("mapindex_name2id: Auto-added map \"%s\" to position %d\n", map_name, i);
 		return i;
 	}
-	ShowWarning("mapindex_name2id: Failed to auto-add map \"%s\" to position %d!\n", name, i);
+	ShowWarning("mapindex_name2id: Failed to auto-add map \"%s\" to position %d!\n", map_name, i);
 	return 0;
 #else
-	ShowDebug("mapindex_name2id: Map \"%s\" not found in index list!\n", name);
+	ShowDebug("mapindex_name2id: Map \"%s\" not found in index list!\n", map_name);
 	return 0;
 #endif
 }
@@ -144,7 +144,7 @@ void mapindex_init(void)
 	char line[1024];
 	int last_index = -1;
 	int index;
-	char map_name[1024]; // only MAP_NAME_LENGTH(_EXT) under safe conditions
+	char map_name[1024];
 	
 	memset (&indexes, 0, sizeof (indexes));
 	fp=fopen(mapindex_cfgfile,"r");
@@ -157,7 +157,7 @@ void mapindex_init(void)
 		if(line[0] == '/' && line[1] == '/')
 			continue;
 
-		switch (sscanf(line, "%s\t%d", map_name, &index))
+		switch (sscanf(line, "%1023s\t%d", map_name, &index))
 		{
 			case 1: //Map with no ID given, auto-assign
 				index = last_index+1;
