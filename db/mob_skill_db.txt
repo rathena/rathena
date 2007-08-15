@@ -477,6 +477,7 @@
 1098,Anubis@NPC_DARKTHUNDER,attack,341,5,1000,1500,10000,no,target,always,0,,,,,,
 1098,Anubis@MG_THUNDERSTORM,attack,21,5,1000,1500,10000,no,target,always,0,,,,,,
 1098,Anubis@AS_SONICBLOW,attack,136,10,1000,0,10000,no,target,always,0,,,,,,
+1098,Anubis@NPC_CRITICALWOUND,attack,673,4,1000,0,10000,no,target,always,0,,,,,,
 1098,Anubis@NPC_MAGICALATTACK,attack,192,1,1000,700,10000,no,target,always,0,,,,,,
 1099,Argiope@AS_VENOMDUST,attack,140,1,500,1500,5000,no,target,always,0,,,,,,
 1099,Argiope@NPC_POISON,attack,176,3,500,800,5000,no,target,always,0,,,,,,

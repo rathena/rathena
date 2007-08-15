@@ -420,6 +420,21 @@ enum {
 	SI_FOODFLEE		= 247,
 	SI_FOODHIT		= 248,
 	SI_FOODCRI		= 249,
+	SI_EXPBOOST		= 250,
+	SI_LIFEINSURANCE	= 251,
+	SI_ITEMBOOST		= 252,
+	SI_BOSSMAPINFO		= 253,
+	//SI_TURTLEGENERAL	= 260, //All mobs display as Turtle General
+	//SI_BIOMOBTRICKDEAD	= 263, //Bio Mob effect on you and SI_TRICKDEAD
+	//SI_BLURRY		= 264, //For short time blurry screen and get Gloria icon
+	//SI_FOODSTR		= 271, //Same as 241
+	//SI_FOODAGI		= 272, //Same as 242
+	//SI_FOODVIT		= 273, //Same as 243
+	//SI_FOODDEX		= 274, //Same as 244
+	//SI_FOODINT		= 275, //Same as 245
+	//SI_FOODLUK		= 276, //Same as 246
+	SI_SLOWCAST		= 282,
+	SI_CRITICALWOUND	= 286,
 };
 
 // JOINTBEAT stackable ailments
