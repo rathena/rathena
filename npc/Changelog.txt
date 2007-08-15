@@ -4,7 +4,11 @@ Date		Added
 	* Deleted an Unnecessary "next;" on Rachel Guide. [Samuray22]
 	-Thanks to $ephiroth.
 	* Removed an Unnecessary "set job_acolyte_q,0;" in Acolyte Quest.
-	* Updated Dialogs from "Oxygen Mask Quest"
+	* Updated Dialogs from "Oxygen Mask Quest".
+	* Corrected some typo error in "Clown Reborn Quest".
+	-Thanks to Myllena.
+	* Corrected some typo error in "Professor Reborn Quest".
+	* Rewrote Taekwon Job Quest to the Aegis Standards.
 2007/08/13
 	* Rev. 11001 Fixed typos in the Blacksmith quest and whitesmith NPC. Thanks to Barron-Monster. [L0ne_W0lf]
 	* Rev. 10998 Fixed a typo in the merchant quest. [L0ne_W0lf]
