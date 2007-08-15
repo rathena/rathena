@@ -2809,7 +2809,7 @@
 9027,Alice_Egg,Alice Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
 9028,Rice_Cake_Egg,Rice Cake Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
 9029,Gobline_Xmas_Egg,Christmas Goblin Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
-9030,Chung_E_Egg,Green maiden Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
+9030,Chung_E_Egg,Green Maiden Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
 9031,Eclipse_Egg,Eclipse Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
 // Pet Accessories
 //===================================================================

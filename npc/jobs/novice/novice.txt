@@ -2083,7 +2083,7 @@ new_zone02,17,182,6	script	Helper#2	84,{
 			mes "Field Combat Training can be";
 			mes "actually pretty dangerous for";
 			mes "new adventurers. Let me give you";
-			mes "a little more strenght through the";
+			mes "a little more strength through the";
 			mes "power of my magic.";
 			next;
 			mes "[Elmeen]";

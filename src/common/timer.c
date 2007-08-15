@@ -269,12 +269,10 @@ int add_timer_interval(unsigned int tick, TimerFunc func, int id, int data, int 
 	return tid;
 }
 
-//int delete_timer(int id, TimerFunc func)
-int delete_timer_sub(int id, TimerFunc func, const char* file, int line)
+int delete_timer(int id, TimerFunc func)
 {
 	if (id <= 0 || id >= timer_data_num) {
-		//ShowError("delete_timer error : no such timer %d (%08x(%s))\n", id, (int)func, search_timer_func_list(func));
-		ShowError("delete_timer error : no such timer %d (%08x(%s)), invoked from %s:%d\n", id, (int)func, search_timer_func_list(func), file, line);
+		ShowError("delete_timer error : no such timer %d (%08x(%s))\n", id, (int)func, search_timer_func_list(func));
 		return -1;
 	}
 	if (timer_data[id].func != func) {

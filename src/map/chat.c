@@ -2,14 +2,15 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/cbasetypes.h"
-#include "../common/nullpo.h"
 #include "../common/malloc.h"
-#include "battle.h"
-#include "map.h"
+#include "../common/nullpo.h"
+#include "../common/strlib.h"
+#include "atcommand.h" // msg_txt()
+#include "battle.h" // struct battle_config
 #include "clif.h"
+#include "map.h"
+#include "npc.h" // npc_event_do()
 #include "pc.h"
-#include "npc.h"
-#include "atcommand.h"
 #include "chat.h"
 
 #include <stdio.h>
@@ -20,7 +21,7 @@ int chat_triggerevent(struct chat_data *cd);
 /*==========================================
  * chatroom creation
  *------------------------------------------*/
-int chat_createchat(struct map_session_data* sd,int limit, int pub, char* pass, char* title, int titlelen)
+int chat_createchat(struct map_session_data* sd, int limit, bool pub, char* pass, char* title, int titlelen)
 {
 	struct chat_data *cd;
 
@@ -40,9 +41,9 @@ int chat_createchat(struct map_session_data* sd,int limit, int pub, char* pass, 
 	cd->pub = pub;
 	cd->users = 1;
 	titlelen = cap_value(titlelen, 0, sizeof(cd->title)-1); // empty string achievable by using custom client
-	// the following two input strings aren't zero terminated, have to handle it manually
-	memcpy(cd->pass, pass, 8); cd->pass[8]= '\0';
-	memcpy(cd->title, title, titlelen); cd->title[titlelen] = '\0';
+	// the following two input strings aren't zero terminated and need to be handled carefully
+	safestrncpy(cd->title, title, min(titlelen+1,CHATROOM_TITLE_SIZE));
+	safestrncpy(cd->pass, pass, CHATROOM_PASS_SIZE);
 
 	cd->owner = (struct block_list **)(&cd->usersd[0]);
 	cd->usersd[0] = sd;
@@ -84,7 +85,7 @@ int chat_joinchat(struct map_session_data* sd, int chatid, char* pass)
 		return 0;
 	}
 	//Allows Gm access to protected room with any password they want by valaris
-	if ((cd->pub == 0 && strncmp(pass, (char *)cd->pass, 8) && (pc_isGM(sd) < battle_config.gm_join_chat || !battle_config.gm_join_chat)) ||
+	if ((!cd->pub && strncmp(pass, (char *)cd->pass, 8) && (pc_isGM(sd) < battle_config.gm_join_chat || !battle_config.gm_join_chat)) ||
 		chatid == (int)sd->chatID) //Double Chat fix by Alex14, thx CHaNGeTe
 	{
 		clif_joinchatfail(sd,1);
@@ -172,7 +173,7 @@ int chat_leavechat(struct map_session_data* sd)
 /*==========================================
  * チャットルームの持ち主を譲る
  *------------------------------------------*/
-int chat_changechatowner(struct map_session_data *sd,char *nextownername)
+int chat_changechatowner(struct map_session_data* sd, char* nextownername)
 {
 	struct chat_data *cd;
 	struct map_session_data *tmp_sd;
@@ -217,7 +218,7 @@ int chat_changechatowner(struct map_session_data *sd,char *nextownername)
 /*==========================================
  * チャットの状態(タイトル等)を変更
  *------------------------------------------*/
-int chat_changechatstatus(struct map_session_data *sd,int limit,int pub,char* pass,char* title,int titlelen)
+int chat_changechatstatus(struct map_session_data* sd, char* title, char* pass, int limit, bool pub)
 {
 	struct chat_data *cd;
 
@@ -227,13 +228,10 @@ int chat_changechatstatus(struct map_session_data *sd,int limit,int pub,char* pa
 	if(cd==NULL || (struct block_list *)sd != (*cd->owner))
 		return 1;
 
+	safestrncpy(cd->title, title, CHATROOM_TITLE_SIZE);
+	safestrncpy(cd->pass, pass, CHATROOM_PASS_SIZE);
 	cd->limit = limit;
 	cd->pub = pub;
-	memcpy(cd->pass,pass,8);
-	cd->pass[7]= '\0'; //Overflow check... [Skotlex]
-	if(titlelen>=sizeof(cd->title)-1) titlelen=sizeof(cd->title)-1;
-	memcpy(cd->title,title,titlelen);
-	cd->title[titlelen]=0;
 
 	clif_changechatstatus(cd);
 	clif_dispchat(cd,0);
@@ -244,7 +242,7 @@ int chat_changechatstatus(struct map_session_data *sd,int limit,int pub,char* pa
 /*==========================================
  * チャットルームから蹴り出す
  *------------------------------------------*/
-int chat_kickchat(struct map_session_data *sd,char *kickusername)
+int chat_kickchat(struct map_session_data* sd,char* kickusername)
 {
 	struct chat_data *cd;
 	int i;
@@ -270,7 +268,7 @@ int chat_kickchat(struct map_session_data *sd,char *kickusername)
 }
 
 /// Creates a chat room for the npc.
-int chat_createnpcchat(struct npc_data* nd,int limit,int pub,int trigger,const char* title,int titlelen,const char *ev)
+int chat_createnpcchat(struct npc_data* nd, int limit, bool pub, int trigger, const char* title, const char* ev)
 {
 	struct chat_data *cd;
 
@@ -283,21 +281,16 @@ int chat_createnpcchat(struct npc_data* nd,int limit,int pub,int trigger,const c
 		cd->trigger = trigger;
 	cd->pub = pub;
 	cd->users = 0;
-	cd->pass[0] = '\0';
-	if( titlelen > sizeof(cd->title) - 1 )
-		titlelen = sizeof(cd->title) - 1;
-	memcpy(cd->title, title, titlelen);
-	cd->title[titlelen] = '\0';
 
+	safestrncpy(cd->title, title, CHATROOM_TITLE_SIZE);
+	memset(cd->pass, '\0', CHATROOM_PASS_SIZE);
 	cd->bl.m    = nd->bl.m;
 	cd->bl.x    = nd->bl.x;
 	cd->bl.y    = nd->bl.y;
 	cd->bl.type = BL_CHAT;
 	cd->bl.prev = cd->bl.next = NULL;
-	cd->owner_  = (struct block_list *)nd;
-	cd->owner   = &cd->owner_;
-	strncpy(cd->npc_event, ev, ARRAYLENGTH(cd->npc_event));
-	cd->npc_event[ARRAYLENGTH(cd->npc_event)-1] = '\0';
+	cd->owner   = &(struct block_list *)nd;
+	safestrncpy(cd->npc_event, ev, ARRAYLENGTH(cd->npc_event));
 	cd->bl.id = map_addobject(&cd->bl);	
 	if( cd->bl.id == 0)
 	{

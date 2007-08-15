@@ -5640,10 +5640,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			break;
 		case SC_ADRENALINE2:
 		case SC_ADRENALINE:
-			if (val2 || !battle_config.party_skill_penalty)
-				val3 = 300;
-			else
-				val3 = 200;
+			val3 = (val2) ? 300 : 200; // aspd increase
 		case SC_WEAPONPERFECTION:
 		case SC_OVERTHRUST:
 			if(sd && pc_checkskill(sd,BS_HILTBINDING)>0)

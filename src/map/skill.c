@@ -8680,7 +8680,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		}
 		break;
 	case ST_RECOV_WEIGHT_RATE:
-		if(battle_config.natural_heal_weight_rate <= 100 && sd->weight*100/sd->max_weight >= battle_config.natural_heal_weight_rate) {
+		if(battle_config.natural_heal_weight_rate <= 100 && sd->weight*100/sd->max_weight >= (unsigned int)battle_config.natural_heal_weight_rate) {
 			clif_skill_fail(sd,skill,0,0);
 			return 0;
 		}

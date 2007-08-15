@@ -1950,16 +1950,7 @@ int charcommand_speed(const int fd, struct map_session_data* sd, const char* com
 		return -1;
 	}
 	
-	if (speed < MIN_WALK_SPEED)
-	{
-		speed = MIN_WALK_SPEED;
-	}
-	else if (speed > MAX_WALK_SPEED)
-	{
-		speed = MAX_WALK_SPEED;
-	}
-	
-	pl_sd->base_status.speed = speed;
+	pl_sd->base_status.speed = cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
 	status_calc_bl(&pl_sd->bl, SCB_SPEED);
 	clif_displaymessage(pl_sd->fd, msg_txt(8)); // Speed changed.
 	if (pl_sd->fd != fd)

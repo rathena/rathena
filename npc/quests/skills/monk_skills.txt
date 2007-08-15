@@ -411,9 +411,9 @@ prt_monk,129,263,3	script	Monk	823,{
 			mes "and you're good.";
 			next;
 			mes "[Monk]";
-			mes "If you have enough strenght";
+			mes "If you have enough strength";
 			mes "to kill Mandoragoras, it means";
-			mes "you have heart and strenght";
+			mes "you have heart and strength";
 			mes "to defeat other monsters";
 			mes "that pester the innocent";
 			mes "travelers.";

@@ -2227,6 +2227,19 @@ void npc_movenpc(struct npc_data* nd, int x, int y)
 	map_foreachinrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
 	npc_setcells(nd);
 }
+
+int npc_changename(const char* name, const char* newname, short look)
+{
+	struct npc_data* nd = (struct npc_data *) strdb_remove(npcname_db, name);
+	if (nd == NULL)
+		return 0;
+	npc_enable(name, 0);
+	strcpy(nd->name, newname);
+	nd->class_ = look;
+	npc_enable(newname, 1);
+	return 0;
+}
+
 /*==========================================
  * function行解析
  *------------------------------------------*/
@@ -2472,16 +2485,15 @@ static int npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4)
 	m = map_mapname2mapid(mapname);
 	if (m < 0)
 		return 1;
-	if (w4 && strcmpi(w4, "off") == 0)
+	if (w4 && !strcmpi(w4, "off"))
 		state = 0;	//Disable mapflag rather than enable it. [Skotlex]
 	
-//マップフラグ
-	if (strcmpi(w3, "nosave") == 0) {
+	if (!strcmpi(w3, "nosave")) {
 		char savemap[MAP_NAME_LENGTH_EXT];
 		int savex, savey;
 		if (state == 0)
 			; //Map flag disabled.
-		else if (strcmp(w4, "SavePoint") == 0) {
+		else if (!strcmpi(w4, "SavePoint")) {
 			map[m].save.map = 0;
 			map[m].save.x = -1;
 			map[m].save.y = -1;
@@ -2497,32 +2509,25 @@ static int npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4)
 		}
 		map[m].flag.nosave = state;
 	}
-	else if (strcmpi(w3,"nomemo")==0) {
+	else if (!strcmpi(w3,"nomemo"))
 		map[m].flag.nomemo=state;
-	}
-	else if (strcmpi(w3,"noteleport")==0) {
+	else if (!strcmpi(w3,"noteleport"))
 		map[m].flag.noteleport=state;
-	}
-	else if (strcmpi(w3,"nowarp")==0) {
+	else if (!strcmpi(w3,"nowarp"))
 		map[m].flag.nowarp=state;
-	}
-	else if (strcmpi(w3,"nowarpto")==0) {
+	else if (!strcmpi(w3,"nowarpto"))
 		map[m].flag.nowarpto=state;
-	}
-	else if (strcmpi(w3,"noreturn")==0) {
+	else if (!strcmpi(w3,"noreturn"))
 		map[m].flag.noreturn=state;
-	}
-	else if (strcmpi(w3,"monster_noteleport")==0) {
+	else if (!strcmpi(w3,"monster_noteleport"))
 		map[m].flag.monster_noteleport=state;
-	}
-	else if (strcmpi(w3,"nobranch")==0) {
+	else if (!strcmpi(w3,"nobranch"))
 		map[m].flag.nobranch=state;
-	}
-	else if (strcmpi(w3,"nopenalty")==0) {
+	else if (!strcmpi(w3,"nopenalty")) {
 		map[m].flag.noexppenalty=state;
 		map[m].flag.nozenypenalty=state;
 	}
-	else if (strcmpi(w3,"pvp")==0) {
+	else if (!strcmpi(w3,"pvp")) {
 		map[m].flag.pvp=state;
 		if (state) {
 			if (map[m].flag.gvg || map[m].flag.gvg_dungeon || map[m].flag.gvg_castle)
@@ -2532,26 +2537,24 @@ static int npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4)
 			map[m].flag.gvg_castle=0;
 		}
 	}
-	else if (strcmpi(w3,"pvp_noparty")==0) {
+	else if (!strcmpi(w3,"pvp_noparty"))
 		map[m].flag.pvp_noparty=state;
-	}
-	else if (strcmpi(w3,"pvp_noguild")==0) {
+	else if (!strcmpi(w3,"pvp_noguild"))
 		map[m].flag.pvp_noguild=state;
-	}
-	else if (strcmpi(w3, "pvp_nightmaredrop") == 0) {
+	else if (!strcmpi(w3, "pvp_nightmaredrop")) {
 		char drop_arg1[16], drop_arg2[16];
 		int drop_id = 0, drop_type = 0, drop_per = 0;
 		if (sscanf(w4, "%[^,],%[^,],%d", drop_arg1, drop_arg2, &drop_per) == 3) {
 			int i;
-			if (strcmp(drop_arg1, "random") == 0)
+			if (!strcmpi(drop_arg1, "random"))
 				drop_id = -1;
 			else if (itemdb_exists((drop_id = atoi(drop_arg1))) == NULL)
 				drop_id = 0;
-			if (strcmp(drop_arg2, "inventory") == 0)
+			if (!strcmpi(drop_arg2, "inventory"))
 				drop_type = 1;
-			else if (strcmp(drop_arg2,"equip") == 0)
+			else if (!strcmpi(drop_arg2,"equip"))
 				drop_type = 2;
-			else if (strcmp(drop_arg2,"all") == 0)
+			else if (!strcmpi(drop_arg2,"all"))
 				drop_type = 3;
 
 			if (drop_id != 0){
@@ -2568,10 +2571,9 @@ static int npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4)
 		} else if (!state) //Disable
 			map[m].flag.pvp_nightmaredrop = 0;
 	}
-	else if (strcmpi(w3,"pvp_nocalcrank")==0) {
+	else if (!strcmpi(w3,"pvp_nocalcrank"))
 		map[m].flag.pvp_nocalcrank=state;
-	}
-	else if (strcmpi(w3,"gvg")==0) {
+	else if (!strcmpi(w3,"gvg")) {
 		map[m].flag.gvg=state;
 		if (state && map[m].flag.pvp)
 		{
@@ -2579,92 +2581,69 @@ static int npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4)
 			ShowWarning("You can't set PvP and GvG flags for the same map! Removing PvP flag from %s\n", map[m].name);
 		}
 	}
-	else if (strcmpi(w3,"gvg_noparty")==0) {
+	else if (!strcmpi(w3,"gvg_noparty"))
 		map[m].flag.gvg_noparty=state;
-	}
-	else if (strcmpi(w3,"gvg_dungeon")==0) {
+	else if (!strcmpi(w3,"gvg_dungeon")) {
 		map[m].flag.gvg_dungeon=state;
 		if (state) map[m].flag.pvp=0;
 	}
-	else if (strcmpi(w3,"gvg_castle")==0) {
+	else if (!strcmpi(w3,"gvg_castle")) {
 		map[m].flag.gvg_castle=state;
 		if (state) map[m].flag.pvp=0;
 	}
-	else if (strcmpi(w3,"noexppenalty")==0) {
+	else if (!strcmpi(w3,"noexppenalty"))
 		map[m].flag.noexppenalty=state;
-	}
-	else if (strcmpi(w3,"nozenypenalty")==0) {
+	else if (!strcmpi(w3,"nozenypenalty"))
 		map[m].flag.nozenypenalty=state;
-	}
-	else if (strcmpi(w3,"notrade")==0) {
+	else if (!strcmpi(w3,"notrade"))
 		map[m].flag.notrade=state;
-	}
-	else if (strcmpi(w3,"novending")==0) {
+	else if (!strcmpi(w3,"novending"))
 		map[m].flag.novending=state;
-	}
-	else if (strcmpi(w3,"nodrop")==0) {
+	else if (!strcmpi(w3,"nodrop"))
 		map[m].flag.nodrop=state;
-	}
-	else if (strcmpi(w3,"noskill")==0) {
+	else if (!strcmpi(w3,"noskill"))
 		map[m].flag.noskill=state;
-	}
-	else if (strcmpi(w3,"noicewall")==0) { // noicewall [Valaris]
+	else if (!strcmpi(w3,"noicewall"))
 		map[m].flag.noicewall=state;
-	}
-	else if (strcmpi(w3,"snow")==0) { // snow [Valaris]
+	else if (!strcmpi(w3,"snow"))
 		map[m].flag.snow=state;
-	}
-	else if (strcmpi(w3,"clouds")==0) {
+	else if (!strcmpi(w3,"clouds"))
 		map[m].flag.clouds=state;
-	}
-	else if (strcmpi(w3,"clouds2")==0) { // clouds2 [Valaris]
+	else if (!strcmpi(w3,"clouds2"))
 		map[m].flag.clouds2=state;
-	}
-	else if (strcmpi(w3,"fog")==0) { // fog [Valaris]
+	else if (!strcmpi(w3,"fog"))
 		map[m].flag.fog=state;
-	}
-	else if (strcmpi(w3,"fireworks")==0) {
+	else if (!strcmpi(w3,"fireworks"))
 		map[m].flag.fireworks=state;
-	}
-	else if (strcmpi(w3,"sakura")==0) { // sakura [Valaris]
+	else if (!strcmpi(w3,"sakura"))
 		map[m].flag.sakura=state;
-	}
-	else if (strcmpi(w3,"leaves")==0) { // leaves [Valaris]
+	else if (!strcmpi(w3,"leaves"))
 		map[m].flag.leaves=state;
-	}
-	else if (strcmpi(w3,"rain")==0) { // rain [Valaris]
+	else if (!strcmpi(w3,"rain"))
 		map[m].flag.rain=state;
-	}
-	else if (strcmpi(w3,"indoors")==0) { // celest
+	else if (!strcmpi(w3,"indoors"))
 		map[m].flag.indoors=state;
-	}
-	else if (strcmpi(w3,"nightenabled")==0) { // Skotlex
+	else if (!strcmpi(w3,"nightenabled"))
 		map[m].flag.nightenabled=state;
-	}
-	else if (strcmpi(w3,"nogo")==0) { // celest
+	else if (!strcmpi(w3,"nogo"))
 		map[m].flag.nogo=state;
-	}
-	else if (strcmpi(w3,"noexp")==0) { // Lorky
+	else if (!strcmpi(w3,"noexp")) {
 		map[m].flag.nobaseexp=state;
 		map[m].flag.nojobexp=state;
 	}
-	else if (strcmpi(w3,"nobaseexp")==0) { // Lorky
+	else if (!strcmpi(w3,"nobaseexp"))
 		map[m].flag.nobaseexp=state;
-	}
-	else if (strcmpi(w3,"nojobexp")==0) { // Lorky
+	else if (!strcmpi(w3,"nojobexp"))
 		map[m].flag.nojobexp=state;
-	}
-	else if (strcmpi(w3,"noloot")==0) { // Lorky
+	else if (!strcmpi(w3,"noloot")) {
 		map[m].flag.nomobloot=state;
 		map[m].flag.nomvploot=state;
 	}
-	else if (strcmpi(w3,"nomobloot")==0) { // Lorky
+	else if (!strcmpi(w3,"nomobloot"))
 		map[m].flag.nomobloot=state;
-	}
-	else if (strcmpi(w3,"nomvploot")==0) { // Lorky
+	else if (!strcmpi(w3,"nomvploot"))
 		map[m].flag.nomvploot=state;
-	}
-	else if (strcmpi(w3,"nocommand")==0) { // Skotlex
+	else if (!strcmpi(w3,"nocommand")) {
 		if (state) {
 			if (sscanf(w4, "%d", &state) == 1)
 				map[m].nocommand =state;
@@ -2673,7 +2652,7 @@ static int npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4)
 		} else
 			map[m].nocommand=0;
 	}
-	else if (strcmpi(w3,"restricted")==0) { // Komurka
+	else if (!strcmpi(w3,"restricted")) {
 		if (state) {
 			map[m].flag.restricted=1;
 			sscanf(w4, "%d", &state);
@@ -2683,28 +2662,24 @@ static int npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4)
 			map[m].zone = 0;
 		}
 	}
-	else if (strcmpi(w3,"jexp")==0) {
+	else if (!strcmpi(w3,"jexp")) {
 		map[m].jexp = (state) ? atoi(w4) : 100;
 		if( map[m].jexp < 0 ) map[m].jexp = 100;
 		map[m].flag.nojobexp = (map[m].jexp==0)?1:0;
 	}
-	else if (strcmpi(w3,"bexp")==0) {
+	else if (!strcmpi(w3,"bexp")) {
 		map[m].bexp = (state) ? atoi(w4) : 100;
 		if( map[m].bexp < 0 ) map[m].bexp = 100;
 		 map[m].flag.nobaseexp = (map[m].bexp==0)?1:0;
 	}
-	else if (strcmpi(w3,"loadevent")==0) { // Skotlex
+	else if (!strcmpi(w3,"loadevent"))
 		map[m].flag.loadevent=state;
-	}
-	else if (strcmpi(w3,"nochat")==0) { // Skotlex
+	else if (!strcmpi(w3,"nochat"))
 		map[m].flag.nochat=state;
-	}
-	else if (strcmpi(w3,"partylock")==0) { // Skotlex
+	else if (!strcmpi(w3,"partylock"))
 		map[m].flag.partylock=state;
-	}
-	else if (strcmpi(w3,"guildlock")==0) { // Skotlex
+	else if (!strcmpi(w3,"guildlock"))
 		map[m].flag.guildlock=state;
-	}
 
 	return 0;
 }
@@ -3165,17 +3140,5 @@ int do_init_npc(void)
 	map_addiddb(&fake_nd->bl);
 	// End of initialization
 
-	return 0;
-}
-// [Lance]
-int npc_changename(const char* name, const char* newname, short look)
-{
-	struct npc_data* nd = (struct npc_data *) strdb_remove(npcname_db, name);
-	if (nd == NULL)
-		return 0;
-	npc_enable(name, 0);
-	strcpy(nd->name, newname);
-	nd->class_ = look;
-	npc_enable(newname, 1);
 	return 0;
 }

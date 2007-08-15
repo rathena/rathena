@@ -9236,11 +9236,22 @@ void clif_parse_ChatAddMember(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- *
+ * S 00de <len>.w <limit>.w <pub>.B <passwd>.8B <title>.?B
  *------------------------------------------*/
-void clif_parse_ChatRoomStatusChange(int fd,struct map_session_data *sd)
+void clif_parse_ChatRoomStatusChange(int fd, struct map_session_data* sd)
 {
-	chat_changechatstatus(sd,RFIFOW(fd,4),RFIFOB(fd,6),(char*)RFIFOP(fd,7),(char*)RFIFOP(fd,15),RFIFOW(fd,2)-15);
+	int len = RFIFOW(fd,2)-15;
+	int limit = RFIFOW(fd,4);
+	bool public = (bool)RFIFOB(fd,6);
+	const char* password = (char*)RFIFOP(fd,7); //not zero-terminated
+	const char* title = (char*)RFIFOP(fd,15); // not zero-terminated
+
+	char s_title[CHATROOM_TITLE_SIZE];
+	char s_password[CHATROOM_PASS_SIZE];
+	safestrncpy(s_title, title, min(len+1,CHATROOM_TITLE_SIZE));
+	safestrncpy(s_password, password, CHATROOM_PASS_SIZE);
+
+	chat_changechatstatus(sd, s_title, s_password, limit, public);
 }
 
 /*==========================================

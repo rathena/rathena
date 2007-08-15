@@ -8965,7 +8965,7 @@ BUILDIN_FUNC(waitingroom)
 		ev = script_getstr(st, 4);
 	}
 	if( (nd=(struct npc_data *)map_id2bl(st->oid)) != NULL )
-		chat_createnpcchat(nd, limit, pub, trigger, title, (int)strlen(title), ev);
+		chat_createnpcchat(nd, limit, pub, trigger, title, ev);
 	return 0;
 }
 

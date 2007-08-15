@@ -1977,23 +1977,13 @@ int atcommand_speed(const int fd, struct map_session_data* sd, const char* comma
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!message || !*message) {
+	if (!message || !*message || sscanf(message, "%d", &speed) < 1) {
 		sprintf(atcmd_output, "Please, enter a speed value (usage: @speed <%d-%d>).", MIN_WALK_SPEED, MAX_WALK_SPEED);
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
 
-	speed = atoi(message);
-	if (speed < MIN_WALK_SPEED)
-	{
-		speed = MIN_WALK_SPEED;
-	}
-	else if (speed > MAX_WALK_SPEED)
-	{
-		speed = MAX_WALK_SPEED;
-	}
-	
-	sd->base_status.speed = speed;
+	sd->base_status.speed = cap_value(speed, MIN_WALK_SPEED, MAX_WALK_SPEED);
 	status_calc_bl(&sd->bl, SCB_SPEED);
 	clif_displaymessage(fd, msg_txt(8)); // Speed changed.
 	return 0;
@@ -2101,11 +2091,12 @@ int atcommand_hide(const int fd, struct map_session_data* sd, const char* comman
  *------------------------------------------*/
 int atcommand_jobchange(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
+        //FIXME: redundancy, potentially wrong code, should use job_name() or similar instead of hardcoding the table
 	int job = 0, upper = 0;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%d %d", &job, &upper) < 1) {
-
+	if (!message || !*message || sscanf(message, "%d %d", &job, &upper) < 1)
+	{
 		int i, found = 0;
 		const struct { char name[16]; int id; } jobs[] = {
 			{ "novice",		0 },
@@ -5073,37 +5064,35 @@ int atcommand_reloadbattleconf(const int fd, struct map_session_data* sd, const 
 
 	battle_config_read(BATTLE_CONF_FILENAME);
 
-	if (memcmp(&prev_config.item_rate_mvp,
-		&battle_config.item_rate_mvp,
-		sizeof(battle_config.item_rate_mvp)+
-		sizeof(battle_config.item_rate_common)+
-		sizeof(battle_config.item_rate_common_boss)+
-		sizeof(battle_config.item_rate_card)+
-		sizeof(battle_config.item_rate_card_boss)+
-		sizeof(battle_config.item_rate_equip)+
-		sizeof(battle_config.item_rate_equip_boss)+
-		sizeof(battle_config.item_rate_heal)+
-		sizeof(battle_config.item_rate_heal_boss)+
-		sizeof(battle_config.item_rate_use)+
-		sizeof(battle_config.item_rate_use_boss)+
-		sizeof(battle_config.item_rate_treasure)+
-		sizeof(battle_config.item_rate_adddrop)+
-		sizeof(battle_config.logarithmic_drops)+
-		sizeof(battle_config.item_drop_common_min)+
-		sizeof(battle_config.item_drop_common_max)+
-		sizeof(battle_config.item_drop_card_min)+
-		sizeof(battle_config.item_drop_card_max)+
-		sizeof(battle_config.item_drop_equip_min)+
-		sizeof(battle_config.item_drop_equip_max)+
-		sizeof(battle_config.item_drop_mvp_min)+
-		sizeof(battle_config.item_drop_mvp_max)+
-		sizeof(battle_config.item_drop_heal_min)+
-		sizeof(battle_config.item_drop_heal_max)+
-		sizeof(battle_config.item_drop_use_min)+
-		sizeof(battle_config.item_drop_use_max)+
-		sizeof(battle_config.item_drop_treasure_min)+
-		sizeof(battle_config.item_drop_treasure_max)
-	) != 0)
+	if( prev_config.item_rate_mvp          != battle_config.item_rate_mvp
+	||  prev_config.item_rate_common       != battle_config.item_rate_common
+	||  prev_config.item_rate_common_boss  != battle_config.item_rate_common_boss
+	||  prev_config.item_rate_card         != battle_config.item_rate_card
+	||  prev_config.item_rate_card_boss    != battle_config.item_rate_card_boss
+	||  prev_config.item_rate_equip        != battle_config.item_rate_equip
+	||  prev_config.item_rate_equip_boss   != battle_config.item_rate_equip_boss
+	||  prev_config.item_rate_heal         != battle_config.item_rate_heal
+	||  prev_config.item_rate_heal_boss    != battle_config.item_rate_heal_boss
+	||  prev_config.item_rate_use          != battle_config.item_rate_use
+	||  prev_config.item_rate_use_boss     != battle_config.item_rate_use_boss
+	||  prev_config.item_rate_treasure     != battle_config.item_rate_treasure
+	||  prev_config.item_rate_adddrop      != battle_config.item_rate_adddrop
+	||  prev_config.logarithmic_drops      != battle_config.logarithmic_drops
+	||  prev_config.item_drop_common_min   != battle_config.item_drop_common_min
+	||  prev_config.item_drop_common_max   != battle_config.item_drop_common_max
+	||  prev_config.item_drop_card_min     != battle_config.item_drop_card_min
+	||  prev_config.item_drop_card_max     != battle_config.item_drop_card_max
+	||  prev_config.item_drop_equip_min    != battle_config.item_drop_equip_min
+	||  prev_config.item_drop_equip_max    != battle_config.item_drop_equip_max
+	||  prev_config.item_drop_mvp_min      != battle_config.item_drop_mvp_min
+	||  prev_config.item_drop_mvp_max      != battle_config.item_drop_mvp_max
+	||  prev_config.item_drop_heal_min     != battle_config.item_drop_heal_min
+	||  prev_config.item_drop_heal_max     != battle_config.item_drop_heal_max
+	||  prev_config.item_drop_use_min      != battle_config.item_drop_use_min
+	||  prev_config.item_drop_use_max      != battle_config.item_drop_use_max
+	||  prev_config.item_drop_treasure_min != battle_config.item_drop_treasure_min
+	||  prev_config.item_drop_treasure_max != battle_config.item_drop_treasure_max
+	)
   	{	//Drop rates changed.
 		mob_reload(); //Needed as well so rate changes take effect.
 #ifndef TXT_ONLY
@@ -7372,7 +7361,7 @@ int atcommand_pettalk(const int fd, struct map_session_data* sd, const char* com
 		}
 	}
 
-	snprintf(temp, sizeof temp ,"%s: %s",pd->pet.name,mes);
+	snprintf(temp, sizeof temp ,"%s : %s", pd->pet.name, mes);
 	clif_message(&pd->bl, temp);
 
 	return 0;
@@ -8324,7 +8313,7 @@ int atcommand_homevolution(const int fd, struct map_session_data* sd, const char
 		return 0;
 	}
 	
-	clif_displaymessage(fd, "Your homunculus doesn't evove.");
+	clif_displaymessage(fd, "Your homunculus doesn't evolve.");
 	return -1;
 }
 
@@ -8441,7 +8430,7 @@ int atcommand_homtalk(const int fd, struct map_session_data* sd, const char* com
 		return -1;
 	}
 
-	snprintf(temp, sizeof temp ,"%s: %s",sd->hd->homunculus.name,mes);
+	snprintf(temp, sizeof temp ,"%s : %s", sd->hd->homunculus.name, mes);
 	clif_message(&sd->hd->bl, temp);
 
 	return 0;

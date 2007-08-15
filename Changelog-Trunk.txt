@@ -3,6 +3,16 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/08/15
+	* Some serious code cleanups
+	- adjusted @reloadbattleconf to not depend on variable ordering
+	- changed all battle vars to 'int' (removes pointless duplicit coding)
+	- added min, max and default columns to battle config data structure
+	- added properly bounded values for these columns (or at least tried to)
+	- battle-conf loading will now complain if it finds unknown settings,
+	  and will reject values that are outside of the allowed range
+	- added CHATROOM_TITLE_SIZE and CHATROOM_PASS_SIZE 
+	- partially cleaned up chatroom manipulation code
 2007/08/13
 	* Modified map_foreachinrange so that you can also specify the max length
 	  of the path to use. The max_count field in the skill_db is used to specify

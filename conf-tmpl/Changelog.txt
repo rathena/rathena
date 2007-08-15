@@ -1,5 +1,8 @@
 Date	Added
 
+2007/08/15
+	* Removed useless 'party_skill_penalty' config option
+	* Removed 'Note 3' & 'Other information' since it doesn't apply anymore
 2007/07/28
 	* Removed useless refine_posword setting from script_athena.conf
 2007/07/25
