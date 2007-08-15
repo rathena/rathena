@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/08/15
+	* Fixed some loop errors in the guides. [Samuray22]
+	-Thanks to $ephiroth.
 	* Fixed 'Job_Professer' typo in mage jobchange quest [ultramage]
 	* Rev. 11016 Corrected a few bugs in the Acolyte Job Quest. (Crashy) [L0ne_W0lf]
 2007/08/14

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.4a
 //===== Compatible With: ===================================== 
 //= eAthena  SVN
 //===== Description: ========================================= 
@@ -15,7 +15,9 @@
 //= 1.2 Optimized, updated common guide names [Lupus]
 //= 1.2a Small note that the BS guild moved to Einbroch [Poki#3]
 //= 1.3 Removed Duplicates [Silent]
-//= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.4a Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.4 Fixed some errors with the loop[Samuray22]
+//	-Thanks to $ephiroth.
 //============================================================
 
 geffen,203,116,0	script	Guide#gef::GefGuide	705,{
@@ -39,11 +41,14 @@ geffen,203,116,0	script	Guide#gef::GefGuide	705,{
 				mes "Would you like me";
 				mes "to mark locations";
 				mes "on your Mini-Map?";
+				next;
 				if (select("Yes:No") == 1) set .@compass_check,1;
 			}
 			set .@loop2,1;
 			while (.@loop2) {
-				next;
+				if (.@wait_button_chk == 0) set .@wait_button_chk,1;
+				else next;
+//				next;
 				switch(select("^FF0000Magic Acedemy^000000:Forge Shop:Weapon Shop:Tool Shop:Pub:Inn:Geffen Tower:Cancel")) {
 				case 1:
 					mes "[Geffen Guide]";
@@ -114,6 +119,7 @@ geffen,203,116,0	script	Guide#gef::GefGuide	705,{
 					mes "location marks displayed";
 					mes "on your Mini-Map.";
 					set .@loop2,0;
+					break;
 				}
 			}
 			break;

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.5a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -16,6 +16,8 @@
 //=     to Muad_Dib
 //= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
 //= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.5a Fixed some errors with the loop[Samuray22]
+//	-Thanks to $ephiroth.
 //============================================================
 
 izlude,121,87,6	script	Guide#iz	105,{
@@ -44,7 +46,9 @@ izlude,121,87,6	script	Guide#iz	105,{
 			}
 			set .@loop2,1;
 			while(.@loop2) {
-				next;
+				if (.@wait_button_chk == 0) set .@wait_button_chk,1;
+				else next;
+				
 				switch(select("^FF0000Swordman Association^000000:Swordman Hall:Arena:Izlude Marina:Weapon Shop:Tool Shop:Cancel")) {
 				case 1:
 					mes "[Izlude Guide]";
@@ -105,6 +109,7 @@ izlude,121,87,6	script	Guide#iz	105,{
 					mes "location marks displayed";
 					mes "on your Mini-Map.";
 					set .@loop2,0;
+					break;
 				}
 			}
 			break;
@@ -147,10 +152,11 @@ izlude,121,87,6	script	Guide#iz	105,{
 			mes "free to come to me";
 			mes "if you ever feel lost";
 			mes "around Izlude, alright?";
+			close2;
 			set .@loop1,0;
+			break;
 		}
 	}
-	close2;
 	cutin "prt_soldier",255;
 	end;
 }

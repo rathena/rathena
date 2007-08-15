@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.2a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -14,7 +14,10 @@
 //= 1.1 Change the while loops a bit. [L0ne_W0lf]
 //= 1.2 Deleted an Unnecessary "next;" [Samuray22]
 //	-Thanks to $ephiroth.
+//= 1.2a Fixed some errors with the loop[Samuray22]
+//	-Thanks to $ephiroth.
 //============================================================ 
+
 rachel,138,146,5	script	Rachel Guide	934,{
 	mes "[Rachel Guide]";
 	mes "Welcome to the capital of";
@@ -23,8 +26,8 @@ rachel,138,146,5	script	Rachel Guide	934,{
 	mes "If this is the first time for you";
 	mes "to use the guide services, why";
 	mes "don't you check the \"Notice\" menu first?";
-	set .@loop,1;
-	while(.@loop) {
+	set .@loop1,1;
+	while(.@loop1) {
 		next;
 		switch(select("Village Guide:Remove Marks from Mini-Map:Notice:Cancel")) {
 		case 1:
@@ -103,9 +106,11 @@ rachel,138,146,5	script	Rachel Guide	934,{
 			mes "[Rachel Guide]";
 			mes "Hope you have a wonderfull journey";
 			mes "in Arunafeltz.";
-			set .@loop,0;
+			close2;
+			set .@loop1,0;
 			break;
 		}
 	}
 	close;
+	end;
 }
