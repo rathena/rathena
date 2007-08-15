@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.8a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //=	Proper dialog for Priest job quest is unused (for now.)
 //= 1.7a Functions now make use of proper priest quest dialog [L0ne_W0lf]
 //= 1.8 Removed an Unnecessary "set job_acolyte_q,0;" [Samuray22]
+//= 1.8a More bug fixes care of Crashy. [L0ne_W0lf]
 //============================================================ 
 
 prt_church,184,41,4	script	Cleric#aco	60,{
@@ -99,7 +100,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 				mes "[Father Mareusis]";
 				mes "Well, I will";
 				mes "give you a mission...";
-				switch(rand(2)) {
+				switch(rand(3)) {
 				default:
 					set job_acolyte_q,2;
 					mes "Please visit ^000077Father Rubalkabara^000000, a member of the Prontera Parish, and return here. He has been practicing asceticism in the ^000077Relics NorthEast of Prontera City^000000.";
@@ -406,7 +407,7 @@ prt_fild00,208,218,6	script	Ascetic#3aco	98,{
 				next;
 				mes "[Father Yosuke]";
 				mes "Now go back to the Santuary and finish becoming an Acolyte, kid.";
-				close;
+				close2;
 				savepoint "prt_fild00",206,230;
 				set job_acolyte_q,8;
 				end;

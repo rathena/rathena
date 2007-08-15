@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/08/15
+	* Rev. 11016 Corrected a few bugs in the Acolyte Job Quest. (Crashy) [L0ne_W0lf]
 2007/08/14
 	* Deleted an Unnecessary "next;" on Rachel Guide. [Samuray22]
 	-Thanks to $ephiroth.
