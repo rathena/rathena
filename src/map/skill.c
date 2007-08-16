@@ -3843,7 +3843,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case AS_POISONREACT:
 	case MC_LOUD:
 	case MG_ENERGYCOAT:
-	case AL_RUWACH:
 	case MO_EXPLOSIONSPIRITS:
 	case MO_STEELBODY:
 	case MO_BLADESTOP:
@@ -3878,6 +3877,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv)));
 		break;
 	case MG_SIGHT:
+	case AL_RUWACH:
 	case WZ_SIGHTBLASTER:
 	case NPC_WIDESIGHT:
 	case NPC_STONESKIN:
