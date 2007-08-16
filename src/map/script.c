@@ -8942,8 +8942,6 @@ BUILDIN_FUNC(waitingroom)
 
 	title = script_getstr(st, 2);
 	limit = script_getnum(st, 3);
-	if( limit == 0 )
-		pub = 3;
 
 	if( script_hasdata(st,5) )
 	{
@@ -8957,15 +8955,16 @@ BUILDIN_FUNC(waitingroom)
 		else
 		{// ,"<event>",<trigger>
 			ev = script_getstr(st, 4);
-			trigger=script_getnum(st,5);
+			trigger = script_getnum(st,5);
 		}
 	}
 	else if( script_hasdata(st,4) )
 	{// ,"<event>"
 		ev = script_getstr(st, 4);
+		trigger = limit;
 	}
 	if( (nd=(struct npc_data *)map_id2bl(st->oid)) != NULL )
-		chat_createnpcchat(nd, limit, pub, trigger, title, ev);
+		chat_createnpcchat(nd, title, limit, pub, trigger, ev);
 	return 0;
 }
 

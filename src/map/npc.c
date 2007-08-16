@@ -22,6 +22,7 @@
 #include "skill.h"
 #include "unit.h"
 #include "npc.h"
+#include "chat.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1511,11 +1512,9 @@ int npc_unload(struct npc_data* nd)
 	npc_remove_map(nd);
 	map_deliddb(&nd->bl);
 
-	if (nd->chat_id) {
-		struct chat_data *cd = (struct chat_data*)map_id2bl(nd->chat_id);
-		if (cd) aFree (cd);
-		cd = NULL;
-	}
+	if (nd->chat_id) // remove npc chatroom object and kick users
+		chat_deletenpcchat(nd);
+
 	if (nd->bl.subtype == SCRIPT) {
 		ev_db->foreach(ev_db,npc_unload_ev,nd->exname); //Clean up all events related.
 		if (nd->u.scr.timerid != -1) {

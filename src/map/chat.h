@@ -8,14 +8,14 @@
 struct map_session_data;
 struct chat_data;
 
-int chat_createchat(struct map_session_data* sd, int limit, bool pub, char* pass, char* title, int titlelen);
-int chat_joinchat(struct map_session_data* sd, int chatid, char* pass);
+int chat_createpcchat(struct map_session_data* sd, const char* title, const char* pass, int limit, bool pub);
+int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass);
 int chat_leavechat(struct map_session_data* sd);
-int chat_changechatowner(struct map_session_data* sd, char* nextownername);
-int chat_changechatstatus(struct map_session_data* sd, char* title, char* pass, int limit, bool pub);
-int chat_kickchat(struct map_session_data* sd, char* kickusername);
+int chat_changechatowner(struct map_session_data* sd, const char* nextownername);
+int chat_changechatstatus(struct map_session_data* sd, const char* title, const char* pass, int limit, bool pub);
+int chat_kickchat(struct map_session_data* sd, const char* kickusername);
 
-int chat_createnpcchat(struct npc_data* nd, int limit, bool pub, int trigger, const char* title, const char* ev);
+int chat_createnpcchat(struct npc_data* nd, const char* title, int limit, bool pub, int trigger, const char* ev);
 int chat_deletenpcchat(struct npc_data* nd);
 int chat_enableevent(struct chat_data* cd);
 int chat_disableevent(struct chat_data* cd);

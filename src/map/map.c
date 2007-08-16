@@ -1844,7 +1844,7 @@ struct map_session_data * map_nick2sd(const char *nick)
 struct block_list * map_id2bl(int id)
 {
 	struct block_list *bl=NULL;
-	if(id >= 0 && id < sizeof(objects)/sizeof(objects[0]))
+	if(id >= 0 && id < ARRAYLENGTH(objects))
 		bl = objects[id];
 	else
 		bl = idb_get(id_db,id);

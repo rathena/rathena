@@ -1143,8 +1143,8 @@ struct chat_data {
 	unsigned char users;             // current users
 	unsigned char limit;             // join limit
 	unsigned char trigger;           // number of users needed to trigger event
-	struct map_session_data *usersd[20];
-	struct block_list **owner;
+	struct map_session_data* usersd[20];
+	struct block_list* owner;
 	char npc_event[50];
 };
 

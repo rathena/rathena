@@ -3179,16 +3179,16 @@ int clif_createchat(struct map_session_data *sd,int fail)
 /*==========================================
  *
  *------------------------------------------*/
-int clif_dispchat(struct chat_data *cd,int fd)
+int clif_dispchat(struct chat_data* cd, int fd)
 {
 	unsigned char buf[128];	// Å‘åtitle(60ƒoƒCƒg)+17
 
-	if(cd==NULL || *cd->owner==NULL)
+	if(cd==NULL || cd->owner==NULL)
 		return 1;
 
 	WBUFW(buf,0)=0xd7;
 	WBUFW(buf,2)=strlen((const char*)cd->title)+17;
-	WBUFL(buf,4)=(*cd->owner)->id;
+	WBUFL(buf,4)=cd->owner->id;
 	WBUFL(buf,8)=cd->bl.id;
 	WBUFW(buf,12)=cd->limit;
 	WBUFW(buf,14)=cd->users;
@@ -3199,7 +3199,7 @@ int clif_dispchat(struct chat_data *cd,int fd)
 		memcpy(WFIFOP(fd,0),buf,WBUFW(buf,2));
 		WFIFOSET(fd,WBUFW(buf,2));
 	} else {
-		clif_send(buf,WBUFW(buf,2),*cd->owner,AREA_WOSC);
+		clif_send(buf,WBUFW(buf,2),cd->owner,AREA_WOSC);
 	}
 
 	return 0;
@@ -3245,7 +3245,7 @@ int clif_clearchat(struct chat_data *cd,int fd)
 		memcpy(WFIFOP(fd,0),buf,packet_len(0xd8));
 		WFIFOSET(fd,packet_len(0xd8));
 	} else {
-		clif_send(buf,packet_len(0xd8),*cd->owner,AREA_WOSC);
+		clif_send(buf,packet_len(0xd8),cd->owner,AREA_WOSC);
 	}
 
 	return 0;
@@ -3289,7 +3289,7 @@ int clif_joinchatok(struct map_session_data *sd,struct chat_data* cd)
 	WFIFOW(fd, 2) = 8 + (28*cd->users);
 	WFIFOL(fd, 4) = cd->bl.id;
 	for (i = 0; i < cd->users; i++) {
-		WFIFOL(fd, 8+i*28) = (i!=0) || ((*cd->owner)->type == BL_NPC);
+		WFIFOL(fd, 8+i*28) = (i != 0 || cd->owner->type == BL_NPC);
 		memcpy(WFIFOP(fd, 8+i*28+4), cd->usersd[i]->status.name, NAME_LENGTH);
 	}
 	WFIFOSET(fd, WFIFOW(fd, 2));
@@ -3318,7 +3318,7 @@ int clif_addchat(struct chat_data* cd,struct map_session_data *sd)
 /*==========================================
  *
  *------------------------------------------*/
-int clif_changechatowner(struct chat_data* cd,struct map_session_data *sd)
+int clif_changechatowner(struct chat_data* cd, struct map_session_data* sd)
 {
 	unsigned char buf[64];
 
@@ -9250,14 +9250,27 @@ void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 /*==========================================
  *
  *------------------------------------------*/
-void clif_parse_CreateChatRoom(int fd,struct map_session_data *sd)
+void clif_parse_CreateChatRoom(int fd, struct map_session_data* sd)
 {
+	int len = RFIFOW(fd,2)-15;
+	int limit = RFIFOW(fd,4);
+	bool public = (bool)RFIFOB(fd,6);
+	const char* password = (char*)RFIFOP(fd,7); //not zero-terminated
+	const char* title = (char*)RFIFOP(fd,15); // not zero-terminated
+	char s_title[CHATROOM_TITLE_SIZE];
+	char s_password[CHATROOM_PASS_SIZE];
+
 	if (sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOROOM)
 		return;
-	if(battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 4){
-		chat_createchat(sd,RFIFOW(fd,4),RFIFOB(fd,6),(char*)RFIFOP(fd,7),(char*)RFIFOP(fd,15),RFIFOW(fd,2)-15);
-	} else
+	if(battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 4) {
 		clif_skill_fail(sd,1,0,3);
+		return;
+	}
+
+	safestrncpy(s_title, title, min(len+1,CHATROOM_TITLE_SIZE));
+	safestrncpy(s_password, password, CHATROOM_PASS_SIZE);
+
+	chat_createpcchat(sd, s_title, s_password, limit, public);
 }
 
 /*==========================================

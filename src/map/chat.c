@@ -16,78 +16,87 @@
 #include <stdio.h>
 #include <string.h>
 
-int chat_triggerevent(struct chat_data *cd);
+int chat_triggerevent(struct chat_data *cd); // forward declaration
+
+/// Initializes a chatroom object (common functionality for both pc and npc chatrooms).
+/// Returns a chatroom object on success, or NULL on failure.
+static struct chat_data* chat_createchat(struct block_list* bl, const char* title, const char* pass, int limit, bool pub, int trigger, const char* ev)
+{
+	struct chat_data* cd;
+	nullpo_retr(NULL, bl);
+
+	cd = (struct chat_data *) aMalloc(sizeof(struct chat_data));
+
+	safestrncpy(cd->title, title, sizeof(cd->title));
+	safestrncpy(cd->pass, pass, sizeof(cd->pass));
+	cd->pub = pub;
+	cd->users = 0;
+	cd->limit = limit;
+	cd->trigger = trigger;
+	memset(cd->usersd, 0, sizeof(cd->usersd));
+	cd->owner = bl;
+	safestrncpy(cd->npc_event, ev, sizeof(cd->npc_event));
+
+	cd->bl.m    = bl->m;
+	cd->bl.x    = bl->x;
+	cd->bl.y    = bl->y;
+	cd->bl.type = BL_CHAT;
+	cd->bl.next = cd->bl.prev = NULL;
+	cd->bl.id   = map_addobject(&cd->bl);
+
+	if( cd->bl.id == 0 ) {
+		aFree(cd);
+		cd = NULL;
+	}
+
+	return cd;
+}
 
 /*==========================================
- * chatroom creation
+ * player chatroom creation
  *------------------------------------------*/
-int chat_createchat(struct map_session_data* sd, int limit, bool pub, char* pass, char* title, int titlelen)
+int chat_createpcchat(struct map_session_data* sd, const char* title, const char* pass, int limit, bool pub)
 {
-	struct chat_data *cd;
-
+	struct chat_data* cd;
 	nullpo_retr(0, sd);
 
 	if (sd->chatID)
-		return 0;	//Prevent people abusing the chat system by creating multiple chats, as pointed out by End of Exam. [Skotlex]
+		return 0; //Prevent people abusing the chat system by creating multiple chats, as pointed out by End of Exam. [Skotlex]
 
 	if (map[sd->bl.m].flag.nochat) {
 		clif_displaymessage (sd->fd, msg_txt(281));
 		return 0; //Can't create chatrooms on this map.
 	}
 	pc_stop_walking(sd,1);
-	cd = (struct chat_data *) aMalloc(sizeof(struct chat_data));
 
-	cd->limit = limit;
-	cd->pub = pub;
-	cd->users = 1;
-	titlelen = cap_value(titlelen, 0, sizeof(cd->title)-1); // empty string achievable by using custom client
-	// the following two input strings aren't zero terminated and need to be handled carefully
-	safestrncpy(cd->title, title, min(titlelen+1,CHATROOM_TITLE_SIZE));
-	safestrncpy(cd->pass, pass, CHATROOM_PASS_SIZE);
-
-	cd->owner = (struct block_list **)(&cd->usersd[0]);
-	cd->usersd[0] = sd;
-	cd->bl.m = sd->bl.m;
-	cd->bl.x = sd->bl.x;
-	cd->bl.y = sd->bl.y;
-	cd->bl.type = BL_CHAT;
-	cd->bl.next = cd->bl.prev = NULL;
-	cd->bl.id = map_addobject(&cd->bl);	
-	if(cd->bl.id==0){
+	cd = chat_createchat(&sd->bl, title, pass, limit, pub, 0, "");
+	if (cd) {
+		cd->users = 1;
+		cd->usersd[0] = sd;
+		pc_setchatid(sd,cd->bl.id);
+		clif_createchat(sd,0);
+		clif_dispchat(cd,0);
+	} else
 		clif_createchat(sd,1);
-		aFree(cd);
-		return 0;
-	}
-	pc_setchatid(sd,cd->bl.id);
-
-	clif_createchat(sd,0);
-	clif_dispchat(cd,0);
 
 	return 0;
 }
 
 /*==========================================
- * 既存チャットルームに参加
+ * join an existing chatroom
  *------------------------------------------*/
-int chat_joinchat(struct map_session_data* sd, int chatid, char* pass)
+int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass)
 {
-	struct chat_data *cd;
+	struct chat_data* cd;
 
 	nullpo_retr(0, sd);
 	cd = (struct chat_data*)map_id2bl(chatid);
 
- //No need for a nullpo check. The chatid was sent by the client, if they lag or mess with the packet 
- //a wrong chat id can be received. [Skotlex]
-	if (cd == NULL)
-		return 1;
-	if (cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->vender_id || sd->chatID || cd->limit <= cd->users) {
+	if (cd == NULL || cd->bl.type != BL_CHAT || cd->bl.m != sd->bl.m || sd->vender_id || sd->chatID || cd->users >= cd->limit) {
 		clif_joinchatfail(sd,0);
 		return 0;
 	}
-	//Allows Gm access to protected room with any password they want by valaris
-	if ((!cd->pub && strncmp(pass, (char *)cd->pass, 8) && (pc_isGM(sd) < battle_config.gm_join_chat || !battle_config.gm_join_chat)) ||
-		chatid == (int)sd->chatID) //Double Chat fix by Alex14, thx CHaNGeTe
-	{
+	if (!cd->pub && strncmp(pass, cd->pass, sizeof(cd->pass)) != 0 && !(battle_config.gm_join_chat && pc_isGM(sd) >= battle_config.gm_join_chat)) {
 		clif_joinchatfail(sd,1);
 		return 0;
 	}
@@ -107,7 +116,10 @@ int chat_joinchat(struct map_session_data* sd, int chatid, char* pass)
 	return 0;
 }
 
-/// Removes the user from the chat room.
+
+/*==========================================
+ * leave a chatroom
+ *------------------------------------------*/
 int chat_leavechat(struct map_session_data* sd)
 {
 	struct chat_data* cd;
@@ -123,109 +135,105 @@ int chat_leavechat(struct map_session_data* sd)
 		return 1;
 	}
 
-	for( i = 0, leavechar = -1; i < cd->users; i++ )
-	{
-		if(cd->usersd[i] == sd){
-			leavechar=i;
-			break;
-		}
-	}
-	if( leavechar < 0 )
+	ARR_FIND( 0, cd->users, i, cd->usersd[i] == sd );
+	if ( i == cd->users )
 	{// Not found in the chatroom?
 		pc_setchatid(sd, 0);
 		return -1;
 	}
 
-	if( leavechar == 0 && cd->users > 1 && (*cd->owner)->type == BL_PC )
-	{// Change ownership to the next user
-		clif_changechatowner(cd, cd->usersd[1]);
-		clif_clearchat(cd, 0);
-	}
+	leavechar = i;
 
-	// 抜けるPCにも送るのでusersを減らす前に実行
 	clif_leavechat(cd, sd);
 
-	cd->users--;
-	pc_setchatid(sd, 0);
+	for( i = leavechar; i < cd->users; i++ )
+		cd->usersd[i] = cd->usersd[i + 1];
 
-	if( cd->users == 0 && (*cd->owner)->type == BL_PC )
+	pc_setchatid(sd, 0);
+	cd->users--;
+
+	if( cd->users == 0 && cd->owner->type == BL_PC )
 	{// Delete empty chatroom
 		clif_clearchat(cd, 0);
 		map_delobject(cd->bl.id);
 		return 1;
 	}
-	for( i = leavechar; i < cd->users; i++ )
-		cd->usersd[i] = cd->usersd[i + 1];
 
-	if( leavechar == 0 && (*cd->owner)->type == BL_PC )
-	{
+	if( leavechar == 0 && cd->owner->type == BL_PC )
+	{	// Set and announce new owner
+		cd->owner = (struct block_list*) cd->usersd[0];
+		clif_changechatowner(cd, cd->usersd[0]);
+		clif_clearchat(cd, 0);
+
 		//Adjust Chat location after owner has been changed.
 		map_delblock( &cd->bl );
 		cd->bl.x=cd->usersd[0]->bl.x;
 		cd->bl.y=cd->usersd[0]->bl.y;
 		map_addblock( &cd->bl );
+
+		clif_dispchat(cd,0);
 	}
-	clif_dispchat(cd,0);
+	else
+		clif_dispchat(cd,0); // refresh chatroom
 
 	return 0;
 }
 
 /*==========================================
- * チャットルームの持ち主を譲る
+ * change a chatroom's owner
  *------------------------------------------*/
-int chat_changechatowner(struct map_session_data* sd, char* nextownername)
+int chat_changechatowner(struct map_session_data* sd, const char* nextownername)
 {
-	struct chat_data *cd;
-	struct map_session_data *tmp_sd;
+	struct chat_data* cd;
+	struct map_session_data* tmpsd;
 	int i, nextowner;
 
 	nullpo_retr(1, sd);
 
 	cd = (struct chat_data*)map_id2bl(sd->chatID);
-	if (cd == NULL || (struct block_list *)sd != (*cd->owner))
+	if (cd == NULL || (struct block_list*) sd != cd->owner)
 		return 1;
 
-	for(i = 1,nextowner=-1;i < cd->users;i++){
-		if(strcmp(cd->usersd[i]->status.name,nextownername)==0){
-			nextowner=i;
-			break;
-		}
-	}
-	if(nextowner<0) // そんな人は居ない
-		return -1;
+	ARR_FIND( 1, cd->users, i, strncmp(cd->usersd[i]->status.name, nextownername, NAME_LENGTH) == 0 );
+	if (i == cd->users)
+		return -1;  // name not found
 
-	clif_changechatowner(cd,cd->usersd[nextowner]);
-	// 一旦消す
+	// erase temporarily
 	clif_clearchat(cd,0);
 
-	// userlistの順番変更 (0が所有者なので)
-	if( (tmp_sd = cd->usersd[0]) == NULL ) //FIXME: How is this even possible!? Invoking character should be owner, hence, it SHOULD be on sc->usersd[0]!
-		return 1; //ありえるのかな？
-	cd->usersd[0] = cd->usersd[nextowner];
-	cd->usersd[nextowner] = tmp_sd;
+	// set new owner
+	nextowner = i;
+	cd->owner = (struct block_list*) cd->usersd[nextowner];
+	clif_changechatowner(cd,cd->usersd[nextowner]);
 
+	// change the owner's position (placing him to 0)
+	tmpsd = cd->usersd[nextowner];
+	cd->usersd[nextowner] = cd->usersd[0];
+	cd->usersd[0] = tmpsd;
+
+	// set the new chatroom position
 	map_delblock( &cd->bl );
-	cd->bl.x=cd->usersd[0]->bl.x;
-	cd->bl.y=cd->usersd[0]->bl.y;
+	cd->bl.x = cd->owner->x;
+	cd->bl.y = cd->owner->y;
 	map_addblock( &cd->bl );
 
-	// 再度表示
+	// and display again
 	clif_dispchat(cd,0);
 
 	return 0;
 }
 
 /*==========================================
- * チャットの状態(タイトル等)を変更
+ * change a chatroom's status (title, etc)
  *------------------------------------------*/
-int chat_changechatstatus(struct map_session_data* sd, char* title, char* pass, int limit, bool pub)
+int chat_changechatstatus(struct map_session_data* sd, const char* title, const char* pass, int limit, bool pub)
 {
-	struct chat_data *cd;
+	struct chat_data* cd;
 
 	nullpo_retr(1, sd);
 
 	cd=(struct chat_data*)map_id2bl(sd->chatID);
-	if(cd==NULL || (struct block_list *)sd != (*cd->owner))
+	if(cd==NULL || (struct block_list *)sd != cd->owner)
 		return 1;
 
 	safestrncpy(cd->title, title, CHATROOM_TITLE_SIZE);
@@ -240,66 +248,43 @@ int chat_changechatstatus(struct map_session_data* sd, char* title, char* pass, 
 }
 
 /*==========================================
- * チャットルームから蹴り出す
+ * kick an user from a chatroom
  *------------------------------------------*/
-int chat_kickchat(struct map_session_data* sd,char* kickusername)
+int chat_kickchat(struct map_session_data* sd, const char* kickusername)
 {
-	struct chat_data *cd;
+	struct chat_data* cd;
 	int i;
 
 	nullpo_retr(1, sd);
 
 	cd = (struct chat_data *)map_id2bl(sd->chatID);
 	
-	if (!cd) return -1;
+	if (!cd)
+		return -1;
 
-	for(i = 0; i < cd->users; i++) {
-		if (strcmp(cd->usersd[i]->status.name, kickusername) == 0) {
-			if (battle_config.gm_kick_chat && pc_isGM(cd->usersd[i]) >= battle_config.gm_kick_chat)
-				//gm kick protection by valaris
-				return 0;
+	ARR_FIND( 0, cd->users, i, strncmp(cd->usersd[i]->status.name, kickusername, NAME_LENGTH) == 0 );
+	if (i == cd->users)
+		return -1;
 
-			chat_leavechat(cd->usersd[i]);
-			return 0;
-		}
-	}
+	if (battle_config.gm_kick_chat && pc_isGM(cd->usersd[i]) >= battle_config.gm_kick_chat)
+		return 0; //gm kick protection [Valaris]
 
-	return -1;
+	chat_leavechat(cd->usersd[i]);
+	return 0;
 }
 
 /// Creates a chat room for the npc.
-int chat_createnpcchat(struct npc_data* nd, int limit, bool pub, int trigger, const char* title, const char* ev)
+int chat_createnpcchat(struct npc_data* nd, const char* title, int limit, bool pub, int trigger, const char* ev)
 {
-	struct chat_data *cd;
+	struct chat_data* cd;
+	nullpo_retr(0, nd);
 
-	nullpo_retr(1, nd);
-
-	cd = (struct chat_data *) aMalloc(sizeof(struct chat_data));
-
-	cd->limit = cd->trigger = limit;
-	if( trigger > 0 )
-		cd->trigger = trigger;
-	cd->pub = pub;
-	cd->users = 0;
-
-	safestrncpy(cd->title, title, CHATROOM_TITLE_SIZE);
-	memset(cd->pass, '\0', CHATROOM_PASS_SIZE);
-	cd->bl.m    = nd->bl.m;
-	cd->bl.x    = nd->bl.x;
-	cd->bl.y    = nd->bl.y;
-	cd->bl.type = BL_CHAT;
-	cd->bl.prev = cd->bl.next = NULL;
-	cd->owner   = &(struct block_list *)nd;
-	safestrncpy(cd->npc_event, ev, ARRAYLENGTH(cd->npc_event));
-	cd->bl.id = map_addobject(&cd->bl);	
-	if( cd->bl.id == 0)
+	cd = chat_createchat(&nd->bl, title, "", limit, pub, trigger, ev);
+	if (cd)
 	{
-		aFree(cd);
-		return 0;
+		nd->chat_id = cd->bl.id;
+		clif_dispchat(cd,0);
 	}
-	nd->chat_id = cd->bl.id;
-
-	clif_dispchat(cd, 0);
 
 	return 0;
 }
