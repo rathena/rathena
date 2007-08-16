@@ -1107,7 +1107,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 
 #ifdef HOTKEY_SAVING
 	//Hotkeys
-	sprintf(tmp_sql, "SELECT `hotkey`, `type`, `itemskill_id`, `skill_lvl` FROM `%s` WHERE `char_id`=%d ORDER BY `hotkey` LIMIT %d;", hotkey_db, char_id, HOTKEY_SAVING);
+	sprintf(tmp_sql, "SELECT `hotkey`, `type`, `itemskill_id`, `skill_lvl` FROM `%s` WHERE `char_id`='%d'", hotkey_db, char_id);
 	if(mysql_query(&mysql_handle, tmp_sql)){
 		ShowSQL("DB error - %s\n", mysql_error(&mysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__, __LINE__, tmp_sql);
@@ -1492,7 +1492,16 @@ int delete_char_sql(int char_id, int partner_id)
 		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 	}
-	
+
+#ifdef HOTKEY_SAVING
+	/* delete hotkeys */
+	sprintf(tmp_sql, "DELETE FROM `%s` WHERE `char_id`='%d'", hotkey_db, char_id);
+	if(mysql_query(&mysql_handle, tmp_sql)) {
+		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
+		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	}
+#endif
+
 	/* delete inventory */
 	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `char_id`='%d'",inventory_db, char_id);
 	if(mysql_query(&mysql_handle, tmp_sql)) {
