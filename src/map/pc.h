@@ -89,6 +89,7 @@ enum {
 #define pc_setsit(sd) ((sd)->state.dead_sit = (sd)->vd.dead_sit = 2)
 #define pc_isdead(sd) ((sd)->state.dead_sit == 1)
 #define pc_issit(sd) ((sd)->vd.dead_sit == 2)
+#define pc_isidle(sd) ((sd)->chatID || (sd)->vender_id || DIFF_TICK(last_tick, sd->idletime) >= battle_config.idle_no_share)
 #define pc_setdir(sd,b,h) ((sd)->ud.dir = (b) ,(sd)->head_dir = (h) )
 #define pc_setchatid(sd,n) ((sd)->chatID = n)
 #define pc_ishiding(sd) ((sd)->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK))

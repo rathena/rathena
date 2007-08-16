@@ -711,8 +711,7 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 
 	// count the number of players eligible for exp sharing
 	for (i = c = 0; i < MAX_PARTY; i++) {
-		if( (sd[c] = p->data[i].sd) == NULL || sd[c]->bl.m != src->m || pc_isdead(sd[c]) ||
-			(battle_config.idle_no_share && (sd[c]->chatID || sd[c]->vender_id || sd[c]->idletime < last_tick - battle_config.idle_no_share)) )
+		if( (sd[c] = p->data[i].sd) == NULL || sd[c]->bl.m != src->m || pc_isdead(sd[c]) || (battle_config.idle_no_share && pc_isidle(sd[c])) )
 			continue;
 		c++;
 	}
@@ -760,8 +759,7 @@ int party_share_loot(struct party_data* p, TBL_PC* sd, struct item* item_data, i
 				if (i >= MAX_PARTY)
 					i = 0;	// reset counter to 1st person in party so it'll stop when it reaches "itemc"
 
-				if( (psd = p->data[i].sd) == NULL || sd->bl.m != psd->bl.m || pc_isdead(psd) ||
-					(battle_config.idle_no_share && (psd->chatID || psd->vender_id || last_tick - battle_config.idle_no_share > psd->idletime)) )
+				if( (psd = p->data[i].sd) == NULL || sd->bl.m != psd->bl.m || pc_isdead(psd) || (battle_config.idle_no_share && pc_isidle(psd)) )
 					continue;
 				
 				if (pc_additem(psd,item_data,item_data->amount))
@@ -779,8 +777,7 @@ int party_share_loot(struct party_data* p, TBL_PC* sd, struct item* item_data, i
 			int count = 0;
 			//Collect pick candidates
 			for (i = 0; i < MAX_PARTY; i++) {
-				if( (psd[count] = p->data[i].sd) == NULL || psd[count]->bl.m != sd->bl.m || pc_isdead(psd[count]) ||
-					(battle_config.idle_no_share && (psd[count]->chatID || psd[count]->vender_id || last_tick - battle_config.idle_no_share > psd[count]->idletime)) )
+				if( (psd[count] = p->data[i].sd) == NULL || psd[count]->bl.m != sd->bl.m || pc_isdead(psd[count]) || (battle_config.idle_no_share && pc_isidle(psd[count])) )
 					continue;
 
 				count++;
@@ -833,7 +830,7 @@ int party_sub_count(struct block_list *bl, va_list ap)
 	if (sd->state.autotrade)
 		return 0;
 	
-	if (battle_config.idle_no_share && (sd->chatID || sd->vender_id || (sd->idletime < (last_tick - battle_config.idle_no_share))))
+	if (battle_config.idle_no_share && pc_isidle(sd))
 		return 0;
 
 	return 1;
