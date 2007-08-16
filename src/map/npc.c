@@ -2377,6 +2377,10 @@ int npc_parse_mob(char* w1, char* w2, char* w3, char* w4)
 		return 1;
 	}
 
+	//Fix for previously wrong interpretation of the delays
+	mob.delay2 = mob.delay1;
+	mob.delay1 = 0;
+
 	mob.num = (unsigned short)num;
 	mob.class_ = (short) class_;
 	mob.x = (unsigned short)x;
