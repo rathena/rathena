@@ -21,6 +21,7 @@
 	1565 Book_of_the_Dead:		Cause Coma status to Demi-human
 	1626 Staff_of_Piercing:		Ignore 10% Mdef
 	2000 Staff_of_Destruction:	Reduce cast-time of Mystical Amplification by 50%
+	2677 Spiritual_Ring:		50% more damage with Heal
 
 	Missing Status Effects:
 	12209 Life_Insurrance:		No EXP penetly on death (Recommend constant: SC_NoPenelty - Has status icon)
@@ -36,6 +37,8 @@
 	Still need proper rates for most 11.3 Equipment that don't have their +rates/Status Infliction rates clearly defined.
 	13107 Western_Outlaw:		Need correct HIT and ASPD Rate
 ========================
+08/16
+	* Removed heal bonus on Spiritual Ring [Playtester]
 08/15
 	* Added Critical Wounds to Anubis's skills [Playtester]
 08/14
