@@ -37,6 +37,10 @@
 	Still need proper rates for most 11.3 Equipment that don't have their +rates/Status Infliction rates clearly defined.
 	13107 Western_Outlaw:		Need correct HIT and ASPD Rate
 ========================
+08/17
+	* Fixed item script on elemental fists [Playtester]
+	- Endow should be cast on self
+	- also added the elemental fists to the mob drops
 08/16
 	* Removed heal bonus on Spiritual Ring [Playtester]
 08/15
