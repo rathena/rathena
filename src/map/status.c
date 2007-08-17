@@ -59,7 +59,6 @@ int current_equip_item_index; //Contains inventory index of an equipped item. To
 int current_equip_card_id; //To prevent card-stacking (from jA) [Skotlex]
 //we need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only
 //to avoid cards exploits
-void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag);	//[orn]
 
 static void add_sc(int skill, int sc)
 {
@@ -1170,13 +1169,24 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 
 void status_calc_bl(struct block_list *bl, unsigned long flag);
 
-	// Basic ASPD value
-#define status_base_amotion_pc(sd,status) (sd->aspd_add + \
-	(sd->status.weapon < MAX_WEAPON_TYPE? \
-		(1000 -4*status->agi -status->dex)*aspd_base[sd->status.class_][sd->status.weapon]/1000:\
-		(1000 -4*status->agi -status->dex)*(\
-			aspd_base[sd->status.class_][sd->weapontype1]+\
-			aspd_base[sd->status.class_][sd->weapontype2])*2/3000))
+// Basic ASPD value
+int status_base_amotion_pc(struct map_session_data* sd, struct status_data* status)
+{
+	int amotion;
+	
+	// base weapon delay
+	amotion = (sd->status.weapon < MAX_WEAPON_TYPE)
+	 ? (aspd_base[sd->status.class_][sd->status.weapon]) // single weapon
+	 : (aspd_base[sd->status.class_][sd->weapontype1] + aspd_base[sd->status.class_][sd->weapontype2])*7/10; // dual-wield
+	
+	// percentual delay reduction from stats
+	amotion-= amotion * (4*status->agi + status->dex)/1000;
+	
+	// raw delay adjustment from bAspd bonus
+	amotion+= sd->aspd_add;
+	
+ 	return amotion;
+}
 
 static int status_base_atk(struct block_list *bl, struct status_data *status)
 {
