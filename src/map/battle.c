@@ -3665,7 +3665,7 @@ static const struct _battle_data {
 	{ "duel_allow_gvg",                     &battle_config.duel_allow_gvg,                  0,      0,      1,              },
 	{ "duel_allow_teleport",                &battle_config.duel_allow_teleport,             0,      0,      1,              },
 	{ "duel_autoleave_when_die",            &battle_config.duel_autoleave_when_die,         1,      0,      1,              },
-	{ "duel_time_interval",                 &battle_config.duel_time_interval,              60,     1,      INT_MAX,        },
+	{ "duel_time_interval",                 &battle_config.duel_time_interval,              60,     0,      INT_MAX,        },
 	{ "duel_only_on_same_map",              &battle_config.duel_only_on_same_map,           0,      0,      1,              },
 	{ "skip_teleport_lv1_menu",             &battle_config.skip_teleport_lv1_menu,          0,      0,      1,              },
 	{ "allow_skill_without_day",            &battle_config.allow_skill_without_day,         0,      0,      1,              },
