@@ -1445,7 +1445,6 @@ int npc_remove_map(struct npc_data* nd)
 	npc_chat_finalize(nd);
 #endif
 	clif_clearunit_area(&nd->bl,2);
-	strdb_remove(npcname_db, (nd->bl.subtype < SCRIPT) ? nd->name : nd->exname);
 	//Remove corresponding NPC CELLs
 	if (nd->bl.subtype == WARP) {
 		int j, xs, ys, x, y;
@@ -1462,14 +1461,12 @@ int npc_remove_map(struct npc_data* nd)
 		}
 	}
 	map_delblock(&nd->bl);
-	map_deliddb(&nd->bl);
 	//Remove npc from map[].npc list. [Skotlex]
 	for(i=0;i<map[m].npc_num && map[m].npc[i] != nd;i++);
 	if (i >= map[m].npc_num) return 2; //failed to find it?
 
 	map[m].npc_num--;
-	for(; i<map[m].npc_num; i++)
-		map[m].npc[i]=map[m].npc[i+1];
+	memmove(&map[m].npc[i], &map[m].npc[i+1], (map[m].npc_num-i)*sizeof(map[m].npc[0]));
 	return 0;
 }
 
@@ -1511,6 +1508,7 @@ int npc_unload(struct npc_data* nd)
 
 	npc_remove_map(nd);
 	map_deliddb(&nd->bl);
+	strdb_remove(npcname_db, (nd->bl.subtype < SCRIPT) ? nd->name : nd->exname);
 
 	if (nd->chat_id) // remove npc chatroom object and kick users
 		chat_deletenpcchat(nd);

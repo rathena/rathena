@@ -1315,11 +1315,13 @@ int clif_spawn(struct block_list *bl)
 			WBUFW(buf,10)=sc->opt2;
 			WBUFW(buf,12)=sc->option;
 		}
+		WBUFW(buf,14)=vd->hair_style;
 		//14W: Hair Style
 		//16W: Weapon
 		//18W: Head bottom 
 		WBUFW(buf,20)=vd->class_;
 		//22W: Shield
+		WBUFW(buf,24)=vd->head_bottom;	//Pet armor
 		//24W: Head top
 		//26W: Head mid
 		//28W: Hair color
@@ -1363,6 +1365,7 @@ int clif_spawn(struct block_list *bl)
 		}
 	break;
 	case BL_PET:
+		if  (vd->head_bottom) //Pet armor display fix.
 		{
 			TBL_PET* pd = (TBL_PET*)bl;
 			if (pd->vd.head_bottom) clif_pet_equip(pd); // needed to display pet equip properly
@@ -3742,6 +3745,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		}
 		break;
 	case BL_PET:
+		if  (vd->head_bottom) //Pet armor display fix.
 		{
 			// needed to display pet equip properly
 			TBL_PET* pd = (TBL_PET*)bl;
@@ -7999,6 +8003,16 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	clif_updatestatus(sd,SP_MAXWEIGHT);
 	clif_updatestatus(sd,SP_WEIGHT);
 
+	if(battle_config.pc_invincible_time > 0) {
+		if(map_flag_gvg(sd->bl.m))
+			pc_setinvincibletimer(sd,battle_config.pc_invincible_time<<1);
+		else
+			pc_setinvincibletimer(sd,battle_config.pc_invincible_time);
+	}
+	map_addblock(&sd->bl);	// ƒuƒƒbƒN“o˜^
+	clif_spawn(&sd->bl);	// spawn
+
+
 	// Party
 	if(sd->status.party_id) {
 		party_send_movemap(sd);
@@ -8008,15 +8022,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	// guild
 	if(sd->status.guild_id)
 		guild_send_memberinfoshort(sd,1);
-
-	if(battle_config.pc_invincible_time > 0) {
-		if(map_flag_gvg(sd->bl.m))
-			pc_setinvincibletimer(sd,battle_config.pc_invincible_time<<1);
-		else
-			pc_setinvincibletimer(sd,battle_config.pc_invincible_time);
-	}
-	map_addblock(&sd->bl);	// ƒuƒƒbƒN“o˜^
-	clif_spawn(&sd->bl);	// spawn
 
 	if(map[sd->bl.m].flag.pvp) {
 		if(!battle_config.pk_mode) { // remove pvp stuff for pk_mode [Valaris]
