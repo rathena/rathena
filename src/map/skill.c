@@ -1,11 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -32,6 +27,12 @@
 #include "guild.h"
 #include "date.h"
 #include "unit.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
 
 #define SKILLUNITTIMER_INVERVAL	100
 //Guild Skills are shifted to these to make them stick into the skill array.
@@ -8006,7 +8007,7 @@ static int skill_check_condition_mob_master_sub (struct block_list *bl, va_list 
  * Determines if a given skill should be made to consume ammo 
  * when used by the player. [Skotlex]
  *------------------------------------------*/
-int skill_isammotype (TBL_PC *sd, int skill)
+int skill_isammotype (struct map_session_data *sd, int skill)
 {
 	return (
 		battle_config.arrow_decrement==2 &&

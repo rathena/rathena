@@ -26,6 +26,7 @@
 #include <string.h>
 #include <math.h>
 
+
 int attr_fix_table[4][ELE_MAX][ELE_MAX];
 
 struct Battle_Config battle_config;

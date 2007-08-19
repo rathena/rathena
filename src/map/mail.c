@@ -6,10 +6,6 @@
 // Created by Valaris
 // moved all strings to msg_athena.conf [Lupus]
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "../common/strlib.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
@@ -23,6 +19,11 @@
 #include "atcommand.h"
 #include "pc.h"
 #include "mail.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 int MAIL_CHECK_TIME = 120000;
 int mail_timer;

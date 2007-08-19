@@ -1,10 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -26,6 +22,11 @@
 #include "clif.h"
 #include "skill.h"
 #include "log.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 static DB guild_db;
 static DB castle_db;

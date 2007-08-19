@@ -1,9 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <string.h>
-
 #include "../common/nullpo.h"
 #include "clif.h"
 #include "itemdb.h"
@@ -17,6 +14,10 @@
 #include "log.h"
 
 #include "irc.h"
+
+#include <stdio.h>
+#include <string.h>
+
 
 /*==========================================
  * òIìXï¬çΩ

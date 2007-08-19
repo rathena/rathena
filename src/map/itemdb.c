@@ -1,10 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
@@ -14,6 +10,11 @@
 #include "battle.h" // struct battle_config
 #include "script.h" // item script processing
 #include "pc.h"     // W_MUSICAL, W_WHIP
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 static struct dbt* item_db;
 

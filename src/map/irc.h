@@ -4,7 +4,8 @@
 #ifndef _IRC_H_
 #define _IRC_H_
 
-#include "map.h"
+//#include "map.h"
+struct map_session_data;
 
 // IRC .conf file [Zido]
 #define IRC_CONF	"irc_athena.conf"

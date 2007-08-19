@@ -1,10 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "../common/cbasetypes.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
@@ -15,6 +11,11 @@
 #ifdef MEMWATCH
 #include "memwatch.h"
 #endif
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 //#define PATH_STANDALONETEST
 

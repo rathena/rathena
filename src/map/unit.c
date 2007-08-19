@@ -1,10 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "../common/showmsg.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -29,6 +25,11 @@
 #include "intif.h"
 #include "chrif.h"
 #include "script.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 const int dirx[8]={0,-1,-1,-1,0,1,1,1};
 const int diry[8]={1,1,0,-1,-1,-1,0,1};

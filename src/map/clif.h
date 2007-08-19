@@ -4,7 +4,16 @@
 #ifndef _CLIF_H_
 #define _CLIF_H_
 
-#include "map.h"
+#include "../common/cbasetypes.h"
+//#include "../common/mmo.h"
+struct storage;
+struct guild_storage;
+//#include "map.h"
+struct block_list;
+struct map_session_data;
+struct homun_data;
+struct unit_data;
+struct flooritem_data;
 
 // server->client protocol version
 // v7 - 2005-04-11aSakexe+ - 0x229, 0x22a, 0x22b, 0x22c
@@ -102,8 +111,8 @@ int clif_updatestatus(struct map_session_data*,int);	//self
 int clif_changestatus(struct block_list*,int,int);	//area
 int clif_damage(struct block_list* src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,int type,int damage2);	// area
 void clif_takeitem(struct block_list* src,struct block_list* dst);
-void clif_sitting(struct map_session_data* sd);
-void clif_standing(struct map_session_data* sd);
+void clif_sitting(struct block_list* bl);
+void clif_standing(struct block_list* bl);
 int clif_changelook(struct block_list *,int,int);	// area
 void clif_changetraplook(struct block_list *bl,int val); // area
 void clif_refreshlook(struct block_list *bl,int id,int type,int val,int area); //area specified in 'area'
@@ -346,7 +355,7 @@ int clif_timedout(struct map_session_data *sd);
 
 int clif_disp_overhead(struct map_session_data *sd, const char* mes);
 
-void clif_get_weapon_view(TBL_PC* sd, unsigned short *rhand, unsigned short *lhand);
+void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, unsigned short *lhand);
 
 int clif_party_xy_remove(struct map_session_data *sd); //Fix for minimap [Kevin]
 void clif_gospel_info(struct map_session_data *sd, int type);

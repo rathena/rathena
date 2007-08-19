@@ -4,7 +4,9 @@
 #ifndef	_TRADE_H_
 #define	_TRADE_H_
 
-#include "map.h"
+//#include "map.h"
+struct map_session_data;
+
 void trade_traderequest(struct map_session_data *sd, struct map_session_data *target_sd);
 void trade_tradeack(struct map_session_data *sd,int type);
 void trade_tradeadditem(struct map_session_data *sd,int index,int amount);

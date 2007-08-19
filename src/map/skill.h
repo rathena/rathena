@@ -4,7 +4,7 @@
 #ifndef _SKILL_H_
 #define _SKILL_H_
 
-#include "map.h"
+#include "map.h" // MAX_SKILL_LEVEL, ...
 
 #define MAX_SKILL_DB			1100
 #define MAX_SKILL_PRODUCE_DB	150
@@ -187,7 +187,7 @@ int	skill_tree_get_max( int id, int b_class );	// Celest
 const char*	skill_get_name( int id ); 	// [Skotlex]
 const char*	skill_get_desc( int id ); 	// [Skotlex]
 
-int skill_isammotype(TBL_PC *sd, int skill);
+int skill_isammotype(struct map_session_data *sd, int skill);
 int skill_castend_id( int tid, unsigned int tick, int id,int data );
 int skill_castend_pos( int tid, unsigned int tick, int id,int data );
 int skill_castend_map( struct map_session_data *sd,int skill_num, const char *map);

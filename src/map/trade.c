@@ -1,9 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <string.h>
-
 #include "../common/nullpo.h"
 #include "clif.h"
 #include "itemdb.h"
@@ -17,6 +14,10 @@
 #include "intif.h"
 #include "atcommand.h"
 #include "log.h"
+
+#include <stdio.h>
+#include <string.h>
+
 
 //Max distance from traders to enable a trade to take place.
 #define TRADE_DISTANCE 2

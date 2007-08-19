@@ -4,7 +4,9 @@
 #ifndef _UNIT_H_
 #define _UNIT_H_
 
-#include "map.h"
+//#include "map.h"
+struct block_list;
+struct unit_data;
 
 // PC, MOB, PET ‚É‹¤’Ê‚·‚éˆ—‚ğ‚P‚Â‚É‚Ü‚Æ‚ß‚éŒv‰æ
 

@@ -4,7 +4,10 @@
 #ifndef _NPC_H_
 #define _NPC_H_
 
-#include "map.h" // TBL_NPC
+//#include "map.h"
+struct block_list;
+struct npc_data;
+struct view_data;
 
 #define START_NPC_NUM 110000000
 
@@ -47,7 +50,7 @@ int npc_touch_areanpc2(struct block_list* bl); // [Skotlex]
 int npc_check_areanpc(int flag, int m, int x, int y, int range);
 int npc_click(struct map_session_data* sd, struct npc_data* nd);
 int npc_scriptcont(struct map_session_data* sd, int id);
-TBL_NPC* npc_checknear(struct map_session_data* sd, struct block_list* bl);
+struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl);
 int npc_checknear2(struct map_session_data* sd, struct block_list* bl);
 int npc_buysellsel(struct map_session_data* sd, int id, int type);
 int npc_buylist(struct map_session_data* sd,int n, unsigned short* item_list);
@@ -87,7 +90,7 @@ void npc_unload_duplicates (struct npc_data* nd);
 int npc_unload(struct npc_data* nd);
 int npc_reload(void);
 void npc_read_event_script(void);
-int npc_script_event(TBL_PC* sd, int type);
+int npc_script_event(struct map_session_data* sd, int type);
 
 struct npc_data *fake_nd;
 

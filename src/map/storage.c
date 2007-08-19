@@ -1,14 +1,13 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
+#include "../common/cbasetypes.h"
+#include "../common/db.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 
+#include "map.h" // struct map_session_data
 #include "storage.h"
 #include "chrif.h"
 #include "itemdb.h"
@@ -19,6 +18,11 @@
 #include "battle.h"
 #include "atcommand.h"
 #include "log.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 static struct dbt *storage_db;
 static struct dbt *guild_storage_db;

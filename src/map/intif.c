@@ -1,13 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <sys/types.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <fcntl.h>
-#include <string.h>
-
 #include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/timer.h"
@@ -25,6 +18,14 @@
 #include "pet.h"
 #include "atcommand.h"
 #include "mercenary.h" //albator
+
+#include <sys/types.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <fcntl.h>
+#include <string.h>
+
 
 static const int packet_len_table[]={
 	-1,-1,27,-1, -1, 0,37, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f

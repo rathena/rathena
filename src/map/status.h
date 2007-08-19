@@ -4,7 +4,7 @@
 #ifndef _STATUS_H_
 #define _STATUS_H_
 
-// forward declarations from map.h
+//#include "map.h"
 struct block_list;
 struct mob_data;
 struct pet_data;

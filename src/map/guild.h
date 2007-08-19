@@ -4,12 +4,14 @@
 #ifndef _GUILD_H_
 #define _GUILD_H_
 
-struct map_session_data;
-struct mob_data;
+//#include "../common/mmo.h"
 struct guild;
 struct guild_member;
 struct guild_position;
 struct guild_castle;
+//#include "map.h"
+struct map_session_data;
+struct mob_data;
 
 int guild_skill_get_max(int id);
 

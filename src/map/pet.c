@@ -1,10 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "../common/db.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
@@ -27,6 +23,11 @@
 #include "skill.h"
 #include "unit.h"
 #include "atcommand.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 #define MIN_PETTHINKTIME 100
 
@@ -555,7 +556,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		return 1;
 	}
 
-	//FIXME: delete taming item here, if this was an item-invoked capture and the item was flagged as delay-consume
+	//FIXME: delete taming item here, if this was an item-invoked capture and the item was flagged as delay-consume [ultramage]
 
 	i = search_petDB_index(md->class_,PET_CLASS);
 	//catch_target_class == 0 is used for universal lures (except bosses for now). [Skotlex]

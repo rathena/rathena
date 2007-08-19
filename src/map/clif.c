@@ -711,7 +711,7 @@ int clif_clearunit_delayed(struct block_list* bl, unsigned int tick)
 	return 0;
 }
 
-void clif_get_weapon_view(TBL_PC* sd, unsigned short *rhand, unsigned short *lhand)
+void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, unsigned short *lhand)
 {
 #if PACKETVER > 3
 	struct item_data *id;
@@ -895,9 +895,9 @@ static int clif_set0078(struct block_list* bl, unsigned char* buf)
 		WBUFW(buf,42)=sc->opt3;
 	}
 	WBUFW(buf,14)=vd->class_;
-	WBUFW(buf,16)=vd->hair_style;  //Required for pets (removes attack cursor)
+	WBUFW(buf,16)=vd->hair_style; //Required for pets (removes attack cursor)
 	//18W: Weapon
-	WBUFW(buf,20)=vd->head_bottom;	//Pet armor (ignored by client)
+	WBUFW(buf,20)=vd->head_bottom; //Pet armor (ignored by client)
 	if (bl->type == BL_NPC && vd->class_ == FLAG_CLASS)
 	{	//The hell, why flags work like this?
 		WBUFL(buf,22)=emblem_id;
@@ -1068,7 +1068,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 	WBUFW(buf,16)=vd->class_;
 	WBUFW(buf,18)=vd->hair_style; //Required for pets (removes attack cursor)
 	//20L: Weapon/Shield
-	WBUFW(buf,24)=vd->head_bottom;	//Pet armor
+	WBUFW(buf,24)=vd->head_bottom; //Pet armor
 	WBUFL(buf,26)=gettick();
 	//30W: Head top
 	//32W: Head mid
@@ -1098,7 +1098,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 		WBUFW(buf,46)=sc->opt3;
 	}
 	WBUFW(buf,14)=vd->class_;
-	WBUFW(buf,16)=vd->hair_style; //For pets (disables mob attack cursor)
+	WBUFW(buf,16)=vd->hair_style; //Required for pets (removes attack cursor)
 	//18W: Weapon
 	WBUFW(buf,20)=vd->head_bottom; //Pet armor
 	WBUFL(buf,22)=gettick();
@@ -1315,10 +1315,9 @@ int clif_spawn(struct block_list *bl)
 			WBUFW(buf,10)=sc->opt2;
 			WBUFW(buf,12)=sc->option;
 		}
-		WBUFW(buf,14)=vd->hair_style; //For pets (disables mob attack cursor)
-		//14W: Hair Style
+		WBUFW(buf,14)=vd->hair_style; //Required for pets (removes attack cursor)
 		//16W: Weapon
-		WBUFW(buf,18)=vd->head_bottom;	//Pet armor (ignored by client)
+		WBUFW(buf,18)=vd->head_bottom; //Pet armor (ignored by client)
 		WBUFW(buf,20)=vd->class_;
 		//22W: Shield
 		//24W: Head top
@@ -1364,7 +1363,7 @@ int clif_spawn(struct block_list *bl)
 		}
 	break;
 	case BL_PET:
-		if (vd->head_bottom) //Pet armor display fix.
+		if (vd->head_bottom)
 			clif_pet_equip_area((TBL_PET*)bl); // needed to display pet equip properly
 		break;
 	}
@@ -3713,7 +3712,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		clif_refreshlook(&sd->bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,SELF);
 
 	switch (bl->type)
-	{	// FIXME: 'AREA' causes unneccessary spam since this should be 1:1 communication
+	{	// FIXME: 'AREA' causes unneccessary spam since this should be 1:1 communication [ultramage]
 	case BL_PC:
 		{
 			TBL_PC* tsd = (TBL_PC*)bl;
@@ -3740,8 +3739,8 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		}
 		break;
 	case BL_PET:
-		if (vd->head_bottom) //Pet armor display fix.
-			clif_pet_equip(sd, (TBL_PET*)bl);
+		if (vd->head_bottom)
+			clif_pet_equip(sd, (TBL_PET*)bl); // needed to display pet equip properly
 		break;
 	}
 }
@@ -3858,42 +3857,40 @@ void clif_takeitem(struct block_list* src, struct block_list* dst)
 }
 
 /*==========================================
- * inform clients in area that `sd` is sitting
+ * inform clients in area that `bl` is sitting
  *------------------------------------------*/
-void clif_sitting(struct map_session_data* sd)
+void clif_sitting(struct block_list* bl)
 {
 	unsigned char buf[32];
-
-	nullpo_retv(sd);
+	nullpo_retv(bl);
 
 	WBUFW(buf, 0) = 0x8a;
-	WBUFL(buf, 2) = sd->bl.id;
+	WBUFL(buf, 2) = bl->id;
 	WBUFB(buf,26) = 2;
-	clif_send(buf, packet_len(0x8a), &sd->bl, AREA);
+	clif_send(buf, packet_len(0x8a), bl, AREA);
 
-	if(disguised(&sd->bl)) {
-		WBUFL(buf, 2) = -sd->bl.id;
-		clif_send(buf, packet_len(0x8a), &sd->bl, SELF);
+	if(disguised(bl)) {
+		WBUFL(buf, 2) = - bl->id;
+		clif_send(buf, packet_len(0x8a), bl, SELF);
 	}
 }
 
 /*==========================================
- * inform clients in area that `sd` is standing
+ * inform clients in area that `bl` is standing
  *------------------------------------------*/
-void clif_standing(struct map_session_data* sd)
+void clif_standing(struct block_list* bl)
 {
 	unsigned char buf[32];
-
-	nullpo_retv(sd);
+	nullpo_retv(bl);
 
 	WBUFW(buf, 0) = 0x8a;
-	WBUFL(buf, 2) = sd->bl.id;
+	WBUFL(buf, 2) = bl->id;
 	WBUFB(buf,26) = 3;
-	clif_send(buf, packet_len(0x8a), &sd->bl, AREA);
+	clif_send(buf, packet_len(0x8a), bl, AREA);
 
-	if(disguised(&sd->bl)) {
-		WBUFL(buf, 2) = -sd->bl.id;
-		clif_send(buf, packet_len(0x8a), &sd->bl, SELF);
+	if(disguised(bl)) {
+		WBUFL(buf, 2) = - bl->id;
+		clif_send(buf, packet_len(0x8a), bl, SELF);
 	}
 }
 
@@ -6115,7 +6112,7 @@ int clif_sendegg(struct map_session_data *sd)
  * type = 5 -> param = hairstyle number
  * If sd is null, the update is sent to nearby objects, otherwise it is sent only to that player.
  *------------------------------------------*/
-int clif_send_petdata(struct map_session_data *sd, struct pet_data* pd, int type, int param)
+int clif_send_petdata(struct map_session_data* sd, struct pet_data* pd, int type, int param)
 {
 	uint8 buf[16];
 	nullpo_retr(0, pd);
@@ -8675,7 +8672,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 
 		if(pc_issit(sd)) {
 			//Bugged client? Just refresh them.
-			clif_sitting(sd);
+			clif_sitting(&sd->bl);
 			return;
 		}
 
@@ -8690,17 +8687,17 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 
 		pc_setsit(sd);
 		skill_sit(sd,1);
-		clif_sitting(sd);
+		clif_sitting(&sd->bl);
 	break;
 	case 0x03: // standup
 		if (!pc_issit(sd)) {
 			//Bugged client? Just refresh them.
-			clif_standing(sd);
+			clif_standing(&sd->bl);
 			return;
 		}
 		pc_setstand(sd);
 		skill_sit(sd,0); 
-		clif_standing(sd);
+		clif_standing(&sd->bl);
 	break;
 	}
 }
@@ -10834,7 +10831,7 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd)
 		WFIFOSET(fd, packet_len(0x0d1));
 
 		//Sort the ignore list.
-		//FIXME: why not just use a simple shift-and-insert scheme instead?
+		//FIXME: why not just use a simple shift-and-insert scheme instead? [ultramage]
 		qsort (sd->ignore[0].name, MAX_IGNORE_LIST, sizeof(sd->ignore[0].name), pstrcmp);
 	}
 	else

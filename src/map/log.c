@@ -1,10 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
 #include "../common/strlib.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
@@ -12,6 +8,11 @@
 #include "map.h"
 #include "log.h"
 #include "battle.h"
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
 
 struct Log_Config log_config;
 

@@ -4,13 +4,16 @@
 #ifndef _PARTY_H_
 #define _PARTY_H_
 
+//#include "map.h"
+struct block_list;
+struct map_session_data;
+struct party;
+struct party_data;
+struct item;
+
 #include <stdarg.h>
-#include "map.h"
 
 extern int party_share_level;
-struct party;
-struct map_session_data;
-struct block_list;
 
 void do_init_party(void);
 void do_final_party(void);
@@ -41,7 +44,7 @@ int party_check_conflict(struct map_session_data *sd);
 int party_skill_check(struct map_session_data *sd, int party_id, int skillid, int skilllv);
 int party_send_xy_clear(struct party_data *p);
 int party_exp_share(struct party_data *p,struct block_list *src,unsigned int base_exp,unsigned int job_exp,int zeny);
-int party_share_loot(struct party_data* p, TBL_PC* sd, struct item* item_data, int first);
+int party_share_loot(struct party_data* p, struct map_session_data* sd, struct item* item_data, int first);
 int party_send_dot_remove(struct map_session_data *sd);
 int party_sub_count(struct block_list *bl, va_list ap);
 int party_foreachsamemap(int (*func)(struct block_list *,va_list),struct map_session_data *sd,int type,...);

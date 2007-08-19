@@ -31,7 +31,6 @@
 #include <time.h>
 
 
-
 // linked list of npc source files
 struct npc_src_list {
 	struct npc_src_list* next;
@@ -1102,7 +1101,7 @@ int npc_checknear2(struct map_session_data* sd, struct block_list* bl)
 	return 0;
 }
 
-TBL_NPC* npc_checknear(struct map_session_data* sd, struct block_list* bl)
+struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl)
 {
 	struct npc_data *nd;
 
@@ -2808,7 +2807,7 @@ void npc_parsesrcfile(const char* name)
 	return;
 }
 
-int npc_script_event(TBL_PC* sd, int type)
+int npc_script_event(struct map_session_data* sd, int type)
 {
 	int i;
 	if (type < 0 || type >= NPCE_MAX)

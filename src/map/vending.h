@@ -4,7 +4,8 @@
 #ifndef	_VENDING_H_
 #define	_VENDING_H_
 
-#include "map.h"
+//#include "map.h"
+struct map_session_data;
 
 void vending_closevending(struct map_session_data *sd);
 void vending_openvending(struct map_session_data *sd,int len,char *message,int flag,unsigned char *p);

@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <string.h>
 
+
 int chat_triggerevent(struct chat_data *cd); // forward declaration
 
 /// Initializes a chatroom object (common functionality for both pc and npc chatrooms).

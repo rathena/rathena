@@ -1,22 +1,12 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdarg.h>
-#include <math.h>
-
-#ifndef _WIN32
-#include <unistd.h>
-#endif
-
 #include "../common/cbasetypes.h"
 #include "../common/core.h"
 #include "../common/timer.h"
 #include "../common/grfio.h"
 #include "../common/malloc.h"
-#include "../common/socket.h"
+#include "../common/socket.h" // WFIFO*()
 #include "../common/showmsg.h"
 #include "../common/version.h"
 #include "../common/nullpo.h"
@@ -48,6 +38,16 @@
 #include "log.h"
 
 #include "irc.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdarg.h>
+#include <math.h>
+
+#ifndef _WIN32
+#include <unistd.h>
+#endif
 
 #ifndef TXT_ONLY
 

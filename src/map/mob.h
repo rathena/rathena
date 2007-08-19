@@ -4,18 +4,18 @@
 #ifndef _MOB_H_
 #define _MOB_H_
 
-#include "unit.h"
-#include "map.h"
+#include "../common/mmo.h" // struct item
+#include "unit.h" // unit_stop_walking(), unit_stop_attack()
+#include "map.h" // struct status_data, struct view_data, struct mob_skill
 
 #define MAX_RANDOMMONSTER 4
 #define MAX_MOB_RACE_DB 6
-	/* Change this to increase the table size in your mob_db to accomodate
-		a larger mob database. Be sure to note that IDs 4001 to 4048 are reserved for advanced/baby/expanded classes.
-	*/
+
+// Change this to increase the table size in your mob_db to accomodate a larger mob database.
+// Be sure to note that IDs 4001 to 4048 are reserved for advanced/baby/expanded classes.
 #define MAX_MOB_DB 10000
 
-//The number of drops all mobs have and the max drop-slot that the steal skill
-//will attempt to steal from.
+//The number of drops all mobs have and the max drop-slot that the steal skill will attempt to steal from.
 #define MAX_MOB_DROP 10
 #define MAX_STEAL_DROP 7
 

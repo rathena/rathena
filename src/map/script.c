@@ -8,7 +8,6 @@
 //#define DEBUG_HASH
 
 #include "../common/cbasetypes.h"
-#include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/malloc.h"
 #include "../common/lock.h"
@@ -52,6 +51,7 @@
 #include <time.h>
 #include <setjmp.h>
 #include <errno.h>
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //## TODO possible enhancements: [FlavioJS]
@@ -4031,7 +4031,6 @@ BUILDIN_FUNC(unitattack);
 BUILDIN_FUNC(unitstop);
 BUILDIN_FUNC(unittalk);
 BUILDIN_FUNC(unitemote);
-BUILDIN_FUNC(unitdeadsit);
 BUILDIN_FUNC(unitskilluseid); // originally by Qamera [celest]
 BUILDIN_FUNC(unitskillusepos); // originally by Qamera [celest]
 // <--- [zBuffer] List of mob control commands
@@ -4373,7 +4372,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitstop,"i"),
 	BUILDIN_DEF(unittalk,"is"),
 	BUILDIN_DEF(unitemote,"ii"),
-	BUILDIN_DEF(unitdeadsit,"ii"),
 	BUILDIN_DEF(unitskilluseid,"iii?"), // originally by Qamera [Celest]
 	BUILDIN_DEF(unitskillusepos,"iiiii"), // [Celest]
 // <--- [zBuffer] List of mob control commands
@@ -10667,7 +10665,7 @@ BUILDIN_FUNC(soundeffectall)
 	name = script_getstr(st,2);
 	type = script_getnum(st,3);
 
-	//FIXME: enumerating map squares (map_foreach) is slower than enumerating the list of online players (map_foreachpc?)
+	//FIXME: enumerating map squares (map_foreach) is slower than enumerating the list of online players (map_foreachpc?) [ultramage]
 
 	if(!script_hasdata(st,4))
 	{	// area around
@@ -13071,41 +13069,6 @@ BUILDIN_FUNC(unitemote)
 	bl = map_id2bl(unit_id);
 	if( bl != NULL )
 		clif_emotion(bl, emotion);
-
-	return 0;
-}
-
-/// Makes the unit do an action
-/// TODO actions
-///
-/// unitdeadsit <unit_id>,<action>;
-BUILDIN_FUNC(unitdeadsit)
-{
-	int unit_id;
-	int action;
-	struct block_list* bl;
-
-	unit_id = script_getnum(st,2);
-	action  = script_getnum(st,3);
-
-	bl = map_id2bl(unit_id);
-	if( bl != NULL )
-	{
-		if( action > -1 && action < 4 )
-		{
-			unsigned char buf[61] = "";
-			struct view_data *vd = status_get_viewdata(bl);
-			if (vd) vd->dead_sit = action;
-			WBUFW(buf, 0) = 0x8a;
-			WBUFL(buf, 2) = bl->id;
-			WBUFB(buf,26) = (unsigned char)action;
-			clif_send(buf, 61, bl, AREA);
-		} else
-		{
-			ShowWarning("script:unitdeadsit: %d is not a valid action\n", action);
-			return 1;
-		}
-	}
 
 	return 0;
 }

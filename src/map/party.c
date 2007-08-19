@@ -1,13 +1,9 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "../common/cbasetypes.h"
 #include "../common/timer.h"
-#include "../common/socket.h"
+#include "../common/socket.h" // last_tick
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
@@ -22,6 +18,11 @@
 #include "skill.h"
 #include "status.h"
 #include "itemdb.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 static DB party_db;
 int party_share_level = 10;

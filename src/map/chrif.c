@@ -320,7 +320,7 @@ int chrif_changemapserverack(int account_id, int login_id1, int login_id2, int c
 	if (sd == NULL || sd->status.char_id != char_id)
 		return -1;
 
-	if (login_id1 == 1) { //FIXME: charserver says '0'!
+	if (login_id1 == 1) { //FIXME: charserver says '0'! [ultramage]
 		if (battle_config.error_log)
 			ShowError("map server change failed.\n");
 		clif_authfail_fd(sd->fd, 0);
@@ -506,6 +506,7 @@ int auth_db_cleanup(int tid, unsigned int tick, int id, int data)
 	auth_db->foreach(auth_db, auth_db_cleanup_sub);
 	return 0;
 }
+
 
 /*==========================================
  *
@@ -929,7 +930,8 @@ int chrif_reloadGMdb(void)
  *------------------------------------------*/
 int chrif_recvgmaccounts(int fd)
 {
-	ShowInfo("From login-server: receiving information of '"CL_WHITE"%d"CL_RESET"' GM accounts.\n", pc_read_gm_account(fd));
+	int nAccounts = pc_read_gm_account(fd);
+	ShowInfo("From login-server: receiving information of '"CL_WHITE"%d"CL_RESET"' GM accounts.\n", nAccounts);
 	return 0;
 }
 
@@ -1287,6 +1289,8 @@ int chrif_parse(int fd)
 
 		if ((int)RFIFOREST(fd) < packet_len)
 			return 0;
+
+		//ShowDebug("Received packet 0x%4x (%d bytes) from char-server (connection %d)\n", RFIFOW(fd,0), packet_len, fd);
 
 		switch(cmd)
 		{

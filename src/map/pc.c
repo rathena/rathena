@@ -1,46 +1,43 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
 #include "../common/cbasetypes.h"
-#include "../common/socket.h" // [Valaris]
-#include "../common/timer.h"
+#include "../common/core.h" // get_svn_revision()
+#include "../common/malloc.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
-#include "../common/malloc.h"
-#include "../common/core.h"
+#include "../common/socket.h" // RFIFO*()
+#include "../common/timer.h"
 
-#include "map.h"
+#include "atcommand.h" // get_atcommand_level()
+#include "battle.h" // battle_config
 #include "chrif.h"
 #include "clif.h"
+#include "date.h" // is_day_of_*()
 #include "intif.h"
-#include "pc.h"
-#include "status.h"
-#include "npc.h"
-#include "mob.h"
-#include "pet.h"
-#include "mercenary.h"	//orn
 #include "itemdb.h"
-#include "script.h"
-#include "battle.h"
-#include "skill.h"
-#include "party.h"
-#include "guild.h"
-#include "chat.h"
-#include "trade.h"
-#include "storage.h"
-#include "vending.h"
-#include "atcommand.h"
 #include "log.h"
-#include "date.h"
+#include "map.h"
+#include "mercenary.h" // merc_is_hom_active()
+#include "mob.h" // MAX_MOB_RACE_DB
+#include "npc.h" // fake_nd
+#include "pet.h" // pet_unlocktarget()
+#include "party.h" // party_search()
+#include "guild.h" // guild_search(), guild_request_info()
+#include "script.h" // script_config
+#include "skill.h"
+#include "status.h" // struct status_data
+#include "vending.h" // vending_closevending()
+#include "pc.h"
 
 #ifndef TXT_ONLY // mail system [Valaris]
 #include "mail.h"
 #endif
+
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+
 
 #define PVP_CALCRANK_INTERVAL 1000	// PVPèáà åvéZÇÃä‘äu
 static unsigned int exp_table[MAX_PC_CLASS][2][MAX_LEVEL];
@@ -6894,6 +6891,7 @@ int pc_autosave(int tid,unsigned int tick,int id,int data)
 
 int pc_read_gm_account(int fd)
 {
+	//FIXME: this implementation is a total failure (direct reading from RFIFO) [ultramage]
 	int i = 0;
 	if (gm_account != NULL)
 		aFree(gm_account);
@@ -6902,7 +6900,6 @@ int pc_read_gm_account(int fd)
 	for (i = 4; i < RFIFOW(fd,2); i += 5) {
 		gm_account[GM_num].account_id = RFIFOL(fd,i);
 		gm_account[GM_num].level = (int)RFIFOB(fd,i+4);
-		//printf("GM account: %d -> level %d\n", gm_account[GM_num].account_id, gm_account[GM_num].level);
 		GM_num++;
 	}
 	return GM_num;
