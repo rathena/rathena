@@ -3170,8 +3170,9 @@ static unsigned int mob_drop_adjust(int rate, int rate_adjust, unsigned short ra
 		//Equation: Droprate(x,y) = x * (5 - log(x)) ^ (ln(y) / ln(5))
 		//x is the normal Droprate, y is the Modificator.
 		rate = (int)(rate * pow((5.0 - log10(rate)), (log(rate_adjust/100.) / log(5.0))) + 0.5);
-	else	//Classical linear rate adjustment.
-		rate = rate*rate_adjust/100;
+	else
+		//Classical linear rate adjustment.
+		rate = rate * rate_adjust/100;
 	return cap_value(rate,rate_min,rate_max);
 }
 

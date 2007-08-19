@@ -144,7 +144,7 @@ L_MainMenu:
 	}
 
 L_AttackMenu:
-	switch(select("Walk","Follow","Attack","Stop","Defend","Talk","Emote","Random Walk","Callback","Back","Sit")){
+	switch(select("Walk","Follow","Attack","Stop","Defend","Talk","Emote","Random Walk","Callback","Back")){
 		case 1: // Walk
 			set .@src, make_menu();
 			input .@x;

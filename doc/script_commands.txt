@@ -9,7 +9,7 @@
 //= Maeki Rika - A section on general concepts and lots of
 //=              other updates and additions.
 //===== Version ===========================================
-//= 3.05.20070423
+//= 3.05.20070819
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -76,6 +76,8 @@
 //= 3.05.20070423
 //=       menu/select/prompt produce consistent results for grouped and empty 
 //=       options [FlavioJS]
+//= 3.05.20070819
+//=       Removed the messy 'unitdeadsit' command reference [ultramage]
 //===== Description =======================================
 //= A reference manual for the eAthena scripting language,
 //= sorted out depending on their functionality.
@@ -4672,18 +4674,9 @@ Example(s):
 * unitstop <GID>;
 * unittalk <GID>,<Text>;
 * unitemote <GID>,<Emote>;
-* unitdeadsit <GID>,<Action?>;
 
 Okay, these commands should be fairly self explaining.
-
 For the emotions, you can look in db/const.txt for prefixes with e_
-The unitdeadsit uses an action, not exactly sure why it's named unitdeadsit...
-
-Anyhoo: actions are
-0: normal attack
-1: pick stone like
-2: normal sit	
-3: nothing?
 
 ---------------------------------------
 
