@@ -1098,7 +1098,7 @@ static int clif_set007b(struct block_list *bl, struct view_data *vd, struct unit
 		WBUFW(buf,46)=sc->opt3;
 	}
 	WBUFW(buf,14)=vd->class_;
-	WBUFW(buf,16)=vd->hair_style; //For pets
+	WBUFW(buf,16)=vd->hair_style; //For pets (disables mob attack cursor)
 	//18W: Weapon
 	WBUFW(buf,20)=vd->head_bottom; //Pet armor
 	WBUFL(buf,22)=gettick();
@@ -1315,13 +1315,12 @@ int clif_spawn(struct block_list *bl)
 			WBUFW(buf,10)=sc->opt2;
 			WBUFW(buf,12)=sc->option;
 		}
-		WBUFW(buf,14)=vd->hair_style;
+		WBUFW(buf,14)=vd->hair_style; //For pets (disables mob attack cursor)
 		//14W: Hair Style
 		//16W: Weapon
-		//18W: Head bottom 
+		WBUFW(buf,18)=vd->head_bottom;	//Pet armor (ignored by client)
 		WBUFW(buf,20)=vd->class_;
 		//22W: Shield
-		WBUFW(buf,24)=vd->head_bottom;	//Pet armor
 		//24W: Head top
 		//26W: Head mid
 		//28W: Hair color
@@ -1365,12 +1364,8 @@ int clif_spawn(struct block_list *bl)
 		}
 	break;
 	case BL_PET:
-		if  (vd->head_bottom) //Pet armor display fix.
-		{
-			TBL_PET* pd = (TBL_PET*)bl;
-			if (pd->vd.head_bottom) clif_pet_equip(pd); // needed to display pet equip properly
-			clif_send_petdata_area(pd, 5, battle_config.pet_hair_style); // removes the attack cursor
-		}
+		if (vd->head_bottom) //Pet armor display fix.
+			clif_pet_equip_area((TBL_PET*)bl); // needed to display pet equip properly
 		break;
 	}
 	return 0;
@@ -3745,22 +3740,8 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		}
 		break;
 	case BL_PET:
-		if  (vd->head_bottom) //Pet armor display fix.
-		{
-			// needed to display pet equip properly
-			TBL_PET* pd = (TBL_PET*)bl;
-			if (pd->vd.head_bottom)
-			{
-				//TODO: adjust clif_pet_equip() to support a 'target', then rewrite this mess into a function call
-				int fd = sd->fd;
-				WFIFOHEAD(fd,packet_len(0x1a4));
-				WFIFOW(fd,0) = 0x1a4;
-				WFIFOB(fd,2) = 3;
-				WFIFOL(fd,3) = pd->bl.id;
-				WFIFOL(fd,7) = pd->vd.head_bottom;
-				WFIFOSET(fd,packet_len(0x1a4));
-			}
-		}
+		if (vd->head_bottom) //Pet armor display fix.
+			clif_pet_equip(sd, (TBL_PET*)bl);
 		break;
 	}
 }
@@ -6132,37 +6113,21 @@ int clif_sendegg(struct map_session_data *sd)
  * type = 3 -> param = accessory id
  * type = 4 -> param = performance number (1-3:normal, 4:special)
  * type = 5 -> param = hairstyle number
+ * If sd is null, the update is sent to nearby objects, otherwise it is sent only to that player.
  *------------------------------------------*/
-int clif_send_petdata(struct map_session_data* sd, int type, int param)
-{
-	int fd;
-
-	nullpo_retr(0, sd);
-	nullpo_retr(0, sd->pd);
-
-	fd = sd->fd;
-	WFIFOHEAD(fd,packet_len(0x1a4));
-	WFIFOW(fd,0) = 0x1a4;
-	WFIFOB(fd,2) = type;
-	WFIFOL(fd,3) = sd->pd->bl.id;
-	WFIFOL(fd,7) = param;
-	WFIFOSET(fd,packet_len(0x1a4));
-
-	return 0;
-}
-
-int clif_send_petdata_area(struct pet_data* pd, int type, int param)
+int clif_send_petdata(struct map_session_data *sd, struct pet_data* pd, int type, int param)
 {
 	uint8 buf[16];
-
 	nullpo_retr(0, pd);
 
 	WBUFW(buf,0) = 0x1a4;
 	WBUFB(buf,2) = type;
 	WBUFL(buf,3) = pd->bl.id;
 	WBUFL(buf,7) = param;
-	clif_send(buf, packet_len(0x1a4), &pd->bl, AREA);
-
+	if (sd)
+		clif_send(buf, packet_len(0x1a4), &sd->bl, SELF);
+	else
+		clif_send(buf, packet_len(0x1a4), &pd->bl, AREA);
 	return 0;
 }
 
@@ -8061,7 +8026,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->pd) {
 		map_addblock(&sd->pd->bl);
 		clif_spawn(&sd->pd->bl);
-		clif_send_petdata(sd,0,0);
+		clif_send_petdata(sd,sd->pd,0,0);
 		clif_send_petstatus(sd);
 //		skill_unit_move(&sd->pd->bl,gettick(),1);
 	}

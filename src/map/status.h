@@ -476,7 +476,7 @@ enum {
 	OPT1_FREEZE,
 	OPT1_STUN,
 	OPT1_SLEEP,
-	//What is 5?
+	//Aegis uses OPT1 = 5 to identify undead enemies (which also grants them immunity to the other opt1 changes)
 	OPT1_STONEWAIT=6 //Petrifying
 };
 
