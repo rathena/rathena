@@ -27,48 +27,10 @@ enum item_types {
 	IT_MAX 
 };
 
-enum item_group_list {
-	IG_BLUEBOX=1,	//1
-	IG_VIOLETBOX,	//2
-	IG_CARDALBUM,	//3
-	IG_GIFTBOX,	//4
-	IG_SCROLLBOX,	//5
-	IG_FINDINGORE,	//6
-	IG_COOKIEBAG,	//7
-	IG_FIRSTAID,	//8
-	IG_HERB,	//9
-	IG_FRUIT,	//10
-	IG_MEAT,	//11
-	IG_CANDY,	//12
-	IG_JUICE,	//13
-	IG_FISH,	//14
-	IG_BOX,	//15
-	IG_GEMSTONE,	//16
-	IG_RESIST,	//17
-	IG_ORE,	//18
-	IG_FOOD,	//19
-	IG_RECOVERY,	//20
-	IG_MINERAL,	//21
-	IG_TAMING,	//22
-	IG_SCROLL,	//23
-	IG_QUIVER,	//24
-	IG_MASK,	//25
-	IG_ACCESORY,	//26
-	IG_JEWEL,	//27
-	IG_GIFTBOX_1,	//28
-	IG_GIFTBOX_2,	//29
-	IG_GIFTBOX_3,	//30
-	IG_GIFTBOX_4,	//31
-	IG_EGGBOY,	//32
-	IG_EGGGIRL,	//33
-	IG_GIFTBOXCHINA,	//34
-	IG_LOTTOBOX,	//35
-	IG_FOODBAG,	//36
-	IG_POTION,	//37
-	IG_REDBOX_2,	//38
-	IG_BLEUBOX,	//39
-	MAX_ITEMGROUP,
-};
+//The only item group required by the code to be known. See const.txt for the full list.
+#define IG_FINDINGORE 6
+//The max. item group count (increase this when needed).
+#define MAX_ITEMGROUP 40
 
 #define CARD0_FORGE 0x00FF
 #define CARD0_CREATE 0x00FE
