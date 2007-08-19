@@ -844,7 +844,7 @@ struct npc_data {
 	int eventtimer[MAX_EVENTTIMER];
 	short arenaflag;
 
-	void *chatdb;
+	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
 	struct npc_data *master_nd;
 
 	union {

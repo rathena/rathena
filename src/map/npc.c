@@ -1441,9 +1441,6 @@ int npc_remove_map(struct npc_data* nd)
 	if(nd->bl.prev == NULL || nd->bl.m < 0)
 		return 1; //Not assigned to a map.
   	m = nd->bl.m;
-#ifdef PCRE_SUPPORT
-	npc_chat_finalize(nd);
-#endif
 	clif_clearunit_area(&nd->bl,2);
 	//Remove corresponding NPC CELLs
 	if (nd->bl.subtype == WARP) {
@@ -1512,6 +1509,10 @@ int npc_unload(struct npc_data* nd)
 
 	if (nd->chat_id) // remove npc chatroom object and kick users
 		chat_deletenpcchat(nd);
+
+#ifdef PCRE_SUPPORT
+	npc_chat_finalize(nd); // deallocate npc PCRE data structures
+#endif
 
 	if (nd->bl.subtype == SCRIPT) {
 		ev_db->foreach(ev_db,npc_unload_ev,nd->exname); //Clean up all events related.
