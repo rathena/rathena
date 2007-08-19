@@ -4,6 +4,13 @@
 #ifndef _INTIF_H_
 #define _INFIF_H_
 
+//#include "../common/mmo.h"
+struct party_member;
+struct guild_member;
+struct guild_position;
+struct s_pet;
+struct s_homunculus;
+
 int intif_parse(int fd);
 
 int intif_GMmessage(const char* mes,int len,int flag);

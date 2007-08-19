@@ -10,10 +10,19 @@ struct storage;
 struct guild_storage;
 //#include "map.h"
 struct block_list;
+struct unit_data;
 struct map_session_data;
 struct homun_data;
-struct unit_data;
+struct pet_data;
+struct npc_data;
+struct chat_data;
 struct flooritem_data;
+struct skill_unit;
+struct vending;
+struct party;
+struct party_data;
+struct guild;
+#include <stdarg.h>
 
 // server->client protocol version
 // v7 - 2005-04-11aSakexe+ - 0x229, 0x22a, 0x22b, 0x22c
