@@ -38,6 +38,7 @@
 	13107 Western_Outlaw:		Need correct HIT and ASPD Rate
 ========================
 08/19
+	* Rev. 11044 Fixed weight for Silver_Shotel and Spirit_of_Kamaitachi. [L0ne_W0lf]
 	* Fixed Evil Land's blind effect not working properly [Playtester]
 08/17
 	* Fixed item script on elemental fists [Playtester]

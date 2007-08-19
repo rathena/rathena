@@ -3300,12 +3300,12 @@
 13301,Huuma_Giant_Wheel,Fuuma Shuriken Daisharin,4,40000,,2500,50,,1,3,0x02000000,7,2,34,4,42,1,22,{ bonus2 bAddEff,Eff_Bleeding,100; },{},{}
 13302,Huuma_Giant_Wheel_,Fuuma Shuriken Daisharin,4,40000,,2500,50,,1,4,0x02000000,7,2,34,4,42,1,22,{ bonus2 bAddEff,Eff_Bleeding,100; },{},{}
 13303,Huuma_Blaze,Fuuma Shuriken Rekka,4,78000,,2300,185,,1,0,0x02000000,7,2,34,4,55,1,22,{ bonus bDex,-2; bonus bAtkEle,Ele_Fire; bonus4 bAutoSpell,17,5,30,1; },{},{}
-13304,Spirit_of_Kamaitachi,Spirit of Kamaitachi,4,,10,1150,112,,1,2,0x02000000,7,2,34,3,70,1,22,{ bonus2 bSkillAtk,525,30; bonus bNoCastCancel,0; },{},{}
+13304,Spirit_of_Kamaitachi,Spirit of Kamaitachi,4,,10,1550,112,,1,2,0x02000000,7,2,34,3,70,1,22,{ bonus2 bSkillAtk,525,30; bonus bNoCastCancel,0; },{},{}
 13400,Cutlas_,Cutlus,4,,10,900,150,,1,1,0x000654E2,7,2,2,4,40,1,2,{ skill 5,5; bonus bStr,2; bonus bDef,1; },{},{}
 13401,Excalibur_C,Refined Excalibur,4,,,0,199,,1,0,0x000654E2,7,2,2,4,1,0,2,{ bonus bInt,10; bonus bLuk,10; bonus bAtkEle,Ele_Holy; },{},{}
 13402,Cutlas_C,Refined Cutlus,4,,,0,185,,1,0,0x000654E2,7,2,2,4,1,0,2,{ skill 5,5; bonus bStr,2; bonus bDef,1; },{},{}
 13403,Solar_Sword_C,Refined Solar Sword,4,,,0,120,,1,0,0x000654E2,7,2,2,4,1,0,2,{ bonus bAtkEle,Ele_Fire; bonus2 bHPDrainRate,1000,1; bonus2 bSPLossRate,15,10000; },{},{}
-13404,Silver_Shotel,Silver Shotel,4,,10,1300,130,,1,1,0x000654E2,7,2,2,4,55,1,2,{ bonus bCritical,50; },{},{}
+13404,Silver_Shotel,Silver Shotel,4,,10,1500,130,,1,1,0x000654E2,7,2,2,4,55,1,2,{ bonus bCritical,50; },{},{}
 13405,Thin_Blade,Thin Blade,4,,10,80,125,,1,2,0x000654E2,7,2,2,4,55,1,2,{ bonus bAspdRate,10; bonus2 bAddEff,Eff_Curse,100; },{},{}
 // More Cash Shop Items
 13502,Drooping_Kitty_Box,Refined_Drooping_Cat_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5279,1; },{},{}
