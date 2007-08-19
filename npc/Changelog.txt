@@ -1,5 +1,9 @@
 Date		Added
 ======
+2007/08/19
+	* Partially fixed monster_controller.txt (see r7233, Lance!) [ultramage]
+	- TODO: why does it spam "Unlocked target [0]!" all the time?
+	- TODO: why does 'follow' walk only 1 cell?
 2007/08/15
 	* Fixed some loop errors in the guides. [Samuray22]
 	-Thanks to $ephiroth.

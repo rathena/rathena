@@ -11,7 +11,7 @@ prontera,180,200,4	script	Monster Controller	123,{
 	}
 
 	function remove_mob {
-		removemob getarg(0);
+		mobremove getarg(0);
 		set .@mob_size, getarraysize(.mc_moblist);
 		for(set .@i, 0; .@i < .@mob_size; set .@i, .@i + 1){
 			if(.mc_moblist[.@i] == getarg(0))
@@ -31,17 +31,17 @@ prontera,180,200,4	script	Monster Controller	123,{
 
 	function summon_mob {
 		set .@mob_size, getarraysize(.mc_moblist);
-		set .mc_moblist[.@mob_size], spawnmob("Slave - " + .@mob_size, getarg(0), "prontera", 180, 200);
+		set .mc_moblist[.@mob_size], mobspawn("Slave - " + .@mob_size, getarg(0), "prontera", 180, 200);
 		mobattach .mc_moblist[.@mob_size];
 		setmobdata .mc_moblist[.@mob_size], 25, 
 			AI_ACTION_TYPE_ATTACK|
 			AI_ACTION_TYPE_DETECT|
-            AI_ACTION_TYPE_DEAD|
+			AI_ACTION_TYPE_DEAD|
 			AI_ACTION_TYPE_ASSIST|
 			AI_ACTION_TYPE_KILL|
-            AI_ACTION_TYPE_UNLOCK|
-            AI_ACTION_TYPE_WALKACK|
-            AI_ACTION_TYPE_WARPACK;
+			AI_ACTION_TYPE_UNLOCK|
+			AI_ACTION_TYPE_WALKACK|
+			AI_ACTION_TYPE_WARPACK;
 		return;
 	}
 
@@ -144,26 +144,26 @@ L_MainMenu:
 	}
 
 L_AttackMenu:
-	switch(select("Walk","Follow","Attack","Stop","Defend","Talk","Emote","Random Walk","Callback","Back")){
+	switch(select("Walk","Follow","Attack","Stop","Defend","Talk","Emote","Random Walk","Callback","Back","Sit")){
 		case 1: // Walk
 			set .@src, make_menu();
 			input .@x;
 			input .@y;
-			mobwalk .@src,.@x,.@y; // Mode 1: Walk to location.
+			unitwalk .@src,.@x,.@y; // Mode 1: Walk to location.
 			break;
 		case 2: // Follow
 			set .@src, make_menu();
 			input .@tar;
-			mobwalk .@src, .@tar; // Mode 2: Walk to target.
+			unitwalk .@src, .@tar; // Mode 2: Walk to target.
 			break;
 		case 3: // Attack
 			set .@src, make_menu();
 			input .@tar;
-			mobattack .@src, .@tar;
+			unitattack .@src, .@tar;
 			break;
 		case 4: // Stop
 			set .@src, make_menu();
-			mobstop .@src;
+			unitstop .@src;
 			break;
 		case 5: // Defend/Assist
 			set .@src, make_menu();
@@ -173,24 +173,24 @@ L_AttackMenu:
 		case 6: // Talk
 			set .@src, make_menu();
 			input .@text$;
-			mobtalk .@src, .@text$;
+			unittalk .@src, .@text$;
 			break;
 		case 7: // Emote
 			set .@src, make_menu();
 			input .@emote;
-			mobemote .@src, .@emote;
+			unitemote .@src, .@emote;
 			break;
 		case 8:
 			set .@src, make_menu();
 			input .@flag;
-			mobrandomwalk .@src, .@flag;
+			setmobdata .@src, 26, .@flag;
 			break;
 		case 9:
 			set .@src, make_menu();
 			input .@flag;
 			setmobdata .@src, 25, .@flag;
 			break;
-		case 9:
+		case 10:
 			next;
 			goto L_MainMenu;
 	}
