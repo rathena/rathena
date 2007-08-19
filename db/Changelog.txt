@@ -37,6 +37,8 @@
 	Still need proper rates for most 11.3 Equipment that don't have their +rates/Status Infliction rates clearly defined.
 	13107 Western_Outlaw:		Need correct HIT and ASPD Rate
 ========================
+08/19
+	* Fixed Evil Land's blind effect not working properly [Playtester]
 08/17
 	* Fixed item script on elemental fists [Playtester]
 	- Endow should be cast on self
