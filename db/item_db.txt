@@ -1987,7 +1987,7 @@
 5283,Baby_Chick,Baby_Chick,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,10,0,311,{ bonus bLuk,2; bonus bMaxHP,50; bonus bMaxSP,50; bonus bDoubleRate,10; bonus2 bSubRace,RC_Demon,5; },{},{}
 5284,Water_Lily_Crown,Water_Lily_Crown,5,,10,200,,0,,0,0xFFFFFFFF,7,2,256,,20,0,312,{ bonus bDex,1; bonus bAgi,1; bonus bHPrecovRate,5; bonus bSPrecovRate,3; },{},{}
 5285,Pinwheel_Hairpin,Pinwheel_Hairpin,5,,10,300,,3,,0,0xFFFFFFFF,7,2,256,,30,0,313,{ bonus bAgi,2; },{},{}
-5286,Peco_Peco_Hairband,Peco_Peco_Hairband,5,,10,0,,3,,0,0xFFFFFFFF,7,2,256,,0,1,314,{ bonus bAspdRate,-10; bonus bAspdRate,5; bonus bCastrate,5; },{},{},
+5286,Peco_Peco_Hairband,Peco_Peco_Hairband,5,,10,0,,3,,0,0xFFFFFFFF,7,2,256,,0,1,314,{ bonus bAspdRate,-10; bonus bAspdRate,5; bonus bCastrate,5; },{},{}
 5287,Summer_Hat,Summer_Hat,5,,10,200,,1,,0,0xFFFFFFFF,7,2,256,,30,0,315,{ bonus bVit,1; },{},{}
 5288,Red_Glasses,Red_Glasses,5,,10,0,,1,,0,0xFFFFFFFF,7,2,512,,0,1,316,{ bonus bInt,1; },{},{}
 5289,Vanilmirth_Hat,Vanilmirth_Hat,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,30,0,317,{ bonus bUnbreakableArmor,0; bonus4 bAutoSpell,19,1,100,1; bonus4 bAutoSpell,14,1,100,1; bonus4 bAutoSpell,20,1,100,1; bonus4 bAutoSpell,90,1,100,1; bonus bMdef,5; },{},{}
