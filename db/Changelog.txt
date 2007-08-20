@@ -37,6 +37,8 @@
 	Still need proper rates for most 11.3 Equipment that don't have their +rates/Status Infliction rates clearly defined.
 	13107 Western_Outlaw:		Need correct HIT and ASPD Rate
 ========================
+08/20
+	* Rev. 11056 Corrected bonus for Gold_Tiara_. (Playtester) [L0ne_W0lf]
 08/19
 	* Rev. 11044 Fixed weight for Silver_Shotel and Spirit_of_Kamaitachi. [L0ne_W0lf]
 	* Fixed Evil Land's blind effect not working properly [Playtester]
