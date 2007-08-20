@@ -585,7 +585,6 @@
 543,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0	//NJ_NEN#NJ_NEN#
 544,-5,6,1,0,0x40,0,10,1,no,0,0,0,weapon,0	//NJ_ISSEN#NJ_ISSEN#
 
-// new NPC skills (not yet implemented)
 653,0,8,4,0,0x6,5:7:9:11:13:5:7:9:11:13,10,3,no,0,0x2,0,magic,0	//NPC_EARTHQUAKE
 654,9,6,1,3,0,5,10,1,no,0,0x2,14,weapon,0	//NPC_FIREBREATH
 655,9,6,1,1,0,5,10,1,no,0,0x2,14,weapon,0	//NPC_ICEBREATH

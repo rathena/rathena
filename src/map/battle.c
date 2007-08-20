@@ -26,7 +26,6 @@
 #include <string.h>
 #include <math.h>
 
-
 int attr_fix_table[4][ELE_MAX][ELE_MAX];
 
 struct Battle_Config battle_config;
@@ -1390,6 +1389,7 @@ static struct Damage battle_calc_weapon_attack(
 				case NPC_ICEBREATH:
 				case NPC_THUNDERBREATH:
 				case NPC_HELLJUDGEMENT:
+				case NPC_PULSESTRIKE:
 					skillratio += 100*(skill_lv-1);
 					break;
 				case RG_BACKSTAP:
