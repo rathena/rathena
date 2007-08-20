@@ -14,6 +14,7 @@ struct unit_data;
 struct map_session_data;
 struct homun_data;
 struct pet_data;
+struct mob_data;
 struct npc_data;
 struct chat_data;
 struct flooritem_data;

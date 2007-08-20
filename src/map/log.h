@@ -7,6 +7,7 @@
 //#include "map.h"
 struct map_session_data;
 struct mob_data;
+struct item;
 
 #ifndef TXT_ONLY
 
