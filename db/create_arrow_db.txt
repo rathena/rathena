@@ -274,9 +274,7 @@
 7562,1754,150,1759,400,1769,200
 //Will of the Red Darkness --> 200 Cursed Arrows, 200 Poison Arrows, 100 Arrows of Shadow
 7566,1761,200,1763,200,1767,100
-
-//11.3 items
-//Crackling Skull -> Shadow Arrow 50, Cursed Arrow 50 EA
+//Crackling Skull --> 50 Arrows of Shadow, 50 Cursed Arrows
 7752,1767,50,1761,50
-//Broken Farm Tool -> Rusty Arrow 50, Iron Arrow 10, Cursed Arrow 20 EA
+//Broken Farm Tool --> 50 Rusty Arrows, 10 Iron Arrows, 20 Cursed Arrows
 7753,1762,50,1770,10,1761,20
