@@ -37,6 +37,7 @@
 	13107 Western_Outlaw:		Need correct HIT and ASPD Rate
 ========================
 08/21
+	* Fixed Book of the Dead not autocasting the correct skill [Playtester]
 	* Fixed Coma status chances being way too low [Playtester]
 08/20
 	* Rev. 11056 Corrected bonus for Gold_Tiara_. (Playtester) [L0ne_W0lf]
