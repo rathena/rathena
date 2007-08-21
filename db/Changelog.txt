@@ -18,7 +18,6 @@
 	Incomplete or missing bonuses (Can be completed with NPC skill update):
 	1270 Drill_Katar:		Full strip target without applying "Stripped" status.
 	1535 Holgrehenn's_Hammer:	Breaking your own gear at low rate when compounded with Whitesmith_card
-	1565 Book_of_the_Dead:		Cause Coma status to Demi-human
 	1626 Staff_of_Piercing:		Ignore 10% Mdef
 	2000 Staff_of_Destruction:	Reduce cast-time of Mystical Amplification by 50%
 	2677 Spiritual_Ring:		50% more damage with Heal
@@ -37,6 +36,8 @@
 	Still need proper rates for most 11.3 Equipment that don't have their +rates/Status Infliction rates clearly defined.
 	13107 Western_Outlaw:		Need correct HIT and ASPD Rate
 ========================
+08/21
+	* Fixed Coma status chances being way too low [Playtester]
 08/20
 	* Rev. 11056 Corrected bonus for Gold_Tiara_. (Playtester) [L0ne_W0lf]
 08/19
