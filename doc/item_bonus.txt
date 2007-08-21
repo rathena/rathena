@@ -143,98 +143,94 @@ bonus3 bAutoSpell,n,x,y;		Auto Spell casting of spell n at level x with y/10% ch
 //---- 2/15 new card effects ----
 
 bonus bCritAtkRate,n;			Increase critical damage by +n%
-bonus bNoRegen,n;				Stops regeneration for n
-                                        n: 1=HP, 2=SP
-bonus bUnstripableWeapon,n;			Weapon cannot be taken off via Strip skills
-bonus bUnstripableArmor,n;			Armor cannot be taken off via Strip skills
-bonus bUnstripableHelm,n;			Helm cannot be taken off via Strip skills
-bonus bUnstripableShield,n;			Shield cannot be taken off via Strip skills
+bonus bNoRegen,n;			Stops regeneration for n
+					n: 1=HP, 2=SP
+bonus bUnstripableWeapon,n;		Weapon cannot be taken off via Strip skills
+bonus bUnstripableArmor,n;		Armor cannot be taken off via Strip skills
+bonus bUnstripableHelm,n;		Helm cannot be taken off via Strip skills
+bonus bUnstripableShield,n;		Shield cannot be taken off via Strip skills
 bonus bSPGainValue,n;			When killing a monster by physical attack, you gain n SP
 bonus bHPGainValue,n;			When killing a monster by physical attack, you gain n HP
 bonus bIgnoreDefMob,n;			Ignore monster's DEF when attacking.
-                                        n: 0=All normal monster except Bosses, 1=All monsters
+					n: 0=All normal monster except Bosses, 1=All monsters
 bonus bDamageWhenUnequip,n;		You lose n HP when the item is unequipped
 bonus2 bCriticalAddRace,n,r;		Critical + n vs. enemies of race r
-							r: 0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect, 5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 10=Boss monster, 11=Other than (normal monster) boss monster
+					r: 0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect, 5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 10=Boss monster, 11=Other than (normal monster) boss monster
 bonus2 bHPLossRate,n,x;			Lose n HP every x milliseconds
 bonus2 bAddEffWhenHit,n,x;		n% chance to cause x state to the enemy when
-                                        being hit by physical damage
+					being hit by physical damage
 bonus2 bAddEffWhenHitShort,n,x;		n% chance to cause x state to the enemy when
-                                        being hit by physical close range damage
+					being hit by physical close range damage
 bonus2 bSkillAtk,n,x;			Increase damage of skill n by x%
 bonus2 bAddDamageByClass,n,x;		When being hit by monster of class n increase
-                                        damage taken by x%
+					damage taken by x%
 bonus2 bAddRace2,n,x;			Increase damage by x% vs. enemies of race n
-                                        (Check db/mob_race2_db.txt)
-
+					(Check db/mob_race2_db.txt)
 bonus3 bHPLossRate,n,x,y;		Lose n amount of hp every x amount of time
-                                        y: 0=Don't show damage 1=Show damage
+					y: 0=Don't show damage 1=Show damage
 bonus3 bAutoSpellWhenHit,x,y,n;		n/10% chance to cast skill x of level y on
-                                        attacker when being hit by a direct
-													 attack. Target must be within spell's 
-													 range to go off.
+					attacker when being hit by a direct
+					attack. Target must be within spell's 
+					range to go off.
 bonus3 bSPDrainRate,n,x,y;		When attacking there is a n% chance to either
-                                        gain SP equivalent to x% of damage dealt, OR
-                                        drain the amount of sp from the enemy.
-                                        y: 0=gain sp  1:drain enemy sp
+					gain SP equivalent to x% of damage dealt, OR
+					drain the amount of sp from the enemy.
+					y: 0=gain sp  1:drain enemy sp
 bonus3 bSPDrainValue,n,x,y;		When attacking there is a n% chance to either
-                                        gain x SP, OR drain the amount of sp from the
-                                        enemy. y:0=gain sp  1:drain enemy sp
-                                        (Note: setting x to -1 or below will reduce
-                                        YOUR sp)
-
+					gain x SP, OR drain the amount of sp from the
+					enemy. y:0=gain sp  1:drain enemy sp
+					(Note: setting x to -1 or below will reduce
+					YOUR sp)
 bonus4 bAutoSpell,x,y,n,i;		n/10% chance to cast skill x of level y when
-                                        being attacking
-                                        i: 1=cast on enemy, not on self
-                                           2=use random skill lv in [1..y]
-                                           3=1+2 (random lv on enemy)
+					being attacking
+					i: 1=cast on enemy, not on self
+					   2=use random skill lv in [1..y]
+					   3=1+2 (random lv on enemy)
 bonus4 bAutoSpellWhenHit,x,y,n,i;	n/10% chance to cast skill x of level y when
-                                        being hit by a direct attack. Target
-													 must be within spell's range to go
-													 off.
-                                        i: 1=cast on enemy, not on self
-                                           2=use random skill lv in [1..y]
-                                           3=1+2 (random lv on enemy)
-
+					being hit by a direct attack. Target
+					must be within spell's range to go
+					off.
+					i: 1=cast on enemy, not on self
+					   2=use random skill lv in [1..y]
+					   3=1+2 (random lv on enemy)
 bonus5 bAutoSpell,x,y,n,t,i;		n/10% chance to cast skill x of level y when
-                                        attacking
-                                        i: 1=cast on enemy, not on self
-                                           2=use random skill lv in [1..y]
-                                           3=1+2 (random lv on enemy)
-                                        t: Trigger criteria:
-                                           BF_SHORT: Trigger on melee attack
-                                           BF_LONG: Trigger on ranged attack
-                                           (When neither is specified,
-                                           then BF_SHORT+BF_LONG is used.
-                                           BF_WEAPON: Trigger on weapon skills 
-                                           BF_MAGIC: Trigger on magic skills 
-                                           BF_MISC: Trigger on misc skills
-														 (If none is specified, BF_WEAPON is
-                                           used)
-                                           BF_NORMAL: Trigger on normal
-                                           attacks. 
-                                           BF_SKILL: Trigger on skills
-                                           (When neither is specified,
-                                           BF_SKILL is used if the type is
-                                           BF_MISC or BF_MAGIC. BF_NORMAL is
-                                           used if the type is BF_WEAPON)
-
+					attacking
+					i: 1=cast on enemy, not on self
+					   2=use random skill lv in [1..y]
+					   3=1+2 (random lv on enemy)
+					t: Trigger criteria:
+					   BF_SHORT: Trigger on melee attack
+					   BF_LONG: Trigger on ranged attack
+					   (When neither is specified,
+					   then BF_SHORT+BF_LONG is used.
+					   BF_WEAPON: Trigger on weapon skills 
+					   BF_MAGIC: Trigger on magic skills 
+					   BF_MISC: Trigger on misc skills
+					   (If none is specified, BF_WEAPON is
+					   used)
+					   BF_NORMAL: Trigger on normal
+					   attacks. 
+					   BF_SKILL: Trigger on skills
+					   (When neither is specified,
+					   BF_SKILL is used if the type is
+					   BF_MISC or BF_MAGIC. BF_NORMAL is
+					   used if the type is BF_WEAPON)
 bonus5 bAutoSpellWhenHit,x,y,n,t,i;	n/10% chance to cast skill x of level y when
-                                        being hit by a direct attack. Target
-													 must be within spell's range to go
-													 off.
-                                        i: 1=cast on enemy, not on self
-                                           2=use random skill lv in [1..y]
-                                           3=1+2 (random lv on enemy)
-                                        t: Trigger criteria (see bonus5
-                                           bAutoSpell)
+					being hit by a direct attack. Target
+					must be within spell's range to go
+					off.
+					i: 1=cast on enemy, not on self
+					   2=use random skill lv in [1..y]
+					   3=1+2 (random lv on enemy)
+					t: Trigger criteria (see bonus5
+					   bAutoSpell)
 
 //---- 2/22 new card effects ----
 
 bonus2 bAddItemHealRate,n,x;		Increases HP recovered by n type items by x%,
-                                        you can also use direct item IDs instead
-                                        of group values.
-                                        (Check db/item_group_db.txt)
+					you can also use direct item IDs instead
+					of group values.
+					(Check db/item_group_db.txt)
 
 //---- 3/15 new card effects ----
 
@@ -243,12 +239,12 @@ bonus bLoseSPWhenUnequip,n;		Lose n SP when the item is unequipped
 bonus2 bSPLossRate,n,x;			Lose n SP every x milliseconds
 bonus2 bExpAddRace,n,x;			Increase exp gained by x% vs. enemies of race n
 bonus2 bSPGainRace,n,x;			When killing a monster of race n by physical
-                                        attack gain x amount of sp
+					attack gain x amount of sp
 bonus2 bSPSubRace2,n,x;			Damage x% reduction from enemies of race n
-                                        (Check db/mob_race2_db.txt)
+					(Check db/mob_race2_db.txt)
 
 bonus2 bAddMonsterDropItemGroup,n,x;	x% chance to get an item of group type n when you kill a
-                                        monster (Check db/item_group_db.txt)
+					monster (Check db/item_group_db.txt)
 						if 'x' is negative value, then it's a part of formula
 							chance = -x*(killed_mob_level/10)+1
 
@@ -258,3 +254,8 @@ bonus3 bAddMonsterDropItemGroup,n,x,y;	y% chance to get an item of group type n 
 					0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect, 5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 10=Boss monster, 11=Other than (normal monster) boss monster
 						if 'y' is negative value, then it's a part of formula
 							chance = -y*(killed_mob_level/10)+1
+
+//Bonuses that were missing
+
+bonus2 bWeaponComaRace,x,y;		y/100% chance to cause Coma when attacking a
+					monster of race x with a normal attack
