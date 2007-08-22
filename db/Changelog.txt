@@ -36,6 +36,8 @@
 	Still need proper rates for most 11.3 Equipment that don't have their +rates/Status Infliction rates clearly defined.
 	13107 Western_Outlaw:		Need correct HIT and ASPD Rate
 ========================
+08/22
+	* Some small MVP updates according to latest info [Playtester]
 08/21
 	* Fixed Book of the Dead not autocasting the correct skill [Playtester]
 	* Fixed Coma status chances being way too low [Playtester]
