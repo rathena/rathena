@@ -3400,6 +3400,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	tstatus = status_get_status_data(bl);
 	sstatus = status_get_status_data(src);
+	
+	if(src!=bl && (i = skill_get_pl(skillid, skilllv)) > ELE_NEUTRAL && 
+		battle_attr_fix(NULL, NULL, 100, i, tstatus->def_ele, tstatus->ele_lv) <= 0)
+		return 1; //Skills with an element should be blocked if the target element absorbs it.
 
 	//Check for undead skills that convert a no-damage skill into a damage one. [Skotlex]
 	switch (skillid) {
@@ -5657,7 +5661,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_DRAGONFEAR:
 		if (flag&1) {
 			const int sc[] = { SC_STUN, SC_CURSE, SC_SILENCE, SC_BLEEDING };
-			sc_start(bl,rand()%ARRAYLENGTH(sc),100,skilllv,skill_get_time2(skillid,skilllv));
+			i = rand()%ARRAYLENGTH(sc);
+			sc_start(bl,sc[i],100,skilllv,skill_get_time2(skillid,i+1));
 			break;
 		}
 	case NPC_WIDEBLEEDING:
