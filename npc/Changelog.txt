@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/08/22
+	* Updated Cursed Abbey spawns [Playtester]
 2007/08/19
 	* Partially fixed monster_controller.txt (see r7233, Lance!) [ultramage]
 	- TODO: why does it spam "Unlocked target [0]!" all the time?
