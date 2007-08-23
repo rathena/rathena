@@ -4217,7 +4217,7 @@
 1783,Galion@NPC_COMBOATTACK,attack,171,1,500,500,5000,no,target,always,0,,,,,,6
 1783,Galion@AS_SONICBLOW,attack,136,5,500,800,5000,no,target,always,0,,,,,,0
 1783,Galion@NPC_DARKNESSATTACK,attack,190,1,2000,0,5000,yes,target,always,0,,,,,,
-1783,Galion@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3195,,,,
+1783,Galion@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x31B5,,,,
 1783,Galion@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1783,Galion@NPC_SUMMONSLAVE,attack,196,3,10000,1000,30000,no,self,slavele,3,1794,,,,,
 1783,Galion@NPC_SUMMONSLAVE,idle,196,3,10000,1000,30000,no,self,slavele,3,1794,,,,,
@@ -4278,7 +4278,7 @@
 1791,Galion@NPC_COMBOATTACK,attack,171,1,500,500,5000,no,target,always,0,,,,,,6
 1791,Galion@AS_SONICBLOW,attack,136,5,500,800,5000,no,target,always,0,,,,,,0
 1791,Galion@NPC_DARKNESSATTACK,attack,190,3,2000,0,5000,yes,target,always,0,,,,,,
-1791,Galion@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x3195,,,,
+1791,Galion@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,7,0x31B5,,,,
 1791,Galion@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1793,Megalith@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,9,,,,,
 1794,Roween@NPC_WINDATTACK,attack,187,2,500,500,5000,no,target,always,0,,,,,,
