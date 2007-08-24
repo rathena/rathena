@@ -989,6 +989,11 @@ enum {
 	UNT_GROUNDDRIFT_POISON,
 	UNT_GROUNDDRIFT_WATER,
 	UNT_GROUNDDRIFT_FIRE,
+	//0xc3 ?
+	//0xc4 ?
+	//0xc5 ?
+	//0xc6 ?
+	UNT_EVILLAND = 0xc7,
 };
 
 #endif /* _SKILL_H_ */

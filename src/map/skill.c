@@ -7262,7 +7262,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			}
 
 		case UNT_SANCTUARY:
-		if (sg->skill_id == PR_SANCTUARY) {
 			if (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race==RC_DEMON)
 			{	//Only damage enemies with offensive Sanctuary. [Skotlex]
 				if(battle_check_target(&src->bl,bl,BCT_ENEMY)>0 &&
@@ -7285,8 +7284,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			if (sg->val1 <= 0)
 				skill_delunitgroup(NULL,sg, 0);
 			break;
-		}
-			//Evil Land
+
+		case UNT_EVILLAND:
 			if (!battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race!=RC_DEMON)
 			{	//Damage enemies
 				if(battle_check_target(&src->bl,bl,BCT_ENEMY)>0)

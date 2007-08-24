@@ -8046,11 +8046,11 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		int lv;
 		sd->state.connect_new = 0;
 		clif_skillinfoblock(sd);
+		clif_hotkeys_send(sd);
 		clif_updatestatus(sd,SP_NEXTBASEEXP);
 		clif_updatestatus(sd,SP_NEXTJOBEXP);
 		clif_updatestatus(sd,SP_SKILLPOINT);
 		clif_initialstatus(sd);
-		clif_hotkeys_send(sd);
 
 		if (sd->sc.option&OPTION_FALCON)
 			clif_status_load(&sd->bl, SI_FALCON, 1);
