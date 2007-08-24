@@ -2807,7 +2807,7 @@ rachel,157,183,3	script	Sincere Follower Urstia	916,{
 			mes "[Urstialla]";
 			mes "I managed to acquire a";
 			mes "necklace of incomparable";
-			mes "beauty from the dwarves";
+			mes "beauty from the dwarves.";
 			mes "However, the gems have dulled";
 			mes "with age and need to be shined";
 			mes "before I can offer them to Freya.";

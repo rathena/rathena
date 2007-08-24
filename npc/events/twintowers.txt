@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= sEiKaN (1.0)
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= Any Athena Version; 0315+
 //===== Description: =========================================
@@ -12,9 +12,10 @@
 //= 1.2 by Akaru 1.3 by massdriller(Fixed typos)
 //= 1.4 fixed coords, according to off. src [Lupus]
 //= 1.5 Removed Duplicates [Silent]
+//= 1.6 Fixed wrong sprite id on main npc [ultramage]
 //============================================================
 
-prontera,146,92,4	script	Twin Towers#tt1::Twin-Towers	813,{
+prontera,146,92,4	script	Twin Towers#tt1::Twin-Towers	812,{
 	mes "[Twin Towers]";
 	mes "How are you? We are the Twin Towers.";
 	mes "It is such a pleasure to be able to meet you here.";

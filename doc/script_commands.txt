@@ -78,6 +78,8 @@
 //=       options [FlavioJS]
 //= 3.05.20070819
 //=       Removed the messy 'unitdeadsit' command reference [ultramage]
+//= 3.05.20070823
+//=       Fixed typo in 'areamonster' description (missing argument) [ultramage]
 //===== Description =======================================
 //= A reference manual for the eAthena scripting language,
 //= sorted out depending on their functionality.
@@ -4403,8 +4405,8 @@ Example(s):
 ==================================
 ---------------------------------------
 
-*monster "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>"};
-*areamonster "<map name>",<x1>,<y1>,<x2>,<y2>,"<monster name>",<amount>{,"<event label>"};
+*monster     "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>"};
+*areamonster "<map name>",<x1>,<y1>,<x2>,<y2>,"<name to show>",<mob id>,<amount>{,"<event label>"};
 
 This command will spawn a monster on the specified coordinates on the specified 
 map. If the script is invoked by a character, a special map name, "this", will 
