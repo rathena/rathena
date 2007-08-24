@@ -1,5 +1,8 @@
 Date		Added
 ======
+2007/08/24
+	* Rev. 11076 Changed the Keil Hyre Black Keycard distributing NPCs slightly. [L0ne_W0lf]
+	* Bug fixes to the Wizard and Knight job quests. 
 2007/08/22
 	* Updated Cursed Abbey spawns [Playtester]
 2007/08/19

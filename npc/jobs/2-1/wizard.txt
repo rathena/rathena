@@ -4,7 +4,7 @@
 //= (Aegis) Translated by yoshiki, converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.5a
+//= 2.5b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -30,6 +30,7 @@
 //= 2.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.5 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
 //= 2.5a More bugfixes care of Barron-Monster. [L0ne_W0lf]
+//= 2.5b Fixed tests calling on a non-existant label in "Room of x#Failed" npcs. [L0ne_W0lf]
 //============================================================ 
 
 gef_tower,111,37,4	script	Wizard Guildsman	70,{
@@ -1164,7 +1165,7 @@ OnTimer185000:
 	end;
 
 OnTimer186000:
-	donpcevent "Room of Water#Failed::OnDisable";
+	disablenpc "Room of Water#Failed";
 	donpcevent "Room of Water::OnDisable";
 	donpcevent "Waiting Room#wiz::OnEnable";
 }
@@ -1229,7 +1230,7 @@ OnTimer62000:
 	end;
 
 OnTimer63000:
-	donpcevent "Room of Water#Failed::OnDisable";
+	disablenpc "Room of Water#Failed";
 	donpcevent "Room of Water#Door::OnDisable";
 	donpcevent "Waiting Room#wiz::OnEnable";
 }
@@ -1336,7 +1337,7 @@ OnTimer185000:
 	end;
 
 OnTimer186000:
-	donpcevent "Room of Earth#Failed::OnDisable";
+	disablenpc "Room of Earth#Failed";
 	donpcevent "Room of Earth::OnDisable";
 	donpcevent "Waiting Room#wiz::OnEnable";
 }
@@ -1404,7 +1405,7 @@ OnTimer62000:
 	end;
 
 OnTimer63000:
-	donpcevent "Room of Earth#Failed::OnDisable";
+	disablenpc "Room of Earth#Failed";
 	donpcevent "Room of Earth#Door::OnDisable";
 	donpcevent "Waiting Room#wiz::OnEnable";
 }
@@ -1512,7 +1513,7 @@ OnTimer185000:
 	end;
 
 OnTimer186000:
-	donpcevent "Room of Fire#Failed::OnDisable";
+	disablenpc "Room of Fire#Failed";
 	donpcevent "Room of Fire::OnDisable";
 	donpcevent "Waiting Room#wiz::OnEnable";
 }
@@ -1583,7 +1584,7 @@ OnTimer122000:
 	end;
 
 OnTimer123000:
-	donpcevent "Room of Fire#Failed::OnDisable";
+	disablenpc "Room of Fire#Failed";
 	donpcevent "Room of Fire#Door::OnDisable";
 	donpcevent "Waiting Room#wiz::OnEnable";
 }

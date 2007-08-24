@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 3.4
+//= 3.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -69,6 +69,7 @@
 //= 3.4 Fixed bug when u can't get a Yellow Keycard if u got the Blue one at first [Lupus]
 //=		Note: There are many condition checks that should be omitted in the future fixed item names in item_db.txt / txt resources according the quest
 //=		for items, should be used bitwise methods in a single variable. So let's fix the rest possible bugs (if they exist) and then optimize ^_-		
+//= 3.5 Changed the way the Black Keycard distibuting NPCs work slighty. [L0ne_W0lf]
 //============================================================ 
 //============================================================================
 // Kiel Hyre Quest/Robotic Lab Dungeon
@@ -6384,7 +6385,7 @@ kh_kiehl01,17,39,0	script	Receiver	111,{
 			set KielHyreQuest,76;
 		}
 		close2;
-		set .KHKilled,.KHKilled+1;
+		set .KHKilled,2;
 		monster "kh_kiehl01",16,32,"Alicel",1739,1,"Receiver::OnMyMobDead";
 		monster "kh_kiehl01",18,31,"Aliot",1740,1,"Receiver::OnMyMobDead";
 		end;
@@ -6395,8 +6396,8 @@ kh_kiehl01,17,39,0	script	Receiver	111,{
 	}
 
 OnMyMobDead:
-	set .KHKilled,.KHKilled+1;
-	if (.KHKilled == 3) { 
+	set .KHKilled,.KHKilled-1;
+	if (.KHKilled < 1) { 
 		makeitem 7506,1,"this",19,36; 
 		set .KHKilled,0;
 	}
@@ -6760,7 +6761,7 @@ kh_kiehl01,15,179,0	script	Robots#kh1	111,{
 		mes "a bunch of robots";
 		mes "suddenly appeared.^000000.";
 		close2;
-		set .KHKilled,.KHKilled+1;
+		set .KHKilled,4;
 		monster "kh_kiehl01",18,181,"Aliot",1740,1,"Robots#kh1::OnMyMobDead";
 		monster "kh_kiehl01",18,180,"Alicel",1739,1,"Robots#kh1::OnMyMobDead";
 		monster "kh_kiehl01",18,179,"Aliot",1740,1,"Robots#kh1::OnMyMobDead";
@@ -6773,8 +6774,8 @@ kh_kiehl01,15,179,0	script	Robots#kh1	111,{
 	}
 
 OnMyMobDead:
-	set .KHKilled,.KHKilled+1;
-	if (.KHKilled == 4) { 
+	set .KHKilled,.KHKilled-1;
+	if (.KHKilled < 1) { 
 		makeitem 7506,1,"this",18,180;
 		set .KHKilled,0;
 	}
@@ -6808,26 +6809,7 @@ kh_kiehl01,166,187,0	script	Big Door#BigDoorKHQ5	111,{
 			mes "you can hear the door";
 			mes "hinges slightly squeak.^000000";
 			next;
-
-			switch(select("Push Door","Kick Door","Shake Door","Pull Door","Lift Door")) {
-
-			case 1:
-				break;
-
-			case 2:
-				break;
-
-			case 3:
-				break;
-
-			case 4:
-				break;
-
-			case 5:
-				break;
-
-			}
-
+			select("Push Door","Kick Door","Shake Door","Pull Door","Lift Door");
 			mes "^3355FFA group of monsters";
 			mes "suddenly appeared as";
 			mes "soon as you applied";

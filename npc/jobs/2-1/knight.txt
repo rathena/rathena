@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -28,6 +28,7 @@
 //= 2.1 Merged JFunc [Lupus]
 //= 2.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.3 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
+//= 2.4 Minor fixes to timer#knt. [L0ne_W0lf]
 //============================================================ 
 
 prt_in,88,101,4	script	Chivalry Captain#knt	56,{
@@ -2068,8 +2069,8 @@ OnTimer300500:
 	end;
 
 OnTimer301500:
-	donpcevent "Timer#knt::OnEnable";
 	stopnpctimer;
+	donpcevent "Timer#knt::OnEnable";
 	end;
 
 OnInit:
@@ -2096,7 +2097,7 @@ OnEnable:
 	end;
 
 OnDisable:
-	killmonsterall "job_knt";
+	killmonsterall "job_knt","Timer#knt::OnMyMobDead";
 	disablenpc "Timer#knt";
 	disablenpc "Warp#knt";
 	end;
