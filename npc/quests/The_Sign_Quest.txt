@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -30,6 +30,7 @@
 //= 1.7c Reformatted for future bughunt. WIP [Lupus]
 //= 1.8 Fixed some bugs and exploit which allowed players helping in the final
 //= fight to finish the quest as well. Completely revamped quiz system. [SinSloth]
+//= 1.9 Made some changes in last event to reflect recent bug exploit fix. [SinSloth]
 //============================================================ 
 //===== Configuration : ======================================
 prontera,1,1,1	script	TheSignConfig	-1,{
@@ -7177,7 +7178,7 @@ L_BranchB:
     next;
     menu "Yes.",-,"No.",L_No;
     if (($signroom2full > 1) || getareausers("que_sign01",229,77,166,12) > 0) goto L_Full;
-    if(Sign_Branch8B == 2) set Sign_Branch8B,3;
+    if(Sign_Branch8B == 3) set Sign_Branch8B,4;
     mes "[Serin]";
     mes "Please follow me";
     mes "......";
@@ -9100,6 +9101,7 @@ L_TryAgain:
 	mes "Please don't";
 	mes "try to stop me!";
 	close2;
+	set Sign_Branch8A,7;
 	donpcevent "#signserin::OnSummon";
 	end;
 
@@ -9301,6 +9303,7 @@ L_TryAgain:
     mes "Please don't";
     mes "try to stop me!";
     close2;
+    set Sign_Branch8B,3;
     donpcevent "#signserin2::OnSummon";
     end;
 

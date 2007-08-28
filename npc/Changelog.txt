@@ -1,5 +1,8 @@
 Date		Added
 ======
+2007/08/29
+	* Made some changes due to recent fixes in the Sign Quest. [SinSloth]
+	* Dandelion's Request event now resets properly after it has been completed by a player. [SinSloth]
 2007/08/24
 	* Rev. 11076 Changed the Keil Hyre Black Keycard distributing NPCs slightly. [L0ne_W0lf]
 	* Bug fixes to the Wizard and Knight job quests. 

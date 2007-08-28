@@ -3,11 +3,11 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
-//= Stop Post and Binoculars Quest.
+//= Stop Post / Binoculars Quest / Dandelion's Request
 //===== Additional Comments: ================================= 
 //= 1.1 Fixed exploits [Lupus]
 //= 1.2 Added Dandelion's Request / Morroc Invasion quest. [SinSloth]
@@ -18,6 +18,7 @@
 //= 1.6 Fixed a nasty bug in last part of the quest. [SinSloth]
 //= 1.6a replaced item "names" with item id. [Lupus]
 //= 1.7 Fixed a bug with XP rewards. [SinSloth]
+//= 1.8 Fixed a bug which prevented reset of events. [SinSloth]
 //============================================================ 
 
 
@@ -7963,7 +7964,7 @@ OnTouch:
 		mes "teleported outside.^000000";
 		close2;
 		warp "morocc",100,100;
-		set $maogate1,0;
+		set $mao_gate1,0;
 	}
 	end;
 
@@ -8007,7 +8008,7 @@ OnTimer596000:
 
 OnTimer597000:
 	enablenpc "#maogate1";
-	set $maogate1,0;
+	set $mao_gate1,0;
 	stopnpctimer;
 	end;
 }
@@ -8950,7 +8951,7 @@ OnTouch:
 		donpcevent "#maogate1_battle::OnStop";
 		donpcevent "#maogate1_battle::OnEnter";
 		enablenpc "#maogate1";
-		set $maogate1,0;
+		set $mao_gate1,0;
 		end;
 	}
 }
@@ -8978,7 +8979,7 @@ OnTouch:
 		mes "teleported outside.^000000";
 		close2;
 		warp "morocc",100,100;
-		set $maogate2,0;
+		set $mao_gate2,0;
 	}
 	end;
 
@@ -9022,7 +9023,7 @@ OnTimer596000:
 
 OnTimer597000:
 	enablenpc "#maogate2";
-	set $maogate2,0;
+	set $mao_gate2,0;
 	stopnpctimer;
 	end;
 }
@@ -9975,7 +9976,7 @@ OnTouch:
 		donpcevent "#maogate2_battle::OnStop";
 		donpcevent "#maogate2_battle::OnEnter";
 		enablenpc "#maogate2";
-		set $maogate2,0;
+		set $mao_gate2,0;
 		end;
 	}
 }
