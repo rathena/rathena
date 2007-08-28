@@ -29,6 +29,8 @@
 //= 2.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.3 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
 //= 2.4 Minor fixes to timer#knt. [L0ne_W0lf]
+//= 2.5 Fixes a small bug with making claymores. [L0ne_W0lf]
+//=	Corrected usages of killmonster and killmonsterall.
 //============================================================ 
 
 prt_in,88,101,4	script	Chivalry Captain#knt	56,{
@@ -1339,7 +1341,9 @@ OnStartArena:
 	if($@KntUsers > 0) end;
 
 	if ((getwaitingroomstate(33)) == 0) end;	// stops the rest of the script from running if there is no one in the waiting room;
-	killmonsterall "job_knt";
+	killmonster "job_knt", "Knight1::OnMyMobDead";
+	killmonster "job_knt", "Knight2::OnMyMobDead";
+	killmonster "job_knt", "Knight3::OnMyMobDead";
 	warpwaitingpc "job_knt",43,146;
 	donpcevent "Knight1::OnEnable";
 	end;
@@ -1370,7 +1374,6 @@ OnEnable:
 
 OnDisable:
 	killmonster "job_knt", "Knight1::OnMyMobDead";
-	killmonsterall "job_knt";
 	disablenpc "Knight1";
 	end;
 
@@ -2097,7 +2100,7 @@ OnEnable:
 	end;
 
 OnDisable:
-	killmonsterall "job_knt","Timer#knt::OnMyMobDead";
+	killmonster "job_knt","Timer#knt::OnMyMobDead";
 	disablenpc "Timer#knt";
 	disablenpc "Warp#knt";
 	end;
@@ -2158,7 +2161,7 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 					close;
 				}
 				else {
-					if (Zeny > 73999 && countitem(999) > 0 && BaseJob == Job_Swordman) {
+					if (Zeny > 73999 && countitem(999) > 0 && BaseJob == Job_Knight) {
 						mes "[Sir Gray]";
 						mes "You are ready!";
 						mes "You must know the";
