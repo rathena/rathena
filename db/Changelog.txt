@@ -36,6 +36,8 @@
 	Still need proper rates for most 11.3 Equipment that don't have their +rates/Status Infliction rates clearly defined.
 	13107 Western_Outlaw:		Need correct HIT and ASPD Rate
 ========================
+08/29
+	* Updated all heal and offensive heal item bonuses [Playtester]
 08/23
 	* Fixed Galion losing boss mode [Playtester]
 08/22
