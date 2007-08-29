@@ -2225,17 +2225,17 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	case SP_SKILL_HEAL:
 		if(sd->state.lr_flag == 2)
 			break;
-		for (i = 0; i < ARRAYLENGTH(sd->skillatk) && sd->skillatk[i].id != 0 && sd->skillatk[i].id != type2; i++);
-		if (i == ARRAYLENGTH(sd->skillatk))
+		for (i = 0; i < ARRAYLENGTH(sd->skillheal) && sd->skillheal[i].id != 0 && sd->skillheal[i].id != type2; i++);
+		if (i == ARRAYLENGTH(sd->skillheal))
 		{	//Better mention this so the array length can be updated. [Skotlex]
-			ShowDebug("run_script: bonus2 bSkillAtk reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillatk), type2, val);
+			ShowDebug("run_script: bonus2 bSkillHeal reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillheal), type2, val);
 			break;
 		}
-		if (sd->skillatk[i].id == type2)
-			sd->skillatk[i].val += val;
+		if (sd->skillheal[i].id == type2)
+			sd->skillheal[i].val += val;
 		else {
-			sd->skillatk[i].id = type2;
-			sd->skillatk[i].val = val;
+			sd->skillheal[i].id = type2;
+			sd->skillheal[i].val = val;
 		}
 		break;
 	case SP_ADD_SKILL_BLOW:
