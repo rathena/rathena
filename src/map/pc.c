@@ -2209,10 +2209,26 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	case SP_SKILL_ATK:
 		if(sd->state.lr_flag == 2)
 			break;
-		for (i = 0; i < MAX_PC_BONUS && sd->skillatk[i].id != 0 && sd->skillatk[i].id != type2; i++);
-		if (i == MAX_PC_BONUS)
+		for (i = 0; i < ARRAYLENGTH(sd->skillatk) && sd->skillatk[i].id != 0 && sd->skillatk[i].id != type2; i++);
+		if (i == ARRAYLENGTH(sd->skillatk))
 		{	//Better mention this so the array length can be updated. [Skotlex]
-			ShowDebug("run_script: bonus2 bSkillAtk reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowDebug("run_script: bonus2 bSkillAtk reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillatk), type2, val);
+			break;
+		}
+		if (sd->skillatk[i].id == type2)
+			sd->skillatk[i].val += val;
+		else {
+			sd->skillatk[i].id = type2;
+			sd->skillatk[i].val = val;
+		}
+		break;
+	case SP_SKILL_HEAL:
+		if(sd->state.lr_flag == 2)
+			break;
+		for (i = 0; i < ARRAYLENGTH(sd->skillatk) && sd->skillatk[i].id != 0 && sd->skillatk[i].id != type2; i++);
+		if (i == ARRAYLENGTH(sd->skillatk))
+		{	//Better mention this so the array length can be updated. [Skotlex]
+			ShowDebug("run_script: bonus2 bSkillAtk reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillatk), type2, val);
 			break;
 		}
 		if (sd->skillatk[i].id == type2)
@@ -4788,6 +4804,28 @@ int pc_resethate(struct map_session_data* sd)
 	{
 		sd->hate_mob[i] = -1;
 		pc_setglobalreg(sd,hate_var[i],0);
+	}
+	return 0;
+}
+
+int pc_skillatk_bonus(struct map_session_data *sd, int skill_num)
+{
+	int i;
+	for (i = 0; i < ARRAYLENGTH(sd->skillatk) && sd->skillatk[i].id; i++)
+	{
+		if (sd->skillatk[i].id == skill_num)
+			return sd->skillatk[i].val;
+	}
+	return 0;
+}
+
+int pc_skillheal_bonus(struct map_session_data *sd, int skill_num)
+{
+	int i;
+	for (i = 0; i < ARRAYLENGTH(sd->skillheal) && sd->skillheal[i].id; i++)
+	{
+		if (sd->skillheal[i].id == skill_num)
+			return sd->skillheal[i].val;
 	}
 	return 0;
 }

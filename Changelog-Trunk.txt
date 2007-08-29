@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/08/23
+	* Added bonus bSkillHeal to distinguish offensive skill damage increases
+	  from healing power boosts.
+	* Moved battle_skillatk_bonus to pc.c, cleaned up the related skillatk
+	  bonus code to consider the skillheal bonus option. [Skotlex]
+2007/08/23
 	* Updated athena-start & start to Shazeya's hack. Please test them! [DracoRPG]
 	- Simplest way is to run ./start that is equivalent to Windows runserver_sql.bat
 	- To run TXT instead, edit the beginning of athena-start with proper filenames

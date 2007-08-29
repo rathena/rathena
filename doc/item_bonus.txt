@@ -162,6 +162,7 @@ bonus2 bAddEffWhenHit,n,x;		n% chance to cause x state to the enemy when
 bonus2 bAddEffWhenHitShort,n,x;		n% chance to cause x state to the enemy when
 					being hit by physical close range damage
 bonus2 bSkillAtk,n,x;			Increase damage of skill n by x%
+bonus2 bSkillHeal,n,x;			Increase heal amount of skill n by x%
 bonus2 bAddDamageByClass,n,x;		When being hit by monster of class n increase
 					damage taken by x%
 bonus2 bAddRace2,n,x;			Increase damage by x% vs. enemies of race n

@@ -824,20 +824,6 @@ static int battle_blewcount_bonus(struct map_session_data *sd, int skill_num)
 	return 0;
 }
 
-int battle_skillatk_bonus(struct map_session_data *sd, int skill_num)
-{
-	int i;
-	if (!sd->skillatk[0].id)
-		return 0;
-	for (i = 0; i < MAX_PC_BONUS && sd->skillatk[i].id &&
-		sd->skillatk[i].id != skill_num; i++);
-
-	if (i < MAX_PC_BONUS && sd->skillatk[i].id)
-		return sd->skillatk[i].val;
-
-	return 0;
-}
-
 struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag);
 struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag);
 
@@ -1637,7 +1623,7 @@ static struct Damage battle_calc_weapon_attack(
 		
 		if(sd)
 		{
-			if (skill_num && (i = battle_skillatk_bonus(sd, skill_num)))
+			if (skill_num && (i = pc_skillatk_bonus(sd, skill_num)))
 				ATK_ADDRATE(i);
 
 			if(skill_num != PA_SACRIFICE && skill_num != MO_INVESTIGATE &&
@@ -2334,7 +2320,7 @@ struct Damage battle_calc_magic_attack(
 
 		if(sd) {
 			//Damage bonuses
-			if ((i = battle_skillatk_bonus(sd, skill_num)))
+			if ((i = pc_skillatk_bonus(sd, skill_num)))
 				ad.damage += ad.damage*i/100;
 
 			//Ignore Defense?
@@ -2631,7 +2617,7 @@ struct Damage  battle_calc_misc_attack(
 			md.damage=md.damage*cardfix/10000;
 	}
 
-	if (sd && (i = battle_skillatk_bonus(sd, skill_num)))
+	if (sd && (i = pc_skillatk_bonus(sd, skill_num)))
 		md.damage += md.damage*i/100;
 
 	if(md.damage < 0)

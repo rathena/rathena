@@ -670,9 +670,9 @@ struct map_session_data {
 		short id, rate, arrow_rate;
 		unsigned char flag;
 	} addeff[MAX_PC_BONUS], addeff2[MAX_PC_BONUS];
-	struct { //skillatk raises bonus dmg% of skills, skillblown increases bonus blewcount for some skills.
+	struct { //skillatk raises bonus dmg% of skills, skillheal increases heal%, skillblown increases bonus blewcount for some skills.
 		short id, val;
-	} skillatk[MAX_PC_BONUS], skillblown[MAX_PC_BONUS];
+	} skillatk[MAX_PC_BONUS], skillheal[5], skillblown[MAX_PC_BONUS];
 	struct {
 		short class_, rate;
 	}	add_def[MAX_PC_BONUS], add_mdef[MAX_PC_BONUS],
@@ -1169,7 +1169,7 @@ enum _sp {
 	SP_ADDEFF, SP_RESEFF,	// 1012-1013
 	SP_BASE_ATK,SP_ASPD_RATE,SP_HP_RECOV_RATE,SP_SP_RECOV_RATE,SP_SPEED_RATE, // 1014-1018
 	SP_CRITICAL_DEF,SP_NEAR_ATK_DEF,SP_LONG_ATK_DEF, // 1019-1021
-	SP_DOUBLE_RATE, SP_DOUBLE_ADD_RATE, SP_FREE2, SP_MATK_RATE, // 1022-1025
+	SP_DOUBLE_RATE, SP_DOUBLE_ADD_RATE, SP_SKILL_HEAL, SP_MATK_RATE, // 1022-1025
 	SP_IGNORE_DEF_ELE,SP_IGNORE_DEF_RACE, // 1026-1027
 	SP_ATK_RATE,SP_SPEED_ADDRATE,SP_FREE3, // 1028-1030
 	SP_MAGIC_ATK_DEF,SP_MISC_ATK_DEF, // 1031-1032
@@ -1201,7 +1201,6 @@ enum _sp {
 	SP_INTRAVISION, SP_ADD_MONSTER_DROP_ITEMGROUP, SP_SP_LOSS_RATE, // 2038-2040
 	SP_ADD_SKILL_BLOW, SP_SP_VANISH_RATE //2041
 	//Before adding another, note that these are free:
-	//1024 (SP_FREE2, previous matk)
 	//1030 (SP_FREE3, previous AspdAddRate)
 	//2022 (SP_FREE, previous bDefIgnoreMob)
 };
