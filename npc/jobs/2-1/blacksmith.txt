@@ -7,7 +7,7 @@
 //= Optimized and further edited by kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: =====================================
-//= 2.4b
+//= 2.4c
 //===== Compatible With: =====================================
 //= eAthena  SVN
 //===== Description: =========================================
@@ -32,6 +32,7 @@
 //= 2.4 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
 //= 2.4a Changed a BaseJob to baseclass. [L0ne_W0lf]
 //= 2.4b Further bug fixes with teh hel of Barron-Monster. [L0ne_W0lf]
+//= 2.4c More fixes courtosy of Micktu. [L0ne_W0lf]
 //==============================================================
 
 ein_in01,18,28,4	script	Guildsman#BLS	731,{
@@ -623,7 +624,7 @@ L_AskQuestions:
 				mes "Wooooo~~~";
 				mes "All done...";
 				switch(BSMITH_Q) {
-				case 4:
+				case 9:
 					mes "Okay, now take this to ^8E6B23Baisulist^000000 in Geffen of Rune-Midgarts Kingdom. Simply deliver it and bring me the receipt.";
 					getitem 1610,1; //Arc_Wand
 					next;
@@ -645,7 +646,7 @@ L_AskQuestions:
 					mes "Anyway, take this";
 					mes "to ^8E6B23Baisulist^000000 in Geffen of Rune-Midgarts Kingdom,";
 					break;
-				case 5:
+				case 10:
 					mes "Okay, now take this to ^8E6B23Wickebine^000000 in Morroc of Rune-Midgarts Kingdom. Simply deliver it and bring me the receipt.";
 					getitem 1219,1; //Gladius
 					next;
@@ -667,7 +668,7 @@ L_AskQuestions:
 					mes "Anyway, take this";
 					mes "to ^8E6B23Wickebine^000000 in Morroc of Rune-Midgarts Kingdom,";
 					break;
-				Case 6:
+				Case 11:
 					mes "Okay, now take this to ^8E6B23Krongast^000000 in Lighthalzen. Simply deliver it and bring me the receipt.";
 					getitem 1119,1; //Tsurugi
 					next;
@@ -690,7 +691,7 @@ L_AskQuestions:
 					mes "Anyway, take this";
 					mes "to ^8E6B23Krongast^000000 in Izlude";
 					break;
-				case 7:
+				case 12:
 					mes "Okay, now take this to ^8E6B23Talpiz^000000 in Payon of Rune-Midgarts Kingdom. Simply deliver this and bring me the receipt.";
 					getitem 1713,1; //Arbalest
 					next;
@@ -711,7 +712,7 @@ L_AskQuestions:
 					mes "Anyway, take this";
 					mes "to ^8E6B23Talpiz^000000 in Payon of Rune-Midgarts Kindgom,";
 					break;
-				case 8:
+				case 13:
 					mes "Okay, now take this to ^8E6B23Bismarc^000000 in Hugel. Simply deliver this and bring back the receipt.";
 					getitem 1122,1; //Ring_Pommel_Saber
 					next;

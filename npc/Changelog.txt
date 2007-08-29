@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/08/29
+	* Rev. 11088 Blacksmith job quest bug fixes care of Micktu. [L0ne_W0lf]
 	* Rev. 11081 Knight job quest bug fixes. [L0ne_W0lf]
 	* Made some changes due to recent fixes in the Sign Quest. [SinSloth]
 	* Dandelion's Request event now resets properly after it has been completed by a player. [SinSloth]
