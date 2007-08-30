@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -25,12 +25,14 @@
 //= 1.5 Fixed exploits and bugs. Plus add a removal of exttra sobbing pieces
 //= 	as suggested Tantarian, to let people Reborn [Lupus]
 //= 1.6 Minor fix, thanks to theultramage for pointing it out. [MasterOfMuppets]
-//= 1.7 Fixed exploit [KarLaeda] 1.7a, fixed wrong dialogue [Lupus]
+//= 1.7 Fixed exploit [KarLaeda]
+//= 1.7a Fixed wrong dialogue [Lupus]
 //= 1.7b Fixed possible exploit [Lupus]
 //= 1.7c Reformatted for future bughunt. WIP [Lupus]
 //= 1.8 Fixed some bugs and exploit which allowed players helping in the final
 //= fight to finish the quest as well. Completely revamped quiz system. [SinSloth]
 //= 1.9 Made some changes in last event to reflect recent bug exploit fix. [SinSloth]
+//= 2.0 Fixed some various minor bugs. [SinSloth]
 //============================================================ 
 //===== Configuration : ======================================
 prontera,1,1,1	script	TheSignConfig	-1,{
@@ -8348,7 +8350,6 @@ L_NoMedal:
 L_Success:
     if (countitem(7313) < 5 && Sign_Branch8A) goto L_Voucher;
     delitem 7313,5;
-    set signquest,57;
     mes "[Kirkena]";
     mes "You've done well.";
     mes "Without her memories of her";
@@ -8369,6 +8370,7 @@ L_Success:
     mes "please visit our queen, Lady Hell.";
     mes "I believe she wants to see you for";
     mes "some reason...";
+    set signquest,57;
     set BaseExp,BaseExp +297000;
     close;
 
@@ -8767,6 +8769,7 @@ L_Sense:
 	mes "very familiar to me. Do you";
 	mes "have something extraordinarily";
 	mes "special in your possesion?";
+	if(!countitem(2644) && !countitem(7178)) close;
 	next;
 	if(countitem(2644) && countitem(7178)) menu "The Sign",L_Sign,"Sobbing Starlight",-;
 	if(!countitem(2644) && countitem(7178)) menu "Sobbing Starlight",-;
@@ -8919,6 +8922,7 @@ OnTimer600000:
 	disablenpc "Serin#serin";
 	killmonster "que_sign01","#signserin::OnSignDead";
 	set $signroomfull,1;
+	set $signparty,0;
 	areawarp "que_sign01",229,227,166,162,"niflheim",30,156;
 	areawarp "que_sign02",1,1,400,400,"niflheim",30,156;
 	stopnpctimer;
