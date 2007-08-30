@@ -6702,6 +6702,8 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 	case NPC_EVILLAND:
 		val1=(skilllv+3)*2;
 		val2=(skilllv>6)?(skillid == PR_SANCTUARY?777:666):skilllv*100;
+		if (sd && (i = pc_skillheal_bonus(sd, skillid)))
+			val2 += val2 * i / 100;
 		break;
 
 	case WZ_FIREPILLAR:
@@ -6807,6 +6809,8 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		if(sd){
 			val1 += pc_checkskill(sd,BA_MUSICALLESSON);
 			val2 += 5*pc_checkskill(sd,BA_MUSICALLESSON);
+			if ((i = pc_skillheal_bonus(sd, skillid)))
+				val2 += val2 * i / 100;
 		}
 		break;
 	case DC_SERVICEFORYOU:
@@ -7269,9 +7273,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				int heal = sg->val2;
 				if (tstatus->hp >= tstatus->max_hp)
 					break;
-				if (sd && (type = pc_skillheal_bonus(sd, sg->skill_id)))
-					heal += heal * type / 100;
-				if (tsc && tsc->count && tsc->data[SC_CRITICALWOUND].timer!=-1)
+				if (tsc && tsc->data[SC_CRITICALWOUND].timer!=-1)
 					heal -= heal * tsc->data[SC_CRITICALWOUND].val2 / 100;
 				if (status_isimmune(bl))
 					heal = 0;	/* 黄金蟲カード（ヒール量０） */
@@ -7449,9 +7451,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			if (sg->src_id == bl->id)
 				break;
 			heal = sg->val2;
-			if (sd && (type = pc_skillheal_bonus(sd, sg->skill_id)))
-				heal += heal * type / 100;
-			if(tsc && tsc->count && tsc->data[SC_CRITICALWOUND].timer!=-1)
+			if(tsc && tsc->data[SC_CRITICALWOUND].timer!=-1)
 				heal -= heal * tsc->data[SC_CRITICALWOUND].val2 / 100;
 			clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);
 			status_heal(bl, heal, 0, 0);

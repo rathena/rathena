@@ -3755,24 +3755,20 @@ int charcommand_homevolution(const int fd, struct map_session_data* sd, const ch
 		return -1;
 	}
 	
-	if (pl_sd->hd)
-	{
-		if (pl_sd->hd->homunculusDB->evo_class)
-		{
-			merc_hom_evolution(pl_sd->hd);
-			clif_displaymessage(pl_sd->fd, "Homunculus evolution initiated."); 
-			if (pl_sd->fd != fd)
-				clif_displaymessage(fd, "Homunculus evolution initiated."); 
-			return 0;
-		}
+	if ( !merc_is_hom_active(pl_sd->hd) ) {
+		clif_displaymessage(fd, "Target player does not have a homunculus."); 
+		return -1;
+	}
+
+	if ( !merc_hom_evolution(pl_sd->hd) ) {
 		clif_displaymessage(fd, "Target homunculus cannot evolve."); 
 		return -1;
 	}
-	else
-	{
-		clif_displaymessage(fd, "Target player does not have a homunculus."); 
-	}
-	return -1;
+
+	clif_displaymessage(pl_sd->fd, "Homunculus evolution initiated."); 
+	if (pl_sd->fd != fd)
+		clif_displaymessage(fd, "Homunculus evolution initiated."); 
+	return 0;
 }
 
 /*==========================================

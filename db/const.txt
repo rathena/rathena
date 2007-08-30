@@ -492,7 +492,6 @@ IG_Potion	37
 IG_RedBox_2	38
 IG_BleuBox	39
 
-
 SC_ALL -1
 SC_STONE	0
 SC_FREEZE	1

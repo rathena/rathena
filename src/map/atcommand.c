@@ -8307,11 +8307,8 @@ int atcommand_homevolution(const int fd, struct map_session_data* sd, const char
 		return -1;
 	}
 
-	if (sd->hd->homunculusDB->evo_class)
-	{
-		merc_hom_evolution(sd->hd) ;
+	if ( merc_hom_evolution(sd->hd) )
 		return 0;
-	}
 	
 	clif_displaymessage(fd, "Your homunculus doesn't evolve.");
 	return -1;

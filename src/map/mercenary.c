@@ -289,7 +289,7 @@ int merc_hom_evolution(struct homun_data *hd)
 	struct map_session_data *sd;
 	nullpo_retr(0, hd);
 
-	if(!hd->homunculusDB->evo_class)
+	if(!hd->homunculusDB->evo_class || hd->homunculus.class_ == hd->homunculusDB->evo_class)
 	{
 		clif_emotion(&hd->bl, 4) ;	//swt
 		return 0 ;
@@ -297,12 +297,12 @@ int merc_hom_evolution(struct homun_data *hd)
 	sd = hd->master;
 	if (!sd)
 		return 0;
-
 	
 	if (!merc_hom_change_class(hd, hd->homunculusDB->evo_class)) {
 		ShowError("merc_hom_evolution: Can't evolve homunc from %d to %d", hd->homunculus.class_, hd->homunculusDB->evo_class);
 		return 0;
 	}
+
 	//Apply evolution bonuses
 	hom = &hd->homunculus;
 	max = &hd->homunculusDB->emax;
