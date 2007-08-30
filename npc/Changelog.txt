@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/08/30
+	* Updated Cursed Abbey spawns some more [Playtester]
 	* Fixed some minor bugs in the Sign Quest. [SinSloth]
 2007/08/29
 	* Rev. 11088 Blacksmith job quest bug fixes care of Micktu. [L0ne_W0lf]
