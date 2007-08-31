@@ -1140,9 +1140,9 @@ struct chat_data {
 	char title[CHATROOM_TITLE_SIZE]; // room title 
 	char pass[CHATROOM_PASS_SIZE];   // password
 	bool pub;                        // private/public flag
-	unsigned char users;             // current users
-	unsigned char limit;             // join limit
-	unsigned char trigger;           // number of users needed to trigger event
+	uint8 users;                     // current user count
+	uint8 limit;                     // join limit
+	uint8 trigger;                   // number of users needed to trigger event
 	struct map_session_data* usersd[20];
 	struct block_list* owner;
 	char npc_event[50];

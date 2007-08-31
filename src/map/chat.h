@@ -10,7 +10,7 @@ struct chat_data;
 
 int chat_createpcchat(struct map_session_data* sd, const char* title, const char* pass, int limit, bool pub);
 int chat_joinchat(struct map_session_data* sd, int chatid, const char* pass);
-int chat_leavechat(struct map_session_data* sd);
+int chat_leavechat(struct map_session_data* sd, bool kicked);
 int chat_changechatowner(struct map_session_data* sd, const char* nextownername);
 int chat_changechatstatus(struct map_session_data* sd, const char* title, const char* pass, int limit, bool pub);
 int chat_kickchat(struct map_session_data* sd, const char* kickusername);

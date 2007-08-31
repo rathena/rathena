@@ -138,14 +138,14 @@ int clif_changeoption(struct block_list*);	// area
 int clif_changeoption2(struct block_list*);	// area
 int clif_useitemack(struct map_session_data*,int,int,int);	// self
 void clif_GlobalMessage(struct block_list* bl, const char* message);
-int clif_createchat(struct map_session_data*,int);	// self
+void clif_createchat(struct map_session_data* sd, int fail);	// self
 int clif_dispchat(struct chat_data*,int);	// area or fd
 int clif_joinchatfail(struct map_session_data*,int);	// self
 int clif_joinchatok(struct map_session_data*,struct chat_data*);	// self
 int clif_addchat(struct chat_data*,struct map_session_data*);	// chat
-int clif_changechatowner(struct chat_data*,struct map_session_data*);	// chat
+void clif_changechatowner(struct chat_data* cd, struct map_session_data* sd);	// chat
 int clif_clearchat(struct chat_data*,int);	// area or fd
-int clif_leavechat(struct chat_data*,struct map_session_data*);	// chat
+void clif_leavechat(struct chat_data* cd, struct map_session_data* sd, bool flag);	// chat
 int clif_changechatstatus(struct chat_data*);	// chat
 int clif_refresh(struct map_session_data*);	// self
 

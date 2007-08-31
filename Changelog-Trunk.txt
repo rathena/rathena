@@ -3,6 +3,15 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/08/31
+	* Added some comments to clif_changechatowner()
+	- totally broken, see the code + topic:163829
+	* Implemented the chatroom display packet properly
+	- now has 4 types: public, private, npc and non-clickable npc chatroom
+	* Implemented the chatroom leave packet properly
+	- now utilizes the 'kicked' flag when the user was forced to leave
+	- TODO: banlist support to prevent re-entry, see jAthena code
+	* Documented/cleaned up chatroom code and packetry [ultramage]
 2007/08/30
 	* Updated sql files [Playtester]
 2007/08/29
