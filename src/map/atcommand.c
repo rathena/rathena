@@ -8883,7 +8883,7 @@ int atcommand_monsterignore(const int fd, struct map_session_data* sd, const cha
 
 	if (!sd->state.monster_ignore) {
 		sd->state.monster_ignore = 1;
-		clif_displaymessage(sd->fd, "You are now inmune to attacks.");
+		clif_displaymessage(sd->fd, "You are now immune to attacks.");
 	} else {
 		sd->state.monster_ignore = 0;
 		clif_displaymessage(sd->fd, "Returned to normal state.");

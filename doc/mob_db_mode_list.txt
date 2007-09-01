@@ -49,7 +49,7 @@ Cast Sensor Idle: Will go after characters who start casting on them if idle
 Cast Sensor Chase: Will go after characters who start casting on them if idle
 	or chasing other players (they switch chase targets)
 
-Boss: Special flag which makes mobs inmune to certain status changes and skills.
+Boss: Special flag which makes mobs immune to certain status changes and skills.
 
 Plant: Always receives 1 damage from attacks.
 

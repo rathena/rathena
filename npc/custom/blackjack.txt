@@ -96,7 +96,7 @@ cmd_in02,188,89,1	script	Black Jack Dealer	57,{
 			mes "each round.";
 			next;
 			mes "[Dealer]";
-			mes "An example of when doubling down is usefull, is when";
+			mes "An example of when doubling down is useful, is when";
 			mes "your first 2 cards give you a point total of 11.  You have a good";
 			mes "chance of getting 21 or 20 with the next card that you draw.  This";
 			mes "would be a good hand to double down on.";

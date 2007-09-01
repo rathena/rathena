@@ -1580,7 +1580,7 @@ Date	Added
 	  check if the skill is ground targetted. [Skotlex]
 	* Moved the berserk_cancel_buffs code to status_change_start. [Skotlex]
 	* Moved most checks of status_isimmune() to status_get_sc_def [Skotlex]
-	* Allowed Endow skills to go through status_isinmune characters. [Skotlex]
+	* Allowed Endow skills to go through status_isimmune characters. [Skotlex]
 	* Fixed PR_BENEDICTIO not taking away all SP. [Skotlex]
 	* Modified the way Status changes are linked to skills for an easier to
 	  read implementation (see status_initChangeTables). [Skotlex]
@@ -1669,7 +1669,7 @@ Date	Added
 	* Modified the skill attack display of Meteor Assault and the Warm Skills
 	  (I think the caster should no longer do fancy animations now on each hit)
 	  [Skotlex]
-	* Added back water elemental targets being inmune to SC_FREEZE [Skotlex]
+	* Added back water elemental targets being immune to SC_FREEZE [Skotlex]
 	* SQL compile fix [Komurka]
 
 2006/02/08
@@ -1726,7 +1726,7 @@ Date	Added
 	* Coma no longer sends SP to 1. [Skotlex]
 	* Updated Meteor so that when level 11 or more is casted, the area over
 	  which meteors fall is tripled. [Skotlex]
-	* Dark elemental characters are now inmune to Curse. [Skotlex]
+	* Dark elemental characters are now immune to Curse. [Skotlex]
 	* Fixed sc_data saving to sql buffer building method. Thanks to its_sparky. [Skotlex]
 	* Changed the map zone reading from using pow to a bit shift. [Skotlex]
 	* Experience has now been changed to unsigned int, and is read as such from
@@ -2027,7 +2027,7 @@ Date	Added
 	  battle_check_target calls on a bunch of invalid targets such as
 	  items/skills/npcs on skills and other misc places. [Skotlex] 
 	* Fixed mob skills that should trigger on status on "any bad". [Skotlex]
-	* TK classes no longer are inmune to the strip-effects of Jump Kick [Skotlex]
+	* TK classes no longer are immune to the strip-effects of Jump Kick [Skotlex]
 	* Fixed SQL mapreg saving. [Skotlex]
 	* Reverted Ice Wall Behaviour (you can snipe/cast through it again) [Skotlex]
 	* Fixed possible crash in skill_check_condition on consume-delayed items [Skotlex]
@@ -2293,7 +2293,7 @@ Date	Added
 	* Fixed the warp unloading code. [Skotlex]
 	* Updated Jump Side Kick to also clear Berserk Pitcher.  [Skotlex]
 	* Preserve now protects against the stripping effects of Side Kick. Taekwon
-	  Classes (TK/SL/SG) are also inmune to it.  [Skotlex]
+	  Classes (TK/SL/SG) are also immune to it.  [Skotlex]
 	* Hopefully fixed the guild information not being sent in some situations
 	  when people are added/removed from a guild. [Skotlex]
 	* Some cleaning up and bug fixes to the guild module of the char-sql
@@ -3424,7 +3424,7 @@ Date	Added
 	* Corrected True Sight's critical bonus (from +0.1 cri per level to +1 cri
 	  per level) [Skotlex]
 	* Made coma a status effect. SC_COMA. Sets HP/SP to 1. Bosses/Emperium are
-	  inmune to it. [Skotlex]
+	  immune to it. [Skotlex]
 	* Fixed null pointer crash in battle_damage. [Skotlex]
 	* Increased max account variables to 32. [Skotlex]
 	* Pressure/Gloria Domini now isn't instant-cancelled by status effects, and
@@ -6272,8 +6272,8 @@ Date	Added
 	* Split zlib dll opening from grf opening in grfio.c [celest]
 	* Moved grfio.c back to /common, it'll be needed by the core later [celest]
 	* SQL Logs crash likely fixed. [Skotlex]
-	* Added Stone-Curse to the list of status effects undead chars are inmune
-	  to. So far undead chars are inmune to Freeze and Stone Curse. [Skotlex]
+	* Added Stone-Curse to the list of status effects undead chars are immune
+	  to. So far undead chars are immune to Freeze and Stone Curse. [Skotlex]
 	* Fixed disp_hpmeter not working properly when set to 0/no [Skotlex]
 	* Added malloc_usage() for checking total memory used [celest]
 	* Added func_parse_table to assign a parse function according to SessionType

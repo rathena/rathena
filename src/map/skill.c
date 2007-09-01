@@ -7055,7 +7055,7 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 	sc = status_get_sc(bl);
 	
 	if (sc && sc->option&OPTION_HIDE && sg->skill_id != WZ_HEAVENDRIVE)
-		return 0; //Hidden characters are inmune to AoE skills except Heaven's Drive. [Skotlex]
+		return 0; //Hidden characters are immune to AoE skills except Heaven's Drive. [Skotlex]
 	
 	type = SkillStatusChangeTable(sg->skill_id);
 	skillid = sg->skill_id; //In case the group is deleted, we need to return the correct skill id, still.

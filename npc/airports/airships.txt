@@ -1136,7 +1136,7 @@ L_Input:
 		mes "["+getarg(0)+"]";
 		mes "Ooh...";
 		mes "You don't have that";
-		mes "much Apples with you,";
+		mes "many Apples with you,";
 		mes "now do you?";
 		close;
 	}

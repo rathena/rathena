@@ -1021,7 +1021,7 @@ alde_alche,101,184,4	script	Vincent Carsciallo	122,{
 	mes "[Vincent Carsciallo]";
 	if(baseJob == Job_Merchant) goto L_Merc;
 	if(baseJob == Job_Alchemist){
-		mes "How Alchemy going? Make sure to be carefull and think about safety at all times.";
+		mes "How Alchemy going? Make sure to be careful and think about safety at all times.";
 		mes "I wouldn't want you blowing yourself up or anything.....";
 		close;
 	}

@@ -675,7 +675,7 @@ lighthalzen,147,105,3	script	Laqumet	869,{
 	mes "I might not be like Sefith,";
 	mes "but I guess I've got a cute";
 	mes "smile, a good personality and";
-	mes "I'm a dandy to boo. Hopefull,";
+	mes "I'm a dandy to boot. Hopefully,";
 	mes "my honesty and loyalty will";
 	mes "help me find someone good.";
 	close;

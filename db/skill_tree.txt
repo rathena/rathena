@@ -2042,7 +2042,7 @@
 4046,419,7,0,0,0,0,0,0,0,0,0,0 //TK_COUNTER#Counter Kick#
 4046,420,1,421,7,0,0,0,0,0,0,0,0 //TK_DODGE#Break Fall#
 4046,421,7,0,0,0,0,0,0,0,0,0,0 //TK_JUMPKICK#Flying Side Kick#
-4046,422,10,0,0,0,0,0,0,0,0,0,0 //TK_HPTIME#Peacefull Rest#
+4046,422,10,0,0,0,0,0,0,0,0,0,0 //TK_HPTIME#Peaceful Rest#
 4046,423,10,0,0,0,0,0,0,0,0,0,0 //TK_SPTIME#Enjoyable Rest#
 4046,424,5,0,0,0,0,0,0,0,0,0,0 //TK_POWER#Fighting Chant#
 4046,425,7,422,5,423,5,424,5,0,0,0,0 //TK_SEVENWIND#Warm Wind#
@@ -2063,7 +2063,7 @@
 4047,419,7,0,0,0,0,0,0,0,0,0,0 //TK_COUNTER#Counter Kick#
 4047,420,1,421,7,0,0,0,0,0,0,0,0 //TK_DODGE#Break Fall#
 4047,421,7,0,0,0,0,0,0,0,0,0,0 //TK_JUMPKICK#Flying Side Kick#
-4047,422,10,0,0,0,0,0,0,0,0,0,0 //TK_HPTIME#Peacefull Rest#
+4047,422,10,0,0,0,0,0,0,0,0,0,0 //TK_HPTIME#Peaceful Rest#
 4047,423,10,0,0,0,0,0,0,0,0,0,0 //TK_SPTIME#Enjoyable Rest#
 4047,424,5,0,0,0,0,0,0,0,0,0,0 //TK_POWER#Fighting Chant#
 4047,425,7,422,5,423,5,424,5,0,0,0,0 //TK_SEVENWIND#Warm Wind#
@@ -2103,7 +2103,7 @@
 4048,419,7,0,0,0,0,0,0,0,0,0,0 //TK_COUNTER#Counter Kick#
 4048,420,1,421,7,0,0,0,0,0,0,0,0 //TK_DODGE#Break Fall#
 4048,421,7,0,0,0,0,0,0,0,0,0,0 //TK_JUMPKICK#Flying Side Kick#
-4048,422,10,0,0,0,0,0,0,0,0,0,0 //TK_HPTIME#Peacefull Rest#
+4048,422,10,0,0,0,0,0,0,0,0,0,0 //TK_HPTIME#Peaceful Rest#
 4048,423,10,0,0,0,0,0,0,0,0,0,0 //TK_SPTIME#Enjoyable Rest#
 4048,424,5,0,0,0,0,0,0,0,0,0,0 //TK_POWER#Fighting Chant#
 4048,425,7,422,5,423,5,424,5,0,0,0,0 //TK_SEVENWIND#Warm Wind#
@@ -2143,7 +2143,7 @@
 4049,419,7,0,0,0,0,0,0,0,0,0,0 //TK_COUNTER#Counter Kick#
 4049,420,1,421,7,0,0,0,0,0,0,0,0 //TK_DODGE#Break Fall#
 4049,421,7,0,0,0,0,0,0,0,0,0,0 //TK_JUMPKICK#Flying Side Kick#
-4049,422,10,0,0,0,0,0,0,0,0,0,0 //TK_HPTIME#Peacefull Rest#
+4049,422,10,0,0,0,0,0,0,0,0,0,0 //TK_HPTIME#Peaceful Rest#
 4049,423,10,0,0,0,0,0,0,0,0,0,0 //TK_SPTIME#Enjoyable Rest#
 4049,424,5,0,0,0,0,0,0,0,0,0,0 //TK_POWER#Fighting Chant#
 4049,425,7,422,5,423,5,424,5,0,0,0,0 //TK_SEVENWIND#Warm Wind#

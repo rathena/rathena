@@ -81,7 +81,7 @@ payon_in01,18,10,4	script	Mystic Lady	75,{
 		mes "I have tried to continue the family business here in Payon but it has proven to be difficult because of the warm whether.";
 		next;
 		mes "[Mystic Lady]";
-		mes "Although the 'Ear Muffs' aren't very usefull here, if you plan on going somewhere that's cold our 'Ear Muffs' are a must have.";
+		mes "Although the 'Ear Muffs' aren't very useful here, if you plan on going somewhere that's cold our 'Ear Muffs' are a must have.";
 		next;
 		mes "[Mystic Lady]";
 		mes "All I need are:";
@@ -230,7 +230,7 @@ payon_in01,56,12,4	script	Young Man#12	89,{
 
 			sL_GetHat:
 				mes "[Young Man]";
-				mes "Wait a moment!  Be carefull about what items you give me.";
+				mes "Wait a moment!  Be careful about what items you give me.";
 				mes "I do not distinguish between equipment that has been forged or has cards attached to them.";
 				mes "If you don't want to loose a precious card or piece of equipment, make sure you don't have it equiped.";
 				next;

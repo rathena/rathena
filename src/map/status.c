@@ -4601,7 +4601,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	switch (type) {
 	case SC_FREEZE:
 	case SC_STONE:
-		//Undead are inmune to Freeze/Stone
+		//Undead are immune to Freeze/Stone
 		if (undead_flag && !(flag&1))
 			return 0;
 	case SC_SLEEP:

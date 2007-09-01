@@ -791,7 +791,7 @@ Logical bitwise operators work only on numbers, and they are the following:
 		if( inProgress&2 == 0 ){
 			// this will set the bit for quest 2 (inProgress has that bit set to 0)
 			set inProgress,inProgress^2;
-			mes "Quest 2: find a newbie and be helpfull to him for an hour.";
+			mes "Quest 2: find a newbie and be helpful to him for an hour.";
 			close;
 		}
 	- After spending some time reading info on Xor's, the player finally completes quest 1:

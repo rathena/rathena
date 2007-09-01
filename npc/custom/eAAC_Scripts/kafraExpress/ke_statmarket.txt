@@ -76,7 +76,7 @@ function	script	F_keStatMarket	{
 		} else 
 		if (@qty > @max) {
 			if (@max == 9999)
-				callfunc "F_keIntro", e_X, "You can't buy that much!";
+				callfunc "F_keIntro", e_X, "You can't buy that many!";
 			else
 				callfunc "F_keIntro", e_X, "You don't have that many to sell...";
 		} else
@@ -86,7 +86,7 @@ function	script	F_keStatMarket	{
 			switch(@kmenu) {
 			case 2: //Buy Stat
 				if (!(callfunc("F_keCharge",@cost,$@kesm_discount,1))) {
-					callfunc "F_keIntro", e_X, "You do not have enough zeny to buy that much.";
+					callfunc "F_keIntro", e_X, "You do not have enough zeny to buy that many.";
 					break;
 				}
 				set StatusPoint,StatusPoint+@qty;
@@ -99,7 +99,7 @@ function	script	F_keStatMarket	{
 				break;
 			case 4: //Buy Skill
 				if (!(callfunc("F_keCharge",@cost,$@kesm_discount,1))) {
-					callfunc "F_keIntro", e_X, "You do not have enough zeny to buy that much.";
+					callfunc "F_keIntro", e_X, "You do not have enough zeny to buy that many.";
 					break;
 				}
 				set SkillPoint,SkillPoint+@qty;

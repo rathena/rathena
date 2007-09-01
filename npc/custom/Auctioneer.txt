@@ -183,7 +183,7 @@ L_AItemsLoop:
 	close;
 L_NotEnough:
 	mes "[Auctioneer]";
-	mes "Seems you don't have that much "+getitemname(@setitem)+"'s";
+	mes "Seems you don't have that many "+getitemname(@setitem)+"'s";
 	close;
 // If the Auction has enterd phase 2, it will run this, during this time items you can bid on registered
 // No items can be retrieved during this time, they are now stuck
