@@ -13,29 +13,37 @@
 	12017 Speed Decreasing Potion:	A potion which decreases the moving speed of a character for a duration.
 	-----
 	4352 B_Ygnizem_Card:		Recover 50 HP and 10 SP every 10 seconds
-	4374 Apocalips_H_Card:		Ignore 30% Mdef on Boss monsters
 	-----
-	Incomplete or missing bonuses (Can be completed with NPC skill update):
+	Incomplete or missing bonuses:
 	1270 Drill_Katar:		Full strip target without applying "Stripped" status.
 	1535 Holgrehenn's_Hammer:	Breaking your own gear at low rate when compounded with Whitesmith_card
-	1626 Staff_of_Piercing:		Ignore 10% Mdef
 	2000 Staff_of_Destruction:	Reduce cast-time of Mystical Amplification by 50%
-	2677 Spiritual_Ring:		50% more damage with Heal
 
-	Missing Status Effects:
+	Missing Effects:
 	12209 Life_Insurrance:		No EXP penetly on death (Recommend constant: SC_NoPenelty - Has status icon)
 	12208 Field_Manual:		Increased EXP rate (Recommend constant: SC_IncreasedEXP - Has status icon)
 	12210 Bubble_Gum:		Increased Drop rate (Recommend constant: SC_IncreasedDropRate - Has status icon)
 	12214 Convex_Mirror:		Detect MVP spawn on minimap; doesn't work with special condition MVPs. (Recommend constant: SC_DetectMVPSpawn)
-
-	Possible Improper bonuses:
-	12212 Giant_Fly_Wing:		Summons all party members to leader using script.
-	12213 Glittering_Wand:		Simple script to ensure weight is 0 and then resets characters skills.	
-	7621 Token_of_Ziegfried:	Revive player on death (if item is in inventoy? Needs a clearer description)
+	7621 Token_of_Ziegfried:	Give player the option to revive after death, through the "Respawn/Exit" menu.
 
 	Still need proper rates for most 11.3 Equipment that don't have their +rates/Status Infliction rates clearly defined.
 	13107 Western_Outlaw:		Need correct HIT and ASPD Rate
+
+	Missing 12.1 Card bonuses:
+	Most 12.1 cards are using a low rate usually 1% for their effects.
+	4411 Vanberk_Card 		small chance that for 5 seconds you gain 100 crit while attacking.
+	4412 Isilla_Card		small chance that for 5 seconds your Cast Time will decrease by 50% and gain 30 flee while attacking.
+	4413 Hodremlin_Card		small chance that for 10 seconds you gain 30 Perfect Dodge when attacked.
+	4416 Siroma_Card		Decreases cast time of skill 'cold bolt' by 25%.
+	4417 Ice_Titan_Card		chance that for 10 seconds you'll gain 10 Armor Defence while taking magic of physical damage.
+	4421 Drosera_Card		CRIT + 15. with long ranged attacks.
+	4425 Atros_Card			chance that for 10 seconds your aspd will increase by 100% while attacking.
+	4433 Imp_Card			Decreases cast time of skill 'fire bolt' by 25%.
+
 ========================
+08/31
+	* Rev. 11101 Implemented 12.1 cards to the best of my ability.  [L0ne_W0lf]
+	- Let me know if I missed any effects that are there that I missed.
 08/29
 	* Updated all heal and offensive heal item bonuses [Playtester]
 08/23
