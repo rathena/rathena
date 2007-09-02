@@ -13,10 +13,12 @@
 	12017 Speed Decreasing Potion:	A potion which decreases the moving speed of a character for a duration.
 	-----
 	4352 B_Ygnizem_Card:		Recover 50 HP and 10 SP every 10 seconds
+	4374 Apocalips_H_Card:		Ignore 30% Mdef on Boss monsters
 	-----
 	Incomplete or missing bonuses:
 	1270 Drill_Katar:		Full strip target without applying "Stripped" status.
 	1535 Holgrehenn's_Hammer:	Breaking your own gear at low rate when compounded with Whitesmith_card
+	1626 Staff_of_Piercing:		Ignore 10% Mdef
 	2000 Staff_of_Destruction:	Reduce cast-time of Mystical Amplification by 50%
 
 	Missing Effects:
@@ -31,13 +33,13 @@
 
 	Missing 12.1 Card bonuses:
 	Most 12.1 cards are using a low rate usually 1% for their effects.
-	4411 Vanberk_Card 		small chance that for 5 seconds you gain 100 crit while attacking.
-	4412 Isilla_Card		small chance that for 5 seconds your Cast Time will decrease by 50% and gain 30 flee while attacking.
-	4413 Hodremlin_Card		small chance that for 10 seconds you gain 30 Perfect Dodge when attacked.
+	4411 Vanberk_Card 		Small chance that for 5 seconds you gain 100 crit while attacking.
+	4412 Isilla_Card		Small chance that for 5 seconds your Cast Time will decrease by 50% and gain 30 flee while attacking.
+	4413 Hodremlin_Card		Small chance that for 10 seconds you gain 30 Perfect Dodge when attacked.
 	4416 Siroma_Card		Decreases cast time of skill 'cold bolt' by 25%.
-	4417 Ice_Titan_Card		chance that for 10 seconds you'll gain 10 Armor Defence while taking magic of physical damage.
-	4421 Drosera_Card		CRIT + 15. with long ranged attacks.
-	4425 Atros_Card			chance that for 10 seconds your aspd will increase by 100% while attacking.
+	4417 Ice_Titan_Card		Chance that for 10 seconds you'll gain 10 Armor Defence while taking magic or physical damage.
+	4421 Drosera_Card		CRIT + 15 with long ranged attacks.
+	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 	4433 Imp_Card			Decreases cast time of skill 'fire bolt' by 25%.
 
 ========================
