@@ -2215,7 +2215,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	case SP_SKILL_ATK:
 		if(sd->state.lr_flag == 2)
 			break;
-		ARR_FIND(0, ARRAYLENGTH(sd->skillatk), i, sd->skillatk[i].id == 0 && sd->skillatk[i].id == type2);
+		ARR_FIND(0, ARRAYLENGTH(sd->skillatk), i, sd->skillatk[i].id == 0 || sd->skillatk[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillatk))
 		{	//Better mention this so the array length can be updated. [Skotlex]
 			ShowDebug("run_script: bonus2 bSkillAtk reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillatk), type2, val);
@@ -2231,7 +2231,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	case SP_SKILL_HEAL:
 		if(sd->state.lr_flag == 2)
 			break;
-		ARR_FIND(0, ARRAYLENGTH(sd->skillheal), i, sd->skillheal[i].id == 0 && sd->skillheal[i].id == type2);
+		ARR_FIND(0, ARRAYLENGTH(sd->skillheal), i, sd->skillheal[i].id == 0 || sd->skillheal[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillheal))
 		{	//Better mention this so the array length can be updated. [Skotlex]
 			ShowDebug("run_script: bonus2 bSkillHeal reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillheal), type2, val);
@@ -2247,7 +2247,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	case SP_ADD_SKILL_BLOW:
 		if(sd->state.lr_flag == 2)
 			break;
-		ARR_FIND(0, ARRAYLENGTH(sd->skillblown), i, sd->skillblown[i].id == 0 && sd->skillblown[i].id == type2);
+		ARR_FIND(0, ARRAYLENGTH(sd->skillblown), i, sd->skillblown[i].id == 0 || sd->skillblown[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillblown))
 		{	//Better mention this so the array length can be updated. [Skotlex]
 			ShowDebug("run_script: bonus2 bSkillBlown reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillblown), type2, val);
@@ -2264,7 +2264,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	case SP_CASTRATE:
 		if(sd->state.lr_flag == 2)
 			break;
-		ARR_FIND(0, ARRAYLENGTH(sd->skillcast), i, sd->skillcast[i].id == 0 && sd->skillcast[i].id == type2);
+		ARR_FIND(0, ARRAYLENGTH(sd->skillcast), i, sd->skillcast[i].id == 0 || sd->skillcast[i].id == type2);
 		if (i == ARRAYLENGTH(sd->skillcast))
 		{	//Better mention this so the array length can be updated. [Skotlex]
 			ShowDebug("run_script: bonus2 bCastRate reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillcast), type2, val);
