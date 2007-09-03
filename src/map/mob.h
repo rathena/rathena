@@ -56,6 +56,11 @@ struct mob_skill {
 	short emotion;
 };
 
+struct spawn_info {
+	unsigned short mapindex;
+	unsigned short qty;
+};
+ 
 struct mob_db {
 	char sprite[NAME_LENGTH],name[NAME_LENGTH],jname[NAME_LENGTH];
 	unsigned int base_exp,job_exp;
@@ -71,6 +76,7 @@ struct mob_db {
 	int summonper[MAX_RANDOMMONSTER];
 	int maxskill;
 	struct mob_skill skill[MAX_MOBSKILL];
+	struct spawn_info spawn[10];
 };
 
 enum {
@@ -173,6 +179,7 @@ void mob_heal(struct mob_data *md,unsigned int heal);
 #define mob_stop_walking(md, type) { if (md->ud.walktimer != -1) unit_stop_walking(&md->bl, type); }
 #define mob_stop_attack(md) { if (md->ud.attacktimer != -1) unit_stop_attack(&md->bl); }
 
+void mob_clear_spawninfo();
 int do_init_mob(void);
 int do_final_mob(void);
 

@@ -8737,8 +8737,13 @@ BUILDIN_FUNC(homunculus_evolution)
 {
 	TBL_PC *sd;
 	sd=script_rid2sd(st);
-	if(merc_is_hom_active(sd->hd) && sd->hd->homunculus.intimacy > 91000)
-		merc_hom_evolution(sd->hd);
+	if(merc_is_hom_active(sd->hd))
+	{
+		if (sd->hd->homunculus.intimacy > 91000)
+			merc_hom_evolution(sd->hd);
+		else
+			clif_emotion(&sd->hd->bl, 4) ;	//swt
+	}
 	return 0;
 }
 

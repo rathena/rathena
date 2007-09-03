@@ -231,6 +231,7 @@ ACMD_FUNC(mutearea); // by MouseJstr
 ACMD_FUNC(rates); // by MouseJstr
 ACMD_FUNC(iteminfo); // Lupus
 ACMD_FUNC(whodrops); //Skotlex 
+ACMD_FUNC(whereis); //Skotlex 
 ACMD_FUNC(mapflag); // Lupus
 ACMD_FUNC(me); //added by massdriller, code by lordalfa
 ACMD_FUNC(monsterignore); // [Valaris]
@@ -527,6 +528,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_ItemInfo,			"@iteminfo",		 1, atcommand_iteminfo }, // [Lupus]
 	{ AtCommand_ItemInfo,			"@ii",				 1, atcommand_iteminfo }, // [Lupus]
 	{ AtCommand_WhoDrops,			"@whodrops",		 1, atcommand_whodrops }, // [Skotlex]
+	{ AtCommand_WhereIs,            "@whereis",		10, atcommand_whereis }, // [Skotlex]
 	{ AtCommand_MapFlag,			"@mapflag", 		99, atcommand_mapflag }, // [Lupus]
 	{ AtCommand_Me, 				"@me",				20, atcommand_me }, //added by massdriller, code by lordalfa
 	{ AtCommand_MonsterIgnore,		"@monsterignore",	99, atcommand_monsterignore }, // [Valaris]
@@ -8696,6 +8698,54 @@ int atcommand_whodrops(const int fd, struct map_session_data* sd, const char* co
 			}
 		}
 	}
+	return 0;
+}
+
+int atcommand_whereis(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	struct mob_db *mob, *mob_array[MAX_SEARCH];
+	int count;
+	int i, j, k;
+
+	if (!message || !*message) {
+		clif_displaymessage(fd, "Please, enter a Monster/ID (usage: @whereis<monster_name_or_monster_ID>).");
+		return -1;
+	}
+
+	// If monster identifier/name argument is a name
+	if ((i = mobdb_checkid(atoi(message))))
+	{
+		mob_array[0] = mob_db(i);
+		count = 1;
+	} else
+		count = mobdb_searchname_array(mob_array, MAX_SEARCH, message);
+
+	if (!count) {
+		clif_displaymessage(fd, msg_txt(40)); // Invalid monster ID or name.
+		return -1;
+	}
+
+	if (count > MAX_SEARCH) {
+		sprintf(atcmd_output, msg_txt(269), MAX_SEARCH, count);
+		clif_displaymessage(fd, atcmd_output);
+		count = MAX_SEARCH;
+	}
+	for (k = 0; k < count; k++) {
+		mob = mob_array[k];
+    	snprintf(atcmd_output, sizeof atcmd_output, "%s spawns in:", mob->jname);
+		clif_displaymessage(fd, atcmd_output);
+
+		for (i = 0; i < ARRAYLENGTH(mob->spawn) && mob->spawn[i].qty; i++)
+		{
+			j = map_mapindex2mapid(mob->spawn[i].mapindex);
+			if (j < 0) continue;
+	    	snprintf(atcmd_output, sizeof atcmd_output, "%s (%d)", map[j].name, mob->spawn[i].qty);
+			clif_displaymessage(fd, atcmd_output);
+		}
+		if (i == 0)
+			clif_displaymessage(fd, "This monster does not spawn normally.");
+	}
+
 	return 0;
 }
 

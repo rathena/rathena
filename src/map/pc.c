@@ -2365,11 +2365,11 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		break;
 	case SP_AUTOSPELL:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, type2, type3, val, 0, current_equip_card_id);
+			pc_bonus_autospell(sd->autospell, MAX_PC_BONUS, skill_get_inf(type2)&INF_SELF_SKILL?-type2:type2, type3, val, 0, current_equip_card_id);
 		break;
 	case SP_AUTOSPELL_WHENHIT:
 		if(sd->state.lr_flag != 2)
-			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, type2, type3, val, 0, current_equip_card_id);
+			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, skill_get_inf(type2)&INF_SELF_SKILL?-type2:type2, type3, val, 0, current_equip_card_id);
 		break;
 	case SP_HP_LOSS_RATE:
 		if(sd->state.lr_flag != 2) {

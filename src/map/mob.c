@@ -3991,6 +3991,14 @@ void mob_reload(void)
 	mob_readdb_race();
 }
 
+void mob_clear_spawninfo()
+{	//Clears spawn related information for a script reload.
+	int i;
+	for (i = 0; i < MAX_MOB_DB; i++)
+		if (mob_db_data[i])
+			memset(&mob_db_data[i]->spawn,0,sizeof(mob_db_data[i]->spawn));
+}
+
 /*==========================================
  * Circumference initialization of mob
  *------------------------------------------*/

@@ -2341,6 +2341,7 @@ int npc_parse_mob(char* w1, char* w2, char* w3, char* w4)
 	char mapname[MAP_NAME_LENGTH_EXT];
 	char mobname[NAME_LENGTH];
 	struct spawn_data mob, *data;
+	struct mob_db* db;
 
 	memset(&mob, 0, sizeof(struct spawn_data));
 
@@ -2397,8 +2398,9 @@ int npc_parse_mob(char* w1, char* w2, char* w3, char* w4)
 		mob.xs = mob.ys = -1;
 	}
 
+	db = mob_db(class_);
 	//Apply the spawn delay fix [Skotlex]
-	mode = mob_db(class_)->status.mode;
+	mode = db->status.mode;
 	if (mode & MD_BOSS) {	//Bosses
 		if (battle_config.boss_spawn_delay != 100)
 		{	// Divide by 100 first to prevent overflows
@@ -2437,6 +2439,32 @@ int npc_parse_mob(char* w1, char* w2, char* w3, char* w4)
 
 	if (!mob_parse_dataset(&mob)) //Verify dataset.
 		return 1;
+
+	for(x=0; x < ARRAYLENGTH(db->spawn); x++)
+	{
+		if (map[mob.m].index == db->spawn[x].mapindex)
+		{	//Update total
+			db->spawn[x].qty += mob.num;
+			//Re-sort list
+			for (y = x; y>0 && db->spawn[y-1].qty < db->spawn[x].qty; y--);
+			if (y != x)
+			{
+				xs = db->spawn[x].mapindex;
+				ys = db->spawn[x].qty;
+				memmove(&db->spawn[y+1], &db->spawn[y], (x-y)*sizeof(db->spawn[0]));
+				db->spawn[y].mapindex = xs;
+				db->spawn[y].qty = ys;
+			}
+			break;
+		}
+		if (mob.num > db->spawn[x].qty)
+		{	//Insert into list
+			memmove(&db->spawn[x+1], &db->spawn[x], sizeof(db->spawn) -(x+1)*sizeof(db->spawn[0]));
+			db->spawn[x].mapindex = map[mob.m].index;
+			db->spawn[x].qty = mob.num;
+			break;
+		}
+	}
 
 	//Now that all has been validated. We allocate the actual memory
 	//that the re-spawn data will use.
@@ -2940,6 +2968,7 @@ int npc_reload(void)
 		if (map[m].npc_num > 0 && battle_config.error_log)
 			ShowWarning("npc_reload: %d npcs weren't removed at map %s!\n", map[m].npc_num, map[m].name);
 	}
+	mob_clear_spawninfo();
 
 	// anything else we should cleanup?
 	// Reloading npc's now
