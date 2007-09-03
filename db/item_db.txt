@@ -781,7 +781,7 @@
 1623,Mighty_Staff_C,Refined Mighty Staff,4,,10,700,165,,1,0,0x00818314,7,2,2,3,1,0,10,{ bonus bStr,10; bonus bInt,4; bonus bMatkRate,20; bonus bSPDrainValue,-1; },{},{}
 1624,Staff_of_Lich's_Skull,Staff of Lich's Skull,4,,10,800,60,,1,2,0x00018314,2,2,2,3,70,1,10,{ bonus bInt,1; bonus bDex,1; bonus bAtkEle,Ele_Undead; bonus bMatkRate,20; bonus2 bAddEffWhenHit,Eff_Curse,200+100*getRefine(); if(getRefine()>=9){ bonus bMatkRate,3; bonus bMaxSP,300; } },{},{}
 1625,Staff_of_Recovery,Staff of Recovery,4,,10,400,10,,1,0,0x00008110,7,2,2,3,55,1,10,{ bonus bAtkEle,Ele_Holy; bonus bMatkRate,15; bonus2 bSkillHeal,28,(getRefine()*15)/10+2*(getRefine()>9); bonus2 bSkillHeal,70,(getRefine()*15)/10+2*(getRefine()>9); },{},{}
-1626,Staff_of_Piercing,Staff of Piercing,4,,10,500,80,,1,0,0x00018314,2,2,2,3,70,1,10,{ bonus bInt,4; bonus bMatkRate,15; bonus2 bMagicAddRace,RC_NonBoss,10+getRefine(); bonus2 bMagicAddRace,RC_Boss,10+getRefine(); },{},{}
+1626,Staff_of_Piercing,Staff of Piercing,4,,10,500,80,,1,0,0x00018314,2,2,2,3,70,1,10,{ bonus bInt,4; bonus bMatkRate,15; bonus bIgnoreMdefRate,10+getRefine(); },{},{}
 // Bows
 1701,Bow,Bow,4,1000,,500,15,,5,3,0x000A0848,7,2,34,1,4,1,11,{},{},{}
 1702,Bow_,Bow,4,1000,,500,15,,5,4,0x000A0848,7,2,34,1,4,1,11,{},{},{}
@@ -1643,7 +1643,7 @@
 4349,Erend_Card,Errende Ebecee Card,6,,10,10,,,,,,,,136,,,,,{ bonus4 bAutoSpellWhenHit,25,1,50,0; },{},{}
 4350,Rawrel_Card,Laurell Weinder Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,88,3; bonus2 bSkillAtk,89,3; },{},{ heal 0,-50; }
 4351,Kavac_Card,Kavach Icarus Card,6,,10,10,,,,,,,,4,,,,,{ if(getrefine()<=4) { bonus bFlee,20; bonus bFlee2,1; } else { bonus bFlee,10; } },{},{}
-4352,B_Ygnizem_Card,General Egnigem Cenia Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMaxHPrate,10; bonus bMaxSPrate,10; },{},{}
+4352,B_Ygnizem_Card,General Egnigem Cenia Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMaxHPrate,10; bonus bMaxSPrate,10; bonus2 bHPRegenRate,50,10000; bonus2 bSPRegenRate,10,10000; },{},{}
 4353,Removal_Card,Remover Card,6,,10,10,,,,,,,,16,,,,,{ bonus bMaxHP,(800-(80*getrefine())); bonus bHPrecovRate,10; },{},{}
 4354,Gemini_Card,Gemini-S58 Card,6,,10,10,,,,,,,,769,,,,,{ if(readparam(bAgi)>=90) { bonus2 bResEff,Eff_Silence,3000; bonus2 bResEff,Eff_Stun,3000; } if(readparam(bVit)>=80) { bonus2 bResEff,Eff_Stone,5000; bonus2 bResEff,Eff_Sleep,5000; } },{},{}
 4355,Gremlin_Card,Gremlin Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12043,RC_Brute,300; },{},{}
@@ -1665,7 +1665,7 @@
 4371,Archdam_Card,Archdam Card,6,,10,10,,,,,,,,16,,,,,{ bonus bBaseAtk,10; bonus bCastrate,20; if(isequipped(4311,4319,4331)) { bonus bInt,1; bonus bStr,1; bonus bDef,2; bonus bSPrecovRate,10; bonus2 bSkillAtk,480,10; bonus2 bSkillAtk,368,10; bonus bCastrate,-10; if(BaseJob == Job_Crusader) { bonus bDefEle,Ele_Holy; } } },{},{}
 4372,Bacsojin_Card,Bacsojin Card,6,,10,10,,,,,,,,769,,,,,{ bonus2 bSkillHeal,28,30; bonus2 bSkillHeal,70,30; bonus2 bSkillHeal,231,30; bonus bUseSPrate,15; },{},{}
 4373,Chung_E_Card,Chung E Card,6,,10,10,,,,,,,,4,,,,,{ bonus bLuk,getrefine()-5; bonus bCritical,getrefine(); },{},{}
-4374,Apocalips_H_Card,Vesper Card,6,,10,10,,,,,,,,769,,,,,{ bonus bDex,2; bonus2 bMagicAddRace,RC_Boss,30; },{},{}
+4374,Apocalips_H_Card,Vesper Card,6,,10,10,,,,,,,,769,,,,,{ bonus bDex,2; bonus2 bIgnoreMdefRate,RC_Boss,30; },{},{}
 4375,Orc_Baby_Card,Orc Baby Card,6,,10,10,,,,,,,,4,,,,,{ if(getrefine()>=9) { bonus2 bSubEle,Ele_Neutral,15; bonus bFlee,15; } else { bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,10; } },{},{}
 4376,Lady_Tanee_Card,Lady Tanee Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMaxHPrate,-50; bonus bMaxSPrate,50; bonus2 bAddMonsterDropItem,513,500; bonus2 bAddItemHealRate,513,100; },{},{}
 4377,Green_Iguana_Card,Green Iguana Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12063,RC_Formless,300; },{},{}

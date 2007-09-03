@@ -8,13 +8,9 @@
 	1475 Equestrian's Spear:	NEED INFO.
 	13005 Angelic Wing Dagger:	NEED INFO.
 	-----
-	4352 B_Ygnizem_Card:		Recover 50 HP and 10 SP every 10 seconds
-	4374 Apocalips_H_Card:		Ignore 30% Mdef on Boss monsters
-	-----
 	Incomplete or missing bonuses:
 	1270 Drill_Katar:		Full strip target without applying "Stripped" status.
 	1535 Holgrehenn's_Hammer:	Breaking your own gear at low rate when compounded with Whitesmith_card
-	1626 Staff_of_Piercing:		Ignore 10% Mdef
 	2000 Staff_of_Destruction:	Reduce cast-time of Mystical Amplification by 50%
 
 	Missing Effects:
@@ -39,6 +35,7 @@
 
 ========================
 09/03
+	* Fixed Staff of Piercing, General Ygnigem Card and Vesper Card [Playtester]
 	* Fixed Zeny Knife, Strong Shield, Cramp Card, Drosera Card and Slow Potion [Playtester]
 08/31
 	* Rev. 11101 Implemented 12.1 cards to the best of my ability.  [L0ne_W0lf]

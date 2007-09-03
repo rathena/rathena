@@ -123,7 +123,7 @@ bonus2 bAddDamageClass,n,x;		In monster of class n the damage addition of x% (on
 bonus2 bAddMagicDamageClass,n,x;	In monster of class n in case of the magical damage addition and prayer of x% in n occupation the magical damage addition of x%
 bonus2 bAddDefClass,n,x;		In monster of class n the damage reduction of x% (only physical attack), in case of prayer in n occupation the damage reduction of x%
 bonus2 bAddMDefClass,n,x;		In monster of class n in case of the magical damage reduction and prayer of x% in n occupation the magical damage reduction of x%
-bonus2 bIgnoreMdefRate,n,x;	Disregard n% of the target's MDEF if the target belongs to race x;
+bonus2 bIgnoreMdefRate,n,x;		Disregard x% of the target's MDEF if the target belongs to race n;
 bonus2 bHPDrainRate,n,x;		it obtained to the enemy -- ? ME ? JI -- n/10 % probability -- x % -- HP -- absorption (+ n and x are carried out)
 bonus2 bSPDrainRate,n,x;		it obtained to the enemy -- ? ME ? JI -- n/10 % probability -- x % -- SP -- absorption (+ n and x are carried out)
 bonus2 bSPVanishRate,n,x;		Add the (n/10)% chance of decreasing enemy's SP (player) amount by x% when attacking
