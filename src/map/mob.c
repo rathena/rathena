@@ -2033,9 +2033,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				}
 			}
 			
-			// process script-granted zeny bonus (get_zeny_num per level +/-10%) [Skotlex]
+			// process script-granted zeny bonus (get_zeny_num) [Skotlex]
 			if(sd->get_zeny_num && rand()%100 < sd->get_zeny_rate)
-				pc_getzeny(sd,md->level*sd->get_zeny_num*(90+rand()%21)/100);
+			{
+				i = sd->get_zeny_num > 0?sd->get_zeny_num:-md->level*sd->get_zeny_num;
+				if (!i) i = 1;
+				pc_getzeny(sd, 1+rand()%i);
+			}
 		}
 		
 		// process items looted by the mob

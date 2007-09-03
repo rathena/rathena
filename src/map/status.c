@@ -384,7 +384,7 @@ void initChangeTables(void)
 	add_sc(NPC_MAGICMIRROR, SC_MAGICMIRROR);
 	set_sc(NPC_SLOWCAST, SC_SLOWCAST, SI_SLOWCAST, SCB_NONE);
 	set_sc(NPC_CRITICALWOUND, SC_CRITICALWOUND, SI_CRITICALWOUND, SCB_NONE);
-	set_sc(NPC_STONESKIN, SC_ARMORCHANGE, SI_BLANK, SCB_DEF|SCB_MDEF|SCB_DEF2|SCB_MDEF2);
+	set_sc(NPC_STONESKIN, SC_ARMORCHANGE, SI_BLANK, SCB_DEF|SCB_MDEF);
 	add_sc(NPC_ANTIMAGIC, SC_ARMORCHANGE);
 	add_sc(NPC_WIDECURSE, SC_CURSE);
 	add_sc(NPC_WIDESTUN, SC_STUN);
@@ -1657,6 +1657,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->magic_addsize)
 		+ sizeof(sd->critaddrace)
 		+ sizeof(sd->expaddrace)
+		+ sizeof(sd->ignore_mdef)
 		+ sizeof(sd->itemgrouphealrate)
 		+ sizeof(sd->sp_gain_race)
 		);
@@ -1697,6 +1698,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->skillatk)
 		+ sizeof(sd->skillheal)
 		+ sizeof(sd->skillblown)
+		+ sizeof(sd->skillcast)
 		+ sizeof(sd->add_def)
 		+ sizeof(sd->add_mdef)
 		+ sizeof(sd->add_dmg)
@@ -1734,8 +1736,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->break_weapon_rate)
 		+ sizeof(sd->break_armor_rate)
 		+ sizeof(sd->crit_atk_rate)
-		+ sizeof(sd->hp_loss_rate)
-		+ sizeof(sd->sp_loss_rate)
 		+ sizeof(sd->classchange)
 		+ sizeof(sd->speed_add_rate)
 		+ sizeof(sd->aspd_add)
@@ -1745,9 +1745,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->splash_range)
 		+ sizeof(sd->splash_add_range)
 		+ sizeof(sd->add_steal_rate)
-		+ sizeof(sd->hp_loss_value)
-		+ sizeof(sd->sp_loss_value)
-		+ sizeof(sd->hp_loss_type)
 		+ sizeof(sd->hp_gain_value)
 		+ sizeof(sd->sp_gain_value)
 		+ sizeof(sd->sp_vanish_rate)
@@ -3556,7 +3553,7 @@ static signed char status_calc_def(struct block_list *bl, struct status_change *
 	if(sc->data[SC_STEELBODY].timer!=-1)
 		return 90;
 	if(sc->data[SC_ARMORCHANGE].timer!=-1)
-		def += def * sc->data[SC_ARMORCHANGE].val2/100;
+		def += sc->data[SC_ARMORCHANGE].val2;
 	if(sc->data[SC_DRUMBATTLE].timer!=-1)
 		def += sc->data[SC_DRUMBATTLE].val3;
 	if(sc->data[SC_DEFENCE].timer != -1)	//[orn]
@@ -3592,8 +3589,6 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		return 0;
 	if(sc->data[SC_ETERNALCHAOS].timer!=-1)
 		return 0;
-	if(sc->data[SC_ARMORCHANGE].timer!=-1)
-		def2 += def2 * sc->data[SC_ARMORCHANGE].val2/100;
 	if(sc->data[SC_SUN_COMFORT].timer!=-1)
 		def2 += sc->data[SC_SUN_COMFORT].val2;
 	if(sc->data[SC_ANGELUS].timer!=-1)
@@ -3633,7 +3628,7 @@ static signed char status_calc_mdef(struct block_list *bl, struct status_change 
 	if(sc->data[SC_SKA].timer != -1) // [marquis007]
 		return 90;
 	if(sc->data[SC_ARMORCHANGE].timer!=-1)
-		mdef += mdef * sc->data[SC_ARMORCHANGE].val3/100;
+		mdef += sc->data[SC_ARMORCHANGE].val3;
 	if(sc->data[SC_STONE].timer!=-1 && sc->opt1 == OPT1_STONE)
 		mdef += 25*mdef/100;
 	if(sc->data[SC_FREEZE].timer!=-1)
@@ -3651,8 +3646,6 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 
 	if(sc->data[SC_BERSERK].timer!=-1)
 		return 0;
-	if(sc->data[SC_ARMORCHANGE].timer!=-1)
-		mdef2 += mdef2 * sc->data[SC_ARMORCHANGE].val3/100;
 	if(sc->data[SC_MINDBREAKER].timer!=-1)
 		mdef2 -= mdef2 * sc->data[SC_MINDBREAKER].val3/100;
 
@@ -4466,6 +4459,10 @@ int status_get_sc_def(struct block_list *bl, int type, int rate, int tick, int f
 			tick /= 5;
 		sc_def = status->agi;
 		break;
+	case SC_ARMORCHANGE:
+		if (sd) //Duration greatly reduced for players.
+			tick /= 15;
+		//No defense against it.
 	default:
 		//Effect that cannot be reduced? Likely a buff.
 		if (!(rand()%10000 < rate))
@@ -4711,6 +4708,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			}
 			if (!opt_flag) return 0;
 		}
+		if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
 		break;
 	case SC_STRIPSHIELD:
 		if (sd) {
@@ -4723,6 +4721,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				return 0;
 			pc_unequipitem(sd,i,3);
 		}
+		if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
 		break;
 	case SC_STRIPARMOR:
 		if (sd) {
@@ -4734,6 +4733,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				return 0;
 			pc_unequipitem(sd,i,3);
 		}
+		if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
 		break;
 	case SC_STRIPHELM:
 		if (sd) {
@@ -4745,6 +4745,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				return 0;
 			pc_unequipitem(sd,i,3);
 		}
+		if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
 		break;
 	}
 
@@ -7132,8 +7133,8 @@ static int status_natural_heal(DBKey key,void * data,va_list ap)
 	))
 		flag=0;
 
-	if (sd && (sd->hp_loss_value > 0 || sd->sp_loss_value > 0))
-		pc_bleeding(sd, natural_heal_diff_tick);
+	if (sd && (sd->hp_loss.value || sd->sp_loss.value))
+			pc_bleeding(sd, natural_heal_diff_tick);
 
 	if(flag&(RGN_SHP|RGN_SSP) && regen->ssregen &&
 		(vd = status_get_viewdata(bl)) && vd->dead_sit == 2)
@@ -7235,6 +7236,10 @@ static int status_natural_heal(DBKey key,void * data,va_list ap)
 				flag&=~RGN_SSP; //full.
 		}
 	}
+
+	//Bonus skill-like regen
+	if (sd && (sd->hp_regen.value || sd->sp_regen.value))
+		pc_regen(sd, natural_heal_diff_tick, (flag&RGN_SHP?1:0)|(flag&RGN_SSP?2:0));
 
 	if (!regen->sregen)
 		return flag;

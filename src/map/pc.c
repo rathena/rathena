@@ -1632,6 +1632,12 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 		if(sd->state.lr_flag != 2)
 			sd->misc_def_rate += val;
 		break;
+	case SP_IGNORE_MDEF_RATE:
+		if(sd->state.lr_flag != 2) {
+			sd->ignore_mdef[RC_NONBOSS] += val;
+			sd->ignore_mdef[RC_BOSS] += val;
+		}
+		break;
 	case SP_IGNORE_MDEF_ELE:
 		if(val >= ELE_MAX) {
 			if(battle_config.error_log)
@@ -2203,7 +2209,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 		if(sd->state.lr_flag != 2)
-			pc_bonus_addeff(sd->addeff2, MAX_PC_BONUS, type2, val, 0,
+			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), type2, val, 0,
 				ATF_SHORT|ATF_TARGET);
 		break;
 	case SP_SKILL_ATK:
@@ -2239,21 +2245,39 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 		break;
 	case SP_ADD_SKILL_BLOW:
-		for (i = 0; i < MAX_PC_BONUS && sd->skillblown[i].id != 0 && sd->skillblown[i].id != type2; i++);
-		if (i == MAX_PC_BONUS)
+		if(sd->state.lr_flag == 2)
+			break;
+		for (i = 0; i < ARRAYLENGTH(sd->skillblown) && sd->skillblown[i].id && sd->skillblown[i].id != type2; i++);
+		if (i == ARRAYLENGTH(sd->skillblown))
 		{	//Better mention this so the array length can be updated. [Skotlex]
-			ShowDebug("run_script: bonus2 bSkillBlown reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowDebug("run_script: bonus2 bSkillBlown reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillblown), type2, val);
 			break;
 		}
-		if(sd->state.lr_flag != 2) {
-			if (sd->skillblown[i].id == type2)
-				sd->skillblown[i].val += val;
-			else {
-				sd->skillblown[i].id = type2;
-				sd->skillblown[i].val = val;
-			}
+		if(sd->skillblown[i].id == type2)
+			sd->skillblown[i].val += val;
+		else {
+			sd->skillblown[i].id = type2;
+			sd->skillblown[i].val = val;
 		}
 		break;
+
+	case SP_CASTRATE:
+		if(sd->state.lr_flag == 2)
+			break;
+		for (i = 0; i < ARRAYLENGTH(sd->skillcast) && sd->skillcast[i].id && sd->skillblown[i].id != type2; i++);
+		if (i == ARRAYLENGTH(sd->skillcast))
+		{	//Better mention this so the array length can be updated. [Skotlex]
+			ShowDebug("run_script: bonus2 bCastRate reached it's limit (%d skills per character), bonus skill %d (+%d%%) lost.\n", ARRAYLENGTH(sd->skillcast), type2, val);
+			break;
+		}
+		if(sd->skillcast[i].id == type2)
+			sd->skillcast[i].val += val;
+		else {
+			sd->skillcast[i].id = type2;
+			sd->skillcast[i].val = val;
+		}
+		break;
+
 	case SP_ADD_DAMAGE_BY_CLASS:
 		if(sd->state.lr_flag != 2) {
 			for(i=0;i<sd->add_dmg_count;i++) {
@@ -2271,8 +2295,14 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	case SP_HP_LOSS_RATE:
 		if(sd->state.lr_flag != 2) {
-			sd->hp_loss_value = type2;
-			sd->hp_loss_rate = val;
+			sd->hp_loss.value = type2;
+			sd->hp_loss.rate = val;
+		}
+		break;
+	case SP_HP_REGEN_RATE:
+		if(sd->state.lr_flag != 2) {
+			sd->hp_regen.value = type2;
+			sd->hp_regen.rate = val;
 		}
 		break;
 	case SP_ADDRACE2:
@@ -2325,8 +2355,14 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	case SP_SP_LOSS_RATE:
 		if(sd->state.lr_flag != 2) {
-			sd->sp_loss_value = type2;
-			sd->sp_loss_rate = val;
+			sd->sp_loss.value = type2;
+			sd->sp_loss.rate = val;
+		}
+		break;
+	case SP_SP_REGEN_RATE:
+		if(sd->state.lr_flag != 2) {
+			sd->sp_regen.value = type2;
+			sd->sp_regen.rate = val;
 		}
 		break;
 	case SP_HP_DRAIN_VALUE_RACE:
@@ -2344,6 +2380,10 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		else if(sd->state.lr_flag == 1) {
 			sd->left_weapon.sp_drain[type2].value += val;
 		}
+		break;
+	case SP_IGNORE_MDEF_RATE:
+		if(sd->state.lr_flag != 2)
+			sd->ignore_mdef[type2] += val;
 		break;
 
 	default:
@@ -2370,13 +2410,6 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 	case SP_AUTOSPELL_WHENHIT:
 		if(sd->state.lr_flag != 2)
 			pc_bonus_autospell(sd->autospell2, MAX_PC_BONUS, skill_get_inf(type2)&INF_SELF_SKILL?-type2:type2, type3, val, 0, current_equip_card_id);
-		break;
-	case SP_HP_LOSS_RATE:
-		if(sd->state.lr_flag != 2) {
-			sd->hp_loss_value = type2;
-			sd->hp_loss_rate = type3;
-			sd->hp_loss_type = val;
-		}
 		break;
 	case SP_SP_DRAIN_RATE:
 		if(!sd->state.lr_flag) {
@@ -4919,7 +4952,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if (sd->menuskill_id)
 		sd->menuskill_id = sd->menuskill_val = 0;
 	//Reset ticks.
-	sd->hp_loss_tick = sd->sp_loss_tick = 0;
+	sd->hp_loss.tick = sd->sp_loss.tick = sd->hp_regen.tick = sd->sp_regen.tick = 0;
 
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",++sd->die_counter);
 
@@ -6828,30 +6861,53 @@ void pc_bleeding (struct map_session_data *sd, unsigned int diff_tick)
 {
 	int hp = 0, sp = 0;
 
-	if (sd->hp_loss_value > 0) {
-		sd->hp_loss_tick += diff_tick;
-		if (sd->hp_loss_tick >= sd->hp_loss_rate) {
-			do {
-				hp += sd->hp_loss_value;
-				sd->hp_loss_tick -= sd->hp_loss_rate;
-			} while (sd->hp_loss_tick >= sd->hp_loss_rate);
-			sd->hp_loss_tick = 0;
+	if (sd->hp_loss.value) {
+		sd->hp_loss.tick += diff_tick;
+		while (sd->hp_loss.tick >= sd->hp_loss.rate) {
+			hp += sd->hp_loss.value;
+			sd->hp_loss.tick -= sd->hp_loss.rate;
 		}
 	}
 	
-	if (sd->sp_loss_value > 0) {
-		sd->sp_loss_tick += diff_tick;
-		if (sd->sp_loss_tick >= sd->sp_loss_rate) {
-			do {
-				sp += sd->sp_loss_value;
-				sd->sp_loss_tick -= sd->sp_loss_rate;
-			} while (sd->sp_loss_tick >= sd->sp_loss_rate);
-			sd->sp_loss_tick = 0;
+	if (sd->sp_loss.value) {
+		sd->sp_loss.tick += diff_tick;
+		while (sd->sp_loss.tick >= sd->sp_loss.rate) {
+			sp += sd->sp_loss.value;
+			sd->sp_loss.tick -= sd->sp_loss.rate;
 		}
 	}
 
 	if (hp > 0 || sp > 0)
 		status_zap(&sd->bl, hp, sp);
+
+	return;
+}
+
+//Character regen. Flag is used to know which types of regen can take place.
+//&1: HP regen
+//&2: SP regen
+void pc_regen (struct map_session_data *sd, unsigned int diff_tick, int flag)
+{
+	int hp = 0, sp = 0;
+
+	if (sd->hp_regen.value && flag&1) {
+		sd->hp_regen.tick += diff_tick;
+		while (sd->hp_regen.tick >= sd->hp_regen.rate) {
+			hp += sd->hp_regen.value;
+			sd->hp_regen.tick -= sd->hp_regen.rate;
+		}
+	}
+	
+	if (sd->sp_regen.value && flag&2) {
+		sd->sp_regen.tick += diff_tick;
+		while (sd->sp_regen.tick >= sd->sp_regen.rate) {
+			sp += sd->sp_regen.value;
+			sd->sp_regen.tick -= sd->sp_regen.rate;
+		}
+	}
+
+	if (hp > 0 || sp > 0)
+		status_heal(&sd->bl, hp, sp, 2);
 
 	return;
 }

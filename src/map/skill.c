@@ -4604,8 +4604,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			type = EQP_WEAPON|EQP_SHIELD|EQP_ARMOR|EQP_HELM;
 			break;
 		}
+		//Note that autospells don't use a duration
 		if (!clif_skill_nodamage(src,bl,skillid,skilllv,
-				skill_strip_equip(bl, type, i, skilllv, skill_get_time(skillid,skilllv)))
+				skill_strip_equip(bl, type, i, skilllv, 
+				sd&&!pc_checkskill(sd, skillid)?0:skill_get_time(skillid,skilllv)))
 			&& sd)
 			clif_skill_fail(sd,skillid,0,0); //Nothing stripped.
 		break;
@@ -8789,10 +8791,20 @@ int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
 	}
 
 	// calculate cast time reduced by item/card bonuses
-	if (!(skill_get_castnodex(skill_id, skill_lv)&4))
-		if (sd && sd->castrate != 100)
+	if (!(skill_get_castnodex(skill_id, skill_lv)&4) && sd)
+	{
+		int i;
+		if (sd->castrate != 100)
 			time = time * sd->castrate / 100;
-
+		for(i = 0; i < ARRAYLENGTH(sd->skillcast) && sd->skillcast[i].id; i++)
+		{
+			if (sd->skillcast[i].id == skill_id)
+			{
+				time+= time * sd->skillcast[i].val / 100;
+				break;
+			}
+		}
+	}
 	// config cast time multiplier
 	if (battle_config.cast_rate != 100)
 		time = time * battle_config.cast_rate / 100;

@@ -62,8 +62,6 @@ bonus bDoubleRate,n;			Double Attack probability n% (works with all weapons | on
 bonus bDoubleAddRate,n;			Double Attack probability + n% (works with all weapons)
 bonus bPerfectHitRate,n;		On-target impact attack probability n% (only the highest among all is applied)
 bonus bPerfectHitAddRate,n;		On-target impact attack probability + n%
-bonus bGetZenyNum,n;			When killing the monster with physical attack, rand () ?? of %n+1 is obtained, (only the highest among all is applied)
-bonus bAddGetZenyNum,n;			When killing the monster with physical attack, rand () ?? of %n+1 is obtained, (n is done +)
 bonus bCriticalDef,n;			Critical ? and others the trap it is, probability + n%
 bonus bNearAtkDef,n;			Adds n% damage reduction against melee physical attacks
 bonus bLongAtkDef,n;			Adds n% damage reduction against ranged physical attacks
@@ -77,6 +75,7 @@ bonus bIgnoreMDefRace;			Disregard MDEF against enemies of race n
 							n: 0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect, 5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 10=Boss monster, 11=Other than (normal monster) boss monster
 bonus bIgnoreMDefEle;			Disregard MDEF against enemies of element n
 							n: 0=Neutral, 1=Water, 2=Earth, 3=Fire, 4=Wind, 5=Poison, 6=Holy, 7=Dark, 8=Spirit, 9=Undead
+bonus bIgnoreMdefRate,n;		Disregard n% of the target's MDEF
 bonus bDefRatioAtkRace,n;		n race if defensive power is high the high extent big damage is given, (defense disregard) :
 							n: 0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect, 5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 10=Boss monster, 11=Other than (normal monster) boss monster
 bonus bDefRatioAtkEle,n;		n attribute if defensive power is high the high extent big damage is given, (defense disregard) :
@@ -101,6 +100,7 @@ bonus2 bAddEff,e,x;			Adds a x/10000 chance to cause effect e to the target when
 							e: Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence, Eff_Stan, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
 bonus2 bResEff,e,x;			Adds a x/10000 tolerance to effect e (e.g. x=100 makes 1% tolerance, x=10000 makes 100% tolerance, etc)
 							e: Eff_Blind, Eff_Sleep, Eff_Poison, Eff_Freeze, Eff_Silence, Eff_Stan, Eff_Curse, Eff_Confusion, Eff_Stone, Eff_Bleeding
+bonus2 bCastrate,n,x;			Adjust casting time of skill n by x%
 bonus2 bAddSize,n,x;			In n size the damage addition of x%
 							n: 0=Small  1=Medium  2=Large
 bonus2 bMagicAddSize,n,x;		In n size the magic damage addition of x%
@@ -123,12 +123,17 @@ bonus2 bAddDamageClass,n,x;		In monster of class n the damage addition of x% (on
 bonus2 bAddMagicDamageClass,n,x;	In monster of class n in case of the magical damage addition and prayer of x% in n occupation the magical damage addition of x%
 bonus2 bAddDefClass,n,x;		In monster of class n the damage reduction of x% (only physical attack), in case of prayer in n occupation the damage reduction of x%
 bonus2 bAddMDefClass,n,x;		In monster of class n in case of the magical damage reduction and prayer of x% in n occupation the magical damage reduction of x%
+bonus2 bIgnoreMdefRate,n,x;	Disregard n% of the target's MDEF if the target belongs to race x;
 bonus2 bHPDrainRate,n,x;		it obtained to the enemy -- ? ME ? JI -- n/10 % probability -- x % -- HP -- absorption (+ n and x are carried out)
 bonus2 bSPDrainRate,n,x;		it obtained to the enemy -- ? ME ? JI -- n/10 % probability -- x % -- SP -- absorption (+ n and x are carried out)
 bonus2 bSPVanishRate,n,x;		Add the (n/10)% chance of decreasing enemy's SP (player) amount by x% when attacking
 bonus2 bAddMonsterDropItem,n,x;		When killing any monsters with physical attack, the probability which drops item n +x% (the item which the monster drops unrelated ones)
 									if 'x' is negative value, then it's a part of formula
 										chance = -x*(killed_mob_level/10)+1
+bonus2 bGetZenyNum,n,x;			When killing a monster, there is a x% chance of gaining 1~n zeny (only the highest among all is applied). If n < 0, the max zeny to gain is -n*monster level.
+bonus2 bAddGetZenyNum,n,x;		Same as bGetZenyNum, but the rates and zeny to gain stack.
+gaining
+
 bonus3 bAddMonsterDropItem,n,x,y;	When killing monsters from race x with physical attack, the probability which drops item n +y% (the item which the monster drops unrelated ones)
 						0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect, 5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 10=Boss monster, 11=Other than (normal monster) boss monster
 									if 'x' is negative value, then it's a part of formula
@@ -156,6 +161,7 @@ bonus bIgnoreDefMob,n;			Ignore monster's DEF when attacking.
 bonus bDamageWhenUnequip,n;		You lose n HP when the item is unequipped
 bonus2 bCriticalAddRace,n,r;		Critical + n vs. enemies of race r
 					r: 0=Formless, 1=Undead, 2=Brute, 3=Plant, 4=Insect, 5=Fish, 6=Demon, 7=Demi-Human, 8=Angel, 9=Dragon, 10=Boss monster, 11=Other than (normal monster) boss monster
+bonus2 bHPRegenRate,n,x;		Gain n HP every x milliseconds
 bonus2 bHPLossRate,n,x;			Lose n HP every x milliseconds
 bonus2 bAddEffWhenHit,n,x;		n% chance to cause x state to the enemy when
 					being hit by physical damage
@@ -167,7 +173,6 @@ bonus2 bAddDamageByClass,n,x;		When being hit by monster of class n increase
 					damage taken by x%
 bonus2 bAddRace2,n,x;			Increase damage by x% vs. enemies of race n
 					(Check db/mob_race2_db.txt)
-bonus3 bHPLossRate,n,x,y;		Lose n amount of hp every x amount of time
 					y: 0=Don't show damage 1=Show damage
 bonus3 bAutoSpellWhenHit,x,y,n;		n/10% chance to cast skill x of level y on
 					attacker (except if it is a self-skill) when being hit by a
@@ -236,6 +241,7 @@ bonus2 bAddItemHealRate,n,x;		Increases HP recovered by n type items by x%,
 
 bonus bLoseSPWhenUnequip,n;		Lose n SP when the item is unequipped
 
+bonus2 bSPRegenRate,n,x;		Gain n SP every x milliseconds
 bonus2 bSPLossRate,n,x;			Lose n SP every x milliseconds
 bonus2 bExpAddRace,n,x;			Increase exp gained by x% vs. enemies of race n
 bonus2 bSPGainRace,n,x;			When killing a monster of race n by physical

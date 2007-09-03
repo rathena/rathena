@@ -305,7 +305,7 @@ bIgnoreDefEle	1026
 bIgnoreDefRace	1027
 bAtkRate	1028
 bSpeedAddRate	1029
-
+bSPRegenRate	1030
 bMagicAtkDef	1031
 bMiscAtkDef	1032
 bIgnoreMdefEle	1033
@@ -361,6 +361,7 @@ bWeaponAtkRate	1082
 bDelayrate	1083
 bHPDrainRateRace	1084
 bSPDrainRateRace	1085
+bIgnoreMdefRate	1086
 
 bRestartFullRecover	2000
 bNoCastCancel	2001
@@ -370,7 +371,6 @@ bNoWeaponDamage	2004
 bNoGemStone	2005
 bNoCastCancel2	2006
 bNoMiscDamage	2007
-
 bUnbreakableWeapon	2008
 bUnbreakableArmor	2009
 bUnbreakableHelm	2010
@@ -385,7 +385,7 @@ bSkillAtk	2018
 bUnstripable	2019
 bAddDamageByClass	2020
 bSPGainValue	2021
-
+bHPRegenRate	2022
 bHPLossRate	2023
 bAddRace2	2024
 bHPGainValue	2025

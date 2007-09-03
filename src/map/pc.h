@@ -264,6 +264,7 @@ struct map_session_data *pc_get_mother(struct map_session_data *sd);
 struct map_session_data *pc_get_child(struct map_session_data *sd);
 
 void pc_bleeding (struct map_session_data *sd, unsigned int diff_tick);
+void pc_regen (struct map_session_data *sd, unsigned int diff_tick, int flag);
 
 int pc_set_gm_level(int account_id, int level);
 void pc_setstand(struct map_session_data *sd);

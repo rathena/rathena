@@ -3,6 +3,28 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/09/03
+	* Added bonuses bSPRegenRate, bHPRegenRate. They behave like the opposite
+	  of bHPLossRate/bSPLossRate, making you gain x Hp/Sp every y ms.
+	* Added bonus bIgnoreMdefRate, used to ignore a % of the target's mdef when
+	  using magic attacks (bonus2 will ignore part of the mdef of all targets,
+	  bonus3 receives a race argument)
+	* You can now use bonus2 bCastRate to adjust the cast rate of a single
+	  skill.
+	* Cleaned the code for bleeding (hp-loss) and extended it to handle regen
+	  as well.
+	* Some small cleanups in the pc_bonus functions.
+	* Removed bonus3 bHpLossRate since it was doing nothing and is not used.
+	* Corrected bGetZeny bonus to be like in Aegis. The amount received is from
+	  1 to the given amount, you can use negative zeny values to use an amount
+	  dependant on mob's level (amount*lv).
+	* Updated doc/item_bonus.txt with all these changes.
+	* Anti-Magic/Stone-Skin now increase/decrease def/mdef only and in an
+	  absolute mode (+20*lv rather than +20%*lv). Also the duration is greatly
+	  decreased (x/15) when used on players.
+	* Now when a player uses a strip skill without having it in the skill tree
+	  (auto-casted) the duration will be 0, the equipment will be stripped
+	  without causing the status change that blocks reequipping.
 2007/09/02
 	* Added @whereis command (displays normal spawn maps for given mobs).
 	  Defaults to a lv10 command. [Skotlex]
