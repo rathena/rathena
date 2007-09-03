@@ -911,7 +911,7 @@
 1973,Foot_of_the_Sea_Witch,Foot of the Sea Witch,4,,10,1500,110,,2,1,0x00080000,2,0,2,4,70,1,14,{ bonus bSPGainValue,5; bonus4 bAutoSpellWhenHit,88,2,50,0; bonus3 bAutoSpell,663,1,10; },{},{}
 1974,Carrot_Whip,Carrot Whip,4,,10,1300,185,,2,0,0x00080000,2,0,2,4,70,1,14,{ if (getRefine() > 0) { bonus4 bAutoSpell,29,getRefine(),10,0; } },{},{}
 // Additional 2-Handed Staffs
-2000,Staff_of_Destruction,Staff of Destruction,4,,10,2500,130,,1,1,0x00000200,7,2,34,4,80,1,10,{ bonus bMatkRate,25; bonus bInt,3; bonus bAgi,10; bonus bUseSPrate,getRefine(); bonus3 bAutoSpellWhenHit,84,5,getRefine()*10; bonus bMatkRate,getRefine()/2; },{},{}
+2000,Staff_of_Destruction,Staff of Destruction,4,,10,2500,130,,1,1,0x00000200,7,2,34,4,80,1,10,{ bonus bMatkRate,25; bonus bInt,3; bonus bAgi,10; bonus bUseSPrate,getRefine(); bonus3 bAutoSpellWhenHit,84,5,getRefine()*10; bonus bMatkRate,getRefine()/2; bonus2 bCastrate,366,-50; },{},{}
 2001,Divine_Cross,Divine Cross,4,,10,1500,120,,1,0,0x00008100,7,2,34,4,70,1,10,{ bonus bMatkRate,15; bonus bDex,4; bonus2 bSubRace,RC_Demon,15; bonus2 bSubRace,RC_Undead,15; if (isequipped(2677)) { bonus bMatkRate,10; bonus bdex,2; bonus2 bSubRace,RC_Demon,10; bonus2 bSubRace,RC_Undead,10; bonus bAtkEle,Ele_Holy; }; },{},{}
 // Shields
 //===================================================================
@@ -1707,7 +1707,7 @@
 4413,Hodremlin_Card,Hodremlin_Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubSize,0,15; bonus2 bSubSize,1,15; bonus2 bSubSize,2,15; },{},{}
 4414,Seeker_Card,Seeker_Card,6,,10,10,,,,,,,,32,,,,,{ skill 16,1; bonus2 bResEff,Eff_Stone,3000; bonus bMdef,10; },{},{}
 4415,Snowier_Card,Snowier_Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItem,536,200; bonus2 bAddItemHealRate,536,100; },{},{}
-4416,Siroma_Card,Siroma_Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bSkillAtk,14,25; },{},{}
+4416,Siroma_Card,Siroma_Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bSkillAtk,14,25; bonus2 bCastrate,14,-25; },{},{}
 4417,Ice_Titan_Card,Ice_Titan_Card,6,,10,10,,,,,,,,64,,,,,{ bonus bVit,2; },{},{}
 4418,Gazeti_Card,Gazeti_Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,14,2,10; },{},{}
 4419,Ktullanux_Card,Ktullanux_Card,6,,10,10,,,,,,,,16,,,,,{  bonus2 bAddEle,Ele_Fire,50; bonus5 bAutoSpellWhenHit,88,10,30,BF_WEAPON|BF_MAGIC,0; },{},{}
@@ -1724,14 +1724,14 @@
 4430,Ifrit_Card,Ifrit_Card,6,,10,10,,,,,,,,136,,,,,{ bonus bAtk,(JobLevel/7); bonus bCritical,(JobLevel/7); bonus bHit,(JobLevel/7); bonus4 bAutoSpellWhenHit,653,2,10,0; },{},{}
 4431,Kasa_Card,Kasa_Card,6,,10,10,,,,,,,,4,,,,,{ bonus3 bAutoSpell,17,5,10; bonus3 bAutoSpell,19,5,10; },{},{}
 4432,Magmaring_Card,Magmaring_Card,6,,10,10,,,,,,,,4,,,,,{ bonus bAtk,5; bonus2 bAddEle,Ele_Earth,10; bonus2 bCriticalAddRace,RC_Brute,15; },{},{}
-4433,Imp_Card,Imp_Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bSkillAtk,19,25; },{},{}
+4433,Imp_Card,Imp_Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bSkillAtk,19,25; bonus2 bCastrate,19,-25; },{},{}
 4434,Knocker_Card,Knocker_Card,6,,10,10,,,,,,,,769,,,,,{ bonus2 bAddRace,RC_Formless,5; bonus3 bAddMonsterDropItem,756,RC_Formless,300; bonus3 bAddMonsterDropItem,757,RC_Formless,300; },{},{}
 4435,Zombie_Slaughter_Card,Zombie_Slaughter_Card,6,,10,10,,,,,,,,64,,,,,{ bonus2 bAddRace,RC_DemiHuman,1; bonus2 bMagicAddRace,DemiHuman,1; bonus bHPGainValue,50;  if(isequipped(4435)) bonus bSPGainValue,2; },{},{}
 4436,Ragged_Zombie_Card,Ragged_Zombie_Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bCriticalAddRace,RC_DemiHuman,5; bonus2 bAddRace,RC_DemiHuman,1; bonus2 bMagicAddRace,DemiHuman,1; bonus2 bAddEff2,Eff_Bleeding,50; },{},{}
 4437,Hell_Poodle_Card,Hell_Poodle_Card,6,,10,10,,,,,,,,136,,,,,{ bonus bHit,1; bonus2 bAddItemHealRate,517,100; bonus2 bAddEff,Eff_Bleeding,100; },{},{}
 4438,Banshee_Card,Banshee_Card,6,,10,10,,,,,,,,769,,,,,{ if (BaseClass == Job_Mage) { bonus bMaxSP,100; bonus bMaxHP,-100; bonus2 bSkillAtk,11,20; bonus2 bSkillAtk,13,20; bonus2 bSkillAtk,400,20; },},{}
 4439,Flame_Skull_Card,Flame_Skull_Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bResEff,Eff_Blind,3000; bonus2 bResEff,Eff_Stun,3000; bonus2 bResEff,Eff_Curse,3000; bonus2 bResEff,Eff_Stone,3000; bonus2 bAddEffWhenHit,Eff_Blind,100; bonus2 bAddEffWhenHit,Eff_Stun,100; bonus2 bAddEffWhenHit,Eff_Curse,100; bonus2 bAddEffWhenHit,Eff_Stone,100; },{},{}
-4440,Necromancer_Card,Necromancer_Card,6,,10,10,,,,,,,,2,,,,,{ if (getiteminfo(getequipid(4),11) == 10) { bonus bInt,1; bonus2 bMagicAddRace,RC_NonBoss,2; bonus2 bMagicAddRace,RC_Boss,2; } },{},{}
+4440,Necromancer_Card,Necromancer_Card,6,,10,10,,,,,,,,2,,,,,{ if (getiteminfo(getequipid(4),11) == 10) { bonus bInt,1; bonus bIgnoreMdefRate,2; } },{},{}
 4441,Fallen_Bishop_Hibram_Card,Fallen_Bishop_Hibram_Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMAtkRate,10; bonus bMaxSPrate,-50; bonus2 bAddRace,RC_Angel,50; bonus2 bAddRace,RC_DemiHuman,50; },{},{}
 // More Headgears
 //===================================================================

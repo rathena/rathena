@@ -9,9 +9,7 @@
 	13005 Angelic Wing Dagger:	NEED INFO.
 	-----
 	Incomplete or missing bonuses:
-	1270 Drill_Katar:		Full strip target without applying "Stripped" status.
 	1535 Holgrehenn's_Hammer:	Breaking your own gear at low rate when compounded with Whitesmith_card
-	2000 Staff_of_Destruction:	Reduce cast-time of Mystical Amplification by 50%
 
 	Missing Effects:
 	12209 Life_Insurrance:		No EXP penalty on death (Recommend constant: SC_NoPenelty - Has status icon)
@@ -28,13 +26,14 @@
 	4411 Vanberk_Card 		Small chance that for 5 seconds you gain 100 crit while attacking.
 	4412 Isilla_Card		Small chance that for 5 seconds your Cast Time will decrease by 50% and gain 30 flee while attacking.
 	4413 Hodremlin_Card		Small chance that for 10 seconds you gain 30 Perfect Dodge when attacked.
-	4416 Siroma_Card		Decreases cast time of skill 'cold bolt' by 25%.
 	4417 Ice_Titan_Card		Chance that for 10 seconds you'll gain 10 Armor Defence while taking magic or physical damage.
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
-	4433 Imp_Card			Decreases cast time of skill 'fire bolt' by 25%.
 
 ========================
 09/03
+	* Updated Staff of Destruction, Siroma Card and Imp Card [Playtester]
+	- also fixed duration of Antimagic and Stoneskin
+	- please report any bugs you find with all the new equips
 	* Fixed Staff of Piercing, General Ygnigem Card and Vesper Card [Playtester]
 	* Fixed Zeny Knife, Strong Shield, Cramp Card, Drosera Card and Slow Potion [Playtester]
 08/31
