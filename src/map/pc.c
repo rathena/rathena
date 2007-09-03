@@ -6886,11 +6886,11 @@ void pc_bleeding (struct map_session_data *sd, unsigned int diff_tick)
 //Character regen. Flag is used to know which types of regen can take place.
 //&1: HP regen
 //&2: SP regen
-void pc_regen (struct map_session_data *sd, unsigned int diff_tick, int flag)
+void pc_regen (struct map_session_data *sd, unsigned int diff_tick)
 {
 	int hp = 0, sp = 0;
 
-	if (sd->hp_regen.value && flag&1) {
+	if (sd->hp_regen.value) {
 		sd->hp_regen.tick += diff_tick;
 		while (sd->hp_regen.tick >= sd->hp_regen.rate) {
 			hp += sd->hp_regen.value;
@@ -6898,7 +6898,7 @@ void pc_regen (struct map_session_data *sd, unsigned int diff_tick, int flag)
 		}
 	}
 	
-	if (sd->sp_regen.value && flag&2) {
+	if (sd->sp_regen.value) {
 		sd->sp_regen.tick += diff_tick;
 		while (sd->sp_regen.tick >= sd->sp_regen.rate) {
 			sp += sd->sp_regen.value;
@@ -6907,7 +6907,7 @@ void pc_regen (struct map_session_data *sd, unsigned int diff_tick, int flag)
 	}
 
 	if (hp > 0 || sp > 0)
-		status_heal(&sd->bl, hp, sp, 2);
+		status_heal(&sd->bl, hp, sp, 0);
 
 	return;
 }

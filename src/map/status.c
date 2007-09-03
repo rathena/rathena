@@ -7133,8 +7133,12 @@ static int status_natural_heal(DBKey key,void * data,va_list ap)
 	))
 		flag=0;
 
-	if (sd && (sd->hp_loss.value || sd->sp_loss.value))
+	if (sd) {
+		if (sd->hp_loss.value || sd->sp_loss.value)
 			pc_bleeding(sd, natural_heal_diff_tick);
+		if (sd->hp_regen.value || sd->sp_regen.value)
+			pc_regen(sd, natural_heal_diff_tick);
+	}
 
 	if(flag&(RGN_SHP|RGN_SSP) && regen->ssregen &&
 		(vd = status_get_viewdata(bl)) && vd->dead_sit == 2)
@@ -7236,10 +7240,6 @@ static int status_natural_heal(DBKey key,void * data,va_list ap)
 				flag&=~RGN_SSP; //full.
 		}
 	}
-
-	//Bonus skill-like regen
-	if (sd && (sd->hp_regen.value || sd->sp_regen.value))
-		pc_regen(sd, natural_heal_diff_tick, (flag&RGN_SHP?1:0)|(flag&RGN_SSP?2:0));
 
 	if (!regen->sregen)
 		return flag;
