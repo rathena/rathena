@@ -425,9 +425,9 @@ struct weapon_data {
 		unsigned type:1;
 	} hp_drain[RC_MAX], sp_drain[RC_MAX];
 
-	short add_damage_classid[MAX_PC_BONUS];
-	int add_damage_classrate[MAX_PC_BONUS];
-	int add_damage_class_count;
+	struct {
+		short class_, rate;
+	}	add_dmg[MAX_PC_BONUS];
 };
 
 struct view_data {
@@ -683,7 +683,7 @@ struct map_session_data {
 	struct {
 		short class_, rate;
 	}	add_def[MAX_PC_BONUS], add_mdef[MAX_PC_BONUS],
-		add_dmg[MAX_PC_BONUS], add_mdmg[MAX_PC_BONUS];
+		add_mdmg[MAX_PC_BONUS];
 	struct s_add_drop { 
 		short id, group;
 		int race, rate;
@@ -720,12 +720,9 @@ struct map_session_data {
 	short sp_gain_value, hp_gain_value;
 	short sp_vanish_rate;
 	short sp_vanish_per;	
-	short add_drop_count;
 	unsigned short unbreakable;	// chance to prevent ANY equipment breaking [celest]
 	unsigned short unbreakable_equip; //100% break resistance on certain equipment
 	unsigned short unstripable_equip;
-	short add_def_count,add_mdef_count;
-	short add_dmg_count,add_mdmg_count;
 
 	// zeroed vars end here.
 
@@ -1193,13 +1190,15 @@ enum _sp {
 	SP_UNBREAKABLE_SHIELD, SP_LONG_ATK_RATE, // 2011-2012
 
 	SP_CRIT_ATK_RATE, SP_CRITICAL_ADDRACE, SP_NO_REGEN, SP_ADDEFF_WHENHIT, SP_AUTOSPELL_WHENHIT, // 2013-2017
-	SP_SKILL_ATK, SP_UNSTRIPABLE, SP_ADD_DAMAGE_BY_CLASS, // 2018-2020
+	SP_SKILL_ATK, SP_UNSTRIPABLE, SP_FREE, // 2018-2020
 	SP_SP_GAIN_VALUE, SP_HP_REGEN_RATE, SP_HP_LOSS_RATE, SP_ADDRACE2, SP_HP_GAIN_VALUE, // 2021-2025
 	SP_SUBSIZE, SP_HP_DRAIN_VALUE_RACE, SP_ADD_ITEM_HEAL_RATE, SP_SP_DRAIN_VALUE_RACE, SP_EXP_ADDRACE,	// 2026-2030
 	SP_SP_GAIN_RACE, SP_SUBRACE2, SP_ADDEFF_WHENHIT_SHORT,	// 2031-2033
 	SP_UNSTRIPABLE_WEAPON,SP_UNSTRIPABLE_ARMOR,SP_UNSTRIPABLE_HELM,SP_UNSTRIPABLE_SHIELD,  // 2034-2037
 	SP_INTRAVISION, SP_ADD_MONSTER_DROP_ITEMGROUP, SP_SP_LOSS_RATE, // 2038-2040
 	SP_ADD_SKILL_BLOW, SP_SP_VANISH_RATE //2041
+	//Before adding new bonuses, reuse the currently free slots:
+	//2020 (SP_FREE) (previously SP_ADD_DAMAGE_BY_CLASS)
 };
 
 enum _look {

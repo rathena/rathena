@@ -817,7 +817,7 @@ static int battle_blewcount_bonus(struct map_session_data *sd, int skill_num)
 	if (!sd->skillblown[0].id)
 		return 0;
 	//Apply the bonus blewcount. [Skotlex]
-	for (i = 0; i < MAX_PC_BONUS && sd->skillblown[i].id; i++) {
+	for (i = 0; i < ARRAYLENGTH(sd->skillblown) && sd->skillblown[i].id; i++) {
 		if (sd->skillblown[i].id == skill_num)
 			return sd->skillblown[i].val;
 	}
@@ -1871,18 +1871,18 @@ static struct Damage battle_calc_weapon_attack(
 				}
 			}
 
-			for(i=0;i<sd->right_weapon.add_damage_class_count;i++) {
-				if(sd->right_weapon.add_damage_classid[i] == t_class) {
-					cardfix=cardfix*(100+sd->right_weapon.add_damage_classrate[i])/100;
+			for(i=0;i<ARRAYLENGTH(sd->right_weapon.add_dmg) && sd->right_weapon.add_dmg[i].rate;i++) {
+				if(sd->right_weapon.add_dmg[i].class_ == t_class) {
+					cardfix=cardfix*(100+sd->right_weapon.add_dmg[i].rate)/100;
 					break;
 				}
 			}
 
 			if (flag.lh)
 			{
-				for(i=0;i<sd->left_weapon.add_damage_class_count;i++) {
-					if(sd->left_weapon.add_damage_classid[i] == t_class) {
-						cardfix_=cardfix_*(100+sd->left_weapon.add_damage_classrate[i])/100;
+				for(i=0;i<ARRAYLENGTH(sd->left_weapon.add_dmg) && sd->left_weapon.add_dmg[i].rate;i++) {
+					if(sd->left_weapon.add_dmg[i].class_ == t_class) {
+						cardfix_=cardfix_*(100+sd->left_weapon.add_dmg[i].rate)/100;
 						break;
 					}
 				}
@@ -1923,10 +1923,9 @@ static struct Damage battle_calc_weapon_attack(
  		cardfix=cardfix*(100-tsd->subrace2[s_race2])/100;
 		cardfix=cardfix*(100-tsd->subrace[sstatus->race])/100;
 		cardfix=cardfix*(100-tsd->subrace[is_boss(src)?RC_BOSS:RC_NONBOSS])/100;
-
-		for(i=0;i<tsd->add_dmg_count;i++) {
-			if(tsd->add_dmg[i].class_ == s_class) {
-				cardfix=cardfix*(100+tsd->add_dmg[i].rate)/100;
+		for(i=0; i < ARRAYLENGTH(tsd->add_def) && tsd->add_def[i].rate;i++) {
+			if(tsd->add_def[i].class_ == s_class) {
+				cardfix=cardfix*(100-tsd->add_def[i].rate)/100;
 				break;
 			}
 		}
@@ -2379,7 +2378,7 @@ struct Damage battle_calc_magic_attack(
 				cardfix=cardfix*(100+sd->magic_addele[tstatus->def_ele])/100;
 			cardfix=cardfix*(100+sd->magic_addsize[tstatus->size])/100;
 			cardfix=cardfix*(100+sd->magic_addrace[is_boss(target)?RC_BOSS:RC_NONBOSS])/100;
-			for(i=0;i<sd->add_mdmg_count;i++) {
+			for(i=0; i< ARRAYLENGTH(sd->add_mdmg) && sd->add_mdmg[i].rate;i++) {
 				if(sd->add_mdmg[i].class_ == t_class) {
 					cardfix=cardfix*(100+sd->add_mdmg[i].rate)/100;
 					continue;
@@ -2401,10 +2400,10 @@ struct Damage battle_calc_magic_attack(
 			cardfix=cardfix*(100-tsd->subrace2[s_race2])/100;
 			cardfix=cardfix*(100-tsd->subrace[sstatus->race])/100;
 			cardfix=cardfix*(100-tsd->subrace[is_boss(src)?RC_BOSS:RC_NONBOSS])/100;
-			for(i=0;i<tsd->add_mdef_count;i++) {
+			for(i=0; i < ARRAYLENGTH(tsd->add_mdef) && tsd->add_mdef[i].rate;i++) {
 				if(tsd->add_mdef[i].class_ == s_class) {
 					cardfix=cardfix*(100-tsd->add_mdef[i].rate)/100;
-					continue;
+					break;
 				}
 			}
 			//It was discovered that ranged defense also counts vs magic! [Skotlex]

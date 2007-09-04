@@ -1433,7 +1433,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		skillid != CR_REFLECTSHIELD
 	){	//Trigger status effects
 		int i, type;
-		for(i=0; i < MAX_PC_BONUS && sd->addeff[i].flag; i++)
+		for(i=0; i < ARRAYLENGTH(sd->addeff) && sd->addeff[i].flag; i++)
 		{
 			rate = sd->addeff[i].rate;
 			if (attack_type&BF_LONG) // Any ranged physical attack takes status arrows into account (Grimtooth...) [DracoRPG]
@@ -1469,7 +1469,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		struct unit_data *ud;
 		int i, skilllv;
 
-		for (i = 0; i < MAX_PC_BONUS && sd->autospell[i].id; i++) {
+		for (i = 0; i < ARRAYLENGTH(sd->autospell) && sd->autospell[i].id; i++) {
 
 			if(!(sd->autospell[i].flag&attack_type&BF_WEAPONMASK &&
 				 sd->autospell[i].flag&attack_type&BF_RANGEMASK &&
@@ -1609,7 +1609,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	if(dstsd && attack_type&BF_WEAPON)
 	{	//Counter effects.
 		int i, type, time;
-		for(i=0; i < MAX_PC_BONUS && dstsd->addeff2[i].flag; i++)
+		for(i=0; i < ARRAYLENGTH(dstsd->addeff2) && dstsd->addeff2[i].flag; i++)
 		{
 			rate = dstsd->addeff2[i].rate;
 			if (attack_type&BF_LONG)
@@ -1641,7 +1641,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		struct unit_data *ud;
 		int i, skillid, skilllv, rate;
 
-		for (i = 0; i < MAX_PC_BONUS && dstsd->autospell2[i].id; i++) {
+		for (i = 0; i < ARRAYLENGTH(dstsd->autospell2) && dstsd->autospell2[i].id; i++) {
 
 			if(!(dstsd->autospell2[i].flag&attack_type&BF_WEAPONMASK &&
 				 dstsd->autospell2[i].flag&attack_type&BF_RANGEMASK &&

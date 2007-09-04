@@ -383,7 +383,6 @@ bAddEffWhenHit	2016
 bAutoSpellWhenHit	2017
 bSkillAtk	2018
 bUnstripable	2019
-bAddDamageByClass	2020
 bSPGainValue	2021
 bHPRegenRate	2022
 bHPLossRate	2023

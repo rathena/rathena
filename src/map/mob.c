@@ -2007,10 +2007,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if(sd) {
 			// process script-granted extra drop bonuses
 			int itemid = 0;
-			for (i = 0; i < sd->add_drop_count; i++)
+			for (i = 0; i < ARRAYLENGTH(sd->add_drop) && (sd->add_drop[i].id || sd->add_drop[i].group); i++)
 			{
-				if (sd->add_drop[i].id < 0)
-					continue;
 				if (sd->add_drop[i].race & (1<<status->race) ||
 					sd->add_drop[i].race & 1<<(status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS))
 				{
