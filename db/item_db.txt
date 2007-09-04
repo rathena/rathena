@@ -1717,7 +1717,7 @@
 4423,Galion_Card,Galion_Card,6,,10,10,,,,,,,,136,,,,,{ bonus bHit,5; bonus2 bAddEle,Ele_Water,5; },{},{}
 4424,Stapo_Card,Stapo_Card,6,,10,10,,,,,,,,136,,,,,{ skill 151,1; skill 152,1; },{},{}
 4425,Atroce_Card,Atroce_Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,25; },{},{}
-4426,Byorgue_Card,Byorgue_Card,6,,10,10,,,,,,,,16,,,,,{ if (BaseJob == Job_Rogue) { bonus bMatkRate,10; bonus bAtkRate,10; },},{}
+4426,Byorgue_Card,Byorgue_Card,6,,10,10,,,,,,,,16,,,,,{ if(BaseJob == Job_Rogue){ bonus bMatkRate,10; bonus bAtkRate,10; } },{},{}
 4427,Sword_Guardian_Card,Sword_Guardian_Card,6,,10,10,,,,,,,,2,,,,,{ bonus bHit,5; bonus bCritical,5; if (getiteminfo(getequipid(4),11) == 2 || getiteminfo(getequipid(4),11) == 3) bonus2 bSkillAtk,62,25; },{},{}
 4428,Bow_Guardian_Card,Bow_Guardian_Card,6,,10,10,,,,,,,,2,,,,,{ bonus bHit,5; bonus bCritical,5; if (getiteminfo(getequipid(4),11) == 11) bonus2 bSkillAtk,47,50; },{},{}
 4429,Salamander_Card,Salamander_Card,6,,10,10,,,,,,,,4,,,,,{ bonus2 bSkillAtk,80,40; bonus2 bSkillAtk,83,40; },{},{}
@@ -1729,7 +1729,7 @@
 4435,Zombie_Slaughter_Card,Zombie_Slaughter_Card,6,,10,10,,,,,,,,64,,,,,{ bonus2 bAddRace,RC_DemiHuman,1; bonus2 bMagicAddRace,DemiHuman,1; bonus bHPGainValue,50;  if(isequipped(4435)) bonus bSPGainValue,2; },{},{}
 4436,Ragged_Zombie_Card,Ragged_Zombie_Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bCriticalAddRace,RC_DemiHuman,5; bonus2 bAddRace,RC_DemiHuman,1; bonus2 bMagicAddRace,DemiHuman,1; bonus2 bAddEff2,Eff_Bleeding,50; },{},{}
 4437,Hell_Poodle_Card,Hell_Poodle_Card,6,,10,10,,,,,,,,136,,,,,{ bonus bHit,1; bonus2 bAddItemHealRate,517,100; bonus2 bAddEff,Eff_Bleeding,100; },{},{}
-4438,Banshee_Card,Banshee_Card,6,,10,10,,,,,,,,769,,,,,{ if (BaseClass == Job_Mage) { bonus bMaxSP,100; bonus bMaxHP,-100; bonus2 bSkillAtk,11,20; bonus2 bSkillAtk,13,20; bonus2 bSkillAtk,400,20; },},{}
+4438,Banshee_Card,Banshee_Card,6,,10,10,,,,,,,,769,,,,,{ if(BaseClass == Job_Mage){ bonus bMaxSP,100; bonus bMaxHP,-100; bonus2 bSkillAtk,11,20; bonus2 bSkillAtk,13,20; bonus2 bSkillAtk,400,20; } },{},{}
 4439,Flame_Skull_Card,Flame_Skull_Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bResEff,Eff_Blind,3000; bonus2 bResEff,Eff_Stun,3000; bonus2 bResEff,Eff_Curse,3000; bonus2 bResEff,Eff_Stone,3000; bonus2 bAddEffWhenHit,Eff_Blind,100; bonus2 bAddEffWhenHit,Eff_Stun,100; bonus2 bAddEffWhenHit,Eff_Curse,100; bonus2 bAddEffWhenHit,Eff_Stone,100; },{},{}
 4440,Necromancer_Card,Necromancer_Card,6,,10,10,,,,,,,,2,,,,,{ if (getiteminfo(getequipid(4),11) == 10) { bonus bInt,1; bonus bIgnoreMdefRate,2; } },{},{}
 4441,Fallen_Bishop_Hibram_Card,Fallen_Bishop_Hibram_Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMAtkRate,10; bonus bMaxSPrate,-50; bonus2 bAddRace,RC_Angel,50; bonus2 bAddRace,RC_DemiHuman,50; },{},{}

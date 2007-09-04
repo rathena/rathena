@@ -28,6 +28,8 @@
 
 ========================
 09/04
+	* Some drop and item fixes [Playtester]
+	- also updated sql files
 	* Added drops to Cursed Abbey mobs [Playtester]
 	* Updated several item scripts to use bonus3 autospells rather than bonus4
 	  ones. [Skotlex]
