@@ -18,9 +18,6 @@
 	12214 Convex_Mirror:		Detect MVP spawn on minimap; doesn't work with special condition MVPs. (Recommend constant: SC_DetectMVPSpawn)
 	7621 Token_of_Ziegfried:	Give player the option to revive after death, through the "Respawn/Exit" menu.
 
-	Still need proper rates for most 11.3 Equipment that don't have their +rates/Status Infliction rates clearly defined.
-	13107 Western_Outlaw:		Need correct HIT and ASPD Rate
-
 	Missing 12.1 card bonuses:
 	Most 12.1 cards are using a low rate usually 1% for their effects.
 	4411 Vanberk_Card 		Small chance that for 5 seconds you gain 100 crit while attacking.
@@ -30,6 +27,9 @@
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
 ========================
+09/04
+	* Fixed all the 11.3 equips [Playtester]
+	- please test them ingame
 09/03
 	* Updated Staff of Destruction, Siroma Card and Imp Card [Playtester]
 	- also fixed duration of Antimagic and Stoneskin
