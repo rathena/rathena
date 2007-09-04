@@ -28,6 +28,8 @@
 
 ========================
 09/04
+	* Updated several item scripts to use bonus3 autospells rather than bonus4
+	  ones. [Skotlex]
 	* Added the 11.3 equips to the monster drops [Playtester]
 	* Fixed all the 11.3 equips [Playtester]
 	- please test them ingame

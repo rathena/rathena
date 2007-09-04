@@ -3562,12 +3562,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case AL_CRUCIS:
-		if (flag & 1) {
-			if (battle_check_target (src, bl, BCT_ENEMY))
-				sc_start(bl,type,
-					23+skilllv*4 +status_get_lv(src) -status_get_lv(bl),
-					skilllv,60000);
-		} else {
+		if (flag&1)
+			sc_start(bl,type, 23+skilllv*4 +status_get_lv(src) -status_get_lv(bl), skilllv,60000);
+		else {
 			map_foreachinrange(skill_area_sub, src, skill_get_splash(skillid, skilllv), BL_CHAR,
 				src, skillid, skilllv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 			clif_skill_nodamage(src, bl, skillid, skilllv, 1);
@@ -4604,10 +4601,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			type = EQP_WEAPON|EQP_SHIELD|EQP_ARMOR|EQP_HELM;
 			break;
 		}
-		//Note that autospells don't use a duration
+		//Note that Full Strip autospell doesn't use a duration
 		if (!clif_skill_nodamage(src,bl,skillid,skilllv,
 				skill_strip_equip(bl, type, i, skilllv, 
-				sd&&!pc_checkskill(sd, skillid)?0:skill_get_time(skillid,skilllv)))
+				sd&&skillid==ST_FULLSTRIP&&!pc_checkskill(sd, skillid)?0:skill_get_time(skillid,skilllv)))
 			&& sd)
 			clif_skill_fail(sd,skillid,0,0); //Nothing stripped.
 		break;

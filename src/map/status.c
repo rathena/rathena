@@ -1697,6 +1697,10 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->addeff2)
 		+ sizeof(sd->skillatk)
 		+ sizeof(sd->skillheal)
+		+ sizeof(sd->hp_loss)
+		+ sizeof(sd->sp_loss)
+		+ sizeof(sd->hp_regen)
+		+ sizeof(sd->sp_regen)
 		+ sizeof(sd->skillblown)
 		+ sizeof(sd->skillcast)
 		+ sizeof(sd->add_def)
@@ -4453,10 +4457,11 @@ int status_get_sc_def(struct block_list *bl, int type, int rate, int tick, int f
 			tick /= 5;
 		sc_def = status->agi;
 		break;
+	case SC_MAGICMIRROR:
 	case SC_ARMORCHANGE:
 		if (sd) //Duration greatly reduced for players.
 			tick /= 15;
-		//No defense against it.
+		//No defense against it (buff).
 	default:
 		//Effect that cannot be reduced? Likely a buff.
 		if (!(rand()%10000 < rate))
