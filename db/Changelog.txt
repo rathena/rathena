@@ -28,6 +28,7 @@
 
 ========================
 09/04
+	* Added the 11.3 equips to the monster drops [Playtester]
 	* Fixed all the 11.3 equips [Playtester]
 	- please test them ingame
 09/03

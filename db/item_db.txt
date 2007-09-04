@@ -535,7 +535,7 @@
 1172,Claymore_,Claymore,4,74000,,2500,180,,1,2,0x00004080,7,2,34,3,33,1,3,{},{},{}
 1173,Muramasa_C,Refined Muramasa,4,,,0,204,,1,0,0x00004082,7,2,34,4,1,0,3,{ bonus bCritical,30; bonus bAspdRate,8; bonus2 bAddEff2,Eff_Curse,100; },{},{}
 1174,Executioner_C,Refined Executioner,4,,,0,190,,1,0,0x00004082,7,2,34,4,1,0,3,{ bonus bIgnoreDefRace,RC_DemiHuman; bonus2 bAddRace,RC_DemiHuman,20; bonus2 bSubRace,RC_DemiHuman,-10; bonus bAtkEle,Ele_Dark; },{},{}
-1175,Blade_of_Atros,Blade_of_Atros,4,,10,2000,200,,1,1,0x00004082,2,2,34,4,55,1,3,{ bonus bCritical,10; if(readparam(bStr)>80) bonus bBreakArmorRate,100; },{},{}
+1175,Blade_of_Atroce,Blade of Atroce,4,,10,2000,200,,1,1,0x00004082,2,2,34,4,55,1,3,{ bonus bCritical,10; if(readparam(bStr)>80) bonus bBreakArmorRate,100; },{},{}
 1176,Muscle_Cutter,Muscle_Cutter,4,,10,2200,160,,1,2,0x00004082,2,2,34,4,55,1,3,{ bonus2 bAddEff,Eff_Bleeding,100; bonus4 bAutoSpell,30,1,20,1; },{},{}
 // Daggers
 1201,Knife,Knife,4,50,,400,17,,1,3,0xFE9F7EEF,7,2,2,1,1,1,1,{},{},{}
@@ -1716,7 +1716,7 @@
 4422,Roween_Card,Roween_Card,6,,10,10,,,,,,,,4,,,,,{ bonus bFlee,5; bonus bFlee2,3; bonus2 bAddEle,Ele_Water,10; bonus2 bCriticalAddRace,RC_Fish,15; },{},{}
 4423,Galion_Card,Galion_Card,6,,10,10,,,,,,,,136,,,,,{ bonus bHit,5; bonus2 bAddEle,Ele_Water,5; },{},{}
 4424,Stapo_Card,Stapo_Card,6,,10,10,,,,,,,,136,,,,,{ skill 151,1; skill 152,1; },{},{}
-4425,Atros_Card,Atros_Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,25; },{},{}
+4425,Atroce_Card,Atroce_Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,25; },{},{}
 4426,Byorgue_Card,Byorgue_Card,6,,10,10,,,,,,,,16,,,,,{ if (BaseJob == Job_Rogue) { bonus bMatkRate,10; bonus bAtkRate,10; },},{}
 4427,Sword_Guardian_Card,Sword_Guardian_Card,6,,10,10,,,,,,,,2,,,,,{ bonus bHit,5; bonus bCritical,5; if (getiteminfo(getequipid(4),11) == 2 || getiteminfo(getequipid(4),11) == 3) bonus2 bSkillAtk,62,25; },{},{}
 4428,Bow_Guardian_Card,Bow_Guardian_Card,6,,10,10,,,,,,,,2,,,,,{ bonus bHit,5; bonus bCritical,5; if (getiteminfo(getequipid(4),11) == 11) bonus2 bSkillAtk,47,50; },{},{}
