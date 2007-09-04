@@ -2722,9 +2722,9 @@
 7749,Sweet_Banana,Sweet Bananas,3,25,,10,,,,,,,,,,,,,{},{},{}
 7750,Macapuno,Macapuno,3,25,,10,,,,,,,,,,,,,{},{},{}
 7751,High_Priest_Cast_Armor,High_Priest_Cast_Armor,3,,10,10,,,,,,,,,,,,,{},{},{}
-7752,Human_Skull,Human_Skull,3,,10,10,,,,,,,,,,,,,{},{},{}
-7753,Miners_Tool,Miners_Tool,3,,10,10,,,,,,,,,,,,,{},{},{}
-7754,Broken_Crown,Broken_Crown,3,,10,10,,,,,,,,,,,,,{},{},{}
+7752,Human_Skull,Human Skull,3,,150,10,,,,,,,,,,,,,{},{},{}
+7753,Miners_Tool,Miners Tool,3,,180,10,,,,,,,,,,,,,{},{},{}
+7754,Broken_Crown,Broken Crown,3,,666,10,,,,,,,,,,,,,{},{},{}
 7755,Unknown_Item,Unknown_Item,3,,10,10,,,,,,,,,,,,,{},{},{}
 7756,Sealed_Book,Sealed_Book,3,,10,10,,,,,,,,,,,,,{},{},{}
 7757,Mithril,Mithril,3,,10,100,,,,,,,,,,,,,{},{},{}

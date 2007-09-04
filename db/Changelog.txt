@@ -28,6 +28,7 @@
 
 ========================
 09/04
+	* Added drops to Cursed Abbey mobs [Playtester]
 	* Updated several item scripts to use bonus3 autospells rather than bonus4
 	  ones. [Skotlex]
 	* Added the 11.3 equips to the monster drops [Playtester]
