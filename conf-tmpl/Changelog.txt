@@ -1,5 +1,7 @@
 Date	Added
 
+2007/09/05
+	* Added 'nomemo' mapflags to some Cursed Abbey maps [Playtester]
 2007/08/19
 	* Added 'noteleport' mapflags to Dandelion's request maps. [SinSloth]
 	* Fixed small mistake in confs causing some confusion [Paradox924X]

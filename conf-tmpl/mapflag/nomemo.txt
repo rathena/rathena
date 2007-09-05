@@ -395,6 +395,11 @@ ra_san05	mapflag	nomemo
 thor_v01	mapflag	nomemo
 thor_v02	mapflag	nomemo
 thor_v03	mapflag	nomemo
+//Cursed Abbey
+nameless_n	mapflag	nomemo
+abbey01	mapflag	nomemo
+abbey02	mapflag	nomemo
+abbey03	mapflag	nomemo
 
 // Guild Castles =============
 //alde_gld	mapflag	nomemo
