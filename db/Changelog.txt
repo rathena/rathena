@@ -28,7 +28,7 @@
 
 ========================
 09/06
-	* Updated two prices [Playtester]
+	* Updated two prices and a drop rate [Playtester]
 09/04
 	* Some drop and item fixes [Playtester]
 	- also updated sql files
