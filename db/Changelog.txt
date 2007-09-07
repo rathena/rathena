@@ -28,6 +28,13 @@
 
 ========================
 09/07
+	* Rev. 1113 Added more items; mostly rental. New pet tames, eggs. [L0ne_W0lf]
+	- Updated and corrected some item names, both kRO and iRO names.
+	- Skill need correct view-ids for new headgears.
+	* Added new pets: Green Maiden, spring Rabbit, Goblins 1, 2 and 4,
+	  Deleter, Diabolic, and Wanderer. The data is mostly custom.
+	* Corrected the item trade entry for the luxurious key.
+	* Added basic data for Spring Rabbit pet mob.
 	* Updated packet_db.txt with latest info [ultramage]
 09/06
 	* Fixed some item names and updated drop rates a little [Playtester]

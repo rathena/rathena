@@ -70,6 +70,8 @@
 //=		Note: There are many condition checks that should be omitted in the future fixed item names in item_db.txt / txt resources according the quest
 //=		for items, should be used bitwise methods in a single variable. So let's fix the rest possible bugs (if they exist) and then optimize ^_-		
 //= 3.5 Changed the way the Black Keycard distibuting NPCs work slighty. [L0ne_W0lf]
+//= 3.6 Keil Hyre remove3s ALL outstanding quest items when he is talked [L0ne_W0lf]
+//=	to after finishing the quest.
 //============================================================ 
 //============================================================================
 // Kiel Hyre Quest/Robotic Lab Dungeon
@@ -5104,26 +5106,6 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 		mes "your help, "+@KHTitle$+" "+strcharinfo(0)+".";
 		getitem 616,1;  //Old card Album
 		delitem 7508,1; //Elisia's_Ring
-		delitem 7487,1; //Culinary_Wine
-		delitem 7488,1; //Delivery_Package
-		delitem 7489,1; //Cottage Key
-		delitem 7493,1; //Golden_Key
-		delitem 7494,1; //Exquisite_Button
-		delitem 7495,1; //Blue_Keycard
-		delitem 7490,1; //Letter to Elly
-		delitem 7492,1; //Yellow_Keycard
-		delitem 7516,1;	//Green_Keycard
-		delitem 7491,1; //Steel_box
-		delitem 7496,1; //Red_Keycard
-		delitem 7497,1; //Metal_Fragment
-		delitem 7504,1; //Power_Source
-		delitem 7498,1; //Losimier's_House_Key
-		delitem 7499,1; //Portrait_of_a_Family
-		delitem 7500,1; //Portrait_of_a_Lady
-		delitem 7501,1; //K.H's_Letter
-		delitem 7502,1; //James's_Memo
-		delitem 7503,1;	//Portrait_of_a_Guy
-		delitem 7505,1; //Toy_Key
 		getexp 1000000,0;
 	}
 
@@ -5132,6 +5114,27 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 		mes "......";
 		mes ".........";
 		mes "............";
+		delitem 7487,countitem(7487); //Culinary_Wine
+		delitem 7488,countitem(7488); //Delivery_Package
+		delitem 7489,countitem(7489); //Cottage Key
+		delitem 7490,countitem(7490); //Letter to Elly
+		delitem 7491,countitem(7491); //Steel_box
+		delitem 7492,countitem(7492); //Yellow_Keycard
+		delitem 7493,countitem(7493); //Golden_Key
+		delitem 7494,countitem(7494); //Exquisite_Button
+		delitem 7495,countitem(7495); //Blue_Keycard
+		delitem 7496,countitem(7496); //Red_Keycard
+		delitem 7497,countitem(7497); //Metal_Fragment
+		delitem 7498,countitem(7498); //Losimier's_House_Key
+		delitem 7499,countitem(7499); //Portrait_of_a_Family
+		delitem 7500,countitem(7500); //Portrait_of_a_Lady
+		delitem 7501,countitem(7501); //K.H's_Letter
+		delitem 7502,countitem(7502); //James's_Memo
+		delitem 7503,countitem(7503); //Portrait_of_a_Guy
+		delitem 7504,countitem(7505); //Power_Source
+		delitem 7505,countitem(7506); //Toy_Key
+		delitem 7508,countitem(7508); //Elysia_Ring
+		delitem 7516,countitem(7516); //Green_Keycard
 	}
 
 	close2;
