@@ -1547,7 +1547,7 @@ s_Tom:
 s_Take:
 	if(Zeny < 11000) goto s_NoZeny;
 	set Zeny, Zeny - 11000;
-	getitem 567,20;
+	getitem 567,20; //Shrimp
 	emotion e_no1;
 	mes "[Thongpool]";
 	mes "Good, now you have the freshest Shrimp in this village!";
@@ -1959,11 +1959,11 @@ s_ICheck:
 	next;
 s_Process:
 	if(countitem(523) < 2 || countitem(610) < 1 || countitem(7213) < 2 || countitem(7217) < 2)goto s_NEnoughItems;
-	delitem 523,2;
-	delitem 610,1;
-	delitem 7213,2;
-	delitem 7217,2;
-	getitem 7287,1;
+	delitem 523,2; //Holy Water
+	delitem 610,1; //Yggdrasil Leaf
+	delitem 7213,2; //Needle Packet
+	delitem 7217,2; //Spool
+	getitem 7287,1; //Holier Threads
 	if(ayodot != 8)set ayodot,8;
 	mes "[Boonthom]";
 	mes "Here you go.";
@@ -2389,7 +2389,7 @@ s_Shrimp:
 	close;
 
 s_EnoughShrimp:
-	delitem 567,20;
+	delitem 567,20; //Shrimp
 	mes "[Mali the Spicy]";
 	mes "Ah you came back!";
 	mes "Now, let me see what"; 
@@ -2449,7 +2449,7 @@ s_Lemons:
 	mes "Lemons so that I can make some Tom Yum Goong!";
 	close;
 s_EnoughLemon:
-	delitem 568,10;
+	delitem 568,10; //Lemon
 	emotion e_gasp;
 	mes "[Mali the Spicy]";
 	mes "Welcome back!";
@@ -2498,7 +2498,7 @@ s_Chilee:
 	mes "You should talk to the Merchants in the Market, they'll know what you want.";
 	close;
 s_EnoughChilee:
-	delitem 7286,30;
+	delitem 7286,30; //Red Chile
 	mes "[Mali the Spicy]";
 	mes "Now...";
 	mes "Everything is all set!";
@@ -2542,7 +2542,7 @@ s_EnoughChilee:
 	next;
 	set tomyumgoong,5;
 	set ayoshrimps,0;
-	getitem 566,10;
+	getitem 566,10; //Tom Yum Goong
 	emotion e_no1;
 	mes "[Mali the Spicy]";
 	mes "Here's your";
@@ -2635,7 +2635,7 @@ s_Chili:
 s_Take:
 	if(Zeny < 2000) goto s_NoZeny;
 	set Zeny, Zeny - 2000;
-	getitem 7286,30;
+	getitem 7286,30; //Red Chile
 	mes "[Merchant Thongdum]";
 	mes "Thank you.";
 	mes "I hhope you will enjoy";
@@ -2884,7 +2884,7 @@ s_Win2:
 	mes "Grab as many as you want!";
 	next;
 	set ayolemon,2;
-	getitem 568,10;
+	getitem 568,10; //Lemon
 	mes "^3C2EE6You have plucked";
 	mes "^3C2EE610 Lemons from the tree.";
 	next;

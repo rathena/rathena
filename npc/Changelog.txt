@@ -1,5 +1,11 @@
 Date		Added
 ======
+2007/09/07
+	* Moved quest_variables.txt to /doc
+	* Added comments to some getitem/delitem calls
+	* Disabled nightmare drop in the custom mvp arena script
+	* Fixed problem with baby novice + swordsman quest (topic:160247)
+	* Fixed a typo and problem in the airship typing challenge [ultramage]
 2007/08/30
 	* Updated Cursed Abbey spawns some more [Playtester]
 	* Fixed some minor bugs in the Sign Quest. [SinSloth]

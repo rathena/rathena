@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -31,6 +31,7 @@
 //=	Removed "green" traps, quest is no longer timed.
 //=	No longer uses function "F_ToHigh"
 //= 1.9 Dialog is official, but the Script is now custom as far as maps go. [L0ne_W0lf]
+//= 1.9b Fixed usage of wrong jobchange func messing up baby classes [ultramage]
 //============================================================ 
 
 izlude_in,74,172,4	script	Swordman	119,{
@@ -150,7 +151,7 @@ izlude_in,74,172,4	script	Swordman	119,{
 		else if (job_sword_q == 4) {
 			mes "Hahaha! Congratulations! Now you are fully qualified to be a real Swordman! I will transform you right away!";
 			next;
-			jobchange Job_Swordman;
+			callfunc "Job_Change",Job_Swordman;
 			set job_sword_q,0;
 			mes "[Swordman]";
 			mes "Once again, congratulations. I expect that you will be a good representative of the Swordman Association.";

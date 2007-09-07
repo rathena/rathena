@@ -895,7 +895,7 @@ packet_ver: 20
 //2006-10-23aSakexe
 0x006d,110
 
-//2007-01-02aSakexe (grouped changes between this and 2006-04-24aSakexe)
+//2006-04-24aSakexe to 2007-01-02aSakexe
 0x023e,8
 0x0277,84
 0x0278,2
@@ -995,7 +995,7 @@ packet_ver: 22
 //2007-05-07aSakexe
 0x01fd,15,repairitem,2
 
-//2007-07-31aSakexe (grouped changes between this and 2007-02-27aSakexe)
+//2007-02-27aSakexe to 2007-09-04aSakexe
 0x0288,10
 0x0289,12
 0x02a6,22
@@ -1003,22 +1003,40 @@ packet_ver: 22
 0x02a8,162
 0x02a9,58
 0x02ad,8
-0x02ae,10
-0x02af,2
 0x02b0,85
 0x02b1,-1
-0x02b3,31
+0x02b2,-1
+0x02b3,107
 0x02b4,6
-0x02b5,12
+0x02b5,-1
 0x02b6,7
-0x02b7,10
+0x02b7,7
 0x02b8,22
 0x02b9,191
 0x02ba,11,hotkey,2:4:5:9
 0x02bb,8
 0x02bc,6
+0x02bf,10
+0x02c0,2
+0x02c1,-1
+0x02c2,-1
 0x02c4,26,partyinvite2,2
+0x02c5,30
+0x02c6,30
 0x02c7,7,replypartyinvite2,2,6
+0x02c8,3
+0x02c9,3
+0x02ca,3
+0x02cb,20
+0x02cc,4
+0x02cd,26
+0x02ce,10
+0x02cf,6
+0x02d0,-1
+0x02d1,-1
+0x02d2,-1
+0x02d3,4
+0x02d4,29
 
 //Add new packets here
 //packet_ver: 23

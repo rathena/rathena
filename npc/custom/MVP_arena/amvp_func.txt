@@ -67,35 +67,3 @@ function	script	Ramvp_M2	{
 		close;
 
 }
-
-function	script	Ramvp_Main	{
-
-menu "Intro",L_Intro,"I want to go back",L_Leave,"Heal me please",L_Heal,"Cancel",L_Cancel;
-
-L_Intro:
-mes "[ ^0065DFMVP Arena Guide^000000 ]";
-mes "Welcome and behold this sacred place, Here you will find out if you truly have what it takes to call yourself a warrior, and a Team mate.";
-next;
-mes "Here in [ ^0065DFSvRO^000000 ] we like to be a family, and as a family you learn you must help and assist one-another, so if you want to survive you should learn to Co-operate.";
-next;
-mes "There are Plenty of rooms with MVP's in them so don't all fight over the one room just cause you think it's the only one, just move to the next one.";
-next;
-mes "If you can't get along, and there is too much complaining about people stealing MVP kills and items... then this place will be removed.";
-next;
-mes "Now the npc's are in groups of monsters, there are 4 different mvps per each npc, i won't tell you which it's a surprise hehe.";
-next;
-mes "Good luck, Live long and Prosper!.";
-close;
-
-L_Leave:
-warp "prontera",156,179;
-close;
-
-L_Heal:
-Heal 32500,32500;
-close;
-
-L_Cancel:
-close;
-
-}

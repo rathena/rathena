@@ -115,94 +115,36 @@ Lget:
 	next;
 	if (event_momo >= 1 && event_momo < 4)
 	{
-	switch(rand(1,10))
+		switch(rand(1,10))
 		{
-	case 1:
-		getitem 622,1; //rainbow carrot
-	break;
-
-	case 2:
-		getitem 627,1; //sweet milk
-	break;
-
-	case 3:
-		getitem 629,1; //singing flower
-	break;
-
-	case 4:
-		getitem 632,1; //fatty chubby earthworm
-	break;
-
-	case 5:
-		getitem 623,1; //earthworm the dude
-	break;
-
-	case 6:
-		getitem 619,1; //unripe apple
-	break;
-
-	case 7:
-		getitem 621,1; //bitter herb
-	break;
-
-	case 8:
-		getitem 620,1; //orange juice
-	break;
-
-	case 9:
-		getitem 625,1; //rusty iron
-	break;
-
-	case 10:
-		getitem 624,1; //rotten fish
-	break;
+		case 1: getitem 622,1; break; //rainbow carrot
+		case 2: getitem 627,1; break; //sweet milk
+		case 3: getitem 629,1; break; //singing flower
+		case 4: getitem 632,1; break; //fatty chubby earthworm
+		case 5: getitem 623,1; break; //earthworm the dude
+		case 6: getitem 619,1; break; //unripe apple
+		case 7: getitem 621,1; break; //bitter herb
+		case 8: getitem 620,1; break; //orange juice
+		case 9: getitem 625,1; break; //rusty iron
+		case 10: getitem 624,1; break; //rotten fish
 		}
 	}
 
 //Am Mut successful finish unknown
 	if (event_momo == 4)
 	{
-	switch(rand(1,10))
+		switch(rand(1,10))
 		{
-	case 1:
-		getitem 659,1; //her heart
-	break;
-
-	case 2:
-		getitem 633,1; //sweet potato
-	break;
-
-	case 3:
-		getitem 634,1; //tropical banana
-	break;
-
-	case 4:
-		getitem 639,1; //armlet of obedience
-	break;
-
-	case 5:
-		getitem 636,1; //no recipient
-	break;
-
-	case 6:
-		getitem 628,1; //well-dried bone
-	break;
-
-	case 7:
-		getitem 637,1; //old broom
-	break;
-
-	case 8:
-		getitem 635,1; //orc trophy
-	break;
-
-	case 9:
-		getitem 626,1; //monster juice
-	break;
-
-	case 10:
-		getitem 641,1; //contract in shadow
-	break;
+		case 1: getitem 659,1; break; //her heart
+		case 2: getitem 633,1; break; //sweet potato
+		case 3: getitem 634,1; break; //tropical banana
+		case 4: getitem 639,1; break; //armlet of obedience
+		case 5: getitem 636,1; break; //no recipient
+		case 6: getitem 628,1; break; //well-dried bone
+		case 7: getitem 637,1; break; //old broom
+		case 8: getitem 635,1; break; //orc trophy
+		case 9: getitem 626,1; break; //monster juice
+		case 10: getitem 641,1; break; //contract in shadow
 		}
 	}
 	set event_momo,5;
@@ -674,14 +616,14 @@ ama_in01,162,17,0	script	Iron Chef	765,{
 		L1_1:
 			if (Zeny < 700) goto Lzeny;
 			set Zeny,Zeny-700;
-			getitem 551,10;
+			getitem 551,10; //Sushi
 			mes "[If you have a chance, come try a little sashimi!]";
 			mes "Thank you very much";
 			close;
 		L1_2:
 			if (Zeny < 74) goto Lzeny;
 			set Zeny,Zeny-74;
-			getitem 551,1;
+			getitem 551,1; //Sushi
 			mes "[If you have a chance, come try a little sashimi!]";
 			mes "Thank you very much";
 			close;
@@ -701,14 +643,14 @@ ama_in01,162,17,0	script	Iron Chef	765,{
 		L2_1:
 			if (Zeny < 350) goto Lzeny;
 			set Zeny,Zeny-350;
-			getitem 544,10;
+			getitem 544,10; //Raw Fish
 			mes "[ShabuShabu]";
 			mes "Thank you very much";
 			close;
 		L2_2:
 			if (Zeny < 37) goto Lzeny;
 			set Zeny,Zeny-37;
-			getitem 544,1;
+			getitem 544,1; //Raw Fish
 			mes "[ShabuShabu]";
 			mes "Thank you very much";
 			close;
@@ -748,8 +690,8 @@ LStart2:
 	mes "You must help me find them!";
 	close;
 Lok:
-	delitem 964,10;
-	getitem 551,20;
+	delitem 964,10; //Clam Shell
+	getitem 551,20; //Sushi
 	mes "[ShabuShabu]";
 	mes "Hmm! Thank you so much";
 	next;
@@ -946,7 +888,7 @@ LStart2:
 	next;
 	monster "ama_in01",22,112,"Fox",1180,1;
 	killmonsterall "ama_in01";
-	getitem 1022,1;
+	getitem 1022,1; //Nine Tails
 	mes "[...]";
 	mes "^FF0066Everything that Paul Shinaku did";
 	mes "will sooner or later";
@@ -1073,7 +1015,7 @@ L1_2:
 L1_2_1:
 		if (Zeny < 10000) goto LError;
 		set Zeny,Zeny-10000;
-		getitem 7160,1;
+		getitem 7160,1; //Feudal Lord Permit
 		mes "[Kyro]";
 		mes "Come, this is it.";
 		mes "Please be careful and don't lose it again.";
@@ -1320,7 +1262,7 @@ LStart4:
 	mes "In this town";
 	next;
 	set event_amatsu,7;
-	getitem 7160,1;
+	getitem 7160,1; //Feudal Lord Permit
 	mes "[Ishida Yushinaku]";
 	mes "Although it's not such a great gift, but";
 	mes "I believe you will have use for it someday...";
