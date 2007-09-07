@@ -10105,6 +10105,28 @@ void clif_parse_PartyInvite(int fd, struct map_session_data *sd)
 	party_invite(sd, t_sd);
 }
 
+void clif_parse_PartyInvite2(int fd, struct map_session_data *sd)
+{
+	struct map_session_data *t_sd;
+	char *name = RFIFOP(fd,2);
+	name[NAME_LENGTH]='\0';
+
+	if(map[sd->bl.m].flag.partylock)
+	{	//Guild locked.
+		clif_displaymessage(fd, msg_txt(227));
+		return;
+	}
+
+	t_sd = map_nick2sd(name);
+
+	// @noask [LuzZza]
+	if(t_sd && t_sd->state.noask) {
+		clif_noask_sub(sd, t_sd, 1);
+		return;
+	}
+	
+	party_invite(sd, t_sd);
+}
 /*==========================================
  * パーティ勧誘返答
  *------------------------------------------*/
@@ -10112,6 +10134,16 @@ void clif_parse_ReplyPartyInvite(int fd,struct map_session_data *sd)
 {
 	if(battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 5){
 		party_reply_invite(sd,RFIFOL(fd,2),RFIFOL(fd,6));
+	} else {
+		party_reply_invite(sd,RFIFOL(fd,2),-1);
+		clif_skill_fail(sd,1,0,4);
+	}
+}
+
+void clif_parse_ReplyPartyInvite2(int fd,struct map_session_data *sd)
+{
+	if(battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 5){
+		party_reply_invite(sd,RFIFOL(fd,2),RFIFOB(fd,6));
 	} else {
 		party_reply_invite(sd,RFIFOL(fd,2),-1);
 		clif_skill_fail(sd,1,0,4);
@@ -11820,7 +11852,9 @@ static int packetdb_readdb(void)
 		{clif_parse_CreateParty,"createparty"},
 		{clif_parse_CreateParty2,"createparty2"},
 		{clif_parse_PartyInvite,"partyinvite"},
+		{clif_parse_PartyInvite2,"partyinvite2"},
 		{clif_parse_ReplyPartyInvite,"replypartyinvite"},
+		{clif_parse_ReplyPartyInvite2,"replypartyinvite2"},
 		{clif_parse_LeaveParty,"leaveparty"},
 		{clif_parse_RemovePartyMember,"removepartymember"},
 		{clif_parse_PartyChangeOption,"partychangeoption"},

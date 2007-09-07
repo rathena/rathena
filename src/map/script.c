@@ -8563,7 +8563,7 @@ BUILDIN_FUNC(sc_start)
 	}
 
 	if( potion_flag == 1 && potion_target )
-	{//##TODO how does this work [FlavioJS]
+	{	//skill.c set the flags before running the script, this must be a potion-pitched effect.
 		bl = map_id2bl(potion_target);
 		tick /= 2;// Thrown potions only last half.
 		val4 = 1;// Mark that this was a thrown sc_effect
@@ -8601,7 +8601,7 @@ BUILDIN_FUNC(sc_start2)
 	}
 
 	if( potion_flag == 1 && potion_target )
-	{//##TODO how does this work [FlavioJS]
+	{	//skill.c set the flags before running the script, this must be a potion-pitched effect.
 		bl = map_id2bl(potion_target);
 		tick /= 2;// Thrown potions only last half.
 		val4 = 1;// Mark that this was a thrown sc_effect
@@ -8643,7 +8643,7 @@ BUILDIN_FUNC(sc_start4)
 	}
 
 	if( potion_flag == 1 && potion_target )
-	{//##TODO how does this work [FlavioJS]
+	{	//skill.c set the flags before running the script, this must be a potion-pitched effect.
 		bl = map_id2bl(potion_target);
 		tick /= 2;// Thrown potions only last half.
 	}

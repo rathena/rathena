@@ -648,6 +648,12 @@ int guild_invite(struct map_session_data *sd,struct map_session_data *tsd)
 			return 0;
 		}
 	}
+	
+	if (!tsd->fd) { //You can't invite someone who has already disconnected.
+		clif_guild_inviteack(sd,1);
+		return 0;
+	}
+
 	if(tsd->status.guild_id>0 ||
 		tsd->guild_invite>0 ||
 		(agit_flag && map[tsd->bl.m].flag.gvg_castle))

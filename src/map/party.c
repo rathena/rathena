@@ -268,6 +268,11 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 			return 0;
 		}
 	}
+	if (!tsd->fd) { //You can't invite someone who has already disconnected.
+		clif_party_inviteack(sd,tsd->status.name,1);
+		return 0;
+	}
+
 	if( tsd->status.party_id>0 || tsd->party_invite>0 ){
 		clif_party_inviteack(sd,tsd->status.name,0);
 		return 0;

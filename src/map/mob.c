@@ -1023,7 +1023,7 @@ int mob_unlocktarget(struct mob_data *md,int tick)
 /*==========================================
  * Random walk
  *------------------------------------------*/
-int mob_randomwalk(struct mob_data *md,int tick)
+int mob_randomwalk(struct mob_data *md,unsigned int tick)
 {
 	const int retrycount=20;
 	int i,x,y,c,d;

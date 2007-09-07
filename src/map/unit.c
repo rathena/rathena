@@ -156,6 +156,9 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	map_moveblock(bl, x, y, tick);
 	ud->walk_count++; //walked cell counter, to be used for walk-triggered skills. [Skotlex]
 
+	if (bl->x != x || bl->y != y || ud->walktimer != -1)
+		return 0; //map_moveblock has altered the object beyond what we expected (moved/warped it)
+
 	ud->walktimer = 1;
 	map_foreachinmovearea(clif_insight, bl, AREA_SIZE,
 		-dx, -dy, sd?BL_ALL:BL_PC, bl);

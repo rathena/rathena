@@ -162,7 +162,7 @@ int mob_once_spawn_area(struct map_session_data *sd,const char *mapname,
 int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, int guardian);	// Spawning Guardians [Valaris]
 int mob_guardian_guildchange(struct block_list *bl,va_list ap); //Change Guardian's ownership. [Skotlex]
 
-int mob_randomwalk(struct mob_data *md,int tick);
+int mob_randomwalk(struct mob_data *md,unsigned int tick);
 
 int mob_target(struct mob_data *md,struct block_list *bl,int dist);
 int mob_unlocktarget(struct mob_data *md,int tick);
