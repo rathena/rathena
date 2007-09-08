@@ -27,6 +27,12 @@
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
 ========================
+09/08
+	* Updated item_db, mob_db and skill_cast_db [Playtester]
+	- updated prices of new etc drops (guessed values)
+	- updated Cursed Abbey mob drops
+	- fixed db name of Thanatos
+	- fixed cast time of Rebirth Spirit
 09/07
 	* Rev. 1113 Added more items; mostly rental. New pet tames, eggs. [L0ne_W0lf]
 	- Updated and corrected some item names, both kRO and iRO names.
