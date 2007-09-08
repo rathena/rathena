@@ -1,17 +1,18 @@
 //===== eAthena Script ======================================= 
 //= Dye Maker
 //===== By: ================================================== 
-//= kobra_k88; L0ne_W0lf
+//= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.2b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //===== Additional Comments: ================================= 
-//= Fully working
+//= 1.0 Fully working [kobra_k88]
 //= 1.1 Spell Checked [Nexon] 
 //= 1.2 Rescripted to Aegis 10.3 standard. [L0ne_W0lf]
+//= 1.2b Fixed typos in variable names [ultramage]
 //============================================================ 
 
 morocc_in,146,99,3	script	Java Dullihan	58,{
@@ -100,49 +101,49 @@ S_MakeDye:
 	switch(getarg(0)) {
 	case 1:
 		mes "Mmm... I need 30 Red Herbs, 1 Counteragent, and 1 Empty Bottle to make Red Dyestuffs. The fee is only 3000 zeny to make it.";
-		setarray .@items[0], 507,30, 0,0, 0,0, 0,0, 0,0;
+		setarray .@item[0], 507,30, 0,0, 0,0, 0,0, 0,0;
 		set .@cost,3000;
 		set .@dyestuff,975;
 		break;
 	case 2:
 		mes "Mmm... I need 30 Yellow Herbs, 1 Couneragent, and 1 Empty Bottle to make Lemon Dyestuffs. The fee is only 3000 zeny to make it.";
-		setarray .@items[0], 508,30, 0,0, 0,0, 0,0, 0,0;
+		setarray .@item[0], 508,30, 0,0, 0,0, 0,0, 0,0;
 		set .@cost,3000;
 		set .@dyestuff,976;
 		break;
 	case 3:
 		mes "Mmm... I need 20 Blue Herbs, 1 Counteragent, and 1 Empty Bottle to make Cobaltblue Dyestuff. It's hard to use the Blue Herb, so the fee is going to be 3500 zeny.";
-		setarray .@items[0], 510,20, 0,0, 0,0, 0,0, 0,0;
+		setarray .@item[0], 510,20, 0,0, 0,0, 0,0, 0,0;
 		set .@cost,3500;
 		set .@dyestuff,978;
 		break;
 	case 4:
 		mes "Mmm... I need 5 Blue Herbs, 20 Green Herbs, 20 Yellow Herbs, 1 Counteragent, 1 Mixture, and 1 Empty Bottle to make Darkgreen Dyestuffs. Don't get all of the materials confused. The fee is only 5000 zeny.";
-		setarray .@items[0], 510,5, 511,20, 508,20, 974,1, 0,0;
+		setarray .@item[0], 510,5, 511,20, 508,20, 974,1, 0,0;
 		set .@cost,5000;
 		set .@dyestuff,979;
 		break;
 	case 5:
 		mes "Mmm... I need 20 Red Herbs, 20 Yellow Herbs, 1 Counteragent, 1 Mixture, and 1 Empty Bottle to make Orange Dyestuff. The fee is going to be 5000 zeny.";
-		setarray .@items[0], 507,20, 508,20, 974,1, 0,0, 0,0;
+		setarray .@item[0], 507,20, 508,20, 974,1, 0,0, 0,0;
 		set .@cost,5000;
 		set .@dyestuff,980;
 		break;
 	case 6:
 		mes "Mmm... I need 10 Blue Herbs, 30 Red Herbs, 1 Counteragent, 1 Mixture, and 1 Empty Bottle to make Violet Dyestuffs. The fee will be 5000 zeny.";
-		setarray .@items[0], 510,10, 507,30, 974,1, 0,0, 0,0;
+		setarray .@item[0], 510,10, 507,30, 974,1, 0,0, 0,0;
 		set .@cost,5000;
 		set .@dyestuff,981;
 		break;
 	case 7:
 		mes "Mmm... I need 30 White Herbs, 1 Counteragent, and 1 Empty bottle to make White Dyestuffs. The fee will be 3000 zeny.";
-		setarray .@items[0], 509,30, 0,0, 0,0, 0,0, 0,0;
+		setarray .@item[0], 509,30, 0,0, 0,0, 0,0, 0,0;
 		set .@cost,3000;
 		set .@dyestuff,982;
 		break;
 	case 8:
 		mes "Mmm... I need 30 of each Red, Yellow, and Green Herb, 5 Blue Herbs, 1 Counteragent, 1 Mixture, and 1 Empty Bottle. The process takes longer and more effort than the others, so it is going to be 7000 zeny.";
-		setarray .@items[0], 507,30, 508,30, 511,30, 510,5, 974,1;
+		setarray .@item[0], 507,30, 508,30, 511,30, 510,5, 974,1;
 		set .@cost,7000;
 		set .@dyestuff,983;
 		break;
