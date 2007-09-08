@@ -550,11 +550,13 @@ int guild_recv_info(struct guild *sg)
 
 		// 最初のロードなのでユーザーのチェックを行う
 		guild_check_member(sg);
-		//If the guild master is online the first time the guild_info is received, that means he was the first to join,
-		//and as such, his guild skills should be blocked to avoid login/logout abuse [Skotlex]
 		if ((sd = map_nick2sd(sg->master)) != NULL)
 		{
-			guild_block_skill(sd, 300000);
+			//If the guild master is online the first time the guild_info is received, that means he was the first to join,
+			//and as such, his guild skills should be blocked to avoid login/logout abuse [Skotlex]
+			//(optionally)
+			//guild_block_skill(sd, 300000);
+
 			//Also set the guild master flag.
 			sd->state.gmaster_flag = g;
 			clif_charnameupdate(sd); // [LuzZza]			
