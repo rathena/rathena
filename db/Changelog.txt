@@ -28,6 +28,7 @@
 
 ========================
 09/09
+	* Updated some cards to use the new format of bonus3 bAddEff* [Skotlex]
 	* Commented unimplemented mob skills [Playtester]
 	* Added Cursed Abbey mob skills thanks to Doddler [Playtester]
 	- also fixed level of MVP heal which was once again 10 instead of 11

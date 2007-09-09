@@ -1288,6 +1288,11 @@ static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, shor
 static int pc_bonus_addeff(struct s_addeffect* effect, int max, short id, short rate, short arrow_rate, unsigned char flag)
 {
 	int i;
+	if (!(flag&(ATF_SHORT|ATF_LONG)))
+		flag|=ATF_SHORT|ATF_LONG; //Default range: both
+	if (!(flag&(ATF_TARGET|ATF_SELF)))
+		flag|=ATF_TARGET; //Default target: enemy.
+
 	for (i = 0; i < max && effect[i].flag; i++) {
 		if (effect[i].id == id && effect[i].flag == flag)
 		{
@@ -1970,8 +1975,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 		pc_bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), type2,
-			sd->state.lr_flag!=2?val:0, sd->state.lr_flag==2?val:0,
-			ATF_SHORT|ATF_LONG|ATF_TARGET);
+			sd->state.lr_flag!=2?val:0, sd->state.lr_flag==2?val:0, 0);
 		break;
 	case SP_ADDEFF2:
 		if (type2 > SC_MAX) {
@@ -1979,8 +1983,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 		pc_bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), type2,
-			sd->state.lr_flag!=2?val:0, sd->state.lr_flag==2?val:0,
-			ATF_SHORT|ATF_LONG|ATF_SELF);
+			sd->state.lr_flag!=2?val:0, sd->state.lr_flag==2?val:0, 0);
 		break;
 	case SP_RESEFF:
 		if (type2 < SC_COMMON_MIN || type2 > SC_COMMON_MAX) {
@@ -2196,8 +2199,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 		if(sd->state.lr_flag != 2)
-			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), type2, val, 0,
-				ATF_SHORT|ATF_LONG|ATF_TARGET);
+			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), type2, val, 0, 0);
 		break;
 	case SP_ADDEFF_WHENHIT_SHORT:
 		if (type2 > SC_MAX) {
@@ -2205,8 +2207,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 		if(sd->state.lr_flag != 2)
-			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), type2, val, 0,
-				ATF_SHORT|ATF_TARGET);
+			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), type2, val, 0, ATF_SHORT);
 		break;
 	case SP_SKILL_ATK:
 		if(sd->state.lr_flag == 2)
@@ -2446,8 +2447,7 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			break;
 		}
 		pc_bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), type2,
-			sd->state.lr_flag!=2?type3:0, sd->state.lr_flag==2?type3:0,
-			ATF_SHORT|ATF_LONG|(val?ATF_TARGET:ATF_SELF)|(val==2?ATF_SELF:0));
+			sd->state.lr_flag!=2?type3:0, sd->state.lr_flag==2?type3:0, val);
 		break;
 
 	case SP_ADDEFF_WHENHIT:
@@ -2456,8 +2456,7 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			break;
 		}
 		if(sd->state.lr_flag != 2)
-			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), type2, type3, 0,
-				ATF_SHORT|ATF_LONG|(val?ATF_TARGET:ATF_SELF)|(val==2?ATF_SELF:0));
+			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), type2, type3, 0, val);
 		break;
 
 	default:
