@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/09/09
+	* Uncommented Cursed Abbey spawns [Playtester]
 2007/09/08
 	* Fixed the dye maker npc (see topic:162818) [ultramage]
 2007/09/07

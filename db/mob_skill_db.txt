@@ -4563,7 +4563,7 @@
 1871,Fallen Bishop@NPC_WIDESILENCE,attack,663,5,10000,1000,20000,no,self,myhpltmaxrate,80,,,,,,32
 1871,Fallen Bishop@NPC_HELLJUDGEMENT,chase,662,4,10000,800,20000,no,self,myhpltmaxrate,60,,,,,,6
 1871,Fallen Bishop@NPC_HELLJUDGEMENT,attack,662,4,10000,800,20000,no,self,myhpltmaxrate,60,,,,,,6
-1871,Fallen Bishop@NPC_VAMPIRE_GIFT,attack,679,2,10000,800,30000,no,self,myhpltmaxrate,40,,,,,,6
+//1871,Fallen Bishop@NPC_VAMPIRE_GIFT,attack,679,2,10000,800,30000,no,self,myhpltmaxrate,40,,,,,,6
 1871,Fallen Bishop@NPC_SLOWCAST,attack,672,5,10000,0,30000,yes,self,myhpltmaxrate,70,,,,,,
 1871,Fallen Bishop@NPC_EVILLAND,attack,670,10,2000,1000,30000,no,self,myhpltmaxrate,90,,,,,,
 1871,Fallen Bishop@PR_LEXDIVINA,attack,76,5,1000,0,30000,no,target,always,0,,,,,,
@@ -4602,7 +4602,7 @@
 1873,Beelzebub@NPC_WIDESLEEP,attack,668,5,10000,700,25000,no,self,myhpltmaxrate,80,,,,,,
 1873,Beelzebub@NPC_HELLJUDGEMENT,chase,662,5,10000,800,20000,no,self,myhpltmaxrate,90,,,,,,6
 1873,Beelzebub@NPC_HELLJUDGEMENT,attack,662,5,10000,800,20000,no,self,myhpltmaxrate,90,,,,,,6
-1873,Beelzebub@NPC_VAMPIRE_GIFT,attack,679,10,10000,0,30000,no,self,myhpltmaxrate,65,,,,,,6
+//1873,Beelzebub@NPC_VAMPIRE_GIFT,attack,679,10,10000,0,30000,no,self,myhpltmaxrate,65,,,,,,6
 1873,Beelzebub@NPC_PULSESTRIKE,attack,661,5,10000,0,15000,no,self,myhpltmaxrate,60,,,,,,
 1873,Beelzebub@NPC_EVILLAND,attack,670,10,2000,1000,30000,no,self,myhpltmaxrate,90,,,,,,
 1873,Beelzebub@NPC_EXPULSION,attack,674,1,1000,1000,10000,no,self,myhpltmaxrate,99,,,,,,
@@ -4625,11 +4625,11 @@
 1874,Beelzebub True@NPC_SLOWCAST,attack,672,5,10000,0,30000,no,self,myhpltmaxrate,90,,,,,,
 1874,Beelzebub True@NPC_WIDESTONE,chase,666,5,10000,500,20000,no,self,myhpltmaxrate,80,,,,,,
 1874,Beelzebub True@NPC_WIDESTONE,attack,666,5,10000,500,20000,no,self,myhpltmaxrate,80,,,,,,
-1874,Beelzebub True@NPC_WIDESOULDRAIN,chase,680,7,10000,500,20000,no,self,myhpltmaxrate,30,,,,,,
-1874,Beelzebub True@NPC_WIDESOULDRAIN,attack,680,7,10000,500,20000,no,self,myhpltmaxrate,30,,,,,,
+//1874,Beelzebub True@NPC_WIDESOULDRAIN,chase,680,7,10000,500,20000,no,self,myhpltmaxrate,30,,,,,,
+//1874,Beelzebub True@NPC_WIDESOULDRAIN,attack,680,7,10000,500,20000,no,self,myhpltmaxrate,30,,,,,,
 1874,Beelzebub True@NPC_HELLJUDGEMENT,chase,662,2,10000,800,20000,no,self,myhpltmaxrate,90,,,,,,6
 1874,Beelzebub True@NPC_HELLJUDGEMENT,attack,662,2,10000,800,20000,no,self,myhpltmaxrate,90,,,,,,6
-1874,Beelzebub True@NPC_VAMPIRE_GIFT,attack,679,10,10000,0,30000,no,self,myhpltmaxrate,50,,,,,,6
+//1874,Beelzebub True@NPC_VAMPIRE_GIFT,attack,679,10,10000,0,30000,no,self,myhpltmaxrate,50,,,,,,6
 1874,Beelzebub True@NPC_PULSESTRIKE,attack,661,5,10000,0,15000,no,self,always,,,,,,,
 1874,Beelzebub True@NPC_EVILLAND,attack,670,10,2000,1000,30000,no,self,myhpltmaxrate,90,,,,,,
 1874,Beelzebub True@NPC_EXPULSION,attack,674,1,1000,1000,10000,no,self,myhpltmaxrate,99,,,,,,
