@@ -3853,7 +3853,7 @@
 1734,Kiel-D-01@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1734,Kiel-D-01@AL_TELEPORT,walk,26,1,10000,0,5000,yes,self,rudeattacked,,,,,,,
 1734,Kiel-D-01@AL_PNEUMA,attack,25,1,10000,0,10000,yes,self,longrangeattacked,,,,,,,
-1734,Kiel-D-01@AL_HEAL,idle,28,10,10000,0,10000,yes,self,myhpltmaxrate,50,,,,,,
+1734,Kiel-D-01@AL_HEAL,idle,28,11,10000,0,10000,yes,self,myhpltmaxrate,50,,,,,,
 1735,Alicel@MO_BODYRELOCATION,chase,264,1,2000,500,5000,no,target,always,0,,,,,,
 1735,Alicel@NPC_EMOTION,idle,197,1,2000,0,5000,yes,self,always,0,29,,,,,
 1735,Alicel@NPC_DARKNESSATTACK,attack,190,3,500,500,5000,no,target,always,0,,,,,,
@@ -4197,7 +4197,7 @@
 1779,Ktullanux@NPC_POWERUP,attack,349,5,10000,0,25000,yes,self,myhpltmaxrate,30,,,,,,
 1779,Ktullanux@NPC_AGIUP,attack,350,5,2000,0,100000,yes,self,always,0,,,,,,
 1779,Ktullanux@NPC_AGIUP,attack,350,5,10000,0,25000,yes,self,myhpltmaxrate,30,,,,,,
-1779,Ktullanux@AL_HEAL,idle,28,10,10000,0,10000,yes,self,myhpltmaxrate,50,,,,,,
+1779,Ktullanux@AL_HEAL,idle,28,11,10000,0,10000,yes,self,myhpltmaxrate,50,,,,,,
 1780,Muscipular@NPC_BLOODDRAIN,attack,199,1,1000,0,5000,yes,randomtarget,always,0,,,,,,
 1780,Muscipular@KN_SPEARSTAB,attack,58,5,500,800,5000,no,randomtarget,always,0,,,,,,6
 1780,Muscipular@NPC_GROUNDATTACK,attack,185,1,1000,0,5000,yes,randomtarget,always,0,,,,,,
@@ -4381,7 +4381,7 @@
 1831,Salamander@NPC_WIDEBLEEDING,attack,665,2,10000,500,100000,no,self,myhpltmaxrate,20,,,,,,
 1832,Ifrit@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1832,Ifrit@AL_PNEUMA,idle,25,1,10000,0,1000,yes,self,longrangeattacked,,,,,,,
-1832,Ifrit@AL_HEAL,idle,28,10,10000,0,5000,yes,self,myhpltmaxrate,50,,,,,,
+1832,Ifrit@AL_HEAL,idle,28,11,10000,0,5000,yes,self,myhpltmaxrate,50,,,,,,
 1832,Ifrit@AL_HEAL,idle,28,1,10000,0,10000,yes,self,myhpltmaxrate,99,,,,,,
 1832,Ifrit@NPC_POWERUP,attack,349,5,10000,0,30000,yes,self,myhpltmaxrate,20,,,,,,6
 1832,Ifrit@NPC_SUMMONSLAVE,attack,196,2,10000,1000,30000,no,self,slavele,1,1834,1835,,,,
@@ -4486,3 +4486,160 @@
 1840,Golden Savage@WZ_QUAGMIRE,attack,92,2,500,0,5000,yes,target,always,,,,,,,
 1840,Golden Savage@WZ_QUAGMIRE,chase,92,2,2000,0,5000,yes,target,always,,,,,,,
 1840,Golden Savage@NPC_PULSESTRIKE,attack,661,1,500,0,10000,yes,self,always,,,,,,,32
+
+//Cursed Abbey
+1864,Zombie Slaughter@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1864,Zombie Slaughter@NPC_SONICBLOW,attack,136,10,2000,0,5000,yes,target,always,0,,,,,,
+1864,Zombie Slaughter@NPC_UNDEADATTACK,attack,347,5,1000,0,5000,yes,target,always,0,,,,,,2
+1864,Zombie Slaughter@CR_AUTOGUARD,chase,249,10,2000,0,5000,yes,self,always,0,,,,,,
+1864,Zombie Slaughter@CR_AUTOGUARD,attack,249,10,500,0,5000,yes,self,always,0,,,,,,
+1864,Zombie Slaughter@RG_STRIPARMOR,attack,217,3,100,0,30000,yes,target,always,0,,,,,,2
+1865,Ragged Zombie@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1865,Ragged Zombie@AC_DOUBLE,idle,46,10,2000,0,5000,yes,target,always,,,,,,,
+1865,Ragged Zombie@AC_SHOWER,idle,47,5,2000,0,5000,yes,target,always,,,,,,,
+1865,Ragged Zombie@AC_DOUBLE,attack,46,10,500,0,5000,yes,target,always,,,,,,,
+1865,Ragged Zombie@AC_SHOWER,attack,47,5,500,0,5000,yes,target,always,,,,,,,
+1865,Ragged Zombie@NPC_UNDEADATTACK,attack,347,5,500,0,5000,yes,target,always,0,,,,,,2
+1865,Ragged Zombie@NPC_STUNATTACK,attack,179,5,500,0,5000,yes,target,always,,,,,,,
+1866,Hell Poodle@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1866,Hell Poodle@AS_GRIMTOOTH,chase,137,5,2000,0,5000,yes,target,always,0,,,,,,
+1866,Hell Poodle@NPC_BLINDATTACK,attack,177,3,500,0,5000,yes,target,always,0,,,,,,
+1866,Hell Poodle@SM_BASH,attack,5,5,500,0,5000,yes,target,always,0,,,,,,
+1866,Hell Poodle@AL_HEAL,idle,28,5,10000,500,15000,yes,self,myhpltmaxrate,30,,,,,,0
+1866,Hell Poodle@AL_HEAL,attack,28,5,10000,500,15000,yes,self,myhpltmaxrate,30,,,,,,0
+1866,Hell Poodle@AS_SONICBLOW,attack,136,5,500,800,5000,no,target,always,0,,,,,,6
+1866,Hell Poodle@TF_BACKSLIDING,attack,150,1,10000,500,600000,no,target,myhpltmaxrate,10,,,,,,
+1867,Banshee@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1867,Banshee@NPC_DARKSTRIKE,chase,340,2,5000,0,5000,yes,target,always,0,,,,,,
+1867,Banshee@NPC_DARKSTRIKE,attack,340,2,2000,0,5000,yes,target,always,0,,,,,,
+1867,Banshee@NPC_CRITICALWOUND,attack,673,4,1000,0,10000,no,target,always,0,,,,,,
+1867,Banshee@NPC_CURSEATTACK,attack,181,5,500,800,5000,no,target,always,0,,,,,,29
+1867,Banshee@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,26
+1867,Banshee@NPC_EVILLAND,attack,670,10,100,1000,30000,yes,self,always,0,,,,,,
+1868,Banshee@NPC_DARKSTRIKE,chase,340,2,5000,0,5000,yes,target,always,0,,,,,,
+1868,Banshee@NPC_DARKSTRIKE,attack,340,2,2000,0,5000,yes,target,always,0,,,,,,
+1868,Banshee@NPC_CRITICALWOUND,attack,673,4,1000,0,10000,no,target,always,0,,,,,,
+1868,Banshee@NPC_CURSEATTACK,attack,181,5,500,800,5000,no,target,always,0,,,,,,29
+1868,Banshee@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,26
+1868,Banshee@NPC_EVILLAND,attack,670,10,100,1000,30000,yes,self,always,0,,,,,,
+1869,Flame Skull@MO_BODYRELOCATION,chase,264,1,2000,500,5000,no,target,always,0,,,,,,
+1869,Flame Skull@MG_FIREBALL,chase,17,5,2000,500,10000,no,target,always,,,,,,,
+1869,Flame Skull@MG_FIREBALL,attack,17,5,1000,500,10000,no,target,always,,,,,,,
+1869,Flame Skull@WZ_SIGHTRASHER,attack,81,7,1000,1000,5000,no,target,always,0,,,,,,
+1870,Necromancer@NPC_SUMMONSLAVE,idle,196,2,10000,1000,10000,no,self,slavele,1,1864,,,,,
+1870,Necromancer@NPC_SUMMONSLAVE,chase,196,2,10000,1000,10000,no,self,slavele,1,1864,,,,,
+1870,Necromancer@NPC_SUMMONSLAVE,attack,196,2,10000,1000,10000,no,self,slavele,1,1864,,,,,
+1870,Necromancer@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,,,,,,,
+1870,Necromancer@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,self,always,,,,,,,
+1870,Necromancer@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
+1870,Necromancer@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,
+1870,Necromancer@CR_REFLECTSHIELD,attack,252,2,500,0,300000,no,self,always,0,,,,,,
+1870,Necromancer@NPC_STONESKIN,attack,675,2,500,0,30000,no,self,myhpltmaxrate,99,,,,,,
+1870,Necromancer@NPC_SLOWCAST,attack,672,5,2000,0,30000,yes,self,myhpltmaxrate,40,,,,,,
+1870,Necromancer@WZ_METEOR,attack,83,5,2000,1500,5000,no,target,myhpltmaxrate,20,,,,,,
+1870,Necromancer@WZ_METEOR,chase,83,5,2000,1500,5000,no,target,myhpltmaxrate,20,,,,,,
+1870,Necromancer@MG_THUNDERSTORM,chase,21,7,5000,800,5000,no,target,always,,,,,,,
+1870,Necromancer@MG_THUNDERSTORM,attack,21,7,2000,800,10000,no,target,always,,,,,,,
+1870,Necromancer@MG_FIREBALL,chase,17,8,2000,0,10000,no,target,attackpcge,2,,,,,,
+1870,Necromancer@MG_FIREBALL,attack,17,8,2000,0,10000,no,target,attackpcge,2,,,,,,
+1870,Necromancer@NPC_DARKSTRIKE,chase,340,10,5000,0,5000,yes,target,always,0,,,,,,
+1870,Necromancer@NPC_DARKSTRIKE,attack,340,10,2000,0,5000,yes,target,always,0,,,,,,
+1870,Necromancer@WZ_QUAGMIRE,chase,92,5,2000,0,5000,no,target,always,0,,,,,,
+1870,Necromancer@NPC_UNDEADATTACK,attack,347,5,2000,0,5000,yes,target,always,0,,,,,,2
+1870,Necromancer@NPC_ENERGYDRAIN,attack,200,1,2000,0,5000,yes,target,always,0,,,,,,
+1871,Fallen Bishop@AL_TELEPORT,idle,26,1,10000,0,0,no,self,rudeattacked,,,,,,,
+1871,Fallen Bishop@AL_TELEPORT,walk,26,1,10000,0,5000,no,self,rudeattacked,,,,,,,
+1871,Fallen Bishop@NPC_CALLSLAVE,attack,352,1,10000,0,30000,no,self,always,0,,,,,,
+1871,Fallen Bishop@NPC_CALLSLAVE,idle,352,1,10000,0,30000,no,self,always,0,,,,,,
+1871,Fallen Bishop@NPC_SUMMONSLAVE,attack,196,4,10000,0,20000,no,self,slavele,8,1868,,,,,
+1871,Fallen Bishop@NPC_SUMMONSLAVE,idle,196,4,10000,0,20000,no,self,slavele,8,1868,,,,,
+1871,Fallen Bishop@MG_SAFETYWALL,attack,12,10,500,0,5000,no,self,always,0,,,,,,
+1871,Fallen Bishop@MG_SAFETYWALL,attack,12,10,1000,0,5000,no,self,myhpltmaxrate,30,,,,,,
+1871,Fallen Bishop@AL_PNEUMA,idle,25,1,10000,0,10000,no,self,longrangeattacked,,,,,,,
+1871,Fallen Bishop@AL_PNEUMA,attack,25,1,3000,0,10000,no,self,longrangeattacked,,,,,,,
+1871,Fallen Bishop@NPC_MAGICMIRROR,attack,671,1,10000,0,30000,no,self,casttargeted,,,,,,,9
+1871,Fallen Bishop@NPC_WIDECURSE,chase,663,5,10000,1000,20000,no,self,myhpltmaxrate,80,,,,,,32
+1871,Fallen Bishop@NPC_WIDECURSE,attack,663,5,10000,1000,20000,no,self,myhpltmaxrate,80,,,,,,32
+1871,Fallen Bishop@NPC_WIDESILENCE,attack,663,5,10000,1000,20000,no,self,myhpltmaxrate,80,,,,,,32
+1871,Fallen Bishop@NPC_HELLJUDGEMENT,chase,662,4,10000,800,20000,no,self,myhpltmaxrate,60,,,,,,6
+1871,Fallen Bishop@NPC_HELLJUDGEMENT,attack,662,4,10000,800,20000,no,self,myhpltmaxrate,60,,,,,,6
+1871,Fallen Bishop@NPC_VAMPIRE_GIFT,attack,679,2,10000,800,30000,no,self,myhpltmaxrate,40,,,,,,6
+1871,Fallen Bishop@NPC_SLOWCAST,attack,672,5,10000,0,30000,yes,self,myhpltmaxrate,70,,,,,,
+1871,Fallen Bishop@NPC_EVILLAND,attack,670,10,2000,1000,30000,no,self,myhpltmaxrate,90,,,,,,
+1871,Fallen Bishop@PR_LEXDIVINA,attack,76,5,1000,0,30000,no,target,always,0,,,,,,
+1871,Fallen Bishop@PR_LEXDIVINA,attack,76,5,1000,0,30000,no,target,casttargeted,,,,,,,
+1871,Fallen Bishop@CR_GRANDCROSS,attack,254,10,500,700,10000,no,self,myhpltmaxrate,50,,,,,,
+1871,Fallen Bishop@NPC_GRANDDARKNESS,attack,339,10,500,700,10000,no,self,myhpltmaxrate,50,,,,,,
+1871,Fallen Bishop@NPC_DARKCROSS,attack,338,10,2000,0,5000,no,target,always,0,,,,,,
+1871,Fallen Bishop@CR_HOLYCROSS,attack,253,10,2000,0,5000,no,target,always,0,,,,,,
+1871,Fallen Bishop@NPC_CRITICALWOUND,attack,673,2,2000,0,10000,no,target,always,0,,,,,,
+1871,Fallen Bishop@NPC_DARKBREATH,attack,202,5,2000,0,10000,no,target,always,0,,,,,,9
+1871,Fallen Bishop@NPC_DARKNESSATTACK,attack,190,10,2000,0,10000,no,target,always,0,,,,,,
+1871,Fallen Bishop@NPC_CRITICALSLASH,attack,170,1,2000,0,5000,no,target,always,0,,,,,,
+1871,Fallen Bishop@AL_HEAL,idle,28,11,10000,0,10000,no,self,myhpltmaxrate,50,,,,,,
+1871,Fallen Bishop@AL_HEAL,chase,28,11,10000,0,10000,no,self,myhpltmaxrate,50,,,,,,
+1871,Fallen Bishop@AL_HEAL,attack,28,11,10000,0,10000,no,self,myhpltmaxrate,50,,,,,,
+1872,Hell Fly@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,
+1872,Hell Fly@NPC_COMBOATTACK,attack,171,3,500,700,5000,no,target,always,0,,,,,,
+1872,Hell Fly@NPC_MENTALBREAKER,attack,159,1,500,800,5000,no,target,always,0,,,,,,
+1872,Hell Fly@NPC_CRITICALWOUND,attack,673,4,500,0,10000,no,target,always,0,,,,,,
+1872,Hell Fly@NPC_WINDATTACK,attack,187,5,2000,0,5000,yes,target,always,0,,,,,,
+1872,Hell Fly@AL_HEAL,idle,28,11,10000,500,5000,yes,friend,friendhpltmaxrate,99,,,,,,3
+1872,Hell Fly@AL_HEAL,attack,28,11,10000,500,10000,yes,friend,friendhpltmaxrate,99,,,,,,3
+1873,Beelzebub@NPC_METAMORPHOSIS,idle,193,1,10000,0,0,no,self,myhpltmaxrate,50,1874,,,,,21
+1873,Beelzebub@NPC_METAMORPHOSIS,walk,193,1,10000,0,0,no,self,myhpltmaxrate,50,1874,,,,,21
+1873,Beelzebub@NPC_METAMORPHOSIS,chase,193,1,10000,0,0,no,self,myhpltmaxrate,50,1874,,,,,21
+1873,Beelzebub@NPC_METAMORPHOSIS,attack,193,1,10000,0,0,no,self,myhpltmaxrate,50,1874,,,,,21
+1873,Beelzebub@AL_TELEPORT,idle,26,1,10000,0,0,no,self,rudeattacked,,,,,,,
+1873,Beelzebub@AL_TELEPORT,walk,26,1,10000,0,5000,no,self,rudeattacked,,,,,,,
+1873,Beelzebub@NPC_CALLSLAVE,attack,352,1,10000,0,30000,no,self,always,0,,,,,,
+1873,Beelzebub@NPC_CALLSLAVE,idle,352,1,10000,0,30000,no,self,always,0,,,,,,
+1873,Beelzebub@NPC_SUMMONSLAVE,attack,196,7,10000,0,20000,no,self,slavele,5,1872,,,,,
+1873,Beelzebub@NPC_SUMMONSLAVE,idle,196,7,10000,0,20000,no,self,slavele,5,1872,,,,,
+1873,Beelzebub@AL_PNEUMA,idle,25,1,10000,0,1000,yes,self,longrangeattacked,,,,,,,
+1873,Beelzebub@AL_INCAGI,chase,29,5,2000,0,240000,yes,self,always,0,,,,,,2
+1873,Beelzebub@NPC_WIDESLEEP,chase,668,5,10000,700,25000,no,self,always,0,,,,,,
+1873,Beelzebub@NPC_WIDESLEEP,attack,668,5,10000,700,25000,no,self,myhpltmaxrate,80,,,,,,
+1873,Beelzebub@NPC_HELLJUDGEMENT,chase,662,5,10000,800,20000,no,self,myhpltmaxrate,90,,,,,,6
+1873,Beelzebub@NPC_HELLJUDGEMENT,attack,662,5,10000,800,20000,no,self,myhpltmaxrate,90,,,,,,6
+1873,Beelzebub@NPC_VAMPIRE_GIFT,attack,679,10,10000,0,30000,no,self,myhpltmaxrate,65,,,,,,6
+1873,Beelzebub@NPC_PULSESTRIKE,attack,661,5,10000,0,15000,no,self,myhpltmaxrate,60,,,,,,
+1873,Beelzebub@NPC_EVILLAND,attack,670,10,2000,1000,30000,no,self,myhpltmaxrate,90,,,,,,
+1873,Beelzebub@NPC_EXPULSION,attack,674,1,1000,1000,10000,no,self,myhpltmaxrate,99,,,,,,
+1873,Beelzebub@NPC_CRITICALWOUND,attack,673,3,2000,0,10000,no,target,always,0,,,,,,
+1873,Beelzebub@LK_SPIRALPIERCE,chase,397,5,2000,0,5000,no,target,always,,,,,,,
+1873,Beelzebub@LK_SPIRALPIERCE,attack,397,5,2000,0,5000,no,target,always,,,,,,,
+1873,Beelzebub@NPC_SHIELDBRAKE,attack,346,10,2000,0,5000,no,target,always,0,,,,,,
+1873,Beelzebub@AL_HEAL,idle,28,9,10000,0,15000,no,self,myhpltmaxrate,70,,,,,,0
+1873,Beelzebub@AL_HEAL,attack,28,9,10000,0,15000,no,self,myhpltmaxrate,70,,,,,,0
+1874,Beelzebub True@AL_TELEPORT,idle,26,1,10000,0,0,no,self,rudeattacked,,,,,,,
+1874,Beelzebub True@AL_TELEPORT,walk,26,1,10000,0,5000,no,self,rudeattacked,,,,,,,
+1874,Beelzebub True@NPC_CALLSLAVE,attack,352,1,10000,0,30000,no,self,always,0,,,,,,
+1874,Beelzebub True@NPC_CALLSLAVE,idle,352,1,10000,0,30000,no,self,always,0,,,,,,
+1874,Beelzebub True@NPC_SUMMONSLAVE,attack,196,7,10000,0,20000,no,self,slavele,5,1872,,,,,
+1874,Beelzebub True@NPC_SUMMONSLAVE,idle,196,7,10000,0,20000,no,self,slavele,5,1872,,,,,
+1874,Beelzebub True@AL_PNEUMA,idle,25,1,10000,0,1000,no,self,longrangeattacked,,,,,,,
+1874,Beelzebub True@AL_INCAGI,chase,29,5,2000,0,240000,no,self,always,0,,,,,,2
+1874,Beelzebub True@NPC_MAGICMIRROR,attack,671,1,10000,0,30000,no,self,casttargeted,,,,,,,9
+1874,Beelzebub True@NPC_STONESKIN,attack,675,4,500,0,30000,no,self,myhpltmaxrate,20,,,,,,
+1874,Beelzebub True@NPC_SLOWCAST,attack,672,5,10000,0,30000,no,self,myhpltmaxrate,90,,,,,,
+1874,Beelzebub True@NPC_WIDESTONE,chase,666,5,10000,500,20000,no,self,myhpltmaxrate,80,,,,,,
+1874,Beelzebub True@NPC_WIDESTONE,attack,666,5,10000,500,20000,no,self,myhpltmaxrate,80,,,,,,
+1874,Beelzebub True@NPC_WIDESOULDRAIN,chase,680,7,10000,500,20000,no,self,myhpltmaxrate,30,,,,,,
+1874,Beelzebub True@NPC_WIDESOULDRAIN,attack,680,7,10000,500,20000,no,self,myhpltmaxrate,30,,,,,,
+1874,Beelzebub True@NPC_HELLJUDGEMENT,chase,662,2,10000,800,20000,no,self,myhpltmaxrate,90,,,,,,6
+1874,Beelzebub True@NPC_HELLJUDGEMENT,attack,662,2,10000,800,20000,no,self,myhpltmaxrate,90,,,,,,6
+1874,Beelzebub True@NPC_VAMPIRE_GIFT,attack,679,10,10000,0,30000,no,self,myhpltmaxrate,50,,,,,,6
+1874,Beelzebub True@NPC_PULSESTRIKE,attack,661,5,10000,0,15000,no,self,always,,,,,,,
+1874,Beelzebub True@NPC_EVILLAND,attack,670,10,2000,1000,30000,no,self,myhpltmaxrate,90,,,,,,
+1874,Beelzebub True@NPC_EXPULSION,attack,674,1,1000,1000,10000,no,self,myhpltmaxrate,99,,,,,,
+1874,Beelzebub True@NPC_CRITICALWOUND,attack,673,3,2000,0,10000,no,target,always,0,,,,,,
+1874,Beelzebub True@NPC_ACIDBREATH,chase,657,10,2000,500,5000,no,target,myhpltmaxrate,70,,,,,,
+1874,Beelzebub True@NPC_ACIDBREATH,attack,657,10,2000,500,5000,no,target,myhpltmaxrate,70,,,,,,
+1874,Beelzebub True@LK_SPIRALPIERCE,chase,397,5,2000,0,5000,no,target,always,,,,,,,
+1874,Beelzebub True@LK_SPIRALPIERCE,attack,397,5,2000,0,5000,no,target,always,,,,,,,
+1874,Beelzebub True@NPC_SHIELDBRAKE,attack,346,10,2000,0,5000,no,target,always,0,,,,,,
+1874,Beelzebub True@AL_HEAL,idle,28,9,10000,0,15000,no,self,myhpltmaxrate,50,,,,,,0
+1874,Beelzebub True@AL_HEAL,attack,28,9,10000,0,15000,no,self,myhpltmaxrate,50,,,,,,0
+//1874,Beelzebub True@SA_LANDPROTECTOR,attack,288,3,5000,0,5000,no,target,always,,,,,,,
+1875,Tristan@NPC_BLOODDRAIN,attack,199,1,2000,0,5000,yes,target,always,0,,,,,,

@@ -27,6 +27,9 @@
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
 ========================
+09/09
+	* Added Cursed Abbey mob skills thanks to Doddler [Playtester]
+	- also fixed level of MVP heal which was once again 10 instead of 11
 09/08
 	* Updated item_db, mob_db and skill_cast_db [Playtester]
 	- updated prices of new etc drops (guessed values)
