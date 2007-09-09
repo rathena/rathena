@@ -1313,7 +1313,7 @@
 2708,Chinese_Handicraft,Chinese Handicraft,5,,10,50,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus3 bAutoSpell,19,5,300; },{},{}
 2709,5th_Anniversary_Coin,5th Anniversary Coin,5,,0,100,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{ bonus bAtkRate,5; bonus bMatkRate,5; },{},{}
 2710,Bloody_Iron_Ball_C,Refined Bloodied Shackle Ball,5,,0,0,,0,,0,0xFFFFFFFE,7,2,136,,1,0,0,{ bonus bAtk,30; },{},{}
-2711,Spiritual_Ring_C,Refined Spiritual Ring,5,,0,0,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{ bonus bInt,2; bonus bDex,2; if(isequipped(2607) || isequipped(2608) || isequipped(2626)) { bonus2 bSkillAtk,28,50; bonus2 bSkillAtk,79,30; bonus bSPrecovRate,9; },},{}
+2711,Spiritual_Ring_C,Refined Spiritual Ring,5,,0,0,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{ bonus bInt,2; bonus bDex,2; if(isequipped(2607) || isequipped(2608) || isequipped(2626)) { bonus2 bSkillAtk,28,50; bonus2 bSkillAtk,79,30; bonus bSPrecovRate,9; } },{},{}
 2712,Collector's_Edition_Book,Collector's Edition Book,5,,10,300,,0,,1,0xFFFFFFFF,7,2,136,,1,0,0,{ bonus bAgi,3; bonus bVit,3; bonus bLuk,3; },{},{}
 // Cards
 //===================================================================
