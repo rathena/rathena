@@ -28,6 +28,7 @@
 
 ========================
 09/10
+	* Fixed Garm's and Bacsojin's skills being cancelable [Playtester]
 	* Fixed Asura Strike autocast being self targetted [Playtester]
 09/09
 	* Fixed size of NPC_EVILLAND [Playtester]
