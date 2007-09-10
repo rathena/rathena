@@ -213,8 +213,10 @@ rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
 		mes "Thanks for supporting Cool";
 		mes "Event Corp. by using our";
 		mes "services. Have a good day~";
+		callfunc("F_CheckKafCode");	//check your storage password, if set
 		close2;
 		openstorage;
+		cutin "", 255;
 		end;
 	case 3:
 		mes "[Cool Event Corp. Staff]";
