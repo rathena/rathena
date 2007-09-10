@@ -66,7 +66,7 @@ struct skill_db {
 	int cast[MAX_SKILL_LEVEL],walkdelay[MAX_SKILL_LEVEL],delay[MAX_SKILL_LEVEL];
 	int upkeep_time[MAX_SKILL_LEVEL],upkeep_time2[MAX_SKILL_LEVEL];
 	int castcancel,cast_def_rate;
-	int inf2,maxcount,skill_type;
+	int inf2,maxcount[MAX_SKILL_LEVEL],skill_type;
 	int blewcount[MAX_SKILL_LEVEL];
 	int hp[MAX_SKILL_LEVEL],sp[MAX_SKILL_LEVEL],mhp[MAX_SKILL_LEVEL],hp_rate[MAX_SKILL_LEVEL],sp_rate[MAX_SKILL_LEVEL],zeny[MAX_SKILL_LEVEL];
 	int weapon,ammo,ammo_qty[MAX_SKILL_LEVEL],state,spiritball[MAX_SKILL_LEVEL];
@@ -179,7 +179,7 @@ int	skill_get_nocast( int id );
 int	skill_get_unit_id(int id,int flag);
 int	skill_get_inf2( int id );
 int	skill_get_castcancel( int id );
-int	skill_get_maxcount( int id );
+int	skill_get_maxcount( int id ,int lv );
 int	skill_get_blewcount( int id ,int lv );
 int	skill_get_unit_flag( int id );
 int	skill_get_unit_target( int id );

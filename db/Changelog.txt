@@ -28,6 +28,8 @@
 
 ========================
 09/10
+	* Corrected Kamaitachi's range to be 9, and the path range to be 4+SkillLv
+	  [Skotlex]
 	* Fixed Garm's and Bacsojin's skills being cancelable [Playtester]
 	* Fixed Asura Strike autocast being self targetted [Playtester]
 09/09

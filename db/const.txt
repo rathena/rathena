@@ -395,7 +395,7 @@ bSPDrainValueRace	2029
 bExpAddRace	2030
 bSPGainRace	2031
 bSubRace2	2032
-bAddEffWhenHitShort	2033
+
 bUnstripableWeapon	2034
 bUnstripableArmor	2035
 bUnstripableHelm	2036

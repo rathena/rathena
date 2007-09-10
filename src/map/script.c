@@ -11062,27 +11062,68 @@ BUILDIN_FUNC(recovery)
 BUILDIN_FUNC(getpetinfo)
 {
 	TBL_PC *sd=script_rid2sd(st);
-	struct pet_data *pd;
+	TBL_PET *pd;
 	int type=script_getnum(st,2);
-
-	if(sd && sd->status.pet_id && sd->pd){
-		pd = sd->pd;
-		switch(type){
-			case 0: script_pushint(st,sd->status.pet_id); break;
-			case 1: script_pushint(st,pd->pet.class_); break;
-			case 2: script_pushstr(st,aStrdup(pd->pet.name)); break;
-			case 3: script_pushint(st,pd->pet.intimate); break;
-			case 4: script_pushint(st,pd->pet.hungry); break;
-			case 5: script_pushint(st,pd->pet.rename_flag); break;
-			default:
-				script_pushint(st,0);
-				break;
-		}
-	}else{
-		script_pushint(st,0);
+	
+	if(!sd || !sd->pd) {
+		if (type == 2)
+			script_pushconststr(st,"null");
+		else
+			script_pushint(st,0);
+		return 0;
+	}
+	pd = sd->pd;
+	switch(type){
+		case 0: script_pushint(st,pd->pet.pet_id); break;
+		case 1: script_pushint(st,pd->pet.class_); break;
+		case 2: script_pushstr(st,aStrdup(pd->pet.name)); break;
+		case 3: script_pushint(st,pd->pet.intimate); break;
+		case 4: script_pushint(st,pd->pet.hungry); break;
+		case 5: script_pushint(st,pd->pet.rename_flag); break;
+		default:
+			script_pushint(st,0);
+			break;
 	}
 	return 0;
 }
+
+/*==========================================
+ * Get your homunculus info: gethominfo(n)  
+ * n -> 0:hom_id 1:class 2:name
+ * 3:friendly 4:hungry, 5: rename flag.
+ * 6: level
+ *------------------------------------------*/
+BUILDIN_FUNC(gethominfo)
+{
+	TBL_PC *sd=script_rid2sd(st);
+	TBL_HOM *hd;
+	int type=script_getnum(st,2);
+
+	hd = sd?sd->hd:NULL;
+	if(!merc_is_hom_active(hd))
+	{
+		if (type == 2)
+			script_pushconststr(st,"null");
+		else
+			script_pushint(st,0);
+		return 0;
+	}
+
+	switch(type){
+		case 0: script_pushint(st,hd->homunculus.hom_id); break;
+		case 1: script_pushint(st,hd->homunculus.class_); break;
+		case 2: script_pushstr(st,aStrdup(hd->homunculus.name)); break;
+		case 3: script_pushint(st,hd->homunculus.intimacy); break;
+		case 4: script_pushint(st,hd->homunculus.hunger); break;
+		case 5: script_pushint(st,hd->homunculus.rename_flag); break;
+		case 6: script_pushint(st,hd->homunculus.level); break;
+		default:
+			script_pushint(st,0);
+			break;
+	}
+	return 0;
+}
+
 /*==========================================
  * Shows wether your inventory(and equips) contain
    selected card or not.

@@ -2201,14 +2201,6 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2)
 			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), type2, val, 0, 0);
 		break;
-	case SP_ADDEFF_WHENHIT_SHORT:
-		if (type2 > SC_MAX) {
-			ShowWarning("pc_bonus2 (Add Effect when hit short): %d is not supported.\n", type2);
-			break;
-		}
-		if(sd->state.lr_flag != 2)
-			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), type2, val, 0, ATF_SHORT);
-		break;
 	case SP_SKILL_ATK:
 		if(sd->state.lr_flag == 2)
 			break;
@@ -2387,15 +2379,21 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		break;
 	case SP_AUTOSPELL:
 		if(sd->state.lr_flag != 2)
+		{
+			int target = skill_get_inf(type2); //Support or Self (non-auto-target) skills should pick self.
+			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !(skill_get_inf2(type2)&INF2_NO_TARGET_SELF));
 			pc_bonus_autospell(sd->autospell, ARRAYLENGTH(sd->autospell),
-				skill_get_inf(type2)&(INF_SELF_SKILL|INF_SUPPORT_SKILL)?-type2:type2,
-				type3, val, 0, current_equip_card_id);
+				target?-type2:type2, type3, val, 0, current_equip_card_id);
+		}
 		break;
 	case SP_AUTOSPELL_WHENHIT:
 		if(sd->state.lr_flag != 2)
+		{
+			int target = skill_get_inf(type2); //Support or Self (non-auto-target) skills should pick self.
+			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !(skill_get_inf2(type2)&INF2_NO_TARGET_SELF));
 			pc_bonus_autospell(sd->autospell2, ARRAYLENGTH(sd->autospell2),
-				skill_get_inf(type2)&(INF_SELF_SKILL|INF_SUPPORT_SKILL)?-type2:type2,
-				type3, val, 0, current_equip_card_id);
+				target?-type2:type2, type3, val, 0, current_equip_card_id);
+		}
 		break;
 	case SP_SP_DRAIN_RATE:
 		if(!sd->state.lr_flag) {

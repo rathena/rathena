@@ -1154,7 +1154,10 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 						k = (xi-x0)*(x1-x0) + (yi-y0)*(y1-y0);
 						if (k < 0 || k > len_limit) //Since more skills use this, check for ending point as well.
 							continue;
-					
+						
+						if (k > magnitude2 && !path_search_long(NULL,m,x0,y0,xi,yi))
+							continue; //Targets beyond the initial ending point need the wall check.
+
 						//All these shifts are to increase the precision of the intersection point and distance considering how it's
 						//int math.
 						k = (k<<4)/magnitude2; //k will be between 1~16 instead of 0~1
@@ -1186,7 +1189,10 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 						k = (xi-x0)*(x1-x0) + (yi-y0)*(y1-y0);
 						if (k < 0 || k > len_limit)
 							continue;
-					
+				
+						if (k > magnitude2 && !path_search_long(NULL,m,x0,y0,xi,yi))
+							continue; //Targets beyond the initial ending point need the wall check.
+	
 						k = (k<<4)/magnitude2; //k will be between 1~16 instead of 0~1
 						xi<<=4;
 						yi<<=4;

@@ -709,7 +709,7 @@ int	skill_get_ammotype( int id ){ skill_get (skill_db[id].ammo, id, 1); }
 int	skill_get_ammo_qty( int id, int lv ){ skill_get (skill_db[id].ammo_qty[lv-1], id, lv); }
 int	skill_get_inf2( int id ){ skill_get (skill_db[id].inf2, id, 1); }
 int	skill_get_castcancel( int id ){ skill_get (skill_db[id].castcancel, id, 1); }
-int	skill_get_maxcount( int id ){ skill_get (skill_db[id].maxcount, id, 1); }
+int	skill_get_maxcount( int id ,int lv ){ skill_get (skill_db[id].maxcount[lv-1], id, lv); }
 int	skill_get_blewcount( int id ,int lv ){ skill_get (skill_db[id].blewcount[lv-1], id, lv); }
 int	skill_get_mhp( int id ,int lv ){ skill_get (skill_db[id].mhp[lv-1], id, lv); }
 int	skill_get_castnodex( int id ,int lv ){ skill_get (skill_db[id].castnodex[lv-1], id, lv); }
@@ -2920,7 +2920,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		//line of sight between caster and target.
 		skill_area_temp[1] = bl->id;
 		map_foreachinpath (skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,
-			skill_get_splash(skillid, skilllv),skill_get_maxcount(skillid), BL_CHAR,
+			skill_get_splash(skillid, skilllv),skill_get_maxcount(skillid,skilllv), BL_CHAR,
 			skill_get_type(skillid),src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
 		break;
 
@@ -2931,7 +2931,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case NPC_THUNDERBREATH:
 		skill_area_temp[1] = bl->id;
 		map_foreachinpath(skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,
-			skill_get_splash(skillid, skilllv),skill_get_maxcount(skillid), BL_CHAR,
+			skill_get_splash(skillid, skilllv),skill_get_maxcount(skillid,skilllv), BL_CHAR,
 			skill_get_type(skillid),src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
 		break;
 
@@ -5974,7 +5974,7 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 			break;
 		
 		if(battle_config.land_skill_limit && src->type&battle_config.land_skill_limit &&
-			(maxcount = skill_get_maxcount(ud->skillid)) > 0
+			(maxcount = skill_get_maxcount(ud->skillid, ud->skilllv)) > 0
 		  ) {
 			int i;
 			for(i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i] && maxcount;i++) {
@@ -6492,7 +6492,7 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 			p[2] = &sd->status.memo_point[1];
 			p[3] = &sd->status.memo_point[2];
 
-			if((maxcount = skill_get_maxcount(skill_num)) > 0) {
+			if((maxcount = skill_get_maxcount(skill_num, sd->menuskill_val)) > 0) {
 				for(i=0;i<MAX_SKILLUNITGROUP && sd->ud.skillunit[i] && maxcount;i++) {
 					if(sd->ud.skillunit[i]->skill_id == skill_num)
 						maxcount--;
@@ -8388,7 +8388,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			int c=0;
 			int summons[5] = { 1589, 1579, 1575, 1555, 1590 };
 			//int summons[5] = { 1020, 1068, 1118, 1500, 1368 };
-			int maxcount = (skill==AM_CANNIBALIZE)? 6-lv : skill_get_maxcount(skill);
+			int maxcount = (skill==AM_CANNIBALIZE)? 6-lv : skill_get_maxcount(skill,lv);
 			int mob_class = (skill==AM_CANNIBALIZE)? summons[lv-1] :1142;
 			if(battle_config.land_skill_limit && maxcount>0 && (battle_config.land_skill_limit&BL_PC)) {
 				i = map_foreachinmap(skill_check_condition_mob_master_sub ,sd->bl.m, BL_MOB, sd->bl.id, mob_class, skill, &c);
@@ -11355,7 +11355,7 @@ int skill_readdb (void)
 			skill_db[i].castcancel=0;
 		skill_db[i].cast_def_rate=atoi(split[10]);
 		skill_db[i].inf2=(int)strtol(split[11], NULL, 0);
-		skill_db[i].maxcount=atoi(split[12]);
+		skill_split_atoi(split[12], skill_db[i].maxcount);
 		if(strcmpi(split[13],"weapon") == 0)
 			skill_db[i].skill_type=BF_WEAPON;
 		else if(strcmpi(split[13],"magic") == 0)
