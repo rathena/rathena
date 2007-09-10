@@ -1,5 +1,10 @@
 Date		Added
 ======
+2007/09/10
+	* Fixed Kafra Storage Exploit via Cool Event Co. Storage. Added password protection to C.E.C NPC [Lupus]
+		Note: We use script based storage password due to lack of Packet/Client Storage Password Support.
+		There were many complains from those servers that use extra password protection from account rippers
+	- Added cutins to Cool Event Co. Staff
 2007/09/09
 	* Uncommented Cursed Abbey spawns [Playtester]
 2007/09/08

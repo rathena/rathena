@@ -5,7 +5,7 @@
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 5.9
+//= 6.0
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: =========================================
@@ -54,6 +54,8 @@
 //=	Thanks to Barron-Monster for pointing out the issues.
 //= 5.8 Fixed another double name being shown when "saving" [L0ne_W0lf]
 //= 5.9 Fixed the Kafra Welcome message for guilds. Thanks Barron-Monster. [L0ne_W0lf]
+//= 6.0 Closed Kafra Password exploit in Cool Event Corp. Storages until we got a client/packet based password support.
+//=		Added 2 args into F_SetKafCode to fit it in Cool Evnt Co. NPC [Lupus]
 //============================================================ 
 
 
@@ -504,7 +506,7 @@ function	script	F_KafInfo	{
 		goto sM_Menu;
 
 	sM_KafCode:
-		callfunc("F_SetKafCode");
+		callfunc("F_SetKafCode","[Kafra Employee]","Kafra Services");
 
 	sM_End:
 		return;
@@ -564,8 +566,9 @@ function	script	F_CheckKafCode	{
 }
 
 // Set / Change / Clear Storage Password Function ====================
+// getarg(0) = NPC Name, getarg(1) = Company Name
 function	script	F_SetKafCode	{
-	mes "[Kafra Employee]";
+	mes getarg(0);
 	if(#kafra_code) {
 		mes "Your storage is protected with a password. What would you do now?";
 		next;
@@ -573,14 +576,14 @@ function	script	F_SetKafCode	{
 		"Remove storage password -> 1000z",M_CLEAR,
 		"Cancel",M_END;
 	} else {
-		mes "Kafra Services proudly presents you a new service:";
+		mes ""+getarg(1)+" proudly presents you a new service:";
 		mes "Additional storage protection with a password.";
 		next;
 		menu "Set new password -> 5000z",M_SET,
 		"Cancel",M_END;
 	}
 
-	mes "[Kafra Employee]";
+	mes getarg(0);
 	mes "At first, please enter your ^0000FFold password^000000.";
 	set @code,callfunc("F_EntKafCode");
 	if(@code==0 || @code != #kafra_code-getcharid(3)-1337) {
@@ -591,7 +594,7 @@ function	script	F_SetKafCode	{
 	next;
 
 M_SET:
-	mes "[Kafra Employee]";
+	mes getarg(0);
 	mes "Now enter your ^FF0000new password^000000 to protect your storage from thieves.";
 	set @code,callfunc("F_EntKafCode");
 	if(@code==0) {
@@ -600,19 +603,19 @@ M_SET:
 		goto M_END;
 	}
 	next;
-	mes "[Kafra Employee]";
+	mes getarg(0);
 	if(Zeny < 5000) goto L_ZENY;
 	set Zeny,Zeny-5000;
-	set RESRVPTS, RESRVPTS + (5000/50);
+	//set RESRVPTS, RESRVPTS + (5000/50);	//hardcoded password doesn't add pts
 
 	set #kafra_code,@code+getcharid(3)+1337;
 	mes "You've protected your storage with a secret password.";
-	mes "Thank you for using Kafra Services.";
+	mes "Thank you for using "+getarg(1)+".";
 	emotion e_thx;
 	goto M_END;	
 
 M_CLEAR:
-	mes "[Kafra Employee]";
+	mes getarg(0);
 	mes "Please, enter your password before its removal.";
 	set @code,callfunc("F_EntKafCode");
 	if(@code==0) {
@@ -621,14 +624,14 @@ M_CLEAR:
 		goto M_END;
 	}
 	next;
-	mes "[Kafra Employee]";
+	mes getarg(0);
 	if(Zeny < 1000) goto L_ZENY;
 	set Zeny,Zeny-1000;
-	set RESRVPTS, RESRVPTS + (1000/50);
+	//set RESRVPTS, RESRVPTS + (1000/50);	//hardcoded password doesn't add pts
 	if(@code == #kafra_code-getcharid(3)-1337) {
 		set #kafra_code,0;
 		mes "You've successfully cleared your storage password.";
-		mes "Thank you for using Kafra Services.";
+		mes "Thank you for using "+getarg(1)+".";
 		emotion e_thx;
 	} else {
 		mes "Wrong password. We won't return your 1000z.";
