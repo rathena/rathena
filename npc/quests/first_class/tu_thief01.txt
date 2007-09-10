@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= 1.0 Fully working
 //= 1.1 optimized [Lupus]
 //=	TODO: Test, Add correct misceffects numbers
+//= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================ 
 
 //=================================================Thief Trainer====================================================
@@ -85,8 +86,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 				mes "[Yierhan]";
 				mes "So if you're feeling like the damage you're making is pretty weak, you might want more stat points in ^2F4F2FSTR^000000. How high your raise your own STR is really up to you.";
 				set tu_thief01, 1;
-				set BaseExp, BaseExp + 200;
-				set JobExp, JobExp + 100;
+				getexp 200,100;
 				//misceffect EF_HIT5;
 				close;
 				break;
@@ -103,8 +103,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 				mes "Sure, ^23238EDEX^000000 and LUK can";
 				mes "also increase your attack damage, but they're insignificant compared to STR. I repeat: ^660000insignificant^000000.";
 				set tu_thief01, 1;
-				set BaseExp, BaseExp + 400;
-				set JobExp, JobExp + 200;
+				getexp 400,200;
 				//misceffect EF_HIT5;
 				close;
 				break;
@@ -120,8 +119,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 				mes "[Yierhan]";
 				mes "So if you're feeling like the damage you're making is pretty weak, you might want more stat points in ^2F4F2FSTR^000000. How high your raise your own STR is really up to you.";
 				set tu_thief01, 1;
-				set BaseExp, BaseExp + 200;
-				set JobExp, JobExp + 100;
+				getexp 200,100;
 				//misceffect EF_HIT5;
 				close;
 				break;
@@ -232,8 +230,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 			mes "about any other skills,";
 			mes "I can explain real quick.";
 			set tu_thief01, 3;
-			set BaseExp, BaseExp + (BaseLevel * 30);
-			set JobExp, JobExp + (BaseLevel *15);
+			getexp BaseLevel*30,BaseLevel*15;
 			//misceffect EF_HIT5;//CHECK
 			close;
 		} else if(tu_thief01 == 3){
@@ -333,28 +330,22 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 					set tu_thief01, 4;
 					//misceffect EF_HIT5;
 					if(@read_d){
-						set BaseExp, BaseExp + 300;
-						set JobExp, JobExp + 100;
+						getexp 300,100;
 					}
 					if(@read_f){
-						set BaseExp, BaseExp + 300;
-						set JobExp, JobExp + 100;
+						getexp 300,100;
 					}
 					if(@read_s){
-						set BaseExp, BaseExp + 300;
-						set JobExp, JobExp + 100;
+						getexp 300,100;
 					}
 					if(@read_p){
-						set BaseExp, BaseExp + 300;
-						set JobExp, JobExp + 100;
+						getexp 300,100;
 					}
 					if(@read_h){
-						set BaseExp, BaseExp + 300;
-						set JobExp, JobExp + 100;
+						getexp 300,100;
 					}
 					if(@read_r){
-						set BaseExp, BaseExp + 300;
-						set JobExp, JobExp + 100;
+						getexp 300,100;
 					}
 					close;
 					break;
@@ -373,8 +364,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 			set tu_thief01, 5;
 			savepoint "moc_ruins",80,164;
 			getitem 602, 1;
-			set BaseExp, BaseExp + 100;
-			set JobExp, JobExp + 50;
+			getexp 100,50;
 			//misceffect EF_HIT5;
 			close2;
 			warp "moc_fild12",158,373;
@@ -427,8 +417,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 						mes "They are still poisonous.";
 						set tu_thief01, 8;
 						getitem 1207, 1;
-						set BaseExp, BaseExp + 1000;
-						set JobExp, JobExp + 500;
+						getexp 1000,500;
 						//misceffect EF_HIT5;
 						close;
 						break;
@@ -440,8 +429,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 						mes "Hahaha...";
 						set tu_thief01, 7;
 						getitem 1207, 1;
-						set BaseExp, BaseExp + 500;
-						set JobExp, JobExp + 200;
+						getexp 500,200;
 						//misceffect EF_HIT5;
 						close;
 						break;
@@ -459,8 +447,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 						mes "Hahaha...";
 						set tu_thief01, 7;
 						getitem 1207, 1;
-						set BaseExp, BaseExp + 500;
-						set JobExp, JobExp + 200;
+						getexp 500,200;
 						//misceffect EF_HIT5;
 						close;
 						break;
@@ -472,8 +459,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 						mes "Hahaha...";
 						set tu_thief01, 7;
 						getitem 1207, 1;
-						set BaseExp, BaseExp + 500;
-						set JobExp, JobExp + 200;
+						getexp 500,200;
 						//misceffect EF_HIT5;
 						close;
 						break;
@@ -505,8 +491,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 			mes "takes out a Red Gemstone in front of you, beware.";
 			mes "He might try to use poison with the Gemstone.";
 			set tu_thief01, 8;
-			set BaseExp, BaseExp + 200;
-			set JobExp, JobExp + 100;
+			getexp 200,100;
 			//misceffect EF_HIT5;
 			close;
 		} else if(tu_thief01 == 8){
@@ -594,8 +579,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 				set tu_thief01, 27;
 				set Mantle, 1; // Why this? Maybe getitem? [Jukka]
 				set Zeny, Zeny + 5000;
-				set BaseExp, BaseExp + 8000;
-				set JobExp, JobExp + 3000;
+				getexp 8000,3000;
 				next;
 				mes "[Yierhan]";
 				mes "Take care now.";
@@ -705,8 +689,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	84,{
 				mes "Take care now.";
 				set tu_magician01, 27;
 				set Zeny, Zeny + 5000;
-				set BaseExp, BaseExp + 5000;
-				set JobExp, JobExp + 2000;
+				getexp 5000,2000;
 				close2;
 				break;
 			}

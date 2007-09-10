@@ -14,6 +14,7 @@
 //=	TODO: Test, Add correct misceffects numbers
 //= 1.3 Moved Master Kavaruk (overlapped Phantasmic Arrow
 //=	Skill quest NPC) [Lupus]
+//= 1.4 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================ 
 
 
@@ -307,8 +308,7 @@ payon_in02,47,13,3	script	Master Kavaruk	55,{
 				mes "for bringing me the news. As Arthail has said, I shall wait until he has more news for me.";
 				mes "You should also train and prepare for the future as well.";
 				set tu_archer02, 10;
-				set BaseExp, BaseExp + 2000;
-				set JobExp,JobExp+1000;
+				getexp 2000,1000;
 				close;
 
 			}
@@ -608,7 +608,7 @@ pay_arche,103,165,5	script	Raiden Karus#tu	832,{
 					emotion e_ag;
 					mes "Huh. So you already know a little about Owl's Eye already, huh? Well then, I guess I oughta talk about something you don't know about!";
 					set tu_archer01, 7;
-					set BaseExp, BaseExp + 500;
+					getexp 500,0;
 					close;
 				}
 				break;
@@ -636,7 +636,7 @@ pay_arche,103,165,5	script	Raiden Karus#tu	832,{
 				mes "Here, this is a small, special reward for you.";
 				//misceffect EF_WIND ;
 				set tu_archer01, 7;
-				set BaseExp, BaseExp + 500;
+				getexp 500,0;
 				next;
 				emotion e_pif;
 				mes "[Raiden Karus]";
@@ -855,7 +855,7 @@ pay_arche,103,165,5	script	Raiden Karus#tu	832,{
 				if(@eagle == 0){
 					//misceffect EF_WIND;
 					set tu_archer01, 10;
-					set JobExp,JobExp+500;
+					getexp 0,500;
 				}
 				emotion e_no1;
 				next;
@@ -904,8 +904,7 @@ pay_arche,103,165,5	script	Raiden Karus#tu	832,{
 					mes "Don't forget that you gotta keep training and improve your skills. Before you know it, you'll be an expert almost as good as me!";
 					//misceffect EF_WIND;
 					set tu_archer01, 12;
-					set BaseExp, BaseExp + 1000;
-					set JobExp,JobExp+1000;
+					getexp 1000,1000;
 					getitem 1707, 1;
 					close;
 				}
@@ -1001,8 +1000,7 @@ pay_arche,103,165,5	script	Raiden Karus#tu	832,{
 				mes "this little reward!";
 				//misceffect EF_WIND ;
 				set tu_archer01, 16;
-				set BaseExp, BaseExp + 3000;
-				set JobExp,JobExp+3000;
+				getexp 3000,3000;
 				getitem 1770, 500;
 				next;
 				mes "[Raiden Karus]";
@@ -1341,13 +1339,13 @@ pay_arche,84,139,3	script	Seisner	727,{
 		//misceffect EF_WIND ;
 		set tu_archer01, 3;
 		if(JobLevel == 1){
-			set JobExp,JobExp+30;
+			getexp 0,30;
 		} else if((JobLevel > 1) && (JobLevel < 11)){	
-			set JobExp,JobExp+100;
+			getexp 0,100;
 		} else if((JobLevel > 10) && (JobLevel < 21)){
-			set JobExp,JobExp+250;
+			getexp 0,250;
 		} else {
-			set JobExp,JobExp+500;
+			getexp 0,500;
 		}
 		end;
 	}

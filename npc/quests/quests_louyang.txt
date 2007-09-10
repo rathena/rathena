@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -13,11 +13,13 @@
 //= 1.0 Initial Release [Evera]
 //= 1.1 Fixed double levelup bug [Lupus]
 //= 1.2 Added Revolution Quest. [SinSloth]
+//= 1.3 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================ 
 
 //============================================================
-//======================================================= Soup
-//====================================================== Quest
+//== Soup Quest
+//============================================================
+
 lou_fild01,195,177,4	script	Jiu Lian Bu#01	819,{
 	if(QL_SOUP2) goto L_DONE;
 	if(QL_SOUPQUEST)goto L_WHERE;
@@ -1081,7 +1083,7 @@ L_DONE:
 	set QL_DOC1STTIME,0;
 	set QL_DOCQUEST,2;
 	getitem 679,2; //Pilule
-	set BaseExp,BaseExp + 10000;
+	getexp 10000,0;
 	next;
 	mes "[Hua Tuo]";
 	mes "Well then, I will see you around. Once again, I'd like to thank you for your help.";
@@ -1131,7 +1133,7 @@ L_CHECKITM:
 	mes "Of course!";
 	mes "Here's your reward. Use this medicine when you feel weary.";
 	getitem 679,5; //Pilule
-	set BaseExp,BaseExp + 30000;
+	getexp 30000,0;
 	set QL_GOTHERB,0;
 	set QL_DOC1STTIME,0;
 	set QL_DOCQUEST,2;
@@ -1990,15 +1992,15 @@ s_CameBack:
 	set QL_POISONKING,30;
 	set QL_POISONPATH,0;
 	getitem 678,3;
-	if(BaseLevel < 56)set BaseExp,BaseExp+8909;
-	else if(BaseLevel > 55 && BaseLevel < 61)set BaseExp,BaseExp+10213;
-	else if(BaseLevel > 60 && BaseLevel < 66)set BaseExp,BaseExp+17684;
-	else if(BaseLevel > 65 && BaseLevel < 71)set BaseExp,BaseExp+25411;
-	else if(BaseLevel > 70 && BaseLevel < 76)set BaseExp,BaseExp+68757;
-	else if(BaseLevel > 75 && BaseLevel < 81)set BaseExp,BaseExp+128246;
-	else if(BaseLevel > 80 && BaseLevel < 86)set BaseExp,BaseExp+142340;
-	else if(BaseLevel > 85 && BaseLevel < 91)set BaseExp,BaseExp+152052;
-	else if(BaseLevel > 90)set BaseExp,BaseExp+366786;
+	if(BaseLevel < 56) getexp 8909,0;
+	else if(BaseLevel > 55 && BaseLevel < 61) getexp 10213,0;
+	else if(BaseLevel > 60 && BaseLevel < 66) getexp 17684,0;
+	else if(BaseLevel > 65 && BaseLevel < 71) getexp 25411,0;
+	else if(BaseLevel > 70 && BaseLevel < 76) getexp 68757,0;
+	else if(BaseLevel > 75 && BaseLevel < 81) getexp 128246,0;
+	else if(BaseLevel > 80 && BaseLevel < 86) getexp 142340,0;
+	else if(BaseLevel > 85 && BaseLevel < 91) getexp 152052,0;
+	else if(BaseLevel > 90) getexp 366786,0;
 	warp "louyang",270,136;
 	end;
 
@@ -3023,15 +3025,15 @@ s_Letter:
 	mes "^3131FFYou grow dizzy, but you can also feel";
 	mes "like you're becoming more powerful";
 	mes "and gaining experience.";
-	if(BaseLevel < 56)set BaseExp,BaseExp+9000;
-	else if(BaseLevel > 55 && BaseLevel < 61)set BaseExp,BaseExp+10500;
-	else if(BaseLevel > 60 && BaseLevel < 66)set BaseExp,BaseExp+18684;
-	else if(BaseLevel > 65 && BaseLevel < 71)set BaseExp,BaseExp+27411;
-	else if(BaseLevel > 70 && BaseLevel < 76)set BaseExp,BaseExp+70757;
-	else if(BaseLevel > 75 && BaseLevel < 81)set BaseExp,BaseExp+130246;
-	else if(BaseLevel > 80 && BaseLevel < 86)set BaseExp,BaseExp+150340;
-	else if(BaseLevel > 85 && BaseLevel < 91)set BaseExp,BaseExp+182052;
-	else if(BaseLevel > 90)set BaseExp,BaseExp+406786;
+	if(BaseLevel < 56) getexp 9000,0;
+	else if(BaseLevel > 55 && BaseLevel < 61) getexp 10500,0;
+	else if(BaseLevel > 60 && BaseLevel < 66) getexp 18684,0;
+	else if(BaseLevel > 65 && BaseLevel < 71) getexp 27411,0;
+	else if(BaseLevel > 70 && BaseLevel < 76) getexp 70757,0;
+	else if(BaseLevel > 75 && BaseLevel < 81) getexp 130246,0;
+	else if(BaseLevel > 80 && BaseLevel < 86) getexp 150340,0;
+	else if(BaseLevel > 85 && BaseLevel < 91) getexp 182052,0;
+	else if(BaseLevel > 90) getexp 406786,0;
 	set QL_POISONKING,17;
 	close2;
 	warp "louyang",270,136;

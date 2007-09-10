@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First version [MasterOfMuppets]
 //= 1.1 a ',' that should be ';' [FlavioJS]
+//= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================
 
 geffen,110,200,3	script	Sage Welshyun	754,2,2,{
@@ -1916,7 +1917,7 @@ s_Tablet:
 	mes "from those motivated by greed.";
 	delitem 7332,1; //Complete Tablet
 	getitem 2658,1; //Nile Rose
-	set BaseExp,BaseExp+1000000;
+	getexp 1000000,0;
 	set HELLIONQ,27;
 	next;
 	mes "[Sir Chilias'Tyus]";
@@ -2035,7 +2036,7 @@ s_HellionEye:
 	delitem 7337,1; //Eye of Hellion
 	getitem 2658,1; //Nile Rose
 	getitem 603,1; //Old Blue Box
-	set BaseExp,BaseExp+1200000;
+	getexp 1200000,0;
 	set HELLIONQ,27;
 	next;
 	mes "[Sir Chilias'Tyus]";

@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 3.3
+//= 3.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -57,6 +57,7 @@
 //= 3.2 Removed the NPC "#kiz03-4" as I couldn't find any [L0ne_W0lf]
 //=	reference to it in the Aegis script.
 //= 3.3 Fixed a wrong negative value checking in Schwartzvalt Trilogy quest. [SinSloth]
+//= 3.4 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================ 
 
 lighthalzen,1,1,7	script	sneakAddSuber	-1,{
@@ -2531,12 +2532,12 @@ s_Ask:
 	mes "adventurer. When the three";
 	mes "of us get together, I'll be";
 	mes "sure to let you know~";
-	if(BaseLevel < 41)set BaseExp,BaseExp+49500;
-	else if(BaseLevel > 40 && BaseLevel < 61)set BaseExp,BaseExp+99000;
-	else if(BaseLevel > 60 && BaseLevel < 71)set BaseExp,BaseExp+198000;
-	else if(BaseLevel > 70 && BaseLevel < 81)set BaseExp,BaseExp+396000;
-	else if(BaseLevel > 80 && BaseLevel < 91)set BaseExp,BaseExp+594000;
-	else if(BaseLevel > 90)set BaseExp,BaseExp+792000;
+	if(BaseLevel < 41) getexp 49500,0;
+	else if(BaseLevel > 40 && BaseLevel < 61) getexp 99000,0;
+	else if(BaseLevel > 60 && BaseLevel < 71) getexp 198000,0;
+	else if(BaseLevel > 70 && BaseLevel < 81) getexp 396000,0;
+	else if(BaseLevel > 80 && BaseLevel < 91) getexp 594000,0;
+	else if(BaseLevel > 90) getexp 792000,0;
 	getitem 7350,1;
 	set friendship,11;
 	set friendship3,0;

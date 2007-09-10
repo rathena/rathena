@@ -12,6 +12,7 @@
 //= 1.0 Fully working
 //= 1.1 Fixed bugs, optimized [Lupus] 1.2 fixed Weight check
 //=	TODO: Test, add missing misceffects
+//= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================ 
 
 
@@ -59,15 +60,13 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "Excellent!";
 			mes "You've taught yourself well. Here, you've earned this little reward~";
 			set tu_merchant, 17;
-			set BaseExp, BaseExp + 1860;
-			set JobExp, JobExp + 604;
+			getexp 1860,604;
 			next;
 		} else if(@chk_vend == 10){
 			mes "[Guarnien]";
 			mes "Oh, I see that you're very serious about being a Merchant. I'm proud that you've managed to master this skill! Here, you deserve this reward!";
 			set tu_merchant, 17;
-			set BaseExp, BaseExp + 1990;
-			set JobExp, JobExp + 699;
+			getexp 1990,699;
 			//misceffect EF_HIT5;
 			next;
 		} else {
@@ -122,8 +121,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "[Guarnien]";
 			mes "But I see that you must already know that, huh? Well, seeing as you're so clever, I think you've earned this little prize~";
 			set tu_merchant, 17;
-			set BaseExp, BaseExp + 1860;
-			set JobExp, JobExp + 604;
+			getexp 1860,604;
 			//misceffect EF_HIT5;
 			next;
 		} else if(@chk_vend == 10){
@@ -137,8 +135,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "little reward for";
 			mes "all your efforts~";
 			set tu_merchant, 17;
-			set BaseExp, BaseExp + 1990;
-			set JobExp, JobExp + 699;
+			getexp 1990,699;
 			//misceffect EF_HIT5;
 			next;
 		} else {
@@ -178,8 +175,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "You deserve a little";
 			mes "reward for your effort~";
 			set tu_merchant, 15;
-			set BaseExp, BaseExp + 1620;
-			set JobExp, JobExp + 520;
+			getexp 1620,520;
 			//misceffect EF_HIT5;
 			next;
 			mes "[Guarnien]";
@@ -190,8 +186,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "Excellent!";
 			mes "You've actually went above and beyond mastered the Push Cart skill. Great work!";
 			set tu_merchant, 15;
-			set BaseExp, BaseExp + 1860;
-			set JobExp, JobExp + 604;
+			getexp 1860,604;
 			//misceffect EF_HIT5;
 			next;
 			mes "[Guarnien]";
@@ -233,8 +228,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "speed, it shouldn't be a big deal.";
 			mes "Well done~";
 			set tu_merchant, 15;
-			set BaseExp, BaseExp + 1620;
-			set JobExp, JobExp + 520;
+			getexp 1620,520;
 			//misceffect EF_HIT5;
 			next;
 			mes "[Guarnien]";
@@ -246,8 +240,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "mastered the Push Cart skill.";
 			mes "You truly deserve a little bit of a reward~";
 			set tu_merchant, 15;
-			set BaseExp, BaseExp + 1860;
-			set JobExp, JobExp + 602;
+			getexp 1860,602;
 			//misceffect EF_HIT5;
 			next;
 			mes "[Guarnien]";
@@ -279,8 +272,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "as I asked. Please,";
 			mes "take this little reward~";
 			set tu_merchant, 13;
-			set BaseExp, BaseExp + 1260;
-			set JobExp, JobExp + 272;
+			getexp 1260,272;
 			//misceffect EF_HIT5;
 			next;
 			mes "[Guarnien]";
@@ -293,8 +285,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "mastered Over Charge?";
 			mes "Most impressive! You deserve a small reward for your work!";
 			set tu_merchant, 13;
-			set BaseExp, BaseExp + 1420;
-			set JobExp, JobExp + 336;
+			getexp 1420,336;
 			//misceffect EF_HIT5;
 			next;
 			mes "[Guarnien]";
@@ -327,8 +318,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "[Guarnien]";
 			mes "Ah, you've already learned Level 4 Over Charge. Perfect! Let me give you a little reward~";
 			set tu_merchant, 13;
-			set BaseExp, BaseExp + 1260;
-			set JobExp, JobExp + 272;
+			getexp 1260,272;
 			//misceffect EF_HIT5;
 			next;
 			mes "[Guarnien]";
@@ -339,8 +329,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "[Guarnien]";
 			mes "Amazing! You've already mastered the Over Charge skill! You must have wanted this reward badly~";
 			set tu_merchant, 13;
-			set BaseExp, BaseExp + 1420;
-			set JobExp, JobExp + 336;
+			getexp 1420,336;
 			//misceffect EF_HIT5;
 			next;
 			mes "[Guarnien]";
@@ -385,8 +374,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 		mes "Let me see those";
 		mes "Red Potions. Ah, it seems you researched the market and bought the cheapest ones! Great work!";
 		set tu_merchant, 11;
-		set BaseExp, BaseExp + 1120;
-		set JobExp, JobExp + 220;
+		getexp 1120,220;
 		//misceffect EF_HIT5;
 		next;
 		mes "[Guarnien]";
@@ -440,8 +428,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "how to use the Discount skill";
 			mes "well enough. Good, here's a little reward for your hard work~";
 			set tu_merchant, 5;
-			set BaseExp, BaseExp + 830;
-			set JobExp, JobExp + 116;
+			getexp 830,116;
 			//misceffect EF_HIT5;
 			next;
 			mes "[Guarnien]";
@@ -451,8 +438,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "Incredible!";
 			mes "You've actually mastered the Discount skill! You're such a great student. You deserve a bit of a reward!";
 			set tu_merchant, 5;
-			set BaseExp, BaseExp + 970;
-			set JobExp, JobExp + 180;
+			getexp 970,180;
 			next;
 			mes "[Guarnien]";
 			mes "Alright, my next lesson will hopefully offer you a bit more of a challenge. Come back when you think you're ready, alright?";
@@ -486,8 +472,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "Here, take this";
 			mes "small reward~";
 			set tu_merchant, 5;
-			set BaseExp, BaseExp + 830;
-			set JobExp, JobExp + 116;
+			getexp 830,116;
 			//misceffect EF_HIT5;
 			next;
 			mes "[Guarnien]";
@@ -498,8 +483,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "Incredible!";
 			mes "You've actually mastered the Discount skill! You're such a great student. You deserve a bit of a reward!";
 			set tu_merchant, 5;
-			set BaseExp, BaseExp + 970;
-			set JobExp, JobExp + 180;
+			getexp 970,180;
 			//misceffect EF_HIT5;
 			next;
 			mes "[Guarnien]";
@@ -539,8 +523,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			mes "[Guarnien]";
 			mes "Well, since you're still green, I feel awfully sorry if you've wasted Zeny. Why don't you take this as compensation?";
 			set tu_merchant, 3;
-			set BaseExp, BaseExp + 700;
-			set JobExp, JobExp + 58;
+			getexp 700,58;
 			//misceffect EF_HIT5;
 			next;
 			mes "[Guarnien]";
@@ -577,8 +560,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 				mes "[Guarnien]";
 				mes "I see in your eyes that you've already learned to appraise items. Haha, although having that knowledge is reward in itself, let me give you something extra!";
 				set tu_merchant, 2;
-				set BaseExp, BaseExp + 585;
-				set JobExp, JobExp + 43;
+				getexp 585,43;
 				getitem 1351, 1;
 				next;
 				mes "[Guarnien]";
@@ -643,8 +625,7 @@ alberta_in,70,51,5	script	Guarnien	98,{
 			if(getskilllv(40)){
 				mes "I see in your eyes that you've already learned to appraise items. Haha, although having that knowledge is reward in itself, let me give you something extra!";
 				//misceffect EF_HIT5;
-				set BaseExp, BaseExp + 585;
-				set JobExp, JobExp + 43;
+				getexp 585,43;
 				getitem 1351, 1;
 				next;
 				mes "[Guarnien]";

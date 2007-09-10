@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -33,6 +33,7 @@
 //= fight to finish the quest as well. Completely revamped quiz system. [SinSloth]
 //= 1.9 Made some changes in last event to reflect recent bug exploit fix. [SinSloth]
 //= 2.0 Fixed some various minor bugs. [SinSloth]
+//= 2.1 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================ 
 //===== Configuration : ======================================
 prontera,1,1,1	script	TheSignConfig	-1,{
@@ -727,7 +728,7 @@ L_Where:
         mes "that the Sign really exists. Thanks";
         mes "again, and I hope you stop by and";
         mes "chat from time to time.";
-        set BaseExp,BaseExp +1823951;
+        getexp 1823951,0;
         close2;
         cutin "",255;
         end;
@@ -780,7 +781,7 @@ L_Stop:
         mes "look at it?";
         next;
         getitem 617,1;
-        set BaseExp,BaseExp + 876543;
+        getexp 876543,0;
     }
     set sign_fail,3;
     mes "[Metz]";
@@ -8371,7 +8372,7 @@ L_Success:
     mes "I believe she wants to see you for";
     mes "some reason...";
     set signquest,57;
-    set BaseExp,BaseExp +297000;
+    getexp 297000,0;
     close;
 
 L_Voucher:
@@ -9361,7 +9362,7 @@ L_Success:
         mes "to me, could you kindly";
         mes "give it back please?";
         next;
-        set JobExp,JobExp + 393759;
+        getexp 0,393759;
     }
     mes "[Serin]";
     mes "Farewell, now.";

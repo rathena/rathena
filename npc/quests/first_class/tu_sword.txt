@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.1 optimized [Lupus]
 //=	TODO: Test, Add correct misceffects numbers
 //= 1.2 Fixed a typo on NPC name. [SinSloth]
+//= 1.3 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================ 
 
 
@@ -106,7 +107,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Here is a humble reward for";
 			mes "your great efforts. But do not let your talents allow you to grow arrogant!";
 			set tu_swordman, 23;
-			set BaseExp, BaseExp + 1860;
+			getexp 1860,0;
 			getitem 1113, 1;
 			next;
 			mes "[Shurank]";
@@ -193,7 +194,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "in recognition of";
 			mes "your accomplishment.";
 			set tu_swordman, 22;
-			set BaseExp, BaseExp + 1860;
+			getexp 1860,0;
 			next;
 			mes "[Shurank]";
 			mes "Next time, I will tell you more about the Magnum Break skill.";
@@ -220,7 +221,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "[Shurank]";
 			mes "From that gleen of toughness upon your skin, I see now that I was foolish to ask. Well done~";
 			set tu_swordman, 13;
-			set BaseExp, BaseExp + 1260;
+			getexp 1260,0;
 			next;
 			mes "[Shurank]";
 			mes "Ah, once again, I have";
@@ -279,7 +280,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "[Shurank]";
 			mes "From that gleen of toughness upon your skin, I see now that I was foolish to ask. Well done~";
 			set tu_swordman, 13;
-			set BaseExp, BaseExp + 1260;
+			getexp 1260,0;
 			next;
 			mes "[Shurank]";
 			mes "Ah, once again, I have";
@@ -352,7 +353,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "[Shurank]";
 			mes "Hm. But judging from the gleen of toughness on your skin, I suppose teaching you about Endure would be a waste of your time. Well done!";
 			set tu_swordman, 13;
-			set BaseExp, BaseExp + 1260;
+			getexp 1260,0;
 			next;
 			mes "[Shurank]";
 			mes "Ah, once again, I have";
@@ -374,7 +375,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "[Shurank]";
 			mes "Ah, I see that you have a fairly good understanding of the Provoke skill. Let me reward you in this small way for your efforts.";
 			set tu_swordman, 10;
-			set BaseExp, BaseExp + 1120;
+			getexp 1120,0;
 			next;
 			mes "[Shurank]";
 			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
@@ -388,7 +389,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "an outstanding Swordman.";
 			mes "Here is a small reward...";
 			set tu_swordman, 10;
-			set BaseExp, BaseExp + 1260;
+			getexp 1260,0;
 			next;
 			mes "[Shurank]";
 			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
@@ -438,7 +439,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "[Shurank]";
 			mes "Ah, I see that you have a fairly good understanding of the Provoke skill. Let me reward you in this small way for your efforts.";
 			set tu_swordman, 10;
-			set BaseExp, BaseExp + 1120;
+			getexp 1120,0;
 			next;
 			mes "[Shurank]";
 			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
@@ -452,7 +453,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "an outstanding Swordman.";
 			mes "Here is a small reward...";
 			set tu_swordman, 10;
-			set BaseExp, BaseExp + 1260;
+			getexp 1260,0;
 			next;
 			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
 			close;
@@ -532,7 +533,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "[Shurank]";
 			mes "Ah, I see that you have a fairly good understanding of the Provoke skill. Let me reward you in this small way for your efforts.";
 			set tu_swordman, 10;
-			set BaseExp, BaseExp + 1120;
+			getexp 1120,0;
 			next;
 			mes "[Shurank]";
 			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
@@ -546,7 +547,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "an outstanding Swordman.";
 			mes "Here is a small reward...";
 			set tu_swordman, 10;
-			set BaseExp, BaseExp + 1260;
+			getexp 1260,0;
 			next;
 			mes "[Shurank]";
 			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
@@ -637,7 +638,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Ah! That healthy glow!";
 			mes "I see that you've mastered this skill already. Let me give you a little reward for your hard training!";
 			set tu_swordman, 5;
-			set BaseExp, BaseExp + 1120;
+			getexp 1120,0;
 			next;
 		} else {
 			mes "[Shurank]";
@@ -678,7 +679,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
 			mes "all of the basics.";
 			set tu_swordman, 4;
-			set BaseExp, BaseExp + 970;
+			getexp 970,0;
 			getitem 2503, 1;
 			close;
 		} else {
@@ -714,7 +715,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Here's a little reward for all of your hard work. I hope you realize the importance of using Bash as";
 			mes "you grow stronger.";
 			set tu_swordman, 3;
-			set BaseExp, BaseExp + 830;
+			getexp 830,0;
 			close;
 		} else if(@chk_bash == 10){
 			mes "[Shurank]";
@@ -725,7 +726,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
 			mes "all of the basics.";
 			set tu_swordman, 4;
-			set BaseExp, BaseExp + 970;
+			getexp 970,0;
 			getitem 2503, 1;
 			close;
 		} else {
@@ -761,7 +762,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Still, for your training efforts, let me give you a humble reward. But remember, we still have more";
 			mes "of the fundamentals to cover!";
 			set tu_swordman, 2;
-			set BaseExp, BaseExp + 585;
+			getexp 585,0;
 			close;
 		} else if((@chk_bash > 4) && (@chk_bash < 10)){
 			mes "[Shurank]";
@@ -790,7 +791,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "[Shurank]";
 			mes "For your efforts and patience, I offer you this small reward. Please take it and grow even stronger...";
 			set tu_swordman, 3;
-			set BaseExp, BaseExp + 830;
+			getexp 830,0;
 			next;
 			mes "[Shurank]";
 			mes "I believe that every true Swordman should master the Bash skill. If you ever do master the skill as a Swordman, come back to me.";
@@ -804,7 +805,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
 			mes "all of the basics.";
 			set tu_swordman, 4;
-			set BaseExp, BaseExp + 970;
+			getexp 970,0;
 			getitem 2503, 1;
 			close;
 		} else {
@@ -838,7 +839,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "[Shurank]";
 			mes "Now, if you wish to become a true Swordman, you must learn the Bash skill. There's no question about it: You've got to know these basics! Take this, and learn to Bash!";
 			set tu_swordman, 1;
-			set BaseExp, BaseExp + 490;
+			getexp 490,0;
 			close;
 		} else if((@chk_bash > 0) && (@chk_bash < 5)){
 			mes "[Shurank]";
@@ -861,7 +862,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Still, for your training efforts, let me give you a humble reward. But remember, we still have more";
 			mes "of the fundamentals to cover!";
 			set tu_swordman, 2;
-			set BaseExp, BaseExp + 585;
+			getexp 585,0;
 			close;
 		} else if((@chk_bash > 4) && (@chk_bash < 10)){
 			mes "[Shurank]";
@@ -883,7 +884,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Still, for your training efforts, let me give you a humble reward. But remember, we still have more";
 			mes "of the fundamentals to cover!";
 			set tu_swordman, 3;
-			set BaseExp, BaseExp + 830;
+			getexp 830,0;
 			next;
 			mes "[Shurank]";
 			mes "But if you wish to become an expert Swordman in my eyes, you must master Bash!";
@@ -897,7 +898,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
 			mes "all of the basics.";
 			set tu_swordman, 4;
-			set BaseExp, BaseExp + 970;
+			getexp 970,0;
 			getitem 2503, 1;
 			close;
 		}
@@ -1051,7 +1052,7 @@ if((tu_swordman == 17) || (tu_swordman == 18)){
 			mes "[Dequ'ee]";
 			mes "Hurry over to Morroc and monitor Bankley in case he does anything desperate. If something happens, report to me right away!";
 			set tu_swordman, 19;
-			set BaseExp, BaseExp + 1620;
+			getexp 1620,0;
 			close2;
 			warp "moc_fild07",359,201;
 			end;
@@ -2147,7 +2148,7 @@ if(tu_swordman == 6){
 							mes "[Dequ'ee]";
 							mes "Thank you for taking the trouble to come this far. Let me reward you with some experience points.";
 							set tu_swordman, 7;
-							set BaseExp, BaseExp + 1120;
+							getexp 1120,0;
 							next;
 							mes "[Dequ'ee]";
 							mes "Take care";

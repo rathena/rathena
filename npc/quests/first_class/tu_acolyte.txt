@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= 1.0 Fully working
 //= 1.1 optimized [Lupus]
 //=	TODO: Test, Add correct misceffects numbers
+//= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================ 
 
 
@@ -284,7 +285,7 @@ prt_monk,230,106,3	script	Asthe#tu	79,{
 		unitskilluseid getcharid(3),28,10;
 		set tu_acolyte01, 3;
 		if(getskilllv(28) == 0){
-			set JobExp,JobExp+100; 
+			getexp 0,100;
 			//misceffect EF_CONE;
 		}
 		close;
@@ -355,13 +356,11 @@ prt_monk,230,106,3	script	Asthe#tu	79,{
 				set tu_acolyte01, 5;
 				delitem 1504, 1;
 				if(Class == Job_Acolyte_High){
-					set JobExp,JobExp+1000; 
-					set BaseExp, BaseExp + 2000;
+					getexp 2000,1000;
 					//misceffect EF_CONE;
 					close;
 				} else {
-					set JobExp,JobExp+500;
-					set BaseExp, BaseExp + 1000;
+					getexp 1000,500;
 					//misceffect EF_CONE;
 					close;
 				}
@@ -764,8 +763,7 @@ prt_monk,230,106,3	script	Asthe#tu	79,{
 		mes "[Asthe]";
 		mes "Well, please don't forget what I've taught you. I hope you look back with fondness at our time together amongst these beautiful flowers. May God bless you~";
 		set tu_acolyte01, 25;
-		set JobExp,JobExp+3000;
-		set BaseExp, BaseExp + 5000;
+		getexp 5000,3000;
 		//misceffect EF_CONE;
 		close;
 	}
@@ -840,8 +838,7 @@ monk_in,18,38,6	script	Priest Gardron#tu	110,{
 			mes "Acolyte training.";
 			set tu_acolyte01, 9;
 			percentheal 100,100;
-			set JobExp,JobExp+2000;
-			set BaseExp, BaseExp + 2000;
+			getexp 2000,2000;
 			//misceffect EF_CONE;
 			getitem	505,1;	//Blue_Potion
 			close;
@@ -1071,7 +1068,7 @@ prt_monk,226,257,6	script	Ill Girl#tu	93,{
 				mes "practice your abilities!";
 				mes "It seemed that this good deed has improved your skills.";
 				set tu_acolyte01, 13;
-				set JobExp,JobExp+1000;
+				getexp 0,1000;
 				//misceffect EF_CONE;
 				next;
 				break;

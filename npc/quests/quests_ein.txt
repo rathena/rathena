@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //= 1.6 Updated Laboratory Entrance regarding Heart Fragment quest. [SinSloth]
 //= 1.7 Changed the laboratory entrance checking to prevent players
 //= from being stuck in the quest. [SinSloth]
+//= 1.8 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================ 
 
 
@@ -1471,12 +1472,12 @@ L_P2:
 	mes "really worth this kind of";
 	mes "cruelty? Whoever they are,";
 	mes "their intentions can't be good.";
-	if(BaseLevel < 41)set BaseExp,BaseExp+34750;
-	else if(BaseLevel > 40 && BaseLevel < 61)set BaseExp,BaseExp+69500;
-	else if(BaseLevel > 60 && BaseLevel < 71)set BaseExp,BaseExp+139000;
-	else if(BaseLevel > 70 && BaseLevel < 81)set BaseExp,BaseExp+278000;
-	else if(BaseLevel > 80 && BaseLevel < 91)set BaseExp,BaseExp+417000;
-	else if(BaseLevel > 90)set BaseExp,BaseExp+556000;
+	if(BaseLevel < 41) getexp 34750,0;
+	else if(BaseLevel > 40 && BaseLevel < 61) getexp 69500,0;
+	else if(BaseLevel > 60 && BaseLevel < 71) getexp 139000,0;
+	else if(BaseLevel > 70 && BaseLevel < 81) getexp 278000,0;
+	else if(BaseLevel > 80 && BaseLevel < 91) getexp 417000,0;
+	else if(BaseLevel > 90) getexp 556000,0;
 	close;
 	
 L_NNotify:
@@ -2127,12 +2128,12 @@ s_Switches:
 		mes "soooooo good.";
 		mes "Wait. Now I just";
 		mes "feel goooood~";
-		if(BaseLevel < 41)set BaseExp,BaseExp+3712;
-		else if(BaseLevel > 40 && BaseLevel < 61)set BaseExp,BaseExp+7425;
-		else if(BaseLevel > 60 && BaseLevel < 71)set BaseExp,BaseExp+14850;
-		else if(BaseLevel > 70 && BaseLevel < 81)set BaseExp,BaseExp+29700;
-		else if(BaseLevel > 80 && BaseLevel < 91)set BaseExp,BaseExp+59400;
-		else if(BaseLevel > 90)set BaseExp,BaseExp+118800;
+		if(BaseLevel < 41) getexp 3712,0;
+		else if(BaseLevel > 40 && BaseLevel < 61) getexp 7425,0;
+		else if(BaseLevel > 60 && BaseLevel < 71) getexp 14850,0;
+		else if(BaseLevel > 70 && BaseLevel < 81) getexp 29700,0;
+		else if(BaseLevel > 80 && BaseLevel < 91) getexp 59400,0;
+		else if(BaseLevel > 90) getexp 118800,0;
 		set EIN_LOVERQ,15;
 		next;
 		mes "[Calla]";
@@ -2427,12 +2428,12 @@ s_Switches:
 		mes "Hell yeah!";
 		mes "That's the stuff!";
 		delitem 1901,1;
-		if(BaseLevel < 41)set BaseExp,BaseExp+3712;
-		else if(BaseLevel > 40 && BaseLevel < 61)set BaseExp,BaseExp+7425;
-		else if(BaseLevel > 60 && BaseLevel < 71)set BaseExp,BaseExp+14850;
-		else if(BaseLevel > 70 && BaseLevel < 81)set BaseExp,BaseExp+29700;
-		else if(BaseLevel > 80 && BaseLevel < 91)set BaseExp,BaseExp+59400;
-		else if(BaseLevel > 90)set BaseExp,BaseExp+118800;
+		if(BaseLevel < 41) getexp 3712,0;
+		else if(BaseLevel > 40 && BaseLevel < 61) getexp 7425,0;
+		else if(BaseLevel > 60 && BaseLevel < 71) getexp 14850,0;
+		else if(BaseLevel > 70 && BaseLevel < 81) getexp 29700,0;
+		else if(BaseLevel > 80 && BaseLevel < 91) getexp 59400,0;
+		else if(BaseLevel > 90) getexp 118800,0;
 		set EIN_LOVERQ,4;
 		next;
 		mes "[Clitzer]";
@@ -3549,13 +3550,13 @@ s_Switches:
 		delitem 7319,10;
 		set EinFactory,16;
 		set $EinPolution,$EinPolution+1;
-		if(BaseLevel < 41) set BaseExp,BaseExp+615;
-		else if(BaseLevel >= 41 && BaseLevel < 51) set BaseExp,BaseExp+3075;
-		else if(BaseLevel >= 51 && BaseLevel < 61) set BaseExp,BaseExp+6604;
-		else if(BaseLevel >= 61 && BaseLevel < 71) set BaseExp,BaseExp+18508;
-		else if(BaseLevel >= 71 && BaseLevel < 81) set BaseExp,BaseExp+32062;
-		else if(BaseLevel >= 81 && BaseLevel < 91) set BaseExp,BaseExp+76026;
-		else if(BaseLevel >= 91) set BaseExp,BaseExp+290675;
+		if(BaseLevel < 41) getexp 615,0;
+		else if(BaseLevel >= 41 && BaseLevel < 51) getexp 3075,0;
+		else if(BaseLevel >= 51 && BaseLevel < 61) getexp 6604,0;
+		else if(BaseLevel >= 61 && BaseLevel < 71) getexp 18508,0;
+		else if(BaseLevel >= 71 && BaseLevel < 81) getexp 32062,0;
+		else if(BaseLevel >= 81 && BaseLevel < 91) getexp 76026,0;
+		else if(BaseLevel >= 91) getexp 290675,0;
 		mes "[Zelmeto]";
 		mes "I don't know how";
 		mes "I can possible pay you";

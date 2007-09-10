@@ -3,14 +3,15 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.01
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
 //= Quest for breaking the seal of Megingjard.
 //===== Additional Comments: =================================
-// 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
-// 1.1 fixed exploit [Lupus]
+//= 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
+//= 1.1 fixed exploit [Lupus]
+//= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================
 
 prt_castle,44,151,0	script	Rebarev Doug	56,{
@@ -2654,23 +2655,23 @@ aldebaran,66,213,0	script	Lady#megin	69,{
 		set god_eremes,28;
 		getitem 603,1;
 		if (BaseLevel < 56)
-			set BaseExp,BaseExp + 27000;
+			getexp 27000,0;
 		else if (BaseLevel > 55 && BaseLevel < 61)
-			set BaseExp,BaseExp + 30000;
+			getexp 30000,0;
 		else if (BaseLevel > 60 && BaseLevel < 66)
-			set BaseExp,BaseExp + 56052;
+			getexp 56052,0;
 		else if (BaseLevel > 65 && BaseLevel < 71)
-			set BaseExp,BaseExp + 82233;
+			getexp 82233,0;
 		else if (BaseLevel > 70 && BaseLevel < 76)
-			set BaseExp,BaseExp + 212271;
+			getexp 212271,0;
 		else if (BaseLevel > 75 && BaseLevel < 81)
-			set BaseExp,BaseExp + 390738;
+			getexp 390738,0;
 		else if (BaseLevel > 80 && BaseLevel < 86)
-			set BaseExp,BaseExp + 451020;
+			getexp 451020,0;
 		else if (BaseLevel > 85 && BaseLevel < 91)
-			set BaseExp,BaseExp + 546156;
+			getexp 546156,0;
 		else if (BaseLevel > 90)
-			set BaseExp,BaseExp + 1220358;
+			getexp 1220358,0;
 		close;
 	}
 		else if (god_eremes == 28)
@@ -3214,23 +3215,23 @@ niflheim,109,254,0	script	Egnigem	796,{
 		mes "This is all I can do for you in return...";
 		set god_eremes,27;
 		if (BaseLevel < 56)
-			set BaseExp,BaseExp + 27000;
+			getexp 27000,0;
 		else if (BaseLevel > 55 && BaseLevel < 61)
-			set BaseExp,BaseExp + 30000;
+			getexp 30000,0;
 		else if (BaseLevel > 60 && BaseLevel < 66)
-			set BaseExp,BaseExp + 56052;
+			getexp 56052,0;
 		else if (BaseLevel > 65 && BaseLevel < 71)
-			set BaseExp,BaseExp + 82233;
+			getexp 82233,0;
 		else if (BaseLevel > 70 && BaseLevel < 76)
-			set BaseExp,BaseExp + 212271;
+			getexp 212271,0;
 		else if (BaseLevel > 75 && BaseLevel < 81)
-			set BaseExp,BaseExp + 390738;
+			getexp 390738,0;
 		else if (BaseLevel > 80 && BaseLevel < 86)
-			set BaseExp,BaseExp + 451020;
+			getexp 451020,0;
 		else if (BaseLevel > 85 && BaseLevel < 91)
-			set BaseExp,BaseExp + 546156;
+			getexp 546156,0;
 		else if (BaseLevel > 90)
-			set BaseExp,BaseExp + 1220358;
+			getexp 1220358,0;
 		close;
 	}
 		else if (god_eremes == 26)
@@ -3270,23 +3271,23 @@ niflheim,109,254,0	script	Egnigem	796,{
 		specialeffect2 245;
 		set god_eremes,27;
 		if (BaseLevel < 56)
-			set BaseExp,BaseExp + 27000;
+			getexp 27000,0;
 		else if (BaseLevel > 55 && BaseLevel < 61)
-			set BaseExp,BaseExp + 30000;
+			getexp 30000,0;
 		else if (BaseLevel > 60 && BaseLevel < 66)
-			set BaseExp,BaseExp + 56052;
+			getexp 56052,0;
 		else if (BaseLevel > 65 && BaseLevel < 71)
-			set BaseExp,BaseExp + 82233;
+			getexp 82233,0;
 		else if (BaseLevel > 70 && BaseLevel < 76)
-			set BaseExp,BaseExp + 212271;
+			getexp 212271,0;
 		else if (BaseLevel > 75 && BaseLevel < 81)
-			set BaseExp,BaseExp + 390738;
+			getexp 390738,0;
 		else if (BaseLevel > 80 && BaseLevel < 86)
-			set BaseExp,BaseExp + 451020;
+			getexp 451020,0;
 		else if (BaseLevel > 85 && BaseLevel < 91)
-			set BaseExp,BaseExp + 546156;
+			getexp 546156,0;
 		else if (BaseLevel > 90)
-			set BaseExp,BaseExp + 1220358;
+			getexp 1220358,0;
 		close;
 	}
 		else if (god_eremes < 20)

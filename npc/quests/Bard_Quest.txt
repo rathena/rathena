@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Riotblade and L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //= This Quest has relation with brisingamen_seal.txt (Seals)
 //= 1.2 Changed variable to "gef_bards_q" to avoid job quest conflict. [L0ne_W0lf]
 //=	Progress prior to the 5th+ step will be lost. Job quest takes priority.
+//= 1.3 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================ 
 
 geffen,132,38,3	script	Bard#2	51,{
@@ -106,15 +107,15 @@ geffen,132,38,3	script	Bard#2	51,{
 		specialeffect2 77; //EF_RESURRECTION
 		mes "^3355FFWhile listening to his song, you feel at ease, and your thoughts become clearer. You believe that you see the vision of an angel, and you gain some experience points.^000000";
 		set gef_bard_q,31;
-		if (BaseLevel < 56) set BaseExp,BaseExp+4500;
-		else if ((BaseLevel > 55) && (BaseLevel < 61)) set BaseExp,BaseExp+5500;
-		else if ((BaseLevel > 60) && (BaseLevel < 66)) set BaseExp,BaseExp+9684;
-		else if ((BaseLevel > 65) && (BaseLevel < 71)) set BaseExp,BaseExp+13411;
-		else if ((BaseLevel > 70) && (BaseLevel < 76)) set BaseExp,BaseExp+35757;
-		else if ((BaseLevel > 75) && (BaseLevel < 81)) set BaseExp,BaseExp+60246;
-		else if ((BaseLevel > 80) && (BaseLevel < 86)) set BaseExp,BaseExp+70340;
-		else if ((BaseLevel > 85) && (BaseLevel < 91)) set BaseExp,BaseExp+92052;
-		else if (BaseLevel > 90) set BaseExp,BaseExp+156786;
+		if (BaseLevel < 56) getexp 4500,0;
+		else if ((BaseLevel > 55) && (BaseLevel < 61)) getexp 5500,0;
+		else if ((BaseLevel > 60) && (BaseLevel < 66)) getexp 9684,0;
+		else if ((BaseLevel > 65) && (BaseLevel < 71)) getexp 13411,0;
+		else if ((BaseLevel > 70) && (BaseLevel < 76)) getexp 35757,0;
+		else if ((BaseLevel > 75) && (BaseLevel < 81)) getexp 60246,0;
+		else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 70340,0;
+		else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 92052,0;
+		else if (BaseLevel > 90) getexp 156786,0;
 		next;
 		cutin "bard_eland02",2;
 		mes "[Errende]";
@@ -196,15 +197,15 @@ geffen,132,38,3	script	Bard#2	51,{
 		specialeffect2 77; //EF_RESURRECTION
 		mes "^3355FFWhile listening to his song, you feel at ease, and your thoughts become clearer. You believe that you see the vision of an angel, and you gain some experience points.^000000";
 		set gef_bard_q,30;
-		if (BaseLevel < 56) set BaseExp,BaseExp+4500;
-		else if ((BaseLevel > 55) && (BaseLevel < 61)) set BaseExp,BaseExp+5500;
-		else if ((BaseLevel > 60) && (BaseLevel < 66)) set BaseExp,BaseExp+9684;
-		else if ((BaseLevel > 65) && (BaseLevel < 71)) set BaseExp,BaseExp+13411;
-		else if ((BaseLevel > 70) && (BaseLevel < 76)) set BaseExp,BaseExp+35757;
-		else if ((BaseLevel > 75) && (BaseLevel < 81)) set BaseExp,BaseExp+60246;
-		else if ((BaseLevel > 80) && (BaseLevel < 86)) set BaseExp,BaseExp+70340;
-		else if ((BaseLevel > 85) && (BaseLevel < 91)) set BaseExp,BaseExp+92052;
-		else if (BaseLevel > 90) set BaseExp,BaseExp+156786;
+		if (BaseLevel < 56) getexp 4500,0;
+		else if ((BaseLevel > 55) && (BaseLevel < 61)) getexp 5500,0;
+		else if ((BaseLevel > 60) && (BaseLevel < 66)) getexp 9684,0;
+		else if ((BaseLevel > 65) && (BaseLevel < 71)) getexp 13411,0;
+		else if ((BaseLevel > 70) && (BaseLevel < 76)) getexp 35757,0;
+		else if ((BaseLevel > 75) && (BaseLevel < 81)) getexp 60246,0;
+		else if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 70340,0;
+		else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 92052,0;
+		else if (BaseLevel > 90) getexp 156786,0;
 		next;
 		cutin "bard_eland02",2;
 		mes "[Errende]";

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -48,6 +48,7 @@
 //=	Another minor fix to Hamion. "< 1" -> "< 2". Added a missing close to
 //=	the ontouch "key". Thanks to Gepard for pointing them out.
 //= 1.9 Fixed a misorder with variable checkings. [SinSloth]
+//= 2.0 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -2606,9 +2607,9 @@ OnTouch:
 		mes "Who would be to blame?";
 		next;
 		set rach_vice,24;
-		if (BaseLevel > 90) set BaseExp,BaseExp+1300000;
-		else if (BaseLevel > 75) set BaseExp,BaseExp+850000;
-		else set BaseExp,BaseExp+450000;
+		if (BaseLevel > 90) getexp 1300000,0;
+		else if (BaseLevel > 75) getexp 850000,0;
+		else getexp 450000,0;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Somehow, I wish that";
 		mes "Katinshuell had the";
@@ -2901,7 +2902,7 @@ rachel,157,183,3	script	Sincere Follower Urstia	916,{
 		mes "token of my appreication for";
 		mes " what you have done for me.";
 		delitem 7573,1; //Sparkling Necklace
-		set BaseExp,BaseExp+700000;
+		getexp 700000,0;
 		set ice_necklace_q,6;
 		next;
 		mes "["+strcharinfo(0)+"]";
@@ -4228,7 +4229,7 @@ ra_temple,116,174,3	script	Nemma#ra_temple	920,{
 				if (countitem(12018) >= 20) {
 					cutin "ra_nemma04",2;
 					delitem 12018,20; //FireCracker";
-					set BaseExp,BaseExp+200000;
+					getexp 200000,0;
 					set ra_tem_q,14;
 					mes "[Priestess Nemma]";
 					mes "Yay!";
@@ -5017,7 +5018,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 		mes "be with you, "+strcharinfo(0)+".";
 		set lost_boy,13;
 		specialeffect2 253;
-		set BaseExp,BaseExp+900000;
+		getexp 900000,0;
 		goto L_End;
 	}
 
@@ -5448,8 +5449,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				set ra_tem_q,0;
 				cutin "",255;
 				specialeffect2 253;
-				set BaseExp,BaseExp+900000;
-				set JobExp,JobExp+600000;
+				getexp 900000,600000;
 				end;
 
 			}

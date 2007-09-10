@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7c
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -31,6 +31,7 @@
 //= 1.7 Updated "Ph.D Quest" Dialogs. [Samuray22]
 //= 1.7b Fixed some minor typos. [SinSloth]
 //= 1.7c replaced item "names" with item id. [Lupus]
+//= 1.8 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================ 
 
 // Prontera Culvert
@@ -2693,7 +2694,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "adventurer. May safety accompany you on all of your journeys.";
 		if (prt_curse == 43) set prt_curse,44;
 		else set prt_curse,54;
-		set BaseExp,BaseExp+1600000;
+		getexp 1600000,0;
 		close;
 	}
 	else if (prt_curse > 43 && prt_curse < 50) {

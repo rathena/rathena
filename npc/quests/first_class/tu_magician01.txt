@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Fix up by Jukka
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN (Testet in Trunk 88xx)
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= 1.0 Fully working
 //= 1.1 Optimized [Lupus]
 //=	TODO: Test, Add proper misceffects
+//= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //============================================================ 
 
 
@@ -92,8 +93,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		mes "Was I talking too much?";
 		mes "Let's take a break and continue later. I'm still new to this, so I'm a little bushed~!";
 		set tu_magician01, 1;
-		set BaseExp,BaseLevel*30;
-		set JobExp,BaseLevel*15;
+		getexp BaseLevel*30,BaseLevel*15;
 		//misceffect EF_HIT5;
 		close;
 		break;
@@ -304,24 +304,19 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 					set tu_magician01, 2;
 					//misceffect EF_HIT5;
 					if(tu_mana&1){
-						set BaseExp, BaseExp + 150;
-						set JobExp,JobExp+70;
+						getexp 150,70;
 					}
 					if(tu_mana&2){
-						set BaseExp, BaseExp + 150;
-						set JobExp,JobExp+70;
+						getexp 150,70;
 					}
 					if(tu_mana&4){
-						set BaseExp, BaseExp + 150;
-						set JobExp,JobExp+70;
+						getexp 150,70;
 					}
 					if(tu_mana&8){
-						set BaseExp, BaseExp + 150;
-						set JobExp,JobExp+70;
+						getexp 150,70;
 					}
 					if(tu_mana&16){
-						set BaseExp, BaseExp + 150;
-						set JobExp,JobExp+70;
+						getexp 150,70;
 					}
 					set tu_mana,0;
 				}
@@ -417,8 +412,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		mes "It may be hard for you to fight a 'Creamy' yet";
 		mes "so if the 'Pupa' is acting weird be extra careful.";
 		set tu_magician01, 3;
-		set BaseExp, BaseExp + 400;
-		set JobExp,JobExp+200;
+		getexp 400,200;
 		//misceffect EF_HIT5;
 		close;
 		break;
@@ -446,8 +440,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 			mes "Let's take a break now before we";
 			mes "move on to explain the other skills.";
 			set tu_magician01, 5;
-			set BaseExp, BaseExp + 400;
-			set JobExp,JobExp+200;
+			getexp 400,200;
 			//misceffect EF_HIT5;
 			close;
 		}
@@ -473,8 +466,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 			mes "Let's take a break now before we";
 			mes "move on to explain the other skills.";
 			set tu_magician01, 5;
-			set BaseExp, BaseExp + 400;
-			set JobExp,JobExp+200;
+			getexp 400,200;
 			//misceffect EF_HIT5;
 			close;
 		}
@@ -632,32 +624,25 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 				getitem 1604, 1;
 				//misceffect EF_HIT5;
 				if(tu_mana&1){
-					set BaseExp, BaseExp + 300;
-					set JobExp,JobExp+100;
+					getexp 300,100;
 				}
 				if(tu_mana&2){
-					set BaseExp, BaseExp + 300;
-					set JobExp,JobExp+100;
+					getexp 300,100;
 				}
 				if(tu_mana&4){
-					set BaseExp, BaseExp + 300;
-					set JobExp,JobExp+100;
+					getexp 300,100;
 				}
 				if(tu_mana&8){
-					set BaseExp, BaseExp + 300;
-					set JobExp,JobExp+100;
+					getexp 300,100;
 				}
 				if(tu_mana&16){
-					set BaseExp, BaseExp + 300;
-					set JobExp,JobExp+100;
+					getexp 300,100;
 				}
 				if(tu_mana&32){
-					set BaseExp, BaseExp + 300;
-					set JobExp,JobExp+100;
+					getexp 300,100;
 				}
 				if(tu_mana&64){
-					set BaseExp, BaseExp + 300;
-					set JobExp,JobExp+100;
+					getexp 300,100;
 				}
 				set tu_mana,0;
 				close;
@@ -737,8 +722,7 @@ geffen,67,180,4	script	New Mage Manager#M	102,{
 		set tu_magician01, 28;
 		getitem 2321, 1;
 		set Zeny, Zeny + 3000;
-		set BaseExp, BaseExp + 3000;
-		set JobExp, JobExp + 1000;
+		getexp 3000,1000;
 		close;
 		break;
 	default:
