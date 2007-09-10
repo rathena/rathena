@@ -6,6 +6,7 @@
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
+#include "../common/strlib.h"
 #include "../common/ers.h"
 
 #include "skill.h"
@@ -14,7 +15,7 @@
 #include "pc.h"
 #include "status.h"
 #include "pet.h"
-#include "mercenary.h"	//[orn]
+#include "mercenary.h"
 #include "mob.h"
 #include "npc.h"
 #include "battle.h"
@@ -666,6 +667,10 @@ struct skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 struct skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 struct skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 
+struct skill_unit_layout skill_unit_layout[MAX_SKILL_UNIT_LAYOUT];
+int firewall_unit_pos;
+int icewall_unit_pos;
+
 // macros to check for out of bounds errors [celest]
 // i: Skill ID, l: Skill Level, var: Value to return after checking
 // for values that don't require level just put a one (putting 0 will trigger return 0; instead
@@ -986,30 +991,28 @@ int skillnotok_hom (int skillid, struct homun_data *hd)
 	return skillnotok(skillid, hd->master);
 }
 
-struct skill_unit_layout skill_unit_layout[MAX_SKILL_UNIT_LAYOUT];
-int firewall_unit_pos;
-int icewall_unit_pos;
-
-struct skill_unit_layout *skill_get_unit_layout (int skillid, int skilllv, struct block_list *src, int x, int y)
+struct skill_unit_layout* skill_get_unit_layout (int skillid, int skilllv, struct block_list* src, int x, int y)
 {	
 	int pos = skill_get_unit_layout_type(skillid,skilllv);
 	int dir;
 
-	if (pos != -1)
+	if (pos < -1 || pos >= MAX_SKILL_UNIT_LAYOUT) {
+		ShowError("skill_get_unit_layout: unsupported layout type %d for skill %d (level %d)\n", pos, skillid, skilllv);
+		pos = cap_value(pos, 0, MAX_SQUARE_LAYOUT); // cap to nearest square layout
+	}
+
+	if (pos != -1) // simple single-definition layout
 		return &skill_unit_layout[pos];
 
-	if (src->x == x && src->y == y)
-		dir = 2;
-	else
-		dir = map_calc_dir(src,x,y);
+	dir = (src->x == x && src->y == y) ? 6 : map_calc_dir(src,x,y); // 6 - default aegis direction
 
 	if (skillid == MG_FIREWALL)
 		return &skill_unit_layout [firewall_unit_pos + dir];
 	else if (skillid == WZ_ICEWALL)
 		return &skill_unit_layout [icewall_unit_pos + dir];
 
-	ShowError("Unknown unit layout for skill %d, %d\n",skillid,skilllv);
-	return &skill_unit_layout[0];
+	ShowError("skill_get_unit_layout: unknown unit layout for skill %d (level %d)\n", skillid, skilllv);
+	return &skill_unit_layout[0]; // default 1x1 layout
 }
 
 /*==========================================
@@ -2341,8 +2344,7 @@ static int skill_check_unit_range (struct block_list *bl, int x, int y, int skil
 	}
 
 	range += layout_type;
-	return map_foreachinarea(skill_check_unit_range_sub,bl->m,
-			x-range,y-range,x+range,y+range,BL_SKILL,skillid);
+	return map_foreachinarea(skill_check_unit_range_sub,bl->m,x-range,y-range,x+range,y+range,BL_SKILL,skillid);
 }
 
 static int skill_check_unit_range2_sub (struct block_list *bl, va_list ap)
@@ -5959,21 +5961,22 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 
 	ud->skilltimer=-1;
 	do {
-		if(status_isdead(src)) break;
+		if(status_isdead(src))
+			break;
 
-		if (!(battle_config.skill_reiteration && src->type&battle_config.skill_reiteration) &&
+		if( !(src->type&battle_config.skill_reiteration) &&
 			skill_get_unit_flag(ud->skillid)&UF_NOREITERATION &&
 			skill_check_unit_range(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv)
-		)
+		  ) 
 			break;
 
-		if (battle_config.skill_nofootset && src->type&battle_config.skill_nofootset &&
+		if( src->type&battle_config.skill_nofootset &&
 			skill_get_unit_flag(ud->skillid)&UF_NOFOOTSET &&
 			skill_check_unit_range2(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv)
-		)
+		  )
 			break;
 		
-		if(battle_config.land_skill_limit && src->type&battle_config.land_skill_limit &&
+		if( src->type&battle_config.land_skill_limit &&
 			(maxcount = skill_get_maxcount(ud->skillid, ud->skilllv)) > 0
 		  ) {
 			int i;
@@ -5981,7 +5984,7 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 				if(ud->skillunit[i]->skill_id == ud->skillid)
 					maxcount--;
 			}
-			if(!maxcount)
+			if( maxcount == 0 )
 				break;
 		}
 
@@ -6647,7 +6650,6 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 {
 	struct skill_unit_group *group;
 	int i,limit,val1=0,val2=0,val3=0;
-	int count=0;
 	int target,interval,range,unit_flag;
 	struct skill_unit_layout *layout;
 	struct map_session_data *sd;
@@ -6737,13 +6739,6 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		break;
 
 	case SA_LANDPROTECTOR:
-		{
-			int aoe_diameter;	// -- aoe_diameter (moonsoul) added for sage Area Of Effect skills
-			val1=skilllv*15+10;
-			aoe_diameter=skilllv+skilllv%2+5;
-			count=aoe_diameter*aoe_diameter;	// -- this will not function if changed to ^2 (moonsoul)
-		}
-	//No break because we also have to check if we use gemstones. [Skotlex]
 	case SA_VOLCANO:
 	case SA_DELUGE:
 	case SA_VIOLENTGALE:
@@ -6845,9 +6840,6 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		val1 = 55 + skilllv*5;	//Elemental Resistance
 		val2 = skilllv*10;	//Status ailment resistance
 		break;
-	case RG_GRAFFITI:			/* Graffiti */
-		count=1;	// Leave this at 1 [Valaris]
-		break;
 	case WE_CALLPARTNER:
 		if (sd) val1 = sd->status.partner_id;
 		break;
@@ -6894,8 +6886,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		}
 	}
 
-	nullpo_retr(NULL, group=skill_initunitgroup(src,(count > 0 ? count : layout->count),
-		skillid,skilllv,skill_get_unit_id(skillid,flag&1)+subunt, limit, interval));
+	nullpo_retr(NULL, group=skill_initunitgroup(src,layout->count,skillid,skilllv,skill_get_unit_id(skillid,flag&1)+subunt, limit, interval));
 	group->val1=val1;
 	group->val2=val2;
 	group->val3=val3;
@@ -6903,47 +6894,39 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 	group->bl_flag= skill_get_unit_bl_target(skillid);
 	group->state.into_abyss = (sc && sc->data[SC_INTOABYSS].timer != -1); //Store into abyss state, to know it shouldn't give traps back. [Skotlex]
 	group->state.magic_power = (flag&2 || (sc && sc->data[SC_MAGICPOWER].timer != -1)); //Store the magic power flag. [Skotlex]
-	//Store if this skill needs to consume ammo.
-	group->state.ammo_consume = (sd && sd->state.arrow_atk && skillid != GS_GROUNDDRIFT);
+	group->state.ammo_consume = (sd && sd->state.arrow_atk && skillid != GS_GROUNDDRIFT); //Store if this skill needs to consume ammo.
 	group->state.song_dance = (unit_flag&(UF_DANCE|UF_SONG)?1:0)|(unit_flag&UF_ENSEMBLE?2:0); //Signals if this is a song/dance/duet
 
   	//if tick is greater than current, do not invoke onplace function just yet. [Skotlex]
 	if (DIFF_TICK(group->tick, gettick()) > 100)
 		active_flag = 0;
 
-	if(skillid==HT_TALKIEBOX ||
-	   skillid==RG_GRAFFITI){
+	if(skillid==HT_TALKIEBOX || skillid==RG_GRAFFITI){
 		group->valstr=(char *) aMalloc(MESSAGE_SIZE*sizeof(char));
 		if (sd)
-			memcpy(group->valstr,sd->message,MESSAGE_SIZE);
+			safestrncpy(group->valstr, sd->message, MESSAGE_SIZE);
 		else //Eh... we have to write something here... even though mobs shouldn't use this. [Skotlex]
-			strcpy(group->valstr, "Boo!");
+			safestrncpy(group->valstr, "Boo!", MESSAGE_SIZE);
 	}
 
 	//Why redefine local variables when the ones of the function can be reused? [Skotlex]
 	val1=skilllv;
 	val2=0;
 	limit=group->limit;
-	count=group->unit_count;
-	for(i=0;i<count;i++){
+	for(i=0;i<layout->count;i++)
+	{
 		struct skill_unit *unit;
 		int ux,uy,alive=1;
 		ux = x + layout->dx[i];
 		uy = y + layout->dy[i];
+
 		switch (skillid) {
 		case MG_FIREWALL:
 		case NJ_KAENSIN:
 			val2=group->val2;
 			break;
 		case WZ_ICEWALL:
-			if(skilllv <= 1)
-				val1 = 500;
-			else
-				val1 = 200 + 200*skilllv;
-			break;
-		case RG_GRAFFITI:	/* Graffiti [Valaris] */
-			ux+=(i%5-2);
-			uy+=(i/5-2);
+			val1 = (skilllv <= 1) ? 500 : 200 + 200*skilllv;
 			break;
 		case GS_DESPERADO:
 			val1 = abs(layout->dx[i]);
@@ -6968,25 +6951,19 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		if(alive && map_getcell(src->m,ux,uy,CELL_CHKWALL))
 			alive = 0;
 		
-		if (alive && battle_config.skill_wall_check) {
-			//Check if there's a path between cell and center of casting.
-			if (!path_search_long(NULL,src->m,ux,uy,x,y))
-				alive = 0;
-		}
+		if(alive && battle_config.skill_wall_check && !path_search_long(NULL,src->m,ux,uy,x,y))
+			alive = 0; //no path between cell and center of casting.
 					
 		if(alive && skillid == WZ_ICEWALL) {
-			if(src->x == x && src->y==y) // Ice Wall not allowed on self [DracoRPG]
-				alive=0;
-			else {
-				val2=map_getcell(src->m,ux,uy,CELL_GETTYPE);
-				if(val2==5 || val2==1)
+				int celltype = map_getcell(src->m,ux,uy,CELL_GETTYPE);
+				if(celltype==5 || celltype==1)
 					alive=0;
 				else
-					clif_changemapcell(src->m,ux,uy,5,0);
-			}
+					clif_changemapcell(0,src->m,ux,uy,5);
 		}
 
 		if(alive){
+			//FIXME: why not calculate val1/val2 in here? [ultramage]
 			nullpo_retr(NULL, unit=skill_initunit(group,i,ux,uy,val1,val2));
 			unit->limit=limit;
 			unit->range=range;
@@ -7681,8 +7658,7 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 		case BD_ROKISWEIL:
 		case BD_INTOABYSS:
 		case BD_SIEGFRIED:
-			if(sc && sc->data[SC_DANCING].timer != -1 &&
-				(sc->data[SC_DANCING].val1&0xFFFF) == skill_id)
+			if(sc && sc->data[SC_DANCING].timer != -1 && (sc->data[SC_DANCING].val1&0xFFFF) == skill_id)
 			{	//Check if you just stepped out of your ensemble skill to cancel dancing. [Skotlex]
 				//We don't check for SC_LONGING because someone could always have knocked you back and out of the song/dance.
 				//FIXME: This code is not perfect, it doesn't checks for the real ensemble's owner,
@@ -7735,12 +7711,12 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 				}
 			}
 			break;
-	case UNT_GOSPEL:
-		if (sc && sc->data[type].timer != -1 && sc->data[type].val4 == BCT_ALL) //End item-no-use Gospel Effect. [Skotlex]
-			status_change_end(bl, type, -1);
-		break;
-
+		case UNT_GOSPEL:
+			if (sc && sc->data[type].timer != -1 && sc->data[type].val4 == BCT_ALL) //End item-no-use Gospel Effect. [Skotlex]
+				status_change_end(bl, type, -1);
+			break;
 	}
+
 	return skill_id;
 }
 
@@ -7811,7 +7787,7 @@ int skill_unit_onlimit (struct skill_unit *src, unsigned int tick, int flag)
 		break;
 
 	case UNT_ICEWALL:
-		clif_changemapcell(src->bl.m,src->bl.x,src->bl.y,src->val2,1);
+		clif_changemapcell(0,src->bl.m,src->bl.x,src->bl.y,src->val2);
 		break;
 	case UNT_CALLFAMILY:
 		if (!flag)
@@ -9904,11 +9880,13 @@ int skill_delunit (struct skill_unit *unit, int flag)
 		return 0;
 	nullpo_retr(0, group=unit->group);
 
+	// invoke onlimit event
 	skill_unit_onlimit( unit,gettick(), flag);
 
 	if (group->state.song_dance&0x1) //Restore dissonance effect.
 		skill_dance_overlap(unit, 0);
 
+	// invoke onout event
 	if (!unit->range) {
 		map_foreachincell(skill_unit_effect,unit->bl.m,
 			unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,gettick(),4);
@@ -9946,10 +9924,11 @@ int skill_delunit (struct skill_unit *unit, int flag)
  *
  *------------------------------------------*/
 static int skill_unit_group_newid = MAX_SKILL_DB;
+
 struct skill_unit_group *skill_initunitgroup (struct block_list *src, int count, int skillid, int skilllv, int unit_id, int limit, int interval)
 {
-	struct unit_data *ud = unit_bl2ud(src);
-	struct skill_unit_group *group=NULL;
+	struct unit_data* ud = unit_bl2ud( src );
+	struct skill_unit_group* group;
 	int i;
 
 	if(skilllv <= 0) return 0;
@@ -9957,9 +9936,11 @@ struct skill_unit_group *skill_initunitgroup (struct block_list *src, int count,
 	nullpo_retr(NULL, src);
 	nullpo_retr(NULL, ud);
 	
-	for(i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i]; i++);
-	
-	if(i == MAX_SKILLUNITGROUP) {
+	// find a free spot to store the new unit group
+	ARR_FIND( 0, MAX_SKILLUNITGROUP, i, ud->skillunit[i] == NULL );
+	if(i == MAX_SKILLUNITGROUP)
+	{
+		// array is full, make room by discarding oldest group
 		int j=0;
 		unsigned maxdiff=0,x,tick=gettick();
 		for(i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i];i++)
@@ -9971,30 +9952,35 @@ struct skill_unit_group *skill_initunitgroup (struct block_list *src, int count,
 		//Since elements must have shifted, we use the last slot.
 		i = MAX_SKILLUNITGROUP-1;
 	}
-	if (!ud->skillunit[i])
-		ud->skillunit[i] = ers_alloc(skill_unit_ers, struct skill_unit_group);
-	group=ud->skillunit[i];
 
-	group->src_id=src->id;
-	group->party_id=status_get_party_id(src);
-	group->guild_id=status_get_guild_id(src);
-	group->group_id=skill_unit_group_newid++;
+	group             = ers_alloc(skill_unit_ers, struct skill_unit_group);
+	group->src_id     = src->id;
+	group->party_id   = status_get_party_id(src);
+	group->guild_id   = status_get_guild_id(src);
+	group->group_id   = skill_unit_group_newid++;
+	group->unit       = (struct skill_unit *)aCalloc(count,sizeof(struct skill_unit));
+	group->unit_count = count;
+	group->alive_count = 0;
+	group->val1       = 0;
+	group->val2       = 0;
+	group->val3       = 0;
+	group->skill_id   = skillid;
+	group->skill_lv   = skilllv;
+	group->unit_id    = unit_id;
+	group->map        = src->m;
+	group->limit      = limit;
+	group->interval   = interval;
+	group->tick       = gettick();
+	group->valstr     = NULL;
+
+	ud->skillunit[i] = group;
+
 	if(skill_unit_group_newid<=0)
 		skill_unit_group_newid = MAX_SKILL_DB;
-	group->unit=(struct skill_unit *)aCalloc(count,sizeof(struct skill_unit));
-	group->unit_count=count;
-	group->alive_count=0;
-	group->val1=group->val2=group->val3=0;
-	group->skill_id=skillid;
-	group->skill_lv=skilllv;
-	group->unit_id=unit_id;
-	group->map=src->m;
-	group->limit=limit;
-	group->interval=interval;
-	group->tick=gettick();
+
 	if (skillid == PR_SANCTUARY) //Sanctuary starts healing +1500ms after casted. [Skotlex]
 		group->tick += 1500;
-	group->valstr=NULL;
+
 	return group;
 }
 
@@ -10060,16 +10046,18 @@ int skill_delunitgroup (struct block_list *src, struct skill_unit_group *group, 
 	group->group_id=0;
 	group->unit_count=0;
 
-	//Locate and clear this unit from the array.
-	for (i=0; i<MAX_SKILLUNITGROUP && ud->skillunit[i]!=group; i++);
-	for (j=i; j<MAX_SKILLUNITGROUP && ud->skillunit[j]; j++);
-	j--;
-	if (i<MAX_SKILLUNITGROUP) {
+	// locate this group, swap with the last entry and delete it
+	ARR_FIND( 0, MAX_SKILLUNITGROUP, i, ud->skillunit[i] == group );
+	ARR_FIND( i, MAX_SKILLUNITGROUP, j, ud->skillunit[j] == NULL ); j--;
+	if( i < MAX_SKILLUNITGROUP )
+	{
 		ud->skillunit[i] = ud->skillunit[j];
 		ud->skillunit[j] = NULL;
 		ers_free(skill_unit_ers, group);
-	} else
+	}
+	else
 		ShowError("skill_delunitgroup: Group not found! (src_id: %d skill_id: %d)\n", group->src_id, group->skill_id);
+
 	return 1;
 }
 
@@ -10392,13 +10380,12 @@ int skill_unit_move (struct block_list *bl, unsigned int tick, int flag)
 		skill_unit_index=0;
 	}
 		
-	map_foreachincell(skill_unit_move_sub,
-			bl->m,bl->x,bl->y,BL_SKILL,bl,tick,flag);
+	map_foreachincell(skill_unit_move_sub,bl->m,bl->x,bl->y,BL_SKILL,bl,tick,flag);
 
 	if (flag&2 && flag&1)
 	{ //Onplace, check any skill units you have left.
 		int i;
-		for (i=0; i < (sizeof(skill_unit_temp)/sizeof(int)) && skill_unit_temp[i]; i++)
+		for (i=0; i < ARRAYLENGTH(skill_unit_temp) && skill_unit_temp[i]; i++)
 			skill_unit_onleft(skill_unit_temp[i], bl, tick);
 	}
 
@@ -11077,6 +11064,8 @@ void skill_init_unit_layout (void)
 	int i,j,size,pos = 0;
 
 	memset(skill_unit_layout,0,sizeof(skill_unit_layout));
+
+	// standard square layouts go first
 	for (i=0; i<=MAX_SQUARE_LAYOUT; i++) {
 		size = i*2+1;
 		skill_unit_layout[i].count = size*size;
@@ -11085,6 +11074,8 @@ void skill_init_unit_layout (void)
 			skill_unit_layout[i].dy[j] = (j/size-i);
 		}
 	}
+
+	// afterwards add special ones
 	pos = i;
 	for (i=0;i<MAX_SKILL_DB;i++) {
 		if (!skill_db[i].unit_id[0] || skill_db[i].unit_layout_type[0] != -1)
@@ -11092,6 +11083,7 @@ void skill_init_unit_layout (void)
 		switch (i) {
 			case MG_FIREWALL:
 			case WZ_ICEWALL:
+				// these will be handled later
 				break;
 			case PR_SANCTUARY:
 			case NPC_EVILLAND:
@@ -11234,6 +11226,8 @@ void skill_init_unit_layout (void)
 			skill_db[i].unit_layout_type[j] = pos;
 		pos++;
 	}
+
+	// firewall and icewall have 8 layouts (direction-dependent)
 	firewall_unit_pos = pos;
 	for (i=0;i<8;i++) {
 		if (i&1) {

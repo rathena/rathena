@@ -2150,8 +2150,8 @@ int map_calc_dir(struct block_list* src, int x, int y)
 	dy = y-src->y;
 	if( dx == 0 && dy == 0 )
 	{	// both are standing on the same spot
-		//dir = 6; // aegis-style, causes knockback to the left
-		dir = unit_getdir(src); // athena-style, causes knockback opposite to src's current direction
+		//dir = 6; // aegis-style, makes knockback default to the left
+		dir = unit_getdir(src); // athena-style, makes knockback default to behind 'src'
 	}
 	else if( dx >= 0 && dy >=0 )
 	{	// upper-right

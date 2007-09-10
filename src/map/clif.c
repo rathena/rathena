@@ -640,7 +640,7 @@ int clif_clearflooritem(struct flooritem_data *fitem, int fd)
 		clif_send(buf, packet_len(0xa1), &fitem->bl, AREA);
 	} else {
 		WFIFOHEAD(fd,packet_len(0xa1));
-		memcpy(WFIFOP(fd,0), buf, 6);
+		memcpy(WFIFOP(fd,0), buf, packet_len(0xa1));
 		WFIFOSET(fd,packet_len(0xa1));
 	}
 
@@ -1182,20 +1182,6 @@ static void clif_spiritball_single(int fd, struct map_session_data *sd)
 	WFIFOL(fd,2)=sd->bl.id;
 	WFIFOW(fd,6)=sd->spiritball;
 	WFIFOSET(fd, packet_len(0x1e1));
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-static void clif_set0192(int fd, int m, int x, int y, int type)
-{
-	WFIFOHEAD(fd,packet_len(0x192));
-	WFIFOW(fd,0) = 0x192;
-	WFIFOW(fd,2) = x;
-	WFIFOW(fd,4) = y;
-	WFIFOW(fd,6) = type;
-	mapindex_getmapname_ext(map[m].name, (char*)WFIFOP(fd,8));
-	WFIFOSET(fd,packet_len(0x192));
 }
 
 // new and improved weather display [Valaris]
@@ -3908,6 +3894,33 @@ void clif_standing(struct block_list* bl)
 /*==========================================
  *
  *------------------------------------------*/
+void clif_changemapcell(int fd, short m, short x, short y, int type)
+{
+	unsigned char buf[32];
+
+	WBUFW(buf,0) = 0x192;
+	WBUFW(buf,2) = x;
+	WBUFW(buf,4) = y;
+	WBUFW(buf,6) = type;
+	mapindex_getmapname_ext(map[m].name,(char*)WBUFP(buf,8));
+
+	if (fd == 0) {
+		struct block_list bl;
+		bl.type = BL_NUL;
+		bl.m = m;
+		bl.x = x;
+		bl.y = y;
+		clif_send(buf,packet_len(0x192),&bl,AREA);
+	} else {
+		WFIFOHEAD(fd,packet_len(0x192));
+		memcpy(WFIFOP(fd,0), buf, packet_len(0x192));
+		WFIFOSET(fd,packet_len(0x192));
+	}
+}
+
+/*==========================================
+ *
+ *------------------------------------------*/
 void clif_getareachar_item(struct map_session_data* sd,struct flooritem_data* fitem)
 {
 	int view,fd;
@@ -3948,7 +3961,7 @@ int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *un
 		WFIFOL(fd, 2)=unit->bl.id;
 		WFIFOL(fd, 6)=unit->group->src_id;
 		WFIFOW(fd,10)=unit->bl.x;
-		WFIFOW(fd,12)=unit->bl.y; // might be typo? [Lance]
+		WFIFOW(fd,12)=unit->bl.y;
 		WFIFOB(fd,14)=unit->group->unit_id;
 		WFIFOB(fd,15)=1;
 		WFIFOB(fd,16)=1;
@@ -3973,7 +3986,7 @@ int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *un
 	WFIFOSET(fd,packet_len(0x11f));
 
 	if(unit->group->skill_id == WZ_ICEWALL)
-		clif_set0192(fd,unit->bl.m,unit->bl.x,unit->bl.y,5);
+		clif_changemapcell(fd,unit->bl.m,unit->bl.x,unit->bl.y,5);
 	return 0;
 /* Previous implementation guess of packet 0x1c9, who can understand what all those fields are for? [Skotlex]
 	WFIFOHEAD(fd,packet_len(0x1c9));
@@ -4034,7 +4047,7 @@ int clif_clearchar_skillunit(struct skill_unit *unit,int fd)
 	WFIFOL(fd, 2)=unit->bl.id;
 	WFIFOSET(fd,packet_len(0x120));
 	if(unit->group && unit->group->skill_id == WZ_ICEWALL)
-		clif_set0192(fd,unit->bl.m,unit->bl.x,unit->bl.y,unit->val2);
+		clif_changemapcell(fd,unit->bl.m,unit->bl.x,unit->bl.y,unit->val2);
 
 	return 0;
 }
@@ -6352,26 +6365,6 @@ int clif_bladestop(struct block_list *src,struct block_list *dst,
 	clif_send(buf,packet_len(0x1d1),src,AREA);
 
 	return 0;
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-void clif_changemapcell(short m, short x, short y, int cell_type, int type)
-{
-	struct block_list bl;
-	unsigned char buf[32];
-
-	bl.type = BL_NUL;
-	bl.m = m;
-	bl.x = x;
-	bl.y = y;
-	WBUFW(buf,0) = 0x192;
-	WBUFW(buf,2) = x;
-	WBUFW(buf,4) = y;
-	WBUFW(buf,6) = cell_type;
-	mapindex_getmapname_ext(map[m].name,(char*)WBUFP(buf,8));
-	clif_send(buf,packet_len(0x192),&bl,(!type)?AREA:ALL_SAMEMAP);
 }
 
 /*==========================================
