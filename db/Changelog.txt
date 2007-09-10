@@ -27,6 +27,8 @@
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
 ========================
+09/10
+	* Fixed Asura Strike autocast being self targetted [Playtester]
 09/09
 	* Fixed size of NPC_EVILLAND [Playtester]
 	* Updated some cards to use the new format of bonus3 bAddEff* [Skotlex]
