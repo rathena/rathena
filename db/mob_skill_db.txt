@@ -4493,7 +4493,7 @@
 1864,Zombie Slaughter@NPC_UNDEADATTACK,attack,347,5,1000,0,5000,yes,target,always,0,,,,,,2
 1864,Zombie Slaughter@CR_AUTOGUARD,chase,249,10,2000,0,5000,yes,self,always,0,,,,,,
 1864,Zombie Slaughter@CR_AUTOGUARD,attack,249,10,500,0,5000,yes,self,always,0,,,,,,
-1864,Zombie Slaughter@RG_STRIPARMOR,attack,217,3,100,0,30000,yes,target,always,0,,,,,,2
+1864,Zombie Slaughter@RG_STRIPARMOR,attack,217,3,500,0,30000,yes,target,always,0,,,,,,2
 1865,Ragged Zombie@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1865,Ragged Zombie@AC_DOUBLE,idle,46,10,2000,0,5000,yes,target,always,,,,,,,
 1865,Ragged Zombie@AC_SHOWER,idle,47,5,2000,0,5000,yes,target,always,,,,,,,
@@ -4521,7 +4521,7 @@
 1868,Banshee@NPC_CRITICALWOUND,attack,673,4,1000,0,10000,no,target,always,0,,,,,,
 1868,Banshee@NPC_CURSEATTACK,attack,181,5,500,800,5000,no,target,always,0,,,,,,29
 1868,Banshee@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,26
-1868,Banshee@NPC_EVILLAND,attack,670,10,100,1000,30000,yes,self,always,0,,,,,,
+1868,Banshee@NPC_EVILLAND,attack,670,10,500,1000,30000,yes,self,always,0,,,,,,
 1869,Flame Skull@MO_BODYRELOCATION,chase,264,1,2000,500,5000,no,target,always,0,,,,,,
 1869,Flame Skull@MG_FIREBALL,chase,17,5,2000,500,10000,no,target,always,,,,,,,
 1869,Flame Skull@MG_FIREBALL,attack,17,5,1000,500,10000,no,target,always,,,,,,,

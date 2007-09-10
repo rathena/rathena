@@ -15,8 +15,8 @@
 nameless_n,0,0,0,0	monster	Ragged Zombie	1865,30,0,0,0
 nameless_n,0,0,0,0	monster	Hell Poodle	1866,30,0,0,0
 nameless_n,0,0,0,0	monster	Ghoul	1036,20,0,0,0
-nameless_n,0,0,0,0	monster	Zombie Slaughter	1864,20,0,0,0
 nameless_n,0,0,0,0	monster	Flame Skull	1869,20,0,0,0
+nameless_n,0,0,0,0	monster	Zombie Slaughter	1864,10,0,0,0
 nameless_n,0,0,0,0	monster	Banshee	1867,10,0,0,0
 
 // Cursed Abbey Dungeon 1
