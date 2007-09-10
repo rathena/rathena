@@ -433,6 +433,7 @@ extern struct Battle_Config
 	int hom_rename;
 	int homunculus_show_growth ;	//[orn]
 	int homunculus_friendly_rate;
+	int quest_exp_rate;
 } battle_config;
 
 void do_init_battle(void);

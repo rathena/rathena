@@ -7767,13 +7767,21 @@ BUILDIN_FUNC(getexp)
 {
 	TBL_PC *sd = script_rid2sd(st);
 	int base=0,job=0;
+	double bonus;
+
+	nullpo_retr(0, sd);
 
 	base=script_getnum(st,2);
 	job =script_getnum(st,3);
 	if(base<0 || job<0)
 		return 0;
-	if(sd)
-		pc_gainexp(sd,NULL,base,job);
+
+	// bonus for npc-given exp
+	bonus = battle_config.quest_exp_rate / 100.;
+	base = (int) cap_value(base * bonus, 0, INT_MAX);
+	job = (int) cap_value(job * bonus, 0, INT_MAX);
+
+	pc_gainexp(sd, NULL, base, job);
 
 	return 0;
 }

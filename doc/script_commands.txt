@@ -9,7 +9,7 @@
 //= Maeki Rika - A section on general concepts and lots of
 //=              other updates and additions.
 //===== Version ===========================================
-//= 3.05.20070819
+//= 3.06.20070910
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -82,6 +82,8 @@
 //=       Fixed typo in 'areamonster' description (missing argument) [ultramage]
 //= 3.06 20070909
 //=       Added 'gethominfo' description [Skotlex]
+//= 3.06.20070910
+//=       Added info about the new behavior of 'getexp' [ultramage]
 //===== Description =======================================
 //= A reference manual for the eAthena scripting language,
 //= sorted out depending on their functionality.
@@ -3516,8 +3518,7 @@ There's good reasons to be very careful when using this command.
 *getexp <base xp>,<job xp>;
 
 This command will give the invoking character a specified number of base and job 
-experience points. Can be used as a quest reward. Negative amounts of experience 
-were not tested but should work.
+experience points. Can be used as a quest reward. Negative values won't work.
 
     getexp 10000,5000;
 
@@ -3530,6 +3531,9 @@ You can also use the "set" command with the constants defined in 'db/const.txt':
 You can also reduce the ammount of experience points:
 
     set BaseExp,BaseExp-10000;
+
+Note that 'getexp' is now subject to the 'quest_exp_rate' config option, which
+adjusts the gained value. If you want to bypass this, use the 'set' method.
 
 ---------------------------------------
 
