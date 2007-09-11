@@ -97,7 +97,7 @@
 591,Caviar_Pancake,Caviar Pancake,0,,,150,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 592,Jam_Pancake,Strawberry Jam Pancake,0,,,150,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 593,Honey_Pancake,Honey Pancake,0,,,150,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-594,Sour_Cream_Pancake,Cream Pankake,0,,,150,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+594,Sour_Cream_Pancake,Cream Pancake,0,,,150,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 595,Mushroom_Pancake,Mushroom Pancake,0,,,150,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 596,Cute_Strawberry_Choco,Cute Strawberry-Choco,0,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,rand(1,100); },{},{}
 597,Lovely_Choco_Tart,Lovely Choco-Tart,0,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
