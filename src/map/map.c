@@ -3227,7 +3227,13 @@ static int map_abort_sub(DBKey key,void * data,va_list ap)
 //------------------------------
 void do_abort(void)
 {
+	static int run = 0;
 	//Save all characters and then flush the inter-connection.
+	if (run) {
+		ShowFatalError("Server has crashed while trying to save characters. Character data can't be saved!\n");
+		return;
+	}
+	run = 1;
 	if (!chrif_isconnected())
 	{
 		if (pc_db->size(pc_db))

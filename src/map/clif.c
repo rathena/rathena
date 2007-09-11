@@ -362,7 +362,7 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 		for(i=1; i<fd_max; i++) {
 			if (session[i] && session[i]->func_parse == clif_parse &&
 				(sd = (struct map_session_data*)session[i]->session_data) != NULL &&
-				sd->state.mainchat && (fd=sd->fd))
+				sd->state.mainchat && !sd->chatID && (fd=sd->fd))
 			{
 				WFIFOHEAD(fd,len);
 				memcpy(WFIFOP(fd,0), buf, len);
