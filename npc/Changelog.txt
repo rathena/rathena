@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/09/12
+	* Moved the Nameless Island warp npc to warps/cities/nameless.txt [Playtester]
 	* Added first version of Nameless Islet sailor.
 	- Players can now access Cursed Abbey for further testings.
 2007/09/10
