@@ -268,7 +268,7 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 		return 0;
 	}
 	//Only leader can invite.
-	ARR_FIND(0, MAX_PARTY, i, i < MAX_PARTY && p->data[i].sd != sd);
+	ARR_FIND(0, MAX_PARTY, i, p->data[i].sd == sd);
 	if (i == MAX_PARTY || !p->party.member[i].leader)
 	{	//TODO: Find the correct reply packet.
 		clif_displaymessage(sd->fd, msg_txt(282));
