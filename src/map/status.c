@@ -1528,14 +1528,7 @@ static void status_calc_sigma(void)
 static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct status_data* status)
 {
 	unsigned int val;
-
 	val = 35 + sd->status.base_level*hp_coefficient2[sd->status.class_]/100 + hp_sigma_val[sd->status.class_][sd->status.base_level];
-	val += val * status->vit/100; // +1% per each point of VIT
-
-	if (sd->class_&JOBL_UPPER)
-		val += val * 25/100; //Trans classes get a 25% hp bonus
-	else if (sd->class_&JOBL_BABY)
-		val -= val * 30/100; //Baby classes get a 30% hp penalty
 
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_NINJA || (sd->class_&MAPID_UPPERMASK) == MAPID_GUNSLINGER)
 		val += 100; //Since their HP can't be approximated well enough without this.
@@ -1544,6 +1537,12 @@ static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct sta
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
 		val += 2000; //Supernovice lvl99 hp bonus.
 
+	val += val * status->vit/100; // +1% per each point of VIT
+
+	if (sd->class_&JOBL_UPPER)
+		val += val * 25/100; //Trans classes get a 25% hp bonus
+	else if (sd->class_&JOBL_BABY)
+		val -= val * 30/100; //Baby classes get a 30% hp penalty
 	return val;
 }
 

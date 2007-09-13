@@ -1600,6 +1600,10 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 		break;
 	}
 
+	if(sd && (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
+		rand()%10000 < battle_config.sg_miracle_skill_ratio)	//SG_MIRACLE [Komurka]
+		sc_start(src,SC_MIRACLE,100,1,battle_config.sg_miracle_skill_duration);
+
 	if(sd && skillid && attack_type&BF_MAGIC && status_isdead(bl) &&
 	 	!(skill_get_inf(skillid)&(INF_GROUND_SKILL|INF_SELF_SKILL)) &&
 		(rate=pc_checkskill(sd,HW_SOULDRAIN))>0
@@ -6374,6 +6378,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	case SG_SUN_WARM:
 	case SG_MOON_WARM:
 	case SG_STAR_WARM:
+		skill_clear_unitgroup(src);
 		if ((sg = skill_unitsetting(src,skillid,skilllv,src->x,src->y,0)))
 			sc_start4(src,type,100,skilllv,0,0,(int)sg,skill_get_time(skillid,skilllv));
 		flag|=1;

@@ -1,5 +1,7 @@
 Date	Added
 
+2007/09/13
+	* Trigger rate Miracle of the Sun, Moon and Stars is now 0.02% [Skotlex]
 2007/09/10
 	* Added 'quest_exp_rate', adjusts exp gained by 'getexp' [ultramage]
 2007/09/05
