@@ -28,6 +28,13 @@
 
 ========================
 09/13
+	* Rev. 11191 Added a few more items. (idRO RIC items, etc) [L0ne_W0lf]
+	- RIC Stat Boost items will only last 1 minute until we have a proper time.
+	- Some items give ONE item as the quantity given is unknown.
+	- Corrected the view ID for "Scarf", "Little Angel Rock", "Robo Eye".
+	  "Sakray Test Helm" and the "Loki Mask"
+	- Commented out several headgear that are not standard in the kRO client.
+	  5301, 5305 - 5322, 5324 and 5325. All i/id/c/p/e/RO event hats?
 	* Updated Moonlight's and Atroce's stats [Playtester]
 09/10
 	* Corrected Kamaitachi's range to be 9, and the path range to be 4+SkillLv
