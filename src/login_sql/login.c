@@ -620,7 +620,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 
 	if (!check_password(session[fd]->session_data, account->passwdenc, user_password, password))
 	{
-		ShowInfo("Invalid password (account: %s, pass: %s, received pass: %s, ip: %s)" RETCODE,
+		ShowInfo("Invalid password (account: %s, pass: %s, received pass: %s, ip: %s)\n",
 		         account->userid, password, (account->passwdenc) ? "[MD5]" : account->passwd, ip);
 		return 1; // 1 = Incorrect Password
 	}
@@ -911,13 +911,13 @@ int parse_fromchar(int fd)
 			memcpy(actual_email, RFIFOP(fd,6), 40);
 			memcpy(new_email, RFIFOP(fd,46), 40);
 			if (e_mail_check(actual_email) == 0)
-				ShowWarning("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command), but actual email is invalid (account: %d, ip: %s)" RETCODE,
+				ShowWarning("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command), but actual email is invalid (account: %d, ip: %s)\n",
 				server[id].name, acc, ip);
 			else if (e_mail_check(new_email) == 0)
-				ShowWarning("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command) with a invalid new e-mail (account: %d, ip: %s)" RETCODE,
+				ShowWarning("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command) with a invalid new e-mail (account: %d, ip: %s)\n",
 				server[id].name, acc, ip);
 			else if (strcmpi(new_email, "a@a.com") == 0)
-				ShowWarning("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command) with a default e-mail (account: %d, ip: %s)" RETCODE,
+				ShowWarning("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command) with a default e-mail (account: %d, ip: %s)\n",
 				server[id].name, acc, ip);
 			else {
 				sprintf(tmpsql, "SELECT `%s`,`email` FROM `%s` WHERE `%s` = '%d'", login_db_userid, login_db, login_db_account_id, acc);
@@ -937,7 +937,7 @@ int parse_fromchar(int fd)
 							ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
 							ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmpsql);
 						}
-						ShowInfo("Char-server '%s': Modify an e-mail on an account (@email GM command) (account: %d (%s), new e-mail: %s, ip: %s)." RETCODE,
+						ShowInfo("Char-server '%s': Modify an e-mail on an account (@email GM command) (account: %d (%s), new e-mail: %s, ip: %s).\n",
 							server[id].name, acc, sql_row[0], actual_email, ip);
 					}
 				}
@@ -1293,7 +1293,7 @@ int login_ip_ban_check(uint32 ip)
 	}
 		
 	// ip ban ok.
-	ShowInfo("Packet from banned ip : %d.%d.%d.%d\n" RETCODE, CONVIP(ip));
+	ShowInfo("Packet from banned ip : %d.%d.%d.%d\n", CONVIP(ip));
 
 	if (login_config.log_login)
 	{
@@ -1668,12 +1668,12 @@ int parse_login(int fd)
 		break;
 
 		case 0x7532:	// Request to end connection
-			ShowStatus ("End of connection (ip: %s)" RETCODE, ip);
+			ShowStatus ("End of connection (ip: %s)\n", ip);
 			set_eof(fd);
 		break;
 
 		default:
-			ShowStatus ("Abnormal end of connection (ip: %s): Unknown packet 0x%x " RETCODE, ip, RFIFOW(fd,0));
+			ShowStatus ("Abnormal end of connection (ip: %s): Unknown packet 0x%x\n", ip, RFIFOW(fd,0));
 			set_eof(fd);
 			return 0;
 		}
@@ -1691,7 +1691,7 @@ int parse_console(char* buf)
 
 	sscanf(buf, "%[^\n]", command);
 
-	//login_log("Console command :%s" RETCODE, command);
+	//login_log("Console command :%s\n", command);
 
 	if( strcmpi("shutdown", command) == 0 ||
 		strcmpi("exit", command) == 0 ||

@@ -270,7 +270,7 @@ int inter_storage_save_sub(DBKey key,void *data,va_list ap)
 	storage_tostr(line,(struct storage *)data);
 	fp=va_arg(ap,FILE *);
 	if(*line)
-		fprintf(fp,"%s" RETCODE,line);
+		fprintf(fp,"%s\n",line);
 	return 0;
 }
 //---------------------------------------------------------
@@ -297,7 +297,7 @@ int inter_guild_storage_save_sub(DBKey key,void *data,va_list ap)
 		guild_storage_tostr(line,(struct guild_storage *)data);
 		fp=va_arg(ap,FILE *);
 		if(*line)
-			fprintf(fp,"%s" RETCODE,line);
+			fprintf(fp,"%s\n",line);
 	}
 	return 0;
 }

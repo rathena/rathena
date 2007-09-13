@@ -1290,7 +1290,7 @@ int make_new_char_sql(int fd, unsigned char *dat)
 			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 		}
 	}
-	//printf("make new char %d-%d %s %d, %d, %d, %d, %d, %d - %d, %d" RETCODE,
+	//printf("make new char %d-%d %s %d, %d, %d, %d, %d, %d - %d, %d\n",
 	//	fd, dat[30], dat, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]);
 
 	//Check Name (already in use?)
@@ -3187,7 +3187,7 @@ int parse_char(int fd)
 					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
 				}
 			}
-			ShowInfo("Selected char: (Account %d: %d - %s)" RETCODE, sd->account_id, RFIFOB(fd, 2), char_dat.name);
+			ShowInfo("Selected char: (Account %d: %d - %s)\n", sd->account_id, RFIFOB(fd, 2), char_dat.name);
 
 			// searching map server
 			i = search_mapserver(char_dat.last_point.map, -1, -1);
@@ -3513,7 +3513,7 @@ int parse_console(char* buf)
 
 	sscanf(buf, "%[^\n]", command);
 
-	//login_log("Console command :%s" RETCODE, command);
+	//login_log("Console command :%s\n", command);
 
 	if( strcmpi("shutdown", command) == 0 ||
 		strcmpi("exit", command) == 0 ||

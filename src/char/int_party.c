@@ -227,7 +227,7 @@ int inter_party_save_sub(DBKey key, void *data, va_list ap) {
 
 	inter_party_tostr(line, &((struct party_data*)data)->party);
 	fp = va_arg(ap, FILE *);
-	fprintf(fp, "%s" RETCODE, line);
+	fprintf(fp, "%s\n", line);
 
 	return 0;
 }

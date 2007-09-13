@@ -156,7 +156,7 @@ int inter_homun_save_sub(DBKey key,void *data,va_list ap)
 	FILE *fp;
 	inter_homun_tostr(line,(struct s_homunculus *)data);
 	fp=va_arg(ap,FILE *);
-	fprintf(fp,"%s" RETCODE,line);
+	fprintf(fp,"%s\n",line);
 	return 0;
 }
 

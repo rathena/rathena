@@ -84,7 +84,7 @@ int log_branch(struct map_session_data *sd)
 		return 0;
 	time(&curtime);
 	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-	fprintf(logfp,"%s - %s[%d:%d]\t%s%s", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex), RETCODE);
+	fprintf(logfp,"%s - %s[%d:%d]\t%s\n", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex));
 	fclose(logfp);
 	return 1;
 }
@@ -134,13 +134,13 @@ int log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int a
 
 	if (itm==NULL) {
 	//We log common item
-		fprintf(logfp,"%s - %d\t%s\t%d,%d,%s%s",
-			timestring, sd->status.char_id, type, nameid, amount, mapname, RETCODE);
+		fprintf(logfp,"%s - %d\t%s\t%d,%d,%s\n",
+			timestring, sd->status.char_id, type, nameid, amount, mapname);
 
 	} else {
 	//We log Extended item
-		fprintf(logfp,"%s - %d\t%s\t%d,%d,%d,%d,%d,%d,%d,%s%s",
-			timestring, sd->status.char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname, RETCODE);
+		fprintf(logfp,"%s - %d\t%s\t%d,%d,%d,%d,%d,%d,%d,%s\n",
+			timestring, sd->status.char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname);
 	}
 	fclose(logfp);
 	return 1; //Logged
@@ -191,13 +191,13 @@ int log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount, 
 
 	if (itm==NULL) {
 	//We log common item
-		fprintf(logfp,"%s - %d\t%s\t%d,%d,%s%s",
-			timestring, md->class_, type, nameid, amount, mapname, RETCODE);
+		fprintf(logfp,"%s - %d\t%s\t%d,%d,%s\n",
+			timestring, md->class_, type, nameid, amount, mapname);
 
 	} else {
 	//We log Extended item
-		fprintf(logfp,"%s - %d\t%s\t%d,%d,%d,%d,%d,%d,%d,%s%s",
-			timestring, md->class_, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname, RETCODE);
+		fprintf(logfp,"%s - %d\t%s\t%d,%d,%d,%d,%d,%d,%d,%s\n",
+			timestring, md->class_, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname);
 	}
 	fclose(logfp);
 	return 1; //Logged
@@ -228,7 +228,7 @@ int log_zeny(struct map_session_data *sd, char *type, struct map_session_data *s
 //			return 0;
 //		time(&curtime);
 //		strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-//		fprintf(logfp,"%s - %s[%d]\t%s[%d]\t%d\t%s", timestring, sd->status.name, sd->status.account_id, target_sd->status.name, target_sd->status.account_id, sd->deal.zeny, RETCODE);
+//		fprintf(logfp,"%s - %s[%d]\t%s[%d]\t%d\n", timestring, sd->status.name, sd->status.account_id, target_sd->status.name, target_sd->status.account_id, sd->deal.zeny);
 //		fclose(logfp);
 //		return 1;
 	return 0;
@@ -258,7 +258,7 @@ int log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp)
 		return 0;
 	time(&curtime);
 	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-	fprintf(logfp,"%s - %s[%d:%d]\t%d\t%d,%d%s", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1], RETCODE);
+	fprintf(logfp,"%s - %s[%d:%d]\t%d\t%d,%d\n", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1]);
 	fclose(logfp);
 	return 0;
 }
@@ -299,7 +299,7 @@ int log_atcommand(struct map_session_data *sd, const char *message)
 		return 0;
 	time(&curtime);
 	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-	fprintf(logfp,"%s - %s[%d]: %s%s",timestring,sd->status.name,sd->status.account_id,message,RETCODE);
+	fprintf(logfp,"%s - %s[%d]: %s\n",timestring,sd->status.name,sd->status.account_id,message);
 	fclose(logfp);
 	return 1;
 }
@@ -333,7 +333,7 @@ int log_npc(struct map_session_data *sd, const char *message)
 		return 0;
 	time(&curtime);
 	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-	fprintf(logfp,"%s - %s[%d]: %s%s",timestring,sd->status.name,sd->status.account_id,message,RETCODE);
+	fprintf(logfp,"%s - %s[%d]: %s\n",timestring,sd->status.name,sd->status.account_id,message);
 	fclose(logfp);
 	return 1;
 }
@@ -386,8 +386,8 @@ int log_chat(const char* type, int type_id, int src_charid, int src_accid, const
 		return 0;
 	time(&curtime);
 	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-	fprintf(logfp, "%s - %s,%d,%d,%d,%s,%d,%d,%s,%s%s", 
-		timestring, type, type_id, src_charid, src_accid, map, x, y, dst_charname, message, RETCODE);
+	fprintf(logfp, "%s - %s,%d,%d,%d,%s,%d,%d,%s,%s\n", 
+		timestring, type, type_id, src_charid, src_accid, map, x, y, dst_charname, message);
 	fclose(logfp);
 	return 1;
 }

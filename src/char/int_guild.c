@@ -470,7 +470,7 @@ int inter_guild_save_sub(DBKey key,void *data,va_list ap) {
 
 	inter_guild_tostr(line,(struct guild *)data);
 	fp=va_arg(ap,FILE *);
-	fprintf(fp,"%s" RETCODE,line);
+	fprintf(fp,"%s\n",line);
 
 	return 0;
 }
@@ -482,7 +482,7 @@ int inter_castle_save_sub(DBKey key, void *data, va_list ap) {
 
 	inter_guildcastle_tostr(line, (struct guild_castle *)data);
 	fp = va_arg(ap, FILE *);
-	fprintf(fp, "%s" RETCODE, line);
+	fprintf(fp, "%s\n", line);
 
 	return 0;
 }
@@ -1005,7 +1005,7 @@ int mapif_parse_CreateGuild(int fd, int account_id, char *name, struct guild_mem
 	mapif_guild_info(fd, g);
 
 	if(log_inter)
-		inter_log("guild %s (id=%d) created by master %s (id=%d)" RETCODE,
+		inter_log("guild %s (id=%d) created by master %s (id=%d)\n",
 			name, g->guild_id, master->name, master->account_id);
 
 	return 0;
@@ -1155,7 +1155,7 @@ int mapif_parse_BreakGuild(int fd, int guild_id) {
 	mapif_guild_broken(guild_id, 0);
 
 	if(log_inter)
-		inter_log("guild %s (id=%d) broken" RETCODE, g->name, guild_id);
+		inter_log("guild %s (id=%d) broken\n", g->name, guild_id);
 
 	idb_remove(guild_db, guild_id);
 	return 0;
@@ -1448,7 +1448,7 @@ int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 			int gid = (value) ? value : gc->guild_id;
 			struct guild *g = idb_get(guild_db, gid);
 			if(log_inter)
-				inter_log("guild %s (id=%d) %s castle id=%d" RETCODE,
+				inter_log("guild %s (id=%d) %s castle id=%d\n",
 					(g) ? g->name : "??", gid, (value) ? "occupy" : "abandon", castle_id);
 		}
 		gc->guild_id = value;

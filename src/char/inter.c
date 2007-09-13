@@ -144,7 +144,7 @@ int inter_accreg_save_sub(DBKey key, void *data, va_list ap) {
 	if (reg->reg_num > 0) {
 		inter_accreg_tostr(line,reg);
 		fp = va_arg(ap, FILE *);
-		fprintf(fp, "%s" RETCODE, line);
+		fprintf(fp, "%s\n", line);
 	}
 
 	return 0;

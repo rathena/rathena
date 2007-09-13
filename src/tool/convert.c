@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define RETCODE	"\r\n"
-
 #define MAX_INVENTORY 100
 #define MAX_CART 100
 #define MAX_SKILL 350
@@ -282,7 +280,7 @@ int mmo_char_convert(char *fname1,char *fname2)
     ret=mmo_char_fromstr(line,&char_dat);
     if(ret){
 	    mmo_char_tostr(line,&char_dat);
-  	  fprintf(ofp,"%s" RETCODE,line);
+  	  fprintf(ofp,"%s\n",line);
     }
   }
   fclose(ifp);

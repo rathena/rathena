@@ -127,7 +127,7 @@ int inter_pet_save_sub(DBKey key,void *data,va_list ap)
 	FILE *fp;
 	inter_pet_tostr(line,(struct s_pet *)data);
 	fp=va_arg(ap,FILE *);
-	fprintf(fp,"%s" RETCODE,line);
+	fprintf(fp,"%s\n",line);
 	return 0;
 }
 
