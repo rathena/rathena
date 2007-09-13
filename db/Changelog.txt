@@ -27,6 +27,8 @@
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
 ========================
+09/13
+	* Updated Moonlight's and Atroce's stats [Playtester]
 09/10
 	* Corrected Kamaitachi's range to be 9, and the path range to be 4+SkillLv
 	  [Skotlex]
