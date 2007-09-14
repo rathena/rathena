@@ -2155,9 +2155,6 @@ struct Damage battle_calc_magic_attack(
 			if(mflag) //mflag has a value when it was checked against an undead in skill.c [Skotlex]
 				ad.blewcount = 0; //No knockback
 			break;
-		case HW_GRAVITATION:
-			ad.dmotion = 0; //No flinch animation.
-			break;
 		case PR_SANCTUARY:
 			ad.dmotion = 0; //No flinch animation.
 			break;
@@ -2201,9 +2198,6 @@ struct Damage battle_calc_magic_attack(
 				break;
 			case PF_SOULBURN:
 				ad.damage = tstatus->sp * 2;
-				break;
-			case HW_GRAVITATION:
-				ad.damage = 200+200*skill_lv;
 				break;
 			default:
 			{
@@ -2556,6 +2550,10 @@ struct Damage  battle_calc_misc_attack(
 		md.damage = 500+rand()%500 + 5*skill_lv * sstatus->int_;
 		nk|=NK_IGNORE_FLEE|NK_NO_ELEFIX; //These two are not properties of the weapon based part.
 		break;
+	case HW_GRAVITATION:
+		md.damage = 200+200*skill_lv;
+		md.dmotion = 0; //No flinch animation.
+		break;
 	}
 
 	if (nk&NK_SPLASHSPLIT){ // Divide ATK among targets
@@ -2678,8 +2676,8 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 	return d;
 }
 
-//Calculates returned damage. direct is true if the skill was a direct attack (that is, not from another source, like a land spell
-int battle_calc_return_damage(struct block_list* bl, int* damage, int direct, int flag)
+//Calculates BF_WEAPON returned damage.
+int battle_calc_return_damage(struct block_list* bl, int damage, int flag)
 {
 	struct map_session_data* sd = NULL;
 	struct status_change* sc;
@@ -2690,37 +2688,23 @@ int battle_calc_return_damage(struct block_list* bl, int* damage, int direct, in
 	if(sc && !sc->count)
 		sc = NULL;
 
-	if(flag&BF_WEAPON && direct) {
-		//Bounces back part of the damage.
-		if (flag & BF_SHORT) {
-			if (sd && sd->short_weapon_damage_return)
-			{
-				rdamage += *damage * sd->short_weapon_damage_return / 100;
-				if(rdamage < 1) rdamage = 1;
-			}
-			if (sc && sc->data[SC_REFLECTSHIELD].timer != -1)
-		  	{
-				rdamage += *damage * sc->data[SC_REFLECTSHIELD].val2 / 100;
-				if (rdamage < 1) rdamage = 1;
-			}
-		} else if (flag & BF_LONG) {
-			if (sd && sd->long_weapon_damage_return)
-			{
-				rdamage += *damage * sd->long_weapon_damage_return / 100;
-				if (rdamage < 1) rdamage = 1;
-			}
+	//Bounces back part of the damage.
+	if (flag & BF_SHORT) {
+		if (sd && sd->short_weapon_damage_return)
+		{
+			rdamage += damage * sd->short_weapon_damage_return / 100;
+			if(rdamage < 1) rdamage = 1;
 		}
-	} else
-	// magic_damage_return by [AppleGirl] and [Valaris]
-	if(flag&BF_MAGIC)
-	{
-		if(
-			(sd && sd->magic_damage_return && direct && rand()%100 < sd->magic_damage_return)
-			|| (sc && sc->data[SC_MAGICMIRROR].timer != -1 && rand()%100 < sc->data[SC_MAGICMIRROR].val2)
-			)
-		{	//Bounces back full damage, you take none.
-			rdamage = *damage;
-		 	*damage = 0;
+		if (sc && sc->data[SC_REFLECTSHIELD].timer != -1)
+		{
+			rdamage += damage * sc->data[SC_REFLECTSHIELD].val2 / 100;
+			if (rdamage < 1) rdamage = 1;
+		}
+	} else if (flag & BF_LONG) {
+		if (sd && sd->long_weapon_damage_return)
+		{
+			rdamage += damage * sd->long_weapon_damage_return / 100;
+			if (rdamage < 1) rdamage = 1;
 		}
 	}
 	return rdamage;
@@ -2909,7 +2893,7 @@ int battle_weapon_attack(struct block_list* src, struct block_list* target, unsi
 
 	damage = wd.damage + wd.damage2;
 	if (damage > 0 && src != target) {
-		rdamage = battle_calc_return_damage(target, &damage, 1, wd.flag);
+		rdamage = battle_calc_return_damage(target, damage, wd.flag);
 		if (rdamage > 0) {
 			rdelay = clif_damage(src, src, tick, wd.amotion, sstatus->dmotion, rdamage, 1, 4, 0);
 			//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
@@ -3160,10 +3144,6 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		{
 			struct skill_unit *su = (struct skill_unit *)src;
 			if (!su->group)
-				return 0;
-
-			//For some mysterious reason ground-skills can't target homun.
-			if (target->type == BL_HOM && battle_config.hom_setting&0x2)
 				return 0;
 
 			if (su->group->src_id == target->id)

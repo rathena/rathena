@@ -1889,6 +1889,35 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 	return count; //Return amount of knocked back cells.
 }
 
+
+//Checks if there should be magic reflection. 
+//type is the type of magic attack: 0: indirect (aoe), 1: direct (targetted)
+static int skill_magic_reflect(struct block_list *src, struct block_list *target, int type)
+{
+	struct status_change *sc = status_get_sc(target);
+	struct map_session_data *sd;
+	BL_CAST(BL_PC, src, sd);
+
+	if(sd && sd->magic_damage_return && type && rand()%100 < sd->magic_damage_return)
+		return 1;
+
+	if(sc && sc->count)
+	{
+		if(sc->data[SC_MAGICMIRROR].timer != -1 && rand()%100 < sc->data[SC_MAGICMIRROR].val2)
+			return 1;
+
+		if(sc->data[SC_KAITE].timer != -1 && (sd || status_get_lv(src) <= 80))
+		{	//Works on players or mobs with level under 80.
+			clif_specialeffect(target, 438, AREA);
+			if (--sc->data[SC_KAITE].val2 <= 0)
+				status_change_end(target, SC_KAITE, -1);
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
 /*
  * =========================================================================
  * Does a skill attack with the given properties.
@@ -1964,16 +1993,15 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	}
 
 	if (attack_type&BF_MAGIC) {
-	 	if(sc && sc->data[SC_KAITE].timer != -1 && (dmg.damage || dmg.damage2)
-			&& !(sstatus->mode&MD_BOSS) && (sd || status_get_lv(src) <= 80) )
-		{	//Works on players or mobs with level under 80.
-			clif_specialeffect(bl, 438, AREA);
-			if (--sc->data[SC_KAITE].val2 <= 0)
-				status_change_end(bl, SC_KAITE, -1);
-			clif_skill_nodamage(bl,src,skillid,skilllv,1);
-			bl = src; //Just make the skill attack yourself @.@
+		if (!(sstatus->mode&MD_BOSS) && (dmg.damage || dmg.damage2) &&
+			skill_magic_reflect(src, bl, src==dsrc))
+		{	//Magic reflection, switch caster/target
+			struct block_list *tbl = bl;
+			bl = src;
+			src = tbl;
+			BL_CAST(BL_PC, src, sd);
+			BL_CAST(BL_PC, bl, tsd);
 			sc = status_get_sc(bl);
-			tsd = (bl->type == BL_PC)?(TBL_PC*)bl:NULL;
 			if (sc && !sc->count)
 				sc = NULL; //Don't need it.
 			//Spirit of Wizard blocks bounced back spells.
@@ -2016,8 +2044,9 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	damage = dmg.damage + dmg.damage2;
 
-	if (damage > 0 && src != bl && skillid != WS_CARTTERMINATION) // FIXME(?): Quick and dirty check, but HSCR does bypass Shield Reflect... so I make it bypass the whole reflect thing [DracoRPG]
-		rdamage = battle_calc_return_damage(bl, &damage, src == dsrc, dmg.flag);
+	if (damage > 0 && dmg.flag&BF_WEAPON && src != bl && src == dsrc &&
+		skillid != WS_CARTTERMINATION) // FIXME(?): Quick and dirty check, but HSCR does bypass Shield Reflect... so I make it bypass the whole reflect thing [DracoRPG]
+		rdamage = battle_calc_return_damage(bl, damage, dmg.flag);
 
 	//Skill hit type
 	type=(skillid==0)?5:skill_get_hit(skillid);
@@ -2775,8 +2804,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		return 1;
 
 	if (skillid && skill_get_type(skillid) == BF_MAGIC && status_isimmune(bl) == 100)
-	{	//GTB makes all targetted magic fail silently.
-		if (sd) clif_skill_fail(sd,skillid,0,0);
+	{	//GTB makes all targetted magic display miss with a single bolt.
+		clif_skill_damage(src, bl, tick, status_get_amotion(src), tstatus->dmotion,
+			0, 1, skillid, skilllv, skill_get_hit(skillid));
 		return 1;
 	}
 
@@ -4483,6 +4513,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case WZ_ESTIMATION:
 		if(sd) {
+			if (dstsd) {
+				clif_skill_fail(sd,skillid,0,0);
+				break;
+			}
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			clif_skill_estimation((struct map_session_data *)src,bl);
 		}
@@ -7545,7 +7579,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;
 
 		case UNT_GRAVITATION:
-			skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+			skill_attack(skill_get_type(sg->skill_id),ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 
 		case UNT_DESPERADO:
