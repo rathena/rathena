@@ -1470,7 +1470,7 @@ kh_school,179,39,1	script	Cute Student	895,{
 				mes "I know it sounds crazy,";
 				mes "but this ghost wanders the";
 				mes "campus, and curses it's victims,";
-				mes "making them so hold and lifeless.";
+				mes "making them so cold and lifeless.";
 				mes "It happened to my roommate,";
 				mes "Mayo. It's like she's a statue.";
 				next;
@@ -3783,7 +3783,7 @@ kh_school,122,186,4	script	Beautiful lady	894,{
 		mes "Friend of prototype Elly,";
 		mes "I welcome you. As you may";
 		mes "have figured out, I need your";
-		mes "help. Kiel Hyre is being help";
+		mes "help. Kiel Hyre is being held";
 		mes "somewhere inside this factory.";
 		next;
 		mes "[Allysia]";
@@ -4784,8 +4784,9 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 								delitem 7501,1; //K.H's_Letter
 								delitem 7502,1; //James's_Memo
 								delitem 7503,1; //Portrait_of_a_Guy
-								close;
-
+								close2;
+								cutin "",255;
+								end;
 							}
 
 						}
@@ -5063,6 +5064,7 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 			donpcevent "Kiehl_Room_Warp::OnEnable";
 			close2;
 			cutin "",255;
+			end;
 		}
 
 		mes "[Kiel Hyre]";
@@ -5613,7 +5615,7 @@ L_StartDialog:
 		mes ".....................";
 		mes "Ah, I see. Good work.";
 		mes "Why don't you go speak to Kiel";
-		mes "Hyle and confront him with";
+		mes "Hyre and confront him with";
 		mes "what you've learned about";
 		mes "his past? Yeah, grill him.";
 		next;
