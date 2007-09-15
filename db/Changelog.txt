@@ -27,7 +27,9 @@
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
 ========================
-
+09/15
+	* Fixed TF_BACKSLIDING being targetted on mob skills [Playtester]
+	- also fixed a cast rate
 09/14
 	* Gravitional Field is now a MISC type of attack. [Skotlex]
 09/13
