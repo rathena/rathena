@@ -5,6 +5,7 @@
 //
 // Outcome (r11216 trunk):
 // * the variables are _shared_ between all duplicates
+// * each duplicate knows its own map coordinates
 // * 'OnInit' loads the middle poring last, for some reason
 // * duplicates always override the source npc's trigger area (even 0x0)
 //

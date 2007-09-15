@@ -16,8 +16,8 @@
 //= Break down of arguments used in F_AgitStart:
 //=   arg(0): name of specific guild castle.
 //=   arg(1): name of specific agit castle script.
-//=   arg(2): x1 for Emperium and monster spawn
-//=   arg(3): y1 for Emperium and monster spawn
+//=   arg(2): x1 for Emperium coordinates.
+//=   arg(3): y1 for Emperium coordinates.
 //= Break down of arguments used in F_AgitBreak:
 //=   arg(0): name of specific guild castle.
 //=   arg(1): name of specific OnRevCastle label.
@@ -34,123 +34,133 @@
 
 // Function for OnAgitStart =========================================
 function	script	F_AgitStart	{
+	set .@map$, getarg(0);
+	set .@castle$, getarg(1);
+	set .@empx, getarg(2);
+	set .@empy, getarg(3);
 
-	MapRespawnGuildID getarg(0),GetCastleData(getarg(0),1),2;
-	Monster getarg(0),getarg(2),getarg(3),"EMPERIUM",1288,1,"Agit_"+getarg(1)+"::OnAgitBreak";
-	GvgOn getarg(0);
-	if (GetCastleData(getarg(0),1) != 0) return;
-	if(getarg(0) == "aldeg_cas01" || getarg(0) == "aldeg_cas02" || getarg(0) == "aldeg_cas03" || getarg(0) == "aldeg_cas04" || getarg(0) == "aldeg_cas05" || getarg(0) == "nguild_alde") goto L_AldegCas;
-	if(getarg(0) == "gefg_cas01" || getarg(0) == "gefg_cas02" || getarg(0) == "gefg_cas03" || getarg(0) == "gefg_cas04" || getarg(0) == "gefg_cas05" || getarg(0) == "nguild_gef") goto L_GefgCas;
-	if(getarg(0) == "payg_cas01" || getarg(0) == "payg_cas02" || getarg(0) == "payg_cas03" || getarg(0) == "payg_cas04" || getarg(0) == "payg_cas05" || getarg(0) == "nguild_pay") goto L_PaygCas;
-	if(getarg(0) == "prtg_cas01" || getarg(0) == "prtg_cas02" || getarg(0) == "prtg_cas03" || getarg(0) == "prtg_cas04" || getarg(0) == "prtg_cas05" || getarg(0) == "nguild_prt") goto L_PrtgCas;
+	MapRespawnGuildID .@map$,GetCastleData(.@map$,1),2;
+	monster .@map$,.@empx,.@empy,"EMPERIUM",1288,1,"Agit_"+.@castle$+"::OnAgitBreak";
+	GvgOn .@map$;
+	if (GetCastleData(.@map$,1) != 0) return;
+	if(.@map$ == "aldeg_cas01" || .@map$ == "aldeg_cas02" || .@map$ == "aldeg_cas03" || .@map$ == "aldeg_cas04" || .@map$ == "aldeg_cas05" || .@map$ == "nguild_alde") goto L_AldegCas;
+	if(.@map$ == "gefg_cas01"  || .@map$ == "gefg_cas02"  || .@map$ == "gefg_cas03"  || .@map$ == "gefg_cas04"  || .@map$ == "gefg_cas05"  || .@map$ == "nguild_gef" ) goto L_GefgCas;
+	if(.@map$ == "payg_cas01"  || .@map$ == "payg_cas02"  || .@map$ == "payg_cas03"  || .@map$ == "payg_cas04"  || .@map$ == "payg_cas05"  || .@map$ == "nguild_pay" ) goto L_PaygCas;
+	if(.@map$ == "prtg_cas01"  || .@map$ == "prtg_cas02"  || .@map$ == "prtg_cas03"  || .@map$ == "prtg_cas04"  || .@map$ == "prtg_cas05"  || .@map$ == "nguild_prt" ) goto L_PrtgCas;
 
 L_AldegCas:
-	areamonster getarg(0),0,0,300,300,"--ja--",1117,10;
-	areamonster getarg(0),0,0,300,300,"--ja--",1132,4;
-	areamonster getarg(0),0,0,300,300,"--ja--",1219,2;
-	areamonster getarg(0),0,0,300,300,"--ja--",1205,1;
-	areamonster getarg(0),0,0,300,300,"--ja--",1216,10;
-	areamonster getarg(0),0,0,300,300,"--ja--",1193,17;
-	areamonster getarg(0),0,0,300,300,"--ja--",1269,9;
-	areamonster getarg(0),0,0,300,300,"--ja--",1276,7;
-	areamonster getarg(0),0,0,300,300,"--ja--",1208,3;
-	areamonster getarg(0),0,0,300,300,"--ja--",1275,1;
-	areamonster getarg(0),0,0,300,300,"--ja--",1268,1;
-	areamonster getarg(0),0,0,300,300,"--ja--",1272,1;
-	monster getarg(0),(getarg(2)+1),getarg(3),"--ja--",1272,1;
-	monster getarg(0),(getarg(2)-1),getarg(3),"--ja--",1270,4;
-	monster getarg(0),getarg(2),(getarg(3)+1),"--ja--",1268,1;
-	monster getarg(0),getarg(2),(getarg(3)-1),"--ja--",1219,1;
-	monster getarg(0),getarg(2),getarg(3),"--ja--",1276,5;
+	areamonster .@map$,0,0,300,300,"--ja--",1117,10;
+	areamonster .@map$,0,0,300,300,"--ja--",1132,4;
+	areamonster .@map$,0,0,300,300,"--ja--",1219,2;
+	areamonster .@map$,0,0,300,300,"--ja--",1205,1;
+	areamonster .@map$,0,0,300,300,"--ja--",1216,10;
+	areamonster .@map$,0,0,300,300,"--ja--",1193,17;
+	areamonster .@map$,0,0,300,300,"--ja--",1269,9;
+	areamonster .@map$,0,0,300,300,"--ja--",1276,7;
+	areamonster .@map$,0,0,300,300,"--ja--",1208,3;
+	areamonster .@map$,0,0,300,300,"--ja--",1275,1;
+	areamonster .@map$,0,0,300,300,"--ja--",1268,1;
+	areamonster .@map$,0,0,300,300,"--ja--",1272,1;
+	monster .@map$,.@empx+1,.@empy,"--ja--",1272,1;
+	monster .@map$,.@empx-1,.@empy,"--ja--",1270,4;
+	monster .@map$,.@empx,.@empy+1,"--ja--",1268,1;
+	monster .@map$,.@empx,.@empy-1,"--ja--",1219,1;
+	monster .@map$,.@empx,.@empy,"--ja--",1276,5;
 	return;
 L_GefgCas:
-	areamonster getarg(0),0,0,300,300,"--ja--",1117,10;
-	areamonster getarg(0),0,0,300,300,"--ja--",1263,11;
-	areamonster getarg(0),0,0,300,300,"--ja--",1102,10;
-	areamonster getarg(0),0,0,300,300,"--ja--",1130,10;
-	areamonster getarg(0),0,0,300,300,"--ja--",1140,20;
-	areamonster getarg(0),0,0,300,300,"--ja--",1163,9;
-	areamonster getarg(0),0,0,300,300,"--ja--",1275,1;
-	areamonster getarg(0),0,0,300,300,"--ja--",1219,1;
-	areamonster getarg(0),0,0,300,300,"--ja--",1150,1;
-	areamonster getarg(0),0,0,300,300,"--ja--",1159,1;
-	monster getarg(0),(getarg(2)+1),getarg(3),"--ja--",1203,1;
-	monster getarg(0),(getarg(2)-1),getarg(3),"--ja--",1087,1;
-	monster getarg(0),getarg(2),(getarg(3)+1),"--ja--",1213,7;
-	monster getarg(0),getarg(2),(getarg(3)-1),"--ja--",1189,7;
+	areamonster .@map$,0,0,300,300,"--ja--",1117,10;
+	areamonster .@map$,0,0,300,300,"--ja--",1263,11;
+	areamonster .@map$,0,0,300,300,"--ja--",1102,10;
+	areamonster .@map$,0,0,300,300,"--ja--",1130,10;
+	areamonster .@map$,0,0,300,300,"--ja--",1140,20;
+	areamonster .@map$,0,0,300,300,"--ja--",1163,9;
+	areamonster .@map$,0,0,300,300,"--ja--",1275,1;
+	areamonster .@map$,0,0,300,300,"--ja--",1219,1;
+	areamonster .@map$,0,0,300,300,"--ja--",1150,1;
+	areamonster .@map$,0,0,300,300,"--ja--",1159,1;
+	monster .@map$,.@empx+1,.@empy,"--ja--",1203,1;
+	monster .@map$,.@empx-1,.@empy,"--ja--",1087,1;
+	monster .@map$,.@empx,.@empy+1,"--ja--",1213,7;
+	monster .@map$,.@empx,.@empy-1,"--ja--",1189,7;
 	return;
 L_PaygCas:
-	areamonster getarg(0),0,0,300,300,"--ja--",1277,10;
-	areamonster getarg(0),0,0,300,300,"--ja--",1208,10;
-	areamonster getarg(0),0,0,300,300,"--ja--",1262,5;
-	areamonster getarg(0),0,0,300,300,"--ja--",1102,5;
-	areamonster getarg(0),0,0,300,300,"--ja--",1150,1;
-	areamonster getarg(0),0,0,300,300,"--ja--",1115,1;
-	areamonster getarg(0),0,0,300,300,"--ja--",1129,11;
-	areamonster getarg(0),0,0,300,300,"--ja--",1276,5;
-	areamonster getarg(0),0,0,300,300,"--ja--",1282,4;
-	areamonster getarg(0),0,0,300,300,"--ja--",1253,5;
-	monster getarg(0),getarg(2),getarg(3),"--ja--",1150,1;
-	monster getarg(0),getarg(2),getarg(3),"--ja--",1115,1;
-	monster getarg(0),getarg(2),(getarg(3)+1),"--ja--",1208,6;
-	monster getarg(0),getarg(2),(getarg(3)-1),"--ja--",1276,5;
+	areamonster .@map$,0,0,300,300,"--ja--",1277,10;
+	areamonster .@map$,0,0,300,300,"--ja--",1208,10;
+	areamonster .@map$,0,0,300,300,"--ja--",1262,5;
+	areamonster .@map$,0,0,300,300,"--ja--",1102,5;
+	areamonster .@map$,0,0,300,300,"--ja--",1150,1;
+	areamonster .@map$,0,0,300,300,"--ja--",1115,1;
+	areamonster .@map$,0,0,300,300,"--ja--",1129,11;
+	areamonster .@map$,0,0,300,300,"--ja--",1276,5;
+	areamonster .@map$,0,0,300,300,"--ja--",1282,4;
+	areamonster .@map$,0,0,300,300,"--ja--",1253,5;
+	monster .@map$,.@empx,.@empy,"--ja--",1150,1;
+	monster .@map$,.@empx,.@empy,"--ja--",1115,1;
+	monster .@map$,.@empx,.@empy+1,"--ja--",1208,6;
+	monster .@map$,.@empx,.@empy-1,"--ja--",1276,5;
 	return;
 L_PrtgCas:
-	areamonster getarg(0),0,0,300,300,"--ja--",1163,15;
-	areamonster getarg(0),0,0,300,300,"--ja--",1132,10;
-	areamonster getarg(0),0,0,300,300,"--ja--",1219,5;
-	areamonster getarg(0),0,0,300,300,"--ja--",1268,5;
-	areamonster getarg(0),0,0,300,300,"--ja--",1251,1;
-	areamonster getarg(0),0,0,300,300,"--ja--",1252,1;
-	areamonster getarg(0),0,0,300,300,"--ja--",1276,5;
-	areamonster getarg(0),0,0,300,300,"--ja--",1259,1;
-	areamonster getarg(0),0,0,300,300,"--ja--",1283,1;
-	areamonster getarg(0),0,0,300,300,"--ja--",1275,1;
-	areamonster getarg(0),0,0,300,300,"--ja--",1200,1;
-	monster getarg(0),(getarg(2)+1),getarg(3),"--ja--",1268,1;
-	monster getarg(0),(getarg(2)-1),getarg(3),"--ja--",1251,1;
-	monster getarg(0),getarg(2),(getarg(3)+1),"--ja--",1252,1;
-	monster getarg(0),getarg(2),(getarg(3)-1),"--ja--",1219,2;
-	monster getarg(0),getarg(2),getarg(3),"--ja--",1276,5;
+	areamonster .@map$,0,0,300,300,"--ja--",1163,15;
+	areamonster .@map$,0,0,300,300,"--ja--",1132,10;
+	areamonster .@map$,0,0,300,300,"--ja--",1219,5;
+	areamonster .@map$,0,0,300,300,"--ja--",1268,5;
+	areamonster .@map$,0,0,300,300,"--ja--",1251,1;
+	areamonster .@map$,0,0,300,300,"--ja--",1252,1;
+	areamonster .@map$,0,0,300,300,"--ja--",1276,5;
+	areamonster .@map$,0,0,300,300,"--ja--",1259,1;
+	areamonster .@map$,0,0,300,300,"--ja--",1283,1;
+	areamonster .@map$,0,0,300,300,"--ja--",1275,1;
+	areamonster .@map$,0,0,300,300,"--ja--",1200,1;
+	monster .@map$,.@empx+1,.@empy,"--ja--",1268,1;
+	monster .@map$,.@empx-1,.@empy,"--ja--",1251,1;
+	monster .@map$,.@empx,.@empy+1,"--ja--",1252,1;
+	monster .@map$,.@empx,.@empy-1,"--ja--",1219,2;
+	monster .@map$,.@empx,.@empy,"--ja--",1276,5;
 	return;
 }
 
 // Function for OnGuildBreak ======================================
 function	script	F_GuildBreak	{
-	killmonsterall getarg(0);
+	set .@map$, getarg(0);
+	set .@castle$, getarg(1);
 
-	Announce "Guild Base [" + GetCastleName(getarg(0)) + "] has been abandoned.",0;
-	disablenpc "Kafra Staff#"+getarg(1);
+	killmonsterall .@map$;
 
-	SetCastleData getarg(0),0,0;
+	Announce "Guild Base [" + GetCastleName(.@map$) + "] has been abandoned.",0;
+	disablenpc "Kafra Staff#"+.@castle$;
+
+	SetCastleData .@map$,0,0;
 	return;
 }
 
 // Function for OnAgitBreak ======================================
 function	script	F_AgitBreak	{
-	//killmonsterall getarg(0);
+	set .@map$, getarg(0);
+	set .@castle$, getarg(1);
+
+	//killmonsterall .@map$;
 	set @GID,getcharid(2);
 	if (@GID <= 0) return;
 
-	set @Economy,GetCastleData(getarg(0),2) - 5;
+	set @Economy,GetCastleData(.@map$,2) - 5;
 	if (@Economy < 0) set @Economy, 0;
-	SetCastleData getarg(0),2, @Economy;
+	SetCastleData .@map$,2, @Economy;
 
-	set @Defence,GetCastleData(getarg(0),3) - 5;
+	set @Defence,GetCastleData(.@map$,3) - 5;
 	if (@Defence < 0) set @Defence, 0;
-	SetCastleData getarg(0),3, @Defence;
+	SetCastleData .@map$,3, @Defence;
 
-	SetCastleData getarg(0),1, @GID;
-	MapAnnounce getarg(0),"The emperium has been destroyed.",bc_map,0x00CCFF;
-	Announce "The [" + GetCastleName(getarg(0)) + "] castle has been conquered by the [" + GetGuildName(@GID) + "] guild.",bc_all;
-	GetCastleData getarg(0),0,"::OnRecvCastle"+getarg(1);
+	SetCastleData .@map$,1, @GID;
+	MapAnnounce .@map$,"The emperium has been destroyed.",bc_map,0x00CCFF;
+	Announce "The [" + GetCastleName(.@map$) + "] castle has been conquered by the [" + GetGuildName(@GID) + "] guild.",bc_all;
+	GetCastleData .@map$,0,"::OnRecvCastle"+@castle$;
 
-	disablenpc "Kafra Staff#"+getarg(1);
+	disablenpc "Kafra Staff#"+.@castle$;
 	set @i, 3;
 
 	L_Loop:
 		set @i, @i + 1;
-		SetCastleData getarg(0),@i,0;
+		SetCastleData .@map$,@i,0;
 		if(@i < 25) goto L_Loop;
 		return;
 }
@@ -158,9 +168,12 @@ function	script	F_AgitBreak	{
 
 // Function for OnAgitEnd ======================================
 function	script	F_AgitEnd	{
-	GvgOff getarg(0);
-//	if (GetCastleData(getarg(0),1) == 0) return;	//enable this line to allow take over of non captured castles after woe ends
-	MapRespawnGuildID getarg(0),GetCastleData(getarg(0),1),4;
-	KillMonster getarg(0),"Agit_"+getarg(1)+"::OnAgitBreak";
+	set .@map$, getarg(0);
+	set .@castle$, getarg(1);
+
+	GvgOff .@map$;
+//	if (GetCastleData(.@map$,1) == 0) return;	//enable this line to allow take over of non captured castles after woe ends
+	MapRespawnGuildID .@map$,GetCastleData(.@map$,1),4;
+	KillMonster .@map$,"Agit_"+.@castle$+"::OnAgitBreak";
 	end;
 }
