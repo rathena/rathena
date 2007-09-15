@@ -548,10 +548,7 @@ int charcommand_petfriendly(const int fd, struct map_session_data* sd, const cha
 		return -1;
 	}
 
-	if (friendly < 0)
-		friendly = 0;
-	else if (friendly > 1000)
-		friendly = 1000;
+	friendly = cap_value(friendly, 0, 1000);
 
 	pd = pl_sd->pd;
 	if (friendly == pd->pet.intimate) {
@@ -1519,28 +1516,25 @@ int charcommand_questskill(const int fd, struct map_session_data* sd, const char
 		return -1;
 	}
 
-	if (skill_id >= 0 && skill_id < MAX_SKILL_DB) {
-		if (skill_get_inf2(skill_id) & INF2_QUEST_SKILL) {
-			if ((pl_sd = map_nick2sd(player)) != NULL) {
-				if (pc_checkskill(pl_sd, skill_id) == 0) {
-					pc_skill(pl_sd, skill_id, 1, 0);
-					clif_displaymessage(fd, msg_txt(199)); // This player has learned the skill.
-				} else {
-					clif_displaymessage(fd, msg_txt(200)); // This player already has this quest skill.
-					return -1;
-				}
-			} else {
-				clif_displaymessage(fd, msg_txt(3)); // Character not found.
-				return -1;
-			}
-		} else {
-			clif_displaymessage(fd, msg_txt(197)); // This skill number doesn't exist or isn't a quest skill.
-			return -1;
-		}
-	} else {
+	if (skill_id < 0 && skill_id >= MAX_SKILL_DB) {
 		clif_displaymessage(fd, msg_txt(198)); // This skill number doesn't exist.
 		return -1;
 	}
+	if (!(skill_get_inf2(skill_id) & INF2_QUEST_SKILL)) {
+		clif_displaymessage(fd, msg_txt(197)); // This skill number doesn't exist or isn't a quest skill.
+		return -1;
+	}
+	if ((pl_sd = map_nick2sd(player)) == NULL) {
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+	if (pc_checkskill(pl_sd, skill_id) > 0) {
+		clif_displaymessage(fd, msg_txt(200)); // This player already has this quest skill.
+		return -1;
+	}
+
+	pc_skill(pl_sd, skill_id, 1, 0);
+	clif_displaymessage(fd, msg_txt(199)); // This player has learned the skill.
 
 	return 0;
 }
@@ -3269,7 +3263,7 @@ int charcommand_disguise(const int fd, struct map_session_data* sd, const char* 
 
 	if(pc_isriding(pl_sd))
 	{
-		//FIXME: wrong message
+		//FIXME: wrong message [ultramage]
 		//clif_displaymessage(fd, msg_txt(228)); 	// Character cannot wear disguise while riding a PecoPeco.
 		return -1;
 	}
@@ -3935,7 +3929,7 @@ int charcommand_hominfo(const int fd, struct map_session_data* sd, const char* c
 		clif_displaymessage(fd, "Please, enter a player name (usage: #hominfo <player>).");
 		return -1;
 	}
-	
+
 	if ( (pl_sd = map_nick2sd(character)) == NULL )
 	{
 		clif_displaymessage(fd, msg_txt(3)); // Character not found.
@@ -3950,26 +3944,21 @@ int charcommand_hominfo(const int fd, struct map_session_data* sd, const char* c
 
 	if(!merc_is_hom_active(pl_sd->hd))
 		return -1;
+
 	hd = pl_sd->hd;
 	status = status_get_status_data(&hd->bl);
 	clif_displaymessage(fd, "Homunculus stats :");
 
-	snprintf(output, sizeof(output) ,"HP : %d/%d - SP : %d/%d",
-		status->hp, status->max_hp, status->sp, status->max_sp);
+	snprintf(output, sizeof(output), "HP : %d/%d - SP : %d/%d", status->hp, status->max_hp, status->sp, status->max_sp);
 	clif_displaymessage(fd, output);
 
-	snprintf(output, sizeof(output) ,"ATK : %d - MATK : %d~%d",
-		status->rhw.atk2 +status->batk, status->matk_min, status->matk_max);
+	snprintf(output, sizeof(output), "ATK : %d - MATK : %d~%d", status->rhw.atk2 +status->batk, status->matk_min, status->matk_max);
 	clif_displaymessage(fd, output);
 
-	snprintf(output, sizeof(output) ,"Hungry : %d - Intimacy : %u",
-		hd->homunculus.hunger, hd->homunculus.intimacy/100);
+	snprintf(output, sizeof(output), "Hungry : %d - Intimacy : %u", hd->homunculus.hunger, hd->homunculus.intimacy/100);
 	clif_displaymessage(fd, output);
 
-	snprintf(output, sizeof(output) ,
-		"Stats: Str %d / Agi %d / Vit %d / Int %d / Dex %d / Luk %d",
-		status->str, status->agi, status->vit,
-		status->int_, status->dex, status->luk);
+	snprintf(output, sizeof(output), "Stats: Str %d / Agi %d / Vit %d / Int %d / Dex %d / Luk %d", status->str, status->agi, status->vit, status->int_, status->dex, status->luk);
 	clif_displaymessage(fd, output);
 
 	return 0;

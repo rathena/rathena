@@ -49,7 +49,7 @@ struct Clif_Config {
 	int connect_cmd[MAX_PACKET_VER + 1]; //Store the connect command for all versions. [Skotlex]
 } clif_config;
 
-struct packet_db_t packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB + 1];
+struct s_packet_db packet_db[MAX_PACKET_VER + 1][MAX_PACKET_DB + 1];
 
 //Converts item type in case of pet eggs.
 #define itemtype(a) (a == IT_PETEGG)?IT_WEAPON:a
@@ -8434,8 +8434,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 		return;
 	}
 	
-	if (is_atcommand(fd, sd, message) != AtCommand_None ||
-		is_charcommand(fd, sd, message) != CharCommand_None)
+	if (is_atcommand(fd, sd, message) != AtCommand_None || is_charcommand(fd, sd, message) != CharCommand_None)
 		return;
 
 	if (sd->sc.count &&
@@ -8532,7 +8531,7 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd)
 {
 	char output[MAP_NAME_LENGTH_EXT+15]; // Max length of a short: ' -6XXXX' -> 7 digits
 	char message[MAP_NAME_LENGTH_EXT+15+5]; // "/mm "+output
-	char *map_name;
+	char* map_name;
 
 	if (battle_config.atc_gmonly && !pc_isGM(sd))
 		return;
@@ -8751,7 +8750,7 @@ void clif_parse_Restart(int fd, struct map_session_data *sd)
 /*==========================================
  * Transmission of a wisp (S 0096 <len>.w <nick>.24B <message>.?B)
  *------------------------------------------*/
-void clif_parse_Wis(int fd, struct map_session_data *sd)
+void clif_parse_Wis(int fd, struct map_session_data* sd)
 {
 	char *command, *msg;
 	struct map_session_data *dstsd;
@@ -8779,8 +8778,7 @@ void clif_parse_Wis(int fd, struct map_session_data *sd)
 	memcpy(msg, RFIFOP(fd, 28), len);
 	mes_len_check(msg, len, CHATBOX_SIZE);
 
-	if ((is_charcommand(fd, sd, command) != CharCommand_None) ||
-		(is_atcommand(fd, sd, command) != AtCommand_None)) {
+	if ((is_charcommand(fd, sd, command) != CharCommand_None) || (is_atcommand(fd, sd, command) != AtCommand_None)) {
 		aFree(command);
 		return;
 	}
@@ -10190,23 +10188,19 @@ void clif_parse_PartyChangeOption(int fd, struct map_session_data *sd)
 /*==========================================
  * パーティメッセージ送信要求
  *------------------------------------------*/
-void clif_parse_PartyMessage(int fd, struct map_session_data *sd)
+void clif_parse_PartyMessage(int fd, struct map_session_data* sd)
 {
-	char *mes;
+	char* message;
 	int len;
 
 	len = RFIFOW(fd,2) - 4;
-	mes = (char*)RFIFOP(fd,4);
-	mes_len_check(mes, len, CHAT_SIZE);
+	message = (char*)RFIFOP(fd,4);
+	mes_len_check(message, len, CHAT_SIZE);
 
-	if (is_charcommand(fd, sd, mes) != CharCommand_None ||
-		is_atcommand(fd, sd, mes) != AtCommand_None)
+	if (is_charcommand(fd, sd, message) != CharCommand_None || is_atcommand(fd, sd, message) != AtCommand_None)
 		return;
 
-	if	(sd->sc.count && (
-			sd->sc.data[SC_BERSERK].timer!=-1 ||
-			(sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)
-		))
+	if (sd->sc.data[SC_BERSERK].timer!=-1 || (sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT))
 		return;
 
 	if (battle_config.min_chat_delay)
@@ -10216,7 +10210,7 @@ void clif_parse_PartyMessage(int fd, struct map_session_data *sd)
 		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
 	}
 
-	party_send_message(sd, mes, len);
+	party_send_message(sd, message, len);
 }
 
 /*==========================================
@@ -10445,23 +10439,19 @@ void clif_parse_GuildExpulsion(int fd,struct map_session_data *sd)
 /*==========================================
  * ギルド会話
  *------------------------------------------*/
-void clif_parse_GuildMessage(int fd,struct map_session_data *sd)
+void clif_parse_GuildMessage(int fd, struct map_session_data* sd)
 {
-	char *mes;
+	char* message;
 	int len;
 
 	len = RFIFOW(fd,2) - 4;
-	mes = (char*)RFIFOP(fd,4);
-	mes_len_check(mes, len, CHAT_SIZE);
+	message = (char*)RFIFOP(fd,4);
+	mes_len_check(message, len, CHAT_SIZE);
 
-	if (is_charcommand(fd, sd, mes) != CharCommand_None ||
-		is_atcommand(fd, sd, mes) != AtCommand_None)
+	if (is_charcommand(fd, sd, message) != CharCommand_None || is_atcommand(fd, sd, message) != AtCommand_None)
 		return;
 
-	if (sd->sc.count && (
-		sd->sc.data[SC_BERSERK].timer!=-1 ||
-		(sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)
-	))
+	if (sd->sc.data[SC_BERSERK].timer!=-1 || (sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT))
 		return;
 
 	if (battle_config.min_chat_delay)
@@ -10471,7 +10461,7 @@ void clif_parse_GuildMessage(int fd,struct map_session_data *sd)
 		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
 	}
 
-	guild_send_message(sd, mes, len);
+	guild_send_message(sd, message, len);
 }
 
 /*==========================================
@@ -10783,7 +10773,8 @@ void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 	
 	if (
 		((level = pc_isGM(sd)) > pc_isGM(dstsd) && level >= get_atcommand_level(AtCommand_Mute))
-		|| (type == 2 && !level)) {
+		|| (type == 2 && !level))
+	{
 		clif_GM_silence(sd, dstsd, ((type == 2) ? 1 : type));
 		dstsd->status.manner -= limit;
 		if(dstsd->status.manner < 0)
@@ -11223,7 +11214,7 @@ void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd)
 /*==========================================
  * /killall
  *------------------------------------------*/
-void clif_parse_GMKillAll(int fd,struct map_session_data *sd)
+void clif_parse_GMKillAll(int fd, struct map_session_data* sd)
 {
 	char message[50];
 
@@ -12015,7 +12006,7 @@ static int packetdb_readdb(void)
 					for(i=0;i<=MAX_PACKET_DB;i++){
 						if (packet_db[packet_ver][i].func == clif_parse_func[j].func)
 						{	
-							memset(&packet_db[packet_ver][i], 0, sizeof(struct packet_db_t));
+							memset(&packet_db[packet_ver][i], 0, sizeof(struct s_packet_db));
 							break;
 						}
 					}

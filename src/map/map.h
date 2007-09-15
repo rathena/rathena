@@ -595,7 +595,7 @@ struct map_session_data {
 	struct mmo_charstatus status;
 	struct registry save_reg;
 	
-	struct item_data *inventory_data[MAX_INVENTORY];
+	struct item_data* inventory_data[MAX_INVENTORY]; // direct pointers to itemdb entries (faster than doing item_id lookups)
 	short equip_index[11];
 	unsigned int weight,max_weight;
 	int cart_weight,cart_num;
@@ -1037,7 +1037,7 @@ enum {
 struct map_data {
 	char name[MAP_NAME_LENGTH];
 	unsigned short index; //Index is the map index used by the mapindex* functions.
-	unsigned char *gat;	// If this is NULL‚ the map is not on this map-server
+	unsigned char *gat; // If this is NULL, the map is not on this map-server
 	unsigned char *cell; //Contains temporary cell data that is set/unset on tiles.
 #ifdef CELL_NOSTACK
 	unsigned char *cell_bl; //Holds amount of bls in any given cell.
@@ -1117,7 +1117,7 @@ struct map_data {
 struct map_data_other_server {
 	char name[MAP_NAME_LENGTH];
 	unsigned short index; //Index is the map index used by the mapindex* functions.
-	unsigned char *gat; // If this is NULL‚ the map is not on this map-server
+	unsigned char *gat; // If this is NULL, the map is not on this map-server
 	uint32 ip;
 	uint16 port;
 };

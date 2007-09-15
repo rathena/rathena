@@ -35,7 +35,7 @@ struct guild;
 #define MAX_PACKET_DB		0x300
 #define MAX_PACKET_VER		22
 
-struct packet_db_t {
+struct s_packet_db {
 	short len;
 	void (*func)(int, struct map_session_data *);
 	short pos[20];
@@ -44,7 +44,7 @@ struct packet_db_t {
 // packet_db[SERVER] is reserved for server use
 #define SERVER 0
 #define packet_len(cmd) packet_db[SERVER][cmd].len
-extern struct packet_db_t packet_db[MAX_PACKET_VER+1][MAX_PACKET_DB+1];
+extern struct s_packet_db packet_db[MAX_PACKET_VER+1][MAX_PACKET_DB+1];
 
 // local define
 enum send_target {

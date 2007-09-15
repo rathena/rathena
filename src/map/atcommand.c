@@ -597,19 +597,6 @@ char atcmd_output[200];
 char atcmd_player_name[NAME_LENGTH];
 char atcmd_temp[100];
 
-/*==========================================
- * estr_lower (replace strlwr, non ANSI function that doesn't exist in all C compilator)
- *------------------------------------------*/
-char *estr_lower(char *str)
-{
-	int i;
-
-	for (i=0; str[i]; i++)
-		if ((str[i] >= 65) && (str[i] <= 90))
-			str[i] += 32;
-	return str;
-}
-
 // compare function for sorting high to lowest
 int hightolow_compare (const void * a, const void * b)
 {
@@ -625,7 +612,7 @@ int lowtohigh_compare (const void * a, const void * b)
 //-----------------------------------------------------------
 // Return the message string of the specified number by [Yor]
 //-----------------------------------------------------------
-char * msg_txt(int msg_number)
+char* msg_txt(int msg_number)
 {
 	if (msg_number >= 0 && msg_number < MAX_MSG &&
 	    msg_table[msg_number] != NULL && msg_table[msg_number][0] != '\0')
@@ -637,32 +624,19 @@ char * msg_txt(int msg_number)
 //-----------------------------------------------------------
 // Returns Players title (from msg_athena.conf) [Lupus]
 //-----------------------------------------------------------
-char * player_title_txt(int level) {
-	if (level < battle_config.title_lvl1)
-		return ""; //w/o any titles
-
-	if (level >= battle_config.title_lvl8)
-		sprintf(atcmd_temp, msg_txt(332), level);
-	else
-	if (level >= battle_config.title_lvl7)
-		sprintf(atcmd_temp, msg_txt(331), level);
-	else
-	if (level >= battle_config.title_lvl6)
-		sprintf(atcmd_temp, msg_txt(330), level);
-	else
-	if (level >= battle_config.title_lvl5)
-		sprintf(atcmd_temp, msg_txt(329), level);
-	else
-	if (level >= battle_config.title_lvl4)
-		sprintf(atcmd_temp, msg_txt(328), level);
-	else
-	if (level >= battle_config.title_lvl3)
-		sprintf(atcmd_temp, msg_txt(327), level);
-	else
-	if (level >= battle_config.title_lvl2)
-		sprintf(atcmd_temp, msg_txt(326), level);
-	else
-		sprintf(atcmd_temp, msg_txt(325), level); //lvl1
+static char* player_title_txt(int level)
+{
+	const char* format;
+	format = (level >= battle_config.title_lvl8) ? msg_txt(332)
+	       : (level >= battle_config.title_lvl7) ? msg_txt(331)
+	       : (level >= battle_config.title_lvl6) ? msg_txt(330)
+	       : (level >= battle_config.title_lvl5) ? msg_txt(329)
+	       : (level >= battle_config.title_lvl4) ? msg_txt(328)
+	       : (level >= battle_config.title_lvl3) ? msg_txt(327)
+	       : (level >= battle_config.title_lvl2) ? msg_txt(326)
+	       : (level >= battle_config.title_lvl1) ? msg_txt(325)
+	       : "";
+	sprintf(atcmd_temp, format, level);
 	return atcmd_temp;
 }
 
@@ -811,7 +785,7 @@ AtCommandType atcommand(struct map_session_data* sd, const int level, const char
 /*==========================================
  * Read Message Data
  *------------------------------------------*/
-int msg_config_read(const char *cfgName)
+int msg_config_read(const char* cfgName)
 {
 	int msg_number;
 	char line[1024], w1[1024], w2[1024];
@@ -825,25 +799,29 @@ int msg_config_read(const char *cfgName)
 
 	if ((--called) == 0)
 		memset(msg_table, 0, sizeof(msg_table[0]) * MAX_MSG);
+
 	while(fgets(line, sizeof(line), fp))
 	{
 		if (line[0] == '/' && line[1] == '/')
 			continue;
-		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) == 2) {
-			if (strcmpi(w1, "import") == 0) {
-				msg_config_read(w2);
-			} else {
-				msg_number = atoi(w1);
-				if (msg_number >= 0 && msg_number < MAX_MSG) {
-					if (msg_table[msg_number] != NULL)
-						aFree(msg_table[msg_number]);
-					msg_table[msg_number] = (char *)aMalloc((strlen(w2) + 1)*sizeof (char));
-					strcpy(msg_table[msg_number],w2);
-				//	printf("message #%d: '%s'.\n", msg_number, msg_table[msg_number]);
-				}
+		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) != 2)
+			continue;
+
+		if (strcmpi(w1, "import") == 0)
+			msg_config_read(w2);
+		else
+		{
+			msg_number = atoi(w1);
+			if (msg_number >= 0 && msg_number < MAX_MSG)
+			{
+				if (msg_table[msg_number] != NULL)
+					aFree(msg_table[msg_number]);
+				msg_table[msg_number] = (char *)aMalloc((strlen(w2) + 1)*sizeof (char));
+				strcpy(msg_table[msg_number],w2);
 			}
 		}
 	}
+
 	fclose(fp);
 
 	return 0;
@@ -852,7 +830,7 @@ int msg_config_read(const char *cfgName)
 /*==========================================
  * Cleanup Message Data
  *------------------------------------------*/
-void do_final_msg (void)
+void do_final_msg(void)
 {
 	int i;
 	for (i = 0; i < MAX_MSG; i++)
@@ -1269,29 +1247,15 @@ int atcommand_where(const int fd, struct map_session_data* sd, const char* comma
 		return -1;
 	}
 	
-	if ((pl_sd = map_nick2sd(atcmd_player_name)) == NULL) 
-	{
+	if((pl_sd = map_nick2sd(atcmd_player_name)) == NULL
+	|| strncmp(pl_sd->status.name,atcmd_player_name,NAME_LENGTH) != 0
+	|| battle_config.hide_GM_session && pc_isGM(sd) < pc_isGM(pl_sd) && !(battle_config.who_display_aid && pc_isGM(sd) >= battle_config.who_display_aid)
+	) {
 		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 
-	if(strncmp(pl_sd->status.name,atcmd_player_name,NAME_LENGTH)!=0)
-	{
-		clif_displaymessage(fd, "You already know where you are...");
-		return -1;
-	}
-		
-	if (battle_config.hide_GM_session) {
-		if(pc_isGM(sd) < pc_isGM(pl_sd)) {
-			if (!(battle_config.who_display_aid && pc_isGM(sd) >= battle_config.who_display_aid)) {
-				clif_displaymessage(fd, msg_txt(3)); // Character not found.
-				return -1;
-			}
-		}
-	}
-
-	snprintf(atcmd_output, sizeof atcmd_output, "%s %s %d %d",
-		pl_sd->status.name, mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
+	snprintf(atcmd_output, sizeof atcmd_output, "%s %s %d %d", pl_sd->status.name, mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
 	clif_displaymessage(fd, atcmd_output);
 
 	return 0;
@@ -2093,7 +2057,7 @@ int atcommand_hide(const int fd, struct map_session_data* sd, const char* comman
  *------------------------------------------*/
 int atcommand_jobchange(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-        //FIXME: redundancy, potentially wrong code, should use job_name() or similar instead of hardcoding the table
+	//FIXME: redundancy, potentially wrong code, should use job_name() or similar instead of hardcoding the table [ultramage]
 	int job = 0, upper = 0;
 	nullpo_retr(-1, sd);
 
@@ -3508,9 +3472,7 @@ void atcommand_killmonster_sub(const int fd, struct map_session_data* sd, const 
 
 int atcommand_killmonster(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	if (!sd) return 0;
 	atcommand_killmonster_sub(fd, sd, message, 1);
-
 	return 0;
 }
 
@@ -3519,9 +3481,7 @@ int atcommand_killmonster(const int fd, struct map_session_data* sd, const char*
  *------------------------------------------*/
 int atcommand_killmonster2(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	if (!sd) return 0;
 	atcommand_killmonster_sub(fd, sd, message, 0);
-
 	return 0;
 }
 
@@ -3561,12 +3521,7 @@ int atcommand_refine(const int fd, struct map_session_data* sd, const char* comm
 		return -1;
 	}
 
-	if (refine < -MAX_REFINE)
-		refine = -MAX_REFINE;
-	else if (refine > MAX_REFINE)
-		refine = MAX_REFINE;
-	else if (refine == 0)
-		refine = 1;
+	refine = cap_value(refine, -MAX_REFINE, MAX_REFINE);
 
 	count = 0;
 	for (j = 0; j < EQI_MAX-1; j++) {
@@ -3582,11 +3537,7 @@ int atcommand_refine(const int fd, struct map_session_data* sd, const char* comm
 		if(position && !(sd->status.inventory[i].equip & position))
 			continue;
 
-		final_refine = sd->status.inventory[i].refine + refine;
-		if (final_refine > MAX_REFINE)
-			final_refine = MAX_REFINE;
-		else if (final_refine < 0)
-			final_refine = 0;
+		final_refine = cap_value(sd->status.inventory[i].refine + refine, 0, MAX_REFINE);
 		if (sd->status.inventory[i].refine != final_refine) {
 			sd->status.inventory[i].refine = final_refine;
 			current_position = sd->status.inventory[i].equip;
@@ -4247,17 +4198,8 @@ int atcommand_char_block(const int fd, struct map_session_data* sd, const char* 
 		return -1;
 	}
 
-	// check player name
-	if (strlen(atcmd_player_name) < 4) {
-		clif_displaymessage(fd, msg_txt(86)); // Sorry, but a player name have at least 4 characters.
-		return -1;
-	} else if (strlen(atcmd_player_name) > 23) {
-		clif_displaymessage(fd, msg_txt(87)); // Sorry, but a player name have 23 characters maximum.
-		return -1;
-	} else {
-		chrif_char_ask_name(sd->status.account_id, atcmd_player_name, 1, 0, 0, 0, 0, 0, 0); // type: 1 - block
-		clif_displaymessage(fd, msg_txt(88)); // Character name sent to char-server to ask it.
-	}
+	chrif_char_ask_name(sd->status.account_id, atcmd_player_name, 1, 0, 0, 0, 0, 0, 0); // type: 1 - block
+	clif_displaymessage(fd, msg_txt(88)); // Character name sent to char-server to ask it.
 
 	return 0;
 }
@@ -4332,17 +4274,8 @@ int atcommand_char_ban(const int fd, struct map_session_data* sd, const char* co
 		return -1;
 	}
 
-	// check player name
-	if (strlen(atcmd_player_name) < 4) {
-		clif_displaymessage(fd, msg_txt(86)); // Sorry, but a player name have at least 4 characters.
-		return -1;
-	} else if (strlen(atcmd_player_name) > 23) {
-		clif_displaymessage(fd, msg_txt(87)); // Sorry, but a player name have 23 characters maximum.
-		return -1;
-	} else {
-		chrif_char_ask_name(sd->status.account_id, atcmd_player_name, 2, year, month, day, hour, minute, second); // type: 2 - ban
-		clif_displaymessage(fd, msg_txt(88)); // Character name sent to char-server to ask it.
-	}
+	chrif_char_ask_name(sd->status.account_id, atcmd_player_name, 2, year, month, day, hour, minute, second); // type: 2 - ban
+	clif_displaymessage(fd, msg_txt(88)); // Character name sent to char-server to ask it.
 
 	return 0;
 }
@@ -4361,18 +4294,9 @@ int atcommand_char_unblock(const int fd, struct map_session_data* sd, const char
 		return -1;
 	}
 
-	// check player name
-	if (strlen(atcmd_player_name) < 4) {
-		clif_displaymessage(fd, msg_txt(86)); // Sorry, but a player name have at least 4 characters.
-		return -1;
-	} else if (strlen(atcmd_player_name) > 23) {
-		clif_displaymessage(fd, msg_txt(87)); // Sorry, but a player name have 23 characters maximum.
-		return -1;
-	} else {
-		// send answer to login server via char-server
-		chrif_char_ask_name(sd->status.account_id, atcmd_player_name, 3, 0, 0, 0, 0, 0, 0); // type: 3 - unblock
-		clif_displaymessage(fd, msg_txt(88)); // Character name sent to char-server to ask it.
-	}
+	// send answer to login server via char-server
+	chrif_char_ask_name(sd->status.account_id, atcmd_player_name, 3, 0, 0, 0, 0, 0, 0); // type: 3 - unblock
+	clif_displaymessage(fd, msg_txt(88)); // Character name sent to char-server to ask it.
 
 	return 0;
 }
@@ -4391,18 +4315,9 @@ int atcommand_char_unban(const int fd, struct map_session_data* sd, const char* 
 		return -1;
 	}
 
-	// check player name
-	if (strlen(atcmd_player_name) < 4) {
-		clif_displaymessage(fd, msg_txt(86)); // Sorry, but a player name have at least 4 characters.
-		return -1;
-	} else if (strlen(atcmd_player_name) > 23) {
-		clif_displaymessage(fd, msg_txt(87)); // Sorry, but a player name have 23 characters maximum.
-		return -1;
-	} else {
-		// send answer to login server via char-server
-		chrif_char_ask_name(sd->status.account_id, atcmd_player_name, 4, 0, 0, 0, 0, 0, 0); // type: 4 - unban
-		clif_displaymessage(fd, msg_txt(88)); // Character name sent to char-server to ask it.
-	}
+	// send answer to login server via char-server
+	chrif_char_ask_name(sd->status.account_id, atcmd_player_name, 4, 0, 0, 0, 0, 0, 0); // type: 4 - unban
+	clif_displaymessage(fd, msg_txt(88)); // Character name sent to char-server to ask it.
 
 	return 0;
 }
@@ -4622,24 +4537,21 @@ int atcommand_questskill(const int fd, struct map_session_data* sd, const char* 
 		clif_displaymessage(fd, "Please, enter a quest skill number (usage: @questskill <#:0+>).");
 		return -1;
 	}
-
-	if (skill_id >= 0 && skill_id < MAX_SKILL_DB) {
-		if (skill_get_inf2(skill_id) & INF2_QUEST_SKILL) {
-			if (pc_checkskill(sd, skill_id) == 0) {
-				pc_skill(sd, skill_id, 1, 0);
-				clif_displaymessage(fd, msg_txt(70)); // You have learned the skill.
-			} else {
-				clif_displaymessage(fd, msg_txt(196)); // You already have this quest skill.
-				return -1;
-			}
-		} else {
-			clif_displaymessage(fd, msg_txt(197)); // This skill number doesn't exist or isn't a quest skill.
-			return -1;
-		}
-	} else {
+	if (skill_id < 0 && skill_id >= MAX_SKILL_DB) {
 		clif_displaymessage(fd, msg_txt(198)); // This skill number doesn't exist.
 		return -1;
 	}
+	if (!(skill_get_inf2(skill_id) & INF2_QUEST_SKILL)) {
+		clif_displaymessage(fd, msg_txt(197)); // This skill number doesn't exist or isn't a quest skill.
+		return -1;
+	}		
+	if (pc_checkskill(sd, skill_id) > 0) {
+		clif_displaymessage(fd, msg_txt(196)); // You already have this quest skill.
+		return -1;
+	}
+ 
+	pc_skill(sd, skill_id, 1, 0);
+	clif_displaymessage(fd, msg_txt(70)); // You have learned the skill.
 
 	return 0;
 }
@@ -4656,26 +4568,23 @@ int atcommand_lostskill(const int fd, struct map_session_data* sd, const char* c
 		clif_displaymessage(fd, "Please, enter a quest skill number (usage: @lostskill <#:0+>).");
 		return -1;
 	}
-
-	if (skill_id >= 0 && skill_id < MAX_SKILL) {
-		if (skill_get_inf2(skill_id) & INF2_QUEST_SKILL) {
-			if (pc_checkskill(sd, skill_id) > 0) {
-				sd->status.skill[skill_id].lv = 0;
-				sd->status.skill[skill_id].flag = 0;
-				clif_skillinfoblock(sd);
-				clif_displaymessage(fd, msg_txt(71)); // You have forgotten the skill.
-			} else {
-				clif_displaymessage(fd, msg_txt(201)); // You don't have this quest skill.
-				return -1;
-			}
-		} else {
-			clif_displaymessage(fd, msg_txt(197)); // This skill number doesn't exist or isn't a quest skill.
-			return -1;
-		}
-	} else {
+	if (skill_id < 0 && skill_id >= MAX_SKILL) {
 		clif_displaymessage(fd, msg_txt(198)); // This skill number doesn't exist.
 		return -1;
 	}
+	if (!(skill_get_inf2(skill_id) & INF2_QUEST_SKILL)) {
+		clif_displaymessage(fd, msg_txt(197)); // This skill number doesn't exist or isn't a quest skill.
+		return -1;
+	}
+	if (pc_checkskill(sd, skill_id) == 0) {
+		clif_displaymessage(fd, msg_txt(201)); // You don't have this quest skill.
+		return -1;
+	}
+
+	sd->status.skill[skill_id].lv = 0;
+	sd->status.skill[skill_id].flag = 0;
+	clif_skillinfoblock(sd);
+	clif_displaymessage(fd, msg_txt(71)); // You have forgotten the skill.
 
 	return 0;
 }
@@ -6101,7 +6010,7 @@ int atcommand_disguise(const int fd, struct map_session_data* sd, const char* co
 
 	if(pc_isriding(sd))
 	{
-		//FIXME: wrong message
+		//FIXME: wrong message [ultramage]
 		//clif_displaymessage(fd, msg_txt(227)); // Character cannot wear disguise while riding a PecoPeco.
 		return -1;
 	}
@@ -7703,39 +7612,32 @@ int atcommand_petid(const int fd, struct map_session_data* sd, const char* comma
 {
 	char searchtext[100];
 	char temp0[100];
-	char temp1[100];
 	int cnt = 0, i = 0;
 
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || sscanf(message, "%99s", searchtext) < 1)
 	{
-		clif_displaymessage(fd, "Please, enter a player name (usage: @petid <monster name>).");
+		clif_displaymessage(fd, "Please, enter a pet name (usage: @petid <part of pet name>).");
 		return -1;
 	}
 
-	estr_lower(searchtext);
-	snprintf(temp0, sizeof(temp0), "Search results for: %s", searchtext);
+	snprintf(temp0, sizeof(temp0), "First %i search results for: %s", MAX_SEARCH, searchtext);
 	clif_displaymessage(fd,temp0);
-	while (i < MAX_PET_DB) {
-		strcpy(temp1,pet_db[i].name);
-		strcpy(temp1, estr_lower(temp1));
-		strcpy(temp0,pet_db[i].jname);
-		strcpy(temp0, estr_lower(temp1));
-		if (strstr(temp1, searchtext) || strstr(temp0, searchtext) ) {
-  			snprintf(temp0, sizeof(temp0), "ID: %i -- Name: %s", pet_db[i].class_,
-     			pet_db[i].jname);
-  			if (cnt >= 100) { // Only if there are custom pets
-	  			clif_displaymessage(fd, "Be more specific, can't send more than"
-					" 100 results.");
-			} else {
+
+	for (i = 0; i < MAX_PET_DB; i++)
+	{
+		if (stristr(pet_db[i].name, searchtext) || stristr(pet_db[i].jname, searchtext))
+		{
+			cnt++;
+			if (cnt <= MAX_SEARCH) { // limits the number of search results
+				snprintf(temp0, sizeof(temp0), "ID: %i -- Name: %s", pet_db[i].class_, pet_db[i].jname);
 				clif_displaymessage(fd, temp0);
 			}
-    		cnt++;
 		}
-	i++;
 	}
-	snprintf(temp0, sizeof(temp0),"%i pets have '%s' in their name.", cnt, searchtext);
+
+	snprintf(temp0, sizeof(temp0), "%i pets have '%s' in their name.", cnt, searchtext);
 	clif_displaymessage(fd, temp0);
 	return 0;
 }
@@ -8309,11 +8211,12 @@ int atcommand_homevolution(const int fd, struct map_session_data* sd, const char
 		return -1;
 	}
 
-	if ( merc_hom_evolution(sd->hd) )
-		return 0;
+	if ( !merc_hom_evolution(sd->hd) ) {
+		clif_displaymessage(fd, "Your homunculus doesn't evolve.");
+		return -1;
+	}
 	
-	clif_displaymessage(fd, "Your homunculus doesn't evolve.");
-	return -1;
+	return 0;
 }
 
 /*==========================================
@@ -8365,10 +8268,7 @@ int atcommand_homfriendly(const int fd, struct map_session_data* sd, const char*
 	}
 
 	friendly = atoi(message);
-	if (friendly < 0)
-		friendly = 0;
-	else if (friendly > 1000)
-		friendly = 1000;
+	friendly = cap_value(friendly, 0, 1000);
 
 	sd->hd->homunculus.intimacy = friendly * 100 ;
 	clif_send_homdata(sd,SP_INTIMATE,friendly);
@@ -8395,10 +8295,7 @@ int atcommand_homhungry(const int fd, struct map_session_data* sd, const char* c
 	}
 
 	hungry = atoi(message);
-	if (hungry < 0)
-		hungry = 0;
-	else if (hungry > 100)
-		hungry = 100;
+	hungry = cap_value(hungry, 0, 100);
 
 	sd->hd->homunculus.hunger = hungry;
 	clif_send_homdata(sd,SP_HUNGRY,hungry);

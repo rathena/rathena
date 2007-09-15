@@ -763,7 +763,7 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 }
 
 //Does party loot. first holds the id of the player who has time priority to take the item.
-int party_share_loot(struct party_data* p, TBL_PC* sd, struct item* item_data, int first)
+int party_share_loot(struct party_data* p, struct map_session_data* sd, struct item* item_data, int first)
 {
 	TBL_PC* target = NULL;
 	int i;

@@ -1921,7 +1921,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if(base_exp && md->dmglog[i].flag) //tmpsd[i] is null if it has no homunc.
 				merc_hom_gainexp(tmpsd[i]->hd, base_exp);
 			if(base_exp || job_exp)
-				pc_gainexp(tmpsd[i], &md->bl, base_exp,job_exp);
+				pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp);
 			if(zeny) // zeny from mobs [Valaris]
 				pc_getzeny(tmpsd[i], zeny);
 		}

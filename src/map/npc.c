@@ -1698,7 +1698,7 @@ static int npc_parse_shop(char* w1, char* w2, char* w3, char* w4)
 	} else {
 		// 引数の個数チェック
 		char mapname[MAP_NAME_LENGTH_EXT];
-		if (sscanf(w1, "%15[^,],%d,%d,%d", mapname, &x, &y, &dir) < 4 || strchr(w4, ',') == NULL) {
+		if (sscanf(w1, "%15[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4 || strchr(w4, ',') == NULL) {
 			ShowError("bad shop line : %s\n", w3);
 			return 1;
 		}
