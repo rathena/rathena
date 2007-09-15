@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/09/15
+	* Added npc_test_duplicate.txt to /samples
 	* Corrected some npc/other/ bugs
 	- added missing arena.txt and fortune.txt to npc list
 	- commented out arena.txt and mail.txt since it's not at all done yet

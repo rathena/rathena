@@ -84,6 +84,8 @@
 //=       Added 'gethominfo' description [Skotlex]
 //= 3.06.20070910
 //=       Added info about the new behavior of 'getexp' [ultramage]
+//= 3.07.20070915
+//=       Fixed 'duplicate' missing the target 'name' parameter! [ultramage]
 //===== Description =======================================
 //= A reference manual for the eAthena scripting language,
 //= sorted out depending on their functionality.
@@ -337,13 +339,12 @@ where we use curly brackets, these do NOT signify an optional parameter.
 
 ** Define an NPC duplicate.
 
-<map name>,<x>,<y>,<facing>%TAB%duplicate(<NPC label>)%TAB%<sprite id>
-<map name>,<x>,<y>,<facing>%TAB%duplicate(<NPC label>)%TAB%<sprite id>,<triggerX>,<triggerY>
+<map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<name>%TAB%<sprite id>
+<map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<name>%TAB%<sprite id>,<triggerX>,<triggerY>
 
-This will duplicate an NPC referred to by the label. The duplicate runs the same 
-code as the NPC it refers to, but may have different location, facing and sprite 
-ID. Whether it may actually have it's own size of trigger area is unclear at the 
-moment - if you need that, try it and tell us of the results.
+This will duplicate an NPC referred to by 'label'. The duplicate runs the same 
+code as the source NPC, but has its own name, location, facing, sprite ID and
+trigger area (in other words, the duplicate does not 'inherit' any of these).
 
 ** Define a 'floating' NPC object.
 
