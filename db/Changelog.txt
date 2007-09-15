@@ -28,6 +28,7 @@
 
 ========================
 09/15
+	* Fixed weight and updated some item names [Playtester]
 	* Fixed TF_BACKSLIDING being targeted on mob skills [Playtester]
 	- also fixed a cast rate
 09/14
