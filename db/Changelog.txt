@@ -28,7 +28,7 @@
 
 ========================
 09/15
-	* Fixed TF_BACKSLIDING being targetted on mob skills [Playtester]
+	* Fixed TF_BACKSLIDING being targeted on mob skills [Playtester]
 	- also fixed a cast rate
 09/14
 	* Gravitional Field is now a MISC type of attack. [Skotlex]
