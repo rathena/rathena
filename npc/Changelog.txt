@@ -1,5 +1,10 @@
 Date		Added
 ======
+2007/09/15
+	* Corrected some npc/other/ bugs
+	- added missing arena.txt and fortune.txt to npc list
+	- commented out arena.txt and mail.txt since it's not at all done yet
+	- alphabetically-sorted the list
 2007/09/14
 	* Fixed several text typos in the Kiel quest [ultramage]
 2007/09/12
