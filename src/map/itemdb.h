@@ -4,7 +4,7 @@
 #ifndef _ITEMDB_H_
 #define _ITEMDB_H_
 
-#include "mmo.h" // ITEM_NAME_LENGTH
+#include "../common/mmo.h" // ITEM_NAME_LENGTH
 
 #define MAX_RANDITEM	10000
 

@@ -285,7 +285,6 @@ AtCommandType atcommand(struct map_session_data *sd, const int level, const char
 int get_atcommand_level(const AtCommandType type);
 
 char* msg_txt(int msg_number); // [Yor]
-char* player_title_txt(int level); // [Lupus]
 
 void do_init_atcommand(void);
 void do_final_atcommand(void);

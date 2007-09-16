@@ -1237,7 +1237,7 @@ int atcommand_rura( const int fd, struct map_session_data* sd, const char* comma
  *------------------------------------------*/
 int atcommand_where(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data *pl_sd = NULL;
+	struct map_session_data* pl_sd;
 
 	nullpo_retr(-1, sd);
 	memset(atcmd_player_name, '\0', sizeof atcmd_player_name);
@@ -1246,10 +1246,11 @@ int atcommand_where(const int fd, struct map_session_data* sd, const char* comma
 		clif_displaymessage(fd, "Please, enter a player name (usage: @where <char name>).");
 		return -1;
 	}
-	
-	if((pl_sd = map_nick2sd(atcmd_player_name)) == NULL
-	|| strncmp(pl_sd->status.name,atcmd_player_name,NAME_LENGTH) != 0
-	|| battle_config.hide_GM_session && pc_isGM(sd) < pc_isGM(pl_sd) && !(battle_config.who_display_aid && pc_isGM(sd) >= battle_config.who_display_aid)
+
+	pl_sd = map_nick2sd(atcmd_player_name);
+	if( pl_sd == NULL
+	||  strncmp(pl_sd->status.name,atcmd_player_name,NAME_LENGTH) != 0
+	||  (battle_config.hide_GM_session && pc_isGM(sd) < pc_isGM(pl_sd) && !(battle_config.who_display_aid && pc_isGM(sd) >= battle_config.who_display_aid))
 	) {
 		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;

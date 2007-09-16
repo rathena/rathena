@@ -1556,30 +1556,27 @@ int charcommand_lostskill(const int fd, struct map_session_data* sd, const char*
 		return -1;
 	}
 
-	if (skill_id >= 0 && skill_id < MAX_SKILL) {
-		if (skill_get_inf2(skill_id) & INF2_QUEST_SKILL) {
-			if ((pl_sd = map_nick2sd(player)) != NULL) {
-				if (pc_checkskill(pl_sd, skill_id) > 0) {
-					pl_sd->status.skill[skill_id].lv = 0;
-					pl_sd->status.skill[skill_id].flag = 0;
-					clif_skillinfoblock(pl_sd);
-					clif_displaymessage(fd, msg_txt(202)); // This player has forgotten the skill.
-				} else {
-					clif_displaymessage(fd, msg_txt(203)); // This player doesn't have this quest skill.
-					return -1;
-				}
-			} else {
-				clif_displaymessage(fd, msg_txt(3)); // Character not found.
-				return -1;
-			}
-		} else {
-			clif_displaymessage(fd, msg_txt(197)); // This skill number doesn't exist or isn't a quest skill.
-			return -1;
-		}
-	} else {
-		clif_displaymessage(fd, msg_txt(198)); // This skill number doesn't exist.
+	if (skill_id < 0 && skill_id >= MAX_SKILL) {
+ 		clif_displaymessage(fd, msg_txt(198)); // This skill number doesn't exist.
+ 		return -1;
+ 	}
+	if (!(skill_get_inf2(skill_id) & INF2_QUEST_SKILL)) {
+		clif_displaymessage(fd, msg_txt(197)); // This skill number doesn't exist or isn't a quest skill.
 		return -1;
 	}
+	if ((pl_sd = map_nick2sd(player)) == NULL) {
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
+		return -1;
+	}
+	if (pc_checkskill(pl_sd, skill_id) == 0) {
+		clif_displaymessage(fd, msg_txt(203)); // This player doesn't have this quest skill.
+		return -1;
+	}
+
+	pl_sd->status.skill[skill_id].lv = 0;
+	pl_sd->status.skill[skill_id].flag = 0;
+	clif_skillinfoblock(pl_sd);
+	clif_displaymessage(fd, msg_txt(202)); // This player has forgotten the skill.
 
 	return 0;
 }
