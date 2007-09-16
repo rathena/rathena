@@ -1,5 +1,9 @@
 Date		Added
 ======
+2007/09/16
+	* Rev. 11224 Touch-ups to the Friendship quest. [L0ne_W0lf]
+	- Added EXP reward. Thanks to $ephiroth for pointing it out.
+	- Added cutins for "Maku" npc, and changed "set HP" to percentheal.
 2007/09/15
 	* Added npc_test_duplicate.txt to /samples
 	* Corrected some npc/other/ bugs

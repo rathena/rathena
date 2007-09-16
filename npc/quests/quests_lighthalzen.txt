@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 3.4
+//= 3.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -58,6 +58,8 @@
 //=	reference to it in the Aegis script.
 //= 3.3 Fixed a wrong negative value checking in Schwartzvalt Trilogy quest. [SinSloth]
 //= 3.4 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 3.5 Touch-ups to the Friendship quest. Added EXP reward. [L0ne_W0lf]
+//=	Added cutins for "Maku" npc, and changed "set HP" to percentheal.
 //============================================================ 
 
 lighthalzen,1,1,7	script	sneakAddSuber	-1,{
@@ -1823,8 +1825,9 @@ s_Dead:
 lighthalzen,337,232,3	script	Maku	870,{
 
 	if(friendship > 1)goto Switches;
+	cutin "lhz_macu01",2;
 	mes "[Maku]";
-	mes "Hey, you're on of";
+	mes "Hey, you're one of";
 	mes "those adventurers, eh?";
 	mes "Welcome to the ghetto.";
 	mes "Nothing too adventurous";
@@ -1871,12 +1874,12 @@ lighthalzen,337,232,3	script	Maku	870,{
 	mes "I'm bitter, but I'll also admit";
 	mes "it's way nicer than this place.";
 	if(BaseLevel > 29) set friendship,1;
-	close;
-
+	close2;
+	cutin "lhz_macu01",255;
+	end;	
 
 Switches:
-	switch(friendship)
-	{
+	switch(friendship) {
 	
 	case 2:
 		mes "[Maku]";
@@ -1887,8 +1890,8 @@ Switches:
 		mes "Uptown Lighthalzen. This";
 		mes "place is pretty run-down...";
 		next;
-		menu "I actually met Digotz and...",-;
-
+		select("I actually met Digotz and...");
+		cutin "lhz_macu05",2;
 		mes "[Maku]";
 		mes "You what...?!";
 		mes "You saw my old pal,";
@@ -1897,6 +1900,7 @@ Switches:
 		mes "who used to be my buddy,";
 		mes "but obviously not anymore.";
 		next;
+		cutin "lhz_macu02",2;
 		mes "[Maku]";
 		mes "Sure, we were real close";
 		mes "at one time, but that was";
@@ -1913,10 +1917,10 @@ Switches:
 		mes "percent! The next time I see";
 		mes "him, I'll beat him to a pulp!";
 		set friendship,3;
-		close;
-	break;
+		break;
 
 	case 3:
+		cutin "lhz_macu03",2;
 		mes "[Maku]";
 		mes "Man, I need to blow off some";
 		mes "steam! Sure, me and Digotz";
@@ -1939,10 +1943,10 @@ Switches:
 		mes "I mean, I'm not the one";
 		mes "holding a grudge. It's all";
 		mes "that guy's fault! Sheeeesh!";
-		close;
-	break;
+		break;
 
 	case 4:
+		cutin "lhz_macu05",2;
 		mes "[Maku]";
 		mes "What the hell are you";
 		mes "still doing around here?";
@@ -1951,7 +1955,7 @@ Switches:
 		mes "like me or that snobby and";
 		mes "totally prickish Digotz.";
 		next;
-		menu "Speaking of which...",-;
+		select("Speaking of which...");
 		mes "[" + strcharinfo(0) + "]";
 		mes "Speaking of which...";
 		mes "I spoke to Digotz again.";
@@ -2014,6 +2018,7 @@ Switches:
 		next;
 		input @digotzstr$;
 		if(@digotzstr$ != "I'm so goddamn happy without you!")goto failstr;
+		cutin "lhz_macu06",2;
 		mes "[Maku]";
 		mes "That's it.";
 		mes "It's decided. The";
@@ -2021,8 +2026,7 @@ Switches:
 		mes "I'm gonna plaster his";
 		mes "face all over the floor.";
 		set friendship,5;
-		close;
-	break;
+		break;
 
 	case 5:
 		mes "[Maku]";
@@ -2040,6 +2044,7 @@ Switches:
 		mes "......";
 		mes ".........";
 		next;
+		cutin "lhz_macu06",2;
 		mes "[Maku]";
 		mes "Gggrrrr...";
 		next;
@@ -2051,7 +2056,7 @@ Switches:
 		mes "you're not getting away";
 		mes "with this! Gonna wreck you!!";
 		next;
-		set Hp,MaxHp/2;
+		percentheal -50,0;
 		mes "^3131FFMaku's seething quickly";
 		mes "explodes into pure, violent";
 		mes "rage. You manage to calm";
@@ -2080,10 +2085,10 @@ Switches:
 		mes "kick Digotz's ass! I swear,";
 		mes "if it weren't for them...!";		
 		set friendship,6;
-		close;
-	break;
+		break;
 
 	case 6:
+		cutin "lhz_macu06",2;
 		mes "[Maku]";
 		mes "Arrrrgh! Whenever I hear";
 		mes "about that Digotz, I get so";
@@ -2098,8 +2103,7 @@ Switches:
 		mes "all those freakin' guards!";
 		mes "Arrrrrrrgh! Man, where's";
 		mes "Benkastein when I need him?";
-		close;
-	break;
+		break;
 
 	case 7:
 		mes "[Maku]";
@@ -2116,10 +2120,10 @@ Switches:
 		mes "all those freakin' guards!";
 		mes "Arrrrrrrgh! Man, where's";
 		mes "Benkastein when I need him?";
-		close;
-	break;
+		break;
 
 	case 8:
+		cutin "lhz_macu06",2;
 		mes "[Maku]";
 		mes "Hey, what is that? You want";
 		mes "me to read this journal?";
@@ -2136,6 +2140,7 @@ Switches:
 		mes "to read? Alright, I owe him a";
 		mes "favor or two, so I oughta...";
 		next;
+		cutin "lhz_macu06",255;
 		mes "[Benkastein's Journal]";
 		mes "^AD9595Today, me, Digotz and";
 		mes "Maku played this crazy flying";
@@ -2152,6 +2157,7 @@ Switches:
 		mes "I think about it. Boy, I hope";
 		mes "we don't do that again.";
 		next;
+		cutin "lhz_macu03",2;
 		mes "^000000[Maku]";
 		mes "What is he talking about?!";
 		mes "That game was real fun!";
@@ -2159,6 +2165,7 @@ Switches:
 		mes "wings and Digotz always";
 		mes "wanted to wear them too.";
 		next;
+		cutin "lhz_macu03",255;
 		mes "[Benkastein's Journal]";
 		mes "^AD9595Maku, Digotz and me went";
 		mes "outside of town. Of course,";
@@ -2175,6 +2182,7 @@ Switches:
 		mes "bad and the monster got away.";
 		mes "Boy, mom was not happy...";
 		next;
+		cutin "lhz_macu03",2;
 		mes "^000000[Maku]";
 		mes "That's right! Back then,";
 		mes "the three of us weren't";
@@ -2183,6 +2191,7 @@ Switches:
 		mes "But I gotta say, he was also";
 		mes "the most fearless of us.";
 		next;
+		cutin "lhz_macu03",255;
 		mes "[Benkastein's Journal]";
 		mes "^AD9595Digotz's been sick for three";
 		mes "days now. It's just a normal";
@@ -2191,6 +2200,7 @@ Switches:
 		mes "But he's always asking me to";
 		mes "go visit him and see if he's okay.";
 		next;
+		cutin "lhz_macu04",2;
 		mes "^000000[Maku]";
 		mes "Wh-what?! No, I wasn't";
 		mes "worried at all! That must";
@@ -2199,6 +2209,7 @@ Switches:
 		mes "that, uh, horrible disease. No";
 		mes "one should have that one!";
 		next;
+		cutin "lhz_macu04",255;
 		mes "[Benkastein's Journal]";
 		mes "^AD9595Mom and dad keep telling";
 		mes "me not to hang out with Maku";
@@ -2214,10 +2225,12 @@ Switches:
 		mes "But Digotz doesn't care.";
 		mes "I know he likes Maku a lot.";
 		next;
+		cutin "lhz_macu01",2;
 		mes "^000000[Maku]";
 		mes "...";
 		mes "......";
 		next;
+		cutin "lhz_macu01",255;
 		mes "[Benkastein's Journal]";
 		mes "^AD9595Today, the three of us";
 		mes "made an oath of brotherhood,";
@@ -2226,6 +2239,7 @@ Switches:
 		mes "be friends no matter what.";
 		mes "For always and for always.";
 		next;
+		cutin "lhz_macu06",2;
 		mes "^000000[Maku]";
 		mes "Well, that's true,";
 		mes "I guess, but people";
@@ -2240,6 +2254,7 @@ Switches:
 		mes "that he'll be coming";
 		mes "by in a few days.";
 		next;
+		cutin "lhz_macu07",2;
 		mes "[Maku]";
 		mes "What?! He's really coming";
 		mes "here? What for? It's too late";
@@ -2255,28 +2270,33 @@ Switches:
 		mes "fun of Digotz. Bwahahaha!";
 		mes "But yeah, um, thanks. Not";
 		mes "that I'm grateful or anything.";
+		cutin "lhz_macu07",255;
 		next;
+		cutin "lhz_macu04",2;
 		mes "[Maku]";
 		mes "So, uh, I guess";
 		mes "I'll see you later.";
 		mes "Um, now I gotta get";
 		mes "ready for something.";
 		mes "^111111(But not to see Digotz!)";
-		if(countitem(7351))delitem 7351,1;
+		if(countitem(7351)) delitem 7351,1;
 		set friendship,9;
-		close;
-	break;
+		if (BaseLevel > 90) getexp 700000,0;
+		else if (BaseLevel > 75) getexp 400000,0;
+		else getexp 200000,0;
+		break;
 
 	case 9:
+		cutin "lhz_macu05",2;
 		mes "[Maku]";
 		mes "Why is Digotz";
 		mes "so late? This isn't";
 		mes "like him at all. Maybe";
 		mes "something's wrong?";
-		close;
-	break;
+		break;
 
 	case 10:
+		cutin "lhz_macu07",2;
 		mes "[Maku]";
 		mes "Why is Digotz";
 		mes "so late? This isn't";
@@ -2290,10 +2310,10 @@ Switches:
 		mes "i've been saving a whole";
 		mes "six pack of kickass to open,";
 		mes "just for him. Heh heh heh~";
-		close;
-	break;
+		break;
 
 	case 11:
+		cutin "lhz_macu07",2;
 		mes "[Maku]";
 		mes "Why is Digotz";
 		mes "so late? This isn't";
@@ -2307,9 +2327,11 @@ Switches:
 		mes "i've been saving a whole";
 		mes "six pack of kickass to open,";
 		mes "just for him. Heh heh heh~";
-		close;
-	break;
+		break;
 	}
+	close2;
+	cutin "",255;
+	end;
 
 failstr:
 	mes "[Maku]";
@@ -2319,7 +2341,9 @@ failstr:
 	mes "him carefully enough? It's";
 	mes "been a while, but I know";
 	mes "how Digotz talks, man.";
-	close;
+	close2;
+	cutin "",255;
+	end;
 }
 
 yuno_in04,107,14,4	script	Student	754,{
