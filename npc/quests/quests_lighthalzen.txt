@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 3.5
+//= 3.5a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -60,6 +60,7 @@
 //= 3.4 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 3.5 Touch-ups to the Friendship quest. Added EXP reward. [L0ne_W0lf]
 //=	Added cutins for "Maku" npc, and changed "set HP" to percentheal.
+//= 3.5a Adjusted EXP given by "Benkasttein" to be the same as that given by Maku. [L0ne_W0lf]
 //============================================================ 
 
 lighthalzen,1,1,7	script	sneakAddSuber	-1,{
@@ -2556,12 +2557,9 @@ s_Ask:
 	mes "adventurer. When the three";
 	mes "of us get together, I'll be";
 	mes "sure to let you know~";
-	if(BaseLevel < 41) getexp 49500,0;
-	else if(BaseLevel > 40 && BaseLevel < 61) getexp 99000,0;
-	else if(BaseLevel > 60 && BaseLevel < 71) getexp 198000,0;
-	else if(BaseLevel > 70 && BaseLevel < 81) getexp 396000,0;
-	else if(BaseLevel > 80 && BaseLevel < 91) getexp 594000,0;
-	else if(BaseLevel > 90) getexp 792000,0;
+	if (BaseLevel > 90) getexp 700000,0;
+	else if (BaseLevel > 75) getexp 400000,0;
+	else getexp 200000,0;
 	getitem 7350,1;
 	set friendship,11;
 	set friendship3,0;
