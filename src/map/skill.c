@@ -671,6 +671,9 @@ struct skill_unit_layout skill_unit_layout[MAX_SKILL_UNIT_LAYOUT];
 int firewall_unit_pos;
 int icewall_unit_pos;
 
+//Since only mob-casted splash skills can hit ice-walls
+#define splash_target(bl) (bl->type==BL_MOB?BL_SKILL|BL_CHAR:BL_CHAR)
+
 // macros to check for out of bounds errors [celest]
 // i: Skill ID, l: Skill Level, var: Value to return after checking
 // for values that don't require level just put a one (putting 0 will trigger return 0; instead
@@ -2922,7 +2925,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		if (!(flag&1) && sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_MONK)
 		{	//Becomes a splash attack when Soul Linked.
 			map_foreachinrange(skill_area_sub, bl,
-				skill_get_splash(skillid, skilllv),BL_CHAR,
+				skill_get_splash(skillid, skilllv),splash_target(src),
 				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 				skill_castend_damage_id);
 		} else
@@ -2933,7 +2936,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_area_temp[1] = 0;
 		map_foreachinrange(skill_attack_area, src,
-			skill_get_splash(skillid, skilllv), BL_CHAR,
+			skill_get_splash(skillid, skilllv), splash_target(src),
 			BF_WEAPON, src, src, skillid, skilllv, tick, flag, BCT_ENEMY);	
 		break;
 
@@ -2956,7 +2959,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		//line of sight between caster and target.
 		skill_area_temp[1] = bl->id;
 		map_foreachinpath (skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,
-			skill_get_splash(skillid, skilllv),skill_get_maxcount(skillid,skilllv), BL_CHAR,
+			skill_get_splash(skillid, skilllv),skill_get_maxcount(skillid,skilllv), splash_target(src),
 			skill_get_type(skillid),src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
 		break;
 
@@ -2967,7 +2970,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case NPC_THUNDERBREATH:
 		skill_area_temp[1] = bl->id;
 		map_foreachinpath(skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,
-			skill_get_splash(skillid, skilllv),skill_get_maxcount(skillid,skilllv), BL_CHAR,
+			skill_get_splash(skillid, skilllv),skill_get_maxcount(skillid,skilllv), splash_target(src),
 			skill_get_type(skillid),src,src,skillid,skilllv,tick,flag,BCT_ENEMY);
 		break;
 
@@ -3107,7 +3110,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			skill_area_temp[0] = 2;
 
 		map_foreachinrange(skill_area_sub, bl,
-			skill_get_splash(skillid, skilllv), BL_CHAR,
+			skill_get_splash(skillid, skilllv), splash_target(src),
 			src, skillid, skilllv, tick, flag|BCT_ENEMY|1,
 			skill_castend_damage_id);
 
@@ -3154,7 +3157,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			clif_blown(bl); //Update target pos.
 			if (i!=c) { //Splash
 				skill_area_temp[1]=bl->id;
-				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), BL_CHAR,
+				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src),
 					src, skillid, skilllv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
 			}
 			//Weirdo dual-hit property, two attacks for 500%
@@ -3854,7 +3857,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	//Passive Magnum, should had been casted on yourself.
 	case SM_MAGNUM:
 		skill_area_temp[1] = 0;
-		map_foreachinrange(skill_area_sub, src, skill_get_splash(skillid, skilllv),BL_CHAR,
+		map_foreachinrange(skill_area_sub, src, skill_get_splash(skillid, skilllv), splash_target(src),
 			src,skillid,skilllv,tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
 		//Initiate 10% of your damage becomes fire element.
 		clif_skill_nodamage (src,src,skillid,skilllv,1);
@@ -4152,7 +4155,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		skill_area_temp[1] = 0;
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		map_foreachinrange(skill_area_sub, bl,
-			skill_get_splash(skillid, skilllv), BL_CHAR,
+			skill_get_splash(skillid, skilllv), splash_target(src),
 			src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 			skill_castend_damage_id);
 		status_change_end(src, SC_HIDING, -1);
@@ -4172,7 +4175,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		skill_area_temp[1] = bl->id;
 		//Mob casted skills should also hit skills.
 		map_foreachinrange(skill_area_sub, bl,
-			skill_get_splash(skillid, skilllv), md?BL_CHAR|BL_SKILL:BL_CHAR,
+			skill_get_splash(skillid, skilllv), splash_target(src),
 			src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 			skill_castend_damage_id);
 		break;
@@ -4230,7 +4233,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		status_change_end(src,SC_SIGHT,-1);
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		map_foreachinrange(skill_area_sub,src,
-			skill_get_splash(skillid, skilllv),BL_CHAR,
+			skill_get_splash(skillid, skilllv),splash_target(src),
 			src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
 			skill_castend_damage_id);
 		break;
@@ -4241,7 +4244,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_area_temp[1] = 0;
 		map_foreachinrange(skill_attack_area, src,
-			skill_get_splash(skillid, skilllv), BL_CHAR,
+			skill_get_splash(skillid, skilllv), splash_target(src),
 			BF_MAGIC, src, src, skillid, skilllv, tick, flag, BCT_ENEMY);
 		break;
 
@@ -4254,7 +4257,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		clif_skill_nodamage(src, src, skillid, -1, 1);
 		map_delblock(src); //Required to prevent chain-self-destructions hitting back.
 		map_foreachinrange(skill_area_sub, bl,
-			skill_get_splash(skillid, skilllv), BL_CHAR,
+			skill_get_splash(skillid, skilllv), splash_target(src),
 			src, skillid, skilllv, tick, flag|i,
 			skill_castend_damage_id);
 		map_addblock(src);
