@@ -28,6 +28,7 @@
 
 ========================
 09/17
+	* Some more drop rate updates [Playtester]
 	* Raised the drop rate for some of the new equips [Playtester]
 	* Added the EQI_* constants to db/const.txt in a format usable by the
 	  equip-position related script commands.
