@@ -27,6 +27,8 @@
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
 ========================
+09/17
+	* Reduced Necromancer's summon frequency [Playtester]
 09/15
 	* Fixed weight and updated some item names [Playtester]
 	* Fixed TF_BACKSLIDING being targeted on mob skills [Playtester]
