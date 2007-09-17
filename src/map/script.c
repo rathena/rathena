@@ -6776,7 +6776,7 @@ unsigned int equip[10]={EQP_HEAD_TOP,EQP_ARMOR,EQP_HAND_L,EQP_HAND_R,EQP_GARMENT
  *------------------------------------------*/
 BUILDIN_FUNC(getequipid)
 {
-	int i,num;
+	int i=-1,num;
 	TBL_PC *sd;
 	struct item_data* item;
 
@@ -6787,7 +6787,8 @@ BUILDIN_FUNC(getequipid)
 		return 0;
 	}
 	num=script_getnum(st,2);
-	i=pc_checkequip(sd,equip[num-1]);
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0){
 		item=sd->inventory_data[i];
 		if(item)
@@ -6805,7 +6806,7 @@ BUILDIN_FUNC(getequipid)
  *------------------------------------------*/
 BUILDIN_FUNC(getequipname)
 {
-	int i,num;
+	int i=-1,num;
 	TBL_PC *sd;
 	struct item_data* item;
 	char *buf;
@@ -6815,7 +6816,8 @@ BUILDIN_FUNC(getequipname)
 	buf=(char *)aMallocA(64*sizeof(char));
 	sd=script_rid2sd(st);
 	num=script_getnum(st,2);
-	i=pc_checkequip(sd,equip[num-1]);
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0){
 		item=sd->inventory_data[i];
 		if(item)
@@ -6890,22 +6892,19 @@ BUILDIN_FUNC(repair)
  *------------------------------------------*/
 BUILDIN_FUNC(getequipisequiped)
 {
-	int i,num;
+	int i=-1,num;
 	TBL_PC *sd;
 
 	num=script_getnum(st,2);
 	sd=script_rid2sd(st);
 
-	if ((num - 1)  >= (sizeof(equip) / sizeof(equip[0])))
-		i = -1;
-	else 
+	if (num > 0 && num <= ARRAYLENGTH(equip))
 		i=pc_checkequip(sd,equip[num-1]);
 
-        if(i >= 0)
-          script_pushint(st,1);
-        else
-          script_pushint(st,0);
-
+	if(i >= 0)
+		script_pushint(st,1);
+	else
+		 script_pushint(st,0);
 	return 0;
 }
 
@@ -6914,12 +6913,13 @@ BUILDIN_FUNC(getequipisequiped)
  *------------------------------------------*/
 BUILDIN_FUNC(getequipisenableref)
 {
-	int i,num;
+	int i=-1,num;
 	TBL_PC *sd;
 
 	num=script_getnum(st,2);
 	sd=script_rid2sd(st);
-	i=pc_checkequip(sd,equip[num-1]);
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0 && sd->inventory_data[i] && !sd->inventory_data[i]->flag.no_refine)
 	{
 		script_pushint(st,1);
@@ -6935,12 +6935,13 @@ BUILDIN_FUNC(getequipisenableref)
  *------------------------------------------*/
 BUILDIN_FUNC(getequipisidentify)
 {
-	int i,num;
+	int i=-1,num;
 	TBL_PC *sd;
 
 	num=script_getnum(st,2);
 	sd=script_rid2sd(st);
-	i=pc_checkequip(sd,equip[num-1]);
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0)
 		script_pushint(st,sd->status.inventory[i].identify);
 	else
@@ -6954,12 +6955,13 @@ BUILDIN_FUNC(getequipisidentify)
  *------------------------------------------*/
 BUILDIN_FUNC(getequiprefinerycnt)
 {
-	int i,num;
+	int i=-1,num;
 	TBL_PC *sd;
 
 	num=script_getnum(st,2);
 	sd=script_rid2sd(st);
-	i=pc_checkequip(sd,equip[num-1]);
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0)
 		script_pushint(st,sd->status.inventory[i].refine);
 	else
@@ -6973,12 +6975,13 @@ BUILDIN_FUNC(getequiprefinerycnt)
  *------------------------------------------*/
 BUILDIN_FUNC(getequipweaponlv)
 {
-	int i,num;
+	int i=-1,num;
 	TBL_PC *sd;
 
 	num=script_getnum(st,2);
 	sd=script_rid2sd(st);
-	i=pc_checkequip(sd,equip[num-1]);
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0 && sd->inventory_data[i])
 		script_pushint(st,sd->inventory_data[i]->wlv);
 	else
@@ -6992,12 +6995,13 @@ BUILDIN_FUNC(getequipweaponlv)
  *------------------------------------------*/
 BUILDIN_FUNC(getequippercentrefinery)
 {
-	int i,num;
+	int i=-1,num;
 	TBL_PC *sd;
 
 	num=script_getnum(st,2);
 	sd=script_rid2sd(st);
-	i=pc_checkequip(sd,equip[num-1]);
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0 && sd->status.inventory[i].nameid && sd->status.inventory[i].refine < MAX_REFINE)
 		script_pushint(st,percentrefinery[itemdb_wlv(sd->status.inventory[i].nameid)][(int)sd->status.inventory[i].refine]);
 	else
@@ -7011,12 +7015,13 @@ BUILDIN_FUNC(getequippercentrefinery)
  *------------------------------------------*/
 BUILDIN_FUNC(successrefitem)
 {
-	int i,num,ep;
+	int i=-1,num,ep;
 	TBL_PC *sd;
 
 	num=script_getnum(st,2);
 	sd=script_rid2sd(st);
-	i=pc_checkequip(sd,equip[num-1]);
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0) {
 		ep=sd->status.inventory[i].equip;
 
@@ -7063,12 +7068,13 @@ BUILDIN_FUNC(successrefitem)
  *------------------------------------------*/
 BUILDIN_FUNC(failedrefitem)
 {
-	int i,num;
+	int i=-1,num;
 	TBL_PC *sd;
 
 	num=script_getnum(st,2);
 	sd=script_rid2sd(st);
-	i=pc_checkequip(sd,equip[num-1]);
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0) {
 		//Logs items, got from (N)PC scripts [Lupus]
 		if(log_config.enable_logs&0x40)
@@ -9749,13 +9755,20 @@ BUILDIN_FUNC(requestguildinfo)
  * ---------------------------------------------------------------------*/
 BUILDIN_FUNC(getequipcardcnt)
 {
-	int i,num;
+	int i=-1,num;
 	TBL_PC *sd;
 	int c=MAX_SLOTS;
 
 	num=script_getnum(st,2);
 	sd=script_rid2sd(st);
-	i=pc_checkequip(sd,equip[num-1]);
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i=pc_checkequip(sd,equip[num-1]);
+
+	if (i < 0) {
+		script_pushint(st,0);
+		return 0;
+	}
+
 	if(itemdb_isspecial(sd->status.inventory[i].card[0]))
 	{
 		script_pushint(st,0);
@@ -9777,14 +9790,21 @@ BUILDIN_FUNC(getequipcardcnt)
  * ----------------------------------------------------------------*/
 BUILDIN_FUNC(successremovecards)
 {
-	int i,j,num,cardflag=0,flag;
+	int i=-1,j,num,cardflag=0,flag;
 	TBL_PC *sd;
 	struct item item_tmp;
 	int c=MAX_SLOTS;
 
 	num=script_getnum(st,2);
 	sd=script_rid2sd(st);
-	i=pc_checkequip(sd,equip[num-1]);
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i=pc_checkequip(sd,equip[num-1]);
+
+	if (i < 0) {
+		script_pushint(st,0);
+		return 0;
+	}
+
 	if(itemdb_isspecial(sd->status.inventory[i].card[0])) 
 		return 0;
 
@@ -9844,7 +9864,7 @@ BUILDIN_FUNC(successremovecards)
  * ----------------------------------------------------------------*/
 BUILDIN_FUNC(failedremovecards)
 {
-	int i,j,num,cardflag=0,flag,typefail;
+	int i=-1,j,num,cardflag=0,flag,typefail;
 	TBL_PC *sd;
 	struct item item_tmp;
 	int c=MAX_SLOTS;
@@ -9852,7 +9872,14 @@ BUILDIN_FUNC(failedremovecards)
 	num=script_getnum(st,2);
 	typefail=script_getnum(st,3);
 	sd=script_rid2sd(st);
-	i=pc_checkequip(sd,equip[num-1]);
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i=pc_checkequip(sd,equip[num-1]);
+
+	if (i < 0) {
+		script_pushint(st,0);
+		return 0;
+	}
+
 	if(itemdb_isspecial(sd->status.inventory[i].card[0]))
 		return 0;
 
@@ -10403,13 +10430,14 @@ BUILDIN_FUNC(setiteminfo)
  *------------------------------------------*/
 BUILDIN_FUNC(getequipcardid)
 {
-	int i,num,slot;
+	int i=-1,num,slot;
 	TBL_PC *sd;
 
 	num=script_getnum(st,2);
 	slot=script_getnum(st,3);
 	sd=script_rid2sd(st);
-	i=pc_checkequip(sd,equip[num-1]);
+	if (num > 0 && num <= ARRAYLENGTH(equip))
+		i=pc_checkequip(sd,equip[num-1]);
 	if(i >= 0 && slot>=0 && slot<4)
 		script_pushint(st,sd->status.inventory[i].card[slot]);
 	else
@@ -11893,10 +11921,11 @@ BUILDIN_FUNC(unequip)
 
 	num = script_getnum(st,2) - 1;
 	sd=script_rid2sd(st);
-	if(sd!=NULL && num<10)
+	if(sd!=NULL && num > 0 && num <= ARRAYLENGTH(equip))
 	{
-		i=pc_checkequip(sd,equip[num]);
-		pc_unequipitem(sd,i,2);
+		i=pc_checkequip(sd,equip[num-1]);
+		if (i >= 0)
+			pc_unequipitem(sd,i,2);
 		return 0;
 	}
 	return 0;

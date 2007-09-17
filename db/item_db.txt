@@ -945,7 +945,7 @@
 2112,Novice_Guard,Novice Guard,5,1,,1,,3,,0,0x00000001,7,2,32,,0,0,1,{},{},{}
 2113,Novice_Shield,Novice Shield,5,5000,,1000,,3,,1,0x00000001,7,2,32,,40,1,3,{ bonus2 bSubEle,Ele_Water,20; bonus2 bSubEle,Ele_Earth,20; bonus2 bSubEle,Ele_Fire,20; bonus2 bSubEle,Ele_Wind,20; bonus2 bSubEle,Ele_Poison,20; bonus2 bSubEle,Ele_Ghost,20; bonus2 bSubEle,Ele_Undead,20; },{},{}
 2114,Stone_Buckler,Stone Buckler,5,30000,,1500,,3,,1,0xFFFFFFFE,7,2,32,,65,1,2,{ bonus2 bSubSize,2,5; if (isequipped(2353,5122)) { bonus bStr,2; bonus bDef,5; bonus bMdef,5; if(BaseClass == Job_Swordman) bonus bDef,6; } },{},{}
-2115,Valkyrja's_Shield,Valkyrie's Shield,5,30000,,500,,3,,1,0xFFFFFFFE,7,2,32,,65,1,3,{ bonus2 bSubEle,Ele_Water,20; bonus2 bSubEle,Ele_Fire,20; bonus2 bSubEle,Ele_Dark,20; bonus2 bSubEle,Ele_Undead,20; bonus bMdef,5; if(isequipped(2353,5124)) { bonus bDef,2; bonus bMdef,5+getrefine()+getequiprefinerycnt(1); } },{},{}
+2115,Valkyrja's_Shield,Valkyrie's Shield,5,30000,,500,,3,,1,0xFFFFFFFE,7,2,32,,65,1,3,{ bonus2 bSubEle,Ele_Water,20; bonus2 bSubEle,Ele_Fire,20; bonus2 bSubEle,Ele_Dark,20; bonus2 bSubEle,Ele_Undead,20; bonus bMdef,5; if(isequipped(2353,5124)) { bonus bDef,2; bonus bMdef,5+getrefine()+getequiprefinerycnt(EQI_HEAD_TOP); } },{},{}
 2116,Angel's_Safeguard,Angelic Guard,5,10000,,400,,3,,1,0x00000001,7,2,32,,20,1,3,{ bonus2 bSubRace,RC_Demon,5; },{},{}
 2117,Arm_Guard,Arm Guard,5,10000,,150,,5,,0,0x02000000,7,2,32,,20,1,,{},{},{}
 2118,Arm_Guard_,Arm Guard,5,10000,,150,,5,,1,0x02000000,7,2,32,,20,1,,{},{},{}
@@ -1175,7 +1175,7 @@
 2506,Manteau_,Manteau,5,32000,,600,,4,,1,0x006654E2,7,2,4,,0,1,0,{},{},{}
 2507,Cape_Of_Ancient_Lord,Ancient Cape,5,82000,,600,,2,,0,0xFFFFFFFE,7,2,4,,40,1,0,{ bonus bAgi,1; },{},{}
 2508,Ragamuffin_Cape,Ragamuffin Manteau,5,56000,,500,,1,,0,0xFFFFFFFE,7,2,4,,0,1,0,{ bonus bMdef,10; },{},{}
-2509,Clack_Of_Servival,Survivor's Manteau,5,20000,,550,,0,,0,0x00810204,7,2,4,,75,1,0,{ bonus bVit,10; if(isequipped(1618) || isequipped(1620)) bonus bMaxHP,300; bonus bMatkRate,-5; if(isequipped(1617) || isequipped(1618) || isequipped(1619) || isequipped(1620)) bonus bMatkRate,getequiprefinerycnt(4); bonus2 bSubEle,Ele_Neutral,getrefine()*3; },{},{}
+2509,Clack_Of_Servival,Survivor's Manteau,5,20000,,550,,0,,0,0x00810204,7,2,4,,75,1,0,{ bonus bVit,10; if(isequipped(1618) || isequipped(1620)) bonus bMaxHP,300; bonus bMatkRate,-5; if(isequipped(1617) || isequipped(1618) || isequipped(1619) || isequipped(1620)) bonus bMatkRate,getequiprefinerycnt(EQI_HAND_R); bonus2 bSubEle,Ele_Neutral,getrefine()*3; },{},{}
 2510,Novice_Hood,Somber Novice Hood,5,1,,1,,2,,0,0x00000001,7,2,4,,0,0,0,{ bonus2 bSubEle,Ele_Neutral,20; },{},{}
 2511,Skeleton's_Cape,Skeleton Manteau,5,5000,,700,,1,,0,0xFFFFFFFE,7,2,4,,75,1,0,{ bonus bStr,2; bonus bInt,-3; bonus bDex,2; bonus bVit,-3; bonus bLuk,2; bonus bAgi,-4; },{},{}
 2512,Novice_Manteau,Novice Manteau,5,50000,,500,,2,,1,0x00000001,7,2,4,,40,1,0,{ bonus2 bSubEle,Ele_Neutral,10; },{},{}
@@ -1190,7 +1190,7 @@
 2521,Angel's_Warmth,Angelic Cardigan,5,10000,,400,,2,,1,0x00000001,7,2,4,,20,1,0,{ bonus bHPrecovRate,5; },{},{}
 2522,Undershirt,Undershirt,5,20000,,150,,2,,0,0xFFFFFFFF,7,2,4,,1,1,0,{ bonus bMdef,1; if(isequipped(2339)) { bonus bAgi,5; bonus bFlee,10; } },{},{}
 2523,Undershirt_,Undershirt,5,20000,,150,,2,,1,0xFFFFFFFF,7,2,4,,1,1,0,{ bonus bMdef,1; if(isequipped(2339)) { bonus bAgi,5; bonus bFlee,10; } },{},{}
-2524,Valkyrie_Manteau,Valkyrie's Manteau,5,0,,500,,3,,1,0xFFFFFFFE,2,2,4,,1,1,0,{ if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus bFlee2,5+(getequiprefinerycnt(5)*2); else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus bShortWeaponDamageReturn,5+(getequiprefinerycnt(5)*2); },{},{}
+2524,Valkyrie_Manteau,Valkyrie's Manteau,5,0,,500,,3,,1,0xFFFFFFFE,2,2,4,,1,1,0,{ if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus bFlee2,5+(getequiprefinerycnt(EQI_GARMENT)*2); else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus bShortWeaponDamageReturn,5+(getequiprefinerycnt(EQI_GARMENT)*2); },{},{}
 2525,Cape_Of_Ancient_Lord_,Ancient Cape,5,82000,,600,,2,,1,0xFFFFFFFE,7,2,4,,40,1,0,{ bonus bAgi,1; },{},{}
 2526,Dragonscale_Jacket,Dragonscale Jacket,5,,10,10,,4,,0,0xFFFFFFFF,7,2,4,,50,1,0,{},{},{}
 2527,Breath_of_the_Dragon,Dragon's Breath,5,,10,600,,4,,1,0xFFFFFFFE,2,2,4,,48,1,0,{ bonus2 bSubRace,RC_Dragon,15; if (isequipped(1166) || isequipped(13001) || isequipped(1474)) bonus2 bAddRace,RC_Dragon,5; },{},{}
@@ -1737,14 +1737,14 @@
 4418,Gazeti_Card,Gazeti Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,14,2,10; },{},{}
 4419,Ktullanux_Card,Ktullanux Card,6,,10,10,,,,,,,,16,,,,,{  bonus2 bAddEle,Ele_Fire,50; bonus5 bAutoSpellWhenHit,88,10,30,BF_WEAPON|BF_MAGIC,0; },{},{}
 4420,Muscipular_Card,Muscipular Card,6,,10,10,,,,,,,,32,,,,,{ bonus5 bAutoSpellWhenHit,28,1,10,BF_SHORT,0; bonus5 bAutoSpellWhenHit,29,1,10,BF_SHORT,0; },{},{}
-4421,Drosera_Card,Drosera Card,6,,10,10,,,,,,,,2,,,,,{ if (getiteminfo(getequipid(4),9) > 3) bonus bCritical,15; },{},{}
+4421,Drosera_Card,Drosera Card,6,,10,10,,,,,,,,2,,,,,{ if (getiteminfo(getequipid(EQI_HAND_R),9) > 3) bonus bCritical,15; },{},{}
 4422,Roween_Card,Roween Card,6,,10,10,,,,,,,,4,,,,,{ bonus bFlee,5; bonus bFlee2,3; bonus2 bAddEle,Ele_Water,10; bonus2 bCriticalAddRace,RC_Fish,15; },{},{}
 4423,Galion_Card,Galion Card,6,,10,10,,,,,,,,136,,,,,{ bonus bHit,5; bonus2 bAddEle,Ele_Water,5; },{},{}
 4424,Stapo_Card,Stapo Card,6,,10,10,,,,,,,,136,,,,,{ skill 151,1; skill 152,1; },{},{}
 4425,Atroce_Card,Atroce Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,25; },{},{}
 4426,Byorgue_Card,Byorgue Card,6,,10,10,,,,,,,,16,,,,,{ if(BaseJob == Job_Rogue){ bonus bMatkRate,10; bonus bAtkRate,10; } },{},{}
-4427,Sword_Guardian_Card,Sword Guardian Card,6,,10,10,,,,,,,,2,,,,,{ bonus bHit,5; bonus bCritical,5; if (getiteminfo(getequipid(4),11) == 2 || getiteminfo(getequipid(4),11) == 3) bonus2 bSkillAtk,62,25; },{},{}
-4428,Bow_Guardian_Card,Bow Guardian Card,6,,10,10,,,,,,,,2,,,,,{ bonus bHit,5; bonus bCritical,5; if (getiteminfo(getequipid(4),11) == 11) bonus2 bSkillAtk,47,50; },{},{}
+4427,Sword_Guardian_Card,Sword Guardian Card,6,,10,10,,,,,,,,2,,,,,{ bonus bHit,5; bonus bCritical,5; if (getiteminfo(getequipid(EQI_HAND_R),11) == 2 || getiteminfo(getequipid(EQI_HAND_R),11) == 3) bonus2 bSkillAtk,62,25; },{},{}
+4428,Bow_Guardian_Card,Bow Guardian Card,6,,10,10,,,,,,,,2,,,,,{ bonus bHit,5; bonus bCritical,5; if (getiteminfo(getequipid(EQI_HAND_R),11) == 11) bonus2 bSkillAtk,47,50; },{},{}
 4429,Salamander_Card,Salamander Card,6,,10,10,,,,,,,,4,,,,,{ bonus2 bSkillAtk,80,40; bonus2 bSkillAtk,83,40; },{},{}
 4430,Ifrit_Card,Ifrit Card,6,,10,10,,,,,,,,136,,,,,{ bonus bAtk,(JobLevel/7); bonus bCritical,(JobLevel/7); bonus bHit,(JobLevel/7); bonus3 bAutoSpellWhenHit,653,2,10; },{},{}
 4431,Kasa_Card,Kasa Card,6,,10,10,,,,,,,,4,,,,,{ bonus3 bAutoSpell,17,5,10; bonus3 bAutoSpell,19,5,10; },{},{}
@@ -1756,7 +1756,7 @@
 4437,Hell_Poodle_Card,Hell Poodle Card,6,,10,10,,,,,,,,136,,,,,{ bonus bHit,1; bonus2 bAddItemHealRate,517,100; bonus2 bAddEff,Eff_Bleeding,100; },{},{}
 4438,Banshee_Card,Banshee Card,6,,10,10,,,,,,,,769,,,,,{ if(BaseClass == Job_Mage){ bonus bMaxSP,100; bonus bMaxHP,-100; bonus2 bSkillAtk,11,20; bonus2 bSkillAtk,13,20; bonus2 bSkillAtk,400,20; } },{},{}
 4439,Flame_Skull_Card,Flame Skull Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bResEff,Eff_Blind,3000; bonus2 bResEff,Eff_Stun,3000; bonus2 bResEff,Eff_Curse,3000; bonus2 bResEff,Eff_Stone,3000; bonus2 bAddEffWhenHit,Eff_Blind,100; bonus2 bAddEffWhenHit,Eff_Stun,100; bonus2 bAddEffWhenHit,Eff_Curse,100; bonus2 bAddEffWhenHit,Eff_Stone,100; },{},{}
-4440,Necromancer_Card,Necromancer Card,6,,10,10,,,,,,,,2,,,,,{ if (getiteminfo(getequipid(4),11) == 10) { bonus bInt,1; bonus bIgnoreMdefRate,2; } },{},{}
+4440,Necromancer_Card,Necromancer Card,6,,10,10,,,,,,,,2,,,,,{ if (getiteminfo(getequipid(EQI_HAND_R),11) == 10) { bonus bInt,1; bonus bIgnoreMdefRate,2; } },{},{}
 4441,Fallen_Bishop_Hibram_Card,Fallen Bishop Hibram Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMAtkRate,10; bonus bMaxSPrate,-50; bonus2 bAddRace,RC_Angel,50; bonus2 bAddRace,RC_DemiHuman,50; },{},{}
 // More Headgears
 //===================================================================

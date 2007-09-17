@@ -27,6 +27,11 @@
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
 ========================
+
+09/17
+	* Added the EQI_* constants to db/const.txt in a format usable by the
+	  equip-position related script commands.
+	* Updated some items to use the new EQI constants. [Skotlex]
 09/17
 	* Reduced Necromancer's summon frequency [Playtester]
 09/15

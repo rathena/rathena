@@ -1890,13 +1890,13 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 }
 
 
-//Checks if there should be magic reflection. 
+//Checks if bl should reflect back a spell.
 //type is the type of magic attack: 0: indirect (aoe), 1: direct (targetted)
-static int skill_magic_reflect(struct block_list *src, struct block_list *target, int type)
+static int skill_magic_reflect(struct block_list *bl, int type)
 {
-	struct status_change *sc = status_get_sc(target);
+	struct status_change *sc = status_get_sc(bl);
 	struct map_session_data *sd;
-	BL_CAST(BL_PC, src, sd);
+	BL_CAST(BL_PC, bl, sd);
 
 	if(sd && sd->magic_damage_return && type && rand()%100 < sd->magic_damage_return)
 		return 1;
@@ -1906,11 +1906,11 @@ static int skill_magic_reflect(struct block_list *src, struct block_list *target
 		if(sc->data[SC_MAGICMIRROR].timer != -1 && rand()%100 < sc->data[SC_MAGICMIRROR].val2)
 			return 1;
 
-		if(sc->data[SC_KAITE].timer != -1 && (sd || status_get_lv(src) <= 80))
+		if(sc->data[SC_KAITE].timer != -1 && (sd || status_get_lv(bl) <= 80))
 		{	//Works on players or mobs with level under 80.
-			clif_specialeffect(target, 438, AREA);
+			clif_specialeffect(bl, 438, AREA);
 			if (--sc->data[SC_KAITE].val2 <= 0)
-				status_change_end(target, SC_KAITE, -1);
+				status_change_end(bl, SC_KAITE, -1);
 			return 1;
 		}
 	}
@@ -1994,7 +1994,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if (attack_type&BF_MAGIC) {
 		if (!(sstatus->mode&MD_BOSS) && (dmg.damage || dmg.damage2) &&
-			skill_magic_reflect(src, bl, src==dsrc))
+			skill_magic_reflect(bl, src==dsrc))
 		{	//Magic reflection, switch caster/target
 			struct block_list *tbl = bl;
 			bl = src;

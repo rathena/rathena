@@ -2074,16 +2074,16 @@ This function returns the item ID of the item equipped in the equipment slot
 specified on the invoking character. If nothing is equpped there, it returns -1. 
 Valid equipment slots are:
 
-1  - Upper head gear
-2  - Armor (Where you keep your Jackets and Robes)
-3  - What is in your Left hand.
-4  - What is in your Right hand.
-5  - The garment slot (Mufflers, Hoods, Manteaus)
-6  - What foot gear the player has on.
-7  - Accessory 1.
-8  - Accessory 2.
-9  - Middle Headgear (masks and glasses)
-10 - Lower Headgear (beards, some masks)
+EQI_HEAD_TOP (1)  - Upper head gear
+EQI_ARMOR (2)     - Armor (Where you keep your Jackets and Robes)
+EQI_HAND_L (3)    - What is in your Left hand.
+EQI_HAND_R (4)    - What is in your Right hand.
+EQI_GARMENT (5)   - The garment slot (Mufflers, Hoods, Manteaus)
+EQI_SHOES (6)     - What foot gear the player has on.
+EQI_ACC_L (7)     - Accessory 1.
+EQI_ACC_R (8)     - Accessory 2.
+EQI_HEAD_MID (9)  - Middle Headgear (masks and glasses)
+EQI_HEAD_LOW (10) - Lower Headgear (beards, some masks)
 
 Notice that a few items occupy several equipment slots, and if the character is 
 wearing such an item, 'getequipid' will return it's ID number for either slot.
@@ -2091,7 +2091,7 @@ wearing such an item, 'getequipid' will return it's ID number for either slot.
 Can be used to check if you have something equiped, or if you haven't got 
 something equiped:
 
-        if(getequipid(1)==2234) goto L_WearingTiara;
+        if(getequipid(EQI_HEAD_TOP)==2234) goto L_WearingTiara;
         mes "Come back when you have a Tiara on";
         close;
     L_WearingTiara:
@@ -2102,7 +2102,7 @@ You can also use it to make sure people don't pass a point before removing an
 item totally from them. Let's say you don't want people to wear Legion Plate 
 armor, but also don't want them to equip if after the check, you would do this:
 
-        if ((getequipid(2) == 2341) || (getequipid(2) == 2342) goto L_EquipedLegionPlate; 
+        if ((getequipid(EQI_ARMOR) == 2341) || (getequipid(EQI_ARMOR) == 2342) goto L_EquipedLegionPlate; 
     // the || is used as an or argument, there is 2341 and 2342 cause there are 
     // two different legion plate armors, one with a slot one without.
         if ((countitem(2341) > 0) || (countitem(2432) > 0) goto L_InventoryLegionPlate;
@@ -2126,8 +2126,8 @@ equipment slot on the invoking character. Almost identical to 'getequipid', good
 for an NPC to state what your are wearing, or maybe saving as a string variable. 
 See 'getequipid' for a full list of valid equipment slots.
 
-        if (getequipname(1)==0) goto L_No_HeadGear;
-        mes "So you are wearing a "+getequipname(1)+" on your head";
+        if (getequipname(EQI_HEAD_TOP)==0) goto L_No_HeadGear;
+        mes "So you are wearing a "+getequipname(EQI_HEAD_TOP)+" on your head";
         close;
     L_No_HeadGear:
         mes "You are not wearing any head gear";
@@ -2165,7 +2165,7 @@ This functions will return 1 if there is an equipment placed on the specified
 equipment slot and 0 otherwise. For a list of equipment slots 
 see 'getequipid'. Function originally used by the refining NPCs:
 
-    if (getequipisequiped(1)) goto L_equipped;
+    if (getequipisequiped(EQI_HEAD_TOP)) goto L_equipped;
         mes "[Refiner]";
         mes "Do you want me to refine your dumb head?";
         close;
@@ -2183,7 +2183,7 @@ Will return 1 if the item equipped on the invoking character in the specified
 equipment slot is refinable, and 0 if it isn't. For a list of equipment slots 
 see 'getequipid'.
 
-        if (getequipisenableref(1)) goto L_Refine;
+        if (getequipisenableref(EQI_HEAD_TOP)) goto L_Refine;
         mes "[Refiner]";
         mes "I can't refine this hat!...";
         close;
@@ -2202,11 +2202,11 @@ slot. For a list of equipment slots see 'getequipid'.
 Can be used to check if you have reached a maximum refine value, default for 
 this is +10:
 
-        if(getequiprefinerycnt(1) < 10) goto L_Refine_HeadGear;
+        if(getequiprefinerycnt(EQI_HEAD_TOP) < 10) goto L_Refine_HeadGear;
         mes "Sorry, it's not possible to refine hats better than +10";
         close;
     L_Refine_HeadGear:
-        mes "I will now upgrade your "+getequipname(1);
+        mes "I will now upgrade your "+getequipname(EQI_HEAD_TOP);
 
 ---------------------------------------
 
@@ -2216,28 +2216,32 @@ This function returns the weapon level for the weapon equipped in the specified
 equipment slot on the invoking character. For a list of equipment slots see 
 'getequipid'.
 
-Only 3 (Left hand) and 4 (Right hand) normally make sense, since only weapons 
+Only EQI_HAND_L and EQI_HAND_R normally make sense, since only weapons 
 have a weapon level. You can, however, probably, use this field for other 
 equippable custom items as a flag or something. 
 If no item is equipped in this slot, or if it doesn't have a weapon level 
 according to the database, 0 will be returned.
 
-    if(getequipweaponlv(4)==0) mes "Seems you don't have a weapon on";
-    if(getequipweaponlv(4)==1) mes "You are holding a lvl 1 weapon";
-    if(getequipweaponlv(4)==2) mes "You are holding a lvl 2 weapon";
-    if(getequipweaponlv(4)==3) mes "You are holding a lvl 3 weapon";
-    if(getequipweaponlv(4)==4) mes "You are holding a lvl 4 weapon";
-    if(getequipweaponlv(4)==5) mes "You are holding a lvl 5 weapon, hm, must be a custom design";
+    switch (getequipweaponlv(EQI_HAND_R)) {
+      case 1: mes "You are holding a lvl 1 weapon"; break;
+		case 2: mes "You are holding a lvl 2 weapon"; break;
+		case 3: mes "You are holding a lvl 3 weapon"; break;
+      case 4: mes "You are holding a lvl 4 weapon"; break;
+		case 5: mes "You are holding a lvl 5 weapon, hm, must be a custom design"; break;
+		default: mes "Seems you don't have a weapon on"; break;
+	 }
 
 Or for the left hand, cause it can hold a weapon or a shield:
 
-        if(getequipid(3)==0) goto L_NothingEquiped;
-        if(getequipweaponlv(3)==0) mes "You are holding a shield, so it doesnt have a level";
-        if(getequipweaponlv(3)==1) mes "You are holding a lvl 1 weapon";
-        if(getequipweaponlv(3)==2) mes "You are holding a lvl 2 weapon";
-        if(getequipweaponlv(3)==3) mes "You are holding a lvl 3 weapon";
-        if(getequipweaponlv(3)==4) mes "You are holding a lvl 4 weapon";
-        if(getequipweaponlv(3)==5) mes "You are holding a lvl 5 weapon, hm, must be a custom design";
+        if(getequipid(EQI_HAND_R)==0) goto L_NothingEquiped;
+        switch (getequipweaponlv(EQI_HAND_L)) {
+          case 0: mes "You are holding a shield, so it doesnt have a level"; break;
+          case 1: mes "You are holding a lvl 1 weapon"; break;
+          case 2: mes "You are holding a lvl 2 weapon"; break;
+          case 3: mes "You are holding a lvl 3 weapon"; break;
+          case 4: mes "You are holding a lvl 4 weapon"; break;
+          case 5: mes "You are holding a lvl 5 weapon, hm, must be a custom design"; break;
+		  }
         close;
     L_NothingEquiped:
         mes "Seems you have nothing equiped";
@@ -2249,10 +2253,9 @@ Or for the left hand, cause it can hold a weapon or a shield:
 
 This function calculates and returns the percent value chance to successfully 
 refine the item found in the specified equipment slot of the invoking character 
-by +1. The actual formula is beyond the scope of this document, however, it is 
-calculated as if the character was a blacksmith trying to refine this particular 
-weapon, and depends on lots and lots of stuff. For a list of equipment slots see 
-'getequipid'.
+by +1. There is no actual formula, the sucess rate for a given weapon level of
+a certain refine level is found in the db/refine_db.txt file. For a list of
+equipment slots see 'getequipid'.
 
 These values can be displayed for the player to see, or used to calculate the 
 random change of a refine succeeding or failing and then going through with it 
@@ -2260,7 +2263,7 @@ random change of a refine succeeding or failing and then going through with it
 
 // This will find a random number from 0 - 99 and if that is equal to or more 
 // than the value recoverd by this command it will go to L_Fail
-    if (getequippercentrefinery(3)<=rand(100)) goto L_Fail;
+    if (getequippercentrefinery(EQI_HAND_L)<=rand(100)) goto L_Fail;
 
 ---------------------------------------
 
@@ -2387,7 +2390,7 @@ Returns value from equipped item slot in the indicated slot:
 getequipcardid(num,slot)
 
 where:
-	num = eqip position slot
+	num = equip position slot
 	slot = 0,1,2,3 (Card Slot N)
 
 This func returns CARD ID, 255,254,-255 (for card 0, if the item is produced) it's useful 
