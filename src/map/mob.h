@@ -163,7 +163,7 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 int mob_guardian_guildchange(struct block_list *bl,va_list ap); //Change Guardian's ownership. [Skotlex]
 
 int mob_randomwalk(struct mob_data *md,unsigned int tick);
-
+int mob_warpchase(struct mob_data *md, struct block_list *target);
 int mob_target(struct mob_data *md,struct block_list *bl,int dist);
 int mob_unlocktarget(struct mob_data *md,int tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);

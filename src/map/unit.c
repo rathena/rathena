@@ -233,6 +233,8 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 		if (!tbl || !status_check_visibility(bl, tbl)) {	//Cancel chase.
 			ud->to_x = bl->x;
 			ud->to_y = bl->y;
+			if (tbl && bl->type == BL_MOB) //See if the mob can do a warp chase.
+				mob_warpchase((TBL_MOB*)bl, tbl);
 			return 0;
 		}
 		if (tbl->m == bl->m && check_distance_bl(bl, tbl, ud->chaserange))
@@ -1367,8 +1369,15 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	if(src == NULL || src->prev == NULL || target==NULL || target->prev == NULL)
 		return 0;
 
-	if(src->m != target->m || status_isdead(src) || status_isdead(target) || !status_check_skilluse(src, target, 0, 0))
+	if(status_isdead(src) || status_isdead(target) || !status_check_skilluse(src, target, 0, 0))
 		return 0; // can't attack under these conditions
+
+	if (src->m != target->m)
+	{
+		if (src->type == BL_MOB && mob_warpchase((TBL_MOB*)src, target))
+			return 1; // Follow up.
+		return 0;
+	}
 
 	if(ud->skilltimer != -1 && !(sd && pc_checkskill(sd,SA_FREECAST) > 0))
 		return 0; // can't attack while casting

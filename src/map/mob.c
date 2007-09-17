@@ -875,19 +875,32 @@ static int mob_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	return 0;
 }
 
-static int mob_ai_sub_hard_warpsearch(struct block_list *bl,va_list ap)
+static int mob_warpchase_sub(struct block_list *bl,va_list ap)
 {
 	struct mob_data* md;
-	struct block_list **target;
+	struct block_list *target;
+	struct npc_data **target_nd;
+	struct npc_data *nd;
+	int *min_distance;
+	int cur_distance;
 
 	md=va_arg(ap,struct mob_data *);
-	target= va_arg(ap,struct block_list**);
+	target= va_arg(ap, struct block_list*);
+	target_nd= va_arg(ap, struct npc_data**);
+	min_distance= va_arg(ap, int*);
 
-	if (*target) return 0;
+	if(bl->subtype != WARP)
+		return 0; //Not a warp
+	nd = (TBL_NPC*) bl;
 
-	if(bl->subtype == WARP)	
-	{
-		*target = bl;
+	if(nd->u.warp.mapindex != map[target->m].index)
+		return 0; //Does not lead to the same map.
+
+	cur_distance = distance_blxy(target, nd->u.warp.x, nd->u.warp.y);
+	if (cur_distance < *min_distance)
+	{	//Pick warp that leads closest to target.
+		*target_nd = nd;
+		*min_distance = cur_distance;
 		return 1;
 	}	
 	return 0;
@@ -1073,6 +1086,29 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 	return 1;
 }
 
+int mob_warpchase(struct mob_data *md, struct block_list *target)
+{
+	struct npc_data *warp = NULL;
+	int distance = AREA_SIZE;
+	if (!(target && battle_config.mob_ai&0x40 && battle_config.mob_warp&1))
+		return 0; //Can't warp chase.
+
+	if (target->m == md->bl.m && check_distance_bl(&md->bl, target, AREA_SIZE))
+		return 0; //No need to do a warp chase.
+
+	if (md->ud.walktimer != -1 &&
+		map_getcell(md->bl.m,md->ud.to_x,md->ud.to_y,CELL_CHKNPC))
+		return 1; //Already walking to a warp.
+
+	//Search for warps within mob's viewing range.
+	map_foreachinrange (mob_warpchase_sub, &md->bl,
+		md->db->range2, BL_NPC, md, target, &warp, &distance);
+
+	if (warp && unit_walktobl(&md->bl, &warp->bl, 0, 1))
+		return 1;
+	return 0;
+}
+
 /*==========================================
  * AI of MOB whose is near a Player
  *------------------------------------------*/
@@ -1128,13 +1164,8 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				((((TBL_PC*)tbl)->state.gangsterparadise && !(mode&MD_BOSS)) ||
 				((TBL_PC*)tbl)->invincible_timer != INVALID_TIMER)
 		)) {	//Unlock current target.
-			if (tbl && tbl->m != md->bl.m && battle_config.mob_ai&0x40)
-			{	//Chase to a nearby warp [Skotlex]
-				tbl = NULL;
-				map_foreachinrange (mob_ai_sub_hard_warpsearch, &md->bl,
-					view_range, BL_NPC, md, &tbl);
-				if (tbl) unit_walktobl(&md->bl, tbl, 0, 1);
-			}
+			if (mob_warpchase(md, tbl))
+				return 0; //Chasing this target.
 			mob_unlocktarget(md, tick-(battle_config.mob_ai&0x8?3000:0)); //Imediately do random walk.
 			tbl = NULL;
 		}
