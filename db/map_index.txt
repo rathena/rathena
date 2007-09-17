@@ -662,6 +662,8 @@ mosk_fild02
 mosk_dun01
 mosk_dun02
 mosk_dun03
+force_4-1
+force_5-1
 
 // Only add maps under this line if they are not standard maps!
 
