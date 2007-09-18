@@ -1,5 +1,9 @@
 Date		Added
 ======
+2007/09/18
+	* Fixed two minor bugs in the Sign Quest and Thanatos Tower ascension. [SinSloth]
+	- Players do not lose time anymore if they return the Sign around midnight.
+	- Thanatos Tower code game now resets properly when entering a wrong value in the box.
 2007/09/16
 	* Rev. 11225 Adjusted EXP given by "Benkasttein" to be the same as that given by Maku. [L0ne_W0lf]
 	* Rev. 11224 Touch-ups to the Friendship quest. [L0ne_W0lf]

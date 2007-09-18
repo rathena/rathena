@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -34,6 +34,7 @@
 //= 1.9 Made some changes in last event to reflect recent bug exploit fix. [SinSloth]
 //= 2.0 Fixed some various minor bugs. [SinSloth]
 //= 2.1 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 2.2 Fixed a small bug which occured when people had to return The Sign around midnight. [SinSloth]
 //============================================================ 
 //===== Configuration : ======================================
 prontera,1,1,1	script	TheSignConfig	-1,{
@@ -648,7 +649,7 @@ L_Where:
         cutin "",255;
         end;
     } else if (signquest == 60) {
-        if (gettime(3) == signmetzhour || gettime(3) == signmetzhour +1 || gettime(3) == signmetzhour +2) {
+        if (gettime(3) == signmetzhour || gettime(3) == signmetzhour +1 || gettime(3) == signmetzhour +2 || (signmetzhour +1 == 24 && gettime(3) == 0) || (signmetzhour +2 == 24 && gettime(3) == 0) || (signmetzhour +2 == 25 && gettime(3) == 1)) {
             mes "[Metz]";
             mes "Fascinating...";
             mes "This was made with";
@@ -5729,7 +5730,7 @@ L_Sign:
     close;
 
 L_Hour:
-    if (gettime(3) == signengelhour || gettime(3) == signengelhour +1 || gettime(3) == signengelhour +2) {
+    if (gettime(3) == signengelhour || gettime(3) == signengelhour +1 || gettime(3) == signengelhour +2 || (signengelhour +1 == 24 && gettime(3) == 0) || (signengelhour +2 == 24 && gettime(3) == 0) || (signengelhour +2 == 25 && gettime(3) == 1)) {
         mes "[Engel]";
         mes "This is now yours to keep.";
         mes "Thank you for giving me the";
