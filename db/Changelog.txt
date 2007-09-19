@@ -27,6 +27,8 @@
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
 ========================
+09/18
+	* Rev. 11240 Corrected viewid for Scarf. Thanks to $ephiroth. [L0ne_W0lf]
 09/17
 	* Some more drop rate updates [Playtester]
 	* Raised the drop rate for some of the new equips [Playtester]
