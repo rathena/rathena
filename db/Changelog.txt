@@ -27,6 +27,9 @@
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
 ========================
+09/19
+	* Slightly adjusted some drop rates [Playtester]
+	- updated sql files
 09/18
 	* Rev. 11241 Added new maps from today's kRO Sakray patch to the mapcache. [L0ne_W0lf]
 	- Mapcache still uses OLD Morroc and Morroc Ruins map data. Sunken Morroc will have to wait.
