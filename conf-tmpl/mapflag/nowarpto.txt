@@ -29,6 +29,11 @@ prtg_cas02	mapflag	nowarpto
 prtg_cas03	mapflag	nowarpto
 prtg_cas04	mapflag	nowarpto
 prtg_cas05	mapflag	nowarpto
+schg_cas01	mapflag	nowarpto
+schg_cas02	mapflag	nowarpto
+schg_cas03	mapflag	nowarpto
+schg_cas04	mapflag	nowarpto
+schg_cas05	mapflag	nowarpto
 //Novice Guild
 n_castle	mapflag	nowarpto
 nguild_alde	mapflag	nowarpto

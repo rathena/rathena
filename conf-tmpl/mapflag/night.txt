@@ -60,6 +60,9 @@ moc_fild16	mapflag	nightenabled
 moc_fild17	mapflag	nightenabled
 moc_fild18	mapflag	nightenabled
 moc_fild19	mapflag	nightenabled
+moc_fild20	mapflag	nightenabled
+moc_fild21	mapflag	nightenabled
+moc_fild22	mapflag	nightenabled
 moc_ruins	mapflag	nightenabled
 morocc	mapflag	nightenabled
 pay_arche	mapflag	nightenabled

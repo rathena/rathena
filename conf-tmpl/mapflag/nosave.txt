@@ -173,6 +173,11 @@ prtg_cas02	mapflag	nosave	SavePoint
 prtg_cas03	mapflag	nosave	SavePoint
 prtg_cas04	mapflag	nosave	SavePoint
 prtg_cas05	mapflag	nosave	SavePoint
+schg_cas01	mapflag	nosave	SavePoint
+schg_cas02	mapflag	nosave	SavePoint
+schg_cas03	mapflag	nosave	SavePoint
+schg_cas04	mapflag	nosave	SavePoint
+schg_cas05	mapflag	nosave	SavePoint
 nguild_alde	mapflag	nosave	SavePoint
 nguild_gef	mapflag	nosave	SavePoint
 nguild_pay	mapflag	nosave	SavePoint

@@ -157,6 +157,11 @@ prtg_cas02	mapflag	noteleport
 prtg_cas03	mapflag	noteleport
 prtg_cas04	mapflag	noteleport
 prtg_cas05	mapflag	noteleport
+schg_cas01	mapflag	noteleport
+schg_cas02	mapflag	noteleport
+schg_cas03	mapflag	noteleport
+schg_cas04	mapflag	noteleport
+schg_cas05	mapflag	noteleport
 nguild_alde	mapflag	noteleport
 nguild_gef	mapflag	noteleport
 nguild_pay	mapflag	noteleport

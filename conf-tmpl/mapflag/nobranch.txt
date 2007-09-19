@@ -139,6 +139,13 @@ prtg_cas02	mapflag	nobranch
 prtg_cas03	mapflag	nobranch
 prtg_cas04	mapflag	nobranch
 prtg_cas05	mapflag	nobranch
+//schg_gld
+schg_cas01	mapflag	nobranch
+schg_cas02	mapflag	nobranch
+schg_cas03	mapflag	nobranch
+schg_cas04	mapflag	nobranch
+schg_cas05	mapflag	nobranch
+
 //n_castle	mapflag	nobranch
 nguild_alde	mapflag	nobranch
 nguild_gef	mapflag	nobranch

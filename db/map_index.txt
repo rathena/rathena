@@ -664,6 +664,35 @@ mosk_dun02
 mosk_dun03
 force_4-1
 force_5-1
+06guild_r
+06guild_01
+06guild_02
+06guild_03
+06guild_04
+06guild_05
+06guild_06
+06guild_07
+06guild_08
+z_agit
+que_temsky
+itemmall
+bossnia_01
+bossnia_02
+bossnia_03
+bossnia_04
+schg_cas01
+schg_cas02
+schg_cas03
+schg_cas04
+schg_cas05
+sch_gld
+cave
+moc_fild20
+moc_fild21
+moc_fild22
+que_ba
+que_moc_16
+que_moon
 
 // Only add maps under this line if they are not standard maps!
 

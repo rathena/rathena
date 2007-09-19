@@ -26,3 +26,8 @@
 21,nguild_gef,Novice Castle 2,Agit_N02,2
 22,nguild_pay,Novice Castle 3,Agit_N03,2
 23,nguild_prt,Novice Castle 4,Agit_N04,2
+//24,schg_cas01,Schwaltzvalt Castle,Agit_sc01,1			// kRO : Schwaltzvalt Castle
+//25,schg_cas02,Schwaltzvalt Castle,Agit_sc02,1			// kRO : Schwaltzvalt Castle
+//26,schg_cas03,Schwaltzvalt Castle,Agit_sc03,1			// kRO : Schwaltzvalt Castle
+//27,schg_cas04,Schwaltzvalt Castle,Agit_sc04,1			// kRO : Schwaltzvalt Castle
+//28,schg_cas05,Schwaltzvalt Castle,Agit_sc05,1			// kRO : Schwaltzvalt Castle

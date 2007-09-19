@@ -28,6 +28,10 @@
 
 ========================
 09/18
+	* Rev. 11241 Added new maps from today's kRO Sakray patch to the mapcache. [L0ne_W0lf]
+	- Mapcache still uses OLD Morroc and Morroc Ruins map data. Sunken Morroc will have to wait.
+	- Added several 'cloned' maps to the mapcache and map_index.
+	* Updated castles database with data for the 5 new castles.
 	* Rev. 11240 Corrected viewid for Scarf. Thanks to $ephiroth. [L0ne_W0lf]
 09/17
 	* Some more drop rate updates [Playtester]

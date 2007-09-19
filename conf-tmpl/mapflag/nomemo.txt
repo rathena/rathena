@@ -434,6 +434,11 @@ nguild_alde	mapflag	nomemo
 nguild_gef	mapflag	nomemo
 nguild_pay	mapflag	nomemo
 nguild_prt	mapflag	nomemo
+schg_cas01	mapflag	nomemo
+schg_cas02	mapflag	nomemo
+schg_cas03	mapflag	nomemo
+schg_cas04	mapflag	nomemo
+schg_cas05	mapflag	nomemo
 //To Protect Novices Guilds from level abusers
 n_castle	mapflag	nomemo
 

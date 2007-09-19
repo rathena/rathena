@@ -30,6 +30,11 @@ prtg_cas02	mapflag	nowarp
 prtg_cas03	mapflag	nowarp
 prtg_cas04	mapflag	nowarp
 prtg_cas05	mapflag	nowarp
+schg_cas01	mapflag	nowarp
+schg_cas02	mapflag	nowarp
+schg_cas03	mapflag	nowarp
+schg_cas04	mapflag	nowarp
+schg_cas05	mapflag	nowarp
 n_castle	mapflag	nowarp
 nguild_alde	mapflag	nowarp
 nguild_gef	mapflag	nowarp

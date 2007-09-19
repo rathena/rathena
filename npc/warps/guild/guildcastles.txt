@@ -7,8 +7,8 @@
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
-//= Warp Points for Al de Baran, Payon, Prontera & Geffen
-//= Guild Castles
+//= Warp Points for Al de Baran, Payon, Prontera, Geffen,
+//= and Juno Guild Castles
 //===== Additional Comments: =================================
 //= Split off npc_warp.txt
 //= fixed aldg504-1 warp [Lupus]
@@ -16,6 +16,7 @@
 //= 2.1 Fixed some warps positions [Yor]
 //= 2.2 Changed all breaks to end as per the new script engine. [Skotlex]
 //= 2.3 Removed 2nd entrance to Novice Castle Geffen [Lupus]
+//= 2.4 Added Warps Juno and it's new Castle Satelite map.
 //============================================================
 
 
@@ -395,6 +396,10 @@ prtg_cas05,53,246,0	warp	prtg504	1,1,prtg_cas05,199,13
 prtg_cas05,58,7,0	warp	prtg506	1,1,prtg_cas05,253,290
 prtg_cas05,66,225,0	warp	prtg503	1,1,prtg_cas05,260,92
 prtg_cas05,76,242,0	warp	prtg502	1,1,prtg_cas05,288,13
+
+// Episode 12: WoE:SE Schwaltzvalt
+yuno,23,127,0	warp	schg001	1,1,sch_gld,260,92
+sch_gld,355,89,0	warp	schg002	1,1,yuno,26,127
 
 //==================  4 Novices Guild Castles =============================
 //Novices Guild: Al de Baran Guild Castles Map
