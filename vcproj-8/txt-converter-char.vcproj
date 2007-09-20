@@ -324,6 +324,22 @@
 			<File
 				RelativePath="..\src\char_sql\char.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)_sql.obj"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)_sql.obj"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\char_sql\char.h"
@@ -332,6 +348,22 @@
 			<File
 				RelativePath="..\src\char_sql\int_guild.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)_sql.obj"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)_sql.obj"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\char_sql\int_guild.h"
@@ -340,6 +372,22 @@
 			<File
 				RelativePath="..\src\char_sql\int_party.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)_sql.obj"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)_sql.obj"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\char_sql\int_party.h"
@@ -348,6 +396,22 @@
 			<File
 				RelativePath="..\src\char_sql\int_pet.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)_sql.obj"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)_sql.obj"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\char_sql\int_pet.h"
@@ -356,6 +420,22 @@
 			<File
 				RelativePath="..\src\char_sql\int_storage.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)_sql.obj"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)_sql.obj"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\char_sql\int_storage.h"
@@ -364,6 +444,22 @@
 			<File
 				RelativePath="..\src\char_sql\inter.c"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)_sql.obj"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)_sql.obj"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="..\src\char_sql\inter.h"
