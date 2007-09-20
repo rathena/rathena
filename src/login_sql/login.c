@@ -449,20 +449,6 @@ int mmo_auth_new(struct mmo_account* account, char sex)
 
 	ShowInfo("New account: userid='%s' passwd='%s' sex='%c'\n", account->userid, account->passwd, TOUPPER(sex));
 
-	if( Sql_LastInsertId(sql_handle) < START_ACCOUNT_NUM )
-	{// Invalid Account ID! Must update it.
-		uint64 id = Sql_LastInsertId(sql_handle);
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `%s`='%d' WHERE `%s`='%lld'", login_db, login_db_account_id, START_ACCOUNT_NUM, login_db_account_id, id) )
-		{
-			Sql_ShowDebug(sql_handle);
-			ShowError("New account '%s' has an invalid account ID [%lld] which could not be updated (account_id must be %d or higher).", account->userid, id, START_ACCOUNT_NUM);
-			//Just delete it and fail.
-			if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `%s`='%lld'", login_db, login_db_account_id, id) )
-				Sql_ShowDebug(sql_handle);
-			return 1;
-		}
-		ShowNotice("Updated New account '%s' ID %d->%d (account_id must be %d or higher).", account->userid, id, START_ACCOUNT_NUM, START_ACCOUNT_NUM);
-	}
 	if( DIFF_TICK(tick, new_reg_tick) > 0 )
 	{// Update the registration check.
 		num_regs = 0;
@@ -524,7 +510,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 	// Account creation with _M/_F
 	if( login_config.new_account_flag )
 	{
-		if( len > 2 && strnlen(account->passwd, NAME_LENGTH) >= 4 && // valid user and password lengths
+		if( len > 2 && strnlen(account->passwd, NAME_LENGTH) > 0 && // valid user and password lengths
 			account->passwdenc == 0 && // unencoded password
 			account->userid[len-2] == '_' && memchr("FfMm", (unsigned char)account->userid[len-1], 4) ) // _M/_F suffix
 		{
@@ -545,7 +531,6 @@ int mmo_auth(struct mmo_account* account, int fd)
 		login_db_account_id, login_db_user_pass, login_db_level,
 		login_db, login_db_userid, (login_config.case_sensitive ? "BINARY" : ""), esc_userid) )
 		Sql_ShowDebug(sql_handle);
-	//login {0-account_id/1-user_pass/2-lastlogin/3-sex/4-connect_untl/5-ban_until/6-state/7-level}
 
 	if( Sql_NumRows(sql_handle) == 0 ) // no such entry
 	{
@@ -556,26 +541,16 @@ int mmo_auth(struct mmo_account* account, int fd)
 
 	Sql_NextRow(sql_handle); //TODO: error checking?
 
-	Sql_GetData(sql_handle, 0, &data, &len);
-	account->account_id = atoi(data);
-
-	Sql_GetData(sql_handle, 1, &data, &len);
+	Sql_GetData(sql_handle, 0, &data, NULL); account->account_id = atoi(data);
+	Sql_GetData(sql_handle, 1, &data, &len); safestrncpy(password, data, sizeof(password));
+	Sql_GetData(sql_handle, 2, &data, NULL); safestrncpy(account->lastlogin, data, sizeof(account->lastlogin));
+	Sql_GetData(sql_handle, 3, &data, NULL); account->sex = (*data == 'S' ? 2 : *data == 'M' ? 1 : 0);
+	Sql_GetData(sql_handle, 4, &data, NULL); connect_until = atol(data);
+	Sql_GetData(sql_handle, 5, &data, NULL); ban_until_time = atol(data);
+	Sql_GetData(sql_handle, 6, &data, NULL); state = atoi(data);
+	Sql_GetData(sql_handle, 7, &data, NULL); account->level = atoi(data);
 	if( len > sizeof(password) - 1 )
-	{
-#if defined(DEBUG)
 		ShowDebug("mmo_auth: password buffer is too small (len=%u,buflen=%u)\n", len, sizeof(password));
-#endif
-		len = sizeof(password) - 1;
-	}
-	memcpy(password, data, len);
-	password[len] = '\0';
-
-	Sql_GetData(sql_handle, 2, &data, &len); safestrncpy(account->lastlogin, data, sizeof(account->lastlogin));
-	Sql_GetData(sql_handle, 3, &data, &len); account->sex = (*data == 'S' ? 2 : *data == 'M' ? 1 : 0);
-	Sql_GetData(sql_handle, 4, &data, &len); connect_until = atol(data);
-	Sql_GetData(sql_handle, 5, &data, &len); ban_until_time = atol(data);
-	Sql_GetData(sql_handle, 6, &data, &len); state = atoi(data);
-	Sql_GetData(sql_handle, 7, &data, &len); account->level = atoi(data);
 	if( account->level > 99 )
 		account->level = 99;
 
@@ -596,53 +571,13 @@ int mmo_auth(struct mmo_account* account, int fd)
 	if( connect_until != 0 && connect_until < time(NULL) )
 		return 2; // 2 = This ID is expired
 
-	if( ban_until_time != 0 )
-	{// account is banned
-		if( ban_until_time > time(NULL) )// still banned
-			return 6; // 6 = Your are Prohibited to log in until %s
+	if( ban_until_time != 0 && ban_until_time > time(NULL) )
+		return 6; // 6 = Your are Prohibited to log in until %s
 
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `ban_until`='0' %s WHERE `%s`= '%d'",
-			login_db, (state == 7 ? ",state='0'" : ""), login_db_account_id, account->account_id) )
-			Sql_ShowDebug(sql_handle);
-	}
-
-	switch( state )
+	if( state )
 	{
-	case -3: //id is banned
-	case -2: //dynamic ban
-		return state;
-	}
-
-	switch( state )
-	{// packet 0x006a value + 1
-	case 0:
-		break;
-	case 1: // 0 = Unregistered ID
-	case 2: // 1 = Incorrect Password
-	case 3: // 2 = This ID is expired
-	case 4: // 3 = Rejected from Server
-	case 5: // 4 = You have been blocked by the GM Team
-	case 6: // 5 = Your Game's EXE file is not the latest version
-	case 7: // 6 = Your are Prohibited to log in until %s
-	case 8: // 7 = Server is jammed due to over populated
-	case 9: // 8 = No more accounts may be connected from this company
-	case 10: // 9 = MSI_REFUSE_BAN_BY_DBA
-	case 11: // 10 = MSI_REFUSE_EMAIL_NOT_CONFIRMED
-	case 12: // 11 = MSI_REFUSE_BAN_BY_GM
-	case 13: // 12 = MSI_REFUSE_TEMP_BAN_FOR_DBWORK
-	case 14: // 13 = MSI_REFUSE_SELF_LOCK
-	case 15: // 14 = MSI_REFUSE_NOT_PERMITTED_GROUP
-	case 16: // 15 = MSI_REFUSE_NOT_PERMITTED_GROUP
-	case 100: // 99 = This ID has been totally erased
-	case 101: // 100 = Login information remains at %s.
-	case 102: // 101 = Account has been locked for a hacking investigation. Please contact the GM Team for more information
-	case 103: // 102 = This account has been temporarily prohibited from login due to a bug-related investigation
-	case 104: // 103 = This character is being deleted. Login is temporarily unavailable for the time being
-	case 105: // 104 = Your spouse character is being deleted. Login is temporarily unavailable for the time being
-		ShowInfo("Auth Error #%d\n", state);
+		ShowInfo("Connection refused (account: %s, pass: %s, state: %d, ip: %s)\n", account->userid, account->passwd, state, ip);
 		return state - 1;
-	default:
-		return 99; // 99 = ID has been totally erased
 	}
 
 	if( login_config.online_check )
@@ -668,7 +603,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 	if( account->sex != 2 && account->account_id < START_ACCOUNT_NUM )
 		ShowWarning("Account %s has account id %d! Account IDs must be over %d to work properly!\n", account->userid, account->account_id, START_ACCOUNT_NUM);
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `lastlogin` = NOW(), `logincount`=`logincount`+1, `last_ip`='%s'  WHERE `%s` = '%d'",
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `lastlogin` = NOW(), `logincount`=`logincount`+1, `last_ip`='%s', `ban_until`='0', `state`='0' WHERE `%s` = '%d'",
 		login_db, ip, login_db_account_id, account->account_id) )
 		Sql_ShowDebug(sql_handle);
 
@@ -704,7 +639,7 @@ int parse_fromchar(int fd)
 	char ip[16];
 	ip2str(ipl, ip);
 
-	ARR_FIND(0, MAX_SERVERS, id, server_fd[id] == fd);
+	ARR_FIND( 0, MAX_SERVERS, id, server_fd[id] == fd );
 	if( id == MAX_SERVERS )
 	{// not a char server
 		set_eof(fd);
@@ -1442,31 +1377,29 @@ int parse_login(int fd)
 				if (login_config.log_login)
 				{
 					const char* error;
-					switch ((result + 1)) {
-					case  -2: error = "Account banned."; break; //-3 = Account Banned
-					case  -1: error = "dynamic ban (ip and account)."; break; //-2 = Dynamic Ban
-					case   1: error = "Unregistered ID."; break; // 0 = Unregistered ID
-					case   2: error = "Incorrect Password."; break; // 1 = Incorrect Password
-					case   3: error = "Account Expired."; break; // 2 = This ID is expired
-					case   4: error = "Rejected from server."; break; // 3 = Rejected from Server
-					case   5: error = "Blocked by GM."; break; // 4 = You have been blocked by the GM Team
-					case   6: error = "Not latest game EXE."; break; // 5 = Your Game's EXE file is not the latest version
-					case   7: error = "Banned."; break; // 6 = Your are Prohibited to log in until %s
-					case   8: error = "Server Over-population."; break; // 7 = Server is jammed due to over populated
-					case   9: error = "Account limit from company"; break; // 8 = No more accounts may be connected from this company
-					case  10: error = "Ban by DBA"; break; // 9 = MSI_REFUSE_BAN_BY_DBA
-					case  11: error = "Email not confirmed"; break; // 10 = MSI_REFUSE_EMAIL_NOT_CONFIRMED
-					case  12: error = "Ban by GM"; break; // 11 = MSI_REFUSE_BAN_BY_GM
-					case  13: error = "Working in DB"; break; // 12 = MSI_REFUSE_TEMP_BAN_FOR_DBWORK
-					case  14: error = "Self Lock"; break; // 13 = MSI_REFUSE_SELF_LOCK
-					case  15: error = "Not Permitted Group"; break; // 14 = MSI_REFUSE_NOT_PERMITTED_GROUP
-					case  16: error = "Not Permitted Group"; break; // 15 = MSI_REFUSE_NOT_PERMITTED_GROUP
-					case 100: error = "Account gone."; break; // 99 = This ID has been totally erased
-					case 101: error = "Login info remains."; break; // 100 = Login information remains at %s
-					case 102: error = "Hacking investigation."; break; // 101 = Account has been locked for a hacking investigation. Please contact the GM Team for more information
-					case 103: error = "Bug investigation."; break; // 102 = This account has been temporarily prohibited from login due to a bug-related investigation
-					case 104: error = "Deleting char."; break; // 103 = This character is being deleted. Login is temporarily unavailable for the time being
-					case 105: error = "Deleting spouse char."; break; // 104 = This character is being deleted. Login is temporarily unavailable for the time being
+					switch( result ) {
+					case   0: error = "Unregistered ID."; break; // 0 = Unregistered ID
+					case   1: error = "Incorrect Password."; break; // 1 = Incorrect Password
+					case   2: error = "Account Expired."; break; // 2 = This ID is expired
+					case   3: error = "Rejected from server."; break; // 3 = Rejected from Server
+					case   4: error = "Blocked by GM."; break; // 4 = You have been blocked by the GM Team
+					case   5: error = "Not latest game EXE."; break; // 5 = Your Game's EXE file is not the latest version
+					case   6: error = "Banned."; break; // 6 = Your are Prohibited to log in until %s
+					case   7: error = "Server Over-population."; break; // 7 = Server is jammed due to over populated
+					case   8: error = "Account limit from company"; break; // 8 = No more accounts may be connected from this company
+					case   9: error = "Ban by DBA"; break; // 9 = MSI_REFUSE_BAN_BY_DBA
+					case  10: error = "Email not confirmed"; break; // 10 = MSI_REFUSE_EMAIL_NOT_CONFIRMED
+					case  11: error = "Ban by GM"; break; // 11 = MSI_REFUSE_BAN_BY_GM
+					case  12: error = "Working in DB"; break; // 12 = MSI_REFUSE_TEMP_BAN_FOR_DBWORK
+					case  13: error = "Self Lock"; break; // 13 = MSI_REFUSE_SELF_LOCK
+					case  14: error = "Not Permitted Group"; break; // 14 = MSI_REFUSE_NOT_PERMITTED_GROUP
+					case  15: error = "Not Permitted Group"; break; // 15 = MSI_REFUSE_NOT_PERMITTED_GROUP
+					case  99: error = "Account gone."; break; // 99 = This ID has been totally erased
+					case 100: error = "Login info remains."; break; // 100 = Login information remains at %s
+					case 101: error = "Hacking investigation."; break; // 101 = Account has been locked for a hacking investigation. Please contact the GM Team for more information
+					case 102: error = "Bug investigation."; break; // 102 = This account has been temporarily prohibited from login due to a bug-related investigation
+					case 103: error = "Deleting char."; break; // 103 = This character is being deleted. Login is temporarily unavailable for the time being
+					case 104: error = "Deleting spouse char."; break; // 104 = This character is being deleted. Login is temporarily unavailable for the time being
 					default : error = "Unknown Error."; break;
 					}
 
@@ -1496,21 +1429,8 @@ int parse_login(int fd)
 							Sql_ShowDebug(sql_handle);
 					}
 				}
-				else if( result == -2 )
-				{// dynamic banned - add ip to ban list.
-					uint8* p = (uint8*)&ipl;
-					if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `ipbanlist`(`list`,`btime`,`rtime`,`reason`) VALUES ('%d.%d.%d.*', NOW() , NOW() +  INTERVAL 1 MONTH ,'Dynamic banned user id : %s')", p[3], p[2], p[1], esc_userid) )
-						Sql_ShowDebug(sql_handle);
-					result = -3;
-				}
-				else if( result == 6 )
-				{// not lastet version ..
-					//result = 5;
-				}
 
-				//cannot connect login failed
 				WFIFOHEAD(fd,23);
-				memset(WFIFOP(fd,0), '\0', 23);
 				WFIFOW(fd,0) = 0x6a;
 				WFIFOB(fd,2) = (uint8)result;
 				if( result == 6 )
@@ -1529,6 +1449,8 @@ int parse_login(int fd)
 						strftime(WFIFOP(fd,3), 20, login_config.date_format, localtime(&ban_until_time));
 					}
 				}
+				else
+					memset(WFIFOP(fd,0), '\0', 20);
 				WFIFOSET(fd,23);
 			}
 
