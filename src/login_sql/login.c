@@ -347,6 +347,62 @@ void mmo_db_close(void)
 		do_close(login_fd);
 }
 
+
+//--------------------------------------------------------------------
+// Packet send to all char-servers, except one (wos: without our self)
+//--------------------------------------------------------------------
+int charif_sendallwos(int sfd, uint8* buf, size_t len)
+{
+	int i, c;
+
+	for( i = 0, c = 0; i < MAX_SERVERS; ++i )
+	{
+		int fd = server_fd[i];
+		if( session_isValid(fd) && fd != sfd )
+		{
+			WFIFOHEAD(fd,len);
+			memcpy(WFIFOP(fd,0), buf, len);
+			WFIFOSET(fd,len);
+			++c;
+		}
+	}
+
+	return c;
+}
+
+
+//-----------------------------------------------------
+// encrypted/unencrypted password check
+//-----------------------------------------------------
+bool check_encrypted(const char* str1, const char* str2, const char* passwd)
+{
+	char md5str[64], md5bin[32];
+
+	snprintf(md5str, sizeof(md5str), "%s%s", str1, str2);
+	md5str[sizeof(md5str)-1] = '\0';
+	MD5_String2binary(md5str, md5bin);
+
+	return (0==memcmp(passwd, md5bin, 16));
+}
+
+bool check_password(struct login_session_data* ld, int passwdenc, const char* passwd, const char* refpass)
+{	
+	if(passwdenc == 0)
+	{
+		return (0==strcmp(passwd, refpass));
+	}
+	else if (ld)
+	{
+		// password mode set to 1 -> (md5key, refpass) enable with <passwordencrypt></passwordencrypt>
+		// password mode set to 2 -> (refpass, md5key) enable with <passwordencrypt2></passwordencrypt2>
+		
+		return ((passwdenc&0x01) && check_encrypted(ld->md5key, refpass, passwd)) ||
+		       ((passwdenc&0x02) && check_encrypted(refpass, ld->md5key, passwd));
+	}
+	return false;
+}
+
+
 //-----------------------------------------------------
 // Make new account
 //-----------------------------------------------------
@@ -417,61 +473,6 @@ int mmo_auth_new(struct mmo_account* account, char sex)
 }
 
 
-//--------------------------------------------------------------------
-// Packet send to all char-servers, except one (wos: without our self)
-//--------------------------------------------------------------------
-int charif_sendallwos(int sfd, uint8* buf, size_t len)
-{
-	int i, c;
-
-	for( i = 0, c = 0; i < MAX_SERVERS; ++i )
-	{
-		int fd = server_fd[i];
-		if( session_isValid(fd) && fd != sfd )
-		{
-			WFIFOHEAD(fd,len);
-			memcpy(WFIFOP(fd,0), buf, len);
-			WFIFOSET(fd,len);
-			++c;
-		}
-	}
-
-	return c;
-}
-
-
-//-----------------------------------------------------
-// encrypted/unencrypted password check
-//-----------------------------------------------------
-bool check_encrypted(const char* str1, const char* str2, const char* passwd)
-{
-	char md5str[64], md5bin[32];
-
-	snprintf(md5str, sizeof(md5str), "%s%s", str1, str2);
-	md5str[sizeof(md5str)-1] = '\0';
-	MD5_String2binary(md5str, md5bin);
-
-	return (0==memcmp(passwd, md5bin, 16));
-}
-
-bool check_password(struct login_session_data* ld, int passwdenc, const char* passwd, const char* refpass)
-{	
-	if(passwdenc == 0)
-	{
-		return (0==strcmp(passwd, refpass));
-	}
-	else if (ld)
-	{
-		// password mode set to 1 -> (md5key, refpass) enable with <passwordencrypt></passwordencrypt>
-		// password mode set to 2 -> (refpass, md5key) enable with <passwordencrypt2></passwordencrypt2>
-		
-		return ((passwdenc&0x01) && check_encrypted(ld->md5key, refpass, passwd)) ||
-		       ((passwdenc&0x02) && check_encrypted(refpass, ld->md5key, passwd));
-	}
-	return false;
-}
-
-
 //-----------------------------------------------------
 // Check/authentication of a connection
 //-----------------------------------------------------
@@ -524,7 +525,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 	if( login_config.new_account_flag )
 	{
 		if( len > 2 && strnlen(account->passwd, NAME_LENGTH) >= 4 && // valid user and password lengths
-			account->passwdenc == 0 &&// unencoded password
+			account->passwdenc == 0 && // unencoded password
 			account->userid[len-2] == '_' && memchr("FfMm", (unsigned char)account->userid[len-1], 4) ) // _M/_F suffix
 		{
 			int result;
@@ -703,9 +704,7 @@ int parse_fromchar(int fd)
 	char ip[16];
 	ip2str(ipl, ip);
 
-	for( id = 0; id < MAX_SERVERS; ++id )
-		if( server_fd[id] == fd )
-			break;
+	ARR_FIND(0, MAX_SERVERS, id, server_fd[id] == fd);
 	if( id == MAX_SERVERS )
 	{// not a char server
 		set_eof(fd);
@@ -748,16 +747,15 @@ int parse_fromchar(int fd)
 			if( RFIFOREST(fd) < 19 )
 				return 0;
 		{
-			int account_id;
-			account_id = RFIFOL(fd,2); // speed up
+			uint32 account_id = RFIFOL(fd,2);
 			for( i = 0; i < AUTH_FIFO_SIZE; ++i )
 			{
-				if( auth_fifo[i].account_id == account_id &&
-					auth_fifo[i].login_id1  == RFIFOL(fd,6) &&
-					auth_fifo[i].login_id2  == RFIFOL(fd,10) &&
-					auth_fifo[i].sex        == RFIFOB(fd,14) &&
-					auth_fifo[i].ip         == ntohl(RFIFOL(fd,15)) &&
-					!auth_fifo[i].delflag)
+				if( auth_fifo[i].account_id == RFIFOL(fd,2) &&
+				    auth_fifo[i].login_id1  == RFIFOL(fd,6) &&
+				    auth_fifo[i].login_id2  == RFIFOL(fd,10) &&
+				    auth_fifo[i].sex        == RFIFOB(fd,14) &&
+				    auth_fifo[i].ip         == ntohl(RFIFOL(fd,15)) &&
+				    !auth_fifo[i].delflag)
 				{
 					auth_fifo[i].delflag = 1;
 					break;
@@ -766,11 +764,9 @@ int parse_fromchar(int fd)
 
 			if( i != AUTH_FIFO_SIZE && account_id > 0 )
 			{// send ack 
-				uint32 connect_until_time = 0;
+				uint32 connect_until_time;
 				char email[40];
 
-				memset(email, 0, sizeof(email));
-				account_id = RFIFOL(fd,2);
 				if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `email`,`connect_until` FROM `%s` WHERE `%s`='%d'", login_db, login_db_account_id, account_id) )
 					Sql_ShowDebug(sql_handle);
 				if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
@@ -778,21 +774,19 @@ int parse_fromchar(int fd)
 					char* data = NULL;
 					size_t len = 0;
 
-					Sql_GetData(sql_handle, 0, &data, &len);
+					Sql_GetData(sql_handle, 0, &data, &len); safestrncpy(email, data, sizeof(email));
+					Sql_GetData(sql_handle, 1, &data, NULL); connect_until_time = (uint32)strtoul(data, NULL, 10);
 					if( len > sizeof(email) )
-					{
-#if defined(DEBUG)
 						ShowDebug("parse_fromchar:0x2712: email is too long (len=%u,maxlen=%u)\n", len, sizeof(email));
-#endif
-						len = sizeof(email);
-					}
-					memcpy(email, data, len);
-
-					Sql_GetData(sql_handle, 1, &data, NULL);
-					connect_until_time = (uint32)strtoul(data, NULL, 10);
 
 					Sql_FreeResult(sql_handle);
 				}
+				else
+				{
+					memset(email, 0, sizeof(email));
+					connect_until_time = 0;
+				}
+
 				WFIFOHEAD(fd,51);
 				WFIFOW(fd,0) = 0x2713;
 				WFIFOL(fd,2) = account_id;
@@ -802,11 +796,13 @@ int parse_fromchar(int fd)
 				WFIFOSET(fd,51);
 			}
 			else
-			{
+			{// authentification not found
 				WFIFOHEAD(fd,51);
 				WFIFOW(fd,0) = 0x2713;
 				WFIFOL(fd,2) = account_id;
 				WFIFOB(fd,6) = 1;
+				// It is unnecessary to send email
+				// It is unnecessary to send validity date of the account
 				WFIFOSET(fd,51);
 			}
 
@@ -828,7 +824,7 @@ int parse_fromchar(int fd)
 					Sql_ShowDebug(sql_handle);
 			}
 			// send some answer
-			WFIFOHEAD(fd,6);
+			WFIFOHEAD(fd,2);
 			WFIFOW(fd,0) = 0x2718;
 			WFIFOSET(fd,2);
 
@@ -1177,7 +1173,7 @@ int parse_fromchar(int fd)
 				struct online_login_data *p;
 				int aid;
 				uint32 i, users;
-				online_db->foreach(online_db,online_db_setoffline,id); //Set all chars from this char-server offline first
+				online_db->foreach(online_db, online_db_setoffline, id); //Set all chars from this char-server offline first
 				users = RFIFOW(fd,4);
 				for (i = 0; i < users; i++) {
 					aid = RFIFOL(fd,6+i*4);
@@ -1245,12 +1241,12 @@ int parse_fromchar(int fd)
 
 		case 0x2737: //Request to set all offline.
 			ShowInfo("Setting accounts from char-server %d offline.\n", id);
-			online_db->foreach(online_db,online_db_setoffline,id);
+			online_db->foreach(online_db, online_db_setoffline, id);
 			RFIFOSKIP(fd,2);
 		break;
 
 		default:
-			ShowError("parse_fromchar: Unknown packet 0x%x from a char-server! Disconnecting!\n", RFIFOW(fd,0));
+			ShowError("parse_fromchar: Unknown packet 0x%x from a char-server! Disconnecting!\n", command);
 			set_eof(fd);
 			return 0;
 		} // switch
@@ -1602,7 +1598,7 @@ int parse_login(int fd)
 				memset(&server[account.account_id], 0, sizeof(struct mmo_char_server));
 				server[account.account_id].ip = ntohl(RFIFOL(fd,54));
 				server[account.account_id].port = ntohs(RFIFOW(fd,58));
-				memcpy(server[account.account_id].name, server_name, 20);
+				safestrncpy(server[account.account_id].name, server_name, sizeof(server[account.account_id].name));
 				server[account.account_id].users = 0;
 				server[account.account_id].maintenance = RFIFOW(fd,82);
 				server[account.account_id].new_ = RFIFOW(fd,84);
@@ -1741,8 +1737,8 @@ int login_lan_config_read(const char *lancfgName)
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\n' || line[1] == '\n')
 			continue;
 
-		if(sscanf(line,"%[^:]: %[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4) != 4) {
-
+		if(sscanf(line,"%[^:]: %[^:]:%[^:]:%[^\r\n]", w1, w2, w3, w4) != 4)
+		{
 			ShowWarning("Error syntax of configuration file %s in line %d.\n", lancfgName, line_num);
 			continue;
 		}
@@ -1807,11 +1803,11 @@ int login_config_read(const char* cfgName)
 		remove_control_chars(w1);
 		remove_control_chars(w2);
 
-		if(!strcmpi(w1,"timestamp_format")) {
+		if(!strcmpi(w1,"timestamp_format"))
 			strncpy(timestamp_format, w2, 20);
-		} else if(!strcmpi(w1,"stdout_with_ansisequence")) {
+		else if(!strcmpi(w1,"stdout_with_ansisequence"))
 			stdout_with_ansisequence = config_switch(w2);
-		} else if(!strcmpi(w1,"console_silent")) {
+		else if(!strcmpi(w1,"console_silent")) {
 			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
 		}
@@ -1825,18 +1821,18 @@ int login_config_read(const char* cfgName)
 			login_config.login_port = (uint16)atoi(w2);
 			ShowStatus("set login_port : %s\n",w2);
 		}
-		else if (!strcmpi(w1, "log_login"))
+		else if(!strcmpi(w1, "log_login"))
 			login_config.log_login = config_switch(w2);
 
-		else if (!strcmpi(w1, "ipban"))
+		else if(!strcmpi(w1, "ipban"))
 			login_config.ipban = config_switch(w2);
-		else if (!strcmpi(w1, "dynamic_pass_failure_ban"))
+		else if(!strcmpi(w1, "dynamic_pass_failure_ban"))
 			login_config.dynamic_pass_failure_ban = config_switch(w2);
-		else if (!strcmpi(w1, "dynamic_pass_failure_ban_interval"))
+		else if(!strcmpi(w1, "dynamic_pass_failure_ban_interval"))
 			login_config.dynamic_pass_failure_ban_interval = atoi(w2);
-		else if (!strcmpi(w1, "dynamic_pass_failure_ban_limit"))
+		else if(!strcmpi(w1, "dynamic_pass_failure_ban_limit"))
 			login_config.dynamic_pass_failure_ban_limit = atoi(w2);
-		else if (!strcmpi(w1, "dynamic_pass_failure_ban_duration"))
+		else if(!strcmpi(w1, "dynamic_pass_failure_ban_duration"))
 			login_config.dynamic_pass_failure_ban_duration = atoi(w2);
 
 		else if(!strcmpi(w1, "new_account"))
@@ -1865,9 +1861,9 @@ int login_config_read(const char* cfgName)
 			login_config.use_dnsbl = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "dnsbl_servers"))
 			safestrncpy(login_config.dnsbl_servs, w2, sizeof(login_config.dnsbl_servs));
-		else if (!strcmpi(w1, "ip_sync_interval"))
+		else if(!strcmpi(w1, "ip_sync_interval"))
 			login_config.ip_sync_interval = (unsigned int)1000*60*atoi(w2); //w2 comes in minutes.
-		else if (!strcmpi(w1, "import"))
+		else if(!strcmpi(w1, "import"))
 			login_config_read(w2);
 	}
 	fclose(fp);
@@ -1979,9 +1975,11 @@ void set_server_type(void)
 	SERVER_TYPE = ATHENA_SERVER_LOGIN;
 }
 
+//------------------------------
+// Login server initialization
+//------------------------------
 int do_init(int argc, char** argv)
 {
-	// initialize login server
 	int i;
 
 	login_set_defaults();
