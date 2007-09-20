@@ -3,6 +3,23 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/09/20
+	* Merged the tmpsql branch: [FlavioJS]
+	- Abstraction for the sql code (sql.c/h).
+	- New configure script and makefiles.
+	- Restored txt zeny logging code. (r10814)
+	- Rewrote mapserver's sql code - itemdb, mobdb, mapreg, logs. (r10814)
+	- Fixed a precedence issue (&& and ) in char_sql/char.c. (r10833)
+	- Improved db reading code a bit for consistency. (r11077)
+	- Added separate atcommand for mail deletion. (r11077)
+	- Corrected a few messages that said "new" instead of "unread". (r11077)
+	- Broadcast (*) messages now use "*" as the target's name (not ""). (r11077)
+	- Moved StringBuf code from utils.c/h to strlib.c/h. (r11084 r11117)
+	- Some misc login server cleanups (reformatting etc). (r11136)
+	- Corrected/modified some header entries. (r11141 r11147 11148)
+	- Adjusted VS project files. (r11147)
+	- Adjusted the way the sql charserver does item saving. (r11192)
+	- Corrected usage of reserved keyword 'friend' in mmo.h. (r11192)
 2007/09/17
 	* Several skills with a splash area (except ground based ones) will now hit
 	  Ice-walls when casted by mobs.

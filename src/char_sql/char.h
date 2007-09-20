@@ -4,37 +4,13 @@
 #ifndef _CHAR_SQL_H_
 #define _CHAR_SQL_H_
 
-#include "../common/core.h"
-#include "../common/socket.h"
-#include "../common/timer.h"
-#include "../common/mmo.h"
-#include "../common/version.h"
-#include "../common/db.h"
-#include "../common/mapindex.h"
-
-#include "inter.h"
-#include "int_pet.h"
-#include "int_guild.h"
-#include "int_party.h"
-#include "int_storage.h"
-#include "itemdb.h"
+struct mmo_charstatus;
 
 #define START_CHAR_NUM 150000
 #define MAX_MAP_SERVERS 30
 
 #define DEFAULT_AUTOSAVE_INTERVAL 300*1000
 
-struct itemtmp {
-	int flag;//checked = 1 else 0
-	int id;
-	short nameid;
-	short amount;
-	unsigned short equip;
-	char identify;
-	char refine;
-	char attribute;
-	short card[4];
-};
 enum {
 	TABLE_INVENTORY,
 	TABLE_CART,
@@ -42,7 +18,7 @@ enum {
 	TABLE_GUILD_STORAGE,
 };
 
-int memitemdata_to_sql(struct itemtmp mapitem[], int count, int char_id,int tableswitch);
+int memitemdata_to_sql(const struct item items[], int max, int id, int tableswitch);
 
 int mapif_sendall(unsigned char *buf,unsigned int len);
 int mapif_sendallwos(int fd,unsigned char *buf,unsigned int len);

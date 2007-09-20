@@ -1,10 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "../common/cbasetypes.h"
 #include "../common/mmo.h"
 #include "../common/malloc.h"
@@ -16,6 +12,10 @@
 #include "inter.h"
 #include "int_storage.h"
 #include "int_guild.h"
+
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 char guild_txt[1024] = "save/guild.txt";
 char castle_txt[1024] = "save/castle.txt";

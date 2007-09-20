@@ -6,6 +6,7 @@
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
+#include "../common/utils.h"
 
 #include "log.h"
 #include "clif.h"

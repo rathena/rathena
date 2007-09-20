@@ -4,9 +4,8 @@
 #ifndef	_MMO_H_
 #define	_MMO_H_
 
-#include <time.h>
 #include "cbasetypes.h"
-#include "utils.h" // _WIN32
+#include <time.h>
 
 #define FIFOSIZE_SERVERLINK	256*1024
 
@@ -179,7 +178,7 @@ struct s_homunculus {	//[orn]
 	int luk ;
 };
 
-struct friend {
+struct s_friend {
 	int account_id;
 	int char_id;
 	char name[NAME_LENGTH];
@@ -229,7 +228,7 @@ struct mmo_charstatus {
 	struct item inventory[MAX_INVENTORY],cart[MAX_CART];
 	struct skill skill[MAX_SKILL];
 
-	struct friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
+	struct s_friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
 #ifdef HOTKEY_SAVING
 	struct hotkey hotkeys[HOTKEY_SAVING];
 #endif

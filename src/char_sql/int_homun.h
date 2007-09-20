@@ -4,6 +4,8 @@
 #ifndef _INT_HOMUN_SQL_H_
 #define _INT_HOMUN_SQL_H_
 
+struct s_homunculus;
+
 int inter_homunculus_sql_init(void);
 void inter_homunculus_sql_final(void);
 int mapif_save_homunculus(struct s_homunculus *hd);

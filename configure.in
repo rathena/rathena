@@ -1,0 +1,295 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_INIT(eAthena)
+AC_REVISION($Revision$)
+AC_PREREQ([2.61])
+AC_CONFIG_SRCDIR([src/common/cbasetypes.h])
+AC_CONFIG_FILES([Makefile src/common/Makefile])
+AC_CONFIG_FILES([src/char/Makefile src/login/Makefile src/ladmin/Makefile])
+AC_CONFIG_FILES([src/char_sql/Makefile src/login_sql/Makefile src/txt-converter/Makefile])
+AC_CONFIG_FILES([src/map/Makefile src/plugins/Makefile src/tool/Makefile])
+
+
+#
+# Enable/disable MySql and optionally specify the path (optional library)
+#
+AC_ARG_WITH(
+	[mysql],
+	AC_HELP_STRING(
+		[--with-mysql=@<:@ARG@:>@],
+		[use MySQL client library @<:@default=yes@:>@, optionally specify path to the mysql_config executable]
+	),
+	[
+		if test "$withval" = "no" ; then
+			want_mysql="no"
+		elif test "$withval" = "yes" ; then
+			want_mysql="yes"
+		else
+			want_mysql="yes"
+			MYSQL_CONFIG_HOME="$withval"
+		fi
+	],
+	[want_mysql="yes"]
+)
+
+
+#
+# Enable/disable PCRE and optionally specify the path (optional library)
+#
+AC_ARG_WITH(
+	[pcre],
+	AC_HELP_STRING(
+		[--with-pcre=@<:@ARG@:>@],
+		[use PCRE library @<:@default=yes@:>@, optionally specify the root directory path of pcre installation]
+	),
+	[
+		if test "$withval" = "no" ; then
+			want_pcre="no"
+		elif test "$withval" = "yes" ; then
+			want_pcre="yes"
+		else
+			want_pcre="yes"
+			PCRE_HOME="$withval"
+		fi
+	],
+	[want_pcre="yes"]
+)
+
+
+#
+# Specify the path of the zlib library (required library)
+#
+AC_ARG_WITH(
+	[zlib],
+	AC_HELP_STRING(
+		[--with-zlib=DIR],
+		[root directory path of zlib installation (defaults to /usr/local or /usr if not found in /usr/local)]
+	),
+	[
+		test -n "$withval" && ZLIB_HOME="$withval"
+	],
+	[
+		ZLIB_HOME=/usr/local
+		test ! -f "${ZLIB_HOME}/include/zlib.h" && ZLIB_HOME=/usr
+	]
+)
+
+
+
+###############################################################################
+# Checks for programs and types.
+
+AC_PROG_MAKE_SET
+AC_PROG_CC
+AC_PROG_CPP
+AC_LANG([C])
+
+
+CFLAGS="$CFLAGS -pipe -ffast-math -Wall -Wno-sign-compare"
+CPPFLAGS="$CPPFLAGS -I../common"
+
+
+AC_C_BIGENDIAN(
+	[AC_MSG_ERROR([[bigendian is not supported... stopping]])],
+	,
+	[AC_MSG_WARN([[unable to determine endianess, only little endian is supported]])]
+)
+
+
+AC_MSG_CHECKING([whether pointers can be stored in ints (old code)])
+pointers_fit_in_ints="no"
+AC_COMPILE_IFELSE(
+	[AC_LANG_PROGRAM([[int hw[(sizeof(int) == sizeof(void *))];]])],
+	[pointers_fit_in_ints="yes"],
+	[]
+)
+if test "$pointers_fit_in_ints" = "no" ; then
+	CFLAGS="$CFLAGS -m32"
+	AC_COMPILE_IFELSE(
+		[AC_LANG_PROGRAM([[int hw[(sizeof(int) == sizeof(void *))];]])],
+		[pointers_fit_in_ints="yes (with -m32)"],
+		[]
+	)
+fi
+AC_MSG_RESULT($pointers_fit_in_ints)
+if test "$pointers_fit_in_ints" = "no" ; then
+	AC_MSG_ERROR([pointers cannot be stored in ints, required for old code... stopping])
+fi
+
+
+AC_MSG_CHECKING([whether $CC supports -Wno-unused-parameter])
+OLD_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS -Wno-unused-parameter"
+AC_COMPILE_IFELSE(
+	[int foo;],
+	[AC_MSG_RESULT([yes])],
+	[
+		AC_MSG_RESULT([no])
+		CFLAGS="$OLD_CFLAGS"
+	]
+)
+
+
+AC_MSG_CHECKING([whether $CC supports -Wno-pointer-sign])
+OLD_CFLAGS="$CFLAGS"
+CFLAGS="$CPPFLAGS -Wno-pointer-sign"
+AC_COMPILE_IFELSE(
+	[int foo;],
+	[AC_MSG_RESULT([yes])],
+	[
+		AC_MSG_RESULT([no])
+		CFLAGS="$OLD_CFLAGS"
+	]
+)
+
+
+###############################################################################
+# Checks for libraries and header files.
+
+
+
+dnl
+dnl Check MySQL library (optional)
+dnl
+
+MYSQL_VERSION=""
+MYSQL_CFLAGS=""
+MYSQL_LIBS=""
+
+if test "$want_mysql" = "no" ; then
+	AC_MSG_NOTICE([ignoring MySQL (optional)])
+else
+	if test -z "$MYSQL_CONFIG_HOME" -o test; then
+		AC_PATH_PROG([MYSQL_CONFIG_HOME], [mysql_config], [no])
+	fi
+
+	AC_MSG_CHECKING([MySQL library (optional)])
+	if test "$MYSQL_CONFIG_HOME" != "no" ; then
+		HAVE_MYSQL="yes"
+		MYSQL_VERSION="`$MYSQL_CONFIG_HOME --version`"
+		MYSQL_CFLAGS="`$MYSQL_CONFIG_HOME --cflags`"
+		MYSQL_LIBS="`$MYSQL_CONFIG_HOME --libs`"
+		AC_MSG_RESULT([yes ($MYSQL_VERSION)])
+	else
+		AC_MSG_RESULT([no])
+		AC_MSG_NOTICE([disabling MySQL (optional)])
+	fi
+fi
+
+AC_SUBST([HAVE_MYSQL])
+AC_SUBST([MYSQL_VERSION])
+AC_SUBST([MYSQL_CFLAGS])
+AC_SUBST([MYSQL_LIBS])
+
+
+
+dnl
+dnl Check PCRE libraries (optional)
+dnl
+
+##TODO PCRE version
+PCRE_LIBS=""
+PCRE_CFLAGS=""
+
+if test "$want_pcre" = "no" ; then
+	AC_MSG_NOTICE([ignoring PCRE (optional)])
+else
+	if test -z "$PCRE_HOME" ; then
+		AC_CHECK_LIB([pcre], [pcre_study], [HAVE_PCRE="yes"], [])
+		if test "$HAVE_PCRE" = "yes" ; then
+			PCRE_LIBS="-lpcre"
+		fi
+	else
+		PCRE_OLD_LDFLAGS="$LDFLAGS" ; LDFLAGS="$LDFLAGS -L$PCRE_HOME/lib"
+		PCRE_OLD_CPPFLAGS="$CPPFLAGS" ; CPPFLAGS="$CPPFLAGS -I$PCRE_HOME/include"
+		AC_CHECK_LIB(pcre, pcre_compile, [HAVE_PCRE="yes"], [])
+		CPPFLAGS="$PCRE_OLD_CPPFLAGS"
+		LDFLAGS="$PCRE_OLD_LDFLAGS"
+		if test "$HAVE_PCRE" = "yes" ; then
+			PCRE_LIBS="-L$PCRE_HOME/lib -lpcre"
+			test -d "$PCRE_HOME/include" && PCRE_CFLAGS="-I$PCRE_HOME/include"
+		fi
+	fi
+	AC_MSG_CHECKING([PCRE library (optional)])
+	if test "$HAVE_PCRE" = "yes" ; then
+		AC_MSG_RESULT([yes])
+	else
+		AC_MSG_RESULT([no])
+		AC_MSG_NOTICE([disabling PCRE (optional)])
+	fi
+fi
+
+AC_SUBST([HAVE_PCRE])
+AC_SUBST([PCRE_LIBS])
+AC_SUBST([PCRE_CFLAGS])
+
+
+
+dnl
+dnl zlib library (required)
+dnl
+
+if test -n "${ZLIB_HOME}" ; then
+	LDFLAGS="$LDFLAGS -L${ZLIB_HOME}/lib"
+	CPPFLAGS="$CPPFLAGS -I${ZLIB_HOME}/include"
+fi
+AC_CHECK_LIB([z], [inflateEnd], ,[AC_MSG_ERROR([zlib library not found, please specify the correct path with --with-zlib=DIR... stopping])])
+AC_CHECK_HEADER([zlib.h], , [AC_MSG_ERROR([zlib header not found, please specify the correct path with --with-zlib=DIR... stopping])])
+
+
+
+dnl
+dnl math library (required)
+dnl
+
+AC_CHECK_LIB([m], [sqrt], [], [AC_MSG_ERROR([math library not found... stopping])])
+
+
+
+dnl
+dnl Host specific stuff
+dnl
+
+AC_MSG_CHECKING([host OS])
+host_os="`uname`"
+AC_MSG_RESULT([$host_os])
+fd_setsize=""
+DLLEXT=".so"
+case $host_os in
+Solaris* )
+	LIBS="$LIBS -lsocket -lnsl -ldl"
+	;;
+Linux* )
+	LIBS="$LIBS -ldl"
+	;;
+FreeBSD*)
+	CPPFLAGS="$CPPFLAGS -D__FREEBSD__"
+	;;
+NetBSD*)
+	CPPFLAGS="$CPPFLAGS -D__NETBSD__"
+	;;
+CYGWIN*)
+	CPPFLAGS="$CPPFLAGS -DFD_SETSIZE=4096 -DCYGWIN"
+	fd_setsize="done"
+	DLLEXT=".dll"
+	;;
+esac
+AC_SUBST([DLLEXT])
+
+AC_MSG_CHECKING([for MinGW])
+if test -n "`$CC --version | grep -i mingw`" ; then
+	AC_MSG_RESULT([yes])
+	CPPFLAGS="$CPPFLAGS -DMINGW"
+	if test -z "$fd_setsize" ; then
+		CPPFLAGS="$CPPFLAGS -DFD_SETSIZE=4096"
+	fi
+	LIBS="$LIBS -lws2_32"
+else
+	AC_MSG_RESULT([no])
+fi
+
+
+
+###############################################################################
+AC_OUTPUT

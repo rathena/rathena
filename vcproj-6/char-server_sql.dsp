@@ -147,6 +147,14 @@ SOURCE=..\src\common\socket.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\common\sql.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\common\sql.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\common\strlib.c
 # End Source File
 # Begin Source File
@@ -232,14 +240,6 @@ SOURCE=..\src\char_sql\inter.c
 # Begin Source File
 
 SOURCE=..\src\char_sql\inter.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\char_sql\itemdb.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\src\char_sql\itemdb.h
 # End Source File
 # End Group
 # End Target

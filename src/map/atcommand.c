@@ -10,6 +10,7 @@
 #include "../common/malloc.h"
 #include "../common/socket.h"
 #include "../common/strlib.h"
+#include "../common/utils.h"
 
 #include "atcommand.h"
 #include "log.h"
@@ -273,6 +274,7 @@ ACMD_FUNC(checkmail); // [Valaris]
 ACMD_FUNC(listmail); // [Valaris]
 ACMD_FUNC(listnewmail); // [Valaris]
 ACMD_FUNC(readmail); // [Valaris]
+ACMD_FUNC(deletemail); // [Valaris]
 ACMD_FUNC(sendmail); // [Valaris]
 ACMD_FUNC(sendprioritymail); // [Valaris]
 ACMD_FUNC(deletemail); // [Valaris]
@@ -577,7 +579,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_ListMail,			"@listmail",		 1, atcommand_listmail }, // [Valaris]
 	{ AtCommand_ListNewMail,		"@listnewmail", 	 1, atcommand_listmail }, // [Valaris]
 	{ AtCommand_ReadMail,			"@readmail",		 1, atcommand_readmail }, // [Valaris]
-	{ AtCommand_DeleteMail, 		"@deletemail",		 1, atcommand_readmail }, // [Valaris]
+	{ AtCommand_DeleteMail, 		"@deletemail",		 1, atcommand_deletemail }, // [Valaris]
 	{ AtCommand_SendMail,			"@sendmail",		 1, atcommand_sendmail }, // [Valaris]
 	{ AtCommand_SendPriorityMail,	"@sendprioritymail",80, atcommand_sendmail }, // [Valaris]
 	{ AtCommand_RefreshOnline,		"@refreshonline",	99, atcommand_refreshonline }, // [Valaris]
@@ -7898,11 +7900,11 @@ int atcommand_listmail(const int fd, struct map_session_data* sd, const char* co
 
 	nullpo_retr(-1, sd);
 
-	if(strlen(command)==12)
+	if(strlen(command)==12) // @listnewmail
 		mail_check(sd,3);
-	else if(strlen(command)==9)
+	else if(strlen(command)==9) // @listmail
 		mail_check(sd,2);
-	else
+	else // @checkmail
 		mail_check(sd,1);
 	return 0;
 }
@@ -7926,10 +7928,31 @@ int atcommand_readmail(const int fd, struct map_session_data* sd, const char* co
 		return 0;
 	}
 
-	if(strlen(command)==11)
-		mail_delete(sd,index);
-	else
-		mail_read(sd,index);
+	mail_read(sd,index);
+
+	return 0;
+}
+
+int atcommand_deletemail(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	int index;
+	if(!mail_server_enable)
+		return 0;
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message) {
+		clif_displaymessage(sd->fd,"You must specify a message number.");
+		return 0;
+	}
+
+	index = atoi(message);
+	if (index < 1) {
+		clif_displaymessage(sd->fd,"Message number cannot be negative or zero.");
+		return 0;
+	}
+
+	mail_delete(sd,index);
 
 	return 0;
 }
@@ -7954,7 +7977,7 @@ int atcommand_sendmail(const int fd, struct map_session_data* sd, const char* co
 		return 0;
 	}
 
-	if(strlen(command)==17)
+	if(strlen(command)==17) // @sendprioritymail
 		mail_send(sd,name,text,1);
 	else
 		mail_send(sd,name,text,0);

@@ -55,118 +55,6 @@ void dump(FILE* fp, const unsigned char* buffer, int length)
 	fprintf(fp, "\n");
 }
 
-// Allocate a StringBuf  [MouseJstr]
-struct StringBuf * StringBuf_Malloc() 
-{
-	struct StringBuf * ret = (struct StringBuf *) aMallocA(sizeof(struct StringBuf));
-	StringBuf_Init(ret);
-	return ret;
-}
-
-// Initialize a previously allocated StringBuf [MouseJstr]
-void StringBuf_Init(struct StringBuf * sbuf)  {
-	sbuf->max_ = 1024;
-	sbuf->ptr_ = sbuf->buf_ = (char *) aMallocA(sbuf->max_ + 1);
-}
-
-// vprintf into a StringBuf, moving the pointer [MouseJstr]
-int StringBuf_Vprintf(struct StringBuf *sbuf,const char *fmt,va_list ap) 
-{
-	int n, size, off;
-
-	while (1) {
-		/* Try to print in the allocated space. */
-		size = sbuf->max_ - (sbuf->ptr_ - sbuf->buf_);
-		n = vsnprintf (sbuf->ptr_, size, fmt, ap);
-		/* If that worked, return the length. */
-		if (n > -1 && n < size) {
-			sbuf->ptr_ += n;
-			return (int)(sbuf->ptr_ - sbuf->buf_);
-		}
-		/* Else try again with more space. */
-		sbuf->max_ *= 2; // twice the old size
-		off = (int)(sbuf->ptr_ - sbuf->buf_);
-		sbuf->buf_ = (char *) aRealloc(sbuf->buf_, sbuf->max_ + 1);
-		sbuf->ptr_ = sbuf->buf_ + off;
-	}
-}
-
-// printf into a StringBuf, moving the pointer [MouseJstr]
-int StringBuf_Printf(struct StringBuf *sbuf,const char *fmt,...) 
-{
-	int len;
-	va_list ap;
-
-	va_start(ap,fmt);
-	len = StringBuf_Vprintf(sbuf,fmt,ap);
-	va_end(ap);
-
-	return len;
-}
-
-// Append buf2 onto the end of buf1 [MouseJstr]
-int StringBuf_Append(struct StringBuf *buf1,const struct StringBuf *buf2) 
-{
-	int buf1_avail = buf1->max_ - (buf1->ptr_ - buf1->buf_);
-	int size2 = (int)(buf2->ptr_ - buf2->buf_);
-
-	if (size2 >= buf1_avail)  {
-		int off = (int)(buf1->ptr_ - buf1->buf_);
-		buf1->max_ += size2;
-		buf1->buf_ = (char *) aRealloc(buf1->buf_, buf1->max_ + 1);
-		buf1->ptr_ = buf1->buf_ + off;
-	}
-
-	memcpy(buf1->ptr_, buf2->buf_, size2);
-	buf1->ptr_ += size2;
-	return (int)(buf1->ptr_ - buf1->buf_);
-}
-
-// Appends str onto the end of buf
-int StringBuf_AppendStr(struct StringBuf* sbuf, const char* str) 
-{
-	int available = sbuf->max_ - (sbuf->ptr_ - sbuf->buf_);
-	int size = (int)strlen(str);
-
-	if( size >= available )
-	{// not enough space, expand the buffer (minimum expansion = 1024)
-		int off = (int)(sbuf->ptr_ - sbuf->buf_);
-		sbuf->max_ += max(size, 1024);
-		sbuf->buf_ = (char *) aRealloc(sbuf->buf_, sbuf->max_ + 1);
-		sbuf->ptr_ = sbuf->buf_ + off;
-	}
-
-	memcpy(sbuf->ptr_, str, size);
-	sbuf->ptr_ += size;
-	return (int)(sbuf->ptr_ - sbuf->buf_);
-}
-
-// Returns the length of the data in a Stringbuf
-int StringBuf_Length(struct StringBuf *sbuf) 
-{
-	return (int)(sbuf->ptr_ - sbuf->buf_);
-}
-
-// Destroy a StringBuf [MouseJstr]
-void StringBuf_Destroy(struct StringBuf *sbuf) 
-{
-	aFree(sbuf->buf_);
-	sbuf->ptr_ = sbuf->buf_ = 0;
-}
-
-// Free a StringBuf returned by StringBuf_Malloc [MouseJstr]
-void StringBuf_Free(struct StringBuf *sbuf) 
-{
-	StringBuf_Destroy(sbuf);
-	aFree(sbuf);
-}
-
-// Return the built string from the StringBuf [MouseJstr]
-char * StringBuf_Value(struct StringBuf *sbuf) 
-{
-	*sbuf->ptr_ = '\0';
-	return sbuf->buf_;
-}
 
 #ifdef WIN32
 
@@ -293,35 +181,43 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 }
 #endif
 
-uint8 GetByte(uint32 val, size_t num)
+uint8 GetByte(uint32 val, int idx)
 {
-	switch( num )
+	switch( idx )
 	{
-	case 0:  return (uint8)((val & 0x000000FF)        );
-	case 1:	 return (uint8)((val & 0x0000FF00) >> 0x08);
-	case 2:	 return (uint8)((val & 0x00FF0000) >> 0x10);
-	case 3:	 return (uint8)((val & 0xFF000000) >> 0x18);
-	default: return 0;	//better throw something here
+	case 0: return (uint8)( (val & 0x000000FF)         );
+	case 1: return (uint8)( (val & 0x0000FF00) >> 0x08 );
+	case 2: return (uint8)( (val & 0x00FF0000) >> 0x10 );
+	case 3: return (uint8)( (val & 0xFF000000) >> 0x18 );
+	default:
+#if defined(DEBUG)
+		ShowDebug("GetByte: invalid index (idx=%d)\n", idx);
+#endif
+		return 0;
 	}
 }
-uint16 GetWord(uint32 val, size_t num)
+
+uint16 GetWord(uint32 val, int idx)
 {
-	switch( num )
+	switch( idx )
 	{
-	case 0:  return (uint16)((val & 0x0000FFFF)        );
-	case 1:  return (uint16)((val & 0xFFFF0000) >> 0x10);
-	default: return 0;	//better throw something here
+	case 0: return (uint16)( (val & 0x0000FFFF)         );
+	case 1: return (uint16)( (val & 0xFFFF0000) >> 0x10 );
+	default:
+#if defined(DEBUG)
+		ShowDebug("GetWord: invalid index (idx=%d)\n", idx);
+#endif
+		return 0;
 	}
 }
 uint16 MakeWord(uint8 byte0, uint8 byte1)
 {
-	return
-		((uint16)(byte0        ))|
-		((uint16)(byte1 << 0x08));
+	return byte0 | (byte1 << 0x08);
 }
+
 uint32 MakeDWord(uint16 word0, uint16 word1)
 {
 	return
-		((uint32)(word0        ))|
-		((uint32)(word1 << 0x10));
+		( (uint32)(word0        ) )|
+		( (uint32)(word1 << 0x10) );
 }

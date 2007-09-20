@@ -11,17 +11,19 @@
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
 #include "../common/timer.h"
+#include "../common/lock.h"
+#include "../common/malloc.h"
+#include "../common/mapindex.h"
+#include "../common/showmsg.h"
+#include "../common/utils.h"
 #include "../common/version.h"
-
 #include "inter.h"
 #include "int_guild.h"
 #include "int_homun.h"
 #include "int_pet.h"
 #include "int_party.h"
 #include "int_storage.h"
-#ifdef ENABLE_SC_SAVING
 #include "int_status.h"
-#endif
 #include "char.h"
 
 #include <sys/types.h>

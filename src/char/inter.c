@@ -1,10 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
 #include "../common/db.h"
 #include "../common/mmo.h"
 #include "../common/socket.h"
@@ -12,7 +8,6 @@
 #include "../common/malloc.h"
 #include "../common/lock.h"
 #include "../common/showmsg.h"
-
 #include "char.h"
 #include "inter.h"
 #include "int_party.h"
@@ -21,6 +16,10 @@
 #include "int_storage.h"
 #include "int_pet.h"
 #include "int_homun.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #define WISDATA_TTL (60*1000)	// Existence time of Wisp/page data (60 seconds)
                              	// that is the waiting time of answers of all map-servers

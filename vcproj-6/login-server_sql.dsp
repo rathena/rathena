@@ -155,6 +155,14 @@ SOURCE=..\src\common\socket.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\common\sql.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\src\common\sql.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\common\strlib.c
 # End Source File
 # Begin Source File

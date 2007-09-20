@@ -1,0 +1,68 @@
+LOGIN_CONVERTER_OBJ = login-converter.o ../common/obj/minicore.o \
+	../common/obj/malloc.o ../common/obj/strlib.o ../common/obj/showmsg.o \
+	../common/obj/utils.o ../common/obj/ers.o ../common/obj/db.o \
+	../common/obj_sql/sql.o
+CHAR_CONVERTER_OBJ = char-converter.o ../common/obj/minicore.o \
+	../common/obj/malloc.o ../common/obj/strlib.o ../common/obj/showmsg.o \
+	../common/obj/utils.o ../common/obj/ers.o ../common/obj/mapindex.o \
+	../common/obj_sql/sql.o \
+	obj_txt/char.o obj_txt/int_pet.o obj_txt/int_storage.o obj_txt/inter.o \
+	obj_txt/int_party.o obj_txt/int_guild.o \
+	obj_sql/char.o obj_sql/int_pet.o obj_sql/int_storage.o \
+	obj_sql/inter.o obj_sql/int_party.o obj_sql/int_guild.o
+
+HAVE_MYSQL=@HAVE_MYSQL@
+ifeq ($(HAVE_MYSQL),yes)
+	LOGIN_CONVERTER_DEPENDS=$(LOGIN_CONVERTER_OBJ)
+	CHAR_CONVERTER_DEPENDS=obj $(CHAR_CONVERTER_OBJ)
+else
+	LOGIN_CONVERTER_DEPENDS=needs_mysql
+	CHAR_CONVERTER_DEPENDS=needs_mysql
+endif
+
+#####################################################################
+.PHONY : all login-converter char-converter clean help
+
+all: login-converter char-converter
+
+login-converter: $(LOGIN_CONVERTER_DEPENDS)
+	@CC@ @LDFLAGS@ -o ../../tools/login-converter@EXEEXT@ $(LOGIN_CONVERTER_OBJ) @LIBS@ @MYSQL_LIBS@
+
+char-converter: $(CHAR_CONVERTER_DEPENDS)
+	@CC@ @LDFLAGS@ -o ../../tools/char-converter@EXEEXT@ $(CHAR_CONVERTER_OBJ) @LIBS@ @MYSQL_LIBS@
+
+clean:
+	rm -rf *.o obj_txt obj_sql ../../tools/login-converter@EXEEXT@ ../../tools/char-converter@EXEEXT@
+
+help:
+	@echo "possible targets are 'login-converter' 'char-converter' 'all' 'clean' 'help'"
+	@echo "'login-converter'  - login server converter"
+	@echo "'char-converter'   - char server converter"
+	@echo "'all'              - builds all above targets"
+	@echo "'clean'            - cleans builds and objects"
+	@echo "'help'             - outputs this message"
+
+#####################################################################
+
+needs_mysql:
+	@echo "MySQL not found or disabled by the configure script"
+	@exit 1
+
+obj:
+	-mkdir obj_txt
+	-mkdir obj_sql
+
+
+# DO NOT DELETE
+
+%.o: %.c
+	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -DTXT_SQL_CONVERT -c $(OUTPUT_OPTION) $<
+
+obj_txt/%.o: ../char/%.c
+	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -DTXT_SQL_CONVERT -c $(OUTPUT_OPTION) $<
+
+obj_sql/%.o: ../char_sql/%.c
+	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -DTXT_SQL_CONVERT -c $(OUTPUT_OPTION) $<
+
+char-converter.o: char-converter.c
+login-converter.o: login-converter.c

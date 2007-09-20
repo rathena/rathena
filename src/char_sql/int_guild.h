@@ -4,17 +4,6 @@
 #ifndef _INT_GUILD_SQL_H_
 #define _INT_GUILD_SQL_H_
 
-int inter_guild_parse_frommap(int fd);
-int inter_guild_sql_init(void);
-void inter_guild_sql_final(void);
-int inter_guild_mapif_init(int fd);
-int inter_guild_leave(int guild_id,int account_id,int char_id);
-int mapif_parse_BreakGuild(int fd,int guild_id);
-int inter_guild_broken(int guild_id);
-int inter_guild_sex_changed(int guild_id,int account_id,int char_id, int gender);
-int inter_guild_CharOnline(int char_id, int guild_id);
-int inter_guild_CharOffline(int char_id, int guild_id);
-
 #define GS_BASIC 0x0001
 #define GS_MEMBER 0x0002
 #define GS_POSITION 0x0004
@@ -28,6 +17,20 @@ int inter_guild_CharOffline(int char_id, int guild_id);
 #define GS_MASK 0x03FF
 #define GS_BASIC_MASK (GS_BASIC | GS_EMBLEM | GS_CONNECT | GS_LEVEL | GS_MES)
 #define GS_REMOVE 0x8000
+
+struct guild;
+struct guild_castle;
+
+int inter_guild_parse_frommap(int fd);
+int inter_guild_sql_init(void);
+void inter_guild_sql_final(void);
+int inter_guild_mapif_init(int fd);
+int inter_guild_leave(int guild_id,int account_id,int char_id);
+int mapif_parse_BreakGuild(int fd,int guild_id);
+int inter_guild_broken(int guild_id);
+int inter_guild_sex_changed(int guild_id,int account_id,int char_id, int gender);
+int inter_guild_CharOnline(int char_id, int guild_id);
+int inter_guild_CharOffline(int char_id, int guild_id);
 
 //For the TXT->SQL converter.
 int inter_guild_tosql(struct guild *g,int flag);

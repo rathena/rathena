@@ -5,7 +5,6 @@
 #define _CHAR_H_
 
 #include "../common/mmo.h"
-#include "../common/mapindex.h"
 
 #define START_CHAR_NUM 150000
 #define MAX_MAP_SERVERS 30
@@ -21,7 +20,7 @@ struct character_data {
 struct mmo_charstatus* search_character(int aid, int cid);
 struct mmo_charstatus* search_character_byname(char* character_name);
 int search_character_index(char* character_name);
-char * search_character_name(int index);
+char* search_character_name(int index);
 int search_character_online(int aid, int cid);
 
 int mapif_sendall(unsigned char *buf, unsigned int len);

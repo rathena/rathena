@@ -1,10 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "../common/mmo.h"
 #include "../common/malloc.h"
 #include "../common/socket.h"
@@ -14,6 +10,10 @@
 #include "char.h"
 #include "inter.h"
 #include "int_homun.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 char homun_txt[1024]="save/homun.txt";
 

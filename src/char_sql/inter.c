@@ -1,34 +1,31 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-
-#include "char.h"
+#include "../common/mmo.h"
+#include "../common/db.h"
 #include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
+#include "../common/socket.h"
+#include "../common/timer.h"
+#include "char.h"
 #include "inter.h"
 #include "int_party.h"
 #include "int_guild.h"
 #include "int_storage.h"
 #include "int_pet.h"
-#include "int_homun.h" //albator
+#include "int_homun.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #define WISDATA_TTL (60*1000)	// Wisデータの生存時間(60秒)
 #define WISDELLIST_MAX 256			// Wisデータ削除リストの要素数
 
 
-MYSQL mysql_handle;
-MYSQL_RES* 	sql_res ;
-MYSQL_ROW	sql_row ;
-int sql_fields, sql_cnt;
-char tmp_sql[65535];
-
-MYSQL lmysql_handle;
-MYSQL_RES* 	lsql_res ;
-MYSQL_ROW	lsql_row ;
+Sql* sql_handle = NULL;
+Sql* lsql_handle = NULL;
 
 int char_server_port = 3306;
 char char_server_ip[32] = "127.0.0.1";
@@ -89,50 +86,59 @@ int inter_sql_test (void);
 #endif //TXT_SQL_CONVERT
 //--------------------------------------------------------
 // Save registry to sql
-int inter_accreg_tosql(int account_id, int char_id, struct accreg *reg, int type){
+int inter_accreg_tosql(int account_id, int char_id, struct accreg* reg, int type)
+{
+	struct global_reg* r;
+	SqlStmt* stmt;
+	int i;
 
-	int j;
-	char temp_str[64]; //Needs be twice the source to ensure it fits [Skotlex]
-	char temp_str2[512];
-	if (account_id<=0) return 0;
-	reg->account_id=account_id;
+	if( account_id <= 0 )
+		return 0;
+	reg->account_id = account_id;
 	reg->char_id = char_id;
 
-	switch (type) {
-		case 3: //Char Reg
-		//`global_reg_value` (`type`, `account_id`, `char_id`, `str`, `value`)
-			sprintf(tmp_sql,"DELETE FROM `%s` WHERE `type`=3 AND `char_id`='%d'",reg_db, char_id);
-			break;
-		case 2: //Account Reg
-		//`global_reg_value` (`type`, `account_id`, `char_id`, `str`, `value`)
-			sprintf(tmp_sql,"DELETE FROM `%s` WHERE `type`=2 AND `account_id`='%d'",reg_db, account_id);
-			break;
-		case 1: //Account2 Reg
-			ShowError("inter_accreg_tosql: Char server shouldn't handle type 1 registry values (##). That is the login server's work!\n");
-			return 0;
-		default:
-			ShowError("inter_accreg_tosql: Invalid type %d\n", type);
-			return 0;
-			
-	}	
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	//`global_reg_value` (`type`, `account_id`, `char_id`, `str`, `value`)
+	switch( type )
+	{
+	case 3: //Char Reg
+		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `type`=3 AND `char_id`='%d'", reg_db, char_id) )
+			Sql_ShowDebug(sql_handle);
+		account_id = 0;
+		break;
+	case 2: //Account Reg
+		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `type`=2 AND `account_id`='%d'", reg_db, account_id) )
+			Sql_ShowDebug(sql_handle);
+		char_id = 0;
+		break;
+	case 1: //Account2 Reg
+		ShowError("inter_accreg_tosql: Char server shouldn't handle type 1 registry values (##). That is the login server's work!\n");
+		return 0;
+	default:
+		ShowError("inter_accreg_tosql: Invalid type %d\n", type);
+		return 0;
 	}
 
-	if (reg->reg_num<=0) return 0;
+	if( reg->reg_num <= 0 )
+		return 0;
 
-	for(j=0;j<reg->reg_num;j++){
-		if(reg->reg[j].str != NULL){
-			sprintf(tmp_sql,"INSERT INTO `%s` (`type`, `account_id`, `char_id`, `str`, `value`) VALUES ('%d','%d','%d','%s','%s')",
-				reg_db, type, type!=3?reg->account_id:0, type==3?reg->char_id:0,
-				jstrescapecpy(temp_str,reg->reg[j].str), jstrescapecpy(temp_str2,reg->reg[j].value));
-			if(mysql_query(&mysql_handle, tmp_sql) ) {
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			}
+	stmt = SqlStmt_Malloc(sql_handle);
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "INSERT INTO `%s` (`type`, `account_id`, `char_id`, `str`, `value`) VALUES ('%d','%d','%d',?,?)", reg_db, type, account_id, char_id) )
+		SqlStmt_ShowDebug(stmt);
+	for( i = 0; i < reg->reg_num; ++i )
+	{
+		r = &reg->reg[i];
+		if( r->str[0] != '\0' && r->value != '\0' )
+		{
+			// str
+			SqlStmt_BindParam(stmt, 0, SQLDT_STRING, r->str, strnlen(r->str, sizeof(r->str)));
+			// value
+			SqlStmt_BindParam(stmt, 1, SQLDT_STRING, r->value, strnlen(r->value, sizeof(r->value)));
+
+			if( SQL_ERROR == SqlStmt_Execute(stmt) )
+				SqlStmt_ShowDebug(stmt);
 		}
 	}
+	SqlStmt_Free(stmt);
 	return 1;
 }
 #ifndef TXT_SQL_CONVERT
@@ -140,38 +146,48 @@ int inter_accreg_tosql(int account_id, int char_id, struct accreg *reg, int type
 // Load account_reg from sql (type=2)
 int inter_accreg_fromsql(int account_id,int char_id, struct accreg *reg, int type)
 {
-	int j=0;
-	if (reg==NULL) return 0;
+	struct global_reg* r;
+	char* data;
+	size_t len;
+	int i;
+
+	if( reg == NULL)
+		return 0;
+
 	memset(reg, 0, sizeof(struct accreg));
-	reg->account_id=account_id;
-	reg->char_id=char_id;
+	reg->account_id = account_id;
+	reg->char_id = char_id;
 
 	//`global_reg_value` (`type`, `account_id`, `char_id`, `str`, `value`)
-	switch (type) {
+	switch( type )
+	{
 	case 3: //char reg
-		sprintf (tmp_sql, "SELECT `str`, `value` FROM `%s` WHERE `type`=3 AND `char_id`='%d'",reg_db, reg->char_id);
-	break;
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `str`, `value` FROM `%s` WHERE `type`=3 AND `char_id`='%d'", reg_db, char_id) )
+			Sql_ShowDebug(sql_handle);
+		break;
 	case 2: //account reg
-		sprintf (tmp_sql, "SELECT `str`, `value` FROM `%s` WHERE `type`=2 AND `account_id`='%d'",reg_db, reg->account_id);
-	break;
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `str`, `value` FROM `%s` WHERE `type`=2 AND `account_id`='%d'", reg_db, account_id) )
+			Sql_ShowDebug(sql_handle);
+		break;
 	case 1: //account2 reg
 		ShowError("inter_accreg_fromsql: Char server shouldn't handle type 1 registry values (##). That is the login server's work!\n");
 		return 0;
+	default:
+		ShowError("inter_accreg_fromsql: Invalid type %d\n", type);
+		return 0;
 	}
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	for( i = 0; i < MAX_REG_NUM && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
+	{
+		r = &reg->reg[i];
+		// str
+		Sql_GetData(sql_handle, 0, &data, &len);
+		memcpy(r->str, data, min(len, sizeof(r->str)));
+		// value
+		Sql_GetData(sql_handle, 1, &data, &len);
+		memcpy(r->value, data, min(len, sizeof(r->value)));
 	}
-	sql_res = mysql_store_result(&mysql_handle);
-
-	if (sql_res) {
-		for(j=0;(sql_row = mysql_fetch_row(sql_res));j++){
-			strcpy(reg->reg[j].str, sql_row[0]);
-			strcpy(reg->reg[j].value, sql_row[1]);
-		}
-		mysql_free_result(sql_res);
-	}
-	reg->reg_num=j;
+	reg->reg_num = i;
+	Sql_FreeResult(sql_handle);
 	return 1;
 }
 
@@ -277,18 +293,17 @@ static int inter_config_read(const char* cfgName)
 int inter_log(char* fmt, ...)
 {
 	char str[255];
-	char temp_str[510]; //Needs be twice as long as str[] //Skotlex
+	char esc_str[sizeof(str)*2+1];// escaped str
 	va_list ap;
+
 	va_start(ap,fmt);
-
-	vsprintf(str,fmt,ap);
-	sprintf(tmp_sql,"INSERT INTO `%s` (`time`, `log`) VALUES (NOW(),  '%s')",interlog_db, jstrescapecpy(temp_str,str));
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
-
+	vsnprintf(str, sizeof(str), fmt, ap);
 	va_end(ap);
+
+	Sql_EscapeStringLen(sql_handle, esc_str, str, strnlen(str, sizeof(str)));
+	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `log`) VALUES (NOW(),  '%s')", interlog_db, esc_str) )
+		Sql_ShowDebug(sql_handle);
+
 	return 0;
 }
 
@@ -298,30 +313,23 @@ int inter_log(char* fmt, ...)
 int inter_sql_ping(int tid, unsigned int tick, int id, int data) 
 {
 	ShowInfo("Pinging SQL server to keep connection alive...\n");
-	mysql_ping(&mysql_handle);
-	if(char_gm_read)
-		mysql_ping(&lmysql_handle);
+	Sql_Ping(sql_handle);
+	if( char_gm_read )
+		Sql_Ping(lsql_handle);
 	return 0;
 }
 
 
 int sql_ping_init(void)
 {
-	int connection_timeout, connection_ping_interval;
+	uint32 connection_timeout, connection_ping_interval;
 
 	// set a default value first
 	connection_timeout = 28800; // 8 hours
 
 	// ask the mysql server for the timeout value
-	if (!mysql_query(&mysql_handle, "SHOW VARIABLES LIKE 'wait_timeout'")
-	&& (sql_res = mysql_store_result(&mysql_handle)) != NULL) {
-		sql_row = mysql_fetch_row(sql_res);
-		if (sql_row)
-			connection_timeout = atoi(sql_row[1]);
-		if (connection_timeout < 60)
-			connection_timeout = 60;
-		mysql_free_result(sql_res);
-	}
+	if( SQL_SUCCESS == Sql_GetTimeout(sql_handle, &connection_timeout) && connection_timeout < 60 )
+		connection_timeout = 60;
 
 	// establish keepalive
 	connection_ping_interval = connection_timeout - 30; // 30-second reserve
@@ -342,13 +350,13 @@ int inter_init_sql(const char *file)
 	inter_config_read(file);
 
 	//DB connection initialized
-	mysql_init(&mysql_handle);
+	sql_handle = Sql_Malloc();
 	ShowInfo("Connect Character DB server.... (Character Server)\n");
-	if(!mysql_real_connect(&mysql_handle, char_server_ip, char_server_id, char_server_pw,
-		char_server_db ,char_server_port, (char *)NULL, 0)) {
-			//pointer check
-			ShowFatalError("%s\n",mysql_error(&mysql_handle));
-			exit(1);
+	if( SQL_ERROR == Sql_Connect(sql_handle, char_server_id, char_server_pw, char_server_ip, (uint16)char_server_port, char_server_db) )
+	{
+		Sql_ShowDebug(sql_handle);
+		Sql_Free(sql_handle);
+		exit(1);
 	}
 #ifndef TXT_SQL_CONVERT
 	else if (inter_sql_test()) {
@@ -356,30 +364,27 @@ int inter_init_sql(const char *file)
 	}
 
 	if(char_gm_read) {
-		mysql_init(&lmysql_handle);
+		lsql_handle = Sql_Malloc();
 		ShowInfo("Connect Character DB server.... (login server)\n");
-		if(!mysql_real_connect(&lmysql_handle, login_server_ip, login_server_id, login_server_pw,
-			login_server_db ,login_server_port, (char *)NULL, 0)) {
-				//pointer check
-				ShowFatalError("%s\n",mysql_error(&lmysql_handle));
-				exit(1);
-		}else {
+		if( SQL_ERROR == Sql_Connect(lsql_handle, login_server_id, login_server_pw, login_server_ip, (uint16)login_server_port, login_server_db) )
+		{
+			Sql_ShowDebug(lsql_handle);
+			Sql_Free(lsql_handle);
+			Sql_Free(sql_handle);
+			exit(1);
+		}
+		else
+		{
 			ShowStatus ("Connect Success! (Login Server)\n");
 		}
 	}
 #endif //TXT_SQL_CONVERT
-	if(strlen(default_codepage) > 0 ) {
-		sprintf( tmp_sql, "SET NAMES %s", default_codepage );
-		if (mysql_query(&mysql_handle, tmp_sql)) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
+	if( *default_codepage ) {
+		if( SQL_ERROR == Sql_SetEncoding(sql_handle, default_codepage) )
+			Sql_ShowDebug(sql_handle);
 #ifndef TXT_SQL_CONVERT
-		if(char_gm_read)
-			if (mysql_query(&lmysql_handle, tmp_sql)) {
-				ShowSQL("DB error - %s\n",mysql_error(&lmysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			}
+		if( char_gm_read && SQL_ERROR == Sql_SetEncoding(lsql_handle, default_codepage) )
+			Sql_ShowDebug(lsql_handle);
 #endif //TXT_SQL_CONVERT
 	}
 
@@ -405,31 +410,29 @@ int inter_sql_test (void)
 		"fame",		// version 1491
 	};	
 	char buf[1024] = "";
+	char* p;
+	size_t len;
 	int i;
 
-	sprintf(tmp_sql, "EXPLAIN `%s`",char_db);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
-	sql_res = mysql_store_result(&mysql_handle);
-	// store DB fields
-	if (sql_res) {
-		while((sql_row = mysql_fetch_row(sql_res))) {
-			strcat (buf, sql_row[0]);
-			strcat (buf, " ");
-		}
-	}
+	if( SQL_ERROR == Sql_GetColumnNames(sql_handle, char_db, buf, sizeof(buf), '\n') )
+		Sql_ShowDebug(sql_handle);
 
 	// check DB strings
-	for (i = 0; i < (int)(sizeof(fields) / sizeof(fields[0])); i++) {
-		if(!strstr(buf, fields[i])) {
+	for( i = 0; i < ARRAYLENGTH(fields); ++i )
+	{
+		len = strlen(fields[i]);
+		p = strstr(buf, fields[i]);
+		while( p != NULL && p[len] != '\n' )
+			p = strstr(p, fields[i]);
+		if( p == NULL )
+		{
 			ShowSQL ("Field `%s` not be found in `%s`. Consider updating your database!\n", fields[i], char_db);
+			if( lsql_handle )
+				Sql_Free(lsql_handle);
+			Sql_Free(sql_handle);
 			exit(1);
 		}
 	}
-
-	mysql_free_result(sql_res);
 
 	return 1;
 }
@@ -636,7 +639,11 @@ int mapif_parse_WisRequest(int fd)
 {
 	struct WisData* wd;
 	static int wisid = 0;
-	char name[NAME_LENGTH], t_name[NAME_LENGTH*2]; //Needs space to allocate names with escaped chars [Skotlex]
+	char name[NAME_LENGTH];
+	char esc_name[NAME_LENGTH*2+1];// escaped name
+	char* data;
+	size_t len;
+
 
 	if ( fd <= 0 ) {return 0;} // check if we have a valid fd
 
@@ -649,35 +656,37 @@ int mapif_parse_WisRequest(int fd)
 	}
 	memcpy(name, RFIFOP(fd,28), NAME_LENGTH); //Received name may be too large and not contain \0! [Skotlex]
 	name[NAME_LENGTH-1]= '\0';
-	
-	sprintf (tmp_sql, "SELECT `name` FROM `%s` WHERE `name`='%s'",
-		char_db, jstrescapecpy(t_name, name));
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
-	sql_res = mysql_store_result(&mysql_handle);
+
+	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `name` FROM `%s` WHERE `name`='%s'", char_db, esc_name) )
+		Sql_ShowDebug(sql_handle);
 
 	// search if character exists before to ask all map-servers
-	if (!(sql_row = mysql_fetch_row(sql_res))) {
+	if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
+	{
 		unsigned char buf[27];
 		WBUFW(buf, 0) = 0x3802;
 		memcpy(WBUFP(buf, 2), RFIFOP(fd, 4), NAME_LENGTH);
 		WBUFB(buf,26) = 1; // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 		mapif_send(fd, buf, 27);
-	// Character exists. So, ask all map-servers
-	} else {
+	}
+	else
+	{// Character exists. So, ask all map-servers
 		// to be sure of the correct name, rewrite it
+		Sql_GetData(sql_handle, 0, &data, &len);
 		memset(name, 0, NAME_LENGTH);
-		strncpy(name, sql_row[0], NAME_LENGTH);
+		memcpy(name, data, min(len, NAME_LENGTH));
 		// if source is destination, don't ask other servers.
-		if (strcmp((char*)RFIFOP(fd,4),name) == 0) {
-			unsigned char buf[27];
+		if( strncmp((const char*)RFIFOP(fd,4), name, NAME_LENGTH) == 0 )
+		{
+			uint8 buf[27];
 			WBUFW(buf, 0) = 0x3802;
 			memcpy(WBUFP(buf, 2), RFIFOP(fd, 4), NAME_LENGTH);
 			WBUFB(buf,26) = 1; // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 			mapif_send(fd, buf, 27);
-		} else {
+		}
+		else
+		{
 
 			CREATE(wd, struct WisData, 1);
 
@@ -695,12 +704,8 @@ int mapif_parse_WisRequest(int fd)
 			mapif_wis_message(wd);
 		}
 	}
-	
-	//Freeing ... O.o 
-	if(sql_res){
-		mysql_free_result(sql_res);
-	}
-	
+
+	Sql_FreeResult(sql_handle);
 	return 0;
 }
 

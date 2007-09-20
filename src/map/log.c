@@ -19,6 +19,8 @@ struct Log_Config log_config;
 char timestring[255];
 time_t curtime;
 
+static int should_log_item(int filter, int nameid, int amount); //log filter check
+
 //FILTER OPTIONS
 //0 = Don't log
 //1 = Log any item
@@ -58,104 +60,105 @@ int should_log_item(int filter, int nameid, int amount)
 
 int log_branch(struct map_session_data *sd)
 {
-#ifndef TXT_ONLY
-	char t_name[NAME_LENGTH*2];
-#endif
-	FILE *logfp;
-
 	if(!log_config.enable_logs)
 		return 0;
+
 	nullpo_retr(0, sd);
+
 #ifndef TXT_ONLY
 	if(log_config.sql_logs > 0)
 	{
-		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`branch_date`, `account_id`, `char_id`, `char_name`, `map`) VALUES (NOW(), '%d', '%d', '%s', '%s')",
-			log_config.log_branch_db, sd->status.account_id, sd->status.char_id, jstrescapecpy(t_name, sd->status.name), mapindex_id2name(sd->mapindex));
-		if(mysql_query(&logmysql_handle, tmp_sql))
+		SqlStmt* stmt;
+		stmt = SqlStmt_Malloc(logmysql_handle);
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, "INSERT DELAYED INTO `%s` (`branch_date`, `account_id`, `char_id`, `char_name`, `map`) VALUES (NOW(), '%d', '%d', ?, '%s')", log_config.log_branch_db, sd->status.account_id, sd->status.char_id, sd->status.name, mapindex_id2name(sd->mapindex))
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
+		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
 		{
-			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			SqlStmt_ShowDebug(stmt);
+			SqlStmt_Free(stmt);
 			return 0;
 		}
-		return 1;
+		SqlStmt_Free(stmt);
 	}
+	else
 #endif
-	if((logfp=fopen(log_config.log_branch,"a+")) == NULL)
-		return 0;
-	time(&curtime);
-	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-	fprintf(logfp,"%s - %s[%d:%d]\t%s\n", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex));
-	fclose(logfp);
+	{
+		FILE* logfp;
+		if((logfp = fopen(log_config.log_branch, "a+")) == NULL)
+			return 0;
+		time(&curtime);
+		strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+		fprintf(logfp,"%s - %s[%d:%d]\t%s\n", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex));
+		fclose(logfp);
+	}
+
 	return 1;
 }
 
 
 int log_pick_pc(struct map_session_data *sd, const char *type, int nameid, int amount, struct item *itm)
 {
-	FILE *logfp;
-	char *mapname;
-
 	nullpo_retr(0, sd);
-	//Should we log this item? [Lupus]
-	if (!should_log_item(log_config.filter,nameid, amount))
-		return 0; //we skip logging this items set - they doesn't met our logging conditions [Lupus]
 
-	mapname = (char*)mapindex_id2name(sd->mapindex);
-
-	if(mapname==NULL)
-		mapname="";
+	if (!should_log_item(log_config.filter, nameid, amount))
+		return 0; //we skip logging this item set - it doesn't meet our logging conditions [Lupus]
 
 #ifndef TXT_ONLY
 	if(log_config.sql_logs > 0)
 	{
-		if (itm==NULL) {
+		if (itm == NULL) {
+			//We log common item
+			if (SQL_ERROR == Sql_Query(logmysql_handle, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%s')",
+				log_config.log_pick_db, sd->status.char_id, type, nameid, amount, mapindex_id2name(sd->mapindex)) )
+			{
+				Sql_ShowDebug(logmysql_handle);
+				return 0;
+			}
+		} else {
+			//We log Extended item
+			if (SQL_ERROR == Sql_Query(logmysql_handle, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
+				log_config.log_pick_db, sd->status.char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapindex_id2name(sd->mapindex)) )
+			{
+				Sql_ShowDebug(logmysql_handle);
+				return 0;
+			}
+		}
+	}
+	else
+#endif
+	{
+		FILE* logfp;
+
+		if((logfp = fopen(log_config.log_pick, "a+")) == NULL)
+			return 0;
+		time(&curtime);
+		strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+
+		if (itm == NULL) {
 		//We log common item
-			sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%s')",
-			 log_config.log_pick_db, sd->status.char_id, type, nameid, amount, mapname);
+			fprintf(logfp,"%s - %d\t%s\t%d,%d,%s\n",
+				timestring, sd->status.char_id, type, nameid, amount, mapindex_id2name(sd->mapindex));
+
 		} else {
 		//We log Extended item
-			sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
-			 log_config.log_pick_db, sd->status.char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname);
+			fprintf(logfp,"%s - %d\t%s\t%d,%d,%d,%d,%d,%d,%d,%s\n",
+				timestring, sd->status.char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapindex_id2name(sd->mapindex));
 		}
-
-		if(mysql_query(&logmysql_handle, tmp_sql))
-		{
-			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			return 0;
-		}
-		return 1;
+		fclose(logfp);
 	}
-#endif
-	if((logfp=fopen(log_config.log_pick,"a+")) == NULL)
-		return 0;
-	time(&curtime);
-	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-
-	if (itm==NULL) {
-	//We log common item
-		fprintf(logfp,"%s - %d\t%s\t%d,%d,%s\n",
-			timestring, sd->status.char_id, type, nameid, amount, mapname);
-
-	} else {
-	//We log Extended item
-		fprintf(logfp,"%s - %d\t%s\t%d,%d,%d,%d,%d,%d,%d,%s\n",
-			timestring, sd->status.char_id, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname);
-	}
-	fclose(logfp);
+	
 	return 1; //Logged
 }
 
 //Mob picked item
 int log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount, struct item *itm)
 {
-	FILE *logfp;
-	char *mapname;
+	char* mapname;
 
 	nullpo_retr(0, md);
-	//Should we log this item? [Lupus]
-	if (!should_log_item(log_config.filter,nameid, amount))
-		return 0; //we skip logging this items set - they doesn't met our logging conditions [Lupus]
+
+	if (!should_log_item(log_config.filter, nameid, amount))
+		return 0; //we skip logging this item set - it doesn't meet our logging conditions [Lupus]
 
 	//either PLAYER or MOB (here we get map name and objects ID)
 	mapname = map[md->bl.m].name;
@@ -167,180 +170,200 @@ int log_pick_mob(struct mob_data *md, const char *type, int nameid, int amount, 
 	{
 		if (itm==NULL) {
 		//We log common item
-			sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%s')",
-			 log_config.log_pick_db, md->class_, type, nameid, amount, mapname);
+			if (SQL_ERROR == Sql_Query(logmysql_handle, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%s')",
+				log_config.log_pick_db, md->class_, type, nameid, amount, mapname) )
+			{
+				Sql_ShowDebug(logmysql_handle);
+				return 0;
+			}
 		} else {
 		//We log Extended item
-			sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
-			 log_config.log_pick_db, md->class_, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname);
+			if (SQL_ERROR == Sql_Query(logmysql_handle, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `type`, `nameid`, `amount`, `refine`, `card0`, `card1`, `card2`, `card3`, `map`) VALUES (NOW(), '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s')",
+				log_config.log_pick_db, md->class_, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname) )
+			{
+				Sql_ShowDebug(logmysql_handle);
+				return 0;
+			}
 		}
-
-		if(mysql_query(&logmysql_handle, tmp_sql))
-		{
-			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			return 0;
-		}
-		return 1;
 	}
+	else
 #endif
-	if((logfp=fopen(log_config.log_pick,"a+")) == NULL)
-		return 0;
-	time(&curtime);
-	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+	{
+		FILE *logfp;
 
-	if (itm==NULL) {
-	//We log common item
-		fprintf(logfp,"%s - %d\t%s\t%d,%d,%s\n",
-			timestring, md->class_, type, nameid, amount, mapname);
+		if((logfp=fopen(log_config.log_pick,"a+")) == NULL)
+			return 0;
+		time(&curtime);
+		strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
 
-	} else {
-	//We log Extended item
-		fprintf(logfp,"%s - %d\t%s\t%d,%d,%d,%d,%d,%d,%d,%s\n",
-			timestring, md->class_, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname);
+		if (itm==NULL) {
+		//We log common item
+			fprintf(logfp,"%s - %d\t%s\t%d,%d,%s\n",
+				timestring, md->class_, type, nameid, amount, mapname);
+
+		} else {
+		//We log Extended item
+			fprintf(logfp,"%s - %d\t%s\t%d,%d,%d,%d,%d,%d,%d,%s\n",
+				timestring, md->class_, type, itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], mapname);
+		}
+		fclose(logfp);
 	}
-	fclose(logfp);
+	
 	return 1; //Logged
 }
 
 int log_zeny(struct map_session_data *sd, char *type, struct map_session_data *src_sd, int amount)
 {
-//	FILE *logfp;
-	if(!log_config.enable_logs || (log_config.zeny!=1 && abs(amount)<log_config.zeny))
+	if(!log_config.enable_logs || (log_config.zeny != 1 && abs(amount) < log_config.zeny))
 		return 0;
 
 	nullpo_retr(0, sd);
+
 #ifndef TXT_ONLY
 	if(log_config.sql_logs > 0)
 	{
-		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%s', '%d', '%s')",
-			 log_config.log_zeny_db, sd->status.char_id, src_sd->status.char_id, type, amount, mapindex_id2name(sd->mapindex));
-		if(mysql_query(&logmysql_handle, tmp_sql))
+		if (SQL_ERROR == Sql_Query(logmysql_handle, "INSERT DELAYED INTO `%s` (`time`, `char_id`, `src_id`, `type`, `amount`, `map`) VALUES (NOW(), '%d', '%d', '%s', '%d', '%s')",
+			 log_config.log_zeny_db, sd->status.char_id, src_sd->status.char_id, type, amount, mapindex_id2name(sd->mapindex)) )
 		{
-			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			Sql_ShowDebug(logmysql_handle);
 			return 0;
 		}
-		return 1;
 	}
+	else
 #endif
-//		if((logfp=fopen(log_config.log_zeny,"a+")) == NULL)
-//			return 0;
-//		time(&curtime);
-//		strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-//		fprintf(logfp,"%s - %s[%d]\t%s[%d]\t%d\n", timestring, sd->status.name, sd->status.account_id, target_sd->status.name, target_sd->status.account_id, sd->deal.zeny);
-//		fclose(logfp);
-//		return 1;
-	return 0;
+	{
+		FILE* logfp;
+		if((logfp=fopen(log_config.log_zeny,"a+")) == NULL)
+			return 0;
+		time(&curtime);
+		strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+		fprintf(logfp, "%s - %s[%d]\t%s[%d]\t%d\t\n", timestring, src_sd->status.name, src_sd->status.account_id, sd->status.name, sd->status.account_id, amount);
+		fclose(logfp);
+	}
+
+	return 1;
 }
 
 int log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp)
 {
-	FILE *logfp;
-
 	if(!log_config.enable_logs)
 		return 0;
+
 	nullpo_retr(0, sd);
+
 #ifndef TXT_ONLY
 	if(log_config.sql_logs > 0)
 	{
-		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`mvp_date`, `kill_char_id`, `monster_id`, `prize`, `mvpexp`, `map`) VALUES (NOW(), '%d', '%d', '%d', '%d', '%s') ", log_config.log_mvpdrop_db, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1], mapindex_id2name(sd->mapindex));
-		if(mysql_query(&logmysql_handle, tmp_sql))
+		if (SQL_ERROR == Sql_Query(logmysql_handle, "INSERT DELAYED INTO `%s` (`mvp_date`, `kill_char_id`, `monster_id`, `prize`, `mvpexp`, `map`) VALUES (NOW(), '%d', '%d', '%d', '%d', '%s') ",
+			log_config.log_mvpdrop_db, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1], mapindex_id2name(sd->mapindex)) )
 		{
-			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			Sql_ShowDebug(logmysql_handle);
 			return 0;
 		}
-		return 1;
 	}
+	else
 #endif
-	if((logfp=fopen(log_config.log_mvpdrop,"a+")) == NULL)
-		return 0;
-	time(&curtime);
-	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-	fprintf(logfp,"%s - %s[%d:%d]\t%d\t%d,%d\n", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1]);
-	fclose(logfp);
-	return 0;
+	{
+		FILE* logfp;
+		if((logfp=fopen(log_config.log_mvpdrop,"a+")) == NULL)
+			return 0;
+		time(&curtime);
+		strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+		fprintf(logfp,"%s - %s[%d:%d]\t%d\t%d,%d\n", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1]);
+		fclose(logfp);
+	}
+
+	return 1;
 }
 
 
-int log_atcommand(struct map_session_data *sd, const char *message)
+int log_atcommand(struct map_session_data* sd, const char* message)
 {
-	FILE *logfp;
-#ifndef TXT_ONLY
-	char t_name[NAME_LENGTH*2];
-	char t_msg[CHAT_SIZE*2+1]; //These are the contents of an @ call, so there shouldn't be overflow danger here?
-#endif
-
 	if(!log_config.enable_logs)
 		return 0;
+
 	nullpo_retr(0, sd);
+
 #ifndef TXT_ONLY
 	if(log_config.sql_logs > 0)
 	{
+		SqlStmt* stmt;
+
 		if (strlen(message) > CHAT_SIZE) {
 			if (battle_config.error_log)
-				ShowError("log atcommand: Received message too long from player %s (%d:%d)!\n",
-					sd->status.name, sd->status.account_id, sd->status.char_id);
+				ShowError("log atcommand: Received message too long from player %s (%d:%d)!\n", sd->status.name, sd->status.account_id, sd->status.char_id);
 			return 0;
 		}
-		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`atcommand_date`, `account_id`, `char_id`, `char_name`, `map`, `command`) VALUES(NOW(), '%d', '%d', '%s', '%s', '%s') ",
-			log_config.log_gm_db, sd->status.account_id, sd->status.char_id, jstrescapecpy(t_name, sd->status.name), mapindex_id2name(sd->mapindex), jstrescapecpy(t_msg, (char *)message));
-		if(mysql_query(&logmysql_handle, tmp_sql))
+
+		stmt = SqlStmt_Malloc(logmysql_handle);
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, "INSERT DELAYED INTO `%s` (`atcommand_date`, `account_id`, `char_id`, `char_name`, `map`, `command`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_gm_db, sd->status.account_id, sd->status.char_id, sd->status.name, mapindex_id2name(sd->mapindex), message)
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (char*)message, strnlen(message, 255))
+		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
 		{
-			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			SqlStmt_ShowDebug(stmt);
+			SqlStmt_Free(stmt);
 			return 0;
 		}
-		return 1;
+		SqlStmt_Free(stmt);
 	}
+	else
 #endif
-	if((logfp=fopen(log_config.log_gm,"a+")) == NULL)
-		return 0;
-	time(&curtime);
-	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-	fprintf(logfp,"%s - %s[%d]: %s\n",timestring,sd->status.name,sd->status.account_id,message);
-	fclose(logfp);
+	{
+		FILE* logfp;
+		if((logfp = fopen(log_config.log_gm, "a+")) == NULL)
+			return 0;
+		time(&curtime);
+		strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+		fprintf(logfp, "%s - %s[%d]: %s\n", timestring, sd->status.name, sd->status.account_id, message);
+		fclose(logfp);
+	}
+	
 	return 1;
 }
 
-int log_npc(struct map_session_data *sd, const char *message)
-{	//[Lupus]
-	FILE *logfp;
-#ifndef TXT_ONLY
-	char t_name[NAME_LENGTH*2];
-	char t_msg[255+1]; //it's 255 chars MAX. 
-#endif
-
+int log_npc(struct map_session_data* sd, const char* message)
+{
 	if(!log_config.enable_logs)
 		return 0;
+
 	nullpo_retr(0, sd);
+
 #ifndef TXT_ONLY
 	if(log_config.sql_logs > 0)
 	{
-		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`npc_date`, `account_id`, `char_id`, `char_name`, `map`, `mes`) VALUES(NOW(), '%d', '%d', '%s', '%s', '%s') ",
-			log_config.log_npc_db, sd->status.account_id, sd->status.char_id, jstrescapecpy(t_name, sd->status.name), mapindex_id2name(sd->mapindex), jstrescapecpy(t_msg, (char *)message));
-		if(mysql_query(&logmysql_handle, tmp_sql))
+		SqlStmt* stmt;
+		stmt = SqlStmt_Malloc(logmysql_handle);
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, "INSERT DELAYED INTO `%s` (`npc_date`, `account_id`, `char_id`, `char_name`, `map`, `mes`) VALUES (NOW(), '%d', '%d', ?, '%s', ?)", log_config.log_npc_db, sd->status.account_id, sd->status.char_id, sd->status.name, mapindex_id2name(sd->mapindex), message)
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, sd->status.name, strnlen(sd->status.name, NAME_LENGTH))
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (char*)message, strnlen(message, 255))
+		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
 		{
-			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			SqlStmt_ShowDebug(stmt);
+			SqlStmt_Free(stmt);
 			return 0;
 		}
-		return 1;
+		SqlStmt_Free(stmt);
 	}
+	else
 #endif
-	if((logfp=fopen(log_config.log_npc,"a+")) == NULL)
-		return 0;
-	time(&curtime);
-	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-	fprintf(logfp,"%s - %s[%d]: %s\n",timestring,sd->status.name,sd->status.account_id,message);
-	fclose(logfp);
+	{
+		FILE* logfp;
+		if((logfp = fopen(log_config.log_npc, "a+")) == NULL)
+			return 0;
+		time(&curtime);
+		strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+		fprintf(logfp, "%s - %s[%d]: %s\n", timestring, sd->status.name, sd->status.account_id, message);
+		fclose(logfp);
+	}
+
 	return 1;
 }
-
 
 int log_chat(const char* type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message)
 {
+	//FIXME: the actual filtering is being done by the calling code instead of in here, why!?
+
 	// Log CHAT (Global, Whisper, Party, Guild, Main chat)
 	// LOGGING FILTERS [Lupus]
 	//=============================================================
@@ -353,42 +376,45 @@ int log_chat(const char* type, int type_id, int src_charid, int src_accid, const
 	//16 - Log Main chat messages
 	//32 - Don't log anything when WOE is on
 
-	FILE *logfp;
-#ifndef TXT_ONLY
-	char t_charname[NAME_LENGTH*2];
-	char t_msg[CHAT_SIZE*2+1]; //Chat line fully escaped, with an extra space just in case.
-#endif
-	
 	//Check ON/OFF
 	if(log_config.chat <= 0)
 		return 0; //Deactivated
 
 #ifndef TXT_ONLY
-	if(log_config.sql_logs > 0){
+	if(log_config.sql_logs > 0)
+	{
+		SqlStmt* stmt;
+		
 		if (strlen(message) > CHAT_SIZE) {
 			if (battle_config.error_log)
-				ShowError("log chat: Received message too long from type %d (%d:%d)!\n",
-					type_id, src_accid, src_charid);
+				ShowError("log chat: Received message too long from type %d (%d:%d)!\n", type_id, src_accid, src_charid);
 			return 0;
 		}
-		sprintf(tmp_sql, "INSERT DELAYED INTO `%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%s', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%s')", 
-		 	log_config.log_chat_db, type, type_id, src_charid, src_accid, map, x, y, jstrescapecpy(t_charname, dst_charname), jstrescapecpy(t_msg, message));
-	
-		if(mysql_query(&logmysql_handle, tmp_sql)){
-			ShowSQL("DB error - %s\n",mysql_error(&logmysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			return 0;	
+
+		stmt = SqlStmt_Malloc(logmysql_handle);
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, "INSERT DELAYED INTO `%s` (`time`, `type`, `type_id`, `src_charid`, `src_accountid`, `src_map`, `src_map_x`, `src_map_y`, `dst_charname`, `message`) VALUES (NOW(), '%s', '%d', '%d', '%d', '%s', '%d', '%d', ?, ?)", log_config.log_chat_db, type, type_id, src_charid, src_accid, map, x, y)
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, (char*)dst_charname, strnlen(dst_charname, NAME_LENGTH))
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 1, SQLDT_STRING, (char*)message, strnlen(message, CHAT_SIZE))
+		||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
+		{
+			SqlStmt_ShowDebug(stmt);
+			SqlStmt_Free(stmt);
+			return 0;
 		}
-		return 1;
+		SqlStmt_Free(stmt);
 	}
+	else
 #endif
-	if((logfp = fopen(log_config.log_chat, "a+")) == NULL)
-		return 0;
-	time(&curtime);
-	strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
-	fprintf(logfp, "%s - %s,%d,%d,%d,%s,%d,%d,%s,%s\n", 
-		timestring, type, type_id, src_charid, src_accid, map, x, y, dst_charname, message);
-	fclose(logfp);
+	{
+		FILE* logfp;
+		if((logfp = fopen(log_config.log_chat, "a+")) == NULL)
+			return 0;
+		time(&curtime);
+		strftime(timestring, 254, "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+		fprintf(logfp, "%s - %s,%d,%d,%d,%s,%d,%d,%s,%s\n", timestring, type, type_id, src_charid, src_accid, map, x, y, dst_charname, message);
+		fclose(logfp);
+	}
+
 	return 1;
 }
 

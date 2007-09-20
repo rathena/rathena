@@ -9,6 +9,7 @@
 #include "../common/showmsg.h"
 #include "../common/ers.h"
 #include "../common/strlib.h"
+#include "../common/utils.h"
 
 #include "map.h"
 #include "guild.h"
@@ -1922,12 +1923,11 @@ int guild_save_sub(int tid,unsigned int tick,int id,int data)
 
 int guild_agit_break(struct mob_data *md)
 {	// Run One NPC_Event[OnAgitBreak]
-	char *evname;
+	char* evname;
 
 	if(!agit_flag) return 0;	// Agit already End
-	evname=(char *)aMallocA((strlen(md->npc_event) + 1)*sizeof(char));
 
-	strcpy(evname,md->npc_event);
+	evname = aStrdup(md->npc_event);
 // Now By User to Run [OnAgitBreak] NPC Event...
 // It's a little impossible to null point with player disconnect in this!
 // But Script will be stop, so nothing...

@@ -4,6 +4,9 @@
 #ifndef _INT_STORAGE_SQL_H_
 #define _INT_STORAGE_SQL_H_
 
+struct storage;
+struct guild_storage;
+
 int inter_storage_sql_init(void);
 void inter_storage_sql_final(void);
 int inter_storage_delete(int account_id);

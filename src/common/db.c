@@ -70,7 +70,6 @@
 
 #include "db.h"
 #include "../common/mmo.h"
-#include "../common/utils.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "../common/ers.h"

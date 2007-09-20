@@ -1,13 +1,14 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-
-#include "int_status.h"
+#include "../common/mmo.h"
 #include "../common/db.h"
 #include "../common/lock.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
+#include "int_status.h"
+
+#include <stdio.h>
 
 static struct dbt * scdata_db = NULL;	//Contains all the status change data in-memory. [Skotlex]
 char scdata_txt[1024]="save/scdata.txt"; //By [Skotlex]

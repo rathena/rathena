@@ -1,14 +1,19 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "char.h"
+#include "../common/mmo.h"
 #include "../common/malloc.h"
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
+#include "../common/socket.h"
+#include "../common/utils.h"
+#include "../common/sql.h"
+#include "char.h"
+#include "inter.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 struct s_homunculus *homun_pt;
 
@@ -68,154 +73,150 @@ int mapif_homunculus_created(int fd, int account_id, struct s_homunculus *sh, un
 // Save/Update Homunculus Skills
 int mapif_save_homunculus_skills(struct s_homunculus *hd)
 {
+	SqlStmt* stmt;
 	int i;
 
-	for(i=0; i<MAX_HOMUNSKILL; i++)
+	stmt = SqlStmt_Malloc(sql_handle);
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `skill_homunculus` (`homun_id`, `id`, `lv`) VALUES (%d, ?, ?)", hd->hom_id) )
+		SqlStmt_ShowDebug(stmt);
+	for( i = 0; i < MAX_HOMUNSKILL; ++i )
 	{
-		if(hd->hskill[i].id != 0 && hd->hskill[i].lv != 0 )
+		if( hd->hskill[i].id > 0 && hd->hskill[i].lv != 0 )
 		{
-			sprintf(tmp_sql,"REPLACE INTO `skill_homunculus` (`homun_id`, `id`, `lv`) VALUES (%d, %d, %d)",
-				hd->hom_id, hd->hskill[i].id, hd->hskill[i].lv);
-
-			if(mysql_query(&mysql_handle, tmp_sql)){
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			SqlStmt_BindParam(stmt, 0, SQLDT_USHORT, &hd->hskill[i].id, 0);
+			SqlStmt_BindParam(stmt, 1, SQLDT_USHORT, &hd->hskill[i].lv, 0);
+			if( SQL_ERROR == SqlStmt_Execute(stmt) )
+			{
+				SqlStmt_ShowDebug(stmt);
+				SqlStmt_Free(stmt);
 				return 0;
 			}
 		}
 	}
+	SqlStmt_Free(stmt);
 
 	return 1;
 }
 
 int mapif_save_homunculus(int fd, int account_id, struct s_homunculus *hd)
 {
-	int flag =1;
-	char t_name[NAME_LENGTH*2];
-	jstrescapecpy(t_name, hd->name);
+	int flag = 1;
+	char esc_name[NAME_LENGTH*2+1];
 
-	if(hd->hom_id==0) // new homunculus
-	{
-		sprintf(tmp_sql, "INSERT INTO `homunculus` "
+	Sql_EscapeStringLen(sql_handle, esc_name, hd->name, strnlen(hd->name, NAME_LENGTH));
+
+	if( hd->hom_id == 0 )
+	{// new homunculus
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `homunculus` "
 			"(`char_id`, `class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`, `rename_flag`, `vaporize`) "
 			"VALUES ('%d', '%d', '%s', '%d', '%u', '%u', '%d', '%d', %d, '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-			hd->char_id, hd->class_,t_name,hd->level,hd->exp,hd->intimacy,hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
-			hd->hp,hd->max_hp,hd->sp,hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize);
-
+			hd->char_id, hd->class_, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
+			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize) )
+		{
+			Sql_ShowDebug(sql_handle);
+			flag = 0;
+		}
+		else
+		{
+			hd->hom_id = (int)Sql_LastInsertId(sql_handle);
+		}
 	}
 	else
 	{
-		sprintf(tmp_sql, "UPDATE `homunculus` SET `char_id`='%d', `class`='%d',`name`='%s',`level`='%d',`exp`='%u',`intimacy`='%u',`hunger`='%d', `str`='%d', `agi`='%d', `vit`='%d', `int`='%d', `dex`='%d', `luk`='%d', `hp`='%d',`max_hp`='%d',`sp`='%d',`max_sp`='%d',`skill_point`='%d', `rename_flag`='%d', `vaporize`='%d' WHERE `homun_id`='%d'",
-			hd->char_id, hd->class_,t_name,hd->level,hd->exp,hd->intimacy,hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
-			hd->hp,hd->max_hp,hd->sp,hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->hom_id);
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `homunculus` SET `char_id`='%d', `class`='%d',`name`='%s',`level`='%d',`exp`='%u',`intimacy`='%u',`hunger`='%d', `str`='%d', `agi`='%d', `vit`='%d', `int`='%d', `dex`='%d', `luk`='%d', `hp`='%d',`max_hp`='%d',`sp`='%d',`max_sp`='%d',`skill_point`='%d', `rename_flag`='%d', `vaporize`='%d' WHERE `homun_id`='%d'",
+			hd->char_id, hd->class_, esc_name, hd->level, hd->exp, hd->intimacy, hd->hunger, hd->str, hd->agi, hd->vit, hd->int_, hd->dex, hd->luk,
+			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->hom_id) )
+		{
+			Sql_ShowDebug(sql_handle);
+			flag = 0;
+		}
+		else
+		{
+			flag = mapif_save_homunculus_skills(hd);
+			mapif_saved_homunculus(fd, account_id, flag);
+		}
 	}
 
-	if(mysql_query(&mysql_handle, tmp_sql)){
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		flag =  0;
-	}
-
-	if(hd->hom_id==0 && flag!=0)
-		hd->hom_id = (int)mysql_insert_id(&mysql_handle); // new homunculus
-	else
-	{
-		flag = mapif_save_homunculus_skills(hd);
-		mapif_saved_homunculus(fd, account_id, flag);
-	}
 	return flag;
 }
 
 
 
 // Load an homunculus
-int mapif_load_homunculus(int fd){
+int mapif_load_homunculus(int fd)
+{
 	int i;
-	RFIFOHEAD(fd);
+	char* data;
+	size_t len;
+
 	memset(homun_pt, 0, sizeof(struct s_homunculus));
+	RFIFOHEAD(fd);
 
-	sprintf(tmp_sql,"SELECT `homun_id`,`char_id`,`class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`rename_flag`, `vaporize` FROM `homunculus` WHERE `homun_id`='%u'", RFIFOL(fd,6));
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `homun_id`,`char_id`,`class`,`name`,`level`,`exp`,`intimacy`,`hunger`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `hp`,`max_hp`,`sp`,`max_sp`,`skill_point`,`rename_flag`, `vaporize` FROM `homunculus` WHERE `homun_id`='%u'", RFIFOL(fd,6)) )
+	{
+		Sql_ShowDebug(sql_handle);
 		return 0;
 	}
-	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res!=NULL && mysql_num_rows(sql_res)>0) {
-		sql_row = mysql_fetch_row(sql_res);
+	if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+	{
+		homun_pt->hom_id = RFIFOL(fd,6);
+		Sql_GetData(sql_handle,  1, &data, NULL); homun_pt->char_id = atoi(data);
+		Sql_GetData(sql_handle,  2, &data, NULL); homun_pt->class_ = atoi(data);
+		Sql_GetData(sql_handle,  3, &data, &len); memcpy(homun_pt->name, data, min(len, NAME_LENGTH));
+		Sql_GetData(sql_handle,  4, &data, NULL); homun_pt->level = atoi(data);
+		Sql_GetData(sql_handle,  5, &data, NULL); homun_pt->exp = atoi(data);
+		Sql_GetData(sql_handle,  6, &data, NULL); homun_pt->intimacy = (unsigned int)strtoul(data, NULL, 10);
+		homun_pt->intimacy = cap_value(homun_pt->intimacy, 0, 100000);
+		Sql_GetData(sql_handle,  7, &data, NULL); homun_pt->hunger = atoi(data);
+		homun_pt->hunger = cap_value(homun_pt->hunger, 0, 100);
+		Sql_GetData(sql_handle,  8, &data, NULL); homun_pt->str = atoi(data);
+		Sql_GetData(sql_handle,  9, &data, NULL); homun_pt->agi = atoi(data);
+		Sql_GetData(sql_handle, 10, &data, NULL); homun_pt->vit = atoi(data);
+		Sql_GetData(sql_handle, 11, &data, NULL); homun_pt->int_ = atoi(data);
+		Sql_GetData(sql_handle, 12, &data, NULL); homun_pt->dex = atoi(data);
+		Sql_GetData(sql_handle, 13, &data, NULL); homun_pt->luk = atoi(data);
+		Sql_GetData(sql_handle, 14, &data, NULL); homun_pt->hp = atoi(data);
+		Sql_GetData(sql_handle, 15, &data, NULL); homun_pt->max_hp = atoi(data);
+		Sql_GetData(sql_handle, 16, &data, NULL); homun_pt->sp = atoi(data);
+		Sql_GetData(sql_handle, 17, &data, NULL); homun_pt->max_sp = atoi(data);
+		Sql_GetData(sql_handle, 18, &data, NULL); homun_pt->skillpts = atoi(data);
+		Sql_GetData(sql_handle, 19, &data, NULL); homun_pt->rename_flag = atoi(data);
+		Sql_GetData(sql_handle, 20, &data, NULL); homun_pt->vaporize = atoi(data);
 
-		homun_pt->hom_id = RFIFOL(fd,6) ; //RFIFOL(fd,2);
-		homun_pt->class_ = atoi(sql_row[2]);
-		strncpy(homun_pt->name, sql_row[3], NAME_LENGTH);
-		homun_pt->char_id = atoi(sql_row[1]);
-		homun_pt->level = atoi(sql_row[4]);
-		homun_pt->exp = atoi(sql_row[5]);
-		homun_pt->intimacy = atoi(sql_row[6]);
-		homun_pt->hunger = atoi(sql_row[7]);
-		homun_pt->str = atoi(sql_row[8]);
-		homun_pt->agi = atoi(sql_row[9]);
-		homun_pt->vit = atoi(sql_row[10]);
-		homun_pt->int_ = atoi(sql_row[11]);
-		homun_pt->dex = atoi(sql_row[12]);
-		homun_pt->luk = atoi(sql_row[13]);
-		homun_pt->hp = atoi(sql_row[14]);
-		homun_pt->max_hp = atoi(sql_row[15]);
-		homun_pt->sp = atoi(sql_row[16]);
-		homun_pt->max_sp = atoi(sql_row[17]);
-		homun_pt->skillpts = atoi(sql_row[18]);
-		homun_pt->rename_flag = atoi(sql_row[19]);
-		homun_pt->vaporize = atoi(sql_row[20]);
+		Sql_FreeResult(sql_handle);
 	}
-	if(homun_pt->hunger < 0)
-		homun_pt->hunger = 0;
-	else if(homun_pt->hunger > 100)
-		homun_pt->hunger = 100;
-	if(homun_pt->intimacy > 100000)
-		homun_pt->intimacy = 100000;
-
-	mysql_free_result(sql_res);
 
 	// Load Homunculus Skill
-	memset(homun_pt->hskill, 0, sizeof(homun_pt->hskill));
-
-	sprintf(tmp_sql,"SELECT `id`,`lv` FROM `skill_homunculus` WHERE `homun_id`=%d",homun_pt->hom_id);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`lv` FROM `skill_homunculus` WHERE `homun_id`=%d", homun_pt->hom_id) )
+	{
+		Sql_ShowDebug(sql_handle);
 		return 0;
 	}
-	sql_res = mysql_store_result(&mysql_handle);
-         if(sql_res){
-         	while((sql_row = mysql_fetch_row(sql_res))){
-						i = (atoi(sql_row[0])-HM_SKILLBASE-1);
-						homun_pt->hskill[i].id = atoi(sql_row[0]);
-                        homun_pt->hskill[i].lv = atoi(sql_row[1]);
-                 }
-         }
+	while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+	{
+		// id
+		Sql_GetData(sql_handle, 0, &data, NULL);
+		i = atoi(data);
+		if( i < HM_SKILLBASE || i >= HM_SKILLBASE + MAX_HOMUNSKILL )
+			continue;// invalid guild skill
+		homun_pt->hskill[i].id = (unsigned short)i;
+		// lv
+		Sql_GetData(sql_handle, 1, &data, NULL);
+		homun_pt->hskill[i].lv = (unsigned short)atoi(data);
+	}
+	Sql_FreeResult(sql_handle);
 
-	mysql_free_result(sql_res);
-
-	if (save_log)
+	if( save_log )
 		ShowInfo("Homunculus loaded (%d - %s).\n", homun_pt->hom_id, homun_pt->name);
 	return mapif_info_homunculus(fd, RFIFOL(fd,2), homun_pt);
 }
 
 int inter_delete_homunculus(int hom_id)
 {
-	sprintf(tmp_sql, "DELETE FROM `homunculus` WHERE `homun_id` = '%u'", hom_id);
-	if(mysql_query(&mysql_handle, tmp_sql))
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `homunculus` WHERE `homun_id` = '%u'", hom_id) ||
+		SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `skill_homunculus` WHERE `homun_id` = '%u'", hom_id) )
 	{
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		return 0;
-	}
-	
-	sprintf(tmp_sql, "DELETE FROM `skill_homunculus` WHERE `homun_id` = '%u'", hom_id);
-	if(mysql_query(&mysql_handle, tmp_sql))
-	{
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		Sql_ShowDebug(sql_handle);
 		return 0;
 	}
 	return 1;

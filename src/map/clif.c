@@ -9,6 +9,7 @@
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
+#include "../common/utils.h"
 
 #include "map.h"
 #include "chrif.h"

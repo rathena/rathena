@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="char-server_sql"
 	ProjectGUID="{D356871D-58E1-450B-967A-E4E9646175AF}"
 	RootNamespace="char-server_sql"
@@ -298,6 +298,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\common\sql.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\sql.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\common\strlib.c"
 				>
 			</File>
@@ -383,14 +391,6 @@
 			</File>
 			<File
 				RelativePath="..\src\char_sql\inter.h"
-				>
-			</File>
-			<File
-				RelativePath="..\src\char_sql\itemdb.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\char_sql\itemdb.h"
 				>
 			</File>
 		</Filter>

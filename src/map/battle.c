@@ -8,6 +8,7 @@
 #include "../common/showmsg.h"
 #include "../common/ers.h"
 #include "../common/strlib.h"
+#include "../common/utils.h"
 
 #include "map.h"
 #include "pc.h"

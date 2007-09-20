@@ -1,0 +1,95 @@
+HAVE_MYSQL=@HAVE_MYSQL@
+ifeq ($(HAVE_MYSQL),yes)
+	ALL_DEPENDS=txt sql
+	SQL_DEPENDS=txt obj_sql common_sql
+else
+	ALL_TARGET=txt
+	SQL_DEPENDS=needs_mysql
+endif
+
+#####################################################################
+.PHONY : all txt sql clean help
+
+all: $(ALL_DEPENDS)
+
+txt: obj common
+
+sql: $(SQL_DEPENDS)
+
+clean:
+	rm -rf *.o obj obj_sql
+
+help:
+	@echo "possible targets are 'txt' 'sql' 'all' 'clean' 'help'"
+	@echo "'txt'    - builds object files used in txt servers"
+	@echo "'sql'    - builds object files used in sql servers"
+	@echo "'all'    - builds all above targets"
+	@echo "'clean'  - cleans builds and objects"
+	@echo "'help'   - outputs this message"
+
+#####################################################################
+
+needs_mysql:
+	@echo "MySQL not found or disabled by the configure script"
+	@exit 1
+
+obj:
+	-mkdir obj
+
+obj_sql:
+	-mkdir obj_sql
+
+common: obj/core.o obj/socket.o obj/timer.o obj/db.o obj/plugins.o obj/lock.o \
+	obj/nullpo.o obj/malloc.o obj/showmsg.o  obj/strlib.o obj/utils.o \
+	obj/grfio.o obj/minicore.o obj/minisocket.o obj/minimalloc.o \
+	obj/mapindex.o obj/ers.o obj/md5calc.o
+
+common_sql: obj_sql/sql.o
+
+
+obj/%.o: %.c
+	@CC@ @CFLAGS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+obj/mini%.o: %.c
+	@CC@ @CFLAGS@ -DMINICORE @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+obj_sql/%.o: %.c
+	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+
+HAVESVN = $(shell which svnversion)
+
+ifeq ($(findstring /,$(HAVESVN)), /)
+svnversion.h:
+	@printf "#define SVNVERSION " > svnversion.h
+	@svnversion . >> svnversion.h
+	@printf "\n" >> svnversion.h
+else
+svnversion.h:
+	@printf "\n" > svnversion.h
+endif
+
+obj/minicore.o: core.c core.h
+obj/minisocket.o: socket.c socket.h
+obj/minimalloc.o: malloc.c malloc.h
+
+# DO NOT DELETE
+
+obj/core.o: core.c core.h showmsg.h svnversion.h
+obj/db.o: db.c db.h showmsg.h ers.h
+obj/ers.o: ers.c ers.h cbasetypes.h
+obj/grfio.o: grfio.c grfio.h
+obj/lock.o: lock.c lock.h showmsg.h
+obj/malloc.o: malloc.c malloc.h showmsg.h
+obj/mapindex.o: mapindex.c mapindex.h
+obj/md5calc.o: md5calc.c md5calc.h
+obj/nullpo.o: nullpo.c nullpo.h showmsg.h
+obj/plugins.o: plugins.c plugins.h plugin.h
+obj/showmsg.o: showmsg.c showmsg.h
+obj/socket.o: socket.c socket.h mmo.h showmsg.h plugins.h
+obj/strlib.o: strlib.c strlib.h utils.h
+obj/timer.o: timer.c timer.h showmsg.h
+obj/utils.o: utils.c utils.h malloc.h showmsg.h mmo.h
+obj_sql/sql.o: sql.c sql.h cbasetypes.h malloc.h showmsg.h utils.h
+mmo.h: cbasetypes.h
+	@touch mmo.h

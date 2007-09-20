@@ -795,7 +795,7 @@ struct map_session_data {
 	char fakename[NAME_LENGTH]; // fake names [Valaris]
 
 #ifndef TXT_ONLY
-	int mail_counter;	// mail counter for mail system [Valaris]
+	int mail_counter;	// mail counter for mail system (antiflood protection)
 #endif
 
 	int duel_group; // duel vars [LuzZza]
@@ -1396,37 +1396,6 @@ extern char *MSG_CONF_NAME;
 
 extern char *map_server_dns;
 
-#ifndef TXT_ONLY
-
-#ifdef WIN32
-#include <winsock2.h>
-#endif
-#include <mysql.h>
-
-extern char tmp_sql[65535];
-
-extern int db_use_sqldbs;
-extern MYSQL mmysql_handle;
-extern MYSQL_RES*	sql_res ;
-extern MYSQL_ROW	sql_row ;
-
-extern MYSQL logmysql_handle;
-extern MYSQL_RES*	logsql_res ;
-extern MYSQL_ROW	logsql_row ;
-
-extern int mail_server_enable;
-extern MYSQL mail_handle;
-extern MYSQL_RES* 	mail_res ;
-extern MYSQL_ROW	mail_row ;
-
-extern char item_db_db[32];
-extern char item_db2_db[32];
-extern char mob_db_db[32];
-extern char mob_db2_db[32];
-extern char char_db[32];
-extern char mail_db[32];
-
-#endif /* not TXT_ONLY */
 //Useful typedefs from jA [Skotlex]
 typedef struct map_session_data TBL_PC;
 typedef struct npc_data         TBL_NPC;
@@ -1443,5 +1412,25 @@ typedef struct homun_data       TBL_HOM;
 
 extern int lowest_gm_level;
 extern char main_chat_nick[16];
+
+#ifndef TXT_ONLY
+
+#include "../common/sql.h"
+
+extern int db_use_sqldbs;
+extern int mail_server_enable;
+
+extern Sql* mmysql_handle;
+extern Sql* logmysql_handle;
+extern Sql* mail_handle;
+
+extern char item_db_db[32];
+extern char item_db2_db[32];
+extern char mob_db_db[32];
+extern char mob_db2_db[32];
+extern char char_db[32];
+extern char mail_db[32];
+
+#endif /* not TXT_ONLY */
 
 #endif /* _MAP_H_ */

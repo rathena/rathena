@@ -1,0 +1,67 @@
+@SET_MAKE@
+
+PLUGINS = sample sig pid gui upnp console
+
+COMMON_H = ../common/plugin.h ../common/cbasetypes.h
+
+#####################################################################
+.PHONY : all $(PLUGINS) clean help
+
+all: $(PLUGINS)
+
+sample: sample@DLLEXT@
+
+sig: sig@DLLEXT@
+
+pid: pid@DLLEXT@
+
+gui: gui@DLLEXT@
+
+upnp: upnp@DLLEXT@
+
+console: console@DLLEXT@
+
+clean:
+	rm -rf *.o
+
+help:
+	@echo "possible targets are $(PLUGINS:%='%') 'all' 'clean' 'help'"
+	@echo "'sample'   - sample plugin"
+	@echo "'sig'      - signal handler plugin"
+	@echo "'pid'      - process id plugin"
+	@echo "'gui'      - gui plugin"
+	@echo "'upnp'     - upnp plugin"
+	@echo "'console'  - console plugin"
+	@echo "'all'      - builds all above targets"
+	@echo "'clean'    - cleans builds and objects"
+	@echo "'help'     - outputs this message"
+
+#####################################################################
+
+%@DLLEXT@: %.c
+	@CC@ @CFLAGS@ @CPPFLAGS@ -shared -o ../../plugins/$@ $<
+
+sig@DLLEXT@: sig.c
+	@$(MAKE) -C ../common txt
+	@CC@ @CFLAGS@ @CPPFLAGS@ -shared -o ../../plugins/$@ $< \
+	../common/obj/showmsg.o ../common/obj/utils.o ../common/obj/strlib.o \
+	../common/obj/minimalloc.o
+
+gui@DLLEXT@: ../../plugins/gui.conf
+upnp@DLLEXT@: ../../plugins/upnp.conf
+
+../../plugins/%.conf: %.txt
+	cp -r $< $@
+
+../../plugins/gui.conf: gui.txt
+../../plugins/upnp.conf: upnp.txt
+
+# DO NOT DELETE
+
+sample@DLLEXT@: sample.c $(COMMON_H)
+sig@DLLEXT@: sig.c $(COMMON_H)
+pid@DLLEXT@: pid.c $(COMMON_H)
+gui@DLLEXT@: gui.c $(COMMON_H)
+#TODO where is upnp.c? [FlavioJS]
+#upnp@DLLEXT@: upnp.c $(COMMON_H)
+console@DLLEXT@: console.c $(COMMON_H)

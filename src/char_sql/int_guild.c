@@ -1,10 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "../common/mmo.h"
 #include "../common/cbasetypes.h"
 #include "../common/strlib.h"
@@ -12,9 +8,14 @@
 #include "../common/db.h"
 #include "../common/malloc.h"
 #include "../common/socket.h"
+#include "../common/timer.h"
+#include "char.h"
 #include "inter.h"
 #include "int_guild.h"
-#include "char.h"
+
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define GS_MEMBER_UNMODIFIED 0x00
 #define GS_MEMBER_MODIFIED 0x01
@@ -87,18 +88,10 @@ static int guild_save_timer(int tid, unsigned int tick, int id, int data) {
 
 int inter_guild_removemember_tosql(int account_id, int char_id)
 {
-	sprintf(tmp_sql,"DELETE from `%s` where `account_id` = '%d' and `char_id` = '%d'", guild_member_db, account_id, char_id);
-	if(mysql_query(&mysql_handle, tmp_sql))
-	{
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
-	sprintf(tmp_sql,"UPDATE `%s` SET `guild_id` = '0' WHERE `char_id` = '%d'", char_db, char_id);
-	if(mysql_query(&mysql_handle, tmp_sql))
-	{
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE from `%s` where `account_id` = '%d' and `char_id` = '%d'", guild_member_db, account_id, char_id) )
+		Sql_ShowDebug(sql_handle);
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `guild_id` = '0' WHERE `char_id` = '%d'", char_db, char_id) )
+		Sql_ShowDebug(sql_handle);
 	return 0;
 }
 #endif //TXT_SQL_CONVERT
@@ -120,19 +113,11 @@ int inter_guild_tosql(struct guild *g,int flag)
 
 	// temporary storage for str convertion. They must be twice the size of the
 	// original string to ensure no overflows will occur. [Skotlex]
-	char t_name[NAME_LENGTH*2],
-		t_master[NAME_LENGTH*2],
-		t_mes1[120],
-		t_mes2[240],
-		t_member[NAME_LENGTH*2],
-		t_position[NAME_LENGTH*2],
-		t_alliance[NAME_LENGTH*2],
-		t_ename[NAME_LENGTH*2],
-		t_emes[80],
-		t_info[240];
-	char emblem_data[4096];
+	char t_info[256];
+	char esc_name[NAME_LENGTH*2+1];
+	char esc_master[NAME_LENGTH*2+1];
 	char new_guild = 0;
-	int i=0, sql_index;
+	int i=0;
 
 	if (g->guild_id<=0 && g->guild_id != -1) return 0;
 	
@@ -140,9 +125,9 @@ int inter_guild_tosql(struct guild *g,int flag)
 	ShowInfo("Save guild request ("CL_BOLD"%d"CL_RESET" - flag 0x%x).",g->guild_id, flag);
 #endif
 
-	jstrescapecpy(t_name, g->name);
-	
-	t_info[0]='\0';
+	Sql_EscapeStringLen(sql_handle, esc_name, g->name, strnlen(g->name, NAME_LENGTH));
+	Sql_EscapeStringLen(sql_handle, esc_master, g->master, strnlen(g->master, NAME_LENGTH));
+	*t_info = '\0';
 
 #ifndef TXT_SQL_CONVERT
 	// Insert a new guild the guild
@@ -151,27 +136,19 @@ int inter_guild_tosql(struct guild *g,int flag)
 		strcat(t_info, " guild_create");
 
 		// Create a new guild
-		sprintf(tmp_sql,"INSERT INTO `%s` "
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` "
 			"(`name`,`master`,`guild_lv`,`max_member`,`average_lv`,`char_id`) "
 			"VALUES ('%s', '%s', '%d', '%d', '%d', '%d')",
-			guild_db,t_name,jstrescapecpy(t_master,g->master),g->guild_lv,g->max_member,g->average_lv,g->member[0].char_id);
-		if(mysql_query(&mysql_handle, tmp_sql) )
+			guild_db, esc_name, esc_master, g->guild_lv, g->max_member, g->average_lv, g->member[0].char_id) )
 		{
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			Sql_ShowDebug(sql_handle);
 			if (g->guild_id == -1)
 				return 0; //Failed to create guild!
-		} 
+		}
 		else
-		{ 
-			//New guild, catch id
-			if(mysql_field_count(&mysql_handle) == 0 &&	mysql_insert_id(&mysql_handle) != 0)
-			{
-				g->guild_id = (int)mysql_insert_id(&mysql_handle);
-				new_guild = 1;
-			}
-			else
-				return 0; //Failed to get ID??
+		{
+			g->guild_id = (int)Sql_LastInsertId(sql_handle);
+			new_guild = 1;
 		}
 	}
 #else
@@ -180,21 +157,15 @@ int inter_guild_tosql(struct guild *g,int flag)
 	{
 		strcat(t_info, " guild_create");
 		// Since the PK is guild id + master id, a replace will not be enough if we are overwriting data, we need to wipe the previous guild.
-		sprintf(tmp_sql,"DELETE FROM `%s` where `guild_id` = '%d'", guild_db,g->guild_id);
-		if(mysql_query(&mysql_handle, tmp_sql) )
-		{
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
+		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` where `guild_id` = '%d'", guild_db, g->guild_id) )
+			Sql_ShowDebug(sql_handle);
 		// Create a new guild
-		sprintf(tmp_sql,"REPLACE INTO `%s` "
+		if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` "
 			"(`guild_id`,`name`,`master`,`guild_lv`,`max_member`,`average_lv`,`char_id`) "
 			"VALUES ('%d', '%s', '%s', '%d', '%d', '%d', '%d')",
-			guild_db,g->guild_id,t_name,jstrescapecpy(t_master,g->master),g->guild_lv,g->max_member,g->average_lv,g->member[0].char_id);
-		if(mysql_query(&mysql_handle, tmp_sql) )
+			guild_db, g->guild_id, esc_name, esc_master, g->guild_lv, g->max_member, g->average_lv, g->member[0].char_id) )
 		{
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			Sql_ShowDebug(sql_handle);
 			return 0; //Failed to create guild.
 		}
 	}
@@ -202,51 +173,79 @@ int inter_guild_tosql(struct guild *g,int flag)
 	// If we need an update on an existing guild or more update on the new guild
 	if (((flag & GS_BASIC_MASK) && !new_guild) || ((flag & (GS_BASIC_MASK & ~GS_BASIC)) && new_guild))
 	{
-		sql_index = sprintf(tmp_sql,"UPDATE `%s` SET ", guild_db);
+		StringBuf buf;
+		bool add_comma = false;
+
+		StringBuf_Init(&buf);
+		StringBuf_Printf(&buf, "UPDATE `%s` SET ", guild_db);
 
 		if (flag & GS_EMBLEM)
 		{
-			char * pData = emblem_data;
+			char emblem_data[sizeof(g->emblem_data)*2+1];
+			char* pData = emblem_data;
+
 			strcat(t_info, " emblem");
 			// Convert emblem_data to hex
+			//TODO: why not use binary directly? [ultramage]
 			for(i=0; i<g->emblem_len; i++){
 				*pData++ = dataToHex[(g->emblem_data[i] >> 4) & 0x0F];
 				*pData++ = dataToHex[g->emblem_data[i] & 0x0F];
 			}
 			*pData = 0;
-			sql_index += sprintf(tmp_sql + sql_index,"`emblem_len`=%d,`emblem_id`=%d,`emblem_data`='%s',",g->emblem_len,g->emblem_id,emblem_data);
+			StringBuf_Printf(&buf, "`emblem_len`=%d, `emblem_id`=%d, `emblem_data`='%s'", g->emblem_len, g->emblem_id, emblem_data);
+			add_comma = true;
 		}
 		if (flag & GS_BASIC) 
 		{
 			strcat(t_info, " basic");
-			sql_index += sprintf(tmp_sql + sql_index,"`name`='%s', `master`='%s', `char_id`=%d,",t_name,jstrescapecpy(t_master,g->master),g->member[0].char_id);
+			if( add_comma )
+				StringBuf_AppendStr(&buf, ", ");
+			else
+				add_comma = true;
+			StringBuf_Printf(&buf, "`name`='%s', `master`='%s', `char_id`=%d", esc_name, esc_master, g->member[0].char_id);
 		}
 		if (flag & GS_CONNECT)
 		{
 			strcat(t_info, " connect");
-			sql_index += sprintf(tmp_sql + sql_index,"`connect_member`=%d,`average_lv`=%d,",g->connect_member, g->average_lv);
+			if( add_comma )
+				StringBuf_AppendStr(&buf, ", ");
+			else
+				add_comma = true;
+			StringBuf_Printf(&buf, "`connect_member`=%d, `average_lv`=%d", g->connect_member, g->average_lv);
 		}
 		if (flag & GS_MES)
 		{
+			char esc_mes1[sizeof(g->mes1)*2+1];
+			char esc_mes2[sizeof(g->mes2)*2+1];
+
 			strcat(t_info, " mes");
-			sql_index += sprintf(tmp_sql + sql_index,"`mes1`='%s',`mes2`='%s',",jstrescapecpy(t_mes1,g->mes1),jstrescapecpy(t_mes2,g->mes2));
+			if( add_comma )
+				StringBuf_AppendStr(&buf, ", ");
+			else
+				add_comma = true;
+			Sql_EscapeStringLen(sql_handle, esc_mes1, g->mes1, strnlen(g->mes1, sizeof(g->mes1)));
+			Sql_EscapeStringLen(sql_handle, esc_mes2, g->mes2, strnlen(g->mes2, sizeof(g->mes2)));
+			StringBuf_Printf(&buf, "`mes1`='%s', `mes2`='%s'", esc_mes1, esc_mes2);
 		}
 		if (flag & GS_LEVEL)
 		{
 			strcat(t_info, " level");
-			sql_index += sprintf(tmp_sql + sql_index,"`guild_lv`=%d,`skill_point`=%d,`exp`=%u,`next_exp`=%u,`max_member`=%d,",g->guild_lv, g->skill_point, g->exp, g->next_exp, g->max_member);
+			if( add_comma )
+				StringBuf_AppendStr(&buf, ", ");
+			else
+				add_comma = true;
+			StringBuf_Printf(&buf, "`guild_lv`=%d, `skill_point`=%d, `exp`=%u, `next_exp`=%u, `max_member`=%d", g->guild_lv, g->skill_point, g->exp, g->next_exp, g->max_member);
 		}
-		sprintf(tmp_sql + sql_index -1," WHERE `guild_id`=%d", g->guild_id);
-		if(mysql_query(&mysql_handle, tmp_sql))
-		{
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
+		StringBuf_Printf(&buf, " WHERE `guild_id`=%d", g->guild_id);
+		if( SQL_ERROR == Sql_Query(sql_handle, "%s", StringBuf_Value(&buf)) )
+			Sql_ShowDebug(sql_handle);
+		StringBuf_Destroy(&buf);
 	}
 
 	if (flag&GS_MEMBER)
 	{
 		struct guild_member *m;
+
 		strcat(t_info, " members");
 		// Update only needed players
 		for(i=0;i<g->max_member;i++){
@@ -257,26 +256,18 @@ int inter_guild_tosql(struct guild *g,int flag)
 #endif
 			if(m->account_id) {
 				//Since nothing references guild member table as foreign keys, it's safe to use REPLACE INTO
-				sprintf(tmp_sql,"REPLACE INTO `%s` (`guild_id`,`account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name`) "
+				Sql_EscapeStringLen(sql_handle, esc_name, m->name, strnlen(m->name, NAME_LENGTH));
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`guild_id`,`account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name`) "
 					"VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%u','%d','%d','%d','%s')",
-				       guild_member_db, g->guild_id, m->account_id,m->char_id,
-				       m->hair,m->hair_color,m->gender,
-				       m->class_,m->lv,m->exp,m->exp_payper,m->online,m->position,
-				       jstrescapecpy(t_member,m->name));
-				if(mysql_query(&mysql_handle, tmp_sql))
-				{
-					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-				}
+					guild_member_db, g->guild_id, m->account_id, m->char_id,
+					m->hair, m->hair_color, m->gender,
+					m->class_, m->lv, m->exp, m->exp_payper, m->online, m->position, esc_name) )
+					Sql_ShowDebug(sql_handle);
 				if (m->modified & GS_MEMBER_NEW)
 				{
-					sprintf(tmp_sql,"UPDATE `%s` SET `guild_id` = '%d' WHERE `char_id` = '%d'",
-						char_db, g->guild_id, m->char_id);
-					if(mysql_query(&mysql_handle, tmp_sql))
-					{
-						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-					}
+					if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `guild_id` = '%d' WHERE `char_id` = '%d'",
+						char_db, g->guild_id, m->char_id) )
+						Sql_ShowDebug(sql_handle);
 				}
 				m->modified = GS_MEMBER_UNMODIFIED;
 			}
@@ -292,13 +283,10 @@ int inter_guild_tosql(struct guild *g,int flag)
 			if (!p->modified)
 				continue;
 #endif
-			sprintf(tmp_sql,"REPLACE INTO `%s` (`guild_id`,`position`,`name`,`mode`,`exp_mode`) VALUES ('%d','%d', '%s','%d','%d')",
-				guild_position_db, g->guild_id, i, jstrescapecpy(t_position,p->name),p->mode,p->exp_mode);
-			//printf(" %s\n",tmp_sql);
-			if(mysql_query(&mysql_handle, tmp_sql) ) {
-				ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-				ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-			}
+			Sql_EscapeStringLen(sql_handle, esc_name, p->name, strnlen(p->name, NAME_LENGTH));
+			if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`guild_id`,`position`,`name`,`mode`,`exp_mode`) VALUES ('%d','%d','%s','%d','%d')",
+				guild_position_db, g->guild_id, i, esc_name, p->mode, p->exp_mode) )
+				Sql_ShowDebug(sql_handle);
 			p->modified = GS_POSITION_UNMODIFIED;
 		}
 	}
@@ -309,12 +297,10 @@ int inter_guild_tosql(struct guild *g,int flag)
 		// NOTE: no need to do it on both sides since both guilds in memory had 
 		// their info changed, not to mention this would also mess up oppositions!
 		// [Skotlex]
-//		sprintf(tmp_sql, "DELETE FROM `%s` WHERE `guild_id`='%d' OR `alliance_id`='%d'",guild_alliance_db, g->guild_id,g->guild_id);
-		sprintf(tmp_sql, "DELETE FROM `%s` WHERE `guild_id`='%d'",guild_alliance_db, g->guild_id);
-		if(mysql_query(&mysql_handle, tmp_sql) )
+		//if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id`='%d' OR `alliance_id`='%d'", guild_alliance_db, g->guild_id, g->guild_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id`='%d'", guild_alliance_db, g->guild_id) )
 		{
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+			Sql_ShowDebug(sql_handle);
 		}
 		else
 		{
@@ -324,15 +310,11 @@ int inter_guild_tosql(struct guild *g,int flag)
 				struct guild_alliance *a=&g->alliance[i];
 				if(a->guild_id>0)
 				{
-					sprintf(tmp_sql,"REPLACE INTO `%s` (`guild_id`,`opposition`,`alliance_id`,`name`) "
+					Sql_EscapeStringLen(sql_handle, esc_name, a->name, strnlen(a->name, NAME_LENGTH));
+					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`guild_id`,`opposition`,`alliance_id`,`name`) "
 						"VALUES ('%d','%d','%d','%s')",
-						guild_alliance_db, g->guild_id,a->opposition,a->guild_id,jstrescapecpy(t_alliance,a->name));
-					//printf(" %s\n",tmp_sql);
-					if(mysql_query(&mysql_handle, tmp_sql) )
-					{
-						ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-						ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-					}
+						guild_alliance_db, g->guild_id, a->opposition, a->guild_id, esc_name) )
+						Sql_ShowDebug(sql_handle);
 				}
 			}
 		}
@@ -344,15 +326,17 @@ int inter_guild_tosql(struct guild *g,int flag)
 		for(i=0;i<MAX_GUILDEXPULSION;i++){
 			struct guild_expulsion *e=&g->expulsion[i];
 			if(e->account_id>0){
-				sprintf(tmp_sql,"REPLACE INTO `%s` (`guild_id`,`name`,`mes`,`acc`,`account_id`,`rsv1`,`rsv2`,`rsv3`) "
+				char esc_mes[sizeof(e->mes)*2+1];
+				char esc_acc[sizeof(e->acc)*2+1];
+
+				Sql_EscapeStringLen(sql_handle, esc_name, e->name, strnlen(e->name, NAME_LENGTH));
+				Sql_EscapeStringLen(sql_handle, esc_mes, e->mes, strnlen(e->mes, sizeof(e->mes)));
+				Sql_EscapeStringLen(sql_handle, esc_acc, e->acc, strnlen(e->acc, sizeof(e->acc)));
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`guild_id`,`name`,`mes`,`acc`,`account_id`,`rsv1`,`rsv2`,`rsv3`) "
 					"VALUES ('%d','%s','%s','%s','%d','%d','%d','%d')",
 					guild_expulsion_db, g->guild_id,
-					jstrescapecpy(t_ename,e->name),jstrescapecpy(t_emes,e->mes),e->acc,e->account_id,e->rsv1,e->rsv2,e->rsv3 );
-				//printf(" %s\n",tmp_sql);
-				if(mysql_query(&mysql_handle, tmp_sql) ) {
-					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-				}
+					esc_name, esc_mes, esc_acc, e->account_id, e->rsv1, e->rsv2 ,e->rsv3) )
+					Sql_ShowDebug(sql_handle);
 			}
 		}
 	}
@@ -362,13 +346,9 @@ int inter_guild_tosql(struct guild *g,int flag)
 		//printf("- Insert guild %d to guild_skill\n",g->guild_id);
 		for(i=0;i<MAX_GUILDSKILL;i++){
 			if (g->skill[i].id>0 && g->skill[i].lv>0){
-				sprintf(tmp_sql,"REPLACE INTO `%s` (`guild_id`,`id`,`lv`) VALUES ('%d','%d','%d')",
-					guild_skill_db, g->guild_id,g->skill[i].id,g->skill[i].lv);
-				//printf("%s\n",tmp_sql);
-				if(mysql_query(&mysql_handle, tmp_sql) ) {
-					ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-					ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-				}
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`guild_id`,`id`,`lv`) VALUES ('%d','%d','%d')",
+					guild_skill_db, g->guild_id, g->skill[i].id, g->skill[i].lv) )
+					Sql_ShowDebug(sql_handle);
 			}
 		}
 	}
@@ -377,213 +357,199 @@ int inter_guild_tosql(struct guild *g,int flag)
 		ShowInfo("Saved guild (%d - %s):%s\n",g->guild_id,g->name,t_info);
 	return 1;
 }
+
 #ifndef TXT_SQL_CONVERT
 // Read guild from sql
 struct guild * inter_guild_fromsql(int guild_id)
 {
-	int i;
-	char * pstr, * pEmblemData;
 	struct guild *g;
+	char* data;
+	size_t len;
+	char* p;
+	int i;
 
-	if (guild_id<=0) return NULL;
+	if( guild_id <= 0 )
+		return NULL;
 
-	g = idb_get(guild_db_,guild_id);
-	if (g) return g;
-
-	g = (struct guild*)aCalloc(sizeof(struct guild), 1);
+	g = idb_get(guild_db_, guild_id);
+	if( g )
+		return g;
 
 #ifdef NOISY
 	ShowInfo("Guild load request (%d)...\n", guild_id);
 #endif
-	
-	sprintf(tmp_sql,"SELECT `name`,`master`,`guild_lv`,`connect_member`,`max_member`,`average_lv`,`exp`,`next_exp`,`skill_point`,`mes1`,`mes2`,`emblem_len`,`emblem_id`,`emblem_data` "
-		"FROM `%s` WHERE `guild_id`='%d'",guild_db, guild_id);
-	//printf("  %s\n",tmp_sql);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		aFree(g);
+
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `name`,`master`,`guild_lv`,`connect_member`,`max_member`,`average_lv`,`exp`,`next_exp`,`skill_point`,`mes1`,`mes2`,`emblem_len`,`emblem_id`,`emblem_data` "
+		"FROM `%s` WHERE `guild_id`='%d'", guild_db, guild_id) )
+	{
+		Sql_ShowDebug(sql_handle);
 		return NULL;
 	}
 
-	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res==NULL || mysql_num_rows(sql_res)<1) {
-		//Guild does not exists.
-		if (sql_res) mysql_free_result(sql_res);
-		aFree(g);
-		return NULL;
-	}
-	
-	sql_row = mysql_fetch_row(sql_res);
-	if (sql_row==NULL) {
-		mysql_free_result(sql_res);
-		aFree(g);
-		return NULL;
-	}
+	if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
+		return NULL;// Guild does not exists.
 
-	g->guild_id=guild_id;
-	strncpy(g->name,sql_row[0],NAME_LENGTH-1);
-	strncpy(g->master,sql_row[1],NAME_LENGTH-1);
-	g->guild_lv=atoi(sql_row[2]);
-	g->connect_member=atoi(sql_row[3]);
-	g->max_member = atoi(sql_row[4]);
-	if (g->max_member > MAX_GUILD)
+	CREATE(g, struct guild, 1);
+
+	g->guild_id = guild_id;
+	Sql_GetData(sql_handle, 0, &data, &len); memcpy(g->name, data, min(len, NAME_LENGTH));
+	Sql_GetData(sql_handle, 1, &data, &len); memcpy(g->master, data, min(len, NAME_LENGTH));
+	Sql_GetData(sql_handle, 2, &data, NULL); g->guild_lv = atoi(data);
+	Sql_GetData(sql_handle, 3, &data, NULL); g->connect_member = atoi(data);
+	Sql_GetData(sql_handle, 4, &data, NULL); g->max_member = atoi(data);
+	if( g->max_member > MAX_GUILD )
 	{	// Fix reduction of MAX_GUILD [PoW]
 		ShowWarning("Guild %d:%s specifies higher capacity (%d) than MAX_GUILD (%d)\n", guild_id, g->name, g->max_member, MAX_GUILD);
 		g->max_member = MAX_GUILD;
 	}
-	g->average_lv=atoi(sql_row[5]);
-	g->exp=(unsigned int)atof(sql_row[6]);
-	g->next_exp=(unsigned int)atof(sql_row[7]);
-	g->skill_point=atoi(sql_row[8]);
-	//There shouldn't be a need to copy the very last char, as it's the \0 [Skotlex]
-	strncpy(g->mes1,sql_row[9],59);
-	strncpy(g->mes2,sql_row[10],119);
-	g->emblem_len=atoi(sql_row[11]);
-	g->emblem_id=atoi(sql_row[12]);
-	//FIXME: check for sql_row[13]==NULL, just in case
-	for(i=0,pstr=sql_row[13],pEmblemData=g->emblem_data; i < g->emblem_len; i++,pstr+=2){
-		int c1=pstr[0],c2=pstr[1],x1=0,x2=0;
-		if(c1>='0' && c1<='9')
-			x1=c1-'0';
-		else if(c1>='a' && c1<='f')
-			x1=c1-'a'+10;
-		else if(c1>='A' && c1<='F')
-			x1=c1-'A'+10;
-		if(c2>='0' && c2<='9')
-			x2=c2-'0';
-		else if(c2>='a' && c2<='f')
-			x2=c2-'a'+10;
-		else if(c2>='A' && c2<='F')
-			x2=c2-'A'+10;
-		*pEmblemData++=(x1<<4)|x2;
+	Sql_GetData(sql_handle,  5, &data, NULL); g->average_lv = atoi(data);
+	Sql_GetData(sql_handle,  6, &data, NULL); g->exp = (unsigned int)strtoul(data, NULL, 10);
+	Sql_GetData(sql_handle,  7, &data, NULL); g->next_exp = (unsigned int)strtoul(data, NULL, 10);
+	Sql_GetData(sql_handle,  8, &data, NULL); g->skill_point = atoi(data);
+	Sql_GetData(sql_handle,  9, &data, &len); memcpy(g->mes1, data, min(len, sizeof(g->mes1)));
+	Sql_GetData(sql_handle, 10, &data, &len); memcpy(g->mes2, data, min(len, sizeof(g->mes2)));
+	Sql_GetData(sql_handle, 11, &data, &len); g->emblem_len = atoi(data);
+	Sql_GetData(sql_handle, 12, &data, &len); g->emblem_id = atoi(data);
+	Sql_GetData(sql_handle, 13, &data, &len);
+	// convert emblem data from hexadecimal to binary
+	//TODO: why not store it in the db as binary directly? [ultramage]
+	for( i = 0, p = g->emblem_data; i < g->emblem_len; ++i, ++p )
+	{
+		if( *data >= '0' && *data <= '9' )
+			*p = *data - '0';
+		else if( *data >= 'a' && *data <= 'f' )
+			*p = *data - 'a' + 10;
+		else if( *data >= 'A' && *data <= 'F' )
+			*p = *data - 'A' + 10;
+		*p <<= 4;
+		++data;
+
+		if( *data >= '0' && *data <= '9' )
+			*p |= *data - '0';
+		else if( *data >= 'a' && *data <= 'f' )
+			*p |= *data - 'a' + 10;
+		else if( *data >= 'A' && *data <= 'F' )
+			*p |= *data - 'A' + 10;
+		++data;
 	}
-	mysql_free_result(sql_res);
 
 	//printf("- Read guild_member %d from sql \n",guild_id);
-	sprintf(tmp_sql,"SELECT `guild_id`,`account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`rsv1`,`rsv2`,`name` "
-		"FROM `%s` WHERE `guild_id`='%d'  ORDER BY `position`", guild_member_db, guild_id);
-	//printf("  %s\n",tmp_sql);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id`,`account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`rsv1`,`rsv2`,`name` "
+		"FROM `%s` WHERE `guild_id`='%d'  ORDER BY `position`", guild_member_db, guild_id) )
+	{
+		Sql_ShowDebug(sql_handle);
 		aFree(g);
 		return NULL;
 	}
-	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res) {
-		for(i=0;((sql_row = mysql_fetch_row(sql_res))&&i<g->max_member);i++){
-			struct guild_member *m = &g->member[i];
-			m->account_id=atoi(sql_row[1]);
-			m->char_id=atoi(sql_row[2]);
-			m->hair=atoi(sql_row[3]);
-			m->hair_color=atoi(sql_row[4]);
-			m->gender=atoi(sql_row[5]);
-			m->class_=atoi(sql_row[6]);
-			m->lv=atoi(sql_row[7]);
-			m->exp=strtoul(sql_row[8],NULL,10);
-			m->exp_payper=atoi(sql_row[9]);
-			m->online=atoi(sql_row[10]);
-			m->position = atoi(sql_row[11]);
-			if (m->position >= MAX_GUILDPOSITION) // Fix reduction of MAX_GUILDPOSITION [PoW]
-				m->position = MAX_GUILDPOSITION - 1;
+	for( i = 0; i < g->max_member && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
+	{
+		struct guild_member* m = &g->member[i];
 
-			strncpy(m->name,sql_row[14],NAME_LENGTH-1);
-			m->modified = GS_MEMBER_UNMODIFIED;
-		}
-		mysql_free_result(sql_res);
+		Sql_GetData(sql_handle,  1, &data, NULL); m->account_id = atoi(data);
+		Sql_GetData(sql_handle,  2, &data, NULL); m->char_id = atoi(data);
+		Sql_GetData(sql_handle,  3, &data, NULL); m->hair = atoi(data);
+		Sql_GetData(sql_handle,  4, &data, NULL); m->hair_color = atoi(data);
+		Sql_GetData(sql_handle,  5, &data, NULL); m->gender = atoi(data);
+		Sql_GetData(sql_handle,  6, &data, NULL); m->class_ = atoi(data);
+		Sql_GetData(sql_handle,  7, &data, NULL); m->lv = atoi(data);
+		Sql_GetData(sql_handle,  8, &data, NULL); m->exp = (unsigned int)strtoul(data, NULL, 10);
+		Sql_GetData(sql_handle,  9, &data, NULL); m->exp_payper = (unsigned int)atoi(data);
+		Sql_GetData(sql_handle, 10, &data, NULL); m->online = atoi(data);
+		Sql_GetData(sql_handle, 11, &data, NULL); m->position = atoi(data);
+		if( m->position >= MAX_GUILDPOSITION ) // Fix reduction of MAX_GUILDPOSITION [PoW]
+			m->position = MAX_GUILDPOSITION - 1;
+		//## TODO what about the rsv fields?
+		// rsv1 (12)
+		// rsv2 (13)
+		// name
+		Sql_GetData(sql_handle, 14, &data, &len); memcpy(m->name, data, min(len, NAME_LENGTH));
+		m->modified = GS_MEMBER_UNMODIFIED;
 	}
 
 	//printf("- Read guild_position %d from sql \n",guild_id);
-	sprintf(tmp_sql,"SELECT `guild_id`,`position`,`name`,`mode`,`exp_mode` FROM `%s` WHERE `guild_id`='%d'",guild_position_db, guild_id);
-	//printf("  %s\n",tmp_sql);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id`,`position`,`name`,`mode`,`exp_mode` FROM `%s` WHERE `guild_id`='%d'", guild_position_db, guild_id) )
+	{
+		Sql_ShowDebug(sql_handle);
 		aFree(g);
 		return NULL;
 	}
-	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res) {
-		for(i=0;((sql_row = mysql_fetch_row(sql_res))&&i<MAX_GUILDPOSITION);i++){
-			int position = atoi(sql_row[1]);
-			struct guild_position *p = &g->position[position];
-			strncpy(p->name,sql_row[2],NAME_LENGTH-1);
-			p->mode=atoi(sql_row[3]);
-			p->exp_mode=atoi(sql_row[4]);
-			p->modified = GS_POSITION_UNMODIFIED;
-		}
-		mysql_free_result(sql_res);
+	while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+	{
+		int position;
+		struct guild_position* p;
+
+		Sql_GetData(sql_handle, 1, &data, NULL); position = atoi(data);
+		if( position < 0 || position >= MAX_GUILDPOSITION )
+			continue;// invalid position
+		p = &g->position[position];
+		Sql_GetData(sql_handle, 2, &data, &len); memcpy(p->name, data, min(len, NAME_LENGTH));
+		Sql_GetData(sql_handle, 3, &data, NULL); p->mode = atoi(data);
+		Sql_GetData(sql_handle, 4, &data, NULL); p->exp_mode = atoi(data);
+		p->modified = GS_POSITION_UNMODIFIED;
 	}
 
 	//printf("- Read guild_alliance %d from sql \n",guild_id);
-	sprintf(tmp_sql,"SELECT `guild_id`,`opposition`,`alliance_id`,`name` FROM `%s` WHERE `guild_id`='%d'",guild_alliance_db, guild_id);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id`,`opposition`,`alliance_id`,`name` FROM `%s` WHERE `guild_id`='%d'", guild_alliance_db, guild_id) )
+	{
+		Sql_ShowDebug(sql_handle);
 		aFree(g);
 		return NULL;
 	}
-	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res) {
-		for(i=0;((sql_row = mysql_fetch_row(sql_res))&&i<MAX_GUILDALLIANCE);i++){
-			struct guild_alliance *a = &g->alliance[i];
-			a->opposition=atoi(sql_row[1]);
-			a->guild_id=atoi(sql_row[2]);
-			strncpy(a->name,sql_row[3],NAME_LENGTH-1);
-		}
-		mysql_free_result(sql_res);
+	for( i = 0; i < MAX_GUILDALLIANCE && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
+	{
+		struct guild_alliance* a = &g->alliance[i];
+
+		Sql_GetData(sql_handle, 1, &data, NULL); a->opposition = atoi(data);
+		Sql_GetData(sql_handle, 2, &data, NULL); a->guild_id = atoi(data);
+		Sql_GetData(sql_handle, 3, &data, &len); memcpy(a->name, data, min(len, NAME_LENGTH));
 	}
 
 	//printf("- Read guild_expulsion %d from sql \n",guild_id);
-	sprintf(tmp_sql,"SELECT `guild_id`,`name`,`mes`,`acc`,`account_id`,`rsv1`,`rsv2`,`rsv3` FROM `%s` WHERE `guild_id`='%d'",guild_expulsion_db, guild_id);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id`,`name`,`mes`,`acc`,`account_id`,`rsv1`,`rsv2`,`rsv3` FROM `%s` WHERE `guild_id`='%d'", guild_expulsion_db, guild_id) )
+	{
+		Sql_ShowDebug(sql_handle);
 		aFree(g);
 		return NULL;
 	}
-	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res) {
-		for(i=0;((sql_row = mysql_fetch_row(sql_res))&&i<MAX_GUILDEXPULSION);i++){
-			struct guild_expulsion *e = &g->expulsion[i];
+	for( i = 0; i < MAX_GUILDEXPULSION && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
+	{
+		struct guild_expulsion *e = &g->expulsion[i];
 
-			strncpy(e->name,sql_row[1],NAME_LENGTH-1);
-			//No need to copy char 40, the null terminator. [Skotlex]
-			strncpy(e->mes,sql_row[2],39);
-			strncpy(e->acc,sql_row[3],39);
-			e->account_id=atoi(sql_row[4]);
-			e->rsv1=atoi(sql_row[5]);
-			e->rsv2=atoi(sql_row[6]);
-			e->rsv3=atoi(sql_row[7]);
-		}
-		mysql_free_result(sql_res);
+		Sql_GetData(sql_handle, 1, &data, &len); memcpy(e->name, data, min(len, NAME_LENGTH));
+		Sql_GetData(sql_handle, 2, &data, &len); memcpy(e->mes, data, min(len, sizeof(e->mes)));
+		Sql_GetData(sql_handle, 3, &data, &len); memcpy(e->acc, data, min(len, sizeof(e->acc)));
+		Sql_GetData(sql_handle, 4, &data, NULL); e->account_id = atoi(data);
+		Sql_GetData(sql_handle, 5, &data, NULL); e->rsv1 = atoi(data);
+		Sql_GetData(sql_handle, 6, &data, NULL); e->rsv2 = atoi(data);
+		Sql_GetData(sql_handle, 7, &data, NULL); e->rsv3 = atoi(data);
 	}
 
 	//printf("- Read guild_skill %d from sql \n",guild_id);
-	sprintf(tmp_sql,"SELECT `guild_id`,`id`,`lv` FROM `%s` WHERE `guild_id`='%d' ORDER BY `id`",guild_skill_db, guild_id);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id`,`id`,`lv` FROM `%s` WHERE `guild_id`='%d' ORDER BY `id`", guild_skill_db, guild_id) )
+	{
+		Sql_ShowDebug(sql_handle);
 		aFree(g);
 		return NULL;
 	}
-	
+
 	for(i = 0; i < MAX_GUILDSKILL; i++)
 	{	//Skill IDs must always be initialized. [Skotlex]
 		g->skill[i].id = i + GD_SKILLBASE;
 	}
 
-	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res) {
-		while ((sql_row = mysql_fetch_row(sql_res))){
-			int id = atoi(sql_row[1])-GD_SKILLBASE;
-			if (id >= 0 && id < MAX_GUILDSKILL)
-			//I know this seems ridiculous, but the skills HAVE to be placed on their 'correct' array slot or things break x.x [Skotlex]
-				g->skill[id].lv=atoi(sql_row[2]);
-		}
-		mysql_free_result(sql_res);
+	while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+	{
+		int id;
+		// id
+		Sql_GetData(sql_handle, 1, &data, NULL);
+		id = atoi(data) - GD_SKILLBASE;
+		if( id < 0 && id >= MAX_GUILDSKILL )
+			continue;// invalid guild skill
+		// lv
+		Sql_GetData(sql_handle, 2, &data, NULL);
+		g->skill[id].lv = atoi(data);
 	}
+	Sql_FreeResult(sql_handle);
 
 	idb_put(guild_db_, guild_id, g); //Add to cache
 	g->save_flag |= GS_REMOVE; //But set it to be removed, in case it is not needed for long.
@@ -604,8 +570,7 @@ ShowDebug("Save guild_castle (%d)\n", gc->castle_id);
 	#endif
 
 //	sql_query("DELETE FROM `%s` WHERE `castle_id`='%d'",guild_castle_db, gc->castle_id);
-
-	sprintf(tmp_sql,"REPLACE INTO `%s` "
+	if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` "
 		"(`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`,"
 		"`visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`,"
 		"`Ghp0`, `Ghp1`, `Ghp2`, `Ghp3`, `Ghp4`, `Ghp5`, `Ghp6`, `Ghp7`)"
@@ -613,12 +578,8 @@ ShowDebug("Save guild_castle (%d)\n", gc->castle_id);
 		guild_castle_db, gc->castle_id, gc->guild_id,  gc->economy, gc->defense, gc->triggerE, gc->triggerD, gc->nextTime, gc->payTime,
 		gc->createTime, gc->visibleC,
 		gc->guardian[0].visible, gc->guardian[1].visible, gc->guardian[2].visible, gc->guardian[3].visible, gc->guardian[4].visible, gc->guardian[5].visible, gc->guardian[6].visible, gc->guardian[7].visible,
-		gc->guardian[0].hp, gc->guardian[1].hp, gc->guardian[2].hp, gc->guardian[3].hp, gc->guardian[4].hp, gc->guardian[5].hp, gc->guardian[6].hp, gc->guardian[7].hp);
-
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
+		gc->guardian[0].hp, gc->guardian[1].hp, gc->guardian[2].hp, gc->guardian[3].hp, gc->guardian[4].hp, gc->guardian[5].hp, gc->guardian[6].hp, gc->guardian[7].hp) )
+		Sql_ShowDebug(sql_handle);
 
 #ifndef TXT_SQL_CONVERT
 	memcpy(&castles[gc->castle_id],gc,sizeof(struct guild_castle));
@@ -631,6 +592,8 @@ ShowDebug("Save guild_castle (%d)\n", gc->castle_id);
 int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 {
 	static int castles_init=0;
+	char* data;
+
 	if (gc==NULL) return 0;
 	if (castle_id==-1) return 0;
 
@@ -649,57 +612,53 @@ int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 	}
 
 	memset(gc,0,sizeof(struct guild_castle));
-	sprintf(tmp_sql,"SELECT `castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, "
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, "
 		"`visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`,"
 		"`Ghp0`, `Ghp1`, `Ghp2`, `Ghp3`, `Ghp4`, `Ghp5`, `Ghp6`, `Ghp7`"
-        	" FROM `%s` WHERE `castle_id`='%d'",guild_castle_db, castle_id);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		" FROM `%s` WHERE `castle_id`='%d'", guild_castle_db, castle_id) )
+	{
+		Sql_ShowDebug(sql_handle);
 		return 0;
 	}
 	// ARU: This needs to be set even if there are no SQL results
 	gc->castle_id=castle_id;
-	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res!=NULL && mysql_num_rows(sql_res)>0) {
-		sql_row = mysql_fetch_row(sql_res);
-		if (sql_row==NULL){
-			mysql_free_result(sql_res);
-			return 1; //Assume empty castle.
-		}
-		gc->guild_id =  atoi (sql_row[1]);
-		gc->economy = atoi (sql_row[2]);
-		gc->defense = atoi (sql_row[3]);
-		gc->triggerE = atoi (sql_row[4]);
-		gc->triggerD = atoi (sql_row[5]);
-		gc->nextTime = atoi (sql_row[6]);
-		gc->payTime = atoi (sql_row[7]);
-		gc->createTime = atoi (sql_row[8]);
-		gc->visibleC = atoi (sql_row[9]);
-		gc->guardian[0].visible = atoi (sql_row[10]);
-		gc->guardian[1].visible = atoi (sql_row[11]);
-		gc->guardian[2].visible = atoi (sql_row[12]);
-		gc->guardian[3].visible = atoi (sql_row[13]);
-		gc->guardian[4].visible = atoi (sql_row[14]);
-		gc->guardian[5].visible = atoi (sql_row[15]);
-		gc->guardian[6].visible = atoi (sql_row[16]);
-		gc->guardian[7].visible = atoi (sql_row[17]);
-		gc->guardian[0].hp = atoi (sql_row[18]);
-		gc->guardian[1].hp = atoi (sql_row[19]);
-		gc->guardian[2].hp = atoi (sql_row[20]);
-		gc->guardian[3].hp = atoi (sql_row[21]);
-		gc->guardian[4].hp = atoi (sql_row[22]);
-		gc->guardian[5].hp = atoi (sql_row[23]);
-		gc->guardian[6].hp = atoi (sql_row[24]);
-		gc->guardian[7].hp = atoi (sql_row[25]);
-	
-		if (save_log)
-			ShowInfo("Loaded Castle %d (guild %d)\n",castle_id,gc->guild_id);
-
+	if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
+	{
+		Sql_FreeResult(sql_handle);
+		return 1; //Assume empty castle.
 	}
-	mysql_free_result(sql_res) ; //resource free
 
+	Sql_GetData(sql_handle,  1, &data, NULL); gc->guild_id =  atoi(data);
+	Sql_GetData(sql_handle,  2, &data, NULL); gc->economy = atoi(data);
+	Sql_GetData(sql_handle,  3, &data, NULL); gc->defense = atoi(data);
+	Sql_GetData(sql_handle,  4, &data, NULL); gc->triggerE = atoi(data);
+	Sql_GetData(sql_handle,  5, &data, NULL); gc->triggerD = atoi(data);
+	Sql_GetData(sql_handle,  6, &data, NULL); gc->nextTime = atoi(data);
+	Sql_GetData(sql_handle,  7, &data, NULL); gc->payTime = atoi(data);
+	Sql_GetData(sql_handle,  8, &data, NULL); gc->createTime = atoi(data);
+	Sql_GetData(sql_handle,  9, &data, NULL); gc->visibleC = atoi(data);
+	Sql_GetData(sql_handle, 10, &data, NULL); gc->guardian[0].visible = atoi(data);
+	Sql_GetData(sql_handle, 11, &data, NULL); gc->guardian[1].visible = atoi(data);
+	Sql_GetData(sql_handle, 12, &data, NULL); gc->guardian[2].visible = atoi(data);
+	Sql_GetData(sql_handle, 13, &data, NULL); gc->guardian[3].visible = atoi(data);
+	Sql_GetData(sql_handle, 14, &data, NULL); gc->guardian[4].visible = atoi(data);
+	Sql_GetData(sql_handle, 15, &data, NULL); gc->guardian[5].visible = atoi(data);
+	Sql_GetData(sql_handle, 16, &data, NULL); gc->guardian[6].visible = atoi(data);
+	Sql_GetData(sql_handle, 17, &data, NULL); gc->guardian[7].visible = atoi(data);
+	Sql_GetData(sql_handle, 18, &data, NULL); gc->guardian[0].hp = atoi(data);
+	Sql_GetData(sql_handle, 19, &data, NULL); gc->guardian[1].hp = atoi(data);
+	Sql_GetData(sql_handle, 20, &data, NULL); gc->guardian[2].hp = atoi(data);
+	Sql_GetData(sql_handle, 21, &data, NULL); gc->guardian[3].hp = atoi(data);
+	Sql_GetData(sql_handle, 22, &data, NULL); gc->guardian[4].hp = atoi(data);
+	Sql_GetData(sql_handle, 23, &data, NULL); gc->guardian[5].hp = atoi(data);
+	Sql_GetData(sql_handle, 24, &data, NULL); gc->guardian[6].hp = atoi(data);
+	Sql_GetData(sql_handle, 25, &data, NULL); gc->guardian[7].hp = atoi(data);
+
+	Sql_FreeResult(sql_handle);
 	memcpy(&castles[castle_id],gc,sizeof(struct guild_castle));
+
+	if( save_log )
+		ShowInfo("Loaded Castle %d (guild %d)\n", castle_id, gc->guild_id);
 
 	return 1;
 }
@@ -740,20 +699,24 @@ int inter_guild_CharOnline(int char_id, int guild_id) {
    
 	if (guild_id == -1) {
 		//Get guild_id from the database
-		sprintf (tmp_sql , "SELECT guild_id FROM `%s` WHERE char_id='%d'",char_db,char_id);
-		if(mysql_query(&mysql_handle, tmp_sql) ) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT guild_id FROM `%s` WHERE char_id='%d'", char_db, char_id) )
+		{
+			Sql_ShowDebug(sql_handle);
 			return 0;
 		}
 
-		sql_res = mysql_store_result(&mysql_handle) ;
-		if(sql_res == NULL)
-			return 0; //Eh? No guild?
-		
-		sql_row = mysql_fetch_row(sql_res);
-		guild_id = sql_row?atoi(sql_row[0]):0;
-		mysql_free_result(sql_res);
+		if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+		{
+			char* data;
+
+			Sql_GetData(sql_handle, 0, &data, NULL);
+			guild_id = atoi(data);
+		}
+		else
+		{
+			guild_id = 0;
+		}
+		Sql_FreeResult(sql_handle);
 	}
 	if (guild_id == 0)
 		return 0; //No guild...
@@ -785,20 +748,24 @@ int inter_guild_CharOffline(int char_id, int guild_id) {
 
 	if (guild_id == -1) {
 		//Get guild_id from the database
-		sprintf (tmp_sql , "SELECT guild_id FROM `%s` WHERE char_id='%d'",char_db,char_id);
-		if(mysql_query(&mysql_handle, tmp_sql) ) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT guild_id FROM `%s` WHERE char_id='%d'", char_db, char_id) )
+		{
+			Sql_ShowDebug(sql_handle);
 			return 0;
 		}
 
-		sql_res = mysql_store_result(&mysql_handle) ;
-		if(sql_res == NULL)
-			return 0; //Eh? No guild?
-		
-		sql_row = mysql_fetch_row(sql_res);
-		guild_id = sql_row?atoi(sql_row[0]):0;
-		mysql_free_result(sql_res);
+		if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+		{
+			char* data;
+
+			Sql_GetData(sql_handle, 0, &data, NULL);
+			guild_id = atoi(data);
+		}
+		else
+		{
+			guild_id = 0;
+		}
+		Sql_FreeResult(sql_handle);
 	}
 	if (guild_id == 0)
 		return 0; //No guild...
@@ -860,23 +827,28 @@ void inter_guild_sql_final(void)
 int search_guildname(char *str)
 {
 	int guild_id;
-	char t_name[NAME_LENGTH*2];
+	char esc_name[NAME_LENGTH*2+1];
 	
-	jstrescapecpy(t_name, str);
+	Sql_EscapeStringLen(sql_handle, esc_name, str, strnlen(str, NAME_LENGTH));
 	//Lookup guilds with the same name
-	sprintf (tmp_sql , "SELECT guild_id FROM `%s` WHERE name='%s'", guild_db, t_name);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT guild_id FROM `%s` WHERE name='%s'", guild_db, esc_name) )
+	{
+		Sql_ShowDebug(sql_handle);
 		return -1;
 	}
 
-	sql_res = mysql_store_result(&mysql_handle) ;
-	if(sql_res)
-		sql_row = mysql_fetch_row(sql_res);
-	
-	guild_id = (sql_row&&sql_res&&sql_row[0])?atoi(sql_row[0]):0;
-	mysql_free_result(sql_res);
+	if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+	{
+		char* data;
+
+		Sql_GetData(sql_handle, 0, &data, NULL);
+		guild_id = atoi(data);
+	}
+	else
+	{
+		guild_id = 0;
+	}
+	Sql_FreeResult(sql_handle);
 	return guild_id;
 }
 
@@ -1228,56 +1200,58 @@ int mapif_guild_castle_datasave(int castle_id,int index,int value)      // <Agit
 	return 0;
 }
 
-int mapif_guild_castle_alldataload(int fd) {
-	struct guild_castle* gc = (struct guild_castle *)aMalloc(sizeof(struct guild_castle));
-	int i, len = 4;
-	WFIFOHEAD(fd, len + MAX_GUILDCASTLE*sizeof(struct guild_castle));
-	WFIFOW(fd,0) = 0x3842;
-	sprintf(tmp_sql,"SELECT * FROM `%s` ORDER BY `castle_id`", guild_castle_db);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
-	sql_res = mysql_store_result(&mysql_handle);
-	if (sql_res) {
-		for(i = 0; ((sql_row = mysql_fetch_row(sql_res)) && i < MAX_GUILDCASTLE); i++) {
-			memset(gc, 0, sizeof(struct guild_castle));
-			gc->castle_id = atoi(sql_row[0]);
-			gc->guild_id =  atoi(sql_row[1]);
-			gc->economy = atoi(sql_row[2]);
-			gc->defense = atoi(sql_row[3]);
-			gc->triggerE = atoi(sql_row[4]);
-			gc->triggerD = atoi(sql_row[5]);
-			gc->nextTime = atoi(sql_row[6]);
-			gc->payTime = atoi(sql_row[7]);
-			gc->createTime = atoi(sql_row[8]);
-			gc->visibleC = atoi(sql_row[9]);
-			gc->guardian[0].visible = atoi(sql_row[10]);
-			gc->guardian[1].visible = atoi(sql_row[11]);
-			gc->guardian[2].visible = atoi(sql_row[12]);
-			gc->guardian[3].visible = atoi(sql_row[13]);
-			gc->guardian[4].visible = atoi(sql_row[14]);
-			gc->guardian[5].visible = atoi(sql_row[15]);
-			gc->guardian[6].visible = atoi(sql_row[16]);
-			gc->guardian[7].visible = atoi(sql_row[17]);
-			gc->guardian[0].visible = atoi(sql_row[18]);
-			gc->guardian[1].visible = atoi(sql_row[19]);
-			gc->guardian[2].visible = atoi(sql_row[20]);
-			gc->guardian[3].visible = atoi(sql_row[21]);
-			gc->guardian[4].visible = atoi(sql_row[22]);
-			gc->guardian[5].visible = atoi(sql_row[23]);
-			gc->guardian[6].visible = atoi(sql_row[24]);
-			gc->guardian[7].visible = atoi(sql_row[25]);
-			memcpy(WFIFOP(fd,len), gc, sizeof(struct guild_castle));
-			len += sizeof(struct guild_castle);
-		}
-		mysql_free_result(sql_res);
-	}
-	WFIFOW(fd,2) = len;
-	WFIFOSET(fd,len);
-	
-	aFree(gc);
+int mapif_guild_castle_alldataload(int fd)
+{
+	struct guild_castle s_gc;
+	struct guild_castle* gc = &s_gc;
+	int i;
+	int off;
+	char* data;
 
+	WFIFOHEAD(fd, 4 + MAX_GUILDCASTLE*sizeof(struct guild_castle));
+	WFIFOW(fd, 0) = 0x3842;
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, "
+		"`visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`,"
+		"`Ghp0`, `Ghp1`, `Ghp2`, `Ghp3`, `Ghp4`, `Ghp5`, `Ghp6`, `Ghp7` FROM `%s` ORDER BY `castle_id`", guild_castle_db) )
+		Sql_ShowDebug(sql_handle);
+	for( i = 0, off = 4; i < MAX_GUILDCASTLE && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
+	{
+		memset(gc, 0, sizeof(struct guild_castle));
+
+		Sql_GetData(sql_handle,  0, &data, NULL); gc->castle_id = atoi(data);
+		Sql_GetData(sql_handle,  1, &data, NULL); gc->guild_id = atoi(data);
+		Sql_GetData(sql_handle,  2, &data, NULL); gc->economy = atoi(data);
+		Sql_GetData(sql_handle,  3, &data, NULL); gc->defense = atoi(data);
+		Sql_GetData(sql_handle,  4, &data, NULL); gc->triggerE = atoi(data);
+		Sql_GetData(sql_handle,  5, &data, NULL); gc->triggerD = atoi(data);
+		Sql_GetData(sql_handle,  6, &data, NULL); gc->nextTime = atoi(data);
+		Sql_GetData(sql_handle,  7, &data, NULL); gc->payTime = atoi(data);
+		Sql_GetData(sql_handle,  8, &data, NULL); gc->createTime = atoi(data);
+		Sql_GetData(sql_handle,  9, &data, NULL); gc->visibleC = atoi(data);
+		Sql_GetData(sql_handle, 10, &data, NULL); gc->guardian[0].visible = atoi(data);
+		Sql_GetData(sql_handle, 11, &data, NULL); gc->guardian[1].visible = atoi(data);
+		Sql_GetData(sql_handle, 12, &data, NULL); gc->guardian[2].visible = atoi(data);
+		Sql_GetData(sql_handle, 13, &data, NULL); gc->guardian[3].visible = atoi(data);
+		Sql_GetData(sql_handle, 14, &data, NULL); gc->guardian[4].visible = atoi(data);
+		Sql_GetData(sql_handle, 15, &data, NULL); gc->guardian[5].visible = atoi(data);
+		Sql_GetData(sql_handle, 16, &data, NULL); gc->guardian[6].visible = atoi(data);
+		Sql_GetData(sql_handle, 17, &data, NULL); gc->guardian[7].visible = atoi(data);
+		Sql_GetData(sql_handle, 18, &data, NULL); gc->guardian[0].hp = atoi(data);
+		Sql_GetData(sql_handle, 19, &data, NULL); gc->guardian[1].hp = atoi(data);
+		Sql_GetData(sql_handle, 20, &data, NULL); gc->guardian[2].hp = atoi(data);
+		Sql_GetData(sql_handle, 21, &data, NULL); gc->guardian[3].hp = atoi(data);
+		Sql_GetData(sql_handle, 22, &data, NULL); gc->guardian[4].hp = atoi(data);
+		Sql_GetData(sql_handle, 23, &data, NULL); gc->guardian[5].hp = atoi(data);
+		Sql_GetData(sql_handle, 24, &data, NULL); gc->guardian[6].hp = atoi(data);
+		Sql_GetData(sql_handle, 25, &data, NULL); gc->guardian[7].hp = atoi(data);
+
+		memcpy(WFIFOP(fd, off), gc, sizeof(struct guild_castle));
+		off += sizeof(struct guild_castle);
+	}
+	Sql_FreeResult(sql_handle);
+	WFIFOW(fd, 2) = off;
+	WFIFOSET(fd, off);
+	
 	return 0;
 }
 
@@ -1462,11 +1436,8 @@ int mapif_parse_GuildLeave(int fd,int guild_id,int account_id,int char_id,int fl
 		g->save_flag |= GS_EXPULSION;
 	}else{
 		// Unknown guild, just update the player
-		sprintf(tmp_sql, "UPDATE `%s` SET `guild_id`='0' WHERE `account_id`='%d' AND `char_id`='%d'",char_db, account_id,char_id);
-		if(mysql_query(&mysql_handle, tmp_sql) ) {
-			ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-			ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		}
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `guild_id`='0' WHERE `account_id`='%d' AND `char_id`='%d'", char_db, account_id, char_id) )
+			Sql_ShowDebug(sql_handle);
 		/* mapif_guild_leaved(guild_id,account_id,char_id,flag,g->member[i].name,mes);	*/
 	}
 
@@ -1542,66 +1513,39 @@ int mapif_parse_BreakGuild(int fd,int guild_id)
 
 	// Delete guild from sql
 	//printf("- Delete guild %d from guild\n",guild_id);
-	sprintf(tmp_sql, "DELETE FROM `%s` WHERE `guild_id`='%d'",guild_db, guild_id);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_db, guild_id) )
+		Sql_ShowDebug(sql_handle);
 
-	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_member_db, guild_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_member_db, guild_id) )
+		Sql_ShowDebug(sql_handle);
 
-	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_castle_db, guild_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_castle_db, guild_id) )
+		Sql_ShowDebug(sql_handle);
 
-	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_storage_db, guild_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_storage_db, guild_id) )
+		Sql_ShowDebug(sql_handle);
 
-	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d' OR `alliance_id` = '%d'", guild_alliance_db, guild_id, guild_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '%d' OR `alliance_id` = '%d'", guild_alliance_db, guild_id, guild_id) )
+		Sql_ShowDebug(sql_handle);
 
-	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_position_db, guild_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_position_db, guild_id) )
+		Sql_ShowDebug(sql_handle);
 
-	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_skill_db, guild_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_skill_db, guild_id) )
+		Sql_ShowDebug(sql_handle);
 
-	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_expulsion_db, guild_id);
-	if (mysql_query(&mysql_handle, tmp_sql)) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '%d'", guild_expulsion_db, guild_id) )
+		Sql_ShowDebug(sql_handle);
 
 	//printf("- Update guild %d of char\n",guild_id);
-	sprintf(tmp_sql, "UPDATE `%s` SET `guild_id`='0' WHERE `guild_id`='%d'",char_db, guild_id);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `guild_id`='0' WHERE `guild_id`='%d'", char_db, guild_id) )
+		Sql_ShowDebug(sql_handle);
 
 	mapif_guild_broken(guild_id,0);
-	
+
 	if(log_inter)
 		inter_log("guild %s (id=%d) broken\n",g->name,guild_id);
-	
+
 	//Remove the guild from memory. [Skotlex]
 	idb_remove(guild_db_, guild_id);
 	return 0;

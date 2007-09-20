@@ -224,6 +224,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\char\int_homun.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\char\int_party.c"
 				>
 			</File>

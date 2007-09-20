@@ -1497,7 +1497,7 @@ int intif_parse(int fd)
 	case 0x3802:	intif_parse_WisEnd(fd); break;
 	case 0x3803:	mapif_parse_WisToGM(fd); break;
 	case 0x3804:	intif_parse_Registers(fd); break;
-	case 0x3806:   intif_parse_ChangeNameOk(fd); break;
+	case 0x3806:	intif_parse_ChangeNameOk(fd); break;
 	case 0x3810:	intif_parse_LoadStorage(fd); break;
 	case 0x3811:	intif_parse_SaveStorage(fd); break;
 	case 0x3818:	intif_parse_LoadGuildStorage(fd); break;

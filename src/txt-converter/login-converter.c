@@ -6,15 +6,11 @@
 #include "../common/core.h"
 #include "../common/db.h"
 #include "../common/showmsg.h"
+#include "../common/sql.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#ifdef WIN32
-#include <winsock2.h>
-#endif
-#include <mysql.h>
 
 char login_account_id[256]="account_id";
 char login_userid[256]="userid";
@@ -90,8 +86,8 @@ int read_gm_account()
 
 int convert_login(void)
 {
-	MYSQL mysql_handle;
-	char tmpsql[1024];
+	Sql* mysql_handle;
+	SqlStmt* stmt;
 	int line_counter = 0;
 	FILE *fp;
 	int account_id, logincount, user_level, state, n, i;
@@ -100,11 +96,12 @@ int convert_login(void)
 	time_t connect_until_time;
 	char dummy[2048];
 
-	mysql_init(&mysql_handle);
-	if(!mysql_real_connect(&mysql_handle, db_server_ip, db_server_id, db_server_pw, db_server_logindb ,db_server_port, (char *)NULL, 0)) {
-			//pointer check
-			printf("%s\n",mysql_error(&mysql_handle));
-			exit(1);
+	mysql_handle = Sql_Malloc();
+	if ( SQL_ERROR == Sql_Connect(mysql_handle, db_server_id, db_server_pw, db_server_ip, db_server_port, db_server_logindb) )
+	{
+		Sql_ShowDebug(mysql_handle);
+		Sql_Free(mysql_handle);
+		exit(1);
 	}
 	ShowStatus("Connect: Success!\n");
 	
@@ -133,21 +130,27 @@ int convert_login(void)
 
 		user_level = isGM(account_id);
 		ShowInfo("Converting user (id: %d, name: %s, gm level: %d)\n", account_id, userid, user_level);
-		sprintf(tmpsql,
+		
+		stmt = SqlStmt_Malloc(mysql_handle);
+		if( SQL_ERROR == SqlStmt_Prepare(stmt, 
 			"REPLACE INTO `login` "
 			"(`account_id`, `userid`, `user_pass`, `lastlogin`, `sex`, `logincount`, `email`, `level`, `error_message`, `connect_until`, `last_ip`, `memo`, `ban_until`, `state`) "
 			"VALUES "
-			"(%d, '%s', '%s', '%s', '%c', %d, '%s', %d, '%s', %u, '%s', '%s', %u, %d)",
-			account_id , userid, pass, lastlogin, sex, logincount, email, user_level, error_message, (uint32)connect_until_time, last_ip, memo, (uint32)ban_until_time, state);
-		if(mysql_query(&mysql_handle, tmpsql) ) {
-			ShowError("DB server Error - %s\n", mysql_error(&mysql_handle) );
-			ShowError("Query: %s\n", tmpsql);
+			"(%d, ?, ?, '%s', '%c', %d, '%s', %d, '%s', %u, '%s', '%s', %u, %d)",
+			account_id, lastlogin, sex, logincount, email, user_level, error_message, (uint32)connect_until_time, last_ip, memo, (uint32)ban_until_time, state)
+		||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_STRING, userid, strnlen(userid, 255))
+		||	SQL_ERROR == SqlStmt_BindParam(stmt, 1, SQLDT_STRING, pass, strnlen(pass, 32))
+		||	SQL_ERROR == SqlStmt_Execute(stmt) )
+		{
+			SqlStmt_ShowDebug(stmt);
 		}
+		SqlStmt_Free(stmt);
 	
 		//TODO: parse the rest of the line to read the login-stored account variables, and import them to `global_reg_value`
 		//      then remove the 'dummy' buffer
 	}
 	fclose(fp);
+	Sql_Free(mysql_handle);
 
 	ShowStatus("Convert end...\n");
 

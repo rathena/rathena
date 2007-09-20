@@ -4,6 +4,9 @@
 #ifndef _INT_GUILD_H_
 #define _INT_GUILD_H_
 
+struct guild;
+struct guild_castle;
+
 int inter_guild_init(void);
 void inter_guild_final(void);
 int inter_guild_save(void);

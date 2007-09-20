@@ -1,15 +1,15 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "plugins.h"
 #include "../common/mmo.h"
 #include "../common/core.h"
 #include "../common/timer.h"
-#include "../common/utils.h"
+#include "../common/utils.h" // findfile()
 #include "../common/socket.h"
 #include "../common/malloc.h"
 #include "../common/version.h"
 #include "../common/showmsg.h"
+#include "plugins.h"
 
 #include <stdio.h>
 #include <stdlib.h>

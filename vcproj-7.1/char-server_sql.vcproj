@@ -185,12 +185,6 @@
 			<File
 				RelativePath="..\src\char_sql\inter.h">
 			</File>
-			<File
-				RelativePath="..\src\char_sql\itemdb.c">
-			</File>
-			<File
-				RelativePath="..\src\char_sql\itemdb.h">
-			</File>
 		</Filter>
 		<Filter
 			Name="common"
@@ -263,6 +257,12 @@
 			</File>
 			<File
 				RelativePath="..\src\common\socket.h">
+			</File>
+			<File
+				RelativePath="..\src\common\sql.c">
+			</File>
+			<File
+				RelativePath="..\src\common\sql.h">
 			</File>
 			<File
 				RelativePath="..\src\common\strlib.c">

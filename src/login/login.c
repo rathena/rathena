@@ -2,6 +2,7 @@
 // For more information, see LICENCE in the main folder
 
 #include "../common/cbasetypes.h"
+#include "../common/mmo.h"
 #include "../common/core.h"
 #include "../common/socket.h"
 #include "../common/db.h"
@@ -9,7 +10,6 @@
 #include "../common/lock.h"
 #include "../common/malloc.h"
 #include "../common/strlib.h"
-#include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/version.h"
 #include "../common/md5calc.h"
@@ -17,10 +17,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/stat.h> // for stat/lstat/fstat
-#include <signal.h>
-#include <fcntl.h>
 #include <string.h>
+#include <sys/stat.h> // for stat/lstat/fstat
 
 uint32 account_id_count = START_ACCOUNT_NUM;
 bool new_account_flag = true;
@@ -1092,20 +1090,18 @@ int mmo_auth_new(struct mmo_account* account, char sex, char* email)
 		account_id_count++;
 
 	auth_dat[i].account_id = account_id_count++;
-	strncpy(auth_dat[i].userid, account->userid, NAME_LENGTH); auth_dat[i].userid[23] = '\0';
-	if (use_md5_passwds) {
+	safestrncpy(auth_dat[i].userid, account->userid, NAME_LENGTH);
+	if( use_md5_passwds )
 		MD5_String(account->passwd, auth_dat[i].pass);
-	} else {
-		strncpy(auth_dat[i].pass, account->passwd, NAME_LENGTH); auth_dat[i].pass[23] = '\0';
-	}
-	memcpy(auth_dat[i].lastlogin, "-", 2);
+	else
+		safestrncpy(auth_dat[i].pass, account->passwd, NAME_LENGTH);
+	safestrncpy(auth_dat[i].lastlogin, "-", sizeof(auth_dat[i].lastlogin));
 	auth_dat[i].sex = (sex == 'M' || sex == 'm');
 	auth_dat[i].logincount = 0;
 	auth_dat[i].state = 0;
-	strncpy(auth_dat[i].email, e_mail_check(email) ? email : "a@a.com", 40);
-	strncpy(auth_dat[i].error_message, "-", 20);
+	safestrncpy(auth_dat[i].email, e_mail_check(email) ? email : "a@a.com", sizeof(auth_dat[i].email));
+	safestrncpy(auth_dat[i].error_message, "-", sizeof(auth_dat[i].error_message));
 	auth_dat[i].ban_until_time = 0;
-
 	if (start_limited_time < 0)
 		auth_dat[i].connect_until_time = 0; // unlimited
 	else { // limited time
@@ -1128,9 +1124,9 @@ int mmo_auth_new(struct mmo_account* account, char sex, char* email)
 	return (account_id_count - 1);
 }
 
-//---------------------------------------
+//-----------------------------------------------------
 // Check/authentication of a connection
-//---------------------------------------
+//-----------------------------------------------------
 int mmo_auth(struct mmo_account* account, int fd)
 {
 	unsigned int i;
@@ -1138,14 +1134,14 @@ int mmo_auth(struct mmo_account* account, int fd)
 	char tmpstr[256];
 	int len;
 	int newaccount = 0;
-	char user_password[256];
+	char user_password[32+1]; // reserve for md5-ed pw
 
 	char ip[16];
 	uint8* sin_addr = (uint8*)&session[fd]->client_addr;
 	sprintf(ip, "%d.%d.%d.%d", sin_addr[3], sin_addr[2], sin_addr[1], sin_addr[0]);
 
 	// DNS Blacklist check
-	if(use_dnsbl)
+	if( use_dnsbl )
 	{
 		char r_ip[16];
 		char ip_dnsbl[256];
@@ -1154,31 +1150,34 @@ int mmo_auth(struct mmo_account* account, int fd)
 
 		sprintf(r_ip, "%d.%d.%d.%d", sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3]);
 
-		for (dnsbl_serv = strtok(dnsbl_servs,","); dnsbl_serv != NULL; dnsbl_serv = strtok(NULL,","))
+		for( dnsbl_serv = strtok(dnsbl_servs,","); !matched && dnsbl_serv != NULL; dnsbl_serv = strtok(NULL,",") )
 		{
-			if (!matched) {
-				sprintf(ip_dnsbl, "%s.%s", r_ip, dnsbl_serv);
-				if(host2ip(ip_dnsbl))
-					matched = true;
-			}
+			sprintf(ip_dnsbl, "%s.%s", r_ip, dnsbl_serv);
+			if( host2ip(ip_dnsbl) )
+				matched = true;
 		}
 
-		if (matched) {
+		if( matched )
+		{
 			ShowInfo("DNSBL: (%s) Blacklisted. User Kicked.\n", r_ip);
 			return 3;
 		}
 	}
 
+	//Client Version check
+	if( check_client_version && account->version != 0 &&
+		account->version != client_version_to_connect )
+		return 5;
 
-	len = strlen(account->userid) - 2;
+	len = strnlen(account->userid, NAME_LENGTH);
 
 	// Account creation with _M/_F
-	if (new_account_flag)
+	if( new_account_flag )
 	{
-		if (account->passwdenc == 0 && account->userid[len] == '_' &&
-			(account->userid[len+1] == 'F' || account->userid[len+1] == 'M' ||
-			account->userid[len+1] == 'f' || account->userid[len+1] == 'm') &&
-			account_id_count <= END_ACCOUNT_NUM && len >= 4 && strlen(account->passwd) >= 4)
+		if( len > 2 && strnlen(account->passwd, NAME_LENGTH) >= 4 && // valid user and password lengths
+			account->passwdenc == 0 && // unencoded password
+			account->userid[len-2] == '_' && memchr("FfMm", (unsigned char)account->userid[len-1], 4) && // _M/_F suffix
+			account_id_count <= END_ACCOUNT_NUM )
 		{
 			//only continue if amount in this time limit is allowed (account registration flood protection)[Kevin]
 			if(DIFF_TICK(gettick(), new_reg_tick) < 0 && num_regs >= allowed_regs) {
@@ -1187,20 +1186,13 @@ int mmo_auth(struct mmo_account* account, int fd)
 				return 3;
 			}
 			newaccount = 1;
-			account->userid[len] = '\0';
+			account->userid[len-2] = '\0';
 		}
 	}
 	
-	//Client Version check
-	if (check_client_version && account->version != 0 &&
-		account->version != client_version_to_connect)
-		return 5;
-	
 	// Strict account search
-	for(i = 0; i < auth_num; i++) {
-		if (strcmp(account->userid, auth_dat[i].userid) == 0)
-			break;
-	}
+	ARR_FIND(0, auth_num, i, strcmp(account->userid, auth_dat[i].userid) == 0);
+
 	// if there is no creation request and strict account search fails, we do a no sensitive case research for index
 	if (!newaccount && i == auth_num) {
 		i = search_account_index(account->userid);
@@ -1210,28 +1202,47 @@ int mmo_auth(struct mmo_account* account, int fd)
 			memcpy(account->userid, auth_dat[i].userid, NAME_LENGTH); // for the possible tests/checks afterwards (copy correcte sensitive case).
 	}
 
-	if (i != auth_num) {
-		if (newaccount) {
-			login_log("Attempt of creation of an already existant account (account: %s_%c, pass: %s, received pass: %s, ip: %s)\n",
-			          account->userid, account->userid[len+1], auth_dat[i].pass, account->passwd, ip);
+	if( i != auth_num )
+	{
+		if (newaccount)
+		{
+			login_log("Attempt of creation of an already existant account (account: %s_%c, pass: %s, received pass: %s, ip: %s)\n", account->userid, account->userid[len-1], auth_dat[i].pass, account->passwd, ip);
 			return 1; // 1 = Incorrect Password
 		}
 
-		if(use_md5_passwds)
+		if( use_md5_passwds )
 			MD5_String(account->passwd, user_password);
 		else
-			memcpy(user_password, account->passwd, NAME_LENGTH);
+			safestrncpy(user_password, account->passwd, NAME_LENGTH);
 
-		if (!check_password(session[fd]->session_data, account->passwdenc, user_password, auth_dat[i].pass))
+		if( !check_password(session[fd]->session_data, account->passwdenc, user_password, auth_dat[i].pass) )
 		{
-			login_log("Invalid password (account: %s, pass: %s, received pass: %s, ip: %s)\n",
-			          account->userid, auth_dat[i].pass, (account->passwdenc) ? "[MD5]" : account->passwd, ip);
+			login_log("Invalid password (account: %s, pass: %s, received pass: %s, ip: %s)\n", account->userid, auth_dat[i].pass, (account->passwdenc) ? "[MD5]" : account->passwd, ip);
 			return 1; // 1 = Incorrect Password
 		}
 
-		if (auth_dat[i].state) {
-			login_log("Connection refused (account: %s, pass: %s, state: %d, ip: %s)\n",
-			          account->userid, account->passwd, auth_dat[i].state, ip);
+		if( auth_dat[i].connect_until_time != 0 && auth_dat[i].connect_until_time < time(NULL) )
+		{
+			login_log("Connection refused (account: %s, pass: %s, expired ID, ip: %s)\n", account->userid, account->passwd, ip);
+			return 2; // 2 = This ID is expired
+		}
+
+		if( auth_dat[i].ban_until_time != 0 )
+		{	// account is banned
+			strftime(tmpstr, 20, date_format, localtime(&auth_dat[i].ban_until_time));
+			tmpstr[19] = '\0';
+			if( auth_dat[i].ban_until_time > time(NULL) ) { // always banned
+				login_log("Connection refused (account: %s, pass: %s, banned until %s, ip: %s)\n", account->userid, account->passwd, tmpstr, ip);
+				return 6; // 6 = Your are Prohibited to log in until %s
+			} else { // ban is over
+				login_log("End of ban (account: %s, pass: %s, previously banned until %s -> not more banned, ip: %s)\n", account->userid, account->passwd, tmpstr, ip);
+				auth_dat[i].ban_until_time = 0; // reset the ban time
+			}
+		}
+
+		if( auth_dat[i].state )
+		{
+			login_log("Connection refused (account: %s, pass: %s, state: %d, ip: %s)\n", account->userid, account->passwd, auth_dat[i].state, ip);
 			switch(auth_dat[i].state) { // packet 0x006a value + 1
 			case 1: // 0 = Unregistered ID
 			case 2: // 1 = Incorrect Password
@@ -1261,55 +1272,38 @@ int mmo_auth(struct mmo_account* account, int fd)
 			}
 		}
 
-		if (online_check) {
+		if( online_check )
+		{
 			struct online_login_data* data = idb_get(online_db,auth_dat[i].account_id);
-			if (data && data->char_server > -1) {
+			if( data && data->char_server > -1 )
+			{
 				//Request char servers to kick this account out. [Skotlex]
 				unsigned char buf[8];
 				ShowNotice("User [%d] is already online - Rejected.\n",auth_dat[i].account_id);
 				WBUFW(buf,0) = 0x2734;
 				WBUFL(buf,2) = auth_dat[i].account_id;
 				charif_sendallwos(-1, buf, 6);
-				if (data->waiting_disconnect == -1)
+				if( data->waiting_disconnect == -1 )
 					data->waiting_disconnect = add_timer(gettick()+30000, waiting_disconnect_timer, auth_dat[i].account_id, 0);
 				return 3; // Rejected
 			}
 		}
-
-		if (auth_dat[i].ban_until_time != 0) { // if account is banned
-			strftime(tmpstr, 20, date_format, localtime(&auth_dat[i].ban_until_time));
-			tmpstr[19] = '\0';
-			if (auth_dat[i].ban_until_time > time(NULL)) { // always banned
-				login_log("Connection refused (account: %s, pass: %s, banned until %s, ip: %s)\n",
-				          account->userid, account->passwd, tmpstr, ip);
-				return 6; // 6 = Your are Prohibited to log in until %s
-			} else { // ban is finished
-				login_log("End of ban (account: %s, pass: %s, previously banned until %s -> not more banned, ip: %s)\n",
-				          account->userid, account->passwd, tmpstr, ip);
-				auth_dat[i].ban_until_time = 0; // reset the ban time
-			}
-		}
-
-		if (auth_dat[i].connect_until_time != 0 && auth_dat[i].connect_until_time < time(NULL)) {
-			login_log("Connection refused (account: %s, pass: %s, expired ID, ip: %s)\n",
-			          account->userid, account->passwd, ip);
-			return 2; // 2 = This ID is expired
-		}
-
-		login_log("Authentification accepted (account: %s (id: %d), ip: %s)\n", account->userid, auth_dat[i].account_id, ip);
-	} else {
-		if (!newaccount) {
-			login_log("Unknown account (account: %s, received pass: %s, ip: %s)\n",
-			          account->userid, account->passwd, ip);
+	}
+	else
+	{
+		if( !newaccount )
+		{
+			login_log("Unknown account (account: %s, received pass: %s, ip: %s)\n", account->userid, account->passwd, ip);
 			return 0; // 0 = Unregistered ID
-		} else {
-			int new_id = mmo_auth_new(account, account->userid[len+1], "a@a.com");
+		}
+		else
+		{
+			int new_id = mmo_auth_new(account, account->userid[len-1], "a@a.com");
 			unsigned int tick = gettick();
-			login_log("Account creation and authentification accepted (account %s (id: %d), pass: %s, sex: %c, connection with _F/_M, ip: %s)\n",
-			          account->userid, new_id, account->passwd, account->userid[len+1], ip);
+			login_log("Account creation and authentification accepted (account %s (id: %d), pass: %s, sex: %c, connection with _F/_M, ip: %s)\n", account->userid, new_id, account->passwd, account->userid[len-1], ip);
 			auth_before_save_file = 0; // Creation of an account -> save accounts file immediatly
 			
-			if(DIFF_TICK(tick, new_reg_tick) > 0)
+			if( DIFF_TICK(tick, new_reg_tick) > 0 )
 			{	//Update the registration check.
 				num_regs = 0;
 				new_reg_tick=tick +time_allowed*1000;
@@ -1317,6 +1311,8 @@ int mmo_auth(struct mmo_account* account, int fd)
 			num_regs++;
 		}
 	}
+
+	login_log("Authentification accepted (account: %s (id: %d), ip: %s)\n", account->userid, auth_dat[i].account_id, ip);
 
 	// auth start : time seed
 	// Platform/Compiler dependant clock() for time check is removed. [Lance]
@@ -1327,13 +1323,14 @@ int mmo_auth(struct mmo_account* account, int fd)
 	account->account_id = auth_dat[i].account_id;
 	account->login_id1 = rand();
 	account->login_id2 = rand();
-	memcpy(account->lastlogin, auth_dat[i].lastlogin, 24);
-	memcpy(auth_dat[i].lastlogin, tmpstr, 24);
+	safestrncpy(account->lastlogin, auth_dat[i].lastlogin, 24);
 	account->sex = auth_dat[i].sex;
-	if (account->sex != 2 && account->account_id < START_ACCOUNT_NUM)
+
+	if( account->sex != 2 && account->account_id < START_ACCOUNT_NUM )
 		ShowWarning("Account %s has account id %d! Account IDs must be over %d to work properly!\n", account->userid, account->account_id, START_ACCOUNT_NUM);
 
-	strncpy(auth_dat[i].last_ip, ip, 16);
+	safestrncpy(auth_dat[i].lastlogin, tmpstr, sizeof(auth_dat[i].lastlogin));
+	safestrncpy(auth_dat[i].last_ip, ip, sizeof(auth_dat[i].last_ip));
 	auth_dat[i].logincount++;
 
 	// Save until for change ip/time of auth is not very useful => limited save for that
@@ -2952,14 +2949,8 @@ int parse_admin(int fd)
 int lan_subnetcheck(uint32 ip)
 {
 	int i;
-
-	for(i = 0; i < subnet_count; i++) {
-		if(subnet[i].subnet == (ip & subnet[i].mask)) {
-			return subnet[i].char_ip;
-		}
-	}
-
-	return 0;
+	ARR_FIND( 0, subnet_count, i, subnet[i].subnet == (ip & subnet[i].mask) );
+	return ( i < subnet_count ) ? subnet[i].char_ip : 0;
 }
 
 //----------------------------------------------------------------------------------------
@@ -3175,61 +3166,56 @@ int parse_login(int fd)
 		case 0x2710:	// Connection request of a char-server
 			if (RFIFOREST(fd) < 86)
 				return 0;
+		{
+			char* server_name;
+			uint32 server_ip;
+			uint16 server_port;
+			
+			memset(&account, 0, sizeof(account));
+			safestrncpy(account.userid, RFIFOP(fd,2), NAME_LENGTH); remove_control_chars(account.userid);
+			safestrncpy(account.passwd, RFIFOP(fd,26), NAME_LENGTH); remove_control_chars(account.passwd);
+			account.passwdenc = 0;
+			server_name = (char*)RFIFOP(fd,60); server_name[20] = '\0'; remove_control_chars(server_name);
+			server_ip = ntohl(RFIFOL(fd, 54));
+			server_port = ntohs(RFIFOW(fd, 58));
+			
+			ShowInfo("Connection request of the char-server '%s' @ %d.%d.%d.%d:%d (account: '%s', pass: '%s', ip: '%s')\n", server_name, CONVIP(server_ip), server_port, account.userid, account.passwd, ip);
+			login_log("Connection request of the char-server '%s' @ %d.%d.%d.%d:%d (account: '%s', pass: '%s', ip: '%s')\n", server_name, CONVIP(server_ip), server_port, account.userid, account.passwd, ip);
+			
+			result = mmo_auth(&account, fd);
+			if( result == -1 && account.sex == 2 && account.account_id < MAX_SERVERS && server_fd[account.account_id] == -1 )
 			{
-				char* server_name;
-				uint32 server_ip;
-				uint16 server_port;
-
-				memset(&account, 0, sizeof(account));
-				memcpy(account.userid, RFIFOP(fd,2), NAME_LENGTH); account.userid[23] = '\0'; remove_control_chars(account.userid);
-				memcpy(account.passwd, RFIFOP(fd,26), NAME_LENGTH); account.passwd[23] = '\0'; remove_control_chars(account.passwd);
-				account.passwdenc = 0;
-				server_name = (char*)RFIFOP(fd,60); server_name[20] = '\0'; remove_control_chars(server_name);
-				server_ip = ntohl(RFIFOL(fd, 54));
-				server_port = ntohs(RFIFOW(fd, 58));
-				login_log("Connection request of the char-server '%s' @ %d.%d.%d.%d:%d (ip: %s)\n",
-				          server_name, CONVIP(server_ip), server_port, ip);
-
-				result = mmo_auth(&account, fd);
-				if (result == -1 && account.sex == 2 && account.account_id < MAX_SERVERS && server_fd[account.account_id] == -1) {
-					login_log("Connection of the char-server '%s' accepted (account: %s, pass: %s, ip: %s)\n",
-					          server_name, account.userid, account.passwd, ip);
-					ShowStatus("Connection of the char-server '%s' accepted.\n", server_name);
-					memset(&server[account.account_id], 0, sizeof(struct mmo_char_server));
-					server[account.account_id].ip = ntohl(RFIFOL(fd,54));
-					server[account.account_id].port = ntohs(RFIFOW(fd,58));
-					memcpy(server[account.account_id].name, server_name, 20);
-					server[account.account_id].users = 0;
-					server[account.account_id].maintenance = RFIFOW(fd,82);
-					server[account.account_id].new_ = RFIFOW(fd,84);
-					server_fd[account.account_id] = fd;
-
-	 				WFIFOHEAD(fd,3);
-					WFIFOW(fd,0) = 0x2711;
-					WFIFOB(fd,2) = 0;
-					WFIFOSET(fd,3);
-
-					session[fd]->func_parse = parse_fromchar;
-					realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
-					
-					send_GM_accounts(fd); // send GM account to char-server
-				} else {
-					if (server_fd[account.account_id] != -1) {
-						ShowNotice("Connection of the char-server '%s' REFUSED - already connected (account: %ld-%s, pass: %s, ip: %s)\n",
-					        server_name, account.account_id, account.userid, account.passwd, ip);
-						login_log("Connexion of the char-server '%s' REFUSED - already connected (account: %ld-%s, pass: %s, ip: %s)\n",
-					          server_name, account.account_id, account.userid, account.passwd, ip);
-					} else {
-						ShowNotice("Connection of the char-server '%s' REFUSED (account: %s, pass: %s, ip: %s).\n", server_name, account.userid, account.passwd, ip);
-						login_log("Connexion of the char-server '%s' REFUSED (account: %s, pass: %s, ip: %s)\n",
-					          	server_name, account.userid, account.passwd, ip);
-					}
-					WFIFOHEAD(fd,3);
-					WFIFOW(fd,0) = 0x2711;
-					WFIFOB(fd,2) = 3;
-					WFIFOSET(fd,3);
-				}
+				ShowStatus("Connection of the char-server '%s' accepted.\n", server_name);
+				login_log("Connection of the char-server '%s' accepted.\n", server_name);
+				memset(&server[account.account_id], 0, sizeof(struct mmo_char_server));
+				server[account.account_id].ip = ntohl(RFIFOL(fd,54));
+				server[account.account_id].port = ntohs(RFIFOW(fd,58));
+				safestrncpy(server[account.account_id].name, server_name, sizeof(server[account.account_id].name));
+				server[account.account_id].users = 0;
+				server[account.account_id].maintenance = RFIFOW(fd,82);
+				server[account.account_id].new_ = RFIFOW(fd,84);
+				server_fd[account.account_id] = fd;
+				
+ 				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x2711;
+				WFIFOB(fd,2) = 0;
+				WFIFOSET(fd,3);
+				
+				session[fd]->func_parse = parse_fromchar;
+				realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
+				
+				send_GM_accounts(fd); // send GM account to char-server
 			}
+			else
+			{
+				ShowNotice("Connection of the char-server '%s' REFUSED.\n", server_name);
+				login_log("Connection of the char-server '%s' REFUSED.\n", server_name);
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x2711;
+				WFIFOB(fd,2) = 3;
+				WFIFOSET(fd,3);
+			}
+		}
 
 			RFIFOSKIP(fd,86);
 			return 0;
@@ -3362,7 +3348,7 @@ int parse_login(int fd)
 //-----------------------
 // Console Command Parser [Wizputer]
 //-----------------------
-int parse_console(char*buf)
+int parse_console(char* buf)
 {
 	char command[256];
 
@@ -3377,13 +3363,15 @@ int parse_console(char*buf)
 		strcmpi("quit", command) == 0 ||
 		strcmpi("end", command) == 0 )
 		runflag = 0;
-	else if( strcmpi("alive", command) == 0 ||
-			strcmpi("status", command) == 0 )
+	else
+	if( strcmpi("alive", command) == 0 ||
+		strcmpi("status", command) == 0 )
 		ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
-	else if( strcmpi("help", command) == 0 ){
+	else
+	if( strcmpi("help", command) == 0 ) {
 		printf(CL_BOLD"Help of commands:"CL_RESET"\n");
 		printf("  To shutdown the server:\n");
-		printf("  'shutdown|exit|qui|end'\n");
+		printf("  'shutdown|exit|quit|end'\n");
 		printf("  To know if server is alive:\n");
 		printf("  'alive|status'\n");
 	}

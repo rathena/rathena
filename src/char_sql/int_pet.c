@@ -1,53 +1,52 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "../common/mmo.h"
+#include "../common/malloc.h"
+#include "../common/socket.h"
+#include "../common/strlib.h"
+#include "../common/showmsg.h"
+#include "../common/utils.h"
+#include "../common/sql.h"
+#include "char.h"
+#include "inter.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "char.h"
-#include "../common/malloc.h"
-#include "../common/strlib.h"
-#include "../common/showmsg.h"
-
 struct s_pet *pet_pt;
 
 //---------------------------------------------------------
-int inter_pet_tosql(int pet_id, struct s_pet *p) {
+int inter_pet_tosql(int pet_id, struct s_pet* p)
+{
 	//`pet` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`)
-	char t_name[NAME_LENGTH*2];
+	char esc_name[NAME_LENGTH*2+1];// escaped pet name
 
-	jstrescapecpy(t_name, p->name);
+	Sql_EscapeStringLen(sql_handle, esc_name, p->name, strnlen(p->name, NAME_LENGTH));
+	p->hungry = cap_value(p->hungry, 0, 100);
+	p->intimate = cap_value(p->intimate, 0, 1000);
 
-	if(p->hungry < 0)
-		p->hungry = 0;
-	else if(p->hungry > 100)
-		p->hungry = 100;
-	if(p->intimate < 0)
-		p->intimate = 0;
-	else if(p->intimate > 1000)
-		p->intimate = 1000;
-	if (pet_id == -1) //New pet.
-		sprintf(tmp_sql,"INSERT INTO `%s` "
+	if( pet_id == -1 )
+	{// New pet.
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` "
 			"(`class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`) "
 			"VALUES ('%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-			pet_db, p->class_, t_name, p->account_id, p->char_id, p->level, p->egg_id,
-			p->equip, p->intimate, p->hungry, p->rename_flag, p->incuvate);
-
-	else	//Update pet.
-		sprintf(tmp_sql, "UPDATE `%s` SET `class`='%d',`name`='%s',`account_id`='%d',`char_id`='%d',`level`='%d',`egg_id`='%d',`equip`='%d',`intimate`='%d',`hungry`='%d',`rename_flag`='%d',`incuvate`='%d' WHERE `pet_id`='%d'",
-			pet_db, p->class_, t_name, p->account_id, p->char_id, p->level, p->egg_id,
-			p->equip, p->intimate, p->hungry, p->rename_flag, p->incuvate, p->pet_id);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		return 0;
-	} else if (pet_id == -1) { //New pet inserted.
-		if(mysql_field_count(&mysql_handle) == 0 &&
-			mysql_insert_id(&mysql_handle) != 0) {
-			p->pet_id = pet_id = (int)mysql_insert_id(&mysql_handle);
-		} else {
-			ShowError("inter_pet_tosql: Failed to retrieve new pet_id for '%s'. Pet creation aborted.\n", p->name);
+			pet_db, p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
+			p->equip, p->intimate, p->hungry, p->rename_flag, p->incuvate) )
+		{
+			Sql_ShowDebug(sql_handle);
+			return 0;
+		}
+		p->pet_id = (int)Sql_LastInsertId(sql_handle);
+	}
+	else
+	{// Update pet.
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class`='%d',`name`='%s',`account_id`='%d',`char_id`='%d',`level`='%d',`egg_id`='%d',`equip`='%d',`intimate`='%d',`hungry`='%d',`rename_flag`='%d',`incuvate`='%d' WHERE `pet_id`='%d'",
+			pet_db, p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
+			p->equip, p->intimate, p->hungry, p->rename_flag, p->incuvate, p->pet_id) )
+		{
+			Sql_ShowDebug(sql_handle);
 			return 0;
 		}
 	}
@@ -57,7 +56,10 @@ int inter_pet_tosql(int pet_id, struct s_pet *p) {
 	return 1;
 }
 #ifndef TXT_SQL_CONVERT
-int inter_pet_fromsql(int pet_id, struct s_pet *p){
+int inter_pet_fromsql(int pet_id, struct s_pet* p)
+{
+	char* data;
+	size_t len;
 
 #ifdef NOISY
 	ShowInfo("Loading pet (%d)...\n",pet_id);
@@ -66,42 +68,35 @@ int inter_pet_fromsql(int pet_id, struct s_pet *p){
 
 	//`pet` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate`)
 
-	sprintf(tmp_sql,"SELECT `pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate` FROM `%s` WHERE `pet_id`='%d'",pet_db, pet_id);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incuvate` FROM `%s` WHERE `pet_id`='%d'", pet_db, pet_id) )
+	{
+		Sql_ShowDebug(sql_handle);
 		return 0;
 	}
-	sql_res = mysql_store_result(&mysql_handle) ;
-	if (sql_res!=NULL && mysql_num_rows(sql_res)>0) {
-		sql_row = mysql_fetch_row(sql_res);
 
+	if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+	{
 		p->pet_id = pet_id;
-		p->class_ = atoi(sql_row[1]);
-		strncpy(p->name, sql_row[2], NAME_LENGTH);
-		p->account_id = atoi(sql_row[3]);
-		p->char_id = atoi(sql_row[4]);
-		p->level = atoi(sql_row[5]);
-		p->egg_id = atoi(sql_row[6]);
-		p->equip = atoi(sql_row[7]);
-		p->intimate = atoi(sql_row[8]);
-		p->hungry = atoi(sql_row[9]);
-		p->rename_flag = atoi(sql_row[10]);
-		p->incuvate = atoi(sql_row[11]);
+		Sql_GetData(sql_handle,  1, &data, NULL); p->class_ = atoi(data);
+		Sql_GetData(sql_handle,  2, &data, &len); memcpy(p->name, data, min(len, NAME_LENGTH));
+		Sql_GetData(sql_handle,  3, &data, NULL); p->account_id = atoi(data);
+		Sql_GetData(sql_handle,  4, &data, NULL); p->char_id = atoi(data);
+		Sql_GetData(sql_handle,  5, &data, NULL); p->level = atoi(data);
+		Sql_GetData(sql_handle,  6, &data, NULL); p->egg_id = atoi(data);
+		Sql_GetData(sql_handle,  7, &data, NULL); p->equip = atoi(data);
+		Sql_GetData(sql_handle,  8, &data, NULL); p->intimate = atoi(data);
+		Sql_GetData(sql_handle,  9, &data, NULL); p->hungry = atoi(data);
+		Sql_GetData(sql_handle, 10, &data, NULL); p->rename_flag = atoi(data);
+		Sql_GetData(sql_handle, 11, &data, NULL); p->incuvate = atoi(data);
+
+		Sql_FreeResult(sql_handle);
+
+		p->hungry = cap_value(p->hungry, 0, 100);
+		p->intimate = cap_value(p->intimate, 0, 1000);
+
+		if( save_log )
+			ShowInfo("Pet loaded (%d - %s).\n", pet_id, p->name);
 	}
-	if(p->hungry < 0)
-		p->hungry = 0;
-	else if(p->hungry > 100)
-		p->hungry = 100;
-	if(p->intimate < 0)
-		p->intimate = 0;
-	else if(p->intimate > 1000)
-		p->intimate = 1000;
-
-	mysql_free_result(sql_res);
-
-	if (save_log)
-		ShowInfo("Pet loaded (%d - %s).\n", pet_id, p->name);
 	return 0;
 }
 //----------------------------------------------
@@ -119,11 +114,8 @@ void inter_pet_sql_final(void){
 int inter_pet_delete(int pet_id){
 	ShowInfo("delete pet request: %d...\n",pet_id);
 
-	sprintf(tmp_sql,"DELETE FROM `%s` WHERE `pet_id`='%d'",pet_db, pet_id);
-	if(mysql_query(&mysql_handle, tmp_sql) ) {
-		ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-	}
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `pet_id`='%d'", pet_db, pet_id) )
+		Sql_ShowDebug(sql_handle);
 	return 0;
 }
 //------------------------------------------------------

@@ -173,7 +173,7 @@ void MD5_String2binary(const char * string, char * output)
 
    //Step 1.Append Padding Bits (extension of a mark bit)
    //1-1
-   string_byte_len = strlen(string);    //The byte chief of a character sequence is acquired.
+   string_byte_len = (unsigned int)strlen(string);    //The byte chief of a character sequence is acquired.
    pstring = (unsigned char *)string; //The position of the present character sequence is set.
 
    //1-2  Repeat calculation until length becomes less than 64 bytes.

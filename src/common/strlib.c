@@ -3,7 +3,6 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
-#include "../common/utils.h"
 #include "strlib.h"
 
 #include <stdio.h>
@@ -258,7 +257,7 @@ int e_mail_check(char* email)
 {
 	char ch;
 	char* last_arobas;
-	int len = strlen(email);
+	size_t len = strlen(email);
 
 	// athena limits
 	if (len < 3 || len > 39)
@@ -309,4 +308,135 @@ char* safestrncpy(char* dst, const char* src, size_t n)
 	if( ret != NULL )
 		ret[n - 1] = '\0';
 	return ret;
+}
+
+
+/////////////////////////////////////////////////////////////////////
+// StringBuf - dynamic string
+//
+// @author MouseJstr (original)
+
+/// Allocates a StringBuf
+StringBuf* StringBuf_Malloc() 
+{
+	StringBuf* self;
+	CREATE(self, StringBuf, 1);
+	StringBuf_Init(self);
+	return self;
+}
+
+/// Initializes a previously allocated StringBuf
+void StringBuf_Init(StringBuf* self)
+{
+	self->max_ = 1024;
+	self->ptr_ = self->buf_ = (char*)aMallocA(self->max_ + 1);
+}
+
+/// Appends the result of printf to the StringBuf
+int StringBuf_Printf(StringBuf* self, const char* fmt, ...)
+{
+	int len;
+	va_list ap;
+
+	va_start(ap, fmt);
+	len = StringBuf_Vprintf(self, fmt, ap);
+	va_end(ap);
+
+	return len;
+}
+
+/// Appends the result of vprintf to the StringBuf
+int StringBuf_Vprintf(StringBuf* self, const char* fmt, va_list ap)
+{
+	int n, size, off;
+
+	for(;;)
+	{
+		/* Try to print in the allocated space. */
+		size = self->max_ - (self->ptr_ - self->buf_);
+		n = vsnprintf(self->ptr_, size, fmt, ap);
+		/* If that worked, return the length. */
+		if( n > -1 && n < size )
+		{
+			self->ptr_ += n;
+			return (int)(self->ptr_ - self->buf_);
+		}
+		/* Else try again with more space. */
+		self->max_ *= 2; // twice the old size
+		off = (int)(self->ptr_ - self->buf_);
+		self->buf_ = (char*)aRealloc(self->buf_, self->max_ + 1);
+		self->ptr_ = self->buf_ + off;
+	}
+}
+
+/// Appends the contents of another StringBuf to the StringBuf
+int StringBuf_Append(StringBuf* self, const StringBuf* sbuf)
+{
+	int available = self->max_ - (self->ptr_ - self->buf_);
+	int needed = (int)(sbuf->ptr_ - sbuf->buf_);
+
+	if( needed >= available )
+	{
+		int off = (int)(self->ptr_ - self->buf_);
+		self->max_ += needed;
+		self->buf_ = (char*)aRealloc(self->buf_, self->max_ + 1);
+		self->ptr_ = self->buf_ + off;
+	}
+
+	memcpy(self->ptr_, sbuf->buf_, needed);
+	self->ptr_ += needed;
+	return (int)(self->ptr_ - self->buf_);
+}
+
+// Appends str to the StringBuf
+int StringBuf_AppendStr(StringBuf* self, const char* str) 
+{
+	int available = self->max_ - (self->ptr_ - self->buf_);
+	int needed = (int)strlen(str);
+
+	if( needed >= available )
+	{// not enough space, expand the buffer (minimum expansion = 1024)
+		int off = (int)(self->ptr_ - self->buf_);
+		self->max_ += max(needed, 1024);
+		self->buf_ = (char*)aRealloc(self->buf_, self->max_ + 1);
+		self->ptr_ = self->buf_ + off;
+	}
+
+	memcpy(self->ptr_, str, needed);
+	self->ptr_ += needed;
+	return (int)(self->ptr_ - self->buf_);
+}
+
+// Returns the length of the data in the Stringbuf
+int StringBuf_Length(StringBuf* self) 
+{
+	return (int)(self->ptr_ - self->buf_);
+}
+
+/// Returns the data in the StringBuf
+char* StringBuf_Value(StringBuf* self) 
+{
+	*self->ptr_ = '\0';
+	return self->buf_;
+}
+
+/// Clears the contents of the StringBuf
+void StringBuf_Clear(StringBuf* self) 
+{
+	self->ptr_ = self->buf_;
+}
+
+/// Destroys the StringBuf
+void StringBuf_Destroy(StringBuf* self)
+{
+	aFree(self->buf_);
+	self->ptr_ = self->buf_ = 0;
+	self->max_ = 0;
+}
+
+// Frees a StringBuf returned by StringBuf_Malloc
+void StringBuf_Free(StringBuf* self) 
+{
+	StringBuf_Destroy(self);
+	aFree(self);
 }

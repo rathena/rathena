@@ -224,6 +224,12 @@
 				RelativePath="..\src\common\socket.h">
 			</File>
 			<File
+				RelativePath="..\src\common\sql.c">
+			</File>
+			<File
+				RelativePath="..\src\common\sql.h">
+			</File>
+			<File
 				RelativePath="..\src\common\strlib.c">
 			</File>
 			<File

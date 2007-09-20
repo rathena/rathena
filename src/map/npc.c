@@ -6,6 +6,7 @@
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
+#include "../common/utils.h"
 #include "../common/ers.h"
 #include "../common/db.h"
 #include "map.h"

@@ -111,8 +111,9 @@ void set_defaultparse(ParseFunc defaultparse)
 void set_nonblocking(int fd, unsigned long yes)
 {
 	// TCP_NODELAY BOOL Disables the Nagle algorithm for send coalescing.
-	if(MODE_NODELAY)
-		setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (char *)&yes, sizeof yes);
+#if defined(MODE_NODELAY) && MODE_NODELAY == 1
+	setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (char *)&yes, sizeof yes);
+#endif
 	
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s. 
 	// The argp parameter is zero if nonblocking is to be disabled. 
@@ -169,7 +170,7 @@ int recv_to_fifo(int fd)
 	if( !session_isActive(fd) )
 		return -1;
 
-	len = recv(fd, (char *) session[fd]->rdata + session[fd]->rdata_size, RFIFOSPACE(fd), 0);
+	len = recv(fd, (char *) session[fd]->rdata + session[fd]->rdata_size, (int)RFIFOSPACE(fd), 0);
 
 	if (len == SOCKET_ERROR) {
 		if (s_errno == S_ECONNABORTED) {
@@ -203,7 +204,7 @@ int send_from_fifo(int fd)
 	if (session[fd]->wdata_size == 0)
 		return 0;
 
-	len = send(fd, (const char *) session[fd]->wdata, session[fd]->wdata_size, 0);
+	len = send(fd, (const char *) session[fd]->wdata, (int)session[fd]->wdata_size, 0);
 
 	if (len == SOCKET_ERROR) {
 		if (s_errno == S_ECONNABORTED) {
@@ -457,7 +458,7 @@ int realloc_writefifo(int fd, size_t addition)
 	return 0;
 }
 
-int RFIFOSKIP(int fd, int len)
+int RFIFOSKIP(int fd, size_t len)
 {
     struct socket_data *s;
 
@@ -477,7 +478,7 @@ int RFIFOSKIP(int fd, int len)
 	return 0;
 }
 
-int WFIFOSET(int fd, int len)
+int WFIFOSET(int fd, size_t len)
 {
 	size_t newreserve;
 	struct socket_data* s = session[fd];

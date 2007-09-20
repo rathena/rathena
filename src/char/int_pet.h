@@ -4,6 +4,8 @@
 #ifndef _INT_PET_H_
 #define _INT_PET_H_
 
+struct s_pet;
+
 int inter_pet_init(void);
 void inter_pet_final(void);
 int inter_pet_save(void);

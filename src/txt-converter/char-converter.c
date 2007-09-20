@@ -7,6 +7,7 @@
 #include "../common/strlib.h"
 #include "../common/showmsg.h"
 #include "../common/mapindex.h"
+#include "../common/utils.h"
 
 #include "../char/char.h"
 #include "../char/int_storage.h"

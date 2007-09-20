@@ -4,6 +4,8 @@
 #ifndef _INTER_H_
 #define _INTER_H_
 
+struct accreg;
+
 int inter_init_txt(const char *file);
 void inter_final(void);
 int inter_save(void);

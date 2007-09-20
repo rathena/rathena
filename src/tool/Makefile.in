@@ -1,0 +1,28 @@
+#####################################################################
+.PHONY : all adduser convert mapcache clean help
+
+all: adduser convert mapcache
+
+adduser:
+	@CC@ -o ../../tools/adduser@EXEEXT@ adduser.c
+
+convert:
+	@CC@ -o ../../tools/convert@EXEEXT@ convert.c
+
+mapcache:
+	@CC@ -c -o grfio.o grfio.c
+	@CC@ -o ../../mapcache@EXEEXT@ mapcache.c grfio.o -lz
+
+clean:
+	rm -rf *.o ../../tools/adduser@EXEEXT@ ../../tools/convert@EXEEXT@ ../../mapcache@EXEEXT@
+
+help:
+	@echo "possible targets are 'adduser' 'convert' 'mapcache' 'all' 'clean' 'help'"
+	@echo "'adduser'   - ???"
+	@echo "'convert'   - ???"
+	@echo "'mapcache'  - mapcache generator"
+	@echo "'all'       - builds all above targets"
+	@echo "'clean'     - cleans builds and objects"
+	@echo "'help'      - outputs this message"
+
+#####################################################################
