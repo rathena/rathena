@@ -4,8 +4,6 @@
 #ifndef _LOGIN_SQL_H_
 #define _LOGIN_SQL_H_
 
-#define MAX_SERVERS 30
-
 #define LOGIN_CONF_NAME	"conf/login_athena.conf"
 #define SQL_CONF_NAME "conf/inter_athena.conf"
 #define LAN_CONF_NAME "conf/subnet_athena.conf"
@@ -25,7 +23,7 @@ struct mmo_account {
 	long login_id2;
 	char lastlogin[24];
 	int sex;
-	int level;
+	uint8 level;
 };
 
 struct mmo_char_server {

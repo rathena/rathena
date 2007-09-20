@@ -24,18 +24,19 @@ struct Login_Config {
 
 	uint32 login_ip;								// the address to bind to
 	uint16 login_port;								// the port to bind to
+	unsigned int ip_sync_interval;					// interval (in minutes) to execute a DNS/IP update (for dynamic IPs)
 	bool log_login;									// whether to log login server actions or not
 	char date_format[32];							// date format used in messages
 	bool console;									// console input system enabled?
-	unsigned int ip_sync_interval;					// interval (in minutes) to execute a DNS/IP update (for dynamic IPs)
-	int min_level_to_connect;						// minimum level of player/GM (0: player, 1-99: gm) to connect
 	bool new_account_flag;							// autoregistration via _M/_F ?
 	bool case_sensitive;							// are logins case sensitive ?
 	bool use_md5_passwds;							// work with password hashes instead of plaintext passwords?
 	bool login_gm_read;								// should the login server handle info about gm accounts?
+	uint8 min_level_to_connect;						// minimum level of player/GM (0: player, 1-99: GM) to connect
 	bool online_check;								// reject incoming players that are already registered as online ?
 	bool check_client_version;						// check the clientversion set in the clientinfo ?
 	unsigned int client_version_to_connect;			// the client version needed to connect (if checking is enabled)
+
 	bool ipban;										// perform IP blocking (via contents of `ipbanlist`) ?
 	bool dynamic_pass_failure_ban;					// automatic IP blocking due to failed login attemps ?
 	unsigned int dynamic_pass_failure_ban_interval;	// how far to scan the loginlog for password failures
@@ -47,7 +48,7 @@ struct Login_Config {
 } login_config;
 
 int login_fd; // login server socket
-int server_num; // number of connected char servers
+#define MAX_SERVERS 30
 int server_fd[MAX_SERVERS]; // char server sockets
 struct mmo_char_server server[MAX_SERVERS]; // char server data
 
@@ -61,15 +62,14 @@ struct s_subnet {
 
 int subnet_count = 0;
 
-
 struct gm_account* gm_account_db = NULL;
 unsigned int GM_num = 0; // number of gm accounts
 
 //Account registration flood protection [Kevin]
 int allowed_regs = 1;
 int time_allowed = 10; //in seconds
-int num_regs = 0;
 unsigned int new_reg_tick = 0;
+int num_regs = 0;
 
 Sql* sql_handle;
 
@@ -494,7 +494,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 	{
 		char r_ip[16];
 		char ip_dnsbl[256];
-		char *dnsbl_serv;
+		char* dnsbl_serv;
 		bool matched = false;
 
 		sprintf(r_ip, "%u.%u.%u.%u", sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3]);
@@ -1172,9 +1172,11 @@ int parse_fromchar(int fd)
 		case 0x272d:	// Receive list of all online accounts. [Skotlex]
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
-			if (login_config.online_check) {
+			if( login_config.online_check )
+			{
 				struct online_login_data *p;
-				int aid, users;
+				int aid;
+				uint32 i, users;
 				online_db->foreach(online_db,online_db_setoffline,id); //Set all chars from this char-server offline first
 				users = RFIFOW(fd,4);
 				for (i = 0; i < users; i++) {
@@ -1189,8 +1191,8 @@ int parse_fromchar(int fd)
 				}
 			}
 			RFIFOSKIP(fd,RFIFOW(fd,2));
-
 		break;
+
 		case 0x272e: //Request account_reg2 for a character.
 			if (RFIFOREST(fd) < 10)
 				return 0;
@@ -1388,6 +1390,8 @@ int parse_login(int fd)
 				}
 				else
 				{
+					uint8 server_num = 0;
+
 					if( login_config.log_login && SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s','100', 'login ok')", loginlog_db, ipl, esc_userid) )
 						Sql_ShowDebug(sql_handle);
 					if( account.level )
@@ -1395,8 +1399,7 @@ int parse_login(int fd)
 					else
 						ShowStatus("Connection of the account '%s' accepted.\n", account.userid);
 
-					server_num = 0;
-					WFIFOHEAD(fd, 47+32*MAX_SERVERS);
+					WFIFOHEAD(fd,47+32*MAX_SERVERS);
 					for( i = 0; i < MAX_SERVERS; ++i )
 					{
 						if( session_isValid(server_fd[i]) )
@@ -1812,12 +1815,13 @@ int login_config_read(const char* cfgName)
 			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
 		}
-		else if (!strcmpi(w1, "bind_ip")) {
+		else if( !strcmpi(w1, "bind_ip") ) {
 			char ip_str[16];
 			login_config.login_ip = host2ip(w2);
-			if (login_config.login_ip)
+			if( login_config.login_ip )
 				ShowStatus("Login server binding IP address : %s -> %s\n", w2, ip2str(login_config.login_ip, ip_str));
-		} else if(!strcmpi(w1,"login_port")) {
+		}
+		else if( !strcmpi(w1, "login_port") ) {
 			login_config.login_port = (uint16)atoi(w2);
 			ShowStatus("set login_port : %s\n",w2);
 		}
@@ -1835,34 +1839,34 @@ int login_config_read(const char* cfgName)
 		else if (!strcmpi(w1, "dynamic_pass_failure_ban_duration"))
 			login_config.dynamic_pass_failure_ban_duration = atoi(w2);
 
-		else if (!strcmpi(w1, "new_account"))
-			login_config.new_account_flag=config_switch(w2);
-		else if (!strcmpi(w1, "check_client_version"))
-			login_config.check_client_version=config_switch(w2);
-		else if (!strcmpi(w1, "client_version_to_connect"))
-			login_config.client_version_to_connect=atoi(w2);
-		else if (!strcmpi(w1, "use_MD5_passwords"))
-			login_config.use_md5_passwds = config_switch(w2);
-		else if (!strcmpi(w1, "min_level_to_connect"))
-			login_config.min_level_to_connect = atoi(w2);
-		else if (!strcmpi(w1, "date_format"))
-			strncpy(login_config.date_format, w2, sizeof(login_config.date_format));
-		else if (!strcmpi(w1, "console"))
+		else if(!strcmpi(w1, "new_account"))
+			login_config.new_account_flag = (bool)config_switch(w2);
+		else if(!strcmpi(w1, "check_client_version"))
+			login_config.check_client_version = (bool)config_switch(w2);
+		else if(!strcmpi(w1, "client_version_to_connect"))
+			login_config.client_version_to_connect = (unsigned int)atoi(w2);
+		else if(!strcmpi(w1, "use_MD5_passwords"))
+			login_config.use_md5_passwds = (bool)config_switch(w2);
+		else if(!strcmpi(w1, "min_level_to_connect"))
+			login_config.min_level_to_connect = (uint8)atoi(w2);
+		else if(!strcmpi(w1, "date_format"))
+			safestrncpy(login_config.date_format, w2, sizeof(login_config.date_format));
+		else if(!strcmpi(w1, "console"))
 			login_config.console = config_switch(w2);
-		else if (!strcmpi(w1, "case_sensitive"))
+		else if(!strcmpi(w1, "case_sensitive"))
 			login_config.case_sensitive = config_switch(w2);
-		else if (!strcmpi(w1, "allowed_regs")) //account flood protection system
+		else if(!strcmpi(w1, "allowed_regs")) //account flood protection system
 			allowed_regs = atoi(w2);
-		else if (!strcmpi(w1, "time_allowed"))
+		else if(!strcmpi(w1, "time_allowed"))
 			time_allowed = atoi(w2);
-		else if (!strcmpi(w1, "online_check"))
-			login_config.online_check = config_switch(w2);
-		else if (!strcmpi(w1, "use_dnsbl"))
-			login_config.use_dnsbl = config_switch(w2);
-		else if (!strcmpi(w1, "dnsbl_servers"))
-			{ strncpy(login_config.dnsbl_servs, w2, 1023); login_config.dnsbl_servs[1023] = '\0'; }
+		else if(!strcmpi(w1, "online_check"))
+			login_config.online_check = (bool)config_switch(w2);
+		else if(!strcmpi(w1, "use_dnsbl"))
+			login_config.use_dnsbl = (bool)config_switch(w2);
+		else if(!strcmpi(w1, "dnsbl_servers"))
+			safestrncpy(login_config.dnsbl_servs, w2, sizeof(login_config.dnsbl_servs));
 		else if (!strcmpi(w1, "ip_sync_interval"))
-			login_config.ip_sync_interval = 1000*60*atoi(w2); //w2 comes in minutes.
+			login_config.ip_sync_interval = (unsigned int)1000*60*atoi(w2); //w2 comes in minutes.
 		else if (!strcmpi(w1, "import"))
 			login_config_read(w2);
 	}
@@ -1924,27 +1928,28 @@ void sql_config_read(const char* cfgName)
 
 void login_set_defaults()
 {
+	login_config.login_ip = INADDR_ANY;
+	login_config.login_port = 6900;
+	login_config.ip_sync_interval = 0;
 	login_config.log_login = true;
+	safestrncpy(login_config.date_format, "%Y-%m-%d %H:%M:%S", sizeof(login_config.date_format));
+	login_config.console = false;
+	login_config.new_account_flag = true;
 	login_config.case_sensitive = true;
+	login_config.use_md5_passwds = false;
+	login_config.login_gm_read = true;
 	login_config.min_level_to_connect = 0;
+	login_config.online_check = true;
 	login_config.check_client_version = false;
 	login_config.client_version_to_connect = 20;
-	login_config.new_account_flag = true;
-	login_config.online_check = true;
+
 	login_config.ipban = true;
 	login_config.dynamic_pass_failure_ban = true;
 	login_config.dynamic_pass_failure_ban_interval = 5;
 	login_config.dynamic_pass_failure_ban_limit = 7;
 	login_config.dynamic_pass_failure_ban_duration = 5;
-	login_config.ip_sync_interval = 0;
 	login_config.use_dnsbl = false;
-	strcpy(login_config.dnsbl_servs, "");
-	login_config.use_md5_passwds = false;
-	login_config.login_gm_read = true;
-	login_config.login_ip = INADDR_ANY;
-	login_config.login_port = 6900;
-	login_config.console = false;
-	strcpy(login_config.date_format, "%Y-%m-%d %H:%M:%S");
+	safestrncpy(login_config.dnsbl_servs, "", sizeof(login_config.dnsbl_servs));
 }
 
 //--------------------------------------
@@ -1965,7 +1970,8 @@ void do_final(void)
 // Function called when the server
 // has received a crash signal.
 //------------------------------
-void do_abort(void) {
+void do_abort(void)
+{
 }
 
 void set_server_type(void)
@@ -1987,11 +1993,11 @@ int do_init(int argc, char** argv)
 
 	srand((unsigned int)time(NULL));
 
-	for(i=0;i<AUTH_FIFO_SIZE;i++)
-		auth_fifo[i].delflag=1;
+	for( i = 0; i < AUTH_FIFO_SIZE; i++ )
+		auth_fifo[i].delflag = 1;
 
-	for(i=0;i<MAX_SERVERS;i++)
-		server_fd[i]=-1;
+	for( i = 0; i < MAX_SERVERS; i++ )
+		server_fd[i] = -1;
 
 	// Online user database init
 	online_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
@@ -2015,6 +2021,7 @@ int do_init(int argc, char** argv)
 	add_timer_func_list(online_data_cleanup, "online_data_cleanup");
 	add_timer_interval(gettick() + 600*1000, online_data_cleanup, 0, 0, 600*1000);
 
+	// add timer to detect ip address change and perform update
 	if (login_config.ip_sync_interval) {
 		add_timer_func_list(sync_ip_addresses, "sync_ip_addresses");
 		add_timer_interval(gettick() + login_config.ip_sync_interval, sync_ip_addresses, 0, 0, login_config.ip_sync_interval);
