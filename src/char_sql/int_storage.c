@@ -24,7 +24,7 @@ struct guild_storage *guild_storage_pt=NULL;
 #endif //TXT_SQL_CONVERT
 
 /// Save guild_storage data to sql
-int storage_tosql(int account_id,struct storage* p)
+int storage_tosql(int account_id, struct storage* p)
 {
 	memitemdata_to_sql(p->storage_, MAX_STORAGE, account_id, TABLE_STORAGE);
 	//ShowInfo ("storage save to DB - account: %d\n", account_id);

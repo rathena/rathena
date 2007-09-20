@@ -1241,54 +1241,53 @@ int mmo_auth(struct mmo_account* account, int fd)
 		return 0; // 0 = Unregistered ID
 	}
 
-		if( login_config.use_md5_passwds )
-			MD5_String(account->passwd, user_password);
-		else
-			safestrncpy(user_password, account->passwd, NAME_LENGTH);
+	if( login_config.use_md5_passwds )
+		MD5_String(account->passwd, user_password);
+	else
+		safestrncpy(user_password, account->passwd, NAME_LENGTH);
 
-		if( !check_password(session[fd]->session_data, account->passwdenc, user_password, auth_dat[i].pass) )
+	if( !check_password(session[fd]->session_data, account->passwdenc, user_password, auth_dat[i].pass) )
+	{
+		login_log("Invalid password (account: %s, pass: %s, received pass: %s, ip: %s)\n", account->userid, auth_dat[i].pass, (account->passwdenc) ? "[MD5]" : account->passwd, ip);
+		return 1; // 1 = Incorrect Password
+	}
+
+	if( auth_dat[i].connect_until_time != 0 && auth_dat[i].connect_until_time < time(NULL) )
+	{
+		login_log("Connection refused (account: %s, pass: %s, expired ID, ip: %s)\n", account->userid, account->passwd, ip);
+		return 2; // 2 = This ID is expired
+	}
+
+	if( auth_dat[i].ban_until_time != 0 && auth_dat[i].ban_until_time > time(NULL) )
+	{
+		strftime(tmpstr, 20, login_config.date_format, localtime(&auth_dat[i].ban_until_time));
+		tmpstr[19] = '\0';
+		login_log("Connection refused (account: %s, pass: %s, banned until %s, ip: %s)\n", account->userid, account->passwd, tmpstr, ip);
+		return 6; // 6 = Your are Prohibited to log in until %s
+	}
+
+	if( auth_dat[i].state )
+	{
+		login_log("Connection refused (account: %s, pass: %s, state: %d, ip: %s)\n", account->userid, account->passwd, auth_dat[i].state, ip);
+		return auth_dat[i].state - 1;
+	}
+
+	if( login_config.online_check )
+	{
+		struct online_login_data* data = idb_get(online_db,auth_dat[i].account_id);
+		if( data && data->char_server > -1 )
 		{
-			login_log("Invalid password (account: %s, pass: %s, received pass: %s, ip: %s)\n", account->userid, auth_dat[i].pass, (account->passwdenc) ? "[MD5]" : account->passwd, ip);
-			return 1; // 1 = Incorrect Password
+			//Request char servers to kick this account out. [Skotlex]
+			unsigned char buf[8];
+			ShowNotice("User [%d] is already online - Rejected.\n",auth_dat[i].account_id);
+			WBUFW(buf,0) = 0x2734;
+			WBUFL(buf,2) = auth_dat[i].account_id;
+			charif_sendallwos(-1, buf, 6);
+			if( data->waiting_disconnect == -1 )
+				data->waiting_disconnect = add_timer(gettick()+30000, waiting_disconnect_timer, auth_dat[i].account_id, 0);
+			return 3; // Rejected
 		}
-
-		if( auth_dat[i].connect_until_time != 0 && auth_dat[i].connect_until_time < time(NULL) )
-		{
-			login_log("Connection refused (account: %s, pass: %s, expired ID, ip: %s)\n", account->userid, account->passwd, ip);
-			return 2; // 2 = This ID is expired
-		}
-
-		if( auth_dat[i].ban_until_time != 0 && auth_dat[i].ban_until_time > time(NULL) )
-		{
-			strftime(tmpstr, 20, login_config.date_format, localtime(&auth_dat[i].ban_until_time));
-			tmpstr[19] = '\0';
-			login_log("Connection refused (account: %s, pass: %s, banned until %s, ip: %s)\n", account->userid, account->passwd, tmpstr, ip);
-			return 6; // 6 = Your are Prohibited to log in until %s
-		}
-
-		if( auth_dat[i].state )
-		{
-			login_log("Connection refused (account: %s, pass: %s, state: %d, ip: %s)\n", account->userid, account->passwd, auth_dat[i].state, ip);
-			return auth_dat[i].state - 1;
-		}
-
-		if( login_config.online_check )
-		{
-			struct online_login_data* data = idb_get(online_db,auth_dat[i].account_id);
-			if( data && data->char_server > -1 )
-			{
-				//Request char servers to kick this account out. [Skotlex]
-				unsigned char buf[8];
-				ShowNotice("User [%d] is already online - Rejected.\n",auth_dat[i].account_id);
-				WBUFW(buf,0) = 0x2734;
-				WBUFL(buf,2) = auth_dat[i].account_id;
-				charif_sendallwos(-1, buf, 6);
-				if( data->waiting_disconnect == -1 )
-					data->waiting_disconnect = add_timer(gettick()+30000, waiting_disconnect_timer, auth_dat[i].account_id, 0);
-				return 3; // Rejected
-			}
-		}
-
+	}
 
 	login_log("Authentification accepted (account: %s (id: %d), ip: %s)\n", account->userid, auth_dat[i].account_id, ip);
 

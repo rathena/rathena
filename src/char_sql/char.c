@@ -3930,7 +3930,11 @@ int do_init(int argc, char **argv)
 		Sql_ShowDebug(sql_handle);
 
 	ShowInfo("End of char server initilization function.\n");
+
+	ShowInfo("open port %d.....\n",char_port);
+	char_fd = make_listen_bind(bind_ip, char_port);
 	ShowStatus("The char-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", char_port);
+
 	return 0;
 }
 
