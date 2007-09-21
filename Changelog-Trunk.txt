@@ -8,6 +8,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  itemdb loockup and a first step to remove map_session_data->inventory_data).
 	* Fixed a typo in the configure script that replaced CFLAGS with CPPFLAGS 
 	  when -Wno-pointer-sign is supported by the compiler. [FlavioJS]
+	* Fixed a typo in the status-change saving code (wrong variable used)
+	* Fixed a case of bad sql code conversion breaking homun skill loading
 	* Corrected skill Charge Attack as described in bugreport:67 [ultramage]
 	- cast time is between 100% and 300% (+ infinite waiting fixed)
 	- damage is also between 100% and 300% (doesn't increase past range 9)

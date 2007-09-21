@@ -199,7 +199,8 @@ int mapif_load_homunculus(int fd)
 		i = atoi(data);
 		if( i < HM_SKILLBASE || i >= HM_SKILLBASE + MAX_HOMUNSKILL )
 			continue;// invalid guild skill
-		homun_pt->hskill[i].id = (unsigned short)i;
+		i = i - HM_SKILLBASE - 1;
+		homun_pt->hskill[i].id = (unsigned short)atoi(data);
 		// lv
 		Sql_GetData(sql_handle, 1, &data, NULL);
 		homun_pt->hskill[i].lv = (unsigned short)atoi(data);

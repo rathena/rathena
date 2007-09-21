@@ -2733,7 +2733,7 @@ int parse_frommap(int fd)
 				for( i = 0; i < count; ++i )
 				{
 					memcpy (&data, RFIFOP(fd, 14+i*sizeof(struct status_change_data)), sizeof(struct status_change_data));
-					if( count > 0 )
+					if( i > 0 )
 						StringBuf_AppendStr(&buf, ", ");
 					StringBuf_Printf(&buf, "('%d','%d','%hu','%d','%d','%d','%d','%d')", aid, cid,
 						data.type, data.tick, data.val1, data.val2, data.val3, data.val4);
