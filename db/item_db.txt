@@ -2740,7 +2740,7 @@
 7716,Strawberry_Choco_Recipe,Recipe for Strawberry Chocolate,3,,10,0,,,,,,,,,,,,,{},{},{}
 7717,Choco_Tart_Recipe,Recipe for Chocolate Tart,3,,10,0,,,,,,,,,,,,,{},{},{}
 7718,Cacao_Bean,Cacao_Bean,3,,10,10,,,,,,,,,,,,,{},{},{}
-7714,BlueCard_G,Blue G Card,3,,,10,,,,,,,,,,,,,{},{},{}
+7719,BlueCard_G,Blue G Card,3,,,10,,,,,,,,,,,,,{},{},{}
 //St. Patricks Day Event (2007)
 7720,Gold_Coin_US,Gold Coin,3,1000,,10,,,,,,,,,,,,,{},{},{}
 7721,Treasure_Box_,Treasure Box,3,300000,,500,,,,,,,,,,,,,{},{},{}

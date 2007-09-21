@@ -27,6 +27,8 @@
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
 ========================
+09/21
+	* Fixed an item id thanks to Empty [Playtester]
 09/19
 	* Slightly adjusted some drop rates [Playtester]
 	- updated sql files
