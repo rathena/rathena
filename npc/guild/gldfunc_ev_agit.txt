@@ -139,30 +139,28 @@ function	script	F_AgitBreak	{
 	set .@castle$, getarg(1);
 
 	//killmonsterall .@map$;
-	set @GID,getcharid(2);
-	if (@GID <= 0) return;
+	set .@GID,getcharid(2);
+	if (.@GID <= 0) return;
 
-	set @Economy,GetCastleData(.@map$,2) - 5;
-	if (@Economy < 0) set @Economy, 0;
-	SetCastleData .@map$,2, @Economy;
+	set .@Economy,GetCastleData(.@map$,2) - 5;
+	if (.@Economy < 0) set .@Economy, 0;
+	SetCastleData .@map$, 2, .@Economy;
 
-	set @Defence,GetCastleData(.@map$,3) - 5;
-	if (@Defence < 0) set @Defence, 0;
-	SetCastleData .@map$,3, @Defence;
+	set .@Defence,GetCastleData(.@map$,3) - 5;
+	if (.@Defence < 0) set .@Defence, 0;
+	SetCastleData .@map$, 3, .@Defence;
 
-	SetCastleData .@map$,1, @GID;
+	SetCastleData .@map$,1, .@GID;
 	MapAnnounce .@map$,"The emperium has been destroyed.",bc_map,0x00CCFF;
-	Announce "The [" + GetCastleName(.@map$) + "] castle has been conquered by the [" + GetGuildName(@GID) + "] guild.",bc_all;
-	GetCastleData .@map$,0,"::OnRecvCastle"+@castle$;
+	Announce "The [" + GetCastleName(.@map$) + "] castle has been conquered by the [" + GetGuildName(.@GID) + "] guild.",bc_all;
+	GetCastleData .@map$,0,"::OnRecvCastle"+.@castle$;
 
 	disablenpc "Kafra Staff#"+.@castle$;
-	set @i, 3;
 
-	L_Loop:
-		set @i, @i + 1;
-		SetCastleData .@map$,@i,0;
-		if(@i < 25) goto L_Loop;
-		return;
+	for( set .@i, 4; .@i < 25; set .@i, .@i+1 )
+		SetCastleData .@map$, .@i, 0;
+
+	return;
 }
 
 
