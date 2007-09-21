@@ -6388,7 +6388,7 @@ L_Done:
 
 // Niflheim Part & Realm of the Dead
 
-niflheim,102,54,4	script	Mad Man		739,{
+niflheim,102,54,4	script	Mad Man	739,{
 
 	if(signquest > 53) goto L_Queen;
 	if(signlaichin == 4) goto L_Where1;
@@ -6742,7 +6742,7 @@ L_Queen:
 	close;
 }
 
-function	script		Sign_Seal	{
+function	script	Sign_Seal	{
 
     if (@signseal == 1) {
         if (Sign_Seal1 == 1) set Sign_Seal1$,"big 1 o'clock";
