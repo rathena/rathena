@@ -160,7 +160,7 @@ MYSQL_LIBS=""
 if test "$want_mysql" = "no" ; then
 	AC_MSG_NOTICE([ignoring MySQL (optional)])
 else
-	if test -z "$MYSQL_CONFIG_HOME" -o test; then
+	if test -z "$MYSQL_CONFIG_HOME"; then
 		AC_PATH_PROG([MYSQL_CONFIG_HOME], [mysql_config], [no])
 	fi
 
@@ -171,6 +171,9 @@ else
 		MYSQL_CFLAGS="`$MYSQL_CONFIG_HOME --cflags`"
 		MYSQL_LIBS="`$MYSQL_CONFIG_HOME --libs`"
 		AC_MSG_RESULT([yes ($MYSQL_VERSION)])
+		if test -n "`$MYSQL_CONFIG_HOME --libs | grep -i '\-m64'`"; then
+			AC_MSG_ERROR([$MYSQL_CONFIG_HOME reported that MySQL was compiled in 64bit mode, please specify a 32bit distribution of MySQL with --with-mysql=<path>... stopping])
+		fi
 	else
 		AC_MSG_RESULT([no])
 		AC_MSG_NOTICE([disabling MySQL (optional)])
