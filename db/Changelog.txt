@@ -28,6 +28,9 @@
 
 ========================
 09/21
+	* Officialized many 10.4 card bonuses [Playtester]
+	- fixed Asura Strike autocast (sorry my mistake)
+	- removed NoRegen bonus, it's -100% Recovery on Aegis
 	* Fixed an item id thanks to Empty [Playtester]
 09/19
 	* Slightly adjusted some drop rates [Playtester]
