@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/09/21
+	* Corrected skill Charge Attack as described in bugreport:67 [ultramage]
+	- cast time is between 100% and 300% (+ infinite waiting fixed)
+	- damage is also between 100% and 300% (doesn't increase past range 9)
+	- added knockback that's equal to the distance to target
+	- no longer causes teleportation on WoE grounds
+	- if target runs behind an obstacle, the skill will still teleport you,
+	  but will not perform the attack or do knockback
+	- this should be official behavior, so enjoy the weirdness!
 	* Makefile deleting .svn in save folder.
 	* Limited the number of packets parsed per cycle to 3.
 	* Fixed sql login throwing an out-of-place debug message and escaping too 

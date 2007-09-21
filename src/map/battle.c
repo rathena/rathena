@@ -1546,7 +1546,11 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 100*(skill_lv-1);
 					break;
 				case KN_CHARGEATK:
-					skillratio += 100*((wflag-1)/3); //+100% every 3 cells.of distance
+					{
+					int k = (wflag-1)/3; //+100% every 3 cells of distance
+					if( k > 2 ) k = 2; // ...but hard-limited to 300%.
+					skillratio += 100 * k; 
+					}
 					break;
 				case HT_PHANTASMIC:
 					skillratio += 50;
