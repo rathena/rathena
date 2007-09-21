@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -25,6 +25,7 @@
 //= 1.7 Changed the laboratory entrance checking to prevent players
 //= from being stuck in the quest. [SinSloth]
 //= 1.8 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.9 Fixed a bug with Einbroch Pollution quest. [SinSloth]
 //============================================================ 
 
 
@@ -2708,7 +2709,7 @@ s_Giveclothes:
 einbroch,1,1,0	script	#PolutionNPC	-1,{
 
 OnPolution:
-	set @AlrdEinPoll,1;
+	set $@AlrdEinPoll,1;
 	donpcevent "Liotzburg::OnHide";
 	donpcevent "Morei::OnHide";
 	donpcevent "Mark::OnHide";
@@ -2856,7 +2857,7 @@ OnTimer600000:
 	enablenpc "Paddler";
 	enablenpc "Head Gear Dealer";
 	set $EinPolution,0;
-	set @AlrdEinPoll,0;
+	set $@AlrdEinPoll,0;
 	end;
 
 }
@@ -2874,7 +2875,7 @@ sec_in02,127,86,3	script	Einbroch Polution	851,{
 		mes "[Einbroch Polution Variable Management]";
 		mes "$EinPolution has been reset to 0.";
 		set $EinPolution,0;
-		set @AlrdEinPoll,0;
+		set $@AlrdEinPoll,0;
 		close;
 	s_Input:
 		mes "[Einbroch Polution Variable Management]";
@@ -2914,7 +2915,7 @@ einbroch,132,84,3	script	Liotzburg	853,{
 		mes "fix this! I gotta hide and find";
 		mes "someplace safe!";
 		close2;
-		if(!@AlrdEinPoll)donpcevent "#PolutionNPC::OnPolution";
+		if(!$@AlrdEinPoll)donpcevent "#PolutionNPC::OnPolution";
 		end;
 	}
 	if(EinFactory >= 13){
