@@ -32,120 +32,118 @@ const char walk_choices [3][3] =
 };
 
 /*==========================================
- * åoòHíTçıï‚èïheap push
+ * heap push (helper function)
  *------------------------------------------*/
 static void push_heap_path(int *heap,struct tmp_path *tp,int index)
 {
 	int i,h;
 
+	h = heap[0];
 	heap[0]++;
 
-	for(h=heap[0]-1,i=(h-1)/2;
-		h>0 && tp[index].cost<tp[heap[i+1]].cost;
-		i=(h-1)/2)
-		heap[h+1]=heap[i+1],h=i;
-	heap[h+1]=index;
+	for( i = (h-1)/2; h > 0 && tp[index].cost < tp[heap[i+1]].cost; i = (h-1)/2 )
+		heap[h+1] = heap[i+1], h = i;
+
+	heap[h+1] = index;
 }
 
 /*==========================================
- * åoòHíTçıï‚èïheap update
+ * heap update (helper function)
  * costÇ™å∏Ç¡ÇΩÇÃÇ≈ç™ÇÃï˚Ç÷à⁄ìÆ
  *------------------------------------------*/
 static void update_heap_path(int *heap,struct tmp_path *tp,int index)
 {
 	int i,h;
 
-	for(h=0;h<heap[0];h++)
-		if(heap[h+1]==index)
-			break;
-	if(h==heap[0]){
+	ARR_FIND( 0, heap[0], h, heap[h+1] == index );
+	if( h == heap[0] )
+	{
 		ShowError("update_heap_path bug\n");
 		exit(1);
 	}
-	for(i=(h-1)/2;
-		h>0 && tp[index].cost<tp[heap[i+1]].cost;
-		i=(h-1)/2)
-		heap[h+1]=heap[i+1],h=i;
-	heap[h+1]=index;
+
+	for( i = (h-1)/2; h > 0 && tp[index].cost < tp[heap[i+1]].cost; i = (h-1)/2 )
+		heap[h+1] = heap[i+1], h = i;
+
+	heap[h+1] = index;
 }
 
 /*==========================================
- * åoòHíTçıï‚èïheap pop
+ * heap pop (helper function)
  *------------------------------------------*/
 static int pop_heap_path(int *heap,struct tmp_path *tp)
 {
 	int i,h,k;
 	int ret,last;
 
-	if(heap[0]<=0)
+	if( heap[0] <= 0 )
 		return -1;
-	ret=heap[1];
-	last=heap[heap[0]];
+	ret = heap[1];
+	last = heap[heap[0]];
 	heap[0]--;
 
-	for(h=0,k=2;k<heap[0];k=k*2+2){
-		if(tp[heap[k+1]].cost>tp[heap[k]].cost)
+	for( h = 0, k = 2; k < heap[0]; k = k*2+2 )
+	{
+		if( tp[heap[k+1]].cost > tp[heap[k]].cost )
 			k--;
-		heap[h+1]=heap[k+1], h=k;
+		heap[h+1] = heap[k+1], h = k;
 	}
-	if(k==heap[0])
-		heap[h+1]=heap[k], h=k-1;
 
-	for(i=(h-1)/2;
-		h>0 && tp[heap[i+1]].cost>tp[last].cost;
-		i=(h-1)/2)
-		heap[h+1]=heap[i+1],h=i;
+	if( k == heap[0] )
+		heap[h+1] = heap[k], h = k-1;
+
+	for( i = (h-1)/2; h > 0 && tp[heap[i+1]].cost > tp[last].cost; i = (h-1)/2 )
+		heap[h+1] = heap[i+1], h = i;
+
 	heap[h+1]=last;
 
 	return ret;
 }
 
 /*==========================================
- * åªç›ÇÃì_ÇÃcoståvéZ
+ * calculate cost for the specified position
  *------------------------------------------*/
 static int calc_cost(struct tmp_path *p,int x1,int y1)
 {
-	int xd,yd;
-
-	xd=x1-p->x;
-	if(xd<0) xd=-xd;
-	yd=y1-p->y;
-	if(yd<0) yd=-yd;
-	return (xd+yd)*10+p->dist;
+	int xd = abs(x1 - p->x);
+	int yd = abs(y1 - p->y);
+	return (xd + yd)*10 + p->dist;
 }
 
 /*==========================================
- * ïKóvÇ»ÇÁpathÇí«â¡/èCê≥Ç∑ÇÈ
+ * attach/adjust path if neccessary
  *------------------------------------------*/
 static int add_path(int *heap,struct tmp_path *tp,int x,int y,int dist,int before,int cost)
 {
 	int i;
 
-	i=calc_index(x,y);
+	i = calc_index(x,y);
 
-	if(tp[i].x==x && tp[i].y==y){
-		if(tp[i].dist>dist){
-			tp[i].dist=dist;
-			tp[i].before=before;
-			tp[i].cost=cost;
-			if(tp[i].flag)
+	if( tp[i].x == x && tp[i].y == y )
+	{
+		if( tp[i].dist > dist )
+		{
+			tp[i].dist = dist;
+			tp[i].before = before;
+			tp[i].cost = cost;
+			if( tp[i].flag )
 				push_heap_path(heap,tp,i);
 			else
 				update_heap_path(heap,tp,i);
-			tp[i].flag=0;
+			tp[i].flag = 0;
 		}
 		return 0;
 	}
 
-	if(tp[i].x || tp[i].y)
+	if( tp[i].x || tp[i].y )
 		return 1;
 
-	tp[i].x=x;
-	tp[i].y=y;
-	tp[i].dist=dist;
-	tp[i].before=before;
-	tp[i].cost=cost;
-	tp[i].flag=0;
+	tp[i].x = x;
+	tp[i].y = y;
+	tp[i].dist = dist;
+	tp[i].before = before;
+	tp[i].cost = cost;
+	tp[i].flag = 0;
 	push_heap_path(heap,tp,i);
 
 	return 0;
@@ -153,42 +151,44 @@ static int add_path(int *heap,struct tmp_path *tp,int x,int y,int dist,int befor
 
 
 /*==========================================
- * (x,y)Ç™à⁄ìÆïsâ¬î\ínë—Ç©Ç«Ç§Ç©
- * flag 0x10000 âìãóó£çUåÇîªíË
+ * is (x,y) passable?
+ * flag: 0x10000 = ranged attack check
+ *       0x30000 = stacking check
  *------------------------------------------*/
 static int can_place(struct map_data *m,int x,int y,int flag)
 {
-	if(map_getcellp(m,x,y,CELL_CHKPASS))
+	if( map_getcellp(m,x,y,CELL_CHKPASS) )
 		return 1;
-	if((flag&0x10000)&&map_getcellp(m,x,y,CELL_CHKGROUND))
+	if( (flag&0x10000)&&map_getcellp(m,x,y,CELL_CHKGROUND) )
 		return 1;
 #ifdef CELL_NOSTACK
 	//Special flag for CELL_NOSTACK systems. Returns true when the given cell is stacked. [Skotlex]
-	if((flag&0x30000)&&map_getcellp(m,x,y,CELL_CHKSTACK))
+	if( (flag&0x30000)&&map_getcellp(m,x,y,CELL_CHKSTACK) )
 		return 1;
 #endif
 	return 0;
 }
 
 /*==========================================
- * (x0,y0)Ç©ÇÁ(x1,y1)Ç÷1ï‡Ç≈à⁄ìÆâ¬î\Ç©åvéZ
+ * can you move from (x0,y0) to (x1,y1) in one step?
+ * (helper function for path_blownpos())
  *------------------------------------------*/
 static int can_move(struct map_data *m,int x0,int y0,int x1,int y1,int flag)
 {
-	if(x1<0 || y1<0 || x1>=m->xs || y1>=m->ys)
-		return 0;
-	if(flag&0x20000) //Flag to ignore everything, for use with Taekwon's Jump skill currently. [Skotlex] 
+	if( x1 < 0 || y1 < 0 || x1 >= m->xs || y1 >= m->ys)
+		return 0; // out-of-bounds coordinates
+	if( flag&0x20000 ) //Flag to ignore everything, for use with Taekwon's Jump skill currently. [Skotlex] 
 		return 1;
 #ifndef CELL_NOSTACK
 	//In no-stack mode, do not check current cell.
-	if(!can_place(m,x0,y0,flag))
+	if( !can_place(m,x0,y0,flag) )
 		return 0;
 #endif
-	if(!can_place(m,x1,y1,flag))
+	if( !can_place(m,x1,y1,flag) )
 		return 0;
-	if(x0==x1 || y0==y1)
+	if( x0 == x1 || y0 == y1 )
 		return 1;
-	if(!can_place(m,x0,y1,flag) || !can_place(m,x1,y0,flag))
+	if( !can_place(m,x0,y1,flag) || !can_place(m,x1,y0,flag) )
 		return 0;
 	return 1;
 }
@@ -201,23 +201,24 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 {
 	struct map_data *md;
 
-	if(!map[m].gat)
+	if( !map[m].gat )
 		return -1;
-	md=&map[m];
+	md = &map[m];
 
-	if(count>25){ //Cap to prevent too much processing...?
-		if(battle_config.error_log)
+	if( count>25 ){ //Cap to prevent too much processing...?
+		if( battle_config.error_log )
 			ShowWarning("path_blownpos: count too many %d !\n",count);
 		count=25;
 	}
-	if(dx>1 || dx<-1 || dy>1 || dy<-1){
-		if(battle_config.error_log)
+	if( dx > 1 || dx < -1 || dy > 1 || dy < -1 ){
+		if( battle_config.error_log )
 			ShowError("path_blownpos: illeagal dx=%d or dy=%d !\n",dx,dy);
-		dx=(dx>=0)?1:((dx<0)?-1:0);
-		dy=(dy>=0)?1:((dy<0)?-1:0);
+		dx=(dx>0)?1:((dx<0)?-1:0);
+		dy=(dy>0)?1:((dy<0)?-1:0);
 	}
 	
-	while( (count--)>0 && (dx || dy) ){
+	while( (count--)>0 && (dx || dy) )
+	{
 		if( !can_move(md,x0,y0,x0+dx,y0+dy,0) ){
 			int fx=(dx!=0 && can_move(md,x0,y0,x0+dx,y0,0));
 			int fy=(dy!=0 && can_move(md,x0,y0,x0,y0+dy,0));
@@ -235,9 +236,9 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 }
 
 /*==========================================
- *  âìãóó£çUåÇÇ™â¬î\Ç©Ç«Ç§Ç©Çï‘Ç∑
+ * is ranged attack from (x0,y0) to (x1,y1) possible?
  *------------------------------------------*/
-int path_search_long_real(struct shootpath_data *spd,int m,int x0,int y0,int x1,int y1,cell_t flag)
+bool path_search_long_real(struct shootpath_data *spd,int m,int x0,int y0,int x1,int y1,cell_t flag)
 {
 	int dx, dy;
 	int wx = 0, wy = 0;
@@ -245,7 +246,7 @@ int path_search_long_real(struct shootpath_data *spd,int m,int x0,int y0,int x1,
 	struct map_data *md;
 
 	if (!map[m].gat)
-		return 0;
+		return false;
 	md = &map[m];
 
 	dx = (x1 - x0);
@@ -264,7 +265,7 @@ int path_search_long_real(struct shootpath_data *spd,int m,int x0,int y0,int x1,
 	}
 
 	if (map_getcellp(md,x1,y1,flag))
-		return 0;
+		return false;
 
 	if (dx > abs(dy)) {
 		weight = dx;
@@ -278,7 +279,7 @@ int path_search_long_real(struct shootpath_data *spd,int m,int x0,int y0,int x1,
 
 	while (x0 != x1 || y0 != y1) {
 		if (map_getcellp(md,x0,y0,flag))
-			return 0;
+			return false;
 		wx += dx;
 		wy += dy;
 		if (wx >= weight) {
@@ -299,11 +300,12 @@ int path_search_long_real(struct shootpath_data *spd,int m,int x0,int y0,int x1,
 		}
 	}
 
-	return 1;
+	return true;
 }
 
 /*==========================================
- * pathíTçı (x0,y0)->(x1,y1)
+ * path search (x0,y0)->(x1,y1)
+ * flag: &1 = easy path search only
  *------------------------------------------*/
 int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int flag,cell_t flag2)
 {
@@ -315,56 +317,49 @@ int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1
 
 	nullpo_retr(0, wpd);
 
-	if(!map[m].gat)
+	if( !map[m].gat )
 		return -1;
-	md=&map[m];
+	md = &map[m];
 #ifdef CELL_NOSTACK
 	//Do not check starting cell as that would get you stuck.
-	if(x0<0 || x0>=md->xs || y0<0 || y0>=md->ys)
+	if( x0 < 0 || x0 >= md->xs || y0 < 0 || y0 >= md->ys )
 #else
-	if(x0<0 || x0>=md->xs || y0<0 || y0>=md->ys || map_getcellp(md,x0,y0,flag2))
+	if( x0 < 0 || x0 >= md->xs || y0 < 0 || y0 >= md->ys || map_getcellp(md,x0,y0,flag2) )
 #endif
 		return -1;
-	if(x1<0 || x1>=md->xs || y1<0 || y1>=md->ys || map_getcellp(md,x1,y1,flag2))
+	if( x1 < 0 || x1 >= md->xs || y1 < 0 || y1 >= md->ys || map_getcellp(md,x1,y1,flag2) )
 		return -1;
 
-	// easy and better [Meruru]
+	// calculate (sgn(x1-x0), sgn(y1-y0))
 	dx = ((dx = x1-x0)) ? ((dx<0) ? -1 : 1) : 0;
 	dy = ((dy = y1-y0)) ? ((dy<0) ? -1 : 1) : 0;
 
-	//Better faster stronger simple path algo. [Meruru]
-	for(x=x0,y=y0,i=0;i < sizeof(wpd->path);)
+	// try finding direct path to target
+	for( x = x0, y = y0, i = 0; i < ARRAYLENGTH(wpd->path); )
 	{
 		wpd->path[i++] = walk_choices[-dy + 1][dx + 1];
 
 		x += dx;
 		y += dy;
 
-		if(x == x1) dx = 0;
-		if(y == y1) dy = 0;
+		if( x == x1 ) dx = 0;
+		if( y == y1 ) dy = 0;
 
-		if((!dx && !dy) || map_getcellp(md,x,y,flag2))
-			break;
+		if( !dx && !dy )
+			break; // success
+		if( map_getcellp(md,x,y,flag2) )
+			break; // obstacle = failure
 	}
 
-	/*
-	You may be thinking what about diagonal
-	moves? Can't they cause a error with this somehow?
-	Answer is NO! The only time this can cause a error
-	is if the target block lies on the diagonal and
-	is non walkable. But rember we already checked that
-	up above! So no problems here... I think [Meruru]
-	*/
-
-	if (x==x1 && y==y1)
+	if( x == x1 && y == y1 )
 	{ //easy path successful.
-		wpd->path_len=i;
-		wpd->path_pos=0;
-		wpd->path_half=0;
+		wpd->path_len = i;
+		wpd->path_pos = 0;
+		wpd->path_half = 0;
 		return 0;
 	}
 	
-	if(flag&1)
+	if( flag&1 )
 		return -1;
 
 	memset(tp,0,sizeof(tp));
@@ -471,53 +466,3 @@ int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1
 	}
 	return -1;
 }
-
-/*==========================================
- * pathíTçı (x0,y0)->(x1,y1)
- *------------------------------------------*/
-
-#ifdef PATH_STANDALONETEST
-char gat[64][64]={
-	{0,0,0,0,0,0,0,0,0,0},
-	{0,0,0,0,0,0,0,0,0,0},
-	{0,0,0,0,0,0,0,0,0,0},
-	{0,0,0,0,0,0,0,0,0,0},
-	{0,0,0,0,1,0,0,0,0,0},
-};
-struct map_data map[1];
-
-/*==========================================
- * åoòHíTçıÉãÅ[É`ÉìíPëÃÉeÉXÉgópmainä÷êî
- *------------------------------------------*/
-void main(int argc,char *argv[])
-{
-	struct walkpath_data wpd;
-
-	map[0].gat=gat;
-	map[0].xs=64;
-	map[0].ys=64;
-
-	path_search(&wpd,0,3,4,5,4);
-	path_search(&wpd,0,5,4,3,4);
-	path_search(&wpd,0,6,4,3,4);
-	path_search(&wpd,0,7,4,3,4);
-	path_search(&wpd,0,4,3,4,5);
-	path_search(&wpd,0,4,2,4,5);
-	path_search(&wpd,0,4,1,4,5);
-	path_search(&wpd,0,4,5,4,3);
-	path_search(&wpd,0,4,6,4,3);
-	path_search(&wpd,0,4,7,4,3);
-	path_search(&wpd,0,7,4,3,4);
-	path_search(&wpd,0,8,4,3,4);
-	path_search(&wpd,0,9,4,3,4);
-	path_search(&wpd,0,10,4,3,4);
-	path_search(&wpd,0,11,4,3,4);
-	path_search(&wpd,0,12,4,3,4);
-	path_search(&wpd,0,13,4,3,4);
-	path_search(&wpd,0,14,4,3,4);
-	path_search(&wpd,0,15,4,3,4);
-	path_search(&wpd,0,16,4,3,4);
-	path_search(&wpd,0,17,4,3,4);
-	path_search(&wpd,0,18,4,3,4);
-}
-#endif

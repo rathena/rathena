@@ -494,14 +494,12 @@ int unit_movepos(struct block_list *bl,int dst_x,int dst_y, int easy, int checkp
 	dx = dst_x - bl->x;
 	dy = dst_y - bl->y;
 
-	map_foreachinmovearea(clif_outsight, bl, AREA_SIZE,
-		dx, dy, sd?BL_ALL:BL_PC, bl);
+	map_foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, sd?BL_ALL:BL_PC, bl);
 
 	map_moveblock(bl, dst_x, dst_y, gettick());
 	
 	ud->walktimer = 1;
-	map_foreachinmovearea(clif_insight, bl, AREA_SIZE,
-		-dx, -dy, sd?BL_ALL:BL_PC, bl);
+	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
 	ud->walktimer = -1;
 		
 	if(sd) {
@@ -514,7 +512,7 @@ int unit_movepos(struct block_list *bl,int dst_x,int dst_y, int easy, int checkp
 		if(sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0)
 		{	//Check if pet needs to be teleported. [Skotlex]
 			int flag = 0;
-			bl = &sd->pd->bl; //Note that bl now points to the pet! 
+			struct block_list* bl = &sd->pd->bl;
 			if (!checkpath && path_search(&wpd,bl->m,bl->x,bl->y,dst_x,dst_y,0))
 				flag = 1;
 			else if (!check_distance_bl(&sd->bl, bl, AREA_SIZE)) //Too far, teleport.
@@ -523,8 +521,6 @@ int unit_movepos(struct block_list *bl,int dst_x,int dst_y, int easy, int checkp
 				unit_movepos(bl,sd->bl.x,sd->bl.y, 0, 0);
 				clif_slide(bl,bl->x,bl->y);
 			}
-		//If you want to use bl afterwards, uncomment this:
-		//bl = &sd->bl;
 		}
 	}
 	return 1;
@@ -863,12 +859,11 @@ int unit_skilluse_id2(struct block_list *src, int target_id, int skill_num, int 
 			target_id = target->id;
 	}
 
-	if(!target && (target=map_id2bl(target_id)) == NULL )
+	if( !target ) // choose default target
+		target = map_id2bl(target_id);
+
+	if( !target || src->m != target->m || !src->prev || !target->prev )
 		return 0;
-	if(src->m != target->m)
-		return 0; // “¯‚¶ƒ}ƒbƒv‚©‚Ç‚¤‚©
-	if(!src->prev || !target->prev)
-		return 0; // map ã‚É‘¶Ý‚·‚é‚©
 
 	//Normally not needed because clif.c checks for it, but the at/char/script commands don't! [Skotlex]
 	if(ud->skilltimer != -1 && skill_num != SA_CASTCANCEL)
