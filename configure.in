@@ -133,7 +133,7 @@ AC_COMPILE_IFELSE(
 
 AC_MSG_CHECKING([whether $CC supports -Wno-pointer-sign])
 OLD_CFLAGS="$CFLAGS"
-CFLAGS="$CPPFLAGS -Wno-pointer-sign"
+CFLAGS="$CFLAGS -Wno-pointer-sign"
 AC_COMPILE_IFELSE(
 	[int foo;],
 	[AC_MSG_RESULT([yes])],
