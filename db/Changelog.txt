@@ -28,6 +28,7 @@
 
 ========================
 09/21
+	* Fixed Angelic and Survivor combo bonuses [Playtester]
 	* Moved a misplaced item thanks to HiddenDragon [Playtester]
 	* Officialized all AddEff and ResEff chances [Playtester]
 	* Fixed Mimic Card, Myst Case Card and Merchant Combo [Playtester]
