@@ -1502,7 +1502,7 @@
 4183,Vagabond_Wolf_Card,Vagabond Wolf Card,6,,10,10,,,,,,,,4,,,,,{ bonus bStr,1; if(isequipped(4029)) bonus bFlee,18; },{},{}
 4184,Lava_Golem_Card,Lava Golem Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddRace2,4,30; },{},{}
 4185,Rideword_Card,Rideword Card,6,,10,10,,,,,,,,769,,,,,{ bonus bInt,1; if(BaseClass == Job_Acolyte) { bonus bInt,1; bonus bMdef,1; } },{},{}
-4186,Raggler_Card,Raggler Card,6,,10,10,,,,,,,,64,,,,,{ bonus bStr,1; bonus bVit,1; if(isequipped(4233,4281,4321,4206)) { bonus bLuk,10; bonus2 bSPDrainValue,2,0; bonus2 bSkillAtk,42,20; if(BaseClass == Job_Merchant) { bonus2 bAddMonsterDropItem,617,-2; bonus bMagicDamageReturn,20; } } },{},{}
+4186,Raggler_Card,Raggler Card,6,,10,10,,,,,,,,64,,,,,{ bonus bStr,1; bonus bVit,1; if(isequipped(4233,4281,4321,4206)) { bonus bLuk,10; bonus2 bSPDrainValue,2,0; bonus2 bSkillAtk,42,20; if(BaseClass == Job_Merchant) { bonus2 bAddMonsterDropItem,617,5; bonus bMagicDamageReturn,20; } } },{},{}
 4187,Raydric_Archer_Card,Raydric Archer Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAddMonsterDropItem,12030,RC_Demon,300; },{},{}
 4188,Leib_Olmai_Card,Leib Olmai Card,6,,10,10,,,,,,,,769,,,,,{ bonus2 bSubEle,Ele_Fire,10; bonus3 bAddMonsterDropItem,990,RC_Brute,100; },{},{}
 4189,Wraith_Dead_Card,Wraith Dead Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Curse,600; },{},{}
@@ -1521,8 +1521,8 @@
 4202,Civil_Servant_Card,Civil Servant Card,6,,10,10,,,,,,,,2,,,,,{ bonus2 bAddEle,Ele_Ghost,20; },{},{}
 4203,Mutant_Dragon_Card,Mutant Dragonoid Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,15; bonus3 bAutoSpell,17,3+2*(getskilllv(17)==10),50; },{},{}
 4204,Mini_Demon_Card,Mini Demon Card,6,,10,10,,,,,,,,64,,,,,{ bonus2 bSubRace,RC_Brute,-20; bonus2 bExpAddRace,RC_Brute,10; },{},{}
-4205,Mimic_Card,Mimic Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItem,603,-6; },{},{}
-4206,Mystcase_Card,Myst Case Card,6,,10,10,,,,,,,,769,,,,,{ bonus2 bAddMonsterDropItem,644,-24; },{},{}
+4205,Mimic_Card,Mimic Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItem,603,10; },{},{}
+4206,Mystcase_Card,Myst Case Card,6,,10,10,,,,,,,,769,,,,,{ bonus2 bAddMonsterDropItem,644,30; },{},{}
 4207,Mysteltainn_Card,Mysteltainn Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubSize,0,25; bonus bDef,1; },{},{}
 4208,Miyabi_Ningyo_Card,Miyabi Doll Card,6,,10,10,,,,,,,,64,,,,,{ bonus bMaxSPrate,10; bonus2 bSkillAtk,15,5; },{},{}
 4209,Violy_Card,Violy Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,318,1+4*(getskilllv(318)==5),20; },{},{}
@@ -1870,7 +1870,7 @@
 5108,Detective_Hat,Renown Detective's Cap,5,20,,350,,3,,1,0xFFFFFFFF,7,2,256,,0,1,189,{},{},{}
 5109,Red_Bonnet,Red Bonnet,5,20,,400,,2,,0,0xFFFFFFFF,7,2,256,,0,1,190,{},{},{}
 5110,Baby_Pacifier,Baby Pacifier,5,20,,50,,0,,0,0xFFFFFFFF,7,2,1,,0,0,191,{},{},{}
-5111,Galapago_Cap,Galapago Cap,5,20,,500,,2,,0,0xFFFFFFFF,7,2,256,,55,1,192,{ bonus2 bAddMonsterDropItem,605,30; },{},{}
+5111,Galapago_Cap,Galapago Cap,5,20,,500,,2,,0,0xFFFFFFFF,7,2,256,,55,1,192,{ bonus2 bAddMonsterDropItem,605,100; },{},{}
 5112,Super_Novice_Hat,Super Novice Hat,5,8500,,400,,4,,0,0x00000001,7,2,256,,40,1,193,{ bonus bAllStats,1; },{},{}
 5113,Angry_Mouth,Angry Snarl,5,20,,50,,0,,0,0xFFFFFFFF,7,2,1,,0,0,194,{},{},{}
 5114,Fedora,Bucket Hat,5,6000,,300,,3,,0,0xFFFFFFFF,7,2,256,,0,1,195,{},{},{}

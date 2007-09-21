@@ -28,6 +28,9 @@
 
 ========================
 09/21
+	* Fixed Mimic Card, Myst Case Card and Merchant Combo [Playtester]
+	- on Aegis drop rate doesn't depend on mob level
+	- also raised Anodyne drop of Galapago Cap
 	* Officialized many 10.4 card bonuses [Playtester]
 	- fixed Asura Strike autocast (sorry my mistake)
 	- removed NoRegen bonus, it's -100% Recovery on Aegis
