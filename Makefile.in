@@ -78,11 +78,13 @@ conf:
 	@for f in $$(ls conf-tmpl) ; do if test "$$f" != "import" ; then cp -rf conf-tmpl/$$f conf ; fi ; done
 	@rm -rf conf/*/.svn
 # save:
-# 1)  create save folder
+# 1) create save folder
 # 2) add missing files
+# 3) remove remaining .svn folder
 	@echo "building save folder..."
 	@if test ! -d save ; then mkdir save ; fi
 	@for f in $$(ls save-tmpl) ; do if test ! -e save/$$f ; then cp save-tmpl/$$f save ; fi ; done
+	@rm -rf save/.svn
 
 clean:
 	@$(MAKE) -C src/common $@

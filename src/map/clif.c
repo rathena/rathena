@@ -11521,8 +11521,12 @@ int clif_parse(int fd)
 {
 	int cmd, packet_ver, packet_len, err;
 	TBL_PC* sd;
+	int pnum;
 
-	while(1)
+	//TODO apply deplays or disconnect based on packet throughput [FlavioJS]
+	// Note: "click masters" can do 80+ clicks in 10 seconds
+
+	for( pnum = 0; pnum < 3; ++pnum )// Limit max packets per cycle to 3 (delay packet spammers) [FlavioJS]
 	{ // begin main client packet processing loop
 
 	sd = (TBL_PC *)session[fd]->session_data;

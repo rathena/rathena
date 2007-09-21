@@ -411,6 +411,7 @@ int mmo_auth_new(struct mmo_account* account, char sex)
 	unsigned int tick = gettick();
 	char md5buf[32+1];
 	SqlStmt* stmt;
+	int result = 0;
 
 	//Account Registration Flood Protection by [Kevin]
 	if( DIFF_TICK(tick, new_reg_tick) < 0 && num_regs >= allowed_regs )
@@ -421,17 +422,19 @@ int mmo_auth_new(struct mmo_account* account, char sex)
 
 	// check if the account doesn't exist already
 	stmt = SqlStmt_Malloc(sql_handle);
-	if ( SQL_SUCCESS != SqlStmt_Prepare(stmt, "SELECT `%s` FROM `%s` WHERE `userid` = ?", login_db_userid, login_db)
-	  || SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, account->userid, strnlen(account->userid, NAME_LENGTH))
-	  || SQL_SUCCESS != SqlStmt_Execute(stmt)
-	  || SqlStmt_NumRows(stmt) > 0 )
+	if( SQL_SUCCESS != SqlStmt_Prepare(stmt, "SELECT `%s` FROM `%s` WHERE `userid` = ?", login_db_userid, login_db)
+	||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 0, SQLDT_STRING, account->userid, strnlen(account->userid, NAME_LENGTH))
+	||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
 	{
 		SqlStmt_ShowDebug(stmt);
-		SqlStmt_Free(stmt);
-		return 1; // incorrect user/pass
+		result = 1;// error
 	}
+	else if( SqlStmt_NumRows(stmt) > 0 )
+		result = 1;// incorrect user/pass
 	SqlStmt_Free(stmt);
-	
+	if( result )
+		return result;// error or incorrect user/pass
+
 	// insert new entry into db
 	//TODO: error checking
 	stmt = SqlStmt_Malloc(sql_handle);
@@ -515,8 +518,12 @@ int mmo_auth(struct mmo_account* account, int fd)
 			account->userid[len-2] == '_' && memchr("FfMm", (unsigned char)account->userid[len-1], 4) ) // _M/_F suffix
 		{
 			int result;
-			account->userid[len-2] = '\0';// terminate the name.
-			result = mmo_auth_new(account, account->userid[len-1]);
+			char sex;
+
+			len -= 2;
+			account->userid[len] = '\0';// nul-terminate the name.
+			sex = account->userid[len+1];
+			result = mmo_auth_new(account, sex);
 			if( result )
 				return result;// Failed to make account. [Skotlex].
 		}

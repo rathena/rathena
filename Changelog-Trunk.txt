@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/09/21
+	* Makefile deleting .svn in save folder.
+	* Limited the number of packets parsed per cycle to 3.
+	* Fixed sql login throwing an out-of-place debug message and escaping too 
+	  much of the name string when creating a new login with _M/F.
 	* Configure script detects 64bit distributions of MySQL.
 	* Generated the configure script with cygwin's autoconf. [FlavioJS]
 2007/09/20
