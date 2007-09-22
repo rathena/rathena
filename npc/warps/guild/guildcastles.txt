@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 2.3
+//= 2.4a
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -16,7 +16,10 @@
 //= 2.1 Fixed some warps positions [Yor]
 //= 2.2 Changed all breaks to end as per the new script engine. [Skotlex]
 //= 2.3 Removed 2nd entrance to Novice Castle Geffen [Lupus]
-//= 2.4 Added Warps Juno and it's new Castle Satelite map.
+//= 2.4 Added Warps between Juno and it's new Castle Satelite map. [L0ne_W0lf]
+//= 2.4a Added more warps between Juno Satellite and Castle Interiors. [L0ne_W0lf]
+//=	castle 1, 4 and 5 entrances are questionable, and will be updated
+//=	as I get more information.
 //============================================================
 
 
@@ -400,6 +403,16 @@ prtg_cas05,76,242,0	warp	prtg502	1,1,prtg_cas05,288,13
 // Episode 12: WoE:SE Schwaltzvalt
 yuno,23,127,0	warp	schg001	1,1,sch_gld,260,92
 sch_gld,355,89,0	warp	schg002	1,1,yuno,26,127
+sch_gld,293,91,0	warp	schg101	1,1,schg_cas01,276,243
+schg_cas01,276,241,0	warp	schg102	1,1,sch_gld,293,95
+sch_gld,288,256,0	warp	schg201	1,1,schg_cas02,340,73
+schg_cas02,340,69,0	warp	schg202	1,1,sch_gld,288,253
+sch_gld,98,182,0	warp	schg301	1,1,schg_cas03,338,332
+schg_cas03,338,335,0	warp	schg302	1,1,sch_gld,98,187
+sch_gld,138,96,0	warp	schg401	1,1,schg_cas04,276,243
+schg_cas04,276,241,0	warp	schg402	1,1,sch_gld,138,93
+sch_gld,63,315,0	warp	schg501	1,1,schg_cas05,276,243
+schg_cas05,276,241,0	warp	schg502	1,1,sch_gld,69,315
 
 //==================  4 Novices Guild Castles =============================
 //Novices Guild: Al de Baran Guild Castles Map
