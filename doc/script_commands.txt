@@ -5871,9 +5871,9 @@ set @i, distance(100,200,101,202);
 
 ---------------------------------------
 
-*query_sql "your MySQL query", <array name>{,<array name>{;
+*query_sql "your MySQL query", <array variable> {,<array variable>, ...};
 
-Returns up to 127 values into array and return the number of row
+Puts up to 128 rows of values into the arrays and returns the number of rows.
 
 Example:
 set @nb, query_sql("select name,fame from `char` ORDER BY fame DESC LIMIT 5", @name$, @fame);

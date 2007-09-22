@@ -12113,73 +12113,101 @@ BUILDIN_FUNC(setd)
 BUILDIN_FUNC(query_sql)
 {
 #ifndef TXT_ONLY
-	int i, j, nb_rows;
-	struct { char* dst_var_name; char type; } row[32];
-	TBL_PC* sd = (st->rid) ? script_rid2sd(st) : NULL;
+	int i, j;
+	TBL_PC* sd = NULL;
+	const char* query;
+	struct script_data* data;
+	char* name;
+	int max_rows = 128;// maximum number of rows
+	int num_vars;
+	int num_cols;
 
-	const char* query = script_getstr(st,2);
-	if (SQL_ERROR == Sql_Query(mmysql_handle, query) )
+	// check target variables
+	for( i = 3; script_hasdata(st,i); ++i )
+	{
+		data = script_getdata(st, i);
+		if( data_isreference(data) && reference_tovariable(data) )
+		{// it's a variable
+			name = reference_getname(data);
+			if( not_server_variable(*name) && sd == NULL )
+			{// requires a player
+				sd = script_rid2sd(st);
+				if( sd == NULL )
+				{// no player attached
+					script_reportdata(data);
+					st->state = END;
+					return 1;
+				}
+			}
+			if( not_array_variable(*name) )
+				max_rows = 1;// not an array, limit to one row
+		}
+		else
+		{
+			ShowError("script:query_sql: not a variable\n");
+			script_reportdata(data);
+			st->state = END;
+			return 1;
+		}
+	}
+	num_vars = i - 3;
+
+	// Execute the query
+	query = script_getstr(st,2);
+	if( SQL_ERROR == Sql_Query(mmysql_handle, query) )
 	{
 		Sql_ShowDebug(mmysql_handle);
 		script_pushint(st, 0);
 		return 1;
 	}
 
-	// Count the number of rows to store
-	nb_rows = Sql_NumColumns(mmysql_handle);
-	//FIXME: what sick mind would write something like this?
-
-	// Can't store more row than variable
-	if (nb_rows > st->end - (st->start+3))
-		nb_rows = st->end - (st->start+3);
-
-	if (!nb_rows)
-	{
-		script_pushint(st,0);
-		return 0; // Nothing to store
+	if( Sql_NumRows(mmysql_handle) == 0 )
+	{// No data received
+		Sql_FreeResult(mmysql_handle);
+		script_pushint(st, 0);
+		return 0;
 	}
 
-	if (nb_rows > 32)
+	// Count the number of columns to store
+	num_cols = Sql_NumColumns(mmysql_handle);
+	if( num_vars < num_cols )
 	{
-		ShowWarning("buildin_query_sql: too many rows!\n");
-		script_pushint(st,0);
-		return 1;
+		ShowWarning("script:query_sql: Too many columns, discarting last %u columns.\n", (unsigned int)(num_cols-num_vars));
+		script_reportsrc(st);
+	}
+	else if( num_vars > num_cols )
+	{
+		ShowWarning("script:query_sql: Too many variables (%u extra).\n", (unsigned int)(num_vars-num_cols));
+		script_reportsrc(st);
 	}
 
-	memset(row, 0, sizeof(row));
-	// Verify argument types
-	for(j=0; j < nb_rows; j++)
-	{
-		if(!data_isreference(script_getdata(st, 3+j))){
-			ShowWarning("buildin_query_sql: Parameter %d is not a variable!\n", j);
-			script_pushint(st,0);
-			return 0;
-		} else {
-			// Store type of variable (string = 0/int = 1)
-			int num = st->stack->stack_data[st->start+3+j].u.num;
-			char* name = str_buf + str_data[num&0x00ffffff].str;
-			if(name[strlen(name)-1] != '$') {
-				row[j].type = 1;
-			}
-			row[j].dst_var_name = name;
-		}
-	}
 	// Store data
-	for (i = 0; i < 128 && SQL_SUCCESS == Sql_NextRow(mmysql_handle); i++)
+	for( i = 0; i < max_rows && SQL_SUCCESS == Sql_NextRow(mmysql_handle); ++i )
 	{
-		char* data;
-		Sql_GetData(mmysql_handle, j, &data, NULL);
-		for(j = 0; j < nb_rows; j++) {
-			if (row[j].type == 1)
-				setd_sub(st,sd, row[j].dst_var_name, i, (void *)atoi(data), script_getref(st,3+j));
+		for( j = 0; j < num_vars; ++j )
+		{
+			char* str = NULL;
+
+			if( j < num_cols )
+				Sql_GetData(mmysql_handle, j, &str, NULL);
+
+			data = script_getdata(st, j+3);
+			name = reference_getname(data);
+			if( is_string_variable(name) )
+				setd_sub(st, sd, name, i, (void *)(str?str:""), reference_getref(data));
 			else
-				setd_sub(st,sd, row[j].dst_var_name, i, (void *)data, script_getref(st,3+j));
+				setd_sub(st, sd, name, i, (void *)(str?atoi(str):0), reference_getref(data));
 		}
 	}
+	if( i == max_rows && max_rows < Sql_NumRows(mmysql_handle) )
+	{
+		ShowWarning("script:query_sql: Only %d/%u rows have been stored.\n", max_rows, (unsigned int)Sql_NumRows(mmysql_handle));
+		script_reportsrc(st);
+	}
+
 	// Free data
 	Sql_FreeResult(mmysql_handle);
-
-	script_pushint(st,i);
+	script_pushint(st, i);
 #else
 	//for TXT version, we always return -1
 	script_pushint(st,-1);

@@ -497,4 +497,9 @@ enum {
 	JOB_SOUL_LINKER,
 };
 
+// sanity checks...
+#if MAX_ZENY > INT_MAX
+#error MAX_ZENY is too big
+#endif
+
 #endif /* _MMO_H_ */
