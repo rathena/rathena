@@ -410,26 +410,7 @@ void read_gm_account(void)
 
 	mapif_send_gmaccounts();
 }
-#endif //TXT_SQL_CONVERT
-int compare_item(const struct item* a, const struct item* b)
-{
 
-	if(a->id == b->id &&
-		a->nameid == b->nameid &&
-		a->amount == b->amount &&
-		a->equip == b->equip &&
-		a->identify == b->identify &&
-		a->refine == b->refine &&
-		a->attribute == b->attribute)
-	{
-		int i;
-		for (i=0; i<MAX_SLOTS && a->card[i]==b->card[i]; i++);
-		return (i == MAX_SLOTS);
-	}
-	return 0;
-}
-
-#ifndef TXT_SQL_CONVERT
 static void* create_charstatus(DBKey key, va_list args)
 {
 	struct mmo_charstatus *cp;
@@ -750,38 +731,44 @@ int memitemdata_to_sql(const struct item items[], int max, int id, int tableswit
 
 	while( SQL_SUCCESS == SqlStmt_NextRow(stmt) )
 	{
-		bool found = false;
+		found = false;
 		// search for the presence of the item in the char's inventory
 		for( i = 0; i < max; ++i )
 		{
-			if( flag[i] )
-				continue; // this item was matched already, skip it
-			
-			if( items[i].id == 0 )
-			{	// to make skipping empty entries faster and to prevent saving them later
-				flag[i] = true;
+			// skip empty and already matched entries
+			if( items[i].nameid == 0 || flag[i] )
 				continue;
-			}
-			
-			if( compare_item(&items[i], &item) )
-				; // Equal - do nothing.
-			else
-			{
-				// update all fields.
-				StringBuf_Clear(&buf);
-				StringBuf_Printf(&buf, "UPDATE `%s` SET `amount`='%d', `equip`='%d', `identify`='%d', `refine`='%d',`attribute`='%d'",
-					tablename, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute);
-				for( j = 0; j < MAX_SLOTS; ++j )
-					StringBuf_Printf(&buf, ", `card%d`=%d", j, items[i].card[j]);
-				StringBuf_Printf(&buf, ", `amount`='%d' WHERE `id`='%d' LIMIT 1", items[i].amount, item.id);
-				
-				if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
-					Sql_ShowDebug(sql_handle);
 
+			if( items[i].nameid == item.nameid
+			&&  items[i].card[0] == item.card[0]
+			&&  items[i].card[2] == item.card[2]
+			&&  items[i].card[3] == item.card[3]
+			) {	//They are the same item.
+				ARR_FIND( 0, MAX_SLOTS, j, items[i].card[j] != item.card[j] );
+				if( j == MAX_SLOTS &&
+				    items[i].amount == item.amount &&
+				    items[i].equip == item.equip &&
+				    items[i].identify == item.identify &&
+				    items[i].refine == item.refine &&
+				    items[i].attribute == item.attribute )
+				;	//Do nothing.
+				else
+				{
+					// update all fields.
+					StringBuf_Clear(&buf);
+					StringBuf_Printf(&buf, "UPDATE `%s` SET `amount`='%d', `equip`='%d', `identify`='%d', `refine`='%d',`attribute`='%d'",
+						tablename, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute);
+					for( j = 0; j < MAX_SLOTS; ++j )
+						StringBuf_Printf(&buf, ", `card%d`=%d", j, items[i].card[j]);
+					StringBuf_Printf(&buf, ", `amount`='%d' WHERE `id`='%d' LIMIT 1", items[i].amount, item.id);
+					
+					if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
+						Sql_ShowDebug(sql_handle);
+				}
+
+				found = flag[i] = true; //Item dealt with,
+				break; //skip to next item in the db.
 			}
-			
-			found = flag[i] = true; //Item dealt with,
-			break; //skip to next item in the db.
 		}
 		if( !found )
 		{// Item not present in inventory, remove it.
@@ -799,21 +786,22 @@ int memitemdata_to_sql(const struct item items[], int max, int id, int tableswit
 
 	found = false;
 	// insert non-matched items into the db as new items
-	for( i = 0, found = 0; i < max; ++i )
+	for( i = 0; i < max; ++i )
 	{
-		if( !flag[i] )
-		{
-			if( found )
-				StringBuf_AppendStr(&buf, ",");
-			else
-				found = true;
+		// skip empty and already matched entries
+		if( items[i].nameid == 0 || flag[i] )
+			continue;
 
-			StringBuf_Printf(&buf, "('%d', '%d', '%d', '%d', '%d', '%d', '%d'",
-				id, items[i].nameid, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute);
-			for( j = 0; j < MAX_SLOTS; ++j )
-				StringBuf_Printf(&buf, ", '%d'", items[i].card[j]);
-			StringBuf_AppendStr(&buf, ")");
-		}
+		if( found )
+			StringBuf_AppendStr(&buf, ",");
+		else
+			found = true;
+
+		StringBuf_Printf(&buf, "('%d', '%d', '%d', '%d', '%d', '%d', '%d'",
+			id, items[i].nameid, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute);
+		for( j = 0; j < MAX_SLOTS; ++j )
+			StringBuf_Printf(&buf, ", '%d'", items[i].card[j]);
+		StringBuf_AppendStr(&buf, ")");
 	}
 
 	if( found && SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )

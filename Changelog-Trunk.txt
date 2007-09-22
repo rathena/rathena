@@ -4,10 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/09/22
-	* Updated sql files [Playtester]
-	* Added a sanity check for MAX_ZENY (doesn't compile if too big).
-	* Redid the buildin_query_sql function. (fixes bugreport:81). [FlavioJS]
-2007/09/21
+	* Fixed a severe bug in inventory saving code (caused by r11192)
 	* Applied changes to clif_parse_globalmessage() from my WiP code
 	- clearer processing of the individual packet components
 	- proper code ordering, some more integrity checks
@@ -15,6 +12,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	- global chat logging no longer logs the entire string (w/ player name)
 	* Fixed global chat logging always crashing on a null pointer
 	* Added 'safestrnlen' to prevent null pointer crashes [ultramage]
+	* Updated sql files [Playtester]
+	* Added a sanity check for MAX_ZENY (doesn't compile if too big).
+	* Redid the buildin_query_sql function. (fixes bugreport:81). [FlavioJS]
+2007/09/21
 	* itemdb.c/h using a static array of 32k struct item_data* entries (faster 
 	  itemdb loockup and a first step to remove map_session_data->inventory_data).
 	* Fixed a typo in the configure script that replaced CFLAGS with CPPFLAGS 
