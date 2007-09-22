@@ -8384,66 +8384,80 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd)
 
 /*==========================================
  * Validates and processes global messages
- * S 008c/00f3 <packet len>.w <strz>.?B
+ * S 008c/00f3 <packet len>.w <text>.?B (<name> : <message>)
  *------------------------------------------*/
 void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 {
-	char* message;
-	unsigned int packetlen, messagelen, namelen;
+	const char *text, *name, *message;
+	unsigned int packetlen, textlen, namelen, messagelen;
 
 	packetlen = RFIFOW(fd,2);
-	if (packetlen > RFIFOREST(fd)) { // there has to be enough data to read
+	// basic structure checks
+	if( packetlen > RFIFOREST(fd) )
+	{	// there has to be enough data to read
 		ShowWarning("clif_parse_GlobalMessage: Received malformed packet from player '%s' (length is incorrect)!", sd->status.name);
 		return;
 	}
-	if (packetlen < 4 + 1) { // 4-byte header and at least an empty string is expected
+	if( packetlen < 4 + 1 )
+	{	// 4-byte header and at least an empty string is expected
 		ShowWarning("clif_parse_GlobalMessage: Received malformed packet from player '%s' (no message data)!", sd->status.name);
 		return;
 	}
 
-	message = (char*)RFIFOP(fd,4);
-	messagelen = packetlen - 4; // let's trust the client here, nothing can go wrong and it saves us one strlen()
-	if (messagelen > CHAT_SIZE) { // messages mustn't be too long
+	text = (char*)RFIFOP(fd,4);
+	textlen = packetlen - 4;
+
+	name = text;
+	namelen = strnlen(sd->status.name, NAME_LENGTH - 1);
+	// verify <name> part of the packet
+	if( strncmp(name, sd->status.name, namelen) || // the text must start with the speaker's name
+		name[namelen] != ' ' || name[namelen+1] != ':' || name[namelen+2] != ' ' ) // followed by ' : '
+	{
+		//Hacked message, or infamous "client desynch" issue where they pick one char while loading another.
+		ShowWarning("clif_parse_GlobalMessage: Player '%s' sent a message using an incorrect name! Forcing a relog...", sd->status.name);
+		clif_setwaitclose(fd); // Just kick them out to correct it.
+		return;
+	}
+
+	message = text + namelen + 3;
+	messagelen = textlen - namelen - 3 - 1; // this should be the message length
+	// verify <message> part of the packet
+	if( message[messagelen] != '\0' )
+	{	// message must be zero-terminated
+		ShowWarning("clif_parse_GlobalMessage: Player '%s' sent an unterminated string!", sd->status.name);
+		return;		
+	}
+	if( messagelen != strnlen(message, messagelen+1) )
+	{	// the declared length must match real length
+		ShowWarning("clif_parse_GlobalMessage: Received malformed packet from player '%s' (length is incorrect)!", sd->status.name);
+		return;		
+	}
+	if( messagelen > CHATBOX_SIZE )
+	{	// messages mustn't be too long
 		int i;
 		// special case here - allow some more freedom for frost joke & dazzler 
 		// TODO:? You could use a state flag when FrostJoke/Scream is used, and unset it once the skill triggers. [Skotlex]
-		for(i = 0; i < MAX_SKILLTIMERSKILL && sd->ud.skilltimerskill[i] &&
-			sd->ud.skilltimerskill[i]->skill_id != BA_FROSTJOKE &&
-			sd->ud.skilltimerskill[i]->skill_id != DC_SCREAM; i++);
+		ARR_FIND( 0, MAX_SKILLTIMERSKILL, i, sd->ud.skilltimerskill[i] == 0 || sd->ud.skilltimerskill[i]->skill_id == BA_FROSTJOKE || sd->ud.skilltimerskill[i]->skill_id == DC_SCREAM );
 
-		if (i == MAX_SKILLTIMERSKILL || !sd->ud.skilltimerskill[i]) { // normal message, too long
-			ShowWarning("clif_parse_GlobalMessage: Player '%s' sent a message too long ('%.*s')!", sd->status.name, CHAT_SIZE, message);
+		if( i == MAX_SKILLTIMERSKILL || !sd->ud.skilltimerskill[i])
+		{	// normal message, too long
+			ShowWarning("clif_parse_GlobalMessage: Player '%s' sent a message too long ('%.*s')!", sd->status.name, CHATBOX_SIZE, message);
 			return;
 		}
-		if (messagelen > 255) { // frost joke/dazzler, but still too long
+		if( messagelen > 255 )
+		{	// frost joke/dazzler, but still too long
 			ShowWarning("clif_parse_GlobalMessage: Player '%s' sent a message too long ('%.*s')!", sd->status.name, 255, message);
 			return;
 		}
 	}
-	if (message[messagelen-1] != '\0') { // message must be zero-terminated
-		ShowWarning("clif_parse_GlobalMessage: Player '%s' sent an unterminated string!", sd->status.name);
-		return;		
-	}
 
-	namelen = strnlen(sd->status.name, NAME_LENGTH - 1);
-	if (strncmp(message, sd->status.name, namelen) || // the name has to match the speaker's name
-		message[namelen] != ' ' || message[namelen+1] != ':' || message[namelen+2] != ' ') // completely, not just the prefix
-	{
-		//Hacked message, or infamous "client desynch" issue where they pick one char while loading another.
-		clif_setwaitclose(fd); // Just kick them out to correct it.
-		ShowWarning("clif_parse_GlobalMessage: Player '%.*s' sent a message using an incorrect name ('%s')! Forcing a relog...", namelen, sd->status.name, message);
-		return;
-	}
-	
-	if (is_atcommand(fd, sd, message) != AtCommand_None || is_charcommand(fd, sd, message) != CharCommand_None)
+	if( is_atcommand(fd, sd, text) != AtCommand_None || is_charcommand(fd, sd, text) != CharCommand_None )
 		return;
 
-	if (sd->sc.count &&
-		(sd->sc.data[SC_BERSERK].timer != -1 ||
-		(sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)))
+	if( sd->sc.data[SC_BERSERK].timer != -1 || (sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT) )
 		return;
 
-	if (battle_config.min_chat_delay)
+	if( battle_config.min_chat_delay )
 	{	//[Skotlex]
 		if (DIFF_TICK(sd->cantalk_tick, gettick()) > 0)
 			return;
@@ -8451,11 +8465,11 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	}
 
 	// send message to others
-	WFIFOHEAD(fd, messagelen + 8);
+	WFIFOHEAD(fd, 8 + textlen);
 	WFIFOW(fd,0) = 0x8d;
-	WFIFOW(fd,2) = messagelen + 8;
+	WFIFOW(fd,2) = 8 + textlen;
 	WFIFOL(fd,4) = sd->bl.id;
-	memcpy(WFIFOP(fd,8), message, messagelen);
+	safestrncpy((char*)WFIFOP(fd,8), text, textlen);
 	clif_send(WFIFOP(fd,0), WFIFOW(fd,2), &sd->bl, sd->chatID ? CHAT_WOS : AREA_CHAT_WOC);
 
 	// send back message to the speaker
@@ -8465,37 +8479,38 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 
 #ifdef PCRE_SUPPORT
 	// trigger listening mobs/npcs
-	map_foreachinrange(npc_chat_sub, &sd->bl, AREA_SIZE, BL_NPC, message, strlen(message), &sd->bl);
-	map_foreachinrange(mob_chat_sub, &sd->bl, AREA_SIZE, BL_MOB, message, strlen(message), &sd->bl);
+	map_foreachinrange(npc_chat_sub, &sd->bl, AREA_SIZE, BL_NPC, text, textlen, &sd->bl);
+	map_foreachinrange(mob_chat_sub, &sd->bl, AREA_SIZE, BL_MOB, text, textlen, &sd->bl);
 #endif
 
 	// check for special supernovice phrase
-	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
+	if( (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE )
+	{
 		int next = pc_nextbaseexp(sd);
-		if (next > 0 && (sd->status.base_exp * 1000 / next)% 100 == 0) { // 0%, 10%, 20%, ...
+		if( next > 0 && (sd->status.base_exp * 1000 / next)% 100 == 0 ) { // 0%, 10%, 20%, ...
 			switch (sd->state.snovice_call_flag) {
 			case 0:
-					if (strstr(message, msg_txt(504))) // "Guardian Angel, can you hear my voice? ^^;"
+					if( strstr(message, msg_txt(504)) ) // "Guardian Angel, can you hear my voice? ^^;"
 						sd->state.snovice_call_flag++;
 			break;
 			case 1: {
 					char buf[256];
 					sprintf(buf, msg_txt(505), sd->status.name);
-					if (strstr(message, buf)) // "My name is %s, and I'm a Super Novice~"
+					if( strstr(message, buf) ) // "My name is %s, and I'm a Super Novice~"
 						sd->state.snovice_call_flag++;
 					}
 			break;
 			case 2:
-					if (strstr(message, msg_txt(506))) // "Please help me~ T.T"
+					if( strstr(message, msg_txt(506)) ) // "Please help me~ T.T"
 						sd->state.snovice_call_flag++;
 			break;
 			case 3:
-				if (skillnotok(MO_EXPLOSIONSPIRITS,sd))
-					break; //Do not override the noskill mapflag. [Skotlex]
-				clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,-1,
-					sc_start(&sd->bl,SkillStatusChangeTable(MO_EXPLOSIONSPIRITS),100,
+					if( skillnotok(MO_EXPLOSIONSPIRITS,sd) )
+						break; //Do not override the noskill mapflag. [Skotlex]
+					clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,-1,
+						sc_start(&sd->bl,SkillStatusChangeTable(MO_EXPLOSIONSPIRITS),100,
 						17,skill_get_time(MO_EXPLOSIONSPIRITS,1))); //Lv17-> +50 critical (noted by Poki) [Skotlex]
-				sd->state.snovice_call_flag = 0;
+					sd->state.snovice_call_flag = 0;
 			break;
 			}
 		}

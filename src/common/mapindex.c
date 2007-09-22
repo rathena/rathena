@@ -52,7 +52,7 @@ const char* mapindex_getmapname_ext(const char* string, char* output)
 	static char buf[MAP_NAME_LENGTH_EXT];
 	char* dest = (output != NULL) ? output : buf;
 	
-	size_t len = strnlen(string, MAP_NAME_LENGTH);
+	size_t len = safestrnlen(string, MAP_NAME_LENGTH);
 	if (len == MAP_NAME_LENGTH) {
 		ShowWarning("(mapindex_normalize_name) Map name '%*s' is too long!", 2*MAP_NAME_LENGTH, string);
 		len--;

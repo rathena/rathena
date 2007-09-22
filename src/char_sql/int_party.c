@@ -299,7 +299,7 @@ struct party_data* search_partyname(char* str)
 	char* data;
 	struct party_data* p = NULL;
 
-	Sql_EscapeStringLen(sql_handle, esc_name, str, strnlen(str, NAME_LENGTH));
+	Sql_EscapeStringLen(sql_handle, esc_name, str, safestrnlen(str, NAME_LENGTH));
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `party_id` FROM `%s` WHERE `name`='%s'", party_db, esc_name) )
 		Sql_ShowDebug(sql_handle);
 	else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )

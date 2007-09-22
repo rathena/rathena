@@ -3423,7 +3423,7 @@ static int script_save_mapreg_strsub(DBKey key,void *data,va_list ap)
 #else
 	if ( name[1] != '@') {
 		char tmp_str2[2*255+1];
-		Sql_EscapeStringLen(mmysql_handle, tmp_str2, (char*)data, strnlen((char*)data, 255));
+		Sql_EscapeStringLen(mmysql_handle, tmp_str2, (char*)data, safestrnlen((char*)data, 255));
 		if( SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `%s`='%s' WHERE `%s`='%s' AND `%s`='%d'", mapregsql_db, mapregsql_db_value, tmp_str2, mapregsql_db_varname, name, mapregsql_db_index, i) )
 			Sql_ShowDebug(mmysql_handle);
 	}

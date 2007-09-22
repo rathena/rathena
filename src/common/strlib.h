@@ -34,6 +34,9 @@ int config_switch(const char* str);
 /// always nul-terminates the string
 char* safestrncpy(char* dst, const char* src, size_t n);
 
+/// doesn't crash on null pointer
+size_t safestrnlen(const char* string, size_t maxlen);
+
 /// StringBuf - dynamic string
 struct StringBuf
 {

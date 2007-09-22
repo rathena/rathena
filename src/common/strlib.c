@@ -310,6 +310,12 @@ char* safestrncpy(char* dst, const char* src, size_t n)
 	return ret;
 }
 
+/// doesn't crash on null pointer
+size_t safestrnlen(const char* string, size_t maxlen)
+{
+	return ( string != NULL ) ? strnlen(string, maxlen) : 0;
+}
+
 
 /////////////////////////////////////////////////////////////////////
 // StringBuf - dynamic string

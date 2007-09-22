@@ -829,7 +829,7 @@ int search_guildname(char *str)
 	int guild_id;
 	char esc_name[NAME_LENGTH*2+1];
 	
-	Sql_EscapeStringLen(sql_handle, esc_name, str, strnlen(str, NAME_LENGTH));
+	Sql_EscapeStringLen(sql_handle, esc_name, str, safestrnlen(str, NAME_LENGTH));
 	//Lookup guilds with the same name
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT guild_id FROM `%s` WHERE name='%s'", guild_db, esc_name) )
 	{
