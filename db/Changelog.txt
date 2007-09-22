@@ -26,7 +26,9 @@
 	4417 Ice_Titan_Card		Chance that for 10 seconds you'll gain 10 Armor Defence while taking magic or physical damage.
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
-========================
+=======================
+09/22
+	* Updated more MVP stats to 11.2 [Playtester]
 09/21
 	* Fixed Angelic and Survivor combo bonuses [Playtester]
 	* Moved a misplaced item thanks to HiddenDragon [Playtester]
