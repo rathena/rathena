@@ -169,9 +169,8 @@ S_MakeDye:
 	if (select("Make Dyestuffs:Cancel") == 1) {
 		set .@size, getarraysize(.@item);
 		// check requirements
-		for (set .@i,0 ; .@i < .@size ; set .@i,.@i+1)
-			countitem(.@item[.@i]) >= .@count[.@i];
-		if (.@i < .@size || Zeny < .@cost) {
+		for( set .@i,0 ; .@i < .@size && countitem(.@item[.@i]) >= .@count[.@i] ; set .@i,.@i+1 );
+		if( .@i < .@size || Zeny < .@cost ) {
 			mes "[Dye Maker Java Dullihan]";
 			mes "Hmmm. Not enough...";
 			mes "I don't think I'll be able to make the color you want with those materials. Why don't you go get some more materials...?";
