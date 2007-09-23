@@ -1498,7 +1498,7 @@ static int mob_delay_item_drop(int tid, unsigned int tick, int id, int data)
 	while (ditem) {
 		map_addflooritem(&ditem->item_data,ditem->item_data.amount,
 			list->m,list->x,list->y,
-			list->first_sd,list->second_sd,list->third_sd,0);
+			list->first_id,list->second_id,list->third_id,0);
 		ditem_prev = ditem;
 		ditem = ditem->next;
 		ers_free(item_drop_ers, ditem_prev);
@@ -1514,6 +1514,8 @@ static int mob_delay_item_drop(int tid, unsigned int tick, int id, int data)
  *------------------------------------------*/
 static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, struct item_drop *ditem, int loot, int drop_rate)
 {
+	TBL_PC* sd;
+
 	if(log_config.enable_logs&0x10)
 	{	//Logs items, dropped by mobs [Lupus]
 		if (loot)
@@ -1522,14 +1524,16 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 			log_pick_mob(md, "M", ditem->item_data.nameid, -ditem->item_data.amount, NULL);
 	}
 
-	if (dlist->first_sd && dlist->first_sd->state.autoloot &&
-		drop_rate <= dlist->first_sd->state.autoloot
+	sd = map_id2sd(dlist->first_id);
+	if( sd == NULL ) sd = map_id2sd(dlist->second_id);
+	if( sd == NULL ) sd = map_id2sd(dlist->third_id);
+	if( sd && drop_rate <= sd->state.autoloot
 #ifdef AUTOLOOT_DISTANCE
-		&& check_distance_blxy(&dlist->first_sd->bl, dlist->x, dlist->y, AUTOLOOT_DISTANCE)
+		&& check_distance_blxy(&sd->bl, dlist->x, dlist->y, AUTOLOOT_DISTANCE)
 #endif
 	) {	//Autoloot.
-		if (party_share_loot(party_search(dlist->first_sd->status.party_id),
-			dlist->first_sd, &ditem->item_data, dlist->first_sd->bl.id) == 0
+		if (party_share_loot(party_search(sd->status.party_id),
+			sd, &ditem->item_data, sd->bl.id) == 0
 		) {
 			ers_free(item_drop_ers, ditem);
 			return;
@@ -1978,9 +1982,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->m = md->bl.m;
 		dlist->x = md->bl.x;
 		dlist->y = md->bl.y;
-		dlist->first_sd = mvp_sd;
-		dlist->second_sd = second_sd;
-		dlist->third_sd = third_sd;
+		dlist->first_id = (mvp_sd ? mvp_sd->bl.id : 0);
+		dlist->second_id = (second_sd ? second_sd->bl.id : 0);
+		dlist->third_id = (third_sd ? third_sd->bl.id : 0);
 		dlist->item = NULL;
 	
 		for (i = 0; i < MAX_MOB_DROP; i++)
@@ -2086,9 +2090,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->m = md->bl.m;
 		dlist->x = md->bl.x;
 		dlist->y = md->bl.y;
-		dlist->first_sd = mvp_sd;
-		dlist->second_sd = second_sd;
-		dlist->third_sd = third_sd;
+		dlist->first_id = (mvp_sd ? mvp_sd->bl.id : 0);
+		dlist->second_id = (second_sd ? second_sd->bl.id : 0);
+		dlist->third_id = (third_sd ? third_sd->bl.id : 0);
 		dlist->item = NULL;
 		for(i = 0; i < md->lootitem_count; i++)
 			mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000);
@@ -2155,7 +2159,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 			if((temp = pc_additem(mvp_sd,&item,1)) != 0) {
 				clif_additem(sd,0,0,temp);
-				map_addflooritem(&item,1,mvp_sd->bl.m,mvp_sd->bl.x,mvp_sd->bl.y,mvp_sd,second_sd,third_sd,1);
+				map_addflooritem(&item,1,mvp_sd->bl.m,mvp_sd->bl.x,mvp_sd->bl.y,mvp_sd->bl.id,(second_sd?second_sd->bl.id:0),(third_sd?third_sd->bl.id:0),1);
 			}
 			
 			if(log_config.enable_logs&0x200)	{//Logs items, MVP prizes [Lupus]

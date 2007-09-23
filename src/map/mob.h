@@ -142,7 +142,7 @@ struct item_drop {
 };
 struct item_drop_list {
 	int m, x, y;                       // coordinates
-	struct map_session_data *first_sd, *second_sd, *third_sd; // sd's of players with higher pickup priority
+	int first_id, second_id, third_id; // id's of players with higher pickup priority
 	struct item_drop* item;            // linked list of drops
 };
 

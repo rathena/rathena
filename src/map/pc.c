@@ -2894,7 +2894,7 @@ int pc_dropitem(struct map_session_data *sd,int n,int amount)
 		log_pick_pc(sd, "P", sd->status.inventory[n].nameid, -amount, (struct item*)&sd->status.inventory[n]);
 	//Logs
 
-	if (!map_addflooritem(&sd->status.inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, NULL, NULL, NULL, 2))
+	if (!map_addflooritem(&sd->status.inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 2))
 		return 0;
 	
 	pc_delitem(sd, n, amount, 0);
@@ -5043,7 +5043,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		item_tmp.card[1]=0;
 		item_tmp.card[2]=GetWord(sd->status.char_id,0); // CharId
 		item_tmp.card[3]=GetWord(sd->status.char_id,1);
-		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,NULL,NULL,NULL,0);
+		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 	}
 
 	// activate Steel body if a super novice dies at 99+% exp [celest]

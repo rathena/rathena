@@ -1544,20 +1544,18 @@ int map_search_freecell(struct block_list *src, int m, short *x,short *y, int rx
  * item_data‚ÍamountˆÈŠO‚ğcopy‚·‚é
  * type flag: &1 MVP item. &2 do stacking check.
  *------------------------------------------*/
-int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,struct map_session_data *first_sd,
-    struct map_session_data *second_sd,struct map_session_data *third_sd,int type)
+int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,int first_id,int second_id,int third_id,int flags)
 {
 	int r;
-	unsigned int tick;
 	struct flooritem_data *fitem=NULL;
 
 	nullpo_retr(0, item_data);
 
-	if(!map_searchrandfreecell(m,&x,&y,type&2?1:0))
+	if(!map_searchrandfreecell(m,&x,&y,flags&2?1:0))
 		return 0;
 	r=rand();
 
-	fitem = (struct flooritem_data *)aCalloc(1,sizeof(*fitem));
+	CREATE(fitem, struct flooritem_data, 1);
 	fitem->bl.type=BL_ITEM;
 	fitem->bl.prev = fitem->bl.next = NULL;
 	fitem->bl.m=m;
@@ -1569,28 +1567,12 @@ int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,struct 
 		return 0;
 	}
 
-	tick = gettick();
-	if(first_sd) {
-		fitem->first_get_id = first_sd->bl.id;
-		if(type&1)
-			fitem->first_get_tick = tick + battle_config.mvp_item_first_get_time;
-		else
-			fitem->first_get_tick = tick + battle_config.item_first_get_time;
-	}
-	if(second_sd) {
-		fitem->second_get_id = second_sd->bl.id;
-		if(type&1)
-			fitem->second_get_tick = tick + battle_config.mvp_item_first_get_time + battle_config.mvp_item_second_get_time;
-		else
-			fitem->second_get_tick = tick + battle_config.item_first_get_time + battle_config.item_second_get_time;
-	}
-	if(third_sd) {
-		fitem->third_get_id = third_sd->bl.id;
-		if(type&1)
-			fitem->third_get_tick = tick + battle_config.mvp_item_first_get_time + battle_config.mvp_item_second_get_time + battle_config.mvp_item_third_get_time;
-		else
-			fitem->third_get_tick = tick + battle_config.item_first_get_time + battle_config.item_second_get_time + battle_config.item_third_get_time;
-	}
+	fitem->first_get_id = first_id;
+	fitem->first_get_tick = gettick() + (flags&1 ? battle_config.mvp_item_first_get_time : battle_config.item_first_get_time);
+	fitem->second_get_id = second_id;
+	fitem->second_get_tick = fitem->first_get_tick + (flags&1 ? battle_config.mvp_item_second_get_time : battle_config.item_second_get_time);
+	fitem->third_get_id = third_id;
+	fitem->third_get_tick = fitem->second_get_tick + (flags&1 ? battle_config.mvp_item_third_get_time : battle_config.item_third_get_time);
 
 	memcpy(&fitem->item_data,item_data,sizeof(*item_data));
 	fitem->item_data.amount=amount;
