@@ -487,6 +487,30 @@ static void Sql_P_ShowDebugMysqlFieldInfo(const char* prefix, enum enum_field_ty
 
 
 
+/// Reports debug information about a truncated column.
+///
+/// @private
+static void SqlStmt_P_ShowDebugTruncatedColumn(SqlStmt* self, size_t i)
+{
+	MYSQL_RES* meta;
+	MYSQL_FIELD* field;
+	MYSQL_BIND* column;
+
+	meta = mysql_stmt_result_metadata(self->stmt);
+	field = mysql_fetch_field_direct(meta, (unsigned int)i);
+	ShowSQL("DB error - data of field '%s' was truncated.\n", field->name);
+	ShowDebug("column - %lu\n", (unsigned long)i);
+	Sql_P_ShowDebugMysqlFieldInfo("data   - ", field->type, field->flags&UNSIGNED_FLAG, self->column_lengths[i].length, "");
+	column = &self->columns[i];
+	if( column->buffer_type == MYSQL_TYPE_STRING )
+		Sql_P_ShowDebugMysqlFieldInfo("buffer - ", column->buffer_type, column->is_unsigned, column->buffer_length, "+1(nul-terminator)");
+	else
+		Sql_P_ShowDebugMysqlFieldInfo("buffer - ", column->buffer_type, column->is_unsigned, column->buffer_length, "");
+	mysql_free_result(meta);
+}
+
+
+
 /// Allocates and initializes a new SqlStmt handle.
 SqlStmt* SqlStmt_Malloc(Sql* sql)
 {
@@ -741,6 +765,8 @@ int SqlStmt_NextRow(SqlStmt* self)
 	// check for errors
 	if( err == MYSQL_NO_DATA )
 		return SQL_NO_DATA;
+#if defined(MYSQL_DATA_TRUNCATED)
+	// MySQL 5.0/5.1 defines and returns MYSQL_DATA_TRUNCATED [FlavioJS]
 	if( err == MYSQL_DATA_TRUNCATED )
 	{
 		my_bool truncated;
@@ -761,25 +787,14 @@ int SqlStmt_NextRow(SqlStmt* self)
 			column->error = NULL;
 			if( truncated )
 			{// report truncated column
-				MYSQL_RES* meta;
-				MYSQL_FIELD* field;
-
-				meta = mysql_stmt_result_metadata(self->stmt);
-				field = mysql_fetch_field_direct(meta, (unsigned int)i);
-				ShowSQL("DB error - data of field '%s' was truncated.\n", field->name);
-				ShowDebug("column - %lu\n", (unsigned long)i);
-				Sql_P_ShowDebugMysqlFieldInfo("data   - ", field->type, field->flags&UNSIGNED_FLAG, self->column_lengths[i].length, "");
-				if( column->buffer_type == MYSQL_TYPE_STRING )
-					Sql_P_ShowDebugMysqlFieldInfo("buffer - ", column->buffer_type, column->is_unsigned, column->buffer_length, "+1(nul-terminator)");
-				else
-					Sql_P_ShowDebugMysqlFieldInfo("buffer - ", column->buffer_type, column->is_unsigned, column->buffer_length, "");
-				mysql_free_result(meta);
+				SqlStmt_P_ShowDebugTruncatedColumn(self, i);
 				return SQL_ERROR;
 			}
 		}
 		ShowSQL("DB error - data truncated (unknown source)\n");
 		return SQL_ERROR;
 	}
+#endif
 	if( err )
 	{
 		ShowSQL("DB error - %s\n", mysql_stmt_error(self->stmt));
@@ -791,6 +806,14 @@ int SqlStmt_NextRow(SqlStmt* self)
 	for( i = 0; i < cols; ++i )
 	{
 		length = self->column_lengths[i].length;
+#if !defined(MYSQL_DATA_TRUNCATED)
+		// MySQL 4.1/(below?) returns success even if data is truncated, so we test truncation manually [FlavioJS]
+		if( self->columns[i].buffer_length < length )
+		{// report truncated column
+			SqlStmt_P_ShowDebugTruncatedColumn(self, i);
+			return SQL_ERROR;
+		}
+#endif
 		if( self->column_lengths[i].out_length )
 			*self->column_lengths[i].out_length = (uint32)length;
 		column = &self->columns[i];

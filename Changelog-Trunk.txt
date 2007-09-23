@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/09/23
+	* Added flag svn:executable to the configure script.
+	* Added code for MySQL versions (below 5.0) that don't have 
+	  MYSQL_DATA_TRUNCATED.
 	* map_addflooritem and struct item_drop_list using id's instead of 
 	  struct map_session_data's (fixes bugreport:36).
 	* Fixed buildin_escape_sql not properly escaping in sql servers. [FlavioJS]
