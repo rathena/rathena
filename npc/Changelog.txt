@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/09/22
+	* Rev. 11278 2-2 job quest update. Although completable, further testing (and optimizing) required. [L0ne_W0lf]
 	* Rev. 11276 Added more warps between Juno Satellite and Castle Interiors. [L0ne_W0lf]
 	- castle 1, 4 and 5 entrances are questionable, and will be updated as I get more information.
 	* Fixed a small bug in Einbroch Pollution quest. [SinSloth]

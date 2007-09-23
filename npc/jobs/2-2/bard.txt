@@ -5,21 +5,11 @@
 //===== Current Version: ===================================== 
 //= 2.3
 //===== Compatible With: ===================================== 
-//= eAthena Final
+//= eAthena SVN
 //===== Description: ========================================= 
-//= Bard job quest based on ASB 4.0.
-//= Updated to Aegis 10.3 standard.
+//= [Aegis Conversion]
+//= Job quest for Bard class
 //===== Additional Comments: =================================
-//= 07/06/05 : Added 1st Version. [Muad_Dib]
-//= Converted to eAthena format by Dr.Evil
-//= Info about gifts and other info --> http://www.ragnainfo.net/forums/viewtopic.php?t=51467&start=0 
-//= 1.1 Optimized, changed some stuff, fixed some bugs [Lupus]
-//= 1.1a minor song test fix [Lupus]
-//= 1.2 Fixed wrong item ID, added missing commands [Lupus]
-//= 1.3 Updated flower sub-quest according to official [Lupus]
-//= 1.4 Changed priority for the gifts. Now you can win the 1st
-//= prize, too. Added Izidor flower [Lupus]
-//= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1b Updated to the Official One. [Samuray22]
 //= 2.2 Fixed BUG when baby classes weren't able to get a job,
 //=	- fixed bug with final prize [Lupus] HAVE TO CHANE ALL ITEMS to numeric IDs
@@ -946,3 +936,17 @@ S_ChangeJob:
 		cutin "job_bard_aiolo01",255;
 		end;
 }
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 07/06/05 : Added 1st Version. [Muad_Dib]
+//= Converted to eAthena format by Dr.Evil
+//= Info about gifts and other info --> http://www.ragnainfo.net/forums/viewtopic.php?t=51467&start=0 
+//= 1.1 Optimized, changed some stuff, fixed some bugs [Lupus]
+//= 1.1a minor song test fix [Lupus]
+//= 1.2 Fixed wrong item ID, added missing commands [Lupus]
+//= 1.3 Updated flower sub-quest according to official [Lupus]
+//= 1.4 Changed priority for the gifts. Now you can win the 1st
+//= prize, too. Added Izidor flower [Lupus]
+//= 2.0 Changed numbers to constants. [Vicious]

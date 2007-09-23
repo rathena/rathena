@@ -6,28 +6,11 @@
 //===== Current Version: ===================================== 
 //= 2.8
 //===== Compatible With: ===================================== 
-//= eAthena  0.5.2 +
+//= eAthena  SVN
 //===== Description: ========================================= 
-//= 
+//= [Aegis Conversion]
+//= Job quest for Crusader classes
 //===== Additional Comments: ================================= 
-//= Need optimalization and fixing
-//= thanks to Komurka, KiLLaLeN, Lupus (fixing error)
-//= just a temp Job Quest
-//= 1.2 minor fix of announcement by Freya people
-//= 1.3 Added Baby Class Support, fixed 40/50 lvl item reward
-//=     also fixed too common script names [Lupus]
-//= 1.3a fixed "dead lock" bugs [Lupus]
-//= 1.3b changed monsters ID in patience test [Komurka]
-//= 1.4 Fixed Job Level parameters mix-up. [massdriller] (Thanks to Komurka)
-//= 1.5 Fixed possible EXP abuse [Lupus]
-//= 1.6 Added a func which prevent advanced classes passing
-//=     2nd Job Quests again. It also guides adv classes where
-//=     to go. [Lupus]
-//= 1.7 Updated names and required items, Chivalry Emblem +
-//=     Hand of God allow to skip item gathering [DracoRPG]
-//= 2.0 Changed numbers to constants. [Vicious]
-//= 2.1 Fixed endless loop, wrong condition check [Lupus]
-//=	also changed all job numbers to constants, fixed logic
 //= 2.2 Updated All NPCs to the officials one [Samuray22]
 //=	-Based on the ASB 4.0 Package.
 //=	-Maybe need be checked the monsters in the test 2 and 4.
@@ -40,7 +23,7 @@
 //=	- Fixed some indentation.
 //= 2.5 Fixed some spelling and grammar in crusader quest. [L0ne_W0lf]
 //= 2.6 Fixed bug (about totally blocked baby class), optimized,
-//=		made some NPC more unique names: Monster Summon#cr1 [Lupus]
+//=	made some NPC more unique names: Monster Summon#cr1 [Lupus]
 //= 2.7 Fixed Some variables like ".@item", and changed to "@item". [Samuray22]
 //= 2.8 Fixed a little minor bug. [Samuray22]
 //============================================================
@@ -1491,9 +1474,9 @@ OnEnd:
 
 }
 
-//==============================================================================
+//============================================================ 
 // mapflag
-//==============================================================================
+//============================================================ 
 job_cru	mapflag	nomemo
 job_cru	mapflag	noteleport
 job_cru	mapflag	nosave	SavePoint
@@ -1501,3 +1484,25 @@ job_cru	mapflag	nopenalty
 job_cru	mapflag	nobranch
 job_cru	mapflag	noexp
 job_cru	mapflag	noloot
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= Need optimalization and fixing
+//= thanks to Komurka, KiLLaLeN, Lupus (fixing error)
+//= just a temp Job Quest
+//= 1.2 minor fix of announcement by Freya people
+//= 1.3 Added Baby Class Support, fixed 40/50 lvl item reward
+//=     also fixed too common script names [Lupus]
+//= 1.3a fixed "dead lock" bugs [Lupus]
+//= 1.3b changed monsters ID in patience test [Komurka]
+//= 1.4 Fixed Job Level parameters mix-up. [massdriller] (Thanks to Komurka)
+//= 1.5 Fixed possible EXP abuse [Lupus]
+//= 1.6 Added a func which prevent advanced classes passing
+//=     2nd Job Quests again. It also guides adv classes where
+//=     to go. [Lupus]
+//= 1.7 Updated names and required items, Chivalry Emblem +
+//=     Hand of God allow to skip item gathering [DracoRPG]
+//= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Fixed endless loop, wrong condition check [Lupus]
+//=	also changed all job numbers to constants, fixed logic
