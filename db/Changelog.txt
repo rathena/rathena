@@ -28,6 +28,7 @@
 
 =======================
 09/23
+	* Fixed some "official bugs" [Playtester]
 	* Another fix on Doom Slayer [Playtester]
 09/22
 	* Even more item fixes [Playtester]
