@@ -27,6 +27,8 @@
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
 =======================
+09/23
+	* Another fix on Doom Slayer [Playtester]
 09/22
 	* Even more item fixes [Playtester]
 	- updated mob_race2_db to official
