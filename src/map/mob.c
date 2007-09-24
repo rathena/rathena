@@ -3239,6 +3239,11 @@ static bool mob_parse_dbrow(char** str)
 		return false;
 	}
 	
+	if (class_ >= MOB_CLONE_START && class_ < MOB_CLONE_END) {
+		ShowWarning("Mob with ID: %d not loaded. That ID is reserved for player clones. Please increase MAX_MOB_DB (%d)\n", MAX_MOB_DB);
+		return false;
+	}
+
 	if (mob_db_data[class_] == NULL)
 		mob_db_data[class_] = aCalloc(1, sizeof (struct mob_data));
 	

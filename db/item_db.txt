@@ -3769,7 +3769,7 @@
 14526,Oriental_Pastry,Oriental Pastry,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,180000,10; },{},{}
 14527,Dungeon_Teleport_Scroll,Dungeon Teleport Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashDungeon"; },{},{}
 14528,PVP_Mobile_Scroll,PVP Mobile Scroll,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14529,Greed_Scroll,Greed Scroll,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 1013,1; },{},{}
+14529,Greed_Scroll,Greed Scroll,11,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 1013,1; },{},{}
 14530,Evasion_Scroll,Evasion Scroll,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCFLEE,1800000,30; },{},{}
 14531,Concentration_Power_Scroll,Concentration Power Scroll,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHIT,1800000,30; },{},{}
 //14532,기초_Field_Manual,기초_Field_Manual,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

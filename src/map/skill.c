@@ -3417,7 +3417,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	struct status_change *tsc;
 	struct mob_data *md = NULL;
 	struct mob_data *dstmd = NULL;
-	int i,type=-1;
+	int i,type;
 	
 	if(skillid > 0 && skilllv <= 0) return 0;	// celest
 
@@ -3445,16 +3445,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		return 1;
 	if(status_isdead(src))
 		return 1;
+
 	if(src!=bl && status_isdead(bl) && skillid != ALL_RESURRECTION && skillid != PR_REDEMPTIO)
 		return 1;
 
 	tstatus = status_get_status_data(bl);
 	sstatus = status_get_status_data(src);
 	
-	if(src!=bl && (i = skill_get_pl(skillid, skilllv)) > ELE_NEUTRAL && 
-		battle_attr_fix(NULL, NULL, 100, i, tstatus->def_ele, tstatus->ele_lv) <= 0)
-		return 1; //Skills with an element should be blocked if the target element absorbs it.
-
 	//Check for undead skills that convert a no-damage skill into a damage one. [Skotlex]
 	switch (skillid) {
 		case HLIF_HEAL:	//[orn]
@@ -3483,10 +3480,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				return skill_castend_pos2(src,bl->x,bl->y,skillid,skilllv,tick,0);
 	}
 
-	if (skillid > 0)
-		type = SkillStatusChangeTable(skillid);
-
+	type = SkillStatusChangeTable(skillid);
 	tsc = status_get_sc(bl);
+
+	if (src!=bl && type > -1 &&
+		(i = skill_get_pl(skillid, skilllv)) > ELE_NEUTRAL &&
+		battle_attr_fix(NULL, NULL, 100, i, tstatus->def_ele, tstatus->ele_lv) <= 0)
+		return 1; //Skills that cause an status should be blocked if the target element blocks its element.
 
 	map_freeblock_lock();
 	switch(skillid)

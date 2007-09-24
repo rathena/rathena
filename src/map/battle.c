@@ -2340,7 +2340,7 @@ struct Damage battle_calc_magic_attack(
 				{
 					if (i > 100) i = 100;
 					mdef -= mdef * i/100;
-					mdef2-= mdef2* i/100;
+					//mdef2-= mdef2* i/100;
 				}
 			}
 			if(battle_config.magic_defense_type)

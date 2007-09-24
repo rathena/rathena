@@ -215,7 +215,7 @@ int pet_sc_check(struct map_session_data *sd, int type)
 
 	if( pd == NULL
 	||  (battle_config.pet_equip_required && pd->pet.equip == 0)
-	||  pd->recovery == NULL 
+	||  pd->recovery == NULL
 	||  pd->recovery->timer != -1
 	||  pd->recovery->type != type )
 		return 1;

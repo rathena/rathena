@@ -28,6 +28,8 @@
 
 =======================
 09/24
+	* Changed Greed Scroll's type to 11 (all itemskill items should use this)
+	  [Skotlex]
 	* Fixed Lever Action Rifle thanks to Cort [Playtester]
 09/23
 	* Fixed some "official bugs" [Playtester]
