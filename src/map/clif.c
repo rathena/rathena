@@ -8517,7 +8517,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	}
 
 	// Chat logging type 'O' / Global Chat
-	if( log_config.chat&1 && !(agit_flag && log_config.chat&32) )
+	if( log_config.chat&1 || (log_config.chat&2 && !(agit_flag && log_config.chat&64)) )
 		log_chat("O", 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, message);
 
 	return;
@@ -8818,7 +8818,7 @@ void clif_parse_Wis(int fd, struct map_session_data* sd)
 	target[NAME_LENGTH]='\0';
 	
 	// Chat logging type 'W' / Whisper
-	if( log_config.chat&2 && !(agit_flag && log_config.chat&32) )
+	if( log_config.chat&1 || (log_config.chat&4 && !(agit_flag && log_config.chat&64)) )
 		log_chat("W", 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, target, msg);
 
 	//-------------------------------------------------------//

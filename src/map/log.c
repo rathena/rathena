@@ -362,19 +362,18 @@ int log_npc(struct map_session_data* sd, const char* message)
 
 int log_chat(const char* type, int type_id, int src_charid, int src_accid, const char* map, int x, int y, const char* dst_charname, const char* message)
 {
-	//FIXME: the actual filtering is being done by the calling code instead of in here, why!?
-
 	// Log CHAT (Global, Whisper, Party, Guild, Main chat)
 	// LOGGING FILTERS [Lupus]
-	//=============================================================
-	//00 = Don't log at all
-	//Advanced Filter Bits: ||
-	//01 - Log Global messages
-	//02 - Log Whisper messages
-	//04 - Log Party messages
-	//08 - Log Guild messages
-	//16 - Log Main chat messages
-	//32 - Don't log anything when WOE is on
+	// =============================================================
+	// 0 = Don't log at all
+	// 1 = Log EVERYTHING!
+	// Advanced Filter Bits: ||
+	// 02 - Log Global messages
+	// 04 - Log Whisper messages
+	// 08 - Log Party messages
+	// 16 - Log Guild messages
+	// 32 - Log Main chat messages
+	// 64 - Don't log anything when WOE is on
 
 	//Check ON/OFF
 	if(log_config.chat <= 0)
