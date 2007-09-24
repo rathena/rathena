@@ -8903,10 +8903,10 @@ OnSerin:
 OnSummon:
 	disablenpc "Serin#serin";
 	set $@Sign_Summon,8;
-	areamonster "que_sign01",188,184,205,205,"Rotten Corpse",1036,3,"#signserin::OnSignDead";
-	areamonster "que_sign01",188,184,205,205,"Ancient Wraith",1192,2,"#signserin::OnSignDead";
-	areamonster "que_sign01",188,184,205,205,"Ancient Mummy",1297,2,"#signserin::OnSignDead";
-	areamonster "que_sign01",188,184,205,205,"Dark Lord Incarnation",1302,1,"#signserin::OnSignDead";
+	areamonster "que_sign01",188,184,205,205,"Rotten Corpse",1423,3,"#signserin::OnSignDead";
+	areamonster "que_sign01",188,184,205,205,"Ancient Wraith",1475,2,"#signserin::OnSignDead";
+	areamonster "que_sign01",188,184,205,205,"Ancient Mummy",1522,2,"#signserin::OnSignDead";
+	areamonster "que_sign01",188,184,205,205,"Dark Lord Incarnation",1605,1,"#signserin::OnSignDead";
 	end;
 
 OnSignDead:
@@ -8945,10 +8945,10 @@ OnSerin:
 OnSummon:
 	disablenpc "Serin#serin2";
 	set $@Sign_Summon2,8;
-	areamonster "que_sign01",188,34,205,55,"Rotten Corpse",1036,3,"#signserin2::OnSignDead";
-	areamonster "que_sign01",188,34,205,55,"Ancient Wraith",1192,2,"#signserin2::OnSignDead";
-	areamonster "que_sign01",188,34,205,55,"Ancient Mummy",1297,2,"#signserin2::OnSignDead";
-	areamonster "que_sign01",188,34,205,55,"Dark Lord Incarnation",1302,1,"#signserin2::OnSignDead";
+	areamonster "que_sign01",188,34,205,55,"Rotten Corpse",1423,3,"#signserin2::OnSignDead";
+	areamonster "que_sign01",188,34,205,55,"Ancient Wraith",1475,2,"#signserin2::OnSignDead";
+	areamonster "que_sign01",188,34,205,55,"Ancient Mummy",1522,2,"#signserin2::OnSignDead";
+	areamonster "que_sign01",188,34,205,55,"Dark Lord Incarnation",1605,1,"#signserin2::OnSignDead";
 	end;
 
 OnSignDead:
