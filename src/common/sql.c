@@ -394,40 +394,52 @@ static int Sql_P_BindSqlDataType(MYSQL_BIND* bind, enum SqlDataType buffer_type,
 	switch( buffer_type )
 	{
 	case SQLDT_NULL: bind->buffer_type = MYSQL_TYPE_NULL;
+		buffer_len = 0;// FIXME length = ? [FlavioJS]
 		break;
 	// fixed size
 	case SQLDT_UINT8: bind->is_unsigned = 1;
 	case SQLDT_INT8: bind->buffer_type = MYSQL_TYPE_TINY;
+		buffer_len = 1;
 		break;
 	case SQLDT_UINT16: bind->is_unsigned = 1;
 	case SQLDT_INT16: bind->buffer_type = MYSQL_TYPE_SHORT;
+		buffer_len = 2;
 		break;
 	case SQLDT_UINT32: bind->is_unsigned = 1;
 	case SQLDT_INT32: bind->buffer_type = MYSQL_TYPE_LONG;
+		buffer_len = 4;
 		break;
 	case SQLDT_UINT64: bind->is_unsigned = 1;
 	case SQLDT_INT64: bind->buffer_type = MYSQL_TYPE_LONGLONG;
+		buffer_len = 8;
 		break;
 	// platform dependent size
 	case SQLDT_UCHAR: bind->is_unsigned = 1;
 	case SQLDT_CHAR: bind->buffer_type = Sql_P_SizeToMysqlIntType(sizeof(char));
+		buffer_len = sizeof(char);
 		break;
 	case SQLDT_USHORT: bind->is_unsigned = 1;
 	case SQLDT_SHORT: bind->buffer_type = Sql_P_SizeToMysqlIntType(sizeof(short));
+		buffer_len = sizeof(short);
 		break;
 	case SQLDT_UINT: bind->is_unsigned = 1;
 	case SQLDT_INT: bind->buffer_type = Sql_P_SizeToMysqlIntType(sizeof(int));
+		buffer_len = sizeof(int);
 		break;
 	case SQLDT_ULONG: bind->is_unsigned = 1;
 	case SQLDT_LONG: bind->buffer_type = Sql_P_SizeToMysqlIntType(sizeof(long));
+		buffer_len = sizeof(long);
 		break;
 	case SQLDT_ULONGLONG: bind->is_unsigned = 1;
 	case SQLDT_LONGLONG: bind->buffer_type = Sql_P_SizeToMysqlIntType(sizeof(long long));
+		buffer_len = sizeof(long long);
 		break;
 	// floating point
 	case SQLDT_FLOAT: bind->buffer_type = MYSQL_TYPE_FLOAT;
+		buffer_len = 4;
 		break;
 	case SQLDT_DOUBLE: bind->buffer_type = MYSQL_TYPE_DOUBLE;
+		buffer_len = 8;
 		break;
 	// other
 	case SQLDT_STRING:
@@ -806,17 +818,21 @@ int SqlStmt_NextRow(SqlStmt* self)
 	for( i = 0; i < cols; ++i )
 	{
 		length = self->column_lengths[i].length;
+		column = &self->columns[i];
 #if !defined(MYSQL_DATA_TRUNCATED)
 		// MySQL 4.1/(below?) returns success even if data is truncated, so we test truncation manually [FlavioJS]
-		if( self->columns[i].buffer_length < length )
+		if( column->buffer_length < length )
 		{// report truncated column
-			SqlStmt_P_ShowDebugTruncatedColumn(self, i);
-			return SQL_ERROR;
+			if( column->buffer_type == MYSQL_TYPE_STRING || column->buffer_type == MYSQL_TYPE_BLOB )
+			{// string/enum/blob column
+				SqlStmt_P_ShowDebugTruncatedColumn(self, i);
+				return SQL_ERROR;
+			}
+			// FIXME numeric types and null [FlavioJS]
 		}
 #endif
 		if( self->column_lengths[i].out_length )
 			*self->column_lengths[i].out_length = (uint32)length;
-		column = &self->columns[i];
 		if( column->buffer_type == MYSQL_TYPE_STRING )
 		{// clear unused part of the string/enum buffer (and nul-terminate)
 			memset((char*)column->buffer + length, 0, column->buffer_length - length + 1);
