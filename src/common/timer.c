@@ -109,19 +109,21 @@ char* search_timer_func_list(TimerFunc func)
 /*----------------------------
  * 	Get tick time
  *----------------------------*/
-static unsigned int gettick_cache;
-static int gettick_count;
 
+//////////////////////////////////////////////////////////////////////////
+#if defined(TICK_CACHE) && TICK_CACHE > 1
+//////////////////////////////////////////////////////////////////////////
+// tick is cached for TICK_CACHE calls
 unsigned int gettick_nocache(void)
 {
-#ifdef _WIN32
-	gettick_count = 256;
+#ifdef WIN32
+	gettick_count = TICK_CACHE;
 	return gettick_cache = GetTickCount();
 #else
 	struct timeval tval;
 
 	gettimeofday(&tval, NULL);
-	gettick_count = 256;
+	gettick_count = TICK_CACHE;
 
 	return gettick_cache = tval.tv_sec * 1000 + tval.tv_usec / 1000;
 #endif
@@ -134,6 +136,23 @@ unsigned int gettick(void)
 
 	return gettick_cache;
 }
+//////////////////////////////
+#else
+//////////////////////////////
+// tick doesn't get cached
+unsigned int gettick(void)
+{
+#ifdef WIN32
+	return GetTickCount();
+#else
+	struct timeval tval;
+	gettimeofday(&tval, NULL);
+	return tval.tv_sec * 1000 + tval.tv_usec / 1000;
+#endif
+}
+//////////////////////////////////////////////////////////////////////////
+#endif
+//////////////////////////////////////////////////////////////////////////
 
 /*======================================
  * 	CORE : Timer Heap

@@ -41,7 +41,11 @@ struct TimerData {
 
 // Function prototype declaration
 
+#if defined(TICK_CACHE) && TICK_CACHE > 1
 unsigned int gettick_nocache(void);
+#else
+#define gettick_nocache gettick
+#endif
 unsigned int gettick(void);
 
 int add_timer(unsigned int,TimerFunc f,int,int);

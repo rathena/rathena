@@ -216,7 +216,7 @@ int clif_skill_memo(struct map_session_data *sd,int flag);
 int clif_skill_teleportmessage(struct map_session_data *sd,int flag);
 int clif_skill_produce_mix_list(struct map_session_data *sd, int trigger);
 
-int clif_produceeffect(struct map_session_data *sd,int flag,int nameid);
+int clif_produceeffect(struct map_session_data* sd,int flag,int nameid);
 
 int clif_skill_setunit(struct skill_unit *unit);
 int clif_skill_delunit(struct skill_unit *unit);
@@ -237,7 +237,7 @@ int clif_status_change(struct block_list *bl,int type,int flag);
 int clif_wis_message(int fd, const char* nick, const char* mes, int mes_len);
 int clif_wis_end(int fd,int flag);
 
-int clif_solved_charname(struct map_session_data *sd,int char_id);
+int clif_solved_charname(int fd, int charid, const char* name);
 int clif_charnameack(int fd, struct block_list *bl);
 int clif_charnameupdate(struct map_session_data *ssd);
 

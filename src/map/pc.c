@@ -696,8 +696,7 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 
 	clif_authok(sd);
 	map_addiddb(&sd->bl);
-	if (map_charid2nick(sd->status.char_id) == NULL)
-		map_addchariddb(sd->status.char_id, sd->status.name);
+	map_delnickdb(sd->status.char_id, sd->status.name);
 
 	//Prevent S. Novices from getting the no-death bonus just yet. [Skotlex]
 	sd->die_counter=-1;

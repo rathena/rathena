@@ -5160,24 +5160,13 @@ int clif_wis_end(int fd, int flag)
 /*==========================================
  * キャラID名前引き結果を送信する
  *------------------------------------------*/
-int clif_solved_charname(struct map_session_data *sd,int char_id)
+int clif_solved_charname(int fd, int charid, const char* name)
 {
-	char *p= map_charid2nick(char_id);
-	int fd;
-
-	nullpo_retr(0, sd);
-
-	fd=sd->fd;
-	if(p!=NULL){
-		WFIFOHEAD(fd,packet_len(0x194));
-		WFIFOW(fd,0)=0x194;
-		WFIFOL(fd,2)=char_id;
-		memcpy(WFIFOP(fd,6), p, NAME_LENGTH);
-		WFIFOSET(fd,packet_len(0x194));
-	}else{
-		map_reqchariddb(sd,char_id);
-		chrif_searchcharid(char_id);
-	}
+	WFIFOHEAD(fd,packet_len(0x194));
+	WFIFOW(fd,0)=0x194;
+	WFIFOL(fd,2)=charid;
+	safestrncpy(WFIFOP(fd,6), name, NAME_LENGTH);
+	WFIFOSET(fd,packet_len(0x194));
 	return 0;
 }
 
@@ -6039,25 +6028,18 @@ int clif_movetoattack(struct map_session_data *sd,struct block_list *bl)
 /*==========================================
  * 製造エフェクト
  *------------------------------------------*/
-int clif_produceeffect(struct map_session_data *sd,int flag,int nameid)
+int clif_produceeffect(struct map_session_data* sd,int flag,int nameid)
 {
-	int view,fd;
+	int fd;
 
 	nullpo_retr(0, sd);
 
-	fd=sd->fd;
-	// 名前の登録と送信を先にしておく
-	if( map_charid2nick(sd->status.char_id)==NULL )
-		map_addchariddb(sd->status.char_id,sd->status.name);
-	clif_solved_charname(sd,sd->status.char_id);
-
+	fd = sd->fd;
+	clif_solved_charname(fd, sd->status.char_id, sd->status.name);
 	WFIFOHEAD(fd,packet_len(0x18f));
 	WFIFOW(fd, 0)=0x18f;
 	WFIFOW(fd, 2)=flag;
-	if((view = itemdb_viewid(nameid)) > 0)
-		WFIFOW(fd, 4)=view;
-	else
-		WFIFOW(fd, 4)=nameid;
+	WFIFOW(fd, 4)=(itemdb_viewid(nameid)||nameid);
 	WFIFOSET(fd,packet_len(0x18f));
 	return 0;
 }
@@ -9915,10 +9897,10 @@ void clif_parse_InsertCard(int fd,struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_SolveCharName(int fd, struct map_session_data *sd)
 {
-	int char_id;
+	int charid;
 
-	char_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
-	clif_solved_charname(sd, char_id);
+	charid = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
+	map_reqnickdb(sd, charid);
 }
 
 /*==========================================
@@ -11263,7 +11245,7 @@ void clif_parse_PVPInfo(int fd,struct map_session_data *sd)
 void clif_parse_Blacksmith(int fd,struct map_session_data *sd)
 {
 	int i;
-	char *name;
+	const char* name;
 
 	WFIFOHEAD(fd,packet_len(0x219));
 	WFIFOW(fd,0) = 0x219;
@@ -11306,7 +11288,7 @@ int clif_fame_blacksmith(struct map_session_data *sd, int points)
 void clif_parse_Alchemist(int fd,struct map_session_data *sd)
 {
 	int i;
-	char *name;
+	const char* name;
 
 	WFIFOHEAD(fd,packet_len(0x21a));
 	WFIFOW(fd,0) = 0x21a;
@@ -11349,7 +11331,7 @@ int clif_fame_alchemist(struct map_session_data *sd, int points)
 void clif_parse_Taekwon(int fd,struct map_session_data *sd)
 {
 	int i;
-	char *name;
+	const char* name;
 
 	WFIFOHEAD(fd,packet_len(0x226));
 	WFIFOW(fd,0) = 0x226;

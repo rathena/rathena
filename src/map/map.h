@@ -1327,11 +1327,11 @@ int map_removemobs_timer(int,unsigned int,int,int);
 int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,int first_id,int second_id,int third_id,int flags);
 
 // ƒLƒƒƒ‰id„ƒLƒƒƒ‰–¼ •ÏŠ·ŠÖ˜A
-void map_addchariddb(int charid,char *name);
-void map_delchariddb(int charid);
-int map_reqchariddb(struct map_session_data * sd,int charid);
-char * map_charid2nick(int);
-struct map_session_data * map_charid2sd(int);
+void map_addnickdb(int charid, const char* nick);
+void map_delnickdb(int charid, const char* nick);
+void map_reqnickdb(struct map_session_data* sd,int charid);
+const char* map_charid2nick(int charid);
+struct map_session_data* map_charid2sd(int charid);
 
 struct map_session_data * map_id2sd(int);
 struct block_list * map_id2bl(int);
@@ -1346,7 +1346,6 @@ void map_deliddb(struct block_list *bl);
 struct map_session_data** map_getallusers(int *users);
 void map_foreachpc(int (*func)(DBKey,void*,va_list),...);
 int map_foreachiddb(int (*)(DBKey,void*,va_list),...);
-void map_addnickdb(struct map_session_data *);
 struct map_session_data * map_nick2sd(const char*);
 
 // ‚»‚Ì‘¼
