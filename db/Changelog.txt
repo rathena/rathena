@@ -27,6 +27,8 @@
 	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
 =======================
+09/25
+	* Small drop rate update [Playtester]
 09/24
 	* Changed Greed Scroll's type to 11 (all itemskill items should use this)
 	  [Skotlex]
