@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena dev team
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.5 Removed Duplicates [Silent]
 //= 1.6 Split doomed sword quest to quests/quests_comodo.txt [Evera]
 //= 1.7 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.8 Fixed a small bug. (close -> close2) [L0ne_W0lf]
 //============================================================
 
 // Inside Comodo
@@ -438,7 +439,7 @@ moc_fild12,35,303,4	script	Serutero#cmd	59,{
 		mes "to go to Sandaruman";
 		mes "Fortress. Alright then,";
 		mes "good luck, and be careful!";
-		close;
+		close2;
 		warp "cmd_fild08",331,319;
 		end;
 	case 2:

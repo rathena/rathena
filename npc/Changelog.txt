@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/09/25
+	* Rev. 11296 Fixed a small bug in a Comodo NPC. (close -> close2) [L0ne_W0lf]
 2007/09/24
 	* Fixed a bug in the sign quest [Playtester]
 	- needs further fixing, I'll leave that to SinSloth
