@@ -2163,12 +2163,12 @@
 //5338,Boyfriend_Hat,Boyfriend Hat,5,,,700,,2,,0,0xFFFFFFFF,7,2,256,,10,1,352,{},{},{}
 //5339,Friend_Hat,Friend Hat,5,,,700,,2,,0,0xFFFFFFFF,7,2,256,,10,1,353,{},{},{}
 //5340,Deporte_Doll_Hat,Deporte Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,354,{ bonus bStr,2; },{},{}
-//5341,Glarice_Doll_Hat,Clarice Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,356,{ bonus bInt,2; },{},{}
-//5342,Sorin_Doll_Hat,Sorin Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,357,{ bonus bDex,2; },{},{}
-//5343,Tailring_Doll_Hat,Tailring Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,358,{ bonus bAgi,2; },{},{}
-//5344,Vinit_Doll_Hat,Vinit Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,359,{ bonus bVit,2; },{},{}
-//5345,W_Doll_Hat,W Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,360,{ bonus bLuk,2; },{},{}
-//5346,Girlfriend_Hat,Girlfriend Hat,5,,,700,,0,,0,0xFFFFFFFF,7,2,256,,10,1,361,{},{},{}
+//5341,Glarice_Doll_Hat,Clarice Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,355,{ bonus bInt,2; },{},{}
+//5342,Sorin_Doll_Hat,Sorin Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,356,{ bonus bDex,2; },{},{}
+//5343,Tailring_Doll_Hat,Tailring Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,357,{ bonus bAgi,2; },{},{}
+//5344,Vinit_Doll_Hat,Vinit Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,358,{ bonus bVit,2; },{},{}
+//5345,W_Doll_Hat,W Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,359,{ bonus bLuk,2; },{},{}
+//5346,Girlfriend_Hat,Girlfriend Hat,5,,,700,,0,,0,0xFFFFFFFF,7,2,256,,10,1,360,{},{},{}
 5347,Ph.D_Hat_,Ph.D Hat,5,20,,200,,3,,1,0xFFFFFFFE,7,2,256,,0,1,98,{},{},{}
 5348,Big_Sis'_Ribbon_,Big Ribbon,5,15000,,200,,2,,1,0xFFFFFFFE,7,2,256,,0,1,28,{ bonus bMdef,3; },{},{}
 5349,Boy's_Cap_,Boys Cap,5,20,,100,,2,,1,0xFFFFFFFE,7,2,256,,0,1,102,{},{},{}
