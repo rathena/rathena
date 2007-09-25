@@ -919,6 +919,7 @@ struct mob_data {
 		unsigned alchemist: 1;
 		unsigned no_random_walk: 1;
 		unsigned killer: 1;
+		unsigned spotted: 1;
 		unsigned char attacked_count; //For rude attacked.
 		int provoke_flag; // Celest
 	} state;

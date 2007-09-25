@@ -3485,6 +3485,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	if (src!=bl && type > -1 &&
 		(i = skill_get_pl(skillid, skilllv)) > ELE_NEUTRAL &&
+		skill_get_inf(skillid) != INF_SUPPORT_SKILL &&
 		battle_attr_fix(NULL, NULL, 100, i, tstatus->def_ele, tstatus->ele_lv) <= 0)
 		return 1; //Skills that cause an status should be blocked if the target element blocks its element.
 

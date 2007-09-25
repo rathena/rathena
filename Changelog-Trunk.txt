@@ -4,6 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/09/25
+	* Modified a bit the hard/lazy ai triggers to match aegis (you can alter
+	  these changing the defines near the beginning of mob.c):
+	- Mobs go into active AI when they are 2 cells from entering a player's
+	  view (ACTIVE_AI_RANGE)
+	- Mobs in passive AI no longer use skills.
+	- Mobs in passive AI do not random walk UNLESS they have entered active AI
+	  before (random walk frequency is not lost during passive AI).
+	* Added an additional check to prevent support skills from being blocked if
+	  the target has an armor element that blocks it. [Skotlex]
 	* Fixed the double free's caused by r11290 (wrong option in the database 
 	  constructors). [FlavioJS]
 	* Corrected being able to cast multiple Gravitation Fields before the

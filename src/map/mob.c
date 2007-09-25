@@ -36,17 +36,18 @@
 #include <string.h>
 #include <math.h>
 
+#define ACTIVE_AI_RANGE 2	//Distance added on top of 'AREA_SIZE' at which mobs enter active AI mode.
 
 #define IDLE_SKILL_INTERVAL 10	//Active idle skills should be triggered every 1 second (1000/MIN_MOBTHINKTIME)
 
-#define MOB_LAZYSKILLPERC 10	// Probability for mobs far from players from doing their IDLE skill. (rate of 1000 minute)
-#define MOB_LAZYMOVEPERC 50	// Move probability in the negligent mode MOB (rate of 1000 minute)
+#define MOB_LAZYSKILLPERC 0	// Probability for mobs far from players from doing their IDLE skill. (rate of 1000 minute)
+// Move probability for mobs away from players (rate of 1000 minute)
+// in Aegis, this is 100% for mobs that have been activated by players and none otherwise.
+#define MOB_LAZYMOVEPERC(md) (md->state.spotted?1000:0)
 #define MOB_LAZYWARPPERC 20	// Warp probability in the negligent mode MOB (rate of 1000 minute)
 
 #define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
-
 #define RUDE_ATTACKED_COUNT 2	//After how many rude-attacks should the skill be used?
-
 //Used to determine default enemy type of mobs (for use in eachinrange calls)
 #define DEFAULT_ENEMY_TYPE(md) (md->special_state.ai?BL_CHAR:BL_PC|BL_HOM)
 
@@ -1129,6 +1130,9 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	if(md->bl.prev == NULL || md->status.hp <= 0)
 		return 1;
 		
+	if(!md->state.spotted) //Hard AI triggered.
+		md->state.spotted = 1;
+
 	if (DIFF_TICK(tick, md->last_thinktime) < MIN_MOBTHINKTIME)
 		return 0;
 	md->last_thinktime = tick;
@@ -1367,7 +1371,7 @@ static int mob_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
 {
 	unsigned int tick;
 	tick=va_arg(ap,unsigned int);
-	map_foreachinrange(mob_ai_sub_hard,&sd->bl, AREA_SIZE*2, BL_MOB,tick);
+	map_foreachinrange(mob_ai_sub_hard,&sd->bl, AREA_SIZE+ACTIVE_AI_RANGE, BL_MOB,tick);
 
 	return 0;
 }
@@ -1413,7 +1417,7 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list ap)
 			// Since PC is in the same map, somewhat better negligent processing is carried out.
 
 			// It sometimes moves.
-			if(rand()%1000<MOB_LAZYMOVEPERC)
+			if(rand()%1000<MOB_LAZYMOVEPERC(md))
 				mob_randomwalk(md,tick);
 			else if(rand()%1000<MOB_LAZYSKILLPERC) //Chance to do a mob's idle skill.
 				mobskill_use(md, tick, -1);
