@@ -538,7 +538,7 @@
 1175,Blade_of_Atroce,Blade of Atroce,4,,10,2000,200,,1,1,0x00004082,2,2,34,4,55,1,3,{ bonus bCritical,10; if(readparam(bStr)>80) bonus bBreakArmorRate,100; },{},{}
 1176,Muscle_Cutter,Muscle Cutter,4,,10,2200,160,,1,2,0x00004082,2,2,34,4,55,1,3,{ bonus2 bAddEff,Eff_Bleeding,100; bonus3 bAutoSpell,30,1,20; },{},{}
 1177,Sakray_Test_Two-Handed_Sword,Sakray Test Two-Handed Sword,4,,10,0,120,,1,0,0x00004082,7,2,34,1,1,0,3,{ bonus2 bAddRace,RC_Boss,50; bonus2 bAddRace,RC_NonBoss,50; },{},{}
-1178,Schweizersabel,Schweizersabel,4,,10,1600,160,,1,2,0x00004082,7,2,34,4,48,1,3,{ bonus bAtkEle,Ele_Wind; bonus bDef,1; bonus3 bAutoSpell,20,3,100; },{},{}
+1178,Schweizersabel_,Schweizersabel,4,,10,1600,160,,1,2,0x00004082,7,2,34,4,48,1,3,{ bonus bAtkEle,Ele_Wind; bonus bDef,1; bonus3 bAutoSpell,20,3,100; },{},{}
 1179,Executioner__,Executioner,4,,10,2200,155,,1,1,0x00004082,7,2,34,4,48,1,3,{ bonus bIgnoreDefRace,RC_DemiHuman; bonus2 bAddRace,RC_DemiHuman,20; bonus2 bSubRace,RC_DemiHuman,-10; bonus bAtkEle,Ele_Dark; },{},{}
 1180,Dragon_Slayer_,Dragon Slayer,4,,10,1300,150,,1,2,0x00004082,7,2,34,4,48,1,3,{ bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddRace,RC_Dragon,15; },{},{}
 1181,Tegron,Tegron,4,,,2000,250,,1,2,0x00004082,2,2,34,4,79,1,3,{ bonus bFlee2,10; if (getrefine() > 8) bonus bCastrate,-20; bonus bDelayRate,-20; },{},{}
@@ -759,7 +759,7 @@
 1535,Holgrehenn's_Hammer,Holgrehenn's Refining Hammer,4,,10,440,4,,1,1,0x0004C5B2,7,2,2,4,44,1,8,{ bonus bBreakArmorRate,200; bonus bBreakWeaponRate,200; if(readparam(bStr) >= 44) { bonus bBaseAtk,44; }; if(isequipped(4361)) { bonus bBreakArmorRate,1000; bonus bBreakWeaponRate,1000; bonus4 bAutoSpell,343,10,30,0; bonus4 bAutoSpell,344,10,30,0; }; },{},{}
 1536,Sakray_Test_Mace,Sakray Test Mace,4,,10,0,120,,1,0,0x0004C5B3,7,2,2,1,1,0,8,{ bonus2 bAddRace,RC_Boss,50; bonus2 bAddRace,RC_NonBoss,50; },{},{}
 1537,Quadrille_C,Refined Quadrille,4,,0,0,193,,1,0,0x00008110,7,2,2,4,1,0,8,{ bonus2 bAddRace,RC_Undead,10; bonus2 bAddRace,RC_DemiHuman,10; bonus2 bAddEle,Ele_Earth,10; },{},{}
-1538,Spike,Spike_,4,,10,700,85,,1,2,0x00008110,7,2,2,4,40,1,8,{ bonus bCritical,40; bonus bDefRate,-67; bonus bDef2Rate,-67; },{},{}
+1538,Spike_,Spike,4,,10,700,85,,1,2,0x00008110,7,2,2,4,40,1,8,{ bonus bCritical,40; bonus bDefRate,-67; bonus bDef2Rate,-67; },{},{}
 1539,Golden_Mace_,Golden Mace,4,,10,800,110,,1,2,0x00008110,7,2,2,4,40,1,8,{ bonus2 bAddRace,RC_Undead,10; bonus bUnbreakableWeapon,0; },{},{}
 1540,Grand_Cross_,Grand Cross,4,,10,1500,140,,1,1,0x00008110,7,2,2,4,40,1,8,{ bonus bAtkEle,Ele_Holy; bonus3 bAutoSpell,77,3,100; bonus2 bSPDrainValueRace,RC_Undead,1; bonus2 bSPGainRace,RC_Undead,3; },{},{}
 1541,Nemesis,Nemesis,4,,,900,120,,1,3,0x00008110,7,2,2,4,60,1,8,{ bonus3 bAutoSpell,32,1+getrefine(),100; },{},{}

@@ -38,6 +38,7 @@
 
 =======================
 09/25
+	* Rev. 11297 Corrected Aegis name for socketed Schweizersabel and Spike. [L0ne_W0lf]
 	* Rev. 11295 Item database update. [L0ne_W0lf]
 	- Added 12.1 equipment to the item database with the info available.
 	- Added expanded Socket-enabled items to the item database.
