@@ -114,6 +114,9 @@ char* search_timer_func_list(TimerFunc func)
 #if defined(TICK_CACHE) && TICK_CACHE > 1
 //////////////////////////////////////////////////////////////////////////
 // tick is cached for TICK_CACHE calls
+static unsigned int gettick_cache;
+static int gettick_count;
+
 unsigned int gettick_nocache(void)
 {
 #ifdef WIN32

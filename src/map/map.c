@@ -3400,8 +3400,8 @@ int do_init(int argc, char *argv[])
 	id_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
 	pc_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));	//Added for reliable map_id2sd() use. [Skotlex]
 	map_db = db_alloc(__FILE__,__LINE__,DB_UINT,DB_OPT_BASE,sizeof(int));
-	nick_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
-	charid_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	nick_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
+	charid_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
 #ifndef TXT_ONLY
 	map_sql_init();
 #endif /* not TXT_ONLY */
