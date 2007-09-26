@@ -38,6 +38,7 @@
 
 =======================
 09/25
+	* Rev. 11307 Implemented Token of Siegfried effect care of Zephyrus_CR. [L0ne_W0lf]
 	* Rev. 11304 Touched up View IDs of the Japanese new Mobile headgears. [L0ne_W0lf]
 	* Rev. 11297 Corrected Aegis name for socketed Schweizersabel and Spike. [L0ne_W0lf]
 	* Rev. 11295 Item database update. [L0ne_W0lf]

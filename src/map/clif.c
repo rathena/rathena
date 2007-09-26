@@ -11492,6 +11492,24 @@ void clif_parse_HomMenu(int fd, struct map_session_data *sd)
 	merc_menu(sd,RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]));
 }
 
+// [Zephyrus Code Modifications]
+void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
+{
+	int item_position;
+
+	nullpo_retv(sd);
+	item_position = pc_search_inventory(sd, 7621);
+
+	if (item_position < 0)
+		return;
+
+	if (!status_revive(&sd->bl, 100, 100))
+	return;
+ 
+	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
+	pc_delitem(sd, item_position, 1, 0);
+}
+
 /*==========================================
  * パケットデバッグ
  *------------------------------------------*/
@@ -11902,6 +11920,7 @@ static int packetdb_readdb(void)
 		{clif_parse_HomMenu,"hommenu"},
 		{clif_parse_StoragePassword,"storagepassword"},
 		{clif_parse_Hotkey,"hotkey"},
+		{clif_parse_AutoRevive,"autorevive"},
 		{NULL,NULL}
 	};
 

@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/09/26
+	* Rev. 11307 Implemented Token of Siegfried effect care of Zephyrus_CR. [L0ne_W0lf]
 2007/09/25
 	* Modified a bit the hard/lazy ai triggers to match aegis (you can alter
 	  these changing the defines near the beginning of mob.c):
