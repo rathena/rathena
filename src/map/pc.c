@@ -1753,8 +1753,6 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 	case SP_NO_GEMSTONE:
 		if(sd->state.lr_flag != 2)
 			sd->special_state.no_gemstone = 1;
-		ShowDebug("Rate: %d\n", sd->special_state.no_gemstone);
-
 		break;
 	case SP_INTRAVISION: // Maya Purple Card effect allowing to see Hiding/Cloaking people [DracoRPG]
 		if(sd->state.lr_flag != 2) {
