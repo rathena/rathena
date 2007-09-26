@@ -1457,7 +1457,7 @@ int parse_login(int fd)
 					}
 				}
 				else
-					memset(WFIFOP(fd,0), '\0', 20);
+					memset(WFIFOP(fd,3), '\0', 20);
 				WFIFOSET(fd,23);
 			}
 
