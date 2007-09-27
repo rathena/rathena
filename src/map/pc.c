@@ -2919,9 +2919,9 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 	if (sd->status.party_id)
 		p = party_search(sd->status.party_id);
 	
-	if(fitem->first_get_id > 0 && fitem->first_get_id != sd->bl.id)
+	if(fitem->first_get_charid > 0 && fitem->first_get_charid != sd->status.char_id)
   	{
-		first_sd = map_id2sd(fitem->first_get_id);
+		first_sd = map_charid2sd(fitem->first_get_charid);
 		if(DIFF_TICK(tick,fitem->first_get_tick) < 0) {
 			if (!(p && p->party.item&1 &&
 				first_sd && first_sd->status.party_id == sd->status.party_id
@@ -2929,9 +2929,9 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 				return 0;
 		}
 		else
-		if(fitem->second_get_id > 0 && fitem->second_get_id != sd->bl.id)
+		if(fitem->second_get_charid > 0 && fitem->second_get_charid != sd->status.char_id)
 	  	{
-			second_sd = map_id2sd(fitem->second_get_id);
+			second_sd = map_charid2sd(fitem->second_get_charid);
 			if(DIFF_TICK(tick, fitem->second_get_tick) < 0) {
 				if(!(p && p->party.item&1 &&
 					((first_sd && first_sd->status.party_id == sd->status.party_id) ||
@@ -2940,9 +2940,9 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 					return 0;
 			}
 			else
-			if(fitem->third_get_id > 0 && fitem->third_get_id != sd->bl.id)
+			if(fitem->third_get_charid > 0 && fitem->third_get_charid != sd->status.char_id)
 		  	{
-				third_sd = map_id2sd(fitem->third_get_id);
+				third_sd = map_charid2sd(fitem->third_get_charid);
 				if(DIFF_TICK(tick,fitem->third_get_tick) < 0) {
 					if(!(p && p->party.item&1 &&
 						((first_sd && first_sd->status.party_id == sd->status.party_id) ||
@@ -2956,7 +2956,7 @@ int pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 	}
 
 	//This function takes care of giving the item to whoever should have it, considering party-share options.
-	if ((flag = party_share_loot(p,sd,&fitem->item_data, fitem->first_get_id))) {
+	if ((flag = party_share_loot(p,sd,&fitem->item_data, fitem->first_get_charid))) {
 		clif_additem(sd,0,0,flag);
 		return 1;
 	}

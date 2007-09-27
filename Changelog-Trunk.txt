@@ -4,9 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/09/27
+	* Loot code using charid's instead of id's in pick priority.
+	* configure script using svn:eol-style LF and require mysql/pcre when 
+	  --with-mysql/pcre is used.
 	* Reimplemented mmo_char_fromsql using sql statements. (fixes bugreport:93)
 	* Fixed buildin_gethominfo not being included in the script engine. (bugreport:124)
-	* homunculus_evolution -> homevolution in script_commands.txt. (bugreport:125)
+	* homunculus_evolution -> homevolution in script_commands.txt.
 	* Deleted item DEFAULT from item_db.txt and regenerated item_db.sql. (bugreport:103)
 	* Skip empty lines and give more feedback (for invalid lines) when reading 
 	  item_db.txt/item_db2.txt. [FlavioJS]

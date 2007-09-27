@@ -4590,7 +4590,7 @@ summon "--ja--",-1;
 
 ---------------------------------------
 
-* homunculus_evolution;
+*homevolution;
 
 This command will try to evolve the current player's homunculus.
 If it doesn't work, the /swt emoticon is shown.

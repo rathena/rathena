@@ -23,14 +23,15 @@ AC_ARG_WITH(
 	[
 		if test "$withval" = "no" ; then
 			want_mysql="no"
-		elif test "$withval" = "yes" ; then
-			want_mysql="yes"
 		else
 			want_mysql="yes"
-			MYSQL_CONFIG_HOME="$withval"
+			require_mysql="yes"
+			if test "$withval" != "yes" ; then
+				MYSQL_CONFIG_HOME="$withval"
+			fi
 		fi
 	],
-	[want_mysql="yes"]
+	[want_mysql="yes" require_mysql="no"]
 )
 
 
@@ -46,14 +47,15 @@ AC_ARG_WITH(
 	[
 		if test "$withval" = "no" ; then
 			want_pcre="no"
-		elif test "$withval" = "yes" ; then
-			want_pcre="yes"
 		else
 			want_pcre="yes"
-			PCRE_HOME="$withval"
+			require_pcre="yes"
+			if test "$withval" != "yes" ; then
+				PCRE_HOME="$withval"
+			fi
 		fi
 	],
-	[want_pcre="yes"]
+	[want_pcre="yes" require_pcre="no"]
 )
 
 
@@ -176,7 +178,11 @@ else
 		fi
 	else
 		AC_MSG_RESULT([no])
-		AC_MSG_NOTICE([disabling MySQL (optional)])
+		if test "$require_mysql" = "yes" ; then
+			AC_MSG_ERROR([MySQL not found (requested)])
+		else
+			AC_MSG_NOTICE([disabling MySQL (optional)])
+		fi
 	fi
 fi
 
@@ -219,7 +225,11 @@ else
 		AC_MSG_RESULT([yes])
 	else
 		AC_MSG_RESULT([no])
-		AC_MSG_NOTICE([disabling PCRE (optional)])
+		if test "$require_pcre" = "yes" ; then
+			AC_MSG_ERROR([PCRE not found (requested)])
+		else
+			AC_MSG_NOTICE([disabling PCRE (optional)])
+		fi
 	fi
 fi
 

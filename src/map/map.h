@@ -1127,7 +1127,7 @@ struct flooritem_data {
 	struct block_list bl;
 	unsigned char subx,suby;
 	int cleartimer;
-	int first_get_id,second_get_id,third_get_id;
+	int first_get_charid,second_get_charid,third_get_charid;
 	unsigned int first_get_tick,second_get_tick,third_get_tick;
 	struct item item_data;
 };
@@ -1325,7 +1325,7 @@ int map_addnpc(int,struct npc_data *);
 int map_clearflooritem_timer(int,unsigned int,int,int);
 int map_removemobs_timer(int,unsigned int,int,int);
 #define map_clearflooritem(id) map_clearflooritem_timer(0,0,id,1)
-int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,int first_id,int second_id,int third_id,int flags);
+int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,int first_charid,int second_charid,int third_charid,int flags);
 
 // ƒLƒƒƒ‰id„ƒLƒƒƒ‰–¼ •ÏŠ·ŠÖ˜A
 void map_addnickdb(int charid, const char* nick);

@@ -997,14 +997,14 @@ static int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	struct pet_data* pd;
 	struct flooritem_data *fitem = (struct flooritem_data *)bl;
 	struct block_list **target;
-	int sd_id =0;
+	int sd_charid =0;
 
 	pd=va_arg(ap,struct pet_data *);
 	target=va_arg(ap,struct block_list**);
 
-	sd_id = fitem->first_get_id;
+	sd_charid = fitem->first_get_charid;
 
-	if(sd_id && sd_id != pd->msd->bl.id)
+	if(sd_charid && sd_charid != pd->msd->status.char_id)
 		return 0;
 	
 	if(unit_can_reach_bl(&pd->bl,bl, pd->db->range2, 1, NULL, NULL) &&
@@ -1028,7 +1028,7 @@ static int pet_delay_item_drop(int tid,unsigned int tick,int id,int data)
 	while (ditem) {
 		map_addflooritem(&ditem->item_data,ditem->item_data.amount,
 			list->m,list->x,list->y,
-			list->first_id,list->second_id,list->third_id,0);
+			list->first_charid,list->second_charid,list->third_charid,0);
 		ditem_prev = ditem;
 		ditem = ditem->next;
 		ers_free(item_drop_ers, ditem_prev);
@@ -1049,9 +1049,9 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 	dlist->m = pd->bl.m;
 	dlist->x = pd->bl.x;
 	dlist->y = pd->bl.y;
-	dlist->first_id = 0;
-	dlist->second_id = 0;
-	dlist->third_id = 0;
+	dlist->first_charid = 0;
+	dlist->second_charid = 0;
+	dlist->third_charid = 0;
 	dlist->item = NULL;
 
 	for(i=0;i<pd->loot->count;i++) {

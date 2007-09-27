@@ -1549,7 +1549,7 @@ int map_search_freecell(struct block_list *src, int m, short *x,short *y, int rx
  * item_data‚ÍamountˆÈŠO‚ðcopy‚·‚é
  * type flag: &1 MVP item. &2 do stacking check.
  *------------------------------------------*/
-int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,int first_id,int second_id,int third_id,int flags)
+int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,int first_charid,int second_charid,int third_charid,int flags)
 {
 	int r;
 	struct flooritem_data *fitem=NULL;
@@ -1572,11 +1572,11 @@ int map_addflooritem(struct item *item_data,int amount,int m,int x,int y,int fir
 		return 0;
 	}
 
-	fitem->first_get_id = first_id;
+	fitem->first_get_charid = first_charid;
 	fitem->first_get_tick = gettick() + (flags&1 ? battle_config.mvp_item_first_get_time : battle_config.item_first_get_time);
-	fitem->second_get_id = second_id;
+	fitem->second_get_charid = second_charid;
 	fitem->second_get_tick = fitem->first_get_tick + (flags&1 ? battle_config.mvp_item_second_get_time : battle_config.item_second_get_time);
-	fitem->third_get_id = third_id;
+	fitem->third_get_charid = third_charid;
 	fitem->third_get_tick = fitem->second_get_tick + (flags&1 ? battle_config.mvp_item_third_get_time : battle_config.item_third_get_time);
 
 	memcpy(&fitem->item_data,item_data,sizeof(*item_data));

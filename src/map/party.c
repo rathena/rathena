@@ -763,12 +763,12 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 	return 0;
 }
 
-//Does party loot. first holds the id of the player who has time priority to take the item.
-int party_share_loot(struct party_data* p, struct map_session_data* sd, struct item* item_data, int first)
+//Does party loot. first_charid holds the charid of the player who has time priority to take the item.
+int party_share_loot(struct party_data* p, struct map_session_data* sd, struct item* item_data, int first_charid)
 {
 	TBL_PC* target = NULL;
 	int i;
-	if (p && p->party.item&2 && (first || !(battle_config.party_share_type&1)))
+	if (p && p->party.item&2 && (first_charid || !(battle_config.party_share_type&1)))
 	{
 		//item distribution to party members.
 		if (battle_config.party_share_type&2)
