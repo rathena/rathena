@@ -821,100 +821,123 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	char t_msg[128] = "";
 	struct mmo_charstatus* cp;
 	StringBuf buf;
-	char* data;
-	size_t len;
+	SqlStmt* stmt;
+	char last_map[MAP_NAME_LENGTH_EXT];
+	char save_map[MAP_NAME_LENGTH_EXT];
+	char point_map[MAP_NAME_LENGTH_EXT];
+	struct point tmp_point;
+	struct item tmp_item;
+	struct skill tmp_skill;
+	struct s_friend tmp_friend;
+	struct hotkey tmp_hotkey;
+	int hotkey_num;
+
 
 	memset(p, 0, sizeof(struct mmo_charstatus));
 	
-	p->char_id = char_id;
 	if (save_log) ShowInfo("Char load request (%d)\n", char_id);
 
+	stmt = SqlStmt_Malloc(sql_handle);
+	if( stmt == NULL )
+	{
+		SqlStmt_ShowDebug(stmt);
+		return 0;
+	}
+
 	// read char data
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT "
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT "
 		"`char_id`,`account_id`,`char_num`,`name`,`class`,`base_level`,`job_level`,`base_exp`,`job_exp`,`zeny`,"
 		"`str`,`agi`,`vit`,`int`,`dex`,`luk`,`max_hp`,`hp`,`max_sp`,`sp`,"
 		"`status_point`,`skill_point`,`option`,`karma`,`manner`,`party_id`,`guild_id`,`pet_id`,`homun_id`,`hair`,"
 		"`hair_color`,`clothes_color`,`weapon`,`shield`,`head_top`,`head_mid`,`head_bottom`,`last_map`,`last_x`,`last_y`,"
 		"`save_map`,`save_x`,`save_y`,`partner_id`,`father`,`mother`,`child`,`fame`"
-		" FROM `%s` WHERE `char_id` = '%d'", char_db, char_id) )
+		" FROM `%s` WHERE `char_id`=? LIMIT 1", char_db)
+	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
+	||	SQL_ERROR == SqlStmt_Execute(stmt)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0,  SQLDT_INT,    &p->char_id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1,  SQLDT_INT,    &p->account_id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2,  SQLDT_UCHAR,  &p->char_num, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 3,  SQLDT_STRING, &p->name, sizeof(p->name), NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 4,  SQLDT_SHORT,  &p->class_, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 5,  SQLDT_UINT,   &p->base_level, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 6,  SQLDT_UINT,   &p->job_level, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 7,  SQLDT_UINT,   &p->base_exp, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 8,  SQLDT_UINT,   &p->job_exp, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 9,  SQLDT_INT,    &p->zeny, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 10, SQLDT_SHORT,  &p->str, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 11, SQLDT_SHORT,  &p->agi, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 12, SQLDT_SHORT,  &p->vit, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 13, SQLDT_SHORT,  &p->int_, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 14, SQLDT_SHORT,  &p->dex, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 15, SQLDT_SHORT,  &p->luk, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 16, SQLDT_INT,    &p->max_hp, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 17, SQLDT_INT,    &p->hp, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 18, SQLDT_INT,    &p->max_sp, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 19, SQLDT_INT,    &p->sp, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 20, SQLDT_USHORT, &p->status_point, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 21, SQLDT_USHORT, &p->skill_point, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 22, SQLDT_UINT,   &p->option, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 23, SQLDT_UCHAR,  &p->karma, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 24, SQLDT_SHORT,  &p->manner, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 25, SQLDT_INT,    &p->party_id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 26, SQLDT_INT,    &p->guild_id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 27, SQLDT_INT,    &p->pet_id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 28, SQLDT_INT,    &p->hom_id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 29, SQLDT_SHORT,  &p->hair, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 30, SQLDT_SHORT,  &p->hair_color, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 31, SQLDT_SHORT,  &p->clothes_color, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 32, SQLDT_SHORT,  &p->weapon, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 33, SQLDT_SHORT,  &p->shield, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 34, SQLDT_SHORT,  &p->head_top, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 35, SQLDT_SHORT,  &p->head_mid, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 36, SQLDT_SHORT,  &p->head_bottom, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 37, SQLDT_STRING, &last_map, sizeof(last_map), NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 38, SQLDT_SHORT,  &p->last_point.x, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 39, SQLDT_SHORT,  &p->last_point.y, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 40, SQLDT_STRING, &save_map, sizeof(save_map), NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 41, SQLDT_SHORT,  &p->save_point.x, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 42, SQLDT_SHORT,  &p->save_point.y, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 43, SQLDT_INT,    &p->partner_id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 44, SQLDT_INT,    &p->father, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 45, SQLDT_INT,    &p->mother, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 46, SQLDT_INT,    &p->child, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 47, SQLDT_INT,    &p->fame, 0, NULL, NULL) )
 	{
-		Sql_ShowDebug(sql_handle);
+		SqlStmt_ShowDebug(stmt);
+		SqlStmt_Free(stmt);
 		return 0;
 	}
-	if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
+	if( SQL_ERROR == SqlStmt_NextRow(stmt) )
 	{
 		ShowError("Requested non-existant character id: %d!\n", char_id);
-		Sql_FreeResult(sql_handle);
+		SqlStmt_Free(stmt);
 		return 0;	
 	}
+	p->last_point.map = mapindex_name2id(last_map);
+	p->save_point.map = mapindex_name2id(save_map);
 
-	p->char_id = char_id;
-	//TODO: prepared statement goes here >_> [ultramage]
-	Sql_GetData(sql_handle,  1, &data, NULL); p->account_id = atoi(data);
-	Sql_GetData(sql_handle,  2, &data, NULL); p->char_num = atoi(data);
-	Sql_GetData(sql_handle,  3, &data, &len); memcpy(p->name, data, min(len, NAME_LENGTH));
-	Sql_GetData(sql_handle,  4, &data, NULL); p->class_ = atoi(data);
-	Sql_GetData(sql_handle,  5, &data, NULL); p->base_level = atoi(data);
-	Sql_GetData(sql_handle,  6, &data, NULL); p->job_level = atoi(data);
-	Sql_GetData(sql_handle,  7, &data, NULL); p->base_exp = (unsigned int)cap_value(strtoul(data,NULL,10), 0, UINT_MAX);
-	Sql_GetData(sql_handle,  8, &data, NULL); p->job_exp = (unsigned int)cap_value(strtoul(data,NULL,10), 0, UINT_MAX);
-	Sql_GetData(sql_handle,  9, &data, NULL); p->zeny = atoi(data);
-	Sql_GetData(sql_handle, 10, &data, NULL); p->str = atoi(data);
-	Sql_GetData(sql_handle, 11, &data, NULL); p->agi = atoi(data);
-	Sql_GetData(sql_handle, 12, &data, NULL); p->vit = atoi(data);
-	Sql_GetData(sql_handle, 13, &data, NULL); p->int_ = atoi(data);
-	Sql_GetData(sql_handle, 14, &data, NULL); p->dex = atoi(data);
-	Sql_GetData(sql_handle, 15, &data, NULL); p->luk = atoi(data);
-	Sql_GetData(sql_handle, 16, &data, NULL); p->max_hp = atoi(data);
-	Sql_GetData(sql_handle, 17, &data, NULL); p->hp = atoi(data);
-	Sql_GetData(sql_handle, 18, &data, NULL); p->max_sp = atoi(data);
-	Sql_GetData(sql_handle, 19, &data, NULL); p->sp = atoi(data);
-	Sql_GetData(sql_handle, 20, &data, NULL); p->status_point = (unsigned short)cap_value(atoi(data), 0, USHRT_MAX);
-	Sql_GetData(sql_handle, 21, &data, NULL); p->skill_point = (unsigned short)cap_value(atoi(data), 0, USHRT_MAX);
-	Sql_GetData(sql_handle, 22, &data, NULL); p->option = atoi(data);
-	Sql_GetData(sql_handle, 23, &data, NULL); p->karma = atoi(data);
-	Sql_GetData(sql_handle, 24, &data, NULL); p->manner = atoi(data);
-	Sql_GetData(sql_handle, 25, &data, NULL); p->party_id = atoi(data);
-	Sql_GetData(sql_handle, 26, &data, NULL); p->guild_id = atoi(data);
-	Sql_GetData(sql_handle, 27, &data, NULL); p->pet_id = atoi(data);
-	Sql_GetData(sql_handle, 28, &data, NULL); p->hom_id = atoi(data);
-	Sql_GetData(sql_handle, 29, &data, NULL); p->hair = atoi(data);
-	Sql_GetData(sql_handle, 30, &data, NULL); p->hair_color = atoi(data);
-	Sql_GetData(sql_handle, 31, &data, NULL); p->clothes_color = atoi(data);
-	Sql_GetData(sql_handle, 32, &data, NULL); p->weapon = atoi(data);
-	Sql_GetData(sql_handle, 33, &data, NULL); p->shield = atoi(data);
-	Sql_GetData(sql_handle, 34, &data, NULL); p->head_top = atoi(data);
-	Sql_GetData(sql_handle, 35, &data, NULL); p->head_mid = atoi(data);
-	Sql_GetData(sql_handle, 36, &data, NULL); p->head_bottom = atoi(data);
-	Sql_GetData(sql_handle, 37, &data, NULL); p->last_point.map = mapindex_name2id(data);
-	Sql_GetData(sql_handle, 38, &data, NULL); p->last_point.x = atoi(data);
-	Sql_GetData(sql_handle, 39, &data, NULL); p->last_point.y = atoi(data);
-	Sql_GetData(sql_handle, 40, &data, NULL); p->save_point.map = mapindex_name2id(data);
-	Sql_GetData(sql_handle, 41, &data, NULL); p->save_point.x = atoi(data);
-	Sql_GetData(sql_handle, 42, &data, NULL); p->save_point.y = atoi(data);
-	Sql_GetData(sql_handle, 43, &data, NULL); p->partner_id = atoi(data);
-	Sql_GetData(sql_handle, 44, &data, NULL); p->father = atoi(data);
-	Sql_GetData(sql_handle, 45, &data, NULL); p->mother = atoi(data);
-	Sql_GetData(sql_handle, 46, &data, NULL); p->child = atoi(data);
-	Sql_GetData(sql_handle, 47, &data, NULL); p->fame = atoi(data);
-
-	//free mysql result.
-	Sql_FreeResult(sql_handle);
-	strcat (t_msg, " status");
+	strcat(t_msg, " status");
 
 	if (!load_everything) // For quick selection of data when displaying the char menu
+	{
+		SqlStmt_Free(stmt);
 		return 1;
+	}
 
 	//read memo data
 	//`memo` (`memo_id`,`char_id`,`map`,`x`,`y`)
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `map`,`x`,`y` FROM `%s` WHERE `char_id`='%d' ORDER by `memo_id`", memo_db, char_id) )
-		Sql_ShowDebug(sql_handle);
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `map`,`x`,`y` FROM `%s` WHERE `char_id`=? ORDER by `memo_id` LIMIT %d", memo_db, MAX_MEMOPOINTS)
+	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
+	||	SQL_ERROR == SqlStmt_Execute(stmt)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &point_map, sizeof(point_map), NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_SHORT,  &tmp_point.x, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,  &tmp_point.y, 0, NULL, NULL) )
+		SqlStmt_ShowDebug(stmt);
 
-	for( i = 0; i < MAX_MEMOPOINTS && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
+	for( i = 0; i < MAX_MEMOPOINTS && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 	{
-		Sql_GetData(sql_handle, 0, &data, NULL); p->memo_point[i].map = mapindex_name2id(data);
-		Sql_GetData(sql_handle, 1, &data, NULL); p->memo_point[i].x = atoi(data);
-		Sql_GetData(sql_handle, 2, &data, NULL); p->memo_point[i].y = atoi(data);
+		tmp_point.map = mapindex_name2id(point_map);
+		memcpy(&p->memo_point[i], &tmp_point, sizeof(tmp_point));
 	}
 	strcat(t_msg, " memo");
 
@@ -922,26 +945,27 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	//`inventory` (`id`,`char_id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`)
 	StringBuf_Init(&buf);
 	StringBuf_AppendStr(&buf, "SELECT `id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`");
-	for( j = 0; j < MAX_SLOTS; ++j )
-		StringBuf_Printf(&buf, ", `card%d`", j);
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id`='%d'", inventory_db, char_id);
+	for( i = 0; i < MAX_SLOTS; ++i )
+		StringBuf_Printf(&buf, ", `card%d`", i);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id`=? LIMIT %d", inventory_db, MAX_INVENTORY);
 
-	if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
-		Sql_ShowDebug(sql_handle);
-	for( i = 0; i < MAX_INVENTORY && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
-	{
-		Sql_GetData(sql_handle, 0, &data, NULL); p->inventory[i].id = atoi(data);
-		Sql_GetData(sql_handle, 1, &data, NULL); p->inventory[i].nameid = atoi(data);
-		Sql_GetData(sql_handle, 2, &data, NULL); p->inventory[i].amount = atoi(data);
-		Sql_GetData(sql_handle, 3, &data, NULL); p->inventory[i].equip = atoi(data);
-		Sql_GetData(sql_handle, 4, &data, NULL); p->inventory[i].identify = atoi(data);
-		Sql_GetData(sql_handle, 5, &data, NULL); p->inventory[i].refine = atoi(data);
-		Sql_GetData(sql_handle, 6, &data, NULL); p->inventory[i].attribute = atoi(data);
-		for( j = 0; j < MAX_SLOTS; ++j )
-		{
-			Sql_GetData(sql_handle, 7 + j, &data, NULL); p->inventory[i].card[j] = atoi(data);
-		}
-	}
+	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
+	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
+	||	SQL_ERROR == SqlStmt_Execute(stmt)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &tmp_item.id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_SHORT,  &tmp_item.nameid, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,  &tmp_item.amount, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_USHORT, &tmp_item.equip, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 4, SQLDT_CHAR,   &tmp_item.identify, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 5, SQLDT_CHAR,   &tmp_item.refine, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 6, SQLDT_CHAR,   &tmp_item.attribute, 0, NULL, NULL) )
+		SqlStmt_ShowDebug(stmt);
+	for( i = 0; i < MAX_SLOTS; ++i )
+		if( SQL_ERROR == SqlStmt_BindColumn(stmt, 7+i, SQLDT_SHORT, &tmp_item.card[i], 0, NULL, NULL) )
+			SqlStmt_ShowDebug(stmt);
+
+	for( i = 0; i < MAX_INVENTORY && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
+		memcpy(&p->inventory[i], &tmp_item, sizeof(tmp_item));
 	strcat(t_msg, " inventory");
 
 	//read cart
@@ -950,80 +974,88 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	StringBuf_AppendStr(&buf, "SELECT `id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`");
 	for( j = 0; j < MAX_SLOTS; ++j )
 		StringBuf_Printf(&buf, ", `card%d`", j);
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id`='%d'", cart_db, char_id);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id`=? LIMIT %d", cart_db, MAX_CART);
 
-	if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
-		Sql_ShowDebug(sql_handle);
-	for( i = 0; i < MAX_CART && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
-	{
-		Sql_GetData(sql_handle, 0, &data, NULL); p->cart[i].id = atoi(data);
-		Sql_GetData(sql_handle, 1, &data, NULL); p->cart[i].nameid = atoi(data);
-		Sql_GetData(sql_handle, 2, &data, NULL); p->cart[i].amount = atoi(data);
-		Sql_GetData(sql_handle, 3, &data, NULL); p->cart[i].equip = atoi(data);
-		Sql_GetData(sql_handle, 4, &data, NULL); p->cart[i].identify = atoi(data);
-		Sql_GetData(sql_handle, 5, &data, NULL); p->cart[i].refine = atoi(data);
-		Sql_GetData(sql_handle, 6, &data, NULL); p->cart[i].attribute = atoi(data);
-		for( j = 0; j < MAX_SLOTS; ++j )
-		{
-			Sql_GetData(sql_handle, 7 + j, &data, NULL); p->cart[i].card[j] = atoi(data);
-		}
-	}
+	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
+	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
+	||	SQL_ERROR == SqlStmt_Execute(stmt)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &tmp_item.id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_SHORT,  &tmp_item.nameid, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,  &tmp_item.amount, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_USHORT, &tmp_item.equip, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 4, SQLDT_CHAR,   &tmp_item.identify, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 5, SQLDT_CHAR,   &tmp_item.refine, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 6, SQLDT_CHAR,   &tmp_item.attribute, 0, NULL, NULL) )
+		SqlStmt_ShowDebug(stmt);
+	for( i = 0; i < MAX_SLOTS; ++i )
+		if( SQL_ERROR == SqlStmt_BindColumn(stmt, 7+i, SQLDT_SHORT, &tmp_item.card[i], 0, NULL, NULL) )
+			SqlStmt_ShowDebug(stmt);
+
+	for( i = 0; i < MAX_CART && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
+		memcpy(&p->cart[i], &tmp_item, sizeof(tmp_item));
 	strcat(t_msg, " cart");
 
 	//read skill
 	//`skill` (`char_id`, `id`, `lv`)
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`, `lv` FROM `%s` WHERE `char_id`='%d'", skill_db, char_id) )
-		Sql_ShowDebug(sql_handle);
-	for( i = 0; i < MAX_SKILL && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `id`, `lv` FROM `%s` WHERE `char_id`=? LIMIT %d", skill_db, MAX_SKILL)
+	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
+	||	SQL_ERROR == SqlStmt_Execute(stmt)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_USHORT, &tmp_skill.id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_USHORT, &tmp_skill.lv, 0, NULL, NULL) )
+		SqlStmt_ShowDebug(stmt);
+	tmp_skill.flag = 0;
+
+	for( i = 0; i < MAX_SKILL && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 	{
-		int n;
-		Sql_GetData(sql_handle, 0, &data, NULL);
-		n = atoi(data);
-		p->skill[n].id = n; //FIXME: why not use a boolean?
-		Sql_GetData(sql_handle, 1, &data, NULL);
-		p->skill[n].lv = atoi(data);
+		if( tmp_skill.id < ARRAYLENGTH(p->skill) )
+			memcpy(&p->skill[tmp_skill.id], &tmp_skill, sizeof(tmp_skill));
+		else
+			ShowWarning("mmo_char_fromsql: ignoring invalid skill (id=%u,lv=%u) of character %s (AID=%d,CID=%d)\n", tmp_skill.id, tmp_skill.lv, p->name, p->account_id, p->char_id);
 	}
 	strcat(t_msg, " skills");
 
-	//Friend list 
-	//Shamelessly stolen from its_sparky (ie: thanks) and then assimilated by [Skotlex]
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT c.name, f.friend_account, f.friend_id FROM `%s` f LEFT JOIN `%s` c ON f.friend_account=c.account_id AND f.friend_id=c.char_id WHERE f.char_id='%d'", friend_db, char_db, char_id) )
-		Sql_ShowDebug(sql_handle);
-	for( i = 0; i < MAX_FRIENDS && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
-	{
-		// name
-		Sql_GetData(sql_handle, 0, &data, &len);
-		if( *data == '\0' )
-			continue;
-		memcpy(p->friends[i].name, data, min(len, NAME_LENGTH));
-		Sql_GetData(sql_handle, 1, &data, NULL); p->friends[i].account_id = atoi(data);
-		Sql_GetData(sql_handle, 2, &data, NULL); p->friends[i].char_id = atoi(data);
-	}
+	//read friends
+	//`friends` (`char_id`, `friend_account`, `friend_id`)
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `account_id`,`char_id`,`name` FROM `%s` WHERE (`account_id`,`char_id`) IN (SELECT DISTINCT `friend_account`,`friend_id` FROM `%s` WHERE `char_id`=?) LIMIT %d", char_db, friend_db, MAX_FRIENDS)
+	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
+	||	SQL_ERROR == SqlStmt_Execute(stmt)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &tmp_friend.account_id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_INT,    &tmp_friend.char_id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_STRING, &tmp_friend.name, sizeof(tmp_friend.name), NULL, NULL) )
+		SqlStmt_ShowDebug(stmt);
+
+	for( i = 0; i < MAX_FRIENDS && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
+		memcpy(&p->friends[i], &tmp_friend, sizeof(tmp_friend));
 	strcat(t_msg, " friends");
 
 #ifdef HOTKEY_SAVING
-	//Hotkeys
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `hotkey`, `type`, `itemskill_id`, `skill_lvl` FROM `%s` WHERE `char_id`='%d'", hotkey_db, char_id) )
-		Sql_ShowDebug(sql_handle);
-	while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+	//read hotkeys
+	//`hotkey` (`char_id`, `hotkey`, `type`, `itemskill_id`, `skill_lvl`
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `hotkey`, `type`, `itemskill_id`, `skill_lvl` FROM `%s` WHERE `char_id`=?", hotkey_db)
+	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
+	||	SQL_ERROR == SqlStmt_Execute(stmt)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &hotkey_num, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_UCHAR,  &tmp_hotkey.type, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT,   &tmp_hotkey.id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_USHORT, &tmp_hotkey.lv, 0, NULL, NULL) )
+		SqlStmt_ShowDebug(stmt);
+
+	while( SQL_SUCCESS == SqlStmt_NextRow(stmt) )
 	{
-		int n;
-		Sql_GetData(sql_handle, 0, &data, NULL); n = atoi(data);
-		if( n < 0 || n >= HOTKEY_SAVING )
-			continue;
-		Sql_GetData(sql_handle, 1, &data, NULL); p->hotkeys[n].type = atoi(data);
-		Sql_GetData(sql_handle, 2, &data, NULL); p->hotkeys[n].id = atoi(data);
-		Sql_GetData(sql_handle, 3, &data, NULL); p->hotkeys[n].lv = atoi(data);
+		if( hotkey_num >= 0 && hotkey_num < HOTKEY_SAVING )
+			memcpy(&p->hotkeys[hotkey_num], &tmp_hotkey, sizeof(tmp_hotkey));
+		else
+			ShowWarning("mmo_char_fromsql: ignoring invalid hotkey (hotkey=%d,type=%u,id=%u,lv=%u) of character %s (AID=%d,CID=%d)\n", hotkey_num, tmp_hotkey.type, tmp_hotkey.id, tmp_hotkey.lv, p->name, p->account_id, p->char_id);
 	}
 	strcat(t_msg, " hotkeys");
 #endif
 
 	if (save_log) ShowInfo("Loaded char (%d - %s): %s\n", char_id, p->name, t_msg);	//ok. all data load successfuly!
-	Sql_FreeResult(sql_handle);
+	SqlStmt_Free(stmt);
 	StringBuf_Destroy(&buf);
 
 	cp = idb_ensure(char_db_, char_id, create_charstatus);
-  	memcpy(cp, p, sizeof(struct mmo_charstatus));
+	memcpy(cp, p, sizeof(struct mmo_charstatus));
 	return 1;
 }
 

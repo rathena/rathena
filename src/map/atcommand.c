@@ -277,7 +277,6 @@ ACMD_FUNC(readmail); // [Valaris]
 ACMD_FUNC(deletemail); // [Valaris]
 ACMD_FUNC(sendmail); // [Valaris]
 ACMD_FUNC(sendprioritymail); // [Valaris]
-ACMD_FUNC(deletemail); // [Valaris]
 ACMD_FUNC(refreshonline); // [Valaris]
 #endif
 #ifdef DMALLOC

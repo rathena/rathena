@@ -742,10 +742,10 @@ static bool itemdb_parse_dbrow(char** str, char* source, int line)
 
 	if (id->slot > MAX_SLOTS)
 	{
-		ShowWarning("itemdb_parse_dbrow: Item %d (%s) specifies %d slots, but the server only supports up to %d\n", nameid, id->jname, id->slot, MAX_SLOTS);
+		ShowWarning("itemdb_parse_dbrow: Item %d (%s) specifies %d slots, but the server only supports up to %d. Using %d slots.\n", nameid, id->jname, id->slot, MAX_SLOTS, MAX_SLOTS);
 		id->slot = MAX_SLOTS;
 	}
-	
+
 	itemdb_jobid2mapid(id->class_base, (unsigned int)strtoul(str[11],NULL,0));
 	id->class_upper = atoi(str[12]);
 	id->sex	= atoi(str[13]);
@@ -812,58 +812,79 @@ static int itemdb_readdb(void)
 		// process rows one by one
 		while(fgets(line, sizeof(line), fp))
 		{
-			char *str[32], *p, *np;
+			char *str[32], *p;
 			int i;
 
 			lines++;
 			if(line[0] == '/' && line[1] == '/')
 				continue;
 			memset(str, 0, sizeof(str));
-			for(i = 0, np = p = line; i < 19 && p; i++)
+
+			p = line;
+			while( ISSPACE(*p) )
+				++p;
+			if( *p == '\0' )
+				continue;// empty line
+			for( i = 0; i < 19; ++i )
 			{
 				str[i] = p;
-				if ((p = strchr(p,',')) != NULL) {
-					*p++ = '\0'; np = p;
-				}
+				p = strchr(p,',');
+				if( p == NULL )
+					break;// comma not found
+				*p = '\0';
+				++p;
 			}
 
-			if( i < 19 )
+			if( p == NULL )
 			{
-				ShowWarning("itemdb_readdb: Insufficient columns in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+				ShowError("itemdb_readdb: Insufficient columns in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
 
-			if((p=strchr(np,'{')) == NULL)
+			// Script
+			if( *p != '{' )
+			{
+				ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
-			str[19] = p; //Script
-			np = strchr(p,'}');
-			while (np && np[1] && np[1] != ',')
-				np = strchr(np+1,'}'); //Jump close brackets until the next field is found.
-			if (!np || !np[1]) {
-				continue; //Couldn't find the end of the script field.
 			}
-			np[1] = '\0'; //Set end of script
-			np += 2; //Skip to next field
-
-			if(!np || (p=strchr(np,'{'))==NULL)
+			str[19] = p;
+			p = strstr(p+1,"},");
+			if( p == NULL )
+			{
+				ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
-			str[20] = p; //Equip Script
-			np = strchr(p,'}');
-			while (np && np[1] && np[1] != ',')
-				np = strchr(np+1,'}'); //Jump close brackets until the next field is found.
-			if (!np || !np[1]) {
-				continue; //Couldn't find the end of the script field.
 			}
-			np[1] = '\0'; //Set end of script
-			np += 2; //Skip comma, to next field
+			p[1] = '\0';
+			p += 2;
 
-			if(!np || (p=strchr(np,'{'))==NULL)
+			// OnEquip_Script
+			if( *p != '{' )
+			{
+				ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
-			str[21] = p; //Unequip script, last column.
+			}
+			str[20] = p;
+			p = strstr(p+1,"},");
+			if( p == NULL )
+			{
+				ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+				continue;
+			}
+			p[1] = '\0';
+			p += 2;
+
+			// OnUnequip_Script (last column)
+			if( *p != '{' )
+			{
+				ShowError("itemdb_readdb: Invalid format (OnUnequip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+				continue;
+			}
+			str[21] = p;
+
 
 			if (!itemdb_parse_dbrow(str, path, lines))
 				continue;
-			
+
 			count++;
 		}
 

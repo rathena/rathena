@@ -3954,6 +3954,7 @@ BUILDIN_FUNC(getusersname); //jA commands added [Lupus]
 BUILDIN_FUNC(dispbottom);
 BUILDIN_FUNC(recovery);
 BUILDIN_FUNC(getpetinfo);
+BUILDIN_FUNC(gethominfo);
 BUILDIN_FUNC(checkequipedcard);
 BUILDIN_FUNC(globalmes);
 BUILDIN_FUNC(jump_zero);
@@ -4293,6 +4294,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getusersname,"*"),
 	BUILDIN_DEF(recovery,""),
 	BUILDIN_DEF(getpetinfo,"i"),
+	BUILDIN_DEF(gethominfo,"i"),
 	BUILDIN_DEF(checkequipedcard,"i"),
 	BUILDIN_DEF(jump_zero,"ii"), //for future jA script compatibility
 	BUILDIN_DEF(globalmes,"s*"),
