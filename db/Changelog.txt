@@ -38,6 +38,7 @@
 
 =======================
 09/27
+	* Rev. 11314 Fixed Diablos Armor. Again. [L0ne_W0lf]
 	* Rev. 11313 Fixed Diablos Armor (Thanks to WiZ|) [L0ne_W0lf]
 09/25
 	* Rev. 11307 Implemented Token of Siegfried effect care of Zephyrus_CR. [L0ne_W0lf]
