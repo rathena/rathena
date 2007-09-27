@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/09/27
+	* Made some adjustments in the Sign Quest with dialogs/summoning and fixed a possible exploit earlier. [SinSloth]
 2007/09/25
 	* Rev. 11303 Added Veins Cool Event Corp. Rep. and Inn master. [L0ne_W0lf
 	* Rev. 11302 Added Veins guide first version. [L0ne_W0lf]

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -35,6 +35,7 @@
 //= 2.0 Fixed some various minor bugs. [SinSloth]
 //= 2.1 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 2.2 Fixed a small bug which occured when people had to return The Sign around midnight. [SinSloth]
+//= 2.3 Made some adjustments in last event with dialogs/summoning and fixed a possible exploit earlier. [SinSloth]
 //============================================================ 
 //===== Configuration : ======================================
 prontera,1,1,1	script	TheSignConfig	-1,{
@@ -2140,6 +2141,7 @@ aldeba_in,155,101,2	script	Jore#SignAldeNpc	805,{
                 delitem 511,10;
                 delitem 610,2;
                 set signquest,7;
+		set SignJore,0;
                 emotion e_thx;
                 mes "[Sir Jore]";
                 mes "Ah! Th-thank you for";
@@ -6790,6 +6792,7 @@ function	script	Sign_Seal	{
 
 niflheim,313,70,3	script	Pleasant-Featured Lady	90,{
 
+    if (signquest > 56) goto L_Souvenir;
     if (signquest > 55) goto L_NoWord;
     if (Sign_Branch8A) goto L_Memory;
     if (Sign_Branch8B) goto L_BranchB;
@@ -7120,48 +7123,207 @@ L_NoWord:
     mes "...";
     mes "......";
     close;
+    
+L_Souvenir:
+	mes "[Serin]";
+	mes "...";
+	mes "......";
+	next;
+	mes "[Serin]";
+	mes "...";
+	mes "......";
+	mes "..........";
+	if (countitem(2643))
+	{
+		next;
+		switch( select( "Give Serin her ring.","Keep the ring." ) )
+		{
+			case 1:
+				mes "[Serin]";
+				mes "...";
+				mes "......";
+				mes ".............";
+				next;
+				mes "[Serin]";
+				mes "...."+strcharinfo(0)+".....";
+				mes "I don't want to forget you.";
+				mes "I can forget my obsession with";
+				mes "life and all my other memories,";
+				mes "But if I can keep just one memory, I want it to be of your kindness.";
+				next;
+				mes "[Serin]";
+				mes "Even now, you're still";
+				mes "so very kind to me. Thank";
+				mes "you for giving back my ring,";
+				mes "my most precious possession.";
+				mes "Thank you, thank you...";
+				emotion e_sob;
+				next;
+				mes "^3355FFThe sound of Serin's voice";
+				mes "softened and when it grew silent, her eyes blankly stared ahead as";
+				mes "if she were in a trance. It looks like she has already forgotten";
+				mes "everything...^000000";
+				next;
+				mes "^3355FFBut Serin has also been able";
+				mes "to forget her sadness. The tears streaked across her cheeks and";
+				mes "the faint smile on her lips tell you that her memories of you";
+				mes "will always remain in her heart.^000000";
+				delitem 2643,1;
+				getexp 500000,0;
+				close;
+
+			case 2:
+				emotion e_sob,0;
+				close;
+		}
+	}
+	else
+	{
+		emotion e_sob,0;
+		close;
+	}
 
 L_Give:
-    mes "[Serin]";
-    mes "The Symbol of Nine Realms?";
-    mes "Will you give it to me?";
-    mes "You know this is the best";
-    mes "to do, for all that people";
-    mes "suffering silently in Niflheim...";
-    next;
-    menu "Yes, take it.",-,"No.",L_Keep;
-    mes "[Serin]";
-    mes "Thanks.";
-    mes "I wouldn't have been able to";
-    mes "get it without you. I knew you";
-    mes "were a true hero.";
-    delitem 7305,1;
-    next;
-    if (countitem(2642)) {
-        mes "[Serin]";
-        mes "May I ask you if I can take a";
-        mes "look at my beloved ring once";
-        mes "again? I just want want to see";
-        mes "it one more time...";
-        delitem 2642,1;
-        set signringreturning,1;
-        next;
-        mes "[Serin]";
-        mes "I will return it too you";
-        mes "shortly, for now let's";
-        mes "focus on what we need to";
-        mes "do.";
-        next;
-    }
-    mes "[Serin]";
-    mes "I have to make some";
-    mes "preparations but I'll guide";
-    mes "you to my house though.";
-    mes "Please tell me when you are";
-    mes "ready.";
-    set Sign_Branch8B,1;
-    close;
-
+	mes "[Serin]";
+	mes "Yes...";
+	mes "This is the Symbol of the";
+	mes "Nine Realms. It only has enough";
+	mes "power for one use, but it's still not easy to get this. Now, what were you planning to use this for?";
+	next;
+	switch( select( "Tell her your story." ) )
+	{
+		case 1:
+			break;
+	}
+	mes "[Serin]";
+	mes "Ah, so you're here";
+	mes "in Niflheim to overcome";
+	mes "the ordeals of the gods and";
+	mes "prove your courage to Valkyrie.";
+	next;
+	mes "[Serin]";
+	mes "So wait...";
+	mes "You've obtained that symbol";
+	mes "just for that witch? This may";
+	mes "seem rude, but I want to tell";
+	mes "you exactly how I feel about her.";
+	next;
+	mes "[Serin]";
+	mes "Isn't it suspicious that she";
+	mes "hasn't explained her intentions to you? The Symbol of Nine Realms";
+	mes "is one of the most powerful objects in Niflheim. Whatever she's planning has to be large scale.";
+	next;
+	mes "[Serin]";
+	mes "Then, there's that Metz Brayde.";
+	mes "Do you really believe that after he completes his research, he'll just give it back to you? You can't just trust someone to hold an object of enormous power and give it back!";
+	next;
+	switch( select( "W-what should I do?","I can't believe this!" ) )
+	{
+		case 1:
+			mes "[Serin]";
+			mes "Well, I can't really tell";
+			mes "you what to do, but I don't think it's a good idea to let that witch have the Symbol of Nine Realms. There's no telling what she'll";
+			mes "use its power for.";
+			next;
+			mes "[Serin]";
+			mes "Actually...";
+			mes "There is this rumor";
+			mes "going around, but I don't";
+			mes "know if you want to hear it...";
+			next;
+			switch( select( "Tell me the rumors about the witch","I don't want to hear." ) )
+			{
+				case 1:
+					mes "[Serin]";
+					mes "Well, I've heard that the witch has been hiding deep in Nifflheim and will only speak to those who pass her test. Apparently, she's been preparing some sort of ritual";
+					mes "to gain more power...";
+					next;
+					mes "[Serin]";
+					mes "It's almost too horrible";
+					mes "to believe, but I think that";
+					mes "she's preparing the ritual to";
+					mes "summon Dark Lord, ruler of";
+					mes "the Realm of Fiends.";
+					next;
+					switch( select( "Dark Lord...?" ) )
+					{
+						case 1:
+							break;
+					}
+					mes "[Serin]";
+					mes "Well, most people don't";
+					mes "know this, but Dark Lord";
+					mes "comes from the Realm of Fiends.";
+					mes "In his own domain, he's so powerful";
+					mes "that even the gods fear his might.";
+					next;
+					mes "[Serin]";
+					mes "Now, sometimes Dark Lord can";
+					mes "enter the world of Rune-Midgard, but only in a manifestation that represents just a small portion";
+					mes "of his full power.";
+					next;
+					mes "[Serin]";
+					mes "You see, it takes too much energy to travel from the Realm of Fiends to Rune-Midgard. And since the life force in Rune-Midgard conflicts with his powers, Dark Lord has problems reaching your world directly.";
+					next;
+					switch( select( "Wouldn't Lady Hell stop him?" ) )
+					{
+						case 1:
+							break;
+					}
+					mes "[Serin]";
+					mes "Well, Dark Lord only wants";
+					mes "Rune-Midgard, so the Queen of the Dead doesn't feel threatened about her control of Niflheim.";
+					next;
+					mes "[Serin]";
+					mes "In fact, I'm sure she's aware";
+					mes "that Dark Lord will cause thousands of deaths in Rune-Midgard, meaning that there would be thousands more souls for her to rule over. So it's not to her advantage to stop him.";
+					next;
+					switch( select( "Then what should we do...?" ) )
+					{
+						case 1:
+							break;
+					}
+					mes "[Serin]";
+					mes "No matter what the cost,";
+					mes "we've got to stop her from";
+					mes "summoning Dark Lord in order";
+					mes "to protect Rune-Midgard from";
+					mes "total annihiliation.";
+					next;
+					mes "[Serin]";
+					mes "I used to be a pretty";
+					mes "skilled Wizard, so I know";
+					mes "that she needs to draw a really huge magic circle in Niflheim if she wants to summon Dark Lord.";
+					next;
+					switch( select( "Can you tell me where?" ) )
+					{
+						case 1:
+							break;
+					}
+					mes "[Serin]";
+					mes "Well, there are certain rules";
+					mes "and conditions to perform the summoning. There aren't any spaces wide enough in the Valley of Gyoll, and Nifflheim's entrance is watched by too many people...";
+					next;
+					mes "[Serin]";
+					mes "Now, I were to summon";
+					mes "Dark Lord, I would probably";
+					mes "do it somewhere inside town";
+					mes "to avoid attention. Hmmm...";
+					mes "I'll send you there once I figure out where the circle might be.";
+					set Sign_Branch8B,1;
+					close;
+					
+				case 2:
+					break;
+			}
+			
+		case 2:
+			mes "[Serin]";
+			mes "I'm sorry if you were offended.";
+			mes "I know I can't really convince you to believe anything, but please understand that I just don't want anyone to take advantage of you. Forgive my rudeness.";
+			close;
+	}
+	
 L_Keep:
     mes "[Serin]";
     mes "Ok, come back";
@@ -7171,10 +7333,6 @@ L_Keep:
     close;
 
 L_BranchB:
-    if (signringreturning) {
-        getitem 2643,1;
-        set signringreturning,0;
-    }
     mes "[Serin]";
     mes "I'll show you the way";
     mes "to their hope... Are you";
@@ -8002,9 +8160,9 @@ nif_in,140,177,1	script	#signgrave	111,{
 
 que_sign01,122,141,5	script	Witch#2	792,{
 
-    if (Sign_Branch8B && Sign_Branch8B < 4)goto L_MustHurry;
     if (signquest > 56) goto L_NoMedal;
     if (signquest > 55) goto L_Success;
+    if (Sign_Branch8B && Sign_Branch8B < 4)goto L_MustHurry;
     if ((countitem(7313) > 0) && Sign_Branch8A < 4 ) goto L_Medal;
     if (Sign_Branch8A) goto L_BranchA;
     if (signquest > 54 && countitem(7305)) goto L_Symbol;
@@ -8373,7 +8531,7 @@ L_Success:
     mes "I believe she wants to see you for";
     mes "some reason...";
     set signquest,57;
-    getexp 297000,0;
+    getexp 500000,0;
     close;
 
 L_Voucher:
@@ -8902,11 +9060,17 @@ OnSerin:
 
 OnSummon:
 	disablenpc "Serin#serin";
-	set $@Sign_Summon,8;
-	areamonster "que_sign01",188,184,205,205,"Rotten Corpse",1423,3,"#signserin::OnSignDead";
-	areamonster "que_sign01",188,184,205,205,"Ancient Wraith",1475,2,"#signserin::OnSignDead";
-	areamonster "que_sign01",188,184,205,205,"Ancient Mummy",1522,2,"#signserin::OnSignDead";
-	areamonster "que_sign01",188,184,205,205,"Dark Lord Incarnation",1605,1,"#signserin::OnSignDead";
+	set $@Sign_Summon,10;
+	monster "que_sign01",180,200,"Rotten Corpse",1423,1,"#signserin::OnSignDead";
+	monster "que_sign01",205,205,"Rotten Corpse",1423,1,"#signserin::OnSignDead";
+	monster "que_sign01",190,190,"Rotten Corpse",1423,1,"#signserin::OnSignDead";
+	monster "que_sign01",205,190,"Rotten Corpse",1423,1,"#signserin::OnSignDead";
+	monster "que_sign01",190,205,"Rotten Corpse",1423,1,"#signserin::OnSignDead";
+	monster "que_sign01",200,200,"Ancient Wraith",1475,1,"#signserin::OnSignDead";
+	monster "que_sign01",200,180,"Ancient Wraith",1475,1,"#signserin::OnSignDead";
+	monster "que_sign01",210,210,"Ancient Mummy",1522,1,"#signserin::OnSignDead";
+	monster "que_sign01",180,180,"Ancient Mummy",1522,1,"#signserin::OnSignDead";
+	monster "que_sign01",196,195,"Dark Lord Incarnation",1605,1,"#signserin::OnSignDead";
 	end;
 
 OnSignDead:
@@ -8944,10 +9108,7 @@ OnSerin:
 
 OnSummon:
 	disablenpc "Serin#serin2";
-	set $@Sign_Summon2,8;
-	areamonster "que_sign01",188,34,205,55,"Rotten Corpse",1423,3,"#signserin2::OnSignDead";
-	areamonster "que_sign01",188,34,205,55,"Ancient Wraith",1475,2,"#signserin2::OnSignDead";
-	areamonster "que_sign01",188,34,205,55,"Ancient Mummy",1522,2,"#signserin2::OnSignDead";
+	set $@Sign_Summon2,1;
 	areamonster "que_sign01",188,34,205,55,"Dark Lord Incarnation",1605,1,"#signserin2::OnSignDead";
 	end;
 
@@ -9034,23 +9195,37 @@ que_sign01,197,195,5	script	Serin#serin	90,{
 	mes "but I'm begging you. Don't get";
 	mes "in my way, " +strcharinfo(0) + ".";
 	next;
-	menu "I can't let you do this!",-,"Okay, have it your way.",L_Go;
+	menu "Let Her",L_Go,"Stop Her",-;
 	set Sign_Branch8A,5;
 	close;
 
 L_Go:
-	set sign_fail,1;
 	mes "[Serin]";
-	mes "That world of yours is so";
-	mes "painful... With my rebirth,";
-	mes "it's just like I was saving";
-	mes "it from its despair and sorrow...";
-	mes "He will be here soon. The great";
-	mes "Dark Lord.";
-	close2;
-	set $signroomfull,0;
-	warp "niflheim",30,156;
-	end;
+	mes "Are you really willing";
+	mes "to throw so much away for";
+	mes "my sake? You do understand";
+	mes "that you'll be failing the ordeals set before you by the gods...";
+	next;
+	switch( select( "I changed my mind for Rune-Midgard.","I do, and it's alright..." ) )
+	{
+		case 1:
+			set Sign_Branch8A,5;
+			close;
+		
+		case 2:
+			mes "[Serin]";
+			mes "The least I can";
+			mes "do is send you back";
+			mes "to Rune-Midgard and";
+			mes "ask the Dark Lord to spare";
+			mes "you. Thank you so much...";
+			set sign_fail,1;
+			getexp 200000,0;
+			close2;
+			set $signroomfull,0;
+			warp "umbala",132,203;
+			end;
+	}
 
 L_Summon:
 	mes "[Serin]";
@@ -9176,131 +9351,134 @@ L_Done:
 
 que_sign01,197,45,5	script	Serin#serin2	90,{
 
-    if (signquest > 55) goto L_Done;
-    if (Sign_Branch8B > 3) goto L_TryAgain;
-    if (Sign_Branch8B > 2) goto L_Success;
-    if (Sign_Branch8B > 1) goto L_Summon;
-    mes "[Serin]";
-    mes "You're finally here.";
-    mes "That witch has been watching";
-    mes "my every move, so she probably";
-    mes "knows what I'm up to by now...";
-    next;
-    menu "Why are you doing this...",-;
-    mes "[Serin]";
-    mes "You don't understand";
-    mes "the horrific experience";
-    mes "of being bound to Niflheim.";
-    mes "I'm sick of breathing death";
-    mes "and feeding on despair.";
-    mes "I want to live again!";
-    next;
-    menu "Is that why you want Dark Lord...?",-;
-    mes "[Serin]";
-    mes "Unfortunately, the symbol";
-    mes "which Lady Hell gave you is";
-    mes "limited to a one time use. Its";
-    mes "power wasn't enough to bring me";
-    mes "back, so summoning Dark Lord is";
-    mes "my last chance.";
-    next;
-    menu "But if Dark Lord comes to Rune-Midgard...",-;
-    mes "[Serin]";
-    mes "Oh, I'm pretty sure of";
-    mes "what will happen if Dark Lord";
-    mes "enters the realm of the living.";
-    mes "He'll destroy Rune-Midgard and";
-    mes "bring death to thousands and";
-    mes "thousands of people.";
-    next;
-    mes "[Serin]";
-    mes "So if I came back to life";
-    mes "and everyone else were dead,";
-    mes "however, by summoning Dark";
-    mes "Lord, you might be thinking it'd be";
-    mes "pretty pointless for me to come";
-    mes "back. But I don't care.";
-    next;
-    mes "[Serin]";
-    mes "The living don't appreciate";
-    mes "what they have, so they ought";
-    mes "to be punished. They can all go to";
-    mes "Niflheim while I enjoy the warmth";
-    mes "of the sun and the fresh outside";
-    mes "air. Everyone should die...";
-    next;
-    mes "[Serin]";
-    mes "Maybe you might not";
-    mes "pity my situation since you've";
-    mes "never been bound to Niflheim,";
-    mes "but I'm begging you. Don't get";
-    mes "in my way, " +strcharinfo(0) + ".";
-    next;
-    menu "I can't let you do this!",-,"Okay, have it your way.",L_Go;
-    set Sign_Branch8B,2;
-    close;
-
-L_Go:
-    set sign_fail,1;
-    mes "[Serin]";
-    mes "That world of yours is so";
-    mes "painful... With my rebirth,";
-    mes "it's just like I was saving";
-    mes "it from its despair and sorrow...";
-    mes "He will be here soon. The great";
-    mes "Dark Lord.";
-    close2;
-    set $signroom2full,0;
-    warp "niflheim",30,156;
-    end;
-
+	if (signquest > 55) goto L_Done;
+	if (Sign_Branch8B > 3) goto L_TryAgain;
+	if (Sign_Branch8B > 2) goto L_Success;
+	if (Sign_Branch8B > 1) goto L_Summon;
+	mes "[Serin]";
+	mes "As its magic power grows,";
+	mes "the Magic Circle is nearing completion. The symbol which I've asked you for is the last material needed for summoning Dark Lord.";
+	next;
+	mes "[Serin]";
+	mes "However, the power of that";
+	mes "symbol can be used to complete";
+	mes "the Magic Circle or destroy it. Would you hand it over to me? I choose to destroy this...";
+	next;
+	mes "[Serin]";
+	mes "Please...";
+	mes "Let me have the symbol.";
+	next;
+	switch( select( "Give Serin the symbol." ) )
+	{
+		case 1:
+			break;
+	}
+	mes "[Serin]";
+	mes "This could be";
+	mes "pretty dangerous";
+	mes "so please step back...";
+	delitem 7305,1;
+	set Sign_Branch8B,2;
+	close;
+	
 L_Summon:
-    mes "[Serin]";
-    mes "If you think that";
-    mes "I can't summon Dark Lord";
-    mes "without the symbol, then you're";
-    mes "mistaken. I've been collecting";
-    mes "the power of despair!";
-    next;
-    mes "[Serin]";
-    mes "Do you remember what";
-    mes "happened to the dead that you";
-    mes "helped on my behalf? Even if they";
-    mes "seemed to have found shelter at";
-    mes "first, they cannot escape my";
-    mes "deep hollow of despair...";
-    next;
-    mes "[Serin]";
-    mes "And that poor little girl,";
-    mes "Alakina Ann? She still";
-    mes "hasn't realized that she's dead!";
-    next;
-    mes "[Serin]";
-    mes "You gave her hope,";
-    mes "but ultimately, you can't";
-    mes "keep your promise to bring her";
-    mes "home. Oh, her disappointment";
-    mes "must be so crushing...";
-    next;
-    mes "[Serin]";
-    mes "Yes...";
-    mes "By trying to help";
-    mes "you gave them nothing";
-    mes "but pain, just as I planned.";
-    mes "Now I have enough despair";
-    mes "to summon Dark Lord!";
-    next;
-    mes "[Serin]";
-    mes "I don't want us to fight,";
-    mes "but I can't let you stop me.";
-    mes "I've already sold my soul to";
-    mes "Dark Lord to become a living";
-    mes "human again so I can't give up";
-    mes "now! We'll have to battle!";
-    close2;
-    donpcevent "#signserin2::OnSummon";
-    set Sign_Branch8B,3;
-    end;
+	mes "[Serin]";
+	mes "I'm sorry.";
+	mes "But I have to do this";
+	mes "to summon Dark Lord.";
+	next;
+	switch( select( "But why...?" ) )
+	{
+		case 1:
+			break;
+	}
+	mes "[Serin]";
+	mes "It was never the witch";
+	mes "that wanted Dark Lord summoned,";
+	mes "but me. I've always wanted to return to my human form. I'm sick and tired of being bound here in Niflheim!";
+	next;
+	mes "[Serin]";
+	mes "Unfortunately, the symbol";
+	mes "which Lady Hell gave you is";
+	mes "limited to a one time use. Its";
+	mes "power wasn't enough to bring me";
+	mes "back, so summoning Dark Lord is";
+	mes "my last chance.";
+	next;
+	switch( select( "But if Dark Lord comes to Rune-Midgard..." ) )
+	{
+		case 1:
+			break;
+	}
+	mes "[Serin]";
+	mes "Oh, I'm pretty sure of";
+	mes "what will happen if Dark Lord";
+	mes "enters the realm of the living. He'll destroy Rune-Midgard and bring death to thousands and thousands of people.";
+	next;
+	mes "[Serin]";
+	mes "So if I came back to life";
+	mes "and everyone else were dead,";
+	mes "However, by summoning Dark Lord,";
+	mes "you might be thinking it'd be pretty pointless for me to come back. But you know what? I don't care.";
+	next;
+	mes "[Serin]";
+	mes "The living don't appreciate";
+	mes "what they have, so they ought";
+	mes "to be punished. They can all go to Niflheim while I enjoy the warmth of the sun and the fresh outside air.";
+	next;
+	mes "[Serin]";
+	mes "Maybe you might not";
+	mes "pity my situation since you've";
+	mes "never been bound to Niflheim,";
+	mes "but I'm begging you. Don't get";
+	mes "in my way.";
+	next;
+	switch( select( "Alright. I'll let you go.","No, you have to be stopped." ) )
+	{
+		case 1:
+			mes "[Serin]";
+			mes "Are you really willing";
+			mes "to throw so much away for";
+			mes "my sake? You do understand";
+			mes "that you'll be failing the ordeals set before you by the gods...";
+			next;
+			switch( select( "I changed my mind for Rune-Midgard.","I do, and it's alright..." ) )
+			{
+				case 1:
+					break;
+					
+				case 2:
+					mes "[Serin]";
+					mes "The least I can";
+					mes "do is send you back";
+					mes "to Rune-Midgard and";
+					mes "ask the Dark Lord to spare";
+					mes "you. Thank you so much...";
+					set signfail,1;
+					getexp 200000,0;
+					set $signroom2full,0;
+					close2;
+					warp "umbala",132,203;
+					end;
+			}
+					
+		case 2:
+			mes "[Serin]";
+			mes "...";
+			mes "I really don't want to fight you,";
+			mes "but I've come too far to give up now. If you insist on interfering, then you leave me no choice...";
+			next;
+			mes "[Dark Lord]";
+			mes "^330033Insolent mortal!";
+			mes "Do you really think";
+			mes "you have a chance of";
+			mes "stopping me? Hmpf.";
+			mes "Every fool must learn.";
+			mes "Prepare to die!^000000";
+			donpcevent "#signserin2::OnSummon";
+			set Sign_Branch8B,3;
+			close;
+	}
 
 L_TryAgain:
     mes "[Serin]";
@@ -9354,17 +9532,6 @@ L_Success:
     mes "me than life itself.";
     next;
     set signquest,56;
-    if (countitem(2643)) {
-        delitem 2643,1;
-        mes "[Serin]";
-        mes "May I ask you one last";
-        mes "favor? I see you kept my";
-        mes "ring. It means very much";
-        mes "to me, could you kindly";
-        mes "give it back please?";
-        next;
-        getexp 0,393759;
-    }
     mes "[Serin]";
     mes "Farewell, now.";
     mes "And good luck on";
