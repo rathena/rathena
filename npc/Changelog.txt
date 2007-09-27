@@ -1,6 +1,9 @@
 Date		Added
 ======
 2007/09/27
+	* Optimized/simplified some poorly written code in TSQ [ultramage]
+	- fixed wrong quiz answers
+	- added some missing dialogue text, added some comments
 	* Made some adjustments in the Sign Quest with dialogs/summoning and fixed a possible exploit earlier. [SinSloth]
 2007/09/25
 	* Rev. 11303 Added Veins Cool Event Corp. Rep. and Inn master. [L0ne_W0lf
