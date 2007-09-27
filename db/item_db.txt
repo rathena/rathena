@@ -2246,6 +2246,7 @@
 7059,Cargo_Free_Ticket,Free Ticket for Kafra Storage,3,1,,10,,,,,,,,,,,,,{},{},{}
 7060,Warp_Free_Ticket,Free Ticket for Kafra Transportation,3,1,,10,,,,,,,,,,,,,{},{},{}
 7061,Cart_Free_Ticket,Free Ticket for the Cart Service,3,1,,10,,,,,,,,,,,,,{},{},{}
+7062,Broken_Turtle_Shell,Broken Turtle Shell,3,20,,10,,,,,,,,,,,,,{},{},{}
 7063,Soft_Feather,Soft Feather,3,280,,10,,,,,,,,,,,,,{},{},{}
 7064,Dragon_Fly_Wing,Wing of Dragonfly,3,520,,10,,,,,,,,,,,,,{},{},{}
 7065,Sea_Otter_Leather,Sea-Otter Fur,3,820,,10,,,,,,,,,,,,,{},{},{}
