@@ -38,6 +38,10 @@
 
 =======================
 09/27
+	* Rev. 11316 Updated All ETC items until 11.2. [L0ne_W0lf]
+	- ETC items no longer use the "Sell Price" field.
+	- Adjusted the Weight of a few items in the process.
+	  For example, Unknown Test tube from 30 -> 10.
 	* Rev. 11314 Fixed Diablos Armor. Again. [L0ne_W0lf]
 	* Rev. 11313 Fixed Diablos Armor (Thanks to WiZ|) [L0ne_W0lf]
 09/25
