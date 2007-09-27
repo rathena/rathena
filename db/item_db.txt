@@ -2297,8 +2297,8 @@
 7110,Vroken_Sword,Broken Sword,3,,294,10,,,,,,,,,,,,,{},{},{}
 7111,Smooth_Paper,Slick Paper,3,,353,10,,,,,,,,,,,,,{},{},{}
 7112,Fright_Paper_Blade,Sharp Paper,3,,453,10,,,,,,,,,,,,,{},{},{}
-7113,Broken_Pharaoh_Symbol,Broken Pharaoh Emblem,3,,10,10,,,,,,,,,,,,,{},{},{}
-7114,Tutankhamen's_Mask,Masque of Tutankhamen,3,,10,10,,,,,,,,,,,,,{},{},{}
+7113,Broken_Pharaoh_Symbol,Broken Pharaoh Emblem,3,,1008,10,,,,,,,,,,,,,{},{},{}
+7114,Tutankhamen's_Mask,Masque of Tutankhamen,3,,5,10,,,,,,,,,,,,,{},{},{}
 7115,Harpy's_Feather,Harpy Feather,3,,571,10,,,,,,,,,,,,,{},{},{}
 7116,Harpy's_Claw,Harpy Talon,3,,605,10,,,,,,,,,,,,,{},{},{}
 7117,Rent_Spell_Book,Torn Magic Book,3,,571,10,,,,,,,,,,,,,{},{},{}
