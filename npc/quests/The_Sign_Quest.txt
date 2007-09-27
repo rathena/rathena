@@ -2826,7 +2826,7 @@ L_quiztime:
 	for( set .@i,1; .@i <= 10; set .@i,.@i+1 )
 	{
 		// choose which question to ask next
-		set .@qpos, rand(.@size);
+		set .@qpos, rand(1,.@size);
 		set .@qid, .@signarray[.@qpos];
 		
 		// remove the question from the array (reducing its size)
