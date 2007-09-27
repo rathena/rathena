@@ -38,6 +38,8 @@
 
 =======================
 09/27
+	* Removed Final Strike from skill_cast_db [Playtester]
+	- also updated sql files
 	* Rev. 11316 Updated All ETC items until 11.2. [L0ne_W0lf]
 	- ETC items no longer use the "Sell Price" field.
 	- Adjusted the Weight of a few items in the process.
