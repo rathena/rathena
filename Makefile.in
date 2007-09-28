@@ -3,7 +3,7 @@
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
 	ALL_DEPENDS=common common_sql login login_sql char char_sql map map_sql ladmin tools converters plugins save
-	SQL_DEPENDS=common_sql login_sql char_sql map_sql
+	SQL_DEPENDS=common_sql login_sql char_sql map_sql save
 	COMMON_SQL_DEPENDS=
 	LOGIN_SQL_DEPENDS=common_sql
 	CHAR_SQL_DEPENDS=common_sql
