@@ -769,11 +769,20 @@ static bool itemdb_parse_dbrow(char** str, char* source, int line)
 	id->sex = itemdb_gendercheck(id); //Apply gender filtering.
 
 	if (id->script)
+	{
 		script_free_code(id->script);
+		id->script = NULL;
+	}
 	if (id->equip_script)
+	{
 		script_free_code(id->equip_script);
+		id->equip_script = NULL;
+	}
 	if (id->unequip_script)
+	{
 		script_free_code(id->unequip_script);
+		id->unequip_script = NULL;
+	}
 
 	if (*str[19])
 		id->script = parse_script(str[19], source, line, 0);

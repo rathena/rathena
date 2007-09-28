@@ -1016,7 +1016,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 
 	//read friends
 	//`friends` (`char_id`, `friend_account`, `friend_id`)
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `account_id`,`char_id`,`name` FROM `%s` WHERE (`account_id`,`char_id`) IN (SELECT DISTINCT `friend_account`,`friend_id` FROM `%s` WHERE `char_id`=?) LIMIT %d", char_db, friend_db, MAX_FRIENDS)
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT c.`account_id`, c.`char_id`, c.`name` FROM `%s` c LEFT JOIN `%s` f ON f.`friend_account` = c.`account_id` AND f.`friend_id` = c.`char_id` WHERE f.`char_id`=? LIMIT %d", char_db, friend_db, MAX_FRIENDS)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &tmp_friend.account_id, 0, NULL, NULL)
