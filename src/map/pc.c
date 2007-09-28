@@ -3777,6 +3777,9 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_XMAS:
 			class_ = MAPID_XMAS;
 			break;
+		case JOB_SUMMER:
+			class_ = MAPID_SUMMER;
+			break;
 		default:
 			return -1;
 	}
@@ -3799,6 +3802,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_GUNSLINGER:      return JOB_GUNSLINGER;
 		case MAPID_NINJA:           return JOB_NINJA;
 		case MAPID_XMAS:            return JOB_XMAS;
+		case MAPID_SUMMER:          return JOB_SUMMER;
 	//2_1 classes
 		case MAPID_SUPER_NOVICE:    return JOB_SUPER_NOVICE;
 		case MAPID_KNIGHT:          return JOB_KNIGHT;
@@ -3909,7 +3913,10 @@ char* job_name(int class_)
 
 	case JOB_XMAS:
 		return msg_txt(570 - JOB_WEDDING+class_);
-		
+
+	case JOB_SUMMER:
+		return msg_txt(621);
+
 	case JOB_NOVICE_HIGH:
 	case JOB_SWORDMAN_HIGH:
 	case JOB_MAGE_HIGH:
@@ -5758,6 +5765,11 @@ int pc_setoption(struct map_session_data *sd,int type)
 	else if (!(type&OPTION_XMAS) && p_type&OPTION_XMAS)
 		new_look = -1;
 
+	if (type&OPTION_SUMMER && !(p_type&OPTION_SUMMER))
+		new_look = JOB_SUMMER;
+	else if (!(type&OPTION_SUMMER) && p_type&OPTION_SUMMER)
+		new_look = -1;
+
 	if (new_look < 0) { //Restore normal look.
 		status_set_viewdata(&sd->bl, sd->status.class_);
 		new_look = sd->vd.class_;
@@ -7349,7 +7361,7 @@ int pc_readdb(void)
 	fclose(fp);
 	for (i = 0; i < MAX_PC_CLASS; i++) {
 		if (!pcdb_checkid(i)) continue;
-		if (i == JOB_WEDDING || i == JOB_XMAS)
+		if (i == JOB_WEDDING || i == JOB_XMAS || i == JOB_SUMMER)
 			continue; //Classes that do not need exp tables.
 		if (!max_level[i][0])
 			ShowWarning("Class %s (%d) does not has a base exp table.\n", job_name(i), i);

@@ -4261,6 +4261,9 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				if (sd->sc.option&OPTION_WEDDING)
 					class_ = JOB_WEDDING;
 				else
+				if (sd->sc.option&OPTION_SUMMER)
+					class_ = JOB_SUMMER;
+				else
 				if (sd->sc.option&OPTION_XMAS)
 					class_ = JOB_XMAS;
 				else
@@ -4350,6 +4353,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 	if (vd && vd->cloth_color && (
 		(vd->class_==JOB_WEDDING && battle_config.wedding_ignorepalette)
 		|| (vd->class_==JOB_XMAS && battle_config.xmas_ignorepalette)
+		|| (vd->class_==JOB_SUMMER && battle_config.summer_ignorepalette)
 	))
 		vd->cloth_color = 0;
 }
@@ -5156,6 +5160,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 		case SC_WEDDING:
 		case SC_XMAS:
+		case SC_SUMMER:
 			if (!vd) return 0;
 			//Store previous values as they could be removed.
 			val1 = vd->class_;
@@ -5165,7 +5170,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			unit_stop_attack(bl);
 			clif_changelook(bl,LOOK_WEAPON,0);
 			clif_changelook(bl,LOOK_SHIELD,0);
-			clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:JOB_XMAS);
+			clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:type==SC_XMAS?JOB_XMAS:JOB_SUMMER);
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->cloth_color);
 			break;
 		case SC_NOCHAT:
@@ -5812,9 +5817,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	switch (type) {
 		case SC_WEDDING:
 		case SC_XMAS:
+		case SC_SUMMER:
 			clif_changelook(bl,LOOK_WEAPON,0);
 			clif_changelook(bl,LOOK_SHIELD,0);
-			clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:JOB_XMAS);
+			clif_changelook(bl,LOOK_BASE,type==SC_WEDDING?JOB_WEDDING:type==SC_XMAS?JOB_XMAS:JOB_SUMMER);
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,val4);
 			break;	
 		case SC_KAAHI:
@@ -5977,6 +5983,9 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_XMAS:
 			sc->option |= OPTION_XMAS;
 			break;
+		case SC_SUMMER:
+			sc->option |= OPTION_SUMMER;
+			break;
 		case SC_ORCISH:
 			sc->option |= OPTION_ORCISH;
 			break;
@@ -6064,6 +6073,7 @@ int status_change_clear(struct block_list *bl,int type)
 		case SC_EDP:
 		case SC_MELTDOWN:
 		case SC_XMAS:
+		case SC_SUMMER:
 		case SC_NOCHAT:
 		case SC_FUSION:
 		case SC_TKREST:
@@ -6153,11 +6163,13 @@ int status_change_end( struct block_list* bl , int type,int tid )
 	switch(type){
 		case SC_WEDDING:
 		case SC_XMAS:
+		case SC_SUMMER:
 			if (!vd) return 0;
 			if (sd)
 			{	//Load data from sd->status.* as the stored values could have changed.
 				//Must remove OPTION to prevent class being rechanged.
-				sc->option &= type==SC_WEDDING?~OPTION_WEDDING:~OPTION_XMAS;
+				sc->option &= type==SC_WEDDING?~OPTION_WEDDING:type==SC_XMAS?~OPTION_XMAS:~OPTION_SUMMER;
+				clif_changeoption(&sd->bl);
 				status_set_viewdata(bl, sd->status.class_);
 			} else {
 				vd->class_ = sc->data[type].val1;
@@ -6426,6 +6438,9 @@ int status_change_end( struct block_list* bl , int type,int tid )
 		break;
 	case SC_XMAS:	
 		sc->option &= ~OPTION_XMAS;
+		break;
+	case SC_SUMMER:
+		sc->option &= ~OPTION_SUMMER;
 		break;
 	case SC_ORCISH:
 		sc->option &= ~OPTION_ORCISH;

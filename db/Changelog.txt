@@ -38,6 +38,7 @@
 
 =======================
 09/27
+	* Rev. 11321 Added constants for Summer Outfit and updated the Summer_Event_Suit item script. [L0ne_W0lf]
 	* Rev. 11319 Re-added an ETC item that got lost in the item update. (7062) [L0ne_W0lf]
 	* Removed Final Strike from skill_cast_db [Playtester]
 	- also updated sql files

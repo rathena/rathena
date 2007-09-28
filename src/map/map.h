@@ -95,6 +95,7 @@ enum {
 	MAPID_GUNSLINGER,
 	MAPID_NINJA,
 	MAPID_XMAS, // [Valaris]
+	MAPID_SUMMER, // [Zephyrs]
 //2_1 classes
 	MAPID_SUPER_NOVICE = JOBL_2_1|0x0,
 	MAPID_KNIGHT,

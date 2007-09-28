@@ -3297,7 +3297,7 @@
 12257,Cold_Medicine,Cold_Medicine,2,,10,100,,,,,0xFFFFFFFF,7,2,,,50,,,{ percentheal 25,25; },{},{}
 12258,Bomb_Poring_Box,Bomb Poring Box,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 //12259,환상의_비약,환상의_비약,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12260,Summer_Event_Suit,Summer Event Suit,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12260,Summer_Event_Suit,Summer Event Suit,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_Summer,600000,0; },{},{}
 //12261,환상의_비약,환상의_비약,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12262,Inspector_Certificate_,Authoritative Badge,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect 507; sc_start SC_SpeedUp0,180000,0; },{},{}
 12701,Old_Blue_Box_F,Old Blue Box,2,,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

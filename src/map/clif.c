@@ -718,7 +718,7 @@ void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, un
 	struct item_data *id;
 #endif
 
-	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
+	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER))
 	{
 		*rhand = *lhand = 0;
 		return;
@@ -2672,11 +2672,12 @@ int clif_changelook(struct block_list *bl,int type,int val)
 		break;
 		case LOOK_BASE:
 			vd->class_ = val;
-			if (vd->class_ == JOB_WEDDING || vd->class_ == JOB_XMAS)
+			if (vd->class_ == JOB_WEDDING || vd->class_ == JOB_XMAS || vd->class_ == JOB_SUMMER)
 				vd->weapon = vd->shield = 0;
 			if (vd->cloth_color && (
 				(vd->class_ == JOB_WEDDING && battle_config.wedding_ignorepalette) ||
-				(vd->class_ == JOB_XMAS && battle_config.xmas_ignorepalette)
+				(vd->class_ == JOB_XMAS && battle_config.xmas_ignorepalette) ||
+				(vd->class_ == JOB_SUMMER && battle_config.summer_ignorepalette)
 			))
 				clif_changelook(bl,LOOK_CLOTHES_COLOR,0);
 		break;
@@ -2698,7 +2699,8 @@ int clif_changelook(struct block_list *bl,int type,int val)
 		case LOOK_CLOTHES_COLOR:
 			if (val && (
 				(vd->class_ == JOB_WEDDING && battle_config.wedding_ignorepalette) ||
-				(vd->class_ == JOB_XMAS && battle_config.xmas_ignorepalette)
+				(vd->class_ == JOB_XMAS && battle_config.xmas_ignorepalette) ||
+				(vd->class_ == JOB_SUMMER && battle_config.summer_ignorepalette)
 			))
 				val = 0;
 			vd->cloth_color = val;
@@ -8651,7 +8653,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		if (clif_cant_act(sd) || sd->sc.option&OPTION_HIDE)
 			return;
 
-		if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
+		if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER))
 			return;
 
 		if (!battle_config.sdelay_attack_enable && pc_checkskill(sd, SA_FREECAST) <= 0) {
@@ -9522,7 +9524,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
+	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER))
 		return;
 	
 	if(target_id<0 && -target_id == sd->bl.id) // for disguises [Valaris]
@@ -9628,7 +9630,7 @@ void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, int skilll
 		return;
 	}
 
-	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS))
+	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER))
 		return;
 	
 	if(sd->menuskill_id)
