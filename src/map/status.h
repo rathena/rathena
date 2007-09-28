@@ -510,7 +510,7 @@ enum {
 //Note that clientside Flying and Xmas are 0x8000 for clients prior to 2007.
 #define OPTION_FLYING 0x0008000
 #define OPTION_XMAS 0x00010000
-#define OPTION_SUMMER 0x00040000 // [Zephyrus Summer]
+#define OPTION_SUMMER 0x00040000
 
 #define OPTION_CART (OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5)
 
