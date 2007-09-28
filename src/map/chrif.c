@@ -7,6 +7,7 @@
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
+#include "../common/strlib.h"
 
 #include "map.h"
 #include "battle.h"
@@ -588,33 +589,28 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email)
 }
 
 /*==========================================
- * Send message to char-server with a character name to do some operations (by Yor)
- * Used to ask Char-server about a character name to have the account number to modify account file in login-server.
+ * S 2b0e <accid>.l <name>.24B <type>.w { <year>.w <month>.w <day>.w <hour>.w <minute>.w <second>.w }
+ * Send an account modification request to the login server (via char server).
  * type of operation:
- *   1: block
- *   2: ban
- *   3: unblock
- *   4: unban
- *   5: changesex
+ *   1: block, 2: ban, 3: unblock, 4: unban, 5: changesex
  *------------------------------------------*/
-int chrif_char_ask_name(int id, char * character_name, short operation_type, int year, int month, int day, int hour, int minute, int second)
+int chrif_char_ask_name(int acc, const char* character_name, unsigned short operation_type, int year, int month, int day, int hour, int minute, int second)
 {
 	chrif_check(-1);
 
-	WFIFOHEAD(char_fd, 44);
-	WFIFOW(char_fd, 0) = 0x2b0e;
-	WFIFOL(char_fd, 2) = id; // account_id of who ask (for answer) -1 if nobody
-	memcpy(WFIFOP(char_fd,6), character_name, NAME_LENGTH);
-	WFIFOW(char_fd, 30) = operation_type; // type of operation
+	WFIFOHEAD(char_fd,44);
+	WFIFOW(char_fd,0) = 0x2b0e;
+	WFIFOL(char_fd,2) = acc;
+	safestrncpy((char*)WFIFOP(char_fd,6), character_name, NAME_LENGTH);
+	WFIFOW(char_fd,30) = operation_type;
 	if (operation_type == 2) {
-		WFIFOW(char_fd, 32) = year;
-		WFIFOW(char_fd, 34) = month;
-		WFIFOW(char_fd, 36) = day;
-		WFIFOW(char_fd, 38) = hour;
-		WFIFOW(char_fd, 40) = minute;
-		WFIFOW(char_fd, 42) = second;
+		WFIFOW(char_fd,32) = year;
+		WFIFOW(char_fd,34) = month;
+		WFIFOW(char_fd,36) = day;
+		WFIFOW(char_fd,38) = hour;
+		WFIFOW(char_fd,40) = minute;
+		WFIFOW(char_fd,42) = second;
 	}
-//	ShowInfo("chrif : sent 0x2b0e\n");
 	WFIFOSET(char_fd,44);
 
 	return 0;
@@ -638,7 +634,7 @@ int chrif_changesex(int id, int sex)
 
 /*==========================================
  * R 2b0f <accid>.l <name>.24B <type>.w <answer>.w
- * Reply to chrif_char_ask_name() (request to do some character operation)
+ * Processing a reply to chrif_char_ask_name() (request to modify an account).
  * type of operation:
  *   1: block, 2: ban, 3: unblock, 4: unban, 5: changesex
  * type of answer:
@@ -647,46 +643,36 @@ int chrif_changesex(int id, int sex)
  *   2: gm level too low
  *   3: login-server offline
  *------------------------------------------*/
-int chrif_char_ask_name_answer(int fd)
+static void chrif_char_ask_name_answer(int acc, const char* player_name, uint16 type, uint16 answer)
 {
 	struct map_session_data* sd;
-	char* action;
+	const char* action;
 	char output[256];
-	int acc = RFIFOL(fd,2); // account_id of who has asked (-1 if nobody)
-	char* player_name = (char*)RFIFOP(fd,6);
-	uint16 type;
-	uint16 answer;
-	
-	type = RFIFOW(fd,30);
-	answer = RFIFOW(fd,32);
 	
 	sd = map_id2sd(acc);
-	if (acc < 0 || sd == NULL) {
+	if( acc < 0 || sd == NULL ) {
 		ShowError("chrif_char_ask_name_answer failed - player not online.\n");
-		return 0;
+		return;
 	}
 
-	switch(type)
-	{
-	case 1: action = "block"; break;
-	case 2: action = "ban"; break;
-	case 3: action = "unblock"; break;
-	case 4: action = "unban"; break;
-	case 5: action = "change the sex of"; break;
+	switch( type ) {
+	case 1 : action = "block"; break;
+	case 2 : action = "ban"; break;
+	case 3 : action = "unblock"; break;
+	case 4 : action = "unban"; break;
+	case 5 : action = "change the sex of"; break;
 	default: action = "???"; break;
 	}
 	
-	switch(answer)
-	{
-	case 0: sprintf(output, "Login-server has been asked to %s the player '%20s'.", action, player_name); break;
-	case 1: sprintf(output, "The player '%20s' doesn't exist.", player_name); break;
-	case 2: sprintf(output, "Your GM level don't authorise you to %s the player '%20s'.", action, player_name); break;
-	case 3: sprintf(output, "Login-server is offline. Impossible to %s the player '%20s'.", action, player_name); break;
+	switch( answer ) {
+	case 0 : sprintf(output, "Login-server has been asked to %s the player '%.*s'.", action, NAME_LENGTH, player_name); break;
+	case 1 : sprintf(output, "The player '%.*s' doesn't exist.", NAME_LENGTH, player_name); break;
+	case 2 : sprintf(output, "Your GM level don't authorise you to %s the player '%.*s'.", action, NAME_LENGTH, player_name); break;
+	case 3 : sprintf(output, "Login-server is offline. Impossible to %s the player '%.*s'.", action, NAME_LENGTH, player_name); break;
 	default: output[0] = '\0'; break;
 	}
 	
 	clif_displaymessage(sd->fd, output);
-	return 0;
 }
 
 /*==========================================
@@ -1305,7 +1291,7 @@ int chrif_parse(int fd)
 		case 0x2b09: map_addnickdb(RFIFOL(fd,2), (char*)RFIFOP(fd,6)); break;
 		case 0x2b0b: chrif_changedgm(fd); break;
 		case 0x2b0d: chrif_changedsex(fd); break;
-		case 0x2b0f: chrif_char_ask_name_answer(fd); break;
+		case 0x2b0f: chrif_char_ask_name_answer(RFIFOL(fd,2), (char*)RFIFOP(fd,6), RFIFOW(fd,30), RFIFOW(fd,32)); break;
 		case 0x2b12: chrif_divorce(RFIFOL(fd,2), RFIFOL(fd,6)); break;
 		case 0x2b13: chrif_accountdeletion(fd); break;
 		case 0x2b14: chrif_accountban(fd); break;

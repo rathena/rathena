@@ -34,7 +34,7 @@ int chrif_changemapserver(struct map_session_data* sd, short map, int x, int y, 
 int chrif_searchcharid(int char_id);
 int chrif_changegm(int id,const char *pass,int len);
 int chrif_changeemail(int id, const char *actual_email, const char *new_email);
-int chrif_char_ask_name(int id, char * character_name, short operation_type, int year, int month, int day, int hour, int minute, int second);
+int chrif_char_ask_name(int acc, const char* character_name, unsigned short operation_type, int year, int month, int day, int hour, int minute, int second);
 int chrif_reloadGMdb(void);
 int chrif_updatefamelist(struct map_session_data *sd);
 int chrif_buildfamelist(void);

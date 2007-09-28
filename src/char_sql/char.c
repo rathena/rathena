@@ -2508,124 +2508,99 @@ int parse_frommap(int fd)
 			RFIFOSKIP(fd, 86);
 		break;
 
-		case 0x2b0e: // Request from map-server to change an account's status (all operations are transmitted to login-server)
+		case 0x2b0e: // Request from map-server to change an account's status (will just be forwarded to login server)
 			if (RFIFOREST(fd) < 44)
 				return 0;
 		{
-			char character_name[NAME_LENGTH];
-			char esc_name[NAME_LENGTH*2+1];// escaped character name
-			int acc = RFIFOL(fd,2); // account_id of who ask (-1 if nobody)
+			int acc = RFIFOL(fd,2); // account_id of who ask (-1 if server itself made this request)
+			const char* name = (char*)RFIFOP(fd,6); // name of the target character
+			int type = RFIFOW(fd, 30); // type of operation: 1-block, 2-ban, 3-unblock, 4-unban
 
-			memcpy(character_name, RFIFOP(fd,6), NAME_LENGTH);
-			character_name[NAME_LENGTH-1] = '\0';
-			Sql_EscapeStringLen(sql_handle, esc_name, character_name, strnlen(character_name, NAME_LENGTH));
-			// prepare answer
-			WFIFOHEAD(fd,34);
-			WFIFOW(fd,0) = 0x2b0f; // answer
-			WFIFOL(fd,2) = acc; // who want do operation
-			WFIFOW(fd,30) = RFIFOW(fd, 30); // type of operation: 1-block, 2-ban, 3-unblock, 4-unban
+			int result = 0; // 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
+			char esc_name[NAME_LENGTH*2+1];
+
+			Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
 			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`name` FROM `%s` WHERE `name` = '%s'", char_db, esc_name) )
 				Sql_ShowDebug(sql_handle);
-
-			if( Sql_NumRows(sql_handle) > 0 )
+			else
+			if( Sql_NumRows(sql_handle) == 0 )
 			{
+				result = 1; // 1-player not found
+			}
+			else
+			if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
+				Sql_ShowDebug(sql_handle);
+			else
+			{
+				char name[NAME_LENGTH];
+				int account_id;
 				char* data;
-				size_t len;
 
-				// name
-				Sql_GetData(sql_handle, 1, &data, &len);
-				if( len >= NAME_LENGTH )
-					memcpy(WFIFOP(fd,6), data, NAME_LENGTH);
+				Sql_GetData(sql_handle, 0, &data, NULL); account_id = atoi(data);
+				Sql_GetData(sql_handle, 1, &data, NULL); safestrncpy(name, data, sizeof(name));
+
+				if( login_fd <= 0 )
+					result = 3; // 3-login-server offline
 				else
-				{
-					memcpy(WFIFOP(fd,6), data, len);
-					memset(WFIFOP(fd,6+len), 0, NAME_LENGTH - len);
-				}
-				// account_id
-				Sql_GetData(sql_handle, 0, &data, NULL);
-				WFIFOW(fd,32) = 0; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
-				switch(RFIFOW(fd, 30)) {
+				if( acc != -1 && isGM(acc) < isGM(account_id) )
+					result = 2; // 2-gm level too low
+				else
+				switch( type ) {
 				case 1: // block
-					if (acc == -1 || isGM(acc) >= isGM(atoi(data))) {
-						if (login_fd > 0) { // don't send request if no login-server
-							WFIFOHEAD(login_fd,10);
-							WFIFOW(login_fd,0) = 0x2724;
-							WFIFOL(login_fd,2) = atoi(data); // account value
-							WFIFOL(login_fd,6) = 5; // status of the account
-							WFIFOSET(login_fd,10);
-						} else
-							WFIFOW(fd,32) = 3; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
-					} else
-						WFIFOW(fd,32) = 2; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
-					break;
+						WFIFOHEAD(login_fd,10);
+						WFIFOW(login_fd,0) = 0x2724;
+						WFIFOL(login_fd,2) = account_id;
+						WFIFOL(login_fd,6) = 5; // new account status
+						WFIFOSET(login_fd,10);
+				break;
 				case 2: // ban
-					if (acc == -1 || isGM(acc) >= isGM(atoi(data))) {
-						if (login_fd > 0) { // don't send request if no login-server
-							WFIFOHEAD(login_fd,18);
-							WFIFOW(login_fd, 0) = 0x2725;
-							WFIFOL(login_fd, 2) = atoi(data); // account value
-							WFIFOW(login_fd, 6) = RFIFOW(fd,32); // year
-							WFIFOW(login_fd, 8) = RFIFOW(fd,34); // month
-							WFIFOW(login_fd,10) = RFIFOW(fd,36); // day
-							WFIFOW(login_fd,12) = RFIFOW(fd,38); // hour
-							WFIFOW(login_fd,14) = RFIFOW(fd,40); // minute
-							WFIFOW(login_fd,16) = RFIFOW(fd,42); // second
-							WFIFOSET(login_fd,18);
-						} else
-							WFIFOW(fd,32) = 3; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
-					} else
-						WFIFOW(fd,32) = 2; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
-					break;
+						WFIFOHEAD(login_fd,18);
+						WFIFOW(login_fd, 0) = 0x2725;
+						WFIFOL(login_fd, 2) = account_id;
+						WFIFOW(login_fd, 6) = RFIFOW(fd,32); // year
+						WFIFOW(login_fd, 8) = RFIFOW(fd,34); // month
+						WFIFOW(login_fd,10) = RFIFOW(fd,36); // day
+						WFIFOW(login_fd,12) = RFIFOW(fd,38); // hour
+						WFIFOW(login_fd,14) = RFIFOW(fd,40); // minute
+						WFIFOW(login_fd,16) = RFIFOW(fd,42); // second
+						WFIFOSET(login_fd,18);
+				break;
 				case 3: // unblock
-					if (acc == -1 || isGM(acc) >= isGM(atoi(data))) {
-						if (login_fd > 0) { // don't send request if no login-server
-							WFIFOHEAD(login_fd,10);
-							WFIFOW(login_fd,0) = 0x2724;
-							WFIFOL(login_fd,2) = atoi(data); // account value
-							WFIFOL(login_fd,6) = 0; // status of the account
-							WFIFOSET(login_fd,10);
-						} else
-							WFIFOW(fd,32) = 3; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
-					} else
-						WFIFOW(fd,32) = 2; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
-					break;
+						WFIFOHEAD(login_fd,10);
+						WFIFOW(login_fd,0) = 0x2724;
+						WFIFOL(login_fd,2) = account_id;
+						WFIFOL(login_fd,6) = 0; // new account status
+						WFIFOSET(login_fd,10);
+				break;
 				case 4: // unban
-					if (acc == -1 || isGM(acc) >= isGM(atoi(data))) {
-						if (login_fd > 0) { // don't send request if no login-server
-							WFIFOHEAD(login_fd,6);
-							WFIFOW(login_fd,0) = 0x272a;
-							WFIFOL(login_fd,2) = atoi(data); // account value
-							WFIFOSET(login_fd,6);
-						} else
-							WFIFOW(fd,32) = 3; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
-					} else
-						WFIFOW(fd,32) = 2; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
-					break;
+						WFIFOHEAD(login_fd,6);
+						WFIFOW(login_fd,0) = 0x272a;
+						WFIFOL(login_fd,2) = account_id;
+						WFIFOSET(login_fd,6);
+				break;
 				case 5: // changesex
-					if (acc == -1 || isGM(acc) >= isGM(atoi(data))) {
-						if (login_fd > 0) { // don't send request if no login-server
-							WFIFOHEAD(login_fd,6);
-							WFIFOW(login_fd,0) = 0x2727;
-							WFIFOL(login_fd,2) = atoi(data); // account value
-							WFIFOSET(login_fd,6);
-						} else
-							WFIFOW(fd,32) = 3; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
-					} else
-						WFIFOW(fd,32) = 2; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
-					break;
+						WFIFOHEAD(login_fd,6);
+						WFIFOW(login_fd,0) = 0x2727;
+						WFIFOL(login_fd,2) = account_id;
+						WFIFOSET(login_fd,6);
+				break;
 				}
-			} else {
-				// character name not found
-				memcpy(WFIFOP(fd,6), character_name, NAME_LENGTH);
-				WFIFOW(fd,32) = 1; // answer: 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
-			}
-			Sql_FreeResult(sql_handle);
-			// send answer if a player ask, not if the server ask
-			if (acc != -1) {
-				WFIFOSET(fd, 34);
 			}
 
-			RFIFOSKIP(fd, 44);
+			Sql_FreeResult(sql_handle);
+
+			// send answer if a player ask, not if the server ask
+			if( acc != -1 ) {
+				WFIFOHEAD(fd,34);
+				WFIFOW(fd, 0) = 0x2b0f;
+				WFIFOL(fd, 2) = acc;
+				safestrncpy((char*)WFIFOP(fd,6), name, NAME_LENGTH);
+				WFIFOW(fd,30) = type;
+				WFIFOW(fd,32) = result;
+				WFIFOSET(fd,34);
+			}
+
+			RFIFOSKIP(fd,44);
 		}
 		break;
 
