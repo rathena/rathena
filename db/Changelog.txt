@@ -38,6 +38,7 @@
 
 =======================
 09/28
+	* Fixed Victorious Coronet thanks to Pinky and $ephiroth [Playtester]
 	* Added 11.2 gun drops [Playtester]
 	* Rev. 11327 Removed slots from Gusli, and commented it out. kRO doesn't support this item. [L0ne_W0lf]
 	- Removed slots from Chinese_Handicraft and Arrest Handcuffs.

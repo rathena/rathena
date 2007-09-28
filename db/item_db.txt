@@ -2179,7 +2179,7 @@
 5802,Upgrade_Elephant_Hat,Upgraded Elephant Hat,5,,,500,,3,,1,0xFFFFFFFF,7,2,256,,0,1,215,{},{},{}
 5803,Love_Flower_Hat,Love Flower Hat,5,,10,100,,2,,0,0xFFFFFFFF,7,2,256,,0,0,5,{ bonus2 bAddMonsterDropItem,608,100; },{},{}
 5804,Pirate_Eye_Bandage,Pirate Eye Bandage,5,,10,100,,0,,0,0xFFFFFFFF,7,2,512,,0,0,13,{},{},{}
-5805,Victorious_Coronet,Victorious Coronet,5,,10,150,,1,,0,0xFFFFFFFF,7,2,256,,70,1,43,{ bonus bMaxSPrate,15; bonus bSPrecovRate,5; },{},{}
+5805,Victorious_Coronet,Victorious Coronet,5,,10,150,,1,,0,0xFFFFFFFF,7,2,256,,70,1,43,{ bonus bMaxHPrate,15; bonus bSPrecovRate,5; },{},{}
 //5806,Poet_³ªÅ»¸®¾ÆÀÇ_Hat,Poet_³ªÅ»¸®¾ÆÀÇ_Hat,5,,10,300,,0,,0,0xFFFFFFFF,7,2,256,,1,0,67,{},{},{}
 //5807,¿ÁÅä¹ö_Pest_Hat,¿ÁÅä¹ö_Pest_Hat,5,,,100,,1,,0,0xFFFFFFFE,7,2,256,,1,0,104,{},{},{}
 5808,Dark_Bashilrium,Dark Bashilrium,5,,,250,,5,,1,0x00CFFF80,2,2,769,,1,0,203,{ bonus2 bResEff,Eff_Stone,2000+(getrefine()*2); bonus2 bResEff,Eff_Freeze,2000+(getrefine()*2); bonus2 bResEff,Eff_Stun,2000+(getrefine()*2); },{},{}
