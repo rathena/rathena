@@ -37,6 +37,9 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+09/28
+	* Rev. 11327 Removed slots from Gusli, and commented it out. kRO doesn't support this item. [L0ne_W0lf]
+	- Removed slots from Chinese_Handicraft and Arrest Handcuffs.
 09/27
 	* Rev. 11321 Added constants for Summer Outfit and updated the Summer_Event_Suit item script. [L0ne_W0lf]
 	* Rev. 11319 Re-added an ETC item that got lost in the item update. (7062) [L0ne_W0lf]
