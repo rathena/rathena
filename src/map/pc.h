@@ -88,26 +88,28 @@ enum {
 	EQI_MAX
 } equip_index_enum;
 
-#define pc_setdead(sd) ((sd)->state.dead_sit = (sd)->vd.dead_sit = 1)
-#define pc_setsit(sd) ((sd)->state.dead_sit = (sd)->vd.dead_sit = 2)
-#define pc_isdead(sd) ((sd)->state.dead_sit == 1)
-#define pc_issit(sd) ((sd)->vd.dead_sit == 2)
-#define pc_isidle(sd) ((sd)->chatID || (sd)->vender_id || DIFF_TICK(last_tick, (sd)->idletime) >= battle_config.idle_no_share)
-#define pc_setdir(sd,b,h) ((sd)->ud.dir = (b) ,(sd)->head_dir = (h) )
-#define pc_setchatid(sd,n) ((sd)->chatID = n)
-#define pc_ishiding(sd) ((sd)->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK))
-#define pc_iscloaking(sd) (!((sd)->sc.option&OPTION_CHASEWALK) && ((sd)->sc.option&OPTION_CLOAK))
-#define pc_ischasewalk(sd) ((sd)->sc.option&OPTION_CHASEWALK)
-#define pc_iscarton(sd) ((sd)->sc.option&OPTION_CART)
-#define pc_isfalcon(sd) ((sd)->sc.option&OPTION_FALCON)
-#define pc_isriding(sd) ((sd)->sc.option&OPTION_RIDING)
-#define pc_isinvisible(sd) ((sd)->sc.option&OPTION_INVISIBLE)
+#define pc_setdead(sd)        ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 1 )
+#define pc_setsit(sd)         ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 2 )
+#define pc_isdead(sd)         ( (sd)->state.dead_sit == 1 )
+#define pc_issit(sd)          ( (sd)->vd.dead_sit == 2 )
+#define pc_isidle(sd)         ( (sd)->chatID || (sd)->vender_id || DIFF_TICK(last_tick, (sd)->idletime) >= battle_config.idle_no_share )
+#define pc_istrading(sd)      ( (sd)->npc_id || (sd)->vender_id || (sd)->state.trading )
+#define pc_cant_act(sd)       ( (sd)->npc_id || (sd)->vender_id || (sd)->chatID || (sd)->sc.opt1 || (sd)->state.trading || (sd)->state.storage_flag )
+#define pc_setdir(sd,b,h)     ( (sd)->ud.dir = (b) ,(sd)->head_dir = (h) )
+#define pc_setchatid(sd,n)    ( (sd)->chatID = n )
+#define pc_ishiding(sd)       ( (sd)->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) )
+#define pc_iscloaking(sd)     ( !((sd)->sc.option&OPTION_CHASEWALK) && ((sd)->sc.option&OPTION_CLOAK) )
+#define pc_ischasewalk(sd)    ( (sd)->sc.option&OPTION_CHASEWALK )
+#define pc_iscarton(sd)       ( (sd)->sc.option&OPTION_CART )
+#define pc_isfalcon(sd)       ( (sd)->sc.option&OPTION_FALCON )
+#define pc_isriding(sd)       ( (sd)->sc.option&OPTION_RIDING )
+#define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE )
 #define pc_is50overweight(sd) ( (sd)->weight*100 >= (sd)->max_weight*battle_config.natural_heal_weight_rate )
 #define pc_is90overweight(sd) ( (sd)->weight*10 >= (sd)->max_weight*9 )
-#define pc_maxparameter(sd) ((sd->class_&JOBL_BABY) ? battle_config.max_baby_parameter : battle_config.max_parameter)
+#define pc_maxparameter(sd)   ( (sd)->class_&JOBL_BABY ? battle_config.max_baby_parameter : battle_config.max_parameter )
 
-#define pc_stop_attack(sd) { if (sd->ud.attacktimer!=-1) { unit_stop_attack(&sd->bl); sd->ud.target = 0; } }
-#define pc_stop_walking(sd, type) { if (sd->ud.walktimer!=-1) unit_stop_walking(&sd->bl, type); }
+#define pc_stop_attack(sd) { if( (sd)->ud.attacktimer != -1 ) { unit_stop_attack(&(sd)->bl); (sd)->ud.target = 0; } }
+#define pc_stop_walking(sd, type) { if( (sd)->ud.walktimer != -1 ) unit_stop_walking(&(sd)->bl, type); }
 
 //Weapon check considering dual wielding.
 #define pc_check_weapontype(sd, type) ((type)&((sd)->status.weapon < MAX_WEAPON_TYPE? \
