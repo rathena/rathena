@@ -83,14 +83,14 @@
 405,0xb7,    ,  0, 1,1000,enemy, 0x000	//PF_SPIDERWEB
 409,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLBABY
 410,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARENT
-428,0x86,    ,  0, 1, 200,enemy, 0x000	//SG_SUN_WARM
-429,0x86,    ,  0, 1, 200,enemy, 0x000	//SG_MOON_WARM
-430,0x86,    ,  0, 1, 200,enemy, 0x000	//SG_STAR_WARM
+428,0x86,    ,  0, 1,   1,enemy, 0x000	//SG_SUN_WARM
+429,0x86,    ,  0, 1,   1,enemy, 0x000	//SG_MOON_WARM
+430,0x86,    ,  0, 1,   1,enemy, 0x000	//SG_STAR_WARM
 484,0xb8,    ,  2, 0,1000,enemy, 0x808	//HW_GRAVITATION
 488,0xb9,    ,  3, 0,  -1,all,   0x200	//CG_HERMODE
 516,0xba,    ,  3, 0, 100,enemy, 0x000	//GS_DESPERADO
 521,0xbe,    ,  0, 1,1000,enemy, 0x000	//GS_GROUNDDRIFT
 527,0xbc,    , -1, 0,2000,enemy, 0x000	//NJ_TATAMIGAESHI
-535,0xbd,    , -1, 0, 200,enemy, 0x008	//NJ_KAENSIN
+535,0xbd,    , -1, 0,   1,enemy, 0x008	//NJ_KAENSIN
 538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x000	//NJ_SUITON
 670,0xc7,    ,  5, 1,1000,all,   0x008	//NPC_EVILLAND

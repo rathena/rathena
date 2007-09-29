@@ -37,6 +37,9 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+09/29
+	* Fixed "Heat" and "Crimson Fire Formation" [Playtester]
+	- they now do 'unlimited' hits per second (same as firewall)
 09/28
 	* Fixed Victorious Coronet thanks to Pinky and $ephiroth [Playtester]
 	* Added 11.2 gun drops [Playtester]
