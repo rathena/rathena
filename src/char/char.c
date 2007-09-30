@@ -96,8 +96,7 @@ int log_inter = 1;	// loggin inter or not [devil]
 static int online_check = 1; //If one, it won't let players connect when their account is already registered online and will send the relevant map server a kick user request. [Skotlex]
 
 // Advanced subnet check [LuzZza]
-struct _subnet {
-	uint32 subnet;
+struct s_subnet {
 	uint32 mask;
 	uint32 char_ip;
 	uint32 map_ip;
@@ -3331,20 +3330,14 @@ static int char_mapif_init(int fd)
 int lan_subnetcheck(uint32 ip)
 {
 	int i;
-	
-	for(i = 0; i < subnet_count; i++) {
-	
-		if((subnet[i].subnet & subnet[i].mask) == (ip & subnet[i].mask)) {
-			
-			ShowInfo("Subnet check [%u.%u.%u.%u]: Matches "CL_CYAN"%u.%u.%u.%u/%u.%u.%u.%u"CL_RESET"\n",
-				CONVIP(ip), CONVIP(subnet[i].subnet), CONVIP(subnet[i].mask));
-			
-			return subnet[i].map_ip;
-		}
+	ARR_FIND( 0, subnet_count, i, (subnet[i].char_ip & subnet[i].mask) == (ip & subnet[i].mask) );
+	if ( i < subnet_count ) {
+		ShowInfo("Subnet check [%u.%u.%u.%u]: Matches "CL_CYAN"%u.%u.%u.%u/%u.%u.%u.%u"CL_RESET"\n", CONVIP(ip), CONVIP(subnet[i].char_ip & subnet[i].mask), CONVIP(subnet[i].mask));
+		return subnet[i].char_ip;
+	} else {
+		ShowInfo("Subnet check [%u.%u.%u.%u]: "CL_CYAN"WAN"CL_RESET"\n", CONVIP(ip));
+		return 0;
 	}
-	
-	ShowInfo("Subnet check [%u.%u.%u.%u]: "CL_CYAN"WAN"CL_RESET"\n", CONVIP(ip));
-	return 0;
 }
 
 int parse_char(int fd)
@@ -4033,13 +4026,14 @@ int char_lan_config_read(const char *lancfgName)
 		remove_control_chars(w3);
 		remove_control_chars(w4);
 
-		if(strcmpi(w1, "subnet") == 0) {
-	
+		if( strcmpi(w1, "subnet") == 0 )
+		{
 			subnet[subnet_count].mask = str2ip(w2);
 			subnet[subnet_count].char_ip = str2ip(w3);
 			subnet[subnet_count].map_ip = str2ip(w4);
-			subnet[subnet_count].subnet = subnet[subnet_count].char_ip&subnet[subnet_count].mask;
-			if (subnet[subnet_count].subnet != (subnet[subnet_count].map_ip&subnet[subnet_count].mask)) {
+
+			if( (subnet[subnet_count].char_ip & subnet[subnet_count].mask) != (subnet[subnet_count].map_ip & subnet[subnet_count].mask) )
+			{
 				ShowError("%s: Configuration Error: The char server (%s) and map server (%s) belong to different subnetworks!\n", lancfgName, w3, w4);
 				continue;
 			}

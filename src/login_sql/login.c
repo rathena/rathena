@@ -54,7 +54,6 @@ struct mmo_char_server server[MAX_SERVERS]; // char server data
 
 // Advanced subnet check [LuzZza]
 struct s_subnet {
-	uint32 subnet;
 	uint32 mask;
 	uint32 char_ip;
 	uint32 map_ip;
@@ -1204,7 +1203,7 @@ int parse_fromchar(int fd)
 int lan_subnetcheck(uint32 ip)
 {
 	int i;
-	ARR_FIND( 0, subnet_count, i, subnet[i].subnet == (ip & subnet[i].mask) );
+	ARR_FIND( 0, subnet_count, i, (subnet[i].char_ip & subnet[i].mask) == (ip & subnet[i].mask) );
 	return ( i < subnet_count ) ? subnet[i].char_ip : 0;
 }
 
@@ -1677,13 +1676,14 @@ int login_lan_config_read(const char *lancfgName)
 		remove_control_chars(w3);
 		remove_control_chars(w4);
 
-		if(strcmpi(w1, "subnet") == 0) {
-
+		if( strcmpi(w1, "subnet") == 0 )
+		{
 			subnet[subnet_count].mask = str2ip(w2);
 			subnet[subnet_count].char_ip = str2ip(w3);
 			subnet[subnet_count].map_ip = str2ip(w4);
-			subnet[subnet_count].subnet = subnet[subnet_count].char_ip&subnet[subnet_count].mask;
-			if (subnet[subnet_count].subnet != (subnet[subnet_count].map_ip&subnet[subnet_count].mask)) {
+
+			if( (subnet[subnet_count].char_ip & subnet[subnet_count].mask) != (subnet[subnet_count].map_ip & subnet[subnet_count].mask) )
+			{
 				ShowError("%s: Configuration Error: The char server (%s) and map server (%s) belong to different subnetworks!\n", lancfgName, w3, w4);
 				continue;
 			}
