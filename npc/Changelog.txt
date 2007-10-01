@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/10/01
+	* Rev. 11342 Small bug fix (== -> !=) thanks to Saithis. [L0ne_W0lf]
 2007/09/27
 	* Optimized/simplified some poorly written code in TSQ [ultramage]
 	- fixed wrong quiz answers

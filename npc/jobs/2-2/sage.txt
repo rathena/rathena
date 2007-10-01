@@ -5,7 +5,7 @@
 //= Unknown Translator (1.0)
 //= Darkchild (1.2)
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //===== Additional Comments: ================================= 
 //= 2.1 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=	No longer uses function "F_BlockHigh"
+//= 2.2 Small bug fix (== -> !=) thanks to Saithis. [L0ne_W0lf]
 //============================================================ 
 
 yuno_in02,38,61,5	script	Dean of the Academy#sa	743,{
@@ -1658,7 +1659,7 @@ yuno_in03,62,176,2	script	History Professor#sa	109,{
 
 yuno_in03,32,102,1	script	Biology Professor#sa	755,{
 	mes "[Lucius Celsus]";
-	if (BaseJob == Job_Mage) {
+	if (BaseJob != Job_Mage) {
 		if (BaseJob == Job_Sage) {
 			mes "What is your business with me?";
 			mes "You must make a reservation a week in advance if you have any questions.";
