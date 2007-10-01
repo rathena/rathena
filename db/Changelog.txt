@@ -37,6 +37,10 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/01
+	* Reverted the bug that was added in the last update [Playtester]
+	- official script clearly says 30%
+	- please don't update db files without official source
 09/30
 	* Fixed Gemini-S58 Card [Paradox924X]
 	- It now 50% resistance to Petrification and Sleep when Vit is 80 or above instead of 30% resistance.
