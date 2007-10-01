@@ -37,6 +37,9 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+09/30
+	* Fixed Gemini-S58 Card [Paradox924X]
+	- It now 50% resistance to Petrification and Sleep when Vit is 80 or above instead of 30% resistance.
 09/29
 	* Fixed "Heat" and "Crimson Fire Formation" [Playtester]
 	- they now do 'unlimited' hits per second (same as firewall)
