@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= DiviniaRO members, cleaned by reddozen
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= SVN eA
 //===== Description: =========================================
@@ -19,6 +19,7 @@
 //= 1.1 Full update. EuRO (?) dialogs, and positions. [L0ne_W0lf]
 //= 1.2 Fixed bugs in the Hahoe/Lion/Bride Mask NPC. [L0ne_W0lf]
 //=	Fixed some of the names to iRO.
+//= 1.3 Fixed some color code bugs in Ghenirhemin. Thanks to yyCC. [L0ne_W0lf]
 //============================================================
 
 //===================== Censor Bar =====================================================
@@ -336,9 +337,9 @@ hugel,147,130,3	script	Ghenirhemin	897,{
 		mes "^FF00001 Elder Card, 1 Nightmare Terror Card,^000000";
 		next;
 		mes "[Ghenirhemin]";
-		mes "^1,000 Rune of the Darkness,";
-		mes "^1,000 Bloody Rune,";
-		mes "^and the helm price, 10,000,000 zeny^000000.";
+		mes "^FF00001,000 Rune of the Darkness,";
+		mes "^FF00001,000 Bloody Rune,";
+		mes "^FF0000and the helm price, 10,000,000 zeny^000000.";
 		next;
 		mes "[Ghenirhemin]";
 		mes "It surely is a reasonable price considering that ";

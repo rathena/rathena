@@ -4,7 +4,7 @@
 //= Made by: Black Dragon
 //= Converted by: Shin
 //===== Current Version: ===================================== 
-//= 2.8
+//= 2.9
 //===== Compatible With: ===================================== 
 //= eAthena  SVN
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //=	made some NPC more unique names: Monster Summon#cr1 [Lupus]
 //= 2.7 Fixed Some variables like ".@item", and changed to "@item". [Samuray22]
 //= 2.8 Fixed a little minor bug. [Samuray22]
+//= 2.9 Minor fixes, typos, an incorrect answer. Thanks to yyCC. [L0ne_W0lf]
 //============================================================
 
 
@@ -573,7 +574,7 @@ C_Questions:
 			mes "[Gabriel Valentine]";
 			mes "1. Which of the following monsters is a different attribute than the others?";
 			next;
-			if (select("Karat:Wind Ghost:Isis:Wanderer") == 3)
+			if (select("Carat:Wind Ghost:Isis:Wanderer") == 3)
 				set .@cru_t,.@cru_t+10;
 
 			mes "[Gabriel Valentine]";
@@ -585,7 +586,7 @@ C_Questions:
 			mes "[Gabriel Valentine]";
 			mes "3. Which item is NOT dropped by Dokebi?";
 			next;
-			if (select("Rough Elunium:Golden Hamer:Sword Mace:Mighty Staff") == 2)
+			if (select("Rough Elunium:Golden Hammer:Sword Mace:Mighty Staff") == 2)
 				set .@cru_t,.@cru_t+10;
 
 			mes "[Gabriel Valentine]";
@@ -609,7 +610,7 @@ C_Questions:
 			mes "[Gabriel Valentine]";
 			mes "7. Which attribute is the most effective on the Wind Ghost?";
 			next;
-			if (select("Water:Earth:Fire:Wind") == 3)
+			if (select("Water:Earth:Fire:Wind") == 2)
 				set .@cru_t,.@cru_t+10;
 
 			mes "[Gabriel Valentine]";

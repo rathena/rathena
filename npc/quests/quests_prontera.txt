@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -32,6 +32,7 @@
 //= 1.7b Fixed some minor typos. [SinSloth]
 //= 1.7c replaced item "names" with item id. [Lupus]
 //= 1.8 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.9 Fixed "him" -> "her" in Ph.D hat quest. THansk to yyCC. [L0ne_W0lf]
 //============================================================ 
 
 // Prontera Culvert
@@ -156,7 +157,7 @@ prt_in,38,108,3	script	Teacher	53,{
 		mes "[Teacher]";
 		mes "My God! The Flower you are holding...";
 		next;
-		switch( select( "Show him the flowers.","Give him the flowers.","Cancel.")) {
+		switch( select( "Show her the flowers.","Give her the flowers.","Cancel.")) {
 			case 1:
 				mes "[Teacher]";
 				mes "Are those the Flowers I've been looking for...";
