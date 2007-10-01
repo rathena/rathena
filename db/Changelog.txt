@@ -38,6 +38,7 @@
 
 =======================
 10/01
+	* Fixed Frigg combo not reducing def by refine rate [Playtester]
 	* Reverted the bug that was added in the last update [Playtester]
 	- official script clearly says 30%
 	- please don't update db files without official source
