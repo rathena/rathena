@@ -4,12 +4,13 @@
 #ifndef	_VENDING_H_
 #define	_VENDING_H_
 
+#include "../common/cbasetypes.h"
 //#include "map.h"
 struct map_session_data;
 
-void vending_closevending(struct map_session_data *sd);
-void vending_openvending(struct map_session_data *sd,int len,char *message,int flag,unsigned char *p);
-void vending_vendinglistreq(struct map_session_data *sd,int id);
-void vending_purchasereq(struct map_session_data *sd,int len,int id,unsigned char *p);
+void vending_closevending(struct map_session_data* sd);
+void vending_openvending(struct map_session_data* sd, const char* message, bool flag, const uint8* data, int count);
+void vending_vendinglistreq(struct map_session_data* sd, int id);
+void vending_purchasereq(struct map_session_data* sd, int id, const uint8* data, int count);
 
 #endif /* _VENDING_H_ */

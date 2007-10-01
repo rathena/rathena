@@ -1958,51 +1958,51 @@ int clif_cutin(struct map_session_data* sd, const char* image, int type)
 static void clif_addcards(unsigned char* buf, struct item* item)
 {
 	int i=0,j;
-	if (item == NULL) { //Blank data
-		WBUFW(buf,0)=0;
-		WBUFW(buf,2)=0;
-		WBUFW(buf,4)=0;
-		WBUFW(buf,6)=0;
+	if( item == NULL ) { //Blank data
+		WBUFW(buf,0) = 0;
+		WBUFW(buf,2) = 0;
+		WBUFW(buf,4) = 0;
+		WBUFW(buf,6) = 0;
 		return;
 	}
-	if(item->card[0]==CARD0_PET) { //pet eggs
-		WBUFW(buf,0)=0;
-		WBUFW(buf,2)=0;
-		WBUFW(buf,4)=0;
-		WBUFW(buf,6)=item->card[3]; //Pet renamed flag.
+	if( item->card[0] == CARD0_PET ) { //pet eggs
+		WBUFW(buf,0) = 0;
+		WBUFW(buf,2) = 0;
+		WBUFW(buf,4) = 0;
+		WBUFW(buf,6) = item->card[3]; //Pet renamed flag.
 		return;
 	}
-	if(item->card[0]==CARD0_FORGE || item->card[0]==CARD0_CREATE) { //Forged/created items
-		WBUFW(buf,0)=item->card[0];
-		WBUFW(buf,2)=item->card[1];
-		WBUFW(buf,4)=item->card[2];
-		WBUFW(buf,6)=item->card[3];
+	if( item->card[0] == CARD0_FORGE || item->card[0] == CARD0_CREATE ) { //Forged/created items
+		WBUFW(buf,0) = item->card[0];
+		WBUFW(buf,2) = item->card[1];
+		WBUFW(buf,4) = item->card[2];
+		WBUFW(buf,6) = item->card[3];
 		return;
 	}
 	//Client only receives four cards.. so randomly send them a set of cards. [Skotlex]
-	if (MAX_SLOTS > 4 && (j = itemdb_slot(item->nameid)) > 4)
+	if( MAX_SLOTS > 4 && (j = itemdb_slot(item->nameid)) > 4 )
 		i = rand()%(j-3); //eg: 6 slots, possible i values: 0->3, 1->4, 2->5 => i = rand()%3;
 
 	//Normal items.
-	if (item->card[i] > 0 && (j=itemdb_viewid(item->card[i])) > 0)
-		WBUFW(buf,0)=j;
+	if( item->card[i] > 0 && (j=itemdb_viewid(item->card[i])) > 0 )
+		WBUFW(buf,0) = j;
 	else
-		WBUFW(buf,0)= item->card[i];
+		WBUFW(buf,0) = item->card[i];
 
-	if (item->card[++i] > 0 && (j=itemdb_viewid(item->card[i])) > 0)
-		WBUFW(buf,2)=j;
+	if( item->card[++i] > 0 && (j=itemdb_viewid(item->card[i])) > 0 )
+		WBUFW(buf,2) = j;
 	else
-		WBUFW(buf,2)=item->card[i];
+		WBUFW(buf,2) = item->card[i];
 
-	if (item->card[++i] > 0 && (j=itemdb_viewid(item->card[i])) > 0)
-		WBUFW(buf,4)=j;
+	if( item->card[++i] > 0 && (j=itemdb_viewid(item->card[i])) > 0 )
+		WBUFW(buf,4) = j;
 	else
-		WBUFW(buf,4)=item->card[i];
+		WBUFW(buf,4) = item->card[i];
 
-	if (item->card[++i] > 0 && (j=itemdb_viewid(item->card[i])) > 0)
-		WBUFW(buf,6)=j;
+	if( item->card[++i] > 0 && (j=itemdb_viewid(item->card[i])) > 0 )
+		WBUFW(buf,6) = j;
 	else
-		WBUFW(buf,6)=item->card[i];
+		WBUFW(buf,6) = item->card[i];
 }
 
 /*==========================================
@@ -3348,59 +3348,51 @@ void clif_leavechat(struct chat_data* cd, struct map_session_data* sd, bool flag
 }
 
 /*==========================================
- * æ‚èˆø‚«—v¿ó‚¯
+ * Opens a trade request window from char 'name'
+ * R 00e5 <nick>.24B
  *------------------------------------------*/
-int clif_traderequest(struct map_session_data* sd, const char* name)
+void clif_traderequest(struct map_session_data* sd, const char* name)
 {
 	int fd;
+	nullpo_retv(sd);
 
-	nullpo_retr(0, sd);
-
-	fd=sd->fd;
-
+	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0xe5));
-	WFIFOW(fd,0)=0xe5;
-
-	strcpy((char*)WFIFOP(fd,2),name);
-	
+	WFIFOW(fd,0) = 0xe5;
+	safestrncpy((char*)WFIFOP(fd,2), name, NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0xe5));
-
-	return 0;
 }
 
 /*==========================================
  * æ‚èˆø‚«—v‹‰“š
  *------------------------------------------*/
-int clif_tradestart(struct map_session_data *sd,int type)
+void clif_tradestart(struct map_session_data* sd, int type)
 {
 	int fd;
+	nullpo_retv(sd);
 
-	nullpo_retr(0, sd);
-
-	fd=sd->fd;
+	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0xe7));
-	WFIFOW(fd,0)=0xe7;
-	WFIFOB(fd,2)=type;
+	WFIFOW(fd,0) = 0xe7;
+	WFIFOB(fd,2) = type;
 	WFIFOSET(fd,packet_len(0xe7));
-
-	return 0;
 }
 
 /*==========================================
  * ‘Šè•û‚©‚ç‚ÌƒAƒCƒeƒ€’Ç‰Á
  *------------------------------------------*/
-int clif_tradeadditem(struct map_session_data *sd,struct map_session_data *tsd,int index,int amount)
+void clif_tradeadditem(struct map_session_data* sd, struct map_session_data* tsd, int index, int amount)
 {
 	int fd;
+	nullpo_retv(sd);
+	nullpo_retv(tsd);
 
-	nullpo_retr(0, sd);
-	nullpo_retr(0, tsd);
-
-	fd=tsd->fd;
+	fd = tsd->fd;
 	WFIFOHEAD(fd,packet_len(0xe9));
-	WFIFOW(fd,0)=0xe9;
-	WFIFOL(fd,2)=amount;
-	if(index==0){
+	WFIFOW(fd,0) = 0xe9;
+	WFIFOL(fd,2) = amount;
+	if( index == 0 )
+	{
 		WFIFOW(fd,6) = 0; // type id
 		WFIFOB(fd,8) = 0; //identify flag
 		WFIFOB(fd,9) = 0; // attribute
@@ -3410,8 +3402,9 @@ int clif_tradeadditem(struct map_session_data *sd,struct map_session_data *tsd,i
 		WFIFOW(fd,15)= 0; //card (4w)
 		WFIFOW(fd,17)= 0; //card (4w)
 	}
-	else{
-		index-=2; //index fix
+	else
+	{
+		index -= 2; //index fix
 		if(sd->inventory_data[index] && sd->inventory_data[index]->view_id > 0)
 			WFIFOW(fd,6) = sd->inventory_data[index]->view_id;
 		else
@@ -3422,80 +3415,66 @@ int clif_tradeadditem(struct map_session_data *sd,struct map_session_data *tsd,i
 		clif_addcards(WFIFOP(fd, 11), &sd->status.inventory[index]);
 	}
 	WFIFOSET(fd,packet_len(0xe9));
-
-	return 0;
 }
 
 /*==========================================
  * ƒAƒCƒeƒ€’Ç‰Á¬Œ÷/¸”s
  *------------------------------------------*/
-int clif_tradeitemok(struct map_session_data *sd,int index,int fail)
+void clif_tradeitemok(struct map_session_data* sd, int index, int fail)
 {
 	int fd;
+	nullpo_retv(sd);
 
-	nullpo_retr(0, sd);
-
-	fd=sd->fd;
+	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0xea));
-	WFIFOW(fd,0)=0xea;
-	WFIFOW(fd,2)=index;
-	WFIFOB(fd,4)=fail;
+	WFIFOW(fd,0) = 0xea;
+	WFIFOW(fd,2) = index;
+	WFIFOB(fd,4) = fail;
 	WFIFOSET(fd,packet_len(0xea));
-
-	return 0;
 }
 
 /*==========================================
  * æ‚èˆø‚«ok‰Ÿ‚µ
  *------------------------------------------*/
-int clif_tradedeal_lock(struct map_session_data *sd,int fail)
+void clif_tradedeal_lock(struct map_session_data* sd, int fail)
 {
 	int fd;
+	nullpo_retv(sd);
 
-	nullpo_retr(0, sd);
-
-	fd=sd->fd;
+	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0xec));
-	WFIFOW(fd,0)=0xec;
-	WFIFOB(fd,2)=fail; // 0=you 1=the other person
+	WFIFOW(fd,0) = 0xec;
+	WFIFOB(fd,2) = fail; // 0=you 1=the other person
 	WFIFOSET(fd,packet_len(0xec));
-
-	return 0;
 }
 
 /*==========================================
  * æ‚èˆø‚«‚ªƒLƒƒƒ“ƒZƒ‹‚³‚ê‚Ü‚µ‚½
  *------------------------------------------*/
-int clif_tradecancelled(struct map_session_data *sd)
+void clif_tradecancelled(struct map_session_data* sd)
 {
 	int fd;
+	nullpo_retv(sd);
 
-	nullpo_retr(0, sd);
-
-	fd=sd->fd;
+	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0xee));
-	WFIFOW(fd,0)=0xee;
+	WFIFOW(fd,0) = 0xee;
 	WFIFOSET(fd,packet_len(0xee));
-
-	return 0;
 }
 
 /*==========================================
  * æ‚èˆø‚«Š®—¹
  *------------------------------------------*/
-int clif_tradecompleted(struct map_session_data *sd,int fail)
+void clif_tradecompleted(struct map_session_data* sd, int fail)
 {
 	int fd;
+	nullpo_retv(sd);
 
-	nullpo_retr(0, sd);
-
-	fd=sd->fd;
+	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0xf0));
-	WFIFOW(fd,0)=0xf0;
-	WFIFOB(fd,2)=fail;
+	WFIFOW(fd,0) = 0xf0;
+	WFIFOB(fd,2) = fail;
 	WFIFOSET(fd,packet_len(0xf0));
-
-	return 0;
 }
 
 /*==========================================
@@ -3639,12 +3618,14 @@ int clif_storageclose(struct map_session_data *sd)
 void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* dstsd)
 {
 	int len;
-	if(dstsd->chatID){
+	if(dstsd->chatID)
+	{
 		struct chat_data *cd;
 		cd=(struct chat_data*)map_id2bl(dstsd->chatID);
 		if(cd && cd->usersd[0]==dstsd)
 			clif_dispchat(cd,sd->fd);
 	}
+
 	if(dstsd->vender_id)
 		clif_showvendingboard(&dstsd->bl,dstsd->message,sd->fd);
 
@@ -5461,193 +5442,178 @@ int clif_cart_delitem(struct map_session_data *sd,int n,int amount)
 }
 
 /*==========================================
- * ˜I“XŠJİ
+ * Opens the shop creation menu.
+ * R 012d <num>.w
+ * 'num' is the number of allowed item slots
  *------------------------------------------*/
-int clif_openvendingreq(struct map_session_data *sd,int num)
+void clif_openvendingreq(struct map_session_data* sd, int num)
 {
 	int fd;
 
-	nullpo_retr(0, sd);
+	nullpo_retv(sd);
 
-	fd=sd->fd;
+	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0x12d));
-	WFIFOW(fd,0)=0x12d;
-	WFIFOW(fd,2)=num;
+	WFIFOW(fd,0) = 0x12d;
+	WFIFOW(fd,2) = num;
 	WFIFOSET(fd,packet_len(0x12d));
-
-	return 0;
 }
 
 /*==========================================
- * ˜I“XŠÅ”Â•\¦
+ * Displays a vending board to target/area
+ * R 0131 <ID>.l <message>.80B
  *------------------------------------------*/
-int clif_showvendingboard(struct block_list* bl, const char* message, int fd)
+void clif_showvendingboard(struct block_list* bl, const char* message, int fd)
 {
 	unsigned char buf[128];
 
-	nullpo_retr(0, bl);
+	nullpo_retv(bl);
 
-	WBUFW(buf,0)=0x131;
-	WBUFL(buf,2)=bl->id;
-	strncpy((char*)WBUFP(buf,6),message,80);
-	if(fd){
+	WBUFW(buf,0) = 0x131;
+	WBUFL(buf,2) = bl->id;
+	safestrncpy((char*)WBUFP(buf,6), message, 80);
+
+	if( fd ) {
 		WFIFOHEAD(fd,packet_len(0x131));
 		memcpy(WFIFOP(fd,0),buf,packet_len(0x131));
 		WFIFOSET(fd,packet_len(0x131));
-	}else{
+	} else {
 		clif_send(buf,packet_len(0x131),bl,AREA_WOS);
 	}
-	return 0;
 }
 
 /*==========================================
- * ˜I“XŠÅ”ÂÁ‹
+ * Removes a vending board from screen
  *------------------------------------------*/
-int clif_closevendingboard(struct block_list* bl,int fd)
+void clif_closevendingboard(struct block_list* bl, int fd)
 {
 	unsigned char buf[16];
 
-	nullpo_retr(0, bl);
+	nullpo_retv(bl);
 
-	WBUFW(buf,0)=0x132;
-	WBUFL(buf,2)=bl->id;
-	if(fd){
+	WBUFW(buf,0) = 0x132;
+	WBUFL(buf,2) = bl->id;
+	if( fd ) {
 		WFIFOHEAD(fd,packet_len(0x132));
 		memcpy(WFIFOP(fd,0),buf,packet_len(0x132));
 		WFIFOSET(fd,packet_len(0x132));
-	}else{
+	} else {
 		clif_send(buf,packet_len(0x132),bl,AREA_WOS);
 	}
-
-	return 0;
 }
+
 /*==========================================
- * ˜I“XƒAƒCƒeƒ€ƒŠƒXƒg
+ * Sends a list of items in a shop
+ * R 0133 <len>.w <ID>.l {<value>.l <amount>.w <index>.w <type>.B <item ID>.w <identify flag>.B <attribute?>.B <refine>.B <card>.4w}.22B
  *------------------------------------------*/
-int clif_vendinglist(struct map_session_data *sd,int id,struct vending *vending)
+void clif_vendinglist(struct map_session_data* sd, int id, struct s_vending* vending)
 {
-	struct item_data *data;
-	int i,n,index,fd;
-	struct map_session_data *vsd;
-	unsigned char *buf;
+	int i,fd;
+	int count;
+	struct map_session_data* vsd;
 
-	nullpo_retr(0, sd);
-	nullpo_retr(0, vending);
-	nullpo_retr(0, vsd=map_id2sd(id));
+	nullpo_retv(sd);
+	nullpo_retv(vending);
+	nullpo_retv(vsd=map_id2sd(id));
 
-	fd=sd->fd;
-        WFIFOHEAD(fd, 8+vsd->vend_num*22);
-	buf = WFIFOP(fd,0);
-	for(i=0,n=0;i<vsd->vend_num;i++){
-		if(vending[i].amount<=0)
-			continue;
-		WBUFL(buf,8+n*22)=vending[i].value;
-		WBUFW(buf,12+n*22)=vending[i].amount;
-		WBUFW(buf,14+n*22)=(index=vending[i].index)+2;
-		if(vsd->status.cart[index].nameid <= 0 || vsd->status.cart[index].amount <= 0)
-			continue;
-		data = itemdb_search(vsd->status.cart[index].nameid);
-		WBUFB(buf,16+n*22)=itemtype(data->type);
-		if(data->view_id > 0)
-			WBUFW(buf,17+n*22)=data->view_id;
-		else
-			WBUFW(buf,17+n*22)=vsd->status.cart[index].nameid;
-		WBUFB(buf,19+n*22)=vsd->status.cart[index].identify;
-		WBUFB(buf,20+n*22)=vsd->status.cart[index].attribute;
-		WBUFB(buf,21+n*22)=vsd->status.cart[index].refine;
-		clif_addcards(WBUFP(buf, 22+n*22), &vsd->status.cart[index]);
-		n++;
+	fd = sd->fd;
+	count = vsd->vend_num;
+
+    WFIFOHEAD(fd, 8+count*22);
+	WFIFOW(fd,0) = 0x133;
+	WFIFOW(fd,2) = 8+count*22;
+	WFIFOL(fd,4) = id;
+	for( i = 0; i < count; i++ )
+	{
+		int index = vending[i].index;
+		struct item_data* data = itemdb_search(vsd->status.cart[index].nameid);
+		WFIFOL(fd, 8+i*22) = vending[i].value;
+		WFIFOW(fd,12+i*22) = vending[i].amount;
+		WFIFOW(fd,14+i*22) = vending[i].index + 2;
+		WFIFOB(fd,16+i*22) = itemtype(data->type);
+		WFIFOW(fd,17+i*22) = ( data->view_id > 0 ) ? data->view_id : vsd->status.cart[index].nameid;
+		WFIFOB(fd,19+i*22) = vsd->status.cart[index].identify;
+		WFIFOB(fd,20+i*22) = vsd->status.cart[index].attribute;
+		WFIFOB(fd,21+i*22) = vsd->status.cart[index].refine;
+		clif_addcards(WFIFOP(fd, 22+i*22), &vsd->status.cart[index]);
 	}
-	if(n > 0){
-		WBUFW(buf,0)=0x133;
-		WBUFW(buf,2)=8+n*22;
-		WBUFL(buf,4)=id;
-		WFIFOSET(fd,WFIFOW(fd,2));
-	}
-
-	return 0;
+	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
 /*==========================================
- * ˜I“XƒAƒCƒeƒ€w“ü¸”s
+ * Shop purchase failure
+ * R 0135 <index>.w <amount>.w <fail>.B
+ * fail=1 - not enough zeny
+ * fail=2 - overweight
+ * fail=4 - out of stock
+ * fail=5 - "cannot use an npc shop while in a trade"
  *------------------------------------------*/
-int clif_buyvending(struct map_session_data *sd,int index,int amount,int fail)
+void clif_buyvending(struct map_session_data* sd, int index, int amount, int fail)
 {
 	int fd;
 
-	nullpo_retr(0, sd);
+	nullpo_retv(sd);
 
-	fd=sd->fd;
+	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0x135));
-	WFIFOW(fd,0)=0x135;
-	WFIFOW(fd,2)=index+2;
-	WFIFOW(fd,4)=amount;
-	WFIFOB(fd,6)=fail;
+	WFIFOW(fd,0) = 0x135;
+	WFIFOW(fd,2) = index+2;
+	WFIFOW(fd,4) = amount;
+	WFIFOB(fd,6) = fail;
 	WFIFOSET(fd,packet_len(0x135));
-
-	return 0;
 }
 
 /*==========================================
- * ˜I“XŠJİ¬Œ÷
+ * Shop creation success
+ * R 0136 <len>.w <ID>.l {<value>.l <index>.w <amount>.w <type>.B <item ID>.w <identify flag>.B <attribute?>.B <refine>.B <card>.4w}.22B*
  *------------------------------------------*/
-int clif_openvending(struct map_session_data *sd,int id,struct vending *vending)
+void clif_openvending(struct map_session_data* sd, int id, struct s_vending* vending)
 {
-	struct item_data *data;
-	int i,n,index,fd;
-	unsigned char *buf;
+	int i,fd;
+	int count;
 
-	nullpo_retr(0, sd);
+	nullpo_retv(sd);
 
-	fd=sd->fd;
-	WFIFOHEAD(fd, 8+sd->vend_num*22);
-	buf = WFIFOP(fd,0);
-	for(i = 0, n = 0; i < sd->vend_num; i++) {
-		if (sd->vend_num > 2+pc_checkskill(sd,MC_VENDING)) return 0;
-		WBUFL(buf,8+n*22)=vending[i].value;
-		WBUFW(buf,12+n*22)=(index=vending[i].index)+2;
-		WBUFW(buf,14+n*22)=vending[i].amount;
-		if(sd->status.cart[index].nameid <= 0 || sd->status.cart[index].amount <= 0 || !sd->status.cart[index].identify ||
-			sd->status.cart[index].attribute==1) // Prevent unidentified and broken items from being sold [Valaris]
-			continue;
-		data = itemdb_search(sd->status.cart[index].nameid);
-		WBUFB(buf,16+n*22)=itemtype(data->type);
-		if(data->view_id > 0)
-			WBUFW(buf,17+n*22)=data->view_id;
-		else
-			WBUFW(buf,17+n*22)=sd->status.cart[index].nameid;
-		WBUFB(buf,19+n*22)=sd->status.cart[index].identify;
-		WBUFB(buf,20+n*22)=sd->status.cart[index].attribute;
-		WBUFB(buf,21+n*22)=sd->status.cart[index].refine;
-		clif_addcards(WBUFP(buf, 22+n*22), &sd->status.cart[index]);
-		n++;
+	fd = sd->fd;
+	count = sd->vend_num;
+
+	WFIFOHEAD(fd, 8+count*22);
+	WFIFOW(fd,0) = 0x136;
+	WFIFOW(fd,2) = 8+count*22;
+	WFIFOL(fd,4) = id;
+	for( i = 0; i < count; i++ )
+	{
+		int index = vending[i].index;
+		struct item_data* data = itemdb_search(sd->status.cart[index].nameid);
+		WFIFOL(fd, 8+i*22) = vending[i].value;
+		WFIFOW(fd,12+i*22) = vending[i].index + 2;
+		WFIFOW(fd,14+i*22) = vending[i].amount;
+		WFIFOB(fd,16+i*22) = itemtype(data->type);
+		WFIFOW(fd,17+i*22) = ( data->view_id > 0 ) ? data->view_id : sd->status.cart[index].nameid;
+		WFIFOB(fd,19+i*22) = sd->status.cart[index].identify;
+		WFIFOB(fd,20+i*22) = sd->status.cart[index].attribute;
+		WFIFOB(fd,21+i*22) = sd->status.cart[index].refine;
+		clif_addcards(WFIFOP(fd,22+count*22), &sd->status.cart[index]);
 	}
-	if(n > 0) {
-		WBUFW(buf,0)=0x136;
-		WBUFW(buf,2)=8+n*22;
-		WBUFL(buf,4)=id;
-		WFIFOSET(fd,WFIFOW(fd,2));
-	}
-	return n;
+	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
 /*==========================================
- * ˜I“XƒAƒCƒeƒ€”Ì”„•ñ
+ * Inform merchant that someone has bought an item.
+ * R 0137 <index>.w <amount>.w
  *------------------------------------------*/
-int clif_vendingreport(struct map_session_data *sd,int index,int amount)
+void clif_vendingreport(struct map_session_data* sd, int index, int amount)
 {
 	int fd;
 
-	nullpo_retr(0, sd);
+	nullpo_retv(sd);
 
-	fd=sd->fd;
+	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0x137));
-	WFIFOW(fd,0)=0x137;
-	WFIFOW(fd,2)=index+2;
-	WFIFOW(fd,4)=amount;
+	WFIFOW(fd,0) = 0x137;
+	WFIFOW(fd,2) = index+2;
+	WFIFOW(fd,4) = amount;
 	WFIFOSET(fd,packet_len(0x137));
-
-	return 0;
 }
 /*==========================================
  * ƒp[ƒeƒBì¬Š®—¹
@@ -9345,7 +9311,13 @@ void clif_parse_TradeAck(int fd,struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_TradeAddItem(int fd,struct map_session_data *sd)
 {
-	trade_tradeadditem(sd,RFIFOW(fd,2),RFIFOL(fd,4));
+	int index = RFIFOW(fd,2);
+	int amount = RFIFOL(fd,4);
+
+	if( index == 0 )
+		trade_tradeaddzeny(sd, amount);
+	else
+		trade_tradeadditem(sd, index, amount);
 }
 
 /*==========================================
@@ -10209,7 +10181,7 @@ void clif_parse_PartyMessage(int fd, struct map_session_data* sd)
 /*==========================================
  * ˜I“X•Â½
  *------------------------------------------*/
-void clif_parse_CloseVending(int fd, struct map_session_data *sd)
+void clif_parse_CloseVending(int fd, struct map_session_data* sd)
 {
 	vending_closevending(sd);
 }
@@ -10217,31 +10189,49 @@ void clif_parse_CloseVending(int fd, struct map_session_data *sd)
 /*==========================================
  * ˜I“XƒAƒCƒeƒ€ƒŠƒXƒg—v‹
  *------------------------------------------*/
-void clif_parse_VendingListReq(int fd, struct map_session_data *sd)
+void clif_parse_VendingListReq(int fd, struct map_session_data* sd)
 {
 	vending_vendinglistreq(sd,RFIFOL(fd,2));
-	if(sd->npc_id)
+
+	if( sd->npc_id )
 		npc_event_dequeue(sd);
 }
 
 /*==========================================
- * ˜I“XƒAƒCƒeƒ€w“ü
+ * Shop item(s) purchase request
+ * S 0134 <len>.w <ID>.l {<amount>.w <index>.w}.4B*
  *------------------------------------------*/
-void clif_parse_PurchaseReq(int fd, struct map_session_data *sd)
+void clif_parse_PurchaseReq(int fd, struct map_session_data* sd)
 {
-	vending_purchasereq(sd, RFIFOW(fd,2), RFIFOL(fd,4), RFIFOP(fd,8));
+	int len = (int)RFIFOW(fd,2) - 8;
+	int id = (int)RFIFOL(fd,4);
+	const uint8* data = (uint8*)RFIFOP(fd,8);
+
+	vending_purchasereq(sd, id, data, len/4);
 }
 
 /*==========================================
- * ˜I“XŠJİ
+ * Confirm or cancel the shop preparation window
+ * S 01b2 <len>.w <message>.80B <flag>.B {<index>.w <amount>.w <value>.l}.8B*
+ * flag: 0=cancel, 1=confirm
  *------------------------------------------*/
-void clif_parse_OpenVending(int fd,struct map_session_data *sd)
+void clif_parse_OpenVending(int fd, struct map_session_data* sd)
 {
-	if (pc_istrading(sd))
-		return;
+	short len = (short)RFIFOW(fd,2) - 85;
+	const char* message = (char*)RFIFOP(fd,4);
+	bool flag = (bool)RFIFOB(fd,84);
+	const uint8* data = (uint8*)RFIFOP(fd,85);
+
 	if (sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOROOM)
 		return;
-	vending_openvending(sd, RFIFOW(fd,2), (char*)RFIFOP(fd,4), RFIFOB(fd,84), RFIFOP(fd,85));
+	if (map[sd->bl.m].flag.novending) {
+		clif_displaymessage (sd->fd, msg_txt(276)); // "You can't open shop on this map"
+		return;
+	}
+	if( message[0] == '\0' ) // invalid input
+		return;
+
+	vending_openvending(sd, message, flag, data, len/8);
 }
 
 /*==========================================

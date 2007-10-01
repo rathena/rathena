@@ -67,37 +67,36 @@ char motd_text[MOTD_LINE_SIZE][256]; // Message of the day buffer [Valaris]
 static const char feel_var[3][NAME_LENGTH] = {"PC_FEEL_SUN","PC_FEEL_MOON","PC_FEEL_STAR"};
 static const char hate_var[3][NAME_LENGTH] = {"PC_HATE_MOB_SUN","PC_HATE_MOB_MOON","PC_HATE_MOB_STAR"};
 
-int pc_isGM(struct map_session_data *sd)
+int pc_isGM(struct map_session_data* sd)
 {
 	int i;
-
 	nullpo_retr(0, sd);
 
-	if(sd->bl.type!=BL_PC )
+	if( sd->bl.type != BL_PC )
 		return 0;
 
-	for(i = 0; i < GM_num; i++)
-		if (gm_account[i].account_id == sd->status.account_id)
-			return gm_account[i].level;
-	return 0;
-
+	ARR_FIND( 0, GM_num, i, gm_account[i].account_id == sd->status.account_id );
+	return ( i < GM_num ) ? gm_account[i].level : 0;
 }
 
 int pc_set_gm_level(int account_id, int level)
 {
     int i;
-    for (i = 0; i < GM_num; i++) {
-        if (account_id == gm_account[i].account_id) {
-            gm_account[i].level = level;
-            return 0;
-        }
-    }
 
-    GM_num++;
-    gm_account = (struct gm_account *) aRealloc(gm_account, sizeof(struct gm_account) * GM_num);
-    gm_account[GM_num - 1].account_id = account_id;
-    gm_account[GM_num - 1].level = level;
-    return 0;
+	ARR_FIND( 0, GM_num, i, account_id == gm_account[i].account_id );
+	if( i < GM_num )
+	{
+		gm_account[i].level = level;
+	}
+	else
+	{
+	    gm_account = (struct gm_account *) aRealloc(gm_account, (GM_num + 1) * sizeof(struct gm_account));
+	    gm_account[GM_num].account_id = account_id;
+	    gm_account[GM_num].level = level;
+	    GM_num++;
+	}
+
+	return 0;
 }
 
 static int pc_invincible_timer(int tid,unsigned int tick,int id,int data)
@@ -2708,16 +2707,16 @@ int pc_payzeny(struct map_session_data *sd,int zeny)
 {
 	nullpo_retr(0, sd);
 
-	if(sd->state.finalsave)
+	if( sd->state.finalsave )
 		return 1;
 
-	if (zeny < 0)
+	if( zeny < 0 )
 	  	return pc_getzeny(sd, -zeny);
 
-	if (sd->status.zeny < zeny)
+	if( sd->status.zeny < zeny )
 		return 1; //Not enough.
 
-	sd->status.zeny-=zeny;
+	sd->status.zeny -= zeny;
 	clif_updatestatus(sd,SP_ZENY);
 
 	return 0;
@@ -2730,23 +2729,25 @@ int pc_getzeny(struct map_session_data *sd,int zeny)
 {
 	nullpo_retr(0, sd);
 
-	if(sd->state.finalsave)
+	if( sd->state.finalsave )
 		return 1;
 
-	if(zeny < 0)
+	if( zeny < 0 )
 		return pc_payzeny(sd, -zeny);
 
-	if (sd->status.zeny > MAX_ZENY -zeny)
-		return 1; //Overflow
+	if( zeny > MAX_ZENY - sd->status.zeny )
+		zeny = MAX_ZENY - sd->status.zeny;
 
-	sd->status.zeny+=zeny;
+	sd->status.zeny += zeny;
 	clif_updatestatus(sd,SP_ZENY);
 
-	if(zeny > 0 && sd->state.showzeny){
+	if( zeny > 0 && sd->state.showzeny )
+	{
 		char output[255];
 		sprintf(output, "Gained %dz.", zeny);
 		clif_disp_onlyself(sd,output,strlen(output));
 	}
+
 	return 0;
 }
 
@@ -3219,17 +3220,19 @@ int pc_putitemtocart(struct map_session_data *sd,int idx,int amount) {
 /*==========================================
  * カ?ト?のアイテム?確認(個?の差分を返す)
  *------------------------------------------*/
-int pc_cartitem_amount(struct map_session_data *sd,int idx,int amount)
+int pc_cartitem_amount(struct map_session_data* sd, int idx, int amount)
 {
-	struct item *item_data;
+	struct item* item_data;
 
 	nullpo_retr(-1, sd);
-	nullpo_retr(-1, item_data=&sd->status.cart[idx]);
 
-	if( item_data->nameid==0 || !item_data->amount)
+	item_data = &sd->status.cart[idx];
+	if( item_data->nameid == 0 || item_data->amount == 0 )
 		return -1;
-	return item_data->amount-amount;
+
+	return item_data->amount - amount;
 }
+
 /*==========================================
  * カ?トからアイテム移動
  *------------------------------------------*/

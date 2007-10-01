@@ -3,6 +3,20 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/10/01
+	* Fixed various trading/vending glitches [ultramage]
+	- fixed vending_tax not working at all (integer division in r10182)
+	- undid change from r8273 where pc_getzeny() treated zeny overflow as 
+	  an error condition; officially, the value is just bounded to MAX_ZENY
+	  (this fixes stuff like shops that you can't buy items from).
+	- fixed stupid code that, instead of properly checking and filtering
+	  invalid items during shop setup, opted to 'hide' these items from
+	  the vending list instead...
+	- removed some custom error message packets related to vending
+	- fixed a glitch where the server would open a shop with no items
+	  when all entered items were tagged as invalid
+	- split zeny handling from trade_tradeadditem() into a separate func
+	- removed loads of redundant code from vending.c
 2007/09/30
 	* Removed redundant 'subnet' s_subnet structure variable. [ultramage]
 2007/09/28

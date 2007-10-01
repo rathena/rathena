@@ -397,7 +397,7 @@ struct status_change {
 	unsigned int option;// effect state
 };
 
-struct vending {
+struct s_vending {
 	short index;
 	unsigned short amount;
 	unsigned int value;
@@ -771,7 +771,7 @@ struct map_session_data {
 	int vender_id;
 	int vend_num;
 	char message[MESSAGE_SIZE];
-	struct vending vending[MAX_VENDING];
+	struct s_vending vending[MAX_VENDING];
 
 	struct pet_data *pd;
 	struct homun_data *hd;	// [blackhole89]

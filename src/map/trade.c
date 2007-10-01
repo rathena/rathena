@@ -310,95 +310,110 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd)
 }
 
 /*==========================================
- * Adds an item/qty to the trade window [rewrite by Skotlex] 
+ * Adds an item/qty to the trade window
  *------------------------------------------*/
 void trade_tradeadditem(struct map_session_data *sd, int index, int amount)
 {
 	struct map_session_data *target_sd;
 	struct item *item;
 	int trade_i, trade_weight;
+	int src_lv, dst_lv;
 
 	nullpo_retv(sd);
-	if (!sd->state.trading || sd->state.deal_locked > 0)
+	if( !sd->state.trading || sd->state.deal_locked > 0 )
 		return; //Can't add stuff.
 
-	if ((target_sd = map_id2sd(sd->trade_partner)) == NULL) {
+	if( (target_sd = map_id2sd(sd->trade_partner)) == NULL )
+	{
 		trade_tradecancel(sd);
 		return;
 	}
 
-	if (amount == 0)
+	if( amount == 0 )
 	{	//Why do this.. ~.~ just send an ack, the item won't display on the trade window.
 		clif_tradeitemok(sd, index, 0);
 		return;
 	}
 
-	if (index == 0)
-	{	//Adding Zeny
-		if (amount >= 0 && amount <= sd->status.zeny && // check amount
-			(amount <= MAX_ZENY - target_sd->status.zeny)) // fix positiv overflow
-		{	//Check Ok
-			sd->deal.zeny = amount;
-			clif_tradeadditem(sd, target_sd, 0, amount);
-		} else //Send overweight when trying to add too much zeny? Hope they get the idea...
-			clif_tradeitemok(sd, 0, 1);
-		return;
-	}
+	index -= 2; // 0 is for zeny, 1 is unknown. Gravity, go figure...
 
-	index = index -2; //Why the actual index used is -2?
 	//Item checks...
-	if (index < 0 || index >= MAX_INVENTORY)
+	if( index < 0 || index >= MAX_INVENTORY )
 		return;
-	if (amount < 0 || amount > sd->status.inventory[index].amount)
+	if( amount < 0 || amount > sd->status.inventory[index].amount )
 		return;
 
 	item = &sd->status.inventory[index];
-	trade_i = pc_isGM(sd); //Recycling the variables to check for trad restrict.
-	trade_weight = pc_isGM(target_sd);
-	if (!itemdb_cantrade(item, trade_i, trade_weight) &&	//Can't trade
-		(pc_get_partner(sd) != target_sd ||
-		!itemdb_canpartnertrade(item, trade_i, trade_weight))) //Can't partner-trade
+	src_lv = pc_isGM(sd);
+	dst_lv = pc_isGM(target_sd);
+	if( !itemdb_cantrade(item, src_lv, dst_lv) && //Can't trade
+		(pc_get_partner(sd) != target_sd || !itemdb_canpartnertrade(item, src_lv, dst_lv)) ) //Can't partner-trade
 	{
 		clif_displaymessage (sd->fd, msg_txt(260));
 		clif_tradeitemok(sd, index+2, 1);
 		return;
 	}
 
-	for(trade_i = 0; trade_i < 10; trade_i++)
-	{	//Locate a trade position
-		if (sd->deal.item[trade_i].index == index ||
-			sd->deal.item[trade_i].amount == 0)
-			break;
-	}
-	if (trade_i >= 10)	//No space left
+	//Locate a trade position
+	ARR_FIND( 0, 10, trade_i, sd->deal.item[trade_i].index == index || sd->deal.item[trade_i].amount == 0 );
+	if( trade_i == 10 ) //No space left
 	{
 		clif_tradeitemok(sd, index+2, 1);
 		return;
 	}
 
 	trade_weight = sd->inventory_data[index]->weight * amount;
-	if (target_sd->weight + sd->deal.weight + trade_weight > target_sd->max_weight)
+	if( target_sd->weight + sd->deal.weight + trade_weight > target_sd->max_weight )
 	{	//fail to add item -- the player was over weighted.
 		clif_tradeitemok(sd, index+2, 1);
 		return;
 	}
 
-	if (sd->deal.item[trade_i].index == index)
+	if( sd->deal.item[trade_i].index == index )
 	{	//The same item as before is being readjusted.
-		if (sd->deal.item[trade_i].amount + amount > sd->status.inventory[index].amount)
+		if( sd->deal.item[trade_i].amount + amount > sd->status.inventory[index].amount )
 		{	//packet deal exploit check
 			amount = sd->status.inventory[index].amount - sd->deal.item[trade_i].amount;
 			trade_weight = sd->inventory_data[index]->weight * amount;
 		}
 		sd->deal.item[trade_i].amount += amount;
-	} else {	//New deal item
+	}
+	else
+	{	//New deal item
 		sd->deal.item[trade_i].index = index;
 		sd->deal.item[trade_i].amount = amount;
 	}
 	sd->deal.weight += trade_weight;
 
 	clif_tradeitemok(sd, index+2, 0); // Return the index as it was received
-	clif_tradeadditem(sd, target_sd, index+2, amount); //index fix
+	clif_tradeadditem(sd, target_sd, index+2, amount);
+}
+
+/*==========================================
+ * Adds the specified amount of zeny to the trade window
+ *------------------------------------------*/
+void trade_tradeaddzeny(struct map_session_data* sd, int amount)
+{
+	struct map_session_data* target_sd;
+	nullpo_retv(sd);
+
+	if( !sd->state.trading || sd->state.deal_locked > 0 )
+		return; //Can't add stuff.
+
+	if( (target_sd = map_id2sd(sd->trade_partner)) == NULL )
+	{
+		trade_tradecancel(sd);
+		return;
+	}
+
+	if( amount < 0 || amount > sd->status.zeny || amount > MAX_ZENY - target_sd->status.zeny )
+	{	// invalid values, no appropriate packet for it => abort
+		trade_tradecancel(sd);
+		return;
+	}
+
+	sd->deal.zeny = amount;
+	clif_tradeadditem(sd, target_sd, 0, amount);
 }
 
 /*==========================================
@@ -511,36 +526,41 @@ void trade_tradecommit(struct map_session_data *sd)
 	}
 	
 	// trade is accepted and correct.
-	for(trade_i = 0; trade_i < 10; trade_i++) {
+	for( trade_i = 0; trade_i < 10; trade_i++ )
+	{
 		int n;
-		if (sd->deal.item[trade_i].amount) {
+		if (sd->deal.item[trade_i].amount)
+		{
 			n = sd->deal.item[trade_i].index;
 
 			flag = pc_additem(tsd, &sd->status.inventory[n], sd->deal.item[trade_i].amount);
-			if (flag == 0) {
+			if (flag == 0)
+			{
 				//Logs (T)rade [Lupus]
-				if(log_config.enable_logs&0x2) {
+				if(log_config.enable_logs&0x2)
+				{
 					log_pick_pc(sd, "T", sd->status.inventory[n].nameid, -(sd->deal.item[trade_i].amount), &sd->status.inventory[n]);
 					log_pick_pc(tsd, "T", sd->status.inventory[n].nameid, sd->deal.item[trade_i].amount, &sd->status.inventory[n]);
 				}
-				//Logs
 				pc_delitem(sd, n, sd->deal.item[trade_i].amount, 1);
 			} else
 				clif_additem(sd, n, sd->deal.item[trade_i].amount, 0);
 			sd->deal.item[trade_i].index = 0;
 			sd->deal.item[trade_i].amount = 0;
 		}
-		if (tsd->deal.item[trade_i].amount) {
+		if (tsd->deal.item[trade_i].amount)
+		{
 			n = tsd->deal.item[trade_i].index;
 
 			flag = pc_additem(sd, &tsd->status.inventory[n], tsd->deal.item[trade_i].amount);
-			if (flag == 0) {
+			if (flag == 0)
+			{
 				//Logs (T)rade [Lupus]
-				if(log_config.enable_logs&0x2) {
+				if(log_config.enable_logs&0x2)
+				{
 					log_pick_pc(tsd, "T", tsd->status.inventory[n].nameid, -(tsd->deal.item[trade_i].amount), &tsd->status.inventory[n]);
 					log_pick_pc(sd, "T", tsd->status.inventory[n].nameid, tsd->deal.item[trade_i].amount, &tsd->status.inventory[n]);
 				}
-				//Logs
 				pc_delitem(tsd, n, tsd->deal.item[trade_i].amount, 1);
 			} else
 				clif_additem(tsd, n, tsd->deal.item[trade_i].amount, 0);
@@ -548,21 +568,21 @@ void trade_tradecommit(struct map_session_data *sd)
 			tsd->deal.item[trade_i].amount = 0;
 		}
 	}
-	if (sd->deal.zeny || tsd->deal.zeny) {
-		if (sd->deal.zeny) {
-			sd->status.zeny -= sd->deal.zeny;
-			tsd->status.zeny += sd->deal.zeny;
-			if (log_config.zeny)
-				log_zeny(tsd, "T", sd, sd->deal.zeny);//Logs Zeny (T)rade [Lupus]
-			sd->deal.zeny = 0;
-		}
-		if (tsd->deal.zeny) {
-			tsd->status.zeny -= tsd->deal.zeny;
-			sd->status.zeny += tsd->deal.zeny;
-			if (log_config.zeny)
-				log_zeny(sd, "T", tsd, tsd->deal.zeny);//Logs Zeny (T)rade [Lupus]
-			tsd->deal.zeny = 0;
-		}
+
+	if( sd->deal.zeny || tsd->deal.zeny )
+	{
+		sd->status.zeny += tsd->deal.zeny - sd->deal.zeny;
+		tsd->status.zeny += sd->deal.zeny - tsd->deal.zeny;
+
+		//Logs Zeny (T)rade [Lupus]
+		if( sd->deal.zeny && log_config.zeny )
+			log_zeny(tsd, "T", sd, sd->deal.zeny);
+		if( tsd->deal.zeny && log_config.zeny )
+			log_zeny(sd, "T", tsd, tsd->deal.zeny);
+
+		sd->deal.zeny = 0;
+		tsd->deal.zeny = 0;
+
 		clif_updatestatus(sd, SP_ZENY);
 		clif_updatestatus(tsd, SP_ZENY);
 	}
@@ -577,6 +597,7 @@ void trade_tradecommit(struct map_session_data *sd)
 	
 	clif_tradecompleted(sd, 0);
 	clif_tradecompleted(tsd, 0);
+
 	// save both player to avoid crash: they always have no advantage/disadvantage between the 2 players
 	if (save_settings&1)
   	{
