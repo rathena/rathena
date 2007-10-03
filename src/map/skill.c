@@ -663,12 +663,12 @@ const struct skill_name_db skill_names[] = {
 static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
 
-struct skill_db skill_db[MAX_SKILL_DB];
-struct skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
-struct skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
-struct skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
+struct s_skill_db skill_db[MAX_SKILL_DB];
+struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
+struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
+struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 
-struct skill_unit_layout skill_unit_layout[MAX_SKILL_UNIT_LAYOUT];
+struct s_skill_unit_layout skill_unit_layout[MAX_SKILL_UNIT_LAYOUT];
 int firewall_unit_pos;
 int icewall_unit_pos;
 
@@ -995,7 +995,7 @@ int skillnotok_hom (int skillid, struct homun_data *hd)
 	return skillnotok(skillid, hd->master);
 }
 
-struct skill_unit_layout* skill_get_unit_layout (int skillid, int skilllv, struct block_list* src, int x, int y)
+struct s_skill_unit_layout* skill_get_unit_layout (int skillid, int skilllv, struct block_list* src, int x, int y)
 {	
 	int pos = skill_get_unit_layout_type(skillid,skilllv);
 	int dir;
@@ -6106,11 +6106,11 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 /*==========================================
  *
  *------------------------------------------*/
-int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int skilllv, unsigned int tick, int flag)
+int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int skilllv, unsigned int tick, int flag)
 {
-	struct map_session_data *sd=NULL;
-	struct status_change *sc;
-	struct skill_unit_group *sg;
+	struct map_session_data* sd;
+	struct status_change* sc;
+	struct skill_unit_group* sg;
 	int i,type;
 
 	//if(skilllv <= 0) return 0;
@@ -6121,12 +6121,9 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 	if(status_isdead(src))
 		return 0;
 
-	if(src->type==BL_PC)
-		sd=(struct map_session_data *)src;
+	BL_CAST(BL_PC, src, sd);
 
 	sc = status_get_sc(src);
-	if (sc && !sc->count)
-		sc = NULL; //Unneeded.
 	type = SkillStatusChangeTable(skillid);
 
 	switch (skillid) { //Skill effect.
@@ -6141,6 +6138,7 @@ int skill_castend_pos2 (struct block_list *src, int x, int y, int skillid, int s
 			else
 				clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 	}
+
 	switch(skillid)
 	{
 	case PR_BENEDICTIO:
@@ -6611,92 +6609,92 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 #undef skill_failed
 }
 
-static int skill_dance_overlap_sub(struct block_list *bl, va_list ap)
+/// transforms 'target' skill unit into dissonance (if conditions are met)
+static int skill_dance_overlap_sub(struct block_list* bl, va_list ap)
 {
-	struct skill_unit *target = (struct skill_unit*)bl,
-		*src = va_arg(ap, struct skill_unit*);
+	struct skill_unit* target = (struct skill_unit*)bl;
+	struct skill_unit* src = va_arg(ap, struct skill_unit*);
 	int flag = va_arg(ap, int);
+
 	if (src == target)
 		return 0;
 	if (!target->group || !(target->group->state.song_dance&0x1))
 		return 0;
 	if (!(target->val2 & src->val2 & ~UF_ENSEMBLE)) //They don't match (song + dance) is valid.
 		return 0;
+
 	if (flag) //Set dissonance
 		target->val2 |= UF_ENSEMBLE; //Add ensemble to signal this unit is overlapping.
 	else //Remove dissonance
 		target->val2 &= ~UF_ENSEMBLE;
+
 	clif_skill_setunit(target); //Update look of affected cell.
+
 	return 1;
 }
 
 //Does the song/dance overlapping -> dissonance check. [Skotlex]
 //When flag is 0, this unit is about to be removed, cancel the dissonance effect
 //When 1, this unit has been positioned, so start the cancel effect.
-int skill_dance_overlap(struct skill_unit *unit, int flag)
+int skill_dance_overlap(struct skill_unit* unit, int flag)
 {
 	if (!unit || !unit->group || !(unit->group->state.song_dance&0x1))
 		return 0;
 	if (!flag && !(unit->val2&UF_ENSEMBLE))
 		return 0; //Nothing to remove, this unit is not overlapped.
+
 	if (unit->val1 != unit->group->skill_id) 
 	{	//Reset state
 		unit->val1 = unit->group->skill_id;
 		unit->val2 &= ~UF_ENSEMBLE;
 	}
-	return map_foreachincell(skill_dance_overlap_sub,
-		unit->bl.m,unit->bl.x,unit->bl.y,BL_SKILL,unit,flag);
+	
+	return map_foreachincell(skill_dance_overlap_sub, unit->bl.m,unit->bl.x,unit->bl.y,BL_SKILL, unit,flag);
 }
 
 /*==========================================
- * Converts this group information so that it is handled
- * as a Dissonance or Ugly Dance cell.
- * Flag: 0 - Convert, 1 - Revert, 2 - Initialize.
+ * Converts this group information so that it is handled as a Dissonance or Ugly Dance cell.
+ * Flag: 0 - Convert, 1 - Revert.
  *------------------------------------------*/
-#define skill_dance_switch(unit, group, flag) (((group)->state.song_dance&0x1 && (unit)->val2&UF_ENSEMBLE)?skill_dance_switch_sub(unit, group, flag):0)
-static int skill_dance_switch_sub(struct skill_unit *unit, struct skill_unit_group *group, int flag)
+static int skill_dance_switch(struct skill_unit* unit, struct skill_unit_group* group, int flag)
 {
-	static struct skill_unit_group original, dissonance, uglydance, *group2;
+	static struct skill_unit_group backup;
 
-	if (flag&2) { //initialize
-		memset(&dissonance, 0, sizeof(dissonance));
-		memset(&uglydance, 0, sizeof(uglydance));
-		group2 = &dissonance;
-		group2->skill_id = BA_DISSONANCE;
-		group2->skill_lv = 1;
-		group2->unit_id = skill_get_unit_id(group2->skill_id,0);
-		group2->target_flag = skill_get_unit_target(group2->skill_id);
-		group2->bl_flag= skill_get_unit_bl_target(group2->skill_id);
-		group2->interval = skill_get_unit_interval(group2->skill_id);
+	//TODO: add protection against attempts to read an empty backup / write to a full backup
 
-		group2 = &uglydance;
-		group2->skill_id = DC_UGLYDANCE;
-		group2->skill_lv = 1;
-		group2->unit_id = skill_get_unit_id(group2->skill_id,0);
-		group2->target_flag = skill_get_unit_target(group2->skill_id);
-		group2->bl_flag= skill_get_unit_bl_target(group2->skill_id);
-		group2->interval = skill_get_unit_interval(group2->skill_id);
+	if ( !(group->state.song_dance&0x1 && unit->val2&UF_ENSEMBLE) )
 		return 0;
+
+	if( !flag )
+	{	//Transform
+		int skillid = unit->val2&UF_SONG ? BA_DISSONANCE : DC_UGLYDANCE;
+
+		// backup
+		backup.skill_id    = group->skill_id;
+		backup.skill_lv    = group->skill_lv;
+		backup.unit_id     = group->unit_id;
+		backup.target_flag = group->target_flag;
+		backup.bl_flag     = group->bl_flag;
+		backup.interval    = group->interval;
+
+		// replace
+		group->skill_id    = skillid;
+		group->skill_lv    = 1;
+		group->unit_id     = skill_get_unit_id(skillid,0);
+		group->target_flag = skill_get_unit_target(skillid);
+		group->bl_flag     = skill_get_unit_bl_target(skillid);
+		group->interval    = skill_get_unit_interval(skillid);
+	}
+	else
+	{	//Restore
+		group->skill_id    = backup.skill_id;
+		group->skill_lv    = backup.skill_lv;
+		group->unit_id     = backup.unit_id;
+		group->target_flag = backup.target_flag;
+		group->bl_flag     = backup.bl_flag;
+		group->interval    = backup.interval;
 	}
 
-	if (!flag)
-	{	//Transform
-		memcpy(&original, group, sizeof(struct skill_unit_group)); //Backup
-		group2 = unit->val2&UF_SONG?&dissonance:&uglydance;
-		group->skill_id = group2->skill_id;
-		group->skill_lv = group2->skill_lv;
-		group->unit_id = group2->unit_id;
-		group->target_flag = group2->target_flag;
-		group->bl_flag= group2->bl_flag;
-		group->interval = group2->interval;
-	} else { //Restore only relevant values (should the backup be 5 ints rather than the whole structure?)
-		group->skill_id = original.skill_id;
-		group->skill_lv = original.skill_lv;
-		group->unit_id = original.unit_id;
-		group->target_flag = original.target_flag;
-		group->bl_flag = original.bl_flag;
-		group->interval = original.interval;
-	}
 	return 1;
 }
 
@@ -6710,7 +6708,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 	struct skill_unit_group *group;
 	int i,limit,val1=0,val2=0,val3=0;
 	int target,interval,range,unit_flag;
-	struct skill_unit_layout *layout;
+	struct s_skill_unit_layout *layout;
 	struct map_session_data *sd;
 	struct status_data *status;
 	struct status_change *sc;
@@ -7187,7 +7185,7 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 		if (sc && sc->data[type].timer==-1)
 			sc_start4(bl,type,100,sg->skill_lv,0,BCT_ENEMY,sg->group_id,sg->limit);
 		break;
-	
+
 	case UNT_ICEWALL: //Destroy the cell. [Skotlex]
 		src->val1 = 0;
 		if(src->limit + sg->tick > tick + 700)
@@ -7195,8 +7193,8 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 		break;
 	
 	case UNT_MOONLIT:
-	//Knockback out of area if affected char isn't in Moonlit effect
-		if (sc && sc->data[SC_DANCING].timer!=-1 && (sc->data[SC_DANCING].val1&0xFFFF) == CG_MOONLIT)
+		//Knockback out of area if affected char isn't in Moonlit effect
+		if (sc && sc->data[SC_DANCING].timer != -1 && (sc->data[SC_DANCING].val1&0xFFFF) == CG_MOONLIT)
 			break;
 		if (ss == bl) //Also needed to prevent infinite loop crash.
 			break;
@@ -7652,9 +7650,6 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 	nullpo_retr(0, bl);
 	nullpo_retr(0, sg=src->group);
 	sc = status_get_sc(bl);
-	if (sc && !sc->count)
-		sc = NULL;
-	
 	type = SkillStatusChangeTable(sg->skill_id);
 
 	if (bl->prev==NULL || !src->alive || //Need to delete the trap if the source died.
@@ -7785,48 +7780,45 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
  * flag&1: Invoke onplace function (otherwise invoke onout)
  * flag&4: Invoke a onleft call (the unit might be scheduled for deletion)
  *------------------------------------------*/
-int skill_unit_effect (struct block_list *bl, va_list ap)
+int skill_unit_effect (struct block_list* bl, va_list ap)
 {
-	struct skill_unit *unit;
-	struct skill_unit_group *group;
-	int flag,skill_id;
-	unsigned int tick;
+	struct skill_unit* unit = va_arg(ap,struct skill_unit*);
+	struct skill_unit_group* group = unit->group;
+	unsigned int flag = va_arg(ap,unsigned int);
+	unsigned int tick = va_arg(ap,unsigned int);
+	int skill_id;
 
-	unit=va_arg(ap,struct skill_unit*);
-	tick = va_arg(ap,unsigned int);
-	flag = va_arg(ap,unsigned int);
-
-	if (!unit->alive || bl->prev==NULL)
+	if( !unit->alive || bl->prev == NULL )
 		return 0;
 
-	nullpo_retr(0, group=unit->group);
+	nullpo_retr(0, group);
   	
-	if (skill_dance_switch(unit, group, 0))
+	if( skill_dance_switch(unit, group, 0) )
 		flag|=64; //Converted cell, remember to restore it.
 
 	//Necessary in case the group is deleted after calling on_place/on_out [Skotlex]
 	skill_id = group->skill_id;
 
 	//Target-type check.
-	if(!(group->bl_flag&bl->type && battle_check_target(&unit->bl,bl,group->target_flag)>0))
+	if( !(group->bl_flag&bl->type && battle_check_target(&unit->bl,bl,group->target_flag)>0) )
 	{
-		if (flag&4 && group->src_id == bl->id && group->state.song_dance&0x2)
+		if( flag&4 && group->src_id == bl->id && group->state.song_dance&0x2 )
 			skill_unit_onleft(skill_id, bl, tick);//Ensemble check to terminate it.
-		if (flag&64)
-			skill_dance_switch(unit, group, 1);
-		return 0;
+	}
+	else
+	{
+		if( flag&1 )
+			skill_unit_onplace(unit,bl,tick);
+		else
+			skill_unit_onout(unit,bl,tick);
+
+		if( flag&4 )
+	  		skill_unit_onleft(skill_id, bl, tick);
 	}
 
-	if (flag&1)
-		skill_unit_onplace(unit,bl,tick);
-	else
-		skill_unit_onout(unit,bl,tick);
-
-	if (flag&4)
-	  	skill_unit_onleft(skill_id, bl, tick);
-
-	if (flag&64)
+	if( flag&64 )
 		skill_dance_switch(unit, group, 1);
+
 	return 0;
 }
 
@@ -9061,29 +9053,23 @@ void skill_brandishspear_first (struct square *tc, int dir, int x, int y)
 /*=========================================
  *
  *-----------------------------------------*/
-void skill_brandishspear_dir (struct square *tc, int dir, int are)
+void skill_brandishspear_dir (struct square* tc, int dir, int are)
 {
 	int c;
-
 	nullpo_retv(tc);
 
-	for(c=0;c<5;c++){
-		if(dir==0){
-			tc->val2[c]+=are;
-		}else if(dir==1){
-			tc->val1[c]-=are; tc->val2[c]+=are;
-		}else if(dir==2){
-			tc->val1[c]-=are;
-		}else if(dir==3){
-			tc->val1[c]-=are; tc->val2[c]-=are;
-		}else if(dir==4){
-			tc->val2[c]-=are;
-		}else if(dir==5){
-			tc->val1[c]+=are; tc->val2[c]-=are;
-		}else if(dir==6){
-			tc->val1[c]+=are;
-		}else if(dir==7){
-			tc->val1[c]+=are; tc->val2[c]+=are;
+	for( c = 0; c < 5; c++ )
+	{
+		switch( dir )
+		{
+			case 0:                   tc->val2[c]+=are; break;
+			case 1: tc->val1[c]-=are; tc->val2[c]+=are; break;
+			case 2: tc->val1[c]-=are;                   break;
+			case 3: tc->val1[c]-=are; tc->val2[c]-=are; break;
+			case 4:                   tc->val2[c]-=are; break;
+			case 5: tc->val1[c]+=are; tc->val2[c]-=are; break;
+			case 6: tc->val1[c]+=are;                   break;
+			case 7: tc->val1[c]+=are; tc->val2[c]+=are; break;
 		}
 	}
 }
@@ -10131,6 +10117,7 @@ int skill_clear_unitgroup (struct block_list *src)
 
 	while (ud->skillunit[0])
 		skill_delunitgroup(src, ud->skillunit[0], 1);
+
 	return 1;
 }
 
@@ -10180,70 +10167,67 @@ struct skill_unit_group_tickset *skill_unitgrouptickset_search (struct block_lis
 /*==========================================
  *
  *------------------------------------------*/
-int skill_unit_timer_sub_onplace (struct block_list *bl, va_list ap)
+int skill_unit_timer_sub_onplace (struct block_list* bl, va_list ap)
 {
-	struct skill_unit *unit;
-	struct skill_unit_group *group;
-	unsigned int tick;
+	struct skill_unit* unit = va_arg(ap,struct skill_unit *);
+	struct skill_unit_group* group = unit->group;
+	unsigned int tick = va_arg(ap,unsigned int);
 
-	unit = va_arg(ap,struct skill_unit *);
-	tick = va_arg(ap,unsigned int);
-
-	if (!unit->alive || bl->prev==NULL)
+	if( !unit->alive || bl->prev == NULL )
 		return 0;
 
-	nullpo_retr(0, group=unit->group);
+	nullpo_retr(0, group);
 
-	if (!(skill_get_inf2(group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP))
-		&& map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR))
+	if( !(skill_get_inf2(group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)) && map_getcell(bl->m, bl->x, bl->y, CELL_CHKLANDPROTECTOR) )
 		return 0; //AoE skills are ineffective. [Skotlex]
 
-	if (battle_check_target(&unit->bl,bl,group->target_flag)<=0)
+	if( battle_check_target(&unit->bl,bl,group->target_flag) <= 0 )
 		return 0;
 
 	skill_unit_onplace_timer(unit,bl,tick);
+
 	return 1;
 }
 
 /*==========================================
  *
  *------------------------------------------*/
-int skill_unit_timer_sub (struct block_list *bl, va_list ap)
+int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 {
-	struct skill_unit *unit;
-	struct skill_unit_group *group;
-	unsigned int tick;
+	struct skill_unit* unit = (struct skill_unit *)bl;
+	struct skill_unit_group* group = unit->group;
+	unsigned int tick = va_arg(ap,unsigned int);
   	int flag;
 
-	unit=(struct skill_unit *)bl;
-	tick=va_arg(ap,unsigned int);
-
-	if(!unit->alive)
+	if( !unit->alive )
 		return 0;
-	group=unit->group;
 
 	nullpo_retr(0, group);
 
 	flag = skill_dance_switch(unit, group, 0);
-	if (unit->range>=0 && group->interval!=-1)
+	if( unit->range >= 0 && group->interval != -1 )
 	{
-		if (battle_config.skill_wall_check)
+		if( battle_config.skill_wall_check )
 			map_foreachinshootrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl,tick);
 		else
 			map_foreachinrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl,tick);
-		if (!unit->alive)
+		if( !unit->alive )
 		{
-			if (flag)
+			if( flag )
 				skill_dance_switch(unit, group, 1);
+
 			return 0;
 		}
 	}
+
   	if (flag)
 		skill_dance_switch(unit, group, 1);
 
-	if((DIFF_TICK(tick,group->tick)>=group->limit || DIFF_TICK(tick,group->tick)>=unit->limit))
+	// check for expiration
+	if( (DIFF_TICK(tick,group->tick) >= group->limit || DIFF_TICK(tick,group->tick) >= unit->limit) )
 	{
-		switch(group->unit_id){
+		switch( group->unit_id )
+		{
 			case UNT_BLASTMINE:
 			case UNT_GROUNDDRIFT_WIND:
 			case UNT_GROUNDDRIFT_DARK:
@@ -10265,9 +10249,10 @@ int skill_unit_timer_sub (struct block_list *bl, va_list ap)
 			case UNT_CLAYMORETRAP:
 			case UNT_TALKIEBOX:
 			{
-				struct block_list *src=map_id2bl(group->src_id);
-				if(src && src->type==BL_PC && !group->state.into_abyss)
-				{	//Avoid generating trap items when it did not cost to create them. [Skotlex]
+				struct block_list* src = map_id2bl(group->src_id);
+				// revert unit back into a trap
+				if( src && src->type == BL_PC && !group->state.into_abyss ) // but only when it cost a trap to deploy it
+				{
 					struct item item_tmp;
 					memset(&item_tmp,0,sizeof(item_tmp));
 					item_tmp.nameid=1065;
@@ -10281,21 +10266,27 @@ int skill_unit_timer_sub (struct block_list *bl, va_list ap)
 				skill_delunit(unit, 0);
 		}
 	}
-
-	if(group->unit_id == UNT_ICEWALL)
-	{
-		unit->val1 -= 5;
-		if(unit->val1 <= 0 && unit->limit + group->tick > tick + 700)
-			unit->limit = DIFF_TICK(tick+700,group->tick);
-	}
 	else
-	if (group->unit_id == UNT_TATAMIGAESHI && unit->range>=0)
-	{	//Disable processed cell.
-		unit->range = -1;
-		if (--group->val1 <= 0)
-	  	{	//All tiles were processed, disable skill.
-			group->target_flag=BCT_NOONE;
-			group->bl_flag= BL_NUL;
+	{
+		switch( group->unit_id )
+		{
+			case UNT_ICEWALL:
+				// icewall loses 50 hp every second (and this executes every 100ms, so...)
+				unit->val1 -= 5; // trap's hp
+				if( unit->val1 <= 0 && unit->limit + group->tick > tick + 700 )
+					unit->limit = DIFF_TICK(tick+700,group->tick);
+			break;
+			case UNT_TATAMIGAESHI:
+				if( unit->range >= 0 )
+				{	//Disable processed cell.
+					unit->range = -1;
+					if (--group->val1 <= 0) // number of live cells
+	  				{	//All tiles were processed, disable skill.
+						group->target_flag=BCT_NOONE;
+						group->bl_flag= BL_NUL;
+					}
+				}
+			break;
 		}
 	}
 
@@ -10318,91 +10309,91 @@ int skill_unit_timer (int tid, unsigned int tick, int id, int data)
 /*==========================================
  *
  *------------------------------------------*/
-int skill_unit_move_sub (struct block_list *bl, va_list ap)
+int skill_unit_move_sub (struct block_list* bl, va_list ap)
 {
-	struct skill_unit *unit = (struct skill_unit *)bl;
-	struct skill_unit_group *group;
-	struct block_list *target;
-	unsigned int tick,flag,result;
-	int skill_id;
+	struct skill_unit* unit = (struct skill_unit *)bl;
+	struct skill_unit_group* group = unit->group;
 
-	target=va_arg(ap,struct block_list*);
-	tick = va_arg(ap,unsigned int);
-	flag = va_arg(ap,int);
+	struct block_list* target = va_arg(ap,struct block_list*);
+	unsigned int tick = va_arg(ap,unsigned int);
+	int flag = va_arg(ap,int);
+
+	int skill_id;
 	
-	nullpo_retr(0, group=unit->group);
+	nullpo_retr(0, group);
 	
-	if (!unit->alive || target->prev==NULL)
+	if( !unit->alive || target->prev == NULL )
 		return 0;
 
 	
-	if (skill_dance_switch(unit, group, 0))
+	if( skill_dance_switch(unit, group, 0) )
 		flag|=64; //Signal to remember to restore it.
 
 	//Necessary in case the group is deleted after calling on_place/on_out [Skotlex]
 	skill_id = unit->group->skill_id;
 
-	if (unit->group->interval!=-1 && 
-		!(skill_get_unit_flag(skill_id)&UF_DUALMODE))
+	if( unit->group->interval!=-1 && !(skill_get_unit_flag(skill_id)&UF_DUALMODE) )
 	{	//Skills in dual mode have to trigger both. [Skotlex]
-		if (flag&64)
+		if( flag&64 )
 			skill_dance_switch(unit, group, 1);
+
 		return 0;
 	}
 
 	//Target-type check.
-	if(!(group->bl_flag&target->type && battle_check_target(&unit->bl,target,group->target_flag)>0))
+	if( !(group->bl_flag&target->type && battle_check_target(&unit->bl,target,group->target_flag) > 0) )
 	{
-		if(group->src_id == target->id && group->state.song_dance&0x2)
+		if( group->src_id == target->id && group->state.song_dance&0x2 )
 		{	//Ensemble check to see if they went out/in of the area [Skotlex]
-			if (flag&1)
+			if( flag&1 )
 			{
-				if (flag&2)
+				if( flag&2 )
 				{	//Clear skill ids we have stored in onout.
 					int i;
-					for(i=0; i < (sizeof(skill_unit_temp)/sizeof(int)) &&
-						skill_unit_temp[i]!=skill_id; i++);
-					if (i < (sizeof(skill_unit_temp)/sizeof(int)))
+					ARR_FIND(0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == skill_id );
+					if( i < ARRAYLENGTH(skill_unit_temp) )
 						skill_unit_temp[i] = 0;
 				}
 			}
 			else
 			{
-				if (flag&2) { //Store this unit id.
-					if (skill_unit_index < (sizeof(skill_unit_temp)/sizeof(int)))
+				if( flag&2 )
+				{	//Store this unit id.
+					if( skill_unit_index < ARRAYLENGTH(skill_unit_temp) )
 						skill_unit_temp[skill_unit_index++] = skill_id;
-					else if (battle_config.error_log)
+					else if( battle_config.error_log )
 						ShowError("skill_unit_move_sub: Reached limit of unit objects per cell!\n");
 				}
 
 			}
-			if (flag&4)
+			if( flag&4 )
 				skill_unit_onleft(skill_id,target,tick);
 		}
-		if (flag&64)
+		if( flag&64 )
 			skill_dance_switch(unit, group, 1);
+
 		return 0;
 	}
 	
-	if (flag&1)
+	if( flag&1 )
 	{
-		result = skill_unit_onplace(unit,target,tick);
-		if (flag&2 && result)
+		unsigned int result = skill_unit_onplace(unit,target,tick);
+		if( flag&2 && result )
 		{	//Clear skill ids we have stored in onout.
 			int i;
-			for(i=0; i < (sizeof(skill_unit_temp)/sizeof(int)) &&
-				skill_unit_temp[i]!=result; i++);
-			if (i < (sizeof(skill_unit_temp)/sizeof(int)))
+			ARR_FIND(0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == result );
+			if( i < ARRAYLENGTH(skill_unit_temp) )
 				skill_unit_temp[i] = 0;
 		}
 	}
 	else
 	{
-		result = skill_unit_onout(unit,target,tick);
-		if (flag&2 && result) { //Store this unit id.
-			if (skill_unit_index < (sizeof(skill_unit_temp)/sizeof(int)))
+		unsigned int result = skill_unit_onout(unit,target,tick);
+		if( flag&2 && result )
+		{	//Store this unit id.
+			if( skill_unit_index < ARRAYLENGTH(skill_unit_temp) )
 				skill_unit_temp[skill_unit_index++] = result;
-			else if (battle_config.error_log)
+			else if( battle_config.error_log )
 				ShowError("skill_unit_move_sub: Reached limit of unit objects per cell!\n");
 		}
 	}
@@ -10410,11 +10401,12 @@ int skill_unit_move_sub (struct block_list *bl, va_list ap)
 	//TODO: Normally, this is dangerous since the unit and group could be freed
 	//inside the onout/onplace functions. Currently it is safe because we know song/dance
 	//cells do not get deleted within them. [Skotlex]
-	if (flag&64)
+	if( flag&64 )
 		skill_dance_switch(unit, group, 1);
 		
-	if (flag&4)
+	if( flag&4 )
 		skill_unit_onleft(skill_id,target,tick);
+
 	return 1;
 }
 
@@ -11794,7 +11786,6 @@ void skill_reload (void)
 int do_init_skill (void)
 {
 	skill_readdb();
-	skill_dance_switch_sub(NULL, NULL, 2); //Initialize Song/Dance overlap switch code.
 	
 	skill_unit_ers = ers_new(sizeof(struct skill_unit_group));
 	skill_timer_ers  = ers_new(sizeof(struct skill_timerskill));

@@ -218,8 +218,8 @@ int clif_skill_produce_mix_list(struct map_session_data *sd, int trigger);
 
 int clif_produceeffect(struct map_session_data* sd,int flag,int nameid);
 
-int clif_skill_setunit(struct skill_unit *unit);
-int clif_skill_delunit(struct skill_unit *unit);
+void clif_skill_setunit(struct skill_unit *unit);
+void clif_skill_delunit(struct skill_unit *unit);
 
 int clif_01ac(struct block_list *bl);
 

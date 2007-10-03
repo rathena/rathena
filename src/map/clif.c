@@ -3923,17 +3923,13 @@ void clif_getareachar_item(struct map_session_data* sd,struct flooritem_data* fi
 /*==========================================
  * 場所スキルエフェクトが視界に入る
  *------------------------------------------*/
-int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *unit)
+static void clif_getareachar_skillunit(struct map_session_data *sd, struct skill_unit *unit)
 {
-	int fd;
-	struct block_list *bl;
+	int fd = sd->fd;
 
-	fd=sd->fd;
-	bl=map_id2bl(unit->group->src_id);
 #if PACKETVER >= 3
 	if(unit->group->unit_id==UNT_GRAFFITI)	{ // Graffiti [Valaris]
 		WFIFOHEAD(fd,packet_len(0x1c9));
-		memset(WFIFOP(fd,0),0,packet_len(0x1c9));
 		WFIFOW(fd, 0)=0x1c9;
 		WFIFOL(fd, 2)=unit->bl.id;
 		WFIFOL(fd, 6)=unit->group->src_id;
@@ -3942,21 +3938,19 @@ int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *un
 		WFIFOB(fd,14)=unit->group->unit_id;
 		WFIFOB(fd,15)=1;
 		WFIFOB(fd,16)=1;
-		memcpy(WFIFOP(fd,17),unit->group->valstr,MESSAGE_SIZE);
+		safestrncpy(WFIFOP(fd,17),unit->group->valstr,MESSAGE_SIZE);
 		WFIFOSET(fd,packet_len(0x1c9));
-		return 0;
+		return;
 	}
 #endif
 	WFIFOHEAD(fd,packet_len(0x11f));
-	memset(WFIFOP(fd,0),0,packet_len(0x11f));
 	WFIFOW(fd, 0)=0x11f;
 	WFIFOL(fd, 2)=unit->bl.id;
 	WFIFOL(fd, 6)=unit->group->src_id;
 	WFIFOW(fd,10)=unit->bl.x;
 	WFIFOW(fd,12)=unit->bl.y;
-	//Use invisible unit id for traps.
 	if (battle_config.traps_setting&1 && skill_get_inf2(unit->group->skill_id)&INF2_TRAP)
-		WFIFOB(fd,14)=UNT_ATTACK_SKILLS;
+		WFIFOB(fd,14)=UNT_ATTACK_SKILLS; //Use invisible unit id for traps.
 	else
 		WFIFOB(fd,14)=unit->group->unit_id;
 	WFIFOB(fd,15)=0;
@@ -3964,69 +3958,22 @@ int clif_getareachar_skillunit(struct map_session_data *sd,struct skill_unit *un
 
 	if(unit->group->skill_id == WZ_ICEWALL)
 		clif_changemapcell(fd,unit->bl.m,unit->bl.x,unit->bl.y,5);
-	return 0;
-/* Previous implementation guess of packet 0x1c9, who can understand what all those fields are for? [Skotlex]
-	WFIFOHEAD(fd,packet_len(0x1c9));
-	memset(WFIFOP(fd,0),0,packet_len(0x1c9));
-	WFIFOW(fd, 0)=0x1c9;
-	WFIFOL(fd, 2)=unit->bl.id;
-	WFIFOL(fd, 6)=unit->group->src_id;
-	WFIFOW(fd,10)=unit->bl.x;
-	WFIFOW(fd,12)=unit->bl.y;
-	WFIFOB(fd,14)=unit->group->unit_id;
-	WFIFOB(fd,15)=1;
-	if(unit->group->unit_id==UNT_GRAFFITI)	{ // Graffiti [Valaris]
-		WFIFOB(fd,16)=1;
-		memcpy(WFIFOP(fd,17),unit->group->valstr,MESSAGE_SIZE);
-	} else {
-		WFIFOL(fd,15+1)=0;						//1-4調べた限り固定
-		WFIFOL(fd,15+5)=0;						//5-8調べた限り固定
-												//9-12マップごとで一定の77-80とはまた違う4バイトのかなり大きな数字
-		WFIFOL(fd,15+13)=unit->bl.y - 0x12;		//13-16ユニットのY座標-18っぽい(Y:17でFF FF FF FF)
-		WFIFOL(fd,15+17)=0x004f37dd;			//17-20調べた限り固定
-		WFIFOL(fd,15+21)=0x0012f674;			//21-24調べた限り固定
-		WFIFOL(fd,15+25)=0x0012f664;			//25-28調べた限り固定
-		WFIFOL(fd,15+29)=0x0012f654;			//29-32調べた限り固定
-		WFIFOL(fd,15+33)=0x77527bbc;			//33-36調べた限り固定
-												//37-39
-		WFIFOB(fd,15+40)=0x2d;					//40調べた限り固定
-		WFIFOL(fd,15+41)=0;						//41-44調べた限り0固定
-		WFIFOL(fd,15+45)=0;						//45-48調べた限り0固定
-		WFIFOL(fd,15+49)=0;						//49-52調べた限り0固定
-		WFIFOL(fd,15+53)=0x0048d919;			//53-56調べた限り固定
-		WFIFOL(fd,15+57)=0x0000003e;			//57-60調べた限り固定
-		WFIFOL(fd,15+61)=0x0012f66c;			//61-64調べた限り固定
-												//65-68
-												//69-72
-		if(bl) WFIFOL(fd,15+73)=bl->y;			//73-76術者のY座標
-		WFIFOL(fd,15+77)=unit->bl.m;			//77-80マップIDかなぁ？かなり2バイトで足りそうな数字
-		WFIFOB(fd,15+81)=0xaa;					//81終端文字0xaa
-	}
-
-	WFIFOSET(fd,packet_len(0x1c9));
-#endif
-	if(unit->group->skill_id == WZ_ICEWALL)
-		clif_set0192(fd,unit->bl.m,unit->bl.x,unit->bl.y,5);
-
-	return 0;
-*/
 }
 
 /*==========================================
  * 場所スキルエフェクトが視界から消える
  *------------------------------------------*/
-int clif_clearchar_skillunit(struct skill_unit *unit,int fd)
+static void clif_clearchar_skillunit(struct skill_unit *unit, int fd)
 {
-	nullpo_retr(0, unit);
+	nullpo_retv(unit);
 
 	WFIFOHEAD(fd,packet_len(0x120));
 	WFIFOW(fd, 0)=0x120;
 	WFIFOL(fd, 2)=unit->bl.id;
 	WFIFOSET(fd,packet_len(0x120));
+
 	if(unit->group && unit->group->skill_id == WZ_ICEWALL)
 		clif_changemapcell(fd,unit->bl.m,unit->bl.x,unit->bl.y,unit->val2);
-
-	return 0;
 }
 
 /*==========================================
@@ -4573,110 +4520,52 @@ int clif_skill_poseffect(struct block_list *src,int skill_id,int val,int x,int y
 /*==========================================
  * 場所スキルエフェクト表示
  *------------------------------------------*/
-int clif_skill_setunit(struct skill_unit *unit)
+void clif_skill_setunit(struct skill_unit *unit)
 {
 	unsigned char buf[128];
-	struct block_list *bl;
 
-	nullpo_retr(0, unit);
+	nullpo_retv(unit);
 
-	bl=map_id2bl(unit->group->src_id);
-
-// These are invisible client-side, but are necessary because
-// otherwise the client will not know who caused the attack.
-//	if (unit->group->unit_id == UNT_ATTACK_SKILLS)
-//		return 0;
-		
 #if PACKETVER >= 3
 	if(unit->group->unit_id==UNT_GRAFFITI)	{ // Graffiti [Valaris]
-		memset(WBUFP(buf, 0),0,packet_len(0x1c9));
 		WBUFW(buf, 0)=0x1c9;
 		WBUFL(buf, 2)=unit->bl.id;
 		WBUFL(buf, 6)=unit->group->src_id;
 		WBUFW(buf,10)=unit->bl.x;
 		WBUFW(buf,12)=unit->bl.y;
-		if (unit->group->state.song_dance&0x1 && unit->val2&UF_ENSEMBLE) {
-			WBUFB(buf,14)=unit->val2&UF_SONG?UNT_DISSONANCE:UNT_UGLYDANCE;
-		} else {
-			WBUFB(buf,14)=unit->group->unit_id;
-		}
+		WBUFB(buf,14)=unit->group->unit_id;
 		WBUFB(buf,15)=1;
 		WBUFB(buf,16)=1;
-		memcpy(WBUFP(buf,17),unit->group->valstr,MESSAGE_SIZE);
+		safestrncpy((char*)WBUFP(buf,17),unit->group->valstr,MESSAGE_SIZE);
 		clif_send(buf,packet_len(0x1c9),&unit->bl,AREA);
-		return 0;
+		return;
 	}
 #endif
-	memset(WBUFP(buf, 0),0,packet_len(0x11f));
 	WBUFW(buf, 0)=0x11f;
 	WBUFL(buf, 2)=unit->bl.id;
 	WBUFL(buf, 6)=unit->group->src_id;
 	WBUFW(buf,10)=unit->bl.x;
 	WBUFW(buf,12)=unit->bl.y;
-	if (unit->group->state.song_dance&0x1 && unit->val2&UF_ENSEMBLE) {
+	if (unit->group->state.song_dance&0x1 && unit->val2&UF_ENSEMBLE)
 		WBUFB(buf,14)=unit->val2&UF_SONG?UNT_DISSONANCE:UNT_UGLYDANCE;
-	} else {
+	else
 		WBUFB(buf,14)=unit->group->unit_id;
-	}
 	WBUFB(buf,15)=0;
 	clif_send(buf,packet_len(0x11f),&unit->bl,AREA);
-	return 0;
-	
-/* Previous mysterious implementation noone really understands. [Skotlex]
-		memset(WBUFP(buf, 0),0,packet_len(0x1c9));
-		WBUFW(buf, 0)=0x1c9;
-		WBUFL(buf, 2)=unit->bl.id;
-		WBUFL(buf, 6)=unit->group->src_id;
-		WBUFW(buf,10)=unit->bl.x;
-		WBUFW(buf,12)=unit->bl.y;
-		WBUFB(buf,14)=unit->group->unit_id;
-		WBUFB(buf,15)=1;
-		if(unit->group->unit_id==0xb0)	{ // Graffiti [Valaris]
-			WBUFB(buf,16)=1;
-			memcpy(WBUFP(buf,17),unit->group->valstr,MESSAGE_SIZE);
-		} else {
-			WBUFL(buf,15+1)=0;						//1-4調べた限り固定
-			WBUFL(buf,15+5)=0;						//5-8調べた限り固定
-												//9-12マップごとで一定の77-80とはまた違う4バイトのかなり大きな数字
-			WBUFL(buf,15+13)=unit->bl.y - 0x12;		//13-16ユニットのY座標-18っぽい(Y:17でFF FF FF FF)
-			WBUFL(buf,15+17)=0x004f37dd;			//17-20調べた限り固定(0x1b2で0x004fdbddだった)
-			WBUFL(buf,15+21)=0x0012f674;			//21-24調べた限り固定
-			WBUFL(buf,15+25)=0x0012f664;			//25-28調べた限り固定
-			WBUFL(buf,15+29)=0x0012f654;			//29-32調べた限り固定
-			WBUFL(buf,15+33)=0x77527bbc;			//33-36調べた限り固定
-												//37-39
-			WBUFB(buf,15+40)=0x2d;					//40調べた限り固定
-			WBUFL(buf,15+41)=0;						//41-44調べた限り0固定
-			WBUFL(buf,15+45)=0;						//45-48調べた限り0固定
-			WBUFL(buf,15+49)=0;						//49-52調べた限り0固定
-			WBUFL(buf,15+53)=0x0048d919;			//53-56調べた限り固定(0x01b2で0x00495119だった)
-			WBUFL(buf,15+57)=0x0000003e;			//57-60調べた限り固定
-			WBUFL(buf,15+61)=0x0012f66c;			//61-64調べた限り固定
-												//65-68
-												//69-72
-			if(bl) WBUFL(buf,15+73)=bl->y;			//73-76術者のY座標
-				WBUFL(buf,15+77)=unit->bl.m;			//77-80マップIDかなぁ？かなり2バイトで足りそうな数字
-			WBUFB(buf,15+81)=0xaa;					//81終端文字0xaa
-		}
-		clif_send(buf,packet_len(0x1c9),&unit->bl,AREA);
-#endif
-	return 0;
-*/
 }
 
 /*==========================================
  * 場所スキルエフェクト削除
  *------------------------------------------*/
-int clif_skill_delunit(struct skill_unit *unit)
+void clif_skill_delunit(struct skill_unit *unit)
 {
 	unsigned char buf[16];
 
-	nullpo_retr(0, unit);
+	nullpo_retv(unit);
 
 	WBUFW(buf, 0)=0x120;
 	WBUFL(buf, 2)=unit->bl.id;
 	clif_send(buf,packet_len(0x120),&unit->bl,AREA);
-	return 0;
 }
 
 /*==========================================

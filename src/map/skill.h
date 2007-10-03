@@ -58,7 +58,7 @@
 #define SD_ANIMATION	0x2000
 
 // スキルデ?タベ?ス
-struct skill_db {
+struct s_skill_db {
 	char *name;
 	char *desc;
 	int range[MAX_SKILL_LEVEL],hit,inf,pl[MAX_SKILL_LEVEL],nk,splash[MAX_SKILL_LEVEL],max;
@@ -80,7 +80,7 @@ struct skill_db {
 	int unit_target;
 	int unit_flag;
 };
-extern struct skill_db skill_db[MAX_SKILL_DB];
+extern struct s_skill_db skill_db[MAX_SKILL_DB];
 
 struct skill_name_db { 
 	int id;	// skill id
@@ -91,7 +91,7 @@ struct skill_name_db {
 #define MAX_SKILL_UNIT_LAYOUT	50
 #define MAX_SQUARE_LAYOUT		5	// 11*11のユニット配置が最大
 #define MAX_SKILL_UNIT_COUNT ((MAX_SQUARE_LAYOUT*2+1)*(MAX_SQUARE_LAYOUT*2+1))
-struct skill_unit_layout {
+struct s_skill_unit_layout {
 	int count;
 	int dx[MAX_SKILL_UNIT_COUNT];
 	int dy[MAX_SKILL_UNIT_COUNT];
@@ -112,27 +112,27 @@ enum {
 };
 
 // アイテム作成デ?タベ?ス
-struct skill_produce_db {
+struct s_skill_produce_db {
 	int nameid, trigger;
 	int req_skill,req_skill_lv,itemlv;
 	int mat_id[MAX_PRODUCE_RESOURCE],mat_amount[MAX_PRODUCE_RESOURCE];
 };
-extern struct skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
+extern struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 
 // 矢作成デ?タベ?ス
-struct skill_arrow_db {
+struct s_skill_arrow_db {
 	int nameid, trigger;
 	int cre_id[5],cre_amount[5];
 };
-extern struct skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
+extern struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 
 // アブラカダブラデ?タベ?ス
-struct skill_abra_db {
+struct s_skill_abra_db {
 	int nameid;
 	int req_lv;
 	int per;
 };
-extern struct skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
+extern struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 
 extern int enchant_eff[5];
 extern int deluge_eff[5];

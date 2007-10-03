@@ -366,6 +366,8 @@ struct guild_castle {
 		int id;
 	} guardian[MAX_GUARDIANS]; //New simplified structure. [Skotlex]
 };
+
+// for Brandish Spear calculations
 struct square {
 	int val1[5];
 	int val2[5];

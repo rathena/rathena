@@ -274,8 +274,8 @@ static int unit_delay_walktoxy_timer(int tid, unsigned int tick, int id, int dat
 //&4 -> Delay walking if the reason you can't walk is the canwalk delay
 int unit_walktoxy( struct block_list *bl, int x, int y, int flag)
 {
-	struct unit_data        *ud = NULL;
-	struct status_change		*sc = NULL;
+	struct unit_data* ud = NULL;
+	struct status_change* sc = NULL;
 
 	nullpo_retr(0, bl);
 	
