@@ -972,7 +972,8 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	}	
 		
 	//Should fail when used on top of Land Protector [Skotlex]
-	if (src && skill_num == AL_TELEPORT && map_getcell(src->m, src->x, src->y, CELL_CHKLANDPROTECTOR))
+	if (src && skill_num == AL_TELEPORT && map_getcell(src->m, src->x, src->y, CELL_CHKLANDPROTECTOR)
+		&& !(status->mode&MD_BOSS))
 		return 0;
 
 	if (src) sc = status_get_sc(src);
