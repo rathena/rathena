@@ -270,6 +270,8 @@ enum {
 	SC_MAGICMIRROR,
 	SC_SLOWCAST,
 	SC_SUMMER, // [Zephyrus Summer]
+	SC_BONUSEXP, // [Field Guide]
+	SC_BONUSDROP, // [Bubble Gum]
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 int SkillStatusChangeTable(int skill);
