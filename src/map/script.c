@@ -4022,6 +4022,7 @@ BUILDIN_FUNC(awake);
 BUILDIN_FUNC(getvariableofnpc);
 BUILDIN_FUNC(warpportal);
 BUILDIN_FUNC(homunculus_evolution) ;	//[orn]
+BUILDIN_FUNC(homunculus_shuffle); // [Zephyrus]
 BUILDIN_FUNC(eaclass);
 BUILDIN_FUNC(roclass);
 BUILDIN_FUNC(setitemscript);
@@ -4364,6 +4365,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getvariableofnpc,"rs"),
 	BUILDIN_DEF(warpportal,"iisii"),
 	BUILDIN_DEF2(homunculus_evolution,"homevolution",""),	//[orn]
+	BUILDIN_DEF2(homunculus_shuffle,"homshuffle",""),	//[Zephyrus]
 	BUILDIN_DEF(eaclass,"*"),	//[Skotlex]
 	BUILDIN_DEF(roclass,"i*"),	//[Skotlex]
 	BUILDIN_DEF(checkvending,"*"),
@@ -8741,6 +8743,17 @@ BUILDIN_FUNC(homunculus_evolution)
 		else
 			clif_emotion(&sd->hd->bl, 4) ;	//swt
 	}
+	return 0;
+}
+
+// [Zephyrus]
+BUILDIN_FUNC(homunculus_shuffle)
+{
+	TBL_PC *sd;
+	sd=script_rid2sd(st);
+	if(merc_is_hom_active(sd->hd))
+		merc_hom_shuffle(sd->hd);
+
 	return 0;
 }
 

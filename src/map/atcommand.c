@@ -8137,7 +8137,7 @@ static int atshowmobs_sub(struct block_list *bl,va_list ap)
 
     md = (struct mob_data *)bl;
 
-	 if(md->special_state.ai || md->master_id)
+	if(md->special_state.ai || md->master_id)
 		 return 0; //Hide slaves and player summoned mobs. [Skotlex]
 
     if(fd && (mob_id==-1 || (md->class_==mob_id))){
@@ -8466,9 +8466,6 @@ int atcommand_homstats(const int fd, struct map_session_data* sd, const char* co
 int atcommand_homshuffle(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct homun_data *hd;
-	int lv, i, skillpts;
-	unsigned int exp;
-	struct skill b_skill[MAX_HOMUNSKILL];
 	TBL_PC* tsd = sd;
 
 	nullpo_retr(-1, sd);
@@ -8492,28 +8489,10 @@ int atcommand_homshuffle(const int fd, struct map_session_data* sd, const char* 
 	}
 
 	hd = tsd->hd;
-	if(!merc_is_hom_active(hd))
+
+	if(!merc_hom_shuffle(hd))
 		return -1;
-	
-	lv = hd->homunculus.level;
-	exp = hd->homunculus.exp;
-	memcpy(&b_skill, &hd->homunculus.hskill, sizeof(b_skill));
-	skillpts = hd->homunculus.skillpts;
-	//Reset values to level 1.
-	merc_reset_stats(hd);
-	//Level it back up
-	for (i = 1; i < lv && hd->exp_next; i++){
-		hd->homunculus.exp += hd->exp_next;
-		merc_hom_levelup(hd);
-	}
-	hd->homunculus.exp = exp;
-	memcpy(&hd->homunculus.hskill, &b_skill, sizeof(b_skill));
-	hd->homunculus.skillpts = skillpts;
-	clif_homskillinfoblock(hd->master);
-	status_calc_homunculus(hd,0);
-	status_percent_heal(&hd->bl, 100, 100);
-	clif_misceffect2(&hd->bl,568);
-	clif_displaymessage(fd, "Homunculus stats altered");
+
 	//Print out the new stats
 	//This will send the commands to the invoker since they all use this fd regardless of sd value.
 	atcommand_homstats(fd, tsd, command, message);

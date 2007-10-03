@@ -10,6 +10,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	- renamed some skill-related data structs (had same name as variables)
 	- commented out custom Venom Splasher countdown messaging code
 	* Bosses now can use teleport on Land Protector [Playtester]
+	- Moved the homunculus shuffle code to mercenary.c, fixing the bug in the
+	  atcommand not using the bonus evolution stats for homunculus.
+	- Adding a new script command "homshuffle" to fix homunculus using NPCs.
 2007/10/01
 	* Fixed various trading/vending glitches [ultramage]
 	- fixed vending_tax not working at all (integer division in r10182)
