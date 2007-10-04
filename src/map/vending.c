@@ -57,10 +57,8 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
  *------------------------------------------*/
 void vending_purchasereq(struct map_session_data* sd, int id, const uint8* data, int count)
 {
-	int i, j, w, new_ = 0, blank, vend_list[MAX_VENDING];
+	int i, j, cursor, w, new_ = 0, blank, vend_list[MAX_VENDING];
 	double z;
-	unsigned short amount;
-	short idx;
 	struct s_vending vending[MAX_VENDING]; // against duplicate packets
 	struct map_session_data* vsd = map_id2sd(id);
 
@@ -83,8 +81,8 @@ void vending_purchasereq(struct map_session_data* sd, int id, const uint8* data,
 	w = 0;  // weight counter
 	for( i = 0; i < count; i++ )
 	{
-		amount = *(uint16*)(data + 4*i + 0);
-		idx    = *(uint16*)(data + 4*i + 2);
+		unsigned short amount = *(uint16*)(data + 4*i + 0);
+		short idx             = *(uint16*)(data + 4*i + 2);
 		idx -= 2;
 
 		if( amount <= 0 )
@@ -152,8 +150,8 @@ void vending_purchasereq(struct map_session_data* sd, int id, const uint8* data,
 
 	for( i = 0; i < count; i++ )
 	{
-		amount = *(uint16*)(data + 4*i + 0);
-		idx    = *(uint16*)(data + 4*i + 2);
+		unsigned short amount = *(uint16*)(data + 4*i + 0);
+		short idx             = *(uint16*)(data + 4*i + 2);
 		idx -= 2;
 
 		//Logs sold (V)ending items [Lupus]
@@ -176,6 +174,23 @@ void vending_purchasereq(struct map_session_data* sd, int id, const uint8* data,
 			clif_disp_onlyself(vsd,temp,strlen(temp));
 		}
 	}
+
+	// compact the vending list
+	for( i = 0, cursor = 0; i < vsd->vend_num; i++ )
+	{
+		if( vsd->vending[i].amount == 0 )
+			continue;
+		
+		if( cursor != i ) // speedup
+		{
+			vsd->vending[cursor].index = vsd->vending[i].index;
+			vsd->vending[cursor].amount = vsd->vending[i].amount;
+			vsd->vending[cursor].value = vsd->vending[i].value;
+		}
+
+		cursor++;
+	}
+	vsd->vend_num = cursor;
 
 	//Always save BOTH: buyer and customer
 	if( save_settings&2 )
