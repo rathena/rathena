@@ -10,6 +10,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	- Updated Field Manual and Bubble Gum in the itemdb.txt file.
 	- As L0ne Wolf reported to me and based on Doddler information, the Bubble Gum
 	  only do a second try of the item drop, and it don't increase the drop rates.
+	* Fixed a mistake in r10919 messing up logged values (bugreport:167)
 	* Added code that compacts the vending list after a purchase; fixes
 	  the problem with empty positions appearing in the list (bugreport:168)
 	* Corrected Icewall skill to be closer to official behavior
