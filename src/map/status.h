@@ -269,9 +269,11 @@ enum {
 	SC_CRITICALWOUND,
 	SC_MAGICMIRROR,
 	SC_SLOWCAST,
-	SC_SUMMER, // [Zephyrus Summer]
-	SC_BONUSEXP, // [Field Guide]
-	SC_BONUSDROP, // [Bubble Gum]
+	SC_SUMMER,
+	SC_EXPBOOST, // Field Guide
+	SC_ITEMBOOST, // Bubble Gum
+	SC_BOSSMAPINFO, // Convex Mirror
+	SC_LIFEINSURANCE, // Life Insurance
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 int SkillStatusChangeTable(int skill);

@@ -4197,8 +4197,8 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 		(int)(status_get_lv(src) - sd->status.base_level) >= 20)
 		bonus += 15; // pk_mode additional exp if monster >20 levels [Valaris]	
 
-	if (sd->sc.data[SC_BONUSEXP].timer != -1)
-		bonus += sd->sc.data[SC_BONUSEXP].val1;
+	if (sd->sc.data[SC_EXPBOOST].timer != -1)
+		bonus += sd->sc.data[SC_EXPBOOST].val1;
 
 	if (!bonus)
 	  	return;

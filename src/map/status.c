@@ -451,6 +451,10 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_LUKFOOD] = SI_FOODLUK;
 	StatusIconChangeTable[SC_FLEEFOOD]= SI_FOODFLEE;
 	StatusIconChangeTable[SC_HITFOOD] = SI_FOODHIT;
+	//Cash Items
+	StatusIconChangeTable[SC_EXPBOOST] = SI_EXPBOOST;
+	StatusIconChangeTable[SC_ITEMBOOST] = SI_ITEMBOOST;
+
 	//Other SC which are not necessarily associated to skills.
 	StatusChangeFlagTable[SC_ASPDPOTION0] = SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] = SCB_ASPD;
@@ -5804,15 +5808,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			//Place here SCs that have no SCB_* data, no skill associated, no ICON
 			//associated, and yet are not wrong/unknown. [Skotlex]
 			break;
-		case SC_BONUSDROP:
-			clif_specialeffect(&sd->bl, 348, AREA);
-			clif_disp_onlyself(sd, "[Drop Rate Increased]", (int)strlen("[Drop Rate Increased]"));
-			if (val1 < 0)
-				val1 = 0;
-			break;
-		case SC_BONUSEXP:
-			clif_specialeffect(&sd->bl, 348, AREA);
-			clif_disp_onlyself(sd, "[Exp Rate Increased]", (int)strlen("[Exp Rate Increased]"));
+		case SC_EXPBOOST:
 			if (val1 < 0)
 				val1 = 0;
 			break;
@@ -6406,14 +6402,6 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			break;
 		case SC_JOINTBEAT:
 			sc->data[type].val2 = 0; // Clear stackable ailments
-			break;
-		case SC_BONUSEXP:
-			clif_disp_onlyself(sd, "[Exp Rate Back to Normal]", (int)strlen("[Exp Rate Back to Normal]"));
-			clif_specialeffect(&sd->bl, 488, AREA);
-			break;
-		case SC_BONUSDROP:
-			clif_disp_onlyself(sd, "[Drop Rate Back to Normal]", (int)strlen("[Drop Rate Back to Normal]"));
-			clif_specialeffect(&sd->bl, 488, AREA);
 			break;
 		}
 

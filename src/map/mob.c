@@ -2017,12 +2017,16 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if (sd && battle_config.pk_mode &&
 				(int)(md->level - sd->status.base_level) >= 20)
 				drop_rate = (int)(drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
-			if (sd && sd->sc.data[SC_BONUSDROP].timer != -1)
-				drop_rate += (int)(0.5+drop_rate*sd->sc.data[SC_BONUSDROP].val1/100.);
 
 			// attempt to drop the item
 			if (rand() % 10000 >= drop_rate)
-				continue;
+			{
+				if (sd && sd->sc.data[SC_ITEMBOOST].timer != -1)
+					if (rand() % 10000 >= drop_rate)
+						continue; // Double try by Bubble Gum
+				else
+					continue;
+			}
 
 			ditem = mob_setdropitem(md->db->dropitem[i].nameid, 1);
 

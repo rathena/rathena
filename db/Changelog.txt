@@ -13,8 +13,6 @@
 
 	Missing Effects:
 	12209 Life_Insurrance:		No EXP penalty on death (Recommend constant: SC_NoPenelty - Has status icon)
-	12208 Field_Manual:		Increased EXP rate (Recommend constant: SC_IncreasedEXP - Has status icon)
-	12210 Bubble_Gum:		Increased Drop rate (Recommend constant: SC_IncreasedDropRate - Has status icon)
 	12214 Convex_Mirror:		Detect MVP spawn on minimap; doesn't work with special condition MVPs. (Recommend constant: SC_DetectMVPSpawn)
 	7621 Token_of_Ziegfried:	Give player the option to revive after death, through the "Respawn/Exit" menu.
 
@@ -37,6 +35,10 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/04
+	* Added SC_EXPBOOST (Field Manual), SC_ITEMBOOST (Bubble Gum) to const.txt. Allready working [Zephyrus]
+	- Added SC_LIFEINSURANCE and SC_BOSSMAPINFO (not implemented)
+	- Updated Field Manual and Bubble Gum in the itemdb.txt file.
 10/01
 	* Fixed Frigg combo not reducing def by refine rate [Playtester]
 	* Reverted the bug that was added in the last update [Playtester]
