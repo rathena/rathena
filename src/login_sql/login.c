@@ -1312,7 +1312,7 @@ int parse_login(int fd)
 				account.version = 1; //Force some version...
 			safestrncpy(account.userid, RFIFOP(fd,6), NAME_LENGTH);//## does it have to be nul-terminated?
 			safestrncpy(account.passwd, RFIFOP(fd,30), NAME_LENGTH);//## does it have to be nul-terminated?
-			account.passwdenc = (command != 0x01dd) ? 0 : PASSWORDENC;
+			account.passwdenc = (command == 0x01dd) ? PASSWORDENC : 0;
 			Sql_EscapeStringLen(sql_handle, esc_userid, account.userid, strlen(account.userid));
 
 			result = mmo_auth(&account, fd);

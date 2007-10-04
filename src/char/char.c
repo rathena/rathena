@@ -452,17 +452,18 @@ int mmo_friends_list_data_str(char *str, struct mmo_charstatus *p)
  --------------------------------------------------*/
 int mmo_hotkeys_tostr(char *str, struct mmo_charstatus *p)
 {
+#ifdef HOTKEY_SAVING
 	int i;
 	char *str_p = str;
 	str_p += sprintf(str_p, "%d", p->char_id);
-#ifdef HOTKEY_SAVING
-	for (i=0;i<HOTKEY_SAVING;i++)
+	for (i=0;i<MAX_HOTKEYS;i++)
 		str_p += sprintf(str_p, ",%d,%d,%d", p->hotkeys[i].type, p->hotkeys[i].id, p->hotkeys[i].lv);
-#endif
 	str_p += '\0';
+#endif
 
 	return 0;
 }
+
 //-------------------------------------------------
 // Function to create the character line (for save)
 //-------------------------------------------------
@@ -935,7 +936,7 @@ int parse_hotkey_txt(struct mmo_charstatus *p)
 		//Read hotkeys 
 		len = strlen(line);
 		next = pos;
-		for (count = 0; next < len && count < HOTKEY_SAVING; count++)
+		for (count = 0; next < len && count < MAX_HOTKEYS; count++)
 		{
 			if (sscanf(line+next, ",%d,%d,%d%n",&type,&id,&lv, &pos) < 3)
 				//Invalid entry?

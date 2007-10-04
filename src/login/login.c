@@ -3034,7 +3034,7 @@ int parse_login(int fd)
 				login_log("Request for connection (encryption mode) of %s (ip: %s).\n", account.userid, ip);
 				memcpy(account.passwd, RFIFOP(fd,30), 16); account.passwd[16] = '\0'; // binary data here
 			}
-			account.passwdenc = (command != 0x01dd) ? 0 : PASSWORDENC;
+			account.passwdenc = (command == 0x01dd) ? PASSWORDENC : 0;
 
 			result = mmo_auth(&account, fd);
 			if( result == -1 )

@@ -5863,6 +5863,7 @@ BUILDIN_FUNC(countitem)
 
 	if (nameid < 500) {
 		if(battle_config.error_log) ShowError("wrong item ID : countitem(%i)\n", nameid);
+		script_reportsrc(st);
 		script_pushint(st,0);
 		return 1;
 	}

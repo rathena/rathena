@@ -52,7 +52,7 @@
 //	anybad		any type of state change
 //	stone		condition of being in stone state
 //	freeze		condition of being in frozen state
-//	stan		condition of being in stunned state
+//	stun		condition of being in stunned state
 //	sleep		condition of being in sleep state
 //	poison		condition of being in poisoned state
 //	curse		condition of being in cursed state

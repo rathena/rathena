@@ -2588,12 +2588,8 @@ int mob_skillid2skillidx(int class_,int skillid)
 	if(ms==NULL)
 		return -1;
 
-	for(i=0;i<max;i++){
-		if(ms[i].skill_id == skillid)
-			return i;
-	}
-	return -1;
-
+	ARR_FIND( 0, max, i, ms[i].skill_id == skillid );
+	return ( i < max ) ? i : -1;
 }
 
 /*==========================================
@@ -2689,12 +2685,10 @@ int mob_getfriendstatus_sub(struct block_list *bl,va_list ap)
 
 struct mob_data *mob_getfriendstatus(struct mob_data *md,int cond1,int cond2)
 {
-	struct mob_data *fr=NULL;
-
+	struct mob_data* fr = NULL;
 	nullpo_retr(0, md);
 
-	map_foreachinrange(mob_getfriendstatus_sub, &md->bl, 8,
-		BL_MOB,md,cond1,cond2,&fr);
+	map_foreachinrange(mob_getfriendstatus_sub, &md->bl, 8,BL_MOB, md,cond1,cond2,&fr);
 	return fr;
 }
 
@@ -2953,12 +2947,8 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 	
 	nullpo_retr(0, sd);
 
-	for(class_=MOB_CLONE_START; class_<MOB_CLONE_END; class_++){
-		if(mob_db_data[class_]==NULL)
-			break;
-	}
-
-	if(class_>MOB_CLONE_END)
+	ARR_FIND( MOB_CLONE_START, MOB_CLONE_END, class_, mob_db_data[class_] == NULL );
+	if(class_ >= MOB_CLONE_END)
 		return 0;
 
 	mob_db_data[class_]=(struct mob_db*)aCalloc(1, sizeof(struct mob_db));
@@ -3459,10 +3449,10 @@ static bool mob_parse_dbrow(char** str)
  *------------------------------------------*/
 static int mob_readdb(void)
 {
-	char* filename[] = { "mob_db.txt", "mob_db2.txt" };
+	const char* filename[] = { "mob_db.txt", "mob_db2.txt" };
 	int fi;
 	
-	for(fi = 0; fi < 2; fi++)
+	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi )
 	{
 		uint32 lines = 0, count = 0;
 		char line[1024];
@@ -3520,10 +3510,10 @@ static int mob_readdb(void)
  *------------------------------------------*/
 static int mob_read_sqldb(void)
 {
-	char* mob_db_name[] = { mob_db_db, mob_db2_db };
+	const char* mob_db_name[] = { mob_db_db, mob_db2_db };
 	int fi;
 	
-	for (fi = 0; fi < 2; fi++)
+	for( fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi )
 	{
 		uint32 lines = 0, count = 0;
 		
@@ -3630,7 +3620,7 @@ static int mob_readdb_mobavail(void)
 			mob_db_data[class_]->vd.head_top=atoi(str[7]);
 			mob_db_data[class_]->vd.head_mid=atoi(str[8]);
 			mob_db_data[class_]->vd.head_bottom=atoi(str[9]);
-			mob_db_data[class_]->option=atoi(str[10])&~0x46;
+			mob_db_data[class_]->option=atoi(str[10])&~(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE);
 			mob_db_data[class_]->vd.cloth_color=atoi(str[11]); // Monster player dye option - Valaris
 		}
 		else if(str[2] && atoi(str[2]) > 0)
@@ -3661,7 +3651,8 @@ static int mob_read_randommonster(void)
 
 	memset(&summon, 0, sizeof(summon));
 
-	for(i=0;i<MAX_RANDOMMONSTER;i++){
+	for( i = 0; i < ARRAYLENGTH(mobfile) && i < MAX_RANDOMMONSTER; i++ )
+	{
 		mob_db_data[0]->summonper[i] = 1002;	// Ý’è‚µ–Y‚ê‚½ê‡‚Íƒ|ƒŠƒ“‚ªo‚é‚æ‚¤‚É‚µ‚Ä‚¨‚­
 		sprintf(line, "%s/%s", db_path, mobfile[i]);
 		fp=fopen(line,"r");
@@ -3689,7 +3680,7 @@ static int mob_read_randommonster(void)
 				continue;
 			mob_db_data[class_]->summonper[i]=atoi(str[2]);
 			if (i) {
-				if (summon[i].qty < sizeof(summon[i].class_)/sizeof(summon[i].class_[0])) //MvPs
+				if( summon[i].qty < ARRAYLENGTH(summon[i].class_) ) //MvPs
 					summon[i].class_[summon[i].qty++] = class_;
 				else {
 					ShowDebug("Can't store more random mobs from %s, increase size of mob.c:summon variable!\n", mobfile[i]);
@@ -3748,7 +3739,7 @@ static int mob_readskilldb(void)
 		{	"anybad",		-1				},
 		{	"stone",		SC_STONE		},
 		{	"freeze",		SC_FREEZE		},
-		{	"stan",			SC_STUN			},
+		{	"stun",			SC_STUN			},
 		{	"sleep",		SC_SLEEP		},
 		{	"poison",		SC_POISON		},
 		{	"curse",		SC_CURSE		},
@@ -3786,13 +3777,15 @@ static int mob_readskilldb(void)
 	};
 
 	int x;
-	char *filename[]={ "mob_skill_db.txt","mob_skill_db2.txt" };
+	const char* filename[] = { "mob_skill_db.txt","mob_skill_db2.txt" };
 
-	if (!battle_config.mob_skill_rate) {
+	if( battle_config.mob_skill_rate == 0 ) {
 		ShowStatus("Mob skill use disabled. Not reading mob skills.\n");
 		return 0;
 	}
-	for(x=0;x<2;x++){
+
+	for( x = 0; x < ARRAYLENGTH(filename); ++x )
+	{
 		int last_mob_id = 0;
 		count = 0;
 		sprintf(line, "%s/%s", db_path, filename[x]); 
@@ -3837,7 +3830,7 @@ static int mob_readskilldb(void)
 				if (mob_id < 0)
 					continue;
 				memset(mob_db_data[mob_id]->skill,0,sizeof(struct mob_skill));
-					mob_db_data[mob_id]->maxskill=0;
+				mob_db_data[mob_id]->maxskill=0;
 				continue;
 			}
 
@@ -3845,28 +3838,24 @@ static int mob_readskilldb(void)
 			{	//Prepare global skill. [Skotlex]
 				memset(&gms, 0, sizeof (struct mob_skill));
 				ms = &gms;
-			} else {			
-				for(i=0;i<MAX_MOBSKILL;i++)
-					if( (ms=&mob_db_data[mob_id]->skill[i])->skill_id == 0)
-						break;
-				if(i==MAX_MOBSKILL){
+			} else {
+				ARR_FIND( 0, MAX_MOBSKILL, i, (ms = &mob_db_data[mob_id]->skill[i])->skill_id == 0 );
+				if( i == MAX_MOBSKILL ) {
 					if (mob_id != last_mob_id) {
-						ShowError("mob_skill: readdb: too many skill! Line %d in %d[%s]\n",
-							count,mob_id,mob_db_data[mob_id]->sprite);
+						ShowError("mob_skill: readdb: too many skills! Line %d in %d[%s]\n", count,mob_id,mob_db_data[mob_id]->sprite);
 						last_mob_id = mob_id;
 					}
 					continue;
 				}
 			}
 
-			ms->state=atoi(sp[2]);
-			tmp = sizeof(state)/sizeof(state[0]);
-			for(j=0;j<tmp && strcmp(sp[2],state[j].str);j++);
-			if (j < tmp)
-				ms->state=state[j].id;
-			else if (!ms->state) {
+			//State
+			ARR_FIND( 0, ARRAYLENGTH(state), j, strcmp(sp[2],state[j].str) == 0 );
+			if( j < ARRAYLENGTH(state) )
+				ms->state = state[j].id;
+			else {
 				ShowWarning("mob_skill: Unrecognized state %s at %s, line %d\n", sp[2], filename[x], count);
-				ms->state=MSS_ANY;
+				ms->state = MSS_ANY;
 			}
 
 			//Skill ID
@@ -3880,6 +3869,7 @@ static int mob_readskilldb(void)
 				continue;
 			}
 			ms->skill_id=j;
+
 			//Skill lvl
 			j= atoi(sp[4])<=0 ? 1 : atoi(sp[4]);
 			ms->skill_lv= j>battle_config.mob_max_skilllvl ? battle_config.mob_max_skilllvl : j; //we strip max skill level
@@ -3900,10 +3890,14 @@ static int mob_readskilldb(void)
 				ms->delay = INT_MAX;
 			ms->cancel=atoi(sp[8]);
 			if( strcmp(sp[8],"yes")==0 ) ms->cancel=1;
-			ms->target=atoi(sp[9]);
-			for(j=0;j<sizeof(target)/sizeof(target[0]);j++){
-				if( strcmp(sp[9],target[j].str)==0)
-					ms->target=target[j].id;
+
+			//Target
+			ARR_FIND( 0, ARRAYLENGTH(target), j, strcmp(sp[9],target[j].str) == 0 );
+			if( j < ARRAYLENGTH(target) )
+				ms->target = target[j].id;
+			else {
+				ShowWarning("mob_skill: Unrecognized target %s at %s, line %d\n", sp[9], filename[x], count);
+				ms->target = MST_TARGET;
 			}
 
 			//Check that the target condition is right for the skill type. [Skotlex]
@@ -3925,21 +3919,22 @@ static int mob_readskilldb(void)
 				ms->target = MST_TARGET;
 			}
 
-			tmp = sizeof(cond1)/sizeof(cond1[0]);
-			for(j=0;j<tmp && strcmp(sp[10],cond1[j].str);j++);
-			if (j < tmp)
-				ms->cond1=cond1[j].id;
+			//Cond1
+			ARR_FIND( 0, ARRAYLENGTH(cond1), j, strcmp(sp[10],cond1[j].str) == 0 );
+			if( j < ARRAYLENGTH(cond1) )
+				ms->cond1 = cond1[j].id;
 			else {
-				ShowWarning("mob_skill: Unrecognized condition 1 %s at %s, line %d\n",
-					sp[10], filename[x], count);
-				ms->cond1=-1;
+				ShowWarning("mob_skill: Unrecognized condition 1 %s at %s, line %d\n", sp[10], filename[x], count);
+				ms->cond1 = -1;
 			}
 
-			ms->cond2=atoi(sp[11]);
-			tmp = sizeof(cond2)/sizeof(cond2[0]);
-			for(j=0;j<tmp && strcmp(sp[11],cond2[j].str);j++);
-			if (j < tmp)
-				ms->cond2=cond2[j].id;
+			//Cond2
+			// numeric value
+			ms->cond2 = atoi(sp[11]);
+			// or special constant 
+			ARR_FIND( 0, ARRAYLENGTH(cond2), j, strcmp(sp[11],cond2[j].str) == 0 );
+			if( j < ARRAYLENGTH(cond2) )
+				ms->cond2 = cond2[j].id;
 			
 			ms->val[0]=(int)strtol(sp[12],NULL,0);
 			ms->val[1]=(int)strtol(sp[13],NULL,0);

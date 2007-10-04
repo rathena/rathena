@@ -579,7 +579,6 @@ int status_percent_change(struct block_list *src,struct block_list *target,signe
 #define status_percent_heal(bl, hp_rate, sp_rate) status_percent_change(NULL, bl, -(hp_rate), -(sp_rate), 1)
 #define status_percent_damage(src, target, hp_rate, sp_rate) status_percent_change(src, target, hp_rate, sp_rate, 0)
 //Instant kill with no drops/exp/etc
-//
 #define status_kill(bl) status_percent_damage(NULL, bl, 100, 0)
 //Used to set the hp/sp of an object to an absolute value (can't kill)
 int status_set_hp(struct block_list *bl, unsigned int hp, int flag);

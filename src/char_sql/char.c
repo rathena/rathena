@@ -828,9 +828,10 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	struct item tmp_item;
 	struct skill tmp_skill;
 	struct s_friend tmp_friend;
+#ifdef HOTKEY_SAVING
 	struct hotkey tmp_hotkey;
 	int hotkey_num;
-
+#endif
 
 	memset(p, 0, sizeof(struct mmo_charstatus));
 	
@@ -1041,7 +1042,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 
 	while( SQL_SUCCESS == SqlStmt_NextRow(stmt) )
 	{
-		if( hotkey_num >= 0 && hotkey_num < HOTKEY_SAVING )
+		if( hotkey_num >= 0 && hotkey_num < MAX_HOTKEYS )
 			memcpy(&p->hotkeys[hotkey_num], &tmp_hotkey, sizeof(tmp_hotkey));
 		else
 			ShowWarning("mmo_char_fromsql: ignoring invalid hotkey (hotkey=%d,type=%u,id=%u,lv=%u) of character %s (AID=%d,CID=%d)\n", hotkey_num, tmp_hotkey.type, tmp_hotkey.id, tmp_hotkey.lv, p->name, p->account_id, p->char_id);
