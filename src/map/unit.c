@@ -457,13 +457,9 @@ int unit_run(struct block_list *bl)
 int unit_escape(struct block_list *bl, struct block_list *target, int dist)
 {
 	int dir = map_calc_dir(target, bl->x, bl->y);
-	while (dist > 0 && map_getcell(bl->m,
-		bl->x + dist*dirx[dir], bl->y + dist*diry[dir],
-		CELL_CHKNOREACH))
+	while( dist > 0 && map_getcell(bl->m, bl->x + dist*dirx[dir], bl->y + dist*diry[dir], CELL_CHKNOREACH) )
 		dist--;
-	return (dist > 0 && unit_walktoxy(bl,
-		bl->x + dist*dirx[dir], bl->y + dist*diry[dir],
-		0));
+	return ( dist > 0 && unit_walktoxy(bl, bl->x + dist*dirx[dir], bl->y + dist*diry[dir], 0) );
 }
 
 //Instant warp function.

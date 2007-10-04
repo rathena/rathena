@@ -2957,7 +2957,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			//HACK: since knockback officially defaults to the left, the client also turns to the left... therefore,
 			// make the caster look in the direction of the target
 			unit_setdir(src, (dir+4)%8);
-			clif_changed_dir(src, AREA);
 		}
 
 		}
@@ -7017,7 +7016,14 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 				if(celltype==5 || celltype==1)
 					alive=0;
 				else
-					clif_changemapcell(0,src->m,ux,uy,5);
+				{
+					struct block_list bl;
+					bl.type = BL_NUL;
+					bl.m = src->m;
+					bl.x = ux;
+					bl.y = uy;
+					clif_changemapcell(0,&bl,5,AREA);
+				}
 		}
 
 		if(alive){
@@ -7187,11 +7193,12 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 			sc_start4(bl,type,100,sg->skill_lv,0,BCT_ENEMY,sg->group_id,sg->limit);
 		break;
 
-	case UNT_ICEWALL: //Destroy the cell. [Skotlex]
-		src->val1 = 0;
-		if(src->limit + sg->tick > tick + 700)
-			src->limit = DIFF_TICK(tick+700,sg->tick);
-		break;
+// officially, icewall has no problems existing on occupied cells [ultramage]
+//	case UNT_ICEWALL: //Destroy the cell. [Skotlex]
+//		src->val1 = 0;
+//		if(src->limit + sg->tick > tick + 700)
+//			src->limit = DIFF_TICK(tick+700,sg->tick);
+//		break;
 	
 	case UNT_MOONLIT:
 		//Knockback out of area if affected char isn't in Moonlit effect
@@ -7839,7 +7846,9 @@ int skill_unit_onlimit (struct skill_unit *src, unsigned int tick, int flag)
 		break;
 
 	case UNT_ICEWALL:
-		clif_changemapcell(0,src->bl.m,src->bl.x,src->bl.y,src->val2);
+		// hack to prevent client from leaving cells unwalkable
+		//FIXME: this should be done individually in insight/outsight code instead [ultramage]
+		clif_changemapcell(0,&src->bl,src->val2,ALL_SAMEMAP);
 		break;
 	case UNT_CALLFAMILY:
 		if (!flag)
@@ -9922,21 +9931,19 @@ int skill_delunit (struct skill_unit *unit, int flag)
 	struct skill_unit_group *group;
 
 	nullpo_retr(0, unit);
-	if(!unit->alive)
+	if( !unit->alive )
 		return 0;
 	nullpo_retr(0, group=unit->group);
 
 	// invoke onlimit event
-	skill_unit_onlimit( unit,gettick(), flag);
+	skill_unit_onlimit(unit, gettick(), flag);
 
-	if (group->state.song_dance&0x1) //Restore dissonance effect.
+	if( group->state.song_dance&0x1 ) //Restore dissonance effect.
 		skill_dance_overlap(unit, 0);
 
 	// invoke onout event
-	if (!unit->range) {
-		map_foreachincell(skill_unit_effect,unit->bl.m,
-			unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,gettick(),4);
-	}
+	if( !unit->range )
+		map_foreachincell(skill_unit_effect,unit->bl.m,unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,gettick(),4);
 
 	switch (group->skill_id) {
 	case AL_PNEUMA:

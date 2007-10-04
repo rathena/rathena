@@ -229,7 +229,7 @@ int clif_marionette(struct block_list *src, struct block_list *target);
 int clif_spiritball(struct map_session_data *sd);
 int clif_combo_delay(struct block_list *src,int wait);
 int clif_bladestop(struct block_list *src,struct block_list *dst,int bool_);
-void clif_changemapcell(int fd, short m, short x, short y, int type);
+void clif_changemapcell(int fd, struct block_list* pos, int type, enum send_target target);
 
 int clif_status_load(struct block_list *bl,int type, int flag);
 int clif_status_change(struct block_list *bl,int type,int flag);

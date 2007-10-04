@@ -324,7 +324,7 @@ int path_search_real(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1
 	//Do not check starting cell as that would get you stuck.
 	if( x0 < 0 || x0 >= md->xs || y0 < 0 || y0 >= md->ys )
 #else
-	if( x0 < 0 || x0 >= md->xs || y0 < 0 || y0 >= md->ys || map_getcellp(md,x0,y0,flag2) )
+	if( x0 < 0 || x0 >= md->xs || y0 < 0 || y0 >= md->ys /*|| map_getcellp(md,x0,y0,flag2)*/ )
 #endif
 		return -1;
 	if( x1 < 0 || x1 >= md->xs || y1 < 0 || y1 >= md->ys || map_getcellp(md,x1,y1,flag2) )

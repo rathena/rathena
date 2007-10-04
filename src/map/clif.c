@@ -274,18 +274,15 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target type)
 {
 	int i;
-	struct map_session_data *sd = NULL;
+	struct map_session_data *sd;
 	struct party_data *p = NULL;
 	struct guild *g = NULL;
 	int x0 = 0, x1 = 0, y0 = 0, y1 = 0, fd;
 
-	if (type != ALL_CLIENT &&
-		type != CHAT_MAINCHAT) {
+	if( type != ALL_CLIENT && type != CHAT_MAINCHAT )
 		nullpo_retr(0, bl);
-		if (bl->type == BL_PC) {
-			sd = (struct map_session_data *)bl;
-		}
-	}
+
+	BL_CAST(BL_PC, bl, sd);
 
 	switch(type) {
 	case ALL_CLIENT: //All player clients.
@@ -3869,30 +3866,27 @@ void clif_standing(struct block_list* bl)
 }
 
 /*==========================================
- *
+ * Inform client(s) about a map-cell change
  *------------------------------------------*/
-void clif_changemapcell(int fd, short m, short x, short y, int type)
+void clif_changemapcell(int fd, struct block_list* pos, int type, enum send_target target)
 {
 	unsigned char buf[32];
+	nullpo_retv(pos);
 
 	WBUFW(buf,0) = 0x192;
-	WBUFW(buf,2) = x;
-	WBUFW(buf,4) = y;
+	WBUFW(buf,2) = pos->x;
+	WBUFW(buf,4) = pos->y;
 	WBUFW(buf,6) = type;
-	mapindex_getmapname_ext(map[m].name,(char*)WBUFP(buf,8));
+	mapindex_getmapname_ext(map[pos->m].name,(char*)WBUFP(buf,8));
 
-	if (fd == 0) {
-		struct block_list bl;
-		bl.type = BL_NUL;
-		bl.m = m;
-		bl.x = x;
-		bl.y = y;
-		clif_send(buf,packet_len(0x192),&bl,AREA);
-	} else {
+	if( fd )
+	{
 		WFIFOHEAD(fd,packet_len(0x192));
 		memcpy(WFIFOP(fd,0), buf, packet_len(0x192));
 		WFIFOSET(fd,packet_len(0x192));
 	}
+	else
+		clif_send(buf,packet_len(0x192),pos,target);
 }
 
 /*==========================================
@@ -3957,7 +3951,7 @@ static void clif_getareachar_skillunit(struct map_session_data *sd, struct skill
 	WFIFOSET(fd,packet_len(0x11f));
 
 	if(unit->group->skill_id == WZ_ICEWALL)
-		clif_changemapcell(fd,unit->bl.m,unit->bl.x,unit->bl.y,5);
+		clif_changemapcell(fd,&unit->bl,5,SELF);
 }
 
 /*==========================================
@@ -3973,7 +3967,21 @@ static void clif_clearchar_skillunit(struct skill_unit *unit, int fd)
 	WFIFOSET(fd,packet_len(0x120));
 
 	if(unit->group && unit->group->skill_id == WZ_ICEWALL)
-		clif_changemapcell(fd,unit->bl.m,unit->bl.x,unit->bl.y,unit->val2);
+		clif_changemapcell(fd,&unit->bl,unit->val2,SELF);
+}
+
+/*==========================================
+ * 場所スキルエフェクト削除
+ *------------------------------------------*/
+void clif_skill_delunit(struct skill_unit *unit)
+{
+	unsigned char buf[16];
+
+	nullpo_retv(unit);
+
+	WBUFW(buf, 0)=0x120;
+	WBUFL(buf, 2)=unit->bl.id;
+	clif_send(buf,packet_len(0x120),&unit->bl,AREA);
 }
 
 /*==========================================
@@ -4552,20 +4560,6 @@ void clif_skill_setunit(struct skill_unit *unit)
 		WBUFB(buf,14)=unit->group->unit_id;
 	WBUFB(buf,15)=0;
 	clif_send(buf,packet_len(0x11f),&unit->bl,AREA);
-}
-
-/*==========================================
- * 場所スキルエフェクト削除
- *------------------------------------------*/
-void clif_skill_delunit(struct skill_unit *unit)
-{
-	unsigned char buf[16];
-
-	nullpo_retv(unit);
-
-	WBUFW(buf, 0)=0x120;
-	WBUFL(buf, 2)=unit->bl.id;
-	clif_send(buf,packet_len(0x120),&unit->bl,AREA);
 }
 
 /*==========================================
