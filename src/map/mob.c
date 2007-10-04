@@ -2022,8 +2022,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if (rand() % 10000 >= drop_rate)
 			{
 				if (sd && sd->sc.data[SC_ITEMBOOST].timer != -1)
+				{
 					if (rand() % 10000 >= drop_rate)
 						continue; // Double try by Bubble Gum
+				}
 				else
 					continue;
 			}
