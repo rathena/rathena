@@ -454,6 +454,8 @@ void initChangeTables(void)
 	//Cash Items
 	StatusIconChangeTable[SC_EXPBOOST] = SI_EXPBOOST;
 	StatusIconChangeTable[SC_ITEMBOOST] = SI_ITEMBOOST;
+	StatusIconChangeTable[SC_LIFEINSURANCE] = SI_LIFEINSURANCE;
+	StatusIconChangeTable[SC_BOSSMAPINFO] = SI_BOSSMAPINFO;
 
 	//Other SC which are not necessarily associated to skills.
 	StatusChangeFlagTable[SC_ASPDPOTION0] = SCB_ASPD;

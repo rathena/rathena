@@ -11360,7 +11360,6 @@ void clif_parse_HomMenu(int fd, struct map_session_data *sd)
 	merc_menu(sd,RFIFOB(fd,packet_db[sd->packet_ver][cmd].pos[0]));
 }
 
-// [Zephyrus Code Modifications]
 void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 {
 	int item_position;
@@ -11372,8 +11371,8 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 		return;
 
 	if (!status_revive(&sd->bl, 100, 100))
-	return;
- 
+		return;
+	
 	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
 	pc_delitem(sd, item_position, 1, 0);
 }

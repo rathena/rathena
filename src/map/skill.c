@@ -4824,7 +4824,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case SC_CARTBOOST:   case SC_MELTDOWN:    case SC_SAFETYWALL:
 				case SC_SMA:         case SC_SPEEDUP0:    case SC_NOCHAT:
 				case SC_ANKLE:       case SC_SPIDERWEB:   case SC_JAILED:
-				case SC_ITEMBOOST:   case SC_EXPBOOST: // [ConvexMirror and FieldGuide]
+				case SC_ITEMBOOST:   case SC_EXPBOOST:    case SC_LIFEINSURANCE:
+				case SC_BOSSMAPINFO:
 					continue;
 				}
 				if(i==SC_BERSERK) tsc->data[i].val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.

@@ -5071,7 +5071,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if(battle_config.death_penalty_type && sd->state.snovice_dead_flag != 1
 		&& (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE	// only novices will receive no penalty
 		&& !map[sd->bl.m].flag.noexppenalty && !map_flag_gvg(sd->bl.m)
-		&& sd->sc.data[SC_BABY].timer == -1)
+		&& sd->sc.data[SC_BABY].timer == -1 && sd->sc.data[SC_LIFEINSURANCE].timer == -1)
 	{
 		unsigned int base_penalty =0;
 		if (battle_config.death_penalty_base > 0) {
