@@ -696,7 +696,7 @@ static int itemdb_gendercheck(struct item_data *id)
 /*==========================================
  * processes one itemdb entry
  *------------------------------------------*/
-static bool itemdb_parse_dbrow(char** str, char* source, int line)
+static bool itemdb_parse_dbrow(const char** str, const char* source, int line)
 {
 	/*
 		+----+--------------+---------------+------+-----------+------------+--------+--------+---------+-------+-------+------------+-------------+---------------+-----------------+--------------+-------------+------------+------+--------+--------------+----------------+

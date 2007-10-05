@@ -4850,7 +4850,6 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		break;
 	case SC_SILENCE:
 		if (sc->data[SC_GOSPEL].timer!=-1 && sc->data[SC_GOSPEL].val4 == BCT_SELF)
-		  	//Clear Gospel [Skotlex]
 			status_change_end(bl,SC_GOSPEL,-1);
 		break;
 	case SC_HIDING:
@@ -6357,7 +6356,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			sc_start4(bl, SC_REGENERATION, 100, 10,0,0,(RGN_HP|RGN_SP),
 				skill_get_time(LK_BERSERK, sc->data[type].val1));
 			break;
-		case SC_GOSPEL: //Clear the buffs from other chars.
+		case SC_GOSPEL:
 			if (sc->data[type].val3) { //Clear the group.
 				struct skill_unit_group *group = (struct skill_unit_group *)sc->data[type].val3;
 				sc->data[type].val3 = 0;

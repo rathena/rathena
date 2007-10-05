@@ -3,6 +3,21 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/10/05
+	* Removed a broken remnant of code from old gospel code (r4349) that's
+	  _supposed_ to clear the gospel status (no item use?) when you step
+	  out of its zone; 1) the constant UNT_GOSPEL was used in a switch()
+	  instead of PA_GOSPEL (thus actually ending 'NPC_STUNATTACK' status),
+	  and 2) this code path is never taken, because Gospel is not recorded
+	  in skill_unit_temp[] (it has a periodic timer and is not DUALMODE)
+	* Now the first empty spot in the 'skill_unit_temp' array will be used
+	  when tracking movement between land skills; reduced its length to 20
+	* Fixed the skill unit mechanism that is supposed to track whether
+	  you're still standing in a certain land skill's AoE or not, which
+	  was not working correctly since the time it was added (r3133)
+	- solves the nasty problem of Loki, Quagmire, ... status not ending
+	  even after stepping out of it in some cases, if there was another
+	  song overlapping the skill's area (fixes bugreport:34) [ultramage]
 2007/10/04
 	* Completed the SC_LIFEINSURANCE status and it's status icon. [Zephyrus]
 	- Updated Item_db.txt.

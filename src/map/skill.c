@@ -2297,8 +2297,6 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
  *  0	=—\–ñ?B0‚ÉŒÅ’è
  *------------------------------------------*/
 static int skill_area_temp[8];
-static int skill_unit_temp[64];	/* For storing skill_unit ids as players move in/out of them. [Skotlex] */
-static int skill_unit_index=0;	//Well, yeah... am too lazy to pass pointers around :X
 typedef int (*SkillFunc)(struct block_list *, struct block_list *, int, int, unsigned int, int);
 int skill_area_sub (struct block_list *bl, va_list ap)
 {
@@ -3409,13 +3407,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
  *------------------------------------------*/
 int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, int skillid, int skilllv, unsigned int tick, int flag)
 {
-	struct map_session_data *sd = NULL;
-	struct homun_data *hd = NULL;
-	struct map_session_data *dstsd = NULL;
+	struct map_session_data *sd;
+	struct homun_data *hd;
+	struct map_session_data *dstsd;
 	struct status_data *sstatus, *tstatus;
 	struct status_change *tsc;
-	struct mob_data *md = NULL;
-	struct mob_data *dstmd = NULL;
+	struct mob_data *md;
+	struct mob_data *dstmd;
 	int i,type;
 	
 	if(skillid > 0 && skilllv <= 0) return 0;	// celest
@@ -3426,19 +3424,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	if (src->m != bl->m)
 		return 1;
 
-	if (src->type == BL_PC) {
-		sd = (struct map_session_data *)src;
-	} else if (src->type == BL_HOM) {	//[orn]
-		hd = (struct homun_data *)src;
-	} else if (src->type == BL_MOB) {
-		md = (struct mob_data *)src;
-	}
+	BL_CAST(BL_PC, src, sd);
+	BL_CAST(BL_HOM, src, hd);
+	BL_CAST(BL_MOB, src, md);
 
-	if (bl->type == BL_PC){
-		dstsd = (struct map_session_data *)bl;
-	} else if (bl->type == BL_MOB){
-		dstmd = (struct mob_data *)bl;
-	}
+	BL_CAST(BL_PC, bl, dstsd);
+	BL_CAST(BL_MOB, bl, dstmd);
 
 	if(bl->prev == NULL)
 		return 1;
@@ -7647,7 +7638,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	return skillid;
 }
 /*==========================================
- *
+ * Triggered when a char steps out of a skill cell
  *------------------------------------------*/
 int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned int tick)
 {
@@ -7691,7 +7682,7 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 }
 
 /*==========================================
- * Triggered when a char steps out of a skill group [Skotlex]
+ * Triggered when a char steps out of a skill group (entirely) [Skotlex]
  *------------------------------------------*/
 static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int tick)
 {
@@ -7773,10 +7764,6 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 					}
 				}
 			}
-			break;
-		case UNT_GOSPEL:
-			if (sc && sc->data[type].timer != -1 && sc->data[type].val4 == BCT_ALL) //End item-no-use Gospel Effect. [Skotlex]
-				status_change_end(bl, type, -1);
 			break;
 	}
 
@@ -10064,13 +10051,16 @@ int skill_delunitgroup (struct block_list *src, struct skill_unit_group *group, 
 		}
 	}
 
-	if (group->unit_id == UNT_GOSPEL) { //Clear Gospel [Skotlex]
+	// end Gospel's status change on 'src'
+	// (needs to be done when the group is deleted by other means than skill deactivation)
+	if (group->unit_id == UNT_GOSPEL) {
 		struct status_change *sc = status_get_sc(src);
 		if(sc && sc->data[SC_GOSPEL].timer != -1) {
 			sc->data[SC_GOSPEL].val3 = 0; //Remove reference to this group. [Skotlex]
 			status_change_end(src,SC_GOSPEL,-1);
 		}
 	}
+
 	if (group->skill_id == SG_SUN_WARM ||
 		group->skill_id == SG_MOON_WARM ||
 		group->skill_id == SG_STAR_WARM) {
@@ -10315,6 +10305,7 @@ int skill_unit_timer (int tid, unsigned int tick, int id, int data)
 	return 0;
 }
 
+static int skill_unit_temp[20];  // temporary storage for tracking skill unit skill ids as players move in/out of them
 /*==========================================
  *
  *------------------------------------------*/
@@ -10328,6 +10319,7 @@ int skill_unit_move_sub (struct block_list* bl, va_list ap)
 	int flag = va_arg(ap,int);
 
 	int skill_id;
+	int i;
 	
 	nullpo_retr(0, group);
 	
@@ -10357,9 +10349,8 @@ int skill_unit_move_sub (struct block_list* bl, va_list ap)
 			if( flag&1 )
 			{
 				if( flag&2 )
-				{	//Clear skill ids we have stored in onout.
-					int i;
-					ARR_FIND(0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == skill_id );
+				{	//Clear this skill id.
+					ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == skill_id );
 					if( i < ARRAYLENGTH(skill_unit_temp) )
 						skill_unit_temp[i] = 0;
 				}
@@ -10367,9 +10358,10 @@ int skill_unit_move_sub (struct block_list* bl, va_list ap)
 			else
 			{
 				if( flag&2 )
-				{	//Store this unit id.
-					if( skill_unit_index < ARRAYLENGTH(skill_unit_temp) )
-						skill_unit_temp[skill_unit_index++] = skill_id;
+				{	//Store this skill id.
+					ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == 0 );
+					if( i < ARRAYLENGTH(skill_unit_temp) )
+						skill_unit_temp[i] = skill_id;
 					else if( battle_config.error_log )
 						ShowError("skill_unit_move_sub: Reached limit of unit objects per cell!\n");
 				}
@@ -10378,45 +10370,48 @@ int skill_unit_move_sub (struct block_list* bl, va_list ap)
 			if( flag&4 )
 				skill_unit_onleft(skill_id,target,tick);
 		}
+
 		if( flag&64 )
 			skill_dance_switch(unit, group, 1);
 
 		return 0;
 	}
-	
-	if( flag&1 )
-	{
-		unsigned int result = skill_unit_onplace(unit,target,tick);
-		if( flag&2 && result )
-		{	//Clear skill ids we have stored in onout.
-			int i;
-			ARR_FIND(0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == result );
-			if( i < ARRAYLENGTH(skill_unit_temp) )
-				skill_unit_temp[i] = 0;
-		}
-	}
 	else
 	{
-		unsigned int result = skill_unit_onout(unit,target,tick);
-		if( flag&2 && result )
-		{	//Store this unit id.
-			if( skill_unit_index < ARRAYLENGTH(skill_unit_temp) )
-				skill_unit_temp[skill_unit_index++] = result;
-			else if( battle_config.error_log )
-				ShowError("skill_unit_move_sub: Reached limit of unit objects per cell!\n");
+		if( flag&1 )
+		{
+			unsigned int result = skill_unit_onplace(unit,target,tick);
+			if( flag&2 && result )
+			{	//Clear skill ids we have stored in onout.
+				ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == result );
+				if( i < ARRAYLENGTH(skill_unit_temp) )
+					skill_unit_temp[i] = 0;
+			}
 		}
+		else
+		{
+			unsigned int result = skill_unit_onout(unit,target,tick);
+			if( flag&2 && result )
+			{	//Store this unit id.
+				ARR_FIND( 0, ARRAYLENGTH(skill_unit_temp), i, skill_unit_temp[i] == 0 );
+				if( i < ARRAYLENGTH(skill_unit_temp) )
+					skill_unit_temp[i] = skill_id;
+				else if( battle_config.error_log )
+					ShowError("skill_unit_move_sub: Reached limit of unit objects per cell!\n");
+			}
+		}
+
+		//TODO: Normally, this is dangerous since the unit and group could be freed
+		//inside the onout/onplace functions. Currently it is safe because we know song/dance
+		//cells do not get deleted within them. [Skotlex]
+		if( flag&64 )
+			skill_dance_switch(unit, group, 1);
+			
+		if( flag&4 )
+			skill_unit_onleft(skill_id,target,tick);
+
+		return 1;
 	}
-
-	//TODO: Normally, this is dangerous since the unit and group could be freed
-	//inside the onout/onplace functions. Currently it is safe because we know song/dance
-	//cells do not get deleted within them. [Skotlex]
-	if( flag&64 )
-		skill_dance_switch(unit, group, 1);
-		
-	if( flag&4 )
-		skill_unit_onleft(skill_id,target,tick);
-
-	return 1;
 }
 
 /*==========================================
@@ -10431,22 +10426,22 @@ int skill_unit_move (struct block_list *bl, unsigned int tick, int flag)
 {
 	nullpo_retr(0, bl);
 
-	if(bl->prev==NULL )
+	if( bl->prev == NULL )
 		return 0;
 
-	if (flag&2 && !(flag&1))
+	if( flag&2 && !(flag&1) )
 	{	//Onout, clear data
-		memset (&skill_unit_temp,0,sizeof(skill_unit_temp));
-		skill_unit_index=0;
+		memset(skill_unit_temp, 0, sizeof(skill_unit_temp));
 	}
 		
 	map_foreachincell(skill_unit_move_sub,bl->m,bl->x,bl->y,BL_SKILL,bl,tick,flag);
 
-	if (flag&2 && flag&1)
-	{ //Onplace, check any skill units you have left.
+	if( flag&2 && flag&1 )
+	{	//Onplace, check any skill units you have left.
 		int i;
-		for (i=0; i < ARRAYLENGTH(skill_unit_temp) && skill_unit_temp[i]; i++)
-			skill_unit_onleft(skill_unit_temp[i], bl, tick);
+		for( i = 0; i < ARRAYLENGTH(skill_unit_temp); i++ )
+			if( skill_unit_temp[i] )
+				skill_unit_onleft(skill_unit_temp[i], bl, tick);
 	}
 
 	return 0;
