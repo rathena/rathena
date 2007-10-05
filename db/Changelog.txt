@@ -36,6 +36,8 @@
 
 =======================
 10/05
+	* Updated gender restrictions to aegis [Playtester]
+	- it will still be ignored by eA due to a config setting
 	* Removed gender restrictions on all equips [Playtester]
 	- official servers don't have gender restrictions implemented, although they have it in their db files
 	- Wedding Dress doesn't display Wedding sprite anymore (females and males can fight with it)
