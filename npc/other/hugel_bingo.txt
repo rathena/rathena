@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= SinSloth
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= Any eAthena Version
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.3 - Fixed a bug where an AFK-player wasn't warped out of the game,
 //= preventing players from launching another. [SinSloth]
 //= 1.4 - Fixed a minor bug added in the last revision. [SinSloth]
+//= 1.5 - Applied a fix to players locations which were not rotating properly. [SinSloth]
 //============================================================
 
 que_bingo,48,84,5	script	Bingo Waiting Room	124,{
@@ -164,6 +165,7 @@ OnTimer203000:
 OnTimer204000:
 	disablenpc "out3#bingo";
 	set $hu_bingoa,0;
+	set $hu_bingob,0;
 	donpcevent "Bingo Waiting Room::OnStart";
 	end;
 }
@@ -914,7 +916,7 @@ OnTouch:
 		case 4:	warp "que_bingo",45,121; break;
 	}
 	set $hu_bingob,$hu_bingob +1;
-	if($hu_bingob == 4) set $hu_bingob,0;
+	if($hu_bingob == 5) set $hu_bingob,0;
 	end;
 }
 
