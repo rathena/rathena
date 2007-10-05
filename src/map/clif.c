@@ -7796,25 +7796,27 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	clif_updatestatus(sd,SP_MAXWEIGHT);
 	clif_updatestatus(sd,SP_WEIGHT);
 
+	// guild
+	// (needs to go before clif_spawn() to show guild emblems correctly)
+	if(sd->status.guild_id)
+		guild_send_memberinfoshort(sd,1);
+
 	if(battle_config.pc_invincible_time > 0) {
 		if(map_flag_gvg(sd->bl.m))
 			pc_setinvincibletimer(sd,battle_config.pc_invincible_time<<1);
 		else
 			pc_setinvincibletimer(sd,battle_config.pc_invincible_time);
 	}
-	map_addblock(&sd->bl);	// ƒuƒƒbƒN“o˜^
-	clif_spawn(&sd->bl);	// spawn
 
+	map_addblock(&sd->bl);
+	clif_spawn(&sd->bl);
 
 	// Party
+	// (needs to go after clif_spawn() to show hp bars correctly)
 	if(sd->status.party_id) {
 		party_send_movemap(sd);
 		clif_party_hp(sd); // Show hp after displacement [LuzZza]
 	}
-
-	// guild
-	if(sd->status.guild_id)
-		guild_send_memberinfoshort(sd,1);
 
 	if(map[sd->bl.m].flag.pvp) {
 		if(!battle_config.pk_mode) { // remove pvp stuff for pk_mode [Valaris]
