@@ -32,6 +32,7 @@
 //=	Correct job level requirements for 1-1 -> 2-x.
 //= 2.7a Added Function "F_BlockHigh" back in until rewriteing of the 2-x [L0ne_W0lf]
 //=	scripts are comepleted.
+//= 2.7b Removed function "F_BlockHigh" as it's no longer used. [L0ne_W0lf]
 //============================================================ 
 
 valkyrie,48,86,4	script	Valkyrie#	811,{
@@ -388,48 +389,3 @@ S_WarpChar:
 valkyrie,48,73,0	warp	valk01	1,1,valkyrie,48,64
 valkyrie,48,66,0	warp	valk01	1,1,valkyrie,48,75
 
-
-// function GUIDE player to Valhalla for getting 3rd JOB
-// this function prevents passing 2nd JOB QUESTS by advanced classes also
-//getarg(0) - High Job ID
-//getarg(1) - High Job Name
-//getarg(2) - 3rd Job ID
-//getarg(3) - 3rd Job Name
-//getarg(4) - NPC Name
-function	script	F_BlockHigh	{
-	if(Upper != 1) return; //This func should interact with Advanced classes only
-	mes "["+getarg(4)+"]";
-	if(Class == getarg(0) && ADVJOB == getarg(2)) goto L_RIGHTHIGH;
-	if(Class == getarg(2)) goto L_RIGHT3RD;
-	if(Class >= Job_Lord_Knight && Class <= Job_Paladin2) goto L_ALREADY3RD; //already advanced class, but from wrong guild
-//this player is a High Novice
-	if(Class == Job_Novice_High) mes "Hello, Novice High! If you are going to became a "+getarg(1)+", then go visit your very first job teacher.";
-//this player has 1st advanced job, but from wrong guild
-	if(Class == getarg(0)) mes "A "+getarg(1)+"?";
-	if(Class != Job_Novice_High) mes "Rumors say only Valhallana knows your way...";
-	emotion e_sry;
-	close;
-
-L_RIGHT3RD:
-	mes "Well, hello there! You look... younger.";
-	emotion e_hmm;
-	next;
-	mes "["+getarg(4)+"]";
-	mes "You are always welcome here, "+strcharinfo(0)+"!";
-	mes "Our good old guild is your second home, isn't it?";
-	emotion e_no1;
-	close;
-
-L_RIGHTHIGH:
-	mes "Hello, "+strcharinfo(0)+"!";
-	mes "If you are going to become a "+getarg(3)+", then you should visit Valhalla again.";
-	if(JobLevel < 45) mes "But you need at least Job Level 45 or higher.";
-	emotion e_gasp;
-	close;
-
-L_ALREADY3RD:
-	mes "A "+getarg(3)+"?";
-	mes "You don't belong to our guild. Begone!";
-	emotion e_omg;
-	close;
-}
