@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/10/06
+	* Updated Atroce's respawn time on Veins fields [Playtester]
 2007/10/05
 	* Fixed a bug in Hugel Bingo which caused wrong rotation in player locations. [SinSloth]
 2007/10/01
