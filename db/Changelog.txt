@@ -35,6 +35,11 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/06
+	* Added missing item names in the item_db [Playtester]
+	- please fix the txt files if there's a bug to begin with next time
+	- also ingame names shouldn't have "_"
+	- updated sql files
 10/05
 	* Updated gender restrictions to aegis [Playtester]
 	- it will still be ignored by eA due to a config setting

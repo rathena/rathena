@@ -2797,10 +2797,10 @@
 7611,Symbol_Of_Fox,Symbol of Fox,3,20,,10,,,,,,,,,,,,,{},{},{}
 7612,Heart_Of_Fox_Queen,Heart of Fox Queen,3,2,,10,,,,,,,,,,,,,{},{},{}
 7613,Small_Rice_Dough,Small Rice Dough,3,0,,0,,,,,,,,,,,,,{},{},{}
-7614,Special_Packing_Paper,,3,0,,1,,,,,,,,,,,,,{},{},{}
-7615,MVP_Ticket,,3,0,,1,,,,,,,,,,,,,{},{},{}
-7616,Mini_Boss_Ticket,,3,0,,1,,,,,,,,,,,,,{},{},{}
-7617,Monster_Ticket_,,3,0,,1,,,,,,,,,,,,,{},{},{}
+7614,Special_Packing_Paper,Special Packing Paper,3,0,,1,,,,,,,,,,,,,{},{},{}
+7615,MVP_Ticket,MVP Ticket,3,0,,1,,,,,,,,,,,,,{},{},{}
+7616,Mini_Boss_Ticket,Mini Boss Ticket,3,0,,1,,,,,,,,,,,,,{},{},{}
+7617,Monster_Ticket_,Monster Ticket,3,0,,1,,,,,,,,,,,,,{},{},{}
 7618,Monster_Crystal,Monster Crystal,3,0,,10,,,,,,,,,,,,,{},{},{}
 7619,Enriched_Elunium,Enriched Elunium,3,0,,10,,,,,,,,,,,,,{},{},{}
 7620,Enriched_Oridecon,Enriched Oridecon,3,0,,10,,,,,,,,,,,,,{},{},{}
