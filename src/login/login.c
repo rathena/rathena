@@ -3933,7 +3933,6 @@ void do_final(void)
 {
 	int i, fd;
 	ShowInfo("Terminating...\n");
-	fflush(stdout);
 	mmo_auth_sync();
 	online_db->destroy(online_db, NULL);
 

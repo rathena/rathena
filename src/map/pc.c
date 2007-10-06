@@ -6198,13 +6198,14 @@ static int pc_eventtimer(int tid,unsigned int tick,int id,int data)
 	if(sd==NULL)
 		return 0;
 
-	for(i=0;i < MAX_EVENTTIMER && sd->eventtimer[i]!=tid; i++);
-
-	if(i < MAX_EVENTTIMER){
+	ARR_FIND( 0, MAX_EVENTTIMER, i, sd->eventtimer[i] == tid );
+	if( i < MAX_EVENTTIMER )
+	{
+		sd->eventtimer[i] = -1;
 		sd->eventcount--;
-		sd->eventtimer[i]=-1;
 		npc_event(sd,p,0);
-	} else if(battle_config.error_log)
+	}
+	else if( battle_config.error_log )
 		ShowError("pc_eventtimer: no such event timer\n");
 
 	if (p) aFree(p);
@@ -6217,18 +6218,15 @@ static int pc_eventtimer(int tid,unsigned int tick,int id,int data)
 int pc_addeventtimer(struct map_session_data *sd,int tick,const char *name)
 {
 	int i;
-	char *evname;
-
+	char* evname;
 	nullpo_retr(0, sd);
 
-	for(i=0;i<MAX_EVENTTIMER && sd->eventtimer[i]!=-1;i++);
-	
-	if(i==MAX_EVENTTIMER)
+	ARR_FIND( 0, MAX_EVENTTIMER, i, sd->eventtimer[i] == -1 );
+	if( i == MAX_EVENTTIMER )
 		return 0;
 
 	evname = aStrdup(name);
-	sd->eventtimer[i]=add_timer(gettick()+tick,
-		pc_eventtimer,sd->bl.id,(int)evname);
+	sd->eventtimer[i] = add_timer(gettick()+tick, pc_eventtimer,sd->bl.id,(int)evname);
 	sd->eventcount++;
 
 	return 1;

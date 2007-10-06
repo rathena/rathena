@@ -837,10 +837,6 @@ struct npc_data {
 	int chat_id;
 	unsigned int next_walktime;
 
-	char eventqueue[MAX_EVENTQUEUE][50];
-	int eventtimer[MAX_EVENTTIMER];
-	short arenaflag;
-
 	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
 	struct npc_data *master_nd;
 

@@ -3862,7 +3862,7 @@ OnPlayerLogout:
 
 OnTimer3000:
 	enablewaitingroomevent "Waiting Room#SignDance";
-	stoptimer;
+	stopnpctimer;
 	end;
 
 OnInit:

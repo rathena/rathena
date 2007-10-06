@@ -2607,48 +2607,29 @@ int map_readgat (struct map_data* m)
 int map_readallmaps (void)
 {
 	int i;
+	FILE* fp;
 	int maps_removed = 0;
-	FILE *fp;
 
-	if(!(fp = fopen(map_cache_file, "rb")))
+	if( enable_grf )
+		ShowStatus("Loading maps (using GRF files)...\n");
+	else
 	{
-		ShowFatalError("Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", map_cache_file);
-		exit(1); //No use launching server if maps can't be read.
+		ShowStatus("Loading maps (using %s as map cache)...\n", map_cache_file);
+		if( (fp = fopen(map_cache_file, "rb")) == NULL )
+		{
+			ShowFatalError("Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", map_cache_file);
+			exit(1); //No use launching server if maps can't be read.
+		}
 	}
-
-	if(enable_grf) ShowStatus("Loading maps (using GRF files)...\n");
-	else ShowStatus("Loading maps (using %s as map cache)...\n", map_cache_file);
 
 	for(i = 0; i < map_num; i++)
 	{
-		static int lasti = -1;
-		static int last_time = -1;
-		int j = i*20/map_num;
 		size_t size;
 
 		// show progress
-		if (j != lasti || last_time != time(0))
-		{
-			char progress[21] = "                    ";
-			char c = '-';
-			int k;
+		ShowStatus("Loading maps [%i/%i]: %s"CL_CLL"\r", i, map_num, map[i].name);
 
-			lasti = j;
-			printf("\r");
-			ShowStatus("Progress: [");
-			for (k=0; k < j; k++) progress[k] = '#';
-			printf(progress);
-			last_time = (int)time(0);
-			switch(last_time % 4) {
-				case 0: c='\\'; break;
-				case 1: c='|'; break;
-				case 2: c='/'; break;
-				case 3: c='-'; break;
-			}
-			printf("] Working: [%c]",c);
-			fflush(stdout);
-		}
-
+		// try to load the map
 		if( !
 			(enable_grf?
 				 map_readgat(&map[i])
@@ -2662,7 +2643,8 @@ int map_readallmaps (void)
 
 		map[i].index = mapindex_name2id(map[i].name);
 
-		if (uidb_get(map_db,(unsigned int)map[i].index) != NULL) {
+		if (uidb_get(map_db,(unsigned int)map[i].index) != NULL)
+		{
 			ShowWarning("Map %s already loaded!\n", map[i].name);
 			if (map[i].gat) {
 				aFree(map[i].gat);
@@ -2703,11 +2685,12 @@ int map_readallmaps (void)
 		map[i].block_mob_count = (int*)aCallocA(size, 1);
 	}
 
-	fclose(fp);
+	if( !enable_grf )
+		fclose(fp);
 
 	// finished map loading
 	printf("\r");
-	ShowInfo("Successfully loaded '"CL_WHITE"%d"CL_RESET"' maps.%30s\n",map_num,"");
+	ShowInfo("Successfully loaded '"CL_WHITE"%d"CL_RESET"' maps."CL_CLL"\n",map_num);
 
 	if (maps_removed)
 		ShowNotice("Maps removed: '"CL_WHITE"%d"CL_RESET"'\n",maps_removed);

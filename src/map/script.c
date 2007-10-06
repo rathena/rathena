@@ -3479,10 +3479,7 @@ int script_config_read_sub(char *cfgName)
 		if(i!=2)
 			continue;
 
-		if(strcmpi(w1,"verbose_mode")==0) {
-			script_config.verbose_mode = config_switch(w2);
-		}
-		else if(strcmpi(w1,"warn_func_mismatch_paramnum")==0) {
+		if(strcmpi(w1,"warn_func_mismatch_paramnum")==0) {
 			script_config.warn_func_mismatch_paramnum = config_switch(w2);
 		}
 		else if(strcmpi(w1,"check_cmdcount")==0) {
@@ -3550,7 +3547,6 @@ int script_config_read(char *cfgName)
 {	//Script related variables should be initialized once! [Skotlex]
 
 	memset (&script_config, 0, sizeof(script_config));
-	script_config.verbose_mode = 0;
 	script_config.warn_func_mismatch_paramnum = 1;
 	script_config.check_cmdcount = 65535;
 	script_config.check_gotocount = 2048;
@@ -3813,6 +3809,7 @@ BUILDIN_FUNC(killmonsterall);
 BUILDIN_FUNC(clone);
 BUILDIN_FUNC(doevent);
 BUILDIN_FUNC(donpcevent);
+BUILDIN_FUNC(cmdothernpc);
 BUILDIN_FUNC(addtimer);
 BUILDIN_FUNC(deltimer);
 BUILDIN_FUNC(addtimercount);
@@ -3834,8 +3831,6 @@ BUILDIN_FUNC(getareausers);
 BUILDIN_FUNC(getareadropitem);
 BUILDIN_FUNC(enablenpc);
 BUILDIN_FUNC(disablenpc);
-BUILDIN_FUNC(enablearena);	// Added by RoVeRT
-BUILDIN_FUNC(disablearena);	// Added by RoVeRT
 BUILDIN_FUNC(hideoffnpc);
 BUILDIN_FUNC(hideonnpc);
 BUILDIN_FUNC(sc_start);
@@ -3859,6 +3854,8 @@ BUILDIN_FUNC(enablewaitingroomevent);
 BUILDIN_FUNC(disablewaitingroomevent);
 BUILDIN_FUNC(getwaitingroomstate);
 BUILDIN_FUNC(warpwaitingpc);
+BUILDIN_FUNC(enablearena);	// Added by RoVeRT
+BUILDIN_FUNC(disablearena);	// Added by RoVeRT
 BUILDIN_FUNC(attachrid);
 BUILDIN_FUNC(detachrid);
 BUILDIN_FUNC(isloggedin);
@@ -3904,9 +3901,6 @@ BUILDIN_FUNC(soundeffect);
 BUILDIN_FUNC(soundeffectall);
 BUILDIN_FUNC(setcastledata);
 BUILDIN_FUNC(mapwarp);
-BUILDIN_FUNC(inittimer);
-BUILDIN_FUNC(stoptimer);
-BUILDIN_FUNC(cmdothernpc);
 BUILDIN_FUNC(mobcount);
 BUILDIN_FUNC(strmobinfo); // Script for displaying mob info [Valaris]
 BUILDIN_FUNC(guardian); // Script for displaying mob info [Valaris]
@@ -4149,6 +4143,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(clone,"siisi*"),
 	BUILDIN_DEF(doevent,"s"),
 	BUILDIN_DEF(donpcevent,"s"),
+	BUILDIN_DEF(cmdothernpc,"ss"),
 	BUILDIN_DEF(addtimer,"is"),
 	BUILDIN_DEF(deltimer,"s"),
 	BUILDIN_DEF(addtimercount,"si"),
@@ -4170,8 +4165,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getareadropitem,"siiiii"),
 	BUILDIN_DEF(enablenpc,"s"),
 	BUILDIN_DEF(disablenpc,"s"),
-	BUILDIN_DEF(enablearena,""),		// Added by RoVeRT
-	BUILDIN_DEF(disablearena,""),	// Added by RoVeRT
 	BUILDIN_DEF(hideoffnpc,"s"),
 	BUILDIN_DEF(hideonnpc,"s"),
 	BUILDIN_DEF(sc_start,"iii?"),
@@ -4193,6 +4186,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(waitingroomkickall,"kickwaitingroomall","?"),
 	BUILDIN_DEF(enablewaitingroomevent,"?"),
 	BUILDIN_DEF(disablewaitingroomevent,"?"),
+	BUILDIN_DEF2(enablewaitingroomevent,"enablearena",""),		// Added by RoVeRT
+	BUILDIN_DEF2(disablewaitingroomevent,"disablearena",""),	// Added by RoVeRT
 	BUILDIN_DEF(getwaitingroomstate,"i?"),
 	BUILDIN_DEF(warpwaitingpc,"sii?"),
 	BUILDIN_DEF(attachrid,"i"),
@@ -4255,9 +4250,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(specialeffect2,"i*"), // skill effect on players[Valaris]
 	BUILDIN_DEF(nude,""), // nude command [Valaris]
 	BUILDIN_DEF(mapwarp,"ssii*"),		// Added by RoVeRT
-	BUILDIN_DEF(inittimer,""),
-	BUILDIN_DEF(stoptimer,""),
-	BUILDIN_DEF(cmdothernpc,"ss"),
 	BUILDIN_DEF(atcommand,"*"), // [MouseJstr]
 	BUILDIN_DEF(charcommand,"*"), // [MouseJstr]
 	BUILDIN_DEF(movenpc,"sii"), // [MouseJstr]
@@ -4737,46 +4729,53 @@ BUILDIN_FUNC(goto)
  *------------------------------------------*/
 BUILDIN_FUNC(callfunc)
 {
+	int i, j;
+	struct linkdb_node** oldval;
 	struct script_code *scr, *oldscr;
-	const char *str=script_getstr(st,2);
+	const char* str = script_getstr(st,2);
 
-	if( (scr = strdb_get(userfunc_db, str)) ){
-		int i,j;
-		struct linkdb_node **oldval = st->stack->var_function;
-		for(i=st->start+3,j=0;i<st->end;i++,j++)
-			push_copy(st->stack,i);
-
-		script_pushint(st,j);				// 引数の数をプッシュ
-		script_pushint(st,st->stack->defsp);	// 現在の基準スタックポインタをプッシュ
-		script_pushint(st,(int)st->script);	// 現在のスクリプトをプッシュ
-		script_pushint(st,(int)st->stack->var_function);	// 現在の関数依存変数をプッシュ
-		push_val(st->stack,C_RETINFO,st->pos);		// 現在のスクリプト位置をプッシュ
-
-		oldscr = st->script;
-		st->pos=0;
-		st->script=scr;
-		st->stack->defsp=st->start+5+j;
-		st->state=GOTO;
-		st->stack->var_function = (struct linkdb_node**)aCalloc(1, sizeof(struct linkdb_node*));
-
-		// ' 変数の引き継ぎ
-		for(i = 0; i < j; i++) {
-			struct script_data *s = &st->stack->stack_data[st->stack->sp-6-i];
-			if( data_isreference(s) && !s->ref ) {
-				char *name = str_buf+str_data[s->u.num&0x00ffffff].str;
-				// '@ 変数の引き継ぎ
-				if( name[0] == '.' && name[1] == '@' ) {
-					s->ref = oldval;
-				} else if( name[0] == '.' ) {
-					s->ref = &oldscr->script_vars;
-				}
-			}
-		}
-	}else{
-		ShowError("script:callfunc: function not found! [%s]\n",str);
-		st->state=END;
+	scr = strdb_get(userfunc_db, str);
+	if( !scr )
+	{
+		ShowError("script:callfunc: function not found! [%s]\n", str);
+		st->state = END;
 		return 1;
 	}
+
+	for( i = st->start+3, j = 0; i < st->end; i++, j++ )
+		push_copy(st->stack,i);
+
+	script_pushint(st,j);				// 引数の数をプッシュ
+	script_pushint(st,st->stack->defsp);	// 現在の基準スタックポインタをプッシュ
+	script_pushint(st,(int)st->script);	// 現在のスクリプトをプッシュ
+	script_pushint(st,(int)st->stack->var_function);	// 現在の関数依存変数をプッシュ
+	push_val(st->stack,C_RETINFO,st->pos);		// 現在のスクリプト位置をプッシュ
+
+	oldscr = st->script;
+	oldval = st->stack->var_function;
+
+	st->pos = 0;
+	st->script = scr;
+	st->stack->defsp = st->start+5+j;
+	st->state = GOTO;
+	st->stack->var_function = (struct linkdb_node**)aCalloc(1, sizeof(struct linkdb_node*));
+
+	// ' 変数の引き継ぎ
+	for( i = 0; i < j; i++ )
+	{
+		struct script_data* s = script_getdatatop(st, -6-i);
+		if( data_isreference(s) && !s->ref )
+		{
+			char* name = str_buf + str_data[s->u.num&0x00ffffff].str;
+			// '@ 変数の引き継ぎ
+			if( name[0] == '.' && name[1] == '@' ) {
+				s->ref = oldval;
+			} else if( name[0] == '.' ) {
+				s->ref = &oldscr->script_vars;
+			}
+		}
+	}
+
 	return 0;
 }
 /*==========================================
@@ -7974,8 +7973,7 @@ BUILDIN_FUNC(clone)
  *------------------------------------------*/
 BUILDIN_FUNC(doevent)
 {
-	const char *event;
-	event=script_getstr(st,2);
+	const char* event = script_getstr(st,2);
 	check_event(st, event);
 	npc_event(map_id2sd(st->rid),event,0);
 	return 0;
@@ -7985,21 +7983,33 @@ BUILDIN_FUNC(doevent)
  *------------------------------------------*/
 BUILDIN_FUNC(donpcevent)
 {
-	const char *event;
-	event=script_getstr(st,2);
+	const char* event = script_getstr(st,2);
 	check_event(st, event);
 	npc_event_do(event);
 	return 0;
 }
+
+/// for Aegis compatibility
+/// basically a specialized 'donpcevent', with the event specified as two arguments instead of one
+BUILDIN_FUNC(cmdothernpc)	// Added by RoVeRT
+{
+	const char* npc = script_getstr(st,2);
+	const char* command = script_getstr(st,3);
+	char event[51];
+	snprintf(event, 51, "%s::OnCommand%s", npc, command);
+	check_event(st, event);
+	npc_event_do(event);
+	return 0;
+}
+
 /*==========================================
  * イベントタイマー追加
  *------------------------------------------*/
 BUILDIN_FUNC(addtimer)
 {
-	const char *event;
-	int tick;
-	tick=script_getnum(st,2);
-	event=script_getstr(st, 3);
+	int tick = script_getnum(st,2);
+	const char* event = script_getstr(st, 3);
+
 	check_event(st, event);
 	pc_addeventtimer(script_rid2sd(st),tick,event);
 	return 0;
@@ -9168,42 +9178,6 @@ BUILDIN_FUNC(warpwaitingpc)
 // ...
 //
 
-/// TODO what is this suposed to do?
-///
-/// @author RoVeRT
-BUILDIN_FUNC(enablearena)
-{
-	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
-	struct chat_data *cd;
-
-
-	if(nd==NULL || (cd=(struct chat_data *)map_id2bl(nd->chat_id))==NULL)
-		return 0;
-
-	npc_enable(nd->name, 1);
-	nd->arenaflag = 1;
-
-	if( cd->users >= cd->trigger && cd->npc_event[0] )
-		npc_timer_event(cd->npc_event);
-
-	return 0;
-}
-
-/// TODO what is this suposed to do?
-///
-/// @author RoVeRT
-BUILDIN_FUNC(disablearena)
-{
-	struct npc_data *nd=(struct npc_data *)map_id2bl(st->oid);
-	nd->arenaflag=0;
-
-	return 0;
-}
-
-/////////////////////////////////////////////////////////////////////
-// ...
-//
-
 /*==========================================
  * RIDのアタッチ
  *------------------------------------------*/
@@ -9999,37 +9973,6 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 			map_foreachinmap(buildin_areawarp_sub,m,BL_PC,index,x,y);
 			break;
 	}
-
-	return 0;
-}
-
-BUILDIN_FUNC(cmdothernpc)	// Added by RoVeRT
-{
-	const char *npc,*command;
-
-	npc=script_getstr(st,2);
-	command=script_getstr(st,3);
-
-	npc_command(map_id2sd(st->rid),npc,command);
-	return 0;
-}
-
-BUILDIN_FUNC(inittimer)	// Added by RoVeRT
-{
-//	struct npc_data *nd=(struct npc_data*)map_id2bl(st->oid);
-//	nd->lastaction=nd->timer=gettick();
-
-	npc_do_ontimer(st->oid, 1);
-
-	return 0;
-}
-
-BUILDIN_FUNC(stoptimer)	// Added by RoVeRT
-{
-//	struct npc_data *nd=(struct npc_data*)map_id2bl(st->oid);
-//	nd->lastaction=nd->timer=-1;
-
-	npc_do_ontimer(st->oid, 0);
 
 	return 0;
 }

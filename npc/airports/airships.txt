@@ -171,7 +171,7 @@ OnTimer250000:
 	mapannounce "airplane","Currently, we are in Yuno. The Airship will leave shortly.",1,0x70DBDB;
 	end;
 OnTimer260000:
-	stoptimer;
+	stopnpctimer;
 }
 }
 
@@ -753,7 +753,7 @@ OnTimer185000:
 	mapannounce "airplane_01","Currently, we are in Rachel. The Airship will leave shortly.",1,0xFF8600;
 	end;
 OnTimer195000:
- 	stoptimer;
+ 	stopnpctimer;
 }
 OnReturn:
 	killmonsterall "airplane_01";
