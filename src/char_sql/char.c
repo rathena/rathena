@@ -1106,7 +1106,7 @@ int make_new_char_sql(int fd, unsigned char *dat)
 
 	// check lenght of character name
 	if (strlen(name) < 4) {
-		char_log("Create char failed (character name too small): (connection #%d, account: %d, name: '%s').\n",
+		ShowInfo("Create char failed (character name too small): (connection #%d, account: %d, name: '%s').\n",
 		         fd, sd->account_id, dat);
 		return -2;
 	}
