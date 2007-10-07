@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/10/06
+	* Rev. 11376 Small bug fix in the Geffen NPCs (end -> next) care of Lesbian. [L0ne_W0lf]
 	* Rev. 11375 Fixed an error in the Sage job quest, thanks to Cara. [L0ne_W0lf]
 	* Removed function F_BlockHigh from Valkyrie.txt
 	* Fixed scripts that used 'stoptimer' instead of 'stopnpctimer' [ultramage]
