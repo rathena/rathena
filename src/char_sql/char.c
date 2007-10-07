@@ -1104,6 +1104,13 @@ int make_new_char_sql(int fd, unsigned char *dat)
 
 	ShowInfo("New character request (%d)\n", sd->account_id);
 
+	// check lenght of character name
+	if (strlen(name) < 4) {
+		char_log("Create char failed (character name too small): (connection #%d, account: %d, name: '%s').\n",
+		         fd, sd->account_id, dat);
+		return -2;
+	}
+
 	//check name != main chat nick [LuzZza]
 	if(strcmpi(name, main_chat_nick) == 0) {
 		ShowInfo("Create char failed (%d): this nick (%s) reserved for mainchat messages.\n", sd->account_id, name);
