@@ -8397,7 +8397,7 @@ int atcommand_hominfo(const int fd, struct map_session_data* sd, const char* com
 int atcommand_homstats(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	struct homun_data *hd;
-	struct homunculus_db *db;
+	struct s_homunculus_db *db;
 	struct s_homunculus *hom;
 	int lv, min, max, evo;
 

@@ -958,7 +958,7 @@ struct homun_data {
 	struct status_data base_status, battle_status;
 	struct status_change sc;
 	struct regen_data regen;
-	struct homunculus_db *homunculusDB;	//[orn]
+	struct s_homunculus_db *homunculusDB;	//[orn]
 	struct s_homunculus homunculus ;	//[orn]
 
 	struct map_session_data *master; //pointer back to its master
@@ -974,7 +974,7 @@ struct pet_data {
 	struct s_pet pet;
 	struct status_data status;
 	struct mob_db *db;
-	struct pet_db *petDB;
+	struct s_pet_db *petDB;
 	int pet_hungry_timer;
 	int target_id;
 	struct {

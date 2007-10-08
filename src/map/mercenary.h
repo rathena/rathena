@@ -4,7 +4,7 @@
 #ifndef _MERCENARY_H_
 #define _MERCENARY_H_
 
-struct homunculus_db {
+struct s_homunculus_db {
 	int base_class, evo_class;
 	char name[NAME_LENGTH];
 	struct h_stats {
@@ -16,7 +16,7 @@ struct homunculus_db {
 	long hungryDelay ;
 	unsigned char element, race, base_size, evo_size;
 };
-extern struct homunculus_db homuncumlus_db[MAX_HOMUNCULUS_CLASS];
+extern struct s_homunculus_db homuncumlus_db[MAX_HOMUNCULUS_CLASS];
 enum { HOMUNCULUS_CLASS, HOMUNCULUS_FOOD };
 enum {
 	SP_ACK 	= 0x00,

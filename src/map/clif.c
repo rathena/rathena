@@ -99,7 +99,6 @@ static int max_account_id = DEFAULT_MAX_ACCOUNT_ID;
 static int max_char_id = DEFAULT_MAX_CHAR_ID;
 
 int clif_parse (int fd);
-static void clif_hpmeter_single(int fd, struct map_session_data *sd);
 
 /*==========================================
  * mapŽI‚ÌipÝ’è
@@ -3632,7 +3631,7 @@ void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* ds
 	if((sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(battle_config.disp_hpmeter && (len = pc_isGM(sd)) >= battle_config.disp_hpmeter && len >= pc_isGM(dstsd))
 		)
-		clif_hpmeter_single(sd->fd, dstsd);
+		clif_hpmeter_single(sd->fd, dstsd->bl.id, dstsd->battle_status.hp, dstsd->battle_status.max_hp);
 
 	if(dstsd->status.manner < 0)
 		clif_changestatus(&dstsd->bl,SP_MANNER,dstsd->status.manner);
@@ -4277,8 +4276,8 @@ int clif_skillcastcancel(struct block_list* bl)
 ///  type==4 "there is a delay after using a skill" MsgStringTable[219]
 ///  type==5 "insufficient zeny" MsgStringTable[233]
 ///  type==6 "wrong weapon" MsgStringTable[239]
-///  type==7 "red jemstone needed" MsgStringTable[246]
-///  type==8 "blue jemstone needed" MsgStringTable[247]
+///  type==7 "red gemstone needed" MsgStringTable[246]
+///  type==8 "blue gemstone needed" MsgStringTable[247]
 ///  type==9 "overweight" MsgStringTable[580]
 ///  type==10 "skill failed" MsgStringTable[285]
 ///  type>=11 ignored
@@ -5766,19 +5765,20 @@ int clif_party_hp(struct map_session_data *sd)
 /*==========================================
  * Sends HP bar to a single fd. [Skotlex]
  *------------------------------------------*/
-static void clif_hpmeter_single(int fd, struct map_session_data *sd)
+void clif_hpmeter_single(int fd, int id, unsigned int hp, unsigned int maxhp)
 {
 	WFIFOHEAD(fd,packet_len(0x106));
 	WFIFOW(fd,0) = 0x106;
-	WFIFOL(fd,2) = sd->status.account_id;
-	if (sd->battle_status.max_hp > SHRT_MAX) { //To correctly display the %hp bar. [Skotlex]
-		WFIFOW(fd,6) = sd->battle_status.hp/(sd->battle_status.max_hp/100);
+	WFIFOL(fd,2) = id;
+	if( maxhp > SHRT_MAX )
+	{// To correctly display the %hp bar. [Skotlex]
+		WFIFOW(fd,6) = hp/(maxhp/100);
 		WFIFOW(fd,8) = 100;
 	} else {
-		WFIFOW(fd,6) = sd->battle_status.hp;
-		WFIFOW(fd,8) = sd->battle_status.max_hp;
+		WFIFOW(fd,6) = hp;
+		WFIFOW(fd,8) = maxhp;
 	}
-	WFIFOSET (fd, packet_len(0x106));
+	WFIFOSET(fd, packet_len(0x106));
 }
 
 /*==========================================

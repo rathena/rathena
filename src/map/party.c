@@ -335,10 +335,12 @@ int party_reply_invite(struct map_session_data *sd,int account_id,int flag)
 	return 1;
 }
 
+/// Invoked (from char-server) when a member is added to the party.
 int party_member_added(int party_id,int account_id,int char_id, int flag)
 {
 	struct map_session_data *sd = map_id2sd(account_id),*sd2;
 	struct party_data *p = party_search(party_id);
+	int i;
 	if(sd == NULL || sd->status.char_id != char_id){
 		if (flag == 0) {
 			if(battle_config.error_log)
@@ -362,6 +364,12 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 		sd->status.party_id=party_id;
 		party_check_conflict(sd);
 		clif_party_member_info(p,sd);
+		for( i = 0; i < ARRAYLENGTH(p->data); ++i )
+		{// hp of the other party members
+			sd2 = p->data[i].sd;
+			if( sd2 && sd2->status.account_id != account_id && sd2->status.char_id != char_id )
+				clif_hpmeter_single(sd->fd, sd2->bl.id, sd2->battle_status.hp, sd2->battle_status.max_hp);
+		}
 		clif_party_hp(sd);
 		clif_party_xy(sd);
 		clif_charnameupdate(sd); //Update char name's display [Skotlex]

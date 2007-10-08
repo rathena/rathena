@@ -2387,7 +2387,7 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	status->luk = hom->luk / 10;
 
 	if (first) {	//[orn]
-		const struct homunculus_db *db = hd->homunculusDB;
+		const struct s_homunculus_db *db = hd->homunculusDB;
 		status->def_ele =  db->element;
 		status->ele_lv = 1;
 		status->race = db->race;

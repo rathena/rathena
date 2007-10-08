@@ -10,6 +10,13 @@
 
 #define MAX_SEARCH	5  //Designed for search functions, species max number of matches to display.
 
+#define ITEMID_YELLOW_GEMSTONE 715
+#define ITEMID_RED_GEMSTONE 716
+#define ITEMID_BLUE_GEMSTONE 717
+#define itemid_isgemstone(id) ( (id) >= ITEMID_YELLOW_GEMSTONE && (id) <= ITEMID_BLUE_GEMSTONE )
+
+#define ITEMID_TRAP 1065
+
 
 enum item_types {
 	IT_HEALING = 0,

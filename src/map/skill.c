@@ -43,7 +43,6 @@
 #define HM_SKILLRANGEMIN 800
 #define HM_SKILLRANGEMAX HM_SKILLRANGEMIN+MAX_HOMUNSKILL
 
-int skill_names_id[MAX_SKILL_DB];
 const struct skill_name_db skill_names[] = {
  { AC_CHARGEARROW, "AC_CHARGEARROW", "Arrow Repel" } ,
  { AC_CONCENTRATION, "AC_CONCENTRATION", "Improve Concentration" } ,
@@ -2477,8 +2476,8 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 	struct status_change *sc;
 	TBL_PC * sd;
 	int i,j,hp,sp,hp_rate,sp_rate,state,mhp ;
-	int index[10],itemid[10],amount[10];
-	int checkitem_flag = 1, delitem_flag = 1;
+	int itemid[10],amount[10];
+	int delitem_flag = 1;
 	
 	nullpo_retr(0, hd);
 	sd = hd->master;
@@ -2555,11 +2554,19 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 		break;
 	}
 
-	if (checkitem_flag) {
-		for(i=0;i<10;i++) {
+	if(!(type&1))
+		return 1;
+
+	if( delitem_flag )
+	{
+		int index[ARRAYLENGTH(itemid)];
+
+		// Check items and reduce required amounts
+		for( i = 0; i < ARRAYLENGTH(itemid); ++i )
+		{
 			index[i] = -1;
 			if(itemid[i] <= 0)
-				continue;
+				continue;// no item
 
 			index[i] = pc_search_inventory(sd,itemid[i]);
 			if(index[i] < 0 || sd->status.inventory[index[i]].amount < amount[i])
@@ -2568,13 +2575,10 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 				return 0;
 			}
 		}
-	}
 
-	if(!(type&1))
-		return 1;
-
-	if(delitem_flag) {
-		for(i=0;i<10;i++) {
+		// Consume items
+		for( i = 0; i < ARRAYLENGTH(itemid); ++i )
+		{
 			if(index[i] >= 0)
 				pc_delitem(sd,index[i],amount[i],0);
 		}
@@ -5206,7 +5210,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 						}
 					}else{
 						memset(&item_tmp,0,sizeof(item_tmp));
-						item_tmp.nameid = 1065;
+						item_tmp.nameid = ITEMID_TRAP;
 						item_tmp.identify = 1;
 						if(item_tmp.nameid && (flag=pc_additem(sd,&item_tmp,1))){
 							clif_additem(sd,0,0,flag);
@@ -8054,13 +8058,13 @@ int skill_isammotype (struct map_session_data *sd, int skill)
  * &1: finished casting the skill (invoke hp/sp/item consumption)
  * &2: picked menu entry (Warp Portal, Teleport and other menu based skills)
  *------------------------------------------*/
-int skill_check_condition (struct map_session_data *sd, int skill, int lv, int type)
+int skill_check_condition(struct map_session_data* sd, int skill, int lv, int type)
 {
 	struct status_data *status;
 	struct status_change *sc;
 	int i,j,hp,sp,hp_rate,sp_rate,zeny,weapon,ammo,ammo_qty,state,spiritball,mhp;
-	int index[10],itemid[10],amount[10];
-	int delitem_flag = 1, checkitem_flag = 1;
+	int itemid[10],amount[10];
+	int delitem_flag = 1;
 
 	nullpo_retr(0, sd);
 
@@ -8464,7 +8468,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			sg->skill_id == SA_VIOLENTGALE
 		)) {
 			if (sg->limit - DIFF_TICK(gettick(), sg->tick) > 0)
-				checkitem_flag = delitem_flag = 0;
+				delitem_flag = 0;
 			else
 				sg->limit = 0; //Disable it.
 		}
@@ -8597,7 +8601,7 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 			return 0;
 		}
 		if (sd->status.hom_id) //Don't delete items when hom is already out.
-			checkitem_flag = delitem_flag = 0;
+			delitem_flag = 0;
 		break;
 	case AM_REST: //Can't vapo homun if you don't have an active homunc or it's hp is < 80%
 		if (!merc_is_hom_active(sd->hd) || sd->hd->battle_status.hp < (sd->hd->battle_status.max_hp*80/100))
@@ -8733,13 +8737,20 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 		return 0;
 	}
 
-	if (checkitem_flag) {
-		for(i=0;i<10;i++) {
-			int x = lv%11 - 1;
+	if(!(type&1))
+		return 1;
+
+	if( delitem_flag )
+	{
+		int index[ARRAYLENGTH(itemid)];
+
+		// Check consumed items and reduce required amounts
+		for( i = 0; i < ARRAYLENGTH(itemid); ++i )
+		{
 			index[i] = -1;
-			if(itemid[i] <= 0)
-				continue;
-			if(itemid[i] >= 715 && itemid[i] <= 717 && skill != HW_GANBANTEIN)
+			if( itemid[i] <= 0 )
+				continue;// no item
+			if( itemid_isgemstone(itemid[i]) && skill != HW_GANBANTEIN )
 			{
 				if (sd->special_state.no_gemstone)
 				{	//Make it substract 1 gem rather than skipping the cost.
@@ -8749,33 +8760,32 @@ int skill_check_condition (struct map_session_data *sd, int skill, int lv, int t
 				if(sc && sc->data[SC_INTOABYSS].timer != -1)
 					continue;
 			} else
-			if(itemid[i] == 1065 && sc && sc->data[SC_INTOABYSS].timer != -1)
+			if(itemid[i] == ITEMID_TRAP && sc && sc->data[SC_INTOABYSS].timer != -1)
 				continue;
 
 			if((skill == AM_POTIONPITCHER ||
 				skill == CR_SLIMPITCHER ||
-				skill == CR_CULTIVATION) && i != x)
+				skill == CR_CULTIVATION) && i != lv%11 - 1)//TODO huh? what is this for? [FlavioJS]
 				continue;
 
 			index[i] = pc_search_inventory(sd,itemid[i]);
 			if(index[i] < 0 || sd->status.inventory[index[i]].amount < amount[i]) {
-				if(itemid[i] == 716 || itemid[i] == 717)
-					clif_skill_fail(sd,skill,(7+(itemid[i]-716)),0);
+				if( itemid[i] == ITEMID_RED_GEMSTONE )
+					clif_skill_fail(sd,skill,7,0);// red gemstone required
+				else if( itemid[i] == ITEMID_BLUE_GEMSTONE )
+					clif_skill_fail(sd,skill,8,0);// blue gemstone required
 				else
 					clif_skill_fail(sd,skill,0,0);
 				return 0;
 			}
-			if(itemid[i] >= 715 && itemid[i] <= 717 && skill != HW_GANBANTEIN &&
+			if( itemid_isgemstone(itemid[i]) && skill != HW_GANBANTEIN &&
 				sc && sc->data[SC_SPIRIT].timer != -1 && sc->data[SC_SPIRIT].val2 == SL_WIZARD)
 				index[i] = -1; //Gemstones are checked, but not substracted from inventory.
 		}
-	}
 
-	if(!(type&1))
-		return 1;
-
-	if(delitem_flag) {
-		for(i=0;i<10;i++) {
+		// Consume items
+		for( i = 0; i < ARRAYLENGTH(itemid); ++i )
+		{
 			if(index[i] >= 0)
 				pc_delitem(sd,index[i],amount[i],0);
 		}
@@ -10255,7 +10265,7 @@ int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 				{
 					struct item item_tmp;
 					memset(&item_tmp,0,sizeof(item_tmp));
-					item_tmp.nameid=1065;
+					item_tmp.nameid=ITEMID_TRAP;
 					item_tmp.identify=1;
 					map_addflooritem(&item_tmp,1,bl->m,bl->x,bl->y,0,0,0,0);
 				}

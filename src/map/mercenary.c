@@ -40,7 +40,7 @@
 //Better equiprobability than rand()% [orn]
 #define rand(a, b) (a+(int) ((float)(b-a+1)*rand()/(RAND_MAX+1.0)))
 
-struct homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
+struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
 struct skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_SKILL_TREE];
 
 static int merc_hom_hungry(int tid,unsigned int tick,int id,int data);
@@ -812,7 +812,7 @@ void merc_hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp)
 
 void merc_reset_stats(struct homun_data *hd)
 {	//Resets a homunc stats back to zero (but doesn't touches hunger or intimacy)
-	struct homunculus_db *db;
+	struct s_homunculus_db *db;
 	struct s_homunculus *hom;
 	struct h_stats *base;
 	hom = &hd->homunculus;
@@ -892,7 +892,7 @@ int read_homunculusdb(void)
 	int j = 0;
 	const char *filename[]={"homunculus_db.txt","homunculus_db2.txt"};
 	char *str[50];
-	struct homunculus_db *db;
+	struct s_homunculus_db *db;
 
 	memset(homunculus_db,0,sizeof(homunculus_db));
 	for(i = 0; i<2; i++)
