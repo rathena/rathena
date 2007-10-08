@@ -700,7 +700,6 @@ packet_ver: 16
 
 //2005-05-31aSakexe
 0x0216,2
-0x0217,0
 0x0239,11
 
 //2005-06-08aSakexe
@@ -924,8 +923,7 @@ packet_ver: 20
 0x028f,6
 0x0290,4
 0x0291,4
-//0x0292,2
-0x0292,2,autorevive,0 // Token_of_Ziegfried used...
+0x0292,2,autorevive,0
 0x0293,70
 0x0294,10
 0x0295,-1
@@ -996,7 +994,7 @@ packet_ver: 22
 //2007-05-07aSakexe
 0x01fd,15,repairitem,2
 
-//2007-02-27aSakexe to 2007-09-04aSakexe
+//2007-02-27aSakexe to 2007-10-02aSakexe
 0x0288,10
 0x0289,12
 0x02a6,22
@@ -1038,6 +1036,18 @@ packet_ver: 22
 0x02d2,-1
 0x02d3,4
 0x02d4,29
+0x02d5,2
+0x02d6,6
+0x02d7,-1
+0x02d8,10
+0x02d9,10
+0x02da,3
+0x02db,-1
+0x02dc,-1
+0x02dd,32
+0x02de,6
+0x02df,36
+0x02e0,34
 
 //Add new packets here
 //packet_ver: 23
