@@ -40,6 +40,7 @@
 	- please fix the txt files if there's a bug to begin with next time
 	- also ingame names shouldn't have "_"
 	- updated sql files
+	* Removed slot from 5147 old Baseball hat [Lupus]
 10/05
 	* Updated gender restrictions to aegis [Playtester]
 	- it will still be ignored by eA due to a config setting
