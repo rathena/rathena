@@ -12,9 +12,7 @@
 	1535 Holgrehenn's_Hammer:	Breaking your own gear at low rate when compounded with Whitesmith_card
 
 	Missing Effects:
-	12209 Life_Insurrance:		No EXP penalty on death (Recommend constant: SC_NoPenelty - Has status icon)
 	12214 Convex_Mirror:		Detect MVP spawn on minimap; doesn't work with special condition MVPs. (Recommend constant: SC_DetectMVPSpawn)
-	7621 Token_of_Ziegfried:	Give player the option to revive after death, through the "Respawn/Exit" menu.
 
 	Missing 12.1 card bonuses:
 	Most 12.1 cards are using a low rate usually 1% for their effects.
@@ -35,6 +33,8 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/08
+	* Rev. 11383 Added the remaining EXP increasing effects. (25, 100, and 300% manuals and Noble's Nameplate) [L0ne_W0lf]
 10/06
 	* Added missing item names in the item_db [Playtester]
 	- please fix the txt files if there's a bug to begin with next time

@@ -3258,7 +3258,7 @@
 12205,DEX_Dish,Hwergelmir's_Tonic,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_DEXFood,1800000, 10; percentheal 15,5; },{},{}
 12206,LUK_Dish,Cooked_Nine_Tail,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_LUKFood,1800000, 10; percentheal 15,5; },{},{}
 12207,VIT_Dish,Immortal_Stew,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_VITFood,1800000, 10; percentheal 15,5; },{},{}
-12208,Battle_Manual,Battle Manual,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,50;},{},{}
+12208,Battle_Manual,Battle Manual,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,50; },{},{}
 12209,Insurance,Life Insurance,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_LIFEINSURANCE,1800000,0; },{},{}
 12210,Bubble_Gum,Bubble Gum,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMBOOST,1800000,0;},{},{}
 12211,Kafra_Card,Kafra Card,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashStore"; },{},{}
@@ -3305,7 +3305,7 @@
 12702,Old_Bleu_Box,Old Bleu Box,2,0,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem groupranditem(IG_BleuBox),1; getitem groupranditem(IG_BleuBox),1; },{},{}
 12703,Vit_Dish10_,Holy Egg,11,,,500,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12704,Elixir_Of_Life,Elixir Of Life,2,,10,850,,,,,0xFFFFFFFF,7,2,,,85,,,{ percentheal 100,0; },{},{}
-12705,Noble_Nameplate,Noble Nameplate,2,,10,100,,,,,0xFFFFFFFF,7,2,,,90,,,{},{},{}
+12705,Noble_Nameplate,Noble Nameplate,2,,10,100,,,,,0xFFFFFFFF,7,2,,,90,,,{ sc_start SC_EXPBOOST,1800000,100; },{},{}
 12706,Luck_Cookie,Luck Cookie,11,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 75,5; },{},{}
 12707,Luck_Cookie_,Luck Cookie,11,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 74,1; },{},{}
 12708,Luck_Cookie__,Luck Cookie,11,,10,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 66,3; },{},{}
@@ -3699,8 +3699,8 @@
 //13692,Freya's_Boots_Box,Freya's Boots Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2428,1;},{},{}
 //13693,Freya's_Manteau_Box,Freya's Manteau Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2533,1; },{},{}
 //13694,Freya's_Crown_Box,Freya's Crown Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5306,1; },{},{}
-//13695,±âÃÊ_Field_Manual_Box,±âÃÊ_Field Manual Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-//13696,»ó±?_Field_Manual_Box,»ó±?_Field Manual Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+13695,Field_Manual_25%_Box,Field Manual 25% Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14532,25; },{},{}
+13696,Field_Manual_100%_Box,Field Manual 100% Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14532,100; },{},{}
 13697,Blessing_Scroll_10ea_Box,Blessing Scroll 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12215,30; },{},{}
 13698,Increase_Agility_Scroll_10ea_Box,Increase Agility Scroll 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12216,10; },{},{}
 13699,Wind_Walk_Scroll_10ea_Box,Wind Walk Scroll 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12219,10; },{},{}
@@ -3862,8 +3862,8 @@
 14529,Greed_Scroll,Greed Scroll,11,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill 1013,1; },{},{}
 14530,Evasion_Scroll,Evasion Scroll,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCFLEE,1800000,30; },{},{}
 14531,Concentration_Power_Scroll,Concentration Power Scroll,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHIT,1800000,30; },{},{}
-//14532,±âÃÊ_Field_Manual,±âÃÊ_Field_Manual,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-//14533,»ó±?_Field_Manual,»ó±?_Field_Manual,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14532,Field_Manual_25%,Field Manual 25%,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,25; },{},{}
+14533,Field_Manual_100%,Field Manual 100%,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,100; },{},{}
 14534,Small_Water_of_Life,Small Water of Life,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14535,Large_Water_of_Life,Large Water of Life,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14536,Grinder,Grinder,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
@@ -3875,7 +3875,7 @@
 14542,Large_Physical_Defense_Potion,Large Physical Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCDEFRATE,180000,3; },{},{}
 14543,Small_Magical_Defense_Potion,Small Magical Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14544,Large_Magical_Defense_Potion,Large Magical Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14545,300%_Field_Manual,300% Field Manual,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14545,Field_Manual_300%,Field Manual 300%,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,300; },{},{}
 14546,Love_You_Firecracker,Love You Firecracker,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14547,White_Day_Firecracker,White Day Firecracker,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14548,Valentine's_Day_Firecracker,Valentine's Day Firecracker,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
