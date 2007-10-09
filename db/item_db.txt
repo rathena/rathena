@@ -2820,7 +2820,7 @@
 7713,BlueCard_A_,Blue A Card,3,0,,1,,,,,,,,,,,,,{},{},{}
 7714,BlueCard_R_,Blue R Card,3,0,,1,,,,,,,,,,,,,{},{},{}
 //Valentine's Day Evernt (2007)
-7715,Handmade_Choco_Recipe,,3,0,,0,,,,,,,,,,,,,{},{},{}
+7715,Handmade_Choco_Recipe,Handmade Choco Recipe,3,0,,0,,,,,,,,,,,,,{},{},{}
 7716,Strawberry_Choco_Recipe,Recipe for Strawberry Chocolate,3,0,,0,,,,,,,,,,,,,{},{},{}
 7717,Choco_Tart_Recipe,Recipe for Chocolate Tart,3,0,,0,,,,,,,,,,,,,{},{},{}
 7718,Cacao_Bean,Cacao_Bean,3,0,,10,,,,,,,,,,,,,{},{},{}

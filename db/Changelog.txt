@@ -33,6 +33,8 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/10
+	* Added a missing item name thanks to rollopop [Playtester]
 10/08
 	* Rev. 11385 Updated several entries in the create arrow database. [L0ne_W0lf]
 	* Rev. 11383 Added the remaining EXP increasing effects. (25, 100, and 300% manuals and Noble's Nameplate) [L0ne_W0lf]
