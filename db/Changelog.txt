@@ -34,6 +34,7 @@
 
 =======================
 10/08
+	* Rev. 11385 Updated several entries in the create arrow database. [L0ne_W0lf]
 	* Rev. 11383 Added the remaining EXP increasing effects. (25, 100, and 300% manuals and Noble's Nameplate) [L0ne_W0lf]
 10/06
 	* Added missing item names in the item_db [Playtester]
