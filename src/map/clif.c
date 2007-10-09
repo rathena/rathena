@@ -8759,13 +8759,13 @@ void clif_parse_Wis(int fd, struct map_session_data* sd)
 }
 
 /*==========================================
- * /b
- * S 0099 <packet len>.w <text>.?B (<name>: <message>) 00
+ * /b /nb
+ * S 0099 <packet len>.w <text>.?B 00
  *------------------------------------------*/
 void clif_parse_GMmessage(int fd, struct map_session_data* sd)
 {
-	char *text, *name, *message;
-	unsigned int textlen, namelen, messagelen;
+	char* msg = (char*)RFIFOP(fd,4);
+	unsigned int len = RFIFOW(fd,2)-4;
 	int lv;
 
 	if (battle_config.atc_gmonly && !pc_isGM(sd))
@@ -8773,27 +8773,15 @@ void clif_parse_GMmessage(int fd, struct map_session_data* sd)
 	if (pc_isGM(sd) < (lv=get_atcommand_level(AtCommand_Broadcast)))
 		return;
 
-	text = (char*)RFIFOP(fd,4);
-	textlen = RFIFOW(fd,2) - 4;
+	// as the length varies depending on the command used, just block unreasonably long strings
+	mes_len_check(msg, len, CHAT_SIZE_MAX);
 
-	name = text;
-	namelen = strnlen(sd->status.name, NAME_LENGTH - 1);
-	// verify <name> part of the packet
-	if( strncmp(name, sd->status.name, namelen) || // the text must start with the speaker's name
-		name[namelen] != ':' || name[namelen+1] != ' ' ) // followed by ': '
-		return;
-
-	// make sure the <message> part of the packet is safe to handle
-	message = text + namelen + 2;
-	messagelen = textlen - namelen - 2; // this should be the message length (w/ zero byte included)
-	mes_len_check(message, messagelen, CHATBOX_SIZE);
-
-	intif_GMmessage(text, textlen, 0);
+	intif_GMmessage(msg, len, 0);
 
 	if(log_config.gm && lv >= log_config.gm) {
-		char msg[CHATBOX_SIZE+4];
-		sprintf(msg, "/b %s", message);
-		log_atcommand(sd, msg);
+		char logmsg[CHAT_SIZE_MAX+4];
+		sprintf(logmsg, "/b %s", msg);
+		log_atcommand(sd, logmsg);
 	}
 }
 
@@ -9773,15 +9761,13 @@ void clif_parse_ResetChar(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * /lb
- * S 019c <packet len>.w <text>.?B (<name>: <message>) 00
+ * /lb /nlb
+ * S 019c <packet len>.w <text>.?B 00
  *------------------------------------------*/
 void clif_parse_LGMmessage(int fd, struct map_session_data* sd)
 {
-	char *text, *name, *message;
-	unsigned int textlen, namelen, messagelen;
-
-	unsigned char buf[CHATBOX_SIZE+4];
+	char* msg = (char*)RFIFOP(fd,4);
+	unsigned int len = RFIFOW(fd,2)-4;
 	int lv;
 
 	if (battle_config.atc_gmonly && !pc_isGM(sd))
@@ -9789,30 +9775,15 @@ void clif_parse_LGMmessage(int fd, struct map_session_data* sd)
 	if (pc_isGM(sd) < (lv=get_atcommand_level(AtCommand_LocalBroadcast)))
 		return;
 
-	text = (char*)RFIFOP(fd,4);
-	textlen = RFIFOW(fd,2) - 4;
+	// as the length varies depending on the command used, just block unreasonably long strings
+	mes_len_check(msg, len, CHAT_SIZE_MAX);
 
-	name = text;
-	namelen = strnlen(sd->status.name, NAME_LENGTH - 1);
-	// verify <name> part of the packet
-	if( strncmp(name, sd->status.name, namelen) || // the text must start with the speaker's name
-		name[namelen] != ':' || name[namelen+1] != ' ' ) // followed by ': '
-		return;
-
-	// make sure the <message> part of the packet is safe to handle
-	message = text + namelen + 2;
-	messagelen = textlen - namelen - 2; // this should be the message length (w/ zero byte included)
-	mes_len_check(message, messagelen, CHATBOX_SIZE);
-
-	WBUFW(buf,0) = 0x9a;
-	WBUFW(buf,2) = textlen+4;
-	memcpy(WBUFP(buf,4), text, textlen);
-	clif_send(buf, WBUFW(buf,2), &sd->bl, ALL_SAMEMAP);
+	clif_GMmessage(&sd->bl, msg, len, 1);
 
 	if(log_config.gm && lv >= log_config.gm) {
-		char msg[CHATBOX_SIZE+5];
-		sprintf(msg, "/lb %s", message);
-		log_atcommand(sd, msg);
+		char logmsg[CHAT_SIZE_MAX+5];
+		sprintf(logmsg, "/lb %s", msg);
+		log_atcommand(sd, logmsg);
 	}
 }
 

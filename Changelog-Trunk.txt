@@ -9,7 +9,6 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	- removed some too aggressive checks in clif_parse_globalmessage()
 	- removed CHAT_SIZE define as it actually doesn't apply anywhere
 	- added CHAT_SIZE_MAX to serve as a custom limit to input string lengths
-	- added length/contents checks to /b and /lb (against fake names)
 2007/10/08
 	* Delayed the check for required items when a skill is cast to when they 
 	  are consumed. Now skills only fail due to lack of items after being cast.
