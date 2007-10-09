@@ -2729,8 +2729,8 @@ int skill_addtimerskill (struct block_list *src, unsigned int tick, int target, 
 	ud = unit_bl2ud(src);
 	nullpo_retr(1, ud);
 	
-	for(i=0;i<MAX_SKILLTIMERSKILL && ud->skilltimerskill[i]; i++);
-	if (i==MAX_SKILLTIMERSKILL) return 1;
+	ARR_FIND( 0, MAX_SKILLTIMERSKILL, i, ud->skilltimerskill[i] == 0 );
+	if( i == MAX_SKILLTIMERSKILL ) return 1;
 	
 	ud->skilltimerskill[i] = ers_alloc(skill_timer_ers, struct skill_timerskill);
 	ud->skilltimerskill[i]->timer = add_timer(tick, skill_timerskill, src->id, i);
@@ -4393,7 +4393,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case DC_SCREAM:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		skill_addtimerskill(src,tick+2000,bl->id,src->x,src->y,skillid,skilllv,0,flag);
+
 		if (md) {
+			// custom hack to make the mob display the skill, because these skills don't show the skill use text themselves
+			//NOTE: mobs don't have the sprite animation that is used when performing this skill (will cause glitches)
 			char temp[128];
 			if (strlen(md->name) + strlen(skill_db[skillid].desc) > 120)
 				break; //Message won't fit on buffer. [Skotlex]

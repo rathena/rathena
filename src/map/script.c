@@ -5334,29 +5334,29 @@ BUILDIN_FUNC(input)
 		return 1;
 	}
 
-	if(sd->state.menu_or_input){
-		sd->state.menu_or_input=0;
-		if( postfix=='$' )
-		{
-			set_reg(st,sd,num,name,(void*)sd->npc_str,
-				script_getref(st,2));
-			return 0;
-		}
-		// Yor, Lupus & Fritz have messed with this.
-		// Basicly it prevents negative input since most scripts do not account for them.
-		sd->npc_amount = cap_value(sd->npc_amount, 0, battle_config.vending_max_value);
-
-		set_reg(st,sd,num,name,(void*)sd->npc_amount,
-			script_getref(st,2));
-		return 0;
+	if( !sd->state.menu_or_input )
+	{	// first invocation, display npc input box
+		sd->state.menu_or_input = 1;
+		st->state = RERUNLINE;
+		if( postfix == '$' )
+			clif_scriptinputstr(sd,st->oid);
+		else	
+			clif_scriptinput(sd,st->oid);
 	}
-	//state.menu_or_input = 0
-	st->state=RERUNLINE;
-	if( postfix=='$' )
-		clif_scriptinputstr(sd,st->oid);
-	else	
-		clif_scriptinput(sd,st->oid);
-	sd->state.menu_or_input=1;
+	else
+	{	// take received text/value and store it in the designated variable
+		sd->state.menu_or_input = 0;
+		if( postfix == '$' )
+		{
+			set_reg(st,sd,num,name,(void*)sd->npc_str,script_getref(st,2));
+		}
+		else
+		{
+			// limit the input to a non-negative value smaller than 'vending_max_value' (for scripts that didn't check this)
+			sd->npc_amount = cap_value(sd->npc_amount, 0, battle_config.vending_max_value);
+			set_reg(st,sd,num,name,(void*)sd->npc_amount,script_getref(st,2));
+		}
+	}
 	return 0;
 }
 

@@ -163,16 +163,15 @@ enum {
 	MAPID_BABY_SOUL_LINKER,
 };
 
-//Max size when inputting a string with those 'npc input boxes'
-//(also used for Graffiti, Talkie Box, Vending, and Chatrooms)
-#define MESSAGE_SIZE 80
+//Max size for inputs to Graffiti, Talkie Box and Vending text prompts
+#define MESSAGE_SIZE (79 + 1)
 //String length you can write in the 'talking box'
-#define CHATBOX_SIZE 70
-//Talk max size: <name> : <message of 70> [Skotlex]
-#define CHAT_SIZE (NAME_LENGTH + 3 + CHATBOX_SIZE)
+#define CHATBOX_SIZE (70 + 1)
 //Chatroom-related string sizes
 #define CHATROOM_TITLE_SIZE (36 + 1)
 #define CHATROOM_PASS_SIZE (8 + 1)
+//Max allowed chat text length
+#define CHAT_SIZE_MAX 150
 
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 
@@ -610,7 +609,7 @@ struct map_session_data {
 	int npc_menu;
 	int npc_amount;
 	struct script_state *st;
-	char npc_str[256];
+	char npc_str[CHATBOX_SIZE]; // for passing npc input box text to script engine
 	int npc_timer_id; //For player attached npc timers. [Skotlex]
 	unsigned int chatID;
 	time_t idletime;

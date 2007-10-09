@@ -906,7 +906,7 @@ int atcommand_config_read(const char *cfgName)
  *------------------------------------------*/
 int atcommand_commands(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	char cz_line_buff[CHATBOX_SIZE+1];
+	char cz_line_buff[CHATBOX_SIZE];
 
 	register char *lpcz_cur = cz_line_buff;
 	register unsigned int ui_slen;
@@ -914,7 +914,7 @@ int atcommand_commands(const int fd, struct map_session_data* sd, const char* co
 	int i_cur_cmd,gm_lvl = pc_isGM(sd), count = 0;
 
 	memset(cz_line_buff,' ',CHATBOX_SIZE);
-	cz_line_buff[CHATBOX_SIZE] = 0;
+	cz_line_buff[CHATBOX_SIZE-1] = 0;
 
 	clif_displaymessage(fd, msg_txt(273));
 
@@ -932,7 +932,7 @@ int atcommand_commands(const int fd, struct map_session_data* sd, const char* co
 			clif_displaymessage(fd,(char*)cz_line_buff);
 			lpcz_cur = cz_line_buff;
 			memset(cz_line_buff,' ',CHATBOX_SIZE);
-			cz_line_buff[CHATBOX_SIZE] = 0;
+			cz_line_buff[CHATBOX_SIZE-1] = 0;
 		}
 
 		memcpy(lpcz_cur,atcommand_info[i_cur_cmd].command,ui_slen);

@@ -41,7 +41,7 @@ enum log_what {
 extern struct Log_Config {
 	enum log_what enable_logs;
 	int filter;
-	int sql_logs;
+	bool sql_logs;
 	int rare_items_log,refine_items_log,price_items_log,amount_items_log; //for filter
 	int branch, drop, mvpdrop, zeny, gm, npc, chat;
 	char log_branch[64], log_pick[64], log_zeny[64], log_mvpdrop[64], log_gm[64], log_npc[64], log_chat[64];
