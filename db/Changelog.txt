@@ -34,6 +34,7 @@
 
 =======================
 10/10
+	* Fixed Undershirt combo not working with slotted Pantie [Playtester]
 	* Updated Lady Tanee card [Playtester]
 	* Added a missing item name thanks to rollopop [Playtester]
 10/08

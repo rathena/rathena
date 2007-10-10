@@ -1229,8 +1229,8 @@
 2519,Morrigane's_Manteau,Morrigane's Manteau,5,30000,,600,,3,,0,0xFFFFFFFE,7,2,4,,61,1,0,{ bonus bLuk,2; bonus bFlee2,8; },{},{}
 2520,Goibne's_Shoulder_Arms,Goibne's Spaulders,5,30000,,700,,3,,0,0xFFFFFFFE,7,2,4,,54,1,0,{ bonus bLongAtkDef,10; bonus bMdef,2; bonus bVit,1; },{},{}
 2521,Angel's_Warmth,Angelic Cardigan,5,10000,,400,,2,,1,0x00000001,7,2,4,,20,1,0,{ bonus bHPrecovRate,5; },{},{}
-2522,Undershirt,Undershirt,5,20000,,150,,2,,0,0xFFFFFFFF,7,2,4,,1,1,0,{ bonus bMdef,1; if(isequipped(2339)) { bonus bAgi,5; bonus bFlee,10; } },{},{}
-2523,Undershirt_,Undershirt,5,20000,,150,,2,,1,0xFFFFFFFF,7,2,4,,1,1,0,{ bonus bMdef,1; if(isequipped(2339)) { bonus bAgi,5; bonus bFlee,10; } },{},{}
+2522,Undershirt,Undershirt,5,20000,,150,,2,,0,0xFFFFFFFF,7,2,4,,1,1,0,{ bonus bMdef,1; if(isequipped(2339) || isequipped(2371)) { bonus bAgi,5; bonus bFlee,10; } },{},{}
+2523,Undershirt_,Undershirt,5,20000,,150,,2,,1,0xFFFFFFFF,7,2,4,,1,1,0,{ bonus bMdef,1; if(isequipped(2339) || isequipped(2371)) { bonus bAgi,5; bonus bFlee,10; } },{},{}
 2524,Valkyrie_Manteau,Valkyrie's Manteau,5,0,,500,,3,,1,0xFFFFFFFE,2,2,4,,1,1,0,{ if(BaseClass==Job_Mage||BaseClass==Job_Archer||BaseClass==Job_Acolyte) bonus bFlee2,5+(getequiprefinerycnt(EQI_GARMENT)*2); else if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief) bonus bShortWeaponDamageReturn,5+(getequiprefinerycnt(EQI_GARMENT)*2); },{},{}
 2525,Cape_Of_Ancient_Lord_,Ancient Cape,5,82000,,600,,2,,1,0xFFFFFFFE,7,2,4,,40,1,0,{ bonus bAgi,1; },{},{}
 2526,Dragonscale_Jacket,Dragonscale Jacket,5,,10,10,,4,,0,0xFFFFFFFF,7,2,4,,50,1,0,{},{},{}
