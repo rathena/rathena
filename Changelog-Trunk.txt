@@ -7,6 +7,11 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Fixed itemdb_read_sqldb blowing up the server with segmentation faults.
 	* Added an option for parse_script to ignore the checks for the set of 
 	  brackets around the script. [FlavioJS]
+	* Partially removed the usage of 'flags' to direct the execution path
+	  in skill unit code (some people seem to really like flags >_>)
+	- wiped out r8478 and its multiple levels of useless flag propagation
+	- skill_unit_onlimit (expiration) no longer executes in skill_delunit
+	- added skill_unit_ondelete for proper handling of this event
 	* Removed 'into_abyss' effect on traps; tests show that it works ONLY
 	  for Gemstones (tho' iRO website claims otherwise) - bugreport:171
 	- corrected code that was exploiting the flag as an 'expired' trap flag
