@@ -7041,9 +7041,9 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 				group->limit = unit->limit;
 			}
 		
+			// execute on all targets standing on this cell
 			if (range==0 && active_flag)
-				map_foreachincell(skill_unit_effect,unit->bl.m,
-					unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,gettick(),1);
+				map_foreachincell(skill_unit_effect,unit->bl.m, unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,gettick(),1);
 		}
 	}
 
@@ -10262,8 +10262,14 @@ int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 			break;
 
 			case UNT_WARP_ACTIVE:
-				skill_unitsetting(&unit->bl,group->skill_id,group->skill_lv,unit->bl.x,unit->bl.y,1);
-				skill_delunit(unit);
+				// warp portal opens (morph to a UNT_WARP_WAITING cell)
+				group->unit_id = UNT_WARP_WAITING;
+				clif_changelook(&unit->bl, LOOK_BASE, group->unit_id);
+				// restart timers
+				group->limit = skill_get_time(group->skill_id,group->skill_lv);
+				unit->limit = skill_get_time(group->skill_id,group->skill_lv);
+				// apply effect to all units standing on it
+				map_foreachincell(skill_unit_effect,unit->bl.m,unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,gettick(),1);
 			break;
 
 			case UNT_CALLFAMILY:

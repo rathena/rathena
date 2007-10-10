@@ -2632,17 +2632,19 @@ int clif_changestatus(struct block_list *bl,int type,int val)
 /*==========================================
  *
  *------------------------------------------*/
-int clif_changelook(struct block_list *bl,int type,int val)
+void clif_changelook(struct block_list *bl,int type,int val)
 {
-	unsigned char buf[32];
-	struct map_session_data *sd = NULL;
-	struct view_data *vd;
-	vd = status_get_viewdata(bl);
-	nullpo_retr(0, vd);
+	unsigned char buf[16];
+	struct map_session_data* sd = NULL;
+	struct view_data* vd;
+	nullpo_retv(bl);
 
 	BL_CAST(BL_PC, bl, sd);	
-
-	switch(type) {
+	vd = status_get_viewdata(bl);
+	//nullpo_ret(vd);	
+	if( vd ) //temp hack to let Warp Portal change appearance
+	switch(type)
+	{
 		case LOOK_WEAPON:
 			if (sd)
 			{
@@ -2710,6 +2712,7 @@ int clif_changelook(struct block_list *bl,int type,int val)
 			//Shoes? No packet uses this....
 		break;
 	}
+
 #if PACKETVER < 4
 	WBUFW(buf,0)=0xc3;
 	WBUFL(buf,2)=bl->id;
@@ -2717,25 +2720,19 @@ int clif_changelook(struct block_list *bl,int type,int val)
 	WBUFB(buf,7)=val;
 	clif_send(buf,packet_len(0xc3),bl,AREA);
 #else
+	WBUFW(buf,0)=0x1d7;
+	WBUFL(buf,2)=bl->id;
 	if(type == LOOK_WEAPON || type == LOOK_SHIELD) {
-		WBUFW(buf,0)=0x1d7;
-		WBUFL(buf,2)=bl->id;
 		WBUFB(buf,6)=LOOK_WEAPON;
 		WBUFW(buf,7)=vd->weapon;
 		WBUFW(buf,9)=vd->shield;
-		clif_send(buf,packet_len(0x1d7),bl,AREA);
-	}
-	else
-	{
-		WBUFW(buf,0)=0x1d7;
-		WBUFL(buf,2)=bl->id;
+	} else {
 		WBUFB(buf,6)=type;
 		WBUFW(buf,7)=val;
 		WBUFW(buf,9)=0;
-		clif_send(buf,packet_len(0x1d7),bl,AREA);
 	}
+	clif_send(buf,packet_len(0x1d7),bl,AREA);
 #endif
-	return 0;
 }
 
 //Sends a change-base-look packet required for traps as they are triggered.
