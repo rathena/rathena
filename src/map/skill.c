@@ -7788,8 +7788,8 @@ int skill_unit_effect (struct block_list* bl, va_list ap)
 {
 	struct skill_unit* unit = va_arg(ap,struct skill_unit*);
 	struct skill_unit_group* group = unit->group;
-	unsigned int flag = va_arg(ap,unsigned int);
 	unsigned int tick = va_arg(ap,unsigned int);
+	unsigned int flag = va_arg(ap,unsigned int);
 	int skill_id;
 
 	if( !unit->alive || bl->prev == NULL )
