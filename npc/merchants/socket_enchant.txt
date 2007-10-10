@@ -47,11 +47,15 @@ payon,140,151,5		script	Seiyablem	84,{
 					mes "C Class, eh?";
 					mes "Now, I can only upgrade certain equipment in that class, so please choose one of the following items, so we can try to add a Slot to it.";
 					next;
-					switch( select( "Trident","Rope","Violin" ) )
+					switch( select( "Trident","Rope","Violin","Book of Billows","Book of Mother Earth","Book of the Blazing Sun","Book of Gust of Wind" ) )
 					{
 						case 1: callfunc "Func_Socket",1,1460,1461,40,66,200,1010,10; break;
 						case 2: callfunc "Func_Socket",1,1950,1951,40,66,200,1010,10; break;
 						case 3: callfunc "Func_Socket",1,1901,1902,40,66,200,1010,10; break;
+						case 4: callfunc "Func_Socket",1,1553,1568,40,66,200,1010,10; break;
+						case 5: callfunc "Func_Socket",1,1554,1569,40,66,200,1010,10; break;
+						case 6: callfunc "Func_Socket",1,1555,1570,40,66,200,1010,10; break;
+						case 7: callfunc "Func_Socket",1,1556,1571,40,60,200,1010,10; break;
 					}
 				break;
 				
