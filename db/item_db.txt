@@ -484,7 +484,7 @@
 1121,Tsurugi__,Tsurugi,4,51000,,1200,130,,1,0,0x000654E2,7,2,2,3,27,1,2,{},{},{}
 1122,Ring_Pommel_Saber,Ring Pommel Saber,4,24000,,900,100,,1,2,0x000654E2,7,2,2,2,14,1,2,{},{},{}
 1123,Haedonggum,Haedonggum,4,50000,,900,120,,1,1,0x000654E2,7,2,2,3,27,1,2,{ bonus bInt,3; },{},{}
-1124,Orcish_Sword,Orcish sword,4,,10,800,90,,1,0,0x000654E3,7,2,2,3,5,1,2,{ bonus bUnbreakableWeapon,0; },{},{}
+1124,Orcish_Sword,Orcish Sword,4,,10,800,90,,1,0,0x000654E3,7,2,2,3,5,1,2,{ bonus bUnbreakableWeapon,0; },{},{}
 1125,Ring_Pommel_Saber_,Ring Pommel Saber,4,24000,,900,100,,1,3,0x000654E2,7,2,2,2,14,1,2,{},{},{}
 1126,Saber,Saber,4,49000,,1000,115,,1,2,0x000654E2,7,2,2,3,27,1,2,{},{},{}
 1127,Saber_,Saber,4,49000,,1000,115,,1,3,0x000654E2,7,2,2,3,27,1,2,{},{},{}

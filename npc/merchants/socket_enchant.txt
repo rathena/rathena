@@ -220,7 +220,7 @@ payon,140,151,5		script	Seiyablem	84,{
 						case 17: callfunc "Func_Socket",1,2605,2625,40,61,400,985,1; break;
 						case 18: callfunc "Func_Socket",1,2264,5167,40,61,400,985,1; break;
 						case 19: callfunc "Func_Socket",1,2287,5350,40,61,500,985,1; break;
-						case 20: callfunc "Func_Socket",1,2529,2530,40,61,500,985,1; break;
+						case 20: callfunc "Func_Socket",1,2425,2434,40,61,500,985,1; break;
 					}
 				break;
 				
