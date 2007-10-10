@@ -34,6 +34,7 @@
 
 =======================
 10/10
+	* Rev. 11401 Added Slotted Black Leather Boots. [L0ne_W0lf]
 	* Fixed Undershirt combo not working with slotted Pantie [Playtester]
 	* Updated Lady Tanee card [Playtester]
 	* Added a missing item name thanks to rollopop [Playtester]
