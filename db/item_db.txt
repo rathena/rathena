@@ -1237,8 +1237,8 @@
 2526,Dragonscale_Jacket,Dragonscale Jacket,5,,10,10,,4,,0,0xFFFFFFFF,7,2,4,,50,1,0,{},{},{}
 2527,Breath_of_the_Dragon,Dragon's Breath,5,,10,600,,4,,1,0xFFFFFFFE,2,2,4,,48,1,0,{ bonus2 bSubRace,RC_Dragon,15; if (isequipped(1166) || isequipped(13001) || isequipped(1474)) bonus2 bAddRace,RC_Dragon,5; },{},{}
 2528,Wool_Scarf,Wool Scarf,5,,10,500,,3,,1,0xFFFFFFFE,2,2,4,,55,1,0,{ bonus bMdef,4;},{},{}
-2529,Decoration_of_the_Rider,Crest of the Rider,5,,10,500,,4,,0,0xFFFFFFFE,2,2,4,,55,1,0,{ bonus bAgi,2; if (isequipped(2425)) bonus bFlee,10; },{},{}
-2530,Decoration_of_the_Rider_,Crest of the Rider,5,,10,500,,4,,1,0xFFFFFFFE,2,2,4,,55,1,0,{ bonus bAgi,2; if (isequipped(2425)) bonus bFlee,10; },{},{}
+2529,Decoration_of_the_Rider,Crest of the Rider,5,,10,500,,4,,0,0xFFFFFFFE,2,2,4,,55,1,0,{ bonus bAgi,2; if (isequipped(2425) || isequipped(2434)) bonus bFlee,10; },{},{}
+2530,Decoration_of_the_Rider_,Crest of the Rider,5,,10,500,,4,,1,0xFFFFFFFE,2,2,4,,55,1,0,{ bonus bAgi,2; if (isequipped(2425) || isequipped(2434)) bonus bFlee,10; },{},{}
 2531,Wolfhedin,Wolfheiden,5,,10,700,,3,,1,0x000654E2,2,2,4,,70,1,0,{ bonus5 bAutoSpellWhenHit,675,1,20,BF_WEAPON,0; },{},{}
 2532,Mithril_Magic_Cape,Mithril Magic Manteau,5,,10,400,,3,,1,0x00098B1C,2,2,4,,70,1,0,{ bonus bMdef,3; bonus5 bAutoSpellWhenHit,676,1,20,BF_MAGIC,0; },{},{}
 //2533,Freya's_Manteau,Freya's Manteau,5,,10,200,,10,,0,0xFFFFFFFE,7,2,4,,0,1,0,{},{},{}
