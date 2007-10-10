@@ -2607,7 +2607,7 @@ int map_readgat (struct map_data* m)
 int map_readallmaps (void)
 {
 	int i;
-	FILE* fp;
+	FILE* fp=NULL;
 	int maps_removed = 0;
 
 	if( enable_grf )

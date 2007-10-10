@@ -62,7 +62,8 @@ struct script_state {
 };
 
 enum script_parse_options {
-	SCRIPT_USE_LABEL_DB = 0x1
+	SCRIPT_USE_LABEL_DB = 0x1,// records labels in scriptlabel_db
+	SCRIPT_IGNORE_EXTERNAL_BRACKETS = 0x2// ignores the check for {} brackets around the script
 };
 
 struct script_code* parse_script(const char* src,const char* file,int line,int options);

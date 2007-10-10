@@ -696,7 +696,7 @@ static int itemdb_gendercheck(struct item_data *id)
 /*==========================================
  * processes one itemdb entry
  *------------------------------------------*/
-static bool itemdb_parse_dbrow(const char** str, const char* source, int line)
+static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scriptopt)
 {
 	/*
 		+----+--------------+---------------+------+-----------+------------+--------+--------+---------+-------+-------+------------+-------------+---------------+-----------------+--------------+-------------+------------+------+--------+--------------+----------------+
@@ -785,11 +785,11 @@ static bool itemdb_parse_dbrow(const char** str, const char* source, int line)
 	}
 
 	if (*str[19])
-		id->script = parse_script(str[19], source, line, 0);
+		id->script = parse_script(str[19], source, line, scriptopt);
 	if (*str[20])
-		id->equip_script = parse_script(str[20], source, line, 0);
+		id->equip_script = parse_script(str[20], source, line, scriptopt);
 	if (*str[21])
-		id->unequip_script = parse_script(str[21], source, line, 0);
+		id->unequip_script = parse_script(str[21], source, line, scriptopt);
 
 	return true;
 }
@@ -891,7 +891,7 @@ static int itemdb_readdb(void)
 			str[21] = p;
 
 
-			if (!itemdb_parse_dbrow(str, path, lines))
+			if (!itemdb_parse_dbrow(str, path, lines, 0))
 				continue;
 
 			count++;
@@ -917,49 +917,31 @@ static int itemdb_read_sqldb(void)
 	for( fi = 0; fi < ARRAYLENGTH(item_db_name); ++fi )
 	{
 		uint32 lines = 0, count = 0;
-		
+
 		// retrieve all rows from the item database
 		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", item_db_name[fi]) )
 		{
 			Sql_ShowDebug(mmysql_handle);
 			continue;
 		}
-		
+
 		// process rows one by one
 		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) )
-		{
-			// wrap the result into a TXT-compatible format
-			char line[1024];
+		{// wrap the result into a TXT-compatible format
 			char* str[22];
-			char* p;
 			int i;
-			
-			lines++;
-			for (i = 0, p = line; i < 22; i++)
-			{
-				char* data;
-				size_t len;
-				Sql_GetData(mmysql_handle, i, &data, &len);
-				
-				if (data == NULL)
-					p[0] = '\0';
-				else if (i >= 19 && data[0] != '{') {
-					sprintf(p, "{ %s }", data); len+= 4;
-				} else
-					strcpy(p, data);
-				str[i] = p;
-				p+= len + 1;
-			}
-			
-			if (!itemdb_parse_dbrow(str, item_db_name[fi], lines))
+			++lines;
+			for( i = 0; i < 22; ++i )
+				Sql_GetData(mmysql_handle, i, &str[i], NULL);
+
+			if (!itemdb_parse_dbrow(str, item_db_name[fi], lines, 0))
 				continue;
-			
-			count++;
+			++count;
 		}
-		
+
 		// free the query result
 		Sql_FreeResult(mmysql_handle);
-		
+
 		ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, item_db_name[fi]);
 	}
 

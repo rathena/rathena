@@ -1898,6 +1898,9 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	struct script_code *code;
 	static int first=1;
 
+	if( src == NULL )
+		return NULL;// empty script
+
 	memset(&syntax,0,sizeof(syntax));
 	if(first){
 		add_buildin_func();
@@ -1948,21 +1951,34 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	parse_syntax_for_flag=0;
 	p=src;
 	p=skip_space(p);
-	if(*p!='{'){
-		disp_error_message("not found '{'",p);
+	if( options&SCRIPT_IGNORE_EXTERNAL_BRACKETS )
+	{// does not require brackets around the script
+		if( *p == '\0' )
+		{// empty script
+			aFree( script_buf );
+			script_pos  = 0;
+			script_size = 0;
+			script_buf  = NULL;
+			return NULL;
+		}
 	}
-	p++;
-	p = skip_space(p);
-	if (p && *p == '}') {
-		// an empty function, just return  
-		aFree( script_buf );
-		script_pos  = 0;
-		script_size = 0;
-		script_buf  = NULL;
-		return NULL;
+	else
+	{// requires brackets around the script
+		if( *p != '{' )
+			disp_error_message("not found '{'",p);
+		p = skip_space(++p);
+		if( *p == '}' )
+		{// empty script
+			aFree( script_buf );
+			script_pos  = 0;
+			script_size = 0;
+			script_buf  = NULL;
+			return NULL;
+		}
 	}
 
-	while (p && *p && (*p!='}' || syntax.curly_count != 0)) {
+	while (*p && (*p != '}' || syntax.curly_count != 0) )
+	{
 		p=skip_space(p);
 		// labelÇæÇØì¡éÍèàóù
 		tmpp=skip_space(skip_word(p));
