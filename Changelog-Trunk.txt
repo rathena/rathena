@@ -7,6 +7,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Fixed itemdb_read_sqldb blowing up the server with segmentation faults.
 	* Added an option for parse_script to ignore the checks for the set of 
 	  brackets around the script. [FlavioJS]
+	* Re-enabled packet 0x1ac to be sent when something gets ankle-snared
 	* Partially removed the usage of 'flags' to direct the execution path
 	  in skill unit code (some people seem to really like flags >_>)
 	- wiped out r8478 and its multiple levels of useless flag propagation

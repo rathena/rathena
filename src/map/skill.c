@@ -7418,10 +7418,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 					sg->val2=bl->id;
 				} else
 					sec = 3000; //Couldn't trap it?
-				//clif_01ac(&src->bl); //Removed? Check the openkore description of this packet: [Skotlex]
-				// 01AC: long ID
-				// Indicates that an object is trapped, but ID is not a
-				// valid monster or player ID.
+				if( sg->unit_id == UNT_ANKLESNARE ) clif_01ac(&src->bl); // mysterious packet
 				sg->limit = DIFF_TICK(tick,sg->tick)+sec;
 				sg->interval = -1;
 				src->range = 0;

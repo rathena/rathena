@@ -123,7 +123,7 @@ int clif_damage(struct block_list* src,struct block_list *dst,unsigned int tick,
 void clif_takeitem(struct block_list* src,struct block_list* dst);
 void clif_sitting(struct block_list* bl);
 void clif_standing(struct block_list* bl);
-int clif_changelook(struct block_list *,int,int);	// area
+void clif_changelook(struct block_list *bl,int type,int val);	// area
 void clif_changetraplook(struct block_list *bl,int val); // area
 void clif_refreshlook(struct block_list *bl,int id,int type,int val,int area); //area specified in 'area'
 int clif_arrowequip(struct map_session_data *sd,int val); //self
@@ -221,7 +221,7 @@ int clif_produceeffect(struct map_session_data* sd,int flag,int nameid);
 void clif_skill_setunit(struct skill_unit *unit);
 void clif_skill_delunit(struct skill_unit *unit);
 
-int clif_01ac(struct block_list *bl);
+void clif_01ac(struct block_list* bl);
 
 int clif_autospell(struct map_session_data *sd,int skilllv);
 int clif_devotion(struct map_session_data *sd);
