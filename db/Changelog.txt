@@ -34,6 +34,7 @@
 
 =======================
 10/10
+	* Updated Lady Tanee card [Playtester]
 	* Added a missing item name thanks to rollopop [Playtester]
 10/08
 	* Rev. 11385 Updated several entries in the create arrow database. [L0ne_W0lf]
