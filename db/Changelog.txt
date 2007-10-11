@@ -33,6 +33,11 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/11
+	* Rev. 11411 Added all out-standing monsters to the Monster Database. (Poring stats) [L0ne_W0lf]
+	- Added Several G_-type monsters. (Events?) as well as WoE:SE monsters.
+	- Commented out ALL custom monsters from mob_db2, mob_skill_db2, and mob_avail.
+	- Added Satan Morroc monsters with KNOWN STATS ONLY. These monsters are far from usable.
 10/10
 	* Rev. 11402 Updated Crest of Rider combo to include slotted black leather boots. [L0ne_W0lf]
 	* Rev. 11401 Added Slotted Black Leather Boots. [L0ne_W0lf]
