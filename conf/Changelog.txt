@@ -1,6 +1,9 @@
 Date	Added
 
 2007/10/11
+	* Renamed import folder to import-tmpl [Playtester]
+	- new server owners please rename/copy it to import to use it
+	- this was done so devs can test their changes easier
 	* Removed nomemo and noteleport mapflags from Veins [Playtester]
 2007/09/24
 	* Added log_chat's '1 - log everything' (revert from r10850) [ultramage]
