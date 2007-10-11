@@ -123,7 +123,7 @@ payon,140,151,5		script	Seiyablem	84,{
 					{
 						case 1: callfunc "Func_Socket",2,1413,1418,40,51,1000,984,5,999,10; break;
 						case 2: callfunc "Func_Socket",2,1239,13016,40,51,1000,984,5,999,10; break;
-						case 3: callfunc "Func_Socket",2,1230,13017,40,51,1000,984,5,999,10; break;
+						case 3: callfunc "Func_Socket",2,1230,13017,40,51,2000,984,5,999,10; break;
 						case 4: callfunc "Func_Socket",2,1236,13018,40,51,1000,984,5,999,10; break;
 						case 5: callfunc "Func_Socket",2,13002,13019,40,51,1000,984,5,999,10; break;
 						case 6: callfunc "Func_Socket",2,1135,13400,40,51,1000,984,5,999,10; break;
@@ -218,7 +218,7 @@ payon,140,151,5		script	Seiyablem	84,{
 						case 15: callfunc "Func_Socket",1,2251,5158,40,61,400,985,1; break;
 						case 16: callfunc "Func_Socket",1,2246,5159,40,61,400,985,1; break;
 						case 17: callfunc "Func_Socket",1,2605,2625,40,61,400,985,1; break;
-						case 18: callfunc "Func_Socket",1,2264,5167,40,61,400,985,1; break;
+						case 18: callfunc "Func_Socket",1,2264,5167,40,61,300,985,1; break;
 						case 19: callfunc "Func_Socket",1,2287,5350,40,61,500,985,1; break;
 						case 20: callfunc "Func_Socket",1,2425,2434,40,61,500,985,1; break;
 					}

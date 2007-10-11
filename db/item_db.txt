@@ -1361,7 +1361,7 @@
 2712,Collector's_Edition_Book,Collector's Edition Book,5,,10,300,,0,,1,0xFFFFFFFF,7,2,136,,1,0,0,{ bonus bAgi,3; bonus bVit,3; bonus bLuk,3; },{},{}
 //
 //
-2715,Skul_Ring_,Skull Ring,5,10000,,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
+2715,Skul_Ring_,Skull Ring,5,10000,,100,,0,,1,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus2 bSubRace,RC_Undead,1; },{},{}
 2716,Librarian_Gloves,Librarian Gloves,5,,,100,,0,,1,0x00812200,7,2,136,,0,0,0,{ bonus MaxSP,20; if (getiteminfo(getequipid(EQI_HAND_R),11) == 15 && isequipped(2717)) bonus bInt,5; bonus bMaxHP,700; bonus bAspdRate,5; },{},{}
 2717,Pocket_Watch,Pocket Watch,5,,,100,,0,,0,0x00010204,7,2,136,,80,0,0,{},{},{}
 2718,Lunatic_Brooch,Lunatic Brooch,5,,,100,,0,,1,0x00080808,7,2,136,,65,0,0,{},{},{}

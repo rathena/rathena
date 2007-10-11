@@ -34,6 +34,7 @@
 
 =======================
 10/11
+	* Added secret bonus of slotted Skull Ring [Playtester]
 	* Rev. 11411 Added all out-standing monsters to the Monster Database. (Poring stats) [L0ne_W0lf]
 	- Added Several G_-type monsters. (Events?) as well as WoE:SE monsters.
 	- Commented out ALL custom monsters from mob_db2, mob_skill_db2, and mob_avail.
