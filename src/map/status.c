@@ -6847,6 +6847,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		break;
 
 	case SC_SPLASHER:
+		// custom Venom Splasher countdown timer
 		//if (sc->data[type].val4 % 1000 == 0) {
 		//	char timer[10];
 		//	snprintf (timer, 10, "%d", sc->data[type].val4/1000);

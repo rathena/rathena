@@ -117,21 +117,25 @@ static int pc_invincible_timer(int tid,unsigned int tick,int id,int data)
 	return 0;
 }
 
-int pc_setinvincibletimer(struct map_session_data *sd,int val) 
+void pc_setinvincibletimer(struct map_session_data* sd, int val) 
 {
-	nullpo_retr(0, sd);
+	nullpo_retv(sd);
 
-	if(sd->invincible_timer != INVALID_TIMER)
+	if( sd->invincible_timer != INVALID_TIMER )
 		delete_timer(sd->invincible_timer,pc_invincible_timer);
 	sd->invincible_timer = add_timer(gettick()+val,pc_invincible_timer,sd->bl.id,0);
-	return 0;
 }
 
-void pc_delinvincibletimer_sub(struct map_session_data *sd)
+void pc_delinvincibletimer(struct map_session_data* sd)
 {
-	delete_timer(sd->invincible_timer,pc_invincible_timer);
-	sd->invincible_timer = INVALID_TIMER;
-	skill_unit_move(&sd->bl,gettick(),1);
+	nullpo_retv(sd);
+
+	if( sd->invincible_timer != INVALID_TIMER )
+	{
+		delete_timer(sd->invincible_timer,pc_invincible_timer);
+		sd->invincible_timer = INVALID_TIMER;
+		skill_unit_move(&sd->bl,gettick(),1);
+	}
 }
 
 static int pc_spiritball_timer(int tid,unsigned int tick,int id,int data)

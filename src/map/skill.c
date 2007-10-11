@@ -6489,8 +6489,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
  *------------------------------------------*/
 int skill_castend_map (struct map_session_data *sd, int skill_num, const char *map)
 {
-	int x=0,y=0;
-
 	nullpo_retr(0, sd);
 
 //Simplify skill_failed code.
@@ -6531,7 +6529,8 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 		return 0;
 	}
 	
-	switch(skill_num){
+	switch(skill_num)
+	{
 	case AL_TELEPORT:
 		if(strcmp(map,"Random")==0)
 			pc_randomwarp(sd,3);
@@ -6545,7 +6544,9 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 			struct skill_unit_group *group;
 			int i, lv, wx, wy;
 			int maxcount=0;
+			int x,y;
 			unsigned short mapindex;
+
 			mapindex  = mapindex_name2id((char*)map);
 			if(!mapindex) { //Given map not found?
 				clif_skill_fail(sd,skill_num,0,0);
@@ -6574,15 +6575,15 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 			wx = sd->menuskill_val>>16;
 			wy = sd->menuskill_val&0xffff;
 			
-			if(lv <= 0) return 0;
-			for(i=0;i<lv;i++){
-				if(mapindex == p[i]->map){
-					x=p[i]->x;
-					y=p[i]->y;
-					break;
-				}
-			}
-			if(x==0 || y==0) {
+			if( lv <= 0 ) return 0;
+			if( lv > 4 ) lv = 4; // crash prevention
+
+			// check if the chosen map exists in the memo list
+			ARR_FIND( 0, lv, i, mapindex == p[i]->map );
+			if( i < lv ) {
+				x=p[i]->x;
+				y=p[i]->y;
+			} else {
 				skill_failed(sd);
 				return 0;
 			}
@@ -6593,16 +6594,19 @@ int skill_castend_map (struct map_session_data *sd, int skill_num, const char *m
 				return 0;
 			}
 			
-			if(skill_check_unit_range2(&sd->bl,wx,wy,skill_num,lv) > 0) {
-				clif_skill_fail(sd,0,0,0);
-				skill_failed(sd);
-				return 0;
-			}
+			// This makes Warp Portal fail if the cell is not empty
+			//if(skill_check_unit_range2(&sd->bl,wx,wy,skill_num,lv) > 0) {
+			//	clif_skill_fail(sd,0,0,0);
+			//	skill_failed(sd);
+			//	return 0;
+			//}
+
 			if((group=skill_unitsetting(&sd->bl,skill_num,lv,wx,wy,0))==NULL) {
 				skill_failed(sd);
 				return 0;
 			}
-			//Now that there's a mapindex, use that in val3 rather than a string. [Skotlex]
+
+			// record the destination coordinates
 			group->val2 = (x<<16)|y;
 			group->val3 = mapindex;
 		}
@@ -6722,7 +6726,7 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 	int active_flag=1;
 	int subunt=0;
 
-	nullpo_retr(0, src);
+	nullpo_retr(NULL, src);
 
 	limit = skill_get_time(skillid,skilllv);
 	range = skill_get_unit_range(skillid,skilllv);
@@ -6731,22 +6735,12 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 	unit_flag = skill_get_unit_flag(skillid);
 	layout = skill_get_unit_layout(skillid,skilllv,src,x,y);
 
-	if (skillid == AL_WARP && flag && src->type == BL_SKILL)
-	{	//Warp Portal morphing to active mode, extract relevant data from src. [Skotlex]
-		group= ((TBL_SKILL*)src)->group;
-		src = map_id2bl(group->src_id);
-		if (!src) return NULL;
-		val2=group->val2; //Copy the (x,y) position you warp to
-		val3=group->val3; //as well as the mapindex to warp to.
-	}
-	
 	BL_CAST(BL_PC, src, sd);
 	status = status_get_status_data(src);
-	sc= status_get_sc(src);	// for traps, firewall and fogwall - celest
-	if (sc && !sc->count)
-		sc = NULL;
+	sc = status_get_sc(src);	// for traps, firewall and fogwall - celest
 
-	switch(skillid){
+	switch(skillid)
+	{
 
 	case MG_SAFETYWALL:
 		val2=skilllv+1;
@@ -6761,6 +6755,15 @@ struct skill_unit_group *skill_unitsetting (struct block_list *src, int skillid,
 		val1=skilllv+6;
 		if(!(flag&1))
 			limit=2000;
+		else // previous implementation (not used anymore)
+		{	//Warp Portal morphing to active mode, extract relevant data from src. [Skotlex]
+			if( src->type != BL_SKILL ) return NULL;
+			group = ((TBL_SKILL*)src)->group;
+			src = map_id2bl(group->src_id);
+			if( !src ) return NULL;
+			val2 = group->val2; //Copy the (x,y) position you warp to
+			val3 = group->val3; //as well as the mapindex to warp to.
+		}
 		break;
 
 	case PR_SANCTUARY:
@@ -10262,7 +10265,7 @@ int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 
 			case UNT_WARP_ACTIVE:
 				// warp portal opens (morph to a UNT_WARP_WAITING cell)
-				group->unit_id = UNT_WARP_WAITING;
+				group->unit_id = skill_get_unit_id(group->skill_id, 1); // UNT_WARP_WAITING
 				clif_changelook(&unit->bl, LOOK_BASE, group->unit_id);
 				// restart timers
 				group->limit = skill_get_time(group->skill_id,group->skill_lv);
