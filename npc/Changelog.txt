@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/10/11
+	* Updated Veins Field spawns [Playtester]
 2007/10/10
 	* Updated Socket Enchant NPC [Playtester]
 2007/10/06

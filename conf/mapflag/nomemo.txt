@@ -80,7 +80,6 @@ p_track02	mapflag	nomemo
 ra_in01	mapflag	nomemo
 ra_temin	mapflag	nomemo
 ra_temsky	mapflag	nomemo
-veins	mapflag	nomemo
 ve_in	mapflag	nomemo
 ve_in02	mapflag	nomemo
 thor_camp	mapflag	nomemo
