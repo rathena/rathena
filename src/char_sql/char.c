@@ -97,7 +97,7 @@ char bind_ip_str[128];
 uint32 bind_ip = INADDR_ANY;
 uint16 char_port = 6121;
 int char_maintenance = 0;
-int char_new = 1;
+bool char_new = true;
 int char_new_display = 0;
 
 int name_ignoring_case = 0; // Allow or not identical name for characters but with a different case by [Yor]
@@ -131,7 +131,8 @@ struct s_subnet {
 } subnet[16];
 int subnet_count = 0;
 
-struct char_session_data{
+struct char_session_data {
+	int fd;
 	int account_id, login_id1, login_id2, sex;
 	int found_char[MAX_CHARS];
 	char email[40]; // e-mail (default: a@a.com) by [Yor]
@@ -267,6 +268,7 @@ void set_char_offline(int char_id, int account_id)
 	struct mmo_charstatus *cp;
 	struct online_char_data* character;
 
+	//FIXME: usage of 'magic constant'; this needs to go! [ultramage]
 	if ( char_id == 99 )
 	{
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online`='0' WHERE `account_id`='%d'", char_db, account_id) )
@@ -1087,141 +1089,104 @@ int mmo_char_sql_init(void)
 
 //==========================================================================================================
 
-int make_new_char_sql(int fd, unsigned char *dat)
+int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int char_num, int hair_color, int hair_style)
 {
-	struct char_session_data *sd;
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
-	unsigned int i; // Used in for loop and comparing with strlen, safe to be unsigned. [Lance]
+	unsigned int i;
 	int char_id;
+	bool valid;
 
-	safestrncpy(name, dat, NAME_LENGTH);
-	normalize_name(name,TRIM_CHARS); //Normalize character name. [Skotlex]
+	safestrncpy(name, name_, NAME_LENGTH);
+	normalize_name(name,TRIM_CHARS);
 	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
-
-	if (!session_isValid(fd) || !(sd = (struct char_session_data*)session[fd]->session_data))
-		return -2;
 
 	ShowInfo("New character request (%d)\n", sd->account_id);
 
-	// check lenght of character name
-	if (strlen(name) < 4) {
-		ShowInfo("Create char failed (character name too small): (connection #%d, account: %d, name: '%s').\n",
-		         fd, sd->account_id, dat);
-		return -2;
-	}
-
-	//check name != main chat nick [LuzZza]
-	if(strcmpi(name, main_chat_nick) == 0) {
-		ShowInfo("Create char failed (%d): this nick (%s) reserved for mainchat messages.\n", sd->account_id, name);
-		return -2;
-	}
-
-	//check for charcount (maxchars) :)
-	if(char_per_account != 0){
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id` FROM `%s` WHERE `account_id` = '%d'", char_db, sd->account_id) )
+	// check the number of already existing chars in this account
+	if( char_per_account != 0 ) {
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d'", char_db, sd->account_id) )
 			Sql_ShowDebug(sql_handle);
-		if( Sql_NumRows(sql_handle) >= char_per_account )
-		{
-			//hehe .. limit exceeded :P
+		if( Sql_NumRows(sql_handle) >= char_per_account ) {
 			ShowInfo("Create char failed (%d): charlimit exceeded.\n", sd->account_id);
 			Sql_FreeResult(sql_handle);
 			return -2;
 		}
 	}
 
+	// check char slot.
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d'", char_db, sd->account_id, char_num) )
+		Sql_ShowDebug(sql_handle);
+	if( Sql_NumRows(sql_handle) > 0 )
+	{
+		ShowWarning("Create char failed (%d, slot: %d), slot already in use\n", sd->account_id, char_num);
+		return -2;
+	}
+
+	// check length of character name
+	if( name[0] == '\0' ) {
+		ShowInfo("Create char failed (empty character name): (connection #%d, account: %d).\n", sd->fd, sd->account_id);
+		return -2;
+	}
+
+	// check name != main chat nick [LuzZza]
+	if( strcmpi(name, main_chat_nick) == 0 ) {
+		ShowInfo("Create char failed (%d): this nick (%s) reserved for mainchat messages.\n", sd->account_id, name);
+		return -2;
+	}
+
 	// Check Authorised letters/symbols in the name of the character
-	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised
-		for (i = 0; i < NAME_LENGTH && name[i]; i++)
-			if (strchr(char_name_letters, name[i]) == NULL)
+	if( char_name_option == 1 ) { // only letters/symbols in char_name_letters are authorised
+		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
+			if( strchr(char_name_letters, name[i]) == NULL )
 				return -2;
-	} else if (char_name_option == 2) { // letters/symbols in char_name_letters are forbidden
-		for (i = 0; i < NAME_LENGTH && name[i]; i++)
-			if (strchr(char_name_letters, name[i]) != NULL)
+	} else
+	if( char_name_option == 2 ) { // letters/symbols in char_name_letters are forbidden
+		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
+			if( strchr(char_name_letters, name[i]) != NULL )
 				return -2;
 	} // else, all letters/symbols are authorised (except control char removed before)
 
-	//check stat error
-	if ((dat[24]+dat[25]+dat[26]+dat[27]+dat[28]+dat[29]!=6*5 ) || // stats
-		(dat[30] >= MAX_CHARS) || // slots (dat[30] can not be negativ)
-		(dat[33] <= 0) || (dat[33] >= 24) || // hair style
-		(dat[31] >= 9)) { // hair color (dat[31] can not be negativ)
-		if (log_char) {
-			// char.log to charlog
-			if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
-				"VALUES (NOW(), '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-				charlog_db,"make new char error", sd->account_id, dat[30], esc_name, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]) )
-				Sql_ShowDebug(sql_handle);
-		}
-		ShowWarning("Create char failed (%d): stats error (bot cheat?!)\n", sd->account_id);
-		return -2;
-	} // for now we have checked: stat points used <31, char slot is less then 9, hair style/color values are acceptable
-
-	// check individual stat value
-	for(i = 24; i <= 29; i++) {
-		if (dat[i] < 1 || dat[i] > 9) {
-			if (log_char) {
-				// char.log to charlog
-				if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
-					"VALUES (NOW(), '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-					charlog_db, "make new char error", sd->account_id, dat[30], esc_name, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]) )
-					Sql_ShowDebug(sql_handle);
-			}
-			ShowWarning("Create char failed (%d): stats error (bot cheat?!)\n", sd->account_id);
-			return -2;
-		}
-	} // now we know that every stat has proper value but we have to check if str/int agi/luk vit/dex pairs are correct
-
-	if( ((dat[24]+dat[27]) > 10) || ((dat[25]+dat[29]) > 10) || ((dat[26]+dat[28]) > 10) ) {
-		if (log_char) {
-			// char.log to charlog
-			if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
-				"VALUES (NOW(), '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-				charlog_db, "make new char error", sd->account_id, dat[30], esc_name, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]) )
-				Sql_ShowDebug(sql_handle);
-		}
-		ShowWarning("Create char failed (%d): stats error (bot cheat?!)\n", sd->account_id);
-		return -2;
-	} // now when we have passed all stat checks
-
-	if (log_char) {
-		// char.log to charlog
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`(`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
-			"VALUES (NOW(), '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-			charlog_db, "make new char", sd->account_id, dat[30], esc_name, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]) )
-			Sql_ShowDebug(sql_handle);
-	}
-	//printf("make new char %d-%d %s %d, %d, %d, %d, %d, %d - %d, %d\n",
-	//	fd, dat[30], dat, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29], dat[33], dat[31]);
-
-	//Check Name (already in use?)
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` = '%s'", char_db, esc_name) )
-	{
+	// check name (already in use?)
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` = '%s'", char_db, esc_name) ) {
 		Sql_ShowDebug(sql_handle);
 		return -2;
 	}
-	if( Sql_NumRows(sql_handle) > 0 )
-	{
+	if( Sql_NumRows(sql_handle) > 0 ) {
 		ShowInfo("Create char failed: charname already in use\n");
 		return -1;
 	}
 
-	// check char slot.
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`, `char_num` FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d'", char_db, sd->account_id, dat[30]) )
-		Sql_ShowDebug(sql_handle);
-	if( Sql_NumRows(sql_handle) > 0 )
-	{
-		ShowWarning("Create char failed (%d, slot: %d), slot already in use\n", sd->account_id, dat[30]);
+	//check other inputs
+	if((char_num >= MAX_CHARS) // slots
+	|| (hair_style >= 24) // hair style
+	|| (hair_color >= 9) // hair color
+	|| (str + agi + vit + int_ + dex + luk != 6*5 ) // stats
+	|| (str < 1 || str > 9 || agi < 1 || agi > 9 || vit < 1 || vit > 9 || int_ < 1 || int_ > 9 || dex < 1 || dex > 9 || luk < 1 || luk > 9) // individual stat values
+	|| (str + int_ != 10 || agi + luk != 10 || vit + dex != 10) ) // pairs
+		valid = false;
+	else
+		valid = true;
+
+	// log result
+	if (log_char) {
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
+			"VALUES (NOW(), '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
+			charlog_db,(valid?"make new char":"make new char error"), sd->account_id, char_num, esc_name, str, agi, vit, int_, dex, luk, hair_style, hair_color) )
+			Sql_ShowDebug(sql_handle);
+	}
+
+	if( !valid ) {
+		ShowWarning("Create char failed (%d): stats error (bot cheat?!)\n", sd->account_id);
 		return -2;
 	}
 
-	//New Querys [Sirius]
 	//Insert the char to the 'chardb' ^^
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
 		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
-		char_db, sd->account_id , dat[30] , esc_name, start_zeny, dat[24], dat[25], dat[26], dat[27], dat[28], dat[29],
-		(40 * (100 + dat[26])/100) , (40 * (100 + dat[26])/100 ),  (11 * (100 + dat[27])/100), (11 * (100 + dat[27])/100), dat[33], dat[31],
+		char_db, sd->account_id , char_num, esc_name, start_zeny, str, agi, vit, int_, dex, luk,
+		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
 		mapindex_id2name(start_point.map), start_point.x, start_point.y, mapindex_id2name(start_point.map), start_point.x, start_point.y) )
 	{
 		Sql_ShowDebug(sql_handle);
@@ -1240,7 +1205,7 @@ int make_new_char_sql(int fd, unsigned char *dat)
 			Sql_ShowDebug(sql_handle);
 	}
 
-	ShowInfo("Created char: account: %d, char: %d, slot: %d, name: %s\n", sd->account_id, char_id, dat[30], name);
+	ShowInfo("Created char: account: %d, char: %d, slot: %d, name: %s\n", sd->account_id, char_id, char_num, name);
 	return char_id;
 }
 
@@ -1307,39 +1272,13 @@ int delete_char_sql(int char_id, int partner_id)
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d' AND `incuvate` = '0'", pet_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 
-	// Komurka's suggested way to clear pets, modified by [Skotlex] (because I always personalize what I do :X)
-	//Removing pets that are in the char's inventory....
-	{	//NOTE: The syntax for multi-table deletes is a bit changed between 4.0 and 4.1 regarding aliases, so we have to consider the version... [Skotlex]
-		//Since we only care about the major and minor version, a double conversion is good enough. (4.1.20 -> 4.10000)
-		//double mysql_version = atof(mysql_get_server_info(&mysql_handle));
-		//
-		//sprintf(tmp_sql,
-		//"delete FROM `%s` USING `%s` as c LEFT JOIN `%s` as i ON c.char_id = i.char_id, `%s` as p WHERE c.char_id = '%d' AND i.card0 = -256 AND p.pet_id = (i.card1|(i.card2<<2))",
-		//	(mysql_version<4.1?pet_db:"p"), char_db, inventory_db, pet_db, char_id);
-		//
-		//if(mysql_query(&mysql_handle, tmp_sql)) {
-		//	ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		//	ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		//}
-
-		////Removing pets that are in the char's cart....
-		//sprintf(tmp_sql,
-		//"delete FROM `%s` USING `%s` as c LEFT JOIN `%s` as i ON c.char_id = i.char_id, `%s` as p WHERE c.char_id = '%d' AND i.card0 = -256 AND p.pet_id = (i.card1|(i.card2<<2))",
-		//	(mysql_version<4.1?pet_db:"p"), char_db, cart_db, pet_db, char_id);
-		//
-		//if(mysql_query(&mysql_handle, tmp_sql)) {
-		//	ShowSQL("DB error - %s\n",mysql_error(&mysql_handle));
-		//	ShowDebug("at %s:%d - %s\n", __FILE__,__LINE__,tmp_sql);
-		//}
-
-		//## TODO double-check the functionality of this query
-		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE pet_id IN "
-			"(SELECT card1|card2<<2 FROM `%s` WHERE char_id = '%d' AND card0 = -256"
-			" UNION"
-			" SELECT card1|card2<<2 FROM `%s` WHERE char_id = '%d' AND card0 = -256)",
-			pet_db, inventory_db, char_id, cart_db, char_id) )
-			Sql_ShowDebug(sql_handle);
-	}
+	//Delete all pets that are stored in eggs (inventory + cart)
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE pet_id IN "
+		"(SELECT card1|card2<<2 FROM `%s` WHERE char_id = '%d' AND card0 = -256"
+		" UNION"
+		" SELECT card1|card2<<2 FROM `%s` WHERE char_id = '%d' AND card0 = -256)",
+		pet_db, inventory_db, char_id, cart_db, char_id) )
+		Sql_ShowDebug(sql_handle);
 
 	/* remove homunculus */ 
 	if (hom_id)
@@ -1487,14 +1426,12 @@ int mmo_char_send006b(int fd, struct char_session_data* sd)
 
 	set_char_online(-1, 99, sd->account_id);
 
-	//search char.
+	// load the char_ids of all chars on this account
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id` FROM `%s` WHERE `account_id` = '%d' AND `char_num` < '%d'", char_db, sd->account_id, MAX_CHARS) )
 		Sql_ShowDebug(sql_handle);
 	for( i = 0; i < MAX_CHARS && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
 	{
-		// char_id
-		Sql_GetData(sql_handle, 0, &data, NULL);
-		sd->found_char[i] = atoi(data);
+		Sql_GetData(sql_handle, 0, &data, NULL); sd->found_char[i] = atoi(data); // char_id
 	}
 	found_num = i;
 	for( ; i < MAX_CHARS; ++i )
@@ -1586,23 +1523,24 @@ int parse_fromlogin(int fd)
 
 	sd = (struct char_session_data*)session[fd]->session_data;
 
-	// hehe. no need to set user limit on SQL version. :P
-	// but char limitation is good way to maintain server. :D
 	while(RFIFOREST(fd) >= 2)
 	{
-//		printf("parse_fromlogin : %d %d %x\n", fd, RFIFOREST(fd), RFIFOW(fd, 0));
+		uint16 command = RFIFOW(fd,0);
 
-		switch(RFIFOW(fd,0)) {
+		switch( command )
+		{
+
+		// acknowledgement of connect-to-loginserver request
 		case 0x2711:
 			if (RFIFOREST(fd) < 3)
 				return 0;
+
 			if (RFIFOB(fd,2)) {
 				//printf("connect login server error : %d\n", RFIFOB(fd, 2));
 				ShowError("Can not connect to login-server.\n");
 				ShowError("The server communication passwords (default s1/p1) are probably invalid.\n");
 				ShowError("Also, please make sure your login db has the correct communication username/passwords and the gender of the account is S.\n");
 				ShowError("The communication passwords are set in map_athena.conf and char_athena.conf\n");
-				//exit(1); //fixed for server shutdown.
 			}else {
 				ShowStatus("Connected to login-server (connection #%d).\n", fd);
 				
@@ -1610,32 +1548,28 @@ int parse_fromlogin(int fd)
 				send_accounts_tologin(-1, gettick(), 0, 0);
 			
 				// if no map-server already connected, display a message...
-				for(i = 0; i < MAX_MAP_SERVERS; i++)
-					if (server_fd[i] > 0 && server[i].map[0]) // if map-server online and at least 1 map
-						break;
-				if (i == MAX_MAP_SERVERS)
+				ARR_FIND( 0, MAX_MAP_SERVERS, i, server_fd[i] > 0 && server[i].map[0] );
+				if( i == MAX_MAP_SERVERS )
 					ShowStatus("Awaiting maps from map-server.\n");
 			}
 			RFIFOSKIP(fd,3);
 		break;
 
+		// acknowledgement of account authentication request
 		case 0x2713:
 			if (RFIFOREST(fd) < 51)
 				return 0;
 
-			for(i = 0; i < fd_max && !(
-				session[i] &&
-				(sd = (struct char_session_data*)session[i]->session_data) &&
-				sd->account_id == RFIFOL(fd,2))
-				; i++);
-
-			if (i < fd_max) {
-				if (RFIFOB(fd,6) != 0) {
+			// find the session with this account id
+			ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == RFIFOL(fd,2) );
+			if( i < fd_max )
+			{
+				if( RFIFOB(fd,6) != 0 ) { // failure
 					WFIFOHEAD(i,3);
 					WFIFOW(i,0) = 0x6c;
 					WFIFOB(i,2) = 0x42;
 					WFIFOSET(i,3);
-				} else {
+				} else { // success
 					memcpy(sd->email, RFIFOP(fd, 7), 40);
 					sd->connect_until_time = (time_t)RFIFOL(fd,47);
 					char_auth_ok(i, sd);
@@ -1644,17 +1578,17 @@ int parse_fromlogin(int fd)
 			RFIFOSKIP(fd,51);
 		break;
 
+		// acknowledgement of e-mail/limited time request
 		case 0x2717:
 			if (RFIFOREST(fd) < 50)
 				return 0;
-			for(i = 0; i < fd_max; i++) {
-				if (session[i] && (sd = (struct char_session_data*)session[i]->session_data)) {
-					if (sd->account_id == RFIFOL(fd,2)) {
-						memcpy(sd->email, RFIFOP(fd,6), 40);
-						sd->connect_until_time = (time_t)RFIFOL(fd,46);
-						break;
-					}
-				}
+
+			// find the session with this account id
+			ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == RFIFOL(fd,2) );
+			if( i < fd_max )
+			{
+				memcpy(sd->email, RFIFOP(fd,6), 40);
+				sd->connect_until_time = (time_t)RFIFOL(fd,46);
 			}
 			RFIFOSKIP(fd,50);
 		break;
@@ -1666,36 +1600,11 @@ int parse_fromlogin(int fd)
 			RFIFOSKIP(fd,2);
 		break;
 
-		// Receiving authentification from Freya-type login server (to avoid char->login->char)
-		case 0x2719:
-			if (RFIFOREST(fd) < 18)
-				return 0;
-			// to conserv a maximum of authentification, search if account is already authentified and replace it
-			// that will reduce multiple connection too
-			for(i = 0; i < AUTH_FIFO_SIZE; i++)
-				if (auth_fifo[i].account_id == RFIFOL(fd,2))
-					break;
-			// if not found, use next value
-			if (i == AUTH_FIFO_SIZE) {
-				if (auth_fifo_pos >= AUTH_FIFO_SIZE)
-					auth_fifo_pos = 0;
-				i = auth_fifo_pos;
-				auth_fifo_pos++;
-			}
-			//printf("auth_fifo set (auth #%d) - account: %d, secure: %08x-%08x\n", i, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10));
-			auth_fifo[i].account_id = RFIFOL(fd,2);
-			auth_fifo[i].char_id = 0;
-			auth_fifo[i].login_id1 = RFIFOL(fd,6);
-			auth_fifo[i].login_id2 = RFIFOL(fd,10);
-			auth_fifo[i].delflag = 2; // 0: auth_fifo canceled/void, 2: auth_fifo received from login/map server in memory, 1: connection authentified
-			auth_fifo[i].connect_until_time = 0; // unlimited/unknown time by default (not display in map-server)
-			auth_fifo[i].ip = ntohl(RFIFOL(fd,14));
-			RFIFOSKIP(fd,18);
-		break;
-
-		case 0x2721:	// gm reply. I don't want to support this function.
+		// gm reply. I don't want to support this function.
+		case 0x2721:
 			if (RFIFOREST(fd) < 10)
 				return 0;
+
 /*		Note that this is the code from char-txt! Even uncommenting it will not work.
 			printf("0x2721:GM reply\n");
 		  {
@@ -1722,14 +1631,14 @@ int parse_fromlogin(int fd)
 			RFIFOSKIP(fd, 10);
 		break;
 
-		case 0x2723:	// changesex reply (modified by [Yor])
+		// changesex reply
+		case 0x2723:
 			if (RFIFOREST(fd) < 7)
 				return 0;
 		{
-			int acc, sex;
+			int acc = RFIFOL(fd,2);
+			int sex = RFIFOB(fd,6);
 			unsigned char buf[16];
-			acc = RFIFOL(fd,2);
-			sex = RFIFOB(fd,6);
 			if( acc > 0 )
 			{
 				int char_id[MAX_CHARS];
@@ -1744,15 +1653,9 @@ int parse_fromlogin(int fd)
 					Sql_ShowDebug(sql_handle);
 				for( i = 0; i < MAX_CHARS && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
 				{
-					// char_id
-					Sql_GetData(sql_handle, 0, &data, NULL);
-					char_id[i] = atoi(data);
-					// class
-					Sql_GetData(sql_handle, 1, &data, NULL);
-					class_[i] = atoi(data);
-					// guild_id
-					Sql_GetData(sql_handle, 2, &data, NULL);
-					guild_id[i] = atoi(data);
+					Sql_GetData(sql_handle, 0, &data, NULL); char_id[i] = atoi(data);
+					Sql_GetData(sql_handle, 1, &data, NULL); class_[i] = atoi(data);
+					Sql_GetData(sql_handle, 2, &data, NULL); guild_id[i] = atoi(data);
 				}
 				num = i;
 				for( i = 0; i < num; ++i )
@@ -1788,45 +1691,42 @@ int parse_fromlogin(int fd)
 				}
 				Sql_FreeResult(sql_handle);
 			}
-			// disconnect player if online on char-server
-			for(i = 0; i < fd_max; i++) {
-				if (session[i] && (sd = (struct char_session_data*)session[i]->session_data)) {
-					if (sd->account_id == acc) {
-						set_eof(i);
-						break;
-					}
-				}
-			}
 
+			// disconnect player if online on char-server
+			ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == acc );
+			if( i < fd_max )
+				set_eof(i);
+
+			// notify all mapservers about this change
 			WBUFW(buf,0) = 0x2b0d;
 			WBUFL(buf,2) = acc;
 			WBUFB(buf,6) = sex;
 			mapif_sendall(buf, 7);
-		  
-			RFIFOSKIP(fd,7);
 		}
+			RFIFOSKIP(fd,7);
 		break;
 
-		// account_reg2•ÏX’Ê’m
+		// reply to an account_reg2 registry request
 		case 0x2729:
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
+
 		{	//Receive account_reg2 registry, forward to map servers.
 			unsigned char buf[ACCOUNT_REG2_NUM*(256+32+2)+16];
 			memcpy(buf,RFIFOP(fd,0), RFIFOW(fd,2));
 //			WBUFW(buf,0) = 0x2b11;
 			WBUFW(buf,0) = 0x3804; //Map server can now receive all kinds of reg values with the same packet. [Skotlex]
 			mapif_sendall(buf, WBUFW(buf,2));
-			RFIFOSKIP(fd, RFIFOW(fd,2));
 		}
+			RFIFOSKIP(fd, RFIFOW(fd,2));
 		break;
 
-		// State change of account/ban notification (from login-server) by [Yor]
+		// State change of account/ban notification (from login-server)
 		case 0x2731:
 			if (RFIFOREST(fd) < 11)
 				return 0;
-			// send to all map-servers to disconnect the player
-		{
+
+		{	// send to all map-servers to disconnect the player
 			unsigned char buf[11];
 			WBUFW(buf,0) = 0x2b14;
 			WBUFL(buf,2) = RFIFOL(fd,2);
@@ -1835,20 +1735,18 @@ int parse_fromlogin(int fd)
 			mapif_sendall(buf, 11);
 		}
 			// disconnect player if online on char-server
-			for(i = 0; i < fd_max; i++) {
-				if (session[i] && (sd = (struct char_session_data*)session[i]->session_data)) {
-					if (sd->account_id == RFIFOL(fd,2)) {
-						set_eof(i);
-						break;
-					}
-				}
-			}
+			ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == RFIFOL(fd,2) );
+			if( i < fd_max )
+				set_eof(i);
+
 			RFIFOSKIP(fd,11);
 		break;
 
+		// gm account information from login server
 		case 0x2732:
 			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 				return 0;
+
 			if(!char_gm_read) {
 				unsigned char buf[32000];
 				if (gm_account != NULL)
@@ -1866,55 +1764,12 @@ int parse_fromlogin(int fd)
 				memcpy(buf, RFIFOP(fd,0), RFIFOW(fd,2));
 				WBUFW(buf,0) = 0x2b15;
 				mapif_sendall(buf, RFIFOW(fd,2));
-
-				RFIFOSKIP(fd,RFIFOW(fd,2));
 			}
+
+			RFIFOSKIP(fd,RFIFOW(fd,2));
 		break;
 
-		// Receive GM accounts [Freya login server packet by Yor]
-		case 0x2733:
-			if (RFIFOREST(fd) < 7)
-				return 0;
-		{
-			int new_level = 0;
-			for(i = 0; i < GM_num; i++)
-				if (gm_account[i].account_id == RFIFOL(fd,2)) {
-					if (gm_account[i].level != (int)RFIFOB(fd,6)) {
-						gm_account[i].level = (int)RFIFOB(fd,6);
-						new_level = 1;
-					}
-					break;
-				}
-			// if not found, add it
-			if (i == GM_num) {
-				// limited to 4000, because we send information to char-servers (more than 4000 GM accounts???)
-				// int (id) + int (level) = 8 bytes * 4000 = 32k (limit of packets in windows)
-				if (((int)RFIFOB(fd,6)) > 0 && GM_num < 4000) {
-					if (GM_num == 0) {
-						gm_account = (struct gm_account*)aMalloc(sizeof(struct gm_account));
-					} else {
-						gm_account = (struct gm_account*)aRealloc(gm_account, sizeof(struct gm_account) * (GM_num + 1));
-					}
-					gm_account[GM_num].account_id = RFIFOL(fd,2);
-					gm_account[GM_num].level = (int)RFIFOB(fd,6);
-					new_level = 1;
-					GM_num++;
-					if (GM_num >= 4000)
-						ShowWarning("4000 GM accounts found. Next GM accounts are not readed.\n");
-				}
-			}
-			if (new_level == 1) {
-				ShowStatus("From login-server: receiving GM account information (%d: level %d).\n", RFIFOL(fd,2), (int)RFIFOB(fd,6));
-				//create_online_files(); // not change online file for only 1 player (in next timer, that will be done
-				// send gm acccounts level to map-servers
-				mapif_send_gmaccounts();
-			}
-
-			RFIFOSKIP(fd,7);
-		}
-		break;
-
-		//Login server request to kick a character out. [Skotlex]
+		// Login server request to kick a character out. [Skotlex]
 		case 0x2734:
 			if (RFIFOREST(fd) < 6)
 				return 0;
@@ -1923,32 +1778,35 @@ int parse_fromlogin(int fd)
 			int aid = RFIFOL(fd,2);
 			if ((character = idb_get(online_char_db, aid)) != NULL)
 			{	//Kick out this player.
-				if (character->server > -1)
+				if( character->server != -1 )
 				{	//Kick it from the map server it is on.
 					mapif_disconnectplayer(server_fd[character->server], character->account_id, character->char_id, 2);
 					if (character->waiting_disconnect == -1)
 						character->waiting_disconnect = add_timer(gettick()+15000, chardb_waiting_disconnect, character->account_id, 0);
-				} else { //Manual kick from char server.
+				}
+				else
+				{	//Manual kick from char server.
 					struct char_session_data *tsd;
 					int i;
-					for(i = 0; i < fd_max; i++) {
-						if (session[i] && (tsd = (struct char_session_data*)session[i]->session_data) && tsd->account_id == aid)
-						{
-							WFIFOHEAD(i,3);
-							WFIFOW(i,0) = 0x81;
-							WFIFOB(i,2) = 2;
-							WFIFOSET(i,3);
-							break;
-						}
+					ARR_FIND( 0, fd_max, i, session[i] && (tsd = (struct char_session_data*)session[i]->session_data) && tsd->account_id == aid );
+					if( i < fd_max )
+					{
+						WFIFOHEAD(i,3);
+						WFIFOW(i,0) = 0x81;
+						WFIFOB(i,2) = 2;
+						WFIFOSET(i,3);
+						break;
 					}
-					if (i == fd_max) //Shouldn't happen, but just in case.
+					else //Shouldn't happen, but just in case.
 						set_char_offline(99, aid);
 				}
 			}
-			RFIFOSKIP(fd,6);
 		}
+
+			RFIFOSKIP(fd,6);
 		break;
 
+		// ip address update signal from login server
 		case 0x2735:
 		{
 			unsigned char buf[2];
@@ -1966,18 +1824,19 @@ int parse_fromlogin(int fd)
 			{	//Update ip.
 				char_ip = new_ip;
 				ShowInfo("Updating IP for [%s].\n", char_ip_str);
+				// notify login server about the change
 				WFIFOHEAD(fd,6);
 				WFIFOW(fd,0) = 0x2736;
 				WFIFOL(fd,2) = htonl(char_ip);
 				WFIFOSET(fd,6);
 			}
+		}
 
 			RFIFOSKIP(fd,2);
-		}
 		break;
 
 		default:
-			ShowError("Unknown packet 0x%04x received from login server, disconnecting.\n", RFIFOW(fd,0));
+			ShowError("Unknown packet 0x%04x received from login server, disconnecting.\n", command);
 			set_eof(fd);
 			return 0;
 		}
@@ -2845,16 +2704,17 @@ int parse_char(int fd)
 		return 0;
 	}
 
-	while(RFIFOREST(fd) >= 2)
+	while( RFIFOREST(fd) >= 2 )
 	{
 		//For use in packets that depend on an sd being present [Skotlex]
 		#define FIFOSD_CHECK(rest) { if(RFIFOREST(fd) < rest) return 0; if (sd==NULL) { RFIFOSKIP(fd,rest); return 0; } }
 
 		cmd = RFIFOW(fd,0);
-		switch(cmd)
+		switch( cmd )
 		{
 
-		case 0x65: // request to connect
+		// request to connect
+		case 0x65:
 			ShowInfo("request connect - account_id:%d/login_id1:%d/login_id2:%d\n", RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10));
 			if (RFIFOREST(fd) < 17)
 				return 0;
@@ -2862,31 +2722,34 @@ int parse_char(int fd)
 			if (sd) {
 				//Received again auth packet for already authentified account?? Discard it.
 				//TODO: Perhaps log this as a hack attempt?
+				//TODO: and perhaps send back a reply?
 				RFIFOSKIP(fd,17);
 				break;
 			}
 			
 			CREATE(session[fd]->session_data, struct char_session_data, 1);
 			sd = (struct char_session_data*)session[fd]->session_data;
-			sd->connect_until_time = 0; // unknow or illimited (not displaying on map-server)
+			sd->fd = fd;
+			sd->connect_until_time = 0; // unknown or unlimited (not displaying on map-server)
 			sd->account_id = RFIFOL(fd,2);
 			sd->login_id1 = RFIFOL(fd,6);
 			sd->login_id2 = RFIFOL(fd,10);
 			sd->sex = RFIFOB(fd,16);
+
 			// send back account_id
 			WFIFOHEAD(fd,4);
 			WFIFOL(fd,0) = RFIFOL(fd,2);
 			WFIFOSET(fd,4);
+
 			// search authentification
-			for(i = 0; i < AUTH_FIFO_SIZE && !(
+			ARR_FIND( 0, AUTH_FIFO_SIZE, i,
 				auth_fifo[i].account_id == sd->account_id &&
 				auth_fifo[i].login_id1 == sd->login_id1 &&
 				auth_fifo[i].login_id2 == sd->login_id2 &&
 				auth_fifo[i].ip == session[fd]->client_addr &&
-				auth_fifo[i].delflag == 2)
-				; i++);
-		  
-			if (i < AUTH_FIFO_SIZE) {
+				auth_fifo[i].delflag == 2 );
+
+			if( i < AUTH_FIFO_SIZE ) {
 				auth_fifo[i].delflag = 1;
 				char_auth_ok(fd, sd);
 			} else { // authentication not found
@@ -2906,15 +2769,16 @@ int parse_char(int fd)
 					WFIFOSET(fd,3);
 				}
 			}
+		}
 
 			RFIFOSKIP(fd,17);
-		}
 		break;
 
-		case 0x66: // char select
+		// char select
+		case 0x66:
 			FIFOSD_CHECK(3);
 
-		do // TODO: poor code structure
+		do //FIXME: poor code structure
 		{
 			struct mmo_charstatus char_dat;
 			char* data;
@@ -2953,9 +2817,7 @@ int parse_char(int fd)
 			if (i < 0) {
 				unsigned short j;
 				//First check that there's actually a map server online.
-				for(j = 0; j < MAX_MAP_SERVERS; j++)
-					if (server_fd[j] >= 0 && server[j].map[0])
-						break;
+				ARR_FIND( 0, MAX_MAP_SERVERS, j, server_fd[j] >= 0 && server[j].map[0] );
 				if (j == MAX_MAP_SERVERS) {
 					ShowInfo("Connection Closed. No map servers available.\n");
 					WFIFOHEAD(fd,3);
@@ -3043,19 +2905,22 @@ int parse_char(int fd)
 			memcpy(WFIFOP(map_fd,20), &char_dat, sizeof(struct mmo_charstatus));
 			WFIFOSET(map_fd, WFIFOW(map_fd,2));
 
-			set_char_online(i, auth_fifo[auth_fifo_pos].char_id, auth_fifo[auth_fifo_pos].account_id);
+			set_char_online(i, char_dat.char_id, char_dat.account_id);
 			auth_fifo_pos++;
 		} while(0);
+
 			RFIFOSKIP(fd,3);
 		break;
 
-		case 0x67:	// make new
+		// create new char
+		// S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <char num>.B <hair color>.W <hair style>.W
+		case 0x67:
 			FIFOSD_CHECK(37);
 
-			if(char_new == 0) //turn character creation on/off [Kevin]
+			if( !char_new ) //turn character creation on/off [Kevin]
 				i = -2;
 			else
-				i = make_new_char_sql(fd, RFIFOP(fd,2));
+				i = make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
 
 			//'Charname already exists' (-1), 'Char creation denied' (-2) and 'You are underaged' (-3)
 			if (i < 0)
@@ -3071,29 +2936,32 @@ int parse_char(int fd)
 				RFIFOSKIP(fd,37);
 				break;
 			}
-		{	//Send to player.
-			int len;
-			struct mmo_charstatus char_dat;
-			WFIFOHEAD(fd,110);
-			WFIFOW(fd,0) = 0x6d;
-			mmo_char_fromsql(i, &char_dat, false); //Only the short data is needed.
-			len = 2 + mmo_char_tobuf(WFIFOP(fd,2), &char_dat);
-			WFIFOSET(fd,len);
+			else
+			{
+				int len;
+				// retrieve data
+				struct mmo_charstatus char_dat;
+				mmo_char_fromsql(i, &char_dat, false); //Only the short data is needed.
 
-			//to do
-			for(ch = 0; ch < MAX_CHARS; ch++) {
-				if (sd->found_char[ch] == -1) {
-					sd->found_char[ch] = char_dat.char_id;
-					break;
-				}
+				// send to player
+				WFIFOHEAD(fd,110);
+				WFIFOW(fd,0) = 0x6d;
+				len = 2 + mmo_char_tobuf(WFIFOP(fd,2), &char_dat);
+				WFIFOSET(fd,len);
+
+				// add new entry to the chars list
+				ARR_FIND( 0, MAX_CHARS, ch, sd->found_char[ch] == -1 );
+				if( ch < MAX_CHARS )
+						sd->found_char[ch] = i;
 			}
 
 			RFIFOSKIP(fd,37);
-		}	
 		break;
 
-		case 0x68:	// delete char
-		case 0x1fb:	// 2004-04-19aSakexe+ langtype 12 char deletion packet
+		// delete char
+		case 0x68:
+		// 2004-04-19aSakexe+ langtype 12 char deletion packet
+		case 0x1fb:
 			if (cmd == 0x68) FIFOSD_CHECK(46);
 			if (cmd == 0x1fb) FIFOSD_CHECK(56);
 		{
@@ -3101,7 +2969,7 @@ int parse_char(int fd)
 			int char_pid=0;
 
 			WFIFOHEAD(fd,46);
-			ShowInfo(CL_RED" Request Char Deletion:"CL_GREEN"%d (%d)"CL_RESET"\n", sd->account_id, cid);
+			ShowInfo(CL_RED"Request Char Deletion: "CL_GREEN"%d (%d)"CL_RESET"\n", sd->account_id, cid);
 			memcpy(email, RFIFOP(fd,6), 40);
 			RFIFOSKIP(fd,RFIFOREST(fd)); // hack to make the other deletion packet work
 			
@@ -3118,21 +2986,21 @@ int parse_char(int fd)
 				break;
 			}
 			
-			for(i = 0; i < MAX_CHARS; i++) {
-				if (sd->found_char[i] == cid) {
-					for(ch = i; ch < MAX_CHARS-1; ch++)
-						sd->found_char[ch] = sd->found_char[ch+1];
-					sd->found_char[MAX_CHARS-1] = -1;
-					break;
-				}
-			}
-			if (i == MAX_CHARS) { // Such a character does not exist in the account
+			// check if this char exists
+			ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == cid );
+			if( i == MAX_CHARS )
+			{ // Such a character does not exist in the account
 				WFIFOHEAD(fd,3);
 				WFIFOW(fd,0) = 0x70;
 				WFIFOB(fd,2) = 0;
 				WFIFOSET(fd,3);
 				break;
 			}
+
+			// remove char from list and compact it
+			for(ch = i; ch < MAX_CHARS-1; ch++)
+				sd->found_char[ch] = sd->found_char[ch+1];
+			sd->found_char[MAX_CHARS-1] = -1;
 			
 			/* Grab the partner id */ 
 			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `partner_id` FROM `%s` WHERE `char_id`='%d'", char_db, cid) )
@@ -3140,9 +3008,7 @@ int parse_char(int fd)
 			else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 			{
 				char* data;
-
-				Sql_GetData(sql_handle, 0, &data, NULL);
-				char_pid = atoi(data);
+				Sql_GetData(sql_handle, 0, &data, NULL); char_pid = atoi(data);
 			}
 
 			/* Delete character and partner (if any) */
@@ -3169,20 +3035,25 @@ int parse_char(int fd)
 		}
 		break;
 
-		case 0x187:	// R 0187 <account ID>.l - client keep-alive packet (every 12 seconds)
+		// client keep-alive packet (every 12 seconds)
+		// R 0187 <account ID>.l
+		case 0x187:
 			if (RFIFOREST(fd) < 6)
 				return 0;
 			RFIFOSKIP(fd,6);
 		break;
 
-		case 0x28d: // R 028d <account ID>.l <char ID>.l <new name>.24B - char rename request
+		// char rename request
+		// R 028d <account ID>.l <char ID>.l <new name>.24B 
+		case 0x28d:
 			if (RFIFOREST(fd) < 34)
 				return 0;
 			//not implemented
 			RFIFOSKIP(fd,34);
 		break;
 
-		case 0x2af8: // login as map-server
+		// log in as map-server
+		case 0x2af8:
 			if (RFIFOREST(fd) < 60)
 				return 0;
 		{
@@ -3228,8 +3099,8 @@ int parse_char(int fd)
 		}
 		break;
 
-		case 0x7530: // Athena info get
-		{
+		// Athena info get
+		case 0x7530:
 			WFIFOHEAD(fd,10);
 			WFIFOW(fd,0) = 0x7531;
 			WFIFOB(fd,2) = ATHENA_MAJOR_VERSION;
@@ -3240,15 +3111,17 @@ int parse_char(int fd)
 			WFIFOB(fd,7) = ATHENA_SERVER_INTER | ATHENA_SERVER_CHAR;
 			WFIFOW(fd,8) = ATHENA_MOD_VERSION;
 			WFIFOSET(fd,10);
-			RFIFOSKIP(fd,2);
-			return 0;
-		}
 
-		case 0x7532: // disconnect request from login server
+			RFIFOSKIP(fd,2);
+		break;
+
+		// disconnect request from login server
+		case 0x7532:
 			set_eof(fd);
 			return 0;
 
-		default: // unknown packet received
+		// unknown packet received
+		default:
 			ShowError("parse_char: Received unknown packet "CL_WHITE"0x%x"CL_RESET" from ip '"CL_WHITE"%s"CL_RESET"'! Disconnecting!\n", RFIFOW(fd,0), ip2str(ipl, NULL));
 			set_eof(fd);
 			return 0;
@@ -3659,7 +3532,7 @@ int char_config_read(const char* cfgName)
 		} else if (strcmpi(w1, "char_maintenance") == 0) {
 			char_maintenance = atoi(w2);
 		} else if (strcmpi(w1, "char_new") == 0) {
-			char_new = atoi(w2);
+			char_new = (bool)atoi(w2);
 		} else if (strcmpi(w1, "char_new_display") == 0) {
 			char_new_display = atoi(w2);
 		} else if (strcmpi(w1, "max_connect_user") == 0) {
