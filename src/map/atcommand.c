@@ -8465,7 +8465,6 @@ int atcommand_homstats(const int fd, struct map_session_data* sd, const char* co
 
 int atcommand_homshuffle(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct homun_data *hd;
 	TBL_PC* tsd = sd;
 
 	nullpo_retr(-1, sd);
@@ -8488,11 +8487,10 @@ int atcommand_homshuffle(const int fd, struct map_session_data* sd, const char* 
 		}
 	}
 
-	hd = tsd->hd;
-
-	if(!merc_hom_shuffle(hd))
+	if(!merc_hom_shuffle(tsd->hd))
 		return -1;
 
+	clif_displaymessage(sd->fd, "[Homunculus Stats Altered]");
 	//Print out the new stats
 	//This will send the commands to the invoker since they all use this fd regardless of sd value.
 	atcommand_homstats(fd, tsd, command, message);
