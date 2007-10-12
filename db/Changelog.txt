@@ -33,6 +33,8 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/12
+	* Fixed up various skills that are supposed to use aMotion as delay [Playtester]
 10/11
 	* Removed exp of poring stat mobs [Playtester]
 	- updated Moscovia mob stats
