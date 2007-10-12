@@ -78,7 +78,7 @@ payon,140,151,5		script	Seiyablem	84,{
 						case 9: callfunc "Func_Socket",2,1713,1715,40,61,300,984,2,999,5; break;
 						case 10: callfunc "Func_Socket",1,1304,1309,40,61,200,984,1; break;
 						case 11: callfunc "Func_Socket",1,1113,1114,40,61,200,984,1; break;
-						case 12: callfunc "Func_Socket",1,1523,1538,40,61,200,984,1; break;
+						case 12: callfunc "Func_Socket",1,1523,1538,40,61,300,984,1; break;
 					}
 				break;
 				
@@ -163,10 +163,10 @@ payon,140,151,5		script	Seiyablem	84,{
 						case 2: callfunc "Func_Socket",1,2309,2310,40,66,200,999,3; break;
 						case 3: callfunc "Func_Socket",1,2232,2233,40,66,200,999,3; break;
 						case 4: callfunc "Func_Socket",1,2216,2217,40,66,200,999,3; break;
-						case 5: callfunc "Func_Socket",1,2253,5351,40,66,100,999,3; break;
-						case 6: callfunc "Func_Socket",1,5012,5347,40,66,100,999,3; break;
-						case 7: callfunc "Func_Socket",1,2244,5348,40,66,100,999,3; break;
-						case 8: callfunc "Func_Socket",1,5016,5349,40,66,100,999,3; break;
+						case 5: callfunc "Func_Socket",1,2253,5351,40,66,200,999,3; break;
+						case 6: callfunc "Func_Socket",1,5012,5347,40,66,200,999,3; break;
+						case 7: callfunc "Func_Socket",1,2244,5348,40,66,200,999,5; break;
+						case 8: callfunc "Func_Socket",1,5016,5349,40,66,200,999,5; break;
 					}
 				break;
 				
@@ -199,7 +199,7 @@ payon,140,151,5		script	Seiyablem	84,{
 					mes "This is some high risk territory!";
 					mes "Alright, which armor would you like me to try adding a Slot?";
 					next;
-					switch( select( "Gemmed Sallet","Bucket Hat","Memory Book","Tights","Legion Plate Armor","Full Plate","Thief Clothes","Greaves","Coif","Manteau","Helm","Ninja Suit","Orc Helm","Ancient Cape","Monk Hat","Golden Gear","Brooch","Munak Hat","Pirate Bandana","Crest of the Rider" ) )
+					switch( select( "Gemmed Sallet","Bucket Hat","Memory Book","Tights","Legion Plate Armor","Full Plate","Thief Clothes","Greaves","Coif","Manteau","Helm","Ninja Suit","Orc Helm","Ancient Cape","Monk Hat","Golden Gear","Brooch","Munak Hat","Pirate Bandana","Black Leather Boots" ) )
 					{
 						case 1:  callfunc "Func_Socket",1,2230,2231,40,61,400,985,1; break;
 						case 2:  callfunc "Func_Socket",1,5114,5120,40,61,400,985,1; break;
