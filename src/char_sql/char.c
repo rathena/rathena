@@ -2952,7 +2952,7 @@ int parse_char(int fd)
 				// add new entry to the chars list
 				ARR_FIND( 0, MAX_CHARS, ch, sd->found_char[ch] == -1 );
 				if( ch < MAX_CHARS )
-						sd->found_char[ch] = i;
+						sd->found_char[ch] = i; // the char_id of the new char
 			}
 
 			RFIFOSKIP(fd,37);

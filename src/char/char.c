@@ -1179,6 +1179,19 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 		return -1;
 	}
 
+	// Check Authorised letters/symbols in the name of the character
+	if( char_name_option == 1 ) { // only letters/symbols in char_name_letters are authorised
+		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
+			if (strchr(char_name_letters, name[i]) == NULL)
+				return -2;
+	} else
+	if( char_name_option == 2 ) { // letters/symbols in char_name_letters are forbidden
+		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
+			if( strchr(char_name_letters, name[i]) != NULL )
+				return -2;
+	} // else, all letters/symbols are authorised (except control char removed before)
+
+	//FIXME: the code way below actually depends on the value of 'i' that's used here! [ultramage]
 	for( i = 0; i < char_num; i++ ) {
 		// check if name doesn't already exist
 		if ((name_ignoring_case != 0 && strncmp(char_dat[i].status.name, name, NAME_LENGTH) == 0) ||
@@ -1194,18 +1207,6 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 			return -1;
 		}
 	}
-
-	// Check Authorised letters/symbols in the name of the character
-	if( char_name_option == 1 ) { // only letters/symbols in char_name_letters are authorised
-		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
-			if (strchr(char_name_letters, name[i]) == NULL)
-				return -2;
-	} else
-	if( char_name_option == 2 ) { // letters/symbols in char_name_letters are forbidden
-		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
-			if( strchr(char_name_letters, name[i]) != NULL )
-				return -2;
-	} // else, all letters/symbols are authorised (except control char removed before)
 
 	//check other inputs
 	if((char_num >= MAX_CHARS) // slots
@@ -3587,7 +3588,7 @@ int parse_char(int fd)
 				// add new entry to the chars list
 				ARR_FIND( 0, MAX_CHARS, ch, sd->found_char[ch] == -1 );
 				if( ch < MAX_CHARS )
-						sd->found_char[ch] = i;
+						sd->found_char[ch] = i; // position of the new char in the char_dat[] array
 			}
 
 			RFIFOSKIP(fd,37);

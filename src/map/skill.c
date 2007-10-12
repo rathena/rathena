@@ -8865,7 +8865,7 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv, bool inst
 	if (bl->type&battle_config.no_skill_delay)
 		return battle_config.min_skill_delay_limit; 
 
-	// instant delay skills have aspd delay IF they were also instant cast (reported by Tharis) [Skotlex]
+	// no-delay skills get aspd delay IF they were also instant cast (reported by Tharis) [Skotlex]
 	if (time == 0) {
 		if (instantcast)
 			time = status_get_amotion(bl); //Use attack delay.

@@ -929,10 +929,14 @@ static int itemdb_read_sqldb(void)
 		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) )
 		{// wrap the result into a TXT-compatible format
 			char* str[22];
+			char* dummy = "";
 			int i;
 			++lines;
 			for( i = 0; i < 22; ++i )
+			{
 				Sql_GetData(mmysql_handle, i, &str[i], NULL);
+				if( str[i] == NULL ) str[i] = dummy; // get rid of NULL columns
+			}
 
 			if (!itemdb_parse_dbrow(str, item_db_name[fi], lines, 0))
 				continue;
