@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/10/12
+	* Fixed Bragi's aftercast delay reduction [Playtester]
 2007/10/10
 	* Fixed itemdb_read_sqldb blowing up the server with segmentation faults.
 	* Added an option for parse_script to ignore the checks for the set of 
