@@ -18,8 +18,10 @@
 //= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
 //= 1.5 Removed Duplicates [Silent]
 //= 1.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
-//= 1.6a Fixed some errors with the loop[Samuray22]
+//= 1.6a Fixed some errors with the loop. [Samuray22]
 //	-Thanks to $ephiroth.
+//= 1.6b Fixed a Problem with Unnecesary RGB Values. [Samuray22]
+//	-Thanks to Brainstorm.
 //============================================================
 
 prontera,154,187,4	script	Guide#prt::PrtGuide	105,{
@@ -28,7 +30,7 @@ prontera,154,187,4	script	Guide#prt::PrtGuide	105,{
 	mes "Welcome to Prontera,";
 	mes "the beautiful capital of the";
 	mes "Rune-Midgarts Kingdom. If";
-	mes "you have questions or need^FFFFFF33333^000000 help finding something in the^FFFFFFco^000000 city, don't hesitate to ask.";
+	mes "you have questions or need help finding something in the city, don't hesitate to ask.";
 	set .@loop1,1;
 	while (.@loop1) {
 		next;

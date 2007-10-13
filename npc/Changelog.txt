@@ -1,5 +1,10 @@
 Date		Added
 ======
+2007/10/13
+	* Fixed a Little Typo Error in Breeder NPC (Custom). [Samuray22]
+	-Thanks to ~AnnieRuru~.
+	* Fixed a little typo error in Prontera Guide (Extra RGB Values). [Samuray22]
+	-Thanks to Brainstorm.
 2007/10/12
 	* Fixed some bugs in the Socket Enchant NPC [Playtester]
 2007/10/11

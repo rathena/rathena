@@ -3,15 +3,17 @@
 //===== By: ================================================== 
 //= eAthena Team
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.3a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 Final +
 //===== Description: ========================================= 
 //= A Free PecoPeco and Falcon Breeder
 //===== Additional Comments: ================================= 
-//FIXED checkriding/cart/falcon funcs [Lupus]
-//Added Rebirth/Advanced Class support [Mass Zero]
-//Simplified the checks of job [Silentdragon]
+//= 1.1 FIXED checkriding/cart/falcon funcs [Lupus]
+//= 1.2 Added Rebirth/Advanced Class support [Mass Zero]
+//= 1.3 Simplified the checks of job [Silentdragon]
+//= 1.3a Fixed a Typo Error. [Samuray22]
+//	-Thanks to ~AnnieRuru~.
 //============================================================ 
 
 
@@ -26,13 +28,12 @@ L_Menu:
 
 L_Cart:
 	if((BaseClass == Job_Merchant || BaseJob == Job_SuperNovice) && checkcart() == 0) goto L_Cart_Ok;
-	if(getskilllv(39)<1) goto L_Need_Skill;
-
 	mes "[Universal Rental Npc]";
 	mes "Sorry " + strcharinfo(0) + ", but I only rent carts to people with the Merchant job root, who have enough skills to handle a cart.";
 	close;
 
 L_Cart_Ok:
+	if(getskilllv(39)<1) goto L_Need_Skill;
 	setcart;
 	goto L_Quit2;
 
