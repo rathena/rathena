@@ -3189,6 +3189,8 @@ void do_final(void)
 	}
 
 	mapindex_final();
+	if(enable_grf)
+		grfio_final();
 
 	id_db->destroy(id_db, NULL);
 	pc_db->destroy(pc_db, NULL);

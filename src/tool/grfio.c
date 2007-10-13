@@ -776,20 +776,26 @@ static int grfio_add(char* fname)
 // removes all entries
 void grfio_final(void)
 {
-	if (filelist != NULL)
-		free(filelist);
+	if (filelist != NULL) {
+		int i;
+		for (i = 0; i < filelist_entrys; i++)
+			if (filelist[i].fnd != NULL)
+				free(filelist[i].fnd);
 
+		free(filelist);
+		filelist = NULL;
+	}
 	filelist_entrys = filelist_maxentry = 0;
 
 	if (gentry_table != NULL) {
 		int i;
-		for (i = 0; i < gentry_entrys; i++) {
+		for (i = 0; i < gentry_entrys; i++)
 			if (gentry_table[i] != NULL)
 				free(gentry_table[i]);
-		}
+
 		free(gentry_table);
+		gentry_table = NULL;
 	}
-	gentry_table = NULL;
 	gentry_entrys = gentry_maxentry = 0;
 }
 
