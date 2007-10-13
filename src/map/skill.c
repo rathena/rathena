@@ -5117,9 +5117,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 
 	case NPC_POWERUP:
-		sc_start(bl,SC_INCATKRATE,100,40*skilllv,skill_get_time(skillid, skilllv));
+		sc_start(bl,SC_INCATKRATE,100,200,skill_get_time(skillid, skilllv));
 		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start(bl,type,100,40*skilllv,skill_get_time(skillid, skilllv)));
+			sc_start(bl,type,100,100,skill_get_time(skillid, skilllv)));
 		break;
 		
 	case NPC_AGIUP:
