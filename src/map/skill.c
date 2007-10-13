@@ -5913,7 +5913,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
 	
 		if (skill_get_state(ud->skillid) != ST_MOVE_ENABLE)
-			unit_set_walkdelay(src, tick, battle_config.default_skill_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
+			unit_set_walkdelay(src, tick, battle_config.default_walk_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
 		
 		if(battle_config.skill_log && battle_config.skill_log&src->type)
 			ShowInfo("Type %d, ID %d skill castend id [id =%d, lv=%d, target ID %d)\n",
@@ -6080,7 +6080,7 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 				src->type, src->id, ud->skillid, ud->skilllv, ud->skillx, ud->skilly);
 		unit_stop_walking(src,1);
 		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
-		unit_set_walkdelay(src, tick, battle_config.default_skill_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
+		unit_set_walkdelay(src, tick, battle_config.default_walk_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
 
 		map_freeblock_lock();
 		skill_castend_pos2(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv,tick,0);
@@ -8868,11 +8868,8 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 	if (time < 0)
 		time = -time + status_get_amotion(bl);	// If set to <0, add to attack motion.
 	else if (time == 0)
-		time = battle_config.default_skill_delay; // Use default skill delay.
+		time = status_get_amotion(bl); // Use amotion
 
-	if (time < status_get_amotion(bl))
-		time = status_get_amotion(bl); // Delay can never be lower than attack motion.
-	
 	// Delay reductions
 	switch (skill_id)
   	{	//Monk combo skills have their delay reduced by agi/dex.
