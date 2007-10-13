@@ -1513,7 +1513,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 			//Set canact delay. [Skotlex]
 			ud = unit_bl2ud(src);
 			if (ud) {
-				rate = skill_delayfix(src, skill, skilllv, true);
+				rate = skill_delayfix(src, skill, skilllv);
 				if (DIFF_TICK(ud->canact_tick, tick + rate) < 0)
 					ud->canact_tick = tick+rate;
 			}
@@ -1689,7 +1689,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			//Set canact delay. [Skotlex]
 			ud = unit_bl2ud(bl);
 			if (ud) {
-				rate = skill_delayfix(bl, skillid, skilllv, true);
+				rate = skill_delayfix(bl, skillid, skilllv);
 				if (DIFF_TICK(ud->canact_tick, tick + rate) < 0)
 					ud->canact_tick = tick+rate;
 			}
@@ -5910,7 +5910,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 		if (ud->walktimer != -1 && ud->skillid != TK_RUN)
 			unit_stop_walking(src,1);
 		
-		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv, tid == -1);
+		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
 	
 		if (skill_get_state(ud->skillid) != ST_MOVE_ENABLE)
 			unit_set_walkdelay(src, tick, battle_config.default_skill_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
@@ -6079,7 +6079,7 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 			ShowInfo("Type %d, ID %d skill castend pos [id =%d, lv=%d, (%d,%d)]\n",
 				src->type, src->id, ud->skillid, ud->skilllv, ud->skillx, ud->skilly);
 		unit_stop_walking(src,1);
-		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv, tid == -1);
+		ud->canact_tick = tick + skill_delayfix(src, ud->skillid, ud->skilllv);
 		unit_set_walkdelay(src, tick, battle_config.default_skill_delay+skill_get_walkdelay(ud->skillid, ud->skilllv), 1);
 
 		map_freeblock_lock();
@@ -8855,7 +8855,7 @@ int skill_castfix_sc (struct block_list *bl, int time)
 /*==========================================
  * Does delay reductions based on dex/agi, sc data, item bonuses, ...
  *------------------------------------------*/
-int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv, bool instantcast)
+int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 {
 	int delaynodex = skill_get_delaynodex(skill_id, skill_lv);
 	int time = skill_get_delay(skill_id, skill_lv);
@@ -8865,15 +8865,15 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv, bool inst
 	if (bl->type&battle_config.no_skill_delay)
 		return battle_config.min_skill_delay_limit; 
 
-	// no-delay skills get aspd delay IF they were also instant cast (reported by Tharis) [Skotlex]
-	if (time == 0) {
-		if (instantcast)
-			time = status_get_amotion(bl); //Use attack delay.
-		else
-			time = battle_config.default_skill_delay;
-	} else if (time < 0)
-		time = -time + status_get_amotion(bl);	// if set to <0, add to attack motion.
-	else //Agi reduction should apply only to non-zero delay skills.
+	if (time < 0)
+		time = -time + status_get_amotion(bl);	// If set to <0, add to attack motion.
+	else if (time == 0)
+		time = battle_config.default_skill_delay; // Use default skill delay.
+
+	if (time < status_get_amotion(bl))
+		time = status_get_amotion(bl); // Delay can never be lower than attack motion.
+	
+	// Delay reductions
 	switch (skill_id)
   	{	//Monk combo skills have their delay reduced by agi/dex.
 	case MO_TRIPLEATTACK:

@@ -3008,7 +3008,7 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 		ms[i].emotion = -1;
 		ms[i].cancel = 0;
 		ms[i].casttime = skill_castfix(&sd->bl,skill_id, ms[i].skill_lv);
-		ms[i].delay = 5000+skill_delayfix(&sd->bl,skill_id, ms[i].skill_lv, ms[i].casttime == 0);
+		ms[i].delay = 5000+skill_delayfix(&sd->bl,skill_id, ms[i].skill_lv);
 
 		inf = skill_get_inf(skill_id);
 		if (inf&INF_ATTACK_SKILL) {
