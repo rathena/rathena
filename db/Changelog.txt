@@ -33,6 +33,8 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/13
+	* Fixed duration of NPC_POWERUP [Playtester]
 10/12
 	* Rev. 11437 Corrected pet tames for newest pets. [L0ne_W0lf]
 	* Fixed up various skills that are supposed to use aMotion as delay [Playtester]
