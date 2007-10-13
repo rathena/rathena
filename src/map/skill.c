@@ -8867,8 +8867,6 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 
 	if (time < 0)
 		time = -time + status_get_amotion(bl);	// If set to <0, add to attack motion.
-	else if (time == 0)
-		time = status_get_amotion(bl); // Use amotion
 
 	// Delay reductions
 	switch (skill_id)
@@ -8926,6 +8924,9 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 
 	if (battle_config.delay_rate != 100)
 		time = time * battle_config.delay_rate / 100;
+
+	if (time < status_get_amotion(bl))
+		time = status_get_amotion(bl); // Delay can never be below amotion [Playtester]
 
 	return max(time, battle_config.min_skill_delay_limit);
 }
