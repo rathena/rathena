@@ -2998,6 +2998,13 @@ int map_sql_close(void)
 		logmysql_handle = NULL;
 	}
 
+	if(mail_server_enable)
+	{ 
+		ShowStatus("Close Mail DB Connection....\n");
+		Sql_Free(mail_handle);
+		mail_handle = NULL;
+	}
+
 	return 0;
 }
 
