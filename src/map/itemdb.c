@@ -938,7 +938,7 @@ static int itemdb_read_sqldb(void)
 				if( str[i] == NULL ) str[i] = dummy; // get rid of NULL columns
 			}
 
-			if (!itemdb_parse_dbrow(str, item_db_name[fi], lines, 0))
+			if (!itemdb_parse_dbrow(str, item_db_name[fi], lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS))
 				continue;
 			++count;
 		}
