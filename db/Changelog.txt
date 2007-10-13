@@ -34,6 +34,7 @@
 
 =======================
 10/12
+	* Rev. 11437 Corrected pet tames for newest pets. [L0ne_W0lf]
 	* Fixed up various skills that are supposed to use aMotion as delay [Playtester]
 10/11
 	* Removed exp of poring stat mobs [Playtester]
