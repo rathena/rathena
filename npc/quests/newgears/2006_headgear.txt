@@ -49,7 +49,7 @@ rachel,91,273,8	script	?	930,{
 		delitem 983,1; //Black_Dyestuffs
 		delitem 7111,100; //Smooth_Paper
 		delitem 938,99; //Sticky_Mucus 
-		set zeny,zeny-100000;
+		set Zeny,Zeny-100000;
 		getitem 5175,1; //Anonimity_Request
 		mes "[?]";
 		mes "Phew...it's done. Well, it was not that difficult to make, but...";
@@ -128,7 +128,7 @@ rachel,152,131,3	script	Sakjul	928,{
 			mes "[Sakjul]";
 			mes "I did succeed in making the hat,";
 			mes "but I cannot let it fall into someone else's hand!";
-			mes "The essential of Feathre Beret is";
+			mes "The essential of Feather Beret is";
 			mes "the precise angle of the beret and the feather,";
 			mes "but this hat's angle has become slightly crooked,";
 			mes "and the quality has become too poor to be my artwork!";
@@ -316,7 +316,7 @@ hugel,147,130,3	script	Ghenirhemin	897,{
 			delitem 4166,1; //Nightmare_Terror_Card
 			delitem 7511,1000; //Rune_Of_Darkness
 			delitem 7563,1000; //Bloody_Rune
-			set zeny,zeny-10000000;
+			set Zeny,Zeny-10000000;
 			set moza_valkylie,3;
 			mes "[Ghenirhemin]";
 			mes "Now I am all nervous";
