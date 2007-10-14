@@ -1795,7 +1795,6 @@ int parse_fromlogin(int fd)
 						WFIFOW(i,0) = 0x81;
 						WFIFOB(i,2) = 2;
 						WFIFOSET(i,3);
-						break;
 					}
 					else //Shouldn't happen, but just in case.
 						set_char_offline(99, aid);

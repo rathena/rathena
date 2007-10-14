@@ -3633,12 +3633,12 @@ int parse_char(int fd)
 					WFIFOL(login_fd,2) = sd->account_id;
 					memcpy(WFIFOP(login_fd, 6), email, 40);
 					WFIFOSET(login_fd,46);
+
 					// change value to put new packet (char selection)
 					RFIFOSKIP(fd,-3); //FIXME: Will this work? Messing with the received buffer is ugly anyway... 
 					RFIFOW(fd,0) = 0x66;
 					RFIFOB(fd,2) = char_dat[sd->found_char[i]].status.char_num;
 					// not send packet, it's modify of actual packet
-					break;
 				} else {
 					WFIFOHEAD(fd,3);
 					WFIFOW(fd,0) = 0x70;
