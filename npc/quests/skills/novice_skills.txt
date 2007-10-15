@@ -1,246 +1,468 @@
-//===== eAthena Script ======================================= 
-//= Novice Skills Quests
-//===== By: ================================================== 
-//= kobra_k88
-//===== Current Version: ===================================== 
-//= 1.4b
-//===== Compatible With: ===================================== 
-//= eAthena 7.15 +
-//===== Description: ========================================= 
-//= Customized novice skills quest
-//===== Additional Comments: ================================= 
-//= Fully working
-//= 1.2 Added Baby Class Support [Lupus]
-//= 1.3 Fixed a Zeny exploit, made more variables clear
-//= on finishing quests. [Lupus]
-//= 1.4 Fixed exploits [Lupus]
-//= 1.4a Fixed some typos [IVBela]
-//============================================================ 
-
-
-
-//<---------------------------------------------------------------------------------------------- Nurse Aid: First Aid NPC ---------------------------------------------------------------------------->\\
-prt_in,235,133,4	script	Nurse Aid	90,{
-	mes "[Nurse Aid]";
-	if(FIRSTAID){
-		if((JobLevel <  3) || (countitem(507) < 5 ) || (countitem(705) < 5) || (countitem(930) < 1)) goto sM_Yes;
-		delitem 507,5;
-		delitem 705,5;
-		delitem 930,1;
-		mes "Oh good.  You have everything needed for me to teach you first aid.  Here we go...";
+prt_in,234,133,4	script	Nami#qsk_nv	66,{
+	if ((BaseClass == Job_Novice && JobLevel > 3) || (BaseLevel > 11 && NOV_SK < 3)) {
+		mes "[Nami]";
+		mes "Hello!";
+		mes "I want to be a nurse so bad!";
+		mes "I always go and try to learn more.";
+		mes "Actually, I'm really good.";
+		mes "Do you want me to try on you? ? ? . .";
 		next;
-		mes "....... 1 hour later.......";
-		next;
-		skill 142,1,0;
-		set FIRSTAID,0;
-		set got_bandage,0;
-		mes "[Nurse Aid]";
-		mes "YES! You finally got it.  Now you can heal yourself and continue fighting those bad monsters.  Well, take care.";
-		emotion e_no1;
-		close;
-	}
-	if(getskilllv(142)>0){
-		mes "Well hello again.  I really hope the First Aid skill has been helpful to you.  Make sure to continue your hard work and don't forget to rest and heal!";
-		close;
-	}
-	mes "Oh hello there!  You look tired and a little worn out.  Have the monsters outside of town been giving you trouble?";
-	next;
-	menu "Ha! Me strong like BULL!!",-, "Well..um..kinda..",M_Yep;
-
-		mes "[Nurse Aid]";
-		mes "Oh I see.  You must be a mighty warrior.  Well, come back anytime if you do ever feel overwhelmed by the monsters.  I'll be able to help.";
-		close;
-	M_Yep:
-		mes "[Nurse Aid]";
-		mes "Well don't feel bad.  It can be very difficult fighting those nasty monsters in the beginning.";
-		next;
-		mes "[Nurse Aid]";
-		mes "I know because I've been treating a lot people lately who have been fighting them.";
-		mes "There are so many injured now that I don't think I can continue treating anyone.";
-		next;
-		mes "[Nurse Aid]";
-		mes "~Sigh~";
-		next;
-		mes "[Nurse Aid]";
-		mes "That's why I've decided to teach people how to heal themselves!  Would you like me to teach you?";
-		emotion e_ic;
-		next;
-		menu "Would you??",sM_Yes, "(...she's nuts!...run!!!)",-;
-
-			mes "[Nurse Aid]";
-			mes "Hey!...Where are you running too??...";
-			emotion e_swt;
-			close;
-		sM_Yes:
-			mes "[Nurse Aid]";
-			mes "In order for me to teach you First Aid you need to have at least a^0000ff Job Level of 3^000000.";
-			mes "You then need to give me:^ff0000 5 Red Herbs^000000,^00bb00 5 Clovers^000000, and an^aaaa00 Old Bandage^000000.";
-			next;
-			mes "[Nurse Aid]";
-			mes "You can get the bandage from the^0000ff 'Newbie Assistant'^000000 located on the second floor of the Castle.";
-			next;
-			mes "[Nurse Aid]";
-			mes "Once you get Job Level 3 and have all of the items come back and see me, OK?";
-			set FIRSTAID,1;
-			close;				
-}
-
-
-//<-------------------------------------------------------------------------------------------------- Bulma: Play Dead -------------------------------------------------------------------------------------------->\\
-prt_in,73,87,2	script	Bulma	98,{
-	mes "[Bulma]";
-	if(BaseJob != Job_Novice){
-		mes "Yeah... I look great.... After all, I'm a Knight of the Prontera Chivalry.  Kuhahahaha!";
-		emotion e_heh;
-		next;
-		mes "[Bulma]";
-		mes "It hasn't been that long since I became a Knight, but I still look good as one right? What do you think???";
-		emotion e_hmm;
-		close;
-	}
-	if(JobLevel < 7){
-		mes "Hello my young friend.  You remind me of myself when I was young.....";
-		mes "Heh heh, I really miss those days..... Wow... It's funny to think about those years now......";
-		next;
-		mes "[Bulma]";
-		mes "They were difficult.... thankfully you can use the ^5555FFPlay Dead^000000 skill when you reach a ^5555FFJob Level of 7^000000.";
-		mes "If you're interested in it come back and talk to me when you've leveled up a bit more.";
-		close;
-	}
-	if(PLAYDEAD){
-		if(countitem(7039)<1){
-			mes "HEY! What are you doing here?  It's irresponsible of you to still be here while your time is running out.........";
-			emotion e_gasp;
-			next;
-			mes "[Bulma]";
-			mes "Now GO! Run! Run! RUN!!";
-			emotion e_go;
+		if (select("Continue conversation:Slowly slink away. . . .") == 1) {
+			if (NOV_SK >= 0 && NOV_SK <= 2) {
+				switch(NOV_SK) {
+				case 0:
+					mes "[Nami]";
+					mes "Thank you for giving me this chance!";
+					mes "I will do the best I can.";
+					mes "When I am nursing people, I never";
+					mes "give half effort. -";
+					next;
+					mes "[Nami]";
+					mes "Let me explain to you about";
+					mes "this skill I am using, ^3355FF' First Aid '^000000 ";
+					mes "It doesn't take any special";
+					mes "equipment or items . .";
+					mes "Using only old cloth, left over potions,";
+					mes "and some other unsubstantial materials";
+					next;
+					mes "[Nami]";
+					mes "you can perform first aid. -";
+					mes "It is a simple skill that you can use";
+					mes "to regain a small amount of HP.";
+					mes "I wouldn't mind teaching you. . .";
+					mes "If you want to learn this skill,";
+					mes "it does not take much to learn. . .";
+					next;
+					mes "[Nami]";
+					mes "First aid does require";
+					mes "some small preparations. . .";
+					mes "Some simple items you should have on hand are";
+					mes "^3355FF' 3 Red Herb '^000000 ";
+					mes "^3355FF' 3 Clover '^000000 ";
+					mes "^3355FF' 1 Sterilized Bandages '^000000 ";
+					next;
+					mes "[Nami]";
+					mes "You can find these items being";
+					mes "carried by monsters close by or";
+					mes "even buy them from a merchant.";
+					mes "It shouldn't be difficult to prepare";
+					mes "these items for your first aid skill.";
+					next;
+					mes "[Nami]";
+					mes "The only item you must take";
+					mes "a special trip for is the bandage.";
+					mes "On the eastern side second floor ";
+					mes "of the prontera castle you can find";
+					mes "a nurse who will supply you with this";
+					mes "item readily. You should see her for this item";
+					next;
+					mes "[Nami]";
+					mes "If you go and find these items, ";
+					mes "I will be happy to teach you this skill.";
+					mes "Well, I will be awaiting your return.";
+					set NOV_SK,1;
+					close;
+				case 1:
+					mes "[Nami]";
+					mes "First aid does require";
+					mes "some small preparations. . .";
+					mes "Some simple items you should have on hand are";
+					mes "^3355FF' 3 Red Herb '^000000 ";
+					mes "^3355FF' 3 Clover '^000000 ";
+					mes "^3355FF' 1 Sterilized Bandages '^000000 ";
+					next;
+					mes "[Nami]";
+					mes "You can find these items being";
+					mes "carried by monsters close by or";
+					mes "even buy them from a merchant.";
+					mes "It shouldn't be difficult to prepare";
+					mes "these items for your first aid skill.";
+					next;
+					mes "[Nami]";
+					mes "The only item you must take";
+					mes "a special trip for is the bandage.";
+					mes "Two maps east of here you can find";
+					mes "a nurse who will supply you with this";
+					mes "item readily. You should see her for";
+					mes "this item. . . ";
+					close;
+				case 2:
+					if (countitem(507) > 2 && countitem(705) > 2) {
+						delitem 507,3; //Red_Herb
+						delitem 705,3; //Clover
+						mes "[Nami]";
+						mes "Hello, welcome back!";
+						mes "You have done well at finding";
+						mes "the necessary items.";
+						mes "I know that the Nurse is a little";
+						mes "strange, I am sure it was a little perplexing. . .";
+						mes "hee hee hee . . . . .";
+						next;
+						mes "[Nami]";
+						mes "Well, let us begin our training.";
+						mes "When using the first aid skill";
+						mes "you will use about 3 SP and convert";
+						mes "this energy into about 5 HP.";
+						mes "This is done with your first aid skill";
+						mes "and supplies.";
+						next;
+						mes "[Nami]";
+						mes "You should take this and place it here. . .";
+						mes "Then you can stop the bleeding. . .";
+						mes "After that you should apply this. . .";
+						mes "There!!! Isn't it easy? ! ? !";
+						next;
+						mes "[Nami]";
+						mes ". . Basically.";
+						mes "You can take a little of left";
+						mes "herbs and common items";
+						mes "and combine them together and. . .";
+						mes "Presto !!";
+						next;
+						skill 142,1,0;
+						set NOV_SK,3;
+						mes "[Nami]";
+						mes "Yes yes, that¡¯s right!";
+						mes "Now that you have this";
+						mes "skill, I hope that it helps you";
+						mes "in the future.";
+						mes "Thank you and have a great day !~~~";
+						close;
+					}
+					else {
+						mes "[Nami]";
+						mes "First aid does require";
+						mes "some small preparations. . .";
+						mes "Some simple items you should have on hand are";
+						mes "^3355FF' 3 Red_Herb '^000000 ";
+						mes "^3355FF' 3 Clover '^000000 ";
+						mes "^3355FF' 1 Sterilized Bandages '^000000 ";
+						close;
+					}
+				}
+			}
+			else {
+				mes "[Nami]";
+				mes ". . . . . Z z z";
+				mes "I am so sorry!!!...I know I did it wrong...!!";
+				mes "Wahhhh ..";
+				mes "!! *sigh* !!";
+				mes "- *rolls her eyes* -";
+				close;
+			}
+		}
+		else {
+			mes "[Nami]";
+			mes "Hey! .. Where are you going? !";
+			mes "Come over here and have a shot !";
+			mes "Prick and its over !!";
+			mes "Grab that patient! ! !";
 			close;
 		}
-		delitem 7039, 1;
-		mes "Good to see you again.  Alright, lets start your training....";
+	}
+	else {
+		mes "[Nami]";
+		mes "I am working hard to receive";
+		mes "my nursing license . . .";
+		mes "I don't think that I lack anything";
+		mes "to become a nurse . .";
+		mes "It must be because of my lack of my experience ?";
 		next;
-		mes "[Bulma]";
-		mes "Let me first introduce to you the concept of 'Method Acting'.  Method Acting stresses the need to understand every aspect of the role you are playing.";
-		next;
-		mes "[Bulma]";
-		mes "You must learn to think, feel, and even live like your character so that you can understand his/her motivation in any given moment.";
-		next;
-		mes "[Bulma]";
-		mes "Now let us use this technique to develop your ability to Play Dead!";
-		mes "I want you to think like a dead person, feel like a dead person, eat, breath, sleep, kiss, etc. like a person who is dead!!!";
-		next;
-		mes "[Bulma]";
-		mes "Don't just stand there! Lay down on the ground and live life through the eyes of a dead person.... errr or don't live.... anyways just do it!!";
-		next;
-		mes "~ several hours later ~";
-		next;
-		mes "[Bulma]";
-		mes "OK, lights, camera, ACTION! Yes... yes... YES!! That's it!! As I watch you laying there I TRULY believe that you are dead.";
-		mes "What a wonderful performance! BRAVO! BRAVO!";
-		emotion e_gasp;
-		next;
-		mes "[Bulma]";
-		mes "With the right motivation and focus you will be able to play dead anywhere at any given moment.  Congratulations on mastering this skill.";
-		emotion e_no1;
-		skill 143,1,0;
-		set PLAYDEAD, 0;
-		set got_novnametag,0;
+		mes "[Nami]";
+		mes "If only you had at least";
+		mes "a first job . .";
+		mes "or maybe be over ^3355FF novice job level 4^000000";
+		mes "I could have talked to";
+		mes "you a little longer. . . . . . .";
 		close;
 	}
-	if(getskilllv(143)>0){
-		mes "Yeah.... I remember back then..... especially those embarrassing novice years... heh.  Luckily there was Play Dead.";
-		mes "That saved me many times in the past.  I'm sure it has been saving you too.";
-		next;
-		mes "[Bulma]";
-		mes "Hopefully it is something you have been using well.  If you have any friends who are novices, tell them about me.  I will help them out as good as I can.";
-		close;
-	}
-	mes "Hello my young friend.  You remind me of myself when I was young..... Heh heh, I really miss those days.....";
-	mes "Look at me acting all sentimental like some old man........";
-	next;
-	mes "[Bulma]";
-	mes "Sorry about that.  Anyhow, I just want you to know that if you work hard and are patient, you too will receive the job you desire.";
-	mes "It may take some time but stay focused and never loose your determination.";
-	next;
-	mes "[Bulma]";
-	mes "Hmm..... actually I might be able to help you out........";
-	emotion e_hmm;
-	next;
-	mes "[Bulma]";
-	mes "What's this? Ha ha, don't look so surprised.  What I have to offer will be very useful to you.";
-	next;
-	mes "[Bulma]";
-	mes "You see I can teach you the skill ^5555FF'Play Dead'^000000.";
-	mes "This skill allows you to act like you just died making any monster that is currently attacking you leave you alone.";
-	next;
-	mes "[Bulma]";
-	mes "I myself have used it as a novice and found it to be very useful.";
-	mes "It may sound easy enough, but it takes a lot of hard work and practice to make your performance look believable.";
-	next;
-	mes "[Bulma]";
-	mes "You MUST look perfectly DEAD in order for this skill to work.  Even the slightest movement will give you away.";
-	next;
-	mes "[Bulma]";
-	mes "I think I've done enough explaining..... The look in your eyes tells me that you are ready to learn this skill.";
-	next;
-	mes "[Bulma]";
-	mes "First take this pill....";
-	next;
-	mes "(you take the pill) ~gulp~";
-	next;
-	mes "[Bulma]";
-	mes "Good.  Now go to the 2nd floor on the East side of the Prontera Castle.";
-	mes "Speak with the ^5555FFNewbie Assistant^000000 and he will give you a ^5555FFNewbie Tag^000000.";
-	next;
-	mes "[Bulma]";
-	mes "Once you have the tag come back here.  You MUST make it back here WITHIN ^FF555510 minutes^000000!";
-	mes "If you don't, then the pill you just swallowed will start making it hard for you to breath!.....";
-	next;
-	mes "[Bulma]";
-	mes "Kekekeke..... Just kidding!  The pill actually helps you stay calm, nothing more.";
-	emotion e_heh;
-	next;
-	mes "[Bulma]";
-	mes "Well get going... GO! GO! GO! RUN!!!";
-	emotion e_go;
-	set PLAYDEAD, 1;
-	close;
 }
 
+prt_in,73,87,4	script	Chivalry Member#qsk_nv	65,{
+	if ((BaseJob == Job_Novice && Upper != 1 && JobLevel > 6) && NOV_SK >= 3 && NOV_SK <= 5) {
+		mes "[Bulma]";
+		mes "Yeah. . . I look great. . .";
+		mes "I am a knight in the knight's";
+		mes "guild of Prontera! Kuhahhahhahah !!";
+		mes "It hasn't been long since I became a";
+		mes " knight, but I still look great huh?";
+		mes "What do you think? ? ?";
+		next;
+		switch(NOV_SK) {
+		case 3:
+			mes "[Bulma]";
+			mes "Hello my young friend -";
+			mes "You remind me of myself as young";
+			mes "sword man. . . ";
+			mes "Kekekkek, Oh I miss those days . .";
+			mes "Look at me acting like an old man.";
+			mes "Heh heh Sorry...";
+			next;
+			mes "[Bulma]";
+			mes "I'm still young!!! Aren't I???";
+			mes "If you just work hard and be patient,";
+			mes "you will soon receive the job you desire as well.";
+			mes "It takes patience, but this is";
+			mes "good life kekkeke";
+			mes "Hmm, I would like to help you out . .";
+			next;
+			mes "[Bulma]";
+			mes ". . . . . I'm not sure why you are looking";
+			mes "at me like that. I assure you that this";
+			mes "might seem a little weird at first, but";
+			mes "what I tell you will most likely be a great aid to you..";
+			next;
+			mes "[Bulma]";
+			mes "Ha ha... It looks like you are getting";
+			mes "a bit interested in what I have to say.";
+			mes "I can teach you a very useful skill!";
+			mes "This skill is acting like you are dead! '";
+			mes "No No, it is more than acting, you ";
+			mes "actually look dead!!! ..";
+			next;
+			mes "[Bulma]";
+			mes "The name of the skill is ^3355FF' Play Dead '^000000";
+			mes "It is a skill I used as a novice.";
+			mes "But don't think little of it because";
+			mes "it is a novice skill. In fact, it takes";
+			mes "extreme concentration and skill";
+			mes "to even make this skill pass as believable.";
+			next;
+			mes "[Bulma]";
+			mes "For example,";
+			mes "What if you are attacked by a strong";
+			mes "monster and can't survive.";
+			mes "You must play dead!";
+			mes "But if the monster was to tickle you,";
+			mes "could you control yourself?";
+			next;
+			mes "[Bulma]";
+			mes "The skill will help you deal with";
+			mes "many situations such as this.";
+			mes "It is truly a skill for the strong minded.";
+			mes "The goal of the skill is to look";
+			mes "perfectly dead. . .";
+			next;
+			mes "[Bulma]";
+			mes "I think that¡¯s enough explanation.";
+			mes "I can tell by the look in your eyes";
+			mes "that you are ready for your training.";
+			mes "Lets not delay!";
+			mes "Ok, take this pill first. . .";
+			mes "Let¡¯s see how this goes. . .";
+			next;
+			mes "[Bulma]";
+			mes "Within in 10 minutes, you must";
+			mes "go to the 2nd floor of the Prontera Castle's";
+			mes "East wing. ^3355FF' Newbie Tag '^000000 is";
+			mes "the item you are seeking. ! . .";
+			next;
+			mes "^3355FF- *Gulp* (You have swallowed the pill) -^000000";
+			next;
+			mes "[Bulma]";
+			mes "The pill that you have just taken";
+			mes "will make it difficult for you to breathe. . .";
+			mes "Kekekk . .AH HA - Just joking !";
+			mes "It is actually a pill to gives you";
+			mes "a mental calm so you can be patient.";
+			mes "I think that nothing is better";
+			next;
+			mes "[Bulma]";
+			mes "training than running.";
+			mes "Okay? GO! ! ! ! ~~~~~";
+			mes "If you are late, you have to do it again! !";
+			mes "Now GO ! GO ! GO !";
+			mes "Run ~~~~~!!!!";
+			set NOV_SK,4;
+			close;
+		case 4:
+			mes "[Bulma]";
+			mes "HEY! what are you doing here ? !";
+			mes "You must be very irresponsible to be";
+			mes "here when your time is running out.";
+			mes "Run Run Run! - - - - -";
+			next;
+			mes "[Bulma]";
+			mes "On the 2nd floor of the east wing!";
+			mes "It's in the Prontera castle!";
+			mes "Okayyyyy~~~!! *waves goodbye*";
+			close;
+		case 5:
+			if (countitem(7039) > 0) {
+				mes "[Bulma]";
+				mes "Hey... I see that you have -";
+				mes "finished your quest! ! ! . .";
+				mes "If you can endure all this,";
+				mes "it shouldn't be a problem to use";
+				mes "this skill. You are a natural!";
+				next;
+				mes "[Bulma]";
+				mes "Now, if you ever feel threatened,";
+				mes "use this skill as you see fit.";
+				mes " ' Play Dead ' ";
+				mes "Okay okay, See you around ! ! !";
+				set NOV_SK,6;
+				delitem 7039,1; //Novice_Nametag
+				skill 143,1,0;
+				close;
+			}
+			else {
+				mes "[Bulma]";
+				mes "What? -";
+				mes "Why haven't you finished your quest?";
+				mes " *Tsk* *Tsk* You must have lost the pass . . .";
+				mes "Such irresponsibility is not acceptable.";
+				mes "I can't accept you into training until";
+				mes "I know you are capable. Go and try again.";
+				next;
+				mes "[Bulma]";
+				mes "Don't take me lightly. . .";
+				mes "If I tell you to come in 10 minutes,";
+				mes "I expect that of you.";
+				mes "In order for you to have another chance,";
+				mes "you must start from the beginning. . .";
+				mes "Do it right this time ! ! ! !";
+				set NOV_SK,4;
+				close;
+			}
+		}
+	}
+	else {
+		mes "[Bulma]";
+		mes "Yeah... I remember back to long ago !";
+		mes "Especially those embarrassing Novice years.";
+		mes "Wow... It is funny to think about those years now.";
+		mes "Those years were difficult. . .";
+		mes "Thankfully you can use the First Aid";
+		mes "skill when you reach novice job level 7.";
+		next;
+		mes "[Bulma]";
+		mes "That saved me many times in the past. . .";
+		mes "I am sure it will help you much as well.";
+		mes "Hopefully, it will be something you use well . .";
+		next;
+		mes "[Bulma]";
+		mes "If you have any friends who are novices,";
+		mes "tell them about me.";
+		mes "If I can, I will help them out";
+		mes "as best as I can . . . .";
+		close;
+	}
+}
 
-//Newbie Assistant------------------------------------------------------------------------------
-prt_castle,174,147,2	script	Newbie Assistant	84,{
-	mes "[Newbie Assistant]";
-	if(BaseJob != Job_Novice){
-		mes "What am I doing here?  I'm just trying to help out young newbies.  You remember how it was to be a newbie... confused.... lost.... heh heh.";
-		emotion e_what;
+prt_castle,175,146,4	script	Nursing Instructor#qsk_nv	50,{
+	mes "[Dread Lord]";
+	mes ". . . . . . . . . .";
+	mes ". . . . . . . . . .";
+	mes "Stop pestering me! ! !";
+	mes "I am very busy ! ! !";
+	mes "Would you just bug off ? ! ? !";
+	next;
+	if (NOV_SK >= 0 || NOV_SK <= 5) {
+		switch(NOV_SK) {
+		case 0:
+			mes "[Dread Lord]";
+			mes "The people who work here at";
+			mes "Prontera clinic are battling life";
+			mes "and death everyday.";
+			mes "It takes a lot of patience and ";
+			mes "puts a lot of tension on us.";
+			mes "Sorry if we seem a bit uptight. . .";
+			next;
+			mes "[Dread Lord]";
+			mes "I am the Nursing director.";
+			mes "There are many things I must do.";
+			mes "If your business is complete, please leave.";
+			close;
+		case 1:
+			mes "[Dread Lord]";
+			mes "Ohhh . .";
+			mes "You have come here for bandages ?";
+			mes "Do you even know how we get these";
+			mes "precious bandages ?";
+			mes "They come from a powerful monster";
+			mes "that is found in the pyramids of Moroc.";
+			next;
+			mes "[Dread Lord]";
+			mes "The monster is some sort of mummy.";
+			mes "We take the rotten bandages from it's";
+			mes "diseased body and sanitize them. . .";
+			mes "Do you believe me ? . .";
+			mes "Heh heh... There is even poison";
+			mes "in the bandages.";
+			next;
+			mes "[Dread Lord]";
+			mes "Fortunately, the poison kills other poisons";
+			mes "and does not hurt the patient . .";
+			mes "You must destroy poison with poison. . .";
+			mes "I think I heard something similar that. . .";
+			mes ". . . . . Anyway, I would usually give you a";
+			mes "hard time for taking these bandages lightly,";
+			next;
+			mes "[Dread Lord]";
+			mes "but I am much too tired today to";
+			mes "give you any trouble. . .";
+			mes "If you ever get skilled in medicine and first aid,";
+			mes "please consider joining our clinic.";
+			mes "Now don't take these bandages and then";
+			mes "go and get killed, be careful. -";
+			next;
+			mes "^3355FF- Got 1 Sterilized Bandages -^000000";
+			set NOV_SK,2;
+			close;
+		case 2:
+			mes "[Dread Lord]";
+			mes "Look, if your business is done";
+			mes "get out of my site! ! !";
+			mes "I have no time for this nonsense ..";
+			mes ". . . . .";
+			mes "- Click Click *Walks away* . . . . . -";
+			close;
+		case 4:
+			if (countitem(7039) == 0) {
+				mes "[Dread Lord]";
+				mes "Look at this guy!";
+				mes "Wake up and watch where you are going.";
+				mes "What are you thinking running around our clinic!";
+				mes "Running ?!?!";
+				mes "*Sigh* . . ";
+				mes "What do you want? ! ? !";
+				next;
+				mes "[Dread Lord]";
+				mes "I see. . . .";
+				mes ". . . . . what ?";
+				mes "You want to have a bandage to learn first aid?";
+				mes " *Arhg* Here take it !";
+				mes "-woosh - *storms away*";
+				next;
+				mes "^3355FF- Got 1 Newbie Tag -^000000";
+				set NOV_SK,5;
+				getitem 7039,1; //Novice_Nametag
+				close;
+			}
+			else {
+				mes "[Dread Lord]";
+				mes "What ! !";
+				mes "I'm only going to give you one!";
+				mes "You don't need any more for the test !";
+				mes "Do you want to stay a novice forever???";
+				mes "I would be happy to arrange that !";
+				close;
+			}
+			break;
+		case 5:
+			mes "[Dread Lord]";
+			mes "What more do you want !";
+			mes "Get out of here !";
+			mes "OUT !";
+			close;
+		}
+	}
+	else {
+		mes "[Dread Lord]";
+		mes "Argh, Get out of here !!";
+		mes "I don't like shouting but ..";
+		mes "GET OUT OF HERE! ! ! ! ! !";
 		close;
 	}
-	if(FIRSTAID && countitem(930)==0 && !got_bandage){
-		mes "So Nurse Aid sent you huh.  She's a great nurse, you should feel very fortunate that she is helping you out.  Here take this.";
-		next;
-		getitem 930,1;
-		set got_bandage,1;
-		mes "[Newbie Assistant]";
-		mes "You'll need it in order for her to teach you her excellent healing technique.";
-		next;
-		mes "[Newbie Assistant]";
-		mes "When I watch her work it is like watching an angel that has descended down from the heavens.....";
-		next;
-		mes "[Newbie Assistant]";
-		mes "Her beauty, her grace, sometimes I wish........ (blushes).......... um.... well... err... tell her I said hello.";
-		emotion e_lv;
-		close;
-	}
-	if(PLAYDEAD && countitem(7039)==0 && !got_novnametag){
-		mes "So Bulma sent you uh.... okay here you go.";
-		getitem 7039,1;
-		set got_novnametag,1;
-		next;
-		mes "Good luck on your adventure.";
-		close;
-	}
-	mes "Hello.  I'm here to provide help to newbies like you.  If there is anything in particular that you need assistance with just let me know.";
-	close;
 }

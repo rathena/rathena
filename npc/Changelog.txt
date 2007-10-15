@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/10/14
+	* Rev. 11469 Updated Acolyte, Swordman, and Novice quest skill NPCs. [L0ne_W0lf]
 2007/10/13
 	* Fixed a Little Typo Error in Breeder NPC (Custom). [Samuray22]
 	-Thanks to ~AnnieRuru~.
