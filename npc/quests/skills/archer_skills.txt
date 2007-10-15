@@ -3,12 +3,284 @@
 //===== By: ==================================================
 //= eAthena dev team
 //===== Current Version: =====================================
-//= 1.4b
-//===== Compatible With: =====================================
-//= eAthena 7.15 +
-//===== Description: =========================================
-//= Arrow crafting, Arrow Repel skills
-//===== Additional Comments: =================================
+//= 1.5
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Quest for skills: Arrow Crafting, Arrow Repel
+//===== Additional Comments: ================================= 
+//= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//============================================================
+
+morocc,121,109,5	script	Roberto#qsk_ac	88,{
+	if (BaseClass == Job_Archer) {
+		if (getskilllv(147) == 1) {
+			mes "[Roberto]";
+			mes "Ooh, you're from my home town!";
+			mes "Nice to see you!";
+			mes "How are you?";
+			mes "Ah! That arrow!";
+			mes "You made it, didn't you!";
+			next;
+			mes "[Roberto]";
+			mes "Haha...!";
+			mes "Do you think it's a lot better?";
+			mes "Haha... anyways, I am glad.";
+			mes "Come back with once in a while";
+			mes "with news from home.";
+			mes "Then byebye~";
+			close;
+		}
+		else if ((Basejob == Job_Archer && JobLevel >= 30) || BaseJob == Job_Hunter || BaseJob == Job_Dancer || BaseJob == Job_Bard) {
+			mes "[Roberto]";
+			mes "Eh!";
+			mes " ";
+			mes "You are...";
+			next;
+			if (countitem(907) > 19 && countitem(921) > 6 && countitem(7012) > 40 && countitem(1019) > 12 && countitem(501) > 0) {
+				mes "[Roberto]";
+				mes "You brought them!";
+				mes "Thank you very much.";
+				mes "Then, as I promised, I will teach you the skill.";
+				next;
+				delitem 907,20; //Resin
+				delitem 921,7; //Mushroom_Spore
+				delitem 7012,41; //Tough_Scalelike_Stem
+				delitem 1019,13; //Wooden_Block
+				delitem 501,1; //Red_Potion
+				skill 147,1,0;
+				mes "[Roberto]";
+				mes "No need to worry about arrows now.";
+				mes "Oh, and did you happen to see";
+				mes "someone called Jason in Payon?";
+				mes "Be careful. He is a";
+				mes "ferocious one.";
+				next;
+				mes "[Roberto]";
+				mes "You just have to be careful of Jason in Payon.";
+				mes "Remember.";
+				mes "Then bubye~ Thank you for the presents~";
+				close;
+			}
+			else {
+				mes "[Roberto]";
+				mes "An archer in Morroc!?";
+				mes "Nice to see you! Meeting a fellow";
+				mes "archer in a place like this! *sniffsniff*!";
+				mes "I came alone to Morroc..";
+				mes "but I was a newcomer, and the pressure... waaah~";
+				mes "I was very lonely~";
+				next;
+				if (select("It must be hard. It's ok have faith.:Keep suffering.") == 1) {
+					mes "[Roberto]";
+					mes "Yes. Thank you...";
+					mes "You must be having a hard";
+					mes "time in a place like this.";
+					mes "Isn't it hard to find arrows?";
+					mes "That's why I make my own.";
+					next;
+					select("Eh, really?!");
+					mes "[Roberto]";
+					mes "Yeah! I gather different items";
+					mes "and make arrows using them.";
+					mes "It is a useful skill to help me";
+					mes "survive alone in this tough world.";
+					mes "If you'd like, I can teach you.";
+					next;
+					select("That would be wonderful.");
+					mes "[Roberto]";
+					mes "But.. I can't do it for free.";
+					mes "Nothing is free in this world~";
+					mes "Mmm... How about this?";
+					mes "You bring me what I ask for.";
+					mes "Then I will teach you the skill.";
+					next;
+					mes "[Roberto]";
+					mes "I've been very lonely since I left my hometown.";
+					mes "I would like to treat my homesick-ness";
+					mes "with things from there.";
+					mes "Bring me 20 Resins from the trees in the ";
+					mes "Payon forest, and 1 Red Potion";
+					mes "sold in the store.";
+					next;
+					mes "[Roberto]";
+					mes "Also, 13 Trunks from the Willows that";
+					mes "lives near the Payon Forest,";
+					mes "41 Tough Scalelike Stem,";
+					mes "7 Mushroom Spores.";
+					mes "If you bring me all of these.";
+					next;
+					mes "[Roberto]";
+					mes "I will teach you the skill.";
+					mes "Then.. I'll be waiting.";
+					mes "For news from our home.";
+					close;
+				}
+				mes "[Roberto]";
+				if (Sex)
+					mes "...hey miss.";
+				else
+					mes "...hey mister.";
+				mes "...be careful at night.";
+				close;
+			}
+		}
+		else {
+			mes "[Roberto]";
+			mes "Hmm... Do you?";
+			mes "Have something to say?";
+			mes "I,";
+			mes "have nothing.";
+			mes "Difference in levels";
+			mes "cuts off conversations.";
+			close;
+		}
+	}
+	else {
+		mes "[?]";
+		mes "Eh... First time seeing an archer or something?";
+		mes "Just go where you were going.";
+		mes "I only talk to high level archers.";
+		mes "Won't open my mouth otherwise!";
+		close;
+	}
+}
+
+payon,103,63,3	script	Jason#qsk_ac	88,3,3,{
+	if (BaseClass == Job_Archer) {
+		if (getskilllv(148) == 1) {
+			mes "[Jason]";
+			mes "Eh, we meet again.";
+			mes "Ehhhh so weird.";
+			mes "Whenever I see someone again";
+			mes "I start eh-ing a lot.";
+			mes "Ehhh... anyways nice to see you again.";
+			mes "Ehhhh... don't come any more ehh...";
+			close;
+		}
+		else if ((Basejob == Job_Archer && JobLevel >= 35) || BaseJob == Job_Hunter || BaseJob == Job_Dancer || BaseJob == Job_Bard) {
+			mes "[Jason]";
+			mes "Darn... my wound isn't healing.";
+			mes "Bleh.. I was too careless... ";
+			mes "to become like this.. err...";
+			mes "But still, hurting me like this";
+			mes "giving me so many injuries...";
+			next;
+			mes "What should I do about Roberto.";
+			mes "Mmmm... Ah!";
+			mes "You? How long have you been there?";
+			mes "Mmm... very high level.";
+			mes "Someone like you would definitely be";
+			mes "able to know how to use Arrow Repel.";
+			next;
+			switch(select("What is that?:Teach me.")) {
+			case 1:
+				mes "[Jason]";
+				mes "...you're kidding, right?";
+				mes "Oh my, you don't even know";
+				mes "Arrow Repel at that level?";
+				mes "You're a strange person.";
+				next;
+				mes "[Jason]";
+				mes "(Jason was in the lala land.)";
+				next;
+				mes "[Jason]";
+				mes "Well, ok. I'll teach you what";
+				mes "Arrow Repel is.";
+				next;
+				mes "[Jason]";
+				mes "Arrow Repel is a skill that allows you to";
+				mes "push the opponent away as soon as you attack.";
+				mes "You can only use it when you aim exactly";
+				mes "at the target. But unlike magic, ";
+				mes "it doesn't de-spell.";
+				next;
+				mes "[Jason]";
+				mes "It is very useful for an archer";
+				mes "that is weak in close ranges.";
+				mes "If you would like to learn,";
+				mes "come find me again.";
+				mes "There are some necessary materials.";
+				next;
+				mes "[Jason]";
+				mes "First, because you must modify a bow";
+				mes "bring a crossbow you do not use.";
+				mes "10 Tentacles, 10 Bill of Birds,";
+				mes "3 Yoyo Tails.. these are very elastic.";
+				mes "Also, 2 Emeralds. And last but not least...";
+				mes "36 bottles of Banana Juice that I love!";
+				next;
+				mes "[Jason]";
+				mes "......Ehem!";
+				mes "If you bring all of these,";
+				mes "I shall teach you Arrow Repel.";
+				mes "Then, see you again.";
+				mes "(I'm going to be mad if you don't bring the Banana Juice.)";
+				close;
+			case 2:
+				if (countitem(721) > 1 && countitem(942) > 2 && countitem(962) > 9 && countitem(925) > 9 && countitem(532) > 35) {
+					mes "[Jason]";
+					mes "Ok! Perfect!";
+					mes "I shall teach you the nationally";
+					mes "renowned skill, Arrow Repel!";
+					next;
+					delitem 721,2; //Azure_Jewel
+					delitem 942,3; //Yoyo_Tail
+					delitem 962,10; //Tentacle
+					delitem 925,10; //Bill_Of_Birds
+					delitem 532,36; //Banana_Juice
+					skill 148,1,0;
+					mes "[Jason]";
+					mes "Oh, works better than I expected!";
+					mes "Won't be needing to modify the bow!";
+					mes "You can take this back~";
+					mes "And enjoy using your newly inherited";
+					mes "skill in fields and dungeons!";
+					mes "He~heh~!";
+					close;
+				}
+				else {
+					mes "[Jason]";
+					mes "Mmm... too bad.";
+					mes "You are missing some things.";
+					mes "Once again, you need 2 Emeralds,";
+					mes "3 Yoyo Tails, 10 Tentacles,";
+					mes "10 Bill of Birds, and last but";
+					mes "not least 36 bottles of Banana juice!";
+					next;
+					mes "[Jason]";
+					mes "Make sure you have all of them and come again!";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Jason]";
+			mes "Ooh... you are an archer.";
+			mes "If you try a little more";
+			mes "you will have a great";
+			mes "reputation as an archer!";
+			mes "Exert yourself!";
+			close;
+		}
+	}
+	else {
+		mes "[?]";
+		mes "What does life need from";
+		mes "a lonely lad like me?";
+		close;
+	}
+
+OnTouch:
+	mes "[???]";
+	mes "Errrrrrr...";
+	close;
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
 //= v1.0 Roberto message text is based off RO npc.  Jason message
 //= text is custom from old version.
 //= All items are from official quests though.[kobra_k88]
@@ -20,194 +292,3 @@
 //= 1.4a Fixed some typos [IVBela]
 //= 1.4b changed perm. variables to temp ones [Lupus]
 //============================================================
-
-
-
-//<======================== Roberto: Arrow crafting =========================>\\
-morocc,121,109,5	script	Roberto	88,{
-	mes "[Roberto]";
-	if(baseClass == Job_Archer) goto L_Start;
-
-L_Other:
-	mes "Eh?... First time seeing an archer or something? Why don't you just";
-	mes "go about your business and leave me be.  I only talk to high level";
-	mes "Archer types........";
-	emotion e_what;
-	close;
-L_Start:
-	if(BaseJob==Job_Archer && JobLevel<30) goto L_LowLvl;
-	if(getskilllv(147)>0) goto L_GotSkill;
-	if(@ARWCRFT) goto L_GetSkill;
-	mes "Hmmm?.... Oh you seem to be a high level Archer type.  Why don't we";
-	mes "converse for a while, eh? Let me start off by talking about my";
-	mes "childhood.... . . . . . . . . . . .";
-	next;
-	mes "[Roberto]";
-	mes "When I turned 15, I decided I'd work for a Blacksmith........";
-	next;
-	mes "[Roberto]";
-	mes "............... ~(blah blah blah)~...................";
-	next;
-	mes "[Roberto]";
-	mes ".... man was my Junior Prom a mess...........";
-	next;
-	mes "[Roberto]";
-	mes "..~(blah blah)~........ ~(blah blah)~.........";
-	next;
-	mes "(many grueling hours later.....)";
-	next;
-	mes "[Roberto]";
-	mes "So that's how I found out how to create all of these different";
-	mes "kinds of arrows for myself.  It definitely comes in handy.";
-	next;
-	mes "[Roberto]";
-	mes "Say, would you like me to teach you?  We've had such a nice talk";
-	mes "that I feel like can trust you with this knowledge.......";
-	next;
-	menu "Zzz... Eh!! Uh, Arrows... making... yes, teach.",M_0, "Zzzzz... Eh! Uh... where am I????",M_1;
-
-	M_0:
-		mes "[Roberto]";
-		mes "Alright then!  In order for me to teach you the art of ^5533FF'Arrow";
-		mes "Crafting'^000000, you must first bring me these items:";
-		mes "^FF335520 Resin,";
-		mes "7 Poison Spores,";
-		mes "41 Pointed Scales,";
-		mes "13 Trunks,";
-		mes "1 Red potion^000000";
-		set @ARWCRFT, 1;
-		emotion e_ic;
-		close;
-	M_1:
-		mes "[Roberto]";
-		mes "................................................................";
-		emotion e_ag;
-		next;
-		mes "[Roberto]";
-		mes "Let me teach you this special skill.... It's called, my boot up";
-		mes "your A........";
-		emotion e_pif;
-		next;
-		mes "!!!!SMACK!!!!";
-		percentheal -5,0;
-		close;
-
-L_GetSkill:
-	if((countitem(907)<20) || (countitem(7033)<7) || (countitem(906)<41) || (countitem(1019)<13) || (countitem(501)<1)) goto L_NotEnuf;
-	delitem 907, 20;
-	delitem 7033, 7;
-	delitem 906, 41;
-	delitem 1019, 13;
-	delitem 501, 1;
-	mes "You've brought all of the items... very good.  Lets begin.....";
-	next;
-	mes "~ hands you a very long list of ingredients ~";
-	next;
-	mes "[Roberto]";
-	mes "There you are.  You're all set.";
-	next;
-	mes ".......................";
-	next;
-	mes "[Roberto]";
-	mes "Hmm?...... What do you mean 'that's it'?....... What else were you";
-	mes "expecting...... With that list you will be able to make any kind of";
-	mes "arrows you want.......";
-	next;
-	mes "[Roberto]";
-	mes "I hope you didn't expect some kind of elaborate ceremony or some";
-	mes "kind of unique and lengthy training.......";
-	next;
-	skill 147,1,0;
-	set @ARWCRFT, 0;
-	mes "[Roberto]";
-	mes "...... Well good luck and have fun making arrows.  I've got other";
-	mes "things to do if you don't mind.......";
-	close;
-
-	L_NotEnuf:
-		mes "You don't have everything I need.";
-		next;
-		goto M_0;
-L_GotSkill:
-	mes "Hmmm?.... Sorry but I've got nothing left to teach you.  Just keep";
-	mes "on making those arrows..... For us Archer types there can never be";
-	mes "too many arrows.....";
-	close;
-L_LowLvl:
-	mes "Hmm?... Do you have something to say to me? Unfortunately I have";
-	mes "nothing to say to you.....";
-	emotion e_what;
-	next;
-	mes "[Roberto]";
-	mes "It's sad but conversations with people who have ^5533FFlow job levels^000000 such";
-	mes "as yourself always seem to end abruptly..... Maybe if you trained a";
-	mes "little bit longer we would have more to talk about............";
-	close;
-}
-
-
-//<============================== Arrow Repel ===============================>\\
-payon,103,63,5	script	Jason	88,{
-	mes "[Jason]";
-	if(baseClass == Job_Archer) goto L_Start;
-
-L_Other:
-	mes "What does life need from a lonely lad like me?";
-	close;
-L_Start:
-	if(getskilllv(148)>0) goto L_GotSkill;
-	if(BaseJob == Job_Archer && JobLevel < 35) goto L_LowLvl;
-	if(@ARWREP) goto L_Check;
-	mes "Hi, I'm the master of the skill ^0033FFArrow Repel^000000. I might be able to";
-	mes "teach you the skill, but only if you help me get the ingredients";
-	mes "for my Grandma's soup.";
-	next;
-	mes "[Jason]";
-	mes "Arrow Repel allows you to use your arrows to repel, push back, an";
-	mes "enemy and keep them at a distance.  This is a great skill for us";
-	mes "Archer types.";
-	next;
-
-	L_List:
-	mes "[Jason]";
-	mes "I need the following:";
-	mes "- 2 ^FF0000Emeralds^000000";
-	mes "- 3 ^FF0000Yoyo tails^000000";
-	mes "- 10 ^FF0000Tentacles^000000";
-	mes "- 10 ^FF0000Bill of birds^000000";
-	mes "- 36 ^FF0000Banana Juices^000000";
-	next;
-	mes "[Jason]";
-	mes "Hurry hurry!";
-	set @ARWREP, 1;
-	close;
-
-L_LowLvl:
-	mes "Oh I think you're a bit inexperienced to learn anything from me,";
-	mes "come back later!  Maybe around ^5533FFjob level 35^000000 or so.....";
-	close;
-
-L_Check:
-	if((countitem(721)<2) || (countitem(942)<3) || (countitem(962)<10) || (countitem(925)<10) || (countitem(532)<36)) goto L_NotEnuf;
-	delitem 721,2;
-	delitem 942,3;
-	delitem 962,10;
-	delitem 925,10;
-	delitem 532,36;
-	mes "OH! Marvelous you brought me all the ingredients!";
-	mes "Now it'll be my pleasure to teach you the skill ^0033FFArrow Repel^000000";
-	next;
-	skill 148,1,0;
-	set @ARWREP, 0;
-	mes "[Jason]";
-	mes "There you go! Happy hunting in the future.";
-	close;
-
-	L_NotEnuf:
-		mes "You don't have everything I need.";
-		next;
-		goto L_List;
-L_GotSkill:
-	mes "Hey! It's you again? I'm afraid I've taught you everything I know.";
-	close;
-}

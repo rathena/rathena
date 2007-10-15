@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/10/14
+	* Rev. 11471 Updated Archer, Mage, and Thief quest skill NPCs. [L0ne_W0lf]
 	* Rev. 11470 Added headers to Acolyte, Swordman, and Novice quest skill files. [L0ne_W0lf]
 	* Rev. 11469 Updated Acolyte, Swordman, and Novice quest skill NPCs. [L0ne_W0lf]
 2007/10/13
