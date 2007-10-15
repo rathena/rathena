@@ -182,7 +182,7 @@
 678,Poison_Bottle,Poison Bottle,0,5000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ if(Class == Job_Assassin_Cross) { sc_start SC_DPoison,60000,0; sc_start SC_ASPDPOTION2,60000,0; } else percentheal -100,-100; },{},{}
 679,Gold_Pill,Pilule,0,5000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 50,50; },{},{}
 680,Magical_Carnation,Magic Carnation,0,,0,1000,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,20; },{},{}
-681,Memory_Of_Wedding,Sweet Memory of Marriage,2,50000,,10,,,,,0xFFFFFFFF,7,3,,,,,,{ sc_start SC_WEDDING,600000,0; },{},{}
+681,Memory_Of_Wedding,Sweet Memory of Marriage,2,50000,,10,,,,,0xFFFFFFFF,7,3,,,,,,{ if (getpartnerid()) sc_start SC_WEDDING,600000,0; },{},{}
 // ATK/MATK Potions
 682,Realgar_Wine,Distilled Fighting Spirit,0,,0,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,60000,30; },{},{}
 683,Exorcize_Herb,Herb of Incantation,0,,0,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_MATKPOTION,60000,30; },{},{}
