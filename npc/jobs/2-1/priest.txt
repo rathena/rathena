@@ -1759,10 +1759,10 @@ function	script	F_MotherMart	{
 			mes "training to become";
 			mes "a Priest.";
 			next;
-			mes "[Mother Marthilda]";
+			mes "[Mother Mathilda]";
 			mes "However, at this point in your pilgrimage, I am not the person that you should be visiting.";
 			next;
-			mes "[Mother Marthilda]";
+			mes "[Mother Mathilda]";
 			mes "Perhaps you should ask Bishop Paul or Sister Cecilia once again. Well, may God be with you...";
 			close;
 		}
@@ -1771,14 +1771,14 @@ function	script	F_MotherMart	{
 			mes "a Priest trainee...?";
 			mes "Welcome!";
 			next;
-			mes "[Mother Marthilda]";
+			mes "[Mother Mathilda]";
 			mes "We Priests are obliged to spread the message of God to";
 			mes "the peoples of the Earth.";
 			next;
-			mes "[Mother Marthilda]";
+			mes "[Mother Mathilda]";
 			mes "After you become a Priest, your travels may take you to the Morroc Pyramids. I hope that you may release the Undead there from the evil to which they are bound.";
 			next;
-			mes "[Mother Marthilda]";
+			mes "[Mother Mathilda]";
 			mes "Well then...";
 			mes "I shall pray to";
 			mes "God for safety";

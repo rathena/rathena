@@ -309,12 +309,12 @@ prt_fild03,365,255,2	script	Ascetic#aco	89,{
 }
 
 moc_fild07,41,355,4	script	Ascetic#2aco	95,{
-	mes "[Mother Marthilda]";
+	mes "[Mother Mathilda]";
 	if (BaseJob == Job_Novice) {
 		if (job_acolyte_q == 7) {
 			mes "I will send a carrier pigeon to the Prontera Sanctuary. When you return, the Priest there should already have received my message.";
 			next;
-			mes "[Mother Marthilda]";
+			mes "[Mother Mathilda]";
 			mes "I will pray to God, and hope that you become an Acolyte soon.";
 			close;
 		}
@@ -322,13 +322,13 @@ moc_fild07,41,355,4	script	Ascetic#2aco	95,{
 			if (job_acolyte_q == 3) {
 				mes "Ah, you must be one of the Acolyte applicants. I sincerely welcome you.";
 				next;
-				mes "[Mother Marthilda]";
+				mes "[Mother Mathilda]";
 				mes "What is your name? " + strcharinfo(0) + "? Let's see... Ah, you're on my list.";
 				next;
-				mes "[Mother Marthilda]";
+				mes "[Mother Mathilda]";
 				mes "I will send a message to the Sanctuary confirming that you, " + strcharinfo(0) + " visited me and completed your penance.";
 				next;
-				mes "[Mother Marthilda]";
+				mes "[Mother Mathilda]";
 				mes "Please return to the Prontera Sanctuary and speak to the Priest in charge.";
 				close2;
 				savepoint "moc_fild07",35,355;
@@ -341,16 +341,16 @@ moc_fild07,41,355,4	script	Ascetic#2aco	95,{
 				mes "of the Acolyte applicants.";
 				mes "I sincerely welcome you.";
 				next;
-				mes "[Mother Marthilda]";
+				mes "[Mother Mathilda]";
 				mes "Now, what is your name?";
 				mes "" + strcharinfo(0) + "? Let's see...";
 				next;
-				mes "[Mother Marthilda]";
+				mes "[Mother Mathilda]";
 				mes "Hmm...";
 				mes "It seems your name";
 				mes "is not on my list...";
 				next;
-				mes "[Mother Marthilda]";
+				mes "[Mother Mathilda]";
 				mes "Perhaps you should return to the Prontera Sanctuary and check the destination for your penance trial once again.";
 				close;
 			}
@@ -365,7 +365,7 @@ moc_fild07,41,355,4	script	Ascetic#2aco	95,{
 		if (BaseJob == Job_Priest) {
 			mes "Hello there~";
 			next;
-			mes "[Mother Marthilda]";
+			mes "[Mother Mathilda]";
 			mes "How is your practice coming along? I certainly hope you're enjoying living in the grace of God.";
 			close;
 		}
