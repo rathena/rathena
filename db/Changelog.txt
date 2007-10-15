@@ -33,6 +33,11 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/14
+	* Rev. 11475 Item Database updates. [L0ne_W0lf]
+	- Updated Memory of Wedding effect, and some item names.
+	- Added the Diablos item set information.
+	- Added cast-delay reduction to Diablos Robe.
 10/13
 	* Fixed duration of NPC_POWERUP [Playtester]
 10/12
