@@ -1,3 +1,19 @@
+//===== eAthena Script =======================================
+//= Swordsman Skills Quests
+//===== By: ==================================================
+//= kobra_k88
+//===== Current Version: =====================================
+//= 1.6
+//===== Compatible With: =====================================
+//= eAthena SVN
+//===== Description: =========================================
+//= [Aegis Conversion]
+//= Quests for skills: Fatal Blow, Mobile HP Recovery,
+//  Auto-Berserk
+//===== Additional Comments: =================================
+//= 1.6 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//============================================================
+
 izlude_in,175,130,2	script	Knight De Thomas#qsk_sm	98,{
 	if (BaseClass == Job_Swordman) {
 		if (SWORD_SK < 1 && getskilllv(144) == 0) {
@@ -467,3 +483,17 @@ prt_in,94,57,3	script	Juan#qsk_sm	85,{
 		close;
 	}
 }
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= Fully working
+//= 1.0a Now using functions found in "Global_Functions.txt"
+//= for class checks.
+//= 1.1 Added missing delitem [Lupus]
+//= 1.2 Added Baby Class Support [Lupus]
+//= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
+//= 1.4 Updated the NPC to allow subclasses of swordsman to learn the skills, [MasterOfMuppets]
+//=	1.5 Fixed exploits [Lupus]
+//= 1.5a Fixed some typos [IVBela]
+//============================================================

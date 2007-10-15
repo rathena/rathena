@@ -1,3 +1,18 @@
+//===== eAthena Script =======================================
+//= Acolyte Skill Quest
+//===== By: ==================================================
+//= kobra_k88
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Quest for skills: Holy Light
+//===== Additional Comments: ================================= 
+//= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//============================================================
+
 prt_church,173,23,4	script	Cleric#qsk_al	79,{
 	mes "[Acolyte Klift]";
 	mes "Ahh . Brothers ! Does the task of";
@@ -95,3 +110,14 @@ prt_church,173,23,4	script	Cleric#qsk_al	79,{
 		close;
 	}
 }
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= v1.0a Now using functions found in "Global_Functions.txt"
+//= for class checks.
+//= 1.2 Added Baby Class Support [Lupus]
+//= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
+//= 1.4 Fixed an exploit [Lupus]
+//= 1.4a changed perm. variables to temp ones [Lupus]
+//============================================================
