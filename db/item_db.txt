@@ -3285,7 +3285,7 @@
 12244,Old_Gift_Box,Old Gift Box,2,,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(5270,5272),1; },{},{}
 //St patrick's day Event (2007)
 12245,Green_Ale_US,Green Ale,0,,10,500,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,0; },{},{}
-12247,Halohalo,Halo-Halo,11,,,1000,,,,,0xFFFFFFFF,7,2,,,20,,,{ sc_start SC_INCALLSTATUS,600000,3; },{},{}
+12247,Halohalo,Halo-Halo,2,,,1000,,,,,0xFFFFFFFF,7,2,,,20,,,{ sc_start SC_INCALLSTATUS,600000,3; },{},{}
 12248,Fancy_Ball_Box,Fancy_Ball_Box,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5296,1; getitem 5297,1; getitem 5298,1; },{},{}
 12249,Kafra_Employee_Paystub,Kafra_Employee_Paystub,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12250,Str_Dish_,Steamed Tongue,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STRFood,3600000,10; percentheal 20,20; },{},{}

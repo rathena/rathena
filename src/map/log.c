@@ -19,8 +19,6 @@ struct Log_Config log_config;
 char timestring[255];
 time_t curtime;
 
-static int should_log_item(int filter, int nameid, int amount); //log filter check
-
 //FILTER OPTIONS
 //0 = Don't log
 //1 = Log any item

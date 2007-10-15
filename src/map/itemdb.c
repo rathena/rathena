@@ -728,11 +728,28 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	} else //In case of an itemdb reload and the item type changed.
 		id->flag.delay_consume = 0;
 
-	id->value_buy = atoi(str[4]);
-	id->value_sell = atoi(str[5]);
-	if (id->value_buy < id->value_sell * 2) id->value_buy = id->value_sell * 2; // prevent exploit
-	if (id->value_buy == 0 && id->value_sell > 0) id->value_buy = id->value_sell * 2;
-	if (id->value_sell == 0 && id->value_buy > 0) id->value_sell = id->value_buy / 2;
+	//When a particular price is not given, we should base it off the other one
+	//(it is important to make a distinction between 'no price' and 0z)
+	if ( str[4][0] )
+		id->value_buy = atoi(str[4]);
+	else
+		id->value_buy = atoi(str[5]) * 2;
+
+	if ( str[5][0] )
+		id->value_sell = atoi(str[5]);
+	else
+		id->value_sell = id->value_buy / 2;
+	/* 
+	if ( !str[4][0] && !str[5][0])
+	{  
+		ShowWarning("itemdb_parse_dbrow: No buying/selling price defined for item %d (%s), using 20/10z\n",       nameid, id->jname);
+		id->value_buy = 20;
+		id->value_sell = 10;
+	} else
+	*/
+	if (id->value_buy/124. < id->value_sell/75.)
+		ShowWarning("itemdb_parse_dbrow: Buying/Selling [%d/%d] price of item %d (%s) allows Zeny making exploit  through buying/selling at discounted/overcharged prices!\n",
+			id->value_buy, id->value_sell, nameid, id->jname);
 
 	id->weight = atoi(str[6]);
 	id->atk = atoi(str[7]);
