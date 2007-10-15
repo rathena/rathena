@@ -619,6 +619,7 @@
 
 1001,9,6,1,-1,0,0,1,1,no,0,0x1,0,weapon,0	//KN_CHARGEATK#Charge Attack#
 1002,0,6,4,0,0x1,0,1,0,no,0,0x1,0,weapon,2	//CR_SHRINK#Shrink#
+1003,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0    //AS_SONICACCEL#Sonic Acceleration#
 1004,9,8,1,0,0x8,0,1,1,no,0,0x1,0,weapon,0	//AS_VENOMKNIFE#Throw Venom Knive#
 1005,1,6,1,0,0x1,0,1,1,no,0,0x1,0,weapon,0	//RG_CLOSECONFINE#Close Confine#
 1006,0,6,4,3,0,2,1,1,yes,0,0x1,0,magic,3	//WZ_SIGHTBLASTER#Sight Blaster#

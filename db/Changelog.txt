@@ -34,6 +34,7 @@
 
 =======================
 10/15
+	* Rev. 11489 Readded Sonic Acceleration to the skill DB. -_- [L0ne_W0lf]
 	* Fixed duration of Enchant Deadly Poison [Playtester]
 	* Reverted last fix according to tests on Aegis [Playtester]
 	* Fixed aftercast delay and timer of Venom Splasher [Playtester]
