@@ -33,6 +33,8 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/15
+	* Fixed aftercast delay and timer of Venom Splasher [Playtester]
 10/14
 	* Rev. 11477 Eek, made it so the Memory of Wedding item only works if you're married. [L0ne_W0lf]
 	* Rev. 11476 Added information pertaining to "Enlarge Weight Limit R." [L0ne_W0lf]
