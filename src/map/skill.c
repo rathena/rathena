@@ -52,6 +52,7 @@ const struct skill_name_db skill_names[] = {
  { AC_SHOWER, "AC_SHOWER", "Arrow Shower" } ,
  { AC_VULTURE, "AC_VULTURE", "Vulture's Eye" } ,
  { ALL_RESURRECTION, "ALL_RESURRECTION", "Resurrection" } ,
+ { ALL_INCCARRY, "ALL_INCCARRY", "Enlarge Weight Limit R" } ,
  { AL_ANGELUS, "AL_ANGELUS", "Angelus" } ,
  { AL_BLESSING, "AL_BLESSING", "Blessing" } ,
  { AL_CRUCIS, "AL_CRUCIS", "Signum Crusis" } ,

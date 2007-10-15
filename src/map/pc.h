@@ -11,8 +11,8 @@
 #include "status.h" // OPTION_*
 #include "unit.h" // unit_stop_attack(), unit_stop_walking()
 
-//Update this max as necessary. 53 is the value needed for Super Baby currently
-#define MAX_SKILL_TREE 53
+//Update this max as necessary. 54 is the value needed for Super Baby currently
+#define MAX_SKILL_TREE 54
 
 enum {
 	W_FIST,	//Bare hands

@@ -2232,6 +2232,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		sd->max_weight += 10000;
 	if(sd->sc.data[SC_KNOWLEDGE].timer != -1)
 		sd->max_weight += sd->max_weight*sd->sc.data[SC_KNOWLEDGE].val1/10;
+	if((skill=pc_checkskill(sd,ALL_INCCARRY))>0)
+		sd->max_weight += 2000*skill;
 
 	if (pc_checkskill(sd,SM_MOVINGRECOVERY)>0)
 		sd->regen.state.walk = 1;
