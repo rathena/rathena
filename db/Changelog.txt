@@ -34,6 +34,7 @@
 
 =======================
 10/15
+	* Fixed duration of Enchant Deadly Poison [Playtester]
 	* Reverted last fix according to tests on Aegis [Playtester]
 	* Fixed aftercast delay and timer of Venom Splasher [Playtester]
 10/14
