@@ -3739,7 +3739,7 @@ static int clif_calc_walkdelay(struct block_list *bl,int delay, int type, int da
 /*==========================================
  * Sends a 'damage' packet (src performs action on dst)
  * R 008a <src ID>.l <dst ID>.l <server tick>.l <src speed>.l <dst speed>.l <param1>.w <param2>.w <type>.B <param3>.w
- *
+ * 
  * type=00 damage [param1: total damage, param2: div, param3: assassin dual-wield damage]
  * type=01 pick up item
  * type=02 sit down
@@ -4318,10 +4318,10 @@ int clif_skill_fail(struct map_session_data *sd,int skill_id,int type,int btype)
 }
 
 /*==========================================
- * スキル攻撃エフェクト＆ダメージ
+ * skill attack effect and damage
+ * R 01de <skill ID>.w <src ID>.l <dst ID>.l <tick>.l <src delay>.l <dst delay>.l <damage>.l <skillv>.w <div>.w <type>.B
  *------------------------------------------*/
-int clif_skill_damage(struct block_list *src,struct block_list *dst,
-	unsigned int tick,int sdelay,int ddelay,int damage,int div,int skill_id,int skill_lv,int type)
+int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,int skill_id,int skill_lv,int type)
 {
 	unsigned char buf[64];
 	struct status_change *sc;
@@ -4329,7 +4329,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 	nullpo_retr(0, src);
 	nullpo_retr(0, dst);
 
-	type = (type>0)?type:skill_get_hit(skill_id);
+	if( type == 0 ) type = skill_get_hit(skill_id);
 	type = clif_calc_delay(type, ddelay);
 	sc = status_get_sc(dst);
 
@@ -4409,8 +4409,8 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,
 /*==========================================
  * 吹き飛ばしスキル攻撃エフェクト＆ダメージ
  *------------------------------------------*/
-int clif_skill_damage2(struct block_list *src,struct block_list *dst,
-	unsigned int tick,int sdelay,int ddelay,int damage,int div,int skill_id,int skill_lv,int type)
+/*
+int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,int skill_id,int skill_lv,int type)
 {
 	unsigned char buf[64];
 	struct status_change *sc;
@@ -4463,6 +4463,7 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,
 	//Because the damage delay must be synced with the client, here is where the can-walk tick must be updated. [Skotlex]
 	return clif_calc_walkdelay(dst,ddelay,type,damage,div);
 }
+*/
 
 /*==========================================
  * 支援/回復スキルエフェクト
@@ -4483,14 +4484,14 @@ int clif_skill_nodamage(struct block_list *src,struct block_list *dst,int skill_
 
 	if (disguised(dst)) {
 		WBUFL(buf,6)=-dst->id;
-		clif_send(buf,packet_len(0x115),dst,SELF);
+		clif_send(buf,packet_len(0x11a),dst,SELF);
 	}
 
 	if(src && disguised(src)) {
 		WBUFL(buf,10)=-src->id;
 		if (disguised(dst))
 			WBUFL(buf,6)=dst->id;
-		clif_send(buf,packet_len(0x115),src,SELF);
+		clif_send(buf,packet_len(0x11a),src,SELF);
 	}
 
 	return fail;

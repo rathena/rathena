@@ -2432,8 +2432,7 @@ struct Damage battle_calc_magic_attack(
 /*==========================================
  * ‚»‚Ì‘¼ƒ_ƒ??[ƒWŒvŽZ
  *------------------------------------------*/
-struct Damage  battle_calc_misc_attack(
-	struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag)
+struct Damage  battle_calc_misc_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag)
 {
 	int skill;
 	short i, nk;
@@ -2495,14 +2494,15 @@ struct Damage  battle_calc_misc_attack(
 		if(mflag > 1) //Autocasted Blitz.
 			nk|=NK_SPLASHSPLIT;
 		
-		if (skill_num == HT_BLITZBEAT)
-			break;
-		//Div fix of Blitzbeat
-		skill = skill_get_num(HT_BLITZBEAT, 5);
-		damage_div_fix(md.damage, skill); 
+		if (skill_num == SN_FALCONASSAULT)
+		{
+			//Div fix of Blitzbeat
+			skill = skill_get_num(HT_BLITZBEAT, 5);
+			damage_div_fix(md.damage, skill); 
 
-		//Falcon Assault Modifier
-		md.damage=md.damage*(150+70*skill_lv)/100;
+			//Falcon Assault Modifier
+			md.damage=md.damage*(150+70*skill_lv)/100;
+		}
 		break;
 	case TF_THROWSTONE:
 		md.damage=50;
@@ -2658,13 +2658,13 @@ struct Damage  battle_calc_misc_attack(
 /*==========================================
  * ƒ_ƒ??[ƒWŒvŽZˆêŠ‡?ˆ—?—p
  *------------------------------------------*/
-struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,int skill_num,int skill_lv,int flag)
+struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,int skill_num,int skill_lv,int count)
 {
 	struct Damage d;
 	switch(attack_type) {
-	case BF_WEAPON: d = battle_calc_weapon_attack(bl,target,skill_num,skill_lv,flag); break;
-	case BF_MAGIC:  d = battle_calc_magic_attack(bl,target,skill_num,skill_lv,flag);  break;
-	case BF_MISC:   d = battle_calc_misc_attack(bl,target,skill_num,skill_lv,flag);   break;
+	case BF_WEAPON: d = battle_calc_weapon_attack(bl,target,skill_num,skill_lv,count); break;
+	case BF_MAGIC:  d = battle_calc_magic_attack(bl,target,skill_num,skill_lv,count);  break;
+	case BF_MISC:   d = battle_calc_misc_attack(bl,target,skill_num,skill_lv,count);   break;
 	default:
 		if (battle_config.error_log)
 			ShowError("battle_calc_attack: unknown attack type! %d\n",attack_type);

@@ -196,20 +196,13 @@ int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range);
 int clif_skillinfoblock(struct map_session_data *sd);
 int clif_skillup(struct map_session_data *sd,int skill_num);
 
-int clif_skillcasting(struct block_list* bl,
-	int src_id,int dst_id,int dst_x,int dst_y,int skill_num,int pl, int casttime);
+int clif_skillcasting(struct block_list* bl,int src_id,int dst_id,int dst_x,int dst_y,int skill_num,int pl,int casttime);
 int clif_skillcastcancel(struct block_list* bl);
 int clif_skill_fail(struct map_session_data *sd,int skill_id,int type,int btype);
-int clif_skill_damage(struct block_list *src,struct block_list *dst,
-	unsigned int tick,int sdelay,int ddelay,int damage,int div,
-	int skill_id,int skill_lv,int type);
-int clif_skill_damage2(struct block_list *src,struct block_list *dst,
-	unsigned int tick,int sdelay,int ddelay,int damage,int div,
-	int skill_id,int skill_lv,int type);
-int clif_skill_nodamage(struct block_list *src,struct block_list *dst,
-	int skill_id,int heal,int fail);
-int clif_skill_poseffect(struct block_list *src,int skill_id,
-	int val,int x,int y,int tick);
+int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,int skill_id,int skill_lv,int type);
+//int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,int skill_id,int skill_lv,int type);
+int clif_skill_nodamage(struct block_list *src,struct block_list *dst,int skill_id,int heal,int fail);
+int clif_skill_poseffect(struct block_list *src,int skill_id,int val,int x,int y,int tick);
 int clif_skill_estimation(struct map_session_data *sd,struct block_list *dst);
 void clif_skill_warppoint(struct map_session_data* sd, int skill_num, int skill_lv, int map1, int map2, int map3, int map4);
 int clif_skill_memo(struct map_session_data *sd,int flag);

@@ -53,9 +53,10 @@
 //Walk intervals at which chase-skills are attempted to be triggered.
 #define WALK_SKILL_INTERVAL 5
 
-// To be passed to skill_attack, whether the skill damage should disable level or animation. [Skotlex]
-#define SD_LEVEL 0x1000
-#define SD_ANIMATION	0x2000
+// Flags passed to skill_attack
+#define SD_LEVEL     0x1000 // will send -1 instead of skill level (affects display of some skills)
+#define SD_ANIMATION 0x2000 // will use '5' instead of the skill's 'type' (this makes skills show an animation)
+#define SD_PREAMBLE  0x4000 // will transmit a 'magic' damage packet (-30000 dmg) for the first target to be hit
 
 // スキルデ?タベ?ス
 struct s_skill_db {
@@ -267,8 +268,7 @@ int skill_blockpc_start (struct map_session_data*,int,int);	// [celest]
 int skill_blockmerc_start (struct homun_data*,int,int);	//[orn]
 
 // スキル攻?一括?理
-int skill_attack( int attack_type, struct block_list* src, struct block_list *dsrc,
-	 struct block_list *bl,int skillid,int skilllv,unsigned int tick,int flag );
+int skill_attack( int attack_type, struct block_list* src, struct block_list *dsrc,struct block_list *bl,int skillid,int skilllv,unsigned int tick,int flag );
 
 void skill_reload(void);
 
@@ -289,7 +289,7 @@ enum {
 	ST_WATER,
 };
 
-enum _skill {
+enum s_skill {
 	NV_BASIC = 1,
 
 	SM_SWORD,

@@ -6522,8 +6522,7 @@ int atcommand_displayskill(const int fd, struct map_session_data* sd, const char
 	}
 	status = status_get_status_data(&sd->bl);
 	tick = gettick();
-	clif_skill_damage(&sd->bl,&sd->bl, tick, status->amotion, status->dmotion,
-		1, 1, skillnum, skilllv, 5);
+	clif_skill_damage(&sd->bl,&sd->bl, tick, status->amotion, status->dmotion, 1, 1, skillnum, skilllv, 5);
 	clif_skill_nodamage(&sd->bl, &sd->bl, skillnum, skilllv, 1);
 	clif_skill_poseffect(&sd->bl, skillnum, skilllv, sd->bl.x, sd->bl.y, tick);
 	return 0;

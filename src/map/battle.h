@@ -23,7 +23,7 @@ struct block_list;
 
 // ダメージ計算
 
-struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,int skill_num,int skill_lv,int flag);
+struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,int skill_num,int skill_lv,int count);
 
 int battle_calc_return_damage(struct block_list *bl, int damage, int flag);
 

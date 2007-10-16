@@ -6296,7 +6296,7 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			{
 				struct block_list *src=map_id2bl(sc->data[type].val3);
 				if(src && tid!=-1)
-					skill_castend_damage_id(src, bl,sc->data[type].val2,sc->data[type].val1,gettick(),0 );
+					skill_castend_damage_id(src, bl, sc->data[type].val2, sc->data[type].val1, gettick(), SD_LEVEL );
 			}
 			break;
 		case SC_CLOSECONFINE2:

@@ -1024,8 +1024,8 @@ struct s_skill_unit_layout* skill_get_unit_layout (int skillid, int skilllv, str
  *------------------------------------------*/
 int skill_additional_effect (struct block_list* src, struct block_list *bl, int skillid, int skilllv, int attack_type, unsigned int tick)
 {
-	struct map_session_data *sd=NULL, *dstsd=NULL;
-	struct mob_data *md=NULL, *dstmd=NULL;
+	struct map_session_data *sd, *dstsd;
+	struct mob_data *md, *dstmd;
 	struct status_data *sstatus, *tstatus;
 	struct status_change *sc, *tsc;
 
@@ -1037,29 +1037,16 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 
 	if(skillid < 0) 
 	{	// remove the debug print when this case is finished
-		ShowDebug("skill_additional_effect: skillid=%i\ncall: %p %p %i %i %i %i",skillid,
-						src, bl,skillid,skilllv,attack_type,tick);
+		ShowDebug("skill_additional_effect: skillid=%i\ncall: %p %p %i %i %i %i",skillid,src,bl,skillid,skilllv,attack_type,tick);
 		return 0;
 	}
 	if(skillid > 0 && skilllv <= 0) return 0;	// don't forget auto attacks! - celest
 
-	switch (src->type) {
-	case BL_PC:
-		sd = (struct map_session_data *)src;
-		break;
-	case BL_MOB:
-		md = (struct mob_data *)src;
-		break;
-	}
+	BL_CAST(BL_PC, src, sd);
+	BL_CAST(BL_MOB, src, md);
+	BL_CAST(BL_PC, bl, dstsd);
+	BL_CAST(BL_MOB, bl, dstmd);
 
-	switch (bl->type) {
-	case BL_PC:
-		dstsd=(struct map_session_data *)bl;
-		break;
-	case BL_MOB:
-		dstmd=(struct mob_data *)bl;
-		break;
-	}
 	sc = status_get_sc(src);
 	tsc = status_get_sc(bl);
 	sstatus = status_get_status_data(src);
@@ -1067,10 +1054,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	if (!tsc) //skill additional effect is about adding effects to the target...
 		//So if the target can't be inflicted with statuses, this is pointless.
 		return 0;	
-	if (sc && !sc->count)
-		sc = NULL;
 
-	switch(skillid){
+	switch(skillid)
+	{
 	case 0: // Normal attacks (no skill used)
 	{
 		if(sd) {
@@ -1968,7 +1954,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	sc= status_get_sc(bl);
 	if (sc && !sc->count) sc = NULL; //Don't need it.
 
-// Is this check really needed? FrostNova won't hurt you if you step right where the caster is?
+	// Is this check really needed? FrostNova won't hurt you if you step right where the caster is?
 	if(skillid == WZ_FROSTNOVA && dsrc->x == bl->x && dsrc->y == bl->y)
 		return 0;
 	 //Trick Dead protects you from damage, but not from buffs and the like, hence it's placed here.
@@ -2151,8 +2137,13 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		}
 	}
 
+	// Cart Revolution and Grimtooth need this weirdo dummy packet for the first target to display correctly
+	if( flag&SD_PREAMBLE )
+		clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion, -30000, dmg.div_, skillid, skilllv, 6);
+
 	//Display damage.
-	switch(skillid){
+	switch( skillid )
+	{
 	case PA_GOSPEL: //Should look like Holy Cross [Skotlex]
 		dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, 5);
 		break;
@@ -2162,19 +2153,25 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		if(src->type==BL_PC)
 			dmg.blewcount = 10;
 		dmg.amotion = 0; //Disable delay or attack will do no damage since source is dead by the time it takes effect. [Skotlex]
-
+		// fall through
 	case KN_AUTOCOUNTER:
 	case NPC_CRITICALSLASH:
-	case NPC_SPLASHATTACK:
 	case TF_DOUBLE:
 	case GS_CHAINACTION:
 		dmg.dmotion = clif_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,dmg.type,dmg.damage2);
 		break;
+
+	case AS_SPLASHER:
+		if( flag&SD_ANIMATION ) // the surrounding targets
+			dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skillid, -1, 5); // needs -1 as skill level
+		else // the central target doesn't display an animation
+			dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skillid, -2, 5); // needs -2(!) as skill level
+		break;
+
 	default:
-		//Disabling skill animation doesn't works on multi-hit.
-		dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion,
-			damage, dmg.div_, skillid, flag&SD_LEVEL?-1:skilllv,
-			(flag&SD_ANIMATION && dmg.div_ < 2?5:type));
+		if( flag&SD_ANIMATION && dmg.div_ < 2 ) //Disabling skill animation doesn't works on multi-hit.
+			type = 5;
+		dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skillid, flag&SD_LEVEL?-1:skilllv, type);
 		break;
 	}
 	
@@ -2316,7 +2313,8 @@ int skill_area_sub (struct block_list *bl, va_list ap)
 	func=va_arg(ap,SkillFunc);
 
 	if(battle_check_target(src,bl,flag) > 0)
-		func(src,bl,skill_id,skill_lv,tick,flag);
+		return func(src,bl,skill_id,skill_lv,tick,flag);
+
 	return 0;
 }
 
@@ -2599,8 +2597,6 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
  *------------------------------------------*/
 int skill_area_sub_count (struct block_list *src, struct block_list *target, int skillid, int skilllv, unsigned int tick, int flag)
 {
-	if(skill_area_temp[0] < 0xffff)
-		skill_area_temp[0]++;
 	return 1;
 }
 
@@ -2810,8 +2806,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	if (skillid && skill_get_type(skillid) == BF_MAGIC && status_isimmune(bl) == 100)
 	{	//GTB makes all targetted magic display miss with a single bolt.
-		clif_skill_damage(src, bl, tick, status_get_amotion(src), status_get_dmotion(bl),
-			0, 1, skillid, skilllv, skill_get_hit(skillid));
+		clif_skill_damage(src, bl, tick, status_get_amotion(src), status_get_dmotion(bl), 0, 1, skillid, skilllv, skill_get_hit(skillid));
 		return 1;
 	}
 
@@ -3085,14 +3080,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	//Splash attack skills.
-	case NPC_PULSESTRIKE:
-	case NPC_HELLJUDGEMENT:
-		skill_attack(skill_get_type(skillid), src, src, bl,
-			skillid, skilllv, tick, skill_area_temp[0]|(flag&SD_LEVEL));
-		break;
-
-	case AS_SPLASHER:
 	case AS_GRIMTOOTH:
+	case AS_SPLASHER:
 	case SM_MAGNUM:
 	case HT_BLITZBEAT:
 	case MC_CARTREVOLUTION:	
@@ -3108,49 +3097,56 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	case GS_DESPERADO:
 	case GS_SPREADATTACK:
 	case NPC_EARTHQUAKE:
-		if (flag&1)
-		{	//Invoked from map_foreachinarea, skill_area_temp[0] holds number of targets to divide damage by.
-			if (skill_area_temp[1] != bl->id)
-				skill_attack(skill_get_type(skillid), src, src, bl,
-					skillid, skilllv, tick, skill_area_temp[0]|SD_ANIMATION|(flag&SD_LEVEL));
-			break;
+	case NPC_PULSESTRIKE:
+	case NPC_HELLJUDGEMENT:
+		if( flag&1 )
+		{	//Recursive invocation
+			// skill_area_temp[0] holds number of targets in area
+			// skill_area_temp[1] holds the id of the original target
+			// skill_area_temp[2] counts how many targets have already been processed
+			int sflag = skill_area_temp[0] & 0xFFF;
+			if( flag&SD_LEVEL )
+				sflag |= SD_LEVEL; // -1 will be used in packets instead of the skill level
+			if( skill_area_temp[1] != bl->id && !(skill_get_inf2(skillid)&INF2_NPC_SKILL) )
+				sflag |= SD_ANIMATION; // original target gets no animation (as well as all NPC skills)
+			if( skill_area_temp[2] == 0 && (skillid == AS_GRIMTOOTH || skillid == MC_CARTREVOLUTION || skillid == NPC_SPLASHATTACK) )
+				sflag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
+
+			skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv, tick, sflag);
+			skill_area_temp[2]++;
 		}
-		if ( skillid == NJ_BAKUENRYU )
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		skill_area_temp[0] = 0;
-		skill_area_temp[1] = bl->id;
-		//SD_LEVEL -> Forced splash damage for Auto Blitz-Beat
-		if (flag&SD_LEVEL || skill_get_nk(skillid)&NK_SPLASHSPLIT)
-			map_foreachinrange(skill_area_sub, bl, 
-				skill_get_splash(skillid, skilllv), BL_CHAR,
-				src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
-		else if (skillid==AS_SPLASHER) //Need split damage anyway.
-			skill_area_temp[0] = 2;
+		else
+		{
+			if ( skillid == NJ_BAKUENRYU )
+				clif_skill_nodamage(src,bl,skillid,skilllv,1);
 
-		map_foreachinrange(skill_area_sub, bl,
-			skill_get_splash(skillid, skilllv), splash_target(src),
-			src, skillid, skilllv, tick, flag|BCT_ENEMY|1,
-			skill_castend_damage_id);
+			skill_area_temp[0] = 0;
+			skill_area_temp[1] = bl->id;
+			skill_area_temp[2] = 0;
 
-		//Splasher Should do 100% damage on targetted character.
-		skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv,
-			tick, (skillid == AS_SPLASHER?0:skill_area_temp[0])|(flag&SD_LEVEL));
+			// if skill damage should be split among targets, count them
+			//SD_LEVEL -> Forced splash damage for Auto Blitz-Beat -> count targets
+			if( flag&SD_LEVEL || skill_get_nk(skillid)&NK_SPLASHSPLIT )
+				skill_area_temp[0] = map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), BL_CHAR, src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
 
-		if (skillid == SM_MAGNUM) {
-			//Initiate 10% of your damage becomes fire element.
-			sc_start4(src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skillid, skilllv));
-			if (sd) skill_blockpc_start (sd, skillid, skill_get_time(skillid, skilllv));
+			// recursive invocation of skill_castend_damage_id() with flag|1
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src), src, skillid, skilllv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
+
+			//FIXME: move this to skill_additional_effect or some such? [ultramage]
+			if (skillid == SM_MAGNUM) {
+				//Initiate 10% of your damage becomes fire element.
+				sc_start4(src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skillid, skilllv));
+				if (sd) skill_blockpc_start (sd, skillid, skill_get_time(skillid, skilllv));
+			}
 		}
 		break;
 
 	case KN_BRANDISHSPEAR:
 		//Coded apart for it needs the flag passed to the damage calculation.
 		if (skill_area_temp[1] != bl->id)
-			skill_attack(skill_get_type(skillid), src, src, bl,
-				skillid, skilllv, tick, flag|SD_ANIMATION);
+			skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv, tick, flag|SD_ANIMATION);
 		else 
-			skill_attack(skill_get_type(skillid), src, src, bl,
-				skillid, skilllv, tick, flag);
+			skill_attack(skill_get_type(skillid), src, src, bl, skillid, skilllv, tick, flag);
 		break;
 
 	case KN_BOWLINGBASH:
@@ -3167,16 +3163,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			for(i=0;i<c;i++){
 				if (!skill_blown(src,bl,1,(unit_getdir(src)+4)%8,0x1))
 					break; //Can't knockback
-				skill_area_temp[0]=0;
-				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), BL_CHAR,
-					src, skillid, skilllv, tick, flag|BCT_ENEMY, skill_area_sub_count);
-				if(skill_area_temp[0]>1) break; // collision
+				skill_area_temp[0] = map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), BL_CHAR, src, skillid, skilllv, tick, flag|BCT_ENEMY, skill_area_sub_count);
+				if( skill_area_temp[0] > 1 ) break; // collision
 			}
 			clif_blown(bl); //Update target pos.
 			if (i!=c) { //Splash
-				skill_area_temp[1]=bl->id;
-				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src),
-					src, skillid, skilllv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
+				skill_area_temp[1] = bl->id;
+				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src), src, skillid, skilllv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
 			}
 			//Weirdo dual-hit property, two attacks for 500%
 			skill_attack(BF_WEAPON,src,src,bl,skillid,skilllv,tick,0);
@@ -3871,8 +3864,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		skill_area_temp[1] = 0;
 		map_foreachinrange(skill_area_sub, src, skill_get_splash(skillid, skilllv), splash_target(src),
 			src,skillid,skilllv,tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
-		//Initiate 10% of your damage becomes fire element.
 		clif_skill_nodamage (src,src,skillid,skilllv,1);
+		//Initiate 10% of your damage becomes fire element.
 		sc_start4(src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skillid, skilllv));
 		if (sd) skill_blockpc_start (sd, skillid, skill_get_time(skillid, skilllv));
 		break;
@@ -4173,23 +4166,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		status_change_end(src, SC_HIDING, -1);
 		break;
 
-	case NPC_EARTHQUAKE:
 	case ASC_METEORASSAULT:
 	case GS_SPREADATTACK:
-		skill_area_temp[0] = 0;
-		if (skill_get_nk(skillid)&NK_SPLASHSPLIT)
-			map_foreachinrange(skill_area_sub, bl, 
-				skill_get_splash(skillid, skilllv), BL_CHAR,
-				src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
+	case NPC_EARTHQUAKE:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 	case NPC_HELLJUDGEMENT:
 	case NPC_PULSESTRIKE:
-		skill_area_temp[1] = bl->id;
-		//Mob casted skills should also hit skills.
-		map_foreachinrange(skill_area_sub, bl,
-			skill_get_splash(skillid, skilllv), splash_target(src),
-			src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
-			skill_castend_damage_id);
+		skill_castend_damage_id(src, src, skillid, skilllv, tick, flag);
 		break;
 
 	case KN_BRANDISHSPEAR:
@@ -5722,13 +5705,22 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if (hd)
 			skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv));
 		break;
+
 	case NPC_DRAGONFEAR:
 		if (flag&1) {
 			const int sc[] = { SC_STUN, SC_CURSE, SC_SILENCE, SC_BLEEDING };
 			i = rand()%ARRAYLENGTH(sc);
 			sc_start(bl,sc[i],100,skilllv,skill_get_time2(skillid,i+1));
-			break;
+		} else {
+			// hacked-together packet (not correct) that shows the animation 
+			clif_skill_damage(src, src, tick, 1, 1, -1, 0, skillid, skilllv, 6);
+			map_foreachinrange(skill_area_sub, bl,
+				skill_get_splash(skillid, skilllv),BL_CHAR,
+				src,skillid,skilllv,tick, flag|BCT_ENEMY|1,
+				skill_castend_nodamage_id);
 		}
+		break;
+		
 	case NPC_WIDEBLEEDING:
 	case NPC_WIDECONFUSE:
 	case NPC_WIDECURSE:
