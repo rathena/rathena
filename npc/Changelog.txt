@@ -1,8 +1,9 @@
 Date		Added
 ======
 2007/10/16
+	* Rev. 11496 Missed one. :> And thanks for Jetvictor for pointing it out. bugreport:239 [L0ne_W0lf]
 	* Rev. 11495 Added a return at the end of several scripts. [L0ne_W0lf]
-	  Should deal with errors being shown in due to a recent commit by FlavioJS
+	  Should deal with errors being shown due to a recent commit by FlavioJS
 2007/10/14
 	* Rev. 11473 Changed "Marthilda" to "Mathilda" in the Aco and priest Job quests. [L0ne_W0lf]
 	* Rev. 11472 Updated Merchant quest skill NPCs. [L0ne_W0lf]
