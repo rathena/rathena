@@ -461,7 +461,7 @@ static void script_reportdata(struct script_data* data)
 		else
 		{// ???
 			ShowDebug("Data: reference name='%s' type=%s\n", reference_getname(data), script_op2name(data->type));
-			ShowDebug("Please report this!!! - str_data.type=%s\n", script_op2name(str_data[reference_getid(data)].type);
+			ShowDebug("Please report this!!! - str_data.type=%s\n", script_op2name(str_data[reference_getid(data)].type));
 		}
 		break;
 	case C_POS:// label
