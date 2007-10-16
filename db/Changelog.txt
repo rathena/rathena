@@ -33,6 +33,8 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/16
+	* Fixed used levels of NPC_CRITICALWOUND [Playtester]
 10/15
 	* Reverted arrow crafting as there's no evidence that it really has been changed [Playtester]
 	* Rev. 11489 Readded Sonic Acceleration to the skill DB. -_- [L0ne_W0lf]

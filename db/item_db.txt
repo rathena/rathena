@@ -612,7 +612,7 @@
 1265,Bloody_Roar,Bloody Roar,4,,10,1000,120,,1,0,0x00001000,7,2,34,4,75,1,16,{ bonus bIgnoreDefRace,RC_DemiHuman; bonus bFlee,-160; bonus bFlee2,-160; bonus bHPrecovRate,-100; bonus bSPrecovRate,-100; },{},{}
 1266,Infiltrator_,Infiltrator,4,57000,,1500,140,,1,1,0x00001000,7,2,34,4,75,1,16,{ bonus2 bAddRace,RC_DemiHuman,50; bonus bDef,3; bonus bFlee,5; bonus bFlee2,2; },{},{}
 1267,Infiltrator_C,Refined Infiltrator,4,,,0,189,,1,0,0x00001000,7,2,34,4,1,0,16,{ bonus2 bAddRace,RC_DemiHuman,70; bonus bDef,3; bonus bFlee,5; bonus bFlee2,2; bonus bAspdRate,5; },{},{}
-1268,Ogre's_Toenail,Ogre's Toenail,4,,10,1450,160,,1,1,0x00001000,2,2,34,4,55,1,16,{ if(getrefine() >= 9){ bonus3 bAutoSpell,673,4,10; } else bonus3 bAutoSpell,673,2,10; },{},{}
+1268,Ogre's_Toenail,Ogre's Toenail,4,,10,1450,160,,1,1,0x00001000,2,2,34,4,55,1,16,{ if(getrefine() >= 9){ bonus3 bAutoSpell,673,2,10; } else bonus3 bAutoSpell,673,1,10; },{},{}
 1269,Inverse_Scare,Inverse Scare,4,,10,1500,140,,1,0,0x00001000,2,2,34,4,55,1,16,{ bonus bAtkEle,Ele_Holy; if(getrefine() >= 9){ bonus3 bAutoSpell,659,2,10; } else bonus3 bAutoSpell,659,1,10; },{},{}
 1270,Drill_Katar,Drill Katar,4,,10,1400,110,,1,1,0x00001000,2,2,34,4,55,1,16,{ bonus bHit,30; bonus3 bAutoSpell,476,5,50; },{},{}
 1271,Bloody_Blade,Bloody Blade,4,,10,1700,120,,1,2,0x00001000,2,2,34,4,55,1,16,{ if(getrefine() >= 9){ bonus3 bAutoSpell,665,2,10; } else bonus3 bAutoSpell,665,1,10; },{},{}

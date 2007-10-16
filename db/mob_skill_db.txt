@@ -477,7 +477,7 @@
 1098,Anubis@NPC_DARKTHUNDER,attack,341,5,1000,1500,10000,no,target,always,0,,,,,,
 1098,Anubis@MG_THUNDERSTORM,attack,21,5,1000,1500,10000,no,target,always,0,,,,,,
 1098,Anubis@AS_SONICBLOW,attack,136,10,1000,0,10000,no,target,always,0,,,,,,
-1098,Anubis@NPC_CRITICALWOUND,attack,673,4,1000,0,10000,no,target,always,0,,,,,,
+1098,Anubis@NPC_CRITICALWOUND,attack,673,2,1000,0,10000,no,target,always,0,,,,,,
 1098,Anubis@NPC_MAGICALATTACK,attack,192,1,1000,700,10000,no,target,always,0,,,,,,
 1099,Argiope@AS_VENOMDUST,attack,140,1,500,1500,5000,no,target,always,0,,,,,,
 1099,Argiope@NPC_POISON,attack,176,3,500,800,5000,no,target,always,0,,,,,,
@@ -4514,13 +4514,13 @@
 1867,Banshee@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1867,Banshee@NPC_DARKSTRIKE,chase,340,2,5000,0,5000,yes,target,always,0,,,,,,
 1867,Banshee@NPC_DARKSTRIKE,attack,340,2,2000,0,5000,yes,target,always,0,,,,,,
-1867,Banshee@NPC_CRITICALWOUND,attack,673,4,1000,0,10000,no,target,always,0,,,,,,
+1867,Banshee@NPC_CRITICALWOUND,attack,673,2,1000,0,10000,no,target,always,0,,,,,,
 1867,Banshee@NPC_CURSEATTACK,attack,181,5,500,800,5000,no,target,always,0,,,,,,29
 1867,Banshee@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,26
 1867,Banshee@NPC_EVILLAND,attack,670,10,100,1000,30000,yes,self,always,0,,,,,,
 1868,Banshee@NPC_DARKSTRIKE,chase,340,2,5000,0,5000,yes,target,always,0,,,,,,
 1868,Banshee@NPC_DARKSTRIKE,attack,340,2,2000,0,5000,yes,target,always,0,,,,,,
-1868,Banshee@NPC_CRITICALWOUND,attack,673,4,1000,0,10000,no,target,always,0,,,,,,
+1868,Banshee@NPC_CRITICALWOUND,attack,673,2,1000,0,10000,no,target,always,0,,,,,,
 1868,Banshee@NPC_CURSEATTACK,attack,181,5,500,800,5000,no,target,always,0,,,,,,29
 1868,Banshee@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,0,,,,,,26
 1868,Banshee@NPC_EVILLAND,attack,670,10,100,1000,30000,yes,self,always,0,,,,,,
