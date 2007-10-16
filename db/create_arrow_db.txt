@@ -228,13 +228,13 @@
 7164,1758,30
 //Leopard Claw --> 10 Sharp Arrows
 7172,1764,10
-//Armor Piece of Dullahan --> 150 Arrows of Shadow
+//Armor Piece of Dullahan --> 150 Shadow Arrows
 7210,1767,150
-//Tangled Chain --> 50 Steel Arrows, 50 Arrows of Shadow
+//Tangled Chain --> 50 Steel Arrows, 50 Shadow Arrows
 7221,1753,50,1767,50
 //Cat's Eye Stone --> 200 Arrows of Wind
 7263,1755,200
-//Dark Crystal Fragment --> 30 Cursed Arrows, 50 Arrows of Shadow
+//Dark Crystal Fragment --> 30 Cursed Arrows, 50 Shadow Arrows
 7315,1761,30,1767,50
 //Insect Leg --> 10 Sharp Arrows, 50 Poison Arrows
 7316,1764,10,1763,50
@@ -246,7 +246,7 @@
 7321,1760,10,1768,30
 //Battered Kettle --> 50 Steel Arrows
 7323,1753,50
-//Will of the Darkness --> 30 Cursed Arrows, 30 Poison Arrows, 50 Arrows of Shadow
+//Will of the Darkness --> 30 Cursed Arrows, 30 Poison Arrows, 50 Shadow Arrows
 7340,1761,30,1763,30,1767,50
 //Golden Ornament --> 200 Silver Arrows, 300 Holy Arrows
 7435,1751,200,1772,300
@@ -260,21 +260,21 @@
 7447,1752,100,1760,80
 //Yellow Bijou --> 50 Silver Arrows, 50 Immaterial Arrows, 80 Sleep Arrows
 7448,1751,50,1757,50,1768,80
-//Skeletal Armor Piece --> 500 Immaterial Arrows, 200 Arrows of Shadow, 100 Oridecon Arrows
+//Skeletal Armor Piece --> 500 Immaterial Arrows, 200 Shadow Arrows, 100 Oridecon Arrows
 7450,1757,500,1767,200,1765,100
 //Fire Dragon Scale --> 300 Fire Arrows, 300 Stun Arrows
 7451,1752,300,1758,300
 //Valhalla's Flower --> 600 Immaterial Arrows, 600 Holy Arrows, 600 Sharp Arrows
 7510,1757,600,1772,600,1764,600
-//Rune of Darkness --> 300 Arrows of Shadow, 150 Flash Arrows
+//Rune of Darkness --> 300 Shadow Arrows, 150 Flash Arrows
 7511,1767,300,1760,150
 //Ice Heart --> 50 Crystal Arrows, 50 Frozen Arrows
 7561,1754,50,1759,50
 //Ice Scale --> 150 Crystal Arrows, 400 Frozen Arrows, 200 Mute Arrows
 7562,1754,150,1759,400,1769,200
-//Will of the Red Darkness --> 200 Cursed Arrows, 200 Poison Arrows, 100 Arrows of Shadow
+//Will of the Red Darkness --> 200 Cursed Arrows, 200 Poison Arrows, 100 Shadow Arrows
 7566,1761,200,1763,200,1767,100
-//Crackling Skull --> 50 Arrows of Shadow, 50 Cursed Arrows
+//Crackling Skull --> 50 Shadow Arrows, 50 Cursed Arrows
 7752,1767,50,1761,50
 //Broken Farm Tool --> 50 Rusty Arrows, 10 Iron Arrows, 20 Cursed Arrows
 7753,1762,50,1770,10,1761,20
