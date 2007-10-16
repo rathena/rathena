@@ -461,6 +461,7 @@ static void script_reportdata(struct script_data* data)
 		else
 		{// ???
 			ShowDebug("Data: reference name='%s' type=%s\n", reference_getname(data), script_op2name(data->type));
+			ShowDebug("Please report this!!! - str_data.type=%s\n", script_op2name(str_data[reference_getid(data)].type);
 		}
 		break;
 	case C_POS:// label
@@ -740,7 +741,7 @@ const char* skip_space(const char* p)
 			{
 				if( *p == '\0' )
 					disp_error_message("script:skip_space: end of file while parsing block comment. expected "CL_BOLD"*/"CL_NORM, p);
-				if( *p == '*' || p[1] == '/' )
+				if( *p == '*' && p[1] == '/' )
 				{// end of block comment
 					p += 2;
 					break;
@@ -1897,6 +1898,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	int i;
 	struct script_code *code;
 	static int first=1;
+	char end;
 
 	if( src == NULL )
 		return NULL;// empty script
@@ -1961,6 +1963,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 			script_buf  = NULL;
 			return NULL;
 		}
+		end = '\0';
 	}
 	else
 	{// requires brackets around the script
@@ -1975,11 +1978,13 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 			script_buf  = NULL;
 			return NULL;
 		}
+		end = '}';
 	}
 
-	while (*p && (*p != '}' || syntax.curly_count != 0) )
+	while( syntax.curly_count != 0 || *p != end )
 	{
-		p=skip_space(p);
+		if( *p == '\0' )
+			disp_error_message("unexpected end of script",p);
 		// labelÇæÇØì¡éÍèàóù
 		tmpp=skip_space(skip_word(p));
 		if(*tmpp==':' && !(!strncasecmp(p,"default:",8) && p + 7 == tmpp)){
@@ -1988,6 +1993,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 			if( parse_options&SCRIPT_USE_LABEL_DB )
 				strdb_put(scriptlabel_db, GETSTRING(str_data[i].str), (void*)script_pos);
 			p=tmpp+1;
+			p=skip_space(p);
 			continue;
 		}
 
