@@ -3126,8 +3126,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 			// if skill damage should be split among targets, count them
 			//SD_LEVEL -> Forced splash damage for Auto Blitz-Beat -> count targets
+			//special case: Venom Splasher uses a different range for searching than for splashing
 			if( flag&SD_LEVEL || skill_get_nk(skillid)&NK_SPLASHSPLIT )
-				skill_area_temp[0] = map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), BL_CHAR, src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
+				skill_area_temp[0] = map_foreachinrange(skill_area_sub, bl, (skillid == AS_SPLASHER)?1:skill_get_splash(skillid, skilllv), BL_CHAR, src, skillid, skilllv, tick, BCT_ENEMY, skill_area_sub_count);
 
 			// recursive invocation of skill_castend_damage_id() with flag|1
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skillid, skilllv), splash_target(src), src, skillid, skilllv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
@@ -5256,8 +5257,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			return 1;
 		}
 		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start4(bl,type,100,
-				skilllv,skillid,src->id,skill_get_time(skillid,skilllv),1000));
+			sc_start4(bl,type,100,skilllv,skillid,src->id,skill_get_time(skillid,skilllv),1000));
+		if (sd) skill_blockpc_start (sd, skillid, skill_get_time(skillid, skilllv)+3000);
 		break;
 
 	case PF_MINDBREAKER:
@@ -5938,9 +5939,9 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 		map_freeblock_unlock();
 		return 1;
 	} while(0);
+
 	//Skill failed.
-	if (ud->skillid == MO_EXTREMITYFIST && sd &&
-		!(sc && sc->count && sc->data[SC_FOGWALL].timer != -1))
+	if (ud->skillid == MO_EXTREMITYFIST && sd && !(sc && sc->count && sc->data[SC_FOGWALL].timer != -1))
   	{	//When Asura fails... (except when it fails from Fog of Wall)
 		//Consume SP/spheres
 		skill_check_condition(sd,ud->skillid, ud->skilllv,1);

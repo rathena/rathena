@@ -1464,9 +1464,9 @@ static struct Damage battle_calc_weapon_attack(
 					skillratio += 100+100*skill_lv;
 					break;
 				case AS_SPLASHER:
-					i = 400+50*skill_lv;
-					if (wflag>1) i /= 4; // FIXME: Should be 25% of damage inflicted to target, not 25% of skillratio bonus
-					skillratio += i;
+					skillratio += 400+50*skill_lv;
+					if(sd)
+						skillratio += 30 * pc_checkskill(sd,AS_POISONREACT);
 					break;
 				case ASC_BREAKER:
 					skillratio += 100*skill_lv-100;

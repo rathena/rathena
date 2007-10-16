@@ -3712,9 +3712,6 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 	}
 }
 
-//Modifies the type of damage according to status changes [Skotlex]
-#define clif_calc_delay(type,delay) (type==1||type==4||type==0x0a)?type:(delay==0?9:type)
-
 /*==========================================
  * Estimates walk delay based on the damage criteria. [Skotlex]
  *------------------------------------------*/
@@ -3758,10 +3755,10 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 	nullpo_retr(0, src);
 	nullpo_retr(0, dst);
 
-	type = clif_calc_delay(type, ddelay); //Type defaults to 0 for normal attacks.
-
 	sc = status_get_sc(dst);
 	if(sc && sc->count) {
+		if(type != 4 && dst->type == BL_PC && sc->data[SC_ENDURE].timer != -1 && !map_flag_gvg(dst->m))
+			type = 9;
 		if(sc->data[SC_HALLUCINATION].timer != -1) {
 			if(damage > 0) damage = damage*(5+sc->data[SC_HALLUCINATION].val1) + rand()%100;
 			if(damage2 > 0) damage2 = damage2*(5+sc->data[SC_HALLUCINATION].val1) + rand()%100;
@@ -4329,11 +4326,10 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int
 	nullpo_retr(0, src);
 	nullpo_retr(0, dst);
 
-	if( type == 0 ) type = skill_get_hit(skill_id);
-	type = clif_calc_delay(type, ddelay);
 	sc = status_get_sc(dst);
-
 	if(sc && sc->count) {
+		if(type != 4 && dst->type == BL_PC && sc->data[SC_ENDURE].timer != -1 && !map_flag_gvg(dst->m))
+			type = 9;
 		if(sc->data[SC_HALLUCINATION].timer != -1 && damage > 0)
 			damage = damage*(5+sc->data[SC_HALLUCINATION].val1) + rand()%100;
 	}
