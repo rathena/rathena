@@ -245,7 +245,7 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
  * &1: Apply the summon success chance found in the list (otherwise get any monster from the db)
  * &2: Apply a monster check level.
  * &4: Selected monster should not be a boss type
- * &8: Selected monster must give base exp.
+ * &8: Selected monster must have normal spawn.
  * lv: Mob level to check against
  *------------------------------------------*/
 int mob_get_random_id(int type, int flag, int lv)
@@ -268,7 +268,7 @@ int mob_get_random_id(int type, int flag, int lv)
 		(flag&1 && mob->summonper[type] <= rand() % 1000000) ||
 		(flag&2 && lv < mob->lv) ||
 		(flag&4 && mob->status.mode&MD_BOSS) ||
-		(flag&8 && mob->base_exp < 1)
+		(flag&8 && mob->spawn[0].qty < 1)
 	) && (i++) < MAX_MOB_DB);
 
 	if(i >= MAX_MOB_DB)
