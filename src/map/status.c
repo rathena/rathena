@@ -5788,7 +5788,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				val2 = rand()%ELE_MAX;
 			break;
 		case SC_CRITICALWOUND:
-			val2 = 10*val1; //Heal effectiveness decrease
+			val2 = 20*val1; //Heal effectiveness decrease
 			break;
 		case SC_MAGICMIRROR:
 		case SC_SLOWCAST:
