@@ -1,28 +1,19 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <sys/types.h>
-
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
 #include "timer.h"
 
-#ifdef WIN32
-//#define __USE_W32_SOCKETS
-// Well, this won't last another 30++ years (where conversion will truncate).
-//#define _USE_32BIT_TIME_T	// use 32 bit time variables on 64bit windows
-//#include <windows.h>
-#include <winsock2.h>
-#else
-#include <sys/socket.h>
-#include <sys/time.h>
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+
+#ifdef WIN32
+#include <windows.h> // GetTickCount()
+#endif
 
 // タイマー間隔の最小値。モンスターの大量召還時、多数のクライアント接続時に
 // サーバーが反応しなくなる場合は、TIMER_MIN_INTERVAL を増やしてください。
@@ -47,20 +38,6 @@ static int free_timer_list_pos	= 0;
 static int timer_heap_num = 0;
 static int timer_heap_max = 0;
 static int* timer_heap = NULL;
-// searches for the target tick's position and stores it in pos (binary search)
-#define HEAP_SEARCH(target,from,to,pos) \
-	do { \
-		int max,pivot; \
-		pos = from; \
-		max = to; \
-		while (pos < max) { \
-			pivot = (pos + max) / 2; \
-			if (DIFF_TICK(target, timer_data[timer_heap[pivot]].tick) < 0) \
-				pos = pivot + 1; \
-			else \
-				max = pivot; \
-		} \
-	} while(0)
 
 // for debug
 struct timer_func_list {
@@ -70,6 +47,7 @@ struct timer_func_list {
 };
 static struct timer_func_list* tfl_root = NULL;
 
+// server startup time
 time_t start_time;
 
 /// Sets the name of a timer function.
@@ -110,40 +88,8 @@ char* search_timer_func_list(TimerFunc func)
  * 	Get tick time
  *----------------------------*/
 
-//////////////////////////////////////////////////////////////////////////
-#if defined(TICK_CACHE) && TICK_CACHE > 1
-//////////////////////////////////////////////////////////////////////////
-// tick is cached for TICK_CACHE calls
-static unsigned int gettick_cache;
-static int gettick_count;
-
-unsigned int gettick_nocache(void)
-{
-#ifdef WIN32
-	gettick_count = TICK_CACHE;
-	return gettick_cache = GetTickCount();
-#else
-	struct timeval tval;
-
-	gettimeofday(&tval, NULL);
-	gettick_count = TICK_CACHE;
-
-	return gettick_cache = tval.tv_sec * 1000 + tval.tv_usec / 1000;
-#endif
-}
-
-unsigned int gettick(void)
-{
-	if (--gettick_count < 0)
-		return gettick_nocache();
-
-	return gettick_cache;
-}
-//////////////////////////////
-#else
-//////////////////////////////
-// tick doesn't get cached
-unsigned int gettick(void)
+/// platform-abstracted tick retrieval
+static unsigned int tick(void)
 {
 #ifdef WIN32
 	return GetTickCount();
@@ -153,6 +99,38 @@ unsigned int gettick(void)
 	return tval.tv_sec * 1000 + tval.tv_usec / 1000;
 #endif
 }
+
+//////////////////////////////////////////////////////////////////////////
+#if defined(TICK_CACHE) && TICK_CACHE > 1
+//////////////////////////////////////////////////////////////////////////
+// tick is cached for TICK_CACHE calls
+static unsigned int gettick_cache;
+static int gettick_count = 1;
+
+unsigned int gettick_nocache(void)
+{
+	gettick_count = TICK_CACHE;
+	gettick_cache = tick();
+	return gettick_cache;
+}
+
+unsigned int gettick(void)
+{
+	return ( --gettick_count == 0 ) ? gettick_nocache() : gettick_cache;
+}
+//////////////////////////////
+#else
+//////////////////////////////
+// tick doesn't get cached
+unsigned int gettick_nocache(void)
+{
+	return tick();
+}
+
+unsigned int gettick(void)
+{
+	return tick();
+}
 //////////////////////////////////////////////////////////////////////////
 #endif
 //////////////////////////////////////////////////////////////////////////
@@ -160,12 +138,26 @@ unsigned int gettick(void)
 /*======================================
  * 	CORE : Timer Heap
  *--------------------------------------*/
+
+// searches for the target tick's position and stores it in pos (binary search)
+#define HEAP_SEARCH(target,from,to,pos) \
+	do { \
+		int max,pivot; \
+		pos = from; \
+		max = to; \
+		while (pos < max) { \
+			pivot = (pos + max) / 2; \
+			if (DIFF_TICK(target, timer_data[timer_heap[pivot]].tick) < 0) \
+				pos = pivot + 1; \
+			else \
+				max = pivot; \
+		} \
+	} while(0)
+
 /// Adds a timer to the timer_heap
 static void push_timer_heap(int tid)
 {
-	unsigned int tick;
 	int pos;
-	int i;
 
 	// check number of element
 	if (timer_heap_num >= timer_heap_max) {
@@ -180,37 +172,16 @@ static void push_timer_heap(int tid)
 	}
 
 	// do a sorting from higher to lower
-	tick = timer_data[tid].tick; // speed up
-	// with less than 4 values, it's speeder to use simple loop
-	if (timer_heap_num < 4) {
-		for(i = timer_heap_num; i > 0; i--)
-		{
-//			if (j < timer_data[timer_heap[i - 1]].tick) //Plain comparisons break on bound looping timers. [Skotlex]
-			if (DIFF_TICK(tick, timer_data[timer_heap[i - 1]].tick) < 0)
-				break;
-			else
-				timer_heap[i] = timer_heap[i - 1];
-		}
-		timer_heap[i] = tid;
-	// searching by dichotomy (binary search)
-	} else {
-		// if lower actual item is higher than new
-//		if (j < timer_data[timer_heap[timer_heap_num - 1]].tick) //Plain comparisons break on bound looping timers. [Skotlex]
-		if (DIFF_TICK(tick, timer_data[timer_heap[timer_heap_num - 1]].tick) < 0)
-			timer_heap[timer_heap_num] = tid;
-		else {
-			// searching position
-			HEAP_SEARCH(tick,0,timer_heap_num-1,pos);
-			// move elements - do loop if there are a little number of elements to move
-			if (timer_heap_num - pos < 5) {
-				for(i = timer_heap_num; i > pos; i--)
-					timer_heap[i] = timer_heap[i - 1];
-			// move elements - else use memmove (speeder for a lot of elements)
-			} else
-				memmove(&timer_heap[pos + 1], &timer_heap[pos], sizeof(int) * (timer_heap_num - pos));
-			// save new element
-			timer_heap[pos] = tid;
-		}
+	if( timer_heap_num == 0 || DIFF_TICK(timer_data[tid].tick, timer_data[timer_heap[timer_heap_num - 1]].tick) < 0 )
+		timer_heap[timer_heap_num] = tid; // if lower actual item is higher than new
+	else
+	{
+		// searching position
+		HEAP_SEARCH(timer_data[tid].tick,0,timer_heap_num-1,pos);
+		// move elements
+		memmove(&timer_heap[pos + 1], &timer_heap[pos], sizeof(int) * (timer_heap_num - pos));
+		// save new element
+		timer_heap[pos] = tid;
 	}
 
 	timer_heap_num++;
@@ -327,9 +298,6 @@ int settick_timer(int tid, unsigned int tick)
 	old_tick = timer_data[tid].tick;
 	if( old_tick == tick )
 		return tick;
-
-	//FIXME: This search is not all that effective... there doesn't seems to be a better way to locate an element in the heap.
-	//for(i = timer_heap_num-1; i >= 0 && timer_heap[i] != tid; i--);
 
 	// search old_tick position
 	HEAP_SEARCH(old_tick,0,timer_heap_num-1,old_pos);

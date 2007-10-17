@@ -8,18 +8,11 @@
 #include "../common/cbasetypes.h"
 #endif
 
-#ifdef WIN32
-/* We need winsock lib to have timeval struct - windows is weirdo */
-//#define __USE_W32_SOCKETS
-//#include <windows.h>
-#include <winsock2.h>
-#endif
-
 #define BASE_TICK 5
 
-#define TIMER_ONCE_AUTODEL 0x1
-#define TIMER_INTERVAL 0x2
-#define TIMER_REMOVE_HEAP 0x10
+#define TIMER_ONCE_AUTODEL 0x01
+#define TIMER_INTERVAL     0x02
+#define TIMER_REMOVE_HEAP  0x10
 
 #define DIFF_TICK(a,b) ((int)((a)-(b)))
 
@@ -41,12 +34,8 @@ struct TimerData {
 
 // Function prototype declaration
 
-#if defined(TICK_CACHE) && TICK_CACHE > 1
-unsigned int gettick_nocache(void);
-#else
-#define gettick_nocache gettick
-#endif
 unsigned int gettick(void);
+unsigned int gettick_nocache(void);
 
 int add_timer(unsigned int,TimerFunc f,int,int);
 int add_timer_interval(unsigned int tick, TimerFunc func, int id, int data, int interval);
