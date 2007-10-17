@@ -722,9 +722,10 @@ void set_label(int l,int pos, const char* script_pos)
 }
 
 /// Skips spaces and/or comments.
-static
 const char* skip_space(const char* p)
 {
+	if( p == NULL )
+		return NULL;
 	for(;;)
 	{
 		while( ISSPACE(*p) )
@@ -740,7 +741,7 @@ const char* skip_space(const char* p)
 			for(;;)
 			{
 				if( *p == '\0' )
-					disp_error_message("script:skip_space: end of file while parsing block comment. expected "CL_BOLD"*/"CL_NORM, p);
+					return p;//disp_error_message("script:skip_space: end of file while parsing block comment. expected "CL_BOLD"*/"CL_NORM, p);
 				if( *p == '*' && p[1] == '/' )
 				{// end of block comment
 					p += 2;
@@ -1896,7 +1897,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 {
 	const char *p,*tmpp;
 	int i;
-	struct script_code *code;
+	struct script_code* code = NULL;
 	static int first=1;
 	char end;
 
@@ -1955,8 +1956,8 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	p=skip_space(p);
 	if( options&SCRIPT_IGNORE_EXTERNAL_BRACKETS )
 	{// does not require brackets around the script
-		if( *p == '\0' )
-		{// empty script
+		if( *p == '\0' && !(options&SCRIPT_RETURN_EMPTY_SCRIPT) )
+		{// empty script and can return NULL
 			aFree( script_buf );
 			script_pos  = 0;
 			script_size = 0;
@@ -1969,9 +1970,9 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	{// requires brackets around the script
 		if( *p != '{' )
 			disp_error_message("not found '{'",p);
-		p = skip_space(++p);
-		if( *p == '}' )
-		{// empty script
+		p = skip_space(p+1);
+		if( *p == '}' && !(options&SCRIPT_RETURN_EMPTY_SCRIPT) )
+		{// empty script and can return NULL
 			aFree( script_buf );
 			script_pos  = 0;
 			script_size = 0;
@@ -3586,6 +3587,7 @@ static int do_final_userfunc_sub (DBKey key,void *data,va_list ap)
 	if(code){
 		script_free_vars( &code->script_vars );
 		aFree( code->script_buf );
+		aFree( code );
 	}
 	return 0;
 }
@@ -3683,7 +3685,7 @@ int do_init_script()
 {
 	mapreg_db= db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
 	mapregstr_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
-	userfunc_db=db_alloc(__FILE__,__LINE__,DB_STRING,DB_OPT_RELEASE_BOTH,50);
+	userfunc_db=db_alloc(__FILE__,__LINE__,DB_STRING,DB_OPT_DUP_KEY,0);
 	scriptlabel_db=db_alloc(__FILE__,__LINE__,DB_STRING,DB_OPT_DUP_KEY|DB_OPT_ALLOW_NULL_DATA,50);
 	
 	script_load_mapreg();

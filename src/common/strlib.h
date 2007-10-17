@@ -37,6 +37,10 @@ char* safestrncpy(char* dst, const char* src, size_t n);
 /// doesn't crash on null pointer
 size_t safestrnlen(const char* string, size_t maxlen);
 
+/// Returns the line of the target position in the string.
+/// Lines start at 1.
+int strline(const char* str, size_t pos);
+
 /// StringBuf - dynamic string
 struct StringBuf
 {

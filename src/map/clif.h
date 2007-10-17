@@ -270,7 +270,7 @@ void clif_vendingreport(struct map_session_data* sd, int index, int amount);
 int clif_movetoattack(struct map_session_data *sd,struct block_list *bl);
 
 // party
-int clif_party_created(struct map_session_data *sd,int flag);
+int clif_party_created(struct map_session_data *sd,int result);
 int clif_party_member_info(struct party_data *p, struct map_session_data *sd);
 int clif_party_info(struct party_data *p, struct map_session_data *sd);
 int clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd);

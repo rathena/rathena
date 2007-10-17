@@ -850,7 +850,7 @@ struct npc_data {
 			struct npc_label_list *label_list;
 			int src_id;
 		} scr;
-		struct npc_item_list shop_item[1];
+		struct npc_item_list shop_item[1];// dynamic array, allocated with extra entries (last one has nameid 0)
 		struct {
 			short xs,ys;
 			short x,y;

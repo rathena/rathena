@@ -316,6 +316,26 @@ size_t safestrnlen(const char* string, size_t maxlen)
 	return ( string != NULL ) ? strnlen(string, maxlen) : 0;
 }
 
+/// Returns the line of the target position in the string.
+/// Lines start at 1.
+int strline(const char* str, size_t pos)
+{
+	const char* target;
+	int line;
+
+	if( str == NULL || pos == 0 )
+		return 1;
+
+	target = str+pos;
+	for( line = 1; ; ++line )
+	{
+		str = strchr(str, '\n');
+		if( str == NULL || target <= str )
+			break;// found target line
+		++str;// skip newline
+	}
+	return line;
+}
 
 /////////////////////////////////////////////////////////////////////
 // StringBuf - dynamic string

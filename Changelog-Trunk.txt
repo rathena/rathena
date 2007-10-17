@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/10/17
+	* Reworked the parsing at npc.c.
+	- Fixes npc.c discarding the '}' at the end of file, when there is no 
+	  newline. (uncovered as a side-effect of r11487)
+	* Empty script functions always have code now (won't report as missing 
+	  when you try to call them).
+	* Changed userfunc_db to not limit the name to 50 characters. [FlavioJS]
 	* Ground skill now can trigger every 20ms [Playtester]
 	- Firewall, Fire Formation and Heat now can do 50 hits a second
 	- this was proven to be official behavior, but it will raise CPU usage

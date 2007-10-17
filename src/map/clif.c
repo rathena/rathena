@@ -5492,10 +5492,15 @@ void clif_vendingreport(struct map_session_data* sd, int index, int amount)
 	WFIFOW(fd,4) = amount;
 	WFIFOSET(fd,packet_len(0x137));
 }
-/*==========================================
- * パーティ作成完了
- *------------------------------------------*/
-int clif_party_created(struct map_session_data *sd,int flag)
+
+/// Result of organizing a party.
+/// S 00FA <result>.B
+///
+/// result=0 : opens party window and shows MsgStringTable[77]="party successfully organized"
+/// result=1 : MsgStringTable[78]="party name already exists"
+/// result=2 : MsgStringTable[79]="already in a party"
+/// result=other : nothing
+int clif_party_created(struct map_session_data *sd,int result)
 {
 	int fd;
 
@@ -5504,7 +5509,7 @@ int clif_party_created(struct map_session_data *sd,int flag)
 	fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0xfa));
 	WFIFOW(fd,0)=0xfa;
-	WFIFOB(fd,2)=flag;
+	WFIFOB(fd,2)=result;
 	WFIFOSET(fd,packet_len(0xfa));
 	return 0;
 }
