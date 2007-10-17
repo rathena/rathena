@@ -121,7 +121,7 @@ int party_created(int account_id,int char_id,int fail,int party_id,char *name)
 	sd->status.party_id=party_id;
 	if(idb_get(party_db,party_id)!=NULL){
 		ShowFatalError("party: id already exists!\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	p=(struct party_data *)aCalloc(1,sizeof(struct party_data));
 	p->party.party_id=party_id;

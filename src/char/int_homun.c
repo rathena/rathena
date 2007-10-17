@@ -127,7 +127,7 @@ int inter_homun_init()
 		p = (struct s_homunculus*)aCalloc(sizeof(struct s_homunculus), 1);
 		if(p==NULL){
 			ShowFatalError("int_homun: out of memory!\n");
-			exit(0);
+			exit(EXIT_FAILURE);
 		}
 		if(inter_homun_fromstr(line,p)==0 && p->hom_id>0){
 			if( p->hom_id >= homun_newid)

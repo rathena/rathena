@@ -118,7 +118,7 @@ int inter_accreg_init(void) {
 		reg = (struct accreg*)aCalloc(sizeof(struct accreg), 1);
 		if (reg == NULL) {
 			ShowFatalError("inter: accreg: out of memory!\n");
-			exit(0);
+			exit(EXIT_FAILURE);
 		}
 		if (inter_accreg_fromstr(line, reg) == 0 && reg->account_id > 0) {
 			idb_put(accreg_db, reg->account_id, reg);

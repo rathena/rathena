@@ -194,7 +194,7 @@ int inter_party_init() {
 		p = (struct party_data*)aCalloc(sizeof(struct party_data), 1);
 		if (p == NULL){
 			ShowFatalError("int_party: out of memory!\n");
-			exit(0);
+			exit(EXIT_FAILURE);
 		}
 		memset(p, 0, sizeof(struct party_data));
 		if (inter_party_fromstr(line, &p->party) == 0 && p->party.party_id > 0) {

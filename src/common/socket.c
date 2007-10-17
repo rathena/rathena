@@ -297,7 +297,7 @@ int make_listen_bind(uint32 ip, uint16 port)
 
 	if (fd == INVALID_SOCKET) {
 		ShowError("socket() creation failed (code %d)!\n", s_errno);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	if ( fd >= FD_SETSIZE ) { //Not enough capacity for this socket
@@ -316,17 +316,17 @@ int make_listen_bind(uint32 ip, uint16 port)
 	result = bind(fd, (struct sockaddr*)&server_address, sizeof(server_address));
 	if( result == SOCKET_ERROR ) {
 		ShowError("bind failed (socket %d, code %d)!\n", fd, s_errno);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	result = listen( fd, 5 );
 	if( result == SOCKET_ERROR ) {
 		ShowError("listen failed (socket %d, code %d)!\n", fd, s_errno);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	if ( fd < 0 || fd > FD_SETSIZE ) 
 	{ //Crazy error that can happen in Windows? (info from Freya)
 		ShowFatalError("listen() returned invalid fd %d!\n",fd);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	if(fd_max <= fd) fd_max = fd + 1;
@@ -469,7 +469,7 @@ int RFIFOSKIP(int fd, size_t len)
 
 	if ( s->rdata_size < s->rdata_pos + len ) {
 		//fprintf(stderr,"too many skip\n");
-		//exit(1);
+		//exit(EXIT_FAILURE);
 		//better than a COMPLETE program abort // TEST! :)
 		ShowError("too many skip (%d) now skipped: %d (FD: %d)\n", len, RFIFOREST(fd), fd);
 		len = RFIFOREST(fd);
@@ -494,7 +494,7 @@ int WFIFOSET(int fd, size_t len)
 			fd, CONVIP(ip), len, s->wdata_size, s->max_wdata);
 		ShowDebug("Likely command that caused it: 0x%x\n", (*(unsigned short*)(s->wdata + s->wdata_size)));
 		// no other chance, make a better fifo model
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	s->wdata_size += len;

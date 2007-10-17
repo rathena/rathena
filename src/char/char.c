@@ -1003,7 +1003,7 @@ int mmo_char_init(void)
 			if (!char_dat) {
 				ShowFatalError("Out of memory: mmo_char_init (realloc of char_dat).\n");
 				char_log("Out of memory: mmo_char_init (realloc of char_dat).\n");
-				exit(1);
+				exit(EXIT_FAILURE);
 			}
 		}
 
@@ -1227,7 +1227,7 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 		if (!char_dat) {
 			ShowFatalError("Out of memory: make_new_char (realloc of char_dat).\n");
 			char_log("Out of memory: make_new_char (realloc of char_dat).\n");
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 	}
 
@@ -1993,7 +1993,7 @@ int parse_fromlogin(int fd)
 				ShowError("The server communication passwords (default s1/p1) are probably invalid.\n");
 				ShowInfo("Also, please make sure your accounts file (default: accounts.txt) has those values present.\n");
 				ShowInfo("The communication passwords can be changed in map_athena.conf and char_athena.conf\n");
-				//exit(1); //fixed for server shutdown.
+				//exit(EXIT_FAILURE); //fixed for server shutdown.
 			} else {
 				ShowStatus("Connected to login-server (connection #%d).\n", fd);
 				

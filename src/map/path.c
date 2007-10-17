@@ -59,7 +59,7 @@ static void update_heap_path(int *heap,struct tmp_path *tp,int index)
 	if( h == heap[0] )
 	{
 		ShowError("update_heap_path bug\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	for( i = (h-1)/2; h > 0 && tp[index].cost < tp[heap[i+1]].cost; i = (h-1)/2 )

@@ -63,7 +63,7 @@ int read_gm_account()
 		p = (struct gm_account*)malloc(sizeof(struct gm_account));
 		if(p==NULL){
 			ShowFatalError("gm_account: out of memory!\n");
-			exit(0);
+			exit(EXIT_FAILURE);
 		}
 		
 		if(sscanf(line,"%d %d",&p->account_id,&p->level) != 2 || p->level <= 0) {
@@ -101,7 +101,7 @@ int convert_login(void)
 	{
 		Sql_ShowDebug(mysql_handle);
 		Sql_Free(mysql_handle);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	ShowStatus("Connect: Success!\n");
 	

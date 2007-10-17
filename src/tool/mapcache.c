@@ -274,7 +274,7 @@ int main(int argc, char *argv[])
 		map_cache_fp = fopen(map_cache_file, "r+b");
 	if(map_cache_fp == NULL) {
 		printf("Failure when opening map cache file %s\n", map_cache_file);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	// Open the map list
@@ -282,7 +282,7 @@ int main(int argc, char *argv[])
 	list = fopen(map_list_file, "r");
 	if(list == NULL) {
 		printf("Failure when opening maps list file %s\n", map_list_file);
-		exit(2);
+		exit(EXIT_FAILURE);
 	}
 
 	// Initialize the main header

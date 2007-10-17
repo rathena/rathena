@@ -299,7 +299,7 @@ int mmo_auth_sqldb_init(void)
 	{
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{

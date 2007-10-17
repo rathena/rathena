@@ -356,7 +356,7 @@ int inter_init_sql(const char *file)
 	{
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 #ifndef TXT_SQL_CONVERT
 	else if (inter_sql_test()) {
@@ -371,7 +371,7 @@ int inter_init_sql(const char *file)
 			Sql_ShowDebug(lsql_handle);
 			Sql_Free(lsql_handle);
 			Sql_Free(sql_handle);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 		else
 		{
@@ -430,7 +430,7 @@ int inter_sql_test (void)
 			if( lsql_handle )
 				Sql_Free(lsql_handle);
 			Sql_Free(sql_handle);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 	}
 

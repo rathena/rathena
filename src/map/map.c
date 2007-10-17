@@ -2394,7 +2394,7 @@ int map_setipport(unsigned short mapindex, uint32 ip, uint16 port)
 	if(ip == clif_getip() && port == clif_getport()) {
 		//That's odd, we received info that we are the ones with this map, but... we don't have it.
 		ShowFatalError("map_setipport : received info that this map-server SHOULD have map '%s', but it is not loaded.\n",mapindex_id2name(mapindex));
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	mdos->ip   = ip;
 	mdos->port = port;
@@ -2606,7 +2606,7 @@ int map_readallmaps (void)
 		if( (fp = fopen(map_cache_file, "rb")) == NULL )
 		{
 			ShowFatalError("Unable to open map cache file "CL_WHITE"%s"CL_RESET"\n", map_cache_file);
-			exit(1); //No use launching server if maps can't be read.
+			exit(EXIT_FAILURE); //No use launching server if maps can't be read.
 		}
 	}
 
@@ -2961,7 +2961,7 @@ int map_sql_init(void)
 
 	ShowInfo("Connecting to the Map DB Server....\n");
 	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) )
-		exit(1);
+		exit(EXIT_FAILURE);
 	ShowStatus("connect success! (Map Server Connection)\n");
 
 	if( strlen(default_codepage) > 0 )
@@ -2975,7 +2975,7 @@ int map_sql_init(void)
 
 		ShowInfo("Connecting to the Mail DB Server....\n");
 		if( SQL_ERROR == Sql_Connect(mail_handle, mail_server_id, mail_server_pw, mail_server_ip, mail_server_port, mail_server_db) )
-			exit(1);
+			exit(EXIT_FAILURE);
 
 		if( strlen(default_codepage) > 0 )
 			if ( SQL_ERROR == Sql_SetEncoding(mail_handle, default_codepage) )
@@ -3015,7 +3015,7 @@ int log_sql_init(void)
 
 	ShowInfo(""CL_WHITE"[SQL]"CL_RESET": Connecting to the Log Database "CL_WHITE"%s"CL_RESET" At "CL_WHITE"%s"CL_RESET"...\n",log_db,log_db_ip);
 	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id, log_db_pw, log_db_ip, log_db_port, log_db) )
-		exit(1);
+		exit(EXIT_FAILURE);
 	ShowStatus(""CL_WHITE"[SQL]"CL_RESET": Successfully '"CL_GREEN"connected"CL_RESET"' to Database '"CL_WHITE"%s"CL_RESET"'.\n", log_db);
 
 	if( strlen(default_codepage) > 0 )
@@ -3269,7 +3269,7 @@ void map_helpscreen(int flag)
 	puts("				(SQL Only)");
 	puts("  --version, --v, -v, /v	Displays the server's version");
 	puts("\n");
-	if (flag) exit(1);
+	if (flag) exit(EXIT_FAILURE);
 }
 
 /*======================================================
@@ -3285,7 +3285,7 @@ void map_versionscreen(int flag)
 	puts(CL_GREEN "IRC Channel:" CL_RESET "\tirc://irc.deltaanime.net/#athena");
 	puts("\nOpen " CL_WHITE "readme.html" CL_RESET " for more information.");
 	if (ATHENA_RELEASE_FLAG) ShowNotice("This version is not for release.\n");
-	if (flag) exit(1);
+	if (flag) exit(EXIT_FAILURE);
 }
 
 /*======================================================

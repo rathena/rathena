@@ -273,7 +273,7 @@ int inter_party_sql_init(void)
 	party_pt = (struct party_data*)aCalloc(sizeof(struct party_data), 1);
 	if (!party_pt) {
 		ShowFatalError("inter_party_sql_init: Out of Memory!\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	/* Uncomment the following if you want to do a party_db cleanup (remove parties with no members) on startup.[Skotlex]

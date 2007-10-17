@@ -97,7 +97,7 @@ int inter_pet_init()
 		p = (struct s_pet*)aCalloc(sizeof(struct s_pet), 1);
 		if(p==NULL){
 			ShowFatalError("int_pet: out of memory!\n");
-			exit(0);
+			exit(EXIT_FAILURE);
 		}
 		memset(p,0,sizeof(struct s_pet));
 		if(inter_pet_fromstr(line,p)==0 && p->pet_id>0){

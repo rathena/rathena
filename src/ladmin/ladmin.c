@@ -3215,7 +3215,7 @@ int prompt(void)
 			} else {
 				ShowMessage("Bye.\n");
 			}
-			exit(0);
+			exit(EXIT_SUCCESS);
 // unknown command
 		} else {
 			if (defaultlanguage == 'F') {
@@ -4199,7 +4199,7 @@ int Connect_login_server(void)
 	if (login_fd == -1)
 	{	//Might not be the most elegant way to handle this, but I've never used ladmin so I dunno what else you could do. [Skotlex]
 		ShowMessage("Error: Failed to connect to Login Server\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	if (passenc == 0) {
 		WFIFOHEAD(login_fd,28);

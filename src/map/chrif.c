@@ -343,7 +343,7 @@ int chrif_connectack(int fd)
 {
 	if (RFIFOB(fd,2)) {
 		ShowFatalError("Connection to char-server failed %d.\n", RFIFOB(fd,2));
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	ShowStatus("Successfully logged on to Char Server (Connection: '"CL_WHITE"%d"CL_RESET"').\n",fd);
 	chrif_state = 1;
@@ -368,7 +368,7 @@ int chrif_sendmapack(int fd)
 {
 	if (RFIFOB(fd,2)) {
 		ShowFatalError("chrif : send map list to char server failed %d\n", RFIFOB(fd,2));
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	memcpy(wisp_server_name, RFIFOP(fd,3), NAME_LENGTH);

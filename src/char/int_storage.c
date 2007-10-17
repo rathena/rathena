@@ -211,7 +211,7 @@ int inter_storage_init()
 		s = (struct storage*)aCalloc(sizeof(struct storage), 1);
 		if(s==NULL){
 			ShowFatalError("int_storage: out of memory!\n");
-			exit(0);
+			exit(EXIT_FAILURE);
 		}
 //		memset(s,0,sizeof(struct storage)); aCalloc does this...
 		s->account_id=tmp_int;
@@ -240,7 +240,7 @@ int inter_storage_init()
 		gs = (struct guild_storage*)aCalloc(sizeof(struct guild_storage), 1);
 		if(gs==NULL){
 			ShowFatalError("int_storage: out of memory!\n");
-			exit(0);
+			exit(EXIT_FAILURE);
 		}
 //		memset(gs,0,sizeof(struct guild_storage)); aCalloc...
 		gs->guild_id=tmp_int;

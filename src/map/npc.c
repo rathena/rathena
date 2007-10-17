@@ -201,10 +201,10 @@ int npc_event_export(char* lname, void* data, va_list ap)
 		ev = (struct event_data *) aMalloc(sizeof(struct event_data));
 		if (ev==NULL) {
 			ShowFatalError("npc_event_export: out of memory !\n");
-			exit(1);
+			exit(EXIT_FAILURE);
 		}else if (p==NULL || (p-lname)>NAME_LENGTH) {
 			ShowFatalError("npc_event_export: label name error !\n");
-			exit(1);
+			exit(EXIT_FAILURE);
 		}else{
 			ev->nd = nd;
 			ev->pos = pos;
@@ -371,7 +371,7 @@ int npc_timerevent_import(char* lname, void* data, va_list ap)
 		else te= (struct npc_timerevent_list*)aRealloc( te, sizeof(struct npc_timerevent_list) * (i+1) );
 		if(te==NULL){
 			ShowFatalError("npc_timerevent_import: out of memory !\n");
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 		for(j=0;j<i;j++){
 			if(te[j].timer>t){
@@ -1604,7 +1604,7 @@ int npc_convertlabel_db(DBKey key, void* data, va_list ap)
 	// here we check if the label fit into the buffer
 	if (len > 23) {
 		ShowError("npc_parse_script: label name longer than 23 chars! '%s'\n (%s)", lname, current_file);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	safestrncpy(lst[num].name, lname, NAME_LENGTH);
 	lst[num].pos = pos;
@@ -1658,7 +1658,7 @@ static void npc_parse_script_line(char* p, int* curly_count, int line)
 	}
 	if(string_flag) {
 		printf("Missing '\"' at file %s line %d\n", current_file, line);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 }
 

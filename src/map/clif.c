@@ -11776,7 +11776,7 @@ static int packetdb_readdb(void)
 	sprintf(line, "%s/packet_db.txt", db_path);
 	if( (fp=fopen(line,"r"))==NULL ){
 		ShowFatalError("can't read %s\n", line);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	clif_config.packet_db_ver = MAX_PACKET_VER;
@@ -11886,7 +11886,7 @@ static int packetdb_readdb(void)
 			
 		if(str[3]==NULL){
 			ShowError("packet_db: packet error\n");
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
 		for(j=0,p2=str[3];p2;j++){
 			str2[j]=p2;
@@ -11928,7 +11928,7 @@ int do_init_clif(void)
 	set_defaultparse(clif_parse);
 	if (!make_listen_bind(bind_ip,map_port)) {
 		ShowFatalError("can't bind game port\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
 	add_timer_func_list(clif_waitclose, "clif_waitclose");

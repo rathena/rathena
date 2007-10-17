@@ -5946,7 +5946,7 @@ int pc_setregstr(struct map_session_data *sd,int reg,char *str)
 	sd->regstr = (struct script_regstr *) aRealloc(sd->regstr, sizeof(sd->regstr[0]) * sd->regstr_num);
 	if(sd->regstr==NULL){
 		ShowFatalError("out of memory : pc_setreg\n");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	memset(sd->regstr + (sd->regstr_num - 1), 0, sizeof(struct script_regstr));
 	sd->regstr[i].index = reg;

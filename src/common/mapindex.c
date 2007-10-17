@@ -150,7 +150,7 @@ void mapindex_init(void)
 	fp=fopen(mapindex_cfgfile,"r");
 	if(fp==NULL){
 		ShowFatalError("Unable to read mapindex config file %s!\n", mapindex_cfgfile);
-		exit(1); //Server can't really run without this file.
+		exit(EXIT_FAILURE); //Server can't really run without this file.
 	}
 	while(fgets(line, sizeof(line), fp))
 	{

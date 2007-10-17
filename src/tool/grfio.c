@@ -570,7 +570,7 @@ static int grfio_entryread(char* grfname, int gentry)
 				if (strlen(fname) > sizeof(aentry.fn) - 1) {
 					printf("GRF file name %s is too long\n", fname);
 					free(grf_filelist);
-					exit(1);
+					exit(EXIT_FAILURE);
 				}
 				srclen = 0;
 				if ((period_ptr = strrchr(fname, '.')) != NULL) {
@@ -641,7 +641,7 @@ static int grfio_entryread(char* grfname, int gentry)
 			if (strlen(fname) > sizeof(aentry.fn)-1) {
 				printf("GRF file name %s is too long\n", fname);
 				free(grf_filelist);
-				exit(1);
+				exit(EXIT_FAILURE);
 			}
 			ofs2 = ofs + (int)strlen(fname)+1;
 			type = grf_filelist[ofs2+12];
