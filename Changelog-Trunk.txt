@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/10/17
+	* Ground skill now can trigger every 20ms [Playtester]
+	- Firewall, Fire Formation and Heat now can do 50 hits a second
+	- this was proven to be official behavior, but it will raise CPU usage
 	* small timer.c cleaning
 	- removed "with less than 4 values, it's speedier to use a simple loop"
 	  as this case will never occur (premature optimization from r1284)

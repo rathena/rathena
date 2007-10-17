@@ -36,7 +36,7 @@
 #include <time.h>
 
 
-#define SKILLUNITTIMER_INVERVAL	100
+#define SKILLUNITTIMER_INVERVAL	20
 //Guild Skills are shifted to these to make them stick into the skill array.
 #define GD_SKILLRANGEMIN 900
 #define GD_SKILLRANGEMAX GD_SKILLRANGEMIN+MAX_GUILDSKILL
