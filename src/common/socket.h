@@ -68,18 +68,23 @@ typedef int (*RecvFunc)(int fd);
 typedef int (*SendFunc)(int fd);
 typedef int (*ParseFunc)(int fd);
 
-struct socket_data {
+struct socket_data
+{
 	unsigned char eof;
+
 	unsigned char *rdata, *wdata;
 	size_t max_rdata, max_wdata;
 	size_t rdata_size, wdata_size;
 	size_t rdata_pos;
-	time_t rdata_tick; // time of last receive (for detecting timeouts)
-	uint32 client_addr; // remote client address (zero for s2s connections)
-	void* session_data;
+	time_t rdata_tick; // time of last recv (for detecting timeouts); zero when timeout is disabled
+
+	uint32 client_addr; // remote client address (0 for server connections)
+
 	RecvFunc func_recv;
 	SendFunc func_send;
 	ParseFunc func_parse;
+
+	void* session_data; // stores application-specific data related to the session
 };
 
 
@@ -94,8 +99,8 @@ extern time_t stall_time;
 
 //////////////////////////////////
 // some checking on sockets
-extern int session_isValid(int fd);
-extern int session_isActive(int fd);
+extern bool session_isValid(int fd);
+extern bool session_isActive(int fd);
 //////////////////////////////////
 
 // Function prototype declaration
@@ -107,8 +112,7 @@ int realloc_writefifo(int fd, size_t addition);
 int WFIFOSET(int fd, size_t len);
 int RFIFOSKIP(int fd, size_t len);
 
-int do_sendrecv(int next);
-int do_parsepacket(void);
+int do_sockets(int next);
 void do_close(int fd);
 void socket_init(void);
 void socket_final(void);
@@ -123,7 +127,7 @@ void set_defaultparse(ParseFunc defaultparse);
 uint32 host2ip(const char* hostname);
 const char* ip2str(uint32 ip, char ip_str[16]);
 uint32 str2ip(const char* ip_str);
-#define CONVIP(ip) (ip>>24)&0xFF,(ip>>16)&0xFF,(ip>>8)&0xFF,(ip>>0)&0xFF
+#define CONVIP(ip) ((ip)>>24)&0xFF,((ip)>>16)&0xFF,((ip)>>8)&0xFF,((ip)>>0)&0xFF
 uint16 ntows(uint16 netshort);
 
 int socket_getips(uint32* ips, int max);

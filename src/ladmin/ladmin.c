@@ -3248,7 +3248,7 @@ int parse_fromlogin(int fd)
 			ladmin_log("Impossible to have a connection with the login-server [%s:%d] !\n", loginserverip, loginserverport);
 		}
 		do_close(fd);
-		exit (0);
+		exit(EXIT_FAILURE);
 	}
 
 //	ShowMessage("parse_fromlogin : %d %d %d\n", fd, RFIFOREST(fd), RFIFOW(fd,0));
@@ -4384,8 +4384,7 @@ int do_init(int argc, char **argv)
 	// so we have to do this ourselves
 	while (runflag) {
 		next = do_timer(gettick_nocache());
-		do_sendrecv(next);
-		do_parsepacket();
+		do_sockets(next);
 	}
 
 	return 0;

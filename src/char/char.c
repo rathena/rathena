@@ -3745,12 +3745,13 @@ int parse_char(int fd)
 				WFIFOB(fd,2) = 0;
 				WFIFOSET(fd,3);
 
-				session[fd]->func_parse = parse_frommap;
 				server_fd[i] = fd;
 				server[i].ip = ntohl(RFIFOL(fd,54));
 				server[i].port = ntohs(RFIFOW(fd,58));
 				server[i].users = 0;
 				memset(server[i].map, 0, sizeof(server[i].map));
+				session[fd]->func_parse = parse_frommap;
+				session[fd]->client_addr = 0;
 				realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 				char_mapif_init(fd);
 				// send gm acccounts level to map-servers
@@ -3951,6 +3952,7 @@ int check_connect_login_server(int tid, unsigned int tick, int id, int data)
 		return 0;
 	}
 	session[login_fd]->func_parse = parse_fromlogin;
+	session[login_fd]->client_addr = 0;
 	realloc_fifo(login_fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 	
 	WFIFOHEAD(login_fd,86);

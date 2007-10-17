@@ -1386,6 +1386,7 @@ int check_connect_char_server(int tid, unsigned int tick, int id, int data)
 		}
 
 		session[char_fd]->func_parse = chrif_parse;
+		session[char_fd]->client_addr = 0;
 		realloc_fifo(char_fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 
 		chrif_connect(char_fd);

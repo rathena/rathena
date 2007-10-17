@@ -3194,6 +3194,7 @@ int parse_login(int fd)
 				WFIFOSET(fd,3);
 				
 				session[fd]->func_parse = parse_fromchar;
+				session[fd]->client_addr = 0;
 				realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 				
 				send_GM_accounts(fd); // send GM account to char-server
