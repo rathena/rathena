@@ -33,6 +33,8 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/18
+	* Added knockback to Crimson Fire Formation [Playtester]
 10/16
 	* Fixed used levels of NPC_CRITICALWOUND [Playtester]
 10/15

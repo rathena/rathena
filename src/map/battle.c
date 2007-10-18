@@ -2156,6 +2156,7 @@ struct Damage battle_calc_magic_attack(
 	switch(skill_num)
 	{
 		case MG_FIREWALL:
+		case NJ_KAENSIN:
 			ad.dmotion = 0; //No flinch animation.
 			if(mflag) //mflag has a value when it was checked against an undead in skill.c [Skotlex]
 				ad.blewcount = 0; //No knockback

@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/10/18
+	* Further optimization of the skill unit code [Playtester]
+	- removed code for Crimson Fire Formation it now uses the same code as Fire Wall
+	- added same knockback behavior as Fire Wall for Fire Formation
+	- Heat now does 50 hits a second in pvp too
+	- please let me know of any bugs that might appear
 	* Optimized the skill unit code [Playtester]
 	- reverted the unit timer interval to 100ms to save CPU usage
 	- rewrote the unit code of Fire Wall, Fire Formation and Heat so that they hit

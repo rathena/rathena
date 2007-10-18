@@ -7288,16 +7288,17 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	switch (sg->unit_id)
 	{
 		case UNT_FIREWALL:
+		case UNT_KAENSIN:
 			if (tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele)) {
 				int count=0;
-				//Fire property mobs and Undeads are never knocked back by firewall
+				//Fire property mobs and Undeads are never knocked back
 				//Should hit every 20ms [Playtester]
 				while (count++ < battle_config.firewall_hits_on_undead && !status_isdead(bl) && src->val2--)
 					skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,1);
 			} else {
 				int count=0;
 				int x = bl->x, y = bl->y;
-				//If mob isn't knocked back it should hit every 20ms [Playtester]
+				//If target isn't knocked back it should hit every 20ms [Playtester]
 				while (count++ < battle_config.firewall_hits_on_undead && x == bl->x && y == bl->y && !status_isdead(bl) && src->val2--)
 					skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,0);
 			}
@@ -7359,21 +7360,20 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				case SG_SUN_WARM: //SG skills [Komurka]
 				case SG_MOON_WARM:
 				case SG_STAR_WARM:
-					if(!status_charge(ss, 0, 2)){  //should end when out of sp.
-						sg->limit=DIFF_TICK(tick,sg->tick);
-						break;
-					}
-					else if(bl->type==BL_PC){
-						//Only damage SP [Skotlex]
-						status_zap(bl, 0, 15);
-					}
-					else{
-						int count=1;
+					{
+						int count=0;
 						int x = bl->x, y = bl->y;
-						skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-						//If mob isn't knocked back it should hit every 20ms [Playtester]
-						while (count++ < battle_config.firewall_hits_on_undead && x == bl->x && y == bl->y && !status_isdead(bl) && status_charge(ss, 0, 2))
-							skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,0);
+						//If target isn't knocked back it should hit every 20ms [Playtester]
+						while (count++ < battle_config.firewall_hits_on_undead && x == bl->x && y == bl->y && !status_isdead(bl)){
+							if (!status_charge(ss, 0, 2)){  //should end when out of sp.
+								sg->limit=DIFF_TICK(tick,sg->tick);
+								break;
+							}
+							else if (bl->type==BL_PC) 
+								status_zap(bl, 0, 15); //Only damage SP [Skotlex]
+							else 
+								skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,0);
+						}
 					}
 				break;
 				case WZ_STORMGUST:
@@ -7628,17 +7628,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			sg->unit_id = UNT_USED_TRAPS;
 			clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
 			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
-			break;
-
-		case UNT_KAENSIN:
-			{
-				int count=0;
-				//Should hit every 20ms [Playtester]
-				while (count++ < battle_config.firewall_hits_on_undead && !status_isdead(bl) && src->val2--)
-					skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,0);
-				if (src->val2 <= 0)
-					skill_delunit(src);
-			}
 			break;
 	}
 
