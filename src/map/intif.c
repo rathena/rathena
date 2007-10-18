@@ -480,7 +480,7 @@ int intif_break_party(int party_id)
 	return 0;
 }
 // パーティ会話送信
-int intif_party_message(int party_id,int account_id,char *mes,int len)
+int intif_party_message(int party_id,int account_id,const char *mes,int len)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -623,7 +623,7 @@ int intif_guild_break(int guild_id)
 	return 0;
 }
 // ギルド会話送信
-int intif_guild_message(int guild_id,int account_id,char *mes,int len)
+int intif_guild_message(int guild_id,int account_id,const char *mes,int len)
 {
 	if (CheckForCharServer())
 		return 0;

@@ -74,12 +74,12 @@
 
 //For character names, title names, guilds, maps, etc.
 //Includes null-terminator as it is the length of the array.
-#define NAME_LENGTH 24
+#define NAME_LENGTH (23 + 1)
 //For item names, which tend to have much longer names.
 #define ITEM_NAME_LENGTH 50
 //For Map Names, which the client considers to be 16 in length including the .gat extension
-#define MAP_NAME_LENGTH 12
-#define MAP_NAME_LENGTH_EXT 16
+#define MAP_NAME_LENGTH (11 + 1)
+#define MAP_NAME_LENGTH_EXT (MAP_NAME_LENGTH + 4)
 
 #define MAX_FRIENDS 40
 #define MAX_MEMOPOINTS 10

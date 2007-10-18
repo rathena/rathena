@@ -3,6 +3,17 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/10/18
+	* Applied the new checking function to clif code, this fixes various
+	  length mismatches caused by incomplete code in r11386
+	* Added clif_process_message(), an unified way to validate all four
+	  types of player message packets and retrieve their components
+	* Removed the requirement to provide a character name in the message
+	  string when calling is_atcommand() (needed for the previous fix)
+	- currently both ways work, but old will be removed in the upcoming
+	  command cleanup so please adjust your custom code if you use this!
+	* Merged improved/cleaned up (WiP) code for clif_parse_WisMessage
+	* Removed commented-out code for check_fake_id() [ultramage]
 2007/10/17
 	* Removed outdated copyright and version number from startup logo
 	* Removed socket code that attempts to cope with code bugs at runtime

@@ -600,7 +600,7 @@ int party_send_logout(struct map_session_data *sd)
 	return 1;
 }
 
-int party_send_message(struct map_session_data *sd,char *mes,int len)
+int party_send_message(struct map_session_data *sd,const char *mes,int len)
 {
 	if(sd->status.party_id==0)
 		return 0;
@@ -614,7 +614,7 @@ int party_send_message(struct map_session_data *sd,char *mes,int len)
 	return 0;
 }
 
-int party_recv_message(int party_id,int account_id,char *mes,int len)
+int party_recv_message(int party_id,int account_id,const char *mes,int len)
 {
 	struct party_data *p;
 	if( (p=party_search(party_id))==NULL)

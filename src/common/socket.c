@@ -198,8 +198,6 @@ int send_from_fifo(int fd)
 	if( session[fd]->wdata_size == 0 )
 		return 0; // nothing to send
 
-	ShowInfo("Session #%d sending %d bytes.\n", fd, session[fd]->wdata_size);
-
 	len = send(fd, (const char *) session[fd]->wdata, (int)session[fd]->wdata_size, 0);
 
 	if( len == SOCKET_ERROR )

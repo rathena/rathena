@@ -287,11 +287,15 @@ CharCommandType is_charcommand(const int fd, struct map_session_data* sd, const 
 	if (!message || !*message)
 		return CharCommand_None;
 
-	str += strlen(sd->status.name);
-	while (*str && (ISSPACE(*str) || (s_flag == 0 && *str == ':'))) {
-		if (*str == ':')
-			s_flag = 1;
-		str++;
+	// temporary compatibility layer for previous implementation
+	if( *message != charcommand_symbol )
+	{
+		str += strlen(sd->status.name);
+		while (*str && (ISSPACE(*str) || (s_flag == 0 && *str == ':'))) {
+			if (*str == ':')
+				s_flag = 1;
+			str++;
+		}
 	}
 
 	if (!*str)

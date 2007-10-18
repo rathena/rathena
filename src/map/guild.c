@@ -995,7 +995,7 @@ int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int onlin
 	return 0;
 }
 // ギルド会話送信
-int guild_send_message(struct map_session_data *sd,char *mes,int len)
+int guild_send_message(struct map_session_data *sd,const char *mes,int len)
 {
 	nullpo_retr(0, sd);
 
@@ -1011,7 +1011,7 @@ int guild_send_message(struct map_session_data *sd,char *mes,int len)
 	return 0;
 }
 // ギルド会話受信
-int guild_recv_message(int guild_id,int account_id,char *mes,int len)
+int guild_recv_message(int guild_id,int account_id,const char *mes,int len)
 {
 	struct guild *g;
 	if( (g=guild_search(guild_id))==NULL)
