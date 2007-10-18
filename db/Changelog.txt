@@ -34,6 +34,7 @@
 
 =======================
 10/18
+	* Updated Gorynych's DEF/MDEF [Playtester]
 	* Fixed Ahlspiess not ignoring def of bosses [Playtester]
 	* Added knockback to Crimson Fire Formation [Playtester]
 10/16
