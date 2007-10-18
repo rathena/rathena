@@ -17,7 +17,7 @@ struct _indexes {
 	char name[MAP_NAME_LENGTH]; //Stores map name
 } indexes[MAX_MAPINDEX];
 
-static unsigned short max_index = 0;
+int max_index = 0;
 
 char mapindex_cfgfile[80] = "db/map_index.txt";
 

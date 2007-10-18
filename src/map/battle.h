@@ -11,7 +11,7 @@ struct Damage {
 	int amotion,dmotion;
 	int blewcount;
 	int flag;
-	int dmg_lv;	//ATK_LUCKY,ATK_FLEE,ATK_DEF
+	enum damage_lv dmg_lv;	//ATK_LUCKY,ATK_FLEE,ATK_DEF
 };
 
 // 属性表（読み込みはpc.c、battle_attr_fixで使用）
@@ -48,11 +48,10 @@ enum {	// 最終計算のフラグ
 	BF_SKILLMASK= 0x0f00,
 };
 
-int battle_delay_damage (unsigned int tick, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, int dmg_lv, int ddelay);
+int battle_delay_damage (unsigned int tick, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, enum damage_lv dmg_lv, int ddelay);
 
 // 通常攻撃処理まとめ
-int battle_weapon_attack( struct block_list *bl,struct block_list *target,
-	 unsigned int tick,int flag);
+enum damage_lv battle_weapon_attack( struct block_list *bl,struct block_list *target,unsigned int tick,int flag);
 
 // 各種パラメータを得る
 struct block_list* battle_get_master(struct block_list *src);

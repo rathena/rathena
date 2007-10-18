@@ -290,7 +290,7 @@ struct skill_unit_group {
 	unsigned int tick;
 	int limit,interval;
 
-	int skill_id,skill_lv;
+	short skill_id,skill_lv;
 	int val1,val2,val3;
 	char *valstr;
 	int unit_id;
@@ -327,7 +327,7 @@ struct unit_data {
 	unsigned int attackabletime;
 	unsigned int canact_tick;
 	unsigned int canmove_tick;
-	unsigned char dir;
+	uint8 dir;
 	unsigned char walk_count;
 	struct {
 		unsigned change_walk_target : 1 ;
@@ -397,7 +397,7 @@ struct status_change {
 
 struct s_vending {
 	short index;
-	unsigned short amount;
+	short amount;
 	unsigned int value;
 };
 
@@ -753,7 +753,7 @@ struct map_session_data {
 	int trade_partner;
 	struct { 
 		struct {
-			int index, amount;
+			short index, amount;
 		} item[10];
 		int zeny, weight;
 	} deal;
@@ -780,7 +780,7 @@ struct map_session_data {
 	}feel_map[3];// 0 - Sun; 1 - Moon; 2 - Stars
 	short hate_mob[3];
 
-	unsigned int pvp_timer;
+	int pvp_timer;
 	short pvp_point;
 	unsigned short pvp_rank, pvp_lastusers;
 	unsigned short pvp_won, pvp_lost;
@@ -1024,7 +1024,7 @@ struct pet_data {
 };
 
 // state of a single attack attempt; used in flee/def penalty calculations when mobbed
-enum {
+enum damage_lv {
 	ATK_LUCKY=1, // attack was lucky-dodged
 	ATK_FLEE,    // attack was dodged
 	ATK_DEF      // attack connected
@@ -1346,7 +1346,7 @@ struct map_session_data * map_nick2sd(const char*);
 
 // ‚»‚Ì‘¼
 int map_check_dir(int s_dir,int t_dir);
-int map_calc_dir( struct block_list *src,int x,int y);
+unsigned char map_calc_dir( struct block_list *src,int x,int y);
 int map_random_dir(struct block_list *bl, short *x, short *y); // [Skotlex]
 
 // path.c‚æ‚è

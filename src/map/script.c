@@ -9417,12 +9417,13 @@ BUILDIN_FUNC(pvpon)
 	return 0;
 }
 
-static int buildin_pvpoff_sub(struct block_list *bl,va_list ap) {
+static int buildin_pvpoff_sub(struct block_list *bl,va_list ap)
+{
 	TBL_PC* sd = (TBL_PC*)bl;
 	clif_pvpset(sd, 0, 0, 2);
-	if (sd->pvp_timer != UINT_MAX) {
+	if (sd->pvp_timer != -1) {
 		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
-		sd->pvp_timer = UINT_MAX;
+		sd->pvp_timer = -1;
 	}
 	return 0;
 }

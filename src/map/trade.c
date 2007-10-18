@@ -228,7 +228,8 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd)
 	struct item inventory[MAX_INVENTORY];
 	struct item inventory2[MAX_INVENTORY];
 	struct item_data *data;
-	int trade_i, i, amount, n;
+	int trade_i, i, n;
+	short amount;
 
 	if(sd->state.finalsave || tsd->state.finalsave)
 		return 0; //Item transferring fails 
@@ -312,7 +313,7 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd)
 /*==========================================
  * Adds an item/qty to the trade window
  *------------------------------------------*/
-void trade_tradeadditem(struct map_session_data *sd, int index, int amount)
+void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 {
 	struct map_session_data *target_sd;
 	struct item *item;

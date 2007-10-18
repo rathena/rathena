@@ -191,7 +191,7 @@ const char*	skill_get_desc( int id ); 	// [Skotlex]
 int skill_isammotype(struct map_session_data *sd, int skill);
 int skill_castend_id( int tid, unsigned int tick, int id,int data );
 int skill_castend_pos( int tid, unsigned int tick, int id,int data );
-int skill_castend_map( struct map_session_data *sd,int skill_num, const char *map);
+int skill_castend_map( struct map_session_data *sd,short skill_num, const char *map);
 
 int skill_cleartimerskill(struct block_list *src);
 int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int x,int y,int skill_id,int skill_lv,int type,int flag);
@@ -203,10 +203,10 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 int skill_break_equip(struct block_list *bl, unsigned short where, int rate, int flag);
 int skill_strip_equip(struct block_list *bl, unsigned short where, int rate, int lv, int time);
 // ユニットスキル
-struct skill_unit_group *skill_unitsetting( struct block_list *src, int skillid,int skilllv,int x,int y,int flag);
+struct skill_unit_group *skill_unitsetting(struct block_list* src, short skillid, short skilllv, short x, short y, int flag);
 struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int x, int y, int val1, int val2);
 int skill_delunit(struct skill_unit *unit);
-struct skill_unit_group *skill_initunitgroup(struct block_list *src, int count,int skillid,int skilllv,int unit_id, int limit, int interval);
+struct skill_unit_group *skill_initunitgroup(struct block_list* src, int count, short skillid, short skilllv, int unit_id, int limit, int interval);
 int skill_delunitgroup(struct block_list *src, struct skill_unit_group *group);
 int skill_clear_unitgroup(struct block_list *src);
 int skill_clear_group(struct block_list *bl, int flag);
@@ -217,8 +217,8 @@ int skill_unit_ondamaged(struct skill_unit *src,struct block_list *bl,
 int skill_castfix( struct block_list *bl, int skill_id, int skill_lv);
 int skill_castfix_sc( struct block_list *bl, int time);
 int skill_delayfix( struct block_list *bl, int skill_id, int skill_lv);
-int skill_check_condition( struct map_session_data *sd,int skill, int lv, int type);
-int skill_check_pc_partner(struct map_session_data *sd, int skill_id, int* skill_lv, int range, int cast_flag);
+int skill_check_condition( struct map_session_data *sd, short skill, short lv, int type);
+int skill_check_pc_partner(struct map_session_data *sd, short skill_id, short* skill_lv, int range, int cast_flag);
 // -- moonsoul	(added skill_check_unit_cell)
 int skill_check_unit_cell(int skillid,int m,int x,int y,int unit_id);
 int skill_unit_out_all( struct block_list *bl,unsigned int tick,int range);

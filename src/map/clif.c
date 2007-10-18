@@ -3925,7 +3925,7 @@ static void clif_getareachar_skillunit(struct map_session_data *sd, struct skill
 		WFIFOB(fd,14)=unit->group->unit_id;
 		WFIFOB(fd,15)=1;
 		WFIFOB(fd,16)=1;
-		safestrncpy(WFIFOP(fd,17),unit->group->valstr,MESSAGE_SIZE);
+		safestrncpy((char*)WFIFOP(fd,17),unit->group->valstr,MESSAGE_SIZE);
 		WFIFOSET(fd,packet_len(0x1c9));
 		return;
 	}
@@ -4559,7 +4559,7 @@ void clif_skill_setunit(struct skill_unit *unit)
 /*==========================================
  * ワープ場所選択
  *------------------------------------------*/
-void clif_skill_warppoint(struct map_session_data* sd, int skill_num, int skill_lv, int map1, int map2, int map3, int map4)
+void clif_skill_warppoint(struct map_session_data* sd, short skill_num, short skill_lv, unsigned short map1, unsigned short map2, unsigned short map3, unsigned short map4)
 {
 	int fd;
 	nullpo_retv(sd);
@@ -5017,7 +5017,7 @@ int clif_solved_charname(int fd, int charid, const char* name)
 	WFIFOHEAD(fd,packet_len(0x194));
 	WFIFOW(fd,0)=0x194;
 	WFIFOL(fd,2)=charid;
-	safestrncpy(WFIFOP(fd,6), name, NAME_LENGTH);
+	safestrncpy((char*)WFIFOP(fd,6), name, NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0x194));
 	return 0;
 }
@@ -8145,7 +8145,7 @@ void clif_parse_Hotkey(int fd, struct map_session_data *sd) {
  *------------------------------------------*/
 void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 {
-	int x, y;
+	short x, y;
 	int cmd;
 
 	if (pc_isdead(sd)) {
@@ -9112,13 +9112,13 @@ void clif_parse_TradeAck(int fd,struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_TradeAddItem(int fd,struct map_session_data *sd)
 {
-	int index = RFIFOW(fd,2);
+	short index = RFIFOW(fd,2);
 	int amount = RFIFOL(fd,4);
 
 	if( index == 0 )
 		trade_tradeaddzeny(sd, amount);
 	else
-		trade_tradeadditem(sd, index, amount);
+		trade_tradeadditem(sd, index, (short)amount);
 }
 
 /*==========================================
@@ -9218,7 +9218,7 @@ void clif_parse_SkillUp(int fd,struct map_session_data *sd)
 	pc_skillup(sd,RFIFOW(fd,2));
 }
 
-static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_session_data *sd, unsigned int tick, int skillnum, int skilllv, int target_id)
+static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_session_data *sd, unsigned int tick, short skillnum, short skilllv, int target_id)
 {
 	int lv;
 
@@ -9251,13 +9251,15 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_sess
  *------------------------------------------*/
 void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 {
-	int skillnum, skilllv, tmp, target_id;
+	short skillnum, skilllv;
+	int tmp, target_id;
 	unsigned int tick = gettick();
 
 	skilllv = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
-	if (skilllv < 1) skilllv = 1; //No clue, I have seen the client do this with guild skills :/ [Skotlex]
 	skillnum = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
 	target_id = RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[2]);
+
+	if (skilllv < 1) skilllv = 1; //No clue, I have seen the client do this with guild skills :/ [Skotlex]
 
 	//Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
 	sd->idletime = last_tick;
@@ -9364,7 +9366,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 /*==========================================
  * スキル使用（場所指定）
  *------------------------------------------*/
-void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, int skilllv, int skillnum, int x, int y, int skillmoreinfo)
+void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, short skilllv, short skillnum, short x, short y, int skillmoreinfo)
 {
 	int lv;
 	unsigned int tick = gettick();
@@ -9460,7 +9462,7 @@ void clif_parse_UseSkillToPosMoreInfo(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_UseSkillMap(int fd, struct map_session_data* sd)
 {
-	int skill_num = RFIFOW(fd,2);
+	short skill_num = RFIFOW(fd,2);
 	char map_name[MAP_NAME_LENGTH];
 	mapindex_getmapname((char*)RFIFOP(fd,4), map_name);
 
@@ -9858,7 +9860,7 @@ void clif_parse_PartyInvite(int fd, struct map_session_data *sd)
 void clif_parse_PartyInvite2(int fd, struct map_session_data *sd)
 {
 	struct map_session_data *t_sd;
-	char *name = RFIFOP(fd,2);
+	char *name = (char*)RFIFOP(fd,2);
 	name[NAME_LENGTH]='\0';
 
 	if(map[sd->bl.m].flag.partylock)
@@ -11239,7 +11241,7 @@ void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd)
 
 void clif_parse_HomMoveTo(int fd,struct map_session_data *sd)
 {	//[orn]
-	int x,y,cmd;
+	short x,y,cmd;
 	nullpo_retv(sd);
 
 	if(!merc_is_hom_active(sd->hd))
@@ -11487,7 +11489,7 @@ static int packetdb_readdb(void)
 	FILE *fp;
 	char line[1024];
 	int ln=0;
-	int cmd,i,j,k,packet_ver;
+	int cmd,i,j,packet_ver;
 	int max_cmd=-1;
 	int skip_ver = 0;
 	int warned = 0;
@@ -11792,8 +11794,8 @@ static int packetdb_readdb(void)
 			ShowError("packet_db: packet len error\n");
 			continue;
 		}
-		k = atoi(str[1]);
-		packet_db[packet_ver][cmd].len = k;
+
+		packet_db[packet_ver][cmd].len = (short)atoi(str[1]);
 
 		if(str[2]==NULL){
 			packet_db[packet_ver][cmd].func = NULL;
@@ -11826,6 +11828,7 @@ static int packetdb_readdb(void)
 			exit(EXIT_FAILURE);
 		}
 		for(j=0,p2=str[3];p2;j++){
+			short k;
 			str2[j]=p2;
 			p2=strchr(p2,':');
 			if(p2) *p2++=0;

@@ -144,7 +144,7 @@ struct delay_damage {
 	unsigned short distance;
 	unsigned short skill_lv;
 	unsigned short skill_id;
-	unsigned short dmg_lv;
+	enum damage_lv dmg_lv;
 	unsigned short attack_type;
 };
 
@@ -168,7 +168,7 @@ int battle_delay_damage_sub (int tid, unsigned int tick, int id, int data)
 	return 0;
 }
 
-int battle_delay_damage (unsigned int tick, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, int dmg_lv, int ddelay)
+int battle_delay_damage (unsigned int tick, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, enum damage_lv dmg_lv, int ddelay)
 {
 	struct delay_damage *dat;
 	nullpo_retr(0, src);
@@ -836,10 +836,10 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 static struct Damage battle_calc_weapon_attack(
 	struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int wflag)
 {
-	unsigned short skillratio = 100;	//Skill dmg modifiers.
+	unsigned int skillratio = 100;	//Skill dmg modifiers.
 	short skill=0;
 	short s_ele, s_ele_, t_class;
-	short i, nk;
+	int i, nk;
 
 	struct map_session_data *sd, *tsd;
 	struct Damage wd;
@@ -1838,8 +1838,8 @@ static struct Damage battle_calc_weapon_attack(
 		//Card Fix, sd side
 		if ((wd.damage || wd.damage2) && !(nk&NK_NO_CARDFIX_ATK))
 		{
-			short cardfix = 1000, cardfix_ = 1000;
-			short t_race2 = status_get_race2(target);	
+			int cardfix = 1000, cardfix_ = 1000;
+			int t_race2 = status_get_race2(target);	
 			if(sd->state.arrow_atk)
 			{
 				cardfix=cardfix*(100+sd->right_weapon.addrace[tstatus->race]+sd->arrow_addrace[tstatus->race])/100;
@@ -2097,12 +2097,11 @@ static struct Damage battle_calc_weapon_attack(
 /*==========================================
  * battle_calc_magic_attack [DracoRPG]
  *------------------------------------------*/
-struct Damage battle_calc_magic_attack(
-	struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag)
-	{
-	short i, nk;
+struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag)
+{
+	int i, nk;
 	short s_ele;
-	unsigned short skillratio = 100;	//Skill dmg modifiers.
+	unsigned int skillratio = 100;	//Skill dmg modifiers.
 
 	struct map_session_data *sd, *tsd;
 	struct Damage ad;
@@ -2392,7 +2391,7 @@ struct Damage battle_calc_magic_attack(
 	  	{	//Target cards.
 			short s_race2=status_get_race2(src);
 			short s_class= status_get_class(src);
-			short cardfix=1000;
+			int cardfix=1000;
 
 			if (!(nk&NK_NO_ELEFIX))
 				cardfix=cardfix*(100-tsd->subele[s_ele])/100;
@@ -2598,11 +2597,7 @@ struct Damage  battle_calc_misc_attack(struct block_list *src,struct block_list 
 			}
 
 			hitrate+= sstatus->hit - flee;
-
-			if (hitrate > battle_config.max_hitrate)
-				hitrate = battle_config.max_hitrate;
-			else if (hitrate < battle_config.min_hitrate)
-				hitrate = battle_config.min_hitrate;
+			hitrate = cap_value(hitrate, battle_config.min_hitrate, battle_config.max_hitrate);
 
 			if(rand()%100 < hitrate)
 				i = 1;
@@ -2733,15 +2728,11 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int rdamage, int ldamage, 
 		
 		hp = wd->hp_drain[type].value;
 		if (wd->hp_drain[type].rate)
-			hp += battle_calc_drain(*damage,
-				wd->hp_drain[type].rate,
-		  		wd->hp_drain[type].per);
+			hp += battle_calc_drain(*damage, wd->hp_drain[type].rate, wd->hp_drain[type].per);
 
 		sp = wd->sp_drain[type].value;
 		if (wd->sp_drain[type].rate)
-			sp += battle_calc_drain(*damage,
-				wd->sp_drain[type].rate,
-			  	wd->sp_drain[type].per);
+			sp += battle_calc_drain(*damage, wd->sp_drain[type].rate, wd->sp_drain[type].per);
 
 		if (hp) {
 			if (wd->hp_drain[type].type)
@@ -2768,7 +2759,7 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int rdamage, int ldamage, 
 /*==========================================
  * ’Ê?í?UŒ‚?ˆ—?‚Ü‚Æ‚ß
  *------------------------------------------*/
-int battle_weapon_attack(struct block_list* src, struct block_list* target, unsigned int tick, int flag)
+enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* target, unsigned int tick, int flag)
 {
 	struct map_session_data *sd = NULL, *tsd = NULL;
 	struct status_data *sstatus, *tstatus;

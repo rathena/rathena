@@ -3398,7 +3398,7 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
  * 2 - Map not in this map-server, and failed to locate alternate map-server.
  * 3 - Failed to warp player because it was in transition between maps.
  *------------------------------------------*/
-int pc_setpos(struct map_session_data *sd,unsigned short mapindex,int x,int y,int clrtype)
+int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, uint8 clrtype)
 {
 	int m;
 
@@ -6688,11 +6688,9 @@ int pc_calc_pvprank_timer(int tid,unsigned int tick,int id,int data)
 	sd=map_id2sd(id);
 	if(sd==NULL)
 		return 0;
-	sd->pvp_timer=UINT_MAX;
-	if( pc_calc_pvprank(sd)>0 )
-		sd->pvp_timer=add_timer(
-			gettick()+PVP_CALCRANK_INTERVAL,
-			pc_calc_pvprank_timer,id,data);
+	sd->pvp_timer = -1;
+	if( pc_calc_pvprank(sd) > 0 )
+		sd->pvp_timer = add_timer(gettick()+PVP_CALCRANK_INTERVAL,pc_calc_pvprank_timer,id,data);
 	return 0;
 }
 

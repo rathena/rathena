@@ -142,7 +142,7 @@ int pc_clean_skilltree(struct map_session_data *sd);
 #define pc_checkoverhp(sd) (sd->battle_status.hp == sd->battle_status.max_hp)
 #define pc_checkoversp(sd) (sd->battle_status.sp == sd->battle_status.max_sp)
 
-int pc_setpos(struct map_session_data*,unsigned short,int,int,int);
+int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, uint8 clrtype);
 int pc_setsavepoint(struct map_session_data*,short,int,int);
 int pc_randomwarp(struct map_session_data *sd,int type);
 int pc_memo(struct map_session_data *sd,int i);

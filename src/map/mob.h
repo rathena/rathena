@@ -66,7 +66,7 @@ struct mob_db {
 	char sprite[NAME_LENGTH],name[NAME_LENGTH],jname[NAME_LENGTH];
 	unsigned int base_exp,job_exp;
 	unsigned int mexp,mexpper;
-	int range2,range3;
+	short range2,range3;
 	short race2;	// celest
 	unsigned short lv;
 	struct { int nameid,p; } dropitem[MAX_MOB_DROP];

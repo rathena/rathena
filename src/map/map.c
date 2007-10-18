@@ -2153,9 +2153,9 @@ int map_check_dir(int s_dir,int t_dir)
 /*==========================================
  * Returns the direction of the given cell, relative to 'src'
  *------------------------------------------*/
-int map_calc_dir(struct block_list* src, int x, int y)
+uint8 map_calc_dir(struct block_list* src, int x, int y)
 {
-	int dir = 0;
+	unsigned char dir = 0;
 	int dx, dy;
 	
 	nullpo_retr(0, src);

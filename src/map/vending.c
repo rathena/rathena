@@ -81,8 +81,8 @@ void vending_purchasereq(struct map_session_data* sd, int id, const uint8* data,
 	w = 0;  // weight counter
 	for( i = 0; i < count; i++ )
 	{
-		unsigned short amount = *(uint16*)(data + 4*i + 0);
-		short idx             = *(uint16*)(data + 4*i + 2);
+		short amount = *(uint16*)(data + 4*i + 0);
+		short idx    = *(uint16*)(data + 4*i + 2);
 		idx -= 2;
 
 		if( amount <= 0 )
@@ -150,8 +150,8 @@ void vending_purchasereq(struct map_session_data* sd, int id, const uint8* data,
 
 	for( i = 0; i < count; i++ )
 	{
-		unsigned short amount = *(uint16*)(data + 4*i + 0);
-		short idx             = *(uint16*)(data + 4*i + 2);
+		short amount = *(uint16*)(data + 4*i + 0);
+		short idx    = *(uint16*)(data + 4*i + 2);
 		idx -= 2;
 
 		//Logs sold (V)ending items [Lupus]
@@ -248,9 +248,9 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 	i = 0;
 	for( j = 0; j < count; j++ )
 	{
-		int index           = *(uint16*)(data + 8*j + 0);
-		unsigned int amount = *(uint16*)(data + 8*j + 2);
-		unsigned int value  = *(uint32*)(data + 8*j + 4);
+		short index        = *(uint16*)(data + 8*j + 0);
+		short amount       = *(uint16*)(data + 8*j + 2);
+		unsigned int value = *(uint32*)(data + 8*j + 4);
 
 		index -= 2; // offset adjustment (client says that the first cart position is 2)
 
