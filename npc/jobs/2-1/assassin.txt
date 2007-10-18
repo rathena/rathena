@@ -34,6 +34,7 @@
 //= 2.5 Fixed a Rogue exploit [Lupus]
 //= 2.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.7 Several bugfixes with the help of Samuray22 and Barron-Monster. [L0ne_W0lf]
+//= 2.8 Removed duplicate warps. [L0ne_W0lf]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -1168,16 +1169,6 @@ OnTouch:
 		warp "in_moc_16",19,13;
 		end;
 	}
-}
-
-in_moc_16,18,8,0	script	guild_to_16	45,1,1,{
-OnTouch:
-	warp "moc_fild16",205,291;
-}
-
-moc_fild16,205,296,0	script	16_to_guild	45,1,1,{
-OnTouch:
-	warp "in_moc_16",18,11;
 }
 
 in_moc_16,1,1,0	script	Beholder#ASNTEST	-1,{

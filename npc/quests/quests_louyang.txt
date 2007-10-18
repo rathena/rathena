@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 1.1 Fixed double levelup bug [Lupus]
 //= 1.2 Added Revolution Quest. [SinSloth]
 //= 1.3 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================ 
 
 //============================================================
@@ -3587,7 +3588,7 @@ lou_in01,43,147,3	script	Gunpowder Expert	750,{
 	}
 }
 
-lou_in01,45,138,3	script	Soldier	825,{
+lou_in01,45,138,3	script	Soldier#1	825,{
 
 	if(countitem(7204))
 	{
@@ -3607,7 +3608,7 @@ lou_in01,45,138,3	script	Soldier	825,{
 	end;
 }
 
-lou_in01,82,139,7	script	Soldier	825,{
+lou_in01,82,139,7	script	Soldier#2	825,{
 
 	if(countitem(7068) || countitem(7096) || countitem(7004))
 	{

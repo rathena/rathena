@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena dev team; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //=		Kafra and Clock Tower NPCs pending remake. [DZeroX]
 //= 2.01 removed all .GATs [Lupus]
 //= 2.1 Rescripted most NPCs to Aegis 10.3 standards. [L0ne_W0lf]
+//= 2.2 Corrected NPC names to fall within proper resctrictions. [L0ne_W0lf]
 //============================================================
 
 // Al De Baran
@@ -90,7 +91,7 @@ aldebaran,49,93,4	script	Young Man#alde	83,{
 	close;
 }
 
-aldebaran,81,61,4	script	Shell Gathering Lady#alde	101,{
+aldebaran,81,61,4	script	Shell Gathering Lady#ald	101,{
 	mes "[Joanne]";
 	mes "I enjoy gathering shells from the sea. It's really fun and relaxing~";
 	next;
@@ -580,7 +581,7 @@ aldeba_in,232,241,4	script	RS125#alde	48,{
 	close;
 }
 
-aldeba_in,223,121,4	script	Threatening-Looking Man#alde	63,{
+aldeba_in,223,121,4	script	Threatening-Looking Man	63,{
 	mes "[Threatening-Looking Man]";
 	mes "Hey, you don't come inside someone else's house without permission.";
 	mes "This is ridiculous!";
@@ -626,7 +627,7 @@ aldeba_in,223,121,4	script	Threatening-Looking Man#alde	63,{
 	close;
 }
 
-aldeba_in,219,61,4	script	Friendly-Looking Man#alde	109,{
+aldeba_in,219,61,4	script	Friendly-Looking Man#ald	109,{
 	mes "[Friendly-Looking Man]";
 	mes "You don't have to listen to a guy right next to my room.";
 	mes "Two years ago, he was in a mercenary training center and fell off from a tree";
@@ -1376,12 +1377,12 @@ sF_Spin:
 
 // Inside Clock Tower
 //============================================================
-c_tower3,10,249,4	script	Gatekeeper	84,{
+c_tower3,10,249,4	script	Gatekeeper#ct	84,{
 	//Key_Of_Clock_Tower
 	callfunc "F_ClockTowerGate","4th",7026,"c_tower4",185,44; 
 }
 
-alde_dun03,264,16,4	script	Gatekeeper	101,{
+alde_dun03,264,16,4	script	Gatekeeper#ct1	101,{
 	//Underground_Key
 	callfunc "F_ClockTowerGate","B4th",7027,"alde_dun04",79,267; 
 }

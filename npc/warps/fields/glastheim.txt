@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 2.x
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 //= Split off npc_warp.txt, 1.1 added gl18-2 [Lupus]
 //= optimized random warp [Lupus] fixed looped warps
+//= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 //Glastheim
@@ -19,7 +20,7 @@ gl_cas01,135,40,0	warp	gl01	1,1,gl_cas01,144,314
 gl_cas01,149,314,0	warp	gl02	1,1,gl_prison,14,70
 gl_cas01,167,191,0	warp	gl03	1,1,gl_prison,14,70
 gl_cas01,185,236,0	warp	gl06	1,1,gl_cas01,163,191
-gl_cas01,200,165,0	warp	gl10	1,1,gl_cas02,104,25
+gl_cas01,200,165,0	warp	gl10a	1,1,gl_cas02,104,25
 gl_cas01,200,18,0	warp	gl7-1	2,2,glast_01,200,294
 gl_cas01,215,236,0	warp	gl07	1,1,gl_cas01,238,192
 gl_cas01,234,192,0	warp	gl04	1,1,gl_prison,14,70
@@ -28,7 +29,7 @@ gl_cas01,372,39,0	warp	gl08	1,1,gl_cas01,367,301
 gl_cas02,104,15,0	warp	gl10-1	1,1,gl_cas01,200,160
 gl_cas02,104,193,0	warp	gl8-1	1,1,glast_01,199,325
 gl_church,156,4,0	warp	gl9-1	1,1,glast_01,200,134
-gl_church,16,299,0	warp	gl11	1,1,gl_chyard,147,284
+gl_church,16,299,0	warp	gl11a	1,1,gl_chyard,147,284
 gl_church,301,46,0	warp	gl12	1,1,gl_chyard,147,15
 gl_chyard,12,149,0	warp	gl22	1,1,gl_sew02,29,270
 gl_chyard,147,12,0	warp	gl12-1	1,1,gl_church,295,46

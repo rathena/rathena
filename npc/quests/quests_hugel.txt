@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets & SinSloth
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena
 //===== Description: =========================================
@@ -16,6 +16,7 @@
 //= 1.3 Added a Missing "close;". [Samuray22]
 //=	-Thanks to Elfange
 //= 1.4 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 //-------------------------------------------------------------------------
@@ -3343,7 +3344,7 @@ lhz_in03,39,44,3	script	Enquro Carson	97,{
 	
 }
 
-hu_in01,310,380,5	script	Girl	891,{
+hu_in01,310,380,5	script	Girl#hugel	891,{
 
 	if(hg_tre < 47)
 	{
@@ -10466,7 +10467,7 @@ OnTouch:
 	}
 }
 
-hugel,209,109,2	script	Boatman	709,{
+hugel,209,109,2	script	Boatman#hugel	709,{
 
 	mes "[Boatman]";
 	mes "Ah, hello~";

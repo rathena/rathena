@@ -5,7 +5,7 @@
 //= Unknown Translator (1.0)
 //= Darkchild (1.2)
 //===== Current Version: ===================================== 
-//= 2.2b
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -15,7 +15,8 @@
 //= 2.1 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=	No longer uses function "F_BlockHigh"
 //= 2.2 Small bug fix (== -> !=) thanks to Saithis. [L0ne_W0lf]
-//= 2.2b ANotehr smakk bugfix, pointed out by Cara. [L0ne_W0lf]
+//= 2.2b ANotehr smaLL bugfix, pointed out by Cara. [L0ne_W0lf]
+//= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================ 
 
 yuno_in02,38,61,5	script	Dean of the Academy#sa	743,{
@@ -604,7 +605,7 @@ yuno_in03,154,35,4	script	Staff of the Academy#a	742,{
 	}
 }
 
-yuno_in03,105,177,5	script	Written Test Professor#sa	754,{
+yuno_in03,105,177,5	script	Written Test Professor#s	754,{
 	mes "[Claytos Verdo]";
 	if (BaseJob != Job_Mage) {
 		if (BaseJob == Job_Sage) {
@@ -1022,7 +1023,8 @@ L_AskQuestions:
 	}
 }
 
-yuno_in03,169,180,3	script	Practical Examination Professor	755,{
+//Practical Examination Professer
+yuno_in03,169,180,3	script	Practical Examination P	755,{
 	mes "[Hermes Tris]";
 	if (BaseJob != Job_Mage) {
 		if (BaseJob == Job_Sage) {

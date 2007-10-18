@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= jAthena/Tsuyuki; L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //= 0.5 Added first, Japanese version [Tsuyuki]
 //= 1.0 Translated to English from iRO NPC Dialogue (100% Official) [Tsuyuki]
 //= 1.1 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 louyang,213,213,3	script	Soldier#BA::LouGuide	825,{
@@ -127,7 +128,7 @@ louyang,213,213,3	script	Soldier#BA::LouGuide	825,{
 
 louyang,160,175,3	duplicate(LouGuide)	Soldier#BB	825
 
-louyang,224,104,3	script	Representative	818,{
+louyang,224,104,3	script	Representative#lou	818,{
 	mes "[Representative]";
 	mes "Welcome to Louyang,";
 	mes "an ancient land with";

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -23,6 +23,7 @@
 //= 1.2 Added more quest from cities/comodo.txt [Evera]
 //= 1.2a missing label [Lupus]
 //= 1.3 Doomed sword quest rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================ 
 
 // Headgear Quests 1
@@ -757,7 +758,7 @@ comodo,216,310,4	script	BBQ Papa#cmd::CmdFamily	50,{
 
 comodo,215,307,4	duplicate(CmdFamily)	BBQ Mama#cmd	74
 
-comodo,213,310,4	duplicate(CmdFamily)	BBQ Boy#cmd	706
+comodo,213,310,4	duplicate(CmdFamily)	BBQ Boy#cmd2	706
 
 cmd_in02,32,140,4	script	Chief#cmd	49,{
 	if (dmdswrd_Q > 4) {

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
-//= 2.2b
+//= 2.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -42,13 +42,14 @@
 //	- Thanks to Barron-Monster.
 //= 2.2b - Changed name from "Pharacon" to "Phracon". [Samuray22]
 //	- Thanks to Barron-Monster.
+//= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 
 //=========================================================
 // Christopher: Geffen Blacksmith
 //=========================================================
-geffen_in,110,172,2	script	Christopher#1::Chris	63,{
+geffen_in,110,172,2	script	Christopher#1::Chrisbs	63,{
 	mes "[Christopher Guillenrow]";
 	mes "Welcome to Christopher's Workshop. Ye can find all yer forging equipment here. So what can I help ye with?";
 	M_Menu:
@@ -177,7 +178,7 @@ geffen_in,110,172,2	script	Christopher#1::Chris	63,{
 		close;
 }
 
-ein_in01,38,29,6	duplicate(Chris)	Christopher#2	63
+ein_in01,38,29,6	duplicate(Chrisbs)	Christopher#2	63
 
 //=====================================================================================
 // Weapon/Armor Refiners

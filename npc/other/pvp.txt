@@ -3,9 +3,9 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
-//= eAthena 0.5.2 +
+//= eAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= PvP NPCs that are found in the Inns in major cities.
@@ -25,6 +25,7 @@
 //=	Removed all receptioned for Yoyo mode, with the
 //=	exception of the "Free for all" mode.
 //=	Added PVP event NPCs.
+//= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================ 
 
 // Morroc
@@ -148,7 +149,7 @@ payon_in01,140,53,4	duplicate(PVPGateKeeper)	Gate Keeper#pay	83
 
 // PVP Yoyo Mode Staff
 //============================================================ 
-pvp_y_room,86,85,4	script	Fight Square Reception Staff	105,{
+pvp_y_room,86,85,4	script	Fight Square Reception#1	105,{
 	set .@mapcount_1,getmapusers("pvp_y_8-1");
 	set .@mapcount_2,getmapusers("pvp_y_8-2");
 	set .@mapcount_3,getmapusers("pvp_y_8-3");
@@ -195,7 +196,7 @@ S_CheckPVPRoom:
 
 // PVP Nightmare Mode Staff
 //============================================================ 
-pvp_n_room,30,85,4	script	Fight Square Reception Staff	105,{
+pvp_n_room,30,85,4	script	Fight Square Reception#2	105,{
 	set .@mapcount_1,getmapusers("pvp_n_8-1");
 	set .@mapcount_2,getmapusers("pvp_n_8-2");
 	set .@mapcount_3,getmapusers("pvp_n_8-3");
@@ -391,7 +392,7 @@ function	script	F_PVPNarrator	{
 
 // Event Contestant Entrance
 //============================================================ 
-pvp_room,54,85,4	script	Combat Square Register Staff	105,{
+pvp_room,54,85,4	script	Registration Staff#1	105,{
 	if (countitem(7028) == 0) {
 		mes "[PVP Combat Square Register Staff]";
 		mes "Eh? How did you get in here?";
@@ -464,7 +465,7 @@ OnInit:
 
 // Spectator Entrance
 //============================================================ 
-pvp_room,62,85,4	script	Compete Square viewer's entrance::PVPSpectator	105,{
+pvp_room,62,85,4	script	Spectator's Entrance#1::PVPSpectator	105,{
 	if (countitem(7029) == 0) {
 		mes "[PVP Compete Square Register Staff]";
 		mes "This is the entrance for viewers.";
@@ -491,15 +492,15 @@ OnInit:
 	end;
 }
 
-pvp_room,70,85,4	duplicate(PVPSpectator)	Compete Square Register Staff	105
+pvp_room,70,85,4	duplicate(PVPSpectator)	Spectator's Entrance#2	105
 
-pvp_room,78,85,4	duplicate(PVPSpectator)	Combat Square Register Staff	105
+pvp_room,78,85,4	duplicate(PVPSpectator)	Spectator's Entrance#3	105
 
-pvp_room,86,85,4	duplicate(PVPSpectator)	Combat Square Register Staff	105
+pvp_room,86,85,4	duplicate(PVPSpectator)	Spectator's Entrance#4	105
 
 // Spectator Warps
 //============================================================ 
-pvp_2vs2,5,4,0	script	Combat Square Staff::PVPSpecWarp	45,1,1,{
+pvp_2vs2,5,4,0	script	Combat Square Staff#1::PVPSpecWarp	45,1,1,{
 OnTouch:
 	mes "[Combat Square Staff]";
 	mes "May I help you?";
@@ -511,13 +512,13 @@ OnTouch:
 	end;
 }
 
-pvp_2vs2,5,74,0	duplicate(PVPSpecWarp)	Combat Square Staff	45,1,1
+pvp_2vs2,5,74,0	duplicate(PVPSpecWarp)	Combat Square Staff#2	45,1,1
 
-pvp_2vs2,74,74,0	duplicate(PVPSpecWarp)	Combat Square Staff	45,1,1
+pvp_2vs2,74,74,0	duplicate(PVPSpecWarp)	Combat Square Staff#3	45,1,1
 
-pvp_2vs2,74,5,0	duplicate(PVPSpecWarp)	Combat Square Staff	45,1,1
+pvp_2vs2,74,5,0	duplicate(PVPSpecWarp)	Combat Square Staff#4	45,1,1
 
-pvp_2vs2,40,40,0	script	Combat Square Staff	45,1,1,{
+pvp_2vs2,40,40,0	script	Combat Square Staff#5	45,1,1,{
 	set mapmove,0;
 	mes "[Combat Square Staff]";
 	mes "May I help you?";
@@ -535,7 +536,7 @@ pvp_2vs2,40,40,0	script	Combat Square Staff	45,1,1,{
 
 // PVP Area Exit warp
 //============================================================ 
-pvp_room,51,19,0	script	out	45,4,2,{
+pvp_room,51,19,0	script	out#eventpvp	45,4,2,{
 OnTouch:
 	mes "[Combat Square Staff]";
 	mes "Did you have fun in Combat Square?";

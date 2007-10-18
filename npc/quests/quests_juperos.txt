@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= MasterOfMuppets
 //===== Version ==============================================
-//= 1.1
+//= 1.2
 //===== Compatible With ======================================
 //= eAthena 1.0
 //===== Description ==========================================
@@ -12,6 +12,7 @@
 //= 1.0 First version, partly implemented [MasterOfMuppets]
 //= 1.1 Added official Juperos Ruins History Quest. Thanks
 //= to Keplerk for his first version. [SinSloth]
+//= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 yuno_in04,190,125,4	script	Scholar	700,{
@@ -1285,7 +1286,7 @@ yuno_in04,186,125,4	script	Bundle of Files	111,{
 	}
 }
 
-yuno_in04,188,118,4	script	Book	111,{
+yuno_in04,188,118,4	script	Book#juperos	111,{
 
 	if(yuno_hist > 7)
 	{
@@ -1347,7 +1348,7 @@ yuno_in04,188,118,4	script	Book	111,{
 
 // Bronze Statue - juperos_01 99 112
 
-juperos_01,99,112,4	script	Bronze Statue	844,{
+juperos_01,99,112,4	script	Bronze Statue#1	844,{
 
 	if(yuno_hist > 3)
 	{
@@ -1713,7 +1714,7 @@ juperos_01,123,92,4	script	Stone Statue	844,{
 	close;
 }
 
-juperos_01,99,71,4	script	Bronze Statue	844,{
+juperos_01,99,71,4	script	Bronze Statue#2	844,{
 
 	mes "^3355FFIt's an elaborate";
 	mes "bronze statue that";

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera
 //===== Current Version: ===================================== 
-//= 2.3c
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: =========================================
@@ -71,6 +71,7 @@
 //=	New $dtsday system and bug fix[Evera]
 //= 2.3a fixed 2 bugs with comparision [Lupus]
 //= 2.3b corrected Glast warp coords [Lupus] 2.3c Bailand -> Bayalan
+//= 2.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================ 
 
 //Yuno
@@ -94,7 +95,7 @@ prontera,164,125,6	script	Kafra Voting Staff#02	115,{
 
 //Cool Event Staff Headquarters NPCs
 //Kudiuu (Maintenance Guy)
-lhz_in02,20,274,6	script	Maintenance Guy	851,{
+lhz_in02,20,274,6	script	Maintenance Guy#dts	851,{
 	mes "[Kudiuu]";
 	mes "Holy...!";
 	mes "Will this place";

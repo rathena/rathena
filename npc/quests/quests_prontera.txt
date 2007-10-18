@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -33,6 +33,7 @@
 //= 1.7c replaced item "names" with item id. [Lupus]
 //= 1.8 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.9 Fixed "him" -> "her" in Ph.D hat quest. THansk to yyCC. [L0ne_W0lf]
+//= 2.0 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================ 
 
 // Prontera Culvert
@@ -1771,7 +1772,7 @@ mjolnir_01,313,269,5	script	Dazed Boy#prt	706,{
 	}
 }
 
-mjolnir_01,316,268,3	script	Exhausted-Looking Woman#prt	879,{
+mjolnir_01,316,268,3	script	Exhausted-Looking Woman	879,{
 	//var max_max_c1 = CheckMaxCount 1201 1
 	//if (max_max_c1 == 1) {
 	//	mes "^3355FFWait a second!";
@@ -3202,7 +3203,7 @@ prt_church,24,111,5	script	#prince3	887,{
 	}
 }
 
-moc_fild16,201,295,5	script	Assassin Guildsman#poison	884,{
+moc_fild16,201,295,5	script	Assassin Guildsman#poiso	884,{
 	if (prt_curse == 23) {
 		mes "[Assassin Guildsman]";
 		mes "What business";

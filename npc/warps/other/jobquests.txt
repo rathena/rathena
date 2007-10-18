@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Version Ep4+
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= 1.5 Replaced clone maps with the real ones [Lupus]
 //= 1.6 removed swordman quest map warps. They are now contained in the swordman quest. [L0ne_W0lf]
 //= 1.7 Updated some 2-2 job quest related warps. [L0ne_W0lf]
+//= 1.8 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 
@@ -65,8 +66,8 @@ monk_test,298,127,0	warp	monk20	1,1,monk_test,268,125
 //==============================================================================
 aldebaran,65,53,0	warp	alche#1	1,1,alde_alche,20,175
 aldebaran,53,65,0	warp	alche#2	1,1,alde_alche,42,175
-alde_alche,19,171,0	warp	alche#1	1,1,aldebaran,68,56
-alde_alche,42,171,0	warp	alche#1	1,1,aldebaran,56,68
+alde_alche,19,171,0	warp	alche#1-1	1,1,aldebaran,68,56
+alde_alche,42,171,0	warp	alche#1-2	1,1,aldebaran,56,68
 alde_alche,41,186,0	warp	alche#1F_2F	1,1,alde_alche,113,178
 alde_alche,114,183,0	warp	alche#2F_1F	1,1,alde_alche,42,182
 alde_alche,13,184,0	warp	alche#1F_B1	1,1,alde_alche,88,113

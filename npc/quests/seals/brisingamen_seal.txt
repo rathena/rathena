@@ -3,14 +3,15 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.0a
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
 //= Quest for breaking the seal of Brisingamen.
 //===== Additional Comments: =================================
-// 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
-// 1.0a Removed duplicates [Toms]
+//= 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
+//= 1.0a Removed duplicates [Toms]
+//= 1.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 prt_fild08,175,374,3	script	Bard#brising	51,{
@@ -2832,7 +2833,7 @@ prt_church,113,103,1	script	Praying Man	798,{
 
 }
 
-prt_castle,80,52,0	script	Personnel Record#hiddenbook1	111,{
+prt_castle,80,52,0	script	Personnel Record#book1	111,{
 
 	if($God2 < 50)
 {

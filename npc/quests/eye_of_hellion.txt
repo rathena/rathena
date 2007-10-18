@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 1.0 First version [MasterOfMuppets]
 //= 1.1 a ',' that should be ';' [FlavioJS]
 //= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 geffen,110,200,3	script	Sage Welshyun	754,2,2,{
@@ -687,7 +688,7 @@ s_Sorry:
 
 }
 
-prontera,224,84,1	script	Training Dummy#HellionDummy	111,{
+prontera,224,84,1	script	Training Dummy#HelDummy	111,{
 
 	if(HELLIONQ == 2)goto s_Hellion;
 	mes "^3151FFIt's a training dummy";
@@ -727,7 +728,7 @@ s_Hellion:
 
 }
 
-prt_in,128,79,0	script	Unknown Machine#HellionMchn	111,{
+prt_in,128,79,0	script	Unknown Machine#HelMchn	111,{
 	if(HELLIONQ == 6)goto s_Input2;
 	if(HELLIONQ == 5)goto s_Input;
 	mes "^3151FFIt's some sort of";
@@ -1233,7 +1234,7 @@ payon,101,191,1	script	#HellionStepAct	139,1,1,{
 
 }
 
-payon,82,109,1	script	Pile of Stones#HellionStones	111,{
+payon,82,109,1	script	Pile of Stones#HelStones	111,{
 	if(HELLIONQ != 11)end;
 	mes "[" + strcharinfo(0) + "]";
 	mes "Well, this is the place";
@@ -1302,7 +1303,7 @@ payon,240,161,1	script	Vat#HellionVat	111,{
 
 }
 
-payon,159,130,1	script	Wooden Floor#HellionFloor	111,{
+payon,159,130,1	script	Wooden Floor#HelFloor	111,{
 	if(HELLIONQ > 15)goto s_Slab;
 	if(HELLIONQ != 15)end;
 	mes "[" + strcharinfo(0) + "]";
@@ -1381,7 +1382,7 @@ s_Slab:
 
 }
 
-pay_arche,141,29,1	script	Buddha Statue#HellionStat	111,3,3,{
+pay_arche,141,29,1	script	Buddha Statue#HelStat	111,3,3,{
 	if(HELLIONQ != 17)end;
 	mes "[" + strcharinfo(0) + "]";
 	mes "Hey, there's a huge";

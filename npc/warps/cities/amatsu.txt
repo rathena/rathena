@@ -4,7 +4,7 @@
 //= Athena (1.0)
 //= Nana (1.1)
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 6+
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //===== Additional Comments: =================================
 //= 1.3 Fixed a warp-back [erKURITA]
 //= 1.4 Added Ninja's Warps. Thanks to RockmanEXE for the info. [erKURITA]
+//= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 //= Amatsu ===================================================
@@ -27,10 +28,10 @@ ama_in01,77,177,0	warp	warp1967	1,1,amatsu,246,160
 ama_in01,86,23,0	warp	warp2009	1,1,amatsu,129,117
 ama_in01,88,94,0	warp	warp2008	1,1,amatsu,52,145
 ama_in02,127,163,0	warp	warp1980	1,1,ama_in02,220,161
-ama_in02,195,44,0	warp	warp1973	1,1,ama_in02,65,40
+ama_in02,195,44,0	warp	warp1973a	1,1,ama_in02,65,40
 ama_in02,215,150,0	warp	warp1978	1,1,ama_in02,59,156
 ama_in02,222,161,0	warp	warp1979	1,1,ama_in02,130,163
-ama_in02,227,45,0	warp	warp1973	1,1,amatsu,88,235
+ama_in02,227,45,0	warp	warp1973b	1,1,amatsu,88,235
 ama_in02,56,44,0	warp	warp1975	1,1,ama_in02,59,144
 ama_in02,59,142,0	warp	warp1976	1,1,ama_in02,56,41
 ama_in02,59,159,0	warp	warp1977	1,1,ama_in02,215,152

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= erKURITA
 //===== Current Version: =====================================
-//= 1.3a
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -14,9 +14,10 @@
 //= 1.2 Fixed tab - missing pillar's appeared [Lupus]
 //= 1.3 Updated Abyss Lake entrance based on official [SinSloth]
 //= 1.3a Removed .GATs [Lupus]
+//= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
-hu_fild05,168,304,0	script	Column	111,{
+hu_fild05,168,304,0	script	Column#abyss1	111,{
 
 	mes "^3355FFThere are 3 oddly";
 	mes "shaped grooves on";
@@ -85,7 +86,7 @@ hu_fild05,168,304,0	script	Column	111,{
 	close;
 }
 
-hu_fild05,171,211,0	script	Column	111,1,1,{
+hu_fild05,171,211,0	script	Column#abyss2	111,1,1,{
 
 	mes "^3355FFThis column looks";
 	mes "very similar to the";

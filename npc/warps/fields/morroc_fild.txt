@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= Nana (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Warp Points for Morroc Fields
 //===== Additional Comments: =================================
 //= 1.1 changed 'anthell' to @anthell [Lupus]
+//= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 //= Sograt Dessert ===========================================
@@ -20,7 +21,7 @@ moc_fild01,301,16,0	warp	mocf02	10,1,moc_fild02,77,338
 moc_fild01,321,16,0	warp	mocf02-1	10,1,moc_fild02,77,338
 moc_fild01,341,16,0	warp	mocf02-2	10,1,moc_fild02,77,338
 moc_fild01,379,162,0	warp	mocf011	2,12,pay_fild04,20,165
-moc_fild01,56,384,0	warp	moc007	3,2,prt_fild08,54,24
+moc_fild01,56,384,0	warp	moc007a	3,2,prt_fild08,54,24
 moc_fild01,68,16,0	warp	mocf01	15,3,moc_fild04,317,376
 moc_fild02,228,29,0	warp	mocf03	4,2,moc_fild13,298,367
 moc_fild02,332,19,0	warp	mocf04	5,3,moc_fild03,70,336

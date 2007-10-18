@@ -473,7 +473,7 @@ function	script	AdoptReset	{
 	return;
 }
 
-prt_church,165,166,6	script	Teacher	97,{
+prt_church,165,166,6	script	Teacher#adopt	97,{
 	mes "[Mario]";
 	if (Upper==2 && (getskilllv(408)<=0 || getskilllv(409)<=0)) goto L_Teach;
 	if (Upper==2) mes "Hello, baby! How are you?";

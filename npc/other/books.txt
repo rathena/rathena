@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Eathena SVN
 //===== Description: =========================================
@@ -11,12 +11,13 @@
 //= Various Books found in Prontera Library
 //===== Additional Comments: =================================
 //= 1.0 First Version, rescripted to Aegis 10.3 standard. [L0ne_W0lf]
+//= 1.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 // Prontera
 //============================================================
 
-prt_in,168,56,4	script	Monster Encyclopedia#pront	111,{
+prt_in,168,56,4	script	Monster Encyclopedia#prt	111,{
 	mes "^FF0000[Monster Encyclopedia]^000000";
 	mes "This is a Monster Encyclopedia";
 	mes "containing information on Water,";
@@ -396,7 +397,7 @@ prt_in,168,56,4	script	Monster Encyclopedia#pront	111,{
 	}
 }
 				
-prt_in,159,56,4	script	Monster Encyclopedia#2pront	111,{
+prt_in,159,56,4	script	Monster Encyclopedia#2pr	111,{
 	mes "^FF0000[Monster Encyclopedia]^000000";
 	mes "This is a Monster Encyclopedia";
 	mes "containing information on Earth,";
@@ -875,7 +876,7 @@ prt_in,159,56,4	script	Monster Encyclopedia#2pront	111,{
 	}
 }
 
-prt_in,161,50,4	script	Monster Encyclopedia#3pront	 111,{
+prt_in,161,50,4	script	Monster Encyclopedia#3pr	 111,{
 	mes "^FF0000[Monster Encyclopedia]^000000";
 	mes "This is a Monster Encyclopedia";
 	mes "containing information on Dark,";
@@ -1243,7 +1244,7 @@ prt_in,161,50,4	script	Monster Encyclopedia#3pront	 111,{
 	}
 }
 
-prt_in,172,96,4	script	Monster Encyclopedia#4pront	111,{
+prt_in,172,96,4	script	Monster Encyclopedia#4pr	111,{
 	mes "^FF0000[Dungeon Monster Encyclopedia]^000000";
 	mes "This is an Encyclopedia describing";
 	mes "monsters living in Dungeons.";
@@ -1725,7 +1726,7 @@ prt_in,172,96,4	script	Monster Encyclopedia#4pront	111,{
 }
 
 
-prt_in,164,96,4	script	Monster Encyclopedia#5pront	111,{
+prt_in,164,96,4	script	Monster Encyclopedia#5pr	111,{
 	mes "^FF0000[Dungeon Monster Encyclopedia]^000000";
 	mes "This is an Encyclopedia describing";
 	mes "Monsters living in Dungeons.";
@@ -2303,7 +2304,7 @@ prt_in,164,96,4	script	Monster Encyclopedia#5pront	111,{
 	}
 }
 
-prt_in,172,102,4	script	Monster Encyclopedia#6pront	111,{
+prt_in,172,102,4	script	Monster Encyclopedia#6pr	111,{
 	mes "^FF0000[Dungeon Monster Encyclopedia]^000000";
 	mes "This is an Encyclopedia describing";
 	mes "Monsters living in Dungeons.";
@@ -2811,7 +2812,7 @@ prt_in,172,102,4	script	Monster Encyclopedia#6pront	111,{
 	}
 }
 
-prt_in,164,102,4	script	Monster Encyclopedia#7pront	111,{
+prt_in,164,102,4	script	Monster Encyclopedia#7pr	111,{
 	mes "^FF0000[Dungeon Monster Encyclopedia]^000000";
 	mes "This is an Encyclopedia describing";
 	mes "Monsters living in Dungeons.";

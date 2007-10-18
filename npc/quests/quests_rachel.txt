@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -49,6 +49,7 @@
 //=	the ontouch "key". Thanks to Gepard for pointing them out.
 //= 1.9 Fixed a misorder with variable checkings. [SinSloth]
 //= 2.0 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 2.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -932,7 +933,7 @@ rachel,138,73,5	script	Idle Merchant#ra_in01	85,{
 
 }
 
-rachel,120,47,3	script	Idle Merchant#ra_in01	85,{
+rachel,120,47,3	script	Idle Merchant#ra_in01_2	85,{
 	if ((lost_boy < 5) || (lost_boy > 6)) {
 		mes "[Idle Merchant]";
 		mes "I'm thinking of quitting";
@@ -3871,7 +3872,7 @@ OnEnable:
 
 // Donation Lottery Quest/High Priest Quest
 //============================================================ 
-ra_temple,119,180,0	script	Temple Entrance#ra_temple	45,1,1,{
+ra_temple,119,180,0	script	Temple Entrance#ra_tem	45,1,1,{
 OnTouch:
 	if ($rachel_donate >= 10000) {
 		if (MISC_QUEST & 8192) { warp "ra_temin",169,23; end; }
@@ -4872,7 +4873,7 @@ que_rachel,180,37,0	duplicate(nemma01)	nemma03	-1,5,5
 que_rachel,165,37,0	duplicate(nemma01)	nemma04	-1,5,5
 que_rachel,160,37,0	duplicate(nemma01)	nemma05	-1,5,5
 
-que_rachel,169,18,0	script	Quest Temple Exit#ra_temple	45,2,2,{
+que_rachel,169,18,0	script	Quest Temple Exit#ra_tem	45,2,2,{
 	mes "^3355FFThe gate is closed.^000000";
 	next;
 
@@ -6522,7 +6523,7 @@ OnTimer120000:
 
 }
 
-rachel,163,152,0	script	imir3#rachel	-1,3,3,{
+rachel,163,152,0	script	imir3#rachel2	-1,3,3,{
 OnTouch:
 	if (ra_tem_q == 22) {
 		mes "^3355FFYou feel a slight headache";

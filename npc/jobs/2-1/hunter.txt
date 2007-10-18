@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.8
+//= 2.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -40,6 +40,7 @@
 //	-Thanks to ultradamage.
 //= 2.7 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.8 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
+//= 2.9 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================ 
 
 // Notices in the old Hunter Guild.
@@ -61,7 +62,7 @@ in_hunter,99,99,4	script	Hunter Info#hnt::HntNotice	727,{
 	close;
 }
 
-pay_fild10,148,252,3	duplicate(HntNotice)	Job Change Location Change Notice#hugel	857
+pay_fild10,148,252,3	duplicate(HntNotice)	Job Change Location#hu	857
 
 // Actual Job quest start
 //============================================================ 

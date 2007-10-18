@@ -4,7 +4,7 @@
 //= kobra_k88
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= [Aegis Conversion]
 //= eAthena 7.15 +
@@ -22,11 +22,12 @@
 //= 1.3 Removed Duplicates [Silent]
 //= 1.4 Rescripted to Aegis 10.3 standard. [L0ne_W0lf]
 //= 1.5 Removed a duplicate related to the Sign Quest. [SinSloth]
+//= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 // Prontera
 //============================================================
-prontera,158,213,1	script	Sign Post#PrtSign1	111,{
+prontera,158,213,1	script	Sign Post#Prt1	111,{
 	mes "^993300- The Sign Post Reads -^000000";
 	mes "North to Prontera Castle";
 	mes "North to Al De Baran";
@@ -40,7 +41,7 @@ prontera,158,213,1	script	Sign Post#PrtSign1	111,{
 	close;
 }
 
-prontera,156,197,1	script	Prontera Bulletin#PrtSign2	111,{
+prontera,156,197,1	script	Prontera Bulletin#Prt2	111,{
 	mes "^993300- The Prontera Bulletin Reads -^000000";
 	mes "Wanted: Two Clip Accessories";
 	mes "Please contact...";
@@ -53,19 +54,19 @@ prontera,156,197,1	script	Prontera Bulletin#PrtSign2	111,{
 	close;
 }
 
-prontera,278,212,1	script	Sign#PrtSign3	111,{
+prontera,278,212,1	script	Sign#Prt3	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Please help keep Prontera a clean place.";
 	close;
 }
 
-prontera,150,326,1	script	Sign#PrtSign4	111,{
+prontera,150,326,1	script	Sign#Prt4	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Citizens of Prontera are Welcomed in the Prontera Castle.";
 	close;
 }
 
-prontera,31,212,1	script	Billboard#PrtSign5	111,{
+prontera,31,212,1	script	Billboard#Prt5	111,{
 	mes "^993300- The Billboard Reads -^000000";
 	mes "~WANTED~";
 	mes "iROGM01";
@@ -77,13 +78,13 @@ prontera,31,212,1	script	Billboard#PrtSign5	111,{
 	close;
 }
 
-prontera,165,305,1	script	Billboard#PrtSign6	111,{
+prontera,165,305,1	script	Billboard#Prt6	111,{
 	mes "^993300- The Billboard Reads -^000000";
 	mes "We hope you enjoy your stay in Prontera.";
 	close;
 }
 
-prontera,145,304,1	script	Sign#PrtSign7	111,{
+prontera,145,304,1	script	Sign#Prt7	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Note:";
 	mes "I lost my cart in Mt. Mjolnir, if someone finds it please tell me, my life was in that bucket of goods!";
@@ -92,21 +93,21 @@ prontera,145,304,1	script	Sign#PrtSign7	111,{
 
 // Morroc
 //============================================================
-morocc,144,84,1	script	Sign#MocSign1	111,{
+morocc,144,84,1	script	Sign#Moc1	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Wanted: Body guard to protect my shop from thieves";
 	mes "Please contact Butcher";
 	close;
 }
 
-morocc,145,83,1	script	Sign#MocSign2	111,{
+morocc,145,83,1	script	Sign#Moc2	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Selling, well groomed Peco Peco!";
 	mes "This beautiful specimen has only been ridden by myself, comes with a saddle, a harness and...";
 	close;
 }
 
-morocc,32,174,1	script	Bulletin#MocSign3	111,{
+morocc,32,174,1	script	Bulletin#Moc3	111,{
 	mes "^993300- The Bulletin Reads -^000000";
 	mes "^0099FFMorroc women up in arms!^000000";
 	mes "A recent study has shown that the majority of male citizens in";
@@ -124,13 +125,13 @@ morocc,32,174,1	script	Bulletin#MocSign3	111,{
 	close;
 }
 
-morocc,168,266,1	script	Sign#MocSign5	111,{
+morocc,168,266,1	script	Sign#Moc5	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Welcome to Morroc.";
 	close;
 }
 
-morocc,168,264,1	script	Billboard#MocSign6	111,{
+morocc,168,264,1	script	Billboard#Moc6	111,{
 	mes "^993300- The Billboard Reads -^000000";
 	mes "^CC0033Battle Royal!^000000";
 	mes "Do you have what it takes to battle someone in a no holds barred, player vs. player game of death!";
@@ -138,7 +139,7 @@ morocc,168,264,1	script	Billboard#MocSign6	111,{
 	close;
 }
 
-morocc,298,211,1	script	Sign#MocSign7	111,{
+morocc,298,211,1	script	Sign#Moc7	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Welcome to Morroc.";
 	close;
@@ -146,20 +147,20 @@ morocc,298,211,1	script	Sign#MocSign7	111,{
 
 // Geffen
 //============================================================
-geffen,116,58,1	script	Geffen Bulletin#GefSign1	111,{
+geffen,116,58,1	script	Geffen Bulletin#Gef1	111,{
 	mes "^993300- The Geffen Bulletin Reads -^000000";
 	mes "Remember Wizard's...It's not how many skills you know, it's the magic that counts!";
 	close;
 }
 
-geffen,61,174,1	script	Sign#GefSign2	111,{
+geffen,61,174,1	script	Sign#Gef2	111,{
 OnClick:
 	mes "^993300- The Sign Reads -^000000";
 	mes "- Seems to be written in a language unfamiliar to you -";
 	close;
 }
 
-geffen,113,104,1	script	Billboard#GefSign3	111,{
+geffen,113,104,1	script	Billboard#Gef3	111,{
 	mes "^993300- The Billboard Reads -^000000";
 	mes "Selling: Brand new Chon Chon Doll!";
 	mes "What a great gift to give to a loved one, contact me now!";
@@ -171,7 +172,7 @@ geffen,113,104,1	script	Billboard#GefSign3	111,{
 	close;
 }
 
-geffen,119,190,1	script	Sign Post#GefSign4	111,{
+geffen,119,190,1	script	Sign Post#Gef4	111,{
 	mes "^993300- The Sign Post Reads -^000000";
 	mes "North to Geffen Fields";
 	mes "Northeast to Al De Baran";
@@ -185,13 +186,13 @@ geffen,119,190,1	script	Sign Post#GefSign4	111,{
 	close;
 }
 
-geffen,168,175,1	script	Sign#GefSign5	111,{
+geffen,168,175,1	script	Sign#Gef5	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "''Your always welcomed in Geffen''";
 	close;
 }
 
-geffen,183,61,1	script	Sign#GefSign6	111,{
+geffen,183,61,1	script	Sign#Gef6	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Welcome.";
 	close;
@@ -199,7 +200,7 @@ geffen,183,61,1	script	Sign#GefSign6	111,{
 
 // Al De Baran
 //============================================================
-aldebaran,181,172,1	script	Billboard#AldeSign1	111,{
+aldebaran,181,172,1	script	Billboard#Alde1	111,{
 	mes "^993300- The Billboard Reads -^000000";
 	mes "In Search of:";
 	mes "I lost my Bongun pet, it wasn't my fault, it just ran away...";
@@ -207,13 +208,13 @@ aldebaran,181,172,1	script	Billboard#AldeSign1	111,{
 	close;
 }
 
-aldebaran,133,104,1	script	Al De Baran Bulletin#AldeSign2	111,{
+aldebaran,133,104,1	script	Al De Baran Bulletin#Al2	111,{
 	mes "^993300- The Al De Baran Bulletin Reads -^000000";
 	mes "''Enjoy your stay in Al De Baran''";
 	close;
 }
 
-aldebaran,54,223,1	script	Billboard#AldeSign3	111,{
+aldebaran,54,223,1	script	Billboard#Alde3	111,{
 	mes "^993300- The Billboard Reads -^000000";
 	mes "Help Wanted:";
 	mes "We are looking for young, strong and athletic people who are";
@@ -222,14 +223,14 @@ aldebaran,54,223,1	script	Billboard#AldeSign3	111,{
 	close;
 }
 
-aldebaran,197,228,1	script	#AldeSign4	-1,1,1,{
+aldebaran,197,228,1	script	#Alde4	-1,1,1,{
 OnTouch:
 	mes "[Home Owner]";
 	mes "Get off my roof you no good leecher!";
 	close;
 }
 
-aldebaran,217,222,1	script	Sign#AldeSign5	111,{
+aldebaran,217,222,1	script	Sign#Alde5	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "I saw Santa Claus in Lutie!";
 	mes "- The rest looks like scribble -";
@@ -238,13 +239,13 @@ aldebaran,217,222,1	script	Sign#AldeSign5	111,{
 
 // Izlude
 //============================================================
-izlude,54,139,1	script	Sign#IzSign1	111,{
+izlude,54,139,1	script	Sign#Iz1	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Welcome to the Swordsman Academy.";
 	close;
 }
 
-izlude,144,148,1	script	Sign#IzSign2	111,{
+izlude,144,148,1	script	Sign#Iz2	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Welcome.";
 	close;
@@ -252,19 +253,19 @@ izlude,144,148,1	script	Sign#IzSign2	111,{
 
 // Alberta
 //============================================================
-alberta,35,241,1	script	Billboard#AlbSign1	111,{
+alberta,35,241,1	script	Billboard#Alb1	111,{
 	mes "^993300- The Billboard Reads -^000000";
 	mes "Welcome to Alberta, the Merchant's paradise.";
 	close;
 }
 
-alberta,37,39,1	script	Billboard#AlbSign2	111,{
+alberta,37,39,1	script	Billboard#Alb2	111,{
 	mes "^993300- The Billboard Reads -^000000";
 	mes "Welcome.";
 	close;
 }
 
-alberta,99,151,1	script	Sign#AlbSign3	111,{
+alberta,99,151,1	script	Sign#Alb3	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Tools by the Cart full!";
 	mes "You need tools? We got'em!";
@@ -272,7 +273,7 @@ alberta,99,151,1	script	Sign#AlbSign3	111,{
 	close;
 }
 
-alberta,196,152,1	script	Sign#AlbSign4	111,{
+alberta,196,152,1	script	Sign#Alb4	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Docking and Shipment times very on load. For information regarding";
 	mes "Shipping and Receiving, please...";
@@ -280,7 +281,7 @@ alberta,196,152,1	script	Sign#AlbSign4	111,{
 	close;
 }
 
-alberta,149,54,1	script	Sign#AlbSign5	111,{
+alberta,149,54,1	script	Sign#Alb5	111,{
 	mes "^993300- The Sign Reads -^000000";
 	mes "Welcome.";
 	close;

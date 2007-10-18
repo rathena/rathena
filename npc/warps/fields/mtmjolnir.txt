@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= Nana (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Warp Points for Mt. Mjolnir
 //===== Additional Comments: =================================
 //= 1.1 updating according to jA [Lupus]
+//= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 //= Mt. Mjolnir ==============================================
@@ -39,7 +40,7 @@ mjolnir_07,17,77,0	warp	mjol11-1	2,4,mjolnir_06,380,74
 mjolnir_07,214,383,0	warp	mjol04-1	4,2,mjolnir_03,212,20
 mjolnir_07,383,233,0	warp	mjol12	2,4,mjolnir_08,33,234
 mjolnir_07,383,362,0	warp	mjol13	2,4,mjolnir_08,32,346
-mjolnir_08,159,373,0	warp	mjol06	1,1,mjolnir_04,160,49
+mjolnir_08,159,373,0	warp	mjol06a	1,1,mjolnir_04,160,49
 mjolnir_08,185,28,0	warp	mjol14	17,2,mjolnir_09,196,364
 mjolnir_08,29,346,0	warp	mjol13-1	2,4,mjolnir_07,380,362
 mjolnir_08,30,234,0	warp	mjol12-1	2,4,mjolnir_07,380,233

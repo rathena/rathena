@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 3.5
+//= 3.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -70,8 +70,9 @@
 //=		Note: There are many condition checks that should be omitted in the future fixed item names in item_db.txt / txt resources according the quest
 //=		for items, should be used bitwise methods in a single variable. So let's fix the rest possible bugs (if they exist) and then optimize ^_-		
 //= 3.5 Changed the way the Black Keycard distibuting NPCs work slighty. [L0ne_W0lf]
-//= 3.6 Keil Hyre remove3s ALL outstanding quest items when he is talked [L0ne_W0lf]
+//= 3.6 Keil Hyre removes ALL outstanding quest items when he is talked [L0ne_W0lf]
 //=	to after finishing the quest.
+//= 3.7 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================ 
 //============================================================================
 // Kiel Hyre Quest/Robotic Lab Dungeon
@@ -5347,7 +5348,7 @@ OnTouch:
 //----------------------------------------------------------------------------
 // Mysterious Woman "Mitchell Layla"
 //----------------------------------------------------------------------------
-kh_mansion,25,79,4	script	Mysterious Woman	727,3,3,{
+kh_mansion,25,79,4	script	Mysterious Woman#kh	727,3,3,{
 L_StartDialog:
 	if (KielHyreQuest == 50) {
 		mes "^3355FFYou awaken with your^000000";
@@ -6795,10 +6796,10 @@ kh_kiehl01,15,177,0	script	Robots#kh2::RobotsKHQ	111,{
 }
 kh_kiehl01,15,180,0	duplicate(RobotsKHQ)	Robots#kh3	111
 kh_kiehl01,15,182,0	duplicate(RobotsKHQ)	Robots#kh4	111
-kh_kiehl01,35,187,0	duplicate(RobotsKHQ)	Robots#kh1	111
-kh_kiehl01,37,187,0	duplicate(RobotsKHQ)	Robots#kh2	111
-kh_kiehl01,39,187,0	duplicate(RobotsKHQ)	Robots#kh3	111
-kh_kiehl01,41,187,0	duplicate(RobotsKHQ)	Robots#kh4	111
+kh_kiehl01,35,187,0	duplicate(RobotsKHQ)	Robots#kh5	111
+kh_kiehl01,37,187,0	duplicate(RobotsKHQ)	Robots#kh6	111
+kh_kiehl01,39,187,0	duplicate(RobotsKHQ)	Robots#kh7	111
+kh_kiehl01,41,187,0	duplicate(RobotsKHQ)	Robots#kh8	111
 
 //----------------------------------------------------------------------------
 // Kiehl's Room; Big Door, (Fifth, and final)

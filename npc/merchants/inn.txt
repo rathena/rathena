@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -34,18 +34,19 @@
 //= 1.8 Corrected Geffen NPC. [L0ne_W0lf] 
 //= 1.9 Added the Inn for Al De baran. [L0ne_W0lf]
 //= 2.0 Added Inn for the Town of Veins. [L0ne_W0lf]
+//= 2.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================ 
 
 
 //======================== Prontera ===================================
 // West Side Inn -------------------
-prt_in,244,135,2	script	Inn Employee::Sammy	53,{
+prt_in,244,135,2	script	Inn Employee#Sammy	53,{
 
 	callfunc "F_InnMaid","[Employee Sammy]","Nenkaras","prt_in",238,130;
 	warp "prt_in",247,104; end;
 }
 // East Side Inn ------------------
-prt_in,61,141,2	script	Inn Employee::Ahlma#01	53,{
+prt_in,61,141,2	script	Inn Employee#Ahlma	53,{
 
 	callfunc "F_InnMaid","[Emplyee Ahlma]","Nenkaras","prt_in",64,136;
 	warp "prt_in",64,136; end;
@@ -53,27 +54,27 @@ prt_in,61,141,2	script	Inn Employee::Ahlma#01	53,{
 
 //======================== Alberta ====================================
 // North --------------------------
-alberta_in,32,142,5	script	Inn Maid::Moira	53,{
+alberta_in,32,142,5	script	Inn Maid#Moira	53,{
 
 	callfunc "F_InnMaid","[Moira]","North Inn","alberta_in",26,138;
 	warp "alberta_in",18,188; end;
 }
 // South -----------------------------
-alberta_in,55,142,8	script	Inn Maid::Tina	53,{
+alberta_in,55,142,8	script	Inn Maid#Tina	53,{
 
 	callfunc "F_InnMaid","[Tina]","South Inn","alberta_in",60,140;
 	warp "alberta_in",68,188; end;
 }
 
 //====================== Geffen ======================================
-geffen_in,70,64,5	script	Inn Employee::Cena	53,{
+geffen_in,70,64,5	script	Inn Employee#Cena	53,{
 
 	callfunc "F_InnMaid","[Employee Cena]","'Ifrit,' the only Inn in the city of Geffen.","geffen_in",70,59;
 	warp "geffen_in",31,31; end;
 }
 
 //======================= Payon ======================================
-payon_in01,132,62,5	script	Inn Employee::Ahee	53,{
+payon_in01,132,62,5	script	Inn Employee#Ahee	53,{
 
 	callfunc "F_InnMaid","[Employee Ahee]","Payon Inn","payon_in01",136,61;
 	warp "payon_in01",132,11; end;
@@ -81,13 +82,13 @@ payon_in01,132,62,5	script	Inn Employee::Ahee	53,{
 
 //======================== Morocc ====================================
 // North East --------------------------
-morocc_in,147,141,3	script	Inn Employee::Hasna	53,{
+morocc_in,147,141,3	script	Inn Employee#Hasna	53,{
 
 	callfunc "F_InnMaid","[Employee Hasna]","Morroc Inn","morocc_in",142,140;
 	warp "morocc_in",173,135; end;
 }
 // South --------------------------------
-morocc_in,80,100,5	script	Inn Employee::Manar	53,{
+morocc_in,80,100,5	script	Inn Employee#Manar	53,{
 
 	callfunc "F_InnMaid","[Employee Manar]","Morroc Inn","morocc_in",78,95;
 	warp "morocc_in",79,123; end;
@@ -95,28 +96,28 @@ morocc_in,80,100,5	script	Inn Employee::Manar	53,{
 
 
 //====================== Aldebaran ===================================
-aldeba_in,92,58,5	script	Inn Maid	53,{
+aldeba_in,92,58,5	script	Inn Maid#Rilim	53,{
 
 	callfunc "F_InnMaid","[Rilim]","Al De Baran Inn","aldeba_in",92,50;
 	warp "aldeba_in",92,112; end;
 }
 
 //======================== Rachel ====================================
-ra_in01,376,69,4	script	Inn Keeper	931,{
+ra_in01,376,69,4	script	Inn Keeper#Annie	931,{
 
 	callfunc "F_InnMaid","[Annie]","Rachel Inn","ra_in01",375,58;
 	warp "ra_in01",384,128; end;
 }
 
 //======================== Hugel ====================================
-hu_in01,246,107,3	script	Inn Maid::Receptionist	53,{
+hu_in01,246,107,3	script	Inn Maid#Receptionist	53,{
 
 	callfunc "F_InnMaid","[Receptionist]","Hugel Inn","hu_in01",263,95;
 	warp "hu_in01",267,5; end;
 }
 
 //======================== Veins ====================================
-ve_in,157,219,5	script	Inn Master::Receptionist	709,{
+ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 	mes "[Inn Master]";
 	mes "Good say~";
 	mes "Welcome to the";

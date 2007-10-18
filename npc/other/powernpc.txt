@@ -3,11 +3,11 @@
 //===== By: ==================================================
 //= KarLaeda (Aegis script cnversion)
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Athena SVN 9000+
 //===== Additional Comments: =================================
-//= 
+//= 1.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 
@@ -264,7 +264,7 @@ gon_test,42,89,4	script	Summoner#gnp	774,{
 	end;
 }
 
-gon_test,46,14,3	script	Guide of field of fight#gnp	770,{
+gon_test,46,14,3	script	Guide of field of fight	770,{
 	mes "[SongHeeYeon]";
 	mes ".....";
 	mes "Hi, there~";

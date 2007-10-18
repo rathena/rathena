@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Dino9021, Edited / Translated by Celest
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 2.2 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=	No longer uses function "F_BlockHigh"
+//= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================ 
 
 prt_monk,59,247,1	script	Guarding Monk#mk	120,6,2,{
@@ -2200,7 +2201,7 @@ job_monk,225,180,1	script	Hyunmoo#mk	89,{
 	}
 }
 
-prt_monk,225,180,1	script	Hyunmoo#mk	89,{
+prt_monk,225,180,1	script	Hyunmoo#mk2	89,{
 	if (MONK_Q < 25) {
 		mes "[Hyunmoo]";
 		mes "As I see vegetables growing, I feel myself growing within.";
@@ -2417,7 +2418,7 @@ OnTouch:
 	end;
 }
 
-monk_test,88,91,1	script	Proctor#mk	52,{
+monk_test,88,91,1	script	Proctor#mk2	52,{
 	mes "[Proctor]";
 	mes "So, are you ready to undergo this spiritual training?";
 	next;

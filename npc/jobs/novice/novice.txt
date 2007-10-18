@@ -2354,7 +2354,7 @@ L_equip:
 }
 
 //Training Center Employee
-new_zone03,95,30,4	script	Training Center Employee#1	84,{
+new_zone03,95,30,4	script	Training Center Employee	84,{
 	mes "[Hoffman]";
 	mes "Hey there~";
 	mes "I'm here to provide";

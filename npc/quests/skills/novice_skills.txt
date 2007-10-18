@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Quest for skills: First Aid, Trick Dead
 //===== Additional Comments: ================================= 
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.6 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================ 
 
 prt_in,234,133,4	script	Nami#qsk_nv	66,{
@@ -365,7 +366,7 @@ prt_in,73,87,4	script	Chivalry Member#qsk_nv	65,{
 	}
 }
 
-prt_castle,175,146,4	script	Nursing Instructor#qsk_nv	50,{
+prt_castle,175,146,4	script	Nursing Instructor#qsk_n	50,{
 	mes "[Dread Lord]";
 	mes ". . . . . . . . . .";
 	mes ". . . . . . . . . .";

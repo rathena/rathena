@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= Any eAthena Version i guess?
 //===== Description: =========================================
@@ -19,6 +19,7 @@
 //= 1.5 Fixed a bug in the number part of the quest. [SinSloth]
 //= 1.6 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.7 Fixed a minor bug with prevented code part from reseting properly. [SinSloth]
+//= 1.8 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
@@ -420,7 +421,7 @@ L_Ask1:
 	close;
 }
 
-tha_t01,140,78,4	script	Guide	831,{
+tha_t01,140,78,4	script	Guide#thana	831,{
 
 	if(!thana_quest)
 	{
@@ -756,7 +757,7 @@ OnTimer30000:
 	end;
 }
 
-tha_t03,67,70,0	script	Machine Device	111,{
+tha_t03,67,70,0	script	Machine Device#thana1	111,{
 
 	if((countitem(7421)) || (countitem(7426)))
 	{
@@ -877,7 +878,7 @@ tha_t03,67,70,0	script	Machine Device	111,{
 	close;
 }
 
-tha_t04,195,195,0	script	Machine Device	111,{
+tha_t04,195,195,0	script	Machine Device#thana2	111,{
 
 	if((countitem(7422)) || (countitem(7427)))
 	{
@@ -1046,7 +1047,7 @@ L_Input:
 	goto L_Input;
 }
 
-tha_t05,101,37,0	script	Machine Device	111,{
+tha_t05,101,37,0	script	Machine Device#thana3	111,{
 
 	if((countitem(7423)) || (countitem(7428)))
 	{
@@ -1148,7 +1149,7 @@ tha_t05,101,37,0	script	Machine Device	111,{
 	}
 }
 
-tha_t06,43,152,0	script	Machine Device	111,{
+tha_t06,43,152,0	script	Machine Device#thana4	111,{
 
 	if((countitem(7424)) || (countitem(7429)))
 	{
@@ -1447,7 +1448,7 @@ tha_t09,19,158,0	script	Machine Device	111,{
 	close;
 }
 
-tha_t04,150,44,0	script	Seal	111,{
+tha_t04,150,44,0	script	Seal#thana1	111,{
 
 	if(!countitem(7423))
 	{
@@ -1522,7 +1523,7 @@ tha_t04,150,44,0	script	Seal	111,{
 	}
 }
 
-tha_t05,218,116,0	script	Seal	111,{
+tha_t05,218,116,0	script	Seal#thana2	111,{
 
 	if(!countitem(7421))
 	{
@@ -1597,7 +1598,7 @@ tha_t05,218,116,0	script	Seal	111,{
 	}
 }
 
-tha_t06,226,230,0	script	Seal	111,{
+tha_t06,226,230,0	script	Seal#thana3	111,{
 
 	if(!countitem(7425))
 	{
@@ -1673,7 +1674,7 @@ tha_t06,226,230,0	script	Seal	111,{
 	}
 }
 
-tha_t07,113,129,0	script	Seal	111,{
+tha_t07,113,129,0	script	Seal#thana4	111,{
 
 	if(!countitem(7422))
 	{
@@ -1837,7 +1838,7 @@ tha_t10,129,159,0	script	Seal	111,{
 	}
 }
 
-tha_t12,96,58,0	script	Stone Statue	111,{
+tha_t12,96,58,0	script	Stone Statue#thana1	111,{
 
 	if(!$@thana_summon)
 	{
@@ -1903,7 +1904,7 @@ tha_t12,96,58,0	script	Stone Statue	111,{
 	}
 }
 
-tha_t12,104,18,0	script	Stone Statue	111,{
+tha_t12,104,18,0	script	Stone Statue#thana2	111,{
 
 	if($@thana_summon == 2)
 	{
@@ -1961,7 +1962,7 @@ tha_t12,104,18,0	script	Stone Statue	111,{
 	}
 }
 
-tha_t12,128,86,0	script	Stone Statue	111,{
+tha_t12,128,86,0	script	Stone Statue#thana3	111,{
 
 	if($@thana_summon == 3)
 	{
@@ -2018,7 +2019,7 @@ tha_t12,128,86,0	script	Stone Statue	111,{
 	}
 }
 
-tha_t12,161,58,0	script	Stone Statue	111,{
+tha_t12,161,58,0	script	Stone Statue#thana4	111,{
 
 	if($@thana_summon == 1)
 	{
@@ -2076,7 +2077,7 @@ tha_t12,161,58,0	script	Stone Statue	111,{
 	}
 }
 
-tha_t12,154,18,0	script	Stone Statue	111,{
+tha_t12,154,18,0	script	Stone Statue#thana5	111,{
 
 	if($@thana_summon == 4)
 	{

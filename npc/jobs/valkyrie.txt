@@ -5,7 +5,7 @@
 //= finished, optimized and tested by Lupus
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -33,6 +33,7 @@
 //= 2.7a Added Function "F_BlockHigh" back in until rewriteing of the 2-x [L0ne_W0lf]
 //=	scripts are comepleted.
 //= 2.7b Removed function "F_BlockHigh" as it's no longer used. [L0ne_W0lf]
+//= 2.8 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================ 
 
 valkyrie,48,86,4	script	Valkyrie#	811,{
@@ -386,6 +387,6 @@ S_WarpChar:
 
 // Warps
 //============================================================ 
-valkyrie,48,73,0	warp	valk01	1,1,valkyrie,48,64
-valkyrie,48,66,0	warp	valk01	1,1,valkyrie,48,75
+valkyrie,48,73,0	warp	valk01#1	1,1,valkyrie,48,64
+valkyrie,48,66,0	warp	valk01#2	1,1,valkyrie,48,75
 

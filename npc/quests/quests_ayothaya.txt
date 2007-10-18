@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= Fredzilla, MasterOfMuppets
 //===== Version ==============================================
-//= 1.8
+//= 1.9
 //===== Compatible With ======================================
 //= eAthena 1.0
 //===== Description ==========================================
@@ -30,6 +30,7 @@
 //= Shrimp, Dungeon, Tom Yum Goong [Evera]
 //= 1.7 Updated the Ayothaya Ring quest to the official one [MasterOfMuppets]
 //= 1.8 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.9 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
 //============================================================
@@ -2590,7 +2591,7 @@ s_Busy:
 	close;	
 }
 
-ayothaya,213,95,7	script	Merchant	841,{
+ayothaya,213,95,7	script	Merchant#chili	841,{
 	if(tomyumgoong == 4)goto s_Chili;
 s_JumpBack:
 	mes "[Merchant Thongdum]";

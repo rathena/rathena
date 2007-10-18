@@ -447,7 +447,7 @@ que_ng,30,65,3	script	Cougar Gai	730,{
 	}
 }
 
-einbroch,184,194,3	script	Suspicious Guy	881,{
+einbroch,184,194,3	script	Suspicious Guy#nin	881,{
 
 	if(Class == Job_Ninja)
 	{
