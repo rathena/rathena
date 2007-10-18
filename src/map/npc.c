@@ -1430,7 +1430,7 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 	if( p )
 	{// <Display name>::<Unique name>
 		size_t len = p-name;
-		if( len >= NAME_LENGTH )
+		if( len > NAME_LENGTH )
 		{
 			ShowWarning("npc_parsename: Display name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
 			safestrncpy(nd->name, name, sizeof(nd->name));
@@ -1441,14 +1441,14 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 			memset(nd->name+len, 0, sizeof(nd->name)-len);
 		}
 		len = strlen(p+2);
-		if( len >= NAME_LENGTH )
+		if( len > NAME_LENGTH )
 			ShowWarning("npc_parsename: Unique name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
 		safestrncpy(nd->exname, p+2, sizeof(nd->exname));
 	}
 	else
 	{// <Display name>
 		size_t len = strlen(name);
-		if( len >= NAME_LENGTH )
+		if( len > NAME_LENGTH )
 			ShowWarning("npc_parsename: Name '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
 		safestrncpy(nd->name, name, sizeof(nd->name));
 		safestrncpy(nd->exname, name, sizeof(nd->exname));
@@ -1473,8 +1473,8 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 		}
 		while( npc_name2id(newname) != NULL );
 
-		strcpy(this_mapname, (nd->bl.m==-1?"(not on a map)":mapindex_id2name(nd->bl.m)));
-		strcpy(other_mapname, (dnd->bl.m==-1?"(not on a map)":mapindex_id2name(dnd->bl.m)));
+		strcpy(this_mapname, (nd->bl.m==-1?"(not on a map)":mapindex_id2name(map[nd->bl.m].index)));
+		strcpy(other_mapname, (dnd->bl.m==-1?"(not on a map)":mapindex_id2name(map[dnd->bl.m].index)));
 
 		//Commented out by ME-- L0ne_W0lf, and maybe one day we'll uncomment it again
 		//if and when I decide to/get all the warnings nad debug messages this horrible
