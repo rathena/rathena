@@ -36,7 +36,7 @@
 #include <time.h>
 
 
-#define SKILLUNITTIMER_INVERVAL	20
+#define SKILLUNITTIMER_INVERVAL	100
 //Guild Skills are shifted to these to make them stick into the skill array.
 #define GD_SKILLRANGEMIN 900
 #define GD_SKILLRANGEMAX GD_SKILLRANGEMIN+MAX_GUILDSKILL
@@ -7288,21 +7288,22 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	switch (sg->unit_id)
 	{
 		case UNT_FIREWALL:
-			{
+			if (tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele)) {
 				int count=0;
-				if (tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele)) {
-					//This is the best Aegis approximation we can do without 
-					//changing the minimum skill unit interval. [Skotlex]
-					while (count++ < battle_config.firewall_hits_on_undead && src->val2-- && !status_isdead(bl))
-						skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*10,1);
-				} else {
-					skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-					src->val2--;
-				}
-				if (src->val2<=0)
-					skill_delunit(src);
-			break;
+				//Fire property mobs and Undeads are never knocked back by firewall
+				//Should hit every 20ms [Playtester]
+				while (count++ < battle_config.firewall_hits_on_undead && !status_isdead(bl) && src->val2--)
+					skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,1);
+			} else {
+				int count=0;
+				int x = bl->x, y = bl->y;
+				//If mob isn't knocked back it should hit every 20ms [Playtester]
+				while (count++ < battle_config.firewall_hits_on_undead && x == bl->x && y == bl->y && !status_isdead(bl) && src->val2--)
+					skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,0);
 			}
+			if (src->val2<=0)
+				skill_delunit(src);
+			break;
 
 		case UNT_SANCTUARY:
 			if (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race==RC_DEMON)
@@ -7358,12 +7359,22 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				case SG_SUN_WARM: //SG skills [Komurka]
 				case SG_MOON_WARM:
 				case SG_STAR_WARM:
-					if(bl->type==BL_PC)
+					if(!status_charge(ss, 0, 2)){  //should end when out of sp.
+						sg->limit=DIFF_TICK(tick,sg->tick);
+						break;
+					}
+					else if(bl->type==BL_PC){
 						//Only damage SP [Skotlex]
-						status_zap(bl, 0, 60);
-					else if(status_charge(ss, 0, 2))
-						//Otherwise, Knockback attack.
+						status_zap(bl, 0, 15);
+					}
+					else{
+						int count=1;
+						int x = bl->x, y = bl->y;
 						skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+						//If mob isn't knocked back it should hit every 20ms [Playtester]
+						while (count++ < battle_config.firewall_hits_on_undead && x == bl->x && y == bl->y && !status_isdead(bl) && status_charge(ss, 0, 2))
+							skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,0);
+					}
 				break;
 				case WZ_STORMGUST:
 					if (tsc && tsc->data[SC_FREEZE].val4 != sg->group_id)
@@ -7620,9 +7631,14 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;
 
 		case UNT_KAENSIN:
-			skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-			if (--src->val2 <= 0)
-				skill_delunit(src);
+			{
+				int count=0;
+				//Should hit every 20ms [Playtester]
+				while (count++ < battle_config.firewall_hits_on_undead && !status_isdead(bl) && src->val2--)
+					skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,0);
+				if (src->val2 <= 0)
+					skill_delunit(src);
+			}
 			break;
 	}
 
