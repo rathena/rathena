@@ -4569,7 +4569,7 @@ void clif_skill_warppoint(struct map_session_data* sd, short skill_num, short sk
 	WFIFOW(fd,0) = 0x11c;
 	WFIFOW(fd,2) = skill_num;
 	memset(WFIFOP(fd,4), 0x00, 4*MAP_NAME_LENGTH_EXT);
-	if (map1 == -1) strcpy((char*)WFIFOP(fd,4), "Random");
+	if (map1 == (unsigned short)-1) strcpy((char*)WFIFOP(fd,4), "Random");
 	if (map1 > 0) mapindex_getmapname_ext(mapindex_id2name(map1), (char*)WFIFOP(fd,4));
 	if (map2 > 0) mapindex_getmapname_ext(mapindex_id2name(map2), (char*)WFIFOP(fd,20));
 	if (map3 > 0) mapindex_getmapname_ext(mapindex_id2name(map3), (char*)WFIFOP(fd,36));
@@ -7628,9 +7628,9 @@ void clif_feel_hate_reset(struct map_session_data *sd)
 /// Returns true if the packet was parsed successfully.
 /// Formats: 0 - <packet id>.w <packet len>.w (<name> : <message>).?B 00
 ///          1 - <packet id>.w <packet len>.w <name>.24B <message>.?B 00
-static bool clif_process_message(struct map_session_data* sd, int format, const char** name_, int* namelen_, const char** message_, int* messagelen_)
+static bool clif_process_message(struct map_session_data* sd, int format, char** name_, int* namelen_, char** message_, int* messagelen_)
 {
-	const char *text, *name, *message;
+	char *text, *name, *message;
 	unsigned int packetlen, textlen, namelen, messagelen;
 	int fd = sd->fd;
 
@@ -8240,7 +8240,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	const char* text = (char*)RFIFOP(fd,4);
 	int textlen = RFIFOW(fd,2) - 4;
 
-	const char *name, *message;
+	char *name, *message;
 	int namelen, messagelen;
 
 	// validate packet and retrieve name and message
@@ -9955,7 +9955,7 @@ void clif_parse_PartyMessage(int fd, struct map_session_data* sd)
 	const char* text = (char*)RFIFOP(fd,4);
 	int textlen = RFIFOW(fd,2) - 4;
 
-	const char *name, *message;
+	char *name, *message;
 	int namelen, messagelen;
 
 	// validate packet and retrieve name and message
@@ -10228,7 +10228,7 @@ void clif_parse_GuildMessage(int fd, struct map_session_data* sd)
 	const char* text = (char*)RFIFOP(fd,4);
 	int textlen = RFIFOW(fd,2) - 4;
 
-	const char *name, *message;
+	char *name, *message;
 	int namelen, messagelen;
 
 	// validate packet and retrieve name and message

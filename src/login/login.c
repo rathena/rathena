@@ -32,7 +32,7 @@ struct Login_Config {
 //	bool case_sensitive;							// are logins case sensitive ?
 	bool use_md5_passwds;							// work with password hashes instead of plaintext passwords?
 //	bool login_gm_read;								// should the login server handle info about gm accounts?
-	uint8 min_level_to_connect;						// minimum level of player/GM (0: player, 1-99: GM) to connect
+	int min_level_to_connect;						// minimum level of player/GM (0: player, 1-99: GM) to connect
 	bool online_check;								// reject incoming players that are already registered as online ?
 	bool check_client_version;						// check the clientversion set in the clientinfo ?
 	unsigned int client_version_to_connect;			// the client version needed to connect (if checking is enabled)
@@ -3622,7 +3622,7 @@ int login_config_read(const char* cfgName)
 		else if(!strcmpi(w1, "use_MD5_passwords"))
 			login_config.use_md5_passwds = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "min_level_to_connect"))
-			login_config.min_level_to_connect = (uint8)atoi(w2);
+			login_config.min_level_to_connect = atoi(w2);
 		else if(!strcmpi(w1, "date_format"))
 			safestrncpy(login_config.date_format, w2, sizeof(login_config.date_format));
 		else if(!strcmpi(w1, "console"))

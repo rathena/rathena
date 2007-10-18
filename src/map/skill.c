@@ -4565,12 +4565,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if(skilllv == 1) {
 				// possibility to skip menu [LuzZza]
 				if(!battle_config.skip_teleport_lv1_menu && sd->skillitem != AL_TELEPORT)
-					clif_skill_warppoint(sd,skillid,skilllv, -1,0,0,0);
+					clif_skill_warppoint(sd,skillid,skilllv, (unsigned short)-1,0,0,0);
 				else
 					pc_randomwarp(sd,3);
 			} else {
 				if (sd->skillitem != AL_TELEPORT)
-					clif_skill_warppoint(sd,skillid,skilllv, -1,sd->status.save_point.map,0,0);
+					clif_skill_warppoint(sd,skillid,skilllv, (unsigned short)-1,sd->status.save_point.map,0,0);
 				else //Autocasted Teleport level 2??
 					pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
 			}

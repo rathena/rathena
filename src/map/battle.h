@@ -4,6 +4,13 @@
 #ifndef _BATTLE_H_
 #define _BATTLE_H_
 
+// state of a single attack attempt; used in flee/def penalty calculations when mobbed
+enum damage_lv {
+	ATK_LUCKY=1, // attack was lucky-dodged
+	ATK_FLEE,    // attack was dodged
+	ATK_DEF      // attack connected
+};
+
 // É_ÉÅÅ[ÉW
 struct Damage {
 	int damage,damage2;

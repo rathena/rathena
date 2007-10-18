@@ -29,7 +29,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 int unit_escape(struct block_list *bl, struct block_list *target, short dist);
 // ˆÊ’u‚Ì‹­§ˆÚ“®(‚«”ò‚Î‚µ‚È‚Ç)
 int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath);
-int unit_warp(struct block_list *bl, short map, short x, short y, uint8 type);
+int unit_warp(struct block_list *bl, short map, short x, short y, int type);
 int unit_setdir(struct block_list *bl,unsigned char dir);
 uint8 unit_getdir(struct block_list *bl);
 
@@ -61,8 +61,8 @@ void unit_dataset(struct block_list *bl);
 int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int tick,int sdelay,int ddelay,int damage,int div,int type,int damage2);
 // ‚»‚Ì‘¼
 struct unit_data* unit_bl2ud(struct block_list *bl);
-int unit_remove_map(struct block_list *bl, uint8 clrtype);
-int unit_free(struct block_list *bl, uint8 clrtype);
+int unit_remove_map(struct block_list *bl, int clrtype);
+int unit_free(struct block_list *bl, int clrtype);
 int unit_changeviewsize(struct block_list *bl,short size);
 
 // ‰Šú‰»ƒ‹[ƒ`ƒ“

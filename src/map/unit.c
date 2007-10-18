@@ -550,7 +550,7 @@ uint8 unit_getdir(struct block_list *bl)
 //Warps a unit/ud to a given map/position. 
 //In the case of players, pc_setpos is used.
 //it respects the no warp flags, so it is safe to call this without doing nowarpto/nowarp checks.
-int unit_warp(struct block_list *bl,short m,short x,short y,uint8 type)
+int unit_warp(struct block_list *bl,short m,short x,short y,int type)
 {
 	struct unit_data *ud;
 	nullpo_retr(0, bl);
@@ -1605,7 +1605,7 @@ int unit_changeviewsize(struct block_list *bl,short size)
  * Otherwise it is assumed bl is being warped.
  * On-Kill specific stuff is not performed here, look at status_damage for that.
  *------------------------------------------*/
-int unit_remove_map(struct block_list *bl, uint8 clrtype)
+int unit_remove_map(struct block_list *bl, int clrtype)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
 	struct status_change *sc = status_get_sc(bl);
@@ -1753,7 +1753,7 @@ int unit_remove_map(struct block_list *bl, uint8 clrtype)
  * If clrtype is <0, no saving is performed. This is only for non-authed
  * objects that shouldn't be on a map yet.
  *------------------------------------------*/
-int unit_free(struct block_list *bl, uint8 clrtype)
+int unit_free(struct block_list *bl, int clrtype)
 {
 	struct unit_data *ud = unit_bl2ud( bl );
 	nullpo_retr(0, ud);

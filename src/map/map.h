@@ -1023,13 +1023,6 @@ struct pet_data {
 	struct map_session_data *msd;
 };
 
-// state of a single attack attempt; used in flee/def penalty calculations when mobbed
-enum damage_lv {
-	ATK_LUCKY=1, // attack was lucky-dodged
-	ATK_FLEE,    // attack was dodged
-	ATK_DEF      // attack connected
-};
-
 struct map_data {
 	char name[MAP_NAME_LENGTH];
 	unsigned short index; // The map index used by the mapindex* functions.
