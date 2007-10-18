@@ -94,7 +94,7 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 	nullpo_retr(0, nd=va_arg(ap,struct npc_data *));
 	if(bl->type == BL_PC && (sd=(struct map_session_data *)bl))
 	{
-		char name[50]; // need 24 + 9 for the "::OnTouch"
+		char name[NAME_LENGTH*2+3];
 
 		if (nd->sc.option&OPTION_INVISIBLE)	// 無効化されている
 			return 1;
@@ -103,7 +103,7 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 			return 1;
 		sd->areanpc_id=nd->bl.id;
 
-		snprintf(name, 50, "%s::OnTouch", nd->exname); // exname to be specific. exname is the unique identifier for script events. [Lance]
+		snprintf(name, ARRAYLENGTH(name), "%s::OnTouch", nd->exname); // exname to be specific. exname is the unique identifier for script events. [Lance]
 		npc_event(sd,name,0);
 	}
 	//aFree(name);
@@ -194,7 +194,7 @@ int npc_event_export(char* lname, void* data, va_list ap)
 
 	if ((lname[0]=='O' || lname[0]=='o')&&(lname[1]=='N' || lname[1]=='n')) {
 		struct event_data *ev;
-		char buf[51];
+		char buf[NAME_LENGTH*2+3];
 		char* p = strchr(lname, ':');
 		// エクスポートされる
 		ev = (struct event_data *) aMalloc(sizeof(struct event_data));
@@ -208,7 +208,7 @@ int npc_event_export(char* lname, void* data, va_list ap)
 			ev->nd = nd;
 			ev->pos = pos;
 			*p = '\0';
-			sprintf(buf, "%s::%s", nd->exname, lname);
+			snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd->exname, lname);
 			*p = ':';
 			strdb_put(ev_db, buf, ev);
 		}
@@ -561,9 +561,9 @@ void npc_timerevent_quit(struct map_session_data* sd)
 	sd->npc_timer_id = -1;
 	if (nd && nd->bl.type == BL_NPC)
 	{	//Execute OnTimerQuit
-		char buf[sizeof(nd->exname)+sizeof("::OnTimerQuit")+1];
+		char buf[NAME_LENGTH*2+3];
 		struct event_data *ev;
-		sprintf(buf,"%s::OnTimerQuit",nd->exname);
+		snprintf(buf, ARRAYLENGTH(buf), "%s::OnTimerQuit", nd->exname);
 		ev = strdb_get(ev_db, buf);
 		if(ev && ev->nd != nd) {
 			ShowWarning("npc_timerevent_quit: Unable to execute \"OnTimerQuit\", two NPCs have the same event name [%s]!\n",buf);
@@ -765,14 +765,13 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 			break;
 		case SCRIPT:
 		{
-			//char *name=(char *)aCallocA(50,sizeof(char));  // fixed [Shinomori]
-			char name[50]; // need 24 max + 9 for "::OnTouch"
+			char name[NAME_LENGTH*2+3];
 
 			if(sd->areanpc_id == map[m].npc[i]->bl.id)
 				return 1;
 			sd->areanpc_id = map[m].npc[i]->bl.id;
 
-			sprintf(name,"%s::OnTouch", map[m].npc[i]->exname); // It goes here too. exname being the unique identifier. [Lance]
+			snprintf(name, ARRAYLENGTH(name), "%s::OnTouch", map[m].npc[i]->exname); // It goes here too. exname being the unique identifier. [Lance]
 
 			if( npc_event(sd,name,0)>0 ) {
 				pc_stop_walking(sd,1); //Make it stop walking!
@@ -1032,11 +1031,11 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 //npc_buylist for script-controlled shops.
 static int npc_buylist_sub(struct map_session_data* sd, int n, unsigned short* item_list, struct npc_data* nd)
 {
-	char npc_ev[51];
+	char npc_ev[NAME_LENGTH*2+3];
 	int i;
 	int regkey = add_str("@bought_nameid");
 	int regkey2 = add_str("@bought_quantity");
-	sprintf(npc_ev, "%s::OnBuyItem", nd->exname);
+	snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::OnBuyItem", nd->exname);
 	for(i=0;i<n;i++){
 		pc_setreg(sd,regkey+(i<<24),(int)item_list[i*2+1]);
 		pc_setreg(sd,regkey2+(i<<24),(int)item_list[i*2]);
@@ -1214,8 +1213,8 @@ int npc_selllist(struct map_session_data* sd, int n, unsigned short* item_list)
 	}
 		
 	if(nd) {
-		char npc_ev[51];
-	  	sprintf(npc_ev, "%s::OnSellItem", nd->exname);
+		char npc_ev[NAME_LENGTH*2+3];
+		snprintf(npc_ev, ARRAYLENGTH(npc_ev), "%s::OnSellItem", nd->exname);
 		npc_event(sd, npc_ev, 0);
 	}
 	
@@ -1302,7 +1301,7 @@ int npc_unload(struct npc_data* nd)
 
 	npc_remove_map(nd);
 	map_deliddb(&nd->bl);
-	strdb_remove(npcname_db, (nd->bl.subtype < SCRIPT) ? nd->name : nd->exname);
+	strdb_remove(npcname_db, nd->exname);
 
 	if (nd->chat_id) // remove npc chatroom object and kick users
 		chat_deletenpcchat(nd);
@@ -1418,6 +1417,72 @@ void npc_delsrcfile(const char* name)
 	}
 }
 
+/// Parses and sets the name and exname of a npc.
+/// Assumes that m, x and y are already set in nd.
+static void npc_parsename(struct npc_data* nd, const char* name, const char* start, const char* buffer, const char* filepath)
+{
+	const char* p;
+	struct npc_data* dnd;
+	char newname[NAME_LENGTH];
+
+	// parse name
+	p = strstr(name,"::");
+	if( p )
+	{// <Display name>::<Unique name>
+		size_t len = p-name;
+		if( len >= NAME_LENGTH )
+		{
+			ShowWarning("npc_parsename: Display name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
+			safestrncpy(nd->name, name, sizeof(nd->name));
+		}
+		else
+		{
+			memcpy(nd->name, name, len);
+			memset(nd->name+len, 0, sizeof(nd->name)-len);
+		}
+		len = strlen(p+2);
+		if( len >= NAME_LENGTH )
+			ShowWarning("npc_parsename: Unique name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
+		safestrncpy(nd->exname, p+2, sizeof(nd->exname));
+	}
+	else
+	{// <Display name>
+		size_t len = strlen(name);
+		if( len >= NAME_LENGTH )
+			ShowWarning("npc_parsename: Name '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
+		safestrncpy(nd->name, name, sizeof(nd->name));
+		safestrncpy(nd->exname, name, sizeof(nd->exname));
+	}
+
+	if( *nd->exname == '\0' || strstr(nd->exname,"::") != NULL )
+	{// invalid
+		snprintf(newname, ARRAYLENGTH(newname), "0_%d_%d_%d", nd->bl.m, nd->bl.x, nd->bl.y);
+		ShowWarning("npc_parsename: Invalid unique name in file '%s', line'%d'. Renaming '%s' to '%s'.\n", filepath, strline(buffer,start-buffer), nd->exname, newname);
+		safestrncpy(nd->exname, newname, sizeof(nd->exname));
+	}
+
+	if( *nd->exname == '\0' || (dnd=npc_name2id(nd->exname)) != NULL )
+	{// duplicate unique name, generate new one
+		char this_mapname[32];
+		char other_mapname[32];
+		int i = 0;
+		do
+		{
+			++i;
+			snprintf(newname, ARRAYLENGTH(newname), "%d_%d_%d_%d", i, nd->bl.m, nd->bl.x, nd->bl.y);
+		}
+		while( npc_name2id(newname) != NULL );
+
+		strcpy(this_mapname, (nd->bl.m==-1?"(not on a map)":mapindex_id2name(nd->bl.m)));
+		strcpy(other_mapname, (dnd->bl.m==-1?"(not on a map)":mapindex_id2name(dnd->bl.m)));
+
+		ShowWarning("npc_parsename: Duplicate unique name in file '%s', line'%d'. Renaming '%s' to '%s'.\n", filepath, strline(buffer,start-buffer), nd->exname, newname);
+		ShowDebug("this npc:\n   display name '%s'\n   unique name '%s'\n   map=%s, x=%d, y=%d\n", nd->name, nd->exname, this_mapname, nd->bl.x, nd->bl.y);
+		ShowDebug("other npc:\n   display name '%s'\n   unique name '%s'\n   map=%s, x=%d, y=%d\n", dnd->name, dnd->exname, other_mapname, dnd->bl.x, dnd->bl.y);
+		safestrncpy(nd->exname, newname, sizeof(nd->exname));
+	}
+}
+
 /// Parses a warp npc.
 const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
@@ -1451,8 +1516,7 @@ const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* s
 	nd->bl.m = m;
 	nd->bl.x = x;
 	nd->bl.y = y;
-	safestrncpy(nd->name, w3, sizeof(nd->name));
-	safestrncpy(nd->exname, w3, sizeof(nd->exname));
+	npc_parsename(nd, w3, start, buffer, filepath);
 
 	if (!battle_config.warp_point_debug)
 		nd->class_ = WARP_CLASS;
@@ -1476,7 +1540,7 @@ const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* s
 	status_change_init(&nd->bl);
 	unit_dataset(&nd->bl);
 	clif_spawn(&nd->bl);
-	strdb_put(npcname_db, nd->name, nd);
+	strdb_put(npcname_db, nd->exname, nd);
 
 	return strchr(start,'\n');// continue
 }
@@ -1546,7 +1610,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	nd->bl.x = x;
 	nd->bl.y = y;
 	nd->bl.id = npc_get_new_npc_id();
-	safestrncpy(nd->name, w3, sizeof(nd->name));
+	npc_parsename(nd, w3, start, buffer, filepath);
 	nd->class_ = m==-1?-1:atoi(w4);
 	nd->speed = 200;
 
@@ -1566,7 +1630,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	{// 'floating' shop?
 		map_addiddb(&nd->bl);
 	}
-	strdb_put(npcname_db, nd->name, nd);
+	strdb_put(npcname_db, nd->exname, nd);
 
 	return strchr(start,'\n');// continue
 }
@@ -1680,7 +1744,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	char mapname[32];
 	struct script_code *script;
 	int i;
-	char *p;
+	const char* end;
 
 	struct npc_label_list* label_list;
 	int label_list_num;
@@ -1697,9 +1761,9 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	else
 	{// npc in a map
 		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4
-		||	(strcmp(w2, "script") == 0 && strchr(w4,',') == NULL) )
+		||	(strcasecmp(w2, "script") == 0 && strchr(w4,',') == NULL) )
 		{
-			ShowError("npc_parse_script: unkown format for a script in file '%s', line '%d'. Skipping the rest of file...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
+			ShowError("npc_parse_script: Unkown format for a script in file '%s', line '%d'. Skipping the rest of file...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			return NULL;// unknown format, don't continue
 		}
 		m = map_mapname2mapid(mapname);
@@ -1708,7 +1772,6 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	if( strcmp(w2, "script") == 0 )
 	{// parsing script with curly
 		const char* real_start;
-		const char* end;
 
 		end = npc_skip_script(start, buffer, filepath);
 		if( end == NULL )
@@ -1729,6 +1792,8 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	else
 	{// duplicate npc
 		char srcname[128];
+
+		end = strchr(start,'\n');
 		if( sscanf(w2,"duplicate(%127[^)])",srcname) != 1 )
 		{
 			ShowError("npc_parse_script: bad duplicate name in file '%s', line '%d' : %s\n", filepath, strline(buffer,start-buffer), w2);
@@ -1761,39 +1826,11 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 		nd->u.scr.ys = 0;
 	}
 
-	// extended name
-	p = strstr(w3,"::");
-	if( p )
-	{
-		*p = '\0';
-		safestrncpy(nd->name, w3, sizeof(nd->name));
-		safestrncpy(nd->exname, p+2, sizeof(nd->exname));
-	}
-	else
-	{
-		safestrncpy(nd->name, w3, sizeof(nd->name));
-		safestrncpy(nd->exname, w3, sizeof(nd->exname));
-	}
-
-	if( npc_name2id(nd->exname) )
-	{// duplicate name, generate new name
-		char newexname[32];
-		int i = 0;
-		do
-		{
-			++i;
-			sprintf(newexname, "%31d", i);
-			dnd = npc_name2id(newexname);
-		}
-		while( dnd );
-		ShowWarning("npc_parse_script: Overriding NPC '%s::%s' to '%s::%d'.. in file '%s', line '%d' (Duplicated System Name - Lazy scripters >_>) \n", nd->name, nd->exname, nd->name, i, filepath, strline(buffer,start-buffer));
-		safestrncpy(nd->exname, newexname, sizeof(nd->exname));
-	}
-
 	nd->bl.prev = nd->bl.next = NULL;
 	nd->bl.m = m;
 	nd->bl.x = x;
 	nd->bl.y = y;
+	npc_parsename(nd, w3, start, buffer, filepath);
 	nd->bl.id = npc_get_new_npc_id();
 	nd->class_ = class_;
 	nd->speed = 200;
@@ -1814,15 +1851,6 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 		nd->ud.dir = dir;
 		npc_setcells(nd);
 		map_addblock(&nd->bl);
-		// Unused. You can always use xxx::OnXXXX events. Have this removed to improve perfomance.
-		/*if (evflag) {	// イベント型
-			struct event_data *ev = (struct event_data *)aCalloc(1, sizeof(struct event_data));
-			ev->nd = nd;
-			ev->pos = 0;
-			strdb_put(ev_db, nd->exname, ev);
-		} else {
-			clif_spawn(&nd->bl);
-		}*/
 		if( class_ >= 0 )
 		{
 			status_set_viewdata(&nd->bl, nd->class_);
@@ -1846,8 +1874,8 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 		if ((lname[0] == 'O' || lname[0] == 'o') && (lname[1] == 'N' || lname[1] == 'n'))
 		{
 			struct event_data* ev;
-			char buf[50+1]; // 24 for npc name + 24 for label + 2 for a "::" and 1 for EOS
-			snprintf(buf, sizeof(buf), "%s::%s", nd->exname, lname);
+			char buf[NAME_LENGTH*2+3]; // 24 for npc name + 24 for label + 2 for a "::" and 1 for EOS
+			snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd->exname, lname);
 
 			// generate the data and insert it
 			CREATE(ev, struct event_data, 1);
@@ -1886,7 +1914,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	}
 	nd->u.scr.timerid = -1;
 
-	return 0;
+	return end;
 }
 
 void npc_setcells(struct npc_data* nd)

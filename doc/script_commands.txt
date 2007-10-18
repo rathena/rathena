@@ -9,7 +9,7 @@
 //= Maeki Rika - A section on general concepts and lots of
 //=              other updates and additions.
 //===== Version ===========================================
-//= 3.06.20070910
+//= 3.08.20071018
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -86,6 +86,8 @@
 //=       Added info about the new behavior of 'getexp' [ultramage]
 //= 3.07.20070915
 //=       Fixed 'duplicate' missing the target 'name' parameter! [ultramage]
+//= 3.08.20071018
+//=       Clarified how npc names work. [FlavioJS]
 //===== Description =======================================
 //= A reference manual for the eAthena scripting language,
 //= sorted out depending on their functionality.
@@ -261,6 +263,25 @@ special ai mobs (which by default attack other monsters instead of players).
 You can add these, so using 10 will spawn small monsters that attack other
 mobs (if you specify both 2 and 4, the small version takes priority).
 
+** Npc names
+
+/!\ WARNING: this applies to warps, npcs, duplicates and shops /!\
+
+Npc names are kinda special and are formatted this way:
+
+<Display name>{::<Unique name>}
+
+All npcs need to have a unique name that is used for identification purposes.
+When you have to identify a npc by it's name, you should use <Unique name>.
+If <Unique name> is not provided, use <Display name> instead.
+
+The client has a special feature when displaying names:
+if the display name contains a '#' character, it hides that part of the name.
+ex: if your npc is named 'Hunter#hunter1', it will be displayed as 'Hunter'
+
+<Display name> must be at most 24 characters in length.
+<Unique name> must be at most 24 characters in length.
+
 ** Define a warp point
 
 <from map name>,<fromX>,<fromY>,<facing>%TAB%warp%TAB%<warp name>%TAB%<spanx>,<spany>,<to map name>,<toX>,<toY>
@@ -300,8 +321,9 @@ Sprite id is the sprite number used to display this particular NPC. For a full
 list of sprite id numbers see http://kalen.s79.xrea.com/npc/npce.shtml You may 
 also use a monster's ID number instead to display a monster sprite for this NPC. 
 It is possible to use a job sprite as well, but you must first define it as a 
-monster sprite in 'mob_avail.txt', a full description on how to do this is for 
-another manual. A '-1' sprite id will make the NPC invisible (and unclickable). 
+monster sprite in 'mob_avail.txt', a full description on how to do this is not 
+in the scope of this manual.
+A '-1' sprite id will make the NPC invisible (and unclickable). 
 A '111' sprite id will make an NPC which does not have a sprite, but is still 
 clickable, which is useful if you want to make a clickable object of the 3D 
 terrain.
@@ -312,25 +334,6 @@ direction across Y. Walking into that area will trigger the NPC. If no
 'OnTouch:' special label is present in the NPC code, the execution will start 
 from the beginning of the script, otherwise, it will start from the 'OnTouch:' 
 label.
-
-NPC name is kinda special, because it's not only the name of NPC you will see on 
-screen. It's formatted this way:
-
-<Screen name>{#<Extra name identifier>}{::<Label name>}
-
-The extra identifier is there  that you can make an npc with an invisible name 
-(just omit the screen name, but keep the identifier name) and so that you can 
-refer to several NPCs which have the same name on screen, which is useful to 
-make an NPC that relocates depending on special conditions, for example - you 
-define several NPC objects and hide all except one. 
-('Hunter#hunter1','Hunter#hunter2'...) The extra name identifiers will let your 
-code tell them apart.
-
-Label name is used to duplicate NPC objects (more on that below).
-
-The complete NPC name (Screen name + extra identifier) may not exceed 24 
-characters. The label name is counted separately but also limited to 24 
-characters.
 
 The code part is the script code that will execute whenever the NPC is 
 triggered. It may contain commands and function calls, descriptions of which 

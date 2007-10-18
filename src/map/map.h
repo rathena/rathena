@@ -830,8 +830,8 @@ struct npc_data {
 	short n;
 	short class_;
 	short speed;
-	char name[NAME_LENGTH];
-	char exname[NAME_LENGTH];
+	char name[NAME_LENGTH+1];// display name
+	char exname[NAME_LENGTH+1];// unique npc name
 	int chat_id;
 	unsigned int next_walktime;
 
