@@ -34,6 +34,7 @@
 
 =======================
 10/18
+	* Fixed Ahlspiess not ignoring def of bosses [Playtester]
 	* Added knockback to Crimson Fire Formation [Playtester]
 10/16
 	* Fixed used levels of NPC_CRITICALWOUND [Playtester]

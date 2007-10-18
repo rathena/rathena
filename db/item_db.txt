@@ -716,7 +716,7 @@
 1475,Horseback_Lance,Equestrian's Spear,4,,10,3700,200,,4,0,0x00004082,7,2,34,4,75,1,5,{},{},{}
 1476,Crescent_Scythe_,Crescent Scythe,4,,10,2500,180,,3,1,0x00004082,7,2,34,4,48,1,5,{ bonus bCritical,30; bonus bHit,10; },{},{}
 1477,Phantom_Sphere,Phantom Spear,4,,10,2000,170,,3,0,0x00004082,7,2,34,4,75,1,5,{ bonus2 bAddEle,Ele_Dark,20; bonus2 bAddRace,RC_Demon,20; bonus2 bAddRace,RC_Undead,20; bonus2 bSubEle,Ele_Dark,10; bonus2 bSubRace,RC_Demon,10; bonus2 bSubRace,RC_Undead,10; bonus bHPGainValue,50; if(!isequipped(2700)) bonus2 bAddEff2,Eff_Confusion,100; },{},{}
-1478,Ahlspiess,Ahlspiess,4,,10,1000,120,,3,0,0x00004080,7,2,34,4,65,1,5,{ bonus bIgnoreDefRace,RC_NonBoss; bonus2 bAddRace,RC_DemiHuman,10; bonus3 bAutoSpell,56,5,20; },{},{}
+1478,Ahlspiess,Ahlspiess,4,,10,1000,120,,3,0,0x00004080,7,2,34,4,65,1,5,{ bonus bIgnoreDefRace,RC_NonBoss; bonus bIgnoreDefRace,RC_Boss; bonus2 bAddRace,RC_DemiHuman,10; bonus3 bAutoSpell,56,5,20; },{},{}
 1479,Phantom_Sphere_,Phantom Spear,4,,10,2000,170,,3,1,0x00004082,7,2,34,4,75,1,5,{ bonus2 bAddEle,Ele_Dark,20; bonus2 bAddRace,RC_Demon,20; bonus2 bAddRace,RC_Undead,20; bonus2 bSubEle,Ele_Dark,10; bonus2 bSubRace,RC_Demon,10; bonus2 bSubRace,RC_Undead,10; bonus bHPGainValue,50; if(!isequipped(2700)) bonus2 bAddEff2,Eff_Confusion,100; },{},{}
 1480,Gae_Bolg_,Gae Bolg,4,,10,2000,160,,3,2,0x00004082,7,2,34,4,60,1,5,{ bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddRace,RC_Boss,10; },{},{}
 1481,Zephyrus_,Zephyrus,4,,10,2000,170,,3,3,0x00004082,7,2,34,4,48,1,5,{ bonus bAtkEle,Ele_Wind; bonus2 bAddEff,Eff_Silence,200; bonus3 bAutoSpell,21,3,100; },{},{}
