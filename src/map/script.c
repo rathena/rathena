@@ -1936,7 +1936,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	if( setjmp( error_jump ) != 0 ) {
 		//Restore program state when script has problems. [from jA]
 		int i;
-		const int size = sizeof(syntax.curly)/sizeof(syntax.curly[0]);
+		const int size = ARRAYLENGTH(syntax.curly);
 		if( error_report )
 			script_error(src,file,line,error_msg,error_pos);
 		aFree( error_msg );

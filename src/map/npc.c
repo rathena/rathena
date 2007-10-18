@@ -828,16 +828,12 @@ int npc_check_areanpc(int flag, int m, int x, int y, int range)
 	int xs,ys;
 
 	if (range < 0) return 0;
-	x0 = x-range;
-	x1 = x+range;
-	y0 = y-range;
-	y1 = y+range;
+	x0 = max(x-range, 0);
+	y0 = max(y-range, 0);
+	x1 = min(x+range, map[m].xs-1);
+	y1 = min(y+range, map[m].ys-1);
 	
 	//First check for npc_cells on the range given
-	if (x0 < 0) x0 = 0;
-	if (y0 < 0) y0 = 0;
-	if (x1 >= map[m].xs) x1 = map[m].xs-1;
-	if (y1 >= map[m].ys) y1 = map[m].ys-1;
 	i = 0;
 	for (ys = y0; ys <= y1 && !i; ys++) {
 		for(xs = x0; xs <= x1 && !i; xs++){
@@ -848,11 +844,13 @@ int npc_check_areanpc(int flag, int m, int x, int y, int range)
 	if (!i) return 0; //No NPC_CELLs.
 
 	//Now check for the actual NPC on said range.
-	for(i=0;i<map[m].npc_num;i++) {
+	for(i=0;i<map[m].npc_num;i++)
+	{
 		if (map[m].npc[i]->sc.option&OPTION_INVISIBLE)
 			continue;
 
-		switch(map[m].npc[i]->bl.subtype) {
+		switch(map[m].npc[i]->bl.subtype)
+		{
 		case WARP:
 			if (!(flag&1))
 				continue;
@@ -868,9 +866,10 @@ int npc_check_areanpc(int flag, int m, int x, int y, int range)
 		default:
 			continue;
 		}
+
 		if (x1 >= map[m].npc[i]->bl.x-xs/2 && x0 < map[m].npc[i]->bl.x-xs/2+xs &&
 			y1 >= map[m].npc[i]->bl.y-ys/2 && y0 < map[m].npc[i]->bl.y-ys/2+ys)
-			break;
+			break; // found a npc
 	}
 	if (i==map[m].npc_num)
 		return 0;
@@ -1959,10 +1958,8 @@ void npc_movenpc(struct npc_data* nd, int x, int y)
 	const int m = nd->bl.m;
 	if (m < 0 || nd->bl.prev == NULL) return;	//Not on a map.
 
-	if (x < 0) x = 0;
-	else if (x >= map[m].xs) x = map[m].xs-1;
-	if (y < 0) y = 0;
-	else if (y >= map[m].ys) y = map[m].ys-1;
+	x = cap_value(x, 0, map[m].xs-1);
+	x = cap_value(y, 0, map[m].ys-1);
 
 	npc_unsetcells(nd);
 	map_foreachinrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);

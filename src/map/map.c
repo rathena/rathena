@@ -319,8 +319,7 @@ static struct block_list bl_head;
  *------------------------------------------*/
 void map_addblcell(struct block_list *bl)
 {
-	if(bl->m<0 || bl->x<0 || bl->x>=map[bl->m].xs
-		|| bl->y<0 || bl->y>=map[bl->m].ys || !(bl->type&BL_CHAR))
+	if( bl->m<0 || bl->x<0 || bl->x>=map[bl->m].xs || bl->y<0 || bl->y>=map[bl->m].ys || !(bl->type&BL_CHAR) )
 		return;
 	map[bl->m].cell_bl[bl->x+bl->y*map[bl->m].xs]++;
 	return;
@@ -328,8 +327,7 @@ void map_addblcell(struct block_list *bl)
 
 void map_delblcell(struct block_list *bl)
 {
-	if(bl->m <0 || bl->x<0 || bl->x>=map[bl->m].xs
-		|| bl->y<0 || bl->y>=map[bl->m].ys || !(bl->type&BL_CHAR))
+	if( bl->m <0 || bl->x<0 || bl->x>=map[bl->m].xs || bl->y<0 || bl->y>=map[bl->m].ys || !(bl->type&BL_CHAR) )
 		return;
 	map[bl->m].cell_bl[bl->x+bl->y*map[bl->m].xs]--;
 }
@@ -549,6 +547,7 @@ int map_count_oncell(int m, int x, int y, int type)
 
 	if (x < 0 || y < 0 || (x >= map[m].xs) || (y >= map[m].ys))
 		return 0;
+
 	bx = x/BLOCK_SIZE;
 	by = y/BLOCK_SIZE;
 
@@ -612,16 +611,12 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_lis
 	int blockcount=bl_list_count,i,c;
 	int x0,x1,y0,y1;
 	va_start(ap,type);
+
 	m = center->m;
-	x0 = center->x-range;
-	x1 = center->x+range;
-	y0 = center->y-range;
-	y1 = center->y+range;
-	
-	if (x0 < 0) x0 = 0;
-	if (y0 < 0) y0 = 0;
-	if (x1 >= map[m].xs) x1 = map[m].xs-1;
-	if (y1 >= map[m].ys) y1 = map[m].ys-1;
+	x0 = max(center->x-range, 0);
+	y0 = max(center->y-range, 0);
+	x1 = min(center->x+range, map[m].xs-1);
+	y1 = min(center->y+range, map[m].ys-1);
 	
 	if (type&~BL_MOB)
 		for (by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++) {
@@ -689,16 +684,12 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
 	if (m < 0)
 		return 0;
 	va_start(ap,type);
-	x0 = center->x-range;
-	x1 = center->x+range;
-	y0 = center->y-range;
-	y1 = center->y+range;
-	
-	if (x0 < 0) x0 = 0;
-	if (y0 < 0) y0 = 0;
-	if (x1 >= map[m].xs) x1 = map[m].xs-1;
-	if (y1 >= map[m].ys) y1 = map[m].ys-1;
-	
+
+	x0 = max(center->x-range, 0);
+	y0 = max(center->y-range, 0);
+	x1 = min(center->x+range, map[m].xs-1);
+	y1 = min(center->y+range, map[m].ys-1);
+
 	if (type&~BL_MOB)
 		for (by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++) {
 			for(bx=x0/BLOCK_SIZE;bx<=x1/BLOCK_SIZE;bx++){
@@ -846,6 +837,7 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 	if (!dx && !dy) return 0; //No movement.
 	va_start(ap,type);
 	m = center->m;
+
 	x0 = center->x-range;
 	x1 = center->x+range;
 	y0 = center->y-range;
@@ -2326,45 +2318,19 @@ void map_setcell(int m,int x,int y,int cell)
 	j=x+y*map[m].xs;
 
 	switch (cell) {
-		case CELL_SETNPC:
-			map[m].cell[j] |= CELL_NPC;
-			break;
-		case CELL_CLRNPC:
-			map[m].cell[j] &= ~CELL_NPC;
-			break;
-		case CELL_SETICEWALL:
-			map[m].cell[j] |= CELL_ICEWALL;
-			break;
-		case CELL_CLRICEWALL:
-			map[m].cell[j] &= ~CELL_ICEWALL;
-			break;
-		case CELL_SETBASILICA:
-			map[m].cell[j] |= CELL_BASILICA;
-			break;
-		case CELL_CLRBASILICA:
-			map[m].cell[j] &= ~CELL_BASILICA;
-			break;
-		case CELL_SETPNEUMA:
-			map[m].cell[j] |= CELL_PNEUMA;
-			break;
-		case CELL_CLRPNEUMA:
-			map[m].cell[j] &= ~CELL_PNEUMA;
-			break;
-		case CELL_SETSAFETYWALL:
-			map[m].cell[j] |= CELL_SAFETYWALL;
-			break;
-		case CELL_CLRSAFETYWALL:
-			map[m].cell[j] &= ~CELL_SAFETYWALL;
-			break;
-		case CELL_SETLANDPROTECTOR:
-			map[m].cell[j] |= CELL_LANDPROTECTOR;
-			break;
-		case CELL_CLRLANDPROTECTOR:
-			map[m].cell[j] &= ~CELL_LANDPROTECTOR;
-			break;
-		case CELL_SETREGEN:
-			map[m].cell[j] |= CELL_REGEN;
-			break;
+		case CELL_SETNPC:           map[m].cell[j] |= CELL_NPC;            break;
+		case CELL_CLRNPC:           map[m].cell[j] &= ~CELL_NPC;           break;
+		case CELL_SETICEWALL:       map[m].cell[j] |= CELL_ICEWALL;        break;
+		case CELL_CLRICEWALL:       map[m].cell[j] &= ~CELL_ICEWALL;       break;
+		case CELL_SETBASILICA:      map[m].cell[j] |= CELL_BASILICA;       break;
+		case CELL_CLRBASILICA:      map[m].cell[j] &= ~CELL_BASILICA;      break;
+		case CELL_SETPNEUMA:        map[m].cell[j] |= CELL_PNEUMA;         break;
+		case CELL_CLRPNEUMA:        map[m].cell[j] &= ~CELL_PNEUMA;        break;
+		case CELL_SETSAFETYWALL:    map[m].cell[j] |= CELL_SAFETYWALL;     break;
+		case CELL_CLRSAFETYWALL:    map[m].cell[j] &= ~CELL_SAFETYWALL;    break;
+		case CELL_SETLANDPROTECTOR: map[m].cell[j] |= CELL_LANDPROTECTOR;  break;
+		case CELL_CLRLANDPROTECTOR: map[m].cell[j] &= ~CELL_LANDPROTECTOR; break;
+		case CELL_SETREGEN:         map[m].cell[j] |= CELL_REGEN;          break;
 		default:
 			map[m].gat[j] = cell;
 			break;
@@ -2494,7 +2460,7 @@ int map_addmap(char* mapname)
 
 static void map_delmapid(int id)
 {
-	ShowNotice("Removing map [ %s ] from maplist\n",map[id].name);
+	ShowNotice("Removing map [ %s ] from maplist\n"CL_CLL,map[id].name);
 	memmove(map+id, map+id+1, sizeof(map[0])*(map_num-id-1));
 	map_num--;
 }
@@ -2569,7 +2535,7 @@ int map_readgat (struct map_data* m)
 
 	xs = m->xs = *(int*)(gat+6);
 	ys = m->ys = *(int*)(gat+10);
-	m->gat = (unsigned char *)aMallocA((m->xs * m->ys)*sizeof(unsigned char));
+	m->gat = (unsigned char *)aMallocA((xs * ys)*sizeof(unsigned char));
 
 	wh = map_waterheight(m->name);
 	for (y = 0; y < ys; y++) {
@@ -2633,7 +2599,7 @@ int map_readallmaps (void)
 
 		if (uidb_get(map_db,(unsigned int)map[i].index) != NULL)
 		{
-			ShowWarning("Map %s already loaded!\n", map[i].name);
+			ShowWarning("Map %s already loaded!\n"CL_CLL, map[i].name);
 			if (map[i].gat) {
 				aFree(map[i].gat);
 				map[i].gat = NULL;	
@@ -2677,7 +2643,6 @@ int map_readallmaps (void)
 		fclose(fp);
 
 	// finished map loading
-	printf("\r");
 	ShowInfo("Successfully loaded '"CL_WHITE"%d"CL_RESET"' maps."CL_CLL"\n",map_num);
 
 	if (maps_removed)

@@ -8152,7 +8152,7 @@ void check_fake_id(int fd, struct map_session_data *sd, int target_id)
 		memset(WPACKETP(0), 0, packet_len(0x95));
 		WPACKETW(0) = 0x95;
 		WPACKETL(2) = server_fake_mob_id;
-		fake_mob = fake_mob_list[(sd->bl.m + sd->fd + sd->status.char_id) % (sizeof(fake_mob_list) / sizeof(fake_mob_list[0]))]; // never same mob
+		fake_mob = fake_mob_list[(sd->bl.m + sd->fd + sd->status.char_id) % ARRAYLENGTH(fake_mob_list)]; // never same mob
 		if (!mobdb_checkid(fake_mob))
 			fake_mob = 1002; // poring (default)
 		strncpy(WPACKETP(6), mob_db[fake_mob].name, 24);
@@ -11775,7 +11775,7 @@ static int packetdb_readdb(void)
 
 	// initialize packet_db[SERVER] from hardcoded packet_len_table[] values
 	memset(packet_db,0,sizeof(packet_db));
-	for( i = 0; i < sizeof(packet_len_table)/sizeof(packet_len_table[0]); ++i )
+	for( i = 0; i < ARRAYLENGTH(packet_len_table); ++i )
 		packet_len(i) = packet_len_table[i];
 
 	sprintf(line, "%s/packet_db.txt", db_path);
@@ -11868,7 +11868,7 @@ static int packetdb_readdb(void)
 			ln++;
 			continue;
 		}
-		for(j=0;j<sizeof(clif_parse_func)/sizeof(clif_parse_func[0]);j++){
+		for(j=0;j<ARRAYLENGTH(clif_parse_func);j++){
 			if(clif_parse_func[j].name != NULL && strcmp(str[2],clif_parse_func[j].name)==0)
 			{
 				if (packet_db[packet_ver][cmd].func != clif_parse_func[j].func)

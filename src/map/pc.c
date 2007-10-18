@@ -2761,16 +2761,10 @@ int pc_getzeny(struct map_session_data *sd,int zeny)
 int pc_search_inventory(struct map_session_data *sd,int item_id)
 {
 	int i;
-
 	nullpo_retr(-1, sd);
 
-	for(i=0;i<MAX_INVENTORY;i++) {
-		if(sd->status.inventory[i].nameid == item_id &&
-		 (sd->status.inventory[i].amount > 0 || item_id == 0))
-			return i;
-	}
-
-	return -1;
+	ARR_FIND( 0, MAX_INVENTORY, i, sd->status.inventory[i].nameid == item_id && (sd->status.inventory[i].amount > 0 || item_id == 0) );
+	return ( i < MAX_INVENTORY ) ? i : -1;
 }
 
 /*==========================================
@@ -3660,7 +3654,7 @@ int pc_checkallowskill(struct map_session_data *sd)
 	if(!sd->sc.count)
 		return 0;
 	
-	for (i = 0; i < sizeof(scw_list)/sizeof(scw_list[0]); i++)
+	for (i = 0; i < ARRAYLENGTH(scw_list); i++)
 	{	// Skills requiring specific weapon types
 		if(sd->sc.data[scw_list[i]].timer!=-1 &&
 			!pc_check_weapontype(sd,skill_get_weapontype(StatusSkillChangeTable[scw_list[i]])))
@@ -3672,7 +3666,7 @@ int pc_checkallowskill(struct map_session_data *sd)
 		status_change_end(&sd->bl,SC_SPURT,-1);
 	
 	if(sd->status.shield <= 0) { // Skills requiring a shield
-		for (i = 0; i < sizeof(scs_list)/sizeof(scs_list[0]); i++)
+		for (i = 0; i < ARRAYLENGTH(scs_list); i++)
 			if(sd->sc.data[scs_list[i]].timer!=-1)
 				status_change_end(&sd->bl,scs_list[i],-1);
 	}

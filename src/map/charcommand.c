@@ -2578,11 +2578,11 @@ int charcommand_param(const int fd, struct map_session_data* sd, const char* com
 	status[5] = &pl_sd->status.luk;
 
 	index = -1;
-	for (index = 0; index < sizeof(param)/sizeof(param[0]); index++) {
+	for (index = 0; index < ARRAYLENGTH(param); index++) {
 		if (strcmpi(command, param[index]) == 0)
 			break;
 	}
-	if (index == sizeof(param)/sizeof(param[0]) || index > MAX_STATUS_TYPE) {
+	if (index == ARRAYLENGTH(param) || index > MAX_STATUS_TYPE) {
 		// normaly impossible...
 		sprintf(output, "Please, enter a valid value (usage: #str,#agi,#vit,#int,#dex,#luk <+/-adjustment> <player>).");
 		clif_displaymessage(fd, output);
@@ -2964,7 +2964,7 @@ int charcommand_allstats(const int fd, struct map_session_data* sd, const char* 
 
 	count = 0;
 	max = pc_maxparameter(pl_sd);
-	for (index = 0; index < (int)(sizeof(status) / sizeof(status[0])); index++) {
+	for (index = 0; index < ARRAYLENGTH(status); index++) {
 
 		if (value > 0 && *status[index] > max - value)
 			new_value = max;

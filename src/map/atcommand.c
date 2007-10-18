@@ -2143,7 +2143,7 @@ int atcommand_jobchange(const int fd, struct map_session_data* sd, const char* c
 			{ "soul linker",	4049 },
 		};
 
-		for (i=0; i < (int)(sizeof(jobs) / sizeof(jobs[0])); i++) {
+		for (i=0; i < ARRAYLENGTH(jobs); i++) {
 			if (strncmpi(message, jobs[i].name, 16) == 0) {
 				job = jobs[i].id;
 				upper = 0;
@@ -3053,7 +3053,7 @@ int atcommand_go(const int fd, struct map_session_data* sd, const char* command,
 	town = atoi(message);
  
 	// if no value, display all value
-	if (!message || !*message || sscanf(message, "%15s", map_name) < 1 || town < -3 || town >= (int)(sizeof(data) / sizeof(data[0]))) {
+	if (!message || !*message || sscanf(message, "%15s", map_name) < 1 || town < -3 || town >= ARRAYLENGTH(data)) {
 		clif_displaymessage(fd, msg_txt(38)); // Invalid location number or name.
 		clif_displaymessage(fd, msg_txt(82)); // Please, use one of this number/name:
 		clif_displaymessage(fd, " 0=Prontera         1=Morroc       2=Geffen");
@@ -3161,7 +3161,7 @@ int atcommand_go(const int fd, struct map_session_data* sd, const char* command,
 				clif_displaymessage(fd, atcmd_output);
 				return -1;
 			}
-		} else if (town >= 0 && town < (int)(sizeof(data) / sizeof(data[0]))) {
+		} else if (town >= 0 && town < ARRAYLENGTH(data)) {
 			m = map_mapname2mapid((char *)data[town].map);
 			if (m >= 0 && map[m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
 				clif_displaymessage(fd, msg_txt(247));
@@ -3917,7 +3917,7 @@ int atcommand_stat_all(const int fd, struct map_session_data* sd, const char* co
 	}
 
 	count = 0;
-	for (index = 0; index < (int)(sizeof(status) / sizeof(status[0])); index++) {
+	for (index = 0; index < ARRAYLENGTH(status); index++) {
 
 		if (value > 0 && *status[index] > max - value)
 			new_value = max;
@@ -6302,10 +6302,8 @@ int atcommand_npcmove(const int fd, struct map_session_data* sd, const char* com
 		return -1;	//Not on a map.
 	}
 	
-	if (x < 0) x = 0;
-	else if (x >= map[m].xs) x = map[m].xs-1;
-	if (y < 0) y = 0;
-	else if (y >= map[m].ys) y = map[m].ys-1;
+	x = cap_value(x, 0, map[m].xs-1);
+	y = cap_value(y, 0, map[m].ys-1);
 	map_foreachinrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
 	map_moveblock(&nd->bl, x, y, gettick());
 	map_foreachinrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);

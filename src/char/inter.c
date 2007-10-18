@@ -677,7 +677,7 @@ int inter_parse_frommap(int fd) {
 	len = 0;
 
 	// interIŠÇŠ‚©‚ğ’²‚×‚é
-	if (cmd < 0x3000 || cmd >= 0x3000 + (sizeof(inter_recv_packet_length) / sizeof(inter_recv_packet_length[0])))
+	if (cmd < 0x3000 || cmd >= 0x3000 + ARRAYLENGTH(inter_recv_packet_length))
 		return 0;
 	
 	if (inter_recv_packet_length[cmd-0x3000] == 0) //This is necessary, because otherwise we return 2 and the char server will just hang waiting for packets! [Skotlex]

@@ -1032,9 +1032,9 @@ enum {
 
 struct map_data {
 	char name[MAP_NAME_LENGTH];
-	unsigned short index; //Index is the map index used by the mapindex* functions.
-	unsigned char *gat; // If this is NULL, the map is not on this map-server
-	unsigned char *cell; //Contains temporary cell data that is set/unset on tiles.
+	unsigned short index; // The map index used by the mapindex* functions.
+	unsigned char *gat;   // Holds the type of each map cell (NULL if the map is not on this map-server).
+	unsigned char *cell;  // Contains temporary cell data that is set/unset on tiles.
 #ifdef CELL_NOSTACK
 	unsigned char *cell_bl; //Holds amount of bls in any given cell.
 #endif
@@ -1042,8 +1042,8 @@ struct map_data {
 	struct block_list **block_mob;
 	int *block_count,*block_mob_count;
 	int m;
-	short xs,ys;
-	short bxs,bys;
+	short xs,ys; // map dimensions (in cells)
+	short bxs,bys; // map dimensions (in blocks)
 	int npc_num;
 	int users;
 	struct map_flag {

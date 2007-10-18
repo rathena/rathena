@@ -1789,13 +1789,13 @@ int skill_strip_equip(struct block_list *bl, unsigned short where, int rate, int
 	if (!sc)
 		return 0;
 
-	for (i = 0; i < sizeof(pos)/sizeof(pos[0]); i++) {
+	for (i = 0; i < ARRAYLENGTH(pos); i++) {
 		if (where&pos[i] && sc->data[sc_def[i]].timer != -1)
 			where&=~pos[i]; 
 	}
 	if (!where) return 0;
 
-	for (i = 0; i < sizeof(pos)/sizeof(pos[0]); i++) {
+	for (i = 0; i < ARRAYLENGTH(pos); i++) {
 		if (where&pos[i] && !sc_start(bl, sc_atk[i], 100, lv, time))
 			where&=~pos[i];
 	}
@@ -3709,7 +3709,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{
 			static int changeclass[]={1038,1039,1046,1059,1086,1087,1112,1115
 				,1157,1159,1190,1272,1312,1373,1492};
-			int class_ = mob_random_class (changeclass,sizeof(changeclass)/sizeof(changeclass[0]));
+			int class_ = mob_random_class (changeclass,ARRAYLENGTH(changeclass));
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if(dstmd) mob_class_change(dstmd,class_);
 		}
@@ -3717,7 +3717,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SA_MONOCELL:
 		{
 			static int poringclass[]={1002};
-			int class_ = mob_random_class (poringclass,sizeof(poringclass)/sizeof(poringclass[0]));
+			int class_ = mob_random_class (poringclass,ARRAYLENGTH(poringclass));
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if(dstmd) mob_class_change(dstmd,class_);
 		}
