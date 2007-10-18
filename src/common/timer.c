@@ -13,6 +13,8 @@
 
 #ifdef WIN32
 #include <windows.h> // GetTickCount()
+#else
+#include <sys/time.h> // struct timeval, gettimeofday()
 #endif
 
 // タイマー間隔の最小値。モンスターの大量召還時、多数のクライアント接続時に
