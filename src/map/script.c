@@ -3802,6 +3802,8 @@ BUILDIN_FUNC(bonus2);
 BUILDIN_FUNC(bonus3);
 BUILDIN_FUNC(bonus4);
 BUILDIN_FUNC(bonus5);
+BUILDIN_FUNC(bonusautoscript);
+BUILDIN_FUNC(bonusautoscript2);
 BUILDIN_FUNC(skill);
 BUILDIN_FUNC(addtoskill); // [Valaris]
 BUILDIN_FUNC(guildskill);
@@ -4134,6 +4136,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(bonus,"bonus3","iiii"),
 	BUILDIN_DEF2(bonus,"bonus4","iiiii"),
 	BUILDIN_DEF2(bonus,"bonus5","iiiiii"),
+	BUILDIN_DEF(bonusautoscript,"si?"),
+	BUILDIN_DEF(bonusautoscript2,"si?"),
 	BUILDIN_DEF(skill,"ii?"),
 	BUILDIN_DEF(addtoskill,"ii?"), // [Valaris]
 	BUILDIN_DEF(guildskill,"ii"),
@@ -7190,6 +7194,59 @@ BUILDIN_FUNC(bonus)
 	}
 
 	return 0;
+}
+
+/// Bonus script that has a chance of being executed on attack.
+BUILDIN_FUNC(bonusautoscript)
+{
+	int rate, flag = 0;
+	const char *str;
+	struct script_code *script;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 1;// no player attached, report source
+
+	str  = script_getstr(st,2);
+	rate = script_getnum(st,3);
+	if( script_hasdata(st,4) )
+		flag = script_getnum(st,4);
+	script = parse_script(str, "autoscript bonus", 0, 0);
+	if (!script)
+		return 1;
+	if (!pc_autoscript_add(sd->autoscript, ARRAYLENGTH(sd->autoscript), rate, flag, script))
+	{
+		script_free_code(script);
+		return 1;
+	}
+	return 0;	
+}
+/// Bonus script that has a chance of being executed when attacked.
+BUILDIN_FUNC(bonusautoscript2)
+{
+	int rate, flag = 0;
+	const char *str;
+	struct script_code *script;
+	TBL_PC* sd;
+
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 1;// no player attached, report source
+
+	str  = script_getstr(st,2);
+	rate = script_getnum(st,3);
+	if( script_hasdata(st,4) )
+		flag = script_getnum(st,4);
+	script = parse_script(str, "autoscript2 bonus", 0, 0);
+	if (!script)
+		return 1;
+	if (!pc_autoscript_add(sd->autoscript2, ARRAYLENGTH(sd->autoscript2), rate, flag, script))
+	{
+		script_free_code(script);
+		return 1;
+	}
+	return 0;	
 }
 
 /// Changes the level of a player skill.

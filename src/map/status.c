@@ -1642,7 +1642,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	sd->def_rate = sd->def2_rate = sd->mdef_rate = sd->mdef2_rate = 100;
 	sd->regen.state.block = 0;
 
-	// zeroed arays, order follows the order in map.h.
+	// zeroed arrays, order follows the order in map.h.
 	// add new arrays to the end of zeroed area in map.h (see comments) and size here. [zzo]
 	memset (sd->param_bonus, 0, sizeof(sd->param_bonus)
 		+ sizeof(sd->param_equip)
@@ -1715,7 +1715,10 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		+ sizeof(sd->add_drop)
 		+ sizeof(sd->itemhealrate)
 	);
-
+	// clear autoscripts...
+	pc_autoscript_clear(sd->autoscript, ARRAYLENGTH(sd->autoscript));
+	pc_autoscript_clear(sd->autoscript2, ARRAYLENGTH(sd->autoscript2));
+	
 	// vars zeroing. ints, shorts, chars. in that order.
 	memset (&sd->arrow_atk, 0,sizeof(sd->arrow_atk)
 		+ sizeof(sd->arrow_ele)

@@ -4285,6 +4285,45 @@ kind in 'doc/item_bonus.txt'.
 
 ---------------------------------------
 
+*bonusautoscript <script>,<rate>{,<flag>}
+*bonusautoscript2 <script>,<rate>{,<flag>}
+
+These commands are meant to be used in item scripts. They will probably work 
+outside item scripts, but the bonus will not persist for long. They, as 
+expected, refer only to an invoking character.
+
+What these commands do is 'attach' a script to the player which will get
+executed on attack (or when attacked in the case of bonusautoscript2). Rate is
+the trigger rate of the script (1000 = 100%). The optional argument flag is
+used to classify the type of attack where the script can trigger (it shares
+the same flags as the bAutoSpell bonus script):
+
+Range criteria:
+	BF_SHORT: Trigger on melee attack
+	BF_LONG: Trigger on ranged attack
+	Default: BF_SHORT+BF_LONG
+Attack type criteria:
+	BF_WEAPON: Trigger on weapon skills 
+	BF_MAGIC: Trigger on magic skills 
+	BF_MISC: Trigger on misc skills
+	Default: BF_WEAPON
+Skill criteria:
+	BF_NORMAL: Trigger on normal attacks
+	BF_SKILL: Trigger on skills
+	default: If the attack type is BF_WEAPON (only) BF_NORMAL is used, otherwise
+		BF_SKILL+BF_NORMAL is used.
+
+In both cases, when the script triggers, the attached player will be the one
+who holds the bonus. There is currently no way of knowing within this script
+who was the other character (the attacker in autoscript2, or the target in
+autoscript).
+
+//Grants a 1% chance of starting the state "all stats +10" for 10 seconds when
+//using weapon or misc attacks (both melee and ranged skills).
+	bonusautoscript "sc_start SC_INCALLSTATUS, 10, 10000;", 10, BF_WEAPON|BF_MISC;
+
+---------------------------------------
+
 *skill <skill id>,<level>{,<flag>};
 *addtoskill <skill id>,<level>{,<flag>}
 

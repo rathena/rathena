@@ -1219,6 +1219,36 @@ int pc_disguise(struct map_session_data *sd, int class_)
 	return 1;
 }
 
+int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short flag, struct script_code *script)
+{
+	int i;
+	ARR_FIND(0, max, i, scripts[i].script == NULL);
+	if (i == max) {
+		if (battle_config.error_log)
+			ShowWarning("pc_autoscript_bonus: Reached max (%d) number of autoscripts per character!\n", max);
+		return 0;
+	}
+	scripts[i].script = script;
+	scripts[i].rate = rate;
+	//Auto-update flag value.
+	if (!(flag&BF_RANGEMASK)) flag|=BF_SHORT|BF_LONG; //No range defined? Use both.
+	if (!(flag&BF_WEAPONMASK)) flag|=BF_WEAPON; //No attack type defined? Use weapon.
+	if (!(flag&BF_SKILLMASK)) {
+		if (flag&(BF_MAGIC|BF_MISC)) flag|=BF_SKILL; //These two would never trigger without BF_SKILL
+		if (flag&BF_WEAPON) flag|=BF_NORMAL;
+	}
+	scripts[i].flag = flag;
+	return 1;
+}
+
+void pc_autoscript_clear(struct s_autoscript *scripts, int max)
+{
+	int i;
+	for (i = 0; i < max && scripts[i].script; i++)
+		script_free_code(scripts[i].script);
+	memset(scripts, 0, i*sizeof(struct s_autoscript));
+}
+
 static int pc_bonus_autospell_del(struct s_autospell *spell, int max, short id, short lv, short rate, short card_id)
 {
 	int i, j;

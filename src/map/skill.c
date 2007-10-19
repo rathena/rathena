@@ -1508,6 +1508,22 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		}
 	}
 
+	//Auto-script when attacking
+	if(sd && src != bl && sd->autoscript[0].script) {
+		int i;
+		for (i = 0; i < ARRAYLENGTH(sd->autoscript) && sd->autoscript[i].script; i++) {
+
+			if(!(sd->autoscript[i].flag&attack_type&BF_WEAPONMASK &&
+				 sd->autoscript[i].flag&attack_type&BF_RANGEMASK &&
+				 sd->autoscript[i].flag&attack_type&BF_SKILLMASK))
+				continue; // one or more trigger conditions were not fulfilled
+			if (rand()%1000 > sd->autoscript[i].rate)
+				continue;
+			run_script(sd->autoscript[i].script,0,sd->bl.id,0);
+			break; //Have only one script execute at a time.
+		}
+	}
+
 	//Polymorph
 	if(sd && sd->classchange && attack_type&BF_WEAPON &&
 		dstmd && !(tstatus->mode&MD_BOSS) &&
@@ -1683,6 +1699,24 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			break; //trigger only one auto-spell per hit.
 		}
 	}
+	//Auto-script when attacked
+	if(dstsd && !status_isdead(bl) && src != bl && dstsd->autoscript2[0].script &&
+		!(skillid && skill_get_nk(skillid)&NK_NO_DAMAGE)) 
+	{
+		int i;
+		for (i = 0; i < ARRAYLENGTH(dstsd->autoscript2) && dstsd->autoscript2[i].script; i++) {
+
+			if(!(dstsd->autoscript2[i].flag&attack_type&BF_WEAPONMASK &&
+				 dstsd->autoscript2[i].flag&attack_type&BF_RANGEMASK &&
+				 dstsd->autoscript2[i].flag&attack_type&BF_SKILLMASK))
+				continue; // one or more trigger conditions were not fulfilled
+			if (rand()%1000 > dstsd->autoscript2[i].rate)
+				continue;
+			run_script(dstsd->autoscript2[i].script,0,dstsd->bl.id,0);
+			break; //Have only one script execute at a time.
+		}
+	}
+
 	return 0;
 }
 /*=========================================================================

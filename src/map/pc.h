@@ -167,6 +167,9 @@ int pc_dropitem(struct map_session_data*,int,int);
 
 int pc_updateweightstatus(struct map_session_data *sd);
 
+int pc_autoscript_add(struct s_autoscript *scripts, int max, short rate, short flag, struct script_code *script);
+void pc_autoscript_clear(struct s_autoscript *scripts, int max);
+
 int pc_bonus(struct map_session_data*,int,int);
 int pc_bonus2(struct map_session_data *sd,int,int,int);
 int pc_bonus3(struct map_session_data *sd,int,int,int,int);

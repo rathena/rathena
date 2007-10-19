@@ -1805,6 +1805,10 @@ int unit_free(struct block_list *bl, int clrtype)
 					status_change_end(bl,SC_STEELBODY,-1);
 			}
 		}
+	
+		pc_autoscript_clear(sd->autoscript, ARRAYLENGTH(sd->autoscript));
+		pc_autoscript_clear(sd->autoscript2, ARRAYLENGTH(sd->autoscript2));
+
 		if (sd->followtimer != -1)
 			pc_stop_following(sd);
 		// Force exiting from duel and rejecting all duel invitations when player quit [LuzZza]

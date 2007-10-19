@@ -692,6 +692,12 @@ struct map_session_data {
 		int rate;
 	} itemhealrate[MAX_PC_BONUS];
 	// zeroed structures end here
+	// manually zeroed structures start here.
+	struct s_autoscript {
+		unsigned short rate, flag;
+		struct script_code *script;
+	} autoscript[5], autoscript2[5]; //Auto script on attack, when attacked
+	// manually zeroed structures end here.
 	// zeroed vars start here.
 	int arrow_atk,arrow_ele,arrow_cri,arrow_hit;
 	int nsshealhp,nsshealsp;
