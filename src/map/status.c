@@ -5000,6 +5000,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 						status_change_start(&tsd->bl,type,10000,val1,val2,val3,val4,tick,1);
 				}
 			}
+			//val4 signals infinite endure (if val4 == 2 it is infinite endure from Berserk)
 			break;
 		case SC_AUTOBERSERK:
 			if (status->hp < status->max_hp>>2 &&
@@ -5347,7 +5348,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 		case SC_BERSERK:
 			if (sc->data[SC_ENDURE].timer == -1 || !sc->data[SC_ENDURE].val4)
-				sc_start4(bl, SC_ENDURE, 100,10,0,0,1, tick);
+				sc_start4(bl, SC_ENDURE, 100,10,0,0,2, tick);
 			//HP healing is performing after the calc_status call.
 			//Val2 holds HP penalty
 			if (!val4) val4 = skill_get_time2(StatusSkillChangeTable[type],val1);
@@ -6214,10 +6215,12 @@ int status_change_end( struct block_list* bl , int type,int tid )
 				status_change_end(bl,SC_PROVOKE,-1);
 			break;
 
+		case SC_ENDURE:
+			if (sc->data[SC_ENDURE].val4)
+				return 0; //Do not end infinite endure.
 		case SC_DEFENDER:
 		case SC_REFLECTSHIELD:
 		case SC_AUTOGUARD:
-		case SC_ENDURE:
 		if (sd) {
 			struct map_session_data *tsd;
 			int i;
@@ -6353,8 +6356,11 @@ int status_change_end( struct block_list* bl , int type,int tid )
 			//If val2 is removed, no HP penalty (dispelled?) [Skotlex]
 			if(status->hp > 100 && sc->data[type].val2)
 				status_set_hp(bl, 100, 0); 
-			if(sc->data[SC_ENDURE].timer != -1)
+			if(sc->data[SC_ENDURE].timer != -1 && sc->data[SC_ENDURE].val4 == 2)
+			{
+				sc->data[SC_ENDURE].val4 = 0;
 				status_change_end(bl, SC_ENDURE, -1);
+			}
 			sc_start4(bl, SC_REGENERATION, 100, 10,0,0,(RGN_HP|RGN_SP),
 				skill_get_time(LK_BERSERK, sc->data[type].val1));
 			break;
