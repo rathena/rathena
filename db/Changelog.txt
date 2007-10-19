@@ -33,6 +33,7 @@
 
 =======================
 10/19
+	* Updated some new cards for testing purposes [Playtester]
 	* Fixed some typos and updated Atroce Card [Playtester]
 10/18
 	* Updated Gorynych's DEF/MDEF [Playtester]
