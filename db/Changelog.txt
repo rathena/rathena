@@ -20,7 +20,6 @@
 	4412 Isilla_Card		Small chance that for 5 seconds your Cast Time will decrease by 50% and gain 30 flee while attacking.
 	4413 Hodremlin_Card		Small chance that for 10 seconds you gain 30 Perfect Dodge when attacked.
 	4417 Ice_Titan_Card		Chance that for 10 seconds you'll gain 10 Armor Defence while taking magic or physical damage.
-	4425 Atros_Card			Chance that for 10 seconds your aspd will increase by 100% while attacking.
 
 	Missing 12.1 Equipment Bonuses:
 	2537 Diablos_Manteau		Increase damage taken from "Satan Morroc" by 10%
@@ -33,6 +32,8 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/19
+	* Fixed some typos and updated Atroce Card [Playtester]
 10/18
 	* Updated Gorynych's DEF/MDEF [Playtester]
 	* Fixed Ahlspiess not ignoring def of bosses [Playtester]

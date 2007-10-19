@@ -985,7 +985,7 @@
 2123,Orleans'_Plate,Orleans' Plate,5,,10,1000,,5,,1,0x0FFFFFFE,2,2,32,,55,1,1,{ bonus bMDef,2; bonus bMagicDamageReturn,5; if (isequipped(2701)) bonus bCastrate,-10; },{},{}
 2124,Thorny_Shield,Thorny Shield,5,,10,1000,,5,,1,0x0FFFFFFE,2,2,32,,55,1,1,{ bonus bMDef,2; if (isequipped(2702)) { bonus bAspdRate,20; bonus bShortWeaponDamageReturn,5; } },{},{}
 2125,Strong_Shield,Strong Shield,5,,10,2500,,4,,1,0xFFFFFFFE,2,2,32,,75,1,1,{ bonus bNoKnockback,0; bonus bNearAtkDef,-20; bonus bLongAtkDef,-20; bonus bMagicAtkDef,-20; },{},{}
-2126,Old_Shield,Old_Shield,5,,10,700,,3,,0,0xFFFFFFFE,7,2,32,,75,1,1,{ bonus bMDef,3; },{},{}
+2126,Old_Shield,Old Shield,5,,10,700,,3,,0,0xFFFFFFFE,7,2,32,,75,1,1,{ bonus bMDef,3; },{},{}
 2127,Sakray_Test_Shield,Sakray Test Shield,5,,10,0,,10,,0,0xFFFFFFFF,7,2,32,1,1,0,1,{ bonus2 bSubRace,RC_NonBoss,-25; bonus2 bSubRace,RC_Boss,-25; },{},{}
 2128,Herald_Of_GOD_,Sacred Mission,5,128000,,1600,,5,,1,0x00004000,7,2,32,,83,1,3,{ bonus bVit,3; bonus bInt,2; bonus bMdef,3; bonus bUnbreakableShield,0; },{},{}
 2129,Sacred_Scripture,Sacred Scripture,5,,,600,,5,,0,0x00008100,7,2,32,,50,1,1,{ bonus bHPrecovRate,3; bonus bSPrecovRate,3; bonus bInt,1; if(isequipped(1631)) bonus2 bSkillAtk,79,20; bonus3 bAutoSpellWhenHit,77,1,10; },{},{}
@@ -1804,7 +1804,7 @@
 4422,Roween_Card,Roween Card,6,,10,10,,,,,,,,4,,,,,{ bonus bFlee,5; bonus bFlee2,3; bonus2 bAddEle,Ele_Water,10; bonus2 bCriticalAddRace,RC_Fish,15; },{},{}
 4423,Galion_Card,Galion Card,6,,10,10,,,,,,,,136,,,,,{ bonus bHit,5; bonus2 bAddEle,Ele_Water,5; },{},{}
 4424,Stapo_Card,Stapo Card,6,,10,10,,,,,,,,136,,,,,{ skill 151,1; skill 152,1; },{},{}
-4425,Atroce_Card,Atroce Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,25; },{},{}
+4425,Atroce_Card,Atroce Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,25; bonusautoscript "{ sc_start SC_TWOHANDQUICKEN,10000,20; }",10; },{},{}
 4426,Byorgue_Card,Byorgue Card,6,,10,10,,,,,,,,16,,,,,{ if(BaseJob == Job_Rogue){ bonus bMatkRate,10; bonus bAtkRate,10; } },{},{}
 4427,Sword_Guardian_Card,Sword Guardian Card,6,,10,10,,,,,,,,2,,,,,{ bonus bHit,5; bonus bCritical,5; if (getiteminfo(getequipid(EQI_HAND_R),11) == 2 || getiteminfo(getequipid(EQI_HAND_R),11) == 3) bonus2 bSkillAtk,62,25; },{},{}
 4428,Bow_Guardian_Card,Bow Guardian Card,6,,10,10,,,,,,,,2,,,,,{ bonus bHit,5; bonus bCritical,5; if (getiteminfo(getequipid(EQI_HAND_R),11) == 11) bonus2 bSkillAtk,47,50; },{},{}

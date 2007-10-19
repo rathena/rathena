@@ -4320,7 +4320,7 @@ autoscript).
 
 //Grants a 1% chance of starting the state "all stats +10" for 10 seconds when
 //using weapon or misc attacks (both melee and ranged skills).
-	bonusautoscript "sc_start SC_INCALLSTATUS, 10, 10000;", 10, BF_WEAPON|BF_MISC;
+	bonusautoscript "{ sc_start SC_INCALLSTATUS,10000,10; }",10,BF_WEAPON|BF_MISC;
 
 ---------------------------------------
 
