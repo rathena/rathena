@@ -35,7 +35,7 @@ struct Login_Config {
 	int min_level_to_connect;						// minimum level of player/GM (0: player, 1-99: GM) to connect
 	bool online_check;								// reject incoming players that are already registered as online ?
 	bool check_client_version;						// check the clientversion set in the clientinfo ?
-	unsigned int client_version_to_connect;			// the client version needed to connect (if checking is enabled)
+	int client_version_to_connect;					// the client version needed to connect (if checking is enabled)
 
 	bool ipban;										// perform IP blocking (via contents of `ipbanlist`) ?
 	bool dynamic_pass_failure_ban;					// automatic IP blocking due to failed login attemps ?
@@ -99,19 +99,19 @@ struct login_session_data {
 };
 
 #define AUTH_FIFO_SIZE 256
-struct {
-	int account_id, login_id1, login_id2;
+struct _auth_fifo {
+	int account_id;
+	uint32 login_id1, login_id2;
 	uint32 ip;
-	char sex;
+	uint8 sex;
 	bool delflag;
 } auth_fifo[AUTH_FIFO_SIZE];
-
 int auth_fifo_pos = 0;
 
 struct online_login_data {
 	int account_id;
 	int waiting_disconnect;
-	short char_server;
+	int char_server;
 };
 
 //-----------------------------------------------------
@@ -688,7 +688,7 @@ int parse_fromchar(int fd)
 			if( RFIFOREST(fd) < 19 )
 				return 0;
 		{
-			uint32 account_id = RFIFOL(fd,2);
+			int account_id = RFIFOL(fd,2);
 			for( i = 0; i < AUTH_FIFO_SIZE; ++i )
 			{
 				if( auth_fifo[i].account_id == RFIFOL(fd,2) &&
@@ -1155,11 +1155,11 @@ int parse_fromchar(int fd)
 				Sql_GetData(sql_handle, 0, &data, NULL);
 				if( *data != '\0' )
 				{
-					off += sprintf(WFIFOP(fd,off), "%s", data)+1; //We add 1 to consider the '\0' in place.
+					off += sprintf((char*)WFIFOP(fd,off), "%s", data)+1; //We add 1 to consider the '\0' in place.
 					
 					// value
 					Sql_GetData(sql_handle, 1, &data, NULL);
-					off += sprintf(WFIFOP(fd,off), "%s", data)+1;
+					off += sprintf((char*)WFIFOP(fd,off), "%s", data)+1;
 				}
 			}
 			Sql_FreeResult(sql_handle);
@@ -1310,8 +1310,8 @@ int parse_login(int fd)
 			account.version = RFIFOL(fd,2);
 			if( !account.version )
 				account.version = 1; //Force some version...
-			safestrncpy(account.userid, RFIFOP(fd,6), NAME_LENGTH);//## does it have to be nul-terminated?
-			safestrncpy(account.passwd, RFIFOP(fd,30), NAME_LENGTH);//## does it have to be nul-terminated?
+			safestrncpy(account.userid, (char*)RFIFOP(fd,6), NAME_LENGTH);//## does it have to be nul-terminated?
+			safestrncpy(account.passwd, (char*)RFIFOP(fd,30), NAME_LENGTH);//## does it have to be nul-terminated?
 			account.passwdenc = (command == 0x01dd) ? PASSWORDENC : 0;
 			Sql_EscapeStringLen(sql_handle, esc_userid, account.userid, strlen(account.userid));
 
@@ -1452,7 +1452,7 @@ int parse_login(int fd)
 						ban_until_time = (time_t)strtoul(data, NULL, 10);
 						Sql_FreeResult(sql_handle);
 
-						strftime(WFIFOP(fd,3), 20, login_config.date_format, localtime(&ban_until_time));
+						strftime((char*)WFIFOP(fd,3), 20, login_config.date_format, localtime(&ban_until_time));
 					}
 				}
 				else
@@ -1503,8 +1503,8 @@ int parse_login(int fd)
 			uint16 server_port;
 
 			memset(&account, 0, sizeof(account));
-			safestrncpy(account.userid, RFIFOP(fd,2), NAME_LENGTH);
-			safestrncpy(account.passwd, RFIFOP(fd,26), NAME_LENGTH);
+			safestrncpy(account.userid, (char*)RFIFOP(fd,2), NAME_LENGTH);
+			safestrncpy(account.passwd, (char*)RFIFOP(fd,26), NAME_LENGTH);
 			account.passwdenc = 0;
 			server_ip = ntohl(RFIFOL(fd,54));
 			server_port = ntohs(RFIFOW(fd,58));
@@ -1752,12 +1752,12 @@ int login_config_read(const char* cfgName)
 			ShowStatus("set login_port : %s\n",w2);
 		}
 		else if(!strcmpi(w1, "log_login"))
-			login_config.log_login = config_switch(w2);
+			login_config.log_login = (bool)config_switch(w2);
 
 		else if(!strcmpi(w1, "ipban"))
-			login_config.ipban = config_switch(w2);
+			login_config.ipban = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "dynamic_pass_failure_ban"))
-			login_config.dynamic_pass_failure_ban = config_switch(w2);
+			login_config.dynamic_pass_failure_ban = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "dynamic_pass_failure_ban_interval"))
 			login_config.dynamic_pass_failure_ban_interval = atoi(w2);
 		else if(!strcmpi(w1, "dynamic_pass_failure_ban_limit"))
@@ -1770,7 +1770,7 @@ int login_config_read(const char* cfgName)
 		else if(!strcmpi(w1, "check_client_version"))
 			login_config.check_client_version = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "client_version_to_connect"))
-			login_config.client_version_to_connect = (unsigned int)atoi(w2);
+			login_config.client_version_to_connect = atoi(w2);
 		else if(!strcmpi(w1, "use_MD5_passwords"))
 			login_config.use_md5_passwds = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "min_level_to_connect"))
@@ -1778,9 +1778,9 @@ int login_config_read(const char* cfgName)
 		else if(!strcmpi(w1, "date_format"))
 			safestrncpy(login_config.date_format, w2, sizeof(login_config.date_format));
 		else if(!strcmpi(w1, "console"))
-			login_config.console = config_switch(w2);
+			login_config.console = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "case_sensitive"))
-			login_config.case_sensitive = config_switch(w2);
+			login_config.case_sensitive = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "allowed_regs")) //account flood protection system
 			allowed_regs = atoi(w2);
 		else if(!strcmpi(w1, "time_allowed"))

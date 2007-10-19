@@ -35,7 +35,7 @@ struct Login_Config {
 	int min_level_to_connect;						// minimum level of player/GM (0: player, 1-99: GM) to connect
 	bool online_check;								// reject incoming players that are already registered as online ?
 	bool check_client_version;						// check the clientversion set in the clientinfo ?
-	unsigned int client_version_to_connect;			// the client version needed to connect (if checking is enabled)
+	int client_version_to_connect;					// the client version needed to connect (if checking is enabled)
 
 //	bool ipban;										// perform IP blocking (via contents of `ipbanlist`) ?
 //	bool dynamic_pass_failure_ban;					// automatic IP blocking due to failed login attemps ?
@@ -71,7 +71,7 @@ int time_allowed = 10; //in seconds
 unsigned int new_reg_tick = 0;
 int num_regs = 0;
 
-uint32 account_id_count = START_ACCOUNT_NUM;
+int account_id_count = START_ACCOUNT_NUM;
 
 char account_filename[1024] = "save/account.txt";
 char GM_account_filename[1024] = "conf/GM_account.txt";
@@ -81,10 +81,6 @@ char login_log_unknown_packets_filename[1024] = "log/login_unknown_packets.log";
 int save_unknown_packets = 0;
 long creation_time_GM_account_file;
 int gm_account_filename_check_timer = 15; // Timer to check if GM_account file has been changed and reload GM account automaticaly (in seconds; default: 15)
-
-int display_parse_login = 0; // 0: no, 1: yes
-int display_parse_admin = 0; // 0: no, 1: yes
-int display_parse_fromchar = 0; // 0: no, 1: yes (without packet 0x2714), 2: all packets
 
 
 enum {
@@ -113,7 +109,7 @@ struct login_session_data {
 
 #define AUTH_FIFO_SIZE 256
 struct _auth_fifo {
-	uint32 account_id;
+	int account_id;
 	uint32 login_id1, login_id2;
 	uint32 ip;
 	uint8 sex;
@@ -122,14 +118,14 @@ struct _auth_fifo {
 int auth_fifo_pos = 0;
 
 struct online_login_data {
-	uint32 account_id;
+	int account_id;
 	int waiting_disconnect;
 	int char_server;
 };
 
 // holds info about all existing accounts
 struct auth_data {
-	uint32 account_id;
+	int account_id;
 	uint8 sex; // 0, 1, 2
 	char userid[24];
 	char pass[32+1]; // 23+1 for normal, 32+1 for md5-ed passwords
@@ -157,7 +153,7 @@ uint32 auth_num = 0, auth_max = 0;
 #define AUTH_SAVE_FILE_DIVIDER 50
 int auth_before_save_file = 0; // Counter. First save when 1st char-server do connection.
 
-int admin_state = 0;
+bool admin_state = false;
 char admin_pass[24] = "";
 char gm_pass[64] = "";
 int level_new_gm = 60;
@@ -275,7 +271,7 @@ int isGM(int account_id)
 //----------------------------------------------------------------------
 // Adds a new GM using acc id and level
 //----------------------------------------------------------------------
-void addGM(uint32 account_id, int level)
+void addGM(int account_id, int level)
 {
 	unsigned int i;
 	int do_add = 0;
@@ -538,7 +534,7 @@ int mmo_auth_tostr(char* str, struct auth_data* p)
 	int i;
 	char *str_p = str;
 
-	str_p += sprintf(str_p, "%u\t%s\t%s\t%s\t%c\t%d\t%u\t%s\t%s\t%ld\t%s\t%s\t%ld\t",
+	str_p += sprintf(str_p, "%d\t%s\t%s\t%s\t%c\t%d\t%u\t%s\t%s\t%ld\t%s\t%s\t%ld\t",
 	                 p->account_id, p->userid, p->pass, p->lastlogin,
 	                 p->sex == 2 ? 'S' : p->sex == 1 ? 'M' : 'F',
 	                 p->logincount, p->state, p->email, p->error_message,
@@ -557,7 +553,7 @@ int mmo_auth_tostr(char* str, struct auth_data* p)
 int mmo_auth_init(void)
 {
 	FILE *fp;
-	uint32 account_id;
+	int account_id;
 	uint32 state;
 	int logincount, n;
 	uint32 i, j;
@@ -594,11 +590,11 @@ int mmo_auth_init(void)
 		memset(memo, 0, sizeof(memo));
 
 		// database version reading (v2)
-		if (((i = sscanf(line, "%u\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%u\t"
+		if (((i = sscanf(line, "%d\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%u\t"
 		                 "%[^\t]\t%[^\t]\t%ld\t%[^\t]\t%[^\t]\t%ld%n",
 		    &account_id, userid, pass, lastlogin, &sex, &logincount, &state,
 		    email, error_message, &connect_until_time, last_ip, memo, &ban_until_time, &n)) == 13 && line[n] == '\t') ||
-		    ((i = sscanf(line, "%u\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%u\t"
+		    ((i = sscanf(line, "%d\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%u\t"
 		                 "%[^\t]\t%[^\t]\t%ld\t%[^\t]\t%[^\t]%n",
 		    &account_id, userid, pass, lastlogin, &sex, &logincount, &state,
 		    email, error_message, &connect_until_time, last_ip, memo, &n)) == 12 && line[n] == '\t')) {
@@ -725,7 +721,7 @@ int mmo_auth_init(void)
 				account_id_count = account_id + 1;
 
 		// Old athena database version reading (v1)
-		} else if ((i = sscanf(line, "%u\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%u\t%n",
+		} else if ((i = sscanf(line, "%d\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%u\t%n",
 		           &account_id, userid, pass, lastlogin, &sex, &logincount, &state, &n)) >= 5) {
 			if (account_id > END_ACCOUNT_NUM) {
 				ShowError(CL_RED"mmmo_auth_init: an account has an id higher than %d\n", END_ACCOUNT_NUM);
@@ -831,7 +827,7 @@ int mmo_auth_init(void)
 
 		} else {
 			int i = 0;
-			if (sscanf(line, "%u\t%%newid%%\n%n", &account_id, &i) == 1 &&
+			if (sscanf(line, "%d\t%%newid%%\n%n", &account_id, &i) == 1 &&
 			    i > 0 && account_id > account_id_count)
 				account_id_count = account_id;
 		}
@@ -884,7 +880,7 @@ void mmo_auth_sync(void)
 	FILE *fp;
 	unsigned int i, j, k;
 	int lock;
-	uint32 account_id;
+	int account_id;
 	CREATE_BUFFER(id, int, auth_num);
 	char line[65536];
 
@@ -923,13 +919,13 @@ void mmo_auth_sync(void)
 	fprintf(fp, "//   ban time        : 0: no ban, <other value>: banned until the date: date calculated by addition of 1/1/1970 + value (number of seconds since the 1/1/1970)\n");
 	for(i = 0; i < auth_num; i++) {
 		k = id[i]; // use of sorted index
-		if (auth_dat[k].account_id == (uint32)-1)
+		if (auth_dat[k].account_id == -1)
 			continue;
 
 		mmo_auth_tostr(line, &auth_dat[k]);
 		fprintf(fp, "%s\n", line);
 	}
-	fprintf(fp, "%u\t%%newid%%\n", account_id_count);
+	fprintf(fp, "%d\t%%newid%%\n", account_id_count);
 
 	lock_fclose(fp, account_filename, &lock);
 
@@ -1369,9 +1365,6 @@ int parse_fromchar(int fd)
 	{
 		uint16 command = RFIFOW(fd,0);
 
-		if (display_parse_fromchar == 2 || (display_parse_fromchar == 1 && command != 0x2714)) // 0x2714 is done very often (number of players)
-			ShowDebug("parse_fromchar: connection #%d, packet: 0x%x (with being read: %d bytes).\n", fd, command, RFIFOREST(fd));
-
 		switch( command )
 		{
 		
@@ -1387,7 +1380,7 @@ int parse_fromchar(int fd)
 			if( RFIFOREST(fd) < 19 )
 				return 0;
 		{
-			uint32 account_id = RFIFOL(fd,2);
+			int account_id = RFIFOL(fd,2);
 			for( i = 0; i < AUTH_FIFO_SIZE; ++i )
 			{
 				if( auth_fifo[i].account_id == RFIFOL(fd,2) &&
@@ -1461,8 +1454,8 @@ int parse_fromchar(int fd)
 				return 0;
 		{
 			char email[40];
-			uint32 acc = RFIFOL(fd,2);
-			memcpy(email, RFIFOP(fd,6), 40); email[39] = '\0';
+			int acc = RFIFOL(fd,2);
+			safestrncpy(email, (char*)RFIFOP(fd,6), 40);
 			remove_control_chars(email);
 			if (e_mail_check(email) == 0)
 				login_log("Char-server '%s': Attempt to create an e-mail on an account with a default e-mail REFUSED - e-mail is invalid (account: %d, ip: %s)\n", server[id].name, acc, ip);
@@ -1489,7 +1482,7 @@ int parse_fromchar(int fd)
 				return 0;
 
 			for(i = 0; i < auth_num; i++) {
-				if (auth_dat[i].account_id == RFIFOL(fd,2)) {
+				if (auth_dat[i].account_id == (int)RFIFOL(fd,2)) {
 					login_log("Char-server '%s': e-mail of the account %d found (ip: %s).\n",
 					          server[id].name, RFIFOL(fd,2), ip);
 					WFIFOW(fd,0) = 0x2717;
@@ -1569,7 +1562,7 @@ int parse_fromchar(int fd)
 				return 0;
 		{
 			char actual_email[40], new_email[40];
-			uint32 acc = RFIFOL(fd,2);
+			int acc = RFIFOL(fd,2);
 			memcpy(actual_email, RFIFOP(fd,6), 40); actual_email[39] = '\0'; remove_control_chars(actual_email);
 			memcpy(new_email, RFIFOP(fd,46), 40); new_email[39] = '\0'; remove_control_chars(new_email);
 			if (e_mail_check(actual_email) == 0)
@@ -1609,7 +1602,8 @@ int parse_fromchar(int fd)
 			if (RFIFOREST(fd) < 10)
 				return 0;
 		{
-			uint32 acc, statut;
+			int acc;
+			uint32 statut;
 			acc = RFIFOL(fd,2);
 			statut = RFIFOL(fd,6);
 			for(i = 0; i < auth_num && auth_dat[i].account_id != acc; i++);
@@ -1648,7 +1642,7 @@ int parse_fromchar(int fd)
 			if (RFIFOREST(fd) < 18)
 				return 0;
 		{
-			uint32 acc = RFIFOL(fd,2);
+			int acc = RFIFOL(fd,2);
 			for(i = 0; i < auth_num; i++) {
 				if (auth_dat[i].account_id == acc) {
 					time_t timestamp;
@@ -1681,8 +1675,10 @@ int parse_fromchar(int fd)
 								WBUFL(buf,7) = (unsigned int)timestamp; // status or final date of a banishment
 								charif_sendallwos(-1, buf, 11);
 								for(j = 0; j < AUTH_FIFO_SIZE; j++)
-									if (auth_fifo[j].account_id == acc)
+									if (auth_fifo[j].account_id == acc) {
 										auth_fifo[j].login_id1++; // to avoid reconnection error when come back from map-server (char-server will ask again the authentification)
+										break;
+									}
 							} else {
 								login_log("Char-server '%s': Error of ban request (account: %d, new date unbans the account, ip: %s).\n",
 								          server[id].name, acc, ip);
@@ -1714,7 +1710,7 @@ int parse_fromchar(int fd)
 				return 0;
 		{
 			uint8 sex;
-			uint32 acc = RFIFOL(fd,2);
+			int acc = RFIFOL(fd,2);
 			for(i = 0; i < auth_num; i++) {
 				if (auth_dat[i].account_id == acc) {
 					if (auth_dat[i].sex == 2)
@@ -1755,7 +1751,7 @@ int parse_fromchar(int fd)
 				return 0;
 			{
 				int p;
-				uint32 acc = RFIFOL(fd,4);
+				int acc = RFIFOL(fd,4);
 				for(i = 0; i < auth_num; i++) {
 					if (auth_dat[i].account_id == acc) {
 						//unsigned char buf[rfifow(fd,2)+1];
@@ -1800,7 +1796,7 @@ int parse_fromchar(int fd)
 			if (RFIFOREST(fd) < 6)
 				return 0;
 		{
-			uint32 acc = RFIFOL(fd,2);
+			int acc = RFIFOL(fd,2);
 			for(i = 0; i < auth_num; i++) {
 				if (auth_dat[i].account_id == acc) {
 					if (auth_dat[i].ban_until_time != 0) {
@@ -1864,8 +1860,8 @@ int parse_fromchar(int fd)
 			if (RFIFOREST(fd) < 10)
 				return 0;
 		{
-			uint32 account_id = RFIFOL(fd, 2);
-			uint32 char_id = RFIFOL(fd, 6);
+			int account_id = RFIFOL(fd, 2);
+			int char_id = RFIFOL(fd, 6);
 			int p;
 			WFIFOW(fd,0) = 0x2729;
 			WFIFOL(fd,4) = account_id;
@@ -1979,9 +1975,6 @@ int parse_admin(int fd)
 	while( RFIFOREST(fd) >= 2 )
 	{
 		uint16 command = RFIFOW(fd,0);
-
-        if (display_parse_admin)
-			ShowDebug("parse_admin: connection #%d, packet: 0x%x (with being read: %d).\n", fd, command, RFIFOREST(fd));
 
 		switch( command )
 		{
@@ -2132,18 +2125,16 @@ int parse_admin(int fd)
 				memcpy(WFIFOP(fd,6), auth_dat[i].userid, 24);
 				WFIFOL(fd,2) = auth_dat[i].account_id;
 				// save deleted account in log file
-				login_log("'ladmin': Account deletion (account: %s, id: %d, ip: %s) - saved in next line:\n",
-				          auth_dat[i].userid, auth_dat[i].account_id, ip);
+				login_log("'ladmin': Account deletion (account: %s, id: %d, ip: %s) - saved in next line:\n", auth_dat[i].userid, auth_dat[i].account_id, ip);
 				mmo_auth_tostr((char*)buf, &auth_dat[i]);
 				login_log("%s\n", buf);
 				// delete account
 				memset(auth_dat[i].userid, '\0', sizeof(auth_dat[i].userid));
-				auth_dat[i].account_id = (uint32)-1;
+				auth_dat[i].account_id = -1;
 				mmo_auth_sync();
 			} else {
 				memcpy(WFIFOP(fd,6), account_name, 24);
-				login_log("'ladmin': Attempt to delete an unknown account (account: %s, ip: %s)\n",
-				          account_name, ip);
+				login_log("'ladmin': Attempt to delete an unknown account (account: %s, ip: %s)\n", account_name, ip);
 			}
 			WFIFOSET(fd,30);
 			RFIFOSKIP(fd,26);
@@ -2531,7 +2522,7 @@ int parse_admin(int fd)
 			WFIFOL(fd,2) = RFIFOL(fd,2);
 			memset(WFIFOP(fd,6), '\0', 24);
 			for(i = 0; i < auth_num; i++) {
-				if (auth_dat[i].account_id == RFIFOL(fd,2)) {
+				if (auth_dat[i].account_id == (int)RFIFOL(fd,2)) {
 					strncpy((char*)WFIFOP(fd,6), auth_dat[i].userid, 24);
 					login_log("'ladmin': Request (by id) of an account name (account: %s, id: %d, ip: %s)\n",
 					          auth_dat[i].userid, RFIFOL(fd,2), ip);
@@ -2669,8 +2660,10 @@ int parse_admin(int fd)
 								WBUFL(buf,7) = (unsigned int)timestamp; // status or final date of a banishment
 								charif_sendallwos(-1, buf, 11);
 								for(j = 0; j < AUTH_FIFO_SIZE; j++)
-									if (auth_fifo[j].account_id == auth_dat[i].account_id)
+									if (auth_fifo[j].account_id == auth_dat[i].account_id) {
 										auth_fifo[j].login_id1++; // to avoid reconnection error when come back from map-server (char-server will ask again the authentification)
+										break;
+									}
 							}
 							auth_dat[i].ban_until_time = timestamp;
 							mmo_auth_sync();
@@ -2837,7 +2830,7 @@ int parse_admin(int fd)
 			WFIFOL(fd,2) = RFIFOL(fd,2);
 			memset(WFIFOP(fd,7), '\0', 24);
 			for(i = 0; i < auth_num; i++) {
-				if (auth_dat[i].account_id == RFIFOL(fd,2)) {
+				if (auth_dat[i].account_id == (int)RFIFOL(fd,2)) {
 					login_log("'ladmin': Sending information of an account (request by the id; account: %s, id: %d, ip: %s)\n",
 					          auth_dat[i].userid, RFIFOL(fd,2), ip);
 					WFIFOB(fd,6) = (unsigned char)isGM(auth_dat[i].account_id);
@@ -2959,22 +2952,6 @@ int parse_login(int fd)
 	while( RFIFOREST(fd) >= 2 )
 	{
 		uint16 command = RFIFOW(fd,0);
-
-		if (display_parse_login)
-		{
-			if (command == 0x0064 || command == 0x01dd)
-			{
-				if ((int)RFIFOREST(fd) >= ((command == 0x0064) ? 55 : 47))
-					ShowDebug("parse_login: connection #%d, packet: 0x%x (with being read: %d), account: %s.\n", fd, command, RFIFOREST(fd), RFIFOP(fd,6));
-			}
-			else if (command == 0x2710)
-			{
-				if (RFIFOREST(fd) >= 86)
-					ShowDebug("parse_login: connection #%d, packet: 0x%x (with being read: %d), server: %s.\n", fd, command, RFIFOREST(fd), RFIFOP(fd,60));
-			}
-			else
-				ShowDebug("parse_login: connection #%d, packet: 0x%x (with being read: %d).\n", fd, command, RFIFOREST(fd));
-		}
 
 		switch(command)
 		{
@@ -3164,8 +3141,8 @@ int parse_login(int fd)
 			uint16 server_port;
 			
 			memset(&account, 0, sizeof(account));
-			safestrncpy(account.userid, RFIFOP(fd,2), NAME_LENGTH); remove_control_chars(account.userid);
-			safestrncpy(account.passwd, RFIFOP(fd,26), NAME_LENGTH); remove_control_chars(account.passwd);
+			safestrncpy(account.userid, (char*)RFIFOP(fd,2), NAME_LENGTH); remove_control_chars(account.userid);
+			safestrncpy(account.passwd, (char*)RFIFOP(fd,26), NAME_LENGTH); remove_control_chars(account.passwd);
 			account.passwdenc = 0;
 			server_name = (char*)RFIFOP(fd,60); server_name[20] = '\0'; remove_control_chars(server_name);
 			server_ip = ntohl(RFIFOL(fd, 54));
@@ -3248,16 +3225,18 @@ int parse_login(int fd)
 					memcpy(password, RFIFOP(fd,4), 24);
 					password[24] = '\0';
 					remove_control_chars(password);
-					// If remote administration is enabled and password sent by client matches password read from login server configuration file
-					if ((admin_state == 1) && (strcmp(password, admin_pass) == 0)) {
+					if( !admin_state )
+						login_log("'ladmin'-login: Connection in administration mode REFUSED - remote administration is disabled (non encrypted password: %s, ip: %s)\n", password, ip);
+					else
+					if( strcmp(password, admin_pass) != 0)
+						login_log("'ladmin'-login: Connection in administration mode REFUSED - invalid password (non encrypted password: %s, ip: %s)\n", password, ip);
+					else {
+						// If remote administration is enabled and password sent by client matches password read from login server configuration file
 						login_log("'ladmin'-login: Connection in administration mode accepted (non encrypted password: %s, ip: %s)\n", password, ip);
 						ShowNotice("Connection of a remote administration accepted (non encrypted password).\n");
 						WFIFOB(fd,2) = 0;
 						session[fd]->func_parse = parse_admin;
-					} else if (admin_state != 1)
-						login_log("'ladmin'-login: Connection in administration mode REFUSED - remote administration is disabled (non encrypted password: %s, ip: %s)\n", password, ip);
-					else
-						login_log("'ladmin'-login: Connection in administration mode REFUSED - invalid password (non encrypted password: %s, ip: %s)\n", password, ip);
+					}
 				} else {	// encrypted password
 					if (!ld)
 						ShowError("'ladmin'-login: error! MD5 key not created/requested for an administration login.\n");
@@ -3269,16 +3248,18 @@ int parse_login(int fd)
 							sprintf(md5str, "%s%s", admin_pass, ld->md5key); // 24 20
 						}
 						MD5_String2binary(md5str, md5bin);
-						// If remote administration is enabled and password hash sent by client matches hash of password read from login server configuration file
-						if ((admin_state == 1) && (memcmp(md5bin, RFIFOP(fd,4), 16) == 0)) {
+						if( !admin_state )
+							login_log("'ladmin'-login: Connection in administration mode REFUSED - remote administration is disabled (encrypted password, ip: %s)\n", ip);
+						else
+						if( memcmp(md5bin, RFIFOP(fd,4), 16) != 0 )
+							login_log("'ladmin'-login: Connection in administration mode REFUSED - invalid password (encrypted password, ip: %s)\n", ip);
+						else {
+							// If remote administration is enabled and password hash sent by client matches hash of password read from login server configuration file
 							login_log("'ladmin'-login: Connection in administration mode accepted (encrypted password, ip: %s)\n", ip);
 							ShowNotice("Connection of a remote administration accepted (encrypted password).\n");
 							WFIFOB(fd,2) = 0;
 							session[fd]->func_parse = parse_admin;
-						} else if (admin_state != 1)
-							login_log("'ladmin'-login: Connection in administration mode REFUSED - remote administration is disabled (encrypted password, ip: %s)\n", ip);
-						else
-							login_log("'ladmin'-login: Connection in administration mode REFUSED - invalid password (encrypted password, ip: %s)\n", ip);
+						}
 					}
 				}
 			}
@@ -3477,7 +3458,7 @@ int login_config_read(const char* cfgName)
 			msg_silent = atoi(w2);
 		}
 		else if (strcmpi(w1, "admin_state") == 0) {
-			admin_state = config_switch(w2);
+			admin_state = (bool)config_switch(w2);
 		} else if (strcmpi(w1, "admin_pass") == 0) {
 			memset(admin_pass, 0, sizeof(admin_pass));
 			strncpy(admin_pass, w2, sizeof(admin_pass));
@@ -3534,7 +3515,7 @@ int login_config_read(const char* cfgName)
 		} else if (strcmpi(w1, "gm_account_filename_check_timer") == 0) {
 			gm_account_filename_check_timer = atoi(w2);
 		} else if (strcmpi(w1, "log_login") == 0) {
-			login_config.log_login = config_switch(w2);
+			login_config.log_login = (bool)config_switch(w2);
 		} else if (strcmpi(w1, "login_log_filename") == 0) {
 			memset(login_log_filename, 0, sizeof(login_log_filename));
 			strncpy(login_log_filename, w2, sizeof(login_log_filename));
@@ -3545,12 +3526,6 @@ int login_config_read(const char* cfgName)
 			login_log_unknown_packets_filename[sizeof(login_log_unknown_packets_filename)-1] = '\0';
 		} else if (strcmpi(w1, "save_unknown_packets") == 0) {
 			save_unknown_packets = config_switch(w2);
-		} else if (strcmpi(w1, "display_parse_login") == 0) {
-			display_parse_login = config_switch(w2);
-		} else if (strcmpi(w1, "display_parse_admin") == 0) {
-			display_parse_admin = config_switch(w2);
-		} else if (strcmpi(w1, "display_parse_fromchar") == 0) {
-			display_parse_fromchar = config_switch(w2); // 0: no, 1: yes (without packet 0x2714), 2: all packets
 		} else if (strcmpi(w1, "add_to_unlimited_account") == 0) {
 			add_to_unlimited_account = config_switch(w2);
 		} else if (strcmpi(w1, "start_limited_time") == 0) {
@@ -3618,7 +3593,7 @@ int login_config_read(const char* cfgName)
 		else if(!strcmpi(w1, "check_client_version"))
 			login_config.check_client_version = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "client_version_to_connect"))
-			login_config.client_version_to_connect = (unsigned int)atoi(w2);
+			login_config.client_version_to_connect = atoi(w2);
 		else if(!strcmpi(w1, "use_MD5_passwords"))
 			login_config.use_md5_passwds = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "min_level_to_connect"))
@@ -3626,7 +3601,7 @@ int login_config_read(const char* cfgName)
 		else if(!strcmpi(w1, "date_format"))
 			safestrncpy(login_config.date_format, w2, sizeof(login_config.date_format));
 		else if(!strcmpi(w1, "console"))
-			login_config.console = config_switch(w2);
+			login_config.console = (bool)config_switch(w2);
 //		else if(!strcmpi(w1, "case_sensitive"))
 //			login_config.case_sensitive = config_switch(w2);
 		else if(!strcmpi(w1, "allowed_regs")) //account flood protection system
@@ -3654,12 +3629,7 @@ int login_config_read(const char* cfgName)
 //-------------------------------------
 void display_conf_warnings(void)
 {
-	if (admin_state != 0 && admin_state != 1) {
-		ShowWarning("Invalid value for admin_state parameter -> setting to 0 (no remote admin).\n");
-		admin_state = 0;
-	}
-
-	if (admin_state == 1) {
+	if( admin_state ) {
 		if (admin_pass[0] == '\0') {
 			ShowWarning("Administrator password is void (admin_pass).\n");
 		} else if (strcmp(admin_pass, "admin") == 0) {
@@ -3702,21 +3672,6 @@ void display_conf_warnings(void)
 	if (save_unknown_packets != 0 && save_unknown_packets != 1) {
 		ShowWarning("Invalid value for save_unknown_packets parameter -> setting to 0-no save.\n");
 		save_unknown_packets = 0;
-	}
-
-	if (display_parse_login != 0 && display_parse_login != 1) { // 0: no, 1: yes
-		ShowWarning("Invalid value for display_parse_login parameter -> setting to 0 (no display).\n");
-		display_parse_login = 0;
-	}
-
-	if (display_parse_admin != 0 && display_parse_admin != 1) { // 0: no, 1: yes
-		ShowWarning("Invalid value for display_parse_admin parameter -> setting to 0 (no display).\n");
-		display_parse_admin = 0;
-	}
-
-	if (display_parse_fromchar < 0 || display_parse_fromchar > 2) { // 0: no, 1: yes (without packet 0x2714), 2: all packets
-		ShowWarning("Invalid value for display_parse_fromchar parameter -> setting to 0 (no display).\n");
-		display_parse_fromchar = 0;
 	}
 
 	if (login_config.min_level_to_connect < 0) { // 0: all players, 1-99 at least gm level x
@@ -3776,7 +3731,7 @@ void save_config_in_log(void)
 	// save configuration in log file
 	login_log("The configuration of the server is set:\n");
 
-	if (admin_state != 1)
+	if( !admin_state )
 		login_log("- with no remote administration.\n");
 	else if (admin_pass[0] == '\0')
 		login_log("- with a remote administration with a VOID password.\n");
@@ -3827,18 +3782,6 @@ void save_config_in_log(void)
 		login_log("- to SAVE all unkown packets.\n");
 	else
 		login_log("- to SAVE only unkown packets sending by a char-server or a remote administration.\n");
-	if (display_parse_login)
-		login_log("- to display normal parse packets on console.\n");
-	else
-		login_log("- to NOT display normal parse packets on console.\n");
-	if (display_parse_admin)
-		login_log("- to display administration parse packets on console.\n");
-	else
-		login_log("- to NOT display administration parse packets on console.\n");
-	if (display_parse_fromchar)
-		login_log("- to display char-server parse packets on console.\n");
-	else
-		login_log("- to NOT display char-server parse packets on console.\n");
 
 	if (login_config.min_level_to_connect == 0) // 0: all players, 1-99 at least gm level x
 		login_log("- with no minimum level for connection.\n");
