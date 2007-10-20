@@ -33,6 +33,7 @@
 
 =======================
 10/20
+	* Rev. 11532 Corrected Desert Twilight and slots. [L0ne_W0lf]
 	* Changed interval of Heat to 20ms [Playtester]
 	- you can change this now if you want Heat to do more or less hits
 10/19
