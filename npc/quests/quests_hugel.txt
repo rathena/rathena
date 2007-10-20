@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets & SinSloth
 //===== Current Version: =====================================
-//= 1.5
+//= 1.5b
 //===== Compatible With: =====================================
 //= eAthena
 //===== Description: =========================================
@@ -16,7 +16,8 @@
 //= 1.3 Added a Missing "close;". [Samuray22]
 //=	-Thanks to Elfange
 //= 1.4 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
-//= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.5a Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.5b Fixed a variable name. [SinSloth]
 //============================================================
 
 //-------------------------------------------------------------------------
@@ -1544,7 +1545,7 @@ hu_in01,326,307,3	script	Siria	90,{
 		mes "to worry about me!";
 		close;
 	}
-	else if(v[hg_bio] == 9)
+	else if(hg_bio == 9)
 	{
 		mes "[Siria]";
 		mes "Oh, welcome~";
