@@ -4570,6 +4570,7 @@ void clif_skill_warppoint(struct map_session_data* sd, short skill_num, short sk
 	WFIFOW(fd,2) = skill_num;
 	memset(WFIFOP(fd,4), 0x00, 4*MAP_NAME_LENGTH_EXT);
 	if (map1 == (unsigned short)-1) strcpy((char*)WFIFOP(fd,4), "Random");
+	else // normal map name
 	if (map1 > 0) mapindex_getmapname_ext(mapindex_id2name(map1), (char*)WFIFOP(fd,4));
 	if (map2 > 0) mapindex_getmapname_ext(mapindex_id2name(map2), (char*)WFIFOP(fd,20));
 	if (map3 > 0) mapindex_getmapname_ext(mapindex_id2name(map3), (char*)WFIFOP(fd,36));
