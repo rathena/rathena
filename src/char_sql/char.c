@@ -461,7 +461,7 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 
 	Sql_EscapeStringLen(sql_handle, esc_name, p->name, strnlen(p->name, NAME_LENGTH));
 	if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`, `char_num`, `name`)  VALUES ('%d', '%d', '%s')",
-		char_db, p->account_id, p->char_num, esc_name) )
+		char_db, p->account_id, p->slot, esc_name) )
 	{
 		Sql_ShowDebug(sql_handle);
 	}
@@ -858,7 +858,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0,  SQLDT_INT,    &p->char_id, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 1,  SQLDT_INT,    &p->account_id, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2,  SQLDT_UCHAR,  &p->char_num, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 2,  SQLDT_UCHAR,  &p->slot, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 3,  SQLDT_STRING, &p->name, sizeof(p->name), NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 4,  SQLDT_SHORT,  &p->class_, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 5,  SQLDT_UINT,   &p->base_level, 0, NULL, NULL)
@@ -1089,7 +1089,7 @@ int mmo_char_sql_init(void)
 
 //==========================================================================================================
 
-int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int char_num, int hair_color, int hair_style)
+int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style)
 {
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
@@ -1115,11 +1115,11 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 	}
 
 	// check char slot.
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d'", char_db, sd->account_id, char_num) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d'", char_db, sd->account_id, slot) )
 		Sql_ShowDebug(sql_handle);
 	if( Sql_NumRows(sql_handle) > 0 )
 	{
-		ShowWarning("Create char failed (%d, slot: %d), slot already in use\n", sd->account_id, char_num);
+		ShowWarning("Create char failed (%d, slot: %d), slot already in use\n", sd->account_id, slot);
 		return -2;
 	}
 
@@ -1158,7 +1158,7 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 	}
 
 	//check other inputs
-	if((char_num >= MAX_CHARS) // slots
+	if((slot >= MAX_CHARS) // slots
 	|| (hair_style >= 24) // hair style
 	|| (hair_color >= 9) // hair color
 	|| (str + agi + vit + int_ + dex + luk != 6*5 ) // stats
@@ -1172,7 +1172,7 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 	if (log_char) {
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
 			"VALUES (NOW(), '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-			charlog_db,(valid?"make new char":"make new char error"), sd->account_id, char_num, esc_name, str, agi, vit, int_, dex, luk, hair_style, hair_color) )
+			charlog_db,(valid?"make new char":"make new char error"), sd->account_id, slot, esc_name, str, agi, vit, int_, dex, luk, hair_style, hair_color) )
 			Sql_ShowDebug(sql_handle);
 	}
 
@@ -1185,7 +1185,7 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
 		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
-		char_db, sd->account_id , char_num, esc_name, start_zeny, str, agi, vit, int_, dex, luk,
+		char_db, sd->account_id , slot, esc_name, start_zeny, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
 		mapindex_id2name(start_point.map), start_point.x, start_point.y, mapindex_id2name(start_point.map), start_point.x, start_point.y) )
 	{
@@ -1205,7 +1205,7 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 			Sql_ShowDebug(sql_handle);
 	}
 
-	ShowInfo("Created char: account: %d, char: %d, slot: %d, name: %s\n", sd->account_id, char_id, char_num, name);
+	ShowInfo("Created char: account: %d, char: %d, slot: %d, name: %s\n", sd->account_id, char_id, slot, name);
 	return char_id;
 }
 
@@ -1410,7 +1410,7 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
 	WBUFB(buf,101) = min(p->int_, UCHAR_MAX);
 	WBUFB(buf,102) = min(p->dex, UCHAR_MAX);
 	WBUFB(buf,103) = min(p->luk, UCHAR_MAX);
-	WBUFW(buf,104) = p->char_num;
+	WBUFW(buf,104) = p->slot;
 	if (char_rename) {
 		WBUFW(buf,106) = 1;// Rename bit (0=rename,1=no rename)
 		return 108;
@@ -2912,7 +2912,7 @@ int parse_char(int fd)
 		break;
 
 		// create new char
-		// S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <char num>.B <hair color>.W <hair style>.W
+		// S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <slot.B <hair color>.W <hair style>.W
 		case 0x67:
 			FIFOSD_CHECK(37);
 

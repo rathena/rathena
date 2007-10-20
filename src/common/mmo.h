@@ -221,7 +221,7 @@ struct mmo_charstatus {
 	char name[NAME_LENGTH];
 	unsigned int base_level,job_level;
 	short str,agi,vit,int_,dex,luk;
-	unsigned char char_num,sex;
+	unsigned char slot,sex;
 
 	uint32 mapip;
 	uint16 mapport;

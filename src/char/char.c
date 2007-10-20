@@ -83,7 +83,7 @@ int char_new_display = 0;
 
 int email_creation = 0; // disabled by default
 
-int name_ignoring_case = 0; // Allow or not identical name for characters but with a different case by [Yor]
+bool name_ignoring_case = false; // Allow or not identical name for characters but with a different case by [Yor]
 int char_name_option = 0; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
 char unknown_char_name[1024] = "Unknown"; // Name to use when the requested name cannot be determined
 #define TRIM_CHARS "\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
@@ -480,7 +480,7 @@ int mmo_char_tostr(char *str, struct mmo_charstatus *p, struct global_reg *reg, 
 		"\t%d,%d,%d\t%d,%d,%d,%d,%d" //Up to head bottom
 		"\t%d,%d,%d\t%d,%d,%d" //last point + save point
 		",%d,%d,%d,%d,%d\t",	//Family info
-		p->char_id, p->account_id, p->char_num, p->name, //
+		p->char_id, p->account_id, p->slot, p->name, //
 		p->class_, p->base_level, p->job_level,
 		p->base_exp, p->job_exp, p->zeny,
 		p->hp, p->max_hp, p->sp, p->max_sp,
@@ -677,7 +677,7 @@ int mmo_char_fromstr(char *str, struct mmo_charstatus *p, struct global_reg *reg
 	memcpy(p->name, tmp_str[0], NAME_LENGTH); //Overflow protection [Skotlex]
 	p->char_id = tmp_int[0];
 	p->account_id = tmp_int[1];
-	p->char_num = tmp_int[2];
+	p->slot = tmp_int[2];
 	p->class_ = tmp_int[3];
 	p->base_level = tmp_int[4];
 	p->job_level = tmp_int[5];
@@ -1086,7 +1086,7 @@ void mmo_char_sync(void)
 			if ((char_dat[i].status.account_id < char_dat[id[j]].status.account_id) ||
 			    // if same account id, we sort by slot.
 			    (char_dat[i].status.account_id == char_dat[id[j]].status.account_id &&
-			     char_dat[i].status.char_num < char_dat[id[j]].status.char_num)) {
+			     char_dat[i].status.slot < char_dat[id[j]].status.slot)) {
 				for(k = i; k > j; k--)
 					id[k] = id[k-1];
 				id[j] = i; // id[i]
@@ -1149,7 +1149,7 @@ int mmo_char_sync_timer(int tid, unsigned int tick, int id, int data)
 //-----------------------------------
 // Function to create a new character
 //-----------------------------------
-int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int char_num, int hair_color, int hair_style)
+int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style)
 {
 	char name[NAME_LENGTH];
 	int i;
@@ -1175,7 +1175,7 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 
 	if (strcmpi(wisp_server_name, name) == 0) {
 		char_log("Make new char error (name used is wisp name for server): (connection #%d, account: %d) slot %d, name: %s, stats: %d/%d/%d/%d/%d/%d, hair: %d, hair color: %d.\n",
-		         sd->fd, sd->account_id, char_num, name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
+		         sd->fd, sd->account_id, slot, name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
 		return -1;
 	}
 
@@ -1194,22 +1194,22 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 	//FIXME: the code way below actually depends on the value of 'i' that's used here! [ultramage]
 	for( i = 0; i < char_num; i++ ) {
 		// check if name doesn't already exist
-		if ((name_ignoring_case != 0 && strncmp(char_dat[i].status.name, name, NAME_LENGTH) == 0) ||
-			(name_ignoring_case == 0 && strncmpi(char_dat[i].status.name, name, NAME_LENGTH) == 0)) {
+		if( (name_ignoring_case && strncmp(char_dat[i].status.name, name, NAME_LENGTH) == 0) ||
+			(!name_ignoring_case && strncmpi(char_dat[i].status.name, name, NAME_LENGTH) == 0) ) {
 			char_log("Make new char error (name already exists): (connection #%d, account: %d) slot %d, name: %s (actual name of other char: %d), stats: %d/%d/%d/%d/%d/%d, hair: %d, hair color: %d.\n",
-			         sd->fd, sd->account_id, char_num, name, char_dat[i].status.name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
+			         sd->fd, sd->account_id, slot, name, char_dat[i].status.name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
 			return -1;
 		}
 		// check if this account's slot is not already occupied
-		if (char_dat[i].status.account_id == sd->account_id && char_dat[i].status.char_num == char_num) {
+		if (char_dat[i].status.account_id == sd->account_id && char_dat[i].status.slot == slot) {
 			char_log("Make new char error (slot already used): (connection #%d, account: %d) slot %d, name: %s (actual name of other char: %d), stats: %d/%d/%d/%d/%d/%d, hair: %d, hair color: %d.\n",
-			         sd->fd, sd->account_id, char_num, name, char_dat[i].status.name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
+			         sd->fd, sd->account_id, slot, name, char_dat[i].status.name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
 			return -1;
 		}
 	}
 
 	//check other inputs
-	if((char_num >= MAX_CHARS) // slots
+	if((slot >= MAX_CHARS) // slots
 	|| (hair_style >= 24) // hair style
 	|| (hair_color >= 9) // hair color
 	|| (str + agi + vit + int_ + dex + luk != 6*5 ) // stats
@@ -1217,7 +1217,7 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 	|| (str + int_ != 10 || agi + luk != 10 || vit + dex != 10) ) // pairs
 	{
 		char_log("Make new char error (invalid values): (connection #%d, account: %d) slot %d, name: %s, stats: %d/%d/%d/%d/%d/%d, hair: %d, hair color: %d\n",
-		     sd->fd, sd->account_id, char_num, name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
+		     sd->fd, sd->account_id, slot, name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
 		return -2;
 	}
 
@@ -1232,13 +1232,13 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 	}
 
 	char_log("Creation of New Character: (connection #%d, account: %d) slot %d, character Name: %s, stats: %d/%d/%d/%d/%d/%d, hair: %d, hair color: %d.\n",
-	         sd->fd, sd->account_id, char_num, name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
+	         sd->fd, sd->account_id, slot, name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
 
 	memset(&char_dat[i], 0, sizeof(struct character_data));
 
 	char_dat[i].status.char_id = char_id_count++;
 	char_dat[i].status.account_id = sd->account_id;
-	char_dat[i].status.char_num = char_num;
+	char_dat[i].status.slot = slot;
 	strcpy(char_dat[i].status.name,name);
 	char_dat[i].status.class_ = 0;
 	char_dat[i].status.base_level = 1;
@@ -1732,7 +1732,7 @@ int mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p)
 	WBUFB(buf,101) = min(p->int_, UCHAR_MAX);
 	WBUFB(buf,102) = min(p->dex, UCHAR_MAX);
 	WBUFB(buf,103) = min(p->luk, UCHAR_MAX);
-	WBUFW(buf,104) = p->char_num;
+	WBUFW(buf,104) = p->slot;
 	if (char_rename) {
 		WBUFW(buf,106) = 1;// Rename bit (0=rename,1=no rename)
 		return 108;
@@ -3426,7 +3426,7 @@ int parse_char(int fd)
 		case 0x66:
 			FIFOSD_CHECK(3);
 		{
-			int char_num = RFIFOB(fd,2);
+			int slot = RFIFOB(fd,2);
 			struct mmo_charstatus *cd;
 
 			RFIFOSKIP(fd,3);
@@ -3440,13 +3440,13 @@ int parse_char(int fd)
 				break;
 			}
 			// otherwise, load the character
-			ARR_FIND( 0, MAX_CHARS, ch, sd->found_char[ch] >= 0 && char_dat[sd->found_char[ch]].status.char_num == char_num );
+			ARR_FIND( 0, MAX_CHARS, ch, sd->found_char[ch] >= 0 && char_dat[sd->found_char[ch]].status.slot == slot );
 			if (ch == MAX_CHARS)
 			{	//Not found?? May be forged packet.
 				break;
 			}
 			cd = &char_dat[sd->found_char[ch]].status;
-			char_log("Character Selected, Account ID: %d, Character Slot: %d, Character Name: %s.\n", sd->account_id, char_num, cd->name);
+			char_log("Character Selected, Account ID: %d, Character Slot: %d, Character Name: %s.\n", sd->account_id, slot, cd->name);
 
 			cd->sex = sd->sex;
 			
@@ -3553,7 +3553,7 @@ int parse_char(int fd)
 		break;
 
 		// create new char
-		// S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <char num>.B <hair color>.W <hair style>.W
+		// S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <slot>.B <hair color>.W <hair style>.W
 		case 0x67:
 			FIFOSD_CHECK(37);
 
@@ -3573,8 +3573,6 @@ int parse_char(int fd)
 				case -3: WFIFOB(fd,2) = 0x01; break;
 				}
 				WFIFOSET(fd,3);
-				RFIFOSKIP(fd,37);
-				break;
 			}
 			else
 			{
@@ -3637,7 +3635,7 @@ int parse_char(int fd)
 					// change value to put new packet (char selection)
 					RFIFOSKIP(fd,-3); //FIXME: Will this work? Messing with the received buffer is ugly anyway... 
 					RFIFOW(fd,0) = 0x66;
-					RFIFOB(fd,2) = char_dat[sd->found_char[i]].status.char_num;
+					RFIFOB(fd,2) = char_dat[sd->found_char[i]].status.slot;
 					// not send packet, it's modify of actual packet
 				} else {
 					WFIFOHEAD(fd,3);
@@ -4176,7 +4174,7 @@ int char_config_read(const char *cfgName)
 		} else if (strcmpi(w1, "char_log_filename") == 0) {
 			strcpy(char_log_filename, w2);
 		} else if (strcmpi(w1, "name_ignoring_case") == 0) {
-			name_ignoring_case = config_switch(w2);
+			name_ignoring_case = (bool)config_switch(w2);
 		} else if (strcmpi(w1, "char_name_option") == 0) {
 			char_name_option = atoi(w2);
 		} else if (strcmpi(w1, "char_name_letters") == 0) {
