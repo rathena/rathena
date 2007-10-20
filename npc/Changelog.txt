@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/10/19
+	* Rev. 11527 Small Adjustment to the Juperos Elevator timer. [L0ne_W0lf]
 	* Rev. 11524 Fixed the errors in the recent change to the juperos warps. [L0ne_W0lf]
 	* Rev. 11523 Implemented proper Juperos Core event-driven access. [L0ne_W0lf]
 	- Bug testing and further optimization required.
