@@ -32,6 +32,9 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/20
+	* Changed interval of Heat to 20ms [Playtester]
+	- you can change this now if you want Heat to do more or less hits
 10/19
 	* Updated some new cards for testing purposes [Playtester]
 	* Fixed some typos and updated Atroce Card [Playtester]

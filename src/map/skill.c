@@ -36,7 +36,7 @@
 #include <time.h>
 
 
-#define SKILLUNITTIMER_INVERVAL	100
+#define SKILLUNITTIMER_INTERVAL	100
 //Guild Skills are shifted to these to make them stick into the skill array.
 #define GD_SKILLRANGEMIN 900
 #define GD_SKILLRANGEMAX GD_SKILLRANGEMIN+MAX_GUILDSKILL
@@ -7399,7 +7399,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 						int count=0;
 						int x = bl->x, y = bl->y;
 						//If target isn't knocked back it should hit every 20ms [Playtester]
-						while (count++ < battle_config.firewall_hits_on_undead && x == bl->x && y == bl->y && !status_isdead(bl)){
+						while (count++ < SKILLUNITTIMER_INTERVAL/sg->interval && x == bl->x && y == bl->y && !status_isdead(bl)){
 							if (!status_charge(ss, 0, 2)){  //should end when out of sp.
 								sg->limit=DIFF_TICK(tick,sg->tick);
 								break;
@@ -10332,8 +10332,8 @@ int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 		switch( group->unit_id )
 		{
 			case UNT_ICEWALL:
-				// icewall loses 50 hp every second (and this executes every 100ms, so...)
-				unit->val1 -= 5; // trap's hp
+				// icewall loses 50 hp every second
+				unit->val1 -= SKILLUNITTIMER_INTERVAL/20; // trap's hp
 				if( unit->val1 <= 0 && unit->limit + group->tick > tick + 700 )
 					unit->limit = DIFF_TICK(tick+700,group->tick);
 			break;
@@ -10354,7 +10354,7 @@ int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 	return 0;
 }
 /*==========================================
- * Executes on all skill units every SKILLUNITTIMER_INVERVAL miliseconds.
+ * Executes on all skill units every SKILLUNITTIMER_INTERVAL miliseconds.
  *------------------------------------------*/
 int skill_unit_timer (int tid, unsigned int tick, int id, int data)
 {
@@ -11856,7 +11856,7 @@ int do_init_skill (void)
 	add_timer_func_list(skill_timerskill,"skill_timerskill");
 	add_timer_func_list(skill_blockpc_end, "skill_blockpc_end");
 	
-	add_timer_interval(gettick()+SKILLUNITTIMER_INVERVAL,skill_unit_timer,0,0,SKILLUNITTIMER_INVERVAL);
+	add_timer_interval(gettick()+SKILLUNITTIMER_INTERVAL,skill_unit_timer,0,0,SKILLUNITTIMER_INTERVAL);
 
 	return 0;
 }
