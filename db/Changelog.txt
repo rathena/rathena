@@ -26,6 +26,8 @@
 
 =======================
 10/21
+	* Added new cards to drops so they can be tested [Playtester]
+	- updated sql files
 	* Implemented remaining 12.1 cards [Playtester]
 	* Fixed some typos in the item_db [Playtester]
 10/20
