@@ -1790,13 +1790,13 @@
 4408,Gloom_Under_Night_Card,Gloom Under Night Card,6,,10,10,,,,,,,,16,,,,,{ bonus2 bAddEle,Ele_Holy,40; bonus2 bAddEle,Ele_Dark,40; bonus2 bAddRace,RC_Angel,40; bonus2 bAddRace,RC_Demon,40; },{},{}
 4409,Agav_Card,Agav Card,6,,10,10,,,,,,,,16,,,,,{ bonus bMatkRate,5; bonus bDef,-10; if (BaseClass == Job_Mage) bonus bMaxSP,100; },{},{}
 4410,Echio_Card,Echio Card,6,,10,10,,,,,,,,16,,,,,{ bonus bBaseAtk,15; if (BaseClass == Job_Swordman) bonus bMaxHP,500; },{},{}
-4411,Vanberk_Card,Vanberk Card,6,,10,10,,,,,,,,769,,,,,{ bonus bStr,2; bonusautoscript "{}",100; },{},{}
-4412,Isilla_Card,Isilla Card,6,,10,10,,,,,,,,769,,,,,{ bonus bInt,2; bonusautoscript "{ sc_start SC_SUFFRAGIUM,5000,3; sc_start SC_INCFLEE,5000,30; }",10,BF_MAGIC; },{},{}
-4413,Hodremlin_Card,Hodremlin Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubSize,0,15; bonus2 bSubSize,1,15; bonus2 bSubSize,2,15; bonusautoscript2 "{}",100,BF_WEAPON|BF_MAGIC; },{},{}
+4411,Vanberk_Card,Vanberk Card,6,,10,10,,,,,,,,769,,,,,{ bonus bStr,2; bonusautoscript "{ sc_start SC_INCCRI,5000,100; }",10; },{},{}
+4412,Isilla_Card,Isilla Card,6,,10,10,,,,,,,,769,,,,,{ bonus bInt,2; bonusautoscript "{ sc_start SC_FASTCAST,5000,50; sc_start SC_INCFLEE,5000,30; }",10,BF_MAGIC; },{},{}
+4413,Hodremlin_Card,Hodremlin Card,6,,10,10,,,,,,,,32,,,,,{ bonus2 bSubSize,0,15; bonus2 bSubSize,1,15; bonus2 bSubSize,2,15; bonusautoscript2 "{ sc_start SC_INCFLEE2,10000,30; }",10,BF_WEAPON|BF_MAGIC; },{},{}
 4414,Seeker_Card,Seeker Card,6,,10,10,,,,,,,,32,,,,,{ skill 16,1; bonus2 bResEff,Eff_Stone,3000; bonus bMdef,10; },{},{}
 4415,Snowier_Card,Snowier Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bAddMonsterDropItem,536,200; bonus2 bAddItemHealRate,536,100; },{},{}
 4416,Siroma_Card,Siroma Card,6,,10,10,,,,,,,,136,,,,,{ bonus2 bSkillAtk,14,25; bonus2 bCastrate,14,-25; },{},{}
-4417,Ice_Titan_Card,Ice Titan Card,6,,10,10,,,,,,,,64,,,,,{ bonus bVit,2; bonusautoscript2 "{ sc_start SC_DEFENCE,10000,5; }",10,BF_WEAPON|BF_MAGIC; },{},{}
+4417,Ice_Titan_Card,Ice Titan Card,6,,10,10,,,,,,,,64,,,,,{ bonus bVit,2; bonusautoscript2 "{ sc_start SC_INCDEF,10000,10; }",10,BF_WEAPON|BF_MAGIC; },{},{}
 4418,Gazeti_Card,Gazeti Card,6,,10,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,14,2,10; },{},{}
 4419,Ktullanux_Card,Ktullanux Card,6,,10,10,,,,,,,,16,,,,,{  bonus2 bAddEle,Ele_Fire,50; bonus5 bAutoSpellWhenHit,88,10,30,BF_WEAPON|BF_MAGIC,0; },{},{}
 4420,Muscipular_Card,Muscipular Card,6,,10,10,,,,,,,,32,,,,,{ bonus5 bAutoSpellWhenHit,28,1,10,BF_SHORT,0; bonus5 bAutoSpellWhenHit,29,1,10,BF_SHORT,0; },{},{}
@@ -1804,7 +1804,7 @@
 4422,Roween_Card,Roween Card,6,,10,10,,,,,,,,4,,,,,{ bonus bFlee,5; bonus bFlee2,3; bonus2 bAddEle,Ele_Water,10; bonus2 bCriticalAddRace,RC_Fish,15; },{},{}
 4423,Galion_Card,Galion Card,6,,10,10,,,,,,,,136,,,,,{ bonus bHit,5; bonus2 bAddEle,Ele_Water,5; },{},{}
 4424,Stapo_Card,Stapo Card,6,,10,10,,,,,,,,136,,,,,{ skill 151,1; skill 152,1; },{},{}
-4425,Atroce_Card,Atroce Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,25; bonusautoscript "{ sc_start SC_TWOHANDQUICKEN,10000,20; }",10; },{},{}
+4425,Atroce_Card,Atroce Card,6,,10,10,,,,,,,,2,,,,,{ bonus bBaseAtk,25; bonusautoscript "{ sc_start SC_INCASPDRATE,10000,100; }",10; },{},{}
 4426,Byorgue_Card,Byorgue Card,6,,10,10,,,,,,,,16,,,,,{ if(BaseJob == Job_Rogue){ bonus bMatkRate,10; bonus bAtkRate,10; } },{},{}
 4427,Sword_Guardian_Card,Sword Guardian Card,6,,10,10,,,,,,,,2,,,,,{ bonus bHit,5; bonus bCritical,5; if (getiteminfo(getequipid(EQI_HAND_R),11) == 2 || getiteminfo(getequipid(EQI_HAND_R),11) == 3) bonus2 bSkillAtk,62,25; },{},{}
 4428,Bow_Guardian_Card,Bow Guardian Card,6,,10,10,,,,,,,,2,,,,,{ bonus bHit,5; bonus bCritical,5; if (getiteminfo(getequipid(EQI_HAND_R),11) == 11) bonus2 bSkillAtk,47,50; },{},{}

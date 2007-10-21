@@ -14,13 +14,6 @@
 	Missing Effects:
 	12214 Convex_Mirror:		Detect MVP spawn on minimap; doesn't work with special condition MVPs. (Recommend constant: SC_DetectMVPSpawn)
 
-	Missing 12.1 card bonuses:
-	Most 12.1 cards are using a low rate usually 1% for their effects.
-	4411 Vanberk_Card 		Small chance that for 5 seconds you gain 100 crit while attacking.
-	4412 Isilla_Card		Small chance that for 5 seconds your Cast Time will decrease by 50% and gain 30 flee while attacking.
-	4413 Hodremlin_Card		Small chance that for 10 seconds you gain 30 Perfect Dodge when attacked.
-	4417 Ice_Titan_Card		Chance that for 10 seconds you'll gain 10 Armor Defence while taking magic or physical damage.
-
 	Missing 12.1 Equipment Bonuses:
 	2537 Diablos_Manteau		Increase damage taken from "Satan Morroc" by 10%
 	2729 Diablos_Ring		Increase damage taken from "Satan Morroc" by 10%
@@ -33,6 +26,7 @@
 
 =======================
 10/21
+	* Implemented remaining 12.1 cards [Playtester]
 	* Fixed some typos in the item_db [Playtester]
 10/20
 	* Fixed some item bugs [Playtester]
