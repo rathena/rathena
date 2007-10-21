@@ -2434,7 +2434,7 @@ int charcommand_refine(const int fd, struct map_session_data* sd, const char* co
 		if (pl_sd->status.inventory[i].refine != final_refine) {
 			pl_sd->status.inventory[i].refine = final_refine;
 			current_position = pl_sd->status.inventory[i].equip;
-			pc_unequipitem(sd, i, 3);
+			pc_unequipitem(pl_sd, i, 3);
 			clif_refine(fd, 0, i, pl_sd->status.inventory[i].refine);
 			clif_delitem(pl_sd, i, 1);
 			clif_additem(pl_sd, i, 1, 0);

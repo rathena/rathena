@@ -11941,11 +11941,11 @@ BUILDIN_FUNC(unequip)
 	size_t num;
 	TBL_PC *sd;
 
-	num = script_getnum(st,2) - 1;
-	sd=script_rid2sd(st);
-	if(sd!=NULL && num > 0 && num <= ARRAYLENGTH(equip))
+	num = script_getnum(st,2);
+	sd = script_rid2sd(st);
+	if( sd != NULL && num >= 1 && num <= ARRAYLENGTH(equip) )
 	{
-		i=pc_checkequip(sd,equip[num-1]);
+		i = pc_checkequip(sd,equip[num-1]);
 		if (i >= 0)
 			pc_unequipitem(sd,i,2);
 		return 0;
@@ -11968,10 +11968,10 @@ BUILDIN_FUNC(equip)
 			ShowError("wrong item ID : equipitem(%i)\n",nameid);
 		return 1;
 	}
-	for(i=0;i<MAX_INVENTORY && sd->status.inventory[i].nameid!=nameid;i++);
-	if(i==MAX_INVENTORY) return 0;
+	ARR_FIND( 0, MAX_INVENTORY, i, sd->status.inventory[i].nameid == nameid );
+	if( i < MAX_INVENTORY )
+		pc_equipitem(sd,i,item_data->equip);
 
-	pc_equipitem(sd,i,item_data->equip);
 	return 0;
 }
 
