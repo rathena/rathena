@@ -32,6 +32,8 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/21
+	* Fixed some typos in the item_db [Playtester]
 10/20
 	* Fixed some item bugs [Playtester]
 	* Rev. 11532 Corrected Desert Twilight and slots. [L0ne_W0lf]
