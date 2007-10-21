@@ -551,14 +551,14 @@ int do_sockets(int next)
 	memcpy(&rfd, &readfds, sizeof(rfd));
 	ret = select(fd_max, &rfd, NULL, NULL, &timeout);
 
-	if( ret < 0 )
+	if( ret == SOCKET_ERROR )
 	{
-		if( ret != S_EINTR )
+		if( s_errno != S_EINTR )
 		{
-			ShowFatalError("do_sockets: select() returned %d!\n", ret);
+			ShowFatalError("do_sockets: select() failed, error code %d!\n", s_errno);
 			exit(EXIT_FAILURE);
 		}
-		return 0;
+		return 0; // interrupted by a signal, just loop and try again
 	}
 
 #ifdef WIN32
