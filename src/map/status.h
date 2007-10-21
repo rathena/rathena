@@ -260,8 +260,8 @@ enum {
 	SC_FLEET,
 	SC_SPEED,
 	SC_DEFENCE,
-	SC_INCAGIRATE,
-	SC_INCDEXRATE,
+	SC_INCASPDRATE,
+	SC_INCFLEE2,
 	SC_JAILED,
 	SC_ENCHANTARMS,	//250
 	SC_MAGICALATTACK,
@@ -274,6 +274,10 @@ enum {
 	SC_ITEMBOOST, // Bubble Gum
 	SC_BOSSMAPINFO, // Convex Mirror
 	SC_LIFEINSURANCE, // Life Insurance
+	SC_INCCRI,
+	SC_INCDEF,
+	SC_INCBASEATK,
+	SC_FASTCAST,
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 int SkillStatusChangeTable(int skill);

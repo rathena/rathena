@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/10/21
+	* Removed SC_INCAGIRATE/SC_INCDEXRATE as they are not used anymore.
+	* Added SC_INCASPDRATE, SC_INCFLEE2, SC_INCCRI, SC_INCDEF, SC_INCBASEATK
+	  and SC_FASTCAST as these are required by the newer items. [Skotlex]
 2007/10/20
 	* Fixed 'unequip' removing items in the wrong position (bugreport:252)
 	* Fixed #refine unequpping the caller's item by mistake (bugreport:265)

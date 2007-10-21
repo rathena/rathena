@@ -8869,10 +8869,11 @@ int skill_castfix_sc (struct block_list *bl, int time)
 
 	if (sc && sc->count) {
 		if (sc->data[SC_SLOWCAST].timer != -1)
-			time+= time * sc->data[SC_SLOWCAST].val2 / 100;
-
+			time += time * sc->data[SC_SLOWCAST].val2 / 100;
+		if (sc->data[SC_FASTCAST].timer != -1)
+			time -= time * sc->data[SC_FASTCAST].val1 / 100;
 		if (sc->data[SC_SUFFRAGIUM].timer != -1) {
-			time -= time * (sc->data[SC_SUFFRAGIUM].val1 * 15) / 100;
+			time -= time * sc->data[SC_SUFFRAGIUM].val2 / 100;
 			status_change_end(bl, SC_SUFFRAGIUM, -1);
 		}
 		if (sc->data[SC_MEMORIZE].timer != -1) {

@@ -477,11 +477,16 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_INCHITRATE] |= SCB_HIT;
 	StatusChangeFlagTable[SC_INCFLEE] |= SCB_FLEE;
 	StatusChangeFlagTable[SC_INCFLEERATE] |= SCB_FLEE;
+	StatusChangeFlagTable[SC_INCCRI] |= SCB_CRI;
+	StatusChangeFlagTable[SC_INCFLEE2] |= SCB_FLEE2;
+	StatusChangeFlagTable[SC_INCDEF] |= SCB_DEF;
 	StatusChangeFlagTable[SC_INCMHPRATE] |= SCB_MAXHP;
 	StatusChangeFlagTable[SC_INCMSPRATE] |= SCB_MAXSP;
+	StatusChangeFlagTable[SC_INCASPDRATE] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_INCATKRATE] |= SCB_BATK|SCB_WATK;
 	StatusChangeFlagTable[SC_INCMATKRATE] |= SCB_MATK;
 	StatusChangeFlagTable[SC_INCDEFRATE] |= SCB_DEF;
+	StatusChangeFlagTable[SC_INCBASEATK] |= SCB_BATK;
 	StatusChangeFlagTable[SC_STRFOOD] |= SCB_STR;
 	StatusChangeFlagTable[SC_AGIFOOD] |= SCB_AGI;
 	StatusChangeFlagTable[SC_VITFOOD] |= SCB_VIT;
@@ -3186,8 +3191,6 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 
 	if(sc->data[SC_CONCENTRATE].timer!=-1 && sc->data[SC_QUAGMIRE].timer == -1)
 		agi += (agi-sc->data[SC_CONCENTRATE].val3)*sc->data[SC_CONCENTRATE].val2/100;
-	if(sc->data[SC_INCAGIRATE].timer!=-1)
-		agi += agi*sc->data[SC_INCAGIRATE].val1/100;
 	if(sc->data[SC_INCALLSTATUS].timer!=-1)
 		agi += sc->data[SC_INCALLSTATUS].val1;
 	if(sc->data[SC_INCAGI].timer!=-1)
@@ -3292,8 +3295,6 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 	if(sc->data[SC_CONCENTRATE].timer!=-1 && sc->data[SC_QUAGMIRE].timer == -1)
 		dex += (dex-sc->data[SC_CONCENTRATE].val4)*sc->data[SC_CONCENTRATE].val2/100;
 
-	if(sc->data[SC_INCDEXRATE].timer!=-1)
-		dex += dex*sc->data[SC_INCDEXRATE].val1/100;
 	if(sc->data[SC_INCALLSTATUS].timer!=-1)
 		dex += sc->data[SC_INCALLSTATUS].val1;
 	if(sc->data[SC_INCDEX].timer!=-1)
@@ -3357,7 +3358,8 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 {
 	if(!sc || !sc->count)
 		return cap_value(batk,0,USHRT_MAX);
-
+	if(sc->data[SC_INCBASEATK].timer!=-1)
+		batk += sc->data[SC_INCBASEATK].val1;
 	if(sc->data[SC_ATKPOTION].timer!=-1)
 		batk += sc->data[SC_ATKPOTION].val1;
 	if(sc->data[SC_BATKFOOD].timer!=-1)
@@ -3454,7 +3456,8 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 {
 	if(!sc || !sc->count)
 		return cap_value(critical,10,SHRT_MAX);
-
+	if (sc->data[SC_INCCRI].timer!=-1)
+		critical += sc->data[SC_INCCRI].val2;
 	if (sc->data[SC_EXPLOSIONSPIRITS].timer!=-1)
 		critical += sc->data[SC_EXPLOSIONSPIRITS].val2;
 	if (sc->data[SC_FORTUNE].timer!=-1)
@@ -3540,6 +3543,8 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 	if(!sc || !sc->count)
 		return cap_value(flee2,10,SHRT_MAX);
 
+	if(sc->data[SC_INCFLEE2].timer!=-1)
+		flee2 += sc->data[SC_INCFLEE2].val2;
 	if(sc->data[SC_WHISTLE].timer!=-1)
 		flee2 += sc->data[SC_WHISTLE].val3*10;
 
@@ -3561,6 +3566,8 @@ static signed char status_calc_def(struct block_list *bl, struct status_change *
 		return 90;
 	if(sc->data[SC_STEELBODY].timer!=-1)
 		return 90;
+	if(sc->data[SC_INCDEF].timer!=-1)
+		def += sc->data[SC_INCDEF].val1;
 	if(sc->data[SC_ARMORCHANGE].timer!=-1)
 		def += sc->data[SC_ARMORCHANGE].val2;
 	if(sc->data[SC_DRUMBATTLE].timer!=-1)
@@ -3804,6 +3811,9 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		else if(sc->data[SC_MADNESSCANCEL].timer!=-1)
 			aspd_rate -= 200;
 	}
+
+	if(sc->data[SC_INCASPDRATE].timer!=-1)
+		aspd_rate -= sc->data[SC_INCASPDRATE].val2;
 	if(sc->data[i=SC_ASPDPOTION3].timer!=-1 ||
 		sc->data[i=SC_ASPDPOTION2].timer!=-1 ||
 		sc->data[i=SC_ASPDPOTION1].timer!=-1 ||
@@ -5811,13 +5821,22 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			val2*=val1; //20% per level
 			val3*=val1;
 			break;
-		case SC_ARMOR_ELEMENT:
-			//Place here SCs that have no SCB_* data, no skill associated, no ICON
-			//associated, and yet are not wrong/unknown. [Skotlex]
-			break;
 		case SC_EXPBOOST:
 			if (val1 < 0)
 				val1 = 0;
+			break;
+		case SC_INCASPDRATE:
+		case SC_INCFLEE2:
+		case SC_INCCRI:
+			val2 = val1*10; //Actual boost (since 100% = 1000)
+			break;
+		case SC_SUFFRAGIUM:
+			val2 = 15 * val1; //Speed cast decrease
+			break;
+		case SC_ARMOR_ELEMENT:
+		case SC_FASTCAST:
+			//Place here SCs that have no SCB_* data, no skill associated, no ICON
+			//associated, and yet are not wrong/unknown. [Skotlex]
 			break;
 		default:
 			if (calc_flag == SCB_NONE &&
