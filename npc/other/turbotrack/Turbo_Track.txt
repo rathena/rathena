@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,8 @@
 //= General Turbo Track NPCs, includes Kafra and Tool Merchant
 //===== Additional Comments: =================================
 //= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Fixed exp rewarding working backwards.[L0ne_W0lf]
+//=	Fixed a bug in the while loop in the guide.
 //============================================================
 
 turbo_room,130,92,3	script	Kafra Staff#tt	115,{
@@ -110,7 +112,8 @@ turbo_room,99,120,4	script	TBT_Guide#Broadcast	124,{
 			mes "game mode. Would you like to";
 			mes "learn more about a certain course? ^FFFFFFcobo^000000";
 			next;
-			while (1) {
+			set .@exitloop,1;
+			while (.@exitloop) {
 				switch(select("Log Bridge and Cube Hills:Cursed Desert and Flasher Maze:Single Snail and Invisible Maze:Snake Dice and Small Cave:No, thanks.")) {
 				case 1:
 					mes "[Turbo Track Guide]";
@@ -183,10 +186,9 @@ turbo_room,99,120,4	script	TBT_Guide#Broadcast	124,{
 					mes "best of luck to";
 					mes "you in the races!";
 					next;
-					set .@exitloop,1;
+					set .@exitloop,0;
 				}
 			}
-			if (.@exitloop) break;
 			mes "[Turbo Track Guide]";
 			mes "Would you like to";
 			mes "know anything else";
@@ -628,7 +630,7 @@ turbo_room,93,117,5	script	Point Exchange Helper	125,{
 				mes "like to exchange your Turbo";
 				mes "Track Points for Experience?";
 				next;
-				if (select("No:Yes") == 1) {
+				if (select("No:Yes") == 2) {
 					if (tt_point < 40) {
 						mes "[Item Exchange Helper]";
 						mes "I'm sorry, but you do";
