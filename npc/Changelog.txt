@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/10/22
+	* Rev. 11552 Forgot to uncomment mail NPCs in scripts_athena.conf XD [L0ne_W0lf]
 	* Rev. 11550 Updated NPCs for the mail system. [L0ne_W0lf]
 	* Rev. 11549 Bug fixes for the turbo track. [L0ne_W0lf]
 	- Fixes both the point exchanger for exp when selecting "No" and
