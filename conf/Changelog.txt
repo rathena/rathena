@@ -3,6 +3,7 @@ Date	Added
 2007/10/22
 	* Rev. 11551 Fixed nopenalty entries for Turbo Track maps. [L0ne_W0lf]
 	* Rev. 11546 Added Turbo Track map flags. [L0ne_W0lf]
+	* Removed the mail_server_enable setting as it's not required. [Zephyrus]
 2007/10/13
 	* Renamed the config default_skill_delay to default_walk_delay as that is
 	  the only thing it does now.

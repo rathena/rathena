@@ -6087,5 +6087,23 @@ server and the egg will disappear when anyone tries to hatch it.
 
 ---------------------------------------
 
+*openmail;
+
+This will open a character's Mail window on the client connected to the 
+invoking character.
+
+    mes "Close this window to open your mail inbox.";
+    close2;
+    openmail;
+    end;
+
+---------------------------------------
+
+*homshuffle
+
+This will recalculate the homunculus stats acording to its level, of the 
+current invoking character.
+
+---------------------------------------
 Whew.
 That's about all of them.

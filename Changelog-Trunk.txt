@@ -9,6 +9,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Added the new mail system implementation (Requires more test and
 	  optimizations) [Zephyrus]
 	- Updated the mail DB structure.
+	* Removed some mail config settings and atcommands not required anymore.
+	- Added documentation for script commands: openmail and homshuffle.
 2007/10/21
 	* Fixed a small mistake in r11503 causing a fatal error&exit on unix
 	  when you try to do a graceful exit (by ctrl+c for example) [ultramage]
