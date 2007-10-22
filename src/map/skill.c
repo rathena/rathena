@@ -7400,12 +7400,12 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 						int x = bl->x, y = bl->y;
 						//If target isn't knocked back it should hit every 20ms [Playtester]
 						while (count++ < SKILLUNITTIMER_INTERVAL/sg->interval && x == bl->x && y == bl->y && !status_isdead(bl)){
-							if (!status_charge(ss, 0, 2)){  //should end when out of sp.
+							if (bl->type==BL_PC) 
+								status_zap(bl, 0, 15); //Only damage SP [Skotlex]
+							else if (!status_charge(ss, 0, 2)){  //should end when out of sp.
 								sg->limit=DIFF_TICK(tick,sg->tick);
 								break;
 							}
-							else if (bl->type==BL_PC) 
-								status_zap(bl, 0, 15); //Only damage SP [Skotlex]
 							else 
 								skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,0);
 						}
