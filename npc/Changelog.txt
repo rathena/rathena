@@ -1,7 +1,8 @@
 Date		Added
 ======
 2007/10/22
-	* Rev. 11548 Bug fixes for the turbo track. [L0ne_W0lf]
+	* Rev. 11550 Updated NPCs for the mail system. [L0ne_W0lf]
+	* Rev. 11549 Bug fixes for the turbo track. [L0ne_W0lf]
 	- Fixes both the point exchanger for exp when selecting "No" and
 	  also fixes the infinite loop in the game Guide.
 	* Rev. 11545 Implemented Al De Baran turbo Track. Please report any errors. [L0ne_W0lf]
