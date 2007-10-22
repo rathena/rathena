@@ -633,6 +633,7 @@ struct map_session_data {
 	unsigned int canlog_tick;
 	unsigned int canuseitem_tick;	// [Skotlex]
 	unsigned int cantalk_tick;
+	unsigned int cansendmail_tick; // [Mail System Flood Protection]
 
 	short weapontype1,weapontype2;
 	short disguise; // [Valaris]
@@ -799,15 +800,16 @@ struct map_session_data {
 
 	char fakename[NAME_LENGTH]; // fake names [Valaris]
 
-#ifndef TXT_ONLY
-	int mail_counter;	// mail counter for mail system (antiflood protection)
-#endif
-
 	int duel_group; // duel vars [LuzZza]
 	int duel_invite;
 
 	char away_message[128]; // [LuzZza]
 
+	// Mail System [Zephyrus]
+	struct {
+		int index, amount, zeny;
+		struct mail_data inbox;
+	} mail;
 };
 
 struct {
@@ -1342,6 +1344,7 @@ struct map_session_data** map_getallusers(int *users);
 void map_foreachpc(int (*func)(DBKey,void*,va_list),...);
 int map_foreachiddb(int (*)(DBKey,void*,va_list),...);
 struct map_session_data * map_nick2sd(const char*);
+struct map_session_data * map_nick2sd_nocase(const char *);
 
 // ‚»‚Ì‘¼
 int map_check_dir(int s_dir,int t_dir);
@@ -1412,18 +1415,15 @@ extern char main_chat_nick[16];
 #include "../common/sql.h"
 
 extern int db_use_sqldbs;
-extern int mail_server_enable;
 
 extern Sql* mmysql_handle;
 extern Sql* logmysql_handle;
-extern Sql* mail_handle;
 
 extern char item_db_db[32];
 extern char item_db2_db[32];
 extern char mob_db_db[32];
 extern char mob_db2_db[32];
 extern char char_db[32];
-extern char mail_db[32];
 
 #endif /* not TXT_ONLY */
 

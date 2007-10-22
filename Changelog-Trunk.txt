@@ -6,6 +6,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2007/10/22
 	* Heat isn't supposed to consume SP when used against players [Playtester]
 	- please report if it still consumes SP in pvp
+	* Added the new mail system implementation (Requires more test and
+	  optimizations) [Zephyrus]
+	- Updated the mail DB structure.
 2007/10/21
 	* Fixed a small mistake in r11503 causing a fatal error&exit on unix
 	  when you try to do a graceful exit (by ctrl+c for example) [ultramage]

@@ -59,6 +59,7 @@ char guild_skill_db[256] = "guild_skill";
 char guild_storage_db[256] = "guild_storage";
 char party_db[256] = "party";
 char pet_db[256] = "pet";
+char mail_db[256] = "mail"; // MAIL SYSTEM
 char friend_db[256] = "friends";
 char hotkey_db[256] = "hotkey";
 
@@ -3447,6 +3448,8 @@ void sql_config_read(const char* cfgName)
 			strcpy(party_db,w2);
 		else if(!strcmpi(w1,"pet_db"))
 			strcpy(pet_db,w2);
+		else if(!strcmpi(w1,"mail_db"))
+			strcpy(mail_db,w2);
 		else if(!strcmpi(w1,"friend_db"))
 			strcpy(friend_db,w2);
 		else if(!strcmpi(w1,"hotkey_db"))

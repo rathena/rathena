@@ -15,6 +15,7 @@
 #include "int_storage.h"
 #include "int_pet.h"
 #include "int_homun.h"
+#include "int_mail.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -26,6 +27,7 @@
 
 Sql* sql_handle = NULL;
 Sql* lsql_handle = NULL;
+Sql* mail_handle = NULL;
 
 int char_server_port = 3306;
 char char_server_ip[32] = "127.0.0.1";
@@ -40,6 +42,12 @@ char login_server_id[32] = "ragnarok";
 char login_server_pw[32] = "ragnarok";
 char login_server_db[32] = "ragnarok";
 
+int mail_server_port = 3306;
+char mail_server_ip[32] = "127.0.0.1";
+char mail_server_id[32] = "ragnarok";
+char mail_server_pw[32] = "ragnarok";
+char mail_server_db[32] = "ragnarok";
+
 #ifndef TXT_SQL_CONVERT
 
 static struct accreg *accreg_pt;
@@ -53,7 +61,7 @@ int inter_send_packet_length[] = {
 	-1, 7, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0,	// 3810-
 	35,-1,11,15, 34,29, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0,	// 3820-
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1,	// 3830-
-	 9, 9,-1, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3840-
+	 9, 9,-1, 0,  0, 0, 0, 0, -1, 0,-1,12, 14,-1,  0, 0,	// 3840-
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3850-
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3860-
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3870-
@@ -65,7 +73,7 @@ int inter_recv_packet_length[] = {
 	 6,-1, 0, 0,  0, 0, 0, 0, 10,-1, 0, 0,  0, 0,  0, 0,	// 3010-
 	-1, 6,-1,14, 14,19, 6,-1, 14,14, 0, 0,  0, 0,  0, 0,	// 3020-
 	-1, 6,-1,-1, 55,19, 6,-1, 14,-1,-1,-1, 14,19,186,-1,	// 3030-
-	 5, 9, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3040-
+	 5, 9, 0, 0,  0, 0, 0, 0,  7, 6,10,10, 10,-1,  0, 0,	// 3040-
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3050-
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3060-
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3070-
@@ -270,6 +278,28 @@ static int inter_config_read(const char* cfgName)
 			strcpy(login_server_db, w2);
 			ShowStatus ("set login_server_db : %s\n", w2);
 		}
+		// MAIL SYSTEM
+		else
+		if(!strcmpi(w1,"mail_server_ip")) {
+			strcpy(mail_server_ip, w2);
+			ShowStatus ("set mail_server_ip : %s\n", w2);
+		} else
+		if(!strcmpi(w1,"mail_server_port")) {
+			mail_server_port = atoi(w2);
+			ShowStatus ("set mail_server_port : %s\n", w2);
+		} else
+		if(!strcmpi(w1,"mail_server_id")) {
+			strcpy(mail_server_id, w2);
+			ShowStatus ("set mail_server_id : %s\n", w2);
+		} else
+		if(!strcmpi(w1,"mail_server_pw")) {
+			strcpy(mail_server_pw, w2);
+			ShowStatus ("set mail_server_pw : %s\n", w2);
+		} else
+		if(!strcmpi(w1,"mail_server_db")) {
+			strcpy(mail_server_db, w2);
+			ShowStatus ("set mail_server_db : %s\n", w2);
+		}
 #ifndef TXT_SQL_CONVERT
 		else if(!strcmpi(w1,"party_share_level"))
 			party_share_level = atoi(w2);
@@ -314,6 +344,7 @@ int inter_sql_ping(int tid, unsigned int tick, int id, int data)
 {
 	ShowInfo("Pinging SQL server to keep connection alive...\n");
 	Sql_Ping(sql_handle);
+	Sql_Ping(mail_handle);
 	if( char_gm_read )
 		Sql_Ping(lsql_handle);
 	return 0;
@@ -358,6 +389,16 @@ int inter_init_sql(const char *file)
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
+	// MAIL SYSTEM
+	mail_handle = Sql_Malloc();
+	ShowInfo("Connect Mail DB server.... (Character Server)\n");
+	if ( SQL_ERROR == Sql_Connect(mail_handle, mail_server_id, mail_server_pw, mail_server_ip, (uint16)mail_server_port, mail_server_db) )
+	{
+		Sql_ShowDebug(mail_handle);
+		Sql_Free(mail_handle);
+		Sql_Free(sql_handle);
+		exit(EXIT_FAILURE);
+	}
 #ifndef TXT_SQL_CONVERT
 	else if (inter_sql_test()) {
 		ShowStatus("Connect Success! (Character Server)\n");
@@ -370,6 +411,7 @@ int inter_init_sql(const char *file)
 		{
 			Sql_ShowDebug(lsql_handle);
 			Sql_Free(lsql_handle);
+			Sql_Free(mail_handle);
 			Sql_Free(sql_handle);
 			exit(EXIT_FAILURE);
 		}
@@ -396,6 +438,7 @@ int inter_init_sql(const char *file)
 	inter_pet_sql_init();
 	inter_homunculus_sql_init(); // albator
 	inter_accreg_sql_init();
+	inter_mail_sql_init();
 
 	sql_ping_init();
 #endif //TXT_SQL_CONVERT
@@ -429,6 +472,7 @@ int inter_sql_test (void)
 			ShowSQL ("Field `%s` not be found in `%s`. Consider updating your database!\n", fields[i], char_db);
 			if( lsql_handle )
 				Sql_Free(lsql_handle);
+			Sql_Free(mail_handle);
 			Sql_Free(sql_handle);
 			exit(EXIT_FAILURE);
 		}
@@ -863,6 +907,7 @@ int inter_parse_frommap(int fd)
 		  || inter_storage_parse_frommap(fd)
 		  || inter_pet_parse_frommap(fd)
 		  || inter_homunculus_parse_frommap(fd)
+		  || inter_mail_parse_frommap(fd)
 		   )
 			break;
 		else

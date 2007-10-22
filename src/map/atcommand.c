@@ -270,13 +270,7 @@ ACMD_FUNC(homshuffle); //[Skotlex]
 ACMD_FUNC(showmobs); //KarLaeda
 ACMD_FUNC(feelreset); //[HiddenDragon]
 #ifndef TXT_ONLY
-ACMD_FUNC(checkmail); // [Valaris]
-ACMD_FUNC(listmail); // [Valaris]
-ACMD_FUNC(listnewmail); // [Valaris]
-ACMD_FUNC(readmail); // [Valaris]
-ACMD_FUNC(deletemail); // [Valaris]
-ACMD_FUNC(sendmail); // [Valaris]
-ACMD_FUNC(sendprioritymail); // [Valaris]
+ACMD_FUNC(mail); // [MAIL SYSTEM]
 ACMD_FUNC(refreshonline); // [Valaris]
 #endif
 #ifdef DMALLOC
@@ -574,13 +568,7 @@ static AtCommandInfo atcommand_info[] = {
 	{ AtCommand_ShowMobs,			"@showmobs",		10, atcommand_showmobs },  //KarLaeda
 	{ AtCommand_FeelReset,			"@feelreset",		10, atcommand_feelreset },	//[HiddenDragon]
 #ifndef TXT_ONLY // sql-only commands
-	{ AtCommand_CheckMail,			"@checkmail",		 1, atcommand_listmail }, // [Valaris]
-	{ AtCommand_ListMail,			"@listmail",		 1, atcommand_listmail }, // [Valaris]
-	{ AtCommand_ListNewMail,		"@listnewmail", 	 1, atcommand_listmail }, // [Valaris]
-	{ AtCommand_ReadMail,			"@readmail",		 1, atcommand_readmail }, // [Valaris]
-	{ AtCommand_DeleteMail, 		"@deletemail",		 1, atcommand_deletemail }, // [Valaris]
-	{ AtCommand_SendMail,			"@sendmail",		 1, atcommand_sendmail }, // [Valaris]
-	{ AtCommand_SendPriorityMail,	"@sendprioritymail",80, atcommand_sendmail }, // [Valaris]
+	{ AtCommand_Mail,			"@mail",		 1, atcommand_mail }, // [Mail System]
 	{ AtCommand_RefreshOnline,		"@refreshonline",	99, atcommand_refreshonline }, // [Valaris]
 #endif
 #ifdef DMALLOC
@@ -7893,97 +7881,13 @@ int atcommand_killid2(const int fd, struct map_session_data* sd, const char* com
 #ifndef TXT_ONLY  /* Begin SQL-Only commands */
 
 /*==========================================
- * Mail System commands by [Valaris]
+ * MAIL SYSTEM
  *------------------------------------------*/
-int atcommand_listmail(const int fd, struct map_session_data* sd, const char* command, const char* message)
+int atcommand_mail(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	if(!mail_server_enable)
-		return 0;
+	nullpo_retr(0,sd);
 
-	nullpo_retr(-1, sd);
-
-	if(strlen(command)==12) // @listnewmail
-		mail_check(sd,3);
-	else if(strlen(command)==9) // @listmail
-		mail_check(sd,2);
-	else // @checkmail
-		mail_check(sd,1);
-	return 0;
-}
-
-int atcommand_readmail(const int fd, struct map_session_data* sd, const char* command, const char* message)
-{
-	int index;
-	if(!mail_server_enable)
-		return 0;
-
-	nullpo_retr(-1, sd);
-
-	if (!message || !*message) {
-		clif_displaymessage(sd->fd,"You must specify a message number.");
-		return 0;
-	}
-
-	index = atoi(message);
-	if (index < 1) {
-		clif_displaymessage(sd->fd,"Message number cannot be negative or zero.");
-		return 0;
-	}
-
-	mail_read(sd,index);
-
-	return 0;
-}
-
-int atcommand_deletemail(const int fd, struct map_session_data* sd, const char* command, const char* message)
-{
-	int index;
-	if(!mail_server_enable)
-		return 0;
-
-	nullpo_retr(-1, sd);
-
-	if (!message || !*message) {
-		clif_displaymessage(sd->fd,"You must specify a message number.");
-		return 0;
-	}
-
-	index = atoi(message);
-	if (index < 1) {
-		clif_displaymessage(sd->fd,"Message number cannot be negative or zero.");
-		return 0;
-	}
-
-	mail_delete(sd,index);
-
-	return 0;
-}
-
-int atcommand_sendmail(const int fd, struct map_session_data* sd, const char* command, const char* message)
-{
-	char name[NAME_LENGTH],text[80];
-
-	if(!mail_server_enable)
-		return 0;
-
-	nullpo_retr(-1, sd);
-
-	if (!message || !*message) {
-		clif_displaymessage(sd->fd,"You must specify a recipient and a message.");
-		return 0;
-	}
-
-	if ((sscanf(message, "\"%23[^\"]\" %79[^\n]", name, text) < 2) &&
-		(sscanf(message, "%23s %79[^\n]", name, text) < 2)) {
-		clif_displaymessage(sd->fd,"You must specify a recipient and a message.");
-		return 0;
-	}
-
-	if(strlen(command)==17) // @sendprioritymail
-		mail_send(sd,name,text,1);
-	else
-		mail_send(sd,name,text,0);
-
+	mail_openmail(sd);
 	return 0;
 }
 

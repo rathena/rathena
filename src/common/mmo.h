@@ -105,6 +105,11 @@
 #define HM_CLASS_BASE 6001
 #define HM_CLASS_MAX (HM_CLASS_BASE+MAX_HOMUNCULUS_CLASS-1)
 
+//Mail System
+#define MAX_MAIL_INBOX 30
+#define MAIL_TITLE_LENGTH 40
+#define MAIL_BODY_LENGTH 200
+
 struct item {
 	int id;
 	short nameid;
@@ -234,6 +239,32 @@ struct mmo_charstatus {
 #ifdef HOTKEY_SAVING
 	struct hotkey hotkeys[MAX_HOTKEYS];
 #endif
+};
+
+struct mail_message {
+	unsigned int id;
+	int send_id;
+	char send_name[NAME_LENGTH];
+	int dest_id;
+	char dest_name[NAME_LENGTH];
+
+	char title[MAIL_TITLE_LENGTH];
+	char body[MAIL_BODY_LENGTH];
+
+	unsigned char read;
+	unsigned int timestamp;
+
+	int zeny;
+	struct item item;
+};
+
+struct mail_data {
+	short amount;
+	short changed;
+	short satured;
+	struct mail_message msg[MAX_MAIL_INBOX];
+
+	short unchecked, unreaded;
 };
 
 struct registry {

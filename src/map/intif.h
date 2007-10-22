@@ -74,6 +74,15 @@ int intif_homunculus_requestload(int account_id, int homun_id);
 int intif_homunculus_requestsave(int account_id, struct s_homunculus* sh);
 int intif_homunculus_requestdelete(int homun_id);
 
+#ifndef TXT_ONLY
+// MAIL SYSTEM
+int intif_Mail_requestinbox(int char_id, unsigned char flag);
+int intif_Mail_read(int mail_id);
+int intif_Mail_getattach(int char_id, int mail_id);
+int intif_Mail_delete(int char_id, int mail_id);
+int intif_Mail_return(int char_id, int mail_id);
+int intif_Mail_send(int account_id, struct mail_message *msg);
+#endif
 
 int CheckForCharServer(void);
 

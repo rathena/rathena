@@ -9,7 +9,7 @@ COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h
 	../common/strlib.h ../common/grfio.h \
 	../common/mapindex.h ../common/ers.h ../common/sql.h
 
-CHAR_OBJ = char.o inter.o int_party.o int_guild.o int_storage.o int_pet.o int_homun.o
+CHAR_OBJ = char.o inter.o int_party.o int_guild.o int_storage.o int_pet.o int_homun.o int_mail.o
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
@@ -54,3 +54,4 @@ int_guild.o: int_guild.c int_guild.h inter.h $(COMMON_H)
 int_storage.o: int_storage.c int_storage.h char.h $(COMMON_H)
 int_pet.o: int_pet.c int_pet.h inter.h char.h $(COMMON_H)
 int_homun.o: int_homun.c int_homun.h inter.h char.h $(COMMON_H)
+int_mail.o: int_mail.c int_mail.h inter.h char.h $(COMMON_H)

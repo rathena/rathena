@@ -382,5 +382,15 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 int do_final_clif(void);
 int do_init_clif(void);
 
+#ifndef TXT_ONLY
+// MAIL SYSTEM
+void clif_Mail_openmail(int fd);
+void clif_Mail_read(struct map_session_data *sd, int mail_id);
+void clif_Mail_delete(struct map_session_data *sd, int mail_id, short flag);
+void clif_Mail_return(struct map_session_data *sd, int mail_id, int new_mail);
+void clif_Mail_send(int fd, unsigned char flag);
+void clif_Mail_new(int fd, int mail_id, const char *sender, const char *title);
+void clif_Mail_refreshinbox(struct map_session_data *sd);
+#endif
 
 #endif /* _CLIF_H_ */

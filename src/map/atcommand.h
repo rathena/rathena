@@ -255,13 +255,7 @@ enum AtCommandType {
 	AtCommand_HappyHappyJoyJoy,
 	// SQL-only commands start
 #ifndef TXT_ONLY
-	AtCommand_CheckMail, // [Valaris]
-	AtCommand_ListMail, // [Valaris]
-	AtCommand_ListNewMail, // [Valaris]
-	AtCommand_ReadMail, // [Valaris]
-	AtCommand_SendMail, // [Valaris]
-	AtCommand_DeleteMail, // [Valaris]
-	AtCommand_SendPriorityMail, // [Valaris]
+	AtCommand_Mail, // [Mail System]
 	AtCommand_RefreshOnline, // [Valaris]
 	// SQL-only commands end
 #endif

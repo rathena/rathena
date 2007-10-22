@@ -633,6 +633,7 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	
 	sd->canuseitem_tick = tick;
 	sd->cantalk_tick = tick;
+	sd->cansendmail_tick = tick;
 
 	for(i = 0; i < MAX_SKILL_LEVEL; i++)
 		sd->spirit_timer[i] = -1;
@@ -742,11 +743,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 		else
 			clif_displaymessage(sd->fd, motd_text[i]);
 	}
-
-#ifndef TXT_ONLY
-	if(mail_server_enable)
-		mail_check(sd,0); // check mail at login [Valaris]
-#endif
 
 	// message of the limited time of the account
 	if (connect_until_time != 0) { // don't display if it's unlimited or unknow value
@@ -886,7 +882,9 @@ int pc_reg_received(struct map_session_data *sd)
 
 	status_calc_pc(sd,1);
 	chrif_scdata_request(sd->status.account_id, sd->status.char_id);
-
+#ifndef TXT_ONLY
+	intif_Mail_requestinbox(sd->status.char_id, 0); // MAIL SYSTEM - Request Mail Inbox
+#endif
 	if (!sd->state.connect_new && sd->fd)
 	{	//Character already loaded map! Gotta trigger LoadEndAck manually.
 		sd->state.connect_new = 1;
