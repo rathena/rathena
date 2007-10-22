@@ -25,6 +25,8 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/22
+	* Fixed Bowling Bash doing more than 1 tile knockback [Playtester]
 10/21
 	* Added new cards to drops so they can be tested [Playtester]
 	- updated sql files

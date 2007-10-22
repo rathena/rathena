@@ -101,7 +101,7 @@
 59,3:5:7:9:11,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	//KN_SPEARBOOMERANG#Spear Boomerang#
 60,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0	//KN_TWOHANDQUICKEN#Twohand Quicken#
 61,0,6,4,-1,0x20,0,5,1,no,0,0,0,weapon,0	//KN_AUTOCOUNTER#Counter Attack#
-62,-2,6,1,-1,0x2,1,10,1,no,33,0,0,weapon,1:1:2:2:3:3:4:4:5:5 //KN_BOWLINGBASH#Bowling Bash#
+62,-2,6,1,-1,0x2,1,10,1,no,33,0,0,weapon,1	//KN_BOWLINGBASH#Bowling Bash#
 63,0,0,0,0,0,0,1,0,no,0,0,0,weapon,0	//KN_RIDING#Peco Peco Riding#
 64,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0	//KN_CAVALIERMASTERY#Cavalier Mastery#
 65,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0	//PR_MACEMASTERY#Mace Mastery#
