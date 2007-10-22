@@ -303,3 +303,13 @@ xmas	mapflag	nobranch
 yuno	mapflag	nobranch
 rachel	mapflag	nobranch
 veins	mapflag	nobranch
+
+//Aldebaran Turbo Track
+turbo_room	mapflag	nobranch
+turbo_n_1	mapflag	nobranch
+turbo_n_4	mapflag	nobranch
+turbo_n_8	mapflag	nobranch
+turbo_n_16	mapflag	nobranch
+turbo_e_4	mapflag	nobranch
+turbo_e_8	mapflag	nobranch
+turbo_e_16	mapflag	nobranch

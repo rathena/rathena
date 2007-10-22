@@ -230,3 +230,13 @@ pvp_n_8-3	mapflag	nopenalty
 pvp_n_8-4	mapflag	nopenalty
 pvp_n_8-5	mapflag	nopenalty
 pvp_2vs2	mapflag	nopenalty
+
+//Aldebaran Turbo Track
+turbo_room	mapflag	nopenelty
+turbo_n_1	mapflag	nopenelty
+turbo_n_4	mapflag	nopenelty
+turbo_n_8	mapflag	nopenelty
+turbo_n_16	mapflag	nopenelty
+turbo_e_4	mapflag	nopenelty
+turbo_e_8	mapflag	nopenelty
+turbo_e_16	mapflag	nopenelty

@@ -92,3 +92,8 @@ pvp_n_8-3	mapflag	pvp
 pvp_n_8-4	mapflag	pvp
 pvp_n_8-5	mapflag	pvp
 pvp_2vs2	mapflag	pvp
+
+//Aldebaran Turbo Track
+turbo_e_4	mapflag	pvp
+turbo_e_8	mapflag	pvp
+turbo_e_16	mapflag	pvp
