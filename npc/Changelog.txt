@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/10/22
+	* Rev. 11545 Implemented Al De Baran turbo Track. Please report any errors. [L0ne_W0lf]
 2007/10/20
 	* Small fixes to Hugel and Lighthalzen quests. [SinSloth]
 	- 'gettimetick' checking in Schwartzvalt Trilogy now looks for both positive and negative values.

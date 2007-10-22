@@ -5,7 +5,7 @@
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 6.0
+//= 6.1
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: =========================================
@@ -56,6 +56,7 @@
 //= 5.9 Fixed the Kafra Welcome message for guilds. Thanks Barron-Monster. [L0ne_W0lf]
 //= 6.0 Closed Kafra Password exploit in Cool Event Corp. Storages until we got a client/packet based password support.
 //=		Added 2 args into F_SetKafCode to fit it in Cool Evnt Co. NPC [Lupus]
+//= 6.1 Added menu for Turbo Track Kafra Staff. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -154,6 +155,11 @@ function	script	F_Kafra	{
 		// Save, Storage, and Pushcart only (Kafra Warehouse)
 		case 7:
 			setarray @K_Menu0$[0],"Save","Use Storage","Rent a Pushcart","Cancel";
+			break;
+
+		// Save, Storage, Other Check information. (Turbo track)
+		case 8:
+			setarray @K_Menu0$[0],"Save","Use Storage","Check Other Information","Cancel";
 			break;
 
 		// Common Kafra Employee
