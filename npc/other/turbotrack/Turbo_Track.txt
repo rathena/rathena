@@ -13,6 +13,7 @@
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 Fixed exp rewarding working backwards.[L0ne_W0lf]
 //=	Fixed a bug in the while loop in the guide.
+//= 1.2 Fix to prevent point converter from hanging. [L0ne_W0lf]
 //============================================================
 
 turbo_room,130,92,3	script	Kafra Staff#tt	115,{
@@ -1057,6 +1058,11 @@ turbo_room,106,117,3	script	Point Manager	833,{
 			mes "your request.";
 			close;
 		}
+	case 3:
+		// There is no dialog for this option.
+		// It's possible it's missing, or maybe
+		// the dialog was never translated. XD
+		close;
 	}
 }
 

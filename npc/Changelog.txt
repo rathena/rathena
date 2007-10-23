@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/10/23
+	* Rev. 11562 Small fix for the turbo track point converter. [L0ne_W0lf]
 2007/10/22
 	* Rev. 11553 Another small update to the mail npcs. [L0ne_W0lf]
 	* Rev. 11552 Forgot to uncomment mail NPCs in scripts_athena.conf XD [L0ne_W0lf]
