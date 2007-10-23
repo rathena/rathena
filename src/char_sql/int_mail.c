@@ -76,7 +76,7 @@ int mail_fromsql(int char_id, struct mail_data *md)
 	md->full = ( Sql_NumRows(sql_handle) > MAIL_MAX_INBOX );
 
 	md->amount = i;
-	md->changed = FALSE;
+	md->changed = false;
 	Sql_FreeResult(sql_handle);
 
 	md->unchecked = 0;
@@ -107,7 +107,7 @@ int mail_savemessage(struct mail_message *msg)
 	int j;
 	char esc_send_name[NAME_LENGTH*2+1], esc_dest_name[NAME_LENGTH*2+1];
 	char esc_title[MAIL_TITLE_LENGTH*2+1], esc_body[MAIL_BODY_LENGTH*2+1];
-	
+
 	if (!msg)
 		return 0;
 
@@ -238,7 +238,7 @@ int mapif_parse_Mail_read(int fd)
 	mail_id = RFIFOL(fd,2);
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `read_flag` = '2' WHERE `id` = '%d'", mail_db, mail_id) )
 		Sql_ShowDebug(sql_handle);
-	
+
 	return 0;
 }
 
@@ -322,7 +322,7 @@ int mapif_Mail_delete(int fd, int char_id, int mail_id)
 	WFIFOL(fd,6) = mail_id;
 	WFIFOW(fd,10) = flag;
 	WFIFOSET(fd,12);
-	
+
 	return 0;
 }
 
@@ -413,7 +413,7 @@ int mapif_parse_Mail_send(int fd)
 	{
 		// Try to find the Dest Char by Name
 		char esc_name[NAME_LENGTH*2+1];
-		
+
 		Sql_EscapeStringLen(sql_handle, esc_name, msg->dest_name, strnlen(msg->dest_name, NAME_LENGTH));
 		if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`, `char_id` FROM `%s` WHERE `name` = '%s'", char_db, esc_name) )
 			Sql_ShowDebug(sql_handle);
