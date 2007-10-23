@@ -32,7 +32,7 @@ int mail_fromsql(int char_id, struct mail_data *md)
 
 	memset(md, 0, sizeof(struct mail_data));
 	md->amount = 0;
-	md->full = FALSE;
+	md->full = false;
 
 	StringBuf_Init(&buf);
 	StringBuf_AppendStr(&buf, "SELECT `id`,`send_name`,`send_id`,`dest_name`,`dest_id`,`title`,`message`,`time`,`read_flag`,"
