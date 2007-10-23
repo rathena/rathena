@@ -25,6 +25,8 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/23
+	* Rev. 11559 Added Arunafeltz State WoE maps. [L0ne_W0lf]
 10/22
 	* Fixed Bowling Bash doing more than 1 tile knockback [Playtester]
 10/21
