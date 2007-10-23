@@ -11326,7 +11326,7 @@ void clif_Mail_refreshinbox(struct map_session_data *sd)
 	WFIFOW(fd,0) = 0x240;
 	WFIFOW(fd,2) = len;
 	WFIFOL(fd,4) = md->amount;
-	for( i = j = 0; i < MAX_MAIL_INBOX && j < md->amount; i++ )
+	for( i = j = 0; i < MAIL_MAX_INBOX && j < md->amount; i++ )
 	{
 		msg = &md->msg[i];
 		if (msg->id < 1)
@@ -11351,7 +11351,7 @@ void clif_parse_Mail_refreshinbox(int fd, struct map_session_data *sd)
 	nullpo_retv(sd);
 	md = &sd->mail.inbox;
 
-	if( md->amount < MAX_MAIL_INBOX && (md->satured || md->changed) )
+	if( md->amount < MAIL_MAX_INBOX && (md->full || md->changed) )
 		intif_Mail_requestinbox(sd->status.char_id, 1);
 	else
 		clif_Mail_refreshinbox(sd);
@@ -11367,8 +11367,8 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 {
 	int i, fd = sd->fd;
 
-	ARR_FIND(0, MAX_MAIL_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
-	if (i < MAX_MAIL_INBOX)
+	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
+	if (i < MAIL_MAX_INBOX)
 	{
 		struct mail_message *msg = &sd->mail.inbox.msg[i];
 		struct item *item = &msg->item;
@@ -11444,8 +11444,8 @@ void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 	int i, mail_id = RFIFOL(fd,2);
 	nullpo_retv(sd);
 
-	ARR_FIND(0, MAX_MAIL_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
-	if (i < MAX_MAIL_INBOX)
+	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
+	if (i < MAIL_MAX_INBOX)
 	{
 		if (sd->mail.inbox.msg[i].zeny < 1 && (sd->mail.inbox.msg[i].item.nameid < 1 || sd->mail.inbox.msg[i].item.amount < 1))
 			return;
@@ -11485,8 +11485,8 @@ void clif_Mail_delete(struct map_session_data *sd, int mail_id, short flag)
 	if (!flag)
 	{
 		int i;
-		ARR_FIND(0, MAX_MAIL_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
-		if( i < MAX_MAIL_INBOX )
+		ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
+		if( i < MAIL_MAX_INBOX )
 		{
 			memset(&sd->mail.inbox.msg[i], 0, sizeof(struct mail_message));
 			sd->mail.inbox.amount--;
@@ -11499,7 +11499,7 @@ void clif_Mail_delete(struct map_session_data *sd, int mail_id, short flag)
 	WFIFOW(fd,6) = flag;
 	WFIFOSET(fd, packet_len(0x257));
 
-	if( !flag && sd->mail.inbox.satured )
+	if( !flag && sd->mail.inbox.full )
 		intif_Mail_requestinbox(sd->status.char_id, 1); // Reload the Mail Inbox
 }
 
@@ -11508,8 +11508,8 @@ void clif_parse_Mail_delete(int fd, struct map_session_data *sd)
 	int i, mail_id = RFIFOL(fd,2);
 	nullpo_retv(sd);
 
-	ARR_FIND(0, MAX_MAIL_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
-	if (i < MAX_MAIL_INBOX)
+	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
+	if (i < MAIL_MAX_INBOX)
 	{
 		struct mail_message *msg = &sd->mail.inbox.msg[i];
 
@@ -11543,8 +11543,8 @@ void clif_parse_Mail_return(int fd, struct map_session_data *sd)
 	int i, mail_id = RFIFOL(fd,2);
 	nullpo_retv(sd);
 
-	ARR_FIND(0, MAX_MAIL_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
-	if (i < MAX_MAIL_INBOX)
+	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
+	if (i < MAIL_MAX_INBOX)
 		intif_Mail_return(sd->status.char_id, mail_id);
 }
 
@@ -11555,8 +11555,8 @@ void clif_Mail_return(struct map_session_data *sd, int mail_id, int new_mail)
 	if (new_mail > 0)
 	{
 		int i;
-		ARR_FIND(0, MAX_MAIL_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
-		if (i < MAX_MAIL_INBOX)
+		ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
+		if (i < MAIL_MAX_INBOX)
 		{
 			struct map_session_data *rd = map_charid2sd(sd->mail.inbox.msg[i].send_id);
 			if (rd)

@@ -27,7 +27,6 @@
 
 Sql* sql_handle = NULL;
 Sql* lsql_handle = NULL;
-Sql* mail_handle = NULL;
 
 int char_server_port = 3306;
 char char_server_ip[32] = "127.0.0.1";
@@ -41,12 +40,6 @@ char login_server_ip[32] = "127.0.0.1";
 char login_server_id[32] = "ragnarok";
 char login_server_pw[32] = "ragnarok";
 char login_server_db[32] = "ragnarok";
-
-int mail_server_port = 3306;
-char mail_server_ip[32] = "127.0.0.1";
-char mail_server_id[32] = "ragnarok";
-char mail_server_pw[32] = "ragnarok";
-char mail_server_db[32] = "ragnarok";
 
 #ifndef TXT_SQL_CONVERT
 
@@ -278,28 +271,6 @@ static int inter_config_read(const char* cfgName)
 			strcpy(login_server_db, w2);
 			ShowStatus ("set login_server_db : %s\n", w2);
 		}
-		// MAIL SYSTEM
-		else
-		if(!strcmpi(w1,"mail_server_ip")) {
-			strcpy(mail_server_ip, w2);
-			ShowStatus ("set mail_server_ip : %s\n", w2);
-		} else
-		if(!strcmpi(w1,"mail_server_port")) {
-			mail_server_port = atoi(w2);
-			ShowStatus ("set mail_server_port : %s\n", w2);
-		} else
-		if(!strcmpi(w1,"mail_server_id")) {
-			strcpy(mail_server_id, w2);
-			ShowStatus ("set mail_server_id : %s\n", w2);
-		} else
-		if(!strcmpi(w1,"mail_server_pw")) {
-			strcpy(mail_server_pw, w2);
-			ShowStatus ("set mail_server_pw : %s\n", w2);
-		} else
-		if(!strcmpi(w1,"mail_server_db")) {
-			strcpy(mail_server_db, w2);
-			ShowStatus ("set mail_server_db : %s\n", w2);
-		}
 #ifndef TXT_SQL_CONVERT
 		else if(!strcmpi(w1,"party_share_level"))
 			party_share_level = atoi(w2);
@@ -344,7 +315,6 @@ int inter_sql_ping(int tid, unsigned int tick, int id, int data)
 {
 	ShowInfo("Pinging SQL server to keep connection alive...\n");
 	Sql_Ping(sql_handle);
-	Sql_Ping(mail_handle);
 	if( char_gm_read )
 		Sql_Ping(lsql_handle);
 	return 0;
@@ -389,16 +359,6 @@ int inter_init_sql(const char *file)
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
-	// MAIL SYSTEM
-	mail_handle = Sql_Malloc();
-	ShowInfo("Connect Mail DB server.... (Character Server)\n");
-	if ( SQL_ERROR == Sql_Connect(mail_handle, mail_server_id, mail_server_pw, mail_server_ip, (uint16)mail_server_port, mail_server_db) )
-	{
-		Sql_ShowDebug(mail_handle);
-		Sql_Free(mail_handle);
-		Sql_Free(sql_handle);
-		exit(EXIT_FAILURE);
-	}
 #ifndef TXT_SQL_CONVERT
 	else if (inter_sql_test()) {
 		ShowStatus("Connect Success! (Character Server)\n");
@@ -411,7 +371,6 @@ int inter_init_sql(const char *file)
 		{
 			Sql_ShowDebug(lsql_handle);
 			Sql_Free(lsql_handle);
-			Sql_Free(mail_handle);
 			Sql_Free(sql_handle);
 			exit(EXIT_FAILURE);
 		}
@@ -472,7 +431,6 @@ int inter_sql_test (void)
 			ShowSQL ("Field `%s` not be found in `%s`. Consider updating your database!\n", fields[i], char_db);
 			if( lsql_handle )
 				Sql_Free(lsql_handle);
-			Sql_Free(mail_handle);
 			Sql_Free(sql_handle);
 			exit(EXIT_FAILURE);
 		}

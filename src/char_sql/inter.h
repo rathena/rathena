@@ -26,7 +26,6 @@ extern char inter_log_filename[1024];
 
 extern Sql* sql_handle;
 extern Sql* lsql_handle;
-extern Sql* mail_handle;
 
 extern int char_server_port;
 extern char char_server_ip[32];
@@ -39,12 +38,6 @@ extern char login_db_server_ip[32];
 extern char login_db_server_id[32];
 extern char login_db_server_pw[32];
 extern char login_db_server_db[32];
-
-extern int mail_server_port;
-extern char mail_server_ip[32];
-extern char mail_server_id[32];
-extern char mail_server_pw[32];
-extern char mail_server_db[32];
 
 extern char main_chat_nick[16];
 

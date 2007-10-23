@@ -106,7 +106,7 @@
 #define HM_CLASS_MAX (HM_CLASS_BASE+MAX_HOMUNCULUS_CLASS-1)
 
 //Mail System
-#define MAX_MAIL_INBOX 30
+#define MAIL_MAX_INBOX 30
 #define MAIL_TITLE_LENGTH 40
 #define MAIL_BODY_LENGTH 200
 
@@ -260,9 +260,9 @@ struct mail_message {
 
 struct mail_data {
 	short amount;
-	short changed;
-	short satured;
-	struct mail_message msg[MAX_MAIL_INBOX];
+	bool changed, full;
+
+	struct mail_message msg[MAIL_MAX_INBOX];
 
 	short unchecked, unreaded;
 };
