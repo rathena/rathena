@@ -1,0 +1,232 @@
+//===== eAthena Script =======================================
+//= Advanced Refiner
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Eathena SVN
+//===== Description: =========================================
+//= [Aegis Conversion]
+//= Refiner that uses Enriched ores to increase upgrade success.
+//= After a conversation with Doddler, it's been established that
+//= the advanced refiner works similar the the "Bubble Gum" item.
+//= The success percentage is not "increased" however, if it fails
+//= You get a second try. This tries twice at the same time,
+//= effectively giving you a re-roll on your attempt.
+//= - Dialog is only partly official to iRO.
+//= - Uses the iRO position for this NPC.
+//===== Additional Comments: =================================
+//= 1.0 First Version. [L0ne_W0lf]
+//============================================================
+
+payon,174,138,0	script	Suhnbi#cash	85,{
+	mes "[Suhnbi]";
+	mes "I am the Armsith";
+	mes "I can refine all kinds of weapons,";
+	mes "armor and equipment, so let me";
+	mes "know what you want to refine.";
+	next;
+	set .@strRetPart1$,getequipname(1);
+	set .@strRetPart2$,getequipname(2);
+	set .@strRetPart3$,getequipname(3);
+	set .@strRetPart4$,getequipname(4);
+	set .@strRetPart5$,getequipname(5);
+	set .@strRetPart6$,getequipname(6);
+	set .@strRetPart7$,getequipname(7);
+	set .@strRetPart8$,getequipname(8);
+	set .@strRetPart9$,getequipname(9);
+	set .@strRetPart10$,getequipname(10);
+
+	set .@menu$,.@strRetPart1$+":"+.@strRetPart2$+":"+.@strRetPart3$+":"+.@strRetPart4$+":"+.@strRetPart5$+":"+.@strRetPart6$+":"+.@strRetPart7$+":"+.@strRetPart8$+":"+.@strRetPart9$+":"+.@strRetPart10$;
+
+	switch(select(.@menu$)) {
+	case 1:
+		set .@part,1;
+		if (getequipisequiped(1) == 0) {
+			mes "[Suhnbi]";
+			mes "Do you want me to refine your skull?";
+			close;
+		}
+		break;
+	case 2:
+		set .@part,2;
+		if (getequipisequiped(2) == 0) {
+			mes "[Suhnbi]";
+			mes "I'll refine your torso with my own passionate body!";
+			close;
+		}
+		break;
+	case 3:
+		set .@part,3;
+		if (getequipisequiped(3) == 0) {
+			mes "[Suhnbi]";
+			mes "Sorry, there ain't any technology yet to put rockets on your left hand...";
+			close;
+		}
+		break;
+	case 4:
+		set .@part,4;
+		if (getequipisequiped(4) == 0) {
+			mes "[Suhnbi]";
+			mes "Sorry, there ain't any technology yet to put rockets on your right hand...";
+			close;
+		}
+		break;
+	case 5:
+		set .@part,5;
+		if (getequipisequiped(5) == 0) {
+			mes "[Suhnbi]";
+			mes "You're not even wearing a garment? Are you?";
+			close;
+		}
+		break;
+	case 6:
+		set .@part,6;
+		if (getequipisequiped(6) == 0) {
+			mes "[Suhnbi]";
+			mes "What do I look like, a makeover artist? I can't refine your bare feet!";
+			close;
+		}
+		break;
+	case 7:
+		set .@part,7;
+		if (getequipisequiped(7) == 0) {
+			mes "[Suhnbi]";
+			mes "Um... You're not wearing an Accessory.";
+			close;
+		}
+		break;
+	case 8:
+		set .@part,8;
+		if (getequipisequiped(8) == 0) {
+			mes "[Suhnbi]";
+			mes "Accessory? You're not wearing one of those.";
+			close;
+		}
+		break;
+	case 9:
+		set .@part,9;
+		if (getequipisequiped(9) == 0) {
+			mes "[Suhnbi]";
+			mes "I refine equipment. I don't give hair cuts.";
+			close;
+		}
+		break;
+	case 10:
+		set .@part,10;
+		if (getequipisequiped(10) == 0) {
+			mes "[Suhnbi]";
+			mes "What am I, your personal hairstylist?. Go to the salon if you want work done on your precious hair.";
+			close2;
+		}
+		break;
+	}
+
+	if (getequipisenableref(.@part) == 0) {
+		mes "[Suhnbi]";
+		mes "I don't think I can refine this item at all.";
+		close;
+	}
+	if (getequipisidentify(.@part) == 0) {
+		mes "[Suhnbi]";
+		mes "This is has not been identified. So, it can't be refined...";
+		close;
+	}
+	if (getequiprefinerycnt(.@part) >= 10) {
+		mes "[Suhnbi]";
+		mes "This item cannot be refined because it has already reached its maximum level...";
+		close;
+	}
+	// Make sure you have the neccessary items and Zeny to refine your items
+	// Determines chance of failure and verifies that you want to continue.
+	switch(getequipweaponlv(.@part)) {
+	case 1: callsub S_RefineValidate,1,7620,50,.@part; break;
+	case 2: callsub S_RefineValidate,2,7620,200,.@part; break;
+	case 3: callsub S_RefineValidate,3,7620,5000,.@part; break;
+	case 4: callsub S_RefineValidate,4,7620,20000,.@part; break;
+	default: callsub S_RefineValidate,0,7619,2000,.@part; break;
+	}
+
+	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+		mes "[Suhnbi]";
+		mes "Clink! Clank! Clunk!";
+		SuccessRefItem .@part;
+		next;
+		Emotion e_no1;
+		mes "[Suhnbi]";
+		mes "Here you are! It's done.";
+		mes "It's been a while since I've made such a fine weapon. You must be happy because it has become stronger!";
+		close;
+	}
+	else {
+		mes "[Suhnbi]";
+		mes "Clink! Clank! Clunk!";
+		FailedRefItem .@part;
+		next;
+		if (rand(5) == 1)
+			Emotion e_cash;
+		else 
+			Emotion e_omg;
+		mes "[Suhnbi]";
+		mes "Cough!!!!";
+		next;
+		mes "[Suhnbi]";
+		mes "Cough...Cough..";
+		mes "What a shame...";
+		mes "Your equipment broke during hte refining process. I had told you earlier this might happen!";
+		close;
+	}
+
+S_RefineValidate:
+	mes "[Suhnbi]";
+	if (getarg(0))
+		mes "A level "+getarg(0)+" weapon...";
+	mes "To refine this I need one ^ff9999"+getitemname(getarg(1))+"^000000 and a service fee of "+getarg(2)+" Zeny.";
+	mes "Do you wish to continue?";
+	next;
+	if (select("Yes:No") == 1) {
+		if (getequippercentrefinery(getarg(3)) < 100) {
+			mes "[Suhnbi]";
+			mes "Wow!!";
+			mes "This weapon, probably";
+			mes "looks like it's been refined...";
+			mes "many times...";
+			mes "It may break if";
+			mes "you refine it again.";
+			next;
+			mes "And if it breaks,";
+			mes "you can't use it anymore!";
+			mes "All the cards in it and the";
+			mes "properties";
+			mes "^ff0000will be lost^000000!!";
+			mes "^ff0000 besides, the equipment will break!^000000";
+			mes " ";
+			mes "Are you sure you still want to continue?";
+			next;
+			if (select("Yes:No") == 2) {
+				mes "[Suhnbi]";
+				mes "I completely agree...";
+				mes "I might be a great refiner, but something even I make mistakes.";
+				close;
+			}
+		}
+		if (countitem(getarg(1)) > 0 && Zeny > getarg(2)) {
+			delitem getarg(1),1;
+			set zeny,zeny-getarg(2);
+			return;
+		}
+		else {
+			mes "[Suhnbi]";
+			mes "You don't seem to have enough Zeny or "+getitemname(getarg(1))+"...";
+			mes "Go get some more. I'll be here ll day if you need me.";
+			close;
+		}
+	}
+	else {
+		mes "[Suhnbi]";
+		mes "Yeah... There's no need to rush.";
+		mes "Take your time.";
+		close;
+	}
+}

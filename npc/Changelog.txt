@@ -1,5 +1,8 @@
 Date		Added
 ======
+2007/10/24
+	* Rev. 11570 Added the Advanced Refiner for Enriched ores. [L0ne_W0lf]
+	- I've had this done for awhile now, but I've never submitted it. XD
 2007/10/23
 	* Rev. 11568 Removed duplicate Morroc city npc (bugreport:277) [L0ne_W0lf]
 	- Fix to the knight job quest. (bad areawarp destination)
