@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/10/23
+	* Rev. 11566 Corrected the Jawaii Ice Cream salesman. bugreport:285 [L0ne_W0lf]
 	* Rev. 11565 Fixed two duplicate names in the assassin skill quest. XD [L0ne_W0lf]
 	* Rev. 11564 2-x quest skill update 2/2. [L0ne_W0lf]
 	* Rev. 11563 2-x quest skill update 1/2. [L0ne_W0lf]
