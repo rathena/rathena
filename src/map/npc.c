@@ -1419,7 +1419,7 @@ void npc_delsrcfile(const char* name)
 static void npc_parsename(struct npc_data* nd, const char* name, const char* start, const char* buffer, const char* filepath)
 {
 	const char* p;
-	struct npc_data* dnd;
+	struct npc_data* dnd;// duplicate npc
 	char newname[NAME_LENGTH];
 
 	// parse name
@@ -1458,16 +1458,12 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 		safestrncpy(nd->exname, newname, sizeof(nd->exname));
 	}
 
-	if( *nd->exname == '\0' || (dnd=npc_name2id(nd->exname)) != NULL )
+	if( (dnd=npc_name2id(nd->exname)) != NULL )
 	{// duplicate unique name, generate new one
 		char this_mapname[32];
 		char other_mapname[32];
 		int i = 0;
 
-		//TODO: the debug message is broken, if nd->exname == NULL
-		//dnd is left uninitialized, and then is printed as that!
-		if (*nd->exname == '\0')
-			dnd = nd;  //Dumb anti-crash measure since I am not sure what this piece of code is supposed to do.
 		do
 		{
 			++i;
