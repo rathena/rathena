@@ -799,7 +799,7 @@ OnTouch:
 	}
 }
 
-in_sphinx2,212,267,0	script	Old Coffin#qsk_as	-1,5,6,{
+in_sphinx2,212,267,0	script	Old Coffin#qsk_as2	-1,5,6,{
 OnTouch:
 	if (ASSN_SK == 2) {
 		mes "^3355FFIt's an ancient coffin";
@@ -917,7 +917,7 @@ OnTouch:
 	}
 }
 
-in_sphinx2,13,146,0	script	Stone Statue#qsk_as	-1,7,7,{
+in_sphinx2,13,146,0	script	Stone Statue#qsk_as2	-1,7,7,{
 OnTouch:
 	if (ASSN_SK == 3) {
 		specialeffect 71; //"Stone Statue#1" EF_CONE
