@@ -475,21 +475,23 @@ int guild_request_info(int guild_id)
 // イベント付き情報要求
 int guild_npc_request_info(int guild_id,const char *event)
 {
-	struct eventlist *ev;
-
-	if( guild_search(guild_id) ){
-		if(event && *event)
+	if( guild_search(guild_id) )
+	{
+		if( event && *event )
 			npc_event_do(event);
+
 		return 0;
 	}
 
-	if(event==NULL || *event==0)
-		return guild_request_info(guild_id);
+	if( event && *event )
+	{
+		struct eventlist* ev;
+		ev=(struct eventlist *)aCalloc(sizeof(struct eventlist),1);
+		memcpy(ev->name,event,strlen(event));
+		//The one in the db becomes the next event from this.
+		ev->next=idb_put(guild_infoevent_db,guild_id,ev);
+	}
 
-	ev=(struct eventlist *)aCalloc(sizeof(struct eventlist),1);
-	memcpy(ev->name,event,strlen(event));
-	//The one in the db becomes the next event from this.
-	ev->next=idb_put(guild_infoevent_db,guild_id,ev);
 	return guild_request_info(guild_id);
 }
 
@@ -1723,8 +1725,8 @@ int guild_castledataloadack(int castle_id,int index,int value)
 	switch(index){
 	case 1:
 		gc->guild_id = value;
-		if (value && guild_search(value)==NULL) //Request guild data which will be required for spawned guardians. [Skotlex]
-			guild_request_info(value);
+		if (gc->guild_id && guild_search(gc->guild_id)==NULL) //Request guild data which will be required for spawned guardians. [Skotlex]
+			guild_request_info(gc->guild_id);
 		break;
 	case 2: gc->economy = value; break;
 	case 3: gc->defense = value; break;
@@ -1826,34 +1828,39 @@ int guild_castledatasaveack(int castle_id,int index,int value)
 int guild_castlealldataload(int len,struct guild_castle *gc)
 {
 	int i;
-	int n = (len-4) / sizeof(struct guild_castle), ev = -1;
+	int n = (len-4) / sizeof(struct guild_castle);
+	int ev;
 
 	nullpo_retr(0, gc);
 
 	//Last owned castle in the list invokes ::OnAgitinit
-	for(i = 0; i < n; i++) {
-		if ((gc + i)->guild_id)
-			ev = i;
-	}
+	for( i = n-1; i >= 0 && !(gc[i].guild_id); --i );
+	ev = i; // offset of castle or -1
 
-	// 城データ格納とギルド情報要求
-	for(i = 0; i < n; i++, gc++) {
+	// load received castles into memory, one by one
+	for( i = 0; i < n; i++, gc++ )
+	{
 		struct guild_castle *c = guild_castle_search(gc->castle_id);
 		if (!c) {
 			ShowError("guild_castlealldataload Castle id=%d not found.\n", gc->castle_id);
 			continue;
 		}
-		memcpy(&c->guild_id,&gc->guild_id,
-			sizeof(struct guild_castle) - ((int)&c->guild_id - (int)c) );
-		if( c->guild_id ){
-			if(i!=ev)
+
+		// update mapserver castle data with new info
+		memcpy(&c->guild_id, &gc->guild_id, sizeof(struct guild_castle) - ((int)&c->guild_id - (int)c));
+
+		if( c->guild_id )
+		{
+			if( i != ev )
 				guild_request_info(c->guild_id);
-			else
+			else // last owned one
 				guild_npc_request_info(c->guild_id, "::OnAgitInit");
 		}
 	}
-	if (ev == -1) //No castles owned, invoke OnAgitInit as it is.
+
+	if( ev < 0 ) //No castles owned, invoke OnAgitInit as it is.
 		npc_event_doall("OnAgitInit");
+
 	return 0;
 }
 

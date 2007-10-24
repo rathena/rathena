@@ -1516,9 +1516,7 @@ int mapif_parse_GuildMasterChange(int fd, int guild_id, const char* name, int le
 
 	g->member[pos].position = g->member[0].position;
 	g->member[0].position = 0; //Position 0: guild Master.
-	strncpy(g->master, name, len);
-	if (len < NAME_LENGTH)
-		g->master[len] = '\0';
+	safestrncpy(g->master, name, NAME_LENGTH);
 
 	ShowInfo("int_guild: Guildmaster Changed to %s (Guild %d - %s)\n",name, guild_id, g->name);
 	return mapif_guild_master_changed(g, g->member[0].account_id, g->member[0].char_id);

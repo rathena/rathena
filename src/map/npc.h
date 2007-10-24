@@ -69,7 +69,7 @@ void npc_delsrcfile(const char* name);
 void npc_parsesrcfile(const char* filepath);
 int do_final_npc(void);
 int do_init_npc(void);
-int npc_event_do_oninit(void);
+void npc_event_do_oninit(void);
 int npc_do_ontimer(int npc_id, int option);
 
 int npc_event_doall(const char* name);

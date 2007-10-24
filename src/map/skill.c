@@ -7399,15 +7399,17 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 						int count=0;
 						int x = bl->x, y = bl->y;
 						//If target isn't knocked back it should hit every 20ms [Playtester]
-						while (count++ < SKILLUNITTIMER_INTERVAL/sg->interval && x == bl->x && y == bl->y && !status_isdead(bl)){
-							if (bl->type==BL_PC) 
+						while( count++ < SKILLUNITTIMER_INTERVAL/sg->interval && x == bl->x && y == bl->y && !status_isdead(bl) )
+						{
+							if( bl->type == BL_PC )
 								status_zap(bl, 0, 15); //Only damage SP [Skotlex]
-							else if (!status_charge(ss, 0, 2)){  //should end when out of sp.
-								sg->limit=DIFF_TICK(tick,sg->tick);
+							else // mobs
+							if( status_charge(ss, 0, 2) ) // costs 2 SP per hit
+								skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,0);
+							else { //should end when out of sp.
+								sg->limit = DIFF_TICK(tick,sg->tick);
 								break;
 							}
-							else 
-								skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,0);
 						}
 					}
 				break;
@@ -8020,8 +8022,7 @@ int skill_check_pc_partner (struct map_session_data *sd, short skill_id, short* 
 	//Else: new search for partners.
 	c = 0;
 	memset (p_sd, 0, sizeof(p_sd));
-	i = map_foreachinrange(skill_check_condition_char_sub, &sd->bl,
-			range, BL_PC, &sd->bl, &c, &p_sd, skill_id);
+	i = map_foreachinrange(skill_check_condition_char_sub, &sd->bl, range, BL_PC, &sd->bl, &c, &p_sd, skill_id);
 
 	if (skill_id != PR_BENEDICTIO) //Apply the average lv to encore skills.
 		*skill_lv = (i+(*skill_lv))/(c+1); //I know c should be one, but this shows how it could be used for the average of n partners.

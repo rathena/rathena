@@ -6,6 +6,7 @@
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
+#include "../common/strlib.h"
 #include "map.h"
 #include "battle.h"
 #include "chrif.h"
@@ -33,7 +34,7 @@ static const int packet_len_table[]={
 	-1, 7, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 14,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
-	 9, 9,-1,14,  0, 0, 0, 0, -1, 0,-1,12, 14,-1,  0, 0, //0x3840
+	 9, 9,-1,14,  0, 0, 0, 0, -1, 0,-1,11, 14,-1,  0, 0, //0x3840
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
@@ -259,6 +260,7 @@ int intif_saveregistry(struct map_session_data *sd, int type)
 {
 	struct global_reg *reg;
 	int count;
+	int i, p;
 
 	if (CheckForCharServer())
 		return -1;
@@ -289,18 +291,13 @@ int intif_saveregistry(struct map_session_data *sd, int type)
 	WFIFOL(inter_fd,4)=sd->status.account_id;
 	WFIFOL(inter_fd,8)=sd->status.char_id;
 	WFIFOB(inter_fd,12)=type;
-	if(count ==0){
-		WFIFOW(inter_fd,2)=13;
-	}else{
-		int i,p;
-		for (p=13,i = 0; i < count; i++) {
-			if (reg[i].str[0] && reg[i].value != 0) {
-				p+= sprintf((char*)WFIFOP(inter_fd,p), "%s", reg[i].str)+1; //We add 1 to consider the '\0' in place.
-				p+= sprintf((char*)WFIFOP(inter_fd,p), "%s", reg[i].value)+1;
-			}
+	for( p = 13, i = 0; i < count; i++ ) {
+		if (reg[i].str[0] && reg[i].value != 0) {
+			p+= sprintf((char*)WFIFOP(inter_fd,p), "%s", reg[i].str)+1; //We add 1 to consider the '\0' in place.
+			p+= sprintf((char*)WFIFOP(inter_fd,p), "%s", reg[i].value)+1;
 		}
-		WFIFOW(inter_fd,2)=p;
 	}
+	WFIFOW(inter_fd,2)=p;
 	WFIFOSET(inter_fd,WFIFOW(inter_fd,2));
 	return 0;
 }
@@ -853,8 +850,7 @@ int intif_parse_WisMessage(int fd)
 
 	id=RFIFOL(fd,4);
 
-	memcpy(name, RFIFOP(fd,32), NAME_LENGTH);
-	name[NAME_LENGTH-1] = '\0'; //In case name arrived without it's terminator. [Skotlex]
+	safestrncpy(name, (char*)RFIFOP(fd,32), NAME_LENGTH);
 	sd = map_nick2sd(name);
 	if(sd == NULL || strcmp(sd->status.name, name) != 0)
 	{	//Not found
@@ -923,10 +919,8 @@ int mapif_parse_WisToGM(int fd)
 	message = (char *) (mes_len >= 255 ? (char *) aMallocA(mes_len) : mbuf);
 
 	min_gm_level = (int)RFIFOW(fd,28);
-	memcpy(Wisp_name, RFIFOP(fd,4), NAME_LENGTH);
-	Wisp_name[NAME_LENGTH-1] = '\0';
-	memcpy(message, RFIFOP(fd,30), mes_len);
-	message[mes_len-1] = '\0';
+	safestrncpy(Wisp_name, (char*)RFIFOP(fd,4), NAME_LENGTH);
+	safestrncpy(message, (char*)RFIFOP(fd,30), mes_len);
 	// information is sended to all online GM
 	clif_foreachclient(mapif_parse_WisToGM_sub, min_gm_level, Wisp_name, message, mes_len);
 
@@ -1216,70 +1210,59 @@ int intif_parse_GuildBroken(int fd)
 	return 0;
 }
 
-// ギルド基本情報変更通知
+// basic guild info change notice
+// 0x3839 <packet len>.w <guild id>.l <type>.w <data>.?b
 int intif_parse_GuildBasicInfoChanged(int fd)
 {
-	int type, guild_id;
-	unsigned int dd;
-	void *data;
-	struct guild *g;
-	short dw;
-	type=RFIFOW(fd,8);
-	guild_id=RFIFOL(fd,4);
-	data=RFIFOP(fd,10);
-	g=guild_search(guild_id);
-	dw=*((short *)data);
-	dd=*((unsigned int *)data);
-	if( g==NULL )
+	//int len = RFIFOW(fd,2) - 10;
+	int guild_id = RFIFOL(fd,4);
+	int type = RFIFOW(fd,8);
+	//void* data = RFIFOP(fd,10);
+
+	struct guild* g = guild_search(guild_id);
+	if( g == NULL )
 		return 0;
-	switch(type){
-	case GBI_EXP:			g->exp=dd; break;
-	case GBI_GUILDLV:		g->guild_lv=dw; break;
-	case GBI_SKILLPOINT:	g->skill_point=dd; break;
+
+	switch(type) {
+	case GBI_EXP:        g->exp = RFIFOL(fd,10); break;
+	case GBI_GUILDLV:    g->guild_lv = RFIFOW(fd,10); break;
+	case GBI_SKILLPOINT: g->skill_point = RFIFOL(fd,10); break;
 	}
+
 	return 0;
 }
-// ギルドメンバ情報変更通知
+
+// guild member info change notice
+// 0x383a <packet len>.w <guild id>.l <account id>.l <char id>.l <type>.w <data>.?b
 int intif_parse_GuildMemberInfoChanged(int fd)
 {
-	int type, guild_id, account_id, char_id, idx, dd;
-	void* data;
-	struct guild *g;
-	type=RFIFOW(fd,16);
-	guild_id=RFIFOL(fd,4);
-	account_id=RFIFOL(fd,8);
-	char_id=RFIFOL(fd,12);
-	data=RFIFOP(fd,18);
-	g=guild_search(guild_id);
-	dd=*((int *)data);
-	if( g==NULL )
+	//int len = RFIFOW(fd,2) - 18;
+	int guild_id = RFIFOL(fd,4);
+	int account_id = RFIFOL(fd,8);
+	int char_id = RFIFOL(fd,12);
+	int type = RFIFOW(fd,16);
+	void* data = RFIFOP(fd,18);
+	int dd = *((int *)data);
+
+	struct guild* g;
+	int idx;
+
+	g = guild_search(guild_id);
+	if( g == NULL )
 		return 0;
-	idx=guild_getindex(g,account_id,char_id);
-	if (idx == -1)
+
+	idx = guild_getindex(g,account_id,char_id);
+	if( idx == -1 )
 		return 0;
-	switch(type){
-	case GMI_POSITION:
-		g->member[idx].position=dd;
-		guild_memberposition_changed(g,idx,dd);
-		break;
-	case GMI_EXP:
-		g->member[idx].exp=dd;
-		break;
-	case GMI_HAIR:
-		g->member[idx].hair=dd;
-		break;
-	case GMI_HAIR_COLOR:
-		g->member[idx].hair_color=dd;
-		break;
-	case GMI_GENDER:
-		g->member[idx].gender=dd;
-		break;
-	case GMI_CLASS:
-		g->member[idx].class_=dd;
-		break;
-	case GMI_LEVEL:
-		g->member[idx].lv=dd;
-		break;
+
+	switch( type ) {
+	case GMI_POSITION:   g->member[idx].position = dd; guild_memberposition_changed(g,idx,dd); break;
+	case GMI_EXP:        g->member[idx].exp = dd; break;
+	case GMI_HAIR:       g->member[idx].hair = dd; break;
+	case GMI_HAIR_COLOR: g->member[idx].hair_color = dd; break;
+	case GMI_GENDER:     g->member[idx].gender = dd; break;
+	case GMI_CLASS:      g->member[idx].class_ = dd; break;
+	case GMI_LEVEL:      g->member[idx].lv = dd; break;
 	}
 	return 0;
 }
@@ -1303,8 +1286,7 @@ int intif_parse_GuildSkillUp(int fd)
 // ギルド同盟/敵対通知
 int intif_parse_GuildAlliance(int fd)
 {
-	guild_allianceack(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOL(fd,14),
-		RFIFOB(fd,18),(char *) RFIFOP(fd,19),(char *) RFIFOP(fd,43));
+	guild_allianceack(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOL(fd,14),RFIFOB(fd,18),(char *) RFIFOP(fd,19),(char *) RFIFOP(fd,43));
 	return 0;
 }
 // ギルド告知変更通知
@@ -1460,15 +1442,16 @@ int intif_parse_DeleteHomunculusOk(int fd)
 	return 0;
 }
 
+#ifndef TXT_ONLY
 /*==========================================
  * MAIL SYSTEM
  * By Zephyrus
- *------------------------------------------
+ *==========================================*/
+
+/*------------------------------------------
  * Inbox Request
  * flag: 0 Update Inbox | 1 OpenMail
  *------------------------------------------*/
-#ifndef TXT_ONLY
-
 int intif_Mail_requestinbox(int char_id, unsigned char flag)
 {
 	if (CheckForCharServer())
@@ -1488,7 +1471,7 @@ int intif_parse_Mail_inboxreceived(int fd)
 	struct map_session_data *sd;
 	unsigned char flag = RFIFOB(fd,8);
 
-	sd = map_charid2sd( RFIFOL(fd,4) );
+	sd = map_charid2sd(RFIFOL(fd,4));
 
 	if (sd == NULL)
 	{
@@ -1507,7 +1490,7 @@ int intif_parse_Mail_inboxreceived(int fd)
 		return 1;
 	}
 
-	memset(&sd->mail.inbox, 0, sizeof(struct mail_data));
+	//FIXME: this operation is not safe [ultramage]
 	memcpy(&sd->mail.inbox, RFIFOP(fd,9), sizeof(struct mail_data));
 
 	if (flag)
@@ -1515,7 +1498,7 @@ int intif_parse_Mail_inboxreceived(int fd)
 	else
 	{
 		char output[128];
-		sprintf(output, "You have %d new emails (%d unreaded)", sd->mail.inbox.unchecked, sd->mail.inbox.unreaded + sd->mail.inbox.unchecked);
+		sprintf(output, "You have %d new emails (%d unread)", sd->mail.inbox.unchecked, sd->mail.inbox.unread + sd->mail.inbox.unchecked);
 		clif_disp_onlyself(sd, output, strlen(output));
 	}
 	return 0;
@@ -1611,21 +1594,22 @@ int intif_Mail_delete(int char_id, int mail_id)
 
 int intif_parse_Mail_delete(int fd)
 {
-	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
+	int char_id = RFIFOL(fd,2);
 	int mail_id = RFIFOL(fd,6);
-	short flag = RFIFOW(fd,10);
+	bool failed = RFIFOB(fd,10);
 
+	struct map_session_data *sd = map_charid2sd(char_id);
 	if (sd == NULL)
 	{
 		if (battle_config.error_log)
-			ShowError("intif_parse_Mail_delete: char not found %d\n",RFIFOL(fd,2));
+			ShowError("intif_parse_Mail_delete: char not found %d\n", char_id);
 		return 1;
 	}
 
 	if (sd->state.finalsave)
 		return 1;
 
-	clif_Mail_delete(sd, mail_id, flag);
+	clif_Mail_delete(sd, mail_id, failed);
 	return 0;
 }
 /*------------------------------------------

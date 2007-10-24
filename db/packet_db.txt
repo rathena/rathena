@@ -753,7 +753,6 @@ packet_ver: 18
 0x0116,12,dropitem,6:10
 0x0190,21,actionrequest,5:20
 0x0216,6
-//Start mail system?
 0x023f,2,mailrefresh,0
 0x0240,8
 0x0241,6,mailread,2
@@ -761,13 +760,9 @@ packet_ver: 18
 0x0243,6,maildelete,2
 0x0244,6,mailgetattach,2
 0x0245,7
-//Start writing a mail?
 0x0246,4,mailwinopen,2
-//Send Item/Zeny
 0x0247,8,mailsetattach,2:4
-//Message
 0x0248,68
-//Delivered?
 0x0249,3
 0x024a,70
 0x024b,4

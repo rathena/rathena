@@ -452,7 +452,7 @@ int realloc_writefifo(int fd, size_t addition)
 		return 0;
 
 	// crash prevention for bugs that cause the send queue to fill up in an infinite loop
-	if( newsize > 1*1024*1024 ) // 1 megabyte is way beyond reasonable
+	if( newsize > 5*1024*1024 ) // 5 MB is way beyond reasonable
 	{
 		ShowError("realloc_writefifo: session #%d's send buffer was overloaded! Disconnecting...\n", fd);
 		// drop all data (but the space will still be available)

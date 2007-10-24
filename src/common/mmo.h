@@ -132,7 +132,7 @@ struct skill {
 
 struct global_reg {
 	char str[32];
-	char value[256]; // [zBuffer]
+	char value[256];
 };
 
 //Holds array of global registries, used by the char server and converter.
@@ -247,12 +247,11 @@ struct mail_message {
 	char send_name[NAME_LENGTH];
 	int dest_id;
 	char dest_name[NAME_LENGTH];
-
 	char title[MAIL_TITLE_LENGTH];
 	char body[MAIL_BODY_LENGTH];
 
 	unsigned char read;
-	unsigned int timestamp;
+	unsigned int timestamp; // marks when the message was sent
 
 	int zeny;
 	struct item item;
@@ -261,10 +260,8 @@ struct mail_message {
 struct mail_data {
 	short amount;
 	bool changed, full;
-
+	short unchecked, unread;
 	struct mail_message msg[MAIL_MAX_INBOX];
-
-	short unchecked, unreaded;
 };
 
 struct registry {
@@ -292,8 +289,6 @@ struct guild_storage {
 	struct item storage_[MAX_GUILD_STORAGE];
 };
 
-struct map_session_data;
-
 struct gm_account {
 	int account_id;
 	int level;
@@ -319,6 +314,7 @@ struct party {
 	struct party_member member[MAX_PARTY];
 };
 
+struct map_session_data;
 struct guild_member {
 	int account_id, char_id;
 	short hair,hair_color,gender,class_,lv;

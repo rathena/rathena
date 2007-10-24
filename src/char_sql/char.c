@@ -3205,13 +3205,13 @@ int mapif_send(int fd, unsigned char *buf, unsigned int len)
 	int i;
 
 	if (fd >= 0) {
-		for(i = 0; i < MAX_MAP_SERVERS; i++) {
-			if (fd == server_fd[i]) {
-				WFIFOHEAD(fd,len);
-				memcpy(WFIFOP(fd,0), buf, len);
-				WFIFOSET(fd,len);
-				return 1;
-			}
+		ARR_FIND( 0, MAX_MAP_SERVERS, i, fd == server_fd[i] );
+		if( i < MAX_MAP_SERVERS )
+		{
+			WFIFOHEAD(fd,len);
+			memcpy(WFIFOP(fd,0), buf, len);
+			WFIFOSET(fd,len);
+			return 1;
 		}
 	}
 	return 0;

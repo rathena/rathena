@@ -162,6 +162,12 @@
 				RelativePath="..\src\char_sql\int_homun.h">
 			</File>
 			<File
+				RelativePath="..\src\char_sql\int_mail.c">
+			</File>
+			<File
+				RelativePath="..\src\char_sql\int_mail.h">
+			</File>
+			<File
 				RelativePath="..\src\char_sql\int_party.c">
 			</File>
 			<File

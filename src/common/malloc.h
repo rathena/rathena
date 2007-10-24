@@ -28,7 +28,7 @@
 // Whether to use Athena's built-in Memory Manager (enabled by default)
 // To disable just comment the following line
 #if !defined(DMALLOC) && !defined(BCHECK)
-	#define USE_MEMMGR
+	//#define USE_MEMMGR
 #endif
 // Whether to enable Memory Manager's logging
 #define LOG_MEMMGR

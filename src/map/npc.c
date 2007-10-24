@@ -337,19 +337,16 @@ int npc_event_do_clock(int tid, unsigned int tick, int id, int data)
 	memcpy(&ev_tm_b,t,sizeof(ev_tm_b));
 	return c;
 }
+
 /*==========================================
  * OnInitイベント実行(&時計イベント開始)
  *------------------------------------------*/
-int npc_event_do_oninit(void)
+void npc_event_do_oninit(void)
 {
-//	int c = npc_event_doall("OnInit");
-	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"
-	CL_WHITE"%d"CL_RESET"' NPCs.\n",npc_event_doall("OnInit"));
+	int count = npc_event_doall("OnInit");
+	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs."CL_CLL"\n", count);
 
-	add_timer_interval(gettick()+100,
-		npc_event_do_clock,0,0,1000);
-
-	return 0;
+	add_timer_interval(gettick()+100,npc_event_do_clock,0,0,1000);
 }
 
 /*==========================================

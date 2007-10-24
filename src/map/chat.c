@@ -151,15 +151,15 @@ int chat_leavechat(struct map_session_data* sd, bool kicked)
 		return -1;
 	}
 
-	leavechar = i;
-
 	clif_leavechat(cd, sd, kicked);
+	pc_setchatid(sd, 0);
+	cd->users--;
+
+	leavechar = i;
 
 	for( i = leavechar; i < cd->users; i++ )
 		cd->usersd[i] = cd->usersd[i+1];
 
-	pc_setchatid(sd, 0);
-	cd->users--;
 
 	if( cd->users == 0 && cd->owner->type == BL_PC )
 	{	// Delete empty chatroom
