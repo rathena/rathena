@@ -2175,14 +2175,8 @@ int atcommand_jobchange(const int fd, struct map_session_data* sd, const char* c
 	if (job == 37 ||job == 45)
 		return 0;
 
-	if ((job >= 0 && job < MAX_PC_CLASS))
+	if (pcdb_checkid(job))
 	{
-		int j;
-
-		for (j=0; j < MAX_INVENTORY; j++) {
-			if(sd->status.inventory[j].nameid>0 && sd->status.inventory[j].equip!=0)
-				pc_unequipitem(sd, j, 3);
-		}
 		if (pc_jobchange(sd, job, upper) == 0)
 			clif_displaymessage(fd, msg_txt(12)); // Your job has been changed.
 		else {

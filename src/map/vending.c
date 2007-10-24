@@ -236,6 +236,12 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 		clif_skill_fail(sd, MC_VENDING, 0, 0);
 		return;
 	}
+	
+	if ( map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNOVENDING) )
+	{
+		clif_displaymessage (sd->fd, msg_txt(276));
+		return; //Can't vend in novending mapflag maps.
+	}
 
 	// check number of items in shop
 	if( count < 1 || count > MAX_VENDING || count > 2 + vending_skill_lvl )

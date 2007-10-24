@@ -28,10 +28,6 @@
 //  but is not the official behaviour.
 //#define CIRCULAR_AREA
 
-#define MAX_PC_CLASS 4050
-#define PC_CLASS_BASE 0
-#define PC_CLASS_BASE2 (PC_CLASS_BASE + 4001)
-#define PC_CLASS_BASE3 (PC_CLASS_BASE2 + 22)
 #define MAX_NPC_PER_MAP 512
 #define BLOCK_SIZE 8
 #define AREA_SIZE battle_config.area_size
@@ -1219,6 +1215,7 @@ enum _look {
 #define CELL_SAFETYWALL	0x8
 #define CELL_LANDPROTECTOR	0x10
 #define CELL_BASILICA	0x20
+#define CELL_NOVENDING	0x40
 #define CELL_ICEWALL	0x80
 /*
  * map_getcell()で使用されるフラグ
@@ -1241,6 +1238,7 @@ typedef enum {
 	CELL_CHKLANDPROTECTOR,
 	CELL_CHKICEWALL,
 	CELL_CHKSTACK,
+	CELL_CHKNOVENDING,
 } cell_t;
 // map_setcell()で使用されるフラグ
 enum {
@@ -1257,6 +1255,8 @@ enum {
 	CELL_CLRSAFETYWALL,
 	CELL_SETICEWALL,
 	CELL_CLRICEWALL,
+	CELL_SETNOVENDING,
+	CELL_CLRNOVENDING,
 };
 
 extern struct map_data map[];

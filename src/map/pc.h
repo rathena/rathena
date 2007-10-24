@@ -7,12 +7,14 @@
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/timer.h" // INVALID_TIMER
 #include "battle.h" // battle_config
-#include "map.h" // MAX_PC_CLASS, struct map_session_data
+#include "map.h" // struct map_session_data
 #include "status.h" // OPTION_*
 #include "unit.h" // unit_stop_attack(), unit_stop_walking()
 
 //Update this max as necessary. 54 is the value needed for Super Baby currently
 #define MAX_SKILL_TREE 54
+//Total number of classes (for data storage)
+#define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)
 
 enum {
 	W_FIST,	//Bare hands
@@ -115,8 +117,9 @@ enum {
 #define pc_check_weapontype(sd, type) ((type)&((sd)->status.weapon < MAX_WEAPON_TYPE? \
 	1<<(sd)->status.weapon:(1<<(sd)->weapontype1)|(1<<(sd)->weapontype2)))
 //Checks if the given class value corresponds to a player class. [Skotlex]
-#define pcdb_checkid(class_) (class_ <= JOB_SUMMER || (class_ >= JOB_NOVICE_HIGH && class_ <= JOB_SOUL_LINKER))
+#define pcdb_checkid(class_) (class_ < JOB_MAX_BASIC || (class_ >= JOB_NOVICE_HIGH && class_ < JOB_MAX))
 
+int pc_class2idx(int class_);
 int pc_isGM(struct map_session_data *sd);
 int pc_getrefinebonus(int lv,int type);
 int pc_can_give_items(int level); //[Lupus]
@@ -289,7 +292,7 @@ struct skill_tree_entry {
 		unsigned char lv;
 	} need[5];
 }; // Celest
-extern struct skill_tree_entry skill_tree[MAX_PC_CLASS][MAX_SKILL_TREE];
+extern struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
 
 int pc_read_gm_account(int fd);
 void pc_setinvincibletimer(struct map_session_data* sd, int val);

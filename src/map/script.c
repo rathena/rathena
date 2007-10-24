@@ -5331,7 +5331,7 @@ BUILDIN_FUNC(jobchange)
 	if( script_hasdata(st,3) )
 		upper=script_getnum(st,3);
 
-	if ((job >= 0 && job < MAX_PC_CLASS))
+	if (pcdb_checkid(job))
 	{
 		pc_jobchange(script_rid2sd(st),job, upper);
 		if(use_irc && irc_announce_jobchange_flag)

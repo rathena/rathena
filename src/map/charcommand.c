@@ -421,7 +421,7 @@ int charcommand_jobchange(const int fd, struct map_session_data* sd, const char*
 {
 	char character[100];
 	struct map_session_data* pl_sd;
-	int job = 0, upper = -1, j = 0;
+	int job = 0, upper = -1;
 
 	memset(character, '\0', sizeof(character));
 
@@ -462,15 +462,11 @@ int charcommand_jobchange(const int fd, struct map_session_data* sd, const char*
 		return -1;
 	}
 
-	if (job < 0 || job > MAX_PC_CLASS) {
+	if (!pcdb_checkid(job)) {
 		clif_displaymessage(fd, msg_txt(49)); // Invalid job ID.
 		return -1;
 	}
 
-	for (j=0; j < MAX_INVENTORY; j++) {
-		if(pl_sd->status.inventory[j].nameid>0 && pl_sd->status.inventory[j].equip!=0)
-			pc_unequipitem(pl_sd, j, 3);
-	}
 	if (pc_jobchange(pl_sd, job, upper) != 0) {
 		clif_displaymessage(fd, msg_txt(192)); // Impossible to change the character's job.
 		return -1;

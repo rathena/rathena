@@ -45,16 +45,16 @@ int StatusIconChangeTable[SC_MAX]; //Stores the icon that should be associated t
 int StatusSkillChangeTable[SC_MAX]; //Stores the skill that should be considered associated to this status change. 
 unsigned long StatusChangeFlagTable[SC_MAX]; //Stores the flag specifying what this SC changes.
 
-static int max_weight_base[MAX_PC_CLASS];
-static int hp_coefficient[MAX_PC_CLASS];
-static int hp_coefficient2[MAX_PC_CLASS];
-static int hp_sigma_val[MAX_PC_CLASS][MAX_LEVEL+1];
-static int sp_coefficient[MAX_PC_CLASS];
-static int aspd_base[MAX_PC_CLASS][MAX_WEAPON_TYPE];	//[blackhole89]
+static int max_weight_base[CLASS_COUNT];
+static int hp_coefficient[CLASS_COUNT];
+static int hp_coefficient2[CLASS_COUNT];
+static int hp_sigma_val[CLASS_COUNT][MAX_LEVEL+1];
+static int sp_coefficient[CLASS_COUNT];
+static int aspd_base[CLASS_COUNT][MAX_WEAPON_TYPE];	//[blackhole89]
 static int refinebonus[MAX_REFINE_BONUS][3];	// 精錬ボーナステーブル(refine_db.txt)
 int percentrefinery[5][MAX_REFINE+1];	// 精錬成功率(refine_db.txt)
 static int atkmods[3][MAX_WEAPON_TYPE];	// 武器ATKサイズ修正(size_fix.txt)
-static char job_bonus[MAX_PC_CLASS][MAX_LEVEL];
+static char job_bonus[CLASS_COUNT][MAX_LEVEL];
 
 static struct status_data dummy_status;
 int current_equip_item_index; //Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
@@ -582,6 +582,13 @@ int status_set_sp(struct block_list *bl, unsigned int sp, int flag)
 	if (sp > status->sp)
 		return status_heal(bl, 0, sp - status->sp, 1|flag);
 	return status_zap(bl, 0, status->sp - sp);
+}
+
+int status_charge(struct block_list* bl, int hp, int sp)
+{
+	if(!((bl)->type&BL_CONSUME))
+		return hp+sp; //Assume all was charged so there are no 'not enough' fails.
+	return status_damage(NULL, bl, hp, sp, 0, 3);
 }
 
 //Inflicts damage on the target with the according walkdelay.
@@ -1189,8 +1196,8 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 	
 	// base weapon delay
 	amotion = (sd->status.weapon < MAX_WEAPON_TYPE)
-	 ? (aspd_base[sd->status.class_][sd->status.weapon]) // single weapon
-	 : (aspd_base[sd->status.class_][sd->weapontype1] + aspd_base[sd->status.class_][sd->weapontype2])*7/10; // dual-wield
+	 ? (aspd_base[pc_class2idx(sd->status.class_)][sd->status.weapon]) // single weapon
+	 : (aspd_base[pc_class2idx(sd->status.class_)][sd->weapontype1] + aspd_base[pc_class2idx(sd->status.class_)][sd->weapontype2])*7/10; // dual-wield
 	
 	// percentual delay reduction from stats
 	amotion-= amotion * (4*status->agi + status->dex)/1000;
@@ -1517,7 +1524,7 @@ static void status_calc_sigma(void)
 {
 	int i,j;
 
-	for(i = 0; i < MAX_PC_CLASS; i++)
+	for(i = 0; i < CLASS_COUNT; i++)
 	{
 		unsigned int k = 0;
 		hp_sigma_val[i][0] = hp_sigma_val[i][1] = 0;
@@ -1540,8 +1547,8 @@ static void status_calc_sigma(void)
 ///    f(x) = 35 + x*(A + B*C/D) + sum(i=2..x){ i*C/D }
 static unsigned int status_base_pc_maxhp(struct map_session_data* sd, struct status_data* status)
 {
-	unsigned int val;
-	val = 35 + sd->status.base_level*hp_coefficient2[sd->status.class_]/100 + hp_sigma_val[sd->status.class_][sd->status.base_level];
+	unsigned int val = pc_class2idx(sd->status.class_);
+	val = 35 + sd->status.base_level*hp_coefficient2[val]/100 + hp_sigma_val[val][sd->status.base_level];
 
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_NINJA || (sd->class_&MAPID_UPPERMASK) == MAPID_GUNSLINGER)
 		val += 100; //Since their HP can't be approximated well enough without this.
@@ -1563,7 +1570,7 @@ static unsigned int status_base_pc_maxsp(struct map_session_data* sd, struct sta
 {
 	unsigned int val;
 
-	val = 10 + sd->status.base_level*sp_coefficient[sd->status.class_]/100;
+	val = 10 + sd->status.base_level*sp_coefficient[pc_class2idx(sd->status.class_)]/100;
 	val += val * status->int_/100;
 
 	if (sd->class_&JOBL_UPPER)
@@ -1606,7 +1613,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	pc_calc_skilltree(sd);	// スキルツリ?の計算
 
-	sd->max_weight = max_weight_base[sd->status.class_]+sd->status.str*300;
+	sd->max_weight = max_weight_base[pc_class2idx(sd->status.class_)]+sd->status.str*300;
 
 	if(first&1) {
 		//Load Hp/SP from char-received data.
@@ -1959,10 +1966,11 @@ int status_calc_pc(struct map_session_data* sd,int first)
 // ----- STATS CALCULATION -----
 
 	// Job bonuses
+	index = pc_class2idx(sd->status.class_);
 	for(i=0;i<(int)sd->status.job_level && i<MAX_LEVEL;i++){
-		if(!job_bonus[sd->status.class_][i])
+		if(!job_bonus[index][i])
 			continue;
-		switch(job_bonus[sd->status.class_][i]) {
+		switch(job_bonus[index][i]) {
 			case 1: status->str++; break;
 			case 2: status->agi++; break;
 			case 3: status->vit++; break;
@@ -7296,7 +7304,7 @@ static int status_natural_heal_timer(int tid,unsigned int tick,int id,int data)
 
 int status_readdb(void)
 {
-	int i,j;
+	int i,j,class_;
 	FILE *fp;
 	char line[1024], path[1024],*p;
 
@@ -7323,15 +7331,16 @@ int status_readdb(void)
 			ShowDebug("%s: Not enough columns at line %d\n", path, i);
 			continue;
 		}
-		if(atoi(split[0])>=MAX_PC_CLASS)
+		class_ = atoi(split[0]);
+		if(!pcdb_checkid(class_))
 			continue;
-		
-		max_weight_base[atoi(split[0])]=atoi(split[1]);
-		hp_coefficient[atoi(split[0])]=atoi(split[2]);
-		hp_coefficient2[atoi(split[0])]=atoi(split[3]);
-		sp_coefficient[atoi(split[0])]=atoi(split[4]);
+		class_ = pc_class2idx(class_);
+		max_weight_base[class_]=atoi(split[1]);
+		hp_coefficient[class_]=atoi(split[2]);
+		hp_coefficient2[class_]=atoi(split[3]);
+		sp_coefficient[class_]=atoi(split[4]);
 		for(j=0;j<MAX_WEAPON_TYPE;j++)
-			aspd_base[atoi(split[0])][j]=atoi(split[j+5]);
+			aspd_base[class_][j]=atoi(split[j+5]);
 	}
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
@@ -7353,10 +7362,12 @@ int status_readdb(void)
 			p=strchr(p,',');
 			if(p) *p++=0;
 		}
-		if(atoi(split[0])>=MAX_PC_CLASS)
+		class_ = atoi(split[0]);
+		if(!pcdb_checkid(class_))
 		    continue;
+		class_ = pc_class2idx(class_);
 		for(i=1;i<j && split[i];i++)
-			job_bonus[atoi(split[0])][i-1]=atoi(split[i]);
+			job_bonus[class_][i-1]=atoi(split[i]);
 	}
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
