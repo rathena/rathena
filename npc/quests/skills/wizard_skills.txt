@@ -3,12 +3,439 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
-//= 1.3c
+//= 1.4
 //===== Compatible With: ===================================== 
-//= eAthena Revision 3800+
+//= eAthena SVN
 //===== Description: ========================================= 
-//= Temp quests for new skills for 2nd classes
+//= [Aegis Conversion]
+//= Quests for skills: Sight Blaster
 //===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//============================================================
+
+gef_tower,115,36,4	script	Meow#q_wiz	876,{
+	if (BaseJob == Job_Wizard) {
+		if (WIZ_SK == 100) {
+			if (getskilllv(1006) == 0) {
+				mes "[Meow]";
+				mes "What...?! You forgot the";
+				mes "awesome skill I taught you?";
+				mes "Transcending's no excuse";
+				mes "for forgetting! Alright, so you";
+				mes "want me to teach you, eh?";
+				mes "Alright, here's your lesson!";
+				next;
+				mes "^3355FF*BAM! BOOM! CRASH!*^000000";
+				specialeffect2 183; // EF_SUI_EXPLOSION
+				next;
+				mes "[Meow]";
+				mes "Don't you dare get";
+				mes "hoity-toity with me, just";
+				mes "because you've been reborn!";
+				mes "You better remember how to";
+				mes "do that skill before I give";
+				mes "you another whupping!";
+				next;
+				mes "^3355FFYou miraculously recall";
+				mes "the Sight Blaster skill before";
+				mes "Meow can administer another";
+				mes "vicious beating to you.";
+				specialeffect2 253; // EF_ABSORBSPIRITS
+				skill 1006,1,0;
+				next;
+				mes "[Meow]";
+				mes "Remember now?";
+				mes "Great. Now I'm going";
+				mes "back to taking a nap.";
+				mes "If you even think about";
+				mes "bothering me, I'll make";
+				mes "you regret it. Mark my word!";
+				close;
+			}
+			else {
+				mes "[Meow]";
+				mes "Zzz... Zzz...";
+				mes "Catherine... I'll";
+				mes "make you sorry for";
+				mes "turning me into a kitty...";
+				mes "I'm gonna... Gonna... Zzz...";
+				close;
+			}
+		}
+		else if (WIZ_SK == 0) {
+			mes "[Meow]";
+			mes "*Yaaawn~*";
+			mes "So sleeepy...";
+			mes "Hm? Did you want";
+			mes "to talk to me? Don't";
+			mes "bother me if you've";
+			mes "got nothing to say!";
+			next;
+			if (select("A cat?:Now I'm sleepy, too...") == 1) {
+				mes "[Meow]";
+				mes "Yeah. Yeah, I'm a cat.";
+				mes "For now, anyway. Damn that";
+				mes "Catherine! She turned me into";
+				mes "this form when I borrowed some";
+				mes "gemstones without her consent.";
+				mes "I was gonna tell her!";
+				next;
+				mes "[Meow]";
+				mes "Once I become human";
+				mes "again and regain my powers,";
+				mes "I'm gonna go freakin' buck";
+				mes "wild. Catherine, you, everyone.";
+				mes "You're all turning into cats!";
+				close;
+			}
+			mes "[Meow]";
+			mes "Hah! Yeah...";
+			mes "Taking a nap sounds like";
+			mes "the best idea I've hear--oh.";
+			mes "Wait. You're a Wizard, right?";
+			mes "I was so sleepy, I didn't even";
+			mes "notice. Ah, this is good~";
+			next;
+			mes "[Meow]";
+			mes "Now, I'm supposed to be";
+			mes "teaching Wizards this new";
+			mes "skill on behalf of the Wizard";
+			mes "Guild. Although I don't really";
+			mes "want to, I pretty much don't have^FFFFFF ^000000 a choice. So what do you say?";
+			next;
+			if (select("Nah, I'm too sleepy...:Sure, I'd like to learn a new skill.") == 1) {
+				mes "[Meow]";
+				mes "^333333*Yaaaawn*^000000";
+				mes "Alright. If you wanna";
+				mes "learn it later, then come";
+				mes "back and remind me about";
+				mes "the skill. Well then, back to";
+				mes "napping... Zzz... Zzz...";
+				close;
+			}
+			mes "[Meow]";
+			mes "Really? Fine, fine.";
+			mes "Just so you know, I'm";
+			mes "only teaching this skill so";
+			mes "that Catherine will return me";
+			mes "to my human form. It's too";
+			mes "humiliating to just be a cat!";
+			next;
+			mes "[Meow]";
+			mes "Wait, now that I think";
+			mes "about it, that dog Maria has";
+			mes "been hanging about Catherine";
+			mes "for the longest time, but she's";
+			mes "never regained her human form.";
+			mes "N-no! I can't lose hope now!";
+			next;
+			mes "[Meow]";
+			mes "Oh, let's just get this over";
+			mes "with. Now, you're aware that we";
+			mes "Wizards have great long range";
+			mes "attack skills, but we're weak";
+			mes "in short range battles, right?";
+			next;
+			mes "[Meow]";
+			mes "This new skill that I am";
+			mes "going to teach you has been";
+			mes "designed to compensate the";
+			mes "Wizard class's weakness in";
+			mes "close range combat. First,";
+			mes "you chant the spell...";
+			next;
+			mes "[Meow]";
+			mes "Then, for the skill's duration,";
+			mes "you will be protected by a shield that will push back and damage";
+			mes "enemies that approach too closely. Doesn't that sound really useful";
+			mes "in heated battle situations?";
+			next;
+			select("I can push enemies away?");
+			mes "[Meow]";
+			mes "Sure you can, well, once you";
+			mes "learn the skill. Hmm, but you";
+			mes "need to have a good grasp on";
+			mes "push back theory before you can";
+			mes "learn the skill. Hmm, you might";
+			mes "need a better explanation...";
+			next;
+			mes "[Meow]";
+			mes "You know what? Knights are";
+			mes "pretty much experts with skills";
+			mes "that push enemies back, so go";
+			mes "and find one who'll explain Push Back theory to you in Prontera.";
+			next;
+			mes "[Meow]";
+			mes "Check the 11 o' clock";
+			mes "direction on your Mini-Map";
+			mes "in Prontera to find the Knight";
+			mes "Chivalry. Someone there should";
+			mes "be willing to teach you more";
+			mes "about Push Backs in skills...";
+			set WIZ_SK,1;
+			close;
+		}
+		else if (WIZ_SK == 1) {
+			mes "[Meow]";
+			mes "What are you still doing";
+			mes "here? Didn't I tell you to go";
+			mes "to the Prontera Chivalry and";
+			mes "ask someone there to teach";
+			mes "you about Push Back theory?";
+			close;
+		}
+		else if (WIZ_SK == 2) {
+			mes "[Meow]";
+			mes "Hm? Oh good, you learned";
+			mes "the basics for pushing back";
+			mes "enemies. Now you're almost";
+			mes "ready to learn the skill that";
+			mes "I'm supposed to teach you.";
+			next;
+			mes "[Meow]";
+			mes "I'm no philanthropist, so";
+			mes "I expect some tuition for all";
+			mes "of my instruction and effort!";
+			mes "Mmm, what would be good for";
+			mes "my payment? Ah, I'm low on";
+			mes "enchanted stones right now~";
+			next;
+			mes "[Meow]";
+			mes "Go and bring me";
+			mes "^FF000010 Crystal Blues^000000,";
+			mes "^FF000010 Green Lives^000000,";
+			mes "^FF000010 Red Bloods^000000 and";
+			mes "^FF000010 Winds of Verdure^000000.";
+			next;
+			mes "[Meow]";
+			mes "It's not that much,";
+			mes "so don't complain and";
+			mes "come back as soon as you";
+			mes "can. While you're out there,";
+			mes "I'm going to take another nap~";
+			set WIZ_SK,3;
+			close;
+		}
+		else if (WIZ_SK == 3) {
+			if (countitem(991) < 10 || countitem(993) < 10 || countitem(990) < 10 || countitem(992) < 10) {
+				mes "[Meow]";
+				mes "^333333*Yaaaaaawn~*^000000 Hm?";
+				mes "H-how dare you come";
+				mes "back without everything";
+				mes "I asked you for?! You";
+				mes "forgot what to bring,";
+				mes "didn't you? Grrrr...";
+				next;
+				mes "[Meow]";
+				mes "I said to bring";
+				mes "^ff000010 Crystal Blues^000000,";
+				mes "^ff000010 Green Lives^000000,";
+				mes "^ff000010 Red Bloods^000000 and";
+				mes "^ff000010 Winds of Verdure^000000!";
+				next;
+				mes "[Meow]";
+				mes "Don't forget this time!";
+				mes "And don't even think of";
+				mes "waking me up until you";
+				mes "find everything I asked for!";
+				close;
+			}
+			mes "[Meow]";
+			mes "*Yaaaawn~* Wh-wha?";
+			mes "Oh, it's you. So did you";
+			mes "bring the stones I wanted?";
+			mes "Mmm. Good, let me see if";
+			mes "you brought them all...";
+			mes "One, two, three...";
+			next;
+			mes "[Meow]";
+			mes ".................";
+			mes "Screw it. I don't feel";
+			mes "like counting this all.";
+			mes "Let me just take these,";
+			mes "and teach you the skill";
+			mes "so I can go back to sleep.";
+			next;
+			mes "[Meow]";
+			mes "This skill is called,";
+			mes "''^FF0000Sight Blaster^000000.'' Pretty";
+			mes "cool, eh? Anyway, it's a Fire";
+			mes "attribute skill that requires";
+			mes "you to cast Sight before you";
+			mes "can activate it. Now try it.";
+			next;
+			specialeffect2 183; // EF_SUI_EXPLOSION
+			mes "^3355FF*BAM! BOOM!*^000000";
+			next;
+			mes "[Meow]";
+			mes "......";
+			mes "Huh. Not exactly right,";
+			mes "but not too bad for a first";
+			mes "try. Remember to will the";
+			mes "push back to happen. Ergh,";
+			mes "let's try it once again, okay?";
+			next;
+			mes "[Meow]";
+			mes "You gotta will it.";
+			mes "Push! Push with";
+			mes "your freakin' mind!";
+			mes "Well, push the flames";
+			mes "you summoned with Sight";
+			mes "with your mind. Not that hard!";
+			next;
+			mes "[Meow]";
+			mes "Finally...!";
+			mes "You actually learned it!";
+			mes "That took way too much effort,";
+			mes "but at least we're done here.";
+			specialeffect2 253; // EF_ABSORBSPIRITS
+			delitem 991,10; //Crystal_Blue
+			delitem 993,10; //Yellow_Live
+			delitem 990,10; //Boody_Red
+			delitem 992,10; //Wind_Of_Verdure
+			set WIZ_SK,100;
+			skill 1006,1,0;
+			next;
+			mes "[Meow]";
+			mes "I'm so tired from all of";
+			mes "this teaching. I think I'll";
+			mes "take a well deserved nap";
+			mes "right now. Go on your way,";
+			mes "and if you know any Wizards,";
+			mes "send 'em to me, I guess.";
+			close;
+		}
+		else {
+			mes "[Meow]";
+			mes "Zzz... Zzz...";
+			mes "Catherine... I'll";
+			mes "make you sorry for";
+			mes "turning me into a kitty...";
+			mes "I'm gonna... Gonna... Zzz...";
+			close;
+		}
+	}
+	else {
+		mes "[Meow]";
+		mes "*Yaaawn~*";
+		mes "So sleeepy...";
+		mes "Hm? Did you want";
+		mes "to talk to me? Don't";
+		mes "bother me if you've";
+		mes "got nothing to say!";
+		next;
+		if (select("A cat?:Now I'm sleepy, too...") == 1) {
+			mes "[Meow]";
+			mes "Yeah. Yeah, I'm a cat.";
+			mes "For now, anyway. Damn that";
+			mes "Catherine! She turned me into";
+			mes "this form when I borrowed some";
+			mes "gemstones without her consent.";
+			mes "I was gonna tell her!";
+			next;
+			mes "[Meow]";
+			mes "Once I become human";
+			mes "again and regain my powers,";
+			mes "I'm gonna go freakin' buck";
+			mes "wild. Catherine, you, everyone.";
+			mes "You're all turning into cats!";
+			close;
+		}
+		mes "[Meow]";
+		mes "Hah! Yeah...";
+		mes "Taking a nap sounds like";
+		mes "the best idea I've heard";
+		mes "all day. Hm. ^333333*Yaaawwn~*^000000";
+		mes "There we go, time to sleep...";
+		mes "ZzzzzzzZZZzzz... ZzZzzzz...";
+		close;
+	}
+}
+
+prt_in,82,98,3	script	Simon Mayace#q_wiz	46,{
+	if (WIZ_SK == 1) {
+		mes "[Simon]";
+		mes "Ah, you must be a skilled";
+		mes "practitioner of magic. Mmm,";
+		mes "you must one of those Wizards.";
+		mes "High Wizards? I can't really";
+		mes "tell the difference. Ah, may";
+		mes "I be of service to you?";
+		next;
+		if (select("I'm fine, thank you.:I want to learn about push backs.") == 1) {
+			mes "[Simon]";
+			mes "I'm surprised that you chose";
+			mes "to practice magic: judging";
+			mes "from your build, I'd say that";
+			mes "you'd be well suited to wielding^FFFFFF ^000000 a sword. Haha, but that's just";
+			mes "a humble Knight's opinion.";
+			close;
+		}
+		mes "[Simon]";
+		mes "Wait, are you asking me";
+		mes "to teach you a Push-Back";
+		mes "attack technique? You can";
+		mes "defend yourself using spells";
+		mes "like Fire Wall or Fire Bolt";
+		mes "much more effectively, right?";
+		next;
+		select("But at close range...");
+		mes "[Simon]";
+		mes "Oh, I see. Yeah, Wizards";
+		mes "aren't very effective in close";
+		mes "range battles. Okay, I can see";
+		mes "why you'd want to learn some";
+		mes "Push-Back technique. Alright,";
+		mes "I can teach you a few basics.";
+		next;
+		mes "[Simon]";
+		mes "Now, every adventurer knows";
+		mes "the fundamentals of attacking.";
+		mes "You strike, and then ready your";
+		mes "next action, which is either";
+		mes "another strike, a dodge or a";
+		mes "guard. Simple stuff, right?";
+		next;
+		mes "[Simon]";
+		mes "To push an enemy back, you've";
+		mes "got to attack using a strike";
+		mes "with continuous force. It's all";
+		mes "in the follow through. Now, if";
+		mes "you strike the head, the push";
+		mes "distance will be too short.";
+		next;
+		mes "[Simon]";
+		mes "If you deliver a pushing";
+		mes "strike to the legs, your";
+		mes "enemy will fall towards you.";
+		mes "The best target for pushing";
+		mes "attacks is the torso since it";
+		mes "allows more control of the push.";
+		next;
+		mes "[Simon]";
+		mes "Well, I've explained";
+		mes "pushing as best as I can.";
+		mes "Concentrate and practice the";
+		mes "theory on your own, and you";
+		mes "should be able to do it. Good^FFFFFF ^000000luck on your travels, adventurer~";
+		set WIZ_SK,2;
+		close;
+	}
+	else {
+		mes "[Simon]";
+		mes "Make no mistake:";
+		mes "swordplay is an art.";
+		mes "The techniques may seem";
+		mes "brutish at first glance, but";
+		mes "there's a keen strategy that";
+		mes "Knights innately understand.";
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
 //= 1.0 for fully working skills only [Lupus]
 //= 1.1 Added more new skill quests for more classes [Lupus]
 //= Somehow eA engine doesn't let you keep learn't skill V_V'
@@ -20,165 +447,3 @@
 //= 1.3b Splitted into different files [DracoRPG]
 //= 1.3c Removed duplicates [Toms]
 //============================================================
-
-
-//============================================================
-// WIZARD - SIGHTBLASTER
-//============================================================
-gef_tower,116,37,1	script	Enoz#2	748,{
-	if(HELLIONQ == 22)goto L_remember;
-	if(HELLIONQ == 21)goto L_joke;
-	if(HELLIONQ == 20)goto L_take;
-	if(BaseJob!=Job_Wizard) goto L_nowiz;
-	if(getskilllv(1006)) goto L_alreadyhave;
-
-	mes "[Enoz]";
-	mes "I'll teach you all I know for:";
-	mes "10 Crystal Blue";
-	mes "10 Green Live";
-	mes "10 Red Blood";
-	mes "10 Wind of Verdure";
-	next;
-	
-	mes "[Enoz]";
-	mes "Let me check your items.";
-	next;
-	
-	if(countitem(990)<10 || countitem(991)<10 || countitem(992)<10 || countitem(993)<10) goto L_noitems;//Items: Red_Blood, Crystal_Blue, Wind_of_Verdure, Green_Live,
-	delitem 990, 10;//Items: Red_Blood,
-	delitem 991, 10;//Items: Crystal_Blue,
-	delitem 992, 10;//Items: Wind_of_Verdure,
-	delitem 993, 10;//Items: Green_Live,
-	
-	mes "[Enoz]";
-	mes "I see you have what you need,";
-	mes "so I'll teach you my talent.";
-	skill 1006,1,0;
-	close;
-
-L_take:
-	mes "[Enoz]";
-	mes "It's gone, it's gone!";
-	mes "Where the hell did it go?!";
-	mes "Oh man, who could have";
-	mes "taken it? Wait, was it... You?!";
-	next;
-	menu "Actually, Welshyun sent me.",L_sent,"No way man, don't go nuts.",-;
-
-	mes "[Enoz]";
-	mes "Nuts?! Oh, you wanna";
-	mes "see crazy, is that it?! You";
-	mes "wanna see insaaaane?!";
-	mes "Cuz I'll go freakin' medieval";
-	mes "if you keep bothering me!!";
-	close;
-
-L_sent:
-	mes "[Enoz]";
-	mes "My mentor, Welshyun?";
-	mes "Huh. Is there a report";
-	mes "I haven't submitted to him";
-	mes "yet? So what was it called?";
-	next;
-	input @tempstr$;
-	if(@tempstr$ != "Monster Life in the Geffen Area")goto L_wrongstr;
-
-	mes "[Enoz]";
-	mes "\"Monster Life in";
-	mes "the Geffen Area\"?";
-	mes "Oh no. My mentor took";
-	mes "that three days ago!";
-	mes "Is he still up to his";
-	mes "old tricks again?";
-	next;
-	mes "[Enoz]";
-	mes "Awww nuts!";
-	mes "Where the heck is";
-	mes "my Master Science";
-	mes "Reference Book?";
-	mes "It was right here";
-	mes "three days ago...";
-	set HELLIONQ,21;
-	close;
-
-L_joke:
-	mes "[Enoz]";
-	mes "My mentor Welshyun's";
-	mes "been playing jokes again,";
-	mes "so you better go talk to him.";
-	mes "Damn. Where is that Master";
-	mes "Science Reference Book?";
-	close;
-
-L_wrongstr:
-	mes "[Enoz]";
-	mes @tempstr$ + "?";
-	mes "I haven't completed";
-	mes "any research related";
-	mes "to that subject. Or did I?";
-	mes "Anyway, I need the exact";
-	mes "name of the report you want!";
-	close;
-
-L_remember:
-	mes "[Enoz]";
-	mes "Oh hey, I remember you~";
-	mes "So did my mentor send you";
-	mes "to me again for some reason?";
-	next;
-	mes "^3151FFYou cautiously hand Enoz the";
-	mes "Master Science Reference Book.";
-	next;
-	mes "[Enoz]";
-	mes "Yes! Oh yes!";
-	mes "This is the book";
-	mes "I lost three days";
-	mes "ago! Thanks so much!";
-	mes "Now I can finally finish";
-	mes "this research project that--";
-	next;
-	mes "[Enoz]";
-	mes "Wait, the page I really";
-	mes "need is missing! And there's";
-	mes "some sort of note... Umm...";
-	mes "^111111\"Enoz I think this page";
-	mes "is worth at least one Apple";
-	mes "Juice. Right? --Welshyun\"^000000.";
-	next;
-	mes "[Enoz]";
-	mes "NOooOOoOo!";
-	mes "Not agaaaaain!";
-	mes "WHy is he always";
-	mes "playing these pranks?!";
-	mes "Apple Juice! I need";
-	mes "some Apple Juice!";
-	next;
-	mes "^3151FFIt looks like it's time";
-	mes "to get 1 Blue Gemstone,";
-	mes "and then bring it back";
-	mes "to Welshyun the Sage.";
-	set HELLIONQ,23;
-	close;
-	
-L_noitems:
-	mes "[Enoz]";
-	mes "You don't have enough items.";
-	mes "Come back when you have all";
-	mes "the required items for me.";
-	close;
-	
-L_nowiz:
-	mes "[Enoz]";
-	mes "Gone! It's gone!";
-	mes "Where did the book";
-	mes "I really need go to?";
-	mes "Oh no oh no oh no oh no!";
-	mes "Waaaaah, I'm gonna cry!";
-	close;
-
-L_alreadyhave:
-	mes "[Enoz]";
-	mes "I've already taught you";
-	mes "everything I know...";
-	close;
-}

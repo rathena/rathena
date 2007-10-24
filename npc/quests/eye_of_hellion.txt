@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.1 a ',' that should be ';' [FlavioJS]
 //= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.4 Moved Enoz from the wizard quest skill to here. [L0ne_W0lf]
 //============================================================
 
 geffen,110,200,3	script	Sage Welshyun	754,2,2,{
@@ -376,6 +377,125 @@ OnTouch:
 	mes "to something in the area.";
 	close;
 
+}
+
+gef_tower,116,37,1	script	Enoz#2	748,{
+	if(HELLIONQ == 22)goto L_remember;
+	if(HELLIONQ == 21)goto L_joke;
+	if(HELLIONQ == 20)goto L_take;
+
+L_take:
+	mes "[Enoz]";
+	mes "It's gone, it's gone!";
+	mes "Where the hell did it go?!";
+	mes "Oh man, who could have";
+	mes "taken it? Wait, was it... You?!";
+	next;
+	menu "Actually, Welshyun sent me.",L_sent,"No way man, don't go nuts.",-;
+
+	mes "[Enoz]";
+	mes "Nuts?! Oh, you wanna";
+	mes "see crazy, is that it?! You";
+	mes "wanna see insaaaane?!";
+	mes "Cuz I'll go freakin' medieval";
+	mes "if you keep bothering me!!";
+	close;
+
+L_sent:
+	mes "[Enoz]";
+	mes "My mentor, Welshyun?";
+	mes "Huh. Is there a report";
+	mes "I haven't submitted to him";
+	mes "yet? So what was it called?";
+	next;
+	input @tempstr$;
+	if(@tempstr$ != "Monster Life in the Geffen Area")goto L_wrongstr;
+
+	mes "[Enoz]";
+	mes "\"Monster Life in";
+	mes "the Geffen Area\"?";
+	mes "Oh no. My mentor took";
+	mes "that three days ago!";
+	mes "Is he still up to his";
+	mes "old tricks again?";
+	next;
+	mes "[Enoz]";
+	mes "Awww nuts!";
+	mes "Where the heck is";
+	mes "my Master Science";
+	mes "Reference Book?";
+	mes "It was right here";
+	mes "three days ago...";
+	set HELLIONQ,21;
+	close;
+
+L_joke:
+	mes "[Enoz]";
+	mes "My mentor Welshyun's";
+	mes "been playing jokes again,";
+	mes "so you better go talk to him.";
+	mes "Damn. Where is that Master";
+	mes "Science Reference Book?";
+	close;
+
+L_wrongstr:
+	mes "[Enoz]";
+	mes @tempstr$ + "?";
+	mes "I haven't completed";
+	mes "any research related";
+	mes "to that subject. Or did I?";
+	mes "Anyway, I need the exact";
+	mes "name of the report you want!";
+	close;
+
+L_remember:
+	mes "[Enoz]";
+	mes "Oh hey, I remember you~";
+	mes "So did my mentor send you";
+	mes "to me again for some reason?";
+	next;
+	mes "^3151FFYou cautiously hand Enoz the";
+	mes "Master Science Reference Book.";
+	next;
+	mes "[Enoz]";
+	mes "Yes! Oh yes!";
+	mes "This is the book";
+	mes "I lost three days";
+	mes "ago! Thanks so much!";
+	mes "Now I can finally finish";
+	mes "this research project that--";
+	next;
+	mes "[Enoz]";
+	mes "Wait, the page I really";
+	mes "need is missing! And there's";
+	mes "some sort of note... Umm...";
+	mes "^111111\"Enoz I think this page";
+	mes "is worth at least one Apple";
+	mes "Juice. Right? --Welshyun\"^000000.";
+	next;
+	mes "[Enoz]";
+	mes "NOooOOoOo!";
+	mes "Not agaaaaain!";
+	mes "WHy is he always";
+	mes "playing these pranks?!";
+	mes "Apple Juice! I need";
+	mes "some Apple Juice!";
+	next;
+	mes "^3151FFIt looks like it's time";
+	mes "to get 1 Blue Gemstone,";
+	mes "and then bring it back";
+	mes "to Welshyun the Sage.";
+	set HELLIONQ,23;
+	close;
+	
+L_nowiz:
+	mes "[Enoz]";
+	mes "Gone! It's gone!";
+	mes "Where did the book";
+	mes "I really need go to?";
+	mes "Oh no oh no oh no oh no!";
+	mes "Waaaaah, I'm gonna cry!";
+	close;
 }
 
 prontera,269,326,3	script	Clanux Heffron	50,{
