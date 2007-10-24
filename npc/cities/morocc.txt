@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.6 Added Bartender NPC, made by Persian69 [Vicious_Pucca]
 //= 1.7 Removed Duplicates [Silent]
 //= 1.8 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
+//= 1.9 Removed duplicate NPC, changed temp char vars to temp npc. [L0ne_W0;f]
 //============================================================
 
 // Morroc
@@ -687,31 +688,6 @@ morocc,289,230,3	script	Citizen#06	92, {
 	close;
 }
 
-//<================================================== Assassin Guild ====================================================>\\
-
-// Hashisid ====================================
-moc_fild16,199,212,4	script	Hashisid	48,{
-	mes "[Hashisid]";
-	mes "For Assassins, it is important not to look a target in the eye.  If a target is smart, he/she may be able to tell what you're up too.";
-	next;
-	menu "About Assassins",M_0,"Quit Conversation",M_End;
-	
-	M_0:
-		mes "[Hashisid]";
-		mes "Let me tell you a little bit about Assassins";
-		next;
-		mes "[Hashisid]";
-		mes "Assassin's are hired to infiltrate, gather intelligence, and even commit murder without being seen or heard.";
-		mes "Stealth and speed are vital to Assassins.  Assassins live in the shadows and never get praise or congratulations.";
-		next;
-		mes "[Hashisid]";
-		mes "It's their job to go unnoticed.  Though an Assassin may seem like a cruel and heartless individual....";
-		mes "An Assassin will never do any harm to an innocent being.  The main purpose of the Assassin to seek out and destroy evil forces!";
-		close;
-	M_End:
-		close;
-}
-
 //==================================================
 // Assassin Guild Guards
 //===================================================
@@ -722,11 +698,11 @@ moc_fild16,195,281,4	script	Assassin Guardian#1::SinGuard	707,{
 		mes "Welcome.";
 		close;
 	}
-	set @temp, rand(1,4);
-	if(@temp == 1) mes "........";
-	if(@temp == 2) mes "Hmmm..........";
-	if(@temp == 3) mes "Hmmm... you shouldn't be here.....";
-	if(@temp == 4) mes "You're trespassing on forbidden grounds.......";
+	set .@temp, rand(1,4);
+	if(.@temp == 1) mes "........";
+	if(.@temp == 2) mes "Hmmm..........";
+	if(.@temp == 3) mes "Hmmm... you shouldn't be here.....";
+	if(.@temp == 4) mes "You're trespassing on forbidden grounds.......";
 	close;
 }
 
