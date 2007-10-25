@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/10/25
+	* Rev. 11574 Minor fixes here and there to a few scripts. [L0ne_W0lf]
 2007/10/24
 	* Rev. 11570 Added the Advanced Refiner for Enriched ores. [L0ne_W0lf]
 	- I've had this done for awhile now, but I've never submitted it. XD

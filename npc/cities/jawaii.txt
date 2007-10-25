@@ -5,7 +5,7 @@
 //= DNett123 (1.1 - 1.5)
 //= L0ne_w0lf
 //===== Current Version: =====================================
-//= 3.2
+//= 3.3
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -30,6 +30,7 @@
 //=		replaced getpartnerid() with ispartneron() at some tri-forks [Lupus]
 //= 3.2 Reverted ispartneron() BACK to getpartnerid(). [L0ne_W0lf]
 //=	None of the NPCs need the player's partner to be online.
+//= 3.3 Just a small fix up on the Bartender. [L0ne_W0lf]
 //============================================================
 // Jawaii
 //============================================================
@@ -1057,7 +1058,6 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 
 		case 5:
 			callsub S_KillChar,1;
-			mes "[Bartender]";
 			mes "There are not many people who like this drink. But the ones that do like this drink, love it.";
 			next;
 			mes "[Bartender]";

@@ -5,7 +5,7 @@
 //= finished, optimized and tested by Lupus
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.8
+//= 2.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -34,6 +34,7 @@
 //=	scripts are comepleted.
 //= 2.7b Removed function "F_BlockHigh" as it's no longer used. [L0ne_W0lf]
 //= 2.8 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.9 Corrected Valkyrie case spicifying where to warp after rebirthing. [L0ne_W0lf]
 //============================================================ 
 
 valkyrie,48,86,4	script	Valkyrie#	811,{
@@ -167,24 +168,24 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 			mes "And I pray that the new life to which the goddess Skuld will guide you will be even more honorable than your last.";
 			close2;
 			switch (ADVJOB) {
-			case 4001:
-			case 4007:
-				warp "izlude",94,103; break;
-			case 4002:
 			case 4008:
-				warp "prontera",273,354; break;
-			case 4003:
+			case 4015:
+				warp "izlude",94,103; break;
 			case 4009:
-				warp "geffen",120,60; break;
-			case 4004:
+			case 4016:
+				warp "prontera",273,354; break;
 			case 4010:
-				warp "alberta",116,57; break;
-			case 4005:
-			case 4012:
-			case 4013:
-				warp "payon",69,100; break;
-			case 4006:
+			case 4017:
+				warp "geffen",120,60; break;
 			case 4011:
+			case 4019:
+				warp "alberta",116,57; break;
+			case 4012:
+			case 4020:
+			case 4021:
+				warp "payon",69,100; break;
+			case 4013:
+			case 4018:
 				warp "morocc",154,50; break;
 			default:
 				warp "yuno_in02",93,205; break;
