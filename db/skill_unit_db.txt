@@ -24,7 +24,7 @@
 //
 
  12,0x7e,    ,  0, 0,  -1,all,   0x003	//MG_SAFETYWALL
- 18,0x7f,    , -1, 0,   1,enemy, 0x008	//MG_FIREWALL
+ 18,0x7f,    , -1, 0,  20,enemy, 0x008	//MG_FIREWALL
  21,0x86,    ,  0, 2,1000,enemy, 0x008	//MG_THUNDERSTORM
  25,0x85,    ,  1, 0,  -1,all,   0x003	//AL_PNEUMA
  27,0x81,0x80,  0, 0,  -1,all,   0x006	//AL_WARP
@@ -91,6 +91,6 @@
 516,0xba,    ,  3, 0, 100,enemy, 0x000	//GS_DESPERADO
 521,0xbe,    ,  0, 1,1000,enemy, 0x000	//GS_GROUNDDRIFT
 527,0xbc,    , -1, 0,2000,enemy, 0x000	//NJ_TATAMIGAESHI
-535,0xbd,    , -1, 0,   1,enemy, 0x008	//NJ_KAENSIN
+535,0xbd,    , -1, 0,  20,enemy, 0x008	//NJ_KAENSIN
 538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x000	//NJ_SUITON
 670,0xc7,    ,  5, 1,1000,all,   0x008	//NPC_EVILLAND
