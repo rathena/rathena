@@ -586,7 +586,7 @@ int status_set_sp(struct block_list *bl, unsigned int sp, int flag)
 
 int status_charge(struct block_list* bl, int hp, int sp)
 {
-	if(!((bl)->type&BL_CONSUME))
+	if(!(bl->type&BL_CONSUME))
 		return hp+sp; //Assume all was charged so there are no 'not enough' fails.
 	return status_damage(NULL, bl, hp, sp, 0, 3);
 }

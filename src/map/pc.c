@@ -943,7 +943,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 			ShowError("pc_calc_skilltree: Unable to normalize job %d for character %s (%d:%d)\n", i, sd->status.name, sd->status.account_id, sd->status.char_id);
 		return 1;
 	}
-	c = pc_class2idx(c);	
+	c = pc_class2idx(c);
 	for(i=0;i<MAX_SKILL;i++){ 
 		if (sd->status.skill[i].flag != 13) //Don't touch plagiarized skills
 			sd->status.skill[i].id=0; //First clear skills.
@@ -1063,7 +1063,7 @@ static void pc_check_skilltree(struct map_session_data *sd, int skill)
 			ShowError("pc_check_skilltree: Unable to normalize job %d for character %s (%d:%d)\n", i, sd->status.name, sd->status.account_id, sd->status.char_id);
 		return;
 	}
-	c = pc_class2idx(c);	
+	c = pc_class2idx(c);
 	do {
 		flag=0;
 		for(i=0;i < MAX_SKILL_TREE && (id=skill_tree[c][i].id)>0;i++){

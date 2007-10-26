@@ -7,7 +7,7 @@
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/timer.h" // INVALID_TIMER
 #include "battle.h" // battle_config
-#include "map.h" // struct map_session_data
+#include "map.h" // JOB_*, struct map_session_data
 #include "status.h" // OPTION_*
 #include "unit.h" // unit_stop_attack(), unit_stop_walking()
 
