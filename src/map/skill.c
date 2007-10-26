@@ -758,6 +758,7 @@ const char*	skill_get_desc( int id ){
 int skill_tree_get_max(int id, int b_class)
 {
 	int i, skillid;
+	b_class = pc_class2idx(b_class);
 	for(i=0;(skillid=skill_tree[b_class][i].id)>0;i++)
 		if (id == skillid) return skill_tree[b_class][i].max;
 	return skill_get_max (id);
@@ -7324,23 +7325,19 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	{
 		case UNT_FIREWALL:
 		case UNT_KAENSIN:
-			if (tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele)) {
-				int count=0;
-				//Fire property mobs and Undeads are never knocked back
-				//Should hit every 20ms [Playtester]
-				while (count++ < battle_config.firewall_hits_on_undead && !status_isdead(bl) && src->val2--)
-					skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,1);
-			} else {
-				int count=0;
-				int x = bl->x, y = bl->y;
-				//If target isn't knocked back it should hit every 20ms [Playtester]
-				while (count++ < battle_config.firewall_hits_on_undead && x == bl->x && y == bl->y && !status_isdead(bl) && src->val2--)
-					skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,0);
-			}
+		{
+			int count=0;
+			const int x = bl->x, y = bl->y;
+			//Take into account these hit more times than the timer interval
+			//can handle.
+			do
+				skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*sg->interval,0);
+			while(--src->val2 && x == bl->x && y == bl->y &&
+				++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(bl));
 			if (src->val2<=0)
 				skill_delunit(src);
 			break;
-
+		}
 		case UNT_SANCTUARY:
 			if (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race==RC_DEMON)
 			{	//Only damage enemies with offensive Sanctuary. [Skotlex]
@@ -7397,20 +7394,21 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				case SG_STAR_WARM:
 					{
 						int count=0;
-						int x = bl->x, y = bl->y;
+						const int x = bl->x, y = bl->y;
 						//If target isn't knocked back it should hit every 20ms [Playtester]
-						while( count++ < SKILLUNITTIMER_INTERVAL/sg->interval && x == bl->x && y == bl->y && !status_isdead(bl) )
+						do
 						{
 							if( bl->type == BL_PC )
 								status_zap(bl, 0, 15); //Only damage SP [Skotlex]
 							else // mobs
 							if( status_charge(ss, 0, 2) ) // costs 2 SP per hit
-								skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*20,0);
+								skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*sg->interval,0);
 							else { //should end when out of sp.
 								sg->limit = DIFF_TICK(tick,sg->tick);
 								break;
 							}
-						}
+						} while( x == bl->x && y == bl->y &&
+							++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(bl) );
 					}
 				break;
 				case WZ_STORMGUST:

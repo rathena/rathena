@@ -396,7 +396,6 @@ extern struct Battle_Config
 	int rare_drop_announce; // chance <= to show rare drops global announces
 
 	int retaliate_to_master;	//Whether when a mob is attacked by another mob, it will retaliate versus the mob or the mob's master. [Skotlex]
-	int firewall_hits_on_undead; //Number of hits firewall does at a time on undead. [Skotlex]
 
 	int title_lvl1; // Players titles [Lupus]
 	int title_lvl2; // Players titles [Lupus]
