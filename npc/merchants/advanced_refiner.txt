@@ -8,8 +8,7 @@
 //= Eathena SVN
 //===== Description: =========================================
 //= [Aegis Conversion]
-//= Refiner that uses Enriched ores to increase upgrade
- success.
+//= Refiner that uses Enriched ores to increase upgrade success.
 //= After a conversation with Doddler, it's been established that
 //= the advanced refiner works similar the the "Bubble Gum" item.
 //= The success percentage is not "increased" however, if it fails
@@ -19,6 +18,7 @@
 //= - Uses the iRO position for this NPC.
 //===== Additional Comments: =================================
 //= 1.0 First Version. [L0ne_W0lf]
+//= 1.1 Fixed a weird carriage return. o_o [L0ne_W0lf]
 //============================================================
 
 payon,174,138,0	script	Suhnbi#cash	85,{

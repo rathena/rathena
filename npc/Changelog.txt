@@ -1,7 +1,8 @@
 Date		Added
 ======
 2007/10/25
-	* Rev. 11575 Minor updates the Juperos Elevator NPCs. [L0ne_W0lf]
+	* Rev. 11577 More minor updates to a couple NPCs. [L0ne_W0lf]
+	* Rev. 11576 Minor updates the Juperos Elevator NPCs. [L0ne_W0lf]
 	* Rev. 11574 Minor fixes here and there to a few scripts. [L0ne_W0lf]
 2007/10/24
 	* Rev. 11570 Added the Advanced Refiner for Enriched ores. [L0ne_W0lf]
