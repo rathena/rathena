@@ -1669,44 +1669,46 @@ int intif_Mail_send(int account_id, struct mail_message *msg)
 
 int intif_parse_Mail_send(int fd)
 {
-	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,4));
+	struct map_session_data* sd = map_charid2sd(RFIFOL(fd,4));
 	int mail_id = RFIFOL(fd,8);
 	int dest_id = RFIFOL(fd,12);
+	struct map_session_data* rd;
 
-	if (sd == NULL && mail_id > 0)
-	{
-		if (battle_config.error_log)
+	if( mail_id == 0 )
+	{// nick->charid lookup failed, no such char
+		// Return the items to the owner
+		mail_removeitem(sd, 0);
+		mail_removezeny(sd, 0);
+		clif_Mail_send(sd->fd, 1); // failed
+		return 0;
+	}
+
+	if( sd == NULL )
+	{// original sender disconnected, item cannot be deleted!
+		if( battle_config.error_log )
 			ShowError("intif_parse_Mail_send: char not found %d\n",RFIFOL(fd,2));
 
-		// If sd = NULL attachment haven't been removed from sender inventory.
+		// the best thing we can do at this point is requesting removal of the mail with the duped item
 		intif_Mail_delete(dest_id, mail_id);
 		return 0;
 	}
 
-	if (mail_id > 0)
+	// physically delete the item
+	mail_removeitem(sd, 1);
+	mail_removezeny(sd, 1);
+	clif_Mail_send(sd->fd, 0); // success
+
+	// notify recipient about new mail
+	rd = map_charid2sd(dest_id);
+	if( rd != NULL )
 	{
-		struct map_session_data *rd = map_charid2sd(dest_id);
-		
-		mail_removeitem(sd, 1);
-		mail_removezeny(sd, 1);
+		char title[MAIL_TITLE_LENGTH];
+		memcpy(title, RFIFOP(fd,16), RFIFOW(fd,2) - 16);
 
-		if (rd != NULL)
-		{
-			char title[MAIL_TITLE_LENGTH];
-			memcpy(title, RFIFOP(fd,16), RFIFOW(fd,2) - 16);
-
-			rd->mail.inbox.changed = 1;
-			clif_Mail_new(rd->fd, mail_id, sd->status.name, title);
-		}
-	}
-	else
-	{ // Return the items to the owner
-		mail_removeitem(sd, 0);
-		mail_removezeny(sd, 0);
+		rd->mail.inbox.changed = 1;
+		clif_Mail_new(rd->fd, mail_id, sd->status.name, title);
 	}
 
-	clif_Mail_send(sd->fd, (mail_id > 0)?0:1);
-	
 	return 0;
 }
 

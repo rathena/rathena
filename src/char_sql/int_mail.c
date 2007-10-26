@@ -128,10 +128,10 @@ static int mail_savemessage(struct mail_message* msg)
 	||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 3, SQLDT_STRING, msg->body, strnlen(msg->body, MAIL_BODY_LENGTH))
 	||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
 	{
-		Sql_ShowDebug(sql_handle);
+		SqlStmt_ShowDebug(stmt);
 		j = 0;
 	} else
-		j = (int)Sql_LastInsertId(sql_handle);
+		j = (int)SqlStmt_LastInsertId(stmt);
 
 	StringBuf_Destroy(&buf);
 
@@ -190,7 +190,8 @@ static bool mail_loadmessage(int char_id, int mail_id, struct mail_message* msg)
 	StringBuf_Destroy(&buf);
 	Sql_FreeResult(sql_handle);
 
-	ShowDebug("Loaded message (had read flag %d)\n", msg->read);
+	// this thing converts the database value (0,1,2) into a boolean yes/no
+	//TODO: provide decent enum instead of using 'magic' values
 	if (msg->read == 1)
 	{
 		msg->read = 0;
@@ -374,7 +375,8 @@ static void mapif_Mail_send(int fd, struct mail_message* msg)
 static void mapif_parse_Mail_send(int fd)
 {
 	struct mail_message msg;
-	int mail_id = 0, account_id = 0;
+	char esc_name[NAME_LENGTH*2+1];
+	int account_id = 0;
 
 	if(RFIFOW(fd,2) != 8 + sizeof(struct mail_message))
 		return;
@@ -383,32 +385,28 @@ static void mapif_parse_Mail_send(int fd)
 
 	account_id = RFIFOL(fd,4);
 
-	if( !msg.dest_id )
+	// Try to find the Dest Char by Name
+	Sql_EscapeStringLen(sql_handle, esc_name, msg.dest_name, strnlen(msg.dest_name, NAME_LENGTH));
+	if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`, `char_id` FROM `%s` WHERE `name` = '%s'", char_db, esc_name) )
+		Sql_ShowDebug(sql_handle);
+	else
+	if ( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 	{
-		// Try to find the Dest Char by Name
-		char esc_name[NAME_LENGTH*2+1];
-
-		Sql_EscapeStringLen(sql_handle, esc_name, msg.dest_name, strnlen(msg.dest_name, NAME_LENGTH));
-		if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`, `char_id` FROM `%s` WHERE `name` = '%s'", char_db, esc_name) )
-			Sql_ShowDebug(sql_handle);
-		else
-		if ( SQL_SUCCESS == Sql_NextRow(sql_handle) )
-		{
-			char *data;
-			Sql_GetData(sql_handle, 0, &data, NULL);
-			if (atoi(data) != account_id)
-			{ // Cannot send mail to char in the same account
-				Sql_GetData(sql_handle, 1, &data, NULL);
-				msg.dest_id = atoi(data);
-			}
+		char *data;
+		Sql_GetData(sql_handle, 0, &data, NULL);
+		if (atoi(data) != account_id)
+		{ // Cannot send mail to char in the same account
+			Sql_GetData(sql_handle, 1, &data, NULL);
+			msg.dest_id = atoi(data);
 		}
-		Sql_FreeResult(sql_handle);
 	}
+	Sql_FreeResult(sql_handle);
 
 	if( msg.dest_id > 0 )
-		mail_id = mail_savemessage(&msg);
+		msg.id = mail_savemessage(&msg);
+	else
+		msg.id = 0;
 
-	msg.id = mail_id;
 	mapif_Mail_send(fd, &msg);
 }
 

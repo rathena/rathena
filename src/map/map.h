@@ -1344,7 +1344,6 @@ struct map_session_data** map_getallusers(int *users);
 void map_foreachpc(int (*func)(DBKey,void*,va_list),...);
 int map_foreachiddb(int (*)(DBKey,void*,va_list),...);
 struct map_session_data * map_nick2sd(const char*);
-struct map_session_data * map_nick2sd_nocase(const char *);
 
 // ‚»‚Ì‘¼
 int map_check_dir(int s_dir,int t_dir);

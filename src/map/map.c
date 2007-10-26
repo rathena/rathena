@@ -1847,21 +1847,6 @@ struct map_session_data * map_nick2sd(const char *nick)
 	return NULL;
 }
 
-struct map_session_data * map_nick2sd_nocase(const char *nick)
-{
-	int i, users;
-	struct map_session_data **pl_allsd;
-
-	pl_allsd = map_getallusers(&users);
-	for (i = 0; i < users; i++)
-	{
-		if ( !strcmp(pl_allsd[i]->status.name, nick) )
-			return pl_allsd[i];
-	}
-
-	return NULL;
-}
-
 /*==========================================
  * id”Ô?‚Ì•¨‚ğ’T‚·
  * ˆêObject‚Ìê‡‚Í”z—ñ‚ğˆø‚­‚Ì‚İ

@@ -11465,7 +11465,10 @@ void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 		weight = data->weight * sd->mail.inbox.msg[i].item.amount;
 		if (weight > sd->max_weight - sd->weight)
 		{
-			clif_displaymessage(fd, "Attachment to heavy for you...");
+			WFIFOHEAD(fd,packet_len(0x245));
+			WFIFOW(fd,0) = 0x245;
+			WFIFOB(fd,2) = 2;
+			WFIFOSET(fd,packet_len(0x245));
 			return;
 		}
 	}
@@ -11635,7 +11638,6 @@ void clif_Mail_send(int fd, unsigned char flag)
 /// S 0248 <packet len>.w <nick>.24B <title>.40B <body len>.B <message>.?B
 void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 {
-	struct map_session_data *rd;
 	struct mail_message msg;
 	int body_len;
 	nullpo_retv(sd);
@@ -11653,14 +11655,6 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 	}
 
 	body_len = RFIFOB(fd,68);
-	rd = map_nick2sd_nocase(RFIFOP(fd,4));
-
-	if (rd && rd == sd) {
-		clif_Mail_send(fd, 1);
-		mail_removeitem(sd,0);
-		mail_removezeny(sd,0);
-		return;
-	}
 
 	if (body_len > MAIL_BODY_LENGTH)
 		body_len = MAIL_BODY_LENGTH;
@@ -11674,16 +11668,9 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 	}
 
 	msg.send_id = sd->status.char_id;
+	msg.dest_id = 0; // will attempt to resolve name
 	safestrncpy(msg.send_name, sd->status.name, NAME_LENGTH);
-
-	if (rd) {
-		msg.dest_id = rd->status.char_id;
-		safestrncpy(msg.dest_name, rd->status.name, NAME_LENGTH);
-	} else {
-		msg.dest_id = 0;
-		safestrncpy(msg.dest_name, (char*)RFIFOP(fd,4), NAME_LENGTH);
-	}
-
+	safestrncpy(msg.dest_name, (char*)RFIFOP(fd,4), NAME_LENGTH);
 	safestrncpy(msg.title, (char*)RFIFOP(fd,28), MAIL_TITLE_LENGTH);
 	
 	if (body_len)
