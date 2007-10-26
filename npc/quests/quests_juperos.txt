@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= MasterOfMuppets
 //===== Version ==============================================
-//= 1.3a
+//= 1.3b
 //===== Compatible With ======================================
 //= eAthena SVN
 //===== Description ==========================================
@@ -17,6 +17,7 @@
 //= 1.3 Removed semi-official core access NPCs, replaced with [L0ne_W0lf]
 //=	event-driven story progressive NPCs. Optimization needed.
 //= 1.3a Adjusted the elevafor timer. (132000 -> 142000) [L0ne_W0lf]
+//= 1.3b Minor updates to juperos elevator NPCs. [L0ne_W0lf]
 //============================================================
 
 yuno_in04,190,125,4	script	Scholar	700,{
@@ -4431,7 +4432,7 @@ jupe_ele_r,51,98,0	script	Switch#ufe	844,{
 							enablenpc "Switch On#ufe";
 							initnpctimer;
 							specialeffect2 563; // 563
-							//sound "earth_quake.wav" 2 0 0
+							soundeffectall "earth_quake.wav",0;
 							close2;
 							cutin "5-1",255;
 							end;
@@ -4600,7 +4601,7 @@ OnEnable:
 
 OnTimer5000:
 	mapannounce "jupe_ele_r","Those of you who have defeated the hallucination, step forward.",bc_map,"0x66FF00";
-	//sound "earth_quake.wav" 2 0 0
+	soundeffectall "earth_quake.wav",0;
 	end;
 
 OnTimer8000:
@@ -4624,7 +4625,7 @@ OnEnable:
 	end;
 
 OnTouch:
-	percentheal 99,100;
+	percentheal -99,-100;
 	end;
 
 OnTimer1000:
@@ -5048,7 +5049,7 @@ OnTimer12000:
 
 OnTimer22000:
 	mapannounce "jupe_ele","It's not real anyway. All of it's safe, it can't hurt you...",bc_map,"0x66FF00";
-	//sound "earth_quake.wav" 2 0 0
+	soundeffectall "earth_quake.wav",0;
 	disablenpc "4F Enter#ufe";
 	end;
 
