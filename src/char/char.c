@@ -1967,7 +1967,7 @@ int parse_fromlogin(int fd)
 
 	// only login-server can have an access to here.
 	// so, if it isn't the login-server, we disconnect the session.
-	if (fd != login_fd)
+	if( fd != login_fd )
 		set_eof(fd);
 	if(session[fd]->eof) {
 		if (fd == login_fd) {
@@ -1980,20 +1980,24 @@ int parse_fromlogin(int fd)
 
 	sd = (struct char_session_data*)session[fd]->session_data;
 
-	while(RFIFOREST(fd) >= 2) {
-//		printf("parse_fromlogin: connection #%d, packet: 0x%x (with being read: %d bytes).\n", fd, RFIFOW(fd,0), RFIFOREST(fd));
+	while(RFIFOREST(fd) >= 2)
+	{
+		uint16 command = RFIFOW(fd,0);
 
-		switch(RFIFOW(fd,0)) {
+		switch( command )
+		{
+
+		// acknowledgement of connect-to-loginserver request
 		case 0x2711:
 			if (RFIFOREST(fd) < 3)
 				return 0;
+
 			if (RFIFOB(fd,2)) {
 				//printf("connect login server error : %d\n", RFIFOB(fd,2));
-				ShowError("Can not connect to the login-server.\n");
+				ShowError("Can not connect to login-server.\n");
 				ShowError("The server communication passwords (default s1/p1) are probably invalid.\n");
 				ShowInfo("Also, please make sure your accounts file (default: accounts.txt) has those values present.\n");
 				ShowInfo("The communication passwords can be changed in map_athena.conf and char_athena.conf\n");
-				//exit(EXIT_FAILURE); //fixed for server shutdown.
 			} else {
 				ShowStatus("Connected to login-server (connection #%d).\n", fd);
 				
@@ -2001,33 +2005,29 @@ int parse_fromlogin(int fd)
 				send_accounts_tologin(-1, gettick(), 0, 0);
 
 				// if no map-server already connected, display a message...
-				for(i = 0; i < MAX_MAP_SERVERS; i++)
-					if (server_fd[i] > 0 && server[i].map[0]) // if map-server online and at least 1 map
-						break;
-				if (i == MAX_MAP_SERVERS)
+				ARR_FIND( 0, MAX_MAP_SERVERS, i, server_fd[i] > 0 && server[i].map[0] );
+				if( i == MAX_MAP_SERVERS )
 					ShowStatus("Awaiting maps from map-server.\n");
 			}
 			RFIFOSKIP(fd,3);
 		break;
 
+		// acknowledgement of account authentication request
 		case 0x2713:
 			if (RFIFOREST(fd) < 51)
 				return 0;
 
-			for(i = 0; i < fd_max && !(
-				session[i] &&
-				(sd = (struct char_session_data*)session[i]->session_data) &&
-				sd->account_id == RFIFOL(fd,2))
-				; i++);
-
-			if (i < fd_max) {
-				if (RFIFOB(fd,6) != 0) {
+			// find the session with this account id
+			ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == RFIFOL(fd,2) );
+			if( i < fd_max )
+			{
+				if( RFIFOB(fd,6) != 0 ) { // failure
 					WFIFOHEAD(i,3);
 					WFIFOW(i,0) = 0x6c;
 					WFIFOB(i,2) = 0x42;
 					WFIFOSET(i,3);
-				} else {
-					memcpy(sd->email, RFIFOP(fd, 7), 40);
+				} else { // success
+					memcpy(sd->email, RFIFOP(fd,7), 40);
 					if (e_mail_check(sd->email) == 0)
 						strncpy(sd->email, "a@a.com", 40); // default e-mail
 					sd->connect_until_time = (time_t)RFIFOL(fd,47);
@@ -3905,15 +3905,14 @@ int send_users_tologin(int tid, unsigned int tick, int id, int data)
 	return 0;
 }
 
+/// load this char's account id into the 'online accounts' packet
 static int send_accounts_tologin_sub(DBKey key, void* data, va_list ap)
 {
 	struct online_char_data* character = (struct online_char_data*)data;
-	int *i = va_arg(ap, int*);
-	int count = va_arg(ap, int);
-	if ((*i) >= count)
-		return 0; //This is an error that shouldn't happen....
-	if(character->server > -1) {
-		WFIFOHEAD(login_fd,8+count*4);
+	int* i = va_arg(ap, int*);
+
+	if(character->server > -1)
+	{
 		WFIFOL(login_fd,8+(*i)*4) = character->account_id;
 		(*i)++;
 		return 1;
@@ -3923,15 +3922,17 @@ static int send_accounts_tologin_sub(DBKey key, void* data, va_list ap)
 
 int send_accounts_tologin(int tid, unsigned int tick, int id, int data)
 {
-	int users = count_users(), i=0;
-
-	if (login_fd > 0 && session[login_fd]) {
+	if (login_fd > 0 && session[login_fd])
+	{
 		// send account list to login server
+		int users = online_char_db->size(online_char_db);
+		int i = 0;
+
 		WFIFOHEAD(login_fd,8+users*4);
 		WFIFOW(login_fd,0) = 0x272d;
-		WFIFOL(login_fd,4) = users;
-		online_char_db->foreach(online_char_db, send_accounts_tologin_sub, &i);
+		online_char_db->foreach(online_char_db, send_accounts_tologin_sub, &i, users);
 		WFIFOW(login_fd,2) = 8+ i*4;
+		WFIFOL(login_fd,4) = i;
 		WFIFOSET(login_fd,WFIFOW(login_fd,2));
 	}
 	return 0;

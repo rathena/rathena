@@ -7328,16 +7328,19 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		{
 			int count=0;
 			const int x = bl->x, y = bl->y;
-			//Take into account these hit more times than the timer interval
-			//can handle.
+			const bool noknockback = ( tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele) );
+
+			//Take into account these hit more times than the timer interval can handle.
 			do
-				skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*sg->interval,0);
+				skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*sg->interval,noknockback);
 			while(--src->val2 && x == bl->x && y == bl->y &&
 				++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(bl));
+
 			if (src->val2<=0)
 				skill_delunit(src);
-			break;
 		}
+		break;
+
 		case UNT_SANCTUARY:
 			if (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race==RC_DEMON)
 			{	//Only damage enemies with offensive Sanctuary. [Skotlex]
@@ -7392,24 +7395,25 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				case SG_SUN_WARM: //SG skills [Komurka]
 				case SG_MOON_WARM:
 				case SG_STAR_WARM:
+				{
+					int count = 0;
+					const int x = bl->x, y = bl->y;
+
+					//If target isn't knocked back it should hit every 20ms [Playtester]
+					do
 					{
-						int count=0;
-						const int x = bl->x, y = bl->y;
-						//If target isn't knocked back it should hit every 20ms [Playtester]
-						do
-						{
-							if( bl->type == BL_PC )
-								status_zap(bl, 0, 15); //Only damage SP [Skotlex]
-							else // mobs
-							if( status_charge(ss, 0, 2) ) // costs 2 SP per hit
-								skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*sg->interval,0);
-							else { //should end when out of sp.
-								sg->limit = DIFF_TICK(tick,sg->tick);
-								break;
-							}
-						} while( x == bl->x && y == bl->y &&
-							++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(bl) );
-					}
+						if( bl->type == BL_PC )
+							status_zap(bl, 0, 15); // sp damage to players
+						else // mobs
+						if( status_charge(ss, 0, 2) ) // costs 2 SP per hit
+							skill_attack(BF_WEAPON,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*sg->interval,0);
+						else { //should end when out of sp.
+							sg->limit = DIFF_TICK(tick,sg->tick);
+							break;
+						}
+					} while( x == bl->x && y == bl->y &&
+						++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(bl) );
+				}
 				break;
 				case WZ_STORMGUST:
 					if (tsc && tsc->data[SC_FREEZE].val4 != sg->group_id)
@@ -8177,13 +8181,10 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 	sp_rate = skill_db[j].sp_rate[lv-1];
 	zeny = skill_db[j].zeny[lv-1];
 
-	if (!type) { //These should only be checked on begin casting.
-		weapon = skill_db[j].weapon;
-		ammo = skill_db[j].ammo;
-		ammo_qty = skill_db[j].ammo_qty[lv-1];
-		state = skill_db[j].state;
-	} else
-		weapon = ammo = ammo_qty = state = 0;
+	weapon = skill_db[j].weapon;
+	ammo = skill_db[j].ammo;
+	ammo_qty = skill_db[j].ammo_qty[lv-1];
+	state = skill_db[j].state;
 
 	spiritball = skill_db[j].spiritball[lv-1];
 	mhp = skill_db[j].mhp[lv-1];
@@ -10783,31 +10784,8 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 				if(battle_config.pp_rate != 100)
 					make_per = make_per * battle_config.pp_rate / 100;
 				break;
-			case SA_CREATECON: // Elemental Converter Creation - skill bonuses are from kRO [DracoRPG]
-				make_per = pc_checkskill(sd, SA_ADVANCEDBOOK)*100 + //TODO: Advanced Book bonus is custom! [Skotlex]
-					sd->status.job_level*20 + status->int_*10 + status->dex*10;
-				switch(nameid){
-					case 12114:
-						flag = pc_checkskill(sd,SA_FLAMELAUNCHER);
-						if (flag > 0)
-							make_per += 1000*flag-500;
-						break;
-					case 12115:
-						flag = pc_checkskill(sd,SA_FROSTWEAPON);
-						if (flag > 0)
-							make_per += 1000*flag-500;
-						break;
-					case 12116:
-						flag = pc_checkskill(sd,SA_SEISMICWEAPON);
-						if (flag > 0)
-							make_per += 1000*flag-500;
-						break;
-					case 12117:
-						flag = pc_checkskill(sd,SA_LIGHTNINGLOADER);
-						if (flag > 0)
-							make_per += 1000*flag-500;
-						break;
-				}
+			case SA_CREATECON: // Elemental Converter Creation
+				make_per = 100000; // should be 100% success rate
 				break;
 			default:
 				if (sd->menuskill_id ==	AM_PHARMACY &&

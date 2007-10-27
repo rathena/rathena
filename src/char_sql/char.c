@@ -189,15 +189,15 @@ struct online_char_data {
 	int char_id;
 	int fd;
 	int waiting_disconnect;
-	short server;
+	short server; // -2: unknown server, -1: not connected, 0+: id of server
 };
 
-struct dbt *online_char_db; //Holds all online characters.
+struct dbt* online_char_db; //Holds all online characters.
 
-static void * create_online_char_data(DBKey key, va_list args)
+static void* create_online_char_data(DBKey key, va_list args)
 {
 	struct online_char_data* character;
-	character = aCalloc(1, sizeof(struct online_char_data));
+	CREATE(character, struct online_char_data, 1);
 	character->account_id = key.i;
 	character->char_id = -1;
   	character->server = -1;
@@ -1509,9 +1509,10 @@ int parse_fromlogin(int fd)
 {
 	int i;
 	struct char_session_data *sd;
+
 	// only login-server can have an access to here.
 	// so, if it isn't the login-server, we disconnect the session.
-	if(fd != login_fd)
+	if( fd != login_fd )
 		set_eof(fd);
 	if(session[fd]->eof) {
 		if (fd == login_fd) {
@@ -1571,7 +1572,7 @@ int parse_fromlogin(int fd)
 					WFIFOB(i,2) = 0x42;
 					WFIFOSET(i,3);
 				} else { // success
-					memcpy(sd->email, RFIFOP(fd, 7), 40);
+					memcpy(sd->email, RFIFOP(fd,7), 40);
 					sd->connect_until_time = (time_t)RFIFOL(fd,47);
 					char_auth_ok(i, sd);
 				}
@@ -3237,15 +3238,14 @@ int send_users_tologin(int tid, unsigned int tick, int id, int data)
 	return 0;
 }
 
+/// load this char's account id into the 'online accounts' packet
 static int send_accounts_tologin_sub(DBKey key, void* data, va_list ap)
 {
 	struct online_char_data* character = (struct online_char_data*)data;
-	int *i = va_arg(ap, int*);
-	int count = va_arg(ap, int);
-	if ((*i) >= count)
-		return 0; //This is an error that shouldn't happen....
-	if(character->server > -1) {
-		WFIFOHEAD(login_fd,8+count*4);
+	int* i = va_arg(ap, int*);
+
+	if(character->server > -1)
+	{
 		WFIFOL(login_fd,8+(*i)*4) = character->account_id;
 		(*i)++;
 		return 1;
@@ -3255,15 +3255,17 @@ static int send_accounts_tologin_sub(DBKey key, void* data, va_list ap)
 
 int send_accounts_tologin(int tid, unsigned int tick, int id, int data)
 {
-	int users = count_users(), i=0;
-
-	if (login_fd > 0 && session[login_fd]) {
+	if (login_fd > 0 && session[login_fd])
+	{
 		// send account list to login server
+		int users = online_char_db->size(online_char_db);
+		int i = 0;
+
 		WFIFOHEAD(login_fd,8+users*4);
 		WFIFOW(login_fd,0) = 0x272d;
-		WFIFOL(login_fd,4) = users;
 		online_char_db->foreach(online_char_db, send_accounts_tologin_sub, &i, users);
 		WFIFOW(login_fd,2) = 8+ i*4;
+		WFIFOL(login_fd,4) = i;
 		WFIFOSET(login_fd,WFIFOW(login_fd,2));
 	}
 	return 0;

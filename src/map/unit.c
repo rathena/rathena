@@ -911,7 +911,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 			break;
 		}
 		if (!skill_check_condition(sd, skill_num, skill_lv, 0))
-			return 0;	
+			return 0;
 	}
 	//TODO: Add type-independant skill_check_condition function.
 	if (src->type == BL_MOB) {

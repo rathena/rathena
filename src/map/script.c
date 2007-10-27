@@ -4052,10 +4052,7 @@ BUILDIN_FUNC(undisguise);
 BUILDIN_FUNC(getmonsterinfo); // [Lupus]
 BUILDIN_FUNC(checkvending); // check vending [Nab4]
 BUILDIN_FUNC(checkchatting); // check chatting [Marka]
-
-#ifndef TXT_ONLY
 BUILDIN_FUNC(openmail); // [Mail System]
-#endif
 
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern); // MouseJstr
@@ -4395,9 +4392,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(roclass,"i*"),	//[Skotlex]
 	BUILDIN_DEF(checkvending,"*"),
 	BUILDIN_DEF(checkchatting,"*"),
-#ifndef TXT_ONLY
 	BUILDIN_DEF(openmail,""),
-#endif
 	{NULL,NULL,NULL},
 };
 
@@ -13455,10 +13450,10 @@ BUILDIN_FUNC(warpportal)
 	return 0;
 }
 
-#ifndef TXT_ONLY
 BUILDIN_FUNC(openmail)
 {
+#ifndef TXT_ONLY
 	mail_openmail(script_rid2sd(st));
+#endif
 	return 0;
 }
-#endif
