@@ -31,6 +31,7 @@ int mail_removeitem(struct map_session_data *sd, short flag)
 			clif_additem(sd, sd->mail.index, sd->mail.amount, 0);
 	}
 
+	sd->mail.nameid = 0;
 	sd->mail.index = 0;
 	sd->mail.amount = 0;
 	return 1;
@@ -49,10 +50,8 @@ int mail_removezeny(struct map_session_data *sd, short flag)
 	return 1;
 }
 
-char mail_setitem(struct map_session_data *sd, int idx, int amount)
+unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 {
-	nullpo_retr(-1,sd);
-
 	if (idx == 0)
 	{ // Zeny Transfer
 		if (amount < 0)
@@ -69,15 +68,15 @@ char mail_setitem(struct map_session_data *sd, int idx, int amount)
 		mail_removeitem(sd, 0);
 
 		if( idx < 0 || idx > MAX_INVENTORY )
-			return 2;
+			return 1;
 		if( amount < 0 || amount > sd->status.inventory[idx].amount )
-			return 2;
-		if( itemdb_isdropable(&sd->status.inventory[idx], pc_isGM(sd)) == 0 )
-			return 2;
+			return 1;
+		if( !itemdb_isdropable(&sd->status.inventory[idx], pc_isGM(sd)) )
+			return 1;
 
 		sd->mail.index = idx;
+		sd->mail.nameid = sd->status.inventory[idx].nameid;
 		sd->mail.amount = amount;
-
 		clif_delitem(sd, idx, amount);
 
 		return 0;
@@ -86,7 +85,7 @@ char mail_setitem(struct map_session_data *sd, int idx, int amount)
 	return -1;
 }
 
-int mail_getattach(struct map_session_data *sd, struct mail_message *msg)
+bool mail_getattach(struct map_session_data *sd, struct mail_message *msg)
 {
 	int n;
 	
@@ -94,13 +93,16 @@ int mail_getattach(struct map_session_data *sd, struct mail_message *msg)
 	nullpo_retr(0,msg);
 
 	if( sd->mail.zeny < 0 || sd->mail.zeny > sd->status.zeny )
-		return 0;
+		return false;
 
 	n = sd->mail.index;
 	if( sd->mail.amount )
 	{
+		if( sd->status.inventory[n].nameid != sd->mail.nameid )
+			return false;
+
 		if( sd->status.inventory[n].amount < sd->mail.amount )
-			return 0;
+			return false;
 
 		memcpy(&msg->item, &sd->status.inventory[n], sizeof(struct item));
 		msg->item.amount = sd->mail.amount;
@@ -108,7 +110,29 @@ int mail_getattach(struct map_session_data *sd, struct mail_message *msg)
 
 	msg->zeny = sd->mail.zeny;
 
-	return 1;
+	return true;
+}
+
+bool mail_checkattach(struct map_session_data *sd)
+{
+	nullpo_retr(false,sd);
+
+	if( sd->mail.zeny > 0 && sd->status.zeny < sd->status.zeny )
+		return false;
+
+	if( sd->mail.amount > 0 )
+	{
+		if( sd->status.inventory[sd->mail.index].nameid != sd->mail.nameid )
+			return false;
+
+		if( sd->status.inventory[sd->mail.index].amount < sd->mail.amount )
+			return false;
+	}
+
+	mail_removeitem(sd,1);
+	mail_removezeny(sd,1);
+
+	return true;
 }
 
 int mail_openmail(struct map_session_data *sd)

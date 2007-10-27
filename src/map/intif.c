@@ -34,7 +34,7 @@ static const int packet_len_table[]={
 	-1, 7, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 14,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
-	 9, 9,-1,14,  0, 0, 0, 0, -1, 0,-1,11, 14,-1,  0, 0, //0x3840
+	 9, 9,-1,14,  0, 0, 0, 0, -1,74,-1,11, 11,10,  0, 0, //0x3840
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
@@ -1538,7 +1538,7 @@ int intif_Mail_getattach(int char_id, int mail_id)
 int intif_parse_Mail_getattach(int fd)
 {
 	struct map_session_data *sd;
-	struct item *item;
+	struct item item;
 	int zeny = RFIFOL(fd,8);
 
 	sd = map_charid2sd( RFIFOL(fd,4) );
@@ -1566,12 +1566,9 @@ int intif_parse_Mail_getattach(int fd)
 		clif_updatestatus(sd, SP_ZENY);
 	}
 
-	item = (struct item*)aCalloc(sizeof(struct item), 1);
-	memcpy(item, RFIFOP(fd,12), sizeof(struct item));
-	if (item->nameid > 0 && item->amount > 0)
-		pc_additem(sd, item, item->amount);
-
-	aFree(item);
+	memcpy(&item, RFIFOP(fd,12), sizeof(struct item));
+	if (item.nameid > 0 && item.amount > 0)
+		pc_additem(sd, &item, item.amount);
 
 	return 0;
 }
@@ -1609,7 +1606,21 @@ int intif_parse_Mail_delete(int fd)
 	if (sd->state.finalsave)
 		return 1;
 
-	clif_Mail_delete(sd, mail_id, failed);
+	if (!failed)
+	{
+		int i;
+		ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
+		if( i < MAIL_MAX_INBOX )
+		{
+			memset(&sd->mail.inbox.msg[i], 0, sizeof(struct mail_message));
+			sd->mail.inbox.amount--;
+		}
+
+		if( sd->mail.inbox.full )
+			intif_Mail_requestinbox(sd->status.char_id, 1); // Free space is available for new mails
+	}
+
+	clif_Mail_delete(sd->fd, mail_id, failed);
 	return 0;
 }
 /*------------------------------------------
@@ -1632,19 +1643,31 @@ int intif_Mail_return(int char_id, int mail_id)
 int intif_parse_Mail_return(int fd)
 {
 	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
-	int mail_id = RFIFOL(fd,6), new_mail = RFIFOL(fd,10);
+	int mail_id = RFIFOL(fd,6);
+	short fail = RFIFOB(fd,10);
 
-	if (sd == NULL)
+	if( sd == NULL )
 	{
 		if (battle_config.error_log)
 			ShowError("intif_parse_Mail_return: char not found %d\n",RFIFOL(fd,2));
 		return 1;
 	}
 
-	if (sd->state.finalsave)
+	if( sd->state.finalsave )
 		return 1;
 
-	clif_Mail_return(sd, mail_id, new_mail);
+	if( !fail )
+	{
+		int i;
+		ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
+		if (i < MAIL_MAX_INBOX)
+		{
+			memset(&sd->mail.inbox.msg[i], 0, sizeof(struct mail_message));
+			sd->mail.inbox.amount--;
+		}
+	}
+
+	clif_Mail_return(sd->fd, mail_id, fail);
 	return 0;
 }
 /*------------------------------------------
@@ -1669,44 +1692,49 @@ int intif_Mail_send(int account_id, struct mail_message *msg)
 
 int intif_parse_Mail_send(int fd)
 {
-	struct map_session_data* sd = map_charid2sd(RFIFOL(fd,4));
-	int mail_id = RFIFOL(fd,8);
-	int dest_id = RFIFOL(fd,12);
-	struct map_session_data* rd;
+	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
+	int mail_id = RFIFOL(fd,6);
+	bool fail = false;
 
-	if( mail_id == 0 )
-	{// nick->charid lookup failed, no such char
-		// Return the items to the owner
-		mail_removeitem(sd, 0);
-		mail_removezeny(sd, 0);
-		clif_Mail_send(sd->fd, 1); // failed
-		return 0;
-	}
-
-	if( sd == NULL )
-	{// original sender disconnected, item cannot be deleted!
-		if( battle_config.error_log )
-			ShowError("intif_parse_Mail_send: char not found %d\n",RFIFOL(fd,2));
-
-		// the best thing we can do at this point is requesting removal of the mail with the duped item
-		intif_Mail_delete(dest_id, mail_id);
-		return 0;
-	}
-
-	// physically delete the item
-	mail_removeitem(sd, 1);
-	mail_removezeny(sd, 1);
-	clif_Mail_send(sd->fd, 0); // success
-
-	// notify recipient about new mail
-	rd = map_charid2sd(dest_id);
-	if( rd != NULL )
+	if( mail_id > 0 )
 	{
-		char title[MAIL_TITLE_LENGTH];
-		memcpy(title, RFIFOP(fd,16), RFIFOW(fd,2) - 16);
+		if( sd == NULL )
+			fail = true;
 
-		rd->mail.inbox.changed = 1;
-		clif_Mail_new(rd->fd, mail_id, sd->status.name, title);
+		if( !mail_checkattach(sd) )
+		{
+			fail = true;
+
+			mail_removeitem(sd, 0);
+			mail_removezeny(sd, 0);
+		}
+
+		WFIFOHEAD(inter_fd,7);
+		WFIFOW(inter_fd,0) = 0x304e;
+		WFIFOL(inter_fd,2) = mail_id;
+		WFIFOB(inter_fd,6) = fail;
+		WFIFOSET(inter_fd,7);
+
+		clif_Mail_send(sd->fd, fail);
+	}
+	else
+		clif_Mail_send(sd->fd, true);
+	
+	return 0;
+}
+
+int intif_parse_Mail_new(int fd)
+{
+	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
+	if( sd != NULL )
+	{
+		char sender_name[NAME_LENGTH], title[MAIL_TITLE_LENGTH];
+		int mail_id = RFIFOL(fd,6);
+
+		safestrncpy(sender_name, RFIFOP(fd,10), NAME_LENGTH);
+		safestrncpy(title, RFIFOP(fd,34), MAIL_TITLE_LENGTH);
+
+		clif_Mail_new(sd, mail_id, sender_name, title);
 	}
 
 	return 0;
@@ -1787,6 +1815,7 @@ int intif_parse(int fd)
 // Mail System
 #ifndef TXT_ONLY
 	case 0x3848:	intif_parse_Mail_inboxreceived(fd); break;
+	case 0x3849:	intif_parse_Mail_new(fd); break;
 	case 0x384a:	intif_parse_Mail_getattach(fd); break;
 	case 0x384b:	intif_parse_Mail_delete(fd); break;
 	case 0x384c:	intif_parse_Mail_return(fd); break;

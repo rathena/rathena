@@ -803,6 +803,7 @@ struct map_session_data {
 
 	// Mail System [Zephyrus]
 	struct {
+		short nameid;
 		int index, amount, zeny;
 		struct mail_data inbox;
 	} mail;

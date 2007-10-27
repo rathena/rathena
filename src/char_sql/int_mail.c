@@ -34,11 +34,12 @@ static int mail_fromsql(int char_id, struct mail_data* md)
 	md->full = false;
 
 	StringBuf_Init(&buf);
-	StringBuf_AppendStr(&buf, "SELECT `id`,`send_name`,`send_id`,`dest_name`,`dest_id`,`title`,`message`,`time`,`read_flag`,"
+	StringBuf_AppendStr(&buf, "SELECT `id`,`send_name`,`send_id`,`dest_name`,`dest_id`,`title`,`message`,`time`,`status`,"
 		"`zeny`,`amount`,`nameid`,`refine`,`attribute`,`identify`");
 	for (i = 0; i < MAX_SLOTS; i++)
 		StringBuf_Printf(&buf, ",`card%d`", i);
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `dest_id`='%d' ORDER BY `id` LIMIT %d", mail_db, char_id, MAIL_MAX_INBOX + 1);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `dest_id`='%d' AND `status` > -1 AND `status` < 3 "
+		"ORDER BY `id` LIMIT %d", mail_db, char_id, MAIL_MAX_INBOX + 1);
 
 	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf)) )
 		Sql_ShowDebug(sql_handle);
@@ -56,7 +57,7 @@ static int mail_fromsql(int char_id, struct mail_data* md)
 		Sql_GetData(sql_handle, 5, &data, NULL); safestrncpy(msg->title, data, MAIL_TITLE_LENGTH);
 		Sql_GetData(sql_handle, 6, &data, NULL); safestrncpy(msg->body, data, MAIL_BODY_LENGTH);
 		Sql_GetData(sql_handle, 7, &data, NULL); msg->timestamp = atoi(data);
-		Sql_GetData(sql_handle, 8, &data, NULL); msg->read = atoi(data);
+		Sql_GetData(sql_handle, 8, &data, NULL); msg->status = atoi(data);
 		Sql_GetData(sql_handle, 9, &data, NULL); msg->zeny = atoi(data);
 		item = &msg->item;
 		Sql_GetData(sql_handle,10, &data, NULL); item->amount = (short)atoi(data);
@@ -83,17 +84,16 @@ static int mail_fromsql(int char_id, struct mail_data* md)
 	for (i = 0; i < md->amount; i++)
 	{
 		msg = &md->msg[i];
-		if( msg->read == 0 )
+		if( msg->status == MAIL_NEW )
 		{
-			if ( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `read_flag` = '1' WHERE `id` = '%d'", mail_db, msg->id) )
+			if ( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", mail_db, MAIL_UNREAD, msg->id) )
 				Sql_ShowDebug(sql_handle);
 
+			msg->status = MAIL_UNREAD;
 			md->unchecked++;
 		}
-		else if ( msg->read == 1 )
+		else if ( msg->status == MAIL_UNREAD )
 			md->unread++;
-
-		msg->read = (msg->read < 2)?0:1;
 	}
 
 	ShowInfo("mail load complete from DB - id: %d (total: %d)\n", char_id, md->amount);
@@ -110,11 +110,11 @@ static int mail_savemessage(struct mail_message* msg)
 
 	// build message save query
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "INSERT INTO `%s` (`send_name`, `send_id`, `dest_name`, `dest_id`, `title`, `message`, `time`, `read_flag`, `zeny`, `amount`, `nameid`, `refine`, `attribute`, `identify`", mail_db);
+	StringBuf_Printf(&buf, "INSERT INTO `%s` (`send_name`, `send_id`, `dest_name`, `dest_id`, `title`, `message`, `time`, `status`, `zeny`, `amount`, `nameid`, `refine`, `attribute`, `identify`", mail_db);
 	for (j = 0; j < MAX_SLOTS; j++)
 		StringBuf_Printf(&buf, ", `card%d`", j);
-	StringBuf_Printf(&buf, ") VALUES (?, '%d', ?, '%d', ?, ?, '%d', '0', '%d', '%d', '%d', '%d', '%d', '%d'",
-		msg->send_id, msg->dest_id, msg->timestamp, msg->zeny, msg->item.amount, msg->item.nameid, msg->item.refine, msg->item.attribute, msg->item.identify);
+	StringBuf_Printf(&buf, ") VALUES (?, '%d', ?, '%d', ?, ?, '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d'",
+		msg->send_id, msg->dest_id, msg->timestamp, msg->status, msg->zeny, msg->item.amount, msg->item.nameid, msg->item.refine, msg->item.attribute, msg->item.identify);
 	for (j = 0; j < MAX_SLOTS; j++)
 		StringBuf_Printf(&buf, ", '%d'", msg->item.card[j]);
 	StringBuf_AppendStr(&buf, ")");
@@ -141,17 +141,17 @@ static int mail_savemessage(struct mail_message* msg)
 
 /// Retrieves a single message from the database.
 /// Returns true if the operation succeeds (or false if it fails).
-static bool mail_loadmessage(int char_id, int mail_id, struct mail_message* msg)
+static bool mail_loadmessage(int mail_id, struct mail_message* msg)
 {
 	int j;
 	StringBuf buf;
 
 	StringBuf_Init(&buf);
-	StringBuf_AppendStr(&buf, "SELECT `id`,`send_name`,`send_id`,`dest_name`,`dest_id`,`title`,`message`,`time`,`read_flag`,"
+	StringBuf_AppendStr(&buf, "SELECT `id`,`send_name`,`send_id`,`dest_name`,`dest_id`,`title`,`message`,`time`,`status`,"
 		"`zeny`,`amount`,`nameid`,`refine`,`attribute`,`identify`");
 	for( j = 0; j < MAX_SLOTS; j++ )
 		StringBuf_Printf(&buf, ",`card%d`", j);
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `dest_id` = '%d' AND `id` = '%d'", mail_db, char_id, mail_id);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `id` = '%d'", mail_db, mail_id);
 
 	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf))
 	||  SQL_SUCCESS != Sql_NextRow(sql_handle) )
@@ -173,7 +173,7 @@ static bool mail_loadmessage(int char_id, int mail_id, struct mail_message* msg)
 		Sql_GetData(sql_handle, 5, &data, NULL); safestrncpy(msg->title, data, MAIL_TITLE_LENGTH);
 		Sql_GetData(sql_handle, 6, &data, NULL); safestrncpy(msg->body, data, MAIL_BODY_LENGTH);
 		Sql_GetData(sql_handle, 7, &data, NULL); msg->timestamp = atoi(data);
-		Sql_GetData(sql_handle, 8, &data, NULL); msg->read = atoi(data);
+		Sql_GetData(sql_handle, 8, &data, NULL); msg->status = atoi(data);
 		Sql_GetData(sql_handle, 9, &data, NULL); msg->zeny = atoi(data);
 		Sql_GetData(sql_handle,10, &data, NULL); msg->item.amount = (short)atoi(data);
 		Sql_GetData(sql_handle,11, &data, NULL); msg->item.nameid = atoi(data);
@@ -189,15 +189,6 @@ static bool mail_loadmessage(int char_id, int mail_id, struct mail_message* msg)
 
 	StringBuf_Destroy(&buf);
 	Sql_FreeResult(sql_handle);
-
-	// this thing converts the database value (0,1,2) into a boolean yes/no
-	//TODO: provide decent enum instead of using 'magic' values
-	if (msg->read == 1)
-	{
-		msg->read = 0;
-	}
-	else
-		msg->read = 1;
 
 	return true;
 }
@@ -231,7 +222,7 @@ static void mapif_parse_Mail_requestinbox(int fd)
 static void mapif_parse_Mail_read(int fd)
 {
 	int mail_id = RFIFOL(fd,2);
-	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `read_flag` = '2' WHERE `id` = '%d'", mail_db, mail_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `read_flag` = '%d' WHERE `id` = '%d'", mail_db, MAIL_READED, mail_id) )
 		Sql_ShowDebug(sql_handle);
 }
 
@@ -265,7 +256,13 @@ static void mapif_Mail_getattach(int fd, int char_id, int mail_id)
 {
 	struct mail_message msg;
 
-	if( !mail_loadmessage(char_id, mail_id, &msg) )
+	if( !mail_loadmessage(mail_id, &msg) )
+		return;
+
+	if( msg.dest_id != char_id )
+		return;
+
+	if( msg.status != MAIL_READED )
 		return;
 
 	if( (msg.item.nameid < 1 || msg.item.amount < 1) && msg.zeny < 1 )
@@ -294,7 +291,7 @@ static void mapif_parse_Mail_getattach(int fd)
 static void mapif_Mail_delete(int fd, int char_id, int mail_id)
 {
 	bool failed = false;
-	if ( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", mail_db, mail_id) )
+	if ( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", mail_db, MAIL_DELETED, mail_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		failed = true;
@@ -314,6 +311,26 @@ static void mapif_parse_Mail_delete(int fd)
 }
 
 /*==========================================
+ * Report New Mail to Map Server
+ *------------------------------------------*/
+static void mapif_Mail_new(int mail_id)
+{
+	struct mail_message msg;
+
+	if( mail_loadmessage(mail_id, &msg) )
+	{
+		unsigned char buf[74];
+
+		WBUFW(buf,0) = 0x3849;
+		WBUFL(buf,2) = msg.dest_id;
+		WBUFL(buf,6) = mail_id;
+		memcpy(WBUFP(buf,10), msg.send_name, NAME_LENGTH);
+		memcpy(WBUFP(buf,34), msg.title, MAIL_TITLE_LENGTH);
+		mapif_sendall(buf, 74);
+	}
+}
+
+/*==========================================
  * Return Mail
  *------------------------------------------*/
 static void mapif_Mail_return(int fd, int char_id, int mail_id)
@@ -321,9 +338,11 @@ static void mapif_Mail_return(int fd, int char_id, int mail_id)
 	struct mail_message msg;
 	int new_mail = 0;
 
-	if( mail_loadmessage(char_id, mail_id, &msg) )
+	if( mail_loadmessage(mail_id, &msg) )
 	{
-		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", mail_db, mail_id) )
+		if( msg.dest_id != char_id)
+			return;
+		else if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", mail_db, MAIL_RETURNED, mail_id) )
 			Sql_ShowDebug(sql_handle);
 		else
 		{
@@ -339,18 +358,20 @@ static void mapif_Mail_return(int fd, int char_id, int mail_id)
 			snprintf(temp_, MAIL_TITLE_LENGTH, "RE:%s", msg.title);
 			safestrncpy(msg.title, temp_, MAIL_TITLE_LENGTH);
 
+			msg.status = MAIL_NEW;
 			msg.timestamp = (unsigned int)calc_times();
 
 			new_mail = mail_savemessage(&msg);
+			mapif_Mail_new(new_mail);
 		}
 	}
 
-	WFIFOHEAD(fd,14);
+	WFIFOHEAD(fd,11);
 	WFIFOW(fd,0) = 0x384c;
 	WFIFOL(fd,2) = char_id;
 	WFIFOL(fd,6) = mail_id;
-	WFIFOL(fd,10) = new_mail;
-	WFIFOSET(fd,14);
+	WFIFOB(fd,10) = (new_mail == 0);
+	WFIFOSET(fd,11);
 }
 
 static void mapif_parse_Mail_return(int fd)
@@ -358,18 +379,16 @@ static void mapif_parse_Mail_return(int fd)
 	mapif_Mail_return(fd, RFIFOL(fd,2), RFIFOL(fd,6));
 }
 
+/*==========================================
+ * Send Mail
+ *------------------------------------------*/
 static void mapif_Mail_send(int fd, struct mail_message* msg)
 {
-	int len = strlen(msg->title);
-
-	WFIFOHEAD(fd,len);
+	WFIFOHEAD(fd,10);
 	WFIFOW(fd,0) = 0x384d;
-	WFIFOW(fd,2) = len + 16;
-	WFIFOL(fd,4) = msg->send_id;
-	WFIFOL(fd,8) = msg->id;
-	WFIFOL(fd,12) = msg->dest_id;
-	safestrncpy((char*)WFIFOP(fd,16), msg->title, len);
-	WFIFOSET(fd,WFIFOW(fd,2));
+	WFIFOL(fd,2) = msg->send_id;
+	WFIFOL(fd,6) = msg->id;
+	WFIFOSET(fd,10);
 }
 
 static void mapif_parse_Mail_send(int fd)
@@ -381,9 +400,8 @@ static void mapif_parse_Mail_send(int fd)
 	if(RFIFOW(fd,2) != 8 + sizeof(struct mail_message))
 		return;
 
-	memcpy(&msg, RFIFOP(fd,8), sizeof(struct mail_message));
-
 	account_id = RFIFOL(fd,4);
+	memcpy(&msg, RFIFOP(fd,8), sizeof(struct mail_message));
 
 	// Try to find the Dest Char by Name
 	Sql_EscapeStringLen(sql_handle, esc_name, msg.dest_name, strnlen(msg.dest_name, NAME_LENGTH));
@@ -403,11 +421,33 @@ static void mapif_parse_Mail_send(int fd)
 	Sql_FreeResult(sql_handle);
 
 	if( msg.dest_id > 0 )
+	{
+		msg.status = MAIL_UNVERIFIED;
 		msg.id = mail_savemessage(&msg);
+	}
 	else
 		msg.id = 0;
 
 	mapif_Mail_send(fd, &msg);
+}
+
+static void mapif_parse_Mail_confirmation(int fd)
+{
+	int mail_id = RFIFOL(fd,2);
+	bool fail = RFIFOB(fd,6);
+
+	if( fail )
+	{
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", mail_db, MAIL_INVALID, mail_id) )
+			Sql_ShowDebug(sql_handle);
+	}
+	else
+	{
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", mail_db, MAIL_NEW, mail_id) )
+			Sql_ShowDebug(sql_handle);
+		else
+			mapif_Mail_new(mail_id);
+	}
 }
 
 /*==========================================
@@ -423,6 +463,7 @@ int inter_mail_parse_frommap(int fd)
 		case 0x304b: mapif_parse_Mail_delete(fd); break;
 		case 0x304c: mapif_parse_Mail_return(fd); break;
 		case 0x304d: mapif_parse_Mail_send(fd); break;
+		case 0x304e: mapif_parse_Mail_confirmation(fd); break;
 		default:
 			return 0;
 	}

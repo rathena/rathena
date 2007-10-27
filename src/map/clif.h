@@ -386,10 +386,10 @@ int do_init_clif(void);
 // MAIL SYSTEM
 void clif_Mail_openmail(int fd);
 void clif_Mail_read(struct map_session_data *sd, int mail_id);
-void clif_Mail_delete(struct map_session_data *sd, int mail_id, bool failed);
-void clif_Mail_return(struct map_session_data *sd, int mail_id, int new_mail);
-void clif_Mail_send(int fd, unsigned char flag);
-void clif_Mail_new(int fd, int mail_id, const char *sender, const char *title);
+void clif_Mail_delete(int fd, int mail_id, short fail);
+void clif_Mail_return(int fd, int mail_id, short fail);
+void clif_Mail_send(int fd, bool fail);
+void clif_Mail_new(struct map_session_data *sd, int mail_id, const char *sender, const char *title);
 void clif_Mail_refreshinbox(struct map_session_data *sd);
 #endif
 

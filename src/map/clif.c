@@ -11301,6 +11301,77 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
  *==========================================*/
 
 /*------------------------------------------
+ * Reply to an Attachment operation
+ * 0 : From inventory to Attachment OK
+ * 1 : Fail to set the attachment
+ * 2 : Weight Problems (when get the attachment)
+ *------------------------------------------*/
+void clif_Mail_attachment(int fd, unsigned char flag)
+{
+	WFIFOHEAD(fd,packet_len(0x245));
+	WFIFOW(fd,0) = 0x245;
+	WFIFOB(fd,2) = flag;
+	WFIFOSET(fd,packet_len(0x245));
+}
+
+/*------------------------------------------
+ * Send Mail ack
+ * 0 : Message Send Ok
+ * 1 : Destination char not found
+ *------------------------------------------*/
+void clif_Mail_send(int fd, bool fail)
+{
+	WFIFOHEAD(fd,packet_len(0x249));
+	WFIFOW(fd,0) = 0x249;
+	WFIFOB(fd,2) = fail;
+	WFIFOSET(fd,packet_len(0x249));
+}
+
+/*------------------------------------------
+ * Delete Mail ack
+ * 0 : Delete ok
+ * 1 : Delete failed
+ *------------------------------------------*/
+void clif_Mail_delete(int fd, int mail_id, short fail)
+{
+	WFIFOHEAD(fd, packet_len(0x257));
+	WFIFOW(fd,0) = 0x257;
+	WFIFOL(fd,2) = mail_id;
+	WFIFOW(fd,6) = fail;
+	WFIFOSET(fd, packet_len(0x257));
+}
+
+/*------------------------------------------
+ * Return Mail ack
+ * 0 : Mail returned to the sender
+ * 1 : The mail does not exist
+ *------------------------------------------*/
+void clif_Mail_return(int fd, int mail_id, short fail)
+{
+	WFIFOHEAD(fd,packet_len(0x274));
+	WFIFOW(fd,0) = 0x274;
+	WFIFOL(fd,2) = mail_id;
+	WFIFOW(fd,6) = fail;
+	WFIFOSET(fd,packet_len(0x274));
+}
+
+/*------------------------------------------
+ * You have New Mail
+ *------------------------------------------*/
+void clif_Mail_new(struct map_session_data *sd, int mail_id, const char *sender, const char *title)
+{
+	int fd = sd->fd;
+	sd->mail.inbox.changed = true;
+		
+	WFIFOHEAD(fd,packet_len(0x24a));
+	WFIFOW(fd,0) = 0x24a;
+	WFIFOL(fd,2) = mail_id;
+	memcpy(WFIFOP(fd,6), sender, NAME_LENGTH);
+	memcpy(WFIFOP(fd,30), title, MAIL_TITLE_LENGTH);
+	WFIFOSET(fd,packet_len(0x24a));
+}
+
+/*------------------------------------------
  * Opens Mail Window on Client
  *------------------------------------------*/
 void clif_Mail_openmail(int fd)
@@ -11331,25 +11402,26 @@ void clif_Mail_refreshinbox(struct map_session_data *sd)
 	{
 		msg = &md->msg[i];
 		if (msg->id < 1)
-			continue; // Deleted Message
+			continue;
 
 		WFIFOL(fd,8+73*j) = msg->id;
 		memcpy(WFIFOP(fd,12+73*j), msg->title, MAIL_TITLE_LENGTH);
-		WFIFOB(fd,52+73*j) = msg->read;
+		WFIFOB(fd,52+73*j) = (msg->status == MAIL_UNREAD);
 		memcpy(WFIFOP(fd,53+73*j), msg->send_name, NAME_LENGTH);
 		WFIFOL(fd,77+73*j) = msg->timestamp;
 		j++;
 	}
 	WFIFOSET(fd,len);
 }
+
 /*------------------------------------------
  * Client Request Inbox List
  *------------------------------------------*/
 void clif_parse_Mail_refreshinbox(int fd, struct map_session_data *sd)
 {
 	struct mail_data *md;
-
 	nullpo_retv(sd);
+
 	md = &sd->mail.inbox;
 
 	if( md->amount < MAIL_MAX_INBOX && (md->full || md->changed) )
@@ -11371,6 +11443,7 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
 	if( i == MAIL_MAX_INBOX )
 	{
+		clif_Mail_return(sd->fd, mail_id, 1); // Mail don't exists
 		ShowWarning("clif_parse_Mail_read: account %d trying to read a message not the inbox.\n", sd->status.account_id);
 		return;
 	}
@@ -11397,36 +11470,26 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 		WFIFOL(fd,72) = 0;
 		WFIFOL(fd,76) = msg->zeny;
 
-		if (item->nameid)
+		if( item->nameid && (data = itemdb_search(item->nameid)) != NULL )
 		{
 			WFIFOL(fd,80) = item->amount;
-			if ((data = itemdb_search(item->nameid)) != NULL)
-				WFIFOW(fd,84) = (data->view_id)?data->view_id:item->nameid;
-			else
-				ShowWarning("clif_parse_Mail_read: Invalid attachment on message %d.\n", msg->id);
-
+			WFIFOW(fd,84) = (data->view_id)?data->view_id:item->nameid;
 			WFIFOW(fd,86) = data->type;
-		}
-		else
-		{
-			WFIFOL(fd,80) = 0;
-			WFIFOW(fd,84) = 0;
-			WFIFOW(fd,86) = 0;
+			WFIFOB(fd,88) = item->identify;
+			WFIFOB(fd,89) = item->attribute;
+			WFIFOB(fd,90) = item->refine;
+			WFIFOW(fd,91) = item->card[0];
+			WFIFOW(fd,93) = item->card[1];
+			WFIFOW(fd,95) = item->card[2];
+			WFIFOW(fd,97) = item->card[3];
 		}
 
-		WFIFOB(fd,88) = item->identify;
-		WFIFOB(fd,89) = item->attribute;
-		WFIFOB(fd,90) = item->refine;
-		WFIFOW(fd,91) = item->card[0];
-		WFIFOW(fd,93) = item->card[1];
-		WFIFOW(fd,95) = item->card[2];
-		WFIFOW(fd,97) = item->card[3];
 		WFIFOB(fd,99) = (unsigned char)msg_len;
 		safestrncpy((char*)WFIFOP(fd,100), msg->body, msg_len);
 		WFIFOSET(fd,len);
 
-		if (!msg->read) {
-			msg->read = 1;
+		if (msg->status == MAIL_UNREAD) {
+			msg->status = MAIL_READED;
 			intif_Mail_read(mail_id);
 			clif_parse_Mail_refreshinbox(fd, sd);
 		}
@@ -11465,10 +11528,7 @@ void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 		weight = data->weight * sd->mail.inbox.msg[i].item.amount;
 		if (weight > sd->max_weight - sd->weight)
 		{
-			WFIFOHEAD(fd,packet_len(0x245));
-			WFIFOW(fd,0) = 0x245;
-			WFIFOB(fd,2) = 2;
-			WFIFOSET(fd,packet_len(0x245));
+			clif_Mail_attachment(fd, 2);
 			return;
 		}
 	}
@@ -11477,39 +11537,12 @@ void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 	memset(&sd->mail.inbox.msg[i].item, 0, sizeof(struct item));
 	clif_Mail_read(sd, mail_id);
 
-	// Send the request for Char Server to delete the attachment
-	// If it is done, the client will receive it.
 	intif_Mail_getattach(sd->status.char_id, mail_id);
 }
 
 /*------------------------------------------
  * Delete Message
  *------------------------------------------*/
-void clif_Mail_delete(struct map_session_data *sd, int mail_id, bool failed)
-{
-	int fd = sd->fd;
-
-	if( !failed )
-	{
-		int i;
-		ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
-		if( i < MAIL_MAX_INBOX )
-		{
-			memset(&sd->mail.inbox.msg[i], 0, sizeof(struct mail_message));
-			sd->mail.inbox.amount--;
-		}
-
-		if( sd->mail.inbox.full )
-			intif_Mail_requestinbox(sd->status.char_id, 1); // Reload the Mail Inbox
-	}
-
-	WFIFOHEAD(fd, packet_len(0x257));
-	WFIFOW(fd,0) = 0x257;
-	WFIFOL(fd,2) = mail_id;
-	WFIFOW(fd,6) = failed;
-	WFIFOSET(fd, packet_len(0x257));
-}
-
 void clif_parse_Mail_delete(int fd, struct map_session_data *sd)
 {
 	int i, mail_id = RFIFOL(fd,2);
@@ -11522,24 +11555,12 @@ void clif_parse_Mail_delete(int fd, struct map_session_data *sd)
 
 		if( (msg->item.nameid > 0 && msg->item.amount > 0) || msg->zeny > 0 )
 		{
-			clif_Mail_delete(sd, mail_id, 1);
+			clif_Mail_delete(sd->fd, mail_id, 1);
 			return;
 		}
 		
 		intif_Mail_delete(sd->status.char_id, mail_id);
 	}
-}
-/*------------------------------------------
- * You have Mail Message
- *------------------------------------------*/
-void clif_Mail_new(int fd, int mail_id, const char *sender, const char *title)
-{
-	WFIFOHEAD(fd,packet_len(0x24a));
-	WFIFOW(fd,0) = 0x24a;
-	WFIFOL(fd,2) = mail_id;
-	memcpy(WFIFOP(fd,6), sender, NAME_LENGTH);
-	memcpy(WFIFOP(fd,30), title, MAIL_TITLE_LENGTH);
-	WFIFOSET(fd,packet_len(0x24a));
 }
 
 /*------------------------------------------
@@ -11553,38 +11574,8 @@ void clif_parse_Mail_return(int fd, struct map_session_data *sd)
 	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
 	if (i < MAIL_MAX_INBOX)
 		intif_Mail_return(sd->status.char_id, mail_id);
-}
-
-void clif_Mail_return(struct map_session_data *sd, int mail_id, int new_mail)
-{
-	int fd = sd->fd;
-
-	if (new_mail > 0)
-	{
-		int i;
-		ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
-		if (i < MAIL_MAX_INBOX)
-		{
-			struct map_session_data *rd = map_charid2sd(sd->mail.inbox.msg[i].send_id);
-			if (rd)
-			{
-				char title[MAIL_TITLE_LENGTH];
-				snprintf(title, MAIL_TITLE_LENGTH, "RE:%s", sd->mail.inbox.msg[i].title);
-				
-				rd->mail.inbox.changed = 1;
-				clif_Mail_new(rd->fd, new_mail, sd->status.name, title);
-			}
-
-			memset(&sd->mail.inbox.msg[i], 0, sizeof(struct mail_message));
-			sd->mail.inbox.amount--;
-		}
-	}
-
-	WFIFOHEAD(fd,packet_len(0x274));
-	WFIFOW(fd,0) = 0x274;
-	WFIFOL(fd,2) = mail_id;
-	WFIFOW(fd,6) = (new_mail > 0)?0:1;
-	WFIFOSET(fd,packet_len(0x274));
+	else
+		clif_Mail_return(sd->fd, mail_id, 1);
 }
 
 /*------------------------------------------
@@ -11594,7 +11585,7 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd)
 {
 	int idx = RFIFOW(fd,2);
 	int amount = RFIFOL(fd,4);
-	char flag;
+	unsigned char flag;
 
 	nullpo_retv(sd);
 	if (idx < 0 || amount < 0)
@@ -11602,12 +11593,7 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd)
 
 	flag = mail_setitem(sd, idx, amount);
 	if (flag > -1)
-	{
-		WFIFOHEAD(fd,packet_len(0x245));
-		WFIFOW(fd,0) = 0x245;
-		WFIFOB(fd,2) = flag;
-		WFIFOSET(fd,packet_len(0x245));
-	}
+		clif_Mail_attachment(fd,flag);
 }
 
 /*------------------------------------------
@@ -11624,16 +11610,6 @@ void clif_parse_Mail_winopen(int fd, struct map_session_data *sd)
 		mail_removezeny(sd, 0);
 }
 
-/*------------------------------------------
- * Send Mail
- *------------------------------------------*/
-void clif_Mail_send(int fd, unsigned char flag)
-{
-	WFIFOHEAD(fd,packet_len(0x249));
-	WFIFOW(fd,0) = 0x249;
-	WFIFOB(fd,2) = flag;
-	WFIFOSET(fd,packet_len(0x249));
-}
 
 /// S 0248 <packet len>.w <nick>.24B <title>.40B <body len>.B <message>.?B
 void clif_parse_Mail_send(int fd, struct map_session_data *sd)
@@ -11641,6 +11617,9 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 	struct mail_message msg;
 	int body_len;
 	nullpo_retv(sd);
+
+	if( sd->state.trading )
+		return;
 
 	if( RFIFOW(fd,2) < 69 ) {
 		ShowWarning("Invalid Msg Len from account %d.\n", sd->status.account_id);
@@ -11681,7 +11660,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 	msg.timestamp = (int)mail_calctimes();
 	intif_Mail_send(sd->status.account_id, &msg);
 
-	sd->cansendmail_tick = gettick() + 1000; // 5 Seconds flood Protection
+	sd->cansendmail_tick = gettick() + 1000; // 1 Second flood Protection
 }
 
 #endif

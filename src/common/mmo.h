@@ -250,7 +250,7 @@ struct mail_message {
 	char title[MAIL_TITLE_LENGTH];
 	char body[MAIL_BODY_LENGTH];
 
-	unsigned char read;
+	short status;
 	unsigned int timestamp; // marks when the message was sent
 
 	int zeny;
@@ -413,6 +413,16 @@ enum {
 	GBI_GUILDLV,		// ギルドのLv
 	GBI_SKILLPOINT,		// ギルドのスキルポイント
 	GBI_SKILLLV,		// ギルドスキルLv
+};
+
+enum {
+	MAIL_UNVERIFIED = -1,
+	MAIL_NEW,
+	MAIL_UNREAD,
+	MAIL_READED,
+	MAIL_DELETED,
+	MAIL_RETURNED,
+	MAIL_INVALID,
 };
 
 enum {
