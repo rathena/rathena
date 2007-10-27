@@ -1690,54 +1690,49 @@ int intif_Mail_send(int account_id, struct mail_message *msg)
 	return 0;
 }
 
-int intif_parse_Mail_send(int fd)
+static void intif_parse_Mail_send(int fd)
 {
 	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
 	int mail_id = RFIFOL(fd,6);
 	bool fail = false;
 
-	if( mail_id > 0 )
+	if( mail_id == 0 )
+		fail = true;
+	else
 	{
 		if( sd == NULL )
 			fail = true;
 
 		if( !mail_checkattach(sd) )
 		{
-			fail = true;
-
 			mail_removeitem(sd, 0);
 			mail_removezeny(sd, 0);
+			fail = true;
 		}
 
+		// confirmation message
 		WFIFOHEAD(inter_fd,7);
 		WFIFOW(inter_fd,0) = 0x304e;
 		WFIFOL(inter_fd,2) = mail_id;
 		WFIFOB(inter_fd,6) = fail;
 		WFIFOSET(inter_fd,7);
-
-		clif_Mail_send(sd->fd, fail);
 	}
-	else
-		clif_Mail_send(sd->fd, true);
-	
-	return 0;
+
+	clif_Mail_send(sd->fd, fail);
 }
 
-int intif_parse_Mail_new(int fd)
+static void intif_parse_Mail_new(int fd)
 {
 	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
-	if( sd != NULL )
-	{
-		char sender_name[NAME_LENGTH], title[MAIL_TITLE_LENGTH];
-		int mail_id = RFIFOL(fd,6);
+	int mail_id = RFIFOL(fd,6);
+	const char* sender_name = (char*)RFIFOP(fd,10);
+	const char* title = (char*)RFIFOP(fd,34);
 
-		safestrncpy(sender_name, RFIFOP(fd,10), NAME_LENGTH);
-		safestrncpy(title, RFIFOP(fd,34), MAIL_TITLE_LENGTH);
+	if( sd == NULL )
+		return;
 
-		clif_Mail_new(sd, mail_id, sender_name, title);
-	}
-
-	return 0;
+	sd->mail.inbox.changed = true;
+	clif_Mail_new(sd->fd, mail_id, sender_name, title);
 }
 
 #endif

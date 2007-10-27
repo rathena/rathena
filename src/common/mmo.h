@@ -241,6 +241,7 @@ struct mmo_charstatus {
 #endif
 };
 
+enum mail_status;
 struct mail_message {
 	unsigned int id;
 	int send_id;
@@ -250,7 +251,7 @@ struct mail_message {
 	char title[MAIL_TITLE_LENGTH];
 	char body[MAIL_BODY_LENGTH];
 
-	short status;
+	enum mail_status status;
 	unsigned int timestamp; // marks when the message was sent
 
 	int zeny;
@@ -408,21 +409,21 @@ struct fame_list {
 	char name[NAME_LENGTH];
 };
 
+enum mail_status {
+	MAIL_UNVERIFIED = -1,
+	MAIL_NEW,
+	MAIL_UNREAD,
+	MAIL_READ,
+	MAIL_DELETED,
+	MAIL_RETURNED,
+	MAIL_INVALID,
+};
+
 enum {
 	GBI_EXP	=1,		// ギルドのEXP
 	GBI_GUILDLV,		// ギルドのLv
 	GBI_SKILLPOINT,		// ギルドのスキルポイント
 	GBI_SKILLLV,		// ギルドスキルLv
-};
-
-enum {
-	MAIL_UNVERIFIED = -1,
-	MAIL_NEW,
-	MAIL_UNREAD,
-	MAIL_READED,
-	MAIL_DELETED,
-	MAIL_RETURNED,
-	MAIL_INVALID,
 };
 
 enum {

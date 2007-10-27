@@ -38,8 +38,8 @@ static int mail_fromsql(int char_id, struct mail_data* md)
 		"`zeny`,`amount`,`nameid`,`refine`,`attribute`,`identify`");
 	for (i = 0; i < MAX_SLOTS; i++)
 		StringBuf_Printf(&buf, ",`card%d`", i);
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `dest_id`='%d' AND `status` > -1 AND `status` < 3 "
-		"ORDER BY `id` LIMIT %d", mail_db, char_id, MAIL_MAX_INBOX + 1);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `dest_id`='%d' AND `status` >= %d AND `status` <= %d "
+		"ORDER BY `id` LIMIT %d", mail_db, char_id, MAIL_NEW, MAIL_READ, MAIL_MAX_INBOX + 1);
 
 	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf)) )
 		Sql_ShowDebug(sql_handle);
@@ -217,12 +217,12 @@ static void mapif_parse_Mail_requestinbox(int fd)
 }
 
 /*==========================================
- * 'Mail read' Mark
+ * Mark mail as 'Read'
  *------------------------------------------*/
 static void mapif_parse_Mail_read(int fd)
 {
 	int mail_id = RFIFOL(fd,2);
-	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `read_flag` = '%d' WHERE `id` = '%d'", mail_db, MAIL_READED, mail_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", mail_db, MAIL_READ, mail_id) )
 		Sql_ShowDebug(sql_handle);
 }
 
@@ -262,7 +262,7 @@ static void mapif_Mail_getattach(int fd, int char_id, int mail_id)
 	if( msg.dest_id != char_id )
 		return;
 
-	if( msg.status != MAIL_READED )
+	if( msg.status != MAIL_READ )
 		return;
 
 	if( (msg.item.nameid < 1 || msg.item.amount < 1) && msg.zeny < 1 )

@@ -55,12 +55,13 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 	if (idx == 0)
 	{ // Zeny Transfer
 		if (amount < 0)
-			return 2;
+			return 2; //FIXME: totally wrong value
 		if (amount > sd->status.zeny)
 			amount = sd->status.zeny;
 
 		sd->mail.zeny = amount;
 		clif_updatestatus(sd, SP_ZENY);
+		return 0;
 	}
 	else
 	{ // Item Transfer
@@ -78,11 +79,8 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 		sd->mail.nameid = sd->status.inventory[idx].nameid;
 		sd->mail.amount = amount;
 		clif_delitem(sd, idx, amount);
-
 		return 0;
 	}
-
-	return -1;
 }
 
 bool mail_getattach(struct map_session_data *sd, struct mail_message *msg)

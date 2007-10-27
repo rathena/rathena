@@ -11231,9 +11231,7 @@ void clif_parse_ChangeHomunculusName(int fd, struct map_session_data *sd)
 }
 
 void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd)
-{	//[orn]
-	nullpo_retv(sd);
-
+{
 	if(!merc_is_hom_active(sd->hd))
 		return;
 
@@ -11241,9 +11239,8 @@ void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd)
 }
 
 void clif_parse_HomMoveTo(int fd,struct map_session_data *sd)
-{	//[orn]
+{
 	short x,y,cmd;
-	nullpo_retv(sd);
 
 	if(!merc_is_hom_active(sd->hd))
 		return;
@@ -11279,10 +11276,7 @@ void clif_parse_HomMenu(int fd, struct map_session_data *sd)
 
 void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 {
-	int item_position;
-
-	nullpo_retv(sd);
-	item_position = pc_search_inventory(sd, 7621);
+	int item_position = pc_search_inventory(sd, 7621);
 
 	if (item_position < 0)
 		return;
@@ -11302,11 +11296,11 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 
 /*------------------------------------------
  * Reply to an Attachment operation
- * 0 : From inventory to Attachment OK
+ * 0 : Successfully attached item to mail
  * 1 : Fail to set the attachment
- * 2 : Weight Problems (when get the attachment)
+ * 2 : Weight problems (when getting the attachment)
  *------------------------------------------*/
-void clif_Mail_attachment(int fd, unsigned char flag)
+static void clif_Mail_attachment(int fd, uint8 flag)
 {
 	WFIFOHEAD(fd,packet_len(0x245));
 	WFIFOW(fd,0) = 0x245;
@@ -11317,7 +11311,7 @@ void clif_Mail_attachment(int fd, unsigned char flag)
 /*------------------------------------------
  * Send Mail ack
  * 0 : Message Send Ok
- * 1 : Destination char not found
+ * 1 : Recipient does not exist
  *------------------------------------------*/
 void clif_Mail_send(int fd, bool fail)
 {
@@ -11358,16 +11352,13 @@ void clif_Mail_return(int fd, int mail_id, short fail)
 /*------------------------------------------
  * You have New Mail
  *------------------------------------------*/
-void clif_Mail_new(struct map_session_data *sd, int mail_id, const char *sender, const char *title)
+void clif_Mail_new(int fd, int mail_id, const char *sender, const char *title)
 {
-	int fd = sd->fd;
-	sd->mail.inbox.changed = true;
-		
 	WFIFOHEAD(fd,packet_len(0x24a));
 	WFIFOW(fd,0) = 0x24a;
 	WFIFOL(fd,2) = mail_id;
-	memcpy(WFIFOP(fd,6), sender, NAME_LENGTH);
-	memcpy(WFIFOP(fd,30), title, MAIL_TITLE_LENGTH);
+	safestrncpy((char*)WFIFOP(fd,6), sender, NAME_LENGTH);
+	safestrncpy((char*)WFIFOP(fd,30), title, MAIL_TITLE_LENGTH);
 	WFIFOSET(fd,packet_len(0x24a));
 }
 
@@ -11406,7 +11397,7 @@ void clif_Mail_refreshinbox(struct map_session_data *sd)
 
 		WFIFOL(fd,8+73*j) = msg->id;
 		memcpy(WFIFOP(fd,12+73*j), msg->title, MAIL_TITLE_LENGTH);
-		WFIFOB(fd,52+73*j) = (msg->status == MAIL_UNREAD);
+		WFIFOB(fd,52+73*j) = (msg->status != MAIL_UNREAD); // 0: unread, 1: read
 		memcpy(WFIFOP(fd,53+73*j), msg->send_name, NAME_LENGTH);
 		WFIFOL(fd,77+73*j) = msg->timestamp;
 		j++;
@@ -11419,10 +11410,7 @@ void clif_Mail_refreshinbox(struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_Mail_refreshinbox(int fd, struct map_session_data *sd)
 {
-	struct mail_data *md;
-	nullpo_retv(sd);
-
-	md = &sd->mail.inbox;
+	struct mail_data* md = &sd->mail.inbox;
 
 	if( md->amount < MAIL_MAX_INBOX && (md->full || md->changed) )
 		intif_Mail_requestinbox(sd->status.char_id, 1);
@@ -11443,8 +11431,8 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
 	if( i == MAIL_MAX_INBOX )
 	{
-		clif_Mail_return(sd->fd, mail_id, 1); // Mail don't exists
-		ShowWarning("clif_parse_Mail_read: account %d trying to read a message not the inbox.\n", sd->status.account_id);
+		clif_Mail_return(sd->fd, mail_id, 1); // Mail doesn't exist
+		ShowWarning("clif_parse_Mail_read: char '%s' trying to read a message not the inbox.\n", sd->status.name);
 		return;
 	}
 	else
@@ -11483,13 +11471,15 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 			WFIFOW(fd,95) = item->card[2];
 			WFIFOW(fd,97) = item->card[3];
 		}
+		else // no item, set all to zero
+			memset(WFIFOP(fd,80), 0x00, 19);
 
 		WFIFOB(fd,99) = (unsigned char)msg_len;
 		safestrncpy((char*)WFIFOP(fd,100), msg->body, msg_len);
 		WFIFOSET(fd,len);
 
 		if (msg->status == MAIL_UNREAD) {
-			msg->status = MAIL_READED;
+			msg->status = MAIL_READ;
 			intif_Mail_read(mail_id);
 			clif_parse_Mail_refreshinbox(fd, sd);
 		}
@@ -11498,7 +11488,6 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 
 void clif_parse_Mail_read(int fd, struct map_session_data *sd)
 {
-	nullpo_retv(sd);
 	clif_Mail_read(sd, RFIFOL(fd,2));
 }
 
@@ -11508,7 +11497,6 @@ void clif_parse_Mail_read(int fd, struct map_session_data *sd)
 void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 {
 	int i, mail_id = RFIFOL(fd,2);
-	nullpo_retv(sd);
 
 	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
 	if( i == MAIL_MAX_INBOX )
@@ -11546,7 +11534,6 @@ void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 void clif_parse_Mail_delete(int fd, struct map_session_data *sd)
 {
 	int i, mail_id = RFIFOL(fd,2);
-	nullpo_retv(sd);
 
 	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
 	if (i < MAIL_MAX_INBOX)
@@ -11554,7 +11541,7 @@ void clif_parse_Mail_delete(int fd, struct map_session_data *sd)
 		struct mail_message *msg = &sd->mail.inbox.msg[i];
 
 		if( (msg->item.nameid > 0 && msg->item.amount > 0) || msg->zeny > 0 )
-		{
+		{// can't delete mail without removing attachment first
 			clif_Mail_delete(sd->fd, mail_id, 1);
 			return;
 		}
@@ -11569,7 +11556,6 @@ void clif_parse_Mail_delete(int fd, struct map_session_data *sd)
 void clif_parse_Mail_return(int fd, struct map_session_data *sd)
 {
 	int i, mail_id = RFIFOL(fd,2);
-	nullpo_retv(sd);
 
 	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
 	if (i < MAIL_MAX_INBOX)
@@ -11587,22 +11573,22 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd)
 	int amount = RFIFOL(fd,4);
 	unsigned char flag;
 
-	nullpo_retv(sd);
 	if (idx < 0 || amount < 0)
 		return;
 
 	flag = mail_setitem(sd, idx, amount);
-	if (flag > -1)
-		clif_Mail_attachment(fd,flag);
+	clif_Mail_attachment(fd,flag);
 }
 
 /*------------------------------------------
  * Mail Window Operation
+ * 0 : Switch to 'new mail' window, or Close mailbox
+ * 1 : ???
+ * 2 : ???
  *------------------------------------------*/
 void clif_parse_Mail_winopen(int fd, struct map_session_data *sd)
 {
 	int flag = RFIFOW(fd,2);
-	nullpo_retv(sd);
 
 	if (flag == 0 || flag == 1)
 		mail_removeitem(sd, 0);
@@ -11610,13 +11596,14 @@ void clif_parse_Mail_winopen(int fd, struct map_session_data *sd)
 		mail_removezeny(sd, 0);
 }
 
-
-/// S 0248 <packet len>.w <nick>.24B <title>.40B <body len>.B <message>.?B
+/*------------------------------------------
+ * Send Mail
+ * S 0248 <packet len>.w <nick>.24B <title>.40B <body len>.B <message>.?B 00
+ *------------------------------------------*/
 void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 {
 	struct mail_message msg;
 	int body_len;
-	nullpo_retv(sd);
 
 	if( sd->state.trading )
 		return;
@@ -11629,7 +11616,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 	if( DIFF_TICK(sd->cansendmail_tick, gettick()) > 0 )
 	{
 		clif_displaymessage(sd->fd,"Cannot send mails too fast!!.");
-		clif_Mail_send(fd, 1);
+		clif_Mail_send(fd, 1); // fail
 		return;
 	}
 
@@ -11640,7 +11627,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 
 	if( !mail_getattach(sd, &msg) )
 	{
-		clif_Mail_send(sd->fd, 1); // Fail
+		clif_Mail_send(sd->fd, 1); // fail
 		mail_removeitem(sd,0);
 		mail_removezeny(sd,0);
 		return;
@@ -11653,7 +11640,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 	safestrncpy(msg.title, (char*)RFIFOP(fd,28), MAIL_TITLE_LENGTH);
 	
 	if (body_len)
-		memcpy(msg.body, RFIFOP(fd,69), body_len);
+		safestrncpy(msg.body, (char*)RFIFOP(fd,69), body_len+1);
 	else
 		memset(msg.body, 0x00, MAIL_BODY_LENGTH);
 	
@@ -11782,9 +11769,9 @@ int clif_parse(int fd)
 
 	if (sd && sd->state.waitingdisconnect == 1) {
 		// 切断待ちの場合パケットを処理しない
-	} else if (packet_db[packet_ver][cmd].func) {
-		if (sd && sd->bl.prev == NULL &&
-			packet_db[packet_ver][cmd].func != clif_parse_LoadEndAck)
+	} else
+	if (packet_db[packet_ver][cmd].func) {
+		if (sd && sd->bl.prev == NULL && packet_db[packet_ver][cmd].func != clif_parse_LoadEndAck)
 			; //Only valid packet when player is not on a map is the finish-loading packet.
 		else
 		if (sd

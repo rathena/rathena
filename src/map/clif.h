@@ -389,7 +389,7 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id);
 void clif_Mail_delete(int fd, int mail_id, short fail);
 void clif_Mail_return(int fd, int mail_id, short fail);
 void clif_Mail_send(int fd, bool fail);
-void clif_Mail_new(struct map_session_data *sd, int mail_id, const char *sender, const char *title);
+void clif_Mail_new(int fd, int mail_id, const char *sender, const char *title);
 void clif_Mail_refreshinbox(struct map_session_data *sd);
 #endif
 
