@@ -241,7 +241,16 @@ struct mmo_charstatus {
 #endif
 };
 
-enum mail_status;
+enum mail_status {
+	MAIL_UNVERIFIED = -1,
+	MAIL_NEW,
+	MAIL_UNREAD,
+	MAIL_READ,
+	MAIL_DELETED,
+	MAIL_RETURNED,
+	MAIL_INVALID,
+};
+
 struct mail_message {
 	unsigned int id;
 	int send_id;
@@ -407,16 +416,6 @@ struct fame_list {
 	int id;
 	int fame;
 	char name[NAME_LENGTH];
-};
-
-enum mail_status {
-	MAIL_UNVERIFIED = -1,
-	MAIL_NEW,
-	MAIL_UNREAD,
-	MAIL_READ,
-	MAIL_DELETED,
-	MAIL_RETURNED,
-	MAIL_INVALID,
 };
 
 enum {
