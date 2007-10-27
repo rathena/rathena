@@ -10,6 +10,7 @@ struct guild_member;
 struct guild_position;
 struct s_pet;
 struct s_homunculus;
+struct mail_message;
 
 int intif_parse(int fd);
 
