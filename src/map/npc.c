@@ -1985,7 +1985,7 @@ void npc_movenpc(struct npc_data* nd, int x, int y)
 	if (m < 0 || nd->bl.prev == NULL) return;	//Not on a map.
 
 	x = cap_value(x, 0, map[m].xs-1);
-	x = cap_value(y, 0, map[m].ys-1);
+	y = cap_value(y, 0, map[m].ys-1);
 
 	npc_unsetcells(nd);
 	map_foreachinrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
