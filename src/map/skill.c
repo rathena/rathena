@@ -3772,12 +3772,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SA_TAMINGMONSTER:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		if (sd && dstmd) {
-			for (i = 0; i < MAX_PET_DB; i++) {
-				if (dstmd->class_ == pet_db[i].class_) {
-					pet_catch_process1 (sd, dstmd->class_);
-					break;
-				}
-			}
+			ARR_FIND( 0, MAX_PET_DB, i, dstmd->class_ == pet_db[i].class_ );
+			if( i < MAX_PET_DB )
+				pet_catch_process1(sd, dstmd->class_);
 		}
 		break;
 

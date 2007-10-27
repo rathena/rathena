@@ -6,6 +6,7 @@
 #include "../common/nullpo.h"
 #include "../common/malloc.h"
 #include "../common/showmsg.h"
+#include "../common/strlib.h"
 #include "../common/utils.h"
 #include "../common/ers.h"
 
@@ -23,7 +24,7 @@
 #include "script.h"
 #include "skill.h"
 #include "unit.h"
-#include "atcommand.h"
+#include "atcommand.h" // msg_txt()
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -279,30 +280,16 @@ int search_petDB_index(int key,int type)
 {
 	int i;
 
-	for(i=0;i<MAX_PET_DB;i++) {
+	for( i = 0; i < MAX_PET_DB; i++ )
+	{
 		if(pet_db[i].class_ <= 0)
 			continue;
 		switch(type) {
-			case PET_CLASS:
-				if(pet_db[i].class_ == key)
-					return i;
-				break;
-			case PET_CATCH:
-				if(pet_db[i].itemID == key)
-					return i;
-				break;
-			case PET_EGG:
-				if(pet_db[i].EggID == key)
-					return i;
-				break;
-			case PET_EQUIP:
-				if(pet_db[i].AcceID == key)
-					return i;
-				break;
-			case PET_FOOD:
-				if(pet_db[i].FoodID == key)
-					return i;
-				break;
+			case PET_CLASS: if(pet_db[i].class_ == key) return i; break;
+			case PET_CATCH: if(pet_db[i].itemID == key) return i; break;
+			case PET_EGG:   if(pet_db[i].EggID  == key) return i; break;
+			case PET_EQUIP: if(pet_db[i].AcceID == key) return i; break;
+			case PET_FOOD:  if(pet_db[i].FoodID == key) return i; break;
 			default:
 				return -1;
 		}
@@ -1252,40 +1239,46 @@ int pet_skill_support_timer(int tid,unsigned int tick,int id,int data)
  *------------------------------------------*/ 
 int read_petdb()
 {
+	char* filename[] = {"pet_db.txt","pet_db2.txt"};
 	FILE *fp;
-	char line[1024];
-	int nameid,i,k; 
-	int j=0;
-	int lines;
-	char *filename[]={"pet_db.txt","pet_db2.txt"};
-	char *str[32],*p,*np;
+	int nameid,i,j,k; 
 
-
-//Remove any previous scripts in case reloaddb was invoked.	
-	for(j =0; j < MAX_PET_DB; j++)
+	// Remove any previous scripts in case reloaddb was invoked.	
+	for( j = 0; j < MAX_PET_DB; j++ )
 		if (pet_db[j].script) {
 			aFree(pet_db[j].script);
 			pet_db[j].script = NULL;
 		}
-	j = 0;
+
+	// clear database
 	memset(pet_db,0,sizeof(pet_db));
-	for(i=0;i<2;i++){
+
+	j = 0; // entry counter
+	for( i = 0; i < ARRAYLENGTH(filename); i++ )
+	{
+		char line[1024];
+		int lines;
+
 		sprintf(line, "%s/%s", db_path, filename[i]);
 		fp=fopen(line,"r");
-		if(fp==NULL){
-			if(i>0)
-				continue;
-			ShowError("can't read %s\n",line);
-			return -1;
+		if( fp == NULL )
+		{
+			if( i == 0 )
+				ShowError("can't read %s\n",line);
+			continue;
 		}
+
 		lines = 0;
-		while(fgets(line, sizeof(line), fp) && j < MAX_PET_DB)
+		while( fgets(line, sizeof(line), fp) && j < MAX_PET_DB )
 		{			
+			char *str[32],*p,*np;
+
 			lines++;
 
 			if(line[0] == '/' && line[1] == '/')
 				continue;
 
+			// split string into table columns
 			for(k=0,p=line;k<20;k++){
 				if((np=strchr(p,','))!=NULL){
 					str[k]=p;
@@ -1307,8 +1300,8 @@ int read_petdb()
 			}
 
 			pet_db[j].class_ = nameid;
-			strncpy(pet_db[j].name,str[1],NAME_LENGTH);
-			strncpy(pet_db[j].jname,str[2],NAME_LENGTH);
+			safestrncpy(pet_db[j].name,str[1],NAME_LENGTH);
+			safestrncpy(pet_db[j].jname,str[2],NAME_LENGTH);
 			pet_db[j].itemID=atoi(str[3]);
 			pet_db[j].EggID=atoi(str[4]);
 			pet_db[j].AcceID=atoi(str[5]);
@@ -1334,7 +1327,8 @@ int read_petdb()
 			pet_db[j].script = parse_script(np, filename[i], lines, 0);
 			j++;
 		}
-		if (j >= MAX_PET_DB)
+
+		if( j >= MAX_PET_DB )
 			ShowWarning("read_petdb: Reached max number of pets [%d]. Remaining pets were not read.\n ", MAX_PET_DB);
 		fclose(fp);
 		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' pets in '"CL_WHITE"%s"CL_RESET"'.\n",j,filename[i]);
@@ -1367,7 +1361,7 @@ int do_init_pet(void)
 
 int do_final_pet(void) {
 	int i;
-	for(i = 0;i < MAX_PET_DB; i++) {
+	for( i = 0; i < MAX_PET_DB; i++ ) {
 		if(pet_db[i].script) {
 			script_free_code(pet_db[i].script);
 			pet_db[i].script = NULL;
