@@ -3242,7 +3242,7 @@ static bool mob_parse_dbrow(char** str)
 	}
 	
 	if (class_ >= MOB_CLONE_START && class_ < MOB_CLONE_END) {
-		ShowWarning("Mob with ID: %d not loaded. That ID is reserved for player clones. Please increase MAX_MOB_DB (%d)\n", MAX_MOB_DB);
+		ShowWarning("Mob with ID: %d not loaded. Range %d-%d is reserved for player clones. Please increase MAX_MOB_DB (%d)\n", class_, MOB_CLONE_START, MOB_CLONE_END-1, MAX_MOB_DB);
 		return false;
 	}
 
