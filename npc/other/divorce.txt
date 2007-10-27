@@ -4,7 +4,7 @@
 //= Perkka, Scriptor, LightFighter
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2a
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.2 Updated to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.2a Commented out check of 'wedding_sign' to let
 //=		old married players divorcing, optimized, fixed a bug [Lupus]
+//= 1.3 Wedding variable 'wedding_sign' is now unset on divorce. [L0ne_W0lf]
 //============================================================ 
 
 nif_in,190,112,5	script	Deviruchi#divorce	738,{
@@ -193,6 +194,7 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 			next;
 			specialeffect 244; //EF_MAGICROD
 			specialeffect2 372; //EF_DEVIL
+			set wedding_sign,0;
 			set zeny,zeny-2500000;
 			percentheal -100,100;
 			divorce;
