@@ -64,6 +64,7 @@
 //= 3.6 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 3.7 Counter-fixed negative value checking to now look for both positive and negative values
 //=     since its symbol depends on the time. [SinSloth]
+//= 3.8 Removed bio ethic quest definition from header. [L0ne_W0lf]
 //============================================================ 
 
 lighthalzen,1,1,7	script	sneakAddSuber	-1,{
