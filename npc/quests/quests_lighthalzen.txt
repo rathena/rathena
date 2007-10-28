@@ -4,15 +4,11 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 3.7
+//= 3.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
-//= Event for the Mobster respawn
-//= Bio Labs Quest
-//= Friendship Quest
-//= Pickpocket Mini-Quest
-//= Bio Ethics Quest (Need bug testing!)
+//= Quests related to Lighthalzen City.
 //===== Additional Comments: ================================= 
 //= Grammar/script check please. This was a quick job.
 //= Things to add: Look at the thread "Lighthalzen Guard" in SVN script
@@ -65,6 +61,7 @@
 //= 3.7 Counter-fixed negative value checking to now look for both positive and negative values
 //=     since its symbol depends on the time. [SinSloth]
 //= 3.8 Removed bio ethic quest definition from header. [L0ne_W0lf]
+//= 3.9 Added Rekenber Job quest. Don't know why it hasn't been there before though. [SinSloth]
 //============================================================ 
 
 lighthalzen,1,1,7	script	sneakAddSuber	-1,{
@@ -9380,3 +9377,1483 @@ lhz_in02,19,274,2	script	Maintenance Guy	851,{
 	mes "almost a health hazard!";
 	close;
 }
+
+// Rekenber Job Quest
+
+lhz_in01,174,258,3	script	Young Man#reken	868,{
+
+	if(lhz_rekenber > 21)
+	{
+		mes "[Kazien]";
+		mes "Just...";
+		mes "Leave me alone.";
+		mes "I feel nothing but";
+		mes "guilt when I see you.";
+		next;
+		mes "[Kazien]";
+		mes "Don't take it the wrong";
+		mes "way. I mean, it's not like";
+		mes "you did nothing wrong. I'm";
+		mes "the one who's... Geez. I wish";
+		mes "I could live the way you do.";
+		mes "Someday I'll be strong enough...";
+		close;
+	}
+	else if(lhz_rekenber == 21)
+	{
+		mes "[Kazien]";
+		mes "Hey, you're back. As usual,";
+		mes "you've done a good job. You";
+		mes "look exhausted: did you run";
+		mes "into those thugs again?";
+		mes "Why don't you take a rest?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Kazien...";
+		mes "While I was fighting";
+		mes "those thugs, one of the";
+		mes "packages was accidentally";
+		mes "opened, and I saw what was";
+		mes "inside of those packages.";
+		next;
+		mes "[Kazien]";
+		mes "......";
+		mes ".........";
+		mes "............";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Wh-why are you supplying";
+		mes "those things? If we let those";
+		mes "packages get imported by";
+		mes "other countries, it can";
+		mes "cause a lot of trouble...!";
+		next;
+		mes "[Kazien]";
+		mes "Stop. Please.";
+		mes "J-just stop it.";
+		mes "I don't want to";
+		mes "hear anymore.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hold it, I deserve an";
+		mes "answer! How can you turn";
+		mes "a blind eye and provide just";
+		mes "anyone with ^FF0000hi-tech weapons";
+		mes "and guardians^000000? It's like you're";
+		mes "promoting war and violence!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "And what about your little";
+		mes "brother Lyozien? He has";
+		mes "no idea what he's doing!";
+		mes "Don't we have a responsibility";
+		mes "to the world to make sure these";
+		mes "weapons aren't distributed?";
+		next;
+		mes "[Kazien]";
+		mes "Shut up! You don't";
+		mes "know anything! Just";
+		mes "shut up! I'm doing this";
+		mes "for the sake of my family!";
+		mes "You don't know what it's like";
+		mes "to live in Lighthalzen's slums!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes ".................";
+		next;
+		mes "[Kazien]";
+		mes "There'd be days when my";
+		mes "brother and I'd have nothing";
+		mes "to eat. So when I heard about";
+		mes "this job, I took it. What good";
+		mes "is world peace if I'm not even";
+		mes "alive to enjoy it, huh?";
+		next;
+		mes "[Kazien]";
+		mes "Now, my brother Lyozien is";
+		mes "a gentle soul, has nothing";
+		mes "but love for everybody. So, of";
+		mes "course I can't tell him what";
+		mes "I'm really doing--he'd never";
+		mes "agree to it, believe me.";
+		next;
+		mes "[Kazien]";
+		mes "I hate this job and what";
+		mes "I'm doing and I want to quit.";
+		mes "But then what? Go back to the";
+		mes "slums? Forget it. As long as";
+		mes "Lyozien is happy, I don't mind if I have to do the devil's work.";
+		next;
+		mes "[Kazien]";
+		mes "At least this way, keeping";
+		mes "it all secret, I can protect";
+		mes "Lyozien from the ugly nature";
+		mes "of this job, even if I'm dirtying my hands, making money";
+		mes "off of other people's deaths.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "But that still isn't right.";
+		mes "You're selling weapons so";
+		mes "that people can kill each other! Even if it's for the sake of";
+		mes "providing for your family...";
+		next;
+		mes "[Kazien]";
+		mes "Look man, this is what";
+		mes "I decided. I don't care";
+		mes "what other people'll think.";
+		mes "I might go to hell when";
+		mes "I die, but that's my problem.";
+		next;
+		mes "[Kazien]";
+		mes "Besides, you adventurers";
+		mes "are always running around";
+		mes "with your swords and magic spells... Isn't that just as bad?";
+		mes "It's not the weapons or the power that's bad: it's how they're used.";
+		next;
+		mes "[Kazien]";
+		mes "Granted, most of my clients";
+		mes "are pretty questionable, and";
+		mes "you adventurers usually use";
+		mes "your powers for good, but...";
+		mes "Damn it! Just... Don't come";
+		mes "back. I can't work like this...";
+		next;
+		mes "[Kazien]";
+		mes "Look, I can't have";
+		mes "you working with me";
+		mes "and Lyozien anymore.";
+		mes "Sorry, but it's for Lyozien's";
+		mes "own good. That, and you";
+		mes "make me feel guilty...";
+		set lhz_rekenber,22;
+		getexp 550000,0;
+		close;
+	}
+	else if(lhz_rekenber > 16)
+	{
+		mes "[Kazien]";
+		mes "Hey now, you better";
+		mes "get a move on. You gotta";
+		mes "assist another delivery to";
+		mes "the Rune-Midgarts Kingdom.";
+		close;
+	}
+	else if(lhz_rekenber == 16)
+	{
+		mes "[Kazien]";
+		mes "Ah, I heard from Lyozien";
+		mes "that you guys finished your";
+		mes "delivery. You're probably";
+		mes "the best part-timer that I've";
+		mes "had in a long, long while.";
+		next;
+		mes "[Kazien]";
+		mes "Anyway, we've got yet";
+		mes "another delivery for the";
+		mes "Rune-Midgarts Kingdom. It's";
+		mes "weird that we're getting more";
+		mes "orders from there, but orders from other countries are decreasing.";
+		next;
+		mes "[Kazien]";
+		mes "Eh, I don't have the time";
+		mes "to wonder about stuff like";
+		mes "that. Lyozien's waiting for";
+		mes "you, so get to it, okay?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "W-wait! During the last";
+		mes "delivery, I was attacked";
+		mes "by a group of thugs that";
+		mes "wanted to destroy the";
+		mes "packages? Why would";
+		mes "they want to do that?";
+		next;
+		mes "[Kazien]";
+		mes "Look... You're better";
+		mes "off not knowing. Or are";
+		mes "you asking me to pay you";
+		mes "more for this job since";
+		mes "you're risking your life?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I understand that the";
+		mes "customer's confidentiality";
+		mes "is important, but I'd feel a";
+		mes "lot better if I knew what was";
+		mes "in those packages, and why me";
+		mes "and Lyozien are being attacked.";
+		next;
+		mes "[Kazien]";
+		mes "Listen, I'm not obligated--";
+		mes "I can't tell you. Heck, I can't";
+		mes "even tell my own brother what's";
+		mes "in those packages. You can see";
+		mes "that, can't you? Anyway, you";
+		mes "can handle those thugs, right?";
+		next;
+		mes "[Kazien]";
+		mes "Right. Now get back to";
+		mes "the Airship and talk to";
+		mes "Lyozien again. Don't give";
+		mes "him any trouble and make";
+		mes "sure you protect him.";
+		set lhz_rekenber,17;
+		getexp 450000,0;
+		close;
+	}
+	else if(lhz_rekenber > 11)
+	{
+		mes "[Kazien]";
+		mes "What are you doing";
+		mes "waiting around here";
+		mes "for? You've got a job to";
+		mes "do, so hurry up and do it~";
+		close;
+	}
+	else if(lhz_rekenber == 11)
+	{
+		mes "[Kazien]";
+		mes "Hey, you're back. I got a";
+		mes "message from Rune-Midgarts,";
+		mes "telling us they received their";
+		mes "order. Good work! So how do";
+		mes "you like working with Lyozien?";
+		mes "He's one of my best men.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Wait, aren't you and";
+		mes "Lyozien supposed";
+		mes "to be brothers?";
+		next;
+		mes "[Kazien]";
+		mes "Whoa, he told you that?";
+		mes "I guess he feels that he";
+		mes "can trust you enough with";
+		mes "that kind of personal talk...";
+		mes "Yeah, he's my little brother.";
+		mes "And a better man than me...";
+		next;
+		mes "[Kazien]";
+		mes "I've gotten my hands";
+		mes "pretty dirty doing this...";
+		mes "Oh, forget it. You came ";
+		mes "here for a job, right?";
+		mes "Luckily, I got another";
+		mes "delivery for you to work on...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Actually, Kazien...";
+		mes "I was curious. What";
+		mes "exactly are we delivering?";
+		mes "I mean, not even Lyozien";
+		mes "doesn't know exactly what";
+		mes "is in those packages.";
+		next;
+		mes "[Kazien]";
+		mes "Huh... Does that mean";
+		mes "you can't work with us if";
+		mes "you don't know exactly what";
+		mes "you're doing?";
+		next;
+		mes "[Kazien]";
+		mes " Come on, I told";
+		mes "you before--absolute secrecy.";
+		mes "It goes both ways, you know.";
+		next;
+		mes "[Kazien]";
+		mes "Look, for your own good,";
+		mes "quit asking. Knowing what";
+		mes "you're delivering wouldn't";
+		mes "change a thing. Trust me.";
+		next;
+		mes "[Kazien]";
+		mes "Anyway, this next job is";
+		mes "more of the same. Meet";
+		mes "Lyozien in the international";
+		mes "flight Airship and protect";
+		mes "another package destined";
+		mes "for the Rune-Midgarts Kingdom.";
+		next;
+		set lhz_rekenber,12;
+		getexp 400000,0;
+		mes "[Kazien]";
+		mes "Alright, I'll see you";
+		mes "later. The important";
+		mes "thing is that you do the";
+		mes "best job that you can.";
+		mes "And don't give Lyozien";
+		mes "any trouble: that's my job!";
+		close;
+	}
+	else if(lhz_rekenber > 7)
+	{
+		mes "[Kazien]";
+		mes "Lyozien is waiting for";
+		mes "you on the international";
+		mes "flight Airship, so go and";
+		mes "meet him there as soon";
+		mes "as you can. Alright then,";
+		mes "I'll see you later.";
+		close;
+	}
+	else if(lhz_rekenber == 7)
+	{
+		mes "[Kazien]";
+		mes "Hey, you're back~";
+		mes "Great, I guess that means";
+		mes "that you've decided to work";
+		mes "for us! Alright, let me tell you about your first real job. As";
+		mes "always: ^FF0000keep it on the down-low^000000.";
+		next;
+		mes "[Kazien]";
+		mes "Go to the Airship for the";
+		mes "international flights, not";
+		mes "the domestic ones, and meet";
+		mes "a man named ^FF0000Lyozien^000000 inside.";
+		mes "He's our courier that'll provide you with further instructions.";
+		next;
+		mes "[Kazien]";
+		mes "Oh. You can talk to Lyozien";
+		mes "about the job, but definitely";
+		mes "not to anybody else. Anyway,";
+		mes "when you're done with what";
+		mes "he asks you to do, come back";
+		mes "to me for another job, okay?";
+		next;
+		set lhz_rekenber,8;
+		mes "[Kazien]";
+		mes "Don't forget...";
+		mes "Talk to ^FF0000Lyozien^000000, our";
+		mes "courier, on the Airship";
+		mes "for the international flights.";
+		close;
+	}
+	else if(lhz_rekenber == 6)
+	{
+		set @rekenrand,rand(1,15);
+		if(@rekenrand == 7)
+		{
+			mes "[Kazien]";
+			mes "Oh, hey, it's you again.";
+			mes "Wait. No. You only remind";
+			mes "me of someone I've met. Um,";
+			mes "have we met before? I don't";
+			mes "remember at all. Oooh, I hate";
+			mes "being this busy, I can't focus!";
+			next;
+			set lhz_rekenber,0;
+			mes "[Kazien]";
+			mes "Arrgh, this is not good.";
+			mes "We are this busy but we don't have enough people,";
+			mes "yet it is not that extrememly bad";
+			mes "to a point that we need to hire more people.";
+			next;
+			mes "[Kazien]";
+			mes "Will you step back? You are hindering my vision.";
+			close;
+		}
+		else
+		{
+			mes "[Kazien]";
+			mes "Oh, hey, it's you again.";
+			mes "Listen, you didn't come here";
+			mes "looking for a part time job,";
+			mes "did you? I already told you";
+			mes "that I can't bring myself";
+			mes "to trust you, you know?";
+			next;
+			mes "[Kazien]";
+			mes "Look, you're not a bad guy,";
+			mes "so I'm sure you'd be perfect";
+			mes "for some other employer.";
+			mes "Don't feel bad... Um, what";
+			mes "was your name again? Wait,";
+			mes "did you even give it to me...?";
+			close;
+		}
+	}
+	else if(lhz_rekenber == 5)
+	{
+		mes "[Kazien]";
+		mes "So, were you able to";
+		mes "contact Garins? Or did";
+		mes "you encounter any problems?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well, I came back to";
+		mes "let you know that I haven't";
+		mes "been able to find a way inside";
+		mes "the Einbroch Laboratory. There";
+		mes "was the guard, but I couldn't";
+		mes "really tell him anything.";
+		next;
+		mes "[Kazien]";
+		mes "Whaaaat~?";
+		mes "I'm sure he would";
+		mes "have let you in if you";
+		mes "told him that you had";
+		mes "to talk to Garins, right?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "But...";
+		mes "I thought you said";
+		mes "I'm not supposed to";
+		mes "tell anyone the details";
+		mes "of my assignment?";
+		next;
+		mes "[Kazien]";
+		mes "Heh... Yeah.";
+		mes "Yeah, that's right.";
+		mes "Heh heh heh! Hahahaha!";
+		mes "Great! I'm happy to say,";
+		mes "buddy, you passed the test!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "H-huh? But I never";
+		mes "even got to see Garins...";
+		mes "I didn't finish the task";
+		mes "that you assigned to me.";
+		next;
+		mes "[Kazien]";
+		mes "Garins is just some";
+		mes "cool name I made up.";
+		mes "He doesn't really exist.";
+		mes "I just wanted to test your";
+		mes "trustworthiness, is all.";
+		mes "Now do you understand?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I... I guess.";
+		mes "Still, you just tricked";
+		mes "me! How am I supposed";
+		mes "to trust you now?";
+		next;
+		mes "[Kazien]";
+		mes "Oh... You...";
+		mes "You got a point, there.";
+		mes "Huh, now isn't that ironic? I'm sorry, pal, let me apologize.";
+		mes "Take some time, consider working for me, and then come back, okay?";
+		set lhz_rekenber,7;
+		close;
+	}
+	else if(lhz_rekenber == 4)
+	{
+		mes "[Kazien]";
+		mes "So, were you able to";
+		mes "contact Garins? Or did";
+		mes "you encounter any problems?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well, I wasn't able to";
+		mes "find him. In fact, I don't";
+		mes "think that Garins even works";
+		mes "at the Einbroch Laboratory.";
+		next;
+		mes "[Kazien]";
+		mes "Whaaaat~?";
+		mes "That can't be true.";
+		mes "Well, how'd you";
+		mes "find that out?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I happened to ask the";
+		mes "Laboratory Guard, but";
+		mes "he wouldn't even let me in.";
+		next;
+		set lhz_rekenber,6;
+		mes "[Kazien]";
+		mes "Uh oh...";
+		mes "I thought so.";
+		mes "I'm sorry, pal, but";
+		mes "you failed the test.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "H-huh? What?";
+		mes "What do you mean?";
+		next;
+		mes "[Kazien]";
+		mes "You told that to the guard,";
+		mes "but you weren't supposed";
+		mes "to let anyone know any detail";
+		mes "about your assignment. Yeah...";
+		mes "Garins is just a name I made";
+		mes "up. He doesn't really exist.";
+		next;
+		mes "[Kazien]";
+		mes "I know you meant well,";
+		mes "you know, doing whatever";
+		mes "you can to finish whatever";
+		mes "goal you have, but you can't";
+		mes "forget the details. Anyway,";
+		mes "sorry, but we can't use you...";
+		close;
+	}
+	else if(lhz_rekenber == 3)
+	{
+		mes "[Kazien]";
+		mes "Remember, visit ^FF0000Garins^000000";
+		mes "in the ^FF0000Einbroch Laboratory^000000";
+		mes "and ^FF0000confirm that he received";
+		mes "his order^000000. We pride ourselves";
+		mes "in our clients' confidentiality,^FFFFFF  ^000000 so keep it secret, got it?";
+		next;
+		mes "[Kazien]";
+		mes "I'll just be waiting";
+		mes "around over here, so";
+		mes "once you're done with";
+		mes "that, come back to me.";
+		close;
+	}
+	else if(lhz_rekenber == 2)
+	{
+		mes "[Kazien]";
+		mes "Okay, I got it! Your first";
+		mes "assignment for us is pretty";
+		mes "simple, but think of it as";
+		mes "something of a trial run.";
+		mes "You know, for us to see";
+		mes "how reliable you are.";
+		next;
+		mes "[Kazien]";
+		mes "All you gotta do is head";
+		mes "to Einbroch, find the Lab";
+		mes "there, and find a researcher";
+		mes "named Garins. You need to";
+		mes "confirm whether he safely";
+		mes "received his order from us.";
+		next;
+		mes "[Kazien]";
+		mes "Simple stuff, yeah?";
+		mes "Now, you can't let anyone";
+		mes "know about your assignment.";
+		mes "Otherwise, we can't trust you";
+		mes "for more important stuff. And";
+		mes "I really wanna trust you.";
+		next;
+		mes "[Kazien]";
+		mes "Remember, visit ^FF0000Garins^000000";
+		mes "in the ^FF0000Einbroch Laboratory^000000";
+		mes "and ^FF0000confirm that he received";
+		mes "his order^000000. We pride ourselves";
+		mes "in our clients' confidentiality, so keep it secret, got it?";
+		next;
+		set lhz_rekenber,3;
+		mes "[Kazien]";
+		mes "I'll just be waiting";
+		mes "around over here, so";
+		mes "once you're done with";
+		mes "that, come back to me.";
+		close;
+	}
+	else if(lhz_rekenber == 1)
+	{
+		mes "[Kazien]";
+		mes "We're so busy, we barely";
+		mes "have enough people to cover";
+		mes "our workload right now. Still,";
+		mes "it's not so bad that we gotta";
+		mes "invest in some new hires.";
+		next;
+		mes "[Kazien]";
+		mes "Oh hey, sorry buddy,";
+		mes "but you mind stepping";
+		mes "back? It's just that you're";
+		mes "blocking my view is all.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Wait, did you just say";
+		mes "that you need help?";
+		mes "I'd like to help solve";
+		mes "your problem, er, for";
+		mes "a nominal fee or some";
+		mes "kind of reward. You know...";
+		next;
+		mes "[Kazien]";
+		mes "Hey, alright~";
+		mes "I could use an extra";
+		mes "hand if you're willing";
+		mes "to work part time. Plus,";
+		mes "you're a straight shooter.";
+		mes "I like that. Let's see now...";
+		next;
+		if(BaseLevel < 70)
+		{
+			mes "[Kazien]";
+			mes "Awww, I'm sorry, pal.";
+			mes "I know you mean well, but";
+			mes "to put it bluntly, you're not";
+			mes "not strong enough for this";
+			mes "kinda work. Hey, but if you put on";
+			mes "some muscle, ask me again, okay?";
+			close;
+		}
+		mes "[Kazien]";
+		mes "Yeah, okay. You look like";
+		mes "you can handle this. But";
+		mes "are you the type of person";
+		mes "I can trust? Hey, you can";
+		mes "keep confidential information";
+		mes "without telling anyone, right?";
+		next;
+		switch( select( "Yes, of course.","Nope, I love giving away secrets." ) )
+		{
+			case 1:
+				set lhz_rekenber,2;
+				mes "[Kazien]";
+				mes "Great, great.";
+				mes "I guess we can just";
+				mes "get down to business,";
+				mes "then. Let me think. First,";
+				mes "I should give you something";
+				mes "easy to do to test you out...";
+				close;
+
+			case 2:
+				mes "[Kazien]";
+				mes "Awww, man.";
+				mes "I can't hire you";
+				mes "if you're gonna blab";
+				mes "your mouth. Sorry buddy,";
+				mes "but I can't afford to take";
+				mes "any risks. You understand...";
+				close;
+		}
+	}
+	mes "[Kazien]";
+	mes "We're so busy, we barely";
+	mes "have enough people to cover";
+	mes "our workload right now. Still,";
+	mes "it's not so bad that we gotta";
+	mes "invest in some new hires.";
+	next;
+	mes "[Kazien]";
+	mes "Oh hey, sorry buddy,";
+	mes "but you mind stepping";
+	mes "back? It's just that you're";
+	mes "blocking my view is all.";
+	close;
+}
+
+lighthalzen,141,162,3	script	Old Man#reken	85,{
+
+	mes "[Old Man]";
+	mes "Lately, Kazien seems";
+	mes "to be having a hard time";
+	mes "managing his business.";
+	mes "Always complaining that";
+	mes "he lacks the manpower...";
+	next;
+	mes "[Old Man]";
+	mes "I don't know what kind of";
+	mes "business he's conducting,";
+	mes "but why don't you help him";
+	mes "out? I don't believe that any";
+	mes "particularly special skills are";
+	mes "required for some positions.";
+	next;
+	mes "[Old Man]";
+	mes "Well, if you're interested,";
+	mes "you can find Kazien inside";
+	mes "the corporation building.";
+	mes "Young people like him should";
+	mes "never be too proud to ask for help. He still needs to learn...";
+	if(!lhz_rekenber) set lhz_rekenber,1;
+	close;
+}
+
+einbroch,55,52,3	script	Laboratory Guard#reken	 852,{
+
+	if(lhz_rekenber == 3)
+	{
+		mes "[Laboratory Guard]";
+		mes "Hold it! This is";
+		mes "a restricted area to";
+		mes "the public! Unless you";
+		mes "have some special business,";
+		mes "you'll have to leave right now.";
+		next;
+		switch( select( "Actually, I do have business here.","Whoa, I'm leaving!" ) )
+		{
+			case 1:
+				mes "[Laboratory Guard]";
+				mes "Yes? State the nature";
+				mes "of your business here,";
+				mes "as well as any person that";
+				mes "you wish to contact inside";
+				mes "of this laboratory facility.";
+				next;
+				switch( select( "I need to see Mr. Garins...","I'll... come back later." ) )
+				{
+					case 1:
+						mes "[" + strcharinfo(0) + "]";
+						mes "I need to see Mr. Garins";
+						mes "and confirm that he received";
+						mes "a package that was sent to him.";
+						next;
+						mes "[Laboratory Guard]";
+						mes "Garins, eh?";
+						mes "Alright, let me check";
+						mes "the employee list. Hmm...";
+						mes "Garins... Garins... Eh?";
+						mes "He's not here. Maybe you";
+						mes "came to the wrong place?";
+						next;
+						mes "[Laboratory Guard]";
+						mes "Sorry, but it looks like";
+						mes "you've wasted your time.";
+						mes "We don't have a Garins";
+						mes "working here. Anyway,";
+						mes "I still can't allow you to";
+						mes "enter the laboratory.";
+						set lhz_rekenber,4;
+						close;
+
+					case 2:
+						break;
+				}
+				
+			case 2:
+				mes "[" + strcharinfo(0) + "]";
+				mes "Whoa, I'm leaving!";
+				mes "(^333333I better speak to Kazien";
+				mes "and let him know I'm having";
+				mes "trouble getting past this";
+				mes "guard. Otherwise, I might";
+				mes "never finish this job!^000000)";
+				set lhz_rekenber,5;
+				close;
+		}
+	}
+	mes "[Laboratory Guard]";
+	mes "This area is restricted";
+	mes "to the public. Unless you";
+	mes "have some kind of special";
+	mes "authorization, I'm going";
+	mes "to have to ask you to leave.";
+	close;
+}
+
+airplane_01,96,48,3	script	Man#Lyozien	868,{
+
+	if(lhz_rekenber > 21)
+	{
+		mes "[Lyozien]";
+		mes "Hey, I hear from my";
+		mes "brother that you can't work";
+		mes "with us anymore because";
+		mes "of some scheduling conflict.";
+		mes "I'm sorry to hear that: it was";
+		mes "really good working with you...";
+		close;
+	}
+	else if(lhz_rekenber == 21)
+	{
+		mes "[Lyozien]";
+		mes "Oh good, you're back.";
+		mes "Mr. Ahman just left and";
+		mes "picked up his goods. We're";
+		mes "done here, so you have to";
+		mes "do now is report to my";
+		mes "brother in Lighthalzen.";
+		next;
+		mes "[Lyozien]";
+		mes "You sure you're alright?";
+		mes "You seem kind of upset.";
+		mes "Do you need to take a";
+		mes "break or something?";
+		close;
+	}	
+	else if(lhz_rekenber == 20)
+	{
+		mes "[Lyozien]";
+		mes "Heya, keep up the";
+		mes "good work. Once you";
+		mes "talk to Mr. Ahman inside";
+		mes "Izlude Airport, we'll be";
+		mes "done with this delivery.";
+		close;
+	}
+	else if(lhz_rekenber == 19)
+	{
+		mes "[Lyozien]";
+		mes "Whoa, you were great!";
+		mes "There were more of them";
+		mes "this time, but you easily";
+		mes "dispatched them. Great job!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Thanks, but...";
+		mes "Now I'm really worried";
+		mes "about what could be in";
+		mes "those packages. Are you";
+		mes "sure you don't know, Lyozien?";
+		next;
+		mes "[Lyozien]";
+		mes "You don't know when to";
+		mes "stop, do you? Nah, I don't";
+		mes "know at all. Besides, so long";
+		mes "as my brother says it's a bad";
+		mes "idea, then I don't wanna find";
+		mes "out for myself. Oh, hey...";
+		next;
+		set lhz_rekenber,20;
+		getitem 504,1;
+		mes "[Lyozien]";
+		mes "Here's a little";
+		mes "something to refresh";
+		mes "yourself after that fight.";
+		mes "Keep up the good work, okay?";
+		mes "Then, we'll be done once you";
+		mes "contact Mr. Ahman in Izlude.";
+		close;
+	}	
+	else if(lhz_rekenber == 18)
+	{
+		mes "[Lyozien]";
+		mes "Okay, just like before, we";
+		mes "gotta get these packages to";
+		mes "Mr. Ahmam. When we arrive";
+		mes "in Izlude, find Mr. Ahman in";
+		mes "the Airport and tell him that";
+		mes "his packages have arrived.";
+		next;
+		mes "[Lyozien]";
+		mes "W-wait...";
+		mes "Did you hear that?";
+		mes "I heard--I think it's them.";
+		mes "Those thugs are back! Don't";
+		mes "let them damage the packages!";
+		close2;
+		set lhz_rekenber,19;
+		donpcevent "#bully2::OnEnter";
+		donpcevent "Man#Lyozien::OnStop";
+		end;
+	}
+	else if(lhz_rekenber == 17)
+	{
+		mes "[Lyozien]";
+		mes "I heard that you upset";
+		mes "Kyozien a little bit with";
+		mes "your questions. I mean,";
+		mes "I totally understand, but";
+		mes "you gotta remember that";
+		mes "we've got obligations.";
+		next;
+		mes "[Lyozien]";
+		mes "I know that these packages";
+		mes "might be putting us in danger,";
+		mes "but I trust my brother. If he says those thugs are bad guys, then";
+		mes "they're definitely bad guys.";
+		next;
+		mes "[Lyozien]";
+		mes "Yeah, ever since we were";
+		mes "kids, Kyozien has always";
+		mes "been right. Even though";
+		mes "I'd like to know what's in the";
+		mes "boxes, I don't ever wanna";
+		mes "disappoint him, you know?";
+		next;
+		set lhz_rekenber,18;
+		mes "[Lyozien]";
+		mes "Anyway, that's";
+		mes "enough chit-chat";
+		mes "for now. Let's get";
+		mes "back to work, shall we?";
+		close;
+	}
+	else if(lhz_rekenber == 16)
+	{
+		mes "[Lyozien]";
+		mes "I'm lucky that you're";
+		mes "around to keep those";
+		mes "thugs off our backs, eh?";
+		mes "Hey, when you're ready for";
+		mes "another job, just talk to";
+		mes "my brother Kazien, okay?";
+		close;
+	}
+	else if(lhz_rekenber == 15)
+	{
+		mes "[Lyozien]";
+		mes "So you spoke to";
+		mes "Mr. Ahman already?";
+		mes "Good, good. Now we can";
+		mes "go back to the Schwaltzvalt";
+		mes "Republic for our next job.";
+		next;
+		mes "[Lyozien]";
+		mes "Just talk to my brother";
+		mes "Kazien and he should give";
+		mes "you any details you need";
+		mes "to know. Man, it's good";
+		mes "that you're working for us.";
+		mes "Those thugs frighten me...";
+		set lhz_rekenber,16;
+		close;
+	}
+	else if(lhz_rekenber == 14)
+	{
+		mes "[Lyozien]";
+		mes "Now that those thugs are";
+		mes "gone, let's concentrate on";
+		mes "our task. Like before, just";
+		mes "get off at Izlude and then tell";
+		mes "Mr. Ahman that his packages";
+		mes "have arrived. See you later~";
+		close;
+	}
+	else if(lhz_rekenber == 13)
+	{
+		mes "[Lyozien]";
+		mes "Oh, thank you!";
+		mes "You saved my life!";
+		mes "As you can tell, I'm";
+		mes "not much of a fighter...";
+		mes "I just ran and hid when";
+		mes "those thugs appeared.";
+		next;
+		mes "[Lyozien]";
+		mes "That's one reason why" ;
+		mes "my brother has been hiring";
+		mes "you adventurers-- we need";
+		mes "packages from those hoodlums.";
+		mes "They're always after us...";
+		next;
+		mes "[Lyozien]";
+		mes "Every time I see them,";
+		mes "they're yelling things like";
+		mes "we're the servants of evil,";
+		mes "or that the packages must";
+		mes "be destroyed. Boy, I sure";
+		mes "am glad that you're here!";
+		set lhz_rekenber,14;
+		close;
+	}
+	else if(lhz_rekenber == 12)
+	{
+		mes "[Lyozien]";
+		mes "Hey, we already have another";
+		mes "package to deliver all the way";
+		mes "to the Rune-Midgarts Kingdom";
+		mes "again. Can you believe it? We";
+		mes "seem to be doing a lot of";
+		mes "business around there lately.";
+		next;
+		mes "[Lyozien]";
+		mes "It's so far away from";
+		mes "home, but a job's a job.";
+		mes "We're obliged to do what";
+		mes "we're been assigned to do";
+		mes "until we qui--whoa. You";
+		mes "hear that? Wh-what was...?";
+		next;
+		mes "[Lyozien]";
+		mes "Awwww, nuts!";
+		mes "It's those thugs!";
+		mes "I'll explain later, but";
+		mes "for now, please protect";
+		mes "the packages and make";
+		mes "sure they don't get them!";
+		close2;
+		set lhz_rekenber,13;
+		donpcevent "Man#Lyozien::OnStop";
+		donpcevent "#bully1::OnEnter";
+		end;
+	}
+	if(lhz_rekenber == 11)
+	{
+		mes "[Lyozien]";
+		mes "Hey, would you go see";
+		mes "my brother Kazien to see";
+		mes "if he's got another job for";
+		mes "us to do? I'll just be over";
+		mes "here waiting when you need";
+		mes "to find me. See you later~";
+		close;
+	}
+	else if(lhz_rekenber == 10)
+	{
+		mes "[Lyozien]";
+		mes "Good work, Mr. Ahman just";
+		mes "arrived and picked up his";
+		mes "packages. It looks like we're";
+		mes "done for today. When you're";
+		mes "ready for another job, just";
+		mes "ask to my brother Kazien, okay?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Lyozien, do you know";
+		mes "what kinds of things";
+		mes "we're delivering?";
+		next;
+		mes "[Lyozien]";
+		mes "No clue. I've been";
+		mes "a little curious myself,";
+		mes "but my brother warned me";
+		mes "not to ask. Besides, I don't";
+		mes "think it makes a difference";
+		mes "to what we gotta do, right?";
+		next;
+		mes "[Lyozien]";
+		mes "Anyway, it oughta be";
+		mes "fine. I mean, our clients";
+		mes "are entitled to their privacy";
+		mes "anyway. You've been in that";
+		mes "sort of situation, right? You";
+		mes "know, embarassing orders...";
+		next;
+		mes "[Lyozien]";
+		mes "No? Eh, just meet up with";
+		mes "my brother to see if he's";
+		mes "got another job for us, okay?";
+		mes "If you wanna find me again,";
+		mes "I'll be waiting right here.";
+		set lhz_rekenber,11;
+		close;
+	}	
+	else if(lhz_rekenber == 9)
+	{
+		mes "[Lyozien]";
+		mes "Alright, when this Airship";
+		mes "arrives in Izlude, get off and";
+		mes "enter the Airport to meet with";
+		mes "a man named Mr. Ahman.";
+		mes "Let him know his order has";
+		mes "already arrived, okay?";
+		close;
+	}	
+	else if(lhz_rekenber == 8)
+	{
+		mes "[Lyozien]";
+		mes "Um, would you mind";
+		mes "treading lightly around";
+		mes "this area, and kind of go";
+		mes "around the piles? Yeah,";
+		mes "these are all pretty fragile.";
+		mes "Thanks, I appreciate it.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Excuse me, but";
+		mes "are you Lyozien?";
+		next;
+		mes "[Lyozien]";
+		mes "Hey, are you the one that";
+		mes "my brother Kazien sent?";
+		mes "Nice, I've been waiting";
+		mes "for you. As you can see,";
+		mes "I'm having trouble handling";
+		mes "all of these packages here.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Wait, Kazien is";
+		mes "your brother? That's";
+		mes "weird, you figure he";
+		mes "would mention that.";
+		next;
+		mes "[Lyozien]";
+		mes "Oh, yeah, he's been like";
+		mes "that ever since we lived";
+		mes "in Lighthalzen's slums.";
+		mes "Luckily, he joined the";
+		mes "corporation and helped";
+		mes "us improve our lots in life...";
+		next;
+		mes "[Lyozien]";
+		mes "That's why I appreciate the";
+		mes "fact that he lets me work for";
+		mes "him. I can't let him down.";
+		mes "Anyway, back to business: we";
+		mes "gotta deliver these goods to";
+		mes "the Rune-Midgarts Kingdom.";
+		next;
+		mes "[Lyozien]";
+		mes "I have to ensure that these";
+		mes "packages aren't damaged or";
+		mes "stolen by thieves. Your job is";
+		mes "to go to Izlude, find Mr. Ahman";
+		mes "at the Airport, and tell him that his orders have safely arrived.";
+		next;
+		set lhz_rekenber,9;
+		mes "[Lyozien]";
+		mes "Once you tell Mr. Ahman";
+		mes "that message, he'll take";
+		mes "care of picking up his own";
+		mes "packages. But yeah, I need";
+		mes "to stay behind to guard these";
+		mes "products in the meantime.";
+		close;
+	}
+	mes "[Lyozien]";
+	mes "Um, would you mind";
+	mes "treading lightly around";
+	mes "this area, and kind of go";
+	mes "around the piles? Yeah,";
+	mes "these are all pretty fragile.";
+	mes "Thanks, I appreciate it.";
+	close;
+
+OnEnter:
+	enablenpc "Man#Lyozien";
+	end;
+
+OnStop:
+	disablenpc "Man#Lyozien";
+	end;
+}
+
+izlude,186,57,5	script	Scamp	853,{
+
+	if(lhz_rekenber > 21)
+	{
+		mes "[Ahman]";
+		mes "Oh, hello. I've heard";
+		mes "that you had to quit.";
+		mes "It's quite a pity, really.";
+		mes "If it weren't for you, some";
+		mes "of my packages would have";
+		mes "been destroyed by those thugs.";
+		close;
+	}
+	else if(lhz_rekenber == 21)
+	{
+		mes "[Ahman]";
+		mes "Shouldn't you be";
+		mes "taking a break? Besides,";
+		mes "Lyozien is still waiting for";
+		mes "you the Airship, isn't he?";
+		close;
+	}
+	else if(lhz_rekenber == 20)
+	{
+		mes "[Ahman]";
+		mes "Oh, have my packages";
+		mes "arrived? Good, good.";
+		mes "I appreciate all of your";
+		mes "hard work. I'm surprised";
+		mes "they haven't hired you";
+		mes "full time by now.";
+		next;
+		mes "[Ahman]";
+		mes "Is something the matter?";
+		mes "You seem really pale. Oh";
+		mes "well, you'll have plenty of";
+		mes "time to relax on the Airship.";
+		mes "Oh, and don't worry, I'll";
+		mes "take care of the packages.";
+		set lhz_rekenber,21;
+		close;
+	}
+	else if (lhz_rekenber > 15 && lhz_rekenber < 20)
+	{
+		mes "[Ahman]";
+		mes "Oh, hello. I'm not";
+		mes "expecting any packages";
+		mes "at this moment, although";
+		mes "I'm aware that there are a";
+		mes "few deliveries in queue, but shouldn't you be in Lighthalzen?";
+		close;
+	}
+	else if(lhz_rekenber == 15)
+	{
+		mes "[Ahman]";
+		mes "Shouldn't you be on";
+		mes "your way and report to";
+		mes "Lyozien? You should hurry";
+		mes "before the Airship takes off.";
+		close;
+	}
+	else if(lhz_rekenber == 14)
+	{
+		mes "[Ahman]";
+		mes "Ah, it's you again.";
+		mes "I assume that means that";
+		mes "my packages have arrived";
+		mes "safely. Is that right?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, that's right.";
+		mes "Actually, this time we ";
+		mes "were attacked by a group";
+		mes "of thugs, so I was wondering";
+		mes "if you knew anything about it... ";
+		next;
+		mes "[Ahman]";
+		mes "They attacked again?";
+		mes "Oh, that isn't good.";
+		mes "Well, I have no idea";
+		mes "what's going on. I wish";
+		mes "I had some idea of what";
+		mes "they were up to, really.";
+		next;
+		set lhz_rekenber,15;
+		mes "[Ahman]";
+		mes "For now, you should";
+		mes "go and report to Lyozien.";
+		mes "I assume that you protected";
+		mes "my packages, so thank you";
+		mes "for your diligent work. Now, I shall pick up what I ordered...";
+		close;
+	}
+	else if (lhz_rekenber > 10 && lhz_rekenber < 14)
+	{
+		mes "[Ahman]";
+		mes "Oh, it's you again.";
+		mes "Shouldn't you be getting";
+		mes "on the Airship and heading";
+		mes "back to the Schwaltzvalt";
+		mes "Republic? There are more";
+		mes "deliveries in queue, you know.";
+		close;
+	}
+	else if(lhz_rekenber == 10)
+	{
+		mes "[Ahman]";
+		mes "Thank you for letting me";
+		mes "know that my order has arrived.";
+		mes "You should go back to Lyozien";
+		mes "now so you can finish your job.";
+		mes "Perhaps I'll see you again";
+		mes "sometime, adventurer.";
+		close;
+	}
+	else if(lhz_rekenber == 9)
+	{
+		mes "[Man]";
+		mes "Hmm, can you really";
+		mes "call this place an Airport?";
+		mes "It's far too small, wouldn't";
+		mes "you agree? Still, I kind of";
+		mes "enjoy sitting around here.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Excuse me, but do";
+		mes "you know where I can";
+		mes "find a man named Ahman?";
+		mes "I have a message for him.";
+		next;
+		mes "[Ahman]";
+		mes "I'm Ahman, how can--";
+		mes "Oh! You must be here to";
+		mes "tell me that my packages";
+		mes "have arrived. Am I correct?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Y-yes. That's right.";
+		mes "Your packages have";
+		mes "arrived and they're";
+		mes "being guarded until";
+		mes "you come to pick them up.";
+		next;
+		mes "[Ahman]";
+		mes "Ah, that's very good to";
+		mes "know. Say, are you a new";
+		mes "worker for Lyozien and Kazien?";
+		mes "I don't believe I've seen you";
+		mes "around before. Have they finally started hiring part timers?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, that's right.";
+		mes "Actually, I'm working for";
+		mes "them part time. I heard";
+		mes "they were really busy, so";
+		mes "I sort of volunteered my time.";
+		next;
+		mes "[Ahman]";
+		mes "Alright, alright.";
+		mes "I suppose that you";
+		mes "also don't know what's";
+		mes "being delivered in these";
+		mes "packages, just like Lyozien.";
+		next;
+		mes "[Ahman]";
+		mes "Well, it's all confidential";
+		mes "information anyway, so don't";
+		mes "worry about it. Thank you for";
+		mes "notifying me about the delivery.^FFFFFF  ^000000 Now, you should go back and ";
+		mes "tell Lyozien. Take care now~";
+		set lhz_rekenber,10;
+		close;
+	}
+	mes "[Man]";
+	mes "Hmm, can you really";
+	mes "call this place an Airport?";
+	mes "It's far too small, wouldn't";
+	mes "you agree? Still, I kind of";
+	mes "enjoy sitting around here.";
+	close;
+}
+
+airplane_01,1,1,1	script	#bully1	-1,{
+
+OnInit:
+	disablenpc "#bully1";
+	end;
+	
+OnEnter:
+	enablenpc "#bully1";
+	initnpctimer;
+	monster "airplane_01",96,53,"Thug",1592,1,"#bully1::OnMyMobDead";
+	monster "airplane_01",87,47,"Thug",1592,1,"#bully1::OnMyMobDead";
+	set .bullymobs,2;
+	end;
+	
+OnReset:
+	killmonster "airplane_01","#bully1::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	set .bullymobs,.bullymobs -1;
+	if(.bullymobs < 1)
+	{
+		mes "[Bully]";
+		mes "Damn it! N-next time...";
+		mes "Next time we'll g-get rid";
+		mes "of those damned packages!";
+		mes "^333333*Cough cough*^000000 For now, we";
+		mes "retreat and fight another day!";
+		close2;
+		donpcevent "#bully1::OnInit";
+		donpcevent "Man#Lyozien::OnEnter";
+		stopnpctimer;
+	}
+	end;
+	
+OnTimer120000:
+	donpcevent "#bully1::OnReset";
+	donpcevent "#bully1::OnInit";
+	donpcevent "Man#Lyozien::OnEnter";
+	stopnpctimer;
+	end;
+}
+
+airplane_01,2,2,1	script	#bully2	-1,{
+
+OnInit:
+	disablenpc "#bully2";
+	end;
+	
+OnEnter:
+	enablenpc "#bully2";
+	initnpctimer;
+	monster "airplane_01",96,53,"Thug",1592,1,"#bully2::OnMyMobDead";
+	monster "airplane_01",87,47,"Thug",1592,1,"#bully2::OnMyMobDead";
+	monster "airplane_01",97,43,"Thug",1592,1,"#bully2::OnMyMobDead";
+	set .bullymobs,3;
+	end;
+	
+OnReset:
+	killmonster "airplane_01","#bully2::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	set .bullymobs,.bullymobs -1;
+	if(.bullymobs < 1)
+	{
+		mes "^3355FFHey-- there's a slit";
+		mes "in the wrapping on one";
+		mes "of the packages. It was";
+		mes "probably ripped a little";
+		mes "while you were fighting.^000000";
+		close2;
+		donpcevent "#bully2::OnInit";
+		donpcevent "#packidentity::OnEnter";
+		stopnpctimer;
+	}
+	end;
+	
+OnTimer120000:
+	donpcevent "#bully2::OnReset";
+	donpcevent "#bully2::OnInit";
+	donpcevent "#packidentity::OnEnter";
+	stopnpctimer;
+	end;
+}
+
+airplane_01,99,47,3	script	#packidentity	139,2,2,{
+	end;
+	
+OnInit:
+	disablenpc "#packidentity";
+	end;
+
+OnEnter:
+	enablenpc "#packidentity";
+	end;
+
+OnTouch:
+	if(lhz_rekenber == 19)
+	{
+		mes "^3355FFYou peek through the";
+		mes "slit in the wrapping";
+		mes "that is covering one";
+		mes "of the packages.^000000";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh... my God!";
+		mes "These are... These are";
+		mes "weapons of mass destruction.";
+		mes "There's even parts for assembling guardians, the kinds that usually";
+		mes "defend those Guild Castles...";
+		close2;
+		donpcevent "Man#Lyozien::OnEnter";
+		donpcevent "#packidentity::OnInit";
+		end;
+	}
+}
+
+lhz_in01,187,247,3	script	#flashback1	139,2,2,{
+
+OnTouch:
+	if(lhz_rekenber == 22)
+	{
+		mes "[Kazien]";
+		mes "-Don't you have anything to protect, huh?- ";
+		mes "-Are you sure that you're always doing the right thing?-";
+		next;
+		mes "[Kazien]";
+		mes "Answer me! Answer me! Answer meee!";
+		next;
+		set lhz_rekenber,23;
+		mes "[" + strcharinfo(0) + "]";
+		mes ".............Damn it.";
+		close;
+	}
+	end;
+}
+
+lhz_in01,75,248,3	script	#flashback2	139,2,2,{
+
+OnTouch:
+	if(lhz_rekenber == 22)
+	{
+		mes "[Kazien]";
+		mes "Look man, this is what";
+		mes "I decided. I don't care";
+		mes "what other people'll think.";
+		mes "I might go to hell when";
+		mes "I die, but that's my problem.";
+		next;
+		mes "[Kazien]";
+		mes "Besides, you adventurers";
+		mes "are always running around";
+		mes "with your swords and magic spells... Isn't that just as bad?";
+		mes "It's not the weapons or the power that's bad: it's how they're used.";
+		next;
+		mes "[Kazien]";
+		mes "There'd be days when my";
+		mes "brother and I'd have nothing";
+		mes "to eat. So when I heard about";
+		mes "this job, I took it. What good";
+		mes "is world peace if I'm not even";
+		mes "alive to enjoy it, huh?";
+		next;
+		set lhz_rekenber,23;
+		mes "[" + strcharinfo(0) + "]";
+		mes "......";
+		mes ".........";
+		mes "Damn it!";
+		close;
+	}
+	end;
+}
+

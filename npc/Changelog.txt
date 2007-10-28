@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/10/28
+	* Added Rekenber Job quest which was missing for some unknown reason. [SinSloth]
 	* Rev. 11595 Updated Bio Ethics quest to official, and re-added. [L0ne_W0lf]
 2007/10/27
 	* Rev. 11590 Small update to divorce NPC. [L0ne_W0lf] 
