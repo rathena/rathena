@@ -1736,6 +1736,11 @@ static const char* npc_skip_script(const char* start, const char* buffer, const 
 	return p+1;// return after the last '}'
 }
 
+/// Parses a npc script.
+///
+/// -%TAB%script%TAB%<NPC Name>%TAB%-1,{<code>}
+/// <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,{<code>}
+/// <map name>,<x>,<y>,<facing>%TAB%script%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>,{<code>}
 static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	int x, y, dir = 0, m, xs = 0, ys = 0, class_ = 0;	// [Valaris] thanks to fov
@@ -1758,10 +1763,9 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	}
 	else
 	{// npc in a map
-		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4
-		||	(strcasecmp(w2, "script") == 0 && strchr(w4,',') == NULL) )
+		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4 )
 		{
-			ShowError("npc_parse_script: Unkown format for a script in file '%s', line '%d'. Skipping the rest of file...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
+			ShowError("npc_parse_script: Invalid placement format for a script in file '%s', line '%d'. Skipping the rest of file...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			return NULL;// unknown format, don't continue
 		}
 		m = map_mapname2mapid(mapname);
@@ -1769,14 +1773,20 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 
 	if( strcmp(w2, "script") == 0 )
 	{// parsing script with curly
-		const char* real_start;
+		const char* script_start;
 
-		end = npc_skip_script(start, buffer, filepath);
+		if( strstr(w4,",{") == NULL )
+		{
+			ShowError("npc_parse_script: Missing left curly ',{' in file '%s', line '%d'. Skipping the rest of the file.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
+			return NULL;// can't continue
+		}
+		script_start = strstr(start,",{")+1;
+
+		end = npc_skip_script(script_start, buffer, filepath);
 		if( end == NULL )
 			return NULL;// (simple) parse error, don't continue
 
-		real_start = strchr(start,'{');
-		script = parse_script(real_start, filepath, strline(buffer,real_start-buffer), SCRIPT_USE_LABEL_DB);
+		script = parse_script(script_start, filepath, strline(buffer,script_start-buffer), SCRIPT_USE_LABEL_DB);
 		label_list = NULL;
 		label_list_num = 0;
 		src_id = 0;
@@ -2014,6 +2024,13 @@ static const char* npc_parse_function(char* w1, char* w2, char* w3, char* w4, co
 	struct script_code *script;
 	struct script_code *oldscript;
 	const char* end;
+
+	start = strstr(start,"\t{");
+	if( *w4 != '{' || start == NULL )
+	{
+		ShowError("npc_parse_function: Missing left curly '%%TAB%%{' in file '%s', line '%d'. Skipping the rest of the file.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
+		return NULL;// can't continue
+	}
 
 	end = npc_skip_script(start,buffer,filepath);
 	if( end == NULL )
