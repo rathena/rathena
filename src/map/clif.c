@@ -11453,8 +11453,8 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 		WFIFOW(fd,0) = 0x242;
 		WFIFOW(fd,2) = len;
 		WFIFOL(fd,4) = msg->id;
-		memcpy(WFIFOP(fd, 8), msg->title, MAIL_TITLE_LENGTH);
-		memcpy(WFIFOP(fd,48), msg->send_name, NAME_LENGTH);
+		safestrncpy((char*)WFIFOP(fd,8), msg->title, MAIL_TITLE_LENGTH + 1);
+		safestrncpy((char*)WFIFOP(fd,48), msg->send_name, NAME_LENGTH + 1);
 		WFIFOL(fd,72) = 0;
 		WFIFOL(fd,76) = msg->zeny;
 
@@ -11475,7 +11475,7 @@ void clif_Mail_read(struct map_session_data *sd, int mail_id)
 			memset(WFIFOP(fd,80), 0x00, 19);
 
 		WFIFOB(fd,99) = (unsigned char)msg_len;
-		safestrncpy((char*)WFIFOP(fd,100), msg->body, msg_len);
+		safestrncpy((char*)WFIFOP(fd,100), msg->body, msg_len + 1);
 		WFIFOSET(fd,len);
 
 		if (msg->status == MAIL_UNREAD) {
@@ -11577,7 +11577,9 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd)
 		return;
 
 	flag = mail_setitem(sd, idx, amount);
-	clif_Mail_attachment(fd,flag);
+
+	if (idx > 0)
+		clif_Mail_attachment(fd,flag);
 }
 
 /*------------------------------------------
@@ -11633,6 +11635,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 		return;
 	}
 
+	msg.id = 0; // id will be assigned by charserver
 	msg.send_id = sd->status.char_id;
 	msg.dest_id = 0; // will attempt to resolve name
 	safestrncpy(msg.send_name, sd->status.name, NAME_LENGTH);
@@ -11640,7 +11643,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 	safestrncpy(msg.title, (char*)RFIFOP(fd,28), MAIL_TITLE_LENGTH);
 	
 	if (body_len)
-		safestrncpy(msg.body, (char*)RFIFOP(fd,69), body_len+1);
+		safestrncpy(msg.body, (char*)RFIFOP(fd,69), body_len + 1);
 	else
 		memset(msg.body, 0x00, MAIL_BODY_LENGTH);
 	

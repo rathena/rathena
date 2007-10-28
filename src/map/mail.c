@@ -55,7 +55,7 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 	if (idx == 0)
 	{ // Zeny Transfer
 		if (amount < 0)
-			return 2; //FIXME: totally wrong value
+			return 0;
 		if (amount > sd->status.zeny)
 			amount = sd->status.zeny;
 
@@ -105,6 +105,8 @@ bool mail_getattach(struct map_session_data *sd, struct mail_message *msg)
 		memcpy(&msg->item, &sd->status.inventory[n], sizeof(struct item));
 		msg->item.amount = sd->mail.amount;
 	}
+	else
+		memset(&msg->item, 0x00, sizeof(struct item));
 
 	msg->zeny = sd->mail.zeny;
 
