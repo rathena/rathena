@@ -7325,11 +7325,10 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		{
 			int count=0;
 			const int x = bl->x, y = bl->y;
-			const bool noknockback = ( tstatus->def_ele == ELE_FIRE || battle_check_undead(tstatus->race, tstatus->def_ele) );
 
 			//Take into account these hit more times than the timer interval can handle.
 			do
-				skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*sg->interval,noknockback);
+				skill_attack(BF_MAGIC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick+count*sg->interval,0);
 			while(--src->val2 && x == bl->x && y == bl->y &&
 				++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(bl));
 
