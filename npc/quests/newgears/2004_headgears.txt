@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dj-Yhn
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -58,6 +58,7 @@
 //= 1.1	Fixed a bug in Giant-band-aid that didn't counting rotten bandages
 //=	Fixed a bug in Fur Hat that didn't count yarn [Evera]
 //= 1.2 Syntax fixes for parenthesis, reformatting [KarLaeda]
+//= 1.3 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //============================================================
 
 //Payon /=Black cat ears=/
@@ -2271,7 +2272,7 @@ morocc,273,79,4	script	Traveler	99,{
 	}
 }
 //Payon /=Fox Mask=/ //==Lets hope this works as it's supposed==//
-pay_dun03,48,84,4	script	Nine Tail#1	1180,1,1{
+pay_dun03,48,84,4	script	Nine Tail#1	1180,1,1,{
 	mes "[Nine Tail]";
 	mes "Kee! KeeKee!";
 	mes "KeeKeeKee! KeeKee! KeeKee!";
@@ -2383,7 +2384,7 @@ pay_dun03,48,84,4	script	Nine Tail#2	1180,{
 	}
 }
 //Orc Village /=Orc Hero Helm=/
-in_orcs01,31,93,1	script	Orc Warrior#1	1023,2,2{
+in_orcs01,31,93,1	script	Orc Warrior#1	1023,2,2,{
 	if (orcs_hero_hat == 1) {
 		if (countitem(909)>999) {
 			delitem 909,1000;
@@ -3247,7 +3248,7 @@ in_orcs01,31,93,1	script	Orc Warrior#1	1023,2,2{
 		}
 	}
 }
-in_orcs01,162,33,1	script	Hero of Orc#1	1087,2,2{
+in_orcs01,162,33,1	script	Hero of Orc#1	1087,2,2,{
 	if (orcs_hero_hat < 16) {
 		mes "[Orc Hero]";
 		mes ".....Go away, don't interrupt me!";

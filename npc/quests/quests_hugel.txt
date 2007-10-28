@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets & SinSloth
 //===== Current Version: =====================================
-//= 1.5b
+//= 1.6
 //===== Compatible With: =====================================
 //= eAthena
 //===== Description: =========================================
@@ -18,6 +18,7 @@
 //= 1.4 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.5a Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.5b Fixed a variable name. [SinSloth]
+//= 1.6 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //============================================================
 
 //-------------------------------------------------------------------------
@@ -4681,7 +4682,7 @@ hugel,198,169,0	script	#HugelTree	139,2,2,{
 	
 }
 
-hugel,191,172,3	script	Manainne	892,1{
+hugel,191,172,3	script	Manainne	892,1,{
 
 	if(hg_memory == 1)
 	{
@@ -7262,7 +7263,7 @@ que_bingo,53,190,7	script	Eukran	778,{
 	
 }
 
-odin_tem01,129,127,0	script	HiddenActivator#Hugel	139,3,3{
+odin_tem01,129,127,0	script	HiddenActivator#Hugel	139,3,3,{
 OnTouch:
 	if(hg_ma1 == 8)
 	{

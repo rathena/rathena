@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.7 Fixed a bug with XP rewards. [SinSloth]
 //= 1.8 Fixed a bug which prevented reset of events. [SinSloth]
 //= 1.9 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -73,7 +74,7 @@ morocc_in,142,100,4	script	Pierce	89,{
 //==================================================================================//
 //				Binoculars Quest
 //==================================================================================//
-morocc_in,76,163,4	script	Marius#binos	64,5,5{
+morocc_in,76,163,4	script	Marius#binos	64,5,5,{
 	mes "[Marius]";
 	mes "Ha! Ha! Ha! Another customer coming!";
 	mes "I know what you are gonna say.";

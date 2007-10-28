@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.5a Fixed a small typo [Evera]
 //= 1.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.6a Small bug fix. (end -> next) care of Lesbian. [L0ne_W0lf]
+//= 1.7 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //============================================================
 
 geffen,59,143,0	script	Meera	91,{
@@ -1404,7 +1405,7 @@ geffen_in,109,72,2	script	Monster Scholar	90,{
 
 // Lvl 4 weapon quest related NPC ------------------------------------------------------
 
-geffen,203,146,5	script	Citizen	97, {
+geffen,203,146,5	script	Citizen	97,{
 	mes "[Citizen]";
 	mes "There was a skillful weaponsmith";
 	mes "in Al De Baran who had 4 sons.";

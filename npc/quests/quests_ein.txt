@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.9
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= from being stuck in the quest. [SinSloth]
 //= 1.8 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.9 Fixed a bug with Einbroch Pollution quest. [SinSloth]
+//= 2.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -557,7 +558,7 @@ ein_in01,32,133,6	script	Maid	850,{
 	close;
 }
 
-einbroch,51,52,1	script	lab_warp	45,2,2{
+einbroch,51,52,1	script	lab_warp	45,2,2,{
 	if(Shinokas_Quest != 7 && lhz_heart != 9 && lhz_heart != 10){
 		mes "^3131FFThe door is locked.";
 		mes "You cannot enter.";

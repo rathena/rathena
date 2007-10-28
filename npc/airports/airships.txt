@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 0.9b
+//= 1.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -27,13 +27,14 @@
 //= 0.8b Fixed a Little Bug with the "How Does the Airship Work" Quest. [Samuray22]
 //= 0.9 Fixed a incorrect variable changed form "mob_inv" to "mobinv". [Samuray22]
 //= 0.9b Fixed a typo and bad variable use in the Typing Challenge [ultramage]
+//= 1.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //============================================================ 
 
 //============================================================ 
 //= The Airship System (Yuno -> Hugel -> Einbroch -> Lighthalzen -> repeat)
 //============================================================ 
 
-airplane,243,74,4	script	#AirshipWarp-1	45,2,2{
+airplane,243,74,4	script	#AirshipWarp-1	45,2,2,{
 OnTouch:
 	if($@airplanelocation == 1)warp "einbroch",90,275;
 	if($@airplanelocation == 2)warp "yuno",85,265;
@@ -49,7 +50,7 @@ OnUnhide:
 	end;
 }
 
-airplane,243,29,4	script	#AirshipWarp-2	45,2,2{
+airplane,243,29,4	script	#AirshipWarp-2	45,2,2,{
 OnTouch:
 	if($@airplanelocation == 1)warp "einbroch",90,275;
 	if($@airplanelocation == 2)warp "yuno",85,265;
@@ -634,7 +635,7 @@ airplane_01,221,158,6	script	Pilot#air-0::Pilot	852,{
 //= The Airship System (Izlude -> Yuno -> Rachel -> Repeat)
 //============================================================ 
 
-airplane_01,243,74,4	script	#AirshipWarp-3	45,2,2{
+airplane_01,243,74,4	script	#AirshipWarp-3	45,2,2,{
 OnTouch:
 	if($@airplanelocation2 == 1)warp "izlude",202,56;
 	if($@airplanelocation2 == 2)warp "yuno",20,265;
@@ -649,7 +650,7 @@ OnUnhide:
 	end;
 }
 
-airplane_01,243,29,4	script	#AirshipWarp-4	45,2,2{
+airplane_01,243,29,4	script	#AirshipWarp-4	45,2,2,{
 OnTouch:
 	if($@airplanelocation2 == 1)warp "izlude",202,56;
 	if($@airplanelocation2 == 2)warp "yuno",20,265;

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //=	from npc/cities/niflheim.txt [Evera]
 //= 1.1 Optimized Book of Devil quest. used bit-wise var,
 //=	Optimized Piano Quest - now uses 1 variable [Lupus]
+//= 1.2 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //============================================================ 
 
 //=============================================================
@@ -209,7 +210,7 @@ nif_in,31,20,3	script	Kurtz	794,{
 	close;
 }
 
-niflheim,169,71,5	script	#1	111,2,2{
+niflheim,169,71,5	script	#1	111,2,2,{
 	if(MISC_QUEST & 32 || nif_piano&8) end;
 
 	mes "- In the nearby tombs -";
@@ -226,7 +227,7 @@ L_end:
 	close;
 }
 
-niflheim,208,103,5	script	#2	111,2,2{
+niflheim,208,103,5	script	#2	111,2,2,{
 	if(MISC_QUEST & 32 || nif_piano&32) end;
 	if(nif_piano&16){
 		mes "- In the hole you have dug -";
@@ -254,7 +255,7 @@ niflheim,208,103,5	script	#2	111,2,2{
 	close;
 }
 
-nif_in,115,181,5	script	#4	111,3,3{
+nif_in,115,181,5	script	#4	111,3,3,{
 	mes "- You see a huge old piano -";
 	if((MISC_QUEST & 32)==0) mes "- with a few keys missing  -";
 	if(MISC_QUEST & 32) mes "- with one key missing -";
@@ -271,7 +272,7 @@ nif_in,115,181,5	script	#4	111,3,3{
 	close;
 }
 
-nif_in,118,151,5	script	#5	111,3,3{
+nif_in,118,151,5	script	#5	111,3,3,{
 	if((MISC_QUEST & 32)==0) end;
 	mes "- The very moment the long shadow -";
 	mes "- of your body falls on the piano -";

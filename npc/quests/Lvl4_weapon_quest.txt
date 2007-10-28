@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Vicious_Pucca, Reddozen & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.2 A small fix, thanks to vicious_pucca [MasterOfMuppets]
 //= 1.21 Fixing MoM's typos (Citrin -> Citrine) [erKURITA]
 //= 1.3 Redirected error message for "LV_16" to "LV_16_NOGEM" (Gepard) [L0ne_W0lf]
+//= 1.4 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //============================================================ 
 
 //---------------------------------------------------------------
@@ -2010,7 +2011,7 @@ LV4_50:
 // Kayron, creates Longinus' Spear, Guillotine, Great Axe and Brionac
 //--------------------------------------------------
 
-niflheim,240,193,3	script	Kayron	794, {
+niflheim,240,193,3	script	Kayron	794,{
 	set @NowWeight, MaxWeight - Weight;
 	if (@NowWeight >= 3000) goto LV4_NOT_OW;
 	mes "- Wait a minute! -";
@@ -2417,7 +2418,7 @@ LV4_HACK:
 // Reyghema, creates Berserk, Tjungkulleti, Rudra's Bow and Brocca(Skewer)
 //--------------------------------------------------
 
-niflheim,99,268,5	script	Reyghema	794, {
+niflheim,99,268,5	script	Reyghema	794,{
 	set @NowWeight, MaxWeight - Weight;
 	if (@NowWeight >= 3000) goto LV4_NOT_OW;
 	mes "- Wait a minute! -";
@@ -2817,7 +2818,7 @@ LV4_HACK:
 // Hein, creates Excalibur, Schweisersabel, Dragon Slayer and Edge
 //--------------------------------------------------
 
-niflheim,187,280,3	script	Hein	795, {
+niflheim,187,280,3	script	Hein	795,{
 	set @NowWeight, MaxWeight - Weight;
 	if (@NowWeight >= 3000) goto LV4_NOT_OW;
 	mes "- Wait a minute! -";

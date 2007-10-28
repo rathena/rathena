@@ -3,13 +3,13 @@
 //===== By: ==================================================
 //= KarLaeda
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena 1
 //===== Description: ========================================= 
 //= Gonryun Broken Sword Quest
 //===== Additional Comments: ================================= 
-//= 
+//= 1.1 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -3463,7 +3463,7 @@ yuno_in01,99,101,4	script	Doctor#gnbs	744,{
 	close;
 }
 
-yuno_in01,104,94,0	script	go away#gnbs	139,2,1{
+yuno_in01,104,94,0	script	go away#gnbs	139,2,1,{
 	if (b_sword < 22) {
 		mes "[??????]";
 		mes "^FF0000What are you doing here?";
