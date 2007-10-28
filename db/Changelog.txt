@@ -25,6 +25,8 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+10/28
+	* Rev. 11598 Corrected Cross Shield bonus. [L0ne_W0lf]
 10/26
 	* Some small db updates [Playtester]
 	- fixed Bongun Card thanks to Gepard

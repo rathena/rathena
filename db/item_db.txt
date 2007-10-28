@@ -989,7 +989,7 @@
 2127,Sakray_Test_Shield,Sakray Test Shield,5,,10,0,,10,,0,0xFFFFFFFF,7,2,32,1,1,0,1,{ bonus2 bSubRace,RC_NonBoss,-25; bonus2 bSubRace,RC_Boss,-25; },{},{}
 2128,Herald_Of_GOD_,Sacred Mission,5,128000,,1600,,5,,1,0x00004000,7,2,32,,83,1,3,{ bonus bVit,3; bonus bInt,2; bonus bMdef,3; bonus bUnbreakableShield,0; },{},{}
 2129,Sacred_Scripture,Sacred Scripture,5,,,600,,5,,0,0x00008100,7,2,32,,50,1,1,{ bonus bHPrecovRate,3; bonus bSPrecovRate,3; bonus bInt,1; if(isequipped(1631)) bonus2 bSkillAtk,79,20; bonus3 bAutoSpellWhenHit,77,1,10; },{},{}
-2130,Cross_Shield,Cross Shield,5,,,2000,,6,,0,0x00004000,7,2,32,,80,1,1,{ bonus bStr,1; bonus2 bSkillAtk,251,30; bonus2 bSkillAtk,251,30; bonus bUseSPrate,10; },{},{}
+2130,Cross_Shield,Cross Shield,5,,,2000,,6,,0,0x00004000,7,2,32,,80,1,1,{ bonus bStr,1; bonus2 bSkillAtk,480,30; bonus2 bSkillAtk,251,30; bonus bUseSPrate,10; },{},{}
 2131,Book_of_Charms_Volume_1,Book of Chars Vol. 1,5,,,1000,,2,,0,0x00010204,2,2,32,,80,1,1,{ bonus bMDef,3; bonus bInt,2; bonus2 bAddEffWhenHit,Eff_Stun,300; },{},{}
 2199,Ahura_Mazda,Ahura Mazdah,5,1,,10,,100,,0,0xFFFFFFFF,7,2,32,,1,1,0,{ bonus bAllStats,50; bonus bMdef,99; bonus bShortWeaponDamageReturn,100; bonus2 bSubRace,RC_DemiHuman,95; skill 479,5; },{},{}
 // Headgears
