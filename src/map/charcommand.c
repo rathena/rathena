@@ -3853,7 +3853,6 @@ bool is_charcommand_sub(const int fd, struct map_session_data* sd, const char* s
 bool is_charcommand(const int fd, struct map_session_data* sd, const char* message)
 {
 	int gmlvl = pc_isGM(sd);
-	int s_flag = 0;
 
 	nullpo_retr(false, sd);
 

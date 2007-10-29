@@ -2432,7 +2432,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 /*==========================================
  * ‚»‚Ì‘¼ƒ_ƒ??[ƒWŒvZ
  *------------------------------------------*/
-struct Damage  battle_calc_misc_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag)
+struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int mflag)
 {
 	int skill;
 	short i, nk;

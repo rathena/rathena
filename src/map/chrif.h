@@ -4,6 +4,9 @@
 #ifndef _CHRIF_H_
 #define _CHRIF_H_
 
+#include "../common/cbasetypes.h"
+#include <time.h>
+
 struct auth_node{
 	int account_id, login_id1, login_id2, sex, fd;
 	time_t connect_until_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
