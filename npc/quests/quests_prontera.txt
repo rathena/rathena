@@ -2848,7 +2848,7 @@ prt_church,184,110,3	script	Father Biscuss	60,{
 		mes "Church, I want to thank";
 		mes "you for all of your help.";
 		set prt_curse,36;
-		set baseExp,BaseExp+1600000;
+		getexp 1600000,0;
 		close;
 	}
 	else if (prt_curse == 36) {

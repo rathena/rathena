@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/10/29
+	* Fixed Gaebolg quest not giving exp in some situations [Playtester]
 2007/10/28
 	* Rev. 11605 Updated NPC headers to fix errors caused by rev. 11603. [L0ne_W0lf]
 	- Note: non-standard loaded scripts need to be checked for errors/duplicates.
