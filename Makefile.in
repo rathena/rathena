@@ -2,15 +2,15 @@
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	ALL_DEPENDS=common common_sql login login_sql char char_sql map map_sql ladmin tools converters plugins save
-	SQL_DEPENDS=common_sql login_sql char_sql map_sql save
+	ALL_DEPENDS=common common_sql login login_sql char char_sql map map_sql ladmin tools converters plugins import save
+	SQL_DEPENDS=common_sql login_sql char_sql map_sql import save
 	COMMON_SQL_DEPENDS=
 	LOGIN_SQL_DEPENDS=common_sql
 	CHAR_SQL_DEPENDS=common_sql
 	MAP_SQL_DEPENDS=common_sql
 	CONVERTERS_DEPENDS=common_sql
 else
-	ALL_DEPENDS=common login char map ladmin tools plugins save
+	ALL_DEPENDS=common login char map ladmin tools plugins import save
 	SQL_DEPENDS=needs_mysql
 	COMMON_SQL_DEPENDS=needs_mysql
 	LOGIN_SQL_DEPENDS=needs_mysql
@@ -21,11 +21,11 @@ endif
 
 #####################################################################
 .PHONY: txt sql common common_sql login login_sql char char_sql map map_sql \
-	ladmin tools converters plugins addons save clean help depend
+	ladmin tools converters plugins addons import save clean help depend
 
 all: $(ALL_DEPENDS)
 
-txt: common login char map conf
+txt: common login char map import save
 
 sql: $(SQL_DEPENDS)
 
@@ -65,6 +65,15 @@ converters: $(CONVERTERS_DEPENDS)
 plugins addons: common
 	@$(MAKE) -C src/plugins
 
+import:
+# 1) create conf/import folder
+# 2) add missing files
+# 3) remove remaining .svn folder
+	@echo "building conf/import folder..."
+	@if test ! -d conf/import ; then mkdir conf/import ; fi
+	@for f in $$(ls conf/import-tmpl) ; do if test ! -e conf/import/$$f ; then cp conf/import-tmpl/$$f conf/import ; fi ; done
+	@rm -rf conf/import/.svn
+
 save:
 # 1) create save folder
 # 2) add missing files
@@ -102,12 +111,13 @@ help:
 	@echo "'converters'  - builds the login/char converters"
 	@echo "'plugins'     - builds all the plugins in src/plugins"
 	@echo "'addons'"
-	@echo "'save'        - builds save folder from the template"
-	@echo "'all'         - builds all above targets"
-	@echo "'txt'         - builds txt servers (targets 'common' 'login' 'char' 'map' and"
-	@echo "                'save')"
+	@echo "'import'      - builds conf/import folder from the template conf/import-tmpl"
+	@echo "'save'        - builds save folder from the template save-tmpl"
+	@echo "'all'         - builds all the above targets"
+	@echo "'txt'         - builds txt servers (targets 'common' 'login' 'char' 'map'"
+	@echo "                'import' and 'save')"
 	@echo "'sql'         - builds sql servers (targets 'common_sql' 'login_sql' 'char_sql'"
-	@echo "                and 'map_sql')"
+	@echo "                'map_sql' 'import' and 'save')"
 	@echo "'clean'       - cleans builds and objects"
 	@echo "'help'        - outputs this message"
 
