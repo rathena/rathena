@@ -1,5 +1,13 @@
 Date	Added
 
+2007/10/29
+	* Removed petid command (not needed because commands understand names)
+	* Removed *id2 commands (messy, useless and redundant)
+	* Added missing @misceffect, @feelreset and #dropall/#storeall setting
+	* AGAIN added conf entries for @whozeny, @kamic, @tonpc, @identify,
+	  @adopt, @trade, @changelook, @send, @displayskill
+	* Reverted atcommand conf (alphabetically-sorted = failure) [ultramage]
+
 2007/10/26
 	* Removed the config setting firewall_hits_on_undead setting. The code
 	  handles this now using the delay defined in skill_unit_db. [Skotlex]

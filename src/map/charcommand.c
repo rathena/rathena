@@ -1,32 +1,31 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/cbasetypes.h"
-#include "../common/socket.h"
 #include "../common/timer.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
+#include "../common/strlib.h"
 #include "../common/utils.h"
 
-#include "log.h"
+#include "atcommand.h" // msg_txt()
+#include "charcommand.h"
+#include "battle.h"
 #include "clif.h"
 #include "chrif.h"
 #include "intif.h"
 #include "itemdb.h"
+#include "log.h"
 #include "map.h"
 #include "pc.h"
 #include "status.h"
 #include "skill.h"
 #include "mob.h"
+#include "npc.h"
 #include "pet.h"
-#include "mercenary.h"	//[orn]
-#include "battle.h"
-#include "charcommand.h"
-#include "atcommand.h"
+#include "mercenary.h"
 #include "party.h"
 #include "guild.h"
 #include "script.h"
-#include "npc.h"
 #include "trade.h"
 #include "unit.h"
 
@@ -40,379 +39,16 @@ char charcommand_symbol = '#';
 extern char *msg_table[1000]; // Server messages (0-499 reserved for GM commands, 500-999 reserved for others)
 
 #define CCMD_FUNC(x) int charcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
-CCMD_FUNC(jobchange);
-CCMD_FUNC(petrename);
-CCMD_FUNC(petfriendly);
-CCMD_FUNC(stats);
-CCMD_FUNC(option);
-CCMD_FUNC(save);
-CCMD_FUNC(stats_all);
-CCMD_FUNC(reset);
-CCMD_FUNC(spiritball);
-CCMD_FUNC(itemlist);
-CCMD_FUNC(effect);
-CCMD_FUNC(storagelist);
-CCMD_FUNC(item);
-CCMD_FUNC(warp);
-CCMD_FUNC(zeny);
-CCMD_FUNC(fakename);
-CCMD_FUNC(baselevel);
-CCMD_FUNC(joblevel);
-CCMD_FUNC(questskill);
-CCMD_FUNC(lostskill);
-CCMD_FUNC(skreset);
-CCMD_FUNC(streset);
-CCMD_FUNC(model);
-CCMD_FUNC(stpoint);
-CCMD_FUNC(skpoint);
-CCMD_FUNC(changesex);
-CCMD_FUNC(feelreset);
-CCMD_FUNC(help);
-CCMD_FUNC(load);
-CCMD_FUNC(speed);
-CCMD_FUNC(storage);
-CCMD_FUNC(guildstorage);
-CCMD_FUNC(hide);
-CCMD_FUNC(alive);
-CCMD_FUNC(heal);
-CCMD_FUNC(item2);
-CCMD_FUNC(itemreset);
-CCMD_FUNC(refine);
-CCMD_FUNC(produce);
-CCMD_FUNC(param);
-CCMD_FUNC(guildlevelup);
-CCMD_FUNC(hatch);
-CCMD_FUNC(pethungry);
-CCMD_FUNC(allskill);
-CCMD_FUNC(dye);
-CCMD_FUNC(hair_style);
-CCMD_FUNC(hair_color);
-CCMD_FUNC(allstats);
-CCMD_FUNC(mount_peco);
-CCMD_FUNC(delitem);
-CCMD_FUNC(jailtime);
-CCMD_FUNC(disguise);
-CCMD_FUNC(undisguise);
-CCMD_FUNC(cart_list);
-CCMD_FUNC(killer);
-CCMD_FUNC(killable);
-CCMD_FUNC(refresh);
-CCMD_FUNC(exp);
-CCMD_FUNC(monsterignore);
-CCMD_FUNC(size);
-CCMD_FUNC(homlevel);
-CCMD_FUNC(homevolution);
-CCMD_FUNC(homfriendly);
-CCMD_FUNC(homhungry);
-CCMD_FUNC(hominfo);
 
-/*==========================================
- *CharCommandInfo charcommand_info[]構造体の定義
- *------------------------------------------*/
+typedef struct CharCommandInfo {
+	const char* command;
+	int level;
+	CharCommandFunc func;
+} CharCommandInfo;
 
-// First char of commands is configured in charcommand_athena.conf. Leave # in this list for default value.
-// to set default level, read charcommand_athena.conf first please.
-static CharCommandInfo charcommand_info[] = {
-	{ CharCommandJobChange,			"#job",						60, charcommand_jobchange },
-	{ CharCommandJobChange,			"#jobchange",				60, charcommand_jobchange },
-	{ CharCommandPetRename,			"#petrename",				50, charcommand_petrename },
-	{ CharCommandPetFriendly,		"#petfriendly",				50, charcommand_petfriendly },
-	{ CharCommandStats,				"#stats",					40, charcommand_stats },
-	{ CharCommandOption,			"#option",					60, charcommand_option },
-	{ CharCommandReset,				"#reset",					60, charcommand_reset },
-	{ CharCommandSave,				"#save",					60, charcommand_save },
-	{ CharCommandSpiritball,		"#spiritball",				40, charcommand_spiritball },
-	{ CharCommandItemList,			"#itemlist",				40, charcommand_itemlist },
-	{ CharCommandEffect,			"#effect",					40, charcommand_effect },
-	{ CharCommandStorageList,		"#storagelist",				40, charcommand_storagelist },
-	{ CharCommandItem,				"#item",					60, charcommand_item },
-	{ CharCommandWarp,				"#warp",					60, charcommand_warp },
-	{ CharCommandWarp,				"#rura",					60, charcommand_warp },
-	{ CharCommandWarp,				"#rura+",					60, charcommand_warp },
-	{ CharCommandZeny,				"#zeny",					60, charcommand_zeny },
-	{ CharCommandFakeName,			"#fakename",				50, charcommand_fakename},
-	{ CharCommandBaseLevel,			"#baselvl",					60, charcommand_baselevel},
-	{ CharCommandBaseLevel,			"#baselevel",				60, charcommand_baselevel},
-	{ CharCommandBaseLevel,			"#blvl",					60, charcommand_baselevel},
-	{ CharCommandBaseLevel,			"#blevel",					60, charcommand_baselevel},
-	{ CharCommandJobLevel,			"#joblvl",					60, charcommand_joblevel},
-	{ CharCommandJobLevel,			"#joblevel",				60, charcommand_joblevel},
-	{ CharCommandJobLevel,			"#jlvl",					60, charcommand_joblevel},
-	{ CharCommandJobLevel,			"#jlevel",					60, charcommand_joblevel},
-	{ CharCommandQuestSkill,		"#questskill",				60, charcommand_questskill },
-	{ CharCommandLostSkill,			"#lostskill",				60, charcommand_lostskill },
-	{ CharCommandSkReset,			"#skreset",					60, charcommand_skreset },
-	{ CharCommandStReset,			"#streset",					60, charcommand_streset },
-	{ CharCommandModel,				"#model",					50, charcommand_model },
-	{ CharCommandSKPoint,			"#skpoint",					60, charcommand_skpoint },
-	{ CharCommandSTPoint,			"#stpoint",					60, charcommand_stpoint },
-	{ CharCommandChangeSex,			"#changesex",				60, charcommand_changesex },
-	{ CharCommandFeelReset,			"#feelreset",				60, charcommand_feelreset },
-	{ CharCommandHelp,				"#help",					20, charcommand_help },
-	{ CharCommandLoad,				"#load",					60, charcommand_load },
-	{ CharCommandSpeed,				"#speed",					60, charcommand_speed },
-	{ CharCommandStorage,			"#storage",					60, charcommand_storage },
-	{ CharCommandGStorage,			"#gstorage",				60, charcommand_guildstorage },
-	{ CharCommandHide,				"#hide",					60, charcommand_hide },
-	{ CharCommandAlive,				"#alive",					60, charcommand_alive },
-	{ CharCommandHeal,				"#heal",					60, charcommand_heal },
-	{ CharCommandItem2,				"#item2",					60, charcommand_item2 },
-	{ CharCommandItemReset,			"#itemreset",				60, charcommand_itemreset },
-	{ CharCommandRefine,			"#refine",					60, charcommand_refine },
-	{ CharCommandProduce,			"#produce",					60, charcommand_produce },
-	{ CharCommandStrength,			"#str",						60, charcommand_param },
-	{ CharCommandAgility,			"#agi",						60, charcommand_param },
-	{ CharCommandVitality,			"#vit",						60, charcommand_param },
-	{ CharCommandIntelligence,		"#int",						60, charcommand_param },
-	{ CharCommandDexterity,			"#dex",						60, charcommand_param },
-	{ CharCommandLuck,				"#luk",						60, charcommand_param },
-	{ CharCommandGuildLevelUp,		"#glvl",					60, charcommand_guildlevelup },
-	{ CharCommandGuildLevelUp,		"#glevel",					60, charcommand_guildlevelup },
-	{ CharCommandGuildLevelUp,		"#guildlvl",				60, charcommand_guildlevelup },
-	{ CharCommandGuildLevelUp,		"#guildlevel",				60, charcommand_guildlevelup },
-	{ CharCommandHatch,				"#hatch",					50, charcommand_hatch },
-	{ CharCommandPetHungry,			"#pethungry",				60, charcommand_pethungry },
-	{ CharCommandAllSkill,			"#allskill",				60, charcommand_allskill },
-	{ CharCommandAllSkill,			"#allskills",				60, charcommand_allskill },
-	{ CharCommandAllSkill,			"#skillall",				60, charcommand_allskill },
-	{ CharCommandAllSkill,			"#skillsall",				60, charcommand_allskill },
-	{ CharCommandDye,				"#dye",						50, charcommand_dye },
-	{ CharCommandHStyle,			"#hairstyle",				50, charcommand_hair_style },
-	{ CharCommandHStyle,			"#hstyle",					50, charcommand_hair_style },
-	{ CharCommandHColor,			"#haircolor",				50, charcommand_hair_color },
-	{ CharCommandHColor,			"#hcolor",					50, charcommand_hair_color },
-	{ CharCommandAllStats,			"#allstat",					60, charcommand_allstats },
-	{ CharCommandAllStats,			"#allstats",				60, charcommand_allstats },
-	{ CharCommandAllStats,			"#statall",					60, charcommand_allstats },
-	{ CharCommandAllStats,			"#statsall",				60, charcommand_allstats },
-	{ CharCommandMountPeco,			"#mount",					50, charcommand_mount_peco },
-	{ CharCommandMountPeco,			"#mountpeco",				50, charcommand_mount_peco },
-	{ CharCommandDelItem,			"#delitem",					60, charcommand_delitem },
-	{ CharCommandJailTime,			"#jailtime",				40, charcommand_jailtime },
-	{ CharCommandDisguie,			"#disguise",				60, charcommand_disguise },
-	{ CharCommandUnDisguise,		"#undisguise",				60, charcommand_undisguise },
-	{ CharCommandCartList,			"#cartlist",				40, charcommand_cart_list },
-	{ CharCommandKiller,			"#killer",					60, charcommand_killer },
-	{ CharCommandKillable,			"#killable",				60, charcommand_killable },
-	{ CharCommandRefresh,			"#refresh",					40, charcommand_refresh },
-	{ CharCommandExp,				"#exp",						 1, charcommand_exp },
-	{ CharCommandMonsterIgnore,		"#monsterignore",			60, charcommand_monsterignore },
-	{ CharCommandSize,				"#size",					50, charcommand_size },
-	{ CharCommandHomLevel,			"#hlvl",					60, charcommand_homlevel },
-	{ CharCommandHomLevel,			"#hlevel",					60, charcommand_homlevel },
-	{ CharCommandHomLevel,			"#homlvl",					60, charcommand_homlevel },
-	{ CharCommandHomLevel,			"#homlevel",				60, charcommand_homlevel },
-	{ CharCommandHomEvolve,			"#homevolve",				60, charcommand_homevolution },
-	{ CharCommandHomEvolve,			"#homevolvution",			60, charcommand_homevolution },
-	{ CharCommandHomFriendly,		"#homfriendly",				60, charcommand_homfriendly },
-	{ CharCommandHomHungry,			"#homhungry",				60, charcommand_homhungry },
-	{ CharCommandHomInfo,			"#hominfo",					40, charcommand_hominfo },
-	
-// add new commands before this line
-	{ CharCommand_Unknown, 		            NULL, 				       1, NULL }
-};
+static CharCommandInfo* get_charcommandinfo_byname(const char* name);
+static CharCommandInfo* get_charcommandinfo_byfunc(const CharCommandFunc func);
 
-int get_charcommand_level(const CharCommandType type)
-{
-	int i;
-
-	for (i = 0; charcommand_info[i].type != CharCommand_None; i++)
-		if (charcommand_info[i].type == type)
-			return charcommand_info[i].level;
-
-	return 100; // 100: command can not be used
-}
-
-CharCommandType is_charcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl)
-{
-	CharCommandInfo info;
-	CharCommandType type;
-
-	memset(&info, 0, sizeof(info));
-
-	type = charcommand(sd, gmlvl, str, &info);
-	if (type != CharCommand_None) {
-		char command[100];
-		char output[200];
-		const char* p = str;
-
-		if (map[sd->bl.m].nocommand &&
-			gmlvl < map[sd->bl.m].nocommand)
-		{	//Command not allowed on this map.
-			sprintf(output, msg_txt(143)); 
-			clif_displaymessage(fd, output);
-			return AtCommand_None;
-		}
-
-		memset(command, '\0', sizeof(command));
-		memset(output, '\0', sizeof(output));
-		while (*p && !ISSPACE(*p))
-			p++;
-		if (p - str >= sizeof(command)) // too long
-			return CharCommand_Unknown;
-		strncpy(command, str, p - str);
-		while (ISSPACE(*p))
-			p++;
-
-		if (type == CharCommand_Unknown || info.proc == NULL) {
-			snprintf(output, sizeof(output),msg_txt(153), command); // %s is Unknown Command.
-			clif_displaymessage(fd, output);
-		} else {
-			if (info.proc(fd, sd, command, p) != 0) {
-				// Command can not be executed
-				snprintf(output, sizeof(output), msg_txt(154), command); // %s failed.
-				clif_displaymessage(fd, output);
-			}
-		}
-
-		return info.type;
-	}
-
-	return CharCommand_None;
-}
-
-/*==========================================
- *is_charcommand @コマンドに存在するかどうか確認する
- *------------------------------------------*/
-CharCommandType is_charcommand(const int fd, struct map_session_data* sd, const char* message)
-{
-	const char* str = message;
-	int s_flag = 0;
-
-	nullpo_retr(CharCommand_None, sd);
-
-	if (sd->sc.count && sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCOMMAND)
-		return CharCommand_None;
-
-	if (!message || !*message)
-		return CharCommand_None;
-
-	// temporary compatibility layer for previous implementation
-	if( *message != charcommand_symbol )
-	{
-		str += strlen(sd->status.name);
-		while (*str && (ISSPACE(*str) || (s_flag == 0 && *str == ':'))) {
-			if (*str == ':')
-				s_flag = 1;
-			str++;
-		}
-	}
-
-	if (!*str)
-		return CharCommand_None;
-
-	if(str[0] == '|' && strlen(str) >= 4 && str[3] == charcommand_symbol)
-		str += 3; // skip 10/11-langtype's codepage indicator, if detected
-
-	return is_charcommand_sub(fd,sd,str,pc_isGM(sd));
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-CharCommandType charcommand(struct map_session_data* sd, const int level, const char* message, CharCommandInfo* info)
-{
-	char* p = (char *)message; 
-
-	if (!info)
-		return CharCommand_None;
-	if (battle_config.atc_gmonly != 0 && !level) // level = pc_isGM(sd)
-		return CharCommand_None;
-	if (!p || !*p) {
-		ShowError("char command message is empty\n");
-		return CharCommand_None;
-	}
-
-	if (*p == charcommand_symbol) { // check first char
-		char command[101];
-		int i = 0;
-		memset(info, 0, sizeof(CharCommandInfo));
-		sscanf(p, "%100s", command);
-		command[100] = '\0';
-
-		while (charcommand_info[i].type != CharCommand_Unknown) {
-			if (strcmpi(command+1, charcommand_info[i].command+1) == 0 && level >= charcommand_info[i].level) {
-				p[0] = charcommand_info[i].command[0]; // set correct first symbol for after.
-				break;
-			}
-			i++;
-		}
-
-		if (charcommand_info[i].type == CharCommand_Unknown) {
-			// doesn't return Unknown if player is normal player (display the text, not display: unknown command)
-			if (level == 0)
-				return CharCommand_None;
-			else
-				return CharCommand_Unknown;
-		} else if((log_config.gm) && (charcommand_info[i].level >= log_config.gm)) {
-			log_atcommand(sd, message);
-		}
-		memcpy(info, &charcommand_info[i], sizeof charcommand_info[i]);
-	} else {
-		return CharCommand_None;
-	}
-
-	return info->type;
-}
-
-
-/*==========================================
- *
- *------------------------------------------*/
-static CharCommandInfo* get_charcommandinfo_byname(const char* name)
-{
-	int i;
-
-	for (i = 0; charcommand_info[i].type != CharCommand_Unknown; i++)
-		if (strcmpi(charcommand_info[i].command + 1, name) == 0)
-			return &charcommand_info[i];
-
-	return NULL;
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-int charcommand_config_read(const char *cfgName)
-{
-	char line[1024], w1[1024], w2[1024];
-	CharCommandInfo* p;
-	FILE* fp;
-
-	if ((fp = fopen(cfgName, "r")) == NULL) {
-		ShowError("CharCommands configuration file not found: %s\n", cfgName);
-		return 1;
-	}
-
-	while (fgets(line, sizeof(line), fp))
-	{
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-
-		if (sscanf(line, "%1023[^:]:%1023s", w1, w2) != 2)
-			continue;
-		p = get_charcommandinfo_byname(w1);
-		if (p != NULL) {
-			p->level = atoi(w2);
-			if (p->level > 100)
-				p->level = 100;
-			else if (p->level < 0)
-				p->level = 0;
-		}
-
-		if (strcmpi(w1, "import") == 0)
-			charcommand_config_read(w2);
-		else if (strcmpi(w1, "command_symbol") == 0 && w2[0] > 31 &&
-				w2[0] != '/' && // symbol of standard ragnarok GM commands
-				w2[0] != '%' && // symbol of party chat speaking
-				w2[0] != '$' && // symbol of guild chat speaking
-				w2[0] != '@')	// symbol of atcommand
-			charcommand_symbol = w2[0];
-	}
-	fclose(fp);
-
-	return 0;
-}
 
 /*==========================================
  * 対象キャラクターを転職させる upper指定で転生や養子も可能
@@ -1558,9 +1194,9 @@ int charcommand_lostskill(const int fd, struct map_session_data* sd, const char*
 	}
 
 	if (skill_id < 0 && skill_id >= MAX_SKILL) {
- 		clif_displaymessage(fd, msg_txt(198)); // This skill number doesn't exist.
- 		return -1;
- 	}
+		clif_displaymessage(fd, msg_txt(198)); // This skill number doesn't exist.
+		return -1;
+	}
 	if (!(skill_get_inf2(skill_id) & INF2_QUEST_SKILL)) {
 		clif_displaymessage(fd, msg_txt(197)); // This skill number doesn't exist or isn't a quest skill.
 		return -1;
@@ -3498,6 +3134,78 @@ int charcommand_killable(const int fd, struct map_session_data* sd, const char* 
 }
 
 /*==========================================
+ * Drop all of the target's possessions on the ground
+ *------------------------------------------*/
+int charcommand_dropall(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	int i;
+	struct map_session_data *pl_sd = NULL;
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message)
+		return -1;
+	if((pl_sd=map_nick2sd((char *) message)) == NULL)
+		return -1;
+	for (i = 0; i < MAX_INVENTORY; i++) {
+		if (pl_sd->status.inventory[i].amount) {
+			if(pl_sd->status.inventory[i].equip != 0)
+				pc_unequipitem(pl_sd, i, 3);
+			pc_dropitem(pl_sd,  i, pl_sd->status.inventory[i].amount);
+		}
+	}
+
+	clif_displaymessage(pl_sd->fd, "All items dropped");
+	clif_displaymessage(fd, "It is done");
+
+	return 0;
+}
+
+/*==========================================
+ * Put all of the target's possessions into storage
+ *------------------------------------------*/
+int charcommand_storeall(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	int i;
+	struct map_session_data *pl_sd = NULL;
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message)
+		return -1;
+	if((pl_sd=map_nick2sd((char *) message)) == NULL)
+		return -1;
+
+	if (pl_sd->state.storage_flag != 1)
+  	{	//Open storage.
+		switch (storage_storageopen(pl_sd)) {
+		case 2: //Try again
+			clif_displaymessage(fd, "Had to open the characters storage window...");
+			clif_displaymessage(fd, "run this command again..");
+			return 0;
+		case 1: //Failure
+			clif_displaymessage(fd, "The character currently can't use the storage.");
+			return 1;
+		}
+	}
+
+	for (i = 0; i < MAX_INVENTORY; i++) {
+		if (pl_sd->status.inventory[i].amount) {
+			if(pl_sd->status.inventory[i].equip != 0)
+				pc_unequipitem(pl_sd, i, 3);
+			storage_storageadd(pl_sd,  i, sd->status.inventory[i].amount);
+		}
+	}
+	storage_storageclose(pl_sd);
+
+	clif_displaymessage(pl_sd->fd, "Everything you own has been put away for safe keeping.");
+	clif_displaymessage(pl_sd->fd, "go to the nearest kafka to retrieve it..");
+	clif_displaymessage(pl_sd->fd, "   -- the management");
+
+	clif_displaymessage(fd, "It is done");
+
+	return 0;
+}
+
+/*==========================================
  * Refreshes target [HiddenDragon]
  *------------------------------------------*/
 int charcommand_refresh(const int fd, struct map_session_data* sd, const char* command, const char* message)
@@ -3734,7 +3442,7 @@ int charcommand_homevolution(const int fd, struct map_session_data* sd, const ch
 		clif_displaymessage(fd, "Please, enter a player name (usage: #homevolution <player>).");
 		return -1;
 	}
-	
+
 	if ( (pl_sd = map_nick2sd(character)) == NULL )
 	{
 		clif_displaymessage(fd, msg_txt(3)); // Character not found.
@@ -3746,7 +3454,7 @@ int charcommand_homevolution(const int fd, struct map_session_data* sd, const ch
 		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
 		return -1;
 	}
-	
+
 	if ( !merc_is_hom_active(pl_sd->hd) ) {
 		clif_displaymessage(fd, "Target player does not have a homunculus."); 
 		return -1;
@@ -3958,6 +3666,264 @@ int charcommand_hominfo(const int fd, struct map_session_data* sd, const char* c
 
 	snprintf(output, sizeof(output), "Stats: Str %d / Agi %d / Vit %d / Int %d / Dex %d / Luk %d", status->str, status->agi, status->vit, status->int_, status->dex, status->luk);
 	clif_displaymessage(fd, output);
+
+	return 0;
+}
+
+
+/*==========================================
+ * charcommand_info[] structure definition
+ *------------------------------------------*/
+
+CharCommandInfo charcommand_info[] = {
+	{ "job",               60,     charcommand_jobchange },
+	{ "jobchange",         60,     charcommand_jobchange },
+	{ "petrename",         50,     charcommand_petrename },
+	{ "petfriendly",       50,     charcommand_petfriendly },
+	{ "stats",             40,     charcommand_stats },
+	{ "option",            60,     charcommand_option },
+	{ "reset",             60,     charcommand_reset },
+	{ "save",              60,     charcommand_save },
+	{ "spiritball",        40,     charcommand_spiritball },
+	{ "itemlist",          40,     charcommand_itemlist },
+	{ "effect",            40,     charcommand_effect },
+	{ "storagelist",       40,     charcommand_storagelist },
+	{ "item",              60,     charcommand_item },
+	{ "warp",              60,     charcommand_warp },
+	{ "rura",              60,     charcommand_warp },
+	{ "rura+",             60,     charcommand_warp },
+	{ "zeny",              60,     charcommand_zeny },
+	{ "fakename",          50,     charcommand_fakename },
+	{ "baselvl",           60,     charcommand_baselevel },
+	{ "baselevel",         60,     charcommand_baselevel },
+	{ "blvl",              60,     charcommand_baselevel },
+	{ "blevel",            60,     charcommand_baselevel },
+	{ "joblvl",            60,     charcommand_joblevel },
+	{ "joblevel",          60,     charcommand_joblevel },
+	{ "jlvl",              60,     charcommand_joblevel },
+	{ "jlevel",            60,     charcommand_joblevel },
+	{ "questskill",        60,     charcommand_questskill },
+	{ "lostskill",         60,     charcommand_lostskill },
+	{ "skreset",           60,     charcommand_skreset },
+	{ "streset",           60,     charcommand_streset },
+	{ "model",             50,     charcommand_model },
+	{ "skpoint",           60,     charcommand_skpoint },
+	{ "stpoint",           60,     charcommand_stpoint },
+	{ "changesex",         60,     charcommand_changesex },
+	{ "feelreset",         60,     charcommand_feelreset },
+	{ "help",              20,     charcommand_help },
+	{ "load",              60,     charcommand_load },
+	{ "speed",             60,     charcommand_speed },
+	{ "storage",           60,     charcommand_storage },
+	{ "gstorage",          60,     charcommand_guildstorage },
+	{ "hide",              60,     charcommand_hide },
+	{ "alive",             60,     charcommand_alive },
+	{ "revive",            60,     charcommand_alive },
+	{ "heal",              60,     charcommand_heal },
+	{ "item2",             60,     charcommand_item2 },
+	{ "itemreset",         60,     charcommand_itemreset },
+	{ "refine",            60,     charcommand_refine },
+	{ "produce",           60,     charcommand_produce },
+	{ "str",               60,     charcommand_param },
+	{ "agi",               60,     charcommand_param },
+	{ "vit",               60,     charcommand_param },
+	{ "int",               60,     charcommand_param },
+	{ "dex",               60,     charcommand_param },
+	{ "luk",               60,     charcommand_param },
+	{ "glvl",              60,     charcommand_guildlevelup },
+	{ "glevel",            60,     charcommand_guildlevelup },
+	{ "guildlvl",          60,     charcommand_guildlevelup },
+	{ "guildlevel",        60,     charcommand_guildlevelup },
+	{ "hatch",             50,     charcommand_hatch },
+	{ "pethungry",         60,     charcommand_pethungry },
+	{ "allskill",          60,     charcommand_allskill },
+	{ "allskills",         60,     charcommand_allskill },
+	{ "skillall",          60,     charcommand_allskill },
+	{ "skillsall",         60,     charcommand_allskill },
+	{ "dye",               50,     charcommand_dye },
+	{ "hairstyle",         50,     charcommand_hair_style },
+	{ "hstyle",            50,     charcommand_hair_style },
+	{ "haircolor",         50,     charcommand_hair_color },
+	{ "hcolor",            50,     charcommand_hair_color },
+	{ "allstat",           60,     charcommand_allstats },
+	{ "allstats",          60,     charcommand_allstats },
+	{ "statall",           60,     charcommand_allstats },
+	{ "statsall",          60,     charcommand_allstats },
+	{ "mount",             50,     charcommand_mount_peco },
+	{ "mountpeco",         50,     charcommand_mount_peco },
+	{ "delitem",           60,     charcommand_delitem },
+	{ "jailtime",          40,     charcommand_jailtime },
+	{ "disguise",          60,     charcommand_disguise },
+	{ "undisguise",        60,     charcommand_undisguise },
+	{ "cartlist",          40,     charcommand_cart_list },
+	{ "killer",            60,     charcommand_killer },
+	{ "killable",          60,     charcommand_killable },
+	{ "dropall",           60,     charcommand_dropall },
+	{ "storeall",          60,     charcommand_storeall },
+	{ "refresh",           40,     charcommand_refresh },
+	{ "exp",                1,     charcommand_exp },
+	{ "monsterignore",     60,     charcommand_monsterignore },
+	{ "size",              50,     charcommand_size },
+	{ "hlvl",              60,     charcommand_homlevel },
+	{ "hlevel",            60,     charcommand_homlevel },
+	{ "homlvl",            60,     charcommand_homlevel },
+	{ "homlevel",          60,     charcommand_homlevel },
+	{ "homevolve",         60,     charcommand_homevolution },
+	{ "homevolution",      60,     charcommand_homevolution },
+	{ "homfriendly",       60,     charcommand_homfriendly },
+	{ "homhungry",         60,     charcommand_homhungry },
+	{ "hominfo",           40,     charcommand_hominfo },
+};
+
+
+/*==========================================
+ * Command lookup functions
+ *------------------------------------------*/
+static CharCommandInfo* get_charcommandinfo_byname(const char* name)
+{
+	int i;
+	if( *name == charcommand_symbol ) name++; // for backwards compatibility
+	ARR_FIND( 0, ARRAYLENGTH(charcommand_info), i, strcmpi(charcommand_info[i].command, name) == 0 );
+	return ( i != ARRAYLENGTH(charcommand_info) ) ? &charcommand_info[i] : NULL;
+}
+
+static CharCommandInfo* get_charcommandinfo_byfunc(const CharCommandFunc func)
+{
+	int i;
+	ARR_FIND( 0, ARRAYLENGTH(charcommand_info), i, charcommand_info[i].func == func );
+	return ( i != ARRAYLENGTH(charcommand_info) ) ? &charcommand_info[i] : NULL;
+}
+
+
+/*==========================================
+ * Retrieve the command's required gm level
+ *------------------------------------------*/
+int get_charcommand_level(const CharCommandFunc func)
+{
+	CharCommandInfo* info = get_charcommandinfo_byfunc(func);
+	return ( info != NULL ) ? info->level : 100; // 100: command can not be used
+}
+
+
+/// Executes a char-command.
+/// To be called by internal server code (bypasses various restrictions).
+bool is_charcommand_sub(const int fd, struct map_session_data* sd, const char* str, int gmlvl)
+{
+	CharCommandInfo* info;
+	char command[100];
+	char args[100];
+	char output[200];
+	
+	if( !str || !*str )
+		return false;
+
+	if( *str != charcommand_symbol ) // check first char
+		return false;
+
+	if( sscanf(str, "%99s %99[^\n]", command, args) < 2 )
+		args[0] = '\0';
+
+	info = get_charcommandinfo_byname(command);
+	if( info == NULL || info->func == NULL || gmlvl < info->level )
+	{
+		if( gmlvl == 0 )
+			return false; // will just display as normal text
+		else
+		{
+			sprintf(output, msg_txt(153), command); // "%s is Unknown Command."
+			clif_displaymessage(fd, output);
+			return true;
+		}
+	}
+
+	if( log_config.gm && info->level >= log_config.gm )
+		log_atcommand(sd, str);
+
+	if( info->func(fd, sd, command, args) != 0 )
+	{
+		sprintf(output, msg_txt(154), command); // "%s failed."
+		clif_displaymessage(fd, output);
+	}
+	
+	return true;
+}
+
+/// Executes a char-command.
+/// To be used by player-invoked code (restrictions will be applied)
+bool is_charcommand(const int fd, struct map_session_data* sd, const char* message)
+{
+	int gmlvl = pc_isGM(sd);
+	int s_flag = 0;
+
+	nullpo_retr(false, sd);
+
+	if( !message || !*message )
+		return false;
+
+	if( sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCOMMAND )
+		return true;
+
+	if( battle_config.atc_gmonly != 0 && gmlvl == 0 )
+		return false;
+
+	if( map[sd->bl.m].nocommand && gmlvl < map[sd->bl.m].nocommand )
+	{
+		clif_displaymessage(fd, msg_txt(143)); // "Commands are disabled on this map."
+		return false;
+	}
+	
+	// skip 10/11-langtype's codepage indicator, if detected
+	if( message[0] == '|' && strlen(message) >= 4 && message[3] == charcommand_symbol )
+		message += 3;
+
+	return is_atcommand_sub(fd,sd,message,gmlvl);
+}
+
+
+/*==========================================
+ *
+ *------------------------------------------*/
+int charcommand_config_read(const char* cfgName)
+{
+	char line[1024], w1[1024], w2[1024];
+	CharCommandInfo* p;
+	FILE* fp;
+
+	if( (fp = fopen(cfgName, "r")) == NULL )
+	{
+		ShowError("CharCommand configuration file not found: %s\n", cfgName);
+		return 1;
+	}
+
+	while( fgets(line, sizeof(line), fp) )
+	{
+		if( line[0] == '/' && line[1] == '/' )
+			continue;
+		
+		if( sscanf(line, "%1023[^:]:%1023s", w1, w2) != 2 )
+			continue;
+		
+		p = get_charcommandinfo_byname(w1);
+		if( p != NULL )
+		{
+			p->level = atoi(w2);
+			p->level = cap_value(p->level, 0, 100);
+		}
+		else
+		if( strcmpi(w1, "import") == 0 )
+			charcommand_config_read(w2);
+		else
+		if( strcmpi(w1, "command_symbol") == 0 &&
+			w2[0] > 31   && // control characters
+			w2[0] != '/' && // symbol of standard ragnarok GM commands
+			w2[0] != '%' && // symbol of party chat speaking
+			w2[0] != '$' && // symbol of guild chat speaking
+			w2[0] != '@' )  // symbol of atcommand
+			charcommand_symbol = w2[0];
+		else
+			ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
+	}
+	fclose(fp);
 
 	return 0;
 }

@@ -8248,7 +8248,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	if( !clif_process_message(sd, 0, &name, &namelen, &message, &messagelen) )
 		return;
 
-	if( is_atcommand(fd, sd, message) != AtCommand_None || is_charcommand(fd, sd, message) != CharCommand_None )
+	if( is_atcommand(fd, sd, message) || is_charcommand(fd, sd, message) )
 		return;
 
 	if( sd->sc.data[SC_BERSERK].timer != -1 || (sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT) )
@@ -8331,14 +8331,14 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd)
 
 	if (battle_config.atc_gmonly && !pc_isGM(sd))
 		return;
-	if(pc_isGM(sd) < get_atcommand_level(AtCommand_MapMove))
+	if(pc_isGM(sd) < get_atcommand_level(atcommand_mapmove))
 		return;
 
 	map_name = (char*)RFIFOP(fd,2);
 	map_name[MAP_NAME_LENGTH_EXT-1]='\0';
 	sprintf(output, "%s %d %d", map_name, RFIFOW(fd,18), RFIFOW(fd,20));
-	atcommand_rura(fd, sd, "@rura", output);
-	if(log_config.gm && get_atcommand_level(AtCommand_MapMove) >= log_config.gm)
+	atcommand_mapmove(fd, sd, "@mapmove", output);
+	if( log_config.gm && get_atcommand_level(atcommand_mapmove) >= log_config.gm )
 	{
 		sprintf(message, "/mm %s", output);
 		log_atcommand(sd, message);
@@ -8559,7 +8559,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	if( !clif_process_message(sd, 1, &target, &namelen, &message, &messagelen) )
 		return;
 
-	if (is_atcommand(fd, sd, message) != AtCommand_None || is_charcommand(fd, sd, message) != CharCommand_None )
+	if (is_atcommand(fd, sd, message) || is_charcommand(fd, sd, message) )
 		return;
 
 	if (sd->sc.data[SC_BERSERK].timer!=-1 || (sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT))
@@ -8694,9 +8694,9 @@ void clif_parse_GMmessage(int fd, struct map_session_data* sd)
 	unsigned int len = RFIFOW(fd,2)-4;
 	int lv;
 
-	if (battle_config.atc_gmonly && !pc_isGM(sd))
+	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
-	if (pc_isGM(sd) < (lv=get_atcommand_level(AtCommand_Broadcast)))
+	if( pc_isGM(sd) < (lv=get_atcommand_level(atcommand_broadcast)) )
 		return;
 
 	// as the length varies depending on the command used, just block unreasonably long strings
@@ -9674,17 +9674,18 @@ void clif_parse_SolveCharName(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_ResetChar(int fd, struct map_session_data *sd)
 {
-	if (battle_config.atc_gmonly && !pc_isGM(sd))
-		return;
-	if (pc_isGM(sd) < get_atcommand_level(AtCommand_ResetState))
+	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
 
-	if (RFIFOW(fd,2))
+	if( pc_isGM(sd) < get_atcommand_level(atcommand_reset) )
+		return;
+
+	if( RFIFOW(fd,2) )
 		pc_resetskill(sd,1);
 	else
 		pc_resetstate(sd);
 
-	if(log_config.gm && get_atcommand_level(AtCommand_ResetState >= log_config.gm))
+	if( log_config.gm && get_atcommand_level(atcommand_reset) >= log_config.gm )
 		log_atcommand(sd, RFIFOW(fd,2) ? "/resetskill" : "/resetstate");
 }
 
@@ -9698,9 +9699,10 @@ void clif_parse_LGMmessage(int fd, struct map_session_data* sd)
 	unsigned int len = RFIFOW(fd,2)-4;
 	int lv;
 
-	if (battle_config.atc_gmonly && !pc_isGM(sd))
+	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
-	if (pc_isGM(sd) < (lv=get_atcommand_level(AtCommand_LocalBroadcast)))
+
+	if( pc_isGM(sd) < (lv=get_atcommand_level(atcommand_localbroadcast)) )
 		return;
 
 	// as the length varies depending on the command used, just block unreasonably long strings
@@ -9708,7 +9710,7 @@ void clif_parse_LGMmessage(int fd, struct map_session_data* sd)
 
 	clif_GMmessage(&sd->bl, msg, len, 1);
 
-	if(log_config.gm && lv >= log_config.gm) {
+	if( log_config.gm && lv >= log_config.gm ) {
 		char logmsg[CHAT_SIZE_MAX+5];
 		sprintf(logmsg, "/lb %s", msg);
 		log_atcommand(sd, logmsg);
@@ -9963,13 +9965,13 @@ void clif_parse_PartyMessage(int fd, struct map_session_data* sd)
 	if( !clif_process_message(sd, 0, &name, &namelen, &message, &messagelen) )
 		return;
 
-	if (is_charcommand(fd, sd, message) != CharCommand_None || is_atcommand(fd, sd, message) != AtCommand_None)
+	if( is_atcommand(fd, sd, message) || is_charcommand(fd, sd, message) )
 		return;
 
-	if (sd->sc.data[SC_BERSERK].timer!=-1 || (sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT))
+	if( sd->sc.data[SC_BERSERK].timer!=-1 || (sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT) )
 		return;
 
-	if (battle_config.min_chat_delay)
+	if( battle_config.min_chat_delay )
 	{	//[Skotlex]
 		if (DIFF_TICK(sd->cantalk_tick, gettick()) > 0)
 			return;
@@ -10236,13 +10238,13 @@ void clif_parse_GuildMessage(int fd, struct map_session_data* sd)
 	if( !clif_process_message(sd, 0, &name, &namelen, &message, &messagelen) )
 		return;
 
-	if (is_charcommand(fd, sd, message) != CharCommand_None || is_atcommand(fd, sd, message) != AtCommand_None)
+	if( is_atcommand(fd, sd, message) || is_charcommand(fd, sd, message) )
 		return;
 
-	if (sd->sc.data[SC_BERSERK].timer!=-1 || (sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT))
+	if( sd->sc.data[SC_BERSERK].timer!=-1 || (sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT) )
 		return;
 
-	if (battle_config.min_chat_delay)
+	if( battle_config.min_chat_delay )
 	{	//[Skotlex]
 		if (DIFF_TICK(sd->cantalk_tick, gettick()) > 0)
 			return;
@@ -10379,10 +10381,10 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 	struct block_list *target;
 	int tid,lv;
 
-	if (battle_config.atc_gmonly && !pc_isGM(sd))
+	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
 
-	if (pc_isGM(sd) < (lv=get_atcommand_level(AtCommand_Kick)))
+	if( pc_isGM(sd) < (lv=get_atcommand_level(atcommand_kick)) )
 		return;
 
 	tid = RFIFOL(fd,2);
@@ -10429,15 +10431,15 @@ void clif_parse_Shift(int fd, struct map_session_data *sd)
 	char *player_name;
 	int lv;
 
-	if (battle_config.atc_gmonly && !pc_isGM(sd))
+	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
-	if (pc_isGM(sd) < (lv=get_atcommand_level(AtCommand_JumpTo)))
+	if( pc_isGM(sd) < (lv=get_atcommand_level(atcommand_jumpto)) )
 		return;
 
 	player_name = (char*)RFIFOP(fd,2);
 	player_name[NAME_LENGTH-1] = '\0';
 	atcommand_jumpto(fd, sd, "@jumpto", player_name); // as @jumpto
-	if(log_config.gm && lv >= log_config.gm) {
+	if( log_config.gm && lv >= log_config.gm ) {
 		char message[NAME_LENGTH+7];
 		sprintf(message, "/shift %s", player_name);
 		log_atcommand(sd, message);
@@ -10453,16 +10455,16 @@ void clif_parse_Recall(int fd, struct map_session_data *sd)
 	char *player_name;
 	int lv;
 
-	if (battle_config.atc_gmonly && !pc_isGM(sd))
+	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
 
-	if (pc_isGM(sd) < (lv=get_atcommand_level(AtCommand_Recall)))
+	if( pc_isGM(sd) < (lv=get_atcommand_level(atcommand_recall)) )
 		return;
 
 	player_name = (char*)RFIFOP(fd,2);
 	player_name[NAME_LENGTH-1] = '\0';
 	atcommand_recall(fd, sd, "@recall", player_name); // as @recall
-	if(log_config.gm && lv >= log_config.gm) {
+	if( log_config.gm && lv >= log_config.gm ) {
 		char message[NAME_LENGTH+8];
 		sprintf(message, "/recall %s", player_name);
 		log_atcommand(sd, message);
@@ -10479,29 +10481,29 @@ void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd)
 	char message[NAME_LENGTH+10]; //For logging.
 	int level;
 
-	if (battle_config.atc_gmonly && !pc_isGM(sd))
+	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
 
 	monster_item_name = (char*)RFIFOP(fd,2);
 	monster_item_name[NAME_LENGTH-1] = '\0';
 
-	if (mobdb_searchname(monster_item_name)) {
-		if (pc_isGM(sd) < (level=get_atcommand_level(AtCommand_Spawn)))
+	if( mobdb_searchname(monster_item_name) ) {
+		if( pc_isGM(sd) < (level=get_atcommand_level(atcommand_monster)) )
 			return;
-		atcommand_monster(fd, sd, "@spawn", monster_item_name); // as @spawn
-		if(log_config.gm && level >= log_config.gm)
+		atcommand_monster(fd, sd, "@monster", monster_item_name); // as @monster
+		if( log_config.gm && level >= log_config.gm )
 		{	//Log action. [Skotlex]
 			snprintf(message, sizeof(message)-1, "@spawn %s", monster_item_name);
 			log_atcommand(sd, message);
 		}
 		return;
 	}
-	if (itemdb_searchname(monster_item_name) == NULL)
+	if( itemdb_searchname(monster_item_name) == NULL )
 		return;
-	if (pc_isGM(sd) < (level = get_atcommand_level(AtCommand_Item)))
+	if( pc_isGM(sd) < (level = get_atcommand_level(atcommand_item)) )
 		return;
 	atcommand_item(fd, sd, "@item", monster_item_name); // as @item
-	if(log_config.gm && level >= log_config.gm)
+	if( log_config.gm && level >= log_config.gm )
 	{	//Log action. [Skotlex]
 		sprintf(message, "@item %s", monster_item_name);
 		log_atcommand(sd, message);
@@ -10513,12 +10515,13 @@ void clif_parse_GM_Monster_Item(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_GMHide(int fd, struct map_session_data *sd)
 {
-	if (battle_config.atc_gmonly && !pc_isGM(sd))
-		return;
-	if (pc_isGM(sd) < get_atcommand_level(AtCommand_Hide))
+	if( battle_config.atc_gmonly && !pc_isGM(sd) )
 		return;
 
-	if (sd->sc.option & OPTION_INVISIBLE) {
+	if( pc_isGM(sd) < get_atcommand_level(atcommand_hide) )
+		return;
+
+	if( sd->sc.option & OPTION_INVISIBLE ) {
 		sd->sc.option &= ~OPTION_INVISIBLE;
 		if (sd->disguise)
 			status_set_viewdata(&sd->bl, sd->disguise);
@@ -10529,7 +10532,7 @@ void clif_parse_GMHide(int fd, struct map_session_data *sd)
 		sd->sc.option |= OPTION_INVISIBLE;
 		sd->vd.class_ = INVISIBLE_CLASS;
 		clif_displaymessage(fd, "Invisible: On.");
-		if(log_config.gm && get_atcommand_level(AtCommand_Hide) >= log_config.gm)
+		if( log_config.gm && get_atcommand_level(atcommand_hide) >= log_config.gm )
 			log_atcommand(sd, "/hide");
 	}
 	clif_changeoption(&sd->bl);
@@ -10560,7 +10563,7 @@ void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 		return;
 	
 	if (
-		((level = pc_isGM(sd)) > pc_isGM(dstsd) && level >= get_atcommand_level(AtCommand_Mute))
+		((level = pc_isGM(sd)) > pc_isGM(dstsd) && level >= get_atcommand_level(atcommand_mute))
 		|| (type == 2 && !level))
 	{
 		clif_GM_silence(sd, dstsd, ((type == 2) ? 1 : type));

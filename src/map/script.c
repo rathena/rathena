@@ -11006,79 +11006,81 @@ BUILDIN_FUNC(nude)
  *------------------------------------------*/
 BUILDIN_FUNC(atcommand)
 {
-	TBL_PC *sd=NULL;
-	const char *cmd;
+	TBL_PC dummy_sd;
+	TBL_PC* sd;
+	int fd;
+	const char* cmd;
 
 	cmd = script_getstr(st,2);
-	if (st->rid)
-		sd = script_rid2sd(st);
 
-	if (sd){
-		if(cmd[0] != atcommand_symbol){
-			cmd += strlen(sd->status.name);
-			while(*cmd != atcommand_symbol && *cmd != 0)
-				cmd++;
-		}
-		is_atcommand_sub(sd->fd, sd, cmd, 99);
+	if (st->rid) {
+		sd = script_rid2sd(st);
+		fd = sd->fd;
 	} else { //Use a dummy character.
-		TBL_PC dummy_sd;
-		struct block_list *bl = NULL;
+		sd = &dummy_sd;
+		fd = 0;
+
 		memset(&dummy_sd, 0, sizeof(TBL_PC));
-		if (st->oid) bl = map_id2bl(st->oid);
-		if (bl) {
+		if (st->oid)
+		{
+			struct block_list* bl = map_id2bl(st->oid);
 			memcpy(&dummy_sd.bl, bl, sizeof(struct block_list));
 			if (bl->type == BL_NPC)
-				strncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
+				safestrncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
 		}
-		if(cmd[0] != atcommand_symbol){
-			cmd += strlen(dummy_sd.status.name);
-			while(*cmd != atcommand_symbol && *cmd != 0)
-				cmd++;
-		}
-		is_atcommand_sub(0, &dummy_sd, cmd, 99);
 	}
+
+	// compatibility with previous implementation (deprecated!)
+	if(cmd[0] != atcommand_symbol)
+	{
+		cmd += strlen(sd->status.name);
+		while(*cmd != atcommand_symbol && *cmd != 0)
+			cmd++;
+	}
+
+	is_atcommand_sub(fd, sd, cmd, 99);
 
 	return 0;
 }
 
 BUILDIN_FUNC(charcommand)
 {
-	TBL_PC *sd=NULL;
-	const char *cmd;
-	
+	TBL_PC dummy_sd;
+	TBL_PC* sd;
+	int fd;
+	const char* cmd;
+
 	cmd = script_getstr(st,2);
 
-	if (st->rid)
+	if (st->rid) {
 		sd = script_rid2sd(st);
-	
-	if (sd){ 
-		if(cmd[0] != charcommand_symbol){
-			cmd += strlen(sd->status.name);
-			while(*cmd != charcommand_symbol && *cmd != 0)
-				cmd++;
-		}
-		is_charcommand_sub(sd->fd, sd, cmd,99);
+		fd = sd->fd;
 	} else { //Use a dummy character.
-		TBL_PC dummy_sd;
-		struct block_list *bl = NULL;
+		sd = &dummy_sd;
+		fd = 0;
+
 		memset(&dummy_sd, 0, sizeof(TBL_PC));
-		if (st->oid) bl = map_id2bl(st->oid);
-		if (bl) {
+		if (st->oid)
+		{
+			struct block_list* bl = map_id2bl(st->oid);
 			memcpy(&dummy_sd.bl, bl, sizeof(struct block_list));
 			if (bl->type == BL_NPC)
-				strncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
+				safestrncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
 		}
-		if(cmd[0] != charcommand_symbol){
-			cmd += strlen(dummy_sd.status.name);
-			while(*cmd != charcommand_symbol && *cmd != 0)
-				cmd++;
-		}
-		is_charcommand_sub(0, &dummy_sd, cmd, 99);
 	}
+
+	// compatibility with previous implementation (deprecated!)
+	if(cmd[0] != charcommand_symbol)
+	{
+		cmd += strlen(sd->status.name);
+		while(*cmd != charcommand_symbol && *cmd != 0)
+			cmd++;
+	}
+
+	is_charcommand_sub(fd, sd, cmd, 99);
 
 	return 0;
 }
-
 
 /*==========================================
  * Displays a message for the player only (like system messages like "you got an apple" )
