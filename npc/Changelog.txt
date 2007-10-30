@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/10/30
+	* Fixed a possible exploit in Thanatos Tower quest. [SinSloth]
+	- Thanatos can only be summoned every 2 hours, no matter how you get there.
 	* Update some missing warps in Veins City [Samuray22]
 	-All credit fo to $ephiroth.
 2007/10/29

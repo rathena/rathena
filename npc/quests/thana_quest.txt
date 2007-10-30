@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= [Ishizu-chan]
 //===== Current Version: =====================================
-//= 1.8
+//= 1.9
 //===== Compatible With: =====================================
 //= Any eAthena Version i guess?
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= 1.6 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.7 Fixed a minor bug with prevented code part from reseting properly. [SinSloth]
 //= 1.8 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.9 Fixed a bug in the last event which allowed an exploit after the first summoning. [SinSloth]
 //============================================================
 
 hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
@@ -2318,7 +2319,7 @@ thana_boss,217,167,0	script	Crest#1	111,3,3,{
 	end;
 	
 OnTouch:
-	if($@thana_summon2 == 6)
+	if($@thana_summon == 6)
 	{
 		mes "^3355FFYou cannot approach";
 		mes "the crest because it is";
@@ -2361,7 +2362,7 @@ thana_boss,202,75,0	script	Crest#2	111,3,3,{
 	end;
 	
 OnTouch:
-	if($@thana_summon2 == 6)
+	if($@thana_summon == 6)
 	{
 		mes "^3355FFYou cannot approach";
 		mes "the crest because it is";
@@ -2404,7 +2405,7 @@ thana_boss,80,76,0	script	Crest#3	111,3,3,{
 	end;
 	
 OnTouch:
-	if($@thana_summon2 == 6)
+	if($@thana_summon == 6)
 	{
 		mes "^3355FFYou cannot approach";
 		mes "the crest because it is";
@@ -2447,7 +2448,7 @@ thana_boss,62,171,0	script	Crest#4	111,3,3,{
 	end;
 	
 OnTouch:
-	if($@thana_summon2 == 6)
+	if($@thana_summon == 6)
 	{
 		mes "^3355FFYou cannot approach";
 		mes "the crest because it is";
@@ -2552,6 +2553,7 @@ OnTimer5000:
 
 OnTimer60000:
 	mapwarp "thana_boss","tha_t12",130,47;
+	set $@thana_summon2,0;
 	enablenpc "Crest#1";
 	enablenpc "Crest#2";
 	enablenpc "Crest#3";
