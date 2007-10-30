@@ -479,7 +479,7 @@ CREATE TABLE `mail` (
   `title` varchar(45) NOT NULL default '',
   `message` varchar(255) NOT NULL default '',
   `time` int(11) unsigned NOT NULL default '0',
-  `read_flag` tinyint(1) unsigned NOT NULL default '0',
+  `status` tinyint(2) unsigned NOT NULL default '0',
   `zeny` int(11) unsigned NOT NULL default '0',
   `nameid` int(11) unsigned NOT NULL default '0',
   `amount` int(11) unsigned NOT NULL default '0',
