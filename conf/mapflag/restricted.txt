@@ -18,3 +18,13 @@ turbo_e_16	mapflag	restricted	1
 
 //Jail
 sec_pri	mapflag	restricted	2
+
+//Izlude Battle Arena
+force_1-1	mapflag	restricted	3
+force_2-1	mapflag	restricted	3
+force_3-1	mapflag	restricted	3
+force_4-1	mapflag	restricted	3
+force_5-1	mapflag	restricted	3
+force_1-2	mapflag	restricted	3
+force_1-3	mapflag	restricted	3
+prt_are_in	mapflag	restricted	3

@@ -56,3 +56,7 @@
 //Zone 2 - Jail
 421,64	//TK_JUMPKICK#Flying Side Kick#
 426,64	//TK_HIGHJUMP#Taekwon Jump#
+
+//Zone 3 - Izlude Battle Arena
+219,128 //Snatch
+26,128	//Teleport

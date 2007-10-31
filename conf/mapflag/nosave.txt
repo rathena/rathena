@@ -59,6 +59,9 @@ force_2-3	mapflag	nosave	SavePoint
 force_3-1	mapflag	nosave	SavePoint
 force_3-2	mapflag	nosave	SavePoint
 force_3-3	mapflag	nosave	SavePoint
+force_4-1	mapflag	nosave	SavePoint
+force_5-1	mapflag	nosave	SavePoint
+prt_are_in	mapflag	nosave	SavePoint
 
 // Juperos =============================
 jupe_area1	mapflag	nosave	SavePoint

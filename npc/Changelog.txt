@@ -1,5 +1,12 @@
 Date		Added
 ======
+2007/10/31
+	* Added Izlude Battle Arena. Please test it and report any bug you find out. [SinSloth]
+	- Level 50/60/70/80 and Party arenas are accessable.
+	- Updated old warps to official.
+	- Acolyte-only arena will be added a bit later.
+	- Arena Points can be obtained by completing arenas as well as exchanging your Turbo Track points.
+	* Removed useless WIP folder whose quests have been there for a while. [SinSloth]
 2007/10/30
 	* Fixed a possible exploit in Thanatos Tower quest. [SinSloth]
 	- Thanatos can only be summoned every 2 hours, no matter how you get there.

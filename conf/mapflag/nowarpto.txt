@@ -47,3 +47,12 @@ ama_test	mapflag	nowarpto
 gon_test	mapflag	nowarpto
 que_rachel	mapflag	nowarpto
 que_san04	mapflag	nowarpto
+// Izlude Battle Arena =========
+force_1-1	mapflag	nowarpto
+force_2-1	mapflag	nowarpto
+force_3-1	mapflag	nowarpto
+force_4-1	mapflag	nowarpto
+force_5-1	mapflag	nowarpto
+force_1-2	mapflag	nowarpto
+force_1-3	mapflag	nowarpto
+prt_are_in	mapflag	nowarpto

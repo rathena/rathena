@@ -453,6 +453,10 @@ arena_room	mapflag	nomemo
 force_1-1	mapflag	nomemo
 force_1-2	mapflag	nomemo
 force_1-3	mapflag	nomemo
+force_2-1	mapflag	nomemo
+force_3-1	mapflag	nomemo
+force_4-1	mapflag	nomemo
+force_5-1	mapflag	nomemo
 ordeal_1-1	mapflag	nomemo
 ordeal_1-2	mapflag	nomemo
 ordeal_1-3	mapflag	nomemo
@@ -476,7 +480,6 @@ sec_in02	mapflag	nomemo
 //priest_1-1	mapflag	nomemo
 //priest_2-1	mapflag	nomemo
 //priest_3-1	mapflag	nomemo
-prt_are_in	mapflag	nomemo
 prt_are_in	mapflag	nomemo
 prt_are01	mapflag	nomemo
 //wizard_1-1	mapflag	nomemo
