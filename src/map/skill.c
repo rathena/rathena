@@ -5612,7 +5612,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 						continue;
 					if(map_getcell(src->m,src->x+dx[j],src->y+dy[j],CELL_CHKNOREACH))
 						dx[j] = dy[j] = 0;
-					pc_setpos(dstsd, map[src->m].index, src->x+dx[j], src->y+dy[j], 2);
+					pc_setpos(dstsd, map_id2index(src->m), src->x+dx[j], src->y+dy[j], 2);
 				}
 			}
 			if (sd)
@@ -10308,13 +10308,13 @@ int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 		  			sd = map_charid2sd(group->val1);
 					group->val1 = 0;
 					if (sd && !map[sd->bl.m].flag.nowarp)
-						pc_setpos(sd,map[unit->bl.m].index,unit->bl.x,unit->bl.y,3);
+						pc_setpos(sd,map_id2index(unit->bl.m),unit->bl.x,unit->bl.y,3);
 				}
 				if(group->val2) {
 					sd = map_charid2sd(group->val2);
 					group->val2 = 0;
 					if (sd && !map[sd->bl.m].flag.nowarp)
-						pc_setpos(sd,map[unit->bl.m].index,unit->bl.x,unit->bl.y,3);
+						pc_setpos(sd,map_id2index(unit->bl.m),unit->bl.x,unit->bl.y,3);
 				}
 				skill_delunit(unit);
 			}

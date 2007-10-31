@@ -4,9 +4,10 @@
 #ifndef _SKILL_H_
 #define _SKILL_H_
 
+#include "../common/mmo.h" // MAX_SKILL
 #include "map.h" // MAX_SKILL_LEVEL, ...
 
-#define MAX_SKILL_DB			1100
+#define MAX_SKILL_DB			MAX_SKILL
 #define MAX_SKILL_PRODUCE_DB	150
 #define MAX_PRODUCE_RESOURCE	12
 #define MAX_SKILL_ARROW_DB		150
@@ -86,7 +87,7 @@ extern struct s_skill_db skill_db[MAX_SKILL_DB];
 struct skill_name_db { 
 	int id;	// skill id
 	char *name;	// search strings
-	char *desc;	// description that shows up for search's
+	char *desc;	// description that shows up for searches
 };
 
 #define MAX_SKILL_UNIT_LAYOUT	50
@@ -255,8 +256,7 @@ int skill_chastle_mob_changetarget(struct block_list *bl,va_list ap);	//[orn]
 
 // ÉAÉCÉeÉÄçÏê¨
 int skill_can_produce_mix( struct map_session_data *sd, int nameid, int trigger, int qty);
-int skill_produce_mix( struct map_session_data *sd,
-	int skill_id, int nameid, int slot1, int slot2, int slot3, int qty );
+int skill_produce_mix( struct map_session_data *sd, int skill_id, int nameid, int slot1, int slot2, int slot3, int qty );
 
 int skill_arrow_create( struct map_session_data *sd,int nameid);
 

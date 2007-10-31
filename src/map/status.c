@@ -34,6 +34,7 @@
 //For specifying where in the SkillStatusChangeTableArray the "out of bounds" skills get stored. [Skotlex]
 #define SC_HM_BASE 800
 #define SC_GD_BASE 900
+
 //Regen related flags.
 #define RGN_HP	0x01
 #define RGN_SP	0x02
@@ -4415,7 +4416,7 @@ void status_change_init(struct block_list *bl)
 //Applies SC defense to a given status change.
 //Returns the adjusted duration based on flag values.
 //the flag values are the same as in status_change_start.
-int status_get_sc_def(struct block_list *bl, int type, int rate, int tick, int flag)
+int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int tick, int flag)
 {
 	int sc_def, tick_def = 0;
 	struct status_data* status;
@@ -4579,16 +4580,16 @@ int status_get_sc_def(struct block_list *bl, int type, int rate, int tick, int f
 
 /*==========================================
  * Starts a status change.
- * type = type, val1~4 depend on the type.
- * rate = base success rate. 10000 = 100%
- * Tick is base duration
- * flag:
+ * 'type' = type, 'val1~4' depend on the type.
+ * 'rate' = base success rate. 10000 = 100%
+ * 'tick' is base duration
+ * 'flag':
  * &1: Cannot be avoided (it has to start)
  * &2: Tick should not be reduced (by vit, luk, lv, etc)
  * &4: sc_data loaded, no value has to be altered.
  * &8: rate should not be reduced
  *------------------------------------------*/
-int status_change_start(struct block_list *bl,int type,int rate,int val1,int val2,int val3,int val4,int tick,int flag)
+int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,int tick,int flag)
 {
 	struct map_session_data *sd = NULL;
 	struct status_change* sc;
@@ -4597,39 +4598,42 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	int opt_flag, calc_flag, undead_flag;
 
 	nullpo_retr(0, bl);
-	sc=status_get_sc(bl);
+	sc = status_get_sc(bl);
 	status = status_get_status_data(bl);
 
-	if (!sc || status_isdead(bl))
-		return 0;
-	
-	switch (bl->type)
+	if( type < 0 || type >= SC_MAX )
 	{
-		case BL_PC:
-			sd=(struct map_session_data *)bl;
-			break;
-		case BL_MOB:
-			if (((struct mob_data*)bl)->class_ == MOBID_EMPERIUM && type != SC_SAFETYWALL)
-				return 0; //Emperium can't be afflicted by status changes.
-			break;
-	}
-
-	if(type < 0 || type >= SC_MAX) {
-		if(battle_config.error_log)
+		if( battle_config.error_log )
 			ShowError("status_change_start: invalid status change (%d)!\n", type);
 		return 0;
 	}
 
-	//Check resistance.
-	if (!(flag&(1|4))) {
-		tick = status_get_sc_def(bl, type, rate, tick, flag);
-		if (!tick) return 0;
+	if( !sc )
+		return 0; //Unable to receive status changes
+	
+	if( status_isdead(bl) )
+		return 0;
+	
+	if( bl->type == BL_MOB && ((TBL_MOB*)bl)->class_ == MOBID_EMPERIUM )
+	{
+		if( type != SC_SAFETYWALL )
+			return 0; //Emperium can't be afflicted by status changes
 	}
 
-	undead_flag=battle_check_undead(status->race,status->def_ele);
+	BL_CAST(BL_PC, bl, sd);
+
+	//Adjust tick according to status resistances
+	if( !(flag&(1|4)) )
+	{
+		tick = status_get_sc_def(bl, type, rate, tick, flag);
+		if( !tick ) return 0;
+	}
+
+	undead_flag = battle_check_undead(status->race,status->def_ele);
 
 	//Check for inmunities / sc fails
-	switch (type) {
+	switch (type)
+	{
 	case SC_FREEZE:
 	case SC_STONE:
 		//Undead are immune to Freeze/Stone
@@ -4696,7 +4700,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		//if (sd && val1 < 3 && skill_check_cloaking(bl))
 		if (sd && pc_checkskill(sd, AS_CLOAKING)< 3 && skill_check_cloaking(bl,sc))
 			return 0;
-		break;
+	break;
 	case SC_MODECHANGE:
 	{
 		int mode;
@@ -4716,8 +4720,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				return status_change_end(bl, type, -1);
 			return 0;
 		}
-		break;
 	}
+	break;
 	//Strip skills, need to divest something or it fails.
 	case SC_STRIPWEAPON:
 		if (sd) {
@@ -4743,7 +4747,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (!opt_flag) return 0;
 		}
 		if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
-		break;
+	break;
 	case SC_STRIPSHIELD:
 		if (sd) {
 			int i;
@@ -4756,7 +4760,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			pc_unequipitem(sd,i,3);
 		}
 		if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
-		break;
+	break;
 	case SC_STRIPARMOR:
 		if (sd) {
 			int i;
@@ -4768,7 +4772,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			pc_unequipitem(sd,i,3);
 		}
 		if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
-		break;
+	break;
 	case SC_STRIPHELM:
 		if (sd) {
 			int i;
@@ -4780,7 +4784,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			pc_unequipitem(sd,i,3);
 		}
 		if (tick == 1) return 1; //Minimal duration: Only strip without causing the SC
-		break;
+	break;
 	}
 
 	//Check for BOSS resistances
@@ -4806,8 +4810,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 				return 0;
 		}
 	}
+
 	//Before overlapping fail, one must check for status cured.
-	switch (type) {
+	switch (type)
+	{
 	case SC_BLESSING:
 		if ((!undead_flag && status->race!=RC_DEMON) || bl->type == BL_PC) {
 			if (sc->data[SC_CURSE].timer!=-1)
@@ -4929,9 +4935,12 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			status_change_end(bl,SC_ADJUSTMENT,-1);
 		break;
 	}
+
 	//Check for overlapping fails
-	if(sc->data[type].timer != -1){
-		switch (type) {
+	if(sc->data[type].timer != -1)
+	{
+		switch (type)
+		{
 			case SC_ADRENALINE:
 			case SC_ADRENALINE2:
 			case SC_WEAPONPERFECTION:
@@ -4997,7 +5006,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			default:
 				if(sc->data[type].val1 > val1)
 					return 1; //Return true to not mess up skill animations. [Skotlex
-			}
+		}
 		(sc->count)--;
 		delete_timer(sc->data[type].timer, status_change_timer);
 		sc->data[type].timer = -1;
@@ -5005,8 +5014,10 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 	vd = status_get_viewdata(bl);
 	calc_flag = StatusChangeFlagTable[type];
-	if(!(flag&4)) //Do not parse val settings when loading SCs
-	switch(type){
+
+	if(!(flag&4)) //&4 - Do not parse val settings when loading SCs
+	switch(type)
+	{
 		case SC_DECREASEAGI:
 		case SC_INCREASEAGI:
 			val2 = 2 + val1; //Agi change
@@ -5849,9 +5860,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			//associated, and yet are not wrong/unknown. [Skotlex]
 			break;
 		default:
-			if (calc_flag == SCB_NONE &&
-				StatusSkillChangeTable[type]==0 &&
-				StatusIconChangeTable[type]==0)
+			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == 0 && StatusIconChangeTable[type] == 0 )
 			{	//Status change with no calc, no icon, and no skill associated...? 
 				if(battle_config.error_log)
 					ShowError("UnknownStatusChange [%d]\n", type);
@@ -5859,7 +5868,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			}
 	}
 	else //Special considerations when loading SC data.
-	switch (type) {
+	switch( type )
+	{
 		case SC_WEDDING:
 		case SC_XMAS:
 		case SC_SUMMER:
@@ -5871,8 +5881,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 		case SC_KAAHI:
 			val4 = -1;
 			break;
-		//In case the speed reduction comes loaded incorrectly,
-		//prevent division by 0.
+		//In case the speed reduction comes loaded incorrectly, prevent division by 0.
 		case SC_DONTFORGETME:
 		case SC_CLOAKING:
 		case SC_LONGING:
@@ -5882,13 +5891,11 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			if (!val3)
 				return 0;
 			break;
-		case SC_GUILDAURA:
-			//Compatibility Upgrade due to Guild Aura code rewrite 
-			//(older saved SC versions would load up with huge bonuses)
-			return 0;
 	}
+
 	//Those that make you stop attacking/walking....
-	switch (type) {
+	switch (type)
+	{
 		case SC_FREEZE:
 		case SC_STUN:
 		case SC_SLEEP:
@@ -5922,7 +5929,8 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 
 	// Set option as needed.
 	opt_flag = 1;
-	switch(type){
+	switch(type)
+	{
 		//OPT1
 		case SC_STONE:
 		case SC_FREEZE:
@@ -6041,8 +6049,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 			opt_flag = 0;
 	}
 
-	//On Aegis, when turning on a status change, first goes the option packet,
-	// then the sc packet.
+	//On Aegis, when turning on a status change, first goes the option packet, then the sc packet.
 	if(opt_flag)
 		clif_changeoption(bl);
 
@@ -6068,8 +6075,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 	sc->data[type].val3 = val3;
 	sc->data[type].val4 = val4;
 
-	sc->data[type].timer = add_timer(
-		gettick() + tick, status_change_timer, bl->id, type);
+	sc->data[type].timer = add_timer(gettick() + tick, status_change_timer, bl->id, type);
 
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
@@ -6095,7 +6101,7 @@ int status_change_start(struct block_list *bl,int type,int rate,int val1,int val
 /*==========================================
  * ステータス異常全解除
  *------------------------------------------*/
-int status_change_clear(struct block_list *bl,int type)
+int status_change_clear(struct block_list* bl, enum sc_type type)
 {
 	struct status_change* sc;
 	int i;
@@ -6153,7 +6159,7 @@ int status_change_clear(struct block_list *bl,int type)
 /*==========================================
  * ステータス異常終了
  *------------------------------------------*/
-int status_change_end( struct block_list* bl , int type,int tid )
+int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 {
 	struct map_session_data *sd;
 	struct status_change *sc;
@@ -6628,7 +6634,7 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, int data)
  *------------------------------------------*/
 int status_change_timer(int tid, unsigned int tick, int id, int data)
 {
-	int type = data;
+	enum sc_type type = data;
 	struct block_list *bl;
 	struct map_session_data *sd;
 	struct status_data *status;
@@ -6959,31 +6965,29 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 /*==========================================
  * ステータス異常タイマー範囲処理
  *------------------------------------------*/
-int status_change_timer_sub(struct block_list *bl, va_list ap )
+int status_change_timer_sub(struct block_list* bl, va_list ap)
 {
-	struct block_list *src;
-	struct status_change *sc, *tsc;
-	struct map_session_data* sd=NULL;
-	struct map_session_data* tsd=NULL;
+	struct map_session_data *sd, *tsd;
+	struct status_change* tsc;
 
-	int type;
-	unsigned int tick;
+	struct block_list* src = va_arg(ap,struct block_list*);
+	struct status_change* sc = va_arg(ap,struct status_change*);
+	enum sc_type type = va_arg(ap,enum sc_type);
+	unsigned int tick = va_arg(ap,unsigned int);
 
-	src=va_arg(ap,struct block_list*);
-	sc=va_arg(ap,struct status_change*);
-	type=va_arg(ap,int);
-	tick=va_arg(ap,unsigned int);
-	tsc=status_get_sc(bl);
-	
 	if (status_isdead(bl))
 		return 0;
-	if (src->type==BL_PC) sd= (struct map_session_data*)src;
-	if (bl->type==BL_PC) tsd= (struct map_session_data*)bl;
 
-	switch( type ){
+	tsc = status_get_sc(bl);
+
+	BL_CAST(BL_PC, src, sd);
+	BL_CAST(BL_PC, bl, tsd);
+
+	switch( type )
+	{
 	case SC_SIGHT:	/* サイト */
 	case SC_CONCENTRATE:
-		if (tsc && tsc->count) {
+		if (tsc) {
 			if (tsc->data[SC_HIDING].timer != -1)
 				status_change_end( bl, SC_HIDING, -1);
 			if (tsc->data[SC_CLOAKING].timer != -1)
@@ -6991,8 +6995,7 @@ int status_change_timer_sub(struct block_list *bl, va_list ap )
 		}
 		break;
 	case SC_RUWACH:	/* ルアフ */
-		if (tsc && tsc->count && (tsc->data[SC_HIDING].timer != -1 ||	// if the target is using a special hiding, i.e not using normal hiding/cloaking, don't bother
-			tsc->data[SC_CLOAKING].timer != -1)) {
+		if (tsc && (tsc->data[SC_HIDING].timer != -1 || tsc->data[SC_CLOAKING].timer != -1)) {
 			status_change_end( bl, SC_HIDING, -1);
 			status_change_end( bl, SC_CLOAKING, -1);
 			if(battle_check_target( src, bl, BCT_ENEMY ) > 0)
@@ -7009,7 +7012,7 @@ int status_change_timer_sub(struct block_list *bl, va_list ap )
 		break;
 	case SC_CLOSECONFINE:
 		//Lock char has released the hold on everyone...
-		if (tsc && tsc->count && tsc->data[SC_CLOSECONFINE2].timer != -1 && tsc->data[SC_CLOSECONFINE2].val2 == src->id) {
+		if (tsc && tsc->data[SC_CLOSECONFINE2].timer != -1 && tsc->data[SC_CLOSECONFINE2].val2 == src->id) {
 			tsc->data[SC_CLOSECONFINE2].val2 = 0;
 			status_change_end(bl, SC_CLOSECONFINE2, -1);
 		}
@@ -7022,7 +7025,7 @@ int status_change_timer_sub(struct block_list *bl, va_list ap )
  * Clears buffs/debuffs of a character.
  * type&1 -> buffs, type&2 -> debuffs
  *------------------------------------------*/
-int status_change_clear_buffs (struct block_list *bl, int type)
+int status_change_clear_buffs (struct block_list* bl, enum sc_type type)
 {
 	int i;
 	struct status_change *sc= status_get_sc(bl);
@@ -7031,13 +7034,14 @@ int status_change_clear_buffs (struct block_list *bl, int type)
 		return 0;
 
 	if (type&2) //Debuffs
-	for (i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++) {
+	for( i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++ )
+	{
 		if(sc->data[i].timer != -1)
 			status_change_end(bl,i,-1);
 	}
 
-	for (i = SC_COMMON_MAX+1; i < SC_MAX; i++) {
-
+	for( i = SC_COMMON_MAX+1; i < SC_MAX; i++ )
+	{
 		if(sc->data[i].timer == -1)
 			continue;
 		

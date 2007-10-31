@@ -277,8 +277,7 @@ int mob_get_random_id(int type, int flag, int lv)
 }
 
 
-struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m,
-	short x, short y, const char *mobname, int class_, const char *event)
+struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m, short x, short y, const char *mobname, int class_, const char *event)
 {
 	struct spawn_data data;
 	
@@ -498,8 +497,8 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 	}
 	data.x = x;
 	data.y = y;
-	strncpy(data.name, mobname, NAME_LENGTH-1);
-	strncpy(data.eventname, event, 50);
+	safestrncpy(data.name, mobname, sizeof(data.name));
+	safestrncpy(data.eventname, event, sizeof(data.eventname));
 	if (!mob_parse_dataset(&data))
 		return 0;
 	

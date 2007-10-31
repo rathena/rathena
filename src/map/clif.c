@@ -11184,9 +11184,9 @@ void clif_parse_FeelSaveOk(int fd,struct map_session_data *sd)
 	i = sd->menuskill_val-1;
 	if (i<0 || i > 2) return; //Bug?
 
-	sd->feel_map[i].index = map[sd->bl.m].index;
+	sd->feel_map[i].index = map_id2index(sd->bl.m);
 	sd->feel_map[i].m = sd->bl.m;
-	pc_setglobalreg(sd,feel_var[i],map[sd->bl.m].index);
+	pc_setglobalreg(sd,feel_var[i],sd->feel_map[i].index);
 
 //Are these really needed? Shouldn't they show up automatically from the feel save packet?
 //	clif_misceffect2(&sd->bl, 0x1b0);

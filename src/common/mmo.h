@@ -65,9 +65,6 @@
 #define MIN_STAR 0
 #define MAX_STAR 3
 
-#define MIN_PORTAL_MEMO 0
-#define MAX_PORTAL_MEMO 2
-
 #define MAX_STATUS_TYPE 5
 
 #define WEDDING_RING_M 2634
@@ -83,7 +80,7 @@
 #define MAP_NAME_LENGTH_EXT (MAP_NAME_LENGTH + 4)
 
 #define MAX_FRIENDS 40
-#define MAX_MEMOPOINTS 10
+#define MAX_MEMOPOINTS 3
 
 //Size of the fame list arrays.
 #define MAX_FAME_LIST 10

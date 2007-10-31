@@ -3590,50 +3590,48 @@ int pc_randomwarp(struct map_session_data *sd, int type)
 }
 
 /*==========================================
- * Œ»ÝˆÊ’u‚Ìƒƒ‚
+ * Records a memo point at sd's current position
+ * pos - entry to replace, (-1: shift oldest entry out)
  *------------------------------------------*/
-int pc_memo(struct map_session_data *sd, int i)
+int pc_memo(struct map_session_data* sd, int pos)
 {
 	int skill;
-	int j;
 
 	nullpo_retr(0, sd);
 
+	// check mapflags
+	if( sd->bl.m >= 0 && (map[sd->bl.m].flag.nomemo || map[sd->bl.m].flag.nowarpto) && battle_config.any_warp_GM_min_level > pc_isGM(sd) ) {
+		clif_skill_teleportmessage(sd, 1); // "Saved point cannot be memorized."
+		return 0;
+	}
+
+	// check inputs
+	if( pos < -1 || pos >= MAX_MEMOPOINTS )
+		return 0; // invalid input
+
+	// check required skill level
 	skill = pc_checkskill(sd, AL_WARP);
-
-	if (i >= MIN_PORTAL_MEMO)
-		i -= MIN_PORTAL_MEMO;
-	else if (map[sd->bl.m].flag.nomemo || (map[sd->bl.m].flag.nowarpto && battle_config.any_warp_GM_min_level > pc_isGM(sd))) {
-		clif_skill_teleportmessage(sd, 1);
+	if( skill < 1 ) {
+		clif_skill_memo(sd,2); // "You haven't learned Warp."
+		return 0;
+	}
+	if( skill < 2 || skill - 2 < pos ) {
+		clif_skill_memo(sd,1); // "Skill Level is not high enough."
 		return 0;
 	}
 
-	if (skill < 1) {
-		clif_skill_memo(sd,2);
+	if( pos == -1 )
+	{
+		int i;
+		// prevent memo-ing the same map multiple times
+		ARR_FIND( 0, MAX_MEMOPOINTS, i, sd->status.memo_point[i].map == map_id2index(sd->bl.m) );
+		memmove(&sd->status.memo_point[1], &sd->status.memo_point[0], (min(i,MAX_MEMOPOINTS-1))*sizeof(struct point));
+		pos = 0;
 	}
 
-	if (skill < 2 || i < -1 || i > 2) {
-		clif_skill_memo(sd, 1);
-		return 0;
-	}
-
-	for(j = 0 ; j < 3; j++) {
-		if (sd->status.memo_point[j].map == map[sd->bl.m].index) {
-			i = j;
-			break;
-		}
-	}
-
-	if (i == -1) {
-		for(i = skill - 3; i >= 0; i--) {
-			memcpy(&sd->status.memo_point[i+1],&sd->status.memo_point[i],
-				sizeof(struct point));
-		}
-		i = 0;
-	}
-	sd->status.memo_point[i].map = map[sd->bl.m].index;
-	sd->status.memo_point[i].x = sd->bl.x;
-	sd->status.memo_point[i].y = sd->bl.y;
+	sd->status.memo_point[pos].map = map_id2index(sd->bl.m);
+	sd->status.memo_point[pos].x = sd->bl.x;
+	sd->status.memo_point[pos].y = sd->bl.y;
 
 	clif_skill_memo(sd, 0);
 

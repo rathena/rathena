@@ -1569,7 +1569,6 @@ int mapif_parse_GuildBasicInfoChange(int fd,int guild_id,int type,const char *da
 	switch(type)
 	{
 		case GBI_GUILDLV:
-			ShowDebug("GBI_GUILDLV\n");
 			if(dw>0 && g->guild_lv+dw<=50)
 			{
 				g->guild_lv+=dw;

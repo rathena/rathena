@@ -601,7 +601,7 @@ int unit_warp(struct block_list *bl,short m,short x,short y,int type)
 	}
 
 	if (bl->type == BL_PC) //Use pc_setpos
-		return pc_setpos((TBL_PC*)bl, map[m].index, x, y, type);
+		return pc_setpos((TBL_PC*)bl, map_id2index(m), x, y, type);
 	
 	if (!unit_remove_map(bl, type))
 		return 3;
