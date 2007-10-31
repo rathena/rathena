@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.1
+//= 1.3
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 1.1 Fixed exp rewarding working backwards.[L0ne_W0lf]
 //=	Fixed a bug in the while loop in the guide.
 //= 1.2 Fix to prevent point converter from hanging. [L0ne_W0lf]
+//= 1.3 Slight optimization to the point exchanger. [L0ne_W0lf]
 //============================================================
 
 turbo_room,130,92,3	script	Kafra Staff#tt	115,{
@@ -838,7 +839,7 @@ turbo_room,93,117,5	script	Point Exchange Helper	125,{
 	}
 }
 
-turbo_room,106,117,3	script	Point Manager	833,{
+turbo_room,106,117,3	script	Point Manager#tt	833,{
 	mes "[Turbo Track Point Manager]";
 	mes "Good day.";
 	mes "Did you enjoy your";
@@ -869,129 +870,13 @@ turbo_room,106,117,3	script	Point Manager	833,{
 		next;
 		switch(select("2 AP -> 1 TTP:4 AP -> 2 TTP:6 AP -> 3 TTP:8 AP -> 4 TTP:10 AP or more:Cancel")) {
 		case 1:
-			if (tt_point > 28999 ) {
-				mes "[Turbo Track Point Manager]";
-				mes "Unfortunately, your Turbo Track Points will exceed the maximum limit if we proceed with point conversion. Please spend more";
-				mes "of your Turbo Track Points before using this service. Thank you.";
-				close;
-			}
-			if (arena_point > 1) {
-				mes "[Turbo Track Point Manager]";
-				mes "As requested,";
-				mes "2 Arena Points";
-				mes "have been converted";
-				mes "into 1 Turbo Track Point.";
-				set arena_point,arena_point-2;
-				set tt_point,tt_point+1;
-				next;
-				mes "[Turbo Track Point Manager]";
-				mes "" + strcharinfo(0) + ",";
-				mes "you now have";
-				mes "^00688B" + tt_point + "^000000 Turbo Track Points";
-				mes "and ^4682B4" + arena_point + "^000000 Arena Points.";
-				mes "Thank you for your patronage.";
-				close;
-			}
-			else {
-				mes "[Turbo Track Point Manager]";
-				mes "I'm sorry, but you do not have enough Arena Points. You need";
-				mes "at least 2 Arena Points in order";
-				mes "to use this service.";
-				close;
-			}
+			callsub S_ExchangePoints,28999,2,1;
 		case 2:
-			if (tt_point > 28998 ) {
-				mes "[Turbo Track Point Manager]";
-				mes "Unfortunately, your Turbo Track Points will exceed the maximum limit if we proceed with point conversion. Please spend more";
-				mes "of your Turbo Track Points before using this service. Thank you.";
-				close;
-			}
-			if (arena_point > 3) {
-				mes "[Turbo Track Point Manager]";
-				mes "As requested,";
-				mes "4 Arena Points";
-				mes "have been converted";
-				mes "into 2 Turbo Track Points.";
-				set arena_point,arena_point-4;
-				set tt_point,tt_point+2;
-				next;
-				mes "[Turbo Track Point Manager]";
-				mes "" + strcharinfo(0) + ",";
-				mes "you now have";
-				mes "^00688B" + tt_point + "^000000 Turbo Track Points";
-				mes "and ^4682B4" + arena_point + "^000000 Arena Points.";
-				mes "Thank you for your patronage.";
-				close;
-			}
-			else {
-				mes "[Turbo Track Point Manager]";
-				mes "I'm sorry, but you do not have enough Arena Points. You need";
-				mes "at least 4 Arena Points in order";
-				mes "to use this service.";
-				close;
-			}
+			callsub S_ExchangePoints,28998,4,2;
 		case 3:
-			if (tt_point > 28997 ) {
-				mes "[Turbo Track Point Manager]";
-				mes "Unfortunately, your Turbo Track Points will exceed the maximum limit if we proceed with point conversion. Please spend more";
-				mes "of your Turbo Track Points before using this service. Thank you.";
-				close;
-			}
-			if (arena_point > 5) {
-				mes "[Turbo Track Point Manager]";
-				mes "As requested,";
-				mes "6 Arena Points";
-				mes "have been converted";
-				mes "into 3 Turbo Track Points.";
-				set arena_point,arena_point-6;
-				set tt_point,tt_point+3;
-				next;
-				mes "[Turbo Track Point Manager]";
-				mes "" + strcharinfo(0) + ",";
-				mes "you now have";
-				mes "^00688B" + tt_point + "^000000 Turbo Track Points";
-				mes "and ^4682B4" + arena_point + "^000000 Arena Points.";
-				mes "Thank you for your patronage.";
-				close;
-			}
-			else {
-				mes "[Turbo Track Point Manager]";
-				mes "I'm sorry, but you do not have enough Arena Points. You need";
-				mes "at least 6 Arena Points in order";
-				mes "to use this service.";
-				close;
-			}
+			callsub S_ExchangePoints,28997,6,2;
 		case 4:
-			if (tt_point > 28996 ) {
-				mes "[Turbo Track Point Manager]";
-				mes "Unfortunately, your Turbo Track Points will exceed the maximum limit if we proceed with point conversion. Please spend more";
-				mes "of your Turbo Track Points before using this service. Thank you.";
-				close;
-			}
-			if (arena_point > 7) {
-				mes "[Turbo Track Point Manager]";
-				mes "As requested,";
-				mes "8 Arena Points";
-				mes "have been converted";
-				mes "into 4 Turbo Track Points.";
-				set arena_point,arena_point-8;
-				set tt_point,tt_point+4;
-				next;
-				mes "[Turbo Track Point Manager]";
-				mes "" + strcharinfo(0) + ",";
-				mes "you now have";
-				mes "^00688B" + tt_point + "^000000 Turbo Track Points";
-				mes "and ^4682B4" + arena_point + "^000000 Arena Points.";
-				mes "Thank you for your patronage.";
-				close;
-			}
-			else {
-				mes "[Turbo Track Point Manager]";
-				mes "I'm sorry, but you do not have enough Arena Points. You need";
-				mes "at least 8 Arena Points in order";
-				mes "to use this service.";
-				close;
-			}
+			callsub S_ExchangePoints,28996,8,4;
 		case 5:
 			mes "[Turbo Track Point Manager]";
 			mes "Please enter the number of times you wish to convert 10 Arena Points into Turbo Track Points. The largest value you may enter";
@@ -1005,7 +890,7 @@ turbo_room,106,117,3	script	Point Manager	833,{
 				mes "your request.";
 				close;
 			}
-			else if (.@input > 20 || .@input < 0) {
+			else if (.@input > 20) {
 				mes "[Turbo Track Point Manager]";
 				mes "Your request exceeds";
 				mes "the maximum limit. Please";
@@ -1062,6 +947,38 @@ turbo_room,106,117,3	script	Point Manager	833,{
 		// There is no dialog for this option.
 		// It's possible it's missing, or maybe
 		// the dialog was never translated. XD
+		close;
+	}
+
+S_ExchangePoints:
+	if (tt_point > getarg(0)) {
+		mes "[Turbo Track Point Manager]";
+		mes "Unfortunately, your Turbo Track Points will exceed the maximum limit if we proceed with point conversion. Please spend more";
+		mes "of your Turbo Track Points before using this service. Thank you.";
+		close;
+	}
+	if (arena_point >= getarg(1)) {
+		mes "[Turbo Track Point Manager]";
+		mes "As requested,";
+		mes "2 Arena Points";
+		mes "have been converted";
+		mes "into 1 Turbo Track Point.";
+		set arena_point,arena_point-getarg(1);
+		set tt_point,tt_point+getarg(2);
+		next;
+		mes "[Turbo Track Point Manager]";
+		mes "" + strcharinfo(0) + ",";
+		mes "you now have";
+		mes "^00688B" + tt_point + "^000000 Turbo Track Points";
+		mes "and ^4682B4" + arena_point + "^000000 Arena Points.";
+		mes "Thank you for your patronage.";
+		close;
+	}
+	else {
+		mes "[Turbo Track Point Manager]";
+		mes "I'm sorry, but you do not have enough Arena Points. You need";
+		mes "at least 2 Arena Points in order";
+		mes "to use this service.";
 		close;
 	}
 }

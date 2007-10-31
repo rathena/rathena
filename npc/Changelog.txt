@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/10/31
+	* Rev. 11626 Added Turbo Track point exchanger to arena. [L0ne_W0lf]
+	* Slightly optimized the existing Arena point exchanger.
 	* Added Izlude Battle Arena. Please test it and report any bug you find out. [SinSloth]
 	- Level 50/60/70/80 and Party arenas are accessable.
 	- Updated old warps to official.
