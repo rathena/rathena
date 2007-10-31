@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= SinSloth
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Izlude Battle Arena Main Room
 //===== Additional Comments: =================================
 //= 1.0 First version.
+//= 1.1 Fixed a small reward typo (was giving potato.) [L0ne_W0lf]
 //============================================================
 
 arena_room,94,93,5	script	Vendigos	97,{
@@ -659,7 +660,7 @@ prt_are_in,98,14,3	script	Givu#arena	728,{
 				case 7: callfunc "Func_Are_Rew",607,1,40;
 				case 8: callfunc "Func_Are_Rew",603,1,100;
 				case 9: callfunc "Func_Are_Rew",617,1,300;
-				case 10: callfunc "Func_Are_Rew",516,1,1000;
+				case 10: callfunc "Func_Are_Rew",616,1,1000;
 			}
 			
 		case 2:
