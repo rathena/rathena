@@ -2826,7 +2826,7 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 	
 	data = itemdb_search(item_data->nameid);
 	w = data->weight*amount;
-	if(w > sd->max_weight - sd->weight)
+	if(sd->weight + w > sd->max_weight)
 		return 2;
 
 	i = MAX_INVENTORY;

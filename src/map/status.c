@@ -3366,6 +3366,7 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 {
 	if(!sc || !sc->count)
 		return cap_value(batk,0,USHRT_MAX);
+
 	if(sc->data[SC_INCBASEATK].timer!=-1)
 		batk += sc->data[SC_INCBASEATK].val1;
 	if(sc->data[SC_ATKPOTION].timer!=-1)
@@ -3464,6 +3465,7 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 {
 	if(!sc || !sc->count)
 		return cap_value(critical,10,SHRT_MAX);
+
 	if (sc->data[SC_INCCRI].timer!=-1)
 		critical += sc->data[SC_INCCRI].val2;
 	if (sc->data[SC_EXPLOSIONSPIRITS].timer!=-1)

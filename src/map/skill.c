@@ -8775,7 +8775,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 
 			if((skill == AM_POTIONPITCHER ||
 				skill == CR_SLIMPITCHER ||
-				skill == CR_CULTIVATION) && i != lv%11 - 1)//TODO huh? what is this for? [FlavioJS]
+				skill == CR_CULTIVATION) && i != lv%11 - 1)//TODO huh? what is this for? [FlavioJS] //These itemsdo not need a check versus ALL their item requirements, but only versus the item in the same slot position (eg: lv1 requires only item[0], lv5 requires only item[4]) [Skotlex]
 				continue;
 
 			index[i] = pc_search_inventory(sd,itemid[i]);

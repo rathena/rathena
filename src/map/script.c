@@ -5892,8 +5892,11 @@ BUILDIN_FUNC(countitem)
 		nameid = conv_num(st,data);
 
 	if (nameid < 500) {
-		if(battle_config.error_log) ShowError("wrong item ID : countitem(%i)\n", nameid);
-		script_reportsrc(st);
+		if(battle_config.error_log)
+		{
+			ShowError("wrong item ID : countitem(%i)\n", nameid);
+			script_reportsrc(st);
+		}
 		script_pushint(st,0);
 		return 1;
 	}
