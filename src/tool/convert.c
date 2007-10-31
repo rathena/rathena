@@ -292,7 +292,7 @@ int main(int argc,char *argv[])
 {
 	if(argc < 3) {
 		printf("Usage: convert <input filename> <output filename>\n");
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 	mmo_char_convert(argv[1],argv[2]);
 

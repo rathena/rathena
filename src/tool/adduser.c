@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 	if (FPaccin == NULL) {
 		printf("'%s' file not found!\n", account_txt);
 		printf("Run the setup wizard please.\n");
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 
 	next_id = 2000000;

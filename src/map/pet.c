@@ -1359,7 +1359,8 @@ int do_init_pet(void)
 	return 0;
 }
 
-int do_final_pet(void) {
+int do_final_pet(void)
+{
 	int i;
 	for( i = 0; i < MAX_PET_DB; i++ ) {
 		if(pet_db[i].script) {

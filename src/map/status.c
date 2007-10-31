@@ -6100,11 +6100,15 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 }
 /*==========================================
  * ステータス異常全解除
+ * type:
+ * 0 - ???
+ * 1 - ???
+ * 2 - ???
  *------------------------------------------*/
-int status_change_clear(struct block_list* bl, enum sc_type type)
+int status_change_clear(struct block_list* bl, int type)
 {
 	struct status_change* sc;
-	int i;
+	enum sc_type i;
 
 	sc = status_get_sc(bl);
 
@@ -6118,9 +6122,10 @@ int status_change_clear(struct block_list* bl, enum sc_type type)
 	{
 		if(sc->data[i].timer == -1)
 		  continue;
+
 		if(type == 0)
 		switch (i)
-		{	//Type 0: PC killed -> Place here stats that do not dispel on death.
+		{	//Type 0: PC killed -> Place here statuses that do not dispel on death.
 		case SC_EDP:
 		case SC_MELTDOWN:
 		case SC_XMAS:
@@ -6136,6 +6141,7 @@ int status_change_clear(struct block_list* bl, enum sc_type type)
 		case SC_JAILED:
 			continue;
 		}
+
 		status_change_end(bl, i, INVALID_TIMER);
 
 		if( type == 1 && sc->data[i].timer != INVALID_TIMER )
@@ -6145,12 +6151,13 @@ int status_change_clear(struct block_list* bl, enum sc_type type)
 			sc->data[i].timer = -1;
 		}
 	}
+
 	sc->opt1 = 0;
 	sc->opt2 = 0;
 	sc->opt3 = 0;
 	sc->option &= OPTION_MASK;
 
-	if(!type || type&2)
+	if( type == 0 || type == 2 )
 		clif_changeoption(bl);
 
 	return 1;
@@ -7025,9 +7032,9 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
  * Clears buffs/debuffs of a character.
  * type&1 -> buffs, type&2 -> debuffs
  *------------------------------------------*/
-int status_change_clear_buffs (struct block_list* bl, enum sc_type type)
+int status_change_clear_buffs (struct block_list* bl, int type)
 {
-	int i;
+	enum sc_type i;
 	struct status_change *sc= status_get_sc(bl);
 
 	if (!sc || !sc->count)

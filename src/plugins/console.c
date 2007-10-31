@@ -53,7 +53,7 @@ typedef struct _buffer {
 /// In linux the worker is a process so it needs to comunicate through pipes.
 #define WORKER_FUNC_DECLARE(name) void worker_ ## name(void)
 #define WORKER_FUNC_START(name) void worker_ ## name(void) {
-#define WORKER_FUNC_END(name) _exit(0); }
+#define WORKER_FUNC_END(name) _exit(EXIT_SUCCESS); }
 #define WORKER_EXECUTE(name,errvar) \
 	do{ \
 		int pid = fork(); \
