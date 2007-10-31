@@ -3,20 +3,21 @@
 //===== By: ==================================================
 //= SinSloth
 //===== Current Version: =====================================
-//= 1.0
+//= 1.0a
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Izlude Party Battle Arena
 //===== Additional Comments: =================================
 //= 1.0 First version.
+//= 1.0a Fixed a typo.
 //============================================================
 
 arena_room,162,88,3	script	Ponox	124,{
 	end;
 	
 OnInit:
-	waitingroom "Time Force Battle - Last Party !",11,"Ponox::OnStartArena",1;
+	waitingroom "Time Force Battle - Last Party !",11,"Ponox::OnStartArena",5;
 	enablewaitingroomevent;
 	end;
 
