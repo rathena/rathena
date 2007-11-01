@@ -2189,14 +2189,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	  	//Emperium destroyed by script. Discard mvp character. [Skotlex]
 		mvp_sd = NULL;
 
-
-	// <Agit> NPC Event [OnAgitBreak]
-	if(md->npc_event[0] && strcmp(((md->npc_event)+strlen(md->npc_event)-13),"::OnAgitBreak") == 0) {
-		ShowNotice("MOB.C: Run NPC_Event[OnAgitBreak].\n");
-		if (agit_flag == 1) //Call to Run NPC_Event[OnAgitBreak]
-			guild_agit_break(md);
-	}
-
 	if(src && src->type == BL_MOB){
 		struct mob_data *smd = (struct mob_data *)src;
 		if(smd->nd)
@@ -2317,7 +2309,7 @@ int mob_guardian_guildchange(struct block_list *bl,va_list ap)
 		return 0;
 	}
 
-	md->guardian_data->guild_id = md->guardian_data->castle->guild_id;
+	md->guardian_data->guild_id = g->guild_id;
 	md->guardian_data->emblem_id = g->emblem_id;
 	md->guardian_data->guardup_lv = guild_checkskill(g,GD_GUARDUP);
 	memcpy(md->guardian_data->guild_name, g->name, NAME_LENGTH);

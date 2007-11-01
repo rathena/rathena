@@ -89,7 +89,6 @@ int guild_castlealldataload(int len,struct guild_castle *gc);
 
 int guild_agit_start(void);
 int guild_agit_end(void);
-int guild_agit_break(struct mob_data *md);
 
 void do_final_guild(void);
 

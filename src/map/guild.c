@@ -66,7 +66,6 @@ struct{
 int guild_save_timer = -1;
 
 int guild_payexp_timer(int tid,unsigned int tick,int id,int data);
-int guild_gvg_eliminate_timer(int tid,unsigned int tick,int id,int data);
 int guild_save_sub(int tid,unsigned int tick,int id,int data);
 static int guild_send_xy_timer(int tid,unsigned int tick,int id,int data);
 
@@ -216,7 +215,6 @@ void do_init_guild(void)
 
 	guild_read_guildskill_tree_db(); //guild skill tree [Komurka]
 
-	add_timer_func_list(guild_gvg_eliminate_timer,"guild_gvg_eliminate_timer");
 	add_timer_func_list(guild_payexp_timer,"guild_payexp_timer");
 	add_timer_func_list(guild_save_sub, "guild_save_sub");
 	add_timer_func_list(guild_send_xy_timer, "guild_send_xy_timer");
@@ -1882,27 +1880,6 @@ int guild_agit_end(void)
 	return 0;
 }
 
-int guild_gvg_eliminate_timer(int tid,unsigned int tick,int id,int data)
-{	// Run One NPC_Event[OnAgitEliminate]
-	char *name = (char*)data;
-	size_t len = (name) ? strlen(name) : 0; 
-	// the rest is dangerous, but let it crash,
-	// if this happens, it's ruined anyway
-	int c=0;
-
-	if(agit_flag)	// Agit not already End
-	{
-		char *evname=(char*)aMalloc( (len + 10) * sizeof(char));
-		memcpy(evname,name,len - 5);
-		strcpy(evname + len - 5,"Eliminate");
-		c = npc_event_do(evname);
-		ShowStatus("NPC_Event:[%s] Run (%d) Events.\n",evname,c);
-		aFree(evname); // [Lance] Should fix this
-	}
-	if(name) aFree(name);
-	return 0;
-}
-
 static int Ghp[MAX_GUILDCASTLE][MAX_GUARDIANS];	// so save only if HP are changed // experimental code [Yor]
 static int Gid[MAX_GUILDCASTLE];
 int guild_save_sub(int tid,unsigned int tick,int id,int data)
@@ -1925,22 +1902,6 @@ int guild_save_sub(int tid,unsigned int tick,int id,int data)
 		}
 	}
 
-	return 0;
-}
-
-int guild_agit_break(struct mob_data *md)
-{	// Run One NPC_Event[OnAgitBreak]
-	char* evname;
-
-	if(!agit_flag) return 0;	// Agit already End
-
-	evname = aStrdup(md->npc_event);
-// Now By User to Run [OnAgitBreak] NPC Event...
-// It's a little impossible to null point with player disconnect in this!
-// But Script will be stop, so nothing...
-// Maybe will be changed in the futher..
-//      int c = npc_event_do(evname);
-	add_timer(gettick()+battle_config.gvg_eliminate_time,guild_gvg_eliminate_timer,md->bl.m,(int)evname);
 	return 0;
 }
 

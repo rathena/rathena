@@ -157,7 +157,7 @@ function	script	F_AgitBreak	{
 
 	disablenpc "Kafra Staff#"+.@castle$;
 
-	for( set .@i, 4; .@i < 25; set .@i, .@i+1 )
+	for( set .@i, 4; .@i <= 25; set .@i, .@i+1 )
 		SetCastleData .@map$, .@i, 0;
 
 	return;

@@ -28,6 +28,7 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","payg_cas01","Py01";
+	addtimer getbattleflag("gvg_eliminate_time"), "Agit_Py01::OnAgitEliminate";
 	end;
 OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas01","Py01";
@@ -54,6 +55,7 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","payg_cas02","Py02";
+	addtimer getbattleflag("gvg_eliminate_time"), "Agit_Py02::OnAgitEliminate";
 	end;
 OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas02","Py02";
@@ -80,6 +82,7 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","payg_cas03","Py03";
+	addtimer getbattleflag("gvg_eliminate_time"), "Agit_Py03::OnAgitEliminate";
 	end;
 OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas03","Py03";
@@ -106,6 +109,7 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","payg_cas04","Py04";
+	addtimer getbattleflag("gvg_eliminate_time"), "Agit_Py04::OnAgitEliminate";
 	end;
 OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas04","Py04";
@@ -132,6 +136,7 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","payg_cas05","Py05";
+	addtimer getbattleflag("gvg_eliminate_time"), "Agit_Py05::OnAgitEliminate";
 	end;
 OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas05","Py05";

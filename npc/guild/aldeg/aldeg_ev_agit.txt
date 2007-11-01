@@ -28,6 +28,7 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","aldeg_cas01","A01";
+	addtimer getbattleflag("gvg_eliminate_time"), "Agit_A01::OnAgitEliminate";
 	end;
 OnGuildBreak:
 	callfunc "F_GuildBreak","aldeg_cas01","A01";
@@ -54,6 +55,7 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","aldeg_cas02","A02";
+	addtimer getbattleflag("gvg_eliminate_time"), "Agit_A02::OnAgitEliminate";
 	end;
 OnGuildBreak:
 	callfunc "F_GuildBreak","aldeg_cas02","A02";
@@ -80,6 +82,7 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","aldeg_cas03","A03";
+	addtimer getbattleflag("gvg_eliminate_time"), "Agit_A03::OnAgitEliminate";
 	end;
 OnGuildBreak:
 	callfunc "F_GuildBreak","aldeg_cas03","A03";
@@ -106,6 +109,7 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","aldeg_cas04","A04";
+	addtimer getbattleflag("gvg_eliminate_time"), "Agit_A04::OnAgitEliminate";
 	end;
 OnGuildBreak:
 	callfunc "F_GuildBreak","aldeg_cas04","A04";
@@ -132,6 +136,7 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","aldeg_cas05","A05";
+	addtimer getbattleflag("gvg_eliminate_time"), "Agit_A05::OnAgitEliminate";
 	end;
 OnGuildBreak:
 	callfunc "F_GuildBreak","aldeg_cas05","A05";
