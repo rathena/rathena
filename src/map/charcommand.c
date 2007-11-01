@@ -3860,7 +3860,7 @@ bool is_charcommand(const int fd, struct map_session_data* sd, const char* messa
 		return false;
 
 	if( sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCOMMAND )
-		return true;
+		return true; // so that it won't display as normal message
 
 	if( battle_config.atc_gmonly != 0 && gmlvl == 0 )
 		return false;
@@ -3875,7 +3875,7 @@ bool is_charcommand(const int fd, struct map_session_data* sd, const char* messa
 	if( message[0] == '|' && strlen(message) >= 4 && message[3] == charcommand_symbol )
 		message += 3;
 
-	return is_atcommand_sub(fd,sd,message,gmlvl);
+	return is_charcommand_sub(fd,sd,message,gmlvl);
 }
 
 
