@@ -409,7 +409,7 @@ int atcommand_send(const int fd, struct map_session_data* sd, const char* comman
  *------------------------------------------*/
 int atcommand_mapmove(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	char map_name[MAP_NAME_LENGTH];
+	char map_name[MAP_NAME_LENGTH_EXT];
 	unsigned short mapindex;
 	int x = 0, y = 0;
 	int m = -1;
@@ -419,8 +419,8 @@ int atcommand_mapmove(const int fd, struct map_session_data* sd, const char* com
 	memset(map_name, '\0', sizeof(map_name));
 
 	if (!message || !*message ||
-		(sscanf(message, "%11s %d %d", map_name, &x, &y) < 3 &&
-		 sscanf(message, "%11[^,],%d,%d", map_name, &x, &y) < 1)) {
+		(sscanf(message, "%15s %d %d", map_name, &x, &y) < 3 &&
+		 sscanf(message, "%15[^,],%d,%d", map_name, &x, &y) < 1)) {
 		 
 			clif_displaymessage(fd, "Please, enter a map (usage: @warp/@rura/@mapmove <mapname> <x> <y>).");
 			return -1;
@@ -786,7 +786,7 @@ int atcommand_whomap3(const int fd, struct map_session_data* sd, const char* com
 	int i, count, users;
 	int pl_GM_level, GM_level;
 	int map_id;
-	char map_name[MAP_NAME_LENGTH];
+	char map_name[MAP_NAME_LENGTH_EXT];
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(map_name, '\0', sizeof(map_name));
@@ -794,7 +794,7 @@ int atcommand_whomap3(const int fd, struct map_session_data* sd, const char* com
 	if (!message || !*message)
 		map_id = sd->bl.m;
 	else {
-		sscanf(message, "%11s", map_name);
+		sscanf(message, "%15s", map_name);
 		if ((map_id = map_mapname2mapid(map_name)) < 0)
 			map_id = sd->bl.m;
 	}
@@ -839,7 +839,7 @@ int atcommand_whomap2(const int fd, struct map_session_data* sd, const char* com
 	int i, count, users;
 	int pl_GM_level, GM_level;
 	int map_id = 0;
-	char map_name[MAP_NAME_LENGTH];
+	char map_name[MAP_NAME_LENGTH_EXT];
 
 	nullpo_retr(-1, sd);
 
@@ -849,7 +849,7 @@ int atcommand_whomap2(const int fd, struct map_session_data* sd, const char* com
 	if (!message || !*message)
 		map_id = sd->bl.m;
 	else {
-		sscanf(message, "%11s", map_name);
+		sscanf(message, "%15s", map_name);
 		if ((map_id = map_mapname2mapid(map_name)) < 0)
 			map_id = sd->bl.m;
 	}
@@ -896,7 +896,7 @@ int atcommand_whomap(const int fd, struct map_session_data* sd, const char* comm
 	int i, count, users;
 	int pl_GM_level, GM_level;
 	int map_id = 0;
-	char map_name[MAP_NAME_LENGTH];
+	char map_name[MAP_NAME_LENGTH_EXT];
 	struct guild *g;
 	struct party_data *p;
 
@@ -910,7 +910,7 @@ int atcommand_whomap(const int fd, struct map_session_data* sd, const char* comm
 	if (!message || !*message)
 		map_id = sd->bl.m;
 	else {
-		sscanf(message, "%11s", map_name);
+		sscanf(message, "%15s", map_name);
 		if ((map_id = map_mapname2mapid(map_name)) < 0)
 			map_id = sd->bl.m;
 	}
@@ -2651,13 +2651,13 @@ static int atkillmonster_sub(struct block_list *bl, va_list ap)
 void atcommand_killmonster_sub(const int fd, struct map_session_data* sd, const char* message, const int drop)
 {
 	int map_id;
-	char map_name[MAP_NAME_LENGTH];
+	char map_name[MAP_NAME_LENGTH_EXT];
 
 	if (!sd) return;
 
 	memset(map_name, '\0', sizeof(map_name));
 
-	if (!message || !*message || sscanf(message, "%11s", map_name) < 1)
+	if (!message || !*message || sscanf(message, "%15s", map_name) < 1)
 		map_id = sd->bl.m;
 	else {
 		if ((map_id = map_mapname2mapid(map_name)) < 0)
