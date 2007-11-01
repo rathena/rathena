@@ -981,9 +981,9 @@
 2119,Improved_Arm_Guard,Improved Arm Guard,5,40000,,150,,4,,0,0x02000000,7,2,32,,50,1,,{ bonus bMdef,5; },{},{}
 2120,Improved_Arm_Guard_,Improved Arm Guard,5,40000,,150,,4,,1,0x02000000,7,2,32,,50,1,,{ bonus bMdef,5; },{},{}
 2121,Memory_Book_,Memory Book,5,,10,1000,,3,,1,0x00810204,7,2,32,,0,1,0,{ bonus bInt,1; bonus bMdef,2; },{},{}
-2122,Platinum_Shield,Platinum Shield,5,,10,1200,,5,,0,0x0FFFFFFE,2,2,32,,68,1,1,{ bonus bMdef,5; bonus2 bSubSize,1,15; bonus2 bSubSize,2,15; bonus2 bSubRace,RC_Undead,10; bonus5 bAutoSpellWhenHit,671,2,10,BF_MAGIC,0; },{},{}
-2123,Orleans'_Plate,Orleans' Plate,5,,10,1000,,5,,1,0x0FFFFFFE,2,2,32,,55,1,1,{ bonus bMDef,2; bonus bMagicDamageReturn,5; if (isequipped(2701)) bonus bCastrate,-10; },{},{}
-2124,Thorny_Shield,Thorny Shield,5,,10,1000,,5,,1,0x0FFFFFFE,2,2,32,,55,1,1,{ bonus bMDef,2; if (isequipped(2702)) { bonus bAspdRate,20; bonus bShortWeaponDamageReturn,5; } },{},{}
+2122,Platinum_Shield,Platinum Shield,5,,10,1200,,5,,0,0xFFFFFFFE,2,2,32,,68,1,1,{ bonus bMdef,5; bonus2 bSubSize,1,15; bonus2 bSubSize,2,15; bonus2 bSubRace,RC_Undead,10; bonus5 bAutoSpellWhenHit,671,2,10,BF_MAGIC,0; },{},{}
+2123,Orleans'_Plate,Orleans' Plate,5,,10,1000,,5,,1,0xFFFFFFFE,2,2,32,,55,1,1,{ bonus bMDef,2; bonus bMagicDamageReturn,5; if (isequipped(2701)) bonus bCastrate,-10; },{},{}
+2124,Thorny_Shield,Thorny Shield,5,,10,1000,,5,,1,0xFFFFFFFE,2,2,32,,55,1,1,{ bonus bMDef,2; if (isequipped(2702)) { bonus bAspdRate,20; bonus bShortWeaponDamageReturn,5; } },{},{}
 2125,Strong_Shield,Strong Shield,5,,10,2500,,4,,1,0xFFFFFFFE,2,2,32,,75,1,1,{ bonus bNoKnockback,0; bonus bNearAtkDef,-20; bonus bLongAtkDef,-20; bonus bMagicAtkDef,-20; },{},{}
 2126,Old_Shield,Old Shield,5,,10,700,,3,,0,0xFFFFFFFE,7,2,32,,75,1,1,{ bonus bMDef,3; },{},{}
 2127,Sakray_Test_Shield,Sakray Test Shield,5,,10,0,,10,,0,0xFFFFFFFF,7,2,32,1,1,0,1,{ bonus2 bSubRace,RC_NonBoss,-25; bonus2 bSubRace,RC_Boss,-25; },{},{}
@@ -1159,8 +1159,8 @@
 //2362,Red_Aodai,Red Robe,5,,10,500,,0,,0,0xFFFFFFFE,7,2,16,,0,1,0,{ bonus bAllStats,5; bonus bMdef,5; },{},{}
 //2363,White_Aodai,White Robe,5,,10,500,,0,,0,0x00000001,7,2,16,,0,1,0,{ bonus bAllStats,3; bonus bMdef,5; },{},{}
 2364,Meteor_Plate,Meteor Plate,5,,10,3000,,10,,1,0x000444A2,2,2,16,,55,1,0,{ bonus2 bResEff,Eff_Stun,3000; bonus2 bResEff,Eff_Freeze,3000; },{},{}
-2365,Robes_of_Orleans,Robes of Orleans,5,,10,300,,2,,1,0x0FFFFFFE,2,2,16,,55,1,0,{ bonus bCastrate,15; bonus bNoCastCancel,0; },{},{}
-2366,Divine_Clothes,Divine Clothes,5,,10,1500,,6,,1,0x0FFFFFFE,2,2,16,,55,1,0,{ bonus2 bResEff,Eff_Curse,500; bonus2 bResEff,Eff_Silence,500; bonus2 bResEff,Eff_Stun,500; bonus2 bResEff,Eff_Stone,500; },{},{}
+2365,Robes_of_Orleans,Robes of Orleans,5,,10,300,,2,,1,0xFFFFFFFE,2,2,16,,55,1,0,{ bonus bCastrate,15; bonus bNoCastCancel,0; },{},{}
+2366,Divine_Clothes,Divine Clothes,5,,10,1500,,6,,1,0xFFFFFFFE,2,2,16,,55,1,0,{ bonus2 bResEff,Eff_Curse,500; bonus2 bResEff,Eff_Silence,500; bonus2 bResEff,Eff_Stun,500; bonus2 bResEff,Eff_Stone,500; },{},{}
 2367,Sniping_Suits,Sniping Suit,5,,10,750,,5,,1,0x00000800,2,2,16,,50,1,0,{ bonus bMdef,5; bonus bCritical,6+readparam(bLuk)/5; bonus bDelayRate,-23; },{},{}
 //2368,Golden_Armor,Golden Armor,5,,10,2000,,4,,0,0xFFFFFFFF,7,2,16,,,1,0,{ bonus bMdef,4; },{},{}
 //2369,Freya's_Clothes,Freya's Clothes,5,,10,500,,12,,0,0xFFFFFFFE,7,2,16,,0,1,0,{ if ((isequipped(2428)) || (isequipped(2533)) || (isequipped(5306))) { bonus2 bSubRace,RC_DemiHuman,10; bonus bMaxHPrate,20; bonus2 bResEff,Eff_Freeze,10000; skill 88,10; } },{},{}
@@ -1346,8 +1346,8 @@
 2698,Vesper_Core03_C,Refined Vesper Core 03,5,,10,0,,1,,0,0x00CFDF80,2,2,136,,1,0,0,{ bonus bMdef,3; bonus bAgi,3; bonus bFlee,5; },{},{}
 2699,Vesper_Core04_C,Refined Vesper Core 04,5,,10,0,,1,,0,0x00CFDF80,2,2,136,,1,0,0,{ bonus bMdef,3; bonus bDex,3; bonus bHit,10; },{},{}
 2700,Red_Silk_of_Seal,Red Silk of Seal,5,,10,100,,0,,0,0x00004082,2,2,136,,0,0,0,{},{},{}
-2701,Glove_of_Orleans,Glove of Orleans,5,,10,100,,0,,1,0x0FFFFFFE,2,2,136,,90,0,0,{ bonus bDex,2; bonus bMatkRate,3; },{},{}
-2702,Horn_of_the_Buffalo,Horn of the Buffalo,5,,10,100,,0,,1,0x0FFFFFFE,2,2,136,,90,0,0,{ bonus bAgi,2; },{},{}
+2701,Glove_of_Orleans,Glove of Orleans,5,,10,100,,0,,1,0xFFFFFFFE,2,2,136,,90,0,0,{ bonus bDex,2; bonus bMatkRate,3; },{},{}
+2702,Horn_of_the_Buffalo,Horn of the Buffalo,5,,10,100,,0,,1,0xFFFFFFFE,2,2,136,,90,0,0,{ bonus bAgi,2; },{},{}
 2703,Expert_Ring,Expert Ring,5,,10,150,,0,,1,0xFFFFFFFE,2,2,136,,90,0,0,{ bonus bDelayRate,-5; bonus bUseSPrate,5; },{},{}
 //2704,Golden_Accessories,Golden Accessories,5,,10,100,,4,,0,0xFFFFFFFF,7,2,136,,,,,{ bonus bMdef,4; },{},{}
 //2705,Golden_Accessories_,Golden Accessories,5,,10,100,,4,,0,0xFFFFFFFF,7,2,136,,,,,{ bonus2 bAddMonsterDropItem,12018,500; },{},{}
@@ -1377,7 +1377,7 @@
 2729,Diablos_Ring,Diablos Ring,5,,,50,,0,,1,0x000FDF80,2,2,136,,0,0,0,{ bonus bMaxHP,100; bonus bMaxSP,100; bonus2 bSkillheal,28,5; },{},{}
 2730,Continental_Guard_Seal,Continental Guard Seal,5,,,50,,0,,1,0xFFFFFFFE,2,2,136,,78,0,0,{ bonus bMaxHP,50; bonus bAspdRate,3; },{},{}
 2731,Rune_Charm_Stone,Rune Charm Stone,5,,,50,,0,,1,0xFFFFFFFE,2,2,136,,78,0,0,{ bonus bMaxSP,50; bonus bCastRate,-1; },{},{}
-2732,Death_Medalion,Death Medalion,5,,,50,,0,,1,0x03FFFFFE,2,2,136,,80,0,0,{ bonus bCritical,5; },{},{}
+2732,Death_Medalion,Death Medalion,5,,,50,,0,,1,0xFFFFFFFE,2,2,136,,80,0,0,{ bonus bCritical,5; },{},{}
 // Cards
 //===================================================================
 4001,Poring_Card,Poring Card,6,,10,10,,,,,,,,16,,,,,{ bonus bLuk,2; bonus bFlee2,1; },{},{}
