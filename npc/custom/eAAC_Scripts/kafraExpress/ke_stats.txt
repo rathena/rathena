@@ -13,7 +13,7 @@
 //= See config.txt for configuration.
 //============================================================
 
--	script	keInit_stats	{
+-	script	keInit_stats	-1,{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadStats";
 	end;

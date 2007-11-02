@@ -14,7 +14,7 @@
 //= See config.txt for configuration.
 //============================================================
 
--	script	keInit_refine	{
+-	script	keInit_refine	-1,{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadRefine";
 	end;

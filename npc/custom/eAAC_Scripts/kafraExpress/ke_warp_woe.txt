@@ -14,7 +14,7 @@
 //= Remove the comment on lines 52,53 and 63 to enable direct G. Dungeon warping
 //============================================================ 
 
--	script	keInit_warpWoe	{
+-	script	keInit_warpWoe	-1,{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadWarpWoe";
 	end;

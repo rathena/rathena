@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/11/02
+	* Rev. 11646 Fixed some NPC headers in the custom scripts. [L0ne_W0lf]
 	* Rev. 11645 Some NPC and CONF file clean up. More duplicate removal. [L0ne_W0lf]
 	* Rev. 11643 Bug fixes in rogue skill quest resolved bugreport:351 [L0ne_W0lf]
 2007/11/01

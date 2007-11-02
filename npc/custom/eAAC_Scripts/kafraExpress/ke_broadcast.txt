@@ -17,7 +17,7 @@
 //= Module are used.
 //============================================================ 
 
--	script	keInit_broadcast	{
+-	script	keInit_broadcast	-1,{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadBroadcast";
 	end;

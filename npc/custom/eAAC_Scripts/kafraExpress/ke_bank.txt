@@ -14,7 +14,7 @@
 //= See config.txt for configuration.
 //============================================================ 
 
--	script	keInit_bank	{
+-	script	keInit_bank	-1,{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadBank";
 	end;

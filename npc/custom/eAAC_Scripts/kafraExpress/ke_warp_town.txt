@@ -36,7 +36,7 @@
 //= 0x00200000 Rachel
 //============================================================ 
 
--	script	keInit_warpTown	{
+-	script	keInit_warpTown	-1,{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadWarpTown";
 	end;

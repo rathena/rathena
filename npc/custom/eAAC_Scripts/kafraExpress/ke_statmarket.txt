@@ -13,7 +13,7 @@
 //= See config.txt for configuration.
 //============================================================
 
--	script	keInit_statmarket	{
+-	script	keInit_statmarket	-1,{
 OnInit:	//Load Config
 	donpcevent "keConfig::OnLoadStatMarket";
 	end;
