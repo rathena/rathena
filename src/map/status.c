@@ -1112,7 +1112,7 @@ int status_check_skilluse(struct block_list *src, struct block_list *target, int
 	hide_flag = flag?OPTION_HIDE:(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK);
 		
  	//You cannot hide from ground skills.
-	if(skill_get_pl(skill_num,1) == ELE_EARTH) //TODO: Need Skill Lv here :/
+	if(skill_get_ele(skill_num,1) == ELE_EARTH) //TODO: Need Skill Lv here :/
 		hide_flag &= ~OPTION_HIDE;
 
 	switch (target->type)

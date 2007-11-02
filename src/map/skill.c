@@ -692,7 +692,7 @@ int icewall_unit_pos;
 // Skill DB
 int	skill_get_hit( int id ){ skill_get (skill_db[id].hit, id, 1); }
 int	skill_get_inf( int id ){ skill_get (skill_db[id].inf, id, 1); }
-int	skill_get_pl( int id , int lv ){ skill_get (skill_db[id].pl[lv-1], id, lv); }
+int	skill_get_ele( int id , int lv ){ skill_get (skill_db[id].element[lv-1], id, lv); }
 int	skill_get_nk( int id ){ skill_get (skill_db[id].nk, id, 1); }
 int	skill_get_max( int id ){ skill_get (skill_db[id].max, id, 1); }
 int	skill_get_range( int id , int lv ){ skill_get(skill_db[id].range[lv-1], id, lv); }
@@ -774,7 +774,6 @@ int skill_greed(struct block_list *bl, va_list ap);
 int skill_cell_overlap(struct block_list *bl, va_list ap);
 int skill_ganbatein(struct block_list *bl, va_list ap);
 int skill_trap_splash(struct block_list *bl, va_list ap);
-int skill_count_target(struct block_list *bl, va_list ap);
 struct skill_unit_group_tickset *skill_unitgrouptickset_search(struct block_list *bl,struct skill_unit_group *sg,int tick);
 static int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int tick);
 static int skill_unit_onleft(int skill_id, struct block_list *bl,unsigned int tick);
@@ -1036,11 +1035,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	nullpo_retr(0, src);
 	nullpo_retr(0, bl);
 
-	if(skillid < 0) 
-	{	// remove the debug print when this case is finished
-		ShowDebug("skill_additional_effect: skillid=%i\ncall: %p %p %i %i %i %i",skillid,src,bl,skillid,skilllv,attack_type,tick);
-		return 0;
-	}
+	if(skillid < 0) return 0;
 	if(skillid > 0 && skilllv <= 0) return 0;	// don't forget auto attacks! - celest
 
 	BL_CAST(BL_PC, src, sd);
@@ -1568,12 +1563,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	nullpo_retr(0, src);
 	nullpo_retr(0, bl);
 
-	if(skillid < 0) 
-	{	// remove the debug print when this case is finished
-		ShowDebug("skill_counter_additional_effect: skillid=%i\ncall: %p %p %i %i %i %i",skillid,
-						src, bl,skillid,skilllv,attack_type,tick);
-		return 0;
-	}
+	if(skillid < 0) return 0;
 	if(skillid > 0 && skilllv <= 0) return 0;	// don't forget auto attacks! - celest
 
 	tsc = status_get_sc(bl);
@@ -2005,7 +1995,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		struct pet_data *pd = (TBL_PET*)src;
 		if (pd->a_skill && pd->a_skill->div_ && pd->a_skill->id == skillid)
 		{
-			int element = skill_get_pl(skillid, skilllv);
+			int element = skill_get_ele(skillid, skilllv);
 			if (skillid == -1)
 				element = sstatus->rhw.ele;
 			if (element != ELE_NEUTRAL || !(battle_config.attack_attr_none&BL_PET))
@@ -3312,8 +3302,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			}
 			cnt--;
 			if (cnt > 0)
-				skill_addtimerskill(src,tick+125,bl->id,0,0,
-					skillid,skilllv,cnt,flag);
+				skill_addtimerskill(src,tick+125,bl->id,0,0,skillid,skilllv,cnt,flag);
 		} else if (sd) //Eat up deluge tiles.
 			skill_count_water(src,0);
 
@@ -3508,7 +3497,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	tsc = status_get_sc(bl);
 
 	if (src!=bl && type > -1 &&
-		(i = skill_get_pl(skillid, skilllv)) > ELE_NEUTRAL &&
+		(i = skill_get_ele(skillid, skilllv)) > ELE_NEUTRAL &&
 		skill_get_inf(skillid) != INF_SUPPORT_SKILL &&
 		battle_attr_fix(NULL, NULL, 100, i, tstatus->def_ele, tstatus->ele_lv) <= 0)
 		return 1; //Skills that cause an status should be blocked if the target element blocks its element.
@@ -3871,11 +3860,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case ITEM_ENCHANTARMS:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
 			sc_start2(bl,type,100,skilllv,
-				skill_get_pl(skillid,skilllv), skill_get_time(skillid,skilllv)));
+				skill_get_ele(skillid,skilllv), skill_get_time(skillid,skilllv)));
 		break;
 
 	case TK_SEVENWIND:
-		switch(skill_get_pl(skillid,skilllv)) {
+		switch(skill_get_ele(skillid,skilllv)) {
 			case ELE_EARTH : type = SC_EARTHWEAPON;  break;
 			case ELE_WIND  : type = SC_WINDWEAPON;   break;
 			case ELE_WATER : type = SC_WATERWEAPON;  break;
@@ -5004,7 +4993,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case NPC_CHANGETELEKINESIS:
 	case NPC_CHANGEUNDEAD:
 		clif_skill_nodamage(src,bl,skillid,skilllv,
-			sc_start2(bl, type, 100, skilllv, skill_get_pl(skillid,skilllv), 
+			sc_start2(bl, type, 100, skilllv, skill_get_ele(skillid,skilllv), 
 				skill_get_time(skillid, skilllv)));
 		break;
 
@@ -9687,16 +9676,6 @@ int skill_chastle_mob_changetarget(struct block_list *bl,va_list ap)
 }
 
 /*==========================================
- * 指定範囲内でsrcに対して有効なターゲットのblの数を数える(foreachinarea)
- *------------------------------------------*/
-int skill_count_target (struct block_list *bl, va_list ap)
-{
-	struct block_list *src = va_arg(ap,struct block_list *);
-	if (battle_check_target(src,bl,BCT_ENEMY) > 0)
-		return 1;
-	return 0;
-}
-/*==========================================
  *
  *------------------------------------------*/
 int skill_trap_splash (struct block_list *bl, va_list ap)
@@ -11409,7 +11388,7 @@ int skill_readdb (void)
 		skill_split_atoi(split[1],skill_db[i].range);
 		skill_db[i].hit=atoi(split[2]);
 		skill_db[i].inf=atoi(split[3]);
-		skill_split_atoi(split[4],skill_db[i].pl);
+		skill_split_atoi(split[4],skill_db[i].element);
 		skill_db[i].nk=(int)strtol(split[5], NULL, 0);
 		skill_split_atoi(split[6],skill_db[i].splash);
 		skill_db[i].max=atoi(split[7]);

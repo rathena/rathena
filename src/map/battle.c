@@ -833,8 +833,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 /*==========================================
  * battle_calc_weapon_attack (by Skotlex)
  *------------------------------------------*/
-static struct Damage battle_calc_weapon_attack(
-	struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int wflag)
+static struct Damage battle_calc_weapon_attack(struct block_list *src,struct block_list *target,int skill_num,int skill_lv,int wflag)
 {
 	unsigned int skillratio = 100;	//Skill dmg modifiers.
 	short skill=0;
@@ -966,7 +965,7 @@ static struct Damage battle_calc_weapon_attack(
 	}
 
 	t_class = status_get_class(target);
-	s_ele = s_ele_ = skill_get_pl(skill_num, skill_lv);
+	s_ele = s_ele_ = skill_get_ele(skill_num, skill_lv);
 	if (!skill_num || s_ele == -1) { //Take weapon's element
 		s_ele = sstatus->rhw.ele;
 		s_ele_ = sstatus->lhw?sstatus->lhw->ele:0;
@@ -2135,7 +2134,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	BL_CAST(BL_PC, target, tsd);
 
 	//Initialize variables that will be used afterwards
-	s_ele = skill_get_pl(skill_num, skill_lv);
+	s_ele = skill_get_ele(skill_num, skill_lv);
 
 	if (s_ele == -1) // pl=-1 : the skill takes the weapon's element
 		s_ele = sstatus->rhw.ele;
@@ -2468,7 +2467,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.blewcount += battle_blewcount_bonus(sd, skill_num);
 	}
 
-	s_ele = skill_get_pl(skill_num, skill_lv);
+	s_ele = skill_get_ele(skill_num, skill_lv);
 	if (s_ele < 0) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
 		s_ele = ELE_NEUTRAL;
 
