@@ -25,6 +25,9 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+11/02
+	* Added trap mode to Firepillar [Playtester]
+	- tell me if it breaks something
 10/29
 	* Rev. 11615 Updated to fix errors reported by Zephyrus_CR. bugreport:334 [L0ne_W0lf]
 10/28
