@@ -100,8 +100,8 @@
 595,Mushroom_Pancake,Mushroom Pancake,0,,,150,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 596,Cute_Strawberry_Choco,Cute Strawberry-Choco,0,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,rand(1,100); },{},{}
 597,Lovely_Choco_Tart,Lovely Choco-Tart,0,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-598,Light_Red_Pot,Red Potion,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,65),0; },{},{}
-599,Light_Orange_Pot,Orange Potion,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; },{},{}
+598,Light_Red_Pot,Light Red Potion,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,65),0; },{},{}
+599,Light_Orange_Pot,Light Orange Potion,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; },{},{}
 // Usable Items
 //===================================================================
 601,Wing_Of_Fly,Fly Wing,2,60,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ warp "Random",0,0; },{},{}
@@ -2105,18 +2105,18 @@
 5280,Magestic_Goat_C,Refined Majestic Goat,5,,0,0,,5,,0,0xFFFFFFFF,7,2,256,,0,0,41,{ bonus bStr,1; },{},{}
 5281,Deviruchi_Hat_C,Refined Deviruchi Hat,5,,0,0,,2,,0,0xFFFFFFFE,7,2,256,,1,0,123,{ bonus bStr,1; bonus bInt,1; },{},{}
 5282,Baseball_Cap___,Europe Baseball Cap,5,,10,200,,3,,1,0xFFFFFFFF,7,2,256,,0,1,216,{},{},{}
-5283,Baby_Chick,Baby Chick,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,10,0,311,{ bonus bLuk,2; bonus bMaxHP,50; bonus bMaxSP,50; bonus bDoubleRate,10; bonus2 bSubRace,RC_Demon,5; },{},{}
+5283,Chick_Hat,Chick Hat,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,10,0,311,{ bonus bLuk,2; bonus bMaxHP,50; bonus bMaxSP,50; bonus bDoubleRate,10; bonus2 bSubRace,RC_DemiHuman,3; bonus2 bSubRace,RC_Brute,3; },{},{}
 5284,Water_Lily_Crown,Water Lily Crown,5,,10,200,,0,,1,0xFFFFFFFF,7,2,256,,20,0,312,{ bonus bDex,1; bonus bAgi,1; bonus bHPrecovRate,5; bonus bSPrecovRate,3; },{},{}
-5285,Pinwheel_Hairpin,Pinwheel Hairpin,5,,10,300,,3,,1,0xFFFFFFFF,7,2,256,,30,0,313,{ bonus bAgi,2; },{},{}
-5286,Peco_Peco_Hairband,Peco Peco Hairband,5,,10,0,,3,,0,0xFFFFFFFF,7,2,256,,0,1,314,{ bonus bAspdRate,-10; bonus bAspdRate,5; bonus bCastrate,5; },{},{}
+5285,Vane_Hairpin,Vane Hairpin,5,,10,300,,3,,1,0xFFFFFFFF,7,2,256,,30,0,313,{ bonus bAgi,2; },{},{}
+5286,Pecopeco_Hairband,Pecopeco Hairband,5,,10,0,,3,,0,0xFFFFFFFF,7,2,256,,0,1,314,{ bonus bSpeedRate,5; bonus bAspdRate,-10; bonus bCastrate,25; },{},{}
 5287,Summer_Hat,Summer Hat,5,,10,200,,1,,1,0xFFFFFFFF,7,2,256,,30,0,315,{ bonus bVit,1; },{},{}
 5288,Red_Glasses,Red Glasses,5,,10,0,,1,,0,0xFFFFFFFF,7,2,512,,0,0,316,{ bonus bInt,1; },{},{}
 5289,Vanilmirth_Hat,Vanilmirth Hat,5,,10,100,,0,,0,0xFFFFFFFF,7,2,256,,30,0,317,{ bonus bUnbreakableArmor,0; bonus3 bAutoSpell,19,1,100; bonus3 bAutoSpell,14,1,100; bonus3 bAutoSpell,20,1,100; bonus3 bAutoSpell,90,1,100; bonus bMdef,5; },{},{}
-5290,Evolved_Drooping_Bunny,Evolved Drooping Bunny,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,249,{ bonus bDex,1; bonus bFlee,2; },{},{}
-5291,Magic_Kettle,Magic Kettle,5,,10,600,,4,,0,0xFFFFFFFF,7,2,256,,30,1,318,{ bonus4 bAutoSpell,286,2,300,0; bonus3 bAutoSpell,86,3,300; },{},{}
-5292,Suspicion_Skeleton,Suspicion Skeleton,5,,10,800,,5,,0,0xFFFFFFFF,7,2,256,,50,1,319,{ bonus2 bSubRace,RC_Dragon,5; },{},{}
+5290,Evolved_Drooping_Bunny,Drooping Bunny,5,,10,100,,1,,0,0xFFFFFFFF,7,2,256,,0,1,249,{ bonus bDex,1; bonus bFlee,2; },{},{}
+5291,Kettle_Hat,Kettle Hat,5,,10,600,,4,,0,0xFFFFFFFF,7,2,256,,30,1,318,{ bonus4 bAutoSpell,286,2,300,0; bonus3 bAutoSpell,86,3,300; },{},{}
+5292,Dragon_Skull,Dragon Skull,5,,10,800,,5,,0,0xFFFFFFFF,7,2,256,,50,1,319,{ bonus2 bSubRace,RC_Dragon,5; },{},{}
 5293,Ramen_Hat,Ramen Hat,5,,10,0,,1,,0,0xFFFFFFFF,7,2,256,,0,1,320,{ bonus bDex,4; bonus3 bAutoSpell,30,1,100; },{},{}
-5294,Whisper_Mask,Whisper Mask,5,,10,0,,0,,0,0xFFFFFFFF,7,2,769,,0,0,321,{ bonus bAgi,3; bonus2 bSubEle,Ele_Ghost,-50; },{},{}
+5294,Whisper_Mask,Whisper Mask,5,,10,0,,0,,0,0xFFFFFFFF,7,2,769,,0,0,321,{ bonus bAgi,3; bonus2 bSubEle,Ele_Ghost,-10; },{},{}
 5296,Drooping_Nine_Tail,Drooping Nine Tail,5,,10,300,,1,,0,0xFFFFFFFF,7,2,256,,0,0,296,{ bonus bAgi,1; bonus bCritical,1; },{},{}
 //5295,Golden_Bandana,Golden Bandana,5,,10,2400,,4,,0,0xFFFFFFFF,7,2,768,,,1,138,{ bonus bMdef,4; },{},{}
 5297,Soul_Wing,Soul Wing,5,,10,300,,2,,1,0xFFFFFFFF,7,2,256,,0,0,301,{},{},{}
@@ -3715,18 +3715,18 @@
 13708,Pet_Egg_Scroll_E,Pet Egg Scroll E,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 13709,BRO_Package_Box,BRO Package Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 13710,Gym_Pass_Box,Gym Pass Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7776,1; },{},{}
-13711,Small_Water_of_Life_10ea_Box,Small Water of Life 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14534,10; },{},{}
-13712,Small_Water_of_Life_30ea_Box,Small Water of Life 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14534,30; },{},{}
-13713,Small_Water_of_Life_50ea_Box,Small Water of Life 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14534,50; },{},{}
-13714,Large_Water_of_Life_10ea_Box,Large Water of Life 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14535,10; },{},{}
-13715,Large_Water_of_Life_30ea_Box,Large Water of Life 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14535,30; },{},{}
-13716,Large_Water_of_Life_50ea_Box,Large Water of Life 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14535,50; },{},{}
-13717,Grinder_5ea_Box,Grinder 5ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14536,5; },{},{}
-13718,Grinder_10ea_Box,Grinder 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14536,10; },{},{}
-13719,Increased_Recovery_Potion_5ea_Box,Increased Recovery Potion 5ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14537,5; },{},{}
-13720,Increased_Recovery_Potion_10ea_Box,Increased Recovery Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14537,10;},{},{}
+13711,Small_Life_Potion_10_Box,Small Life Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14534,10; },{},{}
+13712,Small_Life_Potion_30_Box,Small Life Potion 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14534,30; },{},{}
+13713,Small_Life_Potion_50_Box,Small Life Potion 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14534,50; },{},{}
+13714,Medium_Life_Potion_10ea_Box,Medium Life POtion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14535,10; },{},{}
+13715,Medium_Life_Potion_30ea_Box,Medium Life Potion 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14535,30; },{},{}
+13716,Medium_Life_Potion_50ea_Box,Medium Life Potion 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14535,50; },{},{}
+13717,Abrasive_5ea_Box,Abrasive 5ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14536,5; },{},{}
+13718,Abrasive_10ea_Box,Abrasive 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14536,10; },{},{}
+13719,Regeneration_Potion_5ea_Box,Regeneration Potion 5ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14537,5; },{},{}
+13720,Regeneration_Potion_10ea_Box,Regeneration Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14537,10;},{},{}
 13721,Dungeon_Teleport_Scroll_10ea_Box,DungeonTeleport Scroll 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14527,10; },{},{}
-13722,Peco_Peco_Hairband_Box,Peco Peco Hairband Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5286,1; },{},{}
+13722,Pecopeco_Hairband_Box,Pecopeco Hairband Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5286,1; },{},{}
 13723,Red_Glasses_Box,Red Glasses Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5288,1; },{},{}
 13724,Whisper_Mask_Box,Whisper Mask Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5294,1; },{},{}
 13725,Ramen_Hat_Box,Ramen Hat Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5293,1; },{},{}
@@ -3738,30 +3738,30 @@
 13731,Silver_Key_5ea_Box,Silver Key 5ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7780,5; },{},{}
 //13732,금의_Key_Box,금의_Key_Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7779,1; },{},{}
 //13733,은의_Key_Box,은의_Key_Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7780,1; },{},{}
-13734,Peco_Peco_Hairband_Box_,Peco Peco Hairband Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5286,1; },{},{}
+13734,Pecopeco_Hairband_Box_,Pecopeco Hairband Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5286,1; },{},{}
 13735,Red_Glasses_Box_,Red Glasses Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5288,1; },{},{}
 13736,Whisper_Mask_Box_,Whisper Mask Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5294,1; },{},{}
 13737,Ramen_Hat_Box_,Ramen Hat Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5293,1; },{},{}
-13738,Wine_Glass_of_Illusion_5ea_Box,Wine Glass of Illusion 5ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14538,5; },{},{}
-13739,Wine_Glass_of_Illusion_10ea_Box,Wine Glass of Illusion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14538,10; },{},{}
-13740,Scroll_of_Shadow_Armor_5ea_Box,Scroll of Shadow Armor 5ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14539,5; },{},{}
-13741,Scroll_of_Shadow_Armor_10ea_Box,Scroll of Shadow Armor 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14539,10; },{},{}
-13742,Scroll_of_Shadow_Armor_30ea_Box,Scroll of Shadow Armor 30ea_Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14539,30; },{},{}
-13743,Scroll_of_Holy_Armor_5ea_Box,Scroll of Holy Armor 5ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14540,5; },{},{}
-13744,Scroll_of_Holy_Armor_10ea_Box,Scroll of Holy Armor 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14540,10; },{},{}
-13745,Scroll_of_Holy_Armor_30ea_Box,Scroll of Holy Armor 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14540,30; },{},{}
-13746,Small_Physical_Defense_Potion_10ea_Box,Small Physical Defense Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14541,10; },{},{}
-13747,Small_Physical_Defense_Potion_30ea_Box,Small Physical Defense Potion 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14541,30; },{},{}
-13748,Small_Physical_Defense_Potion_50ea_Box,Small Physical Defense Potion 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14541,50; },{},{}
-13749,Large_Physical_Defense_Potion_10ea_Box,Large Physical Defense Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14541,10; },{},{}
-13750,Large_Physical_Defense_Potion_30ea_Box,Large Physical Defense Potion 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14542,30; },{},{}
-13751,Large_Physical_Defense_Potion_50ea_Box,Large Physical Defense Potion 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14542,50; },{},{}
-13752,Small_Magical_Defense_Potion_10ea_Box,Small Magical Defense Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14543,10; },{},{}
-13753,Small_Magical_Defense_Potion_30ea_Box,Small Magical Defense Potion 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14543,30; },{},{}
-13754,Small_Magical_Defense_Potion_50ea_Box,Small Magical Defense Potion 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14543,50; },{},{}
-13755,Large_Magical_Defense_Potion_10ea_Box,Large Magical Defense Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14544,10; },{},{}
-13756,Large_Magical_Defense_Potion_30ea_Box,Large Magical Defense Potion 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14544,30; },{},{}
-13757,Large_Magical_Defense_Potion_50ea_Box,Large Magical Defense Potion 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14544,50; },{},{}
+13738,Glass_of_Illusion_5ea_Box,Glass of Illusion 5ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14538,5; },{},{}
+13739,Glass_of_Illusion_10ea_Box,Glass of Illusion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14538,10; },{},{}
+13740,Shadow_Armor_Scroll_5ea_Box,Shadow Armor Scroll 5ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14539,5; },{},{}
+13741,Shadow_Armor_Scroll_10ea_Box,Shadow Armor Scroll 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14539,10; },{},{}
+13742,Shadow_Armor_Scroll_30ea_Box,Shadow Armor Scroll 30ea_Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14539,30; },{},{}
+13743,Holy_Armor_Scroll_5ea_Box,Holy Armor Scroll 5ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14540,5; },{},{}
+13744,Holy_Armor_Scroll_10ea_Box,Holy Armor Scroll 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14540,10; },{},{}
+13745,Holy_Armor_Scroll_30ea_Box,Holy Armor Scroll 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14540,30; },{},{}
+13746,Small_Defense_Potion_10ea_Box,Small Defense Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14541,10; },{},{}
+13747,Small_Defense_Potion_30ea_Box,Small Defense Potion 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14541,30; },{},{}
+13748,Small_Defense_Potion_50ea_Box,Small Defense Potion 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14541,50; },{},{}
+13749,Big_Defense_Potion_10ea_Box,Big Defense Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14541,10; },{},{}
+13750,Big_Defense_Potion_30ea_Box,Big Defense Potion 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14542,30; },{},{}
+13751,Big_Defense_Potion_50ea_Box,Big Defense Potion 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14542,50; },{},{}
+13752,Small_Magic_Defense_Potion_10ea_Box,Small Magic Defense Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14543,10; },{},{}
+13753,Small_Magic_Defense_Potion_30ea_Box,Small Magic Defense Potion 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14543,30; },{},{}
+13754,Small_Magic_Defense_Potion_50ea_Box,Small Magic Defense Potion 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14543,50; },{},{}
+13755,Big_Magic_Defense_Potion_10ea_Box,Big Magic Defense Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14544,10; },{},{}
+13756,Big_Magic_Defense_Potion_30ea_Box,Big Magic Defense Potion 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14544,30; },{},{}
+13757,Big_Magic_Defense_Potion_50ea_Box,Big Magic Defense Potion 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14544,50; },{},{}
 13758,300%_Field_Manual_Box,300%_Field Manual Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14545,20; },{},{}
 13759,Blue_Herb_Box,Blue Herb Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 510,50; },{},{}
 13760,Honey_Box,Honey Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 518,100; },{},{}
@@ -3815,9 +3815,9 @@
 13808,Christmas_Firecracker_Box,Christmas Firecracker Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14550,10; },{},{}
 13809,Blue_Gemstone_Box,Blue Gemstone Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 717,100; },{},{}
 13810,Blue_Potion_Box,Blue_Potion_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 505,25; },{},{}
-13811,Food_Box_Vol_1,Food Box Vol 1,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-13812,Food_Box_Vol_2,Food Box Vol 2,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-13813,Food_Box_Vol_3,Food Box Vol 3,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+13811,Food_Box_Vol_1,Food Box Vol 1,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14551,1; getitem 14554,1; getitem 14557,1; getitem 14560,1; getitem 14563,1; getitem 14566,1; },{},{}
+13812,Food_Box_Vol_2,Food Box Vol 2,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14552,1; getitem 14555,1; getitem 14558,1; getitem 14561,1; getitem 14564,1; getitem 14567,1; },{},{}
+13813,Food_Box_Vol_3,Food Box Vol 3,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14553,1; getitem 14556,1; getitem 14559,1; getitem 14562,1; getitem 14565,1; getitem 14568,1; },{},{}
 13814,Healing_Box,Healing Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 13815,Goblin_1_Taming_Box,Goblin Taming Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14569,10; },{},{}
 13816,Goblin_2_Taming_Box,Goblin Taming Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14569,10; },{},{}
@@ -3864,17 +3864,17 @@
 14531,Concentration_Power_Scroll,Concentration Power Scroll,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHIT,1800000,30; },{},{}
 14532,Field_Manual_25%,Field Manual 25%,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,25; },{},{}
 14533,Field_Manual_100%,Field Manual 100%,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,100; },{},{}
-14534,Small_Water_of_Life,Small Water of Life,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14535,Large_Water_of_Life,Large Water of Life,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14536,Grinder,Grinder,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14537,Increased_Recovery_Potion,Increased Recovery Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14538,Wine_Glass_of_Illusion,Wine Glass of Illusion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14539,Scroll_of_Shadow_Armor,Scroll of Shadow Armor,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1800000,Ele_Shadow,20,Ele_Holy,-15; },{},{}
-14540,Scroll_of_Holy_Armor,Scroll of Holy Armor,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1800000,Ele_Holy,20,Ele_Shadow,-15; },{},{}
-14541,Small_Physical_Defense_Potion,Small Physical Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCDEFRATE,60000,3; },{},{}
-14542,Large_Physical_Defense_Potion,Large Physical Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCDEFRATE,180000,3; },{},{}
-14543,Small_Magical_Defense_Potion,Small Magical Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14544,Large_Magical_Defense_Potion,Large Magical Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14534,Small_Life_Potion,Small Life Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14535,Medium_Life_Potion,Medium Life Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14536,Abrasive,Abrasive,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCCRI,300000,30; },{},{}
+14537,Regeneration_Potion,Regeneration Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14538,Glass_of_Illusion,Glass of Illusion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14539,Shadow_Armor_Scroll,Shadow Armor Scroll,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1800000,Ele_Shadow,20,Ele_Holy,-15; },{},{}
+14540,Holy_Armor_Scroll,Holy Armor Scroll,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1800000,Ele_Holy,20,Ele_Shadow,-15; },{},{}
+14541,Small_Defense_Potion,Small Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCDEFRATE,60000,3; },{},{}
+14542,Big_Defense_Potion,Big Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCDEFRATE,180000,3; },{},{}
+14543,Small_Magic_Defense_Potion,Small Magic Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14544,Big_Magic_Defense_Potion,Big Magic Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14545,Field_Manual_300%,Field Manual 300%,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,300; },{},{}
 14546,Love_You_Firecracker,Love You Firecracker,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14547,White_Day_Firecracker,White Day Firecracker,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

@@ -26,6 +26,7 @@
 
 =======================
 11/02
+	* Rev. 11641 Minor fixes/updates to various items. [L0ne_W0lf]
 	* Added trap mode to Firepillar [Playtester]
 	- tell me if it breaks something
 10/29
