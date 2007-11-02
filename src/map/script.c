@@ -5879,24 +5879,25 @@ BUILDIN_FUNC(getcharid)
 	int num;
 	TBL_PC *sd;
 
-	num=script_getnum(st,2);
+	num = script_getnum(st,2);
 	if( script_hasdata(st,3) )
 		sd=map_nick2sd(script_getstr(st,3));
 	else
-	sd=script_rid2sd(st);
-	if(sd==NULL || num<0 || num>3){
+		sd=script_rid2sd(st);
+
+	if(sd==NULL){
 		script_pushint(st,0);	//return 0, according docs
 		return 0;
 	}
 
-	switch (num) {
+	switch( num ) {
 	case 0: script_pushint(st,sd->status.char_id); break;
 	case 1: script_pushint(st,sd->status.party_id); break;
 	case 2: script_pushint(st,sd->status.guild_id); break;
 	case 3: script_pushint(st,sd->status.account_id); break;
 	default:
-		ShowError("buildin_getcharid: invalid .\n");
-		script_pushconststr(st,"");
+		ShowError("buildin_getcharid: invalid parameter (%d).\n", num);
+		script_pushint(st,0);
 		break;
 	}
 		
