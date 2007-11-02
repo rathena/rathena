@@ -11,6 +11,7 @@
 //=
 //===== Additional Comments: =================================
 //= v1.2 Optimized with functions.[kobra_k88]
+//= 1.3 Removed announces when you open chests. [L0ne_W0lf]
 //============================================================
 
 
@@ -27,9 +28,7 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "payg_cas01","Treasure Chest Broken Open",17;
 	set $boxNumPy01, $boxNumPy01 -1;
-	if($boxNumPy01 == 0) mapannounce "payg_cas01", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
@@ -58,9 +57,7 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "payg_cas02","Treasure Chest Broken Open",17;
 	set $boxNumPy02, $boxNumPy02 -1;
-	if($boxNumPy02 == 0) mapannounce "payg_cas02", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
@@ -89,9 +86,7 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "payg_cas03","Treasure Chest Broken Open",17;
 	set $boxNumPy03, $boxNumPy03 -1;
-	if($boxNumPy03 == 0) mapannounce "payg_cas03", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
@@ -120,9 +115,7 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "payg_cas04","Treasure Chest Broken Open",17;
 	set $boxNumPy04, $boxNumPy04 -1;
-	if($boxNumPy04 == 0) mapannounce "payg_cas04", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 
@@ -151,9 +144,7 @@ OnInit:
 	end;
 
 OnDied:
-	mapannounce "payg_cas05","Treasure Chest Broken Open",17;
 	set $boxNumPy05, $boxNumPy05 -1;
-	if($boxNumPy05 == 0) mapannounce "payg_cas05", "All of the treasure boxes have been opened.  You must wait untill the next day for them to appear again.",0;
 	end;
 }
 

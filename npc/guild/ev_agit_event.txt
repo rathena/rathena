@@ -24,6 +24,7 @@
 //= 1.5 Fixed WOE end messages on non-WOE days, by Avaj
 //= 1.5a missing tabs [KarLaeda]
 //= 1.6 Corrected multiple "WoE has begun" announces [ultramage]
+//= 1.7 Commented out the WoE start and end announces. [L0ne_W0lf]
 //============================================================
 //| To know how to set up WoE times, go to doc\woe_time_explanation.txt
 // WoE Start/Stop times
@@ -50,14 +51,14 @@ OnAgitInit:
 
 L_End:
 	if (agitcheck()) {
-		Announce "The War Of Emperium is over!",8;
+		//Announce "The War Of Emperium is over!",8;
 		AgitEnd;
 	}
 	end;
 
 L_Start:
 	if (!agitcheck()) {
-		Announce "The War Of Emperium has begun!",8;
+		//Announce "The War Of Emperium has begun!",8;
 		AgitStart;
 	}
 	end;
@@ -67,6 +68,11 @@ L_Start:
 //========================================
 -	script	TreasSpawn	-1,{
 	end;
+
+// Please explain the relevence of this to me?
+// Why are we spawning chests per zone on 1 minute intervals?
+// They should al spawn at the same time in the same castle.
+// Is there a reason for this? Am I reading something wrong?
 
 OnClock0001:
 	callfunc "F_GldTreas","aldeg_cas01","A01",$boxNumA01,$@bxA01,$@boxIdA01,1324,114,218,123,227,0;

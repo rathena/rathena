@@ -4,101 +4,93 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
 //= 
 //===== Additional Comments: =================================
 //= v1.2 Optimized with functions.[kobra_k88]
+//= 1.3 Updated Guardian positions and types. [L0ne_W0lf]
+//=	Updated manager names, and some additional info
 //============================================================
 
 
 // Castle 1 ==================================================================================
-payg_cas01,120,58,4	script	Grunday	55,{
-	if(callfunc("F_GldManager","Grunday","payg_cas01",290,7,"Py01") == 0) close;
+payg_cas01,120,58,4	script	Kurunnadi#pay1	55,{
+	if(callfunc("F_GldManager","Steward Kurunnadi","payg_cas01",295,8,"Py01") == 0) close;
 
-	if(@GDnum==10) guardian "payg_cas01",210,120,"Soldier Guardian",1287,"Guardian_Py01::OnGuardianDied",0; 
-	if(@GDnum==11) guardian "payg_cas01",69,26,"Soldier Guardian",1287,"Guardian_Py01::OnGuardianDied",1; 
-	if(@GDnum==12) guardian "payg_cas01",23,141,"Soldier Guardian",1287,"Guardian_Py01::OnGuardianDied",2;
-	if(@GDnum==13) guardian "payg_cas01",224,87,"Archer Guardian",1285,"Guardian_Py01::OnGuardianDied",3; 
-	if(@GDnum==14) guardian "payg_cas01",81,45,"Archer Guardian",1285,"Guardian_Py01::OnGuardianDied",4; 
-	if(@GDnum==15) guardian "payg_cas01",214,53,"Knight Guardian",1286,"Guardian_Py01::OnGuardianDied",5; 
-	if(@GDnum==16) guardian "payg_cas01",69,26,"Knight Guardian",1286,"Guardian_Py01::OnGuardianDied",6; 
-	if(@GDnum==17) guardian "payg_cas01",23,141,"Knight Guardian",1286,"Guardian_Py01::OnGuardianDied",7;
-	mes "[ Grunday ]";
-	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
+	if (@GDnum == 10) guardian "payg_cas01",229,92,"Guardian Archer",1285,"Guardian_Py01::OnGuardianDied",0;
+	if (@GDnum == 11) guardian "payg_cas01",225,80,"Guardian Archer",1285,"Guardian_Py01::OnGuardianDied",1; 
+	if (@GDnum == 12) guardian "payg_cas01",222,111,"Guardian Archer",1285,"Guardian_Py01::OnGuardianDied",2;
+	if (@GDnum == 13) guardian "payg_cas01",99,45,"Guardian Archer",1285,"Guardian_Py01::OnGuardianDied",3;
+	if (@GDnum == 14) guardian "payg_cas01",65,31,"Guardian Archer",1285,"Guardian_Py01::OnGuardianDied",4;
+	if (@GDnum == 15) guardian "payg_cas01",36,127,"Guardian Archer",1285,"Guardian_Py01::OnGuardianDied",5;
+	if (@GDnum == 16) guardian "payg_cas01",51,144,"Guardian Archer",1285,"Guardian_Py01::OnGuardianDied",6;
+	if (@GDnum == 17) guardian "payg_cas01",138,133,"Guardian Knight",1286,"Guardian_Py01::OnGuardianDied",7;
 	close;
 }
 
 
 // Castle 2 ==================================================================================
-payg_cas02,22,260,7	script	Cherrios	55,{
-	if(callfunc("F_GldManager","Cherrios","payg_cas02",145,143,"Py02") == 0) close;
+payg_cas02,22,260,7	script	Cherieos#pay2	55,{
+	if(callfunc("F_GldManager","Steward Cherieos","payg_cas02",141,149,"Py02") == 0) close;
 
-	if(@GDnum==10) guardian "payg_cas02",208,37,"Soldier Guardian",1287,"Guardian_Py02::OnGuardianDied",0; 
-	if(@GDnum==11) guardian "payg_cas02",51,245,"Soldier Guardian",1287,"Guardian_Py02::OnGuardianDied",1; 
-	if(@GDnum==12) guardian "payg_cas02",286,245,"Soldier Guardian",1287,"Guardian_Py02::OnGuardianDied",2;
-	if(@GDnum==13) guardian "payg_cas02",217,42,"Archer Guardian",1285,"Guardian_Py02::OnGuardianDied",3; 
-	if(@GDnum==14) guardian "payg_cas02",264,266,"Archer Guardian",1285,"Guardian_Py02::OnGuardianDied",4; 
-	if(@GDnum==15) guardian "payg_cas02",51,245,"Knight Guardian",1286,"Guardian_Py02::OnGuardianDied",5; 
-	if(@GDnum==16) guardian "payg_cas02",279,263,"Knight Guardian",1286,"Guardian_Py02::OnGuardianDied",6; 
-	if(@GDnum==17) guardian "payg_cas02",279,263,"Knight Guardian",1286,"Guardian_Py02::OnGuardianDied",7;
-	mes "[ Cherrios ]";
-	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
+	if (@GDnum == 10) guardian "payg_cas02",237,54,"Guardian Archer",1285,"Guardian_Py02::OnGuardianDied",0;
+	if (@GDnum == 11) guardian "payg_cas02",228,72,"Guardian Archer",1285,"Guardian_Py02::OnGuardianDied",1;
+	if (@GDnum == 12) guardian "payg_cas02",210,41,"Guardian Archer",1285,"Guardian_Py02::OnGuardianDied",2;
+	if (@GDnum == 13) guardian "payg_cas02",57,241,"Guardian Archer",1285,"Guardian_Py02::OnGuardianDied",3;
+	if (@GDnum == 14) guardian "payg_cas02",42,241,"Guardian Archer",1285,"Guardian_Py02::OnGuardianDied",4;
+	if (@GDnum == 15) guardian "payg_cas02",287,257,"Guardian Archer",1285,"Guardian_Py02::OnGuardianDied",5;
+	if (@GDnum == 16) guardian "payg_cas02",264,272,"Guardian Archer",1285,"Guardian_Py02::OnGuardianDied",6;
+	if (@GDnum == 17) guardian "payg_cas02",27,20,"Guardian Knight",1286,"Guardian_Py02::OnGuardianDied",7;
 	close;
 }
 
 
 // Castle 3 ==================================================================================
-payg_cas03,10,277,0	script	Garriet	55,{
-	if(callfunc("F_GldManager","Garriet","payg_cas03",158,168,"Py03") == 0) close;
+payg_cas03,10,277,0	script	Gheriot#pay3	55,{
+	if(callfunc("F_GldManager","Steward Gheriot","payg_cas03",163,167,"Py03") == 0) close;
 
-	if(@GDnum==10) guardian "payg_cas03",252,39,"Soldier Guardian",1287,"Guardian_Py03::OnGuardianDied",0; 
-	if(@GDnum==11) guardian "payg_cas03",23,283,"Soldier Guardian",1287,"Guardian_Py03::OnGuardianDied",1; 
-	if(@GDnum==12) guardian "payg_cas03",34,283,"Soldier Guardian",1287,"Guardian_Py03::OnGuardianDied",2;
-	if(@GDnum==13) guardian "payg_cas03",57,36,"Archer Guardian",1285,"Guardian_Py03::OnGuardianDied",3; 
-	if(@GDnum==14) guardian "payg_cas03",20,36,"Archer Guardian",1285,"Guardian_Py03::OnGuardianDied",4; 
-	if(@GDnum==15) guardian "payg_cas03",34,283,"Knight Guardian",1286,"Guardian_Py03::OnGuardianDied",5; 
-	if(@GDnum==16) guardian "payg_cas03",23,283,"Knight Guardian",1286,"Guardian_Py03::OnGuardianDied",6; 
-	if(@GDnum==17) guardian "payg_cas03",28,253,"Knight Guardian",1286,"Guardian_Py03::OnGuardianDied",7;
-	mes "[ Garriet ]";
-	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
+	if (@GDnum == 10) guardian "payg_cas03",245,37,"Guardian Archer",1285,"Guardian_Py03::OnGuardianDied",0; 
+	if (@GDnum == 11) guardian "payg_cas03",269,51,"Guardian Archer",1285,"Guardian_Py03::OnGuardianDied",1;
+	if (@GDnum == 12) guardian "payg_cas03",36,39,"Guardian Archer",1285,"Guardian_Py03::OnGuardianDied",2;
+	if (@GDnum == 13) guardian "payg_cas03",41,39,"Guardian Archer",1285,"Guardian_Py03::OnGuardianDied",3;
+	if (@GDnum == 14) guardian "payg_cas03",39,65,"Guardian Archer",1285,"Guardian_Py03::OnGuardianDied",4;
+	if (@GDnum == 15) guardian "payg_cas03",19,276,"Guardian Archer",1285,"Guardian_Py03::OnGuardianDied",5;
+	if (@GDnum == 16) guardian "payg_cas03",37,277,"Guardian Archer",1285,"Guardian_Py03::OnGuardianDied",6;
+	if (@GDnum == 17) guardian "payg_cas03",268,244,"Guardian Knight",1286,"Guardian_Py03::OnGuardianDied",7;
 	close;
 }
 
 
 // Castle 4 ==================================================================================
-payg_cas04,38,284,3	script	DJ	55,{
-	if(callfunc("F_GldManager","DJ","payg_cas04",146,48,"Py04") == 0) close;
+payg_cas04,38,284,3	script	DJ#pay4	55,{
+	if(callfunc("F_GldManager","Steward DJ","payg_cas04",151,47,"Py04") == 0) close;
 
-	if(@GDnum==10) guardian "payg_cas04",236,172,"Soldier Guardian",1287,"Guardian_Py04::OnGuardianDied",0; 
-	if(@GDnum==11) guardian "payg_cas04",14,260,"Soldier Guardian",1287,"Guardian_Py04::OnGuardianDied",1; 
-	if(@GDnum==12) guardian "payg_cas04",15,30,"Soldier Guardian",1287,"Guardian_Py04::OnGuardianDied",2;
-	if(@GDnum==13) guardian "payg_cas04",257,166,"Archer Guardian",1285,"Guardian_Py04::OnGuardianDied",3; 
-	if(@GDnum==14) guardian "payg_cas04",65,261,"Archer Guardian",1285,"Guardian_Py04::OnGuardianDied",4; 
-	if(@GDnum==15) guardian "payg_cas04",65,261,"Knight Guardian",1286,"Guardian_Py04::OnGuardianDied",5; 
-	if(@GDnum==16) guardian "payg_cas04",52,29,"Knight Guardian",1286,"Guardian_Py04::OnGuardianDied",6; 
-	if(@GDnum==17) guardian "payg_cas04",15,30,"Knight Guardian",1286,"Guardian_Py04::OnGuardianDied",7;
-	mes "[ DJ ]";
-	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
+	if (@GDnum == 10) guardian "payg_cas04",251,212,"Guardian Archer",1285,"Guardian_Py04::OnGuardianDied",0;
+	if (@GDnum == 11) guardian "payg_cas04",232,212,"Guardian Archer",1285,"Guardian_Py04::OnGuardianDied",1;
+	if (@GDnum == 12) guardian "payg_cas04",231,175,"Guardian Archer",1285,"Guardian_Py04::OnGuardianDied",2;
+	if (@GDnum == 13) guardian "payg_cas04",32,287,"Guardian Archer",1285,"Guardian_Py04::OnGuardianDied",3;
+	if (@GDnum == 14) guardian "payg_cas04",32,232,"Guardian Archer",1285,"Guardian_Py04::OnGuardianDied",4;
+	if (@GDnum == 15) guardian "payg_cas04",35,45,"Guardian Archer",1285,"Guardian_Py04::OnGuardianDied",5;
+	if (@GDnum == 16) guardian "payg_cas04",36,17,"Guardian Archer",1285,"Guardian_Py04::OnGuardianDied",6;
+	if (@GDnum == 17) guardian "payg_cas04",270,41,"Guardian Knight",1286,"Guardian_Py04::OnGuardianDied",7;
 	close;
 }
 
 
 // Castle 5 ==================================================================================
-payg_cas05,277,249,3	script	Najarf	55,{
-	if(callfunc("F_GldManager","Najarf","payg_cas05",156,131,"Py05") == 0) close;
+payg_cas05,277,249,3	script	Nahzarf#pay5	55,{
+	if(callfunc("F_GldManager","Steward Nahzarf","payg_cas05",153,137,"Py05") == 0) close;
 
-	if(@GDnum==10) guardian "payg_cas05",51,258,"Soldier Guardian",1287,"Guardian_Py05::OnGuardianDied",0; 
-	if(@GDnum==11) guardian "payg_cas05",286,235,"Soldier Guardian",1287,"Guardian_Py05::OnGuardianDied",1; 
-	if(@GDnum==12) guardian "payg_cas05",282,277,"Soldier Guardian",1287,"Guardian_Py05::OnGuardianDied",2;
-	if(@GDnum==13) guardian "payg_cas05",18,281,"Archer Guardian",1285,"Guardian_Py05::OnGuardianDied",3; 
-	if(@GDnum==14) guardian "payg_cas05",289,256,"Archer Guardian",1285,"Guardian_Py05::OnGuardianDied",4; 
-	if(@GDnum==15) guardian "payg_cas05",275,42,"Knight Guardian",1286,"Guardian_Py05::OnGuardianDied",5; 
-	if(@GDnum==16) guardian "payg_cas05",254,9,"Knight Guardian",1286,"Guardian_Py05::OnGuardianDied",6; 
-	if(@GDnum==17) guardian "payg_cas05",236,256,"Knight Guardian",1286,"Guardian_Py05::OnGuardianDied",7;
-	mes "[ Najarf ]";
-	mes "Guardian has been installed, guardian will protect our guild base against enemies.";
+	if (@GDnum == 10) guardian "payg_cas05",19,279,"Guardian Archer",1285,"Guardian_Py05::OnGuardianDied",0;
+	if (@GDnum == 11) guardian "payg_cas05",33,260,"Guardian Archer",1285,"Guardian_Py05::OnGuardianDied",1;
+	if (@GDnum == 12) guardian "payg_cas05",266,234,"Guardian Archer",1285,"Guardian_Py05::OnGuardianDied",2;
+	if (@GDnum == 13) guardian "payg_cas05",266,279,"Guardian Archer",1285,"Guardian_Py05::OnGuardianDied",3;
+	if (@GDnum == 14) guardian "payg_cas05",263,37,"Guardian Archer",1285,"Guardian_Py05::OnGuardianDied",4;
+	if (@GDnum == 15) guardian "payg_cas05",263,21,"Guardian Archer",1285,"Guardian_Py05::OnGuardianDied",5;
+	if (@GDnum == 16) guardian "payg_cas05",250,22,"Guardian Archer",1285,"Guardian_Py05::OnGuardianDied",6;
+	if (@GDnum == 17) guardian "payg_cas05",36,36,"Guardian Knight",1286,"Guardian_Py05::OnGuardianDied",7;
 	close;
 }

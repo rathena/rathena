@@ -4,9 +4,9 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
-//= eAthena 0.1+; RO Episode 4+
+//= eAthena SVN; RO Episode 4+
 //===== Description: =========================================
 //= F_AgitStart is in charge of spawning Emperium and mobs in castles
 //=   when WoE is started.
@@ -29,6 +29,8 @@
 //= 1.4 updated a couple mapannounces in OnAgitBreak. [L0ne_W0lf]
 //= 1.5 Changed the names of the Kafra from "Service" to "Staff" [L0ne_W0lf]
 //= 1.6 Fixed the OnAgitBreak message being map-only and not global. (Lil DomX) [L0ne_W0lf]
+//= 1.7 Updated functions, got rid of the various gotos. [L0ne_W0lf]
+//=	Castles can be conquered as long as they un-owned.
 //============================================================
 
 
@@ -40,83 +42,82 @@ function	script	F_AgitStart	{
 	set .@empy, getarg(3);
 
 	MapRespawnGuildID .@map$,GetCastleData(.@map$,1),2;
-	monster .@map$,.@empx,.@empy,"EMPERIUM",1288,1,"Agit_"+.@castle$+"::OnAgitBreak";
+	monster .@map$,.@empx,.@empy,"Emperium",1288,1,"Agit_"+.@castle$+"::OnAgitBreak";
 	GvgOn .@map$;
 	if (GetCastleData(.@map$,1) != 0) return;
-	if(.@map$ == "aldeg_cas01" || .@map$ == "aldeg_cas02" || .@map$ == "aldeg_cas03" || .@map$ == "aldeg_cas04" || .@map$ == "aldeg_cas05" || .@map$ == "nguild_alde") goto L_AldegCas;
-	if(.@map$ == "gefg_cas01"  || .@map$ == "gefg_cas02"  || .@map$ == "gefg_cas03"  || .@map$ == "gefg_cas04"  || .@map$ == "gefg_cas05"  || .@map$ == "nguild_gef" ) goto L_GefgCas;
-	if(.@map$ == "payg_cas01"  || .@map$ == "payg_cas02"  || .@map$ == "payg_cas03"  || .@map$ == "payg_cas04"  || .@map$ == "payg_cas05"  || .@map$ == "nguild_pay" ) goto L_PaygCas;
-	if(.@map$ == "prtg_cas01"  || .@map$ == "prtg_cas02"  || .@map$ == "prtg_cas03"  || .@map$ == "prtg_cas04"  || .@map$ == "prtg_cas05"  || .@map$ == "nguild_prt" ) goto L_PrtgCas;
-
-L_AldegCas:
-	areamonster .@map$,0,0,300,300,"--ja--",1117,10;
-	areamonster .@map$,0,0,300,300,"--ja--",1132,4;
-	areamonster .@map$,0,0,300,300,"--ja--",1219,2;
-	areamonster .@map$,0,0,300,300,"--ja--",1205,1;
-	areamonster .@map$,0,0,300,300,"--ja--",1216,10;
-	areamonster .@map$,0,0,300,300,"--ja--",1193,17;
-	areamonster .@map$,0,0,300,300,"--ja--",1269,9;
-	areamonster .@map$,0,0,300,300,"--ja--",1276,7;
-	areamonster .@map$,0,0,300,300,"--ja--",1208,3;
-	areamonster .@map$,0,0,300,300,"--ja--",1275,1;
-	areamonster .@map$,0,0,300,300,"--ja--",1268,1;
-	areamonster .@map$,0,0,300,300,"--ja--",1272,1;
-	monster .@map$,.@empx+1,.@empy,"--ja--",1272,1;
-	monster .@map$,.@empx-1,.@empy,"--ja--",1270,4;
-	monster .@map$,.@empx,.@empy+1,"--ja--",1268,1;
-	monster .@map$,.@empx,.@empy-1,"--ja--",1219,1;
-	monster .@map$,.@empx,.@empy,"--ja--",1276,5;
-	return;
-L_GefgCas:
-	areamonster .@map$,0,0,300,300,"--ja--",1117,10;
-	areamonster .@map$,0,0,300,300,"--ja--",1263,11;
-	areamonster .@map$,0,0,300,300,"--ja--",1102,10;
-	areamonster .@map$,0,0,300,300,"--ja--",1130,10;
-	areamonster .@map$,0,0,300,300,"--ja--",1140,20;
-	areamonster .@map$,0,0,300,300,"--ja--",1163,9;
-	areamonster .@map$,0,0,300,300,"--ja--",1275,1;
-	areamonster .@map$,0,0,300,300,"--ja--",1219,1;
-	areamonster .@map$,0,0,300,300,"--ja--",1150,1;
-	areamonster .@map$,0,0,300,300,"--ja--",1159,1;
-	monster .@map$,.@empx+1,.@empy,"--ja--",1203,1;
-	monster .@map$,.@empx-1,.@empy,"--ja--",1087,1;
-	monster .@map$,.@empx,.@empy+1,"--ja--",1213,7;
-	monster .@map$,.@empx,.@empy-1,"--ja--",1189,7;
-	return;
-L_PaygCas:
-	areamonster .@map$,0,0,300,300,"--ja--",1277,10;
-	areamonster .@map$,0,0,300,300,"--ja--",1208,10;
-	areamonster .@map$,0,0,300,300,"--ja--",1262,5;
-	areamonster .@map$,0,0,300,300,"--ja--",1102,5;
-	areamonster .@map$,0,0,300,300,"--ja--",1150,1;
-	areamonster .@map$,0,0,300,300,"--ja--",1115,1;
-	areamonster .@map$,0,0,300,300,"--ja--",1129,11;
-	areamonster .@map$,0,0,300,300,"--ja--",1276,5;
-	areamonster .@map$,0,0,300,300,"--ja--",1282,4;
-	areamonster .@map$,0,0,300,300,"--ja--",1253,5;
-	monster .@map$,.@empx,.@empy,"--ja--",1150,1;
-	monster .@map$,.@empx,.@empy,"--ja--",1115,1;
-	monster .@map$,.@empx,.@empy+1,"--ja--",1208,6;
-	monster .@map$,.@empx,.@empy-1,"--ja--",1276,5;
-	return;
-L_PrtgCas:
-	areamonster .@map$,0,0,300,300,"--ja--",1163,15;
-	areamonster .@map$,0,0,300,300,"--ja--",1132,10;
-	areamonster .@map$,0,0,300,300,"--ja--",1219,5;
-	areamonster .@map$,0,0,300,300,"--ja--",1268,5;
-	areamonster .@map$,0,0,300,300,"--ja--",1251,1;
-	areamonster .@map$,0,0,300,300,"--ja--",1252,1;
-	areamonster .@map$,0,0,300,300,"--ja--",1276,5;
-	areamonster .@map$,0,0,300,300,"--ja--",1259,1;
-	areamonster .@map$,0,0,300,300,"--ja--",1283,1;
-	areamonster .@map$,0,0,300,300,"--ja--",1275,1;
-	areamonster .@map$,0,0,300,300,"--ja--",1200,1;
-	monster .@map$,.@empx+1,.@empy,"--ja--",1268,1;
-	monster .@map$,.@empx-1,.@empy,"--ja--",1251,1;
-	monster .@map$,.@empx,.@empy+1,"--ja--",1252,1;
-	monster .@map$,.@empx,.@empy-1,"--ja--",1219,2;
-	monster .@map$,.@empx,.@empy,"--ja--",1276,5;
-	return;
+	if (compare(.@map$,"aldeg_cas")) {
+		areamonster .@map$,0,0,300,300,"--ja--",1117,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1132,4;
+		areamonster .@map$,0,0,300,300,"--ja--",1219,2;
+		areamonster .@map$,0,0,300,300,"--ja--",1205,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1216,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1193,17;
+		areamonster .@map$,0,0,300,300,"--ja--",1269,9;
+		areamonster .@map$,0,0,300,300,"--ja--",1276,7;
+		areamonster .@map$,0,0,300,300,"--ja--",1208,3;
+		areamonster .@map$,0,0,300,300,"--ja--",1275,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1268,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1272,1;
+		monster .@map$,.@empx+1,.@empy,"--ja--",1272,1;
+		monster .@map$,.@empx-1,.@empy,"--ja--",1270,4;
+		monster .@map$,.@empx,.@empy+1,"--ja--",1268,1;
+		monster .@map$,.@empx,.@empy-1,"--ja--",1219,1;
+		monster .@map$,.@empx,.@empy,"--ja--",1276,5;
+		return;
+	}
+	else if (compare(.@map$,"gefg_cas")) {
+		areamonster .@map$,0,0,300,300,"--ja--",1117,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1263,11;
+		areamonster .@map$,0,0,300,300,"--ja--",1102,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1130,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1140,20;
+		areamonster .@map$,0,0,300,300,"--ja--",1163,9;
+		areamonster .@map$,0,0,300,300,"--ja--",1275,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1219,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1150,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1159,1;
+		monster .@map$,.@empx+1,.@empy,"--ja--",1203,1;
+		monster .@map$,.@empx-1,.@empy,"--ja--",1087,1;
+		monster .@map$,.@empx,.@empy+1,"--ja--",1213,7;
+		monster .@map$,.@empx,.@empy-1,"--ja--",1189,7;
+		return;
+	}
+	else if (compare(.@map$,"payg_cas")) {
+		areamonster .@map$,0,0,300,300,"--ja--",1277,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1208,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1262,5;
+		areamonster .@map$,0,0,300,300,"--ja--",1102,5;
+		areamonster .@map$,0,0,300,300,"--ja--",1150,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1115,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1129,11;
+		areamonster .@map$,0,0,300,300,"--ja--",1276,5;
+		areamonster .@map$,0,0,300,300,"--ja--",1282,4;
+		areamonster .@map$,0,0,300,300,"--ja--",1253,5;
+		monster .@map$,.@empx,.@empy,"--ja--",1150,1;
+		monster .@map$,.@empx,.@empy,"--ja--",1115,1;
+		monster .@map$,.@empx,.@empy+1,"--ja--",1208,6;
+		monster .@map$,.@empx,.@empy-1,"--ja--",1276,5;
+		return;
+	}
+	else if (compare(.@map$,"prtg_cas")) {
+		areamonster .@map$,0,0,300,300,"--ja--",1163,15;
+		areamonster .@map$,0,0,300,300,"--ja--",1132,10;
+		areamonster .@map$,0,0,300,300,"--ja--",1219,5;
+		areamonster .@map$,0,0,300,300,"--ja--",1268,5;
+		areamonster .@map$,0,0,300,300,"--ja--",1251,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1252,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1276,5;
+		areamonster .@map$,0,0,300,300,"--ja--",1259,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1283,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1275,1;
+		areamonster .@map$,0,0,300,300,"--ja--",1200,1;
+		monster .@map$,.@empx+1,.@empy,"--ja--",1268,1;
+		monster .@map$,.@empx-1,.@empy,"--ja--",1251,1;
+		monster .@map$,.@empx,.@empy+1,"--ja--",1252,1;
+		monster .@map$,.@empx,.@empy-1,"--ja--",1219,2;
+		monster .@map$,.@empx,.@empy,"--ja--",1276,5;
+		return;
+	}
 }
 
 // Function for OnGuildBreak ======================================
@@ -170,7 +171,9 @@ function	script	F_AgitEnd	{
 	set .@castle$, getarg(1);
 
 	GvgOff .@map$;
-//	if (GetCastleData(.@map$,1) == 0) return;	//enable this line to allow take over of non captured castles after woe ends
+	// Disable the following if statment to keep empty
+	// castles from being aquired after after WoE ends.
+	if (GetCastleData(.@map$,1) == 0) return;
 	MapRespawnGuildID .@map$,GetCastleData(.@map$,1),4;
 	KillMonster .@map$,"Agit_"+.@castle$+"::OnAgitBreak";
 	end;

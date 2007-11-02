@@ -4,9 +4,9 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
-//= eAthena 0.1+; RO Episode 4+
+//= eAthena SVN; RO Episode 4+
 //===== Description: =========================================
 //= Flags display messages stating whether or not a guild castle has been captured.
 //= Allows the guild members to return to a captured castle.
@@ -24,49 +24,48 @@
 //= v1.3a: Implemented k3dt's exploit fix [Vicious]
 //= v1.4: By default town flags are set to no longer show text. [L0ne_W0lf]
 //= v1.5: Updated remaining dialog to iRO standards. [L0ne_W0lf]
+//= v1.6 Restructred script, and removed use of gotos. [L0ne_W0lf]
 //============================================================
 
 function	script	F_Flags	{
-
+	set .@GID, GetCastleData(getarg(1),1);
 	if (getarg(5) == 0) return;
-
-	set @GID, GetCastleData(getarg(1),1);
-	if (@GID != 0) goto L_Startg;
-
-	mes " [ Edict of the Divine Rune Midgard Kingdom ]";
-	mes " ";
-	mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
-	mes "We declare that";
-	mes "there is no formal master of this castle.";
-	mes " ";
-	mes "2. To the one who can ";
-	mes "overcome all trials";
-	mes "and destroy the Emperium,";
-	mes "the king will endow the one with";
-	mes "ownership of this castle.";
-	return;
-L_Startg:
-	if ((getcharid(2) == @GID) && (getarg(4) == 1)) goto L_Startg2;
-	mes "[ Edict of the Divine Rune Midgard Kingdom ]";
-	mes " ";
-	mes "1. Following the ordinance of the";
-	mes "Divine Rune Midgard Kingdom,";
-	mes "we approve that this place is in";
-	mes "the private possession of ^ff0000" + GetGuildName(@GID) + "^000000 Guild.";
-	mes " ";
-	mes "2. The guild Master of ^ff0000"+ GetGuildName(@GID) + "^000000 Guild is";
-	mes "^FF0000" + GetGuildMaster(@GID) + "^000000";
-	mes "If there is anyone who objects to this,";
-	mes " prove your strength and honor with a steel blade in your hand.";
-	return;
-L_Startg2:
-	mes "Brave ones...";
-	mes "Do you wish to return to your honorable place?";
-	next;
-	menu "Return to the guild castle.",M_Enter,"Quit.",-;
-	return;
-
-	M_Enter:
-		if (getcharid(2) == GetCastleData(getarg(1),1)) warp getarg(1),getarg(2),getarg(3);
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
 		return;
+	}
+	else {
+		if (getcharid(2) == .@GID && getarg(4) == 1) {
+			mes "Brave ones...";
+			mes "Do you wish to return to your honorable place?";
+			next;
+			if (select("Return to the guild castle.:Quit.") == 1) {
+				if (getcharid(2) == GetCastleData(getarg(1),1))
+					warp getarg(1),getarg(2),getarg(3);
+			}
+			return;
+		}
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+		return;
+	}
 }

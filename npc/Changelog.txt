@@ -1,6 +1,14 @@
 Date		Added
 ======
 2007/11/01
+	* Rev. 11633 Rather large update to the WoE scripts. [L0ne_W0lf]
+	- Eliminated unofficial map-broadcasts (opening treasures/guardian death.)
+	- Fixed several errors in guardian spawning (script-wise.)
+	- Treasure spawning itself is done weird... What exactly is the last
+	  paramater for anyway? Near as I can see it's ALWAYS 1. Why is it used?
+	  what does it do? Why is it undocumented? Mysteries and more!
+	- Updated dialog and restructured several NPCs.
+	* Created a unique function for novice WoE as the new manager does not support it.
 	* Added timers to trigger OnAgitEliminate after Emperium is broken
 	  (this was previously done from inside the source code) [ultramage]
 2007/10/31
