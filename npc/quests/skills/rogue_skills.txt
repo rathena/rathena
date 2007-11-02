@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.5 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 1.6 Bug fixes as pointed out by Brainstorm in bugreport:351 [L0ne_W0lf]
 //============================================================
 
 in_rogue,359,177,0	script	#killershow01	-1,{
@@ -1203,56 +1204,56 @@ OnDisable:
 prt_are01,149,162,0	script	Kienna#1st	700,1,1,{
 	end;
 OnTouch:
-	callfunc "F_Kienna",1;
+	callfunc "F_Kienna","1st";
 	end;
 }
 
 prt_are01,136,150,0	script	Kienna#2nd	700,1,1,{
 	end;
 OnTouch:
-	callfunc "F_Kienna",2;
+	callfunc "F_Kienna","2nd";
 	end;
 }
 
 prt_are01,150,138,0	script	Kienna#3rd	700,1,1,{
 	end;
 OnTouch:
-	callfunc "F_Kienna",3;
+	callfunc "F_Kienna","3rd";
 	end;
 }
 
 prt_are01,163,147,0	script	Kienna#4th	700,1,1,{
 	end;
 OnTouch:
-	callfunc "F_Kienna",4;
+	callfunc "F_Kienna","4th";
 	end;
 }
 
 prt_are01,134,140,0	script	Kienna#5th	700,1,1,{
 	end;
 OnTouch:
-	callfunc "F_Kienna",5;
+	callfunc "F_Kienna","5th";
 	end;
 }
 
 prt_are01,161,140,0	script	Kienna#6th	700,1,1,{
 	end;
 OnTouch:
-	callfunc "F_Kienna",6;
+	callfunc "F_Kienna","6th";
 	end;
 }
 
 prt_are01,161,160,0	script	Kienna#7th	700,1,1,{
 	end;
 OnTouch:
-	callfunc "F_Kienna",7;
+	callfunc "F_Kienna","7th";
 	end;
 }
 
 prt_are01,138,159,0	script	Kienna#8th	700,1,1,{
 	end;
 OnTouch:
-	callfunc "F_Kienna",8;
+	callfunc "F_Kienna","8th";
 	end;
 }
 
@@ -1389,8 +1390,8 @@ function	script	F_Kienna	{
 			mes "you back to Thor Greg";
 			mes "now so that you can finish";
 			mes "learning ^FF0000Close Confine^000000.";
-			set ROG_SK,getarg(0);
-			disablenpc "Kienna#"+getarg(0)+"th";
+			set ROG_SK,8;
+			disablenpc "Kienna#"+getarg(0);
 			donpcevent "#1st5min::OnDisable";
 			enablenpc "#1strecog";
 			close2;
@@ -1408,13 +1409,13 @@ function	script	F_Kienna	{
 			mes "training exercise again?";
 			next;
 			if (select("Yes!:No, thanks.") == 1) {
-				disablenpc "Kienna#"+getarg(0)+"th";
+				disablenpc "Kienna#"+getarg(0);
 				donpcevent "#1stmove::OnEnable";
 				set ROG_SK,6;
 				warp "prt_are01",150,150;
 				end;
 			}
-			disablenpc "Kienna#"+getarg(0)+"th";
+			disablenpc "Kienna#"+getarg(0);
 			donpcevent "#1st5min::OnDisable";
 			enablenpc "a";
 			set ROG_SK,6;
