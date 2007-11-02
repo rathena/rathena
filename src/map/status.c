@@ -3528,7 +3528,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	if(sc->data[SC_INCFLEERATE].timer!=-1)
 		flee += flee * sc->data[SC_INCFLEERATE].val1/100;
 	if(sc->data[SC_VIOLENTGALE].timer!=-1)
-		flee += flee * sc->data[SC_VIOLENTGALE].val2/100;
+		flee += sc->data[SC_VIOLENTGALE].val2;
 	if(sc->data[SC_MOON_COMFORT].timer!=-1) //SG skill [Komurka]
 		flee += sc->data[SC_MOON_COMFORT].val2;
 	if(sc->data[SC_CLOSECONFINE].timer!=-1)
