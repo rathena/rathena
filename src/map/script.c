@@ -236,7 +236,7 @@ char mapregsql_db_value[32] = "value";
 int get_com(unsigned char *script,int *pos);
 int get_num(unsigned char *script,int *pos);
 
-extern struct script_function {
+struct script_function {
 	int (*func)(struct script_state *st);
 	const char *name;
 	const char *arg;
@@ -1779,7 +1779,8 @@ static void add_buildin_func(void)
 {
 	int i,n;
 	const char* p;
-	for( i=0; buildin_func[i].func; i++ ){
+	for( i = 0; buildin_func[i].func; i++ )
+	{
 		// arg must follow the pattern: (v|s|i|r|l)*\?*\*?
 		// 'v' - value (either string or int or reference)
 		// 's' - string
@@ -1788,7 +1789,7 @@ static void add_buildin_func(void)
 		// 'l' - label
 		// '?' - one optional parameter
 		// '*' - unknown number of optional parameters
-		p=buildin_func[i].arg;
+		p = buildin_func[i].arg;
 		while( *p == 'v' || *p == 's' || *p == 'i' || *p == 'r' || *p == 'l' ) ++p;
 		while( *p == '?' ) ++p;
 		if( *p == '*' ) ++p;
@@ -1797,10 +1798,10 @@ static void add_buildin_func(void)
 		} else if( *skip_word(buildin_func[i].name) != 0 ){
 			ShowWarning("add_buildin_func: ignoring function with invalid name \"%s\" (must be a word).\n", buildin_func[i].name);
 		} else {
-			n=add_str(buildin_func[i].name);
-			str_data[n].type=C_FUNC;
-			str_data[n].val=i;
-			str_data[n].func=buildin_func[i].func;
+			n = add_str(buildin_func[i].name);
+			str_data[n].type = C_FUNC;
+			str_data[n].val = i;
+			str_data[n].func = buildin_func[i].func;
 		}
 	}
 }
@@ -3724,6 +3725,7 @@ int script_reload()
 	return 0;
 }
 
+
 //-----------------------------------------------------------------------------
 // buildin functions
 //
@@ -3731,670 +3733,6 @@ int script_reload()
 #define BUILDIN_DEF(x,args) { buildin_ ## x , #x , args }
 #define BUILDIN_DEF2(x,x2,args) { buildin_ ## x , x2 , args }
 #define BUILDIN_FUNC(x) int buildin_ ## x (struct script_state* st)
-BUILDIN_FUNC(mes);
-BUILDIN_FUNC(goto);
-BUILDIN_FUNC(callsub);
-BUILDIN_FUNC(callfunc);
-BUILDIN_FUNC(return);
-BUILDIN_FUNC(getarg);
-BUILDIN_FUNC(next);
-BUILDIN_FUNC(close);
-BUILDIN_FUNC(close2);
-BUILDIN_FUNC(menu);
-BUILDIN_FUNC(rand);
-BUILDIN_FUNC(warp);
-BUILDIN_FUNC(areawarp);
-BUILDIN_FUNC(warpchar); // [LuzZza]
-BUILDIN_FUNC(warpparty); //[Fredzilla]
-BUILDIN_FUNC(warpguild); //[Fredzilla]
-BUILDIN_FUNC(heal);
-BUILDIN_FUNC(itemheal);
-BUILDIN_FUNC(percentheal);
-BUILDIN_FUNC(jobchange);
-BUILDIN_FUNC(jobname);
-BUILDIN_FUNC(input);
-BUILDIN_FUNC(setlook);
-BUILDIN_FUNC(set);
-BUILDIN_FUNC(setarray);
-BUILDIN_FUNC(cleararray);
-BUILDIN_FUNC(copyarray);
-BUILDIN_FUNC(getarraysize);
-BUILDIN_FUNC(deletearray);
-BUILDIN_FUNC(getelementofarray);
-BUILDIN_FUNC(getitem);
-BUILDIN_FUNC(getitem2);
-BUILDIN_FUNC(getnameditem);
-BUILDIN_FUNC(grouprandomitem);
-BUILDIN_FUNC(makeitem);
-BUILDIN_FUNC(delitem);
-BUILDIN_FUNC(delitem2);
-BUILDIN_FUNC(enableitemuse);
-BUILDIN_FUNC(disableitemuse);
-BUILDIN_FUNC(viewpoint);
-BUILDIN_FUNC(countitem);
-BUILDIN_FUNC(countitem2);
-BUILDIN_FUNC(checkweight);
-BUILDIN_FUNC(readparam);
-BUILDIN_FUNC(getcharid);
-BUILDIN_FUNC(getpartyname);
-BUILDIN_FUNC(getpartymember);
-BUILDIN_FUNC(getpartyleader);
-BUILDIN_FUNC(getguildname);
-BUILDIN_FUNC(getguildmaster);
-BUILDIN_FUNC(getguildmasterid);
-BUILDIN_FUNC(strcharinfo);
-BUILDIN_FUNC(getequipid);
-BUILDIN_FUNC(getequipname);
-BUILDIN_FUNC(getbrokenid); // [Valaris]
-BUILDIN_FUNC(repair); // [Valaris]
-BUILDIN_FUNC(getequipisequiped);
-BUILDIN_FUNC(getequipisenableref);
-BUILDIN_FUNC(getequipisidentify);
-BUILDIN_FUNC(getequiprefinerycnt);
-BUILDIN_FUNC(getequipweaponlv);
-BUILDIN_FUNC(getequippercentrefinery);
-BUILDIN_FUNC(successrefitem);
-BUILDIN_FUNC(failedrefitem);
-BUILDIN_FUNC(cutin);
-BUILDIN_FUNC(statusup);
-BUILDIN_FUNC(statusup2);
-BUILDIN_FUNC(bonus);
-BUILDIN_FUNC(bonus2);
-BUILDIN_FUNC(bonus3);
-BUILDIN_FUNC(bonus4);
-BUILDIN_FUNC(bonus5);
-BUILDIN_FUNC(bonusautoscript);
-BUILDIN_FUNC(bonusautoscript2);
-BUILDIN_FUNC(skill);
-BUILDIN_FUNC(addtoskill); // [Valaris]
-BUILDIN_FUNC(guildskill);
-BUILDIN_FUNC(getskilllv);
-BUILDIN_FUNC(getgdskilllv);
-BUILDIN_FUNC(basicskillcheck);
-BUILDIN_FUNC(getgmlevel);
-BUILDIN_FUNC(end);
-BUILDIN_FUNC(checkoption);
-BUILDIN_FUNC(setoption);
-BUILDIN_FUNC(setcart);
-BUILDIN_FUNC(checkcart); // check cart [Valaris]
-BUILDIN_FUNC(setfalcon);
-BUILDIN_FUNC(checkfalcon); // check falcon [Valaris]
-BUILDIN_FUNC(setriding);
-BUILDIN_FUNC(checkriding); // check for pecopeco [Valaris]
-BUILDIN_FUNC(savepoint);
-BUILDIN_FUNC(gettimetick);
-BUILDIN_FUNC(gettime);
-BUILDIN_FUNC(gettimestr);
-BUILDIN_FUNC(openstorage);
-BUILDIN_FUNC(guildopenstorage);
-BUILDIN_FUNC(itemskill);
-BUILDIN_FUNC(produce);
-BUILDIN_FUNC(monster);
-BUILDIN_FUNC(areamonster);
-BUILDIN_FUNC(killmonster);
-BUILDIN_FUNC(killmonsterall);
-BUILDIN_FUNC(clone);
-BUILDIN_FUNC(doevent);
-BUILDIN_FUNC(donpcevent);
-BUILDIN_FUNC(cmdothernpc);
-BUILDIN_FUNC(addtimer);
-BUILDIN_FUNC(deltimer);
-BUILDIN_FUNC(addtimercount);
-BUILDIN_FUNC(initnpctimer);
-BUILDIN_FUNC(stopnpctimer);
-BUILDIN_FUNC(startnpctimer);
-BUILDIN_FUNC(setnpctimer);
-BUILDIN_FUNC(getnpctimer);
-BUILDIN_FUNC(attachnpctimer);	// [celest]
-BUILDIN_FUNC(detachnpctimer);	// [celest]
-BUILDIN_FUNC(playerattached);	// [Skotlex]
-BUILDIN_FUNC(announce);
-BUILDIN_FUNC(mapannounce);
-BUILDIN_FUNC(areaannounce);
-BUILDIN_FUNC(getusers);
-BUILDIN_FUNC(getmapguildusers);
-BUILDIN_FUNC(getmapusers);
-BUILDIN_FUNC(getareausers);
-BUILDIN_FUNC(getareadropitem);
-BUILDIN_FUNC(enablenpc);
-BUILDIN_FUNC(disablenpc);
-BUILDIN_FUNC(hideoffnpc);
-BUILDIN_FUNC(hideonnpc);
-BUILDIN_FUNC(sc_start);
-BUILDIN_FUNC(sc_start2);
-BUILDIN_FUNC(sc_start4);
-BUILDIN_FUNC(sc_end);
-BUILDIN_FUNC(getscrate);
-BUILDIN_FUNC(debugmes);
-BUILDIN_FUNC(catchpet);
-BUILDIN_FUNC(birthpet);
-BUILDIN_FUNC(resetlvl);
-BUILDIN_FUNC(resetstatus);
-BUILDIN_FUNC(resetskill);
-BUILDIN_FUNC(skillpointcount);
-BUILDIN_FUNC(changebase);
-BUILDIN_FUNC(changesex);
-BUILDIN_FUNC(waitingroom);
-BUILDIN_FUNC(delwaitingroom);
-BUILDIN_FUNC(waitingroomkickall);
-BUILDIN_FUNC(enablewaitingroomevent);
-BUILDIN_FUNC(disablewaitingroomevent);
-BUILDIN_FUNC(getwaitingroomstate);
-BUILDIN_FUNC(warpwaitingpc);
-BUILDIN_FUNC(enablearena);	// Added by RoVeRT
-BUILDIN_FUNC(disablearena);	// Added by RoVeRT
-BUILDIN_FUNC(attachrid);
-BUILDIN_FUNC(detachrid);
-BUILDIN_FUNC(isloggedin);
-BUILDIN_FUNC(setmapflagnosave);
-BUILDIN_FUNC(setmapflag);
-BUILDIN_FUNC(removemapflag);
-BUILDIN_FUNC(pvpon);
-BUILDIN_FUNC(pvpoff);
-BUILDIN_FUNC(gvgon);
-BUILDIN_FUNC(gvgoff);
-BUILDIN_FUNC(emotion);
-BUILDIN_FUNC(maprespawnguildid);
-BUILDIN_FUNC(agitstart);		// <Agit>
-BUILDIN_FUNC(agitend);
-BUILDIN_FUNC(agitcheck);  // <Agitcheck>
-BUILDIN_FUNC(flagemblem);		// Flag Emblem
-BUILDIN_FUNC(getcastlename);
-BUILDIN_FUNC(getcastledata);
-BUILDIN_FUNC(setcastledata);
-BUILDIN_FUNC(requestguildinfo);
-BUILDIN_FUNC(getequipcardcnt);
-BUILDIN_FUNC(successremovecards);
-BUILDIN_FUNC(failedremovecards);
-BUILDIN_FUNC(marriage);
-BUILDIN_FUNC(wedding_effect);
-BUILDIN_FUNC(divorce);
-BUILDIN_FUNC(ispartneron); // MouseJstr
-BUILDIN_FUNC(getpartnerid); // MouseJstr
-BUILDIN_FUNC(getchildid); // Skotlex
-BUILDIN_FUNC(getmotherid); // Lupus
-BUILDIN_FUNC(getfatherid); // Lupus
-BUILDIN_FUNC(warppartner); // MouseJstr
-BUILDIN_FUNC(getitemname);
-BUILDIN_FUNC(getitemslots);
-BUILDIN_FUNC(makepet);
-BUILDIN_FUNC(getexp);
-BUILDIN_FUNC(getinventorylist);
-BUILDIN_FUNC(getskilllist);
-BUILDIN_FUNC(clearitem);
-BUILDIN_FUNC(classchange);
-BUILDIN_FUNC(misceffect);
-BUILDIN_FUNC(soundeffect);
-BUILDIN_FUNC(soundeffectall);
-BUILDIN_FUNC(setcastledata);
-BUILDIN_FUNC(mapwarp);
-BUILDIN_FUNC(mobcount);
-BUILDIN_FUNC(strmobinfo); // Script for displaying mob info [Valaris]
-BUILDIN_FUNC(guardian); // Script for displaying mob info [Valaris]
-BUILDIN_FUNC(guardianinfo); // Script for displaying mob info [Valaris]
-BUILDIN_FUNC(petskillbonus); // petskillbonus [Valaris]
-BUILDIN_FUNC(petrecovery); // pet skill for curing status [Valaris]
-BUILDIN_FUNC(petloot); // pet looting [Valaris]
-BUILDIN_FUNC(petheal); // pet healing [Valaris]
-//BUILDIN_FUNC(petmag); // pet magnificat [Valaris]
-BUILDIN_FUNC(petskillattack); // pet skill attacks [Skotlex]
-BUILDIN_FUNC(petskillattack2); // pet skill attacks [Skotlex]
-BUILDIN_FUNC(petskillsupport); // pet support skill [Valaris]
-BUILDIN_FUNC(skilleffect); // skill effects [Celest]
-BUILDIN_FUNC(npcskilleffect); // skill effects for npcs [Valaris]
-BUILDIN_FUNC(specialeffect); // special effect script [Valaris]
-BUILDIN_FUNC(specialeffect2); // special effect script [Valaris]
-BUILDIN_FUNC(nude); // nude [Valaris]
-BUILDIN_FUNC(atcommand); // [MouseJstr]
-BUILDIN_FUNC(charcommand); // [MouseJstr]
-BUILDIN_FUNC(movenpc); // [MouseJstr]
-BUILDIN_FUNC(message); // [MouseJstr]
-BUILDIN_FUNC(npctalk); // [Valaris]
-BUILDIN_FUNC(getlook);	//Lorky [Lupus]
-BUILDIN_FUNC(getsavepoint);	//Lorky [Lupus]
-BUILDIN_FUNC(npcspeed); // [Valaris]
-BUILDIN_FUNC(npcwalkto); // [Valaris]
-BUILDIN_FUNC(npcstop); // [Valaris]
-BUILDIN_FUNC(getmapxy);  //get map position for player/npc/pet/mob by Lorky [Lupus]
-BUILDIN_FUNC(checkoption1); // [celest]
-BUILDIN_FUNC(checkoption2); // [celest]
-BUILDIN_FUNC(guildgetexp); // [celest]
-BUILDIN_FUNC(guildchangegm); // [Skotlex]
-BUILDIN_FUNC(logmes); // [Lupus]
-BUILDIN_FUNC(summon); // [celest]
-BUILDIN_FUNC(isnight); // [celest]
-BUILDIN_FUNC(isday); // [celest]
-BUILDIN_FUNC(isequipped); // [celest]
-BUILDIN_FUNC(isequippedcnt); // [celest]
-BUILDIN_FUNC(cardscnt); // [Lupus]
-BUILDIN_FUNC(getrefine); // [celest]
-BUILDIN_FUNC(adopt);
-BUILDIN_FUNC(night);
-BUILDIN_FUNC(day);
-BUILDIN_FUNC(getusersname); //jA commands added [Lupus]
-BUILDIN_FUNC(dispbottom);
-BUILDIN_FUNC(recovery);
-BUILDIN_FUNC(getpetinfo);
-BUILDIN_FUNC(gethominfo);
-BUILDIN_FUNC(checkequipedcard);
-BUILDIN_FUNC(globalmes);
-BUILDIN_FUNC(jump_zero);
-BUILDIN_FUNC(select);
-BUILDIN_FUNC(prompt);
-BUILDIN_FUNC(getmapmobs); //jA addition end
-BUILDIN_FUNC(unequip); // unequip [Spectre]
-BUILDIN_FUNC(getstrlen); //strlen [valaris]
-BUILDIN_FUNC(charisalpha);//isalpha [valaris]
-BUILDIN_FUNC(fakenpcname); // [Lance]
-BUILDIN_FUNC(compare); // Lordalfa, to bring strstr to Scripting Engine
-BUILDIN_FUNC(getiteminfo); //[Lupus] returns Items Buy / sell Price, etc info
-BUILDIN_FUNC(setiteminfo); //[Lupus] set Items Buy / sell Price, etc info
-BUILDIN_FUNC(getequipcardid); //[Lupus] returns card id from quipped item card slot N
-// [zBuffer] List of mathematics commands --->
-BUILDIN_FUNC(sqrt);
-BUILDIN_FUNC(pow);
-BUILDIN_FUNC(distance);
-BUILDIN_FUNC(checkcell);
-// <--- [zBuffer] List of mathematics commands
-// [zBuffer] List of dynamic var commands --->
-BUILDIN_FUNC(getd);
-BUILDIN_FUNC(setd);
-// <--- [zBuffer] List of dynamic var commands
-BUILDIN_FUNC(petstat); // [Lance] Pet Stat Rq: Dubby
-BUILDIN_FUNC(callshop); // [Skotlex]
-BUILDIN_FUNC(npcshopitem); // [Lance]
-BUILDIN_FUNC(npcshopadditem);
-BUILDIN_FUNC(npcshopdelitem);
-BUILDIN_FUNC(npcshopattach);
-BUILDIN_FUNC(equip);
-BUILDIN_FUNC(autoequip);
-BUILDIN_FUNC(setbattleflag);
-BUILDIN_FUNC(getbattleflag);
-BUILDIN_FUNC(query_sql);
-BUILDIN_FUNC(escape_sql);
-BUILDIN_FUNC(atoi);
-BUILDIN_FUNC(axtoi);
-// [zBuffer] List of player cont commands --->
-BUILDIN_FUNC(rid2name);
-BUILDIN_FUNC(pcfollow);
-BUILDIN_FUNC(pcstopfollow);
-BUILDIN_FUNC(pcblockmove);
-// <--- [zBuffer] List of player cont commands
-// [zBuffer] List of mob control commands --->
-BUILDIN_FUNC(mobspawn);
-BUILDIN_FUNC(mobremove);
-BUILDIN_FUNC(getmobdata);
-BUILDIN_FUNC(setmobdata);
-BUILDIN_FUNC(mobassist);
-BUILDIN_FUNC(mobattach);
-BUILDIN_FUNC(unitwalk);
-BUILDIN_FUNC(unitkill);
-BUILDIN_FUNC(unitwarp);
-BUILDIN_FUNC(unitattack);
-BUILDIN_FUNC(unitstop);
-BUILDIN_FUNC(unittalk);
-BUILDIN_FUNC(unitemote);
-BUILDIN_FUNC(unitskilluseid); // originally by Qamera [celest]
-BUILDIN_FUNC(unitskillusepos); // originally by Qamera [celest]
-// <--- [zBuffer] List of mob control commands
-BUILDIN_FUNC(sleep);
-BUILDIN_FUNC(sleep2);
-BUILDIN_FUNC(awake);
-BUILDIN_FUNC(getvariableofnpc);
-BUILDIN_FUNC(warpportal);
-BUILDIN_FUNC(homunculus_evolution) ;	//[orn]
-BUILDIN_FUNC(homunculus_shuffle); // [Zephyrus]
-BUILDIN_FUNC(eaclass);
-BUILDIN_FUNC(roclass);
-BUILDIN_FUNC(setitemscript);
-BUILDIN_FUNC(disguise);
-BUILDIN_FUNC(undisguise);
-BUILDIN_FUNC(getmonsterinfo); // [Lupus]
-BUILDIN_FUNC(checkvending); // check vending [Nab4]
-BUILDIN_FUNC(checkchatting); // check chatting [Marka]
-BUILDIN_FUNC(openmail); // [Mail System]
-
-#ifdef PCRE_SUPPORT
-BUILDIN_FUNC(defpattern); // MouseJstr
-BUILDIN_FUNC(activatepset); // MouseJstr
-BUILDIN_FUNC(deactivatepset); // MouseJstr
-BUILDIN_FUNC(deletepset); // MouseJstr
-#endif
-
-struct script_function buildin_func[] = {
-	// NPC interaction
-	BUILDIN_DEF(mes,"s"),
-	BUILDIN_DEF(next,""),
-	BUILDIN_DEF(close,""),
-	BUILDIN_DEF(close2,""),
-	BUILDIN_DEF(menu,"sl*"),
-	BUILDIN_DEF(select,"s*"), //for future jA script compatibility
-	BUILDIN_DEF(prompt,"s*"),
-	//
-	BUILDIN_DEF(goto,"l"),
-	BUILDIN_DEF(callsub,"i*"),
-	BUILDIN_DEF(callfunc,"s*"),
-	BUILDIN_DEF(return,"?"),
-	BUILDIN_DEF(getarg,"i?"),
-	BUILDIN_DEF(jobchange,"i*"),
-	BUILDIN_DEF(jobname,"i"),
-	BUILDIN_DEF(input,"v"),
-	BUILDIN_DEF(warp,"sii"),
-	BUILDIN_DEF(areawarp,"siiiisii"),
-	BUILDIN_DEF(warpchar,"siii"), // [LuzZza]
-	BUILDIN_DEF(warpparty,"siii"), // [Fredzilla]
-	BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
-	BUILDIN_DEF(setlook,"ii"),
-	BUILDIN_DEF(set,"ii"),
-	BUILDIN_DEF(setarray,"rv*"),
-	BUILDIN_DEF(cleararray,"rvi"),
-	BUILDIN_DEF(copyarray,"rri"),
-	BUILDIN_DEF(getarraysize,"r"),
-	BUILDIN_DEF(deletearray,"r?"),
-	BUILDIN_DEF(getelementofarray,"ri"),
-	BUILDIN_DEF(getitem,"vi?"),
-	BUILDIN_DEF(getitem2,"iiiiiiiii*"),
-	BUILDIN_DEF(getnameditem,"is"),
-	BUILDIN_DEF2(grouprandomitem,"groupranditem","i"),
-	BUILDIN_DEF(makeitem,"iisii"),
-	BUILDIN_DEF(delitem,"ii"),
-	BUILDIN_DEF(delitem2,"iiiiiiiii"),
-	BUILDIN_DEF2(enableitemuse,"enable_items",""),
-	BUILDIN_DEF2(disableitemuse,"disable_items",""),
-	BUILDIN_DEF(cutin,"si"),
-	BUILDIN_DEF(viewpoint,"iiiii"),
-	BUILDIN_DEF(heal,"ii"),
-	BUILDIN_DEF(itemheal,"ii"),
-	BUILDIN_DEF(percentheal,"ii"),
-	BUILDIN_DEF(rand,"i?"),
-	BUILDIN_DEF(countitem,"i"),
-	BUILDIN_DEF(countitem2,"iiiiiiii"),
-	BUILDIN_DEF(checkweight,"ii"),
-	BUILDIN_DEF(readparam,"i*"),
-	BUILDIN_DEF(getcharid,"i*"),
-	BUILDIN_DEF(getpartyname,"i"),
-	BUILDIN_DEF(getpartymember,"i*"),
-	BUILDIN_DEF(getpartyleader,"i?"),
-	BUILDIN_DEF(getguildname,"i"),
-	BUILDIN_DEF(getguildmaster,"i"),
-	BUILDIN_DEF(getguildmasterid,"i"),
-	BUILDIN_DEF(strcharinfo,"i"),
-	BUILDIN_DEF(getequipid,"i"),
-	BUILDIN_DEF(getequipname,"i"),
-	BUILDIN_DEF(getbrokenid,"i"), // [Valaris]
-	BUILDIN_DEF(repair,"i"), // [Valaris]
-	BUILDIN_DEF(getequipisequiped,"i"),
-	BUILDIN_DEF(getequipisenableref,"i"),
-	BUILDIN_DEF(getequipisidentify,"i"),
-	BUILDIN_DEF(getequiprefinerycnt,"i"),
-	BUILDIN_DEF(getequipweaponlv,"i"),
-	BUILDIN_DEF(getequippercentrefinery,"i"),
-	BUILDIN_DEF(successrefitem,"i"),
-	BUILDIN_DEF(failedrefitem,"i"),
-	BUILDIN_DEF(statusup,"i"),
-	BUILDIN_DEF(statusup2,"ii"),
-	BUILDIN_DEF(bonus,"ii"),
-	BUILDIN_DEF2(bonus,"bonus2","iii"),
-	BUILDIN_DEF2(bonus,"bonus3","iiii"),
-	BUILDIN_DEF2(bonus,"bonus4","iiiii"),
-	BUILDIN_DEF2(bonus,"bonus5","iiiiii"),
-	BUILDIN_DEF(bonusautoscript,"si?"),
-	BUILDIN_DEF(bonusautoscript2,"si?"),
-	BUILDIN_DEF(skill,"ii?"),
-	BUILDIN_DEF(addtoskill,"ii?"), // [Valaris]
-	BUILDIN_DEF(guildskill,"ii"),
-	BUILDIN_DEF(getskilllv,"i"),
-	BUILDIN_DEF(getgdskilllv,"ii"),
-	BUILDIN_DEF(basicskillcheck,""),
-	BUILDIN_DEF(getgmlevel,""),
-	BUILDIN_DEF(end,""),
-//	BUILDIN_DEF2(end,"break",""), this might confuse advanced scripting support [Eoe]
-	BUILDIN_DEF(checkoption,"i"),
-	BUILDIN_DEF(setoption,"i?"),
-	BUILDIN_DEF(setcart,"?"),
-	BUILDIN_DEF(checkcart,""),
-	BUILDIN_DEF(setfalcon,"?"),
-	BUILDIN_DEF(checkfalcon,""),
-	BUILDIN_DEF(setriding,"?"),
-	BUILDIN_DEF(checkriding,""),
-	BUILDIN_DEF2(savepoint,"save","sii"),
-	BUILDIN_DEF(savepoint,"sii"),
-	BUILDIN_DEF(gettimetick,"i"),
-	BUILDIN_DEF(gettime,"i"),
-	BUILDIN_DEF(gettimestr,"si"),
-	BUILDIN_DEF(openstorage,""),
-	BUILDIN_DEF(guildopenstorage,"*"),
-	BUILDIN_DEF(itemskill,"ii"),
-	BUILDIN_DEF(produce,"i"),
-	BUILDIN_DEF(monster,"siisii*"),
-	BUILDIN_DEF(areamonster,"siiiisii*"),
-	BUILDIN_DEF(killmonster,"ss"),
-	BUILDIN_DEF(killmonsterall,"s"),
-	BUILDIN_DEF(clone,"siisi*"),
-	BUILDIN_DEF(doevent,"s"),
-	BUILDIN_DEF(donpcevent,"s"),
-	BUILDIN_DEF(cmdothernpc,"ss"),
-	BUILDIN_DEF(addtimer,"is"),
-	BUILDIN_DEF(deltimer,"s"),
-	BUILDIN_DEF(addtimercount,"si"),
-	BUILDIN_DEF(initnpctimer,"??"),
-	BUILDIN_DEF(stopnpctimer,"??"),
-	BUILDIN_DEF(startnpctimer,"??"),
-	BUILDIN_DEF(setnpctimer,"i?"),
-	BUILDIN_DEF(getnpctimer,"i?"),
-	BUILDIN_DEF(attachnpctimer,"?"), // attached the player id to the npc timer [Celest]
-	BUILDIN_DEF(detachnpctimer,"?"), // detached the player id from the npc timer [Celest]
-	BUILDIN_DEF(playerattached,""), // returns id of the current attached player. [Skotlex]
-	BUILDIN_DEF(announce,"si*"),
-	BUILDIN_DEF(mapannounce,"ssi*"),
-	BUILDIN_DEF(areaannounce,"siiiisi*"),
-	BUILDIN_DEF(getusers,"i"),
-	BUILDIN_DEF(getmapguildusers,"si"),
-	BUILDIN_DEF(getmapusers,"s"),
-	BUILDIN_DEF(getareausers,"siiii"),
-	BUILDIN_DEF(getareadropitem,"siiiii"),
-	BUILDIN_DEF(enablenpc,"s"),
-	BUILDIN_DEF(disablenpc,"s"),
-	BUILDIN_DEF(hideoffnpc,"s"),
-	BUILDIN_DEF(hideonnpc,"s"),
-	BUILDIN_DEF(sc_start,"iii?"),
-	BUILDIN_DEF(sc_start2,"iiii?"),
-	BUILDIN_DEF(sc_start4,"iiiiii?"),
-	BUILDIN_DEF(sc_end,"i?"),
-	BUILDIN_DEF(getscrate,"ii*"),
-	BUILDIN_DEF(debugmes,"s"),
-	BUILDIN_DEF2(catchpet,"pet","i"),
-	BUILDIN_DEF2(birthpet,"bpet",""),
-	BUILDIN_DEF(resetlvl,"i"),
-	BUILDIN_DEF(resetstatus,""),
-	BUILDIN_DEF(resetskill,""),
-	BUILDIN_DEF(skillpointcount,""),
-	BUILDIN_DEF(changebase,"i"),
-	BUILDIN_DEF(changesex,""),
-	BUILDIN_DEF(waitingroom,"si??"),
-	BUILDIN_DEF(delwaitingroom,"?"),
-	BUILDIN_DEF2(waitingroomkickall,"kickwaitingroomall","?"),
-	BUILDIN_DEF(enablewaitingroomevent,"?"),
-	BUILDIN_DEF(disablewaitingroomevent,"?"),
-	BUILDIN_DEF2(enablewaitingroomevent,"enablearena",""),		// Added by RoVeRT
-	BUILDIN_DEF2(disablewaitingroomevent,"disablearena",""),	// Added by RoVeRT
-	BUILDIN_DEF(getwaitingroomstate,"i?"),
-	BUILDIN_DEF(warpwaitingpc,"sii?"),
-	BUILDIN_DEF(attachrid,"i"),
-	BUILDIN_DEF(detachrid,""),
-	BUILDIN_DEF(isloggedin,"i?"),
-	BUILDIN_DEF(setmapflagnosave,"ssii"),
-	BUILDIN_DEF(setmapflag,"si*"),
-	BUILDIN_DEF(removemapflag,"si"),
-	BUILDIN_DEF(pvpon,"s"),
-	BUILDIN_DEF(pvpoff,"s"),
-	BUILDIN_DEF(gvgon,"s"),
-	BUILDIN_DEF(gvgoff,"s"),
-	BUILDIN_DEF(emotion,"i*"),
-	BUILDIN_DEF(maprespawnguildid,"sii"),
-	BUILDIN_DEF(agitstart,""),	// <Agit>
-	BUILDIN_DEF(agitend,""),
-	BUILDIN_DEF(agitcheck,""),   // <Agitcheck>
-	BUILDIN_DEF(flagemblem,"i"),	// Flag Emblem
-	BUILDIN_DEF(getcastlename,"s"),
-	BUILDIN_DEF(getcastledata,"si*"),
-	BUILDIN_DEF(setcastledata,"sii"),
-	BUILDIN_DEF(requestguildinfo,"i*"),
-	BUILDIN_DEF(getequipcardcnt,"i"),
-	BUILDIN_DEF(successremovecards,"i"),
-	BUILDIN_DEF(failedremovecards,"ii"),
-	BUILDIN_DEF(marriage,"s"),
-	BUILDIN_DEF2(wedding_effect,"wedding",""),
-	BUILDIN_DEF(divorce,""),
-	BUILDIN_DEF(ispartneron,""),
-	BUILDIN_DEF(getpartnerid,""),
-	BUILDIN_DEF(getchildid,""),
-	BUILDIN_DEF(getmotherid,""),
-	BUILDIN_DEF(getfatherid,""),
-	BUILDIN_DEF(warppartner,"sii"),
-	BUILDIN_DEF(getitemname,"i"),
-	BUILDIN_DEF(getitemslots,"i"),
-	BUILDIN_DEF(makepet,"i"),
-	BUILDIN_DEF(getexp,"ii"),
-	BUILDIN_DEF(getinventorylist,""),
-	BUILDIN_DEF(getskilllist,""),
-	BUILDIN_DEF(clearitem,""),
-	BUILDIN_DEF(classchange,"ii"),
-	BUILDIN_DEF(misceffect,"i"),
-	BUILDIN_DEF(soundeffect,"si"),
-	BUILDIN_DEF(soundeffectall,"si*"),	// SoundEffectAll [Codemaster]
-	BUILDIN_DEF(strmobinfo,"ii"),	// display mob data [Valaris]
-	BUILDIN_DEF(guardian,"siisi??"),	// summon guardians
-	BUILDIN_DEF(guardianinfo,"i"),	// display guardian data [Valaris]
-	BUILDIN_DEF(petskillbonus,"iiii"), // [Valaris]
-	BUILDIN_DEF(petrecovery,"ii"), // [Valaris]
-	BUILDIN_DEF(petloot,"i"), // [Valaris]
-	BUILDIN_DEF(petheal,"iiii"), // [Valaris]
-//	BUILDIN_DEF(petmag,"iiii"), // [Valaris]
-	BUILDIN_DEF(petskillattack,"iiii"), // [Skotlex]
-	BUILDIN_DEF(petskillattack2,"iiiii"), // [Valaris]
-	BUILDIN_DEF(petskillsupport,"iiiii"), // [Skotlex]
-	BUILDIN_DEF(skilleffect,"ii"), // skill effect [Celest]
-	BUILDIN_DEF(npcskilleffect,"iiii"), // npc skill effect [Valaris]
-	BUILDIN_DEF(specialeffect,"i*"), // npc skill effect [Valaris]
-	BUILDIN_DEF(specialeffect2,"i*"), // skill effect on players[Valaris]
-	BUILDIN_DEF(nude,""), // nude command [Valaris]
-	BUILDIN_DEF(mapwarp,"ssii*"),		// Added by RoVeRT
-	BUILDIN_DEF(atcommand,"*"), // [MouseJstr]
-	BUILDIN_DEF(charcommand,"*"), // [MouseJstr]
-	BUILDIN_DEF(movenpc,"sii"), // [MouseJstr]
-	BUILDIN_DEF(message,"s*"), // [MouseJstr]
-	BUILDIN_DEF(npctalk,"*"), // [Valaris]
-	BUILDIN_DEF(mobcount,"ss"),
-	BUILDIN_DEF(getlook,"i"),
-	BUILDIN_DEF(getsavepoint,"i"),
-	BUILDIN_DEF(npcspeed,"i"), // [Valaris]
-	BUILDIN_DEF(npcwalkto,"ii"), // [Valaris]
-	BUILDIN_DEF(npcstop,""), // [Valaris]
-	BUILDIN_DEF(getmapxy,"siii*"),	//by Lorky [Lupus]
-	BUILDIN_DEF(checkoption1,"i"),
-	BUILDIN_DEF(checkoption2,"i"),
-	BUILDIN_DEF(guildgetexp,"i"),
-	BUILDIN_DEF(guildchangegm,"is"),
-	BUILDIN_DEF(logmes,"s"), //this command actls as MES but rints info into LOG file either SQL/TXT [Lupus]
-	BUILDIN_DEF(summon,"si*"), // summons a slave monster [Celest]
-	BUILDIN_DEF(isnight,""), // check whether it is night time [Celest]
-	BUILDIN_DEF(isday,""), // check whether it is day time [Celest]
-	BUILDIN_DEF(isequipped,"i*"), // check whether another item/card has been equipped [Celest]
-	BUILDIN_DEF(isequippedcnt,"i*"), // check how many items/cards are being equipped [Celest]
-	BUILDIN_DEF(cardscnt,"i*"), // check how many items/cards are being equipped in the same arm [Lupus]
-	BUILDIN_DEF(getrefine,"*"), // returns the refined number of the current item, or an item with index specified [celest]
-	BUILDIN_DEF(adopt,"sss"), // allows 2 parents to adopt a child
-	BUILDIN_DEF(night,""), // sets the server to night time
-	BUILDIN_DEF(day,""), // sets the server to day time
-#ifdef PCRE_SUPPORT
-	BUILDIN_DEF(defpattern,"iss"), // Define pattern to listen for [MouseJstr]
-	BUILDIN_DEF(activatepset,"i"), // Activate a pattern set [MouseJstr]
-	BUILDIN_DEF(deactivatepset,"i"), // Deactive a pattern set [MouseJstr]
-	BUILDIN_DEF(deletepset,"i"), // Delete a pattern set [MouseJstr]
-#endif
-	BUILDIN_DEF(dispbottom,"s"), //added from jA [Lupus]
-	BUILDIN_DEF(getusersname,"*"),
-	BUILDIN_DEF(recovery,""),
-	BUILDIN_DEF(getpetinfo,"i"),
-	BUILDIN_DEF(gethominfo,"i"),
-	BUILDIN_DEF(checkequipedcard,"i"),
-	BUILDIN_DEF(jump_zero,"ii"), //for future jA script compatibility
-	BUILDIN_DEF(globalmes,"s*"),
-	BUILDIN_DEF(getmapmobs,"s"), //end jA addition
-	BUILDIN_DEF(unequip,"i"), // unequip command [Spectre]
-	BUILDIN_DEF(getstrlen,"s"), //strlen [Valaris]
-	BUILDIN_DEF(charisalpha,"si"), //isalpha [Valaris]
-	BUILDIN_DEF(fakenpcname,"ssi"), // [Lance]
-	BUILDIN_DEF(compare,"ss"), // Lordalfa - To bring strstr to scripting Engine.
-	BUILDIN_DEF(getiteminfo,"ii"), //[Lupus] returns Items Buy / sell Price, etc info
-	BUILDIN_DEF(setiteminfo,"iii"), //[Lupus] set Items Buy / sell Price, etc info
-	BUILDIN_DEF(getequipcardid,"ii"), //[Lupus] returns CARD ID or other info from CARD slot N of equipped item
-	// [zBuffer] List of mathematics commands --->
-	BUILDIN_DEF(sqrt,"i"),
-	BUILDIN_DEF(pow,"ii"),
-	BUILDIN_DEF(distance,"iiii"),
-	BUILDIN_DEF(checkcell,"siii"),
-	// <--- [zBuffer] List of mathematics commands
-	// [zBuffer] List of dynamic var commands --->
-	BUILDIN_DEF(getd,"*"),
-	BUILDIN_DEF(setd,"*"),
-	// <--- [zBuffer] List of dynamic var commands
-	BUILDIN_DEF(petstat,"i"),
-	BUILDIN_DEF(callshop,"si"), // [Skotlex]
-	BUILDIN_DEF(npcshopitem,"sii*"), // [Lance]
-	BUILDIN_DEF(npcshopadditem,"sii*"),
-	BUILDIN_DEF(npcshopdelitem,"si*"),
-	BUILDIN_DEF(npcshopattach,"s?"),
-	BUILDIN_DEF(equip,"i"),
-	BUILDIN_DEF(autoequip,"ii"),
-	BUILDIN_DEF(setbattleflag,"ss"),
-	BUILDIN_DEF(getbattleflag,"s"),
-	BUILDIN_DEF(setitemscript,"is*"), //Set NEW item bonus script. Lupus
-	BUILDIN_DEF(disguise,"i"), //disguise player. Lupus
-	BUILDIN_DEF(undisguise,"*"), //undisguise player. Lupus
-	BUILDIN_DEF(getmonsterinfo,"ii"), //Lupus
-	BUILDIN_DEF(axtoi,"s"),
-	BUILDIN_DEF(query_sql,"s*"),
-	BUILDIN_DEF(escape_sql,"s"),
-	BUILDIN_DEF(atoi,"s"),
-	// [zBuffer] List of player cont commands --->
-	BUILDIN_DEF(rid2name,"i"),
-	BUILDIN_DEF(pcfollow,"ii"),
-	BUILDIN_DEF(pcstopfollow,"i"),
-	BUILDIN_DEF(pcblockmove,"ii"),
-	// <--- [zBuffer] List of player cont commands
-	// [zBuffer] List of mob control commands --->
-	BUILDIN_DEF(mobspawn,"*"),
-	BUILDIN_DEF(mobremove,"i"),
-	BUILDIN_DEF(getmobdata,"i*"),
-	BUILDIN_DEF(setmobdata,"iii"),
-	BUILDIN_DEF(mobassist,"i?"),
-	BUILDIN_DEF(mobattach,"i?"),
-	BUILDIN_DEF(unitwalk,"ii?"),
-	BUILDIN_DEF(unitkill,"i"),
-	BUILDIN_DEF(unitwarp,"isii"),
-	BUILDIN_DEF(unitattack,"iv?"),
-	BUILDIN_DEF(unitstop,"i"),
-	BUILDIN_DEF(unittalk,"is"),
-	BUILDIN_DEF(unitemote,"ii"),
-	BUILDIN_DEF(unitskilluseid,"iii?"), // originally by Qamera [Celest]
-	BUILDIN_DEF(unitskillusepos,"iiiii"), // [Celest]
-// <--- [zBuffer] List of mob control commands
-	BUILDIN_DEF(sleep,"i"),
-	BUILDIN_DEF(sleep2,"i"),
-	BUILDIN_DEF(awake,"s"),
-	BUILDIN_DEF(getvariableofnpc,"rs"),
-	BUILDIN_DEF(warpportal,"iisii"),
-	BUILDIN_DEF2(homunculus_evolution,"homevolution",""),	//[orn]
-	BUILDIN_DEF2(homunculus_shuffle,"homshuffle",""),	//[Zephyrus]
-	BUILDIN_DEF(eaclass,"*"),	//[Skotlex]
-	BUILDIN_DEF(roclass,"i*"),	//[Skotlex]
-	BUILDIN_DEF(checkvending,"*"),
-	BUILDIN_DEF(checkchatting,"*"),
-	BUILDIN_DEF(openmail,""),
-	{NULL,NULL,NULL},
-};
 
 /////////////////////////////////////////////////////////////////////
 // NPC interaction
@@ -13462,3 +12800,346 @@ BUILDIN_FUNC(openmail)
 #endif
 	return 0;
 }
+
+
+// declarations that were supposed to be exported from npc_chat.c
+#ifdef PCRE_SUPPORT
+BUILDIN_FUNC(defpattern);
+BUILDIN_FUNC(activatepset);
+BUILDIN_FUNC(deactivatepset);
+BUILDIN_FUNC(deletepset);
+#endif
+
+
+struct script_function buildin_func[] = {
+	// NPC interaction
+	BUILDIN_DEF(mes,"s"),
+	BUILDIN_DEF(next,""),
+	BUILDIN_DEF(close,""),
+	BUILDIN_DEF(close2,""),
+	BUILDIN_DEF(menu,"sl*"),
+	BUILDIN_DEF(select,"s*"), //for future jA script compatibility
+	BUILDIN_DEF(prompt,"s*"),
+	//
+	BUILDIN_DEF(goto,"l"),
+	BUILDIN_DEF(callsub,"i*"),
+	BUILDIN_DEF(callfunc,"s*"),
+	BUILDIN_DEF(return,"?"),
+	BUILDIN_DEF(getarg,"i?"),
+	BUILDIN_DEF(jobchange,"i*"),
+	BUILDIN_DEF(jobname,"i"),
+	BUILDIN_DEF(input,"v"),
+	BUILDIN_DEF(warp,"sii"),
+	BUILDIN_DEF(areawarp,"siiiisii"),
+	BUILDIN_DEF(warpchar,"siii"), // [LuzZza]
+	BUILDIN_DEF(warpparty,"siii"), // [Fredzilla]
+	BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
+	BUILDIN_DEF(setlook,"ii"),
+	BUILDIN_DEF(set,"ii"),
+	BUILDIN_DEF(setarray,"rv*"),
+	BUILDIN_DEF(cleararray,"rvi"),
+	BUILDIN_DEF(copyarray,"rri"),
+	BUILDIN_DEF(getarraysize,"r"),
+	BUILDIN_DEF(deletearray,"r?"),
+	BUILDIN_DEF(getelementofarray,"ri"),
+	BUILDIN_DEF(getitem,"vi?"),
+	BUILDIN_DEF(getitem2,"iiiiiiiii*"),
+	BUILDIN_DEF(getnameditem,"is"),
+	BUILDIN_DEF2(grouprandomitem,"groupranditem","i"),
+	BUILDIN_DEF(makeitem,"iisii"),
+	BUILDIN_DEF(delitem,"ii"),
+	BUILDIN_DEF(delitem2,"iiiiiiiii"),
+	BUILDIN_DEF2(enableitemuse,"enable_items",""),
+	BUILDIN_DEF2(disableitemuse,"disable_items",""),
+	BUILDIN_DEF(cutin,"si"),
+	BUILDIN_DEF(viewpoint,"iiiii"),
+	BUILDIN_DEF(heal,"ii"),
+	BUILDIN_DEF(itemheal,"ii"),
+	BUILDIN_DEF(percentheal,"ii"),
+	BUILDIN_DEF(rand,"i?"),
+	BUILDIN_DEF(countitem,"i"),
+	BUILDIN_DEF(countitem2,"iiiiiiii"),
+	BUILDIN_DEF(checkweight,"ii"),
+	BUILDIN_DEF(readparam,"i*"),
+	BUILDIN_DEF(getcharid,"i*"),
+	BUILDIN_DEF(getpartyname,"i"),
+	BUILDIN_DEF(getpartymember,"i*"),
+	BUILDIN_DEF(getpartyleader,"i?"),
+	BUILDIN_DEF(getguildname,"i"),
+	BUILDIN_DEF(getguildmaster,"i"),
+	BUILDIN_DEF(getguildmasterid,"i"),
+	BUILDIN_DEF(strcharinfo,"i"),
+	BUILDIN_DEF(getequipid,"i"),
+	BUILDIN_DEF(getequipname,"i"),
+	BUILDIN_DEF(getbrokenid,"i"), // [Valaris]
+	BUILDIN_DEF(repair,"i"), // [Valaris]
+	BUILDIN_DEF(getequipisequiped,"i"),
+	BUILDIN_DEF(getequipisenableref,"i"),
+	BUILDIN_DEF(getequipisidentify,"i"),
+	BUILDIN_DEF(getequiprefinerycnt,"i"),
+	BUILDIN_DEF(getequipweaponlv,"i"),
+	BUILDIN_DEF(getequippercentrefinery,"i"),
+	BUILDIN_DEF(successrefitem,"i"),
+	BUILDIN_DEF(failedrefitem,"i"),
+	BUILDIN_DEF(statusup,"i"),
+	BUILDIN_DEF(statusup2,"ii"),
+	BUILDIN_DEF(bonus,"ii"),
+	BUILDIN_DEF2(bonus,"bonus2","iii"),
+	BUILDIN_DEF2(bonus,"bonus3","iiii"),
+	BUILDIN_DEF2(bonus,"bonus4","iiiii"),
+	BUILDIN_DEF2(bonus,"bonus5","iiiiii"),
+	BUILDIN_DEF(bonusautoscript,"si?"),
+	BUILDIN_DEF(bonusautoscript2,"si?"),
+	BUILDIN_DEF(skill,"ii?"),
+	BUILDIN_DEF(addtoskill,"ii?"), // [Valaris]
+	BUILDIN_DEF(guildskill,"ii"),
+	BUILDIN_DEF(getskilllv,"i"),
+	BUILDIN_DEF(getgdskilllv,"ii"),
+	BUILDIN_DEF(basicskillcheck,""),
+	BUILDIN_DEF(getgmlevel,""),
+	BUILDIN_DEF(end,""),
+	BUILDIN_DEF(checkoption,"i"),
+	BUILDIN_DEF(setoption,"i?"),
+	BUILDIN_DEF(setcart,"?"),
+	BUILDIN_DEF(checkcart,""),
+	BUILDIN_DEF(setfalcon,"?"),
+	BUILDIN_DEF(checkfalcon,""),
+	BUILDIN_DEF(setriding,"?"),
+	BUILDIN_DEF(checkriding,""),
+	BUILDIN_DEF2(savepoint,"save","sii"),
+	BUILDIN_DEF(savepoint,"sii"),
+	BUILDIN_DEF(gettimetick,"i"),
+	BUILDIN_DEF(gettime,"i"),
+	BUILDIN_DEF(gettimestr,"si"),
+	BUILDIN_DEF(openstorage,""),
+	BUILDIN_DEF(guildopenstorage,"*"),
+	BUILDIN_DEF(itemskill,"ii"),
+	BUILDIN_DEF(produce,"i"),
+	BUILDIN_DEF(monster,"siisii*"),
+	BUILDIN_DEF(areamonster,"siiiisii*"),
+	BUILDIN_DEF(killmonster,"ss"),
+	BUILDIN_DEF(killmonsterall,"s"),
+	BUILDIN_DEF(clone,"siisi*"),
+	BUILDIN_DEF(doevent,"s"),
+	BUILDIN_DEF(donpcevent,"s"),
+	BUILDIN_DEF(cmdothernpc,"ss"),
+	BUILDIN_DEF(addtimer,"is"),
+	BUILDIN_DEF(deltimer,"s"),
+	BUILDIN_DEF(addtimercount,"si"),
+	BUILDIN_DEF(initnpctimer,"??"),
+	BUILDIN_DEF(stopnpctimer,"??"),
+	BUILDIN_DEF(startnpctimer,"??"),
+	BUILDIN_DEF(setnpctimer,"i?"),
+	BUILDIN_DEF(getnpctimer,"i?"),
+	BUILDIN_DEF(attachnpctimer,"?"), // attached the player id to the npc timer [Celest]
+	BUILDIN_DEF(detachnpctimer,"?"), // detached the player id from the npc timer [Celest]
+	BUILDIN_DEF(playerattached,""), // returns id of the current attached player. [Skotlex]
+	BUILDIN_DEF(announce,"si*"),
+	BUILDIN_DEF(mapannounce,"ssi*"),
+	BUILDIN_DEF(areaannounce,"siiiisi*"),
+	BUILDIN_DEF(getusers,"i"),
+	BUILDIN_DEF(getmapguildusers,"si"),
+	BUILDIN_DEF(getmapusers,"s"),
+	BUILDIN_DEF(getareausers,"siiii"),
+	BUILDIN_DEF(getareadropitem,"siiiii"),
+	BUILDIN_DEF(enablenpc,"s"),
+	BUILDIN_DEF(disablenpc,"s"),
+	BUILDIN_DEF(hideoffnpc,"s"),
+	BUILDIN_DEF(hideonnpc,"s"),
+	BUILDIN_DEF(sc_start,"iii?"),
+	BUILDIN_DEF(sc_start2,"iiii?"),
+	BUILDIN_DEF(sc_start4,"iiiiii?"),
+	BUILDIN_DEF(sc_end,"i?"),
+	BUILDIN_DEF(getscrate,"ii*"),
+	BUILDIN_DEF(debugmes,"s"),
+	BUILDIN_DEF2(catchpet,"pet","i"),
+	BUILDIN_DEF2(birthpet,"bpet",""),
+	BUILDIN_DEF(resetlvl,"i"),
+	BUILDIN_DEF(resetstatus,""),
+	BUILDIN_DEF(resetskill,""),
+	BUILDIN_DEF(skillpointcount,""),
+	BUILDIN_DEF(changebase,"i"),
+	BUILDIN_DEF(changesex,""),
+	BUILDIN_DEF(waitingroom,"si??"),
+	BUILDIN_DEF(delwaitingroom,"?"),
+	BUILDIN_DEF2(waitingroomkickall,"kickwaitingroomall","?"),
+	BUILDIN_DEF(enablewaitingroomevent,"?"),
+	BUILDIN_DEF(disablewaitingroomevent,"?"),
+	BUILDIN_DEF2(enablewaitingroomevent,"enablearena",""),		// Added by RoVeRT
+	BUILDIN_DEF2(disablewaitingroomevent,"disablearena",""),	// Added by RoVeRT
+	BUILDIN_DEF(getwaitingroomstate,"i?"),
+	BUILDIN_DEF(warpwaitingpc,"sii?"),
+	BUILDIN_DEF(attachrid,"i"),
+	BUILDIN_DEF(detachrid,""),
+	BUILDIN_DEF(isloggedin,"i?"),
+	BUILDIN_DEF(setmapflagnosave,"ssii"),
+	BUILDIN_DEF(setmapflag,"si*"),
+	BUILDIN_DEF(removemapflag,"si"),
+	BUILDIN_DEF(pvpon,"s"),
+	BUILDIN_DEF(pvpoff,"s"),
+	BUILDIN_DEF(gvgon,"s"),
+	BUILDIN_DEF(gvgoff,"s"),
+	BUILDIN_DEF(emotion,"i*"),
+	BUILDIN_DEF(maprespawnguildid,"sii"),
+	BUILDIN_DEF(agitstart,""),	// <Agit>
+	BUILDIN_DEF(agitend,""),
+	BUILDIN_DEF(agitcheck,""),   // <Agitcheck>
+	BUILDIN_DEF(flagemblem,"i"),	// Flag Emblem
+	BUILDIN_DEF(getcastlename,"s"),
+	BUILDIN_DEF(getcastledata,"si*"),
+	BUILDIN_DEF(setcastledata,"sii"),
+	BUILDIN_DEF(requestguildinfo,"i*"),
+	BUILDIN_DEF(getequipcardcnt,"i"),
+	BUILDIN_DEF(successremovecards,"i"),
+	BUILDIN_DEF(failedremovecards,"ii"),
+	BUILDIN_DEF(marriage,"s"),
+	BUILDIN_DEF2(wedding_effect,"wedding",""),
+	BUILDIN_DEF(divorce,""),
+	BUILDIN_DEF(ispartneron,""),
+	BUILDIN_DEF(getpartnerid,""),
+	BUILDIN_DEF(getchildid,""),
+	BUILDIN_DEF(getmotherid,""),
+	BUILDIN_DEF(getfatherid,""),
+	BUILDIN_DEF(warppartner,"sii"),
+	BUILDIN_DEF(getitemname,"i"),
+	BUILDIN_DEF(getitemslots,"i"),
+	BUILDIN_DEF(makepet,"i"),
+	BUILDIN_DEF(getexp,"ii"),
+	BUILDIN_DEF(getinventorylist,""),
+	BUILDIN_DEF(getskilllist,""),
+	BUILDIN_DEF(clearitem,""),
+	BUILDIN_DEF(classchange,"ii"),
+	BUILDIN_DEF(misceffect,"i"),
+	BUILDIN_DEF(soundeffect,"si"),
+	BUILDIN_DEF(soundeffectall,"si*"),	// SoundEffectAll [Codemaster]
+	BUILDIN_DEF(strmobinfo,"ii"),	// display mob data [Valaris]
+	BUILDIN_DEF(guardian,"siisi??"),	// summon guardians
+	BUILDIN_DEF(guardianinfo,"i"),	// display guardian data [Valaris]
+	BUILDIN_DEF(petskillbonus,"iiii"), // [Valaris]
+	BUILDIN_DEF(petrecovery,"ii"), // [Valaris]
+	BUILDIN_DEF(petloot,"i"), // [Valaris]
+	BUILDIN_DEF(petheal,"iiii"), // [Valaris]
+	BUILDIN_DEF(petskillattack,"iiii"), // [Skotlex]
+	BUILDIN_DEF(petskillattack2,"iiiii"), // [Valaris]
+	BUILDIN_DEF(petskillsupport,"iiiii"), // [Skotlex]
+	BUILDIN_DEF(skilleffect,"ii"), // skill effect [Celest]
+	BUILDIN_DEF(npcskilleffect,"iiii"), // npc skill effect [Valaris]
+	BUILDIN_DEF(specialeffect,"i*"), // npc skill effect [Valaris]
+	BUILDIN_DEF(specialeffect2,"i*"), // skill effect on players[Valaris]
+	BUILDIN_DEF(nude,""), // nude command [Valaris]
+	BUILDIN_DEF(mapwarp,"ssii*"),		// Added by RoVeRT
+	BUILDIN_DEF(atcommand,"*"), // [MouseJstr]
+	BUILDIN_DEF(charcommand,"*"), // [MouseJstr]
+	BUILDIN_DEF(movenpc,"sii"), // [MouseJstr]
+	BUILDIN_DEF(message,"s*"), // [MouseJstr]
+	BUILDIN_DEF(npctalk,"*"), // [Valaris]
+	BUILDIN_DEF(mobcount,"ss"),
+	BUILDIN_DEF(getlook,"i"),
+	BUILDIN_DEF(getsavepoint,"i"),
+	BUILDIN_DEF(npcspeed,"i"), // [Valaris]
+	BUILDIN_DEF(npcwalkto,"ii"), // [Valaris]
+	BUILDIN_DEF(npcstop,""), // [Valaris]
+	BUILDIN_DEF(getmapxy,"siii*"),	//by Lorky [Lupus]
+	BUILDIN_DEF(checkoption1,"i"),
+	BUILDIN_DEF(checkoption2,"i"),
+	BUILDIN_DEF(guildgetexp,"i"),
+	BUILDIN_DEF(guildchangegm,"is"),
+	BUILDIN_DEF(logmes,"s"), //this command actls as MES but rints info into LOG file either SQL/TXT [Lupus]
+	BUILDIN_DEF(summon,"si*"), // summons a slave monster [Celest]
+	BUILDIN_DEF(isnight,""), // check whether it is night time [Celest]
+	BUILDIN_DEF(isday,""), // check whether it is day time [Celest]
+	BUILDIN_DEF(isequipped,"i*"), // check whether another item/card has been equipped [Celest]
+	BUILDIN_DEF(isequippedcnt,"i*"), // check how many items/cards are being equipped [Celest]
+	BUILDIN_DEF(cardscnt,"i*"), // check how many items/cards are being equipped in the same arm [Lupus]
+	BUILDIN_DEF(getrefine,"*"), // returns the refined number of the current item, or an item with index specified [celest]
+	BUILDIN_DEF(adopt,"sss"), // allows 2 parents to adopt a child
+	BUILDIN_DEF(night,""), // sets the server to night time
+	BUILDIN_DEF(day,""), // sets the server to day time
+#ifdef PCRE_SUPPORT
+	BUILDIN_DEF(defpattern,"iss"), // Define pattern to listen for [MouseJstr]
+	BUILDIN_DEF(activatepset,"i"), // Activate a pattern set [MouseJstr]
+	BUILDIN_DEF(deactivatepset,"i"), // Deactive a pattern set [MouseJstr]
+	BUILDIN_DEF(deletepset,"i"), // Delete a pattern set [MouseJstr]
+#endif
+	BUILDIN_DEF(dispbottom,"s"), //added from jA [Lupus]
+	BUILDIN_DEF(getusersname,"*"),
+	BUILDIN_DEF(recovery,""),
+	BUILDIN_DEF(getpetinfo,"i"),
+	BUILDIN_DEF(gethominfo,"i"),
+	BUILDIN_DEF(checkequipedcard,"i"),
+	BUILDIN_DEF(jump_zero,"ii"), //for future jA script compatibility
+	BUILDIN_DEF(globalmes,"s*"),
+	BUILDIN_DEF(getmapmobs,"s"), //end jA addition
+	BUILDIN_DEF(unequip,"i"), // unequip command [Spectre]
+	BUILDIN_DEF(getstrlen,"s"), //strlen [Valaris]
+	BUILDIN_DEF(charisalpha,"si"), //isalpha [Valaris]
+	BUILDIN_DEF(fakenpcname,"ssi"), // [Lance]
+	BUILDIN_DEF(compare,"ss"), // Lordalfa - To bring strstr to scripting Engine.
+	BUILDIN_DEF(getiteminfo,"ii"), //[Lupus] returns Items Buy / sell Price, etc info
+	BUILDIN_DEF(setiteminfo,"iii"), //[Lupus] set Items Buy / sell Price, etc info
+	BUILDIN_DEF(getequipcardid,"ii"), //[Lupus] returns CARD ID or other info from CARD slot N of equipped item
+	// [zBuffer] List of mathematics commands --->
+	BUILDIN_DEF(sqrt,"i"),
+	BUILDIN_DEF(pow,"ii"),
+	BUILDIN_DEF(distance,"iiii"),
+	BUILDIN_DEF(checkcell,"siii"),
+	// <--- [zBuffer] List of mathematics commands
+	// [zBuffer] List of dynamic var commands --->
+	BUILDIN_DEF(getd,"*"),
+	BUILDIN_DEF(setd,"*"),
+	// <--- [zBuffer] List of dynamic var commands
+	BUILDIN_DEF(petstat,"i"),
+	BUILDIN_DEF(callshop,"si"), // [Skotlex]
+	BUILDIN_DEF(npcshopitem,"sii*"), // [Lance]
+	BUILDIN_DEF(npcshopadditem,"sii*"),
+	BUILDIN_DEF(npcshopdelitem,"si*"),
+	BUILDIN_DEF(npcshopattach,"s?"),
+	BUILDIN_DEF(equip,"i"),
+	BUILDIN_DEF(autoequip,"ii"),
+	BUILDIN_DEF(setbattleflag,"ss"),
+	BUILDIN_DEF(getbattleflag,"s"),
+	BUILDIN_DEF(setitemscript,"is*"), //Set NEW item bonus script. Lupus
+	BUILDIN_DEF(disguise,"i"), //disguise player. Lupus
+	BUILDIN_DEF(undisguise,"*"), //undisguise player. Lupus
+	BUILDIN_DEF(getmonsterinfo,"ii"), //Lupus
+	BUILDIN_DEF(axtoi,"s"),
+	BUILDIN_DEF(query_sql,"s*"),
+	BUILDIN_DEF(escape_sql,"s"),
+	BUILDIN_DEF(atoi,"s"),
+	// [zBuffer] List of player cont commands --->
+	BUILDIN_DEF(rid2name,"i"),
+	BUILDIN_DEF(pcfollow,"ii"),
+	BUILDIN_DEF(pcstopfollow,"i"),
+	BUILDIN_DEF(pcblockmove,"ii"),
+	// <--- [zBuffer] List of player cont commands
+	// [zBuffer] List of mob control commands --->
+	BUILDIN_DEF(mobspawn,"*"),
+	BUILDIN_DEF(mobremove,"i"),
+	BUILDIN_DEF(getmobdata,"i*"),
+	BUILDIN_DEF(setmobdata,"iii"),
+	BUILDIN_DEF(mobassist,"i?"),
+	BUILDIN_DEF(mobattach,"i?"),
+	BUILDIN_DEF(unitwalk,"ii?"),
+	BUILDIN_DEF(unitkill,"i"),
+	BUILDIN_DEF(unitwarp,"isii"),
+	BUILDIN_DEF(unitattack,"iv?"),
+	BUILDIN_DEF(unitstop,"i"),
+	BUILDIN_DEF(unittalk,"is"),
+	BUILDIN_DEF(unitemote,"ii"),
+	BUILDIN_DEF(unitskilluseid,"iii?"), // originally by Qamera [Celest]
+	BUILDIN_DEF(unitskillusepos,"iiiii"), // [Celest]
+// <--- [zBuffer] List of mob control commands
+	BUILDIN_DEF(sleep,"i"),
+	BUILDIN_DEF(sleep2,"i"),
+	BUILDIN_DEF(awake,"s"),
+	BUILDIN_DEF(getvariableofnpc,"rs"),
+	BUILDIN_DEF(warpportal,"iisii"),
+	BUILDIN_DEF2(homunculus_evolution,"homevolution",""),	//[orn]
+	BUILDIN_DEF2(homunculus_shuffle,"homshuffle",""),	//[Zephyrus]
+	BUILDIN_DEF(eaclass,"*"),	//[Skotlex]
+	BUILDIN_DEF(roclass,"i*"),	//[Skotlex]
+	BUILDIN_DEF(checkvending,"*"),
+	BUILDIN_DEF(checkchatting,"*"),
+	BUILDIN_DEF(openmail,""),
+	{NULL,NULL,NULL},
+};
