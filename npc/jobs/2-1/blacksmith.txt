@@ -33,6 +33,7 @@
 //= 2.4a Changed a BaseJob to baseclass. [L0ne_W0lf]
 //= 2.4b Further bug fixes with teh hel of Barron-Monster. [L0ne_W0lf]
 //= 2.4c More fixes courtosy of Micktu. [L0ne_W0lf]
+//= 2.4d Fixed an incorrect answer in the quiz. (Trojal) [L0ne_W0lf]
 //==============================================================
 
 ein_in01,18,28,4	script	Guildsman#BLS	731,{
@@ -437,7 +438,7 @@ L_AskQuestions:
 					mes "what is the ^8E6B23Safe^000000 limit";
 					mes "for upgrading?";
 					next;
-					if (select("up to + 3:up to + 4:up to + 5:up to + 6") == 2)
+					if (select("up to + 3:up to + 4:up to + 5:up to + 6") == 3)
 						set .@black_q,.@black_q+10;
 					mes "[Geschupenschte]";
 					mes "9. What monster does";

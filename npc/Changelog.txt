@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/11/01
+	* Rev. 11635 Fixed an incorrect answer in the blacksmith quiz. (Trojal) [L0ne_W0lf]
 	* Rev. 11633 Rather large update to the WoE scripts. [L0ne_W0lf]
 	- Eliminated unofficial map-broadcasts (opening treasures/guardian death.)
 	- Fixed several errors in guardian spawning (script-wise.)
