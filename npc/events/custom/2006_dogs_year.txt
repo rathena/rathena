@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Lupus (1.0)
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena Version; 5xxx+ (with 'disguise' command)
 //===== Description: =========================================
@@ -12,6 +12,8 @@
 //= 1.0 Tested, fully working.[Lupus]
 //=		Add some national info in English if you can.
 //=	(Mine was in Russian, and it's damn hard to translate 8)
+//= 1.1 Commented out monster spawn as it is a custom mob and [L0ne_W0lf]
+//	not in the mob database.
 //============================================================
 
 
@@ -92,4 +94,5 @@ OnInit:
 	end;
 }
 
-prontera,0,0,0,0	monster	Fire Dog	1987,50,3600000,1800000,0
+// Requires custom monster.
+//prontera,0,0,0,0	monster	Fire Dog	1987,50,3600000,1800000,0
