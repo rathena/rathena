@@ -7475,17 +7475,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			break;
 
 		case UNT_LANDMINE:
-			skill_attack(BF_MISC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-			sg->unit_id = UNT_USED_TRAPS;
-			clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
-			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
-			break;
-
 		case UNT_CLAYMORETRAP:
 		case UNT_BLASTMINE:
-			//Hold number of targets (required for damage calculation)
-			type = map_foreachinrange(skill_count_target,&src->bl,
-				skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &src->bl);
 		case UNT_SHOCKWAVE:
 		case UNT_SANDMAN:
 		case UNT_FLASHER:
@@ -7493,8 +7484,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			map_foreachinrange(skill_trap_splash,&src->bl,
 				skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
 				&src->bl,tick,type);
-			sg->unit_id = UNT_USED_TRAPS;
-			clif_changetraplook(&src->bl, UNT_USED_TRAPS);
+			clif_changetraplook(&src->bl, sg->unit_id==UNT_LANDMINE?UNT_FIREPILLAR_ACTIVE:UNT_USED_TRAPS);
+			src->range = -1; //Disable range so it does not invoke a for each in area again.
 			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
 			break;
 
@@ -9715,11 +9706,9 @@ int skill_trap_splash (struct block_list *bl, va_list ap)
 	struct skill_unit *unit;
 	struct skill_unit_group *sg;
 	struct block_list *ss;
-	int i,count;
 	src = va_arg(ap,struct block_list *);
 	unit = (struct skill_unit *)src;
 	tick = va_arg(ap,int);
-	count = va_arg(ap,int);
 	
 	nullpo_retr(0, sg = unit->group);
 	nullpo_retr(0, ss = map_id2bl(sg->src_id));
@@ -9735,13 +9724,8 @@ int skill_trap_splash (struct block_list *bl, va_list ap)
 			break;
 		case UNT_BLASTMINE:
 		case UNT_CLAYMORETRAP:
-			//Special property: Each target is hit N times (N = number of targets on splash area)
-			if (!count) count = 1;
-			for(i=0;i<count;i++)
-				skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,0);
-			break;
 		case UNT_FREEZINGTRAP:
-			skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,0);
+			skill_attack(skill_get_type(sg->skill_id),ss,src,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 		case UNT_GROUNDDRIFT_WIND:
 			if(skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
@@ -10232,6 +10216,9 @@ int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 			map_foreachinshootrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl,tick);
 		else
 			map_foreachinrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl,tick);
+
+		if(unit->range == -1) //Unit disabled, but it should not be deleted yet.
+			group->unit_id = UNT_USED_TRAPS;
 
 		if( !unit->alive )
 		{
