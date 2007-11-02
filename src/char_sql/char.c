@@ -461,8 +461,8 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 	char esc_name[NAME_LENGTH*2+1];
 
 	Sql_EscapeStringLen(sql_handle, esc_name, p->name, strnlen(p->name, NAME_LENGTH));
-	if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`, `char_num`, `name`)  VALUES ('%d', '%d', '%s')",
-		char_db, p->account_id, p->slot, esc_name) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`, `account_id`, `char_num`, `name`)  VALUES ('%d', '%d', '%d', '%s')",
+		char_db, p->char_id, p->account_id, p->slot, esc_name) )
 	{
 		Sql_ShowDebug(sql_handle);
 	}
