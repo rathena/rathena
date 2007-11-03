@@ -9,7 +9,7 @@
 //= Maeki Rika - A section on general concepts and lots of
 //=              other updates and additions.
 //===== Version ===========================================
-//= 3.08.20071018
+//= 3.09.20071103
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -88,6 +88,8 @@
 //=       Fixed 'duplicate' missing the target 'name' parameter! [ultramage]
 //= 3.08.20071018
 //=       Clarified how npc names work. [FlavioJS]
+//= 3.09.20071103
+//=       Added script function 'strnpcinfo' [ultramage]
 //===== Description =======================================
 //= A reference manual for the eAthena scripting language,
 //= sorted out depending on their functionality.
@@ -1819,6 +1821,18 @@ invoking character. Whatever it returns is determined by type.
  
 If a character is not a member of any party or guild, an empty string will be 
 returned when requesting that information.
+
+---------------------------------------
+
+*strnpcinfo(<type>)
+
+This function will return the various parts of the name of the calling npc.
+Whatever it returns is determined by type.
+
+ 0 - The NPC's display name (visible#hidden)
+ 1 - The visible part of the NPC's display name
+ 2 - The hidden part of the NPC's display name
+ 3 - The NPC's unique name (::name)
 
 ---------------------------------------
 

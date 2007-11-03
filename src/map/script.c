@@ -6127,6 +6127,51 @@ BUILDIN_FUNC(strcharinfo)
 	return 0;
 }
 
+/*==========================================
+ * ŒÄ‚Ño‚µŒ³‚ÌNPCî•ñ‚ðŽæ“¾‚·‚é
+ *------------------------------------------*/
+BUILDIN_FUNC(strnpcinfo)
+{
+	TBL_NPC* nd;
+	int num;
+	char *buf,*name=NULL;
+
+	nd = map_id2nd(st->oid);
+	if (!nd) {
+		script_pushconststr(st, "");
+		return 0;
+	}
+
+	num = script_getnum(st,2);
+	switch(num){
+		case 0: // display name
+			name = aStrdup(nd->name);
+			break;
+		case 1: // visible part of display name name
+			if((buf = strchr(nd->name,'#')) != NULL)
+			{
+				name = aStrdup(nd->name);
+				name[buf - nd->name] = 0;
+			}
+			break;
+		case 2: // # fragment
+			if((buf = strchr(nd->name,'#')) != NULL)
+				name = aStrdup(buf+1);
+			break;
+		case 3: // unique name
+			name = aStrdup(nd->exname);
+			break;
+	}
+
+	if(name)
+		script_pushstr(st, name);
+	else
+		script_pushconststr(st, "");
+
+	return 0;
+}
+
+
 unsigned int equip[10]={EQP_HEAD_TOP,EQP_ARMOR,EQP_HAND_L,EQP_HAND_R,EQP_GARMENT,EQP_SHOES,EQP_ACC_L,EQP_ACC_R,EQP_HEAD_MID,EQP_HEAD_LOW};
 
 /*==========================================
@@ -12870,6 +12915,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getguildmaster,"i"),
 	BUILDIN_DEF(getguildmasterid,"i"),
 	BUILDIN_DEF(strcharinfo,"i"),
+	BUILDIN_DEF(strnpcinfo,"i"),
 	BUILDIN_DEF(getequipid,"i"),
 	BUILDIN_DEF(getequipname,"i"),
 	BUILDIN_DEF(getbrokenid,"i"), // [Valaris]

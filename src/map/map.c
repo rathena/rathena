@@ -1781,6 +1781,12 @@ struct map_session_data * map_id2sd(int id)
 	return (struct map_session_data*)idb_get(pc_db,id);
 }
 
+struct npc_data * map_id2nd(int id)
+{// just a id2bl lookup because there's no npc_db
+	if (id <= 0) return NULL;
+	return (struct npc_data*)map_id2bl(id);
+}
+
 /// Returns the nick of the target charid or NULL if unknown (requests the nick to the char server).
 const char* map_charid2nick(int charid)
 {

@@ -1324,6 +1324,7 @@ const char* map_charid2nick(int charid);
 struct map_session_data* map_charid2sd(int charid);
 
 struct map_session_data * map_id2sd(int);
+struct npc_data * map_id2nd(int);
 struct block_list * map_id2bl(int);
 
 #define map_id2index(id) map[(id)].index
