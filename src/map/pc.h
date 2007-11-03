@@ -110,8 +110,8 @@ enum {
 #define pc_is90overweight(sd) ( (sd)->weight*10 >= (sd)->max_weight*9 )
 #define pc_maxparameter(sd)   ( (sd)->class_&JOBL_BABY ? battle_config.max_baby_parameter : battle_config.max_parameter )
 
-#define pc_stop_attack(sd) { if( (sd)->ud.attacktimer != -1 ) { unit_stop_attack(&(sd)->bl); (sd)->ud.target = 0; } }
-#define pc_stop_walking(sd, type) { if( (sd)->ud.walktimer != -1 ) unit_stop_walking(&(sd)->bl, type); }
+#define pc_stop_walking(sd, type) unit_stop_walking(&(sd)->bl, type)
+#define pc_stop_attack(sd) { if((sd)->ud.attacktimer != -1) { unit_stop_attack(&(sd)->bl); (sd)->ud.target = 0; } }
 
 //Weapon check considering dual wielding.
 #define pc_check_weapontype(sd, type) ((type)&((sd)->status.weapon < MAX_WEAPON_TYPE? \

@@ -17,12 +17,8 @@
 #include <sys/time.h> // struct timeval, gettimeofday()
 #endif
 
-// タイマー間隔の最小値。モンスターの大量召還時、多数のクライアント接続時に
-// サーバーが反応しなくなる場合は、TIMER_MIN_INTERVAL を増やしてください。
-
-// If the server shows no reaction when processing thousands of monsters
-// or connected by many clients, please increase TIMER_MIN_INTERVAL.
-
+// If the server can't handle processing thousands of monsters
+// or many connected clients, please increase TIMER_MIN_INTERVAL.
 #define TIMER_MIN_INTERVAL 50
 
 // timers
@@ -41,16 +37,18 @@ static int timer_heap_num = 0;
 static int timer_heap_max = 0;
 static int* timer_heap = NULL;
 
-// for debug
+// server startup time
+time_t start_time;
+
+
+/*----------------------------
+ * 	Timer debugging
+ *----------------------------*/
 struct timer_func_list {
 	struct timer_func_list* next;
 	TimerFunc func;
 	char* name;
-};
-static struct timer_func_list* tfl_root = NULL;
-
-// server startup time
-time_t start_time;
+} *tfl_root = NULL;
 
 /// Sets the name of a timer function.
 int add_timer_func_list(TimerFunc func, char* name)
@@ -227,71 +225,83 @@ static int acquire_timer(void)
 	return tid;
 }
 
-int add_timer(unsigned int tick,TimerFunc func, int id, int data)
+/// Starts a new timer that is deleted once it expires (single-use).
+/// Returns the timer's id.
+int add_timer(unsigned int tick, TimerFunc func, int id, int data)
 {
-	int tid = acquire_timer();
-
-	timer_data[tid].tick	= tick;
-	timer_data[tid].func	= func;
-	timer_data[tid].id		= id;
-	timer_data[tid].data	= data;
-	timer_data[tid].type	= TIMER_ONCE_AUTODEL;
+	int tid;
+	
+	tid = acquire_timer();
+	timer_data[tid].tick     = tick;
+	timer_data[tid].func     = func;
+	timer_data[tid].id       = id;
+	timer_data[tid].data     = data;
+	timer_data[tid].type     = TIMER_ONCE_AUTODEL;
 	timer_data[tid].interval = 1000;
 	push_timer_heap(tid);
 
 	return tid;
 }
 
+/// Starts a new timer that automatically restarts itself (infinite loop until manually removed).
+/// Returns the timer's id, or -1 if it fails.
 int add_timer_interval(unsigned int tick, TimerFunc func, int id, int data, int interval)
 {
 	int tid;
 
-	if (interval < 1) {
-		ShowError("add_timer_interval : function %08x(%s) has invalid interval %d!\n",
-			 (int)func, search_timer_func_list(func), interval);
+	if( interval < 1 ) {
+		ShowError("add_timer_interval : function %08x(%s) has invalid interval %d!\n", (int)func, search_timer_func_list(func), interval);
 		return -1;
 	}
 	
 	tid = acquire_timer();
-	timer_data[tid].tick	= tick;
-	timer_data[tid].func	= func;
-	timer_data[tid].id		= id;
-	timer_data[tid].data	= data;
-	timer_data[tid].type	= TIMER_INTERVAL;
+	timer_data[tid].tick     = tick;
+	timer_data[tid].func     = func;
+	timer_data[tid].id       = id;
+	timer_data[tid].data     = data;
+	timer_data[tid].type     = TIMER_INTERVAL;
 	timer_data[tid].interval = interval;
 	push_timer_heap(tid);
 
 	return tid;
 }
 
-int delete_timer(int id, TimerFunc func)
+/// Retrieves internal timer data
+//FIXME: for safety, the return value should be 'const'
+struct TimerData* get_timer(int tid)
 {
-	if (id <= 0 || id >= timer_data_num) {
-		ShowError("delete_timer error : no such timer %d (%08x(%s))\n", id, (int)func, search_timer_func_list(func));
+	return &timer_data[tid];
+}
+
+/// Marks a timer specified by 'id' for immediate deletion once it expires.
+/// Param 'func' is used for debug/verification purposes.
+/// Returns 0 on success, < 0 on failure.
+int delete_timer(int tid, TimerFunc func)
+{
+	if( tid <= 0 || tid >= timer_data_num ) {
+		ShowError("delete_timer error : no such timer %d (%08x(%s))\n", tid, (int)func, search_timer_func_list(func));
 		return -1;
 	}
-	if (timer_data[id].func != func) {
-		ShowError("delete_timer error : function mismatch %08x(%s) != %08x(%s)\n",
-			 (int)timer_data[id].func, search_timer_func_list(timer_data[id].func),
-			 (int)func, search_timer_func_list(func));
+	if( timer_data[tid].func != func ) {
+		ShowError("delete_timer error : function mismatch %08x(%s) != %08x(%s)\n", (int)timer_data[tid].func, search_timer_func_list(timer_data[tid].func), (int)func, search_timer_func_list(func));
 		return -2;
 	}
-	// そのうち消えるにまかせる
-	timer_data[id].func = NULL;
-	timer_data[id].type = TIMER_ONCE_AUTODEL;
+
+	timer_data[tid].func = NULL;
+	timer_data[tid].type = TIMER_ONCE_AUTODEL;
 
 	return 0;
 }
 
+/// Adjusts a timer's expiration time.
+/// Returns the new tick value, or -1 if it fails.
 int addtick_timer(int tid, unsigned int tick)
 {
-	// Doesn't adjust the timer position. Might be the root of the FIXME in settick_timer. [FlavioJS]
-	//return timer_data[tid].tick += tick;
 	return settick_timer(tid, timer_data[tid].tick+tick);
 }
 
-//Sets the tick at which the timer triggers directly (meant as a replacement of delete_timer + add_timer) [Skotlex]
-//FIXME: DON'T use this function yet, it is not correctly reorganizing the timer stack causing unexpected problems later on!
+/// Modifies a timer's expiration time (an alternative to deleting a timer and starting a new one).
+/// Returns the new tick value, or -1 if it fails.
 int settick_timer(int tid, unsigned int tick)
 {
 	int old_pos,pos;
@@ -305,7 +315,7 @@ int settick_timer(int tid, unsigned int tick)
 	HEAP_SEARCH(old_tick,0,timer_heap_num-1,old_pos);
 	while( timer_heap[old_pos] != tid )
 	{// skip timers with the same tick
-		if( DIFF_TICK(old_tick,timer_data[timer_heap[old_pos]].tick) != 0 )
+		if( old_tick != timer_data[timer_heap[old_pos]].tick )
 		{
 			ShowError("settick_timer: no such timer %d (%08x(%s))\n", tid, (int)timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
 			return -1;
@@ -334,14 +344,11 @@ int settick_timer(int tid, unsigned int tick)
 				memmove(&timer_heap[pos+1], &timer_heap[pos], (old_pos-pos)*sizeof(int));
 		}
 	}
+
 	timer_heap[pos] = tid;
 	timer_data[tid].tick = tick;
-	return tick;
-}
 
-struct TimerData* get_timer(int tid)
-{
-	return &timer_data[tid];
+	return tick;
 }
 
 //Correcting the heap when the tick overflows is an idea taken from jA to
@@ -367,37 +374,51 @@ static void fix_timer_heap(unsigned int tick)
 	}
 }
 
+/// Executes all expired timers.
+/// Returns the value of the smallest non-expired timer (or 1 second if there aren't any).
 int do_timer(unsigned int tick)
 {
+	int nextmin = 1000; // return value
 	static int fix_heap_flag = 0; //Flag for fixing the stack only once per tick loop. May not be the best way, but it's all I can think of currently :X [Skotlex]
-	int i, nextmin = 1000;
+	int i;
 
-	if (tick < 0x010000 && fix_heap_flag)
+	if( tick < 0x010000 && fix_heap_flag )
 	{
 		fix_timer_heap(tick);
 		fix_heap_flag = 0;
 	}
 
-	while(timer_heap_num) {
-		i = timer_heap[timer_heap_num - 1]; // next shorter element
-		if ((nextmin = DIFF_TICK(timer_data[i].tick, tick)) > 0)
-			break;
+	// process all timers one by one
+	while( timer_heap_num )
+	{
+		i = timer_heap[timer_heap_num - 1]; // last element in heap (=>smallest)
+		if( (nextmin = DIFF_TICK(timer_data[i].tick, tick)) > 0 )
+			break; // no more expired timers to process
 
 		--timer_heap_num; // suppress the actual element from the table
+
+		// mark timer as 'to be removed'
 		timer_data[i].type |= TIMER_REMOVE_HEAP;
-		if (timer_data[i].func) {
-			if (nextmin < -1000) {
+
+		if( timer_data[i].func )
+		{
+			if( nextmin < -1000 )
 				// 1秒以上の大幅な遅延が発生しているので、
 				// timer処理タイミングを現在値とする事で
 				// 呼び出し時タイミング(引数のtick)相対で処理してる
 				// timer関数の次回処理タイミングを遅らせる
 				timer_data[i].func(i, tick, timer_data[i].id, timer_data[i].data);
-			} else {
+			else
 				timer_data[i].func(i, timer_data[i].tick, timer_data[i].id, timer_data[i].data);
-			}
 		}
-		if (timer_data[i].type & TIMER_REMOVE_HEAP) {
-			switch(timer_data[i].type & ~TIMER_REMOVE_HEAP) {
+
+		// in the case the function didn't change anything...
+		if( timer_data[i].type & TIMER_REMOVE_HEAP )
+		{
+			timer_data[i].type &= ~TIMER_REMOVE_HEAP;
+
+			switch( timer_data[i].type )
+			{
 			case TIMER_ONCE_AUTODEL:
 				timer_data[i].type = 0;
 				if (free_timer_list_pos >= free_timer_list_max) {
@@ -406,7 +427,7 @@ int do_timer(unsigned int tick)
 					memset(free_timer_list + (free_timer_list_max - 256), 0, 256 * sizeof(int));
 				}
 				free_timer_list[free_timer_list_pos++] = i;
-				break;
+			break;
 			case TIMER_INTERVAL:
 				if (DIFF_TICK(timer_data[i].tick , tick) < -1000) {
 					timer_data[i].tick = tick + timer_data[i].interval;
@@ -415,16 +436,17 @@ int do_timer(unsigned int tick)
 				}
 				timer_data[i].type &= ~TIMER_REMOVE_HEAP;
 				push_timer_heap(i);
-				break;
+			break;
 			}
 		}
 	}
 
-	if (nextmin < TIMER_MIN_INTERVAL)
+	if( nextmin < TIMER_MIN_INTERVAL )
 		nextmin = TIMER_MIN_INTERVAL;
 
-	if (UINT_MAX - nextmin < tick) //Tick will loop, rearrange the heap on the next iteration.
+	if( UINT_MAX - nextmin < tick ) //Tick will loop, rearrange the heap on the next iteration.
 		fix_heap_flag = 1;
+
 	return nextmin;
 }
 

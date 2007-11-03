@@ -1019,7 +1019,7 @@ int chrif_save_scdata(struct map_session_data *sd)
 	int i, count=0;
 	unsigned int tick;
 	struct status_change_data data;
-	struct TimerData *timer;
+	const struct TimerData *timer;
 
 	if (sd->state.finalsave) //Character was already saved?
 		return -1;

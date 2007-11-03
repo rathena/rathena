@@ -995,7 +995,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
  * when trying to pick new targets when the current chosen target is
  * unreachable.
  *------------------------------------------*/
-int mob_unlocktarget(struct mob_data *md,int tick)
+int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 {
 	nullpo_retr(0, md);
 
