@@ -25,6 +25,7 @@
 //= v1.4: By default town flags are set to no longer show text. [L0ne_W0lf]
 //= v1.5: Updated remaining dialog to iRO standards. [L0ne_W0lf]
 //= v1.6 Restructred script, and removed use of gotos. [L0ne_W0lf]
+//= 6.17 Whoops. fices a @GID -> .@GID. [L0ne_W0lf]
 //============================================================
 
 function	script	F_Flags	{
@@ -60,10 +61,10 @@ function	script	F_Flags	{
 		mes "1. Following the ordinance of the";
 		mes "Divine Rune Midgard Kingdom,";
 		mes "we approve that this place is in";
-		mes "the private possession of ^ff0000" + GetGuildName(@GID) + "^000000 Guild.";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
 		mes " ";
-		mes "2. The guild Master of ^ff0000"+ GetGuildName(@GID) + "^000000 Guild is";
-		mes "^FF0000" + GetGuildMaster(@GID) + "^000000";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
 		mes "If there is anyone who objects to this,";
 		mes " prove your strength and honor with a steel blade in your hand.";
 		return;
