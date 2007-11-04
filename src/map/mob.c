@@ -3380,6 +3380,7 @@ static bool mob_parse_dbrow(char** str)
 		}
 		type = itemdb_type(db->dropitem[i].nameid);
 		rate = atoi(str[k+1]);
+		if (rate < 5000) rate += 1; //Official drop bug estimate
 		if (class_ >= 1324 && class_ <= 1363)
 		{	//Treasure box drop rates [Skotlex]
 			rate_adjust = battle_config.item_rate_treasure;
