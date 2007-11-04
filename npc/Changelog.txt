@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/11/04
+	* Updated Thor Volcano spawns [Playtester]
 	* Rev. 11653 Fixed a bug in sage job quest. [L0ne_W0lf]
 2007/11/03
 	* Rev. 11649 Corrected an typo in the guild flag function. [L0ne_W0lf]
