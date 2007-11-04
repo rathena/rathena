@@ -17,6 +17,7 @@
 //= 2.2 Small bug fix (== -> !=) thanks to Saithis. [L0ne_W0lf]
 //= 2.2b ANotehr smaLL bugfix, pointed out by Cara. [L0ne_W0lf]
 //= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.4 Fixes bug with first room monsters not being reset. [L0ne_W0lf]
 //============================================================ 
 
 yuno_in02,38,61,5	script	Dean of the Academy#sa	743,{
@@ -2565,7 +2566,7 @@ OnTimer173000:
 
 OnTimer183000:
 	mapannounce "job_sage","Time over.",bc_map;
-	disablenpc "Arena#1";
+	donpcevent "Arena#1::OnReset";
 	end;
 
 OnTimer184000:
