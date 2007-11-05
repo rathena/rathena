@@ -43,623 +43,6 @@
 #define HM_SKILLRANGEMIN 800
 #define HM_SKILLRANGEMAX HM_SKILLRANGEMIN+MAX_HOMUNSKILL
 
-const struct skill_name_db skill_names[] = {
- { AC_CHARGEARROW, "AC_CHARGEARROW", "Arrow Repel" } ,
- { AC_CONCENTRATION, "AC_CONCENTRATION", "Improve Concentration" } ,
- { AC_DOUBLE, "AC_DOUBLE", "Double Strafe" } ,
- { AC_MAKINGARROW, "AC_MAKINGARROW", "Arrow Crafting" } ,
- { AC_OWL, "AC_OWL", "Owl's Eye" } ,
- { AC_SHOWER, "AC_SHOWER", "Arrow Shower" } ,
- { AC_VULTURE, "AC_VULTURE", "Vulture's Eye" } ,
- { ALL_RESURRECTION, "ALL_RESURRECTION", "Resurrection" } ,
- { ALL_INCCARRY, "ALL_INCCARRY", "Enlarge Weight Limit R" } ,
- { AL_ANGELUS, "AL_ANGELUS", "Angelus" } ,
- { AL_BLESSING, "AL_BLESSING", "Blessing" } ,
- { AL_CRUCIS, "AL_CRUCIS", "Signum Crusis" } ,
- { AL_CURE, "AL_CURE", "Cure" } ,
- { AL_DECAGI, "AL_DECAGI", "Decrease AGI" } ,
- { AL_DEMONBANE, "AL_DEMONBANE", "Demon Bane" } ,
- { AL_DP, "AL_DP", "Divine Protection" } ,
- { AL_HEAL, "AL_HEAL", "Heal" } ,
- { AL_HOLYLIGHT, "AL_HOLYLIGHT", "Holy Light" } ,
- { AL_HOLYWATER, "AL_HOLYWATER", "Aqua Benedicta" } ,
- { AL_INCAGI, "AL_INCAGI", "Increase AGI" } ,
- { AL_PNEUMA, "AL_PNEUMA", "Pneuma" } ,
- { AL_RUWACH, "AL_RUWACH", "Ruwach" } ,
- { AL_TELEPORT, "AL_TELEPORT", "Teleport" } ,
- { AL_WARP, "AL_WARP", "Warp Portal" } ,
- { AM_ACIDTERROR, "AM_ACIDTERROR", "Acid Terror" } ,
- { AM_AXEMASTERY, "AM_AXEMASTERY", "Axe Mastery" } ,
- { AM_BERSERKPITCHER, "AM_BERSERKPITCHER", "Aid Berserk Potion" } ,
- { AM_BIOETHICS, "AM_BIOETHICS", "Bioethics" } ,
- { AM_CALLHOMUN, "AM_CALLHOMUN", "Call Homunculus" } ,
- { AM_CANNIBALIZE, "AM_CANNIBALIZE", "Summon Flora" } ,
- { AM_CP_ARMOR, "AM_CP_ARMOR", "Synthetic Armor" } ,
- { AM_CP_HELM, "AM_CP_HELM", "Biochemical Helm" } ,
- { AM_CP_SHIELD, "AM_CP_SHIELD", "Synthetized Shield" } ,
- { AM_CP_WEAPON, "AM_CP_WEAPON", "Alchemical Weapon" } ,
- { AM_CULTIVATION, "AM_CULTIVATION", "Cultivation" } ,
- { AM_DEMONSTRATION, "AM_DEMONSTRATION", "Bomb" } ,
- { AM_LEARNINGPOTION, "AM_LEARNINGPOTION", "Potion Research" } ,
- { AM_PHARMACY, "AM_PHARMACY", "Prepare Potion" } ,
- { AM_POTIONPITCHER, "AM_POTIONPITCHER", "Aid Potion" } ,
- { AM_REST, "AM_REST", "Vaporize" } ,
- { AM_RESURRECTHOMUN, "AM_RESURRECTHOMUN", "Homunculus Resurrection" } ,
- { AM_SPHEREMINE, "AM_SPHEREMINE", "Summon Marine Sphere" } ,
- { AM_TWILIGHT1, "AM_TWILIGHT1", "Twilight Pharmacy 1" } ,
- { AM_TWILIGHT2, "AM_TWILIGHT2", "Twilight Pharmacy 2" } ,
- { AM_TWILIGHT3, "AM_TWILIGHT3", "Twilight Pharmacy 3" } ,
- { ASC_BREAKER, "ASC_BREAKER", "Soul Destroyer" } ,
- { ASC_CDP, "ASC_CDP", "Create Deadly Poison" } ,
- { ASC_EDP, "ASC_EDP", "Enchant Deadly Poison" } ,
- { ASC_KATAR, "ASC_KATAR", "Advanced Katar Mastery" } ,
- { ASC_METEORASSAULT, "ASC_METEORASSAULT", "Meteor Assault" } ,
- { AS_CLOAKING, "AS_CLOAKING", "Cloaking" } ,
- { AS_ENCHANTPOISON, "AS_ENCHANTPOISON", "Enchant Poison" } ,
- { AS_GRIMTOOTH, "AS_GRIMTOOTH", "Grimtooth" } ,
- { AS_KATAR, "AS_KATAR", "Katar Mastery" } ,
- { AS_LEFT, "AS_LEFT", "Lefthand Mastery" } ,
- { AS_POISONREACT, "AS_POISONREACT", "Poison React" } ,
- { AS_RIGHT, "AS_RIGHT", "Righthand Mastery" } ,
- { AS_SONICACCEL, "AS_SONICACCEL", "Sonic Acceleration" } ,
- { AS_SONICBLOW, "AS_SONICBLOW", "Sonic Blow" } ,
- { AS_SPLASHER, "AS_SPLASHER", "Venom Splasher" } ,
- { AS_VENOMDUST, "AS_VENOMDUST", "Venom Dust" } ,
- { AS_VENOMKNIFE, "AS_VENOMKNIFE", "Throw Venom Knife" } ,
- { BA_APPLEIDUN, "BA_APPLEIDUN", "Song of Lutie" } ,
- { BA_ASSASSINCROSS, "BA_ASSASSINCROSS", "Impressive Riff" } ,
- { BA_DISSONANCE, "BA_DISSONANCE", "Unchained Serenade" } ,
- { BA_FROSTJOKE, "BA_FROSTJOKE", "Unbarring Octave" } ,
- { BA_MUSICALLESSON, "BA_MUSICALLESSON", "Music Lessons" } ,
- { BA_MUSICALSTRIKE, "BA_MUSICALSTRIKE", "Melody Strike" } ,
- { BA_PANGVOICE, "BA_PANGVOICE", "Pang Voice" } ,
- { BA_POEMBRAGI, "BA_POEMBRAGI", "Magic Strings" } ,
- { BA_WHISTLE, "BA_WHISTLE", "Perfect Tablature" } ,
- { BD_ADAPTATION, "BD_ADAPTATION", "Amp" } ,
- { BD_DRUMBATTLEFIELD, "BD_DRUMBATTLEFIELD", "Battle Theme" } ,
- { BD_ENCORE, "BD_ENCORE", "Encore" } ,	
- { BD_ETERNALCHAOS, "BD_ETERNALCHAOS", "Down Tempo" } ,
- { BD_INTOABYSS, "BD_INTOABYSS", "Power Cord" } ,
- { BD_LULLABY, "BD_LULLABY", "Lullaby" } ,
- { BD_RICHMANKIM, "BD_RICHMANKIM", "Mental Sensing" } ,
- { BD_RINGNIBELUNGEN, "BD_RINGNIBELUNGEN", "Harmonic Lick" } ,
- { BD_ROKISWEIL, "BD_ROKISWEIL", "Classical Pluck" } ,
- { BD_SIEGFRIED, "BD_SIEGFRIED", "Acoustic Rhythm" } ,
- { BS_ADRENALINE, "BS_ADRENALINE", "Adrenaline Rush" } ,
- { BS_ADRENALINE2, "BS_ADRENALINE2", "Advanced Adrenaline Rush" } ,
- { BS_AXE, "BS_AXE", "Smith Axe" } ,
- { BS_DAGGER, "BS_DAGGER", "Smith Dagger" } ,
- { BS_ENCHANTEDSTONE, "BS_ENCHANTEDSTONE", "Enchantedstone Craft" } ,
- { BS_FINDINGORE, "BS_FINDINGORE", "Ore Discovery" } ,
- { BS_GREED, "BS_GREED", "Greed" } ,
- { BS_HAMMERFALL, "BS_HAMMERFALL", "Hammer Fall" } ,
- { BS_HILTBINDING, "BS_HILTBINDING", "Hilt Binding" } ,
- { BS_IRON, "BS_IRON", "Iron Tempering" } ,
- { BS_KNUCKLE, "BS_KNUCKLE", "Smith Knucklebrace" } ,
- { BS_MACE, "BS_MACE", "Smith Mace" } ,
- { BS_MAXIMIZE, "BS_MAXIMIZE", "Power Maximize" } ,
- { BS_ORIDEOCON, "BS_ORIDEOCON", "Oridecon Research" } ,
- { BS_OVERTHRUST, "BS_OVERTHRUST", "Power-Thrust" } ,
- { BS_REPAIRWEAPON, "BS_REPAIRWEAPON", "Weapon Repair" } ,
- { BS_SKINTEMPER, "BS_SKINTEMPER", "Skin Tempering" } ,
- { BS_SPEAR, "BS_SPEAR", "Smith Spear" } ,
- { BS_STEEL, "BS_STEEL", "Steel Tempering" } ,
- { BS_SWORD, "BS_SWORD", "Smith Sword" } ,
- { BS_TWOHANDSWORD, "BS_TWOHANDSWORD", "Smith Two-handed Sword" } ,
- { BS_UNFAIRLYTRICK, "BS_UNFAIRLYTRICK", "Unfair Trick" } ,
- { BS_WEAPONPERFECT, "BS_WEAPONPERFECT", "Weapon Perfection" } ,
- { BS_WEAPONRESEARCH, "BS_WEAPONRESEARCH", "Weaponry Research" } ,
- { CG_ARROWVULCAN, "CG_ARROWVULCAN", "Vulcan Arrow" } ,
- { CG_HERMODE, "CG_HERMODE", "Wand of Hermode" } ,
- { CG_LONGINGFREEDOM, "CG_LONGINGFREEDOM", "Longing for Freedom" } ,
- { CG_MARIONETTE, "CG_MARIONETTE", "Marionette Control" } ,
- { CG_MOONLIT, "CG_MOONLIT", "Sheltering Bliss" } ,
- { CG_TAROTCARD, "CG_TAROTCARD", "Tarot Card of Fate" } ,
- { CH_CHAINCRUSH, "CH_CHAINCRUSH", "Chain Crush Combo" } ,
- { CH_PALMSTRIKE, "CH_PALMSTRIKE", "Raging Palm Strike" } ,
- { CH_SOULCOLLECT, "CH_SOULCOLLECT", "Zen" } ,
- { CH_TIGERFIST, "CH_TIGERFIST", "Glacier Fist" } ,
- { CR_ACIDDEMONSTRATION, "CR_ACIDDEMONSTRATION", "Acid Demonstration" } ,
- { CR_ALCHEMY, "CR_ALCHEMY", "Alchemy" } ,
- { CR_AUTOGUARD, "CR_AUTOGUARD", "Guard" } ,
- { CR_CULTIVATION, "CR_CULTIVATION", "Plant Cultivation" } ,
- { CR_DEFENDER, "CR_DEFENDER", "Defending Aura" } ,
- { CR_DEVOTION, "CR_DEVOTION", "Sacrifice" } ,
- { CR_FULLPROTECTION, "CR_FULLPROTECTION", "Full Protection" } ,
- { CR_GRANDCROSS, "CR_GRANDCROSS", "Grand Cross" } ,
- { CR_HOLYCROSS, "CR_HOLYCROSS", "Holy Cross" } ,
- { CR_PROVIDENCE, "CR_PROVIDENCE", "Resistant Souls" } ,
- { CR_REFLECTSHIELD, "CR_REFLECTSHIELD", "Shield Reflect" } ,
- { CR_SHIELDBOOMERANG, "CR_SHIELDBOOMERANG", "Shield Boomerang" } ,
- { CR_SHIELDCHARGE, "CR_SHIELDCHARGE", "Smite" } ,
- { CR_SHRINK, "CR_SHRINK", "Shrink" } ,
- { CR_SLIMPITCHER, "CR_SLIMPITCHER", "Slim Pitcher" } ,
- { CR_SPEARQUICKEN, "CR_SPEARQUICKEN", "Spear Quicken" } ,
- { CR_SYNTHESISPOTION, "CR_SYNTHESISPOTION", "Potion Synthesis" } ,
- { CR_TRUST, "CR_TRUST", "Faith" } ,
- { DC_DANCINGLESSON, "DC_DANCINGLESSON", "Dance Lessons" } ,
- { DC_DONTFORGETME, "DC_DONTFORGETME", "Slow Grace" } ,
- { DC_FORTUNEKISS, "DC_FORTUNEKISS", "Lady Luck" } ,
- { DC_HUMMING, "DC_HUMMING", "Focus Ballet" } ,
- { DC_SCREAM, "DC_SCREAM", "Dazzler" } ,
- { DC_SERVICEFORYOU, "DC_SERVICEFORYOU", "Gypsy's Kiss" } ,
- { DC_THROWARROW, "DC_THROWARROW", "Slinging Arrow" } ,
- { DC_UGLYDANCE, "DC_UGLYDANCE", "Hip Shaker" } ,
- { DC_WINKCHARM, "DC_WINKCHARM", "Sexy Wink" } ,
- { GD_APPROVAL, "GD_APPROVAL", "Official Guild Approval" } ,
- { GD_BATTLEORDER, "GD_BATTLEORDER", "Battle Command" } ,
- { GD_DEVELOPMENT, "GD_DEVELOPMENT", "Permanent Development" } ,
- { GD_EMERGENCYCALL, "GD_EMERGENCYCALL", "Urgent Call" } ,
- { GD_EXTENSION, "GD_EXTENSION", "Guild Extension" } ,
- { GD_GLORYGUILD, "GD_GLORYGUILD", "Glory of Guild" } ,
- { GD_GLORYWOUNDS, "GD_GLORYWOUNDS", "Glorious Wounds" } ,
- { GD_GUARDUP, "GD_GUARDUP", "Strengthen Guardian" } ,
- { GD_HAWKEYES, "GD_HAWKEYES", "Sharp Gaze" } ,
- { GD_KAFRACONTRACT, "GD_KAFRACONTRACT", "Contract with Kafra" } ,
- { GD_LEADERSHIP, "GD_LEADERSHIP", "Great Leadership" } ,
- { GD_REGENERATION, "GD_REGENERATION", "Regeneration" } ,
- { GD_RESTORE, "GD_RESTORE", "Restoration" } ,
- { GD_SOULCOLD, "GD_SOULCOLD", "Cold Heart" } ,
- { GS_ADJUSTMENT, "GS_ADJUSTMENT", "Adjustment" } ,
- { GS_BULLSEYE, "GS_BULLSEYE", "Bulls Eye" } ,
- { GS_CHAINACTION, "GS_CHAINACTION", "Chain Action" } ,
- { GS_CRACKER, "GS_CRACKER", "Cracker" } ,
- { GS_DESPERADO, "GS_DESPERADO", "Desperado" } ,
- { GS_DISARM, "GS_DISARM", "Disarm" } ,
- { GS_DUST, "GS_DUST", "Dust" } ,
- { GS_FLING, "GS_FLING", "Fling" } ,
- { GS_FULLBUSTER, "GS_FULLBUSTER", "Full Buster" } ,
- { GS_GATLINGFEVER, "GS_GATLINGFEVER", "Gatling Fever" } ,
- { GS_GLITTERING, "GS_GLITTERING", "Flip the Coin" } ,
- { GS_GROUNDDRIFT, "GS_GROUNDDRIFT", "Ground Drift" } ,
- { GS_INCREASING, "GS_INCREASING", "Increasing Accuracy" } ,
- { GS_MADNESSCANCEL, "GS_MADNESSCANCEL", "Madness Canceler" } ,
- { GS_MAGICALBULLET, "GS_MAGICALBULLET", "Magical Bullet" } ,
- { GS_PIERCINGSHOT, "GS_PIERCINGSHOT", "Piercing Shot" } ,
- { GS_RAPIDSHOWER, "GS_RAPIDSHOWER", "Rapid Shower" } ,
- { GS_SINGLEACTION, "GS_SINGLEACTION", "Single Action" } ,
- { GS_SNAKEEYE, "GS_SNAKEEYE", "Snake Eye" } ,
- { GS_SPREADATTACK, "GS_SPREADATTACK", "Spread Attack" } ,
- { GS_TRACKING, "GS_TRACKING", "Tracking" } ,
- { GS_TRIPLEACTION, "GS_TRIPLEACTION", "Triple Action" } ,
- { HP_ASSUMPTIO, "HP_ASSUMPTIO", "Assumptio" } ,
- { HP_BASILICA, "HP_BASILICA", "Basilica" } ,
- { HP_MANARECHARGE, "HP_MANARECHARGE", "Mana Recharge" } ,
- { HP_MEDITATIO, "HP_MEDITATIO", "Meditatio" } ,
- { HT_ANKLESNARE, "HT_ANKLESNARE", "Ankle Snare" } ,
- { HT_BEASTBANE, "HT_BEASTBANE", "Beast Bane" } ,
- { HT_BLASTMINE, "HT_BLASTMINE", "Blast Mine" } ,
- { HT_BLITZBEAT, "HT_BLITZBEAT", "Blitz Beat" } ,
- { HT_CLAYMORETRAP, "HT_CLAYMORETRAP", "Claymore Trap" } ,
- { HT_DETECTING, "HT_DETECTING", "Detect" } ,
- { HT_FALCON, "HT_FALCON", "Falconry Mastery" } ,
- { HT_FLASHER, "HT_FLASHER", "Flasher" } ,
- { HT_FREEZINGTRAP, "HT_FREEZINGTRAP", "Freezing Trap" } ,
- { HT_LANDMINE, "HT_LANDMINE", "Land Mine" } ,
- { HT_PHANTASMIC, "HT_PHANTASMIC", "Phantasmic Arrow" } ,
- { HT_POWER, "HT_POWER", "Beast Strafing" } ,
- { HT_REMOVETRAP, "HT_REMOVETRAP", "Remove Trap" } ,
- { HT_SANDMAN, "HT_SANDMAN", "Sandman" } ,
- { HT_SHOCKWAVE, "HT_SHOCKWAVE", "Shockwave Trap" } ,
- { HT_SKIDTRAP, "HT_SKIDTRAP", "Skid Trap" } ,
- { HT_SPRINGTRAP, "HT_SPRINGTRAP", "Spring Trap" } ,
- { HT_STEELCROW, "HT_STEELCROW", "Steel Crow" } ,
- { HT_TALKIEBOX, "HT_TALKIEBOX", "Talkie Box" } ,
- { HW_GANBANTEIN, "HW_GANBANTEIN", "Ganbantein" } ,
- { HW_GRAVITATION, "HW_GRAVITATION", "Gravitation Field" } ,
- { HW_MAGICCRASHER, "HW_MAGICCRASHER", "Stave Crasher" } ,
- { HW_MAGICPOWER, "HW_MAGICPOWER", "Mystical Amplification" } ,
- { HW_NAPALMVULCAN, "HW_NAPALMVULCAN", "Napalm Vulcan" } ,
- { HW_SOULDRAIN, "HW_SOULDRAIN", "Soul Drain" } ,
- { ITEM_ENCHANTARMS, "ITEM_ENCHANTARMS", "Weapon Enchantment" },
- { ITM_TOMAHAWK, "ITM_TOMAHAWK", "Tomahawk Throwing" } ,
- { KN_AUTOCOUNTER, "KN_AUTOCOUNTER", "Counter Attack" } ,
- { KN_BOWLINGBASH, "KN_BOWLINGBASH", "Bowling Bash" } ,
- { KN_BRANDISHSPEAR, "KN_BRANDISHSPEAR", "Brandish Spear" } ,
- { KN_CAVALIERMASTERY, "KN_CAVALIERMASTERY", "Cavalier Mastery" } ,
- { KN_CHARGEATK, "KN_CHARGEATK", "Charge Attack" } ,
- { KN_ONEHAND, "KN_ONEHAND", "Onehand Quicken" } ,
- { KN_PIERCE, "KN_PIERCE", "Pierce" } ,
- { KN_RIDING, "KN_RIDING", "Peco Peco Ride" } ,
- { KN_SPEARBOOMERANG, "KN_SPEARBOOMERANG", "Spear Boomerang" } ,
- { KN_SPEARMASTERY, "KN_SPEARMASTERY", "Spear Mastery" } ,
- { KN_SPEARSTAB, "KN_SPEARSTAB", "Spear Stab" } ,
- { KN_TWOHANDQUICKEN, "KN_TWOHANDQUICKEN", "Twohand Quicken" } ,
- { LK_AURABLADE, "LK_AURABLADE", "Aura Blade" } ,
- { LK_BERSERK, "LK_BERSERK", "Frenzy" } ,
- { LK_CONCENTRATION, "LK_CONCENTRATION", "Spear Dynamo" } ,
- { LK_HEADCRUSH, "LK_HEADCRUSH", "Traumatic Blow" } ,
- { LK_JOINTBEAT, "LK_JOINTBEAT", "Vital Strike" } ,
- { LK_PARRYING, "LK_PARRYING", "Parry" } ,
- { LK_SPIRALPIERCE, "LK_SPIRALPIERCE", "Clashing Spiral" } ,
- { LK_TENSIONRELAX, "LK_TENSIONRELAX", "Relax" } ,
- { MC_CARTREVOLUTION, "MC_CARTREVOLUTION", "Cart Revolution" } ,
- { MC_CHANGECART, "MC_CHANGECART", "Change Cart" } ,
- { MC_DISCOUNT, "MC_DISCOUNT", "Discount" } ,
- { MC_IDENTIFY, "MC_IDENTIFY", "Item Appraisal" } ,
- { MC_INCCARRY, "MC_INCCARRY", "Enlarge Weight Limit" } ,
- { MC_LOUD, "MC_LOUD", "Crazy Uproar" } ,
- { MC_MAMMONITE, "MC_MAMMONITE", "Mammonite" } ,
- { MC_OVERCHARGE, "MC_OVERCHARGE", "Overcharge" } ,
- { MC_PUSHCART, "MC_PUSHCART", "Pushcart" } ,
- { MC_VENDING, "MC_VENDING", "Vending" } ,
- { MG_COLDBOLT, "MG_COLDBOLT", "Cold Bolt" } ,
- { MG_ENERGYCOAT, "MG_ENERGYCOAT", "Energy Coat" } ,
- { MG_FIREBALL, "MG_FIREBALL", "Fire Ball" } ,
- { MG_FIREBOLT, "MG_FIREBOLT", "Fire Bolt" } ,
- { MG_FIREWALL, "MG_FIREWALL", "Fire Wall" } ,
- { MG_FROSTDIVER, "MG_FROSTDIVER", "Frost Diver" } ,
- { MG_LIGHTNINGBOLT, "MG_LIGHTNINGBOLT", "Lightening Bolt" } ,
- { MG_NAPALMBEAT, "MG_NAPALMBEAT", "Napalm Beat" } ,
- { MG_SAFETYWALL, "MG_SAFETYWALL", "Safety Wall" } ,
- { MG_SIGHT, "MG_SIGHT", "Sight" } ,
- { MG_SOULSTRIKE, "MG_SOULSTRIKE", "Soul Strike" } ,
- { MG_SRECOVERY, "MG_SRECOVERY", "Increase SP Recovery" } ,
- { MG_STONECURSE, "MG_STONECURSE", "Stone Curse" } ,
- { MG_THUNDERSTORM, "MG_THUNDERSTORM", "Thunderstorm" } ,
- { MO_ABSORBSPIRITS, "MO_ABSORBSPIRITS", "Spiritual Sphere Absorption" } ,
- { MO_BALKYOUNG, "MO_BALKYOUNG", "Ki Explosion" } ,
- { MO_BLADESTOP, "MO_BLADESTOP", "Root" } ,
- { MO_BODYRELOCATION, "MO_BODYRELOCATION", "Snap" } ,
- { MO_CALLSPIRITS, "MO_CALLSPIRITS", "Summon Spirit Sphere" } ,
- { MO_CHAINCOMBO, "MO_CHAINCOMBO", "Raging Quadruple Blow" } ,
- { MO_COMBOFINISH, "MO_COMBOFINISH", "Raging Thrust" } ,
- { MO_DODGE, "MO_DODGE", "Flee" } ,
- { MO_EXPLOSIONSPIRITS, "MO_EXPLOSIONSPIRITS", "Fury" } ,
- { MO_EXTREMITYFIST, "MO_EXTREMITYFIST", "Guillotine Fist" } ,
- { MO_FINGEROFFENSIVE, "MO_FINGEROFFENSIVE", "Throw Spirit Sphere" } ,
- { MO_INVESTIGATE, "MO_INVESTIGATE", "Occult Impaction" } ,
- { MO_IRONHAND, "MO_IRONHAND", "Iron Fists" } ,
- { MO_KITRANSLATION, "MO_KITRANSLATION", "Ki Translation" } ,
- { MO_SPIRITSRECOVERY, "MO_SPIRITSRECOVERY", "Spiritual Cadence" } ,
- { MO_STEELBODY, "MO_STEELBODY", "Mental Strength" } ,
- { MO_TRIPLEATTACK, "MO_TRIPLEATTACK", "Raging Trifecta Blow" } ,
- { NJ_BAKUENRYU, "NJ_BAKUENRYU", "Raging Fire Dragon" } ,
- { NJ_BUNSINJYUTSU, "NJ_BUNSINJYUTSU", "Mirror Image" } ,
- { NJ_HUUJIN, "NJ_HUUJIN", "Wind Blade" } ,
- { NJ_HUUMA, "NJ_HUUMA", "Throw Huuma Shuriken" } ,
- { NJ_HYOUSENSOU, "NJ_HYOUSENSOU", "Spear of Ice" } ,
- { NJ_HYOUSYOURAKU, "NJ_HYOUSYOURAKU", "Ice Meteor" } ,
- { NJ_ISSEN, "NJ_ISSEN", "Final Strike" } ,
- { NJ_KAENSIN, "NJ_KAENSIN", "Crimson Fire Formation" } ,
- { NJ_KAMAITACHI, "NJ_KAMAITACHI", "Kamaitachi" } ,
- { NJ_KASUMIKIRI, "NJ_KASUMIKIRI", "Vanishing Slash" } ,
- { NJ_KIRIKAGE, "NJ_KIRIKAGE", "Shadow Slash" } ,
- { NJ_KOUENKA, "NJ_KOUENKA", "Crimson Fire Petal" } ,
- { NJ_KUNAI, "NJ_KUNAI", "Throw Kunai" } ,
- { NJ_NEN, "NJ_NEN", "Soul" } ,
- { NJ_NINPOU, "NJ_NINPOU", "Spirit of the Blade" } ,
- { NJ_RAIGEKISAI, "NJ_RAIGEKISAI", "Lightning Strike of Destruction" } ,
- { NJ_SHADOWJUMP, "NJ_SHADOWJUMP", "Shadow Leap" } ,
- { NJ_SUITON, "NJ_SUITON", "Hidden Water" } ,
- { NJ_SYURIKEN, "NJ_SYURIKEN", "Throw Shuriken" } ,
- { NJ_TATAMIGAESHI, "NJ_TATAMIGAESHI", "Improvised Defense" } ,
- { NJ_TOBIDOUGU, "NJ_TOBIDOUGU", "Shuriken Training" } ,
- { NJ_UTSUSEMI, "NJ_UTSUSEMI", "Cicada Skin Sheeding" } ,
- { NJ_ZENYNAGE, "NJ_ZENYNAGE", "Zeny Nage" } ,
- { NPC_ACIDBREATH, "NPC_ACIDBREATH", "Acid Breath" } ,
- { NPC_AGIUP, "NPC_AGIUP", "Agility UP" } ,
- { NPC_ANTIMAGIC, "NPC_ANTIMAGIC", "Anti Magic" } ,
- { NPC_ATTRICHANGE, "NPC_ATTRICHANGE", "Attribute Change" } ,
- { NPC_BARRIER, "NPC_BARRIER", "Barrier" } ,
- { NPC_BLEEDING, "NPC_BLEEDING", "Bleeding" } ,
- { NPC_BLINDATTACK, "NPC_BLINDATTACK", "Blind Attack" } ,
- { NPC_BLOODDRAIN, "NPC_BLOODDRAIN", "Blood Drain" } ,
- { NPC_ARMORBRAKE, "NPC_ARMORBRAKE", "Break Armor" } ,
- { NPC_HELMBRAKE, "NPC_HELMBRAKE", "Break Helm" } ,
- { NPC_SHIELDBRAKE, "NPC_SHIELDBRAKE", "Break Shield" } ,
- { NPC_WEAPONBRAKER, "NPC_WEAPONBRAKER", "Break Weapon" } ,
- { NPC_CALLSLAVE, "NPC_CALLSLAVE", "Recall Slaves" } ,
- { NPC_CHANGEDARKNESS, "NPC_CHANGEDARKNESS", "Darkness Change" } ,
- { NPC_CHANGEFIRE, "NPC_CHANGEFIRE", "Fire Change" } ,
- { NPC_CHANGEGROUND, "NPC_CHANGEGROUND", "Earth Change" } ,
- { NPC_CHANGEHOLY, "NPC_CHANGEHOLY", "Holy Change" } ,
- { NPC_CHANGEPOISON, "NPC_CHANGEPOISON", "Poison Change" } ,
- { NPC_CHANGETELEKINESIS, "NPC_CHANGETELEKINESIS", "Ghost Change" } ,
- { NPC_CHANGEUNDEAD, "NPC_CHANGEUNDEAD", "Undead Change" } ,
- { NPC_CHANGEWATER, "NPC_CHANGEWATER", "Water Change" } ,
- { NPC_CHANGEWIND, "NPC_CHANGEWIND", "Wind Change" } ,
- { NPC_COMBOATTACK, "NPC_COMBOATTACK", "Combo Attack" } ,
- { NPC_CRITICALSLASH, "NPC_CRITICALSLASH", "Critical Slash" } ,
- { NPC_CRITICALWOUND, "NPC_CRITICALWOUND", "Critical Wounds" } ,
- { NPC_CURSEATTACK, "NPC_CURSEATTACK", "Curse Attack" } ,
- { NPC_DARKBLESSING, "NPC_DARKBLESSING", "Dark Blessing" } ,
- { NPC_DARKBREATH, "NPC_DARKBREATH", "Dark Breath" } ,
- { NPC_DARKCROSS, "NPC_DARKCROSS", "Dark Cross" } ,
- { NPC_DARKNESSATTACK, "NPC_DARKNESSATTACK", "Shadow Attack" } ,
- { NPC_DARKNESSBREATH, "NPC_DARKNESSBREATH", "Darkness Breath" } ,
- { NPC_DARKSTRIKE, "NPC_DARKSTRIKE", "DarkStrike" } ,
- { NPC_DARKTHUNDER, "NPC_DARKTHUNDER", "DarkThunder" } ,
- { NPC_DEFENDER, "NPC_DEFENDER", "Defender" } ,
- { NPC_DRAGONFEAR, "NPC_DRAGONFEAR", "Dragon Fear" } ,
- { NPC_EARTHQUAKE, "NPC_EARTHQUAKE", "Earthquake" } ,
- { NPC_EMOTION, "NPC_EMOTION", "Emotion" } ,
- { NPC_EMOTION_ON, "NPC_EMOTION_ON", "Emotion ON" } ,
- { NPC_ENERGYDRAIN, "NPC_ENERGYDRAIN", "Energy Drain" } ,
- { NPC_EVILLAND, "NPC_EVILLAND", "Evil Land" } ,
- { NPC_EXPULSION, "NPC_EXPULSION", "Expulsion" } ,
- { NPC_FIREATTACK, "NPC_FIREATTACK", "Fire Attack" } ,
- { NPC_FIREBREATH, "NPC_FIREBREATH", "Fire Breath" } ,
- { NPC_GRANDDARKNESS, "NPC_GRANDDARKNESS", "Grand Dark Cross" } ,
- { NPC_GROUNDATTACK, "NPC_GROUNDATTACK", "Earth Attack" } ,
- { NPC_GUIDEDATTACK, "NPC_GUIDEDATTACK", "Guided Attack" } ,
- { NPC_HALLUCINATION, "NPC_HALLUCINATION", "Hallucination" } ,
- { NPC_HELLJUDGEMENT, "NPC_HELLJUDGEMENT", "Hell's Judgement" } ,
- { NPC_HOLYATTACK, "NPC_HOLYATTACK", "Holy Attack" } ,
- { NPC_ICEBREATH, "NPC_ICEBREATH", "Ice Breath" } ,
- { NPC_INVISIBLE, "NPC_INVISIBLE", "Invisible" } ,
- { NPC_KEEPING, "NPC_KEEPING", "Keeping" } ,
- { NPC_LICK, "NPC_LICK", "Lick" } ,
- { NPC_MAGICALATTACK, "NPC_MAGICALATTACK", "Magical Attack" } ,
- { NPC_MAGICMIRROR, "NPC_MAGICMIRROR", "Magic Mirror" } ,
- { NPC_MENTALBREAKER, "NPC_MENTALBREAKER", "Mental Breaker" } ,
- { NPC_METAMORPHOSIS, "NPC_METAMORPHOSIS", "Metamorphosis" } ,
- { NPC_PETRIFYATTACK, "NPC_PETRIFYATTACK", "Petrify Attack" } ,
- { NPC_PIERCINGATT, "NPC_PIERCINGATT", "Piercing Attack" } ,
- { NPC_POISON, "NPC_POISON", "Poisoning" } ,
- { NPC_POISONATTACK, "NPC_POISONATTACK", "Poison Attack" } ,
- { NPC_POWERUP, "NPC_POWERUP", "Power Up" } ,
- { NPC_PROVOCATION, "NPC_PROVOCATION", "Provocation" } ,
- { NPC_PULSESTRIKE, "NPC_PULSESTRIKE", "Pulse Strike" } ,
- { NPC_RANDOMATTACK, "NPC_RANDOMATTACK", "Random Attack" } ,
- { NPC_RANDOMMOVE, "NPC_RANDOMMOVE", "Random Move" } ,
- { NPC_RANGEATTACK, "NPC_RANGEATTACK", "Ranged attack" } ,
- { NPC_REBIRTH, "NPC_REBIRTH", "Rebirth" } ,
- { NPC_REVENGE, "NPC_REVENGE", "Revenge" } ,
- { NPC_RUN, "NPC_RUN", "Run" } ,
- { NPC_SELFDESTRUCTION, "NPC_SELFDESTRUCTION", "Self Destruction" } ,
- { NPC_SIEGEMODE, "NPC_SIEGEMODE", "Siege Mode" } ,
- { NPC_SILENCEATTACK, "NPC_SILENCEATTACK", "Silence Attack" } ,
- { NPC_SLEEPATTACK, "NPC_SLEEPATTACK", "Sleep Attack" } ,
- { NPC_SLOWCAST, "NPC_SLOWCAST", "Slow Cast" } ,
- { NPC_SMOKING, "NPC_SMOKING", "Smoking" } ,
- { NPC_SPEEDUP, "NPC_SPEEDUP", "Speed UP" } ,
- { NPC_SPLASHATTACK, "NPC_SPLASHATTACK", "Splash Attack" } ,
- { NPC_STONESKIN, "NPC_STONESKIN", "Stone Skin" } ,
- { NPC_STOP, "NPC_STOP", "Stop" } ,
- { NPC_STUNATTACK, "NPC_STUNATTACK", "Stun Attack" } ,
- { NPC_SUICIDE, "NPC_SUICIDE", "Suicide" } ,
- { NPC_SUMMONMONSTER, "NPC_SUMMONMONSTER", "Summon Monster" } ,
- { NPC_SUMMONSLAVE, "NPC_SUMMONSLAVE", "Summon :Slave" } ,
- { NPC_TELEKINESISATTACK, "NPC_TELEKINESISATTACK", "Ghost Attack" } ,
- { NPC_THUNDERBREATH, "NPC_THUNDERBREATH", "Thunder Breath" } ,
- { NPC_TRANSFORMATION, "NPC_TRANSFORMATION", "Transformation" } ,
- { NPC_UNDEADATTACK, "NPC_UNDEADATTACK", "Undead Attack" } ,
- { NPC_VAMPIRE_GIFT, "NPC_VAMPIRE_GIFT", "Vampire Gift" } ,
- { NPC_WATERATTACK, "NPC_WATERATTACK", "Water Attack" } ,
- { NPC_WIDEBLEEDING, "NPC_WIDEBLEEDING", "Wide Bleeding" } ,
- { NPC_WIDECONFUSE, "NPC_WIDECONFUSE", "Wide Confusion" } ,
- { NPC_WIDECURSE, "NPC_WIDECURSE", "Wide Curse" } ,
- { NPC_WIDEFREEZE, "NPC_WIDEFREEZE", "Wide Freeze" } ,
- { NPC_WIDESLEEP, "NPC_WIDESLEEP", "Wide Sleep" } ,
- { NPC_WIDESIGHT, "NPC_WIDESIGHT", "Wide Sight" } ,
- { NPC_WIDESILENCE, "NPC_WIDESILENCE", "Wide Silence" } ,
- { NPC_WIDESOULDRAIN, "NPC_WIDESOULDRAIN", "Wide Soul Drain" } ,
- { NPC_WIDESTONE, "NPC_WIDESTONE", "Wide Petrify" } ,
- { NPC_WIDESTUN, "NPC_WIDESTUN", "Wide Stun" } ,
- { NPC_WINDATTACK, "NPC_WINDATTACK", "Wind Attack" } ,
- { NV_BASIC, "NV_BASIC", "Basic Skill" } ,
- { NV_FIRSTAID, "NV_FIRSTAID", "First Aid" } ,
- { NV_TRICKDEAD, "NV_TRICKDEAD", "Play Dead" } ,
- { PA_GOSPEL, "PA_GOSPEL", "Battle Chant" } ,
- { PA_PRESSURE, "PA_PRESSURE", "Gloria Domini" } ,
- { PA_SACRIFICE, "PA_SACRIFICE", "Martyr's Reckoning" } ,
- { PA_SHIELDCHAIN, "PA_SHIELDCHAIN", "Shield Chain" } ,
- { PF_DOUBLECASTING, "PF_DOUBLECASTING", "Double Casting" } ,
- { PF_FOGWALL, "PF_FOGWALL", "Blinding Mist" } ,
- { PF_HPCONVERSION, "PF_HPCONVERSION", "Indulge" } ,
- { PF_MEMORIZE, "PF_MEMORIZE", "Foresight" } ,
- { PF_MINDBREAKER, "PF_MINDBREAKER", "Mind Breaker" } ,
- { PF_SOULBURN, "PF_SOULBURN", "Soul Siphon" } ,
- { PF_SOULCHANGE, "PF_SOULCHANGE", "Soul Exhale" } ,
- { PF_SPIDERWEB, "PF_SPIDERWEB", "Fiber Lock" } ,
- { PR_ASPERSIO, "PR_ASPERSIO", "Aspersio" } ,
- { PR_BENEDICTIO, "PR_BENEDICTIO", "B.S. Sacramenti" } ,
- { PR_GLORIA, "PR_GLORIA", "Gloria" } ,
- { PR_IMPOSITIO, "PR_IMPOSITIO", "Impositio Manus" } ,
- { PR_KYRIE, "PR_KYRIE", "Kyrie Eleison" } ,
- { PR_LEXAETERNA, "PR_LEXAETERNA", "Lex Aeterna" } ,
- { PR_LEXDIVINA, "PR_LEXDIVINA", "Lex Divina" } ,
- { PR_MACEMASTERY, "PR_MACEMASTERY", "Mace Mastery" } ,
- { PR_MAGNIFICAT, "PR_MAGNIFICAT", "Magnificat" } ,
- { PR_MAGNUS, "PR_MAGNUS", "Magnus Exorcismus" } ,
- { PR_REDEMPTIO, "PR_REDEMPTIO", "Redemptio" } ,
- { PR_SANCTUARY, "PR_SANCTUARY", "Sanctuary" } ,
- { PR_SLOWPOISON, "PR_SLOWPOISON", "Slow Poison" } ,
- { PR_STRECOVERY, "PR_STRECOVERY", "Status Recovery" } ,
- { PR_SUFFRAGIUM, "PR_SUFFRAGIUM", "Suffragium" } ,
- { PR_TURNUNDEAD, "PR_TURNUNDEAD", "Turn Undead" } ,
- { RG_BACKSTAP, "RG_BACKSTAP", "Back Stab" } ,
- { RG_CLEANER, "RG_CLEANER", "Remover" } ,
- { RG_CLOSECONFINE, "RG_CLOSECONFINE", "Close Confine"} ,
- { RG_COMPULSION, "RG_COMPULSION", "Haggle" } ,
- { RG_FLAGGRAFFITI, "RG_FLAGGRAFFITI", "Piece" } ,
- { RG_GANGSTER, "RG_GANGSTER", "Slyness" } ,
- { RG_GRAFFITI, "RG_GRAFFITI", "Scribble" } ,
- { RG_INTIMIDATE, "RG_INTIMIDATE", "Snatch" } ,
- { RG_PLAGIARISM, "RG_PLAGIARISM", "Intimidate" } ,
- { RG_RAID, "RG_RAID", "Sightless Mind" } ,
- { RG_SNATCHER, "RG_SNATCHER", "Gank" } ,
- { RG_STEALCOIN, "RG_STEALCOIN", "Mug" } ,
- { RG_STRIPARMOR, "RG_STRIPARMOR", "Divest Armor" } ,
- { RG_STRIPHELM, "RG_STRIPHELM", "Divest Helm" } ,
- { RG_STRIPSHIELD, "RG_STRIPSHIELD", "Divest Shield" } ,
- { RG_STRIPWEAPON, "RG_STRIPWEAPON", "Divest Weapon" } ,
- { RG_TUNNELDRIVE, "RG_TUNNELDRIVE", "Stalk" } ,
- { SA_ABRACADABRA, "SA_ABRACADABRA", "Hocus-pocus" } ,
- { SA_ADVANCEDBOOK, "SA_ADVANCEDBOOK", "Advanced Book" } ,
- { SA_AUTOSPELL, "SA_AUTOSPELL", "Hindsight" } ,
- { SA_CASTCANCEL, "SA_CASTCANCEL", "Cast Cancel" } ,
- { SA_CLASSCHANGE, "SA_CLASSCHANGE", "Class Change" } ,
- { SA_COMA, "SA_COMA", "Coma" } ,
- { SA_CREATECON, "SA_CREATECON", "Create Elemental Converter" } ,
- { SA_DEATH, "SA_DEATH", "Grim Reaper" } ,
- { SA_DELUGE, "SA_DELUGE", "Deluge" } ,
- { SA_DISPELL, "SA_DISPELL", "Dispell" } ,
- { SA_DRAGONOLOGY, "SA_DRAGONOLOGY", "Dragonology" } ,
- { SA_ELEMENTFIRE, "SA_ELEMENTFIRE", "Elemental Change Fire" } ,
- { SA_ELEMENTGROUND, "SA_ELEMENTGROUND", "Elemental Change Earth" } ,
- { SA_ELEMENTWATER, "SA_ELEMENTWATER", "Elemental Change Water" } ,
- { SA_ELEMENTWIND, "SA_ELEMENTWIND", "Elemental Change Wind" } ,
- { SA_FLAMELAUNCHER, "SA_FLAMELAUNCHER", "Endow Blaze" } ,
- { SA_FORTUNE, "SA_FORTUNE", "Gold Digger" } ,
- { SA_FREECAST, "SA_FREECAST", "Free Cast" } ,
- { SA_FROSTWEAPON, "SA_FROSTWEAPON", "Endow Tsunami" } ,
- { SA_FULLRECOVERY, "SA_FULLRECOVERY", "Rejuvenation" } ,
- { SA_GRAVITY, "SA_GRAVITY", "Gravity" } ,
- { SA_INSTANTDEATH, "SA_INSTANTDEATH", "Suicide" } ,
- { SA_LANDPROTECTOR, "SA_LANDPROTECTOR", "Magnetic Earth" } ,
- { SA_LEVELUP, "SA_LEVELUP", "Leveling" } ,
- { SA_LIGHTNINGLOADER, "SA_LIGHTNINGLOADER", "Endow Tornado" } ,
- { SA_MAGICROD, "SA_MAGICROD", "Magic Rod" } ,
- { SA_MONOCELL, "SA_MONOCELL", "Mono Cell" } ,
- { SA_QUESTION, "SA_QUESTION", "Questioning" } ,
- { SA_REVERSEORCISH, "SA_REVERSEORCISH", "Grampus Morph" } ,
- { SA_SEISMICWEAPON, "SA_SEISMICWEAPON", "Endow Quake" } ,
- { SA_SPELLBREAKER, "SA_SPELLBREAKER", "Spell Breaker" } ,
- { SA_SUMMONMONSTER, "SA_SUMMONMONSTER", "Monster Chant" } ,
- { SA_TAMINGMONSTER, "SA_TAMINGMONSTER", "Beastly Hypnosis" } ,
- { SA_VIOLENTGALE, "SA_VIOLENTGALE", "Whirlwind" } ,
- { SA_VOLCANO, "SA_VOLCANO", "Volcano" } ,
- { SG_DEVIL, "SG_DEVIL", "Devil of the Sun, Moon and Stars" } ,
- { SG_FEEL, "SG_FEEL", "Feeling of the Sun, Moon and Star" } ,
- { SG_FRIEND, "SG_FRIEND", "Companion of the Sun and Moon" } ,
- { SG_FUSION, "SG_FUSION", "Union of the Sun, Moon and Stars" } ,
- { SG_HATE, "SG_HATE", "Hatred of the Sun, Moon and Stars" } ,
- { SG_KNOWLEDGE, "SG_KNOWLEDGE", "Knowledge of the Sun, Moon and Stars" } ,
- { SG_MOON_ANGER, "SG_MOON_ANGER", "Fury of the Moon" } ,
- { SG_MOON_BLESS, "SG_MOON_BLESS", "Bless of the Moon" } ,
- { SG_MOON_COMFORT, "SG_MOON_COMFORT", "Comfort of the Moon" } ,
- { SG_MOON_WARM, "SG_MOON_WARM", "Warmth of the Moon" } ,
- { SG_STAR_ANGER, "SG_STAR_ANGER", "Fury of the Stars" } ,
- { SG_STAR_BLESS, "SG_STAR_BLESS", "Bless of the Stars" } ,
- { SG_STAR_COMFORT, "SG_STAR_COMFORT", "Comfort of the Stars" } ,
- { SG_STAR_WARM, "SG_STAR_WARM", "Warmth of the Stars" } ,
- { SG_SUN_ANGER, "SG_SUN_ANGER", "Fury of the Sun" } ,
- { SG_SUN_BLESS, "SG_SUN_BLESS", "Bless of the Sun" } ,
- { SG_SUN_COMFORT, "SG_SUN_COMFORT", "Comfort of the Sun" } ,
- { SG_SUN_WARM, "SG_SUN_WARM", "Warmth of the Sun" } ,
- { SL_ALCHEMIST, "SL_ALCHEMIST", "Spirit of Alchemist" } ,
- { SL_ASSASIN, "SL_ASSASIN", "Spirit of Assassin" } ,
- { SL_BARDDANCER, "SL_BARDDANCER", "Spirit of Bard and Dancer" } ,
- { SL_BLACKSMITH, "SL_BLACKSMITH", "Spirit of Blacksmith" } ,
- { SL_CRUSADER, "SL_CRUSADER", "Spirit of Crusader" } ,
- { SL_HIGH, "SL_HIGH", "Spirit of Advanced 1st Class" } ,
- { SL_HUNTER, "SL_HUNTER", "Spirit of Hunter" } ,
- { SL_KAAHI, "SL_KAAHI", "Kaahi" } ,
- { SL_KAINA, "SL_KAINA", "Kaina" } ,
- { SL_KAITE, "SL_KAITE", "Kaite" } ,
- { SL_KAIZEL, "SL_KAIZEL", "Kaizel" } ,
- { SL_KAUPE, "SL_KAUPE", "Kaupe" } ,
- { SL_KNIGHT, "SL_KNIGHT", "Spirit of Knight" } ,
- { SL_MONK, "SL_MONK", "Spirit of Monk" } ,
- { SL_PRIEST, "SL_PRIEST", "Spirit of Priest" } ,
- { SL_ROGUE, "SL_ROGUE", "Spirit of Rogue" } ,
- { SL_SAGE, "SL_SAGE", "Spirit of Sage" } ,
- { SL_SKA, "SL_SKA", "Eska" } ,
- { SL_SKE, "SL_SKE", "Eske" } ,
- { SL_SMA, "SL_SMA", "Esma" } ,
- { SL_SOULLINKER, "SL_SOULLINKER", "Spirit of Soul Linker" } ,
- { SL_STAR, "SL_STAR", "Spirit of Stars" } ,
- { SL_STIN, "SL_STIN", "Estin" } ,
- { SL_STUN, "SL_STUN", "Estun" } ,
- { SL_SUPERNOVICE, "SL_SUPERNOVICE", "Spirit of Super Novice" } ,
- { SL_SWOO, "SL_SWOO", "Eswoo" } ,
- { SL_WIZARD, "SL_WIZARD", "Spirit of Wizard" } ,
- { SM_AUTOBERSERK, "SM_AUTOBERSERK", "Berserk" } ,
- { SM_BASH, "SM_BASH", "Bash" } ,
- { SM_ENDURE, "SM_ENDURE", "Endure" } ,
- { SM_FATALBLOW, "SM_FATALBLOW", "Fatal Blow" } ,
- { SM_MAGNUM, "SM_MAGNUM", "Magnum Break" } ,
- { SM_MOVINGRECOVERY, "SM_MOVINGRECOVERY", "HP Recovery While Moving" } ,
- { SM_PROVOKE, "SM_PROVOKE", "Provoke" } ,
- { SM_RECOVERY, "SM_RECOVERY", "Increase HP Recovery" } ,
- { SM_SWORD, "SM_SWORD", "Sword Mastery" } ,
- { SM_TWOHAND, "SM_TWOHAND", "Two-Handed Sword Mastery" } ,
- { SN_FALCONASSAULT, "SN_FALCONASSAULT", "Falcon Assault" } ,
- { SN_SHARPSHOOTING, "SN_SHARPSHOOTING", "Focused Arrow Strike" } ,
- { SN_SIGHT, "SN_SIGHT", "Falcon Eyes" } ,
- { SN_WINDWALK, "SN_WINDWALK", "Wind Walker" } ,
- { ST_CHASEWALK, "ST_CHASEWALK", "Stealth" } ,
- { ST_FULLSTRIP, "ST_FULLSTRIP", "Full Divestment" } ,
- { ST_PRESERVE, "ST_PRESERVE", "Preserve" } ,
- { ST_REJECTSWORD, "ST_REJECTSWORD", "Counter Instinct" } ,
- { TF_BACKSLIDING, "TF_BACKSLIDING", "Back Slide" } ,
- { TF_DETOXIFY, "TF_DETOXIFY", "Detoxify" } ,
- { TF_DOUBLE, "TF_DOUBLE", "Double Attack" } ,
- { TF_HIDING, "TF_HIDING", "Hiding" } ,
- { TF_MISS, "TF_MISS", "Improve Dodge" } ,
- { TF_PICKSTONE, "TF_PICKSTONE", "Find Stone" } ,
- { TF_POISON, "TF_POISON", "Envenom" } ,
- { TF_SPRINKLESAND, "TF_SPRINKLESAND", "Sand Attack" } ,
- { TF_STEAL, "TF_STEAL", "Steal" } ,
- { TF_THROWSTONE, "TF_THROWSTONE", "Stone Fling" } ,
- { TK_COUNTER, "TK_COUNTER", "Spin Kick" } ,
- { TK_DODGE, "TK_DODGE", "Sprint" } ,
- { TK_DOWNKICK, "TK_DOWNKICK", "Heel Drop" } ,
- { TK_HIGHJUMP, "TK_HIGHJUMP", "Taekwon Jump" } ,
- { TK_HPTIME, "TK_HPTIME", "Peaceful Break" } ,
- { TK_JUMPKICK, "TK_JUMPKICK", "Flying Kick" } ,
- { TK_MISSION,  "TK_MISSION", "Mission" } ,
- { TK_POWER, "TK_POWER", "Kihop" } ,
- { TK_READYCOUNTER, "TK_READYCOUNTER", "Spin Kick Stance" } ,
- { TK_READYDOWN, "TK_READYDOWN", "Heel Drop Stance" } ,
- { TK_READYSTORM, "TK_READYSTORM", "Tornado Stance" } ,
- { TK_READYTURN, "TK_READYTURN", "Roundhouse Stance" } ,
- { TK_RUN, "TK_RUN", "Sprint" } ,
- { TK_SEVENWIND, "TK_SEVENWIND", "Mild Wind" } ,
- { TK_SPTIME, "TK_SPTIME", "Happy Break" } ,
- { TK_STORMKICK, "TK_STORMKICK", "Storm Kick" } ,
- { TK_TURNKICK, "TK_TURNKICK", "Turn Kick" } ,
- { WE_BABY, "WE_BABY", "Mom, Dad, I love you!" } ,
- { WE_CALLBABY, "WE_CALLBABY", "Come to me, honey~" } ,
- { WE_CALLPARENT, "WE_CALLPARENT", "Mom, Dad, I miss you!" } ,
- { WE_CALLPARTNER, "WE_CALLPARTNER", "Romantic Rendezvous" } ,
- { WE_FEMALE, "WE_FEMALE", "Loving Touch" } ,
- { WE_MALE, "WE_MALE", "Undying Love" } ,
- { WS_CARTBOOST, "WS_CARTBOOST", "Cart Boost" } ,
- { WS_CARTTERMINATION, "WS_CARTTERMINATION", "Cart Termination" } ,
- { WS_CREATECOIN, "WS_CREATECOIN", "Coin Craft" } ,
- { WS_CREATENUGGET, "WS_CREATENUGGET", "Nugget Craft" } ,
- { WS_MELTDOWN, "WS_MELTDOWN", "Shattering Strike" } ,
- { WS_OVERTHRUSTMAX, "WS_OVERTHRUSTMAX", "Max Power-Thust" } ,
- { WS_SYSTEMCREATE, "WS_SYSTEMCREATE", "Auto Attacking Machine Craft" } ,
- { WS_WEAPONREFINE, "WS_WEAPONREFINE", "Weapon Refine" } ,
- { WZ_EARTHSPIKE, "WZ_EARTHSPIKE", "Earth Spike" } ,
- { WZ_ESTIMATION, "WZ_ESTIMATION", "Sense" } ,
- { WZ_FIREPILLAR, "WZ_FIREPILLAR", "Fire Pillar" } ,
- { WZ_FROSTNOVA, "WZ_FROSTNOVA", "Frost Nova" } ,
- { WZ_HEAVENDRIVE, "WZ_HEAVENDRIVE", "Heaven's Drive" } ,
- { WZ_ICEWALL, "WZ_ICEWALL", "Ice Wall" } ,
- { WZ_JUPITEL, "WZ_JUPITEL", "Jupitel Thunder" } ,
- { WZ_METEOR, "WZ_METEOR", "Meteor Storm" } ,
- { WZ_QUAGMIRE, "WZ_QUAGMIRE", "Quagmire" } ,
- { WZ_SIGHTBLASTER, "WZ_SIGHTBLASTER", "Sight Blaster" } ,
- { WZ_SIGHTRASHER, "WZ_SIGHTRASHER", "Sightrasher" } ,
- { WZ_STORMGUST, "WZ_STORMGUST", "Storm Gust" } ,
- { WZ_VERMILION, "WZ_VERMILION", "Lord of Vermilion" } ,
- { WZ_WATERBALL, "WZ_WATERBALL", "Water Ball" } ,
- //[blackhole89]
- { HLIF_HEAL, "HLIF_HEAL", "Healing Touch" },
- { HLIF_AVOID, "HLIF_AVOID", "Avoid" },
- { HLIF_BRAIN, "HLIF_BRAIN", "Brain Surgery" },
- { HLIF_CHANGE, "HLIF_CHANGE", "Change" },
- { HAMI_CASTLE, "HAMI_CASTLE", "Castling" },
- { HAMI_DEFENCE, "HAMI_DEFENCE", "Defense" },
- { HAMI_SKIN, "HAMI_SKIN", "Adamantium Skin" },
- { HAMI_BLOODLUST, "HAMI_BLOODLUST", "Bloodlust" },
- { HFLI_MOON, "HFLI_MOON", "Moonlight" },
- { HFLI_FLEET, "HFLI_FLEET", "Fleeting Move" },
- { HFLI_SPEED, "HFLI_SPEED", "Speed" },
- { HFLI_SBR44, "HFLI_SBR44", "S.B.R.44" },
- { HVAN_CAPRICE, "HVAN_CAPRICE", "Caprice" },
- { HVAN_CHAOTIC, "HVAN_CHAOTIC", "Benediction of Chaos" },
- { HVAN_INSTRUCT, "HVAN_INSTRUCT", "Instruct" },
- { HVAN_EXPLOSION, "HVAN_EXPLOSION", "Bio Explosion" },
- { 0, "UNKNOWN_SKILL", "Unknown_Skill" }
-
- };
-
 static struct eri *skill_unit_ers = NULL; //For handling skill_unit's [Skotlex]
 static struct eri *skill_timer_ers = NULL; //For handling skill_timerskills [Skotlex]
 
@@ -675,85 +58,94 @@ int icewall_unit_pos;
 //Since only mob-casted splash skills can hit ice-walls
 #define splash_target(bl) (bl->type==BL_MOB?BL_SKILL|BL_CHAR:BL_CHAR)
 
+/// Maps skill ids to skill db offsets.
+/// Returns the skill's array index, or 0 (Unknown Skill).
+static int skill_get_index( int id )
+{
+	// avoid ranges reserved for mapping guild/homun skills
+	if( id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX )
+		return 0;
+	if( id >= HM_SKILLRANGEMIN && id <= HM_SKILLRANGEMAX )
+		return 0;
+
+	// map skill number to skill id
+	if( id >= GD_SKILLBASE )
+		id = GD_SKILLRANGEMIN + id - GD_SKILLBASE;
+	if( id >= HM_SKILLBASE )
+		id = HM_SKILLRANGEMIN + id - HM_SKILLBASE;
+
+	// validate result
+	if( id <= 0 || id >= MAX_SKILL_DB )
+		return 0;
+
+	return id;
+}
+
+const char* skill_get_name( int id )
+{
+	int index = skill_get_index(id);
+	return ( index > 0 ) ? skill_db[id].name : "UNKNOWN_SKILL";
+}
+
+const char* skill_get_desc( int id )
+{
+	int index = skill_get_index(id);
+	return ( index > 0 ) ? skill_db[id].desc : "Unknown Skill";
+}
+
 // macros to check for out of bounds errors [celest]
 // i: Skill ID, l: Skill Level, var: Value to return after checking
 // for values that don't require level just put a one (putting 0 will trigger return 0; instead
 // for values that might need to use a different function just skill_chk would suffice.
-#define skill_chk(i, l) \
-	if (i >= GD_SKILLRANGEMIN && i <= GD_SKILLRANGEMAX) { return 0; } \
-	if (i >= HM_SKILLRANGEMIN && i <= HM_SKILLRANGEMAX) { return 0; } \
-	if (i >= GD_SKILLBASE) {i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;} \
-	if (i >= HM_SKILLBASE) {i = HM_SKILLRANGEMIN + i - HM_SKILLBASE;} \
-	if (i < 1 || i >= MAX_SKILL_DB) {return 0;} \
-	if (l <= 0 || l > MAX_SKILL_LEVEL) {return 0;}
-#define skill_get(var, i, l) \
-	{ skill_chk(i, l); return var; }
+#define skill_chk(i,l) \
+	if (skill_get_index(i) == 0) return 0; \
+	if (l <= 0 || l > MAX_SKILL_LEVEL) return 0;
+#define skill_get(var,i,l) \
+	{ skill_chk((i), (l)); return (var); }
 
 // Skill DB
-int	skill_get_hit( int id ){ skill_get (skill_db[id].hit, id, 1); }
-int	skill_get_inf( int id ){ skill_get (skill_db[id].inf, id, 1); }
-int	skill_get_ele( int id , int lv ){ skill_get (skill_db[id].element[lv-1], id, lv); }
-int	skill_get_nk( int id ){ skill_get (skill_db[id].nk, id, 1); }
-int	skill_get_max( int id ){ skill_get (skill_db[id].max, id, 1); }
-int	skill_get_range( int id , int lv ){ skill_get(skill_db[id].range[lv-1], id, lv); }
-int	skill_get_splash( int id , int lv ){ skill_chk (id, lv); return (skill_db[id].splash[lv-1]>=0?skill_db[id].splash[lv-1]:AREA_SIZE); }
-int	skill_get_hp( int id ,int lv ){ skill_get (skill_db[id].hp[lv-1], id, lv); }
-int	skill_get_sp( int id ,int lv ){ skill_get (skill_db[id].sp[lv-1], id, lv); }
-int	skill_get_hp_rate(int id, int lv ){ skill_get (skill_db[id].hp_rate[lv-1], id, lv); }
-int	skill_get_sp_rate(int id, int lv ){ skill_get (skill_db[id].sp_rate[lv-1], id, lv); }
-int	skill_get_state(int id) { skill_get (skill_db[id].state, id, 1); }
-int	skill_get_spiritball(int id, int lv) { skill_get (skill_db[id].spiritball[lv-1], id, lv); }
-int	skill_get_itemid(int id, int idx) { skill_get (skill_db[id].itemid[idx], id, 1); }
-int	skill_get_itemqty(int id, int idx) { skill_get (skill_db[id].amount[idx], id, 1); }
-int	skill_get_zeny( int id ,int lv ){ skill_get (skill_db[id].zeny[lv-1], id, lv); }
-int	skill_get_num( int id ,int lv ){ skill_get (skill_db[id].num[lv-1], id, lv); }
-int	skill_get_cast( int id ,int lv ){ skill_get (skill_db[id].cast[lv-1], id, lv); }
-int	skill_get_delay( int id ,int lv ){ skill_get (skill_db[id].delay[lv-1], id, lv); }
-int	skill_get_walkdelay( int id ,int lv ){ skill_get (skill_db[id].walkdelay[lv-1], id, lv); }
-int	skill_get_time( int id ,int lv ){ skill_get (skill_db[id].upkeep_time[lv-1], id, lv); }
-int	skill_get_time2( int id ,int lv ){ skill_get (skill_db[id].upkeep_time2[lv-1], id, lv); }
-int	skill_get_castdef( int id ){ skill_get (skill_db[id].cast_def_rate, id, 1); }
-int	skill_get_weapontype( int id ){ skill_get (skill_db[id].weapon, id, 1); }
-int	skill_get_ammotype( int id ){ skill_get (skill_db[id].ammo, id, 1); }
-int	skill_get_ammo_qty( int id, int lv ){ skill_get (skill_db[id].ammo_qty[lv-1], id, lv); }
-int	skill_get_inf2( int id ){ skill_get (skill_db[id].inf2, id, 1); }
-int	skill_get_castcancel( int id ){ skill_get (skill_db[id].castcancel, id, 1); }
-int	skill_get_maxcount( int id ,int lv ){ skill_get (skill_db[id].maxcount[lv-1], id, lv); }
-int	skill_get_blewcount( int id ,int lv ){ skill_get (skill_db[id].blewcount[lv-1], id, lv); }
-int	skill_get_mhp( int id ,int lv ){ skill_get (skill_db[id].mhp[lv-1], id, lv); }
-int	skill_get_castnodex( int id ,int lv ){ skill_get (skill_db[id].castnodex[lv-1], id, lv); }
+int	skill_get_hit( int id )               { skill_get (skill_db[id].hit, id, 1); }
+int	skill_get_inf( int id )               { skill_get (skill_db[id].inf, id, 1); }
+int	skill_get_ele( int id , int lv )      { skill_get (skill_db[id].element[lv-1], id, lv); }
+int	skill_get_nk( int id )                { skill_get (skill_db[id].nk, id, 1); }
+int	skill_get_max( int id )               { skill_get (skill_db[id].max, id, 1); }
+int	skill_get_range( int id , int lv )    { skill_get (skill_db[id].range[lv-1], id, lv); }
+int	skill_get_splash( int id , int lv )   { skill_chk (id, lv); return (skill_db[id].splash[lv-1]>=0?skill_db[id].splash[lv-1]:AREA_SIZE); }
+int	skill_get_hp( int id ,int lv )        { skill_get (skill_db[id].hp[lv-1], id, lv); }
+int	skill_get_sp( int id ,int lv )        { skill_get (skill_db[id].sp[lv-1], id, lv); }
+int	skill_get_hp_rate(int id, int lv )    { skill_get (skill_db[id].hp_rate[lv-1], id, lv); }
+int	skill_get_sp_rate(int id, int lv )    { skill_get (skill_db[id].sp_rate[lv-1], id, lv); }
+int	skill_get_state(int id)               { skill_get (skill_db[id].state, id, 1); }
+int	skill_get_spiritball(int id, int lv)  { skill_get (skill_db[id].spiritball[lv-1], id, lv); }
+int	skill_get_itemid(int id, int idx)     { skill_get (skill_db[id].itemid[idx], id, 1); }
+int	skill_get_itemqty(int id, int idx)    { skill_get (skill_db[id].amount[idx], id, 1); }
+int	skill_get_zeny( int id ,int lv )      { skill_get (skill_db[id].zeny[lv-1], id, lv); }
+int	skill_get_num( int id ,int lv )       { skill_get (skill_db[id].num[lv-1], id, lv); }
+int	skill_get_cast( int id ,int lv )      { skill_get (skill_db[id].cast[lv-1], id, lv); }
+int	skill_get_delay( int id ,int lv )     { skill_get (skill_db[id].delay[lv-1], id, lv); }
+int	skill_get_walkdelay( int id ,int lv ) { skill_get (skill_db[id].walkdelay[lv-1], id, lv); }
+int	skill_get_time( int id ,int lv )      { skill_get (skill_db[id].upkeep_time[lv-1], id, lv); }
+int	skill_get_time2( int id ,int lv )     { skill_get (skill_db[id].upkeep_time2[lv-1], id, lv); }
+int	skill_get_castdef( int id )           { skill_get (skill_db[id].cast_def_rate, id, 1); }
+int	skill_get_weapontype( int id )        { skill_get (skill_db[id].weapon, id, 1); }
+int	skill_get_ammotype( int id )          { skill_get (skill_db[id].ammo, id, 1); }
+int	skill_get_ammo_qty( int id, int lv )  { skill_get (skill_db[id].ammo_qty[lv-1], id, lv); }
+int	skill_get_inf2( int id )              { skill_get (skill_db[id].inf2, id, 1); }
+int	skill_get_castcancel( int id )        { skill_get (skill_db[id].castcancel, id, 1); }
+int	skill_get_maxcount( int id ,int lv )  { skill_get (skill_db[id].maxcount[lv-1], id, lv); }
+int	skill_get_blewcount( int id ,int lv ) { skill_get (skill_db[id].blewcount[lv-1], id, lv); }
+int	skill_get_mhp( int id ,int lv )       { skill_get (skill_db[id].mhp[lv-1], id, lv); }
+int	skill_get_castnodex( int id ,int lv ) { skill_get (skill_db[id].castnodex[lv-1], id, lv); }
 int	skill_get_delaynodex( int id ,int lv ){ skill_get (skill_db[id].delaynodex[lv-1], id, lv); }
-int	skill_get_nocast ( int id ){ skill_get (skill_db[id].nocast, id, 1); }
-int	skill_get_type( int id ){ skill_get (skill_db[id].skill_type, id, 1); }
+int	skill_get_nocast ( int id )           { skill_get (skill_db[id].nocast, id, 1); }
+int	skill_get_type( int id )              { skill_get (skill_db[id].skill_type, id, 1); }
 int	skill_get_unit_id ( int id, int flag ){ skill_get (skill_db[id].unit_id[flag], id, 1); }
-int	skill_get_unit_layout_type( int id ,int lv ){ skill_get (skill_db[id].unit_layout_type[lv-1], id, lv); }
-int	skill_get_unit_interval( int id ){ skill_get (skill_db[id].unit_interval, id, 1); }
+int	skill_get_unit_interval( int id )     { skill_get (skill_db[id].unit_interval, id, 1); }
 int	skill_get_unit_range( int id, int lv ){ skill_get (skill_db[id].unit_range[lv-1], id, lv); }
-int	skill_get_unit_target( int id ){ skill_get ((skill_db[id].unit_target&BCT_ALL), id, 1); }
-int	skill_get_unit_bl_target( int id ){ skill_get ((skill_db[id].unit_target&BL_ALL), id, 1); }
-int	skill_get_unit_flag( int id ){ skill_get (skill_db[id].unit_flag, id, 1); }
-const char*	skill_get_name( int id ){
-	if (id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX)
-		return "UNKNOWN_SKILL";
-	if (id >= GD_SKILLBASE)
-		id = GD_SKILLRANGEMIN + id - GD_SKILLBASE;
-	if (id >= HM_SKILLBASE)	//[orn]
-		id = HM_SKILLRANGEMIN + id - HM_SKILLBASE;
-	if (id < 1 || id > MAX_SKILL_DB || skill_db[id].name==NULL)
-		return "UNKNOWN_SKILL"; //Can't use skill_chk because we return a string.
-	return skill_db[id].name; 
-}
-const char*	skill_get_desc( int id ){
-	if (id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX)
-		return "Unknown Skill";
-	if (id >= GD_SKILLBASE)
-		id = GD_SKILLRANGEMIN + id - GD_SKILLBASE;
-	if (id >= HM_SKILLBASE)	//[orn]
-		id = HM_SKILLRANGEMIN + id - HM_SKILLBASE;
-	if (id < 1 || id > MAX_SKILL_DB || skill_db[id].desc==NULL)
-		return "Unknown Skill"; //Can't use skill_chk because we return a string.
-	return skill_db[id].desc; 
-}
+int	skill_get_unit_target( int id )       { skill_get (skill_db[id].unit_target&BCT_ALL, id, 1); }
+int	skill_get_unit_bl_target( int id )    { skill_get (skill_db[id].unit_target&BL_ALL, id, 1); }
+int	skill_get_unit_flag( int id )         { skill_get (skill_db[id].unit_flag, id, 1); }
+int	skill_get_unit_layout_type( int id ,int lv ){ skill_get (skill_db[id].unit_layout_type[lv-1], id, lv); }
 
 int skill_tree_get_max(int id, int b_class)
 {
@@ -892,20 +284,13 @@ int can_copy (struct map_session_data *sd, int skillid)
 // [MouseJstr] - skill ok to cast? and when?
 int skillnotok (int skillid, struct map_session_data *sd)
 {	
-	int i = skillid,m;
+	int i,m;
 	nullpo_retr (1, sd);
 	m = sd->bl.m;
-
-	if (skillid >= GD_SKILLRANGEMIN && skillid <= GD_SKILLRANGEMAX)
-		return 1;
-
-	if (i >= GD_SKILLBASE)
-		i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
-	if (i >= HM_SKILLBASE)	//[orn]
-		i = HM_SKILLRANGEMIN + i - HM_SKILLBASE;
+	i = skill_get_index(skillid);
 	
-	if (i > MAX_SKILL || i < 0)
-		return 1;
+	if (i == 0)
+		return 1; // invalid skill id
 	
 	if (battle_config.gm_skilluncond && pc_isGM(sd) >= battle_config.gm_skilluncond)
 		return 0;  // GMs can do any damn thing they want
@@ -974,19 +359,11 @@ int skillnotok (int skillid, struct map_session_data *sd)
 // [orn] - skill ok to cast? and when?	//homunculus
 int skillnotok_hom (int skillid, struct homun_data *hd)
 {
-	int i = skillid;
+	int i = skill_get_index(skillid);
 	nullpo_retr (1, hd);
-	
-	if (skillid >= GD_SKILLRANGEMIN && skillid <= GD_SKILLRANGEMAX)
-		return 1;
 
-	if (i >= GD_SKILLBASE)
-		i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
-	if (i >= HM_SKILLBASE)	//[orn]
-		i = HM_SKILLRANGEMIN + i - HM_SKILLBASE;
-	
-	if (i > MAX_SKILL || i < 0)
-		return 1;
+	if (i == 0)
+		return 1; // invalid skill id
 	
 	if (hd->blockskill[i] > 0)
 		return 1;
@@ -4403,10 +3780,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if (md) {
 			// custom hack to make the mob display the skill, because these skills don't show the skill use text themselves
 			//NOTE: mobs don't have the sprite animation that is used when performing this skill (will cause glitches)
-			char temp[128];
-			if (strlen(md->name) + strlen(skill_db[skillid].desc) > 120)
-				break; //Message won't fit on buffer. [Skotlex]
-			sprintf(temp,"%s : %s !!",md->name,skill_db[skillid].desc);
+			char temp[70];
+			snprintf(temp, sizeof(temp), "%s : %s !!",md->name,skill_db[skillid].desc);
 			clif_message(&md->bl,temp);
 		}
 		break;
@@ -7470,9 +6845,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_SANDMAN:
 		case UNT_FLASHER:
 		case UNT_FREEZINGTRAP:
-			map_foreachinrange(skill_trap_splash,&src->bl,
-				skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
-				&src->bl,tick,type);
+			map_foreachinrange(skill_trap_splash,&src->bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &src->bl,tick,type);
 			clif_changetraplook(&src->bl, sg->unit_id==UNT_LANDMINE?UNT_FIREPILLAR_ACTIVE:UNT_USED_TRAPS);
 			src->range = -1; //Disable range so it does not invoke a for each in area again.
 			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
@@ -8137,18 +7510,14 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 			sd->skillitem = sd->skillitemlv = 0;
 		return 1;
 	}
-	// for the guild skills [celest]
-	if (skill >= GD_SKILLBASE)
-		j = GD_SKILLRANGEMIN + skill - GD_SKILLBASE;
-	else if (skill >= HM_SKILLBASE)	//[orn]
-		j = HM_SKILLRANGEMIN + skill - HM_SKILLBASE;
-	else
-		j = skill;
-	if (j < 0 || j >= MAX_SKILL_DB)
+
+	j = skill_get_index(skill);
+	if (j == 0) // invalid skill id
   		return 0;
-	//Code speedup, rather than using skill_get_* over and over again.
 	if (lv < 1 || lv > MAX_SKILL_LEVEL)
 		return 0;
+
+	//Code speedup, rather than using skill_get_* over and over again.
 	hp = skill_db[j].hp[lv-1];
 	sp = skill_db[j].sp[lv-1];
 	if((sd->skillid_old == BD_ENCORE) && skill == sd->skillid_dance)
@@ -10999,11 +10368,8 @@ int skill_blockpc_start(struct map_session_data *sd, int skillid, int tick)
 {
 	nullpo_retr (-1, sd);
 
-	if (skillid >= GD_SKILLBASE)
-		skillid = GD_SKILLRANGEMIN + skillid - GD_SKILLBASE;
-	if (skillid >= HM_SKILLBASE)	//[orn]
-		skillid = HM_SKILLRANGEMIN + skillid - HM_SKILLBASE;
-	if (skillid < 1 || skillid > MAX_SKILL)
+	skillid = skill_get_index(skillid);
+	if (skillid == 0)
 		return -1;
 
 	if (tick < 1) {
@@ -11029,11 +10395,8 @@ int skill_blockmerc_start(struct homun_data *hd, int skillid, int tick)	//[orn]
 {
 	nullpo_retr (-1, hd);
 	
-	if (skillid >= GD_SKILLBASE)
-		skillid = GD_SKILLRANGEMIN + skillid - GD_SKILLBASE;
-	if (skillid >= HM_SKILLBASE)	//[orn]
-		skillid = HM_SKILLRANGEMIN + skillid - HM_SKILLBASE;
-	if (skillid < 1 || skillid > MAX_SKILL)
+	skillid = skill_get_index(skillid);
+	if (skillid == 0)
 		return -1;
 
 	if (tick < 1) {
@@ -11052,12 +10415,14 @@ int skill_split_str (char *str, char **val, int num)
 {
 	int i;
 
-	for (i=0; i<num && str; i++){
+	for( i = 0; i < num && str; i++ )
+	{
 		val[i] = str;
 		str = strchr(str,',');
-		if (str)
+		if( str )
 			*str++=0;
 	}
+
 	return i;
 }
 /*
@@ -11352,11 +10717,11 @@ void skill_init_unit_layout (void)
  *------------------------------------------*/
 int skill_readdb (void)
 {
-	int i,j,k,l,m;
+	int i,j,k,l,lines;
 	FILE *fp;
 	char line[1024],path[1024],*p;
-	char *filename[]={"produce_db.txt","produce_db2.txt"};
 
+	// load 'skill_db.txt'
 	memset(skill_db,0,sizeof(skill_db));
 	sprintf(path, "%s/skill_db.txt", db_path);
 	fp=fopen(path,"r");
@@ -11364,25 +10729,29 @@ int skill_readdb (void)
 		ShowError("can't read %s\n", path);
 		return 1;
 	}
+	lines = 0;
 	while(fgets(line, sizeof(line), fp))
 	{
-		char *split[50];
+		char* split[50];
+		lines++;
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		j = skill_split_str(line,split,15);
-		if(j < 15 || split[14]==NULL)
-			continue;
+		j = skill_split_str(line,split,17);
+		if( j < 2 )
+			continue; // empty line
+		if( j < 17 )
+		{
+			ShowError("skill_readdb: Insufficient columns in line %d of \"%s\" (skill with id %d), skipping.\n", lines, path, atoi(split[0]));
+			continue; // not enough columns
+		}
 
-		i=atoi(split[0]);
+		i = atoi(split[0]);
 		if (i >= GD_SKILLRANGEMIN && i <= GD_SKILLRANGEMAX) {
 			ShowWarning("read skill_db: Can't use skill id %d as guild skills are placed there!\n");
 			continue;
 		}
-		if (i >= GD_SKILLBASE)
-			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
-		if (i >= HM_SKILLBASE)	//[orn]
-			i = HM_SKILLRANGEMIN + i - HM_SKILLBASE;
-		if(i<=0 || i>MAX_SKILL_DB)
+		i = skill_get_index(i);
+		if (i == 0) // invalid skill id
 			continue;
 		
 		skill_split_atoi(split[1],skill_db[i].range);
@@ -11410,17 +10779,13 @@ int skill_readdb (void)
 		else
 			skill_db[i].skill_type=0;
 		skill_split_atoi(split[14],skill_db[i].blewcount);
-
-		for (j = 0; skill_names[j].id != 0; j++)
-			if (skill_names[j].id == i) {
-				skill_db[i].name = skill_names[j].name;
-				skill_db[i].desc = skill_names[j].desc;
-				break;
-			}
+		safestrncpy(skill_db[i].name, split[15], sizeof(skill_db[i].name));
+		safestrncpy(skill_db[i].desc, split[16], sizeof(skill_db[i].desc));
 	}
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
 
+	// load 'skill_require_db.txt'
 	sprintf(path, "%s/skill_require_db.txt", db_path);
 	fp=fopen(path,"r");
 	if(fp==NULL){
@@ -11433,15 +10798,12 @@ int skill_readdb (void)
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		j = skill_split_str(line,split,32);
-		if(j < 32 || split[31]==NULL)
+		if( j < 32 )
 			continue;
 
-		i=atoi(split[0]);
-		if (i >= GD_SKILLBASE)
-			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
-		if (i >= HM_SKILLBASE)	//[orn]
-			i = HM_SKILLRANGEMIN + i - HM_SKILLBASE;
-		if(i<=0 || i>MAX_SKILL_DB)
+		i = atoi(split[0]);
+		i = skill_get_index(i);
+		if(i == 0) // invalid skill id
 			continue;
 
 		skill_split_atoi(split[1],skill_db[i].hp);
@@ -11506,7 +10868,7 @@ int skill_readdb (void)
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
 
-
+	// load 'skill_cast_db.txt'
 	sprintf(path, "%s/skill_cast_db.txt", db_path);
 	fp=fopen(path,"r");
 	if(fp==NULL){
@@ -11523,18 +10885,15 @@ int skill_readdb (void)
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		j = skill_split_str(line,split,6);
-		if(split[0]==NULL || j<2)
+		if( j < 2 )
 			continue; //Blank line.
-		if(split[5]==NULL || j<6) {
+		if( j < 6) {
 			ShowWarning("skill_cast_db.txt: Insufficient number of fields at line %d\n", l);
 			continue;
 		}
-		i=atoi(split[0]);
-		if (i >= GD_SKILLBASE)
-			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
-		if (i >= HM_SKILLBASE)	//[orn]
-			i = HM_SKILLRANGEMIN + i - HM_SKILLBASE;
-		if(i<=0 || i>MAX_SKILL_DB)
+		i = atoi(split[0]);
+		i = skill_get_index(i);
+		if(i == 0) // invalid skill id
 			continue;
 
 		skill_split_atoi(split[1],skill_db[i].cast);
@@ -11546,29 +10905,26 @@ int skill_readdb (void)
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
 
-
+	// load 'skill_unit_db.txt'
 	sprintf(path, "%s/skill_unit_db.txt", db_path);
 	fp=fopen(path,"r");
 	if (fp==NULL) {
 		ShowError("can't read %s\n", path);
 		return 1;
 	}
-        k = 0;
+	k = 0;
 	while (fgets(line, sizeof(line), fp))
 	{
 		char *split[50];
 		if (line[0]=='/' && line[1]=='/')
 			continue;
 		j = skill_split_str(line,split,8);
-		if (split[7]==NULL || j<8)
+		if ( j < 8 )
 			continue;
 
-		i=atoi(split[0]);
-		if (i >= GD_SKILLBASE)
-			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
-		if (i >= HM_SKILLBASE)	//[orn]
-			i = HM_SKILLRANGEMIN + i - HM_SKILLBASE;
-		if(i<=0 || i>MAX_SKILL_DB)
+		i = atoi(split[0]);
+		i = skill_get_index(i);
+		if(i == 0) // invalid skill id
 			continue;
 		skill_db[i].unit_id[0] = strtol(split[1],NULL,16);
 		skill_db[i].unit_id[1] = strtol(split[2],NULL,16);
@@ -11605,68 +10961,65 @@ int skill_readdb (void)
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
 	skill_init_unit_layout();
 
+	// load 'produce_db.txt'
 	memset(skill_produce_db,0,sizeof(skill_produce_db));
-	k=0;
-	for(m=0;m<2;m++){
-		sprintf(path, "%s/%s", db_path, filename[m]);
-		fp=fopen(path,"r");
-		if(fp==NULL){
-			if(m>0)
-				continue;
-			ShowError("can't read %s\n",path);
-			return 1;
-		}
-		while(fgets(line, sizeof(line), fp))
-		{
-			char *split[7 + MAX_PRODUCE_RESOURCE * 2];
-			int x,y;
-			if(line[0]=='/' && line[1]=='/')
-				continue;
-			memset(split,0,sizeof(split));
-			j = skill_split_str(line,split,(4 + MAX_PRODUCE_RESOURCE * 2));
-			if(split[0]==0) //fixed by Lupus
-				continue;
-			i=atoi(split[0]);
-			if(i<=0) continue;
-
-			skill_produce_db[k].nameid=i;
-			skill_produce_db[k].itemlv=atoi(split[1]);
-			skill_produce_db[k].req_skill=atoi(split[2]);
-			skill_produce_db[k].req_skill_lv=atoi(split[3]);
-
-			for(x=4,y=0; split[x] && split[x+1] && y<MAX_PRODUCE_RESOURCE; x+=2,y++){
-				skill_produce_db[k].mat_id[y]=atoi(split[x]);
-				skill_produce_db[k].mat_amount[y]=atoi(split[x+1]);
-			}
-			k++;
-			if(k >= MAX_SKILL_PRODUCE_DB)
-			{
-				ShowError("Reached the max number of produce_db entries (%d), consider raising the value of MAX_SKILL_PRODUCE_DB and recompile.\n", MAX_SKILL_PRODUCE_DB);
-				break;
-			}
-		}
-		fclose(fp);
-		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",k,path);
+	sprintf(path, "%s/produce_db.txt", db_path);
+	fp=fopen(path,"r");
+	if(fp==NULL){
+		ShowError("can't read %s\n",path);
+		return 1;
 	}
+	k = 0;
+	while(fgets(line, sizeof(line), fp))
+	{
+		char* split[4 + MAX_PRODUCE_RESOURCE * 2];
+		int x,y;
+		if(line[0]=='/' && line[1]=='/')
+			continue;
+		memset(split,0,sizeof(split));
+		j = skill_split_str(line,split,(4 + MAX_PRODUCE_RESOURCE * 2));
+		if( j < 4 ) // at least base data needed
+			continue;
+		i=atoi(split[0]);
+		if(i<=0) continue;
 
+		skill_produce_db[k].nameid=i;
+		skill_produce_db[k].itemlv=atoi(split[1]);
+		skill_produce_db[k].req_skill=atoi(split[2]);
+		skill_produce_db[k].req_skill_lv=atoi(split[3]);
+
+		for(x=4,y=0; split[x] && split[x+1] && y<MAX_PRODUCE_RESOURCE; x+=2,y++){
+			skill_produce_db[k].mat_id[y]=atoi(split[x]);
+			skill_produce_db[k].mat_amount[y]=atoi(split[x+1]);
+		}
+		k++;
+		if(k >= MAX_SKILL_PRODUCE_DB)
+		{
+			ShowError("Reached the max number of produce_db entries (%d), consider raising the value of MAX_SKILL_PRODUCE_DB and recompile.\n", MAX_SKILL_PRODUCE_DB);
+			break;
+		}
+	}
+	fclose(fp);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",k,path);
+
+	// load 'create_arrow_db.txt'
 	memset(skill_arrow_db,0,sizeof(skill_arrow_db));
-
 	sprintf(path, "%s/create_arrow_db.txt", db_path);
 	fp=fopen(path,"r");
 	if(fp==NULL){
 		ShowError("can't read %s\n", path);
 		return 1;
 	}
-	k=0;
+	k = 0;
 	while(fgets(line, sizeof(line), fp))
 	{
-		char *split[16];
+		char* split[16];
 		int x,y;
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		memset(split,0,sizeof(split));
-		j = skill_split_str(line,split,13);
-		if(split[0]==0) //fixed by Lupus
+		j = skill_split_str(line,split,1+2*5);
+		if( j < 3 ) // at least 1 entry
 			continue;
 		i=atoi(split[0]);
 		if(i<=0)
@@ -11685,6 +11038,7 @@ int skill_readdb (void)
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",k,path);
 
+	// load 'abra_db.txt'
 	memset(skill_abra_db,0,sizeof(skill_abra_db));
 	sprintf(path, "%s/abra_db.txt", db_path);
 	fp=fopen(path,"r");
@@ -11692,15 +11046,15 @@ int skill_readdb (void)
 		ShowError("can't read %s\n", path);
 		return 1;
 	}
-	k=0;
+	k = 0;
 	while(fgets(line, sizeof(line), fp))
 	{
 		char *split[16];
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 		memset(split,0,sizeof(split));
-		j = skill_split_str(line,split,13);
-		if(split[0]==0) //fixed by Lupus
+		j = skill_split_str(line,split,4);
+		if( j < 4 )
 			continue;
 		i=atoi(split[0]);
 		if(i<=0)
@@ -11716,6 +11070,7 @@ int skill_readdb (void)
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",k,path);
 
+	// load 'skill_castnodex_db.txt'
 	sprintf(path, "%s/skill_castnodex_db.txt", db_path);
 	fp=fopen(path,"r");
 	if(fp==NULL){
@@ -11729,12 +11084,11 @@ int skill_readdb (void)
 			continue;
 		memset(split,0,sizeof(split));
 		j = skill_split_str(line,split,3);
-		if(split[0]==0) //fixed by Lupus
+		if( j < 2 ) //3rd is optional
 			continue;
-		i=atoi(split[0]);
-		if (i >= GD_SKILLBASE)
-			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
-		if(i<=0 || i>MAX_SKILL_DB)
+		i = atoi(split[0]);
+		i = skill_get_index(i);
+		if(i == 0) // invalid skill id
 			continue;
 
 		skill_split_atoi(split[1],skill_db[i].castnodex);
@@ -11745,13 +11099,14 @@ int skill_readdb (void)
 	fclose(fp);
 	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
 
+	// load 'skill_nocast_db.txt'
 	sprintf(path, "%s/skill_nocast_db.txt", db_path);
 	fp=fopen(path,"r");
 	if(fp==NULL){
 		ShowError("can't read %s\n", path);
 		return 1;
 	}
-	k=0;
+	k = 0;
 	while(fgets(line, sizeof(line), fp))
 	{
 		char *split[16];
@@ -11759,12 +11114,11 @@ int skill_readdb (void)
 			continue;
 		memset(split,0,sizeof(split));
 		j = skill_split_str(line,split,2);
-		if(split[0]==0) //fixed by Lupus
+		if( j < 2 )
 			continue;
-		i=atoi(split[0]);
-		if (i >= GD_SKILLBASE)
-			i = GD_SKILLRANGEMIN + i - GD_SKILLBASE;
-		if(i<=0 || i>MAX_SKILL_DB)
+		i = atoi(split[0]);
+		i = skill_get_index(i);
+		if(i == 0) // invalid skill id
 			continue;
 		skill_db[i].nocast|=atoi(split[1]);
 		k++;
