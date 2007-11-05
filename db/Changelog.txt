@@ -26,6 +26,7 @@
 
 =======================
 11/05
+	* Fixed Imp using a too high level of Firebolt [Playtester]
 	* Updated DEF and MDEF of Moscovia mobs [Playtester]
 11/02
 	* Rev. 11641 Minor fixes/updates to various items. [L0ne_W0lf]

@@ -4446,7 +4446,7 @@
 1837,Fire Imp@KN_BRANDISHSPEAR,attack,57,8,1000,1000,5000,no,target,always,,,,,,,
 1837,Fire Imp@MG_FIREWALL,chase,18,10,3000,1000,10000,no,target,always,,,,,,,
 1837,Fire Imp@MG_FIREWALL,attack,18,10,3000,1000,10000,no,target,always,,,,,,,
-1837,Fire Imp@MG_FIREBOLT,attack,19,20,3000,1000,10000,no,target,always,,,,,,,
+1837,Fire Imp@MG_FIREBOLT,attack,19,10,3000,1000,10000,no,target,always,,,,,,,
 1837,Fire Imp@MG_FIREBALL,attack,17,20,3000,500,10000,no,target,always,,,,,,,
 1837,Fire Imp@MG_FIREBALL,chase,17,20,3000,500,10000,no,target,always,,,,,,,
 1837,Fire Imp@NPC_FIREATTACK,attack,186,5,1000,0,5000,yes,target,always,,,,,,,
