@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/11/05
+	* Rev 11661 Fixed a bug in Orange Potion creating. Copy&Pasting = bad.[L0ne_W0lf]
 2007/11/04
 	* Updated Thor Volcano spawns [Playtester]
 	* Rev. 11653 Fixed a bug in sage job quest. [L0ne_W0lf]
