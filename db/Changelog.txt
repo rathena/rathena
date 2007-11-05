@@ -25,6 +25,8 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+11/05
+	* Updated DEF and MDEF of Moscovia mobs [Playtester]
 11/02
 	* Rev. 11641 Minor fixes/updates to various items. [L0ne_W0lf]
 	* Added trap mode to Firepillar [Playtester]
