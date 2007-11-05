@@ -5620,8 +5620,7 @@ int atcommand_skillid(const int fd, struct map_session_data* sd, const char* com
 	skillen = strlen(message);
 
 	for (idx = 0; idx < MAX_SKILL_DB; idx++) {
-		if ((skill_db[idx].name != NULL && strnicmp(skill_db[idx].name, message, skillen) == 0) ||
-			(skill_db[idx].desc != NULL && strnicmp(skill_db[idx].desc, message, skillen) == 0))
+		if (strnicmp(skill_db[idx].name, message, skillen) == 0 || strnicmp(skill_db[idx].desc, message, skillen) == 0)
 		{
 			sprintf(atcmd_output, "skill %d: %s", idx, skill_db[idx].desc);
 			clif_displaymessage(fd, atcmd_output);
@@ -5750,12 +5749,9 @@ int atcommand_skilltree(const int fd, struct map_session_data* sd, const char* c
 	ent = &skill_tree[c][skillidx];
 
 	for(j=0;j<5;j++)
-		if( ent->need[j].id &&
-			pc_checkskill(sd,ent->need[j].id) < ent->need[j].lv)
+		if( ent->need[j].id && pc_checkskill(sd,ent->need[j].id) < ent->need[j].lv)
 		{
-			char *desc = (skill_db[ ent->need[j].id ].desc) ? skill_db[ ent->need[j].id ].desc : "Unknown skill";
-			sprintf(atcmd_output, "player requires level %d of skill %s",
-				ent->need[j].lv, desc);
+			sprintf(atcmd_output, "player requires level %d of skill %s", ent->need[j].lv, skill_db[ent->need[j].id].desc);
 			clif_displaymessage(fd, atcmd_output);
 			meets = 0;
 		}

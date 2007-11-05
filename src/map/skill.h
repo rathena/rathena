@@ -61,7 +61,7 @@
 
 // スキルデ?タベ?ス
 struct s_skill_db {
-	char name[20];
+	char name[NAME_LENGTH];
 	char desc[40];
 	int range[MAX_SKILL_LEVEL],hit,inf,element[MAX_SKILL_LEVEL],nk,splash[MAX_SKILL_LEVEL],max;
 	int num[MAX_SKILL_LEVEL];

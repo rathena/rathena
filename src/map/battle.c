@@ -1244,7 +1244,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 					if(wflag>0)
 						wd.damage/= wflag;
 					else if(battle_config.error_log)
-						ShowError("0 enemies targeted by %s, divide per 0 avoided!\n", skill_get_name(skill_num));
+						ShowError("0 enemies targeted by %d:%s, divide per 0 avoided!\n", skill_num, skill_get_name(skill_num));
 				}
 
 				//Add any bonuses that modify the base baseatk+watk (pre-skills)
@@ -2221,7 +2221,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					if(mflag>0)
 						ad.damage/= mflag;
 					else if(battle_config.error_log)
-						ShowError("0 enemies targeted by %s, divide per 0 avoided!\n", skill_get_name(skill_num));
+						ShowError("0 enemies targeted by %d:%s, divide per 0 avoided!\n", skill_num, skill_get_name(skill_num));
 				}
 
 				switch(skill_num){
@@ -2564,7 +2564,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		if(mflag>0)
 			md.damage/= mflag;
 		else if(battle_config.error_log)
-			ShowError("0 enemies targeted by %s, divide per 0 avoided!\n", skill_get_name(skill_num));
+			ShowError("0 enemies targeted by %d:%s, divide per 0 avoided!\n", skill_num, skill_get_name(skill_num));
 	}
 
 	damage_div_fix(md.damage, md.div_);

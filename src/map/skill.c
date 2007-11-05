@@ -83,14 +83,12 @@ static int skill_get_index( int id )
 
 const char* skill_get_name( int id )
 {
-	int index = skill_get_index(id);
-	return ( index > 0 ) ? skill_db[id].name : "UNKNOWN_SKILL";
+	return skill_db[skill_get_index(id)].name;
 }
 
 const char* skill_get_desc( int id )
 {
-	int index = skill_get_index(id);
-	return ( index > 0 ) ? skill_db[id].desc : "Unknown Skill";
+	return skill_db[skill_get_index(id)].desc;
 }
 
 // macros to check for out of bounds errors [celest]
@@ -7394,8 +7392,7 @@ static int skill_check_condition_mob_master_sub (struct block_list *bl, va_list 
 	skill=va_arg(ap,int);
 	c=va_arg(ap,int *);
 
-	if(md->master_id != src_id ||
-		md->special_state.ai != (skill == AM_SPHEREMINE?2:3))
+	if( md->master_id != src_id || md->special_state.ai != (unsigned)(skill == AM_SPHEREMINE?2:3) )
 		return 0; //Non alchemist summoned mobs have nothing to do here.
 
 	if(md->class_==mob_class)
@@ -8549,7 +8546,7 @@ void skill_weaponrefine (struct map_session_data *sd, int idx)
 				clif_misceffect(&sd->bl,3);
 				if(item->refine == MAX_REFINE &&
 					item->card[0] == CARD0_FORGE &&
-					MakeDWord(item->card[2],item->card[3]) == sd->status.char_id)
+					(int)MakeDWord(item->card[2],item->card[3]) == sd->status.char_id)
 				{ // Fame point system [DracoRPG]
 					switch(ditem->wlv){
 						case 1:
@@ -10710,422 +10707,369 @@ void skill_init_unit_layout (void)
 /*==========================================
  * DB reading.
  * skill_db.txt
+ * skill_require_db.txt
  * skill_cast_db.txt
+ * skill_unit_db.txt
  * produce_db.txt 
  * create_arrow_db.txt
  * abra_db.txt
+ * skill_castnodex_db.txt
+ * skill_nocast_db.txt
  *------------------------------------------*/
-int skill_readdb (void)
+/// Opens and parses a CSV file into columns, feeding them to the specified callback function row by row.
+/// Tracks the progress of the operation (file position, number of successfully processed rows).
+/// Returns 'true' if it was able to process the specified file, or 'false' if it could not be read.
+static bool skill_read_csvdb( const char* directory, const char* filename, int mincolumns, bool (*parseproc)(char* split[], int columns, int current) )
 {
-	int i,j,k,l,lines;
-	FILE *fp;
-	char line[1024],path[1024],*p;
+	FILE* fp;
+	int lines = 0;
+	int entries = 0;
+	char path[1024], line[1024];
 
-	// load 'skill_db.txt'
-	memset(skill_db,0,sizeof(skill_db));
-	sprintf(path, "%s/skill_db.txt", db_path);
-	fp=fopen(path,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
+	// open file
+	snprintf(path, sizeof(path), "%s/%s", directory, filename);
+	fp = fopen(path,"r");
+	if( fp == NULL )
+	{
+		ShowError("skill_read_db: can't read %s\n", path);
+		return false;
 	}
-	lines = 0;
-	while(fgets(line, sizeof(line), fp))
+
+	// process rows one by one
+	while( fgets(line, sizeof(line), fp) )
 	{
 		char* split[50];
+		int columns;
+
 		lines++;
-		if(line[0]=='/' && line[1]=='/')
+		if( line[0] == '/' && line[1] == '/' )
 			continue;
-		j = skill_split_str(line,split,17);
-		if( j < 2 )
+		//TODO: strip trailing // comment
+		//TODO: strip trailing whitespace
+		//TODO: skip empty lines
+
+		memset(split,0,sizeof(split));
+		columns = skill_split_str(line,split,ARRAYLENGTH(split));
+		if( columns < 2 ) // FIXME: assumes db has at least 2 mandatory columns
 			continue; // empty line
-		if( j < 17 )
+		if( columns < mincolumns )
 		{
-			ShowError("skill_readdb: Insufficient columns in line %d of \"%s\" (skill with id %d), skipping.\n", lines, path, atoi(split[0]));
+			ShowError("skill_read_csvdb: Insufficient columns in line %d of \"%s\" (found %d, need at least %d).\n", lines, path, columns, mincolumns);
 			continue; // not enough columns
 		}
-
-		i = atoi(split[0]);
-		if (i >= GD_SKILLRANGEMIN && i <= GD_SKILLRANGEMAX) {
-			ShowWarning("read skill_db: Can't use skill id %d as guild skills are placed there!\n");
-			continue;
-		}
-		i = skill_get_index(i);
-		if (i == 0) // invalid skill id
-			continue;
-		
-		skill_split_atoi(split[1],skill_db[i].range);
-		skill_db[i].hit=atoi(split[2]);
-		skill_db[i].inf=atoi(split[3]);
-		skill_split_atoi(split[4],skill_db[i].element);
-		skill_db[i].nk=(int)strtol(split[5], NULL, 0);
-		skill_split_atoi(split[6],skill_db[i].splash);
-		skill_db[i].max=atoi(split[7]);
-		skill_split_atoi(split[8],skill_db[i].num);
-
-		if(strcmpi(split[9],"yes") == 0)
-			skill_db[i].castcancel=1;
-		else
-			skill_db[i].castcancel=0;
-		skill_db[i].cast_def_rate=atoi(split[10]);
-		skill_db[i].inf2=(int)strtol(split[11], NULL, 0);
-		skill_split_atoi(split[12], skill_db[i].maxcount);
-		if(strcmpi(split[13],"weapon") == 0)
-			skill_db[i].skill_type=BF_WEAPON;
-		else if(strcmpi(split[13],"magic") == 0)
-			skill_db[i].skill_type=BF_MAGIC;
-		else if(strcmpi(split[13],"misc") == 0)
-			skill_db[i].skill_type=BF_MISC;
-		else
-			skill_db[i].skill_type=0;
-		skill_split_atoi(split[14],skill_db[i].blewcount);
-		safestrncpy(skill_db[i].name, split[15], sizeof(skill_db[i].name));
-		safestrncpy(skill_db[i].desc, split[16], sizeof(skill_db[i].desc));
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
-
-	// load 'skill_require_db.txt'
-	sprintf(path, "%s/skill_require_db.txt", db_path);
-	fp=fopen(path,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-	while(fgets(line, sizeof(line), fp))
-	{
-		char *split[50];
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		j = skill_split_str(line,split,32);
-		if( j < 32 )
-			continue;
-
-		i = atoi(split[0]);
-		i = skill_get_index(i);
-		if(i == 0) // invalid skill id
-			continue;
-
-		skill_split_atoi(split[1],skill_db[i].hp);
-		skill_split_atoi(split[2],skill_db[i].mhp);
-		skill_split_atoi(split[3],skill_db[i].sp);
-		skill_split_atoi(split[4],skill_db[i].hp_rate);
-		skill_split_atoi(split[5],skill_db[i].sp_rate);
-		skill_split_atoi(split[6],skill_db[i].zeny);
-		
-		p = split[7];
-		for(j=0;j<32;j++){
-			l = atoi(p);
-			if (l==99) {
-				skill_db[i].weapon = 0xffffffff;
-				break;
-			}
-			else
-				skill_db[i].weapon |= 1<<l;
-			p=strchr(p,':');
-			if(!p)
-				break;
-			p++;
-		}
-
-		p = split[8];
-		for(j=0;j<32;j++){
-			l = atoi(p);
-			if (l==99) {
-				skill_db[i].ammo = 0xffffffff;
-				break;
-			}
-			else if (l)
-				skill_db[i].ammo |= 1<<l;
-			p=strchr(p,':');
-			if(!p)
-				break;
-			p++;
-		}
-		skill_split_atoi(split[9],skill_db[i].ammo_qty);
-
-		if( strcmpi(split[10],"hiding")==0 ) skill_db[i].state=ST_HIDING;
-		else if( strcmpi(split[10],"cloaking")==0 ) skill_db[i].state=ST_CLOAKING;
-		else if( strcmpi(split[10],"hidden")==0 ) skill_db[i].state=ST_HIDDEN;
-		else if( strcmpi(split[10],"riding")==0 ) skill_db[i].state=ST_RIDING;
-		else if( strcmpi(split[10],"falcon")==0 ) skill_db[i].state=ST_FALCON;
-		else if( strcmpi(split[10],"cart")==0 ) skill_db[i].state=ST_CART;
-		else if( strcmpi(split[10],"shield")==0 ) skill_db[i].state=ST_SHIELD;
-		else if( strcmpi(split[10],"sight")==0 ) skill_db[i].state=ST_SIGHT;
-		else if( strcmpi(split[10],"explosionspirits")==0 ) skill_db[i].state=ST_EXPLOSIONSPIRITS;
-		else if( strcmpi(split[10],"cartboost")==0 ) skill_db[i].state=ST_CARTBOOST;
-		else if( strcmpi(split[10],"recover_weight_rate")==0 ) skill_db[i].state=ST_RECOV_WEIGHT_RATE;
-		else if( strcmpi(split[10],"move_enable")==0 ) skill_db[i].state=ST_MOVE_ENABLE;
-		else if( strcmpi(split[10],"water")==0 ) skill_db[i].state=ST_WATER;
-		else skill_db[i].state=ST_NONE;
-
-		skill_split_atoi(split[11],skill_db[i].spiritball);
-		for (j = 0; j < 10; j++) {
-			skill_db[i].itemid[j]=atoi(split[12+ 2*j]);
-			skill_db[i].amount[j]=atoi(split[13+ 2*j]);
-		}
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
-
-	// load 'skill_cast_db.txt'
-	sprintf(path, "%s/skill_cast_db.txt", db_path);
-	fp=fopen(path,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-
-	l=0;
-	while(fgets(line, sizeof(line), fp))
-	{
-		char *split[50];
-		l++;
-		memset(split,0,sizeof(split));	// [Valaris] thanks to fov
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		j = skill_split_str(line,split,6);
-		if( j < 2 )
-			continue; //Blank line.
-		if( j < 6) {
-			ShowWarning("skill_cast_db.txt: Insufficient number of fields at line %d\n", l);
-			continue;
-		}
-		i = atoi(split[0]);
-		i = skill_get_index(i);
-		if(i == 0) // invalid skill id
-			continue;
-
-		skill_split_atoi(split[1],skill_db[i].cast);
-		skill_split_atoi(split[2],skill_db[i].delay);
-		skill_split_atoi(split[3],skill_db[i].walkdelay);
-		skill_split_atoi(split[4],skill_db[i].upkeep_time);
-		skill_split_atoi(split[5],skill_db[i].upkeep_time2);
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
-
-	// load 'skill_unit_db.txt'
-	sprintf(path, "%s/skill_unit_db.txt", db_path);
-	fp=fopen(path,"r");
-	if (fp==NULL) {
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-	k = 0;
-	while (fgets(line, sizeof(line), fp))
-	{
-		char *split[50];
-		if (line[0]=='/' && line[1]=='/')
-			continue;
-		j = skill_split_str(line,split,8);
-		if ( j < 8 )
-			continue;
-
-		i = atoi(split[0]);
-		i = skill_get_index(i);
-		if(i == 0) // invalid skill id
-			continue;
-		skill_db[i].unit_id[0] = strtol(split[1],NULL,16);
-		skill_db[i].unit_id[1] = strtol(split[2],NULL,16);
-		skill_split_atoi(split[3],skill_db[i].unit_layout_type);
-		skill_split_atoi(split[4],skill_db[i].unit_range);
-		skill_db[i].unit_interval = atoi(split[5]);
-
-		if( strcmpi(split[6],"noenemy")==0 ) skill_db[i].unit_target=BCT_NOENEMY;
-		else if( strcmpi(split[6],"friend")==0 ) skill_db[i].unit_target=BCT_NOENEMY;
-		else if( strcmpi(split[6],"party")==0 ) skill_db[i].unit_target=BCT_PARTY;
-		else if( strcmpi(split[6],"ally")==0 ) skill_db[i].unit_target=BCT_PARTY|BCT_GUILD;
-		else if( strcmpi(split[6],"all")==0 ) skill_db[i].unit_target=BCT_ALL;
-		else if( strcmpi(split[6],"enemy")==0 ) skill_db[i].unit_target=BCT_ENEMY;
-		else if( strcmpi(split[6],"self")==0 ) skill_db[i].unit_target=BCT_SELF;
-		else if( strcmpi(split[6],"noone")==0 ) skill_db[i].unit_target=BCT_NOONE;
-		else skill_db[i].unit_target = strtol(split[6],NULL,16);
-
-		skill_db[i].unit_flag = strtol(split[7],NULL,16);
-
-		if (skill_db[i].unit_flag&UF_DEFNOTENEMY && battle_config.defnotenemy)
-			skill_db[i].unit_target=BCT_NOENEMY;
-
-		//By default, target just characters.
-		skill_db[i].unit_target |= BL_CHAR;
-		if (skill_db[i].unit_flag&UF_NOPC)
-			skill_db[i].unit_target &= ~BL_PC;
-		if (skill_db[i].unit_flag&UF_NOMOB)
-			skill_db[i].unit_target &= ~BL_MOB;
-		if (skill_db[i].unit_flag&UF_SKILL)
-			skill_db[i].unit_target |= BL_SKILL;
-		k++;
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
-	skill_init_unit_layout();
-
-	// load 'produce_db.txt'
-	memset(skill_produce_db,0,sizeof(skill_produce_db));
-	sprintf(path, "%s/produce_db.txt", db_path);
-	fp=fopen(path,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n",path);
-		return 1;
-	}
-	k = 0;
-	while(fgets(line, sizeof(line), fp))
-	{
-		char* split[4 + MAX_PRODUCE_RESOURCE * 2];
-		int x,y;
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		memset(split,0,sizeof(split));
-		j = skill_split_str(line,split,(4 + MAX_PRODUCE_RESOURCE * 2));
-		if( j < 4 ) // at least base data needed
-			continue;
-		i=atoi(split[0]);
-		if(i<=0) continue;
-
-		skill_produce_db[k].nameid=i;
-		skill_produce_db[k].itemlv=atoi(split[1]);
-		skill_produce_db[k].req_skill=atoi(split[2]);
-		skill_produce_db[k].req_skill_lv=atoi(split[3]);
-
-		for(x=4,y=0; split[x] && split[x+1] && y<MAX_PRODUCE_RESOURCE; x+=2,y++){
-			skill_produce_db[k].mat_id[y]=atoi(split[x]);
-			skill_produce_db[k].mat_amount[y]=atoi(split[x+1]);
-		}
-		k++;
-		if(k >= MAX_SKILL_PRODUCE_DB)
+		if( columns > ARRAYLENGTH(split) )
 		{
-			ShowError("Reached the max number of produce_db entries (%d), consider raising the value of MAX_SKILL_PRODUCE_DB and recompile.\n", MAX_SKILL_PRODUCE_DB);
+			ShowError("skill_read_csvdb: Too many columns in line %d of \"%s\" (found %d, capacity %d). Increase the capacity in the source code please.\n", lines, path, columns, ARRAYLENGTH(split) );
+			continue; // source code problem
+		}
+
+		// parse this row
+		if( parseproc(split, columns, entries) )
+			entries++;
+	}
+
+	fclose(fp);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, path);
+
+	return true;
+}
+
+static bool skill_parse_row_skilldb(char* split[], int columns, int current)
+{// id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,name,description
+	int i = atoi(split[0]);
+	if( i >= GD_SKILLRANGEMIN && i <= GD_SKILLRANGEMAX ) {
+		ShowWarning("skill_parse_row_skilldb: Skill id %d is forbidden (interferes with guild skill mapping)!\n");
+		return false;
+	}
+	if( i >= HM_SKILLRANGEMIN && i <= HM_SKILLRANGEMAX ) {
+		ShowWarning("skill_parse_row_skilldb: Skill id %d is forbidden (interferes with homunculus skill mapping)!\n");
+		return false;
+	}
+	i = skill_get_index(i);
+	if( !i ) // invalid skill id
+		return false;
+
+	skill_split_atoi(split[1],skill_db[i].range);
+	skill_db[i].hit = atoi(split[2]);
+	skill_db[i].inf = atoi(split[3]);
+	skill_split_atoi(split[4],skill_db[i].element);
+	skill_db[i].nk = (int)strtol(split[5], NULL, 0);
+	skill_split_atoi(split[6],skill_db[i].splash);
+	skill_db[i].max = atoi(split[7]);
+	skill_split_atoi(split[8],skill_db[i].num);
+
+	if( strcmpi(split[9],"yes") == 0 )
+		skill_db[i].castcancel = 1;
+	else
+		skill_db[i].castcancel = 0;
+	skill_db[i].cast_def_rate = atoi(split[10]);
+	skill_db[i].inf2 = (int)strtol(split[11], NULL, 0);
+	skill_split_atoi(split[12],skill_db[i].maxcount);
+	if( strcmpi(split[13],"weapon") == 0 )
+		skill_db[i].skill_type = BF_WEAPON;
+	else if( strcmpi(split[13],"magic") == 0 )
+		skill_db[i].skill_type = BF_MAGIC;
+	else if( strcmpi(split[13],"misc") == 0 )
+		skill_db[i].skill_type = BF_MISC;
+	else
+		skill_db[i].skill_type = 0;
+	skill_split_atoi(split[14],skill_db[i].blewcount);
+	safestrncpy(skill_db[i].name, split[15], sizeof(skill_db[i].name));
+	safestrncpy(skill_db[i].desc, split[16], sizeof(skill_db[i].desc));
+
+	return true;
+}
+
+static bool skill_parse_row_requiredb(char* split[], int columns, int current)
+{// SkillID,HPCost,MaxHPTrigger,SPCost,HPRateCost,SPRateCost,ZenyCost,RequiredWeapons,RequiredAmmoTypes,RequiredAmmoAmount,RequiredState,SpiritSphereCost,RequiredItemID1,RequiredItemAmount1,RequiredItemID2,RequiredItemAmount2,RequiredItemID3,RequiredItemAmount3,RequiredItemID4,RequiredItemAmount4,RequiredItemID5,RequiredItemAmount5,RequiredItemID6,RequiredItemAmount6,RequiredItemID7,RequiredItemAmount7,RequiredItemID8,RequiredItemAmount8,RequiredItemID9,RequiredItemAmount9,RequiredItemID10,RequiredItemAmount10
+	char* p;
+	int j;
+
+	int i = atoi(split[0]);
+	i = skill_get_index(i);
+	if( !i ) // invalid skill id
+		return false;
+
+	skill_split_atoi(split[1],skill_db[i].hp);
+	skill_split_atoi(split[2],skill_db[i].mhp);
+	skill_split_atoi(split[3],skill_db[i].sp);
+	skill_split_atoi(split[4],skill_db[i].hp_rate);
+	skill_split_atoi(split[5],skill_db[i].sp_rate);
+	skill_split_atoi(split[6],skill_db[i].zeny);
+	
+	//FIXME: document this
+	p = split[7];
+	for( j = 0; j < 32; j++ )
+	{
+		int l = atoi(p);
+		if( l == 99 ) // magic value?
+		{
+			skill_db[i].weapon = 0xffffffff;
 			break;
 		}
+		else
+			skill_db[i].weapon |= 1<<l;
+		p = strchr(p,':');
+		if(!p)
+			break;
+		p++;
 	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",k,path);
+	
+	//FIXME: document this
+	p = split[8];
+	for( j = 0; j < 32; j++ )
+	{
+		int l = atoi(p);
+		if( l == 99 ) // magic value?
+		{
+			skill_db[i].ammo = 0xffffffff;
+			break;
+		}
+		else if( l ) // 0 not allowed?
+			skill_db[i].ammo |= 1<<l;
+		p = strchr(p,':');
+		if( !p )
+			break;
+		p++;
+	}
+	skill_split_atoi(split[9],skill_db[i].ammo_qty);
 
-	// load 'create_arrow_db.txt'
+	if(      strcmpi(split[10],"hiding")==0 ) skill_db[i].state = ST_HIDING;
+	else if( strcmpi(split[10],"cloaking")==0 ) skill_db[i].state = ST_CLOAKING;
+	else if( strcmpi(split[10],"hidden")==0 ) skill_db[i].state = ST_HIDDEN;
+	else if( strcmpi(split[10],"riding")==0 ) skill_db[i].state = ST_RIDING;
+	else if( strcmpi(split[10],"falcon")==0 ) skill_db[i].state = ST_FALCON;
+	else if( strcmpi(split[10],"cart")==0 ) skill_db[i].state = ST_CART;
+	else if( strcmpi(split[10],"shield")==0 ) skill_db[i].state = ST_SHIELD;
+	else if( strcmpi(split[10],"sight")==0 ) skill_db[i].state = ST_SIGHT;
+	else if( strcmpi(split[10],"explosionspirits")==0 ) skill_db[i].state = ST_EXPLOSIONSPIRITS;
+	else if( strcmpi(split[10],"cartboost")==0 ) skill_db[i].state = ST_CARTBOOST;
+	else if( strcmpi(split[10],"recover_weight_rate")==0 ) skill_db[i].state = ST_RECOV_WEIGHT_RATE;
+	else if( strcmpi(split[10],"move_enable")==0 ) skill_db[i].state = ST_MOVE_ENABLE;
+	else if( strcmpi(split[10],"water")==0 ) skill_db[i].state = ST_WATER;
+	else skill_db[i].state = ST_NONE;
+	
+	skill_split_atoi(split[11],skill_db[i].spiritball);
+	for( j = 0; j < 10; j++ ) {
+		skill_db[i].itemid[j] = atoi(split[12+ 2*j]);
+		skill_db[i].amount[j] = atoi(split[13+ 2*j]);
+	}
+
+	return true;
+}
+
+static bool skill_parse_row_castdb(char* split[], int columns, int current)
+{// SkillID,CastingTime,AfterCastActDelay,AfterCastWalkDelay,Duration1,Duration2
+	int i = atoi(split[0]);
+	i = skill_get_index(i);
+	if( !i ) // invalid skill id
+		return false;
+	
+	skill_split_atoi(split[1],skill_db[i].cast);
+	skill_split_atoi(split[2],skill_db[i].delay);
+	skill_split_atoi(split[3],skill_db[i].walkdelay);
+	skill_split_atoi(split[4],skill_db[i].upkeep_time);
+	skill_split_atoi(split[5],skill_db[i].upkeep_time2);
+
+	return true;
+}
+
+static bool skill_parse_row_unitdb(char* split[], int columns, int current)
+{// ID,unit ID,unit ID 2,layout,range,interval,target,flag
+	int i = atoi(split[0]);
+	i = skill_get_index(i);
+	if( !i ) // invalid skill id
+		return false;
+	
+	skill_db[i].unit_id[0] = strtol(split[1],NULL,16);
+	skill_db[i].unit_id[1] = strtol(split[2],NULL,16);
+	skill_split_atoi(split[3],skill_db[i].unit_layout_type);
+	skill_split_atoi(split[4],skill_db[i].unit_range);
+	skill_db[i].unit_interval = atoi(split[5]);
+
+	if( strcmpi(split[6],"noenemy")==0 ) skill_db[i].unit_target = BCT_NOENEMY;
+	else if( strcmpi(split[6],"friend")==0 ) skill_db[i].unit_target = BCT_NOENEMY;
+	else if( strcmpi(split[6],"party")==0 ) skill_db[i].unit_target = BCT_PARTY;
+	else if( strcmpi(split[6],"ally")==0 ) skill_db[i].unit_target = BCT_PARTY|BCT_GUILD;
+	else if( strcmpi(split[6],"all")==0 ) skill_db[i].unit_target = BCT_ALL;
+	else if( strcmpi(split[6],"enemy")==0 ) skill_db[i].unit_target = BCT_ENEMY;
+	else if( strcmpi(split[6],"self")==0 ) skill_db[i].unit_target = BCT_SELF;
+	else if( strcmpi(split[6],"noone")==0 ) skill_db[i].unit_target = BCT_NOONE;
+	else skill_db[i].unit_target = strtol(split[6],NULL,16);
+
+	skill_db[i].unit_flag = strtol(split[7],NULL,16);
+
+	if (skill_db[i].unit_flag&UF_DEFNOTENEMY && battle_config.defnotenemy)
+		skill_db[i].unit_target = BCT_NOENEMY;
+
+	//By default, target just characters.
+	skill_db[i].unit_target |= BL_CHAR;
+	if (skill_db[i].unit_flag&UF_NOPC)
+		skill_db[i].unit_target &= ~BL_PC;
+	if (skill_db[i].unit_flag&UF_NOMOB)
+		skill_db[i].unit_target &= ~BL_MOB;
+	if (skill_db[i].unit_flag&UF_SKILL)
+		skill_db[i].unit_target |= BL_SKILL;
+
+	return true;
+}
+
+static bool skill_parse_row_producedb(char* split[], int columns, int current)
+{// ProduceItemID,ItemLV,RequireSkill,RequireSkillLv,MaterialID1,MaterialAmount1,......
+	int x,y;
+
+	int i = atoi(split[0]);
+	if( !i )
+		return false;
+	if( current == MAX_SKILL_PRODUCE_DB )
+		return false;
+
+	skill_produce_db[current].nameid = i;
+	skill_produce_db[current].itemlv = atoi(split[1]);
+	skill_produce_db[current].req_skill = atoi(split[2]);
+	skill_produce_db[current].req_skill_lv = atoi(split[3]);
+	
+	for( x = 4, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_PRODUCE_RESOURCE; x += 2, y++ )
+	{
+		skill_produce_db[current].mat_id[y] = atoi(split[x]);
+		skill_produce_db[current].mat_amount[y] = atoi(split[x+1]);
+	}
+
+	if( current == MAX_SKILL_PRODUCE_DB-1 )
+		ShowWarning("Reached the max number of produce_db entries (%d), consider raising the value of MAX_SKILL_PRODUCE_DB and recompile.\n", MAX_SKILL_PRODUCE_DB);
+
+	return true;
+}
+
+static bool skill_parse_row_createarrowdb(char* split[], int columns, int current)
+{// SourceID,MakeID1,MakeAmount1,...,MakeID5,MakeAmount5
+	int x,y;
+
+	int i = atoi(split[0]);
+	if( !i )
+		return false;
+	if( current == MAX_SKILL_ARROW_DB )
+		return false;
+
+	skill_arrow_db[current].nameid = i;
+	
+	for( x = 1, y = 0; x+1 < columns && split[x] && split[x+1] && y < 5; x += 2, y++ )
+	{
+		skill_arrow_db[current].cre_id[y] = atoi(split[x]);
+		skill_arrow_db[current].cre_amount[y] = atoi(split[x+1]);
+	}
+
+	//TODO?: add capacity warning here
+
+	return true;
+}
+
+static bool skill_parse_row_abradb(char* split[], int columns, int current)
+{// SkillID,DummyName,RequiredHocusPocusLevel,Rate
+	int i = atoi(split[0]);
+	i = skill_get_index(i);
+	if( !i )
+		return false;
+	if( current == MAX_SKILL_ABRA_DB )
+		return false;
+
+	skill_abra_db[i].req_lv = atoi(split[2]);
+	skill_abra_db[i].per = atoi(split[3]);
+
+	//TODO?: add capacity warning here
+
+	return true;
+}
+
+static bool skill_parse_row_castnodexdb(char* split[], int columns, int current)
+{// Skill id,Cast,Delay (optional)
+	int i = atoi(split[0]);
+	i = skill_get_index(i);
+	if( !i ) // invalid skill id
+		return false;
+	
+	skill_split_atoi(split[1],skill_db[i].castnodex);
+	if( !split[2] ) // optional column
+		return false;
+	skill_split_atoi(split[2],skill_db[i].delaynodex);
+
+	return true;
+}
+
+static bool skill_parse_row_nocastdb(char* split[], int columns, int current)
+{// SkillID,Flag
+	int i = atoi(split[0]);
+	i = skill_get_index(i);
+	if( !i ) // invalid skill id
+		return false;
+
+	skill_db[i].nocast |= atoi(split[1]);
+
+	return true;
+}
+
+int skill_readdb(void)
+{
+	// init skill db structures
+	memset(skill_db,0,sizeof(skill_db));
+	memset(skill_produce_db,0,sizeof(skill_produce_db));
 	memset(skill_arrow_db,0,sizeof(skill_arrow_db));
-	sprintf(path, "%s/create_arrow_db.txt", db_path);
-	fp=fopen(path,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-	k = 0;
-	while(fgets(line, sizeof(line), fp))
-	{
-		char* split[16];
-		int x,y;
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		memset(split,0,sizeof(split));
-		j = skill_split_str(line,split,1+2*5);
-		if( j < 3 ) // at least 1 entry
-			continue;
-		i=atoi(split[0]);
-		if(i<=0)
-			continue;
-
-		skill_arrow_db[k].nameid=i;
-
-		for(x=1,y=0;split[x] && split[x+1] && y<5;x+=2,y++){
-			skill_arrow_db[k].cre_id[y]=atoi(split[x]);
-			skill_arrow_db[k].cre_amount[y]=atoi(split[x+1]);
-		}
-		k++;
-		if(k >= MAX_SKILL_ARROW_DB)
-			break;
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",k,path);
-
-	// load 'abra_db.txt'
 	memset(skill_abra_db,0,sizeof(skill_abra_db));
-	sprintf(path, "%s/abra_db.txt", db_path);
-	fp=fopen(path,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-	k = 0;
-	while(fgets(line, sizeof(line), fp))
-	{
-		char *split[16];
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		memset(split,0,sizeof(split));
-		j = skill_split_str(line,split,4);
-		if( j < 4 )
-			continue;
-		i=atoi(split[0]);
-		if(i<=0)
-			continue;
-
-		skill_abra_db[i].req_lv=atoi(split[2]);
-		skill_abra_db[i].per=atoi(split[3]);
-
-		k++;
-		if(k >= MAX_SKILL_ABRA_DB)
-			break;
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n",k,path);
-
-	// load 'skill_castnodex_db.txt'
-	sprintf(path, "%s/skill_castnodex_db.txt", db_path);
-	fp=fopen(path,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-	while(fgets(line, sizeof(line), fp))
-	{
-		char *split[50];
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		memset(split,0,sizeof(split));
-		j = skill_split_str(line,split,3);
-		if( j < 2 ) //3rd is optional
-			continue;
-		i = atoi(split[0]);
-		i = skill_get_index(i);
-		if(i == 0) // invalid skill id
-			continue;
-
-		skill_split_atoi(split[1],skill_db[i].castnodex);
-		if (!split[2])
-			continue;
-		skill_split_atoi(split[2],skill_db[i].delaynodex);
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
-
-	// load 'skill_nocast_db.txt'
-	sprintf(path, "%s/skill_nocast_db.txt", db_path);
-	fp=fopen(path,"r");
-	if(fp==NULL){
-		ShowError("can't read %s\n", path);
-		return 1;
-	}
-	k = 0;
-	while(fgets(line, sizeof(line), fp))
-	{
-		char *split[16];
-		if(line[0]=='/' && line[1]=='/')
-			continue;
-		memset(split,0,sizeof(split));
-		j = skill_split_str(line,split,2);
-		if( j < 2 )
-			continue;
-		i = atoi(split[0]);
-		i = skill_get_index(i);
-		if(i == 0) // invalid skill id
-			continue;
-		skill_db[i].nocast|=atoi(split[1]);
-		k++;
-	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%s"CL_RESET"'.\n",path);
-
+	
+	// load skill databases
+	skill_read_csvdb(db_path, "skill_db.txt", 17, skill_parse_row_skilldb);
+	safestrncpy(skill_db[0].name, "UNKNOWN_SKILL", sizeof(skill_db[0].name));
+	safestrncpy(skill_db[0].desc, "Unknown Skill", sizeof(skill_db[0].desc));
+	skill_read_csvdb(db_path, "skill_require_db.txt", 17, skill_parse_row_requiredb);
+	skill_read_csvdb(db_path, "skill_cast_db.txt", 6, skill_parse_row_castdb);
+	skill_read_csvdb(db_path, "skill_unit_db.txt", 8, skill_parse_row_unitdb);
+	skill_init_unit_layout();
+	skill_read_csvdb(db_path, "produce_db.txt", 4, skill_parse_row_producedb);
+	skill_read_csvdb(db_path, "create_arrow_db.txt", 1+2, skill_parse_row_createarrowdb);
+	skill_read_csvdb(db_path, "abra_db.txt", 4, skill_parse_row_abradb);
+	skill_read_csvdb(db_path, "skill_castnodex_db.txt", 2, skill_parse_row_castnodexdb);
+	skill_read_csvdb(db_path, "skill_nocast_db.txt", 2, skill_parse_row_nocastdb);
+	
 	return 0;
 }
 

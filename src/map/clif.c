@@ -1433,7 +1433,7 @@ int clif_homskillinfoblock(struct map_session_data *sd)
 			WFIFOW(fd,len+6) = hd->homunculus.hskill[j].lv ;
 			WFIFOW(fd,len+8) = skill_get_sp(id,hd->homunculus.hskill[j].lv) ;
 			WFIFOW(fd,len+10)= skill_get_range2(&sd->hd->bl, id,hd->homunculus.hskill[j].lv) ;
-			strncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH) ;
+			safestrncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH) ;
 			WFIFOB(fd,len+36) = (hd->homunculus.hskill[j].lv < merc_skill_tree_get_max(id, hd->homunculus.class_))?1:0;
 			len+=37;
 		}
@@ -4135,7 +4135,7 @@ int clif_skillinfo(struct map_session_data *sd,int skillid,int type,int range)
 		range = skill_get_range2(&sd->bl, id,sd->status.skill[skillid].lv);
 
 	WFIFOW(fd,12)= range;
-	strncpy((char*)WFIFOP(fd,14), skill_get_name(id), NAME_LENGTH);
+	safestrncpy((char*)WFIFOP(fd,14), skill_get_name(id), NAME_LENGTH);
 	if(sd->status.skill[skillid].flag ==0)
 		WFIFOB(fd,38)= (sd->status.skill[skillid].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
 	else
@@ -4170,7 +4170,7 @@ int clif_skillinfoblock(struct map_session_data *sd)
 			WFIFOW(fd,len+6) = sd->status.skill[i].lv;
 			WFIFOW(fd,len+8) = skill_get_sp(id,sd->status.skill[i].lv);
 			WFIFOW(fd,len+10)= skill_get_range2(&sd->bl, id,sd->status.skill[i].lv);
-			strncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH);
+			safestrncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH);
 			if(sd->status.skill[i].flag == 0)
 				WFIFOB(fd,len+36) = (sd->status.skill[i].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
 			else
@@ -5261,7 +5261,7 @@ int clif_item_skill(struct map_session_data *sd,int skillid,int skilllv)
 	WFIFOW(fd, 8)=skilllv;
 	WFIFOW(fd,10)=skill_get_sp(skillid,skilllv);
 	WFIFOW(fd,12)=skill_get_range2(&sd->bl, skillid,skilllv);
-	strncpy((char*)WFIFOP(fd,14),skill_get_name(skillid),NAME_LENGTH);
+	safestrncpy((char*)WFIFOP(fd,14),skill_get_name(skillid),NAME_LENGTH);
 	WFIFOB(fd,38)=0;
 	WFIFOSET(fd,packet_len(0x147));
 	return 0;
@@ -6623,7 +6623,7 @@ int clif_guild_skillinfo(struct map_session_data* sd)
 			WFIFOW(fd,c*37+12) = g->skill[i].lv;
 			WFIFOW(fd,c*37+14) = skill_get_sp(id, g->skill[i].lv);
 			WFIFOW(fd,c*37+16) = skill_get_range(id, g->skill[i].lv);
-			strncpy((char*)WFIFOP(fd,c*37+18), skill_get_name(id), NAME_LENGTH);
+			safestrncpy((char*)WFIFOP(fd,c*37+18), skill_get_name(id), NAME_LENGTH);
 			WFIFOB(fd,c*37+42)= (g->skill[i].lv < guild_skill_get_max(id) && sd == g->member[0].sd) ? 1 : 0;
 			c++;
 		}
