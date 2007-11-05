@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/11/05
+	* Reverted official drop rate estimation [Playtester]
+	- although it really exists we don't have enough information about it
+	- if server owners really want it they can implement it themselves
+	  (it's just a one-line fix anyways)
 	* Cleaned up skill db lookup code
 	- added some well-behaved functions to replace macros (skill_get_index)
 	- used skill_get_index() to replace often occuring blocks of code
