@@ -26,6 +26,7 @@
 
 =======================
 11/05
+	* Rev. 11673 Updated some of the 12.1 armor, added Brynhildr and ASepirka. [L0ne_W0lf]
 	* Fixed Imp using a too high level of Firebolt [Playtester]
 	* Updated DEF and MDEF of Moscovia mobs [Playtester]
 11/02
