@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/11/05
+	* Rev 11678 Corrected aldeg_cas02 treasure room coordinates. [L0ne_W0lf]
 	* Rev 11677 Fixed errors in the Halloween 2006 event script. :P [L0ne_W0lf]
 	* Rev 11676 Added the Halloween 2006 event script. [L0ne_W0lf]
 	* Rev 11675 Added the Christmas 2005 event script. [L0ne_W0lf]
