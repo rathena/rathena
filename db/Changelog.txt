@@ -25,6 +25,8 @@
 	13034 Desert_Twilight		Small chance to activate max Attack Speed for 7 seconds.
 
 =======================
+11/06
+	* Rev. 11686 Fixed Aesprika's item ID. [L0ne_W0lf]
 11/05
 	* Rev. 11676 Added drops for Event Lude. [L0ne_W0lf]
 	* Rev. 11673 Updated some of the 12.1 armor, added Brynhildr and ASepirka. [L0ne_W0lf]

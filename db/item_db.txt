@@ -1246,7 +1246,7 @@
 2535,Clack_of_Survival_C,Refined Survivor's Manteau,5,,0,0,,5,,0,0x00810204,7,2,4,,1,0,0,{ bonus bVit,10; bonus bMdef,10; if (isequipped(1618) || isequipped(1620)) { bonus bMatkRate,5; bonus2 bSubEle,Ele_Neutral,25; } },{},{}
 2536,Skin_of_Ventoss,Skin of Ventoss,5,,,250,,2,,1,0xFFFFFFFE,7,2,4,,60,1,0,{ bonus bMdef,5; bonus bMaxHP,200; bonus bFlee,10; },{},{}
 2537,Diablos_Manteau,Diablos Manteau,5,,,250,,5,,1,0x000FDF80,2,2,4,,1,1,0,{ bonus2 bSubEle,Ele_Neutral,5; bonus bMaxHP,100; if (isequipped(2433)) bonus bMaxHPRate,6; },{},{}
-2536,Aesprika,Aesprika,5,,,400,,5,,0,0xFFFFFFFF,7,2,4,,94,0,0,{ bonus bMdef,5; bonus2 bSubEle,Ele_Neutral,30; bonus2 bSubEle,Ele_Water,30; bonus2 bSubEle,Ele_Earth,30; bonus2 bSubEle,Ele_Fire,30; bonus2 bSubEle,Ele_Wind,30; bonus2 bSubEle,Ele_Poison,30; bonus2 bSubEle,Ele_Holy,30; bonus2 bSubEle,Ele_Dark,30; bonus2 bSubEle,Ele_Ghost,30; bonus2 bSubEle,Ele_Undead,30; bonus bFlee,30; skill 26,1; bonus bUnbreakableArmor,0; },{},{}
+2541,Aesprika,Aesprika,5,,,400,,5,,0,0xFFFFFFFF,7,2,4,,94,0,0,{ bonus bMdef,5; bonus2 bSubEle,Ele_Neutral,30; bonus2 bSubEle,Ele_Water,30; bonus2 bSubEle,Ele_Earth,30; bonus2 bSubEle,Ele_Fire,30; bonus2 bSubEle,Ele_Wind,30; bonus2 bSubEle,Ele_Poison,30; bonus2 bSubEle,Ele_Holy,30; bonus2 bSubEle,Ele_Dark,30; bonus2 bSubEle,Ele_Ghost,30; bonus2 bSubEle,Ele_Undead,30; bonus bFlee,30; skill 26,1; bonus bUnbreakableArmor,0; },{},{}
 // Accessories
 //===================================================================
 2601,Ring,Ring,5,30000,,100,,0,,0,0xFFFFFFFE,7,2,136,,20,0,0,{ bonus bStr,2; },{},{}
