@@ -4,7 +4,7 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.5
+//= 1.5a
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.4 Updated Guardian positions and types. [L0ne_W0lf]
 //=	Updated manager names, and some additional info
 //= 1.5 Corrected aldeg_cas02 treasure room coordinates. [L0ne_W0lf]
+//= 1.5a Another bug fix in an NPC that magically broke. [L0ne_W0lf]
 //============================================================
 
 // Castle 1 ==================================================================================
@@ -54,7 +55,7 @@ aldeg_cas02,78,74,0	script	Chenchenlie#alde2	55,{
 // Castle 3 ==================================================================================
 aldeg_cas03,110,118,0	script	Nahzarf#alde3	55,{
 
-	if(callfunc("F_GldManager","Chen Lee","aldeg_cas03",229,267,"A03") == 0) close;
+	if(callfunc("F_GldManager","Chen Lee","aldeg_cas03",229,267,"A03") == 0) close;
 
 	if (@GDnum == 10) guardian "aldeg_cas03",90,112,"Guardian Knight",1286,"Guardian_A03::OnGuardianDied",0;
 	if (@GDnum == 11) guardian "aldeg_cas03",116,112,"Guardian Knight",1286,"Guardian_A03::OnGuardianDied",1;
