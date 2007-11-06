@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Brainstorm
 //===== Current Version: =====================================
-//= 1.1
+//= 1.1a
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -13,6 +13,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First semi-working conversion. [Brainstorm]
 //= 1.1 Refined Brainstorm's conversion. [L0ne_W0lf]
+//= 1.1a Minor fixes. (Screwed up weight checks somehow) [L0ne_W0lf]
 //============================================================
 
 // Pumpkin Mojo quest (Event 1)
@@ -39,13 +40,13 @@ prontera,164,69,3	script	Cool Devi#06_hw	738,{
 		close;
 	}*/
 	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000)
-		mes "^3355FFWait a second!"
-		mes "Right now, you're carrying"
-		mes "too many things with you."
-		mes "Please come back after"
-		mes "using the Kafra Service"
-		mes "to store some of your items.^000000"
+	if (.@now_weight < 2000) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
 		close;
 	}
 	if (countitem(7609) > 0) {
@@ -246,13 +247,13 @@ geffen,145,132,3	script	Hoirin#06_hw	729,{
 		close;
 	}*/
 	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000)
-		mes "^3355FFWait a second!"
-		mes "Right now, you're carrying"
-		mes "too many things with you."
-		mes "Please come back after"
-		mes "using the Kafra Service"
-		mes "to store some of your items.^000000"
+	if (.@now_weight < 2000) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
 		close;
 	}
 	if (halloween < 100) {
@@ -412,13 +413,13 @@ nif_in,19,32,3	script	Deviruchi#06_hw	738,{
 		close;
 	}*/
 	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000)
-		mes "^3355FFWait a second!"
-		mes "Right now, you're carrying"
-		mes "too many things with you."
-		mes "Please come back after"
-		mes "using the Kafra Service"
-		mes "to store some of your items.^000000"
+	if (.@now_weight < 2000) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
 		close;
 	}
 	mes "[Loli Ruri]";
@@ -514,13 +515,13 @@ nif_fild01,165,115,3	script	Chicken Masta#06_hw	794,{
 		close;
 	}*/
 	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000)
-		mes "^3355FFWait a second!"
-		mes "Right now, you're carrying"
-		mes "too many things with you."
-		mes "Please come back after"
-		mes "using the Kafra Service"
-		mes "to store some of your items.^000000"
+	if (.@now_weight < 2000) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
 		close;
 	}
 	if (halloween == 101) {
