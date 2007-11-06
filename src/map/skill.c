@@ -91,15 +91,17 @@ const char* skill_get_desc( int id )
 	return skill_db[skill_get_index(id)].desc;
 }
 
-// macros to check for out of bounds errors [celest]
+// out of bounds error checking [celest]
 // i: Skill ID, l: Skill Level, var: Value to return after checking
 // for values that don't require level just put a one (putting 0 will trigger return 0; instead
 // for values that might need to use a different function just skill_chk would suffice.
-#define skill_chk(i,l) \
-	if (skill_get_index(i) == 0) return 0; \
-	if (l <= 0 || l > MAX_SKILL_LEVEL) return 0;
-#define skill_get(var,i,l) \
-	{ skill_chk((i), (l)); return (var); }
+static void skill_chk(int* id, int  lv)
+{
+	*id = skill_get_index(*id); // checks/adjusts id
+	if( lv <= 0 || lv > MAX_SKILL_LEVEL ) *id = 0;
+}
+
+#define skill_get(var,id,lv) { skill_chk(&id,lv); if(!id) return 0; return var; }
 
 // Skill DB
 int	skill_get_hit( int id )               { skill_get (skill_db[id].hit, id, 1); }
@@ -108,7 +110,7 @@ int	skill_get_ele( int id , int lv )      { skill_get (skill_db[id].element[lv-1
 int	skill_get_nk( int id )                { skill_get (skill_db[id].nk, id, 1); }
 int	skill_get_max( int id )               { skill_get (skill_db[id].max, id, 1); }
 int	skill_get_range( int id , int lv )    { skill_get (skill_db[id].range[lv-1], id, lv); }
-int	skill_get_splash( int id , int lv )   { skill_chk (id, lv); return (skill_db[id].splash[lv-1]>=0?skill_db[id].splash[lv-1]:AREA_SIZE); }
+int	skill_get_splash( int id , int lv )   { skill_chk (&id, lv); return (skill_db[id].splash[lv-1]>=0?skill_db[id].splash[lv-1]:AREA_SIZE); }
 int	skill_get_hp( int id ,int lv )        { skill_get (skill_db[id].hp[lv-1], id, lv); }
 int	skill_get_sp( int id ,int lv )        { skill_get (skill_db[id].sp[lv-1], id, lv); }
 int	skill_get_hp_rate(int id, int lv )    { skill_get (skill_db[id].hp_rate[lv-1], id, lv); }
