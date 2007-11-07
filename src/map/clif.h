@@ -391,6 +391,7 @@ void clif_Mail_return(int fd, int mail_id, short fail);
 void clif_Mail_send(int fd, bool fail);
 void clif_Mail_new(int fd, int mail_id, const char *sender, const char *title);
 void clif_Mail_refreshinbox(struct map_session_data *sd);
+void clif_Mail_getattachment(int fd, uint8 flag);
 #endif
 
 #endif /* _CLIF_H_ */

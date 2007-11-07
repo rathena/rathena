@@ -1568,7 +1568,10 @@ int intif_parse_Mail_getattach(int fd)
 
 	memcpy(&item, RFIFOP(fd,12), sizeof(struct item));
 	if (item.nameid > 0 && item.amount > 0)
+	{
 		pc_additem(sd, &item, item.amount);
+		clif_Mail_getattachment(sd->fd, 0);
+	}
 
 	return 0;
 }
