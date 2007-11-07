@@ -11301,14 +11301,14 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
  * Reply to an Attachment operation
  * 0 : Successfully attached item to mail
  * 1 : Fail to set the attachment
- * 2 : Weight problems (when getting the attachment)
  *------------------------------------------*/
-static void clif_Mail_attachment(int fd, uint8 flag)
+static void clif_Mail_attachment(int fd, int index, uint8 flag)
 {
-	WFIFOHEAD(fd,packet_len(0x245));
-	WFIFOW(fd,0) = 0x245;
-	WFIFOB(fd,2) = flag;
-	WFIFOSET(fd,packet_len(0x245));
+	WFIFOHEAD(fd,packet_len(0x255));
+	WFIFOW(fd,0) = 0x255;
+	WFIFOW(fd,2) = index;
+	WFIFOB(fd,4) = flag;
+	WFIFOSET(fd,packet_len(0x255));
 }
 
 /*------------------------------------------
@@ -11519,7 +11519,7 @@ void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 		weight = data->weight * sd->mail.inbox.msg[i].item.amount;
 		if (weight > sd->max_weight - sd->weight)
 		{
-			clif_Mail_attachment(fd, 2);
+			// clif_Mail_attachment(fd, 2);
 			return;
 		}
 	}
@@ -11582,7 +11582,7 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd)
 	flag = mail_setitem(sd, idx, amount);
 
 	if (idx > 0)
-		clif_Mail_attachment(fd,flag);
+		clif_Mail_attachment(fd,idx,flag);
 }
 
 /*------------------------------------------

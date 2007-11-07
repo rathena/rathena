@@ -78,7 +78,7 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 		sd->mail.index = idx;
 		sd->mail.nameid = sd->status.inventory[idx].nameid;
 		sd->mail.amount = amount;
-		clif_delitem(sd, idx, amount);
+		
 		return 0;
 	}
 }

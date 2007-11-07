@@ -1700,22 +1700,22 @@ static void intif_parse_Mail_send(int fd)
 		fail = true;
 	else
 	{
-		if( sd == NULL )
-			fail = true;
+		fail = !mail_checkattach(sd);
 
-		if( !mail_checkattach(sd) )
-		{
-			mail_removeitem(sd, 0);
-			mail_removezeny(sd, 0);
-			fail = true;
-		}
-
-		// confirmation message
+		// Confirmation to CharServer
 		WFIFOHEAD(inter_fd,7);
 		WFIFOW(inter_fd,0) = 0x304e;
 		WFIFOL(inter_fd,2) = mail_id;
 		WFIFOB(inter_fd,6) = fail;
 		WFIFOSET(inter_fd,7);
+	}
+
+	nullpo_retv(sd);
+
+	if( fail )
+	{ // Return items and zeny to owner
+		mail_removeitem(sd, 0);
+		mail_removezeny(sd, 0);
 	}
 
 	clif_Mail_send(sd->fd, fail);
