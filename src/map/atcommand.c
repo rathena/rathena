@@ -2263,7 +2263,7 @@ int atcommand_go(const int fd, struct map_session_data* sd, const char* command,
  
 	nullpo_retr(-1, sd);
  
-	if(map[sd->bl.m].flag.nogo) {
+	if( map[sd->bl.m].flag.nogo && battle_config.any_warp_GM_min_level > pc_isGM(sd) ) {
 		clif_displaymessage(sd->fd,"You can not use @go on this map.");
 		return 0;
 	}
