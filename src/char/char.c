@@ -4201,7 +4201,13 @@ int do_init(int argc, char **argv)
 {
 	int i;
 
-	mapindex_init(); //Needed here for the start-point reading.
+	for(i = 0; i < MAX_MAP_SERVERS; i++) {
+		memset(&server[i], 0, sizeof(struct mmo_map_server));
+		server_fd[i] = -1;
+	}
+
+	//Read map indexes
+	mapindex_init();
 	start_point.map = mapindex_name2id("new_zone01");
 
 	char_config_read((argc < 2) ? CHAR_CONF_NAME : argv[1]);
@@ -4213,10 +4219,24 @@ int do_init(int argc, char **argv)
 		ShowNotice("And then change the user/password to use in conf/char_athena.conf (or conf/import/char_conf.txt)\n");
 	}
 
+	ShowInfo("Finished reading the char-server configuration.\n");
+
 	// a newline in the log...
 	char_log("");
 	// moved behind char_config_read in case we changed the filename [celest]
 	char_log("The char-server starting...\n");
+
+	ShowInfo("Initializing char server.\n");
+	online_char_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	mmo_char_init();
+	char_read_fame_list(); //Read fame lists.
+#ifdef ENABLE_SC_SAVING
+	status_init();
+#endif
+	inter_init_txt((argc > 2) ? argv[2] : inter_cfgName);	// inter server ‰Šú‰»
+	ShowInfo("char server initialized.\n");
+
+	set_defaultparse(parse_char);
 
 	if ((naddr_ != 0) && (!login_ip || !char_ip))
 	{
@@ -4237,38 +4257,18 @@ int do_init(int argc, char **argv)
 		}
 	}
 
-	for(i = 0; i < MAX_MAP_SERVERS; i++) {
-		memset(&server[i], 0, sizeof(struct mmo_map_server));
-		server_fd[i] = -1;
-	}
-
-	online_char_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
-
-	mmo_char_init();
-#ifdef ENABLE_SC_SAVING
-	status_init();
-#endif
-	update_online = time(NULL);
-	create_online_files(); // update online players files at start of the server
-
-	inter_init_txt((argc > 2) ? argv[2] : inter_cfgName);	// inter server ‰Šú‰»
-
-	set_defaultparse(parse_char);
-
 	add_timer_func_list(check_connect_login_server, "check_connect_login_server");
 	add_timer_func_list(send_users_tologin, "send_users_tologin");
 	add_timer_func_list(send_accounts_tologin, "send_accounts_tologin");
-	add_timer_func_list(mmo_char_sync_timer, "mmo_char_sync_timer");
 	add_timer_func_list(chardb_waiting_disconnect, "chardb_waiting_disconnect");
 	add_timer_func_list(online_data_cleanup, "online_data_cleanup");
+	add_timer_func_list(mmo_char_sync_timer, "mmo_char_sync_timer");
 	
-	add_timer_interval(gettick() + 1000, check_connect_login_server, 0, 0, 10 * 1000);
-	add_timer_interval(gettick() + 1000, send_users_tologin, 0, 0, 5 * 1000);
-	add_timer_interval(gettick() + 3600*1000, send_accounts_tologin, 0, 0, 3600 * 1000); //Sync online accounts every hour
+	add_timer_interval(gettick() + 1000, check_connect_login_server, 0, 0, 10*1000);
+	add_timer_interval(gettick() + 1000, send_users_tologin, 0, 0, 5*1000);
+	add_timer_interval(gettick() + 3600*1000, send_accounts_tologin, 0, 0, 3600*1000); //Sync online accounts every hour
+	add_timer_interval(gettick() + 600*1000, online_data_cleanup, 0, 0, 600*1000);
 	add_timer_interval(gettick() + autosave_interval, mmo_char_sync_timer, 0, 0, autosave_interval);
-	add_timer_interval(gettick() + 600*1000, online_data_cleanup, 0, 0, 600 * 1000);
-
-	char_read_fame_list(); //Read fame lists.
 
 	if( console )
 	{
@@ -4281,4 +4281,5 @@ int do_init(int argc, char **argv)
 
 	return 0;
 }
+
 #endif //TXT_SQL_CONVERT

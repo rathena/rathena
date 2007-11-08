@@ -3773,6 +3773,9 @@ int do_init(int argc, char **argv)
 	ShowInfo("Initializing char server.\n");
 	online_char_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
 	mmo_char_sql_init();
+	char_read_fame_list(); //Read fame lists.
+	if(char_gm_read)
+		read_gm_account();
 	ShowInfo("char server initialized.\n");
 
 	set_defaultparse(parse_char);
@@ -3800,20 +3803,12 @@ int do_init(int argc, char **argv)
 	add_timer_func_list(send_users_tologin, "send_users_tologin");
 	add_timer_func_list(send_accounts_tologin, "send_accounts_tologin");
 	add_timer_func_list(chardb_waiting_disconnect, "chardb_waiting_disconnect");
-
 	add_timer_func_list(online_data_cleanup, "online_data_cleanup");
-	add_timer_interval(gettick() + 600*1000, online_data_cleanup, 0, 0, 600 * 1000);
 
-	// send ALIVE PING to login server.
-	add_timer_interval(gettick() + 10, check_connect_login_server, 0, 0, 10 * 1000);
-	// send USER COUNT PING to login server.
-	add_timer_interval(gettick() + 10, send_users_tologin, 0, 0, 5 * 1000);
-	add_timer_interval(gettick() + 3600*1000, send_accounts_tologin, 0, 0, 3600 * 1000); //Sync online accounts every hour.
-
-	char_read_fame_list(); //Read fame lists.
-
-	if(char_gm_read)
-		read_gm_account();
+	add_timer_interval(gettick() + 1000, check_connect_login_server, 0, 0, 10*1000);
+	add_timer_interval(gettick() + 1000, send_users_tologin, 0, 0, 5*1000);
+	add_timer_interval(gettick() + 3600*1000, send_accounts_tologin, 0, 0, 3600*1000); //Sync online accounts every hour.
+	add_timer_interval(gettick() + 600*1000, online_data_cleanup, 0, 0, 600*1000);
 
 	if( console )
 	{
