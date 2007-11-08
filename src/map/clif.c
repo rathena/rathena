@@ -7965,7 +7965,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_set0199(fd,3);
 
 	// info about nearby objects
+#ifdef CIRCULAR_AREA
+	// required as circular areas will not catch all objects in visible range.
+	map_foreachinarea(clif_getareachar, sd->bl.m, sd->bl.x-AREA_SIZE, sd->bl.y-AREA_SIZE, sd->bl.x+AREA_SIZE, sd->bl.y+AREA_SIZE, BL_ALL, sd);
+#else
 	map_foreachinrange(clif_getareachar, &sd->bl, AREA_SIZE, BL_ALL, sd);
+#endif
+
 
 	// pet
 	if(sd->pd) {
