@@ -1088,53 +1088,31 @@ int mmo_char_sql_init(void)
 	return 0;
 }
 
-//==========================================================================================================
-
+//-----------------------------------
+// Function to create a new character
+//-----------------------------------
 int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style)
 {
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
 	unsigned int i;
 	int char_id;
-	bool valid;
 
 	safestrncpy(name, name_, NAME_LENGTH);
 	normalize_name(name,TRIM_CHARS);
 	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
 
-	ShowInfo("New character request (%d)\n", sd->account_id);
-
-	// check the number of already existing chars in this account
-	if( char_per_account != 0 ) {
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d'", char_db, sd->account_id) )
-			Sql_ShowDebug(sql_handle);
-		if( Sql_NumRows(sql_handle) >= char_per_account ) {
-			ShowInfo("Create char failed (%d): charlimit exceeded.\n", sd->account_id);
-			Sql_FreeResult(sql_handle);
-			return -2;
-		}
-	}
-
-	// check char slot.
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d'", char_db, sd->account_id, slot) )
-		Sql_ShowDebug(sql_handle);
-	if( Sql_NumRows(sql_handle) > 0 )
-	{
-		ShowWarning("Create char failed (%d, slot: %d), slot already in use\n", sd->account_id, slot);
-		return -2;
-	}
-
 	// check length of character name
-	if( name[0] == '\0' ) {
-		ShowInfo("Create char failed (empty character name): (connection #%d, account: %d).\n", sd->fd, sd->account_id);
-		return -2;
-	}
+	if( name[0] == '\0' )
+		return -2; // empty character name
 
-	// check name != main chat nick [LuzZza]
-	if( strcmpi(name, main_chat_nick) == 0 ) {
-		ShowInfo("Create char failed (%d): this nick (%s) reserved for mainchat messages.\n", sd->account_id, name);
-		return -2;
-	}
+	// check content of character name
+	if( remove_control_chars(name) )
+		return -2; // control chars in name
+
+	// check for reserved names
+	if( strcmpi(name, main_chat_nick) == 0 || strcmpi(name, wisp_server_name) == 0 )
+		return -1; // nick reserved for internal server messages
 
 	// Check Authorised letters/symbols in the name of the character
 	if( char_name_option == 1 ) { // only letters/symbols in char_name_letters are authorised
@@ -1153,10 +1131,8 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 		Sql_ShowDebug(sql_handle);
 		return -2;
 	}
-	if( Sql_NumRows(sql_handle) > 0 ) {
-		ShowInfo("Create char failed: charname already in use\n");
-		return -1;
-	}
+	if( Sql_NumRows(sql_handle) > 0 )
+		return -1; //  name already exists
 
 	//check other inputs
 	if((slot >= MAX_CHARS) // slots
@@ -1165,24 +1141,31 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 	|| (str + agi + vit + int_ + dex + luk != 6*5 ) // stats
 	|| (str < 1 || str > 9 || agi < 1 || agi > 9 || vit < 1 || vit > 9 || int_ < 1 || int_ > 9 || dex < 1 || dex > 9 || luk < 1 || luk > 9) // individual stat values
 	|| (str + int_ != 10 || agi + luk != 10 || vit + dex != 10) ) // pairs
-		valid = false;
-	else
-		valid = true;
+		return -2; // invalid input
 
-	// log result
+	// check the number of already existing chars in this account
+	if( char_per_account != 0 ) {
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d'", char_db, sd->account_id) )
+			Sql_ShowDebug(sql_handle);
+		if( Sql_NumRows(sql_handle) >= char_per_account )
+			return -2; // character account limit exceeded
+	}
+
+	// check char slot
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d'", char_db, sd->account_id, slot) )
+		Sql_ShowDebug(sql_handle);
+	if( Sql_NumRows(sql_handle) > 0 )
+		return -2; // slot already in use
+
+	// validation success, log result
 	if (log_char) {
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `char_msg`,`account_id`,`char_num`,`name`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`hair`,`hair_color`)"
 			"VALUES (NOW(), '%s', '%d', '%d', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-			charlog_db,(valid?"make new char":"make new char error"), sd->account_id, slot, esc_name, str, agi, vit, int_, dex, luk, hair_style, hair_color) )
+			charlog_db, "make new char", sd->account_id, slot, esc_name, str, agi, vit, int_, dex, luk, hair_style, hair_color) )
 			Sql_ShowDebug(sql_handle);
 	}
 
-	if( !valid ) {
-		ShowWarning("Create char failed (%d): stats error (bot cheat?!)\n", sd->account_id);
-		return -2;
-	}
-
-	//Insert the char to the 'chardb' ^^
+	//Insert the new char entry to the database
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
 		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
@@ -1193,16 +1176,15 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 		Sql_ShowDebug(sql_handle);
 		return -2; //No, stop the procedure!
 	}
-	//Now we need the charid from sql!
+	//Retrieve the newly auto-generated char id
 	char_id = (int)Sql_LastInsertId(sql_handle);
 	//Give the char the default items
-	//`inventory` (`id`,`char_id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `card0`, `card1`, `card2`, `card3`)
 	if (start_weapon > 0) { //add Start Weapon (Knife?)
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%d', '%d', '%d', '%d')", inventory_db, char_id, start_weapon, 1, 0x02, 1) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `identify`) VALUES ('%d', '%d', '%d', '%d')", inventory_db, char_id, start_weapon, 1, 1) )
 			Sql_ShowDebug(sql_handle);
 	}
 	if (start_armor > 0) { //Add default armor (cotton shirt?)
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%d', '%d', '%d', '%d')", inventory_db, char_id, start_armor, 1, 0x10, 1) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `identify`) VALUES ('%d', '%d', '%d', '%d')", inventory_db, char_id, start_armor, 1, 1) )
 			Sql_ShowDebug(sql_handle);
 	}
 
@@ -1455,6 +1437,71 @@ int mmo_char_send006b(int fd, struct char_session_data* sd)
 	WFIFOW(fd,2) = j; // packet len
 	WFIFOSET(fd,j);
 
+	return 0;
+}
+
+int char_married(int pl1, int pl2)
+{
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `partner_id` FROM `%s` WHERE `char_id` = '%d'", char_db, pl1) )
+		Sql_ShowDebug(sql_handle);
+	else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+	{
+		char* data;
+
+		Sql_GetData(sql_handle, 0, &data, NULL);
+		if( pl2 == atoi(data) )
+		{
+			Sql_FreeResult(sql_handle);
+			return 1;
+		}
+	}
+	Sql_FreeResult(sql_handle);
+	return 0;
+}
+
+int char_child(int parent_id, int child_id)
+{
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `child` FROM `%s` WHERE `char_id` = '%d'", char_db, parent_id) )
+		Sql_ShowDebug(sql_handle);
+	else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+	{
+		char* data;
+
+		Sql_GetData(sql_handle, 0, &data, NULL);
+		if( child_id == atoi(data) )
+		{
+			Sql_FreeResult(sql_handle);
+			return 1;
+		}
+	}
+	Sql_FreeResult(sql_handle);
+	return 0;
+}
+
+int char_family(int pl1, int pl2, int pl3)
+{
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`partner_id`,`child` FROM `%s` WHERE `char_id` IN ('%d','%d','%d')", char_db, pl1, pl2, pl3) )
+		Sql_ShowDebug(sql_handle);
+	else while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+	{
+		int charid;
+		int partnerid;
+		int childid;
+		char* data;
+
+		Sql_GetData(sql_handle, 0, &data, NULL); charid = atoi(data);
+		Sql_GetData(sql_handle, 1, &data, NULL); partnerid = atoi(data);
+		Sql_GetData(sql_handle, 2, &data, NULL); childid = atoi(data);
+
+		if( (pl1 == charid    && ((pl2 == partnerid && pl3 == childid  ) || (pl2 == childid   && pl3 == partnerid))) ||
+			(pl1 == partnerid && ((pl2 == charid    && pl3 == childid  ) || (pl2 == childid   && pl3 == charid   ))) ||
+			(pl1 == childid   && ((pl2 == charid    && pl3 == partnerid) || (pl2 == partnerid && pl3 == charid   ))) )
+		{
+			Sql_FreeResult(sql_handle);
+			return childid;
+		}
+	}
+	Sql_FreeResult(sql_handle);
 	return 0;
 }
 
@@ -3099,7 +3146,7 @@ int parse_char(int fd)
 			
 			RFIFOSKIP(fd,60);
 		}
-		break;
+		return 0; // avoid processing of followup packets here
 
 		// Athena info get
 		case 0x7530:
@@ -3795,71 +3842,6 @@ int do_init(int argc, char **argv)
 	char_fd = make_listen_bind(bind_ip, char_port);
 	ShowStatus("The char-server is "CL_GREEN"ready"CL_RESET" (Server is listening on the port %d).\n\n", char_port);
 
-	return 0;
-}
-
-int char_child(int parent_id, int child_id)
-{
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `child` FROM `%s` WHERE `char_id` = '%d'", char_db, parent_id) )
-		Sql_ShowDebug(sql_handle);
-	else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
-	{
-		char* data;
-
-		Sql_GetData(sql_handle, 0, &data, NULL);
-		if( child_id == atoi(data) )
-		{
-			Sql_FreeResult(sql_handle);
-			return 1;
-		}
-	}
-	Sql_FreeResult(sql_handle);
-	return 0;
-}
-
-int char_married(int pl1, int pl2)
-{
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `partner_id` FROM `%s` WHERE `char_id` = '%d'", char_db, pl1) )
-		Sql_ShowDebug(sql_handle);
-	else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
-	{
-		char* data;
-
-		Sql_GetData(sql_handle, 0, &data, NULL);
-		if( pl2 == atoi(data) )
-		{
-			Sql_FreeResult(sql_handle);
-			return 1;
-		}
-	}
-	Sql_FreeResult(sql_handle);
-	return 0;
-}
-
-int char_family(int pl1, int pl2, int pl3)
-{
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`partner_id`,`child` FROM `%s` WHERE `char_id` IN ('%d','%d','%d')", char_db, pl1, pl2, pl3) )
-		Sql_ShowDebug(sql_handle);
-	else while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
-	{
-		int charid;
-		int partnerid;
-		int childid;
-		char* data;
-
-		Sql_GetData(sql_handle, 0, &data, NULL); charid = atoi(data);
-		Sql_GetData(sql_handle, 1, &data, NULL); partnerid = atoi(data);
-		Sql_GetData(sql_handle, 2, &data, NULL); childid = atoi(data);
-
-		if( (pl1 == charid    && ((pl2 == partnerid && pl3 == childid  ) || (pl2 == childid   && pl3 == partnerid))) ||
-			(pl1 == partnerid && ((pl2 == charid    && pl3 == childid  ) || (pl2 == childid   && pl3 == charid   ))) ||
-			(pl1 == childid   && ((pl2 == charid    && pl3 == partnerid) || (pl2 == partnerid && pl3 == charid   ))) )
-		{
-			Sql_FreeResult(sql_handle);
-			return childid;
-		}
-	}
-	Sql_FreeResult(sql_handle);
 	return 0;
 }
 

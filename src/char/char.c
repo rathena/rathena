@@ -1156,33 +1156,23 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 	
 	safestrncpy(name, name_, NAME_LENGTH);
 	normalize_name(name,TRIM_CHARS);
-	if( remove_control_chars(name) ) {
-		char_log("Make new char error (control char received in the name): (connection #%d, account: %d).\n", sd->fd, sd->account_id);
-		return -2;
-	}
 
 	// check length of character name
-	if( name[0] == '\0' ) {
-		char_log("Make new char error (character name too small): (connection #%d, account: %d, name: '%s').\n", sd->fd, sd->account_id, name);
-		return -2;
-	}
+	if( name[0] == '\0' )
+		return -2; // empty character name
 
-	// check name != main chat nick [LuzZza]
-	if( strcmpi(name, main_chat_nick) == 0 ) {
-		char_log("Create char failed (%d): this nick (%s) reserved for mainchat messages.\n", sd->account_id, name);
-		return -1;
-	}
+	// check content of character name
+	if( remove_control_chars(name) )
+		return -2; // control chars in name
 
-	if (strcmpi(wisp_server_name, name) == 0) {
-		char_log("Make new char error (name used is wisp name for server): (connection #%d, account: %d) slot %d, name: %s, stats: %d/%d/%d/%d/%d/%d, hair: %d, hair color: %d.\n",
-		         sd->fd, sd->account_id, slot, name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
-		return -1;
-	}
+	// check for reserved names
+	if( strcmpi(name, main_chat_nick) == 0 || strcmpi(name, wisp_server_name) == 0 )
+		return -1; // nick reserved for internal server messages
 
 	// Check Authorised letters/symbols in the name of the character
 	if( char_name_option == 1 ) { // only letters/symbols in char_name_letters are authorised
 		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
-			if (strchr(char_name_letters, name[i]) == NULL)
+			if( strchr(char_name_letters, name[i]) == NULL )
 				return -2;
 	} else
 	if( char_name_option == 2 ) { // letters/symbols in char_name_letters are forbidden
@@ -1191,22 +1181,12 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 				return -2;
 	} // else, all letters/symbols are authorised (except control char removed before)
 
-	//FIXME: the code way below actually depends on the value of 'i' that's used here! [ultramage]
-	for( i = 0; i < char_num; i++ ) {
-		// check if name doesn't already exist
-		if( (name_ignoring_case && strncmp(char_dat[i].status.name, name, NAME_LENGTH) == 0) ||
-			(!name_ignoring_case && strncmpi(char_dat[i].status.name, name, NAME_LENGTH) == 0) ) {
-			char_log("Make new char error (name already exists): (connection #%d, account: %d) slot %d, name: %s (actual name of other char: %d), stats: %d/%d/%d/%d/%d/%d, hair: %d, hair color: %d.\n",
-			         sd->fd, sd->account_id, slot, name, char_dat[i].status.name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
-			return -1;
-		}
-		// check if this account's slot is not already occupied
-		if (char_dat[i].status.account_id == sd->account_id && char_dat[i].status.slot == slot) {
-			char_log("Make new char error (slot already used): (connection #%d, account: %d) slot %d, name: %s (actual name of other char: %d), stats: %d/%d/%d/%d/%d/%d, hair: %d, hair color: %d.\n",
-			         sd->fd, sd->account_id, slot, name, char_dat[i].status.name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
-			return -1;
-		}
-	}
+	// check name (already in use?)
+	ARR_FIND( 0, char_num, i,
+		name_ignoring_case && strncmp(char_dat[i].status.name, name, NAME_LENGTH) == 0 ||
+		!name_ignoring_case && strncmpi(char_dat[i].status.name, name, NAME_LENGTH) == 0 );
+	if( i < char_num )
+		return -1; // name already exists
 
 	//check other inputs
 	if((slot >= MAX_CHARS) // slots
@@ -1215,11 +1195,12 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 	|| (str + agi + vit + int_ + dex + luk != 6*5 ) // stats
 	|| (str < 1 || str > 9 || agi < 1 || agi > 9 || vit < 1 || vit > 9 || int_ < 1 || int_ > 9 || dex < 1 || dex > 9 || luk < 1 || luk > 9) // individual stat values
 	|| (str + int_ != 10 || agi + luk != 10 || vit + dex != 10) ) // pairs
-	{
-		char_log("Make new char error (invalid values): (connection #%d, account: %d) slot %d, name: %s, stats: %d/%d/%d/%d/%d/%d, hair: %d, hair color: %d\n",
-		     sd->fd, sd->account_id, slot, name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
-		return -2;
-	}
+		return -2; // invalid input
+
+	// check char slot
+	ARR_FIND( 0, char_num, i, char_dat[i].status.account_id == sd->account_id && char_dat[i].status.slot == slot );
+	if( i < char_num )
+		return -2; // slot already in use
 
 	if (char_num >= char_max) {
 		char_max += 256;
@@ -1231,15 +1212,17 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 		}
 	}
 
-	char_log("Creation of New Character: (connection #%d, account: %d) slot %d, character Name: %s, stats: %d/%d/%d/%d/%d/%d, hair: %d, hair color: %d.\n",
-	         sd->fd, sd->account_id, slot, name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
+	// validation success, log result
+	char_log("make new char: account: %d, slot %d, name: %s, stats: %d/%d/%d/%d/%d/%d, hair: %d, hair color: %d.\n",
+	         sd->account_id, slot, name, str, agi, vit, int_, dex, luk, hair_style, hair_color);
 
+	i = char_num;
 	memset(&char_dat[i], 0, sizeof(struct character_data));
 
 	char_dat[i].status.char_id = char_id_count++;
 	char_dat[i].status.account_id = sd->account_id;
 	char_dat[i].status.slot = slot;
-	strcpy(char_dat[i].status.name,name);
+	safestrncpy(char_dat[i].status.name,name,NAME_LENGTH);
 	char_dat[i].status.class_ = 0;
 	char_dat[i].status.base_level = 1;
 	char_dat[i].status.job_level = 1;
@@ -1268,13 +1251,11 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 	char_dat[i].status.clothes_color = 0;
 	char_dat[i].status.inventory[0].nameid = start_weapon; // Knife
 	char_dat[i].status.inventory[0].amount = 1;
-	char_dat[i].status.inventory[0].equip = 0x02;
 	char_dat[i].status.inventory[0].identify = 1;
 	char_dat[i].status.inventory[1].nameid = start_armor; // Cotton Shirt
 	char_dat[i].status.inventory[1].amount = 1;
-	char_dat[i].status.inventory[1].equip = 0x10;
 	char_dat[i].status.inventory[1].identify = 1;
-	char_dat[i].status.weapon = 1;
+	char_dat[i].status.weapon = 0; // W_FIST
 	char_dat[i].status.shield = 0;
 	char_dat[i].status.head_top = 0;
 	char_dat[i].status.head_mid = 0;
@@ -1283,6 +1264,7 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 	memcpy(&char_dat[i].status.save_point, &start_point, sizeof(start_point));
 	char_num++;
 
+	ShowInfo("Created char: account: %d, char: %d, slot: %d, name: %s\n", sd->account_id, i, slot, name);
 	mmo_char_sync();
 	return i;
 }
@@ -2062,32 +2044,6 @@ int parse_fromlogin(int fd)
 			RFIFOSKIP(fd,2);
 		break;
 
-		// Receiving authentification from Freya-type login server (to avoid char->login->char)
-		case 0x2719:
-			if (RFIFOREST(fd) < 18)
-				return 0;
-			// to conserv a maximum of authentification, search if account is already authentified and replace it
-			// that will reduce multiple connection too
-			for(i = 0; i < AUTH_FIFO_SIZE; i++)
-				if (auth_fifo[i].account_id == RFIFOL(fd,2))
-					break;
-			// if not found, use next value
-			if (i == AUTH_FIFO_SIZE) {
-				if (auth_fifo_pos >= AUTH_FIFO_SIZE)
-					auth_fifo_pos = 0;
-				i = auth_fifo_pos;
-				auth_fifo_pos++;
-			}
-			auth_fifo[i].account_id = RFIFOL(fd,2);
-			auth_fifo[i].char_id = 0;
-			auth_fifo[i].login_id1 = RFIFOL(fd,6);
-			auth_fifo[i].login_id2 = RFIFOL(fd,10);
-			auth_fifo[i].delflag = 2; // 0: auth_fifo canceled/void, 2: auth_fifo received from login/map server in memory, 1: connection authentified
-			auth_fifo[i].connect_until_time = 0; // unlimited/unknown time by default (not display in map-server)
-			auth_fifo[i].ip = ntohl(RFIFOL(fd,14));
-			RFIFOSKIP(fd,18);
-		break;
-
 		case 0x2721:	// gm reply
 			if (RFIFOREST(fd) < 10)
 				return 0;
@@ -2338,7 +2294,7 @@ int parse_fromlogin(int fd)
 			unsigned char buf[32000];
 			if (gm_account != NULL)
 				aFree(gm_account);
-			gm_account = (struct gm_account*)aCalloc(sizeof(struct gm_account) * ((RFIFOW(fd,2) - 4) / 5), 1);
+			CREATE(gm_account, struct gm_account, (RFIFOW(fd,2) - 4)/5);
 			GM_num = 0;
 			for (i = 4; i < RFIFOW(fd,2); i = i + 5) {
 				gm_account[GM_num].account_id = RFIFOL(fd,i);
@@ -2355,63 +2311,6 @@ int parse_fromlogin(int fd)
 			mapif_sendall(buf, RFIFOW(fd,2));
 
 			RFIFOSKIP(fd,RFIFOW(fd,2));
-		}
-		break;
-
-		// Receive GM accounts [Freya login server packet by Yor]
-		case 0x2733:
-			if (RFIFOREST(fd) < 7)
-				return 0;
-		{
-			int new_level = 0;
-			for(i = 0; i < GM_num; i++)
-				if (gm_account[i].account_id == RFIFOL(fd,2)) {
-					if (gm_account[i].level != (int)RFIFOB(fd,6)) {
-						gm_account[i].level = (int)RFIFOB(fd,6);
-						new_level = 1;
-					}
-					break;
-				}
-			// if not found, add it
-			if (i == GM_num) {
-				// limited to 4000, because we send information to char-servers (more than 4000 GM accounts???)
-				// int (id) + int (level) = 8 bytes * 4000 = 32k (limit of packets in windows)
-				if (((int)RFIFOB(fd,6)) > 0 && GM_num < 4000) {
-					if (GM_num == 0) {
-						gm_account = (struct gm_account*)aMalloc(sizeof(struct gm_account));
-					} else {
-						gm_account = (struct gm_account*)aRealloc(gm_account, sizeof(struct gm_account) * (GM_num + 1));
-					}
-					gm_account[GM_num].account_id = RFIFOL(fd,2);
-					gm_account[GM_num].level = (int)RFIFOB(fd,6);
-					new_level = 1;
-					GM_num++;
-					if (GM_num >= 4000) {
-						ShowWarning("4000 GM accounts found. Next GM accounts are not readed.\n");
-						char_log("***WARNING: 4000 GM accounts found. Next GM accounts are not readed.\n");
-					}
-				}
-			}
-			if (new_level == 1) {
-				unsigned char buf[32000];
-				int len;
-				ShowStatus("From login-server: receiving GM account information (%d: level %d).\n", RFIFOL(fd,2), (int)RFIFOB(fd,6));
-				char_log("From login-server: receiving a GM account information (%d: level %d).\n", RFIFOL(fd,2), (int)RFIFOB(fd,6));
-				//create_online_files(); // not change online file for only 1 player (in next timer, that will be done
-				// send gm acccounts level to map-servers
-				len = 4;
-				WBUFW(buf,0) = 0x2b15;
-			
-				for(i = 0; i < GM_num; i++) {
-					WBUFL(buf, len) = gm_account[i].account_id;
-					WBUFB(buf, len+4) = (unsigned char)gm_account[i].level;
-					len += 5;
-				}
-				WBUFW(buf, 2) = len;
-				mapif_sendall(buf, len);
-			}
-			
-			RFIFOSKIP(fd,7);
 		}
 		break;
 
@@ -2858,8 +2757,6 @@ int parse_frommap(int fd)
 				return 0;
 			//TODO: When data mismatches memory, update guild/party online/offline states.
 			server[id].users = RFIFOW(fd,4);
-			// add online players in the list by [Yor], adapted to use dbs by [Skotlex]
-			j = 0;
 			online_char_db->foreach(online_char_db,char_db_setoffline,id); //Set all chars from this server as 'unknown'
 			for(i = 0; i < server[id].users; i++) {
 				int aid, cid;
@@ -3765,7 +3662,7 @@ int parse_char(int fd)
 
 			RFIFOSKIP(fd,60);
 		}
-		break;
+		return 0; // avoid processing of followup packets here
 
 		// Athena info get
 		case 0x7530:
@@ -4365,11 +4262,11 @@ int do_init(int argc, char **argv)
 	add_timer_func_list(chardb_waiting_disconnect, "chardb_waiting_disconnect");
 	add_timer_func_list(online_data_cleanup, "online_data_cleanup");
 	
-	add_timer_interval(gettick() + 600*1000, online_data_cleanup, 0, 0, 600 * 1000);
 	add_timer_interval(gettick() + 1000, check_connect_login_server, 0, 0, 10 * 1000);
 	add_timer_interval(gettick() + 1000, send_users_tologin, 0, 0, 5 * 1000);
-	add_timer_interval(gettick() + 3600*1000, send_accounts_tologin, 0, 0, 3600*1000); //Sync online accounts every hour
+	add_timer_interval(gettick() + 3600*1000, send_accounts_tologin, 0, 0, 3600 * 1000); //Sync online accounts every hour
 	add_timer_interval(gettick() + autosave_interval, mmo_char_sync_timer, 0, 0, autosave_interval);
+	add_timer_interval(gettick() + 600*1000, online_data_cleanup, 0, 0, 600 * 1000);
 
 	char_read_fame_list(); //Read fame lists.
 
