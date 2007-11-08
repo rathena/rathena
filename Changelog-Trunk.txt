@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/11/08
+	* Changed EXIT_SUCCESS back to 0 in console.c to avoid an unnecessary include.
+	* Fixed gm_account_db not being deallocated in login-converter.c.
+	* Refactoring names and documentation in db.h/db.c: [FlavioJS]
+	- changed 'struct dbt' to 'struct DBMap' and 'DB' to 'DBMap*'
+	- changed 'struct db' to 'struct DBMap_impl' and 'DB_impl' to 'DBMap_impl*'
+	- changed COUNT to DB_COUNTSTAT and made it's existence not depend on DB_ENABLE_STATS
+	- removed some @see links and corrected small typos in the documentation
 	* Fixed a glitch where all packets immediately after the map->char
 	  login packet would get discarded and the mapserver disconnected
 	* Synced charserver char creation creation code [ultramage]
@@ -11,10 +18,10 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	- fixed sql charserver letting you use control chars in char names
 	- new chars will not start with the 'Knife' and 'Cotton Shirt' equipped
 	  anymore (charserver blindly placed magic values into the equip field)
-	* Updated configure script:
+	* Updated configure script: [FlavioJS]
 	- small correction to the help text of --with-mysql and --with-pcre
 	- added the -Wno-switch compiler option to suppress the 
-	  "enumeration value '%s' not handled in switch" warnings [FlavioJS]
+	  "enumeration value '%s' not handled in switch" warnings
 2007/11/07
 	* Some updates on the mail system packets [Zephyrus]
 	- Corrected the mail database structure on main.sql

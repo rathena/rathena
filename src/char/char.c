@@ -169,7 +169,8 @@ struct online_char_data {
 	short server;
 };
 
-struct dbt *online_char_db; //Holds all online characters.
+// Holds all online characters.
+static DBMap* online_char_db; // int account_id -> struct online_char_data*
 
 time_t update_online; // to update online files when we receiving information from a server (not less than 8 seconds)
 
@@ -4227,7 +4228,7 @@ int do_init(int argc, char **argv)
 	char_log("The char-server starting...\n");
 
 	ShowInfo("Initializing char server.\n");
-	online_char_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	online_char_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	mmo_char_init();
 	char_read_fame_list(); //Read fame lists.
 #ifdef ENABLE_SC_SAVING

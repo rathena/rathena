@@ -21,7 +21,7 @@
 
 
 static struct item_data* itemdb_array[MAX_ITEMDB];
-static struct dbt*       itemdb_other;
+static DBMap*            itemdb_other;// int nameid -> struct item_data*
 
 static struct item_group itemgroup_db[MAX_ITEMGROUP];
 
@@ -1044,7 +1044,7 @@ void do_final_itemdb(void)
 int do_init_itemdb(void)
 {
 	memset(itemdb_array, 0, sizeof(itemdb_array));
-	itemdb_other = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int)); 
+	itemdb_other = idb_alloc(DB_OPT_BASE); 
 	create_dummy_data(); //Dummy data item.
 	itemdb_read();
 

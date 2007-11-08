@@ -24,8 +24,8 @@
 #include <string.h>
 
 
-static struct dbt *storage_db;
-static struct dbt *guild_storage_db;
+static DBMap* storage_db; // int account_id -> struct storage*
+static DBMap* guild_storage_db; // int guild_id -> struct guild_storage*
 
 /*==========================================
  * 倉庫内アイテムソート
@@ -61,8 +61,8 @@ void storage_gsortitem (struct guild_storage* gstor)
  *------------------------------------------*/
 int do_init_storage(void) // map.c::do_init()から呼ばれる
 {
-	storage_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
-	guild_storage_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	storage_db=idb_alloc(DB_OPT_RELEASE_DATA);
+	guild_storage_db=idb_alloc(DB_OPT_RELEASE_DATA);
 	return 1;
 }
 void do_final_storage(void) // by [MC Cameri]

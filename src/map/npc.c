@@ -49,8 +49,8 @@ static int npc_delay_mob=0;
 static int npc_cache_mob=0;
 int npc_get_new_npc_id(void){ return npc_id++; }
 
-static struct dbt *ev_db;
-static struct dbt *npcname_db;
+static DBMap* ev_db; // const char* event_name -> struct event_data*
+static DBMap* npcname_db; // const char* npc_name -> struct npc_data*
 
 struct event_data {
 	struct npc_data *nd;
@@ -1794,7 +1794,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 		src_id = 0;
 		if( script )
 		{
-			DB label_db = script_get_label_db();
+			DBMap* label_db = script_get_label_db();
 			label_db->foreach(label_db, npc_convertlabel_db, &label_list, &label_list_num, filepath);
 			label_db->clear(label_db, NULL); // not needed anymore, so clear the db
 		}
@@ -2022,7 +2022,7 @@ int npc_changename(const char* name, const char* newname, short look)
 /// function%TAB%script%TAB%<function name>%TAB%{<code>}
 static const char* npc_parse_function(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	struct dbt *func_db;
+	DBMap* func_db;
 	struct script_code *script;
 	struct script_code *oldscript;
 	const char* end;
@@ -2867,8 +2867,8 @@ int do_init_npc(void)
 	for( i = 1; i < MAX_NPC_CLASS; i++ ) 
 		npc_viewdb[i].class_ = i;
 
-	ev_db = db_alloc(__FILE__,__LINE__,DB_STRING,DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1);
-	npcname_db = db_alloc(__FILE__,__LINE__,DB_STRING,DB_OPT_BASE,NAME_LENGTH);
+	ev_db = strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1);
+	npcname_db = strdb_alloc(DB_OPT_BASE,NAME_LENGTH);
 
 	memset(&ev_tm_b, -1, sizeof(ev_tm_b));
 	timer_event_ers = ers_new(sizeof(struct timer_event_data));

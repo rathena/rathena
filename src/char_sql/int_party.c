@@ -27,7 +27,7 @@ struct party_data {
 };
 
 static struct party_data *party_pt;
-static struct dbt *party_db_;
+static DBMap* party_db_; // int party_id -> struct party_data*
 
 int mapif_party_broken(int party_id,int flag);
 int party_check_empty(struct party_data *p);
@@ -269,7 +269,7 @@ struct party_data *inter_party_fromsql(int party_id)
 int inter_party_sql_init(void)
 {
 	//memory alloc
-	party_db_ = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	party_db_ = idb_alloc(DB_OPT_RELEASE_DATA);
 	party_pt = (struct party_data*)aCalloc(sizeof(struct party_data), 1);
 	if (!party_pt) {
 		ShowFatalError("inter_party_sql_init: Out of Memory!\n");

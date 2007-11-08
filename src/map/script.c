@@ -170,17 +170,17 @@ int str_hash[SCRIPT_HASH_SIZE];
 //#define SCRIPT_HASH_ELF
 //#define SCRIPT_HASH_PJW
 
-static struct dbt *mapreg_db=NULL;
-static struct dbt *mapregstr_db=NULL;
+static DBMap* mapreg_db=NULL; // int var_id -> int value
+static DBMap* mapregstr_db=NULL; // int var_id -> char* value
 static int mapreg_dirty=-1;
 char mapreg_txt[256]="save/mapreg.txt";
 #define MAPREG_AUTOSAVE_INTERVAL	(300*1000)
 
-static struct dbt *scriptlabel_db=NULL;
-static struct dbt *userfunc_db=NULL;
+static DBMap* scriptlabel_db=NULL; // const char* label_name -> int script_pos
+static DBMap* userfunc_db=NULL; // const char* func_name -> struct script_code*
 static int parse_options=0;
-struct dbt* script_get_label_db(){ return scriptlabel_db; }
-struct dbt* script_get_userfunc_db(){ return userfunc_db; }
+DBMap* script_get_label_db(){ return scriptlabel_db; }
+DBMap* script_get_userfunc_db(){ return userfunc_db; }
 
 struct Script_Config script_config;
 
@@ -3685,10 +3685,10 @@ int do_final_script()
  *------------------------------------------*/
 int do_init_script()
 {
-	mapreg_db= db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
-	mapregstr_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
-	userfunc_db=db_alloc(__FILE__,__LINE__,DB_STRING,DB_OPT_DUP_KEY,0);
-	scriptlabel_db=db_alloc(__FILE__,__LINE__,DB_STRING,DB_OPT_DUP_KEY|DB_OPT_ALLOW_NULL_DATA,50);
+	mapreg_db= idb_alloc(DB_OPT_BASE);
+	mapregstr_db=idb_alloc(DB_OPT_RELEASE_DATA);
+	userfunc_db=strdb_alloc(DB_OPT_DUP_KEY,0);
+	scriptlabel_db=strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_ALLOW_NULL_DATA,50);
 	
 	script_load_mapreg();
 

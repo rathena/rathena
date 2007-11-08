@@ -29,11 +29,11 @@
 #include <string.h>
 
 
-static DB guild_db;
-static DB castle_db;
-static DB guild_expcache_db;
-static DB guild_infoevent_db;
-static DB guild_castleinfoevent_db;
+static DBMap* guild_db; // int guild_id -> struct guild*
+static DBMap* castle_db; // int castle_id -> struct guild_castle*
+static DBMap* guild_expcache_db; // int char_id -> struct guild_expcache*
+static DBMap* guild_infoevent_db; // int guild_id -> struct eventlist*
+static DBMap* guild_castleinfoevent_db; // int castle_id_index -> struct eventlist*
 
 struct eventlist {
 	char name[50];
@@ -204,12 +204,12 @@ static int guild_read_castledb(void)
 // èâä˙âª
 void do_init_guild(void)
 {
-	guild_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
-	castle_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
-	guild_expcache_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
-	guild_infoevent_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
+	guild_db=idb_alloc(DB_OPT_RELEASE_DATA);
+	castle_db=idb_alloc(DB_OPT_RELEASE_DATA);
+	guild_expcache_db=idb_alloc(DB_OPT_BASE);
+	guild_infoevent_db=idb_alloc(DB_OPT_BASE);
 	expcache_ers = ers_new(sizeof(struct guild_expcache)); 
-	guild_castleinfoevent_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
+	guild_castleinfoevent_db=idb_alloc(DB_OPT_BASE);
 
 	guild_read_castledb();
 

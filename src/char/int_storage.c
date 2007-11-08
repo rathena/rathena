@@ -24,8 +24,8 @@ char storage_txt[1024]="save/storage.txt";
 char guild_storage_txt[1024]="save/g_storage.txt";
 
 #ifndef TXT_SQL_CONVERT
-static struct dbt *storage_db;
-static struct dbt *guild_storage_db;
+static DBMap* storage_db; // int account_id -> struct storage*
+static DBMap* guild_storage_db; // int guild_id -> struct guild_storage*
 
 // 倉庫データを文字列に変換
 int storage_tostr(char *str,struct storage *p)
@@ -198,7 +198,7 @@ int inter_storage_init()
 	struct guild_storage *gs;
 	FILE *fp;
 
-	storage_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	storage_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
 	fp=fopen(storage_txt,"r");
 	if(fp==NULL){
@@ -227,7 +227,7 @@ int inter_storage_init()
 	fclose(fp);
 
 	c = 0;
-	guild_storage_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	guild_storage_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
 	fp=fopen(guild_storage_txt,"r");
 	if(fp==NULL){

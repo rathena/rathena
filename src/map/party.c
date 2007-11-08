@@ -26,7 +26,7 @@
 #include <string.h>
 
 
-static DB party_db;
+static DBMap* party_db; // int party_id -> struct party_data*
 int party_share_level = 10;
 int party_send_xy_timer(int tid,unsigned int tick,int id,int data);
 
@@ -56,7 +56,7 @@ void do_final_party(void)
 // ‰Šú‰»
 void do_init_party(void)
 {
-	party_db=db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	party_db=idb_alloc(DB_OPT_RELEASE_DATA);
 	add_timer_func_list(party_send_xy_timer, "party_send_xy_timer");
 	add_timer_interval(gettick()+battle_config.party_update_interval, party_send_xy_timer, 0, 0, battle_config.party_update_interval);
 }

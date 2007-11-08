@@ -18,7 +18,7 @@
 char pet_txt[1024]="save/pet.txt";
 
 #ifndef TXT_SQL_CONVERT
-static struct dbt *pet_db;
+static DBMap* pet_db; // int pet_id -> struct s_pet*
 static int pet_newid = 100;
 
 int inter_pet_tostr(char *str,struct s_pet *p)
@@ -88,7 +88,7 @@ int inter_pet_init()
 	FILE *fp;
 	int c=0;
 
-	pet_db= db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	pet_db= idb_alloc(DB_OPT_RELEASE_DATA);
 
 	if( (fp=fopen(pet_txt,"r"))==NULL )
 		return 1;

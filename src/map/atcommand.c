@@ -6430,7 +6430,7 @@ int atcommand_pettalk(const int fd, struct map_session_data* sd, const char* com
  * @users - displays the number of players present on each map (percentage)
  *------------------------------------------*/
 
-static struct dbt *users_db = NULL;
+static DBMap* users_db = NULL; // unsigned int mapindex -> int users
 static int users_all;
 
 static int atcommand_users_sub1(struct map_session_data* sd,va_list va)
@@ -8554,7 +8554,7 @@ int atcommand_config_read(const char* cfgName)
 
 void do_init_atcommand()
 {
-	users_db = db_alloc(__FILE__,__LINE__,DB_UINT,DB_OPT_BASE,sizeof(int));
+	users_db = uidb_alloc(DB_OPT_BASE);
 	duel_count = 0;
 	memset(&duel_list[0], 0, sizeof(duel_list));
 	add_timer_func_list(atshowmobs_timer, "atshowmobs_timer");

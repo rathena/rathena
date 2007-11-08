@@ -64,7 +64,7 @@ char friend_db[256] = "friends";
 char hotkey_db[256] = "hotkey";
 
 #ifndef TXT_SQL_CONVERT
-static struct dbt *char_db_;
+static DBMap* char_db_; // int char_id -> struct mmo_charstatus*
 
 char db_path[1024] = "db";
 
@@ -192,7 +192,8 @@ struct online_char_data {
 	short server; // -2: unknown server, -1: not connected, 0+: id of server
 };
 
-struct dbt* online_char_db; //Holds all online characters.
+// Holds all online characters.
+DBMap* online_char_db; // int account_id -> struct online_char_data*
 
 static void* create_online_char_data(DBKey key, va_list args)
 {
@@ -1066,7 +1067,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 int mmo_char_sql_init(void)
 {
 	ShowInfo("Begin Initializing.......\n");
-	char_db_= db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA, sizeof(int));
+	char_db_= idb_alloc(DB_OPT_RELEASE_DATA);
 
 	if(char_per_account == 0){
 	  ShowStatus("Chars per Account: 'Unlimited'.......\n");
@@ -3771,7 +3772,7 @@ int do_init(int argc, char **argv)
 	ShowInfo("Finished reading the inter-server configuration.\n");
 	
 	ShowInfo("Initializing char server.\n");
-	online_char_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	online_char_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	mmo_char_sql_init();
 	char_read_fame_list(); //Read fame lists.
 	if(char_gm_read)

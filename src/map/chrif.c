@@ -25,7 +25,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-struct dbt *auth_db;
+DBMap* auth_db; // int id -> struct auth_node*
 
 static const int packet_len_table[0x3d] = { // U - used, F - free
 	60, 3,-1,27,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
@@ -430,7 +430,7 @@ void chrif_authreq(struct map_session_data *sd)
 		auth_data->account_id = sd->bl.id;
 		auth_data->login_id1 = sd->login_id1;
 		auth_data->node_created = gettick();
-		uidb_put(auth_db, sd->bl.id, auth_data);
+		idb_put(auth_db, sd->bl.id, auth_data);
 	}
 	return;
 }
@@ -451,7 +451,7 @@ void chrif_authok(int fd)
 			return;
 	}
 	
-	if ((auth_data =uidb_get(auth_db, RFIFOL(fd, 4))) != NULL)
+	if ((auth_data =idb_get(auth_db, RFIFOL(fd, 4))) != NULL)
 	{	//Is the character already awaiting authorization?
 		if (auth_data->sd)
 		{
@@ -472,7 +472,7 @@ void chrif_authok(int fd)
 		//Delete the data of this node...
 		if (auth_data->char_dat)
 			aFree (auth_data->char_dat);
-		uidb_remove(auth_db, RFIFOL(fd, 4));
+		idb_remove(auth_db, RFIFOL(fd, 4));
 		return;
 	}
 	// Awaiting for client to connect.
@@ -485,7 +485,7 @@ void chrif_authok(int fd)
 	auth_data->login_id2=RFIFOL(fd, 16);
 	memcpy(auth_data->char_dat,RFIFOP(fd, 20),sizeof(struct mmo_charstatus));
 	auth_data->node_created=gettick();
-	uidb_put(auth_db, RFIFOL(fd, 4), auth_data);
+	idb_put(auth_db, RFIFOL(fd, 4), auth_data);
 }
 
 int auth_db_cleanup_sub(DBKey key,void *data,va_list ap)
@@ -1445,7 +1445,7 @@ int do_init_chrif(void)
 #endif
 	add_timer_interval(gettick() + 1000, auth_db_cleanup, 0, 0, 30 * 1000);
 
-	auth_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	auth_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
 	return 0;
 }

@@ -116,7 +116,7 @@ struct online_login_data {
 
 //-----------------------------------------------------
 
-struct dbt* online_db;
+static DBMap* online_db; // int account_id -> struct online_login_data*
 
 static void* create_online_user(DBKey key, va_list args)
 {
@@ -1928,7 +1928,7 @@ int do_init(int argc, char** argv)
 		server_fd[i] = -1;
 
 	// Online user database init
-	online_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	online_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	add_timer_func_list(waiting_disconnect_timer, "waiting_disconnect_timer");
 
 	// Auth init

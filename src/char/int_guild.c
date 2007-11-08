@@ -22,8 +22,8 @@ char guild_txt[1024] = "save/guild.txt";
 char castle_txt[1024] = "save/castle.txt";
 
 #ifndef TXT_SQL_CONVERT
-static struct dbt *guild_db;
-static struct dbt *castle_db;
+static DBMap* guild_db; // int guild_id -> struct guild*
+static DBMap* castle_db; // int castle_id -> struct guild_castle*
 
 static int guild_newid = 10000;
 
@@ -376,8 +376,8 @@ int inter_guild_init() {
 
 	inter_guild_readdb();
 
-	guild_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
-	castle_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	guild_db = idb_alloc(DB_OPT_RELEASE_DATA);
+	castle_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
 	if ((fp = fopen(guild_txt,"r")) == NULL)
 		return 1;

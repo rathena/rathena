@@ -7,6 +7,7 @@
 #include "../common/db.h"
 #include "../common/showmsg.h"
 #include "../common/sql.h"
+#include "../common/malloc.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,7 +19,7 @@ char login_user_pass[256]="user_pass";
 char login_db[256]="login";
 char globalreg_db[256]="global_reg_value";
 
-static struct dbt *gm_account_db;
+static DBMap* gm_account_db=NULL; // int account_id -> struct gm_account*
 
 int db_server_port = 3306;
 char db_server_ip[32] = "127.0.0.1";
@@ -52,7 +53,7 @@ int read_gm_account()
 	if( (fp = fopen(GM_ACCOUNT_NAME,"r")) == NULL )
 		return 1;
 	
-	gm_account_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int)); //FIXME: never deallocated
+	gm_account_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	
 	while(fgets(line,sizeof(line),fp))
 	{
@@ -60,7 +61,7 @@ int read_gm_account()
 		if ((line[0] == '/' && line[1] == '/') || line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
 			continue;
 		
-		p = (struct gm_account*)malloc(sizeof(struct gm_account));
+		p = (struct gm_account*)aMalloc(sizeof(struct gm_account));
 		if(p==NULL){
 			ShowFatalError("gm_account: out of memory!\n");
 			exit(EXIT_FAILURE);
@@ -73,7 +74,9 @@ int read_gm_account()
 		else {
 			if(p->level > 99)
 				p->level = 99;
-			idb_put(gm_account_db,p->account_id,p);
+			p = idb_put(gm_account_db,p->account_id,p);
+			if( p )
+				aFree(p);// old entry replaced
 			gm_counter++;
 			ShowInfo("GM ID: %d Level: %d\n",p->account_id,p->level);
 		}
@@ -227,4 +230,11 @@ int do_init(int argc, char** argv)
 
 void do_abort(void) {}
 
-void do_final(void) {}
+void do_final(void)
+{
+	if( gm_account_db )
+	{
+		db_destroy(gm_account_db);
+		gm_account_db = NULL;
+	}
+}

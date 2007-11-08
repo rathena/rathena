@@ -30,7 +30,7 @@ char accreg_txt[1024] = "save/accreg.txt";
 char inter_log_filename[1024] = "log/inter.log";
 char main_chat_nick[16] = "Main";
 
-static struct dbt *accreg_db = NULL;
+static DBMap* accreg_db = NULL; // int account_id -> struct accreg*
 
 unsigned int party_share_level = 10;
 
@@ -66,7 +66,7 @@ struct WisData {
 	unsigned long tick;
 	unsigned char src[24], dst[24], msg[1024];
 };
-static struct dbt * wis_db = NULL;
+static DBMap* wis_db = NULL; // int wis_id -> struct WisData*
 static int wis_dellist[WISDELLIST_MAX], wis_delnum;
 
 
@@ -109,7 +109,7 @@ int inter_accreg_init(void) {
 	int c = 0;
 	struct accreg *reg;
 
-	accreg_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	accreg_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
 	if( (fp = fopen(accreg_txt, "r")) == NULL)
 		return 1;
@@ -259,7 +259,7 @@ int inter_init_txt(const char *file) {
 	inter_config_read(file);
 
 #ifndef TXT_SQL_CONVERT
-	wis_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	wis_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
 	inter_party_init();
 	inter_guild_init();

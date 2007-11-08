@@ -88,8 +88,8 @@ void script_free_stack(struct script_stack*);
 void script_free_code(struct script_code* code);
 void script_free_vars(struct linkdb_node **node);
 
-struct dbt* script_get_label_db(void);
-struct dbt* script_get_userfunc_db(void);
+struct DBMap* script_get_label_db(void);
+struct DBMap* script_get_userfunc_db(void);
 
 int script_config_read(char *cfgName);
 int do_init_script(void);

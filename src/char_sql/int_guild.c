@@ -32,7 +32,7 @@ static const char dataToHex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9
 
 #ifndef TXT_SQL_CONVERT
 //Guild cache
-static struct dbt *guild_db_;
+static DBMap* guild_db_; // int guild_id -> struct guild*
 
 struct guild_castle castles[MAX_GUILDCASTLE];
 
@@ -797,7 +797,7 @@ int inter_guild_CharOffline(int char_id, int guild_id) {
 int inter_guild_sql_init(void)
 {
 	//Initialize the guild cache
-   guild_db_= db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	guild_db_= idb_alloc(DB_OPT_RELEASE_DATA);
 
    //Read exp file
 	inter_guild_ReadEXP();

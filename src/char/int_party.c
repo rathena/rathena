@@ -25,7 +25,7 @@ struct party_data {
 	unsigned char size; //Total size of party.
 };
 
-static struct dbt *party_db;
+static DBMap* party_db; // int party_id -> struct party_data*
 static int party_newid = 100;
 
 int mapif_party_broken(int party_id, int flag);
@@ -178,7 +178,7 @@ int inter_party_init() {
 	int c = 0;
 	int i, j;
 
-	party_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	party_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
 	if ((fp = fopen(party_txt, "r")) == NULL)
 		return 1;

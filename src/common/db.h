@@ -23,8 +23,8 @@
  *  HISTORY:                                                                 *
  *    2.1 (Athena build #???#) - Portability fix                             *
  *      - Fixed the portability of casting to union and added the functions  *
- *        {@link DB#ensure(DB,DBKey,DBCreateData,...)} and                   *
- *        {@link DB#clear(DB,DBApply,...)}.                                  *
+ *        {@link DBMap#ensure(DBMap,DBKey,DBCreateData,...)} and             *
+ *        {@link DBMap#clear(DBMap,DBApply,...)}.                            *
  *    2.0 (Athena build 4859) - Transition version                           *
  *      - Almost everything recoded with a strategy similar to objects,      *
  *        database structure is maintained.                                  *
@@ -40,6 +40,7 @@
 #ifndef _DB_H_
 #define _DB_H_
 
+#include "../common/cbasetypes.h"
 #include <stdarg.h>
 
 /*****************************************************************************\
@@ -51,19 +52,19 @@
  *  DBOptions    - Bitfield enumeration of database options.                 *
  *  DBKey        - Union of used key types.                                  *
  *  DBApply      - Format of functions applyed to the databases.             *
- *  DBMatcher    - Format of matchers used in DB::getall.                    *
+ *  DBMatcher    - Format of matchers used in DBMap::getall.                 *
  *  DBComparator - Format of the comparators used by the databases.          *
  *  DBHasher     - Format of the hashers used by the databases.              *
  *  DBReleaser   - Format of the releasers used by the databases.            *
- *  DB           - Database interface.                                       *
+ *  DBMap        - Database interface.                                       *
 \*****************************************************************************/
 
 /**
  * Define this to enable the functions that cast to unions.
  * Required when the compiler doesn't support casting to unions.
  * NOTE: It is recommened that the conditional tests to determine if this 
- * should be defined be located in a makefile or a header file specific for 
- * of compatibility and portability issues.
+ * should be defined be located in the configure script or a header file 
+ * specific for compatibility and portability issues.
  * @public
  * @see #db_i2key(int)
  * @see #db_ui2key(unsigned int)
@@ -120,7 +121,7 @@ typedef enum DBType {
  * @param DB_OPT_RELEASE_KEY Releases the key.
  * @param DB_OPT_RELEASE_DATA Releases the data whenever an entry is removed 
  *          from the database.
- *          WARNING: for funtions that return the data (like DB::remove),
+ *          WARNING: for funtions that return the data (like DBMap::remove),
  *          a dangling pointer will be returned.
  * @param DB_OPT_RELEASE_BOTH Releases both key and data.
  * @param DB_OPT_ALLOW_NULL_KEY Allow NULL keys in the database.
@@ -130,7 +131,7 @@ typedef enum DBType {
  * @see #db_default_release(DBType,DBOptions)
  * @see #db_alloc(const char *,int,DBType,DBOptions,unsigned short)
  */
-typedef enum db_opt {
+typedef enum DBOptions {
 	DB_OPT_BASE            = 0,
 	DB_OPT_DUP_KEY         = 1,
 	DB_OPT_RELEASE_KEY     = 2,
@@ -147,11 +148,11 @@ typedef enum db_opt {
  * @param str Type of key for DB_STRING and DB_ISTRING databases
  * @public
  * @see #DBType
- * @see DB#get
- * @see DB#put
- * @see DB#remove
+ * @see DBMap#get
+ * @see DBMap#put
+ * @see DBMap#remove
  */
-typedef union dbkey {
+typedef union DBKey {
 	int i;
 	unsigned int ui;
 	const char *str;
@@ -164,27 +165,27 @@ typedef union dbkey {
  * @param args Extra arguments of the funtion
  * @return Data identified by the key to be put in the database
  * @public
- * @see DB#vensure
- * @see DB#ensure
+ * @see DBMap#vensure
+ * @see DBMap#ensure
  */
-typedef void *(*DBCreateData)(DBKey key, va_list args);
+typedef void* (*DBCreateData)(DBKey key, va_list args);
 
 /**
  * Format of functions to be applyed to an unspecified quantity of entries of 
  * a database.
- * Any function that applyes this function to the database will return the sum 
+ * Any function that applies this function to the database will return the sum 
  * of values returned by this function.
  * @param key Key of the database entry
  * @param data Data of the database entry
  * @param args Extra arguments of the funtion
  * @return Value to be added up by the funtion that is applying this
  * @public
- * @see DB#vforeach
- * @see DB#foreach
- * @see DB#vdestroy
- * @see DB#destroy
+ * @see DBMap#vforeach
+ * @see DBMap#foreach
+ * @see DBMap#vdestroy
+ * @see DBMap#destroy
  */
-typedef int (*DBApply)(DBKey key, void *data, va_list args);
+typedef int (*DBApply)(DBKey key, void* data, va_list args);
 
 /**
  * Format of functions that match database entries.
@@ -195,9 +196,9 @@ typedef int (*DBApply)(DBKey key, void *data, va_list args);
  * @param args Extra arguments of the function
  * @return 0 if a match, another number otherwise
  * @public
- * @see DB#getall
+ * @see DBMap#getall
  */
-typedef int (*DBMatcher)(DBKey key, void *data, va_list args);
+typedef int (*DBMatcher)(DBKey key, void* data, va_list args);
 
 /**
  * Format of the comparators used internally by the database system.
@@ -241,58 +242,49 @@ typedef unsigned int (*DBHasher)(DBKey key, unsigned short maxlen);
  * @see #db_default_releaser(DBType,DBOptions)
  * @see #db_custom_release(DBRelease)
  */
-typedef void (*DBReleaser)(DBKey key, void *data, DBRelease which);
+typedef void (*DBReleaser)(DBKey key, void* data, DBRelease which);
+
+
+
+typedef struct DBMap DBMap;
+
+
 
 /**
  * Public interface of a database. Only contains funtions.
  * All the functions take the interface as the first argument.
  * @public
- * @see DB#get(DB,DBKey)
- * @see DB#getall(DB,void **,unsigned int,DBMatch,...)
- * @see DB#vgetall(DB,void **,unsigned int,DBMatch,va_list)
- * @see DB#put(DB,DBKey,void *)
- * @see DB#remove(DB,DBKey)
- * @see DB#foreach(DB,DBApply,...)
- * @see DB#vforeach(DB,DBApply,va_list)
- * @see DB#destroy(DB,DBApply,...)
- * @see DB#destroy(DB,DBApply,va_list)
- * @see DB#size(DB)
- * @see DB#type(DB)
- * @see DB#options(DB)
- * @see #db_alloc(const char *,int,DBType,DBOptions,unsigned short)
+ * @see #db_alloc(const char*,int,DBType,DBOptions,unsigned short)
  */
-typedef struct dbt *DB;
-struct dbt {
+struct DBMap {
 
 	/**
 	 * Get the data of the entry identifid by the key.
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @param key Key that identifies the entry
 	 * @return Data of the entry or NULL if not found
 	 * @protected
-	 * @see #db_get(DB,DBKey)
 	 */
-	void *(*get)(DB self, DBKey key);
+	void* (*get)(DBMap* self, DBKey key);
 
 	/**
-	 * Just calls {@link DB#vgetall(DB,void **,unsigned int,DBMatch,va_list)}.
+	 * Just calls {@link DBMap#vgetall}.
 	 * Get the data of the entries matched by <code>match</code>.
 	 * It puts a maximum of <code>max</code> entries into <code>buf</code>.
 	 * If <code>buf</code> is NULL, it only counts the matches.
 	 * Returns the number of entries that matched.
 	 * NOTE: if the value returned is greater than <code>max</code>, only the 
 	 * first <code>max</code> entries found are put into the buffer.
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @param buf Buffer to put the data of the matched entries
 	 * @param max Maximum number of data entries to be put into buf
 	 * @param match Function that matches the database entries
 	 * @param ... Extra arguments for match
 	 * @return The number of entries that matched
 	 * @protected
-	 * @see DB#vgetall
-	 * @see #db_getall(DB,void **,unsigned int,DBMatch,...)
+	 * @see DBMap#vgetall(DBMap*,void **,unsigned int,DBMatcher,va_list)
 	 */
-	unsigned int (*getall)(DB self, void **buf, unsigned int max, DBMatcher match, ...);
+	unsigned int (*getall)(DBMap* self, void** buf, unsigned int max, DBMatcher match, ...);
 
 	/**
 	 * Get the data of the entries matched by <code>match</code>.
@@ -301,149 +293,139 @@ struct dbt {
 	 * Returns the number of entries that matched.
 	 * NOTE: if the value returned is greater than <code>max</code>, only the 
 	 * first <code>max</code> entries found are put into the buffer.
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @param buf Buffer to put the data of the matched entries
 	 * @param max Maximum number of data entries to be put into buf
 	 * @param match Function that matches the database entries
 	 * @param ... Extra arguments for match
 	 * @return The number of entries that matched
 	 * @protected
-	 * @see DB#getall
-	 * @see #db_vgetall(DB,void **,unsigned int,DBMatch,va_list)
+	 * @see DBMap#getall(DBMap*,void **,unsigned int,DBMatcher,...)
 	 */
-	unsigned int (*vgetall)(DB self, void **buf, unsigned int max, DBMatcher match, va_list args);
+	unsigned int (*vgetall)(DBMap* self, void** buf, unsigned int max, DBMatcher match, va_list args);
 
 	/**
-	 * Just calls {@link common\db.h\DB#vensure(DB,DBKey,DBCreateData,va_list)}.
+	 * Just calls {@link DBMap#vensure}.
 	 * Get the data of the entry identified by the key.
 	 * If the entry does not exist, an entry is added with the data returned by 
 	 * <code>create</code>.
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @param key Key that identifies the entry
 	 * @param create Function used to create the data if the entry doesn't exist
 	 * @param ... Extra arguments for create
 	 * @return Data of the entry
 	 * @protected
-	 * @see DB#vensure(DB,DBKey,DBCreateData,va_list)
-	 * @see #db_ensure(DB,DBKey,DBCreateData,...)
+	 * @see DBMap#vensure(DBMap*,DBKey,DBCreateData,va_list)
 	 */
-	void *(*ensure)(DB self, DBKey key, DBCreateData create, ...);
+	void* (*ensure)(DBMap* self, DBKey key, DBCreateData create, ...);
 
 	/**
 	 * Get the data of the entry identified by the key.
 	 * If the entry does not exist, an entry is added with the data returned by 
 	 * <code>create</code>.
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @param key Key that identifies the entry
 	 * @param create Function used to create the data if the entry doesn't exist
 	 * @param args Extra arguments for create
 	 * @return Data of the entry
 	 * @protected
-	 * @see DB#ensure(DB,DBKey,DBCreateData,...)
-	 * @see #db_vensure(DB,DBKey,DBCreateData,va_list)
+	 * @see DBMap#ensure(DBMap*,DBKey,DBCreateData,...)
 	 */
-	void *(*vensure)(DB self, DBKey key, DBCreateData create, va_list args);
+	void* (*vensure)(DBMap* self, DBKey key, DBCreateData create, va_list args);
 
 	/**
 	 * Put the data identified by the key in the database.
 	 * Returns the previous data if the entry exists or NULL.
 	 * NOTE: Uses the new key, the old one is released.
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @param key Key that identifies the data
 	 * @param data Data to be put in the database
 	 * @return The previous data if the entry exists or NULL
 	 * @protected
-	 * @see #db_put(DB,DBKey,void *)
 	 */
-	void *(*put)(DB self, DBKey key, void *data);
+	void* (*put)(DBMap* self, DBKey key, void* data);
 
 	/**
 	 * Remove an entry from the database.
 	 * Returns the data of the entry.
 	 * NOTE: The key (of the database) is released.
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @param key Key that identifies the entry
 	 * @return The data of the entry or NULL if not found
 	 * @protected
-	 * @see #db_remove(DB,DBKey)
 	 */
-	void *(*remove)(DB self, DBKey key);
+	void* (*remove)(DBMap* self, DBKey key);
 
 	/**
-	 * Just calls {@link DB#vforeach(DB,DBApply,va_list)}.
+	 * Just calls {@link DBMap#vforeach}.
 	 * Apply <code>func</code> to every entry in the database.
 	 * Returns the sum of values returned by func.
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @param func Function to be applyed
 	 * @param ... Extra arguments for func
 	 * @return Sum of the values returned by func
 	 * @protected
-	 * @see DB#vforeach
-	 * @see #db_foreach(DB,DBApply,...)
+	 * @see DBMap#vforeach(DBMap*,DBApply,va_list)
 	 */
-	int (*foreach)(DB self, DBApply func, ...);
+	int (*foreach)(DBMap* self, DBApply func, ...);
 
 	/**
 	 * Apply <code>func</code> to every entry in the database.
 	 * Returns the sum of values returned by func.
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @param func Function to be applyed
 	 * @param args Extra arguments for func
 	 * @return Sum of the values returned by func
 	 * @protected
-	 * @see DB#foreach
-	 * @see #db_vforeach(DB,DBApply,va_list)
+	 * @see DBMap#foreach(DBMap*,DBApply,...)
 	 */
-	int (*vforeach)(DB self, DBApply func, va_list args);
+	int (*vforeach)(DBMap* self, DBApply func, va_list args);
 
 	/**
-	 * Just calls {@link DB#vclear(DB,DBApply,va_list)}.
+	 * Just calls {@link DBMap#vclear}.
 	 * Removes all entries from the database.
 	 * Before deleting an entry, func is applyed to it.
 	 * Releases the key and the data.
 	 * Returns the sum of values returned by func, if it exists.
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @param func Function to be applyed to every entry before deleting
 	 * @param ... Extra arguments for func
 	 * @return Sum of values returned by func
 	 * @protected
-	 * @see DB#vclear
-	 * @see #db_clear(DB,DBApply,...)
+	 * @see DBMap#vclear(DBMap*,DBApply,va_list)
 	 */
-	int (*clear)(DB self, DBApply func, ...);
+	int (*clear)(DBMap* self, DBApply func, ...);
 
 	/**
 	 * Removes all entries from the database.
 	 * Before deleting an entry, func is applyed to it.
 	 * Releases the key and the data.
 	 * Returns the sum of values returned by func, if it exists.
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @param func Function to be applyed to every entry before deleting
 	 * @param args Extra arguments for func
 	 * @return Sum of values returned by func
 	 * @protected
-	 * @see DB#clear
-	 * @see #vclear(DB,DBApply,va_list)
+	 * @see DBMap#clear(DBMap*,DBApply,...)
 	 */
-	int (*vclear)(DB self, DBApply func, va_list args);
+	int (*vclear)(DBMap* self, DBApply func, va_list args);
 
 	/**
-	 * Just calls {@link DB#vdestroy(DB,DBApply,va_list)}.
+	 * Just calls {@link DBMap#vdestroy}.
 	 * Finalize the database, feeing all the memory it uses.
 	 * Before deleting an entry, func is applyed to it.
 	 * Releases the key and the data.
 	 * Returns the sum of values returned by func, if it exists.
 	 * NOTE: This locks the database globally. Any attempt to insert or remove 
 	 * a database entry will give an error and be aborted (except for clearing).
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @param func Function to be applyed to every entry before deleting
 	 * @param ... Extra arguments for func
 	 * @return Sum of values returned by func
 	 * @protected
-	 * @see DB#vdestroy
-	 * @see #db_destroy(DB,DBApply,...)
+	 * @see DBMap#vdestroy(DBMap*,DBApply,va_list)
 	 */
-	int (*destroy)(DB self, DBApply func, ...);
+	int (*destroy)(DBMap* self, DBApply func, ...);
 
 	/**
 	 * Finalize the database, feeing all the memory it uses.
@@ -451,42 +433,38 @@ struct dbt {
 	 * Returns the sum of values returned by func, if it exists.
 	 * NOTE: This locks the database globally. Any attempt to insert or remove 
 	 * a database entry will give an error and be aborted (except for clearing).
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @param func Function to be applyed to every entry before deleting
 	 * @param args Extra arguments for func
 	 * @return Sum of values returned by func
 	 * @protected
-	 * @see DB#destroy
-	 * @see #db_vdestroy(DB,DBApply,va_list)
+	 * @see DBMap#destroy(DBMap*,DBApply,...)
 	 */
-	int (*vdestroy)(DB self, DBApply func, va_list args);
+	int (*vdestroy)(DBMap* self, DBApply func, va_list args);
 
 	/**
 	 * Return the size of the database (number of items in the database).
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @return Size of the database
 	 * @protected
-	 * @see #db_size(DB)
 	 */
-	unsigned int (*size)(DB self);
+	unsigned int (*size)(DBMap* self);
 
 	/**
 	 * Return the type of the database.
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @return Type of the database
 	 * @protected
-	 * @see #db_type(DB)
 	 */
-	DBType (*type)(DB self);
+	DBType (*type)(DBMap* self);
 
 	/**
 	 * Return the options of the database.
-	 * @param dbi Interface of the database
+	 * @param self Database
 	 * @return Options of the database
 	 * @protected
-	 * @see #db_options(DB)
 	 */
-	DBOptions (*options)(DB self);
+	DBOptions (*options)(DBMap* self);
 
 };
 
@@ -501,27 +479,34 @@ struct dbt {
 #	define str2key(k) ((DBKey)(const char *)(k))
 #endif /* not DB_MANUAL_CAST_TO_UNION */
 
-#define db_get(db,k)    (db)->get((db),(k))
-#define idb_get(db,k)   (db)->get((db),i2key(k))
-#define uidb_get(db,k)  (db)->get((db),ui2key(k))
-#define strdb_get(db,k) (db)->get((db),str2key(k))
+#define db_get(db,k)    ( (db)->get((db),(k)) )
+#define idb_get(db,k)   ( (db)->get((db),i2key(k)) )
+#define uidb_get(db,k)  ( (db)->get((db),ui2key(k)) )
+#define strdb_get(db,k) ( (db)->get((db),str2key(k)) )
 
-#define db_put(db,k,d)    (db)->put((db),(k),(d))
-#define idb_put(db,k,d)   (db)->put((db),i2key(k),(d))
-#define uidb_put(db,k,d)  (db)->put((db),ui2key(k),(d))
-#define strdb_put(db,k,d) (db)->put((db),str2key(k),(d))
+#define db_put(db,k,d)    ( (db)->put((db),(k),(d)) )
+#define idb_put(db,k,d)   ( (db)->put((db),i2key(k),(d)) )
+#define uidb_put(db,k,d)  ( (db)->put((db),ui2key(k),(d)) )
+#define strdb_put(db,k,d) ( (db)->put((db),str2key(k),(d)) )
 
-#define db_remove(db,k)    (db)->remove((db),(k))
-#define idb_remove(db,k)   (db)->remove((db),i2key(k))
-#define uidb_remove(db,k)  (db)->remove((db),ui2key(k))
-#define strdb_remove(db,k) (db)->remove((db),str2key(k))
+#define db_remove(db,k)    ( (db)->remove((db),(k)) )
+#define idb_remove(db,k)   ( (db)->remove((db),i2key(k)) )
+#define uidb_remove(db,k)  ( (db)->remove((db),ui2key(k)) )
+#define strdb_remove(db,k) ( (db)->remove((db),str2key(k)) )
 
 //These are discarding the possible vargs you could send to the function, so those
 //that require vargs must not use these defines.
-#define db_ensure(db,k,f)    (db)->ensure((db),(k),f)
-#define idb_ensure(db,k,f)   (db)->ensure((db),i2key(k),f)
-#define uidb_ensure(db,k,f)  (db)->ensure((db),ui2key(k),f)
-#define strdb_ensure(db,k,f) (db)->ensure((db),str2key(k),f)
+#define db_ensure(db,k,f)    ( (db)->ensure((db),(k),(f)) )
+#define idb_ensure(db,k,f)   ( (db)->ensure((db),i2key(k),(f)) )
+#define uidb_ensure(db,k,f)  ( (db)->ensure((db),ui2key(k),(f)) )
+#define strdb_ensure(db,k,f) ( (db)->ensure((db),str2key(k),(f)) )
+
+// Database creation and destruction macros
+#define idb_alloc(opt)            db_alloc(__FILE__,__LINE__,DB_INT,(opt),sizeof(int))
+#define uidb_alloc(opt)           db_alloc(__FILE__,__LINE__,DB_UINT,(opt),sizeof(unsigned int))
+#define strdb_alloc(opt,maxlen)   db_alloc(__FILE__,__LINE__,DB_STRING,(opt),(maxlen))
+#define stridb_alloc(opt,maxlen)  db_alloc(__FILE__,__LINE__,DB_ISTRING,(opt),(maxlen))
+#define db_destroy(db)            ( (db)->destroy((db),NULL) )
 
 /*****************************************************************************\
  *  (2) Section with public functions.                                       *
@@ -550,7 +535,6 @@ struct dbt {
  * @see #DBType
  * @see #DBOptions
  * @see #db_default_release(DBType,DBOptions)
- * @see common\db.c#db_fix_options(DBType,DBOptions)
  */
 DBOptions db_fix_options(DBType type, DBOptions options);
 
@@ -561,7 +545,6 @@ DBOptions db_fix_options(DBType type, DBOptions options);
  * @public
  * @see #DBType
  * @see #DBComparator
- * @see common\db.c#db_default_cmp(DBType)
  */
 DBComparator db_default_cmp(DBType type);
 
@@ -572,7 +555,6 @@ DBComparator db_default_cmp(DBType type);
  * @public
  * @see #DBType
  * @see #DBHasher
- * @see common\db.c#db_default_hash(DBType)
  */
 DBHasher db_default_hash(DBType type);
 
@@ -590,7 +572,6 @@ DBHasher db_default_hash(DBType type);
  * @see #DBReleaser
  * @see #db_fix_options(DBType,DBOptions)
  * @see #db_custom_release(DBRelease)
- * @see common\db.c#db_default_release(DBType,DBOptions)
  */
 DBReleaser db_default_release(DBType type, DBOptions options);
 
@@ -602,7 +583,6 @@ DBReleaser db_default_release(DBType type, DBOptions options);
  * @see #DBRelease
  * @see #DBReleaser
  * @see #db_default_release(DBType,DBOptions)
- * @see common\db.c#db_custom_release(DBRelease)
  */
 DBReleaser db_custom_release(DBRelease which);
 
@@ -621,14 +601,13 @@ DBReleaser db_custom_release(DBRelease which);
  * @return The interface of the database
  * @public
  * @see #DBType
- * @see #DB
+ * @see #DBMap
  * @see #db_default_cmp(DBType)
  * @see #db_default_hash(DBType)
  * @see #db_default_release(DBType,DBOptions)
  * @see #db_fix_options(DBType,DBOptions)
- * @see common\db.c#db_alloc(const char *,int,DBType,DBOptions,unsigned short)
  */
-DB db_alloc(const char *file, int line, DBType type, DBOptions options, unsigned short maxlen);
+DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsigned short maxlen);
 
 #ifdef DB_MANUAL_CAST_TO_UNION
 /**

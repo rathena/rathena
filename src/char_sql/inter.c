@@ -79,7 +79,7 @@ struct WisData {
 	unsigned long tick;
 	unsigned char src[24], dst[24], msg[512];
 };
-static struct dbt * wis_db = NULL;
+static DBMap* wis_db = NULL; // int wis_id -> struct WisData*
 static int wis_dellist[WISDELLIST_MAX], wis_delnum;
 
 int inter_sql_test (void);
@@ -390,7 +390,7 @@ int inter_init_sql(const char *file)
 	}
 
 #ifndef TXT_SQL_CONVERT
-	wis_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	wis_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	inter_guild_sql_init();
 	inter_storage_sql_init();
 	inter_party_sql_init();

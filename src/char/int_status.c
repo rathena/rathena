@@ -10,7 +10,8 @@
 
 #include <stdio.h>
 
-static struct dbt * scdata_db = NULL;	//Contains all the status change data in-memory. [Skotlex]
+// Contains all the status change data in-memory. [Skotlex]
+static DBMap* scdata_db = NULL; // int char_id -> struct scdata*
 char scdata_txt[1024]="save/scdata.txt"; //By [Skotlex]
 
 #ifdef ENABLE_SC_SAVING
@@ -156,7 +157,7 @@ void inter_status_save()
  *------------------------------------------*/
 void status_init()
 {
-	scdata_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
+	scdata_db = idb_alloc(DB_OPT_BASE);
 	status_load_scdata(scdata_txt);
 }
 

@@ -17,7 +17,7 @@
 
 char homun_txt[1024]="save/homun.txt";
 
-static struct dbt *homun_db;
+static DBMap* homun_db; // int hom_id -> struct s_homunculus*
 static int homun_newid = 100;
 
 int inter_homun_tostr(char *str,struct s_homunculus *p)
@@ -118,7 +118,7 @@ int inter_homun_init()
 	FILE *fp;
 	int c=0;
 
-	homun_db= db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_RELEASE_DATA,sizeof(int));
+	homun_db= idb_alloc(DB_OPT_RELEASE_DATA);
 
 	if( (fp=fopen(homun_txt,"r"))==NULL )
 		return 1;

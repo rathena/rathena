@@ -93,11 +93,11 @@ char *SCRIPT_CONF_NAME;
 char *MSG_CONF_NAME;
 
 // ‹É—Í static‚Åƒ?ƒJƒ‹‚É?‚ß‚é
-static struct dbt * id_db=NULL;// id -> struct block_list
-static struct dbt * pc_db=NULL;// id -> struct map_session_data
-static struct dbt * map_db=NULL;
-static struct dbt * nick_db=NULL;// charid -> struct charid2nick (requested names of offline characters)
-static struct dbt * charid_db=NULL;// charid -> struct map_session_data
+static DBMap* id_db=NULL; // int id -> struct block_list*
+static DBMap* pc_db=NULL; // int id -> struct map_session_data*
+static DBMap* map_db=NULL; // unsigned int mapindex -> struct map_data*
+static DBMap* nick_db=NULL; // int char_id -> struct charid2nick* (requested names of offline characters)
+static DBMap* charid_db=NULL; // int char_id -> struct map_session_data*
 
 static int map_users=0;
 static struct block_list *objects[MAX_FLOORITEM];
@@ -3303,11 +3303,11 @@ int do_init(int argc, char *argv[])
 	inter_config_read(INTER_CONF_NAME);
 	log_config_read(LOG_CONF_NAME);
 
-	id_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
-	pc_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));	//Added for reliable map_id2sd() use. [Skotlex]
-	map_db = db_alloc(__FILE__,__LINE__,DB_UINT,DB_OPT_BASE,sizeof(int));
-	nick_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
-	charid_db = db_alloc(__FILE__,__LINE__,DB_INT,DB_OPT_BASE,sizeof(int));
+	id_db = idb_alloc(DB_OPT_BASE);
+	pc_db = idb_alloc(DB_OPT_BASE);	//Added for reliable map_id2sd() use. [Skotlex]
+	map_db = uidb_alloc(DB_OPT_BASE);
+	nick_db = idb_alloc(DB_OPT_BASE);
+	charid_db = idb_alloc(DB_OPT_BASE);
 #ifndef TXT_ONLY
 	map_sql_init();
 #endif /* not TXT_ONLY */
