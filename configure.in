@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_INIT(eAthena)
-AC_REVISION($Revision$)
+AC_REVISION($Revision: 11695$)
 AC_PREREQ([2.61])
 AC_CONFIG_SRCDIR([src/common/cbasetypes.h])
 AC_CONFIG_FILES([Makefile src/common/Makefile])
@@ -17,8 +17,8 @@ AC_CONFIG_FILES([src/map/Makefile src/plugins/Makefile src/tool/Makefile])
 AC_ARG_WITH(
 	[mysql],
 	AC_HELP_STRING(
-		[--with-mysql=@<:@ARG@:>@],
-		[use MySQL client library @<:@default=yes@:>@, optionally specify path to the mysql_config executable]
+		[--with-mysql@<:@=ARG@:>@],
+		[use MySQL client library, optionally specify path to the mysql_config executable (by default mysql is used if found)]
 	),
 	[
 		if test "$withval" = "no" ; then
@@ -41,8 +41,8 @@ AC_ARG_WITH(
 AC_ARG_WITH(
 	[pcre],
 	AC_HELP_STRING(
-		[--with-pcre=@<:@ARG@:>@],
-		[use PCRE library @<:@default=yes@:>@, optionally specify the root directory path of pcre installation]
+		[--with-pcre@<:@=ARG@:>@],
+		[use PCRE library, optionally specify the root directory path of pcre installation (by default pcre is used if found)]
 	),
 	[
 		if test "$withval" = "no" ; then
@@ -136,6 +136,19 @@ AC_COMPILE_IFELSE(
 AC_MSG_CHECKING([whether $CC supports -Wno-pointer-sign])
 OLD_CFLAGS="$CFLAGS"
 CFLAGS="$CFLAGS -Wno-pointer-sign"
+AC_COMPILE_IFELSE(
+	[int foo;],
+	[AC_MSG_RESULT([yes])],
+	[
+		AC_MSG_RESULT([no])
+		CFLAGS="$OLD_CFLAGS"
+	]
+)
+
+
+AC_MSG_CHECKING([whether $CC supports -Wno-switch])
+OLD_CFLAGS="$CFLAGS"
+CFLAGS="$CFLAGS -Wno-switch"
 AC_COMPILE_IFELSE(
 	[int foo;],
 	[AC_MSG_RESULT([yes])],
