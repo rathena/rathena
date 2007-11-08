@@ -885,8 +885,8 @@ int pc_reg_received(struct map_session_data *sd)
 	{
 		// set the Guild Master flag
 		sd->state.gmaster_flag = g;
-		// (optionally) block Guild Skills to prevent logout/login reuse
-		//guild_block_skill(sd, 300000);
+		if( battle_config.guild_skill_relog_delay )
+			guild_block_skill(sd, 300000);
 	}
 
 	status_calc_pc(sd,1);

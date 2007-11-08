@@ -173,6 +173,7 @@ extern struct Battle_Config
 	int guild_emperium_check;
 	int guild_exp_limit;
 	int guild_max_castles;
+	int guild_skill_relog_delay;
 	int emergency_call;
 	int guild_aura;
 	int pc_invincible_time;

@@ -22,6 +22,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	- small correction to the help text of --with-mysql and --with-pcre
 	- added the -Wno-switch compiler option to suppress the 
 	  "enumeration value '%s' not handled in switch" warnings
+	* Added a new setting 'guild_skill_relog_delay' to activate the guild skills delay
+	  on Guild Master relog. [Zephyrus]
 2007/11/07
 	* Some updates on the mail system packets [Zephyrus]
 	- Corrected the mail database structure on main.sql
