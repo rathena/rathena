@@ -159,16 +159,11 @@ int enable_spy = 0; //To enable/disable @spy commands, which consume too much cp
 int enable_grf = 0;	//To enable/disable reading maps from GRF files, bypassing mapcache [blackhole89]
 
 /*==========================================
- * ‘SmapI?Œv‚Å‚ÌÚ??İ’è
- * (charI‚©‚ç‘—‚ç‚ê‚Ä‚­‚é)
+ * server player count (of all mapservers)
  *------------------------------------------*/
-void map_setusers(int fd)
+void map_setusers(int users)
 {
-	map_users = RFIFOL(fd,2);
-	// send some answer
-	WFIFOHEAD(fd, 2);
-	WFIFOW(fd,0) = 0x2718;
-	WFIFOSET(fd,2);
+	map_users = users;
 }
 
 /*==========================================

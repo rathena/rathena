@@ -31,56 +31,58 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 	60, 3,-1,27,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
 	 6,-1,18, 7,-1,35,30,10,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, U->2b07
 	 6,30,-1,10,86, 7,44,34,	// 2b08-2b0f: U->2b08, U->2b09, U->2b0a, U->2b0b, U->2b0c, U->2b0d, U->2b0e, U->2b0f
-	11,-1,10, 6,11,-1, 0,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, U->2b13, U->2b14, U->2b15, U->2b16, U->2b17
-	-1,-1,-1,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
-	-1,10, 8,-1,-1,-1,-1,-1,	// 2b20-2b27: U->2b20, U->2b21, U->2b22, U->2b23, F->2b24, F->2b25, F->2b26, F->2b27
+	11, 9,10, 6,11,-1,266,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, U->2b13, U->2b14, U->2b15, U->2b16, U->2b17
+	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
+	-1,10, 8, 2, 2,-1,-1,-1,	// 2b20-2b27: U->2b20, U->2b21, U->2b22, U->2b23, U->2b24, F->2b25, F->2b26, F->2b27
 };
 
 //Used Packets:
 //2af8: Outgoing, chrif_connect -> 'connect to charserver / auth @ charserver'
-//2af9: Incomming, chrif_connectack -> 'answer of the 2af8 login(ok / fail)'
+//2af9: Incoming, chrif_connectack -> 'answer of the 2af8 login(ok / fail)'
 //2afa: Outgoing, chrif_sendmap -> 'sending our maps'
-//2afb: Incomming, chrif_sendmapack -> 'Maps received successfully / or not ..'
+//2afb: Incoming, chrif_sendmapack -> 'Maps received successfully / or not ..'
 //2afc: Outgoing, chrif_scdata_request -> request sc_data for pc_authok'ed char. <- new command reuses previous one.
-//2afd: Incomming, chrif_authok -> 'character selected, add to auth db'
+//2afd: Incoming, chrif_authok -> 'character selected, add to auth db'
 //2afe: Outgoing, send_usercount_tochar -> 'sends player count of this map server to charserver'
 //2aff: Outgoing, send_users_tochar -> 'sends all actual connected character ids to charserver'
-//2b00: Incomming, map_setusers -> 'set the actual usercount? PACKET.2B COUNT.L.. ?' (not sure)
+//2b00: Incoming, map_setusers -> 'set the actual usercount? PACKET.2B COUNT.L.. ?' (not sure)
 //2b01: Outgoing, chrif_save -> 'charsave of char XY account XY (complete struct)'
 //2b02: Outgoing, chrif_charselectreq -> 'player returns from ingame to charserver to select another char.., this packets includes sessid etc' ? (not 100% sure)
-//2b03: Incomming, clif_charselectok -> '' (i think its the packet after enterworld?) (not sure)
-//2b04: Incomming, chrif_recvmap -> 'getting maps from charserver of other mapserver's'
+//2b03: Incoming, clif_charselectok -> '' (i think its the packet after enterworld?) (not sure)
+//2b04: Incoming, chrif_recvmap -> 'getting maps from charserver of other mapserver's'
 //2b05: Outgoing, chrif_changemapserver -> 'Tell the charserver the mapchange / quest for ok...'
-//2b06: Incomming, chrif_changemapserverack -> 'awnser of 2b05, ok/fail, data: dunno^^'
+//2b06: Incoming, chrif_changemapserverack -> 'awnser of 2b05, ok/fail, data: dunno^^'
 //2b07: Incoming, clif_updatemaxid -> Received when updating the max account/char known
 //2b08: Outgoing, chrif_searchcharid -> '...'
-//2b09: Incomming, map_addchariddb -> 'Adds a name to the nick db'
+//2b09: Incoming, map_addchariddb -> 'Adds a name to the nick db'
 //2b0a: Outgoing, chrif_changegm -> 'level change of acc/char XY'
-//2b0b: Incomming, chrif_changedgm -> 'answer of 2b0a..'
+//2b0b: Incoming, chrif_changedgm -> 'answer of 2b0a..'
 //2b0c: Outgoing, chrif_changeemail -> 'change mail address ...'
-//2b0d: Incomming, chrif_changedsex -> 'Change sex of acc XY'
+//2b0d: Incoming, chrif_changedsex -> 'Change sex of acc XY'
 //2b0e: Outgoing, chrif_char_ask_name -> 'Do some operations (change sex, ban / unban etc)'
-//2b0f: Incomming, chrif_char_ask_name_answer -> 'answer of the 2b0e'
+//2b0f: Incoming, chrif_char_ask_name_answer -> 'answer of the 2b0e'
 //2b10: Outgoing, chrif_updatefamelist -> 'Update the fame ranking lists and send them'
 //2b11: Outgoing, chrif_changesex -> 'change sex of acc X'
-//2b12: Incomming, chrif_divorce -> 'divorce a wedding of charid X and partner id X'
-//2b13: Incomming, chrif_accountdeletion -> 'Delete acc XX, if the player is on, kick ....'
-//2b14: Incomming, chrif_accountban -> 'not sure: kick the player with message XY'
-//2b15: Incomming, chrif_recvgmaccounts -> 'receive gm accs from charserver (seems to be incomplete !)'
+//2b12: Incoming, chrif_divorce -> 'divorce a wedding of charid X and partner id X'
+//2b13: Incoming, chrif_accountdeletion -> 'Delete acc XX, if the player is on, kick ....'
+//2b14: Incoming, chrif_accountban -> 'not sure: kick the player with message XY'
+//2b15: Incoming, chrif_recvgmaccounts -> 'receive gm accs from charserver (seems to be incomplete !)'
 //2b16: Outgoing, chrif_ragsrvinfo -> 'sends motd / rates ....'
 //2b17: Outgoing, chrif_char_offline -> 'tell the charserver that the char is now offline'
 //2b18: Outgoing, chrif_char_reset_offline -> 'set all players OFF!'
 //2b19: Outgoing, chrif_char_online -> 'tell the charserver that the char .. is online'
 //2b1a: Outgoing, chrif_buildfamelist -> 'Build the fame ranking lists and send them'
-//2b1b: Incomming, chrif_recvfamelist -> 'Receive fame ranking lists'
+//2b1b: Incoming, chrif_recvfamelist -> 'Receive fame ranking lists'
 //2b1c: Outgoing, chrif_save_scdata -> 'Send sc_data of player for saving.'
-//2b1d: Incomming, chrif_load_scdata -> 'received sc_data of player for loading.'
+//2b1d: Incoming, chrif_load_scdata -> 'received sc_data of player for loading.'
 //2b1e: Incoming, chrif_update_ip -> 'Reqest forwarded from char-server for interserver IP sync.' [Lance]
-//2b1f: Incomming, chrif_disconnectplayer -> 'disconnects a player (aid X) with the message XY ... 0x81 ..' [Sirius]
-//2b20: Incomming, chrif_removemap -> 'remove maps of a server (sample: its going offline)' [Sirius]
-//2b21: Incomming, chrif_save_ack. Returned after a character has been "final saved" on the char-server. [Skotlex]
-//2b22: Incomming, chrif_updatefamelist_ack. Updated one position in the fame list.
-//2b24-2b27: FREE
+//2b1f: Incoming, chrif_disconnectplayer -> 'disconnects a player (aid X) with the message XY ... 0x81 ..' [Sirius]
+//2b20: Incoming, chrif_removemap -> 'remove maps of a server (sample: its going offline)' [Sirius]
+//2b21: Incoming, chrif_save_ack. Returned after a character has been "final saved" on the char-server. [Skotlex]
+//2b22: Incoming, chrif_updatefamelist_ack. Updated one position in the fame list.
+//2b23: Outgoing, chrif_keepalive. charserver ping.
+//2b24: Incoming, chrif_keepalive_ack. charserver ping reply.
+//2b25-2b27: FREE
 
 int chrif_connected = 0;
 int char_fd = 0; //Using 0 instead of -1 is safer against crashes. [Skotlex]
@@ -376,7 +378,7 @@ int chrif_sendmapack(int fd)
 	chrif_state = 2;
 
 	//If there are players online, send them to the char-server. [Skotlex]
-	send_users_tochar(-1, gettick(), 0, 0);
+	send_users_tochar();
 	
 	//Re-save any storages that were modified in the disconnection time. [Skotlex]
 	do_reconnect_map();
@@ -995,6 +997,8 @@ int chrif_recvfamelist(int fd)
 	return 0;
 }
 
+/// fame ranking update confirmation
+/// R 2b22 <table>.B <index>.B <value>.L
 int chrif_updatefamelist_ack(int fd)
 {
 	struct fame_list* list;
@@ -1096,6 +1100,7 @@ int chrif_load_scdata(int fd)
 
 /*==========================================
  * Send rates and motd to char server [Wizputer]
+ * S 2b16 <base rate>.w <job rate>.w <drop rate>.w <motd len>.w <motd>.256B
  *------------------------------------------*/
  int chrif_ragsrvinfo(int base_rate, int job_rate, int drop_rate)
 {
@@ -1110,6 +1115,7 @@ int chrif_load_scdata(int fd)
 	WFIFOW(char_fd,2) = base_rate;
 	WFIFOW(char_fd,4) = job_rate;
 	WFIFOW(char_fd,6) = drop_rate;
+	WFIFOW(char_fd,8) = sizeof(buf) + 10;
 
 	if ((fp = fopen(motd_txt, "r")) != NULL) {
 		if (fgets(buf, sizeof(buf), fp) != NULL)
@@ -1120,13 +1126,11 @@ int chrif_load_scdata(int fd)
 					break;
 				}
 			}
-			WFIFOW(char_fd,8) = sizeof(buf) + 10;
 			memcpy(WFIFOP(char_fd,10), buf, sizeof(buf));
 		}
 		fclose(fp);
 	} else {
 		memset(buf, 0, sizeof(buf)); //No data found, send empty packets?
-		WFIFOW(char_fd,8) = sizeof(buf) + 10;
 		memcpy(WFIFOP(char_fd,10), buf, sizeof(buf));
 	}
 	WFIFOSET(char_fd,WFIFOW(char_fd,8));
@@ -1226,6 +1230,18 @@ void chrif_update_ip(int fd)
 	WFIFOSET(fd,6);
 }
 
+// pings the charserver
+void chrif_keepalive(int fd)
+{
+	WFIFOHEAD(fd,2);
+	WFIFOW(fd,0) = 0x2b23;
+	WFIFOSET(fd,2);
+}
+
+void chrif_keepalive_ack(int fd)
+{
+}
+
 /*==========================================
  *
  *------------------------------------------*/
@@ -1283,7 +1299,7 @@ int chrif_parse(int fd)
 		case 0x2af9: chrif_connectack(fd); break;
 		case 0x2afb: chrif_sendmapack(fd); break;
 		case 0x2afd: chrif_authok(fd); break;
-		case 0x2b00: map_setusers(fd); break;
+		case 0x2b00: map_setusers(RFIFOL(fd,2)); chrif_keepalive(fd); break;
 		case 0x2b03: clif_charselectok(RFIFOL(fd,2)); break;
 		case 0x2b04: chrif_recvmap(fd); break;
 		case 0x2b06: chrif_changemapserverack(RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), RFIFOW(fd,18), RFIFOW(fd,20), RFIFOW(fd,22), RFIFOL(fd,24), RFIFOW(fd,28)); break;
@@ -1303,6 +1319,7 @@ int chrif_parse(int fd)
 		case 0x2b20: chrif_removemap(fd); break;
 		case 0x2b21: chrif_save_ack(fd); break;
 		case 0x2b22: chrif_updatefamelist_ack(fd); break;
+		case 0x2b24: chrif_keepalive_ack(fd); break;
 		default:
 			if (battle_config.error_log)
 				ShowError("chrif_parse : unknown packet (session #%d): 0x%x. Disconnecting.\n", fd, cmd);
@@ -1316,19 +1333,22 @@ int chrif_parse(int fd)
 	return 0;
 }
 
+int ping_char_server(int tid, unsigned int tick, int id, int data)
+{
+	chrif_check(-1);
+	chrif_keepalive(char_fd);
+	return 0;
+}
+
+// unused
 int send_usercount_tochar(int tid, unsigned int tick, int id, int data)
 {
 	int count;
-	static int last_count = 0;
 
 	chrif_check(-1);
 	
 	map_getallusers(&count);
 	
-	if (count == last_count) //No need to waste packets.
-		return 0;
-	last_count = count;
-
 	WFIFOHEAD(char_fd,4);
 	WFIFOW(char_fd,0) = 0x2afe;
 	WFIFOW(char_fd,2) = count;
@@ -1340,7 +1360,7 @@ int send_usercount_tochar(int tid, unsigned int tick, int id, int data)
  * timerä÷êî
  * ç°Ç±ÇÃmapéIÇ…åqÇ™Ç¡ÇƒÇ¢ÇÈÉNÉâÉCÉAÉìÉgêlêîÇcharéIÇ÷ëóÇÈ
  *------------------------------------------*/
-int send_users_tochar(int tid, unsigned int tick, int id, int data)
+int send_users_tochar(void)
 {
 	int count, users=0, i;
 	struct map_session_data **all_sd;
@@ -1430,22 +1450,20 @@ int do_final_chrif(void)
  *------------------------------------------*/
 int do_init_chrif(void)
 {
+	auth_db = idb_alloc(DB_OPT_RELEASE_DATA);
+
 	add_timer_func_list(check_connect_char_server, "check_connect_char_server");
-	add_timer_func_list(send_usercount_tochar, "send_usercount_tochar");
-	add_timer_func_list(send_users_tochar, "send_users_tochar");
+	add_timer_func_list(ping_char_server, "ping_char_server");
 	add_timer_func_list(auth_db_cleanup, "auth_db_cleanup");
 
+	// establish map-char connection if not present
 	add_timer_interval(gettick() + 1000, check_connect_char_server, 0, 0, 10 * 1000);
-#ifdef TXT_ONLY
-	//Txt needs this more frequently because it is used for the online.html file.
-	add_timer_interval(gettick() + 1000, send_users_tochar, 0, 0, UPDATE_INTERVAL);
-#else
-	add_timer_interval(gettick() + 1000, send_users_tochar, 0, 0, CHECK_INTERVAL);
-	add_timer_interval(gettick() + 1000, send_usercount_tochar, 0, 0, UPDATE_INTERVAL);
-#endif
-	add_timer_interval(gettick() + 1000, auth_db_cleanup, 0, 0, 30 * 1000);
 
-	auth_db = idb_alloc(DB_OPT_RELEASE_DATA);
+	// keep the map-char connection alive
+	add_timer_interval(gettick() + 1000, ping_char_server, 0, 0, ((int)stall_time-2) * 1000);
+
+	// wipe stale data for timed-out client connection requests
+	add_timer_interval(gettick() + 1000, auth_db_cleanup, 0, 0, 30 * 1000);
 
 	return 0;
 }

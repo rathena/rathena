@@ -1,5 +1,7 @@
 Date	Added
 
+2007/11/08
+	* Removed the unneccessary @refreshonline command
 2007/10/29
 	* Removed petid command (not needed because commands understand names)
 	* Removed *id2 commands (messy, useless and redundant)

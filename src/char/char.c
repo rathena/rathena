@@ -172,8 +172,6 @@ struct online_char_data {
 // Holds all online characters.
 static DBMap* online_char_db; // int account_id -> struct online_char_data*
 
-time_t update_online; // to update online files when we receiving information from a server (not less than 8 seconds)
-
 int console = 0;
 
 //------------------------------
@@ -344,6 +342,9 @@ void set_char_online(int map_id, int char_id, int account_id)
 	character->char_id = (char_id==99)?-1:char_id;
 	character->server = (char_id==99)?-1:map_id;
 
+	if( character->server > -1 )
+		server[character->server].users++;
+
 	if(character->waiting_disconnect != -1) {
 		delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
 		character->waiting_disconnect = -1;
@@ -363,6 +364,9 @@ void set_char_offline(int char_id, int account_id)
 
 	if ((character = idb_get(online_char_db, account_id)) != NULL)
 	{	//We don't free yet to avoid aCalloc/aFree spamming during char change. [Skotlex]
+		if( character->server > -1 )
+			server[character->server].users--;
+		
 		character->char_id = -1;
 		character->server = -1;
 		if(character->waiting_disconnect != -1){
@@ -2305,7 +2309,6 @@ int parse_fromlogin(int fd)
 			}
 			ShowStatus("From login-server: receiving information of %d GM accounts.\n", GM_num);
 			char_log("From login-server: receiving information of %d GM accounts.\n", GM_num);
-			create_online_files(); // update online players files (perhaps some online players change of GM level)
 			// send new gm acccounts level to map-servers
 			memcpy(buf, RFIFOP(fd,0), RFIFOW(fd,2));
 			WBUFW(buf,0) = 0x2b15;
@@ -2639,10 +2642,6 @@ int parse_frommap(int fd)
 		switch(RFIFOW(fd,0))
 		{
 
-		case 0x2718: // map-server alive packet
-			RFIFOSKIP(fd,2);
-		break;
-
 		case 0x2af7: // request from map-server to reload GM accounts. Transmission to login-server
 			if (login_fd > 0) { // don't send request if no login-server
 				WFIFOHEAD(login_fd,2);
@@ -2672,10 +2671,11 @@ int parse_frommap(int fd)
 			if (max_account_id != DEFAULT_MAX_ACCOUNT_ID || max_char_id != DEFAULT_MAX_CHAR_ID)
 				mapif_send_maxid(max_account_id, max_char_id); //Send the current max ids to the server to keep in sync [Skotlex]
 
+			// send name for wisp to player
 			WFIFOHEAD(fd, 3 + NAME_LENGTH);
 			WFIFOW(fd,0) = 0x2afb;
 			WFIFOB(fd,2) = 0;
-			memcpy(WFIFOP(fd,3), wisp_server_name, NAME_LENGTH); // name for wisp to player
+			memcpy(WFIFOP(fd,3), wisp_server_name, NAME_LENGTH);
 			WFIFOSET(fd,3+NAME_LENGTH);
 
 			char_send_fame_list(fd); //Send fame list.
@@ -2773,11 +2773,6 @@ int parse_frommap(int fd)
 				}
 				character->char_id = cid;
 				character->server = id;
-			}
-			if (update_online < time(NULL)) { // Time is done
-				update_online = time(NULL) + 8;
-				create_online_files(); // only every 8 sec. (normally, 1 server send users every 5 sec.) Don't update every time, because that takes time, but only every 2 connection.
-				                       // it set to 8 sec because is more than 5 (sec) and if we have more than 1 map-server, informations can be received in shifted.
 			}
 			//If any chars remain in -2, they will be cleaned in the cleanup timer.
 			RFIFOSKIP(fd,6+i*8);
@@ -3033,8 +3028,6 @@ int parse_frommap(int fd)
 		}
 		break;
 
-//		case 0x2b0f: Not used anymore, available for future use
-
 		case 0x2b10: // Update and send fame ranking list
 			if (RFIFOREST(fd) < 11)
 				return 0;
@@ -3145,6 +3138,13 @@ int parse_frommap(int fd)
 #endif
 			RFIFOSKIP(fd, RFIFOW(fd, 2));
 		}
+		break;
+
+		case 0x2b23: // map-server alive packet
+			WFIFOHEAD(fd,2);
+			WFIFOW(fd,0) = 0x2b24;
+			WFIFOSET(fd,2);
+			RFIFOSKIP(fd,2);
 		break;
 
 		case 0x2736: // ip address update
@@ -3783,22 +3783,33 @@ int mapif_send(int fd, unsigned char *buf, unsigned int len)
 	return 0;
 }
 
-int send_users_tologin(int tid, unsigned int tick, int id, int data)
+int broadcast_user_count(int tid, unsigned int tick, int id, int data)
 {
+	uint8 buf[6];
 	int users = count_users();
-	unsigned char buf[16];
 
-	if (login_fd > 0 && session[login_fd]) {
+	// only send an update when needed
+	static prev_users = 0;
+	if( prev_users == users )
+		return 0;
+	prev_users = users;
+
+	if( login_fd > 0 && session[login_fd] )
+	{
 		// send number of user to login server
 		WFIFOHEAD(login_fd,6);
 		WFIFOW(login_fd,0) = 0x2714;
 		WFIFOL(login_fd,2) = users;
 		WFIFOSET(login_fd,6);
 	}
+
 	// send number of players to all map-servers
 	WBUFW(buf,0) = 0x2b00;
 	WBUFL(buf,2) = users;
-	mapif_sendall(buf, 6);
+	mapif_sendall(buf,6);
+
+	// refresh online files (txt and html)
+	create_online_files();
 
 	return 0;
 }
@@ -3868,6 +3879,18 @@ int check_connect_login_server(int tid, unsigned int tick, int id, int data)
 	return 1;
 }
 
+// sends a ping packet to login server (will receive pong 0x2718)
+int ping_login_server(int tid, unsigned int tick, int id, int data)
+{
+	if (login_fd > 0 && session[login_fd] != NULL)
+	{
+		WFIFOHEAD(login_fd,2);
+		WFIFOW(login_fd,0) = 0x2719;
+		WFIFOSET(login_fd,2);
+	}
+	return 0;
+}
+
 //------------------------------------------------
 //Invoked 15 seconds after mapif_disconnectplayer in case the map server doesn't
 //replies/disconnect the player we tried to kick. [Skotlex]
@@ -3880,6 +3903,23 @@ static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, int dat
 		character->waiting_disconnect = -1;
 		set_char_offline(character->char_id, character->account_id);
 	}
+	return 0;
+}
+
+static int online_data_cleanup_sub(DBKey key, void *data, va_list ap)
+{
+	struct online_char_data *character= (struct online_char_data*)data;
+	if (character->server == -2) //Unknown server.. set them offline
+		set_char_offline(character->char_id, character->account_id);
+	if (character->server < 0)
+		//Free data from players that have not been online for a while.
+		db_remove(online_char_db, key);
+	return 0;
+}
+
+static int online_data_cleanup(int tid, unsigned int tick, int id, int data)
+{
+	online_char_db->foreach(online_char_db, online_data_cleanup_sub);
 	return 0;
 }
 
@@ -3931,9 +3971,9 @@ int char_lan_config_read(const char *lancfgName)
 				
 			subnet_count++;
 		}
-
-		ShowStatus("Read information about %d subnetworks.\n", subnet_count);
 	}
+
+	ShowStatus("Read information about %d subnetworks.\n", subnet_count);
 
 	fclose(fp);
 	return 0;
@@ -4181,23 +4221,6 @@ void set_server_type(void)
 	SERVER_TYPE = ATHENA_SERVER_CHAR;
 }
 
-static int online_data_cleanup_sub(DBKey key, void *data, va_list ap)
-{
-	struct online_char_data *character= (struct online_char_data*)data;
-	if (character->server == -2) //Unknown server.. set them offline
-		set_char_offline(character->char_id, character->account_id);
-	if (character->server < 0)
-		//Free data from players that have not been online for a while.
-		db_remove(online_char_db, key);
-	return 0;
-}
-
-static int online_data_cleanup(int tid, unsigned int tick, int id, int data)
-{
-	online_char_db->foreach(online_char_db, online_data_cleanup_sub);
-	return 0;
-}
-
 int do_init(int argc, char **argv)
 {
 	int i;
@@ -4258,18 +4281,32 @@ int do_init(int argc, char **argv)
 		}
 	}
 
+	// establish char-login connection if not present
 	add_timer_func_list(check_connect_login_server, "check_connect_login_server");
-	add_timer_func_list(send_users_tologin, "send_users_tologin");
+	add_timer_interval(gettick() + 1000, check_connect_login_server, 0, 0, 10 * 1000);
+
+	// keep the char-login connection alive
+	add_timer_func_list(ping_login_server, "ping_login_server");
+	add_timer_interval(gettick() + 1000, ping_login_server, 0, 0, ((int)stall_time-2) * 1000);
+
+	// periodically update the overall user count on all mapservers + login server
+	add_timer_func_list(broadcast_user_count, "broadcast_user_count");
+	add_timer_interval(gettick() + 1000, broadcast_user_count, 0, 0, 5 * 1000);
+
+	// send a list of all online account IDs to login server
 	add_timer_func_list(send_accounts_tologin, "send_accounts_tologin");
+	add_timer_interval(gettick() + 1000, send_accounts_tologin, 0, 0, 3600 * 1000); //Sync online accounts every hour
+
+	// ???
 	add_timer_func_list(chardb_waiting_disconnect, "chardb_waiting_disconnect");
+
+	// ???
 	add_timer_func_list(online_data_cleanup, "online_data_cleanup");
+	add_timer_interval(gettick() + 1000, online_data_cleanup, 0, 0, 600 * 1000);
+
+	// periodic flush of all saved data to disk
 	add_timer_func_list(mmo_char_sync_timer, "mmo_char_sync_timer");
-	
-	add_timer_interval(gettick() + 1000, check_connect_login_server, 0, 0, 10*1000);
-	add_timer_interval(gettick() + 1000, send_users_tologin, 0, 0, 5*1000);
-	add_timer_interval(gettick() + 3600*1000, send_accounts_tologin, 0, 0, 3600*1000); //Sync online accounts every hour
-	add_timer_interval(gettick() + 600*1000, online_data_cleanup, 0, 0, 600*1000);
-	add_timer_interval(gettick() + autosave_interval, mmo_char_sync_timer, 0, 0, autosave_interval);
+	add_timer_interval(gettick() + 1000, mmo_char_sync_timer, 0, 0, autosave_interval);
 
 	if( console )
 	{

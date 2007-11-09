@@ -6818,30 +6818,17 @@ int atcommand_misceffect(const int fd, struct map_session_data* sd, const char* 
 	return 0;
 }
 
-#ifndef TXT_ONLY  /* Begin SQL-Only commands */
-
 /*==========================================
  * MAIL SYSTEM
  *------------------------------------------*/
 int atcommand_mail(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	nullpo_retr(0,sd);
-
+#ifndef TXT_ONLY
 	mail_openmail(sd);
+#endif
 	return 0;
 }
-
-/*==========================================
- * Refresh online command for SQL [Valaris]
- * Will refresh and check online column of players and set correctly.
- *------------------------------------------*/
-int atcommand_refreshonline(const int fd, struct map_session_data* sd, const char* command, const char* message)
-{
-	send_users_tochar(-1, gettick(), 0, 0);
-	return 0;
-}
-
-#endif /* end sql only */
 
 /*==========================================
  * Show Monster DB Info   v 1.0
@@ -8394,10 +8381,7 @@ AtCommandInfo atcommand_info[] = {
 	{ "homshuffle",        60,     atcommand_homshuffle },
 	{ "showmobs",          10,     atcommand_showmobs },
 	{ "feelreset",         10,     atcommand_feelreset },
-#ifndef TXT_ONLY
 	{ "mail",               1,     atcommand_mail },
-	{ "refreshonline",     99,     atcommand_refreshonline },
-#endif
 };
 
 

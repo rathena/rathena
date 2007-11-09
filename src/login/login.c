@@ -1441,10 +1441,6 @@ int parse_fromchar(int fd)
 				return 0;
 			//printf("parse_fromchar: Receiving of the users number of the server '%s': %d\n", server[id].name, RFIFOL(fd,2));
 			server[id].users = RFIFOL(fd,2);
-			// send some answer
-			WFIFOHEAD(fd,2);
-			WFIFOW(fd,0) = 0x2718;
-			WFIFOSET(fd,2);
 
 			RFIFOSKIP(fd,6);
 		break;
@@ -1498,6 +1494,17 @@ int parse_fromchar(int fd)
 				          server[id].name, RFIFOL(fd,2), ip);
 
 			RFIFOSKIP(fd,6);
+		break;
+
+		case 0x2719: // ping request from charserver
+			if( RFIFOREST(fd) < 2 )
+				return 0;
+
+			WFIFOHEAD(fd,2);
+			WFIFOW(fd,0) = 0x2718;
+			WFIFOSET(fd,2);
+
+			RFIFOSKIP(fd,2);
 		break;
 
 		case 0x2720: // Request to become a GM
@@ -3419,8 +3426,9 @@ int login_lan_config_read(const char *lancfgName)
 			subnet_count++;
 		}
 
-		ShowStatus("Read information about %d subnetworks.\n", subnet_count);
 	}
+
+	ShowStatus("Read information about %d subnetworks.\n", subnet_count);
 
 	fclose(fp);
 	return 0;
