@@ -439,25 +439,26 @@ int pc_calcweapontype(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
+	// single-hand
 	if(sd->weapontype1 != W_FIST && sd->weapontype2 == W_FIST)
 		sd->status.weapon = sd->weapontype1;
-	else if(sd->weapontype1 == W_FIST && sd->weapontype2 != W_FIST)// ¶è•Ší Only
+	else if(sd->weapontype1 == W_FIST && sd->weapontype2 != W_FIST)
 		sd->status.weapon = sd->weapontype2;
-	else if(sd->weapontype1 == W_DAGGER && sd->weapontype2 == W_DAGGER)// ?’Z?
-		sd->status.weapon = MAX_WEAPON_TYPE+1;
-	else if(sd->weapontype1 == W_1HSWORD && sd->weapontype2 == W_1HSWORD)// ??è?
-		sd->status.weapon = MAX_WEAPON_TYPE+2;
-	else if(sd->weapontype1 == W_1HAXE && sd->weapontype2 == W_1HAXE)// ??è•€
-		sd->status.weapon = MAX_WEAPON_TYPE+3;
-	else if( (sd->weapontype1 == W_DAGGER && sd->weapontype2 == W_1HSWORD) ||
-		(sd->weapontype1 == W_1HSWORD && sd->weapontype2 == W_DAGGER) ) // ’Z? - ?è?
-		sd->status.weapon = MAX_WEAPON_TYPE+4;
-	else if( (sd->weapontype1 == W_DAGGER && sd->weapontype2 == W_1HAXE) ||
-		(sd->weapontype1 == W_1HAXE && sd->weapontype2 == W_DAGGER) ) // ’Z? - •€
-		sd->status.weapon = MAX_WEAPON_TYPE+5;
-	else if( (sd->weapontype1 == W_1HSWORD && sd->weapontype2 == W_1HAXE) ||
-		(sd->weapontype1 == W_1HAXE && sd->weapontype2 == W_1HSWORD) ) // ?è? - •€
-		sd->status.weapon = MAX_WEAPON_TYPE+6;
+	// dual-wield, matching types
+	else if(sd->weapontype1 == W_DAGGER && sd->weapontype2 == W_DAGGER)
+		sd->status.weapon = W_DOUBLE_DD;
+	else if(sd->weapontype1 == W_1HSWORD && sd->weapontype2 == W_1HSWORD)
+		sd->status.weapon = W_DOUBLE_SS;
+	else if(sd->weapontype1 == W_1HAXE && sd->weapontype2 == W_1HAXE)
+		sd->status.weapon = W_DOUBLE_AA;
+	// dual-wield, mixed types
+	else if(sd->weapontype1 == W_DAGGER && sd->weapontype2 == W_1HSWORD || sd->weapontype1 == W_1HSWORD && sd->weapontype2 == W_DAGGER)
+		sd->status.weapon = W_DOUBLE_DS;
+	else if(sd->weapontype1 == W_DAGGER && sd->weapontype2 == W_1HAXE || sd->weapontype1 == W_1HAXE && sd->weapontype2 == W_DAGGER)
+		sd->status.weapon = W_DOUBLE_DA;
+	else if(sd->weapontype1 == W_1HSWORD && sd->weapontype2 == W_1HAXE || sd->weapontype1 == W_1HAXE && sd->weapontype2 == W_1HSWORD)
+		sd->status.weapon = W_DOUBLE_SA;
+	// unknown, default to left hand type
 	else
 		sd->status.weapon = sd->weapontype1;
 
@@ -885,6 +886,7 @@ int pc_reg_received(struct map_session_data *sd)
 	{
 		// set the Guild Master flag
 		sd->state.gmaster_flag = g;
+		// prevent Guild Skills from being used directly after relog
 		if( battle_config.guild_skill_relog_delay )
 			guild_block_skill(sd, 300000);
 	}

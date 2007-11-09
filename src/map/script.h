@@ -26,7 +26,7 @@ extern struct Script_Config {
 } script_config;
 
 struct script_data {
-	int type;
+	enum c_op type;
 	union script_data_val {
 		int num;
 		char *str;

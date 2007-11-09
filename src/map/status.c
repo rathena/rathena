@@ -7330,16 +7330,17 @@ int status_readdb(void)
 	i = 0;
 	while(fgets(line, sizeof(line), fp))
 	{
-		char *split[MAX_WEAPON_TYPE + 5];
+		//NOTE: entry MAX_WEAPON_TYPE is not counted
+		char* split[5 + MAX_WEAPON_TYPE];
 		i++;
 		if(line[0]=='/' && line[1]=='/')
 			continue;
-		for(j=0,p=line;j<(MAX_WEAPON_TYPE + 5) && p;j++){	//not 22 anymore [blackhole89]
+		for(j=0,p=line; j < 5 + MAX_WEAPON_TYPE && p; j++){
 			split[j]=p;
 			p=strchr(p,',');
 			if(p) *p++=0;
 		}
-		if(j < MAX_WEAPON_TYPE + 5)
+		if(j < 5 + MAX_WEAPON_TYPE)
 		{	//Weapon #.MAX_WEAPON_TYPE is constantly not load. Fix to that: replace < with <= [blackhole89]
 			ShowDebug("%s: Not enough columns at line %d\n", path, i);
 			continue;

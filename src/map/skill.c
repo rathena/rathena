@@ -1890,15 +1890,11 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 	if (!sc->count)
 		sc = NULL;
 	
-	// for the guild skills [celest]
-	if (skill >= HM_SKILLBASE)	//[orn]
-		j = HM_SKILLRANGEMIN + skill - HM_SKILLBASE;
-	else
-		j = skill;
-	if (j < 0 || j >= MAX_SKILL_DB)
-  		return 0;
 	//Code speedup, rather than using skill_get_* over and over again.
-	if (lv < 1 || lv > MAX_SKILL_LEVEL)
+	j = skill_get_index(skill);
+	if( j == 0 )
+  		return 0;
+	if( lv < 1 || lv > MAX_SKILL_LEVEL )
 		return 0;
 
 	for(i = 0; i < 10; i++) {
@@ -7510,13 +7506,13 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		return 1;
 	}
 
+	//Code speedup, rather than using skill_get_* over and over again.
 	j = skill_get_index(skill);
-	if (j == 0) // invalid skill id
+	if( j == 0 ) // invalid skill id
   		return 0;
-	if (lv < 1 || lv > MAX_SKILL_LEVEL)
+	if( lv < 1 || lv > MAX_SKILL_LEVEL )
 		return 0;
 
-	//Code speedup, rather than using skill_get_* over and over again.
 	hp = skill_db[j].hp[lv-1];
 	sp = skill_db[j].sp[lv-1];
 	if((sd->skillid_old == BD_ENCORE) && skill == sd->skillid_dance)

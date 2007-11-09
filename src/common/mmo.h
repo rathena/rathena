@@ -111,14 +111,14 @@ struct item {
 	int id;
 	short nameid;
 	short amount;
-	unsigned short equip;
+	unsigned short equip; // location(s) where item is equipped (using enum equip_pos for bitmasking)
 	char identify;
 	char refine;
 	char attribute;
 	short card[MAX_SLOTS];
 };
 
-struct point{
+struct point {
 	unsigned short map;
 	short x,y;
 };
@@ -217,7 +217,8 @@ struct mmo_charstatus {
 	int party_id,guild_id,pet_id,hom_id;
 	int fame;
 
-	short weapon,shield;
+	enum weapon_type weapon;
+	short shield; // view-id
 	short head_top,head_mid,head_bottom;
 
 	char name[NAME_LENGTH];

@@ -16,7 +16,7 @@
 //Total number of classes (for data storage)
 #define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)
 
-enum {
+enum weapon_type {
 	W_FIST,	//Bare hands
 	W_DAGGER,	//1
 	W_1HSWORD,	//2
@@ -26,7 +26,7 @@ enum {
 	W_1HAXE,	//6
 	W_2HAXE,	//7
 	W_MACE,	//8
-	W_UNKNOWN,	//View 9 seems unused anywhere
+	W_2HMACE,	//9, unused?
 	W_STAFF,	//10
 	W_BOW,	//11
 	W_KNUCKLE,	//12	
@@ -40,8 +40,15 @@ enum {
 	W_GATLING,	//20
 	W_GRENADE,	//21
 	W_HUUMA,	//22
-	MAX_WEAPON_TYPE
-} weapon_type;
+	MAX_WEAPON_TYPE,
+	// dual-wield constants
+	W_DOUBLE_DD, // 2 daggers
+	W_DOUBLE_SS, // 2 swords
+	W_DOUBLE_AA, // 2 axes
+	W_DOUBLE_DS, // dagger + sword
+	W_DOUBLE_DA, // dagger + axe
+	W_DOUBLE_SA, // sword + axe
+};
 
 enum {
 	A_ARROW = 1,
@@ -52,8 +59,9 @@ enum {
 	A_SHURIKEN, //6
 	A_KUNAI     //7
 } ammo_type;
+
 //Equip position constants
-enum {
+enum equip_pos {
 	EQP_HEAD_LOW = 0x0001, 
 	EQP_HEAD_MID = 0x0200, //512
 	EQP_HEAD_TOP = 0x0100, //256
@@ -65,7 +73,7 @@ enum {
 	EQP_ACC_L    = 0x0008,
 	EQP_ACC_R    = 0x0080, //128
 	EQP_AMMO     = 0x8000, //32768
-} equip_pos_enum;
+};
 
 #define EQP_WEAPON EQP_HAND_R
 #define EQP_SHIELD EQP_HAND_L

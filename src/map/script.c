@@ -153,7 +153,7 @@ static int script_pos,script_size;
 static char *str_buf;
 static int str_pos,str_size;
 static struct str_data_struct {
-	int type;
+	enum c_op type;
 	int str;
 	int backpatch;
 	int label;
@@ -201,12 +201,13 @@ enum curly_type {
 	TYPE_USERFUNC,
 	TYPE_ARGLIST // function argument list
 };
+
 #define ARGLIST_UNDEFINED 0
 #define ARGLIST_NO_PAREN  1
 #define ARGLIST_PAREN     2
 static struct {
 	struct {
-		int type;
+		enum curly_type type;
 		int index;
 		int count;
 		int flag;
@@ -215,13 +216,14 @@ static struct {
 	int curly_count;	// 右カッコの数
 	int index;			// スクリプト内で使用した構文の数
 } syntax;
+
 const char* parse_curly_close(const char* p);
 const char* parse_syntax_close(const char* p);
 const char* parse_syntax_close_sub(const char* p,int* flag);
 const char* parse_syntax(const char* p);
 static int parse_syntax_for_flag = 0;
 
-extern int current_equip_item_index; //for New CARS Scripts. It contains Inventory Index of the EQUIP_SCRIPT caller item. [Lupus]
+extern int current_equip_item_index; //for New CARDS Scripts. It contains Inventory Index of the EQUIP_SCRIPT caller item. [Lupus]
 int potion_flag=0; //For use on Alchemist improved potions/Potion Pitcher. [Skotlex]
 int potion_hp=0, potion_per_hp=0, potion_sp=0, potion_per_sp=0;
 int potion_target=0;
@@ -11672,7 +11674,6 @@ BUILDIN_FUNC(getd)
 {
 	char varname[100];
 	const char *buffer;
-	//struct script_data dat;
 	int elem;
 
 	buffer = script_getstr(st, 2);
@@ -11681,8 +11682,7 @@ BUILDIN_FUNC(getd)
 		elem = 0;
 
 	// Push the 'pointer' so it's more flexible [Lance]
-	push_val(st->stack,C_NAME,
-				(elem<<24) | add_str(varname));
+	push_val(st->stack, C_NAME, (elem<<24) | add_str(varname));
 
 	return 0;
 }
