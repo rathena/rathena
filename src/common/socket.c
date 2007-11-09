@@ -527,8 +527,6 @@ int do_sockets(int next)
 	struct timeval timeout;
 	int ret,i;
 
-	last_tick = time(0);
-
 	// PRESEND Timers are executed before do_sendrecv and can send packets and/or set sessions to eof.
 	// Send remaining data and process client-side disconnects here.
 #ifdef SEND_SHORTLIST
@@ -560,6 +558,8 @@ int do_sockets(int next)
 		}
 		return 0; // interrupted by a signal, just loop and try again
 	}
+
+	last_tick = time(NULL);
 
 #ifdef WIN32
 	// on windows, enumerating all members of the fd_set is way faster if we access the internals
@@ -1080,7 +1080,7 @@ void socket_init(void)
 	socket_config_read(SOCKET_CONF_FILENAME);
 
 	// initialise last send-receive tick
-	last_tick = time(0);
+	last_tick = time(NULL);
 
 	// session[0] is now currently used for disconnected sessions of the map server, and as such,
 	// should hold enough buffer (it is a vacuum so to speak) as it is never flushed. [Skotlex]
