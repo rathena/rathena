@@ -48,6 +48,7 @@
  *  - create a db that organizes itself by splaying
  *
  *  HISTORY:
+ *    2007/11/09 - Added an iterator to the database.
  *    2006/12/21 - Added 1-node cache to the database.
  *    2.1 (Athena build #???#) - Portability fix
  *      - Fixed the portability of casting to union and added the functions
@@ -189,6 +190,25 @@ typedef struct DBMap_impl {
 	unsigned global_lock : 1;
 } DBMap_impl;
 
+/**
+ * Complete iterator structure.
+ * @param vtable Interface of the iterator
+ * @param db Parent database
+ * @param ht_index Current index of the hashtable
+ * @param node Current node
+ * @private
+ * @see #DBIterator
+ * @see #DBMap_impl
+ * @see #DBNode
+ */
+typedef struct DBIterator_impl {
+	// Iterator interface
+	struct DBIterator vtable;
+	DBMap_impl* db;
+	int ht_index;
+	DBNode node;
+} DBIterator_impl;
+
 #if defined(DB_ENABLE_STATS)
 /**
  * Structure with what is counted when the database estatistics are enabled.
@@ -233,6 +253,14 @@ static struct db_stats {
 	uint32 db_release_key;
 	uint32 db_release_data;
 	uint32 db_release_both;
+	uint32 dbit_first;
+	uint32 dbit_last;
+	uint32 dbit_next;
+	uint32 dbit_prev;
+	uint32 dbit_exists;
+	uint32 dbit_remove;
+	uint32 dbit_destroy;
+	uint32 db_iterator;
 	uint32 db_get;
 	uint32 db_getall;
 	uint32 db_vgetall;
@@ -1039,7 +1067,16 @@ static void db_release_both(DBKey key, void *data, DBRelease which)
 
 /*****************************************************************************\
  *  (4) Section with protected functions used in the interface of the        *
- *  database.                                                                *
+ *  database and interface of the iterator.                                  *
+ *  dbit_obj_first   - Fetches the first entry from the database.            *
+ *  dbit_obj_last    - Fetches the last entry from the database.             *
+ *  dbit_obj_next    - Fetches the next entry from the database.             *
+ *  dbit_obj_prev    - Fetches the previous entry from the database.         *
+ *  dbit_obj_exists  - Returns true if the current entry exists.             *
+ *  dbit_obj_remove  - Remove the current entry from the database.           *
+ *  dbit_obj_destroy - Destroys the iterator, unlocking the database and     *
+ *           freeing used memory.                                            *
+ *  db_obj_iterator - Return a new databse iterator.                         *
  *  db_obj_get      - Get the data identified by the key.                    *
  *  db_obj_vgetall  - Get the data of the matched entries.                   *
  *  db_obj_getall   - Get the data of the matched entries.                   *
@@ -1059,6 +1096,300 @@ static void db_release_both(DBKey key, void *data, DBRelease which)
  *  db_obj_type     - Return the type of the database.                       *
  *  db_obj_options  - Return the options of the database.                    *
 \*****************************************************************************/
+
+/**
+ * Fetches the first entry in the database.
+ * Returns the data of the entry.
+ * Puts the key in out_key, if out_key is not NULL.
+ * @param self Iterator
+ * @param out_key Key of the entry
+ * @return Data of the entry
+ * @protected
+ * @see DBIterator#first
+ */
+void* dbit_obj_first(DBIterator* self, DBKey* out_key)
+{
+	DBIterator_impl* it = (DBIterator_impl*)self;
+	
+	DB_COUNTSTAT(dbit_first);
+	// position before the first entry
+	it->ht_index = -1;
+	it->node = NULL;
+	// get next entry
+	return self->next(self, out_key);
+}
+
+/**
+ * Fetches the last entry in the database.
+ * Returns the data of the entry.
+ * Puts the key in out_key, if out_key is not NULL.
+ * @param self Iterator
+ * @param out_key Key of the entry
+ * @return Data of the entry
+ * @protected
+ * @see DBIterator#last
+ */
+void* dbit_obj_last(DBIterator* self, DBKey* out_key)
+{
+	DBIterator_impl* it = (DBIterator_impl*)self;
+	
+	DB_COUNTSTAT(dbit_last);
+	// position after the last entry
+	it->ht_index = HASH_SIZE;
+	it->node = NULL;
+	// get previous entry
+	return self->prev(self, out_key);
+}
+
+/**
+ * Fetches the next entry in the database.
+ * Returns the data of the entry.
+ * Puts the key in out_key, if out_key is not NULL.
+ * @param self Iterator
+ * @param out_key Key of the entry
+ * @return Data of the entry
+ * @protected
+ * @see DBIterator#next
+ */
+void* dbit_obj_next(DBIterator* self, DBKey* out_key)
+{
+	DBIterator_impl* it = (DBIterator_impl*)self;
+	DBNode node;
+	DBNode parent;
+	struct dbn fake;
+
+	DB_COUNTSTAT(dbit_next);
+	if( it->ht_index < 0 )
+	{// get first node
+		it->ht_index = 0;
+		it->node = NULL;
+	}
+	node = it->node;
+	memset(&fake, 0, sizeof(fake));
+	for( ; it->ht_index < HASH_SIZE; ++(it->ht_index) )
+	{
+		// Iterate in the order: left tree, current node, right tree
+		if( node == NULL )
+		{// prepare initial node of this hash
+			node = it->db->ht[it->ht_index];
+			if( node == NULL )
+				continue;// next hash
+			fake.right = node;
+			node = &fake;
+		}
+
+		while( node )
+		{// next node
+			if( node->right )
+			{// continue in the right subtree
+				node = node->right;
+				while( node->left )
+					node = node->left;// get leftmost node
+			}
+			else
+			{// continue to the next parent (recursive)
+				parent = node->parent;
+				while( parent )
+				{
+					if( parent->right != node )
+						break;
+					node = parent;
+					parent = node->parent;
+				}
+				if( parent == NULL )
+				{// next hash
+					node = NULL;
+					break;
+				}
+				node = parent;
+			}
+
+			if( !node->deleted )
+			{// found next entry
+				it->node = node;
+				if( out_key )
+					memcpy(out_key, &node->key, sizeof(DBKey));
+				return node->data;
+			}
+		}
+	}
+	it->node = NULL;
+	return NULL;// not found
+}
+
+/**
+ * Fetches the previous entry in the database.
+ * Returns the data of the entry.
+ * Puts the key in out_key, if out_key is not NULL.
+ * @param self Iterator
+ * @param out_key Key of the entry
+ * @return Data of the entry
+ * @protected
+ * @see DBIterator#prev
+ */
+void* dbit_obj_prev(DBIterator* self, DBKey* out_key)
+{
+	DBIterator_impl* it = (DBIterator_impl*)self;
+	DBNode node;
+	DBNode parent;
+	struct dbn fake;
+
+	DB_COUNTSTAT(dbit_prev);
+	if( it->ht_index >= HASH_SIZE )
+	{// get last node
+		it->ht_index = HASH_SIZE-1;
+		it->node = NULL;
+	}
+	node = it->node;
+	memset(&fake, 0, sizeof(fake));
+	for( ; it->ht_index >= 0; --(it->ht_index) )
+	{
+		// Iterate in the order: right tree, current node, left tree
+		if( node == NULL )
+		{// prepare initial node of this hash
+			node = it->db->ht[it->ht_index];
+			if( node == NULL )
+				continue;// next hash
+			fake.left = node;
+			node = &fake;
+		}
+
+		
+		while( node )
+		{// next node
+			if( node->left )
+			{// continue in the left subtree
+				node = node->left;
+				while( node->right )
+					node = node->right;// get rightmost node
+			}
+			else
+			{// continue to the next parent (recursive)
+				parent = node->parent;
+				while( parent )
+				{
+					if( parent->left != node )
+						break;
+					node = parent;
+					parent = node->parent;
+				}
+				if( parent == NULL )
+				{// next hash
+					node = NULL;
+					break;
+				}
+				node = parent;
+			}
+
+			if( !node->deleted )
+			{// found next entry
+				it->node = node;
+				if( out_key )
+					memcpy(out_key, &node->key, sizeof(DBKey));
+				return node->data;
+			}
+		}
+	}
+	it->node = NULL;
+	return NULL;// not found
+}
+
+/**
+ * Returns true if the fetched entry exists.
+ * The databases entries might have NULL data, so use this to to test if 
+ * the iterator is done.
+ * @param self Iterator
+ * @return true is the entry exists
+ * @protected
+ * @see DBIterator#exists
+ */
+bool dbit_obj_exists(DBIterator* self)
+{
+	DBIterator_impl* it = (DBIterator_impl*)self;
+
+	DB_COUNTSTAT(dbit_exists);
+	return (it->node && !it->node->deleted);
+}
+
+/**
+ * Removes the current entry from the database.
+ * NOTE: {@link DBIterator#exists} will return false until another entry 
+ *       is fethed
+ * Returns the data of the entry.
+ * @param self Iterator
+ * @return The data of the entry or NULL if not found
+ * @protected
+ * @see DBMap#remove
+ * @see DBIterator#remove
+ */
+void* dbit_obj_remove(DBIterator* self)
+{
+	DBIterator_impl* it = (DBIterator_impl*)self;
+	DBNode node;
+	void* data = NULL;
+
+	DB_COUNTSTAT(dbit_remove);
+	node = it->node;
+	if( node && !node->deleted )
+	{
+		DBMap_impl* db = it->db;
+		if( db->cache == node )
+			db->cache = NULL;
+		data = node->data;
+		db->release(node->key, node->data, DB_RELEASE_DATA);
+		db_free_add(db, node, &db->ht[it->ht_index]);
+	}
+	return data;
+}
+
+/**
+ * Destroys this iterator and unlocks the database.
+ * @param self Iterator
+ * @protected
+ */
+void dbit_obj_destroy(DBIterator* self)
+{
+	DBIterator_impl* it = (DBIterator_impl*)self;
+
+	DB_COUNTSTAT(dbit_destroy);
+	// unlock the database
+	db_free_unlock(it->db);
+	// free iterator
+	aFree(self);
+}
+
+/**
+ * Returns a new iterator for this database.
+ * The iterator keeps the database locked until it is destroyed.
+ * The database will keep functioning normally but will only free internal 
+ * memory when unlocked, so destroy the iterator as soon as possible.
+ * @param self Database
+ * @return New iterator
+ * @protected
+ */
+static DBIterator* db_obj_iterator(DBMap* self)
+{
+	DBMap_impl* db = (DBMap_impl*)self;
+	DBIterator_impl* it;
+
+	DB_COUNTSTAT(db_iterator);
+	CREATE(it, struct DBIterator_impl, 1);
+	/* Interface of the iterator **/
+	it->vtable.first   = dbit_obj_first;
+	it->vtable.last    = dbit_obj_last;
+	it->vtable.next    = dbit_obj_next;
+	it->vtable.prev    = dbit_obj_prev;
+	it->vtable.exists  = dbit_obj_exists;
+	it->vtable.remove  = dbit_obj_remove;
+	it->vtable.destroy = dbit_obj_destroy;
+	/* Initial state (before the first entry) */
+	it->db = db;
+	it->ht_index = -1;
+	it->node = NULL;
+	/* Lock the database */
+	db_free_lock(db);
+	return &it->vtable;
+}
 
 /**
  * Get the data of the entry identifid by the key.
@@ -1981,6 +2312,7 @@ DBMap* db_alloc(const char *file, int line, DBType type, DBOptions options, unsi
 
 	options = db_fix_options(type, options);
 	/* Interface of the database */
+	db->vtable.iterator = db_obj_iterator;
 	db->vtable.get      = db_obj_get;
 	db->vtable.getall   = db_obj_getall;
 	db->vtable.vgetall  = db_obj_vgetall;
@@ -2119,6 +2451,10 @@ void db_final(void)
 			"db_string_hash     %10u, db_istring_hash    %10u,\n"
 			"db_release_nothing %10u, db_release_key     %10u,\n"
 			"db_release_data    %10u, db_release_both    %10u,\n"
+			"dbit_first         %10u, dbit_last          %10u,\n"
+			"dbit_next          %10u, dbit_prev          %10u,\n"
+			"dbit_exists        %10u, dbit_remove        %10u,\n"
+			"dbit_destroy       %10u, db_iterator        %10u,\n"
 			"db_get             %10u,\n"
 			"db_getall          %10u, db_vgetall         %10u,\n"
 			"db_ensure          %10u, db_vensure         %10u,\n"
@@ -2145,6 +2481,10 @@ void db_final(void)
 			stats.db_string_hash,     stats.db_istring_hash,
 			stats.db_release_nothing, stats.db_release_key,
 			stats.db_release_data,    stats.db_release_both,
+			stats.dbit_first,         stats.dbit_last,
+			stats.dbit_next,          stats.dbit_prev,
+			stats.dbit_exists,        stats.dbit_remove,
+			stats.dbit_destroy,       stats.db_iterator,
 			stats.db_get,
 			stats.db_getall,          stats.db_vgetall,
 			stats.db_ensure,          stats.db_vensure,

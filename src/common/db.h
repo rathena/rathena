@@ -21,6 +21,7 @@
  *  - see what functions need or should be added to the database interface   *
  *                                                                           *
  *  HISTORY:                                                                 *
+ *    2007/11/09 - Added an iterator to the database.
  *    2.1 (Athena build #???#) - Portability fix                             *
  *      - Fixed the portability of casting to union and added the functions  *
  *        {@link DBMap#ensure(DBMap,DBKey,DBCreateData,...)} and             *
@@ -56,6 +57,7 @@
  *  DBComparator - Format of the comparators used by the databases.          *
  *  DBHasher     - Format of the hashers used by the databases.              *
  *  DBReleaser   - Format of the releasers used by the databases.            *
+ *  DBIterator   - Database iterator.                                        *
  *  DBMap        - Database interface.                                       *
 \*****************************************************************************/
 
@@ -246,9 +248,97 @@ typedef void (*DBReleaser)(DBKey key, void* data, DBRelease which);
 
 
 
+typedef struct DBIterator DBIterator;
 typedef struct DBMap DBMap;
 
 
+
+/**
+ * Database iterator.
+ * Supports forward iteration, backward iteration and removing entries from the database.
+ * The iterator is initially positioned before the first entry of the database.
+ * While the iterator exists the database is locked internally, so invoke 
+ * {@link DBIterator#destroy} as soon as possible.
+ * @public
+ * @see #DBMap
+ */
+struct DBIterator
+{
+
+	/**
+	 * Fetches the first entry in the database.
+	 * Returns the data of the entry.
+	 * Puts the key in out_key, if out_key is not NULL.
+	 * @param self Iterator
+	 * @param out_key Key of the entry
+	 * @return Data of the entry
+	 * @protected
+	 */
+	void* (*first)(DBIterator* self, DBKey* out_key);
+
+	/**
+	 * Fetches the last entry in the database.
+	 * Returns the data of the entry.
+	 * Puts the key in out_key, if out_key is not NULL.
+	 * @param self Iterator
+	 * @param out_key Key of the entry
+	 * @return Data of the entry
+	 * @protected
+	 */
+	void* (*last)(DBIterator* self, DBKey* out_key);
+
+	/**
+	 * Fetches the next entry in the database.
+	 * Returns the data of the entry.
+	 * Puts the key in out_key, if out_key is not NULL.
+	 * @param self Iterator
+	 * @param out_key Key of the entry
+	 * @return Data of the entry
+	 * @protected
+	 */
+	void* (*next)(DBIterator* self, DBKey* out_key);
+
+	/**
+	 * Fetches the previous entry in the database.
+	 * Returns the data of the entry.
+	 * Puts the key in out_key, if out_key is not NULL.
+	 * @param self Iterator
+	 * @param out_key Key of the entry
+	 * @return Data of the entry
+	 * @protected
+	 */
+	void* (*prev)(DBIterator* self, DBKey* out_key);
+
+	/**
+	 * Returns true if the fetched entry exists.
+	 * The databases entries might have NULL data, so use this to to test if 
+	 * the iterator is done.
+	 * @param self Iterator
+	 * @return true is the entry exists
+	 * @protected
+	 */
+	bool (*exists)(DBIterator* self);
+
+	/**
+	 * Removes the current entry from the database.
+	 * NOTE: {@link DBIterator#exists} will return false until another entry 
+	 *       is fethed
+	 * Returns the data of the entry.
+	 * @param self Iterator
+	 * @return The data of the entry or NULL if not found
+	 * @protected
+	 * @see DBMap#remove
+	 */
+	void* (*remove)(DBIterator* self);
+
+	/**
+	 * Destroys this iterator and unlocks the database.
+	 * @param self Iterator
+	 * @protected
+	 */
+	void (*destroy)(DBIterator* self);
+
+};
 
 /**
  * Public interface of a database. Only contains funtions.
@@ -257,6 +347,17 @@ typedef struct DBMap DBMap;
  * @see #db_alloc(const char*,int,DBType,DBOptions,unsigned short)
  */
 struct DBMap {
+
+	/**
+	 * Returns a new iterator for this database.
+	 * The iterator keeps the database locked until it is destroyed.
+	 * The database will keep functioning normally but will only free internal 
+	 * memory when unlocked, so destroy the iterator as soon as possible.
+	 * @param self Database
+	 * @return New iterator
+	 * @protected
+	 */
+	DBIterator* (*iterator)(DBMap* self);
 
 	/**
 	 * Get the data of the entry identifid by the key.
