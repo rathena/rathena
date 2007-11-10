@@ -3280,7 +3280,7 @@ int broadcast_user_count(int tid, unsigned int tick, int id, int data)
 	int users = count_users();
 
 	// only send an update when needed
-	static prev_users = 0;
+	static int prev_users = 0;
 	if( prev_users == users )
 		return 0;
 	prev_users = users;

@@ -25,6 +25,46 @@ extern struct Script_Config {
 	char joblvup_event_name[NAME_LENGTH];
 } script_config;
 
+enum c_op {
+	C_NOP, // end of script/no value (nil)
+	C_POS,
+	C_INT, // number
+	C_PARAM, // parameter variable (see pc_readparam/pc_setparam)
+	C_FUNC, // buildin function call
+	C_STR, // string (free'd automatically)
+	C_CONSTSTR, // string (not free'd)
+	C_ARG, // start of argument list
+	C_NAME,
+	C_EOL, // end of line (extra stack values are cleared)
+	C_RETINFO,
+	C_USERFUNC, // internal script function
+	C_USERFUNC_POS, // internal script function label
+
+	// operators
+	C_OP3, // a ? b : c
+	C_LOR, // a || b
+	C_LAND, // a && b
+	C_LE, // a <= b
+	C_LT, // a < b
+	C_GE, // a >= b
+	C_GT, // a > b
+	C_EQ, // a == b
+	C_NE, // a != b
+	C_XOR, // a ^ b
+	C_OR, // a | b
+	C_AND, // a & b
+	C_ADD, // a + b
+	C_SUB, // a - b
+	C_MUL, // a * b
+	C_DIV, // a / b
+	C_MOD, // a % b
+	C_NEG, // - a
+	C_LNOT, // ! a
+	C_NOT, // ~ a
+	C_R_SHIFT, // a >> b
+	C_L_SHIFT // a << b
+};
+
 struct script_data {
 	enum c_op type;
 	union script_data_val {

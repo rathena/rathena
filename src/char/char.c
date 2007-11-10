@@ -1188,8 +1188,8 @@ int make_new_char(struct char_session_data* sd, char* name_, int str, int agi, i
 
 	// check name (already in use?)
 	ARR_FIND( 0, char_num, i,
-		name_ignoring_case && strncmp(char_dat[i].status.name, name, NAME_LENGTH) == 0 ||
-		!name_ignoring_case && strncmpi(char_dat[i].status.name, name, NAME_LENGTH) == 0 );
+		(name_ignoring_case && strncmp(char_dat[i].status.name, name, NAME_LENGTH) == 0) ||
+		(!name_ignoring_case && strncmpi(char_dat[i].status.name, name, NAME_LENGTH) == 0) );
 	if( i < char_num )
 		return -1; // name already exists
 
@@ -3789,7 +3789,7 @@ int broadcast_user_count(int tid, unsigned int tick, int id, int data)
 	int users = count_users();
 
 	// only send an update when needed
-	static prev_users = 0;
+	static int prev_users = 0;
 	if( prev_users == users )
 		return 0;
 	prev_users = users;

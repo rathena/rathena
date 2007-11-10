@@ -95,8 +95,7 @@ int convert_login(void)
 	FILE *fp;
 	int account_id, logincount, user_level, state, n, i;
 	char line[2048], userid[2048], pass[2048], lastlogin[2048], sex, email[2048], error_message[2048], last_ip[2048], memo[2048];
-	time_t ban_until_time;
-	time_t connect_until_time;
+	int ban_until_time, connect_until_time;
 	char dummy[2048];
 
 	mysql_handle = Sql_Malloc();
@@ -119,7 +118,7 @@ int convert_login(void)
 		if(line[0]=='/' && line[1]=='/')
 			continue;
 
-		i = sscanf(line, "%d\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%d\t%[^\t]\t%[^\t]\t%ld\t%[^\t]\t%[^\t]\t%ld\t%[^\r\n]%n",
+		i = sscanf(line, "%d\t%[^\t]\t%[^\t]\t%[^\t]\t%c\t%d\t%d\t%[^\t]\t%[^\t]\t%d\t%[^\t]\t%[^\t]\t%d\t%[^\r\n]%n",
 			&account_id, userid, pass, lastlogin, &sex, &logincount, &state,
 			email, error_message, &connect_until_time, last_ip, memo, &ban_until_time, dummy, &n);
 
@@ -139,8 +138,8 @@ int convert_login(void)
 			"REPLACE INTO `login` "
 			"(`account_id`, `userid`, `user_pass`, `lastlogin`, `sex`, `logincount`, `email`, `level`, `error_message`, `connect_until`, `last_ip`, `memo`, `ban_until`, `state`) "
 			"VALUES "
-			"(%d, ?, ?, '%s', '%c', %d, '%s', %d, '%s', %u, '%s', '%s', %u, %d)",
-			account_id, lastlogin, sex, logincount, email, user_level, error_message, (uint32)connect_until_time, last_ip, memo, (uint32)ban_until_time, state)
+			"(%d, ?, ?, '%s', '%c', %d, '%s', %d, '%s', %d, '%s', '%s', %d, %d)",
+			account_id, lastlogin, sex, logincount, email, user_level, error_message, connect_until_time, last_ip, memo, ban_until_time, state)
 		||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_STRING, userid, strnlen(userid, 255))
 		||	SQL_ERROR == SqlStmt_BindParam(stmt, 1, SQLDT_STRING, pass, strnlen(pass, 32))
 		||	SQL_ERROR == SqlStmt_Execute(stmt) )
