@@ -217,7 +217,7 @@ struct mmo_charstatus {
 	int party_id,guild_id,pet_id,hom_id;
 	int fame;
 
-	enum weapon_type weapon;
+	short weapon; // enum weapon_type
 	short shield; // view-id
 	short head_top,head_mid,head_bottom;
 
