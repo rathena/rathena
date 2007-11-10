@@ -1094,8 +1094,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 		sc = NULL;
 	
 	if(sd) {
-		if (skillnotok(skill_num, sd) ||
-			!skill_check_condition(sd, skill_num, skill_lv,0))
+		if (skillnotok(skill_num, sd) || !skill_check_condition(sd, skill_num, skill_lv,0))
 		return 0;
 	} 
 	

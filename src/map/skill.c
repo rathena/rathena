@@ -7801,17 +7801,6 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		if(!sc || sc->data[SC_COMBO].timer == -1 || sc->data[SC_COMBO].val1 != skill)
 			return 0;
 		break;
-	case AM_BERSERKPITCHER:
-	case AM_POTIONPITCHER:
-	case CR_SLIMPITCHER:
-	case MG_STONECURSE:
-	case CR_CULTIVATION:
-	case SA_FLAMELAUNCHER:
-	case SA_FROSTWEAPON:
-	case SA_LIGHTNINGLOADER:
-	case SA_SEISMICWEAPON:
-		delitem_flag = 0;
-		break;
 	case SA_DELUGE:
 	case SA_VOLCANO:
 	case SA_VIOLENTGALE:
@@ -8094,7 +8083,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 	}
 
 	if(!(type&1))
-		return 1;
+		return 1; // consumption only happens on cast-end
 
 	if( delitem_flag )
 	{
