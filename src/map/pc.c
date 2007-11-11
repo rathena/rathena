@@ -5606,10 +5606,26 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 			sd->change_level = sd->status.job_level;
 	  else if (!sd->change_level)
 			sd->change_level = 40; //Assume 40?
+		pc_setglobalreg (sd, "jobchange_level", sd->change_level);
 	}
 
-	pc_setglobalreg (sd, "jobchange_level", sd->change_level);
-
+	if(sd->cloneskill_id) {
+		sd->cloneskill_id = 0;
+		pc_setglobalreg(sd, "CLONE_SKILL", 0);
+		pc_setglobalreg(sd, "CLONE_SKILL_LV", 0);
+	}
+	if ((b_class&&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK))
+	{ //Things to remove when changing class tree.
+		const int class_ = pc_class2idx(sd->status.class_);
+		int id;
+		for(i = 0; i < MAX_SKILL_TREE && (id = skill_tree[class_][i].id) > 0; i++) {
+			//Remove status specific to your current tree skills.
+			id = SkillStatusChangeTable(id);
+			if (id > SC_COMMON_MAX && sd->sc.data[id].timer != -1)
+				status_change_end(&sd->bl, id, -1);
+		}
+	}
+	
 	sd->status.class_ = job;
 	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
 	sd->class_ = (unsigned short)b_class;
