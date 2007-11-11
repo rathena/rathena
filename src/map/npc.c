@@ -1977,7 +1977,7 @@ void npc_unsetcells(struct npc_data* nd)
 	if (m < 0 || xs < 1 || ys < 1)
 		return;
 
-	//Locate max range on which we can localte npce cells
+	//Locate max range on which we can locate npc cells
 	for(x0 = x-xs/2; x0 > 0 && map_getcell(m, x0, y, CELL_CHKNPC); x0--);
 	for(x1 = x+xs/2-1; x1 < map[m].xs && map_getcell(m, x1, y, CELL_CHKNPC); x1++);
 	for(y0 = y-ys/2; y0 > 0 && map_getcell(m, x, y0, CELL_CHKNPC); y0--);
@@ -1999,11 +1999,9 @@ void npc_movenpc(struct npc_data* nd, int x, int y)
 	x = cap_value(x, 0, map[m].xs-1);
 	y = cap_value(y, 0, map[m].ys-1);
 
-	npc_unsetcells(nd);
 	map_foreachinrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
 	map_moveblock(&nd->bl, x, y, gettick());
 	map_foreachinrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
-	npc_setcells(nd);
 }
 
 int npc_changename(const char* name, const char* newname, short look)

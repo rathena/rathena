@@ -465,7 +465,9 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 			if (sc->data[SC_MAGICROD].timer != -1)
 				status_change_end(bl, SC_MAGICROD, -1);
 		}
-	}
+	} else
+	if (bl->type == BL_NPC) npc_unsetcells((BL_NPC*)bl);
+
 	if (moveblock) map_delblock_sub(bl,0);
 #ifdef CELL_NOSTACK
 	else map_delblcell(bl);
@@ -488,7 +490,8 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 					skill_unit_move_unit_group((struct skill_unit_group *)sc->data[SC_WARM].val4, bl->m, x1-x0, y1-y0);
 			}
 		}
-	}
+	} else
+	if (bl->type == BL_NPC) npc_setcells((BL_NPC*)bl);
 	return 0;
 }
 	

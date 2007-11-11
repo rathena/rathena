@@ -440,29 +440,43 @@ int pc_calcweapontype(struct map_session_data *sd)
 	nullpo_retr(0, sd);
 
 	// single-hand
-	if(sd->weapontype1 != W_FIST && sd->weapontype2 == W_FIST)
+	if(sd->weapontype2 == W_FIST) {
 		sd->status.weapon = sd->weapontype1;
-	else if(sd->weapontype1 == W_FIST && sd->weapontype2 != W_FIST)
+		return 1;
+	}
+	if(sd->weapontype1 == W_FIST) {
 		sd->status.weapon = sd->weapontype2;
-	// dual-wield, matching types
-	else if(sd->weapontype1 == W_DAGGER && sd->weapontype2 == W_DAGGER)
-		sd->status.weapon = W_DOUBLE_DD;
-	else if(sd->weapontype1 == W_1HSWORD && sd->weapontype2 == W_1HSWORD)
-		sd->status.weapon = W_DOUBLE_SS;
-	else if(sd->weapontype1 == W_1HAXE && sd->weapontype2 == W_1HAXE)
-		sd->status.weapon = W_DOUBLE_AA;
-	// dual-wield, mixed types
-	else if(sd->weapontype1 == W_DAGGER && sd->weapontype2 == W_1HSWORD || sd->weapontype1 == W_1HSWORD && sd->weapontype2 == W_DAGGER)
-		sd->status.weapon = W_DOUBLE_DS;
-	else if(sd->weapontype1 == W_DAGGER && sd->weapontype2 == W_1HAXE || sd->weapontype1 == W_1HAXE && sd->weapontype2 == W_DAGGER)
-		sd->status.weapon = W_DOUBLE_DA;
-	else if(sd->weapontype1 == W_1HSWORD && sd->weapontype2 == W_1HAXE || sd->weapontype1 == W_1HAXE && sd->weapontype2 == W_1HSWORD)
-		sd->status.weapon = W_DOUBLE_SA;
-	// unknown, default to left hand type
-	else
+		return 1;
+	}
+	// dual-wield
+	sd->status.weapon = 0;
+	switch (sd->weapontype1){
+	case W_DAGGER:
+		switch (sd->weapontype2) {
+		case W_DAGGER:  sd->status.weapon = W_DOUBLE_DD; break;
+		case W_1HSWORD: sd->status.weapon = W_DOUBLE_DS; break;
+		case W_1HAXE:   sd->status.weapon = W_DOUBLE_DA; break;
+		}
+		break;
+	case W_1HSWORD:
+		switch (sd->weapontype2) {
+		case W_DAGGER:  sd->status.weapon = W_DOUBLE_DS; break;
+		case W_1HSWORD: sd->status.weapon = W_DOUBLE_SS; break;
+		case W_1HAXE:   sd->status.weapon = W_DOUBLE_SA; break;
+		}
+		break;
+	case W_1HAXE:
+		switch (sd->weapontype2) {
+		case W_DAGGER:  sd->status.weapon = W_DOUBLE_DA; break;
+		case W_1HSWORD: sd->status.weapon = W_DOUBLE_SA; break;
+		case W_1HAXE:   sd->status.weapon = W_DOUBLE_AA; break;
+		}
+	}
+	// unknown, default to right hand type
+	if (!sd->status.weapon)
 		sd->status.weapon = sd->weapontype1;
 
-	return 0;
+	return 2;
 }
 
 int pc_setequipindex(struct map_session_data *sd)
