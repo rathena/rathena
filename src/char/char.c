@@ -3101,7 +3101,7 @@ int parse_frommap(int fd)
 		break;
 		
 		case 0x2b19: // Character set online [Wizputer]
-			if (RFIFOREST(fd) < 6)
+			if (RFIFOREST(fd) < 10)
 				return 0;
 			set_char_online(id, RFIFOL(fd,2),RFIFOL(fd,6));
 			RFIFOSKIP(fd,10);
