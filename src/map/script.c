@@ -1047,8 +1047,8 @@ const char* parse_line(const char* p)
 	p=skip_space(p);
 	if(*p==';') {
 		// if(); for(); while(); ‚Ì‚½‚ß‚É•Â‚¶”»’è
-		p = parse_syntax_close(p);
-		return p+1;
+		p = parse_syntax_close(p + 1);
+		return p;
 	}
 	if(*p==')' && parse_syntax_for_flag)
 		return p+1;
@@ -1178,10 +1178,8 @@ const char* parse_syntax(const char* p)
 				syntax.curly_count--;
 			}
 			p = skip_space(p2);
-			if(*p != ';') {
+			if(*p != ';')
 				disp_error_message("parse_syntax: need ';'",p);
-			}
-			p++;
 			// if, for , while ‚Ì•Â‚¶”»’è
 			p = parse_syntax_close(p + 1);
 			return p;
@@ -1292,7 +1290,6 @@ const char* parse_syntax(const char* p)
 			p = skip_space(p2);
 			if(*p != ';')
 				disp_error_message("parse_syntax: need ';'",p);
-			p++;
 			// if, for , while ‚Ì•Â‚¶”»’è
 			p = parse_syntax_close(p + 1);
 			return p;
@@ -1436,16 +1433,19 @@ const char* parse_syntax(const char* p)
 			p = skip_word(func_name);
 			if( p == func_name )
 				disp_error_message("parse_syntax:function: function name is missing or invalid", p);
-			if( *skip_space(p) == ';' )
+			p2 = skip_space(p);
+			if( *p2 == ';' )
 			{// function <name> ;
 				// function declaration - just register the name
 				int l;
 				l = add_word(func_name);
 				if( str_data[l].type == C_NOP )//## ??? [FlavioJS]
 					str_data[l].type = C_USERFUNC;
-				return skip_space(p) + 1;
-			}
-			else
+
+				// if, for , while ‚Ì•Â‚¶”»’è
+				p = parse_syntax_close(p2 + 1);
+				return p;			}
+			else if(*p2 == '{')
 			{// function <name> <line/block of code>
 				char label[256];
 				int l;
@@ -1471,6 +1471,10 @@ const char* parse_syntax(const char* p)
 				if( parse_options&SCRIPT_USE_LABEL_DB )
 					strdb_put(scriptlabel_db, GETSTRING(str_data[l].str), (void*)script_pos);
 				return skip_space(p);
+			}
+			else
+			{
+				disp_error_message("expect ';' or '{' at function syntax",p);
 			}
 		}
 		break;
@@ -1727,7 +1731,7 @@ const char* parse_syntax_close_sub(const char* p,int* flag)
 		l=add_str(label);
 		set_label(l,script_pos,p);
 		syntax.curly_count--;
-		return p + 1;
+		return p;
 	} else {
 		*flag = 0;
 		return p;
