@@ -4826,10 +4826,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		if(sc->data[SC_DECREASEAGI].timer!=-1 )
 			status_change_end(bl,SC_DECREASEAGI,-1);
 		break;
-	case SC_DONTFORGETME:
-		//is this correct? Maybe all three should stop the same subset of SCs...
-		if(sc->data[SC_ASSNCROS].timer!=-1 )
-			status_change_end(bl,SC_ASSNCROS,-1);
 	case SC_QUAGMIRE:
 		if(sc->data[SC_CONCENTRATE].timer!=-1 )
 			status_change_end(bl,SC_CONCENTRATE,-1);
@@ -4839,6 +4835,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			status_change_end(bl,SC_WINDWALK,-1);
 		//Also blocks the ones below...
 	case SC_DECREASEAGI:
+		if(sc->data[SC_CARTBOOST].timer!=-1 )
+			status_change_end(bl,SC_CARTBOOST,-1);
+		//Also blocks the ones below...
+	case SC_DONTFORGETME:
 		if(sc->data[SC_INCREASEAGI].timer!=-1 )
 			status_change_end(bl,SC_INCREASEAGI,-1);
 		if(sc->data[SC_ADRENALINE].timer!=-1 )
@@ -4849,8 +4849,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			status_change_end(bl,SC_SPEARQUICKEN,-1);
 		if(sc->data[SC_TWOHANDQUICKEN].timer!=-1 )
 			status_change_end(bl,SC_TWOHANDQUICKEN,-1);
-		if(sc->data[SC_CARTBOOST].timer!=-1 )
-			status_change_end(bl,SC_CARTBOOST,-1);
 		if(sc->data[SC_ONEHAND].timer!=-1 )
 			status_change_end(bl,SC_ONEHAND,-1);
 		break;
