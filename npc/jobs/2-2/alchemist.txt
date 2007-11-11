@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 2.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=	No longer uses function "F_BlockHigh"
+//= 2.6 Corrected a bug in advanced class checking. [L0ne_W0lf]
 //============================================================ 
 
 alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
@@ -1559,7 +1560,7 @@ alde_alche,79,19,5	script	Experiment Expert#am	748,{
 alde_alche,101,184,4	script	Master Alchemist#am	122,{
 	cutin "job_alche_vincent",2;
 	mes "[Vincent Carsciallo]";
-	if (Upper != 0) {
+	if (Upper == 1) {
 		mes "You have transcended...";
 		mes "Excellent, excellent.";
 		next;
