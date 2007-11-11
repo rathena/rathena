@@ -3724,7 +3724,7 @@
 13636,1_Hour_Package_Vol_3,1_Hour Package Vol 3,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12252,2; getitem 12253,2; getitem 12208,2; getitem 12215,15; getitem 12216,15; getitem 12211,1; getitem 7621,1; },{},{}
 13637,1_Hour_Package_Vol_4,1_Hour Package Vol 4,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12252,2; getitem 12255,2; getitem 12208,2; getitem 12215,15; getitem 12216,15; getitem 12211,1; getitem 7621,1; },{},{}
 13638,1_Hour_Package_Vol_5,1_Hour Package Vol 5,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12252,2; getitem 12250,2; getitem 12208,2; getitem 12215,15; getitem 12216,15; getitem 12211,1; getitem 7621,1; },{},{}
-13639,1_Hour_Package_Vol_6,1_Hour Package Vol 6,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12250,2; getitem 12251,2; getitem 12208,2; getitem 1220,24; getitem 12217,20; getitem 12211,1; getitem 7621,1; },{},{}
+13639,1_Hour_Package_Vol_6,1_Hour Package Vol 6,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12250,2; getitem 12251,2; getitem 12208,2; getitem 12215,15; getitem 12217,20; getitem 12211,1; getitem 7621,1; },{},{}
 13640,2_Hour_Package_Vol_1,2_Hour Package Vol 1,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12250,4; getitem 12251,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2; },{},{}
 13641,2_Hour_Package_Vol_2,2_Hour Package Vol 2,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12250,4; getitem 12255,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2; },{},{}
 13642,2_Hour_Package_Vol_3,2_Hour Package Vol 3,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12252,4; getitem 12253,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2; },{},{}
