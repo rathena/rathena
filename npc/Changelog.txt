@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/11/13
+	* Corrected a minor error respect to the header in Star Gladiator Quest. [Samuray22]
 	* Updated Star Gladiator Quest to the Aegis Standards. [Samuray22]
 	- Bug testing required.
 2007/11/10

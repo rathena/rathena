@@ -1,9 +1,9 @@
 //===== eAthena Script ======================================= 
 //= Star Gladiator Job Quest
 //===== By: ================================================== 
-//= Celestria
+//= Celestria, Samuray22
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.1a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
@@ -15,10 +15,11 @@
 //= Sprites from kRO screenshots, bar two which I just had to guess at.
 //= 1.0 Optimized, updated [Lupus]
 //= 1.1 Updated to the Aegis Standards. [Samuray22]
+//= 1.1a Corrected a minor error respect to the header. [Samuray22]
 //============================================================ 
 
 
-payon,215,102,5	script	Moohyun#job_star	828,3,3{	
+payon,215,102,5	script	Moohyun#job_star	828,3,3,{	
 	if (Class == Job_Taekwon) {
 		if (STGL_Q == 0) {
 			mes "[Moohyun]";
