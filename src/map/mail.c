@@ -9,6 +9,7 @@
 #include "itemdb.h"
 #include "clif.h"
 #include "pc.h"
+#include "log.h"
 
 #include <time.h>
 #include <string.h>
@@ -26,7 +27,12 @@ int mail_removeitem(struct map_session_data *sd, short flag)
 	if( sd->mail.amount )
 	{
 		if (flag)
+		{ // Item send
+			if(log_config.enable_logs&0x2000)
+				log_pick_pc(sd, "E", sd->mail.nameid, -sd->mail.amount, &sd->status.inventory[sd->mail.index]);
+
 			pc_delitem(sd, sd->mail.index, sd->mail.amount, 1);
+		}
 		else
 			clif_additem(sd, sd->mail.index, sd->mail.amount, 0);
 	}
@@ -72,7 +78,7 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 			return 1;
 		if( amount < 0 || amount > sd->status.inventory[idx].amount )
 			return 1;
-		if( !itemdb_isdropable(&sd->status.inventory[idx], pc_isGM(sd)) )
+		if( !pc_candrop(sd, &sd->status.inventory[idx]) )
 			return 1;
 
 		sd->mail.index = idx;
@@ -83,12 +89,12 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 	}
 }
 
-bool mail_getattach(struct map_session_data *sd, struct mail_message *msg)
+bool mail_setattachment(struct map_session_data *sd, struct mail_message *msg)
 {
 	int n;
 	
-	nullpo_retr(0,sd);
-	nullpo_retr(0,msg);
+	nullpo_retr(false,sd);
+	nullpo_retr(false,msg);
 
 	if( sd->mail.zeny < 0 || sd->mail.zeny > sd->status.zeny )
 		return false;
@@ -110,29 +116,30 @@ bool mail_getattach(struct map_session_data *sd, struct mail_message *msg)
 
 	msg->zeny = sd->mail.zeny;
 
-	return true;
-}
-
-bool mail_checkattach(struct map_session_data *sd)
-{
-	nullpo_retr(false,sd);
-
-	if( sd->mail.zeny > 0 && sd->status.zeny < sd->status.zeny )
-		return false;
-
-	if( sd->mail.amount > 0 )
-	{
-		if( sd->status.inventory[sd->mail.index].nameid != sd->mail.nameid )
-			return false;
-
-		if( sd->status.inventory[sd->mail.index].amount < sd->mail.amount )
-			return false;
-	}
-
+	// Removes the attachment from sender
 	mail_removeitem(sd,1);
 	mail_removezeny(sd,1);
 
 	return true;
+}
+
+void mail_getattachment(struct map_session_data* sd, int zeny, struct item* item)
+{
+	if( zeny > 0 )
+	{
+		sd->status.zeny += zeny;
+		clif_updatestatus(sd, SP_ZENY);
+	}
+
+	if( item->nameid > 0 && item->amount > 0 )
+	{
+		pc_additem(sd, item, item->amount);
+
+		if(log_config.enable_logs&0x2000)
+			log_pick_pc(sd, "E", item->nameid, item->amount, item);
+
+		clif_Mail_getattachment(sd->fd, 0);
+	}
 }
 
 int mail_openmail(struct map_session_data *sd)

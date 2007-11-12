@@ -384,11 +384,13 @@ static void mapif_parse_Mail_return(int fd)
  *------------------------------------------*/
 static void mapif_Mail_send(int fd, struct mail_message* msg)
 {
-	WFIFOHEAD(fd,10);
+	int len = sizeof(struct mail_message) + 4;
+	
+	WFIFOHEAD(fd,len);
 	WFIFOW(fd,0) = 0x384d;
-	WFIFOL(fd,2) = msg->send_id;
-	WFIFOL(fd,6) = msg->id;
-	WFIFOSET(fd,10);
+	WFIFOW(fd,2) = len;
+	memcpy(WFIFOP(fd,4), msg, sizeof(struct mail_message));
+	WFIFOSET(fd,len);
 }
 
 static void mapif_parse_Mail_send(int fd)
@@ -419,35 +421,12 @@ static void mapif_parse_Mail_send(int fd)
 		}
 	}
 	Sql_FreeResult(sql_handle);
+	msg.status = MAIL_NEW;
 
 	if( msg.dest_id > 0 )
-	{
-		msg.status = MAIL_UNVERIFIED;
 		msg.id = mail_savemessage(&msg);
-	}
-	else
-		msg.id = 0;
 
 	mapif_Mail_send(fd, &msg);
-}
-
-static void mapif_parse_Mail_confirmation(int fd)
-{
-	int mail_id = RFIFOL(fd,2);
-	bool fail = RFIFOB(fd,6);
-
-	if( fail )
-	{
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", mail_db, MAIL_INVALID, mail_id) )
-			Sql_ShowDebug(sql_handle);
-	}
-	else
-	{
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", mail_db, MAIL_NEW, mail_id) )
-			Sql_ShowDebug(sql_handle);
-		else
-			mapif_Mail_new(mail_id);
-	}
 }
 
 /*==========================================
@@ -463,7 +442,6 @@ int inter_mail_parse_frommap(int fd)
 		case 0x304b: mapif_parse_Mail_delete(fd); break;
 		case 0x304c: mapif_parse_Mail_return(fd); break;
 		case 0x304d: mapif_parse_Mail_send(fd); break;
-		case 0x304e: mapif_parse_Mail_confirmation(fd); break;
 		default:
 			return 0;
 	}

@@ -11,8 +11,8 @@ time_t mail_calctimes(void);
 int mail_removeitem(struct map_session_data *sd, short flag);
 int mail_removezeny(struct map_session_data *sd, short flag);
 unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount);
-bool mail_getattach(struct map_session_data *sd, struct mail_message *msg);
-bool mail_checkattach(struct map_session_data *sd);
+bool mail_setattachment(struct map_session_data *sd, struct mail_message *msg);
+void mail_getattachment(struct map_session_data* sd, int zeny, struct item* item);
 int mail_openmail(struct map_session_data *sd);
 
 #endif /* _MAIL_H_ */

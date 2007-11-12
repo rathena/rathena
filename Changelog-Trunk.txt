@@ -8,6 +8,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* The Forget-me-not status now behaves like Decrease AGI [ultramage]
 	- doesn't cancel Impressive Riff, Wind Walker, True Sight (bugreport:187)
 	- additionally, it doesn't cancel Cart Boost
+	* Fixed some bugs on mail system. [Zephyrus]
+	- Added the pc_candrop check (bugreport:305)
+	- Added picklog to mail.
 2007/11/12
 	* Now when job changing to another class tree, status changes from skills
 	  that belong to your previous class are cleared. [Skotlex]

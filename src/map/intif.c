@@ -34,7 +34,7 @@ static const int packet_len_table[]={
 	-1, 7, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 14,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
-	 9, 9,-1,14,  0, 0, 0, 0, -1,74,-1,11, 11,10,  0, 0, //0x3840
+	 9, 9,-1,14,  0, 0, 0, 0, -1,74,-1,11, 11,-1,  0, 0, //0x3840
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
@@ -1560,19 +1560,9 @@ int intif_parse_Mail_getattach(int fd)
 		return 1;
 	}
 
-	if (zeny > 0)
-	{
-		sd->status.zeny += zeny;
-		clif_updatestatus(sd, SP_ZENY);
-	}
-
 	memcpy(&item, RFIFOP(fd,12), sizeof(struct item));
-	if (item.nameid > 0 && item.amount > 0)
-	{
-		pc_additem(sd, &item, item.amount);
-		clif_Mail_getattachment(sd->fd, 0);
-	}
 
+	mail_getattachment(sd, zeny, &item);
 	return 0;
 }
 /*------------------------------------------
@@ -1695,33 +1685,43 @@ int intif_Mail_send(int account_id, struct mail_message *msg)
 
 static void intif_parse_Mail_send(int fd)
 {
-	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
-	int mail_id = RFIFOL(fd,6);
-	bool fail = false;
+	struct mail_message msg;
+	struct map_session_data *sd;
+	bool fail;
 
-	if( mail_id == 0 )
-		fail = true;
-	else
+	if( RFIFOW(fd,2) - 4 != sizeof(struct mail_message) )
 	{
-		fail = !mail_checkattach(sd);
-
-		// Confirmation to CharServer
-		WFIFOHEAD(inter_fd,7);
-		WFIFOW(inter_fd,0) = 0x304e;
-		WFIFOL(inter_fd,2) = mail_id;
-		WFIFOB(inter_fd,6) = fail;
-		WFIFOSET(inter_fd,7);
+		if (battle_config.error_log)
+			ShowError("intif_parse_Mail_send: data size error %d %d\n", RFIFOW(fd,2) - 4, sizeof(struct mail_message));
+		return;
 	}
 
-	nullpo_retv(sd);
+	memcpy(&msg, RFIFOP(fd,4), sizeof(struct mail_message));
+	fail = (msg.id == 0);
+
+	if( (sd = map_charid2sd(msg.send_id)) )
+	{
+		if( fail )
+		{
+			pc_additem(sd, &msg.item, msg.item.amount);
+			if( msg.zeny > 0 )
+			{
+				sd->status.zeny += msg.zeny;
+				clif_updatestatus(sd, SP_ZENY);
+			}
+		}
+
+		clif_Mail_send(sd->fd, fail);
+	}
 
 	if( fail )
-	{ // Return items and zeny to owner
-		mail_removeitem(sd, 0);
-		mail_removezeny(sd, 0);
-	}
+		return;
 
-	clif_Mail_send(sd->fd, fail);
+	if( (sd = map_charid2sd(msg.dest_id)) )
+	{
+		sd->mail.inbox.changed = true;
+		clif_Mail_new(sd->fd, msg.id, msg.send_name, msg.title);
+	}
 }
 
 static void intif_parse_Mail_new(int fd)

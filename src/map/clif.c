@@ -11650,8 +11650,8 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 	if (body_len > MAIL_BODY_LENGTH)
 		body_len = MAIL_BODY_LENGTH;
 
-	if( !mail_getattach(sd, &msg) )
-	{
+	if( !mail_setattachment(sd, &msg) )
+	{ // Invalid Append condition
 		clif_Mail_send(sd->fd, 1); // fail
 		mail_removeitem(sd,0);
 		mail_removezeny(sd,0);

@@ -240,7 +240,6 @@ struct mmo_charstatus {
 };
 
 enum mail_status {
-	MAIL_UNVERIFIED = -1,
 	MAIL_NEW,
 	MAIL_UNREAD,
 	MAIL_READ,
