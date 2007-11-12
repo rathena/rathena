@@ -487,6 +487,7 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_INCATKRATE] |= SCB_BATK|SCB_WATK;
 	StatusChangeFlagTable[SC_INCMATKRATE] |= SCB_MATK;
 	StatusChangeFlagTable[SC_INCDEFRATE] |= SCB_DEF;
+	StatusChangeFlagTable[SC_INCMDEFRATE] |= SCB_MDEF;
 	StatusChangeFlagTable[SC_INCBASEATK] |= SCB_BATK;
 	StatusChangeFlagTable[SC_STRFOOD] |= SCB_STR;
 	StatusChangeFlagTable[SC_AGIFOOD] |= SCB_AGI;
@@ -3662,6 +3663,8 @@ static signed char status_calc_mdef(struct block_list *bl, struct status_change 
 		mdef += 25*mdef/100;
 	if(sc->data[SC_ENDURE].timer!=-1 && sc->data[SC_ENDURE].val4 == 0)
 		mdef += sc->data[SC_ENDURE].val1;
+	if(sc->data[SC_INCMDEFRATE].timer!=-1)
+		mdef += mdef * sc->data[SC_INCMDEFRATE].val1/100;
 
 	return (char)cap_value(mdef,0,CHAR_MAX);
 }

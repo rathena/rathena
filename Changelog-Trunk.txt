@@ -11,6 +11,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Fixed some bugs on mail system. [Zephyrus]
 	- Added the pc_candrop check (bugreport:305)
 	- Added picklog to mail.
+	- Added INCMDEFRATE status for Mdef potion.
 2007/11/12
 	* Now when job changing to another class tree, status changes from skills
 	  that belong to your previous class are cleared. [Skotlex]

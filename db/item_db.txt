@@ -3963,14 +3963,14 @@
 14540,Holy_Armor_Scroll,Holy Armor Scroll,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1800000,Ele_Holy,20,Ele_Shadow,-15; },{},{}
 14541,Small_Defense_Potion,Small Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCDEFRATE,60000,3; },{},{}
 14542,Big_Defense_Potion,Big Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCDEFRATE,180000,3; },{},{}
-14543,Small_Magic_Defense_Potion,Small Magic Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14544,Big_Magic_Defense_Potion,Big Magic Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14543,Small_Magic_Defense_Potion,Small Magic Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMDEFRATE,600000,3; },{},{}
+14544,Big_Magic_Defense_Potion,Big Magic Defense Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMDEFRATE,180000,3; },{},{}
 14545,Field_Manual_300%,Field Manual 300%,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,300; },{},{}
-14546,Love_You_Firecracker,Love You Firecracker,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14547,White_Day_Firecracker,White Day Firecracker,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14548,Valentine's_Day_Firecracker,Valentine's Day Firecracker,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14549,Birthday_Firecracker,Birthday Firecracker,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14550,Christmas_Firecracker,Christmas Firecracker,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14546,Love_You_Firecracker,Love You Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(682); },{},{}
+14547,White_Day_Firecracker,White Day Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(683); },{},{}
+14548,Valentine's_Day_Firecracker,Valentine's Day Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(684); },{},{}
+14549,Birthday_Firecracker,Birthday Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(685); },{},{}
+14550,Christmas_Firecracker,Christmas Firecracker,2,,1,10,,,,,0xFFFFFFFF,7,2,,,,,,{ misceffect(686); },{},{}
 14551,Str_Dish01_,Fried Grasshopper Legs,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STRFood, 1200000, 1; percentheal 5,0; },{},{}
 14552,Str_Dish02_,Seasoned Sticky Webfoot,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STRFood, 1200000, 2; percentheal 5,0; },{},{}
 14553,Str_Dish03_,Bomber Steak,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STRFood, 1200000, 3; percentheal 5,0; },{},{}
