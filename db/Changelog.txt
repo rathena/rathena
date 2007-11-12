@@ -37,6 +37,8 @@
 	2376 General's_Plate_Mail	Increases heal recovery effectiveness on you by 10%
 
 =======================
+11/13
+	* Rev. 11720 Corrected some of the ep. 12 accessory bonuses. [L0ne_W0lf] 
 11/12
 	* Rev. 11711 Fixed an item giving 24 of the 'Gladius' item. :P [L0ne_W0lf]
 11/10
