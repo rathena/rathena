@@ -4267,23 +4267,29 @@ BUILDIN_FUNC(rand)
  *------------------------------------------*/
 BUILDIN_FUNC(warp)
 {
+	int ret;
 	int x,y;
-	const char *str;
-	TBL_PC *sd=script_rid2sd(st);
+	const char* str;
+	TBL_PC* sd = script_rid2sd(st);
 
 	nullpo_retr(0, sd);
 
-	str=script_getstr(st,2);
-	x=script_getnum(st,3);
-	y=script_getnum(st,4);
+	str = script_getstr(st,2);
+	x = script_getnum(st,3);
+	y = script_getnum(st,4);
+
 	if(strcmp(str,"Random")==0)
-		pc_randomwarp(sd,3);
-	else if(strcmp(str,"SavePoint")==0){
-		pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
-	}else if(strcmp(str,"Save")==0){
-		pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
-	}else
-		pc_setpos(sd,mapindex_name2id(str),x,y,0);
+		ret = pc_randomwarp(sd,3);
+	else if(strcmp(str,"SavePoint")==0 || strcmp(str,"Save")==0)
+		ret = pc_setpos(sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,3);
+	else
+		ret = pc_setpos(sd,mapindex_name2id(str),x,y,0);
+
+	if( ret ) {
+		ShowError("buildin_warp: moving player '%s' to \"%s\",%d,%d failed.\n", sd->status.name, str, x, y);
+		script_reportsrc(st);
+	}
+
 	return 0;
 }
 /*==========================================

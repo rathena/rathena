@@ -3443,16 +3443,12 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 	return 0;
 }
 
-//
-//
-//
 /*==========================================
  * Set's a player position.
  * Return values:
  * 0 - Success.
  * 1 - Invalid map index.
  * 2 - Map not in this map-server, and failed to locate alternate map-server.
- * 3 - Failed to warp player because it was in transition between maps.
  *------------------------------------------*/
 int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, uint8 clrtype)
 {
