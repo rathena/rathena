@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.9
+//= 2.9a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -41,6 +41,7 @@
 //= 2.7 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.8 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
 //= 2.9 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.9a Deleted unused variables. [Samuray22]
 //============================================================ 
 
 // Notices in the old Hunter Guild.
@@ -218,7 +219,6 @@ L_AskQuestions:
 					mes "[Hunter Sherin]";
 					mes "I just want to know how you think about life, and why you want to become a Hunter, so there's no need to be nervous.";
 					next;
-					set knight_t,0;
 					mes "[Hunter Sherin]";
 					mes "Well then,";
 					mes "let's begin.";
@@ -402,7 +402,6 @@ L_AskQuestions:
 			mes "Welcome back...!";
 			mes "Well, let's start with the interview. This time, carefully think about the answers to each question.";
 			next;
-			set knight_t,0;
 			mes "[Hunter Sherin]";
 			mes "Well then,";
 			mes "let's begin.";

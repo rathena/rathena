@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.8a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -35,6 +35,7 @@
 //= 2.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.7 Several bugfixes with the help of Samuray22 and Barron-Monster. [L0ne_W0lf]
 //= 2.8 Removed duplicate warps. [L0ne_W0lf]
+//= 2.8a Deleted unused variables. [Samuray22]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -590,8 +591,7 @@ OnTouch:
 			next;
 			mes "[Assassin 'Khai']";
 			mes "Fill out the application form with your name and job level.";
-			next;
-			set name,PcName;
+			next
 			set joblvl,JobLevel;
 			mes "[Assassin 'Khai']";
 			mes "" + strcharinfo(0) + "?";
@@ -1895,7 +1895,6 @@ OnTouch:
 		mes "Please give me";
 		mes "one second...";
 		next;
-		set name,PcName;
 		mapannounce "in_moc_16","Those involved with the testing of " + strcharinfo(0) + ", please gather before me.",bc_map;
 		mes "[Guildmaster]";
 		mes "Those involved with the testing of " + strcharinfo(0) + ", please gather before me.";

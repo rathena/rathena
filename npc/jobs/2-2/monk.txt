@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Dino9021, Edited / Translated by Celest
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.3a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 2.2 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=	No longer uses function "F_BlockHigh"
 //= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.3a Deleted unused variables. [Samuray22]
 //============================================================ 
 
 prt_monk,59,247,1	script	Guarding Monk#mk	120,6,2,{
@@ -1950,7 +1951,6 @@ prt_monk,199,169,3	script	Door Keeper#mk	746,{
 		close;
 	}
 	else if (MONK_Q > 14 && MONK_Q < 25) {
-		set name,PcName;
 		mes "[Keeper Chorip]";
 		mes "Is your name " + strcharinfo(0) + "?";
 		next;

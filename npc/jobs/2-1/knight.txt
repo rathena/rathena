@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.6
+//= 2.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -32,6 +32,7 @@
 //= 2.5 Fixes a small bug with making claymores. [L0ne_W0lf]
 //=	Corrected usages of killmonster and killmonsterall.
 //= 2.6 Corrected an improper areawarp destination. [L0ne_W0lf]
+//= 2.7 Deleted unused variables. [Samuray22]
 //============================================================ 
 
 prt_in,88,101,4	script	Chivalry Captain#knt	56,{
@@ -1848,7 +1849,6 @@ L_AskQuestions:
 			mes "Well then,";
 			mes "let's begin!";
 			next;
-			set knight_t,0;
 			mes "[Lady Amy]";
 			mes "You are a Knight and you are looking for a party in Morroc.";
 			mes "How would you go about doing so?";
@@ -2255,7 +2255,6 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 			mes "everyone else's";
 			mes "test?";
 			next;
-			set knight_t,0;
 			mes "[Sir Gray]";
 			mes "Then shall";
 			mes "we begin mine?";

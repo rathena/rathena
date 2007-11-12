@@ -5,7 +5,7 @@
 //= Converted by: kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.4a
 //===== Compatible With: ===================================== 
 //= eAthena  SVN
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= 2.3 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
 //= 2.3a More bug fixes. [L0ne_W0lf]
 //= 2.4 Changed Marthilda to Mathilda. [L0ne_W0llf]
+//= 2.4a Deleted unused variables. [Samuray22]
 //==========================================================
 
 prt_church,16,41,4	script	High Bishop#prst	60,{
@@ -1549,7 +1550,6 @@ OnTouch:
 		close;
 	}
 	else if (BaseClass == Job_Acolyte) {
-		set name,PcName;
 		mes "[Baphomet]";
 		mes "Greetings.";
 		next;

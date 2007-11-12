@@ -5,7 +5,7 @@
 //= Unknown Translator (1.0)
 //= Darkchild (1.2)
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //= 2.2b ANotehr smaLL bugfix, pointed out by Cara. [L0ne_W0lf]
 //= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.4 Fixes bug with first room monsters not being reset. [L0ne_W0lf]
+//= 2.4a Deleted unused variables. [Samuray22]
 //============================================================ 
 
 yuno_in02,38,61,5	script	Dean of the Academy#sa	743,{
@@ -991,7 +992,6 @@ L_AskQuestions:
 		mes "Each correct answer will give you 5 points. When your score reaches 80 points, you pass the test.";
 		next;
 		set sage_m2,rand(1,3);
-		set sage_t,0;
 		mes "[Claytos Verdo]";
 		mes "Okay, there's no need to wait.";
 		mes "Answer immediately, or I'll fail you again.";

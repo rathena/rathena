@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.4
+//= 2.4a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 2.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=	No longer uses function "F_BlockHigh"
+//= 2.4a Deleted unused variables. [Samuray22]
 //============================================================ 
 
 morocc,100,104,1	script	Thug#rg	118,{
@@ -967,7 +968,6 @@ OnTouch:
 	mes "Who would dare";
 	mes "intrude my territory?";
 	next;
-	set rogue_t,0;
 	switch(select("My father:Aragham:Aragon:Legolas")) {
 	case 1:
 		mes "[" + strcharinfo(0) + "]";
@@ -1038,8 +1038,6 @@ OnTouch:
 	mes "Who would dare";
 	mes "intrude my territory?";
 	next;
-	set name,PcName;
-	set rogue_t,0;
 	switch(select("My father:Aragham:Aragon:Legolas")) {
 	case 1:
 		mes "[" + strcharinfo(0) + "]";
@@ -1110,8 +1108,6 @@ OnTouch:
 	mes "Who would dare";
 	mes "intrude my territory?";
 	next;
-	set name,PcName;
-	set rogue_t,0;
 	switch(select("Anntonio:Aragham:Antonio:Hollgrehenn")) {
 	case 1:
 		mes "[" + strcharinfo(0) + "]";
