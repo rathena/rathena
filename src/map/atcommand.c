@@ -5492,27 +5492,33 @@ int atcommand_npcmove(const int fd, struct map_session_data* sd, const char* com
  *------------------------------------------*/
 int atcommand_addwarp(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	char w1[64], w3[64], w4[64];
-	int x,y,ret=0;
+	char mapname[32];
+	int x,y;
+	unsigned short m;
+	struct npc_data* nd;
+
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%23s %d %d[^\n]", atcmd_player_name, &x, &y) < 3) {
+	if (!message || !*message || sscanf(message, "%31s %d %d", mapname, &x, &y) < 3) {
 		clif_displaymessage(fd, "usage: @addwarp <mapname> <X> <Y>.");
 		return -1;
 	}
 
-	sprintf(w1,"%s,%d,%d", mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
-	sprintf(w3,"%s%d%d%d%d", atcmd_player_name,sd->bl.x, sd->bl.y, x, y);
-	sprintf(w4,"1,1,%s,%d,%d", atcmd_player_name, x, y);
+	m = mapindex_name2id(mapname);
+	if( m == 0 )
+	{
+		sprintf(atcmd_output, "Unknown map '%s'.", mapname);
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
 
-	// FIXME check if it failed [FlavioJS]
-	npc_parse_warp(w1, "warp", w3, w4, NULL, NULL, "console");
+	nd = npc_add_warp(sd->bl.m, sd->bl.x, sd->bl.y, 1, 1, m, x, y);
+	if( nd == NULL )
+		return -1;
 
-	sprintf(atcmd_output, "New warp NPC => %s",w3);
-
+	sprintf(atcmd_output, "New warp NPC '%s' created.", nd->exname);
 	clif_displaymessage(fd, atcmd_output);
-
-	return ret;
+	return 0;
 }
 
 /*==========================================

@@ -1481,8 +1481,49 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 	}
 }
 
+struct npc_data* npc_add_warp(short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y)
+{
+	int i;
+	struct npc_data *nd;
+
+	CREATE(nd, struct npc_data, 1);
+	nd->bl.id = npc_get_new_npc_id();
+	nd->n = map_addnpc(from_mapid, nd);
+	nd->bl.prev = nd->bl.next = NULL;
+	nd->bl.m = from_mapid;
+	nd->bl.x = from_x;
+	nd->bl.y = from_y;
+	safestrncpy(nd->name, "", ARRAYLENGTH(nd->name));// empty display name
+	snprintf(nd->exname, ARRAYLENGTH(nd->exname), "warp_%d_%d_%d", from_mapid, from_x, from_y);
+	for( i = 0; npc_name2id(nd->exname) != NULL; ++i )
+		snprintf(nd->exname, ARRAYLENGTH(nd->exname), "warp%d_%d_%d_%d", i, from_mapid, from_x, from_y);
+
+	if( battle_config.warp_point_debug )
+		nd->class_ = WARP_DEBUG_CLASS;
+	else
+		nd->class_ = WARP_CLASS;
+	nd->speed = 200;
+
+	nd->u.warp.mapindex = to_mapindex;
+	nd->u.warp.x = to_x;
+	nd->u.warp.y = to_y;
+	nd->u.warp.xs = xs+2;// TODO why +2? [FlavioJS]
+	nd->u.warp.ys = xs+2;
+	nd->bl.type = BL_NPC;
+	nd->bl.subtype = WARP;
+	npc_setcells(nd);
+	map_addblock(&nd->bl);
+	status_set_viewdata(&nd->bl, nd->class_);
+	status_change_init(&nd->bl);
+	unit_dataset(&nd->bl);
+	clif_spawn(&nd->bl);
+	strdb_put(npcname_db, nd->exname, nd);
+
+	return nd;
+}
+
 /// Parses a warp npc.
-const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
+static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	int x, y, xs, ys, to_x, to_y, m;
 	unsigned short i;
