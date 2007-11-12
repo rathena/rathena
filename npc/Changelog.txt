@@ -1,5 +1,8 @@
 Date		Added
 ======
+2007/11/13
+	* Updated Star Gladiator Quest to the Aegis Standards. [Samuray22]
+	- Bug testing required.
 2007/11/10
 	* Rev 11708 Small fix to alchemist job quest that was blocking babies. [L0ne_W0lf]
 2007/11/06
