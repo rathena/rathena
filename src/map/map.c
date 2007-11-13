@@ -38,7 +38,6 @@
 #include "charcommand.h"
 #include "log.h"
 #include "irc.h"
-#include "npc.h"
 #ifndef TXT_ONLY
 #include "mail.h"
 #endif

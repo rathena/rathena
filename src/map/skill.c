@@ -10733,7 +10733,8 @@ static bool skill_read_csvdb( const char* directory, const char* filename, int m
 			continue;
 		//TODO: strip trailing // comment
 		//TODO: strip trailing whitespace
-		//TODO: skip empty lines
+		if( line[0] == '\0' || line[0] == '\n' )
+			continue;
 
 		memset(split,0,sizeof(split));
 		columns = skill_split_str(line,split,ARRAYLENGTH(split));
@@ -10751,8 +10752,14 @@ static bool skill_read_csvdb( const char* directory, const char* filename, int m
 		}
 
 		// parse this row
-		if( parseproc(split, columns, entries) )
-			entries++;
+		if( !parseproc(split, columns, entries) )
+		{
+			ShowError("skill_read_csvdb: Could not process contents of line %d of \"%s\".\n", lines, path);
+			continue; // invalid row contents?
+		}
+
+		// success!
+		entries++;
 	}
 
 	fclose(fp);
@@ -11016,9 +11023,8 @@ static bool skill_parse_row_castnodexdb(char* split[], int columns, int current)
 		return false;
 	
 	skill_split_atoi(split[1],skill_db[i].castnodex);
-	if( !split[2] ) // optional column
-		return false;
-	skill_split_atoi(split[2],skill_db[i].delaynodex);
+	if( split[2] ) // optional column
+		skill_split_atoi(split[2],skill_db[i].delaynodex);
 
 	return true;
 }
