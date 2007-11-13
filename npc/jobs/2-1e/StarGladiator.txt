@@ -16,6 +16,7 @@
 //= 1.0 Optimized, updated [Lupus]
 //= 1.1 Updated to the Aegis Standards. [Samuray22]
 //= 1.1a Corrected a minor error respect to the header. [Samuray22]
+//= 1.1b Corrected NPC name length warning. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -347,7 +348,7 @@ OnTouch:
 		close;
 }
 	
-comodo,172,230,5	script	Wandering Master#job_star	730,{
+comodo,172,230,5	script	Wandering Master#job_sta	730,{
 	if (Class == Job_Taekwon) {
 		if (STGL_Q == 1) {
 			mes "[Moogang]";
