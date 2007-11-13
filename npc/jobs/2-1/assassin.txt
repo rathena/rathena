@@ -592,7 +592,7 @@ OnTouch:
 			next;
 			mes "[Assassin 'Khai']";
 			mes "Fill out the application form with your name and job level.";
-			nextl
+			next;
 			mes "[Assassin 'Khai']";
 			mes "" + strcharinfo(0) + "?";
 			mes "That's your name?";
