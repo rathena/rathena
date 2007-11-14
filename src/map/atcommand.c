@@ -5666,7 +5666,7 @@ int atcommand_useskill(const int fd, struct map_session_data* sd, const char* co
 		return -1;
 	}
 
-	if (skillnum >= HM_SKILLBASE && skillnum <= HM_SKILLBASE+MAX_HOMUNSKILL
+	if (skillnum >= HM_SKILLBASE && skillnum < HM_SKILLBASE+MAX_HOMUNSKILL
 		&& sd->hd && merc_is_hom_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
 		bl = &sd->hd->bl;
 	else

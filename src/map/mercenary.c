@@ -143,7 +143,7 @@ int merc_hom_calc_skilltree(struct homun_data *hd)
 	
 	for(i=0;i < MAX_SKILL_TREE && (id = hskill_tree[c][i].id) > 0;i++)
 	{
-		if(hd->homunculus.hskill[id-HM_SKILLBASE-1].id)
+		if(hd->homunculus.hskill[id-HM_SKILLBASE].id)
 			continue; //Skill already known.
 		if(!battle_config.skillfree)
 		{
@@ -158,14 +158,14 @@ int merc_hom_calc_skilltree(struct homun_data *hd)
 			}
 		}
 		if (f)
-			hd->homunculus.hskill[id-HM_SKILLBASE-1].id = id ;
+			hd->homunculus.hskill[id-HM_SKILLBASE].id = id ;
 	}
 	return 0;
 }
 
 int merc_hom_checkskill(struct homun_data *hd,int skill_id)
 {
-	int i = skill_id - HM_SKILLBASE - 1;
+	int i = skill_id - HM_SKILLBASE;
 	if(!hd)
 		return 0;
 
@@ -192,7 +192,7 @@ void merc_hom_skillup(struct homun_data *hd,int skillnum)
 	if(hd->homunculus.vaporize)
 		return;
 	
-	i = skillnum - HM_SKILLBASE - 1;
+	i = skillnum - HM_SKILLBASE;
 	if(hd->homunculus.skillpts > 0 &&
 		hd->homunculus.hskill[i].id &&
 		hd->homunculus.hskill[i].flag == 0 && //Don't allow raising while you have granted skills. [Skotlex]

@@ -97,9 +97,9 @@ int inter_homun_fromstr(char *str,struct s_homunculus *p)
 		if (sscanf(str+next, "%d,%d,%n", &tmp_int[0], &tmp_int[1], &len) != 2)
 			return 2;
 
-		if (tmp_int[0] > HM_SKILLBASE && tmp_int[0] <= HM_SKILLBASE+MAX_HOMUNSKILL)
+		if (tmp_int[0] > HM_SKILLBASE && tmp_int[0] < HM_SKILLBASE+MAX_HOMUNSKILL)
 		{
-			i = tmp_int[0] - HM_SKILLBASE -1;
+			i = tmp_int[0] - HM_SKILLBASE;
 			p->hskill[i].id = tmp_int[0];
 			p->hskill[i].lv = tmp_int[1];
 		} else

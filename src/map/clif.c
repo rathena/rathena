@@ -1426,7 +1426,7 @@ int clif_homskillinfoblock(struct map_session_data *sd)
 	WFIFOW(fd,0)=0x235;
 	for ( i = 0; i < MAX_HOMUNSKILL; i++){
 		if( (id = hd->homunculus.hskill[i].id) != 0 ){
-			j = id - HM_SKILLBASE - 1 ;
+			j = id - HM_SKILLBASE ;
 			WFIFOW(fd,len  ) = id ;
 			WFIFOW(fd,len+2) = skill_get_inf(id) ;
 			WFIFOW(fd,len+4) = 0 ;
@@ -1450,7 +1450,7 @@ void clif_homskillup(struct map_session_data *sd, int skill_num)
 	int fd=sd->fd, skillid;
 	WFIFOHEAD(fd, packet_len(0x239));
 	nullpo_retv(sd);
-	skillid = skill_num - HM_SKILLBASE - 1;
+	skillid = skill_num - HM_SKILLBASE;
 
 	hd=sd->hd;
 
@@ -9275,7 +9275,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	if (tmp&INF_GROUND_SKILL || !tmp)
 		return; //Using a ground/passive skill on a target? WRONG.
 
-	if (skillnum >= HM_SKILLBASE && skillnum <= HM_SKILLBASE+MAX_HOMUNSKILL) {
+	if (skillnum >= HM_SKILLBASE && skillnum < HM_SKILLBASE+MAX_HOMUNSKILL) {
 		clif_parse_UseSkillToId_homun(sd->hd, sd, tick, skillnum, skilllv, target_id);
 		return;
 	}

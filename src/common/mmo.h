@@ -96,7 +96,7 @@
 #define DEFAULT_MAX_CHAR_ID 250000
 
 //Base Homun skill.
-#define HM_SKILLBASE 8000
+#define HM_SKILLBASE 8001
 #define MAX_HOMUNSKILL 16
 #define MAX_HOMUNCULUS_CLASS	16	//[orn]
 #define HM_CLASS_BASE 6001
