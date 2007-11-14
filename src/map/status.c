@@ -66,7 +66,7 @@ int current_equip_card_id; //To prevent card-stacking (from jA) [Skotlex]
 static void add_sc(int skill, int sc)
 {
 	int sk = skill;
-	if (sk > GD_SKILLBASE) sk = skill - GD_SKILLBASE + SC_GD_BASE;
+	if (sk >= GD_SKILLBASE) sk = skill - GD_SKILLBASE + SC_GD_BASE;
 	else
 	if (sk >= HM_SKILLBASE) sk = skill - HM_SKILLBASE + SC_HM_BASE;
 	if (sk < 0 || sk >= MAX_SKILL) {
@@ -508,7 +508,7 @@ void initChangeTables(void)
 int SkillStatusChangeTable(int skill)
 {
 	int sk = skill;
-	if (sk > GD_SKILLBASE) sk = skill - GD_SKILLBASE + SC_GD_BASE;
+	if (sk >= GD_SKILLBASE) sk = skill - GD_SKILLBASE + SC_GD_BASE;
 	else
 	if (sk >= HM_SKILLBASE) sk = skill - HM_SKILLBASE + SC_HM_BASE;
 	if (sk < 0 || sk >= MAX_SKILL) {

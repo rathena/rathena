@@ -72,7 +72,7 @@ static int guild_send_xy_timer(int tid,unsigned int tick,int id,int data);
  // Modified [Komurka]
 int guild_skill_get_max (int id)
 {
-	if (id  < GD_SKILLBASE || id > GD_SKILLBASE+MAX_GUILDSKILL)
+	if (id < GD_SKILLBASE || id >= GD_SKILLBASE+MAX_GUILDSKILL)
 		return 0;
 	return guild_skill_tree[id-GD_SKILLBASE].max;
 }
