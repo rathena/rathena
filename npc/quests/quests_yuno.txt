@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Dev Team; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -29,6 +29,7 @@
 //=	Added the Juno portion of the Doomed Swords quest.
 //= 1.6 Fixed various errors in the Bajin NPC. [L0ne_W0lf]
 //= 1.7 Changed ALCH_Q check and set to corrispond to new alchemist job quest. [L0ne_W0lf]
+//= 1.8 Fixed metto_q never reaching 2. Made some names more unique. [L0ne_W0lf]
 //============================================================ 
 
 // Metto Quest
@@ -46,6 +47,7 @@ yuno_in03,26,39,3	script	Metto#juno	709,{
 		close;
 	}
 	else if (metto_q == 1) {
+		set metto_q,2;
 		mes "I'm going to ask my colleague ^FF0000Stangckle^000000 to help me. I am sure he will be more than willing to help out an old friend.";
 		next;
 		mes "[Metto]";
@@ -314,7 +316,7 @@ yuno_in01,17,95,5	script	Stangckle#juno	99,{
 	}
 }
 
-yuno_in01,19,183,5	script	Kato	55,{
+yuno_in01,19,183,5	script	Kato#juno	55,{
 	mes "[Kato]";
 	if (metto_q == 4) {
 		mes "I am a scientist researching all sorts of things.";
@@ -402,7 +404,7 @@ yuno_in01,19,183,5	script	Kato	55,{
 	}
 }
 
-yuno_in03,178,43,0	script	CiCi	121,{
+yuno_in03,178,43,0	script	CiCi#juno	121,{
 	if (metto_q == 6) {
 		mes "[CiCi]";
 		mes "My name is CiCi. I am one of the three great scientists in this city.";

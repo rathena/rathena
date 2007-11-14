@@ -1,5 +1,9 @@
 Date		Added
 ======
+2007/11/15
+	* Rev. 11733 Several fixes to various scripts. [L0ne_W0lf]
+	- Resolves: bugreport:351, bugreport:379, bugreport:393, bugreport:407,
+	  bugreport:414, partially resolves bug report:414
 2007/11/14
 	* Rev. 11729 Fixed warning in star gladiator job test. [L0ne_W0lf]
 	* Fixed error in assassin job test (missing ;)

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.6a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.5 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.6 Bug fixes as pointed out by Brainstorm in bugreport:351 [L0ne_W0lf]
+//= 1.6a Fixed(?) antoher problem (NPCs not disabling) hopefully. [L0ne_W0lf]
 //============================================================
 
 in_rogue,359,177,0	script	#killershow01	-1,{
@@ -1434,7 +1435,7 @@ function	script	F_Kienna	{
 		mes "of this training.";
 		set ROG_SK,6;
 		close2;
-		disablenpc "Kienna#8th";
+		disablenpc "Kienna#"+getarg(0);
 		donpcevent "#1stmove::OnEnable";
 		warp "prt_are01",150,150;
 		end;

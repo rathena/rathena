@@ -3,14 +3,15 @@
 //===== By: ================================================== 
 //= DZeroX
 //===== Current Version: ===================================== 
-//= 1.02
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
 //= Town-specific Alberta NPCs
 //===== Additional Comments: ================================= 
 //= 1.0 Converted from Aegis 10.4 [DZeroX]
-//= 1.02 Optimized, missing next, REMOVED .GATs! again [Lupus]
+//= 1.1 Optimized, missing next, REMOVED .GATs! again [Lupus]
+//= 1.2 Implemented progression fixes provided by $ephiroth. [L0ne_W0lf]
 //============================================================
 
 alberta,97,51,0	script	Fabian	84,{
@@ -85,9 +86,9 @@ alberta,189,151,5	script	Fisk	100,{
 	mes "Ahoy mate,";
 	mes "where'd ya";
 	mes "wanna go?";
+	next;
 	switch(select("Sunken Ship -> 250 zeny.","Izlude Marina -> 500 zeny.","Never mind.")) {
 		case 1:
-			next;
 			if (Zeny < 250) {
 				mes "[Fisk]";
 				mes "Hey now, don't try to cheat me!";
@@ -98,7 +99,6 @@ alberta,189,151,5	script	Fisk	100,{
 			warp "alb2trea",43,53;
 			end;
 		case 2:
-			next;
 			if (Zeny < 500) {
 				mes "[Fisk]";
 				mes "Ain't no way yer getting there";
@@ -109,7 +109,6 @@ alberta,189,151,5	script	Fisk	100,{
 			warp "izlude",176,182;
 			end;
 		case 3:
-			next;
 			mes "[Fisk]";
 			mes "Alright...";
 			mes "Landlubber.";
@@ -121,6 +120,7 @@ alb2trea,39,50,6	script	Fisk#a2t	100,{
 	mes "[Fisk]";
 	mes "So you wanna head back to the";
 	mes "mainland in Alberta, eh?";
+	next;
 	if(select("Yes please.","I changed my mind.")==1)
 		warp "alberta",192,169;
 	close;
@@ -131,17 +131,17 @@ alberta,131,139,2	script	Drunken Old Man	54,{
 	mes "*^CCCCCCHiccup^000000*";
 	mes "Wh-what are you";
 	mes "staring at? Get lost!!";
+	next;	
 	switch(select("Say nothing.","Leave him alone.")) {
 		case 1:
-			next;
 			mes "[Deagle]";
 			mes "Hahahahaha *^CCCCCChiccup^000000*... You've got";
 			mes "some nerve. I may look worthless";
 			mes "now, but I used to be a sailor on";
 			mes "the 'Going Mary.'";
+			next;
 			switch(select("Never heard of it.","Really? No kidding!")) {
 				case 1:
-					next;
 					mes "[Deagle]";
 					mes "Never heard of it?! Everybody knows";
 					mes "th'notorious pirate ship 'Going";
@@ -158,7 +158,6 @@ alberta,131,139,2	script	Drunken Old Man	54,{
 					mes "before cap'n's sword.";
 					close;
 				case 2:
-					next;
 					mes "[Deagle]";
 					mes "That's right! NOBODY meshes with";
 					mes "the crew of the 'Going Mary!' And";
@@ -188,7 +187,6 @@ alberta,131,139,2	script	Drunken Old Man	54,{
 					close;
 			}
 		case 2:
-			next;
 			mes "[Deagle]";
 			mes "That's right!";
 			mes "Go AWAY~";
@@ -356,9 +354,9 @@ alberta,195,151,2	script	Paul	86,{
 	mes "The admission";
 	mes "fee is only";
 	mes "200 Zeny.";
+	next;
 	switch(select("Sign me up!","Uh, no thanks.")) {
 		case 1:
-			next;
 			if (Zeny < 200) {
 				mes "[Paul]";
 				mes "It seems you don't have the money,";
@@ -371,7 +369,6 @@ alberta,195,151,2	script	Paul	86,{
 				close;
 			}
 		case 2:
-			next;
 			mes "[Paul]";
 			mes "Alright, well...";
 			mes "I'll be around";
@@ -415,9 +412,9 @@ alberta,190,173,4	script	Phelix	85,{
 		mes "Hmm... you want to exchange";
 		mes "jellopies for Red Potions or some";
 		mes "Carrots eh? Well... which one?";
+		next;
 		switch(select("Red Potions please.","Carrots please.")) {
 		case 1:
-			next;
 			mes "[Phelix]";
 			mes "Alright...";
 			mes "Let's see";
@@ -434,6 +431,7 @@ alberta,190,173,4	script	Phelix	85,{
 				mes "Hmm, not bad...";
 				mes "How many potions";
 				mes "do you want to get?";
+				next;
 				switch(select("As many as I can, please.","I want this many.","Never mind, I like my jellopy.")) {
 				case 1:
 					delitem 909,.@max*10;
@@ -444,7 +442,6 @@ alberta,190,173,4	script	Phelix	85,{
 					mes "go suckin' them all down at once.";
 					close;
 				case 2:
-					next;
 					mes "[Phelix]";
 					mes "I'm not giving you more than 100";
 					mes "at a time so don't bother, OK? If";
@@ -479,7 +476,6 @@ alberta,190,173,4	script	Phelix	85,{
 					mes "go suckin' them all down at once.";
 					close;
 				case 3:
-					next;
 					mes "[Phelix]";
 					mes "No problem,";
 					mes "see you next time.";
@@ -487,7 +483,6 @@ alberta,190,173,4	script	Phelix	85,{
 				}
 			}
 		case 2:
-			next;
 			mes "[Phelix]";
 			mes "Alright, let's see what ya got...";
 			next;
@@ -500,6 +495,7 @@ alberta,190,173,4	script	Phelix	85,{
 				set .@max,countitem(909)/3;
 				mes "Not too bad pansy...";
 				mes "How many do you want?";
+				next;
 				switch(select("As many as I can get, please","I want this many.","Never mind, I like my jellopy.")) {
 				case 1:
 					delitem 909,.@max*3;
@@ -510,7 +506,6 @@ alberta,190,173,4	script	Phelix	85,{
 					mes "not to stuff yer face.";
 					close;
 				case 2:
-					next;
 					mes "[Phelix]";
 					mes "Right I'm not giving you more than";
 					mes "100 at a time so don't bother,";
@@ -543,7 +538,6 @@ alberta,190,173,4	script	Phelix	85,{
 					mes "not to stuff yer face.";
 					close;
 				case 3:
-					next;
 					mes "[Phelix]";
 					mes "Catch'ya later.";
 					close;
