@@ -169,7 +169,6 @@ S_MakeDye:
 	next;
 	if (select("Make Dyestuffs:Cancel") == 1) {
 		set .@size, getarraysize(.@item);
-		mes "Size is "+.@size+" entries!";
 		// check requirements
 		for( set .@i,0 ; .@i < .@size ; set .@i,.@i+1 )
 			if( countitem(.@item[.@i]) < .@count[.@i] )
