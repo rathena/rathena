@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, Reddozen, Samuray22
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //===== Additional Comments: ================================= 
 //= 1.9 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 2.0 Rescripted (and re-added) Bio Ethics quest. [L0ne_W0lf]
+//= 2.1 Fixed a Resurrection -> Homunculus Resurrection. [L0ne_W0lf]
 //============================================================
 
 yuno_in04,33,108,4	script	Pisruik#qsk_al	883,{
@@ -1437,7 +1438,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 				mes "you to resurrect Homunculi?";
 				next;
 				input .@input$;
-				if (.@input$ == "Resurrection") {
+				if (.@input$ == "Homunculus Resurrection") {
 					mes "[Kellasus]";
 					mes "So you have been putting";
 					mes "a lot of effort in studying";

@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/11/16
+	* Rev. 11740 Fixes bugreport:417 and bugreport:418 [L0ne_W0lf]
 	* Really fixed bugreport:407 [ultramage]
 2007/11/15
 	* Rev. 11733 Several fixes to various scripts. [L0ne_W0lf]

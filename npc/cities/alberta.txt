@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= DZeroX
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.2b
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= 1.0 Converted from Aegis 10.4 [DZeroX]
 //= 1.1 Optimized, missing next, REMOVED .GATs! again [Lupus]
 //= 1.2 Implemented progression fixes provided by $ephiroth. [L0ne_W0lf]
+//= 1.2b More pregression clean up provided by Barron-Monster. [L0ne_W0lf]
 //============================================================
 
 alberta,97,51,0	script	Fabian	84,{
@@ -435,7 +436,6 @@ alberta,190,173,4	script	Phelix	85,{
 				switch(select("As many as I can, please.","I want this many.","Never mind, I like my jellopy.")) {
 				case 1:
 					delitem 909,.@max*10;
-					next;
 					getitem 501,.@max;
 					mes "[Phelix]";
 					mes "There you go! As I promised. Don't";
@@ -469,7 +469,6 @@ alberta,190,173,4	script	Phelix	85,{
 						close;
 					}
 					delitem 909,.@amount*10;
-					next;
 					getitem 501,.@amount;
 					mes "[Phelix]";
 					mes "There you go! As I promised. Don't";
@@ -499,7 +498,6 @@ alberta,190,173,4	script	Phelix	85,{
 				switch(select("As many as I can get, please","I want this many.","Never mind, I like my jellopy.")) {
 				case 1:
 					delitem 909,.@max*3;
-					next;
 					getitem 515,.@max;
 					mes "[Phelix]";
 					mes "There you go~! As I promised. Try";
@@ -531,7 +529,6 @@ alberta,190,173,4	script	Phelix	85,{
 						close;
 					}
 					delitem 909,.@amount*3;
-					next;
 					getitem 515,.@amount;
 					mes "[Phelix]";
 					mes "There you go~! As I promised. Try";
