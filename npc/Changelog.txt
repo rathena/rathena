@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/11/16
+	* Really fixed bugreport:407 [ultramage]
 2007/11/15
 	* Rev. 11733 Several fixes to various scripts. [L0ne_W0lf]
 	- Resolves: bugreport:351, bugreport:379, bugreport:393, bugreport:407,
