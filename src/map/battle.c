@@ -1703,7 +1703,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				vit_def = def2/2 + (vit_def>0?rand()%vit_def:0);
 				
 				if((battle_check_undead(sstatus->race,sstatus->def_ele) || sstatus->race==RC_DEMON) &&
-					(skill=pc_checkskill(tsd,AL_DP)) >0)
+					src->type == BL_MOB && (skill=pc_checkskill(tsd,AL_DP)) > 0)
 					vit_def += skill*(int)(3 +(tsd->status.base_level+1)*0.04);   // submitted by orn
 			} else { //Mob-Pet vit-eq
 				//VIT + rnd(0,[VIT/20]^2-1)
