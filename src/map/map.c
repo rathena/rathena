@@ -333,17 +333,23 @@ int map_addblock_sub (struct block_list *bl, int flag)
 
 	if (bl->prev != NULL) {
 		if(battle_config.error_log)
-			ShowError("map_addblock error : bl->prev != NULL\n");
+			ShowError("map_addblock: bl->prev != NULL\n");
 		return 0;
 	}
 
 	m = bl->m;
 	x = bl->x;
 	y = bl->y;
-	if (m < 0 || m >= map_num ||
-		x < 0 || x >= map[m].xs ||
-		y < 0 || y >= map[m].ys)
+	if( m < 0 || m >= map_num )
+	{
+		ShowError("map_addblock: invalid map id (%d), only %d are loaded.\n", m, map_num);
 		return 1;
+	}
+	if( x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
+	{
+		ShowError("map_addblock: out-of-bounds coordinates (\"%s\",%d,%d), map is %dx%d\n", map[m].name, x, y, map[m].xs, map[m].ys);
+		return 1;
+	}
 	
 #ifdef CELL_NOSTACK
 	map_addblcell(bl);
