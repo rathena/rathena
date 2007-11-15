@@ -281,6 +281,8 @@ enum sc_type {
 	SC_INCBASEATK,
 	SC_FASTCAST,
 	SC_INCMDEFRATE, // Mdef Potion
+	SC_HPREGEN, // Life Potion
+	SC_INCHEALRATE, // Regeneration Potion
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 int SkillStatusChangeTable(int skill);

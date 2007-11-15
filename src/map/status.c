@@ -4949,6 +4949,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				if (sc->data[type].val2 > val2)
 					return 0;
 			break;
+			case SC_HPREGEN:
 			case SC_STUN:
 			case SC_SLEEP:
 			case SC_POISON:
@@ -5262,6 +5263,12 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val4 = tick/10000;
 			if (!val4) val4 = 1;
 			tick = 10000;
+			break;
+		case SC_HPREGEN:
+			// val1 = % of Max HP per tick
+			val4 = tick/(val2 * 1000);
+			if (!val4) val4 = 1;
+			tick = val2 * 1000; // val2 = seconds
 			break;
 
 		case SC_HIDING:
@@ -5859,6 +5866,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_FASTCAST:
 			//Place here SCs that have no SCB_* data, no skill associated, no ICON
 			//associated, and yet are not wrong/unknown. [Skotlex]
+			break;
+		case SC_INCHEALRATE:
+			if (val1 < 1)
+				val1 = 1;
 			break;
 		default:
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == 0 && StatusIconChangeTable[type] == 0 )
@@ -6779,6 +6790,18 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			if (status_isdead(bl))
 				break;
 			sc->data[type].timer = add_timer(10000 + tick, status_change_timer, bl->id, data ); 
+			return 0;
+		}
+		break;
+
+	case SC_HPREGEN:
+		if( sd && (--sc->data[type].val4) >= 0 )
+		{
+			if( status->hp < status->max_hp ) {
+				int hp = (int)(sd->status.max_hp * sc->data[type].val1 / 100.);
+				status_heal(bl, hp, 0, 2);
+			}
+			sc->data[type].timer = add_timer((sc->data[type].val2 * 1000) + tick, status_change_timer, bl->id, data );
 			return 0;
 		}
 		break;

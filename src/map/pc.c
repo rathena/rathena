@@ -5502,6 +5502,10 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 		}
 		if(bonus!=100)
 			hp = hp * bonus / 100;
+
+		// Recovery Potion
+		if( sd->sc.count && sd->sc.data[SC_INCHEALRATE].timer!=-1 )
+			hp += (int)(hp * sd->sc.data[SC_INCHEALRATE].val1/100.);
 	}
 	if(sp) {
 		bonus = 100 + (sd->battle_status.int_<<1)

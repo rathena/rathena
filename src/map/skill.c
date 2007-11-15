@@ -257,8 +257,13 @@ int skill_calc_heal (struct block_list *src, struct block_list *target, int skil
 		heal += heal * skill * 2 / 100;
 
 	sc = status_get_sc(target);
-	if (sc && sc->count && sc->data[SC_CRITICALWOUND].timer!=-1)
-		heal -= heal * sc->data[SC_CRITICALWOUND].val2/100;
+	if (sc && sc->count)
+	{
+		if( sc->data[SC_CRITICALWOUND].timer!=-1 )
+			heal -= heal * sc->data[SC_CRITICALWOUND].val2/100;
+		if( sc->data[SC_INCHEALRATE].timer!=-1 )
+			heal += heal * sc->data[SC_INCHEALRATE].val1/100;
+	}
 	return heal;
 }
 
@@ -6708,8 +6713,13 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				int heal = sg->val2;
 				if (tstatus->hp >= tstatus->max_hp)
 					break;
-				if (tsc && tsc->data[SC_CRITICALWOUND].timer!=-1)
-					heal -= heal * tsc->data[SC_CRITICALWOUND].val2 / 100;
+				if (tsc)
+				{
+					if( tsc->data[SC_INCHEALRATE].timer!=-1 )
+						heal += heal * tsc->data[SC_INCHEALRATE].val1 / 100;
+					if( tsc->data[SC_CRITICALWOUND].timer!=-1 )
+						heal -= heal * tsc->data[SC_CRITICALWOUND].val2 / 100;
+				}
 				if (status_isimmune(bl))
 					heal = 0;	/* 黄金蟲カード（ヒール量０） */
 				clif_skill_nodamage(&src->bl, bl, AL_HEAL, heal, 1);

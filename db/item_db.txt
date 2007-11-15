@@ -3730,7 +3730,7 @@
 13642,2_Hour_Package_Vol_3,2_Hour Package Vol 3,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12252,4; getitem 12253,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2; },{},{}
 13643,2_Hour_Package_Vol_4,2_Hour Package Vol 4,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12252,4; getitem 12255,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2; },{},{}
 13644,2_Hour_Package_Vol_5,2_Hour Package Vol 5,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12252,4; getitem 12250,4; getitem 12208,4; getitem 12215,30; getitem 12216,30; getitem 12211,2; getitem 7621,2; },{},{}
-13645,2_Hour_Package_Vol_6,2_Hour Package Vol 6,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12250,4; getitem 12251,4; getitem 12208,4; getitem 1220,48; getitem 12217,40; getitem 12211,2; getitem 7621,2; },{},{}
+13645,2_Hour_Package_Vol_6,2_Hour Package Vol 6,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12250,4; getitem 12251,4; getitem 12208,4; getitem 12215,30; getitem 12217,40; getitem 12211,2; getitem 7621,2; },{},{}
 13646,Infiltrator_Box_,Refined Infiltrator Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1267,1; },{},{}
 13647,Muramasa_Box_,Refined Muramasa Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 1173,1; },{},{}
 13648,Excalibur_Box_,Refined Excalibur Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 13401,1; },{},{}
@@ -3901,11 +3901,11 @@
 13813,Food_Box_Vol_3,Food Box Vol 3,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14553,1; getitem 14556,1; getitem 14559,1; getitem 14562,1; getitem 14565,1; getitem 14568,1; },{},{}
 13814,Healing_Box,Healing Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 13815,Goblin_1_Taming_Box,Goblin Taming Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14569,10; },{},{}
-13816,Goblin_2_Taming_Box,Goblin Taming Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14569,10; },{},{}
-13817,Goblin_4_Taming_Box,Goblin Taming Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14569,10; },{},{}
-13818,Deleter_Taming_Box,Deleter Taming Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14569,10; },{},{}
-13819,Diabolic_Taming_Box,Diabolic Taming Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14569,10; },{},{}
-13820,Wanderer_Taming_Box,Wanderer Taming Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14569,10; },{},{}
+13816,Goblin_2_Taming_Box,Goblin Taming Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14570,10; },{},{}
+13817,Goblin_4_Taming_Box,Goblin Taming Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14571,10; },{},{}
+13818,Deleter_Taming_Box,Deleter Taming Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14572,10; },{},{}
+13819,Diabolic_Taming_Box,Diabolic Taming Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14573,10; },{},{}
+13820,Wanderer_Taming_Box,Wanderer Taming Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14574,10; },{},{}
 13821,Green_Apple_Box,Green_Apple_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7821,10; },{},{}
 13822,Whole_Roast_Box,Whole_Roast_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7822,10; },{},{}
 13823,Meat_Kabob_Box,Meat_Kabob_Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7823,10; },{},{}
@@ -3954,10 +3954,10 @@
 14531,Concentration_Power_Scroll,Concentration Power Scroll,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHIT,1800000,30; },{},{}
 14532,Field_Manual_25%,Field Manual 25%,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,25; },{},{}
 14533,Field_Manual_100%,Field Manual 100%,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,100; },{},{}
-14534,Small_Life_Potion,Small Life Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14535,Medium_Life_Potion,Medium Life Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14534,Small_Life_Potion,Small Life Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_HPREGEN,600000,5,5,0,0; },{},{}
+14535,Medium_Life_Potion,Medium Life Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_HPREGEN,600000,7,4,0,0; },{},{}
 14536,Abrasive,Abrasive,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCCRI,300000,30; },{},{}
-14537,Regeneration_Potion,Regeneration Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14537,Regeneration_Potion,Regeneration Potion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHEALRATE,1800000,20; },{},{}
 14538,Glass_of_Illusion,Glass of Illusion,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14539,Shadow_Armor_Scroll,Shadow Armor Scroll,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1800000,Ele_Shadow,20,Ele_Holy,-15; },{},{}
 14540,Holy_Armor_Scroll,Holy Armor Scroll,2,,10,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1800000,Ele_Holy,20,Ele_Shadow,-15; },{},{}
