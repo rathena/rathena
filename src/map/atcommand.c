@@ -5512,7 +5512,7 @@ int atcommand_addwarp(const int fd, struct map_session_data* sd, const char* com
 		return -1;
 	}
 
-	nd = npc_add_warp(sd->bl.m, sd->bl.x, sd->bl.y, 1, 1, m, x, y);
+	nd = npc_add_warp(sd->bl.m, sd->bl.x, sd->bl.y, 2, 2, m, x, y);
 	if( nd == NULL )
 		return -1;
 

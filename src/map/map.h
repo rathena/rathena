@@ -838,7 +838,7 @@ struct npc_data {
 	union {
 		struct {
 			struct script_code *script;
-			short xs,ys;
+			short xs,ys; // OnTouch area radius
 			int guild_id;
 			int timer,timerid,timeramount,rid;
 			unsigned int timertick;
@@ -849,9 +849,9 @@ struct npc_data {
 		} scr;
 		struct npc_item_list shop_item[1];// dynamic array, allocated with extra entries (last one has nameid 0)
 		struct {
-			short xs,ys;
-			short x,y;
-			unsigned short mapindex;
+			short xs,ys; // OnTouch area radius
+			short x,y; // destination coords
+			unsigned short mapindex; // destination map
 		} warp;
 	} u;
 	//Do NOT place anything afterwards... shop data NPC will override any variables from here and on! [Skotlex]
