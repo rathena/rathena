@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= jAthena - kalen (1.0) & eAthena Team
 //===== Current Version: =====================================
-//= 1.8
+//= 1.9
 //===== Compatible With: =====================================
 //= eAthena SVN; RO Episode 4+
 //===== Description: =========================================
@@ -37,6 +37,7 @@
 //=	No longer uses defined numerical values for guardian HP calculation
 //=	Guardian summon display list is now DYNAMIC. Updated with guardian corrections.
 //=	Added dialog for castle Abandoning. Commented out be default.
+//= 1.8 Fixed guild members being able to access Guild Master services. [L0ne_W0lf]
 //============================================================
 
 function	script	F_GldManager	{
@@ -75,7 +76,7 @@ function	script	F_GldManager	{
 		mes "Brave soul... fate will guide you towards your future...";
 		return 0;
 	}
-	if (getcharid(2) != .@GID){
+	if (getcharid(2) != .@GID || strcharinfo(0) != getguildmaster(.@GID)){
 		mes "[ "+getarg(0)+" ]";
 		mes "No matter how much you pester me, I'll still follow my master ^ff0000" + getguildmaster(.@GID) + "^000000. Where are Guardians?! Send these ruffians away right now!";
 		return 0;

@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/11/16
+	* Rev. 11746 Fixed Guild Manager access To Guild Master only. [L0ne_W0lf]
 	* Rev. 11745 Attempt at correcting a small move mistake I made [L0ne_W0lf]
 	  in regards to the movement of Odin's temple's spawn file.
 	* Rev. 11744 Deleted Odin temple field spawn file. Not sure [L0ne_W0lf]
