@@ -1,8 +1,11 @@
 Date		Added
 ======
 2007/11/16
+	* Rev. 11744 Deleted Odin temple field spawn file. Not sure [L0ne_W0lf]
+	  why it stuck around after I moved it properly. O_o 
 	* Rev. 11743 Renamed mob dungeon spawn files to compliment [L0ne_W0lf]
 	  the warp script update. File names now match map names.
+	* Moved Odin Temple spawns to dungeon folder. Split up a few other files.
 	* Rev. 11742 Renamed several dungeon warp scripts [L0ne_W0lf]
 	  to match their map names, split up a couple files as well.
 	* Moved Ninja and Gunslinger warps to the proper file.
