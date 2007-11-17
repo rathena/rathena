@@ -103,14 +103,3 @@ ein_fild04,184,26,0	warp	ein_fd01a	1,1,einbroch,157,327
 einbroch,150,25,0	warp	ein_fd02	1,1,ein_fild08,164,377
 ein_fild08,164,380,0	warp	ein_fd02a	1,1,einbroch,150,28
 
-//==========================================================================
-//Einbroch - Gunslinger Map Portion (Ninja's map is the same: que_ng)
-//==========================================================================
-einbroch,136,199,0	warp	gswarp1	1,1,que_ng,138,167
-que_ng,130,166,0	warp	gswarp2	1,1,einbroch,130,197
-que_ng,178,162,0	warp	gswarp3	1,1,que_ng,172,86
-que_ng,166,85,0	warp	gswarp4	1,1,que_ng,182,161
-que_ng,165,137,0	warp	gswarp5	1,1,que_ng,177,41
-que_ng,172,42,0	warp	gswarp6	1,1,que_ng,160,139
-//This one seems to be wrong
-//einbroch,137,149,0	warp	gswarp7	1,1,que_ng,138,167

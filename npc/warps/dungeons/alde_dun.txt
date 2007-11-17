@@ -1,0 +1,80 @@
+//===== eAthena Script =======================================
+//= Al de Baran Dungeon Warp Script
+//===== By: ==================================================
+//= Nana (1.0)
+//===== Current Version: =====================================
+//= 1.6
+//===== Compatible With: =====================================
+//= Any Athena Version; RO Episode 2+
+//===== Description: =========================================
+//= Warp Points for Al De Baran Dungeon
+//===== Additional Comments: =================================
+//= Split off Aldebaran.txt
+//= 1.1 fixed clt007 warp
+//= 1.3 Optimized [Lupus]
+//= 1.4 Removed Duplicates [Silent]
+//= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.6 Moved Clock Tower warps to unique file. [L0ne_W0lf]
+//============================================================
+
+//============================================================
+//============================================================
+alde_dun01,292,306,0	warp	aldd01	2,1,alde_dun02,43,24
+alde_dun01,167,158,0	warp	ald002a	2,2,c_tower2,148,283
+alde_dun01,302,25,0	warp	ald003a	2,2,c_tower1,125,22
+alde_dun02,43,20,0	warp	aldd04	1,1,alde_dun01,292,300
+alde_dun02,279,250,0	warp	aldd05	2,2,alde_dun03,18,267
+alde_dun02,122,169,0	warp	ald006	2,2,c_tower3,47,41
+alde_dun02,187,234,0	warp	ald007	2,2,c_tower3,65,147
+//============================================================
+//= Random B2 ================================================
+alde_dun02,267,41,4	script	ald008r	45,1,1,{
+	if(rand(2)) {
+		warp "c_tower3",168,252;
+	} else {
+		warp "alde_dun02",262,141;
+	}
+	end;
+}
+alde_dun03,12,267,0	warp	aldd09	2,2,alde_dun02,273,250
+alde_dun03,277,183,0	warp	ald010	2,2,c_tower2,27,27
+alde_dun03,191,31,0	warp	ald011	2,2,c_tower3,217,159
+alde_dun03,276,48,0	warp	ald012	2,2,c_tower1,235,223
+//============================================================
+//7(npc)
+//= Random B3-1 ================================================
+alde_dun03,130,125,4	script	ald014r	45,1,1,{
+	set @r,rand(3);
+	if(@r==1) goto w2;
+	if(@r==2) goto w3;
+		warp "c_tower2",228,267; end;
+	w2:	warp "alde_dun03",130,130; end;
+	w3:	warp "c_tower3",252,29; end;
+}
+//============================================================
+//= Random 3-2 ===============================================
+alde_dun03,171,127,4	script	ald015r	45,1,1,{
+	set @r,rand(4);
+	if(@r==1) goto w2;
+	if(@r==2) goto w3;
+		warp "c_tower2",13,282; end;
+	w2:	warp "alde_dun03",175,131; end;
+	w3:	warp "c_tower3",235,7; end;
+}
+alde_dun04,80,273,0	warp	aldd016	2,2,alde_dun03,263,26
+alde_dun04,207,225,0	warp	ald017	1,1,c_tower3,7,34
+alde_dun04,215,192,0	warp	ald018	1,1,c_tower2,148,283
+alde_dun04,32,74,0	warp	aldd19	1,1,alde_dun02,187,239
+alde_dun04,208,58,0	warp	aldd20	2,2,alde_dun04,268,74
+alde_dun04,272,74,0	warp	aldd021	2,2,alde_dun04,204,62
+alde_dun04,80,34,4	script	ald022r	45,1,1,{
+	set @r,rand(4);
+	if(@r==1) goto w2;
+	if(@r==2) goto w3;
+	if(@r==3) goto w4;
+		warp "c_tower2",13,282; end;
+	w2:	warp "alde_dun03",175,131; end;
+	w3:	warp "c_tower3",235,7; end;
+	w4:	warp "alde_dun04",84,36; end;
+}
+//============================================================
