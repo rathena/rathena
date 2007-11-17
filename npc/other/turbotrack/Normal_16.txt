@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Turbo Track Course: Normal (Non-PVP) - 16 Person
 //===== Additional Comments: =================================
 //= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Fixed small official bug. [L0ne_W0lf]
 //============================================================
 
 turbo_room,91,135,3	script	Normal mode - 16 person	124,{
@@ -1387,7 +1388,7 @@ OnTouch:
 	}
 }
 turbo_n_16,336,52,0	duplicate(TurboTrap_n16_2)	trap_n16#F43	139,1,1
-turbo_n_16,336,481,0	duplicate(TurboTrap_n16_2)	trap_n16#F44	139,1,1
+turbo_n_16,336,48,0	duplicate(TurboTrap_n16_2)	trap_n16#F44	139,1,1
 turbo_n_16,336,44,0	duplicate(TurboTrap_n16_2)	trap_n16#F45	139,1,1
 turbo_n_16,336,50,0	duplicate(TurboTrap_n16_2)	trap_n16#F46	139,1,1
 turbo_n_16,336,36,0	duplicate(TurboTrap_n16_2)	trap_n16#F47	139,1,1
