@@ -2546,10 +2546,9 @@ int get_com(unsigned char *script,int *pos)
  *------------------------------------------*/
 void unget_com(int c)
 {
-	if(unget_com_data!=-1){
-		if(battle_config.error_log)
-			ShowError("unget_com can back only 1 data\n");
-	}
+	if(unget_com_data!=-1)
+		ShowError("unget_com can back only 1 data\n");
+
 	unget_com_data=c;
 }
 
@@ -2827,8 +2826,7 @@ int run_func(struct script_state *st)
 	end_sp=st->stack->sp;
 	for(i=end_sp-1;i>=0 && st->stack->stack_data[i].type!=C_ARG;i--);
 	if(i<=0){ //Crash fix when missing "push_val" causes current pointer to become -1. from Rayce (jA)
-		if(battle_config.error_log)
-			ShowError("function not found\n");
+		ShowError("function not found\n");
 //		st->stack->sp=0;
 		st->state=END;
 		script_reportsrc(st);
@@ -2887,8 +2885,7 @@ int run_func(struct script_state *st)
 		if (str_data[func].func(st)) //Report error
 			script_reportsrc(st);
 	} else {
-		if(battle_config.error_log)
-			ShowError("run_func : %s? (%d(%d))\n",str_buf+str_data[func].str,func,str_data[func].type);
+		ShowError("run_func : %s? (%d(%d))\n",str_buf+str_data[func].str,func,str_data[func].type);
 		script_pushint(st,0);
 		script_reportsrc(st);
 	}
@@ -3069,7 +3066,7 @@ void run_script_main(struct script_state *st)
 				{	//sp > defsp is valid in cases when you invoke functions and don't use the returned value. [Skotlex]
 					//Since sp is supposed to be defsp in these cases, we could assume the extra stack elements are unneeded.
 					pop_stack(stack, stack->defsp, stack->sp); //Clear out the unused stack-section.
-				} else if( battle_config.error_log )
+				} else
 					ShowError("script:run_script_main: unexpected stack position stack.sp(%d) != default(%d)\n", stack->sp, stack->defsp);
 				stack->sp = stack->defsp;
 			}
@@ -3137,8 +3134,7 @@ void run_script_main(struct script_state *st)
 			break;
 
 		default:
-			if(battle_config.error_log)
-				ShowError("unknown command : %d @ %d\n",c,st->pos);
+			ShowError("unknown command : %d @ %d\n",c,st->pos);
 			st->state=END;
 			break;
 		}
@@ -5202,11 +5198,8 @@ BUILDIN_FUNC(countitem)
 		nameid = conv_num(st,data);
 
 	if (nameid < 500) {
-		if(battle_config.error_log)
-		{
-			ShowError("wrong item ID : countitem(%i)\n", nameid);
-			script_reportsrc(st);
-		}
+		ShowError("wrong item ID : countitem(%i)\n", nameid);
+		script_reportsrc(st);
 		script_pushint(st,0);
 		return 1;
 	}
@@ -5257,7 +5250,7 @@ BUILDIN_FUNC(countitem2)
 	c4 = (short)script_getnum(st,9);
 	
 	if (nameid < 500) {
-		if(battle_config.error_log) ShowError("wrong item ID : countitem2(%i)\n", nameid);
+		ShowError("wrong item ID : countitem2(%i)\n", nameid);
 		script_pushint(st,0);
 		return 1;
 	}
@@ -7612,8 +7605,7 @@ BUILDIN_FUNC(getnpctimer)
 	if (!nd || nd->bl.type != BL_NPC)
 	{
 		script_pushint(st,0);
-		if (battle_config.error_log)
-			ShowError("getnpctimer: Invalid NPC\n");
+		ShowError("getnpctimer: Invalid NPC\n");
 		return 1;
 	}
 
@@ -7623,8 +7615,7 @@ BUILDIN_FUNC(getnpctimer)
 		if (nd->u.scr.rid) {
 			sd = map_id2sd(nd->u.scr.rid);
 			if (!sd) {
-				if(battle_config.error_log)
-					ShowError("buildin_getnpctimer: Attached player not found!\n");
+				ShowError("buildin_getnpctimer: Attached player not found!\n");
 				break;
 			}
 			val = (sd->npc_timer_id != -1);
@@ -10802,7 +10793,7 @@ BUILDIN_FUNC(getsavepoint)
 /*==========================================
   * Get position for  char/npc/pet/mob objects. Added by Lorky
   *
-  *     int getMapXY(MapName$,MaxX,MapY,type,[CharName$]);
+  *     int getMapXY(MapName$,MapX,MapY,type,[CharName$]);
   *             where type:
   *                     MapName$ - String variable for output map name
   *                     MapX     - Integer variable for output coord X
@@ -11328,8 +11319,7 @@ BUILDIN_FUNC(equip)
 	nameid=script_getnum(st,2);
 	if((item_data = itemdb_exists(nameid)) == NULL)
 	{
-		if(battle_config.error_log)
-			ShowError("wrong item ID : equipitem(%i)\n",nameid);
+		ShowError("wrong item ID : equipitem(%i)\n",nameid);
 		return 1;
 	}
 	ARR_FIND( 0, MAX_INVENTORY, i, sd->status.inventory[i].nameid == nameid );

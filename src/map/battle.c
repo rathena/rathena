@@ -216,8 +216,7 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 
 	if (def_type < 0 || def_type > ELE_MAX ||
 		def_lv < 1 || def_lv > 4) {
-		if (battle_config.error_log)
-			ShowError("battle_attr_fix: unknown attr type: atk=%d def_type=%d def_lv=%d\n",atk_elem,def_type,def_lv);
+		ShowError("battle_attr_fix: unknown attr type: atk=%d def_type=%d def_lv=%d\n",atk_elem,def_type,def_lv);
 		return damage;
 	}
 
@@ -1243,7 +1242,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				if (nk&NK_SPLASHSPLIT){ // Divide ATK among targets
 					if(wflag>0)
 						wd.damage/= wflag;
-					else if(battle_config.error_log)
+					else
 						ShowError("0 enemies targeted by %d:%s, divide per 0 avoided!\n", skill_num, skill_get_name(skill_num));
 				}
 
@@ -2220,7 +2219,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				if(nk&NK_SPLASHSPLIT){ // Divide MATK in case of multiple targets skill
 					if(mflag>0)
 						ad.damage/= mflag;
-					else if(battle_config.error_log)
+					else
 						ShowError("0 enemies targeted by %d:%s, divide per 0 avoided!\n", skill_num, skill_get_name(skill_num));
 				}
 
@@ -2563,7 +2562,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	if (nk&NK_SPLASHSPLIT){ // Divide ATK among targets
 		if(mflag>0)
 			md.damage/= mflag;
-		else if(battle_config.error_log)
+		else
 			ShowError("0 enemies targeted by %d:%s, divide per 0 avoided!\n", skill_num, skill_get_name(skill_num));
 	}
 
@@ -2661,8 +2660,7 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 	case BF_MAGIC:  d = battle_calc_magic_attack(bl,target,skill_num,skill_lv,count);  break;
 	case BF_MISC:   d = battle_calc_misc_attack(bl,target,skill_num,skill_lv,count);   break;
 	default:
-		if (battle_config.error_log)
-			ShowError("battle_calc_attack: unknown attack type! %d\n",attack_type);
+		ShowError("battle_calc_attack: unknown attack type! %d\n",attack_type);
 		memset(&d,0,sizeof(d));
 		break;
 	}
@@ -3462,7 +3460,6 @@ static const struct _battle_data {
 	{ "skill_log",                          &battle_config.skill_log,                       BL_NUL, BL_NUL, BL_ALL,         },
 	{ "battle_log",                         &battle_config.battle_log,                      0,      0,      1,              },
 	{ "save_log",                           &battle_config.save_log,                        0,      0,      1,              },
-	{ "error_log",                          &battle_config.error_log,                       1,      0,      1,              },
 	{ "etc_log",                            &battle_config.etc_log,                         1,      0,      1,              },
 	{ "save_clothcolor",                    &battle_config.save_clothcolor,                 1,      0,      1,              },
 	{ "undead_detect_type",                 &battle_config.undead_detect_type,              0,      0,      2,              },

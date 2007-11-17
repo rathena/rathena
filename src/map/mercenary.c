@@ -492,8 +492,7 @@ static int merc_hom_hungry(int tid,unsigned int tick,int id,int data)
 		return 1;
 
 	if(hd->hungry_timer != tid){
-		if(battle_config.error_log)
-			ShowError("merc_hom_hungry_timer %d != %d\n",hd->hungry_timer,tid);
+		ShowError("merc_hom_hungry_timer %d != %d\n",hd->hungry_timer,tid);
 		return 0;
 	}
 

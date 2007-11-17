@@ -123,8 +123,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	if(ud == NULL) return 0;
 
 	if(ud->walktimer != tid){
-		if(battle_config.error_log)
-			ShowError("unit_walk_timer mismatch %d != %d\n",ud->walktimer,tid);
+		ShowError("unit_walk_timer mismatch %d != %d\n",ud->walktimer,tid);
 		return 0;
 	}
 	ud->walktimer=-1;
@@ -582,20 +581,17 @@ int unit_warp(struct block_list *bl,short m,short x,short y,int type)
 	if (x<0 || y<0)
   	{	//Random map position.
 		if (!map_search_freecell(NULL, m, &x, &y, -1, -1, 1)) {
-			if(battle_config.error_log)
-				ShowWarning("unit_warp failed. Unit Id:%d/Type:%d, target position map %d (%s) at [%d,%d]\n", bl->id, bl->type, m, map[m].name, x, y);
+			ShowWarning("unit_warp failed. Unit Id:%d/Type:%d, target position map %d (%s) at [%d,%d]\n", bl->id, bl->type, m, map[m].name, x, y);
 			return 2;
 			
 		}
 	} else if (map_getcell(m,x,y,CELL_CHKNOREACH))
 	{	//Invalid target cell
-		if(battle_config.error_log)
-			ShowWarning("unit_warp: Specified non-walkable target cell: %d (%s) at [%d,%d]\n", m, map[m].name, x,y);
+		ShowWarning("unit_warp: Specified non-walkable target cell: %d (%s) at [%d,%d]\n", m, map[m].name, x,y);
 		
 		if (!map_search_freecell(NULL, m, &x, &y, 4, 4, 1))
 	 	{	//Can't find a nearby cell
-			if(battle_config.error_log)
-				ShowWarning("unit_warp failed. Unit Id:%d/Type:%d, target position map %d (%s) at [%d,%d]\n", bl->id, bl->type, m, map[m].name, x, y);
+			ShowWarning("unit_warp failed. Unit Id:%d/Type:%d, target position map %d (%s) at [%d,%d]\n", bl->id, bl->type, m, map[m].name, x, y);
 			return 2;
 		}
 	}
@@ -1353,8 +1349,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 	if((ud=unit_bl2ud(src))==NULL)
 		return 0;
 	if(ud->attacktimer != tid){
-		if(battle_config.error_log)
-			ShowError("unit_attack_timer %d != %d\n",ud->attacktimer,tid);
+		ShowError("unit_attack_timer %d != %d\n",ud->attacktimer,tid);
 		return 0;
 	}
 	BL_CAST( BL_PC , src, sd);

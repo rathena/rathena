@@ -253,8 +253,7 @@ int mob_get_random_id(int type, int flag, int lv)
 	struct mob_db *mob;
 	int i=0, class_;
 	if(type < 0 || type >= MAX_RANDOMMONSTER) {
-		if (battle_config.error_log)
-			ShowError("mob_get_random_id: Invalid type (%d) of random monster.\n", type);
+		ShowError("mob_get_random_id: Invalid type (%d) of random monster.\n", type);
 		return 0;
 	}
 	do {
@@ -1067,8 +1066,7 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 	if(i==retrycount){
 		md->move_fail_count++;
 		if(md->move_fail_count>1000){
-			if(battle_config.error_log)
-				ShowWarning("MOB can't move. random spawn %d, class = %d, at %s (%d,%d)\n",md->bl.id,md->class_,map[md->bl.m].name, md->bl.x, md->bl.y);
+			ShowWarning("MOB can't move. random spawn %d, class = %d, at %s (%d,%d)\n",md->bl.id,md->class_,map[md->bl.m].name, md->bl.x, md->bl.y);
 			md->move_fail_count=0;
 			mob_spawn(md);
 		}
@@ -3902,17 +3900,15 @@ static int mob_readskilldb(void)
 			{	//Ground skill.
 				if (ms->target > MST_AROUND)
 				{
-					if (battle_config.error_log)
-						ShowWarning("Wrong mob skill target for ground skill %d (%s) for %s.\n",
-							ms->skill_id, skill_get_name(ms->skill_id),
-							mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
+					ShowWarning("Wrong mob skill target for ground skill %d (%s) for %s.\n",
+						ms->skill_id, skill_get_name(ms->skill_id),
+						mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
 					ms->target = MST_TARGET;
 				}
 			} else if (ms->target > MST_MASTER) {
-				if (battle_config.error_log)
-					ShowWarning("Wrong mob skill target 'around' for non-ground skill %d (%s) for %s\n.",
-						ms->skill_id, skill_get_name(ms->skill_id),
-						mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
+				ShowWarning("Wrong mob skill target 'around' for non-ground skill %d (%s) for %s\n.",
+					ms->skill_id, skill_get_name(ms->skill_id),
+					mob_id < 0?"all mobs":mob_db_data[mob_id]->sprite);
 				ms->target = MST_TARGET;
 			}
 

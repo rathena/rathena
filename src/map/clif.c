@@ -497,8 +497,7 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 		break;
 
 	default:
-		if (battle_config.error_log)
-			ShowError("clif_send: Unrecognized type %d\n",type);
+		ShowError("clif_send: Unrecognized type %d\n",type);
 		return -1;
 	}
 
@@ -2593,8 +2592,7 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 		break;
 
 	default:
-		if(battle_config.error_log)
-			ShowError("clif_updatestatus : unrecognized type %d\n",type);
+		ShowError("clif_updatestatus : unrecognized type %d\n",type);
 		return 1;
 	}
 	WFIFOSET(fd,len);
@@ -2621,8 +2619,7 @@ int clif_changestatus(struct block_list *bl,int type,int val)
 			WBUFL(buf,8)=val;
 			break;
 		default:
-			if(battle_config.error_log)
-				ShowError("clif_changestatus : unrecognized type %d.\n",type);
+			ShowError("clif_changestatus : unrecognized type %d.\n",type);
 			return 1;
 		}
 		clif_send(buf,packet_len(0x1ab),bl,AREA_WOS);
@@ -7399,8 +7396,7 @@ int clif_charnameack (int fd, struct block_list *bl)
 //		break;
 		return 0;
 	default:
-		if (battle_config.error_log)
-			ShowError("clif_parse_GetCharNameRequest : bad type %d(%d)\n", bl->type, bl->id);
+		ShowError("clif_parse_GetCharNameRequest : bad type %d(%d)\n", bl->type, bl->id);
 		return 0;
 	}
 
@@ -7498,8 +7494,7 @@ int clif_disp_overhead(struct map_session_data *sd, const char* mes)
 	int len_mes = strlen(mes)+1; //Account for \0
 
 	if (len_mes + 8 >= 256) {
-		if (battle_config.error_log)
-			ShowError("clif_disp_overhead: Message too long (length %d)\n", len_mes);
+		ShowError("clif_disp_overhead: Message too long (length %d)\n", len_mes);
 		len_mes = 247; //Trunk it to avoid problems.
 	}
 	// send message to others
@@ -7810,8 +7805,7 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 	int packet_ver;	// 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
 
 	if (sd) {
-		if (battle_config.error_log)
-			ShowError("clif_parse_WantToConnection : invalid request (character already logged in)?\n");
+		ShowError("clif_parse_WantToConnection : invalid request (character already logged in)?\n");
 		return;
 	}
 
@@ -10091,8 +10085,7 @@ void clif_parse_GuildRequestInfo(int fd, struct map_session_data *sd)
 		clif_guild_expulsionlist(sd);
 		break;
 	default:
-		if (battle_config.error_log)
-			ShowError("clif: guild request info: unknown type %d\n", RFIFOL(fd,2));
+		ShowError("clif: guild request info: unknown type %d\n", RFIFOL(fd,2));
 		break;
 	}
 }

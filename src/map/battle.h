@@ -223,7 +223,6 @@ extern struct Battle_Config
 	int skill_log;
 	int battle_log;
 	int save_log;
-	int error_log;
 	int etc_log;
 	int save_clothcolor;
 	int undead_detect_type;

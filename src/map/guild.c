@@ -511,8 +511,7 @@ int guild_check_member(struct guild *g)
 				sd->status.guild_id=0;
 				sd->state.guild_sent=0;
 				sd->guild_emblem_id=0;
-				if(battle_config.error_log)
-					ShowWarning("guild: check_member %d[%s] is not member\n",sd->status.account_id,sd->status.name);
+				ShowWarning("guild: check_member %d[%s] is not member\n",sd->status.account_id,sd->status.name);
 			}
 		}
 	}
@@ -568,8 +567,7 @@ int guild_recv_info(struct guild *sg)
 
 	if(g->max_member > MAX_GUILD)
 	{
-		if (battle_config.error_log)
-			ShowError("guild_recv_info: Received guild with %d members, but MAX_GUILD is only %d. Extra guild-members have been lost!\n", g->max_member, MAX_GUILD);
+		ShowError("guild_recv_info: Received guild with %d members, but MAX_GUILD is only %d. Extra guild-members have been lost!\n", g->max_member, MAX_GUILD);
 		g->max_member = MAX_GUILD;
 	}
 	
@@ -748,8 +746,7 @@ int guild_member_added(int guild_id,int account_id,int char_id,int flag)
 	if(sd==NULL || sd->guild_invite==0){
 		// ƒLƒƒƒ‰‘¤‚É“o˜^‚Å‚«‚È‚©‚Á‚½‚½‚ß’E‘Ş—v‹‚ğo‚·
 		if (flag == 0) {
-			if(battle_config.error_log)
-				ShowError("guild: member added error %d is not online\n",account_id);
+			ShowError("guild: member added error %d is not online\n",account_id);
  			intif_guild_leave(guild_id,account_id,char_id,0,"**“o˜^¸”s**");
 		}
 		return 0;
@@ -959,8 +956,7 @@ int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int onlin
 			sd->guild_emblem_id=0;
 			sd->state.guild_sent=0;
 		}
-		if(battle_config.error_log)
-			ShowWarning("guild: not found member %d,%d on %d[%s]\n",	account_id,char_id,guild_id,g->name);
+		ShowWarning("guild: not found member %d,%d on %d[%s]\n",	account_id,char_id,guild_id,g->name);
 		return 0;
 	}
 	

@@ -206,13 +206,11 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 	md = &map[m];
 
 	if( count>25 ){ //Cap to prevent too much processing...?
-		if( battle_config.error_log )
-			ShowWarning("path_blownpos: count too many %d !\n",count);
+		ShowWarning("path_blownpos: count too many %d !\n",count);
 		count=25;
 	}
 	if( dx > 1 || dx < -1 || dy > 1 || dy < -1 ){
-		if( battle_config.error_log )
-			ShowError("path_blownpos: illeagal dx=%d or dy=%d !\n",dx,dy);
+		ShowError("path_blownpos: illegal dx=%d or dy=%d !\n",dx,dy);
 		dx=(dx>0)?1:((dx<0)?-1:0);
 		dy=(dy>0)?1:((dy<0)?-1:0);
 	}

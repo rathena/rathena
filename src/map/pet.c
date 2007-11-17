@@ -241,8 +241,7 @@ static int pet_hungry(int tid,unsigned int tick,int id,int data)
 
 	pd = sd->pd;
 	if(pd->pet_hungry_timer != tid){
-		if(battle_config.error_log)
-			ShowError("pet_hungry_timer %d != %d\n",pd->pet_hungry_timer,tid);
+		ShowError("pet_hungry_timer %d != %d\n",pd->pet_hungry_timer,tid);
 		return 0;
 	}
 	pd->pet_hungry_timer = -1;
@@ -480,8 +479,7 @@ int pet_recv_petdata(int account_id,struct s_pet *p,int flag)
 				break;
 		}
 		if(i >= MAX_INVENTORY) {
-		  	if (battle_config.error_log)
-				ShowError("pet_recv_petdata: Hatching pet (%d:%s) aborted, couldn't find egg in inventory for removal!\n",p->pet_id, p->name);
+			ShowError("pet_recv_petdata: Hatching pet (%d:%s) aborted, couldn't find egg in inventory for removal!\n",p->pet_id, p->name);
 			sd->status.pet_id = 0;
 			return 1;
 		}
@@ -511,10 +509,9 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 
 	if(sd->status.inventory[egg_index].card[0] == CARD0_PET)
 		intif_request_petdata(sd->status.account_id, sd->status.char_id, MakeDWord(sd->status.inventory[egg_index].card[1], sd->status.inventory[egg_index].card[2]) );
-	else {
-		if(battle_config.error_log)
-			ShowError("wrong egg item inventory %d\n",egg_index);
-	}
+	else
+		ShowError("wrong egg item inventory %d\n",egg_index);
+
 	return 0;
 }
 
@@ -831,8 +828,7 @@ static int pet_randomwalk(struct pet_data *pd,unsigned int tick)
 			if(i+1>=retrycount){
 				pd->move_fail_count++;
 				if(pd->move_fail_count>1000){
-					if(battle_config.error_log)
-						ShowWarning("PET can't move. hold position %d, class = %d\n",pd->bl.id,pd->pet.class_);
+					ShowWarning("PET can't move. hold position %d, class = %d\n",pd->bl.id,pd->pet.class_);
 					pd->move_fail_count=0;
 					pd->ud.canmove_tick = tick + 60000;
 					return 0;
@@ -1088,11 +1084,8 @@ int pet_skill_bonus_timer(int tid,unsigned int tick,int id,int data)
 	pd=sd->pd;
 
 	if(pd->bonus->timer != tid) {
-		if(battle_config.error_log)
-		{
-			ShowError("pet_skill_bonus_timer %d != %d\n",pd->bonus->timer,tid);
-			pd->bonus->timer = -1;
-		}
+		ShowError("pet_skill_bonus_timer %d != %d\n",pd->bonus->timer,tid);
+		pd->bonus->timer = -1;
 		return 0;
 	}
 	
@@ -1131,8 +1124,7 @@ int pet_recovery_timer(int tid,unsigned int tick,int id,int data)
 	pd=sd->pd;
 
 	if(pd->recovery->timer != tid) {
-		if(battle_config.error_log)
-			ShowError("pet_recovery_timer %d != %d\n",pd->recovery->timer,tid);
+		ShowError("pet_recovery_timer %d != %d\n",pd->recovery->timer,tid);
 		return 0;
 	}
 
@@ -1162,8 +1154,7 @@ int pet_heal_timer(int tid,unsigned int tick,int id,int data)
 	pd=sd->pd;
 	
 	if(pd->s_skill->timer != tid) {
-		if(battle_config.error_log)
-			ShowError("pet_heal_timer %d != %d\n",pd->s_skill->timer,tid);
+		ShowError("pet_heal_timer %d != %d\n",pd->s_skill->timer,tid);
 		return 0;
 	}
 	
@@ -1200,8 +1191,7 @@ int pet_skill_support_timer(int tid,unsigned int tick,int id,int data)
 	pd=sd->pd;
 	
 	if(pd->s_skill->timer != tid) {
-		if(battle_config.error_log)
-			ShowError("pet_skill_support_timer %d != %d\n",pd->s_skill->timer,tid);
+		ShowError("pet_skill_support_timer %d != %d\n",pd->s_skill->timer,tid);
 		return 0;
 	}
 	

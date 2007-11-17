@@ -70,8 +70,7 @@ static void add_sc(int skill, int sc)
 	else
 	if (sk >= HM_SKILLBASE) sk = skill - HM_SKILLBASE + SC_HM_BASE;
 	if (sk < 0 || sk >= MAX_SKILL) {
-		if (battle_config.error_log)
-			ShowError("add_sc: Unsupported skill id %d\n", skill);
+		ShowError("add_sc: Unsupported skill id %d\n", skill);
 		return;
 	}
 	if (SkillStatusChangeTableArray[sk]==-1) // skill -> sk [Lance]
@@ -512,8 +511,7 @@ int SkillStatusChangeTable(int skill)
 	else
 	if (sk >= HM_SKILLBASE) sk = skill - HM_SKILLBASE + SC_HM_BASE;
 	if (sk < 0 || sk >= MAX_SKILL) {
-		if (battle_config.error_log)
-			ShowError("add_sc: Unsupported skill id %d\n", skill);
+		ShowError("add_sc: Unsupported skill id %d\n", skill);
 		return -1;
 	}
 	return SkillStatusChangeTableArray[sk];
@@ -4336,7 +4334,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				sd->vd.sex = sd->status.sex;
 			} else if (vd)
 				memcpy(&sd->vd, vd, sizeof(struct view_data));
-			else if (battle_config.error_log)
+			else
 				ShowError("status_set_viewdata (PC): No view data for class %d\n", class_);
 		}
 	break;
@@ -4345,7 +4343,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 			TBL_MOB* md = (TBL_MOB*)bl;
 			if (vd)
 				md->vd = vd;
-			else if (battle_config.error_log)
+			else
 				ShowError("status_set_viewdata (MOB): No view data for class %d\n", class_);
 		}
 	break;
@@ -4362,7 +4360,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 							pd->vd.head_bottom = pd->pet.equip;
 					}
 				}
-			} else if (battle_config.error_log)
+			} else
 				ShowError("status_set_viewdata (PET): No view data for class %d\n", class_);
 		}
 	break;
@@ -4371,7 +4369,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 			TBL_NPC* nd = (TBL_NPC*)bl;
 			if (vd)
 				nd->vd = vd;
-			else if (battle_config.error_log)
+			else
 				ShowError("status_set_viewdata (NPC): No view data for class %d\n", class_);
 		}
 	break;
@@ -4380,7 +4378,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 			struct homun_data *hd = (struct homun_data*)bl;
 			if (vd)
 				hd->vd = vd;
-			else if (battle_config.error_log)
+			else
 				ShowError("status_set_viewdata (HOMUNCULUS): No view data for class %d\n", class_);
 		}
 		break;
@@ -4606,8 +4604,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 
 	if( type < 0 || type >= SC_MAX )
 	{
-		if( battle_config.error_log )
-			ShowError("status_change_start: invalid status change (%d)!\n", type);
+		ShowError("status_change_start: invalid status change (%d)!\n", type);
 		return 0;
 	}
 
@@ -5874,8 +5871,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		default:
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == 0 && StatusIconChangeTable[type] == 0 )
 			{	//Status change with no calc, no icon, and no skill associated...? 
-				if(battle_config.error_log)
-					ShowError("UnknownStatusChange [%d]\n", type);
+				ShowError("UnknownStatusChange [%d]\n", type);
 				return 0;
 			}
 	}
@@ -6628,8 +6624,7 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, int data)
 	if (!sc || !status || data != SC_KAAHI || sc->data[data].timer==-1)
 		return 0;
 	if(sc->data[data].val4 != tid) {
-		if (battle_config.error_log)
-			ShowError("kaahi_heal_timer: Timer mismatch: %d != %d\n", tid, sc->data[data].val4);
+		ShowError("kaahi_heal_timer: Timer mismatch: %d != %d\n", tid, sc->data[data].val4);
 		sc->data[data].val4=-1;
 		return 0;
 	}
@@ -6671,8 +6666,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 
 	if( sc->data[type].timer != tid )
 	{
-		if(battle_config.error_log)
-			ShowError("status_change_timer: Mismatch for type %d: %d != %d (bl id %d)\n",type,tid,sc->data[type].timer, bl->id);
+		ShowError("status_change_timer: Mismatch for type %d: %d != %d (bl id %d)\n",type,tid,sc->data[type].timer, bl->id);
 		return 0;
 	}
 

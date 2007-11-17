@@ -233,9 +233,7 @@ int map_freeblock (struct block_list *bl)
 		aFree(bl);
 		bl = NULL;
 		if (block_free_count >= block_free_max)
-			if (battle_config.error_log)
-				ShowWarning("map_freeblock: too many free block! %d %d\n",
-					block_free_count, block_free_lock);
+			ShowWarning("map_freeblock: too many free block! %d %d\n", block_free_count, block_free_lock);
 	} else
 		block_free[block_free_count++] = bl;
 
@@ -265,8 +263,7 @@ int map_freeblock_unlock (void)
 		}
 		block_free_count = 0;
 	} else if (block_free_lock < 0) {
-		if (battle_config.error_log)
-			ShowError("map_freeblock_unlock: lock count < 0 !\n");
+		ShowError("map_freeblock_unlock: lock count < 0 !\n");
 		block_free_lock = 0;
 	}
 
@@ -332,8 +329,7 @@ int map_addblock_sub (struct block_list *bl, int flag)
 	nullpo_retr(0, bl);
 
 	if (bl->prev != NULL) {
-		if(battle_config.error_log)
-			ShowError("map_addblock: bl->prev != NULL\n");
+		ShowError("map_addblock: bl->prev != NULL\n");
 		return 0;
 	}
 
@@ -399,8 +395,7 @@ int map_delblock_sub (struct block_list *bl, int flag)
 	if (bl->prev == NULL) {
 		if (bl->next != NULL) {
 			// prevÇ™NULLÇ≈nextÇ™NULLÇ≈Ç»Ç¢ÇÃÇÕóLÇ¡ÇƒÇÕÇ»ÇÁÇ»Ç¢
-			if(battle_config.error_log)
-				ShowError("map_delblock error : bl->next!=NULL\n");
+			ShowError("map_delblock error : bl->next!=NULL\n");
 		}
 		return 0;
 	}
@@ -646,10 +641,8 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_lis
 			}
 		}
 
-	if(bl_list_count>=BL_LIST_MAX) {
-		if(battle_config.error_log)
-			ShowWarning("map_foreachinrange: block count too many!\n");
-	}
+	if(bl_list_count>=BL_LIST_MAX)
+		ShowWarning("map_foreachinrange: block count too many!\n");
 
 	map_freeblock_lock();	// ÉÅÉÇÉäÇ©ÇÁÇÃâï˙Çã÷é~Ç∑ÇÈ
 
@@ -720,10 +713,8 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
 			}
 		}
 
-	if(bl_list_count>=BL_LIST_MAX) {
-		if(battle_config.error_log)
+	if(bl_list_count>=BL_LIST_MAX)
 			ShowWarning("map_foreachinrange: block count too many!\n");
-	}
 
 	map_freeblock_lock();	// ÉÅÉÇÉäÇ©ÇÁÇÃâï˙Çã÷é~Ç∑ÇÈ
 
@@ -794,10 +785,8 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int m, int x0, in
 			}
 		}
 
-	if(bl_list_count>=BL_LIST_MAX) {
-		if(battle_config.error_log)
-			ShowWarning("map_foreachinarea: block count too many!\n");
-	}
+	if(bl_list_count>=BL_LIST_MAX)
+		ShowWarning("map_foreachinarea: block count too many!\n");
 
 	map_freeblock_lock();	// ÉÅÉÇÉäÇ©ÇÁÇÃâï˙Çã÷é~Ç∑ÇÈ
 
@@ -937,10 +926,8 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 
 	}
 
-	if(bl_list_count>=BL_LIST_MAX) {
-		if(battle_config.error_log)
-			ShowWarning("map_foreachinmovearea: block count too many!\n");
-	}
+	if(bl_list_count>=BL_LIST_MAX)
+		ShowWarning("map_foreachinmovearea: block count too many!\n");
 
 	map_freeblock_lock();	// ÉÅÉÇÉäÇ©ÇÁÇÃâï˙Çã÷é~Ç∑ÇÈ
 
@@ -996,10 +983,8 @@ int map_foreachincell(int (*func)(struct block_list*,va_list), int m, int x, int
 		}
 	}
 
-	if(bl_list_count>=BL_LIST_MAX) {
-		if(battle_config.error_log)
-			ShowWarning("map_foreachincell: block count too many!\n");
-	}
+	if(bl_list_count>=BL_LIST_MAX)
+		ShowWarning("map_foreachincell: block count too many!\n");
 
 	map_freeblock_lock();	// ÉÅÉÇÉäÇ©ÇÁÇÃâï˙Çã÷é~Ç∑ÇÈ
 
@@ -1192,10 +1177,8 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 			}
 		}
 
-	if(bl_list_count>=BL_LIST_MAX) {
-		if(battle_config.error_log)
-			ShowWarning("map_foreachinpath: block count too many!\n");
-	}
+	if(bl_list_count>=BL_LIST_MAX)
+		ShowWarning("map_foreachinpath: block count too many!\n");
 
 	map_freeblock_lock();
 
@@ -1249,10 +1232,8 @@ int map_foreachinmap(int (*func)(struct block_list*,va_list), int m, int type,..
 		}
 	}
 
-	if(bl_list_count>=BL_LIST_MAX) {
-		if(battle_config.error_log)
-			ShowWarning("map_foreachinmap: block count too many!\n");
-	}
+	if(bl_list_count>=BL_LIST_MAX)
+		ShowWarning("map_foreachinmap: block count too many!\n");
 
 	map_freeblock_lock();	// ÉÅÉÇÉäÇ©ÇÁÇÃâï˙Çã÷é~Ç∑ÇÈ
 
@@ -1284,8 +1265,7 @@ int map_addobject(struct block_list *bl)
 		first_free_object_id=2;
 	for(i=first_free_object_id;i<MAX_FLOORITEM && objects[i];i++);
 	if(i>=MAX_FLOORITEM){
-		if(battle_config.error_log)
-			ShowWarning("no free object id\n");
+		ShowWarning("no free object id\n");
 		return 0;
 	}
 	first_free_object_id=i;
@@ -1355,8 +1335,7 @@ void map_foreachobject(int (*func)(struct block_list*,va_list),int type,...)
 			if(!(objects[i]->type==type)) // Fixed [Lance]
 				continue;
 			if(bl_list_count>=BL_LIST_MAX) {
-				if(battle_config.error_log)
-					ShowWarning("map_foreachobject: too many blocks !\n");
+				ShowWarning("map_foreachobject: too many blocks !\n");
 				break;
 			}
 			bl_list[bl_list_count++]=objects[i];
@@ -1389,8 +1368,7 @@ int map_clearflooritem_timer(int tid,unsigned int tick,int id,int data)
 
 	fitem = (struct flooritem_data *)objects[id];
 	if(fitem==NULL || fitem->bl.type!=BL_ITEM || (!data && fitem->cleartimer != tid)){
-		if(battle_config.error_log)
-			ShowError("map_clearflooritem_timer : error\n");
+		ShowError("map_clearflooritem_timer : error\n");
 		return 1;
 	}
 	if(data)
@@ -1951,8 +1929,7 @@ int map_addnpc(int m,struct npc_data *nd)
 		if(map[m].npc[i]==NULL)
 			break;
 	if(i==MAX_NPC_PER_MAP){
-		if(battle_config.error_log)
-			ShowWarning("too many NPCs in one map %s\n",map[m].name);
+		ShowWarning("too many NPCs in one map %s\n",map[m].name);
 		return -1;
 	}
 	if(i==map[m].npc_num){
@@ -2059,14 +2036,12 @@ int map_removemobs_timer(int tid, unsigned int tick, int id, int data)
 	int k;
 	if (id < 0 || id >= MAX_MAP_PER_SERVER)
 	{	//Incorrect map id!
-		if (battle_config.error_log)
-			ShowError("map_removemobs_timer error: timer %d points to invalid map %d\n",tid, id);
+		ShowError("map_removemobs_timer error: timer %d points to invalid map %d\n",tid, id);
 		return 0;
 	}
 	if (map[id].mob_delete_timer != tid)
 	{	//Incorrect timer call!
-		if (battle_config.error_log)
-			ShowError("map_removemobs_timer mismatch: %d != %d (map %s)\n",map[id].mob_delete_timer, tid, map[id].name);
+		ShowError("map_removemobs_timer mismatch: %d != %d (map %s)\n",map[id].mob_delete_timer, tid, map[id].name);
 		return 0;
 	}
 	map[id].mob_delete_timer = -1;

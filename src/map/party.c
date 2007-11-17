@@ -162,8 +162,7 @@ int party_check_member(struct party *p)
 			
 			if(f){
 				sd->status.party_id=0;
-				if(battle_config.error_log)
-					ShowWarning("party: check_member %d[%s] is not member\n",sd->status.account_id,sd->status.name);
+				ShowWarning("party: check_member %d[%s] is not member\n",sd->status.account_id,sd->status.name);
 			}
 		}
 	}
@@ -343,8 +342,7 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 	int i;
 	if(sd == NULL || sd->status.char_id != char_id){
 		if (flag == 0) {
-			if(battle_config.error_log)
-				ShowError("party: member added error %d is not online\n",account_id);
+			ShowError("party: member added error %d is not online\n",account_id);
 			intif_party_leave(party_id,account_id,char_id);
 		}
 		return 0;
@@ -353,8 +351,7 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 	sd->party_invite_account=0;
 
 	if (!p) {
-		if(battle_config.error_log)
-			ShowError("party_member_added: party %d not found.\n",party_id);
+		ShowError("party_member_added: party %d not found.\n",party_id);
 		intif_party_leave(party_id,account_id,char_id);
 		return 0;
 	}
@@ -530,8 +527,7 @@ int party_recv_movemap(int party_id,int account_id,int char_id, unsigned short m
 		}
 	}
 	if(i==MAX_PARTY){
-		if(battle_config.error_log)
-			ShowError("party: not found member %d/%d on %d[%s]",account_id,char_id,party_id,p->party.name);
+		ShowError("party: not found member %d/%d on %d[%s]",account_id,char_id,party_id,p->party.name);
 		return 0;
 	}
 	

@@ -324,8 +324,7 @@ int chrif_changemapserverack(int account_id, int login_id1, int login_id2, int c
 		return -1;
 
 	if (login_id1 == 1) { //FIXME: charserver says '0'! [ultramage]
-		if (battle_config.error_log)
-			ShowError("map server change failed.\n");
+		ShowError("map server change failed.\n");
 		clif_authfail_fd(sd->fd, 0);
 		return 0;
 	}
@@ -1321,8 +1320,7 @@ int chrif_parse(int fd)
 		case 0x2b22: chrif_updatefamelist_ack(fd); break;
 		case 0x2b24: chrif_keepalive_ack(fd); break;
 		default:
-			if (battle_config.error_log)
-				ShowError("chrif_parse : unknown packet (session #%d): 0x%x. Disconnecting.\n", fd, cmd);
+			ShowError("chrif_parse : unknown packet (session #%d): 0x%x. Disconnecting.\n", fd, cmd);
 			set_eof(fd);
 			return 0;
 		}
