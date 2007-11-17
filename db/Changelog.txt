@@ -37,6 +37,10 @@
 	2376 General's_Plate_Mail	Increases heal recovery effectiveness on you by 10%
 
 =======================
+11/17
+	* Heat now only does 10 hits a second [Playtester]
+	- this is an official kRO update
+	- you can still set the delay in the skill_unit_db to what you desire
 11/16
 	* Rev. 11734 Corrected some taming item boxes. [Zephyrus]
 	- Fixed another item giving 48 Gladius[3]
