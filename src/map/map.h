@@ -847,14 +847,16 @@ struct npc_data {
 			struct npc_label_list *label_list;
 			int src_id;
 		} scr;
-		struct npc_item_list shop_item[1];// dynamic array, allocated with extra entries (last one has nameid 0)
+		struct {
+			struct npc_item_list* shop_item;
+			int count;
+		} shop;
 		struct {
 			short xs,ys; // OnTouch area radius
 			short x,y; // destination coords
 			unsigned short mapindex; // destination map
 		} warp;
 	} u;
-	//Do NOT place anything afterwards... shop data NPC will override any variables from here and on! [Skotlex]
 };
 
 //For quick linking to a guardian's info. [Skotlex]

@@ -1700,29 +1700,26 @@ int clif_npcbuysell(struct map_session_data* sd, int id)
  *------------------------------------------*/
 int clif_buylist(struct map_session_data *sd, struct npc_data *nd)
 {
-	struct item_data *id;
-	int fd,i,val;
+	int fd,i;
 
 	nullpo_retr(0, sd);
 	nullpo_retr(0, nd);
 
-	fd=sd->fd;
+	fd = sd->fd;
  	WFIFOHEAD(fd, 200 * 11 + 4);
-	WFIFOW(fd,0)=0xc6;
-	for(i=0;nd->u.shop_item[i].nameid > 0;i++){
-		id = itemdb_search(nd->u.shop_item[i].nameid);
-		val=nd->u.shop_item[i].value;
-		WFIFOL(fd,4+i*11)=val;
+	WFIFOW(fd,0) = 0xc6;
+	WFIFOW(fd,2) = 4 + nd->u.shop.count*11;
+	for( i = 0; i < nd->u.shop.count; i++ )
+	{
+		struct item_data* id = itemdb_search(nd->u.shop.shop_item[i].nameid);
+		int val = nd->u.shop.shop_item[i].value;
+		WFIFOL(fd,4+i*11) = val;
 		if (!id->flag.value_notdc)
-			val=pc_modifybuyvalue(sd,val);
-		WFIFOL(fd,8+i*11)=val;
-		WFIFOB(fd,12+i*11)=itemtype(id->type);
-		if (id->view_id > 0)
-			WFIFOW(fd,13+i*11)=id->view_id;
-		else
-			WFIFOW(fd,13+i*11)=nd->u.shop_item[i].nameid;
+			val = pc_modifybuyvalue(sd,val);
+		WFIFOL(fd,8+i*11) = val;
+		WFIFOB(fd,12+i*11) = itemtype(id->type);
+		WFIFOW(fd,13+i*11) = ( id->view_id > 0 ) ? id->view_id : id->nameid;
 	}
-	WFIFOW(fd,2)=i*11+4;
 	WFIFOSET(fd,WFIFOW(fd,2));
 
 	return 0;

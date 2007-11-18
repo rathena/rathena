@@ -1056,24 +1056,24 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 		return 3;
 
 	for(i=0,w=0,z=0;i<n;i++) {
-		for(j=0;nd->u.shop_item[j].nameid;j++) {
-			if (nd->u.shop_item[j].nameid==item_list[i*2+1] || //Normal items
-				itemdb_viewid(nd->u.shop_item[j].nameid)==item_list[i*2+1]) //item_avail replacement
+		for(j=0;nd->u.shop.shop_item[j].nameid;j++) {
+			if (nd->u.shop.shop_item[j].nameid==item_list[i*2+1] || //Normal items
+				itemdb_viewid(nd->u.shop.shop_item[j].nameid)==item_list[i*2+1]) //item_avail replacement
 				break;
 		}
-		if (nd->u.shop_item[j].nameid==0)
+		if (nd->u.shop.shop_item[j].nameid==0)
 			return 3;
 		
-		if (!itemdb_isstackable(nd->u.shop_item[j].nameid) && item_list[i*2] > 1)
+		if (!itemdb_isstackable(nd->u.shop.shop_item[j].nameid) && item_list[i*2] > 1)
 		{	//Exploit? You can't buy more than 1 of equipment types o.O
 			ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %d!\n",
-				sd->status.name, sd->status.account_id, sd->status.char_id, item_list[i*2], nd->u.shop_item[j].nameid);
+				sd->status.name, sd->status.account_id, sd->status.char_id, item_list[i*2], nd->u.shop.shop_item[j].nameid);
 			item_list[i*2] = 1;
 		}
-		if (itemdb_value_notdc(nd->u.shop_item[j].nameid))
-			z+=(double)nd->u.shop_item[j].value * item_list[i*2];
+		if (itemdb_value_notdc(nd->u.shop.shop_item[j].nameid))
+			z+=(double)nd->u.shop.shop_item[j].value * item_list[i*2];
 		else
-			z+=(double)pc_modifybuyvalue(sd,nd->u.shop_item[j].value) * item_list[i*2];
+			z+=(double)pc_modifybuyvalue(sd,nd->u.shop.shop_item[j].value) * item_list[i*2];
 		itemamount+=item_list[i*2];
 
 		switch(pc_checkadditem(sd,item_list[i*2+1],item_list[i*2])) {
@@ -1299,7 +1299,11 @@ int npc_unload(struct npc_data* nd)
 	npc_chat_finalize(nd); // deallocate npc PCRE data structures
 #endif
 
-	if (nd->bl.subtype == SCRIPT) {
+	if( nd->bl.subtype == SHOP )
+		free(nd->u.shop.shop_item);
+	else
+	if( nd->bl.subtype == SCRIPT )
+	{
 		ev_db->foreach(ev_db,npc_unload_ev,nd->exname); //Clean up all events related.
 		if (nd->u.scr.timerid != -1) {
 			struct TimerData *td = NULL;
@@ -1322,7 +1326,9 @@ int npc_unload(struct npc_data* nd)
 			}
 		}
 	}
+
 	script_stop_sleeptimers(nd->bl.id);
+
 	aFree(nd);
 
 	return 0;
@@ -1577,6 +1583,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 /// Parses a shop npc.
 static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
+	//TODO: could be rewritten to NOT need this temp array [ultramage] 
 	#define MAX_SHOPITEM 100
 	struct npc_item_list items[MAX_SHOPITEM];
 	char *p;
@@ -1631,9 +1638,10 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		return strchr(start,'\n');// continue
 	}
 
-	nd = (struct npc_data *) aCalloc (1, sizeof(struct npc_data) + sizeof(nd->u.shop_item[0])*(i));
-	memcpy(&nd->u.shop_item, items, sizeof(struct npc_item_list)*i);
-	nd->u.shop_item[i].nameid = 0;
+	CREATE(nd, struct npc_data, 1);
+	CREATE(nd->u.shop.shop_item, struct npc_item_list, i);
+	memcpy(nd->u.shop.shop_item, items, sizeof(struct npc_item_list)*i);
+	nd->u.shop.count = i;
 	nd->bl.prev = nd->bl.next = NULL;
 	nd->bl.m = m;
 	nd->bl.x = x;
