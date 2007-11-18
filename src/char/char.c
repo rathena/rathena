@@ -3254,11 +3254,11 @@ int parse_char(int fd)
 
 		// request to connect
 		case 0x65:
-			ShowInfo("request connect - account_id:%d/login_id1:%d/login_id2:%d\n", RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10));
 			if (RFIFOREST(fd) < 17)
 				return 0;
 		{
 			int GM_value;
+			ShowInfo("request connect - account_id:%d/login_id1:%d/login_id2:%d\n", RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10));
 
 			if (sd) {
 				//Received again auth packet for already authentified account?? Discard it.

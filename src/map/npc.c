@@ -2544,6 +2544,8 @@ static const char* npc_parse_mapcell(char* w1, char* w2, char* w3, char* w4, con
 
 	for( x = x0; x <= x1; ++x )
 		for( y = y0; y <= y1; ++y )
+			if (map_getcell(m, x, y, CELL_CHKNOREACH))
+				continue;
 			map_setcell(m, x, y, cell);
 
 	return strchr(start,'\n');// continue
