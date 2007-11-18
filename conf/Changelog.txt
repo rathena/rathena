@@ -1,5 +1,7 @@
 Date	Added
 
+2007/11/18
+	* 11758 Updated more map flags for Al De Baran's turbo Track. [L0ne_W0lf]
 2007/11/12
 	* hom_setting&0x2 now disables skill range checks for homunculus. [Skotlex]
 2007/11/08

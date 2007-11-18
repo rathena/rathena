@@ -40,3 +40,11 @@ nguild_alde	mapflag	nowarp
 nguild_gef	mapflag	nowarp
 nguild_pay	mapflag	nowarp
 nguild_prt	mapflag	nowarp
+//Aldebaran Turbo Track ======
+turbo_n_1	mapflag	nowarp
+turbo_n_4	mapflag	nowarp
+turbo_n_8	mapflag	nowarp
+turbo_n_16	mapflag	nowarp
+turbo_e_4	mapflag	nowarp
+turbo_e_8	mapflag	nowarp
+turbo_e_16	mapflag	nowarp

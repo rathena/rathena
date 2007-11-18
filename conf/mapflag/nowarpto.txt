@@ -47,6 +47,14 @@ ama_test	mapflag	nowarpto
 gon_test	mapflag	nowarpto
 que_rachel	mapflag	nowarpto
 que_san04	mapflag	nowarpto
+//Aldebaran Turbo Track ========
+turbo_n_1	mapflag	nowarpto
+turbo_n_4	mapflag	nowarpto
+turbo_n_8	mapflag	nowarpto
+turbo_n_16	mapflag	nowarpto
+turbo_e_4	mapflag	nowarpto
+turbo_e_8	mapflag	nowarpto
+turbo_e_16	mapflag	nowarpto
 // Izlude Battle Arena =========
 force_1-1	mapflag	nowarpto
 force_2-1	mapflag	nowarpto

@@ -271,5 +271,12 @@ pvp_n_8-4	mapflag	noteleport
 pvp_n_8-5	mapflag	noteleport
 pvp_2vs2	mapflag	noteleport
 
-//Aldebaran Turbo Track
+//Aldebaran Turbo Track ==========
 turbo_room	mapflag	noteleport
+turbo_n_1	mapflag	noteleport
+turbo_n_4	mapflag	noteleport
+turbo_n_8	mapflag	noteleport
+turbo_n_16	mapflag	noteleport
+turbo_e_4	mapflag	noteleport
+turbo_e_8	mapflag	noteleport
+turbo_e_16	mapflag	noteleport
