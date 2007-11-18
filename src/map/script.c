@@ -11692,7 +11692,7 @@ BUILDIN_FUNC(callshop)
 		flag = script_getnum(st,3);
 	nd = npc_name2id(shopname);
 	if (!nd || nd->bl.type!=BL_NPC || nd->bl.subtype!=SHOP) {
-		ShowError("buildin_callshop: Shop [%s] not found (or NPC is not shop type)", shopname);
+		ShowError("buildin_callshop: Shop [%s] not found (or NPC is not shop type)\n", shopname);
 		script_pushint(st,0);
 		return 1;
 	}

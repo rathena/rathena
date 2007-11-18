@@ -2855,6 +2855,7 @@ static void npc_debug_warps_sub(struct npc_data* nd)
 
 	m = map_mapindex2mapid(nd->u.warp.mapindex);
 	if (m < 0) return; //Warps to another map, nothing to do about it.
+	if (nd->u.warp.x == 0 && nd->u.warp.y == 0) return; // random warp
 
 	if (map_getcell(m, nd->u.warp.x, nd->u.warp.y, CELL_CHKNPC)) {
 		ShowWarning("Warp %s at %s(%d,%d) warps directly on top of an area npc at %s(%d,%d)\n",
