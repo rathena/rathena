@@ -1816,7 +1816,7 @@ int unit_free(struct block_list *bl, int clrtype)
 		clif_foreachclient(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 0);
 		party_send_logout(sd);
 		guild_send_memberinfoshort(sd,0);
-		pc_cleareventtimer(sd);		
+		pc_cleareventtimer(sd);
 		pc_delspiritball(sd,sd->spiritball,1);
 		if (clrtype >= 0) {
 			chrif_save_scdata(sd); //Save status changes, then clear'em out from memory. [Skotlex]

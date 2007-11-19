@@ -4519,7 +4519,7 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 
 		if (tick_def) {
 			if (battle_config.pc_sc_def_rate != 100)
-				tick_def = sc_def*battle_config.pc_sc_def_rate/100;
+				tick_def = tick_def*battle_config.pc_sc_def_rate/100;
 		}
 
 	} else {
@@ -4535,7 +4535,7 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 
 		if (tick_def) {
 			if (battle_config.mob_sc_def_rate != 100)
-				tick_def = sc_def*battle_config.mob_sc_def_rate/100;
+				tick_def = tick_def*battle_config.mob_sc_def_rate/100;
 		}
 	}
 	

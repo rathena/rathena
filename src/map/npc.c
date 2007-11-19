@@ -1300,7 +1300,7 @@ int npc_unload(struct npc_data* nd)
 #endif
 
 	if( nd->bl.subtype == SHOP )
-		free(nd->u.shop.shop_item);
+		aFree(nd->u.shop.shop_item);
 	else
 	if( nd->bl.subtype == SCRIPT )
 	{

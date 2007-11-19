@@ -5487,12 +5487,8 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 
 	ud->canact_tick = tick;
 	ud->skillid = ud->skilllv = 0;
-	if(sd) {
-		clif_skill_fail(sd,ud->skillid,0,0);
+	if(sd)
 		sd->skillitem = sd->skillitemlv = 0;
-	}
-	else if (hd && hd->master)
-		clif_skill_fail(hd->master, ud->skillid, 0, 0);
 	else if(md)
 		md->skillidx  = -1;
 	return 0;
