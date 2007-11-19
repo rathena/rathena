@@ -2,13 +2,80 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_INIT(eAthena)
-AC_REVISION($Revision: 11695$)
+AC_REVISION($Revision$)
 AC_PREREQ([2.61])
 AC_CONFIG_SRCDIR([src/common/cbasetypes.h])
 AC_CONFIG_FILES([Makefile src/common/Makefile])
 AC_CONFIG_FILES([src/char/Makefile src/login/Makefile src/ladmin/Makefile])
 AC_CONFIG_FILES([src/char_sql/Makefile src/login_sql/Makefile src/txt-converter/Makefile])
 AC_CONFIG_FILES([src/map/Makefile src/plugins/Makefile src/tool/Makefile])
+
+
+#
+# Memory managers
+#
+AC_ARG_ENABLE(
+	[manager],
+	AC_HELP_STRING(
+		[--enable-manager=ARG],
+		[memory managers: no, builtin, memwatch, dmalloc, gcollect, bcheck (defaults to builtin)]
+	),
+	[
+		enable_manager="$enableval"
+		case $enableval in
+			"no");;
+			"builtin");;
+			"memwatch");;
+			"dmalloc");;
+			"gcollect");;
+			"bcheck");;
+			*) AC_MSG_ERROR([[unknown memory manager '$enable_manager'... stopping]]);;
+		esac
+	],
+	[enable_manager="builtin"]
+)
+
+
+#
+# mapregsql
+#
+AC_ARG_ENABLE(
+	[mapregsql],
+	AC_HELP_STRING(
+		[--enable-mapregsql],
+		[Makes map-wide script variables be saved to SQL instead of TXT files in the sql map-server. (defauts to no)]
+	),
+	[
+		enable_mapregsql="$enableval"
+		case $enableval in
+			no);;
+			yes);;
+			*) AC_MSG_ERROR([[invalid argument --enable-mapregsql=$enable_mapregsql... stopping]]);;
+		esac
+	],
+	[enable_mapregsql="no"]
+)
+
+
+#
+# debug
+#
+AC_ARG_ENABLE(
+	[debug],
+	AC_HELP_STRING(
+		[--enable-debug],
+		[Compiles in debug mode. (defauts to no)]
+	),
+	[
+		enable_debug="$enableval"
+		case $enableval in
+			no);;
+			yes);;
+			*) AC_MSG_ERROR([[invalid argument --enable-debug=$enable_mapregsql... stopping]]);;
+		esac
+	],
+	[enable_debug="no"]
+)
 
 
 #
@@ -162,6 +229,55 @@ AC_COMPILE_IFELSE(
 ###############################################################################
 # Checks for libraries and header files.
 
+
+
+dnl
+dnl Memory manager
+dnl
+
+case $enableval in
+	"no")
+		CFLAGS="$CFLAGS -DNO_MEMMGR"
+		;;
+	"builtin")
+		# enabled by default
+		;;
+	"memwatch")
+		CFLAGS="$CFLAGS -DMEMWATCH"
+		AC_CHECK_HEADER([memwatch.h], , [AC_MSG_ERROR([memwatch header not found... stopping])])
+		;;
+	"dmalloc")
+		CFLAGS="$CFLAGS -DDMALLOC -DDMALLOC_FUNC_CHECK"
+		LIBS="$LIBS -ldmalloc"
+		AC_CHECK_HEADER([dmalloc.h], , [AC_MSG_ERROR([dmalloc header not found... stopping])])
+		;;
+	"gcollect")
+		CFLAGS="$CFLAGS -DGCOLLECT"
+		LIBS="$LIBS -lgc"
+		AC_CHECK_HEADER([gc.h], , [AC_MSG_ERROR([gcollect header not found... stopping])])
+		;;
+	"bcheck")
+		CFLAGS="$CFLAGS -DBCHECK"
+		;;
+esac
+
+
+dnl
+dnl Memory manager
+dnl
+
+if test "$enable_mapregsql" = "yes" ; then
+	CFLAGS="$CFLAGS -DMAPREGSQL"
+fi
+
+
+dnl
+dnl Debug
+dnl
+
+if test "$enable_debug" = "yes" ; then
+	CFLAGS="$CFLAGS -DDEBUG"
+fi
 
 
 dnl

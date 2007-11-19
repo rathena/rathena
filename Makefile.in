@@ -130,23 +130,6 @@ needs_mysql:
 #####################################################################
 # TODO
 
-# Server Packet Protocol version (also defined in src/common/mmo.h)
-# CFLAGS += -DPACKETVER=8
-
-# Makes map-wide script variables be saved to SQL instead of TXT files.
-# CFLAGS += -DMAPREGSQL
-
-# OPT += -DGCOLLECT
-# LIBS += -lgc
-
-# OPT += -DMEMWATCH
-
-# OPT += -DDMALLOC -DDMALLOC_FUNC_CHECK
-# LIBS += -ldmalloc
-
-# OPT += -DBCHECK
-
-
 install:	conf/%.conf conf/%.txt
 	$(shell mkdir -p /opt/eathena/bin/)
 	$(shell mkdir -p /opt/eathena/etc/eathena/)

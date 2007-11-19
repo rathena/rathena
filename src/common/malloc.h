@@ -13,27 +13,27 @@
 //    and I have doubts our implementation works.
 //    -> They should NOT be used, period.
 
-#ifndef __NETBSD__
-#if __STDC_VERSION__ < 199901L
-#	if __GNUC__ >= 2
-#		define __func__ __FUNCTION__
-#	else
-#		define __func__ ""
-#	endif
-#endif
-#endif
 #define ALC_MARK __FILE__, __LINE__, __func__
 
-//////////////////////////////////////////////////////////////////////
-// Whether to use Athena's built-in Memory Manager (enabled by default)
-// To disable just comment the following line
-#if !defined(DMALLOC) && !defined(BCHECK)
-	#define USE_MEMMGR
+// disable built-in memory manager when using another manager
+#if defined(MEMWATCH) || defined(DMALLOC) || defined(GCOLLECT) || defined(BCHECK)
+#if !defined(NO_MEMMGR)
+#define NO_MEMMGR
 #endif
-// Whether to enable Memory Manager's logging
-#define LOG_MEMMGR
+#endif
 
+// Use built-in memory manager by default
+#if !defined(NO_MEMMGR) && !defined(USE_MEMMGR)
+#define USE_MEMMGR
+#endif
+
+
+//////////////////////////////////////////////////////////////////////
+// Athena's built-in Memory Manager
 #ifdef USE_MEMMGR
+
+// Enable memory manager logging by default
+#define LOG_MEMMGR
 
 #	define aMalloc(n)		_mmalloc(n,ALC_MARK)
 #	define aMallocA(n)		_mmalloc(n,ALC_MARK)
@@ -71,7 +71,7 @@
 
 ////////////// Memory Managers //////////////////
 
-#ifdef MEMWATCH
+#if defined(MEMWATCH)
 
 #	include "memwatch.h"
 #	define MALLOC(n,file,line,func)	mwMalloc((n),(file),(line))
@@ -108,7 +108,6 @@
 	void * _bcallocA(size_t, size_t);
 	char * _bstrdup(const char *);
 
-/* FIXME Why is this the same as #else? [FlavioJS]
 #elif defined(BCHECK)
 
 #	define MALLOC(n,file,line,func)	malloc(n)
@@ -118,7 +117,7 @@
 #	define REALLOC(p,n,file,line,func)	realloc((p),(n))
 #	define STRDUP(p,file,line,func)	strdup(p)
 #	define FREE(p,file,line,func)		free(p)
-*/
+
 #else
 
 #	define MALLOC(n,file,line,func)	malloc(n)

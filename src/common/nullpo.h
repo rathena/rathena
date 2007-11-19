@@ -5,27 +5,14 @@
 #define _NULLPO_H_
 
 
-#define NULLPO_CHECK 1
-		// 全体のスイッチを宣言しているヘッダがあれば
-		// そこに移動していただけると
-
-#ifndef __NETBSD__
-#if __STDC_VERSION__ < 199901L
-# if __GNUC__ >= 2
-#  define __func__ __FUNCTION__
-# else
-#  define __func__ ""
-# endif
-#endif
-#endif
-
-
-#if !defined(__GNUC__) && !defined(MINGW)
-#  define  __attribute__(x)	/* nothing */
-#endif
-
+#include "../common/cbasetypes.h"
 
 #define NLP_MARK __FILE__, __LINE__, __func__
+
+// enabled by default on debug builds
+#if defined(DEBUG) && !defined(NULLPO_CHECK)
+#define NULLPO_CHECK
+#endif
 
 /*----------------------------------------------------------------------------
  * Macros
@@ -81,7 +68,7 @@
  *--------------------------------------
  */
 
-#if NULLPO_CHECK
+#if defined(NULLPO_CHECK)
 
 #define nullpo_ret(t) \
 	if (nullpo_chk(NLP_MARK, (void *)(t))) {return(0);}
@@ -137,25 +124,25 @@
 // 良い方法が思いつかなかったので・・・苦肉の策です。
 // 一応ワーニングは出ないはず
 
-#define nullpo_ret(t) if((t)){;}
-#define nullpo_retv(t) if((t)){;}
-#define nullpo_retr(ret, t) if((t)){;}
-#define nullpo_retb(t) if((t)){;}
+#define nullpo_ret(t) (void)(t)
+#define nullpo_retv(t) (void)(t)
+#define nullpo_retr(ret, t) (void)(t)
+#define nullpo_retb(t) (void)(t)
 
 // 可変引数マクロに関する条件コンパイル
 #if __STDC_VERSION__ >= 199901L
 /* C99に対応 */
-#define nullpo_ret_f(t, fmt, ...) if((t)){;}
-#define nullpo_retv_f(t, fmt, ...) if((t)){;}
-#define nullpo_retr_f(ret, t, fmt, ...) if((t)){;}
-#define nullpo_retb_f(t, fmt, ...) if((t)){;}
+#define nullpo_ret_f(t, fmt, ...) (void)(t)
+#define nullpo_retv_f(t, fmt, ...) (void)(t)
+#define nullpo_retr_f(ret, t, fmt, ...) (void)(t)
+#define nullpo_retb_f(t, fmt, ...) (void)(t)
 
 #elif __GNUC__ >= 2
 /* GCC用 */
-#define nullpo_ret_f(t, fmt, args...) if((t)){;}
-#define nullpo_retv_f(t, fmt, args...) if((t)){;}
-#define nullpo_retr_f(ret, t, fmt, args...) if((t)){;}
-#define nullpo_retb_f(t, fmt, args...) if((t)){;}
+#define nullpo_ret_f(t, fmt, args...) (void)(t)
+#define nullpo_retv_f(t, fmt, args...) (void)(t)
+#define nullpo_retr_f(ret, t, fmt, args...) (void)(t)
+#define nullpo_retb_f(t, fmt, args...) (void)(t)
 
 #else
 /* その他の場合・・・ orz */

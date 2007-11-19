@@ -17,7 +17,7 @@ txt: obj common
 sql: $(SQL_DEPENDS)
 
 clean:
-	rm -rf *.o obj obj_sql
+	rm -rf *.o obj obj_sql svnversion.h
 
 help:
 	@echo "possible targets are 'txt' 'sql' 'all' 'clean' 'help'"

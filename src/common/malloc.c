@@ -1,15 +1,18 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "../common/malloc.h"
 #include "../common/core.h"
 #include "../common/showmsg.h"
 
-#ifdef MINICORE
-	#undef LOG_MEMMGR
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+// no logging for minicore
+#if defined(MINICORE) && defined(LOG_MEMMGR)
+#undef LOG_MEMMGR
 #endif
 
 void* aMalloc_(size_t size, const char *file, int line, const char *func)
@@ -553,12 +556,17 @@ static FILE *log_fp;
 
 static void memmgr_log (char *buf)
 {
-	if (!log_fp) {
+	time_t raw;
+	struct tm* t;
+	if( !log_fp )
+	{
 		log_fp = fopen(memmer_logfile,"w");
 		if (!log_fp) log_fp = stdout;
 		fprintf(log_fp, "Memory manager: Memory leaks found (Revision %s).\n", get_svn_revision());
 	}
-	fprintf(log_fp, buf);
+	time(&raw);
+	t = localtime(&raw);
+	fprintf(log_fp, "%04d%02d%02d%02d%02d%02d %s", (t->tm_year+1900), (t->tm_mon+1), t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec, buf);
 	return;
 }
 #endif
