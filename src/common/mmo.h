@@ -309,7 +309,7 @@ struct party_member {
 	unsigned short map;
 	unsigned short lv;
 	unsigned leader : 1,
-				online : 1;
+	         online : 1;
 };
 
 struct party {

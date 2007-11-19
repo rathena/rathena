@@ -17,8 +17,8 @@ extern int party_share_level;
 
 void do_init_party(void);
 void do_final_party(void);
-struct party_data *party_search(int party_id);
-struct party_data *party_searchname(char *str);
+struct party_data* party_search(int party_id);
+struct party_data* party_searchname(const char* str);
 
 int party_create(struct map_session_data *sd,char *name, int item, int item2);
 int party_created(int account_id,int char_id,int fail,int party_id,char *name);
@@ -47,6 +47,6 @@ int party_exp_share(struct party_data *p,struct block_list *src,unsigned int bas
 int party_share_loot(struct party_data* p, struct map_session_data* sd, struct item* item_data, int first_charid);
 int party_send_dot_remove(struct map_session_data *sd);
 int party_sub_count(struct block_list *bl, va_list ap);
-int party_foreachsamemap(int (*func)(struct block_list *,va_list),struct map_session_data *sd,int type,...);
+int party_foreachsamemap(int (*func)(struct block_list *,va_list),struct map_session_data *sd,int range,...);
 
 #endif /* _PARTY_H_ */
