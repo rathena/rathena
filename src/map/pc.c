@@ -4098,7 +4098,6 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 
 	if (!next || sd->status.base_exp < next)
 		return 0;
-	
 	do {
 		sd->status.base_exp -= next;
 		//Kyoki pointed out that the max overcarry exp is the exp needed for the previous level -1. [Skotlex]
@@ -4272,24 +4271,26 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 		}
 	}
 	
-	//Overflow checks... think we'll ever really need'em? [Skotlex]
-	if (base_exp && sd->status.base_exp > UINT_MAX - base_exp)
-		sd->status.base_exp = UINT_MAX;
-	else
-		sd->status.base_exp += base_exp;
-	
-	pc_checkbaselevelup(sd);
+	//Cap exp to the level up requirement of the previous level when you are at max level, otherwise cap at UINT_MAX (this is required for some S. Novice bonuses). [Skotlex]
+	if (base_exp) {
+		nextb = nextb?UINT_MAX:pc_thisbaseexp(sd);
+		if(sd->status.base_exp > nextb - base_exp)
+			sd->status.base_exp = nextb;
+		else
+			sd->status.base_exp += base_exp;
+		pc_checkbaselevelup(sd);
+		clif_updatestatus(sd,SP_BASEEXP);
+	}
 
-	clif_updatestatus(sd,SP_BASEEXP);
-
-	if (job_exp && sd->status.job_exp > UINT_MAX - job_exp)
-		sd->status.job_exp = UINT_MAX;
-	else
-		sd->status.job_exp += job_exp;
-
-	pc_checkjoblevelup(sd);
-
-	clif_updatestatus(sd,SP_JOBEXP);
+	if (job_exp) {
+		nextj = nextj?UINT_MAX:pc_thisjobexp(sd);
+		if(sd->status.job_exp > nextj - job_exp)
+			sd->status.job_exp = nextj;
+		else
+			sd->status.job_exp += job_exp;
+		pc_checkjoblevelup(sd);
+		clif_updatestatus(sd,SP_JOBEXP);
+	}
 
 	if(sd->state.showexp){
 		sprintf(output,
@@ -4326,6 +4327,15 @@ unsigned int pc_nextbaseexp(struct map_session_data *sd)
 	return exp_table[pc_class2idx(sd->status.class_)][0][sd->status.base_level-1];
 }
 
+unsigned int pc_thisbaseexp(struct map_session_data *sd)
+{
+	if(sd->status.base_level>pc_maxbaselv(sd) || sd->status.base_level<=1)
+		return 0;
+
+	return exp_table[pc_class2idx(sd->status.class_)][0][sd->status.base_level-2];
+}
+
+
 /*==========================================
  * job level側必要??値計算
  *------------------------------------------*/
@@ -4336,6 +4346,13 @@ unsigned int pc_nextjobexp(struct map_session_data *sd)
 	if(sd->status.job_level>=pc_maxjoblv(sd) || sd->status.job_level<=0)
 		return 0;
 	return exp_table[pc_class2idx(sd->status.class_)][1][sd->status.job_level-1];
+}
+
+unsigned int pc_thisjobexp(struct map_session_data *sd)
+{
+	if(sd->status.job_level>pc_maxjoblv(sd) || sd->status.job_level<=1)
+		return 0;
+	return exp_table[pc_class2idx(sd->status.class_)][1][sd->status.job_level-2];
 }
 
 /*==========================================
