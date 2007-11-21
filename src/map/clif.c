@@ -745,22 +745,19 @@ void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, un
 /*==========================================
  * Prepares 'unit standing' packet
  *------------------------------------------*/
-static int clif_set0078(struct block_list* bl, unsigned char* buf)
+static int clif_set_unit_standing(struct block_list* bl, unsigned char* buf)
 {
 	struct status_change* sc;
 	struct view_data* vd;
 	int guild_id, emblem_id, dir, level, speed;
 
-	nullpo_retr(0, bl);
 	sc = status_get_sc(bl);
 	vd = status_get_viewdata(bl);
-
 	guild_id = status_get_guild_id(bl);
 	emblem_id = status_get_emblem_id(bl);
 	speed = status_get_speed(bl);
 	dir = unit_getdir(bl);
-	level = status_get_lv(bl);
-	level = clif_setlevel(level);
+	level = status_get_lv(bl); level = clif_setlevel(level);
 
 	if(pcdb_checkid(vd->class_))
 	{ 
@@ -900,16 +897,14 @@ static int clif_set0078(struct block_list* bl, unsigned char* buf)
 /*==========================================
  * Prepares 'unit walking' packet
  *------------------------------------------*/
-static int clif_set007b(struct block_list* bl, struct unit_data* ud, unsigned char* buf)
+static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, unsigned char* buf)
 {
 	struct status_change* sc;
 	struct view_data* vd;
 	int guild_id, emblem_id, lv;
 
-	nullpo_retr(0, bl);
 	sc = status_get_sc(bl);
 	vd = status_get_viewdata(bl);
-	
 	guild_id = status_get_guild_id(bl);
 	emblem_id = status_get_emblem_id(bl);
 	lv = status_get_lv(bl);
@@ -1074,6 +1069,54 @@ static int clif_set007b(struct block_list* bl, struct unit_data* ud, unsigned ch
 	}
 }
 
+/*==========================================
+ * Prepares 'unit spawned' packet
+ *------------------------------------------*/
+static int clif_set_unit_spawned(struct block_list* bl, unsigned char* buf)
+{
+	struct status_change* sc = status_get_sc(bl);
+	struct view_data* vd = status_get_viewdata(bl);
+
+	if( pcdb_checkid(vd->class_) )
+	{	// player spawn packet
+		int id = ( PACKETVER >= 7 ) ? 0x22b
+		       : ( PACKETVER >= 4 ) ? 0x1d9
+			   :                      0x79;
+		int len = clif_set_unit_standing(bl, buf);
+		WBUFW(buf,0) = id; // override packet id
+		WBUFW(buf,len-3) = WBUFW(buf,len-2); // spawn packet doesn't have the 'dead_sit' field
+		return packet_len(id);
+	}
+	else
+	{	// npc/mob/pet/homun spawn packet
+		struct status_change *sc = status_get_sc(bl);
+		memset(buf,0,sizeof(buf));
+		WBUFW(buf, 0) = 0x7c;
+		WBUFL(buf, 2) = bl->id;
+		WBUFW(buf, 6) = status_get_speed(bl);
+		WBUFW(buf, 8) = (sc)? sc->opt1 : 0;
+		WBUFW(buf,10) = (sc)? sc->opt2 : 0;
+		WBUFW(buf,12) = (sc)? sc->option : 0;
+		WBUFW(buf,14) = vd->hair_style; //Required for pets (removes attack cursor)
+		//16W: Weapon
+		WBUFW(buf,18) = vd->head_bottom; //Pet armor (ignored by client)
+		WBUFW(buf,20) = vd->class_;
+		//22W: Shield
+		//24W: Head top
+		//26W: Head mid
+		//28W: Hair color
+		//30W: Cloth color
+		//32W: Head dir
+		//34B: karma
+		//35B: Sex
+		WBUFPOS(buf,36,bl->x,bl->y,unit_getdir(bl));
+		//39B: ???
+		//40B: ???
+		return packet_len(0x7c);
+	}
+}
+
+
 //Modifies the buffer for disguise characters and sends it to self.
 //Flag = 0: change id to negative, buf will have disguise data.
 //Flag = 1: change id to positive, class and option to make your own char invisible.
@@ -1205,56 +1248,18 @@ int clif_spawn(struct block_list *bl)
 {
 	unsigned char buf[128];
 	struct view_data *vd;
+	int len;
 
-	nullpo_retr(0, bl);
 	vd = status_get_viewdata(bl);
 	if( !vd || vd->class_ == INVISIBLE_CLASS )
 		return 0;
 
-	if( pcdb_checkid(vd->class_) )
-	{	// player spawn packet
-		int id = ( PACKETVER >= 7 ) ? 0x22b
-		       : ( PACKETVER >= 4 ) ? 0x1d9
-			   :                      0x79;
-		int len = clif_set0078(bl, buf);
-		WBUFW(buf,0) = id; // override packet id
-		WBUFW(buf,len-3) = WBUFW(buf,len-2); // spawn packet doesn't have the 'dead_sit' field
-		clif_send(buf, packet_len(id), bl, AREA_WOS);
-		if (disguised(bl))
-			clif_setdisguise((TBL_PC*)bl, buf, packet_len(id), 0);
-	}
-	else
-	{	// npc/mob/pet/homun spawn packet
-		struct status_change *sc = status_get_sc(bl);
-		memset(buf,0,sizeof(buf));
-		WBUFW(buf, 0) = 0x7c;
-		WBUFL(buf, 2) = bl->id;
-		WBUFW(buf, 6) = status_get_speed(bl);
-		WBUFW(buf, 8) = (sc)? sc->opt1 : 0;
-		WBUFW(buf,10) = (sc)? sc->opt2 : 0;
-		WBUFW(buf,12) = (sc)? sc->option : 0;
-		WBUFW(buf,14) = vd->hair_style; //Required for pets (removes attack cursor)
-		//16W: Weapon
-		WBUFW(buf,18) = vd->head_bottom; //Pet armor (ignored by client)
-		WBUFW(buf,20) = vd->class_;
-		//22W: Shield
-		//24W: Head top
-		//26W: Head mid
-		//28W: Hair color
-		//30W: Cloth color
-		//32W: Head dir
-		//34B: karma
-		//35B: Sex
-		WBUFPOS(buf,36,bl->x,bl->y,unit_getdir(bl));
-		//39B: ???
-		//40B: ???
-		clif_send(buf,packet_len(0x7c),bl,AREA_WOS);
-		if (disguised(bl)) {
-			WBUFL(buf,2)=-bl->id;
-			clif_send(buf,packet_len(0x7c),bl,SELF);
-		}
-	}
-	
+	len = clif_set_unit_spawned(bl, buf);
+	clif_send(buf, len, bl, AREA_WOS);
+
+	if (disguised(bl))
+		clif_setdisguise((TBL_PC*)bl, buf, len, 0);
+
 	if (vd->cloth_color)
 		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
 		
@@ -1438,7 +1443,7 @@ static void clif_move2(struct block_list *bl, struct view_data *vd, struct unit_
 	uint8 buf[128];
 	int len;
 	
-	len = clif_set007b(bl,ud,buf);
+	len = clif_set_unit_walking(bl,ud,buf);
 	clif_send(buf,len,bl,AREA_WOS);
 	if (disguised(bl))
 		clif_setdisguise((TBL_PC*)bl, buf, len, 0);
@@ -3540,13 +3545,10 @@ int clif_storageclose(struct map_session_data *sd)
 	return 0;
 }
 
-//
-// callbackŒn ?
-//
 /*==========================================
  * PC•\Ž¦
  *------------------------------------------*/
-void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* dstsd)
+static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* dstsd)
 {
 	int len;
 	if(dstsd->chatID)
@@ -3572,10 +3574,8 @@ void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* ds
 		clif_changestatus(&dstsd->bl,SP_MANNER,dstsd->status.manner);
 		
 	// pvp circle for duel [LuzZza]
-	/*
-	if(dstsd->duel_group)
-		clif_specialeffect(&dstsd->bl, 159, 4);
-	*/
+	//if(dstsd->duel_group)
+	//	clif_specialeffect(&dstsd->bl, 159, 4);
 
 }
 void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
@@ -3590,7 +3590,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		return;
 
 	ud = unit_bl2ud(bl);
-	len = ( ud && ud->walktimer != -1 ) ? clif_set007b(bl,ud,buf) : clif_set0078(bl,buf);
+	len = ( ud && ud->walktimer != -1 ) ? clif_set_unit_walking(bl,ud,buf) : clif_set_unit_standing(bl,buf);
 	clif_send(buf,len,&sd->bl,SELF);
 
 	if (vd->cloth_color)
@@ -3610,8 +3610,9 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		break;
 	case BL_NPC:
 		{
-			if(((TBL_NPC*)bl)->chat_id)
-				clif_dispchat((struct chat_data*)map_id2bl(((TBL_NPC*)bl)->chat_id),sd->fd);
+			TBL_NPC* nd = (TBL_NPC*)bl;
+			if( nd->chat_id )
+				clif_dispchat((struct chat_data*)map_id2bl(nd->chat_id),sd->fd);
 		}
 		break;
 	case BL_MOB:
