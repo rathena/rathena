@@ -92,9 +92,6 @@ const char* skill_get_desc( int id )
 }
 
 // out of bounds error checking [celest]
-// i: Skill ID, l: Skill Level, var: Value to return after checking
-// for values that don't require level just put a one (putting 0 will trigger return 0; instead
-// for values that might need to use a different function just skill_chk would suffice.
 static void skill_chk(int* id, int  lv)
 {
 	*id = skill_get_index(*id); // checks/adjusts id

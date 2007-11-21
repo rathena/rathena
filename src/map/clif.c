@@ -6526,7 +6526,7 @@ int clif_guild_skillinfo(struct map_session_data* sd)
 	if(g == NULL)
 		return 0;
 
-	WFIFOHEAD(fd, MAX_GUILDSKILL * 37 + 6);
+	WFIFOHEAD(fd, 6 + MAX_GUILDSKILL*37);
 	WFIFOW(fd,0) = 0x0162;
 	WFIFOW(fd,4) = g->skill_point;
 	for(i = 0, c = 0; i < MAX_GUILDSKILL; i++)
@@ -6534,18 +6534,19 @@ int clif_guild_skillinfo(struct map_session_data* sd)
 		if(g->skill[i].id > 0 && guild_check_skill_require(g, g->skill[i].id))
 		{
 			int id = g->skill[i].id;
-			WFIFOW(fd,c*37+ 6) = id; 
-			WFIFOW(fd,c*37+ 8) = skill_get_inf(id);
-			WFIFOW(fd,c*37+10) = 0;
-			WFIFOW(fd,c*37+12) = g->skill[i].lv;
-			WFIFOW(fd,c*37+14) = skill_get_sp(id, g->skill[i].lv);
-			WFIFOW(fd,c*37+16) = skill_get_range(id, g->skill[i].lv);
-			safestrncpy((char*)WFIFOP(fd,c*37+18), skill_get_name(id), NAME_LENGTH);
-			WFIFOB(fd,c*37+42)= (g->skill[i].lv < guild_skill_get_max(id) && sd == g->member[0].sd) ? 1 : 0;
+			int p = 6 + c*37;
+			WFIFOW(fd,p+0) = id; 
+			WFIFOW(fd,p+2) = skill_get_inf(id);
+			WFIFOW(fd,p+4) = 0;
+			WFIFOW(fd,p+6) = g->skill[i].lv;
+			WFIFOW(fd,p+8) = skill_get_sp(id, g->skill[i].lv);
+			WFIFOW(fd,p+10) = skill_get_range(id, g->skill[i].lv);
+			safestrncpy((char*)WFIFOP(fd,p+12), skill_get_name(id), NAME_LENGTH);
+			WFIFOB(fd,p+36)= (g->skill[i].lv < guild_skill_get_max(id) && sd == g->member[0].sd) ? 1 : 0;
 			c++;
 		}
 	}
-	WFIFOW(fd,2) = c*37 + 6;
+	WFIFOW(fd,2) = 6 + c*37;
 	WFIFOSET(fd,WFIFOW(fd,2));
 	return 0;
 }
@@ -7879,13 +7880,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_set0199(fd,3);
 
 	// info about nearby objects
-#ifdef CIRCULAR_AREA
-	// required as circular areas will not catch all objects in visible range.
+	// must use foreachinarea (CIRCULAR_AREA interferes with foreachinrange)
 	map_foreachinarea(clif_getareachar, sd->bl.m, sd->bl.x-AREA_SIZE, sd->bl.y-AREA_SIZE, sd->bl.x+AREA_SIZE, sd->bl.y+AREA_SIZE, BL_ALL, sd);
-#else
-	map_foreachinrange(clif_getareachar, &sd->bl, AREA_SIZE, BL_ALL, sd);
-#endif
-
 
 	// pet
 	if(sd->pd) {
