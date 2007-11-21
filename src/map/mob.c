@@ -207,7 +207,6 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	struct mob_data *md = aCalloc(1, sizeof(struct mob_data));
 	md->bl.id= npc_get_new_npc_id();
 	md->bl.type = BL_MOB;
-	md->bl.subtype = MONS;
 	md->bl.m = data->m;
 	md->bl.x = data->x;
 	md->bl.y = data->y;
@@ -889,9 +888,10 @@ static int mob_warpchase_sub(struct block_list *bl,va_list ap)
 	target_nd= va_arg(ap, struct npc_data**);
 	min_distance= va_arg(ap, int*);
 
-	if(bl->subtype != WARP)
-		return 0; //Not a warp
 	nd = (TBL_NPC*) bl;
+
+	if(nd->subtype != WARP)
+		return 0; //Not a warp
 
 	if(nd->u.warp.mapindex != map[target->m].index)
 		return 0; //Does not lead to the same map.

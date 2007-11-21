@@ -4180,7 +4180,7 @@ int status_get_guild_id(struct block_list *bl)
 			return ((TBL_HOM*)bl)->master->status.guild_id;
 		break;
 	case BL_NPC:
-	  	if (bl->subtype == SCRIPT)
+	  	if (((TBL_NPC*)bl)->subtype == SCRIPT)
 			return ((TBL_NPC*)bl)->u.scr.guild_id;
 		break;
 	case BL_SKILL:
@@ -4214,7 +4214,7 @@ int status_get_emblem_id(struct block_list *bl)
 			return ((TBL_HOM*)bl)->master->guild_emblem_id;
 		break;
 	case BL_NPC:
-		if (bl->subtype == SCRIPT && ((TBL_NPC*)bl)->u.scr.guild_id > 0) {
+		if (((TBL_NPC*)bl)->subtype == SCRIPT && ((TBL_NPC*)bl)->u.scr.guild_id > 0) {
 			struct guild *g = guild_search(((TBL_NPC*)bl)->u.scr.guild_id);
 			if (g)
 				return g->emblem_id;

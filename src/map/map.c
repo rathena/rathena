@@ -1955,7 +1955,7 @@ void map_removenpc(void)
 				clif_clearunit_area(&map[m].npc[i]->bl,2);
 				map_delblock(&map[m].npc[i]->bl);
 				idb_remove(id_db,map[m].npc[i]->bl.id);
-				if(map[m].npc[i]->bl.subtype==SCRIPT) {
+				if(map[m].npc[i]->subtype==SCRIPT) {
 					aFree(map[m].npc[i]->u.scr.script);
 					aFree(map[m].npc[i]->u.scr.label_list);
 				}

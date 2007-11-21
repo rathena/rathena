@@ -658,7 +658,7 @@
 
 10000,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0        ,GD_APPROVAL,Official Guild Approval
 10001,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0        ,GD_KAFRACONTRACT,Kafra Contract
-10002,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0        ,GD_GUARDRESEARCH,Guardian Research
+10002,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0        ,GD_GUARDIANRESEARCH,Guardian Research
 10003,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0        ,GD_GUARDUP,Strengthen Guardians
 10004,0,0,0,0,0,0,10,0,no,0,0x10,0,none,0       ,GD_EXTENSION,Guild Extension
 10005,0,0,0,0,0,0,1,0,no,0,0x10,0,none,0        ,GD_GLORYGUILD,Guild's Glory

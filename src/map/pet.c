@@ -395,7 +395,6 @@ int pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	pd->bl.y = pd->ud.to_y;
 	pd->bl.id = npc_get_new_npc_id();
 	pd->db = mob_db(pet->class_);
-	pd->bl.subtype = MONS;
 	pd->bl.type = BL_PET;
 	pd->msd = sd;
 	status_set_viewdata(&pd->bl, pet->class_);

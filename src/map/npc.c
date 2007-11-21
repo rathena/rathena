@@ -725,7 +725,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 			continue;
 		}
 
-		switch(map[m].npc[i]->bl.subtype) {
+		switch(map[m].npc[i]->subtype) {
 		case WARP:
 			xs=map[m].npc[i]->u.warp.xs;
 			ys=map[m].npc[i]->u.warp.ys;
@@ -746,7 +746,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 			ShowError("npc_touch_areanpc : some bug \n");
 		return 1;
 	}
-	switch(map[m].npc[i]->bl.subtype) {
+	switch(map[m].npc[i]->subtype) {
 		case WARP:
 			// hidden chars cannot use warps -- is it the same for scripts too?
 			if (sd->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) ||
@@ -785,7 +785,7 @@ int npc_touch_areanpc2(struct block_list* bl)
 		if (map[m].npc[i]->sc.option&OPTION_INVISIBLE)
 			continue;
 
-		if (map[m].npc[i]->bl.subtype!=WARP)
+		if (map[m].npc[i]->subtype!=WARP)
 			continue;
 	
 		xs=map[m].npc[i]->u.warp.xs;
@@ -840,7 +840,7 @@ int npc_check_areanpc(int flag, int m, int x, int y, int range)
 		if (map[m].npc[i]->sc.option&OPTION_INVISIBLE)
 			continue;
 
-		switch(map[m].npc[i]->bl.subtype)
+		switch(map[m].npc[i]->subtype)
 		{
 		case WARP:
 			if (!(flag&1))
@@ -949,7 +949,7 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 	if (nd->class_ < 0 || nd->sc.option&(OPTION_INVISIBLE|OPTION_HIDE))
 		return 1;
 
-	switch(nd->bl.subtype) {
+	switch(nd->subtype) {
 	case SHOP:
 		clif_npcbuysell(sd,nd->bl.id);
 		break;
@@ -1000,7 +1000,7 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 	if ((nd = npc_checknear(sd,map_id2bl(id))) == NULL)
 		return 1;
 	
-	if (nd->bl.subtype!=SHOP) {
+	if (nd->subtype!=SHOP) {
 		ShowError("no such shop npc : %d\n",id);
 		if (sd->npc_id == id)
 			sd->npc_id=0;
@@ -1052,7 +1052,7 @@ int npc_buylist(struct map_session_data* sd, int n, unsigned short* item_list)
 	if (nd->master_nd) //Script-based shops.
 		return npc_buylist_sub(sd,n,item_list,nd->master_nd);
 
-	if (nd->bl.subtype!=SHOP)
+	if (nd->subtype!=SHOP)
 		return 3;
 
 	for(i=0,w=0,z=0;i<n;i++) {
@@ -1228,7 +1228,7 @@ int npc_remove_map(struct npc_data* nd)
 		return 1; //Not assigned to a map.
   	m = nd->bl.m;
 	clif_clearunit_area(&nd->bl,2);
-	if (nd->bl.subtype == WARP)
+	if (nd->subtype == WARP)
 	{// Remove corresponding NPC CELLs
 		int j, xs, ys, x, y;
 		x = nd->bl.x;
@@ -1269,7 +1269,7 @@ static int npc_unload_dup_sub(DBKey key, void* data, va_list ap)
 	struct npc_data *nd = (struct npc_data *)data;
 	int src_id;
 
-	if(nd->bl.type!=BL_NPC || nd->bl.subtype != SCRIPT)
+	if(nd->bl.type!=BL_NPC || nd->subtype != SCRIPT)
 		return 0;
 
 	src_id=va_arg(ap,int);
@@ -1299,10 +1299,10 @@ int npc_unload(struct npc_data* nd)
 	npc_chat_finalize(nd); // deallocate npc PCRE data structures
 #endif
 
-	if( nd->bl.subtype == SHOP )
+	if( nd->subtype == SHOP )
 		aFree(nd->u.shop.shop_item);
 	else
-	if( nd->bl.subtype == SCRIPT )
+	if( nd->subtype == SCRIPT )
 	{
 		ev_db->foreach(ev_db,npc_unload_ev,nd->exname); //Clean up all events related.
 		if (nd->u.scr.timerid != -1) {
@@ -1508,7 +1508,7 @@ struct npc_data* npc_add_warp(short from_mapid, short from_x, short from_y, shor
 	nd->u.warp.xs = xs;
 	nd->u.warp.ys = xs;
 	nd->bl.type = BL_NPC;
-	nd->bl.subtype = WARP;
+	nd->subtype = WARP;
 	npc_setcells(nd);
 	map_addblock(&nd->bl);
 	status_set_viewdata(&nd->bl, nd->class_);
@@ -1568,7 +1568,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	nd->u.warp.ys = ys;
 	npc_warp++;
 	nd->bl.type = BL_NPC;
-	nd->bl.subtype = WARP;
+	nd->subtype = WARP;
 	npc_setcells(nd);
 	map_addblock(&nd->bl);
 	status_set_viewdata(&nd->bl, nd->class_);
@@ -1653,7 +1653,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 
 	++npc_shop;
 	nd->bl.type = BL_NPC;
-	nd->bl.subtype = SHOP;
+	nd->subtype = SHOP;
 	if( m >= 0 )
 	{// normal shop npc
 		nd->n = map_addnpc(m,nd);
@@ -1888,7 +1888,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 
 	++npc_script;
 	nd->bl.type = BL_NPC;
-	nd->bl.subtype = SCRIPT;
+	nd->subtype = SCRIPT;
 
 	if( m >= 0 )
 	{
@@ -1969,7 +1969,7 @@ void npc_setcells(struct npc_data* nd)
 	int m = nd->bl.m, x = nd->bl.x, y = nd->bl.y, xs, ys;
 	int i,j;
 
-	if (nd->bl.subtype == WARP) {
+	if (nd->subtype == WARP) {
 		xs = nd->u.warp.xs;
 		ys = nd->u.warp.ys;
 	} else {
@@ -2003,7 +2003,7 @@ void npc_unsetcells(struct npc_data* nd)
 	int m = nd->bl.m, x = nd->bl.x, y = nd->bl.y, xs, ys;
 	int i,j, x0, x1, y0, y1;
 
-	if (nd->bl.subtype == WARP) {
+	if (nd->subtype == WARP) {
 		xs = nd->u.warp.xs;
 		ys = nd->u.warp.ys;
 	} else {
@@ -2862,7 +2862,7 @@ int do_final_npc(void)
 static void npc_debug_warps_sub(struct npc_data* nd)
 {
 	int m;
-	if (nd->bl.type != BL_NPC || nd->bl.subtype != WARP || nd->bl.m < 0)
+	if (nd->bl.type != BL_NPC || nd->subtype != WARP || nd->bl.m < 0)
 		return;
 
 	m = map_mapindex2mapid(nd->u.warp.mapindex);
@@ -2952,7 +2952,7 @@ int do_init_npc(void)
 
 	npc_script++;
 	fake_nd->bl.type = BL_NPC;
-	fake_nd->bl.subtype = SCRIPT;
+	fake_nd->subtype = SCRIPT;
 
 	strdb_put(npcname_db, fake_nd->exname, fake_nd);
 	fake_nd->u.scr.timerid = -1;

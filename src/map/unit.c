@@ -1724,6 +1724,7 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 		}
 	} else if (bl->type == BL_HOM) {
 		struct homun_data *hd = (struct homun_data *) bl;
+		ud->canact_tick = ud->canmove_tick; //It appears HOM do reset the can-act tick.
 		if(!hd->homunculus.intimacy &&
 			!(hd->master && hd->master->state.waitingdisconnect)
 		) {	//If logging out, this is deleted on unit_free

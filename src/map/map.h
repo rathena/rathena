@@ -189,7 +189,7 @@ enum bl_type {
 #define BL_CHAR (BL_PC|BL_MOB|BL_HOM)
 #define BL_ALL 0xfff
 
-enum bl_subtype { WARP, SHOP, SCRIPT, MONS };
+enum npc_subtype { WARP, SHOP, SCRIPT };
 
 enum {
 	RC_FORMLESS=0,
@@ -233,7 +233,6 @@ struct block_list {
 	int id;
 	short m,x,y;
 	enum bl_type type;
-	enum bl_subtype subtype;
 };
 
 struct walkpath_data {
@@ -824,6 +823,7 @@ struct npc_data {
 	struct unit_data  ud; //Because they need to be able to move....
 	struct view_data *vd;
 	struct status_change sc; //They can't have status changes, but.. they want the visual opt values.
+	struct npc_data *master_nd;
 	short n;
 	short class_;
 	short speed;
@@ -833,8 +833,7 @@ struct npc_data {
 	unsigned int next_walktime;
 
 	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
-	struct npc_data *master_nd;
-
+	enum npc_subtype subtype;
 	union {
 		struct {
 			struct script_code *script;

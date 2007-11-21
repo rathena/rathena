@@ -608,7 +608,6 @@ int merc_hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 		return 1;
 	}
 	sd->hd = hd = aCalloc(1,sizeof(struct homun_data));
-	hd->bl.subtype = MONS;
 	hd->bl.type = BL_HOM;
 	hd->bl.id = npc_get_new_npc_id();
 
@@ -643,7 +642,6 @@ void merc_hom_init_timers(struct homun_data * hd)
 {
 	if (hd->hungry_timer == -1)
 		hd->hungry_timer = add_timer(gettick()+hd->homunculusDB->hungryDelay,merc_hom_hungry,hd->master->bl.id,0);
-	hd->ud.canact_tick = 0; //Reset can-act delay
 	hd->regen.state.block = 0; //Restore HP/SP block.
 }
 

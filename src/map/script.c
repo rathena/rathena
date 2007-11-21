@@ -11691,7 +11691,7 @@ BUILDIN_FUNC(callshop)
 	if( script_hasdata(st,3) )
 		flag = script_getnum(st,3);
 	nd = npc_name2id(shopname);
-	if (!nd || nd->bl.type!=BL_NPC || nd->bl.subtype!=SHOP) {
+	if (!nd || nd->bl.type!=BL_NPC || nd->subtype!=SHOP) {
 		ShowError("buildin_callshop: Shop [%s] not found (or NPC is not shop type)\n", shopname);
 		script_pushint(st,0);
 		return 1;
@@ -11720,7 +11720,7 @@ BUILDIN_FUNC(npcshopitem)
 	int n, i;
 	int amount;
 
-	if( !nd || nd->bl.subtype != SHOP )
+	if( !nd || nd->subtype != SHOP )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
@@ -11749,7 +11749,7 @@ BUILDIN_FUNC(npcshopadditem)
 	int n, i;
 	int amount;
 
-	if( !nd || nd->bl.subtype != SHOP )
+	if( !nd || nd->subtype != SHOP )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
@@ -11778,7 +11778,7 @@ BUILDIN_FUNC(npcshopdelitem)
 	int amount;
 	int size;
 
-	if( !nd || nd->bl.subtype != SHOP )
+	if( !nd || nd->subtype != SHOP )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
@@ -11815,7 +11815,7 @@ BUILDIN_FUNC(npcshopattach)
 	if( script_hasdata(st,3) )
 		flag = script_getnum(st,3);
 
-	if( !nd || nd->bl.subtype != SHOP )
+	if( !nd || nd->subtype != SHOP )
 	{	//Not found.
 		script_pushint(st,0);
 		return 0;
@@ -12708,7 +12708,7 @@ BUILDIN_FUNC(getvariableofnpc)
 	}
 
 	nd = npc_name2id(script_getstr(st,3));
-	if( nd == NULL || nd->bl.subtype != SCRIPT || nd->u.scr.script == NULL )
+	if( nd == NULL || nd->subtype != SCRIPT || nd->u.scr.script == NULL )
 	{// NPC not found or has no script
 		ShowError("script:getvariableofnpc: can't find npc %s\n", script_getstr(st,3));
 		script_pushnil(st);

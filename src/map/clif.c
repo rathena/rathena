@@ -1074,7 +1074,6 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
  *------------------------------------------*/
 static int clif_set_unit_spawned(struct block_list* bl, unsigned char* buf)
 {
-	struct status_change* sc = status_get_sc(bl);
 	struct view_data* vd = status_get_viewdata(bl);
 
 	if( pcdb_checkid(vd->class_) )
@@ -3583,7 +3582,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 	uint8 buf[128];
 	struct unit_data *ud;
 	struct view_data *vd;
-	int len, fd = sd->fd;
+	int len;
 	
 	vd = status_get_viewdata(bl);
 	if (!vd || vd->class_ == INVISIBLE_CLASS)
