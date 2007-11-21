@@ -3329,8 +3329,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			sc_start2(bl,type,100,skilllv,skillid,skill_get_time(skillid,skilllv)));
 		break;
 	case HLIF_AVOID:
-		if (hd)
-			skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv));
 	case HAMI_DEFENCE:
 		i = skill_get_time(skillid,skilllv);
 		clif_skill_nodamage(bl,bl,skillid,skilllv,sc_start(bl,type,100,skilllv,i)); // Master
