@@ -20,14 +20,21 @@ else
 endif
 
 #####################################################################
-.PHONY: txt sql common common_sql login login_sql char char_sql map map_sql \
-	ladmin tools converters plugins addons import save clean help depend
+.PHONY: txt sql conf \
+	common common_sql \
+	login login_sql \
+	char char_sql \
+	map map_sql \
+	ladmin tools converters plugins addons import save \
+	clean help
 
 all: $(ALL_DEPENDS)
 
 txt: common login char map import save
 
 sql: $(SQL_DEPENDS)
+
+conf: import save
 
 common:
 	@$(MAKE) -C src/common txt
@@ -96,7 +103,7 @@ clean:
 	@$(MAKE) -C src/txt-converter $@
 
 help:
-	@echo "most common targets are 'all' 'txt' 'sql' 'clean' 'help'"
+	@echo "most common targets are 'all' 'txt' 'sql' 'conf' 'clean' 'help'"
 	@echo "possible targets are:"
 	@echo "'common'      - builds object files used in TXT servers"
 	@echo "'common_sql'  - builds object files used in SQL servers"
@@ -118,6 +125,7 @@ help:
 	@echo "                'import' and 'save')"
 	@echo "'sql'         - builds sql servers (targets 'common_sql' 'login_sql' 'char_sql'"
 	@echo "                'map_sql' 'import' and 'save')"
+	@echo "'conf'        - builds templated folders/files (targets 'import' and 'save')"
 	@echo "'clean'       - cleans builds and objects"
 	@echo "'help'        - outputs this message"
 

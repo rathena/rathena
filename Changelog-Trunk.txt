@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/11/21
+	* Added backward compatible target 'conf' to the Makefile. [FlavioJS]
 	* Changed Lif's Emergency Avoid to just get a normal skill delay
 	  (blocks all skills, cancelled by mapchange / re-summon) instead of
 	  getting a persistent block on only this one skill (bugreport:13)
