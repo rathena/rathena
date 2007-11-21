@@ -145,7 +145,9 @@ int Sql_GetColumnNames(Sql* self, const char* table, char* out_buf, size_t buf_l
 /// Changes the encoding of the connection.
 int Sql_SetEncoding(Sql* self, const char* encoding)
 {
-	return Sql_Query(self, "SET NAMES %s", encoding);
+	if( self && mysql_set_character_set(self->handle, encoding) )
+		return SQL_SUCCESS;
+	return SQL_ERROR;
 }
 
 
@@ -155,7 +157,7 @@ int Sql_Ping(Sql* self)
 {
 	if( self && mysql_ping(&self->handle) == 0 )
 		return SQL_SUCCESS;
-	return  SQL_ERROR;
+	return SQL_ERROR;
 }
 
 
