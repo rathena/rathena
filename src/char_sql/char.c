@@ -769,7 +769,7 @@ int memitemdata_to_sql(const struct item items[], int max, int id, int tableswit
 						tablename, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute);
 					for( j = 0; j < MAX_SLOTS; ++j )
 						StringBuf_Printf(&buf, ", `card%d`=%d", j, items[i].card[j]);
-					StringBuf_Printf(&buf, ", `amount`='%d' WHERE `id`='%d' LIMIT 1", items[i].amount, item.id);
+					StringBuf_Printf(&buf, " WHERE `id`='%d' LIMIT 1", item.id);
 					
 					if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
 						Sql_ShowDebug(sql_handle);
