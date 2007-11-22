@@ -1876,8 +1876,8 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	if(first){
 		add_buildin_func();
 		read_constdb();
+		first=0;
 	}
-	first=0;
 
 	script_buf=(unsigned char *)aMalloc(SCRIPT_BLOCK_SIZE*sizeof(unsigned char));
 	script_pos=0;
@@ -1885,16 +1885,6 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	str_data[LABEL_NEXTLINE].type=C_NOP;
 	str_data[LABEL_NEXTLINE].backpatch=-1;
 	str_data[LABEL_NEXTLINE].label=-1;
-	for(i=LABEL_START;i<str_num;i++){
-		if(
-			str_data[i].type==C_POS || str_data[i].type==C_NAME ||
-			str_data[i].type==C_USERFUNC || str_data[i].type == C_USERFUNC_POS
-		){
-			str_data[i].type=C_NOP;
-			str_data[i].backpatch=-1;
-			str_data[i].label=-1;
-		}
-	}
 
 	// who called parse_script is responsible for clearing the database after using it, but just in case... lets clear it here
 	if( options&SCRIPT_USE_LABEL_DB )
@@ -1950,6 +1940,18 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 		end = '}';
 	}
 
+	// clear references of labels, variables and internal functions
+	for(i=LABEL_START;i<str_num;i++){
+		if(
+			str_data[i].type==C_POS || str_data[i].type==C_NAME ||
+			str_data[i].type==C_USERFUNC || str_data[i].type == C_USERFUNC_POS
+		){
+			str_data[i].type=C_NOP;
+			str_data[i].backpatch=-1;
+			str_data[i].label=-1;
+		}
+	}
+
 	while( syntax.curly_count != 0 || *p != end )
 	{
 		if( *p == '\0' )
@@ -1979,10 +1981,11 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 
 	add_scriptc(C_NOP);
 
+	// trim code to size
 	script_size = script_pos;
 	RECREATE(script_buf,unsigned char,script_pos);
 
-	// –¢‰ðŒˆ‚Ìƒ‰ƒxƒ‹‚ð‰ðŒˆ
+	// default unknown references to variables
 	for(i=LABEL_START;i<str_num;i++){
 		if(str_data[i].type==C_NOP){
 			int j,next;
