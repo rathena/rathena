@@ -1,5 +1,9 @@
 Date		Added
 ======
+2007/11/22
+	* Fixed Missing Variables in Metto quest. (bugreport:473) [Samuray22]
+	* Deleted some unused Variables in Bio Ethics quest.
+	* Changed some bad RGB Codes in THQ. (bugreport:211)
 2007/11/17
 	* Rev. 11777 Fixed conf files for jmonster and eamonsters. (bugreport:432) [L0ne_W0lf]
 2007/11/17

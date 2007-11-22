@@ -21,6 +21,7 @@
 //= 1.0 - Straight conversionof Aegis NPC file
 //= 1.1 Added time penalty to prevent get quests to often [Lupus]
 //= 1.2 Fixed not working penalty, added anti-cheat [Lupus]
+//= 1.3 Changed some bad RGB Codes. (bugreport:211) [Samuray22]
 //============================================================
 
 
@@ -434,8 +435,8 @@ N_JobList8:
 	mes "Ok you have a couple quests that can be done here.";
 	next;
 	menu "Banana Juice",-,"Another Delivery",N_Delivery4,"My lost beeds",N_LostBeeds,"^FF0000Baphomet!^000000",N_Bapho;
-	mes "^FF0000Banana Juice^FF0000";
-	mes "^FF0000------------^FF0000";
+	mes "^FF0000Banana Juice^000000";
+	mes "^FF0000------------^000000";
 	mes "Sound gross to some good to others.";
 	mes " ";
 	mes "There is a little girl up in prontera Square a bit north from the fountain, go talk to her.";
@@ -443,8 +444,8 @@ N_JobList8:
 	goto L_QuestGiven;
 
 N_Delivery4:
-	mes "^FF0000Another Delivery^FF0000";
-	mes "^FF0000----------------^FF0000";
+	mes "^FF0000Another Delivery^000000";
+	mes "^FF0000----------------^000000";
 	mes "Well yah box delivering is in high demand,lots of lazy people.";
 	mes " ";
 	mes "Take this package to a man in Morroc named Klye.";
@@ -453,8 +454,8 @@ N_Delivery4:
 	goto L_QuestGiven;
 
 N_Bapho:
-	mes "^FF0000Baphomet!^FF0000";
-	mes "^FF0000*********^FF0000";
+	mes "^FF0000Baphomet!^000000";
+	mes "^FF0000*********^000000";
 	mes "Hidden in the Temple he watches and guards.";
 	mes " ";
 	mes "Rumor has it that a Goat Man is lurking in the Hidden Temple, There is also a man in the Hidden Temple names Zack that needs you help with this Goat Man known as Baphomet.";
@@ -462,8 +463,8 @@ N_Bapho:
 	goto L_QuestGiven;
 
 N_LostBeeds:
-	mes "^FF0000My lost Beeds^FF0000";
-	mes "^FF0000-------------^FF0000";
+	mes "^FF0000My lost Beeds^000000";
+	mes "^FF0000-------------^000000";
 	mes "Oh great I smell stupidity...";
 	mes " ";
 	mes "A little girl in Payon wants to talk to you, her name is Flower, What a stupid name,Hahaha.";
@@ -476,8 +477,8 @@ N_JobList9:
 	mes "Ok you have a couple quests that can be done here.";
 	next;
 	menu "Smelly Box",-,"Payon Cave",N_PayonC,"^FF0000Sohee's Everywere!^000000",N_Sohee,"^FF0000Moonlight Flower^000000",N_Moonlight;
-	mes "^FF0000Smelly Box^FF0000";
-	mes "^FF0000----------^FF0000";
+	mes "^FF0000Smelly Box^000000";
+	mes "^FF0000----------^000000";
 	mes "Oh god please get this out of here fast.";
 	mes " ";
 	mes "Oh man smells like someone died in here.Take this to the Magic School in Geffen and hurry,ahh the smell its burning my eye's!!!";
@@ -486,8 +487,8 @@ N_JobList9:
 	goto L_QuestGiven;
 
 N_Sohee:
-	mes "^FF0000Sohee's Everywere!^FF0000";
-	mes "^FF0000******************^FF0000" ;
+	mes "^FF0000Sohee's Everywere!^000000";
+	mes "^FF0000******************^000000" ;
 	mes "Hmmm seem's a man named Jack wants to speak to you in the Archer Guild House.";
 	mes " ";
 	mes "Well what we know about Payon is that a while ago there was a freak fire that burnt down the old school.";
@@ -498,8 +499,8 @@ N_Sohee:
 	goto L_QuestGiven;
 
 N_Moonlight:
-	mes "^FF0000Moonlight Flower^FF0000";
-	mes "^FF0000****************^FF0000" ;
+	mes "^FF0000Moonlight Flower^000000";
+	mes "^FF0000****************^000000" ;
 	mes "Hmmm seem's a man named Jack wants to speak to you in the Archer Guild House.";
 	mes " ";
 	mes "Well I don't know much about this, it has to do with the deepest reagions of Payon Cave, We don't know much because no one ever seems to make it back alive.";
@@ -507,8 +508,8 @@ N_Moonlight:
 	goto L_QuestGiven;
 
 N_PayonC:
-	mes "^FF0000Payon Cave^FF0000";
-	mes "^FF0000----------^FF0000" ;
+	mes "^FF0000Payon Cave^000000";
+	mes "^FF0000----------^000000" ;
 	mes "Hmmm seem's a man named Jack wants to speak to you in the Archer Guild House.";
 	mes " ";
 	mes "The farther we go into the cave the stranger it gets.";
@@ -522,8 +523,8 @@ N_JobList10:
 	next;
 	menu "The Blank Box",-,"^FF0000Eddga^000000",N_Eddga,"^FF0000Phreeoni^000000",N_Phreeoni,"^FF0000Maya^000000",N_Maya;
 
-	mes "^FF0000The Blank Box^FF0000";
-	mes "^FF0000-------------^FF0000";
+	mes "^FF0000The Blank Box^000000";
+	mes "^FF0000-------------^000000";
 	mes "Package to Morroc";
 	mes " ";
 	mes "There is nothing writen on this box but a notice to deliver it to a man Kreg.";
@@ -532,8 +533,8 @@ N_JobList10:
 	goto L_QuestGiven;
 
 N_Eddga:
-	mes "^FF0000Eddga^FF0000";
-	mes "^FF0000*****^FF0000";
+	mes "^FF0000Eddga^000000";
+	mes "^FF0000*****^000000";
 	mes "Tony the Tiger is on crack and destroying the forest.";
 	mes " ";
 	mes "Talk to a man outside the 'Hidden' Hunter Guild, He needs your help.";
@@ -541,8 +542,8 @@ N_Eddga:
 	goto L_QuestGiven;
 
 N_Phreeoni:
-	mes "^FF0000Phreeoni^FF0000";
-	mes "^FF0000********^FF0000";
+	mes "^FF0000Phreeoni^000000";
+	mes "^FF0000********^000000";
 	mes "He is big and Pink and you run and hide!";
 	mes " ";
 	mes "This guy just poped into some hole one day, He dosent look that tough but you would be supprised. Talk to a man named Caral outside of Ant Hell.";
@@ -550,8 +551,8 @@ N_Phreeoni:
 	goto L_QuestGiven;
 
 N_Maya:
-	mes "^FF0000Maya^FF0000";
-	mes "^FF0000****^FF0000";
+	mes "^FF0000Maya^000000";
+	mes "^FF0000****^000000";
 	mes "Something scary!";
 	mes " ";
 	mes "This half naked freak need an army to take down, now its your job, good luck. Meet a girl named Jeni outside of the back entrance to Ant Hell.";

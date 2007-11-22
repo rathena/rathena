@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Dev Team; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.8
+//= 1.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -30,6 +30,7 @@
 //= 1.6 Fixed various errors in the Bajin NPC. [L0ne_W0lf]
 //= 1.7 Changed ALCH_Q check and set to corrispond to new alchemist job quest. [L0ne_W0lf]
 //= 1.8 Fixed metto_q never reaching 2. Made some names more unique. [L0ne_W0lf]
+//= 1.9 Fixed Missing Variables in Metto quest. (bugreport:473) [Samuray22]
 //============================================================ 
 
 // Metto Quest
@@ -55,6 +56,7 @@ yuno_in03,26,39,3	script	Metto#juno	709,{
 		close;
 	}
 	else if (metto_q == 3) {
+		set metto_q,4;
 		mes "What? That punk Stangckle said he doesn't want to help me?! This is not good. This will slow my research considerably.";
 		next;
 		mes "[Metto]";
@@ -76,6 +78,7 @@ yuno_in03,26,39,3	script	Metto#juno	709,{
 		close;
 	}
 	else if (metto_q == 5) {
+		set metto_q,6;
 		mes "What? You mean to tell me that the very thing I need to continue my research, the mighty Great Z, has been destroyed?!!";
 		next;
 		mes "[Metto]";
@@ -345,47 +348,7 @@ yuno_in01,19,183,5	script	Kato#juno	55,{
 		mes "Um... Hey.";
 		close;
 	}
-	else if (metto_q == 5) {
-		mes "I am interested in researching artificial intelligence. You know, like robots.";
-		next;
-		mes "[Kato]";
-		mes "I know it a very difficult feat to accomplish, but where there's a will, there's a way.";
-		next;
-		mes "[Kato]";
-		mes "If you ever see something really amazing like this, you'll know its my handiwork.";
-		close;
-	}
-	else if (metto_q == 6) {
-		mes "I am interested in researching artificial intelligence. You know, like robots.";
-		next;
-		mes "[Kato]";
-		mes "I know it a very difficult feat to accomplish, but where there's a will, there's a way.";
-		next;
-		mes "[Kato]";
-		mes "If you ever see something really amazing like this, you'll know its my handiwork.";
-		close;
-	}
-	else if (metto_q == 7) {
-		mes "I am interested in researching artificial intelligence. You know, like robots.";
-		next;
-		mes "[Kato]";
-		mes "I know it a very difficult feat to accomplish, but where there's a will, there's a way.";
-		next;
-		mes "[Kato]";
-		mes "If you ever see something really amazing like this, you'll know its my handiwork.";
-		close;
-	}
-	else if (metto_q == 8) {
-		mes "I am interested in researching artificial intelligence. You know, like robots.";
-		next;
-		mes "[Kato]";
-		mes "I know it a very difficult feat to accomplish, but where there's a will, there's a way.";
-		next;
-		mes "[Kato]";
-		mes "If you ever see something really amazing like this, you'll know its my handiwork.";
-		close;
-	}
-	else if (metto_q == 9) {
+	else if (metto_q == 6 || metto_q == 7 || metto_q == 8 || metto_q == 9) {
 		mes "I am interested in researching artificial intelligence. You know, like robots.";
 		next;
 		mes "[Kato]";
