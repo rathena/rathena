@@ -7180,8 +7180,8 @@ int clif_refresh(struct map_session_data *sd)
 		clif_cartlist(sd);
 		clif_updatestatus(sd,SP_CARTINFO);
 	}
-	clif_updatestatus(sd,SP_MAXWEIGHT);
 	clif_updatestatus(sd,SP_WEIGHT);
+	clif_updatestatus(sd,SP_MAXWEIGHT);
 	clif_updatestatus(sd,SP_STR);
 	clif_updatestatus(sd,SP_AGI);
 	clif_updatestatus(sd,SP_VIT);
@@ -7772,9 +7772,18 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 	session[fd]->session_data = sd;
 
 	pc_setnewpc(sd, account_id, char_id, login_id1, client_tick, sex, fd);
+
+#if PACKETVER < 8
 	WFIFOHEAD(fd,4);
 	WFIFOL(fd,0) = sd->bl.id;
 	WFIFOSET(fd,4);
+#else
+	WFIFOHEAD(fd,packet_len(0x283));
+	WFIFOW(fd,0) = 0x283;
+	WFIFOL(fd,2) = sd->bl.id;
+	WFIFOSET(fd,packet_len(0x283));
+#endif
+
 	chrif_authreq(sd);
 	return;
 }
@@ -7823,9 +7832,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_updatestatus(sd,SP_CARTINFO);
 	}
 
-	// weight max, now
-	clif_updatestatus(sd,SP_MAXWEIGHT);
+	// weight
 	clif_updatestatus(sd,SP_WEIGHT);
+	clif_updatestatus(sd,SP_MAXWEIGHT);
 
 	// guild
 	// (needs to go before clif_spawn() to show guild emblems correctly)
@@ -11847,7 +11856,7 @@ static int packetdb_readdb(void)
 	    6,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  8,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0280
-	    0,  0,  0,  0,  0,  0,  0,  0,   0,  8, 18,  0,  0,  0,  0,  0,
+	    0,  0,  0,  6,  0,  0,  0,  0,   0,  8, 18,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,191,  0,  0,  0,  0,  0,  0,
