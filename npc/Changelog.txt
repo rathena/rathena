@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/11/17
+	* Rev. 11777 Fixed conf files for jmonster and eamonsters. (bugreport:432) [L0ne_W0lf]
+2007/11/17
 	* Rev. 11747 Fixed turbo track NPCs that caused "NPC not removed" [L0ne_W0lf]
 	- errors...Even though this bug is slightly official. XD
 2007/11/16
