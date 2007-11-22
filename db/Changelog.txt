@@ -38,6 +38,8 @@
 
 =======================
 11/22
+	* Rev. 11784 Added slots to Cross Shield and Book of Charms (bugreport:429) [L0ne_W0lf]
+	- Fixed the brynhildr item script. (bugreport:429)
 	* Rev. 11778 Guard effect when auto-casted by Clock Card will now cancel on armor swap. [L0ne_W0lf]
 11/17
 	* Heat now only does 10 hits a second [Playtester]
