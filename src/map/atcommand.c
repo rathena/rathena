@@ -4950,7 +4950,7 @@ int atcommand_jail(const int fd, struct map_session_data* sd, const char* comman
 		return -1;
 	}
 
-	if (pl_sd->sc.data[SC_JAILED].timer != -1)
+	if (pl_sd->sc.data[SC_JAILED])
 	{
 		clif_displaymessage(fd, msg_txt(118)); // Player warped in jails.
 		return -1;
@@ -5002,7 +5002,7 @@ int atcommand_unjail(const int fd, struct map_session_data* sd, const char* comm
 		return -1;
 	}
 
-	if (pl_sd->sc.data[SC_JAILED].timer == -1)
+	if (!pl_sd->sc.data[SC_JAILED])
 	{
 		clif_displaymessage(fd, msg_txt(119)); // This player is not in jails.
 		return -1;
@@ -5086,10 +5086,10 @@ int atcommand_jailfor(const int fd, struct map_session_data* sd, const char* com
 	}
 
 	//Added by Coltaro
-	if (pl_sd->sc.count && pl_sd->sc.data[SC_JAILED].timer != -1 && 
-		pl_sd->sc.data[SC_JAILED].val1 != INT_MAX)
+	if(pl_sd->sc.data[SC_JAILED] && 
+		pl_sd->sc.data[SC_JAILED]->val1 != INT_MAX)
   	{	//Update the player's jail time
-		jailtime += pl_sd->sc.data[SC_JAILED].val1;
+		jailtime += pl_sd->sc.data[SC_JAILED]->val1;
 		if (jailtime <= 0) {
 			jailtime = 0;
 			clif_displaymessage(pl_sd->fd, msg_txt(120)); // GM has discharge you.
@@ -5131,23 +5131,23 @@ int atcommand_jailtime(const int fd, struct map_session_data* sd, const char* co
 
 	nullpo_retr(-1, sd);
 	
-	if (!sd->sc.count || sd->sc.data[SC_JAILED].timer == -1) {
+	if (!sd->sc.data[SC_JAILED]) {
 		clif_displaymessage(fd, "You are not in jail."); // You are not in jail.
 		return -1;
 	}
 
-	if (sd->sc.data[SC_JAILED].val1 == INT_MAX) {
+	if (sd->sc.data[SC_JAILED]->val1 == INT_MAX) {
 		clif_displaymessage(fd, "You have been jailed indefinitely.");
 		return 0;
 	}
 
-	if (sd->sc.data[SC_JAILED].val1 <= 0) { // Was not jailed with @jailfor (maybe @jail? or warped there? or got recalled?)
+	if (sd->sc.data[SC_JAILED]->val1 <= 0) { // Was not jailed with @jailfor (maybe @jail? or warped there? or got recalled?)
 		clif_displaymessage(fd, "You have been jailed for an unknown amount of time.");
 		return -1;
 	}
 
 	//Get remaining jail time
-	get_jail_time(sd->sc.data[SC_JAILED].val1,&year,&month,&day,&hour,&minute);
+	get_jail_time(sd->sc.data[SC_JAILED]->val1,&year,&month,&day,&hour,&minute);
 	sprintf(atcmd_output,msg_txt(402),"You will remain",year,month,day,hour,minute); // You will remain in jail for %d years, %d months, %d days, %d hours and %d minutes
 
 	clif_displaymessage(fd, atcmd_output);
@@ -6366,8 +6366,8 @@ int atcommand_npctalk(const int fd, struct map_session_data* sd, const char* com
 	struct npc_data *nd;
 
 	if (sd->sc.count && //no "chatting" while muted.
-		(sd->sc.data[SC_BERSERK].timer!=-1 ||
-		(sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)))
+		(sd->sc.data[SC_BERSERK] ||
+		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT)))
 		return -1;
 
 	if (!message || !*message || sscanf(message, "%23[^,], %99[^\n]", name, mes) < 2) {
@@ -6407,8 +6407,8 @@ int atcommand_pettalk(const int fd, struct map_session_data* sd, const char* com
 	}
 
 	if (sd->sc.count && //no "chatting" while muted.
-		(sd->sc.data[SC_BERSERK].timer!=-1 ||
-		(sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)))
+		(sd->sc.data[SC_BERSERK] ||
+		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT)))
 		return -1;
 
 	if (!message || !*message || sscanf(message, "%99[^\n]", mes) < 1) {
@@ -6670,7 +6670,7 @@ int atcommand_unmute(const int fd, struct map_session_data* sd, const char* comm
 		return -1;
 	}
 
-	if(pl_sd->sc.data[SC_NOCHAT].timer == -1) {
+	if(!pl_sd->sc.data[SC_NOCHAT]) {
 		clif_displaymessage(sd->fd,"Player is not muted");
 		return -1;
 	}
@@ -7175,8 +7175,8 @@ int atcommand_homtalk(const int fd, struct map_session_data* sd, const char* com
 	nullpo_retr(-1, sd);
 
 	if (sd->sc.count && //no "chatting" while muted.
-		(sd->sc.data[SC_BERSERK].timer!=-1 ||
-		(sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)))
+		(sd->sc.data[SC_BERSERK] ||
+		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT)))
 		return -1;
 
 	if ( !merc_is_hom_active(sd->hd) ) {
@@ -7564,7 +7564,7 @@ static int atcommand_mutearea_sub(struct block_list *bl,va_list ap)
 		pl_sd->status.manner -= time;
 		if (pl_sd->status.manner < 0)
 			sc_start(&pl_sd->bl,SC_NOCHAT,100,0,0);
-		else if (pl_sd->sc.count && pl_sd->sc.data[SC_NOCHAT].timer != -1)
+		else if (pl_sd->sc.data[SC_NOCHAT])
 			status_change_end(&pl_sd->bl, SC_NOCHAT, -1);
 	}
 	return 0;
@@ -7617,8 +7617,8 @@ int atcommand_me(const int fd, struct map_session_data* sd, const char* command,
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (sd->sc.count && //no "chatting" while muted.
-		(sd->sc.data[SC_BERSERK].timer!=-1 ||
-		(sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT)))
+		(sd->sc.data[SC_BERSERK] ||
+		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT)))
 		return -1;
 
 	if (!message || !*message || sscanf(message, "%199[^\n]", tempmes) < 0) {
@@ -8025,7 +8025,7 @@ int atcommand_main(const int fd, struct map_session_data* sd, const char* comman
 				sd->state.mainchat = 1;
 				clif_displaymessage(fd, msg_txt(380)); // Main chat has been activated.
 			}
-			if (sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCHAT) {
+			if (sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCHAT) {
 				clif_displaymessage(fd, msg_txt(387));
 				return -1;
 			}
@@ -8474,7 +8474,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	if( !message || !*message )
 		return false; // shouldn't happen
 	
-	if( sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCOMMAND )
+	if( sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCOMMAND )
 		return true; // so that it won't display as normal message
 	
 	if( battle_config.atc_gmonly != 0 && gmlvl == 0 )

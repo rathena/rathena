@@ -272,10 +272,10 @@ enum sc_type {
 	SC_MAGICMIRROR,
 	SC_SLOWCAST,
 	SC_SUMMER,
-	SC_EXPBOOST, // Field Guide
-	SC_ITEMBOOST, // Bubble Gum
-	SC_BOSSMAPINFO, // Convex Mirror
-	SC_LIFEINSURANCE, // Life Insurance
+	SC_EXPBOOST,
+	SC_ITEMBOOST,
+	SC_BOSSMAPINFO, 
+	SC_LIFEINSURANCE, //260
 	SC_INCCRI,
 	SC_INCDEF,
 	SC_INCBASEATK,
@@ -692,5 +692,6 @@ int status_check_visibility(struct block_list *src, struct block_list *target); 
 
 int status_readdb(void);
 int do_init_status(void);
+void do_final_status(void);
 
 #endif /* _STATUS_H_ */

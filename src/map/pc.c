@@ -339,7 +339,7 @@ int pc_makesavestatus(struct map_session_data *sd)
 	//status change load/saving. [Skotlex]
 	sd->status.option = sd->sc.option&(OPTION_CART|OPTION_FALCON|OPTION_RIDING);
 		
-	if (sd->sc.count && sd->sc.data[SC_JAILED].timer != -1)
+	if (sd->sc.data[SC_JAILED])
 	{	//When Jailed, do not move last point.
 		if(pc_isdead(sd)){
 			pc_setrestartvalue(sd,0);
@@ -563,16 +563,16 @@ int pc_isequip(struct map_session_data *sd,int n)
 		return 0;
 	if (sd->sc.count) {
 			
-		if(item->equip & EQP_ARMS && item->type == IT_WEAPON && sd->sc.data[SC_STRIPWEAPON].timer != -1) // Also works with left-hand weapons [DracoRPG]
+		if(item->equip & EQP_ARMS && item->type == IT_WEAPON && sd->sc.data[SC_STRIPWEAPON]) // Also works with left-hand weapons [DracoRPG]
 			return 0;
-		if(item->equip & EQP_SHIELD && item->type == IT_ARMOR && sd->sc.data[SC_STRIPSHIELD].timer != -1)
+		if(item->equip & EQP_SHIELD && item->type == IT_ARMOR && sd->sc.data[SC_STRIPSHIELD])
 			return 0;
-		if(item->equip & EQP_ARMOR && sd->sc.data[SC_STRIPARMOR].timer != -1)
+		if(item->equip & EQP_ARMOR && sd->sc.data[SC_STRIPARMOR])
 			return 0;
-		if(item->equip & EQP_HELM && sd->sc.data[SC_STRIPHELM].timer != -1)
+		if(item->equip & EQP_HELM && sd->sc.data[SC_STRIPHELM])
 			return 0;
 
-		if (sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_SUPERNOVICE) {
+		if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_SUPERNOVICE) {
 			//Spirit of Super Novice equip bonuses. [Skotlex]
 			if (sd->status.base_level > 90 && item->equip & EQP_HELM)
 				return 1; //Can equip all helms
@@ -964,7 +964,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 			sd->status.skill[i].lv=(sd->status.skill[i].flag==1)?0:sd->status.skill[i].flag-2;
 			sd->status.skill[i].flag=0;
 		}
-		if(sd->sc.count && sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_BARDDANCER && i >= DC_HUMMING && i<= DC_SERVICEFORYOU)
+		if(sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER && i >= DC_HUMMING && i<= DC_SERVICEFORYOU)
 		{ //Enable Bard/Dancer spirit linked skills.
 			if (sd->status.sex) { //Link dancer skills to bard.
 				sd->status.skill[i].id=i;
@@ -1024,7 +1024,7 @@ int pc_calc_skilltree(struct map_session_data *sd)
 				if(!sd->status.skill[id].lv && (
 					(inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn) ||
 					inf2&INF2_WEDDING_SKILL ||
-					(inf2&INF2_SPIRIT_SKILL && !(sd->sc.count && sd->sc.data[SC_SPIRIT].timer != -1))
+					(inf2&INF2_SPIRIT_SKILL && !sd->sc.data[SC_SPIRIT])
 				))
 					continue; //Cannot be learned via normal means. Note this check DOES allows raising already known skills.
 
@@ -1106,7 +1106,7 @@ static void pc_check_skilltree(struct map_session_data *sd, int skill)
 			if(!sd->status.skill[id].lv && (
 				(j&INF2_QUEST_SKILL && !battle_config.quest_skill_learn) ||
 				j&INF2_WEDDING_SKILL ||
-				(j&INF2_SPIRIT_SKILL && !(sd->sc.count && sd->sc.data[SC_SPIRIT].timer != -1))
+				(j&INF2_SPIRIT_SKILL && !sd->sc.data[SC_SPIRIT])
 			))
 				continue; //Cannot be learned via normal means.
 
@@ -1177,7 +1177,7 @@ int pc_updateweightstatus(struct map_session_data *sd)
 
 	nullpo_retr(1, sd);
 
-	old_overweight = (sd->sc.data[SC_WEIGHT90].timer != -1) ? 2 : (sd->sc.data[SC_WEIGHT50].timer != -1) ? 1 : 0;
+	old_overweight = (sd->sc.data[SC_WEIGHT90]) ? 2 : (sd->sc.data[SC_WEIGHT50]) ? 1 : 0;
 	new_overweight = (pc_is90overweight(sd)) ? 2 : (pc_is50overweight(sd)) ? 1 : 0;
 
 	if( old_overweight == new_overweight )
@@ -3092,12 +3092,12 @@ int pc_useitem(struct map_session_data *sd,int n)
 		return 0;
 
 	if (sd->sc.count && (
-		sd->sc.data[SC_BERSERK].timer!=-1 ||
-		sd->sc.data[SC_MARIONETTE].timer!=-1 ||
-		(sd->sc.data[SC_GRAVITATION].timer!=-1 && sd->sc.data[SC_GRAVITATION].val3 == BCT_SELF) ||
-		sd->sc.data[SC_TRICKDEAD].timer != -1 ||
-		sd->sc.data[SC_BLADESTOP].timer != -1 ||
-		(sd->sc.data[SC_NOCHAT].timer!=-1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOITEM)
+		sd->sc.data[SC_BERSERK] ||
+		sd->sc.data[SC_MARIONETTE] ||
+		(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF) ||
+		sd->sc.data[SC_TRICKDEAD] ||
+		sd->sc.data[SC_BLADESTOP] ||
+		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM)
 	))
 		return 0;
 
@@ -3123,7 +3123,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 		pc_famerank(MakeDWord(sd->status.inventory[n].card[2],sd->status.inventory[n].card[3]), MAPID_ALCHEMIST))
 	{
 	    potion_flag = 2; // Famous player's potions have 50% more efficiency
-		 if (sd->sc.data[SC_SPIRIT].timer != -1 && sd->sc.data[SC_SPIRIT].val2 == SL_ROGUE)
+		 if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ROGUE)
 			 potion_flag = 3; //Even more effective potions.
 	}
 
@@ -3399,7 +3399,7 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 		return 0;
 
 	md = (TBL_MOB*)target;
-	if(md->state.steal_coin_flag || md->sc.data[SC_STONE].timer != -1 || md->sc.data[SC_FREEZE].timer != -1)
+	if(md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE])
 		return 0;
 
 	if (md->class_>=1324 && md->class_<1364)
@@ -3439,19 +3439,21 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 	{	//Misc map-changing settings
 		if (sd->sc.count)
 		{ //Cancel some map related stuff.
-			if (sd->sc.data[SC_JAILED].timer != -1)
+			if (sd->sc.data[SC_JAILED])
 				return 1; //You may not get out!
-			if (sd->sc.data[SC_WARM].timer != -1)
+			if (sd->sc.data[SC_WARM])
 				status_change_end(&sd->bl,SC_WARM,-1);
-			if (sd->sc.data[SC_SUN_COMFORT].timer != -1)
+			if (sd->sc.data[SC_SUN_COMFORT])
 				status_change_end(&sd->bl,SC_SUN_COMFORT,-1);
-			if (sd->sc.data[SC_MOON_COMFORT].timer != -1)
+			if (sd->sc.data[SC_MOON_COMFORT])
 				status_change_end(&sd->bl,SC_MOON_COMFORT,-1);
-			if (sd->sc.data[SC_STAR_COMFORT].timer != -1)
+			if (sd->sc.data[SC_STAR_COMFORT])
 				status_change_end(&sd->bl,SC_STAR_COMFORT,-1);
-			if (sd->sc.data[SC_KNOWLEDGE].timer != -1) {
-				delete_timer(sd->sc.data[SC_KNOWLEDGE].timer, status_change_timer);
-				sd->sc.data[SC_KNOWLEDGE].timer = add_timer(gettick() + skill_get_time(SG_KNOWLEDGE, sd->sc.data[SC_KNOWLEDGE].val1), status_change_timer, sd->bl.id, SC_KNOWLEDGE);
+			if (sd->sc.data[SC_KNOWLEDGE]) {
+				struct status_change_entry *sce = sd->sc.data[SC_KNOWLEDGE];
+				if (sce->timer != -1)
+					delete_timer(sce->timer, status_change_timer);
+				sce->timer = add_timer(gettick() + skill_get_time(SG_KNOWLEDGE, sce->val1), status_change_timer, sd->bl.id, SC_KNOWLEDGE);
 			}
 		}
 		if (battle_config.clear_unit_onwarp&BL_PC)
@@ -3677,18 +3679,18 @@ int pc_checkallowskill(struct map_session_data *sd)
 	
 	for (i = 0; i < ARRAYLENGTH(scw_list); i++)
 	{	// Skills requiring specific weapon types
-		if(sd->sc.data[scw_list[i]].timer!=-1 &&
+		if(sd->sc.data[scw_list[i]] &&
 			!pc_check_weapontype(sd,skill_get_weapontype(StatusSkillChangeTable[scw_list[i]])))
 			status_change_end(&sd->bl,scw_list[i],-1);
 	}
 	
-	if(sd->sc.data[SC_SPURT].timer!=-1 && sd->status.weapon)
+	if(sd->sc.data[SC_SPURT] && sd->status.weapon)
 		// Spurt requires bare hands (feet, in fact xD)
 		status_change_end(&sd->bl,SC_SPURT,-1);
 	
 	if(sd->status.shield <= 0) { // Skills requiring a shield
 		for (i = 0; i < ARRAYLENGTH(scs_list); i++)
-			if(sd->sc.data[scs_list[i]].timer!=-1)
+			if(sd->sc.data[scs_list[i]])
 				status_change_end(&sd->bl,scs_list[i],-1);
 	}
 	return 0;
@@ -4199,7 +4201,7 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 	//SG additional exp from Blessings [Komurka] - probably can be optimalized ^^;;
 	temp = status_get_class(src);
 	if(temp == sd->hate_mob[2] &&
-		(battle_config.allow_skill_without_day || is_day_of_star() || sd->sc.data[SC_MIRACLE].timer!=-1))
+		(battle_config.allow_skill_without_day || is_day_of_star() || sd->sc.data[SC_MIRACLE]))
 		bonus += 20*pc_checkskill(sd,SG_STAR_BLESS);
 	else
 	if(temp == sd->hate_mob[1] &&
@@ -4214,8 +4216,8 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 		(int)(status_get_lv(src) - sd->status.base_level) >= 20)
 		bonus += 15; // pk_mode additional exp if monster >20 levels [Valaris]	
 
-	if (sd->sc.data[SC_EXPBOOST].timer != -1)
-		bonus += sd->sc.data[SC_EXPBOOST].val1;
+	if (sd->sc.data[SC_EXPBOOST])
+		bonus += sd->sc.data[SC_EXPBOOST]->val1;
 
 	if (!bonus)
 	  	return;
@@ -5104,7 +5106,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if(battle_config.death_penalty_type && sd->state.snovice_dead_flag != 1
 		&& (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE	// only novices will receive no penalty
 		&& !map[sd->bl.m].flag.noexppenalty && !map_flag_gvg(sd->bl.m)
-		&& sd->sc.data[SC_BABY].timer == -1 && sd->sc.data[SC_LIFEINSURANCE].timer == -1)
+		&& !sd->sc.data[SC_BABY] && !sd->sc.data[SC_LIFEINSURANCE])
 	{
 		unsigned int base_penalty =0;
 		if (battle_config.death_penalty_base > 0) {
@@ -5228,16 +5230,17 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		return 1;
 	}
 
-	if (sd->sc.count && sd->sc.data[SC_KAIZEL].timer != -1)
+	if (sd->sc.data[SC_KAIZEL])
 	{
-		j = sd->sc.data[SC_KAIZEL].val1; //Kaizel Lv.
+		j = sd->sc.data[SC_KAIZEL]->val1; //Kaizel Lv.
+		i = sd->sc.data[SC_KAIZEL]->val2; //Revive %
 		pc_setstand(sd);
 		status_change_clear(&sd->bl,0);
 		clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,1,1);
 		if(sd->special_state.restart_full_recover)
 			status_percent_heal(&sd->bl, 100, 100);
 		else
-			status_percent_heal(&sd->bl, 10*j, 0);
+			status_percent_heal(&sd->bl, i, 0);
 		clif_resurrection(&sd->bl, 1);
 		if(battle_config.pc_invincible_time)
 			pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
@@ -5489,8 +5492,8 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 			hp = hp * bonus / 100;
 
 		// Recovery Potion
-		if( sd->sc.count && sd->sc.data[SC_INCHEALRATE].timer!=-1 )
-			hp += (int)(hp * sd->sc.data[SC_INCHEALRATE].val1/100.);
+		if( sd->sc.data[SC_INCHEALRATE] )
+			hp += (int)(hp * sd->sc.data[SC_INCHEALRATE]->val1/100.);
 	}
 	if(sp) {
 		bonus = 100 + (sd->battle_status.int_<<1)
@@ -5502,10 +5505,10 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 			sp = sp * bonus / 100;
 	}
 
-	if (sd->sc.count && sd->sc.data[SC_CRITICALWOUND].timer!=-1)
+	if (sd->sc.data[SC_CRITICALWOUND])
 	{
-		hp -= hp * sd->sc.data[SC_CRITICALWOUND].val2 / 100;
-		sp -= sp * sd->sc.data[SC_CRITICALWOUND].val2 / 100;
+		hp -= hp * sd->sc.data[SC_CRITICALWOUND]->val2 / 100;
+		sp -= sp * sd->sc.data[SC_CRITICALWOUND]->val2 / 100;
 	}
 
 	return status_heal(&sd->bl, hp, sp, 1);
@@ -5606,7 +5609,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		for(i = 0; i < MAX_SKILL_TREE && (id = skill_tree[class_][i].id) > 0; i++) {
 			//Remove status specific to your current tree skills.
 			id = SkillStatusChangeTable(id);
-			if (id > SC_COMMON_MAX && sd->sc.data[id].timer != -1)
+			if (id > SC_COMMON_MAX && sd->sc.data[id])
 				status_change_end(&sd->bl, id, -1);
 		}
 	}
@@ -6372,7 +6375,7 @@ int pc_equipitem(struct map_session_data *sd,int n,int req_pos)
 
 // -- moonsoul (if player is berserk then cannot equip)
 //
-	if(sd->sc.count && sd->sc.data[SC_BERSERK].timer!=-1){
+	if(sd->sc.data[SC_BERSERK]){
 		clif_equipitemack(sd,n,0,0);	// fail
 		return 0;
 	}
@@ -6513,7 +6516,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 
 // -- moonsoul	(if player is berserk then cannot unequip)
 //
-	if(!(flag&2) && sd->sc.count && (sd->sc.data[SC_BLADESTOP].timer!=-1 || sd->sc.data[SC_BERSERK].timer!=-1)){
+	if(!(flag&2) && sd->sc.count && (sd->sc.data[SC_BLADESTOP] || sd->sc.data[SC_BERSERK])){
 		clif_unequipitemack(sd,n,0,0);
 		return 0;
 	}
@@ -6535,7 +6538,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		sd->status.weapon = sd->weapontype2;
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
-		if(sd->sc.data[SC_DANCING].timer!=-1) //When unequipping, stop dancing. [Skotlex]
+		if(sd->sc.data[SC_DANCING]) //When unequipping, stop dancing. [Skotlex]
 			skill_stop_dancing(&sd->bl);
 	}
 	if(sd->status.inventory[n].equip & EQP_HAND_L) {
@@ -6571,7 +6574,7 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		status_calc_pc(sd,0);
 	}
 
-	if(sd->sc.count && sd->sc.data[SC_SIGNUMCRUCIS].timer != -1 && !battle_check_undead(sd->battle_status.race,sd->battle_status.def_ele))
+	if(sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race,sd->battle_status.def_ele))
 		status_change_end(&sd->bl,SC_SIGNUMCRUCIS,-1);
 
 	//OnUnEquip script [Skotlex]
@@ -7091,7 +7094,7 @@ int map_night_timer(int tid, unsigned int tick, int id, int data)
 void pc_setstand(struct map_session_data *sd){
 	nullpo_retv(sd);
 
-	if(sd->sc.count && sd->sc.data[SC_TENSIONRELAX].timer!=-1)
+	if(sd->sc.data[SC_TENSIONRELAX])
 		status_change_end(&sd->bl,SC_TENSIONRELAX,-1);
 
 	//Reset sitting tick.

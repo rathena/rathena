@@ -246,7 +246,7 @@ int skill_autospell(struct map_session_data *md,int skillid);
 
 int skill_calc_heal(struct block_list *src, struct block_list *target, int skill_lv);
 
-int skill_check_cloaking(struct block_list *bl, struct status_change *sc);
+int skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce);
 
 // ステ?タス異常
 int skill_enchant_elemental_end(struct block_list *bl, int type);

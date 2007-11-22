@@ -374,12 +374,17 @@ struct status_change_entry {
 };
 
 struct status_change {
-	struct status_change_entry data[SC_MAX];
-	short count;
+	unsigned int option;// effect state
+	unsigned int opt3;// skill state
 	unsigned short opt1;// body state
 	unsigned short opt2;// health state
-	unsigned int opt3;
-	unsigned int option;// effect state
+	unsigned char count;
+	//TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
+	unsigned char jb_flag; //Joint Beat type flag
+	unsigned short mp_matk_min, mp_matk_max; //Previous matk min/max for ground spells (Amplify magic power)
+	int sg_id; //ID of the previous Storm gust that hit you
+	unsigned char sg_counter; //Storm gust counter (previous hits from storm gust)
+	struct status_change_entry *data[SC_MAX];
 };
 
 struct s_vending {

@@ -1022,6 +1022,7 @@ int chrif_save_scdata(struct map_session_data *sd)
 	int i, count=0;
 	unsigned int tick;
 	struct status_change_data data;
+	struct status_change *sc = &sd->sc;
 	const struct TimerData *timer;
 
 	if (sd->state.finalsave) //Character was already saved?
@@ -1036,17 +1037,21 @@ int chrif_save_scdata(struct map_session_data *sd)
 	WFIFOL(char_fd,8) = sd->status.char_id;
 	for (i = 0; i < SC_MAX; i++)
 	{
-		if (sd->sc.data[i].timer == -1)
+		if (!sc->data[i])
 			continue;
-		timer = get_timer(sd->sc.data[i].timer);
-		if (timer == NULL || timer->func != status_change_timer || DIFF_TICK(timer->tick,tick) < 0)
-			continue;
-		data.tick = DIFF_TICK(timer->tick,tick); //Duration that is left before ending.
+		if (sc->data[i]->timer != -1)
+		{
+			timer = get_timer(sc->data[i]->timer);
+			if (timer == NULL || timer->func != status_change_timer || DIFF_TICK(timer->tick,tick) < 0)
+				continue;
+			data.tick = DIFF_TICK(timer->tick,tick); //Duration that is left before ending.
+		} else
+			data.tick = -1; //Infinite duration
 		data.type = i;
-		data.val1 = sd->sc.data[i].val1;
-		data.val2 = sd->sc.data[i].val2;
-		data.val3 = sd->sc.data[i].val3;
-		data.val4 = sd->sc.data[i].val4;
+		data.val1 = sc->data[i]->val1;
+		data.val2 = sc->data[i]->val2;
+		data.val3 = sc->data[i]->val3;
+		data.val4 = sc->data[i]->val4;
 		memcpy(WFIFOP(char_fd,14 +count*sizeof(struct status_change_data)),
 			&data, sizeof(struct status_change_data));
 		count++;
@@ -1086,11 +1091,6 @@ int chrif_load_scdata(int fd)
 	for (i = 0; i < count; i++)
 	{
 		data = (struct status_change_data*)RFIFOP(fd,14 + i*sizeof(struct status_change_data));
-		if (data->tick < 1)
-		{	//Protection against invalid tick values. [Skotlex]
-			ShowWarning("chrif_load_scdata: Received invalid duration (%d ms) for status change %d (character %s)\n", data->tick, data->type, sd->status.name);
-			continue;
-		}
 		status_change_start(&sd->bl, data->type, 10000, data->val1, data->val2, data->val3, data->val4, data->tick, 15);
 	}
 #endif

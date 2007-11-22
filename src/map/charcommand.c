@@ -2830,17 +2830,17 @@ int charcommand_jailtime(const int fd, struct map_session_data* sd, const char* 
 		return -1;
 	}
 
-	if (pl_sd->sc.data[SC_JAILED].val1 == INT_MAX) {
+	if (pl_sd->sc.data[SC_JAILED]->val1 == INT_MAX) {
 		clif_displaymessage(fd, "You have been jailed indefinitely.");
 		return 0;
 	}
 
-	if (pl_sd->sc.data[SC_JAILED].val1 <= 0) { // Was not jailed with @jailfor (maybe @jail? or warped there? or got recalled?)
+	if (pl_sd->sc.data[SC_JAILED]->val1 <= 0) { // Was not jailed with @jailfor (maybe @jail? or warped there? or got recalled?)
 		clif_displaymessage(fd, "This player has been jailed for an unknown amount of time.");
 		return -1;
 	}
 	//Get remaining jail time
-	get_jail_time(pl_sd->sc.data[SC_JAILED].val1,&year,&month,&day,&hour,&minute);
+	get_jail_time(pl_sd->sc.data[SC_JAILED]->val1,&year,&month,&day,&hour,&minute);
 	sprintf(output,msg_txt(402),"This player will remain",year,month,day,hour,minute); 
 	clif_displaymessage(fd, output);
 
@@ -3861,7 +3861,7 @@ bool is_charcommand(const int fd, struct map_session_data* sd, const char* messa
 	if( !message || !*message )
 		return false;
 
-	if( sd->sc.data[SC_NOCHAT].timer != -1 && sd->sc.data[SC_NOCHAT].val1&MANNER_NOCOMMAND )
+	if( sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOCOMMAND )
 		return true; // so that it won't display as normal message
 
 	if( battle_config.atc_gmonly != 0 && gmlvl == 0 )
