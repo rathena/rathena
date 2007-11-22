@@ -37,6 +37,8 @@
 	2376 General's_Plate_Mail	Increases heal recovery effectiveness on you by 10%
 
 =======================
+11/22
+	* Rev. 11778 Guard effect when auto-casted by Clock Card will now cancel on armor swap. [L0ne_W0lf]
 11/17
 	* Heat now only does 10 hits a second [Playtester]
 	- this is an official kRO update
