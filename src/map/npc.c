@@ -2042,16 +2042,33 @@ void npc_movenpc(struct npc_data* nd, int x, int y)
 	map_foreachinrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
 }
 
-int npc_changename(const char* name, const char* newname, short look)
+/// Changes the display name of the npc.
+///
+/// @param nd Target npc
+/// @param newname New display name
+void npc_setdisplayname(struct npc_data* nd, const char* newname)
 {
-	struct npc_data* nd = (struct npc_data *) strdb_remove(npcname_db, name);
-	if (nd == NULL)
-		return 0;
-	npc_enable(name, 0);
-	strcpy(nd->name, newname);
-	nd->class_ = look;
-	npc_enable(newname, 1);
-	return 0;
+	nullpo_retv(nd);
+
+	safestrncpy(nd->name, newname, sizeof(nd->name));
+	clif_charnameack(0, &nd->bl);
+}
+
+/// Changes the display class of the npc.
+///
+/// @param nd Target npc
+/// @param class_ New display class
+void npc_setclass(struct npc_data* nd, short class_)
+{
+	nullpo_retv(nd);
+
+	if( nd->class_ == class_ )
+		return;
+
+	clif_clearunit_area(&nd->bl, 0);// fade out
+	nd->class_ = class_;
+	status_set_viewdata(&nd->bl, class_);
+	clif_spawn(&nd->bl);// fade in
 }
 
 /// Parses a function.

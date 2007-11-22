@@ -11391,20 +11391,56 @@ BUILDIN_FUNC(charisalpha)
 	return 0;
 }
 
-// [Lance]
-BUILDIN_FUNC(fakenpcname)
+/// Changes the display name and/or display class of the npc.
+/// Returns 0 is successful, 1 if the npc does not exist.
+///
+/// setnpcdisplay("<npc name>", "<new display name>", <new class id>) -> <int>
+/// setnpcdisplay("<npc name>", "<new display name>") -> <int>
+/// setnpcdisplay("<npc name>", <new class id>) -> <int>
+BUILDIN_FUNC(setnpcdisplay)
 {
-	const char *name;
-	const char *newname;
-	int look;
+	const char* name;
+	const char* newname = NULL;
+	int class_ = -1;
+	struct script_data* data;
+	struct npc_data* nd;
+
 	name = script_getstr(st,2);
-	newname = script_getstr(st,3);
-	look = script_getnum(st,4);
-	if(look > 32767 || look < -32768) {
-		ShowError("buildin_fakenpcname: Invalid look value %d\n",look);
-		return 1; // Safety measure to prevent runtime errors
+	data = script_getdata(st,3);
+	get_val(st, data);
+	if( script_hasdata(st,4) )
+	{
+		newname = conv_str(st,data);
+		class_ = script_getnum(st,4);
 	}
-	npc_changename(name,newname,(short)look);
+	else if( data_isstring(data) )
+	{
+		newname = conv_str(st,data);
+	}
+	else if( data_isint(data) )
+	{
+		class_ = conv_num(st,data);
+	}
+	else
+	{
+		ShowError("script:setnpcdisplay: expected a string or number\n");
+		script_reportdata(data);
+		return 1;
+	}
+
+	nd = npc_name2id(name);
+	if( nd == NULL )
+	{// not found
+		script_pushint(st,1);
+		return 0;
+	}
+
+	// update npc
+	if( newname )
+		npc_setdisplayname(nd, newname);
+	if( class_ != -1 )
+		npc_setclass(nd, class_);
+	script_pushint(st,0);
 	return 0;
 }
 
@@ -13042,7 +13078,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unequip,"i"), // unequip command [Spectre]
 	BUILDIN_DEF(getstrlen,"s"), //strlen [Valaris]
 	BUILDIN_DEF(charisalpha,"si"), //isalpha [Valaris]
-	BUILDIN_DEF(fakenpcname,"ssi"), // [Lance]
+	BUILDIN_DEF(setnpcdisplay,"sv?"),
 	BUILDIN_DEF(compare,"ss"), // Lordalfa - To bring strstr to scripting Engine.
 	BUILDIN_DEF(getiteminfo,"ii"), //[Lupus] returns Items Buy / sell Price, etc info
 	BUILDIN_DEF(setiteminfo,"iii"), //[Lupus] set Items Buy / sell Price, etc info

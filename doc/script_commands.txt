@@ -9,7 +9,7 @@
 //= Maeki Rika - A section on general concepts and lots of
 //=              other updates and additions.
 //===== Version ===========================================
-//= 3.09.20071103
+//= 3.10.20071122
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -90,6 +90,8 @@
 //=       Clarified how npc names work. [FlavioJS]
 //= 3.09.20071103
 //=       Added script function 'strnpcinfo' [ultramage]
+//= 3.10.20071122
+//=       Added setnpcdisplay. [FlavioJS]
 //===== Description =======================================
 //= A reference manual for the eAthena scripting language,
 //= sorted out depending on their functionality.
@@ -4877,6 +4879,17 @@ complete the effect.
     // This will make everyone in the area see the NPC greet the character
     // who just invoked it.
     npctalk "Hello "+strcharinfo(0)+" how are you";
+
+---------------------------------------
+
+*setnpcdisplay("<npc name>", "<display name>", <class id>)
+*setnpcdisplay("<npc name>", "<display name>")
+*setnpcdisplay("<npc name>", <class id>)
+
+Changes the display name and/or display class of the target npc.
+Returns 0 is successful, 1 if the npc does not exist.
+
+Since trunk r11779
 
 ---------------------------------------
 \\
