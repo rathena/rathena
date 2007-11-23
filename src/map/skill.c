@@ -5422,14 +5422,18 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 			skill_get_unit_flag(ud->skillid)&UF_NOREITERATION &&
 			skill_check_unit_range(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv)
 		  ) 
+		{
+			if (sd) clif_skill_fail(sd,ud->skillid,0,0);
 			break;
-
+		}
 		if( src->type&battle_config.skill_nofootset &&
 			skill_get_unit_flag(ud->skillid)&UF_NOFOOTSET &&
 			skill_check_unit_range2(src,ud->skillx,ud->skilly,ud->skillid,ud->skilllv)
 		  )
+		{
+			if (sd) clif_skill_fail(sd,ud->skillid,0,0);
 			break;
-		
+		}
 		if( src->type&battle_config.land_skill_limit &&
 			(maxcount = skill_get_maxcount(ud->skillid, ud->skilllv)) > 0
 		  ) {
@@ -5439,7 +5443,10 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 					maxcount--;
 			}
 			if( maxcount == 0 )
+			{
+				if (sd) clif_skill_fail(sd,ud->skillid,0,0);
 				break;
+			}
 		}
 
 		if(tid != -1)
