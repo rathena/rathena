@@ -11765,8 +11765,8 @@ BUILDIN_FUNC(npcshopitem)
 		return 0;
 	}
 
-	// st->end - 2 = nameid + value # ... / 2 = number of items
-	amount = (st->end-2)/2;
+	// get the count of new entries
+	amount = (script_lastdata(st)-2)/2;
 
 	// generate new shop item list
 	RECREATE(nd->u.shop.shop_item, struct npc_item_list, amount);
@@ -11794,7 +11794,8 @@ BUILDIN_FUNC(npcshopadditem)
 		return 0;
 	}
 
-	amount = (st->end-2)/2;
+	// get the count of new entries
+	amount = (script_lastdata(st)-2)/2;
 
 	// append new items to existing shop item list
 	RECREATE(nd->u.shop.shop_item, struct npc_item_list, nd->u.shop.count+amount);
@@ -11823,7 +11824,7 @@ BUILDIN_FUNC(npcshopdelitem)
 		return 0;
 	}
 
-	amount = (st->end-2)/2;
+	amount = script_lastdata(st)-2;
 	size = nd->u.shop.count;
 
 	// remove specified items from the shop item list
