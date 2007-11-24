@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.4a
+//= 2.4b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 2.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=	No longer uses function "F_BlockHigh"
 //= 2.4a Deleted unused variables. [Samuray22]
+//= 2.4b Changed a Problem with JobLevel what made impossible get a Gladius [3]. (bugreport:481) [Samuray22]
 //============================================================ 
 
 morocc,100,104,1	script	Thug#rg	118,{
@@ -161,7 +162,6 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 					mes "You've been";
 					mes "doin' a great job~";
 				}
-				set .@JobLevel,JobLevel;
 				callfunc "Job_Change",Job_Rogue;
 				callfunc "F_ClearJobVar";
 				next;
@@ -174,10 +174,11 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 				mes "[Markie]";
 				mes "Enjoy your freedom as a Rogue. Just remember that you gotta be free and responsible at the same time. So treat other guys the way you wanna be treated, kay? Alright, seeya round.";
 				close2;
-				if (.@jlevel == 50)
+				if (JobLevel == 50) {
 					getitem 1220,1; //Gladius_
-				else
+				} else {
 					getitem 1219,1; //Gladius
+				}
 				end;
 			}
 			if (select("I'm ready.:Hold on, I need to get ready!") == 2) {

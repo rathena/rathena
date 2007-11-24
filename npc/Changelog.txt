@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/11/23
+	* Fixed a error in Rogue Job Quest. (bugreport:481) [Samuray22]
 2007/11/22
 	* Fixed Missing Variables in Metto quest. (bugreport:473) [Samuray22]
 	* Deleted some unused Variables in Bio Ethics quest.
