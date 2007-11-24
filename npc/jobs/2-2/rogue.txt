@@ -162,6 +162,7 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 					mes "You've been";
 					mes "doin' a great job~";
 				}
+				set .@jlevel,JobLevel;
 				callfunc "Job_Change",Job_Rogue;
 				callfunc "F_ClearJobVar";
 				next;
@@ -174,7 +175,7 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 				mes "[Markie]";
 				mes "Enjoy your freedom as a Rogue. Just remember that you gotta be free and responsible at the same time. So treat other guys the way you wanna be treated, kay? Alright, seeya round.";
 				close2;
-				if (JobLevel == 50) {
+				if (.@jlevel == 50) {
 					getitem 1220,1; //Gladius_
 				} else {
 					getitem 1219,1; //Gladius
