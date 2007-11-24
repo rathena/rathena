@@ -4726,7 +4726,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if (sp)
 					sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10)/100;
 			}
-			if (tsc && tsc->data[SC_CRITICALWOUND]->timer!=-1)
+			if (tsc && tsc->data[SC_CRITICALWOUND])
 			{
 				hp -= hp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
 				sp -= sp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
