@@ -1044,5 +1044,19 @@ packet_ver: 22
 0x02df,36
 0x02e0,34
 
+//2007-10-23aSakexe
+0x02cb,65
+0x02cd,71
+
+//2007-11-06aSakexe
+0x0078,55
+0x007c,42
+0x022c,65
+0x029b,80
+
+//2007-11-13aSakexe
+0x015b,-1
+0x02e1,33
+
 //Add new packets here
 //packet_ver: 23

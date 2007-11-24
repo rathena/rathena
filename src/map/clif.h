@@ -28,6 +28,7 @@ struct guild;
 // server->client protocol version
 // v7 - 2005-04-11aSakexe+ - 0x229, 0x22a, 0x22b, 0x22c
 // v8 - 2007-05-21aSakexe+ - 0x283
+// v9 - 2007-11-06aSakexe+ - 0x78, 0x7c, 0x22c
 #ifndef PACKETVER
 	#define PACKETVER	8
 #endif

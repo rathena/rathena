@@ -831,8 +831,16 @@ static int clif_set_unit_standing(struct block_list* bl, unsigned char* buf)
 #endif
 #endif
 	} else {
+#if PACKETVER < 9
 		WBUFW(buf,0) = 0x78;
 		return packet_len(0x78);
+#else
+		// shift payload 1 byte to the right
+		memmove(WBUFP(buf,1), WBUFP(buf,0), packet_len(0x78));
+		WBUFW(buf,0) = 0x78;
+		WBUFB(buf,2) = 0; // padding?
+		return packet_len(0x78);
+#endif
 	}
 }
 
@@ -908,8 +916,16 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	memmove(WBUFP(buf,16), WBUFP(buf,14), 32);
 	WBUFL(buf,12) = (sc)? sc->option : 0;
 
+#if PACKETVER < 9
 	WBUFW(buf,0) = 0x22c;
 	return packet_len(0x22c);
+#else
+	// shift payload 1 byte to the right
+	memmove(WBUFP(buf,1), WBUFP(buf,0), packet_len(0x22c));
+	WBUFW(buf,0) = 0x22c;
+	WBUFB(buf,2) = 0; // padding?
+	return packet_len(0x22c);
+#endif
 #endif
 #endif
 }
@@ -957,7 +973,15 @@ static int clif_set_unit_spawned(struct block_list* bl, unsigned char* buf)
 		//39B: ???
 		//40B: ???
 
+#if PACKETVER < 9
 		return packet_len(0x7c);
+#else
+		// shift payload 1 byte to the right
+		memmove(WBUFP(buf,1), WBUFP(buf,0), packet_len(0x7c));
+		WBUFW(buf,0) = 0x7c;
+		WBUFB(buf,2) = 0; // padding?
+		return packet_len(0x7c);
+#endif
 	}
 }
 
@@ -11653,8 +11677,10 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0, 55, 17,  3, 37,  46, -1, 23, -1,  3,108,  3,  2,
 #if PACKETVER < 2
 	    3, 28, 19, 11,  3, -1,  9,  5,  52, 51, 56, 58, 41,  2,  6,  6,
-#else	// 78-7b 亀島以降 lv99エフェクト用
+#elif PACKETVER < 9	// 78-7b 亀島以降 lv99エフェクト用
 	    3, 28, 19, 11,  3, -1,  9,  5,  54, 53, 58, 60, 41,  2,  6,  6,
+#else // change in 0x78 and 0x7c
+	    3, 28, 19, 11,  3, -1,  9,  5,  55, 53, 58, 60, 42,  2,  6,  6,
 #endif
 	//#0x0080
 	    7,  3,  2,  2,  2,  5, 16, 12,  10,  7, 29,  2, -1, -1, -1,  0, // 0x8b changed to 2 (was 23)
@@ -11693,7 +11719,11 @@ static int packetdb_readdb(void)
 	//#0x0200
 	   26, -1, 26, 10, 18, 26, 11, 34,  14, 36, 10,  0,  0, -1, 32, 10, // 0x20c change to 0 (was 19)
 	   22,  0, 26, 26, 42,  6,  6,  2,   2,282,282, 10, 10, -1, -1, 66,
+#if PACKETVER < 9
 	   10, -1, -1,  8, 10,  2,282, 18,  18, 15, 58, 57, 64,  5, 71,  5,
+#else // 0x22c changed
+	   10, -1, -1,  8, 10,  2,282, 18,  18, 15, 58, 57, 65,  5, 71,  5,
+#endif
 	   12, 26,  9, 11, -1, -1, 10,  2, 282, 11,  4, 36, -1, -1,  4,  2,
 	//#0x0240
 	   -1, -1, -1, -1, -1,  3,  4,  8,  -1,  3, 70,  4,  8, 12,  4, 10,
