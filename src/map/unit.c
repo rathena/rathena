@@ -402,6 +402,7 @@ int unit_run(struct block_list *bl)
 {
 	struct status_change *sc = status_get_sc(bl);
 	short to_x,to_y,dir_x,dir_y;
+	int lv;
 	int i;
 
 	if (!(sc && sc->data[SC_RUN]))
@@ -412,11 +413,13 @@ int unit_run(struct block_list *bl)
 		return 0;
 	}
 	
-	to_x = bl->x;
-	to_y = bl->y;
+	lv = sc->data[SC_RUN]->val1;
 	dir_x = dirx[sc->data[SC_RUN]->val2];
 	dir_y = diry[sc->data[SC_RUN]->val2];
 
+	// determine destination cell
+	to_x = bl->x;
+	to_y = bl->y;
 	for(i=0;i<AREA_SIZE;i++)
 	{
 		if(!map_getcell(bl->m,to_x+dir_x,to_y+dir_y,CELL_CHKPASS))
@@ -429,7 +432,7 @@ int unit_run(struct block_list *bl)
 		//If you can't run forward, you must be next to a wall, so bounce back. [Skotlex]
 		clif_status_change(bl, SI_BUMP, 1);
 		status_change_end(bl,SC_RUN,-1);
-		skill_blown(bl,bl,skill_get_blewcount(TK_RUN,sc->data[SC_RUN]->val1),unit_getdir(bl),0);
+		skill_blown(bl,bl,skill_get_blewcount(TK_RUN,lv),unit_getdir(bl),0);
 		clif_fixpos(bl); //Why is a clif_slide (skill_blown) AND a fixpos needed? Ask Aegis.
 		clif_status_change(bl, SI_BUMP, 0);
 		return 0;
@@ -445,7 +448,7 @@ int unit_run(struct block_list *bl)
 		// copy-paste from above
 		clif_status_change(bl, SI_BUMP, 1);
 		status_change_end(bl,SC_RUN,-1);
-		skill_blown(bl,bl,skill_get_blewcount(TK_RUN,sc->data[SC_RUN]->val1),unit_getdir(bl),0);
+		skill_blown(bl,bl,skill_get_blewcount(TK_RUN,lv),unit_getdir(bl),0);
 		clif_fixpos(bl);
 		clif_status_change(bl, SI_BUMP, 0);
 		return 0;
