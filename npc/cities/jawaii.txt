@@ -5,7 +5,7 @@
 //= DNett123 (1.1 - 1.5)
 //= L0ne_w0lf
 //===== Current Version: =====================================
-//= 3.3
+//= 3.3a
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -31,6 +31,7 @@
 //= 3.2 Reverted ispartneron() BACK to getpartnerid(). [L0ne_W0lf]
 //=	None of the NPCs need the player's partner to be online.
 //= 3.3 Just a small fix up on the Bartender. [L0ne_W0lf]
+//= 3.3a Just a little typo error. [Samuray22]
 //============================================================
 // Jawaii
 //============================================================
@@ -1140,7 +1141,7 @@ jawaii_in,43,115,0	script	Customer#jaw_1	97,{
 		next;
 		mes "^3355FFHe ordered a JJ special for me.^000000";
 		next;
-		mes "["+ name +"]";
+		mes "["+ strcharinfo(0) +"]";
 		mes "Damn...!";
 		mes "Damn! I will be";
 		mes "the one who laughs last!";

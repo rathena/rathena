@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.7a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.6 Merged back JFunc, CHANGED NUMBERS TO CONSTANTS [Lupus]
 //= 1.7 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=	No longer uses function "F_ToHigh"
+//= 1.7a Fixed a "If" in the quest. (bugreport:489) [Samuray22]
 //============================================================ 
 
 geffen_in,164,124,4	script	Mage Guildsman	123,{
@@ -164,7 +165,7 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 			close;
 		}
 		else {
-			if (job_magician_q == 1 && countitem(1071) == 0) || (job_magician_q == 2 && countitem(1085) == 0 || job_magician_q == 3 && countitem(1086) == 0 || job_magician_q == 4 && countitem(1087) == 0) {
+			if ((job_magician_q == 1 && countitem(1071) == 0) || (job_magician_q == 2 && countitem(1085) == 0) || (job_magician_q == 3 && countitem(1086) == 0) || (job_magician_q == 4 && countitem(1087) == 0)) {
 				mes "Wait.";
 				mes "This isn't the";
 				mes "Solution I asked for!";
