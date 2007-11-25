@@ -3,7 +3,6 @@ Date		Added
 2007/11/25
 	* Fixed a Problem in Mage Quest. (bugreport:489) [Samuray22]
 	* Change a "+ name +" to "+ strcharinfo +" in a jawaii NPC.
-	* Change to non-capital letters StarGladiator and SoulLinker Quests.
 	* Rev. 11802 Updated Super Novice Quest with iRO dialog. [L0ne_W0lf]
 	- Also restructured the NPCs significantly according to iRO's script.
 	* Rev. 11801 Updated Novice Potion exhanger and juice maker. [L0ne_W0lf]
