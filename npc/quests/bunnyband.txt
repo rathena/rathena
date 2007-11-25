@@ -3,96 +3,220 @@
 //===== By: ================================================== 
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= v1.4
+//= v1.5
 //===== Compatible With: ===================================== 
-//= eAthena 7.15 +
+//= eAthena SVN
 //===== Description: ========================================= 
-//=
+//= [Aegis Conversion]
+//= Quest to obtain a Bunny Band headgear.
 //===== Additional Comments: ================================= 
+//= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//	Changed @BUNYBAN back to a BUNYBAND, it hsoudl be this way.
+//	Removed duplicates. NPC is ALberta-only.
+//============================================================ 
+
+alberta,26,229,0	script	Kafra Employee#bunny	83,{
+	if (BUNYBND == 1) {
+		mes "[Kafra Employee]";
+		mes "Hello there~!";
+		mes "How'd you like to";
+		mes "participate in Kafra";
+		mes "Corporation's special";
+		mes "^529DFFBunny Band Event^000000?";
+		next;
+		switch(select("Sure, I brought the items.:Event Information:Cancel")) {
+		case 1:
+			mes "[Kafra Employee]";
+			mes "Alrighty~";
+			mes "Let me check to";
+			mes "see if you brought";
+			mes "all the items...";
+			next;
+			if (countitem(949) < 100) {
+				mes "[Kafra Employee]";
+				mes "Ooh, I'm sorry";
+				mes "but you need to";
+				mes "bring at least";
+				mes "100 Feathers.";
+				close;
+			}
+			if (countitem(706) == 0) {
+				mes "[Kafra Employee]";
+				mes "Ooh, I'm sorry";
+				mes "but you need to";
+				mes "bring at least";
+				mes "1 Four-Leaf Clover.";
+				close;
+			}
+			if (countitem(722) == 0) {
+				mes "[Kafra Employee]";
+				mes "Ooh, I'm sorry";
+				mes "but you need to";
+				mes "bring at least";
+				mes "1 Pearl.";
+				close;
+			}		
+			if (countitem(2213) == 0) {
+				mes "Ooh, I'm sorry";
+				mes "but you need to";
+				mes "bring at least";
+				mes "1 Kitty Band.";
+				close;
+			}
+			mes "[Kafra Employee]";
+			mes "Great, I see that";
+			mes "you've gathered";
+			mes "everything I need to";
+			mes "make the Bunny Band.";
+			mes "Please wait a moment";
+			mes "while I put it together...";
+			next;
+			if (countitem(949) < 100) {
+				mes "[Kafra Employee]";
+				mes "Hm? I'm sorry,";
+				mes "but I actually can't";
+				mes "make this right now.";
+				mes "You need 100 Feathers";
+				mes "in order for me to put this";
+				mes "Bunny Band together...";
+				close;
+			}
+			if (countitem(706) < 1) {
+				mes "[Kafra Employee]";
+				mes "Hm? I'm sorry,";
+				mes "but I actually can't";
+				mes "make this right now. You";
+				mes "need 1 Four-Leaf Clover";
+				mes "in order for me to put this";
+				mes "Bunny Band together...";
+				close;
+			}
+			if (countitem(722) < 1) {
+				mes "[Kafra Employee]";
+				mes "Hm? I'm sorry,";
+				mes "but I actually can't";
+				mes "make this right now.";
+				mes "You need 1 Pearl in";
+				mes "order for me to put this";
+				mes "Bunny Band together...";
+				close;
+			}
+			if (countitem(2213) < 1) {
+				mes "[Kafra Employee]";
+				mes "Hm? I'm sorry,";
+				mes "but I actually can't";
+				mes "make this right now.";
+				mes "You need 1 Kitty Band";
+				mes "in order for me to put this";
+				mes "Bunny Band together...";
+				close;
+			}
+			delitem 949,100; //Feather
+			delitem 706,1; //Four_Leaf_Clover
+			delitem 722,1; //Scarlet_Jewel
+			delitem 2213,1; //Cat_Hairband
+			mes "[Kafra Employee]";
+			mes "Ah, here you go~";
+			mes "The perfect Bunny Band!";
+			mes "Well, I hope you enjoy it.";
+			getitem 2214,1; //Bunny_Band
+			set BUNYBND,0;
+			next;
+			mes "[Kafra Employee]";
+			mes "Thank you for";
+			mes "participating in this";
+			mes "special event and your";
+			mes "continued patronage";
+			mes "of the Kafra Services~";
+			close;
+		case 2:
+			mes "[Kafra Employee]";
+			mes "To thank our valued";
+			mes "customers, Kafra Corporation";
+			mes "has prepared a special event";
+			mes "where Kafra Employee will assemble";
+			mes "Bunny Bands for adventurers";
+			mes "who bring the required items.";
+			next;
+			mes "[Kafra Employee]";
+			mes "For this special,";
+			mes "one of a kind item,";
+			mes "bring 100 Feathers,";
+			mes "1 Four-Leaf Clover,";
+			mes "1 Kitty Band and";
+			mes "1 Pearl.";
+			next;
+			mes "[Kafra Employee]";
+			mes "When you're ready,";
+			mes "come back and bring";
+			mes "those items to me.";
+			mes "(Sponsored by the";
+			mes "Alberta Merchant Guild).";
+			close;
+		case 3:
+			close;
+		}
+	}
+	mes "[Kafra Employee]";
+	mes "Hi there~! Would you like";
+	mes "to join our special ^529DFFBunny";
+	mes "Band Event^000000 hosted by the Kafra";
+	mes "Corporation and sponsored by";
+	mes "the Alberta Merchant Guild?";
+	next;
+	switch(select("Join the Event:Event Information:Cancel")) {
+	case 1:
+		set BUNYBND,1;
+		mes "[Kafra Employee]";
+		mes "Great! Thanks for";
+		mes "participating! If you";
+		mes "haven't already heard,";
+		mes "you need to collect these";
+		mes "items if you want me put a";
+		mes "Bunny Band together for you...";
+		next;
+		mes "[Kafra Employee]";
+		mes "100 Feathers,";
+		mes "1 Four-Leaf Clover,";
+		mes "1 Kitty Band and";
+		mes "1 Pearl. That's it!";
+		mes "Good luck and I'll be";
+		mes "waiting for you here~";
+		close;
+	case 2:
+		mes "[Kafra Employee]";
+		mes "To thank our valued";
+		mes "customers, Kafra Corporation";
+		mes "has prepared a special event";
+		mes "where Kafra Employee will assemble";
+		mes "Bunny Bands for adventurers";
+		mes "who bring the required items.";
+		next;
+		mes "[Kafra Employee]";
+		mes "For this special,";
+		mes "one of a kind item,";
+		mes "bring 100 Feathers,";
+		mes "1 Four-Leaf Clover,";
+		mes "1 Kitty Band and";
+		mes "1 Pearl.";
+		next;
+		mes "[Kafra Employee]";
+		mes "When you're ready,";
+		mes "come back and bring";
+		mes "those items to me.";
+		mes "(Sponsored by the";
+		mes "Alberta Merchant Guild).";
+		close;
+	case 3:
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
 //= 1.1 using duplicate command
 //= 1.2 Fixed NPC location, removed NPC dupes [Lupus]
 //= 1.3 RE-Fixed exploit V_V, also cleared used VAR [Lupus]
 //= 1.4 replaced BUNYBND with @BUNYBND [Lupus]
 //============================================================ 
-
-
-// Alberta ------------------------------------------------------------------------------------------------------------------------------------------
-alberta,23,232,1	script	Kafra Corp. Rep.#1::KCRep	83,{
-	mes "[Kafra Corp. Rep.]";
-	if (@BUNYBND) goto L_Check;
-	mes "^529DFFSpecial Event, ^FF0000Bunny Band ^529DFFQuest!!^000000";
-	next;
-	menu "Information",-, "Join",M_Join, "Cancel",M_End;
-
-		mes "[Kafra Corp. Rep.]";
-		mes "To thank our customers for using the Kafra Corp. services, we have prepapred a small event for them...";
-		next;
-		mes "[Kafra Corp. Rep.]";
-		mes "The ^FF0000Bunny Band ^529DFFquest!!!^000000. (Sponsered by: The Alberta Merchant Association.)";
-		mes "This quest allows players to obtain the ultra-rare ^FF0000Bunny Band^000000!";
-		next;
-		mes "[Kafra Corp. Rep.]";
-		mes "All you have to do is collect a number of items and bring them to a Kafra Corp. representative such as myself.";
-		mes "We will then carefully handmake a Bunny Band for you on the spot!";
-		next;
-		mes "[Kafra Corp. Rep.]";
-		mes "Here are the items that you will need for the Bunny Band.";
-		mes "^5555FF100 Feather^000000,";
-		mes "^5555FF1 Four Leaf Clover^000000,";
-		mes "^5555FF1 Pearl^000000,";
-		mes "^5555FF1 Kitty Band^000000.";
-		next;
-		mes "[Kafra Corp. Rep.]";
-		mes "When you've collected all of the items, just speak with any Kafra Corp. representative like myself.";
-		mes "We can be found in every town across Rune Midgard.";
-		close;
-
-	M_Join:
-
-		mes "[Kafra Corp. Rep.]";
-		mes "Thank you for participating in the event. Please come back when you have gathered all of the items.";
-		set @BUNYBND, 1;
-		close;
-
-	M_End:
-		mes "[Kafra Corp. Rep.]";
-		mes "Have a nice day.";
-		close;
-
-	L_Check:
-		if(countitem(949)<100 || countitem(706)<1 || countitem(722)<1 || countitem(2213)<1) goto sL_NoItems;
-		delitem 949,100;
-		delitem 706,1;
-		delitem 722,1;
-		delitem 2213,1;
-		mes "Wow! Well-done, well-done! You've got every single item! I will make the Bunny Band for you right away...";
-		emotion e_no1;
-		next;
-		mes "[Kafra Corp. Rep.]";
-		mes "Tah dah!!! Here is your ^FF0000Bunny Band^000000... Please take it!";
-		getitem 2214,1;
-		set @BUNYBND,0;
-		next;
-		mes "[Kafra Corp. Rep.]";
-		mes "We appreciate your participation in this special event. Thank you and enjoy your Bunny Band!";
-		close;
-
-		sL_NoItems:
-			mes "Here are the items that you will need for the Bunny Band.";
-			mes "^5555FF100 Feather^000000,";
-			mes "^5555FF1 Four Leaf Clover^000000,";
-			mes "^5555FF1 Pearl^000000,";
-			mes "^5555FF1 Kitty Band^000000.";
-			close;
-
-}
-
-
-// Geffen ------------------------------------------------------------------------------------------------------------------------------------------
-//geffen,116,62,2	duplicate(KCRep)	Kafra Corp. Rep.#2	83,
-// Morroc ------------------------------------------------------------------------------------------------------------------------------------------
-//morocc,154,97,4	duplicate(KCRep)	Kafra Corp. Rep.#3	83,
-// Payon ------------------------------------------------------------------------------------------------------------------------------------------
-//payon,184,104,4	duplicate(KCRep)	Kafra Corp. Rep.#4	83,
-// Prontera ------------------------------------------------------------------------------------------------------------------------------------------
-//prontera,146,87,6	duplicate(KCRep)	Kafra Corp. Rep.#5	83,

@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/11/25
+	* 11800 Updated Bunny Band and Mr. Smile quests. [L0ne_W0lf]
 	* Fixed an NPC error in lutie quest file (scrap " left behind.) [l0ne_W0lf]
 	* Changed item names to item IDs on some scripts. [Samuray22]
 2007/11/24

@@ -3,90 +3,108 @@
 //===== By: ================================================== 
 //= kobra_k88, Akaru
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
-//= 
+//= [Aegis Conversion]
+//= Trade Clover, Fluff and Jellopy for a Mr. Smile mask.
 //===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//============================================================ 
+
+prontera,157,187,4	script	Smile Assistance#prt::SmileHelper	92,{
+	mes "[Smile Girl]";
+	mes "Hi ~ Hi ~";
+	mes "This is Smile Assistance.";
+	mes "How may I help you ?";
+	next;
+	switch(select("^3355FFMr. Smile^000000 ?:Construct ^3355FFMr. Smile^000000 :Quit")) {
+	case 1:
+		mes "[Smile Girl]";
+		mes "National Event held by the command of ^5577FFHis majesty Tristram the 3rd^000000,";
+		mes "that intends to encourage the nation of the Rune-Midgarts Kingdom";
+		mes " to play in more enjoyable atmosphere!";
+		mes "I am ^3355FF' Smile Assistance '^000000,";
+		mes ".. who leads the national event under the name of ";
+		mes "^3355FFSmile throughout the Rune-Midgarts Kingdom~^000000";
+		next;
+		mes "[Smile Girl]";
+		mes "With simple and easy-to-get items,";
+		mes "I can provide you";
+		mes "^3355FF' Mr. Smile '^000000.";
+		mes "The requirements are followings.";
+		next;
+		mes "[Smile Girl]";
+		mes "^3355FF10 Jellopy^000000";
+		mes "^3355FF10 Fluff^000000";
+		mes "^3355FF10 Clover^000000";
+		next;
+		mes "[Smile Girl]";
+		mes "With this event";
+		mes "Everybody will be happy and smile,";
+		mes "getting together with other people,";
+		mes "And will try to make Ragnarok the most enjoyable game in the world.";
+		close;
+	case 2:
+		if (countitem(909) > 9 && countitem(914) > 9 && countitem(705) > 9) {
+			mes "[Smile Girl]";
+			mes "Congratulations !";
+			mes "Now please take this Mr.Smile.";
+			next;
+			delitem 909,10; //Jellopy
+			delitem 914,10; //Fluff
+			delitem 705,10; //Clover
+			getitem 2278,1; //Mr_Smile
+			mes "[Smile Girl]";
+			mes "His majesty,Tristram the 3rd";
+			mes "has promised to try his best to make Ragnarok better and more enjoyable.";
+			next;
+			mes "The fact mentioned above";
+			mes "was announced by";
+			mes "the Public Information Bureau of the Rune-Midgarts Kingom.";
+			close;
+		}
+		else {
+			mes "[Smile Girl]";
+			mes "Oh - unfortunately";
+			mes "You have not brought";
+			mes "enough items for Mr. Smile.";
+			mes "^3355FF10 Jellopy^000000";
+			mes "^3355FF10 Fluff^000000";
+			mes "^3355FF10 Clover^000000";
+			mes "Please check the requirements above.";
+			close;
+		}
+	case 3:
+		mes "[Smile Girl]";
+		mes "Thank you for visiting us.";
+		mes "We ..";
+		mes "The Rune-Midgarts Kingdom";
+		mes "always try to make Ragnarok";
+		mes "better and more enjoyable game.";
+		next;
+		mes "[Smile Girl]";
+		mes "We sincerely ask you";
+		mes "to cooperate.";
+		mes "The fact mentioned above";
+		mes "was announced by the Public Information Bureau of the Rune-Midgarts Kingom.";
+		close;
+	}
+}
+
+// Additional Smile Assistance staff
+morocc,158,97,4	duplicate(SmileHelper)	Smile Assistance#moc	92
+aldebaran,136,135,4	duplicate(SmileHelper)	Smile Assistance#alde	92
+geffen,119,107,4	duplicate(SmileHelper)	Smile Assistance#gef	92
+alberta,113,53,4	duplicate(SmileHelper)	Smile Assistance#alb	92
+payon,186,104,5	duplicate(SmileHelper)	Smile Assistance#pay	92
+izlude,129,118,4	duplicate(SmileHelper)	Smile Assistance:iz	92
+
+//============================================================ 
+// Old changelog
+//============================================================ 
 //= Fully working. 1.1 Optimized
 //= 1.2 updated Payon coords [Lupus]
 //= 1.3 fixed exploit [Lupus]
 //============================================================ 
-
-
-
-// Alberta ------------------------------------------------------------------------------------------
-alberta,113,53,3	script	Smile Assistance::SmileAT	92,{
-	mes "[Smile Assistant]";
-	mes "Hi, I'm a Smile Assistance.  How may I help you?";
-	next;
-	menu "^0099FFMr. Smile^000000?",M_0, "Construct a ^0099FFMr. Smile^000000",M_1, "Quit",M_End;
-	
-	M_0:
-		mes "[Smile Assistant]";
-		mes "Oh, the Mr. Smile Event is a nationwide event that is being sponsered by ^0099FFHis Majesty Tristram the 3rd^000000.";
-		mes "The goal of the event is to get the citizens of Rune Midgard to put on happy looking Mr. Smile masks.";
-		next;
-		mes "[Smile Assistance]";
-		mes "By having this event, His Majesty wishes to encourage the people of Rune Midgard to have more fun and enjoy themselves!";
-		mes "As you may have guessed, the Mr. Smile mask is simply a smiley face.";
-		next;
-		mes "[Smile Assistance]";
-		mes "Although it may be simple, no one can argue the power of a smile! And if everybody in the kingdom were to wear one....";
-		mes "just imagine how much joy and cheer the world would see!";
-		next;
-		mes "[Smile Assistant]";
-		mes "As a Smile Assistant, it is my job to make a Mr. Smile mask for all of those who want one.";
-		mes "All I need to make the mask are some little items, namely:";
-		mes "^5555FF10 Jellopy^000000";
-		mes "^5555FF10 Fluff^000000";
-		mes "^5555FF10 Clover^000000";
-		next;
-		mes "[Smile Girl]";
-		mes "The world could use more smiles so get those items and come back soon.  I'll be waiting right here.";
-		close;
-	M_1:
-		mes "[Smile Assistant]";
-		if(countitem(705) < 10 || countitem(909) < 10 || countitem(914) < 10) goto sL_NoItems;
-		delitem 705,10;
-		delitem 909,10;
-		delitem 914,10;
-		mes "Oh, great! You've brought back all of the items needed.  Wait just a sec while I get your Mr. Smile ready.....";
-		next;
-		mes "~!shook!~!shook!~!clack!~!clack!~!tok!~!tok!~";
-		next;
-		mes "[Smile Assistant]";
-		mes "Here ya go, your very own Mr. Smile!";
-		getitem 2278,1;
-		next;
-		mes "[Smile Assistant]";
-		mes "The Mr. Smile Event is just one of the many ways His Majesty Tristam the 3rd is trying to make life more enjoyable here in Rune Midgard.";
-		next;
-		mes "[Smile Assistant]";
-		mes "Hopefully you will be reminded of that fact everytime you put on your Mr. Smile.";
-		close;
-	
-		sL_NoItems:
-			mes "Oh... Unfortunately you don't have enough items for a Mr. Smile.  What you need are:";
-			mes "^5555FF10 Jellopy^000000,";
-			mes "^5555FF10 Fluff^000000,";
-			mes "^5555FF10 Clover^000000,";
-			mes "I'll be waiting here so hurry back.";
-			close;
-	M_End:
-		close;
-}
-
-// Aldebaran --------------------------------------------------------------------------------
-aldebaran,136,135,4	duplicate(SmileAT)	Smile Assistance#2	92
-// Geffen -----------------------------------------------------------------------------------
-geffen,119,107,4	duplicate(SmileAT)	Smile Assistance#3	92
-// Izlude -----------------------------------------------------------------------------------
-izlude,129,118,4	duplicate(SmileAT)	Smile Assistance#4	92
-// Morroc -----------------------------------------------------------------------------------
-morocc,158,97,4	duplicate(SmileAT)	Smile Assistance#5	92
-// Payon ------------------------------------------------------------------------------------
-payon,168,225,4	duplicate(SmileAT)	Smile Assistance#6	92
-// Prontera ---------------------------------------------------------------------------------
-prontera,157,187,4	duplicate(SmileAT)	Smile Assistance#7	92
