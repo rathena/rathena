@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= TonyMan & Samuray22
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.3a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.1 Optimized [Lupus]
 //= 1.2 Fixed Chef Hat items [Lupus]
 //= 1.3 Update NPC to the Official One. [Samuray22]
+//= 1.3a Changed item names to item IDs. [Samuray22]
 //============================================================ 
 
 xmas,117,295,3	script	Vending Machine Man	704,{
@@ -221,91 +222,91 @@ xmas,115,297,3	script	Vending Machine	111,{
 		mes "Thank you";
 		close;
 	case 2:
-		if (countitem("Cat_Hairband") > 0 && countitem("Dragon_Scale") > 19 && countitem("Tough_Scalelike_Stem") > 199 && countitem("Sea_Otter_Leather") > 299) {
+		if (countitem(2213) > 0 && countitem(1036) > 19 && countitem(7012) > 199 && countitem(7065) > 299) {
 			callfunc "Vending Machine","good";
 			next;
-			delitem "Cat_Hairband", 1;
-			delitem "Dragon_Scale", 20;
-			delitem "Tough_Scalelike_Stem", 200;
-			delitem "Sea_Otter_Leather", 300;
-			getitem "Smokie_Hat", 1;
+			delitem 2213, 1; //Kitty Band
+			delitem 1036, 20; //Dragon Scale 
+			delitem 7012", 200; //Tough Scalelike Stem
+			delitem 7065, 300; //Sea-Otter Fur
+			getitem 5033, 1; //Raccoon Hat
 			callfunc "Vending Machine","finish";
 		}
 			callfunc "Vending Machine","bad";
 	case 3:
-		if (countitem("Poison_Spore") > 849 && countitem("Burn_Tree") > 299 && countitem("Thin_N'_Long_Tongue") > 0) {
+		if (countitem(7033) > 849 && countitem(7068) > 299 && countitem(1015) > 0) {
 			callfunc "Vending Machine","good";
 			next;
-			delitem "Poison_Spore", 850;
-			delitem "Burn_Tree", 300;
-			delitem "Thin_N'_Long_Tongue", 1;
-			getitem "Spore_Hat", 1;
+			delitem 7033, 850; //Poison Spore
+			delitem 7068, 300; //Burnt Tree
+			delitem 1015, 1; //Tongue
+			getitem 5029, 1; //Spore Hat
 			callfunc "Vending Machine","finish";
 		}
 			callfunc "Vending Machine","bad";
 	case 4:
-		if (countitem("Fruit_Shell") > 0 && countitem("Dragon_Fly_Wing") > 499) {
+		if (countitem(5037) > 0 && countitem(7064) > 499) {
 			callfunc "Vending Machine","good";
 			next;
-			delitem "Fruit_Shell", 1;
-			delitem "Dragon_Fly_Wing", 500;
-			getitem "Mystery_Fruit_Shell", 1;
+			delitem 5037, 1; //Nutshell
+			delitem 7064, 500; //Wing of Dragonfly
+			getitem 5050, 1; //Wonder Nutshell
 			callfunc "Vending Machine","finish";
 		}
 			callfunc "Vending Machine","bad";
 	case 5:
-		if (countitem("Egg_Shell") > 0 && countitem("Cobaltblue_Dyestuffs") > 0 && countitem("Claw_Of_Desert_Wolf") > 49) {
+		if (countitem(5015) > 0 && countitem(978) > 0 && countitem(7030) > 49) {
 			callfunc "Vending Machine","good";
 			next;
-			delitem "Egg_Shell", 1;
-			delitem "Cobaltblue_Dyestuffs", 1;
-			delitem "Claw_Of_Desert_Wolf", 50;
-			getitem "Mottled_Egg_Shell", 1;
+			delitem 5015, 1; //Egg Shell
+			delitem 978, 1; //Cobaltblue Dyestuff
+			delitem 7030, 50; //Claw of Desert Wolf
+			getitem 5039, 1; //Rainbow Eggshell
 			callfunc "Vending Machine","finish";
 		}
 			callfunc "Vending Machine","bad";
 	case 6:
-		if (countitem("Alice's_Apron") > 99) {
+		if (countitem(7047) > 99) {
 			callfunc "Vending Machine","good";
 			next;
-			delitem "Alice's_Apron", 100;
-			getitem "Blush", 1;
+			delitem 7047, 100; //Alice's Apron
+			getitem 5040, 1; //Blush
 			callfunc "Vending Machine","finish";
 		}
 			callfunc "Vending Machine","bad";
 	case 7:
-		if (countitem("Piece_Of_Cake") > 119 && countitem("White_Dyestuffs") > 0 && countitem("Feather") > 329 && countitem("Dragon_Scale") > 449) {
+		if (countitem(539) > 119 && countitem(982) > 0 && countitem(949) > 329 && countitem(1036) > 449) {
 			callfunc "Vending Machine","good";
 			next;
-			delitem "Piece_Of_Cake", 120;
-			delitem "White_Dyestuffs", 1;
-			delitem "Feather", 330;
-			delitem "Dragon_Scale", 450;
-			getitem "Hat_Of_Cook", 1;
+			delitem 539, 120; //Piece of Cake
+			delitem 982, 1; //White Dyestuff
+			delitem 949, 330; //Feather
+			delitem 1036, 450; //Dragon Scale
+			getitem 5026, 1; //Chef Hat
 			callfunc "Vending Machine","finish";
 		}
 			callfunc "Vending Machine","bad";
 	case 8:
-		if (countitem("Bomb_Wick") > 0 && countitem("Matchstick") > 49 && countitem("Royal_Jelly") > 99) {
+		if (countitem(2279) > 0 && countitem(7035) > 49 && countitem(526) > 99) {
 			callfunc "Vending Machine","good";
 			next;
-			delitem "Bomb_Wick", 1;
-			delitem "Matchstick", 50;
-			delitem "Royal_Jelly", 100;
-			getitem "Candle", 1;
+			delitem 2279, 1; //Bomb Wick
+			delitem 7035, 50; //Matchstick
+			delitem 526, 100; //Royal Jelly
+			getitem 5028, 1; //Candle
 			callfunc "Vending Machine","finish";
 		}
 			callfunc "Vending Machine","bad";
 	case 9:
-		if (countitem("Candy") > 9 && countitem("Candy_Striper") > 4 && countitem("Well_Baked_Cookie") > 14 && countitem("Piece_Of_Cake") > 19 && countitem("Steel") > 9) {
+		if (countitem(529) > 9 && countitem(530) > 4 && countitem(538) > 14 && countitem(539) > 19 && countitem(999) > 9) {
 			callfunc "Vending Machine","good";
 			next;
-			delitem "Candy", 10;
-			delitem "Candy_Striper", 5;
-			delitem "Well_Baked_Cookie", 15;
-			delitem "Piece_Of_Cake", 20;
-			delitem "Steel", 10;
-			getitem "Hat_Of_Cake", 1;
+			delitem 529, 10; //Candy
+			delitem 530, 5; //Candy Cane
+			delitem 538, 15; //Well-baked Cookie
+			delitem 539, 20; //Piece of Cake
+			delitem 999, 10; //Steel
+			getitem 5024, 1; //Cake Hat
 			callfunc "Vending Machine","finish";
 		}
 			callfunc "Vending Machine","bad";
@@ -343,7 +344,7 @@ function	script	Vending Machine	{
 		mes "- weck weck !! -";
 		mes "- boom!! -";
 		mes "- ugh ! -";
-		if(countitem("Blush") > 0) {
+		if(countitem(5040) > 0) {
 			mes "- Wow . Blush !! -";
 			mes "- You are so cool -";
 			mes "- you know real fashion ! -";

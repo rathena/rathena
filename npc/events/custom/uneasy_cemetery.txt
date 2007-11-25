@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus
 //===== Current Version: ===================================== 
-//= 1.2 (Tested and fully working!)
+//= 1.2a (Tested and fully working!)
 //===== Compatible With: ===================================== 
 //= eAthena Version 1.0
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //===== Additional Comments: ================================= 
 //= 1.1 More advanced ver. Added some bonus the the one who'd kill the last walking undead
 //= 1.2 Added coords to the script to make label OmMobDead working
+//= 1.2a Changed item names to item IDs. [Samuray22]
 //============================================================ 
 
 
@@ -109,7 +110,7 @@ L_Undead_Walk:
 	if (Sex==0) mapannounce "prontera","[Mother Mathana]: In the name of Odin we declare beautiful "+$UNEASY_H$+" as a Prontera savior!",0;
 	mes "[Mother Mathana]";
 	mes "In the name of Odin we bless you and decently present a modest gift just from Mareusis' wine-cellar.";
-	getitem "Blue_Potion",1;
+	getitem 505,1; //Blue_Potion
 	set JobExp,JobExp+100;
 	set BaseExp,BaseExp+50;
 	close;

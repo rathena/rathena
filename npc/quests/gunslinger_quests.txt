@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.6a
+//= 1.6b
 //===== Compatible With: =====================================
 //= SVN eA
 //===== Description: =========================================
@@ -19,6 +19,7 @@
 //= 1.6 Updated Garrison Quest - Credits to Lazarus^ for
 //= making the first official version. [SinSloth]
 //= 1.6a Removed .GATs [Lupus]
+//= 1.6b Changed item names to item IDs on some scripts. [Samuray22]
 //============================================================
 
 
@@ -304,13 +305,13 @@ SubGarrison:
 			mes "Hmm, looks like the correct amount of materials and Zeny.";
 			mes "Here's a Garrison~";
 			mes "If you need one again, come and see me~";
-			delitem 999,50;
-			delitem "Oridecon",1;
-			delitem 7317,20;
-			delitem 985,3;
-			delitem 1003,50;
+			delitem 984,1; //Oridecon
+			delitem 985,3; //Elunium
+			delitem 999,50; //Steel
+			delitem 1003,50; //Coal
+			delitem 7317,20; //Rusty Screw
 			set Zeny,Zeny-30000;
-			getitem 13104,1;
+			getitem 13104,1; //Garrison
 			close;
 
 		case 3:

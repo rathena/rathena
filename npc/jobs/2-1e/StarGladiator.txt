@@ -3,22 +3,18 @@
 //===== By: ================================================== 
 //= Celestria, Samuray22
 //===== Current Version: ===================================== 
-//= 1.1a
+//= 1.1c
 //===== Compatible With: ===================================== 
 //= eAthena 1.0 +
 //===== Description: ========================================= 
 //= [Aegis Conversion]
 //= Job Change quest for Star Gladiator class.
 //===== Additional Comments: ================================= 
-//= A temp Star Gladiator Job Changer based on the kRO quest.
-//= Quest info from RagnaInfo.
-//= Sprites from kRO screenshots, bar two which I just had to guess at.
-//= 1.0 Optimized, updated [Lupus]
 //= 1.1 Updated to the Aegis Standards. [Samuray22]
 //= 1.1a Corrected a minor error respect to the header. [Samuray22]
 //= 1.1b Corrected NPC name length warning. [L0ne_W0lf]
-//============================================================ 
-
+//= 1.1c Changed item names to item IDs. [Samuray22]
+//============================================================
 
 payon,215,102,5	script	Moohyun#job_star	828,3,3,{	
 	if (Class == Job_Taekwon) {
@@ -428,7 +424,7 @@ comodo,172,230,5	script	Wandering Master#job_sta	730,{
 				mes "to the grand scheme of things.";
 				close;
 		} else if(STGL_Q == 2) {
-			if (countitem("Rough_Wind") > 0 && countitem("Great_Nature") > 0 && countitem("Mistic_Frozen") > 0 && countitem("Flame_Heart") > 0) {
+			if (countitem(994) > 0 && countitem(995) > 0 && countitem(996) > 0 && countitem(997) > 0) {
 				mes "[Moogang]";
 				mes "Ah, you've completed the";
 				mes "task I've set for you. Very";
@@ -475,10 +471,10 @@ comodo,172,230,5	script	Wandering Master#job_sta	730,{
 				mes "and all things. Now, when you";
 				mes "are ready for the next test, then^FFFFFF ^000000";
 				mes "I shall guide you to the altar.";
-				delitem "Rough_Wind", 1;
-				delitem "Great_Nature", 1;
-				delitem "Mistic_Frozen", 1;
-				delitem "Flame_Heart", 1;
+				delitem 994, 1; //Flame Heart
+				delitem 995, 1; //Mystic Frozen
+				delitem 996, 1; //Rough Wind
+				delitem 997, 1; //Great Nature
 				set STGL_Q, 3;
 				close;
 			}
@@ -1595,3 +1591,10 @@ job_star,161,33,2	script	Cheehee#job_star	77,{
 			mes "starlight in this room...";
 			close;
 }
+
+//===== Old Changelog: ================================= 
+//= A temp Star Gladiator Job Changer based on the kRO quest.
+//= Quest info from RagnaInfo.
+//= Sprites from kRO screenshots, bar two which I just had to guess at.
+//= 1.0 Optimized, updated [Lupus]
+//============================================================ 
