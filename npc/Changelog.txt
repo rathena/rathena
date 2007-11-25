@@ -2,7 +2,9 @@ Date		Added
 ======
 2007/11/24
 	* Rescripted Soul Linker Quest to Aegis 10.3 Standars. [Samuray22]
-	- Bug testing required.
+	- Bug testing Required.
+	* Rescripted Super Novice Quest to Aegis 10.3 Standars.
+	- Bug Testing Required.
 2007/11/23
 	* Fixed a error in Rogue Job Quest. (bugreport:481) [Samuray22]
 2007/11/22

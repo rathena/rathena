@@ -1,16 +1,376 @@
 //===== eAthena Script ======================================= 
 //= Super Novice Script
 //===== By: ================================================== 
-//= Darkchild
+//= Darkchild & Samuray22
 //===== Current Version: ===================================== 
-//= 1.8a
+//= 1.9
 //===== Compatible With: ===================================== 
 //= Any eAthena
 //===== Description: ========================================= 
-//= Super Novice Job Change Npc
-//= Super Novice Cart Rental Npc
-//= Some Other Useless Super Novice Npc
+//= [Aegis Conversion]
+//= Job Change quest for Super Novice class.
 //===== Additional Comments: ================================= 
+//= 1.9 Rescripted to the Aegis 10.3 Standars. [Samuray22]
+//============================================================
+//=======================Job Changer==========================
+aldeba_in,223,167,5	script	Tzerero	709,{
+	if(Upper == 1) {
+		mes "[Tzerero]";
+		mes "You've become one of the members of" ;
+		mes "the Great Novice Club.....";
+		next;
+		mes "[Tzerero]";
+		mes "YeahYeahYeah!!?!?";
+		mes "Oh my god!!! You are!! Are you..!!!?";
+		mes "- DiRiRinggg -";
+		next;
+		mes "- Crash -";
+		next;
+		mes "[Tzerero]";
+		mes "Uhoh, yes, yes, yes";
+		mes "Yes....I knew it, yes, Ah! No! You haven't mentioned it! Yes, of course";
+		mes "-Crash -";
+		next;
+		mes "[Tzerero]";
+		mes "...............";
+		mes "Good bye then~";
+		close;
+	} else if(BaseJob == Job_SuperNovice) {
+		mes "[Tzerero]";
+		mes "I have become one of the brightest member of the Novice Club.";
+		mes "You have learned everything";
+		mes "and you are near perfection.";
+		mes "You're just a normal novice.";
+		next;
+		mes "[Tzerero]";
+		mes "I hope that you will continue to enjoy the average life,";
+		mes "and promote the";
+		mes "existance of a novice.";
+		close;
+	} else if(countitem(938) > 29 && countitem(907) > 29 && SUPNOV_Q == 1) {
+		delitem 938, 30;	//Sticky_Mucus
+		delitem 907, 30;	//Resin
+		mes "[Tzerero]";
+		mes "If my prediction is correct,";
+		mes "it is better for you to be an average person who leads a normal life.";
+		mes "You have nothing to lose";
+		mes "if you join the";
+		mes "Novice Club.";
+		next;
+		mes "[Tzerero]";
+		mes "Then let's follow the agreement";
+		mes "and upgrade your profession to a Super Novice...Hmm?";
+		mes "Ah! What's that thing behind you?" ;
+		next;
+		if(select("Hmm?","What?") == 1) {
+			mes "-You turn back and look-";
+			mes "-but there's nothing-";
+			mes "-nothing...how suspicious!";
+			next;
+			getitem 2339, 1;	//Pantie
+			callfunc "F_ClearJobVar";
+			callfunc "Job_Change",Job_SuperNovice;
+			mes "[Tzerero]";
+			mes "Wahaha! You're shocked!";
+			mes "Making jokes in your daily life";
+			mes "will create another normal life.";
+			mes "What do you think about";
+			mes "the ability of Tzerero.";
+			next;
+			mes "[Tzerero]";
+			mes "Hmm... Joking is nothing important.";
+			mes "The main point is,";
+			mes "you've become a Super Novice.";
+			next;
+			mes "And there's something for you";
+			mes "as a token for joining the club.";
+			mes "This is also the legendary defensive equipment";
+			mes "owned by the Mr. Kimu=Shon?!";
+			next;
+			mes "[Tzerero]";
+			mes "May you lead a normal life";
+			mes "and make our";
+			mes "Novice Club shine.";
+			mes "I wish you a happy life!";
+			close;
+		}
+			mes "-After you've heard Tzerero's word-";
+			mes "-you're a little shock and try to ask him-";
+			mes "-Suddenly!";
+			next;
+			getitem 2339, 1;	//Pantie
+			callfunc "F_ClearJobVar";
+			callfunc "Job_Change",Job_SuperNovice;
+			mes "[Tzerero]";
+			mes "WaHaHa! You're shocked!";
+			mes "Making jokes in your daily life";
+			mes "will create another normal life.";
+			mes "What do you think about";
+			mes "the ability of Tzerero.";
+			next;
+			mes "[Tzerero]";
+			mes "Hmm... Joking is nothing important.";
+			mes "The main point is";
+			mes "you've become a Super Novice.";
+			next;
+			mes "[Tzerero]";
+			mes "And there's something for you";
+			mes "as a token for joining the club.";
+			mes "This is also the legendary defensive equipment";
+			mes "owned by the Mr. Kimu=Shon?!";
+			next;
+			mes "[Tzerero]";
+			mes "May you lead a normal life";
+			mes "and make our";
+			mes "Novice Club shine.";
+			mes "I wish you a happy life.";
+			close;
+	} else if(SUPNOV_Q == 1) {
+		mes "[Tzerero]";
+		mes "Hmm? Have you forgotten ";
+		mes "to bring anything? ";
+		mes "Let me repeat.";
+		mes "Remember it well.";
+		next;
+		mes "[Tzerero]";
+		mes "You'll need^FF0000Sticky Mucus^000000and ^FF0000Resin^000000";
+		mes "Don't forget!";
+		close;
+	} else if(BaseJob == Job_Novice) {
+		mes "[Tzerero]";
+		mes "...Hmm? I can see the";
+		mes "presence of normal all over you.";
+		mes "All of a sudden I think that";
+		mes "you're totally a born commoner who is destined to meet us!";
+		next;
+		mes "[Tzerero]";
+		mes "How about that, join us in the Novice Club";
+		mes "and be a commoner.";
+		mes "Walk a common path, lead a common life.";
+		mes "Do you want to enjoy the life";
+		mes "of being the member?";
+		next;
+		mes "[Tzerero]";
+		mes "Although this is not a substitute";
+		mes "if you become the member of our club.";
+		mes "Let's transfer you from the Novice";
+		mes "to the best Super Novice.";
+		next;
+		switch(select("I want to join","I don't want to join","I need to know the details")) {
+		case 1:
+			if(JobLevel < 10 || Skillpoint != 0) {
+				mes "[Tzerero]";
+				mes "Aiyo... What a pity";
+				mes "The basic status for the job transfer is not enough.";
+				mes "Please increase the skill level to level 9";
+				mes "and come again.";
+				close;
+			} else if(BaseLevel < 45) {
+				mes "[Tzerero]";
+				mes "Aiyo... What a pity.";
+				mes "The basic status for the job transfer is not enough.";
+				mes "Please increase your basic level to level 45";
+				mes "and come again.";
+				close;
+			}
+			mes "[Tzerero]";
+			mes "Oh Oh! you walk the path of a Novice too.";
+			mes "You won't find many of your kind";
+			mes "in this time!";
+			mes "Anyway, you've made a brilliant choice.";
+			next;
+			mes "[Tzerero]";
+			mes "Honestly, there's nothing better than being common.";
+			mes "Do you agree?";
+			next;
+			mes "[Tzerero]";
+			mes "Though it maybe be simple, but you won't become a member";
+			mes "of the Novice Guild just by submitting the application.";
+			mes "You need to attend";
+			mes "an additional qualifying test too...";
+			next;
+			mes "[Tzerero]";
+			mes "To blend with the common life";
+			mes "please catch some common monsters.";
+			mes "and bring some common items, hmm....please bring";
+			mes "^FF0000Sticky Mucus^000000 and ^FF0000Resin^000000";
+			mes "Maybe that'll be better?";
+			next;
+			mes "[Tzerero]";
+			mes "Gather 30 of these two items";
+			mes "and then look for me.";
+			mes "The sound of this number is common too, right? Hahaha!";
+			next;
+			set SUPNOV_Q, 1;
+			mes "[Tzerero]";
+			mes "Good luck to you then.";
+			close;
+		case 2:
+			mes "[Tzerero]";
+			mes "Aiyo...You haven't realized";
+			mes "the joy of a common path.";
+			mes "Never mind. It's your choice";
+			mes "of life living in this world.";
+			next;
+			mes "[Tzerero]";
+			mes "If you have changed your mind,";
+			mes "you can always look for me anytime.";
+			next;
+			mes "[Tzerero]";
+			mes "Ah... Maybe when the size of Novice Club expands";
+			mes "or has a greater influences,";
+			mes "the condition for the member to participate shall increase.";
+			mes "So if you wanted to join the club";
+			mes "be quick!";
+			close;
+		case 3:
+			mes "[Tzerero]";
+			mes "Cough cough, let me tell you something about the club.";
+			mes "The founder of the Novice club";
+			mes "as well as the first president of the club";
+			mes "Mr. Kimu=shon ";
+			mes "feels sorry that most people";
+			mes "have forgotten the path of a commoner...";
+			next;
+			mes "- You must finish listening to-";
+			mes "- the 10 minutes lecture of -";
+			mes "- Tzerero -";
+			next;
+			mes "[Tzerero]";
+			mes "...That the reason why";
+			mes "the Novice Club never dies?";
+			mes "If the Novice Club expands in future,";
+			mes "the concept of Novice Club will be";
+			mes "made into test questions.";
+			close;
+		}
+	}
+		mes "[Tzerero]";
+		mes "You're not a common Person";
+		mes "I'm the unofficial leader of the Novice Club.";
+		mes "My Name is Tzerero.";
+		next;
+		mes "[Tzerero]";
+		mes "To an unusual person like you,";
+		mes "the club will have nothing to do with you in all your life..";
+		mes "It's ok that you don't understand";
+		mes "because it is impossible for us";
+		mes "to make you understand.";
+		next;
+		mes "[Tzerero]";
+		mes "Hmm... There are different kinds of people in this world";
+		mes "When you have such kinds of people,";
+		mes "there will be another kind, that's how things work.";
+		mes "Don't you think so??";
+		close;
+}
+
+//=======================Esere==========================
+aldeba_in,216,169,3	script	Esere	86,{
+	if(BaseJob == Job_Supernovice) {
+		mes "[Esere]";
+		mes "Aiyo? Aren't you the member of the Novice Guild?";
+		mes "Wow~ You have pretty sharp eyes?!";
+		mes "How do you know this is something good~";
+		next;
+		mes "[Esere]";
+		mes "And we can continue to fool around...No no.";
+		mes "I mean enjoy a common life! And for your info";
+		mes "I am the best member under my leader";
+		mes "Tzerero?!";
+		close;
+	} else if(BaseJob == Job_Novice) {
+		mes "[Esere]";
+		mes "You still haven't realize the joy";
+		mes "of being a commoner!";
+		mes "And you have already become the member of Novice Guild?~";
+		mes "Well, it's not a bad thing being a Novice. Hehe.";
+		next;
+		mes "[Esere]";
+		mes "Actually, Novice is the best! Hahaha!";
+		close;
+	}
+		mes "[Esere]";
+		mes "Aiyo...You have went far from the road of commoner.";
+		mes "And it's already too late,";
+		mes "even if you feel regret now!";
+		mes "Hmm... Then you should live the dangerous life as an adventurer";
+		mes "on behalf of us.";
+		close;
+}
+
+//=======================Cart Rental==========================
+aldebaran,54,238,3	script	Kafra Employee	117,{
+	if(BaseJob == Job_Supernovice) {
+		mes "[Kafra Employee]";
+		mes "Hmm? So, you are a Super Novice.";
+		mes "Are you feeling sad because";
+		mes "other Kapra Staffs do not let you use";
+		mes "the push cart? But now,";
+		mes "you won't need to worry anymore.";
+		next;
+		mes "[Kafra Employee]";
+		mes "Due to the overwhelming demands,";
+		mes "we have launched a push cart especially";
+		mes "for the Super Novice...";
+		mes "However, this has offended";
+		mes "the orders from the Kapra Headquarters.";
+		mes "Therefore, we have to provide this service secretly.. Hehe";
+		next;
+		mes "[Kafra Employee]";
+		mes "Anyway, let's end the introduction lecture here!";
+		mes "So, do you want to rent a push cart?";
+		mes "the rental fee is 1900 zeny";
+		next;
+		if(select("Yes","No, thanks") == 1) {
+			mes "[Kafra Employee]";
+			mes "Ah, there's something you need to take note!";
+			mes "Have you learned";
+			mes "the skill of Push cart?";
+			mes "I have nothing to lose because I can rent the cart to you anytime.";
+			mes "But if you didn't learn that skill,";
+			mes "it will only be a waste of zeny and you won't get a push cart.";
+			next;
+			mes "[Kafra Employee]";
+			mes "Please take note that..I do this secretly.";
+			mes "So there's nothing";
+			mes "to be confirmed.";
+			next;
+			if(select("I'll use it", "No thanks") == 1) {
+				if(checkcart() == 1) {
+					mes "[Kafra Employee]";
+					mes "You have equipped the push cart, dear customer.";
+					close;
+				} else if(Zeny > 1899) {
+					set Zeny,Zeny-1900;
+					setcart;
+					mes "[Kafra Employee]";
+					mes "Thank you for using.";
+					mes "Although this is not legal,";
+					mes "I am the Kafra Staff";
+					mes "that will be at your service ~";
+					close;
+				}
+					mes "[Kafra Employee]";
+					mes "You have not pay enough zeny.";
+					mes "The amount of push cart rental is 1900 zeny.";
+					close;
+			}
+		}
+			mes "[Kafra Employee]";
+			mes "Maybe you can use it";
+			mes "in future.";
+			close;
+	}
+		mes "[Kafra Employee]";
+		mes "Welcome~ Uh Oh? I am sorry.";
+		mes "I don't think there's anything that I can do to help you.";
+		mes "Please look for";
+		mes "other Kafra Employees.";
+		close;
+}
+
+//===== Old Changelog: ================================= 
 //= Dialogs From Some Other Scripts (Most Of It)
 //= 1.3-1.5 Added Baby class support (and to the Kafta SN Cart
 //= renter, too) [Lupus]
@@ -19,261 +379,3 @@
 //= 1.7 Fixed Baby Class Support. [Lupus]
 //= 1.8 Now a Baby can become a Super Baby [Lupus]
 //============================================================ 
-
-
-// -- Jobchanger --
-aldeba_in,223,167,3	script	Tozel	709,{
-	if(SUPNOV_Q == 1) goto L_Start2;
-	if(BaseJob == Job_SuperNovice) goto L_Twice;
-	if(BaseJob != Job_Novice || Upper==1) goto L_Otherjob;
-	mes "[Tozel]";
-	mes "Hello, Novice!";
-	mes "Are you enjoying yourself as a novice, the preferred class of the common man?";
-	next;
-	mes "[Tozel]";
-	mes "Would you like to join the Novice Guild and add your common character";
-	mes "to the common pool of talent so that we can perform common services?";
-	next;
-	mes "[Tozel]";
-	mes "If you join us, I'll change your class from Novice to the highly skilled Super Novice!";
-	mes "How does that sound?";
-	next;
-	menu "I'm sold!",-,"Super Novice is Super Stupid",L_Stupid,"Well, to make an informed choice...",L_Well;
-	if(JobLevel < 10) goto L_LowSkill;
-	if(BaseLevel < 45) goto L_LowLevel;
-	if(SkillPoint != 0) goto L_StillSk; 
-	mes "[Tozel]";
-	mes "Wonderful!";
-	mes "You're on the road to becoming an uncommonly common individual.";
-	next;
-	mes "[Tozel]";
-	mes "Common is a great word, isn't it?";
-	next;
-	mes "[Tozel]";
-	mes "Just because you've applied to become a member of the Novice Guild doesn't mean automatic admission.";
-	mes "There are requirements you must meet.";
-	next;
-	mes "[Tozel]";
-	mes "Being a guild of common men, it's only fitting that you bring me a common item as an entry requirement.";
-	mes "So, go and find thirty each of: ";
-	mes "   ^FF0000Sticky Mucus^000000 and";
-	mes "   ^FF0000Resin^000000.";
-   	next;
-	mes "[Tozel]";
-	mes "Once you collect this common number of common items, head on back to this common guild of common men.";
-	set SUPNOV_Q,1;
-	close;
-
-L_Stupid:
-	mes "[Tozel]";
-	mes "Hm...That's an attitude shared by a lot of common criminals and other commonly marginalized types.";
-	mes "...They don't understand the fulfillment gained by a common pool of friends.";
-	next;
-	mes "[Tozel]";
-	mes "Of course, it's common to change one's mind as well.";
-	mes "If you do, please drop by again.";
-	close;
-
-L_Well:
-	mes "[Tozel]";
-	mes "Oh, you want to know a bit more about this guild, eh?";
-	mes "I'll be happy to explain!";
-	next;
-	mes "[Tozel]";
-	mes "Let me tell you about Kima, the guild founder.";
-	mes "Kima founded this guild because those of common ancestry and common our status had no place";
-	mes "to assemble and enjoy each other's company.";
-	next;
-	mes "- Tozel talks for ten minutes. - ";
-	mes "- His tone is so common that it bores you to tears. -";
-	next;
-	mes "[Tozel]";
-	mes "...Anyway, the Novice guild has propsered greatly since its founding.";
-	mes "We pride ourselves on our slogan 'Common Man, Common Goals, Common Dreams'!";
-	close;
-
-L_Start2:
-	if(countitem(938) < 30) goto L_ItemError;
-	if(countitem(907) < 30) goto L_ItemError;
-	delitem 938,30;
-	delitem 907,30;
-	mes "[Tozel]";
-	mes "Well, your performance seems to be uh...common, but that's good enough for us!";
-	mes "Welcome to the Novice Guild!";
-	next;
-	mes "[Tozel]";
-	mes "According to my promise, I'll make you a Super Novice.";
-	mes "Are you ready?!";
-	next;
-	menu "Huh?!",-,"Maybe?!",-;
-	mes "- Tozel's uncommon demeanor catches you off guard, -";
-	mes "- leaving you speechless! -";
-	next;
-	if (Upper==0) jobchange Job_SuperNovice;
-	if (Upper==2) jobchange Job_Super_Baby;
-	getitem 2339,1;
-	callfunc "F_ClearJobVar";
-	mes "[Tozel]";
-	mes "Hahahah!  Were you surprised?!";
-	mes "Just because we're common people doesn't mean we can't be misfits sometimes!";
-	next;
-	mes "[Tozel]";
-	mes "So, now your new life as a Super Novice begins!";
-	next;
-	mes "[Tozel]";
-	mes "Now you're a part of Kima's legacy!";
-	mes "Please continue his good (but common) name.";
-	close;
-
-L_LowSkill:
-	mes "[Tozel]";
-	mes "Well...it seems your level is a little too common at the moment.";
-	mes "You need to have a class level of ^0000FFat least 9^000000 in order to join us.";
-	close;
-
-L_LowLevel:
-	mes "[Tozel]";
-	mes "Well...it seems your level is a little too common at the moment.";
-	mes "You need to have a primary level of ^0000FFat least 45^000000 in order to join us.";
-	close;
-
-L_StillSk:
-	mes "[Tozel]";
-	mes "Well...it seems you still have some skill points.";
-	mes "You need to have ^0000FFNO^000000 skill points left in order to join our guild.";
-	close;
-
-L_ItemError:
-	mes "[Tozel]";
-	mes "Did you forget what you were supposed to find?";
-	mes "I'll tell you again.";
-	next;
-	mes "[Tozel]";
-	mes "You need to find thirty each of";
-	mes "^FF0000  Sticky Muscus^000000 and";
-	mes "^FF0000  Resin^000000.";
-	close;
-
-L_Twice:
-	mes "[Tozel]";
-	mes "You're a member of the Novice Guild now.";
-	mes "There's no need to have exceptional talents here.";
-	mes "Your common vigilance is all we require.";
-	next;
-	mes "[Tozel]";
-	mes "Go, then, and live a common and unexceptional life, in order to bring respect to our guild.";
-	close;
-L_Otherjob:
-	mes "[Tozel]";
-	mes "Hey!  You're not a man of common heritage!";
-	mes "I'm Tozel, the master of the Novice Guild.";
-	next;
-	mes "[Tozel]";
-	mes "This place is for people who who have common goals,";
-	mes "common beliefs, common lives.";
-	mes "For you, an uncommon person, this place is anathema.";
-	next;
-	mes "[Tozel]";
-	mes "Such people don't have a place in our common society.  I'm sorry.";
-	close;
-}
-
-// -- Totaly Useless :) --
-aldeba_in,216,169,5	script	Serei	86,{
-	if(BaseJob == Job_SuperNovice) goto L_Supernovice;
-	if(BaseJob != Job_Novice) goto L_Otherjob;
-	mes "[Serei]";
-	mes "You're pretty common.";
-	mes "A common man should live a happy life.";
-	mes "You should consider joining the Novice Guild.";
-	next;
-	mes "[Serei]";
-	mes "GO NOVICE CLASS!";
-	mes "Hahahahahahahaha!";
-	close;
-
-L_Supernovice:
-	mes "[Serei]";
-	mes "Yaaaaaaaaaaaaaaaaaaaaaaaay!";
-	mes "You're a member of the Novice Guild!  Sweet!";
-	next;
-	mes "[Serei]";
-	mes "That's great!";
-	mes "Are you trying to extend the Guild's legacy of uneventfulness?";
-	next;
-	mes "[Serei]";
-	mes "I'm Guildmaster Tozel's number one man!";
-	close;
-
-L_Otherjob:
-	mes "[Serei]";
-	mes "Oh no!";
-	mes "You're one of those people who rejected the common way of life!";
-	mes "You might be dangerous to those who walk the common path!";
-	mes "Ahhhh!";
-	close;
-}
-
-
-// -- Car Rental --
-aldebaran,54,238,5	script	Kafra::kaf_sn	117,{
-	if(BaseJob != Job_SuperNovice) goto L_Otherjob;
-	if(checkcart() == 1) goto L_GotCart;
-	mes "[Kafra]";
-	mes "Oh, a Super Novice!";
-	mes "You're annoyed that the other Kafras won't lend you a cart?";
-	mes "No problem!";
-	next;
-	mes "[Kafra]";
-	mes "I can lend you a cart, but try to keep a low profile,";
-	mes "because we are under orders from Kafra management not to lend carts to any Novice.";
-	next;
-	mes "[Kafra]";
-	mes "There will be a fee of ^FF00001900zeny^000000 to use the cart.";
-	next;
-	mes "[Kafra]";
-	mes "You need to have the Push Cart skill in order to use a cart.";
-	mes "If you don't have this skill,";
-	mes "you won't be able to use the cart and You'll lose your money.";
-	mes "Do you want me to lend you a cart?";
-	next;
-	menu "Lend me a cart",-,"Not Necessary",L_End;
-	mes "[Kafra]";
-	mes "Since I'm secretly lending you a cart,";
-	mes "I can't ensure you have the Push Cart skill.";
-	mes "If you don't, you won't be able to use the cart and You'll lose your money.";
-	mes "Are you sure you want the cart?";
-	next;
-	menu "I heard you the first time!",-,"Uhhh...wait a minute...",L_End;
-	if(getskilllv(39)==0) goto L_End;
-	if(Zeny < 1900) goto L_Error;
-	set Zeny,Zeny-1900;
-	setcart;
-	mes "[Kafra]";
-	mes "Thanks for using the Kafra service, even if it is under the table.";
-	mes "Hehehehehe...";
-	close;
-
-L_Error:
-	mes "[Kafra]";
-	mes "Hmmm.  It seems you're short of funds.";
-	close;
-
-L_End:
-	mes "[Kafra]";
-	mes "Thank you for your patronage.";
-	mes "Please come again.";
-	close;
-
-L_GotCart:
-	mes "[Kafra]";
-	mes "HI There, Dear Super Novice.";
-	mes "I'm sorry but I can't help you, you already have an cart!";
-	close;
-
-L_Otherjob:
-	mes "[Kafra]";
-	mes "I'm sorry, but I'm not taking customers right now.";
-	mes "Please try asking the other Kafra staff for assistance.";
-	close;
-}
