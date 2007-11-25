@@ -3012,13 +3012,13 @@ int pc_isUseitem(struct map_session_data *sd,int n)
 	//Anodyne (can't use Anodyne's Endure at GVG)
 	if(nameid == 605 && map_flag_gvg(sd->bl.m))
 		return 0;
-	//Fly Wing (can't use at GVG and when noteleport flag is on)
-	if(nameid == 601 && (map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m))) {
+	//Fly Wing/Giant Fly Wing (can't use at GVG and when noteleport flag is on)
+	if((nameid == 601 || nameid == 12212) && (map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m))) {
 		clif_skill_teleportmessage(sd,0);
 		return 0;
 	}
-	//Fly Wing/Butterfly Wing (can't use when you in duel) [LuzZza]
-	if((nameid == 601 || nameid == 602) && (!battle_config.duel_allow_teleport && sd->duel_group)) {
+	//Fly Wing/Butterfly Wing/Giant Fly Wing (can't use when you in duel) [LuzZza]
+	if((nameid == 601 || nameid == 602 || nameid == 12212) && (!battle_config.duel_allow_teleport && sd->duel_group)) {
 		clif_displaymessage(sd->fd, "Duel: Can't use this item in duel.");
 		return 0;
 	}
