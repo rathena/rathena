@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/11/25
+	* Fixed an NPC error in lutie quest file (scrap " left behind.) [l0ne_W0lf]
 	* Changed item names to item IDs on some scripts. [Samuray22]
 2007/11/24
 	* Rescripted Soul Linker Quest to Aegis 10.3 Standars. [Samuray22]

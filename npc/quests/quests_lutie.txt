@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= TonyMan & Samuray22
 //===== Current Version: ===================================== 
-//= 1.3a
+//= 1.3b
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 1.2 Fixed Chef Hat items [Lupus]
 //= 1.3 Update NPC to the Official One. [Samuray22]
 //= 1.3a Changed item names to item IDs. [Samuray22]
+//= 1.3b Removed a scrap " left in a delitem. [L0ne_W0lf]
 //============================================================ 
 
 xmas,117,295,3	script	Vending Machine Man	704,{
@@ -227,7 +228,7 @@ xmas,115,297,3	script	Vending Machine	111,{
 			next;
 			delitem 2213, 1; //Kitty Band
 			delitem 1036, 20; //Dragon Scale 
-			delitem 7012", 200; //Tough Scalelike Stem
+			delitem 7012, 200; //Tough Scalelike Stem
 			delitem 7065, 300; //Sea-Otter Fur
 			getitem 5033, 1; //Raccoon Hat
 			callfunc "Vending Machine","finish";
