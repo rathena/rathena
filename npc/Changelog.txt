@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/11/26
+	* Rev. 11811 Fixed some minor guild script related bugs. [L0ne_W0lf]
+	- And no, this does NOT fix the Emperium spawning issue.
 	* Rev. 11810 Updated trigger area of Payon's West exit/entrance. [L0ne_W0lf]
 2007/11/25
 	* Fixed a Problem in Mage Quest. (bugreport:489) [Samuray22]

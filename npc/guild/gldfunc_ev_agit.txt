@@ -4,7 +4,7 @@
 //= jAthena - kalen (1.0)
 //= 1.1 by Akaru, ho|yAnge|X, and Valaris
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= eAthena SVN; RO Episode 4+
 //===== Description: =========================================
@@ -31,6 +31,9 @@
 //= 1.6 Fixed the OnAgitBreak message being map-only and not global. (Lil DomX) [L0ne_W0lf]
 //= 1.7 Updated functions, got rid of the various gotos. [L0ne_W0lf]
 //=	Castles can be conquered as long as they un-owned.
+//= 1.8 Fixed Guardian data being overwritten when castle ownership changes. [L0ne_W0lf]
+//	Data will only be saved for guardians if you have the Guaridan Research.
+//	It works this way to deal with a bug on ownership change.
 //============================================================
 
 
@@ -139,7 +142,6 @@ function	script	F_AgitBreak	{
 	set .@map$, getarg(0);
 	set .@castle$, getarg(1);
 
-	//killmonsterall .@map$;
 	set .@GID,getcharid(2);
 	if (.@GID <= 0) return;
 
@@ -158,7 +160,14 @@ function	script	F_AgitBreak	{
 
 	disablenpc "Kafra Staff#"+.@castle$;
 
-	for( set .@i, 4; .@i <= 25; set .@i, .@i+1 )
+	// Set data to be cleared from the castle
+	// If the new owning guild doesn't have have 
+	// Guardian Research erase all guardian data.
+	// Otherwise remove investment data and kafra.
+	if (getgdskilllv(.@GID,10002) == 0) set .@data,25;
+	else set .@data,9;
+
+	for( set .@i, 4; .@i <= .@data; set .@i, .@i+1 )
 		SetCastleData .@map$, .@i, 0;
 
 	return;
