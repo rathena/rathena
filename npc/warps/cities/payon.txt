@@ -5,7 +5,7 @@
 //= Darkchild (1.1)
 //= Nana (1.3)
 //===== Current Version: ===================================== 
-//= 1.5
+//= 1.6
 //===== Compatible With: ===================================== 
 //= Any eAthena Mod
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 1.3 Separated and reorganized field and dungeons
 //= 1.4 Fixed warp payonwarp031 [Yor]
 //= 1.5 Removed Payonwarp006, it was a duplicate [MasterOfMuppets]
+//= 1.6 Changed trigger area of payon -> pay_fild08  warp. [L0ne_W0lf]
 //============================================================
 
 // == Official Warps From kRO Screenshots ==
@@ -25,7 +26,7 @@ payon,16,142,0		warp	payonwarp001	1,1,pay_gld,370,149
 pay_gld,374,149,0		warp	payonwarp002	1,1,payon,20,142
 payon,122,27,0		warp	payonwarp003	5,3,pay_fild01,333,356
 pay_fild01,333,360,0	warp	payonwarp004	5,3,payon,122,31
-payon,267,89,0		warp	payonwarp005	2,4,pay_fild08,20,74
+payon,267,89,0		warp	payonwarp005	1,1,pay_fild08,20,74
 payon,228,330,0		warp	payonwarp007	4,2,pay_arche,81,22
 pay_arche,81,18,0		warp	payonwarp008	5,2,payon,228,326
 

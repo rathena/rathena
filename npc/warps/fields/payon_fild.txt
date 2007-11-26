@@ -10,6 +10,7 @@
 //= Payon Field Warps
 //===== Additional Comments: ================================= 
 //= 1.1 Refixed payon field08 -> payon warp
+//= 1.2 Changed trigger area of pay_fild08 -> payon warp. [L0ne_W0lf]
 //============================================================ 
 
 //= Payon Field's ============================================
@@ -37,7 +38,7 @@ pay_fild07,163,17,0	warp	payf08-1	5,2,pay_fild03,177,275
 pay_fild07,280,382,0	warp	payf11	4,2,pay_fild08,160,19	
 pay_fild07,382,290,0	warp	payf12	2,5,pay_fild10,19,290
 pay_fild08,160,16,0	warp	payf11-1	4,2,pay_fild07,280,379
-pay_fild08,17,75,0	warp	payf006	2,4,payon,265,92
+pay_fild08,17,75,0	warp	payf006	1,1,payon,265,92
 pay_fild08,262,91,0	warp	payf13	2,4,pay_fild09,19,91
 pay_fild09,112,16,0	warp	pay14	4,2,pay_fild10,112,379
 pay_fild09,16,91,0	warp	payf13-1	2,4,pay_fild08,259,91
