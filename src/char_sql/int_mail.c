@@ -133,6 +133,7 @@ static int mail_savemessage(struct mail_message* msg)
 	} else
 		j = (int)SqlStmt_LastInsertId(stmt);
 
+	SqlStmt_Free(stmt);
 	StringBuf_Destroy(&buf);
 
 	// return the ID of the new mail
