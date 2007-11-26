@@ -1,24 +1,41 @@
-LOGIN_CONVERTER_OBJ = login-converter.o ../common/obj/minicore.o \
+
+LOGIN_CONVERTER_OBJ = obj_login/login-converter.o ../common/obj/minicore.o \
 	../common/obj/malloc.o ../common/obj/strlib.o ../common/obj/showmsg.o \
 	../common/obj/utils.o ../common/obj/ers.o ../common/obj/db.o \
 	../common/obj_sql/sql.o
-CHAR_CONVERTER_OBJ = char-converter.o ../common/obj/minicore.o \
+LOGIN_CONVERTER_H = ../common/cbasetypes.h ../common/mmo.h ../common/core.h \
+	../common/malloc.h ../common/strlib.h ../common/showmsg.h \
+	../common/utils.h ../common/ers.h ../common/db.h \
+	../common/sql.h
+
+CHAR_CONVERTER_OBJ = obj_char/char-converter.o \
+	obj_char/txt-char.o obj_char/txt-int_pet.o obj_char/txt-int_storage.o obj_char/txt-inter.o \
+	obj_char/txt-int_party.o obj_char/txt-int_guild.o \
+	obj_char/sql-char.o obj_char/sql-int_pet.o obj_char/sql-int_storage.o \
+	obj_char/sql-inter.o obj_char/sql-int_party.o obj_char/sql-int_guild.o \
+	../common/obj/minicore.o \
 	../common/obj/malloc.o ../common/obj/strlib.o ../common/obj/showmsg.o \
 	../common/obj/utils.o ../common/obj/ers.o ../common/obj/mapindex.o \
-	../common/obj_sql/sql.o \
-	obj_txt/char.o obj_txt/int_pet.o obj_txt/int_storage.o obj_txt/inter.o \
-	obj_txt/int_party.o obj_txt/int_guild.o \
-	obj_sql/char.o obj_sql/int_pet.o obj_sql/int_storage.o \
-	obj_sql/inter.o obj_sql/int_party.o obj_sql/int_guild.o
+	../common/obj_sql/sql.o
+CHAR_CONVERTER_H = ../char/char.h ../char/int_pet.h ../char/int_storage.h ../char/inter.h \
+	../char/int_party.h ../char/int_guild.h \
+	../char_sql/char.h ../char_sql/int_pet.h ../char_sql/int_storage.h \
+	../char_sql/inter.h ../char_sql/int_party.h ../char_sql/int_guild.h \
+	../common/cbasetypes.h ../common/mmo.h ../common/core.h \
+	../common/malloc.h ../common/strlib.h ../common/showmsg.h \
+	../common/utils.h ../common/ers.h ../common/mapindex.h \
+	../common/sql.h
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	LOGIN_CONVERTER_DEPENDS=$(LOGIN_CONVERTER_OBJ)
-	CHAR_CONVERTER_DEPENDS=obj $(CHAR_CONVERTER_OBJ)
+	LOGIN_CONVERTER_DEPENDS=obj_login $(LOGIN_CONVERTER_OBJ)
+	CHAR_CONVERTER_DEPENDS=obj_char $(CHAR_CONVERTER_OBJ)
 else
 	LOGIN_CONVERTER_DEPENDS=needs_mysql
 	CHAR_CONVERTER_DEPENDS=needs_mysql
 endif
+
+@SET_MAKE@
 
 #####################################################################
 .PHONY : all login-converter char-converter clean help
@@ -32,7 +49,7 @@ char-converter: $(CHAR_CONVERTER_DEPENDS)
 	@CC@ @LDFLAGS@ -o ../../tools/char-converter@EXEEXT@ $(CHAR_CONVERTER_OBJ) @LIBS@ @MYSQL_LIBS@
 
 clean:
-	rm -rf *.o obj_txt obj_sql ../../tools/login-converter@EXEEXT@ ../../tools/char-converter@EXEEXT@
+	rm -rf *.o obj_login obj_char ../../tools/login-converter@EXEEXT@ ../../tools/char-converter@EXEEXT@
 
 help:
 	@echo "possible targets are 'login-converter' 'char-converter' 'all' 'clean' 'help'"
@@ -48,21 +65,24 @@ needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"
 	@exit 1
 
-obj:
-	-mkdir obj_txt
-	-mkdir obj_sql
+obj_login:
+	-mkdir obj_login
 
+obj_char:
+	-mkdir obj_char
 
-# DO NOT DELETE
-
-%.o: %.c
+obj_login/%.o: %.c $(LOGIN_CONVERTER_H)
 	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -DTXT_SQL_CONVERT -c $(OUTPUT_OPTION) $<
 
-obj_txt/%.o: ../char/%.c
+obj_char/%.o: %.c $(CHAR_CONVERTER_H)
 	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -DTXT_SQL_CONVERT -c $(OUTPUT_OPTION) $<
 
-obj_sql/%.o: ../char_sql/%.c
+obj_char/txt-%.o: ../char/%.c $(CHAR_CONVERTER_H)
 	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -DTXT_SQL_CONVERT -c $(OUTPUT_OPTION) $<
 
-char-converter.o: char-converter.c
-login-converter.o: login-converter.c
+obj_char/sql-%.o: ../char_sql/%.c $(CHAR_CONVERTER_H)
+	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -DTXT_SQL_CONVERT -c $(OUTPUT_OPTION) $<
+
+# missing common object files
+../common/obj/%.o:
+	@$(MAKE) -C ../common sql

@@ -1,18 +1,33 @@
+
+COMMON_OBJ = obj/core.o obj/socket.o obj/timer.o obj/db.o obj/plugins.o obj/lock.o \
+	obj/nullpo.o obj/malloc.o obj/showmsg.o  obj/strlib.o obj/utils.o \
+	obj/grfio.o obj/mapindex.o obj/ers.o obj/md5calc.o \
+	obj/minicore.o obj/minisocket.o obj/minimalloc.o
+COMMON_H = svnversion.h mmo.h plugin.h version.h \
+	core.h socket.h timer.h db.h plugins.h lock.h \
+	nullpo.h malloc.h showmsg.h  strlib.h utils.h \
+	grfio.h mapindex.h ers.h md5calc.h
+
+COMMON_SQL_OBJ = obj_sql/sql.o
+COMMON_SQL_H = sql.h
+
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
 	ALL_DEPENDS=txt sql
-	SQL_DEPENDS=txt obj_sql common_sql
+	SQL_DEPENDS=common common_sql
 else
 	ALL_TARGET=txt
 	SQL_DEPENDS=needs_mysql
 endif
+
+@SET_MAKE@
 
 #####################################################################
 .PHONY : all txt sql clean help
 
 all: $(ALL_DEPENDS)
 
-txt: obj common
+txt: common
 
 sql: $(SQL_DEPENDS)
 
@@ -39,21 +54,18 @@ obj:
 obj_sql:
 	-mkdir obj_sql
 
-common: obj/core.o obj/socket.o obj/timer.o obj/db.o obj/plugins.o obj/lock.o \
-	obj/nullpo.o obj/malloc.o obj/showmsg.o  obj/strlib.o obj/utils.o \
-	obj/grfio.o obj/minicore.o obj/minisocket.o obj/minimalloc.o \
-	obj/mapindex.o obj/ers.o obj/md5calc.o
+common: obj $(COMMON_OBJ)
 
-common_sql: obj_sql/sql.o
+common_sql: obj_sql $(COMMON_SQL_OBJ)
 
 
-obj/%.o: %.c
+obj/%.o: %.c $(COMMON_H)
 	@CC@ @CFLAGS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
-obj/mini%.o: %.c
+obj/mini%.o: %.c $(COMMON_H)
 	@CC@ @CFLAGS@ -DMINICORE @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
-obj_sql/%.o: %.c
+obj_sql/%.o: %.c $(COMMON_H) $(COMMON_SQL_H)
 	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 
@@ -68,28 +80,3 @@ else
 svnversion.h:
 	@printf "\n" > svnversion.h
 endif
-
-obj/minicore.o: core.c core.h
-obj/minisocket.o: socket.c socket.h
-obj/minimalloc.o: malloc.c malloc.h
-
-# DO NOT DELETE
-
-obj/core.o: core.c core.h showmsg.h svnversion.h
-obj/db.o: db.c db.h showmsg.h ers.h
-obj/ers.o: ers.c ers.h cbasetypes.h
-obj/grfio.o: grfio.c grfio.h
-obj/lock.o: lock.c lock.h showmsg.h
-obj/malloc.o: malloc.c malloc.h showmsg.h
-obj/mapindex.o: mapindex.c mapindex.h
-obj/md5calc.o: md5calc.c md5calc.h
-obj/nullpo.o: nullpo.c nullpo.h showmsg.h
-obj/plugins.o: plugins.c plugins.h plugin.h
-obj/showmsg.o: showmsg.c showmsg.h
-obj/socket.o: socket.c socket.h mmo.h showmsg.h plugins.h
-obj/strlib.o: strlib.c strlib.h utils.h
-obj/timer.o: timer.c timer.h showmsg.h
-obj/utils.o: utils.c utils.h malloc.h showmsg.h mmo.h
-obj_sql/sql.o: sql.c sql.h cbasetypes.h malloc.h showmsg.h utils.h
-mmo.h: cbasetypes.h
-	@touch mmo.h

@@ -1,20 +1,26 @@
+
 COMMON_OBJ = ../common/obj/minicore.o ../common/obj/minisocket.o ../common/obj/timer.o \
 	../common/obj/malloc.o ../common/obj/showmsg.o ../common/obj/strlib.o \
 	../common/obj/utils.o ../common/obj/md5calc.o
 COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h \
 	../common/version.h ../common/malloc.h ../common/showmsg.h ../common/strlib.h \
-	../common/utils.h ../common/md5calc.h
+	../common/utils.h ../common/md5calc.h ../common/cbasetypes.h
+
+LADMIN_OBJ = obj/ladmin.o
+LADMIN_H = ladmin.h
+
+@SET_MAKE@
 
 #####################################################################
 .PHONY : all ladmin clean help
 
 all: ladmin
 
-ladmin: ladmin.o $(COMMON_OBJ)
-	@CC@ @LDFLAGS@ -o ../../ladmin@EXEEXT@ ladmin.o $(COMMON_OBJ) @LIBS@
+ladmin: obj $(LADMIN_OBJ) $(COMMON_OBJ)
+	@CC@ @LDFLAGS@ -o ../../ladmin@EXEEXT@ $(LADMIN_OBJ) $(COMMON_OBJ) @LIBS@
 
 clean:
-	rm -f *.o ../../ladmin@EXEEXT@
+	rm -rf *.o obj ../../ladmin@EXEEXT@
 
 help:
 	@echo "possible targets are 'ladmin' 'all' 'clean' 'help'"
@@ -25,7 +31,15 @@ help:
 
 #####################################################################
 
-# DO NOT DELETE
+obj:
+	-mkdir obj
 
-ladmin.o: ladmin.c ladmin.h $(COMMON_H)
+obj/%.o: %.c $(LADMIN_H) $(COMMON_H)
 	@CC@ @CFLAGS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+# missing common object files
+../common/obj/%.o:
+	@$(MAKE) -C ../common txt
+
+../common/obj/mini%.o:
+	@$(MAKE) -C ../common txt

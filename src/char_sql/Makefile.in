@@ -1,22 +1,30 @@
+
 COMMON_OBJ = ../common/obj/core.o ../common/obj/socket.o ../common/obj/timer.o \
 	../common/obj/db.o ../common/obj/plugins.o ../common/obj/lock.o \
 	../common/obj/malloc.o ../common/obj/showmsg.o ../common/obj/utils.o \
 	../common/obj/strlib.o ../common/obj/grfio.o \
-	../common/obj/mapindex.o ../common/obj/ers.o ../common/obj_sql/sql.o
+	../common/obj/mapindex.o ../common/obj/ers.o
 COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h \
 	../common/version.h ../common/db.h ../common/plugins.h ../common/lock.h \
 	../common/malloc.h ../common/showmsg.h ../common/utils.h \
 	../common/strlib.h ../common/grfio.h \
-	../common/mapindex.h ../common/ers.h ../common/sql.h
+	../common/mapindex.h ../common/ers.h
 
-CHAR_OBJ = char.o inter.o int_party.o int_guild.o int_storage.o int_pet.o int_homun.o int_mail.o
+COMMON_SQL_OBJ = ../common/obj_sql/sql.o
+COMMON_H = ../common/sql.h
+
+CHAR_OBJ = obj/char.o obj/inter.o obj/int_party.o obj/int_guild.o \
+	obj/int_storage.o obj/int_pet.o obj/int_homun.o obj/int_mail.o
+CHAR_H = char.h inter.h int_party.h int_guild.h int_storage.h int_pet.h int_homun.h int_mail.h
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	CHAR_SERVER_SQL_DEPENDS=$(CHAR_OBJ) $(COMMON_OBJ)
+	CHAR_SERVER_SQL_DEPENDS=obj $(CHAR_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ)
 else
 	CHAR_SERVER_SQL_DEPENDS=needs_mysql
 endif
+
+@SET_MAKE@
 
 #####################################################################
 .PHONY : all char-server_sql clean help
@@ -24,10 +32,10 @@ endif
 all: char-server_sql
 
 char-server_sql: $(CHAR_SERVER_SQL_DEPENDS)
-	@CC@ @LDFLAGS@ -o ../../char-server_sql@EXEEXT@ $(CHAR_OBJ) $(COMMON_OBJ) @LIBS@ @MYSQL_LIBS@
+	@CC@ @LDFLAGS@ -o ../../char-server_sql@EXEEXT@ $(CHAR_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ) @LIBS@ @MYSQL_LIBS@
 
 clean:
-	rm -f *.o ../../char-server_sql@EXEEXT@
+	rm -rf *.o obj ../../char-server_sql@EXEEXT@
 
 help:
 	@echo "possible targets are 'char-server_sql' 'all' 'clean' 'help'"
@@ -42,16 +50,15 @@ needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"
 	@exit 1
 
-%.o: %.c
+obj:
+	-mkdir obj
+
+obj/%.o: %.c $(CHAR_H) $(COMMON_H) $(COMMON_SQL_H)
 	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
-# DO NOT DELETE
+# missing common object files
+../common/obj/%.o:
+	@$(MAKE) -C ../common sql
 
-char.o: char.c char.h $(COMMON_H)
-inter.o: inter.c inter.h int_party.h int_guild.h int_storage.h int_pet.h int_homun.h $(COMMON_H)
-int_party.o: int_party.c int_party.h inter.h $(COMMON_H)
-int_guild.o: int_guild.c int_guild.h inter.h $(COMMON_H)
-int_storage.o: int_storage.c int_storage.h char.h $(COMMON_H)
-int_pet.o: int_pet.c int_pet.h inter.h char.h $(COMMON_H)
-int_homun.o: int_homun.c int_homun.h inter.h char.h $(COMMON_H)
-int_mail.o: int_mail.c int_mail.h inter.h char.h $(COMMON_H)
+../common/obj_sql/%.o:
+	@$(MAKE) -C ../common sql

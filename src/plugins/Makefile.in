@@ -1,8 +1,13 @@
-@SET_MAKE@
+
+COMMON_OBJ = ../common/obj/showmsg.o ../common/obj/utils.o ../common/obj/strlib.o \
+	../common/obj/minimalloc.o
+COMMON_H = ../common/plugin.h ../common/cbasetypes.h \
+	../common/showmsg.h ../common/utils.h ../common/strlib.h \
+	../common/malloc.h
 
 PLUGINS = sample sig pid gui upnp console
 
-COMMON_H = ../common/plugin.h ../common/cbasetypes.h
+@SET_MAKE@
 
 #####################################################################
 .PHONY : all $(PLUGINS) clean help
@@ -41,27 +46,18 @@ help:
 %@DLLEXT@: %.c
 	@CC@ @CFLAGS@ @CPPFLAGS@ -shared -o ../../plugins/$@ $<
 
-sig@DLLEXT@: sig.c
-	@$(MAKE) -C ../common txt
-	@CC@ @CFLAGS@ @CPPFLAGS@ -shared -o ../../plugins/$@ $< \
-	../common/obj/showmsg.o ../common/obj/utils.o ../common/obj/strlib.o \
-	../common/obj/minimalloc.o
-
 gui@DLLEXT@: ../../plugins/gui.conf
 upnp@DLLEXT@: ../../plugins/upnp.conf
+
+sig@DLLEXT@: sig.c $(COMMON_OBJ)
+	@CC@ @CFLAGS@ @CPPFLAGS@ -shared -o ../../plugins/$@ $< $(COMMON_OBJ)
 
 ../../plugins/%.conf: %.txt
 	cp -r $< $@
 
-../../plugins/gui.conf: gui.txt
-../../plugins/upnp.conf: upnp.txt
+# missing common object files
+../common/obj/%.o: ../common/%.c $(COMMON_H)
+	@$(MAKE) -C ../common txt
 
-# DO NOT DELETE
-
-sample@DLLEXT@: sample.c $(COMMON_H)
-sig@DLLEXT@: sig.c $(COMMON_H)
-pid@DLLEXT@: pid.c $(COMMON_H)
-gui@DLLEXT@: gui.c $(COMMON_H)
-#TODO where is upnp.c? [FlavioJS]
-#upnp@DLLEXT@: upnp.c $(COMMON_H)
-console@DLLEXT@: console.c $(COMMON_H)
+../common/obj/mini%.o: ../common/%.c $(COMMON_H)
+	@$(MAKE) -C ../common txt

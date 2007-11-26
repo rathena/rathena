@@ -1,3 +1,6 @@
+
+@SET_MAKE@
+
 #####################################################################
 .PHONY : all adduser convert mapcache clean help
 
@@ -9,12 +12,12 @@ adduser:
 convert:
 	@CC@ -o ../../tools/convert@EXEEXT@ convert.c
 
-mapcache:
-	@CC@ -c -o grfio.o grfio.c
-	@CC@ -o ../../mapcache@EXEEXT@ mapcache.c grfio.o -lz
+mapcache: obj
+	@CC@ -c -o obj/grfio.o grfio.c
+	@CC@ -o ../../mapcache@EXEEXT@ mapcache.c obj/grfio.o -lz
 
 clean:
-	rm -rf *.o ../../tools/adduser@EXEEXT@ ../../tools/convert@EXEEXT@ ../../mapcache@EXEEXT@
+	rm -rf *.o obj ../../tools/adduser@EXEEXT@ ../../tools/convert@EXEEXT@ ../../mapcache@EXEEXT@
 
 help:
 	@echo "possible targets are 'adduser' 'convert' 'mapcache' 'all' 'clean' 'help'"
@@ -26,3 +29,6 @@ help:
 	@echo "'help'      - outputs this message"
 
 #####################################################################
+
+obj:
+	-mkdir obj

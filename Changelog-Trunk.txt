@@ -4,8 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/11/26
-	* Fixed buildin_query_sql using Sql_Query instead of Sql_QueryStr, making 
-	  all %f,%d,... be processed. (fixes bureport:218) [FlavioJS]
+	* Normalized makefiles:
+	- 3 sections: variables, public targets, private/support targets
+	- object files always in a *_OBJ variable
+	- header files always in a *_H variable
+	- object files always generated to an obj* subfolder
+	- all Makefiles can be executed individually, calling other makefiles if necessary
+	- generic object targets when possible
+	* Fixed buildin_query_sql using Sql_Query instead of Sql_QueryStr, 
+	  wrongly processing all %f,%d,... (fixes bureport:218) [FlavioJS]
 	* Fixed guild expulsion not working correctly [ultramage]
 	* Fixed a memory leak in mail_savemessage (src\char_sql\int_mail.c). [FlavioJS]
 2007/11/25

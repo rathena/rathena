@@ -9,12 +9,17 @@ COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h
 	../common/grfio.h ../common/mapindex.h \
 	../common/ers.h ../common/md5calc.h  ../common/sql.h 
 
+LOGIN_OBJ = obj/login.o
+LOGIN_H = login.h
+
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	LOGIN_SERVER_SQL_DEPENDS=login.o $(COMMON_OBJ)
+	LOGIN_SERVER_SQL_DEPENDS=obj $(LOGIN_OBJ) $(COMMON_OBJ)
 else
 	LOGIN_SERVER_SQL_DEPENDS=needs_mysql
 endif
+
+@SET_MAKE@
 
 #####################################################################
 .PHONY : all login-server_sql clean help
@@ -22,10 +27,10 @@ endif
 all: login-server_sql
 
 login-server_sql: $(LOGIN_SERVER_SQL_DEPENDS)
-	@CC@ @LDFLAGS@ -o ../../login-server_sql@EXEEXT@ login.o $(COMMON_OBJ) @LIBS@ @MYSQL_LIBS@
+	@CC@ @LDFLAGS@ -o ../../login-server_sql@EXEEXT@ $(LOGIN_OBJ) $(COMMON_OBJ) @LIBS@ @MYSQL_LIBS@
 
 clean:
-	rm -f *.o ../../login-server_sql@EXEEXT@
+	rm -rf *.o obj ../../login-server_sql@EXEEXT@
 
 help:
 	@echo "possible targets are 'login-server_sql' 'all' 'clean' 'help'"
@@ -40,7 +45,15 @@ needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"
 	@exit 1
 
-# DO NOT DELETE
+obj:
+	-mkdir obj
 
-login.o: login.c login.h $(COMMON_H)
+obj/%.o: %.c $(LOGIN_H) $(COMMON_H)
 	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+# missing common object files
+../common/obj/%.o:
+	@$(MAKE) -C ../common sql
+
+../common/obj_sql/%.o:
+	@$(MAKE) -C ../common sql
