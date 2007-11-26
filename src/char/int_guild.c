@@ -233,7 +233,7 @@ int inter_guild_fromstr(char *str, struct guild *g) {
 		for(j = 0; j < 4 && str != NULL; j++)	// 位置スキップ
 			str = strchr(str + 1, '\t');
 	}
-//	printf("GuildExplusionInfo OK\n");
+//	printf("GuildExpulsionInfo OK\n");
 	// ギルドスキル
 	for(i = 0; i < MAX_GUILDSKILL; i++) {
 		if (sscanf(str+1,"%d,%d ", &tmp_int[0], &tmp_int[1]) < 2)

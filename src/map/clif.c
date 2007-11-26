@@ -11839,7 +11839,7 @@ static int packetdb_readdb(void)
 		{clif_parse_GuildInvite,"guildinvite"},
 		{clif_parse_GuildReplyInvite,"guildreplyinvite"},
 		{clif_parse_GuildLeave,"guildleave"},
-		{clif_parse_GuildExpulsion,"guildexplusion"},
+		{clif_parse_GuildExpulsion,"guildexpulsion"},
 		{clif_parse_GuildMessage,"guildmessage"},
 		{clif_parse_GuildRequestAlliance,"guildrequestalliance"},
 		{clif_parse_GuildReplyAlliance,"guildreplyalliance"},
