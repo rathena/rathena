@@ -11588,7 +11588,7 @@ BUILDIN_FUNC(query_sql)
 
 	// Execute the query
 	query = script_getstr(st,2);
-	if( SQL_ERROR == Sql_Query(mmysql_handle, query) )
+	if( SQL_ERROR == Sql_QueryStr(mmysql_handle, query) )
 	{
 		Sql_ShowDebug(mmysql_handle);
 		script_pushint(st, 0);
