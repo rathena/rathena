@@ -1715,6 +1715,10 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	status->aspd_rate = 1000;
 	status->ele_lv = 1;
 	status->race = RC_DEMIHUMAN;
+	//Set base Max-Hp/Sp (required here for negative Hp/Sp bonuses to work properly)
+	//We hold the standard Max HP here to make it faster to recalculate on vit changes.
+	sd->status.max_hp = status->max_hp = status_base_pc_maxhp(sd,status);
+	sd->status.max_sp = status->max_sp = status_base_pc_maxsp(sd,status);
 
 	//zero up structures...
 	memset(&sd->autospell,0,sizeof(sd->autospell)
@@ -2032,11 +2036,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 // ----- HP MAX CALCULATION -----
 
-	// Basic MaxHP value
-	//We hold the standard Max HP here to make it faster to recalculate on vit changes.
-	sd->status.max_hp = status_base_pc_maxhp(sd,status);
-	status->max_hp += sd->status.max_hp;
-
 	// Absolute modifiers from passive skills
 	if((skill=pc_checkskill(sd,CR_TRUST))>0)
 		status->max_hp += skill*200;
@@ -2055,10 +2054,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		status->max_hp = 1;
 
 // ----- SP MAX CALCULATION -----
-
-	// Basic MaxSP value
-	sd->status.max_sp = status_base_pc_maxsp(sd,status);
-	status->max_sp += sd->status.max_sp;
 
 	// Absolute modifiers from passive skills
 	if((skill=pc_checkskill(sd,SL_KAINA))>0)
