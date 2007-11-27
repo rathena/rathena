@@ -104,7 +104,6 @@ struct s_subnet {
 int subnet_count = 0;
 
 struct char_session_data {
-	int fd;
 	int account_id, login_id1, login_id2, sex;
 	int found_char[MAX_CHARS];
 	char email[40]; // e-mail (default: a@a.com) by [Yor]
@@ -1903,8 +1902,8 @@ static int char_delete(struct mmo_charstatus *cs)
 static void char_auth_ok(int fd, struct char_session_data *sd)
 {
 	struct online_char_data* character;
-	if (max_connect_user && count_users() >= max_connect_user &&
-		isGM(sd->account_id) < gm_allow_level) {
+	if (max_connect_user && count_users() >= max_connect_user && isGM(sd->account_id) < gm_allow_level)
+	{
 		// refuse connection (over populated)
 		WFIFOW(fd,0) = 0x6c;
 		WFIFOW(fd,2) = 0;
@@ -1916,8 +1915,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 	{	// check if character is not online already. [Skotlex]
 		if (character->server > -1)
 		{	//Character already online. KICK KICK KICK
-			mapif_disconnectplayer(server_fd[character->server],
-				character->account_id, character->char_id, 2);
+			mapif_disconnectplayer(server_fd[character->server], character->account_id, character->char_id, 2);
 			if (character->waiting_disconnect == -1)
 				character->waiting_disconnect = add_timer(gettick()+20000, chardb_waiting_disconnect, character->account_id, 0);
 			WFIFOW(fd,0) = 0x81;
@@ -1956,6 +1954,7 @@ int parse_fromlogin(int fd)
 	// so, if it isn't the login-server, we disconnect the session.
 	if( fd != login_fd )
 		set_eof(fd);
+
 	if(session[fd]->eof) {
 		if (fd == login_fd) {
 			ShowWarning("Connection to login-server lost (connection #%d).\n", fd);
@@ -2859,7 +2858,8 @@ int parse_frommap(int fd)
 				WFIFOL(map_fd,12) = (unsigned long)0; //TODO: connect_until_time, how do I figure it out right now?
 				memcpy(WFIFOP(map_fd,20), char_data, sizeof(struct mmo_charstatus));
 				WFIFOSET(map_fd, WFIFOW(map_fd,2));
-				data = idb_ensure(online_char_db, RFIFOL(fd, 2), create_online_char_data);
+
+				data = idb_ensure(online_char_db, RFIFOL(fd,2), create_online_char_data);
 				data->char_id = char_data->char_id;
 				data->server = map_id; //Update server where char is.
 
@@ -3226,15 +3226,16 @@ int parse_char(int fd)
 	
 	sd = (struct char_session_data*)session[fd]->session_data;
 
+	// disconnect any player if no login-server.
 	if(login_fd < 0)
 		set_eof(fd);
-	if(session[fd]->eof) { // disconnect any player (already connected to char-server or coming back from map-server) if login-server is diconnected.
-		if (fd == login_fd)
-			login_fd = -1;
+
+	if(session[fd]->eof)
+	{
 		if (sd != NULL)
 		{
 			struct online_char_data* data = idb_get(online_char_db, sd->account_id);
-			if (!data || data->server== -1) //If it is not in any server, send it offline. [Skotlex]
+			if (!data || data->server == -1) //If it is not in any server, send it offline. [Skotlex]
 				set_char_offline(99,sd->account_id);
 			if (data && data->fd == fd)
 				data->fd = -1;
@@ -3274,7 +3275,6 @@ int parse_char(int fd)
 			
 			CREATE(session[fd]->session_data, struct char_session_data, 1);
 			sd = (struct char_session_data*)session[fd]->session_data;
-			sd->fd = fd;
 			strncpy(sd->email, "no mail", 40); // put here a mail without '@' to refuse deletion if we don't receive the e-mail
 			sd->connect_until_time = 0; // unknown or unlimited (not displaying on map-server)
 			sd->account_id = RFIFOL(fd,2);
