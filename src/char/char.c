@@ -57,12 +57,12 @@ int save_log = 1;	// show loading/saving messages
 char db_path[1024] = "db";
 
 struct mmo_map_server {
+	int fd;
 	uint32 ip;
 	uint16 port;
 	int users;
 	unsigned short map[MAX_MAP_PER_SERVER];
 } server[MAX_MAP_SERVERS];
-int server_fd[MAX_MAP_SERVERS];
 
 int login_fd, char_fd;
 char userid[24];
@@ -290,7 +290,7 @@ int search_character_online(int aid, int cid)
 	if(character &&
 		character->char_id == cid &&
 		character->server > -1) 
-		return server_fd[character->server];
+		return server[character->server].fd;
 	return -1;
 }
 static void * create_online_char_data(DBKey key, va_list args)
@@ -335,7 +335,7 @@ void set_char_online(int map_id, int char_id, int account_id)
 		if (char_id != 99)
 			ShowNotice("set_char_online: Character %d:%d marked in map server %d, but map server %d claims to have (%d:%d) online!\n",
 				character->account_id, character->char_id, character->server, map_id, account_id, char_id);
-		mapif_disconnectplayer(server_fd[character->server], character->account_id, character->char_id, 2);
+		mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 2);
 	}
 
 	character->char_id = (char_id==99)?-1:char_id;
@@ -402,15 +402,14 @@ static int char_db_setoffline(DBKey key, void* data, va_list ap)
 static int char_db_kickoffline(DBKey key, void* data, va_list ap)
 {
 	struct online_char_data* character = (struct online_char_data*)data;
-	int server = va_arg(ap, int);
+	int server_id = va_arg(ap, int);
 
-	if (server > -1 && character->server != server)
+	if (server_id > -1 && character->server != server_id)
 		return 0;
 
 	//Kick out any connected characters, and set them offline as appropiate.
 	if (character->server > -1)
-		mapif_disconnectplayer(server_fd[character->server],
-			character->account_id, character->char_id, 1);
+		mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 1);
 	else if (character->waiting_disconnect == -1)
 		set_char_offline(character->char_id, character->account_id);
 	else return 0;
@@ -1375,7 +1374,7 @@ static int create_online_files_sub(DBKey key, void* data, va_list va)
 	}
 	
 	j = character->server;
-	if (server_fd[j] < 0) {
+	if (server[j].fd < 0) {
 		server[j].users = 0;
 		return -1;
 	}
@@ -1670,7 +1669,7 @@ int count_users(void)
 
 	users = 0;
 	for(i = 0; i < MAX_MAP_SERVERS; i++)
-		if (server_fd[i] >= 0)
+		if (server[i].fd >= 0)
 			users += server[i].users;
 
 	return users;
@@ -1915,7 +1914,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 	{	// check if character is not online already. [Skotlex]
 		if (character->server > -1)
 		{	//Character already online. KICK KICK KICK
-			mapif_disconnectplayer(server_fd[character->server], character->account_id, character->char_id, 2);
+			mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 2);
 			if (character->waiting_disconnect == -1)
 				character->waiting_disconnect = add_timer(gettick()+20000, chardb_waiting_disconnect, character->account_id, 0);
 			WFIFOW(fd,0) = 0x81;
@@ -1991,7 +1990,7 @@ int parse_fromlogin(int fd)
 				send_accounts_tologin(-1, gettick(), 0, 0);
 
 				// if no map-server already connected, display a message...
-				ARR_FIND( 0, MAX_MAP_SERVERS, i, server_fd[i] > 0 && server[i].map[0] );
+				ARR_FIND( 0, MAX_MAP_SERVERS, i, server[i].fd > 0 && server[i].map[0] );
 				if( i == MAX_MAP_SERVERS )
 					ShowStatus("Awaiting maps from map-server.\n");
 			}
@@ -2150,9 +2149,7 @@ int parse_fromlogin(int fd)
 			else
 			{
 				// at least 1 map-server
-				for(i = 0; i < MAX_MAP_SERVERS; i++)
-					if (server_fd[i] >= 0)
-						break;
+				ARR_FIND( 0, MAX_MAP_SERVERS, i, server[i].fd >= 0 );
 				if (i == MAX_MAP_SERVERS)
 					char_log("'ladmin': Receiving a message for broadcast, but no map-server is online.\n");
 				else {
@@ -2328,7 +2325,7 @@ int parse_fromlogin(int fd)
 			{	//Kick out this player.
 				if (character->server > -1)
 				{	//Kick it from the map server it is on.
-					mapif_disconnectplayer(server_fd[character->server], character->account_id, character->char_id, 2);
+					mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 2);
 					if (character->waiting_disconnect == -1)
 						character->waiting_disconnect = add_timer(gettick()+15000, chardb_waiting_disconnect, character->account_id, 0);
 				} else { //Manual kick from char server.
@@ -2605,9 +2602,7 @@ int parse_frommap(int fd)
 	int i, j;
 	int id;
 
-	for(id = 0; id < MAX_MAP_SERVERS; id++)
-		if (server_fd[id] == fd)
-			break;
+	ARR_FIND( 0, MAX_MAP_SERVERS, id, server[id].fd == fd );
 	if(id == MAX_MAP_SERVERS)
 		set_eof(fd);
 	if(session[fd]->eof) {
@@ -2626,7 +2621,7 @@ int parse_frommap(int fd)
 				WBUFW(buf,2) = j * 4 + 10;
 				mapif_sendallwos(fd, buf, WBUFW(buf,2));
 			}
-			server_fd[id] = -1;
+			server[id].fd = -1;
 			online_char_db->foreach(online_char_db,char_db_setoffline,i); //Tag relevant chars as 'in disconnected' server.
 		}
 		do_close(fd);
@@ -2696,7 +2691,7 @@ int parse_frommap(int fd)
 			}
 			// Transmitting the maps of the other map-servers to the new map-server
 			for(x = 0; x < MAX_MAP_SERVERS; x++) {
-				if (server_fd[x] > 0 && x != id) {
+				if (server[x].fd > 0 && x != id) {
 					WFIFOHEAD(fd,10 +4*MAX_MAP_PER_SERVER);
 					WFIFOW(fd,0) = 0x2b04;
 					WFIFOL(fd,4) = htonl(server[x].ip);
@@ -2768,7 +2763,7 @@ int parse_frommap(int fd)
 				{
 					ShowNotice("Set map user: Character (%d:%d) marked on map server %d, but map server %d claims to have (%d:%d) online!\n",
 						character->account_id, character->char_id, character->server, id, aid, cid);
-					mapif_disconnectplayer(server_fd[character->server], character->account_id, character->char_id, 2);
+					mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 2);
 				}
 				character->char_id = cid;
 				character->server = id;
@@ -2833,7 +2828,7 @@ int parse_frommap(int fd)
 			name = RFIFOW(fd,18);
 			map_id = search_mapserver(name, ntohl(RFIFOL(fd,24)), ntohs(RFIFOW(fd,28))); //Locate mapserver by ip and port.
 			if (map_id >= 0)
-				map_fd = server_fd[map_id];
+				map_fd = server[map_id].fd;
 			for(i = 0; i < char_num; i++) {
 			if (char_dat[i].status.account_id == RFIFOL(fd,2) &&
 			    char_dat[i].status.char_id == RFIFOL(fd,14))
@@ -3180,7 +3175,7 @@ int search_mapserver(unsigned short map, uint32 ip, uint16 port)
 	
 	for(i = 0; i < MAX_MAP_SERVERS; i++)
 	{
-		if (server_fd[i] > 0
+		if (server[i].fd > 0
 		&& (ip == (uint32)-1 || server[i].ip == ip)
 		&& (port == (uint16)-1 || server[i].port == port))
 		{
@@ -3355,7 +3350,7 @@ int parse_char(int fd)
 			if (i < 0) {
 				unsigned short j;
 				//First check that there's actually a map server online.
-				ARR_FIND( 0, MAX_MAP_SERVERS, j, server_fd[j] >= 0 && server[j].map[0] );
+				ARR_FIND( 0, MAX_MAP_SERVERS, j, server[j].fd >= 0 && server[j].map[0] );
 				if (j == MAX_MAP_SERVERS) {
 					ShowInfo("Connection Closed. No map servers available.\n");
 					WFIFOHEAD(fd,3);
@@ -3421,10 +3416,10 @@ int parse_char(int fd)
 			auth_fifo[auth_fifo_pos].ip = session[fd]->client_addr;
 
 			//Send NEW auth packet [Kevin]
-			if ((map_fd = server_fd[i]) < 1 || session[map_fd] == NULL)
+			if ((map_fd = server[i].fd) < 1 || session[map_fd] == NULL)
 			{
 				ShowError("parse_char: Attempting to write to invalid session %d! Map Server #%d disconnected.\n", map_fd, i);
-				server_fd[i] = -1;
+				server[i].fd = -1;
 				memset(&server[i], 0, sizeof(struct mmo_map_server));
 				//Send server closed.
 				WFIFOHEAD(fd,3);
@@ -3626,10 +3621,7 @@ int parse_char(int fd)
 			char* l_pass = RFIFOP(fd,26);
 			l_user[23] = '\0';
 			l_pass[23] = '\0';
-			for(i = 0; i < MAX_MAP_SERVERS; i++) {
-				if (server_fd[i] <= 0)
-					break;
-			}
+			ARR_FIND( 0, MAX_MAP_SERVERS, i, server[i].fd <= 0 );
 			if (i == MAX_MAP_SERVERS || strcmp(l_user, userid) || strcmp(l_pass, passwd)) {
 				WFIFOHEAD(fd,3);
 				WFIFOW(fd,0) = 0x2af9;
@@ -3641,7 +3633,7 @@ int parse_char(int fd)
 				WFIFOB(fd,2) = 0;
 				WFIFOSET(fd,3);
 
-				server_fd[i] = fd;
+				server[i].fd = fd;
 				server[i].ip = ntohl(RFIFOL(fd,54));
 				server[i].port = ntohs(RFIFOW(fd,58));
 				server[i].users = 0;
@@ -3736,7 +3728,7 @@ int mapif_sendall(unsigned char *buf, unsigned int len)
 	c = 0;
 	for(i = 0; i < MAX_MAP_SERVERS; i++) {
 		int fd;
-		if ((fd = server_fd[i]) > 0) {
+		if ((fd = server[i].fd) > 0) {
 			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
@@ -3755,7 +3747,7 @@ int mapif_sendallwos(int sfd, unsigned char *buf, unsigned int len)
 	c = 0;
 	for(i = 0; i < MAX_MAP_SERVERS; i++) {
 		int fd;
-		if ((fd = server_fd[i]) > 0 && fd != sfd) {
+		if ((fd = server[i].fd) > 0 && fd != sfd) {
 			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
@@ -3772,7 +3764,7 @@ int mapif_send(int fd, unsigned char *buf, unsigned int len)
 
 	if (fd >= 0) {
 		for(i = 0; i < MAX_MAP_SERVERS; i++) {
-			if (fd == server_fd[i]) {
+			if (fd == server[i].fd) {
 				WFIFOHEAD(fd,len);
 				memcpy(WFIFOP(fd,0), buf, len);
 				WFIFOSET(fd,len);
@@ -4229,7 +4221,7 @@ int do_init(int argc, char **argv)
 
 	for(i = 0; i < MAX_MAP_SERVERS; i++) {
 		memset(&server[i], 0, sizeof(struct mmo_map_server));
-		server_fd[i] = -1;
+		server[i].fd = -1;
 	}
 
 	//Read map indexes

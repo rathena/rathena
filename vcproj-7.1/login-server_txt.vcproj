@@ -148,6 +148,9 @@
 			Name="login_txt"
 			Filter="">
 			<File
+				RelativePath="..\src\login\admin.c">
+			</File>
+			<File
 				RelativePath="..\src\login\login.c">
 			</File>
 			<File

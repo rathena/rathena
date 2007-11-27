@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/11/27
+	* removed login/char server_fd[] arrays, added server[].fd instead
+	* TXT/SQL login server code synchronization [ultramage]
+	- exported several core structures to login.h
+	- split off ladmin communication code from the TXT login server
+	- removed all occurences of login_log(); a unified function should be
+	  added when SQL's loginlog_db logging code gets synced with TXT
+	- removed conf setting login_log_filename
+	- fixed ladmin getting timeouts since the ping system was changed
 	* Moved basic max HP/SP calculation to before parsing equipment, fixes
 	  negative absolute HP/SP bonuses not working.
 	* Corrected the online_data_cleanup routine setting offline characters that

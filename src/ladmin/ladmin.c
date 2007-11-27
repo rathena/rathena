@@ -4087,37 +4087,37 @@ int parse_fromlogin(int fd)
 					if (defaultlanguage == 'F')
 						ShowMessage(" Statut: 0 [Compte Ok]\n");
 					else
-						ShowMessage(" Statut: 0 [Account OK]\n");
+						ShowMessage(" State: 0 [Account OK]\n");
 					break;
 				case 1:
 					ShowMessage(" Statut: 1 [Unregistered ID]\n");
 					break;
 				case 2:
-					ShowMessage(" Statut: 2 [Incorrect Password]\n");
+					ShowMessage(" State: 2 [Incorrect Password]\n");
 					break;
 				case 3:
 					ShowMessage(" Statut: 3 [This ID is expired]\n");
 					break;
 				case 4:
-					ShowMessage(" Statut: 4 [Rejected from Server]\n");
+					ShowMessage(" State: 4 [Rejected from Server]\n");
 					break;
 				case 5:
 					ShowMessage(" Statut: 5 [You have been blocked by the GM Team]\n");
 					break;
 				case 6:
-					ShowMessage(" Statut: 6 [Your Game's EXE file is not the latest version]\n");
+					ShowMessage(" State: 6 [Your Game's EXE file is not the latest version]\n");
 					break;
 				case 7:
 					ShowMessage(" Statut: 7 [You are Prohibited to log in until %s]\n", error_message);
 					break;
 				case 8:
-					ShowMessage(" Statut: 8 [Server is jammed due to over populated]\n");
+					ShowMessage(" State: 8 [Server is jammed due to over populated]\n");
 					break;
 				case 9:
 					ShowMessage(" Statut: 9 [No MSG]\n");
 					break;
 				default: // 100
-					ShowMessage(" Statut: %d [This ID is totally erased]\n", (int)RFIFOL(fd,36));
+					ShowMessage(" State: %d [This ID is totally erased]\n", (int)RFIFOL(fd,36));
 					break;
 				}
 				if (defaultlanguage == 'F') {
@@ -4229,6 +4229,18 @@ int Connect_login_server(void)
 		}
 	}
 
+	return 0;
+}
+
+// sends a ping packet to login server (will receive pong 0x2718)
+int ping_login_server(int tid, unsigned int tick, int id, int data)
+{
+	if (login_fd > 0 && session[login_fd] != NULL)
+	{
+		WFIFOHEAD(login_fd,2);
+		WFIFOW(login_fd,0) = 0x2719;
+		WFIFOSET(login_fd,2);
+	}
 	return 0;
 }
 
@@ -4379,6 +4391,10 @@ int do_init(int argc, char **argv)
 	}
 
 	Connect_login_server();
+
+	// keep the char-login connection alive
+	add_timer_func_list(ping_login_server, "ping_login_server");
+	add_timer_interval(gettick() + 1000, ping_login_server, 0, 0, ((int)stall_time-2) * 1000);
 
 	// minimalist core doesn't have sockets parsing,
 	// so we have to do this ourselves

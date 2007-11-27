@@ -187,6 +187,10 @@ SOURCE=..\src\common\version.h
 # PROP Default_Filter ""
 # Begin Source File
 
+SOURCE=..\src\login\admin.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\login\login.c
 # End Source File
 # Begin Source File

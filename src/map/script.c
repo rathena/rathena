@@ -11610,7 +11610,7 @@ BUILDIN_FUNC(query_sql)
 	num_cols = Sql_NumColumns(mmysql_handle);
 	if( num_vars < num_cols )
 	{
-		ShowWarning("script:query_sql: Too many columns, discarting last %u columns.\n", (unsigned int)(num_cols-num_vars));
+		ShowWarning("script:query_sql: Too many columns, discarding last %u columns.\n", (unsigned int)(num_cols-num_vars));
 		script_reportsrc(st);
 	}
 	else if( num_vars > num_cols )

@@ -103,7 +103,7 @@ int inter_homun_fromstr(char *str,struct s_homunculus *p)
 			p->hskill[i].id = tmp_int[0];
 			p->hskill[i].lv = tmp_int[1];
 		} else
-			ShowError("Read Homun: Unsupported Skill ID %d for homunculus (Homun ID=%d\n)", tmp_int[0], p->hom_id);
+			ShowError("Read Homun: Unsupported Skill ID %d for homunculus (Homun ID=%d)\n", tmp_int[0], p->hom_id);
 		next += len;
 		if (str[next] == ' ')
 			next++;

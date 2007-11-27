@@ -20,36 +20,10 @@
 #include <string.h>
 #include <sys/stat.h> // for stat/lstat/fstat
 
-struct Login_Config {
-
-	uint32 login_ip;								// the address to bind to
-	uint16 login_port;								// the port to bind to
-	unsigned int ip_sync_interval;					// interval (in minutes) to execute a DNS/IP update (for dynamic IPs)
-	bool log_login;									// whether to log login server actions or not
-	char date_format[32];							// date format used in messages
-	bool console;									// console input system enabled?
-	bool new_account_flag;							// autoregistration via _M/_F ?
-	bool case_sensitive;							// are logins case sensitive ?
-	bool use_md5_passwds;							// work with password hashes instead of plaintext passwords?
-	bool login_gm_read;								// should the login server handle info about gm accounts?
-	int min_level_to_connect;						// minimum level of player/GM (0: player, 1-99: GM) to connect
-	bool online_check;								// reject incoming players that are already registered as online ?
-	bool check_client_version;						// check the clientversion set in the clientinfo ?
-	int client_version_to_connect;					// the client version needed to connect (if checking is enabled)
-
-	bool ipban;										// perform IP blocking (via contents of `ipbanlist`) ?
-	bool dynamic_pass_failure_ban;					// automatic IP blocking due to failed login attemps ?
-	unsigned int dynamic_pass_failure_ban_interval;	// how far to scan the loginlog for password failures
-	unsigned int dynamic_pass_failure_ban_limit;	// number of failures needed to trigger the ipban
-	unsigned int dynamic_pass_failure_ban_duration;	// duration of the ipban
-	bool use_dnsbl;									// dns blacklist blocking ?
-	char dnsbl_servs[1024];							// comma-separated list of dnsbl servers
-	
-} login_config;
+struct Login_Config login_config;
 
 int login_fd; // login server socket
 #define MAX_SERVERS 30
-int server_fd[MAX_SERVERS]; // char server sockets
 struct mmo_char_server server[MAX_SERVERS]; // char server data
 
 // Advanced subnet check [LuzZza]
@@ -98,15 +72,13 @@ struct login_session_data {
 	char md5key[20];
 };
 
-#define AUTH_FIFO_SIZE 256
-struct _auth_fifo {
-	int account_id;
-	uint32 login_id1, login_id2;
-	uint32 ip;
-	uint8 sex;
-	bool delflag;
-} auth_fifo[AUTH_FIFO_SIZE];
+// auth information of incoming clients
+struct _auth_fifo auth_fifo[AUTH_FIFO_SIZE];
 int auth_fifo_pos = 0;
+
+//-----------------------------------------------------
+// Online User Database [Wizputer]
+//-----------------------------------------------------
 
 struct online_login_data {
 	int account_id;
@@ -114,9 +86,8 @@ struct online_login_data {
 	int char_server;
 };
 
-//-----------------------------------------------------
-
 static DBMap* online_db; // int account_id -> struct online_login_data*
+static int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data);
 
 static void* create_online_user(DBKey key, va_list args)
 {
@@ -127,13 +98,6 @@ static void* create_online_user(DBKey key, va_list args)
 	p->waiting_disconnect = -1;
 	return p;
 }
-
-int charif_sendallwos(int sfd, uint8* buf, size_t len);
-static int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data);
-
-//-----------------------------------------------------
-// Online User Database [Wizputer]
-//-----------------------------------------------------
 
 void add_online_user(int char_server, int account_id)
 {
@@ -172,13 +136,26 @@ static int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data
 	return 0;
 }
 
-static int sync_ip_addresses(int tid, unsigned int tick, int id, int data)
+//--------------------------------------------------------------------
+// Packet send to all char-servers, except one (wos: without our self)
+//--------------------------------------------------------------------
+int charif_sendallwos(int sfd, uint8* buf, size_t len)
 {
-	uint8 buf[2];
-	ShowInfo("IP Sync in progress...\n");
-	WBUFW(buf,0) = 0x2735;
-	charif_sendallwos(-1, buf, 2);
-	return 0;
+	int i, c;
+
+	for( i = 0, c = 0; i < MAX_SERVERS; ++i )
+	{
+		int fd = server[i].fd;
+		if( session_isValid(fd) && fd != sfd )
+		{
+			WFIFOHEAD(fd,len);
+			memcpy(WFIFOP(fd,0), buf, len);
+			WFIFOSET(fd,len);
+			++c;
+		}
+	}
+
+	return c;
 }
 
 //-----------------------------------------------------
@@ -331,7 +308,7 @@ void mmo_db_close(void)
 
 	for( i = 0; i < MAX_SERVERS; ++i )
 	{
-		fd = server_fd[i];
+		fd = server[i].fd;
 		if( session_isValid(fd) )
 		{// Clean only data related to servers we are connected to. [Skotlex]
 			if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `sstatus` WHERE `index` = '%d'", i) )
@@ -346,29 +323,17 @@ void mmo_db_close(void)
 		do_close(login_fd);
 }
 
-
-//--------------------------------------------------------------------
-// Packet send to all char-servers, except one (wos: without our self)
-//--------------------------------------------------------------------
-int charif_sendallwos(int sfd, uint8* buf, size_t len)
+//-----------------------------------------------------
+// periodic ip address synchronization
+//-----------------------------------------------------
+static int sync_ip_addresses(int tid, unsigned int tick, int id, int data)
 {
-	int i, c;
-
-	for( i = 0, c = 0; i < MAX_SERVERS; ++i )
-	{
-		int fd = server_fd[i];
-		if( session_isValid(fd) && fd != sfd )
-		{
-			WFIFOHEAD(fd,len);
-			memcpy(WFIFOP(fd,0), buf, len);
-			WFIFOSET(fd,len);
-			++c;
-		}
-	}
-
-	return c;
+	uint8 buf[2];
+	ShowInfo("IP Sync in progress...\n");
+	WBUFW(buf,0) = 0x2735;
+	charif_sendallwos(-1, buf, 2);
+	return 0;
 }
-
 
 //-----------------------------------------------------
 // encrypted/unencrypted password check
@@ -645,7 +610,7 @@ int parse_fromchar(int fd)
 	char ip[16];
 	ip2str(ipl, ip);
 
-	ARR_FIND( 0, MAX_SERVERS, id, server_fd[id] == fd );
+	ARR_FIND( 0, MAX_SERVERS, id, server[id].fd == fd );
 	if( id == MAX_SERVERS )
 	{// not a char server
 		set_eof(fd);
@@ -656,7 +621,7 @@ int parse_fromchar(int fd)
 	if( session[fd]->eof )
 	{
 		ShowStatus("Char-server '%s' has disconnected.\n", server[id].name);
-		server_fd[id] = -1;
+		server[id].fd = -1;
 		memset(&server[id], 0, sizeof(struct mmo_char_server));
 		online_db->foreach(online_db, online_db_setoffline, id); //Set all chars from this char server to offline.
 		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `sstatus` WHERE `index`='%d'", id) )
@@ -673,6 +638,7 @@ int parse_fromchar(int fd)
 		{
 
 		case 0x2709: // request from map-server via char-server to reload GM accounts
+			ShowStatus("Char-server '%s': Request to re-load GM configuration file (ip: %s).\n", server[id].name, ip);
 			if( login_config.log_login )
 			{
 				if( SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`log`) VALUES (NOW(), '%u', '%s', 'GM reload request')", loginlog_db, ipl, server[id].name) )
@@ -689,21 +655,18 @@ int parse_fromchar(int fd)
 				return 0;
 		{
 			int account_id = RFIFOL(fd,2);
-			for( i = 0; i < AUTH_FIFO_SIZE; ++i )
-			{
-				if( auth_fifo[i].account_id == RFIFOL(fd,2) &&
-				    auth_fifo[i].login_id1  == RFIFOL(fd,6) &&
-				    auth_fifo[i].login_id2  == RFIFOL(fd,10) &&
-				    auth_fifo[i].sex        == RFIFOB(fd,14) &&
-				    auth_fifo[i].ip         == ntohl(RFIFOL(fd,15)) &&
-				    !auth_fifo[i].delflag)
-				{
-					auth_fifo[i].delflag = 1;
-					break;
-				}
-			}
+			ARR_FIND( 0, AUTH_FIFO_SIZE, i, 
+				auth_fifo[i].account_id == RFIFOL(fd,2) &&
+				auth_fifo[i].login_id1  == RFIFOL(fd,6) &&
+				auth_fifo[i].login_id2  == RFIFOL(fd,10) &&
+				auth_fifo[i].sex        == RFIFOB(fd,14) &&
+				auth_fifo[i].ip         == ntohl(RFIFOL(fd,15)) &&
+				!auth_fifo[i].delflag );
 
-			if( i != AUTH_FIFO_SIZE && account_id > 0 )
+			if( i < AUTH_FIFO_SIZE )
+				auth_fifo[i].delflag = 1;
+
+			if( i < AUTH_FIFO_SIZE && account_id > 0 )
 			{// send ack 
 				uint32 connect_until_time;
 				char email[40];
@@ -737,7 +700,8 @@ int parse_fromchar(int fd)
 				WFIFOSET(fd,51);
 			}
 			else
-			{// authentification not found
+			{// authentication not found
+				ShowStatus("Char-server '%s': authentication of the account %d REFUSED (ip: %s).\n", server[id].name, account_id, ip);
 				WFIFOHEAD(fd,51);
 				WFIFOW(fd,0) = 0x2713;
 				WFIFOL(fd,2) = account_id;
@@ -752,7 +716,7 @@ int parse_fromchar(int fd)
 		break;
 
 		case 0x2714:
-			if (RFIFOREST(fd) < 6)
+			if( RFIFOREST(fd) < 6 )
 				return 0;
 
 			// how many users on world? (update)
@@ -906,9 +870,8 @@ int parse_fromchar(int fd)
 			if (RFIFOREST(fd) < 10)
 				return 0;
 		{
-			int account_id, state;
-			account_id = RFIFOL(fd,2);
-			state = RFIFOL(fd,6);
+			int account_id = RFIFOL(fd,2);
+			int state = RFIFOL(fd,6);
 			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `state` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
 				Sql_ShowDebug(sql_handle);
 			else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
@@ -990,7 +953,7 @@ int parse_fromchar(int fd)
 		break;
 
 		case 0x2727: // Change of sex (sex is reversed)
-			if (RFIFOREST(fd) < 6)
+			if( RFIFOREST(fd) < 6 )
 				return 0;
 		{
 			int account_id;
@@ -1099,14 +1062,14 @@ int parse_fromchar(int fd)
 		}
 
 		case 0x272b:    // Set account_id to online [Wizputer]
-			if (RFIFOREST(fd) < 6)
+			if( RFIFOREST(fd) < 6 )
 				return 0;
 			add_online_user(id, RFIFOL(fd,2));
 			RFIFOSKIP(fd,6);
 		break;
 
 		case 0x272c:   // Set account_id to offline [Wizputer]
-			if (RFIFOREST(fd) < 6)
+			if( RFIFOREST(fd) < 6 )
 				return 0;
 			remove_online_user(RFIFOL(fd,2));
 			RFIFOSKIP(fd,6);
@@ -1179,7 +1142,7 @@ int parse_fromchar(int fd)
 		break;
 
 		case 0x2736: // WAN IP update from char-server
-			if (RFIFOREST(fd) < 6)
+			if( RFIFOREST(fd) < 6 )
 				return 0;
 			server[id].ip = ntohl(RFIFOL(fd,2));
 			ShowInfo("Updated IP of Server #%d to %d.%d.%d.%d.\n",id, CONVIP(server[id].ip));
@@ -1256,13 +1219,13 @@ int parse_login(int fd)
 	uint32 ipl = session[fd]->client_addr;
 	char ip[16];
 
-	ip2str(ipl, ip);
-
 	if( session[fd]->eof )
 	{
 		do_close(fd);
 		return 0;
 	}
+
+	ip2str(ipl, ip);
 
 	while( RFIFOREST(fd) >= 2 )
 	{
@@ -1287,11 +1250,12 @@ int parse_login(int fd)
 		case 0x0277:		// New login packet (kRO 2006-04-24aSakexe langtype 0)
 		case 0x02b0:		// New login packet (kRO 2007-05-14aSakexe langtype 0)
 		{
-			size_t packet_len = RFIFOREST(fd);
+			size_t packet_len = RFIFOREST(fd); // assume no other packet was sent
 
 			// Perform ip-ban check
 			if( login_config.ipban && login_ip_ban_check(ipl) )
 			{
+				ShowStatus("Connection refused: IP isn't authorised (deny/allow, ip: %s).\n", ip);
 				WFIFOHEAD(fd,23);
 				WFIFOW(fd,0) = 0x6a;
 				WFIFOB(fd,2) = 3; // 3 = Rejected from Server
@@ -1326,6 +1290,7 @@ int parse_login(int fd)
 			{	// auth success
 				if( login_config.min_level_to_connect > account.level )
 				{
+					ShowStatus("Connection refused: the minimum GM level for connection is %d (account: %s, GM level: %d, ip: %s).\n", login_config.min_level_to_connect, account.userid, account.level, ip);
 					WFIFOHEAD(fd,3);
 					WFIFOW(fd,0) = 0x81;
 					WFIFOB(fd,2) = 1; // 01 = Server closed
@@ -1333,32 +1298,24 @@ int parse_login(int fd)
 				}
 				else
 				{
-					uint8 server_num = 0;
+					uint8 server_num, n;
+					uint32 subnet_char_ip;
 
-					if( login_config.log_login && SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s','100', 'login ok')", loginlog_db, ipl, esc_userid) )
-						Sql_ShowDebug(sql_handle);
-					if( account.level )
-						ShowStatus("Connection of the GM (level:%d) account '%s' accepted.\n", account.level, account.userid);
-					else
-						ShowStatus("Connection of the account '%s' accepted.\n", account.userid);
-
-					WFIFOHEAD(fd,47+32*MAX_SERVERS);
+					server_num = 0;
 					for( i = 0; i < MAX_SERVERS; ++i )
-					{
-						if( session_isValid(server_fd[i]) )
-						{
-							// Advanced subnet check [LuzZza]
-							uint32 subnet_char_ip = lan_subnetcheck(ipl);
-							WFIFOL(fd,47+server_num*32) = htonl((subnet_char_ip) ? subnet_char_ip : server[i].ip);
-							WFIFOW(fd,47+server_num*32+4) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
-							memcpy(WFIFOP(fd,47+server_num*32+6), server[i].name, 20);
-							WFIFOW(fd,47+server_num*32+26) = server[i].users;
-							WFIFOW(fd,47+server_num*32+28) = server[i].maintenance;
-							WFIFOW(fd,47+server_num*32+30) = server[i].new_;
+						if( session_isValid(server[i].fd) )
 							server_num++;
-						}
-					}
-					if (server_num > 0) { // if at least 1 char-server
+
+					if( server_num > 0 )
+					{// if at least 1 char-server
+						if( login_config.log_login && SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s','100', 'login ok')", loginlog_db, ipl, esc_userid) )
+							Sql_ShowDebug(sql_handle);
+						if( account.level )
+							ShowStatus("Connection of the GM (level:%d) account '%s' accepted.\n", account.level, account.userid);
+						else
+							ShowStatus("Connection of the account '%s' accepted.\n", account.userid);
+
+						WFIFOHEAD(fd,47+32*server_num);
 						WFIFOW(fd,0) = 0x69;
 						WFIFOW(fd,2) = 47+32*server_num;
 						WFIFOL(fd,4) = account.login_id1;
@@ -1366,8 +1323,24 @@ int parse_login(int fd)
 						WFIFOL(fd,12) = account.login_id2;
 						WFIFOL(fd,16) = 0; // in old version, that was for ip (not more used)
 						//memcpy(WFIFOP(fd,20), account.lastlogin, 24); // in old version, that was for name (not more used)
+						WFIFOW(fd,44) = 0; // unknown
 						WFIFOB(fd,46) = account.sex;
+						for( i = 0, n = 0; i < MAX_SERVERS; ++i )
+						{
+							if( !session_isValid(server[i].fd) )
+								continue;
+
+							subnet_char_ip = lan_subnetcheck(ipl); // Advanced subnet check [LuzZza]
+							WFIFOL(fd,47+n*32) = htonl((subnet_char_ip) ? subnet_char_ip : server[i].ip);
+							WFIFOW(fd,47+n*32+4) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
+							memcpy(WFIFOP(fd,47+n*32+6), server[i].name, 20);
+							WFIFOW(fd,47+n*32+26) = server[i].users;
+							WFIFOW(fd,47+n*32+28) = server[i].maintenance;
+							WFIFOW(fd,47+n*32+30) = server[i].new_;
+							n++;
+						}
 						WFIFOSET(fd,47+32*server_num);
+
 						if (auth_fifo_pos >= AUTH_FIFO_SIZE)
 							auth_fifo_pos = 0;
 						auth_fifo[auth_fifo_pos].account_id = account.account_id;
@@ -1377,7 +1350,11 @@ int parse_login(int fd)
 						auth_fifo[auth_fifo_pos].delflag = 0;
 						auth_fifo[auth_fifo_pos].ip = session[fd]->client_addr;
 						auth_fifo_pos++;
-					} else { // if no char-server, don't send void list of servers, just disconnect the player with proper message
+					}
+					else
+					{// if no char-server, don't send void list of servers, just disconnect the player with proper message
+						ShowStatus("Connection refused: there is no char-server online (account: %s, ip: %s).\n", account.userid, ip);
+						WFIFOHEAD(fd,3);
 						WFIFOW(fd,0) = 0x81;
 						WFIFOB(fd,2) = 1; // 01 = Server closed
 						WFIFOSET(fd,3);
@@ -1445,7 +1422,9 @@ int parse_login(int fd)
 				WFIFOHEAD(fd,23);
 				WFIFOW(fd,0) = 0x6a;
 				WFIFOB(fd,2) = (uint8)result;
-				if( result == 6 )
+				if( result != 6 )
+					memset(WFIFOP(fd,3), '\0', 20);
+				else
 				{// 6 = Your are Prohibited to log in until %s
 					if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `ban_until` FROM `%s` WHERE `%s` = %s '%s'", login_db, login_db_userid, (login_config.case_sensitive ? "BINARY" : ""), esc_userid) )
 						Sql_ShowDebug(sql_handle);
@@ -1461,8 +1440,6 @@ int parse_login(int fd)
 						strftime((char*)WFIFOP(fd,3), 20, login_config.date_format, localtime(&ban_until_time));
 					}
 				}
-				else
-					memset(WFIFOP(fd,3), '\0', 20);
 				WFIFOSET(fd,23);
 			}
 
@@ -1526,7 +1503,7 @@ int parse_login(int fd)
 				Sql_ShowDebug(sql_handle);
 
 			result = mmo_auth(&account, fd);
-			if( result == -1 && account.sex == 2 && account.account_id < MAX_SERVERS && server_fd[account.account_id] == -1 )
+			if( result == -1 && account.sex == 2 && account.account_id < MAX_SERVERS && server[account.account_id].fd == -1 )
 			{
 				ShowStatus("Connection of the char-server '%s' accepted.\n", esc_server_name);
 				memset(&server[account.account_id], 0, sizeof(struct mmo_char_server));
@@ -1536,7 +1513,7 @@ int parse_login(int fd)
 				server[account.account_id].users = 0;
 				server[account.account_id].maintenance = RFIFOW(fd,82);
 				server[account.account_id].new_ = RFIFOW(fd,84);
-				server_fd[account.account_id] = fd;
+				server[account.account_id].fd = fd;
 
 				WFIFOHEAD(fd,3);
 				WFIFOW(fd,0) = 0x2711;
@@ -1560,14 +1537,12 @@ int parse_login(int fd)
 				WFIFOB(fd,2) = 3;
 				WFIFOSET(fd,3);
 			}
-
+		}
 			RFIFOSKIP(fd,86);
 			return 0;
-		}
 
 		case 0x7530:	// Server version information request
-		{
-			ShowInfo ("Athena version check...\n");
+			ShowStatus("Sending server version information to ip: %s\n", ip);
 			WFIFOHEAD(fd,10);
 			WFIFOW(fd,0) = 0x7531;
 			WFIFOB(fd,2) = ATHENA_MAJOR_VERSION;
@@ -1580,7 +1555,6 @@ int parse_login(int fd)
 			WFIFOSET(fd,10);
 
 			RFIFOSKIP(fd,2);
-		}
 		break;
 
 		case 0x7532:	// Request to end connection
@@ -1589,7 +1563,7 @@ int parse_login(int fd)
 		break;
 
 		default:
-			ShowStatus("Abnormal end of connection (ip: %s): Unknown packet 0x%x\n", ip, RFIFOW(fd,0));
+			ShowNotice("Abnormal end of connection (ip: %s): Unknown packet 0x%x\n", ip, command);
 			set_eof(fd);
 			return 0;
 		}
@@ -1618,7 +1592,7 @@ int parse_console(char* buf)
 		strcmpi("end", command) == 0 )
 		runflag = 0;
 	else
-	if( strcmpi("alive", command) == 0 || 
+	if( strcmpi("alive", command) == 0 ||
 		strcmpi("status", command) == 0 )
 		ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
 	else
@@ -1931,7 +1905,7 @@ int do_init(int argc, char** argv)
 		auth_fifo[i].delflag = 1;
 
 	for( i = 0; i < MAX_SERVERS; i++ )
-		server_fd[i] = -1;
+		server[i].fd = -1;
 
 	// Online user database init
 	online_db = idb_alloc(DB_OPT_RELEASE_DATA);
