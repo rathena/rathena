@@ -33,6 +33,8 @@
 #include <time.h>
 
 
+struct npc_data* fake_nd;
+
 // linked list of npc source files
 struct npc_src_list {
 	struct npc_src_list* next;
@@ -2783,7 +2785,8 @@ static int npc_cleanup_dbsub(DBKey key, void* data, va_list ap)
 
 	switch(bl->type) {
 	case BL_NPC:
-		npc_unload((struct npc_data *)bl);
+		if( bl->id != fake_nd->bl.id )// don't remove fake_nd
+			npc_unload((struct npc_data *)bl);
 		break;
 	case BL_MOB:
 		unit_free(bl,0);

@@ -90,6 +90,6 @@ int npc_reload(void);
 void npc_read_event_script(void);
 int npc_script_event(struct map_session_data* sd, int type);
 
-struct npc_data *fake_nd;
+extern struct npc_data* fake_nd;
 
 #endif /* _NPC_H_ */
