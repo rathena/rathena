@@ -1628,7 +1628,9 @@ job_star,161,33,0	script	Cheehee#job_star	77,{
 	close;
 }
 
-//===== Old Changelog: ================================= 
+//============================================================ 
+// Old changelog
+//============================================================ 
 //= A temp Star Gladiator Job Changer based on the kRO quest.
 //= Quest info from RagnaInfo.
 //= Sprites from kRO screenshots, bar two which I just had to guess at.
