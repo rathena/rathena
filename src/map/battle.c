@@ -2335,6 +2335,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					//mdef2-= mdef2* i/100;
 				}
 			}
+			if (skill_num == NPC_EARTHQUAKE)
+				mdef>>=1; //Halves MDEF (stupid overpowered skill)
 			if(battle_config.magic_defense_type)
 				ad.damage = ad.damage - mdef*battle_config.magic_defense_type - mdef2;
 			else
