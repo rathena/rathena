@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/11/27
+	* Added safesnprintf to strlib.c/h (bugreport:372) [FlavioJS]
 	* removed login/char server_fd[] arrays, added server[].fd instead
 	* TXT/SQL login server code synchronization [ultramage]
 	- exported several core structures to login.h

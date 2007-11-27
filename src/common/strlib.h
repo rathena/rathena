@@ -37,6 +37,11 @@ char* safestrncpy(char* dst, const char* src, size_t n);
 /// doesn't crash on null pointer
 size_t safestrnlen(const char* string, size_t maxlen);
 
+/// Works like snprintf, but always nul-terminates the buffer.
+/// Returns the size of the string (without nul-terminator)
+/// or -1 if the buffer is too small.
+int safesnprintf(char* buf, size_t sz, const char* fmt, ...);
+
 /// Returns the line of the target position in the string.
 /// Lines start at 1.
 int strline(const char* str, size_t pos);
