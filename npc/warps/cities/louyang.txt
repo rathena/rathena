@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Nana (1.0)
 //===== Current Version: =====================================
-//= 1.4
+//= 1.4a
 //===== Compatible With: =====================================
 //= Any Athena Version 6.0+
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 1.2 Added a few missing warps [MasterOfMuppets]
 //= 1.3 Fixed a few warp-back [erKURITA]
 //= 1.4 Moved some quest-related warps to proper file. [SinSloth]
+//= 1.4a Corrected some broken warp points. (bugreport:497) [Samuray22]
 //============================================================
 
 //= Louyang Town =============================================
@@ -41,13 +42,13 @@ lou_in02,174,46,0	warp	louwarp008a	3,3,lou_in02,206,94
 lou_in02,197,158,0	warp	louwarp009b	3,3,louyang,124,117
 lou_in02,203,158,0	warp	louwarp009c	3,3,louyang,129,117
 lou_in02,125,164,0	warp	louwarp010a	3,3,louyang,145,171
-lou_in02,251,175,0	warp	louwarp011a	3,3,louyang,140,101
-lou_in02,242,59,0	warp	louwarp018a	3,3,louyang,260,93
+lou_in02,247,171,0	warp	louwarp011a	3,3,louyang,140,101
+lou_in02,242,59,0	warp	louwarp018a	3,3,louyang,259,93
 lou_in02,80,190,0	warp	louwarp012	3,3,lou_in02,74,140
 lou_in02,71,140,0	warp	louwarp012a	3,3,lou_in02,77,190
 lou_in02,35,190,0	warp	louwarp013	3,3,lou_in02,37,138
 lou_in02,43,138,0	warp	louwarp013a	3,3,lou_in02,39,190
-lou_in02,121,32,0	warp	louwarp014a	3,3,louyang,317,173
+lou_in02,118,36,0	warp	louwarp014a	3,3,louyang,317,173
 lou_in02,71,28,0	warp	louwarp015a	3,3,louyang,130,57
 lou_in02,189,74,0	warp	louwarp007a	3,3,louyang,309,76
 lou_fild01,232,357,0	warp	louwarp001a	3,3,louyang,217,26

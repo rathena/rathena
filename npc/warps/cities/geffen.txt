@@ -4,13 +4,13 @@
 //= Athena (1.0)
 //= Nana (1.1)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.1a
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Warp Points for Geffen
 //===== Additional Comments: =================================
-//= No Comment!
+//= 1.1a Corrected a broken warp point. (bugreport:497) [Samuray22]
 //============================================================
 
 //Geffen City
@@ -45,6 +45,6 @@ geffen_in,70,83,0	warp	gef15	3,2,geffen_in,72,101
 geffen_in,72,98,0	warp	gef15-1	3,2,geffen_in,70,80
 geffen_in,163,94,0	warp	gef05-1	4,2,geffen,65,176
 geffen_in,70,132,0	warp	gef04-1	3,1,geffen,46,88
-geffen_in,106,181,0	warp	gef03-1	2,2,geffen,180,61
+geffen_in,106,181,0	warp	gef03-1	2,2,geffen,179,59
 geffen_in,28,106,0	warp	gef01-1	1,3,geffen,136,136
 geffen_in,70,48,0	warp	gef02-1	3,2,geffen,168,170

@@ -2,13 +2,14 @@
 
 prontera,181,200,4	script	Dynamic Shop	123,{
 callshop "dyn_shop1",0;
+npcshopattach "dyn_shop1";
 end;
 
 OnSellItem:
 for(set @i, 0; @i < getarraysize(@sold_nameid); set @i, @i + 1){
-	if(countitem(@sold_nameid[@i]) < @sold_quantity[@i] || @sold_quantity[@i] <= 0){
+	if(countitem(@sold_nameid[@i]) < @sold_quantity[@i] && @sold_quantity[@i] <= 0){
 		mes "omgh4x!";
-		end;
+		close;
 	}
 	if(@sold_nameid[@i] == 501){
 		set $@rpotsleft, $@rpotsleft + @sold_quantity[@i];
