@@ -526,7 +526,7 @@
 482,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0		,PF_DOUBLECASTING,Double Casting
 483,9,6,2,0,0x1,1:2:3:4:5,1,1,no,0,0,0,none,0	,HW_GANBANTEIN,Ganbantein
 484,9,6,2,2,0x91,0,5,1,yes,0,0,0,misc,0		,HW_GRAVITATION,Gravitation Field
-485,-2,6,1,-1,0x8,0,10,1,no,0,0x8,0,weapon,0	,WS_CARTTERMINATION,Cart Termination
+485,-2,6,1,-1,0x8,0,10,1,no,0,0,0,weapon,0	,WS_CARTTERMINATION,Cart Termination
 486,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0		,WS_OVERTHRUSTMAX,Maximum Power Thrust
 487,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0		,CG_LONGINGFREEDOM,Longing for Freedom
 488,0,6,4,0,0x1,1,5,1,no,0,0x40,0,misc,0	,CG_HERMODE,Wand of Hermode
