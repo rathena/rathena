@@ -8120,20 +8120,18 @@ BUILDIN_FUNC(sc_end)
 		bl = map_id2bl(potion_target);
 	}
 
-	if( bl )
-	{
-		if( type == SC_ENDURE )
-		{	//Required to terminate properly infinite endure.
-			struct status_change *sc = status_get_sc(bl);
-			struct status_change_entry *sce = sc?sc->data[type]:NULL;
-			if (sce) sce->val4 = 0;
-		}
-		if( type >= 0 )
-			status_change_end(bl, type, INVALID_TIMER);
-		else
-			status_change_clear(bl, 2);// remove all effects
-	}
+	if( !bl ) return 0l;
 
+	if( type >= 0 && type < SC_MAX )
+	{
+		struct status_change *sc = status_get_sc(bl);
+		struct status_change_entry *sce = sc?sc->data[type]:NULL;
+		if (!sce) return 0;
+		//This should help status_change_end force disabling the SC in case it has no limit.
+		sce->val1 = sce->val2 = sce->val3 = sce->val4 = 0;
+		status_change_end(bl, type, INVALID_TIMER);
+	} else
+		status_change_clear(bl, 2);// remove all effects
 	return 0;
 }
 
