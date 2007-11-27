@@ -8122,6 +8122,12 @@ BUILDIN_FUNC(sc_end)
 
 	if( bl )
 	{
+		if( type == SC_ENDURE )
+		{	//Required to terminate properly infinite endure.
+			struct status_change *sc = status_get_sc(bl);
+			struct status_change_entry *sce = sc?sc->data[type]:NULL;
+			if (sce) sce->val4 = 0;
+		}
 		if( type >= 0 )
 			status_change_end(bl, type, INVALID_TIMER);
 		else

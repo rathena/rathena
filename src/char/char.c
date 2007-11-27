@@ -3909,6 +3909,8 @@ static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, int dat
 static int online_data_cleanup_sub(DBKey key, void *data, va_list ap)
 {
 	struct online_char_data *character= (struct online_char_data*)data;
+	if (character->fd != -1)
+		return 0; //Character still connected
 	if (character->server == -2) //Unknown server.. set them offline
 		set_char_offline(character->char_id, character->account_id);
 	if (character->server < 0)

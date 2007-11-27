@@ -799,7 +799,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	if(sd && attack_type&BF_WEAPON &&
 		skillid != WS_CARTTERMINATION &&
 		skillid != AM_DEMONSTRATION &&
-		skillid != CR_REFLECTSHIELD
+		skillid != CR_REFLECTSHIELD &&
+		skillid != ASC_BREAKER
 	){	//Trigger status effects
 		int i, type;
 		for(i=0; i < ARRAYLENGTH(sd->addeff) && sd->addeff[i].flag; i++)
