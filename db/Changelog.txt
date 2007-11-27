@@ -37,6 +37,9 @@
 	2376 General's_Plate_Mail	Increases heal recovery effectiveness on you by 10%
 
 =======================
+11/27
+	* Cart Termination now ignores the attacker's cards, as a side effect makes
+	  it bypass AutoGuard & Cicada Skin Shedding [Skotlex]
 11/22
 	* Rev. 11784 Added slots to Cross Shield and Book of Charms (bugreport:429) [L0ne_W0lf]
 	- Fixed the brynhildr item script. (bugreport:429)
