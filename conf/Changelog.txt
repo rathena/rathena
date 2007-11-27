@@ -1,5 +1,7 @@
 Date	Added
 
+2007/11/27
+	* Rev. 11824 Added Battle field and Memorial dungeon maps. [L0ne_W0lf]
 2007/11/18
 	* 11758 Updated more map flags for Al De Baran's turbo Track. [L0ne_W0lf]
 2007/11/12

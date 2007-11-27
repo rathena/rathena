@@ -38,6 +38,7 @@
 
 =======================
 11/27
+	* Rev. 11824 Added Battle field and Memorial dungeon maps. [L0ne_W0lf]
 	* Cart Termination now ignores the attacker's cards, as a side effect makes
 	  it bypass AutoGuard & Cicada Skin Shedding [Skotlex]
 11/22

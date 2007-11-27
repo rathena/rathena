@@ -699,6 +699,30 @@ arug_cas03
 arug_cas04
 arug_cas05
 aru_gld
+bat_room
+bat_a01
+bat_a02
+bat_b01
+bat_b02
+que_qsch01
+que_qsch02
+que_qsch03
+que_qsch04
+que_qsch05
+que_qaru01
+que_qaru02
+que_qaru03
+que_qaru04
+que_qaru05
+1@cata
+2@cata
+e_tower
+1@tower
+2@tower
+3@tower
+4@tower
+5@tower
+6@tower
 
 // Only add maps under this line if they are not standard maps!
 
