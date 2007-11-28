@@ -204,7 +204,7 @@ void addGM(int account_id, int level)
 	unsigned int i;
 
 	ARR_FIND( 0, auth_num, i, auth_dat[i].account_id == account_id );
-	if( i < auth_num )
+	if( i == auth_num )
 		return; // no such account
 
 	ARR_FIND( 0, GM_num, i, gm_account_db[i].account_id == account_id );
