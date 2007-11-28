@@ -3577,7 +3577,7 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 static signed char status_calc_def(struct block_list *bl, struct status_change *sc, int def)
 {
 	if(!sc || !sc->count)
-		return cap_value(def,0,CHAR_MAX);
+		return (signed char)cap_value(def,CHAR_MIN,CHAR_MAX);
 
 	if(sc->data[SC_BERSERK])
 		return 0;
@@ -3616,7 +3616,7 @@ static signed char status_calc_def(struct block_list *bl, struct status_change *
 	if (sc->data[SC_FLING])
 		def -= def * (sc->data[SC_FLING]->val2)/100;
 
-	return (char)cap_value(def,0,CHAR_MAX);
+	return (signed char)cap_value(def,CHAR_MIN,CHAR_MAX);
 }
 
 static signed short status_calc_def2(struct block_list *bl, struct status_change *sc, int def2)
@@ -3656,7 +3656,7 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 static signed char status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef)
 {
 	if(!sc || !sc->count)
-		return cap_value(mdef,0,CHAR_MAX);
+		return (signed char)cap_value(mdef,CHAR_MIN,CHAR_MAX);
 
 	if(sc->data[SC_BERSERK])
 		return 0;
@@ -3677,7 +3677,7 @@ static signed char status_calc_mdef(struct block_list *bl, struct status_change 
 	if(sc->data[SC_INCMDEFRATE])
 		mdef += mdef * sc->data[SC_INCMDEFRATE]->val1/100;
 
-	return (char)cap_value(mdef,0,CHAR_MAX);
+	return (signed char)cap_value(mdef,CHAR_MIN,CHAR_MAX);
 }
 
 static signed short status_calc_mdef2(struct block_list *bl, struct status_change *sc, int mdef2)
@@ -4111,7 +4111,7 @@ unsigned short status_get_lwatk2(struct block_list *bl)
 	return status->lhw?status->lhw->atk2:0;
 }
 
-unsigned char status_get_def(struct block_list *bl)
+signed char status_get_def(struct block_list *bl)
 {
 	struct unit_data *ud;
 	struct status_data *status = status_get_status_data(bl);
@@ -4119,8 +4119,7 @@ unsigned char status_get_def(struct block_list *bl)
 	ud = unit_bl2ud(bl);
 	if (ud && ud->skilltimer != -1)
 		def -= def * skill_get_castdef(ud->skillid)/100;
-	if(def < 0) def = 0;
-	return def;
+	return cap_value(def, CHAR_MIN, CHAR_MAX);
 }
 
 unsigned short status_get_speed(struct block_list *bl)
