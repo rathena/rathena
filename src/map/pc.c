@@ -1543,20 +1543,18 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			status->def_ele=val;
 		break;
 	case SP_MAXHP:
-		if(sd->state.lr_flag != 2) {
-			if (val < 0 && status->max_hp <= (unsigned int)(-val))
-				status->max_hp = 1;
-			else
-				status->max_hp+=val;
-		}
+		if(sd->state.lr_flag == 2)
+			break;
+		val += (int)status->max_hp;
+		//Negative bonuses will underflow, this will be handled in status_calc_pc through casting 
+		//If this is called outside of status_calc_pc, you'd better pray they do not underflow and end with UINT_MAX max_hp.
+		status->max_hp = (unsigned int)val;
 		break;
 	case SP_MAXSP:
-		if(sd->state.lr_flag != 2) {
-			if (val < 0 && status->max_sp <= (unsigned int)(-val))
-				status->max_sp = 1;
-			else
-				status->max_sp+=val;
-		}
+		if(sd->state.lr_flag == 2) 
+			break;
+		val += (int)status->max_sp;
+		status->max_sp = (unsigned int)val;
 		break;
 	case SP_CASTRATE:
 		if(sd->state.lr_flag != 2)
