@@ -751,8 +751,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int m, int x, int y)
 	switch(map[m].npc[i]->subtype) {
 		case WARP:
 			// hidden chars cannot use warps -- is it the same for scripts too?
-			if (sd->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) ||
-				(!battle_config.duel_allow_teleport && sd->duel_group)) // duel rstrct [LuzZza]
+			if (sd->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK))
 				break;
 			pc_setpos(sd,map[m].npc[i]->u.warp.mapindex,map[m].npc[i]->u.warp.x,map[m].npc[i]->u.warp.y,0);
 			break;

@@ -1880,8 +1880,7 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 	struct status_data *status;
 	TBL_PC * sd;
 	int i,j,hp,sp,hp_rate,sp_rate,state,mhp ;
-	int itemid[10],amount[10];
-	int delitem_flag = 1;
+	int itemid[10],amount[ARRAYLENGTH(itemid)],index[ARRAYLENGTH(itemid)];
 	
 	nullpo_retr(0, hd);
 	sd = hd->master;
@@ -1954,31 +1953,26 @@ static int skill_check_condition_hom (struct homun_data *hd, int skill, int lv, 
 	if(!(type&1))
 		return 1;
 
-	if( delitem_flag )
+	// Check items and reduce required amounts
+	for( i = 0; i < ARRAYLENGTH(itemid); ++i )
 	{
-		int index[ARRAYLENGTH(itemid)];
+		index[i] = -1;
+		if(itemid[i] <= 0)
+			continue;// no item
 
-		// Check items and reduce required amounts
-		for( i = 0; i < ARRAYLENGTH(itemid); ++i )
+		index[i] = pc_search_inventory(sd,itemid[i]);
+		if(index[i] < 0 || sd->status.inventory[index[i]].amount < amount[i])
 		{
-			index[i] = -1;
-			if(itemid[i] <= 0)
-				continue;// no item
-
-			index[i] = pc_search_inventory(sd,itemid[i]);
-			if(index[i] < 0 || sd->status.inventory[index[i]].amount < amount[i])
-			{
-				clif_skill_fail(sd,skill,0,0);
-				return 0;
-			}
+			clif_skill_fail(sd,skill,0,0);
+			return 0;
 		}
+	}
 
-		// Consume items
-		for( i = 0; i < ARRAYLENGTH(itemid); ++i )
-		{
-			if(index[i] >= 0)
-				pc_delitem(sd,index[i],amount[i],0);
-		}
+	// Consume items
+	for( i = 0; i < ARRAYLENGTH(itemid); ++i )
+	{
+		if(index[i] >= 0)
+			pc_delitem(sd,index[i],amount[i],0);
 	}
 
 	if(type&2)
@@ -4169,12 +4163,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		if (flag&1 || (i = skill_get_splash(skillid, skilllv)) < 1)
 		{
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			i = tstatus->mdef;
-			if (i >= 100 ||
-				(dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) ||
-				tsc == NULL || (tsc->data[SC_SPIRIT] && tsc->data[SC_SPIRIT]->val2 == SL_ROGUE) || //Rogue's spirit defends againt dispel.
-			//Fixed & changed to use a proportionnal reduction (no info, but seems far more logical) [DracoRPG]
-				rand()%100 >= (100-i)*(50+10*skilllv)/100)
+			if((dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER)
+				|| (tsc && tsc->data[SC_SPIRIT] && tsc->data[SC_SPIRIT]->val2 == SL_ROGUE) //Rogue's spirit defends againt dispel.
+				|| rand()%100 >= 50+10*skilllv)
 			{
 				if (sd)
 					clif_skill_fail(sd,skillid,0,0);
@@ -7447,7 +7438,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 	struct status_change *sc;
 	int i,j,hp,sp,hp_rate,sp_rate,zeny,weapon,ammo,ammo_qty,state,spiritball,mhp;
 	int itemid[10],amount[10];
-	int delitem_flag = 1;
+	char item_flag = 2; //0 - no item checking. 1 - only check if you have items. 2 - check and delete
 
 	nullpo_retr(0, sd);
 
@@ -7638,7 +7629,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 
 	case AL_WARP:
 		if(!(type&2)) //Delete the item when the portal has been selected (type&2). [Skotlex]
-			delitem_flag = 0;
+			item_flag = 1;
 		if(!battle_config.duel_allow_teleport && sd->duel_group) { // duel restriction [LuzZza]
 			clif_displaymessage(sd->fd, "Duel: Can't use warp in duel.");
 			return 0;
@@ -7821,6 +7812,17 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		if(!(sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == skill))
 			return 0;
 		break;
+	case AM_BERSERKPITCHER:
+	case AM_POTIONPITCHER:
+	case CR_SLIMPITCHER:
+	case MG_STONECURSE:
+	case CR_CULTIVATION:
+	case SA_FLAMELAUNCHER:
+	case SA_FROSTWEAPON:
+	case SA_LIGHTNINGLOADER:
+	case SA_SEISMICWEAPON:
+		item_flag = 1;
+		break;
 	case SA_DELUGE:
 	case SA_VOLCANO:
 	case SA_VIOLENTGALE:
@@ -7833,7 +7835,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 			sg->skill_id == SA_VIOLENTGALE
 		)) {
 			if (sg->limit - DIFF_TICK(gettick(), sg->tick) > 0)
-				delitem_flag = 0;
+				item_flag = 0;
 			else
 				sg->limit = 0; //Disable it.
 		}
@@ -7966,7 +7968,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 			return 0;
 		}
 		if (sd->status.hom_id) //Don't delete items when hom is already out.
-			delitem_flag = 0;
+			item_flag = 0;
 		break;
 	case AM_REST: //Can't vapo homun if you don't have an active homunc or it's hp is < 80%
 		if (!merc_is_hom_active(sd->hd) || sd->hd->battle_status.hp < (sd->hd->battle_status.max_hp*80/100))
@@ -8104,7 +8106,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 	if(!(type&1))
 		return 1; // consumption only happens on cast-end
 
-	if( delitem_flag )
+	if( item_flag )
 	{
 		int index[ARRAYLENGTH(itemid)];
 
@@ -8146,6 +8148,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		}
 
 		// Consume items
+		if (item_flag==2)
 		for( i = 0; i < ARRAYLENGTH(itemid); ++i )
 		{
 			if(index[i] >= 0)

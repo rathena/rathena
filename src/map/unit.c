@@ -1700,6 +1700,8 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 			sd->pvp_timer = -1;
 			sd->pvp_rank = 0;
 		}
+		if(sd->duel_group > 0)
+			duel_leave(sd->duel_group, sd);
 
 		if(pc_issit(sd)) {
 			pc_setstand(sd);
@@ -1807,9 +1809,6 @@ int unit_free(struct block_list *bl, int clrtype)
 
 		if (sd->followtimer != -1)
 			pc_stop_following(sd);
-		// Force exiting from duel and rejecting all duel invitations when player quit [LuzZza]
-		if(sd->duel_group > 0)
-			duel_leave(sd->duel_group, sd);
 			
 		if(sd->duel_invite > 0)
 			duel_reject(sd->duel_invite, sd);
