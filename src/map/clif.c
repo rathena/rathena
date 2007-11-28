@@ -3593,22 +3593,20 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 	}
 	WBUFW(buf,24)=div;
 	WBUFB(buf,26)=type;
-	clif_send(buf,packet_len(0x8a),src,AREA);
+	if(disguised(dst)) {
+		clif_send(buf,packet_len(0x8a),dst,AREA_WOS);
+		WBUFL(buf,6) = -dst->id;
+		clif_send(buf,packet_len(0x8a),dst,SELF);
+	} else
+		clif_send(buf,packet_len(0x8a),dst,AREA);
 
 	if(disguised(src)) {
 		WBUFL(buf,2) = -src->id;
+		if (disguised(dst))
+			WBUFL(buf,6) = dst->id;
 		if(damage > 0) WBUFW(buf,22) = -1;
 		if(damage2 > 0) WBUFW(buf,27) = -1;
 		clif_send(buf,packet_len(0x8a),src,SELF);
-	}
-	if (disguised(dst)) {
-		WBUFL(buf,6) = -dst->id;
-		if (disguised(src)) WBUFL(buf,2) = src->id;
-		else {
-			if(damage > 0) WBUFW(buf,22) = -1;
-			if(damage2 > 0) WBUFW(buf,27) = -1;
-		}
-		clif_send(buf,packet_len(0x8a),dst,SELF);
 	}
 	//Return adjusted can't walk delay for further processing.
 	return clif_calc_walkdelay(dst,ddelay,type,damage+damage2,div);
@@ -4034,12 +4032,12 @@ int clif_skillcasting(struct block_list* bl,
 	WBUFW(buf,14) = skill_num;
 	WBUFL(buf,16) = pl<0?0:pl; //Avoid sending negatives as element [Skotlex]
 	WBUFL(buf,20) = casttime;
-	clif_send(buf,packet_len(0x13e), bl, AREA);
 	if (disguised(bl)) {
+		clif_send(buf,packet_len(0x13e), bl, AREA_WOS);
 		WBUFL(buf,2) = -src_id;
-		WBUFL(buf,20) = 0;
 		clif_send(buf,packet_len(0x13e), bl, SELF);
-	}
+	} else
+		clif_send(buf,packet_len(0x13e), bl, AREA);
 
 	return 0;
 }
@@ -4163,20 +4161,20 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int
 	WBUFW(buf,26)=skill_lv;
 	WBUFW(buf,28)=div;
 	WBUFB(buf,30)=type;
-	clif_send(buf,packet_len(0x114),src,AREA);
+	if (disguised(dst)) {
+		clif_send(buf,packet_len(0x114),dst,AREA_WOS);
+		WBUFL(buf,8)=-dst->id;
+		clif_send(buf,packet_len(0x114),dst,SELF);
+	} else
+		clif_send(buf,packet_len(0x114),dst,AREA);
+
 	if(disguised(src)) {
 		WBUFL(buf,4)=-src->id;
+		if (disguised(dst)) 
+			WBUFL(buf,8)=dst->id;
 		if(damage > 0)
 			WBUFW(buf,24)=-1;
 		clif_send(buf,packet_len(0x114),src,SELF);
-	}
-	if (disguised(dst)) {
-		WBUFL(buf,8)=-dst->id;
-		if (disguised(src))
-			WBUFL(buf,4)=src->id;
-		else if(damage > 0)
-			WBUFW(buf,24)=-1;
-		clif_send(buf,packet_len(0x114),dst,SELF);
 	}
 #else
 	WBUFW(buf,0)=0x1de;
@@ -4194,20 +4192,20 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int
 	WBUFW(buf,28)=skill_lv;
 	WBUFW(buf,30)=div;
 	WBUFB(buf,32)=type;
-	clif_send(buf,packet_len(0x1de),src,AREA);
+	if (disguised(dst)) {
+		clif_send(buf,packet_len(0x1de),dst,AREA_WOS);
+		WBUFL(buf,8)=-dst->id;
+		clif_send(buf,packet_len(0x1de),dst,SELF);
+	} else
+		clif_send(buf,packet_len(0x1de),dst,AREA);
+
 	if(disguised(src)) {
 		WBUFL(buf,4)=-src->id;
+		if (disguised(dst))
+			WBUFL(buf,8)=dst->id;
 		if(damage > 0)
 			WBUFL(buf,24)=-1;
 		clif_send(buf,packet_len(0x1de),src,SELF);
-	}
-	if (disguised(dst)) {
-		WBUFL(buf,8)=-dst->id;
-		if (disguised(src))
-			WBUFL(buf,4)=src->id;
-		else if(damage > 0)
-			WBUFL(buf,24)=-1;
-		clif_send(buf,packet_len(0x1de),dst,SELF);
 	}
 #endif
 
@@ -4289,12 +4287,13 @@ int clif_skill_nodamage(struct block_list *src,struct block_list *dst,int skill_
 	WBUFL(buf,6)=dst->id;
 	WBUFL(buf,10)=src?src->id:0;
 	WBUFB(buf,14)=fail;
-	clif_send(buf,packet_len(0x11a),dst,AREA);
 
 	if (disguised(dst)) {
+		clif_send(buf,packet_len(0x11a),dst,AREA_WOS);
 		WBUFL(buf,6)=-dst->id;
 		clif_send(buf,packet_len(0x11a),dst,SELF);
-	}
+	} else
+		clif_send(buf,packet_len(0x11a),dst,AREA);
 
 	if(src && disguised(src)) {
 		WBUFL(buf,10)=-src->id;
@@ -4322,11 +4321,12 @@ int clif_skill_poseffect(struct block_list *src,int skill_id,int val,int x,int y
 	WBUFW(buf,10)=x;
 	WBUFW(buf,12)=y;
 	WBUFL(buf,14)=tick;
-	clif_send(buf,packet_len(0x117),src,AREA);
 	if(disguised(src)) {
+		clif_send(buf,packet_len(0x117),src,AREA_WOS);
 		WBUFL(buf,4)=-src->id;
 		clif_send(buf,packet_len(0x117),src,SELF);
-	}
+	} else
+		clif_send(buf,packet_len(0x117),src,AREA);
 
 	return 0;
 }
