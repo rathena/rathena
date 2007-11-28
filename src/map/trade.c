@@ -84,8 +84,8 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
  * Reply to a trade-request.
  * Type values:
  * 0: Char is too far
- * 1: Character does not exists
- *	2: Trade failed
+ * 1: Character does not exist
+ * 2: Trade failed
  * 3: Accept
  * 4: Cancel
  * Weird enough, the client should only send 3/4

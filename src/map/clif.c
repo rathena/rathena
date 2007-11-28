@@ -700,10 +700,6 @@ int clif_clearunit_delayed(struct block_list* bl, unsigned int tick)
 
 void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, unsigned short *lhand)
 {
-#if PACKETVER > 3
-	struct item_data *id;
-#endif
-
 	if(sd->sc.option&(OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER))
 	{
 		*rhand = *lhand = 0;
@@ -717,7 +713,7 @@ void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, un
 	if (sd->equip_index[EQI_HAND_R] >= 0 &&
 		sd->inventory_data[sd->equip_index[EQI_HAND_R]]) 
 	{
-		id = sd->inventory_data[sd->equip_index[EQI_HAND_R]];
+		struct item_data* id = sd->inventory_data[sd->equip_index[EQI_HAND_R]];
 		if (id->view_id > 0)
 			*rhand = id->view_id;
 		else
@@ -729,7 +725,7 @@ void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, un
 		sd->equip_index[EQI_HAND_L] != sd->equip_index[EQI_HAND_R] &&
 		sd->inventory_data[sd->equip_index[EQI_HAND_L]]) 
 	{
-		id = sd->inventory_data[sd->equip_index[EQI_HAND_L]];
+		struct item_data* id = sd->inventory_data[sd->equip_index[EQI_HAND_L]];
 		if (id->view_id > 0)
 			*lhand = id->view_id;
 		else
@@ -3155,32 +3151,61 @@ void clif_leavechat(struct chat_data* cd, struct map_session_data* sd, bool flag
 /*==========================================
  * Opens a trade request window from char 'name'
  * R 00e5 <nick>.24B
+ * R 01f4 <nick>.24B <charid>.L <baselvl>.W
  *------------------------------------------*/
 void clif_traderequest(struct map_session_data* sd, const char* name)
 {
-	int fd;
-	nullpo_retv(sd);
+	int fd = sd->fd;
 
-	fd = sd->fd;
+#if PACKETVER < 6
 	WFIFOHEAD(fd,packet_len(0xe5));
 	WFIFOW(fd,0) = 0xe5;
 	safestrncpy((char*)WFIFOP(fd,2), name, NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0xe5));
+#else
+	struct map_session_data* tsd = map_id2sd(sd->trade_partner);
+	if( !tsd ) return;
+	
+	WFIFOHEAD(fd,packet_len(0x1f4));
+	WFIFOW(fd,0) = 0x1f4;
+	safestrncpy((char*)WFIFOP(fd,2), name, NAME_LENGTH);
+	WFIFOL(fd,26) = tsd->status.char_id;
+	WFIFOW(fd,30) = tsd->status.base_level;
+	WFIFOSET(fd,packet_len(0x1f4));
+#endif
 }
 
 /*==========================================
- * æ‚èˆø‚«—v‹‰“š
+ * Reply to a trade-request.
+ * R 00e7 <type>.B
+ * R 01f5 <type>.B <charid>.L <baselvl>.W
+ * Type:
+ * 0: Char is too far
+ * 1: Character does not exist
+ * 2: Trade failed
+ * 3: Accept
+ * 4: Cancel
  *------------------------------------------*/
-void clif_tradestart(struct map_session_data* sd, int type)
+void clif_tradestart(struct map_session_data* sd, uint8 type)
 {
-	int fd;
-	nullpo_retv(sd);
-
-	fd = sd->fd;
+	int fd = sd->fd;
+	
+#if PACKETVER < 6
 	WFIFOHEAD(fd,packet_len(0xe7));
 	WFIFOW(fd,0) = 0xe7;
 	WFIFOB(fd,2) = type;
 	WFIFOSET(fd,packet_len(0xe7));
+#else
+	struct map_session_data* tsd = map_id2sd(sd->trade_partner);
+	if( !tsd ) return;
+
+	WFIFOHEAD(fd,packet_len(0x1f5));
+	WFIFOW(fd,0) = 0x1f5;
+	WFIFOB(fd,2) = type;
+	WFIFOL(fd,3) = tsd->status.char_id;
+	WFIFOW(fd,7) = tsd->status.base_level;
+	WFIFOSET(fd,packet_len(0x1f5));
+#endif
 }
 
 /*==========================================
