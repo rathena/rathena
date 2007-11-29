@@ -2884,12 +2884,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	wd.dmotion = clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2);
 
-// Eh, battle_calc_damage should take care of not making the off-hand dmg miss.
-//	if(sd && sd->status.weapon > MAX_WEAPON_TYPE && wd.damage2 == 0)
-//		clif_damage(src, target, tick+10, wd.amotion, wd.dmotion,0, 1, 0, 0);
-
 	if (sd && sd->splash_range > 0 && damage > 0)
-		skill_castend_damage_id(src, target, 0, -1, tick, 0);
+		skill_castend_damage_id(src, target, 0, 1, tick, 0);
 
 	map_freeblock_lock();
 
