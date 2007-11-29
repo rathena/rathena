@@ -1866,13 +1866,27 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		(!md->master_id || !md->special_state.ai) && //Only player-summoned mobs do not give exp. [Skotlex]
 		(!map[m].flag.nobaseexp || !map[m].flag.nojobexp) //Gives Exp
 	) { //Experience calculation.
+		int bonus = 100; //Bonus on top of your share (common to all attackers).
+		if (md->sc.data[SC_RICHMANKIM])
+			bonus += md->sc.data[SC_RICHMANKIM]->val2;
+		if(sd) {
+			temp = status_get_class(&md->bl);
+			ARR_FIND(0, 3, i, temp == sd->hate_mob[i]);
+			if (i < 3 && (
+				battle_config.allow_skill_without_day ||
+				sg_info[i].day_func() ||
+				(i==2 && sd->sc.data[SC_MIRACLE]) //Miracle only applies to Star target
+			))
+				bonus += (i==2?20:10)*pc_checkskill(sd,sg_info[i].bless_id);
 
+			if(battle_config.mobs_level_up && md->level > md->db->lv) // [Valaris]
+				bonus += (md->level-md->db->lv)*battle_config.mobs_level_up_exp_rate;
+		}
 	for(i = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++)
 	{
 		int flag=1,zeny=0;
 		unsigned int base_exp, job_exp;
 		double per; //Your share of the mob's exp
-		int bonus; //Bonus on top of your share.
 
 		if (!tmpsd[i]) continue;
 
@@ -1897,15 +1911,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			per /=2.;
 		else if(md->special_state.size==2)
 			per *=2.;
-
-		bonus = 100;
 		
-		if (md->sc.data[SC_RICHMANKIM])
-			bonus += md->sc.data[SC_RICHMANKIM]->val2;
-
-		if(battle_config.mobs_level_up && md->level > md->db->lv) // [Valaris]
-			bonus += (md->level-md->db->lv)*battle_config.mobs_level_up_exp_rate;
-
+	
 		if(battle_config.zeny_from_mobs && md->level) {
 			 // zeny calculation moblv + random moblv [Valaris]
 			zeny=(int) ((md->level+rand()%md->level)*per*bonus/100.);

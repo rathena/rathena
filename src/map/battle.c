@@ -1760,19 +1760,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			if (flag.lh)
 				wd.damage2 = battle_addmastery(sd,target,wd.damage2,1);
 
-			if((skill=pc_checkskill(sd,SG_STAR_ANGER)) >0 && (t_class == sd->hate_mob[2] ||
-				(sc && sc->data[SC_MIRACLE])))
+			if (sc && sc->data[SC_MIRACLE]) i = 2; //Star anger
+			else
+			ARR_FIND(0, 3, i, t_class == sd->hate_mob[i] && (skill=pc_checkskill(sd,sg_info[i].anger_id)));
+			if (i < 3) 
 			{
-				skillratio = sd->status.base_level + sstatus->str + sstatus->dex + sstatus->luk;
-				if (skill<4)
-					skillratio /= 12-3*skill;
-				ATK_ADDRATE(skillratio);
-			} else
-			if(
-				((skill=pc_checkskill(sd,SG_SUN_ANGER)) >0 && t_class == sd->hate_mob[0]) ||
-				((skill=pc_checkskill(sd,SG_MOON_ANGER)) >0 && t_class == sd->hate_mob[1])
-			) {
-				skillratio = sd->status.base_level + sstatus->dex+ sstatus->luk;
+				skillratio = sd->status.base_level + sstatus->dex + sstatus->luk;
+				if (i == 2) skillratio += sstatus->str; //Star Anger
 				if (skill<4)
 					skillratio /= 12-3*skill;
 				ATK_ADDRATE(skillratio);

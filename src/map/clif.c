@@ -10995,7 +10995,6 @@ void clif_parse_RankingPk(int fd,struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_FeelSaveOk(int fd,struct map_session_data *sd)
 {
-	char feel_var[3][NAME_LENGTH] = {"PC_FEEL_SUN","PC_FEEL_MOON","PC_FEEL_STAR"};
 	int i;
 	if (sd->menuskill_id != SG_FEEL)
 		return;
@@ -11004,7 +11003,7 @@ void clif_parse_FeelSaveOk(int fd,struct map_session_data *sd)
 
 	sd->feel_map[i].index = map_id2index(sd->bl.m);
 	sd->feel_map[i].m = sd->bl.m;
-	pc_setglobalreg(sd,feel_var[i],sd->feel_map[i].index);
+	pc_setglobalreg(sd,sg_info[i].feel_var,sd->feel_map[i].index);
 
 //Are these really needed? Shouldn't they show up automatically from the feel save packet?
 //	clif_misceffect2(&sd->bl, 0x1b0);

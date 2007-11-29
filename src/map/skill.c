@@ -1223,7 +1223,7 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 
 	nullpo_retr(0, src);
 
-	if (map_flag_gvg(target->m))
+	if (src != target && map_flag_gvg(target->m))
 		return 0; //No knocking back in WoE
 	if (count == 0)
 		return 0; //Actual knockback distance is 0.
@@ -1632,7 +1632,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	}
 
 	//Only knockback if it's still alive, otherwise a "ghost" is left behind. [Skotlex]
-	if (dmg.blewcount > 0 && !status_isdead(bl))
+	//Reflected spells do not bounce back (bl == dsrc since it only happens for direct skills)
+	if (dmg.blewcount > 0 && bl!=dsrc && !status_isdead(bl))
 	{
 		int direction = -1; // default
 		switch(skillid)
@@ -7880,28 +7881,25 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 			return 0;
 		}
 		break;
-	//SHOULD BE OPTIMALIZED [Komurka]
-	//Optimized #1. optimize comfort later. [Vicious]
 	case SG_SUN_WARM:
 	case SG_MOON_WARM:
 	case SG_STAR_WARM:
-		if ((sd->bl.m == sd->feel_map[skill-SG_SUN_WARM].m) || (sc && sc->data[SC_MIRACLE]))
+		if (sc && sc->data[SC_MIRACLE])
+			break;
+		i = skill-SG_SUN_WARM;
+		if (sd->bl.m == sd->feel_map[i].m)
 			break;
 		clif_skill_fail(sd,skill,0,0);
 		return 0;
 		break;
 	case SG_SUN_COMFORT:
-		if ((sd->bl.m == sd->feel_map[0].m && (battle_config.allow_skill_without_day || is_day_of_sun())) || (sc && sc->data[SC_MIRACLE]))
-			break;
-		clif_skill_fail(sd,skill,0,0);
-		return 0;
 	case SG_MOON_COMFORT:
-		if ((sd->bl.m == sd->feel_map[1].m && (battle_config.allow_skill_without_day || is_day_of_moon())) || (sc && sc->data[SC_MIRACLE]))
-			break;
-		clif_skill_fail(sd,skill,0,0);
-		return 0;
 	case SG_STAR_COMFORT:
-		if ((sd->bl.m == sd->feel_map[2].m && (battle_config.allow_skill_without_day || is_day_of_star())) || (sc && sc->data[SC_MIRACLE]))
+		if (sc && sc->data[SC_MIRACLE])
+			break;
+		i = skill-SG_SUN_COMFORT;
+		if (sd->bl.m == sd->feel_map[i].m &&
+			(battle_config.allow_skill_without_day || sg_info[i].day_func()))
 			break;
 		clif_skill_fail(sd,skill,0,0);
 		return 0;

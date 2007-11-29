@@ -64,8 +64,12 @@ static int GM_num = 0;
 #define MOTD_LINE_SIZE 128
 char motd_text[MOTD_LINE_SIZE][256]; // Message of the day buffer [Valaris]
 
-static const char feel_var[3][NAME_LENGTH] = {"PC_FEEL_SUN","PC_FEEL_MOON","PC_FEEL_STAR"};
-static const char hate_var[3][NAME_LENGTH] = {"PC_HATE_MOB_SUN","PC_HATE_MOB_MOON","PC_HATE_MOB_STAR"};
+//Links related info to the sd->hate_mob[]/sd->feel_map[] entries
+const struct sg_data sg_info[3] = {
+		{ SG_SUN_ANGER, SG_SUN_BLESS, SG_SUN_COMFORT, "PC_FEEL_SUN", "PC_HATE_MOB_SUN", is_day_of_sun },
+		{ SG_MOON_ANGER, SG_MOON_BLESS, SG_MOON_COMFORT, "PC_FEEL_MOON", "PC_HATE_MOB_MOON", is_day_of_moon },
+		{ SG_STAR_ANGER, SG_STAR_BLESS, SG_STAR_COMFORT, "PC_FEEL_STAR", "PC_HATE_MOB_STAR", is_day_of_star }
+	};
 
 //Converts a class to its array index for CLASS_COUNT defined arrays.
 //Note that it does not do a validity check for speed purposes, where parsing
@@ -817,7 +821,7 @@ int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl)
 			return 0; //Wrong size
 	}
 	sd->hate_mob[pos] = class_;
-	pc_setglobalreg(sd,hate_var[pos],class_+1);
+	pc_setglobalreg(sd,sg_info[pos].hate_var,class_+1);
 	clif_hate_info(sd, pos, class_, 1);
 	return 1;
 }
@@ -842,14 +846,14 @@ int pc_reg_received(struct map_session_data *sd)
 	//SG map and mob read [Komurka]
 	for(i=0;i<3;i++) //for now - someone need to make reading from txt/sql
 	{
-		if ((j = pc_readglobalreg(sd,feel_var[i]))!=0) {
+		if ((j = pc_readglobalreg(sd,sg_info[i].feel_var))!=0) {
 			sd->feel_map[i].index = j;
 			sd->feel_map[i].m = map_mapindex2mapid(j);
 		} else {
 			sd->feel_map[i].index = 0;
 			sd->feel_map[i].m = -1;
 		}
-		sd->hate_mob[i] = pc_readglobalreg(sd,hate_var[i])-1;
+		sd->hate_mob[i] = pc_readglobalreg(sd,sg_info[i].hate_var)-1;
 	}
 
 	if ((i = pc_checkskill(sd,RG_PLAGIARISM)) > 0) {
@@ -4190,26 +4194,11 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 {
 	int bonus = 0;
 	struct status_data *status = status_get_status_data(src);
-	unsigned int temp;
 
 	if (sd->expaddrace[status->race])
 		bonus += sd->expaddrace[status->race];	
 	bonus += sd->expaddrace[status->mode&MD_BOSS?RC_BOSS:RC_NONBOSS];
 	
-	//SG additional exp from Blessings [Komurka] - probably can be optimalized ^^;;
-	temp = status_get_class(src);
-	if(temp == sd->hate_mob[2] &&
-		(battle_config.allow_skill_without_day || is_day_of_star() || sd->sc.data[SC_MIRACLE]))
-		bonus += 20*pc_checkskill(sd,SG_STAR_BLESS);
-	else
-	if(temp == sd->hate_mob[1] &&
-		(battle_config.allow_skill_without_day || is_day_of_moon()))
-		bonus += 10*pc_checkskill(sd,SG_MOON_BLESS);
-	else
-	if(temp == sd->hate_mob[0] &&
-		(battle_config.allow_skill_without_day || is_day_of_sun()))
-		bonus += 10*pc_checkskill(sd,SG_SUN_BLESS);
-
 	if (battle_config.pk_mode && 
 		(int)(status_get_lv(src) - sd->status.base_level) >= 20)
 		bonus += 15; // pk_mode additional exp if monster >20 levels [Valaris]	
@@ -4847,7 +4836,7 @@ int pc_resetfeel(struct map_session_data* sd)
 	{
 		sd->feel_map[i].m = -1;
 		sd->feel_map[i].index = 0;
-		pc_setglobalreg(sd,feel_var[i],0);
+		pc_setglobalreg(sd,sg_info[i].feel_var,0);
 	}
 
 	return 0;
@@ -4861,7 +4850,7 @@ int pc_resethate(struct map_session_data* sd)
 	for (i=0; i<3; i++)
 	{
 		sd->hate_mob[i] = -1;
-		pc_setglobalreg(sd,hate_var[i],0);
+		pc_setglobalreg(sd,sg_info[i].hate_var,0);
 	}
 	return 0;
 }

@@ -304,6 +304,16 @@ struct skill_tree_entry {
 }; // Celest
 extern struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
 
+struct sg_data {
+	short anger_id;
+	short bless_id;
+	short comfort_id;
+	char feel_var[NAME_LENGTH];
+	char hate_var[NAME_LENGTH];
+	int (*day_func)(void);
+};
+extern const struct sg_data sg_info[3];
+
 int pc_read_gm_account(int fd);
 void pc_setinvincibletimer(struct map_session_data* sd, int val);
 void pc_delinvincibletimer(struct map_session_data* sd);
