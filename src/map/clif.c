@@ -4718,9 +4718,8 @@ int clif_set0199(int fd,int type)
  *------------------------------------------*/
 int clif_pvpset(struct map_session_data *sd,int pvprank,int pvpnum,int type)
 {
-	int fd = sd->fd;
-
 	if(type == 2) {
+		int fd = sd->fd;
 		WFIFOHEAD(fd,packet_len(0x19a));
 		WFIFOW(fd,0) = 0x19a;
 		WFIFOL(fd,2) = sd->bl.id;
@@ -4736,7 +4735,7 @@ int clif_pvpset(struct map_session_data *sd,int pvprank,int pvpnum,int type)
 		else
 			WBUFL(buf,6) = pvprank;
 		WBUFL(buf,10) = pvpnum;
-		if(sd->sc.option&OPTION_INVISIBLE)
+		if(sd->sc.option&OPTION_INVISIBLE || sd->disguise) //Causes crashes when a 'mob' with pvp info dies.
 			clif_send(buf,packet_len(0x19a),&sd->bl,SELF);
 		else if(!type)
 			clif_send(buf,packet_len(0x19a),&sd->bl,AREA);
