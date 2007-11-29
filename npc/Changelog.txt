@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/11/29
+	* Rescripted Hair Dresser to the Aegis 10.3 Standards. [Samuray22]
 2007/11/28
 	* Fixed problem in the Hair Dyer NPC. (bugreport:509) [Samuray22]
 2007/11/27

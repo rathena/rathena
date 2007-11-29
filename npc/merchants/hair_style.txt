@@ -1,2050 +1,516 @@
 //===== eAthena Script =======================================
 //= Hair Dresser
 //===== By: ==================================================
-//= [Muad_Dib] 1.0 (The Prometheus Project)
+//= [Muad_Dib] 1.0 (The Prometheus Project) & Samuray22
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
-//= Any Athena Version; RO Episode 6+
+//= eAthena SVN
 //===== Description: =========================================
+//= [Aegis Conversion]
 //= Allows you to change your hairstyle.
 //===== Additional Comments: =================================
+//= 1.2 Rescripted to the Aegis 10.3 Standards. [Samuray22]
+//============================================================
+
+// Stylist - alberta_in 55 142
+alberta_in,55,142,1	script	Stylist	91,{
+	mes "[Veronica]";
+	mes "Welcome~~ Welcome~~";
+	mes "Welcome to the one of the best Hair shop, Veronika Beauty Saloon!! HoHoHo";
+	mes "Come here for new hair, right? ^^ How may I help you?";
+	next;
+	switch(select("Look through Hair Styles.","Change Hair Styles.","Stop talking.")) {
+		case 1:
+			mes "[Veronica]";
+			mes "There are 19 Hair Styles, 1 ~ 19!!!";
+			mes "Which number do you want to look at first?";
+			mes "If you want to stop looking, please choose 0.";
+			next;
+			input .@style;
+			if(.@style > 19) {
+				mes "[Veronica]";
+				mes "Sorry, there aren't any hair styles with that number.";
+				mes "Please choose number from 1 to 19.";
+				next;
+			} else if(.@style == 0) {
+				mes "[Veronica]";
+				mes "How was it?";
+				mes "Did you find any styles you like?";
+				mes "If you want to chage your hair style at anytime, I will do my best!!";
+				close;
+			}
+				callsub L_cutin,.@style;
+				mes "[Veronica]";
+				switch(.@style) {
+					case 1:
+						if(Sex == 1) {
+							mes "Oh~ 'Trickdead' style'!";
+							mes "It is very neat feature and comfortable.";
+							mes "How do you think? Do you like it?";
+							close2;
+							cutin "",255;
+							end;
+						}
+							mes "Oh~ 'First Aid' style'!";
+							mes "It is the style people wants to stroke your hair^^.";
+							mes "How do you think? Do you like it?";
+							close2;
+							cutin "",255;
+							end;
+					case 2:
+						if(Sex == 1) {
+							mes "Oh~ 'Two-Handed Sword Mastery' style!";
+							mes "Its style is very similar to one of the famous Swordman.";
+							mes "How do you think? Do you like it?";
+							close2;
+							cutin "",255;
+							end;
+						}
+							mes "Oh~ 'Bash' style!";
+							mes "It feels unrevealed strong power is hidden inside of....";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+					case 3:
+						if(Sex == 1) {
+							mes "Oh~ 'Napalm Beat' style!";
+							mes "It makes feeling there is unknown power...";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Frost Diver' style!";
+							mes "It feels cold but also warm...";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+					case 4:
+						if(Sex == 1) {
+							mes "Oh~ 'Double Strafe' style!";
+							mes "It will make you feel your mind is very clear.";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Arrow Shower' style!";
+							mes "It feels very refreshed~";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+					case 5:
+						if(Sex == 1) {
+							mes "Oh~ 'Angelus' style!";
+							mes "It feels calm and reverence.";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Heal' style!";
+							mes "It feels mind is cured.";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+					case 6:
+						if(Sex == 1) {
+							mes "Oh~ 'Pushcart' style!";
+							mes "This is the style based on motive of string cart..";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Vending' style!";
+							mes "It seems like making lots of money.";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+					case 7:
+						if(Sex == 1) {
+							mes "Oh~ 'Envenom' style!";
+							mes "It makes feel addicting into something..";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Double Strafe' style!";
+							mes "It makes whomever dash twice.";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+					case 8:
+						if(Sex == 1) {
+							mes "Oh~ 'Bowling Bash' style!";
+							mes "Once people sees it, they will fall for it!";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Gloria' style!";
+							mes "Its nobleness and holiness moods are great.";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+					case 9:
+						if(Sex == 1) {
+							mes "Oh~ 'Venom Dust' style!";
+							mes "It is the style gives feeling deadly charm.";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Increase SP Recovery' style!";
+							mes "It makes feel like recovering spirit fully.";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+					case 10:
+						if(Sex == 1) {
+							mes "Oh~ 'Turn Undead' style!";
+							mes "It gives feeling one attack can make Devils disappear!";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Prepare Potion' style!";
+							mes "It feels a wound is healed already!";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+					case 11:
+						if(Sex == 1) {
+							mes "Oh~ 'Dragonology' style!";
+							mes "This is the style based on motive of mysterious Dragon...";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Grand Cross' style!";
+							mes "It feels a firm faith...";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+					case 12:
+						if(Sex == 1) {
+							mes "Oh~ 'Mace Mastery' style!";
+							mes "It looks very hard and attractive!";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Intimidate' style!";
+							mes "It seems you saw this style somewhere...?";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+					case 13:
+						if(Sex == 1) {
+							mes "Oh~ 'Thunderstorm' style!";
+							mes "It feels hit by thunder storm!!";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Spiritual Sphere Absorption' style!";
+							mes "It catches people's spirits^^";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+					case 14:
+						if(Sex == 1) {
+							mes "Oh~ 'Encore' style!";
+							mes "It is the style makes people feels like asking you to sing~^^";
+							mes "How do you think? Do you like it??";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Gypsy's Kiss' style!";
+							mes "It makes people think you are very kind to all...";
+							mes "How do you think? Do you like it?";
+							close2; cutin "",255; end;
+					case 15:
+						if(Sex == 1) {
+							mes "Oh~ 'Grimtooth' style!";
+							mes "It feels like you will be pricked by hair!";
+							mes "How was it? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Counter Attack' style!";
+							mes "It feels it will kick when someone is near!";
+							mes "How was it? Do you like it?";
+							close2; cutin "",255; end;
+					case 16:
+						if(Sex == 1) {
+							mes "Oh~ 'Blitz Beat' style!";
+							mes "It feels it will attack 5 times...?";
+							mes "How was it? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Ankle Snare' style!";
+							mes "This is the style hardly move.";
+							mes "How was it? Do you like it?";
+							close2; cutin "",255; end;
+					case 17:
+						if(Sex == 1) {
+							mes "Oh~ 'Ore Discovery' style!";
+							mes "It feels like picking up things while walking.";
+							mes "How was it? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Hammer Fall' style!";
+							mes "It will make feeling dizzy!";
+							mes "How was it? Do you like it?";
+							close2; cutin "",255; end;
+					case 18:
+						if(Sex == 1) {
+							mes "Oh~ 'Fire Pillar' style!";
+							mes "It has been a great style over the one generation...!";
+							mes "How was it? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Jupitel Thunder' style!";
+							mes "It feels very neat.";
+							mes "How was it? Do you like it?";
+							close2; cutin "",255; end;
+					case 19:
+						if(Sex == 1) {
+							mes "Oh~ 'Guillotine Fist' style!";
+							mes "It feels like betting all at once!!";
+							mes "How was it? Do you like it?";
+							close2; cutin "",255; end;
+						}
+							mes "Oh~ 'Whirlwind' style!";
+							mes "It feels very refresh like wind.";
+							mes "How was it? Do you like it?";
+							close2; cutin "",255; end;
+				}
+		case 2:
+			if(BaseLevel < 60) {
+				mes "[Veronica]";
+				mes "Wow~, Dear, this style looks good on you~";
+				mes "Don't change strangely.";
+				mes "Why don't you decorate hair with accessories~";
+				close;
+			} else if((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) || (Zeny < 99800)) {
+				mes "[Veronica]";
+				mes "If you want to change your hair style, you need several items";
+				mes "Since you need many items....";
+				mes "I think you should write those down.";
+				next;
+				mes "[Veronica]";
+				mes "3 Counteragent,";
+				mes "3 Mixture,";
+				mes "100 Daenggies,";
+				mes "100 Short Daenggies,";
+				mes "100 Black Hairs,";
+				mes "100 Golden Hairs,";
+				mes "100 Glossy Hair.";
+				next;
+				mes "[Veronica]";
+				mes "And also you need 99,800 zeny.";
+				mes "If you gather them all...";
+				mes "I will show you what I can do~!! ^^ HoHoHo.";
+				close;
+			}
+			mes "[Veronica]";
+			mes "Well, then... Please choose Hair Style you like the most.";
+			mes "I will do my best ^^";
+			mes "There are 19 different Hair Styles.";
+			mes "Numbers from 1 to 19~";
+			next;
+			input .@style;
+			if(.@style > 19) {
+				mes "[Veronica]";
+				mes "There are no such numbers like that!";
+				mes "Please check your number~";
+				close;
+			} else if(.@style == 0) {
+				mes "[Veronica]";
+				mes "It's been canceled.";
+				close;
+			} else if(getlook(1) == .@style) {
+				mes "[Veronica]";
+				mes "You already have this style!!";
+				mes "I think you should look through Hair Styles again";
+				close;
+			}
+				callsub L_cutin,.@style;
+				mes "[Veronica]";
+				mes "This is (" + .@style + ") style.";
+				mes "I will change your hair with this again.";
+				mes "Is that OK with you??";
+				next;
+				if(select("Yeah~ I'd love to.","No..I don't like it...") == 1) {
+						if(getlook(6) == 0) {
+							mes "[Veronica]";
+							mes "You haven't dyeing your hair~ Not even once!!";
+							mes "I think dyeing your hair makes you much better...";
+							mes "I can do it for you as a service... for FREE ^^";
+							mes "Which color do you want?";
+							next;
+							switch(select("Red","Yellow","Purple","Orange","Green","Blue","White","Black","Cancel")) {
+								case 1:
+									set .@pallete,8;
+									goto L_style;
+								case 2:
+									set .@pallete,1;
+									goto L_style;
+								case 3:
+									set .@pallete,2;
+									goto L_style;
+								case 4:
+									set .@pallete,3;
+									goto L_style;
+								case 5:
+									set .@pallete,4;
+									goto L_style;
+								case 6:
+									set .@pallete,5;
+									goto L_style;
+								case 7:
+									set .@pallete,6;
+									goto L_style;
+								case 8:
+									set .@pallete,7;
+									goto L_style;
+								case 9:
+									mes "[Veronica]";
+									mes "Well.. then think it over..";
+									mes "and come visit me again.";
+									mes "Not only type of hair style but also color of it is very important.";
+									close;
+							}
+						}
+				L_style:
+						mes "[Veronica]";
+						mes "Now, It begins~. Hold still~";
+						mes "If you move, you will have very bad style^^";
+						mes "Just trust me on this!!";
+						next;
+						mes "[Veronica]";
+						mes "- Clip clip Clip clip -";
+						mes "- Klit klit Klit klit -";
+						mes "- Snip snip Snip snip -";
+						next;
+						delitem 973,3;
+						delitem 974,3;
+						delitem 901,100;
+						delitem 1094,100;
+						delitem 1020,100;
+						delitem 1060,100;
+						delitem 7152,100;
+						setlook 1,.@style;
+						setlook 6,.@pallete;
+						cutin "",255;
+						mes "[Veronica]";
+						mes "Wow~ it came out very well~~~ ";
+						mes "I hope you like this (" + .@style + ") style. ^^";
+						mes "If you'd like to have other hair style,";
+						mes "you are welcome to visit me anytime~ HoHoHo";
+						setlook 1,.@style;
+						setlook 6,.@pallete;
+						close;
+				}
+						mes "[Veronica]";
+						mes "Well~ choose again please~";
+						mes "There shold be a style you like.";
+						mes "Just remember the number you like the most abd tell me.";
+						close;
+		case 3:
+			mes "[Veronica]";
+			mes "Everyone has rights to become beautiful...";
+			mes "I wish you can find your hair style which fits on you well~";
+			mes "I really do~ ^^";
+			close;
+	}
+L_cutin:
+	if(Sex == 1) {
+		if(getarg(0) < 10)
+			cutin "hair_m_0"+getarg(0),4;
+		else
+			cutin "hair_m_"+getarg(0),4;
+	} else {
+		if(getarg(0) < 10)
+			cutin "hair_f_0"+getarg(0),4;
+		else
+			cutin "hair_f_"+getarg(0),4;
+	}
+	return;
+}
+
+// Gypsy Hairdresser - alberta 33 141
+alberta,33,141,1	script	Gypsy Hairdresser	87,{
+	mes "[Bisharm]";
+	mes "Omg! Kidding me she is a desinger!!";
+	mes "One of the best?? Yeah..whatever...";
+	mes "I'm the only one who knows what's the true dudism and value of hair!";
+	mes "I am a CREATOR of BEAUTY!";
+	next;
+	switch(select("What do you do?","Please bless me also!!",".....")) {
+		case 1:
+			mes "[Bisharm]";
+			mes "ME? I am a hairdresser.";
+			mes "I am drifting from place to place...and";
+			mes "giving people beauty of hair.";
+			mes "I heard there is....";
+			mes "there is a novice who is calling oneself a hair designer in this town...";
+			next;
+			mes "[Bisharm]";
+			mes "That's why I came to this town.";
+			mes "I was watching and I find out everyone asks what they want from the menu...";
+			mes "That is not the way!!";
+			mes "There are some cases..";
+			mes "hairs don't look good on people when listening to them!";
+			next;
+			mes "[Bisharm]";
+			mes "Also very amateur skill...";
+			mes "Very very...amateur...";
+			mes "You can't call it a beauty designer!";
+			mes "Waisting too mush hairs!";
+			mes "In short I don't like it very well!!";
+			next;
+			mes "[Bisharm]";
+			mes "If you want me to touch your hair,";
+			mes "please ask me anytime.";
+			mes "I'll specially do my best for you.";
+			mes "Got it?";
+			mes "Don't ever let novice touch your hair!";
+			close;
+		case 2:
+			if(BaseLevel < 60) {
+				mes "[Bisharm]";
+				mes "Hmm, From my artistic perspective,";
+				mes "the hair style you have looks very good on you!";
+				mes "You should stay with it!";
+				mes "Trust me!";
+				close;
+			} else if(Zeny < 199800) {
+				mes "[Bisharm]";
+				mes "Yeah? You don't need anything else. You only need ZENY!";
+				mes "You just need 199,800 zeny.";
+				mes "Just let you know.... ";
+				mes "that you should feel an honor about me touching your hair with only this price...";
+				close;
+			}
+				mes "[Bisharm]";
+				mes "Good, I will take 199,800 zeny for my fee.";
+				mes "OK?";
+				mes "You still have chance to go to that novice and do your hair....";
+				mes "It's up to you...";
+				next;
+				if(select("I will ask you a favor","Well..I will pass..") ==1 ) {
+					mes "[Bisharm]";
+					mes "Alright!----- Here goes!!!";
+					mes "Watch yourself!!";
+					next;
+					mes "[Bisharm]";
+					mes "Wooohhhhhhhhh!!!!";
+					next;
+					mes "[Bisharm]";
+					mes "Yipe!! Yeah!! Yeah~~~~~!!";
+					next;
+					mes "[Bisharm]";
+					mes "Finished...!! great...GREAT!!";
+					mes "The style no one can't creat!!!!";
+					mes "Phu..Hahahahahaha!!";
+					setlook 1,rand(1,19);
+					setlook 6,rand(1,6);
+					set Zeny,Zeny-199800;
+					close;
+				}
+					mes "[Bisharm]";
+					mes "Hmm! Whatever...!! You'll regret this!!";
+					mes "You'll relize only great artisan can...";
+					mes "can creat real beauty.....";
+					mes "You will relize it...someday...";
+					close;
+		case 3:
+			mes "[Bisharm]";
+			mes "I feel so sorry for people";
+			mes "who let their hairs to be touched by a NOVICE";
+			mes "who doesn't know anything about beauty!!";
+			mes "I feel really really sorry for them!!";
+			close;
+	}
+}
+
+//===== Old Changelog: =================================
 //= 07/06/05 : Added 1st Version. [Muad_Dib]
 //= Converted to eAthena format by Dr.Evil Fixed typos [Nexon]
 //= 1.1 Removed Duplicates [Silent]
 //============================================================
-
-alberta,137,37,6	script	Stylist#01	91,{
-	mes "[Veronica]";
-	mes "Welcome~~Welcome~~";
-	mes "Welcome to the one of the best Hair shop, Veronicas Beauty Saloon!!";
-	mes "HoHoHo";
-	mes "Come here for new hair, right?";
-	mes "How may I help you?";
-	next;
-	menu "Look through the Hair Styles.",Look,"Change Hair Style",Change,"Stop talking.",Cancel;
-Look:
-	set @hair,0;
-	mes "[Veronica]";
-	mes "There are 19 Hair Styles, 1~19!!!";
-	mes "Which number do you want to look at first?";
-	mes "If you want to stop looking, please choose 0.";
-	next;
-		if(sex==0) goto LookF;
-		input @hair_in;
-		if (@hair_in > 19) goto hairtohigh;
-		set @hair,@hair_in;
-	goto ShowPicM;
-	close;
-LookF:
-	set @hairf,0; 
-	input @hairf_in;
-	if (@hairf_in > 19) goto hairtohigh;
-	set @hairf,@hairf_in;
-	goto ShowPicF;
-	close;
-ShowPicM:
-		if (@hair == 0) goto hairnothing;
-		if (@hair == 1) goto mhair1show;
-		if (@hair == 2) goto mhair2show;
-		if (@hair == 3) goto mhair3show;
-		if (@hair == 4) goto mhair4show;
-		if (@hair == 5) goto mhair5show;
-		if (@hair == 6) goto mhair6show;
-		if (@hair == 7) goto mhair7show;
-		if (@hair == 8) goto mhair8show;
-		if (@hair == 9) goto mhair9show;
-		if (@hair == 10) goto mhair10show;
-		if (@hair == 11) goto mhair11show;
-		if (@hair == 12) goto mhair12show;
-		if (@hair == 13) goto mhair13show;
-		if (@hair == 14) goto mhair14show;
-		if (@hair == 15) goto mhair15show;
-		if (@hair == 16) goto mhair16show;
-		if (@hair == 17) goto mhair17show;
-		if (@hair == 18) goto mhair18show;
-		if (@hair == 19) goto mhair19show;
-
-mhair1show:
-		cutin "hair_m_01",4;
-	mes "[Veronica]";
-	mes "Oh~ 'Trickdead' style!";
-	mes "It is very neat feature and comfortable.";
-	mes "How do you think? Do you like it?";
-	close;
-mhair2show:
-		cutin "hair_m_02",4;
-	mes "[Veronica]";
-	mes "Oh~'Two-Handed Sword Mastery' style!";
-	mes "It's style is very similar to one of the famous Swordsman.";
-	mes "How do you think? Do you like it?";
-	close;
-mhair3show:
-		cutin "hair_m_03",4;
-	mes "[Veronica]";
-	mes "Oh~'Napalm Beat' style!";
-	mes "It makes feeling there is unknown power...";
-	mes "How do you think? Do you like it?";
-	close;
-mhair4show:
-		cutin "hair_m_04",4;
-	mes "[Veronica]";
-	mes "Oh~'Double Strafe' style!";
-	mes "It will make your mind is very clear.";
-	mes "How do you think? Do you like it?";
-	close;
-mhair5show:
-		cutin "hair_m_05",4;
-	mes "[Veronica]";
-	mes "Oh~'Angelus' style!";
-	mes "It feels calm your reference.";
-	mes "How do you think? Do you like it?";
-	close;
-mhair6show:
-		cutin "hair_m_06",4;
-	mes "[Veronica]";
-	mes "Oh~'Pushcart' style!";
-	mes "This is the style based on motive of string cart..";
-	mes "How do you think? Do you like it?";
-	close;
-mhair7show:
-		cutin "hair_m_07",4;
-	mes "[Veronica]";
-	mes "Oh~'Envenom' style!";
-	mes "It makes feel addicting into something..";
-	mes "How do you think? Do you like it?";
-	close;
-mhair8show:
-		cutin "hair_m_08",4;
-	mes "[Veronica]";
-	mes "Oh~'Bowling Bash' style!";
-	mes "Once people sees it, they will fall for it.";
-	mes "How do you think? Do you like it?";
-	close;
-mhair9show:
-		cutin "hair_m_09",4;
-	mes "[Veronica]";
-	mes "Oh~'Venom Dust' style!";
-	mes "It is the style gives feeling deadly charm.";
-	mes "How do you think? Do you like it?";
-	close;
-mhair10show:
-		cutin "hair_m_10",4;
-	mes "[Veronica]";
-	mes "Oh~'Turn Undead' style!";
-	mes "It gives feeling one attack can make Devils disappear!";
-	mes "How do you think? Do you like it?";
-	close;
-mhair11show:
-		cutin "hair_m_11",4;
-	mes "[Veronica]";
-	mes "Oh~'Dragnology' style!";
-	mes "This is the style bases on motive of mysterious Dragon...";
-	mes "How do you think? Do you like it?";
-	close;
-mhair12show:
-		cutin "hair_m_12",4;
-	mes "[Veronica]";
-	mes "Oh~'Mace Mastery' style!";
-	mes "It looks very hard and attractive.";
-	mes "How do you think? Do you like it?";
-	close;
-mhair13show:
-		cutin "hair_m_13",4;
-	mes "[Veronica]";
-	mes "Oh~'Thunderstorm' style!";
-	mes "It feels hit by Thunderstorm!!";
-	mes "How do you think? Do you like it?";
-	close;
-mhair14show:
-		cutin "hair_m_14",4;
-	mes "[Veronica]";
-	mes "Oh~'Encore' style!";
-	mes "It is the style make people feels like asking you to sing~";
-	mes "How do you think? Do you like it?";
-	close;
-mhair15show:
-		cutin "hair_m_15",4;
-	mes "[Veronica]";
-	mes "Oh~'Grommtooht' style!";
-	mes "It feels like you will be picked by hair!";
-	mes "How do you think? Do you like it?";
-	close;
-mhair16show:
-		cutin "hair_m_16",4;
-	mes "[Veronica]";
-	mes "Oh~'Blitz Beat' style!";
-	mes "It feels it will attack 5 times...?";
-	mes "How do you think? Do you like it?";
-	close;
-mhair17show:
-		cutin "hair_m_17",4;
-	mes "[Veronica]";
-	mes "Oh~'Ore Discovery' style!";
-	mes "It feels like picking up things while walking.";
-	mes "How do you think? Do you like it?";
-	close;
-mhair18show:
-		cutin "hair_m_18",4;
-	mes "[Veronica]";
-	mes "Oh~'Fire Pillar' style!";
-	mes "It has been a great style over the one generation...!";
-	mes "How do you think? Do you like it?";
-	close;
-mhair19show:
-		cutin "hair_m_19",4;
-	mes "[Veronica]";
-	mes "Oh~'Guillotine Fist' style!";
-	mes "It feels like betting all at once!!";
-	mes "How do you think? Do you like it?";
-	close;	
-ShowPicF:
-		if (@hairf == 0) goto hairnothing;
-		if (@hairf == 1) goto fhair1show;
-		if (@hairf == 2) goto fhair2show;
-		if (@hairf == 3) goto fhair3show;
-		if (@hairf == 4) goto fhair4show;
-		if (@hairf == 5) goto fhair5show;
-		if (@hairf == 6) goto fhair6show;
-		if (@hairf == 7) goto fhair7show;
-		if (@hairf == 8) goto fhair8show;
-		if (@hairf == 9) goto fhair9show;
-		if (@hairf == 10) goto fhair10show;
-		if (@hairf == 11) goto fhair11show;
-		if (@hairf == 12) goto fhair12show;
-		if (@hairf == 13) goto fhair13show;
-		if (@hairf == 14) goto fhair14show;
-		if (@hairf == 15) goto fhair15show;
-		if (@hairf == 16) goto fhair16show;
-		if (@hairf == 17) goto fhair17show;
-		if (@hairf == 18) goto fhair18show;
-		if (@hairf == 19) goto fhair19show;
-fhair1show:
-		cutin "hair_f_01",4;
-	mes "[Veronica]";
-	mes "Oh~ 'Trickdead' style!";
-	mes "It is the style people wants to stroke your hair.";
-	mes "How do you think? Do you like it?";
-	close;
-fhair2show:
-		cutin "hair_f_02",4;
-	mes "[Veronica]";
-	mes "Oh~'Bash' style!";
-	mes "It feels unrevealed strong power is hidden inside of....";
-	mes "How do you think? Do you like it?";
-	close;
-fhair3show:
-		cutin "hair_f_03",4;
-	mes "[Veronica]";
-	mes "Oh~'Frost Diver' style!";
-	mes "It feels cold, but also warm....";
-	mes "How do you think? Do you like it?";
-	close;
-fhair4show:
-		cutin "hair_f_04",4;
-	mes "[Veronica]";
-	mes "Oh~'Arrow Shower' style!";
-	mes "It feels very refreshed~";
-	mes "How do you think? Do you like it?";
-	close;
-fhair5show:
-		cutin "hair_f_05",4;
-	mes "[Veronica]";
-	mes "Oh~'Heal' style!";
-	mes "It feels mind in cured.";
-	mes "How do you think? Do you like it?";
-	close;
-fhair6show:
-		cutin "hair_f_06",4;
-	mes "[Veronica]";
-	mes "Oh~'Vending' style!";
-	mes "It seems like making lots of money.";
-	mes "How do you think? Do you like it?";
-	close;
-fhair7show:
-		cutin "hair_f_07",4;
-	mes "[Veronica]";
-	mes "Oh~'Double Strafe' style!";
-	mes "It makes whomever dash twice.";
-	mes "How do you think? Do you like it?";
-	close;
-fhair8show:
-		cutin "hair_f_08",4;
-	mes "[Veronica]";
-	mes "Oh~'Gloria' style!";
-	mes "Its nobleness and holiness moods are great.";
-	mes "How do you think? Do you like it?";
-	close;
-fhair9show:
-		cutin "hair_f_09",4;
-	mes "[Veronica]";
-	mes "Oh~'Increase Sp Recovery' style!";
-	mes "It makes fell like recovering spirit fully.";
-	mes "How do you think? Do you like it?";
-	close;
-fhair10show:
-		cutin "hair_f_10",4;
-	mes "[Veronica]";
-	mes "Oh~'Prepare Potion' style!";
-	mes "It feels a wound is healed already.";
-	mes "How do you think? Do you like it?";
-	close;
-fhair11show:
-		cutin "hair_f_11",4;
-	mes "[Veronica]";
-	mes "Oh~'Grand Cross' style!";
-	mes "It feels like a firm faith.";
-	mes "How do you think? Do you like it?";
-	close;
-fhair12show:
-		cutin "hair_f_12",4;
-	mes "[Veronica]";
-	mes "Oh~'Intimidate' style!";
-	mes "It seems you saw this style somewhere...?";
-	mes "How do you think? Do you like it?";
-	close;
-fhair13show:
-	cutin "hair_f_13",4;
-	mes "[Veronica]";
-	mes "Oh~'Spiritual Sphere Absorption' style!";
-	mes "Its catch people's spirits.";
-	mes "How do you think? Do you like it?";
-	close;
-fhair14show:
-		cutin "hair_f_14",4;
-	mes "[Veronica]";
-	mes "Oh~'Gypsy's Kiss' style!";
-	mes "It makes people think you are very kind to all...";
-	mes "How do you think? Do you like it?";
-	close;
-fhair15show:
-		cutin "hair_f_15",4;
-	mes "[Veronica]";
-	mes "Oh~'Counter Attack' style!";
-	mes "It feels it will kick when someone is near.";
-	mes "How do you think? Do you like it?";
-	close;				
-fhair16show:
-		cutin "hair_f_16",4;
-	mes "[Veronica]";
-	mes "Oh~'Ankle Snare' style!";
-	mes "This is the style hardly moved";
-	mes "How do you think? Do you like it?";
-	close;
-fhair17show:
-		cutin "hair_f_17",4;
-	mes "[Veronica]";
-	mes "Oh~'Hammer Fall' style!";
-	mes "It will make feeling dizzy.";
-	mes "How do you think? Do you like it?";
-	close;
-fhair18show:
-		cutin "hair_f_18",4;
-	mes "[Veronica]";
-	mes "Oh~'Jupiter Thunder' style!";
-	mes "It feels very neat.";
-	mes "How do you think? Do you like it?";
-	close;
-fhair19show:
-		cutin "hair_f_19",4;
-	mes "[Veronica]";
-	mes "Oh~'Whirlwind' style!";
-	mes "It feels very refreshed like wind.";
-	mes "How do you think? Do you like it?";
-	close;
-hairnothing:
-	mes "[Veronica]";
-	mes "Did you find a style you like?";
-	mes "If you want to change your hair style at anytime, I will do my best!!";
-	close;
-hairtohigh:
-	mes "[Veronica]";
-	mes "Sorry, there aren't any Hairstyles with that number.";
-	mes "Please choose a number from 1 to 19.";
-	close;
-Change:
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-
-		set @hairch,0;
-	mes "[Veronica]";
-	mes "Well, then... Please choose Hair Style you like most.";
-	mes "I will do my best";
-	mes "There are 19 different Hair Styles.";
-	mes "Numbers from 1 to 19~";
-	next;
-		if(sex==0) goto iffemale;
-		input @hairchange_in;
-		if (@hairchange_in > 19) goto tohighchange;
-		set @hairch,@hairchange_in;
-		if (@hairch == 1) goto mhair1;
-		if (@hairch == 2) goto mhair2;
-		if (@hairch == 3) goto mhair3;
-		if (@hairch == 4) goto mhair4;
-		if (@hairch == 5) goto mhair5;
-		if (@hairch == 6) goto mhair6;
-		if (@hairch == 7) goto mhair7;
-		if (@hairch == 8) goto mhair8;
-		if (@hairch == 9) goto mhair9;
-		if (@hairch == 10) goto mhair10;
-		if (@hairch == 11) goto mhair11;
-		if (@hairch == 12) goto mhair12;
-		if (@hairch == 13) goto mhair13;
-		if (@hairch == 14) goto mhair14;
-		if (@hairch == 15) goto mhair15;
-		if (@hairch == 16) goto mhair16;
-		if (@hairch == 17) goto mhair17;
-		if (@hairch == 18) goto mhair18;
-		if (@hairch == 19) goto mhair19;
-mhair1:
-		cutin "hair_m_01",4;
-	mes "[Veronica]";
-	mes "This is the (1) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO1;
-	cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,1;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (1) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO1:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;					
-mhair2:
-		cutin "hair_m_02",4;
-	mes "[Veronica]";
-	mes "This is the (2) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yaeh~ I'd love to.",-,"No..I don't like it..",M_NO2;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,2;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (2) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vitis me anytime~ HoHoHo";
-	close;
-M_NO2:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;							
-mhair3:
-		cutin "hair_m_03",4;
-	mes "[Veronica]";
-	mes "This is the (3) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO3;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,3;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (3) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO3:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;						
-mhair4:
-		cutin "hair_m_04",4;
-	mes "[Veronica]";
-	mes "This is the (4) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO4;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,4;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (4) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO4:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-mhair5:
-		cutin "hair_m_05",4;
-	mes "[Veronica]";
-	mes "This is the (5) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO5;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,5;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (5) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO5:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-mhair6:
-		cutin "hair_m_06",4;
-	mes "[Veronica]";
-	mes "This is the (6) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO6;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,6;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (6) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO6:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-mhair7:
-		cutin "hair_m_07",4;
-	mes "[Veronica]";
-	mes "This is the (7) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO7;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,7;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (7) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO7:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-mhair8:
-		cutin "hair_m_08",4;
-	mes "[Veronica]";
-	mes "This is the (8) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO8;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,8;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (8) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO8:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-mhair9:
-		cutin "hair_m_09",4;
-	mes "[Veronica]";
-	mes "This is the (9) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO9;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-	if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-	set Zeny,Zeny-99800;
-	delitem 973,3;
-	delitem 974,3;
-	delitem 901,100;
-	delitem 1094,100;
-	delitem 1020,100;
-	delitem 1060,100;
-	delitem 7152,100;
-	setlook 1,9;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (9) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO9:
-	cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-mhair10:
-	cutin "hair_m_10",4;
-	mes "[Veronica]";
-	mes "This is the (10) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO10;
-	cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-	if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-	set Zeny,Zeny-99800;
-	delitem 973,3;
-	delitem 974,3;
-	delitem 901,100;
-	delitem 1094,100;
-	delitem 1020,100;
-	delitem 1060,100;
-	delitem 7152,100;
-	setlook 1,10;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (10) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO10:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-mhair11:
-		cutin "hair_m_11",4;
-	mes "[Veronica]";
-	mes "This is the (11) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO11;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-	if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-	set Zeny,Zeny-99800;
-	delitem 973,3;
-	delitem 974,3;
-	delitem 901,100;
-	delitem 1094,100;
-	delitem 1020,100;
-	delitem 1060,100;
-	delitem 7152,100;
-	setlook 1,11;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (11) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO11:
-	cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-mhair12:
-	cutin "hair_m_12",4;
-	mes "[Veronica]";
-	mes "This is the (12) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO12;
-	cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,12;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (12) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO12:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-mhair13:
-		cutin "hair_m_13",4;
-	mes "[Veronica]";
-	mes "This is the (13) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO13;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,13;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (13) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO13:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;	
-mhair14:
-		cutin "hair_m_14",4;
-	mes "[Veronica]";
-	mes "This is the (14) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO14;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,14;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (14) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO14:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;	
-mhair15:
-		cutin "hair_m_15",4;
-	mes "[Veronica]";
-	mes "This is the (15) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO15;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,15;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (15) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO15:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-mhair16:
-		cutin "hair_m_16",4;
-	mes "[Veronica]";
-	mes "This is the (16) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO16;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,16;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (16) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO16:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-mhair17:
-		cutin "hair_m_17",4;
-	mes "[Veronica]";
-	mes "This is the (17) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO12;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,17;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (17) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO17:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-mhair18:
-		cutin "hair_m_18",4;
-	mes "[Veronica]";
-	mes "This is the (18) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO12;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,18;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (18) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO18:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-mhair19:
-		cutin "hair_m_19",4;
-	mes "[Veronica]";
-	mes "This is the (19) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",M_NO19;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,19;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (19) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-M_NO19:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-iffemale:
-		input @hairchange_in;
-		if (@hairchange_in > 19) goto tohighchange;
-		set @hairch,@hairchange_in;
-		if (@hairch == 1) goto fhair1;
-		if (@hairch == 2) goto fhair2;
-		if (@hairch == 3) goto fhair3;
-		if (@hairch == 4) goto fhair4;
-		if (@hairch == 5) goto fhair5;
-		if (@hairch == 6) goto fhair6;
-		if (@hairch == 7) goto fhair7;
-		if (@hairch == 8) goto fhair8;
-		if (@hairch == 9) goto fhair9;
-		if (@hairch == 10) goto fhair10;
-		if (@hairch == 11) goto fhair11;
-		if (@hairch == 12) goto fhair12;
-		if (@hairch == 13) goto fhair13;
-		if (@hairch == 14) goto fhair14;
-		if (@hairch == 15) goto fhair15;
-		if (@hairch == 16) goto fhair16;
-		if (@hairch == 17) goto fhair17;
-		if (@hairch == 18) goto fhair18;
-		if (@hairch == 19) goto fhair19;
-
-fhair1:
-		cutin "hair_f_01",4;
-	mes "[Veronica]";
-	mes "This is the (1) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yaeh~ I'd love to.",-,"No..I don't like it..",F_NO1;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,1;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (1) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO1:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair2:
-		cutin "hair_f_02",4;
-	mes "[Veronica]";
-	mes "This is the (2) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO2;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,2;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (2) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO2:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair3:
-		cutin "hair_f_03",4;
-	mes "[Veronica]";
-	mes "This is the (3) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO3;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,3;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (3) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO3:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair4:
-		cutin "hair_f_04",4;
-	mes "[Veronica]";
-	mes "This is the (4) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO4;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,4;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (4) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO4:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair5:
-		cutin "hair_f_05",4;
-	mes "[Veronica]";
-	mes "This is the (5) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO5;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,5;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (5) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO5:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair6:
-		cutin "hair_f_06",4;
-	mes "[Veronica]";
-	mes "This is the (6) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO6;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,6;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (6) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO6:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair7:
-		cutin "hair_f_07",4;
-	mes "[Veronica]";
-	mes "This is the (7) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO7;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,7;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (7) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO7:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair8:
-		cutin "hair_f_08",4;
-	mes "[Veronica]";
-	mes "This is the (8) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO8;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,8;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (8) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO8:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair9:
-		cutin "hair_f_09",4;
-	mes "[Veronica]";
-	mes "This is the (9) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO9;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,9;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (9) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO9:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair10:
-		cutin "hair_f_10",4;
-	mes "[Veronica]";
-	mes "This is the (10) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO10;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,10;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (10) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO10:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair11:
-		cutin "hair_f_11",4;
-	mes "[Veronica]";
-	mes "This is the (11) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO11;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,11;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (11) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO11:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair12:
-		cutin "hair_f_12",4;
-	mes "[Veronica]";
-	mes "This is the (12) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO12;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,12;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (12) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO12:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair13:
-		cutin "hair_f_13",4;
-	mes "[Veronica]";
-	mes "This is the (13) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO13;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,13;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (13) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO13:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;	
-fhair14:
-		cutin "hair_f_14",4;
-	mes "[Veronica]";
-	mes "This is the (14) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO14;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,14;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (14) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO14:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;	
-fhair15:
-		cutin "hair_f_15",4;
-	mes "[Veronica]";
-	mes "This is the (15) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO15;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,15;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (15) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO15:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair16:
-		cutin "hair_f_16",4;
-	mes "[Veronica]";
-	mes "This is the (16) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO16;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,16;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (16) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO16:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair17:
-		cutin "hair_f_17",4;
-	mes "[Veronica]";
-	mes "This is the (17) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO17;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,17;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (17) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO17:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair18:
-		cutin "hair_f_18",4;
-	mes "[Veronica]";
-	mes "This is the (18) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO18;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,18;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (18) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO18:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-fhair19:
-		cutin "hair_f_19",4;
-	mes "[Veronica]";
-	mes "This is the (19) style.";
-	mes "I will change your Hair with this Again.";
-	mes "Is that OK for you??";
-	next;
-	menu "Yeah~ I'd love to.",-,"No..I don't like it..",F_NO19;
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Now it begins~. Hold still~";
-	mes "If you move, you will have very bad style.";
-	mes "Just trust me on this!!";
-	next;
-	mes "[Veronica]";
-	mes "- Clip clip Clip clip -";
-	mes "- Klit klit Klit klit -";
-	mes "- Snap snap Snap snap -";
-	next;
-		if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) ||(Zeny < 99800)) goto NOItem;
-		set Zeny,Zeny-99800;
-		delitem 973,3;
-		delitem 974,3;
-		delitem 901,100;
-		delitem 1094,100;
-		delitem 1020,100;
-		delitem 1060,100;
-		delitem 7152,100;
-		setlook 1,19;
-	mes "[Veronica]";
-	mes "Wow~ it came out very well~~";
-	mes "I hope you like this (19) style.";
-	mes "If you'd like to have another hair style,";
-	mes "you are welcome welcome to vi tis me anytime~ HoHoHo";
-	close;
-F_NO19:
-		cutin "",255;
-	mes "[Veronica]";
-	mes "Well~ choose again please~";
-	mes "There should be a style you like.";
-	mes "Just remember the number you like the most and tell me.";
-	close;
-tohighchange:
-	mes "[Veronica]";
-	mes "There are no such numbers like that!";
-	mes "Please check your number~";
-	close;
-NOItem:
-	mes "[Veronica]";
-	mes "If you want to change your hairstyle, you need several items.";
-	mes "Since, you need many items....";
-	mes "I think you should write those down.";
-	next;
-	mes "[Veronica]";
-	mes "3 Counteragents,";
-	mes "3 Mixtures,";
-	mes "100 Daenggies,";
-	mes "100 Short Daenggies,";
-	mes "100 Black Hairs,";
-	mes "100 Golden Hairs,";
-	mes "100 Glossy Hair.";
-	next;
-	mes "[Veronica]";
-	mes "And also you need 99,800zeny.";
-	mes "If you gather them all...";
-	mes "I will show you what I can do~!!";
-	mes "HoHoHo.";
-	close;
-Cancel:
-	mes "[Veronica]";
-	mes "Everyone has rights to become beautiful...";
-	mes "I wish you can find your hair style which fits on you well~";
-	mes "I really do~";
-	close;
-}
