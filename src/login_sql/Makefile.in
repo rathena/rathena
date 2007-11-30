@@ -1,20 +1,21 @@
-COMMON_OBJ = ../common/obj/core.o ../common/obj/socket.o ../common/obj/timer.o \
-	../common/obj/db.o ../common/obj/plugins.o ../common/obj/lock.o \
-	../common/obj/malloc.o ../common/obj/showmsg.o ../common/obj/utils.o \
-	../common/obj/strlib.o ../common/obj/grfio.o ../common/obj/mapindex.o \
-	../common/obj/ers.o ../common/obj/md5calc.o ../common/obj_sql/sql.o 
+
+COMMON_OBJ = ../common/obj_all/core.o ../common/obj_all/socket.o ../common/obj_all/timer.o \
+	../common/obj_all/db.o ../common/obj_all/plugins.o ../common/obj_all/lock.o \
+	../common/obj_all/malloc.o ../common/obj_all/showmsg.o ../common/obj_all/utils.o \
+	../common/obj_all/strlib.o ../common/obj_all/grfio.o ../common/obj_all/mapindex.o \
+	../common/obj_all/ers.o ../common/obj_all/md5calc.o ../common/obj_sql/sql.o 
 COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h \
 	../common/version.h ../common/db.h ../common/plugins.h ../common/lock.h \
 	../common/malloc.h ../common/showmsg.h ../common/utils.h ../common/strlib.h \
 	../common/grfio.h ../common/mapindex.h \
-	../common/ers.h ../common/md5calc.h  ../common/sql.h 
+	../common/ers.h ../common/md5calc.h ../common/sql.h 
 
-LOGIN_OBJ = obj/login.o
+LOGIN_OBJ = obj_sql/login.o
 LOGIN_H = login.h
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
-	LOGIN_SERVER_SQL_DEPENDS=obj $(LOGIN_OBJ) $(COMMON_OBJ)
+	LOGIN_SERVER_SQL_DEPENDS=obj_sql $(LOGIN_OBJ) $(COMMON_OBJ)
 else
 	LOGIN_SERVER_SQL_DEPENDS=needs_mysql
 endif
@@ -30,7 +31,7 @@ login-server_sql: $(LOGIN_SERVER_SQL_DEPENDS)
 	@CC@ @LDFLAGS@ -o ../../login-server_sql@EXEEXT@ $(LOGIN_OBJ) $(COMMON_OBJ) @LIBS@ @MYSQL_LIBS@
 
 clean:
-	rm -rf *.o obj ../../login-server_sql@EXEEXT@
+	rm -rf *.o obj_sql ../../login-server_sql@EXEEXT@
 
 help:
 	@echo "possible targets are 'login-server_sql' 'all' 'clean' 'help'"
@@ -45,14 +46,14 @@ needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"
 	@exit 1
 
-obj:
-	-mkdir obj
+obj_sql:
+	-mkdir obj_sql
 
-obj/%.o: %.c $(LOGIN_H) $(COMMON_H)
+obj_sql/%.o: %.c $(LOGIN_H) $(COMMON_H)
 	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing common object files
-../common/obj/%.o:
+../common/obj_all/%.o:
 	@$(MAKE) -C ../common sql
 
 ../common/obj_sql/%.o:

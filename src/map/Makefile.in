@@ -1,9 +1,9 @@
 
-COMMON_OBJ = ../common/obj/core.o ../common/obj/socket.o ../common/obj/timer.o \
-	../common/obj/db.o ../common/obj/plugins.o ../common/obj/lock.o \
-	../common/obj/nullpo.o ../common/obj/malloc.o ../common/obj/showmsg.o \
-	../common/obj/utils.o ../common/obj/strlib.o ../common/obj/grfio.o \
-	../common/obj/mapindex.o ../common/obj/ers.o
+COMMON_OBJ = ../common/obj_all/core.o ../common/obj_all/socket.o ../common/obj_all/timer.o \
+	../common/obj_all/db.o ../common/obj_all/plugins.o ../common/obj_all/lock.o \
+	../common/obj_all/nullpo.o ../common/obj_all/malloc.o ../common/obj_all/showmsg.o \
+	../common/obj_all/utils.o ../common/obj_all/strlib.o ../common/obj_all/grfio.o \
+	../common/obj_all/mapindex.o ../common/obj_all/ers.o
 COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h \
 	../common/db.h ../common/plugins.h ../common/lock.h \
 	../common/nullpo.h ../common/malloc.h ../common/showmsg.h \
@@ -13,11 +13,13 @@ COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h \
 COMMON_SQL_OBJ = ../common/obj_sql/sql.o
 COMMON_SQL_H = ../common/sql.h
 
-MAP_OBJ = obj/map.o obj/chrif.o obj/clif.o obj/pc.o obj/status.o obj/npc.o \
-	obj/npc_chat.o obj/chat.o obj/path.o obj/itemdb.o obj/mob.o obj/script.o \
-	obj/storage.o obj/skill.o obj/atcommand.o obj/charcommand.o obj/battle.o \
-	obj/intif.o obj/trade.o obj/party.o obj/vending.o obj/guild.o obj/pet.o \
-	obj/log.o obj/mail.o obj/date.o obj/irc.o obj/unit.o obj/mercenary.o
+MAP_OBJ = map.o chrif.o clif.o pc.o status.o npc.o \
+	npc_chat.o chat.o path.o itemdb.o mob.o script.o \
+	storage.o skill.o atcommand.o charcommand.o battle.o \
+	intif.o trade.o party.o vending.o guild.o pet.o \
+	log.o mail.o date.o irc.o unit.o mercenary.o
+MAP_TXT_OBJ = $(MAP_OBJ:%=obj_txt/%)
+MAP_SQL_OBJ = $(MAP_OBJ:%=obj_sql/%)
 MAP_H = map.h chrif.h clif.h pc.h status.h npc.h \
 	chat.h itemdb.h mob.h script.h \
 	storage.h skill.h atcommand.h charcommand.h battle.h \
@@ -80,11 +82,11 @@ obj_sql:
 	-mkdir obj_sql
 
 # executables
-map-server: obj_txt $(MAP_OBJ:obj/%=obj_txt/%) $(COMMON_OBJ)
-	@CC@ @LDFLAGS@ -o ../../map-server@EXEEXT@ $(MAP_OBJ:obj/%=obj_txt/%) $(COMMON_OBJ) @LIBS@ @PCRE_LIBS@
+map-server: obj_txt $(MAP_TXT_OBJ) $(COMMON_OBJ)
+	@CC@ @LDFLAGS@ -o ../../map-server@EXEEXT@ $(MAP_TXT_OBJ) $(COMMON_OBJ) @LIBS@ @PCRE_LIBS@
 
-map-server_sql: obj_sql $(MAP_OBJ:obj/%=obj_sql/%) $(COMMON_OBJ) $(COMMON_SQL_OBJ)
-	@CC@ @LDFLAGS@ -o ../../map-server_sql@EXEEXT@ $(MAP_OBJ:obj/%=obj_sql/%) $(COMMON_OBJ) $(COMMON_SQL_OBJ) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+map-server_sql: obj_sql $(MAP_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ)
+	@CC@ @LDFLAGS@ -o ../../map-server_sql@EXEEXT@ $(MAP_SQL_OBJ) $(COMMON_OBJ) $(COMMON_SQL_OBJ) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
 
 # map object files
 obj_txt/%.o: %.c $(MAP_H) $(COMMON_H)
@@ -94,7 +96,7 @@ obj_sql/%.o: %.c $(MAP_H) $(COMMON_H) $(COMMON_SQL_H)
 	@CC@ @CFLAGS@ $(PCRE_CFLAGS) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing common object files
-../common/obj/%.o:
+../common/obj_all/%.o:
 	@$(MAKE) -C ../common txt
 
 ../common/obj_sql/%.o:

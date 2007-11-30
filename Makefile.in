@@ -139,6 +139,7 @@ needs_mysql:
 # TODO
 
 install:	conf/%.conf conf/%.txt
+	$(shell read -p "WARNING: This target does not work properly yet. Press Ctrl+C to cancel or Enter to continue.")
 	$(shell mkdir -p /opt/eathena/bin/)
 	$(shell mkdir -p /opt/eathena/etc/eathena/)
 	$(shell mkdir -p /opt/eathena/var/log/eathena/)
@@ -162,6 +163,7 @@ bin-clean:
 	$(shell rm /opt/eathena/bin/ladmin)
 
 uninstall:
+	$(shell read -p "WARNING: This target does not work properly yet. Press Ctrl+C to cancel or Enter to continue.")
 	bin-clean
 	$(shell rm /opt/eathena/bin/save)
 	$(shell rm /opt/eathena/bin/db)

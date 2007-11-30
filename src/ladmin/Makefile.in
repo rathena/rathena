@@ -1,12 +1,12 @@
 
-COMMON_OBJ = ../common/obj/minicore.o ../common/obj/minisocket.o ../common/obj/timer.o \
-	../common/obj/malloc.o ../common/obj/showmsg.o ../common/obj/strlib.o \
-	../common/obj/utils.o ../common/obj/md5calc.o
+COMMON_OBJ = ../common/obj_all/minicore.o ../common/obj_all/minisocket.o ../common/obj_all/timer.o \
+	../common/obj_all/malloc.o ../common/obj_all/showmsg.o ../common/obj_all/strlib.o \
+	../common/obj_all/utils.o ../common/obj_all/md5calc.o
 COMMON_H = ../common/core.h ../common/socket.h ../common/timer.h ../common/mmo.h \
 	../common/version.h ../common/malloc.h ../common/showmsg.h ../common/strlib.h \
 	../common/utils.h ../common/md5calc.h ../common/cbasetypes.h
 
-LADMIN_OBJ = obj/ladmin.o
+LADMIN_OBJ = obj_all/ladmin.o
 LADMIN_H = ladmin.h
 
 @SET_MAKE@
@@ -16,11 +16,11 @@ LADMIN_H = ladmin.h
 
 all: ladmin
 
-ladmin: obj $(LADMIN_OBJ) $(COMMON_OBJ)
+ladmin: obj_all $(LADMIN_OBJ) $(COMMON_OBJ)
 	@CC@ @LDFLAGS@ -o ../../ladmin@EXEEXT@ $(LADMIN_OBJ) $(COMMON_OBJ) @LIBS@
 
 clean:
-	rm -rf *.o obj ../../ladmin@EXEEXT@
+	rm -rf *.o obj_all ../../ladmin@EXEEXT@
 
 help:
 	@echo "possible targets are 'ladmin' 'all' 'clean' 'help'"
@@ -31,15 +31,15 @@ help:
 
 #####################################################################
 
-obj:
-	-mkdir obj
+obj_all:
+	-mkdir obj_all
 
-obj/%.o: %.c $(LADMIN_H) $(COMMON_H)
+obj_all/%.o: %.c $(LADMIN_H) $(COMMON_H)
 	@CC@ @CFLAGS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing common object files
-../common/obj/%.o:
+../common/obj_all/%.o:
 	@$(MAKE) -C ../common txt
 
-../common/obj/mini%.o:
+../common/obj_all/mini%.o:
 	@$(MAKE) -C ../common txt

@@ -1,8 +1,8 @@
 
-COMMON_OBJ = obj/core.o obj/socket.o obj/timer.o obj/db.o obj/plugins.o obj/lock.o \
-	obj/nullpo.o obj/malloc.o obj/showmsg.o  obj/strlib.o obj/utils.o \
-	obj/grfio.o obj/mapindex.o obj/ers.o obj/md5calc.o \
-	obj/minicore.o obj/minisocket.o obj/minimalloc.o
+COMMON_OBJ = obj_all/core.o obj_all/socket.o obj_all/timer.o obj_all/db.o obj_all/plugins.o obj_all/lock.o \
+	obj_all/nullpo.o obj_all/malloc.o obj_all/showmsg.o obj_all/strlib.o obj_all/utils.o \
+	obj_all/grfio.o obj_all/mapindex.o obj_all/ers.o obj_all/md5calc.o \
+	obj_all/minicore.o obj_all/minisocket.o obj_all/minimalloc.o
 COMMON_H = svnversion.h mmo.h plugin.h version.h \
 	core.h socket.h timer.h db.h plugins.h lock.h \
 	nullpo.h malloc.h showmsg.h  strlib.h utils.h \
@@ -32,7 +32,7 @@ txt: common
 sql: $(SQL_DEPENDS)
 
 clean:
-	rm -rf *.o obj obj_sql svnversion.h
+	rm -rf *.o obj_all obj_sql svnversion.h
 
 help:
 	@echo "possible targets are 'txt' 'sql' 'all' 'clean' 'help'"
@@ -48,21 +48,21 @@ needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"
 	@exit 1
 
-obj:
-	-mkdir obj
+obj_all:
+	-mkdir obj_all
 
 obj_sql:
 	-mkdir obj_sql
 
-common: obj $(COMMON_OBJ)
+common: obj_all $(COMMON_OBJ)
 
 common_sql: obj_sql $(COMMON_SQL_OBJ)
 
 
-obj/%.o: %.c $(COMMON_H)
+obj_all/%.o: %.c $(COMMON_H)
 	@CC@ @CFLAGS@ @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
-obj/mini%.o: %.c $(COMMON_H)
+obj_all/mini%.o: %.c $(COMMON_H)
 	@CC@ @CFLAGS@ -DMINICORE @LDFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 obj_sql/%.o: %.c $(COMMON_H) $(COMMON_SQL_H)
@@ -74,7 +74,7 @@ HAVESVN = $(shell which svnversion)
 ifeq ($(findstring /,$(HAVESVN)), /)
 svnversion.h:
 	@printf "#define SVNVERSION " > svnversion.h
-	@svnversion . >> svnversion.h
+	@svnversion .. >> svnversion.h
 	@printf "\n" >> svnversion.h
 else
 svnversion.h:

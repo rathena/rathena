@@ -1,6 +1,6 @@
 
-COMMON_OBJ = ../common/obj/showmsg.o ../common/obj/utils.o ../common/obj/strlib.o \
-	../common/obj/minimalloc.o
+COMMON_OBJ = ../common/obj_all/showmsg.o ../common/obj_all/utils.o ../common/obj_all/strlib.o \
+	../common/obj_all/minimalloc.o
 COMMON_H = ../common/plugin.h ../common/cbasetypes.h \
 	../common/showmsg.h ../common/utils.h ../common/strlib.h \
 	../common/malloc.h
@@ -56,8 +56,8 @@ sig@DLLEXT@: sig.c $(COMMON_OBJ)
 	cp -r $< $@
 
 # missing common object files
-../common/obj/%.o: ../common/%.c $(COMMON_H)
+../common/obj_all/%.o: ../common/%.c $(COMMON_H)
 	@$(MAKE) -C ../common txt
 
-../common/obj/mini%.o: ../common/%.c $(COMMON_H)
+../common/obj_all/mini%.o: ../common/%.c $(COMMON_H)
 	@$(MAKE) -C ../common txt

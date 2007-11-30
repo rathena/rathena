@@ -12,12 +12,12 @@ adduser:
 convert:
 	@CC@ -o ../../tools/convert@EXEEXT@ convert.c
 
-mapcache: obj
-	@CC@ -c -o obj/grfio.o grfio.c
-	@CC@ -o ../../mapcache@EXEEXT@ mapcache.c obj/grfio.o -lz
+mapcache: obj_mapcache
+	@CC@ -c -o obj_mapcache/grfio.o grfio.c
+	@CC@ -o ../../mapcache@EXEEXT@ mapcache.c obj_mapcache/grfio.o -lz
 
 clean:
-	rm -rf *.o obj ../../tools/adduser@EXEEXT@ ../../tools/convert@EXEEXT@ ../../mapcache@EXEEXT@
+	rm -rf *.o obj_mapcache ../../tools/adduser@EXEEXT@ ../../tools/convert@EXEEXT@ ../../mapcache@EXEEXT@
 
 help:
 	@echo "possible targets are 'adduser' 'convert' 'mapcache' 'all' 'clean' 'help'"
@@ -30,5 +30,5 @@ help:
 
 #####################################################################
 
-obj:
-	-mkdir obj
+obj_mapcache:
+	-mkdir obj_mapcache

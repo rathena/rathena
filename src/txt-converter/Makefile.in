@@ -1,7 +1,7 @@
 
-LOGIN_CONVERTER_OBJ = obj_login/login-converter.o ../common/obj/minicore.o \
-	../common/obj/malloc.o ../common/obj/strlib.o ../common/obj/showmsg.o \
-	../common/obj/utils.o ../common/obj/ers.o ../common/obj/db.o \
+LOGIN_CONVERTER_OBJ = obj_login/login-converter.o ../common/obj_all/minicore.o \
+	../common/obj_all/malloc.o ../common/obj_all/strlib.o ../common/obj_all/showmsg.o \
+	../common/obj_all/utils.o ../common/obj_all/ers.o ../common/obj_all/db.o \
 	../common/obj_sql/sql.o
 LOGIN_CONVERTER_H = ../common/cbasetypes.h ../common/mmo.h ../common/core.h \
 	../common/malloc.h ../common/strlib.h ../common/showmsg.h \
@@ -13,9 +13,9 @@ CHAR_CONVERTER_OBJ = obj_char/char-converter.o \
 	obj_char/txt-int_party.o obj_char/txt-int_guild.o \
 	obj_char/sql-char.o obj_char/sql-int_pet.o obj_char/sql-int_storage.o \
 	obj_char/sql-inter.o obj_char/sql-int_party.o obj_char/sql-int_guild.o \
-	../common/obj/minicore.o \
-	../common/obj/malloc.o ../common/obj/strlib.o ../common/obj/showmsg.o \
-	../common/obj/utils.o ../common/obj/ers.o ../common/obj/mapindex.o \
+	../common/obj_all/minicore.o \
+	../common/obj_all/malloc.o ../common/obj_all/strlib.o ../common/obj_all/showmsg.o \
+	../common/obj_all/utils.o ../common/obj_all/ers.o ../common/obj_all/mapindex.o \
 	../common/obj_sql/sql.o
 CHAR_CONVERTER_H = ../char/char.h ../char/int_pet.h ../char/int_storage.h ../char/inter.h \
 	../char/int_party.h ../char/int_guild.h \
@@ -84,5 +84,8 @@ obj_char/sql-%.o: ../char_sql/%.c $(CHAR_CONVERTER_H)
 	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -DTXT_SQL_CONVERT -c $(OUTPUT_OPTION) $<
 
 # missing common object files
-../common/obj/%.o:
+../common/obj_all/%.o:
+	@$(MAKE) -C ../common sql
+
+../common/obj_sql/%.o:
 	@$(MAKE) -C ../common sql

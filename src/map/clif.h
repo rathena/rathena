@@ -213,8 +213,8 @@ int clif_skill_nodamage(struct block_list *src,struct block_list *dst,int skill_
 int clif_skill_poseffect(struct block_list *src,int skill_id,int val,int x,int y,int tick);
 int clif_skill_estimation(struct map_session_data *sd,struct block_list *dst);
 void clif_skill_warppoint(struct map_session_data* sd, short skill_num, short skill_lv, unsigned short map1, unsigned short map2, unsigned short map3, unsigned short map4);
-int clif_skill_memo(struct map_session_data *sd,int flag);
-int clif_skill_teleportmessage(struct map_session_data *sd,int flag);
+void clif_skill_memomessage(struct map_session_data* sd, int type);
+void clif_skill_teleportmessage(struct map_session_data* sd, int type);
 int clif_skill_produce_mix_list(struct map_session_data *sd, int trigger);
 
 int clif_produceeffect(struct map_session_data* sd,int flag,int nameid);
@@ -331,7 +331,7 @@ void clif_MainChatMessage(const char* message); //luzza
 int clif_announce(struct block_list *bl, const char* mes, int len, unsigned long color, int flag);
 int clif_heal(int fd,int type,int val);
 int clif_resurrection(struct block_list *bl,int type);
-int clif_set0199(int fd,int type);
+void clif_set0199(struct map_session_data* sd, int mode);
 int clif_pvpset(struct map_session_data *sd, int pvprank, int pvpnum,int type);
 int clif_send0199(int map,int type);
 void clif_refine(int fd, int fail, int index, int val);
