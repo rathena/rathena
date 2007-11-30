@@ -3,7 +3,7 @@
 //===== By: ============================
 //= eAthena Dev Team
 //===== Current Version: =======================
-//= 2.3
+//= 2.3a
 //===== Compatible With: ============================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -24,6 +24,7 @@
 //=	Kafra Leilah is now a full NPC and no longer uses functions.
 //=	Added unique Kafra Welcome message.
 //=	Changed "Yuno" to "Juno"
+//= 2.3a Added "callfunc("F_CheckKafCode")" when you open storage. (bugreport:515) [Samuray22]
 //=====================================================================
 
 // Kafra Main Office (Kafra Leilah) ------------------------------------
@@ -76,6 +77,7 @@ aldeba_in,96,181,4	script	Kafra Service	113,{
 		mes "duty if you wish to use";
 		mes "any of the Kafra Services.";
 		mes "Thank you for your patronage.";
+		callfunc("F_CheckKafCode");    //check your storage password, if set
 		close2;
 		openstorage;
 		break;
