@@ -907,7 +907,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	return packet_len(0x1da);
 #else
 	// sc->option and sc->opt3 changed from W to L
-	memmove(WBUFP(buf,52), WBUFP(buf,48), 9);
+	memmove(WBUFP(buf,52), WBUFP(buf,48), 12);
 	WBUFL(buf,48) = (sc)? sc->opt3 : 0;
 	memmove(WBUFP(buf,16), WBUFP(buf,14), 32);
 	WBUFL(buf,12) = (sc)? sc->option : 0;
