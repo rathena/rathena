@@ -1233,9 +1233,9 @@ int parse_fromchar(int fd)
 	if( session[fd]->eof )
 	{
 		ShowStatus("Char-server '%s' has disconnected.\n", server[id].name);
-		server[id].fd = -1;
-		memset(&server[id], 0, sizeof(struct mmo_char_server));
 		online_db->foreach(online_db, online_db_setoffline, id); //Set all chars from this char server to offline.
+		memset(&server[id], 0, sizeof(struct mmo_char_server));
+		server[id].fd = -1;
 		do_close(fd);
 		return 0;
 	}
@@ -2606,7 +2606,8 @@ void login_set_defaults()
 void do_final(void)
 {
 	int i, fd;
-	ShowInfo("Terminating...\n");
+	ShowStatus("Terminating...\n");
+
 	mmo_auth_sync();
 	online_db->destroy(online_db, NULL);
 
@@ -2615,10 +2616,11 @@ void do_final(void)
 	if(access_ladmin_allow) aFree(access_ladmin_allow);
 	if(access_allow) aFree(access_allow);
 	if(access_deny) aFree(access_deny);
+
 	for (i = 0; i < MAX_SERVERS; i++) {
 		if ((fd = server[i].fd) >= 0) {
-			server[i].fd = -1;
 			memset(&server[i], 0, sizeof(struct mmo_char_server));
+			server[i].fd = -1;
 			do_close(fd);
 		}
 	}
@@ -2626,6 +2628,7 @@ void do_final(void)
 
 	if(log_fp)
 		fclose(log_fp);
+
 	ShowStatus("Finished.\n");
 }
 

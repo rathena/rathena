@@ -946,7 +946,6 @@ static int clif_set_unit_spawned(struct block_list* bl, unsigned char* buf)
 	}
 	else
 	{	// npc/mob/pet/homun spawn packet
-		memset(buf,0,sizeof(buf));
 		WBUFW(buf, 0) = 0x7c;
 		WBUFL(buf, 2) = bl->id;
 		WBUFW(buf, 6) = status_get_speed(bl);
@@ -954,20 +953,20 @@ static int clif_set_unit_spawned(struct block_list* bl, unsigned char* buf)
 		WBUFW(buf,10) = (sc)? sc->opt2 : 0;
 		WBUFW(buf,12) = (sc)? sc->option : 0;
 		WBUFW(buf,14) = vd->hair_style; //Required for pets (removes attack cursor)
-		//16W: Weapon
+		WBUFW(buf,16) = 0; // Weapon
 		WBUFW(buf,18) = vd->head_bottom; //Pet armor (ignored by client)
 		WBUFW(buf,20) = vd->class_;
-		//22W: Shield
-		//24W: Head top
-		//26W: Head mid
-		//28W: Hair color
-		//30W: Cloth color
-		//32W: Head dir
-		//34B: karma
-		//35B: Sex
+		WBUFW(buf,22) = 0; // Shield
+		WBUFW(buf,24) = 0; // Head top
+		WBUFW(buf,26) = 0; // Head mid
+		WBUFW(buf,28) = 0; // Hair color
+		WBUFW(buf,30) = 0; // Cloth color
+		WBUFW(buf,32) = 0; // Head dir
+		WBUFB(buf,34) = 0; // karma
+		WBUFB(buf,35) = 0; // Sex
 		WBUFPOS(buf,36,bl->x,bl->y,unit_getdir(bl));
-		//39B: ???
-		//40B: ???
+		WBUFB(buf,39) = 0; // ???
+		WBUFB(buf,40) = 0; // ???
 
 #if PACKETVER < 9
 		return packet_len(0x7c);

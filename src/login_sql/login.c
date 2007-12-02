@@ -621,11 +621,11 @@ int parse_fromchar(int fd)
 	if( session[fd]->eof )
 	{
 		ShowStatus("Char-server '%s' has disconnected.\n", server[id].name);
-		server[id].fd = -1;
-		memset(&server[id], 0, sizeof(struct mmo_char_server));
 		online_db->foreach(online_db, online_db_setoffline, id); //Set all chars from this char server to offline.
 		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `sstatus` WHERE `index`='%d'", id) )
 			Sql_ShowDebug(sql_handle);
+		memset(&server[id], 0, sizeof(struct mmo_char_server));
+		server[id].fd = -1;
 		do_close(fd);
 		return 0;
 	}
@@ -1863,13 +1863,24 @@ void login_set_defaults()
 //--------------------------------------
 void do_final(void)
 {
-	//sync account when terminating.
-	//but no need when you using DBMS (mysql)
+	int i, fd;
 	ShowStatus("Terminating...\n");
+
 	mmo_db_close();
 	online_db->destroy(online_db, NULL);
-	if (gm_account_db)
-		aFree(gm_account_db);
+
+	if(gm_account_db) aFree(gm_account_db);
+
+	for (i = 0; i < MAX_SERVERS; i++) {
+		if ((fd = server[i].fd) >= 0) {
+			memset(&server[i], 0, sizeof(struct mmo_char_server));
+			server[i].fd = -1;
+			do_close(fd);
+		}
+	}
+	do_close(login_fd);
+
+	ShowStatus("Finished.\n");
 }
 
 //------------------------------
