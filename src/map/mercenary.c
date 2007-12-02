@@ -716,11 +716,10 @@ int merc_hom_recv_data(int account_id, struct s_homunculus *sh, int flag)
 	{
 		map_addblock(&hd->bl);
 		clif_spawn(&hd->bl);
+		clif_send_homdata(sd,SP_ACK,0);
 		clif_hominfo(sd,hd,1);
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock(sd);
-		clif_hominfo(sd,hd,0);
-		clif_send_homdata(sd,SP_ACK,0);
 		merc_hom_init_timers(hd);
 	}
 	return 1;

@@ -2404,6 +2404,7 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 	struct status_data b_status, *status;
 	struct s_homunculus *hom;
 	int skill;
+	int amotion;
 
 	memcpy(&b_status, &hd->base_status, sizeof(struct status_data));
 	hom = &hd->homunculus;
@@ -2468,17 +2469,15 @@ int status_calc_homunculus(struct homun_data *hd, int first)
 
 	status->aspd_rate = 1000;
 
-	skill = (1000 -4*status->agi -status->dex)
-			*hd->homunculusDB->baseASPD/1000;
-
-	status->amotion = cap_value(skill,battle_config.max_aspd,2000);
+	amotion = (1000 -4*status->agi -status->dex) * hd->homunculusDB->baseASPD/1000;
+	status->amotion = cap_value(amotion,battle_config.max_aspd,2000);
 	status->adelay = status->amotion; //It seems adelay = amotion for Homunculus.
 
 	status_calc_misc(&hd->bl, status, hom->level);
 	status_cpy(&hd->battle_status, status);
 	status_calc_bl(&hd->bl, SCB_ALL); //Status related changes.
 
-	if (memcmp(&b_status, status, sizeof(struct status_data)))
+	if( memcmp(&b_status, status, sizeof(struct status_data)) && !first )
 		clif_hominfo(hd->master,hd,0) ;
 
 	return 1;

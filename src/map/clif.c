@@ -1203,7 +1203,7 @@ int clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	WBUFL(buf,59)=hd->homunculus.exp;
 	WBUFL(buf,63)=hd->exp_next;
 	WBUFW(buf,67)=hd->homunculus.skillpts;
-	WBUFW(buf,69)=1; // FIXME: Attackable? When exactly is a homun not attackable? [Skotlex]
+	WBUFW(buf,69)=2; // FIXME: undocumented flag, seems to be '2' all the time [ultramage]
 	clif_send(buf,packet_len(0x22e),&sd->bl,SELF);
 	return 0;
 }
@@ -7832,9 +7832,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(merc_is_hom_active(sd->hd)) {
 		map_addblock(&sd->hd->bl);
 		clif_spawn(&sd->hd->bl);
+		clif_send_homdata(sd,0,0);
 		clif_hominfo(sd,sd->hd,1);
 		clif_hominfo(sd,sd->hd,0); //for some reason, at least older clients want this sent twice
-		clif_send_homdata(sd,0,0);
 		clif_homskillinfoblock(sd);
 		if (battle_config.hom_setting&0x8)
 			status_calc_bl(&sd->hd->bl, SCB_SPEED); //Homunc mimic their master's speed on each map change
