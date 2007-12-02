@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.1a
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -35,6 +35,7 @@
 //= 1.9 Added the Inn for Al De baran. [L0ne_W0lf]
 //= 2.0 Added Inn for the Town of Veins. [L0ne_W0lf]
 //= 2.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.1a Corrected a little Typo error. (bugreport:536) [Samuray22]
 //============================================================ 
 
 
@@ -48,7 +49,7 @@ prt_in,244,135,2	script	Inn Employee#Sammy	53,{
 // East Side Inn ------------------
 prt_in,61,141,2	script	Inn Employee#Ahlma	53,{
 
-	callfunc "F_InnMaid","[Emplyee Ahlma]","Nenkaras","prt_in",64,136;
+	callfunc "F_InnMaid","[Employee Ahlma]","Nenkaras","prt_in",64,136;
 	warp "prt_in",64,136; end;
 }
 

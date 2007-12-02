@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
-//= Headgear Quests 1:
+//= Headgear Quests 1 [Aegis Conversion]:
 //= - 'Cross Hat', 'Bulb Hairband'
 //= - 'Striped Hairband', 'Blue Hairband'
 //= Headgear Quests 2:
@@ -24,102 +24,86 @@
 //= 1.2a missing label [Lupus]
 //= 1.3 Doomed sword quest rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.5 Rescripted Headgear Quests 1 to Aegis 10.3 Standards. [Samuray22]
 //============================================================ 
 
 // Headgear Quests 1
 // Cross Hat, Bulb Hairband, Striped Hairband, Blue Hairband
 //============================================================ 
-comodo,227,158,4	script	Hair Ornament Girl	700,{
+comodo,228,159,4	script	Hair Ornament Girl	700,{
 	mes "[Hair Ornament Girl]";
-	if(sex==1)mes "Oh, hi.  Do you need to buy a present for a friend, your mother, or maybe your girl friend? Then get her a Hair Band! It's the best gift you can get her.";
-	if(sex==0)mes "Oh, hi.  Do you need to buy a present for a friend, your mother, or maybe yourself? Then get a Hair Band! It's the best gift you can give, or get.";
+	if(Sex == 1) {
+		mes "Oh! hi. You wanna make one?";
+		mes "If you want to give present to girl friend, Hair band is the one.";
+	} else {
+		mes "Hey! look at me. I think this will suit to you so much~";
+		mes "You wanna order one of Hair Band?";
+	}
 	next;
 	mes "[Hair Ornament Girl]";
-	mes "Just by bringing me a few simple items, I can make you a gorgeous Hair Band!  Here, take a look at these....";
-M_Menu:
+	mes "If you give me simple items then I make a gorgeous Hair Band~";
+	mes "Have a look at these.";
 	next;
-	menu "-Cross Hat Hairband",-, "-Bulb Hairband",M_Bulb, "-Striped Hairband",M_Striped, "-Blue Hairband",M_Blue, "-End Conversation",M_End;
-
-		set @BAND$, "Cross Hat Hairband";
-		set @ITEMS$, " ^5555FF1 Rosary^000000 and ^5555FF500 Destroyed Armors^000000.";
-		if(countitem(2608)>=1 && countitem(7069)>=500) set @GETBAND, 1;
-		goto sL_0;
-
-	M_Bulb:
-		set @BAND$, "Bulb Hairband";
-		set @ITEMS$, "^5555FF1 Slotted Circlet^000000 and ^5555FF20 Glass Beads^000000.";
-		if(countitem(2233)>=1 && countitem(746)>=20) set @GETBAND, 2;
-		goto sL_0;
-
-	M_Striped:
-		set @BAND$, "Striped Hairband";
-		set @ITEMS$, "^5555FF1500 Worn-out Prison Uniforms^000000.";
-		if(countitem(1099)>=1500) set @GETBAND, 3;
-		goto sL_0;
-
-	M_Blue:
-		set @BAND$, "Blue Hairband";
-		set @ITEMS$, "^5555FF1 Bandana^000000, ^5555FF1 Cobaltblue Dyestuffs^000000, and ^5555FF300 Anolian Skins^000000.";
-		if(countitem(2211)>=1 && countitem(978)>=1 && countitem(7003)>=300) set @GETBAND, 4;
-
-		sL_0:
+	switch(select("Cross Band:Light Bulb Band:Stripe band:Blue hair band")) {
+	case 1:	
+		callsub L_select,1,2608,1,7069,500,0,0,5036; //Cross Band (1) = Rosary (1) + Destroyed Armor (500)
+	case 2:
+		callsub L_select,2,2233,1,746,20,0,0,5034; //Bulb Band (1) = Circlet (1) + Glass Bead (20)
+	case 3:
+		callsub L_select,3,1099,1499,0,0,0,0,5049; //Stripe Band (1) = Worn Out Prison Uniform (1500)
+	case 4:
+		callsub L_select,4,2211,1,978,1,7003,299,5052; //Blue hair band (1) = Bandana (1) + Cobaltblue Dyestuffs (1) + Anolian Skin (300)
+	}
+L_select:
+	mes "[Hair Ornament Girl]";
+	if((getarg(0) == 1 && countitem(2068) > 0 && countitem(7069) > 499) ||
+	   (getarg(0) == 2 && countitem(2233) > 0 && countitem(746) > 19) || 
+	   (getarg(0) == 3 && countitem(1099) > 1499) ||
+	   (getarg(0) == 4 && countitem(2211) > 0 && countitem(978) > 0 && countitem(7003) > 299)) {
+		mes "Hum~ You've chosen "+getitemname(getarg(7))+"?";
+		mes "You brought all required item. I will make you~";
+		next;
+		if(getarg(0) != 3) {
 			mes "[Hair Ornament Girl]";
-			mes "So you're interested in the "+@BAND$+" huh? Here are the items you'll need for the "+@BAND$+":";
-			mes @ITEMS$;
+			mes "But, before I make, can you check that Items are sure?";
+			mes "If it is forged item or monster cards is applied, then it is waste of item.";
 			next;
-			if(@GETBAND > 0) goto sL_GetBand;
-
+		}
+		mes "[Hair Ornament Girl]";
+		mes "It's better to bring only just requested item";
+		mes "Did you check? Then let's make it. ok?";
+		next;
+		if(select("No.:Yes.") == 1) {
 			mes "[Hair Ornament Girl]";
-			mes "Bring me all of these items and I will be able to make you a "+@BAND$+".";
-			goto M_Menu;
-
-		sL_GetBand:
+			mes "Yes, Yes, Put other stuffs to storage~";
+			mes "See you soon~";
+			close;
+		}
 			mes "[Hair Ornament Girl]";
-			mes "I see that you have enough items for a "+@BAND$+".  Would you like me to make you one?";
+			mes "^3355FFHm. Piece of cake^000000";
 			next;
-			menu "Yes, I would.",-, "No thank you.",M_End;
-
-				if(@GETBAND == 1) goto ssL_Cross;
-				if(@GETBAND == 2) goto ssL_Bulb;
-				if(@GETBAND == 3) goto ssL_Striped;
-				if(@GETBAND == 4) goto ssL_Blue;
-
-				ssL_Cross:
-					if(countitem(2608)<1 || countitem(7069)<500) goto L_Cheater;
-					delitem 2608,1;
-					delitem 7069,500;
-					getitem  5036,1;
-					goto ssL_End;
-				ssL_Bulb:
-					if(countitem(2233)<1 || countitem(746)<20) goto L_Cheater;
-					delitem 2233,1;
-					delitem 746,20;
-					getitem 5034,1;
-					goto ssL_End;
-				ssL_Striped:
-					if(countitem(1099)<1500) goto L_Cheater;
-					delitem 1099,1500;
-					getitem 5049,1;
-					goto ssL_End;
-				ssL_Blue:
-					if(countitem(2211)<1 || countitem(978)<1 || countitem(7003)<300) goto L_Cheater;
-					delitem 2211,1;
-					delitem 978,1;
-					delitem 7003,300;
-					getitem 5052,1;
-				ssL_End:
-					mes "[Hair Ornament Girl]";
-					mes "Here is your "+@BAND$+".  Thank you.";
-					set @GETBAND, 0;
-					close;
-	L_Cheater:
+			delitem getarg(1),getarg(2);
+			if(getarg(3) != 0) delitem getarg(3),getarg(4);
+			if(getarg(5) != 0) delitem getarg(5),getarg(6);
+			mes "[Hair Ornament Girl]";
+			mes "Look, this! Well done~";
+			mes "Plaese come again~ hoooo!";
+			getitem getarg(7),1;
+			close;
+	}
+		mes "Hum~ You've chosen "+getitemname(getarg(7))+"?";
+		mes "There is some requiring items to make, Prepare items.";
+		next;
 		mes "[Hair Ornament Girl]";
-		mes "Ooops... Where are these items?";
-		close;
-
-	M_End:
+		mes "To make "+getitemname(getarg(7))+"...";
+		mes "^3355FF"+getitemname(getarg(1))+"^000000 "+getarg(2)+"";
+		if(getarg(3) > 0) mes "^3355FF"+getitemname(getarg(3))+"^000000 "+getarg(4)+"";
+		if(getarg(5) > 0) mes "^3355FF"+getitemname(getarg(5))+"^000000 "+getarg(6)+"";
+		mes "...will need?";
+		next;
 		mes "[Hair Ornament Girl]";
-		mes "Hope to see you again soon.";
+		mes "If you bring all items then I will make you right away.";
+		mes "Hoo~ see you then~";
 		close;
 }
 
