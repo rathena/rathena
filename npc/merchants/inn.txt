@@ -35,7 +35,7 @@
 //= 1.9 Added the Inn for Al De baran. [L0ne_W0lf]
 //= 2.0 Added Inn for the Town of Veins. [L0ne_W0lf]
 //= 2.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
-//= 2.1a Corrected a little Typo error. (bugreport:536) [Samuray22]
+//= 2.1a Corrected a little Typo error. (bugreport:536 & 537) [Samuray22]
 //============================================================ 
 
 
@@ -120,7 +120,7 @@ hu_in01,246,107,3	script	Inn Maid#Receptionist	53,{
 //======================== Veins ====================================
 ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 	mes "[Inn Master]";
-	mes "Good say~";
+	mes "Good day~";
 	mes "Welcome to the";
 	mes "most comfortable";
 	mes "inn here in Veins~";

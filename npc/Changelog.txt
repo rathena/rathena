@@ -2,7 +2,8 @@ Date		Added
 ======
 2007/12/02
 	* Rescripted Headgear Quests 1 (Comodo) to Aegis 10.3 Standards. [Samuray22]
-	- Corrected a little Typo errorin the "Inn". (bugreport:536)
+	* Corrected a little Typo error in the "Inn". (bugreport:536 & 537)
+	* Added Indian RO Children Week Event. Thanks $ephirot
 2007/11/30
 	* Added Missed Storage Password Function. (bugreport:515) [Samuray22]
 2007/11/29
