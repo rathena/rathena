@@ -11515,7 +11515,8 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 		memset(msg.body, 0x00, MAIL_BODY_LENGTH);
 	
 	msg.timestamp = (int)mail_calctimes();
-	intif_Mail_send(sd->status.account_id, &msg);
+	if( !intif_Mail_send(sd->status.account_id, &msg) )
+		mail_deliveryfail(sd, &msg);
 
 	sd->cansendmail_tick = gettick() + 1000; // 1 Second flood Protection
 }

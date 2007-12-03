@@ -14,5 +14,6 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount);
 bool mail_setattachment(struct map_session_data *sd, struct mail_message *msg);
 void mail_getattachment(struct map_session_data* sd, int zeny, struct item* item);
 int mail_openmail(struct map_session_data *sd);
+void mail_deliveryfail(struct map_session_data *sd, struct mail_message *msg);
 
 #endif /* _MAIL_H_ */

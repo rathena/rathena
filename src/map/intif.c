@@ -1645,7 +1645,7 @@ int intif_Mail_send(int account_id, struct mail_message *msg)
 	memcpy(WFIFOP(inter_fd,8), msg, sizeof(struct mail_message));
 	WFIFOSET(inter_fd,len);
 
-	return 0;
+	return 1;
 }
 
 static void intif_parse_Mail_send(int fd)
@@ -1666,16 +1666,9 @@ static void intif_parse_Mail_send(int fd)
 	if( (sd = map_charid2sd(msg.send_id)) )
 	{
 		if( fail )
-		{
-			pc_additem(sd, &msg.item, msg.item.amount);
-			if( msg.zeny > 0 )
-			{
-				sd->status.zeny += msg.zeny;
-				clif_updatestatus(sd, SP_ZENY);
-			}
-		}
-
-		clif_Mail_send(sd->fd, fail);
+			mail_deliveryfail(sd, &msg);
+		else
+			clif_Mail_send(sd->fd, false);
 	}
 
 	if( fail )

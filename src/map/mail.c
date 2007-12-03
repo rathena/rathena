@@ -154,4 +154,20 @@ int mail_openmail(struct map_session_data *sd)
 	return 0;
 }
 
+void mail_deliveryfail(struct map_session_data *sd, struct mail_message *msg)
+{
+	nullpo_retv(sd);
+	nullpo_retv(msg);
+
+	pc_additem(sd, &msg->item, msg->item.amount);
+	
+	if( msg->zeny > 0 )
+	{
+		sd->status.zeny += msg->zeny;
+		clif_updatestatus(sd, SP_ZENY);
+	}
+	
+	clif_Mail_send(sd->fd, true);
+}
+
 #endif
