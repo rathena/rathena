@@ -8613,28 +8613,29 @@ void clif_parse_TakeItem(int fd, struct map_session_data *sd)
 void clif_parse_DropItem(int fd, struct map_session_data *sd)
 {
 	int item_index, item_amount;
+	do {
+		if (pc_isdead(sd))
+			break;
 
-	if (pc_isdead(sd)) {
-		clif_clearunit_area(&sd->bl, 1);
+		if (pc_cant_act(sd))
+			break;
+
+		if (sd->sc.count && (
+			sd->sc.data[SC_AUTOCOUNTER] ||
+			sd->sc.data[SC_BLADESTOP] ||
+			(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM)
+		))
+			break;
+
+		item_index = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2;
+		item_amount = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
+		if (!pc_dropitem(sd, item_index, item_amount))
+			break;
+
 		return;
-	}
-
-	if (pc_cant_act(sd))
-		return;
-
-	if (sd->sc.count && (
-		sd->sc.data[SC_AUTOCOUNTER] ||
-		sd->sc.data[SC_BLADESTOP] ||
-		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM)
-	))
-		return;
-
-	item_index = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2;
-	item_amount = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
-	if (!pc_dropitem(sd, item_index, item_amount))
+	} while (0);
 	//Because the client does not likes being ignored.
-		clif_delitem(sd, item_index,0);
-
+	clif_delitem(sd, item_index,0);
 }
 
 /*==========================================
