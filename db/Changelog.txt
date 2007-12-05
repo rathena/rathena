@@ -37,6 +37,10 @@
 	2376 General's_Plate_Mail	Increases heal recovery effectiveness on you by 10%
 
 =======================
+
+12/05
+	* Corrected Lif skill durations/delays according to
+	  http://irowiki.org/wiki/Lif [Skotlex]
 12/02
 	* Rev. 11852 Added some missing headgears from others official servers. [Zephyrus]
 11/27
