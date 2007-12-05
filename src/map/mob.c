@@ -2941,40 +2941,43 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 	int i,j,inf,skill_id;
 	struct mob_data *md;
 	struct mob_skill *ms;
-	
+	struct mob_db* db;
+	struct status_data *status;
+
 	nullpo_retr(0, sd);
 
 	ARR_FIND( MOB_CLONE_START, MOB_CLONE_END, class_, mob_db_data[class_] == NULL );
 	if(class_ >= MOB_CLONE_END)
 		return 0;
 
-	mob_db_data[class_]=(struct mob_db*)aCalloc(1, sizeof(struct mob_db));
-	sprintf(mob_db_data[class_]->sprite,sd->status.name);
-	sprintf(mob_db_data[class_]->name,sd->status.name);
-	sprintf(mob_db_data[class_]->jname,sd->status.name);
-	mob_db_data[class_]->lv=status_get_lv(&sd->bl);
-	memcpy(&mob_db_data[class_]->status, &sd->base_status, sizeof(struct status_data));
-	mob_db_data[class_]->status.lhw = NULL; //Prevent dangling pointer if player quits.
-	mob_db_data[class_]->status.rhw.atk =
-	mob_db_data[class_]->status.rhw.atk2 = sd->base_status.dex; //Min ATK
-	mob_db_data[class_]->status.rhw.atk2+=
-		sd->base_status.rhw.atk + sd->base_status.rhw.atk2 +
-		sd->base_status.lhw->atk + sd->base_status.lhw->atk2; //Max ATK
+	db = mob_db_data[class_]=(struct mob_db*)aCalloc(1, sizeof(struct mob_db));
+	status = &db->status;
+	sprintf(db->sprite,sd->status.name);
+	sprintf(db->name,sd->status.name);
+	sprintf(db->jname,sd->status.name);
+	db->lv=status_get_lv(&sd->bl);
+	memcpy(status, &sd->base_status, sizeof(struct status_data));
+	status->rhw.atk2= status->dex + status->rhw.atk + status->rhw.atk2; //Max ATK
+	status->rhw.atk = status->dex; //Min ATK
+	if (status->lhw.atk) {
+		status->lhw.atk2= status->dex + status->lhw.atk + status->lhw.atk2; //Max ATK
+		status->lhw.atk = status->dex; //Min ATK
+	}
 	if (mode) //User provided mode.
-		mob_db_data[class_]->status.mode = mode; 
+		status->mode = mode; 
 	else if (flag&1) //Friendly Character, remove looting.
-		mob_db_data[class_]->status.mode &= ~MD_LOOTER; 
-	mob_db_data[class_]->status.hp = mob_db_data[class_]->status.max_hp;
-	mob_db_data[class_]->status.sp = mob_db_data[class_]->status.max_sp;
-	memcpy(&mob_db_data[class_]->vd, &sd->vd, sizeof(struct view_data));
-	mob_db_data[class_]->base_exp=1;
-	mob_db_data[class_]->job_exp=1;
-	mob_db_data[class_]->range2=AREA_SIZE; //Let them have the same view-range as players.
-	mob_db_data[class_]->range3=AREA_SIZE; //Min chase of a screen.
-	mob_db_data[class_]->option=sd->sc.option;
+		status->mode &= ~MD_LOOTER; 
+	status->hp = status->max_hp;
+	status->sp = status->max_sp;
+	memcpy(&db->vd, &sd->vd, sizeof(struct view_data));
+	db->base_exp=1;
+	db->job_exp=1;
+	db->range2=AREA_SIZE; //Let them have the same view-range as players.
+	db->range3=AREA_SIZE; //Min chase of a screen.
+	db->option=sd->sc.option;
 
 	//Skill copy [Skotlex]
-	ms = &mob_db_data[class_]->skill[0];
+	ms = &db->skill[0];
 	//Go Backwards to give better priority to advanced skills.
 	for (i=0,j = MAX_SKILL_TREE-1;j>=0 && i< MAX_MOBSKILL ;j--) {
 		skill_id = skill_tree[sd->status.class_][j].id;
@@ -3057,7 +3060,7 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 			
 			if (i+1 < MAX_MOBSKILL) { //duplicate this so it also triggers on self.
 				memcpy(&ms[i+1], &ms[i], sizeof(struct mob_skill));
-				mob_db_data[class_]->maxskill = ++i;
+				db->maxskill = ++i;
 				ms[i].target = MST_SELF;
 				ms[i].cond1 = MSC_MYHPLTMAXRATE;
 			}
@@ -3081,7 +3084,7 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 		if (battle_config.mob_skill_delay != 100)
 			ms[i].delay = ms[i].delay*battle_config.mob_skill_delay/100;
 		
-		mob_db_data[class_]->maxskill = ++i;
+		db->maxskill = ++i;
 	}
 	//Finally, spawn it.
 	md = mob_once_spawn_sub(&sd->bl, m, x, y, "--en--",class_,event);

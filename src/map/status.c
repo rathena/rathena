@@ -1598,7 +1598,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 {
 	static int calculating = 0; //Check for recursive call preemption. [Skotlex]
 	struct status_data b_status, *status;
-	struct weapon_atk b_lhw;
 	struct skill b_skill[MAX_SKILL];
 
 	int b_weight,b_max_weight;
@@ -1612,9 +1611,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		return -1;
 
 	memcpy(&b_status, &sd->battle_status, sizeof(struct status_data));
-	memcpy(&b_lhw, &sd->battle_lhw, sizeof(struct weapon_atk));
-	b_status.lhw = &b_lhw;
-
 	memcpy(b_skill,&sd->status.skill,sizeof(b_skill));
 	b_weight = sd->weight;
 	b_max_weight = sd->max_weight;
@@ -1627,8 +1623,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		//Load Hp/SP from char-received data.
 		sd->battle_status.hp = sd->status.hp;
 		sd->battle_status.sp = sd->status.sp;
-		sd->battle_status.lhw = &sd->battle_lhw;
-		sd->base_status.lhw = &sd->base_lhw;
 		sd->regen.sregen = &sd->sregen;
 		sd->regen.ssregen = &sd->ssregen;
 		sd->weight=0;
@@ -1695,8 +1689,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		clif_status_load(&sd->bl, SI_INTRAVISION, 0);
 
 	memset(&sd->special_state,0,sizeof(sd->special_state));
-	memset(&status->max_hp, 0, sizeof(struct status_data)-(sizeof(status->hp)+sizeof(status->sp)+sizeof(status->lhw)));
-	memset(status->lhw, 0, sizeof(struct weapon_atk));
+	memset(&status->max_hp, 0, sizeof(struct status_data)-(sizeof(status->hp)+sizeof(status->sp)));
 
 	//FIXME: Most of these stuff should be calculated once, but how do I fix the memset above to do that? [Skotlex]
 	status->speed = DEFAULT_WALK_SPEED;
@@ -1818,7 +1811,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 				wlv = MAX_REFINE_BONUS - 1;
 			if(i == EQI_HAND_L && sd->status.inventory[index].equip == EQP_HAND_L) {
 				wd = &sd->left_weapon; // Left-hand weapon
-				wa = status->lhw;
+				wa = &status->lhw;
 			} else {
 				wd = &sd->right_weapon;
 				wa = &status->rhw;
@@ -1945,9 +1938,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	//param_bonus now holds card bonuses.
 
 	if(status->rhw.range < 1) status->rhw.range = 1;
-	if(status->lhw->range < 1) status->lhw->range = 1;
-	if(status->rhw.range < status->lhw->range)
-		status->rhw.range = status->lhw->range;
+	if(status->lhw.range < 1) status->lhw.range = 1;
+	if(status->rhw.range < status->lhw.range)
+		status->rhw.range = status->lhw.range;
 
 	sd->double_rate += sd->double_add_rate;
 	sd->perfect_hit += sd->perfect_hit_add;
@@ -2362,13 +2355,13 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if(b_status.amotion != status->amotion)
 		clif_updatestatus(sd,SP_ASPD);
 	if(b_status.rhw.atk != status->rhw.atk ||
-		b_status.lhw->atk != status->lhw->atk ||
+		b_status.lhw.atk != status->lhw.atk ||
 		b_status.batk != status->batk)
 		clif_updatestatus(sd,SP_ATK1);
 	if(b_status.def != status->def)
 		clif_updatestatus(sd,SP_DEF1);
 	if(b_status.rhw.atk2 != status->rhw.atk2 ||
-		b_status.lhw->atk2 != status->lhw->atk2)
+		b_status.lhw.atk2 != status->lhw.atk2)
 		clif_updatestatus(sd,SP_ATK2);
 	if(b_status.def2 != status->def2)
 		clif_updatestatus(sd,SP_DEF2);
@@ -3009,14 +3002,14 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 		status->rhw.atk = status_calc_watk(bl, sc, b_status->rhw.atk);
 		if (!sd) //Should not affect weapon refine bonus
 			status->rhw.atk2 = status_calc_watk(bl, sc, b_status->rhw.atk2);
-		if(status->lhw && b_status->lhw && b_status->lhw->atk) {
+		if(b_status->lhw.atk) {
 			if (sd) {
 				sd->state.lr_flag = 1;
-				status->lhw->atk = status_calc_watk(bl, sc, b_status->lhw->atk);
+				status->lhw.atk = status_calc_watk(bl, sc, b_status->lhw.atk);
 				sd->state.lr_flag = 0;
 			} else {
-				status->lhw->atk = status_calc_watk(bl, sc, b_status->lhw->atk);
-				status->lhw->atk2= status_calc_watk(bl, sc, b_status->lhw->atk2);
+				status->lhw.atk = status_calc_watk(bl, sc, b_status->lhw.atk);
+				status->lhw.atk2= status_calc_watk(bl, sc, b_status->lhw.atk2);
 			}
 		}
 	}
@@ -3081,11 +3074,9 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 
 	if(flag&SCB_ATK_ELE) {
 		status->rhw.ele = status_calc_attack_element(bl, sc, b_status->rhw.ele);
-		if(status->lhw && b_status->lhw) {
-			if (sd) sd->state.lr_flag = 1;
-			status->lhw->ele = status_calc_attack_element(bl, sc, b_status->lhw->ele);
-			if (sd) sd->state.lr_flag = 0;
-		}
+		if (sd) sd->state.lr_flag = 1;
+		status->lhw.ele = status_calc_attack_element(bl, sc, b_status->lhw.ele);
+		if (sd) sd->state.lr_flag = 0;
 	}
 
 	if(flag&SCB_DEF_ELE) {
@@ -4098,18 +4089,6 @@ struct status_data *status_get_base_status(struct block_list *bl)
 	}
 }
 
-unsigned short status_get_lwatk(struct block_list *bl)
-{
-	struct status_data *status = status_get_status_data(bl);
-	return status->lhw?status->lhw->atk:0;
-}
-
-unsigned short status_get_lwatk2(struct block_list *bl)
-{
-	struct status_data *status = status_get_status_data(bl);
-	return status->lhw?status->lhw->atk2:0;
-}
-
 signed char status_get_def(struct block_list *bl)
 {
 	struct unit_data *ud;
@@ -4126,12 +4105,6 @@ unsigned short status_get_speed(struct block_list *bl)
 	if(bl->type==BL_NPC)//Only BL with speed data but no status_data [Skotlex]
 		return ((struct npc_data *)bl)->speed;
 	return status_get_status_data(bl)->speed;
-}
-
-unsigned char status_get_attack_lelement(struct block_list *bl)
-{
-	struct status_data *status = status_get_status_data(bl);
-	return status->lhw?status->lhw->ele:0;
 }
 
 int status_get_party_id(struct block_list *bl)

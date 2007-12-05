@@ -356,7 +356,7 @@ struct status_data {
 		size, race;
 	signed char
 		def, mdef;
-	struct weapon_atk rhw, *lhw; //Right Hand/Left Hand Weapon. Only players have a lhw (hence it's a pointer)
+	struct weapon_atk rhw, lhw; //Right Hand/Left Hand Weapon.
 };
 
 struct script_reg {
@@ -512,7 +512,6 @@ struct map_session_data {
 	struct unit_data ud;
 	struct view_data vd;
 	struct status_data base_status, battle_status;
-	struct weapon_atk base_lhw, battle_lhw; //Left-hand weapon atk data.
 	struct status_change sc;
 	struct regen_data regen;
 	struct regen_data_sub sregen, ssregen;

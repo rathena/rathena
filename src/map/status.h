@@ -597,11 +597,9 @@ int status_set_sp(struct block_list *bl, unsigned int sp, int flag);
 int status_heal(struct block_list *bl,int hp,int sp, int flag);
 int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp);
 
-//Define for copying a status_data structure from b to a, without overwriting current Hp and Sp, nor messing the lhw pointer.
-#define status_cpy(a, b) { \
-	memcpy(&((a)->max_hp), &((b)->max_hp), sizeof(struct status_data)-(sizeof((a)->hp)+sizeof((a)->sp)+sizeof((a)->lhw))); \
-	if ((a)->lhw && (b)->lhw) { memcpy((a)->lhw, (b)->lhw, sizeof(struct weapon_atk)); } \
-}
+//Define for copying a status_data structure from b to a, without overwriting current Hp and Sp
+#define status_cpy(a, b) \
+	memcpy(&((a)->max_hp), &((b)->max_hp), sizeof(struct status_data)-(sizeof((a)->hp)+sizeof((a)->sp)))
 
 struct regen_data *status_get_regen_data(struct block_list *bl);
 struct status_data *status_get_status_data(struct block_list *bl);
@@ -633,8 +631,8 @@ signed char status_get_def(struct block_list *bl);
 #define status_get_watk2(bl) status_get_status_data(bl)->rhw.atk2
 #define status_get_matk_max(bl) status_get_status_data(bl)->matk_max
 #define status_get_matk_min(bl) status_get_status_data(bl)->matk_min
-unsigned short status_get_lwatk(struct block_list *bl);
-unsigned short status_get_lwatk2(struct block_list *bl);
+#define status_get_lwatk(bl) status_get_status_data(bl)->lhw.atk
+#define status_get_lwatk2(bl) status_get_status_data(bl)->lhw.atk2
 unsigned short status_get_speed(struct block_list *bl);
 #define status_get_adelay(bl) status_get_status_data(bl)->adelay
 #define status_get_amotion(bl) status_get_status_data(bl)->amotion
@@ -644,7 +642,7 @@ unsigned short status_get_speed(struct block_list *bl);
 unsigned char status_calc_attack_element(struct block_list *bl, struct status_change *sc, int element);
 #define status_get_attack_sc_element(bl, sc) status_calc_attack_element(bl, sc, 0)
 #define status_get_attack_element(bl) status_get_status_data(bl)->rhw.ele
-unsigned char status_get_attack_lelement(struct block_list *bl);
+#define status_get_attack_lelement(bl) status_get_status_data(bl)->lhw.ele
 #define status_get_race(bl) status_get_status_data(bl)->race
 #define status_get_size(bl) status_get_status_data(bl)->size
 #define status_get_mode(bl) status_get_status_data(bl)->mode

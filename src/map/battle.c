@@ -705,7 +705,7 @@ static int battle_calc_base_damage(struct status_data *status, struct weapon_atk
 			atkmin = atkmax;
 	} else {	//PCs
 		atkmax = wa->atk;
-		type = (wa == status->lhw)?EQI_HAND_L:EQI_HAND_R;
+		type = (wa == &status->lhw)?EQI_HAND_L:EQI_HAND_R;
 
 		if (!(flag&1) || (flag&2))
 		{	//Normal attacks
@@ -964,7 +964,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	s_ele = s_ele_ = skill_get_ele(skill_num, skill_lv);
 	if (!skill_num || s_ele == -1) { //Take weapon's element
 		s_ele = sstatus->rhw.ele;
-		s_ele_ = sstatus->lhw?sstatus->lhw->ele:0;
+		s_ele_ = sstatus->lhw.ele;
 		if (flag.arrow && sd && sd->arrow_ele)
 			s_ele = sd->arrow_ele;
 	} else if (s_ele == -2) { //Use enchantment's element
@@ -980,7 +980,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 			flag.rh=0;
 			flag.lh=1;
 		}
-		if (sstatus->lhw && sstatus->lhw->atk)
+		if (sstatus->lhw.atk)
 			flag.lh=1;
 	}
 
@@ -1234,7 +1234,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				}
 				wd.damage = battle_calc_base_damage(sstatus, &sstatus->rhw, sc, tstatus->size, sd, i);
 				if (flag.lh)
-					wd.damage2 = battle_calc_base_damage(sstatus, sstatus->lhw, sc, tstatus->size, sd, i);
+					wd.damage2 = battle_calc_base_damage(sstatus, &sstatus->lhw, sc, tstatus->size, sd, i);
 
 				if (nk&NK_SPLASHSPLIT){ // Divide ATK among targets
 					if(wflag>0)
@@ -1737,9 +1737,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		if (sd && flag.weapon && skill_num != MO_INVESTIGATE && skill_num != MO_EXTREMITYFIST) {
 			if (skill_num == MO_FINGEROFFENSIVE) //Counts refine bonus multiple times
 			{
-				ATK_ADD2(wd.div_*sstatus->rhw.atk2, wd.div_*sstatus->lhw->atk2);
+				ATK_ADD2(wd.div_*sstatus->rhw.atk2, wd.div_*sstatus->lhw.atk2);
 			} else {
-				ATK_ADD2(sstatus->rhw.atk2, sstatus->lhw->atk2);
+				ATK_ADD2(sstatus->rhw.atk2, sstatus->lhw.atk2);
 			}
 		}
 

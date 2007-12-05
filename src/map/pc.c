@@ -1441,8 +1441,8 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			status->rhw.atk = cap_value(bonus, 0, USHRT_MAX);
 		}
 		else if(sd->state.lr_flag == 1) {
-			bonus = status->lhw->atk + val;
-			status->lhw->atk =  cap_value(bonus, 0, USHRT_MAX);
+			bonus = status->lhw.atk + val;
+			status->lhw.atk =  cap_value(bonus, 0, USHRT_MAX);
 		}
 		break;
 	case SP_ATK2:
@@ -1451,8 +1451,8 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			status->rhw.atk2 = cap_value(bonus, 0, USHRT_MAX);
 		}
 		else if(sd->state.lr_flag == 1) {
-			bonus = status->lhw->atk2 + val;
-			status->lhw->atk2 =  cap_value(bonus, 0, USHRT_MAX);
+			bonus = status->lhw.atk2 + val;
+			status->lhw.atk2 =  cap_value(bonus, 0, USHRT_MAX);
 		}
 		break;
 	case SP_BASE_ATK:
@@ -1535,7 +1535,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			}
 			break;
 		case 1:
-			status->lhw->ele=val;
+			status->lhw.ele=val;
 			break;
 		default:
 			status->rhw.ele=val;
@@ -1594,7 +1594,7 @@ int pc_bonus(struct map_session_data *sd,int type,int val)
 			}
 			break;
 		case 1:
-			status->lhw->range += val;
+			status->lhw.range += val;
 			break;
 		default:
 			status->rhw.range += val;
