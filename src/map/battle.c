@@ -155,6 +155,7 @@ int battle_delay_damage_sub (int tid, unsigned int tick, int id, int data)
 	if (target && dat && map_id2bl(id) == dat->src && target->prev != NULL && !status_isdead(target) &&
 		target->m == dat->src->m && check_distance_bl(dat->src, target, dat->distance)) //Check to see if you haven't teleported. [Skotlex]
 	{
+		map_freeblock_lock();
 		status_fix_damage(dat->src, target, dat->damage, dat->delay);
 		if ((dat->dmg_lv == ATK_DEF || dat->damage > 0) && dat->attack_type)
 		{
@@ -162,7 +163,7 @@ int battle_delay_damage_sub (int tid, unsigned int tick, int id, int data)
 				skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
 			skill_counter_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
 		}
-
+		map_freeblock_unlock();
 	}
 	ers_free(delay_damage_ers, dat);
 	return 0;
@@ -175,6 +176,7 @@ int battle_delay_damage (unsigned int tick, struct block_list *src, struct block
 	nullpo_retr(0, target);
 
 	if (!battle_config.delay_battle_damage) {
+		map_freeblock_lock();
 		status_fix_damage(src, target, damage, ddelay);
 		if ((damage > 0 || dmg_lv == ATK_DEF) && attack_type)
 		{
@@ -182,6 +184,7 @@ int battle_delay_damage (unsigned int tick, struct block_list *src, struct block
 				skill_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
 			skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
 		}
+		map_freeblock_unlock();
 		return 0;
 	}
 	dat = ers_alloc(delay_damage_ers, struct delay_damage);
