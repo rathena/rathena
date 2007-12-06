@@ -744,44 +744,73 @@ static int clif_setlevel(int lv)
 	return lv;
 }
 
-/// Prepares 0x78 - old player / non-player unit standing packet (helper function)
-static int clif_set_0078(struct block_list* bl, unsigned char* buf)
+/*==========================================
+ * Prepares 'unit standing/spawning' packet
+ *------------------------------------------*/
+static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool spawn)
 {
 	struct map_session_data* sd;
-	struct status_change* sc;
-	struct view_data* vd;
+	struct status_change* sc = status_get_sc(bl);
+	struct view_data* vd = status_get_viewdata(bl);
+	unsigned char *buf = WBUFP(buffer,0);
+	bool type = !pcdb_checkid(vd->class_);
+	unsigned short offset = 0;
 
 	BL_CAST(BL_PC, bl, sd);
-	sc = status_get_sc(bl);
-	vd = status_get_viewdata(bl);
 
-	WBUFW(buf, 0) = 0x78;
+	if(type)
+		WBUFW(buf,0) = spawn?0x7c:0x78;
+	else
+#if PACKETVER < 4
+		WBUFW(buf,0) = spawn?0x79:0x78;
+#elif PACKETVER < 7
+		WBUFW(buf,0) = spawn?0x1d9:0x1d8;
+#else
+		WBUFW(buf,0) = spawn?0x22b:0x22a;
+#endif
+
+#if PACKETVER >= 9
+	if (type) {
+		// shift payload 1 byte to the right for mob packets
+		WBUFB(buf,2) = 0; // padding?
+		offset++;
+		buf = WBUFP(buffer,offset);
+	}
+#endif
+
 	WBUFL(buf, 2) = bl->id;
 	WBUFW(buf, 6) = status_get_speed(bl);
 	WBUFW(buf, 8) = (sc)? sc->opt1 : 0;
 	WBUFW(buf,10) = (sc)? sc->opt2 : 0;
-	WBUFW(buf,12) = (sc)? sc->option : 0;
-	WBUFW(buf,14) = vd->class_;
-	WBUFW(buf,16) = vd->hair_style;
-	WBUFW(buf,18) = vd->weapon;
-	WBUFW(buf,20) = vd->head_bottom;
-	WBUFW(buf,22) = vd->shield;
+	if (type&&spawn) { //uses an older and different packet structure
+		WBUFW(buf,12) = (sc)? sc->option : 0;
+		WBUFW(buf,14) = vd->hair_style;
+		WBUFW(buf,16) = vd->weapon;
+		WBUFW(buf,18) = vd->head_bottom;
+		WBUFW(buf,20) = vd->class_; //Pet armor (ignored by client)
+		WBUFW(buf,22) = vd->shield;
+	} else {
+#if PACKETVER >= 7
+		if (!type) {
+			WBUFL(buf,12) = (sc)? sc->option : 0;
+			offset+=2;
+			buf = WBUFP(buffer,offset); //Shift 2 bytes to the right for the rest of fields
+		} else
+#endif
+			WBUFW(buf,12) = (sc)? sc->option : 0;
+		WBUFW(buf,14) = vd->class_;
+		WBUFW(buf,16) = vd->hair_style;
+		WBUFW(buf,18) = vd->weapon;
+#if PACKETVER < 4
+		WBUFW(buf,20) = vd->head_bottom;
+		WBUFW(buf,22) = vd->shield;
+#else
+		WBUFW(buf,20) = vd->shield;
+		WBUFW(buf,22) = vd->head_bottom;
+#endif
+	}
 	WBUFW(buf,24) = vd->head_top;
 	WBUFW(buf,26) = vd->head_mid;
-	WBUFW(buf,28) = vd->hair_color;
-	WBUFW(buf,30) = vd->cloth_color;
-	WBUFW(buf,32) = (sd)? sd->head_dir : 0;
-	WBUFL(buf,34) = status_get_guild_id(bl);
-	WBUFW(buf,38) = status_get_emblem_id(bl);
-	WBUFW(buf,40) = (sd)? sd->status.manner : 0;
-	WBUFW(buf,42) = (sc)? sc->opt3 : 0;
-	WBUFB(buf,44) = (sd)? sd->status.karma : 0;
-	WBUFB(buf,45) = vd->sex;
-	WBUFPOS(buf,46,bl->x,bl->y,unit_getdir(bl));
-	WBUFB(buf,49) = (sd)? 5 : 0;
-	WBUFB(buf,50) = (sd)? 5 : 0;
-	WBUFB(buf,51) = vd->dead_sit;
-	WBUFW(buf,52) = clif_setlevel(status_get_lv(bl));
 
 	if( bl->type == BL_NPC && vd->class_ == FLAG_CLASS )
 	{	//The hell, why flags work like this?
@@ -789,80 +818,91 @@ static int clif_set_0078(struct block_list* bl, unsigned char* buf)
 		WBUFL(buf,26) = status_get_guild_id(bl);
 	}
 
-	return 54;
+	WBUFW(buf,28) = vd->hair_color;
+	WBUFW(buf,30) = vd->cloth_color;
+	WBUFW(buf,32) = (sd)? sd->head_dir : 0;
+	if (type&&spawn) { //End of packet 0x7c
+		WBUFB(buf,34) = 0; // karma
+		WBUFB(buf,35) = vd->sex;
+		WBUFPOS(buf,36,bl->x,bl->y,unit_getdir(bl));
+		WBUFB(buf,39) = 0;
+		WBUFB(buf,40) = 0;
+		return packet_len(0x7c);
+	}
+	WBUFL(buf,34) = status_get_guild_id(bl);
+	WBUFW(buf,38) = status_get_emblem_id(bl);
+	WBUFW(buf,40) = (sd)? sd->status.manner : 0;
+#if PACKETVER >= 7
+	if (!type) {
+		WBUFL(buf,42) = (sc)? sc->opt3 : 0;
+		offset+=2;
+		buf = WBUFP(buffer,offset); //Shift additional 2 bytes...
+	} else
+#endif
+		WBUFW(buf,42) = (sc)? sc->opt3 : 0;
+	WBUFB(buf,44) = (sd)? sd->status.karma : 0;
+	WBUFB(buf,45) = vd->sex;
+	WBUFPOS(buf,46,bl->x,bl->y,unit_getdir(bl));
+	WBUFB(buf,49) = (sd)? 5 : 0;
+	WBUFB(buf,50) = (sd)? 5 : 0;
+	if (spawn) {
+		WBUFW(buf,51) = clif_setlevel(status_get_lv(bl));
+	} else {
+		WBUFB(buf,51) = vd->dead_sit;
+		WBUFW(buf,52) = clif_setlevel(status_get_lv(bl));
+	}
+	return packet_len(WBUFW(buffer,0));
 }
 
 /*==========================================
- * Prepares 'unit standing' packet
+ * Prepares 'unit walking' packet
  *------------------------------------------*/
-static int clif_set_unit_standing(struct block_list* bl, unsigned char* buf)
-{
-	struct status_change* sc = status_get_sc(bl);
-	struct view_data* vd = status_get_viewdata(bl);
-
-	// base packet
-	clif_set_0078(bl, buf);
-
-	if(pcdb_checkid(vd->class_))
-	{ 
-#if PACKETVER < 4
-		WBUFW(buf,0) = 0x78;
-		return packet_len(0x78);
-#else
-		// swap vd->shield and vd->head_bottom
-		WBUFW(buf,20) = vd->shield;
-		WBUFW(buf,22) = vd->head_bottom;
-#if PACKETVER < 7
-		WBUFW(buf,0) = 0x1d8;
-		return packet_len(0x1d8);
-#else
-		// change sc->option and sc->opt3 from W to L
-		memmove(WBUFP(buf,48), WBUFP(buf,44), 10);
-		WBUFL(buf,44) = (sc)? sc->opt3 : 0;
-		memmove(WBUFP(buf,16), WBUFP(buf,14), 28);
-		WBUFL(buf,12) = (sc)? sc->option : 0;
-
-		WBUFW(buf,0) = 0x22a;
-		return packet_len(0x22a);
-#endif
-#endif
-	} else {
-#if PACKETVER < 9
-		WBUFW(buf,0) = 0x78;
-		return packet_len(0x78);
-#else
-		// shift payload 1 byte to the right
-		memmove(WBUFP(buf,1), WBUFP(buf,0), packet_len(0x78));
-		WBUFW(buf,0) = 0x78;
-		WBUFB(buf,2) = 0; // padding?
-		return packet_len(0x78);
-#endif
-	}
-}
-
-/// Prepares 0x7b - old player / old non-player unit walking packet (helper function)
-static int clif_set_007b(struct block_list* bl, struct unit_data* ud, unsigned char* buf)
+static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, unsigned char* buffer)
 {
 	struct map_session_data* sd;
-	struct status_change* sc;
-	struct view_data* vd;
+	struct status_change* sc = status_get_sc(bl);
+	struct view_data* vd = status_get_viewdata(bl);
+	unsigned char* buf = WBUFP(buffer,0);
+	unsigned short offset = 0;
 
 	BL_CAST(BL_PC, bl, sd);
-	sc = status_get_sc(bl);
-	vd = status_get_viewdata(bl);
 
+#if PACKETVER < 4
 	WBUFW(buf, 0) = 0x7b;
+#elif PACKETVER < 7
+	WBUFW(buf, 0) = 0x1da;
+#else
+	WBUFW(buf, 0) = 0x22c;
+#endif
+
+#if PACKETVER >= 9
+	WBUFB(buf, 2) = 0; // padding?
+	offset++;
+	buf = WBUFP(buf,offset);
+#endif
 	WBUFL(buf, 2) = bl->id;
 	WBUFW(buf, 6) = status_get_speed(bl);
 	WBUFW(buf, 8) = (sc)? sc->opt1 : 0;
 	WBUFW(buf,10) = (sc)? sc->opt2 : 0;
+#if PACKETVER < 7
 	WBUFW(buf,12) = (sc)? sc->option : 0;
+#else
+	WBUFL(buf,12) = (sc)? sc->option : 0;
+	offset+=2; //Shift the rest of elements by 2 bytes.
+	buf = WBUFP(buffer,offset);
+#endif
 	WBUFW(buf,14) = vd->class_;
-	WBUFW(buf,16) = vd->hair_style; // for pets, a specific value disables the 'attack' cursor
+	WBUFW(buf,16) = vd->hair_style;
 	WBUFW(buf,18) = vd->weapon;
-	WBUFW(buf,20) = vd->head_bottom; // for pets, pet equip goes here
+#if PACKETVER < 4
+	WBUFW(buf,20) = vd->head_bottom;
 	WBUFL(buf,22) = gettick();
 	WBUFW(buf,26) = vd->shield;
+#else
+	WBUFW(buf,20) = vd->shield;
+	WBUFW(buf,22) = vd->head_bottom;
+	WBUFL(buf,24) = gettick();
+#endif
 	WBUFW(buf,28) = vd->head_top;
 	WBUFW(buf,30) = vd->head_mid;
 	WBUFW(buf,32) = vd->hair_color;
@@ -871,7 +911,13 @@ static int clif_set_007b(struct block_list* bl, struct unit_data* ud, unsigned c
 	WBUFL(buf,38) = status_get_guild_id(bl);
 	WBUFW(buf,42) = status_get_emblem_id(bl);
 	WBUFW(buf,44) = (sd)? sd->status.manner : 0;
+#if PACKETVER < 7
 	WBUFW(buf,46) = (sc)? sc->opt3 : 0;
+#else
+	WBUFL(buf,46) = (sc)? sc->opt3 : 0;
+	offset+=2; //Shift the rest of elements by 2 bytes.
+	buf = WBUFP(buffer,offset);
+#endif
 	WBUFB(buf,48) = (sd)? sd->status.karma : 0;
 	WBUFB(buf,49) = vd->sex;
 	WBUFPOS2(buf,50,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
@@ -879,107 +925,8 @@ static int clif_set_007b(struct block_list* bl, struct unit_data* ud, unsigned c
 	WBUFB(buf,57) = (sd)? 5 : 0;
 	WBUFW(buf,58) = clif_setlevel(status_get_lv(bl));
 
-	return 60;
+	return packet_len(WBUFW(buffer,0));
 }
-
-/*==========================================
- * Prepares 'unit walking' packet
- *------------------------------------------*/
-static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, unsigned char* buf)
-{
-	struct status_change* sc = status_get_sc(bl);
-	struct view_data* vd = status_get_viewdata(bl);
-
-	// base packet
-	clif_set_007b(bl, ud, buf);
-
-#if PACKETVER < 4
-	WBUFW(buf,0) = 0x7b;
-	return packet_len(0x7b);
-#else
-	// 'head_bottom, tick, shield' changed to 'shield, head_bottom, tick'
-	WBUFW(buf,20) = vd->shield;
-	WBUFW(buf,22) = vd->head_bottom;
-	WBUFL(buf,24) = gettick();
-#if PACKETVER < 7
-	//TODO: find out if this packet also works for mobs/pets [ultramage]
-	WBUFW(buf,0) = 0x1da;
-	return packet_len(0x1da);
-#else
-	// sc->option and sc->opt3 changed from W to L
-	memmove(WBUFP(buf,52), WBUFP(buf,48), 12);
-	WBUFL(buf,48) = (sc)? sc->opt3 : 0;
-	memmove(WBUFP(buf,16), WBUFP(buf,14), 32);
-	WBUFL(buf,12) = (sc)? sc->option : 0;
-
-#if PACKETVER < 9
-	WBUFW(buf,0) = 0x22c;
-	return packet_len(0x22c);
-#else
-	// shift payload 1 byte to the right
-	memmove(WBUFP(buf,1), WBUFP(buf,0), packet_len(0x22c));
-	WBUFW(buf,0) = 0x22c;
-	WBUFB(buf,2) = 0; // padding?
-	return packet_len(0x22c);
-#endif
-#endif
-#endif
-}
-
-/*==========================================
- * Prepares 'unit spawned' packet
- *------------------------------------------*/
-static int clif_set_unit_spawned(struct block_list* bl, unsigned char* buf)
-{
-	struct status_change* sc = status_get_sc(bl);
-	struct view_data* vd = status_get_viewdata(bl);
-
-	if( pcdb_checkid(vd->class_) )
-	{	// player spawn packet
-		int id = ( PACKETVER < 4 ) ? 0x79
-		       : ( PACKETVER < 7 ) ? 0x1d9
-		       :                     0x22b;
-		int len = clif_set_unit_standing(bl, buf);
-		WBUFW(buf,0) = id; // override packet id
-		WBUFW(buf,len-3) = WBUFW(buf,len-2); // spawn packet doesn't have the 'dead_sit' field
-		return packet_len(id);
-	}
-	else
-	{	// npc/mob/pet/homun spawn packet
-		WBUFW(buf, 0) = 0x7c;
-		WBUFL(buf, 2) = bl->id;
-		WBUFW(buf, 6) = status_get_speed(bl);
-		WBUFW(buf, 8) = (sc)? sc->opt1 : 0;
-		WBUFW(buf,10) = (sc)? sc->opt2 : 0;
-		WBUFW(buf,12) = (sc)? sc->option : 0;
-		WBUFW(buf,14) = vd->hair_style; //Required for pets (removes attack cursor)
-		WBUFW(buf,16) = 0; // Weapon
-		WBUFW(buf,18) = vd->head_bottom; //Pet armor (ignored by client)
-		WBUFW(buf,20) = vd->class_;
-		WBUFW(buf,22) = 0; // Shield
-		WBUFW(buf,24) = 0; // Head top
-		WBUFW(buf,26) = 0; // Head mid
-		WBUFW(buf,28) = 0; // Hair color
-		WBUFW(buf,30) = 0; // Cloth color
-		WBUFW(buf,32) = 0; // Head dir
-		WBUFB(buf,34) = 0; // karma
-		WBUFB(buf,35) = 0; // Sex
-		WBUFPOS(buf,36,bl->x,bl->y,unit_getdir(bl));
-		WBUFB(buf,39) = 0; // ???
-		WBUFB(buf,40) = 0; // ???
-
-#if PACKETVER < 9
-		return packet_len(0x7c);
-#else
-		// shift payload 1 byte to the right
-		memmove(WBUFP(buf,1), WBUFP(buf,0), packet_len(0x7c));
-		WBUFW(buf,0) = 0x7c;
-		WBUFB(buf,2) = 0; // padding?
-		return packet_len(0x7c);
-#endif
-	}
-}
-
 
 //Modifies the buffer for disguise characters and sends it to self.
 //Flag = 0: change id to negative, buf will have disguise data.
@@ -1125,7 +1072,7 @@ int clif_spawn(struct block_list *bl)
 	if( !vd || vd->class_ == INVISIBLE_CLASS )
 		return 0;
 
-	len = clif_set_unit_spawned(bl, buf);
+	len = clif_set_unit_idle(bl, buf,true);
 	clif_send(buf, len, bl, AREA_WOS);
 
 	if (disguised(bl))
@@ -3490,7 +3437,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		return;
 
 	ud = unit_bl2ud(bl);
-	len = ( ud && ud->walktimer != -1 ) ? clif_set_unit_walking(bl,ud,buf) : clif_set_unit_standing(bl,buf);
+	len = ( ud && ud->walktimer != -1 ) ? clif_set_unit_walking(bl,ud,buf) : clif_set_unit_idle(bl,buf,false);
 	clif_send(buf,len,&sd->bl,SELF);
 
 	if (vd->cloth_color)
