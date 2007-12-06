@@ -7152,7 +7152,7 @@ BUILDIN_FUNC(gettimestr)
  *------------------------------------------*/
 BUILDIN_FUNC(openstorage)
 {
-	TB_PC* sd;
+	TBL_PC* sd;
 
 	sd = script_rid2sd(st);
 	if( sd == NULL )
@@ -7244,7 +7244,7 @@ BUILDIN_FUNC(makepet)
  *------------------------------------------*/
 BUILDIN_FUNC(getexp)
 {
-	TBL_PC* sd;;
+	TBL_PC* sd;
 	int base=0,job=0;
 	double bonus;
 
