@@ -868,16 +868,28 @@ This label will be executed if a trigger area is defined for the NPC object it's
 in. If it isn't present, the execution will start from the beginning of the NPC 
 code. The RID of the triggering character object will be attached.
 
-OnPCDieEvent:
-OnPCKillEvent:
-OnPCLogoutEvent:
 OnPCLoginEvent:
+OnPCLogoutEvent:
+OnPCBaseLvUpEvent:
+OnPCJobLvUpEvent:
 
-These four special labels will be invoked if you have set 'event_script_type' 
-value in your 'script_athena.conf' to 1, and you can change their names by 
-altering the configuration options in 'script_athena.conf'. It's pretty obvious 
-when those will get triggered. For more information, see 
-'npc/sample/PCLoginEvent.txt'
+It's pretty obvious when these four special labels will be invoked. For more
+information, see 'npc/sample/PCLoginEvent.txt'
+
+OnPCDieEvent:
+
+This special label triggers when a player dies. The variable 'killerrid' is
+set to the ID of the killer.
+
+OnPCKillEvent:
+
+This special label triggers when a player kills another player. The variable
+'killedrid' is set to the ID of the player killed.
+
+OnNPCKillEvent:
+
+This special label triggers when a player kills a monster. The variable
+'killedrid' is set to the Class of the monster killed.
 
 OnPCLoadMapEvent:
 

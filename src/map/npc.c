@@ -67,7 +67,6 @@ static struct view_data npc_viewdb[MAX_NPC_CLASS];
 
 static struct script_event_s
 {	//Holds pointers to the commonly executed scripts for speedup. [Skotlex]
-	struct npc_data *nd;
 	struct event_data *event[UCHAR_MAX];
 	const char *event_name[UCHAR_MAX];
 	uint8 event_count;
@@ -2688,26 +2687,18 @@ void npc_parsesrcfile(const char* filepath)
 	return;
 }
 
-int npc_script_event(struct map_session_data* sd, int type)
+int npc_script_event(struct map_session_data* sd, enum npce_event type)
 {
 	int i;
-	if (type < 0 || type >= NPCE_MAX)
+	if (type == NPCE_MAX)
 		return 0;
 	if (!sd) {
 		ShowError("npc_script_event: NULL sd. Event Type %d\n", type);
 		return 0;
 	}
-	if (script_event[type].nd) {
-		TBL_NPC *nd = script_event[type].nd;
-		run_script(nd->u.scr.script,0,sd->bl.id,nd->bl.id);
-		return 1;
-	} else if (script_event[type].event_count) {
-		for (i = 0; i<script_event[type].event_count; i++) {
-			npc_event_sub(sd,script_event[type].event[i],script_event[type].event_name[i]);
-		}
-		return i;
-	} 
-	return 0;
+	for (i = 0; i<script_event[type].event_count; i++)
+		npc_event_sub(sd,script_event[type].event[i],script_event[type].event_name[i]);
+	return i;
 }
 
 static int npc_read_event_script_sub(DBKey key, void* data, va_list ap)
@@ -2735,7 +2726,7 @@ void npc_read_event_script(void)
 	int i;
 	struct {
 		char *name;
-		char *event_name;
+		const char *event_name;
 	} config[] = {
 		{"Login Event",script_config.login_event_name},
 		{"Logout Event",script_config.logout_event_name},
@@ -2748,32 +2739,19 @@ void npc_read_event_script(void)
 	};
 
 	for (i = 0; i < NPCE_MAX; i++) {
-		script_event[i].nd = NULL;
+		char buf[64]="::";
 		script_event[i].event_count = 0;
-		if (!script_config.event_script_type) {
-			//Use a single NPC as event source.
-			script_event[i].nd = npc_name2id(config[i].event_name);
-		} else {
-			//Use an array of Events
-			char buf[64]="::";
-			strncpy(buf+2,config[i].event_name,62);
-			ev_db->foreach(ev_db,npc_read_event_script_sub,buf,
-				&script_event[i].event,
-				&script_event[i].event_name,
-				&script_event[i].event_count);
-		}
+		//Use an array of Events
+		strncpy(buf+2,config[i].event_name,62);
+		ev_db->foreach(ev_db,npc_read_event_script_sub,buf,
+			&script_event[i].event,
+			&script_event[i].event_name,
+			&script_event[i].event_count);
 	}
 	if (battle_config.etc_log) {
 		//Print summary.
-		for (i = 0; i < NPCE_MAX; i++) {
-			if(!script_config.event_script_type) {
-				if (script_event[i].nd)
-					ShowInfo("%s: Using NPC named '%s'.\n", config[i].name, config[i].event_name);
-				else
-					ShowInfo("%s: No NPC found with name '%s'.\n", config[i].name, config[i].event_name);
-			} else
-				ShowInfo("%s: %d '%s' events.\n", config[i].name, script_event[i].event_count, config[i].event_name);
-		}
+		for (i = 0; i < NPCE_MAX; i++)
+			ShowInfo("%s: %d '%s' events.\n", config[i].name, script_event[i].event_count, config[i].event_name);
 	}
 }
 

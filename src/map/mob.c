@@ -2218,7 +2218,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			npc_event(mvp_sd,md->npc_event,0);
 		}
 		md->status.hp = 1;
-	} else if (mvp_sd && mvp_sd->state.event_kill_mob) {	//lordalfa
+	} else if (mvp_sd) {	//lordalfa
 		pc_setglobalreg(mvp_sd,"killedrid",md->class_);
 		npc_script_event(mvp_sd, NPCE_KILLNPC); // PCKillNPC [Lance]
 	}

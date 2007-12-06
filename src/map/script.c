@@ -182,7 +182,17 @@ static int parse_options=0;
 DBMap* script_get_label_db(){ return scriptlabel_db; }
 DBMap* script_get_userfunc_db(){ return userfunc_db; }
 
-struct Script_Config script_config;
+struct Script_Config script_config = {
+	1, 65535, 2048, //warn_func_mismatch_paramnum/check_cmdcount/check_gotocount
+	"OnPCDieEvent", //die_event_name
+	"OnPCKillEvent", //kill_pc_event_name
+	"OnNPCKillEvent", //kill_mob_event_name
+	"OnPCLoginEvent", //login_event_name
+	"OnPCLogoutEvent", //logout_event_name
+	"OnPCLoadMapEvent", //loadmap_event_name
+	"OnPCBaseLvUpEvent", //baselvup_event_name
+	"OnPCJobLvUpEvent" //joblvup_event_name
+};
 
 static jmp_buf     error_jump;
 static char*       error_msg;
@@ -3449,7 +3459,7 @@ static int script_autosave_mapreg(int tid,unsigned int tick,int id,int data)
 	return 0;
 }
 
-int script_config_read_sub(char *cfgName)
+int script_config_read(char *cfgName)
 {
 	int i;
 	char line[1024],w1[1024],w2[1024];
@@ -3478,75 +3488,14 @@ int script_config_read_sub(char *cfgName)
 		else if(strcmpi(w1,"check_gotocount")==0) {
 			script_config.check_gotocount = config_switch(w2);
 		}
-		else if(strcmpi(w1,"event_script_type")==0) {
-			script_config.event_script_type = config_switch(w2);
-		}
-		else if(strcmpi(w1,"event_requires_trigger")==0) {
-			script_config.event_requires_trigger = config_switch(w2);
-		}
-		else if(strcmpi(w1,"die_event_name")==0) {			
-			strncpy(script_config.die_event_name, w2, NAME_LENGTH-1);
-			if (strlen(script_config.die_event_name) != strlen(w2))
-				ShowWarning("script_config_read: Event label truncated (max length is 23 chars): %d\n", script_config.die_event_name);
-		}
-		else if(strcmpi(w1,"kill_pc_event_name")==0) {
-			strncpy(script_config.kill_pc_event_name, w2, NAME_LENGTH-1);
-			if (strlen(script_config.kill_pc_event_name) != strlen(w2))
-				ShowWarning("script_config_read: Event label truncated (max length is 23 chars): %d\n", script_config.kill_pc_event_name);
-		}
-		else if(strcmpi(w1,"kill_mob_event_name")==0) {
-			strncpy(script_config.kill_mob_event_name, w2, NAME_LENGTH-1);
-			if (strlen(script_config.kill_mob_event_name) != strlen(w2))
-				ShowWarning("script_config_read: Event label truncated (max length is 23 chars): %d\n", script_config.kill_mob_event_name);
-		}
-		else if(strcmpi(w1,"login_event_name")==0) {
-			strncpy(script_config.login_event_name, w2, NAME_LENGTH-1);
-			if (strlen(script_config.login_event_name) != strlen(w2))
-				ShowWarning("script_config_read: Event label truncated (max length is 23 chars): %d\n", script_config.login_event_name);
-		}
-		else if(strcmpi(w1,"logout_event_name")==0) {
-			strncpy(script_config.logout_event_name, w2, NAME_LENGTH-1);
-			if (strlen(script_config.logout_event_name) != strlen(w2))
-				ShowWarning("script_config_read: Event label truncated (max length is 23 chars): %d\n", script_config.logout_event_name);
-		}
-		else if(strcmpi(w1,"loadmap_event_name")==0) {
-			strncpy(script_config.loadmap_event_name, w2, NAME_LENGTH-1);
-			if (strlen(script_config.loadmap_event_name) != strlen(w2))
-				ShowWarning("script_config_read: Event label truncated (max length is 23 chars): %d\n", script_config.loadmap_event_name);
-		}
-		else if(strcmpi(w1,"baselvup_event_name")==0) {
-			strncpy(script_config.baselvup_event_name, w2, NAME_LENGTH-1);
-			if (strlen(script_config.baselvup_event_name) != strlen(w2))
-				ShowWarning("script_config_read: Event label truncated (max length is 23 chars): %d\n", script_config.baselvup_event_name);
-		}
-		else if(strcmpi(w1,"joblvup_event_name")==0) {
-			strncpy(script_config.joblvup_event_name, w2, NAME_LENGTH-1);
-			if (strlen(script_config.joblvup_event_name) != strlen(w2))
-				ShowWarning("script_config_read: Event label truncated (max length is 23 chars): %d\n", script_config.joblvup_event_name);
-		}
 		else if(strcmpi(w1,"import")==0){
-			script_config_read_sub(w2);
+			script_config_read(w2);
 		}
 	}
 	fclose(fp);
 
 	return 0;
 }
-
-int script_config_read(char *cfgName)
-{	//Script related variables should be initialized once! [Skotlex]
-
-	memset (&script_config, 0, sizeof(script_config));
-	script_config.warn_func_mismatch_paramnum = 1;
-	script_config.check_cmdcount = 65535;
-	script_config.check_gotocount = 2048;
-
-	script_config.event_script_type = 0;
-	script_config.event_requires_trigger = 1;
-
-	return script_config_read_sub(cfgName);
-}
-
 
 static int do_final_userfunc_sub (DBKey key,void *data,va_list ap)
 {

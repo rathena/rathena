@@ -727,11 +727,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 
 	//Prevent S. Novices from getting the no-death bonus just yet. [Skotlex]
 	sd->die_counter=-1;
-	//Until the reg values arrive, set them to not require trigger...
-	sd->state.event_death = 1;
-	sd->state.event_kill_pc = 1;
-	sd->state.event_disconnect = 1;
-	sd->state.event_kill_mob = 1;
 
 	{	//Add IP field
 		uint32 ip = session[sd->fd]->client_addr;
@@ -867,25 +862,6 @@ int pc_reg_received(struct map_session_data *sd)
 		}
 	}
 
-	// Automated script events
-	if (script_config.event_requires_trigger) {
-		sd->state.event_death = pc_readglobalreg(sd, script_config.die_event_name);
-		sd->state.event_kill_pc = pc_readglobalreg(sd, script_config.kill_pc_event_name);
-		sd->state.event_kill_mob = pc_readglobalreg(sd, script_config.kill_mob_event_name);
-		sd->state.event_disconnect = pc_readglobalreg(sd, script_config.logout_event_name);
-		sd->state.event_baselvup = pc_readglobalreg(sd, script_config.baselvup_event_name);
-		sd->state.event_joblvup = pc_readglobalreg(sd, script_config.joblvup_event_name);
-		sd->state.event_loadmap = pc_readglobalreg(sd, script_config.loadmap_event_name);
-	// if script triggers are not required
-	} else {
-		sd->state.event_death = 1;
-		sd->state.event_kill_pc = 1;
-		sd->state.event_disconnect = 1;
-		sd->state.event_kill_mob = 1;
-		sd->state.event_baselvup = 1;
-		sd->state.event_joblvup = 1;
-		sd->state.event_loadmap = 1;
-	}
 	//Weird... maybe registries were reloaded?
 	if (sd->state.auth)
 		return 0;
@@ -4150,9 +4126,7 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 		sc_start(&sd->bl,SkillStatusChangeTable(AL_BLESSING),100,10,600000);
 	}
 	clif_misceffect(&sd->bl,0);
-	//LORDALFA - LVLUPEVENT
-	if(sd->state.event_baselvup)
-		npc_script_event(sd, NPCE_BASELVUP);
+	npc_script_event(sd, NPCE_BASELVUP); //LORDALFA - LVLUPEVENT
 
 	if(sd->status.party_id)
 		party_send_levelup(sd);
@@ -4186,8 +4160,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 	if (pc_checkskill(sd, SG_DEVIL) && !pc_nextjobexp(sd))
 		clif_status_change(&sd->bl,SI_DEVIL, 1); //Permanent blind effect from SG_DEVIL.
 
-	if(sd->state.event_joblvup)
-		npc_script_event(sd, NPCE_JOBLVUP);
+	npc_script_event(sd, NPCE_JOBLVUP);
 	return 1;
 }
 
@@ -4973,14 +4946,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	sd->hp_loss.tick = sd->sp_loss.tick = sd->hp_regen.tick = sd->sp_regen.tick = 0;
 
 	pc_setglobalreg(sd,"PC_DIE_COUNTER",++sd->die_counter);
-
-	if (sd->state.event_death){
-		if(!src)
-			pc_setglobalreg(sd, "killerrid", 0);
-		else
-			pc_setglobalreg(sd,"killerrid",src->id);
-		npc_script_event(sd,NPCE_DIE);
-	}
+	pc_setglobalreg(sd,"killerrid",src?src->id:0);
+	npc_script_event(sd,NPCE_DIE);
 
 	if ( sd && sd->spiritball && (sd->class_&MAPID_BASEMASK)==MAPID_GUNSLINGER ) // maybe also monks' spiritballs ?
 		pc_delspiritball(sd,sd->spiritball,0);
@@ -5008,10 +4975,9 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	case BL_PC:
 	{
 		struct map_session_data *ssd = (struct map_session_data *)src;
-		if (ssd->state.event_kill_pc) {
-			pc_setglobalreg(ssd, "killedrid", sd->bl.id);
-			npc_script_event(ssd, NPCE_KILLPC);
-		}
+		pc_setglobalreg(ssd, "killedrid", sd->bl.id);
+		npc_script_event(ssd, NPCE_KILLPC);
+
 		if (battle_config.pk_mode&2) {
 			ssd->status.manner -= 5;
 			if(ssd->status.manner < 0)
@@ -6082,14 +6048,6 @@ int pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type)
 			i = (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE);
 			sd->die_counter = val;
 			if (i) status_calc_pc(sd,0); //Lost the bonus.
-		} else if(strcmp(reg,script_config.die_event_name) == 0){
-			sd->state.event_death = val;
-		} else if(strcmp(reg,script_config.kill_pc_event_name) == 0){
-			sd->state.event_kill_pc = val;
-		} else if(strcmp(reg,script_config.kill_mob_event_name) == 0){
-			sd->state.event_kill_mob = val;
-		} else if(strcmp(reg,script_config.logout_event_name) == 0){
-			sd->state.event_disconnect = val;
 		}
 	}
 	switch (type) {

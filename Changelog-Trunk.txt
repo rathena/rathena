@@ -3,6 +3,16 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/12/06
+	* The default event script behaviour is to trigger on labels rather than
+	  NPCs now.
+	* Removed several script config options which break NPC compatibility when
+	  you mess with them (event_script_type, event_requires_trigger,
+	  die_event_name, kill_pc_event_name, kill_mob_event_name, logout_event_name,
+	  login_event_name, loadmap_event_name, baselvup_event_name,
+	  joblvup_event_name)
+	* LoadMap events no longer set the variable "@maploaded$" to the name of
+	  the new map. [Skotlex]
 2007/12/03
 	* Fixed a bug on Mail System. Removed the possibility to lost the attachment on
 	  a Map - Char server disconnection. [Zephyrus]

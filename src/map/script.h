@@ -13,16 +13,14 @@ extern struct Script_Config {
 	int check_cmdcount;
 	int check_gotocount;
 
-	unsigned event_script_type : 1;
-	unsigned event_requires_trigger : 1;
-	char die_event_name[NAME_LENGTH];
-	char kill_pc_event_name[NAME_LENGTH];
-	char kill_mob_event_name[NAME_LENGTH];
-	char login_event_name[NAME_LENGTH];
-	char logout_event_name[NAME_LENGTH];
-	char loadmap_event_name[NAME_LENGTH];
-	char baselvup_event_name[NAME_LENGTH];
-	char joblvup_event_name[NAME_LENGTH];
+	const char *die_event_name;
+	const char *kill_pc_event_name;
+	const char *kill_mob_event_name;
+	const char *login_event_name;
+	const char *logout_event_name;
+	const char *loadmap_event_name;
+	const char *baselvup_event_name;
+	const char *joblvup_event_name;
 } script_config;
 
 enum c_op {

@@ -27,7 +27,7 @@ int mob_chat_sub(struct block_list* bl, va_list ap);
 #endif
 
 //Script NPC events.
-enum {
+enum npce_event {
 	NPCE_LOGIN,
 	NPCE_LOGOUT,
 	NPCE_LOADMAP,
@@ -88,7 +88,7 @@ void npc_unload_duplicates (struct npc_data* nd);
 int npc_unload(struct npc_data* nd);
 int npc_reload(void);
 void npc_read_event_script(void);
-int npc_script_event(struct map_session_data* sd, int type);
+int npc_script_event(struct map_session_data* sd, enum npce_event type);
 
 extern struct npc_data* fake_nd;
 

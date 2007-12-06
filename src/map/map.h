@@ -531,16 +531,7 @@ struct map_session_data {
 		unsigned storage_flag : 2; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex]
 		unsigned snovice_call_flag : 2; //Summon Angel (stage 1~3)
 		unsigned snovice_dead_flag : 2; //Explosion spirits on death: 0 off, 1 active, 2 used.
-		// originally by Qamera, adapted by celest
-		unsigned event_death : 1;
-		unsigned event_kill_pc : 1;
-		unsigned event_disconnect : 1;
-		unsigned event_kill_mob : 1;
-		unsigned event_baselvup : 1;
-		unsigned event_joblvup : 1;
-		unsigned event_loadmap : 1;
-		// Abracadabra bugfix by Aru
-		unsigned abra_flag : 1;
+		unsigned abra_flag : 1; // Abracadabra bugfix by Aru
 		unsigned autotrade : 1;	//By Fantik
 		unsigned reg_dirty : 3; //By Skotlex (marks whether registry variables have been saved or not yet)
 		unsigned showdelay :1;
