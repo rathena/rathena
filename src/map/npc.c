@@ -2610,18 +2610,10 @@ void npc_parsesrcfile(const char* filepath)
 
 		// w1<TAB>w2<TAB>w3<TAB>w4
 		if( (count = sscanf(p, "%[^\t\r\n]\t%[^\t\r\n]\t%[^\t\r\n]\t%n%[^\r\n]", w1, w2, w3, &w4pos, w4)) < 3 )
-		{
-			if( (count = sscanf(p, "%s %s %[^\t]\t %n%[^\n]", w1, w2, w3, &w4pos, w4)) == 4
-			||	(count = sscanf(p, "%s %s %s %n%[^\n]\n", w1, w2, w3, &w4pos, w4)) >= 3 )
-			{// Incorrect syntax, try to parse
-				ShowWarning("npc_parsesrcfile: Incorrect separator syntax in file '%s', line '%d'. Use tabs instead of spaces!\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,p-buffer), w1, w2, w3, w4);
-			}
-			else
-			{// Unknown syntax, try to continue
-				ShowError("npc_parsesrcfile: Unknown syntax in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,p-buffer), w1, w2, w3, w4);
-				p = strchr(p,'\n');// next line
-				continue;
-			}
+		{// Unknown syntax, try to continue
+			ShowError("npc_parsesrcfile: Unknown syntax in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,p-buffer), w1, w2, w3, w4);
+			p = strchr(p,'\n');// next line
+			continue;
 		}
 
 		if( strcmp(w1,"-") !=0 && strcasecmp(w1,"function") != 0 )
