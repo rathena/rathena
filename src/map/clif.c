@@ -984,30 +984,37 @@ static int clif_set_unit_spawned(struct block_list* bl, unsigned char* buf)
 //Modifies the buffer for disguise characters and sends it to self.
 //Flag = 0: change id to negative, buf will have disguise data.
 //Flag = 1: change id to positive, class and option to make your own char invisible.
-//Luckily, the offsets that need to be changed are the same in packets 0x78, 0x7b, 0x1d8 and 0x1da
-//But no longer holds true for those packet of PACKETVER 7.
 static void clif_setdisguise(struct map_session_data *sd, unsigned char *buf,int len, int flag)
 {
-	if (flag) {
-		WBUFL(buf,2)=sd->bl.id;
-#if PACKETVER >= 7
-		switch (WBUFW(buf,0)) {
-		case 0x22c:
-		case 0x22b:
-		case 0x22a:
-			WBUFL(buf,12)=OPTION_INVISIBLE;
-			WBUFW(buf,16)=sd->status.class_;
-			break;
-		default:
-#endif
-			WBUFW(buf,12)=OPTION_INVISIBLE;
-			WBUFW(buf,14)=sd->status.class_;
-#if PACKETVER >= 7
-			break;
-		}
-#endif
-	} else {
+	if (!flag) {
 		WBUFL(buf,2)=-sd->bl.id;
+		clif_send(buf, len, &sd->bl, SELF);
+		return;
+	}
+	WBUFL(buf,2)=sd->bl.id;
+	switch (WBUFW(buf,0)) {
+	case 0x22c:
+#if PACKETVER >= 9
+		WBUFL(buf,13)=OPTION_INVISIBLE;
+		WBUFW(buf,17)=sd->status.class_;
+		break;
+	case 0x78:
+	case 0x7c:
+		WBUFW(buf,13)=OPTION_INVISIBLE;
+		WBUFW(buf,15)=sd->status.class_;
+		break;
+#endif
+#if PACKETVER >= 7
+	case 0x22b:
+	case 0x22a:
+		WBUFL(buf,12)=OPTION_INVISIBLE;
+		WBUFW(buf,16)=sd->status.class_;
+		break;
+#endif
+	default:	//0x78, 0x7b, 0x1d8 and 0x1da
+		WBUFW(buf,12)=OPTION_INVISIBLE;
+		WBUFW(buf,14)=sd->status.class_;
+		break;
 	}
 	clif_send(buf, len, &sd->bl, SELF);
 }
