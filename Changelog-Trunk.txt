@@ -3,6 +3,13 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/12/07
+	* removed the timer heap correction code when the timers overflow since
+	  Flavio points out that it is not needed.
+	* Modified a bit the changesex code so you get saved and quit before
+	  changing your sex rather than afterwards.
+	* Cleaned up #changesex
+	* Signum Crucis now works on bosses. [Skotlex]
 2007/12/06
 	* Removed the attempts to recover from invalid syntax in npc_parsesrcfile 
 	  since they can produce incorrect results (spaces in sscanf can match 

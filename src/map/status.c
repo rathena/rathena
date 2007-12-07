@@ -4778,7 +4778,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				  break;
 			case SC_QUAGMIRE:
 			case SC_DECREASEAGI:
-			case SC_SIGNUMCRUCIS:
 			case SC_PROVOKE:
 			case SC_ROKISWEIL:
 			case SC_COMA:

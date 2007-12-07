@@ -6712,7 +6712,7 @@ int atcommand_uptime(const int fd, struct map_session_data* sd, const char* comm
 int atcommand_changesex(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
-	chrif_char_ask_name(sd->status.account_id,sd->status.name, 5,0,0,0,0,0,0);
+	chrif_changesex(sd);
 	return 0;
 }
 

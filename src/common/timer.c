@@ -351,42 +351,12 @@ int settick_timer(int tid, unsigned int tick)
 	return tick;
 }
 
-//Correcting the heap when the tick overflows is an idea taken from jA to
-//prevent timer problems. Thanks to [End of Exam] for providing the required data. [Skotlex]
-//This funtion will rearrange the heap and assign new tick values.
-static void fix_timer_heap(unsigned int tick)
-{
-	if (timer_heap_num >= 0 && tick < 0x00010000 && timer_data[timer_heap[0]].tick > 0xf0000000)
-	{	//The last timer is way too far into the future, and the current tick is too close to 0, overflow was very likely
-		//(not perfect, but will work as long as the timer is not expected to happen 50 or so days into the future)
-		int i;
-		int *tmp_heap;
-		for (i=0; i < timer_heap_num && timer_data[timer_heap[i]].tick > 0xf0000000; i++)
-		{	//All functions with high tick value should had been executed already...
-			timer_data[timer_heap[i]].tick = 0;
-		}
-		//Move elements to readjust the heap.
-		tmp_heap = aCalloc(sizeof(int), i);
-		memcpy(tmp_heap, timer_heap, i*sizeof(int));
-		memmove(timer_heap, &timer_heap[i], (timer_heap_num-i)*sizeof(int));
-		memmove(&timer_heap[timer_heap_num-i], tmp_heap, i*sizeof(int));
-		aFree(tmp_heap);
-	}
-}
-
 /// Executes all expired timers.
 /// Returns the value of the smallest non-expired timer (or 1 second if there aren't any).
 int do_timer(unsigned int tick)
 {
 	int nextmin = 1000; // return value
-	static int fix_heap_flag = 0; //Flag for fixing the stack only once per tick loop. May not be the best way, but it's all I can think of currently :X [Skotlex]
 	int i;
-
-	if( tick < 0x010000 && fix_heap_flag )
-	{
-		fix_timer_heap(tick);
-		fix_heap_flag = 0;
-	}
 
 	// process all timers one by one
 	while( timer_heap_num )
@@ -443,9 +413,6 @@ int do_timer(unsigned int tick)
 
 	if( nextmin < TIMER_MIN_INTERVAL )
 		nextmin = TIMER_MIN_INTERVAL;
-
-	if( UINT_MAX - nextmin < tick ) //Tick will loop, rearrange the heap on the next iteration.
-		fix_heap_flag = 1;
 
 	return nextmin;
 }

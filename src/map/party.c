@@ -233,7 +233,7 @@ int party_recv_info(struct party *sp)
 		sd = map_id2sd(p->party.member[i].account_id);
 		if (sd && sd->status.party_id==p->party.party_id
 			&& sd->status.char_id == p->party.member[i].char_id
-			&& !sd->state.waitingdisconnect)
+			&& sd->state.auth && !sd->state.waitingdisconnect)
 			p->data[i].sd = sd;
 	}
 	party_check_state(p);

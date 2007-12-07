@@ -62,7 +62,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b0e: Outgoing, chrif_char_ask_name -> 'Do some operations (change sex, ban / unban etc)'
 //2b0f: Incoming, chrif_char_ask_name_answer -> 'answer of the 2b0e'
 //2b10: Outgoing, chrif_updatefamelist -> 'Update the fame ranking lists and send them'
-//2b11: Outgoing, chrif_changesex -> 'change sex of acc X'
+//2b11: FREE
 //2b12: Incoming, chrif_divorce -> 'divorce a wedding of charid X and partner id X'
 //2b13: Incoming, chrif_accountdeletion -> 'Delete acc XX, if the player is on, kick ....'
 //2b14: Incoming, chrif_accountban -> 'not sure: kick the player with message XY'
@@ -593,7 +593,7 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email)
  * S 2b0e <accid>.l <name>.24B <type>.w { <year>.w <month>.w <day>.w <hour>.w <minute>.w <second>.w }
  * Send an account modification request to the login server (via char server).
  * type of operation:
- *   1: block, 2: ban, 3: unblock, 4: unban, 5: changesex
+ *   1: block, 2: ban, 3: unblock, 4: unban, 5: changesex (use next function for 5)
  *------------------------------------------*/
 int chrif_char_ask_name(int acc, const char* character_name, unsigned short operation_type, int year, int month, int day, int hour, int minute, int second)
 {
@@ -613,23 +613,21 @@ int chrif_char_ask_name(int acc, const char* character_name, unsigned short oper
 		WFIFOW(char_fd,42) = second;
 	}
 	WFIFOSET(char_fd,44);
-
 	return 0;
 }
 
-/*==========================================
- * «•Ê•Ï‰»—v‹
- *------------------------------------------*/
-int chrif_changesex(int id, int sex)
+int chrif_changesex(struct map_session_data *sd)
 {
 	chrif_check(-1);
+	WFIFOHEAD(char_fd,44);
+	WFIFOW(char_fd,0) = 0x2b0e;
+	WFIFOL(char_fd,2) = sd->status.account_id;
+	safestrncpy((char*)WFIFOP(char_fd,6), sd->status.name, NAME_LENGTH);
+	WFIFOW(char_fd,30) = 5;
+	WFIFOSET(char_fd,44);
 
-	WFIFOHEAD(char_fd,9);
-	WFIFOW(char_fd,0) = 0x2b11;
-	WFIFOW(char_fd,2) = 9;
-	WFIFOL(char_fd,4) = id;
-	WFIFOB(char_fd,8) = sex;
-	WFIFOSET(char_fd,9);
+	clif_displaymessage(sd->fd, "Need disconnection to perform change-sex request...");
+	map_quit(sd);
 	return 0;
 }
 
@@ -714,60 +712,49 @@ int chrif_changedsex(int fd)
 	if (battle_config.etc_log)
 		ShowNotice("chrif_changedsex %d.\n", acc);
 	sd = map_id2sd(acc);
-	if (acc > 0) {
-		if (sd != NULL && sd->status.sex != sex) {
-			sd->status.sex = !sd->status.sex;
+	if (sd) { //Normally there should not be a char logged on right now!
+		if (sd->status.sex == sex) 
+			return 0; //Do nothing? Likely safe.
+		sd->status.sex = !sd->status.sex;
 
-			// to avoid any problem with equipment and invalid sex, equipment is unequiped.
-			for (i = 0; i < EQI_MAX; i++) {
-				if (sd->equip_index[i] >= 0)
-					pc_unequipitem((struct map_session_data*)sd, sd->equip_index[i], 2);
-			}
-			// reset skill of some job
-			if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER) {
-				// remove specifical skills of Bard classes 
-				for(i = 315; i <= 322; i++) {
-					if (sd->status.skill[i].id > 0 && !sd->status.skill[i].flag) {
-						if (sd->status.skill_point > USHRT_MAX - sd->status.skill[i].lv)
-							sd->status.skill_point = USHRT_MAX;
-						else
-							sd->status.skill_point += sd->status.skill[i].lv;
-						sd->status.skill[i].id = 0;
-						sd->status.skill[i].lv = 0;
-					}
+		// reset skill of some job
+		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER) {
+			// remove specifical skills of Bard classes 
+			for(i = 315; i <= 322; i++) {
+				if (sd->status.skill[i].id > 0 && !sd->status.skill[i].flag) {
+					if (sd->status.skill_point > USHRT_MAX - sd->status.skill[i].lv)
+						sd->status.skill_point = USHRT_MAX;
+					else
+						sd->status.skill_point += sd->status.skill[i].lv;
+					sd->status.skill[i].id = 0;
+					sd->status.skill[i].lv = 0;
 				}
-				// remove specifical skills of Dancer classes 
-				for(i = 323; i <= 330; i++) {
-					if (sd->status.skill[i].id > 0 && !sd->status.skill[i].flag) {
-						if (sd->status.skill_point > USHRT_MAX - sd->status.skill[i].lv)
-							sd->status.skill_point = USHRT_MAX;
-						else
-							sd->status.skill_point += sd->status.skill[i].lv;
-						sd->status.skill[i].id = 0;
-						sd->status.skill[i].lv = 0;
-					}
-				}
-				clif_updatestatus(sd, SP_SKILLPOINT);
-				// change job if necessary
-				if (sd->status.sex) //Changed from Dancer
-					sd->status.class_ -= 1;
-				else	//Changed from Bard
-					sd->status.class_ += 1;
-				//sd->class_ needs not be updated as both Dancer/Bard are the same.
 			}
-			// save character
-			//chrif_save(sd,1); Character will be saved on session closed -> map_quit
-			sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
-			                 // do same modify in login-server for the account, but no in char-server (it ask again login_id1 to login, and don't remember it)
-			clif_displaymessage(sd->fd, "Your sex has been changed (need disconnection by the server)...");
-			clif_setwaitclose(sd->fd); // forced to disconnect for the change
+			// remove specifical skills of Dancer classes 
+			for(i = 323; i <= 330; i++) {
+				if (sd->status.skill[i].id > 0 && !sd->status.skill[i].flag) {
+					if (sd->status.skill_point > USHRT_MAX - sd->status.skill[i].lv)
+						sd->status.skill_point = USHRT_MAX;
+					else
+						sd->status.skill_point += sd->status.skill[i].lv;
+					sd->status.skill[i].id = 0;
+					sd->status.skill[i].lv = 0;
+				}
+			}
+			clif_updatestatus(sd, SP_SKILLPOINT);
+			// change job if necessary
+			if (sd->status.sex) //Changed from Dancer
+				sd->status.class_ -= 1;
+			else	//Changed from Bard
+				sd->status.class_ += 1;
+			//sd->class_ needs not be updated as both Dancer/Bard are the same.
 		}
-	} else {
-		if (sd != NULL) {
-			ShowError("chrif_changedsex failed.\n");
-		}
+		// save character
+		sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
+							  // do same modify in login-server for the account, but no in char-server (it ask again login_id1 to login, and don't remember it)
+		clif_displaymessage(sd->fd, "Your sex has been changed (need disconnection by the server)...");
+		clif_setwaitclose(sd->fd); // forced to disconnect for the change
 	}
-
 	return 0;
 }
 

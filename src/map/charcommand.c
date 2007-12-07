@@ -1411,6 +1411,7 @@ int charcommand_stpoint(const int fd, struct map_session_data* sd, const char* c
  *------------------------------------------*/
 int charcommand_changesex(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
+	struct map_session_data *pl_sd;
 	char player[NAME_LENGTH];
 	nullpo_retr(-1, sd);
 
@@ -1419,18 +1420,17 @@ int charcommand_changesex(const int fd, struct map_session_data* sd, const char*
 		return -1;
 	}
 
-	// check player name
-	if (strlen(player) < 4) {
-		clif_displaymessage(fd, msg_table[86]); // Sorry, but a player name have at least 4 characters.
+	if ((pl_sd = map_nick2sd(player)) == NULL)
+	{
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
-	} else if (strlen(player) > 23) {
-		clif_displaymessage(fd, msg_table[87]); // Sorry, but a player name have 23 characters maximum.
-		return -1;
-	} else {
-		chrif_char_ask_name(sd->status.account_id, player, 5, 0, 0, 0, 0, 0, 0); // type: 5 - changesex
-		clif_displaymessage(fd, msg_table[88]); // Character name sent to char-server to ask it.
 	}
-
+	if (pc_isGM(sd) < pc_isGM(pl_sd)) {
+		clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
+		return -1;
+	}
+	clif_displaymessage(fd, msg_table[88]); // Character name sent to char-server to ask it.
+	chrif_changesex(pl_sd);
 	return 0;
 }
 
