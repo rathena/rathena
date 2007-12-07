@@ -7328,7 +7328,7 @@ static int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 						(tsd->weapontype1==W_MUSICAL || tsd->weapontype1==W_WHIP) &&
 						sd->status.party_id && tsd->status.party_id &&
 						sd->status.party_id == tsd->status.party_id &&
-						tsd->sc.data[SC_DANCING])
+						!tsd->sc.data[SC_DANCING])
 				{
 					p_sd[(*c)++]=tsd->bl.id;
 					return skilllv;

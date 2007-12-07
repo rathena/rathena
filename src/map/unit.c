@@ -899,10 +899,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		case BD_INTOABYSS:
 		case BD_SIEGFRIED:
 		case CG_MOONLIT:
-			if (battle_config.player_skill_partner_check &&
-				(!battle_config.gm_skilluncond || pc_isGM(sd) < battle_config.gm_skilluncond) &&
-				(skill_check_pc_partner(sd, skill_num, &skill_lv, 1, 0) < 1)
-			) {
+			if (skill_check_pc_partner(sd, skill_num, &skill_lv, 1, 0) < 1)
+			{
 				clif_skill_fail(sd,skill_num,0,0);
 				return 0;
 			}
