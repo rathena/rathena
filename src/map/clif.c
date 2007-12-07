@@ -754,8 +754,9 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	struct view_data* vd = status_get_viewdata(bl);
 	unsigned char *buf = WBUFP(buffer,0);
 	bool type = !pcdb_checkid(vd->class_);
+#if PACKETVER >= 7
 	unsigned short offset = 0;
-
+#endif
 	BL_CAST(BL_PC, bl, sd);
 
 	if(type)
@@ -863,7 +864,9 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	struct status_change* sc = status_get_sc(bl);
 	struct view_data* vd = status_get_viewdata(bl);
 	unsigned char* buf = WBUFP(buffer,0);
+#if PACKETVER >= 7
 	unsigned short offset = 0;
+#endif
 
 	BL_CAST(BL_PC, bl, sd);
 
