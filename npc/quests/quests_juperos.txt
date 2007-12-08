@@ -614,7 +614,7 @@ yuno_in04,190,125,4	script	Scholar	700,{
 
 }
 
-function	script		Func_JupHist	{
+function	script	Func_JupHist	{
 
 	switch(yuno_hist)
 	{

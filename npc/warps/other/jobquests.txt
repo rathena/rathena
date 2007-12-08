@@ -96,7 +96,7 @@ in_rogue,247,122,0	warp	rogue03-fild07	1,1,cmd_fild07,349,285
 in_rogue,244,21,0	warp	rogue04-fild09	1,1,cmd_fild09,106,191
 in_rogue,172,34,0	warp	rogue05-fild09	1,1,cmd_fild09,341,143
 in_rogue,161,103,0	warp	rogue06-fild04	1,1,cmd_fild04,302,177
-in_rogue,8,9,0		warp	stair_to_ro	1,1,in_rogue,389,389
+in_rogue,8,9,0	warp	stair_to_ro	1,1,in_rogue,389,389
 
 //==============================================================================
 //Dancer

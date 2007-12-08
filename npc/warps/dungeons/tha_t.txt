@@ -31,7 +31,7 @@ tha_t03,59,140,0	warp	WarpThana3a	1,1,tha_t04,60,142
 tha_t04,60,137,0	warp	WarpThana3b	1,1,tha_t03,59,135
 
 // Thanatos Tower Level 4 (tha_t04)
-tha_t04,81,36,0		warp	WarpThana4a	1,1,tha_t05,62,8
+tha_t04,81,36,0	warp	WarpThana4a	1,1,tha_t05,62,8
 
 // Thanatos Tower Level 5 (tha_t05)
 tha_t05,62,157,0	warp	WarpThana5a	1,1,tha_t05,213,97
@@ -54,7 +54,7 @@ tha_t10,170,138,0	warp	WarpThana10b	1,1,thana_step,14,73
 
 // Thanatos Tower Level 11 (tha_t11)
 thana_step,15,15,0	warp	WarpThana11a	1,1,tha_t11,50,17
-tha_t11,92,36,0		warp	WarpThana11b	1,1,thana_step,180,73
+tha_t11,92,36,0	warp	WarpThana11b	1,1,thana_step,180,73
 
 // Thanatos Tower Level 12 (tha_t12)
 thana_step,181,15,0	warp	WarpThana12a	1,1,tha_t12,115,16

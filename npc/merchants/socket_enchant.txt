@@ -22,7 +22,7 @@
 //= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //============================================================
 
-payon,140,151,5		script	Seiyablem	84,{
+payon,140,151,5	script	Seiyablem	84,{
 
 	mes "[Seiyablem]";
 	mes "I'm an engineer that specializes in adding Slots to normal Weapons and Armor.";
@@ -402,8 +402,8 @@ function	script	Func_Socket	{
 }
 
 lhz_in02,281,35,5	duplicate(Seiyablem)	Seiyablem#lhz	84,0,0
-prt_in,33,70,5		duplicate(Seiyablem)	Seiyablem#prt	84,0,0
-morocc,51,41,5		duplicate(Seiyablem)	Seiyablem#moc	84,0,0
+prt_in,33,70,5	duplicate(Seiyablem)	Seiyablem#prt	84,0,0
+morocc,51,41,5	duplicate(Seiyablem)	Seiyablem#moc	84,0,0
 
 payon,143,143,7	script	Young Man#socket	97,{
 
@@ -424,5 +424,5 @@ payon,143,143,7	script	Young Man#socket	97,{
 }
 
 lhz_in02,269,33,5	duplicate(Young Man#socket)	Young Man#lhz	97,0,0
-prt_in,31,57,1		duplicate(Young Man#socket)	Young Man#prt	97,0,0
-morocc,60,42,3		duplicate(Young Man#socket)	Young Man#moc	97,0,0
+prt_in,31,57,1	duplicate(Young Man#socket)	Young Man#prt	97,0,0
+morocc,60,42,3	duplicate(Young Man#socket)	Young Man#moc	97,0,0

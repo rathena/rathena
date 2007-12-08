@@ -3655,9 +3655,9 @@ kh_dun01,76,233,0	script	Heavy Door::HeavyDoorKHQ2	111,{
 kh_dun01,106,233,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ3	111
 kh_dun01,6,164,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ4	111
 kh_dun01,6,133,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ5	111
-kh_dun01,6,60,0		duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ6	111
-kh_dun01,6,30,0		duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ7	111
-kh_dun01,6,18,0		duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ8	111
+kh_dun01,6,60,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ6	111
+kh_dun01,6,30,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ7	111
+kh_dun01,6,18,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ8	111
 kh_dun01,235,70,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ9	111
 kh_dun01,235,92,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ10	111
 kh_dun01,235,114,0	duplicate(HeavyDoorKHQ2)	Heavy Door::HeavyDoorKHQ11	111
@@ -6201,7 +6201,7 @@ kh_rossi,149,288,0	script	Bookshelf::BookshelfKHQ2	111,{
 //----------------------------------------------------------------------------
 // Fisherman
 //----------------------------------------------------------------------------
-yuno_fild12,232,222,0	script		Old Fisherman	709,{
+yuno_fild12,232,222,0	script	Old Fisherman	709,{
 	if (KielHyreQuest < 60) {
 		mes "[Fisherman]";
 		mes "These days, it's much";
@@ -6319,7 +6319,7 @@ yuno_fild12,232,222,0	script		Old Fisherman	709,{
 //----------------------------------------------------------------------------
 // Kiel Hyre's hut; Wooden Board
 //----------------------------------------------------------------------------
-yuno_fild09,158,217,0	script		Wooden Board	111,{
+yuno_fild09,158,217,0	script	Wooden Board	111,{
 	if ((KielHyreQuest < 62) || (KielHyreQuest >= 64)) {
 		mes "^3355FFIt's a useless^000000";
 		mes "^3355FFwooden board^000000";

@@ -36,18 +36,18 @@ kh_school,71,74,0	warp	kh_school_06b	1,1,kh_school,35,184
 //============================================================
 // Kiel Hyre's Cottage (kh_vila)
 //============================================================
-kh_vila,79,11,0		warp	kh_vila_01	1,1,yuno_fild02,92,208
-kh_vila,71,38,0		warp	kh_vila_02a	1,1,kh_vila,42,38
-kh_vila,46,38,0		warp	kh_vila_02b	1,1,kh_vila,75,38
-kh_vila,71,54,0		warp	kh_vila_03a	1,1,kh_vila,42,54
-kh_vila,46,54,0		warp	kh_vila_03b	1,1,kh_vila,75,54
-kh_vila,34,66,0		warp	kh_vila_04a	1,1,kh_vila,20,108
+kh_vila,79,11,0	warp	kh_vila_01	1,1,yuno_fild02,92,208
+kh_vila,71,38,0	warp	kh_vila_02a	1,1,kh_vila,42,38
+kh_vila,46,38,0	warp	kh_vila_02b	1,1,kh_vila,75,38
+kh_vila,71,54,0	warp	kh_vila_03a	1,1,kh_vila,42,54
+kh_vila,46,54,0	warp	kh_vila_03b	1,1,kh_vila,75,54
+kh_vila,34,66,0	warp	kh_vila_04a	1,1,kh_vila,20,108
 kh_vila,20,103,0	warp	kh_vila_04b	1,1,kh_vila,34,61
-kh_vila,84,66,0		warp	kh_vila_05a	1,1,kh_vila,44,107
+kh_vila,84,66,0	warp	kh_vila_05a	1,1,kh_vila,44,107
 kh_vila,44,103,0	warp	kh_vila_05b	1,1,kh_vila,84,62
 kh_vila,32,128,0	warp	kh_vila_06a	1,1,kh_vila,23,171
 kh_vila,22,167,0	warp	kh_vila_06b	1,1,kh_vila,32,123
-kh_vila,90,47,0		warp	kh_vila_07a	1,1,kh_vila,119,47
+kh_vila,90,47,0	warp	kh_vila_07a	1,1,kh_vila,119,47
 kh_vila,115,47,0	warp	kh_vila_07b	1,1,kh_vila,85,47
 kh_vila,126,75,0	warp	kh_vila_08a	1,1,kh_vila,180,176
 kh_vila,180,171,0	warp	kh_vila_08b	1,1,kh_vila,126,70

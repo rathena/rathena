@@ -5123,7 +5123,7 @@ L_Cherish:
 
 }
 
-mjo_dun02,88,295,3		script	Flaming Spirit Man	85,{
+mjo_dun02,88,295,3	script	Flaming Spirit Man	85,{
     //get rid of some pieces, to let player reborn in future
     if (signquest > 22) delitem 7177,countitem(7177);
 

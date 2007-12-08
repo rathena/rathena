@@ -854,7 +854,7 @@ function	script	cherno	{
 
 //========Unidentified Machine #1 and #2=======================
 
-ein_in01,127,94,5	script	 Unidentified Machine#mac	111,{
+ein_in01,127,94,5	script	Unidentified Machine#mac	111,{
 	callfunc "Machine";
 }
 ein_in01,122,103,5	script	Unidentified Machine	111,{
@@ -1052,9 +1052,9 @@ ein_in01,117,80,5	script	Unidentified Machine#as	111,{
 	}
 }
 //===================Trees From Einbech==========================
-//Tree of the Diary			
+//Tree of the Diary
 einbech,36,100,5	duplicate(Tree)	Tree#t1-2	111
-einbech,44,90,5	duplicate(Tree)		Tree#t1-3	111
+einbech,44,90,5	duplicate(Tree)	Tree#t1-3	111
 einbech,53,94,5	duplicate(Tree)	Tree#t1-4	111
 
 //=======================================================================================================//
