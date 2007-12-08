@@ -8567,6 +8567,8 @@ void clif_parse_TakeItem(int fd, struct map_session_data *sd)
 void clif_parse_DropItem(int fd, struct map_session_data *sd)
 {
 	int item_index, item_amount;
+	item_index = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2;
+	item_amount = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
 	do {
 		if (pc_isdead(sd))
 			break;
@@ -8581,8 +8583,6 @@ void clif_parse_DropItem(int fd, struct map_session_data *sd)
 		))
 			break;
 
-		item_index = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2;
-		item_amount = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
 		if (!pc_dropitem(sd, item_index, item_amount))
 			break;
 

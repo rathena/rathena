@@ -6847,7 +6847,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_SANDMAN:
 		case UNT_FLASHER:
 		case UNT_FREEZINGTRAP:
-			map_foreachinrange(skill_trap_splash,&src->bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &src->bl,tick,type);
+			map_foreachinrange(skill_trap_splash,&src->bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &src->bl,tick);
 			clif_changetraplook(&src->bl, sg->unit_id==UNT_LANDMINE?UNT_FIREPILLAR_ACTIVE:UNT_USED_TRAPS);
 			src->range = -1; //Disable range so it does not invoke a for each in area again.
 			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
@@ -7014,7 +7014,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_GROUNDDRIFT_FIRE:
 			map_foreachinrange(skill_trap_splash,&src->bl,
 				skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
-				&src->bl,tick,0);
+				&src->bl,tick);
 			sg->unit_id = UNT_USED_TRAPS;
 			clif_changetraplook(&src->bl, UNT_FIREPILLAR_ACTIVE);
 			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
@@ -9072,6 +9072,7 @@ int skill_trap_splash (struct block_list *bl, va_list ap)
 		case UNT_FLASHER:        
 			skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,tick);
 			break;
+		case UNT_LANDMINE:
 		case UNT_BLASTMINE:
 		case UNT_CLAYMORETRAP:
 		case UNT_FREEZINGTRAP:
