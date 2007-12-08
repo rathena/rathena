@@ -7453,7 +7453,7 @@ int status_readdb(void)
 		refinebonus[i][0]=atoi(split[0]);	// 精?ボ?ナス
 		refinebonus[i][1]=atoi(split[1]);	// 過?精?ボ?ナス
 		refinebonus[i][2]=atoi(split[2]);	// 安全精?限界
-		for(j=0;j<MAX_REFINE && split[j];j++)
+		for(j=0;j<MAX_REFINE && split[j+3];j++)
 			percentrefinery[i][j]=atoi(split[j+3]);
 		i++;
 	}

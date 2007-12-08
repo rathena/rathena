@@ -5082,8 +5082,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			clif_skill_nodamage(src,bl,AL_HEAL,i,1);
 			clif_skill_nodamage(src,bl,skillid,i,1);
 			status_heal(bl, i, 0, 0);
-			if (hd)
-				skill_blockmerc_start(hd, skillid, skill_get_time2(skillid,skilllv)) ;
 		}
 		break;
 	//Homun single-target support skills [orn]
