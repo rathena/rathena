@@ -440,8 +440,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 	char* data;
 
 	char ip[16];
-	uint8* sin_addr = (uint8*)&session[fd]->client_addr;
-	sprintf(ip, "%u.%u.%u.%u", sin_addr[3], sin_addr[2], sin_addr[1], sin_addr[0]);
+	ip2str(session[fd]->client_addr, ip);
 
 	// DNS Blacklist check
 	if( login_config.use_dnsbl )
@@ -450,6 +449,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 		char ip_dnsbl[256];
 		char* dnsbl_serv;
 		bool matched = false;
+		uint8* sin_addr = (uint8*)&session[fd]->client_addr;
 
 		sprintf(r_ip, "%u.%u.%u.%u", sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3]);
 
@@ -605,10 +605,8 @@ static int online_db_setoffline(DBKey key, void* data, va_list ap)
 int parse_fromchar(int fd)
 {
 	int i, id;
-
-	uint32 ipl = session[fd]->client_addr;
+	uint32 ipl;
 	char ip[16];
-	ip2str(ipl, ip);
 
 	ARR_FIND( 0, MAX_SERVERS, id, server[id].fd == fd );
 	if( id == MAX_SERVERS )
@@ -629,6 +627,9 @@ int parse_fromchar(int fd)
 		do_close(fd);
 		return 0;
 	}
+
+	ipl = server[id].ip;
+	ip2str(ipl, ip);
 
 	while( RFIFOREST(fd) >= 2 )
 	{
@@ -1216,7 +1217,7 @@ int parse_login(int fd)
 	char esc_userid[NAME_LENGTH*2+1];// escaped username
 	struct mmo_account account;
 	int result, i;
-	uint32 ipl = session[fd]->client_addr;
+	uint32 ipl;
 	char ip[16];
 
 	if( session[fd]->eof )
@@ -1225,6 +1226,7 @@ int parse_login(int fd)
 		return 0;
 	}
 
+	ipl = login_config.login_ip;
 	ip2str(ipl, ip);
 
 	while( RFIFOREST(fd) >= 2 )

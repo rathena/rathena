@@ -1024,8 +1024,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 	char user_password[32+1]; // reserve for md5-ed pw
 
 	char ip[16];
-	uint8* sin_addr = (uint8*)&session[fd]->client_addr;
-	sprintf(ip, "%u.%u.%u.%u", sin_addr[3], sin_addr[2], sin_addr[1], sin_addr[0]);
+	ip2str(session[fd]->client_addr, ip);
 
 	// DNS Blacklist check
 	if( login_config.use_dnsbl )
@@ -1034,6 +1033,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 		char ip_dnsbl[256];
 		char* dnsbl_serv;
 		bool matched = false;
+		uint8* sin_addr = (uint8*)&session[fd]->client_addr;
 
 		sprintf(r_ip, "%u.%u.%u.%u", sin_addr[0], sin_addr[1], sin_addr[2], sin_addr[3]);
 
@@ -1817,7 +1817,7 @@ int parse_login(int fd)
 	struct mmo_account account;
 	int result, j;
 	unsigned int i;
-	uint32 ipl = session[fd]->client_addr;
+	uint32 ipl;
 	char ip[16];
 
 	if( session[fd]->eof )
@@ -1826,6 +1826,7 @@ int parse_login(int fd)
 		return 0;
 	}
 
+	ipl = login_config.login_ip;
 	ip2str(ipl, ip);
 
 	while( RFIFOREST(fd) >= 2 )

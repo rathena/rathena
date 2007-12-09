@@ -11529,8 +11529,7 @@ int clif_parse(int fd)
 				map_quit(sd);
 			}
 		} else {
-			uint32 ip = session[fd]->client_addr;
-			ShowInfo("Closed connection from '"CL_WHITE"%d.%d.%d.%d"CL_RESET"'.\n", CONVIP(ip));
+			ShowInfo("Closed connection from '"CL_WHITE"%s"CL_RESET"'.\n", ip2str(session[fd]->client_addr, NULL));
 		}
 		do_close(fd);
 		return 0;
