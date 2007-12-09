@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/12/09
+	* Fixed a bug in r11633 always spawning only 1 chest type [ultramage]
 2007/12/08
 	* Removed double tabs from mapflag/warp/script/function/duplicate declarations. [FlavioJS]
 2007/12/02
