@@ -3745,14 +3745,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if (sd) clif_walkok(sd);
 			}
 		break;
+
 	case AS_CLOAKING:
-		if(tsce)
-			i = status_change_end(bl, type, -1);
-		else
+		if( !tsce )
 			i = sc_start(bl,type,100,skilllv,skill_get_time(skillid,skilllv));
-		clif_skill_nodamage(src,bl,skillid,-1,i);
-		if (!i && sd)
-			clif_skill_fail(sd,skillid,0,0);
+		else
+			i = status_change_end(bl, type, -1);
+
+		if( i )
+			clif_skill_nodamage(src,bl,skillid,-1,i);
+		else
+			if( sd ) clif_skill_fail(sd,skillid,0,0);
 		break;
 
 	case BD_ADAPTATION:
@@ -7604,7 +7607,9 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 	if(sd->dsprate!=100)
 		sp=sp*sd->dsprate/100;
 
-	switch(skill) {
+	// perform skill-specific checks (and actions)
+	switch( skill )
+	{
 	case SA_CASTCANCEL:
 		if(sd->ud.skilltimer == -1) {
 			clif_skill_fail(sd,skill,0,0);
@@ -7762,22 +7767,21 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 			}
 		}
 		break;
+
 	case PR_BENEDICTIO:
-		{
-			if (!(type&1))
-			{	//Started casting.
-				if (skill_check_pc_partner(sd, skill, &lv, 1, 0) < 2)
-				{
-					clif_skill_fail(sd,skill,0,0);
-					return 0;
-				}
+		if (!(type&1))
+		{	//Started casting.
+			if (skill_check_pc_partner(sd, skill, &lv, 1, 0) < 2)
+			{
+				clif_skill_fail(sd,skill,0,0);
+				return 0;
 			}
-			else
-				//Should I repeat the check? If so, it would be best to only do
-				//this on cast-ending. [Skotlex]
-				skill_check_pc_partner(sd, skill, &lv, 1, 1);
 		}
+		else
+			//Should I repeat the check? If so, it would be best to only do this on cast-ending. [Skotlex]
+			skill_check_pc_partner(sd, skill, &lv, 1, 1);
 		break;
+
 	case AM_CANNIBALIZE:
 	case AM_SPHEREMINE:
 		if(type&1){
@@ -9124,42 +9128,45 @@ int skill_enchant_elemental_end (struct block_list *bl, int type)
 	return 0;
 }
 
-int skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce)
+bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce)
 {
-	static int dx[] = { 0, 1, 0, -1, -1,  1, 1, -1}; //optimized by Lupus
+	static int dx[] = { 0, 1, 0, -1, -1,  1, 1, -1};
 	static int dy[] = {-1, 0, 1,  0, -1, -1, 1,  1};
-	int end = 1,i;
+	bool wall = true;
+	int i;
 
-	if ((bl->type == BL_PC && battle_config.pc_cloak_check_type&1) ||
-		(bl->type != BL_PC && battle_config.monster_cloak_check_type&1))
-		{	//Check for walls.
-			for (i = 0; i < 8; i++)
-			if (map_getcell(bl->m, bl->x+dx[i], bl->y+dy[i], CELL_CHKNOPASS))
-			{
-				end = 0;
-				break;
-			}
-		} else
-			end = 0; //No wall check.
+	if( (bl->type == BL_PC && battle_config.pc_cloak_check_type&1)
+	||	(bl->type != BL_PC && battle_config.monster_cloak_check_type&1) )
+	{	//Check for walls.
+		ARR_FIND( 0, 8, i, map_getcell(bl->m, bl->x+dx[i], bl->y+dy[i], CELL_CHKNOPASS) != 0 );
+		if( i == 8 )
+			wall = false;
+	}
 		
-	if(!sce) return end; //Just report.
-	
-	if(end){
-		if (sce->val1 < 3) //End cloaking.
-			status_change_end(bl, SC_CLOAKING, -1);
-		else if(sce->val4&1)
-		{	//Remove wall bonus
-			sce->val4&=~1;
-			status_calc_bl(bl,SCB_SPEED);
+	if( sce )
+	{
+		if( !wall )
+		{
+			if( sce->val1 < 3 ) //End cloaking.
+				status_change_end(bl, SC_CLOAKING, -1);
+			else
+			if( sce->val4&1 )
+			{	//Remove wall bonus
+				sce->val4&=~1;
+				status_calc_bl(bl,SCB_SPEED);
+			}
+		}
+		else
+		{
+			if( !(sce->val4&1) )
+			{	//Add wall speed bonus
+				sce->val4|=1;
+				status_calc_bl(bl,SCB_SPEED);
+			}
 		}
 	}
-	else if(!(sce->val4&1))
-	{	//Add wall speed bonus
-		sce->val4|=1;
-		status_calc_bl(bl,SCB_SPEED);
-	}
 
-	return end;
+	return wall;
 }
 
 /*==========================================

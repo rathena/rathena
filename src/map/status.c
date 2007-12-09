@@ -4679,7 +4679,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		//Due to the cloaking card, we have to check the wall versus to known
 		//skill level rather than the used one. [Skotlex]
 		//if (sd && val1 < 3 && skill_check_cloaking(bl,NULL))
-		if (sd && pc_checkskill(sd, AS_CLOAKING)< 3 && skill_check_cloaking(bl,NULL))
+		if( sd && pc_checkskill(sd, AS_CLOAKING) < 3 && !skill_check_cloaking(bl,NULL) )
 			return 0;
 	break;
 	case SC_MODECHANGE:
