@@ -5064,12 +5064,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 	case HVAN_CHAOTIC:	//[orn]
 		{
-			static const int per[10][2]={{20,50},{50,60},{25,75},{60,64},{34,67},
-										 {34,67},{34,67},{34,67},{34,67},{34,67}};
+			static const int per[5][2]={{20,50},{50,60},{25,75},{60,64},{34,67}};
 			int rnd = rand()%100;
-			if(rnd<per[skilllv-1][0]) //Self
+			i = (skilllv-1)%5; 
+			if(rnd<per[i][0]) //Self
 				bl = src;
-			else if(rnd<per[skilllv-1][1]) //Master
+			else if(rnd<per[i][1]) //Master
 				bl = battle_get_master(src);
 			else //Enemy
 				bl = map_id2bl(battle_gettarget(src));
