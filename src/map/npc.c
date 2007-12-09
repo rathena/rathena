@@ -31,6 +31,7 @@
 #include <string.h>
 #include <math.h>
 #include <time.h>
+#include <errno.h>
 
 
 struct npc_data* fake_nd;
@@ -2579,7 +2580,7 @@ void npc_parsesrcfile(const char* filepath)
 	const char* p;
 
 	// read whole file to buffer
-	fp = fopen(filepath, "rb");
+	fp = fopen(filepath, "rt");
 	if( fp == NULL )
 	{
 		ShowError("npc_parsesrcfile: File not found '%s'.\n", filepath);
@@ -2588,11 +2589,12 @@ void npc_parsesrcfile(const char* filepath)
 	fseek(fp, 0, SEEK_END);
 	len = ftell(fp);
 	buffer = (char*)aMalloc(len+1);
-	buffer[len] = '\0';
 	fseek(fp, 0, SEEK_SET);
-	if( fread(buffer, len, 1, fp) != 1 )
+	len = fread(buffer, sizeof(char), len, fp);
+	buffer[len] = '\0';
+	if( ferror(fp) )
 	{
-		ShowError("npc_parsesrcfile: Failed to read file '%s'.\n", filepath);
+		ShowError("npc_parsesrcfile: Failed to read file '%s' - %s\n", filepath, strerror(errno));
 		aFree(buffer);
 		fclose(fp);
 		return;
@@ -2602,26 +2604,56 @@ void npc_parsesrcfile(const char* filepath)
 	// parse buffer
 	for( p = skip_space(buffer); p && *p ; p = skip_space(p) )
 	{
-		char w1[2048], w2[2048], w3[2048], w4[2048], mapname[2048];
-		int i, w4pos, count;
+		int pos[9];
+		char w1[2048], w2[2048], w3[2048], w4[2048];
+		int i, count;
 		lines++;
 
-		w1[0] = w2[0] = w3[0] = w4[0] = '\0';
-
 		// w1<TAB>w2<TAB>w3<TAB>w4
-		if( (count = sscanf(p, "%[^\t\r\n]\t%[^\t\r\n]\t%[^\t\r\n]\t%n%[^\r\n]", w1, w2, w3, &w4pos, w4)) < 3 )
-		{// Unknown syntax, try to continue
-			ShowError("npc_parsesrcfile: Unknown syntax in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,p-buffer), w1, w2, w3, w4);
-			p = strchr(p,'\n');// next line
-			continue;
+		count = sv_parse(p, len+buffer-p, 0, '\t', pos, ARRAYLENGTH(pos), SV_TERMINATE_LF);
+		if( count < 0 )
+		{
+			ShowError("npc_parsesrcfile: Parse error in file '%s', line '%d'. Stopping...\n", filepath, strline(buffer,p-buffer));
+			break;
+		}
+		// fill w1
+		if( pos[3]-pos[2] > ARRAYLENGTH(w1)-1 )
+			ShowWarning("npc_parsesrcfile: w1 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[3]-pos[2], filepath, strline(buffer,p-buffer));
+		i = min(pos[3]-pos[2], ARRAYLENGTH(w1)-1);
+		memcpy(w1, p+pos[2], i*sizeof(char));
+		w1[i] = '\0';
+		// fill w2
+		if( pos[5]-pos[4] > ARRAYLENGTH(w2)-1 )
+			ShowWarning("npc_parsesrcfile: w2 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[5]-pos[4], filepath, strline(buffer,p-buffer));
+		i = min(pos[5]-pos[4], ARRAYLENGTH(w2)-1);
+		memcpy(w2, p+pos[4], i*sizeof(char));
+		w2[i] = '\0';
+		// fill w3
+		if( pos[7]-pos[6] > ARRAYLENGTH(w3)-1 )
+			ShowWarning("npc_parsesrcfile: w3 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[7]-pos[6], filepath, strline(buffer,p-buffer));
+		i = min(pos[7]-pos[6], ARRAYLENGTH(w3)-1);
+		memcpy(w3, p+pos[6], i*sizeof(char));
+		w3[i] = '\0';
+		// fill w4 (to end of line)
+		if( pos[1]-pos[8] > ARRAYLENGTH(w4)-1 )
+			ShowWarning("npc_parsesrcfile: w4 truncated, too much data (%d) in file '%s', line '%d'.\n", pos[1]-pos[8], filepath, strline(buffer,p-buffer));
+		i = min(pos[1]-pos[8], ARRAYLENGTH(w4)-1);
+		memcpy(w4, p+pos[8], i*sizeof(char));
+		w4[i] = '\0';
+
+		if( count < 3 )
+		{// Unknown syntax
+			ShowError("npc_parsesrcfile: Unknown syntax in file '%s', line '%d'. Stopping...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,p-buffer), w1, w2, w3, w4);
+			break;
 		}
 
 		if( strcmp(w1,"-") !=0 && strcasecmp(w1,"function") != 0 )
 		{// w1 = <map name>,<x>,<y>,<facing>
+			char mapname[2048];
 			sscanf(w1,"%[^,]",mapname);
 			if( !mapindex_name2id(mapname) )
 			{// Incorrect map, we must skip the script info...
-				ShowError("npc_parsesrcfile: Unknown map '%s' in file '%s', line '%d'.\n", mapname, filepath, strline(buffer,p-buffer));
+				ShowError("npc_parsesrcfile: Unknown map '%s' in file '%s', line '%d'. Skipping line...\n", mapname, filepath, strline(buffer,p-buffer));
 				if( strcasecmp(w2,"script") == 0 && count > 3 )
 					p = npc_skip_script(p,buffer,filepath);
 				p = strchr(p,'\n');// next line
@@ -2670,7 +2702,7 @@ void npc_parsesrcfile(const char* filepath)
 		}
 		else
 		{
-			ShowError("Probably TAB is missing in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,p-buffer), w1, w2, w3, w4);
+			ShowError("npc_parsesrcfile: Unable to parse, probably a missing or extra TAB in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,p-buffer), w1, w2, w3, w4);
 			p = strchr(p,'\n');// skip and continue
 		}
 	}
