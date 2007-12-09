@@ -46,6 +46,42 @@ int safesnprintf(char* buf, size_t sz, const char* fmt, ...);
 /// Lines start at 1.
 int strline(const char* str, size_t pos);
 
+
+
+/// Bitfield determining the behaviour of sv_parse.
+enum e_svopt
+{
+	// default: no escapes and no line terminator
+	SV_NOESCAPE_NOTERMINATE = 0,
+	// Escapes according to the C compiler.
+	SV_ESCAPE_C = 1,
+	// Line terminators
+	SV_TERMINATE_LF = 2,
+	SV_TERMINATE_CRLF = 4,
+	SV_TERMINATE_CR = 8,
+};
+
+/// Other escape sequences supported by the C compiler.
+#define SV_ESCAPE_C_SUPPORTED "abtnvfr\?\"'\\"
+
+/// Parses a delim-separated string.
+/// Starts parsing at startoff and fills the pos array with the start and end 
+/// positions in the string of the line and fields (that fit the array).
+/// Returns the number of fields or -1 if an error occurs.
+int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, int npos, enum e_svopt opt);
+
+/// Escapes src to out_dest according to the format of the C compiler.
+/// Returns the length of the escaped string.
+/// out_dest should be len*4+1 in size.
+size_t sv_escape_c(char* out_dest, const char* src, size_t len, const char* escapes);
+
+/// Unescapes src to out_dest according to the format of the C compiler.
+/// Returns the length of the unescaped string.
+/// out_dest should be len+1 in size and can be the same buffer as src.
+size_t sv_unescape_c(char* out_dest, const char* src, size_t len);
+
+
+
 /// StringBuf - dynamic string
 struct StringBuf
 {

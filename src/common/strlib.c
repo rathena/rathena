@@ -3,6 +3,7 @@
 
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
+#include "../common/showmsg.h"
 #include "strlib.h"
 
 #include <stdio.h>
@@ -361,6 +362,342 @@ int strline(const char* str, size_t pos)
 	}
 	return line;
 }
+
+
+
+/////////////////////////////////////////////////////////////////////
+/// Parses a delim-separated string.
+/// Starts parsing at startoff and fills the out_pos array with the start and 
+/// end positions in the string of the line and fields (that fit the array).
+/// Returns the number of fields or -1 if an error occurs.
+/// 
+/// out_pos can be NULL.
+/// Positions out_pos[0] and out_pos[1] are for the line start and end 
+/// positions. If a line terminator is found, the end position is placed there.
+/// The next values of the array are the start and end positions of the fields.
+/// out_pos[2] and out_pos[3] for the first field, out_pos[4] and out_pos[5] 
+/// for the seconds field and so on.
+/// Unfilled positions are set to -1.
+/// 
+/// @param str String to parse
+/// @param len Length of the string
+/// @param startoff Where to start parsing
+/// @param delim Field delimiter
+/// @parem out_pos Array of resulting positions
+/// @param npos Size of the pos array
+/// @param opt Options that determine the parsing behaviour
+/// @return Number of fields in the string or -1 if an error occured
+int sv_parse(const char* str, int len, int startoff, char delim, int* out_pos, int npos, enum e_svopt opt)
+{
+	int i;
+	int count;
+	enum {
+		START_OF_FIELD,
+		PARSING_FIELD,
+		PARSING_C_ESCAPE,
+		END_OF_FIELD,
+		TERMINATE,
+		END
+	} state;
+
+	// check pos/npos
+	if( out_pos == NULL ) npos = 0;
+	for( i = 0; i < npos; ++i )
+		out_pos[i] = -1;
+
+	// check opt
+	if( delim == '\n' && (opt&(SV_TERMINATE_CRLF|SV_TERMINATE_LF)) )
+	{
+		ShowError("sv_parse: delimiter '\\n' is not compatible with options SV_TERMINATE_LF or SV_TERMINATE_CRLF.\n");
+		return -1;// error
+	}
+	if( delim == '\r' && (opt&(SV_TERMINATE_CRLF|SV_TERMINATE_CR)) )
+	{
+		ShowError("sv_parse: delimiter '\\r' is not compatible with options SV_TERMINATE_CR or SV_TERMINATE_CRLF.\n");
+		return -1;// error
+	}
+
+	// check str
+	if( str == NULL )
+		return 0;// nothing to parse
+
+#define IS_END() ( i >= len )
+#define IS_DELIM() ( str[i] == delim )
+#define IS_TERMINATOR() ( \
+	((opt&SV_TERMINATE_LF) && str[i] == '\n') || \
+	((opt&SV_TERMINATE_CR) && str[i] == '\r') || \
+	((opt&SV_TERMINATE_CRLF) && i+1 < len && str[i] == '\r' && str[i+1] == '\n') )
+#define IS_C_ESCAPE() ( (opt&SV_ESCAPE_C) && str[i] == '\\' )
+#define SET_FIELD_START() if( npos > count*2+2 ) out_pos[count*2+2] = i
+#define SET_FIELD_END() if( npos > count*2+3 ) out_pos[count*2+3] = i; ++count
+
+	i = startoff;
+	count = 0;
+	state = START_OF_FIELD;
+	if( npos > 0 ) out_pos[0] = startoff;// start
+	while( state != END )
+	{
+		if( npos > 1 ) out_pos[1] = i;// end
+		switch( state )
+		{
+		case START_OF_FIELD:// record start of field and start parsing it
+			SET_FIELD_START();
+			state = PARSING_FIELD;
+			break;
+
+		case PARSING_FIELD:// skip field character
+			if( IS_END() || IS_DELIM() || IS_TERMINATOR() )
+				state = END_OF_FIELD;
+			else if( IS_C_ESCAPE() )
+				state = PARSING_C_ESCAPE;
+			else
+				++i;// normal character
+			break;
+
+		case PARSING_C_ESCAPE:// skip escape sequence (validates it too)
+			{
+				++i;// '\\'
+				if( IS_END() )
+				{
+					ShowError("sv_parse: empty escape sequence\n");
+					return -1;
+				}
+				if( str[i] == 'x' )
+				{// hex escape
+					++i;// 'x'
+					if( IS_END() || !ISXDIGIT(str[i]) )
+					{
+						ShowError("sv_parse: \\x with no following hex digits\n");
+						return -1;
+					}
+					do{
+						++i;// hex digit
+					}while( !IS_END() && ISXDIGIT(str[i]));
+				}
+				else if( str[i] == '0' || str[i] == '1' || str[i] == '2' )
+				{// octal escape
+					++i;// octal digit
+					if( !IS_END() && str[i] >= '0' && str[i] <= '7' )
+						++i;// octal digit
+					if( !IS_END() && str[i] >= '0' && str[i] <= '7' )
+						++i;// octal digit
+				}
+				else if( strchr(SV_ESCAPE_C_SUPPORTED, str[i]) )
+				{// supported escape character
+					++i;
+				}
+				else
+				{
+					ShowError("sv_parse: unknown escape sequence \\%c\n", str[i]);
+					return -1;
+				}
+				state = PARSING_FIELD;
+				break;
+			}
+
+		case END_OF_FIELD:// record end of field and continue
+			SET_FIELD_END();
+			if( IS_END() )
+				state = END;
+			else if( IS_DELIM() )
+			{
+				++i;// delim
+				state = START_OF_FIELD;
+			}
+			else if( IS_TERMINATOR() )
+				state = TERMINATE;
+			else
+				state = START_OF_FIELD;
+			break;
+
+		case TERMINATE:
+#if 0
+			// skip line terminator
+			if( (opt&SV_TERMINATE_CRLF) && i+1 < len && str[i] == '\r' && str[i+1] == '\n' )
+				i += 2;// CRLF
+			else
+				++i;// CR or LF
+#endif
+			state = END;
+			break;
+		}
+	}
+
+#undef IS_END
+#undef IS_DELIM
+#undef IS_TERMINATOR
+#undef IS_C_ESCAPE
+#undef SET_FIELD_START
+#undef SET_FIELD_END
+
+	return count;
+}
+
+/// Escapes src to out_dest according to the format of the C compiler.
+/// Returns the length of the escaped string.
+/// out_dest should be len*4+1 in size.
+///
+/// @param out_dest Destination buffer
+/// @param src Source string
+/// @param len Length of the source string
+/// @param escapes Extra characters to be escaped
+/// @return Length of the escaped string
+size_t sv_escape_c(char* out_dest, const char* src, size_t len, const char* escapes)
+{
+	size_t i;
+	size_t j;
+
+	if( out_dest == NULL )
+		return 0;// nothing to do
+	if( src == NULL )
+	{// nothing to escape
+		*out_dest = 0;
+		return 0;
+	}
+	if( escapes == NULL )
+		escapes = "";
+
+	for( i = 0, j = 0; i < len; ++i )
+	{
+		switch( src[i] )
+		{
+		case '\0':// octal 0
+			out_dest[j++] = '\\';
+			out_dest[j++] = '0';
+			out_dest[j++] = '0';
+			out_dest[j++] = '0';
+			break;
+		case '\r':// carriage return
+			out_dest[j++] = '\\';
+			out_dest[j++] = 'r';
+			break;
+		case '\n':// line feed
+			out_dest[j++] = '\\';
+			out_dest[j++] = 'n';
+			break;
+		case '\\':// escape character
+			out_dest[j++] = '\\';
+			out_dest[j++] = '\\';
+			break;
+		default:
+			if( strchr(escapes,src[i]) )
+			{// escapes to octal
+				out_dest[j++] = '\\';
+				out_dest[j++] = '0'+((char)(((unsigned char)src[i]&0700)>>6));
+				out_dest[j++] = '0'+((char)(((unsigned char)src[i]&0070)>>3));
+				out_dest[j++] = '0'+((char)(((unsigned char)src[i]&0007)   ));
+			}
+			else
+				out_dest[j++] = src[i];
+			break;
+		}
+	}
+	out_dest[j] = 0;
+	return j;
+}
+
+/// Unescapes src to out_dest according to the format of the C compiler.
+/// Returns the length of the unescaped string.
+/// out_dest should be len+1 in size and can be the same buffer as src.
+///
+/// @param out_dest Destination buffer
+/// @param src Source string
+/// @param len Length of the source string
+/// @return Length of the escaped string
+size_t sv_unescape_c(char* out_dest, const char* src, size_t len)
+{
+	static unsigned char low2hex[256] = {
+		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0x0?
+		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0x1?
+		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0x2?
+		0,  1,  2,  3,  4,  5,  6, 7, 8, 9, 0, 0, 0, 0, 0, 0,// 0x3?
+		0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0x4?
+		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0x5?
+		0, 10, 11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0x6?
+		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0x7?
+		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0x8?
+		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0x9?
+		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0xA?
+		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0xB?
+		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0xC?
+		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0xD?
+		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,// 0xE?
+		0,  0,  0,  0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0 // 0xF?
+	};
+	size_t i;
+	size_t j;
+
+	for( i = 0, j = 0; i < len; )
+	{
+		if( src[i] == '\\' )
+		{
+			++i;// '\\'
+			if( i >= len )
+				ShowWarning("sv_unescape_c: empty escape sequence\n");
+			else if( src[i] == 'x' )
+			{// hex escape sequence
+				unsigned char c = 0;
+				unsigned char inrange = 1;
+
+				++i;// 'x'
+				if( i >= len || !ISXDIGIT(src[i]) )
+				{
+					ShowWarning("sv_unescape_c: \\x with no following hex digits\n");
+					continue;
+				}
+				do{
+					if( c > 0x0F && inrange )
+					{
+						ShowWarning("sv_unescape_c: hex escape sequence out of range\n");
+						inrange = 0;
+					}
+					c = (c<<8)|low2hex[(unsigned char)src[i++]];// hex digit
+				}while( i >= len || !ISXDIGIT(src[i]) );
+				out_dest[j++] = (char)c;
+			}
+			else if( src[i] == '0' || src[i] == '1' || src[i] == '2' || src[i] == '3' )
+			{// octal escape sequence (255=0377)
+				unsigned char c = src[i]-'0';
+				++i;// '0', '1', '2' or '3'
+				if( i < len && src[i] >= '0' && src[i] <= '9' )
+				{
+					c = (c<<3)|(src[i]-'0');
+					++i;// octal digit
+				}
+				if( i < len && src[i] >= '0' && src[i] <= '9' )
+				{
+					c = (c<<3)|(src[i]-'0');
+					++i;// octal digit
+				}
+				out_dest[j++] = (char)c;
+			}
+			else
+			{// other escape sequence
+				if( strchr(SV_ESCAPE_C_SUPPORTED, src[i]) == NULL )
+					ShowWarning("sv_parse: unknown escape sequence \\%c\n", src[i]);
+				switch( src[i] )
+				{
+				case 'a': out_dest[j++] = '\a'; break;
+				case 'b': out_dest[j++] = '\b'; break;
+				case 't': out_dest[j++] = '\t'; break;
+				case 'n': out_dest[j++] = '\n'; break;
+				case 'v': out_dest[j++] = '\v'; break;
+				case 'f': out_dest[j++] = '\f'; break;
+				case 'r': out_dest[j++] = '\r'; break;
+				case '?': out_dest[j++] = '\?'; break;
+				default: out_dest[j++] = src[i]; break;
+				}
+				++i;// escaped character
+			}
+		}
+		else
+			out_dest[j++] = src[i++];// normal character
+	}
+	out_dest[j] = 0;
+	return j;
+}
+
+
 
 /////////////////////////////////////////////////////////////////////
 // StringBuf - dynamic string
