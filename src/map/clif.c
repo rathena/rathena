@@ -1322,8 +1322,10 @@ void clif_move(struct unit_data *ud)
 	WBUFPOS2(buf,6,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
 	WBUFL(buf,12)=gettick();
 	clif_send(buf, 16, bl, AREA_WOS);
-	if (disguised(bl))
-		clif_setdisguise((TBL_PC*)bl, buf, 16, 0);
+	if (disguised(bl)) {
+		WBUFL(buf,2)=-bl->id;
+		clif_send(buf, 16, bl, SELF);
+	}
 }
 
 /*==========================================
