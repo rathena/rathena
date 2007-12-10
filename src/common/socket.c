@@ -210,9 +210,9 @@ int send_from_fifo(int fd)
 		return 0;
 	}
 
-	// some data could not be transferred?
 	if( len > 0 )
 	{
+		// some data could not be transferred?
 		// shift unsent data to the beginning of the queue
 		if( (size_t)len < session[fd]->wdata_size )
 			memmove(session[fd]->wdata, session[fd]->wdata + len, session[fd]->wdata_size - len);
@@ -507,6 +507,11 @@ int WFIFOSET(int fd, size_t len)
 	}
 
 	s->wdata_size += len;
+	//If the interserver has 200% of its normal size full, flush the data.
+	if(s->max_wdata >= FIFOSIZE_SERVERLINK &&
+		s->wdata_size >= 2*FIFOSIZE_SERVERLINK)
+		flush_fifo(fd);
+
 	// always keep a WFIFO_SIZE reserve in the buffer
 	// For inter-server connections, let the reserve be 1/4th of the link size.
 	newreserve = s->wdata_size + (s->max_wdata >= FIFOSIZE_SERVERLINK ? FIFOSIZE_SERVERLINK / 4 : WFIFO_SIZE);
