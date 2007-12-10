@@ -1691,6 +1691,7 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 		if(sd->menuskill_id)
 			sd->menuskill_id = sd->menuskill_val = 0;
 
+		sd->npc_shopid = 0;
 		pc_delinvincibletimer(sd);
 
 		if(sd->pvp_timer!=-1) {

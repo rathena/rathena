@@ -1672,7 +1672,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		//Use Reflect Shield to signal this kind of skill trigger. [Skotlex]
 		if (tsd && src != bl)
 			battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
-		skill_additional_effect(bl,src,CR_REFLECTSHIELD, 1,BF_WEAPON,tick);
+		skill_additional_effect(bl,src,CR_REFLECTSHIELD,1,BF_WEAPON|BF_SHORT|BF_NORMAL,tick);
 	}
 
 	if (!(flag&2) &&
