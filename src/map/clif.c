@@ -932,41 +932,15 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 }
 
 //Modifies the buffer for disguise characters and sends it to self.
-//Flag = 0: change id to negative, buf will have disguise data.
-//Flag = 1: change id to positive, class and option to make your own char invisible.
-static void clif_setdisguise(struct map_session_data *sd, unsigned char *buf,int len, bool flag)
+//Used for spawn/walk packets, where the ID offset changes for packetver >=9
+static void clif_setdisguise(struct block_list *bl, unsigned char *buf,int len)
 {
-	if (!flag) {
-		WBUFL(buf,2)=-sd->bl.id;
-		clif_send(buf, len, &sd->bl, SELF);
-		return;
-	}
-	WBUFL(buf,2)=sd->bl.id;
-	switch (WBUFW(buf,0)) {
-	case 0x22c:
 #if PACKETVER >= 9
-		WBUFL(buf,13)=OPTION_INVISIBLE;
-		WBUFW(buf,17)=sd->status.class_;
-		break;
-	case 0x78:
-	case 0x7c:
-		WBUFW(buf,13)=OPTION_INVISIBLE;
-		WBUFW(buf,15)=sd->status.class_;
-		break;
+	WBUFL(buf,3)=-bl->id;
+#else
+	WBUFL(buf,2)=-bl->id;
 #endif
-#if PACKETVER >= 7
-	case 0x22b:
-	case 0x22a:
-		WBUFL(buf,12)=OPTION_INVISIBLE;
-		WBUFW(buf,16)=sd->status.class_;
-		break;
-#endif
-	default:	//0x78, 0x7b, 0x1d8 and 0x1da
-		WBUFW(buf,12)=OPTION_INVISIBLE;
-		WBUFW(buf,14)=sd->status.class_;
-		break;
-	}
-	clif_send(buf, len, &sd->bl, SELF);
+	clif_send(buf, len, bl, SELF);
 }
 
 /*==========================================
@@ -1077,9 +1051,8 @@ int clif_spawn(struct block_list *bl)
 
 	len = clif_set_unit_idle(bl, buf,true);
 	clif_send(buf, len, bl, AREA_WOS);
-
 	if (disguised(bl))
-		clif_setdisguise((TBL_PC*)bl, buf, len, 0);
+		clif_setdisguise(bl, buf, len);
 
 	if (vd->cloth_color)
 		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
@@ -1267,7 +1240,7 @@ static void clif_move2(struct block_list *bl, struct view_data *vd, struct unit_
 	len = clif_set_unit_walking(bl,ud,buf);
 	clif_send(buf,len,bl,AREA_WOS);
 	if (disguised(bl))
-		clif_setdisguise((TBL_PC*)bl, buf, len, 0);
+		clif_setdisguise(bl, buf, len);
 		
 	if(vd->cloth_color)
 		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
@@ -1323,7 +1296,10 @@ void clif_move(struct unit_data *ud)
 	WBUFL(buf,12)=gettick();
 	clif_send(buf, 16, bl, AREA_WOS);
 	if (disguised(bl))
-		clif_setdisguise((TBL_PC*)bl, buf, 16, 0);
+	{
+		WBUFL(buf,2)=-bl->id;
+		clif_send(buf, 16, bl, SELF);
+	}
 }
 
 /*==========================================
