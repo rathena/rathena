@@ -934,7 +934,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 //Modifies the buffer for disguise characters and sends it to self.
 //Flag = 0: change id to negative, buf will have disguise data.
 //Flag = 1: change id to positive, class and option to make your own char invisible.
-static void clif_setdisguise(struct map_session_data *sd, unsigned char *buf,int len, int flag)
+static void clif_setdisguise(struct map_session_data *sd, unsigned char *buf,int len, bool flag)
 {
 	if (!flag) {
 		WBUFL(buf,2)=-sd->bl.id;
@@ -1322,10 +1322,8 @@ void clif_move(struct unit_data *ud)
 	WBUFPOS2(buf,6,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
 	WBUFL(buf,12)=gettick();
 	clif_send(buf, 16, bl, AREA_WOS);
-	if (disguised(bl)) {
-		WBUFL(buf,2)=-bl->id;
-		clif_send(buf, 16, bl, SELF);
-	}
+	if (disguised(bl))
+		clif_setdisguise((TBL_PC*)bl, buf, 16, 0);
 }
 
 /*==========================================
