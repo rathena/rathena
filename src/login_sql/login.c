@@ -1226,7 +1226,7 @@ int parse_login(int fd)
 		return 0;
 	}
 
-	ipl = login_config.login_ip;
+	ipl = session[fd]->client_addr;
 	ip2str(ipl, ip);
 
 	while( RFIFOREST(fd) >= 2 )
