@@ -3,19 +3,17 @@
 //===== By: ==================================================
 //= Nana (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 6+
 //===== Description: =========================================
-//= Warp Points for Amatsu
+//= [Aegis Conversion]
+//= Warp Points for Amatsu Dungeon
 //===== Additional Comments: =================================
-//= Split off amatsu.txt
+//= 1.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //============================================================
 
-//= Amatsu Dungeon ===========================================
-//disabled due to amatsu dungeon quest
-//ama_dun01,228,6,0	warp	warp8007	1,1,ama_test,50,87
-ama_dun01,234,143,0	warp	warp8008	1,1,ama_dun02,31,41
-ama_dun02,196,124,0	warp	warp8010	1,1,ama_dun03,119,14
-ama_dun02,29,41,0	warp	warp8009	1,1,ama_dun01,231,143
-ama_dun03,119,9,0	warp	warp8011	1,1,ama_dun02,196,121
+ama_dun01,235,144,0	warp	ama_dun1-1	1,1,ama_dun02,33,40
+ama_dun02,30,40,0	warp	ama_dun1-2	1,1,ama_dun01,232,144
+ama_dun02,196,123,0	warp	ama_dun2-1	1,1,ama_dun03,120,12
+ama_dun03,120,9,0	warp	ama_dun2-2	1,1,ama_dun02,196,120
