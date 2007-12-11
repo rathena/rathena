@@ -4595,7 +4595,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	
 	if( status_isdead(bl) )
 		return 0;
-	
+
 	if( bl->type == BL_MOB && ((TBL_MOB*)bl)->class_ == MOBID_EMPERIUM )
 	{
 		if( type != SC_SAFETYWALL )
@@ -4603,6 +4603,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	}
 
 	BL_CAST(BL_PC, bl, sd);
+
+	if(sd && sd->state.waitingdisconnect)
+		return 0; //Character logging out, all his SC were wiped already!
 
 	//Adjust tick according to status resistances
 	if( !(flag&(1|4)) )
