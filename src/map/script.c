@@ -11651,9 +11651,9 @@ BUILDIN_FUNC(setd)
 	return 0;
 }
 
-BUILDIN_FUNC(query_sql)
-{
 #ifndef TXT_ONLY
+int buildin_query_sql_sub(struct script_state* st, Sql* handle)
+{
 	int i, j;
 	TBL_PC* sd = NULL;
 	const char* query;
@@ -11695,22 +11695,22 @@ BUILDIN_FUNC(query_sql)
 
 	// Execute the query
 	query = script_getstr(st,2);
-	if( SQL_ERROR == Sql_QueryStr(mmysql_handle, query) )
+	if( SQL_ERROR == Sql_QueryStr(handle, query) )
 	{
-		Sql_ShowDebug(mmysql_handle);
+		Sql_ShowDebug(handle);
 		script_pushint(st, 0);
 		return 1;
 	}
 
-	if( Sql_NumRows(mmysql_handle) == 0 )
+	if( Sql_NumRows(handle) == 0 )
 	{// No data received
-		Sql_FreeResult(mmysql_handle);
+		Sql_FreeResult(handle);
 		script_pushint(st, 0);
 		return 0;
 	}
 
 	// Count the number of columns to store
-	num_cols = Sql_NumColumns(mmysql_handle);
+	num_cols = Sql_NumColumns(handle);
 	if( num_vars < num_cols )
 	{
 		ShowWarning("script:query_sql: Too many columns, discarding last %u columns.\n", (unsigned int)(num_cols-num_vars));
@@ -11723,14 +11723,14 @@ BUILDIN_FUNC(query_sql)
 	}
 
 	// Store data
-	for( i = 0; i < max_rows && SQL_SUCCESS == Sql_NextRow(mmysql_handle); ++i )
+	for( i = 0; i < max_rows && SQL_SUCCESS == Sql_NextRow(handle); ++i )
 	{
 		for( j = 0; j < num_vars; ++j )
 		{
 			char* str = NULL;
 
 			if( j < num_cols )
-				Sql_GetData(mmysql_handle, j, &str, NULL);
+				Sql_GetData(handle, j, &str, NULL);
 
 			data = script_getdata(st, j+3);
 			name = reference_getname(data);
@@ -11740,21 +11740,39 @@ BUILDIN_FUNC(query_sql)
 				setd_sub(st, sd, name, i, (void *)(str?atoi(str):0), reference_getref(data));
 		}
 	}
-	if( i == max_rows && max_rows < Sql_NumRows(mmysql_handle) )
+	if( i == max_rows && max_rows < Sql_NumRows(handle) )
 	{
-		ShowWarning("script:query_sql: Only %d/%u rows have been stored.\n", max_rows, (unsigned int)Sql_NumRows(mmysql_handle));
+		ShowWarning("script:query_sql: Only %d/%u rows have been stored.\n", max_rows, (unsigned int)Sql_NumRows(handle));
 		script_reportsrc(st);
 	}
 
 	// Free data
-	Sql_FreeResult(mmysql_handle);
+	Sql_FreeResult(handle);
 	script_pushint(st, i);
+	return 0;
+}
+#endif
+
+BUILDIN_FUNC(query_sql)
+{
+#ifndef TXT_ONLY
+	return buildin_query_sql_sub(st, mmysql_handle);
 #else
 	//for TXT version, we always return -1
 	script_pushint(st,-1);
-#endif
-
 	return 0;
+#endif
+}
+
+BUILDIN_FUNC(query_logsql)
+{
+#ifndef TXT_ONLY
+	return buildin_query_sql_sub(st, logmysql_handle);
+#else
+	//for TXT version, we always return -1
+	script_pushint(st,-1);
+	return 0;
+#endif
 }
 
 //Allows escaping of a given string.
@@ -13226,6 +13244,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getmonsterinfo,"ii"), //Lupus
 	BUILDIN_DEF(axtoi,"s"),
 	BUILDIN_DEF(query_sql,"s*"),
+	BUILDIN_DEF(query_logsql,"s*"),
 	BUILDIN_DEF(escape_sql,"s"),
 	BUILDIN_DEF(atoi,"s"),
 	// [zBuffer] List of player cont commands --->

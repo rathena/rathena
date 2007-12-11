@@ -92,6 +92,8 @@
 //=       Added script function 'strnpcinfo' [ultramage]
 //= 3.10.20071122
 //=       Added setnpcdisplay. [FlavioJS]
+//= 3.10.20071211
+//=       Added query_logsql. [Skotlex]
 //===== Description =======================================
 //= A reference manual for the eAthena scripting language,
 //= sorted out depending on their functionality.
@@ -5953,6 +5955,7 @@ set @i, distance(100,200,101,202);
 ---------------------------------------
 
 *query_sql "your MySQL query", <array variable> {,<array variable>, ...};
+*query_logsql "your MySQL query", <array variable> {,<array variable>, ...};
 
 Puts up to 128 rows of values into the arrays and returns the number of rows.
 
@@ -5967,6 +5970,9 @@ mes "5."+@name$[4]+"("+@fame[4]+")";
 
 Note: In the TXT version it doesn't fill the array and always return -1.
 Note: Use $ as suffix in the array to receive all data as text.
+Note: The difference between query_sql and query_logsql is that the latter
+uses the sql connection to the log database, and should be used when you want
+to query the server log tables.
 
 ---------------------------------------
 
