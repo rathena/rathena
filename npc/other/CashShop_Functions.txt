@@ -92,3 +92,46 @@ function	script	F_CashDungeon	{
 	}
 	return;
 }
+
+// Cities Teleport Scroll
+//============================================================ 
+// - Warp player to differents Citys acording to the Scroll
+// - Arg(0) = type of scroll.
+function	script	F_CashCity	{
+	switch(getarg(0))
+	{
+		// Yellow
+		case 1: switch(select("Prontera:Geffen:Payon:Morroc:Aldebaran:Alberta")) {
+			case 1: warp "prontera",0,0; end;
+			case 2: warp "geffen",0,0; end;
+			case 3: warp "payon",0,0; end;
+			case 4: warp "morocc",0,0; end;
+			case 5: warp "aldebaran",0,0; end;
+			case 6: warp "alberta",0,0; end;
+			}
+		break;
+		// Green
+		case 2: switch(select("Juno:Lighthalzen:Einbroch:Hugel")) {
+			case 1: warp "yuno",0,0; end;
+			case 2: warp "lighthalzen",0,0; end;
+			case 3: warp "einbroch",0,0; end;
+			case 4: warp "hugel",0,0; end;
+			}
+		break;
+		// Red
+		case 3: switch(select("Rachel:Veins")) {
+			case 1: warp "rachel",0,0; end;
+			case 2: warp "veins",0,0; end;
+			}
+		break;
+		// Blue
+		case 4: switch(select("Ayothaya:Amatsu:Louyang:Gonryun")) {
+			case 1: warp "ayothaya",0,0; end;
+			case 2: warp "amatsu",0,0; end;
+			case 3: warp "louyang",0,0; end;
+			case 4: warp "gonryun",0,0; end;
+			}
+		break;
+	}
+	return;
+}

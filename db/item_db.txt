@@ -2187,7 +2187,7 @@
 //5319,Hello_Mother_Hat,Hello Mother Hat,5,,10,200,,2,,0,0xFFFFFFFE,7,2,256,,10,1,341,{ bonus bLuk,3; },{},{}
 //5320,Champion_Wreath,Sacred Palma,5,,10,500,,4,,0,0xFFFFFFFF,7,2,256,,0,1,261,{ bonus bAllStats,2; bonus4 bAutoSpellWhenHit,28,1,50,0; },{},{}
 //5321,Indonesian_Bandana,Bandana Merah Putih,5,,10,500,,4,,0,0xFFFFFFFF,7,2,256,,0,1,342,{ bonus2 bAddMonsterDropItem,518,100; },{},{}
-//5322,Scarf,Scarf,5,,10,100,,2,,0,0xFFFFFFFF,7,2,256,,24,0,343,{ bonus bFlee,5; bonus bMdef,2; },{},{}
+//5322,Kerchief,Kerchief,5,,10,100,,2,,0,0xFFFFFFFF,7,2,256,,24,0,343,{ bonus bFlee,5; bonus bMdef,2; },{},{}
 5323,Sakray_Test_Helm,Sakray Test Helm,5,,10,0,,10,,0,0xFFFFFFFF,7,2,256,,1,0,165,{ bonus bAllStats,2; },{},{}
 //5324,Little_Angel_Rock,Little Angel Rock,5,,10,300,,2,,0,0xFFFFFFFF,7,2,256,,10,0,344,{ bonus bDex,3; bonus4 bAutoSpellWhenHit,254,3,50,0; },{},{}
 //5325,Robo_Eye,Robo_Eye,5,,10,200,,2,,0,0xFFFFFFFF,7,2,512,,10,0,345,{ bonus bAtkRate,3; bonus bMatkRate,3; bonus bDex,1; },{},{}
@@ -2219,7 +2219,7 @@
 5351,Sunflower_,Sunflower,5,20,,100,,1,,1,0xFFFFFFFF,7,2,256,,0,0,37,{ bonus2 bSubRace,RC_Insect,10; },{},{}
 //5354,Songkok,Songkok,5,,,100,,2,,0,0xFFFFFFFE,7,1,256,,0,1,362,{ bonus bCastrate,-5; },{},{}
 //5355,Selendang,Selendang,5,,,100,,2,,0,0xFFFFFFFE,7,0,256,,0,1,363,{ bonus bCastrate,-5; },{},{}
-5357,Victory_Wings,Victory Wings,5,,,0,,10,,,0xFFFFFFFF,7,2,256,,,,365,{ bonus bMdef,10;},{},{}
+5357,Victory_Wings,Victory Wings,5,,,0,,10,,0,0xFFFFFFFF,7,2,768,,0,1,365,{ bonus bMdef,10; bonus bUnbreakableHelm,0; },{},{}
 //5358,Pecopeco_Ears,Pecopeco Ears,5,,,100,,1,,0,0xFFFFFFFF,7,2,512,,70,0,366,{ bonus bAgi,1; bonus bMdef,2; },{},{}
 //5359,Ship_Captain's_Hat,Ship Captain's Hat,5,,,500,,3,,0,0xFFFFFFFF,7,2,256,,30,1,367,{ bonus bLongAtkRate,3; },{},{}
 //5360,Hukke's_Blackcat_Ears,Hukke's Blackcat Ears,5,,,200,,2,,0,0xFFFFFFFF,7,2,256,,45,1,368,{ bonus bDef,-50; bonus bFlee,10; bonus bCritical,3; bonus2 bCriticalAddRace,RC_Boss,10; bonus2 bCriticalAddRace,RC_NonBoss,10; },{},{}
@@ -2227,6 +2227,10 @@
 //5362,Ninja's_Scroll,Ninja's Scroll,5,,,200,,0,,0,0xFFFFFFFF,7,2,1,,60,0,370,{ bonus bMatkRate,1; },{},{}
 //5366,Love_Dad_Bandana,Love Dad Bandana,5,,,200,,3,,0,0xFFFFFFFF,7,2,256,,0,1,374,{ bonus bStr,2; },{},{}
 //5370,Orchid_Hairband,Orchid Hairband,5,,,200,,1,,0,0xFFFFFFFF,7,2,256,,0,1,376,{ bonus bInt,1; },{},{}
+5379,Balloon_Hat,Balloon Hat,5,,,800,,3,,1,0xFFFFFFFF,7,2,256,,0,1,389,{ bonus bCastrate,-getrefine(); },{},{}
+5380,Fish_Head_Hat,Fish Head Hat,5,,,400,,1,,0,0xFFFFFFFF,7,2,256,,0,1,386,{ bonus3 bAutoSpell,281,1,20; },{},{}
+5381,SantaPoring_Cap,SantaPoring Cap,5,,,100,,2,,1,0xFFFFFFFF,7,2,256,,0,0,387,{ bonus bMdef,2; bonus2 bAddEle,Ele_Dark,3; bonus2 bSubEle,Ele_Dark,3; },{},{}
+5382,Bell_Ribbon,Bell Ribbon,5,,,200,,3,,1,0xFFFFFFFF,7,2,256,,0,1,388,{ bonus bVit,1; skill 33,1; },{},{}
 5800,Blush_Of_Groom,Blush of Groom,5,,,50,,0,,0,0xFFFFFFFF,7,2,512,,0,0,125,{ bonus2 bSubRace,RC_DemiHuman,3; },{},{}
 5801,Ribbon_Of_Bride,Red Tailed Ribbon,5,,,100,,5,,0,0xFFFFFFFF,7,2,256,,0,1,167,{ bonus bAllStats,2; bonus2 bSubRace,RC_DemiHuman,10; if (getskilllv(29) == 10) { bonus3 bAutoSpellWhenHit,28,10,20; } else { bonus3 bAutoSpellWhenHit,28,5,20; } },{},{}
 5802,Upgrade_Elephant_Hat,Upgraded Elephant Hat,5,,,500,,3,,1,0xFFFFFFFF,7,2,256,,0,1,215,{},{},{}
@@ -2235,7 +2239,7 @@
 5805,Victorious_Coronet,Victorious Coronet,5,,10,150,,1,,0,0xFFFFFFFF,7,2,256,,70,1,43,{ bonus bMaxHPrate,15; bonus bSPrecovRate,5; },{},{}
 5806,Natalie's_Poet_Hat,Natalie's Poet Hat,5,,10,300,,0,,0,0xFFFFFFFF,7,2,256,,1,0,67,{},{},{}
 5807,Octopus_Hat,Octopus Hat,5,,,100,,1,,0,0xFFFFFFFE,7,2,256,,1,0,104,{},{},{}
-5808,Dark_Bashilrium,Dark Bashilrium,5,,,250,,5,,1,0x00CFFF80,2,2,769,,1,0,203,{ bonus2 bResEff,Eff_Stone,2000+(getrefine()*2); bonus2 bResEff,Eff_Freeze,2000+(getrefine()*2); bonus2 bResEff,Eff_Stun,2000+(getrefine()*2); },{},{}
+5808,Dark_Bashilrium,Dark Bashilrium,5,,,250,,5,,1,0x00CFFF80,2,2,769,,1,0,366,{ bonus2 bResEff,Eff_Stone,2000+(getrefine()*2); bonus2 bResEff,Eff_Freeze,2000+(getrefine()*2); bonus2 bResEff,Eff_Stun,2000+(getrefine()*2); },{},{}
 // More Etc Items
 //===================================================================
 7001,Mould_Powder,Mould Powder,3,466,,10,,,,,,,,,,,,,{},{},{}
@@ -3928,6 +3932,14 @@
 13831,Stat_Boost_2,Stat Booster 2,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCINT,60000,5; sc_start SC_INCLUK,60000,5; sc_start SC_INCDEX,60000,5; },{},{}
 13832,Stat_Boost_3,Stat Booster 3,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCAGI,60000,5; sc_start SC_INCVIT,60000,5; sc_start SC_INCDEX,60000,5; },{},{}
 13833,Stat_Boost_4,Stat Booster 4,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCINT,60000,5; sc_start SC_INCVIT,60000,5; sc_start SC_INCDEX,60000,5; },{},{}
+13849,Yellow_Butterfly_Wing_5ea_Box,Yellow Butterfly Wing 5ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14582,5; },{},{}
+13850,Yellow_Butterfly_Wing_10ea_Box,Yellow Butterfly Wing 10ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14582,10; },{},{}
+13851,Green_Butterfly_Wing_5ea_Box,Green Butterfly Wing 5ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14583,5; },{},{}
+13852,Green_Butterfly_Wing_10ea_Box,Green Butterfly Wing 10ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14583,10; },{},{}
+13853,Red_Butterfly_Wing_5ea_Box,Red Butterfly Wing 5ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14584,5; },{},{}
+13854,Red_Butterfly_Wing_10ea_Box,Red Butterfly Wing 10ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14584,10; },{},{}
+13855,Blue_Butterfly_Wing_5ea_Box,Blue Butterfly Wing 5ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14585,5; },{},{}
+13856,Blue_Butterfly_Wing_10ea_Box,Blue Butterfly Wing 10ea Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14585,10; },{},{}
 13859,Patrol_Mission_Envelope,Patrol Mission Envelope,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2734,1; },{},{}
 13860,Patrol_Mission_Envelope_,Patrol Mission Envelope,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 2735,1; },{},{}
 13863,Repair_Weapon_Scroll_Box10ea,Repair Weapon Scroll Box 10ea,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14521,10; },{},{}
@@ -4010,3 +4022,7 @@
 14578,Agi_Dish05_,Steamed Bat Wing in Pumpkin,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_AGIFood, 1200000, 5; percentheal 6,2; },{},{}
 14579,Dex_Dish05_,Green Salad,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_DEXFood, 1200000, 5; percentheal 5,5; },{},{}
 14580,Luk_Dish05_,Fried Scorpion Tails,0,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_LUKFood, 1200000, 5; percentheal 5,2; },{},{}
+14582,Yellow_Butterfly_Wing,Yellow Butterfly Wing,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashCity",1; },{},{}
+14583,Green_Butterfly_Wing,Green Butterfly Wing,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashCity",2; },{},{}
+14584,Red_Butterfly_Wing,Red Butterfly Wing,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashCity",3; },{},{}
+14585,Blue_Butterfly_Wing,Blue Butterfly Wing,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc "F_CashCity",4; },{},{}
