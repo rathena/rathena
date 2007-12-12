@@ -340,15 +340,6 @@ void guild_makemember(struct guild_member *m,struct map_session_data *sd)
 	memcpy(m->name,sd->status.name,NAME_LENGTH);
 	return;
 }
-// ギルド競合確認
-int guild_check_conflict(struct map_session_data *sd)
-{
-	nullpo_retr(0, sd);
-
-	intif_guild_checkconflict(sd->status.guild_id,
-		sd->status.account_id,sd->status.char_id);
-	return 0;
-}
 
 // ギルドのEXPキャッシュをinter鯖にフラッシュする
 int guild_payexp_timer_sub(DBKey dataid, void *data, va_list ap)
@@ -770,10 +761,9 @@ int guild_member_added(int guild_id,int account_id,int char_id,int flag)
 	if( sd2!=NULL )
 		clif_guild_inviteack(sd2,2);
 
-	// いちおう競合確認
-	guild_check_conflict(sd);
 	//Next line commented because it do nothing, look at guild_recv_info [LuzZza]
 	//clif_charnameupdate(sd); //Update display name [Skotlex]
+
 	return 0;
 }
 

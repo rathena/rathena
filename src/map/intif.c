@@ -638,19 +638,6 @@ int intif_guild_message(int guild_id,int account_id,const char *mes,int len)
 
 	return 0;
 }
-// ギルド競合チェック要求
-int intif_guild_checkconflict(int guild_id,int account_id,int char_id)
-{
-	if (CheckForCharServer())
-		return 0;
-	WFIFOHEAD(inter_fd, 14);
-	WFIFOW(inter_fd, 0)=0x3038;
-	WFIFOL(inter_fd, 2)=guild_id;
-	WFIFOL(inter_fd, 6)=account_id;
-	WFIFOL(inter_fd,10)=char_id;
-	WFIFOSET(inter_fd,14);
-	return 0;
-}
 // ギルド基本情報変更要求
 int intif_guild_change_basicinfo(int guild_id,int type,const void *data,int len)
 {

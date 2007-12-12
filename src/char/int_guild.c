@@ -548,35 +548,6 @@ int guild_check_empty(struct guild *g) {
 	return 1;
 }
 
-// キャラの競合がないかチェック用
-int guild_check_conflict_sub(DBKey key, void *data, va_list ap) {
-	struct guild *g = (struct guild *)data;
-	int guild_id, account_id, char_id, i;
-
-	guild_id = va_arg(ap, int);
-	account_id = va_arg(ap, int);
-	char_id = va_arg(ap, int);
-
-	if (g->guild_id == guild_id)	// 本来の所属なので問題なし
-		return 0;
-
-	for(i = 0; i < MAX_GUILD; i++) {
-		if (g->member[i].account_id == account_id && g->member[i].char_id == char_id) {
-			// 別のギルドに偽の所属データがあるので脱退
-			ShowWarning("int_guild: guild conflict! %d,%d %d!=%d\n", account_id, char_id, guild_id, g->guild_id);
-			mapif_parse_GuildLeave(-1, g->guild_id, account_id, char_id, 0, "**データ競合**");
-		}
-	}
-
-	return 0;
-}
-// キャラの競合がないかチェック
-int guild_check_conflict(int guild_id, int account_id, int char_id) {
-	guild_db->foreach(guild_db, guild_check_conflict_sub, guild_id, account_id, char_id);
-
-	return 0;
-}
-
 unsigned int guild_nextexp (int level)
 {
 	if (level == 0)
@@ -1492,11 +1463,6 @@ int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 	return mapif_guild_castle_datasave(gc->castle_id, index, value);
 }
 
-// ギルドチェック要求
-int mapif_parse_GuildCheck(int fd, int guild_id, int account_id, int char_id) {
-	return guild_check_conflict(guild_id, account_id, char_id);
-}
-
 int mapif_parse_GuildMasterChange(int fd, int guild_id, const char* name, int len)
 {
 	struct guild *g = idb_get(guild_db, guild_id);
@@ -1539,7 +1505,6 @@ int inter_guild_parse_frommap(int fd) {
 	case 0x3035: mapif_parse_GuildChangeMemberInfoShort(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOB(fd,14), RFIFOW(fd,15), RFIFOW(fd,17)); break;
 	case 0x3036: mapif_parse_BreakGuild(fd, RFIFOL(fd,2)); break;
 	case 0x3037: mapif_parse_GuildMessage(fd, RFIFOL(fd,4), RFIFOL(fd,8), (char*)RFIFOP(fd,12), RFIFOW(fd,2)-12); break;
-	case 0x3038: mapif_parse_GuildCheck(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)); break;
 	case 0x3039: mapif_parse_GuildBasicInfoChange(fd, RFIFOL(fd,4), RFIFOW(fd,8), (const char*)RFIFOP(fd,10), RFIFOW(fd,2)-10); break;
 	case 0x303A: mapif_parse_GuildMemberInfoChange(fd, RFIFOL(fd,4), RFIFOL(fd,8), RFIFOL(fd,12), RFIFOW(fd,16), (const char*)RFIFOP(fd,18), RFIFOW(fd,2)-18); break;
 	case 0x303B: mapif_parse_GuildPosition(fd, RFIFOL(fd,4), RFIFOL(fd,8), (struct guild_position *)RFIFOP(fd,12)); break;

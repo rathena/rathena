@@ -49,7 +49,6 @@ int intif_guild_leave(int guild_id, int account_id, int char_id, int flag, const
 int intif_guild_memberinfoshort(int guild_id, int account_id, int char_id, int online, int lv, int class_);
 int intif_guild_break(int guild_id);
 int intif_guild_message(int guild_id, int account_id, const char *mes, int len);
-int intif_guild_checkconflict(int guild_id, int account_id, int char_id);
 int intif_guild_change_gm(int guild_id, const char* name, int len);
 int intif_guild_change_basicinfo(int guild_id, int type, const void *data, int len);
 int intif_guild_change_memberinfo(int guild_id, int account_id, int char_id, int type, const void *data, int len);
