@@ -76,7 +76,7 @@ int msg_silent = 0; //Specifies how silent the console is.
 		buf.d_ = StringBuf_Malloc();					\
 		buf.l_ = StringBuf_Vprintf(buf.d_, fmt, args);	\
 		buf.v_ = StringBuf_Value(buf.d_);				\
-		ShowDebug("showmsg: dynamic buffer used, increase the static buffer size to %d or more.", buf.l_+1);\
+		ShowDebug("showmsg: dynamic buffer used, increase the static buffer size to %d or more.\n", buf.l_+1);\
 	}													\
 //define BUFVPRINTF
 

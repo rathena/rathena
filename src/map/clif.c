@@ -6472,6 +6472,7 @@ int clif_guild_inviteack(struct map_session_data *sd,int flag)
 	WFIFOSET(fd,packet_len(0x169));
 	return 0;
 }
+
 /*==========================================
  * ギルドメンバ脱退通知
  *------------------------------------------*/
@@ -6487,23 +6488,24 @@ int clif_guild_leave(struct map_session_data *sd,const char *name,const char *me
 	clif_send(buf,packet_len(0x15a),&sd->bl,GUILD);
 	return 0;
 }
+
 /*==========================================
  * ギルドメンバ追放通知
  *------------------------------------------*/
-int clif_guild_expulsion(struct map_session_data *sd,const char *name,const char *mes,
-	int account_id)
+int clif_guild_expulsion(struct map_session_data *sd,const char *name,const char *mes,int account_id)
 {
 	unsigned char buf[128];
 
 	nullpo_retr(0, sd);
 
 	WBUFW(buf, 0)=0x15c;
-	memcpy(WBUFP(buf, 2),name,NAME_LENGTH);
-	memcpy(WBUFP(buf,26),mes,40);
-	memcpy(WBUFP(buf,66),"dummy",NAME_LENGTH);
+	safestrncpy(WBUFP(buf, 2),name,NAME_LENGTH);
+	safestrncpy(WBUFP(buf,26),mes,40);
+	safestrncpy(WBUFP(buf,66),"",NAME_LENGTH); // account name (not used for security reasons)
 	clif_send(buf,packet_len(0x15c),&sd->bl,GUILD);
 	return 0;
 }
+
 /*==========================================
  * ギルド追放メンバリスト
  *------------------------------------------*/
@@ -6519,18 +6521,18 @@ int clif_guild_expulsionlist(struct map_session_data *sd)
 	g=guild_search(sd->status.guild_id);
 	if(g==NULL)
 		return 0;
-	WFIFOHEAD(fd,MAX_GUILDEXPULSION * 88 + 4);
+	WFIFOHEAD(fd,4 + MAX_GUILDEXPULSION * 88);
 	WFIFOW(fd,0)=0x163;
 	for(i=c=0;i<MAX_GUILDEXPULSION;i++){
 		struct guild_expulsion *e=&g->expulsion[i];
 		if(e->account_id>0){
-			memcpy(WFIFOP(fd,c*88+ 4),e->name,NAME_LENGTH);
-			memcpy(WFIFOP(fd,c*88+28),e->acc,24);
-			memcpy(WFIFOP(fd,c*88+52),e->mes,44);
+			safestrncpy(WFIFOP(fd,4 + c*88),e->name,NAME_LENGTH);
+			safestrncpy(WFIFOP(fd,4 + c*88+24),"",24); // account name (not used for security reasons)
+			safestrncpy(WFIFOP(fd,4 + c*88+48),e->mes,40);
 			c++;
 		}
 	}
-	WFIFOW(fd,2)=c*88+4;
+	WFIFOW(fd,2) = 4 + c*88;
 	WFIFOSET(fd,WFIFOW(fd,2));
 	return 0;
 }
@@ -8542,7 +8544,9 @@ void clif_parse_TakeItem(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 void clif_parse_DropItem(int fd, struct map_session_data *sd)
 {
-	int item_index, item_amount;
+	int item_index = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2;
+	int item_amount = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
+
 	item_index = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0])-2;
 	item_amount = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[1]);
 	do {
@@ -8564,7 +8568,8 @@ void clif_parse_DropItem(int fd, struct map_session_data *sd)
 
 		return;
 	} while (0);
-	//Because the client does not likes being ignored.
+
+	//Because the client does not like being ignored.
 	clif_delitem(sd, item_index,0);
 }
 
@@ -9991,7 +9996,8 @@ void clif_parse_GuildLeave(int fd,struct map_session_data *sd)
 }
 
 /*==========================================
- * ギルド追放
+ * Request to expel a member of a guild
+ * S 015b <guild_id>.L <account_id>.L <char_id>.L <reason>.39B 00
  *------------------------------------------*/
 void clif_parse_GuildExpulsion(int fd,struct map_session_data *sd)
 {

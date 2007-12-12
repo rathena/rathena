@@ -4065,7 +4065,7 @@ struct regen_data *status_get_regen_data(struct block_list *bl)
 struct status_data *status_get_status_data(struct block_list *bl)
 {
 	nullpo_retr(&dummy_status, bl);
-		
+
 	switch (bl->type) {
 		case BL_PC:  return &((TBL_PC*)bl)->battle_status;
 		case BL_MOB: return &((TBL_MOB*)bl)->status;

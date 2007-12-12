@@ -27,12 +27,12 @@ void inter_homunculus_sql_final(void){
 	return;
 }
 
-int mapif_saved_homunculus(int fd, int account_id, unsigned char flag)
+static int mapif_saved_homunculus(int fd, int account_id, bool flag)
 {
 	WFIFOHEAD(fd, 7);
 	WFIFOW(fd,0) = 0x3892;
 	WFIFOL(fd,2) = account_id;
-	WFIFOB(fd,6) = flag;
+	WFIFOB(fd,6) = flag; // 1:success, 0:failure
 	WFIFOSET(fd, 7);
 	return 0;
 }
@@ -71,7 +71,7 @@ int mapif_homunculus_created(int fd, int account_id, struct s_homunculus *sh, un
 }
 
 // Save/Update Homunculus Skills
-int mapif_save_homunculus_skills(struct s_homunculus *hd)
+static bool mapif_save_homunculus_skills(struct s_homunculus *hd)
 {
 	SqlStmt* stmt;
 	int i;
@@ -89,18 +89,18 @@ int mapif_save_homunculus_skills(struct s_homunculus *hd)
 			{
 				SqlStmt_ShowDebug(stmt);
 				SqlStmt_Free(stmt);
-				return 0;
+				return false;
 			}
 		}
 	}
 	SqlStmt_Free(stmt);
 
-	return 1;
+	return true;
 }
 
-int mapif_save_homunculus(int fd, int account_id, struct s_homunculus *hd)
+static bool mapif_save_homunculus(int fd, int account_id, struct s_homunculus *hd)
 {
-	int flag = 1;
+	bool flag = true;
 	char esc_name[NAME_LENGTH*2+1];
 
 	Sql_EscapeStringLen(sql_handle, esc_name, hd->name, strnlen(hd->name, NAME_LENGTH));
@@ -114,7 +114,7 @@ int mapif_save_homunculus(int fd, int account_id, struct s_homunculus *hd)
 			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize) )
 		{
 			Sql_ShowDebug(sql_handle);
-			flag = 0;
+			flag = false;
 		}
 		else
 		{
@@ -128,7 +128,7 @@ int mapif_save_homunculus(int fd, int account_id, struct s_homunculus *hd)
 			hd->hp, hd->max_hp, hd->sp, hd->max_sp, hd->skillpts, hd->rename_flag, hd->vaporize, hd->hom_id) )
 		{
 			Sql_ShowDebug(sql_handle);
-			flag = 0;
+			flag = false;
 		}
 		else
 		{

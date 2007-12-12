@@ -231,13 +231,9 @@ CREATE TABLE `guild_castle` (
 DROP TABLE IF EXISTS `guild_expulsion`;
 CREATE TABLE `guild_expulsion` (
   `guild_id` int(11) unsigned NOT NULL default '0',
+  `account_id` int(11) unsigned NOT NULL default '0',
   `name` varchar(24) NOT NULL default '',
   `mes` varchar(40) NOT NULL default '',
-  `acc` varchar(40) NOT NULL default '',
-  `account_id` int(11) unsigned NOT NULL default '0',
-  `rsv1` int(11) unsigned NOT NULL default '0',
-  `rsv2` int(11) unsigned NOT NULL default '0',
-  `rsv3` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`guild_id`,`name`)
 ) TYPE=MyISAM;
 
@@ -259,8 +255,6 @@ CREATE TABLE `guild_member` (
   `exp_payper` tinyint(11) unsigned NOT NULL default '0',
   `online` tinyint(4) unsigned NOT NULL default '0',
   `position` tinyint(6) unsigned NOT NULL default '0',
-  `rsv1` int(11) unsigned NOT NULL default '0',
-  `rsv2` int(11) unsigned NOT NULL default '0',
   `name` varchar(24) NOT NULL default '',
   PRIMARY KEY  (`guild_id`,`char_id`),
   KEY `char_id` (`char_id`)

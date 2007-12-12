@@ -655,9 +655,7 @@ int guild_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	}
 
 	// ’èˆõŠm”F
-	for(i=0;i<g->max_member;i++)
-		if(g->member[i].account_id==0)
-			break;
+	ARR_FIND( 0, g->max_member, i, g->member[i].account_id == 0 );
 	if(i==g->max_member){
 		clif_guild_inviteack(sd,3);
 		return 0;
@@ -669,60 +667,52 @@ int guild_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	clif_guild_invite(tsd,g);
 	return 0;
 }
-// ƒMƒ‹ƒhŠ©—U‚Ö‚Ì•Ô“š
-int guild_reply_invite(struct map_session_data *sd,int guild_id,int flag)
+
+/// Guild invitation reply.
+/// flag: 0:rejected, 1:accepted
+int guild_reply_invite(struct map_session_data* sd, int guild_id, int flag)
 {
-	struct map_session_data *tsd;
+	struct map_session_data* tsd;
 
 	nullpo_retr(0, sd);
-	
-	//nullpo_retr(0, tsd= map_id2sd( sd->guild_invite_account ));
-	//I checked the code, and there's no "check" for the case where the guy
-	//that invites another to a guild quits the map-server before being replied.
-	//Hence that's a valid null pointer scenario. :) [Skotlex]
-	if ((tsd= map_id2sd( sd->guild_invite_account )) == NULL)
-	{	//Do we send a "invitation failed" msg or something to the player?
-		//Or should we accept the invitation and add it to the guild anyway?
-		//afterall, guild_invite holds the guild id that the player was invited to.
-		sd->guild_invite=0;
-		sd->guild_invite_account=0;
-		return 0;
+
+	// subsequent requests may override the value
+	if( sd->guild_invite != guild_id )
+		return 0; // mismatch
+
+	// look up the person who sent the invite
+	//NOTE: this can be NULL because the person might have logged off in the meantime
+	tsd = map_id2sd(sd->guild_invite_account);
+
+	// zero out the status data
+	sd->guild_invite = 0;
+	sd->guild_invite_account = 0;
+
+	if( flag == 0 )
+	{// rejected
+		if( tsd ) clif_guild_inviteack(tsd,1);
 	}
-
-	if(sd->guild_invite!=guild_id)	// Š©—U‚ÆƒMƒ‹ƒhID‚ªˆá‚¤
-		return 0;
-
-	if(flag==1){	// ³‘ø
+	else
+	{// accepted
 		struct guild_member m;
-		struct guild *g;
+		struct guild* g;
 		int i;
 
-		// ’èˆõŠm”F
-		if( (g=guild_search(tsd->status.guild_id))==NULL ){
-			sd->guild_invite=0;
-			sd->guild_invite_account=0;
+		if( (g=guild_search(guild_id)) == NULL )
 			return 0;
-		}
-		for(i=0;i<g->max_member;i++)
-			if(g->member[i].account_id==0)
-				break;
-		if(i==g->max_member){
-			sd->guild_invite=0;
-			sd->guild_invite_account=0;
-			clif_guild_inviteack(tsd,3);
+
+		ARR_FIND( 0, g->max_member, i, g->member[i].account_id == 0 );
+		if( i == g->max_member )
+		{
+			if( tsd ) clif_guild_inviteack(tsd,3);
 			return 0;
 		}
 
-		//interI‚Ö’Ç‰Á—v‹
 		guild_makemember(&m,sd);
-		intif_guild_addmember( sd->guild_invite, &m );
+		intif_guild_addmember(guild_id, &m);
 		//TODO: send a minimap update to this player
-		return 0;
-	}else{		// ‹‘”Û
-		sd->guild_invite=0;
-		sd->guild_invite_account=0;
-		clif_guild_inviteack(tsd,1);
 	}
+
 	return 0;
 }
 // ƒMƒ‹ƒhƒƒ“ƒo‚ª’Ç‰Á‚³‚ê‚½
@@ -1821,7 +1811,9 @@ int guild_castlealldataload(int len,struct guild_castle *gc)
 	for( i = n-1; i >= 0 && !(gc[i].guild_id); --i );
 	ev = i; // offset of castle or -1
 
-	// load received castles into memory, one by one
+	if( ev < 0 ) //No castles owned, invoke OnAgitInit as it is.
+		npc_event_doall("OnAgitInit");
+	else // load received castles into memory, one by one
 	for( i = 0; i < n; i++, gc++ )
 	{
 		struct guild_castle *c = guild_castle_search(gc->castle_id);
@@ -1841,9 +1833,6 @@ int guild_castlealldataload(int len,struct guild_castle *gc)
 				guild_npc_request_info(c->guild_id, "::OnAgitInit");
 		}
 	}
-
-	if( ev < 0 ) //No castles owned, invoke OnAgitInit as it is.
-		npc_event_doall("OnAgitInit");
 
 	return 0;
 }
@@ -1906,57 +1895,15 @@ int guild_checkcastles(struct guild *g)
 	return nb_cas;
 }
 
-// [MouseJstr]
-//    is this guild allied with this castle?
-int guild_isallied(struct guild *g, struct guild_castle *gc)
+// Are these two guilds allied?
+bool guild_isallied(int guild_id, int guild_id2)
 {
 	int i;
-
+	struct guild* g = guild_search(guild_id);
 	nullpo_retr(0, g);
 
-	if(g->guild_id == gc->guild_id)
-		return 1;
-
-	if (gc->guild_id == 0)
-		return 0;
-
-
-	for(i=0;i<MAX_GUILDALLIANCE;i++)
-		if(g->alliance[i].guild_id == gc->guild_id) {
-			if(g->alliance[i].opposition == 0)
-				return 1;
-			else
-				return 0;
-		}
-
-	return 0;
-}
-
-int guild_idisallied(int guild_id, int guild_id2)
-{
-	int i;
-	struct guild *g;
-
-	if (guild_id <= 0 || guild_id2 <= 0)
-		return 0;
-	
-	if(guild_id == guild_id2)
-		return 1;
-
-	g = guild_search(guild_id);
-
-	nullpo_retr(0, g);
-
-
-	for(i=0;i<MAX_GUILDALLIANCE;i++)
-		if(g->alliance[i].guild_id == guild_id2) {
-			if(g->alliance[i].opposition == 0)
-				return 1;
-			else
-				return 0;
-		}
-
-	return 0;
+	ARR_FIND( 0, MAX_GUILDALLIANCE, i, g->alliance[i].guild_id == guild_id2 );
+	return( i < MAX_GUILDALLIANCE && g->alliance[i].opposition == 0 );
 }
 
 static int guild_infoevent_db_final(DBKey key,void *data,va_list ap)

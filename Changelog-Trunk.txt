@@ -3,6 +3,13 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/12/12
+	* Some preparations for the guild script update [ultramage]
+	- cleaned up npc event execution code
+	- cleaned up guild data loading/saving code; to be improved later
+	- removed dummy 'account name' expulsion list management code
+	- removed columns 'rsv1' and 'rsv2' from guild member data
+	- removed columns 'rsv1' 'rsv2' 'rsv3' and 'acc' from guild expulsion data
 2007/12/11
 	* Added query_logsql script command to perform sql commands using the log
 	  db connection.

@@ -59,7 +59,6 @@ struct event_data {
 	struct npc_data *nd;
 	int pos;
 };
-static struct tm ev_tm_b;	// 時計イベント用
 
 static struct eri *timer_event_ers; //For the npc timer data. [Skotlex]
 
@@ -227,17 +226,20 @@ int npc_event_doall_sub(DBKey key, void* data, va_list ap)
 	const char* p = key.str;
 	struct event_data* ev;
 	int* c;
+	const char* name;
 	int rid;
-	char* name;
 
-	ev = (struct event_data *)data;
-	c = va_arg(ap, int *);
-	name = va_arg(ap,char *);
+	nullpo_retr(0, ev = (struct event_data *)data);
+	nullpo_retr(0, ap);
+	nullpo_retr(0, c = va_arg(ap, int *));
+	nullpo_retr(0, name = va_arg(ap, const char *));
 	rid = va_arg(ap, int);
 
-	if( (p=strchr(p, ':')) && p && strcmpi(name, p)==0 ) {
-		if(rid)
-			npc_event_sub(((struct map_session_data *)map_id2bl(rid)),ev,key.str);
+	p = strchr(p, ':'); // match only the event name
+	if( p && strcmpi(name, p) == 0 )
+	{
+		if(rid) // a player may only have 1 script running at the same time
+			npc_event_sub(map_id2sd(rid),ev,key.str);
 		else
 			run_script(ev->nd->u.scr.script,ev->pos,rid,ev->nd->bl.id);
 		(*c)++;
@@ -245,26 +247,8 @@ int npc_event_doall_sub(DBKey key, void* data, va_list ap)
 
 	return 0;
 }
-int npc_event_doall(const char* name)
-{
-	int c = 0;
-	char buf[64] = "::";
 
-	strncpy(buf+2, name, 62);
-	ev_db->foreach(ev_db,npc_event_doall_sub,&c,buf,0);
-	return c;
-}
-int npc_event_doall_id(const char* name, int rid)
-{
-	int c = 0;
-	char buf[64] = "::";
-
-	strncpy(buf+2, name, 62);
-	ev_db->foreach(ev_db,npc_event_doall_sub,&c,buf,rid);
-	return c;
-}
-
-int npc_event_do_sub(DBKey key, void* data, va_list ap)
+static int npc_event_do_sub(DBKey key, void* data, va_list ap)
 {
 	const char* p = key.str;
 	struct event_data* ev;
@@ -274,43 +258,61 @@ int npc_event_do_sub(DBKey key, void* data, va_list ap)
 	nullpo_retr(0, ev = (struct event_data *)data);
 	nullpo_retr(0, ap);
 	nullpo_retr(0, c = va_arg(ap, int *));
+	nullpo_retr(0, name = va_arg(ap, const char *));
 
-	name = va_arg(ap, const char *);
-
-	if (p && strcmpi(name, p)==0) {
+	if( p && strcmpi(name, p) == 0 )
+	{
 		run_script(ev->nd->u.scr.script,ev->pos,0,ev->nd->bl.id);
 		(*c)++;
 	}
 
 	return 0;
 }
+
+// runs the specified event (supports both single-npc and global events)
 int npc_event_do(const char* name)
 {
 	int c = 0;
 
-	if (*name == ':' && name[1] == ':') {
-		return npc_event_doall(name+2);
-	}
+	if( name[0] == ':' && name[1] == ':' )
+		ev_db->foreach(ev_db,npc_event_doall_sub,&c,name,0);
+	else
+		ev_db->foreach(ev_db,npc_event_do_sub,&c,name);
 
-	ev_db->foreach(ev_db,npc_event_do_sub,&c,name);
 	return c;
 }
+// runs the specified event (global only)
+int npc_event_doall(const char* name)
+{
+	return npc_event_doall_id(name, 0);
+}
+// runs the specified event, with a RID attached (global only)
+int npc_event_doall_id(const char* name, int rid)
+{
+	int c = 0;
+	char buf[64];
+	safesnprintf(buf, sizeof(buf), "::%s", name);
+	ev_db->foreach(ev_db,npc_event_doall_sub,&c,buf,rid);
+	return c;
+}
+
 
 /*==========================================
  * 時計イベント実行
  *------------------------------------------*/
 int npc_event_do_clock(int tid, unsigned int tick, int id, int data)
 {
+	static struct tm ev_tm_b; // tracks previous execution time
 	time_t timer;
-	struct tm *t;
+	struct tm* t;
 	char buf[64];
-        char *day="";
-	int c=0;
+	char* day;
+	int c = 0;
 
-	time(&timer);
-	t=localtime(&timer);
+	timer = time(NULL);
+	t = localtime(&timer);
 
-        switch (t->tm_wday) {
+	switch (t->tm_wday) {
 	case 0: day = "Sun"; break;
 	case 1: day = "Mon"; break;
 	case 2: day = "Tue"; break;
@@ -318,6 +320,7 @@ int npc_event_do_clock(int tid, unsigned int tick, int id, int data)
 	case 4: day = "Thu"; break;
 	case 5: day = "Fri"; break;
 	case 6: day = "Sat"; break;
+	default:day = ""; break;
 	}
 
 	if (t->tm_min != ev_tm_b.tm_min ) {
@@ -336,6 +339,7 @@ int npc_event_do_clock(int tid, unsigned int tick, int id, int data)
 		sprintf(buf,"OnDay%02d%02d",t->tm_mon+1,t->tm_mday);
 		c+=npc_event_doall(buf);
 	}
+
 	memcpy(&ev_tm_b,t,sizeof(ev_tm_b));
 	return c;
 }
@@ -345,8 +349,7 @@ int npc_event_do_clock(int tid, unsigned int tick, int id, int data)
  *------------------------------------------*/
 void npc_event_do_oninit(void)
 {
-	int count = npc_event_doall("OnInit");
-	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs."CL_CLL"\n", count);
+	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs."CL_CLL"\n", npc_event_doall("OnInit"));
 
 	add_timer_interval(gettick()+100,npc_event_do_clock,0,0,1000);
 }
@@ -361,7 +364,8 @@ int npc_timerevent_import(char* lname, void* data, va_list ap)
 	struct npc_data *nd=va_arg(ap,struct npc_data *);
 	int t=0,i=0;
 
-	if(sscanf(lname,"OnTimer%d%n",&t,&i)==1 && lname[i]==':') {
+	if(sscanf(lname,"OnTimer%d%n",&t,&i)==1 && lname[i]==':')
+	{
 		// タイマーイベント
 		struct npc_timerevent_list *te=nd->u.scr.timer_event;
 		int j,i=nd->u.scr.timeramount;
@@ -371,12 +375,9 @@ int npc_timerevent_import(char* lname, void* data, va_list ap)
 			ShowFatalError("npc_timerevent_import: out of memory !\n");
 			exit(EXIT_FAILURE);
 		}
-		for(j=0;j<i;j++){
-			if(te[j].timer>t){
-				memmove(te+j+1,te+j,sizeof(struct npc_timerevent_list)*(i-j));
-				break;
-			}
-		}
+		ARR_FIND( 0, i, j, te[j].timer > t );
+		if( j < i )
+			memmove(te+j+1,te+j,sizeof(struct npc_timerevent_list)*(i-j));
 		te[j].timer=t;
 		te[j].pos=pos;
 		nd->u.scr.timer_event=te;
@@ -465,10 +466,7 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 	if( n==0 )
 		return 0;
 
-	for(j=0;j<n;j++){
-		if( nd->u.scr.timer_event[j].timer > nd->u.scr.timer )
-			break;
-	}
+	ARR_FIND( 0, n, j, nd->u.scr.timer_event[j].timer > nd->u.scr.timer );
 	if(j>=n) // check if there is a timer to use !!BEFORE!! you write stuff to the structures [Shinomori]
 		return 0;
 	if (nd->u.scr.rid > 0) {
@@ -2931,7 +2929,6 @@ int do_init_npc(void)
 	ev_db = strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1);
 	npcname_db = strdb_alloc(DB_OPT_BASE,NAME_LENGTH);
 
-	memset(&ev_tm_b, -1, sizeof(ev_tm_b));
 	timer_event_ers = ers_new(sizeof(struct timer_event_data));
 
 	// process all npc files

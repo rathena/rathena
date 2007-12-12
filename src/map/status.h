@@ -20,8 +20,8 @@ extern unsigned long StatusChangeFlagTable[];
 // Status changes listing. These code are for use by the server. 
 enum sc_type {
 	//First we enumerate common status ailments which are often used around.
-	SC_COMMON_MIN = 0, // begin
 	SC_STONE = 0,
+	SC_COMMON_MIN = 0, // begin
 	SC_FREEZE,
 	SC_STUN,
 	SC_SLEEP,

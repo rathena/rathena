@@ -587,13 +587,12 @@ int intif_guild_leave(int guild_id,int account_id,int char_id,int flag,const cha
 	WFIFOL(inter_fd, 6) = account_id;
 	WFIFOL(inter_fd,10) = char_id;
 	WFIFOB(inter_fd,14) = flag;
-	memcpy(WFIFOP(inter_fd,15),mes,40);
+	safestrncpy(WFIFOP(inter_fd,15),mes,40);
 	WFIFOSET(inter_fd,55);
 	return 0;
 }
 // ギルドメンバのオンライン状況/Lv更新要求
-int intif_guild_memberinfoshort(int guild_id,
-	int account_id,int char_id,int online,int lv,int class_)
+int intif_guild_memberinfoshort(int guild_id,int account_id,int char_id,int online,int lv,int class_)
 {
 	if (CheckForCharServer())
 		return 0;

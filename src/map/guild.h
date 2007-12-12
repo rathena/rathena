@@ -18,8 +18,7 @@ int guild_skill_get_max(int id);
 int guild_checkskill(struct guild *g,int id);
 int guild_check_skill_require(struct guild *g,int id); // [Komurka]
 int guild_checkcastles(struct guild *g); // [MouseJstr]
-int guild_isallied(struct guild *g, struct guild_castle *gc);
-int guild_idisallied(int guild_id, int guild_id2); //Checks alliance based on guild Ids. [Skotlex]
+bool guild_isallied(int guild_id, int guild_id2); //Checks alliance based on guild Ids. [Skotlex]
 
 void do_init_guild(void);
 struct guild *guild_search(int guild_id);

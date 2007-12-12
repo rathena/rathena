@@ -92,7 +92,6 @@ static uint32 char_ip = 0;
 static uint16 char_port = 6121;
 static char userid[NAME_LENGTH], passwd[NAME_LENGTH];
 static int chrif_state = 0;
-static int char_init_done = 0;
 int other_mapserver_count=0; //Holds count of how many other map servers are online (apart of this instance) [Skotlex]
 
 //Interval at which map server updates online listing. [Valaris]
@@ -342,20 +341,23 @@ int chrif_changemapserverack(int account_id, int login_id1, int login_id2, int c
  *------------------------------------------*/
 int chrif_connectack(int fd)
 {
+	static bool char_init_done = false;
+
 	if (RFIFOB(fd,2)) {
 		ShowFatalError("Connection to char-server failed %d.\n", RFIFOB(fd,2));
 		exit(EXIT_FAILURE);
 	}
+
 	ShowStatus("Successfully logged on to Char Server (Connection: '"CL_WHITE"%d"CL_RESET"').\n",fd);
 	chrif_state = 1;
-	chrif_connected=1;
+	chrif_connected = 1;
 
 	chrif_sendmap(fd);
 
 	ShowStatus("Event '"CL_WHITE"OnCharIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnCharIfInit"));
 	ShowStatus("Event '"CL_WHITE"OnInterIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInit"));
-	if(!char_init_done) {
-		char_init_done = 1;
+	if( !char_init_done ) {
+		char_init_done = true;
 		ShowStatus("Event '"CL_WHITE"OnInterIfInitOnce"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInitOnce"));
 	}
 
