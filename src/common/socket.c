@@ -34,31 +34,158 @@
 	#endif
 #endif
 
-// portability layer 
-#ifdef WIN32
-	typedef int socklen_t;
+/////////////////////////////////////////////////////////////////////
+#if defined(WIN32)
+/////////////////////////////////////////////////////////////////////
+// windows portability layer 
 
-	#define s_errno WSAGetLastError()
-	#define S_ENOTSOCK WSAENOTSOCK
-	#define S_EWOULDBLOCK WSAEWOULDBLOCK
-	#define S_EINTR WSAEINTR
-	#define S_ECONNABORTED WSAECONNABORTED
+typedef int socklen_t;
 
-	#define SHUT_RD   SD_RECEIVE
-	#define SHUT_WR   SD_SEND
-	#define SHUT_RDWR SD_BOTH
+#define sErrno WSAGetLastError()
+#define S_ENOTSOCK WSAENOTSOCK
+#define S_EWOULDBLOCK WSAEWOULDBLOCK
+#define S_EINTR WSAEINTR
+#define S_ECONNABORTED WSAECONNABORTED
+
+#define SHUT_RD   SD_RECEIVE
+#define SHUT_WR   SD_SEND
+#define SHUT_RDWR SD_BOTH
+
+// global array of sockets (emulating linux)
+// fd is the position in the array
+static SOCKET sock_arr[FD_SETSIZE];
+static int sock_arr_len = 0;
+
+/// Returns the socket associated with the target fd.
+///
+/// @param fd Target fd.
+/// @return Socket
+#define fd2sock(fd) sock_arr[fd]
+
+/// Returns the first fd associated with the socket.
+/// Returns -1 if the socket is not found.
+///
+/// @param s Socket
+/// @return Fd or -1
+int sock2fd(SOCKET s)
+{
+	int fd;
+
+	// search for the socket
+	for( fd = 1; fd < sock_arr_len; ++fd )
+		if( sock_arr[fd] == s )
+			break;// found the socket
+	if( fd == sock_arr_len )
+		return -1;// not found
+	return fd;
+}
+
+
+/// Inserts the socket into the global array of sockets.
+/// Returns a new fd associated with the socket.
+/// If there are too many sockets it closes the socket, sets an error and 
+//  returns -1 instead.
+/// Since fd 0 is reserved, it returns values in the range [1,FD_SETSIZE[.
+///
+/// @param s Socket
+/// @return New fd or -1
+int sock2newfd(SOCKET s)
+{
+	int fd;
+
+	// find an empty position
+	for( fd = 1; fd < sock_arr_len; ++fd )
+		if( sock_arr[fd] == INVALID_SOCKET )
+			break;// empty position
+	if( fd == ARRAYLENGTH(sock_arr) )
+	{// too many sockets
+		closesocket(s);
+		WSASetLastError(WSAEMFILE);
+		return -1;
+	}
+	sock_arr[fd] = s;
+	if( sock_arr_len <= fd )
+		sock_arr_len = fd+1;
+	return fd;
+}
+
+int sAccept(int fd, struct sockaddr* addr, int* addrlen)
+{
+	SOCKET s;
+
+	// accept connection
+	s = accept(fd2sock(fd), addr, addrlen);
+	if( s == INVALID_SOCKET )
+		return -1;// error
+	return sock2newfd(s);
+}
+
+int sClose(int fd)
+{
+	int ret = closesocket(fd2sock(fd));
+	fd2sock(fd) = INVALID_SOCKET;
+	return ret;
+}
+
+int sSocket(int af, int type, int protocol)
+{
+	SOCKET s;
+
+	// create socket
+	s = socket(af,type,protocol);
+	if( s == INVALID_SOCKET )
+		return -1;// error
+	return sock2newfd(s);
+}
+
+#define sBind(fd,name,namelen) bind(fd2sock(fd),name,namelen)
+#define sConnect(fd,name,namelen) connect(fd2sock(fd),name,namelen)
+#define sIoctl(fd,cmd,argp) ioctlsocket(fd2sock(fd),cmd,argp)
+#define sListen(fd,backlog) listen(fd2sock(fd),backlog)
+#define sRecv(fd,buf,len,flags) recv(fd2sock(fd),buf,len,flags)
+#define sSelect select
+#define sSend(fd,buf,len,flags) send(fd2sock(fd),buf,len,flags)
+#define sSetsockopt(fd,level,optname,optval,optlen) setsockopt(fd2sock(fd),level,optname,optval,optlen)
+#define sShutdown(fd,how) shutdown(fd2sock(fd),how)
+#define sFD_SET(fd,set) FD_SET(fd2sock(fd),set)
+#define sFD_CLR(fd,set) FD_CLR(fd2sock(fd),set)
+#define sFD_ISSET(fd,set) FD_ISSET(fd2sock(fd),set)
+#define sFD_ZERO FD_ZERO
+
+/////////////////////////////////////////////////////////////////////
 #else
-	#define SOCKET_ERROR -1
-	#define INVALID_SOCKET -1
-	#define ioctlsocket ioctl
-	#define closesocket close
+/////////////////////////////////////////////////////////////////////
+// nix portability layer
 
-	#define s_errno errno
-	#define S_ENOTSOCK EBADF
-	#define S_EWOULDBLOCK EAGAIN
-	#define S_EINTR EINTR
-	#define S_ECONNABORTED ECONNABORTED
+#define SOCKET_ERROR (-1)
+
+#define sErrno errno
+#define S_ENOTSOCK EBADF
+#define S_EWOULDBLOCK EAGAIN
+#define S_EINTR EINTR
+#define S_ECONNABORTED ECONNABORTED
+
+#define sAccept accept
+#define sClose close
+#define sSocket socket
+
+#define sBind bind
+#define sConnect connect
+#define sIoctl ioctl
+#define sListen listen
+#define sRecv recv
+#define sSelect select
+#define sSend send
+#define sSetsockopt setsockopt
+#define sShutdown shutdown
+#define sFD_SET FD_SET
+#define sFD_CLR FD_CLR
+#define sFD_ISSET FD_ISSET
+#define sFD_ZERO FD_ZERO
+
+/////////////////////////////////////////////////////////////////////
 #endif
+/////////////////////////////////////////////////////////////////////
 
 fd_set readfds;
 int fd_max;
@@ -79,7 +206,7 @@ struct socket_data* session[FD_SETSIZE];
 #ifdef SEND_SHORTLIST
 int send_shortlist_array[FD_SETSIZE];// we only support FD_SETSIZE sockets, limit the array to that
 int send_shortlist_count = 0;// how many fd's are in the shortlist
-fd_set send_shortlist_fd_set;// to know if specific fd's are already in the shortlist
+uint32 send_shortlist_set[(FD_SETSIZE+31)/32];// to know if specific fd's are already in the shortlist
 #endif
 
 static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse);
@@ -112,26 +239,26 @@ void set_nonblocking(int fd, unsigned long yes)
 {
 	// FIONBIO Use with a nonzero argp parameter to enable the nonblocking mode of socket s. 
 	// The argp parameter is zero if nonblocking is to be disabled. 
-	if (ioctlsocket(fd, FIONBIO, &yes) != 0)
-		ShowError("Couldn't set the socket to non-blocking mode (code %d)!\n", s_errno);
+	if( sIoctl(fd, FIONBIO, &yes) != 0 )
+		ShowError("set_nonblocking: Failed to set socket #%d to non-blocking mode (code %d) - Please report this!!!\n", fd, sErrno);
 }
 
 void setsocketopts(int fd)
 {
 	int yes = 1; // reuse fix
-#ifndef WIN32
-    // set SO_REAUSEADDR to true, unix only. on windows this option causes
-    // the previous owner of the socket to give up, which is not desirable
-    // in most cases, neither compatible with unix.
-	setsockopt(fd,SOL_SOCKET,SO_REUSEADDR,(char *)&yes,sizeof(yes));
+#if !defined(WIN32)
+	// set SO_REAUSEADDR to true, unix only. on windows this option causes
+	// the previous owner of the socket to give up, which is not desirable
+	// in most cases, neither compatible with unix.
+	sSetsockopt(fd,SOL_SOCKET,SO_REUSEADDR,(char *)&yes,sizeof(yes));
 #ifdef SO_REUSEPORT
-	setsockopt(fd,SOL_SOCKET,SO_REUSEPORT,(char *)&yes,sizeof(yes));
+	sSetsockopt(fd,SOL_SOCKET,SO_REUSEPORT,(char *)&yes,sizeof(yes));
 #endif
 #endif
 
 	// Set the socket into no-delay mode; otherwise packets get delayed for up to 200ms, likely creating server-side lag.
 	// The RO protocol is mainly single-packet request/response, plus the FIFO model already does packet grouping anyway.
-	setsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (char *)&yes, sizeof(yes));
+	sSetsockopt(fd, IPPROTO_TCP, TCP_NODELAY, (char *)&yes, sizeof(yes));
 
 	// force the socket into no-wait, graceful-close mode (should be the default, but better make sure)
 	//(http://msdn.microsoft.com/library/default.asp?url=/library/en-us/winsock/winsock/closesocket_2.asp)
@@ -139,8 +266,8 @@ void setsocketopts(int fd)
 	struct linger opt;
 	opt.l_onoff = 0; // SO_DONTLINGER
 	opt.l_linger = 0; // Do not care
-	if (setsockopt(fd, SOL_SOCKET, SO_LINGER, (char*)&opt, sizeof(opt)))
-		ShowWarning("setsocketopts: Unable to set SO_LINGER mode for connection %d!\n",fd);
+	if( sSetsockopt(fd, SOL_SOCKET, SO_LINGER, (char*)&opt, sizeof(opt)) )
+		ShowWarning("setsocketopts: Unable to set SO_LINGER mode for connection #%d!\n", fd);
 	}
 }
 
@@ -166,12 +293,12 @@ int recv_to_fifo(int fd)
 	if( !session_isActive(fd) )
 		return -1;
 
-	len = recv(fd, (char *) session[fd]->rdata + session[fd]->rdata_size, (int)RFIFOSPACE(fd), 0);
+	len = sRecv(fd, (char *) session[fd]->rdata + session[fd]->rdata_size, (int)RFIFOSPACE(fd), 0);
 
 	if( len == SOCKET_ERROR )
 	{//An exception has occured
-		if( s_errno != S_EWOULDBLOCK ) {
-			//ShowDebug("recv_to_fifo: code %d, closing connection #%d\n", s_errno, fd);
+		if( sErrno != S_EWOULDBLOCK ) {
+			//ShowDebug("recv_to_fifo: code %d, closing connection #%d\n", sErrno, fd);
 			set_eof(fd);
 		}
 		return 0;
@@ -198,12 +325,12 @@ int send_from_fifo(int fd)
 	if( session[fd]->wdata_size == 0 )
 		return 0; // nothing to send
 
-	len = send(fd, (const char *) session[fd]->wdata, (int)session[fd]->wdata_size, 0);
+	len = sSend(fd, (const char *) session[fd]->wdata, (int)session[fd]->wdata_size, 0);
 
 	if( len == SOCKET_ERROR )
 	{//An exception has occured
-		if( s_errno != S_EWOULDBLOCK ) {
-			//ShowDebug("send_from_fifo: error %d, ending connection #%d\n", s_errno, fd);
+		if( sErrno != S_EWOULDBLOCK ) {
+			//ShowDebug("send_from_fifo: error %d, ending connection #%d\n", sErrno, fd);
 			session[fd]->wdata_size = 0; //Clear the send queue as we can't send anymore. [Skotlex]
 			set_eof(fd);
 		}
@@ -248,15 +375,21 @@ int connect_client(int listen_fd)
 
 	len = sizeof(client_address);
 
-	fd = accept(listen_fd, (struct sockaddr*)&client_address, &len);
-	if ( fd == INVALID_SOCKET ) {
-		ShowError("accept failed (code %i)!\n", s_errno);
+	fd = sAccept(listen_fd, (struct sockaddr*)&client_address, &len);
+	if ( fd == -1 ) {
+		ShowError("connect_client: accept failed (code %d)!\n", sErrno);
 		return -1;
 	}
-
-	if ( fd >= FD_SETSIZE ) { //Not enough capacity for this socket
+	if( fd == 0 )
+	{// reserved
+		ShowError("connect_client: Socket #0 is reserved - Please report this!!!\n");
+		sClose(fd);
+		return -1;
+	}
+	if( fd >= FD_SETSIZE )
+	{// socket number too big
 		ShowError("connect_client: New socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (currently %d) for your OS to fix this!\n", fd, FD_SETSIZE);
-		closesocket(fd);
+		sClose(fd);
 		return -1;
 	}
 
@@ -271,7 +404,7 @@ int connect_client(int listen_fd)
 #endif
 
 	if( fd_max <= fd ) fd_max = fd + 1;
-	FD_SET(fd,&readfds);
+	sFD_SET(fd,&readfds);
 
 	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
 	session[fd]->client_addr = ntohl(client_address.sin_addr.s_addr);
@@ -285,16 +418,23 @@ int make_listen_bind(uint32 ip, uint16 port)
 	int fd;
 	int result;
 
-	fd = (int)socket( AF_INET, SOCK_STREAM, 0 );
+	fd = sSocket(AF_INET, SOCK_STREAM, 0);
 
-	if (fd == INVALID_SOCKET) {
-		ShowError("socket() creation failed (code %d)!\n", s_errno);
+	if( fd == -1 )
+	{
+		ShowError("make_listen_bind: socket creation failed (code %d)!\n", sErrno);
 		exit(EXIT_FAILURE);
 	}
-
-	if ( fd >= FD_SETSIZE ) { //Not enough capacity for this socket
+	if( fd == 0 )
+	{// reserved
+		ShowError("make_listen_bind: Socket #0 is reserved - Please report this!!!\n");
+		sClose(fd);
+		return -1;
+	}
+	if( fd >= FD_SETSIZE )
+	{// socket number too big
 		ShowError("make_listen_bind: New socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (currently %d) for your OS to fix this!\n", fd, FD_SETSIZE);
-		closesocket(fd);
+		sClose(fd);
 		return -1;
 	}
 
@@ -305,24 +445,19 @@ int make_listen_bind(uint32 ip, uint16 port)
 	server_address.sin_addr.s_addr = htonl(ip);
 	server_address.sin_port        = htons(port);
 
-	result = bind(fd, (struct sockaddr*)&server_address, sizeof(server_address));
+	result = sBind(fd, (struct sockaddr*)&server_address, sizeof(server_address));
 	if( result == SOCKET_ERROR ) {
-		ShowError("bind failed (socket %d, code %d)!\n", fd, s_errno);
+		ShowError("make_listen_bind: bind failed (socket #%d, code %d)!\n", fd, sErrno);
 		exit(EXIT_FAILURE);
 	}
-	result = listen( fd, 5 );
+	result = sListen(fd,5);
 	if( result == SOCKET_ERROR ) {
-		ShowError("listen failed (socket %d, code %d)!\n", fd, s_errno);
-		exit(EXIT_FAILURE);
-	}
-	if ( fd < 0 || fd > FD_SETSIZE ) 
-	{ //Crazy error that can happen in Windows? (info from Freya)
-		ShowFatalError("listen() returned invalid fd %d!\n",fd);
+		ShowError("make_listen_bind: listen failed (socket #%d, code %d)!\n", fd, sErrno);
 		exit(EXIT_FAILURE);
 	}
 
 	if(fd_max <= fd) fd_max = fd + 1;
-	FD_SET(fd, &readfds);
+	sFD_SET(fd, &readfds);
 
 	create_session(fd, connect_client, null_send, null_parse);
 	session[fd]->rdata_tick = 0; // disable timeouts on this socket
@@ -337,16 +472,22 @@ int make_connection(uint32 ip, uint16 port)
 	int fd;
 	int result;
 
-	fd = (int)socket( AF_INET, SOCK_STREAM, 0 );
+	fd = sSocket(AF_INET, SOCK_STREAM, 0);
 
-	if (fd == INVALID_SOCKET) {
-		ShowError("socket() creation failed (code %d)!\n", fd, s_errno);
+	if (fd == -1) {
+		ShowError("make_connection: socket creation failed (code %d)!\n", sErrno);
 		return -1;
 	}
-
-	if ( fd >= FD_SETSIZE ) { //Not enough capacity for this socket
+	if( fd == 0 )
+	{// reserved
+		ShowError("make_connection: Socket #0 is reserved - Please report this!!!\n");
+		sClose(fd);
+		return -1;
+	}
+	if( fd >= FD_SETSIZE )
+	{// socket number too big
 		ShowError("make_connection: New socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (currently %d) for your OS to fix this!\n", fd, FD_SETSIZE);
-		closesocket(fd);
+		sClose(fd);
 		return -1;
 	}
 
@@ -358,9 +499,9 @@ int make_connection(uint32 ip, uint16 port)
 
 	ShowStatus("Connecting to %d.%d.%d.%d:%i\n", CONVIP(ip), port);
 
-	result = connect(fd, (struct sockaddr *)(&server_address), sizeof(struct sockaddr_in));
+	result = sConnect(fd, (struct sockaddr *)(&server_address), sizeof(struct sockaddr_in));
 	if( result == SOCKET_ERROR ) {
-		ShowError("connect failed (socket %d, code %d)!\n", fd, s_errno);
+		ShowError("make_connection: connect failed (socket #%d, code %d)!\n", fd, sErrno);
 		do_close(fd);
 		return -1;
 	}
@@ -368,7 +509,7 @@ int make_connection(uint32 ip, uint16 port)
 	set_nonblocking(fd, 1);
 
 	if (fd_max <= fd) fd_max = fd + 1;
-	FD_SET(fd,&readfds);
+	sFD_SET(fd,&readfds);
 
 	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
 	session[fd]->client_addr = 0;
@@ -394,7 +535,6 @@ static int delete_session(int fd)
 {
 	if (fd <= 0 || fd >= FD_SETSIZE)
 		return -1;
-	FD_CLR(fd, &readfds);
 	if (session[fd]) {
 		aFree(session[fd]->rdata);
 		aFree(session[fd]->wdata);
@@ -552,13 +692,13 @@ int do_sockets(int next)
 	timeout.tv_usec = next%1000*1000;
 
 	memcpy(&rfd, &readfds, sizeof(rfd));
-	ret = select(fd_max, &rfd, NULL, NULL, &timeout);
+	ret = sSelect(fd_max, &rfd, NULL, NULL, &timeout);
 
 	if( ret == SOCKET_ERROR )
 	{
-		if( s_errno != S_EINTR )
+		if( sErrno != S_EINTR )
 		{
-			ShowFatalError("do_sockets: select() failed, error code %d!\n", s_errno);
+			ShowFatalError("do_sockets: select() failed, error code %d!\n", sErrno);
 			exit(EXIT_FAILURE);
 		}
 		return 0; // interrupted by a signal, just loop and try again
@@ -566,19 +706,20 @@ int do_sockets(int next)
 
 	last_tick = time(NULL);
 
-#ifdef WIN32
+#if defined(WIN32)
 	// on windows, enumerating all members of the fd_set is way faster if we access the internals
-	for(i=0;i<(int)rfd.fd_count;i++)
+	for( i = 0; i < (int)rfd.fd_count; ++i )
 	{
-		if(session[rfd.fd_array[i]])
-			session[rfd.fd_array[i]]->func_recv(rfd.fd_array[i]);
+		int fd = sock2fd(rfd.fd_array[i]);
+		if( session[fd] )
+			session[fd]->func_recv(fd);
 	}
 #else
 	// otherwise assume that the fd_set is a bit-array and enumerate it in a standard way
 	//TODO: select() returns the number of readable sockets; use that to exit the fd_max loop faster
 	for (i = 1; i < fd_max; i++)
 	{
-		if(FD_ISSET(i,&rfd) && session[i])
+		if(sFD_ISSET(i,&rfd) && session[i])
 			session[i]->func_recv(i);
 	}
 #endif
@@ -609,7 +750,7 @@ int do_sockets(int next)
 			continue;
 
 		if (session[i]->rdata_tick && DIFF_TICK(last_tick, session[i]->rdata_tick) > stall_time) {
-			ShowInfo ("Session #%d timed out\n", i);
+			ShowInfo("Session #%d timed out\n", i);
 			set_eof(i);
 		}
 
@@ -965,8 +1106,9 @@ void socket_final(void)
 void do_close(int fd)
 {
 	flush_fifo(fd); // Try to send what's left (although it might not succeed since it's a nonblocking socket)
-	shutdown(fd, SHUT_RDWR); // Disallow further reads/writes
-	closesocket(fd); // We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
+	sFD_CLR(fd, &readfds);// this needs to be done before closing the socket
+	sShutdown(fd, SHUT_RDWR); // Disallow further reads/writes
+	sClose(fd); // We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
 	if (session[fd]) delete_session(fd);
 }
 
@@ -1016,13 +1158,13 @@ int socket_getips(uint32* ips, int max)
 		struct sockaddr_in* a;
 		u_long ad;
 
-		fd = socket(AF_INET, SOCK_STREAM, 0);
+		fd = sSocket(AF_INET, SOCK_STREAM, 0);
 
 		// The ioctl call will fail with Invalid Argument if there are more
 		// interfaces than will fit in the buffer
 		ic.ifc_len = sizeof(buf);
 		ic.ifc_buf = buf;
-		if( ioctl(fd, SIOCGIFCONF, &ic) == -1 )
+		if( sIoctl(fd, SIOCGIFCONF, &ic) == -1 )
 		{
 			ShowError("socket_getips: SIOCGIFCONF failed!\n");
 			return 0;
@@ -1045,7 +1187,7 @@ int socket_getips(uint32* ips, int max)
 	#endif//not AIX or APPLE
 			}
 		}
-		closesocket(fd);
+		sClose(fd);
 	}
 #endif // not W32
 
@@ -1080,7 +1222,10 @@ void socket_init(void)
 	// Get initial local ips
 	naddr_ = socket_getips(addr_,16);
 
-	FD_ZERO(&readfds);
+	sFD_ZERO(&readfds);
+#if defined(SEND_SHORTLIST)
+	memset(send_shortlist_set, 0, sizeof(send_shortlist_set));
+#endif
 
 	socket_config_read(SOCKET_CONF_FILENAME);
 
@@ -1144,11 +1289,18 @@ uint16 ntows(uint16 netshort)
 // sending or eof handling.
 void send_shortlist_add_fd(int fd)
 {
-	if( FD_ISSET(fd, &send_shortlist_fd_set) )
-		return;// Refuse to add duplicate FDs to the shortlist
+	int i;
+	int bit;
 
-	FD_SET(fd, &send_shortlist_fd_set);
+	if( fd < 0 || fd >= FD_SETSIZE )
+		return;// out of range
+	i = fd/32;
+	bit = fd%32;
+	if( (send_shortlist_set[i]>>bit)&1 )
+		return;// already in the list
 
+	// set the bit
+	send_shortlist_set[i] |= 1<<bit;
 	// Add to the end of the shortlist array.
 	send_shortlist_array[send_shortlist_count++] = fd;
 }
@@ -1159,7 +1311,7 @@ void send_shortlist_do_sends()
 	int i = 0;
 
 	// Assume all or most of the fd's don't remain in the shortlist
-	FD_ZERO(&send_shortlist_fd_set);
+	memset(send_shortlist_set, 0, sizeof(send_shortlist_set));
 
 	while( i < send_shortlist_count )
 	{
@@ -1182,7 +1334,7 @@ void send_shortlist_do_sends()
 			// be sent from it we'll keep it in the shortlist.
 			if( session[fd] && !session[fd]->eof && session[fd]->wdata_size )
 			{
-				FD_SET(fd, &send_shortlist_fd_set);
+				send_shortlist_set[fd/32] |= 1<<(fd%32);
 				++i;
 				continue;
 			}
