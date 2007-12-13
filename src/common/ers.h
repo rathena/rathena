@@ -59,7 +59,7 @@
  * All code except the typedef of ERInterface will be disabled.
  * To allow a smooth transition, 
  */
-//#define DISABLE_ERS
+#define DISABLE_ERS
 
 /**
  * Entries are aligned to ERS_ALIGNED bytes in the blocks of entries.
