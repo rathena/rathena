@@ -76,7 +76,11 @@
 #define script_lastdata(st) ( (st)->end - (st)->start - 1 )
 /// Pushes an int into the stack
 #define script_pushint(st,val) push_val((st)->stack, C_INT, (val))
+/// Pushes a string into the stack (script engine frees it automatically)
 #define script_pushstr(st,val) push_str((st)->stack, C_STR, (val))
+/// Pushes a copy of a string into the stack
+#define script_pushstrcopy(st,val) push_str((st)->stack, C_STR, aStrdup(val))
+/// Pushes a constant string into the stack (must never change or be freed)
 #define script_pushconststr(st,val) push_str((st)->stack, C_CONSTSTR, (val))
 /// Pushes a nil into the stack
 #define script_pushnil(st) push_val((st)->stack, C_NOP, 0)
@@ -5967,9 +5971,9 @@ BUILDIN_FUNC(getpartyleader)
 		case 1: script_pushint(st,p->party.member[i].account_id); break;
 		case 2: script_pushint(st,p->party.member[i].char_id); break;
 		case 3: script_pushint(st,p->party.member[i].class_); break;
-		case 4: script_pushstr(st,aStrdup(mapindex_id2name(p->party.member[i].map))); break;
+		case 4: script_pushstrcopy(st,mapindex_id2name(p->party.member[i].map)); break;
 		case 5: script_pushint(st,p->party.member[i].lv); break;
-		default: script_pushstr(st,aStrdup(p->party.member[i].name)); break;
+		default: script_pushstrcopy(st,p->party.member[i].name); break;
 	}
 	return 0;
 }
@@ -6068,7 +6072,7 @@ BUILDIN_FUNC(strcharinfo)
 	num=script_getnum(st,2);
 	switch(num){
 		case 0:
-			script_pushstr(st,aStrdup(sd->status.name));
+			script_pushstrcopy(st,sd->status.name);
 			break;
 		case 1:
 			buf=buildin_getpartyname_sub(sd->status.party_id);
@@ -8638,9 +8642,9 @@ BUILDIN_FUNC(getwaitingroomstate)
 	case 1:  script_pushint(st, cd->limit); break;
 	case 2:  script_pushint(st, cd->trigger&0x7f); break;
 	case 3:  script_pushint(st, ((cd->trigger&0x80)!=0)); break;
-	case 4:  script_pushconststr(st, cd->title); break;
-	case 5:  script_pushconststr(st, cd->pass); break;
-	case 16: script_pushconststr(st, cd->npc_event);break;
+	case 4:  script_pushstrcopy(st, cd->title); break;
+	case 5:  script_pushstrcopy(st, cd->pass); break;
+	case 16: script_pushstrcopy(st, cd->npc_event);break;
 	case 32: script_pushint(st, (cd->users >= cd->limit)); break;
 	case 33: script_pushint(st, (cd->users >= cd->trigger)); break;
 	default: script_pushint(st, -1); break;
@@ -9102,7 +9106,7 @@ BUILDIN_FUNC(getcastlename)
 	const char* mapname = mapindex_getmapname(script_getstr(st,2),NULL);
 	struct guild_castle* gc = guild_mapname2gc(mapname);
 	char* name = (gc) ? gc->castle_name : "";
-	script_pushconststr(st,name);
+	script_pushstrcopy(st,name);
 	return 0;
 }
 
@@ -9682,8 +9686,8 @@ BUILDIN_FUNC(strmobinfo)
 	}
 
 	switch (num) {
-	case 1: script_pushconststr(st,mob_db(class_)->name); break;
-	case 2: script_pushconststr(st,mob_db(class_)->jname); break;
+	case 1: script_pushstrcopy(st,mob_db(class_)->name); break;
+	case 2: script_pushstrcopy(st,mob_db(class_)->jname); break;
 	case 3: script_pushint(st,mob_db(class_)->lv); break;
 	case 4: script_pushint(st,mob_db(class_)->status.max_hp); break;
 	case 5: script_pushint(st,mob_db(class_)->status.max_sp); break;
@@ -10592,7 +10596,7 @@ BUILDIN_FUNC(getpetinfo)
 	switch(type){
 		case 0: script_pushint(st,pd->pet.pet_id); break;
 		case 1: script_pushint(st,pd->pet.class_); break;
-		case 2: script_pushstr(st,aStrdup(pd->pet.name)); break;
+		case 2: script_pushstrcopy(st,pd->pet.name); break;
 		case 3: script_pushint(st,pd->pet.intimate); break;
 		case 4: script_pushint(st,pd->pet.hungry); break;
 		case 5: script_pushint(st,pd->pet.rename_flag); break;
@@ -10628,7 +10632,7 @@ BUILDIN_FUNC(gethominfo)
 	switch(type){
 		case 0: script_pushint(st,hd->homunculus.hom_id); break;
 		case 1: script_pushint(st,hd->homunculus.class_); break;
-		case 2: script_pushstr(st,aStrdup(hd->homunculus.name)); break;
+		case 2: script_pushstrcopy(st,hd->homunculus.name); break;
 		case 3: script_pushint(st,hd->homunculus.intimacy); break;
 		case 4: script_pushint(st,hd->homunculus.hunger); break;
 		case 5: script_pushint(st,hd->homunculus.rename_flag); break;
@@ -10883,7 +10887,7 @@ BUILDIN_FUNC(getsavepoint)
 	type = script_getnum(st,2);
 
 	switch(type) {
-		case 0: script_pushstr(st,aStrdup(mapindex_id2name(sd->status.save_point.map))); break;
+		case 0: script_pushstrcopy(st,mapindex_id2name(sd->status.save_point.map)); break;
 		case 1: script_pushint(st,sd->status.save_point.x); break;
 		case 2: script_pushint(st,sd->status.save_point.y); break;
 		default:
@@ -11829,7 +11833,7 @@ BUILDIN_FUNC(petstat)
 	pd = sd->pd;
 	switch(flag){
 		case 1: script_pushint(st,(int)pd->pet.class_); break;
-		case 2: script_pushstr(st, aStrdup(pd->pet.name)); break;
+		case 2: script_pushstrcopy(st, pd->pet.name); break;
 		case 3: script_pushint(st,(int)pd->pet.level); break;
 		case 4: script_pushint(st,(int)pd->pet.hungry); break;
 		case 5: script_pushint(st,(int)pd->pet.intimate); break;
@@ -12085,7 +12089,7 @@ BUILDIN_FUNC(getmonsterinfo)
 	}
 	mob = mob_db(mob_id);
 	switch ( script_getnum(st,3) ) {
-		case 0:  script_pushconststr(st,mob->jname); break;
+		case 0:  script_pushstrcopy(st,mob->jname); break;
 		case 1:  script_pushint(st,mob->lv); break;
 		case 2:  script_pushint(st,mob->status.max_hp); break;
 		case 3:  script_pushint(st,mob->base_exp); break;
@@ -12196,11 +12200,11 @@ BUILDIN_FUNC(rid2name)
 	if((bl = map_id2bl(rid)))
 	{
 		switch(bl->type) {
-			case BL_MOB: script_pushconststr(st,((TBL_MOB*)bl)->name); break;
-			case BL_PC:  script_pushconststr(st,((TBL_PC*)bl)->status.name); break;
-			case BL_NPC: script_pushconststr(st,((TBL_NPC*)bl)->exname); break;
-			case BL_PET: script_pushconststr(st,((TBL_PET*)bl)->pet.name); break;
-			case BL_HOM: script_pushconststr(st,((TBL_HOM*)bl)->homunculus.name); break;
+			case BL_MOB: script_pushstrcopy(st,((TBL_MOB*)bl)->name); break;
+			case BL_PC:  script_pushstrcopy(st,((TBL_PC*)bl)->status.name); break;
+			case BL_NPC: script_pushstrcopy(st,((TBL_NPC*)bl)->exname); break;
+			case BL_PET: script_pushstrcopy(st,((TBL_PET*)bl)->pet.name); break;
+			case BL_HOM: script_pushstrcopy(st,((TBL_HOM*)bl)->homunculus.name); break;
 			default:
 				ShowError("buildin_rid2name: BL type unknown.\n");
 				script_pushconststr(st,"");
