@@ -684,12 +684,10 @@ int guild_reply_invite(struct map_session_data* sd, int guild_id, int flag)
 	//NOTE: this can be NULL because the person might have logged off in the meantime
 	tsd = map_id2sd(sd->guild_invite_account);
 
-	// zero out the status data
-	sd->guild_invite = 0;
-	sd->guild_invite_account = 0;
-
 	if( flag == 0 )
 	{// rejected
+		sd->guild_invite = 0;
+		sd->guild_invite_account = 0;
 		if( tsd ) clif_guild_inviteack(tsd,1);
 	}
 	else
@@ -699,11 +697,17 @@ int guild_reply_invite(struct map_session_data* sd, int guild_id, int flag)
 		int i;
 
 		if( (g=guild_search(guild_id)) == NULL )
+		{
+			sd->guild_invite = 0;
+			sd->guild_invite_account = 0;
 			return 0;
+		}
 
 		ARR_FIND( 0, g->max_member, i, g->member[i].account_id == 0 );
 		if( i == g->max_member )
 		{
+			sd->guild_invite = 0;
+			sd->guild_invite_account = 0;
 			if( tsd ) clif_guild_inviteack(tsd,3);
 			return 0;
 		}
@@ -728,7 +732,7 @@ int guild_member_added(int guild_id,int account_id,int char_id,int flag)
 		// ƒLƒƒƒ‰‘¤‚É“o˜^‚Å‚«‚È‚©‚Á‚½‚½‚ß’E‘Ş—v‹‚ğo‚·
 		if (flag == 0) {
 			ShowError("guild: member added error %d is not online\n",account_id);
- 			intif_guild_leave(guild_id,account_id,char_id,0,"**“o˜^¸”s**");
+ 			intif_guild_leave(guild_id,account_id,char_id,0,"** Data Error **");
 		}
 		return 0;
 	}
