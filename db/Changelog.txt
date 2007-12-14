@@ -38,6 +38,8 @@
 
 =======================
 
+12/14
+	* corrected Option_Xmas value in const.txt [Skotlex]
 12/13
 	* Rev. 11909 Fixed Big Defense Potion 10ea Box. (was giving small def pot.) [L0ne_W0lf]
 12/05

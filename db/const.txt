@@ -165,7 +165,7 @@ EAJ_BABY_ROGUE	0x2206
 EAJ_BABY_SOUL_LINKER	0x2207
 
 Option_Wedding	0x1000
-Option_Xmas	0x20000
+Option_Xmas	0x10000
 Option_Summer	0x40000
 
 bc_all	0

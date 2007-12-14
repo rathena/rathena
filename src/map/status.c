@@ -5552,10 +5552,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val2 = 50*val1; //aspd reduction
 			break;
 
-		case SC_HERMODE:
-			status_change_clear_buffs(bl,1);
-			break;
-
 		case SC_REGENERATION:
 			if (val1 == 1)
 				val2 = 2;
@@ -6206,10 +6202,8 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	
 	sc = status_get_sc(bl);
 	status = status_get_status_data(bl);
-	nullpo_retr(0,sc);
-	nullpo_retr(0,status);
 
-	if(type < 0 || type >= SC_MAX || !(sce = sc->data[type]))
+	if(type < 0 || type >= SC_MAX || !sc || !(sce = sc->data[type]))
 		return 0;
 
 	BL_CAST(BL_PC,bl,sd);

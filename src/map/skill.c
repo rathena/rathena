@@ -6544,6 +6544,10 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 			0,0,sg->limit);
 		break;
 
+	case UNT_HERMODE:
+		if (sg->src_id!=bl->id && battle_check_target(&src->bl,bl,BCT_PARTY|BCT_GUILD) > 0)
+			status_change_clear_buffs(bl,1); //Should dispell only allies.
+			break;
 	case UNT_RICHMANKIM:
 	case UNT_ETERNALCHAOS:
 	case UNT_DRUMBATTLEFIELD:
@@ -6551,7 +6555,6 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 	case UNT_ROKISWEIL:
 	case UNT_INTOABYSS:
 	case UNT_SIEGFRIED:
-	case UNT_HERMODE:
 		 //Needed to check when a dancer/bard leaves their ensemble area.
 		if (sg->src_id==bl->id && !(sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER))
 			return skillid;

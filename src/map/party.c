@@ -155,7 +155,7 @@ int party_check_member(struct party *p)
 			ARR_FIND( 0, MAX_PARTY, j, p->member[j].account_id == sd->status.account_id && p->member[j].char_id == sd->status.char_id );
 			if( j == MAX_PARTY )
 			{
-				ShowWarning("party_check_member: '%s' (acc:%d) is not member of party '%s' (id:%d)\n",sd->status.char_id,sd->status.name,p->name,p->party_id);
+				ShowWarning("party_check_member: '%s' (acc:%d) is not member of party '%s' (id:%d)\n",sd->status.name,sd->status.account_id,p->name,p->party_id);
 				sd->status.party_id = 0;
 			}
 		}
