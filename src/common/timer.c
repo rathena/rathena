@@ -91,8 +91,12 @@ char* search_timer_func_list(TimerFunc func)
 /// platform-abstracted tick retrieval
 static unsigned int tick(void)
 {
-#ifdef WIN32
+#if defined(WIN32)
 	return GetTickCount();
+#elif defined(__FREEBSD__)
+	struct timespec tval;
+	clock_gettime(CLOCK_MONOTONIC, &tval);
+	return tval.tv_sec * 1000 + tval.tv_nsec / 1000000;
 #else
 	struct timeval tval;
 	gettimeofday(&tval, NULL);
