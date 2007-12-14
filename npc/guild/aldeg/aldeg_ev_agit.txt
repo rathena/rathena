@@ -4,7 +4,7 @@
 //= jAthena (1.0)
 //= 1.1 by Akaru and ho|yAnge|
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -13,6 +13,8 @@
 //= v1.2 Now using functions for OnAgitStart and OnAgitBreak. [kobra_k88]
 //= 1.3 Added code for abandoning captured castles on /breakguild [Lupus]
 //= 1.4 Small updated. Changed "EMPERIUM" to "Emperium". [L0ne_W0lf]
+//= 1.5 Quick fix "emps not respawning if the emp breaker logs off".
+//=     (from r11630 bureport:369) [FlavioJS]
 //============================================================
 
 
@@ -29,13 +31,14 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","aldeg_cas01","A01";
-	addtimer getbattleflag("gvg_eliminate_time"), "Agit_A01::OnAgitEliminate";
-	end;
+	goto OnAgitEliminate;
 OnGuildBreak:
 	callfunc "F_GuildBreak","aldeg_cas01","A01";
 	end;
 OnAgitEliminate:
+	sleep getbattleflag("gvg_eliminate_time");
 	MapRespawnGuildID "aldeg_cas01",GetCastleData("aldeg_cas01",1),6;
+	sleep 6333-getbattleflag("gvg_eliminate_time");// wait for emp animation to end
 	Monster "aldeg_cas01",216,24,"Emperium",1288,1,"Agit_A01::OnAgitBreak";
 	end;
 OnAgitEnd:
@@ -56,13 +59,14 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","aldeg_cas02","A02";
-	addtimer getbattleflag("gvg_eliminate_time"), "Agit_A02::OnAgitEliminate";
-	end;
+	goto OnAgitEliminate;
 OnGuildBreak:
 	callfunc "F_GuildBreak","aldeg_cas02","A02";
 	end;
 OnAgitEliminate:
+	sleep getbattleflag("gvg_eliminate_time");
 	MapRespawnGuildID "aldeg_cas02",GetCastleData("aldeg_cas02",1),6;
+	sleep 6333-getbattleflag("gvg_eliminate_time");// wait for emp animation to end
 	Monster "aldeg_cas02",214,24,"Emperium",1288,1,"Agit_A02::OnAgitBreak";
 	end;
 OnAgitEnd:
@@ -83,13 +87,14 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","aldeg_cas03","A03";
-	addtimer getbattleflag("gvg_eliminate_time"), "Agit_A03::OnAgitEliminate";
-	end;
+	goto OnAgitEliminate;
 OnGuildBreak:
 	callfunc "F_GuildBreak","aldeg_cas03","A03";
 	end;
 OnAgitEliminate:
+	sleep getbattleflag("gvg_eliminate_time");
 	MapRespawnGuildID "aldeg_cas03",GetCastleData("aldeg_cas03",1),6;
+	sleep 6333-getbattleflag("gvg_eliminate_time");// wait for emp animation to end
 	Monster "aldeg_cas03",206,32,"Emperium",1288,1,"Agit_A03::OnAgitBreak";
 	end;
 OnAgitEnd:
@@ -110,13 +115,14 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","aldeg_cas04","A04";
-	addtimer getbattleflag("gvg_eliminate_time"), "Agit_A04::OnAgitEliminate";
-	end;
+	goto OnAgitEliminate;
 OnGuildBreak:
 	callfunc "F_GuildBreak","aldeg_cas04","A04";
 	end;
 OnAgitEliminate:
+	sleep getbattleflag("gvg_eliminate_time");
 	MapRespawnGuildID "aldeg_cas04",GetCastleData("aldeg_cas04",1),6;
+	sleep 6333-getbattleflag("gvg_eliminate_time");// wait for emp animation to end
 	Monster "aldeg_cas04",36,218,"Emperium",1288,1,"Agit_A04::OnAgitBreak";
 	end;
 OnAgitEnd:
@@ -137,13 +143,14 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","aldeg_cas05","A05";
-	addtimer getbattleflag("gvg_eliminate_time"), "Agit_A05::OnAgitEliminate";
-	end;
+	goto OnAgitEliminate;
 OnGuildBreak:
 	callfunc "F_GuildBreak","aldeg_cas05","A05";
 	end;
 OnAgitEliminate:
+	sleep getbattleflag("gvg_eliminate_time");
 	MapRespawnGuildID "aldeg_cas05",GetCastleData("aldeg_cas05",1),6;
+	sleep 6333-getbattleflag("gvg_eliminate_time");// wait for emp animation to end
 	Monster "aldeg_cas05",28,102,"Emperium",1288,1,"Agit_A05::OnAgitBreak";
 	end;
 OnAgitEnd:

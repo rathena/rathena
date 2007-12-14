@@ -4,7 +4,7 @@
 //= jAthena (1.0)
 //= 1.1 by Akaru and ho|yAnge|
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -13,6 +13,8 @@
 //= v1.2 Now using functions for OnAgitStart and OnAgitBreak. [kobra_k88]
 //= 1.3 Added code for abandoning captured castles on /breakguild [Lupus]
 //= 1.4 Small updated. Changed "EMPERIUM" to "Emperium". [L0ne_W0lf]
+//= 1.5 Quick fix "emps not respawning if the emp breaker logs off".
+//=     (from r11630 bureport:369) [FlavioJS]
 //============================================================
 
 
@@ -29,13 +31,14 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","payg_cas01","Py01";
-	addtimer getbattleflag("gvg_eliminate_time"), "Agit_Py01::OnAgitEliminate";
-	end;
+	goto OnAgitEliminate;
 OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas01","Py01";
 	end;
 OnAgitEliminate:
+	sleep getbattleflag("gvg_eliminate_time");
 	MapRespawnGuildID "payg_cas01",GetCastleData("payg_cas01",1),6;
+	sleep 6333-getbattleflag("gvg_eliminate_time");// wait for emp animation to end
 	Monster "payg_cas01",139,139,"Emperium",1288,1,"Agit_Py01::OnAgitBreak";
 	end;
 OnAgitEnd:
@@ -56,13 +59,14 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","payg_cas02","Py02";
-	addtimer getbattleflag("gvg_eliminate_time"), "Agit_Py02::OnAgitEliminate";
-	end;
+	goto OnAgitEliminate;
 OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas02","Py02";
 	end;
 OnAgitEliminate:
+	sleep getbattleflag("gvg_eliminate_time");
 	MapRespawnGuildID "payg_cas02",GetCastleData("payg_cas02",1),6;
+	sleep 6333-getbattleflag("gvg_eliminate_time");// wait for emp animation to end
 	Monster "payg_cas02",39,25,"Emperium",1288,1,"Agit_Py02::OnAgitBreak";
 	end;
 OnAgitEnd:
@@ -83,13 +87,14 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","payg_cas03","Py03";
-	addtimer getbattleflag("gvg_eliminate_time"), "Agit_Py03::OnAgitEliminate";
-	end;
+	goto OnAgitEliminate;
 OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas03","Py03";
 	end;
 OnAgitEliminate:
+	sleep getbattleflag("gvg_eliminate_time");
 	MapRespawnGuildID "payg_cas03",GetCastleData("payg_cas03",1),6;
+	sleep 6333-getbattleflag("gvg_eliminate_time");// wait for emp animation to end
 	Monster "payg_cas03",269,265,"Emperium",1288,1,"Agit_Py03::OnAgitBreak";
 	end;
 OnAgitEnd:
@@ -110,13 +115,14 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","payg_cas04","Py04";
-	addtimer getbattleflag("gvg_eliminate_time"), "Agit_Py04::OnAgitEliminate";
-	end;
+	goto OnAgitEliminate;
 OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas04","Py04";
 	end;
 OnAgitEliminate:
+	sleep getbattleflag("gvg_eliminate_time");
 	MapRespawnGuildID "payg_cas04",GetCastleData("payg_cas04",1),6;
+	sleep 6333-getbattleflag("gvg_eliminate_time");// wait for emp animation to end
 	Monster "payg_cas04",271,29,"Emperium",1288,1,"Agit_Py04::OnAgitBreak";
 	end;
 OnAgitEnd:
@@ -137,13 +143,14 @@ OnAgitStart:
 	end;
 OnAgitBreak:
 	callfunc "F_AgitBreak","payg_cas05","Py05";
-	addtimer getbattleflag("gvg_eliminate_time"), "Agit_Py05::OnAgitEliminate";
-	end;
+	goto OnAgitEliminate;
 OnGuildBreak:
 	callfunc "F_GuildBreak","payg_cas05","Py05";
 	end;
 OnAgitEliminate:
+	sleep getbattleflag("gvg_eliminate_time");
 	MapRespawnGuildID "payg_cas05",GetCastleData("payg_cas05",1),6;
+	sleep 6333-getbattleflag("gvg_eliminate_time");// wait for emp animation to end
 	Monster "payg_cas05",30,30,"Emperium",1288,1,"Agit_Py05::OnAgitBreak";
 	end;
 OnAgitEnd:
