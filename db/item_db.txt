@@ -3847,7 +3847,7 @@
 13746,Small_Defense_Potion_10ea_Box,Small Defense Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14541,10; },{},{}
 13747,Small_Defense_Potion_30ea_Box,Small Defense Potion 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14541,30; },{},{}
 13748,Small_Defense_Potion_50ea_Box,Small Defense Potion 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14541,50; },{},{}
-13749,Big_Defense_Potion_10ea_Box,Big Defense Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14541,10; },{},{}
+13749,Big_Defense_Potion_10ea_Box,Big Defense Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14542,10; },{},{}
 13750,Big_Defense_Potion_30ea_Box,Big Defense Potion 30ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14542,30; },{},{}
 13751,Big_Defense_Potion_50ea_Box,Big Defense Potion 50ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14542,50; },{},{}
 13752,Small_Magic_Defense_Potion_10ea_Box,Small Magic Defense Potion 10ea Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14543,10; },{},{}

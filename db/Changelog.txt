@@ -38,6 +38,8 @@
 
 =======================
 
+12/13
+	* Rev. 11909 Fixed Big Defense Potion 10ea Box. (was giving small def pot.) [L0ne_W0lf]
 12/05
 	* Corrected Lif skill durations/delays according to
 	  http://irowiki.org/wiki/Lif [Skotlex]
