@@ -94,6 +94,8 @@
 //=       Added setnpcdisplay. [FlavioJS]
 //= 3.10.20071211
 //=       Added query_logsql. [Skotlex]
+//= 3.11.20071215
+//=       Updated guardianinfo and get-/setcastledata [ultramage]
 //===== Description =======================================
 //= A reference manual for the eAthena scripting language,
 //= sorted out depending on their functionality.
@@ -5537,14 +5539,16 @@ set the things up that only castle guardians need.
 
 ---------------------------------------
 
-*guardianinfo(<guardian number>)
+*guardianinfo("<map name>", <guardian number>, <type>)
 
-This function will return the current hit point value for the specified guardian 
-number, if such guardian is currently installed. This function will only work if 
-the invoking character is on a castle map, and will refer only to the guardians 
-of that castle, regardless of anything else, i.e. whether the character is a 
-member of the guild owning the castle, etc, etc.
-If no guardian is installed in this slot, the function will return -1.
+This function will return various info about the specified guardian, or -1
+if it fails for some reason. It is primarily used in the castle manager npc.
+
+Map name and guardian number (value between 0 and 7) define the target.
+Type indicates what information to return:
+ 0 - visibility (whether the guardian is installed or not)
+ 1 - max. hp
+ 2 - current hp
 
 ---------------------------------------
 //

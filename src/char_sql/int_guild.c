@@ -564,13 +564,10 @@ ShowDebug("Save guild_castle (%d)\n", gc->castle_id);
 //	sql_query("DELETE FROM `%s` WHERE `castle_id`='%d'",guild_castle_db, gc->castle_id);
 	if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` "
 		"(`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`,"
-		"`visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`,"
-		"`Ghp0`, `Ghp1`, `Ghp2`, `Ghp3`, `Ghp4`, `Ghp5`, `Ghp6`, `Ghp7`)"
-		"VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
-		guild_castle_db, gc->castle_id, gc->guild_id,  gc->economy, gc->defense, gc->triggerE, gc->triggerD, gc->nextTime, gc->payTime,
-		gc->createTime, gc->visibleC,
-		gc->guardian[0].visible, gc->guardian[1].visible, gc->guardian[2].visible, gc->guardian[3].visible, gc->guardian[4].visible, gc->guardian[5].visible, gc->guardian[6].visible, gc->guardian[7].visible,
-		gc->guardian[0].hp, gc->guardian[1].hp, gc->guardian[2].hp, gc->guardian[3].hp, gc->guardian[4].hp, gc->guardian[5].hp, gc->guardian[6].hp, gc->guardian[7].hp) )
+		"`visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`)"
+		"VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d')",
+		guild_castle_db, gc->castle_id, gc->guild_id,  gc->economy, gc->defense, gc->triggerE, gc->triggerD, gc->nextTime, gc->payTime, gc->createTime, gc->visibleC,
+		gc->guardian[0].visible, gc->guardian[1].visible, gc->guardian[2].visible, gc->guardian[3].visible, gc->guardian[4].visible, gc->guardian[5].visible, gc->guardian[6].visible, gc->guardian[7].visible) )
 		Sql_ShowDebug(sql_handle);
 
 #ifndef TXT_SQL_CONVERT
@@ -605,8 +602,7 @@ int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 
 	memset(gc,0,sizeof(struct guild_castle));
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, "
-		"`visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`,"
-		"`Ghp0`, `Ghp1`, `Ghp2`, `Ghp3`, `Ghp4`, `Ghp5`, `Ghp6`, `Ghp7`"
+		"`visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`"
 		" FROM `%s` WHERE `castle_id`='%d'", guild_castle_db, castle_id) )
 	{
 		Sql_ShowDebug(sql_handle);
@@ -637,14 +633,6 @@ int inter_guildcastle_fromsql(int castle_id,struct guild_castle *gc)
 	Sql_GetData(sql_handle, 15, &data, NULL); gc->guardian[5].visible = atoi(data);
 	Sql_GetData(sql_handle, 16, &data, NULL); gc->guardian[6].visible = atoi(data);
 	Sql_GetData(sql_handle, 17, &data, NULL); gc->guardian[7].visible = atoi(data);
-	Sql_GetData(sql_handle, 18, &data, NULL); gc->guardian[0].hp = atoi(data);
-	Sql_GetData(sql_handle, 19, &data, NULL); gc->guardian[1].hp = atoi(data);
-	Sql_GetData(sql_handle, 20, &data, NULL); gc->guardian[2].hp = atoi(data);
-	Sql_GetData(sql_handle, 21, &data, NULL); gc->guardian[3].hp = atoi(data);
-	Sql_GetData(sql_handle, 22, &data, NULL); gc->guardian[4].hp = atoi(data);
-	Sql_GetData(sql_handle, 23, &data, NULL); gc->guardian[5].hp = atoi(data);
-	Sql_GetData(sql_handle, 24, &data, NULL); gc->guardian[6].hp = atoi(data);
-	Sql_GetData(sql_handle, 25, &data, NULL); gc->guardian[7].hp = atoi(data);
 
 	Sql_FreeResult(sql_handle);
 	memcpy(&castles[castle_id],gc,sizeof(struct guild_castle));
@@ -1231,14 +1219,6 @@ int mapif_guild_castle_alldataload(int fd)
 		Sql_GetData(sql_handle, 15, &data, NULL); gc->guardian[5].visible = atoi(data);
 		Sql_GetData(sql_handle, 16, &data, NULL); gc->guardian[6].visible = atoi(data);
 		Sql_GetData(sql_handle, 17, &data, NULL); gc->guardian[7].visible = atoi(data);
-		Sql_GetData(sql_handle, 18, &data, NULL); gc->guardian[0].hp = atoi(data);
-		Sql_GetData(sql_handle, 19, &data, NULL); gc->guardian[1].hp = atoi(data);
-		Sql_GetData(sql_handle, 20, &data, NULL); gc->guardian[2].hp = atoi(data);
-		Sql_GetData(sql_handle, 21, &data, NULL); gc->guardian[3].hp = atoi(data);
-		Sql_GetData(sql_handle, 22, &data, NULL); gc->guardian[4].hp = atoi(data);
-		Sql_GetData(sql_handle, 23, &data, NULL); gc->guardian[5].hp = atoi(data);
-		Sql_GetData(sql_handle, 24, &data, NULL); gc->guardian[6].hp = atoi(data);
-		Sql_GetData(sql_handle, 25, &data, NULL); gc->guardian[7].hp = atoi(data);
 
 		memcpy(WFIFOP(fd, len), gc, sizeof(struct guild_castle));
 		len += sizeof(struct guild_castle);
@@ -1853,15 +1833,6 @@ int mapif_parse_GuildCastleDataLoad(int fd,int castle_id,int index)
 	case 16:
 	case 17:
 		return mapif_guild_castle_dataload(gc.castle_id,index,gc.guardian[index-10].visible); break;
-	case 18:
-	case 19:
-	case 20:
-	case 21:
-	case 22:
-	case 23:
-	case 24:
-	case 25:
-		return mapif_guild_castle_dataload(gc.castle_id,index,gc.guardian[index-18].hp); break;
 	default:
 		ShowError("mapif_parse_GuildCastleDataLoad ERROR!! (Not found index=%d)\n", index);
 		return 0;
@@ -1906,15 +1877,6 @@ int mapif_parse_GuildCastleDataSave(int fd,int castle_id,int index,int value)
 	case 16:
 	case 17:
 		gc.guardian[index-10].visible = value; break;
-	case 18:
-	case 19:
-	case 20:
-	case 21:
-	case 22:
-	case 23:
-	case 24:
-	case 25:
-		gc.guardian[index-18].hp = value; break;	// end additions [Valaris]
 	default:
 		ShowError("mapif_parse_GuildCastleDataSave ERROR!! (Not found index=%d)\n", index);
 		return 0;

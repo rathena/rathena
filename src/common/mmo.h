@@ -391,9 +391,8 @@ struct guild_castle {
 	int visibleC;
 	struct {
 		unsigned visible : 1;
-		int hp;
-		int id;
-	} guardian[MAX_GUARDIANS]; //New simplified structure. [Skotlex]
+		int id; // object id
+	} guardian[MAX_GUARDIANS];
 };
 
 // for Brandish Spear calculations

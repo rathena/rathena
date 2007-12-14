@@ -143,7 +143,7 @@ function	script	F_GldManager	{
 				mes "I'm sorry but there is not enough zeny to invest in the reserves of guild. You have failed to invest, Master.";
 				return 0;
 			}
-			set zeny,zeny-.@eco_invest;;
+			set zeny,zeny-.@eco_invest;
 			SetCastleData getarg(1),4,GetCastleData(getarg(1),4)+1;
 			SetCastleData getarg(1),2,.@Economy + 1 + (.@Economy<99 && rand(2) && getgdskilllv(.@GID,10014));
 			mes "We have finished investing safely. I expect in our coming days, the growth level will increase.";
@@ -194,17 +194,6 @@ function	script	F_GldManager	{
 			set Zeny,Zeny-.@def_invest;
 			SetCastleData getarg(1),5,GetCastleData(getarg(1),5)+1;
 			SetCastleData getarg(1),3,.@Defence+1;
-			set .@Defence, .@Defence + 1;
-			set .@AGuardian, strmobinfo(4,1285) + (.@Defence*2000);
-			set .@KGuardian, strmobinfo(4,1286) + (.@Defence*2000);
-			set .@SGuardian, strmobinfo(4,1287) + (.@Defence*2000);
-
-			for (set .@i, 0; .@i <= 7 ; set .@i, .@i+1) {
-				if (.@guardiantype[.@i] == 1) set .@GHP,.@SGuardian;
-				else if (.@guardiantype[.@i] == 2) set .@GHP,.@AGuardian;
-				else set .@GHP,.@KGuardian;
-				if (GetCastleData(getarg(1),(.@i + 10)) == 1) SetCastleData getarg(1),(.@i + 18),.@GHP;
-			}
 			mes "We have finished investing safely. I expect in our coming days, the growth level will increase.";
 			return 0;
 		}
@@ -213,37 +202,26 @@ function	script	F_GldManager	{
 		return 0;
 
 	case 4:
-		set .@Defence,GetCastleData(getarg(1),3);
-		set .@AGuardian, strmobinfo(4,1285) + (.@Defence*2000);
-		set .@KGuardian, strmobinfo(4,1286) + (.@Defence*2000);
-		set .@SGuardian, strmobinfo(4,1287) + (.@Defence*2000);
-
 		mes "[ "+getarg(0)+" ]";
 		mes "Do you still want to summon a Guardian? It'll be a protector to defend us to the end.";
 		mes "Choose a Guardian to summon.";
 		next;
 
-		for (set .@i, 0; .@i <= 7 ; set .@i, .@i+1) {
-			if (.@guardiantype[.@i] == 1) {
-				set .@type$,"Soldier";
-				setarray .@GuardianHP[.@i],.@SGuardian;
-			}
-			else if (.@guardiantype[.@i] == 2) {
-				set .@type$,"Archer";
-				setarray .@GuardianHP[.@i],.@AGuardian;
-			}
-			else {
-				set .@type$,"Knight";
-				setarray .@GuardianHP[.@i],.@KGuardian;
-			}
+		for( set .@i, 0; .@i <= 7 ; set .@i, .@i+1 )
+		{
+			if      (.@guardiantype[.@i] == 1) set .@type$,"Guardian Soldier";
+			else if (.@guardiantype[.@i] == 2) set .@type$,"Guardian Archer";
+			else                               set .@type$,"Guardian Knight";
 
-			if (GetCastleData(getarg(1),(.@i+10)))
-				setarray .@name$[.@i],"Guardian "+.@type$+" - Implemented (" + guardianinfo(.@i) + "/" + .@GuardianHP[.@i] + ")";
+			if( guardianinfo(getarg(1),.@i,0) )
+				setarray .@name$[.@i], .@type$ + " - Implemented (" + guardianinfo(getarg(1),.@i,2) + "/" + guardianinfo(getarg(1),.@i,1) + ")";
 			else
-				setarray .@name$[.@i],"Guardian "+.@type$+" - Not Implemented";
+				setarray .@name$[.@i], .@type$ + " - Not Implemented";
 		}
 	
 		set .@menu$,.@name$[0]+":"+.@name$[1]+":"+.@name$[2]+":"+.@name$[3]+":"+.@name$[4]+":"+.@name$[5]+":"+.@name$[6]+":"+.@name$[7];
+
+		// this thing will propagate outside of this function
 		switch(select(.@menu$)) {
 		case 1: set @GDnum,10; break;
 		case 2: set @GDnum,11; break;
@@ -274,9 +252,8 @@ function	script	F_GldManager	{
 				return 0;
 			}
 			set zeny,zeny-10000;
-			set .@HP,@GDnum + 8;
-			SetCastleData getarg(1),@GDnum,1;
-			SetCastleData getarg(1),.@HP,.@GuardianHP[(@GDnum - 10)];
+			SetCastleData getarg(1),@GDnum,1; // mark as 'installed'
+			// guardian will be spawned outside of this function
 			mes "We have successfully summoned the Guardian. We now have our strong force to defend us!";
 			return 1;
 

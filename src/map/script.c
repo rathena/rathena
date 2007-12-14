@@ -9127,7 +9127,7 @@ BUILDIN_FUNC(getcastledata)
 		switch(index){
 			case 0: {
 				int i;
-				for(i=1;i<26;i++) // Initialize[AgitInit]
+				for(i=1;i<18;i++) // Initialize[AgitInit]
 					guild_castledataload(gc->castle_id,i);
 				} break;
 			case 1:
@@ -9157,15 +9157,6 @@ BUILDIN_FUNC(getcastledata)
 			case 16:
 			case 17:
 				script_pushint(st,gc->guardian[index-10].visible); break;
-			case 18:
-			case 19:
-			case 20:
-			case 21:
-			case 22:
-			case 23:
-			case 24:
-			case 25:
-				script_pushint(st,gc->guardian[index-18].hp); break;
 			default:
 				script_pushint(st,0); break;
 		}
@@ -9213,30 +9204,6 @@ BUILDIN_FUNC(setcastledata)
 			case 16:
 			case 17:
 				gc->guardian[index-10].visible = value; break;
-			case 18:
-			case 19:
-			case 20:
-			case 21:
-			case 22:
-			case 23:
-			case 24:
-			case 25:
-				gc->guardian[index-18].hp = value;
-				if (gc->guardian[index-18].id)
-				{	//Update this mob's HP.
-					struct block_list *bl = map_id2bl(gc->guardian[index-18].id);
-					if (!bl)
-					{	//Wrong target?
-						gc->guardian[index-18].id = 0;
-						break;
-					}
-					if (value < 1) {
-						status_kill(bl);
-						break;
-					}
-					status_set_hp(bl, value, 0);
-				}
-				break;
 			default:
 				return 0;
 		}
@@ -9742,27 +9709,47 @@ BUILDIN_FUNC(guardian)
 	return 0;
 }
 
-/*================================================
- * Script for Displaying Guardian Info [Valaris]
- *------------------------------------------------*/
+/// Retrieves various information about the specified guardian.
+///
+/// guardianinfo("<map_name>", <index>, <type>) -> <value>
+/// type: 0 - whether it is deployed or not
+///       1 - maximum hp
+///       2 - current hp
+///
 BUILDIN_FUNC(guardianinfo)
 {
-	int guardian=script_getnum(st,2);
-	TBL_PC *sd=script_rid2sd(st);
-	struct guild_castle *gc=guild_mapname2gc(map[sd->bl.m].name);
+	const char* mapname = mapindex_getmapname(script_getstr(st,2),NULL);
+	int id = script_getnum(st,3);
+	int type = script_getnum(st,4);
 
-	if (guardian < 0 || guardian >= MAX_GUARDIANS || gc==NULL)
+	struct guild_castle* gc = guild_mapname2gc(mapname);
+	struct mob_data* gd;
+
+	if( gc == NULL || id < 0 || id >= MAX_GUARDIANS )
 	{
 		script_pushint(st,-1);
 		return 0;
 	}
 
-	if(gc->guardian[guardian].visible)
-		script_pushint(st,gc->guardian[guardian].hp);
-	else script_pushint(st,-1);
+	if( type == 0 )
+		script_pushint(st, gc->guardian[id].visible);
+	else
+	if( !gc->guardian[id].visible )
+		script_pushint(st,-1);
+	else
+	if( (gd = map_id2md(gc->guardian[id].id)) == NULL )
+		script_pushint(st,-1);
+	else
+	{
+		if     ( type == 1 ) script_pushint(st,gd->status.max_hp);
+		else if( type == 2 ) script_pushint(st,gd->status.hp);
+		else
+			script_pushint(st,-1);
+	}
 
 	return 0;
 }
+
 /*==========================================
  * IDÇ©ÇÁItemñº
  *------------------------------------------*/
@@ -13158,7 +13145,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(soundeffectall,"si*"),	// SoundEffectAll [Codemaster]
 	BUILDIN_DEF(strmobinfo,"ii"),	// display mob data [Valaris]
 	BUILDIN_DEF(guardian,"siisi??"),	// summon guardians
-	BUILDIN_DEF(guardianinfo,"i"),	// display guardian data [Valaris]
+	BUILDIN_DEF(guardianinfo,"sii"),	// display guardian data [Valaris]
 	BUILDIN_DEF(petskillbonus,"iiii"), // [Valaris]
 	BUILDIN_DEF(petrecovery,"ii"), // [Valaris]
 	BUILDIN_DEF(petloot,"i"), // [Valaris]

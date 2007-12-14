@@ -1723,15 +1723,6 @@ int guild_castledataloadack(int castle_id,int index,int value)
 	case 16:
 	case 17:
 		gc->guardian[index-10].visible = value; break;
-	case 18:
-	case 19:
-	case 20:
-	case 21:
-	case 22:
-	case 23:
-	case 24:
-	case 25:
-		gc->guardian[index-18].hp = value; break;
 	default:
 		ShowError("guild_castledataloadack ERROR!! (Not found index=%d)\n", index);
 		return 0;
@@ -1749,14 +1740,28 @@ int guild_castledataloadack(int castle_id,int index,int value)
 // ギルド城データ変更要求
 int guild_castledatasave(int castle_id,int index,int value)
 {
-	if (index == 1)
+	if( index == 1 )
 	{	//The castle's owner has changed? Update Guardian ownership, too. [Skotlex]
 		struct guild_castle *gc = guild_castle_search(castle_id);
 		int m = -1;
 		if (gc) m = map_mapname2mapid(gc->map_name);
 		if (m != -1)
-			map_foreachinmap(mob_guardian_guildchange, m, BL_MOB);
+			map_foreachinmap(mob_guardian_guildchange, m, BL_MOB); //FIXME: why not iterate over gc->guardian[i].id ?
 	}
+	else
+	if( index == 3 )
+	{	// defense invest change -> recalculate guardian hp
+		struct guild_castle* gc = guild_castle_search(castle_id);
+		if( gc )
+		{
+			int i;
+			struct mob_data* gd;
+			for( i = 0; i < MAX_GUARDIANS; i++ )
+				if( gc->guardian[i].visible && (gd = map_id2md(gc->guardian[i].id)) != NULL )
+						status_calc_mob(gd,0);
+		}
+	}
+
 	return intif_guild_castle_datasave(castle_id,index,value);
 }
 
@@ -1786,15 +1791,6 @@ int guild_castledatasaveack(int castle_id,int index,int value)
 	case 16:
 	case 17:
 		gc->guardian[index-10].visible = value; break;
-	case 18:
-	case 19:
-	case 20:
-	case 21:
-	case 22:
-	case 23:
-	case 24:
-	case 25:
-		gc->guardian[index-18].hp = value; break;
 	default:
 		ShowError("guild_castledatasaveack ERROR!! (Not found index=%d)\n", index);
 		return 0;
@@ -1864,7 +1860,7 @@ static int Gid[MAX_GUILDCASTLE];
 int guild_save_sub(int tid,unsigned int tick,int id,int data)
 {
 	struct guild_castle *gc;
-	int i,j;
+	int i;
 
 	for(i = 0; i < MAX_GUILDCASTLE; i++) {	// [Yor]
 		gc = guild_castle_search(i);
@@ -1873,11 +1869,6 @@ int guild_save_sub(int tid,unsigned int tick,int id,int data)
 			// Re-save guild id if its owner guild has changed
 			guild_castledatasave(gc->castle_id, 1, gc->guild_id);
 			Gid[i] = gc->guild_id;
-		}
-		for (j = 0; j < MAX_GUARDIANS; j++)
-		{
-			if (gc->guardian[j].visible && Ghp[i][j] != gc->guardian[j].hp)
-				guild_castledatasave(gc->castle_id, 18+j, gc->guardian[j].hp);
 		}
 	}
 

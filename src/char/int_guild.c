@@ -309,13 +309,11 @@ int inter_guildcastle_tostr(char *str, struct guild_castle *gc)
 {
 	int len;
 
-	len = sprintf(str, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",	// added Guardian HP [Valaris]
+	len = sprintf(str, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
 	              gc->castle_id, gc->guild_id, gc->economy, gc->defense, gc->triggerE,
 	              gc->triggerD, gc->nextTime, gc->payTime, gc->createTime, gc->visibleC,
 	              gc->guardian[0].visible, gc->guardian[1].visible, gc->guardian[2].visible, gc->guardian[3].visible,
-					  gc->guardian[4].visible, gc->guardian[5].visible, gc->guardian[6].visible, gc->guardian[7].visible,
-					  gc->guardian[0].hp, gc->guardian[1].hp, gc->guardian[2].hp, gc->guardian[3].hp,
-					  gc->guardian[4].hp, gc->guardian[5].hp, gc->guardian[6].hp, gc->guardian[7].hp);
+	              gc->guardian[4].visible, gc->guardian[5].visible, gc->guardian[6].visible, gc->guardian[7].visible);
 
 	return 0;
 }
@@ -324,77 +322,40 @@ int inter_guildcastle_tostr(char *str, struct guild_castle *gc)
 // ギルド城データの文字列からの変換
 int inter_guildcastle_fromstr(char *str, struct guild_castle *gc)
 {
-	int tmp_int[26];
+	int castleid, guildid, economy, defense, triggerE, triggerD, nextTime, payTime, createTime, visibleC;
+	int guardian[8];
+	int dummy;
 
 	memset(gc, 0, sizeof(struct guild_castle));
-	// new structure of guild castle
-	if (sscanf(str, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-	           &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3], &tmp_int[4], &tmp_int[5], &tmp_int[6],
-	           &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12], &tmp_int[13],
-	           &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17], &tmp_int[18], &tmp_int[19], &tmp_int[20],
-	           &tmp_int[21], &tmp_int[22], &tmp_int[23], &tmp_int[24], &tmp_int[25]) == 26) {
-		gc->castle_id = tmp_int[0];
-		gc->guild_id = tmp_int[1];
-		gc->economy = tmp_int[2];
-		gc->defense = tmp_int[3];
-		gc->triggerE = tmp_int[4];
-		gc->triggerD = tmp_int[5];
-		gc->nextTime = tmp_int[6];
-		gc->payTime = tmp_int[7];
-		gc->createTime = tmp_int[8];
-		gc->visibleC = tmp_int[9];
-		gc->guardian[0].visible = tmp_int[10];
-		gc->guardian[1].visible = tmp_int[11];
-		gc->guardian[2].visible = tmp_int[12];
-		gc->guardian[3].visible = tmp_int[13];
-		gc->guardian[4].visible = tmp_int[14];
-		gc->guardian[5].visible = tmp_int[15];
-		gc->guardian[6].visible = tmp_int[16];
-		gc->guardian[7].visible = tmp_int[17];
-		gc->guardian[0].hp = tmp_int[18];
-		gc->guardian[1].hp = tmp_int[19];
-		gc->guardian[2].hp = tmp_int[20];
-		gc->guardian[3].hp = tmp_int[21];
-		gc->guardian[4].hp = tmp_int[22];
-		gc->guardian[5].hp = tmp_int[23];
-		gc->guardian[6].hp = tmp_int[24];
-		gc->guardian[7].hp = tmp_int[25];	// end additions [Valaris]
-	// old structure of guild castle
-	} else if (sscanf(str, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
-	                  &tmp_int[0], &tmp_int[1], &tmp_int[2], &tmp_int[3], &tmp_int[4], &tmp_int[5], &tmp_int[6],
-	                  &tmp_int[7], &tmp_int[8], &tmp_int[9], &tmp_int[10], &tmp_int[11], &tmp_int[12], &tmp_int[13],
-	                  &tmp_int[14], &tmp_int[15], &tmp_int[16], &tmp_int[17]) == 18) {
-		int i;
-		
-		gc->castle_id = tmp_int[0];
-		gc->guild_id = tmp_int[1];
-		gc->economy = tmp_int[2];
-		gc->defense = tmp_int[3];
-		gc->triggerE = tmp_int[4];
-		gc->triggerD = tmp_int[5];
-		gc->nextTime = tmp_int[6];
-		gc->payTime = tmp_int[7];
-		gc->createTime = tmp_int[8];
-		gc->visibleC = tmp_int[9];
-		gc->guardian[0].visible = tmp_int[10];
-		gc->guardian[1].visible = tmp_int[11];
-		gc->guardian[2].visible = tmp_int[12];
-		gc->guardian[3].visible = tmp_int[13];
-		gc->guardian[4].visible = tmp_int[14];
-		gc->guardian[5].visible = tmp_int[15];
-		gc->guardian[6].visible = tmp_int[16];
-		gc->guardian[7].visible = tmp_int[17];
-
-		for (i = 0; i < MAX_GUARDIANS; i++)
-		{
-			if (gc->guardian[i].visible)
-				gc->guardian[i].hp = 15000 + 2000 * gc->defense;
-			else
-				gc->guardian[i].hp = 0;
-		}
-	} else {
+	// structure of guild castle with the guardian hp included
+	if( sscanf(str, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+		&castleid, &guildid, &economy, &defense, &triggerE, &triggerD, &nextTime, &payTime, &createTime, &visibleC,
+		&guardian[0], &guardian[1], &guardian[2], &guardian[3], &guardian[4], &guardian[5], &guardian[6], &guardian[7],
+		&dummy, &dummy, &dummy, &dummy, &dummy, &dummy, &dummy, &dummy) != 26 )
+	// structure of guild castle without the hps (current one)
+	if( sscanf(str, "%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",
+		&castleid, &guildid, &economy, &defense, &triggerE, &triggerD, &nextTime, &payTime, &createTime, &visibleC,
+		&guardian[0], &guardian[1], &guardian[2], &guardian[3], &guardian[4], &guardian[5], &guardian[6], &guardian[7]) != 18 )
 		return 1;
-	}
+
+	gc->castle_id = castleid;
+	gc->guild_id = guildid;
+	gc->economy = economy;
+	gc->defense = defense;
+	gc->triggerE = triggerE;
+	gc->triggerD = triggerD;
+	gc->nextTime = nextTime;
+	gc->payTime = payTime;
+	gc->createTime = createTime;
+	gc->visibleC = visibleC;
+	gc->guardian[0].visible = guardian[0];
+	gc->guardian[1].visible = guardian[1];
+	gc->guardian[2].visible = guardian[2];
+	gc->guardian[3].visible = guardian[3];
+	gc->guardian[4].visible = guardian[4];
+	gc->guardian[5].visible = guardian[5];
+	gc->guardian[6].visible = guardian[6];
+	gc->guardian[7].visible = guardian[7];
 
 	return 0;
 }
@@ -964,15 +925,6 @@ int mapif_guild_castle_datasave(int castle_id, int index, int value)
 	return 0;
 }
 
-int mapif_guild_castle_alldataload_sub(DBKey key, void *data, va_list ap)
-{
-	int fd = va_arg(ap, int);
-	int *p = va_arg(ap, int*);
-
-
-	return 0;
-}
-
 int mapif_guild_castle_alldataload(int fd)
 {
 	DBIterator* iter;
@@ -1498,16 +1450,6 @@ int mapif_parse_GuildCastleDataLoad(int fd, int castle_id, int index)
 	case 16:
 	case 17:
 		return mapif_guild_castle_dataload(gc->castle_id, index, gc->guardian[index-10].visible);
-	case 18:
-	case 19:
-	case 20:
-	case 21:
-	case 22:
-	case 23:
-	case 24:
-	case 25:
-		return mapif_guild_castle_dataload(gc->castle_id, index, gc->guardian[index-18].hp);	// end additions [Valaris]
-
 	default:
 		ShowError("mapif_parse_GuildCastleDataLoad ERROR!! (Not found index=%d)\n", index);
 		return 0;
@@ -1555,15 +1497,6 @@ int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 	case 16:
 	case 17:
 		gc->guardian[index-10].visible = value; break;
-	case 18:
-	case 19:
-	case 20:
-	case 21:
-	case 22:
-	case 23:
-	case 24:
-	case 25:
-		gc->guardian[index-18].hp = value; break;	// end additions [Valaris]
 	default:
 		ShowError("mapif_parse_GuildCastleDataSave ERROR!! (Not found index=%d)\n", index);
 		return 0;

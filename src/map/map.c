@@ -1763,6 +1763,12 @@ struct map_session_data * map_id2sd(int id)
 	return (struct map_session_data*)idb_get(pc_db,id);
 }
 
+struct mob_data * map_id2md(int id)
+{// just a id2bl lookup because there's no mob_db
+	if (id <= 0) return NULL;
+	return (struct mob_data*)map_id2bl(id);
+}
+
 struct npc_data * map_id2nd(int id)
 {// just a id2bl lookup because there's no npc_db
 	if (id <= 0) return NULL;

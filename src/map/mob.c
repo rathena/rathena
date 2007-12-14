@@ -439,7 +439,6 @@ static int mob_spawn_guardian_sub(int tid,unsigned int tick,int id,int data)
 			{	//Safe removal of guardian.
 				md->guardian_data->castle->guardian[md->guardian_data->number].visible = 0;
 				guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
-				guild_castledatasave(md->guardian_data->castle->castle_id, 18+md->guardian_data->number,0);
 			}
 			unit_free(&md->bl,0); //Remove guardian.
 		}
@@ -1734,9 +1733,6 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		if (src) mob_log_damage(md, src, damage);
 	}
 
-	if(md->guardian_data && md->guardian_data->number < MAX_GUARDIANS) // guardian hp update [Valaris] (updated by [Skotlex])
-		md->guardian_data->castle->guardian[md->guardian_data->number].hp = md->status.hp;
-
 	if (battle_config.show_mob_info&3)
 		clif_charnameack (0, &md->bl);
 	
@@ -1779,10 +1775,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	status = &md->status;
 		
 	if(md->guardian_data && md->guardian_data->number < MAX_GUARDIANS)
-	{	// guardian hp update [Valaris] (updated by [Skotlex])
 		guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
-		guild_castledatasave(md->guardian_data->castle->castle_id, 18+md->guardian_data->number,0);
-	}
 
 	md->state.skillstate = MSS_DEAD;	
 	mobskill_use(md,tick,-1);	//On Dead skill.
@@ -2291,7 +2284,6 @@ int mob_guardian_guildchange(struct block_list *bl,va_list ap)
 			{	//Safe removal of guardian.
 				md->guardian_data->castle->guardian[md->guardian_data->number].visible = 0;
 				guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
-				guild_castledatasave(md->guardian_data->castle->castle_id, 18+md->guardian_data->number,0);
 			}
 			unit_free(&md->bl,0); //Remove guardian.
 		}
@@ -2304,7 +2296,6 @@ int mob_guardian_guildchange(struct block_list *bl,va_list ap)
 		ShowError("mob_guardian_guildchange: New Guild (id %d) does not exists!\n", md->guardian_data->guild_id);
 		md->guardian_data->castle->guardian[md->guardian_data->number].visible = 0;
 		guild_castledatasave(md->guardian_data->castle->castle_id, 10+md->guardian_data->number,0);
-		guild_castledatasave(md->guardian_data->castle->castle_id, 18+md->guardian_data->number,0);
 		unit_free(&md->bl,0);
 		return 0;
 	}
@@ -2412,10 +2403,6 @@ int mob_class_change (struct mob_data *md, int class_)
  *------------------------------------------*/
 void mob_heal(struct mob_data *md,unsigned int heal)
 {
-	if(md->guardian_data && md->guardian_data->number < MAX_GUARDIANS)
-	// guardian hp update [Valaris] (updated by [Skotlex])
-		md->guardian_data->castle->guardian[md->guardian_data->number].hp = md->status.hp;
-
 	if (battle_config.show_mob_info&3)
 		clif_charnameack (0, &md->bl);
 }
