@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.8a
+//= 2.9
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -37,6 +37,7 @@
 //= 2.8 Removed duplicate warps. [L0ne_W0lf]
 //= 2.8a Deleted unused variables. [Samuray22]
 //= 2.8b Fixed error caused in last updated, removed useless variable 'joblvl'. [L0ne_W0lf]
+//= 2.9 Fixed an indent and added a 'break;' in hopes of 'fixing' an error [L0ne_W0lf[
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -686,7 +687,7 @@ OnTouch:
 		next;
 		set ASSIN_Q2,0;
 		while(ASSIN_Q2 < 3) {
-		switch(select("...Skills?:...Stats?:Hmpf, I know it all.")) {
+			switch(select("...Skills?:...Stats?:Hmpf, I know it all.")) {
 			case 1:
 				mes "[The Anonymous One]";
 				mes "Skills...?";
@@ -954,6 +955,7 @@ L_AskQuestions:
 			next;
 			if (select("Whisper card:Elder Willow card:Soldier Skeleton card:Cobold card") == 2)
 				set .@assassin_t,.@assassin_t+10;
+			break;
 		}
 		if (ASSIN_Q2 == 3) {
 			next;

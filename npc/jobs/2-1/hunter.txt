@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.9a
+//= 3.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -42,6 +42,7 @@
 //= 2.8 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
 //= 2.9 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.9a Deleted unused variables. [Samuray22]
+//= 3.0 Fixed a small typo, "jo" instead of "Job". [L0ne_W0lf]
 //============================================================ 
 
 // Notices in the old Hunter Guild.
@@ -99,7 +100,7 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 		mes "a Novice? Wow, you've got a long way ahead of you. I don't think there's much you can do here.";
 		close;
 	}
-	else if (BaseClass == Jo_Swordman) {
+	else if (BaseClass == Job_Swordman) {
 		mes "[Hunter Guildsman]";
 		mes "You have chosen the path of the sword. I can respect the strength of your blade. Of course, from far away, you can't really afford to throw your sword at enemies, can you?";
 		close;

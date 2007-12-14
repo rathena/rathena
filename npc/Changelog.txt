@@ -1,6 +1,9 @@
 Date		Added
 ======
 2007/12/13
+	* Rev. 11906 Minor fixes, guild manager, and a couple others. [L0ne_W0lf]
+	- bugreport:579, attempt at fixing bugreport:581
+	- Fixed a typo in the hunter quest. (Not noticable really.)
 	* Rev. 11903 Updated Ayothaya NPCs, Quests, and Warps. [L0ne_W0lf]
 	- Should also fix bugreport:586 (Footprint2 error)
 2007/12/11

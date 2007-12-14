@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= jAthena - kalen (1.0) & eAthena Team
 //===== Current Version: =====================================
-//= 1.9a
+//= 1.9b
 //===== Compatible With: =====================================
 //= eAthena SVN; RO Episode 4+
 //===== Description: =========================================
@@ -39,6 +39,7 @@
 //=	Added dialog for castle Abandoning. Commented out be default.
 //= 1.9 Fixed guild members being able to access Guild Master services. [L0ne_W0lf]
 //= 1.9a Fixed Kafra cutin not closing if you choose not to dismiss her. [L0ne_W0lf]
+//= 1.9b Corrected impropper variable being used for defense investment. [L0ne_W0lf]
 //============================================================
 
 function	script	F_GldManager	{
@@ -190,7 +191,7 @@ function	script	F_GldManager	{
 				mes "I'm sorry but there is not enough zeny to invest in the reserves of guild. You have failed to invest, Master.";
 				return 0;
 			}
-			set Zeny,Zeny-@def_invest;
+			set Zeny,Zeny-.@def_invest;
 			SetCastleData getarg(1),5,GetCastleData(getarg(1),5)+1;
 			SetCastleData getarg(1),3,.@Defence+1;
 			set .@Defence, .@Defence + 1;
