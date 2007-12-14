@@ -1,6 +1,7 @@
 Date		Added
 ======
 2007/12/13
+	* Rev. 11907 Maheo in Ice dungeon quest now uses setnpcdisplay. [L0ne_W0lf]
 	* Rev. 11906 Minor fixes, guild manager, and a couple others. [L0ne_W0lf]
 	- bugreport:579, attempt at fixing bugreport:581
 	- Fixed a typo in the hunter quest. (Not noticable really.)

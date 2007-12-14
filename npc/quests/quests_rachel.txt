@@ -3,16 +3,11 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
 //= Collection of Rachel Quests 
-//= * Lost Child
-//= * Bruspetti
-//= * Ice Necklace
-//= * Sanctuary/donation
-//===== Comments: ============================================
 //= Lost Child Quest:
 //= - End of quest coincides with opening the Sanctuary.
 //= - Variable in use: lost_boy (max 13)
@@ -50,6 +45,7 @@
 //= 1.9 Fixed a misorder with variable checkings. [SinSloth]
 //= 2.0 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 2.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.2 Maheo NPC now uses "setnpcdisplay" instead of two NPCs. [L0ne_W0lf]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -3169,8 +3165,7 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		mes "^3355FF*Pzzzzz*";
 		mes "*CRASH!*^000000";
 		next;
-		enablenpc "Maheo#cave";
-		disablenpc "Man Stuck in Ice#cave";
+		setnpcdisplay "Man Stuck in Ice#cave",937;
 		emotion e_gasp;
 		mes "[Maheo]";
 		mes "Finally...!";
@@ -3229,10 +3224,10 @@ ice_dun02,120,105,3	script	Man Stuck in Ice#cave	924,5,5,{
 		delitem 7572,1; //Ashy_Necklace
 		delitem 7569,1; //Wind Hammer
 		set ice_necklace_q,5;
-		enablenpc "Man Stuck in Ice#cave";
-		disablenpc "Maheo#cave";
+		close2;
 		cutin "",255;
-		close;
+		setnpcdisplay "Man Stuck in Ice#cave",924;
+		end;
 	}
 
 OnTouch:
@@ -3413,15 +3408,6 @@ rachel,265,98,3	script	Hamion#aru	930,{
 		close;
 	}
 
-}
-
-ice_dun02,120,105,3	script	Maheo#cave	937,{
-	enablenpc "Man Stuck in Ice#cave";
-	disablenpc "Maheo#cave";
-	end;
-OnInit:
-	disablenpc "Maheo#cave";
-	end;
 }
 
 rachel,113,96,5	script	Mohadian	929,10,10,{
