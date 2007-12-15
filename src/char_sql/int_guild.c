@@ -1193,9 +1193,10 @@ int mapif_guild_castle_alldataload(int fd)
 
 	WFIFOHEAD(fd, 4 + MAX_GUILDCASTLE*sizeof(struct guild_castle));
 	WFIFOW(fd, 0) = 0x3842;
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, "
-		"`visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`,"
-		"`Ghp0`, `Ghp1`, `Ghp2`, `Ghp3`, `Ghp4`, `Ghp5`, `Ghp6`, `Ghp7` FROM `%s` ORDER BY `castle_id`", guild_castle_db) )
+	if( SQL_ERROR == Sql_Query(sql_handle,
+		"SELECT `castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`,"
+		" `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`"
+		" FROM `%s` ORDER BY `castle_id`", guild_castle_db) )
 		Sql_ShowDebug(sql_handle);
 	for( i = 0, len = 4; i < MAX_GUILDCASTLE && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
 	{
