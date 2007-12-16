@@ -1,6 +1,8 @@
 Date		Added
 ======
 2007/12/16
+	* Rev. 11922 Touched up Merchant quest Biliban Kafra function [L0ne_W0lf]
+	- Will now return to the previous script execution if all conditions fail.
 	* Rev. 11921 Updated Louyang NPCs, quests, and warps. [L0ne_W0lf]
 2007/12/14
 	* Commited the quick fix "emps not respawning if the emp breaker logs off".

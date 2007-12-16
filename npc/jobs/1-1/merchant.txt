@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.9b
+//= 2.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -24,6 +24,7 @@
 //= 1.9 Bugfixes, thanks to Barron-Monster. [L0ne_W0lf]
 //= 1.9a Added a missing next; (Barron-Monster) [L0ne_W0lf]
 //= 1.9b Typo. "nextl" -> "next;" (Barron-Monster) [L0ne_W0lf]
+//= 2.0 Should "fix" the problem with the Biliban Kafra. [L0ne_W0lf]
 //============================================================ 
 
 alberta_in,53,43,6	script	Merchant#mer	86,{
@@ -1050,7 +1051,7 @@ prontera,248,42,0	script	Kafra Employee#mer	116,{
 
 //izlu2dun,106,58,4	script	Kafra Employee#mer	116,{
 function	script	F_MercKafra	{
-	if (job_merchant_q == 6 || job_merchant_q == 5 && job_merchant_q2 == 8 || job_merchant_q2 == 7) {
+	if ((job_merchant_q == 6 || job_merchant_q == 5) && (job_merchant_q2 == 8 || job_merchant_q2 == 7)) {
 		mes "[Kafra Employee]";
 		mes "Oh hello~";
 		mes "Um, is there";
@@ -1144,4 +1145,5 @@ function	script	F_MercKafra	{
 		cutin "",255;
 		end;
 	}
+	return;
 }
