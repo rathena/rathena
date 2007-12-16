@@ -1,11 +1,13 @@
 Date		Added
 ======
+2007/12/16
+	* Rev. 11921 Updated Louyang NPCs, quests, and warps. [L0ne_W0lf]
 2007/12/14
 	* Commited the quick fix "emps not respawning if the emp breaker logs off".
 	  (from r11630 bureport:369) [FlavioJS]
 2007/12/13
-	* Rev. 11907 Maheo in Ice dungeon quest now uses setnpcdisplay. [L0ne_W0lf]
-	* Rev. 11906 Minor fixes, guild manager, and a couple others. [L0ne_W0lf]
+	* Rev. 11906 Maheo in Ice dungeon quest now uses setnpcdisplay. [L0ne_W0lf]
+	* Rev. 11905 Minor fixes, guild manager, and a couple others. [L0ne_W0lf]
 	- bugreport:579, attempt at fixing bugreport:581
 	- Fixed a typo in the hunter quest. (Not noticable really.)
 	* Rev. 11903 Updated Ayothaya NPCs, Quests, and Warps. [L0ne_W0lf]
