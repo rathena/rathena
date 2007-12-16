@@ -377,7 +377,7 @@ struct guild {
 
 struct guild_castle {
 	int castle_id;
-	char map_name[MAP_NAME_LENGTH];
+	int mapindex;
 	char castle_name[NAME_LENGTH];
 	char castle_event[NAME_LENGTH];
 	int guild_id;

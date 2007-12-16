@@ -186,7 +186,7 @@ static int guild_read_castledb(void)
 
 		gc=(struct guild_castle *)aCalloc(1,sizeof(struct guild_castle));
 		gc->castle_id=atoi(str[0]);
-		mapindex_getmapname(str[1],gc->map_name);
+		gc->mapindex = mapindex_name2id(str[1]);
 		safestrncpy(gc->castle_name,str[2],NAME_LENGTH);
 		safestrncpy(gc->castle_event,str[3],NAME_LENGTH);
 
@@ -232,29 +232,23 @@ struct guild_castle* guild_castle_search(int gcid)
 /// lookup: map index -> castle*
 struct guild_castle* guild_mapindex2gc(short mapindex)
 {
-	int i;
-	struct guild_castle *gc=NULL;
-
-	for(i=0;i<MAX_GUILDCASTLE;i++){
-		gc=guild_castle_search(i);
-		if(!gc) continue;
-		if(strcmp(gc->map_name,mapindex_id2name(mapindex))==0) return gc;
+	struct guild_castle* gc;
+	
+	DBIterator* iter = castle_db->iterator(castle_db);
+	for( gc = iter->first(iter,NULL); iter->exists(iter); gc = iter->next(iter,NULL) )
+	{
+		if( gc->mapindex == mapindex )
+			break;
 	}
-	return NULL;
+	iter->destroy(iter);
+
+	return gc;
 }
 
 /// lookup: map name -> castle*
 struct guild_castle* guild_mapname2gc(const char* mapname)
 {
-	int i;
-	for(i = 0; i < MAX_GUILDCASTLE; i++)
-	{
-		struct guild_castle* gc;
-		gc = guild_castle_search(i);
-		if(!gc) continue;
-		if(strcmp(gc->map_name,mapname)==0) return gc;
-	}
-	return NULL;
+	return guild_mapindex2gc(mapindex_name2id(mapname));
 }
 
 struct map_session_data* guild_getavailablesd(struct guild* g)
@@ -283,9 +277,6 @@ int guild_getindex(struct guild *g,int account_id,int char_id)
 int guild_getposition(struct guild* g, struct map_session_data* sd)
 {
 	int i;
-
-	nullpo_retr(-1, sd);
-
 	if( g == NULL && (g=guild_search(sd->status.guild_id)) == NULL )
 		return -1;
 	
@@ -1710,7 +1701,7 @@ int guild_castledatasave(int castle_id,int index,int value)
 	{	//The castle's owner has changed? Update Guardian ownership, too. [Skotlex]
 		struct guild_castle *gc = guild_castle_search(castle_id);
 		int m = -1;
-		if (gc) m = map_mapname2mapid(gc->map_name);
+		if (gc) m = map_mapindex2mapid(gc->mapindex);
 		if (m != -1)
 			map_foreachinmap(mob_guardian_guildchange, m, BL_MOB); //FIXME: why not iterate over gc->guardian[i].id ?
 	}
