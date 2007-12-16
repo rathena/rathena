@@ -6049,7 +6049,7 @@ int clif_guild_belonginfo(struct map_session_data *sd,struct guild *g)
 	nullpo_retr(0, g);
 
 	fd=sd->fd;
-	ps=guild_getposition(sd,g);
+	ps=guild_getposition(g,sd);
 
 	WFIFOHEAD(fd,packet_len(0x16c));
 	memset(WFIFOP(fd,0),0,packet_len(0x16c));

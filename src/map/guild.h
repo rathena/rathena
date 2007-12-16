@@ -30,7 +30,7 @@ struct guild_castle* guild_mapindex2gc(short mapindex);
 
 struct map_session_data *guild_getavailablesd(struct guild *g);
 int guild_getindex(struct guild *g,int account_id,int char_id);
-int guild_getposition(struct map_session_data *sd,struct guild *g);
+int guild_getposition(struct guild *g, struct map_session_data *sd);
 unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp);
 int guild_getexp(struct map_session_data *sd,int exp); // [Celest]
 

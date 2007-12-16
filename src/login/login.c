@@ -743,12 +743,12 @@ int mmo_auth_init(void)
 		ShowStatus("mmo_auth_init: %d accounts read in %s,\n", auth_num, account_filename);
 
 	if( GM_count == 0 )
-		ShowStatus("               of which is no GM account, and ");
+		ShowStatus("               of which is no GM account, and \n");
 	else
 	if( GM_count == 1 )
-		ShowStatus("               of which is 1 GM account, and ");
+		ShowStatus("               of which is 1 GM account, and \n");
 	else
-		ShowStatus("               of which is %d GM accounts, and ", GM_count);
+		ShowStatus("               of which is %d GM accounts, and \n", GM_count);
 
 	if( server_count == 0 )
 		ShowStatus("               no server account ('S').\n");
