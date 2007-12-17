@@ -21,16 +21,6 @@ echo "checking..."
 #EOF
 }
 
-#check_account() {
-#    if [ ! -f ./save/account.txt ]; then
-#        echo "0    s1    p1    -    S    0" > save/account.txt
-#        echo "1    s2    p2    -    S    0" >>save/account.txt
-#        echo "2    s3    p3    -    S    0" >>save/account.txt
-#        echo "3    s4    p4    -    S    0" >>save/account.txt
-#        echo "4    s5    p5    -    S    0" >>save/account.txt
-#    fi
-#}
-
 check_files() {
 
     for i in ${L_SRV} ${C_SRV} ${M_SRV}
@@ -52,7 +42,6 @@ echo "Looks good, a nice Athena!"
 case $1 in
     'start')
         print_start
-#        check_account
         check_files
 
         exec ./${L_SRV}&
@@ -62,7 +51,7 @@ case $1 in
         echo "Now Started Athena."
 ;;
     'stop')
-        ps ax | grep -E "${L_SRV}|${C_SRV}|${M_SRV}" | awk '{print $1}' | xargs kill -9
+        ps ax | grep -E "${L_SRV}|${C_SRV}|${M_SRV}" | awk '{print $1}' | xargs kill
 ;;
     'restart')
         $0 stop

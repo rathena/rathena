@@ -6,7 +6,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2007/12/14
 	* Guardian hp handling code removal (see bugreport:342)
 	- removed guardian hp from the castle data structure, database,
-	  savefiles and various script functions (use upgrade_svn11914.sql)
+	  savefiles and various script functions (use upgrade_svn11915.sql)
 	- removed guardian hp calculation and manipulation from the castle
 	  manager npc, now the hp values are updated by the server itself
 	  (glitch: when castle defense changes, all guardians are healed to full)
