@@ -282,7 +282,7 @@ void set_eof(int fd)
 		// Add this socket to the shortlist for eof handling.
 		send_shortlist_add_fd(fd);
 #endif
-		session[fd]->eof = 1;
+		session[fd]->flag.eof = 1;
 	}
 }
 
@@ -460,15 +460,15 @@ int make_listen_bind(uint32 ip, uint16 port)
 	sFD_SET(fd, &readfds);
 
 	create_session(fd, connect_client, null_send, null_parse);
+	session[fd]->client_addr = 0; // just listens
 	session[fd]->rdata_tick = 0; // disable timeouts on this socket
-	session[fd]->client_addr = 0;
 
 	return fd;
 }
 
 int make_connection(uint32 ip, uint16 port)
 {
-	struct sockaddr_in server_address;
+	struct sockaddr_in remote_address;
 	int fd;
 	int result;
 
@@ -493,13 +493,13 @@ int make_connection(uint32 ip, uint16 port)
 
 	setsocketopts(fd);
 
-	server_address.sin_family      = AF_INET;
-	server_address.sin_addr.s_addr = htonl(ip);
-	server_address.sin_port        = htons(port);
+	remote_address.sin_family      = AF_INET;
+	remote_address.sin_addr.s_addr = htonl(ip);
+	remote_address.sin_port        = htons(port);
 
 	ShowStatus("Connecting to %d.%d.%d.%d:%i\n", CONVIP(ip), port);
 
-	result = sConnect(fd, (struct sockaddr *)(&server_address), sizeof(struct sockaddr_in));
+	result = sConnect(fd, (struct sockaddr *)(&remote_address), sizeof(struct sockaddr_in));
 	if( result == SOCKET_ERROR ) {
 		ShowError("make_connection: connect failed (socket #%d, code %d)!\n", fd, sErrno);
 		do_close(fd);
@@ -512,7 +512,7 @@ int make_connection(uint32 ip, uint16 port)
 	sFD_SET(fd,&readfds);
 
 	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
-	session[fd]->client_addr = 0;
+	session[fd]->client_addr = ntohl(remote_address.sin_addr.s_addr);
 
 	return fd;
 }
@@ -1252,7 +1252,7 @@ bool session_isValid(int fd)
 
 bool session_isActive(int fd)
 {
-	return ( session_isValid(fd) && !session[fd]->eof );
+	return ( session_isValid(fd) && !session[fd]->flag.eof );
 }
 
 // Resolves hostname into a numeric ip.
@@ -1327,12 +1327,12 @@ void send_shortlist_do_sends()
 
 			// If it's been marked as eof, call the parse func on it so that
 			// the socket will be immediately closed.
-			if( session[fd]->eof )
+			if( session[fd]->flag.eof )
 				session[fd]->func_parse(fd);
 
 			// If the session still exists, is not eof and has things left to
 			// be sent from it we'll keep it in the shortlist.
-			if( session[fd] && !session[fd]->eof && session[fd]->wdata_size )
+			if( session[fd] && !session[fd]->flag.eof && session[fd]->wdata_size )
 			{
 				send_shortlist_set[fd/32] |= 1<<(fd%32);
 				++i;

@@ -616,7 +616,7 @@ int parse_fromchar(int fd)
 		return 0;
 	}
 
-	if( session[fd]->eof )
+	if( session[fd]->flag.eof )
 	{
 		ShowStatus("Char-server '%s' has disconnected.\n", server[id].name);
 		online_db->foreach(online_db, online_db_setoffline, id); //Set all chars from this char server to offline.
@@ -1220,7 +1220,7 @@ int parse_login(int fd)
 	uint32 ipl;
 	char ip[16];
 
-	if( session[fd]->eof )
+	if( session[fd]->flag.eof )
 	{
 		do_close(fd);
 		return 0;
@@ -1523,7 +1523,7 @@ int parse_login(int fd)
 				WFIFOSET(fd,3);
 
 				session[fd]->func_parse = parse_fromchar;
-				session[fd]->client_addr = 0;
+				session[fd]->flag.server = 1;
 				realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 
 				send_GM_accounts(fd); // send GM account to char-server

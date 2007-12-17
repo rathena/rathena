@@ -233,7 +233,7 @@ struct guild_castle* guild_castle_search(int gcid)
 struct guild_castle* guild_mapindex2gc(short mapindex)
 {
 	struct guild_castle* gc;
-	
+
 	DBIterator* iter = castle_db->iterator(castle_db);
 	for( gc = iter->first(iter,NULL); iter->exists(iter); gc = iter->next(iter,NULL) )
 	{
@@ -277,6 +277,7 @@ int guild_getindex(struct guild *g,int account_id,int char_id)
 int guild_getposition(struct guild* g, struct map_session_data* sd)
 {
 	int i;
+
 	if( g == NULL && (g=guild_search(sd->status.guild_id)) == NULL )
 		return -1;
 	

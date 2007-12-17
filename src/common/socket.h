@@ -35,7 +35,7 @@
 #define RFIFOSPACE(fd) (session[fd]->max_rdata - session[fd]->rdata_size)
 #define WFIFOSPACE(fd) (session[fd]->max_wdata - session[fd]->wdata_size)
 
-#define RFIFOREST(fd)  (session[fd]->eof ? 0 : session[fd]->rdata_size - session[fd]->rdata_pos)
+#define RFIFOREST(fd)  (session[fd]->flag.eof ? 0 : session[fd]->rdata_size - session[fd]->rdata_pos)
 #define RFIFOFLUSH(fd) \
 	do { \
 		if(session[fd]->rdata_size == session[fd]->rdata_pos){ \
@@ -70,15 +70,18 @@ typedef int (*ParseFunc)(int fd);
 
 struct socket_data
 {
-	unsigned char eof;
+	struct {
+		unsigned char eof : 1;
+		unsigned char server : 1;
+	} flag;
 
-	unsigned char *rdata, *wdata;
+	uint32 client_addr; // remote client address
+
+	uint8 *rdata, *wdata;
 	size_t max_rdata, max_wdata;
 	size_t rdata_size, wdata_size;
 	size_t rdata_pos;
 	time_t rdata_tick; // time of last recv (for detecting timeouts); zero when timeout is disabled
-
-	uint32 client_addr; // remote client address (0 for server connections)
 
 	RecvFunc func_recv;
 	SendFunc func_send;

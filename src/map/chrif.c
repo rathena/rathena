@@ -1245,7 +1245,7 @@ int chrif_parse(int fd)
 		return 0;
 	}
 
-	if (session[fd]->eof)
+	if (session[fd]->flag.eof)
 	{
 		if (chrif_connected == 1)
 			chrif_disconnect(fd);
@@ -1393,7 +1393,7 @@ int check_connect_char_server(int tid, unsigned int tick, int id, int data)
 		}
 
 		session[char_fd]->func_parse = chrif_parse;
-		session[char_fd]->client_addr = 0;
+		session[char_fd]->flag.server = 1;
 		realloc_fifo(char_fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 
 		chrif_connect(char_fd);

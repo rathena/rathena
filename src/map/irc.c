@@ -121,7 +121,7 @@ void irc_announce_mvp(struct map_session_data *sd, struct mob_data *md)
 
 int irc_parse(int fd)
 {
-	if (session[fd]->eof)
+	if (session[fd]->flag.eof)
 	{
 		do_close(fd);
 		irc_si = NULL;

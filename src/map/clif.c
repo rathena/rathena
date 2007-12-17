@@ -11494,7 +11494,7 @@ int clif_parse(int fd)
 	{ // begin main client packet processing loop
 
 	sd = (TBL_PC *)session[fd]->session_data;
-	if (session[fd]->eof) {
+	if (session[fd]->flag.eof) {
 		if (sd) {
 			if (sd->state.autotrade) {
 				//Disassociate character from the socket connection.

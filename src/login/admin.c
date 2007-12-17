@@ -45,7 +45,7 @@ int parse_admin(int fd)
 	char ip[16];
 	ip2str(ipl, ip);
 
-	if( session[fd]->eof )
+	if( session[fd]->flag.eof )
 	{
 		do_close(fd);
 		ShowInfo("Remote administration has disconnected (session #%d).\n", fd);

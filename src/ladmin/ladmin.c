@@ -3239,7 +3239,7 @@ int parse_fromlogin(int fd)
 	struct char_session_data *sd;
 	int id;
 	RFIFOHEAD(fd);
-	if (session[fd]->eof) {
+	if (session[fd]->flag.eof) {
 		if (defaultlanguage == 'F') {
 			ShowMessage("Impossible de se connecter au serveur de login [%s:%d] !\n", loginserverip, loginserverport);
 			ladmin_log("Impossible de se connecter au serveur de login [%s:%d] !\n", loginserverip, loginserverport);
@@ -4201,6 +4201,7 @@ int Connect_login_server(void)
 		ShowMessage("Error: Failed to connect to Login Server\n");
 		exit(EXIT_FAILURE);
 	}
+	session[login_fd]->flag.server = 1;
 	if (passenc == 0) {
 		WFIFOHEAD(login_fd,28);
 		WFIFOW(login_fd,0) = 0x7918; // Request for administation login

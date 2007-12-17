@@ -348,7 +348,7 @@ void set_char_online(int map_id, int char_id, int account_id)
 		delete_timer(character->waiting_disconnect, chardb_waiting_disconnect);
 		character->waiting_disconnect = -1;
 	}
-	if (login_fd > 0 && !session[login_fd]->eof)
+	if (login_fd > 0 && !session[login_fd]->flag.eof)
 	{	
 		WFIFOHEAD(login_fd,6);
 		WFIFOW(login_fd,0) = 0x272b;
@@ -374,7 +374,7 @@ void set_char_offline(int char_id, int account_id)
 		}
 	}
 	
-	if (login_fd > 0 && !session[login_fd]->eof)
+	if (login_fd > 0 && !session[login_fd]->flag.eof)
 	{
 		WFIFOHEAD(login_fd,6);
 		WFIFOW(login_fd,0) = 0x272c;
@@ -424,7 +424,7 @@ void set_all_offline(int id)
 		ShowNotice("Sending users of map-server %d offline.\n",id);
 	online_char_db->foreach(online_char_db,char_db_kickoffline,id);
 
-	if (id >= 0 || login_fd <= 0 || session[login_fd]->eof)
+	if (id >= 0 || login_fd <= 0 || session[login_fd]->flag.eof)
 		return;
 	//Tell login-server to also mark all our characters as offline.
 	WFIFOHEAD(login_fd,2);
@@ -1954,7 +1954,7 @@ int parse_fromlogin(int fd)
 	if( fd != login_fd )
 		set_eof(fd);
 
-	if(session[fd]->eof) {
+	if(session[fd]->flag.eof) {
 		if (fd == login_fd) {
 			ShowWarning("Connection to login-server lost (connection #%d).\n", fd);
 			login_fd = -1;
@@ -2605,7 +2605,7 @@ int parse_frommap(int fd)
 	ARR_FIND( 0, MAX_MAP_SERVERS, id, server[id].fd == fd );
 	if(id == MAX_MAP_SERVERS)
 		set_eof(fd);
-	if(session[fd]->eof) {
+	if(session[fd]->flag.eof) {
 		if (id < MAX_MAP_SERVERS) {
 			unsigned char buf[16384];
 			ShowStatus("Map-server %d (session #%d) has disconnected.\n", id, fd);
@@ -3225,7 +3225,7 @@ int parse_char(int fd)
 	if(login_fd < 0)
 		set_eof(fd);
 
-	if(session[fd]->eof)
+	if(session[fd]->flag.eof)
 	{
 		if (sd != NULL)
 		{
@@ -3639,7 +3639,7 @@ int parse_char(int fd)
 				server[i].users = 0;
 				memset(server[i].map, 0, sizeof(server[i].map));
 				session[fd]->func_parse = parse_frommap;
-				session[fd]->client_addr = 0;
+				session[fd]->flag.server = 1;
 				realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 				char_mapif_init(fd);
 				// send gm acccounts level to map-servers
@@ -3852,7 +3852,7 @@ int check_connect_login_server(int tid, unsigned int tick, int id, int data)
 		return 0;
 	}
 	session[login_fd]->func_parse = parse_fromlogin;
-	session[login_fd]->client_addr = 0;
+	session[login_fd]->flag.server = 1;
 	realloc_fifo(login_fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 	
 	WFIFOHEAD(login_fd,86);
