@@ -52,7 +52,7 @@ int irc_connect_timer(int tid, unsigned int tick, int id, int data)
 		return 0;
 	//Ok, this ShowInfo and printf are a little ugly, but they are meant to 
 	//debug just how long the code freezes here. [Skotlex]
-	ShowInfo("(IRC) Connecting to %s...\n", irc_ip_str);
+	ShowInfo("(IRC) Connecting to %s... ", irc_ip_str);
 	irc_fd = make_connection(irc_ip,irc_port);
 	if(irc_fd > 0){
 		printf("ok\n");

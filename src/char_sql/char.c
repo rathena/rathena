@@ -339,8 +339,10 @@ static int char_db_kickoffline(DBKey key, void* data, va_list ap)
 		mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 1);
 	else if (character->waiting_disconnect == -1)
 		set_char_offline(character->char_id, character->account_id);
-	else return 0;
-	return 1; // WTF, pick one!
+	else
+		return 0; // fail
+
+	return 1;
 }
 
 void set_all_offline(int id)

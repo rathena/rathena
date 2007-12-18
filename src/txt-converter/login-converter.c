@@ -227,8 +227,6 @@ int do_init(int argc, char** argv)
 	return 0;
 }
 
-void do_abort(void) {}
-
 void do_final(void)
 {
 	if( gm_account_db )
