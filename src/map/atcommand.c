@@ -6012,7 +6012,7 @@ int atcommand_partyoption(const int fd, struct map_session_data* sd, const char*
 {
 	struct party_data *p;
 	int mi, option;
-	char w1[15], w2[15];
+	char w1[16], w2[16];
 	nullpo_retr(-1, sd);
 
 	if (sd->status.party_id == 0 || (p = party_search(sd->status.party_id)) == NULL)
@@ -6020,9 +6020,8 @@ int atcommand_partyoption(const int fd, struct map_session_data* sd, const char*
 		clif_displaymessage(fd, msg_txt(282));
 		return -1;
 	}
-	
-	for (mi = 0; mi < MAX_PARTY && p->data[mi].sd != sd; mi++);
-	
+
+	ARR_FIND( 0, MAX_PARTY, mi, p->data[mi].sd == sd );
 	if (mi == MAX_PARTY)
 		return -1; //Shouldn't happen
 
@@ -6031,15 +6030,15 @@ int atcommand_partyoption(const int fd, struct map_session_data* sd, const char*
 		clif_displaymessage(fd, msg_txt(282));
 		return -1;
 	}
-	
+
 	if(!message || !*message || sscanf(message, "%15s %15s", w1, w2) < 2)
 	{
 		clif_displaymessage(fd, "Command usage: @changeoption <pickup share: yes/no> <item distribution: yes/no>");
 		return -1;
 	}
-	w1[14] = w2[14] = '\0'; //Assure a proper string terminator.
+
 	option = (config_switch(w1)?1:0)|(config_switch(w2)?2:0);
-	
+
 	//Change item share type.
 	if (option != p->party.item)
 		party_changeoption(sd, p->party.exp, option);
