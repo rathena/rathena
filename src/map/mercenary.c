@@ -76,7 +76,6 @@ int merc_hom_dead(struct homun_data *hd, struct block_list *src)
 	if (!sd) //unit remove map will invoke unit free
 		return 3;
 
-	clif_hominfo(sd,hd,0); // Send dead flag
 	clif_emotion(&sd->bl, 28) ; //sob
 	//Remove from map (if it has no intimacy, it is auto-removed from memory)
 	return 3;
