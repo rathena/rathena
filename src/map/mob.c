@@ -1383,7 +1383,7 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list ap)
 
 	nullpo_retr(0, md);
 
-	if(md->bl.type!=BL_MOB || md->bl.prev == NULL)
+	if(md->bl.prev == NULL)
 		return 0;
 
 	if (md->nd || (battle_config.mob_ai&0x20 && map[md->bl.m].users>0))
@@ -1443,7 +1443,7 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list ap)
  *------------------------------------------*/
 static int mob_ai_lazy(int tid,unsigned int tick,int id,int data)
 {
-	map_foreachiddb(mob_ai_sub_lazy,tick);
+	map_foreachmob(mob_ai_sub_lazy,tick);
 	return 0;
 }
 

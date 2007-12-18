@@ -10821,8 +10821,8 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 	else
 		skill_db[i].skill_type = 0;
 	skill_split_atoi(split[14],skill_db[i].blewcount);
-	safestrncpy(skill_db[i].name, split[15], sizeof(skill_db[i].name));
-	safestrncpy(skill_db[i].desc, split[16], sizeof(skill_db[i].desc));
+	safestrncpy(skill_db[i].name, trim(split[15]), sizeof(skill_db[i].name));
+	safestrncpy(skill_db[i].desc, trim(split[16]), sizeof(skill_db[i].desc));
 
 	return true;
 }

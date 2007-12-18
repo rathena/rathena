@@ -38,6 +38,9 @@
 
 =======================
 
+12/18
+	* Cleaned up a bit the format of skill_db.txt (that comma next to the skill
+	  name looks ugly if you ask me)
 12/14
 	* corrected Option_Xmas value in const.txt [Skotlex]
 12/13

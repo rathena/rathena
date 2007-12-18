@@ -42,602 +42,602 @@
 // 15 Blowcount (amount of tiles skill knockbacks)
 // 16 Name
 // 17 Description
-1,0,0,0,0,0,0,9,0,no,0,0,0,none,0		,NV_BASIC,Basic Skill
-2,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,SM_SWORD,Sword Mastery
-3,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,SM_TWOHAND,Two-Handed Sword Mastery
-4,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,SM_RECOVERY,Increase HP Recovery
-5,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0		,SM_BASH,Bash
-6,9,6,1,0,1,0,10,1,no,0,0,0,none,0		,SM_PROVOKE,Provoke
-7,0,6,4,3,0x2,2,10,1,no,0,0,0,weapon,2		,SM_MAGNUM,Magnum Break
-8,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0		,SM_ENDURE,Endure
-9,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,MG_SRECOVERY,Increase SP Recovery
-10,0,6,4,3,0x3,3,1,1,yes,0,0,0,magic,0		,MG_SIGHT,Sight
-11,9,6,1,8,0x6,1,10,1,yes,0,0,0,magic,0		,MG_NAPALMBEAT,Napalm Beat
-12,9,8,2,8,0x1,0,10,1,yes,0,0,0,magic,0		,MG_SAFETYWALL,Safety Wall
-13,9,8,1,8,0,0,10,1:1:2:2:3:3:4:4:5:5,yes,0,0,0,magic,0		,MG_SOULSTRIKE,Soul Strike
-14,9,8,1,1,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0	,MG_COLDBOLT,Cold Bolt
-15,9,6,1,1,0,0,10,1,yes,0,0,0,magic,0		,MG_FROSTDIVER,Frost Diver
-16,2,6,1,2,0x1,0,10,1,yes,0,0,0,magic,0		,MG_STONECURSE,Stone Curse
-17,9,6,1,3,0x2,2,10,1,yes,0,0,0,magic,0		,MG_FIREBALL,Fire Ball
-18,9,6,2,3,0,0,10,1,yes,0,0,3,magic,2		,MG_FIREWALL,Fire Wall
-19,9,8,1,3,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0	,MG_FIREBOLT,Fire Bolt
-20,9,8,1,4,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0	,MG_LIGHTNINGBOLT,Lightning Bolt
-21,9,8,2,4,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0	,MG_THUNDERSTORM,Thunderstorm
-22,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,AL_DP,Divine Protection
-23,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,AL_DEMONBANE,Demon Bane
-24,0,6,4,6,0x3,2,1,1,yes,0,0,0,magic,0		,AL_RUWACH,Ruwach
-25,9,6,2,0,0x1,0,1,1,yes,0,0,0,magic,0		,AL_PNEUMA,Pneuma
-26,0,6,4,0,0x1,0,2,1,yes,0,0,0,magic,0		,AL_TELEPORT,Teleport
-27,9,6,2,0,0x1,0,4,1,yes,0,0,3,magic,0		,AL_WARP,Warp Portal
-28,9,6,16,6,0x21,0,10,1,yes,0,0,0,magic,0	,AL_HEAL,Heal
-29,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0	,AL_INCAGI,Increase AGI
-30,9,6,1,0,0x1,0,10,1,yes,0,0,0,magic,0		,AL_DECAGI,Decrease AGI
-31,0,6,4,0,0x1,0,1,1,yes,0,0,0,magic,0		,AL_HOLYWATER,Aqua Benedicta
-32,0,6,4,0,0x3,15,10,1,yes,0,0,0,magic,0	,AL_CRUCIS,Signum Crucis
-33,0,6,4,0,0x3,-1,10,1,yes,0,0,0,magic,0	,AL_ANGELUS,Angelus
-34,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0	,AL_BLESSING,Blessing
-35,9,6,16,0,0x1,0,1,1,yes,0,0,0,magic,0		,AL_CURE,Cure
-36,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,MC_INCCARRY,Enlarge Weight Limit
-37,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,MC_DISCOUNT,Discount
-38,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,MC_OVERCHARGE,Overcharge
-39,1,0,0,0,0,0,10,0,no,0,0,0,none,0		,MC_VENDING,Pushcart
-40,1,6,4,0,0x1,0,1,1,no,0,0,0,none,0		,MC_IDENTIFY,Item Appraisal
-41,1,6,4,0,0x1,0,10,1,no,0,0,0,none,0		,MC_VENDING,Vending
-42,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0		,MC_MAMMONITE,Mammonite
-43,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,AC_OWL,Owl's Eye
-44,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,AC_VULTURE,Vulture's Eye
-45,0,6,4,0,0x3,3,10,1,no,0,0,0,weapon,0		,AC_CONCENTRATION,Improve Concentration
-46,-9,8,1,-1,0,0,10,2,no,0,0,0,weapon,0		,AC_DOUBLE,Double Strafe
-47,-9,6,2,-1,0x2,2,10,1,no,0,0,0,weapon,2	,AC_SHOWER,Arrow Shower
-48,-1,8,0,-1,0,0,10,2,no,0,0,0,weapon,0		,TF_DOUBLE,Double Attack
-49,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,TF_MISS,Improve Dodge
-50,1,6,1,0,1,0,10,1,no,0,0,0,weapon,0		,TF_STEAL,Steal
-51,1,6,4,0,1,0,10,1,no,0,0,0,none,0		,TF_HIDING,Hiding
-52,-2,6,1,5,0,0,10,1,no,0,0,0,weapon,0		,TF_POISON,Envenom
-53,9,6,16,5,0x1,0,1,1,no,0,0,0,weapon,0		,TF_DETOXIFY,Detoxify
-54,9,6,16,6,0x1,0,4,1,yes,0,0,0,magic,0		,ALL_RESURRECTION,Resurrection
-55,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,KN_SPEARMASTERY,Spear Mastery
-56,-2,8,1,-1,0,0,10,3,no,0,0,0,weapon,0		,KN_PIERCE,Pierce
-57,-2,6,1,-1,0x1,0,10,1,no,33,0,0,weapon,3	,KN_BRANDISHSPEAR,Brandish Spear
-58,-4,6,1,-1,0x2,0,10,1,no,0,0,0,weapon,6	,KN_SPEARSTAB,Spear Stab
-59,3:5:7:9:11,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	,KN_SPEARBOOMERANG,Spear Boomerang
-60,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0		,KN_TWOHANDQUICKEN,Twohand Quicken
-61,0,6,4,-1,0x20,0,5,1,no,0,0,0,weapon,0	,KN_AUTOCOUNTER,Counter Attack
-62,-2,6,1,-1,0x2,1,10,1,no,33,0,0,weapon,1	,KN_BOWLINGBASH,Bowling Bash
-63,0,0,0,0,0,0,1,0,no,0,0,0,weapon,0		,KN_RIDING,Peco Peco Riding
-64,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0		,KN_CAVALIERMASTERY,Cavalier Mastery
-65,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,PR_MACEMASTERY,Mace Mastery
-66,9,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0		,PR_IMPOSITIO,Impositio Manus
-67,9,6,16,0,0x1,0,3,1,yes,0,0x200,0,magic,0	,PR_SUFFRAGIUM,Suffragium
-68,9,6,16,6,0x31,0,5,1,yes,0,0,0,magic,0	,PR_ASPERSIO,Aspersio
-69,9,6,2,0,0x23,1,5,1,yes,0,0x40,0,magic,0	,PR_BENEDICTIO,B.S. Sacramenti
-70,9,6,2,6,0x21,0,10,1,yes,0,0,0,magic,1	,PR_SANCTUARY,Sanctuary
-71,9,6,16,0,0x1,0,4,1,yes,0,0,0,magic,0		,PR_SLOWPOISON,Slow Poison
-72,9,6,16,0,0x1,0,1,1,yes,0,0,0,magic,0		,PR_STRECOVERY,Status Recovery
-73,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0	,PR_KYRIE,Kyrie Eleison
-74,0,6,4,0,0x3,-1,5,1,yes,0,0,0,magic,0		,PR_MAGNIFICAT,Magnificat
-75,0,6,4,0,0x3,-1,5,1,yes,0,0,0,magic,0		,PR_GLORIA,Gloria
-76,5,6,1,0,0x1,0:0:0:0:0:0:0:0:0:0:-1,10,0,yes,0,0,0,magic,0	,PR_LEXDIVINA,Lex Divina
-77,5,6,1,6,0x28,0,10,1,yes,0,0,0,magic,0	,PR_TURNUNDEAD,Turn Undead
-78,9,6,1,0,0x1,0,1,0,yes,0,0,0,magic,0		,PR_LEXAETERNA,Lex Aeterna
-79,9,8,2,6,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0	,PR_MAGNUS,Magnus Exorcismus
-80,9,8,2,3,0x20,1:1:1:1:1:2:2:2:2:2:2,10,3:4:5:6:7:8:9:10:11:12:12,yes,0,0x80,5,magic,0	,WZ_FIREPILLAR,Fire Pillar
-81,0,6,4,3,0,3,10,1,yes,0,0,0,magic,5		,WZ_SIGHTRASHER,Sightrasher
-//82,9,6,2,3,0,0,10,1,yes,0,0,0,magic,0		,WZ_FIREIVY,Fire Ivy
-83,9,8,2,3,0,3:3:3:3:3:3:3:3:3:3:14,10,1:1:2:2:3:3:4:4:5:5:15,yes,0,0,0,magic,0	,WZ_METEOR,Meteor Storm
-84,9,8,1,4,0,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,0,0,magic,2:3:3:4:4:5:5:6:6:7	,WZ_JUPITEL,Jupitel Thunder
-85,9,8,2,4,0,0,10,-10,yes,0,0,0,magic,0		,WZ_VERMILION,Lord of Vermilion
-86,9,8,1,1,0,0,5,1,yes,0,0,0,magic,0		,WZ_WATERBALL,Water Ball
-87,9,6,2,1,0,0,10,1,yes,0,0,0,magic,0		,WZ_ICEWALL,Ice Wall
-88,0,6,4,1,0x2,2,10,1,yes,0,0,0,magic,0		,WZ_FROSTNOVA,Frost Nova
-89,9,6,2,1,0,0,10,1,yes,0,0,0,magic,2		,WZ_STORMGUST,Storm Gust
-90,9,8,1,2,0,0,5,1:2:3:4:5,yes,0,0,0,magic,0	,WZ_EARTHSPIKE,Earth Spike
-91,9,8,2,2,0,0,5,1:2:3:4:5,yes,0,0,0,magic,0	,WZ_HEAVENDRIVE,Heaven's Drive
-92,9,6,2,2,0x1,0,5,1,yes,0,0,3,magic,0		,WZ_QUAGMIRE,Quagmire
-93,9,6,1,0,0x1,0,1,1,yes,0,0,0,magic,0		,WZ_ESTIMATION,Sense
-94,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0		,BS_IRON,Iron Tempering
-95,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0		,BS_STEEL,Steel Tempering
-96,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0		,BS_ENCHANTEDSTONE,Enchanted Stone Craft
-97,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0		,BS_ORIDEOCON,Oridecon Research
-98,0,0,0,0,0,0,3,0,no,0,0,0,weapon,0		,BS_DAGGER,Smith Dagger
-99,0,0,0,0,0,0,3,0,no,0,0,0,weapon,0		,BS_SWORD,Smith Sword
-100,0,0,0,0,0,0,3,0,no,0,0,0,weapon,0		,BS_TWOHANDSWORD,Smith Two-handed Sword
-101,0,0,0,0,0,0,3,0,no,0,0,0,weapon,0		,BS_AXE,Smith Axe
-102,0,0,0,0,0,0,3,0,no,0,0,0,weapon,0		,BS_MACE,Smith Mace
-103,0,0,0,0,0,0,3,0,no,0,0,0,weapon,0		,BS_KNUCKLE,Smith Knucklebrace
-104,0,0,0,0,0,0,3,0,no,0,0,0,weapon,0		,BS_SPEAR,Smith Spear
-105,0,0,0,0,0,0,1,0,no,0,0,0,weapon,0		,BS_HILTBINDING,Hilt Binding
-106,0,0,0,0,0,0,1,0,no,0,0,0,weapon,0		,BS_FINDINGORE,Ore Discovery
-107,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,BS_WEAPONRESEARCH,Weaponry Research
-108,2,6,16,0,0x1,0,1,1,yes,0,0,0,weapon,0	,BS_REPAIRWEAPON,Weapon Repair
-109,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0		,BS_SKINTEMPER,Skin Tempering
-110,1,6,2,0,0x3,2:2:2:2:2:14,5,1,no,0,0,0,weapon,0	,BS_HAMMERFALL,Hammer Fall
-111,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0	,BS_ADRENALINE,Adrenaline Rush
-112,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0	,BS_WEAPONPERFECT,Weapon Perfection
-113,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0	,BS_OVERTHRUST,Power-Thrust
-114,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0		,BS_MAXIMIZE,Maximize Power
-115,3,6,2,0,0x1,0,5,1,no,0,0x80,0,misc,6:7:8:9:10	,HT_SKIDTRAP,Skid Trap
-116,3,6,2,2,0x40,0,5,1,no,0,0x80,0,misc,0	,HT_LANDMINE,Land Mine
-117,3,6,2,0,0x1,0,5,1,no,0,0x80,0,misc,0	,HT_ANKLESNARE,Ankle Snare
-118,3,6,2,0,0x2,1,5,1,no,0,0x80,0,misc,0	,HT_SHOCKWAVE,Shockwave Trap
-119,3,6,2,0,0x3,2,5,1,no,0,0x80,0,misc,0	,HT_SANDMAN,Sandman
-120,3,6,2,0,0x3,1,5,1,no,0,0x80,0,misc,0	,HT_FLASHER,Flasher
-121,3,6,2,1,0x42,1,5,1,no,0,0x80,0,misc,0	,HT_FREEZINGTRAP,Freezing Trap
-122,3,6,2,4,0x42,1,5,1,no,0,0x80,0,misc,0	,HT_BLASTMINE,Blast Mine
-123,3,6,2,3,0x42,2,5,1,no,0,0x80,0,misc,0	,HT_CLAYMORETRAP,Claymore Trap
-124,2,6,32,0,0x1,0,1,1,no,0,0,0,misc,0		,HT_REMOVETRAP,Remove Trap
-125,3,6,2,0,0x1,0,1,1,no,0,0,0,misc,0		,HT_TALKIEBOX,Talkie Box
-126,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,HT_BEASTBANE,Beast Bane
-127,0,0,0,0,0,0,1,0,no,0,0,0,misc,0		,HT_FALCON,Falconry Mastery
-128,0,0,0,0,0,0,10,0,no,0,0,0,misc,0		,HT_STEELCROW,Steel Crow
-129,5,8,1,0,0x42,1,5,1:2:3:4:5,yes,0,0,0,misc,0	,HT_BLITZBEAT,Blitz Beat
-130,3:5:7:9,6,2,0,0x3,3,4,1,no,0,0,0,misc,0	,HT_DETECTING,Detect
-131,4:5:6:7:8,6,32,0,0x1,0,5,1,no,0,0,0,misc,0	,HT_SPRINGTRAP,Spring Trap
-132,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0		,AS_RIGHT,Righthand Mastery
-133,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0		,AS_LEFT,Lefthand Mastery
-134,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,AS_KATAR,Katar Mastery
-135,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0	,AS_CLOAKING,Cloaking
-136,-1,8,1,-1,0,0,10,8,no,0,0,0,weapon,0	,AS_SONICBLOW,Sonic Blow
+1,0,0,0,0,0,0,9,0,no,0,0,0,none,0,		NV_BASIC,Basic Skill
+2,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		SM_SWORD,Sword Mastery
+3,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		SM_TWOHAND,Two-Handed Sword Mastery
+4,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		SM_RECOVERY,Increase HP Recovery
+5,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,		SM_BASH,Bash
+6,9,6,1,0,1,0,10,1,no,0,0,0,none,0,		SM_PROVOKE,Provoke
+7,0,6,4,3,0x2,2,10,1,no,0,0,0,weapon,2,		SM_MAGNUM,Magnum Break
+8,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,		SM_ENDURE,Endure
+9,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		MG_SRECOVERY,Increase SP Recovery
+10,0,6,4,3,0x3,3,1,1,yes,0,0,0,magic,0,		MG_SIGHT,Sight
+11,9,6,1,8,0x6,1,10,1,yes,0,0,0,magic,0,		MG_NAPALMBEAT,Napalm Beat
+12,9,8,2,8,0x1,0,10,1,yes,0,0,0,magic,0,		MG_SAFETYWALL,Safety Wall
+13,9,8,1,8,0,0,10,1:1:2:2:3:3:4:4:5:5,yes,0,0,0,magic,0,		MG_SOULSTRIKE,Soul Strike
+14,9,8,1,1,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0,	MG_COLDBOLT,Cold Bolt
+15,9,6,1,1,0,0,10,1,yes,0,0,0,magic,0,		MG_FROSTDIVER,Frost Diver
+16,2,6,1,2,0x1,0,10,1,yes,0,0,0,magic,0,		MG_STONECURSE,Stone Curse
+17,9,6,1,3,0x2,2,10,1,yes,0,0,0,magic,0,		MG_FIREBALL,Fire Ball
+18,9,6,2,3,0,0,10,1,yes,0,0,3,magic,2,		MG_FIREWALL,Fire Wall
+19,9,8,1,3,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0,	MG_FIREBOLT,Fire Bolt
+20,9,8,1,4,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0,	MG_LIGHTNINGBOLT,Lightning Bolt
+21,9,8,2,4,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0,	MG_THUNDERSTORM,Thunderstorm
+22,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		AL_DP,Divine Protection
+23,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		AL_DEMONBANE,Demon Bane
+24,0,6,4,6,0x3,2,1,1,yes,0,0,0,magic,0,		AL_RUWACH,Ruwach
+25,9,6,2,0,0x1,0,1,1,yes,0,0,0,magic,0,		AL_PNEUMA,Pneuma
+26,0,6,4,0,0x1,0,2,1,yes,0,0,0,magic,0,		AL_TELEPORT,Teleport
+27,9,6,2,0,0x1,0,4,1,yes,0,0,3,magic,0,		AL_WARP,Warp Portal
+28,9,6,16,6,0x21,0,10,1,yes,0,0,0,magic,0,	AL_HEAL,Heal
+29,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,	AL_INCAGI,Increase AGI
+30,9,6,1,0,0x1,0,10,1,yes,0,0,0,magic,0,		AL_DECAGI,Decrease AGI
+31,0,6,4,0,0x1,0,1,1,yes,0,0,0,magic,0,		AL_HOLYWATER,Aqua Benedicta
+32,0,6,4,0,0x3,15,10,1,yes,0,0,0,magic,0,	AL_CRUCIS,Signum Crucis
+33,0,6,4,0,0x3,-1,10,1,yes,0,0,0,magic,0,	AL_ANGELUS,Angelus
+34,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,	AL_BLESSING,Blessing
+35,9,6,16,0,0x1,0,1,1,yes,0,0,0,magic,0,		AL_CURE,Cure
+36,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		MC_INCCARRY,Enlarge Weight Limit
+37,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		MC_DISCOUNT,Discount
+38,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		MC_OVERCHARGE,Overcharge
+39,1,0,0,0,0,0,10,0,no,0,0,0,none,0,		MC_VENDING,Pushcart
+40,1,6,4,0,0x1,0,1,1,no,0,0,0,none,0,		MC_IDENTIFY,Item Appraisal
+41,1,6,4,0,0x1,0,10,1,no,0,0,0,none,0,		MC_VENDING,Vending
+42,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,		MC_MAMMONITE,Mammonite
+43,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		AC_OWL,Owl's Eye
+44,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		AC_VULTURE,Vulture's Eye
+45,0,6,4,0,0x3,3,10,1,no,0,0,0,weapon,0,		AC_CONCENTRATION,Improve Concentration
+46,-9,8,1,-1,0,0,10,2,no,0,0,0,weapon,0,		AC_DOUBLE,Double Strafe
+47,-9,6,2,-1,0x2,2,10,1,no,0,0,0,weapon,2,	AC_SHOWER,Arrow Shower
+48,-1,8,0,-1,0,0,10,2,no,0,0,0,weapon,0,		TF_DOUBLE,Double Attack
+49,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		TF_MISS,Improve Dodge
+50,1,6,1,0,1,0,10,1,no,0,0,0,weapon,0,		TF_STEAL,Steal
+51,1,6,4,0,1,0,10,1,no,0,0,0,none,0,		TF_HIDING,Hiding
+52,-2,6,1,5,0,0,10,1,no,0,0,0,weapon,0,		TF_POISON,Envenom
+53,9,6,16,5,0x1,0,1,1,no,0,0,0,weapon,0,		TF_DETOXIFY,Detoxify
+54,9,6,16,6,0x1,0,4,1,yes,0,0,0,magic,0,		ALL_RESURRECTION,Resurrection
+55,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		KN_SPEARMASTERY,Spear Mastery
+56,-2,8,1,-1,0,0,10,3,no,0,0,0,weapon,0,		KN_PIERCE,Pierce
+57,-2,6,1,-1,0x1,0,10,1,no,33,0,0,weapon,3,	KN_BRANDISHSPEAR,Brandish Spear
+58,-4,6,1,-1,0x2,0,10,1,no,0,0,0,weapon,6,	KN_SPEARSTAB,Spear Stab
+59,3:5:7:9:11,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,	KN_SPEARBOOMERANG,Spear Boomerang
+60,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,		KN_TWOHANDQUICKEN,Twohand Quicken
+61,0,6,4,-1,0x20,0,5,1,no,0,0,0,weapon,0,	KN_AUTOCOUNTER,Counter Attack
+62,-2,6,1,-1,0x2,1,10,1,no,33,0,0,weapon,1,	KN_BOWLINGBASH,Bowling Bash
+63,0,0,0,0,0,0,1,0,no,0,0,0,weapon,0,		KN_RIDING,Peco Peco Riding
+64,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		KN_CAVALIERMASTERY,Cavalier Mastery
+65,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		PR_MACEMASTERY,Mace Mastery
+66,9,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,		PR_IMPOSITIO,Impositio Manus
+67,9,6,16,0,0x1,0,3,1,yes,0,0x200,0,magic,0,	PR_SUFFRAGIUM,Suffragium
+68,9,6,16,6,0x31,0,5,1,yes,0,0,0,magic,0,	PR_ASPERSIO,Aspersio
+69,9,6,2,0,0x23,1,5,1,yes,0,0x40,0,magic,0,	PR_BENEDICTIO,B.S. Sacramenti
+70,9,6,2,6,0x21,0,10,1,yes,0,0,0,magic,1,	PR_SANCTUARY,Sanctuary
+71,9,6,16,0,0x1,0,4,1,yes,0,0,0,magic,0,		PR_SLOWPOISON,Slow Poison
+72,9,6,16,0,0x1,0,1,1,yes,0,0,0,magic,0,		PR_STRECOVERY,Status Recovery
+73,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,	PR_KYRIE,Kyrie Eleison
+74,0,6,4,0,0x3,-1,5,1,yes,0,0,0,magic,0,		PR_MAGNIFICAT,Magnificat
+75,0,6,4,0,0x3,-1,5,1,yes,0,0,0,magic,0,		PR_GLORIA,Gloria
+76,5,6,1,0,0x1,0:0:0:0:0:0:0:0:0:0:-1,10,0,yes,0,0,0,magic,0,	PR_LEXDIVINA,Lex Divina
+77,5,6,1,6,0x28,0,10,1,yes,0,0,0,magic,0,	PR_TURNUNDEAD,Turn Undead
+78,9,6,1,0,0x1,0,1,0,yes,0,0,0,magic,0,		PR_LEXAETERNA,Lex Aeterna
+79,9,8,2,6,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0,	PR_MAGNUS,Magnus Exorcismus
+80,9,8,2,3,0x20,1:1:1:1:1:2:2:2:2:2:2,10,3:4:5:6:7:8:9:10:11:12:12,yes,0,0x80,5,magic,0,	WZ_FIREPILLAR,Fire Pillar
+81,0,6,4,3,0,3,10,1,yes,0,0,0,magic,5,		WZ_SIGHTRASHER,Sightrasher
+//82,9,6,2,3,0,0,10,1,yes,0,0,0,magic,0,		WZ_FIREIVY,Fire Ivy
+83,9,8,2,3,0,3:3:3:3:3:3:3:3:3:3:14,10,1:1:2:2:3:3:4:4:5:5:15,yes,0,0,0,magic,0,	WZ_METEOR,Meteor Storm
+84,9,8,1,4,0,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,0,0,magic,2:3:3:4:4:5:5:6:6:7,	WZ_JUPITEL,Jupitel Thunder
+85,9,8,2,4,0,0,10,-10,yes,0,0,0,magic,0,		WZ_VERMILION,Lord of Vermilion
+86,9,8,1,1,0,0,5,1,yes,0,0,0,magic,0,		WZ_WATERBALL,Water Ball
+87,9,6,2,1,0,0,10,1,yes,0,0,0,magic,0,		WZ_ICEWALL,Ice Wall
+88,0,6,4,1,0x2,2,10,1,yes,0,0,0,magic,0,		WZ_FROSTNOVA,Frost Nova
+89,9,6,2,1,0,0,10,1,yes,0,0,0,magic,2,		WZ_STORMGUST,Storm Gust
+90,9,8,1,2,0,0,5,1:2:3:4:5,yes,0,0,0,magic,0,	WZ_EARTHSPIKE,Earth Spike
+91,9,8,2,2,0,0,5,1:2:3:4:5,yes,0,0,0,magic,0,	WZ_HEAVENDRIVE,Heaven's Drive
+92,9,6,2,2,0x1,0,5,1,yes,0,0,3,magic,0,		WZ_QUAGMIRE,Quagmire
+93,9,6,1,0,0x1,0,1,1,yes,0,0,0,magic,0,		WZ_ESTIMATION,Sense
+94,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		BS_IRON,Iron Tempering
+95,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		BS_STEEL,Steel Tempering
+96,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		BS_ENCHANTEDSTONE,Enchanted Stone Craft
+97,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		BS_ORIDEOCON,Oridecon Research
+98,0,0,0,0,0,0,3,0,no,0,0,0,weapon,0,		BS_DAGGER,Smith Dagger
+99,0,0,0,0,0,0,3,0,no,0,0,0,weapon,0,		BS_SWORD,Smith Sword
+100,0,0,0,0,0,0,3,0,no,0,0,0,weapon,0,		BS_TWOHANDSWORD,Smith Two-handed Sword
+101,0,0,0,0,0,0,3,0,no,0,0,0,weapon,0,		BS_AXE,Smith Axe
+102,0,0,0,0,0,0,3,0,no,0,0,0,weapon,0,		BS_MACE,Smith Mace
+103,0,0,0,0,0,0,3,0,no,0,0,0,weapon,0,		BS_KNUCKLE,Smith Knucklebrace
+104,0,0,0,0,0,0,3,0,no,0,0,0,weapon,0,		BS_SPEAR,Smith Spear
+105,0,0,0,0,0,0,1,0,no,0,0,0,weapon,0,		BS_HILTBINDING,Hilt Binding
+106,0,0,0,0,0,0,1,0,no,0,0,0,weapon,0,		BS_FINDINGORE,Ore Discovery
+107,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		BS_WEAPONRESEARCH,Weaponry Research
+108,2,6,16,0,0x1,0,1,1,yes,0,0,0,weapon,0,	BS_REPAIRWEAPON,Weapon Repair
+109,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		BS_SKINTEMPER,Skin Tempering
+110,1,6,2,0,0x3,2:2:2:2:2:14,5,1,no,0,0,0,weapon,0,	BS_HAMMERFALL,Hammer Fall
+111,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,	BS_ADRENALINE,Adrenaline Rush
+112,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,	BS_WEAPONPERFECT,Weapon Perfection
+113,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,	BS_OVERTHRUST,Power-Thrust
+114,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,		BS_MAXIMIZE,Maximize Power
+115,3,6,2,0,0x1,0,5,1,no,0,0x80,0,misc,6:7:8:9:10,	HT_SKIDTRAP,Skid Trap
+116,3,6,2,2,0x40,0,5,1,no,0,0x80,0,misc,0,	HT_LANDMINE,Land Mine
+117,3,6,2,0,0x1,0,5,1,no,0,0x80,0,misc,0,	HT_ANKLESNARE,Ankle Snare
+118,3,6,2,0,0x2,1,5,1,no,0,0x80,0,misc,0,	HT_SHOCKWAVE,Shockwave Trap
+119,3,6,2,0,0x3,2,5,1,no,0,0x80,0,misc,0,	HT_SANDMAN,Sandman
+120,3,6,2,0,0x3,1,5,1,no,0,0x80,0,misc,0,	HT_FLASHER,Flasher
+121,3,6,2,1,0x42,1,5,1,no,0,0x80,0,misc,0,	HT_FREEZINGTRAP,Freezing Trap
+122,3,6,2,4,0x42,1,5,1,no,0,0x80,0,misc,0,	HT_BLASTMINE,Blast Mine
+123,3,6,2,3,0x42,2,5,1,no,0,0x80,0,misc,0,	HT_CLAYMORETRAP,Claymore Trap
+124,2,6,32,0,0x1,0,1,1,no,0,0,0,misc,0,		HT_REMOVETRAP,Remove Trap
+125,3,6,2,0,0x1,0,1,1,no,0,0,0,misc,0,		HT_TALKIEBOX,Talkie Box
+126,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		HT_BEASTBANE,Beast Bane
+127,0,0,0,0,0,0,1,0,no,0,0,0,misc,0,		HT_FALCON,Falconry Mastery
+128,0,0,0,0,0,0,10,0,no,0,0,0,misc,0,		HT_STEELCROW,Steel Crow
+129,5,8,1,0,0x42,1,5,1:2:3:4:5,yes,0,0,0,misc,0,	HT_BLITZBEAT,Blitz Beat
+130,3:5:7:9,6,2,0,0x3,3,4,1,no,0,0,0,misc,0,	HT_DETECTING,Detect
+131,4:5:6:7:8,6,32,0,0x1,0,5,1,no,0,0,0,misc,0,	HT_SPRINGTRAP,Spring Trap
+132,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		AS_RIGHT,Righthand Mastery
+133,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		AS_LEFT,Lefthand Mastery
+134,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		AS_KATAR,Katar Mastery
+135,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,	AS_CLOAKING,Cloaking
+136,-1,8,1,-1,0,0,10,8,no,0,0,0,weapon,0,	AS_SONICBLOW,Sonic Blow
 137,3:4:5:6:7,6,1,-1,0x2,1,5,1,no,0,0,0,weapon,0,AS_GRIMTOOTH,Grimtooth
-138,1,6,16,5,0x1,0,10,1,no,0,0x400,0,weapon,0	,AS_ENCHANTPOISON,Enchant Poison
-139,0,6,4,0,0,0,10,1,no,0,0,0,weapon,0		,AS_POISONREACT,Poison React
-140,2,6,2,5,0x1,0,10,1,no,0,0,0,weapon,0	,AS_VENOMDUST,Venom Dust
-141,1,6,1,-1,0xF,2,10,1,yes,0,0,0,weapon,0	,AS_SPLASHER,Venom Splasher
-142,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0		,NV_FIRSTAID,First Aid
-143,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0		,NV_TRICKDEAD,Play Dead
-144,0,0,0,0,0,0,1,0,no,0,0x1,0,none,0		,SM_MOVINGRECOVERY,Moving HP-Recovery
-145,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0		,SM_FATALBLOW,Fatal Blow
-146,0,6,4,0,0x1,0,1,1,no,0,0x1,0,weapon,0	,SM_AUTOBERSERK,Auto Berserk
-147,0,0,4,0,0x1,0,1,0,no,0,0x1,0,weapon,0	,AC_MAKINGARROW,Arrow Crafting
-148,-9,6,1,-1,0x2,0,1,1,no,0,0x1,0,weapon,6	,AC_CHARGEARROW,Arrow Repel
-149,1,6,1,2,0,0,1,1,no,0,0x1,0,weapon,0		,TF_SPRINKLESAND,Sand Attack
-150,0,6,4,0,0x1,0,1,1,no,0,0x1,0,weapon,5	,TF_BACKSLIDING,Back Slide
-151,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0		,TF_PICKSTONE,Find Stone
-152,7,6,1,0,0x40,0,1,1,no,0,0x1,0,misc,0	,TF_THROWSTONE,Stone Fling
-153,1,6,1,-1,0x2,1,1,1,no,0,0x1,0,weapon,2	,MC_CARTREVOLUTION,Cart Revolution
-154,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0		,MC_CHANGECART,Change Cart
-155,0,6,4,0,0x1,0,1,1,no,0,0x1,0,weapon,0	,MC_LOUD,Crazy Uproar
-156,9,6,1,6,0,0,1,1,yes,0,0x1,0,magic,0		,AL_HOLYLIGHT,Holy Light
-157,0,6,4,0,0x1,0,1,1,yes,0,0x1,0,magic,0	,MG_ENERGYCOAT,Energy Coat
-158,3,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_PIERCINGATT,Piercing Attack
-159,-1,6,1,-1,0x40,0,5,1,no,0,0x2,0,weapon,0	,NPC_MENTALBREAKER,Spirit Destruction
-160,9,6,1,0,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_RANGEATTACK,Stand off attack
-161,0,0,4,0,0x1,0,1,1,no,0,0x2,0,magic,0	,NPC_ATTRICHANGE,Attribute Change
-162,0,0,4,1,0x1,0,1,1,no,0,0x2,0,magic,0	,NPC_CHANGEWATER,Water Attribute Change
-163,0,0,4,2,0x1,0,1,1,no,0,0x2,0,magic,0	,NPC_CHANGEGROUND,Earth Attribute Change
-164,0,0,4,3,0x1,0,1,1,no,0,0x2,0,magic,0	,NPC_CHANGEFIRE,Fire Attribute Change
-165,0,0,4,4,0x1,0,1,1,no,0,0x2,0,magic,0	,NPC_CHANGEWIND,Wind Attribute Change
-166,0,0,4,5,0x1,0,1,1,no,0,0x2,0,magic,0	,NPC_CHANGEPOISON,Poison Attribute Change
-167,0,0,4,6,0x1,0,1,1,no,0,0x2,0,magic,0	,NPC_CHANGEHOLY,Holy Attribute Change
-168,0,0,4,7,0x1,0,1,1,no,0,0x2,0,magic,0	,NPC_CHANGEDARKNESS,Shadow Attribute Change
-169,0,0,4,8,0x1,0,1,1,no,0,0x2,0,magic,0	,NPC_CHANGETELEKINESIS,Ghost Attribute Change
-170,-9,6,1,-1,0x20,0,10,1,no,0,0x2,0,weapon,0	,NPC_CRITICALSLASH,Defense disregard attack
-171,-9,8,1,-1,0,0,10,-2:-3:-4:-5:-6:-7:-8:-9:-10:-11,no,0,0x2,0,weapon,0	,NPC_COMBOATTACK,Multi-stage Attack
-172,-9,6,1,-1,0x40,0,10,1,no,0,0x2,0,weapon,0	,NPC_GUIDEDATTACK,Guided Attack
-173,5,6,4,3,0xD2,5,10,1,no,0,0x2,0,misc,3	,NPC_SELFDESTRUCTION,Suicide bombing
-174,-9,6,1,-1,0x2,3,1,1,no,0,0x2,0,weapon,0	,NPC_SPLASHATTACK,Splash attack
-175,0,0,4,0,0x41,0,10,1,no,0,0x2,0,misc,0	,NPC_SUICIDE,Suicide
-176,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	,NPC_POISON,Poison Attack
-177,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	,NPC_BLINDATTACK,Blind Attack
-178,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	,NPC_SILENCEATTACK,Silence Attack
-179,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	,NPC_STUNATTACK,Stun Attack
-180,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	,NPC_PETRIFYATTACK,Petrify Attack
-181,-9,6,1,7,0,0,5,1,no,0,0x2,0,weapon,0	,NPC_CURSEATTACK,Curse Attack
-182,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	,NPC_SLEEPATTACK,Sleep attack
-183,-9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_RANDOMATTACK,Random Attack
-184,-9,6,1,1,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_WATERATTACK,Water Attribute Attack
-185,-9,6,1,2,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_GROUNDATTACK,Earth Attribute Attack
-186,-9,6,1,3,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_FIREATTACK,Fire Attribute Attack
-187,-9,6,1,4,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_WINDATTACK,Wind Attribute Attack
-188,-9,6,1,5,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_POISONATTACK,Poison Attribute Attack
-189,-9,6,1,6,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_HOLYATTACK,Holy Attribute Attack
-190,-9,6,1,7,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_DARKNESSATTACK,Shadow Attribute Attack
-191,-9,6,1,8,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_TELEKINESISATTACK,Ghost Attribute Attack
-192,-9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_MAGICALATTACK,Demon Shock Attack
-193,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0	,NPC_METAMORPHOSIS,Metamorphosis
-194,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0	,NPC_PROVOCATION,Provocation
-195,0,6,4,0,0x50,0,10,1,no,0,0x2,0,misc,0	,NPC_SMOKING,Smoking
-196,0,0,4,0,0x1,0,10,1,no,0,0x2,0,magic,0	,NPC_SUMMONSLAVE,Follower Summons
-197,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0	,NPC_EMOTION,Emotion
-198,0,0,4,0,0x1,0,10,1,no,0,0x2,0,magic,0	,NPC_TRANSFORMATION,Transformation
-199,9,6,1,7,0x40,0,1,1,no,0,0x2,0,weapon,0	,NPC_BLOODDRAIN,Sucking Blood
-200,9,6,1,7,0,0,1,1,no,0,0x2,0,magic,0		,NPC_ENERGYDRAIN,Energy Drain
-201,0,0,4,0,0x1,0,1,1,no,0,0x2,0,weapon,0	,NPC_KEEPING,Keeping
-202,9,6,1,7,0,0,5,1,no,0,0x2,0,misc,0		,NPC_DARKBREATH,Dark Breath
-203,9,6,1,7,0x1,0,10,1,no,0,0x2,0,magic,0	,NPC_DARKBLESSING,Dark Blessing
-204,0,0,4,0,0x1,0,1,1,no,0,0x2,0,magic,0	,NPC_BARRIER,Barrier
-205,0,0,4,0,0x1,0,1,1,no,0,0x2,0,weapon,0	,NPC_DEFENDER,Defender
-206,1,6,1,-1,0x1,0,5,1,no,0,0x2,0,weapon,0	,NPC_LICK,Lick
-207,9,0,1,0,0x1,0,10,1,no,0,0x2,0,magic,0	,NPC_HALLUCINATION,Hallucination
-208,0,0,4,0,0x1,0,1,1,no,0,0x2,0,magic,0	,NPC_REBIRTH,Rebirth
-209,0,0,4,0,0x1,0,10,1,no,0,0x2,0,magic,0	,NPC_SUMMONMONSTER,Monster Summons
-210,0,0,0,-1,0,0,10,0,no,0,0,0,weapon,0		,RG_SNATCHER,Gank
-211,1,6,1,0,0x1,0,10,1,no,0,0,0,weapon,0	,RG_STEALCOIN,Mug
-212,-1,6,1,-1,0x40,0,10,1,no,0,0,0,weapon,0	,RG_BACKSTAP,Back Stab
-213,0,0,0,0,0,0,5,0,no,0,0,0,none,0		,RG_TUNNELDRIVE,Stalk
-214,0,6,4,-1,0x2,1,5,1,no,0,0,0,weapon,0	,RG_RAID,Sightless Mind
-215,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0		,RG_STRIPWEAPON,Divest Weapon
-216,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0		,RG_STRIPSHIELD,Divest Shield
-217,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0		,RG_STRIPARMOR,Divest Armor
-218,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0		,RG_STRIPHELM,Divest Helm
-219,-1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0		,RG_INTIMIDATE,Snatch
-220,1,6,2,0,0x1,0,1,1,no,0,0,0,none,0		,RG_GRAFFITI,Scribble
-221,0,6,2,0,0x1,0,5,1,no,0,0,0,none,0		,RG_FLAGGRAFFITI,Piece
-222,1,6,2,0,0x3,5,1,1,no,0,0,0,none,0		,RG_CLEANER,Remover
-223,0,0,0,0,0,1,1,0,no,0,0,0,none,0		,RG_GANGSTER,Slyness
-224,0,0,0,0,0,0,5,0,no,0,0,0,none,0		,RG_COMPULSION,Haggle
-225,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,RG_PLAGIARISM,Intimidate
-226,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,AM_AXEMASTERY,Axe Mastery
-227,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,AM_LEARNINGPOTION,Potion Research
-228,0,6,4,0,0x1,0,10,0,no,0,0,0,none,0		,AM_PHARMACY,Prepare Potion
-229,9,6,2,3,0x9,0,5,1,yes,0,0,0,weapon,0	,AM_DEMONSTRATION,Bomb
-230,9,6,1,0,0x48,0,5,1,yes,0,0,0,weapon,0	,AM_ACIDTERROR,Acid Terror
-231,9,6,16,0,0x1,0,5,1,yes,0,0xC00,0,none,0	,AM_POTIONPITCHER,Aid Potion
-232,4,6,2,0,0x1,0,5,1,no,0,0,5,none,0		,AM_CANNIBALIZE,Summon Flora
-233,1,6,2,0,0x1,0,5,1,no,0,0,3,none,0		,AM_SPHEREMINE,Summon Marine Sphere
-234,1,6,16,0,0x1,0,5,1,yes,0,0,0,weapon,0	,AM_CP_WEAPON,Alchemical Weapon
-235,1,6,16,0,0x1,0,5,1,yes,0,0,0,weapon,0	,AM_CP_SHIELD,Synthesized Shield
-236,1,6,16,0,0x1,0,5,1,yes,0,0,0,weapon,0	,AM_CP_ARMOR,Synthetic Armor
-237,1,6,16,0,0x1,0,5,1,yes,0,0,0,weapon,0	,AM_CP_HELM,Biochemical Helm
-238,0,0,0,0,0,0,1,0,no,0,0x1,0,none,0		,AM_BIOETHICS,Bioethics
-//239,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,AM_BIOTECHNOLOGY,Biotechnology
-//240,0,0,0,0,0,0,5,0,no,0,0,0,none,0		,AM_CREATECREATURE,Life Creation
-//241,0,0,0,0,0,0,5,0,no,0,0,0,none,0		,AM_CULTIVATION,Cultivation
-//242,0,0,0,0,0,0,5,0,no,0,0,0,none,0		,AM_FLAMECONTROL,Flame Control
-243,0,0,4,0,0x1,1,1,0,no,0,0,0,none,0		,AM_CALLHOMUN,Call Homunculus
-244,0,0,4,0,0x1,0,1,0,no,0,0,0,none,0		,AM_REST,Vaporize
-//245,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,AM_DRILLMASTER,Drillmaster
-//246,9,0,0,0,0,0,10,0,no,0,0,0,none,0		,AM_HEALHOMUN,Heal Homunculus
-247,9,6,4,0,0x1,1,5,0,no,0,0,0,none,0		,AM_RESURRECTHOMUN,Homunculus Resurrection
-248,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,CR_TRUST,Faith
-249,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0	,CR_AUTOGUARD,Guard
-250,3,6,1,0,0,0,5,1,no,0,0,0,weapon,5:6:7:8:9	,CR_SHIELDCHARGE,Smite
-251,3:5:7:9:11,6,1,0,0,0,5,1,no,0,0,0,weapon,0	,CR_SHIELDBOOMERANG,Shield Boomerang
-252,0,6,4,0,0,0,10,1,no,0,0,0,weapon,0		,CR_REFLECTSHIELD,Shield Reflect
-253,-2,8,1,6,0,0,10,-2,no,0,0,0,weapon,0	,CR_HOLYCROSS,Holy Cross
-254,5,6,4,6,0x48,0,10,1,no,33,0x100,0,magic,0	,CR_GRANDCROSS,Grand Cross
-255,7:8:9:10:11,6,16,0,0x1,0,5,1,yes,0,0x600,0,none,0	,CR_DEVOTION,Sacrifice
-256,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,none,0	,CR_PROVIDENCE,Resistant Souls
-257,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0		,CR_DEFENDER,Defending Aura
-258,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0	,CR_SPEARQUICKEN,Spear Quicken
-259,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,MO_IRONHAND,Iron Fists
-260,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0		,MO_SPIRITSRECOVERY,Spiritual Cadence
-261,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0		,MO_CALLSPIRITS,Summon Spirit Sphere
-262,9,6,16,0,0x1,0,1,1,yes,0,0,0,weapon,0	,MO_ABSORBSPIRITS,Absorb Spirit Sphere
-263,-1,8,0,-1,0,0,10,-3,no,0,0,0,weapon,0	,MO_TRIPLEATTACK,Raging Trifecta Blow
-264,18,6,2,0,0x1,0,1,1,no,0,0,0,none,0		,MO_BODYRELOCATION,Snap
-265,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,MO_DODGE,Dodge
-266,2,6,1,0,0x40,0,5,1,no,0,0,0,weapon,0	,MO_INVESTIGATE,Occult Impaction
-267,9,8,1,-1,0,0,5,1:2:3:4:5,no,0,0,0,weapon,0	,MO_FINGEROFFENSIVE,Throw Spirit Sphere
-268,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0		,MO_STEELBODY,Mental Strength
-269,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0		,MO_BLADESTOP,Root
-270,0,6,4,0,0x1,0,5,0,no,0,0,0,weapon,0		,MO_EXPLOSIONSPIRITS,Fury
-271,-2,6,4,0,0x60,0,5,1,yes,0,0x200,0,weapon,0	,MO_EXTREMITYFIST,Asura Strike
-272,-2,8,4,-1,0,0,5,-4,no,0,0x200,0,weapon,0	,MO_CHAINCOMBO,Raging Quadruple Blow
-273,-2,6,4,-1,0x2,2,5,1,no,0,0x200,0,weapon,0	,MO_COMBOFINISH,Raging Thrust
-274,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,SA_ADVANCEDBOOK,Study
-275,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0		,SA_CASTCANCEL,Cast Cancel
-276,0,6,4,0,0x1,0,5,1,yes,0,0,0,magic,0		,SA_MAGICROD,Magic Rod
-277,9,6,1,0,0x1,0,5,1,yes,0,0,0,magic,0		,SA_SPELLBREAKER,Spell Breaker
-278,0,0,0,0,0,0,10,0,no,0,0,0,magic,0		,SA_FREECAST,Free Cast
-279,0,6,4,0,0x1,0,10,1,yes,0,0,0,magic,0	,SA_AUTOSPELL,Hindsight
-280,9,6,16,3,0x1,0,5,1,yes,0,0xC00,0,magic,0	,SA_FLAMELAUNCHER,Endow Blaze
-281,9,6,16,1,0x1,0,5,1,yes,0,0xC00,0,magic,0	,SA_FROSTWEAPON,Endow Tsunami
-282,9,6,16,4,0x1,0,5,1,yes,0,0xC00,0,magic,0	,SA_LIGHTNINGLOADER,Endow Tornado
-283,9,6,16,2,0x1,0,5,1,yes,0,0xC00,0,magic,0	,SA_SEISMICWEAPON,Endow Quake
-284,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0		,SA_DRAGONOLOGY,Dragonology
-285,2,6,2,3,0x1,0,5,1,yes,0,0,0,magic,0		,SA_VOLCANO,Volcano
-286,2,6,2,1,0x1,0,5,1,yes,0,0,0,magic,0		,SA_DELUGE,Deluge
-287,2,6,2,4,0x1,0,5,1,yes,0,0,0,magic,0		,SA_VIOLENTGALE,Whirlwind
-288,3,6,2,0,0x1,0,5,1,yes,0,0,0,magic,0		,SA_LANDPROTECTOR,Magnetic Earth
-289,9,6,1,0,0x1,0:0:0:0:0:-1,5,1,yes,0,0xE00,0,magic,0	,SA_DISPELL,Dispell
-290,0,6,4,0,0x1,0,10,1,yes,0,0,0,magic,0	,SA_ABRACADABRA,Hocus-pocus
-291,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0	,SA_MONOCELL,Monocell
-292,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0	,SA_CLASSCHANGE,Class Change
-293,0,6,4,0,0x1,0,1,1,yes,0,0x2,0,magic,0	,SA_SUMMONMONSTER,Monster Chant
-294,9,6,4,0,0x1,0,1,1,yes,0,0x2,0,magic,0	,SA_REVERSEORCISH,Grampus Morph
-295,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0	,SA_DEATH,Grim Reaper
-296,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0	,SA_FORTUNE,Gold Digger
-297,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0	,SA_TAMINGMONSTER,Beastly Hypnosis
-298,9,6,4,0,0x1,0,1,1,yes,0,0x2,0,magic,0	,SA_QUESTION,Questioning
-299,9,6,4,0,0x1,0,1,1,yes,0,0x2,0,magic,0	,SA_GRAVITY,Gravity
-300,9,6,4,0,0x1,0,1,1,yes,0,0x2,0,magic,0	,SA_LEVELUP,Leveling
-301,9,6,4,0,0,0,1,1,yes,0,0x2,0,magic,0		,SA_INSTANTDEATH,Suicide
-302,9,6,4,0,0x1,0,1,1,yes,0,0x2,0,magic,0	,SA_FULLRECOVERY,Rejuvenation
-303,9,6,4,0,0,0,1,1,yes,0,0x2,0,magic,0		,SA_COMA,Coma
-304,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0		,BD_ADAPTATION,Amp
-305,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0		,BD_ENCORE,Encore
-306,0,6,4,0,0x1,0,1,1,no,0,0x40,0,misc,0	,BD_LULLABY,Lullaby
-307,0,6,4,0,0x1,0,5,1,no,0,0x40,0,misc,0	,BD_RICHMANKIM,Mental Sensing
-308,0,6,4,0,0x1,0,1,1,no,0,0x40,0,misc,0	,BD_ETERNALCHAOS,Down Tempo
-309,0,6,4,0,0x1,0,5,1,no,0,0x40,0,misc,0	,BD_DRUMBATTLEFIELD,Battle Theme
-310,0,6,4,0,0x1,0,5,1,no,0,0x40,0,misc,0	,BD_RINGNIBELUNGEN,Harmonic Lick
-311,0,6,4,0,0x1,0,1,1,no,0,0x40,0,misc,0	,BD_ROKISWEIL,Classical Pluck
-312,0,6,4,0,0x1,0,1,1,no,0,0x40,0,misc,0	,BD_INTOABYSS,Power Chord
-313,0,6,4,0,0x1,0,5,1,no,0,0x40,0,misc,0	,BD_SIEGFRIED,Acoustic Rhythm
-//314,0,0,0,0,0,0,1,1,no,0,0x40,0,misc,0	,BD_RAGNAROK,Ragnarok
-315,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,BA_MUSICALLESSON,Music Lessons
-316,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0		,BA_MUSICALSTRIKE,Melody Strike
-317,0,8,4,0,0x41,0,5,1,no,0,0x20,0,misc,0	,BA_DISSONANCE,Unchained Serenade
-318,0,6,4,0,0x3,-1,5,1,no,0,0,0,misc,0		,BA_FROSTJOKE,Unbarring Octave
-319,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0	,BA_WHISTLE,Perfect Tablature
-320,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0	,BA_ASSASSINCROSS,Impressive Riff
-321,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0	,BA_POEMBRAGI,Magic Strings
-322,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0	,BA_APPLEIDUN,Song of Lutie
-323,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0		,DC_DANCINGLESSON,Dance Lessons
-324,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0		,DC_THROWARROW,Slinging Arrow
-325,0,8,4,0,0x1,0,5,1,no,0,0x20,0,misc,0	,DC_UGLYDANCE,Hip Shaker
-326,0,6,4,0,0x3,-1,5,1,no,0,0,0,misc,0		,DC_SCREAM,Dazzler
-327,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0	,DC_HUMMING,Focus Ballet
-328,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0	,DC_DONTFORGETME,Slow Grace
-329,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0	,DC_FORTUNEKISS,Lady Luck
-330,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0	,DC_SERVICEFORYOU,Gypsy's Kiss
-331,0,6,4,0,0x1,0,10,0,no,0,0x2,0,none,0	,NPC_RANDOMMOVE,Random Move
-332,0,6,4,0,0x1,0,10,0,no,0,0x2,0,none,0	,NPC_SPEEDUP,Speed UP
-333,0,6,4,0,0x1,0,1,0,no,0,0x2,0,none,0		,NPC_REVENGE,Revenge
-334,9,6,4,0,0x1,0,1,1,yes,0,0x4,0,none,0	,WE_MALE,I Will Protect You
-335,9,6,4,0,0x1,0,1,1,yes,0,0x4,0,none,0	,WE_FEMALE,I Look up to You
-336,9,6,4,0,0x1,3,1,1,yes,0,0x4,1,none,0	,WE_CALLPARTNER,I miss You
-337,9,6,1,-1,0,0,1,1,no,0,0x2,0,weapon,0	,ITM_TOMAHAWK,Throw Tomahawk
-338,-1,8,1,7,0,0,10,-2,no,0,0x2,0,weapon,0	,NPC_DARKCROSS,Cross of Darkness
-339,5,6,4,7,0x48,0,10,1,no,33,0x102,0,magic,0	,NPC_GRANDDARKNESS,Grand cross of Darkness
-340,9,8,1,7,0,0,10,1:1:2:2:3:3:4:4:5:5,yes,0,0x2,0,magic,0	,NPC_DARKSTRIKE,Soul Strike of Darkness
-341,9,8,1,7,0,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,0x2,0,magic,2:3:3:4:4:5:5:6:6:7	,NPC_DARKTHUNDER,Darkness Jupitel
-342,9,6,1,0,0x1,0,1,0,no,0,0x2,0,none,0		,NPC_STOP,Stop
-343,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_WEAPONBRAKER,Break weapon
-344,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_ARMORBRAKE,Break armor
-345,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_HELMBRAKE,Break helm
-346,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_SHIELDBRAKE,Break shield
-347,-9,6,1,9,0,0,10,1,no,0,0x2,0,weapon,0	,NPC_UNDEADATTACK,Undead Element Attack
-348,9,0,1,9,0x1,0,5,1,no,0,0x2,0,magic,0	,NPC_CHANGEUNDEAD,Undead Attribute Change
-349,0,6,4,0,0x1,0,10,0,no,0,0x2,0,weapon,0	,NPC_POWERUP,Power Up
-350,0,6,4,0,0x1,0,10,0,no,0,0x2,0,none,0	,NPC_AGIUP,Agility UP
-351,0,0,0,0,0x1,0,1,0,no,0,0x2,0,none,0		,NPC_SIEGEMODE,Siege Mode
-352,2,0,4,0,0x1,0,1,0,no,0,0x2,0,none,0		,NPC_CALLSLAVE,Recall Slaves
-353,0,0,0,0,0x1,0,1,0,no,0,0x2,0,none,0		,NPC_INVISIBLE,Invisible
-354,2,6,4,0,0x1,0,20,0,no,0,0x2,0,misc,0	,NPC_RUN,Run
-355,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0		,LK_AURABLADE,Aura Blade
-356,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0	,LK_PARRYING,Parrying
-357,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0		,LK_CONCENTRATION,Concentration
-358,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0		,LK_TENSIONRELAX,Relax
-359,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0		,LK_BERSERK,Frenzy
-//360,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0	,LK_FURY,Fury
-361,9,6,16,0,0x3,1,5,1,yes,0,0,0,magic,0	,HP_ASSUMPTIO,Assumptio
-362,4,6,4,0,0x1,0,5,1,yes,0,0,0,magic,2		,HP_BASILICA,Basilica
-363,0,0,0,0,0,0,10,0,no,0,0,0,magic,0		,HP_MEDITATIO,Meditatio
-364,0,0,0,0,0,0,10,1,no,0,0,0,magic,0		,HW_SOULDRAIN,Soul Drain
-365,9,8,1,-1,0,0,1,1,yes,0,0,0,weapon,0		,HW_MAGICCRASHER,Stave Crasher
-366,0,6,4,0,0x1,0,10,1,no,0,0,0,magic,0		,HW_MAGICPOWER,Mystical Amplification
-367,9,8,1,0,0xD0,0,5,1,no,0,0,0,misc,0		,PA_PRESSURE,Gloria Domini
-368,0,6,4,0,0x61,0,5,1,yes,0,0,0,weapon,0	,PA_SACRIFICE, Martyr's Reckoning
-369,0,6,4,0,0x41,0,10,1,yes,0,0,0,misc,0	,PA_GOSPEL,Battle Chant
-370,-2,6,1,-1,0,0,5,1,yes,0,0,0,weapon,3	,CH_PALMSTRIKE,Raging Palm Strike
-371,-2,8,4,-1,0,0,5,1,no,0,0x200,0,weapon,0	,CH_TIGERFIST,Glacier Fist
-372,-2,8,4,-1,0,0,10,-1:-1:-2:-2:-3:-3:-4:-4:-5:-5,no,0,0x200,0,weapon,0	,CH_CHAINCRUSH,Chain Crush Combo
-373,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0	,PF_HPCONVERSION,Indulge
-374,9,6,1,0,0x1,0,1,1,yes,0,0xE00,0,none,0	,PF_SOULCHANGE,Soul Exhale
-375,9,6,1,0,0x98,0,5,1,yes,0,0,0,magic,0	,PF_SOULBURN,Soul Siphon
-376,0,0,0,0,0x1,0,5,1,no,0,0,0,weapon,0		,ASC_KATAR,Advanced Katar Mastery
-//377,0,0,4,0,0x1,0,10,1,no,0,0,0,misc,0	,ASC_HALLUCINATION,Hallucination Walk
-378,0,6,4,5,0x1,0,5,1,no,0,0,0,weapon,0		,ASC_EDP,Enchant Deadly Poison
-379,9,6,1,-1,0x8,0,10,1,yes,0,0,0,weapon,0	,ASC_BREAKER,Soul Destroyer
-380,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0	,SN_SIGHT,Falcon Eyes
-381,5,8,1,0,0x40,0,5,1,yes,0,0,0,misc,0		,SN_FALCONASSAULT,Falcon Assault
-382,4,8,1,-1,0,2,5,1,yes,0,0,14,weapon,0	,SN_SHARPSHOOTING,Focused Arrow Strike
-383,0,6,4,0,0x3,-1,10,1,yes,0,0,0,weapon,0	,SN_WINDWALK,Wind Walker
-384,0,0,4,0,0x1,0,10,1,yes,0,0,0,weapon,0	,WS_MELTDOWN,Shattering Strike
-//385,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0	,WS_CREATECOIN,Create Coins
-//386,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0	,WS_CREATENUGGET,Create Nuggets
-387,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0		,WS_CARTBOOST,Cart Boost
-//388,9,6,2,0,0x1,0,5,1,no,0,0,0,none,0		,WS_SYSTEMCREATE,Auto Attack System
-389,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0		,ST_CHASEWALK,Stealth
-390,0,0,4,0,0,0,5,1,yes,0,0,0,weapon,0		,ST_REJECTSWORD,Counter Instinct
-//391,0,0,4,0,1,0,1,1,yes,0,0,0,magic,0		,ST_STEALBACKPACK,Steal Backpack
-392,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0		,CR_ALCHEMY,Alchemy
-393,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0		,CR_SYNTHESISPOTION,Potion Synthesis
-394,9,8,1,-1,0,0,10,-9,yes,0,0,0,weapon,0	,CG_ARROWVULCAN,Vulcan Arrow
-395,0,0,4,0,0x1,3,1,1,yes,0,0x40,0,misc,2	,CG_MOONLIT,Sheltering Bliss
-396,1,6,16,0,0x1,0,1,1,yes,0,0x600,0,none,0	,CG_MARIONETTE,Marionette Control
-397,5,8,1,-1,0x20,0,5,5,no,0,0,0,weapon,0	,LK_SPIRALPIERCE,Spiral Pierce
-398,4,6,1,-1,0,0,5,1,no,0,0,0,weapon,0		,LK_HEADCRUSH,Traumatic Blow
-399,4,6,1,-1,0,0,10,1,no,0,0,0,weapon,0		,LK_JOINTBEAT,Vital Strike
-400,9,8,1,8,0x6,1,5,1:2:3:4:5,yes,0,0,0,magic,0	,HW_NAPALMVULCAN,Napalm Vulcan
-401,0,6,4,0,0x1,0,1,1,yes,0,0,0,none,0		,CH_SOULCOLLECT,Zen
-402,9,6,1,0,0x1,0,5,1,no,0,0,0,none,0		,PF_MINDBREAKER,Mind Breaker
-403,0,0,4,0,0x1,0,1,1,yes,0,0,0,magic,0		,PF_MEMORIZE,Foresight
-404,9,6,2,2,0x1,0,5,1,yes,0,0x100,2,magic,0	,PF_FOGWALL,Blinding Mist
-405,7,6,1,0,0x1,0,1,1,no,0,0,3,magic,0		,PF_SPIDERWEB,Fiber Lock
-406,0,6,4,-1,0xA,2,10,1,no,33,0,0,weapon,0	,ASC_METEORASSAULT,Meteor Assault
-407,0,6,4,0,0x1,0,1,0,no,0,0,0,none,0		,ASC_CDP,Create Deadly Poison
-408,9,6,4,0,0x1,0,1,1,yes,0,0x4,0,none,0	,WE_BABY,Baby
-409,9,6,4,0,0x1,3,1,1,yes,0,0x4,1,none,0	,WE_CALLPARENT,Call Parent
-410,9,6,4,0,0x1,3,1,1,yes,0,0x4,1,none,0	,WE_CALLBABY,Call Baby
-411,0,6,4,0,0x1,0,10,1,yes,0,0,0,misc,4		,TK_RUN,Running
-412,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0		,TK_READYSTORM,Tornado Stance
-413,-2,8,4,-1,0x2,2,7,-3,no,0,0x200,0,weapon,0	,TK_STORMKICK,Tornado Kick
-414,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0		,TK_READYDOWN,Heel Drop Stance
-415,-2,8,4,-1,0,0,7,-3,no,0,0x200,0,weapon,0	,TK_DOWNKICK,Heel Drop
-416,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0		,TK_READYTURN,Roundhouse Stance
-417,-2,8,4,-1,0x2,1,7,-3,no,0,0x200,0,weapon,2	,TK_TURNKICK,Roundhouse Kick
-418,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0		,TK_READYCOUNTER,Counter Kick Stance
-419,-2,8,4,-1,0x40,0,7,-3,no,0,0x200,0,weapon,0	,TK_COUNTER,Counter Kick
-420,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0		,TK_DODGE,Tumbling
-421,9,8,4,-1,0,0,7,-3,no,0,0x200,0,weapon,0	,TK_JUMPKICK,Flying Kick
-422,0,0,0,0,0,1,10,0,no,0,0,0,none,0		,TK_HPTIME,Peaceful Break
-423,0,0,0,0,0,1,10,0,no,0,0,0,none,0		,TK_SPTIME,Happy Break
-424,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0		,TK_POWER,Kihop
-425,0,6,4,2:4:1:3:8:7:6,0x1,0,7,1,no,0,0,0,weapon,0	,TK_SEVENWIND,Mild Wind
-426,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0		,TK_HIGHJUMP,Taekwon Jump
-427,0,6,4,0,0x1,0,3,1,yes,0,0,0,magic,0		,SG_FEEL,Feeling the Sun, Moon and Stars
-428,1,6,4,-1,0x42,1,3,1,yes,0,0,0,weapon,2	,SG_SUN_WARM,Warmth of the Sun
-429,1,6,4,-1,0x42,1,3,1,yes,0,0,0,weapon,2	,SG_MOON_WARM,Warmth of the Moon
-430,1,6,4,-1,0x42,1,3,1,yes,0,0,0,weapon,2	,SG_STAR_WARM,Warmth of the Stars
-431,0,0,4,0,0x1,0,4,1,yes,0,0,0,magic,0		,SG_SUN_COMFORT,Comfort of the Sun
-432,0,0,4,0,0x1,0,4,1,yes,0,0,0,magic,0		,SG_MOON_COMFORT,Comfort of the Moon
-433,0,0,4,0,0x1,0,4,1,yes,0,0,0,magic,0		,SG_STAR_COMFORT,Comfort of the Stars
-434,10,6,1,0,0x1,0,3,1,yes,0,0,0,magic,0	,SG_HATE,Hatred of the Sun, Moon and Stars
-435,0,0,0,0,0,0,3,0,no,0,0,0,none,0		,SG_SUN_ANGER,Anger of the Sun
-436,0,0,0,0,0,0,3,0,no,0,0,0,none,0		,SG_MOON_ANGER,Anger of the Moon
-437,0,0,0,0,0,0,3,0,no,0,0,0,none,0		,SG_STAR_ANGER,Anger of the Stars
-438,0,0,0,0,0,0,5,0,no,0,0,0,none,0		,SG_SUN_BLESS,Blessing of the Sun
-439,0,0,0,0,0,0,5,0,no,0,0,0,none,0		,SG_MOON_BLESS,Blessing of the Moon
-440,0,0,0,0,0,0,5,0,no,0,0,0,none,0		,SG_STAR_BLESS,Blessing of the Stars
-441,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,SG_DEVIL,Demon of the Sun, Moon and Stars
-442,0,0,0,0,0,0,3,0,no,0,0,0,none,0		,SG_FRIEND,Friend of the Sun, Moon and Stars
-443,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,SG_KNOWLEDGE,Knowledge of the Sun, Moon and Stars
-444,0,6,4,0,0x1,0,1,1,no,0,0,0,misc,0		,SG_FUSION,Union of the Sun, Moon and Stars
-445,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_ALCHEMIST,Spirit of the Alchemist
-446,9,6,16,0,0x1,0,1,1,yes,0,0xC08,0,none,0	,AM_BERSERKPITCHER,Aid Berserk Potion
-447,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_MONK,Spirit of the Monk
-448,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_STAR,Spirit of the Star Gladiator
-449,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_SAGE,Spirit of the Sage
-450,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_CRUSADER,Spirit of the Crusader
-451,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_SUPERNOVICE,Spirit of the Supernovice
-452,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_KNIGHT,Spirit of the Knight
-453,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_WIZARD,Spirit of the Wizard
-454,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_PRIEST,Spirit of the Priest
-455,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_BARDDANCER,Spirit of the Artist
-456,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_ROGUE,Spirit of the Rogue
-457,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_ASSASIN,Spirit of the Assasin
-458,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_BLACKSMITH,Spirit of the Blacksmith
-459,0,6,4,0,0x3,-1,1,1,no,0,0x8,0,weapon,0 	,BS_ADRENALINE2,Advanced Adrenaline Rush
-460,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_HUNTER,Spirit of the Hunter
-461,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0	,SL_SOULLINKER,Spirit of the Soul Linker
-462,9,6,16,0,0x1,0,7,1,yes,0,0,0,magic,0 	,SL_KAIZEL,Kaizel
-463,9,6,16,0,0x1,0,7,1,yes,0,0,0,magic,0 	,SL_KAAHI,Kaahi
-464,9,6,16,0,0x1,0,3,1,yes,0,0,0,magic,0 	,SL_KAUPE,Kaupe
-465,9,6,16,0,0x1,0,7,1,yes,0,0,0,magic,0 	,SL_KAITE,Kaite
-466,0,0,0,0,0,0,7,0,yes,0,0,0,magic,0 		,SL_KAINA,Kaina
-467,9,6,1,-2,0,0,7,1,no,0,0,0,magic,2		,SL_STIN,Estin
-468,9,6,1,-2,0,0,7,1,no,0,0,0,magic,0		,SL_STUN,Estun
-469,9,8,1,-2,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0	,SL_SMA,Esma
-470,9,6,1,0,0x1,0,7,1,no,0,0,0,magic,0 		,SL_SWOO,Eswoo
-471,9,6,1,0,0x1,0,3,1,no,0,0,0,magic,0 		,SL_SKE,Eske
-472,9,6,1,0,0x1,0,3,1,no,0,0,0,magic,0 		,SL_SKA,Eska
-473,0,0,0,0,0,0,0,0,no,0,0,0,none,0		,SM_SELFPROVOKE,Provoke Self
-474,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0	,NPC_EMOTION_ON,Emotion ON
-475,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0		,ST_PRESERVE,Preserve
-476,1,6,1,0,0x1,0,5,1,yes,0,0,0,weapon,0	,ST_FULLSTRIP,Divest All
-477,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0	,WS_WEAPONREFINE,Upgrade Weapon
-478,3,6,2,0,0x3,3,10,1,no,0,0,0,none,0		,CR_SLIMPITCHER,Aid Condensed Potion
-479,1,6,16,0,0x1,0,5,1,yes,0,0,0,weapon,0	,CR_FULLPROTECTION,Full Protection
-480,5,8,1,0,0,0,5,5,no,0,0,0,weapon,0		,PA_SHIELDCHAIN,Shield Chain
-481,0,0,0,0,0,0,5,0,no,0,0,0,none,0		,HP_MANARECHARGE,Mana Recharge
-482,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0		,PF_DOUBLECASTING,Double Casting
-483,9,6,2,0,0x1,1:2:3:4:5,1,1,no,0,0,0,none,0	,HW_GANBANTEIN,Ganbantein
-484,9,6,2,2,0x91,0,5,1,yes,0,0,0,misc,0		,HW_GRAVITATION,Gravitation Field
-485,-2,6,1,-1,0x8,0,10,1,no,0,0,0,weapon,0	,WS_CARTTERMINATION,Cart Termination
-486,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0		,WS_OVERTHRUSTMAX,Maximum Power Thrust
-487,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0		,CG_LONGINGFREEDOM,Longing for Freedom
-488,0,6,4,0,0x1,1,5,1,no,0,0x40,0,misc,0	,CG_HERMODE,Wand of Hermode
-489,9,6,1,0,0x41,0,5,1,no,0,0,0,misc,0		,CG_TAROTCARD,Tarot Card of Fate
-490,9,8,1,0,0x40,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,misc,0	,CR_ACIDDEMONSTRATION,Acid Demonstration
-491,1,6,2,0,0x1,0,2,1,no,0,0,0,none,0		,CR_CULTIVATION,Plant Cultivation
-492,0,6,4,0:1:2:3:4:5:6:7:8:9,0x1,0,10,1,no,0,0x2,0,none,0	,ITEM_ENCHANTARMS,Weapon Enchantment
-493,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0		,TK_MISSION,Taekwon Mission
-494,9,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0	,SL_HIGH,Spirit of Rebirth
-495,0,6,4,0,0x1,0,1,1,no,0,0x8,0,weapon,0	,KN_ONEHAND,Onehand Quicken
-496,0,6,4,0,0x1,0,1,0,no,0,0x8,0,none,0		,AM_TWILIGHT1,Twilight Alchemy 1
-497,0,6,4,0,0x1,0,1,0,no,0,0x8,0,none,0		,AM_TWILIGHT2,Twilight Alchemy 2
-498,0,6,4,0,0x1,0,1,0,no,0,0x8,0,none,0		,AM_TWILIGHT3,Twilight Alchemy 3
-499,-9,8,4,-1,0,0,1,2,no,0,0x208,0,weapon,0	,HT_POWER,Beast Strafing
-500,0,6,4,0,0x40,0,5,1,no,0,0,0,misc,0		,GS_GLITTERING,Flip the Coin
-501,9,6,1,-1,0x50,0,1,1,no,0,0,0,misc,0		,GS_FLING,Fling
-502,-9,8,1,-1,0,0,1,3,no,0,0,0,weapon,0		,GS_TRIPLEACTION,Triple Action
-503,-9,6,1,-1,0x8,0,1,1,no,0,0,0,weapon,0	,GS_BULLSEYE,Bulls Eye
-504,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0		,GS_MADNESSCANCEL,Madness Canceller
-505,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0		,GS_ADJUSTMENT,AdJustment
-506,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0		,GS_INCREASING,Increasing Accuracy
-507,-9,6,1,8,0,0,1,1,no,0,0,0,weapon,0		,GS_MAGICALBULLET,Magical Bullet
-508,-9,6,1,-1,0x1,0,1,1,no,0,0,0,weapon,0	,GS_CRACKER,Cracker
-509,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,GS_SINGLEACTION,Single Action
-510,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,GS_SNAKEEYE,Snake Eye
-511,-9,8,0,-1,0,0,10,2,no,0,0,0,weapon,0	,GS_CHAINACTION,Chain Action
-512,-9,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	,GS_TRACKING,Tracking
-513,-9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0		,GS_DISARM,Disarm
-514,-9,6,1,-1,0x20,0,5,1,no,0,0,0,weapon,0	,GS_PIERCINGSHOT,Piercing Shot
-515,-9,8,1,-1,0,0,10,5,no,0,0,0,weapon,0	,GS_RAPIDSHOWER,Rapid Shower
-516,0,8,4,-1,0x2,3,10,1,no,0,0,0,weapon,0	,GS_DESPERADO,Desperado
-517,0,6,4,-1,0x1,0,10,1,no,0,0,0,weapon,0	,GS_GATLINGFEVER,Gatling Fever
-518,2,6,1,-1,0,0,10,1,no,0,0,0,weapon,5		,GS_DUST,Dust
-519,-9,6,1,-1,0,0,10,1,yes,0,0,0,weapon,0	,GS_FULLBUSTER,Full Buster
-520,-9,6,1,-1,0x2,1:1:1:2:2:2:3:3:3:4,10,1,no,0,0,0,weapon,0	,GS_SPREADATTACK,Spread Attack
-521,-9,6,2,-1,0x40,1,10,1,no,0,0,0,weapon,3	,GS_GROUNDDRIFT,Ground Drift
-522,0,0,0,0,0,0,10,1,no,0,0,0,weapon,0		,NJ_TOBIDOUGU,Shuriken Training
-523,9,6,1,-1,0x40,0,10,1,no,0,0,0,weapon,0	,NJ_SYURIKEN,Throw Shuriken
-524,9,8,1,-1,0x40,0,5,3,no,0,0,0,weapon,0	,NJ_KUNAI,Throw Kunai
-525,9,8,1,-1,0x6,1,5,-3:-3:-4:-4:-5,yes,0,0,0,weapon,0	,NJ_HUUMA,Throw Huuma Shuriken
-526,9,6,1,0,0x50,0,10,1,no,0,0,0,misc,0		,NJ_ZENYNAGE,Throw Zeny
-527,0,6,4,-1,0,0,5,1,no,0,0,0,weapon,3		,NJ_TATAMIGAESHI,Improvised Defense
-528,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0	,NJ_KASUMIKIRI,Vanishing Slash
-529,7:9:11:13:15,6,2,0,0x1,0,5,1,no,0,0,0,none,0	,NJ_SHADOWJUMP,Shadow Leap
-530,7:9:11:13:15,6,1,-1,0,0,5,1,no,0,0,0,weapon,0	,NJ_KIRIKAGE,Shadow Slash
-531,0,6,4,0,0x1,0,5,1,no,0,0,0,none,7		,NJ_UTSUSEMI,Cicada Skin Sheeding
-532,0,6,4,0,0x1,0,10,1,yes,0,0,0,magic,0	,NJ_BUNSINJYUTSU,Mirror Image
-533,0,0,0,0,0,0,10,0,no,0,0,0,none,0		,NJ_NINPOU,Spirit of the Blade
-534,9,8,1,3,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0	,NJ_KOUENKA,Crimson Fire Petal
-535,0,8,4,3,0,0,10,1,yes,0,0,0,magic,1		,NJ_KAENSIN,Crimson Fire Formation
-536,9,8,1,3,0x2,2,5,3,yes,0,0,0,magic,0		,NJ_BAKUENRYU,Raging Fire Dragon
-537,9,8,1,1,0,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,0,0,magic,0	,NJ_HYOUSENSOU,Spear of Ice
-538,9,6,2,0,0x1,0,10,1,yes,0,0,0,magic,0	,NJ_SUITON,Hidden Water
-539,0,6,4,1,0x2,3,5,1,yes,0,0,0,magic,0		,NJ_HYOUSYOURAKU,Ice Meteor
-540,9,8,1,4,0,0,10,1:2:2:3:3:4:4:5:5:6,yes,0,0,0,magic,0	,NJ_HUUJIN,Wind Blade
-541,9,6,4,4,0x2,2:2:3:3:4,5,1,yes,0,0,0,magic,0	,NJ_RAIGEKISAI,Lightning Strike of Destruction
-542,9,8,1,4,0,3,5,1,yes,0,0,5:6:7:8:9,magic,0	,NJ_KAMAITACHI,Kamaitachi
-543,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0		,NJ_NEN,Soul
-544,-5,6,1,0,0x40,0,10,1,no,0,0,0,weapon,0	,NJ_ISSEN,Final Strike
+138,1,6,16,5,0x1,0,10,1,no,0,0x400,0,weapon,0,	AS_ENCHANTPOISON,Enchant Poison
+139,0,6,4,0,0,0,10,1,no,0,0,0,weapon,0,		AS_POISONREACT,Poison React
+140,2,6,2,5,0x1,0,10,1,no,0,0,0,weapon,0,	AS_VENOMDUST,Venom Dust
+141,1,6,1,-1,0xF,2,10,1,yes,0,0,0,weapon,0,	AS_SPLASHER,Venom Splasher
+142,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0,		NV_FIRSTAID,First Aid
+143,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0,		NV_TRICKDEAD,Play Dead
+144,0,0,0,0,0,0,1,0,no,0,0x1,0,none,0,		SM_MOVINGRECOVERY,Moving HP-Recovery
+145,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0,		SM_FATALBLOW,Fatal Blow
+146,0,6,4,0,0x1,0,1,1,no,0,0x1,0,weapon,0,	SM_AUTOBERSERK,Auto Berserk
+147,0,0,4,0,0x1,0,1,0,no,0,0x1,0,weapon,0,	AC_MAKINGARROW,Arrow Crafting
+148,-9,6,1,-1,0x2,0,1,1,no,0,0x1,0,weapon,6,	AC_CHARGEARROW,Arrow Repel
+149,1,6,1,2,0,0,1,1,no,0,0x1,0,weapon,0,		TF_SPRINKLESAND,Sand Attack
+150,0,6,4,0,0x1,0,1,1,no,0,0x1,0,weapon,5,	TF_BACKSLIDING,Back Slide
+151,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0,		TF_PICKSTONE,Find Stone
+152,7,6,1,0,0x40,0,1,1,no,0,0x1,0,misc,0,	TF_THROWSTONE,Stone Fling
+153,1,6,1,-1,0x2,1,1,1,no,0,0x1,0,weapon,2,	MC_CARTREVOLUTION,Cart Revolution
+154,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0,		MC_CHANGECART,Change Cart
+155,0,6,4,0,0x1,0,1,1,no,0,0x1,0,weapon,0,	MC_LOUD,Crazy Uproar
+156,9,6,1,6,0,0,1,1,yes,0,0x1,0,magic,0,		AL_HOLYLIGHT,Holy Light
+157,0,6,4,0,0x1,0,1,1,yes,0,0x1,0,magic,0,	MG_ENERGYCOAT,Energy Coat
+158,3,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_PIERCINGATT,Piercing Attack
+159,-1,6,1,-1,0x40,0,5,1,no,0,0x2,0,weapon,0,	NPC_MENTALBREAKER,Spirit Destruction
+160,9,6,1,0,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_RANGEATTACK,Stand off attack
+161,0,0,4,0,0x1,0,1,1,no,0,0x2,0,magic,0,	NPC_ATTRICHANGE,Attribute Change
+162,0,0,4,1,0x1,0,1,1,no,0,0x2,0,magic,0,	NPC_CHANGEWATER,Water Attribute Change
+163,0,0,4,2,0x1,0,1,1,no,0,0x2,0,magic,0,	NPC_CHANGEGROUND,Earth Attribute Change
+164,0,0,4,3,0x1,0,1,1,no,0,0x2,0,magic,0,	NPC_CHANGEFIRE,Fire Attribute Change
+165,0,0,4,4,0x1,0,1,1,no,0,0x2,0,magic,0,	NPC_CHANGEWIND,Wind Attribute Change
+166,0,0,4,5,0x1,0,1,1,no,0,0x2,0,magic,0,	NPC_CHANGEPOISON,Poison Attribute Change
+167,0,0,4,6,0x1,0,1,1,no,0,0x2,0,magic,0,	NPC_CHANGEHOLY,Holy Attribute Change
+168,0,0,4,7,0x1,0,1,1,no,0,0x2,0,magic,0,	NPC_CHANGEDARKNESS,Shadow Attribute Change
+169,0,0,4,8,0x1,0,1,1,no,0,0x2,0,magic,0,	NPC_CHANGETELEKINESIS,Ghost Attribute Change
+170,-9,6,1,-1,0x20,0,10,1,no,0,0x2,0,weapon,0,	NPC_CRITICALSLASH,Defense disregard attack
+171,-9,8,1,-1,0,0,10,-2:-3:-4:-5:-6:-7:-8:-9:-10:-11,no,0,0x2,0,weapon,0,	NPC_COMBOATTACK,Multi-stage Attack
+172,-9,6,1,-1,0x40,0,10,1,no,0,0x2,0,weapon,0,	NPC_GUIDEDATTACK,Guided Attack
+173,5,6,4,3,0xD2,5,10,1,no,0,0x2,0,misc,3,	NPC_SELFDESTRUCTION,Suicide bombing
+174,-9,6,1,-1,0x2,3,1,1,no,0,0x2,0,weapon,0,	NPC_SPLASHATTACK,Splash attack
+175,0,0,4,0,0x41,0,10,1,no,0,0x2,0,misc,0,	NPC_SUICIDE,Suicide
+176,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0,	NPC_POISON,Poison Attack
+177,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0,	NPC_BLINDATTACK,Blind Attack
+178,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0,	NPC_SILENCEATTACK,Silence Attack
+179,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0,	NPC_STUNATTACK,Stun Attack
+180,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0,	NPC_PETRIFYATTACK,Petrify Attack
+181,-9,6,1,7,0,0,5,1,no,0,0x2,0,weapon,0,	NPC_CURSEATTACK,Curse Attack
+182,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0,	NPC_SLEEPATTACK,Sleep attack
+183,-9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_RANDOMATTACK,Random Attack
+184,-9,6,1,1,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_WATERATTACK,Water Attribute Attack
+185,-9,6,1,2,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_GROUNDATTACK,Earth Attribute Attack
+186,-9,6,1,3,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_FIREATTACK,Fire Attribute Attack
+187,-9,6,1,4,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_WINDATTACK,Wind Attribute Attack
+188,-9,6,1,5,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_POISONATTACK,Poison Attribute Attack
+189,-9,6,1,6,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_HOLYATTACK,Holy Attribute Attack
+190,-9,6,1,7,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_DARKNESSATTACK,Shadow Attribute Attack
+191,-9,6,1,8,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_TELEKINESISATTACK,Ghost Attribute Attack
+192,-9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_MAGICALATTACK,Demon Shock Attack
+193,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0,	NPC_METAMORPHOSIS,Metamorphosis
+194,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0,	NPC_PROVOCATION,Provocation
+195,0,6,4,0,0x50,0,10,1,no,0,0x2,0,misc,0,	NPC_SMOKING,Smoking
+196,0,0,4,0,0x1,0,10,1,no,0,0x2,0,magic,0,	NPC_SUMMONSLAVE,Follower Summons
+197,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0,	NPC_EMOTION,Emotion
+198,0,0,4,0,0x1,0,10,1,no,0,0x2,0,magic,0,	NPC_TRANSFORMATION,Transformation
+199,9,6,1,7,0x40,0,1,1,no,0,0x2,0,weapon,0,	NPC_BLOODDRAIN,Sucking Blood
+200,9,6,1,7,0,0,1,1,no,0,0x2,0,magic,0,		NPC_ENERGYDRAIN,Energy Drain
+201,0,0,4,0,0x1,0,1,1,no,0,0x2,0,weapon,0,	NPC_KEEPING,Keeping
+202,9,6,1,7,0,0,5,1,no,0,0x2,0,misc,0,		NPC_DARKBREATH,Dark Breath
+203,9,6,1,7,0x1,0,10,1,no,0,0x2,0,magic,0,	NPC_DARKBLESSING,Dark Blessing
+204,0,0,4,0,0x1,0,1,1,no,0,0x2,0,magic,0,	NPC_BARRIER,Barrier
+205,0,0,4,0,0x1,0,1,1,no,0,0x2,0,weapon,0,	NPC_DEFENDER,Defender
+206,1,6,1,-1,0x1,0,5,1,no,0,0x2,0,weapon,0,	NPC_LICK,Lick
+207,9,0,1,0,0x1,0,10,1,no,0,0x2,0,magic,0,	NPC_HALLUCINATION,Hallucination
+208,0,0,4,0,0x1,0,1,1,no,0,0x2,0,magic,0,	NPC_REBIRTH,Rebirth
+209,0,0,4,0,0x1,0,10,1,no,0,0x2,0,magic,0,	NPC_SUMMONMONSTER,Monster Summons
+210,0,0,0,-1,0,0,10,0,no,0,0,0,weapon,0,		RG_SNATCHER,Gank
+211,1,6,1,0,0x1,0,10,1,no,0,0,0,weapon,0,	RG_STEALCOIN,Mug
+212,-1,6,1,-1,0x40,0,10,1,no,0,0,0,weapon,0,	RG_BACKSTAP,Back Stab
+213,0,0,0,0,0,0,5,0,no,0,0,0,none,0,		RG_TUNNELDRIVE,Stalk
+214,0,6,4,-1,0x2,1,5,1,no,0,0,0,weapon,0,	RG_RAID,Sightless Mind
+215,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,		RG_STRIPWEAPON,Divest Weapon
+216,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,		RG_STRIPSHIELD,Divest Shield
+217,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,		RG_STRIPARMOR,Divest Armor
+218,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,		RG_STRIPHELM,Divest Helm
+219,-1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,		RG_INTIMIDATE,Snatch
+220,1,6,2,0,0x1,0,1,1,no,0,0,0,none,0,		RG_GRAFFITI,Scribble
+221,0,6,2,0,0x1,0,5,1,no,0,0,0,none,0,		RG_FLAGGRAFFITI,Piece
+222,1,6,2,0,0x3,5,1,1,no,0,0,0,none,0,		RG_CLEANER,Remover
+223,0,0,0,0,0,1,1,0,no,0,0,0,none,0,		RG_GANGSTER,Slyness
+224,0,0,0,0,0,0,5,0,no,0,0,0,none,0,		RG_COMPULSION,Haggle
+225,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		RG_PLAGIARISM,Intimidate
+226,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		AM_AXEMASTERY,Axe Mastery
+227,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		AM_LEARNINGPOTION,Potion Research
+228,0,6,4,0,0x1,0,10,0,no,0,0,0,none,0,		AM_PHARMACY,Prepare Potion
+229,9,6,2,3,0x9,0,5,1,yes,0,0,0,weapon,0,	AM_DEMONSTRATION,Bomb
+230,9,6,1,0,0x48,0,5,1,yes,0,0,0,weapon,0,	AM_ACIDTERROR,Acid Terror
+231,9,6,16,0,0x1,0,5,1,yes,0,0xC00,0,none,0,	AM_POTIONPITCHER,Aid Potion
+232,4,6,2,0,0x1,0,5,1,no,0,0,5,none,0,		AM_CANNIBALIZE,Summon Flora
+233,1,6,2,0,0x1,0,5,1,no,0,0,3,none,0,		AM_SPHEREMINE,Summon Marine Sphere
+234,1,6,16,0,0x1,0,5,1,yes,0,0,0,weapon,0,	AM_CP_WEAPON,Alchemical Weapon
+235,1,6,16,0,0x1,0,5,1,yes,0,0,0,weapon,0,	AM_CP_SHIELD,Synthesized Shield
+236,1,6,16,0,0x1,0,5,1,yes,0,0,0,weapon,0,	AM_CP_ARMOR,Synthetic Armor
+237,1,6,16,0,0x1,0,5,1,yes,0,0,0,weapon,0,	AM_CP_HELM,Biochemical Helm
+238,0,0,0,0,0,0,1,0,no,0,0x1,0,none,0,		AM_BIOETHICS,Bioethics
+//239,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		AM_BIOTECHNOLOGY,Biotechnology
+//240,0,0,0,0,0,0,5,0,no,0,0,0,none,0,		AM_CREATECREATURE,Life Creation
+//241,0,0,0,0,0,0,5,0,no,0,0,0,none,0,		AM_CULTIVATION,Cultivation
+//242,0,0,0,0,0,0,5,0,no,0,0,0,none,0,		AM_FLAMECONTROL,Flame Control
+243,0,0,4,0,0x1,1,1,0,no,0,0,0,none,0,		AM_CALLHOMUN,Call Homunculus
+244,0,0,4,0,0x1,0,1,0,no,0,0,0,none,0,		AM_REST,Vaporize
+//245,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		AM_DRILLMASTER,Drillmaster
+//246,9,0,0,0,0,0,10,0,no,0,0,0,none,0,		AM_HEALHOMUN,Heal Homunculus
+247,9,6,4,0,0x1,1,5,0,no,0,0,0,none,0,		AM_RESURRECTHOMUN,Homunculus Resurrection
+248,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		CR_TRUST,Faith
+249,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,	CR_AUTOGUARD,Guard
+250,3,6,1,0,0,0,5,1,no,0,0,0,weapon,5:6:7:8:9,	CR_SHIELDCHARGE,Smite
+251,3:5:7:9:11,6,1,0,0,0,5,1,no,0,0,0,weapon,0,	CR_SHIELDBOOMERANG,Shield Boomerang
+252,0,6,4,0,0,0,10,1,no,0,0,0,weapon,0,		CR_REFLECTSHIELD,Shield Reflect
+253,-2,8,1,6,0,0,10,-2,no,0,0,0,weapon,0,	CR_HOLYCROSS,Holy Cross
+254,5,6,4,6,0x48,0,10,1,no,33,0x100,0,magic,0,	CR_GRANDCROSS,Grand Cross
+255,7:8:9:10:11,6,16,0,0x1,0,5,1,yes,0,0x600,0,none,0,	CR_DEVOTION,Sacrifice
+256,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,none,0,	CR_PROVIDENCE,Resistant Souls
+257,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,		CR_DEFENDER,Defending Aura
+258,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,	CR_SPEARQUICKEN,Spear Quicken
+259,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		MO_IRONHAND,Iron Fists
+260,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		MO_SPIRITSRECOVERY,Spiritual Cadence
+261,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		MO_CALLSPIRITS,Summon Spirit Sphere
+262,9,6,16,0,0x1,0,1,1,yes,0,0,0,weapon,0,	MO_ABSORBSPIRITS,Absorb Spirit Sphere
+263,-1,8,0,-1,0,0,10,-3,no,0,0,0,weapon,0,	MO_TRIPLEATTACK,Raging Trifecta Blow
+264,18,6,2,0,0x1,0,1,1,no,0,0,0,none,0,		MO_BODYRELOCATION,Snap
+265,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		MO_DODGE,Dodge
+266,2,6,1,0,0x40,0,5,1,no,0,0,0,weapon,0,	MO_INVESTIGATE,Occult Impaction
+267,9,8,1,-1,0,0,5,1:2:3:4:5,no,0,0,0,weapon,0,	MO_FINGEROFFENSIVE,Throw Spirit Sphere
+268,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,		MO_STEELBODY,Mental Strength
+269,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,		MO_BLADESTOP,Root
+270,0,6,4,0,0x1,0,5,0,no,0,0,0,weapon,0,		MO_EXPLOSIONSPIRITS,Fury
+271,-2,6,4,0,0x60,0,5,1,yes,0,0x200,0,weapon,0,	MO_EXTREMITYFIST,Asura Strike
+272,-2,8,4,-1,0,0,5,-4,no,0,0x200,0,weapon,0,	MO_CHAINCOMBO,Raging Quadruple Blow
+273,-2,6,4,-1,0x2,2,5,1,no,0,0x200,0,weapon,0,	MO_COMBOFINISH,Raging Thrust
+274,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		SA_ADVANCEDBOOK,Study
+275,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,		SA_CASTCANCEL,Cast Cancel
+276,0,6,4,0,0x1,0,5,1,yes,0,0,0,magic,0,		SA_MAGICROD,Magic Rod
+277,9,6,1,0,0x1,0,5,1,yes,0,0,0,magic,0,		SA_SPELLBREAKER,Spell Breaker
+278,0,0,0,0,0,0,10,0,no,0,0,0,magic,0,		SA_FREECAST,Free Cast
+279,0,6,4,0,0x1,0,10,1,yes,0,0,0,magic,0,	SA_AUTOSPELL,Hindsight
+280,9,6,16,3,0x1,0,5,1,yes,0,0xC00,0,magic,0,	SA_FLAMELAUNCHER,Endow Blaze
+281,9,6,16,1,0x1,0,5,1,yes,0,0xC00,0,magic,0,	SA_FROSTWEAPON,Endow Tsunami
+282,9,6,16,4,0x1,0,5,1,yes,0,0xC00,0,magic,0,	SA_LIGHTNINGLOADER,Endow Tornado
+283,9,6,16,2,0x1,0,5,1,yes,0,0xC00,0,magic,0,	SA_SEISMICWEAPON,Endow Quake
+284,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		SA_DRAGONOLOGY,Dragonology
+285,2,6,2,3,0x1,0,5,1,yes,0,0,0,magic,0,		SA_VOLCANO,Volcano
+286,2,6,2,1,0x1,0,5,1,yes,0,0,0,magic,0,		SA_DELUGE,Deluge
+287,2,6,2,4,0x1,0,5,1,yes,0,0,0,magic,0,		SA_VIOLENTGALE,Whirlwind
+288,3,6,2,0,0x1,0,5,1,yes,0,0,0,magic,0,		SA_LANDPROTECTOR,Magnetic Earth
+289,9,6,1,0,0x1,0:0:0:0:0:-1,5,1,yes,0,0xE00,0,magic,0,	SA_DISPELL,Dispell
+290,0,6,4,0,0x1,0,10,1,yes,0,0,0,magic,0,	SA_ABRACADABRA,Hocus-pocus
+291,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0,	SA_MONOCELL,Monocell
+292,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0,	SA_CLASSCHANGE,Class Change
+293,0,6,4,0,0x1,0,1,1,yes,0,0x2,0,magic,0,	SA_SUMMONMONSTER,Monster Chant
+294,9,6,4,0,0x1,0,1,1,yes,0,0x2,0,magic,0,	SA_REVERSEORCISH,Grampus Morph
+295,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0,	SA_DEATH,Grim Reaper
+296,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0,	SA_FORTUNE,Gold Digger
+297,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0,	SA_TAMINGMONSTER,Beastly Hypnosis
+298,9,6,4,0,0x1,0,1,1,yes,0,0x2,0,magic,0,	SA_QUESTION,Questioning
+299,9,6,4,0,0x1,0,1,1,yes,0,0x2,0,magic,0,	SA_GRAVITY,Gravity
+300,9,6,4,0,0x1,0,1,1,yes,0,0x2,0,magic,0,	SA_LEVELUP,Leveling
+301,9,6,4,0,0,0,1,1,yes,0,0x2,0,magic,0,		SA_INSTANTDEATH,Suicide
+302,9,6,4,0,0x1,0,1,1,yes,0,0x2,0,magic,0,	SA_FULLRECOVERY,Rejuvenation
+303,9,6,4,0,0,0,1,1,yes,0,0x2,0,magic,0,		SA_COMA,Coma
+304,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,		BD_ADAPTATION,Amp
+305,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,		BD_ENCORE,Encore
+306,0,6,4,0,0x1,0,1,1,no,0,0x40,0,misc,0,	BD_LULLABY,Lullaby
+307,0,6,4,0,0x1,0,5,1,no,0,0x40,0,misc,0,	BD_RICHMANKIM,Mental Sensing
+308,0,6,4,0,0x1,0,1,1,no,0,0x40,0,misc,0,	BD_ETERNALCHAOS,Down Tempo
+309,0,6,4,0,0x1,0,5,1,no,0,0x40,0,misc,0,	BD_DRUMBATTLEFIELD,Battle Theme
+310,0,6,4,0,0x1,0,5,1,no,0,0x40,0,misc,0,	BD_RINGNIBELUNGEN,Harmonic Lick
+311,0,6,4,0,0x1,0,1,1,no,0,0x40,0,misc,0,	BD_ROKISWEIL,Classical Pluck
+312,0,6,4,0,0x1,0,1,1,no,0,0x40,0,misc,0,	BD_INTOABYSS,Power Chord
+313,0,6,4,0,0x1,0,5,1,no,0,0x40,0,misc,0,	BD_SIEGFRIED,Acoustic Rhythm
+//314,0,0,0,0,0,0,1,1,no,0,0x40,0,misc,0,	BD_RAGNAROK,Ragnarok
+315,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		BA_MUSICALLESSON,Music Lessons
+316,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,		BA_MUSICALSTRIKE,Melody Strike
+317,0,8,4,0,0x41,0,5,1,no,0,0x20,0,misc,0,	BA_DISSONANCE,Unchained Serenade
+318,0,6,4,0,0x3,-1,5,1,no,0,0,0,misc,0,		BA_FROSTJOKE,Unbarring Octave
+319,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,	BA_WHISTLE,Perfect Tablature
+320,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,	BA_ASSASSINCROSS,Impressive Riff
+321,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,	BA_POEMBRAGI,Magic Strings
+322,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,	BA_APPLEIDUN,Song of Lutie
+323,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,		DC_DANCINGLESSON,Dance Lessons
+324,9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,		DC_THROWARROW,Slinging Arrow
+325,0,8,4,0,0x1,0,5,1,no,0,0x20,0,misc,0,	DC_UGLYDANCE,Hip Shaker
+326,0,6,4,0,0x3,-1,5,1,no,0,0,0,misc,0,		DC_SCREAM,Dazzler
+327,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,	DC_HUMMING,Focus Ballet
+328,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,	DC_DONTFORGETME,Slow Grace
+329,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,	DC_FORTUNEKISS,Lady Luck
+330,0,6,4,0,0x1,0,10,1,no,0,0x20,0,misc,0,	DC_SERVICEFORYOU,Gypsy's Kiss
+331,0,6,4,0,0x1,0,10,0,no,0,0x2,0,none,0,	NPC_RANDOMMOVE,Random Move
+332,0,6,4,0,0x1,0,10,0,no,0,0x2,0,none,0,	NPC_SPEEDUP,Speed UP
+333,0,6,4,0,0x1,0,1,0,no,0,0x2,0,none,0,		NPC_REVENGE,Revenge
+334,9,6,4,0,0x1,0,1,1,yes,0,0x4,0,none,0,	WE_MALE,I Will Protect You
+335,9,6,4,0,0x1,0,1,1,yes,0,0x4,0,none,0,	WE_FEMALE,I Look up to You
+336,9,6,4,0,0x1,3,1,1,yes,0,0x4,1,none,0,	WE_CALLPARTNER,I miss You
+337,9,6,1,-1,0,0,1,1,no,0,0x2,0,weapon,0,	ITM_TOMAHAWK,Throw Tomahawk
+338,-1,8,1,7,0,0,10,-2,no,0,0x2,0,weapon,0,	NPC_DARKCROSS,Cross of Darkness
+339,5,6,4,7,0x48,0,10,1,no,33,0x102,0,magic,0,	NPC_GRANDDARKNESS,Grand cross of Darkness
+340,9,8,1,7,0,0,10,1:1:2:2:3:3:4:4:5:5,yes,0,0x2,0,magic,0,	NPC_DARKSTRIKE,Soul Strike of Darkness
+341,9,8,1,7,0,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,0x2,0,magic,2:3:3:4:4:5:5:6:6:7,	NPC_DARKTHUNDER,Darkness Jupitel
+342,9,6,1,0,0x1,0,1,0,no,0,0x2,0,none,0,		NPC_STOP,Stop
+343,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_WEAPONBRAKER,Break weapon
+344,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_ARMORBRAKE,Break armor
+345,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_HELMBRAKE,Break helm
+346,9,6,1,-1,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_SHIELDBRAKE,Break shield
+347,-9,6,1,9,0,0,10,1,no,0,0x2,0,weapon,0,	NPC_UNDEADATTACK,Undead Element Attack
+348,9,0,1,9,0x1,0,5,1,no,0,0x2,0,magic,0,	NPC_CHANGEUNDEAD,Undead Attribute Change
+349,0,6,4,0,0x1,0,10,0,no,0,0x2,0,weapon,0,	NPC_POWERUP,Power Up
+350,0,6,4,0,0x1,0,10,0,no,0,0x2,0,none,0,	NPC_AGIUP,Agility UP
+351,0,0,0,0,0x1,0,1,0,no,0,0x2,0,none,0,		NPC_SIEGEMODE,Siege Mode
+352,2,0,4,0,0x1,0,1,0,no,0,0x2,0,none,0,		NPC_CALLSLAVE,Recall Slaves
+353,0,0,0,0,0x1,0,1,0,no,0,0x2,0,none,0,		NPC_INVISIBLE,Invisible
+354,2,6,4,0,0x1,0,20,0,no,0,0x2,0,misc,0,	NPC_RUN,Run
+355,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,		LK_AURABLADE,Aura Blade
+356,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,	LK_PARRYING,Parrying
+357,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,		LK_CONCENTRATION,Concentration
+358,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		LK_TENSIONRELAX,Relax
+359,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		LK_BERSERK,Frenzy
+//360,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,	LK_FURY,Fury
+361,9,6,16,0,0x3,1,5,1,yes,0,0,0,magic,0,	HP_ASSUMPTIO,Assumptio
+362,4,6,4,0,0x1,0,5,1,yes,0,0,0,magic,2,		HP_BASILICA,Basilica
+363,0,0,0,0,0,0,10,0,no,0,0,0,magic,0,		HP_MEDITATIO,Meditatio
+364,0,0,0,0,0,0,10,1,no,0,0,0,magic,0,		HW_SOULDRAIN,Soul Drain
+365,9,8,1,-1,0,0,1,1,yes,0,0,0,weapon,0,		HW_MAGICCRASHER,Stave Crasher
+366,0,6,4,0,0x1,0,10,1,no,0,0,0,magic,0,		HW_MAGICPOWER,Mystical Amplification
+367,9,8,1,0,0xD0,0,5,1,no,0,0,0,misc,0,		PA_PRESSURE,Gloria Domini
+368,0,6,4,0,0x61,0,5,1,yes,0,0,0,weapon,0,	PA_SACRIFICE, Martyr's Reckoning
+369,0,6,4,0,0x41,0,10,1,yes,0,0,0,misc,0,	PA_GOSPEL,Battle Chant
+370,-2,6,1,-1,0,0,5,1,yes,0,0,0,weapon,3,	CH_PALMSTRIKE,Raging Palm Strike
+371,-2,8,4,-1,0,0,5,1,no,0,0x200,0,weapon,0,	CH_TIGERFIST,Glacier Fist
+372,-2,8,4,-1,0,0,10,-1:-1:-2:-2:-3:-3:-4:-4:-5:-5,no,0,0x200,0,weapon,0,	CH_CHAINCRUSH,Chain Crush Combo
+373,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,	PF_HPCONVERSION,Indulge
+374,9,6,1,0,0x1,0,1,1,yes,0,0xE00,0,none,0,	PF_SOULCHANGE,Soul Exhale
+375,9,6,1,0,0x98,0,5,1,yes,0,0,0,magic,0,	PF_SOULBURN,Soul Siphon
+376,0,0,0,0,0x1,0,5,1,no,0,0,0,weapon,0,		ASC_KATAR,Advanced Katar Mastery
+//377,0,0,4,0,0x1,0,10,1,no,0,0,0,misc,0,	ASC_HALLUCINATION,Hallucination Walk
+378,0,6,4,5,0x1,0,5,1,no,0,0,0,weapon,0,		ASC_EDP,Enchant Deadly Poison
+379,9,6,1,-1,0x8,0,10,1,yes,0,0,0,weapon,0,	ASC_BREAKER,Soul Destroyer
+380,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,	SN_SIGHT,Falcon Eyes
+381,5,8,1,0,0x40,0,5,1,yes,0,0,0,misc,0,		SN_FALCONASSAULT,Falcon Assault
+382,4,8,1,-1,0,2,5,1,yes,0,0,14,weapon,0,	SN_SHARPSHOOTING,Focused Arrow Strike
+383,0,6,4,0,0x3,-1,10,1,yes,0,0,0,weapon,0,	SN_WINDWALK,Wind Walker
+384,0,0,4,0,0x1,0,10,1,yes,0,0,0,weapon,0,	WS_MELTDOWN,Shattering Strike
+//385,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0,	WS_CREATECOIN,Create Coins
+//386,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0,	WS_CREATENUGGET,Create Nuggets
+387,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		WS_CARTBOOST,Cart Boost
+//388,9,6,2,0,0x1,0,5,1,no,0,0,0,none,0,		WS_SYSTEMCREATE,Auto Attack System
+389,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		ST_CHASEWALK,Stealth
+390,0,0,4,0,0,0,5,1,yes,0,0,0,weapon,0,		ST_REJECTSWORD,Counter Instinct
+//391,0,0,4,0,1,0,1,1,yes,0,0,0,magic,0,		ST_STEALBACKPACK,Steal Backpack
+392,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0,		CR_ALCHEMY,Alchemy
+393,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0,		CR_SYNTHESISPOTION,Potion Synthesis
+394,9,8,1,-1,0,0,10,-9,yes,0,0,0,weapon,0,	CG_ARROWVULCAN,Vulcan Arrow
+395,0,0,4,0,0x1,3,1,1,yes,0,0x40,0,misc,2,	CG_MOONLIT,Sheltering Bliss
+396,1,6,16,0,0x1,0,1,1,yes,0,0x600,0,none,0,	CG_MARIONETTE,Marionette Control
+397,5,8,1,-1,0x20,0,5,5,no,0,0,0,weapon,0,	LK_SPIRALPIERCE,Spiral Pierce
+398,4,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,		LK_HEADCRUSH,Traumatic Blow
+399,4,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,		LK_JOINTBEAT,Vital Strike
+400,9,8,1,8,0x6,1,5,1:2:3:4:5,yes,0,0,0,magic,0,	HW_NAPALMVULCAN,Napalm Vulcan
+401,0,6,4,0,0x1,0,1,1,yes,0,0,0,none,0,		CH_SOULCOLLECT,Zen
+402,9,6,1,0,0x1,0,5,1,no,0,0,0,none,0,		PF_MINDBREAKER,Mind Breaker
+403,0,0,4,0,0x1,0,1,1,yes,0,0,0,magic,0,		PF_MEMORIZE,Foresight
+404,9,6,2,2,0x1,0,5,1,yes,0,0x100,2,magic,0,	PF_FOGWALL,Blinding Mist
+405,7,6,1,0,0x1,0,1,1,no,0,0,3,magic,0,		PF_SPIDERWEB,Fiber Lock
+406,0,6,4,-1,0xA,2,10,1,no,33,0,0,weapon,0,	ASC_METEORASSAULT,Meteor Assault
+407,0,6,4,0,0x1,0,1,0,no,0,0,0,none,0,		ASC_CDP,Create Deadly Poison
+408,9,6,4,0,0x1,0,1,1,yes,0,0x4,0,none,0,	WE_BABY,Baby
+409,9,6,4,0,0x1,3,1,1,yes,0,0x4,1,none,0,	WE_CALLPARENT,Call Parent
+410,9,6,4,0,0x1,3,1,1,yes,0,0x4,1,none,0,	WE_CALLBABY,Call Baby
+411,0,6,4,0,0x1,0,10,1,yes,0,0,0,misc,4,		TK_RUN,Running
+412,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		TK_READYSTORM,Tornado Stance
+413,-2,8,4,-1,0x2,2,7,-3,no,0,0x200,0,weapon,0,	TK_STORMKICK,Tornado Kick
+414,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		TK_READYDOWN,Heel Drop Stance
+415,-2,8,4,-1,0,0,7,-3,no,0,0x200,0,weapon,0,	TK_DOWNKICK,Heel Drop
+416,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		TK_READYTURN,Roundhouse Stance
+417,-2,8,4,-1,0x2,1,7,-3,no,0,0x200,0,weapon,2,	TK_TURNKICK,Roundhouse Kick
+418,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		TK_READYCOUNTER,Counter Kick Stance
+419,-2,8,4,-1,0x40,0,7,-3,no,0,0x200,0,weapon,0,	TK_COUNTER,Counter Kick
+420,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		TK_DODGE,Tumbling
+421,9,8,4,-1,0,0,7,-3,no,0,0x200,0,weapon,0,	TK_JUMPKICK,Flying Kick
+422,0,0,0,0,0,1,10,0,no,0,0,0,none,0,		TK_HPTIME,Peaceful Break
+423,0,0,0,0,0,1,10,0,no,0,0,0,none,0,		TK_SPTIME,Happy Break
+424,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,		TK_POWER,Kihop
+425,0,6,4,2:4:1:3:8:7:6,0x1,0,7,1,no,0,0,0,weapon,0,	TK_SEVENWIND,Mild Wind
+426,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,		TK_HIGHJUMP,Taekwon Jump
+427,0,6,4,0,0x1,0,3,1,yes,0,0,0,magic,0,		SG_FEEL,Feeling the Sun, Moon and Stars
+428,1,6,4,-1,0x42,1,3,1,yes,0,0,0,weapon,2,	SG_SUN_WARM,Warmth of the Sun
+429,1,6,4,-1,0x42,1,3,1,yes,0,0,0,weapon,2,	SG_MOON_WARM,Warmth of the Moon
+430,1,6,4,-1,0x42,1,3,1,yes,0,0,0,weapon,2,	SG_STAR_WARM,Warmth of the Stars
+431,0,0,4,0,0x1,0,4,1,yes,0,0,0,magic,0,		SG_SUN_COMFORT,Comfort of the Sun
+432,0,0,4,0,0x1,0,4,1,yes,0,0,0,magic,0,		SG_MOON_COMFORT,Comfort of the Moon
+433,0,0,4,0,0x1,0,4,1,yes,0,0,0,magic,0,		SG_STAR_COMFORT,Comfort of the Stars
+434,10,6,1,0,0x1,0,3,1,yes,0,0,0,magic,0,	SG_HATE,Hatred of the Sun, Moon and Stars
+435,0,0,0,0,0,0,3,0,no,0,0,0,none,0,		SG_SUN_ANGER,Anger of the Sun
+436,0,0,0,0,0,0,3,0,no,0,0,0,none,0,		SG_MOON_ANGER,Anger of the Moon
+437,0,0,0,0,0,0,3,0,no,0,0,0,none,0,		SG_STAR_ANGER,Anger of the Stars
+438,0,0,0,0,0,0,5,0,no,0,0,0,none,0,		SG_SUN_BLESS,Blessing of the Sun
+439,0,0,0,0,0,0,5,0,no,0,0,0,none,0,		SG_MOON_BLESS,Blessing of the Moon
+440,0,0,0,0,0,0,5,0,no,0,0,0,none,0,		SG_STAR_BLESS,Blessing of the Stars
+441,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		SG_DEVIL,Demon of the Sun, Moon and Stars
+442,0,0,0,0,0,0,3,0,no,0,0,0,none,0,		SG_FRIEND,Friend of the Sun, Moon and Stars
+443,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		SG_KNOWLEDGE,Knowledge of the Sun, Moon and Stars
+444,0,6,4,0,0x1,0,1,1,no,0,0,0,misc,0,		SG_FUSION,Union of the Sun, Moon and Stars
+445,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_ALCHEMIST,Spirit of the Alchemist
+446,9,6,16,0,0x1,0,1,1,yes,0,0xC08,0,none,0,	AM_BERSERKPITCHER,Aid Berserk Potion
+447,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_MONK,Spirit of the Monk
+448,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_STAR,Spirit of the Star Gladiator
+449,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_SAGE,Spirit of the Sage
+450,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_CRUSADER,Spirit of the Crusader
+451,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_SUPERNOVICE,Spirit of the Supernovice
+452,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_KNIGHT,Spirit of the Knight
+453,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_WIZARD,Spirit of the Wizard
+454,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_PRIEST,Spirit of the Priest
+455,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_BARDDANCER,Spirit of the Artist
+456,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_ROGUE,Spirit of the Rogue
+457,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_ASSASIN,Spirit of the Assasin
+458,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_BLACKSMITH,Spirit of the Blacksmith
+459,0,6,4,0,0x3,-1,1,1,no,0,0x8,0,weapon,0 ,	BS_ADRENALINE2,Advanced Adrenaline Rush
+460,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_HUNTER,Spirit of the Hunter
+461,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,magic,0,	SL_SOULLINKER,Spirit of the Soul Linker
+462,9,6,16,0,0x1,0,7,1,yes,0,0,0,magic,0 ,	SL_KAIZEL,Kaizel
+463,9,6,16,0,0x1,0,7,1,yes,0,0,0,magic,0 ,	SL_KAAHI,Kaahi
+464,9,6,16,0,0x1,0,3,1,yes,0,0,0,magic,0 ,	SL_KAUPE,Kaupe
+465,9,6,16,0,0x1,0,7,1,yes,0,0,0,magic,0 ,	SL_KAITE,Kaite
+466,0,0,0,0,0,0,7,0,yes,0,0,0,magic,0 ,		SL_KAINA,Kaina
+467,9,6,1,-2,0,0,7,1,no,0,0,0,magic,2,		SL_STIN,Estin
+468,9,6,1,-2,0,0,7,1,no,0,0,0,magic,0,		SL_STUN,Estun
+469,9,8,1,-2,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0,	SL_SMA,Esma
+470,9,6,1,0,0x1,0,7,1,no,0,0,0,magic,0 ,		SL_SWOO,Eswoo
+471,9,6,1,0,0x1,0,3,1,no,0,0,0,magic,0 ,		SL_SKE,Eske
+472,9,6,1,0,0x1,0,3,1,no,0,0,0,magic,0 ,		SL_SKA,Eska
+473,0,0,0,0,0,0,0,0,no,0,0,0,none,0,		SM_SELFPROVOKE,Provoke Self
+474,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0,	NPC_EMOTION_ON,Emotion ON
+475,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0,		ST_PRESERVE,Preserve
+476,1,6,1,0,0x1,0,5,1,yes,0,0,0,weapon,0,	ST_FULLSTRIP,Divest All
+477,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,	WS_WEAPONREFINE,Upgrade Weapon
+478,3,6,2,0,0x3,3,10,1,no,0,0,0,none,0,		CR_SLIMPITCHER,Aid Condensed Potion
+479,1,6,16,0,0x1,0,5,1,yes,0,0,0,weapon,0,	CR_FULLPROTECTION,Full Protection
+480,5,8,1,0,0,0,5,5,no,0,0,0,weapon,0,		PA_SHIELDCHAIN,Shield Chain
+481,0,0,0,0,0,0,5,0,no,0,0,0,none,0,		HP_MANARECHARGE,Mana Recharge
+482,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,		PF_DOUBLECASTING,Double Casting
+483,9,6,2,0,0x1,1:2:3:4:5,1,1,no,0,0,0,none,0,	HW_GANBANTEIN,Ganbantein
+484,9,6,2,2,0x91,0,5,1,yes,0,0,0,misc,0,		HW_GRAVITATION,Gravitation Field
+485,-2,6,1,-1,0x8,0,10,1,no,0,0,0,weapon,0,	WS_CARTTERMINATION,Cart Termination
+486,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,		WS_OVERTHRUSTMAX,Maximum Power Thrust
+487,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,		CG_LONGINGFREEDOM,Longing for Freedom
+488,0,6,4,0,0x1,1,5,1,no,0,0x40,0,misc,0,	CG_HERMODE,Wand of Hermode
+489,9,6,1,0,0x41,0,5,1,no,0,0,0,misc,0,		CG_TAROTCARD,Tarot Card of Fate
+490,9,8,1,0,0x40,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,misc,0,	CR_ACIDDEMONSTRATION,Acid Demonstration
+491,1,6,2,0,0x1,0,2,1,no,0,0,0,none,0,		CR_CULTIVATION,Plant Cultivation
+492,0,6,4,0:1:2:3:4:5:6:7:8:9,0x1,0,10,1,no,0,0x2,0,none,0,	ITEM_ENCHANTARMS,Weapon Enchantment
+493,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,		TK_MISSION,Taekwon Mission
+494,9,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,	SL_HIGH,Spirit of Rebirth
+495,0,6,4,0,0x1,0,1,1,no,0,0x8,0,weapon,0,	KN_ONEHAND,Onehand Quicken
+496,0,6,4,0,0x1,0,1,0,no,0,0x8,0,none,0,		AM_TWILIGHT1,Twilight Alchemy 1
+497,0,6,4,0,0x1,0,1,0,no,0,0x8,0,none,0,		AM_TWILIGHT2,Twilight Alchemy 2
+498,0,6,4,0,0x1,0,1,0,no,0,0x8,0,none,0,		AM_TWILIGHT3,Twilight Alchemy 3
+499,-9,8,4,-1,0,0,1,2,no,0,0x208,0,weapon,0,	HT_POWER,Beast Strafing
+500,0,6,4,0,0x40,0,5,1,no,0,0,0,misc,0,		GS_GLITTERING,Flip the Coin
+501,9,6,1,-1,0x50,0,1,1,no,0,0,0,misc,0,		GS_FLING,Fling
+502,-9,8,1,-1,0,0,1,3,no,0,0,0,weapon,0,		GS_TRIPLEACTION,Triple Action
+503,-9,6,1,-1,0x8,0,1,1,no,0,0,0,weapon,0,	GS_BULLSEYE,Bulls Eye
+504,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		GS_MADNESSCANCEL,Madness Canceller
+505,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		GS_ADJUSTMENT,AdJustment
+506,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,		GS_INCREASING,Increasing Accuracy
+507,-9,6,1,8,0,0,1,1,no,0,0,0,weapon,0,		GS_MAGICALBULLET,Magical Bullet
+508,-9,6,1,-1,0x1,0,1,1,no,0,0,0,weapon,0,	GS_CRACKER,Cracker
+509,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		GS_SINGLEACTION,Single Action
+510,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		GS_SNAKEEYE,Snake Eye
+511,-9,8,0,-1,0,0,10,2,no,0,0,0,weapon,0,	GS_CHAINACTION,Chain Action
+512,-9,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,	GS_TRACKING,Tracking
+513,-9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,		GS_DISARM,Disarm
+514,-9,6,1,-1,0x20,0,5,1,no,0,0,0,weapon,0,	GS_PIERCINGSHOT,Piercing Shot
+515,-9,8,1,-1,0,0,10,5,no,0,0,0,weapon,0,	GS_RAPIDSHOWER,Rapid Shower
+516,0,8,4,-1,0x2,3,10,1,no,0,0,0,weapon,0,	GS_DESPERADO,Desperado
+517,0,6,4,-1,0x1,0,10,1,no,0,0,0,weapon,0,	GS_GATLINGFEVER,Gatling Fever
+518,2,6,1,-1,0,0,10,1,no,0,0,0,weapon,5,		GS_DUST,Dust
+519,-9,6,1,-1,0,0,10,1,yes,0,0,0,weapon,0,	GS_FULLBUSTER,Full Buster
+520,-9,6,1,-1,0x2,1:1:1:2:2:2:3:3:3:4,10,1,no,0,0,0,weapon,0,	GS_SPREADATTACK,Spread Attack
+521,-9,6,2,-1,0x40,1,10,1,no,0,0,0,weapon,3,	GS_GROUNDDRIFT,Ground Drift
+522,0,0,0,0,0,0,10,1,no,0,0,0,weapon,0,		NJ_TOBIDOUGU,Shuriken Training
+523,9,6,1,-1,0x40,0,10,1,no,0,0,0,weapon,0,	NJ_SYURIKEN,Throw Shuriken
+524,9,8,1,-1,0x40,0,5,3,no,0,0,0,weapon,0,	NJ_KUNAI,Throw Kunai
+525,9,8,1,-1,0x6,1,5,-3:-3:-4:-4:-5,yes,0,0,0,weapon,0,	NJ_HUUMA,Throw Huuma Shuriken
+526,9,6,1,0,0x50,0,10,1,no,0,0,0,misc,0,		NJ_ZENYNAGE,Throw Zeny
+527,0,6,4,-1,0,0,5,1,no,0,0,0,weapon,3,		NJ_TATAMIGAESHI,Improvised Defense
+528,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,	NJ_KASUMIKIRI,Vanishing Slash
+529,7:9:11:13:15,6,2,0,0x1,0,5,1,no,0,0,0,none,0,	NJ_SHADOWJUMP,Shadow Leap
+530,7:9:11:13:15,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,	NJ_KIRIKAGE,Shadow Slash
+531,0,6,4,0,0x1,0,5,1,no,0,0,0,none,7,		NJ_UTSUSEMI,Cicada Skin Sheeding
+532,0,6,4,0,0x1,0,10,1,yes,0,0,0,magic,0,	NJ_BUNSINJYUTSU,Mirror Image
+533,0,0,0,0,0,0,10,0,no,0,0,0,none,0,		NJ_NINPOU,Spirit of the Blade
+534,9,8,1,3,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0,0,magic,0,	NJ_KOUENKA,Crimson Fire Petal
+535,0,8,4,3,0,0,10,1,yes,0,0,0,magic,1,		NJ_KAENSIN,Crimson Fire Formation
+536,9,8,1,3,0x2,2,5,3,yes,0,0,0,magic,0,		NJ_BAKUENRYU,Raging Fire Dragon
+537,9,8,1,1,0,0,10,3:4:5:6:7:8:9:10:11:12,yes,0,0,0,magic,0,	NJ_HYOUSENSOU,Spear of Ice
+538,9,6,2,0,0x1,0,10,1,yes,0,0,0,magic,0,	NJ_SUITON,Hidden Water
+539,0,6,4,1,0x2,3,5,1,yes,0,0,0,magic,0,		NJ_HYOUSYOURAKU,Ice Meteor
+540,9,8,1,4,0,0,10,1:2:2:3:3:4:4:5:5:6,yes,0,0,0,magic,0,	NJ_HUUJIN,Wind Blade
+541,9,6,4,4,0x2,2:2:3:3:4,5,1,yes,0,0,0,magic,0,	NJ_RAIGEKISAI,Lightning Strike of Destruction
+542,9,8,1,4,0,3,5,1,yes,0,0,5:6:7:8:9,magic,0,	NJ_KAMAITACHI,Kamaitachi
+543,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,		NJ_NEN,Soul
+544,-5,6,1,0,0x40,0,10,1,no,0,0,0,weapon,0,	NJ_ISSEN,Final Strike
 
-653,0,8,4,0,0x6,5:7:9:11:13:5:7:9:11:13,10,3,no,0,0x2,0,magic,0	,NPC_EARTHQUAKE,Earthquake
-654,9,6,1,3,0,5,10,1,no,0,0x2,14,weapon,0	,NPC_FIREBREATH,Fire Breath
-655,9,6,1,1,0,5,10,1,no,0,0x2,14,weapon,0	,NPC_ICEBREATH,Ice Breath
-656,9,6,1,4,0,5,10,1,no,0,0x2,14,weapon,0	,NPC_THUNDERBREATH,Thunder Breath
-657,9,6,1,5,0,5,10,1,no,0,0x2,14,weapon,0	,NPC_ACIDBREATH,Acid Breath
-658,9,6,1,7,0,5,10,1,no,0,0x2,14,weapon,0	,NPC_DARKNESSBREATH,Darkness Breath
-659,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0	,NPC_DRAGONFEAR,Dragon Fear
-660,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	,NPC_BLEEDING,Bleeding
-661,0,6,4,0,0x2,7,5,1,no,0,0x2,0,weapon,7	,NPC_PULSESTRIKE,Pulse Strike
-662,0,6,4,0,0x2,14,10,1,no,0,0x2,0,weapon,0	,NPC_HELLJUDGEMENT,Hell's Judgement
-663,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0	,NPC_WIDESILENCE,Wide Silence
-664,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0	,NPC_WIDEFREEZE,Wide Freeze
-665,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0	,NPC_WIDEBLEEDING,Wide Bleeding
-666,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0	,NPC_WIDESTONE,Wide Petrify
-667,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0	,NPC_WIDECONFUSE,Wide Confusion
-668,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0	,NPC_WIDESLEEP,Wide Sleep
-669,0,6,4,3,0x3,5,1,1,no,0,0x2,0,magic,0	,NPC_WIDESIGHT,Wide Sight
-670,9,6,2,7,0x21,0,10,1,no,0,0x2,0,magic,0	,NPC_EVILLAND,Evil Land
-671,0,6,4,0,0x1,0,5,1,no,0,0x2,0,magic,0	,NPC_MAGICMIRROR,Magic Mirror
-672,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0	,NPC_SLOWCAST,Slow Cast
-673,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0	,NPC_CRITICALWOUND,Critical Wounds
-674,-9,6,1,-1,0x1,0,1,1,no,0,0x2,0,none,0	,NPC_EXPULSION,Expulsion
-675,0,6,4,0,0x1,0,5,1,no,0,0x2,0,magic,0	,NPC_STONESKIN,Stone Skin
-676,0,6,4,0,0x1,0,5,1,no,0,0x2,0,magic,0	,NPC_ANTIMAGIC,Anti Magic
-677,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0	,NPC_WIDECURSE,Wide Curse
-678,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0	,NPC_WIDESTUN,Wide Stun
-679,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0	,NPC_VAMPIRE_GIFT,Vampire Gift
-680,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0	,NPC_WIDESOULDRAIN,Wide Soul Drain
+653,0,8,4,0,0x6,5:7:9:11:13:5:7:9:11:13,10,3,no,0,0x2,0,magic,0,	NPC_EARTHQUAKE,Earthquake
+654,9,6,1,3,0,5,10,1,no,0,0x2,14,weapon,0,	NPC_FIREBREATH,Fire Breath
+655,9,6,1,1,0,5,10,1,no,0,0x2,14,weapon,0,	NPC_ICEBREATH,Ice Breath
+656,9,6,1,4,0,5,10,1,no,0,0x2,14,weapon,0,	NPC_THUNDERBREATH,Thunder Breath
+657,9,6,1,5,0,5,10,1,no,0,0x2,14,weapon,0,	NPC_ACIDBREATH,Acid Breath
+658,9,6,1,7,0,5,10,1,no,0,0x2,14,weapon,0,	NPC_DARKNESSBREATH,Darkness Breath
+659,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_DRAGONFEAR,Dragon Fear
+660,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0,	NPC_BLEEDING,Bleeding
+661,0,6,4,0,0x2,7,5,1,no,0,0x2,0,weapon,7,	NPC_PULSESTRIKE,Pulse Strike
+662,0,6,4,0,0x2,14,10,1,no,0,0x2,0,weapon,0,	NPC_HELLJUDGEMENT,Hell's Judgement
+663,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_WIDESILENCE,Wide Silence
+664,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_WIDEFREEZE,Wide Freeze
+665,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_WIDEBLEEDING,Wide Bleeding
+666,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_WIDESTONE,Wide Petrify
+667,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_WIDECONFUSE,Wide Confusion
+668,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_WIDESLEEP,Wide Sleep
+669,0,6,4,3,0x3,5,1,1,no,0,0x2,0,magic,0,	NPC_WIDESIGHT,Wide Sight
+670,9,6,2,7,0x21,0,10,1,no,0,0x2,0,magic,0,	NPC_EVILLAND,Evil Land
+671,0,6,4,0,0x1,0,5,1,no,0,0x2,0,magic,0,	NPC_MAGICMIRROR,Magic Mirror
+672,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_SLOWCAST,Slow Cast
+673,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0,	NPC_CRITICALWOUND,Critical Wounds
+674,-9,6,1,-1,0x1,0,1,1,no,0,0x2,0,none,0,	NPC_EXPULSION,Expulsion
+675,0,6,4,0,0x1,0,5,1,no,0,0x2,0,magic,0,	NPC_STONESKIN,Stone Skin
+676,0,6,4,0,0x1,0,5,1,no,0,0x2,0,magic,0,	NPC_ANTIMAGIC,Anti Magic
+677,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_WIDECURSE,Wide Curse
+678,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,	NPC_WIDESTUN,Wide Stun
+679,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0,	NPC_VAMPIRE_GIFT,Vampire Gift
+680,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0,	NPC_WIDESOULDRAIN,Wide Soul Drain
 
 // Cash Shop Skill
-681,0,0,0,0,0,0,10,0,no,0,0x1,0,none,0		,ALL_INCCARRY,Increase Weight Limit R
+681,0,0,0,0,0,0,10,0,no,0,0x1,0,none,0,		ALL_INCCARRY,Increase Weight Limit R
 
-1001,9,6,1,-1,0,0,1,1,no,0,0x1,0,weapon,0	,KN_CHARGEATK,Charge Attack
-1002,0,6,4,0,0x1,0,1,0,no,0,0x1,0,weapon,2	,CR_SHRINK,Shrink
-1003,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0	,AS_SONICACCEL,Sonic Acceleration
-1004,9,8,1,0,0x8,0,1,1,no,0,0x1,0,weapon,0	,AS_VENOMKNIFE,Throw Venom Knife
-1005,1,6,1,0,0x1,0,1,1,no,0,0x1,0,weapon,0	,RG_CLOSECONFINE,Close Confine
-1006,0,6,4,3,0,2,1,1,yes,0,0x1,0,magic,3	,WZ_SIGHTBLASTER,Sight Blaster
-1007,0,6,4,0,0x1,0,10,0,no,0,0x1,0,none,0	,SA_CREATECON,Create Elemental Converter
-1008,9,6,1,1,0x1,0,1,1,yes,0,0x1,0,magic,0	,SA_ELEMENTWATER,Elemental Change Water
-1009,-9,6,1,0,0,0,1,1,no,0,0x1,0,weapon,3	,HT_PHANTASMIC,Phantasmic Arrow
-1010,9,6,1,0,0x1,0,1,0,no,0,0x1,0,misc,0	,BA_PANGVOICE,Pang Voice
-1011,9,6,1,0,0x1,0,1,0,no,0,0x1,0,misc,0	,DC_WINKCHARM,Wink of Charm
-1012,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0	,BS_UNFAIRLYTRICK,Unfair Trick
-1013,0,6,4,0,0x3,2,1,0,no,0,0x1,0,weapon,0	,BS_GREED,Greed
-1014,0,6,4,6,0x3,14,1,0,yes,0,0x1,0,magic,0	,PR_REDEMPTIO,Redemptio
-1015,9,6,16,0,0x1,0,1,1,no,0,0x401,0,weapon,0	,MO_KITRANSLATION,Ki Translation
-1016,-1,6,1,-1,0x2,1,1,1,no,0,0x1,0,weapon,5	,MO_BALKYOUNG,Ki Explosion
-1017,9,6,1,2,0x1,0,1,1,yes,0,0x1,0,magic,0	,SA_ELEMENTGROUND,Elemental Change Earth
-1018,9,6,1,3,0x1,0,1,1,yes,0,0x1,0,magic,0	,SA_ELEMENTFIRE,Elemental Change Fire
-1019,9,6,1,4,0x1,0,1,1,yes,0,0x1,0,magic,0	,SA_ELEMENTWIND,Elemental Change Wind
+1001,9,6,1,-1,0,0,1,1,no,0,0x1,0,weapon,0,	KN_CHARGEATK,Charge Attack
+1002,0,6,4,0,0x1,0,1,0,no,0,0x1,0,weapon,2,	CR_SHRINK,Shrink
+1003,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0,	AS_SONICACCEL,Sonic Acceleration
+1004,9,8,1,0,0x8,0,1,1,no,0,0x1,0,weapon,0,	AS_VENOMKNIFE,Throw Venom Knife
+1005,1,6,1,0,0x1,0,1,1,no,0,0x1,0,weapon,0,	RG_CLOSECONFINE,Close Confine
+1006,0,6,4,3,0,2,1,1,yes,0,0x1,0,magic,3,	WZ_SIGHTBLASTER,Sight Blaster
+1007,0,6,4,0,0x1,0,10,0,no,0,0x1,0,none,0,	SA_CREATECON,Create Elemental Converter
+1008,9,6,1,1,0x1,0,1,1,yes,0,0x1,0,magic,0,	SA_ELEMENTWATER,Elemental Change Water
+1009,-9,6,1,0,0,0,1,1,no,0,0x1,0,weapon,3,	HT_PHANTASMIC,Phantasmic Arrow
+1010,9,6,1,0,0x1,0,1,0,no,0,0x1,0,misc,0,	BA_PANGVOICE,Pang Voice
+1011,9,6,1,0,0x1,0,1,0,no,0,0x1,0,misc,0,	DC_WINKCHARM,Wink of Charm
+1012,0,0,0,0,0,0,1,0,no,0,0x1,0,weapon,0,	BS_UNFAIRLYTRICK,Unfair Trick
+1013,0,6,4,0,0x3,2,1,0,no,0,0x1,0,weapon,0,	BS_GREED,Greed
+1014,0,6,4,6,0x3,14,1,0,yes,0,0x1,0,magic,0,	PR_REDEMPTIO,Redemptio
+1015,9,6,16,0,0x1,0,1,1,no,0,0x401,0,weapon,0,	MO_KITRANSLATION,Ki Translation
+1016,-1,6,1,-1,0x2,1,1,1,no,0,0x1,0,weapon,5,	MO_BALKYOUNG,Ki Explosion
+1017,9,6,1,2,0x1,0,1,1,yes,0,0x1,0,magic,0,	SA_ELEMENTGROUND,Elemental Change Earth
+1018,9,6,1,3,0x1,0,1,1,yes,0,0x1,0,magic,0,	SA_ELEMENTFIRE,Elemental Change Fire
+1019,9,6,1,4,0x1,0,1,1,yes,0,0x1,0,magic,0,	SA_ELEMENTWIND,Elemental Change Wind
 
 8001,9,6,4,0,0x1,0,5,1,no,0,0,0,magic,0         ,HLIF_HEAL,Healing Touch
 8002,0,6,4,0,0x3,-1,5,1,no,0,0,0,none,0         ,HLIF_AVOID,Avoid
