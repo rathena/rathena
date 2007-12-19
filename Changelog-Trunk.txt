@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/12/19
+	* Changes to the configure script. [FlavioJS]
+	- fixed the 'pointers can be stored in ints' test not working
+	- fixed the linker trying to build 64 bit executables with 32 bit code on 
+	  x86_64 (missing -m32 flag in LDFLAGS)
+	- made MYSQL_CFLAGS be built from the --include option to be more portable
+	- made --with-mysql check if the optional argument is an executable file
+	- make --with-pcre check if the optional argument is a directory
+	- other minor changes
 	* Corrected SC_MIRACLE to trigger Bless of the Stars on all defeated mobs.
 	  [Skotlex]
 2007/12/18
