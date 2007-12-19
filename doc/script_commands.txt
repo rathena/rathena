@@ -1,21 +1,16 @@
 //===== Athena Doc ========================================
 //= eAthena Script Commands
-//===== By ================================================
-//= Fredzilla
-//===== Helped By =========================================
-//= Terminal Vertex & Z3R0 - Helped define getmapxy
-//= HappyDenn -  Gave everything to do with getpartymember 
-//=              a great help
-//= Maeki Rika - A section on general concepts and lots of
-//=              other updates and additions.
+//===== Description =======================================
+//= A reference manual for the eAthena scripting language.
+//= Commands are sorted depending on their functionality.
 //===== Version ===========================================
 //= 3.10.20071122
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
-//=       and things I have missed out
-//= 1.1 - Added better discription for "getmapxy"
-//= 1.2b- Added a description for getpartymember 
+//=       and things I have missed out [Fredzilla]
+//= 1.1 - Added better discription for "getmapxy" (by Terminal Vertex & Z3R0)
+//= 1.2b- Added a description for getpartymember (by HappyDenn)
 //=       (+few spelling mistakes corrected)
 //= 2.0 - +79kb extra stuff and numerous corrections by 
 //=       Maeki Rika.
@@ -96,9 +91,8 @@
 //=       Added query_logsql. [Skotlex]
 //= 3.11.20071215
 //=       Updated guardianinfo and get-/setcastledata [ultramage]
-//===== Description =======================================
-//= A reference manual for the eAthena scripting language,
-//= sorted out depending on their functionality.
+//= 3.12.20071218
+//=       Corrected various mistakes mentioned in bugreport:373 [ultramage]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -516,8 +510,8 @@ nothing  - A permanent variable attached to the character, the default
            'l' as a temporary variable prefix, so beware of having variable
            names starting with 'l' if you want full backward compatibility.
 "$"      - A global permanent variable.
-           They are stored in "save\mapreg.txt" file and are the only kind of
-           variables stored in a text file in the SQL version.
+           They are stored in "save\mapreg.txt" or database table `mapreg`,
+           depending on server type and the MAPREGSQL compilation flag.
 "$@"     - A global temporary variable.
            This is important for scripts which are called with no RID
            attached, that is, not triggered by a specific character object.
@@ -835,6 +829,7 @@ there are also some special labels which the script engine will start execution
 from if a special event happens:
 
 OnClock<hour><minute>:
+OnMinute<minute>:
 OnHour<hour>:
 On<weekday><hour><minute>:
 OnDay<month><day>:
@@ -898,7 +893,7 @@ This special label triggers when a player kills a monster. The variable
 OnPCLoadMapEvent:
 
 This special label will trigger once a player steps in a map marked with the 
-'loadmap' mapflag and attach its RID. The fact that this label requires a 
+'loadevent' mapflag and attach its RID. The fact that this label requires a 
 mapflag for it to work is because, otherwise, it'd be server-wide and trigger
 everytime a player would change maps. Imagine the server load with 1,000 players
 (oh the pain...)
@@ -1951,7 +1946,7 @@ doesn't have an attached RID. Note that this will cause the map server to
 print "player not attached!" error messages, so it is preferred to use
 "playerattached" to check for the character attached to the script.
 
-if (getcharid(2)) mes "Only members of a guild are allowed beyond this point!";
+if( getcharid(2) == 0 ) mes "Only members of a guild are allowed here!";
 
 ---------------------------------------
 
@@ -2334,7 +2329,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_amount[]    - their corresponding item amounts.
 @inventorylist_equip[]     - whether the item is equipped or not.
 @inventorylist_refine[]    - for how much it is refined.
-@inventorylist_identify[]  - whether it's refined.
+@inventorylist_identify[]  - whether it is identified.
 @inventorylist_attribute[] - whether it is broken.
 @inventorylist_card1[]     - These four arrays contain card data for the items.
 @inventorylist_card2[]       These data slots are also used to store names
@@ -2843,12 +2838,12 @@ set @i, petstat(PET_CLASS);
 
 ---------------------------------------
 
-*getmonsterinfo(<item ID>,<type>)
+*getmonsterinfo(<mob ID>,<type>)
 
-This function will look up the monster with the specified ID number in the database 
-and return the info set by TYPE argument.
+This function will look up the monster with the specified ID number in the
+mob database and return the info set by TYPE argument.
 It will return -1 if there is no such item. Due to specific of MOB DB routines,
-it's better to check monster name. It'd return "Dummy" for a non-existing monster.
+it's better to check monster name. It'd return "Dummy" for a non-existing mob.
 
 Valid types are listed in const.txt:
 	MOB_NAME	0		MOB_LV	1
@@ -3198,7 +3193,7 @@ For a list of equipment slots see 'getequipid'.
 ==============================
 -------------------------
 
-*attachrid(<character ID>)
+*attachrid(<account ID>)
 *detachrid;
 
 A 'RID' is an ID of a character who caused the NPC script to run, as has been 
@@ -4885,6 +4880,13 @@ emotion will appear above each of their heads.
 
 ---------------------------------------
 
+*cmdothernpc "<npc name>","<command>";
+
+This is simply "donpcevent <npc name>::OnCommand<command>".
+It is an approximation of official server script language's 'cmdothernpc'.
+
+---------------------------------------
+
 *npctalk "<message>";
 
 This command will display a message to the surrounding area as if the NPC object 
@@ -4923,59 +4925,34 @@ that timer.
 
 When this timer runs out, a new execution thread will start in the specified NPC 
 object at the specified label. If no such label is found in the NPC object, it 
-will run as if clicked. In either case, no RID will be attached during 
-execution.
+will run as if clicked. In either case, the script runs with no RID attached.
 
 The ticks are given in 1/1000ths of a second.
 
----------------------------------------
-
-*stoptimer;
-*inittimer;
-*enablearena;
-*disablearena;
-*cmdothernpc "<npc name?>","<command?>";
-
-This set of commands is marked as added by someone going under the nickname 
-'RoVeRT', as mentioned the source code comments, and has to do with timers and 
-scheduling working entirely unlike any other timing commands. It is not certain 
-that they actually even work properly anymore, and most of these read no 
-arguments, though the 'inittimer'/'stoptimer' pair of commands has to do 
-something with an 'OnTimer' label and will probably invoke it and 'cmdothernpc' 
-will execute starting with the label 'OnCommand'. Whatever they actually do, the 
-other commands can most likely do it better. The two arena commands definitely 
-do not do anything useful at all.
-
-None of these commands are used in any scripts bundled with eAthena. Most 
-probably they are deprecated and left in by mistake.
-
-Unless RoVeRT can be found and asked to clarify what these were made for, that 
-is.
+One more thing. These timers are stored as part of player data. If the player
+logs out, all of these get immediately deleted, without executing the script.
+If this behavior is undesirable, use some other timer mechanism (like 'sleep').
 
 ---------------------------------------
 
-*initnpctimer{ "<NPC object name>" {, <Attach Flag>} } |
-             {"<NPC object name>" | <Attach Flag> };
-*stopnpctimer{ "<NPC object name>" {, <Detach Flag>}  } |
-             { "<NPC object name>" | <Detach Flag> };
-*startnpctimer{ "<NPC object name>" {, <Attach Flag>} } |
-              { "<NPC object name>" | <Attach Flag> };
-*setnpctimer <tick>{,"<NPC object name>"};
-*getnpctimer(<type of information>{,"<NPC object name>"});
+*initnpctimer{ "<NPC name>" {, <Attach Flag>} } |
+             { "<NPC name>" | <Attach Flag> };
+*stopnpctimer{ "<NPC name>" {, <Detach Flag>}  } |
+             { "<NPC name>" | <Detach Flag> };
+*startnpctimer{ "<NPC name>" {, <Attach Flag>} } |
+              { "<NPC name>" | <Attach Flag> };
+*setnpctimer <tick>{,"<NPC name>"};
+*getnpctimer(<type of information>{,"<NPC name>"});
 *attachnpctimer {"<character name>"};
-*detachnpctimer {"<NPC object name>"};
+*detachnpctimer {"<NPC name>"};
 
-This set of commands and functions will create and manage an NPC-object based 
-timer. The NPC object may be declared by name, or the name in all cases may be 
-omitted, in that case this timer will be based in the object the current script 
-is running in.
+This set of commands and functions will create and manage an NPC-based timer.
+The NPC name may be omitted, in which case the calling NPC is used as target.
 
-Why is it actually part of an NPCs structure we aren't sure, but it is, and 
-while 'addtimer'/'deltimer' commands will let you have many different timers 
-referencing different labels in the same NPC, one each and each with their own 
-countdown, 'initnpctimer' can only have one per NPC object. But it can trigger 
-many labels and it can let you know how many were triggered already and how many 
-still remain.
+Contrary to addtimer/deltimer commands which let you have many different timers
+referencing different labels in the same NPC, each with their own countdown,
+'initnpctimer' can only have one per NPC object. But it can trigger many labels
+and let you know how many were triggered already and how many still remain.
 
 This timer is counting up from 0 in ticks of 1/1000ths of a second each. Upon 
 creating this timer, the execution will not stop, but will happily continue 
@@ -4986,27 +4963,25 @@ To create the timer, use the 'initnpctimer', which will start it running.
 'stopnpctimer' will pause the timer, without clearing the current tick, while 
 'startnpctimer' will let the paused timer continue.
 
-By default timers do not have a RID attached, which lets the timers continue even
+By default timers do not have a RID attached, which lets them continue even
 if the player that started them logs off. To attach a RID to a timer, you can
-either use the "attach flag" optional value when using initnpctimer/startnpctimer, 
-likewise, the optional flag of stopnpctimer detaches any RID after stopping
-the timer. Once a player is attached to a timer, it stays attached to all
-timers from that script until detached manually. You can have multiple
-npctimers going on at the same time as long as each one has a different player
-attached (think of each RID being used as an independant timer).
+either use the optional "attach flag" when using 'initnpctimer/startnpctimer', 
+or do it manually by using 'attachnpctimer'. Likewise, the optional flag of
+stopnpctimer lets you detach any RID after stopping the timer, and by using
+'detachnpctimer' you can detach a RID at any time.
 
-The other method to attach/detach a RID is through the script commands
-'attachnpctimer' and 'detachnpctimer'. Once attached, that will make the
-character the target for all character-referencing commands and functions,
-not to mention variables.
+Normally there is only a single timer per NPC, but as an exception, as long as
+you attach a player to the timer, you can have multiple timers running at once,
+because these will get stored on the players instead of the NPC.
+NOTE: You need to attach the RID before the timer _before_ you start it to
+get a player-attached timer. Otherwise it'll stay a NPC timer (no effect).
 
 If the player that is attached to the npctimer logs out, the "OnTimerQuit:"
 event label of that npc will be triggered, so you can do the appropiate
 cleanup (the player is still attached when this event is triggered).
 
-'setnpctimer' will explicitly set the timer to a given tick. To make it useful, 
-you will need the 'getnpctimer' function, which the type of information argument 
-means:
+The 'setnpctimer' command will explicitly set the timer to a given tick.
+'getnpctimer' provides timer information. Its parameter defines what type:
 
  0 - Will return the current tick count of the timer.
  1 - Will return 1 if there are remaining "OnTimer<ticks>:" labels in the 
@@ -5044,30 +5019,7 @@ Example 1:
 Example 2:
 
     OnTimer15000:
-        set $quote,rand(5);
-        if($quote == 0) goto Lquote0;
-        if($quote == 1) goto Lquote1;
-        if($quote == 2) goto Lquote2;
-        if($quote == 3) goto Lquote3;
-        if($quote == 4) goto Lquote4;
-    Lquote0:
-        npctalk "If 0 is randomly picked you will see this";
-        setnpctimer 0;
-        end;
-    Lquote1:
-        npctalk "If 1 is randomly picked you will see this";
-        setnpctimer 0;
-        end;
-    Lquote2:
-        npctalk "If 2 is randomly picked you will see this";
-        setnpctimer 0;
-        end;
-    Lquote3:
-        npctalk "If 3 is randomly picked you will see this";
-        setnpctimer 0;
-        end;
-    Lquote4:
-        npctalk "If 4 is randomly picked you will see this";
+	npctalk "Another 15 seconds have passed.";
         setnpctimer 0;
         end;
        
@@ -5316,6 +5268,8 @@ It's not clear what happens to a waiting room if the NPC is disabled with
 
 *enablewaitingroomevent {"<NPC object name>"};
 *disablewaitingroomevent {"<NPC object name>"};
+*enablearena;
+*disablearena;
 
 This will enable and disable triggering the waiting room event (see 
 'waitingroom') respectively. Optionally giving an NPC object name will do that 
@@ -5328,6 +5282,10 @@ accordingly.
 Normally, whenever a waiting room was created to make sure that only one 
 character is, for example, trying to pass a job quest trial, and no other 
 characters are present in the room to mess up the script.
+
+The 'enablearena'/'disablearena' commands are just aliases with no parameter.
+These are supposedly left here for compatibility with official server scripts,
+but no eathena script uses these at the moment.
 
 ---------------------------------------
 
