@@ -7468,14 +7468,14 @@ int atcommand_whereis(const int fd, struct map_session_data* sd, const char* com
 	}
 	for (k = 0; k < count; k++) {
 		mob = mob_array[k];
-    	snprintf(atcmd_output, sizeof atcmd_output, "%s spawns in:", mob->jname);
+		snprintf(atcmd_output, sizeof atcmd_output, "%s spawns in:", mob->jname);
 		clif_displaymessage(fd, atcmd_output);
 
 		for (i = 0; i < ARRAYLENGTH(mob->spawn) && mob->spawn[i].qty; i++)
 		{
 			j = map_mapindex2mapid(mob->spawn[i].mapindex);
 			if (j < 0) continue;
-	    	snprintf(atcmd_output, sizeof atcmd_output, "%s (%d)", map[j].name, mob->spawn[i].qty);
+			snprintf(atcmd_output, sizeof atcmd_output, "%s (%d)", map[j].name, mob->spawn[i].qty);
 			clif_displaymessage(fd, atcmd_output);
 		}
 		if (i == 0)
@@ -7496,52 +7496,52 @@ int atcommand_adopt(const int fd, struct map_session_data* sd, const char* comma
 	struct map_session_data *pl_sd3 = NULL;
 	char player1[NAME_LENGTH], player2[NAME_LENGTH], player3[NAME_LENGTH];
 	char output[256];
-	
-        nullpo_retr(-1, sd);
 
-		if (!message || !*message || sscanf(message, "%23[^,],%23[^,],%23[^\r\n]", player1, player2, player3) < 3) {
-				clif_displaymessage(fd, "usage: @adopt <player1>,<player2>,<player3>.");
-				return -1;
-		}
+	nullpo_retr(-1, sd);
 
-		  if (battle_config.etc_log)
-	        printf("Adopting: --%s--%s--%s--\n",player1,player2,player3);
+	if (!message || !*message || sscanf(message, "%23[^,],%23[^,],%23[^\r\n]", player1, player2, player3) < 3) {
+		clif_displaymessage(fd, "usage: @adopt <father>,<mother>,<child>.");
+		return -1;
+	}
 
-        if((pl_sd1=map_nick2sd((char *) player1)) == NULL) {
-                sprintf(output, "Cannot find player %s online", player1);
-                clif_displaymessage(fd, output);
-                return -1;
-        }
+	if (battle_config.etc_log)
+		ShowInfo("Adopting: --%s--%s--%s--\n",player1,player2,player3);
 
-        if((pl_sd2=map_nick2sd((char *) player2)) == NULL) {
-                sprintf(output, "Cannot find player %s online", player2);
-                clif_displaymessage(fd, output);
-                return -1;
+	if((pl_sd1=map_nick2sd((char *) player1)) == NULL) {
+		sprintf(output, "Cannot find player %s online", player1);
+		clif_displaymessage(fd, output);
+		return -1;
+	}
+
+	if((pl_sd2=map_nick2sd((char *) player2)) == NULL) {
+		sprintf(output, "Cannot find player %s online", player2);
+		clif_displaymessage(fd, output);
+		return -1;
 	}
  
-       if((pl_sd3=map_nick2sd((char *) player3)) == NULL) {
-                sprintf(output, "Cannot find player %s online", player3);
-                clif_displaymessage(fd, output);
-                return -1;
-        }
+	if((pl_sd3=map_nick2sd((char *) player3)) == NULL) {
+		sprintf(output, "Cannot find player %s online", player3);
+		clif_displaymessage(fd, output);
+		return -1;
+	}
 
-		if (pc_adoption(pl_sd1, pl_sd2, pl_sd3) == 0) {
-				clif_displaymessage(fd, "They are family.. wish them luck");
-				return 0;
-		}
-		else
-				return -1;
+	if( pc_adoption(pl_sd1, pl_sd2, pl_sd3) != 0 ) {
+		return -1;
+	}
+	
+	clif_displaymessage(fd, "They are family... wish them luck");
+	return 0;
 }
 
 int atcommand_version(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	const char * revision;
 
- 	if ((revision = get_svn_revision()) != 0) {
- 		sprintf(atcmd_output,"eAthena Version SVN r%s",revision);
-            clif_displaymessage(fd,atcmd_output);
- 	} else 
-          clif_displaymessage(fd,"Cannot determine SVN revision");
+	if ((revision = get_svn_revision()) != 0) {
+		sprintf(atcmd_output,"eAthena Version SVN r%s",revision);
+		clif_displaymessage(fd,atcmd_output);
+	} else 
+		clif_displaymessage(fd,"Cannot determine SVN revision");
 
 	return 0;
 }
@@ -7823,11 +7823,11 @@ int atcommand_duel(const int fd, struct map_session_data* sd, const char* comman
 	char output[256];
 	unsigned int maxpl=0, newduel;
 	struct map_session_data *target_sd;
-    
-    if(sd->duel_group > 0) {
-    	duel_showinfo(sd->duel_group, sd);
-    	return 0;
-    }
+
+	if(sd->duel_group > 0) {
+		duel_showinfo(sd->duel_group, sd);
+		return 0;
+	}
 
 	if(sd->duel_invite > 0) {
 		// "Duel: @duel without @reject."
@@ -7845,30 +7845,30 @@ int atcommand_duel(const int fd, struct map_session_data* sd, const char* comman
 	if(strlen(message) > 0) {
 		if(sscanf(message, "%d", &maxpl) >= 1) {
 			if(maxpl < 2 || maxpl > 65535) {
-        		clif_displaymessage(fd, msg_txt(357)); // "Duel: Invalid value."
-        		return 0;
-        	}
-        	duel_create(sd, maxpl);
-        } else {
-        	target_sd = map_nick2sd((char *)message);
-        	if(target_sd != NULL) {
-        		if((newduel = duel_create(sd, 2)) != -1) {
+				clif_displaymessage(fd, msg_txt(357)); // "Duel: Invalid value."
+				return 0;
+			}
+			duel_create(sd, maxpl);
+		} else {
+			target_sd = map_nick2sd((char *)message);
+			if(target_sd != NULL) {
+				if((newduel = duel_create(sd, 2)) != -1) {
 					if(target_sd->duel_group > 0 ||	target_sd->duel_invite > 0) {
 						clif_displaymessage(fd, msg_txt(353)); // "Duel: Player already in duel."
 						return 0;
 					}
-        			duel_invite(newduel, sd, target_sd);
-        			clif_displaymessage(fd, msg_txt(354)); // "Duel: Invitation has been sent."
-        		}
-        	} else {
-        		// "Duel: Player not found."
-        		clif_displaymessage(fd, msg_txt(352));
-        		return 0;
-        	}
-        }
+					duel_invite(newduel, sd, target_sd);
+					clif_displaymessage(fd, msg_txt(354)); // "Duel: Invitation has been sent."
+				}
+			} else {
+				// "Duel: Player not found."
+				clif_displaymessage(fd, msg_txt(352));
+				return 0;
+			}
+		}
 	} else
 		duel_create(sd, 0);
-	
+
 	return 0;
 }
 
@@ -7967,7 +7967,7 @@ int atcommand_clone(const int fd, struct map_session_data* sd, const char* comma
 		clif_displaymessage(fd, msg_txt(126));	// Cannot clone a player of higher GM level than yourself.
 		return 0;
 	}
-		
+
 	if (strcmpi(command, "@clone") == 0) 
 		flag = 1;
 	else if (strcmpi(command, "@slaveclone") == 0) {
@@ -7979,7 +7979,7 @@ int atcommand_clone(const int fd, struct map_session_data* sd, const char* comma
 			return 0;
 		}
 	}
-	
+
 	do {
 		x = sd->bl.x + (rand() % 10 - 5);
 		y = sd->bl.y + (rand() % 10 - 5);
