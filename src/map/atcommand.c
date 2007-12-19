@@ -7495,6 +7495,7 @@ int atcommand_adopt(const int fd, struct map_session_data* sd, const char* comma
 	struct map_session_data *pl_sd2 = NULL;
 	struct map_session_data *pl_sd3 = NULL;
 	char player1[NAME_LENGTH], player2[NAME_LENGTH], player3[NAME_LENGTH];
+	char output[256];
 	
         nullpo_retr(-1, sd);
 
@@ -7507,20 +7508,20 @@ int atcommand_adopt(const int fd, struct map_session_data* sd, const char* comma
 	        printf("Adopting: --%s--%s--%s--\n",player1,player2,player3);
 
         if((pl_sd1=map_nick2sd((char *) player1)) == NULL) {
-                sprintf(player2, "Cannot find player %s online", player1);
-                clif_displaymessage(fd, player2);
+                sprintf(output, "Cannot find player %s online", player1);
+                clif_displaymessage(fd, output);
                 return -1;
         }
 
         if((pl_sd2=map_nick2sd((char *) player2)) == NULL) {
-                sprintf(player1, "Cannot find player %s online", player2);
-                clif_displaymessage(fd, player1);
+                sprintf(output, "Cannot find player %s online", player2);
+                clif_displaymessage(fd, output);
                 return -1;
 	}
  
        if((pl_sd3=map_nick2sd((char *) player3)) == NULL) {
-                sprintf(player1, "Cannot find player %s online", player3);
-                clif_displaymessage(fd, player1);
+                sprintf(output, "Cannot find player %s online", player3);
+                clif_displaymessage(fd, output);
                 return -1;
         }
 
