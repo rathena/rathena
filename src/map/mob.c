@@ -1871,10 +1871,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				(i==2 && sd->sc.data[SC_MIRACLE]) //Miracle only applies to Star target
 			))
 				bonus += (i==2?20:10)*pc_checkskill(sd,sg_info[i].bless_id);
-
-			if(battle_config.mobs_level_up && md->level > md->db->lv) // [Valaris]
-				bonus += (md->level-md->db->lv)*battle_config.mobs_level_up_exp_rate;
 		}
+		if(battle_config.mobs_level_up && md->level > md->db->lv) // [Valaris]
+			bonus += (md->level-md->db->lv)*battle_config.mobs_level_up_exp_rate;
+
 	for(i = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++)
 	{
 		int flag=1,zeny=0;
@@ -2774,7 +2774,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				case MSC_MASTERHPLTMAXRATE:
 					flag = ((fbl = mob_getmasterhpltmaxrate(md, ms[i].cond2)) != NULL); break;
 				case MSC_MASTERATTACKED:
-					flag = (md->master_id > 0 && unit_counttargeted(map_id2bl(md->master_id), 0) > 0); break;
+					flag = (md->master_id > 0 && (fbl=map_id2bl(md->master_id)) && unit_counttargeted(fbl, 0) > 0); break;
 				case MSC_ALCHEMIST:
 					flag = (md->state.alchemist);
 					break;
