@@ -1864,13 +1864,12 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			bonus += md->sc.data[SC_RICHMANKIM]->val2;
 		if(sd) {
 			temp = status_get_class(&md->bl);
-			ARR_FIND(0, 3, i, temp == sd->hate_mob[i]);
-			if (i < 3 && (
-				battle_config.allow_skill_without_day ||
-				sg_info[i].day_func() ||
-				(i==2 && sd->sc.data[SC_MIRACLE]) //Miracle only applies to Star target
-			))
-				bonus += (i==2?20:10)*pc_checkskill(sd,sg_info[i].bless_id);
+			if(sd->sc.data[SC_MIRACLE]) i = 2; //All mobs are Star Targets
+			else
+			ARR_FIND(0, 3, i, temp == sd->hate_mob[i] &&
+				(battle_config.allow_skill_without_day || sg_info[i].day_func()));
+			if(i<3 && (temp=pc_checkskill(sd,sg_info[i].bless_id)))
+				bonus += (i==2?20:10)*temp;
 		}
 		if(battle_config.mobs_level_up && md->level > md->db->lv) // [Valaris]
 			bonus += (md->level-md->db->lv)*battle_config.mobs_level_up_exp_rate;
