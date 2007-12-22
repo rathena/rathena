@@ -2182,11 +2182,6 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		return strchr(start,'\n');// skip and continue
 	}
 
-	//Fixed according to latest kRO update (needs optimization)
-	temp = mob.delay1;
-	mob.delay1 += mob.delay2;
-	mob.delay2 = temp;
-
 	mob.num = (unsigned short)num;
 	mob.class_ = (short) class_;
 	mob.x = (unsigned short)x;

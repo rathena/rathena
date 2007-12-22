@@ -349,10 +349,6 @@ int map_addblock_sub (struct block_list *bl, int flag)
 		return 1;
 	}
 	
-#ifdef CELL_NOSTACK
-	map_addblcell(bl);
-#endif
-	
 	pos = x/BLOCK_SIZE+(y/BLOCK_SIZE)*map[m].bxs;
 	if (bl->type == BL_MOB) {
 		bl->next = map[m].block_mob[pos];
@@ -361,14 +357,13 @@ int map_addblock_sub (struct block_list *bl, int flag)
 		map[m].block_mob[pos] = bl;
 		map[m].block_mob_count[pos]++;
 	} else {
-		bl->next = map[m].block[pos];
-		bl->prev = &bl_head;
-		if (bl->next) bl->next->prev = bl;
-		map[m].block[pos] = bl;
-		map[m].block_count[pos]++;
 		if (bl->type == BL_PC && flag)
 		{
 			struct map_session_data* sd;
+			if (!sd->state.auth) {
+				ShowError("map_addblock: Attempted to add a non-authed player (%d:%d)!\n", sd->status.account_id, sd->status.char_id);
+				return 1;
+			}
 			if (map[m].users++ == 0 && battle_config.dynamic_mobs)	//Skotlex
 				map_spawnmobs(m);
 			sd = (struct map_session_data*)bl;
@@ -378,8 +373,17 @@ int map_addblock_sub (struct block_list *bl, int flag)
 				pet_menu(sd, 3); //Option 3 is return to egg.
 			}
 		}
+		bl->next = map[m].block[pos];
+		bl->prev = &bl_head;
+		if (bl->next) bl->next->prev = bl;
+		map[m].block[pos] = bl;
+		map[m].block_count[pos]++;
 	}
 
+#ifdef CELL_NOSTACK
+	map_addblcell(bl);
+#endif
+	
 	return 0;
 }
 

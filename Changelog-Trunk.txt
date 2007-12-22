@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/12/22
+	* Corrected mob spawn utilization of the delay1/delay2 values (one is
+	  respawn delay base, the second is random variance added on top of it).
+	  Cleaned up related code. [Skotlex]
 2007/12/19
 	* Fixed yet another buffer overflow, in @adopt [ultramage]
 	* Changes to the configure script. [FlavioJS]

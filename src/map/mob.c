@@ -612,24 +612,19 @@ static int mob_delayspawn(int tid, unsigned int tick, int m, int n)
  *------------------------------------------*/
 int mob_setdelayspawn(struct mob_data *md)
 {
-	unsigned int spawntime, spawntime1, spawntime2, spawntime3;
-
+	unsigned int spawntime;
 
 	if (!md->spawn) //Doesn't has respawn data!
 		return unit_free(&md->bl,1);
 
-	spawntime1 = md->last_spawntime + md->spawn->delay1;
-	spawntime2 = md->last_deadtime + md->spawn->delay2;
-	spawntime3 = gettick() + 5000 + rand()%5000; //Lupus
-	// spawntime = max(spawntime1,spawntime2,spawntime3);
-	if (DIFF_TICK(spawntime1, spawntime2) > 0)
-		spawntime = spawntime1;
-	else
-		spawntime = spawntime2;
-	if (DIFF_TICK(spawntime3, spawntime) > 0)
-		spawntime = spawntime3;
+	spawntime = md->spawn->delay1; //Base respawn time
+	if (md->spawn->delay2) //random variance
+		spawntime+= rand()%md->spawn->delay2;
 
-	add_timer(spawntime, mob_delayspawn, md->bl.id, 0);
+	if (spawntime < 5000) //Min respawn time (is it needed?)
+		spawntime = 5000;
+
+	add_timer(gettick()+spawntime, mob_delayspawn, md->bl.id, 0);
 	return 0;
 }
 
@@ -646,7 +641,6 @@ int mob_spawn (struct mob_data *md)
 	int i=0;
 	unsigned int c =0, tick = gettick();
 
-	md->last_spawntime = md->last_thinktime = tick;
 	if (md->bl.prev != NULL)
 		unit_remove_map(&md->bl,2);
 	else
@@ -2221,7 +2215,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	}
 
 	mob_deleteslave(md);
-	md->last_deadtime=tick;
 	
 	map_freeblock_unlock();
 

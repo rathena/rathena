@@ -924,8 +924,7 @@ struct mob_data {
 	unsigned int tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
 	int level;
 	int target_id,attacked_id;
-	unsigned int next_walktime;
-	unsigned int last_deadtime,last_spawntime,last_thinktime,last_linktime;
+	unsigned int next_walktime,last_thinktime,last_linktime;
 	short move_fail_count;
 	short lootitem_count;
 	short min_chase;
