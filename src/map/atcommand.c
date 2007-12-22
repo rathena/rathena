@@ -6033,10 +6033,10 @@ int atcommand_partyoption(const int fd, struct map_session_data* sd, const char*
 
 	if(!message || !*message || sscanf(message, "%15s %15s", w1, w2) < 2)
 	{
-		clif_displaymessage(fd, "Command usage: @changeoption <pickup share: yes/no> <item distribution: yes/no>");
+		clif_displaymessage(fd, "Command usage: @partyoption <pickup share: yes/no> <item distribution: yes/no>");
 		return -1;
 	}
-
+	
 	option = (config_switch(w1)?1:0)|(config_switch(w2)?2:0);
 
 	//Change item share type.
@@ -6390,12 +6390,6 @@ int atcommand_pettalk(const int fd, struct map_session_data* sd, const char* com
 {
 	char mes[100],temp[100];
 	struct pet_data *pd;
-	const char* emo[] = {	 "/!", "/?", "/ho", "/lv", "/swt", "/ic", "/an", "/ag", "/$", "/...",
-				"/scissors", "/rock", "/paper", "/korea", "/lv2", "/thx", "/wah", "/sry", "/heh", "/swt2",
-				"/hmm", "/no1", "/??", "/omg", "/O", "/X", "/hlp", "/go", "/sob", "/gg",
-				"/kis", "/kis2", "/pif", "/ok", "-?-", "-?-", "/bzz", "/rice", "/awsm", "/meh",
-				"/shy", "/pat", "/mp", "/slur", "/com", "/yawn", "/grat", "/hp", "/philippines", "/usa",
-				"/indonesia", "/brazil", "/fsh", "/spin", "/sigh", "/dum", "/crwd", "/desp", "/dice", NULL };
 
 	nullpo_retr(-1, sd);
 
@@ -6415,13 +6409,22 @@ int atcommand_pettalk(const int fd, struct map_session_data* sd, const char* com
 		return -1;
 	}
 
-	if (message[0] == '/') {
+	if (message[0] == '/')
+	{// pet emotion processing
+		const char* emo[] = {
+			"/!", "/?", "/ho", "/lv", "/swt", "/ic", "/an", "/ag", "/$", "/...",
+			"/scissors", "/rock", "/paper", "/korea", "/lv2", "/thx", "/wah", "/sry", "/heh", "/swt2",
+			"/hmm", "/no1", "/??", "/omg", "/O", "/X", "/hlp", "/go", "/sob", "/gg",
+			"/kis", "/kis2", "/pif", "/ok", "-?-", "-?-", "/bzz", "/rice", "/awsm", "/meh",
+			"/shy", "/pat", "/mp", "/slur", "/com", "/yawn", "/grat", "/hp", "/philippines", "/usa",
+			"/indonesia", "/brazil", "/fsh", "/spin", "/sigh", "/dum", "/crwd", "/desp", "/dice"
+		};
 		int i;
-		for (i = 0; emo[i] != NULL; i++) {
-			if (!stricmp(message, emo[i])) {
-				clif_emotion(&pd->bl, i);
-				return 0;
-			}
+		ARR_FIND( 0, ARRAYLENGTH(emo), i, stricmp(message, emo[i]) == 0 );
+		if( i < ARRAYLENGTH(emo) )
+		{
+			clif_emotion(&pd->bl, i);
+			return 0;
 		}
 	}
 

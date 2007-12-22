@@ -4567,7 +4567,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if( (su)
 			&&  (sg = su->group)
 			&&  (sg->src_id == src->id || map_flag_vs(bl->m))
-			&&	(skill_get_inf2(sg->skill_id)&INF2_TRAP) )
+			&&  (skill_get_inf2(sg->skill_id)&INF2_TRAP) )
 			{	// prevent picking up expired traps
 				if( !(sg->unit_id == UNT_USED_TRAPS || (sg->unit_id == UNT_ANKLESNARE && sg->val2 != 0 )) )
 				{

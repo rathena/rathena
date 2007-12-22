@@ -59,7 +59,7 @@ int pet_recovery_timer(int tid,unsigned int tick,int id,int data); // [Valaris]
 int pet_heal_timer(int tid,unsigned int tick,int id,int data); // [Valaris]
 
 #define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)
-#define pet_stop_attack(pd) { if((pd)->ud.attacktimer != -1) unit_stop_attack(&(pd)->bl); }
+#define pet_stop_attack(pd) unit_stop_attack(&(pd)->bl)
 
 int read_petdb(void);
 int do_init_pet(void);

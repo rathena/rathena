@@ -437,7 +437,7 @@ int party_member_leaved(int party_id, int account_id, int char_id)
 		}
 	}
 
-	if( sd && sd->status.party_id==party_id && sd->status.char_id == char_id )
+	if( sd && sd->status.party_id == party_id && sd->status.char_id == char_id )
 	{
 		sd->status.party_id = 0;
 		sd->state.party_sent = 0;

@@ -178,7 +178,7 @@ void mob_revive(struct mob_data *md, unsigned int hp);
 void mob_heal(struct mob_data *md,unsigned int heal);
 
 #define mob_stop_walking(md, type) unit_stop_walking(&(md)->bl, type)
-#define mob_stop_attack(md) { if((md)->ud.attacktimer != -1) unit_stop_attack(&(md)->bl); }
+#define mob_stop_attack(md) unit_stop_attack(&(md)->bl)
 
 void mob_clear_spawninfo();
 int do_init_mob(void);

@@ -1454,7 +1454,7 @@ static int mob_ai_hard(int tid,unsigned int tick,int id,int data)
 {
 
 	if (battle_config.mob_ai&0x20)
-		map_foreachiddb(mob_ai_sub_lazy,tick);
+		map_foreachmob(mob_ai_sub_lazy,tick);
 	else
 		clif_foreachclient(mob_ai_sub_foreachclient,tick);
 

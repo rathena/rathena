@@ -1032,6 +1032,7 @@ int intif_parse_LoadGuildStorage(int fd)
 	gstor=guild2storage(guild_id);
 	if(!gstor) {
 		ShowWarning("intif_parse_LoadGuildStorage: error guild_id %d not exist\n",guild_id);
+		return 1;
 	}
 	if (gstor->storage_status == 1) { // Already open.. lets ignore this update
 		ShowWarning("intif_parse_LoadGuildStorage: storage received for a client already open (User %d:%d)\n", sd->status.account_id, sd->status.char_id);

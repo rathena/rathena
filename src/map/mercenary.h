@@ -55,7 +55,7 @@ int merc_hom_hungry_timer_delete(struct homun_data *hd);
 int merc_hom_change_name(struct map_session_data *sd,char *name);
 int merc_hom_change_name_ack(struct map_session_data *sd, char* name, int flag);
 #define merc_stop_walking(hd, type) unit_stop_walking(&(hd)->bl, type)
-#define merc_stop_attack(hd) { if((hd)->ud.attacktimer != -1) unit_stop_attack(&(hd)->bl); hd->ud.target = 0; }
+#define merc_stop_attack(hd) unit_stop_attack(&(hd)->bl)
 int merc_hom_increase_intimacy(struct homun_data * hd, unsigned int value);
 int merc_hom_decrease_intimacy(struct homun_data * hd, unsigned int value);
 int merc_skill_tree_get_max(int id, int b_class);
