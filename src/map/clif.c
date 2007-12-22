@@ -738,10 +738,11 @@ void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, un
 //To make the assignation of the level based on limits clearer/easier. [Skotlex]
 static int clif_setlevel(int lv)
 {
-	lv = cap_value(lv, 0, battle_config.max_lv);
-	if( lv == battle_config.max_lv && lv < battle_config.aura_lv )
-		lv = battle_config.max_lv - 1;
-	return lv;
+   if( lv < battle_config.max_lv )
+	  return lv;
+   if( lv < battle_config.aura_lv )
+	  return battle_config.max_lv - 1;
+   return battle_config.max_lv;
 }
 
 /*==========================================
