@@ -8,6 +8,7 @@
 #include "../common/malloc.h"
 #include "unit.h"
 #include "map.h"
+#include "path.h"
 #include "pc.h"
 #include "mob.h"
 #include "pet.h"
@@ -58,7 +59,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 	ud = unit_bl2ud(bl);
 	if(ud == NULL) return 0;
 
-	if(path_search(&wpd,bl->m,bl->x,bl->y,ud->to_x,ud->to_y,ud->state.walk_easy))
+	if( !path_search(&wpd,bl->m,bl->x,bl->y,ud->to_x,ud->to_y,ud->state.walk_easy,CELL_CHKNOPASS) )
 		return 0;
 
 	memcpy(&ud->walkpath,&wpd,sizeof(wpd));
@@ -472,7 +473,6 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 	uint8 dir;
 	struct unit_data        *ud = NULL;
 	struct map_session_data *sd = NULL;
-	struct walkpath_data wpd;
 
 	nullpo_retr(0, bl);
 	if( BL_CAST( BL_PC,  bl, sd ) ) {
@@ -485,8 +485,8 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 	unit_stop_walking(bl,1);
 	unit_stop_attack(bl);
 
-	if(checkpath && (map_getcell(bl->m,dst_x,dst_y, CELL_CHKNOPASS) || path_search_real(&wpd,bl->m,bl->x,bl->y,dst_x,dst_y,easy, CELL_CHKNOREACH)))
-		return 0;
+	if( checkpath && (map_getcell(bl->m,dst_x,dst_y,CELL_CHKNOPASS) || !path_search(NULL,bl->m,bl->x,bl->y,dst_x,dst_y,easy,CELL_CHKNOREACH)) )
+		return 0; // unreachable
 
 	dir = map_calc_dir(bl, dst_x,dst_y);
 	ud->dir = dir;
@@ -513,7 +513,7 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 		{	//Check if pet needs to be teleported. [Skotlex]
 			int flag = 0;
 			struct block_list* bl = &sd->pd->bl;
-			if (!checkpath && path_search(&wpd,bl->m,bl->x,bl->y,dst_x,dst_y,0))
+			if( !checkpath && !path_search(NULL,bl->m,bl->x,bl->y,dst_x,dst_y,0,CELL_CHKNOPASS) )
 				flag = 1;
 			else if (!check_distance_bl(&sd->bl, bl, AREA_SIZE)) //Too far, teleport.
 				flag = 2;
@@ -1273,46 +1273,35 @@ int unit_cancel_combo(struct block_list *bl)
 /*==========================================
  *
  *------------------------------------------*/
-int unit_can_reach_pos(struct block_list *bl,int x,int y, int easy)
+bool unit_can_reach_pos(struct block_list *bl,int x,int y, int easy)
 {
-	struct walkpath_data wpd;
-
-	nullpo_retr(0, bl);
+	nullpo_retr(false, bl);
 
 	if( bl->x==x && bl->y==y )	// “¯‚¶ƒ}ƒX
-		return 1;
+		return true;
 
-	// áŠQ•¨”»’è
-	wpd.path_len=0;
-	wpd.path_pos=0;
-	wpd.path_half=0;
-	return (path_search_real(&wpd,bl->m,bl->x,bl->y,x,y,easy,CELL_CHKNOREACH)!=-1);
+	return path_search(NULL,bl->m,bl->x,bl->y,x,y,easy,CELL_CHKNOREACH);
 }
 
 /*==========================================
  *
  *------------------------------------------*/
-int unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, int easy, short *x, short *y)
+bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, int easy, short *x, short *y)
 {
-	struct walkpath_data wpd;
 	int i;
 	short dx,dy;
-	nullpo_retr(0, bl);
-	nullpo_retr(0, tbl);
+	nullpo_retr(false, bl);
+	nullpo_retr(false, tbl);
 
 	if( bl->m != tbl->m)
-		return 0;
+		return false;
 	
 	if( bl->x==tbl->x && bl->y==tbl->y )
-		return 1;
+		return true;
 
 	if(range>0 && !check_distance_bl(bl, tbl, range))
-		return 0;
+		return false;
 
-	wpd.path_len=0;
-	wpd.path_pos=0;
-	wpd.path_half=0;
-	
 	// It judges whether it can adjoin or not.
 	dx=tbl->x - bl->x;
 	dy=tbl->y - bl->y;
@@ -1322,14 +1311,14 @@ int unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, i
 	if (map_getcell(tbl->m,tbl->x-dx,tbl->y-dy,CELL_CHKNOPASS))
 	{	//Look for a suitable cell to place in.
 		for(i=0;i<9 && map_getcell(tbl->m,tbl->x-dirx[i],tbl->y-diry[i],CELL_CHKNOPASS);i++);
-		if (i==9) return 0; //No valid cells.
+		if (i==9) return false; //No valid cells.
 		dx = dirx[i];
 		dy = diry[i];
 	}
 
 	if (x) *x = tbl->x-dx;
 	if (y) *y = tbl->y-dy;
-	return (path_search_real(&wpd,bl->m,bl->x,bl->y,tbl->x-dx,tbl->y-dy,easy,CELL_CHKNOREACH)!=-1);
+	return path_search(NULL,bl->m,bl->x,bl->y,tbl->x-dx,tbl->y-dy,easy,CELL_CHKNOREACH);
 }
 
 

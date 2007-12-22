@@ -34,8 +34,8 @@ int unit_setdir(struct block_list *bl,unsigned char dir);
 uint8 unit_getdir(struct block_list *bl);
 
 // ‚»‚±‚Ü‚Å•às‚Å‚½‚Ç‚è’…‚¯‚é‚©‚Ì”»’è
-int unit_can_reach_pos(struct block_list *bl,int x,int y,int easy);
-int unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, int easy, short *x, short *y);
+bool unit_can_reach_pos(struct block_list *bl,int x,int y,int easy);
+bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, int easy, short *x, short *y);
 
 // UŒ‚ŠÖ˜A
 int unit_stop_attack(struct block_list *bl);

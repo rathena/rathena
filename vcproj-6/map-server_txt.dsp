@@ -379,6 +379,10 @@ SOURCE=..\src\map\party.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\map\path.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\map\pc.h
 # End Source File
 # Begin Source File

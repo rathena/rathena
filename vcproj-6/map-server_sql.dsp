@@ -351,6 +351,10 @@ SOURCE=..\src\map\path.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\map\path.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\map\pc.c
 # End Source File
 # Begin Source File

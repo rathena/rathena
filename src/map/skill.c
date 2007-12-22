@@ -12,6 +12,7 @@
 
 #include "skill.h"
 #include "map.h"
+#include "path.h"
 #include "clif.h"
 #include "pc.h"
 #include "status.h"
@@ -2331,7 +2332,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	case KN_CHARGEATK:
 		{
-		bool path = path_search_long(NULL, src->m, src->x, src->y, bl->x, bl->y);
+		bool path = path_search_long(NULL, src->m, src->x, src->y, bl->x, bl->y,CELL_CHKWALL);
 		unsigned int dist = distance_bl(src, bl);
 		unsigned int dir = map_calc_dir(bl, src->x, src->y);
 
@@ -6407,7 +6408,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		if(alive && map_getcell(src->m,ux,uy,CELL_CHKWALL))
 			alive = 0;
 		
-		if(alive && battle_config.skill_wall_check && !path_search_long(NULL,src->m,ux,uy,x,y))
+		if( alive && battle_config.skill_wall_check && !path_search_long(NULL,src->m,ux,uy,x,y,CELL_CHKWALL) )
 			alive = 0; //no path between cell and center of casting.
 					
 		if(alive && skillid == WZ_ICEWALL) {

@@ -11,6 +11,7 @@
 #include "../common/utils.h"
 
 #include "map.h"
+#include "path.h"
 #include "pc.h"
 #include "status.h"
 #include "skill.h"
@@ -3274,25 +3275,25 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 /*==========================================
  * ŽË’ö”»’è
  *------------------------------------------*/
-int battle_check_range(struct block_list *src,struct block_list *bl,int range)
+bool battle_check_range(struct block_list *src,struct block_list *bl,int range)
 {
-	nullpo_retr(0, src);
-	nullpo_retr(0, bl);
+	nullpo_retr(false, src);
+	nullpo_retr(false, bl);
 
 	if(src->m != bl->m)	// ˆá‚¤ƒ}ƒbƒv
-		return 0;
+		return false;
 
 	if(src->type == BL_HOM && battle_config.hom_setting&0x2)
 		range = battle_config.area_size + 1; //WTF, way to go Aegis and your awesome bugs.
 
 	if (!check_distance_bl(src, bl, range))
-		return 0;
+		return false;
 
 	if(distance_bl(src, bl) < 2) //No need for path checking.
-		return 1;
+		return true;
 
 	// ?áŠQ•¨”»’è
-	return path_search_long(NULL,src->m,src->x,src->y,bl->x,bl->y);
+	return path_search_long(NULL,src->m,src->x,src->y,bl->x,bl->y,CELL_CHKWALL);
 }
 
 static const struct _battle_data {
