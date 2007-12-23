@@ -848,4 +848,290 @@ void  linkdb_final  ( struct linkdb_node** head );
 
 
 
+/////////////////////////////////////////////////////////////////////
+// Vector library based on defines. (dynamic array)
+// uses aMalloc, aRealloc, aFree
+
+
+
+/// Declares a named vector struct.
+///
+/// @param __name Structure name
+/// @param __type Type of data
+#define VECTOR_STRUCT(__name,__type) \
+	struct __name { \
+		size_t _max_; \
+		size_t _len_; \
+		__type* _data_; \
+	}
+
+
+
+/// Declares a named vector struct variable.
+///
+/// @param __name Structure name
+/// @param __var Variable name
+#define VECTOR_STRUCT_VAR(__name,__var) \
+	struct __name __var = {0,0,NULL}
+
+
+
+/// Declares a vector variable with an anonymous struct.
+///
+/// @param __type Type of data
+/// @param __var Variable name
+#define VECTOR_VAR(__type,__var) \
+	struct { \
+		size_t _max_; \
+		size_t _len_; \
+		__type* _data_; \
+	} __var = {0,0,NULL}
+
+
+
+/// Returns the internal array of values.
+///
+/// @param __vec Vector
+/// @return Array of values
+#define VECTOR_DATA(__vec) \
+	( (__vec)._data_ )
+
+
+
+/// Returns the length of the vector.
+///
+/// @param __vec Vector
+/// @return Length
+#define VECTOR_LENGTH(__vec) \
+	( (__vec)._len_ )
+
+
+
+/// Returns the capacity of the vector.
+///
+/// @param __vec Vector
+/// @return Capacity
+#define VECTOR_CAPACITY(__vec) \
+	( (__vec)._max_ )
+
+
+
+/// Returns the value at the target index.
+/// Assumes the index exists.
+///
+/// @param __vec Vector
+/// @param __idx Index
+/// @return Value
+#define VECTOR_INDEX(__vec,__idx) \
+	( VECTOR_DATA(__vec)[__idx] )
+
+
+
+/// Returns the first value of the vector.
+/// Assumes the array is not empty.
+///
+/// @param __vec Vector
+/// @return First value
+#define VECTOR_FIRST(__vec) \
+	( VECTOR_INDEX(__vec,0) )
+
+
+
+/// Returns the last value of the vector.
+/// Assumes the array is not empty.
+///
+/// @param __vec Vector
+/// @return Last value
+#define VECTOR_LAST(__vec) \
+	( VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)-1) )
+
+
+
+/// Resizes the vector.
+/// Excess values are discarded, new positions are zeroed.
+///
+/// @param __vec Vector
+/// @param __n Size
+#define VECTOR_RESIZE(__vec,__n) \
+	do{ \
+		if( (__n) > VECTOR_CAPACITY(__vec) ) \
+		{ /* increase size */ \
+			if( VECTOR_CAPACITY(__vec) == 0 ) VECTOR_DATA(__vec) = aMalloc((__n)*sizeof(VECTOR_FIRST(__vec))); /* allocate new */ \
+			else VECTOR_DATA(__vec) = aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec))); /* reallocate */ \
+			memset(VECTOR_DATA(__vec)+VECTOR_LENGTH(__vec), 0, (VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec))*sizeof(VECTOR_FIRST(__vec))); /* clear new data */ \
+			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
+		} \
+		else if( (__n) == 0 && VECTOR_CAPACITY(__vec) ) \
+		{ /* clear vector */ \
+			aFree(VECTOR_DATA(__vec)); VECTOR_DATA(__vec) = NULL; /* free data */ \
+			VECTOR_CAPACITY(__vec) = 0; /* clear capacity */ \
+			VECTOR_LENGTH(__vec) = 0; /* clear length */ \
+		} \
+		else if( (__n) < VECTOR_CAPACITY(__vec) ) \
+		{ /* reduce size */ \
+			VECTOR_DATA(__vec) = aRealloc(VECTOR_DATA(__vec),(__n)*sizeof(VECTOR_FIRST(__vec))); /* reallocate */ \
+			VECTOR_CAPACITY(__vec) = (__n); /* update capacity */ \
+			if( VECTOR_LENGTH(__vec) > (__n) ) VECTOR_LENGTH(__vec) = (__n); /* update length */ \
+		} \
+	}while(0)
+
+
+
+/// Ensures that the array has the target number of empty positions.
+/// Increases the capacity in multiples of __step.
+///
+/// @param __vec Vector
+/// @param __n Empty positions
+/// @param __step Increase
+#define VECTOR_ENSURE(__vec,__n,__step) \
+	do{ \
+		size_t _empty_ = VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec); \
+		while( (__n) > _empty_ ) _empty_ += (__step); \
+		if( _empty_ != VECTOR_CAPACITY(__vec)-VECTOR_LENGTH(__vec) ) VECTOR_RESIZE(__vec,_empty_+VECTOR_LENGTH(__vec)); \
+	}while(0)
+
+
+
+/// Inserts a value in the target index. (using the '=' operator)
+/// Assumes the index is valid and there is enough capacity.
+///
+/// @param __vec Vector
+/// @param __idx Index
+/// @param __val Value
+#define VECTOR_INSERT(__vec,__idx,__val) \
+	do{ \
+		if( (__idx) < VECTOR_LENGTH(__vec) ) /* move data */ \
+			memmove(&VECTOR_INDEX(__vec,(__idx)+1),&VECTOR_INDEX(__vec,__idx),(VECTOR_LENGTH(__vec)-(__idx))*sizeof(VECTOR_FIRST(__vec))); \
+		VECTOR_INDEX(__vec,__idx) = (__val); /* set value */ \
+		++VECTOR_LENGTH(__vec); /* increase length */ \
+	}while(0)
+
+
+
+/// Inserts a value in the target index. (using memcpy)
+/// Assumes the index is valid and there is enough capacity.
+///
+/// @param __vec Vector
+/// @param __idx Index
+/// @param __val Value
+#define VECTOR_INSERTCOPY(__vec,__idx,__val) \
+	VECTOR_INSERTARRAY(__vec,__idx,&(__val),1)
+
+
+
+/// Inserts the values of the array in the target index. (using memcpy)
+/// Assumes the index is valid and there is enough capacity.
+///
+/// @param __vec Vector
+/// @param __idx Index
+/// @param __pval Array of values
+/// @param __n Number of values
+#define VECTOR_INSERTARRAY(__vec,__idx,__pval,__n) \
+	do{ \
+		if( (__idx) < VECTOR_LENGTH(__vec) ) /* move data */ \
+			memmove(&VECTOR_INDEX(__vec,(__idx)+(__n)),&VECTOR_INDEX(__vec,__idx),(VECTOR_LENGTH(__vec)-(__idx))*sizeof(VECTOR_FIRST(__vec))); \
+		memcpy(&VECTOR_INDEX(__vec,__idx), (__pval), (__n)*sizeof(VECTOR_FIRST(__vec))); /* set values */ \
+		VECTOR_LENGTH(__vec) += (__n); /* increase length */ \
+	}while(0)
+
+
+
+/// Inserts a value in the end of the vector. (using the '=' operator)
+/// Assumes there is enough capacity.
+///
+/// @param __vec Vector
+/// @param __val Value
+#define VECTOR_PUSH(__vec,__val) \
+	do{ \
+		VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)) = (__val); /* set value */ \
+		++VECTOR_LENGTH(__vec); /* increase length */ \
+	}while(0)
+
+
+
+/// Inserts a value in the end of the vector. (using memcpy)
+/// Assumes there is enough capacity.
+///
+/// @param __vec Vector
+/// @param __val Value
+#define VECTOR_PUSHCOPY(__vec,__val) \
+	VECTOR_PUSHARRAY(__vec,&(__val),1)
+
+
+
+/// Inserts the values of the array in the end of the vector. (using memcpy)
+/// Assumes there is enough capacity.
+///
+/// @param __vec Vector
+/// @param __pval Array of values
+/// @param __n Number of values
+#define VECTOR_PUSHARRAY(__vec,__pval,__n) \
+	do{ \
+		memcpy(&VECTOR_INDEX(__vec,VECTOR_LENGTH(__vec)), (__pval), (__n)*sizeof(VECTOR_FIRST(__vec))); /* set values */ \
+		VECTOR_LENGTH(__vec) += (__n); /* increase length */ \
+	}while(0)
+
+
+
+/// Removes and returns the last value of the vector.
+/// Assumes the array is not empty.
+///
+/// @param __vec Vector
+/// @return Removed value
+#define VECTOR_POP(__vec) \
+	( VECTOR_INDEX(__vec,--VECTOR_LENGTH(__vec)) )
+
+
+
+/// Removes the last N values of the vector and returns the value of the last pop.
+/// Assumes there are enough values.
+///
+/// @param __vec Vector
+/// @param __n Number of pops
+/// @return Last removed value
+#define VECTOR_POPN(__vec,__n) \
+	( VECTOR_INDEX(__vec,(VECTOR_LENGTH(__vec)-=(__n))) )
+
+
+
+/// Removes the target index from the vector.
+/// Assumes the index is valid and there are enough values.
+///
+/// @param __vec Vector
+/// @param __idx Index
+#define VECTOR_ERASE(__vec,__idx) \
+	VECTOR_ERASEN(__vec,__idx,1)
+
+
+
+/// Removes N values from the target index of the vector.
+/// Assumes the index is valid and there are enough values.
+///
+/// @param __vec Vector
+/// @param __idx Index
+/// @param __n Number of values
+#define VECTOR_ERASEN(__vec,__idx,__n) \
+	do{ \
+		if( (__idx) < VECTOR_LENGTH(__vec)-(__n) ) /* move data */ \
+			memmove(&VECTOR_INDEX(__vec,__idx),&VECTOR_INDEX(__vec,(__idx)+(__n)),(VECTOR_LENGTH(__vec)-((__idx)+(__n)))*sizeof(VECTOR_FIRST(__vec))); \
+		VECTOR_LENGTH(__vec) -= (__n); /* decrease length */ \
+	}while(0)
+
+
+
+/// Clears the vector, freeing allocated data.
+///
+/// @param __vec Vector
+#define VECTOR_CLEAR(__vec) \
+	do{ \
+		if( VECTOR_CAPACITY(__vec) ) \
+		{ \
+			aFree(VECTOR_DATA(__vec)); VECTOR_DATA(__vec) = NULL; /* clear allocated array */ \
+			VECTOR_CAPACITY(__vec) = 0; /* clear capacity */ \
+			VECTOR_LENGTH(__vec) = 0; /* clear length */ \
+		} \
+	}while(0)
+
+
+
 #endif /* _DB_H_ */
