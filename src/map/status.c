@@ -6622,7 +6622,6 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, int data)
 	struct status_data *status;
 	int hp;
 
-	;
 	if(!((bl=map_id2bl(id))&&
 		(sc=status_get_sc(bl)) &&
 		(sce = sc->data[SC_KAAHI])))

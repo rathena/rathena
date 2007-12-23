@@ -130,7 +130,7 @@ extern struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 
 // アブラカダブラデ?タベ?ス
 struct s_skill_abra_db {
-	int nameid;
+	int skillid;
 	int req_lv;
 	int per;
 };
