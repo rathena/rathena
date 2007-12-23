@@ -1904,7 +1904,7 @@ prt_fild05,273,215,4	script	Warpra#11	113,{
 tur_dun01,148,239,4	script	Warpra#12	113,{
 	callfunc "Q_Warpra",1;
 }
-valkyrie,48,35,8	script	Warpra@13	113,{
+valkyrie,48,35,8	script	Warpra#13	113,{
 	callfunc "Q_Warpra",1;
 }
 yuno_fild03,37,135,4	script	Warpra#14	113,{
