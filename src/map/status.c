@@ -3390,7 +3390,7 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 	if(sc->data[SC_CURSE])
 		batk -= batk * 25/100;
 //Curse shouldn't effect on this?  <- Curse OR Bleeding??
-//	if(sc->data[SC_BLEEDING]->)
+//	if(sc->data[SC_BLEEDING])
 //		batk -= batk * 25/100;
 	if(sc->data[SC_FLEET])
 		batk += batk * sc->data[SC_FLEET]->val3/100;
@@ -3819,7 +3819,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		}
 		aspd_rate -= max;
 
-	  	//These stack with the rest of bonuses->
+	  	//These stack with the rest of bonuses.
 		if(sc->data[SC_BERSERK])
 			aspd_rate -= 300;
 		else if(sc->data[SC_MADNESSCANCEL])
@@ -6622,19 +6622,19 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, int data)
 	struct status_data *status;
 	int hp;
 
-	bl=map_id2bl(id);
-	sc=status_get_sc(bl);
-	status=status_get_status_data(bl);
-	
-	if (!(sc && status && data == SC_KAAHI && sc->data[data]))
+	;
+	if(!((bl=map_id2bl(id))&&
+		(sc=status_get_sc(bl)) &&
+		(sce = sc->data[SC_KAAHI])))
 		return 0;
-	sce = sc->data[data];
+
 	if(sce->val4 != tid) {
 		ShowError("kaahi_heal_timer: Timer mismatch: %d != %d\n", tid, sce->val4);
 		sce->val4=-1;
 		return 0;
 	}
-		
+
+	status=status_get_status_data(bl);
 	if(!status_charge(bl, 0, sce->val3)) {
 		sce->val4=-1;
 		return 0;

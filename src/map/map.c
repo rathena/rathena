@@ -359,14 +359,13 @@ int map_addblock_sub (struct block_list *bl, int flag)
 	} else {
 		if (bl->type == BL_PC && flag)
 		{
-			struct map_session_data* sd;
+			struct map_session_data* sd = (struct map_session_data*)bl;
 			if (!sd->state.auth) {
 				ShowError("map_addblock: Attempted to add a non-authed player (%d:%d)!\n", sd->status.account_id, sd->status.char_id);
 				return 1;
 			}
 			if (map[m].users++ == 0 && battle_config.dynamic_mobs)	//Skotlex
 				map_spawnmobs(m);
-			sd = (struct map_session_data*)bl;
 			if (battle_config.pet_no_gvg && map_flag_gvg(m) && sd->pd)
 			{	//Return the pet to egg. [Skotlex]
 				clif_displaymessage(sd->fd, "Pets are not allowed in Guild Wars.");

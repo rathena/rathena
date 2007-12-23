@@ -2137,7 +2137,7 @@ int npc_parse_mob2(struct spawn_data* mob, int index)
 
 static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
-	int level, num, class_, mode, x,y,xs,ys, temp;
+	int level, num, class_, mode, x,y,xs,ys;
 	char mapname[32];
 	char mobname[128];
 	struct spawn_data mob, *data;
