@@ -7,6 +7,7 @@
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h" // RFIFO*()
+#include "../common/strlib.h" // safestrncpy()
 #include "../common/timer.h"
 #include "../common/utils.h"
 
@@ -5876,38 +5877,35 @@ int pc_candrop(struct map_session_data *sd,struct item *item)
 /*==========================================
  * script用??の値を?む
  *------------------------------------------*/
-int pc_readreg(struct map_session_data *sd,int reg)
+int pc_readreg(struct map_session_data* sd, int reg)
 {
 	int i;
 
 	nullpo_retr(0, sd);
 
-	for(i=0;i<sd->reg_num;i++)
-		if(sd->reg[i].index==reg)
-			return sd->reg[i].data;
-
-	return 0;
+	ARR_FIND( 0, sd->reg_num, i,  sd->reg[i].index == reg );
+	return ( i < sd->reg_num ) ? sd->reg[i].data : 0;
 }
 /*==========================================
  * script用??の値を設定
  *------------------------------------------*/
-int pc_setreg(struct map_session_data *sd,int reg,int val)
+int pc_setreg(struct map_session_data* sd, int reg, int val)
 {
 	int i;
 
 	nullpo_retr(0, sd);
 
-	for (i = 0; i < sd->reg_num; i++) {
-		if (sd->reg[i].index == reg){
-			sd->reg[i].data = val;
-			return 1;
-		}
+	ARR_FIND( 0, sd->reg_num, i, sd->reg[i].index == reg );
+	if( i < sd->reg_num )
+		// overwrite existing entry
+		sd->reg[i].data = val;
+	else {
+		// insert new entry
+		sd->reg_num++;
+		RECREATE(sd->reg, struct script_reg, sd->reg_num);
+		sd->reg[i].index = reg;
+		sd->reg[i].data = val;
 	}
-	sd->reg_num++;
-	sd->reg = (struct script_reg *) aRealloc(sd->reg, sizeof(*(sd->reg)) * sd->reg_num);
-	memset(sd->reg + (sd->reg_num - 1), 0, sizeof(struct script_reg));
-	sd->reg[i].index = reg;
-	sd->reg[i].data = val;
 
 	return 1;
 }
@@ -5915,22 +5913,19 @@ int pc_setreg(struct map_session_data *sd,int reg,int val)
 /*==========================================
  * script用文字列??の値を?む
  *------------------------------------------*/
-char *pc_readregstr(struct map_session_data *sd,int reg)
+char* pc_readregstr(struct map_session_data* sd, int reg)
 {
 	int i;
 
 	nullpo_retr(0, sd);
 
-	for(i=0;i<sd->regstr_num;i++)
-		if(sd->regstr[i].index==reg)
-			return sd->regstr[i].data;
-
-	return NULL;
+	ARR_FIND( 0, sd->regstr_num, i,  sd->regstr[i].index == reg );
+	return ( i < sd->regstr_num ) ? sd->regstr[i].data : NULL;
 }
 /*==========================================
  * script用文字列??の値を設定
  *------------------------------------------*/
-int pc_setregstr(struct map_session_data *sd,int reg,char *str)
+int pc_setregstr(struct map_session_data* sd, int reg, char* str)
 {
 	int i;
 
@@ -5941,29 +5936,29 @@ int pc_setregstr(struct map_session_data *sd,int reg,char *str)
 		return 0;
 	}
 
-	for(i=0;i<sd->regstr_num;i++)
-		if(sd->regstr[i].index==reg){
-			if (str && strcmp(str,"")!=0)
-				strcpy(sd->regstr[i].data,str);
-			else { //Delete last entry.
-				sd->regstr_num--;
-				memcpy(&sd->regstr[i], &sd->regstr[sd->regstr_num], sizeof(sd->regstr[0]));
-				sd->regstr = (struct script_regstr *) aRealloc(sd->regstr, sizeof(sd->regstr[0]) * sd->regstr_num);
-			}
-			return 1;
+	ARR_FIND( 0, sd->regstr_num, i, sd->regstr[i].index == reg );
+	if( i < sd->regstr_num )
+	{
+		if (str && strcmp(str,"")!=0)
+			safestrncpy(sd->regstr[i].data, str, sizeof(sd->regstr[i].data));
+		else {
+			sd->regstr_num--;
+			memcpy(&sd->regstr[i], &sd->regstr[sd->regstr_num], sizeof(sd->regstr[0]));
+			RECREATE(sd->regstr, struct script_regstr, sd->regstr_num);
 		}
+		return 1;
+	}
 
 	if (!str) return 1;
 
 	sd->regstr_num++;
-	sd->regstr = (struct script_regstr *) aRealloc(sd->regstr, sizeof(sd->regstr[0]) * sd->regstr_num);
+	RECREATE(sd->regstr, struct script_regstr, sd->regstr_num);
 	if(sd->regstr==NULL){
 		ShowFatalError("out of memory : pc_setreg\n");
 		exit(EXIT_FAILURE);
 	}
-	memset(sd->regstr + (sd->regstr_num - 1), 0, sizeof(struct script_regstr));
 	sd->regstr[i].index = reg;
-	strcpy(sd->regstr[i].data, str);
+	safestrncpy(sd->regstr[i].data, str, sizeof(sd->regstr[i].data));
 
 	return 1;
 }
@@ -5996,11 +5991,9 @@ int pc_readregistry(struct map_session_data *sd,const char *reg,int type)
 		intif_request_registry(sd,type==3?4:type);
 		return 0;
 	}
-	for(i=0;i<max;i++){
-		if(strcmp(sd_reg[i].str,reg)==0)
-			return atoi(sd_reg[i].value);
-	}
-	return 0;
+
+	ARR_FIND( 0, max, i, strcmp(sd_reg[i].str,reg) == 0 );
+	return ( i < max ) ? atoi(sd_reg[i].value) : 0;
 }
 
 char* pc_readregistry_str(struct map_session_data *sd,char *reg,int type)
@@ -6031,11 +6024,9 @@ char* pc_readregistry_str(struct map_session_data *sd,char *reg,int type)
 		intif_request_registry(sd,type==3?4:type);
 		return NULL;
 	}
-	for(i=0;i<max;i++){
-		if(strcmp(sd_reg[i].str,reg)==0)
-			return sd_reg[i].value;
-	}
-	return NULL;
+
+	ARR_FIND( 0, max, i, strcmp(sd_reg[i].str,reg) == 0 );
+	return ( i < max ) ? sd_reg[i].value : NULL;
 }
 
 int pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type)
@@ -6077,32 +6068,31 @@ int pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type)
 	
 	// delete reg
 	if (val == 0) {
-		for(i = 0; i < *max; i++) {
-			if (strcmp(sd_reg[i].str, reg) == 0) {
-				if (i != *max - 1)
-					memcpy(&sd_reg[i], &sd_reg[*max - 1], sizeof(struct global_reg));
-				memset(&sd_reg[*max - 1], 0, sizeof(struct global_reg));
-				(*max)--;
-				sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
-				break;
-			}
+		ARR_FIND( 0, *max, i, strcmp(sd_reg[i].str, reg) == 0 );
+		if( i < *max )
+		{
+			if (i != *max - 1)
+				memcpy(&sd_reg[i], &sd_reg[*max - 1], sizeof(struct global_reg));
+			memset(&sd_reg[*max - 1], 0, sizeof(struct global_reg));
+			(*max)--;
+			sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
 		}
 		return 1;
 	}
 	// change value if found
-	for(i = 0; i < *max; i++) {
-		if (strcmp(sd_reg[i].str, reg) == 0) {
-			sprintf(sd_reg[i].value, "%d", val); 
-			sd->state.reg_dirty |= 1<<(type-1);
-			return 1;
-		}
+	ARR_FIND( 0, *max, i, strcmp(sd_reg[i].str, reg) == 0 );
+	if( i < *max )
+	{
+		safesnprintf(sd_reg[i].value, sizeof(sd_reg[i].value), "%d", val);
+		sd->state.reg_dirty |= 1<<(type-1);
+		return 1;
 	}
 
 	// add value if not found
 	if (i < regmax) {
 		memset(&sd_reg[i], 0, sizeof(struct global_reg));
-		strncpy(sd_reg[i].str, reg, 32);
-		sprintf(sd_reg[i].value, "%d", val); 
+		safestrncpy(sd_reg[i].str, reg, sizeof(sd_reg[i].str));
+		safesnprintf(sd_reg[i].value, sizeof(sd_reg[i].value), "%d", val);
 		(*max)++;
 		sd->state.reg_dirty |= 1<<(type-1);
 		return 1;
@@ -6149,35 +6139,36 @@ int pc_setregistry_str(struct map_session_data *sd,char *reg,char *val,int type)
 	}
 	
 	// delete reg
-	if (!val || strcmp(val,"")==0) {
-		for(i = 0; i < *max; i++) {
-			if (strcmp(sd_reg[i].str, reg) == 0) {
-				if (i != *max - 1)
-					memcpy(&sd_reg[i], &sd_reg[*max - 1], sizeof(struct global_reg));
-				memset(&sd_reg[*max - 1], 0, sizeof(struct global_reg));
-				(*max)--;
-				sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
-				if (type!=3) intif_saveregistry(sd,type);
-				break;
-			}
+	if (!val || strcmp(val,"")==0)
+	{
+		ARR_FIND( 0, *max, i, strcmp(sd_reg[i].str, reg) == 0 );
+		if( i < *max )
+		{
+			if (i != *max - 1)
+				memcpy(&sd_reg[i], &sd_reg[*max - 1], sizeof(struct global_reg));
+			memset(&sd_reg[*max - 1], 0, sizeof(struct global_reg));
+			(*max)--;
+			sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
+			if (type!=3) intif_saveregistry(sd,type);
 		}
 		return 1;
 	}
+
 	// change value if found
-	for(i = 0; i < *max; i++) {
-		if (strcmp(sd_reg[i].str, reg) == 0) {
-			strncpy(sd_reg[i].value, val, 256);
-			sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
-			if (type!=3) intif_saveregistry(sd,type);
-			return 1;
-		}
+	ARR_FIND( 0, *max, i, strcmp(sd_reg[i].str, reg) == 0 );
+	if( i < *max )
+	{
+		safestrncpy(sd_reg[i].value, val, sizeof(sd_reg[i].value));
+		sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
+		if (type!=3) intif_saveregistry(sd,type);
+		return 1;
 	}
 
 	// add value if not found
 	if (i < regmax) {
 		memset(&sd_reg[i], 0, sizeof(struct global_reg));
-		strncpy(sd_reg[i].str, reg, 32);
-		strncpy(sd_reg[i].value, val, 256);
+		safestrncpy(sd_reg[i].str, reg, sizeof(sd_reg[i].str));
+		safestrncpy(sd_reg[i].value, val, sizeof(sd_reg[i].value));
 		(*max)++;
 		sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
 		if (type!=3) intif_saveregistry(sd,type);
