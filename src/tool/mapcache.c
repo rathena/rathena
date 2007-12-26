@@ -110,7 +110,7 @@ int read_map(char *name, struct map_data *m)
 	unsigned char *gat, *rsw;
 	int water_height;
 	size_t xy, off, num_cells;
-	float height[4];
+	float height;
 	unsigned long type;
 
 	// Open map GAT
@@ -140,18 +140,16 @@ int read_map(char *name, struct map_data *m)
 	off = 14;
 	for (xy = 0; xy < num_cells; xy++)
 	{
-		// Height of the corners
-		height[0] = GetFloat( gat + off      );
-		height[1] = GetFloat( gat + off + 4  );
-		height[2] = GetFloat( gat + off + 8  );
-		height[3] = GetFloat( gat + off + 12 );
+		// Height of the bottom-left corner
+		height = GetFloat( gat + off      );
 		// Type of cell
-		type      = GetULong( gat + off + 16 );
+		type   = GetULong( gat + off + 16 );
 		off += 20;
-		if (water_height != NO_WATER && type == 0 && (height[0] > water_height || height[1] > water_height || height[2] > water_height || height[3] > water_height))
-			m->cells[xy] = 3; // Cell is 0 (walkable) but under water level, set to 3 (walkable water)
-		else
-			m->cells[xy] = (unsigned char)type;
+
+		if (type == 0 && water_height != NO_WATER && height > water_height)
+			type = 3; // Cell is 0 (walkable) but under water level, set to 3 (walkable water)
+
+		m->cells[xy] = (unsigned char)type;
 	}
 
 	free(gat);

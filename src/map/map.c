@@ -2474,33 +2474,38 @@ int map_waterheight(char* mapname)
  *----------------------------------*/
 int map_readgat (struct map_data* m)
 {
-	char fn[256];
-	char *gat;
-	int wh,x,y,xs,ys;
-	struct gat_1cell {float high[4]; int type;} *p = NULL;
+	char filename[256];
+	uint8* gat;
+	int water_height;
+	size_t xy, off, num_cells;
 
-	sprintf(fn, "data\\%s.gat", m->name);
+	sprintf(filename, "data\\%s.gat", m->name);
 
-	// read & convert fn
-	gat = (char *) grfio_read (fn);
+	gat = (uint8 *) grfio_read(filename);
 	if (gat == NULL)
 		return 0;
 
-	xs = m->xs = *(int*)(gat+6);
-	ys = m->ys = *(int*)(gat+10);
-	m->gat = (unsigned char *)aMallocA((xs * ys)*sizeof(unsigned char));
+	m->xs = *(int32*)(gat+6);
+	m->ys = *(int32*)(gat+10);
+	num_cells = m->xs * m->ys;
+	CREATE(m->gat, uint8, num_cells);
 
-	wh = map_waterheight(m->name);
-	for (y = 0; y < ys; y++) {
-		p = (struct gat_1cell*)(gat+y*xs*20+14);
-		for (x = 0; x < xs; x++) {
-			if (wh != NO_WATER && p->type == 0)
-				// …ê”»’è
-				m->gat[x+y*xs] = (p->high[0]>wh || p->high[1]>wh || p->high[2]>wh || p->high[3]>wh) ? 3 : 0;
-			else
-				m->gat[x+y*xs] = p->type;
-			p++;
-		}
+	water_height = map_waterheight(m->name);
+
+	// Set cell properties
+	off = 14;
+	for( xy = 0; xy < num_cells; ++xy )
+	{
+		// read cell data
+		float height = *(float*)( gat + off      );
+		uint32 type = *(uint32*)( gat + off + 16 );
+		off += 20;
+
+		if( type == 0 && water_height != NO_WATER && height > water_height )
+			type = 3; // Cell is 0 (walkable) but under water level, set to 3 (walkable water)
+
+		m->gat[xy] = (uint8)type;
+
 	}
 
 	aFree(gat);
