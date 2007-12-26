@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= $ephiroth
 //===== Current Version: =====================================
-//= 1.5
+//= 1.6
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
@@ -13,61 +13,77 @@
 //= 1.3 Fixed some typos and Atros spawn [Playtester]
 //= 1.4 Updated spawns with info from RO Monthly [Playtester]
 //= 1.5 Updated spawn amounts to official [Playtester]
+//= 1.6 Even more accurate spawns [Playtester]
 //============================================================
 
 //======== [Veins Field-01] ==================================
-ve_fild01,0,0,0,0	monster	Muka	1055,70,0,0,0
-ve_fild01,0,0,0,0	monster	Stapo	1784,20,0,0,0
-ve_fild01,0,0,0,0	monster	Side Winder	1037,10,0,0,0
 ve_fild01,0,0,0,0	monster	Drops	1113,10,0,0,0
-ve_fild01,0,0,0,0	monster	Red Plant	1078,20,180000,90000,1
-ve_fild01,0,0,0,0	monster	Yellow Plant	1081,20,180000,90000,1
-ve_fild01,0,0,0,0	monster	Blue Plant	1079,4,1800000,900000,1
-ve_fild01,0,0,0,0	monster	Shining Plant	1083,1,1800000,900000,1
-ve_fild01,0,0,0,0	monster	Atroce	1785,1,18000000,12000000,1
+ve_fild01,0,0,0,0	monster	Stapo	1784,20,0,0,0
+ve_fild01,0,0,0,0	monster	Muka	1055,70,0,0,0
+ve_fild01,0,0,0,0	monster	Side Winder	1037,10,0,0,0
+ve_fild01,0,0,0,0	monster	Atroce	1785,1,10800000,0,0
+ve_fild01,0,0,0,0	monster	Red Plant	1078,10,0,0,0
+ve_fild01,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
+ve_fild01,270,80,20,7	monster	Blue Plant	1079,4,840000,0,0
+ve_fild01,270,80,20,7	monster	Shining Plant	1083,1,960000,0,0
 
 //======== [Veins Field-02] ===================================
-ve_fild02,0,0,0,0	monster	Savage	1166,60,0,0,0
-ve_fild02,0,0,0,0	monster	Roween	1782,20,0,0,0
 ve_fild02,0,0,0,0	monster	Stapo	1784,20,0,0,0
-ve_fild02,0,0,0,0	monster	Side Winder	1037,5,0,0,0
-ve_fild02,0,0,0,0	monster	Atroce	1785,1,21600000,12000000,1
+ve_fild02,0,0,0,0	monster	Savage	1166,30,0,0,0
+ve_fild02,220,215,135,180	monster	Savage	1166,30,0,0,0
+ve_fild02,65,220,14,14	monster	Roween	1782,2,660000,0,0
+ve_fild02,220,215,135,180	monster	Roween	1782,18,0,0,0
+ve_fild02,65,220,14,14	monster	Side Winder	1037,1,900000,0,0
+ve_fild02,220,215,135,180	monster	Side Winder	1037,4,0,0,0
+ve_fild02,120,55,50,50	monster	Atroce	1785,1,21600000,0,0
+ve_fild02,0,0,0,0	monster	Red Plant	1078,10,0,0,0
+ve_fild02,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
 
 //======== [Veins Field-03] ===================================
-ve_fild03,200,90,200,90	monster	Sandman	1165,45,180000,90000,1
-ve_fild03,200,90,200,90	monster	Sleeper	1386,5,180000,90000,1
-ve_fild03,0,0,0,0	monster	Stapo	1784,10,180000,90000,1
-ve_fild03,200,250,100,50	monster	Magmaring	1836,10,180000,90000,1
-ve_fild03,0,0,0,0	monster	Red Plant	1078,10,180000,90000,1
-ve_fild03,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
+ve_fild03,0,0,0,0	monster	Stapo	1784,10,0,0,0
+ve_fild03,200,212,114,60	monster	Magmaring	1836,10,0,0,0
+ve_fild03,0,0,0,0	monster	Sandman	1165,20,0,0,0
+ve_fild03,187,106,155,35	monster	Sandman	1165,25,0,0,0
+ve_fild03,200,212,114,60	monster	Sleeper	1386,5,0,0,0
+ve_fild03,200,212,114,60	monster	Red Plant	1078,10,0,0,0
+ve_fild03,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
 
 //======== [Veins Field-04] ===================================
+ve_fild04,0,0,0,0	monster	Stapo	1784,20,0,0,0
 ve_fild04,0,0,0,0	monster	Desert Wolf	1106,60,0,0,0
 ve_fild04,0,0,0,0	monster	Roween	1782,20,0,0,0
-ve_fild04,0,0,0,0	monster	Stapo	1784,20,0,0,0
 ve_fild04,0,0,0,0	monster	Muscipular	1780,10,0,0,0
-ve_fild04,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
-ve_fild04,0,0,0,0	monster	Blue Plant	1079,3,1800000,900000,1
+ve_fild04,0,0,0,0	monster	Yellow Plant	1081,10,0,0,0
+ve_fild04,288,273,4,4	monster	Blue Plant	1079,3,660000,0,0
 
 //======== [Veins Field-05] ===================================
-ve_fild05,0,0,0,0	monster	Sleeper	1386,55,0,0,0
-ve_fild05,0,0,0,0	monster	Sandman	1165,30,0,0,0
 ve_fild05,0,0,0,0	monster	Roween	1782,15,0,0,0
-ve_fild05,0,0,0,0	monster	Drosera	1781,10,0,0,0
 ve_fild05,0,0,0,0	monster	Galion	1783,5,0,0,0
-ve_fild05,0,0,0,0	monster	White Plant	1082,5,180000,90000,1
-ve_fild05,0,0,0,0	monster	Shining Plant	1083,1,1800000,900000,1
+ve_fild05,0,0,0,0	monster	Drosera	1781,10,0,0,0
+ve_fild05,0,0,0,0	monster	Sandman	1165,10,0,0,0
+ve_fild05,130,225,46,59	monster	Sandman	1165,7,60000,0,0
+ve_fild05,270,190,95,140	monster	Sandman	1165,11,60000,0,0
+ve_fild05,123,65,50,21	monster	Sandman	1165,2,90000,0,0
+ve_fild05,0,0,0,0	monster	Sleeper	1386,10,0,0,0
+ve_fild05,130,225,46,59	monster	Sleeper	1386,15,90000,0,0
+ve_fild05,270,190,95,140	monster	Sleeper	1386,25,90000,0,0
+ve_fild05,123,65,50,21	monster	Sleeper	1386,5,120000,0,0
+ve_fild05,152,139,15,17	monster	White Plant	1082,5,1800000,0,0
+ve_fild05,152,139,5,5	monster	Shining Plant	1083,1,2400000,0,0
 
 //======== [Veins Field-06] ===================================	
-ve_fild06,0,0,0,0	monster	Stapo	1784,2,1800000,900000,1
-ve_fild06,0,0,0,0	monster	Shining Plant	1083,1,1800000,900000,1
+ve_fild06,0,0,0,0	monster	Stapo	1784,2,300000,0,0
+ve_fild06,0,0,0,0	monster	Stapo	1784,1,1800000,0,0
+ve_fild06,0,0,0,0	monster	Shining Plant	1083,1,1020000,0,0
 
 //======== [Veins Field-07] ===================================
-ve_fild07,0,0,0,0	monster	Side Winder	1037,70,0,0,0
-ve_fild07,0,0,0,0	monster	Raggler	1254,35,0,0,0
 ve_fild07,0,0,0,0	monster	Stapo	1784,30,0,0,0
-ve_fild07,200,40,200,40	monster	Shellfish	1074,5,180000,90000,1
-ve_fild07,65,50,65,50	monster	Shellfish	1074,5,180000,90000,1
-ve_fild07,200,40,200,40	monster	Aster	1266,5,180000,90000,1
-ve_fild07,65,50,65,50	monster	Aster	1266,5,180000,90000,1
-ve_fild07,0,0,0,0	monster	White Plant	1082,10,180000,90000,1
+ve_fild07,64,126,35,55	monster	Aster	1266,3,0,0,0
+ve_fild07,256,76,75,37	monster	Aster	1266,7,0,0,0
+ve_fild07,64,126,35,55	monster	Shellfish	1074,3,0,0,0
+ve_fild07,256,76,75,37	monster	Shellfish	1074,7,0,0,0
+ve_fild07,0,0,0,0	monster	Raggler	1254,24,0,0,0
+ve_fild07,64,126,35,55	monster	Raggler	1254,4,0,0,0
+ve_fild07,256,76,75,37	monster	Raggler	1254,7,0,0,0
+ve_fild07,0,0,0,0	monster	Side Winder	1037,70,0,0,0
+ve_fild07,0,0,0,0	monster	White Plant	1082,10,600000,0,0

@@ -1,5 +1,7 @@
 Date		Added
 ======
+2007/12/26
+	* More official Veins spawns [Playtester]
 2007/12/23
 	* Fixed a line in eAAC Quest Warper causing crashes. (bugreport:641) [Paradox924X]
 2007/12/22
