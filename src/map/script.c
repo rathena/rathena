@@ -17,6 +17,7 @@
 #include "../common/utils.h"
 
 #include "map.h"
+#include "path.h"
 #include "clif.h"
 #include "chrif.h"
 #include "itemdb.h"
@@ -11594,7 +11595,7 @@ BUILDIN_FUNC(distance)
 	x1 = script_getnum(st,4);
 	y1 = script_getnum(st,5);
 
-	script_pushint(st,distance(x0-x1, y0-y1));
+	script_pushint(st,distance_xy(x0,y0,x1,y1));
 	return 0;
 }
 

@@ -5,6 +5,7 @@
 #include "clif.h"
 #include "itemdb.h"
 #include "map.h"
+#include "path.h"
 #include "trade.h"
 #include "pc.h"
 #include "npc.h"

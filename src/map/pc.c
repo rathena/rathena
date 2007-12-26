@@ -20,6 +20,7 @@
 #include "itemdb.h"
 #include "log.h"
 #include "map.h"
+#include "path.h"
 #include "mercenary.h" // merc_is_hom_active()
 #include "mob.h" // MAX_MOB_RACE_DB
 #include "npc.h" // fake_nd

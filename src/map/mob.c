@@ -12,6 +12,7 @@
 #include "../common/utils.h"
 
 #include "map.h"
+#include "path.h"
 #include "clif.h"
 #include "intif.h"
 #include "pc.h"

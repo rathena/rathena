@@ -177,52 +177,6 @@ int map_getusers(void)
 	return map_users;
 }
 
-//Distance functions, taken from http://www.flipcode.com/articles/article_fastdistance.shtml
-int check_distance(int dx, int dy, int distance)
-{
-#ifdef CIRCULAR_AREA
-	//In this case, we just do a square comparison. Add 1 tile grace for diagonal range checks.
-	return (dx*dx + dy*dy <= distance*distance + (dx&&dy?1:0));
-#else
-	if (dx < 0) dx = -dx;
-	if (dy < 0) dy = -dy;
-	return ((dx<dy?dy:dx) <= distance);
-#endif
-}
-
-unsigned int distance(int dx, int dy)
-{
-#ifdef CIRCULAR_AREA
-	unsigned int min, max;
-
-	if ( dx < 0 ) dx = -dx;
-	if ( dy < 0 ) dy = -dy;
-	//There appears to be something wrong with the aproximation below when either dx/dy is 0! [Skotlex]
-	if ( dx == 0 ) return dy;
-	if ( dy == 0 ) return dx;
-	
-	if ( dx < dy )
-	{
-		min = dx;
-		max = dy;
-	} else {
-		min = dy;
-		max = dx;
-	}
-   // coefficients equivalent to ( 123/128 * max ) and ( 51/128 * min )
-	return ((( max << 8 ) + ( max << 3 ) - ( max << 4 ) - ( max << 1 ) +
-		( min << 7 ) - ( min << 5 ) + ( min << 3 ) - ( min << 1 )) >> 8 );
-#else
-	if (dx < 0) dx = -dx;
-	if (dy < 0) dy = -dy;
-	return (dx<dy?dy:dx);
-#endif
-}
-
-//
-// block削除の安全性確保?理
-//
-
 /*==========================================
  * blockをfreeするときfreeの?わりに呼ぶ
  * ロックされているときはバッファにためる

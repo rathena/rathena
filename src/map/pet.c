@@ -13,6 +13,7 @@
 #include "pc.h"
 #include "status.h"
 #include "map.h"
+#include "path.h"
 #include "intif.h"
 #include "clif.h"
 #include "chrif.h"

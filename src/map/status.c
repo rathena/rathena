@@ -9,8 +9,9 @@
 #include "../common/utils.h"
 #include "../common/ers.h"
 
-#include "pc.h"
 #include "map.h"
+#include "path.h"
+#include "pc.h"
 #include "pet.h"
 #include "npc.h"
 #include "mob.h"
