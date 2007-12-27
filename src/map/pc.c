@@ -5904,7 +5904,7 @@ int pc_setreg(struct map_session_data* sd, int reg, int val)
 	}
 
 	ARR_FIND( 0, sd->reg_num, i, sd->reg[i].data == 0 );
-	if( i == sd->regstr_num )
+	if( i == sd->reg_num )
 	{// nothing free, increase size
 		sd->reg_num++;
 		RECREATE(sd->reg, struct script_reg, sd->reg_num);
@@ -5935,11 +5935,6 @@ int pc_setregstr(struct map_session_data* sd, int reg, char* str)
 	int i;
 
 	nullpo_retr(0, sd);
-
-	if(str && strlen(str)+1 >= sizeof(sd->regstr[0].data)){
-		ShowWarning("pc_setregstr: string too long !\n");
-		return 0;
-	}
 
 	ARR_FIND( 0, sd->regstr_num, i, sd->regstr[i].index == reg );
 	if( i < sd->regstr_num )
