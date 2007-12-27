@@ -1671,6 +1671,10 @@ int map_quit(struct map_session_data *sd)
 	}
 	if(sd->regstr)
 	{
+		int i;
+		for( i = 0; i < sd->regstr_num; ++i )
+			if( sd->regstr[i].data )
+				aFree(sd->regstr[i].data);
 		aFree(sd->regstr);
 		sd->regstr = NULL;
 		sd->regstr_num = 0;

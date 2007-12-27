@@ -5898,15 +5898,19 @@ int pc_setreg(struct map_session_data* sd, int reg, int val)
 
 	ARR_FIND( 0, sd->reg_num, i, sd->reg[i].index == reg );
 	if( i < sd->reg_num )
-		// overwrite existing entry
+	{// overwrite existing entry
 		sd->reg[i].data = val;
-	else {
-		// insert new entry
+		return 1;
+	}
+
+	ARR_FIND( 0, sd->reg_num, i, sd->reg[i].data == 0 );
+	if( i == sd->regstr_num )
+	{// nothing free, increase size
 		sd->reg_num++;
 		RECREATE(sd->reg, struct script_reg, sd->reg_num);
-		sd->reg[i].index = reg;
-		sd->reg[i].data = val;
 	}
+	sd->reg[i].index = reg;
+	sd->reg[i].data = val;
 
 	return 1;
 }
@@ -5939,27 +5943,37 @@ int pc_setregstr(struct map_session_data* sd, int reg, char* str)
 
 	ARR_FIND( 0, sd->regstr_num, i, sd->regstr[i].index == reg );
 	if( i < sd->regstr_num )
-	{
-		if (str && strcmp(str,"")!=0)
-			safestrncpy(sd->regstr[i].data, str, sizeof(sd->regstr[i].data));
-		else {
-			sd->regstr_num--;
-			memcpy(&sd->regstr[i], &sd->regstr[sd->regstr_num], sizeof(sd->regstr[0]));
-			RECREATE(sd->regstr, struct script_regstr, sd->regstr_num);
+	{// found entry, update
+		if( str == NULL || *str == '\0' )
+		{// empty string
+			if( sd->regstr[i].data != NULL )
+				aFree(sd->regstr[i].data);
+			sd->regstr[i].data = NULL;
+		}
+		else if( sd->regstr[i].data )
+		{// recreate
+			size_t len = strlen(str)+1;
+			RECREATE(sd->regstr[i].data, char, len);
+			memcpy(sd->regstr[i].data, str, len*sizeof(char));
+		}
+		else
+		{// create
+			sd->regstr[i].data = aStrdup(str);
 		}
 		return 1;
 	}
 
-	if (!str) return 1;
+	if( str == NULL || *str == '\0' )
+		return 1;// nothing to add, empty string
 
-	sd->regstr_num++;
-	RECREATE(sd->regstr, struct script_regstr, sd->regstr_num);
-	if(sd->regstr==NULL){
-		ShowFatalError("out of memory : pc_setreg\n");
-		exit(EXIT_FAILURE);
+	ARR_FIND( 0, sd->regstr_num, i, sd->regstr[i].data == NULL );
+	if( i == sd->regstr_num )
+	{// nothing free, increase size
+		sd->regstr_num++;
+		RECREATE(sd->regstr, struct script_regstr, sd->regstr_num);
 	}
 	sd->regstr[i].index = reg;
-	safestrncpy(sd->regstr[i].data, str, sizeof(sd->regstr[i].data));
+	sd->regstr[i].data = aStrdup(str);
 
 	return 1;
 }
@@ -5968,7 +5982,7 @@ int pc_readregistry(struct map_session_data *sd,const char *reg,int type)
 {
 	struct global_reg *sd_reg;
 	int i,max;
-	
+
 	nullpo_retr(0, sd);
 	switch (type) {
 	case 3: //Char reg

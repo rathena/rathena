@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.10.20071122
+//= 3.12.20071227
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -93,6 +93,8 @@
 //=       Updated guardianinfo and get-/setcastledata [ultramage]
 //= 3.12.20071218
 //=       Corrected various mistakes mentioned in bugreport:373 [ultramage]
+//= 3.12.20071227
+//=       Corrected description of scope and npc variables. [FlavioJS]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -495,12 +497,11 @@ local     - local to the server
 account   - attached to the account of the character identified by RID
 character - attached to the character identified by RID
 npc       - attached to the NPC
+scope     - attached to the scope of the instance
 
 Extent can be:
-permanent - Permanent NPC variables exist while the server is running.
-            Others still exist when the server resets.
-temporary - Temporary NPC variables exist while the script instance is running.
-            Others cease to exist when the server resets.
+permanent - They still exist when the server resets.
+temporary - They cease to exist when the server resets.
 
 Prefix: scope and extent
 nothing  - A permanent variable attached to the character, the default 
@@ -515,11 +516,16 @@ nothing  - A permanent variable attached to the character, the default
 "$@"     - A global temporary variable.
            This is important for scripts which are called with no RID
            attached, that is, not triggered by a specific character object.
-"."      - A variable that exists on the NPC as long as the server is running.
-           They are only accessible from inside the NPC or by calling 
+"."      - A NPC variable.
+           They exist in the NPC and dissapear when the server restarts or the 
+           npc is reloaded. Can be accessed from inside the NPC or by calling 
            'getvariableofnpc'.
-".@"     - A temporary variable that exists until the script instance ends.
-           They are only accessible in that NPC instance.
+".@"     - A scope variable.
+           They are unique to the instance and scope. Each instance has it's 
+           own scope that ends when the script ends. Calling a function with 
+           callsub/callfunc starts a new scope, returning from the function 
+           ends it. When a scope ends, it's variables are converted to values 
+           ('return .@var;' returns a value, not a reference).
 "#"      - A permanent local account variable.
            They are stored with all the account data in "save\accreg.txt" in
            TXT versions and in the SQL versions in the 'global_reg_value'
@@ -546,10 +552,10 @@ Examples:
  $name$ - permanent global string variable
 $@name  - temporary global integer variable
 $@name$ - temporary global string variable
- .name  - permanent npc integer variable
- .name$ - permanent npc string variable
-.@name  - temporary npc integer variable
-.@name$ - temporary npc string variable
+ .name  - npc integer variable
+ .name$ - npc string variable
+.@name  - scope integer variable
+.@name$ - scope string variable
  #name  - permanent local account integer variable
  #name$ - permanent local account string variable
 ##name  - permanent global account integer variable
@@ -1473,7 +1479,7 @@ You can pass multiple arguments in a function call:
 
 getarg(0) would be 5, getarg(1) would be 4 and getarg(2) would be 3.
 
-Getarg has an optional argument since trunk r10773.
+Getarg has an optional argument since trunk r10773 and stable r10958.
 If the target argument exists, it is returned.
 Otherwise, if <default_value> is present it is returned instead, 
 if not the script terminates immediately.

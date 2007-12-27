@@ -365,7 +365,7 @@ struct script_reg {
 };
 struct script_regstr {
 	int index;
-	char data[256];
+	char* data;
 };
 
 struct status_change_entry {
