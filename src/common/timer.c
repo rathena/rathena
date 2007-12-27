@@ -12,8 +12,10 @@
 #include <time.h>
 
 #ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h> // GetTickCount()
 #else
+#include <unistd.h>
 #include <sys/time.h> // struct timeval, gettimeofday()
 #endif
 
@@ -93,7 +95,7 @@ static unsigned int tick(void)
 {
 #if defined(WIN32)
 	return GetTickCount();
-#elif defined(__FREEBSD__)
+#elif (defined(_POSIX_TIMERS) && _POSIX_TIMERS > 0 && defined(_POSIX_MONOTONIC_CLOCK) /* posix compliant */) || (defined(__FreeBSD_cc_version) && __FreeBSD_cc_version >= 500005 /* FreeBSD >= 5.1.0 */)
 	struct timespec tval;
 	clock_gettime(CLOCK_MONOTONIC, &tval);
 	return tval.tv_sec * 1000 + tval.tv_nsec / 1000000;
@@ -147,8 +149,8 @@ unsigned int gettick(void)
 #define HEAP_SEARCH(target,from,to,pos) \
 	do { \
 		int max,pivot; \
-		pos = from; \
 		max = to; \
+		pos = from; \
 		while (pos < max) { \
 			pivot = (pos + max) / 2; \
 			if (DIFF_TICK(target, timer_data[timer_heap[pivot]].tick) < 0) \

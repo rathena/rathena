@@ -854,11 +854,23 @@ void  linkdb_final  ( struct linkdb_node** head );
 
 
 
+/// Declares an anonymous vector struct.
+///
+/// @param __type Type of data
+#define VECTOR_DECL(__type) \
+	struct { \
+		size_t _max_; \
+		size_t _len_; \
+		__type* _data_; \
+	}
+
+
+
 /// Declares a named vector struct.
 ///
 /// @param __name Structure name
 /// @param __type Type of data
-#define VECTOR_STRUCT(__name,__type) \
+#define VECTOR_STRUCT_DECL(__name,__type) \
 	struct __name { \
 		size_t _max_; \
 		size_t _len_; \
@@ -867,7 +879,16 @@ void  linkdb_final  ( struct linkdb_node** head );
 
 
 
-/// Declares a named vector struct variable.
+/// Declares and initializes an anonymous vector variable.
+///
+/// @param __type Type of data
+/// @param __var Variable name
+#define VECTOR_VAR(__type,__var) \
+	VECTOR_DECL(__type) __var = {0,0,NULL}
+
+
+
+/// Declares and initializes a named vector variable.
 ///
 /// @param __name Structure name
 /// @param __var Variable name
@@ -876,16 +897,11 @@ void  linkdb_final  ( struct linkdb_node** head );
 
 
 
-/// Declares a vector variable with an anonymous struct.
+/// Initializes a vector.
 ///
-/// @param __type Type of data
-/// @param __var Variable name
-#define VECTOR_VAR(__type,__var) \
-	struct { \
-		size_t _max_; \
-		size_t _len_; \
-		__type* _data_; \
-	} __var = {0,0,NULL}
+/// @param __vec Vector
+#define VECTOR_INIT(__vec) \
+	memset(&(__vec), 0, sizeof(__vec))
 
 
 

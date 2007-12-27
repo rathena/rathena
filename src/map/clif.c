@@ -12043,7 +12043,8 @@ int do_init_clif(void)
 	packetdb_readdb();
 
 	set_defaultparse(clif_parse);
-	if (!make_listen_bind(bind_ip,map_port)) {
+	if( make_listen_bind(bind_ip,map_port) == -1 )
+	{
 		ShowFatalError("can't bind game port\n");
 		exit(EXIT_FAILURE);
 	}

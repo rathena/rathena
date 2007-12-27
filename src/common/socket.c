@@ -716,11 +716,13 @@ int do_sockets(int next)
 	}
 #else
 	// otherwise assume that the fd_set is a bit-array and enumerate it in a standard way
-	//TODO: select() returns the number of readable sockets; use that to exit the fd_max loop faster
-	for (i = 1; i < fd_max; i++)
+	for( i = 1; ret && i < fd_max; ++i )
 	{
 		if(sFD_ISSET(i,&rfd) && session[i])
+		{
 			session[i]->func_recv(i);
+			--ret;
+		}
 	}
 #endif
 
