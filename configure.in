@@ -289,6 +289,29 @@ fi
 
 
 #
+# zlib library (required)
+#
+if test -n "${ZLIB_HOME}" ; then
+	LDFLAGS="$LDFLAGS -L${ZLIB_HOME}/lib"
+	CPPFLAGS="$CPPFLAGS -I${ZLIB_HOME}/include"
+fi
+AC_CHECK_LIB([z], [inflateEnd], [],[AC_MSG_ERROR([zlib library not found or incompatible, please specify the correct path with --with-zlib=DIR... stopping])])
+AC_CHECK_HEADER([zlib.h], [], [AC_MSG_ERROR([zlib header not found, please specify the correct path with --with-zlib=DIR... stopping])])
+
+
+#
+# math library (required)
+#
+AC_CHECK_LIB([m], [sqrt], [], [AC_MSG_ERROR([math library not found... stopping])])
+
+
+#
+# clock_gettime (rt on Debian)
+#
+AC_CHECK_LIB([rt], [clock_gettime])
+
+
+#
 # MySQL library (optional)
 #
 MYSQL_VERSION=""
@@ -302,22 +325,30 @@ else
 		AC_PATH_PROG([MYSQL_CONFIG_HOME], [mysql_config], [no])
 	fi
 
-	AC_MSG_CHECKING([MySQL library (optional)])
 	if test "$MYSQL_CONFIG_HOME" != "no" ; then
-		HAVE_MYSQL="yes"
 		MYSQL_VERSION="`$MYSQL_CONFIG_HOME --version`"
 		MYSQL_CFLAGS="`$MYSQL_CONFIG_HOME --include`"
 		MYSQL_LIBS="`$MYSQL_CONFIG_HOME --libs`"
+
+		MYSQL_OLD_LDFLAGS="$LDFLAGS" ; LDFLAGS="$LDFLAGS $MYSQL_LIBS"
+		MYSQL_OLD_CPPFLAGS="$CPPFLAGS" ; CPPFLAGS="$CPPFLAGS $MYSQL_CFLAGS"
+		AC_CHECK_LIB([mysqlclient], [mysql_init], [HAVE_MYSQL="yes"], [])
+		AC_CHECK_HEADER([mysql.h], [], [HAVE_MYSQL=""])
+		CPPFLAGS="$MYSQL_OLD_CPPFLAGS"
+		LDFLAGS="$MYSQL_OLD_LDFLAGS"
+	fi
+	AC_MSG_CHECKING([MySQL library (optional)])
+	if test "$HAVE_MYSQL" = "yes" ; then
 		AC_MSG_RESULT([yes ($MYSQL_VERSION)])
-		if test -n "`$MYSQL_CONFIG_HOME --cflags | grep -i '\-m64'`"; then
-			AC_MSG_ERROR([$MYSQL_CONFIG_HOME reported a 64 bit MySQL, please specify a 32bit version with --with-mysql=<path to mysql_config>... stopping])
-		fi
 	else
 		AC_MSG_RESULT([no])
 		if test "$require_mysql" = "yes" ; then
-			AC_MSG_ERROR([MySQL not found (requested)])
+			AC_MSG_ERROR([MySQL not found or incompatible (requested)])
 		else
 			AC_MSG_NOTICE([disabling MySQL (optional)])
+			MYSQL_VERSION=""
+			MYSQL_CFLAGS=""
+			MYSQL_LIBS=""
 		fi
 	fi
 fi
@@ -326,7 +357,6 @@ AC_SUBST([HAVE_MYSQL])
 AC_SUBST([MYSQL_VERSION])
 AC_SUBST([MYSQL_CFLAGS])
 AC_SUBST([MYSQL_LIBS])
-
 
 
 #
@@ -361,7 +391,7 @@ else
 	else
 		AC_MSG_RESULT([no])
 		if test "$require_pcre" = "yes" ; then
-			AC_MSG_ERROR([PCRE not found (requested)])
+			AC_MSG_ERROR([PCRE not found or incompatible (requested)])
 		else
 			AC_MSG_NOTICE([disabling PCRE (optional)])
 		fi
@@ -371,26 +401,6 @@ fi
 AC_SUBST([HAVE_PCRE])
 AC_SUBST([PCRE_LIBS])
 AC_SUBST([PCRE_CFLAGS])
-
-
-
-#
-# zlib library (required)
-#
-if test -n "${ZLIB_HOME}" ; then
-	LDFLAGS="$LDFLAGS -L${ZLIB_HOME}/lib"
-	CPPFLAGS="$CPPFLAGS -I${ZLIB_HOME}/include"
-fi
-AC_CHECK_LIB([z], [inflateEnd], ,[AC_MSG_ERROR([zlib library not found, please specify the correct path with --with-zlib=DIR... stopping])])
-AC_CHECK_HEADER([zlib.h], , [AC_MSG_ERROR([zlib header not found, please specify the correct path with --with-zlib=DIR... stopping])])
-
-
-
-#
-# math library (required)
-#
-AC_CHECK_LIB([m], [sqrt], [], [AC_MSG_ERROR([math library not found... stopping])])
-
 
 
 #

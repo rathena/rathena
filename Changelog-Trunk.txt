@@ -4,6 +4,9 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/12/27
+	* Changed the configure script:
+	- refined the mysql test (wasn't detecting 64 libraries compiled without -m64)
+	- added a test for clock_gettime in -lrt (required for Debian)
 	* Corrected description of scope and npc variables in script_commands.txt.
 	* Made temporary character string variables not have a limited length.
 	  (now all temporary string variables don't have limited length)
