@@ -5653,7 +5653,7 @@ int clif_movetoattack(struct map_session_data *sd,struct block_list *bl)
  *------------------------------------------*/
 int clif_produceeffect(struct map_session_data* sd,int flag,int nameid)
 {
-	int fd;
+	int view,fd;
 
 	nullpo_retr(0, sd);
 
@@ -5662,7 +5662,10 @@ int clif_produceeffect(struct map_session_data* sd,int flag,int nameid)
 	WFIFOHEAD(fd,packet_len(0x18f));
 	WFIFOW(fd, 0)=0x18f;
 	WFIFOW(fd, 2)=flag;
-	WFIFOW(fd, 4)=(itemdb_viewid(nameid)||nameid);
+	if((view = itemdb_viewid(nameid)) > 0)
+		WFIFOW(fd, 4)=view;
+	else
+		WFIFOW(fd, 4)=nameid;
 	WFIFOSET(fd,packet_len(0x18f));
 	return 0;
 }
