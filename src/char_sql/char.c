@@ -720,7 +720,7 @@ int memitemdata_to_sql(const struct item items[], int max, int id, int tableswit
 	{
 		SqlStmt_ShowDebug(stmt);
 		SqlStmt_Free(stmt);
-		StringBuf_Clear(&buf);
+		StringBuf_Destroy(&buf);
 		return 1;
 	}
 
