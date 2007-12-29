@@ -144,52 +144,9 @@ static int add_path(int *heap,struct tmp_path *tp,int x,int y,int dist,int befor
 	return 0;
 }
 
-
 /*==========================================
- * is (x,y) passable?
- * flag: 0x10000 = ranged attack check
- *       0x30000 = stacking check
- *------------------------------------------*/
-static int can_place(struct map_data *m,int x,int y,int flag)
-{
-	if( map_getcellp(m,x,y,CELL_CHKPASS) )
-		return 1;
-	if( (flag&0x10000)&&map_getcellp(m,x,y,CELL_CHKGROUND) )
-		return 1;
-#ifdef CELL_NOSTACK
-	//Special flag for CELL_NOSTACK systems. Returns true when the given cell is stacked. [Skotlex]
-	if( (flag&0x30000)&&map_getcellp(m,x,y,CELL_CHKSTACK) )
-		return 1;
-#endif
-	return 0;
-}
-
-/*==========================================
- * can you move from (x0,y0) to (x1,y1) in one step?
- * (helper function for path_blownpos())
- *------------------------------------------*/
-static int can_move(struct map_data *m,int x0,int y0,int x1,int y1,int flag)
-{
-	if( x1 < 0 || y1 < 0 || x1 >= m->xs || y1 >= m->ys)
-		return 0; // out-of-bounds coordinates
-	if( flag&0x20000 ) //Flag to ignore everything, for use with Taekwon's Jump skill currently. [Skotlex] 
-		return 1;
-#ifndef CELL_NOSTACK
-	//In no-stack mode, do not check current cell.
-	if( !can_place(m,x0,y0,flag) )
-		return 0;
-#endif
-	if( !can_place(m,x1,y1,flag) )
-		return 0;
-	if( x0 == x1 || y0 == y1 )
-		return 1;
-	if( !can_place(m,x0,y1,flag) || !can_place(m,x1,y0,flag) )
-		return 0;
-	return 1;
-}
-
-/*==========================================
- * (x0,y0)‚©‚ç(dx,dy)•ûŒü‚ÖcountƒZƒ‹•ª
+ * Find the closest reachable cell, 'count' cells away from (x0,y0) in direction (dx,dy).
+ * 
  * ‚«”ò‚Î‚µ‚½‚ ‚Æ‚ÌÀ•W‚ðŠ“¾
  *------------------------------------------*/
 int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
@@ -210,21 +167,30 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 		dy=(dy>0)?1:((dy<0)?-1:0);
 	}
 	
-	while( (count--)>0 && (dx || dy) )
+	while( count > 0 && (dx != 0 || dy != 0) )
 	{
-		if( !can_move(md,x0,y0,x0+dx,y0+dy,0) ){
-			int fx=(dx!=0 && can_move(md,x0,y0,x0+dx,y0,0));
-			int fy=(dy!=0 && can_move(md,x0,y0,x0,y0+dy,0));
-			if( fx && fy ){
-				if(rand()&1) dx=0;
-				else		 dy=0;
+		if( !map_getcellp(md,x0+dx,y0+dy,CELL_CHKPASS) )
+		{// attempt partial movement
+			int fx = ( dx != 0 && map_getcellp(md,x0+dx,y0,CELL_CHKPASS) );
+			int fy = ( dy != 0 && map_getcellp(md,x0,y0+dy,CELL_CHKPASS) );
+			if( fx && fy )
+			{
+				if(rand()&1)
+					dx=0;
+				else
+					dy=0;
 			}
-			if( !fx )		dx=0;
-			if( !fy )		dy=0;
+			else if( !fx )
+				dx=0;
+			else if( !fy )
+				dy=0;
 		}
-		x0+=dx;
-		y0+=dy;
+
+		x0 += dx;
+		y0 += dy;
+		count--;
 	}
+
 	return (x0<<16)|y0; //TODO: use 'struct point' here instead?
 }
 
