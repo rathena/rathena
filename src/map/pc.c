@@ -3295,7 +3295,8 @@ int pc_show_steal(struct block_list *bl,va_list ap)
  *------------------------------------------*/
 int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 {
-	int i,rate,itemid,flag;
+	int i,itemid,flag;
+	double rate;
 	struct status_data *sd_status, *md_status;
 	struct mob_data *md;
 	struct item tmp_item;
@@ -3320,23 +3321,22 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, int lv)
 		md->state.steal_flag = UCHAR_MAX;
 		return 0;
 	}
-						
-	rate = battle_config.skill_steal_type
-		? (sd_status->dex - md_status->dex)/2 + lv*6 + 10
-		: (sd_status->dex - md_status->dex)   + lv*3 + 10;
 
-	rate += sd->add_steal_rate; //Better make the steal_Rate addition affect % rather than an absolute on top of the total drop rate. [Skotlex]
+	// base skill success chance (percentual)
+	rate = (sd_status->dex - md_status->dex)/2 + lv*6 + 4;
+	rate += sd->add_steal_rate;
 		
-	if (rate < 1)
+	if( rate < 1 )
 		return 0;
 
-	//preliminar statistical data hints at this behaviour:
-	//each steal attempt: try to steal against ONE mob drop, and no more.
-	i = rand()%(MAX_STEAL_DROP); //You can't steal from the last slot.
-
-	if(rand() % 10000 >= md->db->dropitem[i].p*rate/100)
+	// Try dropping one item, in the order from first to last possible slot.
+	// Droprate is affected by the skill success rate.
+	for( i = 0; i < MAX_STEAL_DROP; i++ )
+		if( md->db->dropitem[i].nameid > 0 && rand() % 10000 < md->db->dropitem[i].p * rate/100. )
+			break;
+	if( i == MAX_STEAL_DROP )
 		return 0;
-	
+
 	itemid = md->db->dropitem[i].nameid;
 	memset(&tmp_item,0,sizeof(tmp_item));
 	tmp_item.nameid = itemid;

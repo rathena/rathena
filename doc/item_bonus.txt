@@ -270,3 +270,5 @@ bonus3 bAddMonsterDropItemGroup,n,x,y;	y% chance to get an item of group type n 
 
 bonus2 bWeaponComaRace,x,y;		y/100% chance to cause Coma when attacking a
 					monster of race x with a normal attack
+
+bAddStealRate,n;			n/100% increase to Steal skill success chance

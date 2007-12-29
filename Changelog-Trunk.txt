@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/12/29
+	* Implemented THE official Steal skill equation and game mechanics
+	  (basically version from /stable plus a few tweaks) (see topic:116540)
+	* Added missing bAddStealRate reference to doc/item_bonus.txt
+	* Removed skill_steal_rate, as it was never used in the code (see r231)
+	* Removed skill_steal_type, it's just a one-liner source mod (see r231)
 	* Knockback now works through cells where there is a diagonal path, but
 	  no horizontal+vertical (two 90` icewalls with a gap where they 'join')
 	* Some dead code removal in path.c [ultramage]

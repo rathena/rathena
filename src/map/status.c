@@ -1769,7 +1769,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		// shorts
 		+ sizeof(sd->splash_range)
 		+ sizeof(sd->splash_add_range)
-		+ sizeof(sd->add_steal_rate)
 		+ sizeof(sd->hp_gain_value)
 		+ sizeof(sd->sp_gain_value)
 		+ sizeof(sd->sp_vanish_rate)
