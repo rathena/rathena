@@ -2233,15 +2233,17 @@ void get_val(struct script_state* st, struct script_data* data)
 	return;
 }
 
+void push_val2(struct script_stack* stack, int type, int val, struct linkdb_node** ref);
+
 /// Retrieves the value of a reference identified by uid (variable, constant, param)
+/// The value is left in the top of the stack and needs to be removed manually.
 void* get_val2(struct script_state* st, int uid, struct linkdb_node** ref)
 {
-	struct script_data data;
-	data.type = C_NAME;
-	data.u.num = uid;
-	data.ref = ref;
-	get_val(st, &data);
-	return (data.type == C_INT ? (void*)data.u.num : (void*)data.u.str);
+	struct script_data* data;
+	push_val2(st->stack, C_NAME, uid, ref);
+	data = script_getdatatop(st, -1);
+	get_val(st, data);
+	return (data->type == C_INT ? (void*)data->u.num : (void*)data->u.str);
 }
 
 /*==========================================
@@ -4735,6 +4737,7 @@ static int32 getarraysize(struct script_state* st, int32 id, int32 idx, int isst
 			char* str = (char*)get_val2(st, reference_uid(id, idx), ref);
 			if( str && *str )
 				ret = idx + 1;
+			script_removetop(st, -1, 0);
 		}
 	}
 	else
@@ -4744,6 +4747,7 @@ static int32 getarraysize(struct script_state* st, int32 id, int32 idx, int isst
 			int32 num = (int32)get_val2(st, reference_uid(id, idx), ref);
 			if( num )
 				ret = idx + 1;
+			script_removetop(st, -1, 0);
 		}
 	}
 	return ret;
@@ -4941,6 +4945,7 @@ BUILDIN_FUNC(copyarray)
 		{
 			v = get_val2(st, reference_uid(id2, idx2 + i), reference_getref(data2));
 			set_reg(st, sd, reference_uid(id1, idx1 + i), name1, v, reference_getref(data1));
+			script_removetop(st, -1, 0);
 		}
 	}
 	else
@@ -4948,10 +4953,13 @@ BUILDIN_FUNC(copyarray)
 		for( i = 0; i < count; ++i )
 		{
 			if( idx2 + i < 128 )
+			{
 				v = get_val2(st, reference_uid(id2, idx2 + i), reference_getref(data2));
+				set_reg(st, sd, reference_uid(id1, idx1 + i), name1, v, reference_getref(data1));
+				script_removetop(st, -1, 0);
+			}
 			else// out of range - assume ""/0
-				v = (void*)(is_string_variable(name1) ? "" : 0);
-			set_reg(st, sd, reference_uid(id1, idx1 + i), name1, v, reference_getref(data1));
+				set_reg(st, sd, reference_uid(id1, idx1 + i), name1, (is_string_variable(name1)?(void*)"":(void*)0), reference_getref(data1));
 		}
 	}
 	return 0;
@@ -5049,6 +5057,7 @@ BUILDIN_FUNC(deletearray)
 		{
 			void* v = get_val2(st, reference_uid(id, start + count), reference_getref(data));
 			set_reg(st, sd, reference_uid(id, start), name, v, reference_getref(data));
+			script_removetop(st, -1, 0);
 		}
 	}
 
