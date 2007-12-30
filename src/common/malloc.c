@@ -112,6 +112,8 @@ char* _bstrdup(const char *chr)
 
 #ifdef USE_MEMMGR
 
+#define DEBUG_MEMMGR
+
 /* USE_MEMMGR */
 
 /*
@@ -226,6 +228,10 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 				p->next = unit_head_large_first;
 			}
 			unit_head_large_first = p;
+#ifdef DEBUG_MEMMGR
+			// set allocated data to 0xCD (clean memory)
+			memset(p + sizeof(struct unit_head_large) - sizeof(int), 0xCD, size);
+#endif
 			*(int*)((char*)p + sizeof(struct unit_head_large) - sizeof(int) + size) = 0xdeadbeaf;
 			return (char *)p + sizeof(struct unit_head_large) - sizeof(int);
 		} else {
@@ -284,6 +290,10 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 			head->size  = size;
 			head->line  = line;
 			head->file  = file;
+#ifdef DEBUG_MEMMGR
+			// set allocated memory to 0xCD (clean memory)
+			memset(head + sizeof(struct unit_head) - sizeof(int), 0xCD, size);
+#endif
 			*(int*)((char*)head + sizeof(struct unit_head) - sizeof(int) + size) = 0xdeadbeaf;
 			return (char *)head + sizeof(struct unit_head) - sizeof(int);
 		}
@@ -367,6 +377,10 @@ void _mfree(void *ptr, const char *file, int line, const char *func )
 			}
 			head->block = NULL;
 			memmgr_usage_bytes -= head->size;
+#ifdef DEBUG_MEMMGR
+			// set freed memory to 0xDD (dead memory)
+			memset(ptr, 0xDD, size_hash - sizeof(struct unit_head_large) + sizeof(int) );
+#endif
 			FREE(head_large,file,line,func);
 		} else {
 			ShowError("Memory manager: args of aFree is freed pointer %s:%d@%s\n", file, line, func);
@@ -382,6 +396,10 @@ void _mfree(void *ptr, const char *file, int line, const char *func )
 			ShowError("Memory manager: args of aFree is overflowed pointer %s line %d\n", file, line);
 		} else {
 			head->block = NULL;
+#ifdef DEBUG_MEMMGR
+			// set freed memory to 0xDD (dead memory)
+			memset(ptr, 0xDD, block->unit_size - sizeof(struct unit_head) + sizeof(int) );
+#endif
 			memmgr_usage_bytes -= head->size;
 			if(--block->unit_used == 0) {
 				/* ƒuƒƒbƒN‚Ì‰ğ•ú */
