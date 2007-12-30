@@ -398,7 +398,7 @@ void _mfree(void *ptr, const char *file, int line, const char *func )
 			head->block = NULL;
 #ifdef DEBUG_MEMMGR
 			// set freed memory to 0xDD (dead memory)
-			memset(ptr, 0xDD, block->unit_size - sizeof(struct unit_head) + sizeof(int) );
+			memset(ptr, 0xDD, head->size - sizeof(struct unit_head) + sizeof(int) );
 #endif
 			memmgr_usage_bytes -= head->size;
 			if(--block->unit_used == 0) {
