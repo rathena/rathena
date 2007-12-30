@@ -230,7 +230,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 			unit_head_large_first = p;
 #ifdef DEBUG_MEMMGR
 			// set allocated data to 0xCD (clean memory)
-			memset(p + sizeof(struct unit_head_large) - sizeof(int), 0xCD, size);
+			memset((char *)p + sizeof(struct unit_head_large) - sizeof(int), 0xCD, size);
 #endif
 			*(int*)((char*)p + sizeof(struct unit_head_large) - sizeof(int) + size) = 0xdeadbeaf;
 			return (char *)p + sizeof(struct unit_head_large) - sizeof(int);
@@ -292,7 +292,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 			head->file  = file;
 #ifdef DEBUG_MEMMGR
 			// set allocated memory to 0xCD (clean memory)
-			memset(head + sizeof(struct unit_head) - sizeof(int), 0xCD, size);
+			memset((char *)head + sizeof(struct unit_head) - sizeof(int), 0xCD, size);
 #endif
 			*(int*)((char*)head + sizeof(struct unit_head) - sizeof(int) + size) = 0xdeadbeaf;
 			return (char *)head + sizeof(struct unit_head) - sizeof(int);
@@ -379,7 +379,7 @@ void _mfree(void *ptr, const char *file, int line, const char *func )
 			memmgr_usage_bytes -= head->size;
 #ifdef DEBUG_MEMMGR
 			// set freed memory to 0xDD (dead memory)
-			memset(ptr, 0xDD, size_hash - sizeof(struct unit_head_large) + sizeof(int) );
+			memset(ptr, 0xDD, head->size);
 #endif
 			FREE(head_large,file,line,func);
 		} else {
@@ -398,7 +398,7 @@ void _mfree(void *ptr, const char *file, int line, const char *func )
 			head->block = NULL;
 #ifdef DEBUG_MEMMGR
 			// set freed memory to 0xDD (dead memory)
-			memset(ptr, 0xDD, head->size - sizeof(struct unit_head) + sizeof(int) );
+			memset(ptr, 0xDD, head->size);
 #endif
 			memmgr_usage_bytes -= head->size;
 			if(--block->unit_used == 0) {
