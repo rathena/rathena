@@ -1300,8 +1300,9 @@ int map_delobjectnofree(int id);
 void map_foreachobject(int (*)(struct block_list*,va_list),int,...);
 int map_search_freecell(struct block_list *src, int m, short *x, short *y, int rx, int ry, int flag);
 //
+bool map_knowsaccount(int account_id);
 int map_quit(struct map_session_data *);
-void map_quit_ack(struct map_session_data *);
+void map_quit_ack(int account_id, int char_id);
 // npc
 int map_addnpc(int,struct npc_data *);
 

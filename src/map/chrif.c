@@ -273,11 +273,7 @@ int chrif_removemap(int fd)
 // received after a character has been "final saved" on the char-server
 int chrif_save_ack(int fd)
 {
-	struct map_session_data *sd;
-	sd = map_id2sd(RFIFOL(fd,2));
-
-	if (sd && sd->status.char_id == RFIFOL(fd,6))
-		map_quit_ack(sd);
+	map_quit_ack(RFIFOL(fd,2), RFIFOL(fd,6));
 	return 0;
 }
 
@@ -332,7 +328,7 @@ int chrif_changemapserverack(int account_id, int login_id1, int login_id2, int c
 
 	//Player has been saved already, remove him from memory. [Skotlex]	
 	map_quit(sd);
-	map_quit_ack(sd);
+	map_quit_ack(sd->status.account_id, sd->status.char_id);
 	return 0;
 }
 

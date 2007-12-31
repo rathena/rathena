@@ -101,6 +101,7 @@ static DBMap* mobid_db=NULL; // int id -> struct mob_data*
 static DBMap* map_db=NULL; // unsigned int mapindex -> struct map_data*
 static DBMap* nick_db=NULL; // int char_id -> struct charid2nick* (requested names of offline characters)
 static DBMap* charid_db=NULL; // int char_id -> struct map_session_data*
+static DBMap* quit_db=NULL; // int account_id -> struct map_session_data* (players that are quitting or changing map-server)
 
 static int map_users=0;
 static struct block_list *objects[MAX_FLOORITEM];
@@ -1625,6 +1626,12 @@ void map_deliddb(struct block_list *bl)
 	idb_remove(id_db,bl->id);
 }
 
+/// Returns true if the map server knows the account (to reject logins).
+bool map_knowsaccount(int account_id)
+{
+	return (map_id2sd(account_id) || idb_get(quit_db,account_id) ? true : false);
+}
+
 /*==========================================
  * PC‚Ìquit?— map.c?•ª
  *
@@ -1632,6 +1639,7 @@ void map_deliddb(struct block_list *bl)
  *------------------------------------------*/
 int map_quit(struct map_session_data *sd)
 {
+	struct map_session_data* sd2;
 	if(!sd->state.auth) { //Removing a player that hasn't even finished loading
 		TBL_PC *sd2 = map_id2sd(sd->status.account_id);
 		if (sd->pd) unit_free(&sd->pd->bl,-1);
@@ -1661,7 +1669,12 @@ int map_quit(struct map_session_data *sd)
 			unit_remove_map(&sd->hd->bl, 0);
 	}
 
-	idb_remove(id_db,sd->bl.id);
+	map_deliddb(&sd->bl);
+	if( (sd2=(struct map_session_data*)idb_put(quit_db, sd->status.account_id, sd)) )
+	{
+		ShowDebug("map_quit: Possible double login AID/CID: %d/%d AID/CID: %d/%d\n", sd2->status.account_id, sd2->status.char_id, sd->status.account_id, sd->status.char_id);
+		aFree(sd2);
+	}
 
 	if(sd->reg)
 	{	//Double logout already freed pointer fix... [Skotlex]
@@ -1695,12 +1708,15 @@ int map_quit(struct map_session_data *sd)
 	return 0;
 }
 
-void map_quit_ack(struct map_session_data *sd)
+void map_quit_ack(int account_id, int char_id)
 {
-	if (sd && sd->state.finalsave) {
-		idb_remove(pc_db,sd->status.account_id);
-		idb_remove(charid_db,sd->status.char_id);
-		aFree(sd);
+	struct map_session_data* sd = (struct map_session_data*)idb_get(quit_db,account_id);
+	if( sd )
+	{
+		if( sd->status.char_id != char_id )
+			ShowDebug("map_quit_ack: Possible double login AID/CID: %d/%d AID/CID: %d/%d\n", account_id, char_id, sd->status.account_id, sd->status.char_id);
+		else
+			idb_remove(quit_db,account_id);
 	}
 }
 
@@ -1718,6 +1734,7 @@ static int do_reconnect_map_sub(DBKey key,void *data,va_list va)
 void do_reconnect_map(void)
 {
 	pc_db->foreach(pc_db,do_reconnect_map_sub);
+	pc_db->foreach(quit_db,do_reconnect_map_sub);//## FIXME possible loss of data [FlavioJS]
 }
 
 /*==========================================
@@ -3015,7 +3032,7 @@ static int cleanup_db_subpc(DBKey key,void *data,va_list va)
 		map_quit(sd); //Attempt force-save
 	}
 	//Force remove from memory...
-	map_quit_ack(sd);
+	map_quit_ack(sd->status.account_id, sd->status.char_id);
 	return 1;
 }
 
@@ -3093,6 +3110,7 @@ void do_final(void)
 	mobid_db->destroy(mobid_db, NULL);
 	nick_db->destroy(nick_db, nick_db_final);
 	charid_db->destroy(charid_db, NULL);
+	db_destroy(quit_db);
 
 #ifndef TXT_ONLY
     map_sql_close();
@@ -3273,6 +3291,7 @@ int do_init(int argc, char *argv[])
 	map_db = uidb_alloc(DB_OPT_BASE);
 	nick_db = idb_alloc(DB_OPT_BASE);
 	charid_db = idb_alloc(DB_OPT_BASE);
+	quit_db = idb_alloc(DB_OPT_RELEASE_DATA);
 #ifndef TXT_ONLY
 	map_sql_init();
 #endif /* not TXT_ONLY */

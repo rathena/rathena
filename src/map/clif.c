@@ -7617,7 +7617,17 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 		WFIFOSET(fd,packet_len(0x6a));
 		clif_setwaitclose(fd);
 		return;
-	} else
+	} else if( map_knowsaccount(account_id) )
+	{// double login
+		ShowError("clif_parse_WantToConnection: double login attempt AID/CID: %d/%d, rejecting...\n", account_id, char_id);
+		WFIFOHEAD(fd,packet_len(0x6a));
+		WFIFOW(fd,0) = 0x6a;
+		WFIFOB(fd,2) = 3; // Rejected by server
+		WFIFOSET(fd,packet_len(0x6a));
+		clif_setwaitclose(fd);
+		return;
+	}
+	else
 	{// packet version accepted
 		struct block_list* bl;
 		if( (bl=map_id2bl(account_id)) != NULL && bl->type != BL_PC )
