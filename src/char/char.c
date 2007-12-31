@@ -4177,15 +4177,15 @@ int chardb_final(int key, void* data, va_list va)
 void do_final(void)
 {
 	ShowStatus("Terminating server.\n");
-	// write online players files with no player
-	online_char_db->clear(online_char_db, NULL); //clean the db...
-	create_online_files();
-	online_char_db->destroy(online_char_db, NULL); //dispose the db...
 
 	mmo_char_sync();
 	inter_save();
 	set_all_offline(-1);
 	flush_fifos();
+	// write online players files with no player
+	online_char_db->clear(online_char_db, NULL); //clean the db...
+	create_online_files();
+	online_char_db->destroy(online_char_db, NULL); //dispose the db...
 	
 	if(gm_account) aFree(gm_account);
 	if(char_dat) aFree(char_dat);
