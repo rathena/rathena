@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf (Script), DZeroX (Timer)
 //===== Current Version: ===================================== 
-//= 3.7
+//= 3.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -73,6 +73,7 @@
 //= 3.6 Keil Hyre removes ALL outstanding quest items when he is talked [L0ne_W0lf]
 //=	to after finishing the quest.
 //= 3.7 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 3.8 Corrected some delitems. (bugreport:690) [Samuray22]
 //============================================================ 
 //============================================================================
 // Kiel Hyre Quest/Robotic Lab Dungeon
@@ -5134,8 +5135,9 @@ kh_mansion,22,28,4	script	Kiel Hyre	903,{
 		delitem 7501,countitem(7501); //K.H's_Letter
 		delitem 7502,countitem(7502); //James's_Memo
 		delitem 7503,countitem(7503); //Portrait_of_a_Guy
-		delitem 7504,countitem(7505); //Power_Source
-		delitem 7505,countitem(7506); //Toy_Key
+		delitem 7504,countitem(7504); //Power_Source
+		delitem 7505,countitem(7505); //Toy_Key
+		delitem 7506,countitem(7506); //Black_Keycard
 		delitem 7508,countitem(7508); //Elysia_Ring
 		delitem 7516,countitem(7516); //Green_Keycard
 	}

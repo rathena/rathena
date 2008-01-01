@@ -1,5 +1,9 @@
 Date		Added
 ======
+2008/01/01
+	* Corrected some delitems in Kyel Hyre Quest. (bugreport:690) [Samuray22]
+	* Corrected a Typo error in Yuno NPCs. (bugreport:716)
+	* Corrected a Typo error in Novice Training Ground. (bugreport:728)
 2007/12/26
 	* More official Veins spawns [Playtester]
 2007/12/23

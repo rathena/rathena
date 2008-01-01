@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= KitsuneStarwind, kobra_k88, L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.4a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 1.3.3 Removed Noyee	NPC (it's implemented in sleipnir_seal.txt)
 //= 1.4 Updated to Aegis 10.3 standards. [L0ne_W0lf]
 //=	Added Juno Airship Representative.
+//= 1.4a Corrected a Typo error (bugreport:716) [Samuray22]
 //============================================================ 
 
 // Juno
@@ -29,10 +30,10 @@ yuno,184,173,4	script	Freidrich#juno	729,{
 		mes "^3355FFJuno^000000 is kept aloft in the air by an ancient and mysterious force.";
 		next;
 		mes "[Freidrich]";
-		mes "This power is said to come from a relic from an ancient civilization called ^3355FFJupheros^000000 which existed here long before Juno.";
+		mes "This power is said to come from a relic from an ancient civilization called ^3355FFJuperos^000000 which existed here long before Juno.";
 		next;
 		mes "[Freidrich]";
-		mes "Research revealed that Juno's power source based on ^3355FFPieces of Ymir's Heart^000000. I hear that this power source is found where Jupheros used to exist.";
+		mes "Research revealed that Juno's power source based on ^3355FFPieces of Ymir's Heart^000000. I hear that this power source is found where Juperos used to exist.";
 		next;
 		mes "[Freidrich]";
 		mes "Since many scholars have been coming to Juno to study and research this power source, our city is basically a well known mecca for scholars.";
