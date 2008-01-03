@@ -6408,8 +6408,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 			alive = 0; //no path between cell and center of casting.
 					
 		if(alive && skillid == WZ_ICEWALL) {
-				int celltype = map_getcell(src->m,ux,uy,CELL_GETTYPE);
-				if(celltype==5 || celltype==1)
+				if( map_getcell(src->m,ux,uy,CELL_CHKWALL) || map_getcell(src->m,ux,uy,CELL_CHKCLIFF) )
 					alive=0;
 				else
 				{

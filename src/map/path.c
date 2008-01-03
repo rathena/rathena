@@ -153,7 +153,7 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 {
 	struct map_data *md;
 
-	if( !map[m].gat )
+	if( !map[m].cell )
 		return -1;
 	md = &map[m];
 
@@ -208,7 +208,7 @@ bool path_search_long(struct shootpath_data *spd,int m,int x0,int y0,int x1,int 
 	if( spd == NULL )
 		spd = &s_spd; // use dummy output variable
 
-	if (!map[m].gat)
+	if (!map[m].cell)
 		return false;
 	md = &map[m];
 
@@ -282,7 +282,7 @@ bool path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int
 	if( wpd == NULL )
 		wpd = &s_wpd; // use dummy output variable
 
-	if( !map[m].gat )
+	if( !map[m].cell )
 		return false;
 	md = &map[m];
 

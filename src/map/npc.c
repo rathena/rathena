@@ -2555,9 +2555,9 @@ static const char* npc_parse_mapcell(char* w1, char* w2, char* w3, char* w4, con
 		swap(y0, y1);
 
 	for( x = x0; x <= x1; ++x )
-		for( y = y0; y <= y1; ++y ) {
-			int type = map_getcell(m, x, y, CELL_GETTYPE);
-			if (type == 1 || type == 5) //TODO: use defines for the cell types. 
+		for( y = y0; y <= y1; ++y )
+		{
+			if( map_getcell(m, x, y, CELL_CHKWALL) || map_getcell(m, x, y, CELL_CHKCLIFF) )
 				continue;
 			map_setcell(m, x, y, cell);
 		}
