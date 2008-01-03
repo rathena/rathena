@@ -171,18 +171,17 @@ enum {
 #define map_flag_gvg2(m) (map[m].flag.gvg || map[m].flag.gvg_castle)
 
 //This stackable implementation does not means a BL can be more than one type at a time, but it's 
-//meant to make it easier to check for multiple types at a time on invocations such as
-// map_foreach* calls [Skotlex]
+//meant to make it easier to check for multiple types at a time on invocations such as map_foreach* calls [Skotlex]
 enum bl_type { 
-	BL_NUL = 0x000,
-	BL_PC = 0x001,
-	BL_MOB = 0x002,
-	BL_PET = 0x004,
-	BL_HOM = 0x008,
-	BL_ITEM = 0x010,
+	BL_NUL   = 0x000,
+	BL_PC    = 0x001,
+	BL_MOB   = 0x002,
+	BL_PET   = 0x004,
+	BL_HOM   = 0x008,
+	BL_ITEM  = 0x010,
 	BL_SKILL = 0x020,
-	BL_NPC = 0x040,
-	BL_CHAT = 0x080,
+	BL_NPC   = 0x040,
+	BL_CHAT  = 0x080,
 };
 
 //For common mapforeach calls. Since pets cannot be affected, they aren't included here yet.
@@ -1025,7 +1024,6 @@ struct map_data {
 #endif
 	struct block_list **block;
 	struct block_list **block_mob;
-	int *block_count,*block_mob_count;
 	int m;
 	short xs,ys; // map dimensions (in cells)
 	short bxs,bys; // map dimensions (in blocks)
@@ -1289,7 +1287,6 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 int map_foreachincell(int (*func)(struct block_list*,va_list), int m, int x, int y, int type, ...);
 int map_foreachinpath(int (*func)(struct block_list*,va_list), int m, int x0, int y0, int x1, int y1, int range, int length, int type, ...);
 int map_foreachinmap(int (*func)(struct block_list*,va_list), int m, int type, ...);
-int map_countnearpc(int,int,int);
 //blockŠÖ˜A‚É’Ç‰Á
 int map_count_oncell(int m,int x,int y,int type);
 struct skill_unit *map_find_skill_unit_oncell(struct block_list *,int x,int y,int skill_id,struct skill_unit *);

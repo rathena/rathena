@@ -149,8 +149,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	
 	// ƒoƒVƒŠƒJ”»’è
 
-	map_foreachinmovearea(clif_outsight, bl, AREA_SIZE,
-		dx, dy, sd?BL_ALL:BL_PC, bl);
+	map_foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, sd?BL_ALL:BL_PC, bl);
 
 	x += dx;
 	y += dy;
@@ -161,8 +160,7 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 		return 0; //map_moveblock has altered the object beyond what we expected (moved/warped it)
 
 	ud->walktimer = 1;
-	map_foreachinmovearea(clif_insight, bl, AREA_SIZE,
-		-dx, -dy, sd?BL_ALL:BL_PC, bl);
+	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
 	ud->walktimer = -1;
 	
 	if(sd) {

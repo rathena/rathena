@@ -3,6 +3,10 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/01/03
+	* Removed map_data's block_count, as (quote Yor/ja2160),
+	  "Perhaps useful for debug, but uses memory AND CPU for nothing."
+	  (block lists are linked lists, they don't need count tracking)
 2007/12/31
 	* Fixed a crash in txt char-servers that the memory manager was hiding.
 	  online_char_db being used after being destroyed (since r4026)

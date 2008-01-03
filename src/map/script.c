@@ -10705,8 +10705,8 @@ BUILDIN_FUNC(jump_zero)
 BUILDIN_FUNC(getmapmobs)
 {
 	const char *str=NULL;
-	int m=-1,bx,by,i;
-	int count=0,c;
+	int m=-1,bx,by;
+	int count=0;
 	struct block_list *bl;
 
 	str=script_getstr(st,2);
@@ -10727,16 +10727,12 @@ BUILDIN_FUNC(getmapmobs)
 		return 0;
 	}
 
-	for(by=0;by<=(map[m].ys-1)/BLOCK_SIZE;by++){
-		for(bx=0;bx<=(map[m].xs-1)/BLOCK_SIZE;bx++){
-			bl = map[m].block_mob[bx+by*map[m].bxs];
-			c = map[m].block_mob_count[bx+by*map[m].bxs];
-			for(i=0;i<c && bl;i++,bl=bl->next){
+	for(by=0;by<=(map[m].ys-1)/BLOCK_SIZE;by++)
+		for(bx=0;bx<=(map[m].xs-1)/BLOCK_SIZE;bx++)
+			for( bl = map[m].block_mob[bx+by*map[m].bxs] ; bl != NULL ; bl = bl->next )
 				if(bl->x>=0 && bl->x<=map[m].xs-1 && bl->y>=0 && bl->y<=map[m].ys-1)
 					count++;
-			}
-		}
-	}
+
 	script_pushint(st,count);
 	return 0;
 }
