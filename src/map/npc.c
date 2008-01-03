@@ -1227,20 +1227,7 @@ int npc_remove_map(struct npc_data* nd)
 		return 1; //Not assigned to a map.
   	m = nd->bl.m;
 	clif_clearunit_area(&nd->bl,2);
-	if (nd->subtype == WARP)
-	{// Remove corresponding NPC CELLs
-		int j, xs, ys, x, y;
-		x = nd->bl.x;
-		y = nd->bl.y;
-		xs = nd->u.warp.xs;
-		ys = nd->u.warp.ys;
-
-		for( i = y-ys; i < y+ys; i++ )
-			for( j = x-xs; j < x+xs; j++ )
-				if( map_getcell(m, j, i, CELL_CHKNPC) )
-					map_setcell(m, j, i, CELL_CLRNPC);
-
-	}
+	npc_unsetcells(nd);
 	map_delblock(&nd->bl);
 	//Remove npc from map[].npc list. [Skotlex]
 	ARR_FIND( 0, map[m].npc_num, i, map[m].npc[i] == nd );
@@ -2014,6 +2001,7 @@ void npc_unsetcells(struct npc_data* nd)
 		return;
 
 	//Locate max range on which we can locate npc cells
+	//FIXME: does this really do what it's supposed to do? [ultramage]
 	for(x0 = x-xs; x0 > 0 && map_getcell(m, x0, y, CELL_CHKNPC); x0--);
 	for(x1 = x+xs; x1 < map[m].xs-1 && map_getcell(m, x1, y, CELL_CHKNPC); x1++);
 	for(y0 = y-ys; y0 > 0 && map_getcell(m, x, y0, CELL_CHKNPC); y0--);

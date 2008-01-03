@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/01/03
+	* Fixed npc unloading not clearing NPC touch cells (bugreport:595)	
 	* Map cell mechanism rewrite
 	- defined a data structure for map cells (replaces 3 various cell arrays)
 	- both terrain (gat) and dynamic (cell) information is now stored as
