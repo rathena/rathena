@@ -1275,10 +1275,8 @@ int map_freeblock(struct block_list *bl);
 int map_freeblock_lock(void);
 int map_freeblock_unlock(void);
 // blockŠÖ˜A
-int map_addblock_sub(struct block_list *, int);
-int map_delblock_sub(struct block_list *, int);
-#define map_addblock(bl) map_addblock_sub(bl,1)
-#define map_delblock(bl) map_delblock_sub(bl,1)
+int map_addblock(struct block_list* bl);
+int map_delblock(struct block_list* bl);
 int map_moveblock(struct block_list *, int, int, unsigned int);
 int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int type, ...);
 int map_foreachinshootrange(int (*func)(struct block_list*,va_list), struct block_list* center, int range, int type, ...);

@@ -275,11 +275,9 @@ void map_delblcell(struct block_list *bl)
 
 /*==========================================
  * Adds a block to the map.
- * If flag is 1, then the block was just added,
- * otherwise it is part of a transition.
  * Returns 0 on success, 1 on failure (illegal coordinates).
  *------------------------------------------*/
-int map_addblock_sub (struct block_list *bl, int flag)
+int map_addblock(struct block_list* bl)
 {
 	int m, x, y, pos;
 
@@ -287,7 +285,7 @@ int map_addblock_sub (struct block_list *bl, int flag)
 
 	if (bl->prev != NULL) {
 		ShowError("map_addblock: bl->prev != NULL\n");
-		return 0;
+		return 1;
 	}
 
 	m = bl->m;
@@ -303,29 +301,15 @@ int map_addblock_sub (struct block_list *bl, int flag)
 		ShowError("map_addblock: out-of-bounds coordinates (\"%s\",%d,%d), map is %dx%d\n", map[m].name, x, y, map[m].xs, map[m].ys);
 		return 1;
 	}
-	
+
 	pos = x/BLOCK_SIZE+(y/BLOCK_SIZE)*map[m].bxs;
+
 	if (bl->type == BL_MOB) {
 		bl->next = map[m].block_mob[pos];
 		bl->prev = &bl_head;
 		if (bl->next) bl->next->prev = bl;
 		map[m].block_mob[pos] = bl;
 	} else {
-		if (bl->type == BL_PC && flag)
-		{
-			struct map_session_data* sd = (struct map_session_data*)bl;
-			if (!sd->state.auth) {
-				ShowError("map_addblock: Attempted to add a non-authed player (%d:%d)!\n", sd->status.account_id, sd->status.char_id);
-				return 1;
-			}
-			if (map[m].users++ == 0 && battle_config.dynamic_mobs)	//Skotlex
-				map_spawnmobs(m);
-			if (battle_config.pet_no_gvg && map_flag_gvg(m) && sd->pd)
-			{	//Return the pet to egg. [Skotlex]
-				clif_displaymessage(sd->fd, "Pets are not allowed in Guild Wars.");
-				pet_menu(sd, 3); //Option 3 is return to egg.
-			}
-		}
 		bl->next = map[m].block[pos];
 		bl->prev = &bl_head;
 		if (bl->next) bl->next->prev = bl;
@@ -341,12 +325,10 @@ int map_addblock_sub (struct block_list *bl, int flag)
 
 /*==========================================
  * Removes a block from the map.
- * If flag is 1, then the block is removed for good
- * otherwise it is part of a transition.
  *------------------------------------------*/
-int map_delblock_sub (struct block_list *bl, int flag)
+int map_delblock(struct block_list* bl)
 {
-	int b;
+	int pos;
 	nullpo_retr(0, bl);
 
 	// ?にblocklistから?けている
@@ -362,20 +344,16 @@ int map_delblock_sub (struct block_list *bl, int flag)
 	map_delblcell(bl);
 #endif
 	
-	b = bl->x/BLOCK_SIZE+(bl->y/BLOCK_SIZE)*map[bl->m].bxs;
-
-	if (bl->type == BL_PC && flag)
-		if (--map[bl->m].users == 0 && battle_config.dynamic_mobs)	//[Skotlex]
-			map_removemobs(bl->m);
+	pos = bl->x/BLOCK_SIZE+(bl->y/BLOCK_SIZE)*map[bl->m].bxs;
 
 	if (bl->next)
 		bl->next->prev = bl->prev;
 	if (bl->prev == &bl_head) {
 		// リストの頭なので、map[]のblock_listを更新する
 		if (bl->type == BL_MOB) {
-			map[bl->m].block_mob[b] = bl->next;
+			map[bl->m].block_mob[pos] = bl->next;
 		} else {
-			map[bl->m].block[b] = bl->next;
+			map[bl->m].block[pos] = bl->next;
 		}
 	} else {
 		bl->prev->next = bl->next;
@@ -403,6 +381,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 		bl->y = y1;
 		return 0;	
 	}
+
 	//TODO: Perhaps some outs of bounds checking should be placed here?
 	if (bl->type&BL_CHAR) {
 		skill_unit_move(bl,tick,2);
@@ -422,18 +401,20 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 				status_change_end(bl, SC_MAGICROD, -1);
 		}
 	} else
-	if (bl->type == BL_NPC) npc_unsetcells((TBL_NPC*)bl);
+	if (bl->type == BL_NPC)
+		npc_unsetcells((TBL_NPC*)bl);
 
-	if (moveblock) map_delblock_sub(bl,0);
+	if (moveblock) map_delblock(bl);
 #ifdef CELL_NOSTACK
 	else map_delblcell(bl);
 #endif
 	bl->x = x1;
 	bl->y = y1;
-	if (moveblock) map_addblock_sub(bl,0);
+	if (moveblock) map_addblock(bl);
 #ifdef CELL_NOSTACK
 	else map_addblcell(bl);
 #endif
+
 	if (bl->type&BL_CHAR) {
 		skill_unit_move(bl,tick,3);
 		if (sc) {
@@ -447,7 +428,9 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 			}
 		}
 	} else
-	if (bl->type == BL_NPC) npc_setcells((TBL_NPC*)bl);
+	if (bl->type == BL_NPC)
+		npc_setcells((TBL_NPC*)bl);
+
 	return 0;
 }
 	
