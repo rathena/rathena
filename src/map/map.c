@@ -2176,16 +2176,10 @@ int map_getcellp(struct map_data* m,int x,int y,cell_t cellchk)
 		// base cell type checks
 		case CELL_CHKNPC:
 			return (cell.npc);
-		case CELL_CHKPNEUMA:
-			return (cell.pneuma);
-		case CELL_CHKSAFETYWALL:
-			return (cell.safetywall);
 		case CELL_CHKBASILICA:
 			return (cell.basilica);
 		case CELL_CHKLANDPROTECTOR:
 			return (cell.landprotector);
-		case CELL_CHKREGEN:
-			return (cell.regen);
 		case CELL_CHKICEWALL:
 			return (cell.icewall);
 		case CELL_CHKNOVENDING:
@@ -2235,13 +2229,8 @@ void map_setcell(int m,int x,int y,int cell)
 		case CELL_CLRICEWALL:       map[m].cell[j].icewall = 0;       break;
 		case CELL_SETBASILICA:      map[m].cell[j].basilica = 1;      break;
 		case CELL_CLRBASILICA:      map[m].cell[j].basilica = 0;      break;
-		case CELL_SETPNEUMA:        map[m].cell[j].pneuma = 1;        break;
-		case CELL_CLRPNEUMA:        map[m].cell[j].pneuma = 0;        break;
-		case CELL_SETSAFETYWALL:    map[m].cell[j].safetywall = 1;    break;
-		case CELL_CLRSAFETYWALL:    map[m].cell[j].safetywall = 0;    break;
 		case CELL_SETLANDPROTECTOR: map[m].cell[j].landprotector = 1; break;
 		case CELL_CLRLANDPROTECTOR: map[m].cell[j].landprotector = 0; break;
-		case CELL_SETREGEN:         map[m].cell[j].regen = 1;         break;
 		case CELL_SETNOVENDING:     map[m].cell[j].novending = 1;     break;
 		case CELL_CLRNOVENDING:     map[m].cell[j].novending = 0;     break;
 		default:

@@ -1109,9 +1109,6 @@ enum _look {
 
 // CELLs for non-permanent cell-based effects (Pneuma, Basilica, Npcs, etc)
 #define CELL_NPC	0x1
-#define CELL_REGEN	0x2
-#define CELL_PNEUMA	0x4
-#define CELL_SAFETYWALL	0x8
 #define CELL_LANDPROTECTOR	0x10
 #define CELL_BASILICA	0x20
 #define CELL_NOVENDING	0x40
@@ -1132,9 +1129,6 @@ typedef enum {
 	CELL_CHKNOREACH,	// Same as NOPASS, but ignores the cell-stacking mod.
 
 	CELL_CHKNPC=0x10,	// タッチタイプのNPC(セルタイプ0x80フラグ)
-	CELL_CHKREGEN,		// cells that improve regeneration
-	CELL_CHKPNEUMA,
-	CELL_CHKSAFETYWALL,
 	CELL_CHKBASILICA,	// バジリカ(セルタイプ0x40フラグ)
 	CELL_CHKLANDPROTECTOR,
 	CELL_CHKICEWALL,
@@ -1148,14 +1142,9 @@ enum {
 	CELL_CLRNPC,
 	CELL_SETBASILICA,	// バジリカをセット
 	CELL_CLRBASILICA,	// バジリカをクリア
-	CELL_SETREGEN,		// set regen cell
-	CELL_SETLANDPROTECTOR, //Set/Clear Magnetic Earth
+	CELL_SETLANDPROTECTOR=0x15, //Set/Clear Magnetic Earth
 	CELL_CLRLANDPROTECTOR,
-	CELL_SETPNEUMA,
-	CELL_CLRPNEUMA,
-	CELL_SETSAFETYWALL,
-	CELL_CLRSAFETYWALL,
-	CELL_SETICEWALL,
+	CELL_SETICEWALL=0x1b,
 	CELL_CLRICEWALL,
 	CELL_SETNOVENDING,
 	CELL_CLRNOVENDING,
@@ -1172,9 +1161,6 @@ struct mapcell
 	// dynamic flags
 	unsigned char
 		npc : 1,
-		regen : 1,
-		pneuma : 1,
-		safetywall : 1,
 		landprotector : 1,
 		basilica : 1,
 		icewall : 1,

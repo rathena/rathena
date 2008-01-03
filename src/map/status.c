@@ -153,6 +153,7 @@ void initChangeTables(void)
 	add_sc(MG_FROSTDIVER, SC_FREEZE);
 	add_sc(MG_STONECURSE, SC_STONE);
 	add_sc(AL_RUWACH, SC_RUWACH);
+	add_sc(AL_PNEUMA, SC_PNEUMA);
 	set_sc(AL_INCAGI, SC_INCREASEAGI, SI_INCREASEAGI, SCB_AGI|SCB_SPEED);
 	set_sc(AL_DECAGI, SC_DECREASEAGI, SI_DECREASEAGI, SCB_AGI|SCB_SPEED);
 	set_sc(AL_CRUCIS, SC_SIGNUMCRUCIS, SI_SIGNUMCRUCIS, SCB_DEF);
@@ -4597,7 +4598,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 
 	if( bl->type == BL_MOB && ((TBL_MOB*)bl)->class_ == MOBID_EMPERIUM )
 	{
-		if( type != SC_SAFETYWALL )
+		if( type != SC_SAFETYWALL && type != SC_PNEUMA )
 			return 0; //Emperium can't be afflicted by status changes
 	}
 
@@ -7060,6 +7061,7 @@ int status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_DANCING:
 			case SC_GUILDAURA:
 			case SC_SAFETYWALL:
+			case SC_PNEUMA:
 			case SC_NOCHAT:
 			case SC_JAILED:
 			case SC_ANKLE:
@@ -7215,8 +7217,6 @@ static int status_natural_heal(DBKey key,void * data,va_list ap)
 	{
 		if(!vd) vd = status_get_viewdata(bl);
 		if(vd && vd->dead_sit == 2)
-			bonus++;
-		if(map_getcell(bl->m,bl->x,bl->y,CELL_CHKREGEN))
 			bonus++;
 		if(regen->state.gc)
 			bonus++;

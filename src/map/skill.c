@@ -4191,7 +4191,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				case SC_SMA:         case SC_SPEEDUP0:    case SC_NOCHAT:
 				case SC_ANKLE:       case SC_SPIDERWEB:   case SC_JAILED:
 				case SC_ITEMBOOST:   case SC_EXPBOOST:    case SC_LIFEINSURANCE:
-				case SC_BOSSMAPINFO:
+				case SC_BOSSMAPINFO: case SC_PNEUMA:
 					continue;
 				}
 				if(i==SC_BERSERK) tsc->data[i]->val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
@@ -6502,6 +6502,11 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 			sc_start4(bl,type,100,sg->skill_lv,sg->group_id,(int)sg,0,sg->limit);
 		break;
 
+	case UNT_PNEUMA:
+		if (!sce)
+			sc_start4(bl,type,100,sg->skill_lv,sg->group_id,0,0,sg->limit);
+		break;
+
 	case UNT_WARP_WAITING:
 		if(bl->type==BL_PC){
 			struct map_session_data *sd = (struct map_session_data *)bl;
@@ -7057,6 +7062,7 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 
 	switch(sg->unit_id){
 	case UNT_SAFETYWALL:
+	case UNT_PNEUMA:
 		if (sce)
 			status_change_end(bl,type,-1);
 		break;
@@ -9234,12 +9240,6 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 	map_addblock(&unit->bl);
 
 	switch (group->skill_id) {
-	case AL_PNEUMA:
-		skill_unitsetmapcell(unit,AL_PNEUMA,group->skill_lv,CELL_SETPNEUMA);
-		break;
-	case MG_SAFETYWALL:
-		skill_unitsetmapcell(unit,MG_SAFETYWALL,group->skill_lv,CELL_SETSAFETYWALL);
-		break;
 	case SA_LANDPROTECTOR:
 		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_SETLANDPROTECTOR);
 		break;
@@ -9281,12 +9281,6 @@ int skill_delunit (struct skill_unit* unit)
 		map_foreachincell(skill_unit_effect,unit->bl.m,unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,gettick(),4);
 
 	switch (group->skill_id) {
-	case AL_PNEUMA:
-		skill_unitsetmapcell(unit,AL_PNEUMA,group->skill_lv,CELL_CLRPNEUMA);
-		break;
-	case MG_SAFETYWALL:
-		skill_unitsetmapcell(unit,MG_SAFETYWALL,group->skill_lv,CELL_CLRSAFETYWALL);
-		break;
 	case SA_LANDPROTECTOR:
 		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_CLRLANDPROTECTOR);
 		break;
