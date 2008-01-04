@@ -1565,10 +1565,11 @@ void clif_sendfakenpc(struct map_session_data *sd, int npcid)
 {
 	unsigned char *buf;
 	int fd = sd->fd;
-	WFIFOHEAD(fd, packet_len(0x78));
 	sd->state.using_fake_npc = 1;
+
+	WFIFOHEAD(fd, packet_len(0x78));
 	buf = WFIFOP(fd,0);
-	memset(WBUFP(fd,0), 0, packet_len(0x78));
+	memset(WBUFP(buf,0), 0, packet_len(0x78));
 	WBUFW(buf,0)=0x78;
 #if PACKETVER >=9
 	WBUFB(buf,2) = 0; //Unknown bit
@@ -1580,6 +1581,7 @@ void clif_sendfakenpc(struct map_session_data *sd, int npcid)
 	WBUFB(buf,49)=5;
 	WBUFB(buf,50)=5;
 	WFIFOSET(fd, packet_len(0x78));
+
 	return;
 }
 
