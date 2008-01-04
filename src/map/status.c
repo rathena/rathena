@@ -6662,7 +6662,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	struct status_change_entry *sce;
 
 	bl = map_id2bl(id);
-	sc = status_get_sc(bl);
+	sc = bl?status_get_sc(bl):NULL;
 	status = status_get_status_data(bl);
 	
 	if(!(bl && sc && (sce = sc->data[type])))

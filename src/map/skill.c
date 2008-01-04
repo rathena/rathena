@@ -6271,7 +6271,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 	case BA_ASSASSINCROSS:
 		val1 = 100+10*skilllv+status->agi; // ASPD increase
 		if(sd)
-			val1 += pc_checkskill(sd,BA_MUSICALLESSON);
+			val1 += 5*pc_checkskill(sd,BA_MUSICALLESSON);
 		break;
 	case DC_FORTUNEKISS:
 		val1 = 10+skilllv+(status->luk/10); // Critical increase
