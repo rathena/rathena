@@ -224,12 +224,14 @@ mf_nochat	43
 mf_noexppenalty	44
 mf_guildlock	45
 
-cell_wall	1
-cell_water	3
-cell_ground	5
-cell_regen	32
-cell_basilica	64
-cell_npc	128
+cell_walkable	0
+cell_shootable	1
+cell_water	2
+cell_npc	3
+cell_basilica	4
+cell_landprotector	5
+cell_icewall	6
+cell_novending	7
 
 StatusPoint	9	1
 BaseLevel	11	1

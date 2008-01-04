@@ -197,7 +197,7 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 /*==========================================
  * is ranged attack from (x0,y0) to (x1,y1) possible?
  *------------------------------------------*/
-bool path_search_long(struct shootpath_data *spd,int m,int x0,int y0,int x1,int y1,cell_t cell)
+bool path_search_long(struct shootpath_data *spd,int m,int x0,int y0,int x1,int y1,cell_chk cell)
 {
 	int dx, dy;
 	int wx = 0, wy = 0;
@@ -270,7 +270,7 @@ bool path_search_long(struct shootpath_data *spd,int m,int x0,int y0,int x1,int 
  * flag: &1 = easy path search only
  * cell: type of obstruction to check for
  *------------------------------------------*/
-bool path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int flag,cell_t cell)
+bool path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int flag,cell_chk cell)
 {
 	int heap[MAX_HEAP+1];
 	struct tmp_path tp[MAX_WALKPATH*MAX_WALKPATH];

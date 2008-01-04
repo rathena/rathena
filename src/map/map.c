@@ -468,7 +468,7 @@ int map_count_oncell(int m, int x, int y, int type)
 /*
  * ´ª´ÅEæ™ŒıÃÙ¯™ÀÃ∏™ƒ™±™ø´π´≠´ÅEÊ´À´√´»™Ú⁄˜™π
  */
-struct skill_unit *map_find_skill_unit_oncell(struct block_list *target,int x,int y,int skill_id,struct skill_unit *out_unit)
+struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int x,int y,int skill_id,struct skill_unit* out_unit)
 {
 	int m,bx,by;
 	struct block_list *bl;
@@ -485,10 +485,11 @@ struct skill_unit *map_find_skill_unit_oncell(struct block_list *target,int x,in
 	{
 		if (bl->x != x || bl->y != y || bl->type != BL_SKILL)
 			continue;
+
 		unit = (struct skill_unit *) bl;
-		if (unit==out_unit || !unit->alive || !unit->group || unit->group->skill_id!=skill_id)
+		if( unit == out_unit || !unit->alive || !unit->group || unit->group->skill_id != skill_id )
 			continue;
-		if (battle_check_target(&unit->bl,target,unit->group->target_flag)>0)
+		if( battle_check_target(&unit->bl,target,unit->group->target_flag) > 0 )
 			return unit;
 	}
 	return NULL;
@@ -2136,12 +2137,12 @@ static int map_cell2gat(struct mapcell cell)
 /*==========================================
  * (m,x,y)ÇÃèÛë‘Çí≤Ç◊ÇÈ
  *------------------------------------------*/
-int map_getcell(int m,int x,int y,cell_t cellchk)
+int map_getcell(int m,int x,int y,cell_chk cellchk)
 {
 	return (m < 0 || m >= MAX_MAP_PER_SERVER) ? 0 : map_getcellp(&map[m],x,y,cellchk);
 }
 
-int map_getcellp(struct map_data* m,int x,int y,cell_t cellchk)
+int map_getcellp(struct map_data* m,int x,int y,cell_chk cellchk)
 {
 	struct mapcell cell;
 
@@ -2149,10 +2150,7 @@ int map_getcellp(struct map_data* m,int x,int y,cell_t cellchk)
 
 	//NOTE: this intentionally overrides the last row and column
 	if(x<0 || x>=m->xs-1 || y<0 || y>=m->ys-1)
-	{
-		if(cellchk==CELL_CHKNOPASS) return 1;
-		return 0;
-	}
+		return( cellchk == CELL_CHKNOPASS );
 
 	cell = m->cell[x + y*m->xs];
 
@@ -2213,28 +2211,31 @@ int map_getcellp(struct map_data* m,int x,int y,cell_t cellchk)
 }
 
 /*==========================================
- * (m,x,y)ÇÃèÛë‘Çê›íËÇ∑ÇÈ
+ * Change the type/flags of a map cell
+ * 'cell' - which flag to modify
+ * 'flag' - true = on, false = off
  *------------------------------------------*/
-void map_setcell(int m,int x,int y,int cell)
+void map_setcell(int m, int x, int y, cell_t cell, bool flag)
 {
 	int j;
-	if(x<0 || x>=map[m].xs || y<0 || y>=map[m].ys)
-		return;
-	j=x+y*map[m].xs;
 
-	switch (cell) {
-		case CELL_SETNPC:           map[m].cell[j].npc = 1;           break;
-		case CELL_CLRNPC:           map[m].cell[j].npc = 0;           break;
-		case CELL_SETICEWALL:       map[m].cell[j].icewall = 1;       break;
-		case CELL_CLRICEWALL:       map[m].cell[j].icewall = 0;       break;
-		case CELL_SETBASILICA:      map[m].cell[j].basilica = 1;      break;
-		case CELL_CLRBASILICA:      map[m].cell[j].basilica = 0;      break;
-		case CELL_SETLANDPROTECTOR: map[m].cell[j].landprotector = 1; break;
-		case CELL_CLRLANDPROTECTOR: map[m].cell[j].landprotector = 0; break;
-		case CELL_SETNOVENDING:     map[m].cell[j].novending = 1;     break;
-		case CELL_CLRNOVENDING:     map[m].cell[j].novending = 0;     break;
+	if( m < 0 || m >= map_num || x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
+		return;
+
+	j = x + y*map[m].xs;
+
+	switch( cell ) {
+		case CELL_WALKABLE:      map[m].cell[j].walkable = flag;      break;
+		case CELL_SHOOTABLE:     map[m].cell[j].shootable = flag;     break;
+		case CELL_WATER:         map[m].cell[j].water = flag;         break;
+
+		case CELL_NPC:           map[m].cell[j].npc = flag;           break;
+		case CELL_ICEWALL:       map[m].cell[j].icewall = flag;       break;
+		case CELL_BASILICA:      map[m].cell[j].basilica = flag;      break;
+		case CELL_LANDPROTECTOR: map[m].cell[j].landprotector = flag; break;
+		case CELL_NOVENDING:     map[m].cell[j].novending = flag;     break;
 		default:
-			//map[m].gat[j] = cell; FIXME
+			ShowWarning("map_setcell: invalid cell type '%d'\n", (int)cell);
 			break;
 	}
 }

@@ -1970,7 +1970,7 @@ void npc_setcells(struct npc_data* nd)
 		for (j = x-xs; j <= x+xs; j++) {
 			if (map_getcell(m, j, i, CELL_CHKNOPASS))
 				continue;
-			map_setcell(m, j, i, CELL_SETNPC);
+			map_setcell(m, j, i, CELL_NPC, true);
 		}
 	}
 }
@@ -2010,7 +2010,7 @@ void npc_unsetcells(struct npc_data* nd)
 	//Erase this npc's cells
 	for (i = y-ys; i <= y+ys; i++)
 		for (j = x-xs; j <= x+xs; j++)
-			map_setcell(m, j, i, CELL_CLRNPC);
+			map_setcell(m, j, i, CELL_NPC, false);
 
 	//Re-deploy NPC cells for other nearby npcs.
 	map_foreachinarea( npc_unsetcells_sub, m, x0, y0, x1, y1, BL_NPC, nd->bl.id );
@@ -2512,47 +2512,6 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	return strchr(start,'\n');// continue
 }
 
-/*==========================================
- * Setting up map cells
- *------------------------------------------*/
-static const char* npc_parse_mapcell(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
-{
-	int m, cell, x, y, x0, y0, x1, y1;
-	char type[32], mapname[32];
-
-	// w1=<mapname>
-	// w3=<type>,<x1>,<y1>,<x2>,<y2>
-	if( sscanf(w1, "%31[^,]", mapname) != 1
-	||	sscanf(w3, "%31[^,],%d,%d,%d,%d", type, &x0, &y0, &x1, &y1) < 5 )
-	{
-		ShowError("npc_parse_mapcell: Invalid mapcell definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
-		return strchr(start,'\n');// skip and continue
-	}
-	m = map_mapname2mapid(mapname);
-	if( m < 0 )
-	{
-		ShowWarning("npc_parse_mapcell: Unknown map in file '%s', line '%d' : %s\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", mapname, filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
-		return strchr(start,'\n');// skip and continue
-	}
-
-	cell = strtol(type, (char **)NULL, 0);
-
-	if( x0 > x1 )
-		swap(x0, x1);
-	if( y0 > y1 )
-		swap(y0, y1);
-
-	for( x = x0; x <= x1; ++x )
-		for( y = y0; y <= y1; ++y )
-		{
-			if( map_getcell(m, x, y, CELL_CHKWALL) || map_getcell(m, x, y, CELL_CHKCLIFF) )
-				continue;
-			map_setcell(m, x, y, cell);
-		}
-
-	return strchr(start,'\n');// continue
-}
-
 void npc_parsesrcfile(const char* filepath)
 {
 	int m, lines = 0;
@@ -2677,10 +2636,6 @@ void npc_parsesrcfile(const char* filepath)
 		else if( strcmpi(w2,"mapflag") == 0 && count >= 3 )
 		{
 			p = npc_parse_mapflag(w1, w2, w3, w4, p, buffer, filepath);
-		}
-		else if( strcmpi(w2,"setcell") == 0 && count >= 3 )
-		{
-			p = npc_parse_mapcell(w1, w2, w3, w4, p, buffer, filepath);
 		}
 		else
 		{

@@ -1996,24 +1996,27 @@ int skill_area_sub_count (struct block_list *src, struct block_list *target, int
 
 int skill_count_water (struct block_list *src, int range)
 {
-	int i,x,y,cnt = 0,size = range*2+1;
+	int x,y,cnt = 0;
 	struct skill_unit *unit;
 
-	for (i=0;i<size*size;i++) {
-		x = src->x+(i%size-range);
-		y = src->y+(i/size-range);
-		if (map_getcell(src->m,x,y,CELL_CHKWATER)) {
-			cnt++;
-			continue;
-		}
-		unit = map_find_skill_unit_oncell(src,x,y,SA_DELUGE,NULL);
-		if (!unit)
-		  unit = map_find_skill_unit_oncell(src,x,y,NJ_SUITON,NULL);
-		if (unit) {
-			cnt++;
-			skill_delunit(unit);
+	for( y = src->y - range; y <= src->y + range; ++y )
+	{
+		for( x = src->x - range; x <= src->x + range; ++x )
+		{
+			if (map_getcell(src->m,x,y,CELL_CHKWATER)) {
+				cnt++;
+				continue;
+			}
+			unit = map_find_skill_unit_oncell(src,x,y,SA_DELUGE,NULL);
+			if (!unit)
+			  unit = map_find_skill_unit_oncell(src,x,y,NJ_SUITON,NULL);
+			if (unit) {
+				cnt++;
+				skill_delunit(unit);
+			}
 		}
 	}
+
 	return cnt;
 }
 
@@ -7066,6 +7069,7 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 		if (sce)
 			status_change_end(bl,type,-1);
 		break;
+
 	case UNT_HERMODE:	//Clear Hermode if the owner moved.
 		if (sce && sce->val3 == BCT_SELF && sce->val4 == sg->group_id)
 			status_change_end(bl,type,-1);
@@ -8758,33 +8762,16 @@ int skill_frostjoke_scream (struct block_list *bl, va_list ap)
 /*==========================================
  *
  *------------------------------------------*/
-void skill_unitsetmapcell (struct skill_unit *src, int skill_num, int skill_lv, int flag)
+static void skill_unitsetmapcell (struct skill_unit *src, int skill_num, int skill_lv, cell_t cell, bool flag)
 {
-	int i,x,y,range = skill_get_unit_range(skill_num,skill_lv);
-	int size = range*2+1;
+	int range = skill_get_unit_range(skill_num,skill_lv);
+	int x,y;
 
-	for (i=0;i<size*size;i++) {
-		x = src->bl.x+(i%size-range);
-		y = src->bl.y+(i/size-range);
-		map_setcell(src->bl.m,x,y,flag);
-	}
+	for( y = src->bl.y - range; y <= src->bl.y + range; ++y )
+		for( x = src->bl.x - range; x <= src->bl.x + range; ++x )
+			map_setcell(src->bl.m, x, y, cell, flag);
 }
 
-/*==========================================
- * Sets a map cell around the caster, according to the skill's splash range.
- *------------------------------------------*/
-void skill_setmapcell (struct block_list *src, int skill_num, int skill_lv, int flag)
-{
-	int i,x,y,range = skill_get_splash(skill_num, skill_lv);
-	int size = range*2+1;
-
-	for (i=0;i<size*size;i++) {
-		x = src->x+(i%size-range);
-		y = src->y+(i/size-range);
-		map_setcell(src->m,x,y,flag);
-	}
-}
-	
 /*==========================================
  *
  *------------------------------------------*/
@@ -9241,13 +9228,13 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 
 	switch (group->skill_id) {
 	case SA_LANDPROTECTOR:
-		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_SETLANDPROTECTOR);
+		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_LANDPROTECTOR,true);
 		break;
 	case HP_BASILICA:
-		skill_unitsetmapcell(unit,HP_BASILICA,group->skill_lv,CELL_SETBASILICA);
+		skill_unitsetmapcell(unit,HP_BASILICA,group->skill_lv,CELL_BASILICA,true);
 		break;
 	case WZ_ICEWALL:
-		skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_SETICEWALL);
+		skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_ICEWALL,true);
 		break;
 	default:
 		if (group->state.song_dance&0x1) //Check for dissonance.
@@ -9282,13 +9269,13 @@ int skill_delunit (struct skill_unit* unit)
 
 	switch (group->skill_id) {
 	case SA_LANDPROTECTOR:
-		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_CLRLANDPROTECTOR);
+		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_LANDPROTECTOR,false);
 		break;
 	case HP_BASILICA:
-		skill_unitsetmapcell(unit,HP_BASILICA,group->skill_lv,CELL_CLRBASILICA);
+		skill_unitsetmapcell(unit,HP_BASILICA,group->skill_lv,CELL_BASILICA,false);
 		break;
 	case WZ_ICEWALL:
-		skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_CLRICEWALL);
+		skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_ICEWALL,false);
 		break;
 	}
 

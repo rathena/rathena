@@ -8,10 +8,10 @@
 int path_blownpos(int m,int x0,int y0,int dx,int dy,int count);
 
 // tries to find a walkable path
-bool path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int flag,cell_t cell);
+bool path_search(struct walkpath_data *wpd,int m,int x0,int y0,int x1,int y1,int flag,cell_chk cell);
 
 // tries to find a shootable path
-bool path_search_long(struct shootpath_data *spd,int m,int x0,int y0,int x1,int y1,cell_t cell);
+bool path_search_long(struct shootpath_data *spd,int m,int x0,int y0,int x1,int y1,cell_chk cell);
 
 
 // distance related functions

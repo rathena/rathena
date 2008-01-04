@@ -1107,48 +1107,39 @@ enum _look {
 	LOOK_SHOES
 };
 
-// CELLs for non-permanent cell-based effects (Pneuma, Basilica, Npcs, etc)
-#define CELL_NPC	0x1
-#define CELL_LANDPROTECTOR	0x10
-#define CELL_BASILICA	0x20
-#define CELL_NOVENDING	0x40
-#define CELL_ICEWALL	0x80
-/*
- * map_getcell()で使用されるフラグ
- */
+// used by map_setcell()
 typedef enum {
-	CELL_GETTYPE,		// セルタイプを返す
+	CELL_WALKABLE,
+	CELL_SHOOTABLE,
+	CELL_WATER,
 
-	CELL_CHKWALL,		// 壁(セルタイプ1)
-	CELL_CHKWATER,		// 水場(セルタイプ3)
-	CELL_CHKCLIFF,		// 地面障害物(セルタイプ5)
-
-	CELL_CHKPASS,		// 通過可能(セルタイプ1,5以外)
-	CELL_CHKREACH,		// Same as PASS, but ignores the cell-stacking mod.
-	CELL_CHKNOPASS,		// 通過不可(セルタイプ1,5)
-	CELL_CHKNOREACH,	// Same as NOPASS, but ignores the cell-stacking mod.
-
-	CELL_CHKNPC=0x10,	// タッチタイプのNPC(セルタイプ0x80フラグ)
-	CELL_CHKBASILICA,	// バジリカ(セルタイプ0x40フラグ)
-	CELL_CHKLANDPROTECTOR,
-	CELL_CHKICEWALL,
-	CELL_CHKSTACK,
-	CELL_CHKNOVENDING,
+	CELL_NPC,
+	CELL_BASILICA,
+	CELL_LANDPROTECTOR,
+	CELL_ICEWALL,
+	CELL_NOVENDING,
 } cell_t;
 
-// map_setcell()で使用されるフラグ
-enum {
-	CELL_SETNPC=0x10,	// タッチタイプのNPCをセット
-	CELL_CLRNPC,
-	CELL_SETBASILICA,	// バジリカをセット
-	CELL_CLRBASILICA,	// バジリカをクリア
-	CELL_SETLANDPROTECTOR=0x15, //Set/Clear Magnetic Earth
-	CELL_CLRLANDPROTECTOR,
-	CELL_SETICEWALL=0x1b,
-	CELL_CLRICEWALL,
-	CELL_SETNOVENDING,
-	CELL_CLRNOVENDING,
-};
+// used by map_getcell()
+typedef enum {
+	CELL_GETTYPE,		// retrieves a cell's 'gat' type
+
+	CELL_CHKWALL,		// wall (gat type 1)
+	CELL_CHKWATER,		// water (gat type 3)
+	CELL_CHKCLIFF,		// cliff/gap (gat type 5)
+
+	CELL_CHKPASS,		// passable cell (gat type non-1/5)
+	CELL_CHKREACH,		// Same as PASS, but ignores the cell-stacking mod.
+	CELL_CHKNOPASS,		// non-passable cell (gat types 1 and 5)
+	CELL_CHKNOREACH,	// Same as NOPASS, but ignores the cell-stacking mod.
+	CELL_CHKSTACK,		// whether cell is full (reached cell stacking limit) 
+
+	CELL_CHKNPC,
+	CELL_CHKBASILICA,
+	CELL_CHKLANDPROTECTOR,
+	CELL_CHKICEWALL,
+	CELL_CHKNOVENDING,
+} cell_chk;
 
 struct mapcell
 {
@@ -1254,8 +1245,13 @@ struct map_data_other_server {
 	uint16 port;
 };
 
+int map_getcell(int,int,int,cell_chk);
+int map_getcellp(struct map_data*,int,int,cell_chk);
+void map_setcell(int m, int x, int y, cell_t cell, bool flag);
+
 extern struct map_data map[];
 extern int map_num;
+
 extern int autosave_interval;
 extern int minsave_interval;
 extern int save_settings;
@@ -1263,11 +1259,6 @@ extern int agit_flag;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
 extern char db_path[256];
-
-// gat?ﾖｧ
-int map_getcell(int,int,int,cell_t);
-int map_getcellp(struct map_data*,int,int,cell_t);
-void map_setcell(int,int,int,int);
 
 extern char motd_txt[];
 extern char help_txt[];

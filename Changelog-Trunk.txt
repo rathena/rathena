@@ -4,6 +4,17 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/01/04
+	* Modified the map_setcell() code to to use a boolean flag instead of
+	  needing SET_ / CLR_ pairs of defines (topic:174323) [ultramage].
+	  Also removed script object 'setcell', added script function 'setcell'
+	- Now you can manipulate cell information without needing @loadnpc
+	- You can also manipulate the terrain ('gat') type itself, using the
+	  new cell_walkable, cell_shootable and cell_water constants
+	  (currently the implementation uses bit flags too, so to get the type
+	  you want, you need to adjust the flags one by one)
+	- This breaks current scripts, so please adjust places that use setcell
+	  (also be sure to _only_ use predefined constants, not direct numbers)
+	- Details can be found in the script reference.
 	* Fixed Music Lesson's effect on Assassin Cross of Sunset.
 	* Fixed a possible crash in status_change_timer when debug mode is
 	  disabled. [Skotlex]
@@ -13,7 +24,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	- removed unused CELL_SAFETYWALL
 	- removed custom CELL_REGEN, it just increased regen rate (r1192, r1518)
 	* Fixed npc unloading not clearing NPC touch cells (bugreport:595)	
-	* Map cell mechanism rewrite
+	* Map cell mechanism rewrite (bugreport:426)
 	- defined a data structure for map cells (replaces 3 various cell arrays)
 	- both terrain (gat) and dynamic (cell) information is now stored as
 	  C-style bit flags instead of #defines and bitmasks
