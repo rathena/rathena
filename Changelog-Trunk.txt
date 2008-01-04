@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/01/04
+	* Fixed a mistake in r11991 that let knockback work through walls
 	* Modified the map_setcell() code to to use a boolean flag instead of
 	  needing SET_ / CLR_ pairs of defines (topic:174323) [ultramage].
 	  Also removed script object 'setcell', added script function 'setcell'

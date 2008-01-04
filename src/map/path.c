@@ -180,9 +180,9 @@ int path_blownpos(int m,int x0,int y0,int dx,int dy,int count)
 				else
 					dy=0;
 			}
-			else if( !fx )
+			if( !fx )
 				dx=0;
-			else if( !fy )
+			if( !fy )
 				dy=0;
 		}
 
