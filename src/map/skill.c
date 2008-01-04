@@ -1994,32 +1994,6 @@ int skill_area_sub_count (struct block_list *src, struct block_list *target, int
 	return 1;
 }
 
-int skill_count_water (struct block_list *src, int range)
-{
-	int x,y,cnt = 0;
-	struct skill_unit *unit;
-
-	for( y = src->y - range; y <= src->y + range; ++y )
-	{
-		for( x = src->x - range; x <= src->x + range; ++x )
-		{
-			if (map_getcell(src->m,x,y,CELL_CHKWATER)) {
-				cnt++;
-				continue;
-			}
-			unit = map_find_skill_unit_oncell(src,x,y,SA_DELUGE,NULL);
-			if (!unit)
-			  unit = map_find_skill_unit_oncell(src,x,y,NJ_SUITON,NULL);
-			if (unit) {
-				cnt++;
-				skill_delunit(unit);
-			}
-		}
-	}
-
-	return cnt;
-}
-
 /*==========================================
  *
  *------------------------------------------*/
@@ -2660,23 +2634,37 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			skill_attack(BF_MAGIC,src,src,bl,sid,skilllv,tick,flag|SD_LEVEL);
 		}
 		break;
-	case WZ_WATERBALL:			/* ウォーターボール */
+	case WZ_WATERBALL:
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
-		if (skilllv>1) {
-			int range = skilllv/2;
-			int cnt;
-		  	if (sd)
-				cnt = skill_count_water(src,range);
-			else {
-				range = 2*range+1;
-				cnt = range*range;
-			}
-			cnt--;
-			if (cnt > 0)
-				skill_addtimerskill(src,tick+125,bl->id,0,0,skillid,skilllv,cnt,flag);
-		} else if (sd) //Eat up deluge tiles.
-			skill_count_water(src,0);
+	{
+		int range = skilllv/2;
+		int size = 2*range + 1;
+		int count = 0;
 
+		if( src->type == BL_PC )
+		{// count the number of water cells in range
+			struct skill_unit* unit;
+			int x, y;
+			for( y = src->y - range; y <= src->y + range; ++y )
+			for( x = src->x - range; x <= src->x + range; ++x )
+			{
+				if( map_getcell(src->m,x,y,CELL_CHKWATER) )
+					count++; // natural water cell
+				else
+				if( (unit = map_find_skill_unit_oncell(src,x,y,SA_DELUGE,NULL)) != NULL 
+				||  (unit = map_find_skill_unit_oncell(src,x,y,NJ_SUITON,NULL)) != NULL )
+				{
+					count++; // skill-induced water cell
+					skill_delunit(unit); // consume cell
+				}
+			}
+		}
+		else // non-players bypass the water requirement
+			count = size*size;
+
+		if( count > 1 ) // queue the remaining count - 1 timerskill Waterballs
+			skill_addtimerskill(src,tick+150,bl->id,0,0,skillid,skilllv,count-1,flag);
+	}
 		break;
 
 	case PR_BENEDICTIO:
