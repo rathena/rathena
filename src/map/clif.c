@@ -1563,16 +1563,22 @@ int clif_scriptclose(struct map_session_data *sd, int npcid)
  *------------------------------------------*/
 void clif_sendfakenpc(struct map_session_data *sd, int npcid)
 {
+	unsigned char *buf;
 	int fd = sd->fd;
 	WFIFOHEAD(fd, packet_len(0x78));
 	sd->state.using_fake_npc = 1;
-	memset(WFIFOP(fd,0), 0, packet_len(0x78));
-	WFIFOW(fd,0)=0x78;
-	WFIFOL(fd,2)=npcid;
-	WFIFOW(fd,14)=111;
-	WFIFOPOS(fd,46,sd->bl.x,sd->bl.y,sd->ud.dir);
-	WFIFOB(fd,49)=5;
-	WFIFOB(fd,50)=5;
+	buf = WFIFOP(fd,0);
+	memset(WBUFP(fd,0), 0, packet_len(0x78));
+	WBUFW(buf,0)=0x78;
+#if PACKETVER >=9
+	WBUFB(buf,2) = 0; //Unknown bit
+	buf = WFIFOP(fd,1);
+#endif
+	WBUFL(buf,2)=npcid;
+	WBUFW(buf,14)=111;
+	WBUFPOS(buf,46,sd->bl.x,sd->bl.y,sd->ud.dir);
+	WBUFB(buf,49)=5;
+	WBUFB(buf,50)=5;
 	WFIFOSET(fd, packet_len(0x78));
 	return;
 }
