@@ -4064,7 +4064,7 @@ void mob_clear_spawninfo()
 int do_init_mob(void)
 {	//Initialize the mob database
 	memset(mob_db_data,0,sizeof(mob_db_data)); //Clear the array
-	mob_db_data[0] = aCalloc(1, sizeof (struct mob_data));	//This mob is used for random spawns
+	mob_db_data[0] = aCalloc(1, sizeof (struct mob_db));	//This mob is used for random spawns
 	mob_makedummymobdb(0); //The first time this is invoked, it creates the dummy mob
 	item_drop_ers = ers_new(sizeof(struct item_drop));
 	item_drop_list_ers = ers_new(sizeof(struct item_drop_list));
