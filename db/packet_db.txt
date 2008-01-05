@@ -1055,18 +1055,29 @@ packet_ver: 22
 0x029b,80
 
 //2007-11-13aSakexe
-//0x015b,-1
 0x02e1,33
 
 //2007-11-20aSakexe
-//0x015b,54,guildexpulsion,2:6:10:14
-//0x01df,10,gmreqnochatcount,2 <- TODO
-//0x01f3,0
+//0x01df,10 <- ???
 0x02e2,14
 0x02e3,25
 0x02e4,8
 0x02e5,8
 0x02e6,6
+
+//2007-11-27aSakexe
+0x02e7,-1
+
+//2008-01-02aSakexe
+0x01df,6,gmreqnochatcount,2
+0x02e8,-1
+0x02e9,-1
+0x02ea,-1
+0x02eb,13
+0x02ec,67
+0x02ed,59
+0x02ee,60
+0x02ef,8
 
 //Add new packets here
 //packet_ver: 23
