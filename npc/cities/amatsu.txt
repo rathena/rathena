@@ -5,8 +5,11 @@
 //===== Current Version: ===================================== 
 //= 1.3
 //===== Compatible With: ===================================== 
-//= Any eAthena Version; Niflheim Required
+//= eAthena SVN
 //===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Amatsu Town Script
+//===== Additional Comments: ================================= 
 //= 1.3 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
 //=	Moved elemental stone trader to 'elemental_trader.txt'
 //============================================================

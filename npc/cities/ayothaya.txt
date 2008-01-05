@@ -1,5 +1,5 @@
 //===== eAthena Script ======================================= 
-//= Ayothaya Town
+//= Ayotaya Town
 //===== By: ================================================== 
 //= MasterOfMuppets
 //===== Current Version: =====================================
@@ -8,9 +8,9 @@
 //= eAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
-//= Ayothaya Town Scripts
+//= Ayotaya Town Script
 //===== Additional Comments: ================================= 
-//= 1.6 Rescripted to AEgis 10.3 standards. [L0ne_W0lf]
+//= 1.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //============================================================ 
 
 // Ayothaya Transportation NPC
@@ -26,7 +26,7 @@ alberta,247,42,3	script	Aibakthing#ayo	843,{
 	switch(select("About Ayotaya.:Go to Ayotaya.:Cancel.")) {
 	case 1:
 		mes "[Aibakthing]";
-		mes "We Ayothayans are a pious people who value peace and sincerity. We endeavor to lead simple, yet noble, lives in harmony with nature.";
+		mes "We Ayotayans are a pious people who value peace and sincerity. We endeavor to lead simple, yet noble, lives in harmony with nature.";
 		next;
 		mes "[Aibakthing]";
 		mes "Our traditional cuisine is world famous. It's no surprise when we serve dishes like Tom Yum Goong, made of Shrimp, Lemon and Chillis, which has a tantalizing aroma and flavor beyond imagining.";

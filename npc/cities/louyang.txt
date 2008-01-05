@@ -13,7 +13,7 @@
 //= eAthena SVN
 //===== Description: ========================================= 
 //= [Aegis Conversion]
-//= Official NPC's for Louyang city.
+//= Louyang Town Script
 //===== Additional Comments: ================================= 
 //= 2.9 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
 //============================================================

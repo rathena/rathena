@@ -1,5 +1,10 @@
 Date		Added
 ======
+2008/01/05
+	* Rev. 12014 Updated Kunlun NPCs and warps. [L0ne_W0lf]
+	- Didn't update the Kunlun 'Power' npcs
+	- Updated Lutie and Comodo warps.
+	* Fixed some slight inconsistencies with the some script headers.
 2008/01/01
 	* Corrected some delitems in Kyel Hyre Quest. (bugreport:690) [Samuray22]
 	* Corrected a Typo error in Yuno NPCs. (bugreport:716)
