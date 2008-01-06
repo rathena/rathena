@@ -140,7 +140,6 @@ int inter_homun_init()
 		c++;
 	}
 	fclose(fp);
-//	printf("int_homun: %s read done (%d homuns)\n",homun_txt,c);
 	return 0;
 }
 
@@ -170,7 +169,6 @@ int inter_homun_save()
 	}
 	homun_db->foreach(homun_db,inter_homun_save_sub,fp);
 	lock_fclose(fp,homun_txt,&lock);
-//	printf("int_homun: %s saved.\n",homun_txt);
 	return 0;
 }
 

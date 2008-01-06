@@ -4,7 +4,6 @@
 #ifndef _SHOWMSG_H_
 #define _SHOWMSG_H_
 
-#define SHOW_DEBUG_MSG 1
 // for help with the console colors look here:
 // http://www.edoceo.com/liberum/?doc=printf-with-color
 // some code explanation (used here):

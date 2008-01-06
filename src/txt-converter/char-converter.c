@@ -41,7 +41,7 @@ int convert_init(void)
 	FILE *fp;
 
 	ShowWarning("Make sure you backup your databases before continuing!\n");
-	printf("\n");
+	ShowMessage("\n");
 
 	ShowNotice("Do you wish to convert your Character Database to SQL? (y/n) : ");
 	input = getchar();
@@ -102,13 +102,13 @@ int convert_init(void)
 	}
 	
 	while(getchar() != '\n');
-	printf("\n");
+	ShowMessage("\n");
 	ShowNotice("Do you wish to convert your Storage Database to SQL? (y/n) : ");
 	input = getchar();
 	if(input == 'y' || input == 'Y')
 	{
 		struct storage storage_;
-		printf("\n");
+		ShowMessage("\n");
 		ShowStatus("Converting Storage Database...\n");
 		if( (fp = fopen(storage_txt,"r")) == NULL )
 		{
@@ -138,13 +138,13 @@ int convert_init(void)
 	//FIXME: CONVERT STATUS DATA HERE!!!
 
 	while(getchar() != '\n');
-	printf("\n");
+	ShowMessage("\n");
 	ShowNotice("Do you wish to convert your Pet Database to SQL? (y/n) : ");
 	input=getchar();
 	if(input == 'y' || input == 'Y')
 	{
 		struct s_pet p;
-		printf("\n");
+		ShowMessage("\n");
 		ShowStatus("Converting Pet Database...\n");
 		if( (fp = fopen(pet_txt, "r")) == NULL )
 		{
@@ -170,13 +170,13 @@ int convert_init(void)
 	//FIXME: CONVERT HOMUNCULUS DATA AND SKILLS HERE!!!
 
 	while(getchar() != '\n');
-	printf("\n");
+	ShowMessage("\n");
 	ShowNotice("Do you wish to convert your Party Database to SQL? (y/n) : ");
 	input=getchar();
 	if(input == 'y' || input == 'Y')
 	{
 		struct party p;
-		printf("\n");
+		ShowMessage("\n");
 		ShowStatus("Converting Party Database...\n");
 		if( (fp = fopen(party_txt, "r")) == NULL )
 		{
@@ -201,14 +201,14 @@ int convert_init(void)
 	}
 
 	while(getchar() != '\n');
-	printf("\n");
+	ShowMessage("\n");
 	ShowNotice("Do you wish to convert your Guilds and Castles Database to SQL? (y/n) : ");
 	input=getchar();
 	if(input == 'y' || input == 'Y')
 	{
 		struct guild g;
 		struct guild_castle gc;
-		printf("\n");
+		ShowMessage("\n");
 		ShowStatus("Converting Guild Database...\n");
 		if( (fp = fopen(guild_txt, "r")) == NULL )
 		{
@@ -252,13 +252,13 @@ int convert_init(void)
 	}
 
 	while(getchar() != '\n');
-	printf("\n");
+	ShowMessage("\n");
 	ShowNotice("Do you wish to convert your Guild Storage Database to SQL? (y/n) : ");
 	input=getchar();
 	if(input == 'y' || input == 'Y')
 	{
 		struct guild_storage storage_;
-		printf("\n");
+		ShowMessage("\n");
 		ShowStatus("Converting Guild Storage Database...\n");
 		if( (fp = fopen(guild_storage_txt, "r")) == NULL )
 		{

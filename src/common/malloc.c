@@ -201,7 +201,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 	size_t size_hash;
 
 	if (((long) size) < 0) {
-		printf("_mmalloc: %d\n", size);
+		ShowError("_mmalloc: %d\n", size);
 		return 0;
 	}
 	

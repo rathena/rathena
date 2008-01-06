@@ -503,7 +503,6 @@ int mapif_wis_end(struct WisData *wd,int flag)
 	memcpy(WBUFP(buf, 2),wd->src,24);
 	WBUFB(buf,26)=flag;
 	mapif_send(wd->fd,buf,27);
-//	printf("inter server wis_end %d\n",flag);
 	return 0;
 }
 

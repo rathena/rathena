@@ -2614,22 +2614,22 @@ int parse_console(char* buf)
 
 	if( n == 5 && strcmpi("admin",type) == 0 ){
 		if( !is_atcommand_sub(sd.fd,&sd,command,99) )
-			printf("Console: not atcommand\n");
+			ShowInfo("Console: not atcommand\n");
 	} else if( n == 2 && strcmpi("server",type) == 0 ){
 		if( strcmpi("shutdown",command) == 0 ||
-			strcmpi("exit",command) == 0 ||
-			strcmpi("quit",command) == 0 ){
+		    strcmpi("exit",command) == 0 ||
+		    strcmpi("quit",command) == 0 ){
 			runflag = 0;
 		}
 	} else if( strcmpi("help",type) == 0 ){
 		ShowNotice("To use GM commands:\n");
-		printf("admin:<gm command>:<map of \"gm\"> <x> <y>\n");
-		printf("You can use any GM command that doesn't require the GM.\n");
-		printf("No using @item or @warp however you can use @charwarp\n");
-		printf("The <map of \"gm\"> <x> <y> is for commands that need coords of the GM\n");
-		printf("IE: @spawn\n");
-		printf("To shutdown the server:\n");
-		printf("server:shutdown\n");
+		ShowInfo("admin:<gm command>:<map of \"gm\"> <x> <y>\n");
+		ShowInfo("You can use any GM command that doesn't require the GM.\n");
+		ShowInfo("No using @item or @warp however you can use @charwarp\n");
+		ShowInfo("The <map of \"gm\"> <x> <y> is for commands that need coords of the GM\n");
+		ShowInfo("IE: @spawn\n");
+		ShowInfo("To shutdown the server:\n");
+		ShowInfo("server:shutdown\n");
 	}
 
 	return 0;
@@ -3116,13 +3116,12 @@ void map_helpscreen(int flag)
  *------------------------------------------------------*/
 void map_versionscreen(int flag)
 {
-	printf("CL_WHITE" "eAthena version %d.%02d.%02d, Athena Mod version %d" CL_RESET"\n",
+	ShowInfo("CL_WHITE" "eAthena version %d.%02d.%02d, Athena Mod version %d" CL_RESET"\n",
 		ATHENA_MAJOR_VERSION, ATHENA_MINOR_VERSION, ATHENA_REVISION,
 		ATHENA_MOD_VERSION);
-	puts(CL_GREEN "Website/Forum:" CL_RESET "\thttp://eathena.deltaanime.net/");
-	puts(CL_GREEN "Download URL:" CL_RESET "\thttp://eathena.systeminplace.net/");
-	puts(CL_GREEN "IRC Channel:" CL_RESET "\tirc://irc.deltaanime.net/#athena");
-	puts("\nOpen " CL_WHITE "readme.html" CL_RESET " for more information.");
+	ShowInfo(CL_GREEN "Website/Forum:" CL_RESET "\thttp://eathena.deltaanime.net/");
+	ShowInfo(CL_GREEN "IRC Channel:" CL_RESET "\tirc://irc.deltaanime.net/#athena");
+	ShowInfo("\nOpen " CL_WHITE "readme.html" CL_RESET " for more information.");
 	if (ATHENA_RELEASE_FLAG) ShowNotice("This version is not for release.\n");
 	if (flag) exit(EXIT_FAILURE);
 }
@@ -3203,10 +3202,6 @@ int do_init(int argc, char *argv[])
 		if (!char_ip_set)
 			chrif_setip(ip_str);
 	}
-
-	if (SHOW_DEBUG_MSG)
-		ShowNotice("Server running in '"CL_WHITE"Debug Mode"CL_RESET"'.\n");
-
 
 	battle_config_read(BATTLE_CONF_FILENAME);
 	msg_config_read(MSG_CONF_NAME);

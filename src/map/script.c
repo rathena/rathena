@@ -1828,16 +1828,16 @@ const char* script_print_line( const char *p, const char *mark, int line )
 	int i;
 	if( p == NULL || !p[0] ) return NULL;
 	if( line < 0 ) 
-		printf("*% 5d : ", -line);
+		ShowMessage("*% 5d : ", -line);
 	else
-		printf(" % 5d : ", line);
+		ShowMessage(" % 5d : ", line);
 	for(i=0;p[i] && p[i] != '\n';i++){
 		if(p + i != mark)
-			printf("%c",p[i]);
+			ShowMessage("%c",p[i]);
 		else
-			printf("\'%c\'",p[i]);
+			ShowMessage("\'%c\'",p[i]);
 	}
-	printf("\n");
+	ShowMessage("\n");
 	return p+i+(p[i] == '\n' ? 1 : 0);
 }
 
@@ -1861,9 +1861,9 @@ void script_error(const char *src,const char *file,int start_line, const char *e
 		p=lineend+1;
 	}
 
-	printf("\a\n");
-	printf("script error on %s line %d\n", file, line);
-	printf("    %s\n", error_msg);
+	ShowMessage("\a\n");
+	ShowMessage("script error on %s line %d\n", file, line);
+	ShowMessage("    %s\n", error_msg);
 	for(j = 0; j < 5; j++ ) {
 		script_print_line( linestart[j], NULL, line + j - 5);
 	}
@@ -2017,63 +2017,63 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 #ifdef DEBUG_DISP
 	for(i=0;i<script_pos;i++){
 		if((i&15)==0) printf("%04x : ",i);
-		printf("%02x ",script_buf[i]);
+		ShowMessage("%02x ",script_buf[i]);
 		if((i&15)==15) printf("\n");
 	}
-	printf("\n");
+	ShowMessage("\n");
 #endif
 #ifdef DEBUG_DISASM
 	{
 		int i = 0,j;
 		while(i < script_pos) {
-			printf("%06x ",i);
+			ShowMessage("%06x ",i);
 			j = i;
 			switch(get_com(script_buf,&i)) {
 			case C_EOL:	 printf("C_EOL"); break;
 			case C_INT:	 printf("C_INT %d",get_num(script_buf,&i)); break;
 			case C_POS:
-				printf("C_POS  0x%06x",*(int*)(script_buf+i)&0xffffff);
+				ShowMessage("C_POS  0x%06x",*(int*)(script_buf+i)&0xffffff);
 				i += 3;
 				break;
 			case C_NAME:
 				j = (*(int*)(script_buf+i)&0xffffff);
-				printf("C_NAME %s",j == 0xffffff ? "?? unknown ??" : str_buf + str_data[j].str);
+				ShowMessage("C_NAME %s",j == 0xffffff ? "?? unknown ??" : str_buf + str_data[j].str);
 				i += 3;
 				break;
-			case C_ARG:		printf("C_ARG"); break;
-			case C_FUNC:	printf("C_FUNC"); break;
-			case C_ADD:	 	printf("C_ADD"); break;
-			case C_SUB:		printf("C_SUB"); break;
-			case C_MUL:		printf("C_MUL"); break;
-			case C_DIV:		printf("C_DIV"); break;
-			case C_MOD:		printf("C_MOD"); break;
-			case C_EQ:		printf("C_EQ"); break;
-			case C_NE:		printf("C_NE"); break;
-			case C_GT:		printf("C_GT"); break;
-			case C_GE:		printf("C_GE"); break;
-			case C_LT:		printf("C_LT"); break;
-			case C_LE:		printf("C_LE"); break;
-			case C_AND:		printf("C_AND"); break;
-			case C_OR:		printf("C_OR"); break;
-			case C_XOR:		printf("C_XOR"); break;
-			case C_LAND:	printf("C_LAND"); break;
-			case C_LOR:		printf("C_LOR"); break;
-			case C_R_SHIFT:	printf("C_R_SHIFT"); break;
-			case C_L_SHIFT:	printf("C_L_SHIFT"); break;
-			case C_NEG:		printf("C_NEG"); break;
-			case C_NOT:		printf("C_NOT"); break;
-			case C_LNOT:	printf("C_LNOT"); break;
-			case C_NOP:		printf("C_NOP"); break;
-			case C_OP3:		printf("C_OP3"); break;
+			case C_ARG:		ShowMessage("C_ARG"); break;
+			case C_FUNC:	ShowMessage("C_FUNC"); break;
+			case C_ADD:	 	ShowMessage("C_ADD"); break;
+			case C_SUB:		ShowMessage("C_SUB"); break;
+			case C_MUL:		ShowMessage("C_MUL"); break;
+			case C_DIV:		ShowMessage("C_DIV"); break;
+			case C_MOD:		ShowMessage("C_MOD"); break;
+			case C_EQ:		ShowMessage("C_EQ"); break;
+			case C_NE:		ShowMessage("C_NE"); break;
+			case C_GT:		ShowMessage("C_GT"); break;
+			case C_GE:		ShowMessage("C_GE"); break;
+			case C_LT:		ShowMessage("C_LT"); break;
+			case C_LE:		ShowMessage("C_LE"); break;
+			case C_AND:		ShowMessage("C_AND"); break;
+			case C_OR:		ShowMessage("C_OR"); break;
+			case C_XOR:		ShowMessage("C_XOR"); break;
+			case C_LAND:	ShowMessage("C_LAND"); break;
+			case C_LOR:		ShowMessage("C_LOR"); break;
+			case C_R_SHIFT:	ShowMessage("C_R_SHIFT"); break;
+			case C_L_SHIFT:	ShowMessage("C_L_SHIFT"); break;
+			case C_NEG:		ShowMessage("C_NEG"); break;
+			case C_NOT:		ShowMessage("C_NOT"); break;
+			case C_LNOT:	ShowMessage("C_LNOT"); break;
+			case C_NOP:		ShowMessage("C_NOP"); break;
+			case C_OP3:		ShowMessage("C_OP3"); break;
 			case C_STR:
 				j = strlen(script_buf + i);
-				printf("C_STR %s",script_buf + i);
+				ShowMessage("C_STR %s",script_buf + i);
 				i+= j+1;
 				break;
 			default:
-				printf("unknown");
+				ShowMessage("unknown");
 			}
-			printf("\n");
+			ShowMessage("\n");
 		}
 	}
 #endif
@@ -2871,33 +2871,33 @@ int run_func(struct script_state *st)
 		for(i=0;i<end_sp;i++){
 			switch(st->stack->stack_data[i].type){
 			case C_INT:
-				printf(" int(%d)",st->stack->stack_data[i].u.num);
+				ShowMessage(" int(%d)",st->stack->stack_data[i].u.num);
 				break;
 			case C_NAME:
-				printf(" name(%s)",str_buf+str_data[st->stack->stack_data[i].u.num & 0xffffff].str);
+				ShowMessage(" name(%s)",str_buf+str_data[st->stack->stack_data[i].u.num & 0xffffff].str);
 				break;
 			case C_ARG:
-				printf(" arg");
+				ShowMessage(" arg");
 				break;
 			case C_POS:
-				printf(" pos(%d)",st->stack->stack_data[i].u.num);
+				ShowMessage(" pos(%d)",st->stack->stack_data[i].u.num);
 				break;
 			case C_STR:
-				printf(" str(%s)",st->stack->stack_data[i].u.str);
+				ShowMessage(" str(%s)",st->stack->stack_data[i].u.str);
 				break;
 			case C_CONSTSTR:
-				printf(" cstr(%s)",st->stack->stack_data[i].u.str);
+				ShowMessage(" cstr(%s)",st->stack->stack_data[i].u.str);
 				break;
 			default:
-				printf(" etc(%d,%d)",st->stack->stack_data[i].type,st->stack->stack_data[i].u.num);
+				ShowMessage(" etc(%d,%d)",st->stack->stack_data[i].type,st->stack->stack_data[i].u.num);
 			}
 		}
-		printf("\n");
+		ShowMessage("\n");
 	}
 #endif
 
 	if(str_data[func].type!=C_FUNC ){
-		ShowMessage ("run_func: '"CL_WHITE"%s"CL_RESET"' (type %d) is not function and command!\n", str_buf+str_data[func].str, str_data[func].type);
+		ShowError("run_func: '"CL_WHITE"%s"CL_RESET"' (type %d) is not function and command!\n", str_buf+str_data[func].str, str_data[func].type);
 //		st->stack->sp=0;
 		st->state=END;
 		script_reportsrc(st);
@@ -9112,7 +9112,7 @@ BUILDIN_FUNC(flagemblem)
 
 	if(g_id < 0) return 0;
 
-//	printf("Script.c: [FlagEmblem] GuildID=%d, Emblem=%d.\n", g->guild_id, g->emblem_id);
+//	ShowMessage("Script.c: [FlagEmblem] GuildID=%d, Emblem=%d.\n", g->guild_id, g->emblem_id);
 	((struct npc_data *)map_id2bl(st->oid))->u.scr.guild_id = g_id;
 	return 0;
 }

@@ -817,7 +817,7 @@ static int connect_check(uint32 ip)
 {
 	int result = connect_check_(ip);
 	if( access_debug ) {
-		ShowMessage("connect_check: Connection from %d.%d.%d.%d %s\n", CONVIP(ip),result ? "allowed." : "denied!");
+		ShowInfo("connect_check: Connection from %d.%d.%d.%d %s\n", CONVIP(ip),result ? "allowed." : "denied!");
 	}
 	return result;
 }
@@ -837,7 +837,7 @@ static int connect_check_(uint32 ip)
 	for( i=0; i < access_allownum; ++i ){
 		if( (ip & access_allow[i].mask) == (access_allow[i].ip & access_allow[i].mask) ){
 			if( access_debug ){
-				ShowMessage("connect_check: Found match from allow list:%d.%d.%d.%d IP:%d.%d.%d.%d Mask:%d.%d.%d.%d\n",
+				ShowInfo("connect_check: Found match from allow list:%d.%d.%d.%d IP:%d.%d.%d.%d Mask:%d.%d.%d.%d\n",
 					CONVIP(ip),
 					CONVIP(access_allow[i].ip),
 					CONVIP(access_allow[i].mask));
@@ -850,7 +850,7 @@ static int connect_check_(uint32 ip)
 	for( i=0; i < access_denynum; ++i ){
 		if( (ip & access_deny[i].mask) == (access_deny[i].ip & access_deny[i].mask) ){
 			if( access_debug ){
-				ShowMessage("connect_check: Found match from deny list:%d.%d.%d.%d IP:%d.%d.%d.%d Mask:%d.%d.%d.%d\n",
+				ShowInfo("connect_check: Found match from deny list:%d.%d.%d.%d IP:%d.%d.%d.%d Mask:%d.%d.%d.%d\n",
 					CONVIP(ip),
 					CONVIP(access_deny[i].ip),
 					CONVIP(access_deny[i].mask));
@@ -956,7 +956,7 @@ static int connect_check_clear(int tid, unsigned int tick, int id, int data)
 		connect_history[i] = root.next;
 	}
 	if( access_debug ){
-		ShowMessage("connect_check_clear: Cleared %d of %d from IP list.\n", clear, list);
+		ShowInfo("connect_check_clear: Cleared %d of %d from IP list.\n", clear, list);
 	}
 	return list;
 }
@@ -1001,7 +1001,7 @@ int access_ipmask(const char* str, AccessControl* acc)
 		}
 	}
 	if( access_debug ){
-		ShowMessage("access_ipmask: Loaded IP:%d.%d.%d.%d mask:%d.%d.%d.%d\n", CONVIP(ip), CONVIP(mask));
+		ShowInfo("access_ipmask: Loaded IP:%d.%d.%d.%d mask:%d.%d.%d.%d\n", CONVIP(ip), CONVIP(mask));
 	}
 	acc->ip   = ip;
 	acc->mask = mask;
@@ -1215,7 +1215,7 @@ void socket_init(void)
 		}
 		if( LOBYTE(wsaData.wVersion) != 2 || HIBYTE(wsaData.wVersion) != 0 )
 		{
-			printf("socket_init: WinSock version mismatch (2.0 or compatible required)!\n");
+			ShowError("socket_init: WinSock version mismatch (2.0 or compatible required)!\n");
 			return;
 		}
 	}

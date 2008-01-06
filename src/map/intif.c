@@ -402,8 +402,6 @@ int intif_request_partyinfo(int party_id)
 	WFIFOW(inter_fd,0) = 0x3021;
 	WFIFOL(inter_fd,2) = party_id;
 	WFIFOSET(inter_fd,6);
-//	if(battle_config.etc_log)
-//		printf("intif: request party info\n");
 	return 0;
 }
 // パーティ追加要求
@@ -1082,7 +1080,6 @@ int intif_parse_PartyInfo(int fd)
 		return 0;
 	}
 
-//	printf("intif: party info %d\n",RFIFOL(fd,4));
 	if( RFIFOW(fd,2)!=sizeof(struct party)+4 )
 		ShowError("intif: party info : data size error %d %d %d\n",RFIFOL(fd,4),RFIFOW(fd,2),sizeof(struct party)+4);
 	party_recv_info((struct party *)RFIFOP(fd,4));
@@ -1704,8 +1701,6 @@ int intif_parse(int fd)
 			return 2;
 		packet_len = RFIFOW(fd,2);
 	}
-//	if(battle_config.etc_log)
-//		printf("intif_parse %d %x %d %d\n",fd,cmd,packet_len,RFIFOREST(fd));
 	if((int)RFIFOREST(fd)<packet_len){
 		return 2;
 	}

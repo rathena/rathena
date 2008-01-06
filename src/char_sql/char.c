@@ -1719,7 +1719,6 @@ int parse_fromlogin(int fd)
 				return 0;
 
 /*		Note that this is the code from char-txt! Even uncommenting it will not work.
-			printf("0x2721:GM reply\n");
 		  {
 			int oldacc, newacc;
 			unsigned char buf[64];
@@ -1738,7 +1737,6 @@ int parse_fromlogin(int fd)
 			WBUFL(buf,2)=oldacc;
 			WBUFL(buf,6)=newacc;
 			mapif_sendall(buf,10);
-//			printf("char -> map\n");
 		  }
 */
 			RFIFOSKIP(fd, 10);
@@ -2463,7 +2461,6 @@ int parse_frommap(int fd)
 			memcpy(WFIFOP(login_fd,2),RFIFOP(fd,2),RFIFOW(fd,2)-2);
 			WFIFOW(login_fd,0)=0x2720;
 			WFIFOSET(login_fd,RFIFOW(fd,2));
-//			printf("char : change gm -> login %d %s %d\n", RFIFOL(fd, 4), RFIFOP(fd, 8), RFIFOW(fd, 2));
 			*/
 			ShowWarning("packet 0x2ba (become GM) is not supported by the Char-Server.\n");
 			RFIFOSKIP(fd, RFIFOW(fd, 2));
@@ -3254,19 +3251,19 @@ int parse_console(char* buf)
 	//login_log("Console command :%s\n", command);
 
 	if( strcmpi("shutdown", command) == 0 ||
-		strcmpi("exit", command) == 0 ||
-		strcmpi("quit", command) == 0 ||
-		strcmpi("end", command) == 0 )
+	    strcmpi("exit", command) == 0 ||
+	    strcmpi("quit", command) == 0 ||
+	    strcmpi("end", command) == 0 )
 		runflag = 0;
 	else if( strcmpi("alive", command) == 0 ||
-			strcmpi("status", command) == 0 )
+	         strcmpi("status", command) == 0 )
 		ShowInfo(CL_CYAN"Console: "CL_BOLD"I'm Alive."CL_RESET"\n");
 	else if( strcmpi("help", command) == 0 ){
-		printf(CL_BOLD"Help of commands:"CL_RESET"\n");
-		printf("  To shutdown the server:\n");
-		printf("  'shutdown|exit|qui|end'\n");
-		printf("  To know if server is alive:\n");
-		printf("  'alive|status'\n");
+		ShowInfo(CL_BOLD"Help of commands:"CL_RESET"\n");
+		ShowInfo("  To shutdown the server:\n");
+		ShowInfo("  'shutdown|exit|qui|end'\n");
+		ShowInfo("  To know if server is alive:\n");
+		ShowInfo("  'alive|status'\n");
 	}
 
 	return 0;

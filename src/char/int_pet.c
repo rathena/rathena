@@ -49,7 +49,6 @@ int inter_pet_fromstr(char *str,struct s_pet *p)
 
 	memset(p,0,sizeof(struct s_pet));
 
-//	printf("sscanf pet main info\n");
 	s=sscanf(str,"%d,%d,%[^\t]\t%d,%d,%d,%d,%d,%d,%d,%d,%d",&tmp_int[0],&tmp_int[1],tmp_str,&tmp_int[2],
 		&tmp_int[3],&tmp_int[4],&tmp_int[5],&tmp_int[6],&tmp_int[7],&tmp_int[8],&tmp_int[9],&tmp_int[10]);
 
@@ -111,7 +110,6 @@ int inter_pet_init()
 		c++;
 	}
 	fclose(fp);
-//	printf("int_pet: %s read done (%d pets)\n",pet_txt,c);
 	return 0;
 }
 
@@ -141,7 +139,6 @@ int inter_pet_save()
 	}
 	pet_db->foreach(pet_db,inter_pet_save_sub,fp);
 	lock_fclose(fp,pet_txt,&lock);
-//	printf("int_pet: %s saved.\n",pet_txt);
 	return 0;
 }
 

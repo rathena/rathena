@@ -129,7 +129,6 @@ int inter_accreg_init(void) {
 		c++;
 	}
 	fclose(fp);
-//	printf("inter: %s read done (%d)\n", accreg_txt, c);
 
 	return 0;
 }
@@ -160,7 +159,6 @@ int inter_accreg_save(void) {
 	}
 	accreg_db->foreach(accreg_db, inter_accreg_save_sub,fp);
 	lock_fclose(fp, accreg_txt, &lock);
-//	printf("inter: %s saved.\n", accreg_txt);
 
 	return 0;
 }
@@ -316,7 +314,6 @@ int mapif_GMmessage(unsigned char *mes, int len, unsigned long color, int sfd) {
 	WBUFL(buf,4) = color;
 	memcpy(WBUFP(buf,8), mes, len - 8);
 	mapif_sendallwos(sfd, buf, len);
-//	printf("inter server: GM:%d %s\n", len, mes);
 
 	return 0;
 }
@@ -369,7 +366,6 @@ int mapif_wis_end(struct WisData *wd, int flag) {
 	memcpy(WBUFP(buf, 2), wd->src, 24);
 	WBUFB(buf,26) = flag; // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
 	mapif_send(wd->fd, buf, 27);
-//	printf("inter server wis_end: flag: %d\n", flag);
 
 	return 0;
 }

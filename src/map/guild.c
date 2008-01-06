@@ -1404,8 +1404,6 @@ int guild_allianceack(int guild_id1,int guild_id2,int account_id1,int account_id
 				clif_guild_allianceack(sd[i],((flag>>4)==i+1)?3:4);
 		return 0;
 	}
-//	if(battle_config.etc_log)
-//		printf("guild alliance_ack %d %d %d %d %d %s %s\n",guild_id1,guild_id2,account_id1,account_id2,flag,name1,name2);
 
 	if(!(flag&0x08)){	// ŠÖŒW’Ç‰Á
 		for(i=0;i<2-(flag&1);i++)

@@ -127,7 +127,6 @@ int inter_party_fromstr(char *str, struct party *p) {
 	
 	memset(p, 0, sizeof(struct party));
 
-//	printf("sscanf party main info\n");
 	if (sscanf(str, "%d\t%255[^\t]\t%d,%d\t", &tmp_int[0], tmp_str, &tmp_int[1], &tmp_int[2]) != 4)
 		return 1;
 
@@ -135,7 +134,6 @@ int inter_party_fromstr(char *str, struct party *p) {
 	memcpy(p->name, tmp_str, NAME_LENGTH);
 	p->exp = tmp_int[1]?1:0;
 	p->item = tmp_int[2];
-//	printf("%d [%s] %d %d\n", tmp_int[0], tmp_str[0], tmp_int[1], tmp_int[2]);
 
 	for(j = 0; j < 3 && str != NULL; j++)
 		str = strchr(str + 1, '\t');
@@ -144,7 +142,6 @@ int inter_party_fromstr(char *str, struct party *p) {
 		struct party_member *m = &p->member[i];
 		if (str == NULL)
 			return 1;
-//		printf("sscanf party member info %d\n", i);
 
 		if (sscanf(str + 1, "%d,%d,%d\t", &tmp_int[0], &tmp_int[1], &tmp_int[2]) != 3)
 			return 1;

@@ -94,7 +94,7 @@ static void sig_proc(int sn)
 		//run_flag = 0;	// should we quit?
 		break;
 	case SIGPIPE:
-		ShowMessage ("Broken pipe found... closing socket\n");	// set to eof in socket.c
+		//ShowInfo ("Broken pipe found... closing socket\n");	// set to eof in socket.c
 		break;	// does nothing here
 #endif
 	}

@@ -249,9 +249,9 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 	if (session[fd] != NULL) {
 		WFIFOHEAD(fd, len);
 		if (WFIFOP(fd,0) == buf) {
-			printf("WARNING: Invalid use of clif_send function\n");
-			printf("         Packet x%4x use a WFIFO of a player instead of to use a buffer.\n", WBUFW(buf,0));
-			printf("         Please correct your code.\n");
+			ShowError("WARNING: Invalid use of clif_send function\n");
+			ShowError("         Packet x%4x use a WFIFO of a player instead of to use a buffer.\n", WBUFW(buf,0));
+			ShowError("         Please correct your code.\n");
 			// don't send to not move the pointer of the packet for next sessions in the loop
 			WFIFOSET(fd,0);//## TODO is this ok?
 		} else {
@@ -11495,13 +11495,13 @@ void clif_parse_debug(int fd,struct map_session_data *sd)
 	cmd = RFIFOW(fd,0);
 	len = sd?packet_db[sd->packet_ver][cmd].len:RFIFOREST(fd); //With no session, just read the remaining in the buffer.
 	ShowDebug("packet debug 0x%4X\n",cmd);
-	printf("---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
+	ShowMessage("---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
 	for(i=0;i<len;i++){
 		if((i&15)==0)
-			printf("\n%04X ",i);
-		printf("%02X ",RFIFOB(fd,i));
+			ShowMessage("\n%04X ",i);
+		ShowMessage("%02X ",RFIFOB(fd,i));
 	}
-	printf("\n");
+	ShowMessage("\n");
 }
 
 /*==========================================
@@ -11648,21 +11648,21 @@ int clif_parse(int fd)
 	if (dump) {
 		int i;
 		ShowDebug("\nclif_parse: session #%d, packet 0x%04x, length %d, version %d\n", fd, cmd, packet_len, packet_ver);
-		printf("---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
+		ShowMessage("---- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F");
 		for(i = 0; i < packet_len; i++) {
 			if ((i & 15) == 0)
-				printf("\n%04X ",i);
-			printf("%02X ", RFIFOB(fd,i));
+				ShowMessage("\n%04X ",i);
+			ShowMessage("%02X ", RFIFOB(fd,i));
 		}
-		printf("\n");
+		ShowMessage("\n");
 		if (sd && sd->state.auth) {
 			if (sd->status.name != NULL)
-				printf("\nAccount ID %d, character ID %d, player name %s.\n",
-			       sd->status.account_id, sd->status.char_id, sd->status.name);
+				ShowMessage("\nAccount ID %d, character ID %d, player name %s.\n",
+				sd->status.account_id, sd->status.char_id, sd->status.name);
 			else
-				printf("\nAccount ID %d.\n", sd->bl.id);
+				ShowMessage("\nAccount ID %d.\n", sd->bl.id);
 		} else if (sd) // not authentified! (refused by char-server or disconnect before to be authentified)
-			printf("\nAccount ID %d.\n", sd->bl.id);
+			ShowMessage("\nAccount ID %d.\n", sd->bl.id);
 	}*/
 
 	RFIFOSKIP(fd, packet_len);

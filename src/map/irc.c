@@ -55,10 +55,10 @@ int irc_connect_timer(int tid, unsigned int tick, int id, int data)
 	ShowInfo("(IRC) Connecting to %s... ", irc_ip_str);
 	irc_fd = make_connection(irc_ip,irc_port);
 	if(irc_fd > 0){
-		printf("ok\n");
+		ShowMessage("ok\n");
 		session[irc_fd]->func_parse = irc_parse;
 	} else
-		printf("failed\n");
+		ShowMessage("failed\n");
 	return 0;
 }
 
@@ -298,10 +298,10 @@ void irc_parse_sub(int fd, char *incoming_string)
 			{
 				ShowInfo("IRC: Refreshing User List");
 				irc_rmnames();
-				printf("...");
+				ShowMessage("...");
 				sprintf(send_string,"NAMES %s",irc_channel);
 				irc_send(send_string);
-				printf("Done\n");
+				ShowMessage("Done\n");
 			}
 			else // Autojoin on kick
 			if((strcmpi(command,"kick")==0)&&(irc_autojoin==1))

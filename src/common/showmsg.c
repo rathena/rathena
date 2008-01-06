@@ -525,9 +525,6 @@ int	FPRINTF(HANDLE handle, const char *fmt, ...)
 #else // not _WIN32
 
 
-//#define VPRINTF	vprintf
-//#define PRINTF	printf
-
 #define is_console(file) (0!=isatty(fileno(file)))
 
 //vprintf_without_ansiformats
@@ -674,12 +671,8 @@ int	FPRINTF(FILE *file, const char *fmt, ...)
 
 char timestamp_format[20] = ""; //For displaying Timestamps
 
-// by MC Cameri
 int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 {
-	// _ShowMessage MUST be used instead of printf as of 10/24/2004.
-	// Return: 0 = Successful, 1 = Failed.
-//	int ret = 0;
 	char prefix[100];
 #if defined(DEBUGLOGMAP) || defined(DEBUGLOGCHAR) || defined(DEBUGLOGLOGIN)
 	FILE *fp;
@@ -689,19 +682,18 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 		ShowError("Empty string passed to _vShowMessage().\n");
 		return 1;
 	}
-	if (
-#if !defined(SHOW_DEBUG_MSG)
-			(flag == MSG_DEBUG) ||
-#endif
+	if(
 	    (flag == MSG_INFORMATION && msg_silent&1) ||
 	    (flag == MSG_STATUS && msg_silent&2) ||
 	    (flag == MSG_NOTICE && msg_silent&4) ||
 	    (flag == MSG_WARNING && msg_silent&8) ||
 	    (flag == MSG_ERROR && msg_silent&16) ||
-	    (flag == MSG_SQL && msg_silent&16))
+	    (flag == MSG_SQL && msg_silent&16) ||
+	    (flag == MSG_DEBUG && msg_silent&32)
+	)
 		return 0; //Do not print it.
 
-	if (timestamp_format[0])
+	if (timestamp_format[0] && flag != MSG_NONE)
 	{	//Display time format. [Skotlex]
 		time_t t = time(NULL);
 		strftime(prefix, 80, timestamp_format, localtime(&t));

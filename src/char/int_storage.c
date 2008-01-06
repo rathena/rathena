@@ -286,7 +286,6 @@ int inter_storage_save()
 	}
 	storage_db->foreach(storage_db,inter_storage_save_sub,fp);
 	lock_fclose(fp,storage_txt,&lock);
-//	printf("int_storage: %s saved.\n",storage_txt);
 	return 0;
 }
 
@@ -314,7 +313,6 @@ int inter_guild_storage_save()
 	}
 	guild_storage_db->foreach(guild_storage_db,inter_guild_storage_save_sub,fp);
 	lock_fclose(fp,guild_storage_txt,&lock);
-//	printf("int_storage: %s saved.\n",guild_storage_txt);
 	return 0;
 }
 
