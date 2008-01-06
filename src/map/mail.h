@@ -8,6 +8,7 @@
 
 time_t mail_calctimes(void);
 
+void mail_clear(struct map_session_data *sd);
 int mail_removeitem(struct map_session_data *sd, short flag);
 int mail_removezeny(struct map_session_data *sd, short flag);
 unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount);

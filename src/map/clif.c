@@ -7048,6 +7048,9 @@ int clif_message(struct block_list* bl, const char* msg)
 int clif_refresh(struct map_session_data *sd)
 {
 	nullpo_retr(-1, sd);
+
+	mail_clear(sd);
+
 	clif_changemap(sd,sd->mapindex,sd->bl.x,sd->bl.y);
 	clif_inventorylist(sd);
 	if(pc_iscarton(sd)) {
@@ -7687,6 +7690,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		sd->state.connect_new = 0;
 		return;
 	}
+
+	mail_clear(sd);
 
 	if (sd->state.rewarp)
   	{	//Rewarp player.

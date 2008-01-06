@@ -20,6 +20,16 @@ time_t mail_calctimes(void)
 	return mktime(localtime(&temp));
 }
 
+void mail_clear(struct map_session_data *sd)
+{
+	sd->mail.nameid = 0;
+	sd->mail.index = 0;
+	sd->mail.amount = 0;
+	sd->mail.zeny = 0;
+
+	return;
+}
+
 int mail_removeitem(struct map_session_data *sd, short flag)
 {
 	nullpo_retr(0,sd);

@@ -4925,7 +4925,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			case SC_ADRENALINE2:
 			case SC_WEAPONPERFECTION:
 			case SC_OVERTHRUST:
-				if (sce->val2 > val2)
+				if (sce->val1 > val1)
 					return 0;
 			break;
 			case SC_HPREGEN:
