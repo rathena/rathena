@@ -285,7 +285,7 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m, short x, short
 	data.num = 1;
 	data.class_ = class_;
 	if (mobname)
-		strncpy(data.name, mobname, NAME_LENGTH-1);
+		safestrncpy(data.name, mobname, sizeof(data.name));
 	else
 	if(battle_config.override_mob_names==1)
 		strcpy(data.name,"--en--");
@@ -293,11 +293,13 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m, short x, short
 		strcpy(data.name,"--ja--");
 
 	if (event)
-		strncpy(data.eventname, event, 50);
+		safestrncpy(data.eventname, event, sizeof(data.eventname));
 	
-	if (bl && (x < 0 || y < 0))//Locate spot around player.
+	// Locate spot next to player.
+	if (bl && (x < 0 || y < 0))
 		map_search_freecell(bl, m, &x, &y, 1, 1, 0);
 
+	// if none found, pick random position on map
 	if (x <= 0 || y <= 0 || map_getcell(m,x,y,CELL_CHKNOREACH))
 		map_search_freecell(NULL, m, &x, &y, -1, -1, 1);
 	
@@ -309,35 +311,32 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m, short x, short
 
 	return mob_spawn_dataset(&data);
 }
+
 /*==========================================
- * The MOB appearance for one time (for scripts)
+ * Spawn a single mob on the specified coordinates.
  *------------------------------------------*/
-int mob_once_spawn (struct map_session_data* sd, const char* mapname, short x, short y, const char* mobname, int class_, int amount, const char* event)
+int mob_once_spawn(struct map_session_data* sd, int m, short x, short y, const char* mobname, int class_, int amount, const char* event)
 {
 	struct mob_data* md = NULL;
-	int m, count, lv = 255;
+	int count, lv;
 	
-	if(sd) lv = sd->status.base_level;
+	if (m < 0 || amount <= 0)
+		return 0; // invalid input
 
-	if(sd && strcmp(mapname,"this")==0)
-		m = sd->bl.m;
+	if(sd)
+		lv = sd->status.base_level;
 	else
-		m = map_mapname2mapid(mapname);
+		lv = 255;
 
-	if (m < 0 || amount <= 0)	// ’l‚ªˆÙí‚È‚ç¢Š«‚ðŽ~‚ß‚é
-		return 0;
-	
 	for (count = 0; count < amount; count++)
 	{
-		md = mob_once_spawn_sub(sd?&sd->bl:NULL, m, x, y, mobname,
-			class_<0?
-				mob_get_random_id(-class_-1, battle_config.random_monster_checklv?3:1, lv):
-				class_, event);
+		int c = ( class_ >= 0 ) ? class_ : mob_get_random_id(-class_-1, battle_config.random_monster_checklv?3:1, lv);
+		md = mob_once_spawn_sub(sd?&sd->bl:NULL, m, x, y, mobname, c, event);
 
 		if (!md) continue;
 
 		if(class_ == MOBID_EMPERIUM) {
-			struct guild_castle* gc = guild_mapname2gc(map[md->bl.m].name);
+			struct guild_castle* gc = guild_mapindex2gc(map[m].index);
 			struct guild* g = gc?guild_search(gc->guild_id):NULL;
 			if(gc) {
 				md->guardian_data = aCalloc(1, sizeof(struct guardian_data));
@@ -353,55 +352,71 @@ int mob_once_spawn (struct map_session_data* sd, const char* mapname, short x, s
 					add_timer(gettick()+5000,mob_spawn_guardian_sub,md->bl.id,md->guardian_data->guild_id);
 			}
 		}	// end addition [Valaris]
-		mob_spawn (md);
+
+		mob_spawn(md);
+
 		if (class_ < 0 && battle_config.dead_branch_active)
 			//Behold Aegis's masterful decisions yet again...
 			//"I understand the "Aggressive" part, but the "Can Move" and "Can Attack" is just stupid" - Poki#3
 			sc_start4(&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE|MD_CANATTACK|MD_CANMOVE, 0, 60000);
 	}
-	return (md)?md->bl.id : 0;
+
+	return (md)?md->bl.id : 0; // id of last spawned mob
 }
+
 /*==========================================
- * The MOB appearance for one time (& area specification for scripts)
+ * Spawn mobs in the specified area.
  *------------------------------------------*/
-int mob_once_spawn_area(struct map_session_data *sd,const char *mapname,
-	int x0,int y0,int x1,int y1,
-	const char *mobname,int class_,int amount,const char *event)
+int mob_once_spawn_area(struct map_session_data* sd,int m,int x0,int y0,int x1,int y1,const char* mobname,int class_,int amount,const char* event)
 {
-	int x,y,i,max,lx=-1,ly=-1,id=0;
-	int m;
+	int i,max,id=0;
+	int lx=-1,ly=-1;
 
-	if(strcmp(mapname,"this")==0)
-		m=sd->bl.m;
-	else
-		m=map_mapname2mapid(mapname);
+	if (m < 0 || amount <= 0)
+		return 0; // invalid input
 
-	max=(y1-y0+1)*(x1-x0+1)*3;
-	if(max>1000)max=1000;
+	// normalize x/y coordinates
+	if( x0 > x1 ) swap(x0,x1);
+	if( y0 > y1 ) swap(y0,y1);
 
-	if (m < 0 || amount <= 0)	// ’l‚ªˆÙí‚È‚ç¢Š«‚ðŽ~‚ß‚é
-		return 0;
+	// choose a suitable max. number of attempts
+	max = (y1-y0+1)*(x1-x0+1)*3;
+	if( max > 1000 )
+		max = 1000;
 
-	for(i=0;i<amount;i++){
-		int j=0;
-		do{
-			x=rand()%(x1-x0+1)+x0;
-			y=rand()%(y1-y0+1)+y0;
-		} while (map_getcell(m,x,y,CELL_CHKNOPASS) && (++j)<max);
-		if(j>=max){
-			if(lx>=0){	// Since reference went wrong, the place which boiled before is used.
-				x=lx;
-				y=ly;
-			}else
-				return 0;	// Since reference of the place which boils first went wrong, it stops.
+	// spawn mobs, one by one
+	for( i = 0; i < amount; i++)
+	{
+		int x,y;
+		int j = 0;
+
+		// find a suitable map cell
+		do {
+			x = rand()%(x1-x0+1)+x0;
+			y = rand()%(y1-y0+1)+y0;
+			j++;
+		} while( map_getcell(m,x,y,CELL_CHKNOPASS) && j < max );
+
+		if( j == max )
+		{// attempt to find an available cell failed
+			if( lx == -1 && ly == -1 )
+				return 0; // total failure
+			
+			// fallback to last good x/y pair
+			x = lx;
+			y = ly;
 		}
-		if(x==0||y==0) ShowWarning("mob_once_spawn_area: xory=0, x=%d,y=%d,x0=%d,y0=%d\n",x,y,x0,y0);
-		id=mob_once_spawn(sd,mapname,x,y,mobname,class_,1,event);
-		lx=x;
-		ly=y;
+
+		// record last successful coordinates
+		lx = x;
+		ly = y;
+
+		id = mob_once_spawn(sd,m,x,y,mobname,class_,1,event);
 	}
-	return id;
+
+	return id; // id of last spawned mob
 }
+
 /*==========================================
  * Set a Guardian's guild data [Skotlex]
  *------------------------------------------*/

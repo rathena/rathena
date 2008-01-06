@@ -2454,7 +2454,7 @@ int atcommand_monster(const int fd, struct map_session_data* sd, const char* com
 	range = (int)sqrt(number) +2; // calculation of an odd number (+ 4 area around)
 	for (i = 0; i < number; i++) {
 		map_search_freecell(&sd->bl, 0, &mx,  &my, range, range, 0);
-		k = mob_once_spawn(sd, "this", mx, my, name, mob_id, 1, "");
+		k = mob_once_spawn(sd, sd->bl.m, mx, my, name, mob_id, 1, "");
 		count += (k != 0) ? 1 : 0;
 	}
 
@@ -2539,7 +2539,7 @@ int atcommand_monstersmall(const int fd, struct map_session_data* sd, const char
 			my = sd->bl.y + (rand() % 11 - 5);
 		else
 			my = y;
-		count += (mob_once_spawn((struct map_session_data*)sd, "this", mx, my, name, mob_id, 1, "2") != 0) ? 1 : 0;
+		count += (mob_once_spawn(sd, sd->bl.m, mx, my, name, mob_id, 1, "2") != 0) ? 1 : 0;
 	}
 
 	if (count != 0)
@@ -2615,7 +2615,7 @@ int atcommand_monsterbig(const int fd, struct map_session_data* sd, const char* 
 			my = sd->bl.y + (rand() % 11 - 5);
 		else
 			my = y;
-		count += (mob_once_spawn((struct map_session_data*)sd, "this", mx, my, name, mob_id, 1, "4") != 0) ? 1 : 0;
+		count += (mob_once_spawn(sd, sd->bl.m, mx, my, name, mob_id, 1, "4") != 0) ? 1 : 0;
 	}
 
 	if (count != 0)

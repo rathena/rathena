@@ -3072,7 +3072,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		break;
 	case SA_SUMMONMONSTER:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
-		if (sd) mob_once_spawn(sd,map[src->m].name,src->x,src->y,"--ja--",-1,1,"");
+		if (sd) mob_once_spawn(sd,src->m,src->x,src->y,"--ja--",-1,1,"");
 		break;
 	case SA_LEVELUP:
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
@@ -5804,7 +5804,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			pc_delitem(sd,j,skill_db[skillid].amount[i],0);
 			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 			if (rand()%100 < 50)
-				mob_once_spawn(sd, "this", x, y, "--ja--",(skilllv < 2 ? 1084+rand()%2 : 1078+rand()%6), 1, "");
+				mob_once_spawn(sd, sd->bl.m, x, y, "--ja--",(skilllv < 2 ? 1084+rand()%2 : 1078+rand()%6), 1, "");
 			else
 				clif_skill_fail(sd,skillid,0,0);
 		}

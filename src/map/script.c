@@ -7334,17 +7334,20 @@ BUILDIN_FUNC(guildchangegm)
  *------------------------------------------*/
 BUILDIN_FUNC(monster)
 {
-	int class_,amount,x,y;
-	const char *str,*map,*event="";
+	const char* map   = script_getstr(st,2);
+	int x             = script_getnum(st,3);
+	int y             = script_getnum(st,4);
+	const char* str   = script_getstr(st,5);
+	int class_        = script_getnum(st,6);
+	int amount        = script_getnum(st,7);
+	const char* event = "";
 
-	map	=script_getstr(st,2);
-	x	=script_getnum(st,3);
-	y	=script_getnum(st,4);
-	str	=script_getstr(st,5);
-	class_=script_getnum(st,6);
-	amount=script_getnum(st,7);
-	if( script_hasdata(st,8) ){
-		event=script_getstr(st,8);
+	struct map_session_data* sd;
+	int m;
+
+	if( script_hasdata(st,8) )
+	{
+		event = script_getstr(st,8);
 		check_event(st, event);
 	}
 
@@ -7352,7 +7355,15 @@ BUILDIN_FUNC(monster)
 		ShowWarning("buildin_monster: Attempted to spawn non-existing monster class %d\n", class_);
 		return 1;
 	}
-	mob_once_spawn(map_id2sd(st->rid),map,x,y,str,class_,amount,event);
+
+	sd = map_id2sd(st->rid);
+
+	if( sd && strcmp(map,"this") == 0 )
+		m = sd->bl.m;
+	else
+		m = map_mapname2mapid(map);
+
+	mob_once_spawn(sd,m,x,y,str,class_,amount,event);
 	return 0;
 }
 /*==========================================
@@ -7360,23 +7371,33 @@ BUILDIN_FUNC(monster)
  *------------------------------------------*/
 BUILDIN_FUNC(areamonster)
 {
-	int class_,amount,x0,y0,x1,y1;
-	const char *str,*map,*event="";
+	const char* map   = script_getstr(st,2);
+	int x0            = script_getnum(st,3);
+	int y0            = script_getnum(st,4);
+	int x1            = script_getnum(st,5);
+	int y1            = script_getnum(st,6);
+	const char* str   = script_getstr(st,7);
+	int class_        = script_getnum(st,8);
+	int amount        = script_getnum(st,9);
+	const char* event = "";
 
-	map	=script_getstr(st,2);
-	x0	=script_getnum(st,3);
-	y0	=script_getnum(st,4);
-	x1	=script_getnum(st,5);
-	y1	=script_getnum(st,6);
-	str	=script_getstr(st,7);
-	class_=script_getnum(st,8);
-	amount=script_getnum(st,9);
-	if( script_hasdata(st,10) ){
-		event=script_getstr(st,10);
+	struct map_session_data* sd;
+	int m;
+
+	if( script_hasdata(st,10) )
+	{
+		event = script_getstr(st,10);
 		check_event(st, event);
 	}
 
-	mob_once_spawn_area(map_id2sd(st->rid),map,x0,y0,x1,y1,str,class_,amount,event);
+	sd = map_id2sd(st->rid);
+
+	if( sd && strcmp(map,"this") == 0 )
+		m = sd->bl.m;
+	else
+		m = map_mapname2mapid(map);
+
+	mob_once_spawn_area(sd,m,x0,y0,x1,y1,str,class_,amount,event);
 	return 0;
 }
 /*==========================================
@@ -12290,8 +12311,8 @@ BUILDIN_FUNC(mobspawn)
 	map		=script_getstr(st,4);
 	x		=script_getnum(st,5);
 	y		=script_getnum(st,6);
-		
-	id = mob_once_spawn(map_id2sd(st->rid),map,x,y,str,class_,1,"");
+
+	id = mob_once_spawn(map_id2sd(st->rid),map_mapname2mapid(map),x,y,str,class_,1,"");
 	script_pushint(st,id);
 
 	return 0;
