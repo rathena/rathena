@@ -7049,8 +7049,6 @@ int clif_refresh(struct map_session_data *sd)
 {
 	nullpo_retr(-1, sd);
 
-	mail_clear(sd);
-
 	clif_changemap(sd,sd->mapindex,sd->bl.x,sd->bl.y);
 	clif_inventorylist(sd);
 	if(pc_iscarton(sd)) {
@@ -7073,6 +7071,11 @@ int clif_refresh(struct map_session_data *sd)
 		clif_send_homdata(sd,0,0);
 	map_foreachinrange(clif_getareachar,&sd->bl,AREA_SIZE,BL_ALL,sd);
 	clif_weather_check(sd);
+
+#ifndef TXT_ONLY
+	mail_clear(sd);
+#endif
+
 	return 0;
 }
 
@@ -7691,8 +7694,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		return;
 	}
 
-	mail_clear(sd);
-
 	if (sd->state.rewarp)
   	{	//Rewarp player.
 		sd->state.rewarp = 0;
@@ -7883,6 +7884,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 		if(sd->npc_id)
 			npc_event_dequeue(sd);
+
+#ifndef TXT_ONLY
+		mail_clear(sd);
+#endif
 	}
 
 	if(map[sd->bl.m].flag.loadevent) // Lance
