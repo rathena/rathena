@@ -19,7 +19,7 @@ struct view_data;
 #define MAX_NPC_CLASS 1000
 //Checks if a given id is a valid npc id. [Skotlex]
 //Since new npcs are added all the time, the max valid value is the one before the first mob (Scorpion = 1001)
-#define npcdb_checkid(id) ((id >=  46 && id <= 125) || id == 139 || (id >= 700 && id <= MAX_NPC_CLASS) || id == INVISIBLE_CLASS)
+#define npcdb_checkid(id) ((id >=  46 && id <= 125) || id == 139 || (id >= 400 && id <= MAX_NPC_CLASS) || id == INVISIBLE_CLASS)
 
 #ifdef PCRE_SUPPORT
 void npc_chat_finalize(struct npc_data* nd);

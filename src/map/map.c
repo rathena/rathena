@@ -2338,7 +2338,7 @@ int map_readfromcache(struct map_data *m, FILE *fp)
 	if( i < header.map_count )
 	{
 		unsigned char *buf, *buf2;
-		unsigned int size, xy;
+		unsigned long size, xy;
 
 		m->xs = info.xs;
 		m->ys = info.ys;
