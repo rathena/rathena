@@ -17,7 +17,6 @@
 //  512 = Cannot be used in zone 5 maps
 //  1024 = Cannot be used in zone 6 maps
 //  2048 = Cannot be used in zone 7 maps
-
 //
 // Example:
 // 8,6 = Endure cannot be used in PvP and GvG maps (2+4)

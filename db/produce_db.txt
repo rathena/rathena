@@ -1,4 +1,4 @@
-// Blacksmith and Alchemist Produce Database
+// Item Produce Database
 //
 // Structure of Database:
 // ProduceItemID,ItemLV,RequireSkill,RequireSkillLv,MaterialID1,MaterialAmount1,......
