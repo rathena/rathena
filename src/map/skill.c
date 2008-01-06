@@ -3657,7 +3657,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case BS_OVERTHRUST:
 		if (sd == NULL || sd->status.party_id == 0 || (flag & 1)) {
 			clif_skill_nodamage(bl,bl,skillid,skilllv,
-				sc_start4(bl,type,100,skilllv,(src == bl)? 1:0,0,0,skill_get_time(skillid,skilllv)));
+				sc_start2(bl,type,100,skilllv,(src == bl)? 1:0,skill_get_time(skillid,skilllv)));
 		} else if (sd) {
 			party_foreachsamemap(skill_area_sub,
 				sd,skill_get_splash(skillid, skilllv),

@@ -1262,7 +1262,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 		if(sc && skill_num != PA_SACRIFICE)
 		{
 			if(sc->data[SC_OVERTHRUST])
-				skillratio += sc->data[SC_OVERTHRUST]->val2;
+				skillratio += sc->data[SC_OVERTHRUST]->val3;
 			if(sc->data[SC_MAXOVERTHRUST])
 				skillratio += sc->data[SC_MAXOVERTHRUST]->val2;
 			if(sc->data[SC_BERSERK])

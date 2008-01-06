@@ -2976,7 +2976,7 @@ int mob_clone_spawn(struct map_session_data *sd, int m, int x, int y, const char
 	ms = &db->skill[0];
 	//Go Backwards to give better priority to advanced skills.
 	for (i=0,j = MAX_SKILL_TREE-1;j>=0 && i< MAX_MOBSKILL ;j--) {
-		skill_id = skill_tree[sd->status.class_][j].id;
+		skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].id;
 		if (!skill_id || sd->status.skill[skill_id].lv < 1 ||
 			(skill_get_inf2(skill_id)&(INF2_WEDDING_SKILL|INF2_GUILD_SKILL)) ||
 			skill_get_nocast(skill_id)&16

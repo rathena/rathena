@@ -4925,7 +4925,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			case SC_ADRENALINE2:
 			case SC_WEAPONPERFECTION:
 			case SC_OVERTHRUST:
-				if (sce->val1 > val1)
+				if (sce->val2 > val2)
 					return 0;
 			break;
 			case SC_HPREGEN:
@@ -5686,7 +5686,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			val2 = 20*val1; //Power increase
 			break;
 		case SC_OVERTHRUST:
-			val2 = 5*val1; //Power increase
+			//val2 holds if it was casted on self, or is bonus received from others
+			val3 = 5*val1; //Power increase
 			if(sd && pc_checkskill(sd,BS_HILTBINDING)>0)
 				tick += tick / 10;
 			break;
@@ -6662,12 +6663,17 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	struct status_change_entry *sce;
 
 	bl = map_id2bl(id);
-	sc = bl?status_get_sc(bl):NULL;
+	if(!bl)
+	{
+		ShowDebug("status_change_timer: Null pointer id: %d data: %d\n", id, data);
+		return 0;
+	}
+	sc = status_get_sc(bl);
 	status = status_get_status_data(bl);
 	
-	if(!(bl && sc && (sce = sc->data[type])))
+	if(!(sc && (sce = sc->data[type])))
 	{
-		ShowDebug("status_change_timer: Null pointer id: %d data: %d bl-type: %d\n", id, data, bl?bl->type:-1);
+		ShowDebug("status_change_timer: Null pointer id: %d data: %d bl-type: %d\n", id, data, bl->type);
 		return 0;
 	}
 
