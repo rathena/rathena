@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dr.Evil & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.7b
+//= 1.7c
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 1.7 Now Kafra Tickets are given at correct NPC/Actions [Lupus]
 //= 1.7a a bit of optimization [Lupus]
 //= 1.7b Corrected a little Typo Error. (bugreport:728) [Samuray22]
+//= 1.7C Corrected another Typo Error. (bugreport:740) [Samuray22]
 //============================================================ 
 
 //====================================================================
@@ -2916,7 +2917,7 @@ L_cancel:
 		set NOV_3_ARCHER,NOV_3_ARCHER+1;break;
 	case 3:	set NOV_3_MAGICIAN,NOV_3_MAGICIAN+1;
 		set NOV_3_THIEF,NOV_3_THIEF+1;
-		set NOV_3_MERCHANT,NOV_3_MERCHAN+1;	
+		set NOV_3_MERCHANT,NOV_3_MERCHANT+1;	
 	}
 	mes "[Hanson]";
 	mes "You happened to pick up";

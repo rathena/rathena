@@ -5,7 +5,7 @@
 //= [Lance]
 //= Idea from emilylee78
 //===== Version =============================================
-//= 2.3 FINAL
+//= 2.4 FINAL
 //===== Compatible With =====================================
 //= eAthena SVN and Freya SVN
 //===== Description =========================================
@@ -31,9 +31,11 @@
 //= 2.1 - Typo.. again.. T_T                        [Lance]
 //= 2.2 - Minor updates and added Jury              [Lance]
 //= 2.3 - Utilizing eAthena's new scripting engine  [Lance]
+//= 2.4 - Minor bug fix with event script label (bugport:722) [Samura22]
 //===========================================================
 
 prontera,0,0,0	script	OnPCLoginEvent	-1,{
+OnPCLoginEvent:
 	callfunc "HallOfFameInit";
 	end;
 
@@ -91,6 +93,7 @@ OnClock0000:
 }
 
 prontera,0,0,0	script	PCLogoutEvent	-1,{
+OnPCLogoutEvent:
 	callfunc "HallOfFameInit";
 	end;
 }
@@ -219,31 +222,34 @@ L_End:
 
 
 function	script	hallOfFameNewEntry	{
-	if(getarg(0) == 0 || getarg(1) != $HoF_LadderName$[getarg(0) - 1]) {
+	if(getarg(0) == 0) goto L_New_Entry;
+	else if(getarg(1) != $HoF_LadderName$[getarg(0) - 1]) goto L_New_Entry;
+	return;
+
+L_New_Entry:
 		set @startPos, getarg(0);
 		copyarray @HoF_LadderNameB$[0], $HoF_LadderName$[@startPos], $HoF_totalCount;
 		copyarray @HoF_LadderBLevelB[0], $HoF_LadderBLevel[@startPos], $HoF_totalCount; 
 		copyarray @HoF_LadderJLevelB[0], $HoF_LadderJLevel[@startPos], $HoF_totalCount;
 		copyarray @HoF_LadderZenyB[0], $HoF_LadderZeny[@startPos], $HoF_totalCount; 
-		set $HoF_LadderName$[@startPos], getarg(1);
-		set $HoF_LadderBLevel[@startPos], getarg(2);
-		set $HoF_LadderJLevel[@startPos], getarg(3);
-		set $HoF_LadderZeny[@startPos], getarg(4);
+		setarray $HoF_LadderName$[@startPos], getarg(1);
+		setarray $HoF_LadderBLevel[@startPos], getarg(2);
+		setarray $HoF_LadderJLevel[@startPos], getarg(3);
+		setarray $HoF_LadderZeny[@startPos], getarg(4);
 		set @startPos, @startPos + 1;
-		set @limitPos, $HoF_totalCount - @startPos;
+		set @limitPos, $HoF_totalCount - @startPos + 1;
 		copyarray $HoF_LadderName$[@startPos], @HoF_LadderNameB$[0], @limitPos;
 		copyarray $HoF_LadderBLevel[@startPos], @HoF_LadderBLevelB[0], @limitPos; 
 		copyarray $HoF_LadderJLevel[@startPos], @HoF_LadderJLevelB[0], @limitPos;
 		copyarray $HoF_LadderZeny[@startPos], @HoF_LadderZenyB[0], @limitPos;
 		announce "[Hall of Fame] " + getarg(1) + " has made his/herself onto the No. " + @startPos + " ranking in Hall of Fame!", bc_all;
-	}
-	return;
+		return;
 }
 
 function	script	printHallOfFame	{
 	if(getarg(0) == 1) {
 		mes "[Hall of Fame] - Last Week's Rankings";
-		for(set @loop, 0; @loop < $HoF_totalCount; set @loop, @loop + 1){
+		for(set @loop, 0; @loop <= $HoF_totalCount; set @loop, @loop + 1){
 			mes "^ff0000";
 			mes "Position No. " + (@loop + 1) + ":^0000ff";
 			mes "+================================+";
@@ -255,7 +261,7 @@ function	script	printHallOfFame	{
 		}
 	} else {
 		mes "[Hall of Fame] - Current Rankings";
-		for(set @loop, 0; @loop < $HoF_totalCount; set @loop, @loop + 1){
+		for(set @loop, 0; @loop <= $HoF_totalCount; set @loop, @loop + 1){
 			mes "^ff0000";
 			mes "Position No. " + (@loop + 1) + ":^0000ff";
 			mes "+================================+";
@@ -269,7 +275,7 @@ function	script	printHallOfFame	{
 	return;
 }
 
-prontera,180,200,4	script	Jury	109,{
+prontera,164,134,2	script	Jury	109,{
 	mes "[Jury]";
 	mes "Good day. Would you like to view the Hall of Fame?";
 	next;

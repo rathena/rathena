@@ -1,5 +1,9 @@
 Date		Added
 ======
+2008/01/06
+	* Fixed a little Error with a label on Hall Of Fame. (bugreport:722) [Samuray22]
+	* Fixed another typo error in Novice Training Ground. (bugreport:740)
+	* Fixed a typo error in duplicates of Mr.Smile Quest. (bugreport:749)
 2008/01/05
 	* Rev. 12014 Updated Kunlun NPCs and warps. [L0ne_W0lf]
 	- Didn't update the Kunlun 'Power' npcs

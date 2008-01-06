@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88, Akaru
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.4a
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Trade Clover, Fluff and Jellopy for a Mr. Smile mask.
 //===== Additional Comments: ================================= 
 //= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.4a Fixed a little Typo error in duplicates. (bugreport:749) [Samuray22]
 //============================================================ 
 
 prontera,157,187,4	script	Smile Assistance#prt::SmileHelper	92,{
@@ -99,7 +100,7 @@ aldebaran,136,135,4	duplicate(SmileHelper)	Smile Assistance#alde	92
 geffen,119,107,4	duplicate(SmileHelper)	Smile Assistance#gef	92
 alberta,113,53,4	duplicate(SmileHelper)	Smile Assistance#alb	92
 payon,186,104,5	duplicate(SmileHelper)	Smile Assistance#pay	92
-izlude,129,118,4	duplicate(SmileHelper)	Smile Assistance:iz	92
+izlude,129,118,4	duplicate(SmileHelper)	Smile Assistance#iz	92
 
 //============================================================ 
 // Old changelog
