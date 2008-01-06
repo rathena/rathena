@@ -102,6 +102,7 @@ thor_camp	mapflag	noteleport
 job_sword1	mapflag	noteleport
 job_thief1	mapflag	noteleport
 // 2-1 -----------------------
+job_knt	mapflag	noteleport
 job_prist	mapflag	noteleport
 job_wiz	mapflag	noteleport
 job_hunte	mapflag	noteleport

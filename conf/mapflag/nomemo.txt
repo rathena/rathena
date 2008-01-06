@@ -175,6 +175,7 @@ job_sword1	mapflag	nomemo
 job_thief1	mapflag	nomemo
 job_star	mapflag	nomemo
 // Primary Second Job Class
+job_knt	mapflag	noteleport
 job_prist	mapflag	nomemo
 job_wiz	mapflag	nomemo
 job_hunte	mapflag	nomemo

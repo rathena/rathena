@@ -1,5 +1,6 @@
 Date	Added
-
+2008/01/06
+	* Added job_knt to nomemo, no return & noteleport mapflags. [Samuray22]
 2007/11/27
 	* Rev. 11824 Added Battle field and Memorial dungeon maps. [L0ne_W0lf]
 2007/11/18
