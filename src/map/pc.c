@@ -5930,7 +5930,7 @@ char* pc_readregstr(struct map_session_data* sd, int reg)
 /*==========================================
  * script—p•¶š—ñ??‚Ì’l‚ğİ’è
  *------------------------------------------*/
-int pc_setregstr(struct map_session_data* sd, int reg, char* str)
+int pc_setregstr(struct map_session_data* sd, int reg, const char* str)
 {
 	int i;
 
@@ -6113,7 +6113,7 @@ int pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type)
 	return 0;
 }
 
-int pc_setregistry_str(struct map_session_data *sd,char *reg,char *val,int type)
+int pc_setregistry_str(struct map_session_data *sd,char *reg,const char *val,int type)
 {
 	struct global_reg *sd_reg;
 	int i,*max, regmax;

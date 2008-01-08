@@ -2864,13 +2864,13 @@ void status_calc_bl_sub_hom(struct homun_data *hd, unsigned long flag)	//[orn]
 		if(status->sp > status->max_sp)
 			status->sp = status->max_sp;
 	}
-	if(flag&SCB_VIT)
+	if(flag&(SCB_VIT|SCB_DEF))
 	{	//Since vit affects def, recalculate def.
 		flag|=SCB_DEF;
 		status->def = status_calc_def(&hd->bl, &hd->sc, b_status->def);
-		status->def+=	(status->vit/5 - b_status->vit/5);
+		status->def+=(status->vit/5 - b_status->vit/5);
 	}
-	if(flag&SCB_INT)
+	if(flag&(SCB_INT|SCB_MDEF))
 	{
 		flag|=SCB_MDEF;
 		status->mdef = status_calc_mdef(&hd->bl, &hd->sc, b_status->mdef);

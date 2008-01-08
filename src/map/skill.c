@@ -6545,7 +6545,6 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 	case UNT_HERMODE:
 		if (sg->src_id!=bl->id && battle_check_target(&src->bl,bl,BCT_PARTY|BCT_GUILD) > 0)
 			status_change_clear_buffs(bl,1); //Should dispell only allies.
-			break;
 	case UNT_RICHMANKIM:
 	case UNT_ETERNALCHAOS:
 	case UNT_DRUMBATTLEFIELD:

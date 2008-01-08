@@ -2250,13 +2250,13 @@ void* get_val2(struct script_state* st, int uid, struct linkdb_node** ref)
  * Stores the value of a script variable
  * Return value is 0 on fail, 1 on success.
  *------------------------------------------*/
-static int set_reg(struct script_state* st, TBL_PC* sd, int num, char* name, void* value, struct linkdb_node** ref)
+static int set_reg(struct script_state* st, TBL_PC* sd, int num, char* name, const void* value, struct linkdb_node** ref)
 {
 	char prefix = name[0]; char postfix = name[strlen(name)-1];
 
 	if (postfix == '$') { // string variable
 
-		char* str = (char*)value;
+		const char* str = (const char*)value;
 		switch (prefix) {
 		case '@':
 			return pc_setregstr(sd, num, str);
