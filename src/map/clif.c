@@ -8455,6 +8455,11 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 			snprintf(output, ARRAYLENGTH(output), msg_txt(386), sd->status.name, message);
 			intif_announce(output, strlen(output) + 1, 0xFE000000, 0);
 		}
+
+		// Chat logging type 'M' / Main Chat
+		if( log_config.chat&1 || (log_config.chat&32 && !(agit_flag && log_config.chat&64)) )
+			log_chat("M", 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, NULL, message);
+
 		return;
 	}
 
