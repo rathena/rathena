@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/01/08
+	* More official Cursed Abbey spawns [Playtester]
 2008/01/06
 	* Fixed a little Error with a label on Hall Of Fame. (bugreport:722) [Samuray22]
 	* Fixed another typo error in Novice Training Ground. (bugreport:740)
