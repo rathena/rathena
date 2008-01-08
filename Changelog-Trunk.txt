@@ -7,6 +7,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Added missing code to log main chat messages sent by whispering
 	  to main_chat_nick (bugreport:424) [ultramage]
 2008/01/07
+	* Small change to potion pitcher to allow potion healing rate item effects
+	  to be included in potion pitcher's heal rate. [Reddozen]
 	* Changed the code in status_change_timer so that a null pointer no longer
 	  causes a crash but prints an error instead.
 	* Corrected clones not copying over a player's skills properly. [Skotlex]
