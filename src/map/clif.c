@@ -8566,11 +8566,9 @@ void clif_parse_TakeItem(int fd, struct map_session_data *sd)
 		if (pc_cant_act(sd))
 			break;
 
-  		//Disable cloaking/chasewalking characters from looting [Skotlex]
-		if(pc_iscloaking(sd) || pc_ischasewalk(sd))
-			break;
-		
 		if(sd->sc.count && (
+			sd->sc.data[SC_HIDING] ||
+			sd->sc.data[SC_CLOAKING] ||
 			sd->sc.data[SC_TRICKDEAD] ||
 			sd->sc.data[SC_BLADESTOP] ||
 			(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM))
@@ -8601,6 +8599,7 @@ void clif_parse_DropItem(int fd, struct map_session_data *sd)
 			break;
 
 		if (sd->sc.count && (
+			sd->sc.data[SC_HIDING] ||
 			sd->sc.data[SC_AUTOCOUNTER] ||
 			sd->sc.data[SC_BLADESTOP] ||
 			(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM)

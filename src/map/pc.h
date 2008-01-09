@@ -98,6 +98,15 @@ enum {
 	EQI_MAX
 } equip_index_enum;
 
+struct duel {
+	int members_count;
+	int invites_count;
+	int max_players_limit;
+};
+
+extern struct duel duel_list[MAX_DUEL];
+extern int duel_count;
+
 #define pc_setdead(sd)        ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 1 )
 #define pc_setsit(sd)         ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 2 )
 #define pc_isdead(sd)         ( (sd)->state.dead_sit == 1 )

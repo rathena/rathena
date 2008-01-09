@@ -12941,7 +12941,7 @@ BUILDIN_FUNC(warpportal)
 	if( mapindex == 0 )
 		return 0;// map not found
 
-	group = skill_unitsetting(bl, AL_WARP, 4, spx, spy, 1);
+	group = skill_unitsetting(bl, AL_WARP, 4, spx, spy, 0);
 	if( group == NULL )
 		return 0;// failed
 	group->val2 = (tpx<<16) | tpy;

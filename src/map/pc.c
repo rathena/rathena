@@ -66,6 +66,9 @@ static int GM_num = 0;
 #define MOTD_LINE_SIZE 128
 char motd_text[MOTD_LINE_SIZE][256]; // Message of the day buffer [Valaris]
 
+struct duel duel_list[MAX_DUEL];
+int duel_count = 0;
+
 //Links related info to the sd->hate_mob[]/sd->feel_map[] entries
 const struct sg_data sg_info[3] = {
 		{ SG_SUN_ANGER, SG_SUN_BLESS, SG_SUN_COMFORT, "PC_FEEL_SUN", "PC_HATE_MOB_SUN", is_day_of_sun },
@@ -7551,6 +7554,8 @@ int do_init_pc(void)
 {
 	pc_readdb();
 	pc_read_motd(); // Read MOTD [Valaris]
+
+	memset(&duel_list[0], 0, sizeof(duel_list));
 
 	add_timer_func_list(pc_invincible_timer, "pc_invincible_timer");
 	add_timer_func_list(pc_eventtimer, "pc_eventtimer");

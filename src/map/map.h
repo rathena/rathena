@@ -794,14 +794,6 @@ struct map_session_data {
 	} mail;
 };
 
-struct {
-	int members_count;
-	int invites_count;
-	int max_players_limit;
-} duel_list[MAX_DUEL];
-
-int duel_count;
-
 struct npc_timerevent_list {
 	int timer,pos;
 };

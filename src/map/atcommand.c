@@ -8548,8 +8548,6 @@ int atcommand_config_read(const char* cfgName)
 void do_init_atcommand()
 {
 	users_db = uidb_alloc(DB_OPT_BASE);
-	duel_count = 0;
-	memset(&duel_list[0], 0, sizeof(duel_list));
 	add_timer_func_list(atshowmobs_timer, "atshowmobs_timer");
 	return;
 }
