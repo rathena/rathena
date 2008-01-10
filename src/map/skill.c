@@ -3023,14 +3023,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			abra_skilllv = min(skilllv, skill_get_max(abra_skillid));
 			clif_skill_nodamage (src, bl, skillid, skilllv, 1);
 			
-			if (sd)
-			{	//Crash-protection against Abracadabra casting pets
-				sd->skillitem = abra_skillid;
-				sd->skillitemlv = abra_skilllv;
+			if( sd )
+			{// player-casted
 				sd->state.abra_flag = 1;
-				clif_item_skill (sd, abra_skillid, abra_skilllv);
-			} else
-			{	// [Skotlex]
+				if( skill_get_inf(abra_skillid)&INF_SELF_SKILL )
+					// non-targeted, execute immediately
+					unit_skilluse_id(src, bl->id, abra_skillid, abra_skilllv);
+				else
+				{// targeted, delay and let player pick target
+					sd->skillitem = abra_skillid;
+					sd->skillitemlv = abra_skilllv;
+					clif_item_skill(sd, abra_skillid, abra_skilllv);
+				}
+			}
+			else
+			{// mob-casted
 				struct unit_data *ud = unit_bl2ud(src);
 				int inf = skill_get_inf(abra_skillid);
 				int target_id = 0;
@@ -7485,8 +7492,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 			//Abracadabra skill, skip requisites!
 			if(type&1)
 			{	//Clear out the data.
-				sd->skillitem = sd->skillitemlv = 0;
-				sd->state.abra_flag = 0;
+				sd->skillitem = sd->skillitemlv = sd->state.abra_flag = 0;
 			}
 			return 1;
 		}
