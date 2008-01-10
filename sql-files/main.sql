@@ -393,7 +393,7 @@ DROP TABLE IF EXISTS `login`;
 CREATE TABLE `login` (
   `account_id` int(11) unsigned NOT NULL auto_increment,
   `userid` varchar(23) NOT NULL default '',
-  `user_pass` varchar(23) NOT NULL default '',
+  `user_pass` varchar(32) NOT NULL default '',
   `lastlogin` datetime NOT NULL default '0000-00-00 00:00:00',
   `sex` enum('M','F','S') NOT NULL default 'M',
   `logincount` mediumint(9) unsigned NOT NULL default '0',
