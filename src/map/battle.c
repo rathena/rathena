@@ -236,14 +236,6 @@ int battle_attr_fix(struct block_list *src, struct block_list *target, int damag
 	}
 	if (tsc && tsc->count)
 	{
-		if(tsc->data[SC_ARMOR_ELEMENT])
-		{
-			if (tsc->data[SC_ARMOR_ELEMENT]->val1 == atk_elem)
-				ratio -= tsc->data[SC_ARMOR_ELEMENT]->val2;
-			else
-			if (tsc->data[SC_ARMOR_ELEMENT]->val3 == atk_elem)
-				ratio -= tsc->data[SC_ARMOR_ELEMENT]->val4;
-		}
 		if(tsc->data[SC_SPIDERWEB] && atk_elem == ELE_FIRE)
 		{	// [Celest]
 			damage <<= 1;

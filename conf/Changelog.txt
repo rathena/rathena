@@ -1,4 +1,8 @@
 Date	Added
+
+2008/01/10
+	* Removed 'skill_steal_type' from skill.conf as said config no longer
+	  exists. [Skotlex]
 2008/01/06
 	* Added job_knt to nomemo, no return & noteleport mapflags. [Samuray22]
 2007/11/27

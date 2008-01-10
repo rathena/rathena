@@ -4169,7 +4169,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					clif_skill_fail(sd,skillid,0,0);
 				break;
 			}
-			if(status_isimmune(bl) || !tsc->count)
+			if(status_isimmune(bl) || !tsc || !tsc->count)
 				break;
 			for(i=0;i<SC_MAX;i++){
 				if (!tsc->data[i])

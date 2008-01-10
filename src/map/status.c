@@ -504,6 +504,7 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_BATKFOOD] |= SCB_BATK;
 	StatusChangeFlagTable[SC_WATKFOOD] |= SCB_WATK;
 	StatusChangeFlagTable[SC_MATKFOOD] |= SCB_MATK;
+	StatusChangeFlagTable[SC_ARMOR_ELEMENT] |= SCB_PC;
 
 	if (!battle_config.display_hallucination) //Disable Hallucination.
 		StatusIconChangeTable[SC_HALLUCINATION] = SI_BLANK;
@@ -1599,6 +1600,7 @@ int status_calc_pc(struct map_session_data* sd,int first)
 {
 	static int calculating = 0; //Check for recursive call preemption. [Skotlex]
 	struct status_data b_status, *status;
+	const struct status_change *sc = &sd->sc;
 	struct skill b_skill[MAX_SKILL];
 
 	int b_weight,b_max_weight;
@@ -2251,8 +2253,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		sd->max_weight += 2000*skill;
 	if(pc_isriding(sd) && pc_checkskill(sd,KN_RIDING)>0)
 		sd->max_weight += 10000;
-	if(sd->sc.data[SC_KNOWLEDGE])
-		sd->max_weight += sd->max_weight*sd->sc.data[SC_KNOWLEDGE]->val1/10;
+	if(sc->data[SC_KNOWLEDGE])
+		sd->max_weight += sd->max_weight*sc->data[SC_KNOWLEDGE]->val1/10;
 	if((skill=pc_checkskill(sd,ALL_INCCARRY))>0)
 		sd->max_weight += 2000*skill;
 
@@ -2265,10 +2267,8 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	if((skill=pc_checkskill(sd,HP_MANARECHARGE))>0 )
 		sd->dsprate -= 4*skill;
 
-	if(sd->sc.count){
-		if(sd->sc.data[SC_SERVICE4U])
-			sd->dsprate -= sd->sc.data[SC_SERVICE4U]->val3;
-	}
+	if(sc->data[SC_SERVICE4U])
+		sd->dsprate -= sc->data[SC_SERVICE4U]->val3;
 
 	//Underflow protections.
 	if(sd->dsprate < 0)
@@ -2284,10 +2284,10 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	// Anti-element and anti-race
 	if((skill=pc_checkskill(sd,CR_TRUST))>0)
-		sd->subele[6] += skill*5;
+		sd->subele[ELE_HOLY] += skill*5;
 	if((skill=pc_checkskill(sd,BS_SKINTEMPER))>0) {
-		sd->subele[0] += skill;
-		sd->subele[3] += skill*4;
+		sd->subele[ELE_NEUTRAL] += skill;
+		sd->subele[ELE_FIRE] += skill*4;
 	}
 	if((skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0 ){
 		skill = skill*4;
@@ -2297,14 +2297,14 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		sd->subrace[RC_DRAGON]+=skill;
 	}
 
-	if(sd->sc.count){
-     	if(sd->sc.data[SC_CONCENTRATE])
+	if(sc->count){
+     	if(sc->data[SC_CONCENTRATE])
 		{	//Update the card-bonus data
-			sd->sc.data[SC_CONCENTRATE]->val3 = sd->param_bonus[1]; //Agi
-			sd->sc.data[SC_CONCENTRATE]->val4 = sd->param_bonus[4]; //Dex
+			sc->data[SC_CONCENTRATE]->val3 = sd->param_bonus[1]; //Agi
+			sc->data[SC_CONCENTRATE]->val4 = sd->param_bonus[4]; //Dex
 		}
-     	if(sd->sc.data[SC_SIEGFRIED]){
-			i = sd->sc.data[SC_SIEGFRIED]->val2;
+     	if(sc->data[SC_SIEGFRIED]){
+			i = sc->data[SC_SIEGFRIED]->val2;
 			sd->subele[ELE_WATER] += i;
 			sd->subele[ELE_EARTH] += i;
 			sd->subele[ELE_FIRE] += i;
@@ -2315,9 +2315,14 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			sd->subele[ELE_GHOST] += i;
 			sd->subele[ELE_UNDEAD] += i;
 		}
-		if(sd->sc.data[SC_PROVIDENCE]){
-			sd->subele[ELE_HOLY] += sd->sc.data[SC_PROVIDENCE]->val2;
-			sd->subrace[RC_DEMON] += sd->sc.data[SC_PROVIDENCE]->val2;
+		if(sc->data[SC_PROVIDENCE]){
+			sd->subele[ELE_HOLY] += sc->data[SC_PROVIDENCE]->val2;
+			sd->subrace[RC_DEMON] += sc->data[SC_PROVIDENCE]->val2;
+		}
+		if(sc->data[SC_ARMOR_ELEMENT])
+		{	//This status change should grant card-type elemental resist.
+			sd->subele[sc->data[SC_ARMOR_ELEMENT]->val1] += sc->data[SC_ARMOR_ELEMENT]->val2;
+			sd->subele[sc->data[SC_ARMOR_ELEMENT]->val3] += sc->data[SC_ARMOR_ELEMENT]->val4;
 		}
 	}
 
@@ -5874,7 +5879,12 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_KAIZEL:
 			val2 = 10*val1; //% of life to be revived with
 			break;
-		case SC_ARMOR_ELEMENT:
+		case SC_ARMOR_ELEMENT: //Script generated elemental resist, verify bounds.
+			if (val1 < ELE_NEUTRAL || val1 >= ELE_MAX)
+				val1 = val2 = 0; //First Elemental resist
+			if (val3 < ELE_NEUTRAL || val3 >= ELE_MAX)
+				val3 = val4 = 0; //Second element resist
+			break;
 		case SC_FASTCAST:
 			//Place here SCs that have no SCB_* data, no skill associated, no ICON
 			//associated, and yet are not wrong/unknown. [Skotlex]

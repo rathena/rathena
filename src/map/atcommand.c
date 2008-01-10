@@ -7971,9 +7971,9 @@ int atcommand_clone(const int fd, struct map_session_data* sd, const char* comma
 		return 0;
 	}
 
-	if (strcmpi(command, "@clone") == 0) 
+	if (strcmpi(command+1, "clone") == 0) 
 		flag = 1;
-	else if (strcmpi(command, "@slaveclone") == 0) {
+	else if (strcmpi(command+1, "slaveclone") == 0) {
 	  	flag = 2;
 		master = sd->bl.id;
 		if (battle_config.atc_slave_clone_limit
