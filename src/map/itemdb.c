@@ -161,13 +161,9 @@ int itemdb_group_bonus(struct map_session_data* sd, int itemid)
 	for (i=0; i < MAX_ITEMGROUP; i++) {
 		if (!sd->itemgrouphealrate[i])
 			continue;
-		for (j=0; j < itemgroup_db[i].qty; j++) {
-			if (itemgroup_db[i].nameid[j] == itemid)
-			{
-				bonus += sd->itemgrouphealrate[i];
-				break;
-			}
-		}
+		ARR_FIND( 0, itemgroup_db[i].qty, j, itemgroup_db[i].nameid[j] == itemid );
+		if( j < itemgroup_db[i].qty )
+			bonus += sd->itemgrouphealrate[i];
 	}
 	return bonus;
 }

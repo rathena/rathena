@@ -4082,10 +4082,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 							sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10) / 100;
 					}
 				}
-				if (sd->itemgrouphealrate[37]>0)
+
+				if (sd->itemgrouphealrate[IG_POTION]>0)
 				{
-					hp += hp * sd->itemgrouphealrate[37] / 100;
-					sp += sp * sd->itemgrouphealrate[37] / 100;
+					hp += hp * sd->itemgrouphealrate[IG_POTION] / 100;
+					sp += sp * sd->itemgrouphealrate[IG_POTION] / 100;
 				}
 
 				if ((i = pc_skillheal_bonus(sd, skillid)))

@@ -3681,11 +3681,6 @@ int parse_char(int fd)
 			RFIFOSKIP(fd,2);
 		break;
 
-		// disconnect request from login server
-		case 0x7532:
-			set_eof(fd);
-			return 0;
-
 		// unknown packet received
 		default:
 			ShowError("parse_char: Received unknown packet "CL_WHITE"0x%x"CL_RESET" from ip '"CL_WHITE"%s"CL_RESET"'! Disconnecting!\n", RFIFOW(fd,0), ip2str(ipl, NULL));

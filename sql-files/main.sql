@@ -93,7 +93,7 @@ CREATE TABLE `charlog` (
   `char_msg` varchar(255) NOT NULL default 'char select',
   `account_id` int(11) NOT NULL default '0',
   `char_num` tinyint(4) NOT NULL default '0',
-  `name` varchar(255) NOT NULL default '',
+  `name` varchar(23) NOT NULL default '',
   `str` int(11) unsigned NOT NULL default '0',
   `agi` int(11) unsigned NOT NULL default '0',
   `vit` int(11) unsigned NOT NULL default '0',
@@ -392,8 +392,8 @@ CREATE TABLE `ipbanlist` (
 DROP TABLE IF EXISTS `login`;
 CREATE TABLE `login` (
   `account_id` int(11) unsigned NOT NULL auto_increment,
-  `userid` varchar(255) NOT NULL default '',
-  `user_pass` varchar(32) NOT NULL default '',
+  `userid` varchar(23) NOT NULL default '',
+  `user_pass` varchar(23) NOT NULL default '',
   `lastlogin` datetime NOT NULL default '0000-00-00 00:00:00',
   `sex` enum('M','F','S') NOT NULL default 'M',
   `logincount` mediumint(9) unsigned NOT NULL default '0',
@@ -453,7 +453,7 @@ DROP TABLE IF EXISTS `loginlog`;
 CREATE TABLE `loginlog` (
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
   `ip` int(10) unsigned NOT NULL default '0',
-  `user` varchar(32) NOT NULL default '',
+  `user` varchar(23) NOT NULL default '',
   `rcode` tinyint(4) NOT NULL default '0',
   `log` varchar(255) NOT NULL default '',
   INDEX (`ip`)

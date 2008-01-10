@@ -468,8 +468,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 	}
 
 	//Client Version check
-	if( login_config.check_client_version && account->version != 0 &&
-		account->version != login_config.client_version_to_connect )
+	if( login_config.check_client_version && account->version != login_config.client_version_to_connect )
 		return 5;
 
 	len = strnlen(account->userid, NAME_LENGTH);
@@ -639,6 +638,7 @@ int parse_fromchar(int fd)
 		{
 
 		case 0x2709: // request from map-server via char-server to reload GM accounts
+			RFIFOSKIP(fd,2);
 			ShowStatus("Char-server '%s': Request to re-load GM configuration file (ip: %s).\n", server[id].name, ip);
 			if( login_config.log_login )
 			{
@@ -648,7 +648,6 @@ int parse_fromchar(int fd)
 			read_gm_account();
 			// send GM accounts to all char-servers
 			send_GM_accounts(-1);
-			RFIFOSKIP(fd,2);
 		break;
 
 		case 0x2712: // request from char-server to authenticate an account
@@ -656,22 +655,40 @@ int parse_fromchar(int fd)
 				return 0;
 		{
 			int account_id = RFIFOL(fd,2);
+			int login_id1 = RFIFOL(fd,6);
+			int login_id2 = RFIFOL(fd,10);
+			char sex = RFIFOB(fd,14);
+			uint32 ip_ = ntohl(RFIFOL(fd,15));
+			RFIFOSKIP(fd,19);
+
 			ARR_FIND( 0, AUTH_FIFO_SIZE, i, 
-				auth_fifo[i].account_id == RFIFOL(fd,2) &&
-				auth_fifo[i].login_id1  == RFIFOL(fd,6) &&
-				auth_fifo[i].login_id2  == RFIFOL(fd,10) &&
-				auth_fifo[i].sex        == RFIFOB(fd,14) &&
-				auth_fifo[i].ip         == ntohl(RFIFOL(fd,15)) &&
+				auth_fifo[i].account_id == account_id &&
+				auth_fifo[i].login_id1  == login_id1 &&
+				auth_fifo[i].login_id2  == login_id2 &&
+				auth_fifo[i].sex        == sex &&
+				auth_fifo[i].ip         == ip_ &&
 				!auth_fifo[i].delflag );
 
-			if( i < AUTH_FIFO_SIZE )
-				auth_fifo[i].delflag = 1;
-
-			if( i < AUTH_FIFO_SIZE && account_id > 0 )
-			{// send ack 
+			if( i == AUTH_FIFO_SIZE || account_id <= 0 )
+			{// authentication not found
+				ShowStatus("Char-server '%s': authentication of the account %d REFUSED (ip: %s).\n", server[id].name, account_id, ip);
+				WFIFOHEAD(fd,51);
+				WFIFOW(fd,0) = 0x2713;
+				WFIFOL(fd,2) = account_id;
+				WFIFOB(fd,6) = 1;
+				// It is unnecessary to send email
+				// It is unnecessary to send validity date of the account
+				WFIFOSET(fd,51);
+			}
+			else
+			{// found
 				uint32 connect_until_time;
 				char email[40];
 
+				// each auth entry can only be used once
+				auth_fifo[i].delflag = 1;
+
+				// retrieve email and account expiration time
 				if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `email`,`connect_until` FROM `%s` WHERE `%s`='%d'", login_db, login_db_account_id, account_id) )
 					Sql_ShowDebug(sql_handle);
 				if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
@@ -692,6 +709,7 @@ int parse_fromchar(int fd)
 					connect_until_time = 0;
 				}
 
+				// send ack
 				WFIFOHEAD(fd,51);
 				WFIFOW(fd,0) = 0x2713;
 				WFIFOL(fd,2) = account_id;
@@ -700,48 +718,37 @@ int parse_fromchar(int fd)
 				WFIFOL(fd,47) = connect_until_time;
 				WFIFOSET(fd,51);
 			}
-			else
-			{// authentication not found
-				ShowStatus("Char-server '%s': authentication of the account %d REFUSED (ip: %s).\n", server[id].name, account_id, ip);
-				WFIFOHEAD(fd,51);
-				WFIFOW(fd,0) = 0x2713;
-				WFIFOL(fd,2) = account_id;
-				WFIFOB(fd,6) = 1;
-				// It is unnecessary to send email
-				// It is unnecessary to send validity date of the account
-				WFIFOSET(fd,51);
-			}
-
-			RFIFOSKIP(fd,19);
 		}
 		break;
 
 		case 0x2714:
 			if( RFIFOREST(fd) < 6 )
 				return 0;
+		{
+			int users = RFIFOL(fd,2);
+			RFIFOSKIP(fd,6);
 
 			// how many users on world? (update)
-			if( server[id].users != RFIFOL(fd,2) )
+			if( server[id].users != users )
 			{
-				ShowStatus("set users %s : %d\n", server[id].name, RFIFOL(fd,2));
+				ShowStatus("set users %s : %d\n", server[id].name, users);
 
-				server[id].users = RFIFOL(fd,2);
+				server[id].users = users;
 				if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `sstatus` SET `user` = '%d' WHERE `index` = '%d'", server[id].users, id) )
 					Sql_ShowDebug(sql_handle);
 			}
-			RFIFOSKIP(fd,6);
+		}
 		break;
 
 		case 0x2716: // received an e-mail/limited time request, because a player comes back from a map-server to the char-server
 			if( RFIFOREST(fd) < 6 )
 				return 0;
 		{
-			int account_id;
 			uint32 connect_until_time = 0;
-			char email[40];
+			char email[40] = "";
 
-			memset(email, 0, sizeof(email));
-			account_id = RFIFOL(fd,2);
+			int account_id = RFIFOL(fd,2);
+			RFIFOSKIP(fd,6);
 
 			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `email`,`connect_until` FROM `%s` WHERE `%s`='%d'", login_db, login_db_account_id, account_id) )
 				Sql_ShowDebug(sql_handle);
@@ -751,79 +758,70 @@ int parse_fromchar(int fd)
 				size_t len;
 
 				Sql_GetData(sql_handle, 0, &data, &len);
-				if( len > sizeof(email) )
-				{
-#if defined(DEBUG)
-					ShowDebug("parse_fromchar:0x2716: email is too long (len=%u,maxlen=%u)\n", len, sizeof(email));
-#endif
-					len = sizeof(email);
-				}
-				memcpy(email, data, len);
+				safestrncpy(email, data, sizeof(email));
 
 				Sql_GetData(sql_handle, 1, &data, NULL);
 				connect_until_time = (uint32)strtoul(data, NULL, 10);
 
 				Sql_FreeResult(sql_handle);
 			}
-			//printf("parse_fromchar: E-mail/limited time request from '%s' server (concerned account: %d)\n", server[id].name, RFIFOL(fd,2));
+
 			WFIFOHEAD(fd,50);
 			WFIFOW(fd,0) = 0x2717;
-			WFIFOL(fd,2) = RFIFOL(fd,2);
-			memcpy(WFIFOP(fd, 6), email, 40);
+			WFIFOL(fd,2) = account_id;
+			safestrncpy((char*)WFIFOP(fd,6), email, 40);
 			WFIFOL(fd,46) = connect_until_time;
 			WFIFOSET(fd,50);
-
-			RFIFOSKIP(fd,6);
 		}
 		break;
 
 		case 0x2719: // ping request from charserver
 			if( RFIFOREST(fd) < 2 )
 				return 0;
+			RFIFOSKIP(fd,2);
 
 			WFIFOHEAD(fd,2);
 			WFIFOW(fd,0) = 0x2718;
 			WFIFOSET(fd,2);
-
-			RFIFOSKIP(fd,2);
 		break;
 
-		case 0x2720: // Request to become a GM (TXT only!)
-			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
+		case 0x2720: // Request to become a GM
+			if( RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2) )
 				return 0;
-			//oldacc = RFIFOL(fd,4);
-			ShowWarning("change GM isn't supported in this login server version.\n");
-			ShowError("change GM error 0 %s\n", RFIFOP(fd, 8));
+		{
+			int acc = RFIFOL(fd,4);
+			RFIFOSKIP(fd, RFIFOW(fd,2));
 
+			ShowWarning("change GM isn't supported in this login server version.\n");
+			ShowError("change GM error 0 %s\n", RFIFOP(fd,8));
+
+			// announce gm level update result
 			WFIFOHEAD(fd,10);
 			WFIFOW(fd,0) = 0x2721;
-			WFIFOL(fd,2) = RFIFOL(fd,4); // oldacc;
-			WFIFOL(fd,6) = 0; // newacc;
+			WFIFOL(fd,2) = acc;
+			WFIFOL(fd,6) = 0; // level
 			WFIFOSET(fd,10);
-
-			RFIFOSKIP(fd, RFIFOW(fd, 2));
-			return 0;
+		}
+		break;
 
 		// Map server send information to change an email of an account via char-server
 		case 0x2722:	// 0x2722 <account_id>.L <actual_e-mail>.40B <new_e-mail>.40B
 			if (RFIFOREST(fd) < 86)
 				return 0;
 		{
-			int account_id;
-			char actual_email[40], new_email[40];
+			char actual_email[40];
+			char new_email[40];
+			int account_id = RFIFOL(fd,2);
+			safestrncpy(actual_email, RFIFOP(fd,6), 40);
+			safestrncpy(new_email, RFIFOP(fd,46), 40);
+			RFIFOSKIP(fd, 86);
 
-			account_id = RFIFOL(fd,2);
-			memcpy(actual_email, RFIFOP(fd,6), 40);
-			memcpy(new_email, RFIFOP(fd,46), 40);
 			if( e_mail_check(actual_email) == 0 )
-				ShowWarning("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command), but actual email is invalid (account: %d, ip: %s)\n",
-				server[id].name, account_id, ip);
+				ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command), but actual email is invalid (account: %d, ip: %s)\n", server[id].name, account_id, ip);
 			else if( e_mail_check(new_email) == 0 )
-				ShowWarning("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command) with a invalid new e-mail (account: %d, ip: %s)\n",
-				server[id].name, account_id, ip);
+				ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command) with a invalid new e-mail (account: %d, ip: %s)\n", server[id].name, account_id, ip);
 			else if( strcmpi(new_email, "a@a.com") == 0 )
-				ShowWarning("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command) with a default e-mail (account: %d, ip: %s)\n",
-				server[id].name, account_id, ip);
+				ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command) with a default e-mail (account: %d, ip: %s)\n", server[id].name, account_id, ip);
 			else if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `%s`,`email` FROM `%s` WHERE `%s` = '%d'", login_db_userid, login_db, login_db_account_id, account_id) )
 				Sql_ShowDebug(sql_handle);
 			else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
@@ -832,38 +830,21 @@ int parse_fromchar(int fd)
 				size_t len;
 
 				Sql_GetData(sql_handle, 1, &data, &len);
-				if( len > sizeof(actual_email) )
-				{
-#if defined(DEBUG)
-					ShowDebug("parse_fromchar:0x2722: email is too long (len=%u,maxlen=%u)\n", len, sizeof(actual_email));
-#endif
-					len = sizeof(actual_email);
-				}
 				if( strncasecmp(data, actual_email, sizeof(actual_email)) == 0 )
 				{
 					char esc_user_id[NAME_LENGTH*2+1];
 					char esc_new_email[sizeof(new_email)*2+1];
 
 					Sql_GetData(sql_handle, 0, &data, &len);
-					if( len > NAME_LENGTH )
-					{
-#if defined(DEBUG)
-						ShowDebug("parse_fromchar:0x2722: userid is too long (len=%u,maxlen=%u)\n", len, NAME_LENGTH);
-#endif
-						len = NAME_LENGTH;
-					}
 					Sql_EscapeStringLen(sql_handle, esc_user_id, data, len);
 					Sql_EscapeStringLen(sql_handle, esc_new_email, new_email, strnlen(new_email, sizeof(new_email)));
 
 					if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `email` = '%s' WHERE `%s` = '%d'", login_db, esc_new_email, login_db_account_id, account_id) )
 						Sql_ShowDebug(sql_handle);
-					ShowInfo("Char-server '%s': Modify an e-mail on an account (@email GM command) (account: %d ('%s'), new e-mail: '%s', ip: %s).\n",
-						server[id].name, account_id, esc_user_id, esc_new_email, ip);
+					ShowInfo("Char-server '%s': Modify an e-mail on an account (@email GM command) (account: %d ('%s'), new e-mail: '%s', ip: %s).\n", server[id].name, account_id, esc_user_id, esc_new_email, ip);
 				}
 				Sql_FreeResult(sql_handle);
 			}
-
-			RFIFOSKIP(fd, 86);
 		}
 		break;
 
@@ -873,6 +854,8 @@ int parse_fromchar(int fd)
 		{
 			int account_id = RFIFOL(fd,2);
 			int state = RFIFOL(fd,6);
+			RFIFOSKIP(fd,10);
+
 			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `state` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
 				Sql_ShowDebug(sql_handle);
 			else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
@@ -894,8 +877,6 @@ int parse_fromchar(int fd)
 
 			if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `state` = '%d' WHERE `%s` = '%d'", login_db, state, login_db_account_id, account_id) )
 				Sql_ShowDebug(sql_handle);
-
-			RFIFOSKIP(fd,10);
 		}
 		break;
 
@@ -903,12 +884,19 @@ int parse_fromchar(int fd)
 			if (RFIFOREST(fd) < 18)
 				return 0;
 		{
-			int account_id;
 			struct tm *tmtime;
 			time_t tmptime = 0;
 			time_t timestamp = time(NULL);
 
-			account_id = RFIFOL(fd,2);
+			int account_id = RFIFOL(fd,2);
+			int year = (short)RFIFOW(fd,6);
+			int month = (short)RFIFOW(fd,8);
+			int mday = (short)RFIFOW(fd,10);
+			int hour = (short)RFIFOW(fd,12);
+			int min = (short)RFIFOW(fd,14);
+			int sec = (short)RFIFOW(fd,16);
+			RFIFOSKIP(fd,18);
+
 			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `ban_until` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
 				Sql_ShowDebug(sql_handle);
 			else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
@@ -921,12 +909,12 @@ int parse_fromchar(int fd)
 					timestamp = tmptime;
 			}
 			tmtime = localtime(&timestamp);
-			tmtime->tm_year = tmtime->tm_year + (int16)RFIFOW(fd,6);
-			tmtime->tm_mon  = tmtime->tm_mon  + (int16)RFIFOW(fd,8);
-			tmtime->tm_mday = tmtime->tm_mday + (int16)RFIFOW(fd,10);
-			tmtime->tm_hour = tmtime->tm_hour + (int16)RFIFOW(fd,12);
-			tmtime->tm_min  = tmtime->tm_min  + (int16)RFIFOW(fd,14);
-			tmtime->tm_sec  = tmtime->tm_sec  + (int16)RFIFOW(fd,16);
+			tmtime->tm_year = tmtime->tm_year + year;
+			tmtime->tm_mon  = tmtime->tm_mon  + month;
+			tmtime->tm_mday = tmtime->tm_mday + mday;
+			tmtime->tm_hour = tmtime->tm_hour + hour;
+			tmtime->tm_min  = tmtime->tm_min  + min;
+			tmtime->tm_sec  = tmtime->tm_sec  + sec;
 			timestamp = mktime(tmtime);
 			if( timestamp != (time_t)-1 )
 			{
@@ -948,8 +936,6 @@ int parse_fromchar(int fd)
 						Sql_ShowDebug(sql_handle);
 				}
 			}
-
-			RFIFOSKIP(fd,18);
 		}
 		break;
 
@@ -957,15 +943,15 @@ int parse_fromchar(int fd)
 			if( RFIFOREST(fd) < 6 )
 				return 0;
 		{
-			int account_id;
-			int sex;
-			uint8 buf[16];
+			int account_id = RFIFOL(fd,2);
+			RFIFOSKIP(fd,6);
 
-			account_id = RFIFOL(fd,2);
 			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `sex` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
 				Sql_ShowDebug(sql_handle);
 			else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 			{
+				unsigned char buf[7];
+				int sex;
 				char* data;
 
 				Sql_GetData(sql_handle, 0, &data, NULL);
@@ -982,8 +968,6 @@ int parse_fromchar(int fd)
 				WBUFB(buf,6) = sex;
 				charif_sendallwos(-1, buf, 7);
 			}
-
-			RFIFOSKIP(fd,6);
 		}
 		break;
 
@@ -1028,28 +1012,20 @@ int parse_fromchar(int fd)
 				}
 				SqlStmt_Free(stmt);
 
-				{// Send to char
-					//uint8* buf;
-					//CREATE(buf, uint8, RFIFOW(fd,2));
-					//memcpy(WBUFP(buf,0), RFIFOP(fd,0), RFIFOW(fd,2));
-					//WBUFW(buf,0)=0x2729;
-					//charif_sendallwos(fd, buf, WBUFW(buf,2));
-					//aFree(buf);
-
-					RFIFOW(fd,0) = 0x2729;// reusing read buffer
-					charif_sendallwos(fd, RFIFOP(fd,0), RFIFOW(fd,2));
-				}
+				// Sending information towards the other char-servers.
+				RFIFOW(fd,0) = 0x2729;// reusing read buffer
+				charif_sendallwos(fd, RFIFOP(fd,0), RFIFOW(fd,2));
+				RFIFOSKIP(fd,RFIFOW(fd,2));
 			}
-			RFIFOSKIP(fd,RFIFOW(fd,2));
 		break;
 
 		case 0x272a:	// Receiving of map-server via char-server an unban request
 			if( RFIFOREST(fd) < 6 )
 				return 0;
 		{
-			int account_id;
+			int account_id = RFIFOL(fd,2);
+			RFIFOSKIP(fd,6);
 
-			account_id = RFIFOL(fd,2);
 			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `ban_until` FROM `%s` WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
 				Sql_ShowDebug(sql_handle);
 			else if( Sql_NumRows(sql_handle) > 0 )
@@ -1057,10 +1033,8 @@ int parse_fromchar(int fd)
 				if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `ban_until` = '0' WHERE `%s` = '%d'", login_db, login_db_account_id, account_id) )
 					Sql_ShowDebug(sql_handle);
 			}
-
-			RFIFOSKIP(fd,6);
-			return 0;
 		}
+		break;
 
 		case 0x272b:    // Set account_id to online [Wizputer]
 			if( RFIFOREST(fd) < 6 )
@@ -1104,18 +1078,21 @@ int parse_fromchar(int fd)
 			if (RFIFOREST(fd) < 10)
 				return 0;
 		{
-			int account_id = RFIFOL(fd, 2);
-			int char_id = RFIFOL(fd, 6);
 			size_t off;
 
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `str`,`value` FROM `%s` WHERE `type`='1' AND `account_id`='%d'", reg_db, account_id) )
-				Sql_ShowDebug(sql_handle);
+			int account_id = RFIFOL(fd,2);
+			int char_id = RFIFOL(fd,6);
+			RFIFOSKIP(fd,10);
 
 			WFIFOHEAD(fd,10000);
 			WFIFOW(fd,0) = 0x2729;
 			WFIFOL(fd,4) = account_id;
 			WFIFOL(fd,8) = char_id;
 			WFIFOB(fd,12) = 1; //Type 1 for Account2 registry
+
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `str`,`value` FROM `%s` WHERE `type`='1' AND `account_id`='%d'", reg_db, account_id) )
+				Sql_ShowDebug(sql_handle);
+
 			off = 13;
 			while( SQL_SUCCESS == Sql_NextRow(sql_handle) && off < 9000 )
 			{
@@ -1133,12 +1110,12 @@ int parse_fromchar(int fd)
 				}
 			}
 			Sql_FreeResult(sql_handle);
+
 			if( off >= 9000 )
 				ShowWarning("Too many account2 registries for AID %d. Some registries were not sent.\n", account_id);
+
 			WFIFOW(fd,2) = (uint16)off;
 			WFIFOSET(fd,WFIFOW(fd,2));
-
-			RFIFOSKIP(fd,10);
 		}
 		break;
 
@@ -1235,6 +1212,7 @@ int parse_login(int fd)
 
 		switch( command )
 		{
+
 		case 0x0200:		// New alive packet: structure: 0x200 <account.userid>.24B. used to verify if client is always alive.
 			if (RFIFOREST(fd) < 26)
 				return 0;
@@ -1280,10 +1258,14 @@ int parse_login(int fd)
 
 			memset(&account, 0, sizeof(account));
 			account.version = RFIFOL(fd,2);
-			if( !account.version )
-				account.version = 1; //Force some version...
 			safestrncpy(account.userid, (char*)RFIFOP(fd,6), NAME_LENGTH);//## does it have to be nul-terminated?
-			safestrncpy(account.passwd, (char*)RFIFOP(fd,30), NAME_LENGTH);//## does it have to be nul-terminated?
+			if (command != 0x01dd) {
+				safestrncpy(account.passwd, (char*)RFIFOP(fd,30), NAME_LENGTH);//## does it have to be nul-terminated?
+			} else {
+				memcpy(account.passwd, RFIFOP(fd,30), 16); account.passwd[16] = '\0'; // raw binary data here!
+			}
+			RFIFOSKIP(fd,packet_len);
+
 			account.passwdenc = (command == 0x01dd) ? PASSWORDENC : 0;
 			Sql_EscapeStringLen(sql_handle, esc_userid, account.userid, strlen(account.userid));
 
@@ -1444,12 +1426,11 @@ int parse_login(int fd)
 				}
 				WFIFOSET(fd,23);
 			}
-
-			RFIFOSKIP(fd,packet_len);
 		}
 		break;
 
 		case 0x01db:	// Sending request of the coding key
+			RFIFOSKIP(fd,2);
 		{
 			struct login_session_data* ld;
 			if( session[fd]->session_data )
@@ -1473,8 +1454,6 @@ int parse_login(int fd)
 			WFIFOW(fd,2) = 4 + ld->md5keylen;
 			memcpy(WFIFOP(fd,4), ld->md5key, ld->md5keylen);
 			WFIFOSET(fd,WFIFOW(fd,2));
-
-			RFIFOSKIP(fd,2);
 		}
 		break;
 
@@ -1482,23 +1461,28 @@ int parse_login(int fd)
 			if (RFIFOREST(fd) < 86)
 				return 0;
 		{
+			char server_name[20];
 			char esc_server_name[20*2+1];
-			char* server_name;
 			uint32 server_ip;
 			uint16 server_port;
+			uint16 maintenance;
+			uint16 new_;
 
 			memset(&account, 0, sizeof(account));
+			account.passwdenc = 0;
 			safestrncpy(account.userid, (char*)RFIFOP(fd,2), NAME_LENGTH);
 			safestrncpy(account.passwd, (char*)RFIFOP(fd,26), NAME_LENGTH);
-			account.passwdenc = 0;
 			server_ip = ntohl(RFIFOL(fd,54));
 			server_port = ntohs(RFIFOW(fd,58));
-			server_name = (char*)RFIFOP(fd,60);
+			safestrncpy(server_name, (char*)RFIFOP(fd,60), 20);
+			maintenance = RFIFOW(fd,82);
+			new_ = RFIFOW(fd,84);
+			RFIFOSKIP(fd,86);
 
 			Sql_EscapeStringLen(sql_handle, esc_server_name, server_name, strnlen(server_name, 20));
 			Sql_EscapeStringLen(sql_handle, esc_userid, account.userid, strnlen(account.userid, NAME_LENGTH));
 
-			ShowInfo("Connection request of the char-server '%s' @ %d.%d.%d.%d:%d (account: '%s', pass: '%s', ip: '%s')\n", esc_server_name, CONVIP(server_ip), server_port, account.userid, account.passwd, ip);
+			ShowInfo("Connection request of the char-server '%s' @ %d.%d.%d.%d:%d (account: '%s', pass: '%s', ip: '%s')\n", server_name, CONVIP(server_ip), server_port, account.userid, account.passwd, ip);
 
 			if( login_config.log_login && SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s@%s','100', 'charserver - %s@%u.%u.%u.%u:%d')",
 				loginlog_db, ipl, esc_userid, esc_server_name, esc_server_name, CONVIP(server_ip), server_port) )
@@ -1507,44 +1491,45 @@ int parse_login(int fd)
 			result = mmo_auth(&account, fd);
 			if( result == -1 && account.sex == 2 && account.account_id < MAX_SERVERS && server[account.account_id].fd == -1 )
 			{
-				ShowStatus("Connection of the char-server '%s' accepted.\n", esc_server_name);
-				memset(&server[account.account_id], 0, sizeof(struct mmo_char_server));
-				server[account.account_id].ip = ntohl(RFIFOL(fd,54));
-				server[account.account_id].port = ntohs(RFIFOW(fd,58));
+				ShowStatus("Connection of the char-server '%s' accepted.\n", server_name);
 				safestrncpy(server[account.account_id].name, server_name, sizeof(server[account.account_id].name));
-				server[account.account_id].users = 0;
-				server[account.account_id].maintenance = RFIFOW(fd,82);
-				server[account.account_id].new_ = RFIFOW(fd,84);
 				server[account.account_id].fd = fd;
-
-				WFIFOHEAD(fd,3);
-				WFIFOW(fd,0) = 0x2711;
-				WFIFOB(fd,2) = 0;
-				WFIFOSET(fd,3);
+				server[account.account_id].ip = server_ip;
+				server[account.account_id].port = server_port;
+				server[account.account_id].users = 0;
+				server[account.account_id].maintenance = maintenance;
+				server[account.account_id].new_ = new_;
 
 				session[fd]->func_parse = parse_fromchar;
 				session[fd]->flag.server = 1;
 				realloc_fifo(fd, FIFOSIZE_SERVERLINK, FIFOSIZE_SERVERLINK);
 
-				send_GM_accounts(fd); // send GM account to char-server
+				// send connection success
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x2711;
+				WFIFOB(fd,2) = 0;
+				WFIFOSET(fd,3);
+
+				// send GM account to char-server
+				send_GM_accounts(fd);
 
 				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `sstatus`(`index`,`name`,`user`) VALUES ( '%d', '%s', '%d')", account.account_id, esc_server_name, 0) )
 					Sql_ShowDebug(sql_handle);
 			}
 			else
 			{
-				ShowNotice("Connection of the char-server '%s' REFUSED.\n", esc_server_name);
+				ShowNotice("Connection of the char-server '%s' REFUSED.\n", server_name);
 				WFIFOHEAD(fd,3);
 				WFIFOW(fd,0) = 0x2711;
 				WFIFOB(fd,2) = 3;
 				WFIFOSET(fd,3);
 			}
 		}
-			RFIFOSKIP(fd,86);
-			return 0;
+		return 0; // processing will continue elsewhere
 
 		case 0x7530:	// Server version information request
 			ShowStatus("Sending server version information to ip: %s\n", ip);
+			RFIFOSKIP(fd,2);
 			WFIFOHEAD(fd,10);
 			WFIFOW(fd,0) = 0x7531;
 			WFIFOB(fd,2) = ATHENA_MAJOR_VERSION;
@@ -1555,13 +1540,6 @@ int parse_login(int fd)
 			WFIFOB(fd,7) = ATHENA_SERVER_LOGIN;
 			WFIFOW(fd,8) = ATHENA_MOD_VERSION;
 			WFIFOSET(fd,10);
-
-			RFIFOSKIP(fd,2);
-		break;
-
-		case 0x7532:	// Request to end connection
-			ShowStatus("End of connection (ip: %s)\n", ip);
-			set_eof(fd);
 		break;
 
 		default:
@@ -1654,11 +1632,6 @@ int login_lan_config_read(const char *lancfgName)
 			continue;
 		}
 
-		remove_control_chars(w1);
-		remove_control_chars(w2);
-		remove_control_chars(w3);
-		remove_control_chars(w4);
-
 		if( strcmpi(w1, "subnet") == 0 )
 		{
 			subnet[subnet_count].mask = str2ip(w2);
@@ -1711,9 +1684,6 @@ int login_config_read(const char* cfgName)
 
 		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) < 2)
 			continue;
-
-		remove_control_chars(w1);
-		remove_control_chars(w2);
 
 		if(!strcmpi(w1,"timestamp_format"))
 			strncpy(timestamp_format, w2, 20);

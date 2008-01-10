@@ -74,12 +74,6 @@ int parse_admin(int fd)
 			RFIFOSKIP(fd,2);
 			break;
 
-		case 0x7532:	// Request of end of connection
-			ShowStatus("'ladmin': End of connection (ip: %s)\n", ip);
-			RFIFOSKIP(fd,2);
-			set_eof(fd);
-			break;
-
 		case 0x7920:	// Request of an accounts list
 			if (RFIFOREST(fd) < 10)
 				return 0;

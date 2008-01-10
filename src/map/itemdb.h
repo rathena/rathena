@@ -36,6 +36,7 @@ enum item_types {
 
 //The only item group required by the code to be known. See const.txt for the full list.
 #define IG_FINDINGORE 6
+#define IG_POTION 37
 //The max. item group count (increase this when needed).
 #define MAX_ITEMGROUP 40
 
