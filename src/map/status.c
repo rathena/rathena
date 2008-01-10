@@ -851,7 +851,8 @@ int status_heal(struct block_list *bl,int hp,int sp, int flag)
 //no exp/drops will be awarded if there is no src (or src is target)
 //If rates are > 0, percent is of current HP/SP
 //If rates are < 0, percent is of max HP/SP
-//If flag, this is heal, otherwise it is damage.
+//If !flag, this is heal, otherwise it is damage.
+//Furthermore, if flag==2, then the target must not die from the substraction.
 int status_percent_change(struct block_list *src,struct block_list *target,signed char hp_rate, signed char sp_rate, int flag)
 {
 	struct status_data *status;
@@ -878,6 +879,9 @@ int status_percent_change(struct block_list *src,struct block_list *target,signe
 	if (hp_rate && !hp)
 		hp = 1;
 
+	if (flag == 2 && hp >= status->hp)
+		hp = status->hp-1; //Must not kill target.
+
 	//Should be safe to not do overflow protection here, noone should have
 	//millions upon millions of SP
 	if (sp_rate > 99)
@@ -896,19 +900,20 @@ int status_percent_change(struct block_list *src,struct block_list *target,signe
 	if (hp > INT_MAX) {
 	  	hp -= INT_MAX;
 		if (flag)
-		  	status_heal(target, INT_MAX, 0, 0);
-		else
 			status_damage(src, target, INT_MAX, 0, 0, (!src||src==target?5:1));
+		else
+		  	status_heal(target, INT_MAX, 0, 0);
 	}
   	if (sp > INT_MAX) {
 		sp -= INT_MAX;
 		if (flag)
-		  	status_heal(target, 0, INT_MAX, 0);
-		else
 			status_damage(src, target, 0, INT_MAX, 0, (!src||src==target?5:1));
+		else
+		  	status_heal(target, 0, INT_MAX, 0);
 	}	
-	if (flag) return status_heal(target, hp, sp, 0);
-	return status_damage(src, target, hp, sp, 0, (!src||src==target?5:1));
+	if (flag)
+		return status_damage(src, target, hp, sp, 0, (!src||src==target?5:1));
+	return status_heal(target, hp, sp, 0);
 }
 
 int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp)

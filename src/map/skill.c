@@ -561,7 +561,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case HT_SHOCKWAVE:
-		status_percent_damage(src, bl, 0, 15*skilllv+5);
+		status_percent_damage(src, bl, 0, 15*skilllv+5, false);
 		break;
 
 	case HT_SANDMAN:
@@ -603,7 +603,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case PA_PRESSURE:
-		status_percent_damage(src, bl, 0, 15+5*skilllv);
+		status_percent_damage(src, bl, 0, 15+5*skilllv, false);
 		break;
 
 	case RG_RAID:
@@ -2710,12 +2710,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			if (skilllv == 5)
 				skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
-			status_percent_damage(src, bl, 0, 100);
+			status_percent_damage(src, bl, 0, 100, false);
 		} else {
 			clif_skill_nodamage(src,src,skillid,skilllv,1);
 			if (skilllv == 5)
 				skill_attack(BF_MAGIC,src,src,src,skillid,skilllv,tick,flag);
-			status_percent_damage(src, src, 0, 100);
+			status_percent_damage(src, src, 0, 100, false);
 		}		
 		if (sd) skill_blockpc_start (sd, skillid, (skilllv < 5 ? 10000: 15000));
 		break;
@@ -4261,7 +4261,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if(sp < 1) sp = 1;
 				status_heal(bl,0,sp,2);
 				clif_skill_nodamage(bl,bl,SA_MAGICROD,tsc->data[SC_MAGICROD]->val1,1);
-				status_percent_damage(bl, src, 0, -20); //20% max SP damage.
+				status_percent_damage(bl, src, 0, -20, false); //20% max SP damage.
 			} else {
 				struct unit_data *ud = unit_bl2ud(bl);
 				int bl_skillid=0,bl_skilllv=0,hp = 0;
@@ -4787,7 +4787,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				switch (eff)
 				{
 				case 0:	// heals SP to 0
-					status_percent_damage(src, bl, 0, 100);
+					status_percent_damage(src, bl, 0, 100, false);
 					break;
 				case 1:	// matk halved
 					sc_start(bl,SC_INCMATKRATE,100,-50,skill_get_time2(skillid,skilllv));
@@ -5815,14 +5815,17 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 			int i = skilllv - 1;
 			int j = pc_search_inventory(sd,skill_db[skillid].itemid[i]);
 			if(j < 0 || skill_db[skillid].itemid[i] <= 0 || sd->inventory_data[j] == NULL ||
-				sd->status.inventory[j].amount < skill_db[skillid].amount[i]) {
+				sd->status.inventory[j].amount < skill_db[skillid].amount[i] ||
+				map_count_oncell(src->m,x,y,BL_CHAR) > 0
+			) {
 				clif_skill_fail(sd,skillid,0,0);
 				return 1;
 			}
+
 			pc_delitem(sd,j,skill_db[skillid].amount[i],0);
 			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 			if (rand()%100 < 50)
-				mob_once_spawn(sd, sd->bl.m, x, y, "--ja--",(skilllv < 2 ? 1084+rand()%2 : 1078+rand()%6), 1, "");
+				mob_once_spawn(sd, src->m, x, y, "--ja--",(skilllv < 2 ? 1084+rand()%2 : 1078+rand()%6), 1, "");
 			else
 				clif_skill_fail(sd,skillid,0,0);
 		}
@@ -10263,7 +10266,7 @@ int skill_produce_mix (struct map_session_data *sd, int skill_id, int nameid, in
 	} else {
 		switch (skill_id) {
 			case ASC_CDP: //25% Damage yourself, and display same effect as failed potion.
-				status_percent_damage(NULL, &sd->bl, -25, 0);
+				status_percent_damage(NULL, &sd->bl, -25, 0, true);
 			case AM_PHARMACY:
 			case AM_TWILIGHT1:
 			case AM_TWILIGHT2:

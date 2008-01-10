@@ -5494,22 +5494,22 @@ int pc_percentheal(struct map_session_data *sd,int hp,int sp)
 	if(hp >= 0 && sp >= 0) //Heal
 		return status_percent_heal(&sd->bl, hp, sp);
 
-	if(hp <= 0 && sp <= 0) //Damage (negative rates indicate % of max rather than current)
-		return status_percent_damage(NULL, &sd->bl, hp, sp);
+	if(hp <= 0 && sp <= 0) //Damage (negative rates indicate % of max rather than current), and only kill target IF the specified amount is 100%
+		return status_percent_damage(NULL, &sd->bl, hp, sp, hp==-100);
 
 	//Crossed signs
 	if(hp) {
 		if(hp > 0)
 			status_percent_heal(&sd->bl, hp, 0);
 		else
-			status_percent_damage(NULL, &sd->bl, hp, 0);
+			status_percent_damage(NULL, &sd->bl, hp, 0, hp==-100);
 	}
 	
 	if(sp) {
 		if(sp > 0)
 			status_percent_heal(&sd->bl, 0, sp);
 		else
-			status_percent_damage(NULL, &sd->bl, 0, sp);
+			status_percent_damage(NULL, &sd->bl, 0, sp, false);
 	}
 	return 0;
 }

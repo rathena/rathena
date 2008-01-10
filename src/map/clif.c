@@ -10238,7 +10238,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 		break;
 	}
 	case BL_MOB:
-		status_percent_damage(&sd->bl, target, 100, 0);
+		status_percent_damage(&sd->bl, target, 100, 0, true);
 		if(log_config.gm && lv >= log_config.gm) {
 			char message[NAME_LENGTH+16];
 			sprintf(message, "/kick %s (%d)", status_get_name(target), status_get_class(target));

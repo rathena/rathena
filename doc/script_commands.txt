@@ -2839,8 +2839,8 @@ set @i, petstat(PET_CLASS);
 
 This function will look up the monster with the specified ID number in the
 mob database and return the info set by TYPE argument.
-It will return -1 if there is no such item. Due to specific of MOB DB routines,
-it's better to check monster name. It'd return "Dummy" for a non-existing mob.
+It will return -1 if there is no such monster (or the type value is invalid),
+or "null" if you requested the monster's name.
 
 Valid types are listed in const.txt:
 	MOB_NAME	0		MOB_LV	1

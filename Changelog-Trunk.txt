@@ -4,6 +4,12 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/01/10
+	* Fixed getmonsterinfo to return "null" when returning the name of a
+	  non-existing mob instead of -1.
+	* Corrected CR_CULTIVATION to fail when the target cell has some BL_CHAR on
+	  it already.
+	* Script command percentheal will no longer kill the player if the
+	  specified amount is negative (and not -100).
 	* Fixed Abracadabra unable to cast non-targeted skills (bugreport:186)
 	* Another round of login server cleaning [ultramage]
 	- fixed passwordencrypt on SQL not behaving correctly (since r10753)

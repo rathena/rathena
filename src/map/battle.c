@@ -2724,7 +2724,7 @@ void battle_drain(TBL_PC *sd, struct block_list *tbl, int rdamage, int ldamage, 
 	}
 
 	if (sd->sp_vanish_rate && rand()%1000 < sd->sp_vanish_rate)
-		status_percent_damage(&sd->bl, tbl, 0, (unsigned char)sd->sp_vanish_per);
+		status_percent_damage(&sd->bl, tbl, 0, (unsigned char)sd->sp_vanish_per, false);
 	if (!thp && !tsp) return;
 
 	status_heal(&sd->bl, thp, tsp, battle_config.show_hp_sp_drain?3:1);
