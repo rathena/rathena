@@ -3026,15 +3026,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if( sd )
 			{// player-casted
 				sd->state.abra_flag = 1;
-				if( skill_get_inf(abra_skillid)&INF_SELF_SKILL )
-					// non-targeted, execute immediately
-					unit_skilluse_id(src, bl->id, abra_skillid, abra_skilllv);
-				else
-				{// targeted, delay and let player pick target
-					sd->skillitem = abra_skillid;
-					sd->skillitemlv = abra_skilllv;
-					clif_item_skill(sd, abra_skillid, abra_skilllv);
-				}
+				sd->skillitem = abra_skillid;
+				sd->skillitemlv = abra_skilllv;
+				clif_item_skill(sd, abra_skillid, abra_skilllv);
 			}
 			else
 			{// mob-casted
@@ -8269,6 +8263,9 @@ int skill_delayfix (struct block_list *bl, int skill_id, int skill_lv)
 	int time = skill_get_delay(skill_id, skill_lv);
 	
 	nullpo_retr(0, bl);
+
+	if (skill_id == SA_ABRACADABRA)
+		return 0; //Will use picked skill's delay.
 
 	if (bl->type&battle_config.no_skill_delay)
 		return battle_config.min_skill_delay_limit; 
