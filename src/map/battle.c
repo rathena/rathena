@@ -1485,7 +1485,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 				case TK_JUMPKICK:
 					skillratio += -70 + 10*skill_lv;
 					if (sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == skill_num)
-						skillratio += 10*status_get_lv(src)/3;
+						skillratio += 10*status_get_lv(src)/3; //Tumble bonus
+					if (wflag)
+						skillratio += 10*status_get_lv(src)/3; //Running bonus (TODO: What is the real bonus?)
 					break;
 				case GS_TRIPLEACTION:
 					skillratio += 50*skill_lv;

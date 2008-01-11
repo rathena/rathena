@@ -5168,7 +5168,7 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 	struct mob_data* md = NULL;
 	struct unit_data* ud = unit_bl2ud(src);
 	struct status_change *sc = NULL;
-	int inf,inf2;
+	int inf,inf2,flag=0;
 
 	nullpo_retr(0, ud);
 
@@ -5297,7 +5297,10 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 			
 		if(hd && !skill_check_condition_hom(hd,ud->skillid, ud->skilllv,1))	//[orn]
 			break;
-			
+
+		if (ud->state.running && ud->skillid == TK_JUMPKICK)
+			flag = 1;
+
 		if (ud->walktimer != -1 && ud->skillid != TK_RUN)
 			unit_stop_walking(src,1);
 		
@@ -5312,9 +5315,9 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 
 		map_freeblock_lock();
 		if (skill_get_casttype(ud->skillid) == CAST_NODAMAGE)
-			skill_castend_nodamage_id(src,target,ud->skillid,ud->skilllv,tick,0);
+			skill_castend_nodamage_id(src,target,ud->skillid,ud->skilllv,tick,flag);
 		else
-			skill_castend_damage_id(src,target,ud->skillid,ud->skilllv,tick,0);
+			skill_castend_damage_id(src,target,ud->skillid,ud->skilllv,tick,flag);
 
 		sc = status_get_sc(src);
 		if(sc && sc->count) {
