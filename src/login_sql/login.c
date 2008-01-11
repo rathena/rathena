@@ -1470,6 +1470,7 @@ int parse_login(int fd)
 
 			memset(&account, 0, sizeof(account));
 			account.passwdenc = 0;
+			account.version = login_config.client_version_to_connect; // hack to skip version check
 			safestrncpy(account.userid, (char*)RFIFOP(fd,2), NAME_LENGTH);
 			safestrncpy(account.passwd, (char*)RFIFOP(fd,26), NAME_LENGTH);
 			server_ip = ntohl(RFIFOL(fd,54));
