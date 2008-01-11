@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= erKURITA & RockmanEXE
 //===== Current Version: =====================================
-//= 1.2a
+//= 1.3
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -15,6 +15,7 @@
 //= 1.1 Added warp to Veins Field [Playtester]
 //= 1.2 Fully official rachel warps [Playtester]
 //= 1.2a Added missing warp (Pope's office entryway -> temple) [L0ne_W0lf]
+//= 1.3 Updated Rachel -> Veins Field warp. [L0ne_W0lf]
 //============================================================
 
 rachel,150,249,0	warp	rachel01	1,1,ra_temple,120,30
@@ -105,7 +106,7 @@ ra_temsky,62,139,0	warp	rachel73	1,1,ra_temsky,91,143
 
 rachel,25,125,0	warp	rachel74	1,1,ra_fild11,353,226
 rachel,275,125,0	warp	rachel75	1,1,ra_fild12,40,226
-rachel,130,20,0	warp	rachel76	1,1,ve_fild02,196,379
+rachel,130,21,0	warp	rachel76	1,1,ve_fild02,195,377
 
 que_rachel,130,93,0	warp	rachel77	1,1,que_rachel,239,258
 que_rachel,206,93,0	warp	rachel78	1,1,que_rachel,312,258

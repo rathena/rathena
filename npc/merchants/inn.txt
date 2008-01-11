@@ -4,7 +4,7 @@
 //= Darkchild (1.1)
 //= Playtester (1.2)
 //===== Current Version: ===================================== 
-//= 2.1a
+//= 2.2
 //===== Compatible With: ===================================== 
 //= eAthena 1.0+
 //===== Description: ========================================= 
@@ -36,6 +36,7 @@
 //= 2.0 Added Inn for the Town of Veins. [L0ne_W0lf]
 //= 2.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.1a Corrected a little Typo error. (bugreport:536 & 537) [Samuray22]
+//= 2.2 Small update to Vein's Inn Master. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -137,10 +138,8 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 	Mrent:
 		mes "[Inn Master]";
 		if(Zeny < 5000){
-			mes "I'm sorry, but the service charge";
-			mes "is 5,000 zeny. Please make sure";
-			mes "that you have enough money to check";
-			mes "in next time, okay?";
+			mes "I'm sorry, but you don't have enough money to check in.";
+			mes "THe service charge is 5,000 zeny.";
 			close;
 		}
 		mes "Enjoy your stay~";

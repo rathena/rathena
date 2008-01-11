@@ -11,9 +11,10 @@
 //= Veins City guide
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Added second Veins guide NPC. [L0ne_W0lf]
 //============================================================ 
 
-veins,210,345,5	script	Veins Guide	934,{
+veins,210,345,5	script	Veins Guide#1::ve_guide	934,{
 	mes "[Veins Guide]";
 	mes "Desert City Veins welcomes adventurers seeking shelter from harsh sandstorms.";
 	mes "If this is the first time for you to use the guide services, why don't you check the ...";
@@ -123,3 +124,5 @@ veins,210,345,5	script	Veins Guide	934,{
 	}
 	close;
 }
+
+veins,189,101,5	duplicate(ve_guide)	Veins Guide#2	934

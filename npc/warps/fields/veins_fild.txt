@@ -3,45 +3,47 @@
 //===== By: ==================================================
 //= $ephiroth
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
 //= Warp Points for Veins Field
 //===== Additional Comments: =================================
+//= 1.4 Rescripted to Aegis 11.2 Standards. [L0ne_W0lf
+//============================================================
+
+ve_fild01,366,267,0	warp	ve_fild1-1	1,1,ve_fild02,36,263
+ve_fild01,184,20,0	warp	ve_fild1-2	1,1,ve_fild04,174,334
+ra_fild11,233,27,0	warp	ve_fild1-3	1,1,ve_fild01,243,363
+ve_fild01,243,368,0	warp	ve_fild1-4	1,1,ra_fild11,232,32
+ve_fild01,350,92,0	warp	ve_fild1-5	1,1,ve_fild02,78,133
+ra_fild13,29,308,0	warp	ve_fild2-1	1,1,ve_fild02,380,308
+ve_fild02,385,308,0	warp	ve_fild2-2	1,1,ra_fild13,34,308
+ve_fild02,195,382,0	warp	ve_fild2-3	1,1,rachel,130,25
+ve_fild02,31,263,0	warp	ve_fild2-4	1,1,ve_fild01,361,267
+ve_fild02,73,133,0	warp	ve_fild2-5	1,1,ve_fild01,345,92
+ve_fild03,355,223,0	warp	ve_fild3-1	1,1,ve_fild04,49,249
+ve_fild03,222,43,0	warp	ve_fild3-2	1,1,ve_fild05,200,325
+ve_fild04,174,339,0	warp	ve_fild4-1	1,1,ve_fild01,184,25
+ve_fild04,44,249,0	warp	ve_fild4-2	1,1,ve_fild03,350,220
+ve_fild04,115,50,0	warp	ve_fild4-3	1,1,ve_fild06,80,183
+ve_fild05,200,330,0	warp	ve_fild5-1	1,1,ve_fild03,222,48
+ve_fild05,359,192,0	warp	ve_fild5-2	1,1,ve_fild06,80,183
+ve_fild06,153,220,0	warp	ve_fild6-1	1,1,veins,218,355
+ve_fild06,81,177,0	script	ve_fild6-2	45,1,1,{
+	if (rand(2))
+		warp "ve_fild04",115,55;
+	else
+		warp "ve_fild05",354,191;
+	end;
+}
+ve_fild07,147,371,0	warp	ve_fild7-1	1,1,veins,146,28
+
+//============================================================ 
+// Old changelog
+//============================================================ 
 //= 1.0 Initial version [$ephiroth]
 //= 1.1 Updated more warps [$ephiroth]
 //= 1.2 Removed some unofficial warps [Playtester]
 //= 1.3 Added random Veins exit [Playtester]
 //============================================================
-
-//= Veins Field (ve_fild) ====================================
-ve_fild02,196,382,0	warp	veinswarp5001	1,1,rachel,130,23
-ve_fild06,154,219,0	warp	veinswarp5002	1,1,veins,218,358
-ve_fild07,147,372,0	warp	veinswarp5003	1,1,veins,146,27
-ve_fild03,168,241,0	warp	veinswarp5004	1,1,thor_v01,21,226
-ve_fild01,243,369,0	warp	veinswarp5005	1,1,ra_fild11,232,29
-ra_fild11,232,26,0	warp	veinswarp5006	1,1,ve_fild01,243,366
-ve_fild01,367,263,0	warp	veinswarp5007	1,1,ve_fild02,33,259
-ve_fild02,30,259,0	warp	veinswarp5008	1,1,ve_fild01,364,263
-ve_fild01,351,95,0	warp	veinswarp5009	1,1,ve_fild02,76,133	
-ve_fild02,73,133,0	warp	veinswarp5010	1,1,ve_fild01,348,95
-ve_fild01,185,19,0	warp	veinswarp5011	1,1,ve_fild04,174,337
-ve_fild04,174,340,0	warp	veinswarp5012	1,1,ve_fild01,185,22
-ve_fild02,385,309,0	warp	veinswarp5013	1,1,ra_fild13,31,311
-ra_fild13,28,311,0	warp	veinswarp5014	1,1,ve_fild02,382,309
-ve_fild03,355,222,0	warp	veinswarp5015	1,1,ve_fild04,46,249
-ve_fild04,43,249,0	warp	veinswarp5016	1,1,ve_fild03,353,221
-ve_fild03,222,42,0	warp	veinswarp5017	1,1,ve_fild05,204,330
-ve_fild05,206,331,0	warp	veinswarp5018	1,1,ve_fild03,222,45
-
-ve_fild05,359,192,0	warp	veinswarp5019	1,1,ve_fild06,84,179
-ve_fild04,115,49,0	warp	veinswarp5020	1,1,ve_fild06,84,179
-
-ve_fild06,88,176,0	script	veinswarp5021	45,1,1,{
-	if (rand(2))
-		warp "ve_fild04",115,52;
-	else
-		warp "ve_fild05",354,192;
-	end;
-}

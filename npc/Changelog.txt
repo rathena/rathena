@@ -1,5 +1,9 @@
 Date		Added
 ======
+2008/10/11
+	* Rev. 12056 Added Veins town NPCs, mail box, and second guide. [L0ne_W0lf]
+	- Updated warps for Veins. Outstanding warps are quest related.
+	* Minor updates to other warp files.
 2008/01/08
 	* More official Cursed Abbey spawns [Playtester]
 2008/01/06
