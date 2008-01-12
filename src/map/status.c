@@ -5000,15 +5000,18 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				if(sce->val1 > val1)
 					return 1; //Return true to not mess up skill animations. [Skotlex
 		}
-		(sc->count)--;
-		if (sce->timer != -1)
-			delete_timer(sce->timer, status_change_timer);
-		sce->timer = -1;
 	}
 	//NOTE: avoiding returning after this point, or if you must return a failure, use this to properly cleanup any existing data. 
-#define sc_start_abort(ret) { \
-	if (sce) { ers_free(sc_data_ers, sce); sc->data[type] = NULL; } \
-	return ret; }
+#define sc_start_abort(ret) \
+	do{ \
+		if((sce=sc->data[type])){ \
+			--(sc->count); \
+			sc->data[type] = NULL; \
+			if( sce->timer != INVALID_TIMER ) delete_timer(sce->timer, status_change_timer); \
+			ers_free(sc_data_ers, sce); \
+			return ret; \
+		} \
+	}while(0)
 
 	vd = status_get_viewdata(bl);
 	calc_flag = StatusChangeFlagTable[type];
@@ -6101,10 +6104,16 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	else if (sd) //Send packet to self otherwise (disguised player?)
 		clif_status_load(bl,StatusIconChangeTable[type],1);
 
-	(sc->count)++;
-
-	if (!sce) //Not null when overwriting existing sc.
+	if((sce=sc->data[type]))
+	{// reuse old sc
+		if( sce->timer != INVALID_TIMER )
+			delete_timer(sce->timer, status_change_timer);
+	}
+	else
+	{// new sc
+		++(sc->count);
 		sce = sc->data[type] = ers_alloc(sc_data_ers, struct status_change_entry);
+	}
 	sce->val1 = val1;
 	sce->val2 = val2;
 	sce->val3 = val3;
