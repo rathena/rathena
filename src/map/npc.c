@@ -2523,7 +2523,7 @@ void npc_parsesrcfile(const char* filepath)
 	const char* p;
 
 	// read whole file to buffer
-	fp = fopen(filepath, "rt");
+	fp = fopen(filepath, "rb");
 	if( fp == NULL )
 	{
 		ShowError("npc_parsesrcfile: File not found '%s'.\n", filepath);
@@ -2553,7 +2553,7 @@ void npc_parsesrcfile(const char* filepath)
 		lines++;
 
 		// w1<TAB>w2<TAB>w3<TAB>w4
-		count = sv_parse(p, len+buffer-p, 0, '\t', pos, ARRAYLENGTH(pos), SV_TERMINATE_LF);
+		count = sv_parse(p, len+buffer-p, 0, '\t', pos, ARRAYLENGTH(pos), SV_TERMINATE_LF|SV_TERMINATE_CRLF);
 		if( count < 0 )
 		{
 			ShowError("npc_parsesrcfile: Parse error in file '%s', line '%d'. Stopping...\n", filepath, strline(buffer,p-buffer));
