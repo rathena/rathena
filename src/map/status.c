@@ -6791,9 +6791,9 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 				bool flag;
 				map_freeblock_lock();
 				status_zap(bl, sce->val4, 0);
-				flag = sc->data[type]; //We check for this rather than 'killed' since the target could have revived with kaizel.
+				flag = !sc->data[type]; //We check for this rather than 'killed' since the target could have revived with kaizel.
 				map_freeblock_unlock();
-				if (!flag) return 0; //target died, SC cancelled already.
+				if (flag) return 0; //target died, SC cancelled already.
 			}
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data );
 			return 0;
@@ -6812,9 +6812,9 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			int flag;
 			map_freeblock_lock();
 			status_fix_damage(NULL, bl, rand()%600 + 200, 0);
-			flag = sc->data[type];
+			flag = !sc->data[type];
 			map_freeblock_unlock();
-			if (!flag) return 0; //SC already ended.
+			if (flag) return 0; //SC already ended.
 			sc_timer_next(10000 + tick, status_change_timer, bl->id, data); 
 			return 0;
 		}
