@@ -1,5 +1,7 @@
 Date	Added
 
+2008/01/13
+	* Corrected job_knt Mapflags. (bugreport:803) [Samuray22]
 2008/01/10
 	* Removed 'skill_steal_type' from skill.conf as said config no longer
 	  exists. [Skotlex]

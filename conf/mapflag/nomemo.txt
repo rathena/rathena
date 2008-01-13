@@ -3,6 +3,7 @@
 //===== By: ==================================================
 //= eAthena Dev Team
 //= 1.6a added up to Hugel maps. [Lupus]
+//= 1.6b Added job_knt map. [Samuray22]
 //===== Current Version: =====================================
 
 
@@ -175,7 +176,7 @@ job_sword1	mapflag	nomemo
 job_thief1	mapflag	nomemo
 job_star	mapflag	nomemo
 // Primary Second Job Class
-job_knt	mapflag	noteleport
+job_knt	mapflag	nomemo
 job_prist	mapflag	nomemo
 job_wiz	mapflag	nomemo
 job_hunte	mapflag	nomemo
