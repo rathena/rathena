@@ -6818,7 +6818,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_BLEEDING:
 		if (--(sce->val4) >= 0) {
 			status_fix_damage(NULL, bl, rand()%600 + 200, 0);
-			if (status_isdead(bl))
+			if (status_isdead(bl) || !sc->data[type]) //It is possible you revived from kaizel if killed.
 				break;
 			sc_timer_next(10000 + tick, status_change_timer, bl->id, data ); 
 			return 0;
