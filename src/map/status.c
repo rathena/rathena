@@ -4998,20 +4998,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				val2 |= sce->val2; // stackable ailments
 			default:
 				if(sce->val1 > val1)
-					return 1; //Return true to not mess up skill animations. [Skotlex
+					return 1; //Return true to not mess up skill animations. [Skotlex]
 		}
 	}
-	//NOTE: avoiding returning after this point, or if you must return a failure, use this to properly cleanup any existing data. 
-#define sc_start_abort(ret) \
-	do{ \
-		if((sce=sc->data[type])){ \
-			--(sc->count); \
-			sc->data[type] = NULL; \
-			if( sce->timer != INVALID_TIMER ) delete_timer(sce->timer, status_change_timer); \
-			ers_free(sc_data_ers, sce); \
-			return ret; \
-		} \
-	}while(0)
 
 	vd = status_get_viewdata(bl);
 	calc_flag = StatusChangeFlagTable[type];
@@ -5208,7 +5197,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_WEDDING:
 		case SC_XMAS:
 		case SC_SUMMER:
-			if (!vd) sc_start_abort(0);
+			if (!vd) return 0;
 			//Store previous values as they could be removed.
 			val1 = vd->class_;
 			val2 = vd->weapon;
@@ -5439,7 +5428,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			} else {
 				struct status_data *b_status = status_get_base_status(bl);
 				if (!b_status)
-					sc_start_abort(0);
+					return 0;
 
 				val3 = 0;
 				val2 = b_status->str>>1;
@@ -5477,7 +5466,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			struct status_change_entry *psce = psc?psc->data[SC_MARIONETTE]:NULL;
 			int stat,max;
 			if (!psce)
-				sc_start_abort(0);
+				return 0;
 			val2 = tick /1000;
 			val3 = val4 = 0;
 			if (sd) {
@@ -5514,7 +5503,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				val4 |= stat;
 			} else {
 				struct status_data *b_status = status_get_base_status(bl);
-				if (!b_status) sc_start_abort(0);
+				if (!b_status) return 0;
 				max = 0xFF; //Assume a 256 max parameter
 				//Str
 				stat = (psce->val3>>16)&0xFF;
@@ -5597,7 +5586,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 
 		case SC_COMA: //Coma. Sends a char to 1HP. If val2, do not zap sp
 			status_zap(bl, status->hp-1, val2?0:status->sp);
-			sc_start_abort(1);
+			return 1;
 			break;
 		case SC_CLOSECONFINE2:
 		{
@@ -5613,7 +5602,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 					sce2->timer = add_timer(gettick()+tick+1000, status_change_timer, src->id, SC_CLOSECONFINE);
 				}
 			} else //Status failed.
-				sc_start_abort(0);
+				return 0;
 		}
 			break;
 		case SC_KAITE:
@@ -5901,7 +5890,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == 0 && StatusIconChangeTable[type] == 0 )
 			{	//Status change with no calc, no icon, and no skill associated...? 
 				ShowError("UnknownStatusChange [%d]\n", type);
-				sc_start_abort(0);
+				return 0;
 			}
 	}
 	else //Special considerations when loading SC data.
@@ -6104,6 +6093,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	else if (sd) //Send packet to self otherwise (disguised player?)
 		clif_status_load(bl,StatusIconChangeTable[type],1);
 
+	//Don't trust the previous sce assignment, in case the SC ended somewhere between there and here.
 	if((sce=sc->data[type]))
 	{// reuse old sc
 		if( sce->timer != INVALID_TIMER )
@@ -6121,7 +6111,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	if (tick >= 0)
 		sce->timer = add_timer(gettick() + tick, status_change_timer, bl->id, type);
 	else
-		sce->timer = -1; //Infinite duration
+		sce->timer = INVALID_TIMER; //Infinite duration
 
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
@@ -6142,7 +6132,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			ud->state.running = unit_run(bl);
 	}
 	return 1;
-#undef sc_start_abort
 }
 /*==========================================
  * ステータス異常全解除
