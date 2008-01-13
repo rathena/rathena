@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Playtester
 //===== Current Version: =====================================
-//= 1.6b
+//= 1.6c
 //===== Compatible With: =====================================
 //= SVN eA
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= making the first official version. [SinSloth]
 //= 1.6a Removed .GATs [Lupus]
 //= 1.6b Changed item names to item IDs on some scripts. [Samuray22]
+//= 1.6c Corrected a bad delitem. (bugreport:763) [Samuray22]
 //============================================================
 
 

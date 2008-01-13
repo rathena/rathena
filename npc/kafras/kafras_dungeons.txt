@@ -3,7 +3,7 @@
 //===== By: ============================
 //= eAthena Dev Team
 //===== Current Version: =======================
-//= 2.7
+//= 2.7a
 //===== Compatible With: ============================
 //= eAthena 1.0
 //===== Description: ============================================
@@ -30,6 +30,7 @@
 //=	Added unique Kafra Welcome message.
 //=	Removed Ant Hell Kafra Employees.
 //= 2.7 Merchant quest in the Biliban kafra. (Barron-Monster) [L0ne_W0lf]
+//= 2.7a Corrected a problem with Dobuel "Welcome Message". (bugreport:783) [Samuray22]
 //===============================================================
 
 //<============================= Byalan Island ============================>\\
@@ -43,7 +44,7 @@ izlu2dun,106,58,8	script	Kafra Employee::kaf_izlu2dun	115,{
 	mes "Kafra's Employees are";
 	mes "always ready to serve you.";
 	mes "How can I help you today?";
-	callfunc "F_Kafra",0,2,1,120,1200;
+	callfunc "F_Kafra",5,2,1,120,1200;
 
 	M_Save:
 		savepoint "izlu2dun",87,170;
@@ -61,7 +62,7 @@ prt_fild05,290,224,3	script	Kafra Employee::prt_fild05	114,{
 	mes "adventurers of Rune-Midgard";
 	mes "with its excellent service. So";
 	mes "what can I do for you today?";
-	callfunc "F_Kafra",0,1,1,40,0;
+	callfunc "F_Kafra",5,1,1,40,0;
 
 	M_Save:
 		savepoint "prt_fild05",274,243;
@@ -113,7 +114,7 @@ gef_fild10,73,340,5	script	Kafra Employee::kaf_gef_fild10	116,{
 	mes "Kafra's Employees are";
 	mes "always ready to serve you.";
 	mes "How can I help you today?";
-	callfunc "F_Kafra",0,6,1,130,0;
+	callfunc "F_Kafra",5,6,1,130,0;
 
 	M_Save:
 		savepoint "gef_fild10",54,326;
@@ -129,7 +130,7 @@ alb2trea,59,69,5	script	Kafra Employee::kaf_alb2trea	117,{
 	mes "The Kafra services";
 	mes "are always on your side.";
 	mes "How may I assist you?";
-	callfunc "F_Kafra",0,2,1,50,0;
+	callfunc "F_Kafra",5,2,1,50,0;
 
 	M_Save:
 		savepoint "alb2trea",92,64;
