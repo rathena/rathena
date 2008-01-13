@@ -139,7 +139,7 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 		mes "[Inn Master]";
 		if(Zeny < 5000){
 			mes "I'm sorry, but you don't have enough money to check in.";
-			mes "THe service charge is 5,000 zeny.";
+			mes "The service charge is 5,000 zeny.";
 			close;
 		}
 		mes "Enjoy your stay~";

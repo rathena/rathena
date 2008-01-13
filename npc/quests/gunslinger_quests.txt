@@ -900,7 +900,7 @@ SubDestroyer_:
 		mes "You've got the perfect materials and Zeny~";
 		mes "Here's the Slotted Destroyer I made ahead of time for you.";
 		mes "Use it well.";
-		delitem 1811,1;
+		delitem 1812,1;
 		delitem 984,5;
 		getitem 13161,1;
 		next;
