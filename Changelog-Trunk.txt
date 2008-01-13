@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/01/12
+	* Another possible fix to ers/status_change crashing.
+	- same logic as r12058 but in status_change_timer.
+	- look out for this error: "[Error]: status_change_timer: Unexpected NULL status change id: ### data: ###"
+	  getting it means that a crash was avoided and the culprit found.
 	* Modified npc_parsesrcfile to read the file as binary and let sv_parse handle LF/CRLF line endings.
 	* Possible fix to ers/status_change crashing. [FlavioJS]
 	- this patch is untested. Didn't find anyone willing to test it and I can't 

@@ -6709,13 +6709,20 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 
 	BL_CAST(BL_PC, bl, sd);
 
+// set the next timer of the sce (don't assume the status still exists)
+#define sc_timer_next(t,f,i,d) \
+	if( (sce=sc->data[type]) ) \
+		sce->timer = add_timer(t,f,i,d); \
+	else \
+		ShowError("status_change_timer: Unexpected NULL status change id: %d data: %d\n", id, data)
+
 	switch(type)
 	{
 	case SC_MAXIMIZEPOWER:
 	case SC_CLOAKING:
 		if(!status_charge(bl, 0, 1))
 			break; //Not enough SP to continue.
-		sce->timer = add_timer(sce->val2+tick, status_change_timer, bl->id, data);
+		sc_timer_next(sce->val2+tick, status_change_timer, bl->id, data);
 		return 0;
 
 	case SC_CHASEWALK:
@@ -6727,14 +6734,14 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 				(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_ROGUE?10:1) //SL bonus -> x10 duration
 				*skill_get_time2(StatusSkillChangeTable[type],sce->val1));
 		}
-		sce->timer = add_timer(sce->val2+tick, status_change_timer, bl->id, data);
+		sc_timer_next(sce->val2+tick, status_change_timer, bl->id, data);
 		return 0;
 	break;
 
 	case SC_SKA:  
 		if(--(sce->val2)>0){  
 			sce->val3 = rand()%100; //Random defense.  
-			sce->timer = add_timer(1000+tick, status_change_timer,bl->id, data);  
+			sc_timer_next(1000+tick, status_change_timer,bl->id, data);  
 			return 0;  
 		}  
 		break;
@@ -6745,7 +6752,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			if(sce->val2 % sce->val4 == 0 &&!status_charge(bl, 0, 1))
 				break; //Fail if it's time to substract SP and there isn't.
 		
-			sce->timer = add_timer(1000+tick, status_change_timer,bl->id, data);
+			sc_timer_next(1000+tick, status_change_timer,bl->id, data);
 			return 0;
 		}
 	break;
@@ -6756,14 +6763,14 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		map_foreachinrange( status_change_timer_sub, bl, sce->val3, BL_CHAR, bl, sce, type, tick);
 
 		if( --(sce->val2)>0 ){
-			sce->timer = add_timer(250+tick, status_change_timer, bl->id, data);
+			sc_timer_next(250+tick, status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;
 		
 	case SC_PROVOKE:
 		if(sce->val2) { //Auto-provoke (it is ended in status_heal)
-			sce->timer = add_timer(1000*60+tick,status_change_timer, bl->id, data );
+			sc_timer_next(1000*60+tick,status_change_timer, bl->id, data );
 			return 0;
 		}
 		break;
@@ -6774,14 +6781,14 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			unit_stop_walking(bl,1);
 			sc->opt1 = OPT1_STONE;
 			clif_changeoption(bl);
-			sce->timer = add_timer(1000+tick,status_change_timer, bl->id, data );
+			sc_timer_next(1000+tick,status_change_timer, bl->id, data );
 			status_calc_bl(bl, StatusChangeFlagTable[type]);
 			return 0;
 		}
 		if(--(sce->val3) > 0) {
 			if(++(sce->val4)%5 == 0 && status->hp > status->max_hp/4)
 				status_zap(bl, sce->val2, 0);
-			sce->timer = add_timer(1000+tick,status_change_timer, bl->id, data );
+			sc_timer_next(1000+tick,status_change_timer, bl->id, data );
 			return 0;
 		}
 		break;
@@ -6796,14 +6803,14 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 				if (status_isdead(bl))
 					break;
 			}
-			sce->timer = add_timer(1000 + tick, status_change_timer, bl->id, data );
+			sc_timer_next(1000 + tick, status_change_timer, bl->id, data );
 			return 0;
 		}
 		break;
 
 	case SC_TENSIONRELAX:
 		if(status->max_hp > status->hp && --(sce->val3) > 0){
-			sce->timer = add_timer(sce->val4+tick, status_change_timer, bl->id, data);
+			sc_timer_next(sce->val4+tick, status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;
@@ -6813,7 +6820,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			status_fix_damage(NULL, bl, rand()%600 + 200, 0);
 			if (status_isdead(bl))
 				break;
-			sce->timer = add_timer(10000 + tick, status_change_timer, bl->id, data ); 
+			sc_timer_next(10000 + tick, status_change_timer, bl->id, data ); 
 			return 0;
 		}
 		break;
@@ -6825,7 +6832,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 				int hp = (int)(sd->status.max_hp * sce->val1 / 100.);
 				status_heal(bl, hp, 0, 2);
 			}
-			sce->timer = add_timer((sce->val2 * 1000) + tick, status_change_timer, bl->id, data );
+			sc_timer_next((sce->val2 * 1000) + tick, status_change_timer, bl->id, data );
 			return 0;
 		}
 		break;
@@ -6836,7 +6843,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			bl->m == sd->feel_map[1].m ||
 			bl->m == sd->feel_map[2].m)
 		{	//Timeout will be handled by pc_setpos
-			sce->timer = -1;
+			sce->timer = INVALID_TIMER;
 			return 0;
 		}
 		break;
@@ -6891,7 +6898,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 				if (!status_charge(bl, 0, sp))
 					break;
 			}
-			sce->timer = add_timer(1000+tick, status_change_timer, bl->id, data);
+			sc_timer_next(1000+tick, status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;
@@ -6902,7 +6909,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			struct map_session_data *md = map_id2sd(sce->val1);
 			if (md && check_distance_bl(bl, &md->bl, sce->val3) && (sce->val4-=1000)>0)
 			{
-				sce->timer = add_timer(1000+tick, status_change_timer, bl->id, data);
+				sc_timer_next(1000+tick, status_change_timer, bl->id, data);
 				return 0;
 			}
 		}
@@ -6912,7 +6919,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		// 5% every 10 seconds [DracoRPG]
 		if(--(sce->val3)>0 && status_charge(bl, sce->val2, 0))
 		{
-			sce->timer = add_timer(sce->val4+tick, status_change_timer, bl->id, data);
+			sc_timer_next(sce->val4+tick, status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;
@@ -6923,7 +6930,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			clif_updatestatus(sd,SP_MANNER);
 			if (sd->status.manner < 0)
 			{	//Every 60 seconds your manner goes up by 1 until it gets back to 0.
-				sce->timer = add_timer(60000+tick, status_change_timer, bl->id, data);
+				sc_timer_next(60000+tick, status_change_timer, bl->id, data);
 				return 0;
 			}
 		}
@@ -6937,7 +6944,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		//	clif_message(bl, timer);
 		//}
 		if((sce->val4 -= 500) > 0) {
-			sce->timer = add_timer(500 + tick, status_change_timer, bl->id, data);
+			sc_timer_next(500 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;
@@ -6948,7 +6955,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			struct block_list *pbl = map_id2bl(sce->val1);
 			if (pbl && check_distance_bl(bl, pbl, 7) && (sce->val2)-->0)
 			{
-				sce->timer = add_timer(1000 + tick, status_change_timer, bl->id, data);
+				sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 				return 0;
 			}
 		}
@@ -6962,7 +6969,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			sp = (sce->val1 > 5) ? 35 : 20;
 			if(!status_charge(bl, hp, sp))
 				break;
-			sce->timer = add_timer(10000+tick, status_change_timer, bl->id, data);
+			sc_timer_next(10000+tick, status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;
@@ -6972,7 +6979,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 			struct block_list *tbl = map_id2bl(sce->val2);
 			
 			if (tbl && battle_check_range(bl, tbl, 2)){
-				sce->timer = add_timer(1000 + tick, status_change_timer, bl->id, data);
+				sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 				return 0;
 			}
 		}
@@ -6981,7 +6988,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_JAILED:
 		if(sce->val1 == INT_MAX || --(sce->val1) > 0)
 		{
-			sce->timer = add_timer(60000+tick, status_change_timer, bl->id,data);
+			sc_timer_next(60000+tick, status_change_timer, bl->id,data);
 			return 0;
 		}
 		break;
@@ -6989,7 +6996,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_BLIND:
 		if(sc->data[SC_FOGWALL]) 
 		{	//Blind lasts forever while you are standing on the fog.
-			sce->timer = add_timer(5000+tick, status_change_timer, bl->id, data);
+			sc_timer_next(5000+tick, status_change_timer, bl->id, data);
 			return 0;
 		}
 		break;
@@ -6997,6 +7004,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 
 	// default for all non-handled control paths is to end the status
 	return status_change_end( bl,type,tid );
+#undef sc_timer_next
 }
 
 /*==========================================
