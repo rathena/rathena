@@ -6788,9 +6788,12 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_DPOISON:
 		if (--(sce->val3) > 0) {
 			if (!sc->data[SC_SLOWPOISON]) {
+				bool flag;
+				map_freeblock_lock();
 				status_zap(bl, sce->val4, 0);
-				if (status_isdead(bl))
-					break;
+				flag = sc->data[type]; //We check for this rather than 'killed' since the target could have revived with kaizel.
+				map_freeblock_unlock();
+				if (!flag) return 0; //target died, SC cancelled already.
 			}
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data );
 			return 0;
@@ -6806,10 +6809,13 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 
 	case SC_BLEEDING:
 		if (--(sce->val4) >= 0) {
+			int flag;
+			map_freeblock_lock();
 			status_fix_damage(NULL, bl, rand()%600 + 200, 0);
-			if (status_isdead(bl) || !sc->data[type]) //It is possible you revived from kaizel if killed.
-				break;
-			sc_timer_next(10000 + tick, status_change_timer, bl->id, data ); 
+			flag = sc->data[type];
+			map_freeblock_unlock();
+			if (!flag) return 0; //SC already ended.
+			sc_timer_next(10000 + tick, status_change_timer, bl->id, data); 
 			return 0;
 		}
 		break;
