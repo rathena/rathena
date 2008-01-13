@@ -281,7 +281,7 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 
 	if (sc && sc->count) {
 		//First, sc_*'s that reduce damage to 0.
-		if( sc->data[SC_SAFETYWALL] && flag&BF_SHORT && skill_num != NPC_GUIDEDATTACK )
+		if( sc->data[SC_SAFETYWALL] && (flag&(BF_SHORT|BF_MAGIC))==BF_SHORT && skill_num != NPC_GUIDEDATTACK )
 		{
 			struct skill_unit_group *group = (struct skill_unit_group *)sc->data[SC_SAFETYWALL]->val3;
 			if (group) {
