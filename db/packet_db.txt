@@ -319,7 +319,7 @@ packet_ver: 5
 0x0195,102
 0x0196,9
 0x0197,4,resetchar,2
-0x0198,8
+0x0198,8,changemaptype,2:4:6
 0x0199,4
 0x019a,14
 0x019b,10
@@ -353,9 +353,9 @@ packet_ver: 5
 0x01b7,6
 0x01b8,3
 0x01b9,6
-0x01ba,26
+0x01ba,26,remove,2
 0x01bb,26,shift,2
-0x01bc,26
+0x01bc,26,recall,2
 0x01bd,26,summon,2
 0x01be,2
 0x01bf,3
@@ -390,7 +390,7 @@ packet_ver: 5
 0x01dc,-1
 0x01dd,47
 0x01de,33
-0x01df,6,gmreqnochatcount,2
+0x01df,6,gmreqaccname,2
 0x01e0,30
 0x01e1,8
 0x01e2,34
@@ -500,7 +500,7 @@ packet_ver: 9
 
 //2004-08-16aSakexe
 0x0212,26
-0x0213,26
+0x0213,26,check,2
 0x0214,42
 
 //2004-08-17aSakexe

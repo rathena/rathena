@@ -2240,6 +2240,22 @@ void map_setcell(int m, int x, int y, cell_t cell, bool flag)
 	}
 }
 
+void map_setgatcell(int m, int x, int y, int gat)
+{
+	int j;
+	struct mapcell cell;
+
+	if( m < 0 || m >= map_num || x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
+		return;
+
+	j = x + y*map[m].xs;
+
+	cell = map_gat2cell(gat);
+	map[m].cell[j].walkable = cell.walkable;
+	map[m].cell[j].shootable = cell.shootable;
+	map[m].cell[j].water = cell.water;
+}
+
 static void* create_map_data_other_server(DBKey key, va_list args)
 {
 	struct map_data_other_server *mdos;

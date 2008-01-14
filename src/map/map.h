@@ -1240,6 +1240,7 @@ struct map_data_other_server {
 int map_getcell(int,int,int,cell_chk);
 int map_getcellp(struct map_data*,int,int,cell_chk);
 void map_setcell(int m, int x, int y, cell_t cell, bool flag);
+void map_setgatcell(int m, int x, int y, int gat);
 
 extern struct map_data map[];
 extern int map_num;

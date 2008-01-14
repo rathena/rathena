@@ -6423,14 +6423,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 				if( map_getcell(src->m,ux,uy,CELL_CHKWALL) || map_getcell(src->m,ux,uy,CELL_CHKCLIFF) )
 					alive=0;
 				else
-				{
-					struct block_list bl;
-					bl.type = BL_NUL;
-					bl.m = src->m;
-					bl.x = ux;
-					bl.y = uy;
-					clif_changemapcell(0,&bl,5,AREA);
-				}
+					clif_changemapcell(0,src->m,ux,uy,5,AREA);
 		}
 
 		if(alive){
@@ -7251,7 +7244,7 @@ static int skill_unit_ondelete (struct skill_unit *src, unsigned int tick)
 	case UNT_ICEWALL:
 		// hack to prevent client from leaving cells unwalkable
 		//FIXME: this should be done individually in insight/outsight code instead [ultramage]
-		clif_changemapcell(0,&src->bl,src->val2,ALL_SAMEMAP);
+		clif_changemapcell(0,src->bl.m,src->bl.x,src->bl.y,src->val2,ALL_SAMEMAP);
 	break;
 
 	case UNT_ANKLESNARE:

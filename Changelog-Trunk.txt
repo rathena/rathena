@@ -5,6 +5,13 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2008/01/14
+	* Client packet corrections
+	- 0x01df is not 'gmreqnochatcount', but for requesting a player's
+	  account name via right-click menu (which currently can't be done)
+	- added /remove and /recall, aliases to /shift and /summon
+	- added /changemaptype, which alters a single cell's gat type
+	- gm kick will no longer exit the client (now it goes to the login screen)
+	- removed the quicksort invocation in /ignore code
 	* Fixed card removal script functions' 'extra card' bug (bugreport:786)
 	* Removed the hardcoded limit for numeric npc input boxes (bugreport:811)
 	* Applied a temp patch to make some npc-executed atcommands work again

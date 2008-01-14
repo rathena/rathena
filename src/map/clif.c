@@ -3613,16 +3613,15 @@ void clif_standing(struct block_list* bl)
 /*==========================================
  * Inform client(s) about a map-cell change
  *------------------------------------------*/
-void clif_changemapcell(int fd, struct block_list* pos, int type, enum send_target target)
+void clif_changemapcell(int fd, int m, int x, int y, int type, enum send_target target)
 {
 	unsigned char buf[32];
-	nullpo_retv(pos);
 
 	WBUFW(buf,0) = 0x192;
-	WBUFW(buf,2) = pos->x;
-	WBUFW(buf,4) = pos->y;
+	WBUFW(buf,2) = x;
+	WBUFW(buf,4) = y;
 	WBUFW(buf,6) = type;
-	mapindex_getmapname_ext(map[pos->m].name,(char*)WBUFP(buf,8));
+	mapindex_getmapname_ext(map[m].name,(char*)WBUFP(buf,8));
 
 	if( fd )
 	{
@@ -3631,7 +3630,14 @@ void clif_changemapcell(int fd, struct block_list* pos, int type, enum send_targ
 		WFIFOSET(fd,packet_len(0x192));
 	}
 	else
-		clif_send(buf,packet_len(0x192),pos,target);
+	{
+		struct block_list dummy_bl;
+		dummy_bl.type = BL_NUL;
+		dummy_bl.x = x;
+		dummy_bl.y = y;
+		dummy_bl.m = m;
+		clif_send(buf,packet_len(0x192),&dummy_bl,target);
+	}
 }
 
 /*==========================================
@@ -3696,7 +3702,7 @@ static void clif_getareachar_skillunit(struct map_session_data *sd, struct skill
 	WFIFOSET(fd,packet_len(0x11f));
 
 	if(unit->group->skill_id == WZ_ICEWALL)
-		clif_changemapcell(fd,&unit->bl,5,SELF);
+		clif_changemapcell(fd,unit->bl.m,unit->bl.x,unit->bl.y,5,SELF);
 }
 
 /*==========================================
@@ -3712,7 +3718,7 @@ static void clif_clearchar_skillunit(struct skill_unit *unit, int fd)
 	WFIFOSET(fd,packet_len(0x120));
 
 	if(unit->group && unit->group->skill_id == WZ_ICEWALL)
-		clif_changemapcell(fd,&unit->bl,unit->val2,SELF);
+		clif_changemapcell(fd,unit->bl.m,unit->bl.x,unit->bl.y,unit->val2,SELF);
 }
 
 /*==========================================
@@ -6878,23 +6884,18 @@ int clif_GM_kickack(struct map_session_data *sd, int id)
 	return 0;
 }
 
-void clif_parse_QuitGame(int fd,struct map_session_data *sd);
-
 int clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd,int type)
 {
 	int fd = tsd->fd;
-	WFIFOHEAD(fd,packet_len(0x18b));
-	if(type)
-		clif_GM_kickack(sd,tsd->status.account_id);
-	if (!fd) {
-		map_quit(tsd);
-		return 0;
-	}
 
-	WFIFOW(fd,0) = 0x18b;
-	WFIFOW(fd,2) = 0;
-	WFIFOSET(fd,packet_len(0x18b));
-	clif_setwaitclose(fd);
+	if( fd > 0 )
+		clif_authfail_fd(fd, 15);
+	else
+		map_quit(tsd);
+
+	if( type )
+		clif_GM_kickack(sd,tsd->status.account_id);
+
 	return 0;
 }
 
@@ -10202,7 +10203,11 @@ void clif_parse_ChangePetName(int fd, struct map_session_data *sd)
 	pet_change_name(sd,(char*)RFIFOP(fd,2));
 }
 
-// Kick (right click menu for GM "(name) force to quit")
+/*==========================================
+ * /kill <???>
+ * (or right click menu for GM "(name) force to quit")
+ * S 00cc <id>.L
+ *------------------------------------------*/
 void clif_parse_GMKick(int fd, struct map_session_data *sd)
 {
 	struct block_list *target;
@@ -10265,9 +10270,17 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * /shift
+ * /killall
  *------------------------------------------*/
-void clif_parse_Shift(int fd, struct map_session_data *sd)
+void clif_parse_GMKickAll(int fd, struct map_session_data* sd)
+{
+	is_atcommand(fd, sd, "@kickall");
+}
+
+/*==========================================
+ * /shift <name>
+ *------------------------------------------*/
+void clif_parse_GMShift(int fd, struct map_session_data *sd)
 {	
 	char *player_name;
 	int lv;
@@ -10285,13 +10298,12 @@ void clif_parse_Shift(int fd, struct map_session_data *sd)
 		sprintf(message, "/shift %s", player_name);
 		log_atcommand(sd, message);
 	}
-	return;
 }
 
 /*==========================================
- * /recall
+ * /recall <name>
  *------------------------------------------*/
-void clif_parse_Recall(int fd, struct map_session_data *sd)
+void clif_parse_GMRecall(int fd, struct map_session_data *sd)
 {
 	char *player_name;
 	int lv;
@@ -10310,7 +10322,6 @@ void clif_parse_Recall(int fd, struct map_session_data *sd)
 		sprintf(message, "/recall %s", player_name);
 		log_atcommand(sd, message);
 	}
-	return;
 }
 
 /*==========================================
@@ -10380,23 +10391,23 @@ void clif_parse_GMHide(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * GMによるチャット禁止時間付与
+ * GM adjustment of a player's manner value
+ * /red
+ * S 0149 <id>.L <type>.B <value>.W
+ * type: 0 - positive points
+ *       1 - negative points
  *------------------------------------------*/
 void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 {
-	int type, limit, level;
-	struct block_list *bl;
+	int type, value, level;
 	struct map_session_data *dstsd;
 
-	bl = map_id2bl(RFIFOL(fd,2));
-	if (!bl || bl->type != BL_PC)
-		return;
-	dstsd =(struct map_session_data *)bl;
-
+	dstsd = map_id2sd(RFIFOL(fd,2));
 	type = RFIFOB(fd,6);
-	limit = RFIFOW(fd,7);
+	value = RFIFOW(fd,7);
+
 	if (type == 0)
-		limit = 0 - limit;
+		value = 0 - value;
 
 	//If type is 2 and the ids don't match, this is a crafted hacked packet!
 	//Disabled because clients keep self-muting when you give players public @ commands... [Skotlex]
@@ -10408,65 +10419,83 @@ void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 		|| (type == 2 && !level))
 	{
 		clif_GM_silence(sd, dstsd, ((type == 2) ? 1 : type));
-		dstsd->status.manner -= limit;
+		dstsd->status.manner -= value;
 		if(dstsd->status.manner < 0)
-			sc_start(bl,SC_NOCHAT,100,0,0);
+			sc_start(&sd->bl,SC_NOCHAT,100,0,0);
 		else
 		{
 			dstsd->status.manner = 0;
-			status_change_end(bl,SC_NOCHAT,-1);
+			status_change_end(&sd->bl,SC_NOCHAT,-1);
 		}
 	}
-
-	return;
 }
+
 /*==========================================
- * GMによるチャット禁止時間参照（？）
+ * GM requesting account name (for right-click gm menu)
+ * S 01df <id>.L
+ * R 01e0 <id>.L <name>.24B
  *------------------------------------------*/
-void clif_parse_GMReqNoChatCount(int fd, struct map_session_data *sd)
+void clif_parse_GMReqAccountName(int fd, struct map_session_data *sd)
 {
 	int tid;
 	tid = RFIFOL(fd,2);
 
+	//TODO: find out if this works for any player or only for authorized GMs
+
 	WFIFOHEAD(fd,packet_len(0x1e0));
 	WFIFOW(fd,0) = 0x1e0;
 	WFIFOL(fd,2) = tid;
-	sprintf((char*)WFIFOP(fd,6),"%d",tid);
+	safestrncpy((char*)WFIFOP(fd,6), "", 24); // insert account name here >_<
 	WFIFOSET(fd, packet_len(0x1e0));
-
-	return;
 }
 
-static int pstrcmp(const void *a, const void *b)
+/*==========================================
+ * GM single cell type change request
+ * /changemaptype <x> <y> <type>
+ * S 0198 <x>.W <y>.W <gat>.W
+ *------------------------------------------*/
+void clif_parse_GMChangeMapType(int fd, struct map_session_data *sd)
 {
-	char *name1 = (char *)a;
-	char *name2 = (char *)b;
-	if (name1[0] && name2[0])
-		return strcmp(name1, name2);
-	//Since names are sorted in ascending order, send blank entries to the bottom.
-	if (name1[0])
-		return -1;
-	if (name2[0])
-		return 1;
-	return 0;
+	int x,y,type;
+
+	if( battle_config.atc_gmonly && !pc_isGM(sd) )
+		return;
+
+	if( pc_isGM(sd) < 99 ) //TODO: add proper check
+		return;
+
+	x = RFIFOW(fd,2);
+	y = RFIFOW(fd,4);
+	type = RFIFOW(fd,6);
+
+	map_setgatcell(sd->bl.m,x,y,type);
+	clif_changemapcell(0,sd->bl.m,x,y,type,ALL_SAMEMAP);
+	//FIXME: once players leave the map, the client 'forgets' this information.
 }
 
-void clif_parse_PMIgnore(int fd, struct map_session_data *sd)
+/// S 00cf <nick>.24B <type>.B
+/// type: 0 (/ex nick) deny speech from nick
+///       1 (/in nick) allow speech from nick
+///
+/// R 00d1 <type>.B <result>.B
+/// type:   0: deny, 1: allow
+/// result: 0: success, 1: fail 2: list full
+void clif_parse_PMIgnore(int fd, struct map_session_data* sd)
 {
 	char output[512];
-	char *nick; // S 00cf <nick>.24B <type>.B: 00 (/ex nick) deny speech from nick, 01 (/in nick) allow speech from nick
+	char* nick;
+	uint8 type;
 	int i;
 
-	memset(output, '\0', sizeof(output));
-
 	nick = (char*)RFIFOP(fd,2); // speed up
-	nick[NAME_LENGTH-1] = '\0'; // to be sure that the player name have at maximum 23 characters
+	nick[NAME_LENGTH-1] = '\0'; // to be sure that the player name has at most 23 characters
+	type = RFIFOB(fd,26);
 
 	WFIFOHEAD(fd,packet_len(0xd1));
-	WFIFOW(fd,0) = 0x0d1; // R 00d1 <type>.B <result>.B: type: 0: deny, 1: allow, result: 0: success, 1: fail 2: list full
-	WFIFOB(fd,2) = RFIFOB(fd,26);
+	WFIFOW(fd,0) = 0x0d1;
+	WFIFOB(fd,2) = type;
 	
-	if (RFIFOB(fd,26) == 0)
+	if( type == 0 )
 	{	// Add name to ignore list (block)
 
 		// Bot-check...
@@ -10480,83 +10509,87 @@ void clif_parse_PMIgnore(int fd, struct map_session_data *sd)
 		}
 
 		// try to find a free spot, while checking for duplicates at the same time
-		for(i = 0; i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0' && strcmp(sd->ignore[i].name, nick) != 0; i++);
-
-		if (i == MAX_IGNORE_LIST) { // no space for new entry
+		ARR_FIND( 0, MAX_IGNORE_LIST, i, sd->ignore[i].name[0] == '\0' || strcmp(sd->ignore[i].name, nick) == 0 );
+		if( i == MAX_IGNORE_LIST )
+		{// no space for new entry
 			WFIFOB(fd,3) = 2; // fail
 			WFIFOSET(fd, packet_len(0x0d1));
 			return;
 		}
-		if(sd->ignore[i].name[0] != '\0') { // name already exists
+		if( sd->ignore[i].name[0] != '\0' )
+		{// name already exists
 			WFIFOB(fd,3) = 0; // Aegis reports success.
 			WFIFOSET(fd, packet_len(0x0d1));
 			return;
 		}
+
 		//Insert in position i
-		memcpy(sd->ignore[i].name, nick, NAME_LENGTH);
+		safestrncpy(sd->ignore[i].name, nick, NAME_LENGTH);
+
 		WFIFOB(fd,3) = 0; // success
 		WFIFOSET(fd, packet_len(0x0d1));
-
-		//Sort the ignore list.
-		//FIXME: why not just use a simple shift-and-insert scheme instead? [ultramage]
-		qsort (sd->ignore[0].name, MAX_IGNORE_LIST, sizeof(sd->ignore[0].name), pstrcmp);
 	}
 	else
 	{	// Remove name from ignore list (unblock)
-		
-		for(i = 0; i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0' && strcmp(sd->ignore[i].name, nick) != 0; i++);
 
-		if (i == MAX_IGNORE_LIST || sd->ignore[i].name[i] == '\0') { //Not found
+		// find entry
+		ARR_FIND( 0, MAX_IGNORE_LIST, i, sd->ignore[i].name[0] == '\0' || strcmp(sd->ignore[i].name, nick) == 0 );
+		if( i == MAX_IGNORE_LIST || sd->ignore[i].name[i] == '\0' )
+		{ //Not found
 			WFIFOB(fd,3) = 1; // fail
 			WFIFOSET(fd, packet_len(0x0d1));
 			return;
 		}
-		//Move everything one place down to overwrite removed entry.
+		// move everything one place down to overwrite removed entry
 		memmove(sd->ignore[i].name, sd->ignore[i+1].name, (MAX_IGNORE_LIST-i-1)*sizeof(sd->ignore[0].name));
+		// wipe last entry
 		memset(sd->ignore[MAX_IGNORE_LIST-1].name, 0, sizeof(sd->ignore[0].name));
+
 		WFIFOB(fd,3) = 0; // success
 		WFIFOSET(fd, packet_len(0x0d1));
 	}
 
-	//for(i = 0; i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0'; i++)
-	//	ShowDebug("Ignored player: '%s'\n", sd->ignore[i].name);
 	return;
 }
 
+/// S 00d0 <type>.B
+/// type: 0 (/exall) deny all speech
+///       1 (/inall) allow all speech
+///
+/// R 00d2 <type>.B <fail>.B
+/// type: 0: deny, 1: allow
+/// fail: 0: success, 1: fail
 void clif_parse_PMIgnoreAll(int fd, struct map_session_data *sd)
 {
-	//printf("Ignore all: state: %d\n", RFIFOB(fd,2));
-	// R 00d2 <type>.B <fail>.B: type: 0: deny, 1: allow, fail: 0: success, 1: fail
-	// S 00d0 <type>len.B: 00 (/exall) deny all speech, 01 (/inall) allow all speech
 	WFIFOHEAD(fd,packet_len(0xd2));
 	WFIFOW(fd,0) = 0x0d2;
 	WFIFOB(fd,2) = RFIFOB(fd,2);
-	if (RFIFOB(fd,2) == 0) { //Deny all
-		if (sd->state.ignoreAll) {
+
+	if( RFIFOB(fd,2) == 0 )
+	{// Deny all
+		if( sd->state.ignoreAll ) {
 			WFIFOB(fd,3) = 1; // fail
-			WFIFOSET(fd, packet_len(0x0d2));
-			return;
+		} else {
+			sd->state.ignoreAll = 1;
+			WFIFOB(fd,3) = 0; // success
 		}
-		sd->state.ignoreAll = 1;
-		WFIFOB(fd,3) = 0; // success
-		WFIFOSET(fd, packet_len(0x0d2));
-		return;
 	}
-	//Unblock everyone
-	if (!sd->state.ignoreAll) {
-		if (sd->ignore[0].name[0] != '\0')
-		{  //Wipe the ignore list.
-			memset(sd->ignore, 0, sizeof(sd->ignore));
-			WFIFOB(fd,3) = 0;
-			WFIFOSET(fd, packet_len(0x0d2));
-			return;
+	else
+	{//Unblock everyone
+		if( sd->state.ignoreAll ) {
+			sd->state.ignoreAll = 0;
+			WFIFOB(fd,3) = 0; // success
+		} else {
+			if (sd->ignore[0].name[0] != '\0')
+			{  //Wipe the ignore list.
+				memset(sd->ignore, 0, sizeof(sd->ignore));
+				WFIFOB(fd,3) = 0; // success
+			} else {
+				WFIFOB(fd,3) = 1; // fail
+			}
 		}
-		WFIFOB(fd,3) = 1; // fail
-		WFIFOSET(fd, packet_len(0x0d2));
-		return;
 	}
-	sd->state.ignoreAll = 0;
-	WFIFOB(fd,3) = 0; // success
+
 	WFIFOSET(fd, packet_len(0x0d2));
 	return;
 }
@@ -10844,14 +10877,6 @@ void clif_parse_FriendsListRemove(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * /killall
- *------------------------------------------*/
-void clif_parse_GMKillAll(int fd, struct map_session_data* sd)
-{
-	is_atcommand(fd, sd, "@kickall");
-}
-
-/*==========================================
  * /pvpinfo
  *------------------------------------------*/
 void clif_parse_PVPInfo(int fd,struct map_session_data *sd)
@@ -11129,6 +11154,13 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 	
 	clif_skill_nodamage(&sd->bl,&sd->bl,ALL_RESURRECTION,4,1);
 	pc_delitem(sd, item_position, 1, 0);
+}
+
+/// /check <string>
+/// S 0213 <string>.24B
+void clif_parse_Check(int fd, struct map_session_data *sd)
+{
+	// no info
 }
 
 #ifndef TXT_ONLY
@@ -11898,10 +11930,19 @@ static int packetdb_readdb(void)
 		{clif_parse_SelectEgg,"selectegg"},
 		{clif_parse_SendEmotion,"sendemotion"},
 		{clif_parse_ChangePetName,"changepetname"},
+
 		{clif_parse_GMKick,"gmkick"},
 		{clif_parse_GMHide,"gmhide"},
 		{clif_parse_GMReqNoChat,"gmreqnochat"},
-		{clif_parse_GMReqNoChatCount,"gmreqnochatcount"},
+		{clif_parse_GMReqAccountName,"gmreqaccname"},
+		{clif_parse_GMKickAll,"killall"},
+		{clif_parse_GMRecall,"recall"},
+		{clif_parse_GMRecall,"summon"},
+		{clif_parse_GM_Monster_Item,"itemmonster"},
+		{clif_parse_GMShift,"remove"},
+		{clif_parse_GMShift,"shift"},
+		{clif_parse_GMChangeMapType,"changemaptype"},
+
 		{clif_parse_NoviceDoriDori,"sndoridori"},
 		{clif_parse_NoviceExplosionSpirits,"snexplosionspirits"},
 		{clif_parse_PMIgnore,"wisexin"},
@@ -11910,10 +11951,6 @@ static int packetdb_readdb(void)
 		{clif_parse_FriendsListAdd,"friendslistadd"},
 		{clif_parse_FriendsListRemove,"friendslistremove"},
 		{clif_parse_FriendsListReply,"friendslistreply"},
-		{clif_parse_GMKillAll,"killall"},
-		{clif_parse_Recall,"summon"},
-		{clif_parse_GM_Monster_Item,"itemmonster"},
-		{clif_parse_Shift,"shift"},
 		{clif_parse_Blacksmith,"blacksmith"},
 		{clif_parse_Alchemist,"alchemist"},
 		{clif_parse_Taekwon,"taekwon"},
@@ -11929,6 +11966,7 @@ static int packetdb_readdb(void)
 		{clif_parse_StoragePassword,"storagepassword"},
 		{clif_parse_Hotkey,"hotkey"},
 		{clif_parse_AutoRevive,"autorevive"},
+		{clif_parse_Check,"check"},
 #ifndef TXT_ONLY
 		// MAIL SYSTEM
 		{clif_parse_Mail_refreshinbox,"mailrefresh"},
