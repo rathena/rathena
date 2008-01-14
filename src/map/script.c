@@ -4667,15 +4667,9 @@ BUILDIN_FUNC(input)
 	{	// take received text/value and store it in the designated variable
 		sd->state.menu_or_input = 0;
 		if( postfix == '$' )
-		{
 			set_reg(st,sd,num,name,(void*)sd->npc_str,script_getref(st,2));
-		}
 		else
-		{
-			// limit the input to a non-negative value smaller than 'vending_max_value' (for scripts that didn't check this)
-			sd->npc_amount = cap_value(sd->npc_amount, 0, battle_config.vending_max_value);
 			set_reg(st,sd,num,name,(void*)sd->npc_amount,script_getref(st,2));
-		}
 	}
 	return 0;
 }
