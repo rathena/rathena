@@ -5825,8 +5825,10 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 				clif_skill_fail(sd,skillid,0,0);
 			} else {
 				TBL_MOB* md = mob_once_spawn_sub(src, src->m, x, y, "--ja--",(skilllv < 2 ? 1084+rand()%2 : 1078+rand()%6),"");
-				if (md && (i = skill_get_time(skillid, skilllv)) > 0)
+				if (!md) break;
+				if ((i = skill_get_time(skillid, skilllv)) > 0)
 					md->deletetimer = add_timer (tick + i, mob_timer_delete, md->bl.id, 0);
+				mob_spawn (md);
 			}
 		}
 		break;

@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2008/01/14
+	* Fixed missing mob_spawn call, which was making CR_CULTIVATION not
+	  actually spawn the plant. [Skotlex]
 	* Client packet corrections
 	- 0x01df is not 'gmreqnochatcount', but for requesting a player's
 	  account name via right-click menu (which currently can't be done)
