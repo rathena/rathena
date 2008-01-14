@@ -1362,8 +1362,8 @@ typedef struct skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
 typedef struct homun_data       TBL_HOM;
 
-#define BL_CAST(type_, bl , dest) \
-	(((bl) == NULL || (bl)->type != type_) ? ((dest) = NULL, 0) : ((dest) = (T ## type_ *)(bl), 1))
+#define BL_CAST(type_, bl) \
+	( ((bl) == (struct block_list*)NULL || (bl)->type != (type_)) ? (T ## type_ *)NULL : (T ## type_ *)(bl) )
 
 
 extern int lowest_gm_level;

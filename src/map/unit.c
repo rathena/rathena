@@ -107,19 +107,16 @@ static int unit_walktoxy_timer(int tid,unsigned int tick,int id,int data)
 	int x,y,dx,dy;
 	uint8 dir;
 	struct block_list       *bl;
-	struct map_session_data *sd = NULL;
-	struct mob_data         *md = NULL;
-	struct unit_data        *ud = NULL;
+	struct map_session_data *sd;
+	struct mob_data         *md;
+	struct unit_data        *ud;
 
-	bl=map_id2bl(id);
+	bl = map_id2bl(id);
 	if(bl == NULL)
 		return 0;
-	if( BL_CAST( BL_PC,  bl, sd ) ) {
-		ud = &sd->ud;
-	} else if( BL_CAST( BL_MOB, bl, md ) ) {
-		ud = &md->ud;
-	} else
-		ud = unit_bl2ud(bl);
+	sd = BL_CAST(BL_PC, bl);
+	md = BL_CAST(BL_MOB, bl);
+	ud = unit_bl2ud(bl);
 	
 	if(ud == NULL) return 0;
 
@@ -473,11 +470,9 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 	struct map_session_data *sd = NULL;
 
 	nullpo_retr(0, bl);
-	if( BL_CAST( BL_PC,  bl, sd ) ) {
-		ud = &sd->ud;
-	} else
-		ud = unit_bl2ud(bl);
-	
+	sd = BL_CAST(BL_PC, bl);
+	ud = unit_bl2ud(bl);
+
 	if( ud == NULL) return 0;
 
 	unit_stop_walking(bl,1);
@@ -696,7 +691,7 @@ int unit_can_move(struct block_list *bl)
 	nullpo_retr(0, bl);
 	ud = unit_bl2ud(bl);
 	sc = status_get_sc(bl);
-	BL_CAST(BL_PC, bl, sd);
+	sd = BL_CAST(BL_PC, bl);
 	
 	if (!ud)
 		return 0;
@@ -793,10 +788,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 	if(status_isdead(src))
 		return 0; // Ž€‚ñ‚Å‚¢‚È‚¢‚©
 
-	if( BL_CAST( BL_PC,  src, sd ) )
-		ud = &sd->ud;
-	else 
-		ud = unit_bl2ud(src);
+	sd = BL_CAST(BL_PC, src);
+	ud = unit_bl2ud(src);
 
 	if(ud == NULL) return 0;
 	sc = status_get_sc(src);	
@@ -1074,10 +1067,8 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 	if(!src->prev) return 0; // map ã‚É‘¶Ý‚·‚é‚©
 	if(status_isdead(src)) return 0;
 
-	if( BL_CAST( BL_PC, src, sd ) ) {
-		ud = &sd->ud;
-	} else
-		ud = unit_bl2ud(src);
+	sd = BL_CAST(BL_PC, src);
+	ud = unit_bl2ud(src);
 	if(ud == NULL) return 0;
 
 	if(ud->skilltimer != -1) //Normally not needed since clif.c checks for it, but at/char/script commands don't! [Skotlex]
@@ -1338,8 +1329,8 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 		ShowError("unit_attack_timer %d != %d\n",ud->attacktimer,tid);
 		return 0;
 	}
-	BL_CAST( BL_PC , src, sd);
-	BL_CAST( BL_MOB, src, md);
+	sd = BL_CAST(BL_PC, src);
+	md = BL_CAST(BL_MOB, src);
 	ud->attacktimer=-1;
 	target=map_id2bl(ud->target);
 
@@ -1465,7 +1456,7 @@ int unit_skillcastcancel(struct block_list *bl,int type)
 	if (!ud || ud->skilltimer==-1)
 		return 0; //Nothing to cancel.
 
-	BL_CAST(BL_PC,  bl, sd);
+	sd = BL_CAST(BL_PC, bl);
 
 	if (type&2) {
 		//See if it can be cancelled.

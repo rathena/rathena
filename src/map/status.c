@@ -2520,7 +2520,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 
 	if (!(bl->type&BL_REGEN) || !regen)
 		return;
-	BL_CAST(BL_PC,bl,sd);
+	sd = BL_CAST(BL_PC,bl);
 
 	val = 1 + (status->vit/5) + (status->max_hp/200);
 
@@ -2957,7 +2957,7 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 	if (!b_status || !status)
 		return;
 
-	BL_CAST(BL_PC,bl,sd);
+	sd = BL_CAST(BL_PC,bl);
 
 	if(sd && flag&SCB_PC)
 	{	//Recalc everything.
@@ -4446,7 +4446,7 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 		return 0;
 	}
 	
-	BL_CAST(BL_PC,bl,sd);
+	sd = BL_CAST(BL_PC,bl);
 	status = status_get_status_data(bl);
 	switch (type)
 	{
@@ -4612,7 +4612,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			return 0; //Emperium can't be afflicted by status changes
 	}
 
-	BL_CAST(BL_PC, bl, sd);
+	sd = BL_CAST(BL_PC, bl);
 
 	if(sd && sd->state.waitingdisconnect)
 		return 0; //Character logging out, all his SC were wiped already!
@@ -6220,7 +6220,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 	if(type < 0 || type >= SC_MAX || !sc || !(sce = sc->data[type]))
 		return 0;
 
-	BL_CAST(BL_PC,bl,sd);
+	sd = BL_CAST(BL_PC,bl);
 
 	if (sce->timer != tid && tid != -1)
 		return 0;
@@ -6696,7 +6696,7 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		return 0;
 	}
 
-	BL_CAST(BL_PC, bl, sd);
+	sd = BL_CAST(BL_PC, bl);
 
 // set the next timer of the sce (don't assume the status still exists)
 #define sc_timer_next(t,f,i,d) \
@@ -7020,8 +7020,8 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 
 	tsc = status_get_sc(bl);
 
-	BL_CAST(BL_PC, src, sd);
-	BL_CAST(BL_PC, bl, tsd);
+	sd = BL_CAST(BL_PC, src);
+	tsd = BL_CAST(BL_PC, bl);
 
 	switch( type )
 	{
@@ -7172,7 +7172,7 @@ static int status_natural_heal(DBKey key,void * data,va_list ap)
 	sc = status_get_sc(bl);
 	if (sc && !sc->count)
 		sc = NULL;
-	BL_CAST(BL_PC,bl,sd);
+	sd = BL_CAST(BL_PC,bl);
 
 	flag = regen->flag;
 	if (flag&RGN_HP && (status->hp >= status->max_hp || regen->state.block&1))

@@ -878,8 +878,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src,struct blo
 	if (tsc && !tsc->count)
 		tsc = NULL; //Skip checking as there are no status changes active.
 
-	BL_CAST(BL_PC, src, sd);
-	BL_CAST(BL_PC, target, tsd);
+	sd = BL_CAST(BL_PC, src);
+	tsd = BL_CAST(BL_PC, target);
 
 	if(sd)
 		wd.blewcount += battle_blewcount_bonus(sd, skill_num);
@@ -2111,8 +2111,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	nk = skill_get_nk(skill_num);
 	flag.imdef = nk&NK_IGNORE_DEF?1:0;
 
-	BL_CAST(BL_PC, src, sd);
-	BL_CAST(BL_PC, target, tsd);
+	sd = BL_CAST(BL_PC, src);
+	tsd = BL_CAST(BL_PC, target);
 
 	//Initialize variables that will be used afterwards
 	s_ele = skill_get_ele(skill_num, skill_lv);
@@ -2442,8 +2442,8 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 
 	nk = skill_get_nk(skill_num);
 	
-	BL_CAST(BL_PC, src, sd);
-	BL_CAST(BL_PC, target, tsd);
+	sd = BL_CAST(BL_PC, src);
+	tsd = BL_CAST(BL_PC, target);
 	
 	if(sd) {
 		sd->state.arrow_atk = 0;
@@ -2664,7 +2664,7 @@ int battle_calc_return_damage(struct block_list* bl, int damage, int flag)
 	struct map_session_data* sd = NULL;
 	int rdamage = 0;
 
-	BL_CAST(BL_PC, bl, sd);
+	sd = BL_CAST(BL_PC, bl);
 
 	//Bounces back part of the damage.
 	if (flag & BF_SHORT) {
@@ -2753,8 +2753,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if (src->prev == NULL || target->prev == NULL)
 		return 0;
 
-	BL_CAST(BL_PC, src, sd);
-	BL_CAST(BL_PC, target, tsd);
+	sd = BL_CAST(BL_PC, src);
+	tsd = BL_CAST(BL_PC, target);
 
 	sstatus = status_get_status_data(src);
 	tstatus = status_get_status_data(target);

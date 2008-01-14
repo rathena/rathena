@@ -279,7 +279,7 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 	if( type != ALL_CLIENT && type != CHAT_MAINCHAT )
 		nullpo_retr(0, bl);
 
-	BL_CAST(BL_PC, bl, sd);
+	sd = BL_CAST(BL_PC, bl);
 
 	switch(type) {
 	case ALL_CLIENT: //All player clients.
@@ -758,7 +758,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 #if PACKETVER >= 7
 	unsigned short offset = 0;
 #endif
-	BL_CAST(BL_PC, bl, sd);
+	sd = BL_CAST(BL_PC, bl);
 
 	if(type)
 		WBUFW(buf,0) = spawn?0x7c:0x78;
@@ -869,7 +869,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	unsigned short offset = 0;
 #endif
 
-	BL_CAST(BL_PC, bl, sd);
+	sd = BL_CAST(BL_PC, bl);
 
 #if PACKETVER < 4
 	WBUFW(buf, 0) = 0x7b;
@@ -2388,7 +2388,7 @@ void clif_changelook(struct block_list *bl,int type,int val)
 	struct view_data* vd;
 	nullpo_retv(bl);
 
-	BL_CAST(BL_PC, bl, sd);	
+	sd = BL_CAST(BL_PC, bl);
 	vd = status_get_viewdata(bl);
 	//nullpo_ret(vd);	
 	if( vd ) //temp hack to let Warp Portal change appearance
@@ -3787,8 +3787,8 @@ int clif_outsight(struct block_list *bl,va_list ap)
 	TBL_PC *sd, *tsd;
 	tbl=va_arg(ap,struct block_list*);
 	if(bl == tbl) return 0;
-	BL_CAST(BL_PC, bl, sd);
-	BL_CAST(BL_PC, tbl, tsd);
+	sd = BL_CAST(BL_PC, bl);
+	tsd = BL_CAST(BL_PC, tbl);
 
 	if (tsd && tsd->fd)
 	{	//tsd has lost sight of the bl object.
@@ -3836,8 +3836,8 @@ int clif_insight(struct block_list *bl,va_list ap)
 
 	if (bl == tbl) return 0;
 	
-	BL_CAST(BL_PC, bl, sd);
-	BL_CAST(BL_PC, tbl, tsd);
+	sd = BL_CAST(BL_PC, bl);
+	tsd = BL_CAST(BL_PC, tbl);
 
 	if (tsd && tsd->fd)
 	{	//Tell tsd that bl entered into his view

@@ -418,10 +418,10 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	if(skillid < 0) return 0;
 	if(skillid > 0 && skilllv <= 0) return 0;	// don't forget auto attacks! - celest
 
-	BL_CAST(BL_PC, src, sd);
-	BL_CAST(BL_MOB, src, md);
-	BL_CAST(BL_PC, bl, dstsd);
-	BL_CAST(BL_MOB, bl, dstmd);
+	sd = BL_CAST(BL_PC, src);
+	md = BL_CAST(BL_MOB, src);
+	dstsd = BL_CAST(BL_PC, bl);
+	dstmd = BL_CAST(BL_MOB, bl);
 
 	sc = status_get_sc(src);
 	tsc = status_get_sc(bl);
@@ -952,8 +952,8 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	if (tsc && !tsc->count)
 		tsc = NULL;
 
-	BL_CAST(BL_PC, src, sd);
-	BL_CAST(BL_PC, bl, dstsd);
+	sd = BL_CAST(BL_PC, src);
+	dstsd = BL_CAST(BL_PC, bl);
 
 	switch(skillid){
 	case 0: //Normal Attack
@@ -1106,7 +1106,7 @@ int skill_break_equip (struct block_list *bl, unsigned short where, int rate, in
 	struct status_change *sc = status_get_sc(bl);
 	int i,j;
 	TBL_PC *sd;
-	BL_CAST(BL_PC, bl, sd);
+	sd = BL_CAST(BL_PC, bl);
 	if (sc && !sc->count)
 		sc = NULL;
 
@@ -1293,7 +1293,7 @@ static int skill_magic_reflect(struct block_list *bl, int type)
 {
 	struct status_change *sc = status_get_sc(bl);
 	struct map_session_data *sd;
-	BL_CAST(BL_PC, bl, sd);
+	sd = BL_CAST(BL_PC, bl);
 
 	if(sd && sd->magic_damage_return && type && rand()%100 < sd->magic_damage_return)
 		return 1;
@@ -1353,8 +1353,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			return 0;
 	}
 
-	BL_CAST(BL_PC, src, sd);
-	BL_CAST(BL_PC, bl, tsd);
+	sd = BL_CAST(BL_PC, src);
+	tsd = BL_CAST(BL_PC, bl);
 
 	sstatus = status_get_status_data(src);
 	tstatus = status_get_status_data(bl);
@@ -1396,8 +1396,8 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			struct block_list *tbl = bl;
 			bl = src;
 			src = tbl;
-			BL_CAST(BL_PC, src, sd);
-			BL_CAST(BL_PC, bl, tsd);
+			sd = BL_CAST(BL_PC, src);
+			tsd = BL_CAST(BL_PC, bl);
 			sc = status_get_sc(bl);
 			if (sc && !sc->count)
 				sc = NULL; //Don't need it.
@@ -2169,8 +2169,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 	if (bl->prev == NULL)
 		return 1;
 	
-	BL_CAST(BL_PC, src, sd);
-	BL_CAST(BL_PC, bl, tsd);
+	sd = BL_CAST(BL_PC, src);
+	tsd = BL_CAST(BL_PC, bl);
 
 	if (status_isdead(bl))
 		return 1;
@@ -2807,12 +2807,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	if (src->m != bl->m)
 		return 1;
 
-	BL_CAST(BL_PC, src, sd);
-	BL_CAST(BL_HOM, src, hd);
-	BL_CAST(BL_MOB, src, md);
+	sd = BL_CAST(BL_PC, src);
+	hd = BL_CAST(BL_HOM, src);
+	md = BL_CAST(BL_MOB, src);
 
-	BL_CAST(BL_PC, bl, dstsd);
-	BL_CAST(BL_MOB, bl, dstmd);
+	dstsd = BL_CAST(BL_PC, bl);
+	dstmd = BL_CAST(BL_MOB, bl);
 
 	if(bl->prev == NULL)
 		return 1;
@@ -4562,7 +4562,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		{
 			struct skill_unit* su;
 			struct skill_unit_group* sg;
-			BL_CAST(BL_SKILL, bl, su);
+			su = BL_CAST(BL_SKILL, bl);
 
 			if( (su)
 			&&  (sg = su->group)
@@ -5166,9 +5166,9 @@ int skill_castend_id (int tid, unsigned int tick, int id, int data)
 
 	nullpo_retr(0, ud);
 
-	BL_CAST( BL_PC,  src, sd);
-	BL_CAST( BL_HOM, src, hd);	//[orn]
-	BL_CAST( BL_MOB, src, md);
+	sd = BL_CAST(BL_PC,  src);
+	hd = BL_CAST(BL_HOM, src);
+	md = BL_CAST(BL_MOB, src);
 
 	if( src->prev == NULL ) {
 		ud->skilltimer = -1;
@@ -5391,9 +5391,9 @@ int skill_castend_pos (int tid, unsigned int tick, int id, int data)
 
 	nullpo_retr(0, ud);
 
-	BL_CAST( BL_PC , src, sd);
-	BL_CAST( BL_HOM, src, hd);	//[orn]
-	BL_CAST( BL_MOB, src, md);
+	sd = BL_CAST(BL_PC , src);
+	hd = BL_CAST(BL_HOM, src);
+	md = BL_CAST(BL_MOB, src);
 
 	if( src->prev == NULL ) {
 		ud->skilltimer = -1;
@@ -5518,7 +5518,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	if(status_isdead(src))
 		return 0;
 
-	BL_CAST(BL_PC, src, sd);
+	sd = BL_CAST(BL_PC, src);
 
 	sc = status_get_sc(src);
 	type = SkillStatusChangeTable(skillid);
@@ -6134,7 +6134,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 	unit_flag = skill_get_unit_flag(skillid);
 	layout = skill_get_unit_layout(skillid,skilllv,src,x,y);
 
-	BL_CAST(BL_PC, src, sd);
+	sd = BL_CAST(BL_PC, src);
 	status = status_get_status_data(src);
 	sc = status_get_sc(src);	// for traps, firewall and fogwall - celest
 
@@ -6650,8 +6650,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 
 	nullpo_retr(0, sg=src->group);
 	nullpo_retr(0, ss=map_id2bl(sg->src_id));
-	BL_CAST(BL_PC, ss, sd);
-	BL_CAST(BL_PC, bl, tsd);
+	sd = BL_CAST(BL_PC, ss);
+	tsd = BL_CAST(BL_PC, bl);
 	tsc = status_get_sc(bl);
 	tstatus = status_get_status_data(bl);
 	if (sg->state.magic_power)  //For magic power. 
@@ -8194,7 +8194,7 @@ int skill_castfix (struct block_list *bl, int skill_id, int skill_lv)
 	struct map_session_data *sd;
 
 	nullpo_retr(0, bl);
-	BL_CAST(BL_PC, bl, sd);
+	sd = BL_CAST(BL_PC, bl);
 	
 	// calculate base cast time (reduced by dex)
 	if (!(skill_get_castnodex(skill_id, skill_lv)&1)) {
