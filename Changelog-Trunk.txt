@@ -5,13 +5,14 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2008/01/14
+	* Fixed card removal script functions' 'extra card' bug (bugreport:786)
 	* Removed the hardcoded limit for numeric npc input boxes (bugreport:811)
 	* Applied a temp patch to make some npc-executed atcommands work again
 	* Added support for right-click-gm-menu kicking NPC objects [ultramage]
 	* Fixed dangling pointer crashes when bleeding or Deadly poison kills a
 	  spawn-once monster.
 	* Fixed a possible ERS entry corruption when Deadly Poison kills a target
-	  that has kaziel active.
+	  that has kaizel active.
 2008/01/13
 	* Fixed a possible ers_entry corruption if you die from bleeding while
 	  under the effects of kaizel.

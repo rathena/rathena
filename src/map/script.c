@@ -9261,14 +9261,13 @@ BUILDIN_FUNC(requestguildinfo)
 	return 0;
 }
 
-/* =====================================================================
- * カードの数を得る
- * ---------------------------------------------------------------------*/
+/// Returns the number of cards that have been compounded onto the specified equipped item.
+/// getequipcardcnt(<equipment slot>);
 BUILDIN_FUNC(getequipcardcnt)
 {
-	int i=-1,num;
+	int i=-1,j,num;
 	TBL_PC *sd;
-	int c=MAX_SLOTS;
+	int count;
 
 	num=script_getnum(st,2);
 	sd=script_rid2sd(st);
@@ -9285,46 +9284,44 @@ BUILDIN_FUNC(getequipcardcnt)
 		script_pushint(st,0);
 		return 0;
 	}
-	do{
-		if(sd->status.inventory[i].card[c-1] &&
-			itemdb_type(sd->status.inventory[i].card[c-1]) == IT_CARD){	// [Celest]
-			script_pushint(st,(c));
-			return 0;
-		}
-	}while(c--);
-	script_pushint(st,0);
+
+	count = 0;
+	for( j = 0; j < MAX_SLOTS; j++ )
+		if( sd->status.inventory[i].card[j] && itemdb_type(sd->status.inventory[i].card[j]) == IT_CARD )
+			count++;
+
+	script_pushint(st,count);
 	return 0;
 }
 
-/* ================================================================
- * カード取り外し成功
- * ----------------------------------------------------------------*/
+/// Removes all cards from the item found in the specified equipment slot of the invoking character,
+/// and give them to the character. If any cards were removed in this manner, it will also show a success effect.
+/// successremovecards <slot>;
 BUILDIN_FUNC(successremovecards)
 {
-	int i=-1,j,num,cardflag=0,flag;
-	TBL_PC *sd;
-	struct item item_tmp;
-	int c=MAX_SLOTS;
+	int i=-1,j,c,cardflag=0;
 
-	num=script_getnum(st,2);
-	sd=script_rid2sd(st);
+	TBL_PC* sd = script_rid2sd(st);
+	int num = script_getnum(st,2);
+
 	if (num > 0 && num <= ARRAYLENGTH(equip))
 		i=pc_checkequip(sd,equip[num-1]);
 
 	if (i < 0) {
-		script_pushint(st,0);
 		return 0;
 	}
 
 	if(itemdb_isspecial(sd->status.inventory[i].card[0])) 
 		return 0;
 
-	do{
-		if(sd->status.inventory[i].card[c-1] &&
-			itemdb_type(sd->status.inventory[i].card[c-1]) == IT_CARD){	// [Celest]
-
+	for( c = MAX_SLOTS - 1; c >= 0; --c )
+	{
+		if( sd->status.inventory[i].card[c] && itemdb_type(sd->status.inventory[i].card[c]) == IT_CARD )
+		{// extract this card from the item
+			int flag;
+			struct item item_tmp;
 			cardflag = 1;
-			item_tmp.id=0,item_tmp.nameid=sd->status.inventory[i].card[c-1];
+			item_tmp.id=0,item_tmp.nameid=sd->status.inventory[i].card[c];
 			item_tmp.equip=0,item_tmp.identify=1,item_tmp.refine=0;
 			item_tmp.attribute=0;
 			for (j = 0; j < MAX_SLOTS; j++)
@@ -9339,20 +9336,22 @@ BUILDIN_FUNC(successremovecards)
 				map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 			}
 		}
-	}while(c--);
+	}
 
-	if(cardflag == 1){	// カードを取り除いたアイテム所得
-		flag=0;
+	if(cardflag == 1)
+	{	// カードを取り除いたアイテム所得
+		int flag;
+		struct item item_tmp;
 		item_tmp.id=0,item_tmp.nameid=sd->status.inventory[i].nameid;
 		item_tmp.equip=0,item_tmp.identify=1,item_tmp.refine=sd->status.inventory[i].refine;
 		item_tmp.attribute=sd->status.inventory[i].attribute;
+		for (j = 0; j < MAX_SLOTS; j++)
+			item_tmp.card[j]=0;
 
 		//Logs items, got from (N)PC scripts [Lupus]
 		if(log_config.enable_logs&0x40)
 			log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
 
-		for (j = 0; j < MAX_SLOTS; j++)
-			item_tmp.card[j]=0;
 		pc_delitem(sd,i,1,0);
 
 		//Logs items, got from (N)PC scripts [Lupus]
@@ -9363,45 +9362,46 @@ BUILDIN_FUNC(successremovecards)
 			clif_additem(sd,0,0,flag);
 			map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
 		}
+
 		clif_misceffect(&sd->bl,3);
-		return 0;
 	}
 	return 0;
 }
 
-/* ================================================================
- * カード取り外し失敗 slot,type
- * type=0: 両方損失、1:カード損失、2:武具損失、3:損失無し
- * ----------------------------------------------------------------*/
+/// Removes all cards from the item found in the specified equipment slot of the invoking character.
+/// failedremovecards <slot>, <type>;
+/// <type>=0 : will destroy both the item and the cards.
+/// <type>=1 : will keep the item, but destroy the cards.
+/// <type>=2 : will keep the cards, but destroy the item.
+/// <type>=? : will just display the failure effect.
 BUILDIN_FUNC(failedremovecards)
 {
-	int i=-1,j,num,cardflag=0,flag,typefail;
-	TBL_PC *sd;
-	struct item item_tmp;
-	int c=MAX_SLOTS;
+	int i=-1,j,c,cardflag=0;
 
-	num=script_getnum(st,2);
-	typefail=script_getnum(st,3);
-	sd=script_rid2sd(st);
+	TBL_PC* sd = script_rid2sd(st);
+	int num = script_getnum(st,2);
+	int typefail = script_getnum(st,3);
+
 	if (num > 0 && num <= ARRAYLENGTH(equip))
 		i=pc_checkequip(sd,equip[num-1]);
 
-	if (i < 0) {
-		script_pushint(st,0);
+	if (i < 0)
 		return 0;
-	}
 
 	if(itemdb_isspecial(sd->status.inventory[i].card[0]))
 		return 0;
 
-	do{
-		if(sd->status.inventory[i].card[c-1] &&
-			itemdb_type(sd->status.inventory[i].card[c-1]) == IT_CARD){	// [Celest]
-
+	for( c = MAX_SLOTS - 1; c >= 0; --c )
+	{
+		if( sd->status.inventory[i].card[c] && itemdb_type(sd->status.inventory[i].card[c]) == IT_CARD )
+		{
 			cardflag = 1;
 
-			if(typefail == 2){ // 武具のみ損失なら、カードは受け取らせる
-				item_tmp.id=0,item_tmp.nameid=sd->status.inventory[i].card[c-1];
+			if(typefail == 2)
+			{// add cards to inventory, clear 
+				int flag;
+				struct item item_tmp;
+				item_tmp.id=0,item_tmp.nameid=sd->status.inventory[i].card[c];
 				item_tmp.equip=0,item_tmp.identify=1,item_tmp.refine=0;
 				item_tmp.attribute=0;
 				for (j = 0; j < MAX_SLOTS; j++)
@@ -9417,21 +9417,20 @@ BUILDIN_FUNC(failedremovecards)
 				}
 			}
 		}
-	}while(c--);
+	}
 
-	if(cardflag == 1){
-
+	if(cardflag == 1)
+	{
 		if(typefail == 0 || typefail == 2){	// 武具損失
 			//Logs items, got from (N)PC scripts [Lupus]
 			if(log_config.enable_logs&0x40)
 				log_pick_pc(sd, "N", sd->status.inventory[i].nameid, -1, &sd->status.inventory[i]);
 
 			pc_delitem(sd,i,1,0);
-			clif_misceffect(&sd->bl,2);
-			return 0;
 		}
 		if(typefail == 1){	// カードのみ損失（武具を返す）
-			flag=0;
+			int flag;
+			struct item item_tmp;
 			item_tmp.id=0,item_tmp.nameid=sd->status.inventory[i].nameid;
 			item_tmp.equip=0,item_tmp.identify=1,item_tmp.refine=sd->status.inventory[i].refine;
 			item_tmp.attribute=sd->status.inventory[i].attribute;
@@ -9454,8 +9453,8 @@ BUILDIN_FUNC(failedremovecards)
 			}
 		}
 		clif_misceffect(&sd->bl,2);
-		return 0;
 	}
+
 	return 0;
 }
 
