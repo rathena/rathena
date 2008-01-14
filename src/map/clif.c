@@ -10231,20 +10231,34 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 		}
 		clif_GM_kick(sd, tsd, 1);
 		if(log_config.gm && lv >= log_config.gm) {
-			char message[NAME_LENGTH+6];
-			sprintf(message, "/kick %d", tsd->status.char_id);
+			char message[256];
+			sprintf(message, "/kick %s (%d)", tsd->status.name, tsd->status.char_id);
 			log_atcommand(sd, message);
 		}
-		break;
 	}
+	break;
 	case BL_MOB:
 		status_percent_damage(&sd->bl, target, 100, 0, true);
 		if(log_config.gm && lv >= log_config.gm) {
-			char message[NAME_LENGTH+16];
+			char message[256];
 			sprintf(message, "/kick %s (%d)", status_get_name(target), status_get_class(target));
 			log_atcommand(sd, message);
 		}
-		break;
+	break;
+	case BL_NPC:
+	{
+		struct npc_data* nd = (struct npc_data *)target;
+		lv = get_atcommand_level(atcommand_unloadnpc);
+		if( pc_isGM(sd) < lv )
+			return;
+		npc_unload(nd);
+		if( log_config.gm && lv >= log_config.gm ) {
+			char message[256];
+			sprintf(message, "/kick %s (%d)", status_get_name(target), status_get_class(target));
+			log_atcommand(sd, message);
+		}
+	}
+	break;
 	default:
 		clif_GM_kickack(sd, 0);
 	}

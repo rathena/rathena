@@ -869,28 +869,6 @@ int npc_check_areanpc(int flag, int m, int x, int y, int range)
 	return (map[m].npc[i]->bl.id);
 }
 
-/*==========================================
- * ‹ß‚­‚©‚Ç‚¤‚©‚Ì”»’è
- *------------------------------------------*/
-int npc_checknear2(struct map_session_data* sd, struct block_list* bl)
-{
-	nullpo_retr(1, sd);
-	if(bl == NULL) return 1;
-	
-	if(sd->state.using_fake_npc && sd->npc_id == bl->id)
-		return 0;
-
-	if (status_get_class(bl)<0) //Class-less npc, enable click from anywhere.
-		return 0;
-
-	if (bl->m!=sd->bl.m ||
-	   bl->x<sd->bl.x-AREA_SIZE-1 || bl->x>sd->bl.x+AREA_SIZE+1 ||
-	   bl->y<sd->bl.y-AREA_SIZE-1 || bl->y>sd->bl.y+AREA_SIZE+1)
-		return 1;
-
-	return 0;
-}
-
 struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl)
 {
 	struct npc_data *nd;

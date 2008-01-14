@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2008/01/14
+	* Applied a temp patch to make some npc-executed atcommands work again
+	* Added support for right-click-gm-menu kicking NPC objects [ultramage]
 	* Fixed dangling pointer crashes when bleeding or Deadly poison kills a
 	  spawn-once monster.
 	* Fixed a possible ERS entry corruption when Deadly Poison kills a target

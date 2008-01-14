@@ -91,7 +91,7 @@ int pc_isGM(struct map_session_data* sd)
 	nullpo_retr(0, sd);
 
 	if( sd->bl.type != BL_PC )
-		return 0;
+		return 99;
 
 	ARR_FIND( 0, GM_num, i, gm_account[i].account_id == sd->status.account_id );
 	return ( i < GM_num ) ? gm_account[i].level : 0;

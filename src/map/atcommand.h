@@ -35,6 +35,7 @@ int atcommand_kick(const int fd, struct map_session_data* sd, const char* comman
 int atcommand_broadcast(const int fd, struct map_session_data* sd,const char* command, const char* message);
 int atcommand_localbroadcast(const int fd, struct map_session_data* sd,const char* command, const char* message);
 int atcommand_reset(const int fd, struct map_session_data* sd,const char* command, const char* message);
+int atcommand_unloadnpc(const int fd, struct map_session_data* sd, const char* command, const char* message);
 
 #define MAX_MSG 1000
 extern char* msg_table[MAX_MSG];

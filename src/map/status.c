@@ -4035,14 +4035,14 @@ const char* status_get_name(struct block_list *bl)
 int status_get_class(struct block_list *bl)
 {
 	nullpo_retr(0, bl);
-	if(bl->type==BL_MOB)	//Class used on all code should be the view class of the mob.
-		return ((struct mob_data *)bl)->vd->class_;
-	if(bl->type==BL_PC)
-		return ((struct map_session_data *)bl)->status.class_;
-	if(bl->type==BL_PET)
-		return ((struct pet_data *)bl)->pet.class_;
-	if(bl->type==BL_HOM)
-		return ((struct homun_data *)bl)->homunculus.class_;
+	switch( bl->type )
+	{
+	case BL_PC:  return ((TBL_PC*)bl)->status.class_;
+	case BL_MOB: return ((TBL_MOB*)bl)->vd->class_; //Class used on all code should be the view class of the mob.
+	case BL_PET: return ((TBL_PET*)bl)->pet.class_;
+	case BL_HOM: return ((TBL_HOM*)bl)->homunculus.class_;
+	case BL_NPC: return ((TBL_NPC*)bl)->class_;
+	}
 	return 0;
 }
 /*==========================================
