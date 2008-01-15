@@ -6744,10 +6744,18 @@ int atcommand_mute(const int fd, struct map_session_data* sd, const char* comman
 		return -1;
 	}
 
-	clif_GM_silence(sd, pl_sd, 0);
-	pl_sd->status.manner -= manner;
-	if(pl_sd->status.manner < 0)
+	clif_manner_message(sd, 0);
+	clif_manner_message(pl_sd, 5);
+
+	if( pl_sd->status.manner < manner ) {
+		pl_sd->status.manner -= manner;
 		sc_start(&pl_sd->bl,SC_NOCHAT,100,0,0);
+	} else {
+		pl_sd->status.manner = 0;
+		status_change_end(&pl_sd->bl,SC_NOCHAT,-1);
+	}
+
+	clif_GM_silence(sd, pl_sd, (manner > 0 ? 1 : 0));
 
 	return 0;
 }

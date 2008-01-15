@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
+2008/01/15
+	* Manner system fixing [ultramage]
+	- better-than-aegis 'red bubble' packet updates; now it shows correctly
+	- added support for /rc, which is basically mute for 60 minutes
+	- fixed typo in r12076 making gm-mute start on the gm instead of target
+	- fixed @mute not ending the status properly when using negative values
+	- adde missing clif_manner_message(), sends info about manner updates
 2008/01/14
 	* Fixed missing mob_spawn call, which was making CR_CULTIVATION not
 	  actually spawn the plant. [Skotlex]

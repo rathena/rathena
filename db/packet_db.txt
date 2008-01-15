@@ -499,7 +499,7 @@ packet_ver: 9
 0x0193,18,actionrequest,7:17
 
 //2004-08-16aSakexe
-0x0212,26
+0x0212,26,rc,2
 0x0213,26,check,2
 0x0214,42
 
@@ -1069,7 +1069,7 @@ packet_ver: 22
 0x02e7,-1
 
 //2008-01-02aSakexe
-0x01df,6,gmreqnochatcount,2
+0x01df,6,gmreqaccname,2
 0x02e8,-1
 0x02e9,-1
 0x02ea,-1
@@ -1078,6 +1078,13 @@ packet_ver: 22
 0x02ed,59
 0x02ee,60
 0x02ef,8
+
+//2008-01-08aSakexe
+//0x01df,0
+0x02a6,204
+0x02a7,204
+//0x02a8,0
+//0x02a9,0
 
 //Add new packets here
 //packet_ver: 23

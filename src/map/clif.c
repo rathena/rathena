@@ -2180,7 +2180,6 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 		break;
 	case SP_MANNER:
 		WFIFOL(fd,4)=sd->status.manner;
-		clif_changestatus(&sd->bl,SP_MANNER,sd->status.manner);
 		break;
 	case SP_STATUSPOINT:
 		WFIFOL(fd,4)=sd->status.status_point;
@@ -3405,9 +3404,6 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 		)
 		clif_hpmeter_single(sd->fd, dstsd->bl.id, dstsd->battle_status.hp, dstsd->battle_status.max_hp);
 
-	if(dstsd->status.manner < 0)
-		clif_changestatus(&dstsd->bl,SP_MANNER,dstsd->status.manner);
-		
 	// pvp circle for duel [LuzZza]
 	//if(dstsd->duel_group)
 	//	clif_specialeffect(&dstsd->bl, 159, 4);
@@ -6899,23 +6895,42 @@ int clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd,int ty
 	return 0;
 }
 
-int clif_GM_silence(struct map_session_data *sd, struct map_session_data *tsd, int type)
+/// Displays various manner-related status messages
+/// R 014a <type>.L
+/// type: 0 - "A manner point has been successfully aligned."
+///       1 - ?
+///       2 - ?
+///       3 - "Chat Block has been applied by GM due to your ill-mannerous action."
+///       4 - "Automated Chat Block has been applied due to Anti-Spam System."
+///       5 - "You got a good point from %s."
+void clif_manner_message(struct map_session_data* sd, uint32 type)
 {
 	int fd;
+	nullpo_retv(sd);
 	
-	nullpo_retr(0, sd);
-	nullpo_retr(0, tsd);
+	fd = sd->fd;
+	WFIFOHEAD(fd,packet_len(0x14a));
+	WFIFOW(fd,0) = 0x14a;
+	WFIFOL(fd,2) = type;
+	WFIFOSET(fd, packet_len(0x14a));
+}
+
+/// Followup to 0x14a type 3/5, informs who did the manner adjustment action.
+/// R 014b <type>.B <GM name>.24B
+/// type: 0 - positive (unmute)
+///       1 - negative (mute)
+void clif_GM_silence(struct map_session_data* sd, struct map_session_data* tsd, uint8 type)
+{
+	int fd;	
+	nullpo_retv(sd);
+	nullpo_retv(tsd);
 
 	fd = tsd->fd;
-	if (fd <= 0)
-		return 0;
 	WFIFOHEAD(fd,packet_len(0x14b));
 	WFIFOW(fd,0) = 0x14b;
-	WFIFOB(fd,2) = 0;
-	memcpy(WFIFOP(fd,3), sd->status.name, NAME_LENGTH);
+	WFIFOB(fd,2) = type;
+	safestrncpy((char*)WFIFOP(fd,3), sd->status.name, NAME_LENGTH);
 	WFIFOSET(fd, packet_len(0x14b));
-
-	return 0;
 }
 
 /*==========================================
@@ -10391,42 +10406,74 @@ void clif_parse_GMHide(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * GM adjustment of a player's manner value
- * /red
+ * GM adjustment of a player's manner value (right-click GM menu)
  * S 0149 <id>.L <type>.B <value>.W
  * type: 0 - positive points
  *       1 - negative points
+ *       2 - self mute (+10 minutes)
  *------------------------------------------*/
 void clif_parse_GMReqNoChat(int fd,struct map_session_data *sd)
 {
-	int type, value, level;
+	int id, type, value, level;
 	struct map_session_data *dstsd;
 
-	dstsd = map_id2sd(RFIFOL(fd,2));
+	id = RFIFOL(fd,2);
 	type = RFIFOB(fd,6);
 	value = RFIFOW(fd,7);
 
-	if (type == 0)
+	if( type == 0 )
 		value = 0 - value;
 
 	//If type is 2 and the ids don't match, this is a crafted hacked packet!
 	//Disabled because clients keep self-muting when you give players public @ commands... [Skotlex]
-	if (type == 2/* && sd->bl.id != dstsd->bl.id*/)
+	if (type == 2 /* && (pc_isGM(sd) > 0 || sd->bl.id != id)*/)
 		return;
-	
-	if (
-		((level = pc_isGM(sd)) > pc_isGM(dstsd) && level >= get_atcommand_level(atcommand_mute))
-		|| (type == 2 && !level))
+
+	dstsd = map_id2sd(id);
+	if( dstsd == NULL )
+		return;
+
+	if( (level = pc_isGM(sd)) > pc_isGM(dstsd) && level >= get_atcommand_level(atcommand_mute) )
 	{
-		clif_GM_silence(sd, dstsd, ((type == 2) ? 1 : type));
-		dstsd->status.manner -= value;
-		if(dstsd->status.manner < 0)
-			sc_start(&sd->bl,SC_NOCHAT,100,0,0);
-		else
-		{
+		clif_manner_message(sd, 0);
+		clif_manner_message(dstsd, 5);
+
+		if( dstsd->status.manner < value ) {
+			dstsd->status.manner -= value;
+			sc_start(&dstsd->bl,SC_NOCHAT,100,0,0);
+		} else {
 			dstsd->status.manner = 0;
-			status_change_end(&sd->bl,SC_NOCHAT,-1);
+			status_change_end(&dstsd->bl,SC_NOCHAT,-1);
 		}
+
+		if( type != 2 )
+			clif_GM_silence(sd, dstsd, type);
+	}
+}
+
+/*==========================================
+ * GM adjustment of a player's manner value by -60 (using name)
+ * /rc <name>
+ * S 0212 <name>.24B
+ *------------------------------------------*/
+void clif_parse_GMRc(int fd, struct map_session_data* sd)
+{
+	char* name = (char*)RFIFOP(fd,2);
+	struct map_session_data* dstsd;
+	name[23] = '\0';
+	dstsd = map_nick2sd(name);
+	if( dstsd == NULL )
+		return;
+
+	if( pc_isGM(sd) > pc_isGM(dstsd) && pc_isGM(sd) >= get_atcommand_level(atcommand_mute) )
+	{
+		clif_manner_message(sd, 0);
+		clif_manner_message(dstsd, 3);
+
+		dstsd->status.manner -= 60;
+		sc_start(&dstsd->bl,SC_NOCHAT,100,0,0);
+
+		clif_GM_silence(sd, dstsd, 1);
 	}
 }
 
@@ -11942,6 +11989,7 @@ static int packetdb_readdb(void)
 		{clif_parse_GMShift,"remove"},
 		{clif_parse_GMShift,"shift"},
 		{clif_parse_GMChangeMapType,"changemaptype"},
+		{clif_parse_GMRc,"rc"},
 
 		{clif_parse_NoviceDoriDori,"sndoridori"},
 		{clif_parse_NoviceExplosionSpirits,"snexplosionspirits"},
