@@ -5,6 +5,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
 2008/01/17
+	* Made battle_check_range fail whenever the distance between src/target is
+	  greater than the viewing range. [Skotlex]
 	* Icewalls can no longer be knocked back (see bugreport:38)
 2008/01/15
 	* Manner system fixing [ultramage]
