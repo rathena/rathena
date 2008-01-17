@@ -9835,8 +9835,11 @@ int skill_unit_move_unit_group (struct skill_unit_group *group, int m, int dx, i
 	if (group->unit==NULL)
 		return 0;
 
-	if (skill_get_unit_flag(group->skill_id)&UF_ENSEMBLE) //Ensembles may not be moved around.
-		return 0;
+	if (skill_get_unit_flag(group->skill_id)&UF_ENSEMBLE)
+		return 0; //Ensembles may not be moved around.
+
+	if( group->unit_id == UNT_ICEWALL )
+		return 0; //Icewalls don't get knocked back
 
 	m_flag = (int *) aCalloc(group->unit_count, sizeof(int));
 	//    m_flag
