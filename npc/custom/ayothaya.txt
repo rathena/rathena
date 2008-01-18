@@ -1,0 +1,724 @@
+//===== eAthena Script =======================================
+//= Wandering poet NPC
+//===== By: ==================================================
+//= by MouseJstr
+//===== Current Version: =====================================
+//= 0.2a
+//===== Compatible With: =====================================
+//= eAthena 1.0 Final +
+//===== Description: =========================================
+
+ayothaya,58,134,5	script	Louise Gluck	763,{
+  mes "[Louise Gluck]";
+  mes "What is the next line? ";
+  close;
+
+ OnTimer5000:
+  npcwalkto 65,129;
+  npctalk "Twas brillig, and the slithy toves Did gyre and gimble in the wabe:";
+  end;
+
+ OnTimer10000:
+  npcwalkto 71,131;
+  npctalk "All mimsy were the bogoroves, And the mome raths outgrabe.";
+  end;
+
+ OnTimer15000:
+  npcwalkto 75,127;
+  npctalk "Beware the Jabberwock, my son!  The jaws that bite, theh claws that catch!";
+  end;
+
+ OnTimer20000:
+  npcwalkto 80,122;
+  npctalk "Beware the Jubjub bird and shun The frumious Bandersnatch!";
+  end;
+
+ OnTimer25000:
+  npcwalkto 82,118;
+  npctalk "He took his vorpal sword in hand: Long time the manxome foe he sought-";
+  end;
+
+ OnTimer30000:
+  npcwalkto 93,115;
+  npctalk "So rested he by the Tumtum tree, And stood a while in thought.";
+  end;
+
+ OnTimer35000:
+  npcwalkto 94,112;
+  npctalk "And, as in uffish thought he stood, The Jabberwock, with eyes of flame,";
+  end;
+
+ OnTimer40000:
+  npcwalkto 88,124;
+  npctalk "Came whiffling through the tulgey wood, And burbled as it came!";
+  end;
+
+ OnTimer45000:
+  npcwalkto 81,129;
+  npctalk "One, two! One, two! And through and through The vorpal blade went snicker-snack!";
+  end;
+
+ OnTimer50000:
+  npcwalkto 76,139;
+  npctalk "He left it dead, and with its head He went galumphing back.";
+  end;
+
+ OnTimer55000:
+  npcwalkto 67,138;
+  npctalk "And hast though slain the Jabberwock?  Come to my arms beamish boy!";
+  end;
+
+ OnTimer60000:
+  npcwalkto 59,144;
+  npctalk "O frabjous day! Callooh! Callay! He chortled in his joy.";
+  end;
+
+ OnTimer65000:
+  npcwalkto 55,124;
+  npctalk "Twas brillig, and the slithy toves Did gyre and gimble in the wabe:";
+  end;
+
+ OnTimer70000:
+  npcwalkto 58,134;
+  npctalk "All mimsy were the bogoroves, And the mome raths outgrabe.";
+  setnpctimer 0;
+  end;
+
+ OnInit:
+  npcspeed 150;
+  initnpctimer;
+  end;
+}
+
+
+ayothaya,212,276,0	script	Romeo	50,{
+  mes "[Romeo]";
+  mes "What is the next line? ";
+  close;
+ OnTimer0:
+  npctalk "He jests at scars that never felt a wound.";
+  end;
+ OnTimer6000:
+  npctalk "But, soft! what light through yonder window breaks?";
+  end;
+ OnTimer8000:
+  npctalk "It is the east, and Juliet is the sun.";
+  end;
+ OnTimer10000:
+  npctalk "Arise, fair sun, and kill the envious moon,";
+  end;
+ OnTimer12000:
+  npctalk "Who is already sick and pale with grief,";
+  end;
+ OnTimer14000:
+  npctalk "That thou her maid art far more fair than she:";
+  end;
+ OnTimer16000:
+  npctalk "Be not her maid, since she is envious;";
+  end;
+ OnTimer18000:
+  npctalk "Her vestal livery is but sick and green";
+  end;
+ OnTimer20000:
+  npctalk "And none but fools do wear it; cast it off.";
+  end;
+ OnTimer22000:
+  npctalk "It is my lady, O, it is my love!";
+  end;
+ OnTimer24000:
+  npctalk "O, that she knew she were!";
+  end;
+ OnTimer26000:
+  npctalk "She speaks yet she says nothing: what of that?";
+  end;
+ OnTimer28000:
+  npctalk "Her eye discourses; I will answer it.";
+  end;
+ OnTimer30000:
+  npctalk "I am too bold, tis not to me she speaks:";
+  end;
+ OnTimer32000:
+  npctalk "Two of the fairest stars in all the heaven,";
+  end;
+ OnTimer34000:
+  npctalk "Having some business, do entreat her eyes";
+  end;
+ OnTimer36000:
+  npctalk "To twinkle in their spheres till they return.";
+  end;
+ OnTimer38000:
+  npctalk "What if her eyes were there, they in her head?";
+  end;
+ OnTimer40000:
+  npctalk "The brightness of her cheek would shame those stars,";
+  end;
+ OnTimer42000:
+  npctalk "As daylight doth a lamp; her eyes in heaven";
+  end;
+ OnTimer44000:
+  npctalk "Would through the airy region stream so bright";
+  end;
+ OnTimer46000:
+  npctalk "That birds would sing and think it were not night.";
+  end;
+ OnTimer48000:
+  npctalk "See, how she leans her cheek upon her hand!";
+  end;
+ OnTimer50000:
+  npctalk "O, that I were a glove upon that hand,";
+  end;
+ OnTimer52000:
+  npctalk "That I might touch that cheek!";
+  end;
+ OnTimer56000:
+  npctalk "She speaks:";
+  end;
+ OnTimer58000:
+  npctalk "O, speak again, bright angel! for thou art";
+  end;
+ OnTimer60000:
+  npctalk "As glorious to this night, being oer my head";
+  end;
+ OnTimer62000:
+  npctalk "As is a winged messenger of heaven";
+  end;
+ OnTimer64000:
+  npctalk "Unto the white-upturned wondering eyes";
+  end;
+ OnTimer66000:
+  npctalk "Of mortals that fall back to gaze on him";
+  end;
+ OnTimer68000:
+  npctalk "When he bestrides the lazy-pacing clouds";
+  end;
+ OnTimer70000:
+  npctalk "And sails upon the bosom of the air.";
+  end;
+ OnTimer80000:
+  npctalk "Shall I hear more, or shall I speak at this?";
+  end;
+ OnTimer106000:
+  npctalk "I take thee at thy word:";
+  end;
+ OnTimer108000:
+  npctalk "Call me but love, and Ill be new baptized;";
+  end;
+ OnTimer110000:
+  npctalk "Henceforth I never will be Romeo.";
+  end;
+ OnTimer116000:
+  npctalk "By a name";
+  end;
+ OnTimer118000:
+  npctalk "I know not how to tell thee who I am:";
+  end;
+ OnTimer120000:
+  npctalk "My name, dear saint, is hateful to myself,";
+  end;
+ OnTimer122000:
+  npctalk "Because it is an enemy to thee;";
+  end;
+ OnTimer124000:
+  npctalk "Had I it written, I would tear the word.";
+  end;
+ OnTimer132000:
+  npctalk "Neither, fair saint, if either thee dislike.";
+  end;
+ OnTimer142000:
+  npctalk "With loves light wings did I oer-perch these walls;";
+  end;
+ OnTimer144000:
+  npctalk "For stony limits cannot hold love out,";
+  end;
+ OnTimer146000:
+  npctalk "And what love can do that dares love attempt;";
+  end;
+ OnTimer148000:
+  npctalk "Therefore thy kinsmen are no let to me.";
+  end;
+ OnTimer152000:
+  npctalk "Alack, there lies more peril in thine eye";
+  end;
+ OnTimer154000:
+  npctalk "Than twenty of their swords: look thou but sweet,";
+  end;
+ OnTimer156000:
+  npctalk "And I am proof against their enmity.";
+  end;
+ OnTimer160000:
+  npctalk "I have nights cloak to hide me from their sight;";
+  end;
+ OnTimer162000:
+  npctalk "And but thou love me, let them find me here:";
+  end;
+ OnTimer164000:
+  npctalk "My life were better ended by their hate,";
+  end;
+ OnTimer166000:
+  npctalk "Than death prorogued, wanting of thy love.";
+  end;
+ OnTimer170000:
+  npctalk "By love, who first did prompt me to inquire;";
+  end;
+ OnTimer172000:
+  npctalk "He lent me counsel and I lent him eyes.";
+  end;
+ OnTimer174000:
+  npctalk "I am no pilot; yet, wert thou as far";
+  end;
+ OnTimer176000:
+  npctalk "As that vast shore washd with the farthest sea,";
+  end;
+ OnTimer178000:
+  npctalk "I would adventure for such merchandise.";
+  end;
+ OnTimer224000:
+  npctalk "Lady, by yonder blessed moon I swear";
+  end;
+ OnTimer226000:
+  npctalk "That tips with silver all these fruit-tree tops--";
+  end;
+ OnTimer234000:
+  npctalk "What shall I swear by?";
+  end;
+ OnTimer244000:
+  npctalk "If my hearts dear love--";
+  end;
+ OnTimer264000:
+  npctalk "O, wilt thou leave me so unsatisfied?";
+  end;
+ OnTimer268000:
+  npctalk "The exchange of thy loves faithful vow for mine.";
+  end;
+ OnTimer274000:
+  npctalk "Wouldst thou withdraw it? for what purpose, love?";
+  end;
+ OnTimer294000:
+  npctalk "O blessed, blessed night! I am afeard.";
+  end;
+ OnTimer296000:
+  npctalk "Being in night, all this is but a dream,";
+  end;
+ OnTimer298000:
+  npctalk "Too flattering-sweet to be substantial.";
+  end;
+ OnTimer330000:
+  npctalk "So thrive my soul--";
+  end;
+ OnTimer334000:
+  npctalk "A thousand times the worse, to want thy light.";
+  end;
+ OnTimer336000:
+  npctalk "Love goes toward love, as schoolboys from";
+  end;
+ OnTimer338000:
+  npctalk "their books,";
+  end;
+ OnTimer340000:
+  npctalk "But love from love, toward school with heavy looks.";
+  end;
+ OnTimer356000:
+  npctalk "It is my soul that calls upon my name:";
+  end;
+ OnTimer358000:
+  npctalk "How silver-sweet sound lovers tongues by night,";
+  end;
+ OnTimer360000:
+  npctalk "Like softest music to attending ears!";
+  end;
+ OnTimer364000:
+  npctalk "My dear?";
+  end;
+ OnTimer370000:
+  npctalk "At the hour of nine.";
+  end;
+ OnTimer376000:
+  npctalk "Let me stand here till thou remember it.";
+  end;
+ OnTimer382000:
+  npctalk "And Ill still stay, to have thee still forget,";
+  end;
+ OnTimer384000:
+  npctalk "Forgetting any other home but this.";
+  end;
+ OnTimer398000:
+  npctalk "I would I were thy bird.";
+  end;
+ OnTimer410000:
+  npctalk "Sleep dwell upon thine eyes, peace in thy breast!";
+  end;
+ OnTimer412000:
+  npctalk "Would I were sleep and peace, so sweet to rest!";
+  end;
+ OnTimer414000:
+  npctalk "Hence will I to my ghostly fathers cell,";
+  end;
+ OnTimer416000:
+  npctalk "His help to crave, and my dear hap to tell.";
+  end;
+ OnTimer538000:
+  setnpctimer 0;
+  end;
+ OnInit:
+  npcspeed 150;
+  initnpctimer;
+  end;
+}
+ 
+ayothaya,214,279,3	script	Juliet	53,{
+  mes "[Juliet]";
+  mes "What is the next line? ";
+  close;
+ OnTimer54000:
+  npctalk "Ay me!";
+  end;
+ OnTimer72000:
+  npctalk "O Romeo, Romeo! wherefore art thou Romeo?";
+  end;
+ OnTimer74000:
+  npctalk "Deny thy father and refuse thy name;";
+  end;
+ OnTimer76000:
+  npctalk "Or, if thou wilt not, be but sworn my love,";
+  end;
+ OnTimer78000:
+  npctalk "And Ill no longer be a Capulet.";
+  end;
+ OnTimer82000:
+  npctalk "Tis but thy name that is my enemy;";
+  end;
+ OnTimer84000:
+  npctalk "Thou art thyself, though not a Montague.";
+  end;
+ OnTimer86000:
+  npctalk "Whats Montague? it is nor hand, nor foot,";
+  end;
+ OnTimer88000:
+  npctalk "Nor arm, nor face, nor any other part";
+  end;
+ OnTimer90000:
+  npctalk "Belonging to a man. O, be some other name!";
+  end;
+ OnTimer92000:
+  npctalk "Whats in a name? that which we call a rose";
+  end;
+ OnTimer94000:
+  npctalk "By any other name would smell as sweet;";
+  end;
+ OnTimer96000:
+  npctalk "So Romeo would, were he not Romeo calld,";
+  end;
+ OnTimer98000:
+  npctalk "Retain that dear perfection which he owes";
+  end;
+ OnTimer100000:
+  npctalk "Without that title. Romeo, doff thy name,";
+  end;
+ OnTimer102000:
+  npctalk "And for that name which is no part of thee";
+  end;
+ OnTimer104000:
+  npctalk "Take all myself.";
+  end;
+ OnTimer112000:
+  npctalk "What man art thou that thus bescreend in night";
+  end;
+ OnTimer114000:
+  npctalk "So stumblest on my counsel?";
+  end;
+ OnTimer126000:
+  npctalk "My ears have not yet drunk a hundred words";
+  end;
+ OnTimer128000:
+  npctalk "Of that tongues utterance, yet I know the sound:";
+  end;
+ OnTimer130000:
+  npctalk "Art thou not Romeo and a Montague?";
+  end;
+ OnTimer134000:
+  npctalk "How camest thou hither, tell me, and wherefore?";
+  end;
+ OnTimer136000:
+  npctalk "The orchard walls are high and hard to climb,";
+  end;
+ OnTimer138000:
+  npctalk "And the place death, considering who thou art,";
+  end;
+ OnTimer140000:
+  npctalk "If any of my kinsmen find thee here.";
+  end;
+ OnTimer150000:
+  npctalk "If they do see thee, they will murder thee.";
+  end;
+ OnTimer158000:
+  npctalk "I would not for the world they saw thee here.";
+  end;
+ OnTimer168000:
+  npctalk "By whose direction foundst thou out this place?";
+  end;
+ OnTimer180000:
+  npctalk "Thou knowst the mask of night is on my face,";
+  end;
+ OnTimer182000:
+  npctalk "Else would a maiden blush bepaint my cheek";
+  end;
+ OnTimer184000:
+  npctalk "For that which thou hast heard me speak to-night";
+  end;
+ OnTimer186000:
+  npctalk "Fain would I dwell on form, fain, fain deny";
+  end;
+ OnTimer188000:
+  npctalk "What I have spoke: but farewell compliment!";
+  end;
+ OnTimer190000:
+  npctalk "Dost thou love me? I know thou wilt say Ay,";
+  end;
+ OnTimer192000:
+  npctalk "And I will take thy word: yet if thou swearst,";
+  end;
+ OnTimer194000:
+  npctalk "Thou mayst prove false; at lovers perjuries";
+  end;
+ OnTimer196000:
+  npctalk "Then say, Jove laughs. O gentle Romeo,";
+  end;
+ OnTimer198000:
+  npctalk "If thou dost love, pronounce it faithfully:";
+  end;
+ OnTimer200000:
+  npctalk "Or if thou thinkst I am too quickly won,";
+  end;
+ OnTimer202000:
+  npctalk "Ill frown and be perverse an say thee nay,";
+  end;
+ OnTimer204000:
+  npctalk "So thou wilt woo; but else, not for the world.";
+  end;
+ OnTimer206000:
+  npctalk "In truth, fair Montague, I am too fond,";
+  end;
+ OnTimer208000:
+  npctalk "And therefore thou mayst think my havior light:";
+  end;
+ OnTimer210000:
+  npctalk "But trust me, gentleman, Ill prove more true";
+  end;
+ OnTimer212000:
+  npctalk "Than those that have more cunning to be strange.";
+  end;
+ OnTimer214000:
+  npctalk "I should have been more strange, I must confess,";
+  end;
+ OnTimer216000:
+  npctalk "But that thou overheardst, ere I was ware,";
+  end;
+ OnTimer218000:
+  npctalk "My true loves passion: therefore pardon me,";
+  end;
+ OnTimer220000:
+  npctalk "And not impute this yielding to light love,";
+  end;
+ OnTimer222000:
+  npctalk "Which the dark night hath so discovered.";
+  end;
+ OnTimer228000:
+  npctalk "O, swear not by the moon, the inconstant moon,";
+  end;
+ OnTimer230000:
+  npctalk "That monthly changes in her circled orb,";
+  end;
+ OnTimer232000:
+  npctalk "Lest that thy love prove likewise variable.";
+  end;
+ OnTimer236000:
+  npctalk "Do not swear at all;";
+  end;
+ OnTimer238000:
+  npctalk "Or, if thou wilt, swear by thy gracious self,";
+  end;
+ OnTimer240000:
+  npctalk "Which is the god of my idolatry,";
+  end;
+ OnTimer242000:
+  npctalk "And Ill believe thee.";
+  end;
+ OnTimer246000:
+  npctalk "Well, do not swear: although I joy in thee,";
+  end;
+ OnTimer248000:
+  npctalk "I have no joy of this contract to-night:";
+  end;
+ OnTimer250000:
+  npctalk "It is too rash, too unadvised, too sudden;";
+  end;
+ OnTimer252000:
+  npctalk "Too like the lightning, which doth cease to be";
+  end;
+ OnTimer254000:
+  npctalk "Ere one can say It lightens. Sweet, good night!";
+  end;
+ OnTimer256000:
+  npctalk "This bud of love, by summers ripening breath,";
+  end;
+ OnTimer258000:
+  npctalk "May prove a beauteous flower when next we meet.";
+  end;
+ OnTimer260000:
+  npctalk "Good night, good night! as sweet repose and rest";
+  end;
+ OnTimer262000:
+  npctalk "Come to thy heart as that within my breast!";
+  end;
+ OnTimer266000:
+  npctalk "What satisfaction canst thou have to-night?";
+  end;
+ OnTimer270000:
+  npctalk "I gave thee mine before thou didst request it:";
+  end;
+ OnTimer272000:
+  npctalk "And yet I would it were to give again.";
+  end;
+ OnTimer276000:
+  npctalk "But to be frank, and give it thee again.";
+  end;
+ OnTimer278000:
+  npctalk "And yet I wish but for the thing I have:";
+  end;
+ OnTimer280000:
+  npctalk "My bounty is as boundless as the sea,";
+  end;
+ OnTimer282000:
+  npctalk "My love as deep; the more I give to thee,";
+  end;
+ OnTimer284000:
+  npctalk "The more I have, for both are infinite.";
+  end;
+ OnTimer288000:
+  npctalk "I hear some noise within; dear love, adieu!";
+  end;
+ OnTimer290000:
+  npctalk "Anon, good nurse! Sweet Montague, be true.";
+  end;
+ OnTimer292000:
+  npctalk "Stay but a little, I will come again.";
+  end;
+ OnTimer302000:
+  npctalk "Three words, dear Romeo, and good night indeed.";
+  end;
+ OnTimer304000:
+  npctalk "If that thy bent of love be honourable,";
+  end;
+ OnTimer306000:
+  npctalk "Thy purpose marriage, send me word to-morrow,";
+  end;
+ OnTimer308000:
+  npctalk "By one that Ill procure to come to thee,";
+  end;
+ OnTimer310000:
+  npctalk "Where and what time thou wilt perform the rite;";
+  end;
+ OnTimer312000:
+  npctalk "And all my fortunes at thy foot Ill lay";
+  end;
+ OnTimer314000:
+  npctalk "And follow thee my lord throughout the world.";
+  end;
+ OnTimer318000:
+  npctalk "I come, anon.--But if thou meanst not well,";
+  end;
+ OnTimer320000:
+  npctalk "I do beseech thee--";
+  end;
+ OnTimer324000:
+  npctalk "By and by, I come:--";
+  end;
+ OnTimer326000:
+  npctalk "To cease thy suit, and leave me to my grief:";
+  end;
+ OnTimer328000:
+  npctalk "To-morrow will I send.";
+  end;
+ OnTimer332000:
+  npctalk "A thousand times good night!";
+  end;
+ OnTimer344000:
+  npctalk "Hist! Romeo, hist! O, for a falconers voice,";
+  end;
+ OnTimer346000:
+  npctalk "To lure this tassel-gentle back again!";
+  end;
+ OnTimer348000:
+  npctalk "Bondage is hoarse, and may not speak aloud;";
+  end;
+ OnTimer350000:
+  npctalk "Else would I tear the cave where Echo lies,";
+  end;
+ OnTimer352000:
+  npctalk "And make her airy tongue more hoarse than mine,";
+  end;
+ OnTimer354000:
+  npctalk "With repetition of my Romeos name.";
+  end;
+ OnTimer362000:
+  npctalk "Romeo!";
+  end;
+ OnTimer366000:
+  npctalk "At what oclock to-morrow";
+  end;
+ OnTimer368000:
+  npctalk "Shall I send to thee?";
+  end;
+ OnTimer372000:
+  npctalk "I will not fail: tis twenty years till then.";
+  end;
+ OnTimer374000:
+  npctalk "I have forgot why I did call thee back.";
+  end;
+ OnTimer378000:
+  npctalk "I shall forget, to have thee still stand there,";
+  end;
+ OnTimer380000:
+  npctalk "Remembering how I love thy company.";
+  end;
+ OnTimer386000:
+  npctalk "Tis almost morning; I would have thee gone:";
+  end;
+ OnTimer388000:
+  npctalk "And yet no further than a wantons bird;";
+  end;
+ OnTimer390000:
+  npctalk "Who lets it hop a little from her hand,";
+  end;
+ OnTimer392000:
+  npctalk "Like a poor prisoner in his twisted gyves,";
+  end;
+ OnTimer394000:
+  npctalk "And with a silk thread plucks it back again,";
+  end;
+ OnTimer396000:
+  npctalk "So loving-jealous of his liberty.";
+  end;
+ OnTimer400000:
+  npctalk "Sweet, so would I:";
+  end;
+ OnTimer402000:
+  npctalk "Yet I should kill thee with much cherishing.";
+  end;
+ OnTimer404000:
+  npctalk "Good night, good night! parting is such";
+  end;
+ OnTimer406000:
+  npctalk "sweet sorrow,";
+  end;
+ OnTimer408000:
+  npctalk "That I shall say good night till it be morrow.";
+  end;
+ OnTimer538000:
+  setnpctimer 0;
+  end;
+ OnInit:
+  npcspeed 150;
+  initnpctimer;
+  end;
+}
