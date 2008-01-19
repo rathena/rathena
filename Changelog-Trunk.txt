@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 
+2008/01/19
+	* Added plugin dbghelpplug to generate more extensive crash reports in windows. [FlavioJS]
+	- see header of src/plugins/dbghelpplug.c to know it's capabilities
+	- VS8 project file supplied at vcproj-8/dbghelpplug.vcproj
+	- a dll compiled in release mode is supplied at plugins/dbghelpplug.dll
 2008/01/17
 	* Made battle_check_range fail whenever the distance between src/target is
 	  greater than the viewing range. [Skotlex]
