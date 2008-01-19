@@ -1,10 +1,12 @@
 Date		Added
 ======
-2008/10/13
+2008/01/19
+	* Fixed a bad countitem in cross band quest. (bugreport:840) [Samuray22]
+2008/01/13
 	* Corrected a bad Delitem in gunslinger quest (not job). (bugreport:763) [Samuray22]
 	* Corrected a Double Welcome Message in Dungeon's Kafras. (bugreport:783)
 	* Corrected a Typo error in MailBox. (bugreport:798)
-2008/10/11
+2008/01/11
 	* Rev. 12056 Added Veins town NPCs, mail box, and second guide. [L0ne_W0lf]
 	- Updated warps for Veins. Outstanding warps are quest related.
 	* Minor updates to other warp files.
