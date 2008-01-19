@@ -1448,5 +1448,8 @@ int do_init_chrif(void)
 	// wipe stale data for timed-out client connection requests
 	add_timer_interval(gettick() + 1000, auth_db_cleanup, 0, 0, 30 * 1000);
 
+	// send the user count every 10 seconds, to hide the charserver's online counting problem
+	add_timer_interval(gettick() + 1000, send_usercount_tochar, 0, 0, UPDATE_INTERVAL);
+
 	return 0;
 }
