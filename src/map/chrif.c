@@ -1260,8 +1260,8 @@ int chrif_parse(int fd)
 			if (r == 1) continue;	// intifで処理した
 			if (r == 2) return 0;	// intifで処理したが、データが足りない
 
+			ShowWarning("chrif_parse: session #%d, intif_parse failed (unrecognized command 0x%.4x).\n", fd, cmd);
 			set_eof(fd);
-			ShowWarning("chrif_parse: session #%d, intif_parse failed -> disconnected.\n", fd);
 			return 0;
 		}
 
