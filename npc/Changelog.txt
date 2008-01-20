@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/01/20
+	* Corrected one setcastledata call that I missed in r11915
 2008/01/19
 	* Fixed a bad countitem in cross band quest. (bugreport:840) [Samuray22]
 2008/01/13

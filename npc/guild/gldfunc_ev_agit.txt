@@ -160,15 +160,14 @@ function	script	F_AgitBreak	{
 
 	disablenpc "Kafra Staff#"+.@castle$;
 
-	// Set data to be cleared from the castle
-	// If the new owning guild doesn't have have 
-	// Guardian Research erase all guardian data.
-	// Otherwise remove investment data and kafra.
-	if (getgdskilllv(.@GID,10002) == 0) set .@data,25;
-	else set .@data,9;
-
-	for( set .@i, 4; .@i <= .@data; set .@i, .@i+1 )
+	// remove investment data and kafra
+	for( set .@i, 4; .@i <= 9; set .@i, .@i+1 )
 		SetCastleData .@map$, .@i, 0;
+
+	// if the new guild doesn't have Guardian Research, erase guardians
+	if( getgdskilllv(.@GID,10002) == 0 )
+		for( set .@i, 10; .@i <= 17; set .@i, .@i+1 )
+			SetCastleData .@map$, .@i, 0;
 
 	return;
 }
