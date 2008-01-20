@@ -6780,7 +6780,14 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		}
 		if(--(sce->val3) > 0) {
 			if(++(sce->val4)%5 == 0 && status->hp > status->max_hp/4)
+			{
+				bool flag;
+				map_freeblock_lock();
 				status_zap(bl, sce->val2, 0);
+				flag = !sc->data[type];
+				map_freeblock_unlock();
+				if (flag) return 0; //target died, SC cancelled already.
+			}
 			sc_timer_next(1000+tick,status_change_timer, bl->id, data );
 			return 0;
 		}
