@@ -3088,20 +3088,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 		clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		break;
 	case SA_CLASSCHANGE:
-		{
-			static int changeclass[]={1038,1039,1046,1059,1086,1087,1112,1115
-				,1157,1159,1190,1272,1312,1373,1492};
-			int class_ = mob_random_class (changeclass,ARRAYLENGTH(changeclass));
-			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if(dstmd) mob_class_change(dstmd,class_);
-		}
-		break;
 	case SA_MONOCELL:
+		if (dstmd)
 		{
-			static int poringclass[]={1002};
-			int class_ = mob_random_class (poringclass,ARRAYLENGTH(poringclass));
+			int class_ = skillid==SA_MONOCELL?1002:mob_get_random_id(2, 1, 0);
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
-			if(dstmd) mob_class_change(dstmd,class_);
+			mob_class_change(dstmd,class_);
+			if (tsc) {
+				const int scs[] = { SC_QUAGMIRE, SC_PROVOKE, SC_ROKISWEIL,	SC_GRAVITATION, SC_SUITON, SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM, SC_BLADESTOP };
+				for (i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++)
+					if (tsc->data[i]) status_change_end(bl, i, -1);
+				for (i = 0; i < ARRAYLENGTH(scs); i++)
+					if (tsc->data[scs[i]]) status_change_end(bl, scs[i], -1);
+			}
 		}
 		break;
 	case SA_DEATH:

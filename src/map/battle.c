@@ -3276,9 +3276,10 @@ bool battle_check_range(struct block_list *src,struct block_list *bl,int range)
 	if(src->m != bl->m)	// ˆá‚¤ƒ}ƒbƒv
 		return false;
 
-	if(src->type == BL_HOM && battle_config.hom_setting&0x2)
-		range = battle_config.area_size + 1; //WTF, way to go Aegis and your awesome bugs.
 
+	if(src->type == BL_HOM && battle_config.hom_setting&0x2)
+		;	//WTF, way to go Aegis and your awesome bugs.
+	else	
 	if (!check_distance_bl(src, bl, range))
 		return false;
 

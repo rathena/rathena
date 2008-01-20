@@ -74,7 +74,7 @@ struct item_data* itemdb_searchname(const char *str)
 			return item;
 
 		//Second priority to Client displayed name.
-		if( strcasecmp(item->name,str) == 0 )
+		if( strcasecmp(item->jname,str) == 0 )
 			item2 = item;
 	}
 
