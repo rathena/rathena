@@ -3729,23 +3729,25 @@ int battle_config_read(const char* cfgName)
 	count++;
 
 	fp = fopen(cfgName,"r");
-	if (fp == NULL) {
+	if (fp == NULL)
 		ShowError("File not found: %s\n", cfgName);
-		return 1;
-	}
-	while(fgets(line, sizeof(line), fp))
+	else
 	{
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-		if (sscanf(line, "%1023[^:]:%1023s", w1, w2) != 2)
-			continue;
-		if (strcmpi(w1, "import") == 0)
-			battle_config_read(w2);
-		else
-		if (battle_set_value(w1, w2) == 0)
-			ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
+		while(fgets(line, sizeof(line), fp))
+		{
+			if (line[0] == '/' && line[1] == '/')
+				continue;
+			if (sscanf(line, "%1023[^:]:%1023s", w1, w2) != 2)
+				continue;
+			if (strcmpi(w1, "import") == 0)
+				battle_config_read(w2);
+			else
+			if (battle_set_value(w1, w2) == 0)
+				ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
+		}
+
+		fclose(fp);
 	}
-	fclose(fp);
 
 	count--;
 
