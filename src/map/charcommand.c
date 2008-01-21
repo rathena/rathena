@@ -2836,7 +2836,7 @@ int charcommand_jailtime(const int fd, struct map_session_data* sd, const char* 
 	}
 
 	if (pl_sd->sc.data[SC_JAILED]->val1 == INT_MAX) {
-		clif_displaymessage(fd, "This player have been jailed indefinitely.");
+		clif_displaymessage(fd, "This player has been jailed indefinitely.");
 		return 0;
 	}
 

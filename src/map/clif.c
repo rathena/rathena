@@ -99,21 +99,6 @@ static int max_char_id = DEFAULT_MAX_CHAR_ID;
 int clif_parse (int fd);
 
 /*==========================================
- * Send specials effect to tarjet
- *------------------------------------------*/
-int clif_specialeffecttoone(struct block_list *bl, struct block_list *dst, int type)
-{
-	struct map_session_data *sd = (struct map_session_data *)dst;
-
-	WFIFOW(sd->fd,0) = 0x1f3;
-	WFIFOL(sd->fd,2) = bl->id;
-	WFIFOL(sd->fd,6) = type;
-	WFIFOSET(sd->fd, packet_len(0x1f3));
-
-	return 0;
-}
-
-/*==========================================
  * mapŽI‚ÌipÝ’è
  *------------------------------------------*/
 int clif_setip(const char* ip)
@@ -3449,9 +3434,9 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			TBL_PC* tsd = (TBL_PC*)bl;
 			clif_getareachar_pc(sd, tsd);
 			if(tsd->state.size==2) // tiny/big players [Valaris]
-				clif_specialeffecttoone(bl, &sd->bl, 423);
+				clif_specialeffect_single(bl, 423, sd->fd);
 			else if(tsd->state.size==1)
-				clif_specialeffecttoone(bl, &sd->bl, 421);
+				clif_specialeffect_single(bl, 421, sd->fd);
 		}
 		break;
 	case BL_NPC:
@@ -3465,9 +3450,9 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		{
 			TBL_MOB* md = (TBL_MOB*)bl;
 			if(md->special_state.size==2) // tiny/big mobs [Valaris]
-				clif_specialeffecttoone(bl, &sd->bl, 423);
+				clif_specialeffect_single(bl, 423, sd->fd);
 			else if(md->special_state.size==1)
-				clif_specialeffecttoone(bl, &sd->bl, 421);
+				clif_specialeffect_single(bl, 421, sd->fd);
 		}
 		break;
 	case BL_PET:
@@ -7055,6 +7040,15 @@ int clif_specialeffect(struct block_list* bl, int type, enum send_target target)
 		clif_send(buf, packet_len(0x1f3), bl, SELF);
 	}
 	return 0;
+}
+
+void clif_specialeffect_single(struct block_list* bl, int type, int fd)
+{
+	WFIFOHEAD(fd,10);
+	WFIFOW(fd,0) = 0x1f3;
+	WFIFOL(fd,2) = bl->id;
+	WFIFOL(fd,6) = type;
+	WFIFOSET(fd,10);
 }
 
 // messages (from mobs/npcs) [Valaris]
