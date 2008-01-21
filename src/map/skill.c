@@ -3094,8 +3094,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			int class_ = skillid==SA_MONOCELL?1002:mob_get_random_id(2, 1, 0);
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 			mob_class_change(dstmd,class_);
-			if (tsc) {
-				const int scs[] = { SC_QUAGMIRE, SC_PROVOKE, SC_ROKISWEIL,	SC_GRAVITATION, SC_SUITON, SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM, SC_BLADESTOP };
+			if( tsc && dstmd->status.mode&MD_BOSS )
+			{
+				const int scs[] = { SC_QUAGMIRE, SC_PROVOKE, SC_ROKISWEIL, SC_GRAVITATION, SC_SUITON, SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM, SC_BLADESTOP };
 				for (i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++)
 					if (tsc->data[i]) status_change_end(bl, i, -1);
 				for (i = 0; i < ARRAYLENGTH(scs); i++)

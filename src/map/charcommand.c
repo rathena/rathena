@@ -2830,8 +2830,13 @@ int charcommand_jailtime(const int fd, struct map_session_data* sd, const char* 
 		return -1;
 	}
 
+	if (!pl_sd->sc.data[SC_JAILED]) {
+		clif_displaymessage(fd, "This player is not in jail.");
+		return -1;
+	}
+
 	if (pl_sd->sc.data[SC_JAILED]->val1 == INT_MAX) {
-		clif_displaymessage(fd, "You have been jailed indefinitely.");
+		clif_displaymessage(fd, "This player have been jailed indefinitely.");
 		return 0;
 	}
 
