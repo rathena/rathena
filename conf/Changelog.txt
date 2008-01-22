@@ -1,5 +1,8 @@
 Date	Added
 
+2008/01/22
+	* Removed hom_setting&02 (ignore skill range) as this was fixed by Gravity
+	  some time ago. [Skotlex]
 2008/01/13
 	* Corrected job_knt Mapflags. (bugreport:803) [Samuray22]
 2008/01/10

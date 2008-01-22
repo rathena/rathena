@@ -1640,7 +1640,7 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 
 	if (bl->type&BL_CHAR) {
 		skill_unit_move(bl,gettick(),4);
-		skill_cleartimerskill(bl);			// タイマースキルクリア
+		skill_cleartimerskill(bl);
 	}
 
 	switch( bl->type )
@@ -1673,7 +1673,6 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 			sd->menuskill_id = sd->menuskill_val = 0;
 
 		sd->npc_shopid = 0;
-		pc_delinvincibletimer(sd);
 
 		if(sd->pvp_timer!=-1) {
 			delete_timer(sd->pvp_timer,pc_calc_pvprank_timer);
@@ -1763,6 +1762,7 @@ int unit_free(struct block_list *bl, int clrtype)
 		if(status_isdead(bl))
 			pc_setrestartvalue(sd,2);
 
+		pc_delinvincibletimer(sd);
 		//Status that are not saved...
 		if(sd->sc.count) {
 			if(sd->sc.data[SC_SPURT])
