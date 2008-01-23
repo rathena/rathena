@@ -11,7 +11,7 @@
 //= Warp Points for Al de Baran
 //===== Additional Comments: =================================
 //= 1.2 Added Turbo Room Warps [Justin84]
-//= 1.3 Rmeoved Turbo Track entrance. Scripted warp. [L0ne_W0lf]
+//= 1.3 Removed Turbo Track entrance. Scripted warp. [L0ne_W0lf]
 //============================================================
 
 //===== Al De Baran Warps =====================================
