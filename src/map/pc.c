@@ -310,10 +310,9 @@ int pc_setrestartvalue(struct map_session_data *sd,int type)
 			sc_start(&sd->bl,SkillStatusChangeTable(MO_STEELBODY),100,1,skill_get_time(MO_STEELBODY,1));
 		} else
 			status_heal(&sd->bl, b_status->hp, b_status->sp>status->sp?b_status->sp-status->sp:0, 1);
-	} else { //Just for saving on the char-server
+	} else { //Just for saving on the char-server (with values as if respawned)
 		sd->status.hp = b_status->hp;
-		if ((unsigned int)sd->status.sp < b_status->sp)
-			sd->status.sp = b_status->sp;
+		sd->status.sp = (status->sp < b_status->sp)?b_status->sp:status->sp;
 	}
 	return 0;
 }
