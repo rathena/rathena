@@ -37,6 +37,9 @@
 	2376 General's_Plate_Mail	Increases heal recovery effectiveness on you by 10%
 
 =======================
+2008/01/25
+	* Changed cast time of Napalm Vulcan from 1,7s to 1s. [FlavioJS]
+	  Based on X.4 and 11.2 zones
 01/09
 	* Corrected duration of sphere mines to be 30 secs regardless of skill
 	  level. [Skotlex]
