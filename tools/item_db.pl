@@ -43,28 +43,29 @@ while ($ligne=<STDIN>)
 		$ligne = $&;
 		if ($ligne =~ /^\/\//)
 		{
-			printf("# %s\n", $ligne);
+			printf("# ");
+			$ligne = substr($ligne, 2);
+		}
+		if ($ligne =~ $line_format) {
+			@champ = ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22);
 		} else {
-			if ($ligne =~ $line_format) {
-				@champ = ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22);
-			} else {
-				@champ = ();
-			}
-			if ($#champ != $nb_columns - 1)
+			@champ = ();
+		}
+		if ($#champ != $nb_columns - 1)
+		{
+			# Can't parse, it's a real comment
+			printf ("%s\n", $ligne);
+		} else {
+			printf("REPLACE INTO `%s` VALUES (", $db);
+			for ($i=0; $i<$#champ; $i++)
 			{
-				printf ("# WARNING BAD LINE : %d (%s)\n", $#champ, $ligne);
-				printf STDERR ("Warning : can't parse %s\n", $ligne); 
-			} else {
-				printf("REPLACE INTO `%s` VALUES (", $db);
-				for ($i=0; $i<$#champ; $i++)
-				{
-					printField($champ[$i],",",$i);
-				}
-				printField($champ[$#champ],");\n",$#champ);
+				printField($champ[$i],",",$i);
 			}
+			printField($champ[$#champ],");\n",$#champ);
 		}
 	}
 }
+
 
 sub printField {
 	my ($str, $suffix, $idCol) = @_;

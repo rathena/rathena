@@ -29,13 +29,13 @@ CREATE TABLE `item_db2` (
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM;
 
-# // Items Additional Database - Custom Items go here
-# //
-# // Structure of Database:
-# // ID,Name,Name,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Upper,Gender,Loc,wLV,eLV,Refineable,View,{ Script },{ OnEquip_Script },{ OnUnequip_Script }
-# //
-# // THQ Quest Items
-# //=============================================================
+#  Items Additional Database - Custom Items go here
+# 
+#  Structure of Database:
+# REPLACE INTO `item_db` VALUES ( ID,'Name','Name',Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Upper,Gender,Loc,wLV,eLV,Refineable,View,' Script ',' OnEquip_Script ',' OnUnequip_Script ');
+# 
+#  THQ Quest Items
+# =============================================================
 # REPLACE INTO `item_db2` VALUES (7950,'THG_Membership','THG Membership',3,NULL,10,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 # REPLACE INTO `item_db2` VALUES (7951,'Token_Bag','Token Bag',3,NULL,10,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 # REPLACE INTO `item_db2` VALUES (1998,'Jeramiah\'s_Jur','Jeramiah\'s Jur',3,NULL,10,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
