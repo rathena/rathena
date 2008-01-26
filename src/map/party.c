@@ -145,7 +145,7 @@ int party_check_member(struct party *p)
 	nullpo_retr(0, p);
 
 	all_sd = map_getallusers(&users);
-	
+
 	for(i=0;i<users;i++)
 	{
 		sd = all_sd[i];

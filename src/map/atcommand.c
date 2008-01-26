@@ -3663,7 +3663,7 @@ int atcommand_kick(const int fd, struct map_session_data* sd, const char* comman
 		return -1;
 	}
 	
-	clif_GM_kick(sd, pl_sd, 1);
+	clif_GM_kick(sd, pl_sd);
 	
 	return 0;
 }
@@ -3682,7 +3682,7 @@ int atcommand_kickall(const int fd, struct map_session_data* sd, const char* com
 	for (i = 0; i < users; i++) {
 		if ((pl_sd = pl_allsd[i]) && pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can kick only lower or same gm level
 			if (sd->status.account_id != pl_sd->status.account_id)
-				clif_GM_kick(sd, pl_sd, 0);
+				clif_GM_kick(NULL, pl_sd);
 		}
 	}
 
@@ -3899,9 +3899,9 @@ int atcommand_mapexit(const int fd, struct map_session_data* sd, const char* com
 	pl_allsd = map_getallusers(&users);
 	for (i = 0; i < users; i++) {
 		if ((pl_sd = pl_allsd[i]) && sd->status.account_id != pl_sd->status.account_id)
-			clif_GM_kick(sd, pl_sd, 0);
+			clif_GM_kick(NULL, pl_sd);
 	}
-	clif_GM_kick(sd, sd, 0);
+	clif_GM_kick(NULL, sd);
 	
 	flush_fifos();
 

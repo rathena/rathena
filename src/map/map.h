@@ -503,9 +503,6 @@ struct homunculus_db;	//[orn]
 struct item_data;
 struct square;
 
-// The player performed a suspicious action (not used right now) [FlavioJS]
-#define LOG_SUSPICIOUS(sd,msg)
-
 struct map_session_data {
 	struct block_list bl;
 	struct unit_data ud;

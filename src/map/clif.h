@@ -362,7 +362,7 @@ void clif_specialeffect_single(struct block_list* bl, int type, int fd);
 int clif_message(struct block_list *bl, const char* msg); // messages (from mobs/npcs) [Valaris]
 
 int clif_GM_kickack(struct map_session_data *sd,int id);
-int clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd,int type);
+void clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd);
 void clif_manner_message(struct map_session_data* sd, uint32 type);
 void clif_GM_silence(struct map_session_data* sd, struct map_session_data* tsd, uint8 type);
 int clif_timedout(struct map_session_data *sd);

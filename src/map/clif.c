@@ -3434,9 +3434,9 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			TBL_PC* tsd = (TBL_PC*)bl;
 			clif_getareachar_pc(sd, tsd);
 			if(tsd->state.size==2) // tiny/big players [Valaris]
-				clif_specialeffect_single(bl, 423, sd->fd);
+				clif_specialeffect_single(bl,423,sd->fd);
 			else if(tsd->state.size==1)
-				clif_specialeffect_single(bl, 421, sd->fd);
+				clif_specialeffect_single(bl,421,sd->fd);
 		}
 		break;
 	case BL_NPC:
@@ -3450,9 +3450,9 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		{
 			TBL_MOB* md = (TBL_MOB*)bl;
 			if(md->special_state.size==2) // tiny/big mobs [Valaris]
-				clif_specialeffect_single(bl, 423, sd->fd);
+				clif_specialeffect_single(bl,423,sd->fd);
 			else if(md->special_state.size==1)
-				clif_specialeffect_single(bl, 421, sd->fd);
+				clif_specialeffect_single(bl,421,sd->fd);
 		}
 		break;
 	case BL_PET:
@@ -6880,7 +6880,7 @@ int clif_GM_kickack(struct map_session_data *sd, int id)
 	return 0;
 }
 
-int clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd,int type)
+void clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd)
 {
 	int fd = tsd->fd;
 
@@ -6889,10 +6889,8 @@ int clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd,int ty
 	else
 		map_quit(tsd);
 
-	if( type )
+	if( sd )
 		clif_GM_kickack(sd,tsd->status.account_id);
-
-	return 0;
 }
 
 /// Displays various manner-related status messages
@@ -9046,14 +9044,11 @@ void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 
 	type = (int)RFIFOW(fd,2);
 
-	if( (type == 5 && sd->status.base_level <= 90) ||
-		(type == 4 && sd->status.base_level <= 80) ||
-		(type == 3 && sd->status.base_level <= 65) ||
-		(type == 2 && sd->status.base_level <= 40) ||
-		pc_setcart(sd,type) )
-	{
-		LOG_SUSPICIOUS(sd,"clif_parse_ChangeCart");
-	}
+	if( (type == 5 && sd->status.base_level > 90) ||
+	    (type == 4 && sd->status.base_level > 80) ||
+	    (type == 3 && sd->status.base_level > 65) ||
+	    (type == 2 && sd->status.base_level > 40) )
+		pc_setcart(sd,type);
 }
 
 /*==========================================
@@ -9403,7 +9398,7 @@ void clif_parse_NpcSelectMenu(int fd,struct map_session_data *sd)
 	select = RFIFOB(fd,6);
 	if((select > sd->npc_menu && select != 0xff) || !select){
 		ShowWarning("Hack on NPC Select Menu: %s (AID: %d)!\n",sd->status.name,sd->bl.id);
-		clif_GM_kick(sd,sd,0);
+		clif_GM_kick(NULL,sd);
 	} else {
 		sd->npc_menu=select;
 		npc_scriptcont(sd,RFIFOL(fd,2));
@@ -10258,7 +10253,7 @@ void clif_parse_GMKick(int fd, struct map_session_data *sd)
 			clif_GM_kickack(sd, 0);
 			return;
 		}
-		clif_GM_kick(sd, tsd, 1);
+		clif_GM_kick(sd, tsd);
 		if(log_config.gm && lv >= log_config.gm) {
 			char message[256];
 			sprintf(message, "/kick %s (%d)", tsd->status.name, tsd->status.char_id);
