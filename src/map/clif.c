@@ -8072,7 +8072,7 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd)
 		//Possible bot? Thanks to veider and qspirit
 		//FIXME: Still isn't perfected as clients keep asking for this on legitimate situations.
 		char gm_msg[256];
-		sprintf(gm_msg, "Hack on NameRequest: character '%s' (account: %d) requested the name of an invisible target.", sd->status.name, sd->status.account_id);
+		sprintf(gm_msg, "Hack on NameRequest: character '%s' (account: %d) requested the name of an invisible target.\n", sd->status.name, sd->status.account_id);
 		ShowWarning(gm_msg);
 		 // information is sended to all online GM
 		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);

@@ -1142,6 +1142,12 @@ int map_addobject(struct block_list *bl)
  *------------------------------------------*/
 int map_delobjectnofree(int id)
 {
+	if( id < 0 || id >= MAX_FLOORITEM )
+	{
+		ShowError("map_delobjectnofree: invalid object id '%d'!\n", id);
+		return 0;
+	}
+
 	if(objects[id]==NULL)
 		return 0;
 
@@ -1167,13 +1173,17 @@ int map_delobjectnofree(int id)
  *------------------------------------------*/
 int map_delobject(int id)
 {
-	struct block_list *obj = objects[id];
+	if( id < 0 || id >= MAX_FLOORITEM )
+	{
+		ShowError("map_delobject: invalid object id '%d'!\n", id);
+		return 0;
+	}
 
-	if(obj==NULL)
+	if(objects[id]==NULL)
 		return 0;
 
 	map_delobjectnofree(id);
-	map_freeblock(obj);
+	map_freeblock(objects[id]);
 
 	return 0;
 }
