@@ -48,6 +48,7 @@
  * + Variables/parameters:
  *   - structure members
  *   - union members
+ *   - globals
  * - Portability to MinGW
  *
  * $Id$
@@ -673,7 +674,7 @@ Dhp__PrintTypeName(
 				LocalFree( pSymname );
 			}
 			else
-				fprintf(log_file, "<TODO typename of tag %d>", symtag); break;
+				fprintf(log_file, "<TODO typename of symtag %d>", symtag); break;
 		}
 		break;
 	}
@@ -687,7 +688,7 @@ Dhp__PrintTypeName(
 ///
 /// @param log_file Log file
 /// @param p Pointer to the data
-/// @param length Length of the data
+/// @param length Length of the data in bytes
 static VOID
 Dhp__PrintValueBytes(
 	FILE*   log_file,
@@ -709,7 +710,7 @@ Dhp__PrintValueBytes(
 ///
 /// @param log_file Log file
 /// @param p Pointer to the value
-/// @param length Length of the value
+/// @param length Length of the value in bytes
 static VOID
 Dhp__PrintValueWideChars(
 	FILE*   log_file,
@@ -760,7 +761,7 @@ Dhp__PrintValueWideChars(
 ///
 /// @param log_file Log file
 /// @param p Pointer to the value
-/// @param length Length of the value
+/// @param length Length of the value in bytes
 static VOID
 Dhp__PrintValueChars(
 	FILE*   log_file,
@@ -802,7 +803,7 @@ Dhp__PrintValueChars(
 ///
 /// @param log_file Log file
 /// @param p Pointer to the value
-/// @param length Length of the value
+/// @param length Length of the value in bytes
 static VOID
 Dhp__PrintValueFloat(
 	FILE*   log_file,
@@ -824,7 +825,7 @@ Dhp__PrintValueFloat(
 ///
 /// @param log_file Log file
 /// @param p Pointer to the value
-/// @param length Length of the value
+/// @param length Length of the value in bytes
 static VOID
 Dhp__PrintValueHex(
 	FILE*   log_file,
@@ -850,7 +851,7 @@ Dhp__PrintValueHex(
 ///
 /// @param log_file Log file
 /// @param p Pointer to the value
-/// @param length Length of the value
+/// @param length Length of the value in bytes
 static VOID
 Dhp__PrintValueUnsigned(
 	FILE*   log_file,
@@ -876,7 +877,7 @@ Dhp__PrintValueUnsigned(
 ///
 /// @param log_file Log file
 /// @param p Pointer to the value
-/// @param length Length of the value
+/// @param length Length of the value in bytes
 static VOID
 Dhp__PrintValueSigned(
 	FILE*   log_file,
@@ -913,18 +914,18 @@ Dhp__PrintValueCWideString(
 	// check if memory is readable
 	__try
 	{
-		while( str[length] != L'\0')
+		while( str[length] != L'\0' )
 			++length;
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )
 	{
-		if( length ) Dhp__PrintValueWideChars(log_file, str, length, TRUE);	// print readable part
+		if( length ) Dhp__PrintValueWideChars(log_file, str, length*sizeof(WCHAR), TRUE);	// print readable part
 		fprintf(log_file, "<invalid memory>");
 		return;
 	}
 
 	// print string
-	Dhp__PrintValueWideChars(log_file, str, length, TRUE);
+	Dhp__PrintValueWideChars(log_file, str, length*sizeof(WCHAR), TRUE);
 }
 
 
@@ -945,18 +946,18 @@ Dhp__PrintValueCString(
 	// check if memory is readable
 	__try
 	{
-		while( str[length] != '\0')
+		while( str[length] != '\0' )
 			++length;
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )
 	{
-		if( length ) Dhp__PrintValueChars(log_file, str, length, TRUE);	// print readable part
+		if( length ) Dhp__PrintValueChars(log_file, str, length*sizeof(char), TRUE);	// print readable part
 		fprintf(log_file, "<invalid memory>");
 		return;
 	}
 
 	// print string
-	Dhp__PrintValueChars(log_file, str, length, TRUE);
+	Dhp__PrintValueChars(log_file, str, length*sizeof(char), TRUE);
 }
 
 
@@ -1003,9 +1004,9 @@ Dhp__PrintDataValue(
 	{
 		BYTE* p = (BYTE*)pVariable;
 		ULONG i;
-		BYTE b;
+		BYTE b = 0;
 		for( i = 0; i < length; ++i )
-			b = p[i];
+			b += p[i];	// add to make sure it's not optimized out in release mode
 	}
 	__except( EXCEPTION_EXECUTE_HANDLER )
 	{
