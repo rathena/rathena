@@ -589,6 +589,8 @@ int party_send_logout(struct map_session_data *sd)
 	ARR_FIND( 0, MAX_PARTY, i, p->data[i].sd == sd );
 	if( i < MAX_PARTY )
 		memset(&p->data[i], 0, sizeof(p->data[0]));
+	else
+		ShowError("party_send_logout: Failed to locate member %d:%d in party %d!\n", sd->status.account_id, sd->status.char_id, p->party.party_id);
 	
 	return 1;
 }

@@ -848,6 +848,8 @@ int guild_send_memberinfoshort(struct map_session_data *sd,int online)
 		int i=guild_getindex(g,sd->status.account_id,sd->status.char_id);
 		if(i>=0)
 			g->member[i].sd=NULL;
+		else
+			ShowError("guild_send_memberinfoshort: Failed to locate member %d:%d in guild %d!\n", sd->status.account_id, sd->status.char_id, g->guild_id);
 		return 0;
 	}
 	
