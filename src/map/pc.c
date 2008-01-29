@@ -4976,7 +4976,15 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			mob_script_callback(md, &sd->bl, CALLBACK_KILL);
 	}
 	break;
-	case BL_PC:
+	case BL_PET: //Pass on to master...
+		src = &((TBL_PET*)src)->msd->bl;
+	break;
+	case BL_HOM:
+		src = &((TBL_HOM*)src)->master->bl;
+	break;
+	}
+
+	if (src && src->type == BL_PC)
 	{
 		struct map_session_data *ssd = (struct map_session_data *)src;
 		pc_setglobalreg(ssd, "killedrid", sd->bl.id);
@@ -4986,33 +4994,31 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			ssd->status.manner -= 5;
 			if(ssd->status.manner < 0)
 				sc_start(src,SC_NOCHAT,100,0,0);
-
-		// PK/Karma system code (not enabled yet) [celest]
-		// originally from Kade Online, so i don't know if any of these is correct ^^;
-		// note: karma is measured REVERSE, so more karma = more 'evil' / less honourable,
-		// karma going down = more 'good' / more honourable.
-		// The Karma System way...
-		/*
+#if 0
+			// PK/Karma system code (not enabled yet) [celest]
+			// originally from Kade Online, so i don't know if any of these is correct ^^;
+			// note: karma is measured REVERSE, so more karma = more 'evil' / less honourable,
+			// karma going down = more 'good' / more honourable.
+			// The Karma System way...
+		
 			if (sd->status.karma > ssd->status.karma) {	// If player killed was more evil
 				sd->status.karma--;
 				ssd->status.karma--;
 			}
 			else if (sd->status.karma < ssd->status.karma)	// If player killed was more good
 				ssd->status.karma++;
-		*/
+	
 
-		// or the PK System way...
-		/*
+			// or the PK System way...
+	
 			if (sd->status.karma > 0)	// player killed is dishonourable?
 				ssd->status.karma--; // honour points earned
 			sd->status.karma++;	// honour points lost
-		*/
+		
 			// To-do: Receive exp on certain occasions
+#endif
 		}
 	}
-	break;
-	}
-
 
 	// PK/Karma system code (not enabled yet) [celest]
 	/*
