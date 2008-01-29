@@ -575,17 +575,9 @@ int realloc_writefifo(int fd, size_t addition)
 		while( session[fd]->wdata_size + addition > newsize ) newsize += newsize;
 	}
 	else
-	if( session[fd]->max_wdata >= FIFOSIZE_SERVERLINK)
-	{
-		//Inter-server adjust. [Skotlex]
-		if ((session[fd]->wdata_size+addition)*4 < session[fd]->max_wdata)
-			newsize = session[fd]->max_wdata / 2;
-		else
-			return 0; //No change
-	}
-	else
-	if( session[fd]->max_wdata > WFIFO_SIZE && (session[fd]->wdata_size+addition)*4 < session[fd]->max_wdata )
-	{	// shrink rule, shrink by 2 when only a quater of the fifo is used, don't shrink below 4*addition
+	if( session[fd]->max_wdata >= 2*(session[fd]->flag.server?FIFOSIZE_SERVERLINK:WFIFO_SIZE)
+		&& (session[fd]->wdata_size+addition)*4 < session[fd]->max_wdata )
+	{	// shrink rule, shrink by 2 when only a quarter of the fifo is used, don't shrink below nominal size.
 		newsize = session[fd]->max_wdata / 2;
 	}
 	else // no change
@@ -648,13 +640,12 @@ int WFIFOSET(int fd, size_t len)
 
 	s->wdata_size += len;
 	//If the interserver has 200% of its normal size full, flush the data.
-	if(s->max_wdata >= FIFOSIZE_SERVERLINK &&
-		s->wdata_size >= 2*FIFOSIZE_SERVERLINK)
+	if( s->flag.server && s->wdata_size >= 2*FIFOSIZE_SERVERLINK )
 		flush_fifo(fd);
 
 	// always keep a WFIFO_SIZE reserve in the buffer
 	// For inter-server connections, let the reserve be 1/4th of the link size.
-	newreserve = s->wdata_size + (s->max_wdata >= FIFOSIZE_SERVERLINK ? FIFOSIZE_SERVERLINK / 4 : WFIFO_SIZE);
+	newreserve = s->wdata_size + ( s->flag.server ? FIFOSIZE_SERVERLINK / 4 : WFIFO_SIZE);
 
 	// readjust the buffer to the newly chosen size
 	realloc_writefifo(fd, newreserve);
