@@ -1592,19 +1592,25 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 		if ((!tsd->status.skill[skillid].id || tsd->status.skill[skillid].flag >= 13) &&
 			can_copy(tsd,skillid))	// Split all the check into their own function [Aru]
 		{
+			int lv = skilllv;
 			if (tsd->cloneskill_id && tsd->status.skill[tsd->cloneskill_id].flag == 13){
 				tsd->status.skill[tsd->cloneskill_id].id = 0;
 				tsd->status.skill[tsd->cloneskill_id].lv = 0;
 				tsd->status.skill[tsd->cloneskill_id].flag = 0;
 			}
+
+			if ((type = pc_checkskill(tsd,RG_PLAGIARISM)) < lv)
+				lv = type;
+			//kRO Update makes it impossible to copy skills beyond the skill_db max.
+			if ((type = skill_get_max(RG_PLAGIARISM)) < lv)
+				lv = type;
+
 			tsd->cloneskill_id = skillid;
 			tsd->status.skill[skillid].id = skillid;
-			tsd->status.skill[skillid].lv = skilllv;
-			if ((type = pc_checkskill(tsd,RG_PLAGIARISM)) < skilllv)
-				tsd->status.skill[skillid].lv = type;
+			tsd->status.skill[skillid].lv = lv;
 			tsd->status.skill[skillid].flag = 13;//cloneskill flag
-			pc_setglobalreg(tsd, "CLONE_SKILL", tsd->cloneskill_id);
-			pc_setglobalreg(tsd, "CLONE_SKILL_LV", tsd->status.skill[skillid].lv);
+			pc_setglobalreg(tsd, "CLONE_SKILL", skillid);
+			pc_setglobalreg(tsd, "CLONE_SKILL_LV", lv);
 			clif_skillinfoblock(tsd);
 		}
 	}
