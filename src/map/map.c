@@ -93,6 +93,7 @@ char *ATCOMMAND_CONF_FILENAME;
 char *CHARCOMMAND_CONF_FILENAME;
 char *SCRIPT_CONF_NAME;
 char *MSG_CONF_NAME;
+char *GRF_PATH_FILENAME;
 
 // ‹É—Í static‚Åƒ?ƒJƒ‹‚É?‚ß‚é
 static DBMap* id_db=NULL; // int id -> struct block_list*
@@ -3156,6 +3157,7 @@ int do_init(int argc, char *argv[])
 	CHARCOMMAND_CONF_FILENAME = "conf/charcommand_athena.conf";
 	SCRIPT_CONF_NAME = "conf/script_athena.conf";
 	MSG_CONF_NAME = "conf/msg_athena.conf";
+	GRF_PATH_FILENAME = "conf/grf-files.txt";
 
 	srand(gettick());
 
@@ -3176,6 +3178,8 @@ int do_init(int argc, char *argv[])
 			SCRIPT_CONF_NAME = argv[i+1];
 		else if (strcmp(argv[i],"--msg_config") == 0 || strcmp(argv[i],"--msg-config") == 0)
 			MSG_CONF_NAME = argv[i+1];
+		else if (strcmp(argv[i],"--grf_path_file") == 0 || strcmp(argv[i],"--grf-path-file") == 0)
+			GRF_PATH_FILENAME = argv[i+1];
 #ifndef TXT_ONLY
 		else if (strcmp(argv[i],"--inter_config") == 0 || strcmp(argv[i],"--inter-config") == 0)
 			INTER_CONF_NAME = argv[i+1];
@@ -3230,7 +3234,7 @@ int do_init(int argc, char *argv[])
 
 	mapindex_init();
 	if(enable_grf)
-		grfio_init("conf/grf-files.txt");	//[blackhole89] - restore
+		grfio_init(GRF_PATH_FILENAME);
 
 	map_readallmaps();
 
