@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 3.9
+//= 4.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -62,6 +62,7 @@
 //=     since its symbol depends on the time. [SinSloth]
 //= 3.8 Removed bio ethic quest definition from header. [L0ne_W0lf]
 //= 3.9 Added Rekenber Job quest. Don't know why it hasn't been there before though. [SinSloth]
+//= 4.0 Updated several NPCs to Official (iRO) dialog, and restrucured. [L0ne_W0lf]
 //============================================================ 
 
 lighthalzen,1,1,7	script	sneakAddSuber	-1,{
@@ -107,7 +108,7 @@ OnTimer10000:
 MakeMob:
 	if($@lhz_alert == 1) goto ChkEnd;
 	set $@mobcount, $@mob;
-	mapannounce "lighthalzen","Maintenance Organization of the Public Order: Currently the security of the city has been compromized, We ask the citizens to be more careful. I repeat. We ask the citizens to be more careful.", 1;
+	mapannounce "lighthalzen","Attention, citizens. Our security has been breached and the city is in Gangster Alert status. Please find shelter immediately!", 1;
 	
 	for( set $@i, 0; $@i < $@mob; set $@i, $@i + 1 ) {
 		monster "lighthalzen",0,0,"Gangster",1592,1,"AlertChk::OnMobKilled";
@@ -121,7 +122,7 @@ MakeMob:
 ClearMob:
 	if($@lhz_alert == 0) goto ChkEnd;
 	set $@mobcount, 0;
-	mapannounce "lighthalzen","Maintenance organization of the Public Order: We were able to get rid of all the trouble makers in the city. You may relax now.", 1;	
+	mapannounce "lighthalzen","Attention, citizens. Our law enforcement department has successfully contained the situation. Alert status has been canceled.", 1;	
 	killmonster "lighthalzen","AlertChk::OnMobKilled";
 	set $@lhz_alert, 0;
 	set $@sneakguard, 0;
@@ -139,118 +140,112 @@ ChkEnd:
 	end;	
 }
 
-lighthalzen,267,200,3	script	Security Guard#01	868,{
-
-	if(countitem(7350)>0) goto Lhzpass1;
-	if($@lhz_alert == 1) goto Lhzstop;
-	if((gettime(2)>00 && gettime(2)<10)) goto LhzTalk2;
-	if((gettime(2)>30 && gettime(2)<40)) goto LhzTalk2;
-	set @LhzTalk,rand(1,10);
-	if(@LhzTalk  < 2 ) goto LhzTalk1;
-
-LhzTalk:
-	mes "[Guard]";
-	mes "Hey! Where do you think you are going?";
-	mes "I can not send nobody to the slum district!";
-	mes "If we let suspecious people like you pass,";
-	mes "there is no point in peace keeping!";
-	close;
-
-LhzTalk1:
-	mes "-Looks like the guard is doing something else";
-	mes "Now is a good time to sneak by.-";
-	next;
-	warp "lighthalzen",297,227;
-	set $@sneakguard, $@sneakguard + 1;
-	close;
-
-LhzTalk2:
-	set @LhzTalk,rand(1,10);
-	if(@LhzTalk  < 2 ) goto LhzTalk;
-	mes "[Guard]";
-	mes "zzZ... zzZ... zzZ...";
-	mes "hmm. hmm... zzZ...";
-	next;
-	mes "-Looks like the guard is sleeping";
-	mes "Now is a good time to sneak by.-";
-	next;
-	warp "lighthalzen",297,227;
-	close;
-
-Lhzpass1:
-	mes "[Guard]";
-	mes "Who are you! ...Hmm? You have a pass?";
-	mes "I'm sorry. You look like an adventurer,";
-	mes "but I guess you got the authority.";
-	mes "You may pass.";
-	next; 
-	warp "lighthalzen",297,227;
-	close;
-
-Lhzstop:
-	mes "[Guard]";
-	mes "Recently, there were too many people sneaking pass us,";
-	mes "so we raised the security level.";
-	mes "Who sneak past us anyway?";
-	mes "It's troublesome...";
-	close;
+lighthalzen,267,200,3	script	Guard#lhz01	868,{
+	if(countitem(7350)>0) {
+		mes "[Guard]";
+		mes "Hold it right th--!";
+		mes "Oh. I'm sorry. I didn't";
+		mes "realize you were carrying";
+		mes "a pass and had authorization.";
+		close2;
+		warp "lighthalzen",303,229;
+		end;
+	}
+	else if($@lhz_alert == 1) {
+		mes "[Guard]";
+		mes "Recently too many people";
+		mes "have been traveling between";
+		mes "Uptown and the ghetto, so";
+		mes "we've heightened security";
+		mes "around here. But how can";
+		mes "so many sneak through us?";
+		close;
+	}
+	else if ((gettime(2)>00 && gettime(2)<10) || (gettime(2)>30 && gettime(2)<40)) {
+		if(rand(1,10) < 2) {
+			mes "[Guard]";
+			mes "Hold it right there!";
+			mes "I can't permit anyone";
+			mes "to enter the slums.";
+			mes "Go back to where you";
+			mes "came from, adventurer!";
+			close;
+		}
+		mes "[Guard]";
+		mes "Zzzz... Zzz...";
+		mes "ZZZzzzzzzzzzz...";
+		next;
+		mes "^3355FFThis guard is";
+		mes "dozing off, so this is";
+		mes "the perfect opportunity";
+		mes "to sneak past him.^000000";
+		close2;
+		warp "lighthalzen",303,229;
+		end;
+	}
+	else if(rand(1,10) < 2) {
+		mes "^3355FFThe guard seems distracted";
+		mes "and is looking elsewhere. Now's";
+		mes "your chance to sneak past him!^000000";
+		close2;
+		warp "lighthalzen",297,227;
+		set $@sneakguard, $@sneakguard + 1;
+		end;
+	}
 }
 
-lighthalzen,294,223,7	script	Security Guard#02	868,{
-
-	if(countitem(7350)>0) goto Lhzpass1;
-	if($@lhz_alert == 1) goto Lhzstop;
-	if((gettime(2)>00 && gettime(2)<10)) goto LhzTalk2;
-	if((gettime(2)>30 && gettime(2)<40)) goto LhzTalk2;
-	set @LhzTalk,rand(1,10);
-	if(@LhzTalk  < 2 ) goto LhzTalk1;
-
-LhzTalk:
-	mes "[Guard]";
-	mes "Hey! Where do you think you are going?";
-	mes "I can not send nobody to the slum district!";
-	mes "If we let suspecious people like you pass,";
-	mes "there is no point in peace keeping!";
-	close;
-
-LhzTalk1:
-	mes "-Looks like the guard is doing something else";
-	mes "Now is a good time to sneak by.-";
-	next;
-	warp "lighthalzen",264,200;
-	set $@sneakguard, $@sneakguard + 1;
-	close;
-
-LhzTalk2:
-	set @LhzTalk,rand(1,10);
-	if(@LhzTalk  < 2 ) goto LhzTalk;
-	mes "[Guard]";
-	mes "zzZ... zzZ... zzZ...";
-	mes "hmm. hmm... zzZ...";
-	next;
-	mes "-Looks like the guard is sleeping";
-	mes "Now is a good time to sneak by.-";
-	next;
-	warp "lighthalzen",264,200;
-	close;
-
-Lhzpass1:
-	mes "[Guard]";
-	mes "Who are you! ...Hmm? You have a pass?";
-	mes "I'm sorry. You look like an adventurer,";
-	mes "but I guess you got the authority.";
-	mes "You may pass.";
-	next; 
-	warp "lighthalzen",264,200;
-	close;
-
-Lhzstop:
-	mes "[Guard]";
-	mes "Recently, there were too many people sneaking pass us,";
-	mes "so we raised the security level.";
-	mes "Who sneak past us anyway?";
-	mes "It's troublesome...";
-	close;
+lighthalzen,294,223,7	script	Guard#lhz02	868,{
+	if(countitem(7350)>0) {
+		mes "[Guard]";
+		mes "Hold it right th--!";
+		mes "Oh. I'm sorry. I didn't";
+		mes "realize you were carrying";
+		mes "a pass and had authorization.";
+		close2;
+		warp "lighthalzen",260,199;
+		end;
+	}
+	if($@lhz_alert == 1) {
+		mes "[Guard]";
+		mes "Recently too many people";
+		mes "have been traveling between";
+		mes "Uptown and the ghetto, so";
+		mes "we've heightened security";
+		mes "around here. But how can";
+		mes "so many sneak through us?";
+		close;
+	}
+	if((gettime(2)>00 && gettime(2)<10) || (gettime(2)>30 && gettime(2)<40)) {
+		if(rand(1,10) < 2) {
+			mes "[Guard]";
+			mes "Hold it right there!";
+			mes "I can't permit anyone to";
+			mes "enter Uptown Lighthalzen!";
+			mes "If you don't have a pass,";
+			mes "then move on out of here!";
+			close;
+		}
+		mes "[Guard]";
+		mes "Zzzz... Zzz...";
+		mes "ZZZzzzzzzzzzz...";
+		next;
+		mes "^3355FFThis guard is";
+		mes "dozing off, so this is";
+		mes "the perfect opportunity";
+		mes "to sneak past him.^000000";
+		close2;
+		warp "lighthalzen",264,200;
+		end;
+	}
+	else if(rand(1,10) < 2) {
+		mes "^3355FFThe guard seems distracted";
+		mes "and is looking elsewhere. Now's";
+		mes "your chance to sneak past him!^000000";
+		close2;
+		warp "lighthalzen",264,200;
+		set $@sneakguard, $@sneakguard + 1;
+		end;
+	}
 }
 
 //============================================================
@@ -1249,117 +1244,308 @@ L_DONE:
 // Lighthalzen Pickpocket Mini-Quest
 //============================================================
 
-lighthalzen,240,216,4	script	Man#Pickpocket1	870,2,2,{
+lighthalzen,240,216,4	script	Suspicious Guy#lhz_01	870,2,2,{
 	end;
+
 OnTouch:
-	callfunc "F_LHZPick",33,1;
-	close;
+	switch(rand(1,3)) {
+	case 1:
+		mes "^3355FF*SHHHHHHUK!*^000000";
+		specialeffect 18; //"Suspicious Guy#lhz_01" EF_STEAL
+		set zeny,zeny-100;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Huh...?";
+		mes "I sense something...";
+		mes "No. It might just";
+		mes "be my imagination.";
+		next;
+		mes "[?????]";
+		mes "^333333Heh heh heh heh...^000000";
+		close;
+	case 2:
+		mes "^3355FF*SHHHHHHUK!*^000000";
+		specialeffect 18; //"Suspicious Guy#lhz_01" EF_STEAL
+		set zeny,zeny-200;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Huh...?";
+		mes "I could have sworn";
+		mes "that these pockets full";
+		mes "of zeny were heavier";
+		mes "just a second ago...";
+		next;
+		mes "[?????]";
+		mes "^333333Heh heh heh heh...^000000";
+		close;
+	case 3:
+		mes "^3355FF*SHHHHHHUK!*^000000";
+		specialeffect 18; //EF_STEAL
+		set zeny,zeny-10;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Huh...?";
+		mes "What the?!";
+		mes "That guy, did he just...?";
+		mes "He did! Hey! That guy";
+		mes "stole some of my money!";
+		next;
+		mes "[Suspicious Guy]";
+		mes "Oh crap!";
+		mes "Gotta scram!";
+		mes "Eat my dust, good guy!";
+		next;
+		if (rand(1,4) == 1) {
+			enablenpc "Suspicious Guy#lhz_03";
+			disablenpc "Suspicious Guy#lhz_01";
+		}
+		else {
+			enablenpc"Suspicious Guy#lhz_02";
+			disablenpc "Suspicious Guy#lhz_01";
+		}
+		close;
+	}
 }
 
-lighthalzen,220,169,4	script	Man#Pickpocket2	870,2,2,{
+lighthalzen,220,169,3	script	Suspicious Guy#lhz_02	870,2,2,{
 	end;
-OnTouch:
-	callfunc "F_LHZPick",33,2;
-	close;
-}
 
-lighthalzen,164,127,4	script	Man#Pickpocket3	870,2,2,{
-	end;
-OnTouch:
-	callfunc "F_LHZPick",20,3;
-	if(@caught!=1) close;
-	mes "[Strange Man]";
-	mes "Ayee! I'm trapped.";
-	mes "If you will forgive me,";
-	mes "I can give you something good.";
-	mes "["+strcharinfo(0)+"]";
-	mes "You're forgiven, now what is this";
-	mes "good thing you mentioned?";
-	next;
-	mes "[Strange Man]";
-	mes "The lower part of your body,";
-	mes "will produce a strong power";
-	mes "once you've taken the secret potion.";
-	mes "It's very useful";
-	mes "when you want to run quickly";
-	next;
-	mes "[Strange Man]";
-	mes "I will sell you them for a bargin";
-	mes "price of 15,000 zeny to a maximum";
-	mes "of three potions.";
-	mes "How many do you want?";
-	next;
-	input @number;
-	if(@number>3) set @number,3;
-	set @cost,15000*@number;
-	if(Zeny<@cost) goto L_Zeny;
-	//please check that you add the script to it.
-	set Zeny,zeny-@cost;
-	getitem 12016,@number; //Speed Potion
-	mes "[Strange Man]";
-	mes "Thanks for your money.";
-	if(rand(1,2)==1) goto L_Reset;
-	disablenpc "Man#Pickpocket3";
-	enablenpc "Man#Pickpocket2";
-	close;
-L_Reset:
-	disablenpc "Man#Pickpocket3";
-	enablenpc "Man#Pickpocket1";
-	close;
-L_Zeny:
-	mes "[Strange Man]";
-	mes "Too bad.";
-	mes "No zeny makes you a poor man.";
-	close;
 OnInit:
-	disablenpc "Man#Pickpocket2";
-	disablenpc "Man#Pickpocket3";
+	disablenpc "Suspicious Guy#lhz_02";
+	end;
+
+OnTouch:
+	switch(rand(1,3)) {
+	case 1:
+		mes "^3355FF*SHHHHHHUK!*^000000";
+		specialeffect 18; //"Suspicious Guy#lhz_02" EF_STEAL
+		set zeny,zeny-100;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Huh...?";
+		mes "I sense something...";
+		mes "No. It might just";
+		mes "be my imagination.";
+		next;
+		mes "[?????]";
+		mes "^333333Heh heh heh heh...^000000";
+		close;
+	case 2:
+		mes "^3355FF*SHHHHHHUK!*^000000";
+		specialeffect 18; //"Suspicious Guy#lhz_02" EF_STEAL
+		set zeny,zeny-200;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Huh...?";
+		mes "I could have sworn";
+		mes "that these pockets full";
+		mes "of zeny were heavier";
+		mes "just a second ago...";
+		next;
+		mes "[?????]";
+		mes "^333333Heh heh heh heh...^000000";
+		close;
+	case 3:
+		mes "^3355FF*SHHHHHHUK!*^000000";
+		specialeffect 18; //EF_STEAL
+		set zeny,zeny-10;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Huh...?";
+		mes "What the?!";
+		mes "That guy, did he just...?";
+		mes "He did! Hey! That guy";
+		mes "stole some of my money!";
+		next;
+		mes "[Suspicious Guy]";
+		mes "Oh crap!";
+		mes "Gotta scram!";
+		mes "Eat my dust, good guy!";
+		if (rand(1,4) == 1) {
+			enablenpc "Suspicious Guy#lhz_03";
+			disablenpc "Suspicious Guy#lhz_02";
+		}
+		else {
+			enablenpc "Suspicious Guy#lhz_01";
+			disablenpc "Suspicious Guy#lhz_02";
+		}
+		close;
+	}
 }
 
-function	script	F_LHZPick	{
-	if(Zeny<100) set Zeny,0;
-	if(Zeny>=100) set Zeny,zeny-100;
-	mes "Pickpocket";
-	next;
-	if(rand(0,100)<getarg(0)) goto L_Caught;
-	mes "Hehehehe....";
-	return;
-L_Caught:
-	mes "(You notice the man put his";
-	mes "hand in your pocket!)";
-	mes "["+strcharinfo(0)+"]";
-	mes "Eh!? What are you doing!";
-	mes "You are!! Stealing my money?!";
-	mes "[Strange Man]";
-	mes "Ah! I'm caught!";
-	mes "["+strcharinfo(0)+"]";
-	mes "You're a pickpocket?!?";
-	mes "[Strange Man]";
-	mes "Hehehehe....";
-	next;
-	set @rand,rand(1,4);
-	if(getarg(1)==1 && @rand<4) goto L_MoveB;
-	if(getarg(1)==2 && @rand<4) goto L_MoveA;
-	if(getarg(1)==1 && @rand==4) goto L_MoveC1;
-	if(getarg(1)==2 && @rand==4) goto L_MoveC2;
-	set @caught,1;
-	return;
-L_MoveA:
-	disablenpc "Man#Pickpocket2";
-	enablenpc "Man#Pickpocket1";
-	return;
-L_MoveB:
-	disablenpc "Man#Pickpocket1";
-	enablenpc "Man#Pickpocket2";
-	return;
-L_MoveC1:
-	disablenpc "Man#Pickpocket1";
-	enablenpc "Man#Pickpocket3";
-	return;
-L_MoveC2:
-	disablenpc "Man#Pickpocket2";
-	enablenpc "Man#Pickpocket3";
-	return;
+lighthalzen,164,127,4	script	Suspicious Guy#lhz_03	870,2,2,{
+	end;
+
+OnInit:
+	disablenpc "Suspicious Guy#lhz_03";
+	end;
+
+OnTouch:
+	switch(rand(1,5)) {
+	case 1:
+	case 2:
+		mes "^3355FF*SHHHHHHUK!*^000000";
+		specialeffect 18; //EF_STEAL
+		set zeny,zeny-100;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Huh...?";
+		mes "I sense something...";
+		mes "No. It might just";
+		mes "be my imagination.";
+		next;
+		mes "[?????]";
+		mes "^333333Heh heh heh heh...^000000";
+		close;
+	case 3:
+	case 4:
+		mes "^3355FF*SHHHHHHUK!*^000000";
+		specialeffect 18; //EF_STEAL
+		set zeny,zeny-200;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Huh...?";
+		mes "I could have sworn";
+		mes "that these pockets full";
+		mes "of zeny were heavier";
+		mes "just a second ago...";
+		next;
+		mes "[?????]";
+		mes "^333333Heh heh heh heh...^000000";
+		close;
+	case 5:
+		mes "^3355FF*SHHHHHHUK!*^000000";
+		specialeffect 18; //"Suspicious Guy#lhz_03" EF_STEAL
+		set zeny,zeny-10;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Huh...?";
+		mes "What the?!";
+		mes "That guy, did he just...?";
+		mes "He did! Hey! That guy";
+		mes "stole some of my money!";
+		next;
+		mes "[Suspicious Guy]";
+		mes "Oh crap!";
+		mes "Gotta scram!";
+		mes "Eat my dust, good gu--!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh no, you don't!";
+		mes "I'm turning you in,";
+		mes "you pickpocket!";
+		next;
+		mes "[Suspicious Guy]";
+		mes "No...! I'm sorry!";
+		mes "I'll give you back";
+		mes "your money, just ";
+		mes "let me go! Crap!";
+		emotion e_sob;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Alright, fine,";
+		mes "but you better quit";
+		mes "this life of crime!";
+		next;
+		mes "[Suspicious Guy]";
+		mes "You're right, that was";
+		mes "wrong of me. Thanks";
+		mes "for letting me go. Since";
+		mes "you did me a favor, I'll";
+		mes "sell you some tonic that";
+		mes "I use to run really fast.";
+		next;
+		mes "[Suspicious Guy]";
+		mes "I can only sell up to";
+		mes "three of my secret tonic";
+		mes "to you since that's all";
+		mes "I have. Each one will";
+		mes "cost 15,000 zeny. So";
+		mes "what do you say?";
+		next;
+		switch(select("Give me 1.:Give me 2.:Give me 3.:No, I'm fine.")) {
+		case 1: set .@number,1; set .@price,15000*1; break;
+		case 2: set .@number,2; set .@price,15000*2; break;
+		case 3: set .@number,3; set .@price,15000*3; break;
+		case 4:
+			mes "[Suspicious Guy]";
+			mes "Well...";
+			mes "You're just gonna";
+			mes "let me go, then?";
+			mes "That's awful generous.";
+			mes "Thanks, I appreciate it.";
+			next;
+			mes "[Suspicious Guy]";
+			mes "Anyway, I'm gonna";
+			mes "get back to work.";
+			mes "Heh heh heh~";
+		}
+		if (.@number) {
+			if (Zeny < .@price) {
+				mes "[Suspicious Guy]";
+				mes "Er, since I'm quitting";
+				mes "pickpocketing, I need";
+				mes "to make cash legitimately";
+				mes "as a business person. I'm";
+				mes "real sorry pal, but I can't just^FFFFFF ^000000 give these tonics away!";
+				next;
+				mes "[Suspicious Guy]";
+				mes "Anyway, I'm gonna";
+				mes "get back to work.";
+				mes "Heh heh heh~";
+			}
+			else {
+				if ((MaxWeight-Weight) < 400) {
+					mes "[Suspicious Guy]";
+					mes "Eh, I'm sorry, but you";
+					mes "don't have enough room";
+					mes "in your inventory to even";
+					mes "hold these tonics. Sorry";
+					mes "pal, but this deal's off.";
+					next;
+					mes "[Suspicious Guy]";
+					mes "Anyway, I'm gonna";
+					mes "get back to work.";
+					mes "Heh heh heh~";
+				}
+				else {
+					mes "[Suspicious Guy]";
+					if (.@number == 1) {
+						mes "Only one? Alright, you";
+						mes "might be a cheapskate,";
+						mes "but I do owe you. Just";
+						mes "take this and I hope we never";
+						mes "bump into each other again!";
+					}
+					else if (.@number == 2) {
+						mes "Two, huh? I can dig it.";
+						mes "Now take these and I hope";
+						mes "we never see each other";
+						mes "ever again! Ciao, baby~";
+					}
+					else {
+						mes "You want all three?";
+						mes "Heh, you're much smarter";
+						mes "than I thought! Alright, take";
+						mes "these with my compliments,";
+						mes "but I hope we never bump";
+						mes "into each other ever again!";
+					}
+					set zeny,zeny-.@price;
+					getitem 12016,.@number; //Speed_Up_Potion
+				}
+			}
+		}
+		if (rand(1,2) == 1) {
+			enablenpc "Suspicious Guy#lhz_01";
+			disablenpc "Suspicious Guy#lhz_03";
+		}
+		else {
+			enablenpc "Suspicious Guy#lhz_02";
+			disablenpc "Suspicious Guy#lhz_03";
+		}
+		close;
+	}
 }
 
 //==============================================================

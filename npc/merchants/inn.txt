@@ -37,6 +37,7 @@
 //= 2.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.1a Corrected a little Typo error. (bugreport:536 & 537) [Samuray22]
 //= 2.2 Small update to Vein's Inn Master. [L0ne_W0lf]
+//= 2.3 Added Lighthalzen Inn from Lighthalzen town file. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -109,6 +110,55 @@ ra_in01,376,69,4	script	Inn Keeper#Annie	931,{
 
 	callfunc "F_InnMaid","[Annie]","Rachel Inn","ra_in01",375,58;
 	warp "ra_in01",384,128; end;
+}
+
+//====================== Lighthalzen =================================
+lhz_in02,230,284,4	script	Hotel Employee#01	86,{
+
+	mes "[Hotel Employee]";
+	mes "Welcome to";
+	mes "the Royal Dragon,";
+	mes "where you can find the";
+	mes "finest accomodations";
+	mes "and the best service.";
+	next;
+	menu "Save Point",s_Save,"Rest - 5,000 zeny",s_Rest,"Cancel",-;
+
+	mes "[Hotel Employee]";
+	mes "Thank you and";
+	mes "have a nice day.";
+	close;
+
+s_Save:
+	savepoint "lhz_in02",209,275;
+	mes "[Hotel Employee]";
+	mes "Thank you, your";
+	mes "Respawn Point has";
+	mes "been saved here in";
+	mes "the Royal Dragon.";
+	close;
+
+s_Rest:
+	if(Zeny < 5000)goto s_NEnoughZ;
+	set Zeny,Zeny - 5000;
+	mes "[Hotel Employee]";
+	mes "Thank you~";
+	mes "I hope you enjoy";
+	mes "your stay in the";
+	mes "Royal Dragon.";
+	close2;
+	warp "lhz_in02",219,150;
+	percentheal 100,100;
+	sc_start SC_BLESSING,240000,10;
+	skilleffect AL_BLESSING,0;
+	end;
+
+s_NEnoughZ:
+	mes "[Hotel Employee]";
+	mes "I'm sorry but you do not";
+	mes "have enough zeny, please";
+	mes "come back when you do!";
+	close;
 }
 
 //======================== Hugel ====================================

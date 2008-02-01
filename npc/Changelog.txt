@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/01/31
+	* Rev. 12155 Updated Lighthalzen Town NPCs and Speed Potion quest. [L0ne_W0lf]
 2008/01/20
 	* Corrected one setcastledata call that I missed in r11915
 2008/01/19
