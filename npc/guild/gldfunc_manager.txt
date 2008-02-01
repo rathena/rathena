@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= jAthena - kalen (1.0) & eAthena Team
 //===== Current Version: =====================================
-//= 1.9b
+//= 1.9c
 //===== Compatible With: =====================================
 //= eAthena SVN; RO Episode 4+
 //===== Description: =========================================
@@ -40,6 +40,7 @@
 //= 1.9 Fixed guild members being able to access Guild Master services. [L0ne_W0lf]
 //= 1.9a Fixed Kafra cutin not closing if you choose not to dismiss her. [L0ne_W0lf]
 //= 1.9b Corrected impropper variable being used for defense investment. [L0ne_W0lf]
+//= 1.9c Fixed a typo with zeny checkm when installing guardian. [L0ne_W0lf]
 //============================================================
 
 function	script	F_GldManager	{
@@ -247,7 +248,7 @@ function	script	F_GldManager	{
 				mes "Master, you have already have that Guardian. You cannot summon any more.";
 				return 0;
 			}
-			if (Zeny < 1000) {
+			if (Zeny < 10000) {
 				mes "Well... I'm sorry but we don't have enough funds to summon the Guardian. We have failed to summon the Guardian.";
 				return 0;
 			}

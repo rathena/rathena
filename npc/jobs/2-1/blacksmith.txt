@@ -34,6 +34,7 @@
 //= 2.4b Further bug fixes with teh hel of Barron-Monster. [L0ne_W0lf]
 //= 2.4c More fixes courtosy of Micktu. [L0ne_W0lf]
 //= 2.4d Fixed an incorrect answer in the quiz. (Trojal) [L0ne_W0lf]
+//= 2.4e Touched up a few issues as pointed out by Ultramage. [L0ne_W0lf]
 //==============================================================
 
 ein_in01,18,28,4	script	Guildsman#BLS	731,{
@@ -179,7 +180,7 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 				mes "[Altiregen]";
 				mes "The test may consist of difficult tasks, but it's definitely not impossible. You will need to deliver certain items to different areas around the world";
 				mes "to complete the test.";
-				break;
+				close;
 			case 3:
 				mes "[Altiregen]";
 				mes "Hmmm...";
@@ -295,12 +296,6 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 			close;
 		}
 		else if (BSMITH_Q == 1) {
-			mes "[Geschupenschte]";
-			mes "Oh ho ho!";
-			mes "You're a Merchant!";
-			mes "Excellent! I was";
-			mes "in need of some help!";
-			next;
 			mes "[Geschupenschte]";
 			mes "Am I correct in assuming you are the help sent by the Blacksmith Guild? There aren't many trustyworthy people I can hire to help me, so I'm always";
 			mes "short on help.";
@@ -1474,7 +1469,7 @@ ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
 				next;
 				mes "[Mitehmaeeuh]";
 				mes "Take this Hammer";
-				mes "of Blacksmith and go back to the Einbroch Blacksmith Guild. Okay then? I wish you the best of luck!";
+				mes "of Blacksmith and go back to the Altiregen. Okay then? I wish you the best of luck!";
 				close;
 			}
 			mes "You failed! You better study up before coming back here.";
@@ -1496,7 +1491,7 @@ ein_in01,24,41,5	script	Blacksmith Guildsman#moc	726,{
 		mes "Yeap, you just passed the Blacksmith job test~";
 		next;
 		mes "[Mitehmaeeuh]";
-		mes "Why don't you go back to Mr.Geschupenschte?";
+		mes "Why don't you go back to Mr.Altiregen?";
 		next;
 		mes "[Mitehmaeeuh]";
 		mes "Don't forget to bring the Hammer of Blacksmith with you!";
