@@ -1156,115 +1156,114 @@ if($God1 > 49 && $God2 < 100)
 						set @godtemplib4,1;
 						close;
 					}
-						else if((@str$ == "The 3rd company" || @str$ == "the 3rd company" || @str$ == "The third company") && @godtemplib4)
+					else if((@str$ == "The 3rd company" || @str$ == "the 3rd company" || @str$ == "The third company") && @godtemplib4)
+					{
+						mes "- search with the keyword : " + @str$ + " -";
+						mes "The 3rd company : Crusaders.";
+						mes "The 3rd comany is known as organized with the best members of crusaders,";
+						mes "there have been no report regarding the personnel in&out record of this company. However,";
+						next;
+						mes "The 3rd squad in the 1st platoon of the 3rd comany was an exception of that case,";
+						mes "the members of the 1st squad were all retired or transfered to other forces.";
+						mes "Specific information can be searched within the article about the 1st platoon.";
+						set @godtemplib1,1;
+						close;
+					}
+					else if((@str$ == "The 1st platoon" || @str$ == "the 1st platoon" || @str$ == "The first platoon") && @godtemplib1)
+					{
+						mes "- search with the keyword : " + @str$ + " -";
+						mes "The 1st platoon : The 1st platoon of the 3rd company, Crusaders.";
+						mes "Each company consists of 4 platoons, and this is only one record regarding the 3rd squad of the 1st platoon.";
+						next;
+						mes "Specific information can be searched within the article about the 3rd squad.";
+						set @godtemplib2,1;
+						close;
+					}
+					else if((@str$ == "The 3rd squad" || @str$ == "the 3rd squad" || @str$ == "The third squad") && @godtemplib2)
+					{
+						mes "- search with the keyword : " + @str$ + " -";
+						mes "The 3rd squad : Crusaders.";
+						mes "Member list who participated in ^0000FFthe last mission^000000.";
+						next;
+						mes "^0000FF : Rebarev Doug";
+						mes " : Jack O";
+						mes " : Zan.Huadoku";
+						mes " : Cuaque Donon";
+						mes " : Emma Searth";
+						mes " : Royal Myst";
+						mes " : The Nineball^000000";
+						set @godtemplib3,1;
+						if(god_eremes == 17)set god_eremes,18;
+						close;
+					}
+					else if((@str$ == "The last mission" || @str$ == "the last mission") && @godtemplib3)
+					{
+						mes "- search with the keyword : " + @str$ + " -";
+						mes "The upper part decided to disband the 3rd squad which was the best search party of the crusader force after the following mission.";
+						next;
+						mes "The 3rd squad was secretly assigned to track down ^0000FFthe signs of God^000000 under a command from the royal court.";
+						next;
+						mes "During the mission, an unexpected incident happened.";
+						mes "A member started second guessing the squad leader's leadership and ^0000FFacting on his own authority^000000.";
+						next;
+						mes "It resulted in a factional dispute. In order to solve the problem, the leader held a meeting with the others.";
+						mes "Based on other's opinions, the squad leader concluded the member's behaviour as ^0000FFinsubordination^000000,";
+						next;
+						mes "and he and other members did a physical punishment onto the member. The member was reported to be injured and dropped from the squad during the mission.";
+						next;
+						mes "Due to this disgraceful incident, the 3rd squad could not complete the mission.";
+						mes "And because of the unsatisfying mission result, the 3rd squad leader was pressed hard by the 1st platoon leader and the 3rd company commendant.";
+						next;
+						mes "The 3rd company commandant proposed disband of the 3rd squad to upper hierarchy and his proposal was accepted.";
+						mes "After the 3rd squad was disbanded, the members including the squad leader were sent to diciplinary retraining for 3 moths. After that retraining, all of them were transfered to the other squad.";
+						next;
+						mes "Currently Rebarev Doug who was the 3rd squad leader at the time have been researching the signs of God based on the mission result.";
+						mes "And the research was ordered by the King of Rune-Midgarts Kingdom.";
+						close2;
+						if(god_eremes == 18)set god_eremes,19;
+						end;
+					}
+					else if((@str$ == "The 1st platoon" || @str$ == "the 1st platoon" || @str$ == "The first platoon") && @godtemplib4)
+					{
+						mes "- search with the keyword : " + @str$ + " -";
+						mes "The 1st platoon : The 1st platoon of the 3rd company, Crusaders.";
+						mes "Each company consists of 4 platoons and this is the first of the four.";
+						next;
+						mes "The 1st platoon of the 1st company, Crusader force.";
+						mes "Suggested to search 'Company' a higher rank keyword.";
+						next;
+						mes "Other information is confidential, cannot be searched on this document.";
+						close;
+					}
+					else if((@str$ == "The 3rd squad" || @str$ == "the 3rd squad" || @str$ == "The third squad") && @godtemplib1) 
 						{
-							mes "- search with the keyword : " + @str$ + " -";
-							mes "The 3rd company : Crusaders.";
-							mes "The 3rd comany is known as organized with the best members of crusaders,";
-							mes "there have been no report regarding the personnel in&out record of this company. However,";
-							next;
-							mes "The 3rd squad in the 1st platoon of the 3rd comany was an exception of that case,";
-							mes "the members of the 1st squad were all retired or transfered to other forces.";
-							mes "Specific information can be searched within the article about the 1st platoon.";
-							set @godtemplib1,1;
-							close;
-						}
-							else if((@str$ == "The 1st platoon" || @str$ == "the 1st platoon" || @str$ == "The first platoon") && @godtemplib1)
-							{
-								mes "- search with the keyword : " + @str$ + " -";
-								mes "The 1st platoon : The 1st platoon of the 3rd company, Crusaders.";
-								mes "Each company consists of 4 platoons, and this is only one record regarding the 3rd squad of the 1st platoon.";
-								next;
-								mes "Specific information can be searched within the article about the 3rd squad.";
-								set @godtemplib2,1;
-								close;
-							}
-								else if((@str$ == "The 3rd squad" || @str$ == "the 3rd squad" || @str$ == "The third squad") && @godtemplib2)
-								{
-									mes "- search with the keyword : " + @str$ + " -";
-									mes "The 3rd squad : Crusaders.";
-									mes "Member list who participated in ^0000FFthe last mission^000000.";
-									next;
-									mes "^0000FF : Rebarev Doug";
-									mes " : Jack O";
-									mes " : Zan.Huadoku";
-									mes " : Cuaque Donon";
-									mes " : Emma Searth";
-									mes " : Royal Myst";
-									mes " : The Nineball^000000";
-									set @godtemplib3,1;
-									if(god_eremes == 17)set god_eremes,18;
-									close;
-								}
-									else if((@str$ == "The last mission" || @str$ == "the last mission") && @godtemplib3)
-									{
-										mes "- search with the keyword : " + @str$ + " -";
-										mes "The upper part decided to disband the 3rd squad which was the best search party of the crusader force after the following mission.";
-										next;
-										mes "The 3rd squad was secretly assigned to track down ^0000FFthe signs of God^000000 under a command from the royal court.";
-										next;
-										mes "During the mission, an unexpected incident happened.";
-										mes "A member started second guessing the squad leader's leadership and ^0000FFacting on his own authority^000000.";
-										next;
-										mes "It resulted in a factional dispute. In order to solve the problem, the leader held a meeting with the others.";
-										mes "Based on other's opinions, the squad leader concluded the member's behaviour as ^0000FFinsubordination^000000,";
-										next;
-										mes "and he and other members did a physical punishment onto the member. The member was reported to be injured and dropped from the squad during the mission.";
-										next;
-										mes "Due to this disgraceful incident, the 3rd squad could not complete the mission.";
-										mes "And because of the unsatisfying mission result, the 3rd squad leader was pressed hard by the 1st platoon leader and the 3rd company commendant.";
-										next;
-										mes "The 3rd company commandant proposed disband of the 3rd squad to upper hierarchy and his proposal was accepted.";
-										mes "After the 3rd squad was disbanded, the members including the squad leader were sent to diciplinary retraining for 3 moths. After that retraining, all of them were transfered to the other squad.";
-										next;
-										mes "Currently Rebarev Doug who was the 3rd squad leader at the time have been researching the signs of God based on the mission result.";
-										mes "And the research was ordered by the King of Rune-Midgarts Kingdom.";
-										close2;
-										if(god_eremes == 18)set god_eremes,19;
-										end;
-									}
-
-						else if((@str$ == "The 1st platoon" || @str$ == "the 1st platoon" || @str$ == "The first platoon") && @godtemplib4)
-							{
-							mes "- search with the keyword : " + @str$ + " -";
-							mes "The 1st platoon : The 1st platoon of the 3rd company, Crusaders.";
-							mes "Each company consists of 4 platoons and this is the first of the four.";
-							next;
-							mes "The 1st platoon of the 1st company, Crusader force.";
-							mes "Suggested to search 'Company' a higher rank keyword.";
-							next;
-							mes "Other information is confidential, cannot be searched on this document.";
-							close;
-							}
-						else if((@str$ == "The 3rd squad" || @str$ == "the 3rd squad" || @str$ == "The third squad") && @godtemplib1) 
-							{
-							mes "- search with the keyword : " + @str$ + " -";
-							mes "The 3rd squad : Crusaders.";
-							mes "Each platoon consists of 4 squads and this is the third of the four.";
-							mes "Suggested to search 'Platoon' a higher rank keyword.";
-							next;
-							mes "Generally a squad has 8 members within.";
-							mes "Other information is confidential, cannot be searched on this document.";
-							close;
-							}
-						else if(@str$ == "The last mission" || @str$ == "the last mission") 
-						{
-							mes "- search with the keyword : " + @str$ + " -";
-							mes "- No result has been found.-";
-							mes "- Suggested to enter a specific name of the force for a better research.-";
-							close;
-						}
+						mes "- search with the keyword : " + @str$ + " -";
+						mes "The 3rd squad : Crusaders.";
+						mes "Each platoon consists of 4 squads and this is the third of the four.";
+						mes "Suggested to search 'Platoon' a higher rank keyword.";
+						next;
+						mes "Generally a squad has 8 members within.";
+						mes "Other information is confidential, cannot be searched on this document.";
+						close;
+					}
+					else if(@str$ == "The last mission" || @str$ == "the last mission") 
+					{
+						mes "- search with the keyword : " + @str$ + " -";
+						mes "- No result has been found.-";
+						mes "- Suggested to enter a specific name of the force for a better research.-";
+						close;
+					}
 					else if((@str$ == "Crusader" || @str$ == "crusader") && @godtemplib4)
 					{
-							mes "- search with a keyword : " + @str$ + " -";
-							mes "The 3rd company : Crusaders.";
-							mes "The 3rd comany is known as organized with the best members of crusaders,";
-							mes "there have been no report regarding the personnel in&out record of this company. However,";
-							next;
-							mes "The 3rd squad in the 1st platoon of the 3rd comany was an exception of that case,";
-							mes "the members of the 1st squad were all retired or transfered to other forces.";
-							mes "Specific information can be searched within the article about the 1st platoon.";
-							close;
+						mes "- search with a keyword : " + @str$ + " -";
+						mes "The 3rd company : Crusaders.";
+						mes "The 3rd comany is known as organized with the best members of crusaders,";
+						mes "there have been no report regarding the personnel in&out record of this company. However,";
+						next;
+						mes "The 3rd squad in the 1st platoon of the 3rd comany was an exception of that case,";
+						mes "the members of the 1st squad were all retired or transfered to other forces.";
+						mes "Specific information can be searched within the article about the 1st platoon.";
+						close;
 					}
 					else if(@str$ == "The 1st platoon" || @str$ == "the 1st platoon" || @str$ == "The first platoon")
 					{
@@ -1287,7 +1286,6 @@ if($God1 > 49 && $God2 < 100)
 						mes "- search with the keyword : " + @str$ + " -";
 						mes "- No result has been found.-";
 						mes "- Suggested to enter a specific name of the force for a better research.-";
-						next;
 						close;
 					}
 					else if(@str$ == "Rebarev Doug")
@@ -1298,7 +1296,7 @@ if($God1 > 49 && $God2 < 100)
 						mes "Also he's in charge of a research under a command from the royal court.";
 						close;
 					}
-					else if(@str$ == Egnigem)
+					else if(@str$ == "Egnigem")
 					{
 						mes "- search with the keyword : " + @str$ + " -";
 						mes "No result has been found.";
