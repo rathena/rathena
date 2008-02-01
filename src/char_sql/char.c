@@ -1896,7 +1896,7 @@ int parse_fromlogin(int fd)
 			int aid = RFIFOL(fd,2);
 			if ((character = idb_get(online_char_db, aid)) != NULL)
 			{	//Kick out this player.
-				if( character->server != -1 )
+				if( character->server > -1 )
 				{	//Kick it from the map server it is on.
 					mapif_disconnectplayer(server[character->server].fd, character->account_id, character->char_id, 2);
 					if (character->waiting_disconnect == -1)
