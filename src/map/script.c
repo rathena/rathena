@@ -8236,7 +8236,7 @@ BUILDIN_FUNC(sc_end)
 		bl = map_id2bl(potion_target);
 	}
 
-	if( !bl ) return 0l;
+	if( !bl ) return 0;
 
 	if( type >= 0 && type < SC_MAX )
 	{

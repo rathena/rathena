@@ -237,7 +237,7 @@ void vending_openvending(struct map_session_data* sd, const char* message, bool 
 		clif_skill_fail(sd, MC_VENDING, 0, 0);
 		return;
 	}
-	
+
 	// check number of items in shop
 	if( count < 1 || count > MAX_VENDING || count > 2 + vending_skill_lvl )
 	{	// invalid item count
