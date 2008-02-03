@@ -6378,6 +6378,11 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		case SC_NOCHAT:
 			if (sd && sd->status.manner < 0 && tid != -1)
 				sd->status.manner = 0;
+			if (sd)
+			{
+				clif_changestatus(&sd->bl,SP_MANNER,sd->status.manner);
+				clif_updatestatus(sd,SP_MANNER);
+			}
 			break;
 		case SC_SPLASHER:	
 			{

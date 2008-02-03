@@ -575,7 +575,7 @@ int realloc_writefifo(int fd, size_t addition)
 		while( session[fd]->wdata_size + addition > newsize ) newsize += newsize;
 	}
 	else
-	if( session[fd]->max_wdata >= 2*(session[fd]->flag.server?FIFOSIZE_SERVERLINK:WFIFO_SIZE)
+	if( session[fd]->max_wdata >= (size_t)2*(session[fd]->flag.server?FIFOSIZE_SERVERLINK:WFIFO_SIZE)
 		&& (session[fd]->wdata_size+addition)*4 < session[fd]->max_wdata )
 	{	// shrink rule, shrink by 2 when only a quarter of the fifo is used, don't shrink below nominal size.
 		newsize = session[fd]->max_wdata / 2;
