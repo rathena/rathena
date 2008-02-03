@@ -608,6 +608,14 @@ struct DBMap {
 #define strdb_alloc(opt,maxlen)   db_alloc(__FILE__,__LINE__,DB_STRING,(opt),(maxlen))
 #define stridb_alloc(opt,maxlen)  db_alloc(__FILE__,__LINE__,DB_ISTRING,(opt),(maxlen))
 #define db_destroy(db)            ( (db)->destroy((db),NULL) )
+// Other macros
+#define db_iterator(db)     ( (db)->iterator(db) )
+#define dbi_first(dbi)      ( (dbi)->first(dbi,NULL) )
+#define dbi_last(dbi)       ( (dbi)->last(dbi,NULL) )
+#define dbi_next(dbi)       ( (dbi)->next(dbi,NULL) )
+#define dbi_prev(dbi)       ( (dbi)->prev(dbi,NULL) )
+#define dbi_exists(dbi)     ( (dbi)->exists(dbi) )
+#define dbi_destroy(dbi)    ( (dbi)->destroy(dbi) )
 
 /*****************************************************************************\
  *  (2) Section with public functions.                                       *

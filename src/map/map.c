@@ -1829,6 +1829,154 @@ int map_foreachiddb(int (*func)(DBKey,void*,va_list),...)
 	return 0;
 }
 
+/// Iterator.
+/// Can filter by bl type.
+struct s_mapiterator
+{
+	enum e_mapitflags flags;// flags for special behaviour
+	enum bl_type types;// what bl types to return
+	DBIterator* dbi;// database iterator
+};
+
+/// Returns true if the block_list matches the description in the iterator.
+///
+/// @param _mapit_ Iterator
+/// @param _bl_ block_list
+/// @return true if it matches
+#define MAPIT_MATCHES(_mapit_,_bl_) \
+	( \
+		( (_bl_)->type & (_mapit_)->types /* type matches */ ) && \
+		( (_bl_)->type != BL_PC /* not a pc */ || !((_mapit_)->flags & MAPIT_PCISPLAYING) /* any pc state */ || pc_isplaying((TBL_PC*)(_bl_)) /* pc is playing */ ) \
+	)
+
+/// Allocates a new iterator.
+/// Returns the new iterator.
+/// types can represent several BL's as a bit field.
+/// TODO should this be expanded to allow filtering of map/guild/party/chat/cell/area/...?
+///
+/// @param flags Flags of the iterator
+/// @param type Target types
+/// @return Iterator
+struct s_mapiterator* mapit_alloc(enum e_mapitflags flags, enum bl_type types)
+{
+	struct s_mapiterator* mapit;
+
+	CREATE(mapit, struct s_mapiterator, 1);
+	if( !(types & BL_PC) && (flags & MAPIT_PCISPLAYING) ) flags ^= MAPIT_PCISPLAYING;// incompatible flag
+	mapit->flags = flags;
+	mapit->types = types;
+	if( types == BL_PC )       mapit->dbi = db_iterator(pc_db);
+	else if( types == BL_MOB ) mapit->dbi = db_iterator(mobid_db);
+	else                       mapit->dbi = db_iterator(id_db);
+	return mapit;
+}
+
+/// Frees the iterator.
+///
+/// @param mapit Iterator
+void mapit_free(struct s_mapiterator* mapit)
+{
+	nullpo_retv(mapit);
+
+	dbi_destroy(mapit->dbi);
+	aFree(mapit);
+}
+
+/// Returns the first block_list that matches the description.
+/// Returns NULL if not found.
+///
+/// @param mapit Iterator
+/// @return first block_list or NULL
+struct block_list* mapit_first(struct s_mapiterator* mapit)
+{
+	struct block_list* bl;
+
+	nullpo_retr(NULL,mapit);
+
+	for( bl = (struct block_list*)dbi_first(mapit->dbi); bl != NULL; bl = (struct block_list*)dbi_next(mapit->dbi) )
+	{
+		if( MAPIT_MATCHES(mapit,bl) )
+			break;// found match
+	}
+	return bl;
+}
+
+/// Returns the last block_list that matches the description.
+/// Returns NULL if not found.
+///
+/// @param mapit Iterator
+/// @return last block_list or NULL
+struct block_list* mapit_last(struct s_mapiterator* mapit)
+{
+	struct block_list* bl;
+
+	nullpo_retr(NULL,mapit);
+
+	for( bl = (struct block_list*)dbi_last(mapit->dbi); bl != NULL; bl = (struct block_list*)dbi_prev(mapit->dbi) )
+	{
+		if( MAPIT_MATCHES(mapit,bl) )
+			break;// found match
+	}
+	return bl;
+}
+
+/// Returns the next block_list that matches the description.
+/// Returns NULL if not found.
+///
+/// @param mapit Iterator
+/// @return next block_list or NULL
+struct block_list* mapit_next(struct s_mapiterator* mapit)
+{
+	struct block_list* bl;
+
+	nullpo_retr(NULL,mapit);
+
+	for( ; ; )
+	{
+		bl = (struct block_list*)dbi_next(mapit->dbi);
+		if( bl == NULL )
+			break;// end
+		if( MAPIT_MATCHES(mapit,bl) )
+			break;// found a match
+		// try next
+	}
+	return bl;
+}
+
+/// Returns the previous block_list that matches the description.
+/// Returns NULL if not found.
+///
+/// @param mapit Iterator
+/// @return previous block_list or NULL
+struct block_list* mapit_prev(struct s_mapiterator* mapit)
+{
+	struct block_list* bl;
+
+	nullpo_retr(NULL,mapit);
+
+	for( ; ; )
+	{
+		bl = (struct block_list*)dbi_prev(mapit->dbi);
+		if( bl == NULL )
+			break;// end
+		if( MAPIT_MATCHES(mapit,bl) )
+			break;// found a match
+		// try prev
+	}
+	return bl;
+}
+
+/// Returns true if the current block_list exists in the database.
+///
+/// @param mapit Iterator
+/// @return true if it exists
+bool mapit_exists(struct s_mapiterator* mapit)
+{
+	nullpo_retr(false,mapit);
+
+	return dbi_exists(mapit->dbi);
+}
+
 /*==========================================
  * map.npc‚Ö’Ç‰Á (warp“™‚Ì—Ìˆæ‚¿‚Ì‚İ)
  *------------------------------------------*/

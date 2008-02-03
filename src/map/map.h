@@ -1324,6 +1324,25 @@ void map_foreachmob(int (*func)(DBKey,void*,va_list),...);
 int map_foreachiddb(int (*)(DBKey,void*,va_list),...);
 struct map_session_data * map_nick2sd(const char*);
 
+/// Bitfield of flags for the iterator.
+enum e_mapitflags
+{
+	MAPIT_NORMAL = 0,
+	MAPIT_PCISPLAYING = 1,// player is authed, not waiting disconnect and not in final save
+};
+struct s_mapiterator;
+struct s_mapiterator*   mapit_alloc(enum e_mapitflags flags, enum bl_type types);
+void                    mapit_free(struct s_mapiterator* mapit);
+struct block_list*      mapit_first(struct s_mapiterator* mapit);
+struct block_list*      mapit_last(struct s_mapiterator* mapit);
+struct block_list*      mapit_next(struct s_mapiterator* mapit);
+struct block_list*      mapit_prev(struct s_mapiterator* mapit);
+bool                    mapit_exists(struct s_mapiterator* mapit);
+#define mapit_getallusers() mapit_alloc(MAPIT_PCISPLAYING,BL_PC)
+#define mapit_geteachpc()   mapit_alloc(MAPIT_NORMAL,BL_PC)
+#define mapit_geteachmob()  mapit_alloc(MAPIT_NORMAL,BL_MOB)
+#define mapit_geteachiddb() mapit_alloc(MAPIT_NORMAL,BL_ALL)
+
 // ‚»‚Ì‘¼
 int map_check_dir(int s_dir,int t_dir);
 unsigned char map_calc_dir( struct block_list *src,int x,int y);
