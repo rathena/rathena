@@ -728,7 +728,7 @@ struct map_session_data {
 	unsigned char mission_count; //Stores the bounty kill count for TK_MISSION
 	short mission_mobid; //Stores the target mob_id for TK_MISSION
 	int die_counter; //Total number of times you've died
-	int devotion[5]; //Stores the char IDs of chars devoted to.
+	int devotion[5]; //Stores the account IDs of chars devoted to.
 	int reg_num; //Number of registries (type numeric)
 	int regstr_num; //Number of registries (type string)
 

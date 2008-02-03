@@ -4,6 +4,13 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/02/03
+	* Fixes to Devotion (see topic:153345) [ultramage]
+	- removed totally fake Devotion packet from Marionette Control code
+	- fixed one devoted chars array management code bug which caused chars
+	  to be included in the array multiple times, producing various problems
+	- the link will now re-display when coming into view range
+	- the link will no longer break if the devotee walks away, but instead,
+	  if he receives damage while being out of range of Devotion
 	* Added an iterator to map.h/c. [FlavioJS]
 	  Will be used instead of map_getallusers, which has problems with 
 	  dangling pointers (returned array isn't updated).

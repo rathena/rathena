@@ -3152,7 +3152,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				if (!sc->data[type] && !tsc->data[type2]) {
 					sc_start(src,type,100,bl->id,skill_get_time(skillid,skilllv));
 					sc_start(bl,type2,100,src->id,skill_get_time(skillid,skilllv));
-					clif_marionette(src, bl);
 					clif_skill_nodamage(src,bl,skillid,skilllv,1);
 				}
 				else if (sc->data[type] && tsc->data[type2] &&
@@ -3444,6 +3443,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case CR_DEVOTION:
 		if(sd && dstsd)
 		{
+			int count = min(skilllv, 5);
 			int lv = sd->status.base_level - dstsd->status.base_level;
 			if (lv < 0) lv = -lv;
 			if (lv > battle_config.devotion_level_difference ||
@@ -3453,18 +3453,24 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				map_freeblock_unlock();
 				return 1;
 			}
-			//Look for an empty slot (or reuse in case you cast it twice in the same char. [Skotlex]
-			for (i = 0; i < skilllv && i < 5 && sd->devotion[i]!=bl->id && sd->devotion[i]; i++);
-			if (i == skilllv)
-			{
-				clif_skill_fail(sd,skillid,0,0);
-				map_freeblock_unlock();
-				return 1;
+
+			// check if the char isn't devoted already
+			ARR_FIND( 0, count, i, sd->devotion[i] == bl->id );
+			if( i == count )
+			{// not there, find first empty slot
+				ARR_FIND( 0, count, i, sd->devotion[i] == 0 );
+				if( i == count )
+				{// all slots full, fail
+					clif_skill_fail(sd,skillid,0,0);
+					map_freeblock_unlock();
+					return 1;
+				}
 			}
+
 			sd->devotion[i] = bl->id;
 			clif_skill_nodamage(src,bl,skillid,skilllv,
 				sc_start4(bl,type,100,src->id,i,skill_get_range2(src,skillid,skilllv),skill_get_time2(skillid, skilllv),1000));
-			clif_devotion(sd);
+			clif_devotion(sd,NULL);
 		}
 		else
 			if (sd)

@@ -3384,7 +3384,9 @@ int clif_storageclose(struct map_session_data *sd)
  *------------------------------------------*/
 static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_data* dstsd)
 {
-	int len;
+	int gmlvl;
+	int i;
+
 	if(dstsd->chatID)
 	{
 		struct chat_data *cd;
@@ -3400,9 +3402,16 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 		clif_spiritball_single(sd->fd, dstsd);
 
 	if((sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
-		(battle_config.disp_hpmeter && (len = pc_isGM(sd)) >= battle_config.disp_hpmeter && len >= pc_isGM(dstsd))
+		(battle_config.disp_hpmeter && (gmlvl = pc_isGM(sd)) >= battle_config.disp_hpmeter && gmlvl >= pc_isGM(dstsd))
 		)
 		clif_hpmeter_single(sd->fd, dstsd->bl.id, dstsd->battle_status.hp, dstsd->battle_status.max_hp);
+
+	// display links to devoted chars for crusader
+	ARR_FIND( 0, 5, i, sd->devotion[i] == dstsd->bl.id );
+	if( i < 5 ) clif_devotion(sd, sd);
+	// display links to devoted chars for others
+	ARR_FIND( 0, 5, i, dstsd->devotion[i] > 0 );
+	if( i < 5 ) clif_devotion(dstsd, sd);
 
 	// pvp circle for duel [LuzZza]
 	//if(dstsd->duel_group)
@@ -5283,7 +5292,7 @@ void clif_vendingreport(struct map_session_data* sd, int index, int amount)
 }
 
 /// Result of organizing a party.
-/// S 00FA <result>.B
+/// R 00FA <result>.B
 ///
 /// result=0 : opens party window and shows MsgStringTable[77]="party successfully organized"
 /// result=1 : MsgStringTable[78]="party name already exists"
@@ -5888,49 +5897,26 @@ int clif_autospell(struct map_session_data *sd,int skilllv)
 }
 
 /*==========================================
- * ディボーションの青い糸
+ * Devotion's visual effect
+ * S 01cf <devoter id>.L { <devotee id>.L }[5] <max distance>.W
  *------------------------------------------*/
-int clif_devotion(struct map_session_data *sd)
+void clif_devotion(struct map_session_data *sd, struct map_session_data *tsd)
 {
 	unsigned char buf[56];
-	int i,n;
+	int i;
 
-	nullpo_retr(0, sd);
+	nullpo_retv(sd);
 
-	WBUFW(buf,0)=0x1cf;
-	WBUFL(buf,2)=sd->bl.id;
-	for(i=0,n=0;i<5;i++) {
-		if (!sd->devotion[i])
-			continue;
-		WBUFL(buf,6+4*n)=sd->devotion[i];
-		n++;
-	}
-	for(;n<5;n++)
-		WBUFL(buf,6+4*n)=0;
-		
-	WBUFB(buf,26)=8;
-	WBUFB(buf,27)=0;
+	WBUFW(buf,0) = 0x1cf;
+	WBUFL(buf,2) = sd->bl.id;
+	for( i = 0; i < 5; i++ )
+		WBUFL(buf,6+4*i) = sd->devotion[i];
+	WBUFW(buf,26) = skill_get_range2(&sd->bl,CR_DEVOTION,pc_checkskill(sd,CR_DEVOTION)); // ignored
 
-	clif_send(buf,packet_len(0x1cf),&sd->bl,AREA);
-	return 0;
-}
-
-int clif_marionette(struct block_list *src, struct block_list *target)
-{
-	unsigned char buf[56];
-	int n;
-
-	WBUFW(buf,0)=0x1cf;
-	WBUFL(buf,2)=src->id;
-	for(n=0;n<5;n++)
-		WBUFL(buf,6+4*n)=0;
-	if (target) //The target goes on the second slot.
-		WBUFL(buf,6+4) = target->id;
-	WBUFB(buf,26)=8;
-	WBUFB(buf,27)=0;
-
-	clif_send(buf,packet_len(0x1cf),src,AREA);
-	return 0;
+	if( tsd )
+		clif_send(buf,packet_len(0x1cf),&tsd->bl,SELF);
+	else
+		clif_send(buf,packet_len(0x1cf),&sd->bl,AREA);
 }
 
 /*==========================================

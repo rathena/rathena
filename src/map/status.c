@@ -647,7 +647,7 @@ int status_damage(struct block_list *src,struct block_list *target,int hp, int s
 			if ((sce=sc->data[SC_DEVOTION]) && src && battle_getcurrentskill(src) != PA_PRESSURE)
 			{	//Devotion prevents any of the other ailments from ending.
 				struct map_session_data *sd2 = map_id2sd(sce->val1);
-				if (sd2 && sd2->devotion[sce->val2] == target->id)
+				if (sd2 && sd2->devotion[sce->val2] == target->id && check_distance_bl(target, &sd2->bl, sce->val3))
 				{
 					clif_damage(&sd2->bl, &sd2->bl, gettick(), 0, 0, hp, 0, 0, 0);
 					status_fix_damage(NULL, &sd2->bl, hp, 0);
@@ -6322,7 +6322,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			if (md)
 			{
 				md->devotion[sce->val2] = 0;
-				clif_devotion(md);
+				clif_devotion(md,NULL);
 			}
 			//Remove inherited status [Skotlex]
 			if (sc->data[SC_AUTOGUARD])
@@ -6333,8 +6333,8 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 				status_change_end(bl,SC_REFLECTSHIELD,-1);
 			if (sc->data[SC_ENDURE])
 				status_change_end(bl,SC_ENDURE,-1);
-			break;
 		}
+		break;
 		case SC_BLADESTOP:
 			if(sce->val4)
 			{
@@ -6431,8 +6431,6 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 					status_change_end(pbl, type2, -1);
 				}
 			}
-			if (type == SC_MARIONETTE)
-				clif_marionette(bl, 0); //Clear effect.
 			break;
 
 		case SC_BERSERK:
@@ -6906,14 +6904,11 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		break;
 
 	case SC_DEVOTION:
-		{	//Check range and timeleft to preserve status [Skotlex]
-			//This implementation won't work for mobs because of map_id2sd, but it's a small cost in exchange of the speed of map_id2sd over map_id2bl
-			struct map_session_data *md = map_id2sd(sce->val1);
-			if (md && check_distance_bl(bl, &md->bl, sce->val3) && (sce->val4-=1000)>0)
-			{
-				sc_timer_next(1000+tick, status_change_timer, bl->id, data);
-				return 0;
-			}
+		//FIXME: use normal status duration instead of a looping timer
+		if( (sce->val4 -= 1000) > 0 )
+		{
+			sc_timer_next(1000+tick, status_change_timer, bl->id, data);
+			return 0;
 		}
 		break;
 		
