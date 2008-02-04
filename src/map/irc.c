@@ -159,9 +159,9 @@ int irc_keepalive_timer(int tid, unsigned int tick, int id, int data)
 void irc_send(char *buf)
 {
 	int len;
-	int fd = irc_si->fd;
+	int fd;
 	
-	if(!irc_si || !session[fd])
+	if(!irc_si || !(fd = irc_si->fd) || !session[fd])
 		return;
 
 	len = strlen(buf) + 1;
