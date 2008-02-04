@@ -255,7 +255,7 @@ int skill_calc_heal (struct block_list *src, struct block_list *target, int skil
 		heal += heal * skill * 2 / 100;
 
 	sc = status_get_sc(target);
-	if (sc && sc->count)
+	if( sc && sc->count )
 	{
 		if( sc->data[SC_CRITICALWOUND] )
 			heal -= heal * sc->data[SC_CRITICALWOUND]->val2/100;
@@ -6732,7 +6732,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				int heal = sg->val2;
 				if (tstatus->hp >= tstatus->max_hp)
 					break;
-				if (tsc)
+				if( tsc )
 				{
 					if( tsc->data[SC_INCHEALRATE] )
 						heal += heal * tsc->data[SC_INCHEALRATE]->val1 / 100;

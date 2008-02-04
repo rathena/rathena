@@ -373,23 +373,26 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 			
 		if (p) {
 			for(i=0;i<MAX_PARTY;i++){
-				if ((sd = p->data[i].sd) == NULL)
+				if( (sd = p->data[i].sd) == NULL )
 					continue;
-				if (!(fd=sd->fd) || session[fd] == NULL || sd->state.auth == 0
-					|| session[fd]->session_data == NULL || sd->packet_ver > MAX_PACKET_VER)
+
+				if( !(fd=sd->fd) || fd <= 0 || fd >= fd_max )
 					continue;
-				
-				if (sd->bl.id == bl->id && (type == PARTY_WOS || type == PARTY_SAMEMAP_WOS || type == PARTY_AREA_WOS))
-					continue;
-				
-				if (type != PARTY && type != PARTY_WOS && bl->m != sd->bl.m)
+
+				if( session[fd] == NULL || sd->state.auth == 0 || session[fd]->session_data == NULL || sd->packet_ver > MAX_PACKET_VER )
 					continue;
 				
-				if ((type == PARTY_AREA || type == PARTY_AREA_WOS) &&
-					(sd->bl.x < x0 || sd->bl.y < y0 || sd->bl.x > x1 || sd->bl.y > y1))
+				if( sd->bl.id == bl->id && (type == PARTY_WOS || type == PARTY_SAMEMAP_WOS || type == PARTY_AREA_WOS) )
 					continue;
 				
-				if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
+				if( type != PARTY && type != PARTY_WOS && bl->m != sd->bl.m )
+					continue;
+				
+				if( (type == PARTY_AREA || type == PARTY_AREA_WOS) && (sd->bl.x < x0 || sd->bl.y < y0 || sd->bl.x > x1 || sd->bl.y > y1) )
+					continue;
+				
+				if( packet_db[sd->packet_ver][RBUFW(buf,0)].len )
+				{ // packet must exist for the client version
 					WFIFOHEAD(fd,len);
 					memcpy(WFIFOP(fd,0), buf, len);
 					WFIFOSET(fd,len);
@@ -455,22 +458,25 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 
 		if (g) {
 			for(i = 0; i < g->max_member; i++) {
-				if ((sd = g->member[i].sd) != NULL) {
-					if (!(fd=sd->fd) || session[fd] == NULL || sd->state.auth == 0
-						|| session[fd]->session_data == NULL || sd->packet_ver > MAX_PACKET_VER)
+				if( (sd = g->member[i].sd) != NULL )
+				{
+					if( !(fd=sd->fd) || fd <= 0 || fd >= fd_max )
 						continue;
 					
-					if (sd->bl.id == bl->id && (type == GUILD_WOS || type == GUILD_SAMEMAP_WOS || type == GUILD_AREA_WOS))
+					if( session[fd] == NULL || sd->state.auth == 0 || session[fd]->session_data == NULL || sd->packet_ver > MAX_PACKET_VER )
 						continue;
 					
-					if (type != GUILD && type != GUILD_WOS && sd->bl.m != bl->m)
+					if( sd->bl.id == bl->id && (type == GUILD_WOS || type == GUILD_SAMEMAP_WOS || type == GUILD_AREA_WOS) )
 						continue;
 					
-					if ((type == GUILD_AREA || type == GUILD_AREA_WOS) &&
-						(sd->bl.x < x0 || sd->bl.y < y0 || sd->bl.x > x1 || sd->bl.y > y1))
+					if( type != GUILD && type != GUILD_WOS && sd->bl.m != bl->m )
 						continue;
 
-					if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
+					if( (type == GUILD_AREA || type == GUILD_AREA_WOS) && (sd->bl.x < x0 || sd->bl.y < y0 || sd->bl.x > x1 || sd->bl.y > y1) )
+						continue;
+
+					if( packet_db[sd->packet_ver][RBUFW(buf,0)].len )
+					{ // packet must exist for the client version
 						WFIFOHEAD(fd,len);
 						memcpy(WFIFOP(fd,0), buf, len);
 						WFIFOSET(fd,len);
@@ -9598,7 +9604,7 @@ void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd)
 		return;
 	if (sd->state.storage_flag == 1)
 		storage_storageaddfromcart(sd, RFIFOW(fd,2) - 2, RFIFOL(fd,4));
-	else	if (sd->state.storage_flag == 2)
+	else if (sd->state.storage_flag == 2)
 		storage_guild_storageaddfromcart(sd, RFIFOW(fd,2) - 2, RFIFOL(fd,4));
 }
 

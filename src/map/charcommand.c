@@ -230,6 +230,8 @@ int charcommand_stats(const int fd, struct map_session_data* sd, const char* com
 		{ "Dex - %3d", 0 },
 		{ "Luk - %3d", 0 },
 		{ "Zeny - %d", 0 },
+		{ "Free SK Points - %d", 0 },
+		{ "JobChangeLvl - %d", 0 },
 		{ NULL, 0 }
 	};
 
@@ -263,6 +265,8 @@ int charcommand_stats(const int fd, struct map_session_data* sd, const char* com
 	output_table[10].value = pl_sd->status.dex;
 	output_table[11].value = pl_sd->status.luk;
 	output_table[12].value = pl_sd->status.zeny;
+	output_table[13].value = pl_sd->status.skill_point;
+	output_table[14].value = pl_sd->change_level;
 
 	sprintf(job_jobname, "Job - %s %s", job_name(pl_sd->status.class_), "(level %d)");
 	sprintf(output, msg_txt(53), pl_sd->status.name); // '%s' stats:

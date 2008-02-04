@@ -1814,7 +1814,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if (hp||sp)
 			status_heal(src, hp, sp, battle_config.show_hp_sp_gain?2:0);
 		if (sd->mission_mobid == md->class_) { //TK_MISSION [Skotlex]
-			if (++sd->mission_count >= 100 && (temp = mob_get_random_id(0,0xC, sd->status.base_level)))
+			if (++sd->mission_count >= 100 && (temp = mob_get_random_id(0, 0xE, sd->status.base_level)))
 			{
 				pc_addfame(sd, 1);
 				sd->mission_mobid = temp;

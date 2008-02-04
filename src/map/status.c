@@ -6825,6 +6825,17 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		}
 		break;
 
+	case SC_KNOWLEDGE:
+		if (!sd) break;
+		if(bl->m == sd->feel_map[0].m ||
+			bl->m == sd->feel_map[1].m ||
+			bl->m == sd->feel_map[2].m)
+		{	//Timeout will be handled by pc_setpos
+			sce->timer = INVALID_TIMER;
+			return 0;
+		}
+		break;
+
 	case SC_HPREGEN:
 		if( sd && --(sce->val4) >= 0 )
 		{
@@ -6837,16 +6848,6 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 		}
 		break;
 
-	case SC_KNOWLEDGE:
-		if (!sd) break;
-		if(bl->m == sd->feel_map[0].m ||
-			bl->m == sd->feel_map[1].m ||
-			bl->m == sd->feel_map[2].m)
-		{	//Timeout will be handled by pc_setpos
-			sce->timer = INVALID_TIMER;
-			return 0;
-		}
-		break;
 	case SC_DANCING: //ダンススキルの時間SP消費
 		{
 			int s = 0;
