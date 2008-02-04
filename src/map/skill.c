@@ -1602,7 +1602,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 			if ((type = pc_checkskill(tsd,RG_PLAGIARISM)) < lv)
 				lv = type;
 			//kRO Update makes it impossible to copy skills beyond the skill_db max.
-			if ((type = skill_get_max(RG_PLAGIARISM)) < lv)
+			if ((type = skill_get_max(skillid)) < lv)
 				lv = type;
 
 			tsd->cloneskill_id = skillid;

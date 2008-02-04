@@ -1192,7 +1192,7 @@
 2371,G_Strings_,Pantie,5,1000,,100,,4,,1,0xFFFFFFFF,7,2,16,,0,1,0,{},{},{}
 2372,Mage_Coat_,Mage Coat,5,,10,600,,5,,1,0x00810204,7,2,16,,50,1,0,{ bonus bMdef,5; bonus bInt,1; },{},{}
 2373,Holy_Robe_,Holy Robe,5,,10,1700,,7,,1,0x00008110,7,2,16,,60,1,0,{ bonus bMdef,5; bonus2 bSubRace,RC_Demon,15; bonus2 bSubEle,Ele_Dark,10; },{},{}
-2374,Diablos_Robe,Diablos Robe,5,,,300,,6,,1,0x00098B1C,2,2,16,55,0,1,0,{ bonus bMaxSP,150; bonus bMdef,5; bonus2 bSkillheal,28,6; bonus bDelayRate,-10; if (isequipped(2729)) bonus bAtkRate,3; bonus bMatkRate,3; },{},{}
+2374,Diablos_Robe,Diablos Robe,5,,,300,,6,,1,0x00098B1C,2,2,16,,55,1,0,{ bonus bMaxSP,150; bonus bMdef,5; bonus2 bSkillheal,28,6; bonus bDelayRate,-10; if (isequipped(2729)) bonus bAtkRate,3; bonus bMatkRate,3; },{},{}
 2375,Diablos_Armor,Diablos Armor,5,,,600,,7,,1,0x000654E2,2,2,16,,0,1,0,{ bonus bStr,2; bonus bDex,1; bonus bMaxHP,150; bonus2 bResEff,Eff_Stun,500; bonus2 bResEff,Eff_Stone,500; if (isequipped(2729)) bonus bAtkRate,3; bonus bMatkRate,3; },{},{}
 2376,General's_Plate_Mail,General's Plate Mail,5,,,0,,7,,1,0x006444A2,7,2,16,,80,1,0,{ bonus bMaxHP,150; bonus bMdef,2; bonus2 bSubRace,RC_DemiHuman,2; if (isequipped(2538) && isequipped(2435)) { bonus2 bSubRace,RC_DemiHuman,3; bonus bVit,3; bonus bMaxHPRate,12; bonus2 bAddItemHealRate,IG_Recovery,10; bonusautoscript "{ heal 6000,0; }",10,BF_WEAPON; }; },{},{}
 2377,Elite_Engineer's_Armor,Elite Engineer's Armor,5,,,0,,7,,1,0x00040420,7,2,16,,80,1,0,{ bonus bMaxHP,150; bonus bMdef,2; bonus2 bSubRace,RC_DemiHuman,2; if (isequipped(2538) && isequipped(2435)) { bonus2 bSubRace,RC_DemiHuman,3; bonus bStr,3; bonus bMaxHPRate,12; bonus2 bSkillAtk,42,20; bonus2 bSkillHeal,231,10; bonus bUnbreakableArmor,0; }; },{},{}
