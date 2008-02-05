@@ -22,6 +22,7 @@
 //= 1.6 Quest is now up to iRO 10.3 standards. [L0ne_W0lf]
 //= - Not sure what the EnableItemMove is for, as there is no 
 //= command to disable being able to move items.
+//= 1.6a Corrected a bad cutin, a Typo error ";;" and a bad delitem (bugreport:911) [Samuray22]
 //============================================================ 
 
 prt_castle,43,30,3	script	Charles Orleans#cook	878,{
@@ -1112,10 +1113,10 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 				mes "something new, I suppose.";
 				goto L_End;
 			}
-			mes "[Charles Orleans]";;
-			mes "So you wanted to borrow a";;
-			mes "Level " + .@new_book + " Cookbook, eh?";;
-			mes "Oh, would you please tell";;
+			mes "[Charles Orleans]";
+			mes "So you wanted to borrow a";
+			mes "Level " + .@new_book + " Cookbook, eh?";
+			mes "Oh, would you please tell";
 			mes "me the level of the cookbook";
 			mes "that you are returning to me?";
 			next;
@@ -1913,7 +1914,7 @@ prt_castle,45,35,5	script	Madeleine Chu#cook	886,{
 				mes "arts in that way? I'm so";
 				mes "very ashamed of you...";
 				next;
-				delitem 7474,1; //Cookbook01
+				delitem 7472,1; //Cookbook01
 				set cooking,0;
 				mes "[Madeleine Chu]";
 				mes "First of all, I'd like";
@@ -2099,7 +2100,7 @@ prt_castle,45,35,5	script	Madeleine Chu#cook	886,{
 			mes "spine... Could someone";
 			mes "be talking about me?";
 			close;
-			cutin "orleans_6",255;
+			cutin "",255;
 		}
 	}
 	mes "[Madeleine Chu]";

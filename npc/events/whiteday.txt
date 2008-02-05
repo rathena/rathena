@@ -73,7 +73,7 @@ L_INPUT:
 	input @maplenum;
 	if (@maplenum > 5) goto L_ERROR;
 	if (@maplenum == 0) goto M_END;
-	set @maplePriceT,@maplePrice*@maplenum;;
+	set @maplePriceT,@maplePrice*@maplenum;
 	if (Zeny < @maplePriceT) goto L_ERROR2;
 	set Zeny,Zeny- @maplePriceT;
 	getitem @mapleItemID,@maplenum;

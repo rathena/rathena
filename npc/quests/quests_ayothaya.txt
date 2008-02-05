@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= Fredzilla, MasterOfMuppets
 //===== Version ==============================================
-//= 2.0
+//= 2.0a
 //===== Compatible With ======================================
 //= eAthena SVN
 //===== Description ==========================================
@@ -25,6 +25,7 @@
 //= 1.9 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.0 Rescripted Tom Yum Goong and Dungeon quest to Aegis [L0ne_W0lf]
 //=	10.3 standards.
+//= 2.0a Corrected a Typo error ";;". [Samuray22]
 //============================================================
 
 // Ayothaya Ring Quest
@@ -586,7 +587,7 @@ if(!$annonactive)
 		if(!rand(0,2))
 		{
 			emotion e_gasp,1;
-			mes "[" +strcharinfo(0)+ "]";;
+			mes "[" +strcharinfo(0)+ "]";
 			mes "Huh...?";
 			next;
 			mes "["+strcharinfo(0)+"]";

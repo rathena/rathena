@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.9
+//= 2.9a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -37,7 +37,8 @@
 //= 2.8 Removed duplicate warps. [L0ne_W0lf]
 //= 2.8a Deleted unused variables. [Samuray22]
 //= 2.8b Fixed error caused in last updated, removed useless variable 'joblvl'. [L0ne_W0lf]
-//= 2.9 Fixed an indent and added a 'break;' in hopes of 'fixing' an error [L0ne_W0lf[
+//= 2.9 Fixed an indent and added a 'break;' in hopes of 'fixing' an error [L0ne_W0lf]
+//= 2.9a Corrected a Typo error ";;". [Samuray22]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -244,7 +245,7 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 					close2;
 					set ASSIN_Q,0;
 					warp "in_moc_16",19,76;
-					end;;
+					end;
 				case 2:
 					mes "[Ferocious-looking guy]";
 					mes "Requirements? Well, first you need to be a Thief. Second, you need to be at least Thief job level 40.";

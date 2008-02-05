@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.2a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -46,6 +46,7 @@
 //= 2.0 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 2.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.2 Maheo NPC now uses "setnpcdisplay" instead of two NPCs. [L0ne_W0lf]
+//= 2.2a Corrected a Typo error ";;". [Samuray22]
 //============================================================ 
 
 // Lost Child Quest (Prerequisite to High Priest quest)
@@ -5491,7 +5492,7 @@ ra_temin,170,46,3	script	Panno#rachel	920,{
 			next;
 			if (select("Yes:No") == 1) goto L_Lottery;
 			cutin "ra_fano03",2;
-			mes "[Priestess Panno]";;
+			mes "[Priestess Panno]";
 			mes "You can redeem your";
 			mes "Lottery Tickets at any";
 			mes "time, so please visit";

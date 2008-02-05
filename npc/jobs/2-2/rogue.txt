@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.4b
+//= 2.4c
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -13,7 +13,9 @@
 //= 2.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=	No longer uses function "F_BlockHigh"
 //= 2.4a Deleted unused variables. [Samuray22]
-//= 2.4b Changed a Problem with JobLevel what made impossible get a Gladius [3]. (bugreport:481) [Samuray22]
+//= 2.4b Changed a Problem with JobLevel what made 
+//=	impossible get a Gladius [3]. (bugreport:481) [Samuray22]
+//= 2.4c Corrected a Typo error ";;" and a typo error with "rouge". (bugreport:909) [Samuray22]
 //============================================================ 
 
 morocc,100,104,1	script	Thug#rg	118,{
@@ -101,7 +103,7 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 				mes "So why you wanna join up with the Rogues? I guess you gave me your real name, so you'd be an honest Rogue. Not many of those around, heh heh~";
 				next;
 				mes "[Markie]";
-				mes "Rule number 1 for Rouges...";
+				mes "Rule number 1 for Rogues...";
 				mes "Never give out your real identity to most people, most of the time. It's just a little backup measure we like to use.";
 				next;
 				mes "[Markie]";
@@ -935,7 +937,7 @@ S_CheckItems:
 		delitem getarg(6),getarg(7);
 		set ROGUE_Q,7;
 		next;
-		mes "[Mr. Smith]";;
+		mes "[Mr. Smith]";
 		mes "Great, great...";
 		mes "I think you";
 		mes "brought everything.";

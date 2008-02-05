@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.0a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -34,6 +34,7 @@
 //= 1.8 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.9 Fixed "him" -> "her" in Ph.D hat quest. THansk to yyCC. [L0ne_W0lf]
 //= 2.0 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.0a Corrected a Typo error ";;". [Samuray22]
 //============================================================ 
 
 // Prontera Culvert
@@ -492,7 +493,7 @@ OnTouch:
 			mes "time I just can't help it.";
 			mes "There's nothing I can do!";
 			mes "Oh, I'm gonna lose this job!";
-			Emotion e_sob;;
+			Emotion e_sob;
 			next;
 			mes "[Busy-Looking Boy]";
 			mes "Wait... You adventurers";
@@ -3288,7 +3289,7 @@ que_job01,10,16,5	script	Marjana#poison	885,{
 		mes "It's true that such powerful";
 		mes "poison exists, but such deadly";
 		mes "poison is usually only used by";
-		mes "Assassin Crosses. Generally,";;
+		mes "Assassin Crosses. Generally,";
 		mes "normal Assassins use poisons";
 		mes "that are much less potent.";
 		next;

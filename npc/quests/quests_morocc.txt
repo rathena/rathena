@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.0
+//= 2.0a
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -21,6 +21,7 @@
 //= 1.8 Fixed a bug which prevented reset of events. [SinSloth]
 //= 1.9 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 2.0a Corrected a Typo error ";;". [Samuray22]
 //============================================================ 
 
 
@@ -936,7 +937,7 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 			next;
 			mes "[Guildsman]";
 			mes "The Assassin Guild has";
-			mes "officially asked our guild";;
+			mes "officially asked our guild";
 			mes "for help in a mission regarding";
 			mes "children that have been missing";
 			mes "from Morroc, and they want us";
@@ -1276,7 +1277,7 @@ OnTouch:
 				next;
 				mes "[Guildsman]";
 				mes "The Assassin Guild has";
-				mes "officially asked our guild";;
+				mes "officially asked our guild";
 				mes "for help in a mission regarding";
 				mes "children that have been missing";
 				mes "from Morroc, and they want us";

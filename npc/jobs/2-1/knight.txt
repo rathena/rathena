@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.7
+//= 2.7a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -33,6 +33,7 @@
 //=	Corrected usages of killmonster and killmonsterall.
 //= 2.6 Corrected an improper areawarp destination. [L0ne_W0lf]
 //= 2.7 Deleted unused variables. [Samuray22]
+//= 2.7a Corrected a Typo error ";;". [Samuray22]
 //============================================================ 
 
 prt_in,88,101,4	script	Chivalry Captain#knt	56,{
@@ -1444,7 +1445,7 @@ OnMyMobDead:
 	if (.MyMobs < 1) {
 		mes "[Sir Windsor]";
 		mes "...Hmm.";
-		next;;
+		next;
 		mes "[Sir Windsor]";
 		mes "...One stage left.";
 		close2;

@@ -5,7 +5,7 @@
 //= Converted by: kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.4a
+//= 2.4b
 //===== Compatible With: ===================================== 
 //= eAthena  SVN
 //===== Description: ========================================= 
@@ -27,6 +27,7 @@
 //= 2.3a More bug fixes. [L0ne_W0lf]
 //= 2.4 Changed Marthilda to Mathilda. [L0ne_W0llf]
 //= 2.4a Deleted unused variables. [Samuray22]
+//= 2.4b Corrected a Typo error ";;". [Samuray22]
 //==========================================================
 
 prt_church,16,41,4	script	High Bishop#prst	60,{
@@ -1448,7 +1449,7 @@ OnTouch:
 			mes "the light again!";
 			close2;
 			warp "gef_dun02",210,177;
-			end;;
+			end;
 		}
 		mes "[Doppelganger]";
 		mes "I don't think you understood what I just offered. Think about it again. I mean, this is your one and only chance to undo your life mistakes. I mean, becoming an Acolyte?";

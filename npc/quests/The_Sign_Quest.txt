@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth(Most of the NPCs), MasterOfMuppets(Some of the NPCs + bug fixes) & Kargha(The quiz NPCs)
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.5a
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -38,6 +38,7 @@
 //= 2.3 Made some adjustments in last event with dialogs/summoning and fixed a possible exploit earlier. [SinSloth]
 //= 2.4 Optimized/simplified some poorly written code; fixed wrong quiz answers [ultramage]
 //= 2.5 Updated to fall within proper name restrictions. [L0ne_W0lf]
+//= 2.5a Corrected a Typo error ";;". [Samuray22]
 //============================================================ 
 //===== Configuration : ======================================
 prontera,1,1,1	script	TheSignConfig	-1,{
@@ -2987,7 +2988,7 @@ L_quiztime:
 				case 1:
 					mes "Heh heh...";
 					mes "The first question";
-					mes "is always too easy.";;
+					mes "is always too easy.";
 				break;
 				case 2:
 					mes "Ho ho ho ho~!";

@@ -7,7 +7,7 @@
 //= DON'T REMOVE THIS! (by request of him, he provided all
 //= the info regarding the quests and shops.)
 //===== Current Version: ===================================== 
-//= 2.1
+//= 2.1a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -26,6 +26,7 @@
 //= 2.0 Updated to official version - Thanks to Omega for
 //= his first try [SinSloth] 1.10b - removed .GATs [Lupus]
 //= 2.1 Wise Bull Horn now deletes all items. Thanks to yyCC. [L0ne_W0lf]
+//= 2.1a Corrected a Typo error ";;". [Samuray22]
 //============================================================ 
 
 que_ng,152,167,3	script	Master Miller	901,{
@@ -244,7 +245,7 @@ payon,184,65,3	script	The Wise Bull Horn	866,{
 			mes "["+ strcharinfo(0) +"]";
 			mes "Mr. Miller sent me here.";
 			next;
-			mes "[The Wise Bull Horn]";;
+			mes "[The Wise Bull Horn]";
 			mes "Miller...";
 			mes "Mm...Hmm. So Dark Fox";
 			mes "sent you here...";
@@ -261,7 +262,7 @@ payon,184,65,3	script	The Wise Bull Horn	866,{
 			mes "["+ strcharinfo(0) +"]";
 			mes "....";
 			next;
-			mes "[The Wise Bull Horn]";;
+			mes "[The Wise Bull Horn]";
 			mes "mmm...";
 			mes "mmmmm....";
 			next;

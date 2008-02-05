@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= SinSloth
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.1a
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //===== Additional Comments: =================================
 // 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
 // 1.1 Fixed wrong label names [Luups]
+// 1.1a Corrected a a typo error ";;". [Samuray22]
 //============================================================
 
 prontera,124,297,3	script	Tialfi	706,{
@@ -2902,7 +2903,7 @@ mjolnir_12,18,18,7	script	Dwarf Blacksmith#north	826,{
 						mes "You cannot have everything what you want.";
 						mes "Besides, when you're obssessive about something,";
 						mes "you cannot think rationally about the thing.";
-						next;;
+						next;
 						set god_mjo_4,2;
 						mes "[Nordri]";
 						mes "Thank you for listening to my long story.";

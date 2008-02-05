@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus (1.0)
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.2a
 //===== Compatible With: ===================================== 
 //= eAthena 1.x
 //===== Description: ========================================= 
@@ -17,6 +17,7 @@
 // 1.1 Added log of bank operation -> logmes "some info";
 // 1.2 Set max income to 100,000z. It would help to avoid
 //	zeny exploits when you change DATE at your server
+// 1.2a Corrected bad duplicate names. (bugreport:921) [Samuray22]
 //============================================================ 
 
 prontera,131,190,1	script	Bank Clerk::bankg	833,{  
@@ -111,6 +112,6 @@ B_EXIT2:
  close;
 }
 
-geffen,125,73,3	duplicate(bankg)	Bank Clerk#2	833
-izlude,145,107,1	duplicate(bankg)	Bank Clerk#3	833
-morocc,147,84,7	duplicate(bankg)	Bank Clerk#4	833
+geffen,125,73,3	duplicate(bankg)	Bank Clerk#2-1	833
+izlude,145,107,1	duplicate(bankg)	Bank Clerk#3-1	833
+morocc,147,84,7	duplicate(bankg)	Bank Clerk#4-1	833
