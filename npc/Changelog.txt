@@ -7,6 +7,7 @@ Date		Added
 	* Corrected a Cutin Problem in Cooking Quest and a Delitem. (bugreport:911)
 	* Corrected some typo error with "rouge". (bugreport:909)
 	* Moved Custom Event folder to Custom Folder.
+	* Corrected again the Cooking quest changed a close; to close2;
 2008/01/31
 	* Rev. 12156 Started fixing bugreport:899 and fixed bugreport:875 [L0ne_W0lf]
 	* Rev. 12155 Updated Lighthalzen Town NPCs and Speed Potion quest. [L0ne_W0lf]

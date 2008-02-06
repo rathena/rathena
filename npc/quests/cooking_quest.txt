@@ -2099,8 +2099,9 @@ prt_castle,45,35,5	script	Madeleine Chu#cook	886,{
 			mes "I just felt a chill down my";
 			mes "spine... Could someone";
 			mes "be talking about me?";
-			close;
+			close2;
 			cutin "",255;
+			end;
 		}
 	}
 	mes "[Madeleine Chu]";
