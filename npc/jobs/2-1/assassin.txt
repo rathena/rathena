@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.9a
+//= 2.9b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -39,6 +39,7 @@
 //= 2.8b Fixed error caused in last updated, removed useless variable 'joblvl'. [L0ne_W0lf]
 //= 2.9 Fixed an indent and added a 'break;' in hopes of 'fixing' an error [L0ne_W0lf]
 //= 2.9a Corrected a Typo error ";;". [Samuray22]
+//= 2.9b Moved a wrong 'break'. [Zephyrus_cr]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -771,9 +772,9 @@ OnTouch:
 					mes "Know everything do you?!";
 					mes "I'll be the judge of that!";
 					next;
-					break;
 				}
 				set ASSIN_Q2,3;
+				break;
 			}
 		}
 		mes "[The Anonymous One]";
