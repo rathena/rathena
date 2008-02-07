@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -28,10 +28,11 @@
 //= 0.9 Fixed a incorrect variable changed form "mob_inv" to "mobinv". [Samuray22]
 //= 0.9b Fixed a typo and bad variable use in the Typing Challenge [ultramage]
 //= 1.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 1.1 Touch-ups, and changed references of "Yuno" to "Juno",  [L0ne_W0lf]
 //============================================================ 
 
 //============================================================ 
-//= The Airship System (Yuno -> Hugel -> Einbroch -> Lighthalzen -> repeat)
+//= The Airship System (Juno -> Hugel -> Einbroch -> Lighthalzen -> repeat)
 //============================================================ 
 
 airplane,243,74,4	script	#AirshipWarp-1	45,2,2,{
@@ -152,13 +153,13 @@ OnTimer195000:
 	donpcevent "#AirshipWarp-2::OnHide";
 	disablenpc "#AirshipWarp-1";
 	disablenpc "#AirshipWarp-2";
-	mapannounce "airplane","The Airship is now taking off. Our next destination is Yuno.",1,0x70DBDB;
+	mapannounce "airplane","The Airship is now taking off. Our next destination is Juno.",1,0x70DBDB;
 	end;
 OnTimer210000:
-	mapannounce "airplane","We are heading to Yuno.",1,0x70DBDB;
+	mapannounce "airplane","We are heading to Juno.",1,0x70DBDB;
 	end;
 OnTimer225000:
-	mapannounce "airplane","We will arrive in Yuno shortly.",1,0x70DBDB;
+	mapannounce "airplane","We will arrive in Juno shortly.",1,0x70DBDB;
 	end;
 OnTimer240000:
 	set $@airplanelocation,2;
@@ -166,10 +167,10 @@ OnTimer240000:
 	enablenpc "#AirshipWarp-2";
 	donpcevent "#AirshipWarp-1::OnUnhide";
 	donpcevent "#AirshipWarp-2::OnUnhide";
-	mapannounce "airplane","Welcome to Yuno. Have a safe trip.",1,0x70DBDB;
+	mapannounce "airplane","Welcome to Juno. Have a safe trip.",1,0x70DBDB;
 	end;
 OnTimer250000:
-	mapannounce "airplane","Currently, we are in Yuno. The Airship will leave shortly.",1,0x70DBDB;
+	mapannounce "airplane","Currently, we are in Juno. The Airship will leave shortly.",1,0x70DBDB;
 	end;
 OnTimer260000:
 	stopnpctimer;
@@ -183,9 +184,7 @@ OnTimer260000:
 //============================================================ 
 
 airplane,240,64,5	script	Exit#01::Exit2	857,{
-
-end;
-
+	end;
 }
 
 airplane,247,64,5	duplicate(Exit2)	Exit#02	857
@@ -195,7 +194,6 @@ airplane,240,39,1	duplicate(Exit2)	Exit#03	857
 airplane,247,39,1	duplicate(Exit2)	Exit#04	857
 
 airplane,100,69,2	script	Airship Crew#01::Airship Crew	852,{
-
 	mes "[Airship Crew]";
 	mes "If we've landed at";
 	mes "your destination and";
@@ -204,11 +202,9 @@ airplane,100,69,2	script	Airship Crew#01::Airship Crew	852,{
 	mes "stairs up ahead. Thank";
 	mes "you for you patronage.";
 	close;
-
 }
 
 airplane,250,59,3	script	Airship Staff::AirshipInfo	67,{
-
 	mes "[Airship Staff]";
 	mes "Welcome";
 	mes "to the Airship.";
@@ -610,29 +606,29 @@ airplane_01,221,158,6	script	Pilot#air-0::Pilot	852,{
 		mes "(See what I mean?)";
 		close;
 	}
-		mes "[Pilot]";
-		mes "This uniform is";
-		mes "really dapper, but";
-		mes "it's way too thick to";
-		mes "wear around the Airship.";
-		next;
-		mes "[Pilot]";
-		mes "...";
-		mes "......";
-		mes "No one ever really";
-		mes "comes into this room.";
-		mes "And the captain IS a reindeer.";
-		mes "I could just strip to my boxers.";
-		next;
-		//Emotion "Pilot#airplane_01" ET_HUK
-		mes "[Pilot]";
-		mes "Oh...! Hello there!";
-		mes "E-e-enjoying your flight?!";
-		close;
+	mes "[Pilot]";
+	mes "This uniform is";
+	mes "really dapper, but";
+	mes "it's way too thick to";
+	mes "wear around the Airship.";
+	next;
+	mes "[Pilot]";
+	mes "...";
+	mes "......";
+	mes "No one ever really";
+	mes "comes into this room.";
+	mes "And the captain IS a reindeer.";
+	mes "I could just strip to my boxers.";
+	next;
+	//Emotion "Pilot#airplane_01" ET_HUK
+	mes "[Pilot]";
+	mes "Oh...! Hello there!";
+	mes "E-e-enjoying your flight?!";
+	close;
 }
 
 //============================================================ 
-//= The Airship System (Izlude -> Yuno -> Rachel -> Repeat)
+//= The Airship System (Izlude -> Juno -> Rachel -> Repeat)
 //============================================================ 
 
 airplane_01,243,74,4	script	#AirshipWarp-3	45,2,2,{
@@ -709,13 +705,13 @@ OnTimer65000:
 	donpcevent "#AirshipWarp-4::OnHide";
 	disablenpc "#AirshipWarp-3";
 	disablenpc "#AirshipWarp-4";
-	mapannounce "airplane_01","The Airship is leaving the ground. Our next destination is Yuno.",1,0x70DBDB;
+	mapannounce "airplane_01","The Airship is leaving the ground. Our next destination is Juno.",1,0x70DBDB;
 	end;
 OnTimer80000:
-	mapannounce "airplane_01","We are heading to Yuno.",1,0x70DBDB;
+	mapannounce "airplane_01","We are heading to Juno.",1,0x70DBDB;
 	end;
 OnTimer95000:
-	mapannounce "airplane_01","We will arrive in Yuno shortly.",1,0x70DBDB;
+	mapannounce "airplane_01","We will arrive in Juno shortly.",1,0x70DBDB;
 	end;
 OnTimer110000:
 	set $@airplanelocation2,2;
@@ -723,10 +719,10 @@ OnTimer110000:
 	enablenpc "#AirshipWarp-4";
 	donpcevent "#AirshipWarp-3::OnUnhide";
 	donpcevent "#AirshipWarp-4::OnUnhide";
-	mapannounce "airplane_01","Welcome to Yuno. Have a safe trip.",1,0x70DBDB;
+	mapannounce "airplane_01","Welcome to Juno. Have a safe trip.",1,0x70DBDB;
 	end;
 OnTimer120000:
-	mapannounce "airplane_01","Currently, we are in Yuno. The Airship will take off shortly.",1,0x70DBDB;
+	mapannounce "airplane_01","Currently, we are in Juno. The Airship will take off shortly.",1,0x70DBDB;
 	end;
 OnTimer130000:
 	set $@airplanelocation2,0;
@@ -802,7 +798,6 @@ OnTouch:
 }
 
 airplane_01,69,63,2	script	Old Man#06	55,{
-
 	mes "[Mendel]";
 	mes "As I expected, the";
 	mes "in-flight meals are";
@@ -811,7 +806,6 @@ airplane_01,69,63,2	script	Old Man#06	55,{
 	mes "have brought my chef so that";
 	mes "I could enjoy a real meal.";
 	close;
-
 }
 
 airplane_01,33,68,4	script	Clarice	74,{
@@ -845,13 +839,11 @@ airplane_01,71,31,6	script	Swordman Shimizu	106,{
 //============================================================
 
 izlude,201,54,3	script	Airship Staff#izl	91,{
-
 	mes "[Airship Staff]";
 	mes "Welcome to the International Airship.";
 	mes "How may I help you?";
 	next;
-	menu "Board the Airship",-,"Cancel",L_Cancel;
-
+	if (select("Board the Airship:Cancel") == 1) {
 		mes "[Airship Staff]";
 		mes "The Airship boarding fee";
 		mes "is 1,200 zeny, but if you've";
@@ -859,29 +851,26 @@ izlude,201,54,3	script	Airship Staff#izl	91,{
 		mes "the fee will be waived. Will";
 		mes "you board the Airship?";
 		next;
-		menu "Yes",-,"No",L_Cancel;
-
-		if(countitem(7311) > 0) goto L_GotTicket;
-		if(Zeny < 1200) goto L_NoZeny;
-			set Zeny, Zeny - 1200;
-			warp "airplane_01",224,64;
+		if (select("Yes:No") == 1) {
+			if(countitem(7311) > 0) {
+				delitem 7311,1;
+				warp "airplane_01",224,64;
+				close;
+			}
+			if(Zeny > 1200) {
+				set Zeny, Zeny - 1200;
+				warp "airplane_01",224,64;
+				close;
+			}
+			mes "[Airship Staff]";
+			mes "You don't have enough zeny.";
 			close;
-
-		L_GotTicket:
-			delitem 7311,1;
-			warp "airplane_01",224,64;
-			close;
-
-	L_NoZeny:
-		mes "[Airship Staff]";
-		mes "You don't have enough zeny.";
-		close;
-
-	L_Cancel:
-		mes "[Airship Staff]";
-		mes "Thank you and";
-		mes "have a nice day.";
-		close;
+		}
+	}
+	mes "[Airship Staff]";
+	mes "Thank you and";
+	mes "have a nice day.";
+	close;
 }
 
 //============================================================ 
@@ -889,13 +878,11 @@ izlude,201,54,3	script	Airship Staff#izl	91,{
 //============================================================
 
 hugel,182,150,3	script	Airship Staff#hu	91,{
-
 	mes "[Airship Staff]";
-	mes "Welcome to the Schwarzwald Republic's Airship.";
+	mes "Welcome to the International Airship.";
 	mes "How may I help you?";
 	next;
-	menu "Board the Airship",-,"Cancel",L_Cancel;
-
+	if (select("Board the Airship:Cancel") == 1) {
 		mes "[Airship Staff]";
 		mes "The Airship boarding fee";
 		mes "is 1,200 zeny, but if you've";
@@ -903,126 +890,99 @@ hugel,182,150,3	script	Airship Staff#hu	91,{
 		mes "the fee will be waived. Will";
 		mes "you board the Airship?";
 		next;
-		menu "Yes",-,"No",L_Cancel;
-
-		if(countitem(7311) > 0) goto L_GotTicket;
-		if(Zeny < 1200) goto L_NoZeny;
-			set Zeny, Zeny - 1200;
-			warp "airplane",224,64;
+		if (select("Yes:No") == 1) {
+			if(countitem(7311) > 0) {
+				delitem 7311,1;
+				warp "airplane_01",224,64;
+				close;
+			}
+			if(Zeny > 1200) {
+				set Zeny, Zeny - 1200;
+				warp "airplane_01",224,64;
+				close;
+			}
+			mes "[Airship Staff]";
+			mes "You don't have enough zeny.";
 			close;
-
-		L_GotTicket:
-			delitem 7311,1;
-			warp "airplane",224,64;
-			close;
-
-	L_NoZeny:
-		mes "[Airship Staff]";
-		mes "You don't have enough zeny.";
-		close;
-
-	L_Cancel:
-		mes "[Airship Staff]";
-		mes "Thank you and";
-		mes "have a nice day.";
-		close;
+		}
+	}
+	mes "[Airship Staff]";
+	mes "Thank you and";
+	mes "have a nice day.";
+	close;
 }
 
 //============================================================ 
 //= The Rachel Airship Staff
 //============================================================
 
-ra_fild12,294,206,3	script	Airship Staff#ra	91,{
-
-	mes "[Airship Staff]";
-	mes "Welcome to the International Airship.";
-	mes "How may I help you?";
+ra_fild12,295,208,3	script	Airship Staff#ra	45,1,1,{
+OnTouch:
+	mes "T use the airship, you are";
+	mes "required to pay 1,200 zeny or a";
+	mes "Free Airship Ticket. Would you like to use the service?";
 	next;
-	menu "Board the Airship",-,"Cancel",L_Cancel;
-
-		mes "[Airship Staff]";
-		mes "The Airship boarding fee";
-		mes "is 1,200 zeny, but if you've";
-		mes "got a Free Ticket for Airship,"; 
-		mes "the fee will be waived. Will";
-		mes "you board the Airship?";
-		next;
-		menu "Yes",-,"No",L_Cancel;
-
-		if(countitem(7311) > 0) goto L_GotTicket;
-		if(Zeny < 1200) goto L_NoZeny;
-			set Zeny, Zeny - 1200;
-			warp "airplane_01",224,64;
-			close;
-
-		L_GotTicket:
+	if (select("Yes:No") == 1) {
+		if (countitem(7311) > 0) {
 			delitem 7311,1;
 			warp "airplane_01",224,64;
 			close;
-
-	L_NoZeny:
-		mes "[Airship Staff]";
+		}
+		if (Zeny >= 1200) {
+			set Zeny, Zeny - 1200;
+			warp "airplane_01",224,64;
+			close;
+		}
 		mes "You don't have enough zeny.";
 		close;
-
-	L_Cancel:
-		mes "[Airship Staff]";
-		mes "Thank you and";
-		mes "have a nice day.";
-		close;
+	}
+	mes "Thank you and, please come again.";
+	close;
 }
 
 //============================================================ 
-//= Yuno Airport NPCs
+//= Juno Airport NPCs
 //============================================================
 
 y_airport,144,63,4	script	Airport Staff#Ein	91,{
-
 	mes "[Airship Staff]";
 	mes "Good day!";
 	mes "Would you like to go";
 	mes "to ^FF0000Einbroch^000000,^FF0000Hugel^000000 or";
 	mes "^FF0000Lighthalzen^000000?";
 	next;
-	menu "Yes.",s_Warp,"No.",-;
-
+	if (select("Yes.:No.") == 1) {
+		mes "[Airship Staff]";
+		mes "Thank you and";
+		mes "have a nice day.";
+		close2;
+		warp "yuno",57,240;
+		end;
+	}
 	mes "[Airship Staff]";
 	mes "Thank you and";
 	mes "have a nice day.";
 	close;
-
-s_Warp:
-	mes "[Airship Staff]";
-	mes "Thank you and";
-	mes "have a nice day.";
-	close2;
-	warp "yuno",57,240;
-	end;
-
 }
 	
 y_airport,141,63,4	script	Airport Staff#Izl	91,{
-
 	mes "[Airship Staff]";
 	mes "Good day!";
 	mes "Would you like to go";
 	mes "to ^FF0000Izlude^000000 or ^FF0000Rachel^000000?";
 	next;
-	menu "Yes.",s_Warp,"No.",-;
-
+	if (select("Yes.:No.") == 1) {
+		mes "[Airship Staff]";
+		mes "Thank you and";
+		mes "have a nice day.";
+		close2;
+		warp "yuno",50,240;
+		end;
+	}
 	mes "[Airship Staff]";
 	mes "Thank you and";
 	mes "have a nice day.";
 	close;
-
-s_Warp:
-	mes "[Airship Staff]";
-	mes "Thank you and";
-	mes "have a nice day.";
-	close2;
-	warp "yuno",50,240;
-	end;
-
 }
 
 yuno,14,262,3	script	Airship Staff#yuno01::Airship Staff	91,{
