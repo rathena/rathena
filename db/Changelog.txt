@@ -38,6 +38,10 @@
 
 =======================
 2008/02/07
+	* Rev. 12183 Updated some existing items and added some others. [L0ne_W0lf]
+	* Changed NPC_BLEEDING in mob_skill_db to be target not self.
+	* Added Event drops to tarou, cramp, martin. (enable in mob_db2)
+	* Added new pet: New Year Doll (quest reward) thanks to Yomanda.
 	* Corrected Freezing Trap's type to weapon.
 	* Changed suiton's element to water.
 	* Changed Landmine's trigger area to 0 (1x1, to match its splash range).

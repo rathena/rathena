@@ -568,7 +568,7 @@
 1115,Eddga@MG_FIREBALL,chase,17,20,10000,0,0,yes,target,skillused,18,,,,,,
 1115,Eddga@NPC_CALLSLAVE,attack,352,1,10000,0,30000,yes,self,always,0,,,,,,
 1115,Eddga@NPC_CALLSLAVE,idle,352,1,10000,0,30000,yes,self,always,0,,,,,,
-1115,Eddga@NPC_BLEEDING,attack,660,5,2000,0,3000,yes,self,always,0,,,,,,32
+1115,Eddga@NPC_BLEEDING,attack,660,5,2000,0,3000,yes,target,always,0,,,,,,32
 1115,Eddga@AM_DEMONSTRATION,attack,229,5,2000,0,2000,yes,target,always,0,,,,,,6
 1115,Eddga@AM_DEMONSTRATION,chase,229,5,2000,0,2000,yes,target,always,0,,,,,,6
 1115,Eddga@NPC_SUMMONSLAVE,attack,196,8,10000,700,10000,no,self,slavele,3,1603,,,,,
@@ -4232,7 +4232,7 @@
 1785,Atros@NPC_DEFENDER,idle,205,1,10000,0,5000,yes,self,longrangeattacked,,,,,,,
 1785,Atros@KN_TWOHANDQUICKEN,attack,60,20,2000,0,120000,yes,self,myhpltmaxrate,30,,,,,,36
 1785,Atros@NPC_PULSESTRIKE,attack,661,5,2000,0,30000,yes,self,always,0,,,,,,32
-1785,Atros@NPC_BLEEDING,attack,660,5,1000,0,5000,yes,self,always,0,,,,,,32
+1785,Atros@NPC_BLEEDING,attack,660,5,1000,0,5000,yes,target,always,0,,,,,,32
 1785,Atros@SM_BASH,attack,5,10,1000,0,5000,yes,target,always,0,,,,,,
 1785,Atros@NPC_DARKNESSATTACK,attack,190,3,500,800,5000,no,target,always,0,,,,,,
 1785,Atros@SM_MAGNUM,attack,7,20,10000,0,5000,yes,self,attackpcge,2,,,,,,
@@ -4367,7 +4367,7 @@
 1830,Bow Master@AC_CHARGEARROW,attack,148,1,2000,0,5000,yes,target,always,,,,,,,
 1830,Bow Master@NPC_STUNATTACK,attack,179,5,1500,0,5000,yes,target,always,,,,,,,
 1830,Bow Master@NPC_COMBOATTACK,attack,171,5,1500,0,5000,yes,target,always,,,,,,,
-1830,Bow Master@NPC_BLEEDING,attack,660,5,1500,0,5000,yes,self,always,,,,,,,
+1830,Bow Master@NPC_BLEEDING,attack,660,5,1500,0,5000,yes,target,always,,,,,,,
 1830,Bow Master@NPC_WIDEBLEEDING,attack,665,4,10000,0,15000,yes,self,myhpltmaxrate,40,,,,,,
 1831,Salamander@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,
 1831,Salamander@MG_FIREBALL,idle,17,5,10000,0,5000,yes,target,always,,,,,,,
@@ -4375,7 +4375,7 @@
 1831,Salamander@CR_REFLECTSHIELD,idle,252,3,1000,0,200000,no,self,always,,,,,,,
 1831,Salamander@CR_REFLECTSHIELD,attack,252,3,1000,0,200000,no,self,always,,,,,,,
 1831,Salamander@NPC_FIREATTACK,attack,186,5,2000,1000,200000,no,target,always,,,,,,,
-1831,Salamander@NPC_BLEEDING,attack,660,3,500,500,10000,no,self,always,,,,,,,
+1831,Salamander@NPC_BLEEDING,attack,660,3,500,500,10000,no,target,always,,,,,,,
 1831,Salamander@AS_SONICBLOW,attack,136,10,1000,0,10000,yes,target,always,,,,,,,
 1831,Salamander@SM_MAGNUM,attack,7,7,1000,0,10000,yes,self,attackpcge,2,,,,,,
 1831,Salamander@KN_TWOHANDQUICKEN,attack,60,20,2000,0,300000,yes,self,myhpltmaxrate,40,,,,,,
@@ -4421,7 +4421,7 @@
 1834,Salamander@MG_FIREBALL,chase,17,5,10000,0,5000,yes,target,always,,,,,,,
 1834,Salamander@CR_REFLECTSHIELD,attack,252,3,1000,0,200000,no,self,always,,,,,,,
 1834,Salamander@NPC_FIREATTACK,attack,186,5,2000,1000,200000,no,target,always,,,,,,,
-1834,Salamander@NPC_BLEEDING,attack,660,3,500,500,10000,no,self,always,,,,,,,
+1834,Salamander@NPC_BLEEDING,attack,660,3,500,500,10000,no,target,always,,,,,,,
 1834,Salamander@AS_SONICBLOW,attack,136,10,1000,0,10000,yes,target,always,,,,,,,
 1834,Salamander@SM_MAGNUM,attack,7,7,1000,0,10000,yes,self,attackpcge,2,,,,,,
 1834,Salamander@KN_TWOHANDQUICKEN,attack,60,20,2000,0,300000,yes,self,myhpltmaxrate,40,,,,,,

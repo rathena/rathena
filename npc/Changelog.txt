@@ -1,6 +1,8 @@
 Date		Added
 ======
 2008/02/07
+	* Rev. 12183 Added Lunar new year event for 2008 from iRO. [L0ne_W0lf]
+	- Please read the comments before enabling.
 	* Rev. 12182 Updated some Airship/port npcs. [L0ne_W0lf]
 	* Rev. 12181 Updated "Old Blue Box quest" and enabled it. [L0ne_W0lf]
 	- This quest no longer gives unlimited Old Blue Boxes,
