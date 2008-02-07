@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= DZeroX
 //===== Current Version: ===================================== 
-//= 1.2b
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 1.1 Optimized, missing next, REMOVED .GATs! again [Lupus]
 //= 1.2 Implemented progression fixes provided by $ephiroth. [L0ne_W0lf]
 //= 1.2b More pregression clean up provided by Barron-Monster. [L0ne_W0lf]
+//= 1.3 Removed npc "Tourist#al" as it's a quest NPC. [L0ne_W0lf]
 //============================================================
 
 alberta,97,51,0	script	Fabian	84,{
@@ -558,38 +559,6 @@ alberta,43,49,5	script	Poor-looking Merchant	89,{
 	mes "they quickly took our place";
 	mes "as the biggest business owners";
 	mes "here. It's our biggest shame...";
-	close;
-}
-
-alberta,43,244,8	script	Tourist#al	99,{
-	mes "[Tourist]";
-	mes "Where am I...?";
-	mes "...Who am I?";
-	next;
-	mes "[Tourist]";
-	mes "..........";
-	next;
-	mes "[Tourist]";
-	mes ".....";
-	next;
-	mes "[Tourist]";
-	mes "........";
-	next;
-	mes "[Tourist]";
-	mes "Mahahahahahahaha!!";
-	next;
-	mes "[Tourist]";
-	mes "*Drools*...I love chocolate!";
-	next;
-	mes "[Tourist]";
-	mes "Wait...";
-	mes "I have a girlfriend...";
-	mes "and...and...";
-	mes "cookies...?";
-	mes "I feel sooo lost...";
-	next;
-	mes "[Tourist]";
-	mes "^3355FFWe don't talk to crazy people~^000000";
 	close;
 }
 
