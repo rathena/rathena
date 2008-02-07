@@ -6867,6 +6867,8 @@ void pc_bleeding (struct map_session_data *sd, unsigned int diff_tick)
 			hp += sd->hp_loss.value;
 			sd->hp_loss.tick -= sd->hp_loss.rate;
 		}
+		if(hp >= sd->battle_status.hp)
+			hp = sd->battle_status.hp-1; //Script drains cannot kill you.
 	}
 	
 	if (sd->sp_loss.value) {

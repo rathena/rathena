@@ -3,6 +3,15 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/02/07
+	* Fixed the disguise commands using the wrong variable when attempting to
+	  disguise as an npc.
+	* Corrected and optimized npc_remove_map's npc array cleanup (Fixes
+	  @reloadscripts reporting 'too many npcs per map' and related dangling
+	  pointer crashes).
+	* HP loss item scripts can no longer kill you.
+	* Corrected the item-drop-rate check to avoid duplicate entries in
+	  @whodrops after a @reloadmobdb. [Skotlex]
 2008/02/04
 	* Some code cleanups. [Zephyrus]
 	- Added new Cell types (NoChat and NoDamage)

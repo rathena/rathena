@@ -2896,7 +2896,7 @@ int charcommand_disguise(const int fd, struct map_session_data* sd, const char* 
 		{
 			struct npc_data* nd = npc_name2id(mob_name);
 			if (nd != NULL)
-				mob_id = nd->n;
+				mob_id = nd->class_;
 		}
 	}
 

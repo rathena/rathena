@@ -37,6 +37,11 @@
 	2376 General's_Plate_Mail	Increases heal recovery effectiveness on you by 10%
 
 =======================
+2008/02/07
+	* Corrected Freezing Trap's type to weapon.
+	* Changed suiton's element to water.
+	* Changed Landmine's trigger area to 0 (1x1, to match its splash range).
+	  [Skotlex]
 2008/01/25
 	* Changed cast time of Napalm Vulcan from 1,7s to 1s. [FlavioJS]
 	  Based on X.4 and 11.2 zones

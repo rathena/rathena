@@ -39,7 +39,7 @@
  91,0x86,    ,  0, 2,1000,enemy, 0x000	//WZ_HEAVENDRIVE
  92,0x8e,    ,  2, 0,  -1,enemy, 0x000	//WZ_QUAGMIRE
 115,0x90,    ,  0, 1,1000,enemy, 0x006	//HT_SKIDTRAP
-116,0x93,    ,  0, 1,1000,enemy, 0x006	//HT_LANDMINE
+116,0x93,    ,  0, 0,1000,enemy, 0x006	//HT_LANDMINE
 117,0x91,    ,  0, 1,1000,enemy, 0x006	//HT_ANKLESNARE
 118,0x94,    ,  0, 1,1000,enemy, 0x006	//HT_SHOCKWAVE
 119,0x95,    ,  0, 1,1000,enemy, 0x006	//HT_SANDMAN

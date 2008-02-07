@@ -1211,10 +1211,11 @@ int npc_remove_map(struct npc_data* nd)
 	map_delblock(&nd->bl);
 	//Remove npc from map[].npc list. [Skotlex]
 	ARR_FIND( 0, map[m].npc_num, i, map[m].npc[i] == nd );
-	if( i >= map[m].npc_num ) return 2; //failed to find it?
+	if( i == map[m].npc_num ) return 2; //failed to find it?
 
 	map[m].npc_num--;
-	memmove(&map[m].npc[i], &map[m].npc[i+1], (map[m].npc_num-i)*sizeof(map[m].npc[0]));
+	map[m].npc[i] = map[m].npc[map[m].npc_num];
+	map[m].npc[map[m].npc_num] = NULL;
 	return 0;
 }
 
@@ -1452,7 +1453,7 @@ struct npc_data* npc_add_warp(short from_mapid, short from_x, short from_y, shor
 
 	CREATE(nd, struct npc_data, 1);
 	nd->bl.id = npc_get_new_npc_id();
-	nd->n = map_addnpc(from_mapid, nd);
+	map_addnpc(from_mapid, nd);
 	nd->bl.prev = nd->bl.next = NULL;
 	nd->bl.m = from_mapid;
 	nd->bl.x = from_x;
@@ -1514,7 +1515,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	CREATE(nd, struct npc_data, 1);
 
 	nd->bl.id = npc_get_new_npc_id();
-	nd->n = map_addnpc(m, nd);
+	map_addnpc(m, nd);
 	nd->bl.prev = nd->bl.next = NULL;
 	nd->bl.m = m;
 	nd->bl.x = x;
@@ -1622,7 +1623,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	nd->subtype = SHOP;
 	if( m >= 0 )
 	{// normal shop npc
-		nd->n = map_addnpc(m,nd);
+		map_addnpc(m,nd);
 		map_addblock(&nd->bl);
 		status_set_viewdata(&nd->bl, nd->class_);
 		status_change_init(&nd->bl);
@@ -1858,7 +1859,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 
 	if( m >= 0 )
 	{
-		nd->n = map_addnpc(m, nd);
+		map_addnpc(m, nd);
 		status_change_init(&nd->bl);
 		unit_dataset(&nd->bl);
 		nd->ud.dir = dir;

@@ -5178,7 +5178,7 @@ int atcommand_disguise(const int fd, struct map_session_data* sd, const char* co
 		{
 			struct npc_data* nd = npc_name2id(message);
 			if (nd != NULL)
-				id = nd->n;
+				id = nd->class_;
 		}
 	}
 

@@ -3427,7 +3427,7 @@ static bool mob_parse_dbrow(char** str)
 				id->maxchance = db->dropitem[i].p; //item has bigger drop chance or sold in shops
 			}
 			for (k = 0; k< MAX_SEARCH; k++) {
-				if (id->mob[k].chance < db->dropitem[i].p && id->mob[k].id != class_)
+				if (id->mob[k].chance <= db->dropitem[i].p)
 					break;
 			}
 			if (k == MAX_SEARCH)

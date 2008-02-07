@@ -1980,29 +1980,23 @@ bool mapit_exists(struct s_mapiterator* mapit)
 /*==========================================
  * map.npc‚Ö’Ç‰Á (warp“™‚Ì—Ìˆæ‚¿‚Ì‚İ)
  *------------------------------------------*/
-int map_addnpc(int m,struct npc_data *nd)
+bool map_addnpc(int m,struct npc_data *nd)
 {
-	int i;
-	if( m < 0 || m >= map_num )
-		return -1;
-
-	ARR_FIND( 0, map[m].npc_num, i, map[m].npc[i] == NULL );
-	if( i == MAX_NPC_PER_MAP )
-	{
-		ShowWarning("too many NPCs in one map %s\n",map[m].name);
-		return -1;
-	}
-
 	nullpo_retr(0, nd);
 
-	if( i == map[m].npc_num )
-		map[m].npc_num++;
+	if( m < 0 || m >= map_num )
+		return false;
 
-	map[m].npc[i]=nd;
-	nd->n = i;
+	if( map[m].npc_num == MAX_NPC_PER_MAP )
+	{
+		ShowWarning("too many NPCs in one map %s\n",map[m].name);
+		return false;
+	}
+
+	map[m].npc[map[m].npc_num]=nd;
+	map[m].npc_num++;
 	idb_put(id_db,nd->bl.id,nd);
-
-	return i;
+	return true;
 }
 
 /*=========================================

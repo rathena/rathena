@@ -3020,7 +3020,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			return -1;
 	}
 
-	if (flag&BCT_ENEMY && map_getcell(m,src->x,src->y,CELL_CHKNODAMAGE) || map_getcell(m,target->x,target->y,CELL_CHKNODAMAGE))
+	if (flag&BCT_ENEMY && (map_getcell(m,src->x,src->y,CELL_CHKNODAMAGE) || map_getcell(m,target->x,target->y,CELL_CHKNODAMAGE)))
 		return -1; // [NoDamage]
 
 	//t_bl/s_bl hold the 'master' of the attack, while src/target are the actual
