@@ -1,0 +1,98 @@
+//===== eAthena Script =======================================
+//= Eastern New Year 2006 The Year Of The Fire Dog
+//===== By: ==================================================
+//= Lupus (1.0)
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= eAthena Version; 5xxx+ (with 'disguise' command)
+//===== Description: =========================================
+//= Custom event: For 28-29 January
+//===== Additional Comments: =================================
+//= 1.0 Tested, fully working.[Lupus]
+//=		Add some national info in English if you can.
+//=	(Mine was in Russian, and it's damn hard to translate 8)
+//= 1.1 Commented out monster spawn as it is a custom mob and [L0ne_W0lf]
+//	not in the mob database.
+//============================================================
+
+
+prontera,149,167,6	script	Maria	81,{
+	mes "[Maria]";
+	//month
+	if((gettime(6)==1 && (gettime(5)==28 || gettime(5)==29))==0) {
+		mes "Happy New Year Of The Fire Dog! Woof!";
+		close;
+	}
+
+	mes "Happy New Year of The Fire Dog!";
+	if(rand(2))mes "By the way, 'Dogs' fit the most to the ones, born in years of Horse, Tiger and Rabbit.";
+	next;
+	menu "Tell me about Japanese traditions",-,
+		"Tell me about Chinese New Year",M_NGCH,
+		"Tell me about Korean New Year",M_NGCO,
+		"I need a doggy costume!",M_PRIZE,
+		"Happy New Year to you.",LEnd;
+
+	mes "[Maria]";
+	mes "Japan...";
+	mes "Put here some notes in English about their HNY.";
+	next;
+	mes "[Maria]";
+	mes "Put here some notes in English about their HNY.";
+	close;
+
+M_NGCH:
+	mes "[Maria]";
+	mes "China...";
+	mes "Put here some notes in English about their HNY.";
+	next;
+	mes "[Maria]";
+	mes "Put here some notes in English about their HNY.";
+	close;
+
+M_NGCO:
+	mes "[Maria]";
+	mes "Korea...";
+	mes "Put here some notes in English about their HNY.";
+	next;
+	mes "[Maria]";
+	mes "Put here some notes in English about their HNY.";
+	close;
+
+M_PRIZE:
+	mes "[Maria]";
+	if(countitem(12132)>9) {
+		mes "You should use all of your old costumes first!";
+		close;
+	}
+	mes "Some buddhistic books tell us legends about humans to dogs reincarnation... Buy ^FF0000this magic doggie costume^000000 for just ^0000FF999 Zeny^000000!";
+	mes "And prove old legends yourself!";
+	next;
+	menu "I'll buy one.",-,"No, thank you.",LEnd;
+	
+		mes "[Maria]";
+		if(Zeny<999) goto NoZ;
+		set Zeny,Zeny-999;
+		getitem 12132,1;
+		mes "Here you go. Its form will show true power of your spirit.";
+		emotion 15;
+		close;
+		NoZ:
+			mes "Oh dear, you lack of zeny. I have 7 puppies to feed, you know...";
+			emotion 17;
+			close;
+	LEnd:
+		mes "[Maria]";
+		mes "Happy New Year of the Fire Me!!! Woof-woof!";
+		emotion rand(19,20);
+		close;
+
+OnInit:
+	//Magic Doggie Costum
+	setitemscript 12132,"{ misceffect 215; if(BaseLevel>97){disguise 1022;end;}if(BaseLevel>90){disguise 1296;end;}if(BaseLevel>80){disguise 1106;end;}if(BaseLevel>50){disguise 1013;end;}if(BaseLevel>40){disguise 1135;end;}disguise 1107;}";
+	end;
+}
+
+// Requires custom monster.
+//prontera,0,0,0,0	monster	Fire Dog	1987,50,3600000,1800000,0
