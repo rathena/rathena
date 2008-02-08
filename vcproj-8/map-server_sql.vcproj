@@ -39,6 +39,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/wd4018&#x0D;&#x0A;/wd4100"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\src\common;..\src\zlib;..\src\mysql"
 				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;PCRE_SUPPORT;MAPREGSQL;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;DB_MANUAL_CAST_TO_UNION"

@@ -515,7 +515,7 @@ static void itemdb_read_itemgroup_sub(const char* filename)
 	char w1[1024], w2[1024];
 	
 	if( (fp=fopen(filename,"r"))==NULL ){
-		ShowError("can't read %s\n", line);
+		ShowError("can't read %s\n", filename);
 		return;
 	}
 
