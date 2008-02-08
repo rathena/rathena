@@ -1,7 +1,9 @@
 Date		Added
 ======
-2008/02/07
+2008/02/08
+	* rev. 12188 Castle ownership displays at the start and end of WoE. [L0ne_W0lf]
 	* Rev. 12187 Fixed a typo in the Lunar new year event. [L0ne_W0lf]
+2008/02/07
 	* Rev. 12183 Added Lunar new year event for 2008 from iRO. [L0ne_W0lf]
 	- Please read the comments before enabling.
 	* Rev. 12182 Updated some Airship/port npcs. [L0ne_W0lf]
