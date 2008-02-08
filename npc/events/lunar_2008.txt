@@ -218,7 +218,7 @@ payon,215,127,4	script	Rice Mill Man#rat	54,{
 		mes "be made into pastries";
 		mes "Would you please bring";
 		mes "this to my mother?";
-		selitem 7869,1; //Rice_Pouch
+		delitem 7869,1; //Rice_Pouch
 		getitem 7770,1; //Sweet_Rice
 		close;
 	}
