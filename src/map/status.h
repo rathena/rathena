@@ -496,15 +496,14 @@ enum {
 };
 
 //opt2: Stackable status changes.
-#define OPT2_POISON 0x001
-#define OPT2_CURSE 0x002
-#define OPT2_SILENCE 0x004
-#define OPT2_SIGNUMCRUCIS 0x008
-#define OPT2_BLIND 0x010
-//0x020 - nothing
-//0x040 - nothing
-#define OPT2_DPOISON 0x080
-//0x100 
+#define OPT2_POISON       0x0001
+#define OPT2_CURSE        0x0002
+#define OPT2_SILENCE      0x0004
+#define OPT2_SIGNUMCRUCIS 0x0008
+#define OPT2_BLIND        0x0010
+#define OPT2_ANGELUS      0x0020
+#define OPT2_BLEEDING     0x0040
+#define OPT2_DPOISON      0x0080
 
 #define OPTION_SIGHT 0x00000001
 #define OPTION_HIDE 0x00000002

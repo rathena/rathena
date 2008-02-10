@@ -5959,28 +5959,19 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	switch(type)
 	{
 		//OPT1
-		case SC_STONE:
-		case SC_FREEZE:
-		case SC_STUN:
-		case SC_SLEEP:
-			if(type == SC_STONE)
-				sc->opt1 = OPT1_STONEWAIT;
-			else
-				sc->opt1 = OPT1_STONE + (type - SC_STONE);
-			break;
+		case SC_STONE:  sc->opt1 = OPT1_STONEWAIT; break;
+		case SC_FREEZE: sc->opt1 = OPT1_FREEZE;    break;
+		case SC_STUN:   sc->opt1 = OPT1_STUN;      break;
+		case SC_SLEEP:  sc->opt1 = OPT1_SLEEP;     break;
 		//OPT2
-		case SC_POISON:
-		case SC_CURSE:
-		case SC_SILENCE:
-		case SC_BLIND:
-			sc->opt2 |= 1<<(type-SC_POISON);
-			break;
-		case SC_DPOISON:
-			sc->opt2 |= OPT2_DPOISON;
-			break;
-		case SC_SIGNUMCRUCIS:
-			sc->opt2 |= OPT2_SIGNUMCRUCIS;
-			break;
+		case SC_POISON:       sc->opt2 |= OPT2_POISON;       break;
+		case SC_CURSE:        sc->opt2 |= OPT2_CURSE;        break;
+		case SC_SILENCE:      sc->opt2 |= OPT2_SILENCE;      break;
+		case SC_SIGNUMCRUCIS: sc->opt2 |= OPT2_SIGNUMCRUCIS; break;
+		case SC_BLIND:        sc->opt2 |= OPT2_BLIND;        break;
+		case SC_ANGELUS:      sc->opt2 |= OPT2_ANGELUS;      break;
+		case SC_BLEEDING:     sc->opt2 |= OPT2_BLEEDING;     break;
+		case SC_DPOISON:      sc->opt2 |= OPT2_DPOISON;      break;
 		//OPT3
 		case SC_TWOHANDQUICKEN:
 		case SC_SPEARQUICKEN:
