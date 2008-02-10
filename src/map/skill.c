@@ -6530,11 +6530,17 @@ int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned 
 		if(bl->type==BL_PC){
 			struct map_session_data *sd = (struct map_session_data *)bl;
 			if((!sd->chatID || battle_config.chat_warpportal)
-				&& sd->ud.to_x == src->bl.x && sd->ud.to_y == src->bl.y) {
-				if (pc_setpos(sd,sg->val3,sg->val2>>16,sg->val2&0xffff,3) == 0) {
-					if (--sg->val1<=0)
-						skill_delunitgroup(NULL, sg);
-				}
+				&& sd->ud.to_x == src->bl.x && sd->ud.to_y == src->bl.y)
+			{
+				int x = sg->val2>>16;
+				int y = sg->val2&0xffff;
+				unsigned short m = sg->val3;
+
+				if( --sg->val1 <= 0 )
+					skill_delunitgroup(NULL, sg);
+
+				pc_setpos(sd,m,x,y,3);
+				sg = src->group; // avoid dangling pointer (pc_setpos can cause deletion of 'sg')
 			}
 		} else
 		if(bl->type == BL_MOB && battle_config.mob_warp&2)
