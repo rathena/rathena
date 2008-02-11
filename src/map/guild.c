@@ -69,6 +69,25 @@ int guild_payexp_timer(int tid,unsigned int tick,int id,int data);
 int guild_save_sub(int tid,unsigned int tick,int id,int data);
 static int guild_send_xy_timer(int tid,unsigned int tick,int id,int data);
 
+/*==========================================
+ * Retrieves and validates the sd pointer for this guild member [Skotlex]
+ *------------------------------------------*/
+static TBL_PC* guild_sd_check(int guild_id, int account_id, int char_id)
+{
+	TBL_PC* sd = map_id2sd(account_id);
+
+	if (!(sd && sd->status.char_id == char_id && sd->state.auth && !sd->state.waitingdisconnect))
+		return NULL;
+
+	if (sd->status.guild_id != guild_id)
+	{	//If player belongs to a different guild, kick him out.
+ 		intif_guild_leave(guild_id,account_id,char_id,0,"** Guild Mismatch **");
+		return NULL;
+	}
+
+	return sd;
+}
+
  // Modified [Komurka]
 int guild_skill_get_max (int id)
 {
@@ -494,11 +513,11 @@ int guild_recv_info(struct guild *sg)
 	struct guild *g,before;
 	int i,bm,m;
 	struct eventlist *ev,*ev2;
+	struct map_session_data *sd;
 
 	nullpo_retr(0, sg);
 
 	if((g=idb_get(guild_db,sg->guild_id))==NULL){
-		struct map_session_data *sd;
 		g=(struct guild *)aCalloc(1,sizeof(struct guild));
 		idb_put(guild_db,sg->guild_id,g);
 		before=*sg;
@@ -526,15 +545,10 @@ int guild_recv_info(struct guild *sg)
 		g->max_member = MAX_GUILD;
 	}
 	
-	for(i=bm=m=0;i<g->max_member;i++){	// sdの設定と人数の確認
+	for(i=bm=m=0;i<g->max_member;i++){
 		if(g->member[i].account_id>0){
-			struct map_session_data *sd = map_id2sd(g->member[i].account_id);
-			if (sd && sd->status.char_id == g->member[i].char_id &&
-				sd->status.guild_id == g->guild_id &&
-				!sd->state.waitingdisconnect) {
-				g->member[i].sd = sd;
-				clif_charnameupdate(sd); // [LuzZza]
-			} else g->member[i].sd = NULL;
+			sd = g->member[i].sd = guild_sd_check(g->guild_id, g->member[i].account_id, g->member[i].char_id);
+			if (sd) clif_charnameupdate(sd); // [LuzZza]
 			m++;
 		}else
 			g->member[i].sd=NULL;
@@ -543,7 +557,7 @@ int guild_recv_info(struct guild *sg)
 	}
 
 	for(i=0;i<g->max_member;i++){	// 情報の送信
-		struct map_session_data *sd = g->member[i].sd;
+		sd = g->member[i].sd;
 		if( sd==NULL )
 			continue;
 
@@ -876,6 +890,7 @@ int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int onlin
 	
 	for(i=0,alv=0,c=0,om=0;i<g->max_member;i++){
 		struct guild_member *m=&g->member[i];
+		if(!m->account_id) continue;
 		if(m->account_id==account_id && m->char_id==char_id ){
 			oldonline=m->online;
 			m->online=online;
@@ -883,10 +898,8 @@ int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int onlin
 			m->class_=class_;
 			idx=i;
 		}
-		if(m->account_id>0){
-			alv+=m->lv;
-			c++;
-		}
+		alv+=m->lv;
+		c++;
 		if(m->online)
 			om++;
 	}
@@ -906,16 +919,12 @@ int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int onlin
 	g->average_lv=alv/c;
 	g->connect_member=om;
 
-	for(i=0;i<g->max_member;i++) {
-		struct map_session_data *sd= map_id2sd(g->member[i].account_id);
-		g->member[i].sd = (sd && sd->status.char_id == g->member[i].char_id &&
-			sd->status.guild_id == g->guild_id && !sd->state.waitingdisconnect) ? sd : NULL;
-	}
-	
+	//Ensure validity of pointer (ie: player logs in/out, changes map-server)
+	g->member[idx].sd = guild_sd_check(guild_id, account_id, char_id);
+
 	if(oldonline!=online) 
 		clif_guild_memberlogin_notice(g, idx, online);
 	
-
 	if(!g->member[idx].sd)
 		return 0;
 
@@ -929,7 +938,7 @@ int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int onlin
 
 		clif_guild_xy_single(g->member[idx].sd->fd, g->member[i].sd);
 		clif_guild_xy_single(g->member[i].sd->fd, g->member[idx].sd);
-	}			
+	}
 
 	return 0;
 }
