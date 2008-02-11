@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.12.20071227
+//= 3.14.20080211
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -97,6 +97,8 @@
 //=       Corrected description of scope and npc variables. [FlavioJS]
 //= 3.13.20080104
 //=       Updated 'setcell' desc to match latest code changes [ultramage]
+//= 3.14.20080211
+//=       Updated 'input' (new arguments and return value). [FlavioJS]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -1303,7 +1305,7 @@ the Cancel button, this function will return 255 instead.
 
 ---------------------------------------
 
-*input <variable>;
+*input(<variable>{,<min>{,<max>}})
 
 This command will make an input box pop up on the client connected to the 
 invoking character, to allow entering of a number or a string. This has many 
@@ -1349,11 +1351,18 @@ allow the player to enter text. Otherwise, only numbers will be allowed.
 		close;
 	}
 
-Notice that in current SVN, you may not input a negative number with this 
-command. This was done to prevent exploits in badly written scripts, which would 
+Normally you may not input a negative number with this command.
+This is done to prevent exploits in badly written scripts, which would 
 let people, for example, put negative amounts of zeny into a bank script and 
-receive free zeny as a result. Unfortunately it limits the uses of the 'input' 
-command quite a bit.
+receive free zeny as a result.
+
+Since trunk r12192 the command has two optional arguments and a return value.
+The default value of 'min' and 'max' can be set with 'input_min_value' and 
+'input_max_value' in script_athena.conf.
+For numeric inputs the value is capped to the range [min,max]. Returns 1 if 
+the value was higher than 'max', -1 if lower than 'min' and 0 otherwise.
+For string inputs it returns 1 if the string was longer than 'max', -1 is 
+shorter than 'min' and 0 otherwise.
 
 ---------------------------------------
 

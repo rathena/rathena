@@ -189,6 +189,7 @@ DBMap* script_get_userfunc_db(){ return userfunc_db; }
 
 struct Script_Config script_config = {
 	1, 65535, 2048, //warn_func_mismatch_paramnum/check_cmdcount/check_gotocount
+	0, INT_MAX, // input_min_value/input_max_value
 	"OnPCDieEvent", //die_event_name
 	"OnPCKillEvent", //kill_pc_event_name
 	"OnNPCKillEvent", //kill_mob_event_name
@@ -3502,6 +3503,12 @@ int script_config_read(char *cfgName)
 		else if(strcmpi(w1,"check_gotocount")==0) {
 			script_config.check_gotocount = config_switch(w2);
 		}
+		else if(strcmpi(w1,"input_min_value")==0) {
+			script_config.input_min_value = config_switch(w2);
+		}
+		else if(strcmpi(w1,"input_max_value")==0) {
+			script_config.input_max_value = config_switch(w2);
+		}
 		else if(strcmpi(w1,"import")==0){
 			script_config_read(w2);
 		}
@@ -4635,30 +4642,43 @@ BUILDIN_FUNC(jobname)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/// Get input from the player.
+/// For numeric inputs the value is capped to the range [min,max]. Returns 1 if 
+/// the value was higher than 'max', -1 if lower than 'min' and 0 otherwise.
+/// For string inputs it returns 1 if the string was longer than 'max', -1 is 
+/// shorter than 'min' and 0 otherwise.
+///
+/// input(<var>{,<min>{,<max>}}) -> <int>
 BUILDIN_FUNC(input)
 {
-	TBL_PC *sd = script_rid2sd(st);
-	struct script_data *data = script_getdata(st,2);
-	int num = data->u.num;
-	char *name=str_buf+str_data[num&0x00ffffff].str;
-	char postfix = name[strlen(name)-1];
+	TBL_PC* sd;
+	struct script_data* data;
+	int uid;
+	char* name;
+	int min;
+	int max;
 
-	if (!sd) return 0;
+	sd = script_rid2sd(st);
+	if( sd == NULL )
+		return 0;
 
+	data = script_getdata(st,2);
 	if( !data_isreference(data) ){
 		ShowError("script:input: not a variable\n");
 		script_reportdata(data);
+		st->state = END;
 		return 1;
 	}
+	uid = reference_getuid(data);
+	name = reference_getname(data);
+	min = (script_hasdata(st,3) ? script_getnum(st,3) : script_config.input_min_value);
+	max = (script_hasdata(st,4) ? script_getnum(st,4) : script_config.input_max_value);
 
 	if( !sd->state.menu_or_input )
 	{	// first invocation, display npc input box
 		sd->state.menu_or_input = 1;
 		st->state = RERUNLINE;
-		if( postfix == '$' )
+		if( is_string_variable(name) )
 			clif_scriptinputstr(sd,st->oid);
 		else	
 			clif_scriptinput(sd,st->oid);
@@ -4666,12 +4686,17 @@ BUILDIN_FUNC(input)
 	else
 	{	// take received text/value and store it in the designated variable
 		sd->state.menu_or_input = 0;
-		if( postfix == '$' )
-			set_reg(st,sd,num,name,(void*)sd->npc_str,script_getref(st,2));
+		if( is_string_variable(name) )
+		{
+			size_t len = strlen(sd->npc_str);
+			set_reg(st, sd, uid, name, (void*)sd->npc_str, script_getref(st,2));
+			script_pushint(st, (len > max ? 1 : len < min ? -1 : 0));
+		}
 		else
 		{
-			sd->npc_amount = cap_value(sd->npc_amount, 0, INT_MAX);
-			set_reg(st,sd,num,name,(void*)sd->npc_amount,script_getref(st,2));
+			int amount = sd->npc_amount;
+			set_reg(st, sd, uid, name, (void*)cap_value(amount,min,max), script_getref(st,2));
+			script_pushint(st, (amount > max ? 1 : amount < min ? -1 : 0));
 		}
 	}
 	return 0;

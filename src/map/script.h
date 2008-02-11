@@ -12,6 +12,8 @@ extern struct Script_Config {
 	unsigned warn_func_mismatch_paramnum : 1;
 	int check_cmdcount;
 	int check_gotocount;
+	int input_min_value;
+	int input_max_value;
 
 	const char *die_event_name;
 	const char *kill_pc_event_name;
