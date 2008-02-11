@@ -4,6 +4,10 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/02/11
+	* 'Forget me Not' no longer blocks ASPD bonuses from working or prevents
+	  their re-casting, they are simply dispelled when the effect takes place.
+	* Fixed a possible crash when a player logs out before their create-party
+	  request is accepted. [Skotlex]
 	* Expanded the script command 'input': (bugreport:811) [FlavioJS]
 	- two new optional arguments 'min' and 'max'
 	- return value indicating if it's in the correct range

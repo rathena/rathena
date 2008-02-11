@@ -3775,7 +3775,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 	if(!sc || !sc->count)
 		return cap_value(aspd_rate,0,SHRT_MAX);
 
-	if(!sc->data[SC_QUAGMIRE] && !sc->data[SC_DONTFORGETME])
+	if(!sc->data[SC_QUAGMIRE])
 	{
 		int max = 0;
 		if(sc->data[SC_STAR_COMFORT])
@@ -4659,7 +4659,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		if(sd && !pc_check_weapontype(sd,skill_get_weapontype(BS_ADRENALINE)))
 			return 0;
 		if (sc->data[SC_QUAGMIRE] ||
-			sc->data[SC_DONTFORGETME] ||
 			sc->data[SC_DECREASEAGI]
 		)
 			return 0;
@@ -4668,7 +4667,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		if(sd && !pc_check_weapontype(sd,skill_get_weapontype(BS_ADRENALINE2)))
 			return 0;
 		if (sc->data[SC_QUAGMIRE] ||
-			sc->data[SC_DONTFORGETME] ||
 			sc->data[SC_DECREASEAGI]
 		)
 			return 0;
@@ -4684,7 +4682,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	case SC_WINDWALK:
 	case SC_CARTBOOST:
 	case SC_ASSNCROS:
-		if (sc->data[SC_QUAGMIRE] || sc->data[SC_DONTFORGETME])
+		if (sc->data[SC_QUAGMIRE])
 			return 0;
 	break;
 	case SC_CLOAKING:

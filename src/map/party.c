@@ -108,9 +108,12 @@ int party_created(int account_id,int char_id,int fail,int party_id,char *name)
 	struct party_data *p;
 	sd=map_id2sd(account_id);
 
-	nullpo_retr(0, sd);
-	if (sd->status.char_id != char_id)
-		return 0; //unlikely failure...
+	if (!sd || sd->status.char_id != char_id)
+	{	//Character logged off before creation ack?
+		if (!fail) //break up party since player could not be added to it.
+			intif_party_leave(party_id,account_id,char_id);
+		return 0;
+	}
 	
 	if(fail){
 		clif_party_created(sd,1);
