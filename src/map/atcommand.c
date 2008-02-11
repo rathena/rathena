@@ -565,8 +565,9 @@ int atcommand_jump(const int fd, struct map_session_data* sd, const char* comman
 int atcommand_who3(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char temp0[100];
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, j, count, users;
+	struct map_session_data *pl_sd;
+	struct s_mapiterator* iter;
+	int j, count;
 	int pl_GM_level, GM_level;
 	char match_text[100];
 	char player_name[NAME_LENGTH];
@@ -584,40 +585,42 @@ int atcommand_who3(const int fd, struct map_session_data* sd, const char* comman
 
 	count = 0;
 	GM_level = pc_isGM(sd);
-	pl_allsd = map_getallusers(&users);
-	for (i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i])) {
-			pl_GM_level = pc_isGM(pl_sd);
-			if (!((battle_config.hide_GM_session || (pl_sd->sc.option & OPTION_INVISIBLE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
-				memcpy(player_name, pl_sd->status.name, NAME_LENGTH);
-				for (j = 0; player_name[j]; j++)
-					player_name[j] = TOLOWER(player_name[j]);
-				if (strstr(player_name, match_text) != NULL) { // search with no case sensitive
 
-					if (battle_config.who_display_aid > 0 && pc_isGM(sd) >= battle_config.who_display_aid) {
-						sprintf(atcmd_output, "(CID:%d/AID:%d) ", pl_sd->status.char_id, pl_sd->status.account_id);
-					} else {
-						atcmd_output[0]=0;
-					}
-					//Player name
-					sprintf(temp0, msg_txt(333), pl_sd->status.name);
-					strcat(atcmd_output,temp0);
-					//Player title, if exists
-					if (pl_GM_level > 0) {
-						//sprintf(temp0, "(%s) ", player_title_txt(pl_GM_level) );
-						sprintf(temp0, msg_txt(334), player_title_txt(pl_GM_level) );
-						strcat(atcmd_output,temp0);
-					}
-					//Players Location: map x y
-					sprintf(temp0, msg_txt(338), mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
-					strcat(atcmd_output,temp0);
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+	{
+		pl_GM_level = pc_isGM(pl_sd);
+		if(!( (battle_config.hide_GM_session || (pl_sd->sc.option & OPTION_INVISIBLE)) && pl_GM_level > GM_level ))
+		{// you can look only lower or same level
+			memcpy(player_name, pl_sd->status.name, NAME_LENGTH);
+			for (j = 0; player_name[j]; j++)
+				player_name[j] = TOLOWER(player_name[j]);
+			if (strstr(player_name, match_text) != NULL) { // search with no case sensitive
 
-					clif_displaymessage(fd, atcmd_output);
-					count++;
+				if (battle_config.who_display_aid > 0 && pc_isGM(sd) >= battle_config.who_display_aid) {
+					sprintf(atcmd_output, "(CID:%d/AID:%d) ", pl_sd->status.char_id, pl_sd->status.account_id);
+				} else {
+					atcmd_output[0]=0;
 				}
+				//Player name
+				sprintf(temp0, msg_txt(333), pl_sd->status.name);
+				strcat(atcmd_output,temp0);
+				//Player title, if exists
+				if (pl_GM_level > 0) {
+					//sprintf(temp0, "(%s) ", player_title_txt(pl_GM_level) );
+					sprintf(temp0, msg_txt(334), player_title_txt(pl_GM_level) );
+					strcat(atcmd_output,temp0);
+				}
+				//Players Location: map x y
+				sprintf(temp0, msg_txt(338), mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
+				strcat(atcmd_output,temp0);
+
+				clif_displaymessage(fd, atcmd_output);
+				count++;
 			}
 		}
 	}
+	mapit_free(iter);
 
 	if (count == 0)
 		clif_displaymessage(fd, msg_txt(28)); // No player found.
@@ -637,8 +640,9 @@ int atcommand_who3(const int fd, struct map_session_data* sd, const char* comman
 int atcommand_who2(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char temp0[100];
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, j, count, users;
+	struct map_session_data *pl_sd;
+	struct s_mapiterator* iter;
+	int j, count;
 	int pl_GM_level, GM_level;
 	char match_text[100];
 	char player_name[NAME_LENGTH];
@@ -656,35 +660,37 @@ int atcommand_who2(const int fd, struct map_session_data* sd, const char* comman
 
 	count = 0;
 	GM_level = pc_isGM(sd);
-	pl_allsd = map_getallusers(&users);
-	for (i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i])) {
-			pl_GM_level = pc_isGM(pl_sd);
-			if (!((battle_config.hide_GM_session || (pl_sd->sc.option & OPTION_INVISIBLE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
-				memcpy(player_name, pl_sd->status.name, NAME_LENGTH);
-				for (j = 0; player_name[j]; j++)
-					player_name[j] = TOLOWER(player_name[j]);
-				if (strstr(player_name, match_text) != NULL) { // search with no case sensitive
-					//Players Name
-					//sprintf(atcmd_output, "Name: %s ", pl_sd->status.name);
-					sprintf(atcmd_output, msg_txt(333), pl_sd->status.name);
-					//Player title, if exists
-					if (pl_GM_level > 0) {
-						//sprintf(temp0, "(%s) ", player_title_txt(pl_GM_level) );
-						sprintf(temp0, msg_txt(334), player_title_txt(pl_GM_level) );
-						strcat(atcmd_output,temp0);
-					}
-					//Players Base Level / Job name
-					//sprintf(temp0, "| L:%d/%d | Job: %s", pl_sd->status.base_level, pl_sd->status.job_level, job_name(pl_sd->status.class_) );
-					sprintf(temp0, msg_txt(337), pl_sd->status.base_level, pl_sd->status.job_level, job_name(pl_sd->status.class_) );
-					strcat(atcmd_output,temp0);
 
-					clif_displaymessage(fd, atcmd_output);
-					count++;
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+	{
+		pl_GM_level = pc_isGM(pl_sd);
+		if(!( (battle_config.hide_GM_session || (pl_sd->sc.option & OPTION_INVISIBLE)) && (pl_GM_level > GM_level) ))
+		{// you can look only lower or same level
+			memcpy(player_name, pl_sd->status.name, NAME_LENGTH);
+			for (j = 0; player_name[j]; j++)
+				player_name[j] = TOLOWER(player_name[j]);
+			if (strstr(player_name, match_text) != NULL) { // search with no case sensitive
+				//Players Name
+				//sprintf(atcmd_output, "Name: %s ", pl_sd->status.name);
+				sprintf(atcmd_output, msg_txt(333), pl_sd->status.name);
+				//Player title, if exists
+				if (pl_GM_level > 0) {
+					//sprintf(temp0, "(%s) ", player_title_txt(pl_GM_level) );
+					sprintf(temp0, msg_txt(334), player_title_txt(pl_GM_level) );
+					strcat(atcmd_output,temp0);
 				}
+				//Players Base Level / Job name
+				//sprintf(temp0, "| L:%d/%d | Job: %s", pl_sd->status.base_level, pl_sd->status.job_level, job_name(pl_sd->status.class_) );
+				sprintf(temp0, msg_txt(337), pl_sd->status.base_level, pl_sd->status.job_level, job_name(pl_sd->status.class_) );
+				strcat(atcmd_output,temp0);
+
+				clif_displaymessage(fd, atcmd_output);
+				count++;
 			}
 		}
 	}
+	mapit_free(iter);
 	
 	if (count == 0)
 		clif_displaymessage(fd, msg_txt(28)); // No player found.
@@ -704,8 +710,9 @@ int atcommand_who2(const int fd, struct map_session_data* sd, const char* comman
 int atcommand_who(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	char temp0[100];
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, j, count, users;
+	struct map_session_data *pl_sd;
+	struct s_mapiterator* iter;
+	int j, count;
 	int pl_GM_level, GM_level;
 	char match_text[100];
 	char player_name[NAME_LENGTH];
@@ -726,44 +733,44 @@ int atcommand_who(const int fd, struct map_session_data* sd, const char* command
 
 	count = 0;
 	GM_level = pc_isGM(sd);
-	pl_allsd = map_getallusers(&users);
-	for (i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i])) {
-			pl_GM_level = pc_isGM(pl_sd);
-			if (!((battle_config.hide_GM_session || (pl_sd->sc.option & OPTION_INVISIBLE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
-				memcpy(player_name, pl_sd->status.name, NAME_LENGTH);
-				for (j = 0; player_name[j]; j++)
-					player_name[j] = TOLOWER(player_name[j]);
-				if (strstr(player_name, match_text) != NULL) { // search with no case sensitive
-					g = guild_search(pl_sd->status.guild_id);
-					p = party_search(pl_sd->status.party_id);
-					//Players Name
-					//sprintf(atcmd_output, "Name: %s ", pl_sd->status.name);
-					sprintf(atcmd_output, msg_txt(333), pl_sd->status.name);
-					//Player title, if exists
-					if (pl_GM_level > 0) {
-						//sprintf(temp0, "(%s) ", player_title_txt(pl_GM_level) );
-						sprintf(temp0, msg_txt(334), player_title_txt(pl_GM_level) );
-						strcat(atcmd_output,temp0);
-					}
-					//Players Party if exists
-					if (p != NULL) {
-						//sprintf(temp0," | Party: '%s'", p->name);
-						sprintf(temp0, msg_txt(335), p->party.name);
-						strcat(atcmd_output,temp0);
-					}
-					//Players Guild if exists
-					if (g != NULL) {
-						//sprintf(temp0," | Guild: '%s'", g->name);
-						sprintf(temp0, msg_txt(336), g->name);
-						strcat(atcmd_output,temp0);
-					}
-					clif_displaymessage(fd, atcmd_output);
-					count++;
+
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+	{
+		pl_GM_level = pc_isGM(pl_sd);
+		if(!( (battle_config.hide_GM_session || (pl_sd->sc.option & OPTION_INVISIBLE)) && pl_GM_level > GM_level ))
+		{// you can look only lower or same level
+			memcpy(player_name, pl_sd->status.name, NAME_LENGTH);
+			for (j = 0; player_name[j]; j++)
+				player_name[j] = TOLOWER(player_name[j]);
+			if (strstr(player_name, match_text) != NULL) { // search with no case sensitive
+				g = guild_search(pl_sd->status.guild_id);
+				p = party_search(pl_sd->status.party_id);
+				//Players Name
+				sprintf(atcmd_output, msg_txt(333), pl_sd->status.name);
+				//Player title, if exists
+				if (pl_GM_level > 0) {
+					sprintf(temp0, msg_txt(334), player_title_txt(pl_GM_level) );
+					strcat(atcmd_output,temp0);
 				}
+				//Players Party if exists
+				if (p != NULL) {
+					//sprintf(temp0," | Party: '%s'", p->name);
+					sprintf(temp0, msg_txt(335), p->party.name);
+					strcat(atcmd_output,temp0);
+				}
+				//Players Guild if exists
+				if (g != NULL) {
+					//sprintf(temp0," | Guild: '%s'", g->name);
+					sprintf(temp0, msg_txt(336), g->name);
+					strcat(atcmd_output,temp0);
+				}
+				clif_displaymessage(fd, atcmd_output);
+				count++;
 			}
 		}
 	}
+	mapit_free(iter);
 
 	if (count == 0)
 		clif_displaymessage(fd, msg_txt(28)); // No player found.

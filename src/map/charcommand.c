@@ -409,51 +409,6 @@ int charcommand_save(const int fd, struct map_session_data* sd, const char* comm
 }
 
 /*==========================================
- *
- *------------------------------------------*/
-//** Character Stats All by fritz
-int charcommand_stats_all(const int fd, struct map_session_data* sd, const char* command, const char* message)
-{
-	char output[1024], gmlevel[1024];
-	int i;
-	int count, users;
-	struct map_session_data *pl_sd, **pl_allsd;
-
-	memset(output, '\0', sizeof(output));
-	memset(gmlevel, '\0', sizeof(gmlevel));
-
-	count = 0;
-	pl_allsd = map_getallusers(&users);
-	for(i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i]))
-		{
-			if (pc_isGM(pl_sd) > 0)
-				sprintf(gmlevel, "| GM Lvl: %d", pc_isGM(pl_sd));
-			else
-				sprintf(gmlevel, " ");
-
-			sprintf(output, "Name: %s | BLvl: %d | Job: %s (Lvl: %d) | HP: %d/%d | SP: %d/%d", pl_sd->status.name, pl_sd->status.base_level, job_name(pl_sd->status.class_), pl_sd->status.job_level, pl_sd->status.hp, pl_sd->status.max_hp, pl_sd->status.sp, pl_sd->status.max_sp);
-			clif_displaymessage(fd, output);
-			sprintf(output, "STR: %d | AGI: %d | VIT: %d | INT: %d | DEX: %d | LUK: %d | Zeny: %d %s", pl_sd->status.str, pl_sd->status.agi, pl_sd->status.vit, pl_sd->status.int_, pl_sd->status.dex, pl_sd->status.luk, pl_sd->status.zeny, gmlevel);
-			clif_displaymessage(fd, output);
-			clif_displaymessage(fd, "--------");
-			count++;
-		}
-	}
-
-	if (count == 0)
-		clif_displaymessage(fd, msg_txt(28)); // No player found.
-	else if (count == 1)
-		clif_displaymessage(fd, msg_txt(29)); // 1 player found.
-	else {
-		sprintf(output, msg_txt(30), count); // %d players found.
-		clif_displaymessage(fd, output);
-	}
-
-	return 0;
-}
-
-/*==========================================
  * CharSpiritBall Function by PalasX
  *------------------------------------------*/
 int charcommand_spiritball(const int fd, struct map_session_data* sd,const char* command, const char* message)
@@ -790,63 +745,68 @@ int charcommand_item(const int fd, struct map_session_data* sd, const char* comm
 		(item_data = itemdb_exists(atoi(item_name))) != NULL)
 		item_id = item_data->nameid;
 
-	if (item_id >= 500) {
-		get_count = number;
-		// check pet egg
-		pet_id = search_petDB_index(item_id, PET_EGG);
-		if (item_data->type == 4 || item_data->type == 5 ||
-			item_data->type == 7 || item_data->type == 8) {
-			get_count = 1;
-		}
-		if ((pl_sd = map_nick2sd(character)) != NULL) {
-			if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can look items only lower or same level
-				for (i = 0; i < number; i += get_count) {
-					// if pet egg
-					if (pet_id >= 0) {
-						pl_sd->catch_target_class = pet_db[pet_id].class_;
-						intif_create_pet(pl_sd->status.account_id, pl_sd->status.char_id,
-										 (short)pet_db[pet_id].class_, (short)mob_db(pet_db[pet_id].class_)->lv,
-										 (short)pet_db[pet_id].EggID, 0, (short)pet_db[pet_id].intimate,
-										 100, 0, 1, pet_db[pet_id].jname);
-					// if not pet egg
-					} else {
-						memset(&item_tmp, 0, sizeof(item_tmp));
-						item_tmp.nameid = item_id;
-						item_tmp.identify = 1;
+	if (item_id < 500) {
+		clif_displaymessage(fd, msg_txt(19)); // Invalid item ID or name.
+		return -1;
+	}
 
-						if ((flag = pc_additem(pl_sd, &item_tmp, get_count)))
-							clif_additem(pl_sd, 0, 0, flag);
-					}
-				}
+	get_count = number;
+	// check pet egg
+	pet_id = search_petDB_index(item_id, PET_EGG);
+	if (item_data->type == 4 || item_data->type == 5 ||
+		item_data->type == 7 || item_data->type == 8) {
+		get_count = 1;
+	}
 
-				//Logs (A)dmins items [Lupus]
-				if(log_config.enable_logs&0x400)
-					log_pick_pc(sd, "A", item_tmp.nameid, number, &item_tmp);
-
-				clif_displaymessage(fd, msg_txt(18)); // Item created.
-			} else {
-				clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
-				return -1;
-			}
-		} else if(/* from jA's @giveitem */strcmpi(character,"all")==0 || strcmpi(character,"everyone")==0){
-			struct map_session_data **pl_allsd;
-			int users;
-			pl_allsd = map_getallusers(&users);
-			for (i = 0; i < users; i++) {
-				if ((pl_sd = pl_allsd[i])) {
-					charcommand_giveitem_sub(pl_sd,item_data,number);
-					snprintf(tmp_cmdoutput, sizeof(tmp_cmdoutput), "You got %s %d.", item_name,number);
-					clif_displaymessage(pl_sd->fd, tmp_cmdoutput);
-				}
-			}
-			snprintf(tmp_cmdoutput, sizeof(tmp_cmdoutput), "%s received %s %d.","Everyone",item_name,number);
-			clif_displaymessage(fd, tmp_cmdoutput);
-		} else {
-			clif_displaymessage(fd, msg_txt(3)); // Character not found.
+	if ((pl_sd = map_nick2sd(character)) == NULL)
+	{
+		if (pc_isGM(sd) < pc_isGM(pl_sd))
+		{// you can give items only to lower or same level
+			clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
 			return -1;
 		}
+		else
+		{
+			for (i = 0; i < number; i += get_count) {
+				// if pet egg
+				if (pet_id >= 0) {
+					pl_sd->catch_target_class = pet_db[pet_id].class_;
+					intif_create_pet(pl_sd->status.account_id, pl_sd->status.char_id,
+									 (short)pet_db[pet_id].class_, (short)mob_db(pet_db[pet_id].class_)->lv,
+									 (short)pet_db[pet_id].EggID, 0, (short)pet_db[pet_id].intimate,
+									 100, 0, 1, pet_db[pet_id].jname);
+				// if not pet egg
+				} else {
+					memset(&item_tmp, 0, sizeof(item_tmp));
+					item_tmp.nameid = item_id;
+					item_tmp.identify = 1;
+
+					if ((flag = pc_additem(pl_sd, &item_tmp, get_count)))
+						clif_additem(pl_sd, 0, 0, flag);
+				}
+			}
+
+			//Logs (A)dmins items [Lupus]
+			if(log_config.enable_logs&0x400)
+				log_pick_pc(sd, "A", item_tmp.nameid, number, &item_tmp);
+
+			clif_displaymessage(fd, msg_txt(18)); // Item created.
+		}
+	} else
+	if (strcmpi(character,"all")==0 || strcmpi(character,"everyone")==0) {
+		struct s_mapiterator* iter = mapit_getallusers();
+		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+		{
+			charcommand_giveitem_sub(pl_sd,item_data,number);
+			snprintf(tmp_cmdoutput, sizeof(tmp_cmdoutput), "You got %s %d.", item_name,number);
+			clif_displaymessage(pl_sd->fd, tmp_cmdoutput);
+		}
+		mapit_free(iter);
+
+		snprintf(tmp_cmdoutput, sizeof(tmp_cmdoutput), "%s received %s %d.","Everyone",item_name,number);
+		clif_displaymessage(fd, tmp_cmdoutput);
 	} else {
-		clif_displaymessage(fd, msg_txt(19)); // Invalid item ID or name.
+		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
 

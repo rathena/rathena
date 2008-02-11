@@ -159,30 +159,29 @@ int party_request_info(int party_id)
 }
 
 /// Checks if each char having a party actually belongs to that party.
-/// If check fails, the char is marked as 'not in a party'.
+/// If check fails, the char gets marked as 'not in a party'.
 int party_check_member(struct party *p)
 {
-	int i, users;
-	struct map_session_data *sd, **all_sd;
+	int i;
+	struct map_session_data *sd;
+	struct s_mapiterator* iter;
 
 	nullpo_retr(0, p);
 
-	all_sd = map_getallusers(&users);
-
-	for(i=0;i<users;i++)
+	iter = mapit_getallusers();
+	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 	{
-		sd = all_sd[i];
-		if( sd && sd->status.party_id == p->party_id )
+		if( sd->status.party_id != p->party_id )
+			continue;
+
+		ARR_FIND( 0, MAX_PARTY, i, p->member[i].account_id == sd->status.account_id && p->member[i].char_id == sd->status.char_id );
+		if( i == MAX_PARTY )
 		{
-			int j;
-			ARR_FIND( 0, MAX_PARTY, j, p->member[j].account_id == sd->status.account_id && p->member[j].char_id == sd->status.char_id );
-			if( j == MAX_PARTY )
-			{
-				ShowWarning("party_check_member: '%s' (acc:%d) is not member of party '%s' (id:%d)\n",sd->status.name,sd->status.account_id,p->name,p->party_id);
-				sd->status.party_id = 0;
-			}
+			ShowWarning("party_check_member: '%s' (acc:%d) is not member of party '%s' (id:%d)\n",sd->status.name,sd->status.account_id,p->name,p->party_id);
+			sd->status.party_id = 0;
 		}
 	}
+	mapit_free(iter);
 
 	return 0;
 }
@@ -190,15 +189,17 @@ int party_check_member(struct party *p)
 /// Marks all chars belonging to this party as 'not in a party'.
 int party_recv_noinfo(int party_id)
 {
-	int i, users;
-	struct map_session_data *sd, **all_sd;
+	struct map_session_data *sd;
+	struct s_mapiterator* iter;
 
-	all_sd = map_getallusers(&users);
-	
-	for(i=0;i<users;i++){
-		if((sd = all_sd[i]) && sd->status.party_id==party_id)
-			sd->status.party_id=0;
+	iter = mapit_getallusers();
+	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+	{
+		if( sd->status.party_id == party_id )
+			sd->status.party_id = 0; // erase party
 	}
+	mapit_free(iter);
+
 	return 0;
 }
 

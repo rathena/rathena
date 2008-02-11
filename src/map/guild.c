@@ -470,43 +470,48 @@ int guild_npc_request_info(int guild_id,const char *event)
 // 所属キャラの確認
 int guild_check_member(struct guild *g)
 {
-	int i, j, users;
-	struct map_session_data *sd, **all_sd;
+	int i;
+	struct map_session_data *sd;
+	struct s_mapiterator* iter;
 
 	nullpo_retr(0, g);
 
-	all_sd = map_getallusers(&users);
-	
-	for(i=0;i<users;i++){
-		sd=all_sd[i];
-		if(sd->status.guild_id==g->guild_id){
-			j=guild_getindex(g,sd->status.account_id,sd->status.char_id);
-			if (j < 0) {
-				sd->status.guild_id=0;
-				sd->state.guild_sent=0;
-				sd->guild_emblem_id=0;
-				ShowWarning("guild: check_member %d[%s] is not member\n",sd->status.account_id,sd->status.name);
-			}
+	iter = mapit_getallusers();
+	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+	{
+		if( sd->status.guild_id != g->guild_id )
+			continue;
+
+		i = guild_getindex(g,sd->status.account_id,sd->status.char_id);
+		if (i < 0) {
+			sd->status.guild_id=0;
+			sd->state.guild_sent=0;
+			sd->guild_emblem_id=0;
+			ShowWarning("guild: check_member %d[%s] is not member\n",sd->status.account_id,sd->status.name);
 		}
 	}
+	mapit_free(iter);
+
 	return 0;
 }
+
 // 情報所得失敗（そのIDのキャラを全部未所属にする）
 int guild_recv_noinfo(int guild_id)
 {
-	int i, users;
-	struct map_session_data *sd, **all_sd;
+	struct map_session_data *sd;
+	struct s_mapiterator* iter;
 
-	all_sd = map_getallusers(&users);
-	
-	for(i=0;i<users;i++){
-		if((sd=all_sd[i])){
-			if(sd->status.guild_id==guild_id)
-				sd->status.guild_id=0;
-		}
+	iter = mapit_getallusers();
+	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+	{
+		if( sd->status.guild_id == guild_id )
+			sd->status.guild_id = 0; // erase guild
 	}
+	mapit_free(iter);
+
 	return 0;
 }
+
 // 情報所得
 int guild_recv_info(struct guild *sg)
 {

@@ -184,8 +184,6 @@ void irc_parse_sub(int fd, char *incoming_string)
 	
 	int i=0;
 
-	struct map_session_data **allsd;
-	
 	memset(source,'\0',256);
 	memset(command,'\0',256);
 	memset(target,'\0',256);
@@ -266,25 +264,41 @@ void irc_parse_sub(int fd, char *incoming_string)
 				else // Number of users online
 				if(strcmpi(cmdname,"users")==0)
 				{
-					int users;
-					map_getallusers(&users);
+					int users = 0;
+					struct s_mapiterator* iter;
+
+					iter = mapit_getallusers();
+					for( mapit_first(iter); mapit_exists(iter); mapit_next(iter) )
+						users++;
+					mapit_free(iter);
+
 					sprintf(send_string, "PRIVMSG %s :Users Online: %d", irc_channel, users);
 					irc_send(send_string);
 				}
 				else // List all users online
 				if(strcmpi(cmdname,"who")==0)
 				{
-					int users;
-					allsd = map_getallusers(&users);
+					int users = 0;
+					struct s_mapiterator* iter;
+					struct map_session_data* sd;
+
+					iter = mapit_getallusers();
+					for( mapit_first(iter); mapit_exists(iter); mapit_next(iter) )
+						users++;
+					mapit_free(iter);
+
 					if(users > 0)
 					{
 						sprintf(send_string,"NOTICE %s :%d Users Online",source_nick,users);
 						irc_send(send_string);
-						for(i = 0; i < users; i++)
+
+						iter = mapit_getallusers();
+						for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 						{
-							sprintf(send_string,"NOTICE %s :Name: \"%s\"",source_nick,allsd[i]->status.name);
+							sprintf(send_string,"NOTICE %s :Name: \"%s\"",source_nick,sd->status.name);
 							irc_send(send_string);
 						}
+						mapit_free(iter);
 					}
 					else
 					{

@@ -1326,12 +1326,16 @@ int ping_char_server(int tid, unsigned int tick, int id, int data)
 // unused
 int send_usercount_tochar(int tid, unsigned int tick, int id, int data)
 {
-	int count;
+	int count = 0;
+	struct s_mapiterator* iter;
 
 	chrif_check(-1);
-	
-	map_getallusers(&count);
-	
+
+	iter = mapit_getallusers();
+	for( mapit_first(iter); mapit_exists(iter); mapit_next(iter) )
+		count++;
+	mapit_free(iter);
+
 	WFIFOHEAD(char_fd,4);
 	WFIFOW(char_fd,0) = 0x2afe;
 	WFIFOW(char_fd,2) = count;
@@ -1345,22 +1349,32 @@ int send_usercount_tochar(int tid, unsigned int tick, int id, int data)
  *------------------------------------------*/
 int send_users_tochar(void)
 {
-	int count, users=0, i;
-	struct map_session_data **all_sd;
+	int users = 0, i = 0;
+	struct map_session_data* sd;
+	struct s_mapiterator* iter;
 
 	chrif_check(-1);
 
-	all_sd = map_getallusers(&count);
+	// get user count (TODO: improve this)
+	iter = mapit_getallusers();
+	for( mapit_first(iter); mapit_exists(iter); mapit_next(iter) )
+		users++;
+	mapit_free(iter);
+
+	// build the packet
 	WFIFOHEAD(char_fd, 6+8*users);
 	WFIFOW(char_fd,0) = 0x2aff;
-	for (i = 0; i < count; i++) {
-		WFIFOL(char_fd,6+8*users) = all_sd[i]->status.account_id;
-		WFIFOL(char_fd,6+8*users+4) = all_sd[i]->status.char_id;
-		users++;
+	iter = mapit_getallusers();
+	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+	{
+		WFIFOL(char_fd,6+8*i) = sd->status.account_id;
+		WFIFOL(char_fd,6+8*i+4) = sd->status.char_id;
+		i++;
 	}
-	WFIFOW(char_fd,2) = 6 + 8 * users;
+	mapit_free(iter);
+	WFIFOW(char_fd,2) = 6 + 8*users;
 	WFIFOW(char_fd,4) = users;
-	WFIFOSET(char_fd,6+8*users);
+	WFIFOSET(char_fd, 6+8*users);
 
 	return 0;
 }
