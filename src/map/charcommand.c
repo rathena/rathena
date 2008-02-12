@@ -684,33 +684,47 @@ int charcommand_storagelist(const int fd, struct map_session_data* sd, const cha
 	return 0;
 }
 
-static void charcommand_giveitem_sub(struct map_session_data *sd,struct item_data *item_data,int number)
+static void charcommand_item_sub(struct map_session_data *sd,struct item_data *item_data,int number)
 {
-	int flag = 0;
-	int loop = 1, get_count = number,i;
-	struct item item_tmp;
+	int loop, get_count, pet_id, i;
 
-	if(sd && item_data){
-		if (item_data->type == 4 || item_data->type == 5 ||
-			item_data->type == 7 || item_data->type == 8) {
-			loop = number;
-			get_count = 1;
+	if( sd == NULL || item_data == NULL )
+		return;
+	
+	if( !itemdb_isstackable2(item_data) ) {
+		loop = number; get_count = 1;
+	} else {
+		loop = 1; get_count = number;
+	}
+
+	for (i = 0; i < loop; i++)
+	{
+		if( (pet_id = search_petDB_index(item_data->nameid, PET_EGG)) >= 0 )
+		{// if pet egg
+			sd->catch_target_class = pet_db[pet_id].class_;
+			intif_create_pet(sd->status.account_id, sd->status.char_id,
+			                 (short)pet_db[pet_id].class_, (short)mob_db(pet_db[pet_id].class_)->lv,
+			                 (short)pet_db[pet_id].EggID, 0, (short)pet_db[pet_id].intimate,
+			                 100, 0, 1, pet_db[pet_id].jname);
 		}
-		for (i = 0; i < loop; i++) {
+		else
+		{// if not pet egg
+			int flag = 0;
+			struct item item_tmp;
 			memset(&item_tmp, 0, sizeof(item_tmp));
 			item_tmp.nameid = item_data->nameid;
 			item_tmp.identify = 1;
 
-			if ((flag = pc_additem((struct map_session_data*)sd,
-					&item_tmp, get_count)))
-				clif_additem((struct map_session_data*)sd, 0, 0, flag);
-		}
-		//Logs (A)dmins items [Lupus]
-		if(log_config.enable_logs&0x400)
-			log_pick_pc(sd, "A", item_tmp.nameid, number, &item_tmp);
+			if ((flag = pc_additem(sd, &item_tmp, get_count)))
+				clif_additem(sd, 0, 0, flag);
 
+			//Logs (A)dmins items [Lupus]
+			if(log_config.enable_logs&0x400)
+				log_pick_pc(sd, "A", item_tmp.nameid, number, &item_tmp);
+		}
 	}
 }
+
 /*==========================================
  * #item command (usage: #item <name/id_of_item> <quantity> <player>)
  * by MC Cameri
@@ -720,10 +734,9 @@ int charcommand_item(const int fd, struct map_session_data* sd, const char* comm
 	char item_name[100];
 	char character[NAME_LENGTH];
 	struct map_session_data *pl_sd;
-	int number = 0, item_id, flag;
-	struct item item_tmp;
+	int number = 0, item_id;
 	struct item_data *item_data;
-	int get_count, i, pet_id;
+	int gmlvl;
 	char tmp_cmdoutput[1024];
 	nullpo_retr(-1, sd);
 
@@ -750,62 +763,44 @@ int charcommand_item(const int fd, struct map_session_data* sd, const char* comm
 		return -1;
 	}
 
-	get_count = number;
-	// check pet egg
-	pet_id = search_petDB_index(item_id, PET_EGG);
-	if (item_data->type == 4 || item_data->type == 5 ||
-		item_data->type == 7 || item_data->type == 8) {
-		get_count = 1;
+	gmlvl = pc_isGM(sd);
+	if( !pc_can_give_items(gmlvl) )
+	{
+		clif_displaymessage(fd, msg_txt(246)); // GM is not allowed to trade
+		return -1;
 	}
 
-	if ((pl_sd = map_nick2sd(character)) == NULL)
+	if ((pl_sd = map_nick2sd(character)) != NULL)
 	{
-		if (pc_isGM(sd) < pc_isGM(pl_sd))
+		int pl_gmlvl = pc_isGM(pl_sd);
+		if( gmlvl < pl_gmlvl || !itemdb_cantrade_sub(item_data, gmlvl, pl_gmlvl) )
 		{// you can give items only to lower or same level
 			clif_displaymessage(fd, msg_txt(81)); // Your GM level don't authorise you to do this action on this player.
 			return -1;
 		}
-		else
-		{
-			for (i = 0; i < number; i += get_count) {
-				// if pet egg
-				if (pet_id >= 0) {
-					pl_sd->catch_target_class = pet_db[pet_id].class_;
-					intif_create_pet(pl_sd->status.account_id, pl_sd->status.char_id,
-									 (short)pet_db[pet_id].class_, (short)mob_db(pet_db[pet_id].class_)->lv,
-									 (short)pet_db[pet_id].EggID, 0, (short)pet_db[pet_id].intimate,
-									 100, 0, 1, pet_db[pet_id].jname);
-				// if not pet egg
-				} else {
-					memset(&item_tmp, 0, sizeof(item_tmp));
-					item_tmp.nameid = item_id;
-					item_tmp.identify = 1;
 
-					if ((flag = pc_additem(pl_sd, &item_tmp, get_count)))
-						clif_additem(pl_sd, 0, 0, flag);
-				}
-			}
-
-			//Logs (A)dmins items [Lupus]
-			if(log_config.enable_logs&0x400)
-				log_pick_pc(sd, "A", item_tmp.nameid, number, &item_tmp);
-
-			clif_displaymessage(fd, msg_txt(18)); // Item created.
-		}
-	} else
-	if (strcmpi(character,"all")==0 || strcmpi(character,"everyone")==0) {
+		charcommand_item_sub(pl_sd,item_data,number);
+		clif_displaymessage(fd, msg_txt(18)); // Item created.
+	}
+	else if (strcmpi(character,"all")==0 || strcmpi(character,"everyone")==0)
+	{
 		struct s_mapiterator* iter = mapit_getallusers();
 		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
 		{
-			charcommand_giveitem_sub(pl_sd,item_data,number);
-			snprintf(tmp_cmdoutput, sizeof(tmp_cmdoutput), "You got %s %d.", item_name,number);
-			clif_displaymessage(pl_sd->fd, tmp_cmdoutput);
+			int pl_gmlvl = pc_isGM(pl_sd);
+			if( gmlvl < pl_gmlvl || !itemdb_cantrade_sub(item_data, gmlvl, pl_gmlvl) )
+				continue;
+
+			charcommand_item_sub(pl_sd,item_data,number);
+			clif_displaymessage(pl_sd->fd, msg_txt(18)); // Item created.
 		}
 		mapit_free(iter);
 
-		snprintf(tmp_cmdoutput, sizeof(tmp_cmdoutput), "%s received %s %d.","Everyone",item_name,number);
+		snprintf(tmp_cmdoutput, sizeof(tmp_cmdoutput), "Everyone received %s %d.",item_name,number);
 		clif_displaymessage(fd, tmp_cmdoutput);
-	} else {
+	}
+	else
+	{
 		clif_displaymessage(fd, msg_txt(3)); // Character not found.
 		return -1;
 	}
