@@ -1310,7 +1310,7 @@ int delete_char_sql(int char_id, int partner_id)
 	Sql_GetData(sql_handle, 4, &data, NULL); base_level = atoi(data);
 	Sql_GetData(sql_handle, 5, &data, NULL); hom_id = atoi(data);
 
-	Sql_EscapeStringLen(sql_handle, esc_name, data, min(len, NAME_LENGTH));
+	Sql_EscapeStringLen(sql_handle, esc_name, name, min(len, NAME_LENGTH));
 	Sql_FreeResult(sql_handle);
 
 	//check for config char del condition [Lupus]
