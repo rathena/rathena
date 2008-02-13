@@ -376,7 +376,7 @@ void _mfree(void *ptr, const char *file, int line, const char *func )
 			*(long*)((char*)head_large + sizeof(struct unit_head_large) - sizeof(long) + head_large->size)
 			!= 0xdeadbeaf)
 		{
-			ShowError("Memory manager: args of aFree is overflowed pointer %s line %d\n", file, line);
+			ShowError("Memory manager: args of aFree 0x%p is overflowed pointer %s line %d\n", ptr, file, line);
 		} else {
 			head->size = -1;
 			if(head_large->prev) {
@@ -398,11 +398,11 @@ void _mfree(void *ptr, const char *file, int line, const char *func )
 		/* ユニット解放 */
 		struct block *block = head->block;
 		if( (char*)head - (char*)block > sizeof(struct block) ) {
-			ShowError("Memory manager: args of aFree is invalid pointer %s line %d\n",file,line);
+			ShowError("Memory manager: args of aFree 0x%p is invalid pointer %s line %d\n", ptr, file, line);
 		} else if(head->block == NULL) {
-			ShowError("Memory manager: args of aFree is freed pointer %s:%d@%s\n", file, line, func);
+			ShowError("Memory manager: args of aFree 0x%p is freed pointer %s:%d@%s\n", ptr, file, line, func);
 		} else if(*(long*)((char*)head + sizeof(struct unit_head) - sizeof(long) + head->size) != 0xdeadbeaf) {
-			ShowError("Memory manager: args of aFree is overflowed pointer %s line %d\n", file, line);
+			ShowError("Memory manager: args of aFree 0x%p is overflowed pointer %s line %d\n", ptr, file, line);
 		} else {
 			memmgr_usage_bytes -= head->size;
 			head->block         = NULL;
@@ -443,7 +443,7 @@ static struct block* block_malloc(unsigned short hash)
 		hash_unfill[0] = hash_unfill[0]->unfill_next;
 	} else {
 		/* ブロック用の領域を新たに確保する */
-		p = (struct block*)MALLOC(sizeof(struct block) * (BLOCK_ALLOC), file,line,func );
+		p = (struct block*)MALLOC(sizeof(struct block) * (BLOCK_ALLOC), __FILE__, __LINE__, __func__ );
 		if(p == NULL) {
 			ShowFatalError("Memory manager::block_alloc failed.\n");
 			exit(EXIT_FAILURE);
@@ -464,6 +464,7 @@ static struct block* block_malloc(unsigned short hash)
 				p[i].unfill_next = hash_unfill[0];
 				hash_unfill[0]   = &p[i];
 				p[i].unfill_prev = NULL;
+				p[i].unit_used = 0;
 			}
 			if(i != BLOCK_ALLOC -1) {
 				p[i].block_next = &p[i+1];
@@ -517,20 +518,69 @@ static FILE *log_fp;
 
 static void memmgr_log (char *buf)
 {
-	time_t raw;
-	struct tm* t;
 	if( !log_fp )
 	{
-		log_fp = fopen(memmer_logfile,"w");
+		time_t raw;
+		struct tm* t;
+
+		log_fp = fopen(memmer_logfile,"at");
 		if (!log_fp) log_fp = stdout;
-		fprintf(log_fp, "Memory manager: Memory leaks found (Revision %s).\n", get_svn_revision());
+
+		time(&raw);
+		t = localtime(&raw);
+		fprintf(log_fp, "\nMemory manager: Memory leaks found at %d/%02d/%02d %02dh%02dm%02ds (Revision %s).\n",
+			(t->tm_year+1900), (t->tm_mon+1), t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec, get_svn_revision());
 	}
-	time(&raw);
-	t = localtime(&raw);
-	fprintf(log_fp, "%04d%02d%02d%02d%02d%02d %s", (t->tm_year+1900), (t->tm_mon+1), t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec, buf);
+	fprintf(log_fp, "%s", buf);
 	return;
 }
-#endif
+#endif /* LOG_MEMMGR */
+
+/// Returns true if the memory location is active.
+/// Active means it is allocated and points to a usable part.
+///
+/// @param ptr Pointer to the memory
+/// @return true if the memory is active
+bool memmgr_verify(void* ptr)
+{
+	struct block* block = block_first;
+	struct unit_head_large* large = unit_head_large_first;
+
+	if( ptr == NULL )
+		return false;// never valid
+
+	// search small blocks
+	while( block )
+	{
+		if( (char*)ptr >= (char*)block && (char*)ptr < ((char*)block) + sizeof(struct block) )
+		{// found memory block
+			if( block->unit_used && (char*)ptr >= block->data )
+			{// memory block is being used and ptr points to a sub-unit
+				size_t i = (size_t)((char*)ptr - block->data)/block->unit_size;
+				struct unit_head* head = block2unit(block, i);
+				if( i < block->unit_maxused && head->block != NULL )
+				{// memory unit is allocated, check if ptr points to the usable part
+					return ( (char*)ptr >= ((char*)head) + sizeof(struct unit_head) - sizeof(long)
+						&& (char*)ptr < ((char*)head) + sizeof(struct unit_head) - sizeof(long) + head->size );
+				}
+			}
+			return false;
+		}
+		block = block->block_next;
+	}
+
+	// search large blocks
+	while( large )
+	{
+		if( (char*)ptr >= (char*)large && (char*)ptr < ((char*)large) + large->size )
+		{// found memory block, check if ptr points to the usable part
+			return ( (char*)ptr >= ((char*)large) + sizeof(struct unit_head_large) - sizeof(long)
+				&& (char*)ptr < ((char*)large) + sizeof(struct unit_head_large) - sizeof(long) + large->size );
+		}
+		large = large->next;
+	}
+	return false;
+}
 
 static void memmgr_final (void)
 {
@@ -539,23 +589,24 @@ static void memmgr_final (void)
 
 #ifdef LOG_MEMMGR
 	int count = 0;
-#endif
-	
+#endif /* LOG_MEMMGR */
+
 	while (block) {
-		if (block->unfill_prev) {
+		if (block->unit_used) {
 			int i;
 			for (i = 0; i < block->unit_maxused; i++) {
 				struct unit_head *head = block2unit(block, i);
 				if(head->block != NULL) {
+					char* ptr = (char *)head + sizeof(struct unit_head) - sizeof(long);
 #ifdef LOG_MEMMGR
-					char buf[128];
+					char buf[1024];
 					sprintf (buf,
-						"%04d : %s line %d size %lu\n", ++count,
-						head->file, head->line, (unsigned long)head->size);
+						"%04d : %s line %d size %lu address 0x%p\n", ++count,
+						head->file, head->line, (unsigned long)head->size, ptr);
 					memmgr_log (buf);
-#endif
+#endif /* LOG_MEMMGR */
 					// get block pointer and free it [celest]
-					_mfree ((char *)head + sizeof(struct unit_head) - sizeof(short), ALC_MARK);
+					_mfree(ptr, ALC_MARK);
 				}
 			}
 		}
@@ -565,12 +616,12 @@ static void memmgr_final (void)
 	while(large) {
 		struct unit_head_large *large2;
 #ifdef LOG_MEMMGR
-		char buf[128];
+		char buf[1024];
 		sprintf (buf,
-			"%04d : %s line %d size %lu\n", ++count,
-			large->unit_head.file, large->unit_head.line, (unsigned long)large->unit_head.size);
+			"%04d : %s line %d size %lu address 0x%p\n", ++count,
+			large->unit_head.file, large->unit_head.line, (unsigned long)large->size, &large->unit_head.checksum);
 		memmgr_log (buf);
-#endif
+#endif /* LOG_MEMMGR */
 		large2 = large->next;
 		FREE(large,file,line,func);
 		large = large2;
@@ -582,7 +633,7 @@ static void memmgr_final (void)
 		ShowWarning("Memory manager: Memory leaks found and fixed.\n");
 		fclose(log_fp);
 	}
-#endif
+#endif /* LOG_MEMMGR */
 	return;
 }
 
@@ -591,10 +642,11 @@ static void memmgr_init (void)
 #ifdef LOG_MEMMGR
 	sprintf(memmer_logfile, "log/%s.leaks", SERVER_NAME);
 	ShowStatus("Memory manager initialised: "CL_WHITE"%s"CL_RESET"\n", memmer_logfile);
-#endif
+	memset(hash_unfill, 0, sizeof(hash_unfill));
+#endif /* LOG_MEMMGR */
 	return;
 }
-#endif
+#endif /* USE_MEMMGR */
 
 
 /*======================================
@@ -605,10 +657,10 @@ static void memmgr_init (void)
 bool malloc_verify(void* ptr)
 {
 #ifdef USE_MEMMGR
-	
-#endif
-
+	return memmgr_verify(ptr);
+#else
 	return true;
+#endif
 }
 
 unsigned int malloc_usage (void)

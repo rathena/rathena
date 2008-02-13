@@ -4,7 +4,15 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/02/13
-	* Merged memory manager updates from old jA revisions (bugreport:663)
+	* Changes to memory manager: [FlavioJS]
+	- fixed blocks that are fully used not being detected (and not freed) in 
+	  memmgr_final (unfill_prev is NULL for unused blocks and full blocks)
+	- fixed memmgr_final giving the wrong address to _mfree (for small blocks)
+	- added the pointer address to most error messages (and log)
+	- made it append to the log file instead of rewriting it
+	- implemented a function to verify if a memory location is active
+	- other minor changes
+	* Merged memory manager updates from old jA revisions (bugreport:663) [ultramage]
 	- less overhead and better overflow detection (caution, experimental!)
 	* Added some security checks in mail system [Zephyrus]
 	- This supose to fix a bug reported in 622 to limit to MAX_ZENY.
