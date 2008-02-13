@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.0a
+//= 2.0b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -35,6 +35,7 @@
 //= 1.9 Fixed "him" -> "her" in Ph.D hat quest. THansk to yyCC. [L0ne_W0lf]
 //= 2.0 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.0a Corrected a Typo error ";;". [Samuray22]
+//= 2.0b Corrected a Typo error. (bugreport:950) [Samuray22]
 //============================================================ 
 
 // Prontera Culvert
@@ -2206,7 +2207,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		next;
 		select("Give him the herb pouch.");
 		if (countitem(7432) < 1) {
-			mes "[+strcharinfo(0)+]";
+			mes "["+strcharinfo(0)+"]";
 			mes "Ack!";
 			mes "Now, where did I put";
 			mes "that pouch with the herbs?";

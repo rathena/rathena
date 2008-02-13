@@ -1,5 +1,8 @@
 Date		Added
 ======
+2008/02/13
+	* Corrected a "donpcevent" missing a ":" in Cooking Quest. (bugreport:962) [Samuray22]
+	* Corrected a Typo error in quest_prontera.txt. (bugreport:950)
 2008/02/08
 	* rev. 12188 Castle ownership displays at the start and end of WoE. [L0ne_W0lf]
 	* Rev. 12187 Fixed a typo in the Lunar new year event. [L0ne_W0lf]
