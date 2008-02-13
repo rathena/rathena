@@ -11295,13 +11295,14 @@ void clif_Mail_new(int fd, int mail_id, const char *sender, const char *title)
 }
 
 /*------------------------------------------
- * Opens Mail Window on Client
+ * Handles Mail Window on Client
+ * flag : 0 open | 1 close
  *------------------------------------------*/
-void clif_Mail_openmail(int fd)
+void clif_Mail_window(int fd, int flag)
 {
 	WFIFOHEAD(fd,packet_len(0x260));
 	WFIFOW(fd,0) = 0x260;
-	WFIFOL(fd,2) = 0;
+	WFIFOL(fd,2) = flag;
 	WFIFOSET(fd,packet_len(0x260));
 }
 
@@ -11429,6 +11430,7 @@ void clif_parse_Mail_read(int fd, struct map_session_data *sd)
 void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 {
 	int i, mail_id = RFIFOL(fd,2);
+	bool fail = false;
 
 	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
 	if( i == MAIL_MAX_INBOX )
@@ -11445,8 +11447,23 @@ void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 		if ((data = itemdb_search(sd->mail.inbox.msg[i].item.nameid)) == NULL)
 			return;
 
+		switch( pc_checkadditem(sd, data->nameid, sd->mail.inbox.msg[i].item.amount) )
+		{
+			case ADDITEM_NEW:
+				fail = ( pc_inventoryblank(sd) == 0 );
+				break;
+			case ADDITEM_OVERAMOUNT:
+				fail = true;
+		}
+
+		if( fail )
+		{
+			clif_Mail_getattachment(fd, 1);
+			return;
+		}
+
 		weight = data->weight * sd->mail.inbox.msg[i].item.amount;
-		if (weight > sd->max_weight - sd->weight)
+		if( weight > sd->max_weight - sd->weight )
 		{
 			clif_Mail_getattachment(fd, 2);
 			return;

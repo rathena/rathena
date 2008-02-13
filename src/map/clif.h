@@ -394,7 +394,7 @@ int do_init_clif(void);
 
 #ifndef TXT_ONLY
 // MAIL SYSTEM
-void clif_Mail_openmail(int fd);
+void clif_Mail_window(int fd, int flag);
 void clif_Mail_read(struct map_session_data *sd, int mail_id);
 void clif_Mail_delete(int fd, int mail_id, short fail);
 void clif_Mail_return(int fd, int mail_id, short fail);

@@ -6,6 +6,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2008/02/13
 	* Merged memory manager updates from old jA revisions (bugreport:663)
 	- less overhead and better overflow detection (caution, experimental!)
+	* Added some security checks in mail system [Zephyrus]
+	- This supose to fix a bug reported in 622 to limit to MAX_ZENY.
+	- Also add more checks to free space in your inventory to receive items.
 2008/02/11
 	* 'Forget me Not' no longer blocks ASPD bonuses from working or prevents
 	  their re-casting, they are simply dispelled when the effect takes place.

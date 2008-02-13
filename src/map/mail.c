@@ -135,12 +135,6 @@ bool mail_setattachment(struct map_session_data *sd, struct mail_message *msg)
 
 void mail_getattachment(struct map_session_data* sd, int zeny, struct item* item)
 {
-	if( zeny > 0 )
-	{
-		sd->status.zeny += zeny;
-		clif_updatestatus(sd, SP_ZENY);
-	}
-
 	if( item->nameid > 0 && item->amount > 0 )
 	{
 		pc_additem(sd, item, item->amount);
@@ -150,6 +144,9 @@ void mail_getattachment(struct map_session_data* sd, int zeny, struct item* item
 
 		clif_Mail_getattachment(sd->fd, 0);
 	}
+
+	if( zeny > 0 )
+		pc_getzeny(sd, zeny);
 }
 
 int mail_openmail(struct map_session_data *sd)
@@ -159,9 +156,9 @@ int mail_openmail(struct map_session_data *sd)
 	if( sd->state.finalsave == 1 || sd->state.storage_flag || sd->vender_id || sd->state.trading )
 		return 0;
 
-	clif_Mail_openmail(sd->fd);	
+	clif_Mail_window(sd->fd, 0);
 
-	return 0;
+	return 1;
 }
 
 void mail_deliveryfail(struct map_session_data *sd, struct mail_message *msg)
