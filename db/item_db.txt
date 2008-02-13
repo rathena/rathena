@@ -2205,13 +2205,13 @@
 //5337,Party_Hat__,Party Hat,5,,,700,,2,,0,0xFFFFFFFF,7,2,256,,10,1,351,{},{},{}
 //5338,Boyfriend_Hat,Boyfriend Hat,5,,,700,,2,,0,0xFFFFFFFF,7,2,256,,10,1,352,{},{},{}
 //5339,Friend_Hat,Friend Hat,5,,,700,,2,,0,0xFFFFFFFF,7,2,256,,10,1,353,{},{},{}
-//5340,Deporte_Doll_Hat,Deporte Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,354,{ bonus bStr,2; },{},{}
-//5341,Glarice_Doll_Hat,Clarice Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,355,{ bonus bInt,2; },{},{}
-//5342,Sorin_Doll_Hat,Sorin Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,356,{ bonus bDex,2; },{},{}
-//5343,Tailring_Doll_Hat,Tailring Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,357,{ bonus bAgi,2; },{},{}
-//5344,Vinit_Doll_Hat,Vinit Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,358,{ bonus bVit,2; },{},{}
-//5345,W_Doll_Hat,W Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,359,{ bonus bLuk,2; },{},{}
-//5346,Girlfriend_Hat,Girlfriend Hat,5,,,700,,0,,0,0xFFFFFFFF,7,2,256,,10,1,360,{},{},{}
+//5340,Deporte_Doll_Hat,Deporte Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,354,{ bonus2 bSubRace,RC_DemiHuman,5; bonus bStr,2; },{},{}
+//5341,Glarice_Doll_Hat,Clarice Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,355,{ bonus2 bSubRace,RC_DemiHuman,5; bonus bInt,2; },{},{}
+//5342,Sorin_Doll_Hat,Sorin Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,356,{ bonus2 bSubRace,RC_DemiHuman,5; bonus bDex,2; },{},{}
+//5343,Tailring_Doll_Hat,Tailring Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,357,{ bonus2 bSubRace,RC_DemiHuman,5; bonus bAgi,2; },{},{}
+//5344,Vinit_Doll_Hat,Vinit Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,358,{ bonus2 bSubRace,RC_DemiHuman,5; bonus bVit,2; },{},{}
+//5345,W_Doll_Hat,W Doll Hat,5,,,500,,0,,1,0xFFFFFFFF,7,2,256,,60,0,359,{ bonus2 bSubRace,RC_DemiHuman,5; bonus bLuk,2; },{},{}
+5346,Girlfriend_Hat,Girlfriend Hat,5,,,700,,0,,0,0xFFFFFFFF,7,2,256,,10,1,360,{},{},{}
 5347,Ph.D_Hat_,Ph.D Hat,5,20,,200,,3,,1,0xFFFFFFFE,7,2,256,,0,1,98,{},{},{}
 5348,Big_Sis'_Ribbon_,Big Ribbon,5,15000,,200,,2,,1,0xFFFFFFFE,7,2,256,,0,1,28,{ bonus bMdef,3; },{},{}
 5349,Boy's_Cap_,Boys Cap,5,20,,100,,2,,1,0xFFFFFFFE,7,2,256,,0,1,102,{},{},{}
@@ -2244,6 +2244,14 @@
 5382,Bell_Ribbon,Bell Ribbon,5,,,200,,3,,1,0xFFFFFFFF,7,2,256,,0,1,388,{ bonus bVit,1; skill 33,1; },{},{}
 5383,Hunter_Cap,Hunter Cap,5,,,250,,3,,1,0xFFFFFFFE,7,2,256,,50,1,389,{},{},{ bonus bLuk,1; }
 //5385,Yoyo_Hat,Yoyo Hat,5,,,300,,1,,0,0xFFFFFFFF,7,2,256,,20,1,391,{ skill 51,1; },{},{}
+// ??? 5386,NewYear_Suit_Hat,NewYear Suit Hat,
+// ??? 5387,Nekomimi_Kafra_Headband,Nekomimi Kafra Headband, slot
+// ??? 5388,Snake_Head_Hat,Snake Head Hat, slot
+// ??? 5389,Angel_Of_Ghost,Angel Of Ghost,
+//5390,Blue_France_Santa_Hat,Blue France Santa Hat,5,,,100,,2,,0,0xFFFFFFFF,7,2,256,,0,1,395,{ bonus2 bResEff,Eff_Freeze,3000; },{},{}
+// ??? Missing ID
+//5392,Topi_Raja_Angpao,Topi Raja Angpao,5,,,300,,3,,1,0xFFFFFFFF,7,2,256,,0,1,397,{ bonus bLuk,2; bonus2 bAddMonsterDropItem,668,3; },{},{}
+//5393,Love_Valentine's_Hat,Love Valentine's Hat,5,,,200,,2,,0,0xFFFFFFFF,7,2,256,,0,0,398,{ bonus bMaxSPrate,7; bonus bMaxHPrate,7; },{},{}
 5800,Blush_Of_Groom,Blush of Groom,5,,,50,,0,,0,0xFFFFFFFF,7,2,512,,0,0,125,{ bonus2 bSubRace,RC_DemiHuman,3; },{},{}
 5801,Ribbon_Of_Bride,Red Tailed Ribbon,5,,,100,,5,,0,0xFFFFFFFF,7,2,256,,0,1,167,{ bonus bAllStats,2; bonus2 bSubRace,RC_DemiHuman,10; if (getskilllv(29) == 10) { bonus3 bAutoSpellWhenHit,28,10,20; } else { bonus3 bAutoSpellWhenHit,28,5,20; } },{},{}
 5802,Upgrade_Elephant_Hat,Upgraded Elephant Hat,5,,,500,,3,,1,0xFFFFFFFF,7,2,256,,0,1,215,{},{},{}
@@ -2252,7 +2260,7 @@
 5805,Victorious_Coronet,Victorious Coronet,5,,10,150,,1,,0,0xFFFFFFFF,7,2,256,,70,1,43,{ bonus bMaxHPrate,15; bonus bSPrecovRate,5; },{},{}
 5806,Natalie's_Poet_Hat,Natalie's Poet Hat,5,,10,300,,0,,0,0xFFFFFFFF,7,2,256,,1,0,67,{},{},{}
 5807,Octopus_Hat,Octopus Hat,5,,,100,,1,,0,0xFFFFFFFE,7,2,256,,1,0,104,{},{},{}
-5808,Dark_Bashilrium,Dark Bashilrium,5,,,250,,5,,1,0x00CFFF80,2,2,769,,1,0,364,{ bonus2 bResEff,Eff_Stone,2000+(getrefine()*2); bonus2 bResEff,Eff_Freeze,2000+(getrefine()*2); bonus2 bResEff,Eff_Stun,2000+(getrefine()*2); },{},{}
+5808,Dark_Bashilrium,Dark Bashilrium,5,,,250,,5,,1,0x00CFFF80,2,2,769,,1,0,364,{ bonus2 bResEff,Eff_Stone,2000+(getrefine()*200); bonus2 bResEff,Eff_Freeze,2000+(getrefine()*200); bonus2 bResEff,Eff_Stun,2000+(getrefine()*200); },{},{}
 // More Etc Items
 //===================================================================
 7001,Mould_Powder,Mould Powder,3,466,,10,,,,,,,,,,,,,{},{},{}
