@@ -438,6 +438,10 @@ extern struct Battle_Config
 	int homunculus_show_growth ;	//[orn]
 	int homunculus_friendly_rate;
 	int quest_exp_rate;
+	int homunculus_autoloot;
+	int idle_no_autoloot;
+	int max_guild_alliance;
+	int ksprotection;
 } battle_config;
 
 void do_init_battle(void);

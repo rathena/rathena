@@ -807,6 +807,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, short skill_num, sh
 		if(skillnotok(skill_num, sd)) // [MouseJstr]
 			return 0;
 
+		mob_ksprotected(src, map_id2bl(target_id));
+
 		switch(skill_num)
 		{	//Check for skills that auto-select target
 		case MO_CHAINCOMBO:

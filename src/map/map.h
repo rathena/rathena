@@ -551,6 +551,8 @@ struct map_session_data {
 		unsigned doridori : 1;
 		unsigned ignoreAll : 1;
 		unsigned short autoloot;
+		unsigned short autolootid; // [Zephyrus]
+		unsigned noks : 1; // [Zeph Kill Steal Protection]
 		struct guild *gmaster_flag;
 	} state;
 	struct {
@@ -612,6 +614,7 @@ struct map_session_data {
 	unsigned int canuseitem_tick;	// [Skotlex]
 	unsigned int cantalk_tick;
 	unsigned int cansendmail_tick; // [Mail System Flood Protection]
+	unsigned int ks_floodprotect_tick; // [Kill Steal Protection]
 
 	short weapontype1,weapontype2;
 	short disguise; // [Valaris]
@@ -911,6 +914,11 @@ struct mob_data {
 	unsigned int tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
 	int level;
 	int target_id,attacked_id;
+
+	// Kill Steal Protection
+	int owner_id;
+	unsigned int ks_tick;
+	
 	unsigned int next_walktime,last_thinktime,last_linktime;
 	short move_fail_count;
 	short lootitem_count;
@@ -1168,6 +1176,7 @@ struct map_data {
 	int npc_num;
 	int users;
 	struct map_flag {
+		unsigned allowks : 1; // [Kill Steal Protection]
 		unsigned nomemo : 1;
 		unsigned noteleport : 1;
 		unsigned noreturn : 1;

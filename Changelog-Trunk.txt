@@ -17,6 +17,9 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Added some security checks in mail system [Zephyrus]
 	- This supose to fix a bug reported in 622 to limit to MAX_ZENY.
 	- Also add more checks to free space in your inventory to receive items.
+	* Added some new config settings: [Zephyrus]
+	- homunculus_autoloot, idle_no_autoloot, max_guild_alliance.
+	- Added a code to activate a Kill Steal protection and the required mapflags.
 2008/02/11
 	* 'Forget me Not' no longer blocks ASPD bonuses from working or prevents
 	  their re-casting, they are simply dispelled when the effect takes place.

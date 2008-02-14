@@ -157,6 +157,7 @@ struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m,
 int mob_once_spawn(struct map_session_data* sd,int m,short x,short y,const char* mobname,int class_,int amount,const char* event);
 int mob_once_spawn_area(struct map_session_data* sd,int m,int x0,int y0,int x1,int y1,const char* mobname,int class_,int amount,const char* event);
 
+bool mob_ksprotected (struct block_list *src, struct block_list *target);
 int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, int guardian);	// Spawning Guardians [Valaris]
 int mob_guardian_guildchange(struct block_list *bl,va_list ap); //Change Guardian's ownership. [Skotlex]
 

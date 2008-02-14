@@ -1250,11 +1250,11 @@ int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd)
 	if(sd->status.guild_id == tsd->status.guild_id)
 		return 0;
 
-	if( guild_get_alliance_count(g[0],0)>=3 )	{
+	if( guild_get_alliance_count(g[0],0) >= battle_config.max_guild_alliance )	{
 		clif_guild_allianceack(sd,4);
 		return 0;
 	}
-	if( guild_get_alliance_count(g[1],0)>=3 ) {
+	if( guild_get_alliance_count(g[1],0) >= battle_config.max_guild_alliance ) {
 		clif_guild_allianceack(sd,3);
 		return 0;
 	}
@@ -1300,12 +1300,12 @@ int guild_reply_reqalliance(struct map_session_data *sd,int account_id,int flag)
 		g=guild_search(sd->status.guild_id);
 		tg=guild_search(tsd->status.guild_id);
 		
-		if(g==NULL || guild_get_alliance_count(g,0)>=3){
+		if(g==NULL || guild_get_alliance_count(g,0) >= battle_config.max_guild_alliance){
 			clif_guild_allianceack(sd,4);
 			clif_guild_allianceack(tsd,3);
 			return 0;
 		}
-		if(tg==NULL || guild_get_alliance_count(tg,0)>=3){
+		if(tg==NULL || guild_get_alliance_count(tg,0) >= battle_config.max_guild_alliance){
 			clif_guild_allianceack(sd,3);
 			clif_guild_allianceack(tsd,4);
 			return 0;
@@ -1367,7 +1367,7 @@ int guild_opposition(struct map_session_data *sd,struct map_session_data *tsd)
 	if(sd->status.guild_id == tsd->status.guild_id)
 		return 0;
 
-	if( guild_get_alliance_count(g,1)>=3 )	{
+	if( guild_get_alliance_count(g,1) >= battle_config.max_guild_alliance )	{
 		clif_guild_oppositionack(sd,1);
 		return 0;
 	}

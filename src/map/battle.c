@@ -259,6 +259,9 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 	if (!damage)
 		return 0;
 	
+	if( mob_ksprotected(src, bl) )
+		return 0;
+
 	if (bl->type == BL_PC) {
 		sd=(struct map_session_data *)bl;
 		//Special no damage states
@@ -3139,23 +3142,22 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_PC:
 		{
 			TBL_PC *sd = (TBL_PC*) s_bl;
-			if (sd->state.killer && s_bl != t_bl)
+			if( s_bl != t_bl )
 			{
-				state |= BCT_ENEMY; //Is on a killing rampage :O
-				strip_enemy = 0;
-			} else
-			if (sd->duel_group && t_bl != s_bl && // Duel [LuzZza]
-				!(
-					(!battle_config.duel_allow_pvp && map[m].flag.pvp) ||
-					(!battle_config.duel_allow_gvg && map_flag_gvg(m))
-				))
-		  	{
-				if (t_bl->type == BL_PC &&
-					(sd->duel_group == ((TBL_PC*)t_bl)->duel_group))
-					//Duel targets can ONLY be your enemy, nothing else.
-					return (BCT_ENEMY&flag)?1:-1;
-				else // You can't target anything out of your duel
-					return 0;
+				if( sd->state.killer )
+				{
+					state |= BCT_ENEMY; //Is on a killing rampage :O
+					strip_enemy = 0;
+				}
+				else if( sd->duel_group && !((!battle_config.duel_allow_pvp && map[m].flag.pvp) || (!battle_config.duel_allow_gvg && map_flag_gvg(m))) )
+		  		{
+					if (t_bl->type == BL_PC &&
+						(sd->duel_group == ((TBL_PC*)t_bl)->duel_group))
+						//Duel targets can ONLY be your enemy, nothing else.
+						return (BCT_ENEMY&flag)?1:-1;
+					else // You can't target anything out of your duel
+						return 0;
+				}
 			}
 			if (map_flag_gvg(m) && !sd->status.guild_id &&
 				t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->guardian_data)
@@ -3650,6 +3652,10 @@ static const struct _battle_data {
 	{ "sg_miracle_skill_duration",          &battle_config.sg_miracle_skill_duration,       3600000, 0,     INT_MAX,        },
 	{ "hvan_explosion_intimate",            &battle_config.hvan_explosion_intimate,         45000,  0,      100000,         },
 	{ "quest_exp_rate",                     &battle_config.quest_exp_rate,                  100,    0,      INT_MAX,        },
+	{ "homunculus_autoloot",                &battle_config.homunculus_autoloot,             0,      0,      1,              },
+	{ "idle_no_autoloot",                   &battle_config.idle_no_autoloot,                0,      0,      INT_MAX,        },
+	{ "max_guild_alliance",                 &battle_config.max_guild_alliance,              3,      1,      3,              },
+	{ "ksprotection",                       &battle_config.ksprotection,                    5000,   0,      INT_MAX,        },
 };
 
 

@@ -10,6 +10,7 @@
 #include "../common/ers.h"
 #include "../common/strlib.h"
 #include "../common/utils.h"
+#include "../common/socket.h"
 
 #include "map.h"
 #include "path.h"
@@ -275,6 +276,80 @@ int mob_get_random_id(int type, int flag, int lv)
 	return class_;
 }
 
+/*==========================================
+ * Kill Steal Protection [Zephyrus]
+ *------------------------------------------*/
+bool mob_ksprotected (struct block_list *src, struct block_list *target)
+{
+	struct block_list *s_bl;
+	struct map_session_data *sd, *pl_sd;
+	struct mob_data *md;
+	unsigned int tick = gettick();
+	char output[128];
+
+	if( !battle_config.ksprotection )
+		return false; // KS Protection Disabled
+
+	if( !(md = BL_CAST(BL_MOB,target)) )
+		return false; // Tarjet is not MOB
+
+	if( (s_bl = battle_get_master(src)) == NULL )
+		s_bl = src;
+
+	if( !(sd = BL_CAST(BL_PC,s_bl)) )
+		return false; // Master is not PC
+
+	do {
+		if( map[md->bl.m].flag.allowks || map[md->bl.m].flag.gvg || map[md->bl.m].flag.pvp )
+			return false; // Ignores GVG, PVP and AllowKS map flags
+
+		if( md->db->mexp || md->master_id )
+			return false; // MVP and Slaves ignores KS
+
+		if( sd->bl.id == md->owner_id )
+			break; // Same player
+
+		if( !md->owner_id || !(pl_sd = map_id2sd(md->owner_id)) )
+			break; // Not owner or owner offline
+
+		if( pl_sd->bl.m != md->bl.m )
+			break; // Owner on different map
+
+		if( DIFF_TICK(md->ks_tick, tick) <= 0 )
+			break; // Protection Time's Out
+
+		if( !pl_sd->state.noks )
+			return false; // No KS Protected, but this is necessary to protect normal players
+
+		if( pl_sd->status.party_id && pl_sd->status.party_id == sd->status.party_id )
+			break; // Same Party Allow KS
+
+		// Message to KS
+		if( DIFF_TICK(sd->ks_floodprotect_tick, tick) <= 0 )
+		{
+			sprintf(output, "[KS Warning!! - Owner : %s]", pl_sd->status.name);
+			clif_disp_onlyself(sd, output, strlen(output));
+
+			sd->ks_floodprotect_tick = tick + 2000;
+		}
+
+		// Message to Owner
+		if( DIFF_TICK(pl_sd->ks_floodprotect_tick, tick) <= 0 )
+		{
+			sprintf(output, "[Warning!! - %s is KS you]", sd->status.name);
+			clif_disp_onlyself(pl_sd, output, strlen(output));
+
+			pl_sd->ks_floodprotect_tick = tick + 2000;
+		}
+
+		return true;
+	} while(0);
+
+	md->owner_id = sd->bl.id;
+	md->ks_tick = tick + battle_config.ksprotection;
+
+	return false;
+}
 
 struct mob_data *mob_once_spawn_sub(struct block_list *bl, int m, short x, short y, const char *mobname, int class_, const char *event)
 {
@@ -1522,8 +1597,9 @@ static int mob_delay_item_drop(int tid, unsigned int tick, int id, int data)
  * Sets the item_drop into the item_drop_list.
  * Also performs logging and autoloot if enabled.
  * rate is the drop-rate of the item, required for autoloot.
+ * flag : Killed only by homunculus?
  *------------------------------------------*/
-static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, struct item_drop *ditem, int loot, int drop_rate)
+static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, struct item_drop *ditem, int loot, int drop_rate, unsigned short flag)
 {
 	TBL_PC* sd;
 
@@ -1538,7 +1614,7 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	sd = map_charid2sd(dlist->first_charid);
 	if( sd == NULL ) sd = map_charid2sd(dlist->second_charid);
 	if( sd == NULL ) sd = map_charid2sd(dlist->third_charid);
-	if( sd && drop_rate <= sd->state.autoloot
+	if( sd && (drop_rate <= sd->state.autoloot || ditem->item_data.nameid == sd->state.autolootid) && sd->idletime >= (last_tick - battle_config.idle_no_autoloot) && (battle_config.homunculus_autoloot?1:!flag)
 #ifdef AUTOLOOT_DISTANCE
 		&& check_distance_blxy(&sd->bl, dlist->x, dlist->y, AUTOLOOT_DISTANCE)
 #endif
@@ -1777,6 +1853,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	} pt[DAMAGELOG_SIZE];
 	int i,temp,count,pnum=0,m=md->bl.m;
 	unsigned int mvp_damage, tick = gettick();
+	unsigned short flaghom = 1; // [Zephyrus] Does the mob only received damage from homunculus?
 
 	if(src && src->type == BL_PC) {
 		sd = (struct map_session_data *)src;
@@ -1851,6 +1928,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		}
 
 		tmpsd[i] = tsd; // record as valid damage-log entry
+
+		if(!md->dmglog[i].flag && flaghom)
+			flaghom = 0; // Damage received from other Types != Homunculus
 	}
 
 	if(!battle_config.exp_calc_type && count > 1)
@@ -2045,13 +2125,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 			// Announce first, or else ditem will be freed. [Lance]
 			// By popular demand, use base drop rate for autoloot code. [Skotlex]
-			mob_item_drop(md, dlist, ditem, 0, md->db->dropitem[i].p);
+			mob_item_drop(md, dlist, ditem, 0, md->db->dropitem[i].p, flaghom);
 		}
 
 		// Ore Discovery [Celest]
 		if (sd == mvp_sd && pc_checkskill(sd,BS_FINDINGORE)>0 && battle_config.finding_ore_rate/10 >= rand()%10000) {
 			ditem = mob_setdropitem(itemdb_searchrandomid(IG_FINDINGORE), 1);
-			mob_item_drop(md, dlist, ditem, 0, battle_config.finding_ore_rate/10);
+			mob_item_drop(md, dlist, ditem, 0, battle_config.finding_ore_rate/10, 0);
 		}
 
 		if(sd) {
@@ -2077,7 +2157,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					if (rand()%10000 >= drop_rate)
 						continue;
 					itemid = (sd->add_drop[i].id > 0) ? sd->add_drop[i].id : itemdb_searchrandomid(sd->add_drop[i].group);
-					mob_item_drop(md, dlist, mob_setdropitem(itemid,1), 0, drop_rate);
+					mob_item_drop(md, dlist, mob_setdropitem(itemid,1), 0, drop_rate, 0);
 				}
 			}
 			
@@ -2093,7 +2173,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		// process items looted by the mob
 		if(md->lootitem) {
 			for(i = 0; i < md->lootitem_count; i++)
-				mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000);
+				mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000, 0);
 		}
 		if (dlist->item) //There are drop items.
 			add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, (int)dlist, 0);
@@ -2109,7 +2189,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 		dlist->item = NULL;
 		for(i = 0; i < md->lootitem_count; i++)
-			mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000);
+			mob_item_drop(md, dlist, mob_setlootitem(&md->lootitem[i]), 1, 10000, 0);
 		add_timer(tick + (!battle_config.delay_battle_damage?500:0), mob_delay_item_drop, (int)dlist, 0);
 	}
 

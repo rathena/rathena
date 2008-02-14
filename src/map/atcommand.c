@@ -6085,9 +6085,55 @@ int atcommand_autoloot(const int fd, struct map_session_data* sd, const char* co
 		clif_displaymessage(fd, atcmd_output);
 	}else 
 		clif_displaymessage(fd, "Autoloot is now off.");
-	return 0;  
-}   
 
+	if (sd->state.autoloot && sd->state.autolootid) {
+		// Autolootitem should be turned off
+		sd->state.autolootid = 0;
+		clif_displaymessage(fd, "Autolootitem is now off.");
+	}
+
+	return 0;  
+}
+/*==========================================
+ * @autolootitem
+ *------------------------------------------*/
+int atcommand_autolootitem(const int fd, struct map_session_data* sd, const char* command, const char* message)
+{
+	struct item_data *item_data = NULL;
+
+	if (!message || !*message) {
+		if (sd->state.autolootid) {
+			sd->state.autolootid = 0;
+			clif_displaymessage(fd, "Autolootitem have been turned OFF.");
+		} else
+			clif_displaymessage(fd, "Please, enter Item name or its ID (usage: @autolootitem <item_name_or_ID>).");
+
+		return -1;
+	}
+
+	if ((item_data = itemdb_exists(atoi(message))) == NULL)
+		item_data = itemdb_searchname(message);
+
+	if (!item_data) {
+		// No items founds in the DB with Id or Name
+		clif_displaymessage(fd, "Item not found.");
+		return -1;
+	}
+
+	sd->state.autolootid = item_data->nameid; // Autoloot Activated
+
+	sprintf(atcmd_output, "Autolooting Item: '%s'/'%s' {%d}",
+		item_data->name, item_data->jname, item_data->nameid);
+	clif_displaymessage(fd, atcmd_output);
+
+	if (sd->state.autolootid && sd->state.autoloot) {
+		// Autoloot should be turned off
+		sd->state.autoloot = 0;
+		clif_displaymessage(fd, "Autoloot is now off (cannot be actitaved together).");
+	}
+
+	return 0;
+}
 
 /*==========================================
  * It is made to rain.
@@ -8115,8 +8161,42 @@ int atcommand_feelreset(const int fd, struct map_session_data* sd, const char* c
 	return 0;
 }
 
+/*==========================================
+ * Kill Steal Protection
+ *------------------------------------------*/
+int atcommand_ksprotection(const int fd, struct map_session_data *sd, const char *command, const char *message)
+{
+	nullpo_retr(-1,sd);
 
+	if( sd->state.noks ) {
+		sd->state.noks = 0;
+		sprintf(atcmd_output, "[ K.S Protection Inactive ]");
+	} else {
+		sprintf(atcmd_output, "[ K.S Protection Active ]");
+		sd->state.noks = 1;
+	}
 
+	clif_displaymessage(fd, atcmd_output);
+	return 0;
+}
+/*==========================================
+ * Map Kill Steal Protection Setting
+ *------------------------------------------*/
+int atcommand_allowks(const int fd, struct map_session_data *sd, const char *command, const char *message)
+{
+	nullpo_retr(-1,sd);
+
+	if( map[sd->bl.m].flag.allowks ) {
+		map[sd->bl.m].flag.allowks = 0;
+		sprintf(atcmd_output, "[ Map K.S Protection Active ]");
+	} else {
+		map[sd->bl.m].flag.allowks = 1;
+		sprintf(atcmd_output, "[ Map K.S Protection Inactive ]");
+	}
+
+	clif_displaymessage(fd, atcmd_output);
+	return 0;
+}
 
 /*==========================================
  * atcommand_info[] structure definition
@@ -8348,6 +8428,7 @@ AtCommandInfo atcommand_info[] = {
 	{ "disguiseall",       99,     atcommand_disguiseall },
 	{ "changelook",        60,     atcommand_changelook },
 	{ "autoloot",          10,     atcommand_autoloot },
+	{ "alootid",           10,     atcommand_autolootitem },
 	{ "mobinfo",            1,     atcommand_mobinfo },
 	{ "monsterinfo",        1,     atcommand_mobinfo },
 	{ "mi",                 1,     atcommand_mobinfo },
@@ -8407,6 +8488,8 @@ AtCommandInfo atcommand_info[] = {
 	{ "showmobs",          10,     atcommand_showmobs },
 	{ "feelreset",         10,     atcommand_feelreset },
 	{ "mail",               1,     atcommand_mail },
+	{ "noks",               0,     atcommand_ksprotection },
+	{ "allowks",            6,     atcommand_allowks },
 };
 
 
