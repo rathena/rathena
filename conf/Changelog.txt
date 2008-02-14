@@ -1,5 +1,7 @@
 Date	Added
 
+2008/02/14
+	* Removed atcommand @whozeny [ultramage]
 2008/02/11
 	* Added 'input_min_value' and 'input_max_value' to script_athena.conf. [FlavioJS]
 2008/01/22

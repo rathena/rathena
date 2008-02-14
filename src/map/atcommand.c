@@ -789,8 +789,9 @@ int atcommand_who(const int fd, struct map_session_data* sd, const char* command
  *------------------------------------------*/
 int atcommand_whomap3(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, count, users;
+	struct map_session_data *pl_sd;
+	struct s_mapiterator* iter;
+	int count;
 	int pl_GM_level, GM_level;
 	int map_id;
 	char map_name[MAP_NAME_LENGTH_EXT];
@@ -808,22 +809,24 @@ int atcommand_whomap3(const int fd, struct map_session_data* sd, const char* com
 
 	count = 0;
 	GM_level = pc_isGM(sd);
-	pl_allsd = map_getallusers(&users);
-	for (i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i])) {
-			pl_GM_level = pc_isGM(pl_sd);
-			if (!((battle_config.hide_GM_session || (pl_sd->sc.option & OPTION_INVISIBLE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
-				if (pl_sd->bl.m == map_id) {
-					if (pl_GM_level > 0)
-						sprintf(atcmd_output, "Name: %s (GM:%d) | Location: %s %d %d", pl_sd->status.name, pl_GM_level, mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
-					else
-						sprintf(atcmd_output, "Name: %s | Location: %s %d %d", pl_sd->status.name, mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
-					clif_displaymessage(fd, atcmd_output);
-					count++;
-				}
-			}
-		}
+
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+	{
+		pl_GM_level = pc_isGM(pl_sd);
+		if( pl_sd->bl.m != map_id )
+			continue;
+		if( (battle_config.hide_GM_session || (pl_sd->sc.option & OPTION_INVISIBLE)) && (pl_GM_level > GM_level) )
+			continue;
+
+		if (pl_GM_level > 0)
+			sprintf(atcmd_output, "Name: %s (GM:%d) | Location: %s %d %d", pl_sd->status.name, pl_GM_level, mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
+		else
+			sprintf(atcmd_output, "Name: %s | Location: %s %d %d", pl_sd->status.name, mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
+		clif_displaymessage(fd, atcmd_output);
+		count++;
 	}
+	mapit_free(iter);
 
 	if (count == 0)
 		sprintf(atcmd_output, msg_txt(54), map[map_id].name); // No player found in map '%s'.
@@ -842,8 +845,9 @@ int atcommand_whomap3(const int fd, struct map_session_data* sd, const char* com
  *------------------------------------------*/
 int atcommand_whomap2(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, count, users;
+	struct map_session_data *pl_sd;
+	struct s_mapiterator* iter;
+	int count;
 	int pl_GM_level, GM_level;
 	int map_id = 0;
 	char map_name[MAP_NAME_LENGTH_EXT];
@@ -863,22 +867,24 @@ int atcommand_whomap2(const int fd, struct map_session_data* sd, const char* com
 
 	count = 0;
 	GM_level = pc_isGM(sd);
-	pl_allsd = map_getallusers(&users);
-	for (i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i])) {
-			pl_GM_level = pc_isGM(pl_sd);
-			if (!((battle_config.hide_GM_session || (pl_sd->sc.option & OPTION_INVISIBLE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
-				if (pl_sd->bl.m == map_id) {
-					if (pl_GM_level > 0)
-						sprintf(atcmd_output, "Name: %s (GM:%d) | BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.name, pl_GM_level, pl_sd->status.base_level, job_name(pl_sd->status.class_), pl_sd->status.job_level);
-					else
-						sprintf(atcmd_output, "Name: %s | BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.name, pl_sd->status.base_level, job_name(pl_sd->status.class_), pl_sd->status.job_level);
-					clif_displaymessage(fd, atcmd_output);
-					count++;
-				}
-			}
-		}
+
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+	{
+		pl_GM_level = pc_isGM(pl_sd);
+		if( pl_sd->bl.m != map_id )
+			continue;
+		if( (battle_config.hide_GM_session || (pl_sd->sc.option & OPTION_INVISIBLE)) && (pl_GM_level > GM_level) )
+			continue;
+
+		if (pl_GM_level > 0)
+			sprintf(atcmd_output, "Name: %s (GM:%d) | BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.name, pl_GM_level, pl_sd->status.base_level, job_name(pl_sd->status.class_), pl_sd->status.job_level);
+		else
+			sprintf(atcmd_output, "Name: %s | BLvl: %d | Job: %s (Lvl: %d)", pl_sd->status.name, pl_sd->status.base_level, job_name(pl_sd->status.class_), pl_sd->status.job_level);
+		clif_displaymessage(fd, atcmd_output);
+		count++;
 	}
+	mapit_free(iter);
 
 	if (count == 0)
 		sprintf(atcmd_output, msg_txt(54), map[map_id].name); // No player found in map '%s'.
@@ -899,8 +905,9 @@ int atcommand_whomap(const int fd, struct map_session_data* sd, const char* comm
 {
 	char temp0[100];
 	char temp1[100];
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, count, users;
+	struct map_session_data *pl_sd;
+	struct s_mapiterator* iter;
+	int count;
 	int pl_GM_level, GM_level;
 	int map_id = 0;
 	char map_name[MAP_NAME_LENGTH_EXT];
@@ -925,31 +932,31 @@ int atcommand_whomap(const int fd, struct map_session_data* sd, const char* comm
 	count = 0;
 	GM_level = pc_isGM(sd);
 
-	pl_allsd = map_getallusers(&users);
-	for (i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i])) {
-			pl_GM_level = pc_isGM(pl_sd);
-			if (!((battle_config.hide_GM_session || (pl_sd->sc.option & OPTION_INVISIBLE)) && (pl_GM_level > GM_level))) { // you can look only lower or same level
-				if (pl_sd->bl.m == map_id) {
-					g = guild_search(pl_sd->status.guild_id);
-					if (g == NULL)
-						sprintf(temp1, "None");
-					else
-						sprintf(temp1, "%s", g->name);
-					p = party_search(pl_sd->status.party_id);
-					if (p == NULL)
-						sprintf(temp0, "None");
-					else
-						sprintf(temp0, "%s", p->party.name);
-					if (pl_GM_level > 0)
-						sprintf(atcmd_output, "Name: %s (GM:%d) | Party: '%s' | Guild: '%s'", pl_sd->status.name, pl_GM_level, temp0, temp1);
-					else
-						sprintf(atcmd_output, "Name: %s | Party: '%s' | Guild: '%s'", pl_sd->status.name, temp0, temp1);
-					clif_displaymessage(fd, atcmd_output);
-					count++;
-				}
-			}
-		}
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+	{
+		pl_GM_level = pc_isGM(pl_sd);
+		if( pl_sd->bl.m != map_id )
+			continue;
+		if( (battle_config.hide_GM_session || (pl_sd->sc.option & OPTION_INVISIBLE)) && (pl_GM_level > GM_level) )
+			continue;
+
+		g = guild_search(pl_sd->status.guild_id);
+		if (g == NULL)
+			sprintf(temp1, "None");
+		else
+			sprintf(temp1, "%s", g->name);
+		p = party_search(pl_sd->status.party_id);
+		if (p == NULL)
+			sprintf(temp0, "None");
+		else
+			sprintf(temp0, "%s", p->party.name);
+		if (pl_GM_level > 0)
+			sprintf(atcmd_output, "Name: %s (GM:%d) | Party: '%s' | Guild: '%s'", pl_sd->status.name, pl_GM_level, temp0, temp1);
+		else
+			sprintf(atcmd_output, "Name: %s | Party: '%s' | Guild: '%s'", pl_sd->status.name, temp0, temp1);
+		clif_displaymessage(fd, atcmd_output);
+		count++;
 	}
 
 	if (count == 0)
@@ -969,8 +976,9 @@ int atcommand_whomap(const int fd, struct map_session_data* sd, const char* comm
  *------------------------------------------*/
 int atcommand_whogm(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, j, count, users;
+	struct map_session_data* pl_sd;
+	struct s_mapiterator* iter;
+	int j, count;
 	int pl_GM_level, GM_level;
 	char match_text[200];
 	char player_name[NAME_LENGTH];
@@ -990,9 +998,10 @@ int atcommand_whogm(const int fd, struct map_session_data* sd, const char* comma
 
 	count = 0;
 	GM_level = pc_isGM(sd);
-	pl_allsd = map_getallusers(&users);
-	for (i = 0; i < users; i++) {
-		pl_sd = pl_allsd[i];
+
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+	{
 		pl_GM_level = pc_isGM(pl_sd);
 		if (!pl_GM_level)
 			continue;
@@ -1034,6 +1043,7 @@ int atcommand_whogm(const int fd, struct map_session_data* sd, const char* comma
 		clif_displaymessage(fd, atcmd_output);
 		count++;
 	}
+	mapit_free(iter);
 
 	if (count == 0)
 		clif_displaymessage(fd, msg_txt(150)); // No GM found.
@@ -1043,81 +1053,6 @@ int atcommand_whogm(const int fd, struct map_session_data* sd, const char* comma
 		sprintf(atcmd_output, msg_txt(152), count); // %d GMs found.
 		clif_displaymessage(fd, atcmd_output);
 	}
-
-	return 0;
-}
-
-int atcommand_whozeny(const int fd, struct map_session_data* sd, const char* command, const char* message)
-{
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, j, count,c, users;
-	char match_text[100];
-	char player_name[NAME_LENGTH];
-	int *zeny;
-	int *counted;
-
-	nullpo_retr(-1, sd);
-
-	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(match_text, '\0', sizeof(match_text));
-	memset(player_name, '\0', sizeof(player_name));
-
-	if (sscanf(message, "%99[^\n]", match_text) < 1)
-		strcpy(match_text, "");
-	for (j = 0; match_text[j]; j++)
-		match_text[j] = TOLOWER(match_text[j]);
-
-	count = 0;
-	pl_allsd = map_getallusers(&users);
-	if (users < 1)
-	{
-		clif_displaymessage(fd, msg_txt(28)); // No player found.
-		return 0;
-	}	
-	zeny = (int *)aMallocA(users*sizeof(int));
-	counted = (int *)aMallocA(users*sizeof(int));
-	for (i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i])) {
-				memcpy(player_name, pl_sd->status.name, NAME_LENGTH);
-				for (j = 0; player_name[j]; j++)
-					player_name[j] = TOLOWER(player_name[j]);
-				if (strstr(player_name, match_text) != NULL) { // search with no case sensitive
-					zeny[count]=pl_sd->status.zeny;
-					counted[i]=0;
-					count++;
-				}
-		}
-	}
-
-	qsort(zeny, count, sizeof(int), hightolow_compare);
-	for (c = 0; c < count && c < 50; c++) {
-		if(!zeny[c])
-			continue;
-		for (i = 0; i < users; i++) {
-			if(!zeny[c])
-				continue;
-			if ((pl_sd = pl_allsd[i]) && counted[i]==0) {
-				if(pl_sd->status.zeny==zeny[c]) {
-					sprintf(atcmd_output, "Name: %s | Zeny: %d", pl_sd->status.name, pl_sd->status.zeny);
-					clif_displaymessage(fd, atcmd_output);
-					zeny[c]=0;
-					counted[i]=1;
-				}
-			}
-		}
-	}
-
-	if (count == 0)
-		clif_displaymessage(fd, msg_txt(28)); // No player found.
-	else if (count == 1)
-		clif_displaymessage(fd, msg_txt(29)); // 1 player found.
-	else {
-		sprintf(atcmd_output, msg_txt(30), count); // %d players found.
-		clif_displaymessage(fd, atcmd_output);
-	}
-
-	aFree(zeny);
-	aFree(counted);
 
 	return 0;
 }
@@ -2017,11 +1952,6 @@ int atcommand_pvpoff(const int fd, struct map_session_data* sd, const char* comm
 {
 	nullpo_retr(-1, sd);
 
-	//if (battle_config.pk_mode) { //disable command if server is in PK mode [Valaris]
-	//	clif_displaymessage(fd, msg_txt(52)); // This option cannot be used in PK Mode.
-	//	return -1;
-	//}
-
 	if (!map[sd->bl.m].flag.pvp) {
 		clif_displaymessage(fd, msg_txt(160)); // PvP is already Off.
 		return -1;
@@ -2040,39 +1970,38 @@ int atcommand_pvpoff(const int fd, struct map_session_data* sd, const char* comm
 /*==========================================
  *
  *------------------------------------------*/
+static int atcommand_pvpon_sub(struct block_list *bl,va_list ap)
+{
+	TBL_PC* sd = (TBL_PC*)bl;
+	if (sd->pvp_timer == -1) {
+		sd->pvp_timer = add_timer(gettick() + 200, pc_calc_pvprank_timer, sd->bl.id, 0);
+		sd->pvp_rank = 0;
+		sd->pvp_lastusers = 0;
+		sd->pvp_point = 5;
+		sd->pvp_won = 0;
+		sd->pvp_lost = 0;
+	}
+	return 0;
+}
+
 int atcommand_pvpon(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, users;
 	nullpo_retr(-1, sd);
 
-	//if (battle_config.pk_mode) { //disable command if server is in PK mode [Valaris]
-	//	clif_displaymessage(fd, msg_txt(52)); // This option cannot be used in PK Mode.
-	//	return -1;
-	//}
-
-	if (!map[sd->bl.m].flag.pvp) {
-		map[sd->bl.m].flag.pvp = 1;
-		if (!battle_config.pk_mode)
-		{
-			clif_send0199(sd->bl.m, 1);
-			pl_allsd = map_getallusers(&users);
-			for (i = 0; i < users; i++) {
-				if ((pl_sd = pl_allsd[i]) && sd->bl.m == pl_sd->bl.m && pl_sd->pvp_timer == -1) {
-					pl_sd->pvp_timer = add_timer(gettick() + 200, pc_calc_pvprank_timer, pl_sd->bl.id, 0);
-					pl_sd->pvp_rank = 0;
-					pl_sd->pvp_lastusers = 0;
-					pl_sd->pvp_point = 5;
-					pl_sd->pvp_won = 0;
-					pl_sd->pvp_lost = 0;
-				}
-			}
-		}
-		clif_displaymessage(fd, msg_txt(32)); // PvP: On.
-	} else {
+	if (map[sd->bl.m].flag.pvp) {
 		clif_displaymessage(fd, msg_txt(161)); // PvP is already On.
 		return -1;
 	}
+
+	map[sd->bl.m].flag.pvp = 1;
+
+	if (!battle_config.pk_mode)
+	{// display pvp circle and rank
+		clif_send0199(sd->bl.m, 1);
+		map_foreachinmap(atcommand_pvpon_sub,sd->bl.m, BL_PC);
+	}
+
+	clif_displaymessage(fd, msg_txt(32)); // PvP: On.
 
 	return 0;
 }
@@ -2083,15 +2012,16 @@ int atcommand_pvpon(const int fd, struct map_session_data* sd, const char* comma
 int atcommand_gvgoff(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
-	if (map[sd->bl.m].flag.gvg) {
-		map[sd->bl.m].flag.gvg = 0;
-		clif_send0199(sd->bl.m, 0);
-		map_foreachinmap(atcommand_stopattack,sd->bl.m, BL_CHAR, 0);
-		clif_displaymessage(fd, msg_txt(33)); // GvG: Off.
-	} else {
+
+	if (!map[sd->bl.m].flag.gvg) {
 		clif_displaymessage(fd, msg_txt(162)); // GvG is already Off.
 		return -1;
 	}
+		
+	map[sd->bl.m].flag.gvg = 0;
+	clif_send0199(sd->bl.m, 0);
+	map_foreachinmap(atcommand_stopattack,sd->bl.m, BL_CHAR, 0);
+	clif_displaymessage(fd, msg_txt(33)); // GvG: Off.
 
 	return 0;
 }
@@ -2102,14 +2032,15 @@ int atcommand_gvgoff(const int fd, struct map_session_data* sd, const char* comm
 int atcommand_gvgon(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
-	if (!map[sd->bl.m].flag.gvg) {
-		map[sd->bl.m].flag.gvg = 1;
-		clif_send0199(sd->bl.m, 3);
-		clif_displaymessage(fd, msg_txt(34)); // GvG: On.
-	} else {
+
+	if (map[sd->bl.m].flag.gvg) {
 		clif_displaymessage(fd, msg_txt(163)); // GvG is already On.
 		return -1;
 	}
+	
+	map[sd->bl.m].flag.gvg = 1;
+	clif_send0199(sd->bl.m, 3);
+	clif_displaymessage(fd, msg_txt(34)); // GvG: On.
 
 	return 0;
 }
@@ -3548,17 +3479,23 @@ int atcommand_day(const int fd, struct map_session_data* sd, const char* command
  *------------------------------------------*/
 int atcommand_doom(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, users;
+	struct map_session_data* pl_sd;
+	struct s_mapiterator* iter;
+
 	nullpo_retr(-1, sd);
 	clif_specialeffect(&sd->bl,450,ALL_SAMEMAP);
-	pl_allsd = map_getallusers(&users);
-	for(i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i]) && pl_sd->fd != fd && pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can doom only lower or same gm level
+
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+	{
+		if (pl_sd->fd != fd && pc_isGM(sd) >= pc_isGM(pl_sd))
+		{
 			status_kill(&pl_sd->bl);
 			clif_displaymessage(pl_sd->fd, msg_txt(61)); // The holy messenger has given judgement.
 		}
 	}
+	mapit_free(iter);
+
 	clif_displaymessage(fd, msg_txt(62)); // Judgement was made.
 
 	return 0;
@@ -3569,20 +3506,23 @@ int atcommand_doom(const int fd, struct map_session_data* sd, const char* comman
  *------------------------------------------*/
 int atcommand_doommap(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, users;
+	struct map_session_data* pl_sd;
+	struct s_mapiterator* iter;
+
 	nullpo_retr(-1, sd);
 	clif_specialeffect(&sd->bl,450,ALL_CLIENT);
-	pl_allsd = map_getallusers(&users);
-	for (i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i]) && pl_sd->fd != fd && sd->bl.m == pl_sd->bl.m &&
-			pc_isGM(sd) >= pc_isGM(pl_sd))	// you can doom only lower or same gm level
+
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+	{
+		if (pl_sd->fd != fd && sd->bl.m == pl_sd->bl.m && pc_isGM(sd) >= pc_isGM(pl_sd))
 		{
 			status_kill(&pl_sd->bl);
-//			clif_specialeffect(&pl_sd->bl,450,1);
 			clif_displaymessage(pl_sd->fd, msg_txt(61)); // The holy messenger has given judgement.
 		}
 	}
+	mapit_free(iter);
+
 	clif_displaymessage(fd, msg_txt(62)); // Judgement was made.
 
 	return 0;
@@ -3607,16 +3547,16 @@ static void atcommand_raise_sub(struct map_session_data* sd)
  *------------------------------------------*/
 int atcommand_raise(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	int i, users;
-	struct map_session_data **all_sd;
+	struct map_session_data* pl_sd;
+	struct s_mapiterator* iter;
 		
 	nullpo_retr(-1, sd);
 
-	all_sd = map_getallusers(&users);
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+		atcommand_raise_sub(pl_sd);
+	mapit_free(iter);
 
-	for (i = 0; i < users; i++) {
-		atcommand_raise_sub(all_sd[i]);
-	}
 	clif_displaymessage(fd, msg_txt(64)); // Mercy has been granted.
 
 	return 0;
@@ -3627,17 +3567,17 @@ int atcommand_raise(const int fd, struct map_session_data* sd, const char* comma
  *------------------------------------------*/
 int atcommand_raisemap(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data **pl_allsd;
-	int i, users;
+	struct map_session_data* pl_sd;
+	struct s_mapiterator* iter;
 
 	nullpo_retr(-1, sd);
 
-	pl_allsd = map_getallusers(&users);
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+		if (sd->bl.m == pl_sd->bl.m)
+			atcommand_raise_sub(pl_sd);
+	mapit_free(iter);
 
-	for (i = 0; i < users; i++) {
-		if (sd->bl.m == pl_allsd[i]->bl.m)
-			atcommand_raise_sub(pl_allsd[i]);
-	}
 	clif_displaymessage(fd, msg_txt(64)); // Mercy has been granted.
 
 	return 0;
@@ -3680,18 +3620,19 @@ int atcommand_kick(const int fd, struct map_session_data* sd, const char* comman
  *------------------------------------------*/
 int atcommand_kickall(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, users;
+	struct map_session_data* pl_sd;
+	struct s_mapiterator* iter;
 	nullpo_retr(-1, sd);
 
-	pl_allsd = map_getallusers(&users);
-
-	for (i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i]) && pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can kick only lower or same gm level
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+	{
+		if (pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can kick only lower or same gm level
 			if (sd->status.account_id != pl_sd->status.account_id)
 				clif_GM_kick(NULL, pl_sd);
 		}
 	}
+	mapit_free(iter);
 
 	clif_displaymessage(fd, msg_txt(195)); // All players have been kicked!
 
@@ -3899,15 +3840,17 @@ int atcommand_agitend(const int fd, struct map_session_data* sd, const char* com
  *------------------------------------------*/
 int atcommand_mapexit(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, users;
+	struct map_session_data* pl_sd;
+	struct s_mapiterator* iter;
+
 	nullpo_retr(-1, sd);
 
-	pl_allsd = map_getallusers(&users);
-	for (i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i]) && sd->status.account_id != pl_sd->status.account_id)
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+		if (sd->status.account_id != pl_sd->status.account_id)
 			clif_GM_kick(NULL, pl_sd);
-	}
+	mapit_free(iter);
+
 	clif_GM_kick(NULL, sd);
 	
 	flush_fifos();
@@ -3958,9 +3901,9 @@ int atcommand_idsearch(const int fd, struct map_session_data* sd, const char* co
  *------------------------------------------*/
 int atcommand_recallall(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i;
-	int count, users;
+	struct map_session_data* pl_sd;
+	struct s_mapiterator* iter;
+	int count;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -3971,10 +3914,11 @@ int atcommand_recallall(const int fd, struct map_session_data* sd, const char* c
 	}
 
 	count = 0;
-	pl_allsd = map_getallusers(&users);
-	for (i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i]) && sd->status.account_id != pl_sd->status.account_id &&
-		    pc_isGM(sd) >= pc_isGM(pl_sd)) { // you can recall only lower or same level
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+	{
+		if (sd->status.account_id != pl_sd->status.account_id && pc_isGM(sd) >= pc_isGM(pl_sd))
+		{
 			if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd))
 				count++;
 			else {
@@ -3986,6 +3930,7 @@ int atcommand_recallall(const int fd, struct map_session_data* sd, const char* c
 			}
 		}
 	}
+	mapit_free(iter);
 
 	clif_displaymessage(fd, msg_txt(92)); // All characters recalled!
 	if (count) {
@@ -4001,8 +3946,9 @@ int atcommand_recallall(const int fd, struct map_session_data* sd, const char* c
  *------------------------------------------*/
 int atcommand_guildrecall(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, users, count;
+	struct map_session_data* pl_sd;
+	struct s_mapiterator* iter;
+	int count;
 	char guild_name[NAME_LENGTH];
 	struct guild *g;
 	nullpo_retr(-1, sd);
@@ -4020,30 +3966,35 @@ int atcommand_guildrecall(const int fd, struct map_session_data* sd, const char*
 		return -1;
 	}
 
-	if ((g = guild_searchname(guild_name)) != NULL || // name first to avoid error when name begin with a number
-	    (g = guild_search(atoi(message))) != NULL) {
-		count = 0;
-		pl_allsd = map_getallusers(&users);
-		for (i = 0; i < users; i++) {
-			if ((pl_sd = pl_allsd[i]) && sd->status.account_id != pl_sd->status.account_id &&
-			    pl_sd->status.guild_id == g->guild_id) {
-				if (pc_isGM(pl_sd) > pc_isGM(sd))
-					continue; //Skip GMs greater than you.
-				if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd))
-					count++;
-				else
-					pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, 2);
-			}
-		}
-		sprintf(atcmd_output, msg_txt(93), g->name); // All online characters of the %s guild are near you.
-		clif_displaymessage(fd, atcmd_output);
-		if (count) {
-			sprintf(atcmd_output, "Because you are not authorised to warp from some maps, %d player(s) have not been recalled.", count);
-			clif_displaymessage(fd, atcmd_output);
-		}
-	} else {
+	if ((g = guild_searchname(guild_name)) == NULL && // name first to avoid error when name begin with a number
+	    (g = guild_search(atoi(message))) == NULL)
+	{
 		clif_displaymessage(fd, msg_txt(94)); // Incorrect name/ID, or no one from the guild is online.
 		return -1;
+	}
+
+	count = 0;
+
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+	{
+		if (sd->status.account_id != pl_sd->status.account_id && pl_sd->status.guild_id == g->guild_id)
+		{
+			if (pc_isGM(pl_sd) > pc_isGM(sd))
+				continue; //Skip GMs greater than you.
+			if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd))
+				count++;
+			else
+				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, 2);
+		}
+	}
+	mapit_free(iter);
+
+	sprintf(atcmd_output, msg_txt(93), g->name); // All online characters of the %s guild are near you.
+	clif_displaymessage(fd, atcmd_output);
+	if (count) {
+		sprintf(atcmd_output, "Because you are not authorised to warp from some maps, %d player(s) have not been recalled.", count);
+		clif_displaymessage(fd, atcmd_output);
 	}
 
 	return 0;
@@ -4054,11 +4005,11 @@ int atcommand_guildrecall(const int fd, struct map_session_data* sd, const char*
  *------------------------------------------*/
 int atcommand_partyrecall(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	int i;
-	struct map_session_data *pl_sd, **pl_allsd;
+	struct map_session_data* pl_sd;
+	struct s_mapiterator* iter;
 	char party_name[NAME_LENGTH];
 	struct party_data *p;
-	int count, users;
+	int count;
 	nullpo_retr(-1, sd);
 
 	memset(party_name, '\0', sizeof(party_name));
@@ -4074,31 +4025,35 @@ int atcommand_partyrecall(const int fd, struct map_session_data* sd, const char*
 		return -1;
 	}
 
-	if ((p = party_searchname(party_name)) != NULL || // name first to avoid error when name begin with a number
-	    (p = party_search(atoi(message))) != NULL) {
-		count = 0;
-
-		pl_allsd = map_getallusers(&users);
-		for (i = 0; i < users; i++) {
-			if ((pl_sd = pl_allsd[i]) && sd->status.account_id != pl_sd->status.account_id &&
-			    pl_sd->status.party_id == p->party.party_id) {
-				if (pc_isGM(pl_sd) > pc_isGM(sd))
-					continue; //Skip GMs greater than you.
-				if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd))
-					count++;
-				else
-					pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, 2);
-			}
-		}
-		sprintf(atcmd_output, msg_txt(95), p->party.name); // All online characters of the %s party are near you.
-		clif_displaymessage(fd, atcmd_output);
-		if (count) {
-			sprintf(atcmd_output, "Because you are not authorised to warp from some maps, %d player(s) have not been recalled.", count);
-			clif_displaymessage(fd, atcmd_output);
-		}
-	} else {
+	if ((p = party_searchname(party_name)) == NULL && // name first to avoid error when name begin with a number
+	    (p = party_search(atoi(message))) == NULL)
+	{
 		clif_displaymessage(fd, msg_txt(96)); // Incorrect name or ID, or no one from the party is online.
 		return -1;
+	}
+
+	count = 0;
+
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+	{
+		if (sd->status.account_id != pl_sd->status.account_id && pl_sd->status.party_id == p->party.party_id)
+		{
+			if (pc_isGM(pl_sd) > pc_isGM(sd))
+				continue; //Skip GMs greater than you.
+			if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && battle_config.any_warp_GM_min_level > pc_isGM(sd))
+				count++;
+			else
+				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, 2);
+		}
+	}
+	mapit_free(iter);
+
+	sprintf(atcmd_output, msg_txt(95), p->party.name); // All online characters of the %s party are near you.
+	clif_displaymessage(fd, atcmd_output);
+	if (count) {
+		sprintf(atcmd_output, "Because you are not authorised to warp from some maps, %d player(s) have not been recalled.", count);
+		clif_displaymessage(fd, atcmd_output);
 	}
 
 	return 0;
@@ -4271,46 +4226,52 @@ int atcommand_reloadgmdb(const int fd, struct map_session_data* sd, const char* 
  *------------------------------------------*/
 int atcommand_mapinfo(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data *pl_sd, **pl_allsd;
+	struct map_session_data* pl_sd;
+	struct s_mapiterator* iter;
 	struct npc_data *nd = NULL;
 	struct chat_data *cd = NULL;
 	char direction[12];
-	int m_id, i, chat_num, users, list = 0;
+	int i, m_id, chat_num, list = 0;
 	unsigned short m_index;
+	char mapname[24];
+
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+	memset(mapname, '\0', sizeof(mapname));
 	memset(direction, '\0', sizeof(direction));
 
-	sscanf(message, "%d %23[^\n]", &list, atcmd_player_name);
+	sscanf(message, "%d %23[^\n]", &list, mapname);
 
 	if (list < 0 || list > 3) {
 		clif_displaymessage(fd, "Please, enter at least a valid list number (usage: @mapinfo <0-3> [map]).");
 		return -1;
 	}
 
-	if (atcmd_player_name[0] == '\0') {
-		safestrncpy(atcmd_player_name, mapindex_id2name(sd->mapindex), MAP_NAME_LENGTH);
+	if (mapname[0] == '\0') {
+		safestrncpy(mapname, mapindex_id2name(sd->mapindex), MAP_NAME_LENGTH);
 		m_id =  map_mapindex2mapid(sd->mapindex);
 	} else {
-		m_id = map_mapname2mapid(atcmd_player_name);
+		m_id = map_mapname2mapid(mapname);
 	}
+
 	if (m_id < 0) {
 		clif_displaymessage(fd, msg_txt(1)); // Map not found.
 		return -1;
 	}
-	m_index = mapindex_name2id(atcmd_player_name); //This one shouldn't fail since the previous seek did not.
+	m_index = mapindex_name2id(mapname); //This one shouldn't fail since the previous seek did not.
 	
 	clif_displaymessage(fd, "------ Map Info ------");
+
+	// count chats (for initial message)
 	chat_num = 0;
-	pl_allsd = map_getallusers(&users);
-	for (i = 0; i < users; i++) {
-		if ((pl_sd = pl_allsd[i]) && (cd = (struct chat_data*)map_id2bl(pl_sd->chatID))) {
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+		if( (cd = (struct chat_data*)map_id2bl(pl_sd->chatID)) != NULL && pl_sd->mapindex == m_index && cd->usersd[0] == pl_sd )
 			chat_num++;
-		}
-	}
-	sprintf(atcmd_output, "Map Name: %s | Players In Map: %d | NPCs In Map: %d | Chats In Map: %d", atcmd_player_name, map[m_id].users, map[m_id].npc_num, chat_num);
+	mapit_free(iter);
+
+	sprintf(atcmd_output, "Map Name: %s | Players In Map: %d | NPCs In Map: %d | Chats In Map: %d", mapname, map[m_id].users, map[m_id].npc_num, chat_num);
 	clif_displaymessage(fd, atcmd_output);
 	clif_displaymessage(fd, "------ Map Flags ------");
 	strcpy(atcmd_output,"PvP Flags: ");
@@ -4431,17 +4392,21 @@ int atcommand_mapinfo(const int fd, struct map_session_data* sd, const char* com
 		break;
 	case 1:
 		clif_displaymessage(fd, "----- Players in Map -----");
-		for (i = 0; i < users; i++) {
-			if ((pl_sd = pl_allsd[i]) && pl_sd->mapindex == m_index) {
+		iter = mapit_getallusers();
+		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+		{
+			if (pl_sd->mapindex == m_index) {
 				sprintf(atcmd_output, "Player '%s' (session #%d) | Location: %d,%d",
 				        pl_sd->status.name, pl_sd->fd, pl_sd->bl.x, pl_sd->bl.y);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
+		mapit_free(iter);
 		break;
 	case 2:
 		clif_displaymessage(fd, "----- NPCs in Map -----");
-		for (i = 0; i < map[m_id].npc_num;) {
+		for (i = 0; i < map[m_id].npc_num;)
+		{
 			nd = map[m_id].npc[i];
 			switch(nd->ud.dir) {
 			case 0:  strcpy(direction, "North"); break;
@@ -4462,18 +4427,22 @@ int atcommand_mapinfo(const int fd, struct map_session_data* sd, const char* com
 		break;
 	case 3:
 		clif_displaymessage(fd, "----- Chats in Map -----");
-		for (i = 0; i < users; i++) {
-			if ((pl_sd = pl_allsd[i]) && (cd = (struct chat_data*)map_id2bl(pl_sd->chatID)) &&
+		iter = mapit_getallusers();
+		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+		{
+			if ((cd = (struct chat_data*)map_id2bl(pl_sd->chatID)) != NULL &&
 			    pl_sd->mapindex == m_index &&
-			    cd->usersd[0] == pl_sd) {
-				sprintf(atcmd_output, "Chat %d: %s | Player: %s | Location: %d %d",
-				        i, cd->title, pl_sd->status.name, cd->bl.x, cd->bl.y);
+			    cd->usersd[0] == pl_sd)
+			{
+				sprintf(atcmd_output, "Chat: %s | Player: %s | Location: %d %d",
+				        cd->title, pl_sd->status.name, cd->bl.x, cd->bl.y);
 				clif_displaymessage(fd, atcmd_output);
 				sprintf(atcmd_output, "   Users: %d/%d | Password: %s | Public: %s",
 				        cd->users, cd->limit, cd->pass, (cd->pub) ? "Yes" : "No");
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
+		mapit_free(iter);
 		break;
 	default: // normally impossible to arrive here
 		clif_displaymessage(fd, "Please, enter at least a valid list number (usage: @mapinfo <0-3> [map]).");
@@ -5213,8 +5182,9 @@ int atcommand_disguise(const int fd, struct map_session_data* sd, const char* co
  *------------------------------------------*/
 int atcommand_disguiseall(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	int mob_id=0, i=0, users;
-	struct map_session_data *pl_sd, **pl_allsd;
+	int mob_id=0, i=0;
+	struct map_session_data *pl_sd;
+	struct s_mapiterator* iter;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message) {
@@ -5230,12 +5200,11 @@ int atcommand_disguiseall(const int fd, struct map_session_data* sd, const char*
 		return -1;
 	}
 
-	pl_allsd = map_getallusers(&users);
-	for(i=0; i < users; i++)
-	{
-		if((pl_sd = pl_allsd[i]))
-			pc_disguise(pl_sd, mob_id);
-	}
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+		pc_disguise(pl_sd, mob_id);
+	mapit_free(iter);
+
 	clif_displaymessage(fd, msg_txt(122)); // Disguise applied.
 	return 0;
 }
@@ -5262,16 +5231,16 @@ int atcommand_undisguise(const int fd, struct map_session_data* sd, const char* 
  *------------------------------------------*/
 int atcommand_undisguiseall(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data *pl_sd, **pl_allsd;
-	int i, users;
+	struct map_session_data *pl_sd;
+	struct s_mapiterator* iter;
 	nullpo_retr(-1, sd);
 
-	pl_allsd = map_getallusers(&users);
-
-	for(i=0; i < users; i++) {
-		if((pl_sd = pl_allsd[i]) && pl_sd->disguise)
+	iter = mapit_getallusers();
+	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+		if( pl_sd->disguise )
 			pc_disguise(pl_sd, 0);
-	}
+	mapit_free(iter);
+
 	clif_displaymessage(fd, msg_txt(124)); // Undisguise applied.
 
 	return 0;
@@ -8409,7 +8378,6 @@ AtCommandInfo atcommand_info[] = {
 	{ "uptime",             1,     atcommand_uptime },
 	{ "changesex",         60,     atcommand_changesex },
 	{ "mute",              80,     atcommand_mute },
-	{ "whozeny",           20,     atcommand_whozeny },
 	{ "refresh",            1,     atcommand_refresh },
 	{ "identify",          40,     atcommand_identify },
 	{ "gmotd",             20,     atcommand_gmotd },
