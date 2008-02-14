@@ -283,6 +283,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 {
 	struct block_list *s_bl;
 	struct map_session_data *sd, *pl_sd;
+	struct status_change_entry *sce;
 	struct mob_data *md;
 	unsigned int tick = gettick();
 	char output[128];
@@ -304,25 +305,28 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 			return false; // Ignores GVG, PVP and AllowKS map flags
 
 		if( md->db->mexp || md->master_id )
-			return false; // MVP and Slaves ignores KS
+			return false; // MVP, Slaves mobs ignores KS
 
-		if( sd->bl.id == md->owner_id )
-			break; // Same player
+		if( (sce = md->sc.data[SC_KSPROTECTED]) == NULL )
+			break; // No KS Protected
 
-		if( !md->owner_id || !(pl_sd = map_id2sd(md->owner_id)) )
-			break; // Not owner or owner offline
+		if( sd->bl.id == sce->val1 )
+			break; // Same Player
+
+		if( !(pl_sd = map_id2sd(sce->val1)) )
+			break; // Owner offline
 
 		if( pl_sd->bl.m != md->bl.m )
-			break; // Owner on different map
-
-		if( DIFF_TICK(md->ks_tick, tick) <= 0 )
-			break; // Protection Time's Out
+			break; // Protection expires on different map
 
 		if( !pl_sd->state.noks )
-			return false; // No KS Protected, but this is necessary to protect normal players
+			return false; // No KS Protected, but normal players should be protected too
 
-		if( pl_sd->status.party_id && pl_sd->status.party_id == sd->status.party_id )
-			break; // Same Party Allow KS
+		if( pl_sd->state.noks == 2 && pl_sd->status.party_id && pl_sd->status.party_id == sd->status.party_id )
+			break; // Party KS allowed
+
+		if( pl_sd->state.noks == 3 && pl_sd->status.guild_id && pl_sd->status.guild_id == sd->status.guild_id )
+			break; // Guild KS allowed
 
 		// Message to KS
 		if( DIFF_TICK(sd->ks_floodprotect_tick, tick) <= 0 )
@@ -345,8 +349,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 		return true;
 	} while(0);
 
-	md->owner_id = sd->bl.id;
-	md->ks_tick = tick + battle_config.ksprotection;
+	status_change_start(target, SC_KSPROTECTED, 10000, sd->bl.id, 0, 0, 0, battle_config.ksprotection, 0);
 
 	return false;
 }

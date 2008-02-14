@@ -552,7 +552,7 @@ struct map_session_data {
 		unsigned ignoreAll : 1;
 		unsigned short autoloot;
 		unsigned short autolootid; // [Zephyrus]
-		unsigned noks : 1; // [Zeph Kill Steal Protection]
+		unsigned noks : 3; // [Zeph Kill Steal Protection]
 		struct guild *gmaster_flag;
 	} state;
 	struct {
@@ -915,10 +915,6 @@ struct mob_data {
 	int level;
 	int target_id,attacked_id;
 
-	// Kill Steal Protection
-	int owner_id;
-	unsigned int ks_tick;
-	
 	unsigned int next_walktime,last_thinktime,last_linktime;
 	short move_fail_count;
 	short lootitem_count;

@@ -8140,9 +8140,24 @@ int atcommand_ksprotection(const int fd, struct map_session_data *sd, const char
 	if( sd->state.noks ) {
 		sd->state.noks = 0;
 		sprintf(atcmd_output, "[ K.S Protection Inactive ]");
-	} else {
-		sprintf(atcmd_output, "[ K.S Protection Active ]");
-		sd->state.noks = 1;
+	}
+	else
+	{
+		if( !message || !*message || !strcmpi(message, "party") )
+		{ // Default is Party
+			sd->state.noks = 2;
+			sprintf(atcmd_output, "[ K.S Protection Active - Option: Party ]");
+		}
+		else if( !strcmpi(message, "self") )
+		{
+			sd->state.noks = 1;
+			sprintf(atcmd_output, "[ K.S Protection Active - Option: Self ]");
+		}
+		else if( !strcmpi(message, "guild") )
+		{
+			sd->state.noks = 3;
+			sprintf(atcmd_output, "[ K.S Protection Active - Option: Guild ]");
+		}
 	}
 
 	clif_displaymessage(fd, atcmd_output);

@@ -6,6 +6,8 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 2008/02/14
 	* Removed/replaced all calls to map_getallusers (followup to r12195)
 	* Trashed @whozeny (from r269) [ultramage]
+	* Added some changes to @noks. Now it uses a SC and not vars in mob_data [Zephyrus]
+	- Added support to Self|Party|Guild to @noks (default is Party)
 2008/02/13
 	* Changes to memory manager: [FlavioJS]
 	- fixed blocks that are fully used not being detected (and not freed) in 
