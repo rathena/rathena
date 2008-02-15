@@ -4880,7 +4880,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	//Reset ticks.
 	sd->hp_loss.tick = sd->sp_loss.tick = sd->hp_regen.tick = sd->sp_regen.tick = 0;
 
-	pc_setglobalreg(sd,"PC_DIE_COUNTER",++sd->die_counter);
+	pc_setglobalreg(sd,"PC_DIE_COUNTER",sd->die_counter+1);
 	pc_setglobalreg(sd,"killerrid",src?src->id:0);
 	npc_script_event(sd,NPCE_DIE);
 
