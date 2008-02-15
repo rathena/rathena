@@ -182,8 +182,6 @@ void irc_parse_sub(int fd, char *incoming_string)
 	char *source_host=NULL;
 	char *state_mgr=NULL;
 	
-	int i=0;
-
 	memset(source,'\0',256);
 	memset(command,'\0',256);
 	memset(target,'\0',256);

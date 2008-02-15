@@ -6176,8 +6176,8 @@ int pc_addeventtimer(struct map_session_data *sd,int tick,const char *name)
  *------------------------------------------*/
 int pc_deleventtimer(struct map_session_data *sd,const char *name)
 {
+	char* p = NULL;
 	int i;
-	char* p;
 
 	nullpo_retr(0, sd);
 

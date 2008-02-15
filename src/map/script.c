@@ -4450,20 +4450,16 @@ BUILDIN_FUNC(warpparty)
  *------------------------------------------*/
 BUILDIN_FUNC(warpguild)
 {
-	int x,y;
-	unsigned short mapindex;
-	const char *str;
-	int gid;
 	TBL_PC *sd;
 	TBL_PC *pl_sd;
 	struct guild* g;
 	struct s_mapiterator* iter;
 	int type;
 
-	str=script_getstr(st,2);
-	x=script_getnum(st,3);
-	y=script_getnum(st,4);
-	gid=script_getnum(st,5);
+	const char* str = script_getstr(st,2);
+	int x           = script_getnum(st,3);
+	int y           = script_getnum(st,4);
+	int gid         = script_getnum(st,5);
 
 	sd=script_rid2sd(st);
 	if( sd == NULL )
@@ -4479,8 +4475,6 @@ BUILDIN_FUNC(warpguild)
 	     : ( strcmp(str,"SavePointAll")==0 ) ? 1
 		 : ( strcmp(str,"SavePoint")==0 ) ? 2
 		 : 3;
-	if( type == 3 )
-		mapindex = mapindex_name2id(str);
 
 	iter = mapit_getallusers();
 	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
@@ -4504,7 +4498,7 @@ BUILDIN_FUNC(warpguild)
 		break;
 		case 3: // m,x,y
 			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp)
-				pc_setpos(pl_sd,mapindex,x,y,3);
+				pc_setpos(pl_sd,mapindex_name2id(str),x,y,3);
 		break;
 		}
 	}
@@ -7918,7 +7912,7 @@ BUILDIN_FUNC(getusers)
 BUILDIN_FUNC(getusersname)
 {
 	TBL_PC *sd, *pl_sd;
-	int i=0,disp_num=1;
+	int disp_num=1;
 	struct s_mapiterator* iter;
 
 	sd = script_rid2sd(st);
