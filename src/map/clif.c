@@ -12137,23 +12137,12 @@ static int packetdb_readdb(void)
 			ln++;
 			continue;
 		}
-		for(j=0;j<ARRAYLENGTH(clif_parse_func);j++){
-			if(clif_parse_func[j].name != NULL && strcmp(str[2],clif_parse_func[j].name)==0)
-			{
-				if (packet_db[packet_ver][cmd].func != clif_parse_func[j].func)
-				{	//If we are updating a function, we need to zero up the previous one. [Skotlex]
-					for(i=0;i<=MAX_PACKET_DB;i++){
-						if (packet_db[packet_ver][i].func == clif_parse_func[j].func)
-						{	
-							memset(&packet_db[packet_ver][i], 0, sizeof(struct s_packet_db));
-							break;
-						}
-					}
-				}
-				packet_db[packet_ver][cmd].func = clif_parse_func[j].func;
-				break;
-			}
-		}
+
+		// look up processing function by name
+		ARR_FIND( 0, ARRAYLENGTH(clif_parse_func), j, clif_parse_func[j].name != NULL && strcmp(str[2],clif_parse_func[j].name)==0 );
+		if( j < ARRAYLENGTH(clif_parse_func) )
+			packet_db[packet_ver][cmd].func = clif_parse_func[j].func;
+
 		// set the identifying cmd for the packet_db version
 		if (strcmp(str[2],"wanttoconnection")==0)
 			clif_config.connect_cmd[packet_ver] = cmd;

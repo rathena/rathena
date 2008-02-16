@@ -383,7 +383,7 @@ int strline(const char* str, size_t pos)
 /// @param len Length of the string
 /// @param startoff Where to start parsing
 /// @param delim Field delimiter
-/// @parem out_pos Array of resulting positions
+/// @param out_pos Array of resulting positions
 /// @param npos Size of the pos array
 /// @param opt Options that determine the parsing behaviour
 /// @return Number of fields in the string or -1 if an error occured
