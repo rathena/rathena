@@ -1173,11 +1173,7 @@ int socket_getips(uint32* ips, int max)
 					if( ad != INADDR_LOOPBACK && ad != INADDR_ANY )
 						ips[num++] = (uint32)ad;
 				}
-	#if (defined(BSD) && BSD >= 199103) || defined(_AIX) || defined(__APPLE__)
 				pos += ir->ifr_addr.sa_len + sizeof(ir->ifr_name);
-	#else// not AIX or APPLE
-				pos += sizeof(struct ifreq);
-	#endif//not AIX or APPLE
 			}
 		}
 		sClose(fd);
