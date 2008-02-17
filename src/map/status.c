@@ -1226,7 +1226,7 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
  	return amotion;
 }
 
-static int status_base_atk(struct block_list *bl, struct status_data *status)
+static unsigned short status_base_atk(struct block_list *bl, struct status_data *status)
 {
 	int flag = 0, str, dex, dstr;
 
@@ -1259,7 +1259,7 @@ static int status_base_atk(struct block_list *bl, struct status_data *status)
 	str += dstr*dstr;
 	if (bl->type == BL_PC)
 		str+= dex/5 + status->luk/5;
-	return str;
+	return cap_value(str, 0, USHRT_MAX);
 }
 
 #define status_base_matk_max(status) (status->int_+(status->int_/5)*(status->int_/5))
@@ -1293,7 +1293,11 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	else
 		status->flee2 = 0;
 
-	status->batk += status_base_atk(bl, status);
+	if (status->batk) {
+		int temp = status->batk + status_base_atk(bl, status);
+		status->batk = cap_value(temp, 0, USHRT_MAX);
+	} else
+		status->batk = status_base_atk(bl, status);
 	if (status->cri)
 	switch (bl->type) {
 	case BL_MOB:
@@ -3004,7 +3008,10 @@ void status_calc_bl(struct block_list *bl, unsigned long flag)
 		status->batk = status_base_atk(bl,status);
 		temp = b_status->batk - status_base_atk(bl,b_status);
 		if (temp)
-			status->batk += temp;
+		{
+			temp += status->batk;
+			status->batk = cap_value(temp, 0, USHRT_MAX);
+		}
 		status->batk = status_calc_batk(bl, sc, status->batk);
 	}
 

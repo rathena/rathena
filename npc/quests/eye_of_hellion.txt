@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets
 //===== Current Version: =====================================
-//= 1.4
+//= 1.5
 //===== Compatible With: =====================================
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: =========================================
@@ -16,6 +16,7 @@
 //= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.4 Moved Enoz from the wizard quest skill to here. [L0ne_W0lf]
+//= 1.5 Updated input calls to allow the high-value code to be entered [Skotlex]
 //============================================================
 
 geffen,110,200,3	script	Sage Welshyun	754,2,2,{
@@ -897,7 +898,7 @@ s_Insert:
 	mes "Ah, right, the numbers";
 	mes "that Veggie Lady gave me!";
 	next;
-	input @temp;
+	input @temp,0,99999999;
 	if(@temp != 16754213)goto s_FailInp;
 s_CorrectInput:
 	mes "^3151FFThe machine responds to";
@@ -931,7 +932,7 @@ s_Input2:
 	mes "if I can enter the";
 	mes "right number this time...";
 	next;
-	input @temp;
+	input @temp,0,99999999;
 	if(@temp == 16754213)goto s_CorrectInput;
 
 s_FailInp:

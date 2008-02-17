@@ -5182,7 +5182,7 @@ int atcommand_disguise(const int fd, struct map_session_data* sd, const char* co
  *------------------------------------------*/
 int atcommand_disguiseall(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	int mob_id=0, i=0;
+	int mob_id=0;
 	struct map_session_data *pl_sd;
 	struct s_mapiterator* iter;
 	nullpo_retr(-1, sd);

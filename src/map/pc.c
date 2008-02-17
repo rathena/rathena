@@ -3087,6 +3087,13 @@ int pc_useitem(struct map_session_data *sd,int n)
 	))
 		return 0;
 
+	//Since most delay-consume items involve using a "skill-type" target cursor,
+	//perform a skill-use check before going through. [Skotlex]
+	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.
+	if (sd->inventory_data[n]->flag.delay_consume &&
+		!status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0))
+		return 0;	
+
 	sd->itemid = sd->status.inventory[n].nameid;
 	sd->itemindex = n;
 	if(sd->catch_target_class != -1) //Abort pet catching.

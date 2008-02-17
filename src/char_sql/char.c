@@ -84,7 +84,7 @@ struct mmo_map_server {
 	unsigned short map[MAX_MAP_PER_SERVER];
 } server[MAX_MAP_SERVERS];
 
-int login_fd, char_fd;
+int login_fd=-1, char_fd=-1;
 char userid[24];
 char passwd[24];
 char server_name[20];

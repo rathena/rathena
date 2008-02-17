@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/02/17
+	* Updated Eye of Hellion to use the new format of the input command. [Skotlex]
 2008/02/13
 	* Corrected a "donpcevent" missing a ":" in Cooking Quest. (bugreport:962) [Samuray22]
 	* Corrected a Typo error in quest_prontera.txt. (bugreport:950)
