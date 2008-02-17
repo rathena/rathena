@@ -1153,6 +1153,8 @@ int socket_getips(uint32* ips, int max)
 
 		fd = sSocket(AF_INET, SOCK_STREAM, 0);
 
+		memset(buf, 0x00, sizeof(buf));
+
 		// The ioctl call will fail with Invalid Argument if there are more
 		// interfaces than will fit in the buffer
 		ic.ifc_len = sizeof(buf);
@@ -1173,7 +1175,11 @@ int socket_getips(uint32* ips, int max)
 					if( ad != INADDR_LOOPBACK && ad != INADDR_ANY )
 						ips[num++] = (uint32)ad;
 				}
+	#if (defined(BSD) && BSD >= 199103) || defined(_AIX) || defined(__APPLE__)
 				pos += ir->ifr_addr.sa_len + sizeof(ir->ifr_name);
+	#else// not AIX or APPLE
+				pos += sizeof(struct ifreq);
+	#endif//not AIX or APPLE
 			}
 		}
 		sClose(fd);
