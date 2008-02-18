@@ -3090,9 +3090,11 @@ int pc_useitem(struct map_session_data *sd,int n)
 	//Since most delay-consume items involve using a "skill-type" target cursor,
 	//perform a skill-use check before going through. [Skotlex]
 	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.
-	if (sd->inventory_data[n]->flag.delay_consume &&
-		!status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0))
-		return 0;	
+	if (sd->inventory_data[n]->flag.delay_consume && (
+		sd->ud.skilltimer != -1 ||
+		DIFF_TICK(tick, sd->ud.canact_tick) < 0 ||
+		!status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)))
+		return 0;
 
 	sd->itemid = sd->status.inventory[n].nameid;
 	sd->itemindex = n;

@@ -291,7 +291,7 @@ void initChangeTables(void)
 	add_sc(NPC_INVISIBLE, SC_CLOAKING);
 	set_sc(LK_AURABLADE, SC_AURABLADE, SI_AURABLADE, SCB_NONE);
 	set_sc(LK_PARRYING, SC_PARRYING, SI_PARRYING, SCB_NONE);
-	set_sc(LK_CONCENTRATION, SC_CONCENTRATION, SI_CONCENTRATION, SCB_BATK|SCB_WATK|SCB_HIT|SCB_DEF|SCB_DEF2|SCB_DSPD);
+	set_sc(LK_CONCENTRATION, SC_CONCENTRATION, SI_CONCENTRATION, SCB_BATK|SCB_WATK|SCB_HIT|SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_DSPD);
 	set_sc(LK_TENSIONRELAX, SC_TENSIONRELAX, SI_TENSIONRELAX, SCB_REGEN);
 	set_sc(LK_BERSERK, SC_BERSERK, SI_BERSERK, SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2|SCB_FLEE|SCB_SPEED|SCB_ASPD|SCB_MAXHP|SCB_REGEN);
 	set_sc(HP_ASSUMPTIO, SC_ASSUMPTIO, SI_ASSUMPTIO, SCB_NONE);
@@ -3681,6 +3681,8 @@ static signed char status_calc_mdef(struct block_list *bl, struct status_change 
 		mdef += 25*mdef/100;
 	if(sc->data[SC_ENDURE] && sc->data[SC_ENDURE]->val4 == 0)
 		mdef += sc->data[SC_ENDURE]->val1;
+	if(sc->data[SC_CONCENTRATION])
+		mdef += 1; //Skill info says it adds a fixed 1 Mdef point.
 	if(sc->data[SC_INCMDEFRATE])
 		mdef += mdef * sc->data[SC_INCMDEFRATE]->val1/100;
 
