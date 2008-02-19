@@ -112,7 +112,9 @@ char* _bstrdup(const char *chr)
 
 #ifdef USE_MEMMGR
 
+#if defined(DEBUG)
 #define DEBUG_MEMMGR
+#endif
 
 /* USE_MEMMGR */
 

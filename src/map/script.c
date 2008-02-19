@@ -13070,7 +13070,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getarg,"i?"),
 	BUILDIN_DEF(jobchange,"i*"),
 	BUILDIN_DEF(jobname,"i"),
-	BUILDIN_DEF(input,"v"),
+	BUILDIN_DEF(input,"v??"),
 	BUILDIN_DEF(warp,"sii"),
 	BUILDIN_DEF(areawarp,"siiiisii"),
 	BUILDIN_DEF(warpchar,"siii"), // [LuzZza]

@@ -7648,7 +7648,11 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 		return;
 	} else if( map_knowsaccount(account_id) )
 	{// double login
-		ShowError("clif_parse_WantToConnection: double login attempt AID/CID: %d/%d, rejecting...\n", account_id, char_id);
+		sd = map_id2sd(acount_id);
+		if( sd  && sd->state.autotrade )
+			map_quit(sd);// kick autotrading character
+		else
+			ShowError("clif_parse_WantToConnection: double login attempt AID/CID: %d/%d, rejecting...\n", account_id, char_id);
 		WFIFOHEAD(fd,packet_len(0x6a));
 		WFIFOW(fd,0) = 0x6a;
 		WFIFOB(fd,2) = 3; // Rejected by server
