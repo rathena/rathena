@@ -7648,7 +7648,7 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 		return;
 	} else if( map_knowsaccount(account_id) )
 	{// double login
-		sd = map_id2sd(acount_id);
+		sd = map_id2sd(account_id);
 		if( sd  && sd->state.autotrade )
 			map_quit(sd);// kick autotrading character
 		else
