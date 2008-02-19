@@ -48,12 +48,12 @@
  *  - create a db that organizes itself by splaying
  *
  *  HISTORY:
+ *    2008/02/19 - Fixed db_obj_get not handling deleted entries correctly.
  *    2007/11/09 - Added an iterator to the database.
  *    2006/12/21 - Added 1-node cache to the database.
  *    2.1 (Athena build #???#) - Portability fix
  *      - Fixed the portability of casting to union and added the functions
- *        {@link DB#ensure(DB,DBKey,DBCreateData,...)} and
- *        {@link DB#clear(DB,DBApply,...)}.
+ *        ensure and clear to the database.
  *    2.0 (Athena build 4859) - Transition version
  *      - Almost everything recoded with a strategy similar to objects,
  *        database structure is maintained.
@@ -627,7 +627,7 @@ static DBKey db_dup_key(DBMap_impl* db, DBKey key)
 		case DB_ISTRING:
 			if (db->maxlen) {
 				CREATE(str, char, db->maxlen +1);
-				memcpy(str, key.str, db->maxlen);
+				strncpy(str, key.str, db->maxlen);
 				str[db->maxlen] = '\0';
 				key.str = str;
 			} else {
@@ -1282,7 +1282,7 @@ void* dbit_obj_prev(DBIterator* self, DBKey* out_key)
 			}
 
 			if( !node->deleted )
-			{// found next entry
+			{// found previous entry
 				it->node = node;
 				if( out_key )
 					memcpy(out_key, &node->key, sizeof(DBKey));
@@ -1413,15 +1413,25 @@ static void* db_obj_get(DBMap* self, DBKey key)
 		return NULL; // nullpo candidate
 	}
 
-	if (db->cache && db->cmp(key, db->cache->key, db->maxlen) == 0)
+	if (db->cache && db->cmp(key, db->cache->key, db->maxlen) == 0) {
+#if defined(DEBUG)
+		if (db->cache->deleted) {
+			ShowDebug("db_get: Cache contains a deleted node. Please report this!!!\n");
+			return NULL;
+		}
+#endif
 		return db->cache->data; // cache hit
+	}
 
 	db_free_lock(db);
 	node = db->ht[db->hash(key, db->maxlen)%HASH_SIZE];
 	while (node) {
 		c = db->cmp(key, node->key, db->maxlen);
 		if (c == 0) {
-			data = node->data;
+			if (!(node->deleted)) {
+				data = node->data;
+				db->cache = node;
+			}
 			break;
 		}
 		if (c < 0)
@@ -1429,7 +1439,6 @@ static void* db_obj_get(DBMap* self, DBKey key)
 		else
 			node = node->right;
 	}
-	db->cache = node;
 	db_free_unlock(db);
 	return data;
 }
@@ -1865,7 +1874,7 @@ static int db_obj_vforeach(DBMap* self, DBApply func, va_list args)
 }
 
 /**
- * Just calls {@link common\db.h\DB#vforeach(DB,DBApply,va_list)}.
+ * Just calls {@link DBMap#vforeach}.
  * Apply <code>func</code> to every entry in the database.
  * Returns the sum of values returned by func.
  * @param self Interface of the database
