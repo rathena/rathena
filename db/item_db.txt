@@ -2073,7 +2073,7 @@
 5205,Wreath,Emperor's Laurel Crown,5,20,,1000,,3,,0,0xFFFFFFFF,7,2,768,,0,1,261,{ bonus bAllStats,1; bonus bMdef,3; },{},{}
 5206,Romantic_White_Flower,White Petal,5,20,,100,,0,,0,0xFFFFFFFE,7,2,1,,0,0,259,{ bonus2 bSubRace,RC_Plant,3; },{},{}
 5207,Golden_Spirit_Chain,Angel Blessing,5,20,,100,,0,,0,0xFFFFFFFF,7,2,256,,0,0,260,{ bonus bLuk,1; bonus2 bSubEle,Ele_Holy,5; },{},{}
-5208,Rideword_Hat,Rideword Hat,5,,10,300,,2,,1,0xFFFFFFFE,7,2,256,,40,1,262,{ bonus2 bHPDrainRate,5,8; bonus2 bSPDrainRate,1,4; bonus2 bHPLossRate,10,5000; },{},{}
+5208,Rideword_Hat,Rideword Hat,5,,10,300,,2,,1,0xFFFFFFFE,7,2,256,,40,1,262,{ bonus2 bHPDrainRate,50,8; bonus2 bSPDrainRate,10,4; bonus2 bHPLossRate,10,5000; },{},{}
 5209,Yellow_Baseball_Cap,iRO Baseball Cap,5,,10,300,,2,,0,0xFFFFFFFE,7,2,256,,0,1,263,{},{},{}
 5210,Flying_Angel,Flying Angel,5,,10,300,,1,,0,0xFFFFFFFF,7,2,256,,10,1,264,{ bonus bCastrate,-3; bonus bAspdRate,3; },{},{}
 5211,Dress_Hat,Ribbon Hat,5,,10,200,,2,,1,0xFFFFFFFF,7,2,256,,20,1,265,{ bonus bMdef,7; },{},{}
@@ -2260,7 +2260,7 @@
 5805,Victorious_Coronet,Victorious Coronet,5,,10,150,,1,,0,0xFFFFFFFF,7,2,256,,70,1,43,{ bonus bMaxHPrate,15; bonus bSPrecovRate,5; },{},{}
 5806,Natalie's_Poet_Hat,Natalie's Poet Hat,5,,10,300,,0,,0,0xFFFFFFFF,7,2,256,,1,0,67,{},{},{}
 5807,Octopus_Hat,Octopus Hat,5,,,100,,1,,0,0xFFFFFFFE,7,2,256,,1,0,104,{},{},{}
-5808,Dark_Bashilrium,Dark Bashilrium,5,,,250,,5,,1,0x00CFFF80,2,2,769,,1,0,364,{ bonus2 bResEff,Eff_Stone,2000+(getrefine()*200); bonus2 bResEff,Eff_Freeze,2000+(getrefine()*200); bonus2 bResEff,Eff_Stun,2000+(getrefine()*200); },{},{}
+5808,Dark_Bashilrium,Dark Bashilrium,5,,,250,,5,,1,0x00CFFF80,2,2,769,,1,1,364,{ bonus2 bResEff,Eff_Stone,2000+(getrefine()*200); bonus2 bResEff,Eff_Freeze,2000+(getrefine()*200); bonus2 bResEff,Eff_Stun,2000+(getrefine()*200); },{},{}
 // More Etc Items
 //===================================================================
 7001,Mould_Powder,Mould Powder,3,466,,10,,,,,,,,,,,,,{},{},{}
