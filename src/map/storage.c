@@ -138,7 +138,7 @@ int storage_storageopen(struct map_session_data *sd)
 	if(sd->state.storage_flag)
 		return 1; //Already open?
 	
-	if(pc_can_give_items(pc_isGM(sd)))
+	if( !pc_can_give_items(pc_isGM(sd)) )
   	{ //check is this GM level is allowed to put items to storage
 		clif_displaymessage(sd->fd, msg_txt(246));
 		return 1;
@@ -508,7 +508,7 @@ int storage_guild_storageopen(struct map_session_data *sd)
 	if(sd->state.storage_flag)
 		return 1; //Can't open both storages at a time.
 	
-	if( pc_can_give_items(pc_isGM(sd)) ) { //check is this GM level can open guild storage and store items [Lupus]
+	if( !pc_can_give_items(pc_isGM(sd)) ) { //check is this GM level can open guild storage and store items [Lupus]
 		clif_displaymessage(sd->fd, msg_txt(246));
 		return 1;
 	}

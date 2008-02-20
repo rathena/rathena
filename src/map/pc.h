@@ -140,7 +140,7 @@ extern int duel_count;
 int pc_class2idx(int class_);
 int pc_isGM(struct map_session_data *sd);
 int pc_getrefinebonus(int lv,int type);
-int pc_can_give_items(int level); //[Lupus]
+bool pc_can_give_items(int level);
 
 int pc_setrestartvalue(struct map_session_data *sd,int type);
 int pc_makesavestatus(struct map_session_data *);

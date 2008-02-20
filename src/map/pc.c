@@ -318,16 +318,12 @@ int pc_setrestartvalue(struct map_session_data *sd,int type)
 }
 
 /*==========================================
-	Determines if the GM can give / drop / trade / vend items [Lupus]
+	Determines if the GM can give / drop / trade / vend items
     Args: GM Level (current player GM level)
- *  Returns
-		1 = this GM can't do it
-		0 = this one can do it
  *------------------------------------------*/
-int pc_can_give_items(int level)
+bool pc_can_give_items(int level)
 {
-	return (	level >= battle_config.gm_cant_drop_min_lv
-			&&	level <= battle_config.gm_cant_drop_max_lv);
+	return( level < battle_config.gm_cant_drop_min_lv || level > battle_config.gm_cant_drop_max_lv );
 }
 
 /*==========================================
@@ -5817,7 +5813,7 @@ int pc_setriding(TBL_PC* sd, int flag)
 int pc_candrop(struct map_session_data *sd,struct item *item)
 {
 	int level = pc_isGM(sd);
-	if ( pc_can_give_items(level) ) //check if this GM level can drop items
+	if ( !pc_can_give_items(level) ) //check if this GM level can drop items
 		return 0;
 	return (itemdb_isdropable(item, level));
 }
