@@ -842,7 +842,8 @@ int pc_reg_received(struct map_session_data *sd)
 
 	map_addiddb(&sd->bl);
 	map_delnickdb(sd->status.char_id, sd->status.name);
-	chrif_auth_finished(sd);
+	if (!chrif_auth_finished(sd))
+		ShowError("pc_reg_received: Failed to properly remove player %d:%d from logging db!\n", sd->status.account_id, sd->status.char_id);
 
 	status_calc_pc(sd,1);
 	chrif_scdata_request(sd->status.account_id, sd->status.char_id);

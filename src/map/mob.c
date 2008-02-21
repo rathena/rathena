@@ -2451,7 +2451,7 @@ int mob_class_change (struct mob_data *md, int class_)
 	if (md->class_ == class_)
 		return 0; //Nothing to change.
 
-	hp_rate = md->status.hp*100/md->status.max_hp;
+	hp_rate = status_calc_life(md->status.hp, md->status.max_hp);
 	md->class_ = class_;
 	md->db = mob_db(class_);
 	if (battle_config.override_mob_names==1)
@@ -2586,7 +2586,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 	
 	if (!battle_config.monster_class_change_recover &&
 		(skill_id == NPC_TRANSFORMATION || skill_id == NPC_METAMORPHOSIS))
-		hp_rate = 100*md2->status.hp/md2->status.max_hp;
+		hp_rate = status_calc_life(md2->status.hp, md2->status.max_hp);
 
 	for(;k<amount;k++) {
 		short x,y;
@@ -2691,7 +2691,7 @@ int mob_getfriendhprate_sub(struct block_list *bl,va_list ap)
 	if (battle_check_target(&md->bl,bl,BCT_ENEMY)>0)
 		return 0;
 	
-	rate = 100*status_get_hp(bl)/status_get_max_hp(bl);
+	rate = status_calc_life(status_get_hp(bl), status_get_max_hp(bl));
 	
 	if (rate >= min_rate && rate <= max_rate)
 		(*fr) = bl;
@@ -2717,7 +2717,7 @@ struct block_list *mob_getmasterhpltmaxrate(struct mob_data *md,int rate)
 {
 	if (md && md->master_id > 0) {
 		struct block_list *bl = map_id2bl(md->master_id);
-		if (status_get_hp(bl) < status_get_max_hp(bl) * rate / 100)
+		if (bl && status_calc_life(status_get_hp(bl), status_get_max_hp(bl)) < rate);
 			return bl;
 	}
 
@@ -2823,11 +2823,11 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 				case MSC_ALWAYS:
 					flag = 1; break;
 				case MSC_MYHPLTMAXRATE:		// HP< maxhp%
-					flag = 100*md->status.hp/md->status.max_hp;
+					flag = status_calc_life(md->status.hp, md->status.max_hp);
 					flag = (flag <= c2);
 				  	break;
 				case MSC_MYHPINRATE:
-					flag = 100*md->status.hp/md->status.max_hp;
+					flag = status_calc_life(md->status.hp, md->status.max_hp);
 					flag = (flag >= c2 && flag <= ms[i].val[0]);
 					break;
 				case MSC_MYSTATUSON:		// status[num] on
@@ -3282,7 +3282,7 @@ static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned shor
 {
 	double rate = baserate;
 
-	if (battle_config.logarithmic_drops && rate_adjust > 0) //Logarithmic drops equation by Ishizu-Chan
+	if (battle_config.logarithmic_drops && rate_adjust > 0 && baserate > 0) //Logarithmic drops equation by Ishizu-Chan
 		//Equation: Droprate(x,y) = x * (5 - log(x)) ^ (ln(y) / ln(5))
 		//x is the normal Droprate, y is the Modificator.
 		rate = rate * pow((5.0 - log10(rate)), (log(rate_adjust/100.) / log(5.0))) + 0.5;

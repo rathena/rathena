@@ -951,6 +951,17 @@ int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per
 	}
 	return 1;
 }
+
+//calculates the base/max ratio as a value between 0->100 (percent), using
+//different approaches to avoid overflows.
+//NOTE: The -1 case (0 max hp) should never trigger!
+char status_calc_life(unsigned int base, unsigned int max)
+{
+	if (!max) return -1;
+	if (max < 10000) return 100*base/max;
+	return base/(max/100);
+}
+
 /*==========================================
  * Checks whether the src can use the skill on the target,
  * taking into account status/option of both source/target. [Skotlex]
@@ -5173,11 +5184,9 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 				clif_status_change(bl,SI_MOONLIT,1);
 			val1|= (val3<<16);
 			val3 = 0; //Tick duration/Speed penalty.
-			if (sd) { //Store walk speed change in lower part of val3
+			//Store walk speed change in lower part of val3
+			if (sd && !(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER))
 				val3 = 500-40*pc_checkskill(sd,(sd->status.sex?BA_MUSICALLESSON:DC_DANCINGLESSON));
-				if (sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER)
-				val3 -= 40; //TODO: Figure out real bonus rate.
-			}
 			val3|= ((tick/1000)<<16)&0xFFFF0000; //Store tick in upper part of val3
 			tick = 1000;
 			break;

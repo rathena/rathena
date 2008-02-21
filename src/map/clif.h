@@ -300,6 +300,7 @@ int clif_guild_allianceinfo(struct map_session_data *sd);
 int clif_guild_memberlist(struct map_session_data *sd);
 int clif_guild_skillinfo(struct map_session_data *sd);
 int clif_guild_send_onlineinfo(struct map_session_data *sd); //[LuzZza]
+int clif_guild_masterormember(struct map_session_data *sd);
 int clif_guild_memberlogin_notice(struct guild *g,int idx,int flag);
 int clif_guild_invite(struct map_session_data *sd,struct guild *g);
 int clif_guild_inviteack(struct map_session_data *sd,int flag);

@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2007/02/21
+	* Added status_calc_life to properly calculate hp/max_hp as a ratio taking
+	  into accounts overflows (and for now also avoids divisions by 0). Applied
+	  this function around clif.c, mob.c and pet.c
+	* Implemented the correct walk-speed bonus from the Bard/Dancer spirit.
+	* Fixed logarithmic drops turning 0% drop rates into 100%.
 	* Restructured the login mechanism of the map-server. The goal was to make
 	  sure players are not found  in the different dbs of the map while the
 	  player has not yet been fully authed or while it is quitting, to avoid the

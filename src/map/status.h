@@ -599,6 +599,8 @@ int status_set_sp(struct block_list *bl, unsigned int sp, int flag);
 int status_heal(struct block_list *bl,int hp,int sp, int flag);
 int status_revive(struct block_list *bl, unsigned char per_hp, unsigned char per_sp);
 
+char status_calc_life(unsigned int base, unsigned int max);
+
 //Define for copying a status_data structure from b to a, without overwriting current Hp and Sp
 #define status_cpy(a, b) \
 	memcpy(&((a)->max_hp), &((b)->max_hp), sizeof(struct status_data)-(sizeof((a)->hp)+sizeof((a)->sp)))
