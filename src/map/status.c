@@ -1616,9 +1616,6 @@ int status_calc_pc(struct map_session_data* sd,int first)
 	int i,index;
 	int skill,refinedef=0;
 
-	if(!sd->state.auth && !(first&1)) //Shouldn't invoke yet until player is done loading.
-		return -1;
-
 	if (++calculating > 10) //Too many recursive calls!
 		return -1;
 
@@ -4622,9 +4619,6 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	}
 
 	sd = BL_CAST(BL_PC, bl);
-
-	if(sd && sd->state.waitingdisconnect)
-		return 0; //Character logging out, all his SC were wiped already!
 
 	//Adjust tick according to status resistances
 	if( !(flag&(1|4)) )

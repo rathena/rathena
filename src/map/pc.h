@@ -126,7 +126,6 @@ extern int duel_count;
 #define pc_is50overweight(sd) ( (sd)->weight*100 >= (sd)->max_weight*battle_config.natural_heal_weight_rate )
 #define pc_is90overweight(sd) ( (sd)->weight*10 >= (sd)->max_weight*9 )
 #define pc_maxparameter(sd)   ( (sd)->class_&JOBL_BABY ? battle_config.max_baby_parameter : battle_config.max_parameter )
-#define pc_isplaying(sd)      ( (sd)->state.auth /* is authed */ && !(sd)->state.waitingdisconnect /* not waiting disconnect */ && !(sd)->state.finalsave /* not in final save */ )
 
 #define pc_stop_walking(sd, type) unit_stop_walking(&(sd)->bl, type)
 #define pc_stop_attack(sd) unit_stop_attack(&(sd)->bl)
@@ -145,8 +144,8 @@ bool pc_can_give_items(int level);
 int pc_setrestartvalue(struct map_session_data *sd,int type);
 int pc_makesavestatus(struct map_session_data *);
 int pc_setnewpc(struct map_session_data*,int,int,int,unsigned int,int,int);
-int pc_authok(struct map_session_data*, int, time_t, struct mmo_charstatus *);
-int pc_authfail(struct map_session_data *);
+bool pc_authok(struct map_session_data*, int, time_t, struct mmo_charstatus *);
+void pc_authfail(struct map_session_data *);
 int pc_reg_received(struct map_session_data *sd);
 
 int pc_isequip(struct map_session_data *sd,int n);

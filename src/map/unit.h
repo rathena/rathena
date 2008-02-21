@@ -7,6 +7,7 @@
 //#include "map.h"
 struct block_list;
 struct unit_data;
+struct map_session_data;
 
 // PC, MOB, PET ‚É‹¤’Ê‚·‚éˆ—‚ğ‚P‚Â‚É‚Ü‚Æ‚ß‚éŒv‰æ
 
@@ -61,6 +62,8 @@ void unit_dataset(struct block_list *bl);
 int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int tick,int sdelay,int ddelay,int damage,int div,int type,int damage2);
 // ‚»‚Ì‘¼
 struct unit_data* unit_bl2ud(struct block_list *bl);
+void unit_remove_map_pc(struct map_session_data *sd, int clrtype);
+void unit_free_pc(struct map_session_data *sd);
 int unit_remove_map(struct block_list *bl, int clrtype);
 int unit_free(struct block_list *bl, int clrtype);
 int unit_changeviewsize(struct block_list *bl,short size);

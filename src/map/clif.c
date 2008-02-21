@@ -175,7 +175,7 @@ int clif_countusers(void)
 	for(i = 0; i < fd_max; i++) {
 		if (session[i] && session[i]->func_parse == clif_parse &&
 			(sd = (struct map_session_data*)session[i]->session_data) &&
-		  	sd->state.auth && !(battle_config.hide_GM_session && pc_isGM(sd)))
+		  	sd->state.active && !(battle_config.hide_GM_session && pc_isGM(sd)))
 			users++;
 	}
 	return users;
@@ -195,7 +195,7 @@ int clif_foreachclient(int (*func)(struct map_session_data*, va_list),...) //rec
 	for(i = 0; i < fd_max; i++) {
 		if ( session[i] && session[i]->func_parse == clif_parse) {
 			sd = (struct map_session_data*)session[i]->session_data;
-			if ( sd && sd->state.auth && !sd->state.waitingdisconnect )
+			if ( sd && sd->state.active )
 				func(sd, ap);
 		}
 	}
@@ -246,20 +246,23 @@ int clif_send_sub(struct block_list *bl, va_list ap)
 	break;
 	}
 
-	if (session[fd] != NULL) {
-		WFIFOHEAD(fd, len);
-		if (WFIFOP(fd,0) == buf) {
-			ShowError("WARNING: Invalid use of clif_send function\n");
-			ShowError("         Packet x%4x use a WFIFO of a player instead of to use a buffer.\n", WBUFW(buf,0));
-			ShowError("         Please correct your code.\n");
-			// don't send to not move the pointer of the packet for next sessions in the loop
-			WFIFOSET(fd,0);//## TODO is this ok?
-		} else {
-			if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
-				memcpy(WFIFOP(fd,0), buf, len);
-				WFIFOSET(fd,len);
-			}
-		}
+	if (session[fd] == NULL)
+		return 0;
+
+	WFIFOHEAD(fd, len);
+	if (WFIFOP(fd,0) == buf) {
+		ShowError("WARNING: Invalid use of clif_send function\n");
+		ShowError("         Packet x%4x use a WFIFO of a player instead of to use a buffer.\n", WBUFW(buf,0));
+		ShowError("         Please correct your code.\n");
+		// don't send to not move the pointer of the packet for next sessions in the loop
+		//WFIFOSET(fd,0);//## TODO is this ok?
+		//NO. It is not ok. There is the chance WFIFOSET actually sends the buffer data, and shifts elements around, which will corrupt the buffer.
+		return 0;
+	}
+
+	if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
+		memcpy(WFIFOP(fd,0), buf, len);
+		WFIFOSET(fd,len);
 	}
 
 	return 0;
@@ -285,13 +288,13 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 	case ALL_CLIENT: //All player clients.
 		for (i = 0; i < fd_max; i++) {
 			if (session[i] && session[i]->func_parse == clif_parse &&
-				(sd = (struct map_session_data *)session[i]->session_data) != NULL&&
-				sd->state.auth) {
-				if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
-					WFIFOHEAD(i, len);
-					memcpy(WFIFOP(i,0), buf, len);
-					WFIFOSET(i,len);
-				}
+				(sd = (struct map_session_data *)session[i]->session_data) != NULL &&
+				sd->state.active &&
+				packet_db[sd->packet_ver][RBUFW(buf,0)].len)
+			{ // packet must exist for the client version
+				WFIFOHEAD(i, len);
+				memcpy(WFIFOP(i,0), buf, len);
+				WFIFOSET(i,len);
 			}
 		}
 		break;
@@ -299,12 +302,12 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 		for(i = 0; i < fd_max; i++) {
 			if (session[i] && session[i]->func_parse == clif_parse &&
 				(sd = (struct map_session_data*)session[i]->session_data) != NULL &&
-				sd->state.auth && sd->bl.m == bl->m) {
-				if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
-					WFIFOHEAD(i,len);
-					memcpy(WFIFOP(i,0), buf, len);
-					WFIFOSET(i,len);
-				}
+				sd->state.active && sd->bl.m == bl->m &&
+				packet_db[sd->packet_ver][RBUFW(buf,0)].len)
+			{ // packet must exist for the client version
+				WFIFOHEAD(i,len);
+				memcpy(WFIFOP(i,0), buf, len);
+				WFIFOSET(i,len);
 			}
 		}
 		break;
@@ -350,11 +353,11 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 		for(i=1; i<fd_max; i++) {
 			if (session[i] && session[i]->func_parse == clif_parse &&
 				(sd = (struct map_session_data*)session[i]->session_data) != NULL &&
-				sd->state.mainchat && !sd->chatID && (fd=sd->fd))
+				sd->state.active && sd->state.mainchat && !sd->chatID)
 			{
-				WFIFOHEAD(fd,len);
-				memcpy(WFIFOP(fd,0), buf, len);
-				WFIFOSET(fd, len);
+				WFIFOHEAD(i,len);
+				memcpy(WFIFOP(i,0), buf, len);
+				WFIFOSET(i, len);
 			}
 		}
 		break;
@@ -376,12 +379,9 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 				if( (sd = p->data[i].sd) == NULL )
 					continue;
 
-				if( !(fd=sd->fd) || fd <= 0 || fd >= fd_max )
+				if( !(fd=sd->fd) )
 					continue;
 
-				if( session[fd] == NULL || sd->state.auth == 0 || session[fd]->session_data == NULL || sd->packet_ver > MAX_PACKET_VER )
-					continue;
-				
 				if( sd->bl.id == bl->id && (type == PARTY_WOS || type == PARTY_SAMEMAP_WOS || type == PARTY_AREA_WOS) )
 					continue;
 				
@@ -404,13 +404,12 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 
 				if (session[i] && session[i]->func_parse == clif_parse &&
 					(sd = (struct map_session_data*)session[i]->session_data) != NULL &&
-				  	sd->state.auth && (fd=sd->fd) && sd->partyspy == p->party.party_id)
-		  		{
-					if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
-						WFIFOHEAD(fd,len);
-						memcpy(WFIFOP(fd,0), buf, len);
-						WFIFOSET(fd,len);
-					}
+				  	sd->state.active && sd->partyspy == p->party.party_id &&
+					packet_db[sd->packet_ver][RBUFW(buf,0)].len)
+				{ // packet must exist for the client version
+					WFIFOHEAD(i,len);
+					memcpy(WFIFOP(i,0), buf, len);
+					WFIFOSET(i,len);
 				}
 			}
 		}
@@ -423,7 +422,7 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 		for (i = 0; i < fd_max; i++) {
 			if (session[i] && session[i]->func_parse == clif_parse &&
 				(sd = (struct map_session_data *)session[i]->session_data) != NULL &&
-				sd->state.auth && sd->duel_group == x0) {
+				sd->state.active && sd->duel_group == x0) {
 				if (type == DUEL_WOS && bl->id == sd->bl.id)
 					continue;
 				if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { 
@@ -460,10 +459,7 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 			for(i = 0; i < g->max_member; i++) {
 				if( (sd = g->member[i].sd) != NULL )
 				{
-					if( !(fd=sd->fd) || fd <= 0 || fd >= fd_max )
-						continue;
-					
-					if( session[fd] == NULL || sd->state.auth == 0 || session[fd]->session_data == NULL || sd->packet_ver > MAX_PACKET_VER )
+					if( !(fd=sd->fd) )
 						continue;
 					
 					if( sd->bl.id == bl->id && (type == GUILD_WOS || type == GUILD_SAMEMAP_WOS || type == GUILD_AREA_WOS) )
@@ -488,12 +484,12 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 			for (i = 1; i < fd_max; i++){ // guildspy [Syrus22]
 				if (session[i] && session[i]->func_parse == clif_parse &&
 					(sd = (struct map_session_data*)session[i]->session_data) != NULL &&
-				  	sd->state.auth && (fd=sd->fd) && sd->guildspy == g->guild_id) {
-					if (packet_db[sd->packet_ver][RBUFW(buf,0)].len) { // packet must exist for the client version
-						WFIFOHEAD(fd,len);
-						memcpy(WFIFOP(fd,0), buf, len);
-						WFIFOSET(fd,len);
-					}
+				  	sd->state.active && sd->guildspy == g->guild_id &&
+					packet_db[sd->packet_ver][RBUFW(buf,0)].len)
+				{ // packet must exist for the client version
+					WFIFOHEAD(fd,len);
+					memcpy(WFIFOP(fd,0), buf, len);
+					WFIFOSET(fd,len);
 				}
 			}
 		}
@@ -541,6 +537,7 @@ int clif_authok(struct map_session_data *sd)
  *  3 - timeout/too much lag -> MsgStringTable[241]
  *  4 - server full -> MsgStringTable[264]
  *  5 - underaged -> MsgStringTable[305]
+ *  8 - Server sill recognizes last connection -> MsgStringTable[441]
  *  9 - too many connections from this ip -> MsgStringTable[529]
  *  10 - out of available time paid for -> MsgStringTable[530]
  *  15 - disconnected by a GM -> if( servicetype == taiwan ) MsgStringTable[579]
@@ -1038,7 +1035,7 @@ int clif_weather(int m)
 	for(i = 0; i < fd_max; i++) {
 		if (session[i] && session[i]->func_parse == clif_parse &&	
 			(sd = session[i]->session_data) != NULL &&
-		  	sd->state.auth && sd->bl.m == m) {
+		  	sd->state.active && sd->bl.m == m) {
 			clif_weather_check(sd);
 		}
 	}
@@ -1327,8 +1324,7 @@ static int clif_delayquit(int tid, unsigned int tick, int id, int data)
  *------------------------------------------*/
 void clif_quitsave(int fd,struct map_session_data *sd)
 {
-	if (sd->state.waitingdisconnect || //Was already waiting to be disconnected.
-		!battle_config.prevent_logout ||
+	if (!battle_config.prevent_logout ||
 	  	DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout)
 		map_quit(sd);
 	else if (sd->fd)
@@ -1356,10 +1352,9 @@ static int clif_waitclose(int tid, unsigned int tick, int id, int data)
  *------------------------------------------*/
 void clif_setwaitclose(int fd)
 {
-	struct map_session_data *sd;
 
 	// if player is not already in the game (double connection probably)
-	if ((sd = (struct map_session_data*)session[fd]->session_data) == NULL) {
+	if (session[fd]->session_data == NULL) {
 		// limited timer, just to send information.
 		add_timer(gettick() + 1000, clif_waitclose, fd, 0);
 	} else
@@ -3775,7 +3770,7 @@ void clif_01ac(struct block_list* bl)
 
 	sd=va_arg(ap,struct map_session_data*);
 
-	if (sd == NULL || !sd->fd || session[sd->fd] == NULL)
+	if (sd == NULL || !sd->fd)
 		return 0;
 
 	switch(bl->type){
@@ -5614,7 +5609,7 @@ int clif_hpmeter(struct map_session_data *sd)
 	for (i = 0; i < fd_max; i++) {
 		if (session[i] && session[i]->func_parse == clif_parse &&	
 			(sd2 = (struct map_session_data*)session[i]->session_data) &&
-			sd != sd2 && sd2->state.auth) {
+			sd != sd2 && sd2->state.active) {
 			if (sd2->bl.m != sd->bl.m || 
 				sd2->bl.x < x0 || sd2->bl.y < y0 ||
 				sd2->bl.x > x1 || sd2->bl.y > y1 ||
@@ -7616,12 +7611,14 @@ static int clif_guess_PacketVer(int fd, int get_previous, int *error)
  *------------------------------------------*/
 void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 {
+	struct block_list* bl;
+	struct auth_node* node;
 	int cmd, account_id, char_id, login_id1, sex;
 	unsigned int client_tick; //The client tick is a tick, therefore it needs be unsigned. [Skotlex]
 	int packet_ver;	// 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 (by [Yor])
 
 	if (sd) {
-		ShowError("clif_parse_WantToConnection : invalid request (character already logged in)?\n");
+		ShowError("clif_parse_WantToConnection : invalid request (character already logged in)\n");
 		return;
 	}
 
@@ -7646,13 +7643,12 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 		WFIFOSET(fd,packet_len(0x6a));
 		clif_setwaitclose(fd);
 		return;
-	} else if( map_knowsaccount(account_id) )
-	{// double login
-		sd = map_id2sd(account_id);
-		if( sd  && sd->state.autotrade )
-			map_quit(sd);// kick autotrading character
-		else
-			ShowError("clif_parse_WantToConnection: double login attempt AID/CID: %d/%d, rejecting...\n", account_id, char_id);
+	}
+
+	//Check for double login.
+	bl = map_id2bl(account_id);
+	if(bl && bl->type != BL_PC) {
+		ShowError("clif_parse_WantToConnection: a non-player object already has id %d, please increase the starting account number\n", account_id);
 		WFIFOHEAD(fd,packet_len(0x6a));
 		WFIFOW(fd,0) = 0x6a;
 		WFIFOB(fd,2) = 3; // Rejected by server
@@ -7660,19 +7656,22 @@ void clif_parse_WantToConnection(int fd, TBL_PC* sd)
 		clif_setwaitclose(fd);
 		return;
 	}
-	else
-	{// packet version accepted
-		struct block_list* bl;
-		if( (bl=map_id2bl(account_id)) != NULL && bl->type != BL_PC )
-		{// non-player object already has that id
-			ShowError("clif_parse_WantToConnection: a non-player object already has id %d, please increase the starting account number\n", account_id);
-			WFIFOHEAD(fd,packet_len(0x6a));
-			WFIFOW(fd,0) = 0x6a;
-			WFIFOB(fd,2) = 3; // Rejected by server
-			WFIFOSET(fd,packet_len(0x6a));
-			clif_setwaitclose(fd);
-			return;
-		}
+
+	if (bl || 
+		((node=chrif_search(account_id)) && //An already existing node is valid only if it is for this login.
+			!(node->account_id == account_id && node->char_id == char_id && node->state == ST_LOGIN))) {
+		sd = BL_CAST(BL_PC, bl);
+		if (!sd)
+			;	//We have another char with the same account logging in/out.
+		else //Already connected player.
+		if (sd->fd)
+			clif_authfail_fd(sd->fd, 2); //someone else logged in
+		else
+		if(sd->state.autotrade)
+			map_quit(sd);// kick autotrading character
+		//Else do not kick character, it could be on its 10 sec penalty for Alt+F4
+		clif_authfail_fd(fd, 8); //Still recognizes last connection
+		return;
 	}
 
 	CREATE(sd, TBL_PC, 1);
@@ -7706,7 +7705,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->bl.prev != NULL)
 		return;
 	
-	if (!sd->state.auth)
+	if (!sd->state.active)
 	{	//Character loading is not complete yet!
 		//Let pc_reg_received reinvoke this when ready.
 		sd->state.connect_new = 0;
@@ -11652,12 +11651,13 @@ int clif_parse(int fd)
 				sd->fd = 0;
 				ShowInfo("%sCharacter '"CL_WHITE"%s"CL_RESET"' logged off (using @autotrade).\n", (pc_isGM(sd))?"GM ":"", sd->status.name);
 			} else
-			if (sd->state.auth) {
+			if (sd->state.active) {
 				 // Player logout display [Valaris]
 				ShowInfo("%sCharacter '"CL_WHITE"%s"CL_RESET"' logged off.\n", (pc_isGM(sd))?"GM ":"", sd->status.name);
 				clif_quitsave(fd, sd);
 			} else {
-				ShowInfo("Player AID:%d/CID:%d (not authenticated) logged off.\n", sd->bl.id, sd->status.char_id);
+				//Unusual logout (during log on/off/map-changer procedure)
+				ShowInfo("Player AID:%d/CID:%d logged off.\n", sd->status.account_id, sd->status.char_id);
 				map_quit(sd);
 			}
 		} else {
@@ -11723,17 +11723,14 @@ int clif_parse(int fd)
 	if ((int)RFIFOREST(fd) < packet_len)
 		return 0; // not enough data received to form the packet
 
-	if (sd && sd->state.waitingdisconnect == 1) {
-		// 切断待ちの場合パケットを処理しない
-	} else
 	if (packet_db[packet_ver][cmd].func) {
 		if (sd && sd->bl.prev == NULL && packet_db[packet_ver][cmd].func != clif_parse_LoadEndAck)
 			; //Only valid packet when player is not on a map is the finish-loading packet.
 		else
-		if (sd
+		if ((sd && sd->state.active)
 			|| packet_db[packet_ver][cmd].func == clif_parse_WantToConnection
 			|| packet_db[packet_ver][cmd].func == clif_parse_debug
-		)	//Only execute the function when there's an sd (except for debug/wanttoconnect packets)
+		)	//Only execute the function when there's an active sd (except for debug/wanttoconnect packets)
 			packet_db[packet_ver][cmd].func(fd, sd);
 	}
 #if DUMP_UNKNOWN_PACKET
@@ -11750,7 +11747,7 @@ int clif_parse(int fd)
 			return 1;
 		} else {
 			time(&now);
-			if (sd && sd->state.auth) {
+			if (sd && sd->state.active) {
 				fprintf(fp, "%sPlayer with account ID %d (character ID %d, player name %s) sent wrong packet:\n",
 					asctime(localtime(&now)), sd->status.account_id, sd->status.char_id, sd->status.name);
 			} else if (sd) // not authentified! (refused by char-server or disconnect before to be authentified)
@@ -11779,7 +11776,7 @@ int clif_parse(int fd)
 			ShowMessage("%02X ", RFIFOB(fd,i));
 		}
 		ShowMessage("\n");
-		if (sd && sd->state.auth) {
+		if (sd && sd->state.active) {
 			if (sd->status.name != NULL)
 				ShowMessage("\nAccount ID %d, character ID %d, player name %s.\n",
 				sd->status.account_id, sd->status.char_id, sd->status.name);

@@ -102,7 +102,6 @@ static DBMap* mobid_db=NULL; // int id -> struct mob_data*
 static DBMap* map_db=NULL; // unsigned int mapindex -> struct map_data*
 static DBMap* nick_db=NULL; // int char_id -> struct charid2nick* (requested names of offline characters)
 static DBMap* charid_db=NULL; // int char_id -> struct map_session_data*
-static DBMap* quit_db=NULL; // int account_id -> struct map_session_data* (players that are quitting or changing map-server)
 
 static int map_users=0;
 static struct block_list *objects[MAX_FLOORITEM];
@@ -1540,115 +1539,74 @@ void map_deliddb(struct block_list *bl)
 	idb_remove(id_db,bl->id);
 }
 
-/// Returns true if the map server knows the account (to reject logins).
-bool map_knowsaccount(int account_id)
-{
-	return (map_id2sd(account_id) || idb_get(quit_db,account_id) ? true : false);
-}
-
 /*==========================================
- * PC‚Ìquit?— map.c?•ª
- *
- * quit?—‚ÌŽå?‚ªˆá‚¤‚æ‚¤‚È?‚à‚µ‚Ä‚«‚½
+ * Standard call when a player connection is closed.
  *------------------------------------------*/
 int map_quit(struct map_session_data *sd)
 {
-	struct map_session_data* sd2;
-	if(!sd->state.auth) { //Removing a player that hasn't even finished loading
-		TBL_PC *sd2 = map_id2sd(sd->status.account_id);
-		if (sd->pd) unit_free(&sd->pd->bl,-1);
-		if (sd->hd) unit_free(&sd->hd->bl,-1);
-		//Double login, let original do the cleanups below.
-		if (sd2 && sd2 != sd)
-			return 0;
-		map_deliddb(&sd->bl);
+	if(!sd->state.active) { //Removing a player that is not active.
+		struct auth_node *node = chrif_search(sd->status.account_id);
+		if (node && node->char_id == sd->status.char_id &&
+			node->state != ST_LOGOUT)
+			//Except when logging out, clear the auth-connect data immediately.
+			chrif_auth_delete(node->account_id, node->char_id, node->state);
+		//Non-active players should not have loaded any data yet (or it was cleared already) so no additional cleanups are needed.
 		return 0;
 	}
-	if(!sd->state.waitingdisconnect) {
-		if (sd->npc_timer_id != -1) //Cancel the event timer.
-			npc_timerevent_quit(sd);
 
-		npc_script_event(sd, NPCE_LOGOUT);
-		sd->state.waitingdisconnect = 1;
-		if (sd->pd) unit_free(&sd->pd->bl,0);
-		if (sd->hd) unit_free(&sd->hd->bl,0);
-		unit_free(&sd->bl,3);
-		chrif_save(sd,1);
-	} else { //Try to free some data, without saving anything (this could be invoked on map server change. [Skotlex]
-		if (sd->bl.prev != NULL)
-			unit_remove_map(&sd->bl, 0);
-		if (sd->pd && sd->pd->bl.prev != NULL)
-			unit_remove_map(&sd->pd->bl, 0);
-		if (sd->hd && sd->hd->bl.prev != NULL)
-			unit_remove_map(&sd->hd->bl, 0);
-	}
+	if (sd->npc_timer_id != -1) //Cancel the event timer.
+		npc_timerevent_quit(sd);
 
-	map_deliddb(&sd->bl);
-	if( (sd2=(struct map_session_data*)idb_put(quit_db, sd->status.account_id, sd)) )
-	{
-		ShowDebug("map_quit: Possible double login AID/CID: %d/%d AID/CID: %d/%d\n", sd2->status.account_id, sd2->status.char_id, sd->status.account_id, sd->status.char_id);
-		aFree(sd2);
-	}
+	npc_script_event(sd, NPCE_LOGOUT);
 
-	if(sd->reg)
-	{	//Double logout already freed pointer fix... [Skotlex]
-		aFree(sd->reg);
-		sd->reg = NULL;
-		sd->reg_num = 0;
+	//Unit_free handles clearing the player related data, 
+	//map_quit handles extra specific data which is related to quitting normally
+	//(changing map-servers invokes unit_free but bypasses map_quit)
+	if(sd->sc.count) {
+		//Status that are not saved...
+		if(sd->sc.data[SC_SPURT])
+			status_change_end(&sd->bl,SC_SPURT,-1);
+		if(sd->sc.data[SC_BERSERK])
+			status_change_end(&sd->bl,SC_BERSERK,-1);
+		if(sd->sc.data[SC_TRICKDEAD])
+			status_change_end(&sd->bl,SC_TRICKDEAD,-1);
+		if(sd->sc.data[SC_GUILDAURA])
+			status_change_end(&sd->bl,SC_GUILDAURA,-1);
+		if (battle_config.debuff_on_logout&1) {
+			if(sd->sc.data[SC_ORCISH])
+				status_change_end(&sd->bl,SC_ORCISH,-1);
+			if(sd->sc.data[SC_STRIPWEAPON])
+				status_change_end(&sd->bl,SC_STRIPWEAPON,-1);
+			if(sd->sc.data[SC_STRIPARMOR])
+				status_change_end(&sd->bl,SC_STRIPARMOR,-1);
+			if(sd->sc.data[SC_STRIPSHIELD])
+				status_change_end(&sd->bl,SC_STRIPSHIELD,-1);
+			if(sd->sc.data[SC_STRIPHELM])
+				status_change_end(&sd->bl,SC_STRIPHELM,-1);
+			if(sd->sc.data[SC_EXTREMITYFIST])
+				status_change_end(&sd->bl,SC_EXTREMITYFIST,-1);
+			if(sd->sc.data[SC_EXPLOSIONSPIRITS])
+				status_change_end(&sd->bl,SC_EXPLOSIONSPIRITS,-1);
+			if(sd->sc.data[SC_REGENERATION] && sd->sc.data[SC_REGENERATION]->val4)
+				status_change_end(&sd->bl,SC_REGENERATION,-1);
+		}
+		if (battle_config.debuff_on_logout&2)
+		{
+			if(sd->sc.data[SC_MAXIMIZEPOWER])
+				status_change_end(&sd->bl,SC_MAXIMIZEPOWER,-1);
+			if(sd->sc.data[SC_MAXOVERTHRUST])
+				status_change_end(&sd->bl,SC_MAXOVERTHRUST,-1);
+			if(sd->sc.data[SC_STEELBODY])
+				status_change_end(&sd->bl,SC_STEELBODY,-1);
+		}
 	}
-	if(sd->regstr)
-	{
-		int i;
-		for( i = 0; i < sd->regstr_num; ++i )
-			if( sd->regstr[i].data )
-				aFree(sd->regstr[i].data);
-		aFree(sd->regstr);
-		sd->regstr = NULL;
-		sd->regstr_num = 0;
-	}
-	if (sd->st) {
-		if (sd->st->stack)
-			script_free_stack (sd->st->stack);
-		aFree(sd->st);
-		sd->st = NULL;
-		sd->npc_id = 0;
-	}
-	if(sd->fd)
-  	{	//Player will be free'd on save-ack. [Skotlex]
-		if (session[sd->fd])
-			session[sd->fd]->session_data = NULL;
-		sd->fd = 0;
-	}
+	
+	unit_remove_map_pc(sd,3);
+	pc_makesavestatus(sd);
+	pc_clean_skilltree(sd);
+	chrif_save(sd,1);
+	unit_free_pc(sd);
 	return 0;
-}
-
-void map_quit_ack(int account_id, int char_id)
-{
-	struct map_session_data* sd = (struct map_session_data*)idb_get(quit_db,account_id);
-	if( sd )
-	{
-		if( sd->status.char_id != char_id )
-			ShowDebug("map_quit_ack: Possible double login AID/CID: %d/%d AID/CID: %d/%d\n", account_id, char_id, sd->status.account_id, sd->status.char_id);
-		else
-			idb_remove(quit_db,account_id);
-	}
-}
-
-static int do_reconnect_map_sub(DBKey key,void *data,va_list va)
-{
-	struct map_session_data *sd = (TBL_PC*)data;
-	if (sd->state.finalsave) {
-		sd->state.finalsave = 0;
-		chrif_save(sd, 1); //Resend to save!
-		return 1;
-	}
-	return 0;
-}
-
-void do_reconnect_map(void)
-{
-	pc_db->foreach(pc_db,do_reconnect_map_sub);
-	pc_db->foreach(quit_db,do_reconnect_map_sub);//## FIXME possible loss of data [FlavioJS]
 }
 
 /*==========================================
@@ -1765,15 +1723,6 @@ struct block_list * map_id2bl(int id)
 	return bl;
 }
 
-static int map_getallpc_sub(DBKey key,void * data,va_list ap)
-{
-	struct map_session_data *sd = (struct map_session_data*) data;
-	if (!sd->state.auth || sd->state.waitingdisconnect || sd->state.finalsave)
-		return 1; //Do not count in not-yet authenticated characters or ready to disconnect ones.
-
-	return 0;
-}
-
 /*==========================================
  * Returns an array of all players in the server (includes non connected ones) [Skotlex]
  * The int pointer given returns the count of elements in the array.
@@ -1805,7 +1754,7 @@ struct map_session_data** map_getallusers(int *users)
 		RECREATE(all_sd, struct map_session_data*, all_count);
 	}
 
-	*users = pc_db->getall(pc_db,(void**)all_sd,all_count,map_getallpc_sub);
+	*users = pc_db->getall(pc_db,(void**)all_sd,all_count,NULL);
 	if (*users > (signed int)all_count) //Which should be impossible...
 		*users = all_count;
 
@@ -1857,8 +1806,7 @@ struct s_mapiterator
 /// @return true if it matches
 #define MAPIT_MATCHES(_mapit_,_bl_) \
 	( \
-		( (_bl_)->type & (_mapit_)->types /* type matches */ ) && \
-		( (_bl_)->type != BL_PC /* not a pc */ || !((_mapit_)->flags & MAPIT_PCISPLAYING) /* any pc state */ || pc_isplaying((TBL_PC*)(_bl_)) /* pc is playing */ ) \
+		( (_bl_)->type & (_mapit_)->types /* type matches */ ) \
 	)
 
 /// Allocates a new iterator.
@@ -1874,7 +1822,6 @@ struct s_mapiterator* mapit_alloc(enum e_mapitflags flags, enum bl_type types)
 	struct s_mapiterator* mapit;
 
 	CREATE(mapit, struct s_mapiterator, 1);
-	if( !(types & BL_PC) && (flags & MAPIT_PCISPLAYING) ) flags ^= MAPIT_PCISPLAYING;// incompatible flag
 	mapit->flags = flags;
 	mapit->types = types;
 	if( types == BL_PC )       mapit->dbi = db_iterator(pc_db);
@@ -3127,19 +3074,6 @@ static int cleanup_db_sub(DBKey key,void *data,va_list va)
 	return cleanup_sub((struct block_list*)data, NULL);
 }
 
-static int cleanup_db_subpc(DBKey key,void *data,va_list va)
-{
-	struct map_session_data *sd = (TBL_PC*)data;
-	if (!sd->state.finalsave)
-  	{	//Error?
-		ShowError("do_final: Player character in DB which was not sent to save! %d:%d\n", sd->status.account_id, sd->status.char_id);
-		map_quit(sd); //Attempt force-save
-	}
-	//Force remove from memory...
-	map_quit_ack(sd->status.account_id, sd->status.char_id);
-	return 1;
-}
-
 /*==========================================
  * mapŽII—¹E—
  *------------------------------------------*/
@@ -3164,9 +3098,6 @@ void do_final(void)
 	id_db->foreach(id_db,cleanup_db_sub);
 	chrif_char_reset_offline();
 	chrif_flush_fifo();
-  	//Online players were sent to save, but the ack will not arrive on time!
-	//They have to be removed from memory, and assume the char-server saved them.
-	pc_db->foreach(pc_db,cleanup_db_subpc);
 
 	do_final_atcommand();
 	do_final_battle();
@@ -3210,7 +3141,6 @@ void do_final(void)
 	mobid_db->destroy(mobid_db, NULL);
 	nick_db->destroy(nick_db, nick_db_final);
 	charid_db->destroy(charid_db, NULL);
-	db_destroy(quit_db);
 
 #ifndef TXT_ONLY
     map_sql_close();
@@ -3221,9 +3151,6 @@ void do_final(void)
 static int map_abort_sub(DBKey key,void * data,va_list ap)
 {
 	struct map_session_data *sd = (TBL_PC*)data;
-
-	if (!sd->state.auth || sd->state.waitingdisconnect || sd->state.finalsave) 
-		return 0;
 
 	chrif_save(sd,1);
 	return 1;
@@ -3389,7 +3316,6 @@ int do_init(int argc, char *argv[])
 	map_db = uidb_alloc(DB_OPT_BASE);
 	nick_db = idb_alloc(DB_OPT_BASE);
 	charid_db = idb_alloc(DB_OPT_BASE);
-	quit_db = idb_alloc(DB_OPT_RELEASE_DATA);
 #ifndef TXT_ONLY
 	map_sql_init();
 #endif /* not TXT_ONLY */

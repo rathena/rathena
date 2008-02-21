@@ -232,9 +232,6 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd)
 	int trade_i, i, n;
 	short amount;
 
-	if(sd->state.finalsave || tsd->state.finalsave)
-		return 0; //Item transferring fails 
-
 	// check zenys value against hackers (Zeny was already checked on time of adding, but you never know when you lost some zeny since then.
 	if(sd->deal.zeny > sd->status.zeny || (tsd->status.zeny > MAX_ZENY - sd->deal.zeny))
 		return 0;

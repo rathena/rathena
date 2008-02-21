@@ -7,12 +7,15 @@
 #include "../common/cbasetypes.h"
 #include <time.h>
 
-struct auth_node{
-	int account_id, login_id1, login_id2, sex, fd;
+enum sd_state { ST_LOGIN, ST_LOGOUT, ST_MAPCHANGE };
+struct auth_node {
+	int account_id, char_id;
+	int login_id1, login_id2, sex, fd;
 	time_t connect_until_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 	struct map_session_data *sd;	//Data from logged on char.
 	struct mmo_charstatus *char_dat;	//Data from char server.
-	unsigned int node_created; //For node auto-deleting
+	unsigned int node_created; //timestamp for node timeouts
+	enum sd_state state; //To track whether player was login in/out or changing maps.	
 };
 
 void chrif_setuserid(char* id);
@@ -26,12 +29,17 @@ int chrif_isconnected(void);
 extern int chrif_connected;
 extern int other_mapserver_count;
 
+struct auth_node* chrif_search(int account_id);
+struct auth_node* chrif_auth_check(int account_id, int char_id, enum sd_state state);
+bool chrif_auth_delete(int account_id, int char_id, enum sd_state state);
+bool chrif_auth_finished(struct map_session_data* sd);
+
 void chrif_authreq(struct map_session_data* sd);
 void chrif_authok(int fd);
 int chrif_scdata_request(int account_id, int char_id);
 int chrif_save(struct map_session_data* sd, int flag);
 int chrif_charselectreq(struct map_session_data* sd, uint32 s_ip);
-int chrif_changemapserver(struct map_session_data* sd, short map, int x, int y, uint32 ip, uint16 port);
+int chrif_changemapserver(struct map_session_data* sd, uint32 ip, uint16 port);
 
 int chrif_searchcharid(int char_id);
 int chrif_changegm(int id,const char *pass,int len);

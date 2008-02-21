@@ -333,9 +333,6 @@ int pc_makesavestatus(struct map_session_data *sd)
 {
 	nullpo_retr(0, sd);
 
-	if (sd->state.finalsave)
-		return 0; //Nothing to change.
-	
 	if(!battle_config.save_clothcolor)
 		sd->status.clothes_color=0;
 
@@ -392,10 +389,9 @@ int pc_setnewpc(struct map_session_data *sd, int account_id, int char_id, int lo
 	sd->login_id1    = login_id1;
 	sd->login_id2    = 0; // at this point, we can not know the value :(
 	sd->client_tick  = client_tick;
-	sd->state.auth   = 0;
+	sd->state.active = 0; //to be set to 1 after player is fully authed and loaded.
 	sd->bl.type      = BL_PC;
 	sd->canlog_tick  = gettick();
-	sd->state.waitingdisconnect = 0;
 	//Required to prevent homunculus copuing a base speed of 0.
 	sd->battle_status.speed = sd->base_status.speed = DEFAULT_WALK_SPEED;
 	return 0;
@@ -607,35 +603,17 @@ int pc_isequip(struct map_session_data *sd,int n)
  * session idに問題無し
  * char鯖から送られてきたステ?タスを設定
  *------------------------------------------*/
-int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_time, struct mmo_charstatus *st)
+bool pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_time, struct mmo_charstatus *st)
 {
-	TBL_PC* old_sd;
 	int i;
 	unsigned long tick = gettick();
-
-	if (sd->state.auth) //Temporary debug. [Skotlex]
-	{
-		ShowDebug("pc_authok: Received auth ok for already authorized client (account id %d)!\n", sd->bl.id);
-		return 1;
-	}
 
 	sd->login_id2 = login_id2;
 	memcpy(&sd->status, st, sizeof(*st));
 
 	if (st->sex != sd->status.sex) {
 		clif_authfail_fd(sd->fd, 0);
-		return 1;
-	}
-
-	if( (old_sd=map_id2sd(st->account_id)) != NULL ){
-		if (old_sd->state.finalsave || !old_sd->state.auth)
-			; //Previous player is not done loading/quiting, No need to kick.
-		else if (old_sd->fd)
-			clif_authfail_fd(old_sd->fd, 2); // same id
-		else 
-			map_quit(old_sd);
-		clif_authfail_fd(sd->fd, 8); // still recognizes last connection
-		return 1;
+		return false;
 	}
 
 	//Set the map-server used job id. [Skotlex]
@@ -673,9 +651,6 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 	if (!(battle_config.display_skill_fail&2))
 		sd->state.showdelay = 1;
 		
-	// Request all registries.
-	intif_request_registry(sd,7);
-
 	// アイテムチェック
 	pc_setinventorydata(sd);
 	pc_checkitem(sd);
@@ -709,21 +684,11 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 		if (pc_setpos(sd, mapindex_name2id(MAP_PRONTERA), 273, 354, 0) != 0) {
 			// if we fail again
 			clif_authfail_fd(sd->fd, 0);
-			return 1;
+			return false;
 		}
 	}
 
-	// pet
-	if (sd->status.pet_id > 0)
-		intif_request_petdata(sd->status.account_id, sd->status.char_id, sd->status.pet_id);
-
-	// Homunculus [albator]
-	if (sd->status.hom_id > 0)
-		intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id);
-
 	clif_authok(sd);
-	map_addiddb(&sd->bl);
-	map_delnickdb(sd->status.char_id, sd->status.name);
 
 	//Prevent S. Novices from getting the no-death bonus just yet. [Skotlex]
 	sd->die_counter=-1;
@@ -777,22 +742,18 @@ int pc_authok(struct map_session_data *sd, int login_id2, time_t connect_until_t
 		clif_wis_message(sd->fd, wisp_server_name, tmpstr, strlen(tmpstr)+1);
 	}
 
-	return 0;
+	// Request all registries (auth is considered completed whence they arrive)
+	intif_request_registry(sd,7);
+	return true;
 }
 
 /*==========================================
  * Closes a connection because it failed to be authenticated from the char server.
  *------------------------------------------*/
-int pc_authfail(struct map_session_data *sd)
+void pc_authfail(struct map_session_data *sd)
 {
-	if (sd->state.auth) //Temporary debug. [Skotlex]
-		ShowDebug("pc_authfail: Received auth fail for already authentified client (account id %d)!\n", sd->bl.id);
-
-	if (!sd->fd)
-		ShowDebug("pc_authfail: Received auth fail for a player with no connection (account id %d)!\n", sd->bl.id);
-
 	clif_authfail_fd(sd->fd, 0);
-	return 0;
+	return;
 }
 
 //Attempts to set a mob. 
@@ -827,7 +788,6 @@ int pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl)
 int pc_reg_received(struct map_session_data *sd)
 {
 	int i,j;
-	struct guild *g = NULL;
 	
 	sd->change_level = pc_readglobalreg(sd,"jobchange_level");
 	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
@@ -863,28 +823,33 @@ int pc_reg_received(struct map_session_data *sd)
 	}
 
 	//Weird... maybe registries were reloaded?
-	if (sd->state.auth)
+	if (sd->state.active)
 		return 0;
-	sd->state.auth = 1;
+	sd->state.active = 1;
 
-	if (sd->status.party_id > 0 && party_search(sd->status.party_id) == NULL)
-		party_request_info(sd->status.party_id);
-	if (sd->status.guild_id > 0 && (g=guild_search(sd->status.guild_id)) == NULL)
-		guild_request_info(sd->status.guild_id);
-	else if (g && strcmp(sd->status.name,g->master) == 0)
-	{
-		// set the Guild Master flag
-		sd->state.gmaster_flag = g;
-		// prevent Guild Skills from being used directly after relog
-		if( battle_config.guild_skill_relog_delay )
-			guild_block_skill(sd, 300000);
-	}
+	if (sd->status.party_id)
+		party_member_joined(sd);
+	if (sd->status.guild_id)
+		guild_member_joined(sd);
+	
+	// pet
+	if (sd->status.pet_id > 0)
+		intif_request_petdata(sd->status.account_id, sd->status.char_id, sd->status.pet_id);
+
+	// Homunculus [albator]
+	if (sd->status.hom_id > 0)
+		intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id);
+
+	map_addiddb(&sd->bl);
+	map_delnickdb(sd->status.char_id, sd->status.name);
+	chrif_auth_finished(sd);
 
 	status_calc_pc(sd,1);
 	chrif_scdata_request(sd->status.account_id, sd->status.char_id);
 #ifndef TXT_ONLY
 	intif_Mail_requestinbox(sd->status.char_id, 0); // MAIL SYSTEM - Request Mail Inbox
 #endif
+
 	if (!sd->state.connect_new && sd->fd)
 	{	//Character already loaded map! Gotta trigger LoadEndAck manually.
 		sd->state.connect_new = 1;
@@ -2717,9 +2682,6 @@ int pc_payzeny(struct map_session_data *sd,int zeny)
 {
 	nullpo_retr(0, sd);
 
-	if( sd->state.finalsave )
-		return 1;
-
 	if( zeny < 0 )
 	  	return pc_getzeny(sd, -zeny);
 
@@ -2738,9 +2700,6 @@ int pc_payzeny(struct map_session_data *sd,int zeny)
 int pc_getzeny(struct map_session_data *sd,int zeny)
 {
 	nullpo_retr(0, sd);
-
-	if( sd->state.finalsave )
-		return 1;
 
 	if( zeny < 0 )
 		return pc_payzeny(sd, -zeny);
@@ -2784,9 +2743,6 @@ int pc_additem(struct map_session_data *sd,struct item *item_data,int amount)
 
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_data);
-
-	if(sd->state.finalsave)
-		return 1;
 
 	if(item_data->nameid <= 0 || amount <= 0)
 		return 1;
@@ -3135,9 +3091,6 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_data);
 
-	if(sd->state.finalsave)
-		return 1;
-
 	if(item_data->nameid <= 0 || amount <= 0)
 		return 1;
 	data = itemdb_search(item_data->nameid);
@@ -3190,9 +3143,6 @@ int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amoun
 int pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type)
 {
 	nullpo_retr(1, sd);
-
-	if(sd->state.finalsave)
-		return 1;
 
 	if(sd->status.cart[n].nameid==0 ||
 	   sd->status.cart[n].amount<amount)
@@ -3456,29 +3406,23 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 	}
 
 	if(m<0) {
-		if(sd->mapindex) {
-			uint32 ip;
-			uint16 port;
-			if(map_mapname2ipport(mapindex,&ip,&port)==0) {
-				unit_remove_map(&sd->bl,clrtype);
-				sd->mapindex = mapindex;
-				sd->bl.x=x;
-				sd->bl.y=y;
-				sd->state.waitingdisconnect=1;
-				pc_clean_skilltree(sd);
-				if(sd->status.pet_id > 0 && sd->pd) {
-					intif_save_petdata(sd->status.account_id,&sd->pd->pet);
-					unit_remove_map(&sd->pd->bl, clrtype);
-				}
-				if(merc_is_hom_active(sd->hd)) //Hom is auto-saved in chrif_save
-					unit_remove_map(&sd->hd->bl, clrtype);
+		uint32 ip;
+		uint16 port;
+		//if can't find any map-servers, just abort setting position.
+		if(!sd->mapindex || map_mapname2ipport(mapindex,&ip,&port))
+			return 2;
 
-				chrif_save(sd,2);
-				chrif_changemapserver(sd, mapindex, x, y, ip, (short)port);
-				return 0;
-			}
-		}
-		return 2;
+		sd->mapindex = mapindex;
+		sd->bl.x=x;
+		sd->bl.y=y;
+		pc_clean_skilltree(sd);
+		unit_remove_map_pc(sd,clrtype);
+		chrif_save(sd,2);
+		chrif_changemapserver(sd, ip, (short)port);
+		//It is important to invoke remove_map separately from unit_free before
+		//saving so that the data saved corresponds to that AFTER warping.
+		unit_free_pc(sd);
+		return 0;
 	}
 
 	if(x <0 || x >= map[m].xs || y <0 || y >= map[m].ys)
@@ -3500,13 +3444,9 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 	}
 
 	if(sd->bl.prev != NULL){
-		unit_remove_map(&sd->bl, clrtype);
-		if(sd->status.pet_id > 0 && sd->pd)
-			unit_remove_map(&sd->pd->bl, clrtype);
-		if(merc_is_hom_active(sd->hd))
-			unit_remove_map(&sd->hd->bl, clrtype);
+		unit_remove_map_pc(sd,clrtype);
 		clif_changemap(sd,map[m].index,x,y); // [MouseJstr]
-	} else if(sd->state.auth)
+	} else if(sd->state.active)
 		//Tag player for rewarping after map-loading is done. [Skotlex]
 		sd->state.rewarp = 1;
 	
@@ -6587,7 +6527,7 @@ int pc_checkitem(struct map_session_data *sd)
 	}
 
 	pc_setequipindex(sd);
-	if(calc_flag && sd->state.auth)
+	if(calc_flag && sd->state.active)
 	{
 		status_calc_pc(sd,0);
 		pc_equiplookall(sd);
@@ -6881,24 +6821,11 @@ static int pc_autosave_sub(DBKey key,void * data,va_list ap)
 	if(save_flag != 1) //Not our turn to save yet.
 		return 0;
 
-	if (sd->state.waitingdisconnect) //Invalid char to save.
-		return 0;
-
 	//Save char.
 	last_save_id = sd->bl.id;
 	save_flag=2;
 
-	// pet
-	if(sd->status.pet_id > 0 && sd->pd)
-		intif_save_petdata(sd->status.account_id,&sd->pd->pet);
-
-	if(sd->state.finalsave)
-  	{	//Save ack hasn't returned from char-server yet? Retry.
-		ShowDebug("pc_autosave: Resending to save logging out char %d:%d (save ack from char-server hasn't arrived yet)\n", sd->status.account_id, sd->status.char_id);
-		sd->state.finalsave = 0;
-		chrif_save(sd,1);
-	} else
-		chrif_save(sd,0);
+	chrif_save(sd,0);
 	return 1;
 }
 

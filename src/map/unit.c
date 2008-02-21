@@ -1658,13 +1658,11 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 			trade_tradecancel(sd);
 		if(sd->vender_id)
 			vending_closevending(sd);
-		if(!sd->state.waitingdisconnect)
-	  	{	//when quitting, let the final chrif_save handle storage saving.
-			if(sd->state.storage_flag == 1)
-				storage_storage_quit(sd,0);
-			else if (sd->state.storage_flag == 2)
-				storage_guild_storage_quit(sd,0);
-		}
+		if(sd->state.storage_flag == 1)
+			storage_storage_quit(sd,0);
+		else if (sd->state.storage_flag == 2)
+			storage_guild_storage_quit(sd,0);
+		sd->state.storage_flag = 0; //Force close it when being warped.
 		if(sd->party_invite>0)
 			party_reply_invite(sd,sd->party_invite_account,0);
 		if(sd->guild_invite>0)
@@ -1708,7 +1706,7 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 	case BL_PET:
 	{
 		struct pet_data *pd = (struct pet_data*)bl;
-		if( pd->pet.intimate <= 0 && !(pd->msd && pd->msd->state.waitingdisconnect) )
+		if( pd->pet.intimate <= 0 && !(pd->msd && pd->msd->state.active) )
 		{	//If logging out, this is deleted on unit_free
 			clif_clearunit_area(bl,clrtype);
 			map_delblock(bl);
@@ -1723,7 +1721,7 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 	{
 		struct homun_data *hd = (struct homun_data *) bl;
 		ud->canact_tick = ud->canmove_tick; //It appears HOM do reset the can-act tick.
-		if(!hd->homunculus.intimacy && !(hd->master && hd->master->state.waitingdisconnect) )
+		if(!hd->homunculus.intimacy && !(hd->master && hd->master->state.active) )
 		{	//If logging out, this is deleted on unit_free
 			clif_emotion(bl, 28) ;	//sob
 			clif_clearunit_area(bl,clrtype);
@@ -1742,6 +1740,25 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 	map_delblock(bl);
 	map_freeblock_unlock();
 	return 1;
+}
+
+void unit_remove_map_pc(struct map_session_data *sd, int clrtype)
+{
+	unit_remove_map(&sd->bl,clrtype);
+
+	if (clrtype == 3) clrtype = 0; //3 is the warp from logging out, but pets/homunc need to just 'vanish' instead of showing the warping out animation.
+
+	if(sd->pd)
+		unit_remove_map(&sd->pd->bl, clrtype);
+	if(merc_is_hom_active(sd->hd))
+		unit_remove_map(&sd->hd->bl, clrtype);
+}
+
+void unit_free_pc(struct map_session_data *sd)
+{
+	if (sd->pd) unit_free(&sd->pd->bl,0);
+	if (sd->hd) unit_free(&sd->hd->bl,0);
+	unit_free(&sd->bl,3);
 }
 
 /*==========================================
@@ -1765,44 +1782,6 @@ int unit_free(struct block_list *bl, int clrtype)
 			pc_setrestartvalue(sd,2);
 
 		pc_delinvincibletimer(sd);
-		//Status that are not saved...
-		if(sd->sc.count) {
-			if(sd->sc.data[SC_SPURT])
-				status_change_end(bl,SC_SPURT,-1);
-			if(sd->sc.data[SC_BERSERK])
-				status_change_end(bl,SC_BERSERK,-1);
-			if(sd->sc.data[SC_TRICKDEAD])
-				status_change_end(bl,SC_TRICKDEAD,-1);
-			if(sd->sc.data[SC_GUILDAURA])
-				status_change_end(bl,SC_GUILDAURA,-1);
-			if (battle_config.debuff_on_logout&1) {
-				if(sd->sc.data[SC_ORCISH])
-					status_change_end(bl,SC_ORCISH,-1);
-				if(sd->sc.data[SC_STRIPWEAPON])
-					status_change_end(bl,SC_STRIPWEAPON,-1);
-				if(sd->sc.data[SC_STRIPARMOR])
-					status_change_end(bl,SC_STRIPARMOR,-1);
-				if(sd->sc.data[SC_STRIPSHIELD])
-					status_change_end(bl,SC_STRIPSHIELD,-1);
-				if(sd->sc.data[SC_STRIPHELM])
-					status_change_end(bl,SC_STRIPHELM,-1);
-				if(sd->sc.data[SC_EXTREMITYFIST])
-					status_change_end(bl,SC_EXTREMITYFIST,-1);
-				if(sd->sc.data[SC_EXPLOSIONSPIRITS])
-					status_change_end(bl,SC_EXPLOSIONSPIRITS,-1);
-				if(sd->sc.data[SC_REGENERATION] && sd->sc.data[SC_REGENERATION]->val4)
-					status_change_end(bl,SC_REGENERATION,-1);
-			}
-			if (battle_config.debuff_on_logout&2)
-			{
-				if(sd->sc.data[SC_MAXIMIZEPOWER])
-					status_change_end(bl,SC_MAXIMIZEPOWER,-1);
-				if(sd->sc.data[SC_MAXOVERTHRUST])
-					status_change_end(bl,SC_MAXOVERTHRUST,-1);
-				if(sd->sc.data[SC_STEELBODY])
-					status_change_end(bl,SC_STEELBODY,-1);
-			}
-		}
 	
 		pc_autoscript_clear(sd->autoscript, ARRAYLENGTH(sd->autoscript));
 		pc_autoscript_clear(sd->autoscript2, ARRAYLENGTH(sd->autoscript2));
@@ -1819,10 +1798,29 @@ int unit_free(struct block_list *bl, int clrtype)
 		guild_send_memberinfoshort(sd,0);
 		pc_cleareventtimer(sd);
 		pc_delspiritball(sd,sd->spiritball,1);
-		if (clrtype >= 0) {
-			chrif_save_scdata(sd); //Save status changes, then clear'em out from memory. [Skotlex]
-			pc_makesavestatus(sd);
-			pc_clean_skilltree(sd);
+
+		if(sd->reg)
+		{	//Double logout already freed pointer fix... [Skotlex]
+			aFree(sd->reg);
+			sd->reg = NULL;
+			sd->reg_num = 0;
+		}
+		if(sd->regstr)
+		{
+			int i;
+			for( i = 0; i < sd->regstr_num; ++i )
+				if( sd->regstr[i].data )
+					aFree(sd->regstr[i].data);
+			aFree(sd->regstr);
+			sd->regstr = NULL;
+			sd->regstr_num = 0;
+		}
+		if (sd->st) {
+			if (sd->st->stack)
+				script_free_stack (sd->st->stack);
+			aFree(sd->st);
+			sd->st = NULL;
+			sd->npc_id = 0;
 		}
 	} else if( bl->type == BL_PET ) {
 		struct pet_data *pd = (struct pet_data*)bl;
@@ -1924,11 +1922,9 @@ int unit_free(struct block_list *bl, int clrtype)
 
 	skill_clear_unitgroup(bl);
 	status_change_clear(bl,1);
-	if (bl->type != BL_PC)
-  	{	//Players are handled by map_quit
-		map_deliddb(bl);
+	map_deliddb(bl);
+	if (bl->type != BL_PC) //Players are handled by map_quit
 		map_freeblock(bl);
-	}
 	map_freeblock_unlock();
 	return 0;
 }

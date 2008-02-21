@@ -919,12 +919,16 @@ int intif_parse_Registers(int fd)
 	struct map_session_data *sd;
 	struct global_reg *reg;
 	int *qty;
-
-	if( (sd=map_id2sd(RFIFOL(fd,4)))==NULL)
-		return 1;
-
-	if (RFIFOB(fd,12) == 3 && sd->status.char_id != RFIFOL(fd,8))
-		return 1; //Character registry from another character.
+	int account_id = RFIFOL(fd,4), char_id = RFIFOL(fd,8);
+	struct auth_node *node = chrif_auth_check(account_id, char_id, ST_LOGIN);
+	if (node)
+		sd = node->sd;
+	else { //Normally registries should arrive for in log-in chars.
+		sd = map_id2sd(account_id);
+		if (sd && RFIFOB(fd,12) == 3 && sd->status.char_id != char_id)
+			sd = NULL; //Character registry from another character.
+	}
+	if (!sd) return 1;
 
 	flag = (sd->save_reg.global_num == -1 || sd->save_reg.account_num == -1 || sd->save_reg.account2_num == -1);
 
@@ -974,9 +978,6 @@ int intif_parse_LoadStorage(int fd)
 		ShowError("intif_parse_LoadStorage: user not found %d\n",RFIFOL(fd,4));
 		return 1;
 	}
-
-	if (sd->state.finalsave)
-		return 1; //Player is already scheduled to leave the server.
 
 	stor = account2storage( RFIFOL(fd,4));
 
@@ -1434,9 +1435,6 @@ int intif_parse_Mail_inboxreceived(int fd)
 		return 1;
 	}
 
-	if (sd->state.finalsave)
-		return 1;
-
 	if (RFIFOW(fd,2) - 9 != sizeof(struct mail_data))
 	{
 		ShowError("intif_parse_Mail_inboxreceived: data size error %d %d\n", RFIFOW(fd,2) - 9, sizeof(struct mail_data));
@@ -1502,9 +1500,6 @@ int intif_parse_Mail_getattach(int fd)
 		return 1;
 	}
 
-	if (sd->state.finalsave)
-		return 1;
-
 	if (RFIFOW(fd,2) - 12 != sizeof(struct item))
 	{
 		ShowError("intif_parse_Mail_getattach: data size error %d %d\n", RFIFOW(fd,2) - 16, sizeof(struct item));
@@ -1545,9 +1540,6 @@ int intif_parse_Mail_delete(int fd)
 		ShowError("intif_parse_Mail_delete: char not found %d\n", char_id);
 		return 1;
 	}
-
-	if (sd->state.finalsave)
-		return 1;
 
 	if (!failed)
 	{
@@ -1594,9 +1586,6 @@ int intif_parse_Mail_return(int fd)
 		ShowError("intif_parse_Mail_return: char not found %d\n",RFIFOL(fd,2));
 		return 1;
 	}
-
-	if( sd->state.finalsave )
-		return 1;
 
 	if( !fail )
 	{

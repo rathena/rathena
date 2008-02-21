@@ -786,7 +786,7 @@ int mapif_parse_RegistryRequest(int fd)
 	//Load Account Registry
 	if (RFIFOB(fd,11)) mapif_account_reg_reply(fd,RFIFOL(fd,2),RFIFOL(fd,6),2);
 	//Ask Login Server for Account2 values.
-	if (RFIFOB(fd,10)) request_accreg2(RFIFOL(fd,2),RFIFOL(fd,6)-2);
+	if (RFIFOB(fd,10)) request_accreg2(RFIFOL(fd,2),RFIFOL(fd,6));
 	return 1;
 }
 

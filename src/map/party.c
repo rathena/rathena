@@ -54,7 +54,7 @@ static TBL_PC* party_sd_check(int party_id, int account_id, int char_id)
 {
 	TBL_PC* sd = map_id2sd(account_id);
 
-	if (!(sd && sd->status.char_id == char_id && sd->state.auth && !sd->state.waitingdisconnect))
+	if (!(sd && sd->status.char_id == char_id))
 		return NULL;
 
 	if (sd->status.party_id != party_id)
@@ -125,7 +125,6 @@ int party_create(struct map_session_data *sd,char *name,int item,int item2)
 int party_created(int account_id,int char_id,int fail,int party_id,char *name)
 {
 	struct map_session_data *sd;
-	struct party_data *p;
 	sd=map_id2sd(account_id);
 
 	if (!sd || sd->status.char_id != char_id)
@@ -140,16 +139,8 @@ int party_created(int account_id,int char_id,int fail,int party_id,char *name)
 		return 0; // "party name already exists"
 	}
 	sd->status.party_id=party_id;
-	if(idb_get(party_db,party_id)!=NULL){
-		ShowFatalError("party: id already exists!\n");
-		exit(EXIT_FAILURE);
-	}
-	p=(struct party_data *)aCalloc(1,sizeof(struct party_data));
-	p->party.party_id=party_id;
-	memcpy(p->party.name, name, NAME_LENGTH);
-	idb_put(party_db,party_id,p);
 	clif_party_created(sd,0); //Success message
-	clif_charnameupdate(sd); //Update other people's display. [Skotlex]
+	//We don't do any further work here because the char-server sends a party info packet right after creating the party.
 	return 1;
 }
 
@@ -239,15 +230,18 @@ static void party_check_state(struct party_data *p)
 
 int party_recv_info(struct party *sp)
 {
-	struct map_session_data *sd;
 	struct party_data *p;
 	int i;
+	bool party_new = false;
 	
 	nullpo_retr(0, sp);
 
 	p= idb_ensure(party_db, sp->party_id, create_party);
 	if (!p->party.party_id) //party just received.
+	{
+		party_new = true;
 		party_check_member(sp);
+	}
 	memcpy(&p->party,sp,sizeof(struct party));
 	memset(&p->state, 0, sizeof(p->state));
 	memset(&p->data, 0, sizeof(p->data));
@@ -257,14 +251,17 @@ int party_recv_info(struct party *sp)
 		p->data[i].sd = party_sd_check(p->party.party_id, p->party.member[i].account_id, p->party.member[i].char_id);
 	}
 	party_check_state(p);
-	for(i=0;i<MAX_PARTY;i++){
-		sd = p->data[i].sd;
-		if(!sd || sd->state.party_sent)
-			continue;
-		clif_party_member_info(p,sd);
-		clif_party_option(p,sd,0x100);
-		clif_party_info(p,NULL);
-		sd->state.party_sent=1;
+	if (party_new) {
+		//Send party data to all players.
+		struct map_session_data *sd;
+		for(i=0;i<MAX_PARTY;i++){
+			sd = p->data[i].sd;
+			if(!sd) continue;
+			clif_charnameupdate(sd); //Update other people's display. [Skotlex]
+			clif_party_member_info(p,sd);
+			clif_party_option(p,sd,0x100);
+			clif_party_info(p,NULL);
+		}
 	}
 	
 	return 0;
@@ -349,6 +346,26 @@ int party_reply_invite(struct map_session_data *sd,int account_id,int flag)
 	return 1;
 }
 
+//Invoked when a player joins:
+//- Loads up party data if not in server
+//- Sets up the pointer to him
+//- Player must be authed/active and belong to a party before calling this method
+void party_member_joined(struct map_session_data *sd)
+{
+	struct party_data* p = party_search(sd->status.party_id);
+	int i;
+	if (!p)
+	{
+		party_request_info(sd->status.party_id);
+		return;
+	}
+	ARR_FIND( 0, MAX_PARTY, i, p->party.member[i].account_id == sd->status.account_id && p->party.member[i].char_id == sd->status.char_id );
+	if (i < MAX_PARTY)
+		p->data[i].sd = sd;
+	else
+		sd->status.party_id = 0; //He does not belongs to the party really?
+}
+
 /// Invoked (from char-server) when a new member is added to the party.
 int party_member_added(int party_id,int account_id,int char_id, int flag)
 {
@@ -371,9 +388,10 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 	}
 
 	if(!flag) {
-		sd->state.party_sent=0;
 		sd->status.party_id=party_id;
 		party_check_conflict(sd);
+		clif_party_option(p,sd,0x100);
+		clif_party_info(p,sd);
 		clif_party_member_info(p,sd);
 		for( i = 0; i < ARRAYLENGTH(p->data); ++i )
 		{// hp of the other party members
@@ -458,7 +476,6 @@ int party_member_leaved(int party_id, int account_id, int char_id)
 	if( sd && sd->status.party_id == party_id && sd->status.char_id == char_id )
 	{
 		sd->status.party_id = 0;
-		sd->state.party_sent = 0;
 		clif_charnameupdate(sd); //Update name display [Skotlex]
 		//TODO: hp bars should be cleared too
 	}
@@ -479,7 +496,6 @@ int party_broken(int party_id)
 		if(p->data[i].sd!=NULL){
 			clif_party_leaved(p,p->data[i].sd,p->party.member[i].account_id,p->party.member[i].name,0x10);
 			p->data[i].sd->status.party_id=0;
-			p->data[i].sd->state.party_sent=0;
 		}
 	}
 	idb_remove(party_db,party_id);
@@ -561,14 +577,11 @@ void party_send_movemap(struct map_session_data *sd)
 	p=party_search(sd->status.party_id);
 	if (!p) return;
 
-	if(!sd->state.party_sent) {
-		party_check_member(&p->party);
-		if(sd->status.party_id==p->party.party_id){
-			clif_party_option(p,sd,0x100);
-			clif_party_info(p,sd);
-			clif_party_member_info(p,sd);
-			sd->state.party_sent=1;
-		}
+	if(sd->state.connect_new) {
+		//Note that this works because this function is invoked before connect_new is cleared.
+		clif_party_option(p,sd,0x100);
+		clif_party_info(p,sd);
+		clif_party_member_info(p,sd);
 	}
 
 	if (sd->fd) { // synchronize minimap positions with the rest of the party

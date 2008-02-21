@@ -42,6 +42,7 @@ int guild_recv_info(struct guild *sg);
 int guild_npc_request_info(int guild_id,const char *ev);
 int guild_invite(struct map_session_data *sd,struct map_session_data *tsd);
 int guild_reply_invite(struct map_session_data *sd,int guild_id,int flag);
+void guild_member_joined(struct map_session_data *sd);
 int guild_member_added(int guild_id,int account_id,int char_id,int flag);
 int guild_leave(struct map_session_data *sd,int guild_id,
 	int account_id,int char_id,const char *mes);

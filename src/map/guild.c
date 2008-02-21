@@ -76,7 +76,7 @@ static TBL_PC* guild_sd_check(int guild_id, int account_id, int char_id)
 {
 	TBL_PC* sd = map_id2sd(account_id);
 
-	if (!(sd && sd->status.char_id == char_id && sd->state.auth && !sd->state.waitingdisconnect))
+	if (!(sd && sd->status.char_id == char_id))
 		return NULL;
 
 	if (sd->status.guild_id != guild_id)
@@ -431,7 +431,6 @@ int guild_created(int account_id,int guild_id)
 	}
 	//struct guild *g;
 	sd->status.guild_id=guild_id;
-	sd->state.guild_sent=0;
 	clif_guild_created(sd,0);
 	if(battle_config.guild_emperium_check)
 		pc_delitem(sd,pc_search_inventory(sd,714),1,0);	// エンペリウム消耗
@@ -485,7 +484,6 @@ int guild_check_member(struct guild *g)
 		i = guild_getindex(g,sd->status.account_id,sd->status.char_id);
 		if (i < 0) {
 			sd->status.guild_id=0;
-			sd->state.guild_sent=0;
 			sd->guild_emblem_id=0;
 			ShowWarning("guild: check_member %d[%s] is not member\n",sd->status.account_id,sd->status.name);
 		}
@@ -519,10 +517,12 @@ int guild_recv_info(struct guild *sg)
 	int i,bm,m;
 	struct eventlist *ev,*ev2;
 	struct map_session_data *sd;
+	bool guild_new = false;
 
 	nullpo_retr(0, sg);
 
 	if((g=idb_get(guild_db,sg->guild_id))==NULL){
+		guild_new = true;
 		g=(struct guild *)aCalloc(1,sizeof(struct guild));
 		idb_put(guild_db,sg->guild_id,g);
 		before=*sg;
@@ -538,7 +538,8 @@ int guild_recv_info(struct guild *sg)
 
 			//Also set the guild master flag.
 			sd->state.gmaster_flag = g;
-			clif_charnameupdate(sd); // [LuzZza]			
+			clif_charnameupdate(sd); // [LuzZza]
+			clif_guild_masterormember(sd);
 		}
 	}else
 		before=*g;
@@ -579,11 +580,10 @@ int guild_recv_info(struct guild *sg)
 		if( before.skill_point!=g->skill_point)
 			clif_guild_skillinfo(sd);	// スキル情報送信
 
-		if( sd->state.guild_sent==0){	// 未送信なら所属情報も送る
+		if( guild_new ){	// 未送信なら所属情報も送る
 			clif_guild_belonginfo(sd,g);
 			clif_guild_notice(sd,g);
 			sd->guild_emblem_id=g->emblem_id;
-			sd->state.guild_sent=1;
 		}
 	}
 
@@ -702,6 +702,34 @@ int guild_reply_invite(struct map_session_data* sd, int guild_id, int flag)
 
 	return 0;
 }
+
+//Invoked when a player joins.
+//- If guild is not in memory, it is requested
+//- Otherwise sd pointer is set up.
+//- Player must be authed and must belong to a guild before invoking this method
+void guild_member_joined(struct map_session_data *sd)
+{
+	struct guild* g;
+	int i;
+	g=guild_search(sd->status.guild_id);
+	if (!g) {
+		guild_request_info(sd->status.guild_id);
+		return;
+	}
+	if (strcmp(sd->status.name,g->master) == 0)
+	{	// set the Guild Master flag
+		sd->state.gmaster_flag = g;
+		// prevent Guild Skills from being used directly after relog
+		if( battle_config.guild_skill_relog_delay )
+			guild_block_skill(sd, 300000);
+	}
+	i = guild_getindex(g, sd->status.account_id, sd->status.char_id);
+	if (i == -1)
+		sd->status.guild_id = 0;
+	else
+		g->member[i].sd = sd;
+}
+
 // ギルドメンバが追加された
 int guild_member_added(int guild_id,int account_id,int char_id,int flag)
 {
@@ -730,9 +758,12 @@ int guild_member_added(int guild_id,int account_id,int char_id,int flag)
 	}
 
 		// 成功
-	sd->state.guild_sent = 0;
 	sd->status.guild_id = g->guild_id;
 	sd->guild_emblem_id = g->emblem_id;
+	//Packets which were sent in the previous 'guild_sent' implementation.
+	clif_guild_belonginfo(sd,g);
+	clif_guild_notice(sd,g);
+
 	//TODO: send new emblem info to others
 
 	if( sd2!=NULL )
@@ -836,7 +867,6 @@ int guild_member_leaved(int guild_id, int account_id, int char_id, int flag, con
 
 		sd->status.guild_id = 0;
 		sd->guild_emblem_id = 0;
-		sd->state.guild_sent = 0;
 		
 		clif_charnameupdate(sd); //Update display name [Skotlex]
 		//TODO: send emblem update to self and people around
@@ -850,14 +880,10 @@ int guild_send_memberinfoshort(struct map_session_data *sd,int online)
 	
 	nullpo_retr(0, sd);
 		
-	if(!(g = guild_search(sd->status.guild_id)))
+	if(sd->status.guild_id <= 0)
 		return 0;
 
-	//Moved to place before intif_guild_memberinfoshort because
-	//If it's not a member, needn't send it's info to intif. [LuzZza]
-	guild_check_member(g);
-	
-	if(sd->status.guild_id <= 0)
+	if(!(g = guild_search(sd->status.guild_id)))
 		return 0;
 
 	intif_guild_memberinfoshort(g->guild_id,
@@ -872,15 +898,12 @@ int guild_send_memberinfoshort(struct map_session_data *sd,int online)
 		return 0;
 	}
 	
-	if(sd->state.guild_sent)
-		return 0;
-
-	clif_guild_belonginfo(sd,g);
-	clif_guild_notice(sd,g);
-	
-	sd->state.guild_sent = 1;
-	sd->guild_emblem_id = g->emblem_id;
-	
+	if(sd->state.connect_new)
+	{	//Note that this works because it is invoked in parse_LoadEndAck before connect_new is cleared.
+		clif_guild_belonginfo(sd,g);
+		clif_guild_notice(sd,g);
+		sd->guild_emblem_id = g->emblem_id;
+	}
 	return 0;
 }
 
@@ -915,7 +938,6 @@ int guild_recv_memberinfoshort(int guild_id,int account_id,int char_id,int onlin
 		if(sd && sd->status.char_id == char_id) {
 			sd->status.guild_id=0;
 			sd->guild_emblem_id=0;
-			sd->state.guild_sent=0;
 		}
 		ShowWarning("guild: not found member %d,%d on %d[%s]\n",	account_id,char_id,guild_id,g->name);
 		return 0;
@@ -1535,7 +1557,6 @@ int guild_broken(int guild_id,int flag)
 			if(sd->state.storage_flag == 2)
 				storage_guild_storage_quit(sd,1);
 			sd->status.guild_id=0;
-			sd->state.guild_sent=0;
 			clif_guild_broken(g->member[i].sd,0);
 			clif_charnameupdate(sd); // [LuzZza]
 		}

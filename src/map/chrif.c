@@ -8,6 +8,7 @@
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
 #include "../common/strlib.h"
+#include "../common/ers.h"
 
 #include "map.h"
 #include "battle.h"
@@ -25,7 +26,8 @@
 #include <sys/types.h>
 #include <time.h>
 
-DBMap* auth_db; // int id -> struct auth_node*
+static struct eri *auth_db_ers; //For reutilizing player login structures.
+static DBMap* auth_db; // int id -> struct auth_node*
 
 static const int packet_len_table[0x3d] = { // U - used, F - free
 	60, 3,-1,27,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
@@ -101,7 +103,77 @@ int other_mapserver_count=0; //Holds count of how many other map servers are onl
 //This define should spare writing the check in every function. [Skotlex]
 #define chrif_check(a) { if(!chrif_isconnected()) return a; }
 
+struct auth_node* chrif_search(int account_id) {
+	return idb_get(auth_db, account_id);
+}
 
+struct auth_node* chrif_auth_check(int account_id, int char_id, enum sd_state state) {
+	struct auth_node *node = chrif_search(account_id);
+	return (node && node->char_id == char_id && node->state == state)?node:NULL;
+}
+
+bool chrif_auth_delete(int account_id, int char_id, enum sd_state state) {
+	struct auth_node *node;
+	if ((node=chrif_auth_check(account_id, char_id, state)))
+	{
+		if (node->fd && session[node->fd] && node->sd &&
+			session[node->fd]->session_data == node->sd)
+			session[node->fd]->session_data = NULL;
+		if (node->char_dat) aFree(node->char_dat);
+		if (node->sd) aFree(node->sd);
+		ers_free(auth_db_ers, node);
+		idb_remove(auth_db,account_id);
+		return true;
+	}
+	return false;
+}
+
+//Moves the sd character to the auth_db structure.
+static bool chrif_sd_to_auth(TBL_PC* sd, enum sd_state state)
+{
+	struct auth_node *node;
+	if (chrif_search(sd->status.account_id))
+		return false; //Already exists?
+
+	node = ers_alloc(auth_db_ers, struct auth_node);
+	memset(node, 0, sizeof(struct auth_node));
+	node->account_id = sd->status.account_id;
+	node->char_id = sd->status.char_id;
+	node->login_id1 = sd->login_id1;
+	node->login_id2 = sd->login_id2;
+	node->sex = sd->status.sex;
+	node->fd = sd->fd;
+	node->sd = sd;	//Data from logged on char.
+	node->node_created = gettick(); //timestamp for node timeouts
+	node->state = state;
+
+	sd->state.active = 0;
+	idb_put(auth_db, node->account_id, node);
+	return true;
+}
+
+static bool chrif_auth_logout(TBL_PC* sd, enum sd_state state)
+{
+	if(sd->fd && state == ST_LOGOUT)
+  	{	//Disassociate player, and free it after saving ack returns. [Skotlex]
+		//fd info must not be lost for ST_MAPCHANGE as a final packet needs to be sent to the player.
+		if (session[sd->fd])
+			session[sd->fd]->session_data = NULL;
+		sd->fd = 0;
+	}
+	return chrif_sd_to_auth(sd, state);
+}
+
+bool chrif_auth_finished(TBL_PC* sd)
+{
+	struct auth_node *node= chrif_search(sd->status.account_id);
+	if (node && node->sd == sd && node->state == ST_LOGIN) {
+		node->sd = NULL;
+		chrif_auth_delete(node->account_id, node->char_id, ST_LOGIN);
+		return true;
+	}
+	return false;
+}
 // sets char-server's user id
 void chrif_setuserid(char *id)
 {
@@ -165,15 +237,17 @@ int chrif_save(struct map_session_data *sd, int flag)
 
 	if (!flag) //The flag check is needed to prevent 'nosave' taking effect when a jailed player logs out.
 		pc_makesavestatus(sd);
-
-	if(!chrif_isconnected())
-  	{
-		if (flag) sd->state.finalsave = 1; //Will save character on reconnect.
-		return -1;
+	
+	if (flag && sd->state.active) //Store player data which is quitting.
+	{
+		//FIXME: SC are lost if there's no connection at save-time because of the way its related data is cleared immediately after this function. [Skotlex]
+		if (chrif_isconnected()) chrif_save_scdata(sd);
+		chrif_auth_logout(sd, flag==1?ST_LOGOUT:ST_MAPCHANGE);
 	}
 
-	if (sd->state.finalsave)
-		return -1; //Refuse to save a char already tagged for final saving. [Skotlex]
+	if(!chrif_isconnected())
+		return -1; //Character is saved on reconnect.
+
 	//For data sync
 	if (sd->state.storage_flag == 1)
 		storage_storage_save(sd->status.account_id, flag);
@@ -198,11 +272,13 @@ int chrif_save(struct map_session_data *sd, int flag)
 	memcpy(WFIFOP(char_fd,13), &sd->status, sizeof(sd->status));
 	WFIFOSET(char_fd, WFIFOW(char_fd,2));
 
+
+	if(sd->status.pet_id > 0 && sd->pd)
+		intif_save_petdata(sd->status.account_id,&sd->pd->pet);
+
 	if (sd->hd && merc_is_hom_active(sd->hd))
 		merc_save(sd->hd);
 
-	if (flag)
-		sd->state.finalsave = 1; //Mark the last save as done.
 	return 0;
 }
 
@@ -271,18 +347,15 @@ int chrif_removemap(int fd)
 }
 
 // received after a character has been "final saved" on the char-server
-int chrif_save_ack(int fd)
+static void chrif_save_ack(int fd)
 {
-	map_quit_ack(RFIFOL(fd,2), RFIFOL(fd,6));
-	return 0;
+	chrif_auth_delete(RFIFOL(fd,2), RFIFOL(fd,6), ST_LOGOUT);
 }
 
 // request to move a character between mapservers
-int chrif_changemapserver(struct map_session_data* sd, short map, int x, int y, uint32 ip, uint16 port)
+int chrif_changemapserver(struct map_session_data* sd, uint32 ip, uint16 port)
 {
 	nullpo_retr(-1, sd);
-
-	chrif_check(-1);
 
 	if (other_mapserver_count < 1)
 	{	//No other map servers are online!
@@ -290,21 +363,22 @@ int chrif_changemapserver(struct map_session_data* sd, short map, int x, int y, 
 		return -1;
 	}
 
+	chrif_check(-1);
+
 	WFIFOHEAD(char_fd,35);
 	WFIFOW(char_fd, 0) = 0x2b05;
 	WFIFOL(char_fd, 2) = sd->bl.id;
 	WFIFOL(char_fd, 6) = sd->login_id1;
 	WFIFOL(char_fd,10) = sd->login_id2;
 	WFIFOL(char_fd,14) = sd->status.char_id;
-	WFIFOW(char_fd,18) = map;
-	WFIFOW(char_fd,20) = x;
-	WFIFOW(char_fd,22) = y;
+	WFIFOW(char_fd,18) = sd->mapindex;
+	WFIFOW(char_fd,20) = sd->bl.x;
+	WFIFOW(char_fd,22) = sd->bl.y;
 	WFIFOL(char_fd,24) = htonl(ip);
 	WFIFOW(char_fd,28) = htons(port);
 	WFIFOB(char_fd,30) = sd->status.sex;
 	WFIFOL(char_fd,31) = 0; // sd's IP, not used anymore
 	WFIFOSET(char_fd,35);
-
 	return 0;
 }
 
@@ -312,23 +386,18 @@ int chrif_changemapserver(struct map_session_data* sd, short map, int x, int y, 
 /// R 2b06 <account_id>.L <login_id1>.L <login_id2>.L <char_id>.L <map_index>.W <x>.W <y>.W <ip>.L <port>.W
 int chrif_changemapserverack(int account_id, int login_id1, int login_id2, int char_id, short map_index, short x, short y, uint32 ip, uint16 port)
 {
-	struct map_session_data *sd;
-	sd = map_id2sd(account_id);
-
-	if (sd == NULL || sd->status.char_id != char_id)
+	struct auth_node *node;
+	if (!(node=chrif_auth_check(account_id, char_id, ST_MAPCHANGE)))
 		return -1;
 
-	if (login_id1 == 1) { //FIXME: charserver says '0'! [ultramage]
+	if (!login_id1) {
 		ShowError("map server change failed.\n");
-		clif_authfail_fd(sd->fd, 0);
-		return 0;
-	}
+		clif_authfail_fd(node->fd, 0);
+	} else
+		clif_changemapserver(node->sd, map_index, x, y, ntohl(ip), ntohs(port));
 
-	clif_changemapserver(sd, map_index, x, y, ntohl(ip), ntohs(port));
-
-	//Player has been saved already, remove him from memory. [Skotlex]	
-	map_quit(sd);
-	map_quit_ack(sd->status.account_id, sd->status.char_id);
+	//Player has been saved already, remove him from memory. [Skotlex]
+	chrif_auth_delete(account_id, char_id, ST_MAPCHANGE);
 	return 0;
 }
 
@@ -359,6 +428,36 @@ int chrif_connectack(int fd)
 
 	return 0;
 }
+static int chrif_reconnect(DBKey key,void *data,va_list ap)
+{
+	struct auth_node *node=(struct auth_node*)data;
+	switch (node->state) {
+	case ST_LOGIN:
+		if (node->sd && node->char_dat == NULL)
+		{	//Since there is no way to request the char auth, make it fail.
+			pc_authfail(node->sd);
+			chrif_char_offline(node->sd);
+			chrif_auth_delete(node->account_id, node->char_id, ST_LOGIN);
+		}
+		break;
+	case ST_LOGOUT:
+		//Re-send final save
+		chrif_save(node->sd, 1);
+		break;
+	case ST_MAPCHANGE:
+		{	//Re-send map-change request.
+		struct map_session_data *sd = node->sd;
+		uint32 ip;
+		uint16 port;
+		if(map_mapname2ipport(sd->mapindex,&ip,&port)==0)
+			chrif_changemapserver(sd, ip, port);
+		else //too much lag/timeout is the closest explanation for this error.
+			clif_authfail_fd(sd->fd, 3);
+		break;
+		}
+	}
+	return 0;
+}
 
 /*==========================================
  *
@@ -378,7 +477,7 @@ int chrif_sendmapack(int fd)
 	send_users_tochar();
 	
 	//Re-save any storages that were modified in the disconnection time. [Skotlex]
-	do_reconnect_map();
+	auth_db->foreach(auth_db,chrif_reconnect);
 	do_reconnect_storage();
 
 	return 0;
@@ -406,30 +505,31 @@ int chrif_scdata_request(int account_id, int char_id)
  *------------------------------------------*/
 void chrif_authreq(struct map_session_data *sd)
 {
-	struct auth_node *auth_data;
-	auth_data=idb_get(auth_db, sd->bl.id);
+	struct auth_node *node= chrif_search(sd->bl.id);
 
-	if(auth_data) {
-		if(auth_data->char_dat &&
-			auth_data->account_id== sd->bl.id &&
-			auth_data->login_id1 == sd->login_id1)
-		{	//auth ok
-			pc_authok(sd, auth_data->login_id2, auth_data->connect_until_time, auth_data->char_dat);
-		} else { //auth failed
-			pc_authfail(sd);
-			chrif_char_offline(sd); //Set him offline, the char server likely has it set as online already.
+	if(!node) {
+		//data from char server has not arrived yet.
+		chrif_sd_to_auth(sd, ST_LOGIN);
+		return;
+	}
+
+	if(node->state == ST_LOGIN &&
+		node->char_dat &&
+		node->account_id== sd->status.account_id &&
+		node->login_id1 == sd->login_id1)
+	{	//auth ok
+		if (!pc_authok(sd, node->login_id2, node->connect_until_time, node->char_dat))
+			chrif_auth_delete(sd->status.account_id, sd->status.char_id, ST_LOGIN);
+		else {
+			//char_dat no longer needed, but player auth is not completed yet.
+			aFree(node->char_dat);
+			node->char_dat = NULL;
+			node->sd = sd;
 		}
-		if (auth_data->char_dat)
-			aFree(auth_data->char_dat);
-		idb_remove(auth_db, sd->bl.id);
-	} else { //data from char server has not arrived yet.
-		auth_data = aCalloc(1,sizeof(struct auth_node));
-		auth_data->sd = sd;
-		auth_data->fd = sd->fd;
-		auth_data->account_id = sd->bl.id;
-		auth_data->login_id1 = sd->login_id1;
-		auth_data->node_created = gettick();
-		idb_put(auth_db, sd->bl.id, auth_data);
+	} else { //auth failed
+		pc_authfail(sd);
+		chrif_char_offline(sd); //Set him offline, the char server likely has it set as online already.
+		chrif_auth_delete(sd->status.account_id, sd->status.char_id, ST_LOGIN);
 	}
 	return;
 }
@@ -437,65 +537,69 @@ void chrif_authreq(struct map_session_data *sd)
 //character selected, insert into auth db
 void chrif_authok(int fd)
 {
-	struct auth_node *auth_data;
+	struct auth_node *node;
+	int account_id = RFIFOL(fd, 4);
+	struct mmo_charstatus *status = (struct mmo_charstatus *)RFIFOP(fd, 20);
+	int char_id = status->char_id;
 	TBL_PC* sd;
 	//Check if we don't already have player data in our server
-	//(prevents data that is to be saved from being overwritten by
-	//this received status data if this auth is later successful) [Skotlex]
-	if ((sd = map_id2sd(RFIFOL(fd, 4))) != NULL)
-	{
-		struct mmo_charstatus *status = (struct mmo_charstatus *)RFIFOP(fd, 20);
-		//Auth check is because this could be the very same sd that is waiting char-server authorization.
-		if (sd->state.auth && sd->status.char_id == status->char_id)
-			return;
-	}
+	//Causes problems if the currently connected player tries to quit or this data belongs to an already connected player which is trying to re-auth.
+	if ((sd = map_id2sd(account_id)) != NULL)
+		return;
 	
-	if ((auth_data =idb_get(auth_db, RFIFOL(fd, 4))) != NULL)
+	if ((node = chrif_search(account_id)))
 	{	//Is the character already awaiting authorization?
-		if (auth_data->sd)
+		if (node->state == ST_LOGIN && node->sd)
 		{
-			//First, check to see if the session data still exists (avoid dangling pointers)
-			if(session[auth_data->fd] && session[auth_data->fd]->session_data == auth_data->sd)
-			{	
-				if (auth_data->char_dat == NULL &&
-					auth_data->account_id == RFIFOL(fd, 4) &&
-					auth_data->login_id1 == RFIFOL(fd, 8))
-				{ //Auth Ok
-					pc_authok(auth_data->sd, RFIFOL(fd, 16), RFIFOL(fd, 12), (struct mmo_charstatus*)RFIFOP(fd, 20));
-				} else { //Auth Failed
-					pc_authfail(auth_data->sd);
-					chrif_char_offline(auth_data->sd); //Set him offline, the char server likely has it set as online already.
-				}
-			} //else: Character no longer exists, just go through.
+			sd = node->sd;
+			if(node->char_dat == NULL &&
+				node->account_id == account_id &&
+				node->char_id == char_id &&
+				node->login_id1 == RFIFOL(fd, 8))
+			{ //Auth Ok
+				if (!pc_authok(sd, RFIFOL(fd, 16), RFIFOL(fd, 12), status))
+					chrif_auth_delete(account_id, char_id, ST_LOGIN);
+			} else { //Auth Failed
+				pc_authfail(sd);
+				chrif_char_offline(sd); //Set him offline, the char server likely has it set as online already.
+				chrif_auth_delete(account_id, char_id, ST_LOGIN);
+			}
 		}
-		//Delete the data of this node...
-		if (auth_data->char_dat)
-			aFree (auth_data->char_dat);
-		idb_remove(auth_db, RFIFOL(fd, 4));
+		//Otherwise discard the entry received as we already have information.
 		return;
 	}
-	// Awaiting for client to connect.
-	auth_data = (struct auth_node *)aCalloc(1,sizeof(struct auth_node));
-	auth_data->char_dat = (struct mmo_charstatus *) aMalloc(sizeof(struct mmo_charstatus));
 
-	auth_data->account_id=RFIFOL(fd, 4);
-	auth_data->login_id1=RFIFOL(fd, 8);
-	auth_data->connect_until_time=RFIFOL(fd, 12);
-	auth_data->login_id2=RFIFOL(fd, 16);
-	memcpy(auth_data->char_dat,RFIFOP(fd, 20),sizeof(struct mmo_charstatus));
-	auth_data->node_created=gettick();
-	idb_put(auth_db, RFIFOL(fd, 4), auth_data);
+	// Awaiting for client to connect.
+	node = ers_alloc(auth_db_ers, struct auth_node);
+	memset(node, 0, sizeof(struct auth_node));
+	node->char_dat = (struct mmo_charstatus *) aMalloc(sizeof(struct mmo_charstatus));
+
+	node->account_id=account_id;
+	node->char_id=char_id;
+	node->login_id1=RFIFOL(fd, 8);
+	node->connect_until_time=RFIFOL(fd, 12);
+	node->login_id2=RFIFOL(fd, 16);
+	memcpy(node->char_dat,status,sizeof(struct mmo_charstatus));
+	node->node_created=gettick();
+	idb_put(auth_db, account_id, node);
 }
 
 int auth_db_cleanup_sub(DBKey key,void *data,va_list ap)
 {
 	struct auth_node *node=(struct auth_node*)data;
 
-	if(DIFF_TICK(gettick(),node->node_created)>30000) {
-		ShowNotice("Character (aid: %d) not authed within 30 seconds of character select!\n", node->account_id);
-		if (node->char_dat)
-			aFree(node->char_dat);
-		db_remove(auth_db, key);
+	if(DIFF_TICK(gettick(),node->node_created)>60000) {
+		switch (node->state)
+		{
+		case ST_LOGOUT:
+			//Re-save attempt (->sd should never be null here).
+			chrif_save(node->sd, 1);
+			break;
+		default:
+			//Clear data. any connected players should have timed out by now.
+			chrif_auth_delete(node->account_id, node->char_id, node->state);
+			break;
+		}
 		return 1;
 	}
 	return 0;
@@ -503,10 +607,10 @@ int auth_db_cleanup_sub(DBKey key,void *data,va_list ap)
 
 int auth_db_cleanup(int tid, unsigned int tick, int id, int data)
 {
+	if(!chrif_isconnected()) return 0;
 	auth_db->foreach(auth_db, auth_db_cleanup_sub);
 	return 0;
 }
-
 
 /*==========================================
  *
@@ -1010,9 +1114,6 @@ int chrif_save_scdata(struct map_session_data *sd)
 	struct status_change *sc = &sd->sc;
 	const struct TimerData *timer;
 
-	if (sd->state.finalsave) //Character was already saved?
-		return -1;
-	
 	chrif_check(-1);
 	tick = gettick();
 	
@@ -1428,6 +1529,9 @@ int auth_db_final(DBKey k,void *d,va_list ap)
 	struct auth_node *node=(struct auth_node*)d;
 	if (node->char_dat)
 		aFree(node->char_dat);
+	if (node->sd)
+		aFree(node->sd);
+	ers_free(auth_db_ers, node);
 	return 0;
 }
 
@@ -1438,7 +1542,9 @@ int do_final_chrif(void)
 {
 	if (char_fd > 0)
 		do_close(char_fd);
+
 	auth_db->destroy(auth_db, auth_db_final);
+	ers_destroy(auth_db_ers);
 	return 0;
 }
 
@@ -1447,7 +1553,8 @@ int do_final_chrif(void)
  *------------------------------------------*/
 int do_init_chrif(void)
 {
-	auth_db = idb_alloc(DB_OPT_RELEASE_DATA);
+	auth_db = idb_alloc(DB_OPT_BASE);
+	auth_db_ers = ers_new(sizeof(struct auth_node));
 
 	add_timer_func_list(check_connect_char_server, "check_connect_char_server");
 	add_timer_func_list(ping_char_server, "ping_char_server");

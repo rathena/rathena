@@ -514,10 +514,9 @@ struct map_session_data {
 	//NOTE: When deciding to add a flag to state or special_state, take into consideration that state is preserved in
 	//status_calc_pc, while special_state is recalculated in each call. [Skotlex]
 	struct {
-		unsigned auth : 1;
+		unsigned active : 1; //Marks active player (not active is logging in/out, or changing map servers)
 		unsigned menu_or_input : 1;// if a script is waiting for feedback from the player
 		unsigned dead_sit : 2;
-		unsigned waitingdisconnect : 1;
 		unsigned lr_flag : 2;
 		unsigned connect_new : 1;
 		unsigned arrow_atk : 1;
@@ -537,12 +536,9 @@ struct map_session_data {
 		unsigned noask :1; // [LuzZza]
 		unsigned trading :1; //[Skotlex] is 1 only after a trade has started.
 		unsigned deal_locked :2; //1: Clicked on OK. 2: Clicked on TRADE
-		unsigned party_sent :1;
-		unsigned guild_sent :1;
 		unsigned monster_ignore :1; // for monsters to ignore a character [Valaris] [zzo]
 		unsigned size :2; // for tiny/large types
 		unsigned night :1; //Holds whether or not the player currently has the SI_NIGHT effect on. [Skotlex]
-		unsigned finalsave :1; //Signals whether the final save for the char was done or not yet. Meant to prevent exploits and the like. [Skotlex]
 		unsigned blockedmove :1;
 		unsigned using_fake_npc :1;
 		unsigned rewarp :1; //Signals that a player should warp as soon as he is done loading a map. [Skotlex]
@@ -1295,9 +1291,7 @@ int map_delobjectnofree(int id);
 void map_foreachobject(int (*)(struct block_list*,va_list),int,...);
 int map_search_freecell(struct block_list *src, int m, short *x, short *y, int rx, int ry, int flag);
 //
-bool map_knowsaccount(int account_id);
 int map_quit(struct map_session_data *);
-void map_quit_ack(int account_id, int char_id);
 // npc
 bool map_addnpc(int,struct npc_data *);
 
@@ -1338,7 +1332,7 @@ struct map_session_data * map_nick2sd(const char*);
 enum e_mapitflags
 {
 	MAPIT_NORMAL = 0,
-	MAPIT_PCISPLAYING = 1,// player is authed, not waiting disconnect and not in final save
+//	MAPIT_PCISPLAYING = 1,// Unneeded as pc_db/id_db will only hold auth'ed, active players.
 };
 struct s_mapiterator;
 struct s_mapiterator*   mapit_alloc(enum e_mapitflags flags, enum bl_type types);
@@ -1348,7 +1342,7 @@ struct block_list*      mapit_last(struct s_mapiterator* mapit);
 struct block_list*      mapit_next(struct s_mapiterator* mapit);
 struct block_list*      mapit_prev(struct s_mapiterator* mapit);
 bool                    mapit_exists(struct s_mapiterator* mapit);
-#define mapit_getallusers() mapit_alloc(MAPIT_PCISPLAYING,BL_PC)
+#define mapit_getallusers() mapit_alloc(MAPIT_NORMAL,BL_PC)
 #define mapit_geteachpc()   mapit_alloc(MAPIT_NORMAL,BL_PC)
 #define mapit_geteachmob()  mapit_alloc(MAPIT_NORMAL,BL_MOB)
 #define mapit_geteachiddb() mapit_alloc(MAPIT_NORMAL,BL_ALL)

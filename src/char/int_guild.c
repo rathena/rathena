@@ -1004,6 +1004,7 @@ int mapif_parse_CreateGuild(int fd, int account_id, char *name, struct guild_mem
 	// ここでギルド情報計算が必要と思われる
 	g->max_member = 16;
 	g->average_lv = master->lv;
+	g->connect_member = 1;
 	for(i = 0; i < MAX_GUILDSKILL; i++)
 		g->skill[i].id=i + GD_SKILLBASE;
 

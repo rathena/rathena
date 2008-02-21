@@ -153,7 +153,7 @@ int mail_openmail(struct map_session_data *sd)
 {
 	nullpo_retr(0,sd);
 
-	if( sd->state.finalsave == 1 || sd->state.storage_flag || sd->vender_id || sd->state.trading )
+	if( sd->state.storage_flag || sd->vender_id || sd->state.trading )
 		return 0;
 
 	clif_Mail_window(sd->fd, 0);

@@ -132,9 +132,6 @@ int storage_storageopen(struct map_session_data *sd)
 	struct storage *stor;
 	nullpo_retr(0, sd);
 
-	if(sd->state.finalsave) //Refuse to open storage when you had your last save done.
-		return 1;
-
 	if(sd->state.storage_flag)
 		return 1; //Already open?
 	
@@ -182,9 +179,6 @@ static int storage_additem(struct map_session_data *sd,struct storage *stor,stru
 {
 	struct item_data *data;
 	int i;
-
-	if (sd->state.finalsave)
-		return 1;
 
 	if(item_data->nameid <= 0 || amount <= 0)
 		return 1;
@@ -502,9 +496,6 @@ int storage_guild_storageopen(struct map_session_data *sd)
 	if(sd->status.guild_id <= 0)
 		return 2;
 
-	if(sd->state.finalsave) //Refuse to open storage when you had your last save done.
-		return 1;
-	
 	if(sd->state.storage_flag)
 		return 1; //Can't open both storages at a time.
 	
