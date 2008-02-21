@@ -1419,7 +1419,7 @@ function	script	F_Kienna	{
 			}
 			disablenpc "Kienna#"+getarg(0);
 			donpcevent "#1st5min::OnDisable";
-			enablenpc "a";
+			enablenpc "#1strecog";
 			set ROG_SK,6;
 			donpcevent "Waiting Room#rogue10::OnEnable";
 			warp "in_rogue",264,124;

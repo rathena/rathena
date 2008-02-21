@@ -286,12 +286,16 @@ prt_church,111,112,1	script	Sister Linus	79,{
 					next;
 					set .@redem_s,JobLevel+getskilllv(54);
 					set .@red_suc,rand(1,100);
-					if (.@redem_s < 31)
-						if (.@red_suc > 20 && .@red_suc < 41) set .@success,1;
-					else if (.@redem_s < 41)
-						if (.@red_suc > 10 && .@red_suc < 41) set .@success,1;
-					else
-						if (.@red_suc > 10 && .@red_suc < 51) set .@success,1;
+					if( .@redem_s < 31 ) {
+						if( .@red_suc > 20 && .@red_suc < 41 )
+							set .@success,1;
+					} else if( .@redem_s < 41 ) {
+						if( .@red_suc > 10 && .@red_suc < 41 )
+							set .@success,1;
+					} else {
+						if( .@red_suc > 10 && .@red_suc < 51 )
+							set .@success,1;
+					}
 
 					if (.@success) {
 						specialeffect2 14; // EF_HEALSP
