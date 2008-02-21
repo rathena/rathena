@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/02/21
+	* Fixed Hugel Airship Staff from teleporting you to the wrong airplane. [Paradox924X]
 2008/02/17
 	* Updated Eye of Hellion to use the new format of the input command. [Skotlex]
 2008/02/13

@@ -893,12 +893,12 @@ hugel,182,150,3	script	Airship Staff#hu	91,{
 		if (select("Yes:No") == 1) {
 			if(countitem(7311) > 0) {
 				delitem 7311,1;
-				warp "airplane_01",224,64;
+				warp "airplane",224,64;
 				close;
 			}
 			if(Zeny > 1200) {
 				set Zeny, Zeny - 1200;
-				warp "airplane_01",224,64;
+				warp "airplane",224,64;
 				close;
 			}
 			mes "[Airship Staff]";
