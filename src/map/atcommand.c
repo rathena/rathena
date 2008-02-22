@@ -958,6 +958,7 @@ int atcommand_whomap(const int fd, struct map_session_data* sd, const char* comm
 		clif_displaymessage(fd, atcmd_output);
 		count++;
 	}
+	mapit_free(iter);
 
 	if (count == 0)
 		sprintf(atcmd_output, msg_txt(54), map[map_id].name); // No player found in map '%s'.
