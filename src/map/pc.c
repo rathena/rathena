@@ -4735,17 +4735,21 @@ int pc_skillheal_bonus(struct map_session_data *sd, int skill_num)
 	return 0;
 }
 
-static int pc_respawn(int tid,unsigned int tick,int id,int data)
+void pc_respawn(struct map_session_data* sd, uint8 clrtype)
+{
+	if( !pc_isdead(sd) )
+		return; // not applicable
+
+	pc_setstand(sd);
+	pc_setrestartvalue(sd,3);
+	if(pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, clrtype))
+		clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
+}
+
+static int pc_respawn_timer(int tid,unsigned int tick,int id,int data)
 {
 	struct map_session_data *sd = map_id2sd(id);
-	if (sd && pc_isdead(sd))
-	{	//Auto-respawn [Skotlex]
-		pc_setstand(sd);
-		pc_setrestartvalue(sd,3);
-		if(pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 0))
-			clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
-
-	}
+	pc_respawn(sd,0);
 	return 0;
 }
 
@@ -5064,13 +5068,13 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		}
 		if( sd->pvp_point < 0 ){
 			sd->pvp_point=0;
-			add_timer(tick+1000, pc_respawn,sd->bl.id,0);
+			add_timer(tick+1000, pc_respawn_timer,sd->bl.id,0);
 			return 1;
 		}
 	}
 	//GvG
 	if(map_flag_gvg(sd->bl.m)){
-		add_timer(tick+1000, pc_respawn,sd->bl.id,0);
+		add_timer(tick+1000, pc_respawn_timer,sd->bl.id,0);
 		return 1;
 	}
 
@@ -6807,41 +6811,38 @@ int pc_setsavepoint(struct map_session_data *sd, short mapindex,int x,int y)
 }
 
 /*==========================================
- * 自動セ?ブ 各クライアント
- *------------------------------------------*/
-static int last_save_id=0,save_flag=0;
-static int pc_autosave_sub(DBKey key,void * data,va_list ap)
-{
-	struct map_session_data *sd = (TBL_PC*)data;
-	
-	if(sd->bl.id == last_save_id && save_flag != 1) {
-		save_flag = 1;
-		return 1;
-	}
-
-	if(save_flag != 1) //Not our turn to save yet.
-		return 0;
-
-	//Save char.
-	last_save_id = sd->bl.id;
-	save_flag=2;
-
-	chrif_save(sd,0);
-	return 1;
-}
-
-/*==========================================
  * 自動セ?ブ (timer??)
  *------------------------------------------*/
 int pc_autosave(int tid,unsigned int tick,int id,int data)
 {
 	int interval;
+	struct s_mapiterator* iter;
+	struct map_session_data* sd;
+	static int last_save_id = 0, save_flag = 0;
 
 	if(save_flag == 2) //Someone was saved on last call, normal cycle
 		save_flag = 0;
 	else
 		save_flag = 1; //Noone was saved, so save first found char.
-	map_foreachpc(pc_autosave_sub);
+
+	iter = mapit_getallusers();
+	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
+	{
+		if(sd->bl.id == last_save_id) {
+			save_flag = 1;
+			continue;
+		}
+
+		if(save_flag != 1) //Not our turn to save yet.
+			continue;
+
+		//Save char.
+		last_save_id = sd->bl.id;
+		save_flag = 2;
+
+		chrif_save(sd,0);
+	}
+	mapit_free(iter);
 
 	interval = autosave_interval/(clif_countusers()+1);
 	if(interval < minsave_interval)

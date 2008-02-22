@@ -295,6 +295,7 @@ int clif_hpmeter(struct map_session_data *sd);
 // guild
 int clif_guild_created(struct map_session_data *sd,int flag);
 int clif_guild_belonginfo(struct map_session_data *sd,struct guild *g);
+int clif_guild_masterormember(struct map_session_data *sd);
 int clif_guild_basicinfo(struct map_session_data *sd);
 int clif_guild_allianceinfo(struct map_session_data *sd);
 int clif_guild_memberlist(struct map_session_data *sd);

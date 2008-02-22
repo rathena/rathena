@@ -528,7 +528,6 @@ static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseF
 	session[fd]->func_send  = func_send;
 	session[fd]->func_parse = func_parse;
 	session[fd]->rdata_tick = last_tick;
-	session[fd]->session_data = NULL;
 	return 0;
 }
 
@@ -583,17 +582,6 @@ int realloc_writefifo(int fd, size_t addition)
 	}
 	else // no change
 		return 0;
-
-	// crash prevention for bugs that cause the send queue to fill up in an infinite loop
-	if( newsize > 5*1024*1024 ) // 5 MB is way beyond reasonable
-	{
-		ShowError("realloc_writefifo: session #%d's send buffer was overloaded! Disconnecting...\n", fd);
-		// drop all data (but the space will still be available)
-		session[fd]->wdata_size = 0;
-		// request disconnect
-		set_eof(fd);
-		return 0;
-	}
 
 	RECREATE(session[fd]->wdata, unsigned char, newsize);
 	session[fd]->max_wdata  = newsize;

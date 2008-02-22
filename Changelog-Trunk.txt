@@ -4,6 +4,11 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/02/22
+	* Removed code in socket.c that tries to avoid send buffer overloading,
+	  as there is a scenario (many players and charserver disconnect) where
+	  mass char saving produces huge ammounts of data to send (see r11503)
+	* Cleaned up player respawning code (bugreport:1022)
+	* Increased the max amount of different autocast skills from 5 to 10
 	* Fixed @whomap not unlocking the player db (bug in r12204) [ultramage]
 	* Added $(CUSTOM_CFLAGS) into all Makefile.in to provide any custom defs
 	  directly to all sub make files. How to use:

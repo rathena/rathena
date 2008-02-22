@@ -8,7 +8,7 @@ Date		Added
 	- Added Dimensional Gorge map spawns (According to RO Future Wiki)
 	- Updated Lighthalzen boss spawning mechanisim to official.
 	- Fixed a small error in the novice potion exchanger.
-	- Resolves the following: bugreport:879 bugreport:973 bugreport:983
+	- Resolves the following: bugreport:897 bugreport:973 bugreport:983
 	- bugreport:1013 bugreport:1021 bugreport:1024 bugreport:1026
 2008/02/21
 	* Fixed Hugel Airship Staff from teleporting you to the wrong airplane. [Paradox924X]

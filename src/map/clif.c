@@ -642,8 +642,8 @@ int clif_clearflooritem(struct flooritem_data *fitem, int fd)
  * id  : the id of the unit
  * type: 0 - moved out of sight
  *       1 - died
- *       2 - logged out
- *       3 - teleported / winged away
+ *       2 - respawned
+ *       3 - teleported / logged out
  * fd  : the target client
  *------------------------------------------*/
 int clif_clearunit_single(int id, uint8 type, int fd)
@@ -661,8 +661,8 @@ int clif_clearunit_single(int id, uint8 type, int fd)
  * make a unit (char, npc, mob, homun) disappear to all clients in area
  * type: 0 - moved out of sight
  *       1 - died
- *       2 - logged out
- *       3 - teleported / winged away
+ *       2 - respawned
+ *       3 - teleported / logged out
  *------------------------------------------*/
 int clif_clearunit_area(struct block_list* bl, uint8 type)
 {
@@ -7187,8 +7187,7 @@ int clif_charnameack (int fd, struct block_list *bl)
 				if (battle_config.show_mob_info&1)
 					str_p += sprintf(str_p, "HP: %u/%u | ", md->status.hp, md->status.max_hp);
 				if (battle_config.show_mob_info&2)
-					str_p += sprintf(str_p, "HP: %d%% | ", 
-						status_calc_life(md->status.hp, md->status.max_hp));
+					str_p += sprintf(str_p, "HP: %d%% | ", status_calc_life(md->status.hp, md->status.max_hp));
 				//Even thought mobhp ain't a name, we send it as one so the client
 				//can parse it. [Skotlex]
 				if (str_p != mobhp) {
@@ -8362,12 +8361,7 @@ void clif_parse_Restart(int fd, struct map_session_data *sd)
 {
 	switch(RFIFOB(fd,2)) {
 	case 0x00:
-		if (!pc_isdead(sd))
-			break;
-		pc_setstand(sd);
-		pc_setrestartvalue(sd, 3);
-		if (pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, 2))
-			clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
+		pc_respawn(sd,2);
 		break;
 	case 0x01:
 		/*	Rovert's Prevent logout option - Fixed [Valaris]	*/
