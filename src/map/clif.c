@@ -487,9 +487,9 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 				  	sd->state.active && sd->guildspy == g->guild_id &&
 					packet_db[sd->packet_ver][RBUFW(buf,0)].len)
 				{ // packet must exist for the client version
-					WFIFOHEAD(fd,len);
-					memcpy(WFIFOP(fd,0), buf, len);
-					WFIFOSET(fd,len);
+					WFIFOHEAD(i,len);
+					memcpy(WFIFOP(i,0), buf, len);
+					WFIFOSET(i,len);
 				}
 			}
 		}
