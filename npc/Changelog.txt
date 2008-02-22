@@ -1,5 +1,15 @@
 Date		Added
 ======
+2008/02/22
+	* Rev. 12227 Several small fixes to scripts, and updates. [L0ne_W0lf]
+	- Updated City warps for Lighthalzen, and dugneon warps.
+	- Updated castle warps for Schwaltzvalt Castles Map.
+	- "The Sign" quest is now enabled by default. (bugreport:1011)
+	- Added Dimensional Gorge map spawns (According to RO Future Wiki)
+	- Updated Lighthalzen boss spawning mechanisim to official.
+	- Fixed a small error in the novice potion exchanger.
+	- Resolves the following: bugreport:879 bugreport:973 bugreport:983
+	- bugreport:1013 bugreport:1021 bugreport:1024 bugreport:1026
 2008/02/21
 	* Fixed Hugel Airship Staff from teleporting you to the wrong airplane. [Paradox924X]
 2008/02/17

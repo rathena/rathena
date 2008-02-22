@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= jAthena - kalen (1.0) & eAthena Team
 //===== Current Version: =====================================
-//= 1.9c
+//= 2.0
 //===== Compatible With: =====================================
 //= eAthena SVN; RO Episode 4+
 //===== Description: =========================================
@@ -41,6 +41,7 @@
 //= 1.9a Fixed Kafra cutin not closing if you choose not to dismiss her. [L0ne_W0lf]
 //= 1.9b Corrected impropper variable being used for defense investment. [L0ne_W0lf]
 //= 1.9c Fixed a typo with zeny checkm when installing guardian. [L0ne_W0lf]
+//= 2.0 Fixed a typo in abandon function call. [L0ne_W0lf]
 //============================================================
 
 function	script	F_GldManager	{
@@ -375,7 +376,7 @@ function	script	F_GldManager	{
 	//		mes "[ "+getarg(0)+" ]";
 	//		mes "Master!!.....";
 	//		mes "...... Ma..s...ter.....";
-	//		callfunc "F_GuildBreak",getarg(0),getarg(4);
+	//		callfunc "F_GuildBreak",getarg(1),getarg(4);
 	//		return 0;
 	//	}
 	//	mes "[ "+getarg(0)+" ]";

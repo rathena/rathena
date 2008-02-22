@@ -7,7 +7,7 @@
 //= Optimized and further edited by kobra_k88.
 //= Further bugfixed and tested by Lupus
 //===== Current Version: =====================================
-//= 2.4c
+//= 2.5
 //===== Compatible With: =====================================
 //= eAthena  SVN
 //===== Description: =========================================
@@ -35,6 +35,7 @@
 //= 2.4c More fixes courtosy of Micktu. [L0ne_W0lf]
 //= 2.4d Fixed an incorrect answer in the quiz. (Trojal) [L0ne_W0lf]
 //= 2.4e Touched up a few issues as pointed out by Ultramage. [L0ne_W0lf]
+//= 2.5 Krongast is in Lighthalzen. (DarkValmir) [L0ne_W0lf]
 //==============================================================
 
 ein_in01,18,28,4	script	Guildsman#BLS	731,{
@@ -685,7 +686,7 @@ L_AskQuestions:
 					next;
 					mes "[Geschupenschte]";
 					mes "Anyway, take this";
-					mes "to ^8E6B23Krongast^000000 in Izlude";
+					mes "to ^8E6B23Krongast^000000 in Lighthalzen";
 					break;
 				case 12:
 					mes "Okay, now take this to ^8E6B23Talpiz^000000 in Payon of Rune-Midgarts Kingdom. Simply deliver this and bring me the receipt.";

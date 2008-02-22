@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Sara-chan (1.0)
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 8+
 //===== Description: =========================================
@@ -25,34 +25,47 @@
 //= 1.8 Some small changes [MasterOfMuppets]
 //= 1.9 Removed duplicates [Toms]
 //= 2.0 Now use MISC_QUEST&512 instead of 'hzdun' [Lupus]
+//= 2.1 Updated all standard dungeon warps. [L0ne_W0lf]
+//=	Updated Sewer pipe dungeon entrance.
+//=	Removed dialog from level 3 entrance warp.
 //============================================================
 
-lhz_dun03,140,139,0	warp	lhz003	1,1,lhz_dun02,150,145
-lhz_dun02,18,150,0	warp	lhz004	1,1,lhz_dun01,18,148
-lhz_dun01,18,146,0	warp	lhz004a	1,1,lhz_dun02,18,148
-lhz_dun02,282,155,0	warp	lhz005	1,1,lhz_dun01,281,152
-lhz_dun01,281,150,0	warp	lhz005a	1,1,lhz_dun02,282,153
-lhz_dun02,148,18,0	warp	lhz006	1,1,lhz_dun01,146,10
-lhz_dun01,148,10,0	warp	lhz006a	1,1,lhz_dun02,150,18
-
-//current entrance
-lhz_dun01,150,290,0	warp	lhz007	1,1,lhz_in01,23,137
-//lighthalzen,73,52,0	warp	lhz007a	1,1,lhz_dun01,150,288
-//This should be only an Exit. This warp doesn't exist on kRO.
+lhz_dun01,149,291,0	warp	lhz_dun1-1	1,1,lhz_in01,19,129
+lhz_dun01,281,150,0	warp	lhz_dun2-1	1,1,lhz_dun02,282,153
+lhz_dun02,282,161,0	warp	lhz_dun2-2	1,1,lhz_dun01,281,154
+lhz_dun01,149,9,0	warp	lhz_dun3-1	1,1,lhz_dun02,153,19
+lhz_dun02,146,19,0	warp	lhz_dun3-2	1,1,lhz_dun01,144,9
+lhz_dun01,18,145,0	warp	lhz_dun4-1	1,1,lhz_dun02,17,150
+lhz_dun02,17,156,0	warp	lhz_dun4-2	1,1,lhz_dun01,18,150
+lhz_dun02,150,149,4	script	lhz_dun5-1	45,2,2,{
+OnTouch:
+	if ((Upper != 1 && BaseLevel<95) || (Upper == 1 && BaseLevel<90)) end;
+	warp "lhz_dun03",140,137;
+	end;
+}
+lhz_dun03,139,137,0	warp	lhz_dun5-2	1,1,lhz_dun02,149,142
 
 //--------------------------Sewer Pipe--------------------------
 
-lighthalzen,313,301,0	script	Sewer Pipe	111,{
-	mes "You see some pipes for a sewage system.";
-	if(MISC_QUEST&512){
-		mes "You found the way into the lab.";
+lighthalzen,313,301,0	script	Sewer Pipe#lt	111,{
+	if (MISC_QUEST&512) {
+		mes "^3355FFYou found some sort";
+		mes "of large sewage pipe.";
+		mes "Naturally, the stench";
+		mes "emanating from inside";
+		mes "the pipe is barely endurable.^000000";
 		next;
-		menu "Go in.",-,"Do not go in.",L_NO;
-
-		warp "lhz_cube",231,17;
-		end;
+		if (select("Enter:Cancel") == 1) {
+			warp "lhz_cube",231,17;
+			end;
+		}
+		close;
 	}
-L_NO:
+	mes "^3355FFYou found some sort";
+	mes "of large sewage pipe.";
+	mes "Naturally, the stench";
+	mes "emanating from inside";
+	mes "the pipe is barely endurable.^000000";
 	close;
 }
 
@@ -65,22 +78,6 @@ lhz_dun02,224,6,0	warp	lhzcube2	1,1,lhz_cube,231,90
 //Cube room -> Lighthalzen
 lhz_cube,231,12,0	warp	lhzcube3	1,1,lighthalzen,310,302
 lhz_cube,177,96,0	warp	lhzcube4	1,1,lighthalzen,310,302
-
-lhz_dun02,150,149,4	script	lhz-warp	45,2,2,{
-OnTouch:
-	if(Upper != 1 && BaseLevel<95)goto s_Noentry0;
-	if(Upper == 1 && BaseLevel<90)goto s_Noentry1;
-	warp "lhz_dun03",140,137;
-	end;
-
-s_Noentry0:
-	mes "Non-Advanced class characters must be at least base level 95 to enter level 3 of the Bio Lab Dungeon";
-	close; 
-
-s_Noentry1:
-	mes "Advanced class characters must be at least base level 90 to enter level 3 of the Bio Lab Dungeon";
-	close;
-}
 
 //----------------- Cube Room Maze ---------------------------
 // -1 are warps facing east.
@@ -204,10 +201,9 @@ lhz_cube,123,26,0	script	cubew09-4	45,1,1,{
  
 //----- Function for Random Warps ----------------------------
 function	script	randomw	{
-	set @rdm,rand(3);
-	if(@rdm==1)goto rdm1;
-	if(@rdm==2)goto rdm2;
- 	warp "lhz_cube",67,193; end;
-	rdm1: warp "lhz_cube",66,136; end;
-	rdm2: warp "lhz_cube",66,74; end;
+	switch(rand(3)) {
+	case 1: warp "lhz_cube",66,136; end;
+	case 2: warp "lhz_cube",66,74; end;
+ 	default: warp "lhz_cube",67,193; end;
+	}
 }

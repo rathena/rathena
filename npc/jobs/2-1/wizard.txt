@@ -4,7 +4,7 @@
 //= (Aegis) Translated by yoshiki, converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.5c
+//= 2.6
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -16,6 +16,7 @@
 //= 2.5a More bugfixes care of Barron-Monster. [L0ne_W0lf]
 //= 2.5b Fixed tests calling on a non-existant label in "Room of x#Failed" npcs. [L0ne_W0lf]
 //= 2.5c Bug fixes. Cleaned up some NPCs slightly. [L0ne_W0lf]
+//= 2.6 Fixed Water Room not warping on time-up. [L0ne_W0lf]
 //============================================================ 
 
 gef_tower,111,37,4	script	Wizard Guildsman	70,{
@@ -1142,7 +1143,7 @@ OnTimer183000:
 	end;
 
 OnTimer184000:
-	donpcevent "Room of Water#Failed::OnEnable";
+	enablenpc "Room of Water#Failed";
 	end;
 
 OnTimer185000:

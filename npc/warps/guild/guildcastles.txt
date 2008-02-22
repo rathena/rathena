@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 2.4a
+//= 2.4b
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= 2.4a Added more warps between Juno Satellite and Castle Interiors. [L0ne_W0lf]
 //=	castle 1, 4 and 5 entrances are questionable, and will be updated
 //=	as I get more information.
+//= 2.4b Corrected Warp points for Juno castles 1, 4 and 5. [L0ne_W0lf]
 //============================================================
 
 
@@ -400,19 +401,22 @@ prtg_cas05,58,7,0	warp	prtg506	1,1,prtg_cas05,253,290
 prtg_cas05,66,225,0	warp	prtg503	1,1,prtg_cas05,260,92
 prtg_cas05,76,242,0	warp	prtg502	1,1,prtg_cas05,288,13
 
-// Episode 12: WoE:SE Schwaltzvalt
+//Episode 12: WoE:SE
+//Schwaltzvalt Guild Castles Map Connection
 yuno,23,127,0	warp	schg001	1,1,sch_gld,260,92
 sch_gld,355,89,0	warp	schg002	1,1,yuno,26,127
-sch_gld,293,91,0	warp	schg101	1,1,schg_cas01,276,243
-schg_cas01,276,241,0	warp	schg102	1,1,sch_gld,293,95
+
+//Schwaltzvalt Castles Map
+sch_gld,293,91,0	warp	schg101	1,1,schg_cas01,119,8
+schg_cas01,119,5,0	warp	schg102	1,1,sch_gld,293,95
 sch_gld,288,256,0	warp	schg201	1,1,schg_cas02,340,73
 schg_cas02,340,69,0	warp	schg202	1,1,sch_gld,288,253
 sch_gld,98,182,0	warp	schg301	1,1,schg_cas03,338,332
 schg_cas03,338,335,0	warp	schg302	1,1,sch_gld,98,187
-sch_gld,138,96,0	warp	schg401	1,1,schg_cas04,276,243
-schg_cas04,276,241,0	warp	schg402	1,1,sch_gld,138,93
-sch_gld,63,315,0	warp	schg501	1,1,schg_cas05,276,243
-schg_cas05,276,241,0	warp	schg502	1,1,sch_gld,69,315
+sch_gld,138,96,0	warp	schg401	1,1,schg_cas04,119,8
+schg_cas04,119,5,0	warp	schg402	1,1,sch_gld,138,93
+sch_gld,63,315,0	warp	schg501	1,1,schg_cas05,119,8
+schg_cas05,119,5,0	warp	schg502	1,1,sch_gld,69,315
 
 //==================  4 Novices Guild Castles =============================
 //Novices Guild: Al de Baran Guild Castles Map

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 Added second Veins guide NPC. [L0ne_W0lf]
+//= 1.2 Fixed a few small typos. [L0ne_W0lf]
 //============================================================ 
 
 veins,210,345,5	script	Veins Guide#1::ve_guide	934,{
@@ -42,7 +43,7 @@ veins,210,345,5	script	Veins Guide#1::ve_guide	934,{
 				case 1:
 					mes "[Veins Guide]";
 					mes "Our temple is located north,";
-					mes "and always crowded with sincere followes of Goddess Freya.";
+					mes "and always crowded with sincere followers of Goddess Freya.";
 					if (.@compass_check == 1) viewpoint 1,196,258,1,0xFF0000;
 					break;
 				case 2:
@@ -79,10 +80,10 @@ veins,210,345,5	script	Veins Guide#1::ve_guide	934,{
 					break;
 				case 7:
 					mes "[Veins Guide]";
-					mes "Are you intereste din studying geology?";
+					mes "Are you interested in studying geology?";
 					mes "Then you'd better go check out the";
 					mes "Geological Research Institute on";
-					mes "the 2nd floor of hte weapon shop.";
+					mes "the 2nd floor of the weapon shop.";
 					if (.@compass_check == 1) viewpoint 1,150,175,7,0x00FF00;
 					break;
 				case 8:

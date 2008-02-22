@@ -3,7 +3,7 @@
 //===== By: ==================================================
 // The Prometheus Project, eAthena dev team
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= Any Athena
 //===== Additional Comments: =================================
@@ -15,6 +15,10 @@
 //= 1.4: Adjusted spawns according to own info from iRO [MasterOfMuppets]
 //= 1.5: More accurate spawn numbers and iRO names thanks to Tharis [Playtester]
 //= 1.6: Official X.3 spawns [Playtester]
+//= 1.7 Corrected MVP spawn function to be standard to iRO. [L0ne_W0lf]
+//=	- A random 99 will now be spawned when the MVP spawns.
+//=	- Spare spawn and MVP spawn now spawn in official locations.
+//=	- Expandeded timer to allow for varying spawn times.
 //============================================================
 
 
@@ -216,26 +220,86 @@ lhz_dun03,139,117,20,11	monster	Sniper Cecil	1644,1,2700000,2500000,1
 lhz_dun03,138,138,36,34	monster	High Priest Margaretha	1643,1,3300000,3000000,1
 lhz_dun03,138,138,36,34	monster	High Wizard Kathryne	1645,1,2580000,2460000,1
 
-lhz_dun03,1,1,0	script	Lhzdun03monster	-1,{
+lhz_dun03,2,2,0	script	summon_boss_lt	-1,{
 OnInit:
-	while(1)
-	{
-		switch(rand(1,6))
-		{
-		case 1: areamonster "lhz_dun03",1,1,300,300,"Lord Knight Seyren",1646,1,"Lhzdun03monster::OnMonsterDead"; break;
-		case 2: areamonster "lhz_dun03",1,1,300,300,"Assassin Cross Eremes",1647,1,"Lhzdun03monster::OnMonsterDead"; break;
-		case 3: areamonster "lhz_dun03",1,1,300,300,"Whitesmith Horward",1648,1,"Lhzdun03monster::OnMonsterDead"; break;
-		case 4: areamonster "lhz_dun03",1,1,300,300,"High Priest Margaretha",1649,1,"Lhzdun03monster::OnMonsterDead"; break;
-		case 5: areamonster "lhz_dun03",1,1,300,300,"Sniper Cecil",1650,1,"Lhzdun03monster::OnMonsterDead"; break;
-		case 6: areamonster "lhz_dun03",1,1,300,300,"High Wizard Kathryne",1651,1,"Lhzdun03monster::OnMonsterDead"; break;
-		}
-		end;
-	OnMonsterDead:
-		initnpctimer;
-		setnpctimer 0;
-		end;
-	OnTimer7200000:
+	initnpctimer;
+	end;
+
+OnTimer6000000:
+	if (rand(1,6) == 1) {
+		donpcevent "summon_boss_lt::Onsummon";
 		stopnpctimer;
 	}
+	end;
 
+OnTimer6300000:
+	if (rand(1,6) == 2) {
+		donpcevent "summon_boss_lt::Onsummon";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer6600000:
+	if (rand(1,6) == 3) {
+		donpcevent "summon_boss_lt::Onsummon";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer6900000:
+	if (rand(1,6) == 4) {
+		donpcevent "summon_boss_lt::Onsummon";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer7200000:
+	if (rand(1,6) == 5) {
+		donpcevent "summon_boss_lt::Onsummon";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer7500000:
+	if (rand(1,6) == 6) {
+		donpcevent "summon_boss_lt::Onsummon";
+		stopnpctimer;
+	}
+	end;
+
+OnTimer7800000:
+	donpcevent "summon_boss_lt::Onsummon";
+	stopnpctimer;
+	end;
+
+Onsummon:
+	// Select Coordinates to summon a random MVP on
+	switch(rand(1,6)) {
+	case 1: set .@x,140;	set .@y,232;	break;
+	case 2: set .@x,75;	set .@y,138;	break;
+	case 3: set .@x,140;	set .@y,87;		break;
+	case 4: set .@x,205;	set .@y,140;	break;
+	case 5: set .@x,123;	set .@y,137;	break;
+	case 6: set .@x,175;	set .@y,137;	break;
+	}
+	set .@mob,rand(1646,1651);
+	monster "lhz_dun03",.@x,.@y,strmobinfo(1,.@mob),.@mob,1,"summon_boss_lt::OnMyMvPDead";
+
+	// Select Coordinates to summon a random 99 on
+	switch(rand(1,6)) {
+	case 1: set .@x2,183;	set .@y2,97;	break;
+	case 2: set .@x2,97;	set .@y2,96;	break;
+	case 3: set .@x2,47;	set .@y2,139;	break;
+	case 4: set .@x2,231;	set .@y2,140;	break;
+	case 5: set .@x2,139;	set .@y2,211;	break;
+	case 6: set .@x2,139;	set .@y2,259;	break;
+	}
+	set .@mob2,rand(1640,1645);
+	monster "lhz_dun03",.@x2,.@y2,strmobinfo(1,.@mob2),.@mob2,1,"summon_boss_lt::OnMVP";
+	end;
+
+OnMyMvPDead:
+	killmonster "lhz_dun03","summon_boss_lt::OnMVP";
+	initnpctimer;
+	end;
 }

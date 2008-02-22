@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets & SinSloth
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= eAthena
 //===== Description: =========================================
@@ -19,6 +19,7 @@
 //= 1.5a Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.5b Fixed a variable name. [SinSloth]
 //= 1.6 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 1.7 Corrected locations of warpinside#1. (DarkValmir) [L0ne_W0lf]
 //============================================================
 
 //-------------------------------------------------------------------------
@@ -10574,7 +10575,7 @@ OnTimer100000:
 	}
 }
 
-odin_tem03,206,302,0	script	warpinside#1	139,3,3,{
+odin_tem03,266,302,0	script	warpinside#1	139,3,3,{
 
 OnInit:
 	disablenpc "warpinside#1";

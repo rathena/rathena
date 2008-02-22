@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Muad_Dib(The Prometheus Project), Lupus, Samuray22
 //===== Current Version: ===================================== 
-//= 2.3
+//= 2.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //=	- Temporary character variables "@" are now ".@"
 //=	- Fixed some indentation.
 //=	- Changed item names to item IDs
+//= 2.4 Fixed hang up on bard quest. ($kiN.) [L0ne_W0lf]
 //============================================================
 
 //=============== Ayealo ============================
@@ -331,6 +332,9 @@ comodo,226,123,5	script	Wandering Bard	741,{
 			mes "[Lalo]";
 			mes "You can get this flower from the girl in Prontera.";
 			mes "Please bring me a different flower.";
+			close2;
+			cutin "job_bard_aiolo02",255;
+			end;
 		}
 		else if(countitem(744) > 0) {
 			mes "Oh no, you brought a Bouquet?";
