@@ -50,7 +50,7 @@ obj_sql:
 	-mkdir obj_sql
 
 obj_sql/%.o: %.c $(LOGIN_H) $(COMMON_H)
-	@CC@ @CFLAGS@ @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@CC@ @CFLAGS@ $(CUSTOM_CFLAGS) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing common object files
 ../common/obj_all/%.o:
