@@ -6828,7 +6828,7 @@ int pc_autosave(int tid,unsigned int tick,int id,int data)
 	iter = mapit_getallusers();
 	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 	{
-		if(sd->bl.id == last_save_id) {
+		if(sd->bl.id == last_save_id && save_flag != 1) {
 			save_flag = 1;
 			continue;
 		}
