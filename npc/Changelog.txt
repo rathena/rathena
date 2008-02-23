@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/02/22
+	* Rev. 12234 Added dummy event to Lighthalzen boss spawn mechanisim. [L0ne_W0lf]
 	* Rev. 12227 Several small fixes to scripts, and updates. [L0ne_W0lf]
 	- Updated City warps for Lighthalzen, and dugneon warps.
 	- Updated castle warps for Schwaltzvalt Castles Map.

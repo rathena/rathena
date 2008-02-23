@@ -3,7 +3,7 @@
 //===== By: ==================================================
 // The Prometheus Project, eAthena dev team
 //===== Current Version: =====================================
-//= 1.7
+//= 1.7a
 //===== Compatible With: =====================================
 //= Any Athena
 //===== Additional Comments: =================================
@@ -19,6 +19,7 @@
 //=	- A random 99 will now be spawned when the MVP spawns.
 //=	- Spare spawn and MVP spawn now spawn in official locations.
 //=	- Expandeded timer to allow for varying spawn times.
+//= 1.7a Added dummy event to keep from causnig warnings. [L0ne_W0lf]
 //============================================================
 
 
@@ -301,5 +302,9 @@ Onsummon:
 OnMyMvPDead:
 	killmonster "lhz_dun03","summon_boss_lt::OnMVP";
 	initnpctimer;
+	end;
+
+//Required to keep from erroring
+OnMVP:
 	end;
 }
