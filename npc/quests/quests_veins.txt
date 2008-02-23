@@ -1,0 +1,621 @@
+//===== eAthena Script ======================================= 
+//= Veins Quests
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= eAthena SVN
+//===== Description: ========================================= 
+//= [Aegis Conversion]
+//= Collection of Veins Quests 
+//= Stone Quest:
+//= - Help an Old Man with his job.
+//= - Dialog obtained from iRO.
+//= - Variable in use: veins_stone (max 8)
+//===== Additional Comments: ================================= 
+//= 1.0 First version, Added Veins Stone quest. [L0ne_W0lf]
+//============================================================ 
+
+ve_fild05,257,130,4	script	Wincing Old Man#ve	945,{
+	//if (max_max_c1 == 1) {
+	//	mes "- Wait a moment! -";
+	//	mes "- Currently you are carrying -";
+	//	mes "- too many items with you. -";
+	//	mes "- Please come back after -";
+	//	mes "- you put some items into Kafra Storage. -";
+	//	close;
+	//}
+	if ((MaxWeight - Weight) < 2000) {
+		mes "- Wait a moment! -";
+		mes "- Currently you are carrying -";
+		mes "- too many items with you. -";
+		mes "- Please come back after -";
+		mes "- you put some items into Kafra Storage. -";
+		close;
+	}
+	if ((veins_stone == 0) && (BaseLevel > 59)) {
+		mes "[Zabaroo]";
+		mes "My back is killing me";
+		mes "after stooping over to";
+		mes "pick up stones all day long...";
+		mes "The pain... It's unbearable!";
+		next;
+		switch(select("Bend with your knees, yo.:Gosh, how bad is it?")) {
+		case 1:
+			mes "[Zabaroo]";
+			mes "Whippersnapper!";
+			mes "I didn't ask you for";
+			mes "your advice! Don't";
+			mes "patronize an old man!";
+			close;
+		case 2:
+			mes "[Zabaroo]";
+			mes "Oh, it hurts so much, it's";
+			mes "almost crippling. But I don't";
+			mes "have any choice. I need to";
+			mes "get enough stops to fill";
+			mes "this gap if I want to get";
+			mes "paid. Arrrrgh, damn it!";
+			next;
+			mes "[Zabaroo]";
+			mes "If I don't get enough";
+			mes "money to pay for my";
+			mes "granddaughter's medicine,";
+			mes "I won't be able to buy any";
+			mes "medicine for my granddaughter!";
+			mes "And that will be horrible! Ag!";
+			next;
+			select("Can I help?");
+			mes "[Zabaroo]";
+			mes "I appreciate your kindness,";
+			mes "stranger, but no. I have";
+			mes "to do this on my own.";
+			mes "A man must have his pride....";
+			next;
+			mes "^333333*Snap*^000000";
+			next;
+			mes "[Zabaroo]";
+			mes "Argh! My back...!";
+			mes "This was totally";
+			mes "unforeseeable!";
+			mes "Please! Please,";
+			mes "for the love of Freya,";
+			mes "please help me!";
+			next;
+			select("I will help you.");
+			mes "[Zabaroo]";
+			mes "Thank you!";
+			mes "Thanks so much!";
+			next;
+			select("What do you want me to do?");
+			mes "[Zabaroo]";
+			mes "Ow-ow-ow! Oh... Okay...";
+			mes "You see those all dark";
+			mes "stones stuck in the ground?";
+			mes "Those are what I need to";
+			mes "pick up. Now don't go";
+			mes "lifting rocks just yet...";
+			next;
+			mes "[Zabaroo]";
+			mes "I asked some other old";
+			mes "man in town, Absar, to";
+			mes "make me something to help";
+			mes "with my back. He was going";
+			mes "to help me if I gave hi--";
+			mes "ARGH! My back! It hurts!";
+			next;
+			mes "[Zabaroo]";
+			mes "It hurts so bad! But it's";
+			mes "especially painful right";
+			mes "when I'm about to finish";
+			mes "sentences in which I intend to";
+			mes "tell you important informat--";
+			mes "ARRRGH! Find Absar! Quickly!";
+			next;
+			while(1) {
+				mes "[Zabaroo]";
+				mes "Wait, wait...";
+				mes "Maybe I can answer";
+				mes "a few of your questions";
+				mes "before my body is wracked";
+				mes "with throbbing pain. Let's...";
+				mes "Let's at least give it a try.";
+				next;
+				switch(select("What's with these stones?:Where's the old man?:Nothing.")) {
+				case 1:
+					mes "[Zabaroo]";
+					mes "Well, we use these dark";
+					mes "stones because they're";
+					mes "pretty and easy to process.";
+					mes "They're sort of a specialty";
+					mes "of this town. I get paid to";
+					mes "harvest these handy rocks.";
+					next;
+					mes "[Zabaroo]";
+					mes "We can sell these to tourists,";
+					mes "and we even have a factory";
+					mes "that uses these stones.";
+					mes "Still, it's not like the";
+					mes "townspeople are getting";
+					mes "rich off these stones.";
+					next;
+					mes "[Zabaroo]";
+					mes "All of us are still";
+					mes "barely making a living...";
+					next;
+					break;
+				case 2:
+					mes "[Zabaroo]";
+					mes "Absar? He's inside";
+					mes "the Tool Shop. You";
+					mes "can't miss him... Just";
+					mes "look for the man with";
+					mes "the crazy eyes!";
+					next;
+					break;
+				case 3:
+					mes "[Zabaroo]";
+					mes "Thanks for your help.";
+					mes "If you can't find Absar";
+					mes "in the Tool Shop, then";
+					mes "you might want to stop";
+					mes "by the Tavern. A-auuugh!";
+					set veins_stone,1;
+					close;
+				}
+			}
+		}
+	}
+	else if (veins_stone == 1) {
+		mes "[Zabaroo]";
+		mes "Thanks for your help.";
+		mes "If you can't find Absar";
+		mes "in the Tool Shop, then";
+		mes "you might want to stop";
+		mes "by the Tavern. A-auuugh!";
+		close;
+	}
+	else if (veins_stone < 4) {
+		mes "[Zabaroo]";
+		mes "Geez, Absar sure can";
+		mes "be fussy. Still, do your";
+		mes "best to get what he wants.";
+		mes "He won't help me otherwise!";
+		mes "Other than that, he's not";
+		mes "really that bad a guy...";
+		close;
+	}
+	else if (veins_stone == 4) {
+		mes "[Zabaroo]";
+		mes "Oh good, you're back!";
+		mes "Did you bring what";
+		mes "Absar made for me?";
+		next;
+		select("Yes, here...");
+		mes "[Zabaroo]";
+		mes "So this is what he";
+		mes "was talking about?";
+		mes "How does it... Ah!";
+		mes "Here we go! If I pull";
+		mes "the handle, that end of";
+		mes "the stick will pick stuff up!";
+		next;
+		mes "[Zabaroo]";
+		mes "This is great! I won't";
+		mes "have to bend over to pick";
+		mes "up stones anymore! Heh,";
+		mes "he must be awfully proud";
+		mes "of this useful invention~";
+		mes "I can imagine him strutting.";
+		next;
+		mes "[Zabaroo]";
+		mes "Um, did he have anything";
+		mes "to say after he gave this";
+		mes "to you? I'm just curious.";
+		next;
+		select("This message...");
+		mes "[Zabaroo]";
+		mes "Oh... I thought he";
+		mes "would forget all about";
+		mes "that. Well, it's a relief";
+		mes "to know that now. That's";
+		mes "really very nice of him.";
+		next;
+		mes "Zabaroo]";
+		mes "I hate to ask you...";
+		mes "But would you mind";
+		mes "helping me out one";
+		mes "more time?";
+		next;
+		select("Huh? What is it?");
+		mes "[Zabaroo]";
+		mes "Don't worry, it's not";
+		mes "too hard. Would you just";
+		mes "deliver the stones I gathered";
+		mes "to the factory in town? It's";
+		mes "near the airport or airship or";
+		mes "something. It won't take long.";
+		set veins_stone,5;
+		close;
+	}
+	else if (veins_stone < 7) {
+		mes "[Zabaroo]";
+		mes "Thanks again for your help!";
+		mes "What did Asbar call this";
+		mes "thing again? A Tactile...";
+		mes "Extendable... Damn it...";
+		mes "Why's the name so long?";
+		mes "Anyway, it's usefull~";
+		close;
+	}
+	else if (veins_stone == 7) {
+		mes "[Zabaroo]";
+		mes "Oh, you're back!";
+		mes "I really appreciate all";
+		mes "of your help. I don't have";
+		mes "much, and I know you weren't";
+		mes "expecting a reward, but I'd";
+		mes "like to give you something.";
+		next;
+		mes "[Zabaroo]";
+		mes "Ah, here we are. I found";
+		mes "these while harvesting stones";
+		mes "I was told that adventurers";
+		mes "find these useful. Anyway,";
+		mes "I hope you like these rocks...";
+		set veins_stone,8;
+		getexp 300000,0;
+		getitem 985,3; //Elunium
+		close;
+	}
+	else if (veins_stone > 7) {
+		mes "[Zabaroo]";
+		mes "Thanks to you and Asbar,";
+		mes "my poor back hasn't been";
+		mes "bothering me at all lately.";
+		mes "I should be taking better";
+		mes "care of myself at my age...";
+		close;
+	}
+	mes "[Zabaroo]";
+	mes "I'm sorry dear.";
+	mes "You're not strong enough for this kind of work.";
+	mes "Put on some muscle and talk to me again.";
+	close;
+}
+
+ve_in,169,310,6	script	Strange Old Man#ve	121,{
+	if (veins_stone == 0) {
+		mes "[Absar]";
+		mes "Bwahahaha!";
+		mes "Once... Once this is completed, I'll...";
+		mes "Mwahahahahahahahah!";
+		close;
+	}
+	else if (veins_stone == 1) {
+		mes "[Absar]";
+		mes "I'm so close to";
+		mes "completion. Now, if";
+		mes "I just turn this here...";
+		next;
+		if (select("Excuse me...:........") == 1) {
+			mes "[Absar]";
+			mes "What?! Who dares";
+			mes "disturb me?! N-no!";
+			mes "Look! Look what you did!";
+			mes "You made me screw up!";
+			next;
+			specialeffect 90; //EF_LORD
+			percentheal 30,0;
+			next;
+			mes "[Absar]";
+			mes "!@#$%#@#$!*~";
+			mes "F$#@#%^^^&&!";
+			close2;
+			warp "ve_in",262,309;
+			end;
+		}
+		mes "[Absar]";
+		mes "Oh, no...";
+		next;
+		specialeffect 86; //"Strange Old Man#ve" EF_ASPERSIO
+		next;
+		mes "[Absar]";
+		mes "How...?!";
+		mes "No! I failed again!";
+		mes "D-DAAAAAAAAAAAMN IIIII--";
+		next;
+		mes "[Absar]";
+		mes "Huh? What are you...";
+		mes "What do you want?";
+		next;
+		select("Oh, I-I'm...");
+		mes "[Absar]";
+		mes "Spit it out. Tell me";
+		mes "what you want, not your";
+		mes "name. Hurry, can't you";
+		mes "see that I'm busy?";
+		next;
+		if (select("I... I'm sorry.:I'm here for Mr. Zabaroo...") == 1) {
+			mes "[Absar]";
+			mes "If only you didn't";
+			mes "interrupt me! Then";
+			mes "I'd already have...";
+			mes "Ugh! Back to work!";
+			close;
+		}
+		mes "[Absar]";
+		mes "Zabaroo? What does...";
+		mes "Oh. Never mind. I think";
+		mes "I remember what he asked";
+		mes "me to make him. So did";
+		mes "you bring all the materials?";
+		next;
+		if (select("Yes:What materials...?") == 1) {
+			mes "[Absar]";
+			mes "Great, we can get";
+			mes "started and m--";
+			mes "Liar. You don't even know";
+			mes "what you're supposed to";
+			mes "bring me, do you?!";
+			mes "Get out of here!";
+			close2;
+			warp "ve_in",262,309;
+			end;
+		}
+		mes "[Absar]";
+		mes "Of course. I didn't tell him";
+		mes "what materials I needed";
+		mes "anyway. Heh heh! Now, this";
+		mes "is what I need you to bring.";
+		mes "Listen up, okay? And hurry.";
+		next;
+		mes "[Absar]";
+		mes "^4D4DFF5 Maneater Roots^000000,";
+		mes "^4D4DFF2 Glacial Hearts^000000, and";
+		mes "^4D4DFF5 Steel^000000. If you don't";
+		mes "come back soon, then";
+		mes "I won't help you. I've got";
+		mes "projects I'm working on!";
+		set veins_stone,2;
+		close;
+	}
+	else if (veins_stone == 2) {
+		if (countitem(999) > 4 && 7561 > 1 && countitem(1033) > 4) {
+			mes "[Absar]";
+			mes "Good, you finally";
+			mes "brought everthing.";
+			mes "I was just about to";
+			mes "give up on you, so";
+			mes "consider yourself lucky!";
+			next;
+			mes "[Absar]";
+			mes "Give me a second.";
+			mes "You won't have to";
+			mes "wait long to see";
+			mes "my great invention!";
+			delitem 999,5; //Steel
+			delitem 1033,5; //Root_Of_Maneater
+			delitem 7561,2; //Ice_Heart
+			set veins_stone,3;
+			close2;
+			specialeffect 50; //"Strange Old Man#ve" EF_FIRESPLASHHIT
+			end;
+		}
+		mes "[Absar]";
+		mes "What the hell?";
+		mes "Hurry and bring";
+		mes "^4D4DFF5 Maneater Roots^000000,";
+		mes "^4D4DFF2 Glacial Hearts^000000, and";
+		mes "^4D4DFF5 Steel^000000! Do you think";
+		mes "I'm doing this for fun?!";
+		close;
+	}
+	else if (veins_stone == 3) {
+		mes "[Absar]";
+		mes "Here you are...";
+		mes "Well, I don't know";
+		mes "if you appreciate";
+		mes "inventions, but this";
+		mes "is a Tactile Extendable";
+		mes "Clamp-Release Mechanism!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Tack... What...?";
+		next;
+		mes "[Absar]";
+		mes "...............................";
+		mes "You can use this to pick";
+		mes "things up. From a distance.";
+		next;
+		mes "[Absar]";
+		mes "Anyway, when you get back";
+		mes "to Zabaroo, let me him know";
+		mes "that he doesn't owe me";
+		mes "anything anymore. He'll...";
+		mes "He'll know what I mean...";
+		set veins_stone,4;
+		close;
+	}
+	mes "[Absar]";
+	mes "It's a ''Tactile Extendable";
+	mes "Clamp-Release Mechanism.''";
+	mes "What's so hard to understand";
+	mes "about that? Hmpf! I know!";
+	mes "It must be the educational";
+	mes "system! They're to blame!";
+	close;
+}
+
+ve_in02,37,28,4	script	Factory Manager	898,{
+	if (veins_stone < 5) {
+		mes "[Mirhen]";
+		mes "Hey, employees only beyond this point!";
+		mes "Geez, don't we have a sigh that says that?";
+		mes "We should get one...";
+		mes "Anyway, get out of here.";
+		close2;
+		warp "veins",269,221;
+		end;
+	}
+	else if (veins_stone == 5) {
+		mes "[Mirhen]";
+		mes "Hey, employees only";
+		mes "beyond this point!";
+		mes "Geez, don't we have";
+		mes "a sign that says that?";
+		mes "We should get one...";
+		mes "Anyway, get out of here.";
+		next;
+		if (select("I'm sorry.:I've brought these...") == 1) {
+			mes "[Mirhen]";
+			mes "You're sorry,";
+			mes "I get it. Ummm...";
+			mes "Aren't you leaving?";
+			close;
+		}
+		mes "[Mirhen]";
+		mes "Huh? What's this name";
+		mes "tag? Zabaroo? Wait a sec...";
+		mes "You're definitely not him!";
+		next;
+		select("I'm here on his behalf.");
+		mes "[Mirhen]";
+		mes "Ah, I get it. Zabaroo's";
+		mes "back has really been";
+		mes "bothering him lately.";
+		mes "Okay, we can bend the";
+		mes "rules a bit in this situation.";
+		next;
+		mes "[Mirhen]";
+		mes "Bring those rocks over";
+		mes "to Bahed over there.";
+		mes "He'll take care of them.";
+		set veins_stone,6;
+		close;
+	}
+	mes "[Mirhen]";
+	mes "Hetarium ...";
+	mes "What's so special about";
+	mes "it? I mean, it looks just like";
+	mes "Iron Ore. Why the hell is";
+	mes "it like classified info?";
+	next;
+	mes "[Mirhen]";
+	mes "I wish I could return to";
+	mes "Rekenber Headquarters...";
+	mes "I hate being stuck here";
+	mes "gathering silly rocks in";
+	mes "the middle of nowhere.";
+	close;
+}
+
+ve_in02,54,49,2	script	Factory Worker#ve1	943,{
+	if (veins_stone < 6) {
+		mes "[Bahed]";
+		mes "lately, I've been feeling so weak...";
+		mes "I heard the guy before me had to quit because he also started feeling weak.";
+		next;
+		mes "[Bahed]";
+		mes "It couldn't be...";
+		mes "It couldn't be because of this 'Hetarium'...";
+		mes "That's just plain crazy...";
+		close;
+	}
+	else if (veins_stone == 6) {
+		mes "[Bahed]";
+		mes "Oh, you got the rocks?";
+		mes "You brought them for Zabaroo?";
+		mes "Oh, how is he doing? I hear";
+		mes "he threw out his back.";
+		next;
+		select("He still hurts.");
+		mes "[Bahed]";
+		mes "Oh no... I'm so sorry";
+		mes "to hear that. I hope he";
+		mes "feels better soon. Anyway,";
+		mes "why don't you bring the";
+		mes "rocks over here?";
+		next;
+		mes "[Bahed]";
+		mes "Let me confirm Zabaroo's";
+		mes "quota for today. Ah, and";
+		mes "don't worry, We pay him";
+		mes "for his quotas regularly.";
+		next;
+		select("I have a question...");
+		mes "[Bahed]";
+		mes "Hm? What'd you want";
+		mes "to know? I can't say that";
+		mes "I know everything, but";
+		mes "I'll try my best to tell you";
+		mes "what I know. I mean,";
+		mes "you helped Zabaroo, so...";
+		next;
+		select("What's this Hetarium??");
+		mes "[Bahed]";
+		mes "Well, it hasn't been that";
+		mes "long since these rocks";
+		mes "attracted attention outside";
+		mes "of town. Before all this,";
+		mes "the townspeople just";
+		mes "made carvings out of them.";
+		next;
+		mes "[Bahed]";
+		mes "Then, all of a sudden,";
+		mes "these people from--I guess";
+		mes "it was Schwaltzvalt--came";
+		mes "and bought a lot of these";
+		mes "stones. Later, they even built";
+		mes "this factory to process them!";
+		next;
+		mes "[Bahed]";
+		mes "Oh, they tried using machines";
+		mes "to harvest these stones, but";
+		mes "they all broke down too soon.";
+		mes "That's why they hired people";
+		mes "in Veins to collect them.";
+		next;
+		mes "[Bahed]";
+		mes "I'm not sure many people";
+		mes "know who owns this factory.";
+		mes "Maybe it's Rekenber? Yes,";
+		mes "I saw one of their corporate";
+		mes "airships come to town, so";
+		mes "I think it might be them.";
+		next;
+		select("How do they use Hetarium??");
+		mes "[Bahed]";
+		mes "I'm not really sure. I just";
+		mes "happened to overhear some";
+		mes "of the higher ups mention";
+		mes "something about hearts?";
+		mes "Pieces of hearts? Doesn't";
+		mes "make any sense to me.";
+		next;
+		mes "[Bahed]";
+		mes "All I gathered was that";
+		mes "they were using the stones";
+		mes "to build a machine related";
+		mes "to those hearts. That's";
+		mes "all I know. Anyway, please";
+		mes "leave the stones over there~";
+		set veins_stone,7;
+		close;
+	}
+	mes "[Bahed]";
+	mes "Everyday I feel";
+	mes "weaker and weaker...";
+	mes "Could this be chronic";
+	mes "fatigue syndrome? Ugh...";
+	close;
+}
+
+ve_in02,68,39,7	script	Factory Worker#ve2	943,{
+	mes "[Worker]";
+	mes "What the heck are these rocks?";
+	mes "They're ordinary stones, aren't they?";
+	mes "They don't pay me enough here...";
+	close;
+}
