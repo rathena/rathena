@@ -51,7 +51,7 @@ OnInit:
 	set $@HoF_recovery, 0;
 	// =======================================
 
-	set $HoF_totalCount, $HoF_totalCount - 1;
+	//set $HoF_totalCount, $HoF_totalCount - 1;
 	set $@FebruaryD, 28;
 	if((gettime(7) % 4) == 0) {
 		set $@FebruaryD, 29;
@@ -103,11 +103,10 @@ function	script	hallOfFameReset	{
 	copyarray $HoF_LadderBLevelO[0], $HoF_LadderBLevel[0], $HoF_totalCount; 
 	copyarray $HoF_LadderJLevelO[0], $HoF_LadderJLevel[0], $HoF_totalCount;
 	copyarray $HoF_LadderZenyO[0], $HoF_LadderZeny[0], $HoF_totalCount;
-	set $@number, $HoF_totalCount + 1;
-	deletearray $HoF_LadderName$[0], $@number;
-	deletearray $HoF_LadderBLevel[0], $@number; 
-	deletearray $HoF_LadderJLevel[0], $@number;
-	deletearray $HoF_LadderZeny[0], $@number;
+	deletearray $HoF_LadderName$[0], $HoF_totalCount;
+	deletearray $HoF_LadderBLevel[0], $HoF_totalCount; 
+	deletearray $HoF_LadderJLevel[0], $HoF_totalCount;
+	deletearray $HoF_LadderZeny[0], $HoF_totalCount;
 	set $HoF_LastUpdateD, gettime(5);
 	set $HoF_LastUpdateM, gettime(6);
 	set $HoF_LastUpdateY, gettime(7);
@@ -131,7 +130,7 @@ function	script	updateHallofFame	{
 	if(getarg(0) == 1){
 		goto L_ShuffleName;
 	}
-	if(BaseLevel >= $HoF_LadderBLevel[$HoF_totalCount]){
+	if(BaseLevel >= $HoF_LadderBLevel[$HoF_totalCount-1]){
 		goto L_checkBase;
 	}
 	goto L_End;
@@ -140,7 +139,7 @@ L_ShuffleName:
 	if($HoF_LadderName$[@i] == strcharinfo(0)) {
 		goto L_ShuffleScore;
 	}
-	if(@i == $HoF_totalCount) {
+	if(@i == $HoF_totalCount-1) {
 		goto L_checkEntry;
 	}
 	set @i, @i + 1;
@@ -208,7 +207,7 @@ L_NewEntry:
 	end;
 
 L_Increment:
-	if(@i == $HoF_totalCount) {
+	if(@i == $HoF_totalCount-1) {
 		goto L_End;
 	} else {
 		set @i, @i + 1;
@@ -237,7 +236,7 @@ L_New_Entry:
 		setarray $HoF_LadderJLevel[@startPos], getarg(3);
 		setarray $HoF_LadderZeny[@startPos], getarg(4);
 		set @startPos, @startPos + 1;
-		set @limitPos, $HoF_totalCount - @startPos + 1;
+		set @limitPos, $HoF_totalCount - @startPos;
 		copyarray $HoF_LadderName$[@startPos], @HoF_LadderNameB$[0], @limitPos;
 		copyarray $HoF_LadderBLevel[@startPos], @HoF_LadderBLevelB[0], @limitPos; 
 		copyarray $HoF_LadderJLevel[@startPos], @HoF_LadderJLevelB[0], @limitPos;
@@ -249,7 +248,7 @@ L_New_Entry:
 function	script	printHallOfFame	{
 	if(getarg(0) == 1) {
 		mes "[Hall of Fame] - Last Week's Rankings";
-		for(set @loop, 0; @loop <= $HoF_totalCount; set @loop, @loop + 1){
+		for(set @loop, 0; @loop < $HoF_totalCount; set @loop, @loop + 1){
 			mes "^ff0000";
 			mes "Position No. " + (@loop + 1) + ":^0000ff";
 			mes "+================================+";
@@ -261,7 +260,7 @@ function	script	printHallOfFame	{
 		}
 	} else {
 		mes "[Hall of Fame] - Current Rankings";
-		for(set @loop, 0; @loop <= $HoF_totalCount; set @loop, @loop + 1){
+		for(set @loop, 0; @loop < $HoF_totalCount; set @loop, @loop + 1){
 			mes "^ff0000";
 			mes "Position No. " + (@loop + 1) + ":^0000ff";
 			mes "+================================+";
