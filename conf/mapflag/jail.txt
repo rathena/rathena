@@ -33,7 +33,7 @@ sec_pri	mapflag	noteleport
 sec_pri	mapflag	nowarp
 
 // No Return, Stop people from being pulled out of jail (warpparty/guild)
-sec_pri	mapflag	noreturn 
+sec_pri	mapflag	noreturn
 
 // Bloody Jail ===========================
 //Uncomment following maps to let your prisoners fight with other prisoners

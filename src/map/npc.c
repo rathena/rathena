@@ -2491,6 +2491,12 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.partylock=state;
 	else if (!strcmpi(w3,"guildlock"))
 		map[m].flag.guildlock=state;
+	else
+	{
+		char buf[256];
+		sv_escape_c(buf, w3, strlen(w3), NULL); // to handle \r properly
+		ShowError("npc_parse_mapflag: unrecognized mapflag '%s' (file '%s', line '%d').\n", buf, filepath, strline(buffer,start-buffer));
+	}
 
 	return strchr(start,'\n');// continue
 }
