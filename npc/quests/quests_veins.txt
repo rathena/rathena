@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.0
+//= 1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -13,10 +13,17 @@
 //= - Help an Old Man with his job.
 //= - Dialog obtained from iRO.
 //= - Variable in use: veins_stone (max 8)
+//= Spy Quest:
+//= - Help prove (or disprove) a bard's innocence.
+//= - Dialog obtained from iRO.
+//= - Variable in use: que_sch (max 26)
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Added Veins Stone quest. [L0ne_W0lf]
+//= 1.1 Added Veins Spy Quest. [L0ne_W0lf]
 //============================================================ 
 
+// Stone Quest
+//============================================================ 
 ve_fild05,257,130,4	script	Wincing Old Man#ve	945,{
 	//if (max_max_c1 == 1) {
 	//	mes "- Wait a moment! -";
@@ -618,4 +625,2048 @@ ve_in02,68,39,7	script	Factory Worker#ve2	943,{
 	mes "They're ordinary stones, aren't they?";
 	mes "They don't pay me enough here...";
 	close;
+}
+
+// Spy Quest
+//============================================================ 
+prontera,202,122,0	script	Kid#sch	703,{
+	if (que_sch == 0) {
+		mes "[Rooney]";
+		mes "Where the heck";
+		mes "is it? I don't... Where...?";
+		mes "He's got to be around here";
+		mes "somewhere, I think...";
+		next;
+		if (select("What's wrong?:...") == 1) {
+			mes "[Rooney]";
+			mes "Oh, it's just...";
+			mes "Some guy sent me on a";
+			mes "delivery errand, but I can't";
+			mes "find the recipient. He said";
+			mes "that I can't miss him, but";
+			mes "I still can't figure it out.";
+			next;
+			mes "[Rooney]";
+			mes "I should have asked for";
+			mes "the exact location. I mean,";
+			mes "if I don't find him, then I'll";
+			mes "never get paid for doing";
+			mes "this delivery. ^333333*Sigh*^000000";
+			next;
+			if (select("Sounds tough. Good luck!:Do you need any help?") == 1) {
+				mes "[Rooney]";
+				mes "Thanks. I think";
+				mes "I just might need it.";
+				mes "Where could this guy";
+				mes "be? If he's expecting";
+				mes "a delivery, he should";
+				mes "make himself easy to find...";
+				close;
+			}
+			mes "[Rooney]";
+			mes "Yeah, sure, it'd be great";
+			mes "if you could help me. Let's";
+			mes "see, I need to deliver this";
+			mes "letter to a bard named...";
+			mes "It was... Ah, ^FF0000Lasda Midar^000000!";
+			next;
+			mes "[Rooney]";
+			mes "I've looked everywhere";
+			mes "in town for someone that";
+			mes "looks like a Bard, but I'm";
+			mes "not having any luck. If you";
+			mes "find him, would you tell me?";
+			set que_sch,1;
+			close;
+		}
+		close;
+	}
+	else if (que_sch == 1) {
+		mes "[Rooney]";
+		mes "I still haven't";
+		mes "found Lasda Midar.";
+		mes "Would you let me know";
+		mes "if you find him so that";
+		mes "I can deliver his letter?";
+		close;
+	}
+	else if (que_sch == 2) {
+		if (Zeny < 100) {
+			mes "[Rooney]";
+			mes "Lasda Midar...";
+			mes "Where the heck";
+			mes "could that guy be?";
+			close;
+		}
+		else {
+			mes "[Rooney]";
+			mes "Wow, did you really";
+			mes "find Lasda Midar?";
+			mes "Why couldn't I find him?";
+			mes "Anyway, thank you so much";
+			mes "for your help. I thought I was";
+			mes "going to fail my delivery!";
+			next;
+			select("He asked me to give you this.");
+			mes "[Rooney]";
+			mes "Hey, alright! Thanks";
+			mes "for the cash! Heh heh~";
+			set zeny,zeny-100;
+			set que_sch,3;
+			close;
+		}
+	}
+	mes "[Rooney]";
+	mes "Nice day out, isn't it?";
+	close;
+}
+
+prt_church,89,108,6	script	Bard#sch	741,{
+	//if (max_max_c1 == 1) {
+	//	mes "^3355FFWait a second!";
+	//	mes "Right now, you're carrying";
+	//	mes "too many things with you.";
+	//	mes "Please come back after";
+	//	mes "using the Kafra Service";
+	//	mes "to store some of your items.^000000";
+	//	close;
+	//}
+	if ((MaxWeight-Weight) < 2000) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
+
+	if (que_sch < 1) {
+		mes "[Lasda]";
+		mes "Hello there, isn't today";
+		mes "such a wonderful day?";
+		mes "Nice weather always";
+		mes "inspires the poet in me,";
+		mes "and I can't seem to stop";
+		mes "singing my heart out~";
+		close;
+	}
+	else if (que_sch == 1) {
+		mes "[Lasda]";
+		mes "Why, what a glorious";
+		mes "day! I should sing a song";
+		mes "in praise of its wonder!";
+		mes "Ooooh... La la la-la~";
+		mes "Girls, girls, giiiirls...";
+		next;
+		switch(select("Excuse me...:......")) {
+		case 1:
+			mes "[Lasda]";
+			mes "Why, what a glorious";
+			mes "day! I should sing a song";
+			mes "in praise of its wonder!";
+			mes "Ooooh... La la la-la~";
+			mes "Girls, girls, giiiirls...";
+			close;
+		case 2:
+			mes "[Lasda]";
+			mes "Girls, girls, giiiirls...";
+			mes "Making my heart";
+			mes "beat like... Like it's";
+			mes "going too fast. My heart's";
+			mes "racing... And you're at the";
+			mes "finish line--Love Champion!";
+			next;
+			mes "[Lasda]";
+			mes "Oh? Don't stare at me";
+			mes "like that, you're making";
+			mes "me blush. Did you need to";
+			mes "talk to me or something?.";
+			next;
+			switch(select("I'm sorry.:Are you ^ff0000Lasda Midar^000000?")) {
+			case 1:
+				mes "[Lasda]";
+				mes "Oh, that's alright.";
+				mes "...............................";
+				mes "Girl, I'll laugh at all your";
+				mes "jokes, and agree with yourv";
+				mes "politics~ You're hot! But";
+				mes "baby, you're dumb as bricks~";
+				close;
+			case 2:
+				mes "[Lasda]";
+				mes "Oh? Oh, yes, that's me.";
+				mes "How can I help you?";
+				next;
+				select("I'm here to deliver this to you.");
+				mes "[Lasda]";
+				mes "Ah! He must have finally";
+				mes "sent it. Would you please";
+				mes "give me a second? Let's see...";
+				next;
+				mes "^3355FFLasda opened the letter";
+				mes "and started reading it.^000000";
+				next;
+				mes "[Lasda]";
+				mes "Umm...";
+				mes "Oh, no...";
+				next;
+				mes "[Lasda]";
+				mes "Ah, I'm sorry for";
+				mes "making you wait.";
+				mes "Here, please give";
+				mes "this money to that";
+				mes "kid that was supposed";
+				mes "to come find me here.";
+				set que_sch,2;
+				set zeny,zeny+100;
+				next;
+				mes "[Lasda]";
+				mes "I'd like you to come";
+				mes "talk to me again later";
+				mes "if you have the time";
+				mes "See you around~";
+				close;
+			}
+		}
+	}
+	else if (que_sch == 2) {
+		mes "^3355FFLasda seems to be";
+		mes "lost in deep thought.^000000";
+		close;
+	}
+	else if (que_sch == 3) {
+		mes "[Lasda]";
+		mes "Oh good, you came back!";
+		mes "Thanks for delivering that";
+		mes "letter for me. Listen, you";
+		mes "mind listening to me for";
+		mes "a bit? I want to ask you";
+		mes "for your help with something.";
+		next;
+		if (select("Sure.:No.") == 1) {
+			mes "[Lasda]";
+			mes "You see, the letter you";
+			mes "brought me was from my old";
+			mes "best friend. I haven't heard";
+			mes "from him for a while, so";
+			mes "I was pretty worried...";
+			next;
+			mes "[Lasda]";
+			mes "Vitre said in his letter";
+			mes "that he's in jail under";
+			mes "false charges so he wants";
+			mes "me to help him out. However,";
+			mes "there isn't much I can do.";
+			mes "Do you think you can help him?";
+			next;
+			if (select("Sure.:No.") == 1) {
+				mes "[Lasda]";
+				mes "Thank you so much!";
+				mes "I guess the best thing";
+				mes "to do for now is to find";
+				mes "my friend in a prison in";
+				mes "^FF0000Morroc^000000, and see what";
+				mes "you can do to help him..";
+				set que_sch,4;
+				close;
+			}
+			mes "[Lasda]";
+			mes "I... I guess...";
+			mes "You must not be";
+			mes "able to help him too...";
+			close;
+		}
+		mes "[Lasda]";
+		mes "I suppose that you";
+		mes "must already be busy";
+		mes "doing something else.";
+		mes "Well, I understand...";
+		close;
+	}
+	else if (que_sch < 8) {
+		mes "[Lasda]";
+		mes "I still can't believe";
+		mes "Vitre is being held";
+		mes "in prison in Morroc. I mean,";
+		mes "what could have happened?";
+		mes "I hope you can help him...";
+		close;
+	}
+	else if (que_sch == 8) {
+		mes "[Lasda]";
+		mes "He was arrested because";
+		mes "he's suspected of espionage?";
+		mes "That doesn't make any sense.";
+		mes "What could be going on?";
+		next;
+		select("^ff0000Krieg^000000 told me that.");
+		mes "[Lasda]";
+		mes "Krieg? Do you mean Krieg";
+		mes "Laje Mandi? I know him quite";
+		mes "well, actually. Let me write";
+		mes "you a letter or recommendation.";
+		mes "Hopefully, it'll be enough to";
+		mes "let you enter the prison.";
+		set que_sch,9;
+		close;
+	}
+	else if (que_sch == 9) {
+		mes "[Lasda]";
+		mes "Hurry and go bring";
+		mes "my letter to Krieg.";
+		mes "I wonder what happened...";
+		mes "There must be some kind";
+		mes "of weird misunderstanding.";
+		close;
+	}
+	else if (que_sch < 19) {
+		mes "[Lasda]";
+		mes "He really asked you";
+		mes "to break him out of jail?";
+		mes "Well, I know that's a morally";
+		mes "hazy area, but I hope that";
+		mes "you do your best to help Vitre.";
+		close;
+	}
+	else if (que_sch < 25) {
+		mes "[Lasda]";
+		mes "Thanks for offering";
+		mes "to help me out. I still";
+		mes "can't believe Vitre had";
+		mes "the gall to just break";
+		mes "out of prison, though...";
+		next;
+		mes "[Lasda]";
+		mes "I still can't do";
+		mes "anything to help him,";
+		mes "so please do what you";
+		mes "can to take care of him";
+		mes "for me. I really appreciate it.";
+		close;
+	}
+	else if (que_sch == 25) {
+		mes "[Lasda]";
+		mes "Ah, you're back. I'm sure";
+		mes "you have a lot to ask me";
+		mes "right now. You deserve to";
+		mes "know that everything I asked";
+		mes "you to do was part of a plan";
+		mes "to confirm Vitre's guilt.";
+		next;
+		mes "[Lasda]";
+		mes "We arrested him once";
+		mes "we learned that he was";
+		mes "an Arunafeltz spy, but we";
+		mes "couldn't punish him since";
+		mes "we lacked concrete proof.";
+		next;
+		mes "[Lasda]";
+		mes "That's why we allowed";
+		mes "him to escape: we planned";
+		mes "on following him to get the";
+		mes "proof that we needed. Our";
+		mes "sting was even able to round";
+		mes "up all of his compatriots!";
+		next;
+		mes "[Lasda]";
+		mes "I'm sorry for keeping";
+		mes "you in the dark, but it was";
+		mes "essential to the plan. We";
+		mes "couldn't have done it without";
+		mes "your help. Please take this";
+		mes "reward with our sincere thanks.";
+		set que_sch,26;
+		getitem 12106,1; //Accessory_Box
+		getexp 600000,0;
+		close;
+	}
+	else {
+		mes "[Lasda]";
+		mes "We're having too many";
+		mes "cases involving spies";
+		mes "like Vitre lately. This";
+		mes "might be a sign that";
+		mes "Arunafeltz is planning";
+		mes "to move against us...";
+		close;
+	}
+}
+
+moc_castle,137,88,2	script	Prison Ward#sch	707,{
+	if (que_sch < 4) {
+		mes "[Jesse]";
+		mes "Only authorized";
+		mes "personnel can enter";
+		mes "this prison. You need";
+		mes "a permit if you want";
+		mes "to be able to enter.";
+		close;
+	}
+	else if (que_sch == 4) {
+		mes "[Jesse]";
+		mes "What? You want to meet";
+		mes "the prisoner? I'm sorry,";
+		mes "but he's not allowed to";
+		mes "see anyone since he was";
+		mes "arrested on suspicion";
+		mes "of espionage.";
+		set que_sch,5;
+		close;
+	}
+	else if (que_sch == 5) {
+		mes "[Jesse]";
+		mes "Huh. You're awfully";
+		mes "persistent. Alright,";
+		mes "if you can do me a favor,";
+		mes "I'll let you in. Bring me";
+		mes "1 dish of ^FF0000Fried Monkey Tails^000000";
+		next;
+		mes "[Jesse]";
+		mes "Of course, I can only let";
+		mes "you inside. Whether they'll";
+		mes "actually let you meet the";
+		mes "prisoner is another matter.";
+		mes "So do we have a deal?";
+		set que_sch,6;
+		close;
+	}
+	else if (que_sch == 6) {
+		if (countitem(12066) > 0) {
+			mes "[Jesse]";
+			mes "Ah, that's the stuff!";
+			mes "Thanks for the Fried";
+			mes "Monkey Tails~ Alright,";
+			mes "go talk to ^FF0000Sir Krieg^000000 in";
+			mes "Morroc Castle. Get his";
+			mes "approval, and I'll let you in.";
+			delitem 12066,1; //Luk_Dish01
+			set que_sch,7;
+			close;
+		}
+		mes "[Jesse]";
+		mes "Bring me a plate of";
+		mes "^FF0000Fried Monkey Tails^000000.";
+		mes "Do it, or I won't help";
+		mes "you out. I mean, I know";
+		mes "you mean well, but I'm";
+		mes "risking my job here...";
+		close;
+	}
+	else if (que_sch < 10) {
+		mes "[Jesse]";
+		mes "You didn't get approval";
+		mes "from Sir Krieg yet? You'd";
+		mes "better do it, or there's no";
+		mes "point in entering this prison.";
+		mes "You can't just sneak around";
+		mes "inside this place, you know?";
+		close;
+	}
+	else if (que_sch == 10) {
+		mes "[Jesse]";
+		mes "Did you really get";
+		mes "Sir Krieg's approval?";
+		mes "Alright, you may enter now.";
+		close2;
+		warp "ra_in01",48,355;
+		end;
+	}
+	else if (que_sch < 19) {
+		mes "[Jesse]";
+		mes "Do you want to enter?";
+		next;
+		if (select("Yes.:No") == 1) {
+			mes "[Jesse]";
+			mes "Be careful when you talk";
+			mes "to that guy: he's a smooth";
+			mes "talker, and almost charmed";
+			mes "a lot of the guards into";
+			mes "letting him go free.";
+			close2;
+			warp "ra_in01",48,355;
+			end;
+		}
+		mes "[Jesse]";
+		mes "Take your time.";
+		mes "If you're not mentally";
+		mes "prepared, then it's not";
+		mes "a good idea to talk";
+		mes "to the prisoner.";
+		close;
+	}
+	else if (que_sch < 19) {
+		mes "[Jesse]";
+		mes "Argh, I'm in trouble.";
+		mes "The prisoner escaped.";
+		mes "How could I let this...";
+		mes "happen?! Damn, I need to";
+		mes "report this to Mr. Krieg";
+		close;
+	}
+	mes "[Jesse]";
+	mes "What a relief! They";
+	mes "really set it up so that";
+	mes "the prisoner could escape?";
+	mes "Well, I thought I was going";
+	mes "to get fired for all that.";
+	close;
+}
+
+moc_castle,173,122,0	script	Public Security Officer	748,{
+	if (que_sch < 7) {
+		mes "[Krieg]";
+		mes "I'm in charge of public";
+		mes "security here in Morroc.";
+		mes "Lately, there have been";
+		mes "more incidents disturbing";
+		mes "the public peace and";
+		mes "many unsettling rumors...";
+		close;
+	}
+	else if (que_sch == 7) {
+		mes "[Krieg]";
+		mes "Hello, adventurer.";
+		mes "How may I help you?";
+		next;
+		select("I'd like to see a prisoner, Mr. Vitre.");
+		mes "[Krieg]";
+		mes "Vitre? I'm sorry, but";
+		mes "I can't approve of that.";
+		mes "I'd allow visitors for normal";
+		mes "prisoners, but not for people";
+		mes "suspected of espionage.";
+		mes "That's why he's in jail.";
+		next;
+		mes "[Krieg]";
+		mes "If I knew you personally,";
+		mes "or if someone I trust can";
+		mes "vouch for you, then I'd";
+		mes "reconsider letting you";
+		mes "meet Vitre. Otherwise,";
+		mes "I just can't do it.";
+		set que_sch,8;
+		close;
+	}
+	else if (que_sch == 8) {
+		mes "[Krieg]";
+		mes "I can't let you meet";
+		mes "Vitre until I'm absolutely";
+		mes "sure that you're not involved";
+		mes "with any espionage activities.";
+		close;
+	}
+	else if (que_sch == 9) {
+		mes "[Krieg]";
+		mes "I can't let you meet";
+		mes "Vitre until I'm absolutely";
+		mes "sure that you're not involved";
+		mes "with any espionage activities.";
+		next;
+		select("Here's a letter from Lasda.");
+		mes "[Krieg]";
+		mes "Lasda? Now there's a";
+		mes "man I hold in high regard.";
+		mes "Please let me read what";
+		mes "he has to say. Hmmm...";
+		next;
+		mes "[Krieg]";
+		mes "Alright, I'll let you visit";
+		mes "Vitre. I'll send a message";
+		mes "to the prison ward so that";
+		mes "he'll let you talk to him.";
+		set que_sch,10;
+		close;
+	}
+	else if (que_sch < 26) {
+		mes "[Krieg]";
+		mes "Hmm... This is almost too";
+		mes "difficult for me to handle.";
+		mes "What should I do?";
+		close;
+	}
+	mes "[Krieg]";
+	mes "I understand that you were";
+	mes "instrumental in solving a";
+	mes "problem regarding public";
+	mes "safety. I'd just like to thank";
+	mes "you, and apologize for any";
+	mes "trouble I might have caused.";
+	close;
+}
+
+ra_in01,48,352,0	warp	que_sch_jail	1,1,moc_castle,136,86
+
+ra_in01,50,387,4	script	Upset Looking Bard#sch	51,{
+	if (que_sch < 10) {
+		mes "[Vitre]";
+		mes ".............";
+		close;
+	}
+	else if (que_sch == 10) {
+		mes "[Vitre]";
+		mes "...............................";
+		mes "...............................";
+		mes "...............................";
+		mes "Damn, what should I do?";
+		next;
+		select("Excuse me...");
+		mes "[Vitre]";
+		mes "Hm? I'm Vitre Bizlita.";
+		mes "As you can see, I'm not in";
+		mes "any real position to help";
+		mes "you. Still, did you want";
+		mes "to ask me something?";
+		next;
+		switch(select("Nothing.:I'm here on behalf of Mr. Lasda.")) {
+		case 1:
+			mes "[Vitre]";
+			mes "Well...";
+			mes "It's nice to";
+			mes "receive visitors.";
+			mes "Jail can be lonely....";
+			close;
+		case 2:
+			mes "[Vitre]";
+			mes "Oh, good. Lasda finally";
+			mes "got my letter, eh? I don't";
+			mes "know what the hell's going";
+			mes "on. I mean, all I remember";
+			mes "is that these strange men";
+			mes "came and brought me here.";
+			next;
+			mes "[Vitre]";
+			mes "I... I don't think";
+			mes "they'll let me out";
+			mes "of here. I mean, they";
+			mes "jailed me and there's no";
+			mes "proof I did anything wrong.";
+			next;
+			mes "[Vitre]";
+			mes "My life is in danger as";
+			mes "long as I'm here, so I have";
+			mes "to get out as soon as I can.";
+			mes "Luckily, I figured out that";
+			mes "I can open these doors if";
+			mes "I just had 2 things.";
+			next;
+			mes "[Vitre]";
+			mes "I just need a ^FF0000Megaphone^000000";
+			mes "and a ^FF0000Violin^000000. Luckily, they're";
+			mes "pretty mundane objects, so no";
+			mes "one would suspect anything if";
+			mes "you brought them here. Um...";
+			mes "You will help me, won't you?";
+			next;
+			mes "[Vitre]";
+			mes "I understand if you have any";
+			mes "doubts about my innocence.";
+			mes "But think about it: wouldn't";
+			mes "you want to see what I do";
+			mes "with a Megaphone and Violin?";
+			mes "Sounds pretty cool, huh?";
+			next;
+			mes "^3355FFYou can hear someone";
+			mes "mumbling from the cell";
+			mes "next to Vitre's.^000000";
+			next;
+			mes "[????]";
+			mes "I wonder how the lady";
+			mes "in the Dancer Job Change";
+			mes "place is doing by now...";
+			set que_sch,11;
+			close;
+		}
+	}
+	else if (que_sch < 18) {
+		mes "[Vitre]";
+		mes "Didn't you bring the";
+		mes "Megaphone and Violin?";
+		mes "The longer I sit here,";
+		mes "the more likely it is";
+		mes "that they'll kill me!";
+		close;
+	}
+	else if (que_sch == 18) {
+		if (countitem(7040) > 0 && countitem(1901) > 0) {
+			mes "[Vitre]";
+			mes "You brought me a";
+			mes "Megaphone and Violin?";
+			mes "Perfect! Now, step aside";
+			mes "Can't have you getting hurt.";
+			next;
+			mes "...............................";
+			mes "...............................";
+			mes "...............................";
+			next;
+			mes "^3355FFVitre drew in a deep";
+			mes "breath, and then smashed";
+			mes "the steel bars of his cell";
+			mes "with the Violin. Surprisingly,";
+			mes "the door swings open with";
+			mes "a very loud noise.^000000";
+			next;
+			mes "[Vitre]";
+			mes "Heh! That was a little";
+			mes "harder than I thought,";
+			mes "but it looks like I'm free~";
+			mes "Alright, let's get a move on.";
+			next;
+			mes "[Jesse]";
+			mes "What?! What's this noise?!";
+			next;
+			enablenpc "Jesse#sch";
+			mes "[Jesse]";
+			mes "Hey! How did you";
+			mes "get out of your cell?!";
+			mes "Get back in there, NOW!";
+			next;
+			mes "[Vitre]";
+			mes "If you were me, would";
+			mes "you go back in your cell";
+			mes "just because someone's";
+			mes "yelling at you? Forget it~";
+			next;
+			mes "^3355FFVitre raised the Megaphone";
+			mes "to his mouth, and drew in";
+			mes "another deep breath.^000000";
+			next;
+			mes "[Vitre]";
+			mes "Wah!";
+			next;
+			mes "[Jesse]";
+			mes "Arg...";
+			mes "Oh Lord...!";
+			mes "M-my ears...";
+			next;
+			mes "[Vitre]";
+			mes "Heh! I love it when";
+			mes "a plan comes together~";
+			mes "Let's get out of here!";
+			next;
+			delitem 1901,1; //Violin
+			delitem 7040,1; //Megaphone
+			set que_sch,19;
+			close2;
+			disablenpc "Jesse#sch";
+			warp "morocc",294,153;
+			end;
+		}
+		mes "[Vitre]";
+		mes "Didn't you bring";
+		mes "a Megaphone and";
+		mes "a Violin? Please";
+		mes "hurry, I don't have";
+		mes "much time left!";
+		close;
+	}
+	else {
+		mes "[Vitre]";
+		mes "Heh! I love it when";
+		mes "a plan comes together~";
+		mes "Let's get out of here!";
+		close2;
+		warp "morocc",294,153;
+		end;
+	}
+}
+
+ra_in01,58,389,0	script	Jesse#sch	707,{
+	end;
+
+OnInit:
+	disablenpc "Jesse#sch";
+	end;
+}
+
+ra_in01,58,389,0	script	Guant Prisoner#sch	929,{
+	if (que_sch < 11) {
+		mes "[Ruan]";
+		mes "This stinks. Why am";
+		mes "I locked up in here?";
+		mes "I didn't do anything";
+		mes "to deserve this!";
+		next;
+		mes "[Ruan]";
+		mes "It's getting to be so";
+		mes "bad that I even miss the";
+		mes "sound of Hianna's voice.";
+		mes "It's freakishly loud.";
+		mes "You couldn't outyell her";
+		mes "even with a Megaphone.";
+		close;
+	}
+	else if (que_sch == 11) {
+		mes "[Ruan]";
+		mes "This stinks. Why am";
+		mes "I locked up in here?";
+		mes "I didn't do anything";
+		mes "to deserve this!";
+		next;
+		mes "[Ruan]";
+		mes "It's getting to be so";
+		mes "bad that I even miss the";
+		mes "sound of Hianna's voice.";
+		mes "It's freakishly loud.";
+		mes "You couldn't outyell her";
+		mes "even with a Megaphone.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "What...?!";
+		next;
+		select("Where I can find that Megaphone?");
+		mes "[Ruan]";
+		mes "Huh? Why would you";
+		mes "want to know that?";
+		next;
+		select("I really need one!");
+		mes "[Ruan]";
+		mes "Uh, you can get one from";
+		mes "that Dancer Job Change";
+		mes "place in Comodo. They're";
+		mes "really hard to get, though,";
+		mes "if not impossible. Knock";
+		mes "yourself out, buddy.";
+		close;
+	}
+	else if (que_sch < 20) {
+		mes "[Ruan]";
+		mes "Nobody knows what";
+		mes "will happen tomorrow.";
+		mes "I mean, this is a world of";
+		mes "miracles and tragedies.";
+		mes "Death, or real love...";
+		mes "You will never know what will happen.";
+		close;
+	}
+	mes "[Ruan]";
+	mes "........";
+	close;
+}
+
+// Escort Dancers to Schwaltzvalt Republic
+job_duncer,93,106,6	script	Dance Instructor#sch	892,{
+	//if (max_max_c1 == 1) {
+	//	mes "^3355FFWait a second!";
+	//	mes "Right now, you're carrying";
+	//	mes "too many things with you.";
+	//	mes "Please come back after";
+	//	mes "using the Kafra Service";
+	//	mes "to store some of your items.^000000";
+	//	close;
+	//}
+	if ((MaxWeight-Weight) < 2000) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
+
+	if (que_sch < 11) {
+		mes "[Hianna]";
+		mes "Keep up the good work,";
+		mes "everyone! There's only";
+		mes "a few days left until the";
+		mes "big performance! Hey...";
+		mes "You! Can't you do it right?";
+		mes "Turn your waist quicker!";
+		close;
+	}
+	else if (que_sch == 11) {
+		mes "[Hianna]";
+		mes "Hey, who are you?";
+		mes "We already have enough";
+		mes "problems with too many";
+		mes "pervs ogling the Dancers.";
+		mes "I'd prefer it if you didn't";
+		mes "come to watch us practice.";
+		next;
+		if (select("I want a Megaphone.:Eeek...") == 2) {
+			mes "[Hianna]";
+			mes "If you really want to";
+			mes "watch us dance, come to";
+			mes "the show and buy a ticket.";
+			mes "Watching for free isn't";
+			mes "exactly supporting the arts.";
+			close;
+		}
+		mes "[Hianna]";
+		mes "You want a Megaphone?";
+		mes "Well, I'm sorry, but it's";
+		mes "not just something I can";
+		mes "lend to anybody. Then again";
+		mes "it's not like you can find one";
+		mes "anywhere else, either.";
+		next;
+		if (select("Please! I'll do anything!:Later.") == 2) {
+			mes "[Hianna]";
+			mes "Alright, then.";
+			mes "I'm sorry that";
+			mes "I can't help you.";
+			close;
+		}
+		mes "[Hianna]";
+		mes "Anything, huh?";
+		mes "Well, you just said";
+		mes "the magic word. Listen";
+		mes "carefully to what I want";
+		mes "you to do for me.";
+		next;
+		if (select("Listen:Reconsider") == 1) {
+			mes "[Hianna]";
+			mes "First, I want a little";
+			mes "cash. Consider it a rental";
+			mes "fee. 500,000 zeny should be";
+			mes "just about enough. Then,";
+			mes "I want you to do me a favor.";
+			next;
+			mes "[Hianna]";
+			mes "The Schwaltzvalt Republic";
+			mes "requested me to send some";
+			mes "Dancers for some party, but";
+			mes "I don't have enough guards";
+			mes "to protect them on their";
+			mes "way over there.";
+			next;
+			mes "[Hianna]";
+			mes "If you act as bodyguard";
+			mes "to my Dancers on the way";
+			mes "to the Schwaltzvalt Republic,";
+			mes "I'll lend you my Megaphone";
+			mes "once you come back. So...";
+			mes "How does that sound?";
+			next;
+			if (select("Sounds good.:Like a ripoff.") == 1) {
+				mes "[Hianna]";
+				mes "I'm glad you agree~";
+				mes "Okay, the Dancers are";
+				mes "waiting are the entrance,";
+				mes "so bring them over to the";
+				mes "Schwaltzvalt Republic as";
+				mes "soon as you're ready.";
+				set que_sch,12;
+				close;
+			}
+			mes "[Hianna]";
+			mes "So... I guess you";
+			mes "didn't need that";
+			mes "Megaphone as";
+			mes "badly as I thought.";
+			close;
+		}
+		mes "[Hianna]";
+		mes "Alright, take your";
+		mes "time. I'm in no rush.";
+		close;
+	}
+	else if (que_sch < 17) {
+		mes "[Hianna]";
+		mes "What are you still doing";
+		mes "here? Shouldn't you be";
+		mes "escorting the Dancers to";
+		mes "the Schwaltvalt Republic";
+		mes "already? Get a move on~";
+		close;
+	}
+	else if (que_sch == 17) {
+		mes "[Hianna]";
+		mes "Thanks for all your";
+		mes "hard work. The Dancers";
+		mes "told me that you did a good";
+		mes "job escorting them. Now...";
+		mes "Do you have the money?";
+		next;
+		if (select("Yes:No") == 1) {
+			if (Zeny < 500000) {
+				mes "[Hianna]";
+				mes "What's this? Hmm...";
+				mes "I think you made a mistake.";
+				mes "This isn't enough money.";
+				mes "Remember, 500,000 zeny~";
+				close;
+			}
+			mes "[Hianna]";
+			mes "Perfect. Well, here's";
+			mes "your Megaphone. Thanks";
+			mes "for everything, and I'll see";
+			mes "you around, adventurer~";
+			set zeny,zeny-500000;
+			set que_sch,18;
+			getitem 7040,1; //Megaphone
+			close;
+		}
+		mes "[Hianna]";
+		mes "I can't have you breaking";
+		mes "your promises, so I won't";
+		mes "give you the Megaphone";
+		mes "until you pay me the";
+		mes "500,000 zeny that you";
+		mes "said that you would.";
+		close;
+	}
+	else if (que_sch == 18) {
+		mes "[Hianna]";
+		mes "Thanks for escorting";
+		mes "my Dancers over to the";
+		mes "Schwaltzvalt Republic.";
+		mes "Anything I can help";
+		mes "you with today?";
+		next;
+		if (select("I'd like another Megaphone.:No thanks.") == 1) {
+			mes "[Hianna]";
+			mes "Well, I guess I can let";
+			mes "you have another one if";
+			mes "you pay me 500,000 zeny.";
+			mes "You sure you want to pay";
+			mes "the money for a Megaphone?";
+			next;
+			if (select("Yes:No") == 1) {
+				if (Zeny < 500000) {
+					mes "[Hianna]";
+					mes "I'm sorry, but this";
+					mes "isn't enough money for";
+					mes "a Megaphone. Be sure";
+					mes "to bring me 500,000 zeny.";
+					close;
+				}
+				mes "[Hianna]";
+				mes "Here you are. The fact is...";
+				mes "These Megaphones are";
+				mes "considered guild property,";
+				mes "so I'm not supposed to let";
+				mes "you have this. Don't let";
+				mes "anyone know I gave you this!";
+				set zeny,zeny-500000;
+				getitem 7040,1; //Megaphone
+				close;
+			}
+			mes "[Hianna]";
+			mes "Alright~";
+			mes "Take care, and";
+			mes "travel safely~";
+			close;
+		}
+		mes "[Hianna]";
+		mes "Alright~";
+		mes "Take care, and";
+		mes "travel safely~";
+		close;
+	}
+	mes "[Hianna]";
+	mes "Trust me, we've made";
+	mes "good use of the money";
+	mes "that you've ''donated.''";
+	mes "Thanks for taking good";
+	mes "care of my Dancers~";
+	close;
+}
+
+job_duncer,85,49,0	script	Young Dancer#sch1	724,{
+	if (que_sch < 12) {
+		mes "[Dancer]";
+		mes "Hi there~";
+		mes "Are you enjoying";
+		mes "yourself? I hope so!";
+		close;
+	}
+	else if (que_sch == 12) {
+		mes "[Dancer]";
+		mes "Ah, you must be the";
+		mes "bodyguard. So are you";
+		mes "ready to go now?";
+		next;
+		if (select("Yes:No") == 1) {
+			mes "[Dancer]";
+			mes "Alright, then.";
+			mes "Here we go~";
+			set que_sch,13;
+			close2;
+			warp "airplane",75,55;
+			end;
+		}
+		mes "[Dancer]";
+		mes "We need to depart soon,";
+		mes "so please hurry. I'll be";
+		mes "waiting for you here~";
+		close;
+	}
+	mes "[Dancer]";
+	mes "Oh, that was such a fun";
+	mes "performance. I can still";
+	mes "see the dazzling decorations";
+	mes "in the ballroom where we got";
+	mes "to dance. It was so wonderful!";
+	close;
+}
+
+job_duncer,83,52,6	script	Cheerful Dancer#sch1	724,{
+	if (que_sch < 12) {
+		mes "[Dancer]";
+		mes "Hi there~";
+		mes "Are you enjoying";
+		mes "yourself? I hope so!";
+		close;
+	}
+	else if (que_sch == 12) {
+		mes "[Dancer]";
+		mes "Ah, you must be the";
+		mes "bodyguard. So are you";
+		mes "ready to go now?";
+		next;
+		if (select("Yes:No") == 1) {
+			mes "[Dancer]";
+			mes "Alright, then.";
+			mes "Here we go~";
+			set que_sch,13;
+			close2;
+			warp "airplane",75,55;
+			end;
+		}
+		mes "[Dancer]";
+		mes "We need to depart soon,";
+		mes "so please hurry. I'll be";
+		mes "waiting for you here~";
+		close;
+	}
+	mes "[Dancer]";
+	mes "I guess it's pretty";
+	mes "fun to perform on stage~";
+	mes "But I still need to practice";
+	mes "more for the next performance.";
+	close;
+}
+
+job_duncer,87,50,2	script	Mature Looking Dancer#s1	724,{
+	if (que_sch < 12) {
+		mes "[Dancer]";
+		mes "Hi there~";
+		mes "Are you enjoying";
+		mes "yourself? I hope so!";
+		close;
+	}
+	else if (que_sch == 12) {
+		mes "[Dancer]";
+		mes "Ah, you must be the";
+		mes "bodyguard. So are you";
+		mes "ready to go now?";
+		next;
+		if (select("Yes:No") == 1) {
+			mes "[Dancer]";
+			mes "Alright, then.";
+			mes "Here we go~";
+			set que_sch,13;
+			close2;
+			warp "airplane",75,55;
+			end;
+		}
+		mes "[Dancer]";
+		mes "We need to depart soon,";
+		mes "so please hurry. I'll be";
+		mes "waiting for you here~";
+		close;
+	}
+	mes "[Dancer]";
+	mes "I sure learned a lot from";
+	mes "that trip. I hope that the new";
+	mes "girls also gained something";
+	mes "from their experiences.";
+	close;
+}
+
+airplane,76,56,4	script	Young Dancer#sch2	724,{
+	if (que_sch < 13) {
+		mes "[Dancer]";
+		mes "Hi there~";
+		mes "Are you enjoying";
+		mes "yourself? I hope so!";
+		close;
+	}
+	else if (que_sch == 13) {
+		mes "[Dancer]";
+		mes "This will be my";
+		mes "first performance...";
+		mes "I guess that's why";
+		mes "I have butterflies";
+		mes "in my stomach...";
+		close;
+	}
+	mes "[Dancer]";
+	mes "I wonder which beautiful";
+	mes "place we'll get to perform in";
+	mes "next time! Ooh, I can't wait!";
+	close;
+}
+
+airplane,75,53,0	script	Cheerful Dancer#sch2	724,{
+	if (que_sch < 13) {
+		mes "[Dancer]";
+		mes "Hi there~";
+		mes "Are you enjoying";
+		mes "yourself? I hope so!";
+		close;
+	}
+	else if (que_sch == 13) {
+		mes "[Dancer]";
+		mes "I've performed at many";
+		mes "venues, but this is the";
+		mes "frist time I'll be dancing";
+		mes "in the Schwaltzvalt Republic.";
+		mes "This is also my first time on";
+		mes "an airship. How exciting!";
+		close;
+	}
+	mes "[Dancer]";
+	mes "Traveling is really";
+	mes "thrilling... It's almost as";
+	mes "fun as dancing on stage~";
+	close;
+}
+
+airplane,79,55,2	script	Mature Looking Dancer#s2	724,{
+	if (que_sch < 13) {
+		mes "[Dancer]";
+		mes "Hi there~";
+		mes "Are you enjoying";
+		mes "yourself? I hope so!";
+		close;
+	}
+	else if (que_sch == 13) {
+		mes "[Dancer]";
+		mes "This is the first time that";
+		mes "the Schwaltzvalt Republic";
+		mes "requested a performance";
+		mes "from us. Isn't that amazing?";
+		mes "I guess we earned a reputation";
+		mes "overseas. I'll do my best!";
+		next;
+		mes "[Airship Announcement]";
+		mes "We will be arriving";
+		mes "in Einbroch shortly.";
+		mes "Passengers to Einbroch,";
+		mes "please get ready to land.";
+		next;
+		mes "[Dancer]";
+		mes "Oh! We're finally here!";
+		mes "Alright, I'll give this next";
+		mes "performance my all!";
+		close2;
+		set que_sch,14;
+		warp "ein_in01",278,223;
+		end;
+	}
+	mes "[Dancer]";
+	mes "I've been dancing on";
+	mes "stage for a long time, but";
+	mes "I always feel so nervous";
+	mes "right beforehand. I wonder";
+	mes "why that happens to me.";
+	close;
+}
+
+ein_in01,174,266,0	script	Young Dancer#sch3	724,{
+	if (que_sch < 17) {
+		mes "[Dancer]";
+		mes "Oh, the dinner";
+		mes "party isn't finished yet.";
+		mes "It'll be over before";
+		mes "you even know it~";
+		close;
+	}
+	else if (que_sch == 17) {
+		mes "[Dancer]";
+		mes "Hooray! My first";
+		mes "onstage performance";
+		mes "was a success! Oh";
+		mes "I was so nervous...";
+		mes "But I'm so proud";
+		mes "of myself now!";
+		close;
+	}
+	mes "[Dancer]";
+	mes "Without dance,";
+	mes "my life has no";
+	mes "meaning at all.";
+	close;
+}
+
+ein_in01,172,266,0	script	Cheerful Dancer#sch3	724,{
+	if (que_sch < 17) {
+		mes "[Dancer]";
+		mes "The dinner party isn't";
+		mes "even finished yet, but";
+		mes "I'm already exhausted~";
+		close;
+	}
+	else if (que_sch == 17) {
+		mes "[Dancer]";
+		mes "^333333*Whew*^000000 We gave a good";
+		mes "performance this time.";
+		mes "I was worried since that";
+		mes "airship trip really drained me.";
+		close;
+	}
+	mes "[Dancer]";
+	mes "Dancing is really";
+	mes "hard work, and all that";
+	mes "practicing wears you out,";
+	mes "but it's worth it once you";
+	mes "get up on that stage.";
+	close;
+}
+
+ein_in01,170,266,0	script	Mature Looking Dancer#s3	724,{
+	if (que_sch < 17) {
+		mes "[Dancer]";
+		mes "Oh, the dinner";
+		mes "party isn't finished yet.";
+		mes "It'll be over before";
+		mes "you even know it~";
+		close;
+	}
+	else if (que_sch == 17) {
+		mes "[Dancer]";
+		mes "Well well, it looks like our";
+		mes "performance was a success.";
+		mes "The new girls did a really";
+		mes "great job. So let's head";
+		mes "back home, shall we?";
+		close2;
+		warp "comodo",191,146;
+		end;
+	}
+	mes "[Dancer]";
+	mes "Dancing is so fun, but";
+	mes "sometimes it's hard to";
+	mes "keep up with the audience's";
+	mes "expectations, you know?";
+	close;
+}
+
+ein_in01,279,221,0	script	Hotel Manager#sch	903,5,5,{
+	if (que_sch < 15) {
+		mes "[Manager]";
+		mes "It'd be a really great";
+		mes "party if our customers";
+		mes "were a little less rowdy";
+		mes "Recently, they've been";
+		mes "more than a handful...";
+		close;
+	}
+	else if (que_sch == 15) {
+		mes "[Manager]";
+		mes "I'm glad our customers";
+		mes "enjoyed the performance";
+		mes "I was a little worried about";
+		mes "what they were going to think,";
+		mes "but I guess I was just being";
+		mes "overly anxious about it all.";
+		close;
+	}
+	else if (que_sch == 16) {
+		mes "[Manager]";
+		mes "Thank you so much for";
+		mes "your services. I'll be sure to";
+		mes "have one of my employees";
+		mes "send you your payment";
+		mes "Have a safe trip back~";
+		set que_sch,17;
+		close;
+	}
+	end;
+
+//OnTouch2:
+OnTouch:
+	if (que_sch == 14) {
+		mes "[Manager]";
+		mes "Oh, did you enjoy";
+		mes "your trip? I'm glad to";
+		mes "see that everyone arrived";
+		mes "safely. The dinner party";
+		mes "will start shortly, so";
+		mes "please get ready~";
+		set que_sch,15;
+		close;
+	}
+	end;
+}
+
+ein_in01,166,282,4	script	Employee#sch	904,{
+	if (que_sch < 15) {
+		mes "[Employee]";
+		mes "We've been so busy lately!";
+		mes "It's just one party reservation";
+		mes "after another! When will I be";
+		mes "able to just take a break?";
+		close;
+	}
+	else if (que_sch < 17) {
+		if (rand(1,3) == 2) {
+			mes "[Employee]";
+			mes "Hi, how may I help you?";
+			mes "Tonight, most of customers";
+			mes "are high ranking government";
+			mes "officials or public figures.";
+			mes "That man over there is the";
+			mes "Rekenber P.R. executive.";
+			next;
+			mes "[Employee]";
+			mes "That priest over there is";
+			mes "actually a diplomat from";
+			mes "Arunafeltz on business.";
+			mes "These are some very";
+			mes "important people!";
+			close;
+		}
+		mes "[Employee]";
+		mes "How can I help you?";
+		mes "Oh, would you like another";
+		mes "drink? There you go! Please";
+		mes "enjoy the dinner party~";
+		close;
+	}
+	mes "[Employee]";
+	mes "Oh, the mess left after";
+	mes "a banquet is the biggest";
+	mes "part of my job. It's tough";
+	mes "work, but it needs to get done.";
+	close;
+}
+
+ein_in01,176,285,0	script	°ÍµÂ ÌØÀæ¸ê#sch	-1,1,1,{
+//OnTouch2:
+OnTouch:
+	if (que_sch == 15) {
+		disablenpc "Corporate Figure#sch";
+		disablenpc "Arunafeltz Figure#sch";
+		enablenpc "Corporate Figure";
+		enablenpc "Arunafeltz Figure";
+		mes "[????]";
+		mes "I guess the party";
+		mes "will soon be over.";
+		mes "Did you enjoy yourself?";
+		next;
+		mes "[??????]";
+		mes "Yes, thank you, I had";
+		mes "a great time. I'm sorry";
+		mes "I gave you such short";
+		mes "notice of my arrival, but";
+		mes "you held this party anyway.";
+		next;
+		mes "[????]";
+		mes "Don't mention it.";
+		mes "You're a valued guest.";
+		mes "It would shame me if I'd";
+		mes "failed to entertain you.";
+		next;
+		mes "[??????]";
+		mes "Ho ho, you certainly know";
+		mes "how to be a good host~";
+		next;
+		mes "[????]";
+		mes "Your words honor me.";
+		next;
+		mes "^3355FFThe man took a quick";
+		mes "look around the room.^000000";
+		next;
+		mes "[????]";
+		mes "No one's around.";
+		mes "I have something to";
+		mes "discuss with you before";
+		mes "we get down to business.";
+		next;
+		mes "[??????]";
+		mes "What kind of...?";
+		next;
+		mes "[????]";
+		mes "I'll explain in detail";
+		mes "someplace safer. The gist";
+		mes "is that some rogues over in";
+		mes "Arunafeltz are plotting to harm";
+		mes "relations between Arunafeltz";
+		mes "and the Rekenber Corporation.";
+		next;
+		mes "[??????]";
+		mes "Oh... I see. Yes,";
+		mes "we can't talk about";
+		mes "that here. To tell the";
+		mes "truth, I've suspected that";
+		mes "something like that was";
+		mes "going on... Yes, makes sense.";
+		next;
+		mes "[????]";
+		mes "We should relocate";
+		mes "so that we can talk";
+		mes "a bit more freely.";
+		mes "Please follow me,";
+		mes "I already have";
+		mes "a place prepared.";
+		set que_sch,16;
+		close2;
+		disablenpc "Corporate Figure";
+		disablenpc "Arunafeltz Figure";
+		enablenpc "Corporate Figure#sch";
+		enablenpc "Arunafeltz Figure#sch";
+	}
+	end;
+}
+
+ein_in01,181,284,0	script	Corporate Figure	109,{
+	end;
+
+OnInit:
+	disablenpc "Corporate Figure";
+	end;
+}
+
+ein_in01,181,285,0	script	Arunafeltz Figure	920,{
+	end;
+
+OnInit:
+	disablenpc "Arunafeltz Figure";
+	end;
+}
+
+ein_in01,168,274,0	script	Corporate Figure#sch	109,{
+	mes "[????]";
+	mes "Hmm... Good.";
+	mes "Everything looks";
+	mes "ready to me.";
+	close;
+}
+
+ein_in01,170,284,4	script	Arunafeltz Figure#sch	920,{
+	mes "[??????]";
+	mes "I've got to say, only";
+	mes "Rekenber can host such";
+	mes "a magnificent party in";
+	mes "a city this polluted.";
+	mes "What's going on...?";
+	close;
+}
+
+morocc,297,154,0	script	Thin-Faced Bard#sch	51,{
+	//if (max_max_c1 == 1) {
+	//	mes "^3355FFWait a second!";
+	//	mes "Right now, you're carrying";
+	//	mes "too many things with you.";
+	//	mes "Please come back after";
+	//	mes "using the Kafra Service";
+	//	mes "to store some of your items.^000000";
+	//	close;
+	//}
+	if ((MaxWeight-Weight) < 2000) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.^000000";
+		close;
+	}
+
+	if (que_sch < 19) {
+		mes "[????]";
+		mes "............";
+		close;
+	}
+	else if (que_sch == 19) {
+		mes "[Vitre]";
+		mes "Thanks for your help.";
+		mes "This country's government";
+		mes "should know better than to";
+		mes "put a good man like me in jail.";
+		mes "Listen, I'm a fugitive now.";
+		mes "Do you think you can help me?";
+		next;
+		select("Sure.:I may as well...");
+		mes "[Vitre]";
+		mes "I just need you to talk";
+		mes "to a few people, and let";
+		mes "me know what they said.";
+		mes "I'd do it myself, but you";
+		mes "understand that I've got";
+		mes "to keep a low profile.";
+		next;
+		mes "[Vitre]";
+		mes "Please meet these people";
+		mes "in the order that I tell you.";
+		mes "I've sent messengers to let";
+		mes "them know of your arrival,";
+		mes "but I had to send them out";
+		mes "at different times... Anyway...";
+		next;
+		mes "[Vitre]";
+		mes "First, go to Prontera";
+		mes "and talk to Chada. Second,";
+		mes "go to Geffen and speak to";
+		mes "Ghez. Lastly, please go to";
+		mes "Comodo and meet Nosdan.";
+		next;
+		mes "[Vitre]";
+		mes "Each one of them will";
+		mes "sing you a song. Listen";
+		mes "carefully, and sing me their";
+		mes "songs when you come back.";
+		mes "Thanks, you have no idea how";
+		mes "much I appreciate your help.";
+		set que_sch,20;
+		close;
+	}
+	else if (que_sch == 20) {
+		mes "[Vitre]";
+		mes "Chada is probably near";
+		mes "the middle of Prontera.";
+		mes "The messenger I sent to";
+		mes "him should have reached";
+		mes "him by now, so he should";
+		mes "be expecting your arrival.";
+		close;
+	}
+	else if (que_sch == 21) {
+		mes "[Vitre]";
+		mes "Ah, now you've got to";
+		mes "talk to Ghez. He should";
+		mes "be in Northeast Geffen";
+		mes "somewhere. Hopefully";
+		mes "you won't have too much";
+		mes "trouble finding him.";
+		close;
+	}
+	else if (que_sch == 22) {
+		mes "[Vitre]";
+		mes "Trying to find Nosdan?";
+		mes "I think he's probably in the";
+		mes "Northern Cave in Comodo.";
+		mes "Please talk to him, and let";
+		mes "me know about his song.";
+		close;
+	}
+	else if (que_sch == 23) {
+		mes "[Vitre]";
+		mes "Welcome back.";
+		mes "So did you listen";
+		mes "to all of their songs?";
+		next;
+		if (select("Yes:No") == 1) {
+			mes "[Vitre]";
+			mes "Perfect~ Here's a little";
+			mes "something to show my";
+			mes "gratitude. Hope you like it.";
+			set que_sch,24;
+			getitem 603,1; //Old_Blue_Box
+			next;
+			mes "[Vitre]";
+			mes "Now, tell me, what";
+			mes "exactly did they si--";
+			next;
+			mes "[????]";
+			mes "Hold it!";
+			next;
+			enablenpc "????#sch1";
+			enablenpc "????#sch2";
+			enablenpc "????#sch3";
+			mes "[Vitre]";
+			mes "What? Wh-who the";
+			mes "hell are you guys?!";
+			next;
+			mes "[????]";
+			mes "Rune-Midgarts";
+			mes "Secret Service!";
+			mes "Vitre Bizlleta--";
+			mes "you're under arrest";
+			mes "for espionage!";
+			next;
+			mes "[Vitre]";
+			mes "Again? Didn't you just";
+			mes "arrest me just for being";
+			mes "suspected of espionage?";
+			mes "I think it's a little unfair";
+			mes "to just capture me when";
+			mes "you don't have any proof.";
+			next;
+			mes "[????]";
+			mes "We just seized concrete";
+			mes "evidence of your illegal";
+			mes "activities. It's probably";
+			mes "enough to imprison you";
+			mes "for life. Happy now?";
+			next;
+			mes "[Vitre]";
+			mes "You're bluffing.";
+			next;
+			mes "[????]";
+			mes "You shouldn't have sent";
+			mes "that unsuspecting adventurer";
+			mes "to your news sources. We've";
+			mes "taken them into custody";
+			mes "Chada, Ghez, Nosdan.";
+			mes "That's them, right?";
+			next;
+			mes "[Vitre]";
+			mes "Nooooooooo!";
+			next;
+			mes "[Suden]";
+			mes "Adventurer, thank you for";
+			mes "your cooperation. I am";
+			mes "Suden Griea, Secret Service";
+			mes "agent. I'm sure you have";
+			mes "a lot of questions, but ^FF0000Lasda";
+			mes "Midar^000000 will answer them.";
+			next;
+			mes "[Suden]";
+			mes "I'd explain here and now,";
+			mes "but I better dispose of";
+			mes "this trash with the rest of";
+			mes "his scum buddies... in jail!";
+			set que_sch,25;
+			close2;
+			disablenpc "????#sch1";
+			disablenpc "????#sch2";
+			disablenpc "????#sch3";
+			end;
+		}
+		mes "[Vitre]";
+		mes "Would you please hurry?";
+		mes "Staying in one place like";
+		mes "this makes me nervous...";
+		mes "I should be on the move...";
+		close;
+	}
+	else if (que_sch == 24) {
+		mes "[Vitre]";
+		mes "Now, tell me, what";
+		mes "exactly did they si--";
+		next;
+		mes "[????]";
+		mes "Hold it!";
+		next;
+		enablenpc "????#sch1";
+		enablenpc "????#sch2";
+		enablenpc "????#sch3";
+		mes "[Vitre]";
+		mes "What? Wh-who the";
+		mes "hell are you guys?!";
+		next;
+		mes "[????]";
+		mes "Rune-Midgarts";
+		mes "Secret Service!";
+		mes "Vitre Bizlleta--";
+		mes "you're under arrest";
+		mes "for espionage!";
+		next;
+		mes "[Vitre]";
+		mes "Again? Didn't you just";
+		mes "arrest me just for being";
+		mes "suspected of espionage?";
+		mes "I think it's a little unfair";
+		mes "to just capture me when";
+		mes "you don't have any proof.";
+		next;
+		mes "[????]";
+		mes "We just seized concrete";
+		mes "evidence of your illegal";
+		mes "activities. It's probably";
+		mes "enough to imprison you";
+		mes "for life. Happy now?";
+		next;
+		mes "[Vitre]";
+		mes "You're bluffing.";
+		next;
+		mes "[????]";
+		mes "You shouldn't have sent";
+		mes "that unsuspecting adventurer";
+		mes "to your news sources. We've";
+		mes "taken them into custody";
+		mes "Chada, Ghez, Nosdan.";
+		mes "That's them, right?";
+		next;
+		mes "[Vitre]";
+		mes "Nooooooooo!";
+		next;
+		mes "[Suden]";
+		mes "Adventurer, thank you for";
+		mes "your cooperation. I am";
+		mes "Suden Griea, Secret Service";
+		mes "agent. I'm sure you have";
+		mes "a lot of questions, but ^FF0000Lasda";
+		mes "Midar^000000 will answer them.";
+		next;
+		mes "[Suden]";
+		mes "I'd explain here and now,";
+		mes "but I better dispose of";
+		mes "this trash with the rest of";
+		mes "his scum buddies... in jail!";
+		set que_sch,25;
+		close2;
+		disablenpc "????#sch1";
+		disablenpc "????#sch2";
+		disablenpc "????#sch3";
+		end;
+	}
+	mes "[Bard]";
+	mes "Oh, uh...";
+	mes "I'm not really Vitre.";
+	mes "I'm just a lookalike that's";
+	mes "been planted here in case";
+	mes "his hoodlum buddies come";
+	mes "here to find him. You know?";;
+	next;
+	mes "[Bard]";
+	mes "Yeah... This is a pretty";
+	mes "dumb job. I mean, all I do";
+	mes "is stand here, waiting for";
+	mes "his spy friends. What are";
+	mes "the odds of that happening?";
+	close;
+}
+
+morocc,294,152,0	script	????#sch1	899,{
+	end;
+
+OnInit:
+	disablenpc "????#sch1";
+	end;
+}
+
+morocc,293,155,6	script	????#sch2	899,{
+	end;
+
+OnInit:
+	disablenpc "????#sch2";
+	end;
+}
+
+morocc,298,150,1	script	????#sch3	899,{
+	end;
+
+OnInit:
+	disablenpc "????#sch3";
+	end;
+}
+
+prontera,109,161,6	script	Young Man#sch	83,{
+	if (que_sch < 20) {
+		mes "[Chada]";
+		mes "What a boring day...";
+		mes "Perhaps I'll stave the";
+		mes "dreariness with song~";
+		close;
+	}
+	else if (que_sch == 20) {
+		mes "[Chada]";
+		mes "Are you the one that";
+		mes "Vitre sent? Good, good.";
+		mes "Let me treat you to my";
+		mes "wonderful song. Listen...";
+		mes "And learn... And love...";
+		next;
+		mes "[Chada]";
+		mes "La la la la la la la la~";
+		mes "A curse plagues the";
+		mes "royal family, and it's";
+		mes "been passed down to their";
+		mes "second child... la la la...";
+		mes "No one can cure it... Oooh~";
+		next;
+		mes "[Chada]";
+		mes "Hahaha! Isn't that";
+		mes "such a wonderful song?";
+		mes "Let Vitre know each and";
+		mes "every word to it, okay?";
+		set que_sch,21;
+		close;
+	}
+	else if (que_sch < 30) {
+		mes "[Chada]";
+		mes "Did you need to hear";
+		mes "the song again? Alright,";
+		mes "listen carefully this time~";
+		next;
+		mes "[Chada]";
+		mes "La la la la la la la la~";
+		mes "A curse plagues the";
+		mes "royal family, and it's";
+		mes "been passed down to their";
+		mes "second child... la la la...";
+		mes "No one can cure it... Oooh~";
+		next;
+		mes "[Chada]";
+		mes "Hahaha! Isn't that";
+		mes "such a wonderful song?";
+		mes "Let Vitre know each and";
+		mes "every word to it, okay?";
+		close;
+	}
+	else {
+		mes "[Chada]";
+		mes "...........";
+		mes "I have nothing to say to you.";
+		close;
+	}
+}
+
+geffen,196,167,4	script	Young Woman#sch	101,{
+	if (que_sch < 21) {
+		mes "[Ghez]";
+		mes "When is he going";
+		mes "to send someone to";
+		mes "listen to my song?";
+		close;
+	}
+	else if (que_sch == 21) {
+		mes "[Ghez]";
+		mes "Oh, Vitre send you?";
+		mes "Great, I've been waiting";
+		mes "for you. Check out this";
+		mes "new song I wrote. It's great.";
+		next;
+		mes "[Ghez]";
+		mes "Sha la la la la la";
+		mes "Prontera Knights gotta";
+		mes "protect the palace~";
+		mes "Sha hoo hoo haaaaa";
+		mes "Geffen Knights gotta";
+		mes "protect the magic tower~";
+		next;
+		mes "[Ghez]";
+		mes "Na na na nan nan naaa";
+		mes "Prontera! Geffen! Knights";
+		mes "together! Protect the palace!";
+		mes "Ooooooooooooh yeah!";
+		mes "And crush their foes to the west!";
+		mes "That's the secret plan! La la la~";
+		next;
+		mes "[Ghez]";
+		mes "Wasn't that poetic?";
+		mes "Now sing that song exactly";
+		mes "as you heard it to Vitre.";
+		set que_sch,22;
+		close;
+	}
+	else if (que_sch < 30) {
+		mes "[Ghez]";
+		mes "You want to hear my song";
+		mes "again? Fine, but make sure";
+		mes "to memorize it all this time.";
+		next;
+		mes "[Ghez]";
+		mes "Sha la la la la la";
+		mes "Prontera Knights gotta";
+		mes "protect the palace~";
+		mes "Sha hoo hoo haaaaa";
+		mes "Geffen Knights gotta";
+		mes "protect the magic tower~";
+		next;
+		mes "[Ghez]";
+		mes "Na na na nan nan naaa";
+		mes "Prontera! Geffen! Knights";
+		mes "together! Protect the palace!";
+		mes "Ooooooooooooh yeah!";
+		mes "And crush their foes to the west!";
+		mes "That's the secret plan! La la la~";
+		next;
+		mes "[Ghez]";
+		mes "Wasn't that poetic?";
+		mes "Now sing that song exactly";
+		mes "as you heard it to Vitre.";
+		close;
+	}
+	else {
+		mes "[Ghez]";
+		mes "I'm doomed...";
+		mes ".......";
+		close;
+	}
+}
+
+comodo,135,299,0	script	Young Man#sch2	809,{
+	if (que_sch < 22) {
+		mes "[Nosdan]";
+		mes "Have you come to hear";
+		mes "my song? Ah, it's good";
+		mes "that you've come to enjoy";
+		mes "my melodious vo--wait,";
+		mes "wait, where are you going?";
+		close;
+	}
+	else if (que_sch == 22) {
+		mes "[Nosdan]";
+		mes "Ah, are you the one";
+		mes "that Vitre mentioned";
+		mes "in his message? Okay,";
+		mes "please give me a moment.";
+		next;
+		mes "[Nosdan]";
+		mes "^333333*Ahem ahem*^000000";
+		mes "I'm ready. Now";
+		mes "please listen..";
+		next;
+		mes "[Nosdan]";
+		mes "Who dares stop the fearless";
+		mes "warrior? Baphomet? Drake?";
+		mes "No, they're too weak! His";
+		mes "steps now head to the group";
+		mes "of evil men trying to revive";
+		mes "Satan Morroc. I mean, come on!";
+		next;
+		mes "[Nosdan]";
+		mes "Sad news from an old comrade,";
+		mes "the evil group discovered...";
+		mes "Time to stop Satan Morroc's";
+		mes "revival~ La la la la la la la";
+		mes "la la la la la la la la la la";
+		mes "la la la la la la la la la la";
+		next;
+		mes "[Nosdan]";
+		mes "What'd you think?";
+		mes "Um, don't ask me about";
+		mes "the lyrics. Just a weird";
+		mes "artistic quirk I guess.";
+		mes "Oh, please sing that song";
+		mes "to Vitre for me, okay?";
+		set que_sch,23;
+		close;
+	}
+	else if (que_sch < 30) {
+		mes "[Nosdan]";
+		mes "Oh, you need to";
+		mes "hear my song again?";
+		mes "No problem! I guess";
+		mes "you really like it~";
+		next;
+		mes "[Nosdan]";
+		mes "Who dares stop the fearless";
+		mes "warrior? Baphomet? Drake?";
+		mes "No, they're too weak! His";
+		mes "steps now head to the group";
+		mes "of evil men trying to revive";
+		mes "Satan Morroc. I mean, come on!";
+		next;
+		mes "[Nosdan]";
+		mes "Sad news from an old comrade,";
+		mes "the evil group discovered...";
+		mes "Time to stop Satan Morroc's";
+		mes "revival~ La la la la la la la";
+		mes "la la la la la la la la la la";
+		mes "la la la la la la la la la la";
+		next;
+		mes "[Nosdan]";
+		mes "What'd you think?";
+		mes "Um, don't ask me about";
+		mes "the lyrics. Just a weird";
+		mes "artistic quirk I guess.";
+		mes "Oh, please sing that song";
+		mes "to Vitre for me, okay?";
+		close;
+	}
+	else {
+		mes "[Nosdan]";
+		mes "Oh, no! I didn't!";
+		mes "do anything wrong.";
+		mes "I swear!";
+		close;
+	}
 }
