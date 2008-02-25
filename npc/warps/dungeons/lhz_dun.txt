@@ -28,6 +28,7 @@
 //= 2.1 Updated all standard dungeon warps. [L0ne_W0lf]
 //=	Updated Sewer pipe dungeon entrance.
 //=	Removed dialog from level 3 entrance warp.
+//= 2.1a Updated 3rd floor warp. Again... [L0ne_W0lf]
 //============================================================
 
 lhz_dun01,149,291,0	warp	lhz_dun1-1	1,1,lhz_in01,19,129
@@ -37,10 +38,14 @@ lhz_dun01,149,9,0	warp	lhz_dun3-1	1,1,lhz_dun02,153,19
 lhz_dun02,146,19,0	warp	lhz_dun3-2	1,1,lhz_dun01,144,9
 lhz_dun01,18,145,0	warp	lhz_dun4-1	1,1,lhz_dun02,17,150
 lhz_dun02,17,156,0	warp	lhz_dun4-2	1,1,lhz_dun01,18,150
-lhz_dun02,150,149,4	script	lhz_dun5-1	45,2,2,{
+lhz_dun02,149,149,4	script	lhz_dun5-1	45,2,2,{
 OnTouch:
-	if ((Upper != 1 && BaseLevel<95) || (Upper == 1 && BaseLevel<90)) end;
-	warp "lhz_dun03",140,137;
+	if ((Upper != 1 && BaseLevel<95) || (Upper == 1 && BaseLevel<90)) {
+		warp "lhz_dun03",140,133;
+	}
+	else {
+		warp "lhz_dun02",145,149;
+	}
 	end;
 }
 lhz_dun03,139,137,0	warp	lhz_dun5-2	1,1,lhz_dun02,149,142

@@ -1,6 +1,7 @@
 Date		Added
 ======
-2008/02/23
+2008/02/24
+	* Rev 12240 Corrected Labs level 3 warp. [L0ne_W0lf]
 	* Rev 12239 Implemented Veins Spy quest. [L0ne_W0lf]
 2008/02/23
 	* Rev 12237 Implemented Veins Stone quest. [L0ne_W0lf]
