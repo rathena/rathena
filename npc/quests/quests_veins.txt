@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -31,6 +31,7 @@
 //= 1.2 Added Veins Siblings Quest. [L0ne_W0lf]
 //=	Added Veins Thor Volcano Base Quest NPC. [L0ne_W0lf]
 //=	Start NPC is missing, but will be added when I get it.
+//= 1.3 Fixed two typos small in Asbar. [L0ne_W0lf]
 //============================================================ 
 
 // Stone Quest
@@ -325,7 +326,7 @@ ve_in,169,310,6	script	Strange Old Man#ve	121,{
 			mes "You made me screw up!";
 			next;
 			specialeffect 90; //EF_LORD
-			percentheal 30,0;
+			percentheal -30,0;
 			next;
 			mes "[Absar]";
 			mes "!@#$%#@#$!*~";
@@ -400,7 +401,7 @@ ve_in,169,310,6	script	Strange Old Man#ve	121,{
 		close;
 	}
 	else if (veins_stone == 2) {
-		if (countitem(999) > 4 && 7561 > 1 && countitem(1033) > 4) {
+		if (countitem(999) > 4 && countitem(7561) > 1 && countitem(1033) > 4) {
 			mes "[Absar]";
 			mes "Good, you finally";
 			mes "brought everthing.";

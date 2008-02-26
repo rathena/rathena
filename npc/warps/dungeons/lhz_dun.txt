@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Sara-chan (1.0)
 //===== Current Version: =====================================
-//= 2.1
+//= 2.1b
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 8+
 //===== Description: =========================================
@@ -29,6 +29,7 @@
 //=	Updated Sewer pipe dungeon entrance.
 //=	Removed dialog from level 3 entrance warp.
 //= 2.1a Updated 3rd floor warp. Again... [L0ne_W0lf]
+//= 2.1b Fixed reverse level requirement in 3rd floor warp. [L0ne_W0lf]
 //============================================================
 
 lhz_dun01,149,291,0	warp	lhz_dun1-1	1,1,lhz_in01,19,129
@@ -41,10 +42,10 @@ lhz_dun02,17,156,0	warp	lhz_dun4-2	1,1,lhz_dun01,18,150
 lhz_dun02,149,149,4	script	lhz_dun5-1	45,2,2,{
 OnTouch:
 	if ((Upper != 1 && BaseLevel<95) || (Upper == 1 && BaseLevel<90)) {
-		warp "lhz_dun03",140,133;
+		warp "lhz_dun02",145,149;
 	}
 	else {
-		warp "lhz_dun02",145,149;
+		warp "lhz_dun03",140,133;
 	}
 	end;
 }
