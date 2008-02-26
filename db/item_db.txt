@@ -3973,6 +3973,31 @@
 13867,Cat_hat_Box,Neko Mimi Box,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5099,1; },{},{}
 13868,Moonlight_Flower_Hat_Box,Moonlight Flower Hat Box,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5214,1; },{},{}
 13869,Chick_Hat_Box,Chick Hat Box,2,,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5283,1; },{},{}
+13870,Beauty_Gift_Certificate_Box,Beauty Gift Certificate Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7622,1; },{},{}
+13871,Mage_Card_Box,Mage Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4327,1; getitem 4309,1; getitem 4325,1; getitem 4208,1; getitem 4258,1; getitem 4191,1; },{},{}
+13872,Acolyte_Card_Box,Acolyte Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4185,1; getitem 4312,1; getitem 4217,1; getitem 4280,1; getitem 4293,1; },{},{}
+13873,Archer_Card_Box,Archer Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4297,1; getitem 4234,1; getitem 4199,1; getitem 4178,1; getitem 4252,1; },{},{}
+13874,Swordman_Card_Box,Swordman Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4319,1; getitem 4331,1; getitem 4220,1; getitem 4311,1; getitem 4246,1; },{},{}
+13875,Thief_Card_Box,Thief Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4230,1; getitem 4210,1; getitem 4257,1; getitem 4172,1; getitem 4272,1; },{},{}
+13876,Merchant_Card_Box,Merchant Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4206,1; getitem 4281,1; getitem 4186,1; getitem 4233,1; getitem 4321,1; },{},{}
+13877,Clock_Tower_Card_Box,Clock Tower Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4244,1; getitem 4299,1; getitem 4313,1; getitem 4229,1; },{},{}
+13878,Geffenia_Card_Box,Geffenia Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4218,1; getitem 4269,1; },{},{}
+13879,Owl_Card_Box,Owl Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4237,1; getitem 4238,1; },{},{}
+13880,Ghost_Card_Box,Ghost Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4193,1; getitem 4294,1; },{},{}
+13881,Nightmare_Card_Box,Nightmare Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4127,1; getitem 4166,1; },{},{}
+13882,Curse_Card_Box,Curse Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4076,4; },{},{}
+13883,Sleep_Card_Box,Sleep Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4024,4; },{},{}
+13884,Freeze_Card_Box,Freeze Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4055,4; },{},{}
+13885,Stun_Card_Box,Stun Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4017,4; },{},{}
+13886,Silence_Card_Box,Silence Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4057,4; },{},{}
+13887,Blind_Card_Box,Blind Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4020,4; },{},{}
+13888,Chaos_Card_Box,Chaos Card Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 4104,4; },{},{}
+13899,Elunium_Box_,Elunium Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 985,10; },{},{}
+13890,Oridecon_Box_,Oridecon Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 984,10; },{},{}
+13891,Fire_Converter_Box,Fire Converter Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12114,10; },{},{}
+13892,Water_Converter_Box,Water Converter Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12115,10; },{},{}
+13893,Wind_Converter_Box,Wind Converter Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12117,10; },{},{}
+13894,Earth_Converter_Box,Earth Converter Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12116,10; },{},{}
 14508,Zeny_Pet_Egg_Scroll,Zeny Pet Egg Scroll,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14509,Light_Center_Pot,Light Concentration Potion,2,,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,0; },{},{}
 14510,Light_Awakening_Pot,Light Awakening Potion,2,,,20,,,,,0xFFF7FEEF,7,2,,,40,,,{ sc_start SC_ASPDPOTION1,1800000,0; },{},{}
