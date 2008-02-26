@@ -1,5 +1,9 @@
 Date		Added
 ======
+2008/02/25
+	* Rev 12241 Implemented Veins Siblings quest. [L0ne_W0lf]
+	* Added NPCs for Thor Volcano Base quest. Quest is inactive.
+	  Segment for High Priest Zhed (quest start) is missing.
 2008/02/24
 	* Rev 12240 Corrected Labs level 3 warp. [L0ne_W0lf]
 	* Rev 12239 Implemented Veins Spy quest. [L0ne_W0lf]
