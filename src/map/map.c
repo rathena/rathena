@@ -1564,6 +1564,8 @@ int map_quit(struct map_session_data *sd)
 	//(changing map-servers invokes unit_free but bypasses map_quit)
 	if(sd->sc.count) {
 		//Status that are not saved...
+		if(sd->sc.data[SC_AUTOTRADE])
+			status_change_end(&sd->bl,SC_AUTOTRADE,-1);
 		if(sd->sc.data[SC_SPURT])
 			status_change_end(&sd->bl,SC_SPURT,-1);
 		if(sd->sc.data[SC_BERSERK])

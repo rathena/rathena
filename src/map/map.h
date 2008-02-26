@@ -1168,6 +1168,7 @@ struct map_data {
 	int npc_num;
 	int users;
 	struct map_flag {
+		unsigned autotrade : 1;
 		unsigned allowks : 1; // [Kill Steal Protection]
 		unsigned nomemo : 1;
 		unsigned noteleport : 1;

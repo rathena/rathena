@@ -2583,7 +2583,7 @@ static int atkillmonster_sub(struct block_list *bl, va_list ap)
 	if (flag)
 		status_zap(bl,md->status.hp, 0);
 	else
-		status_kill(bl);	
+		status_kill(bl);
 	return 1;
 }
 
@@ -2971,7 +2971,7 @@ int atcommand_param(const int fd, struct map_session_data* sd, const char* comma
 
 	for (i = 0; param[i] != NULL; i++)
 		if (strcmpi(command, param[i]) == 0)
-			break;	
+			break;
 
 	if (param[i] == NULL || i > MAX_STATUS_TYPE) { // normally impossible...
 		sprintf(atcmd_output, "Please, enter a valid value (usage: @str,@agi,@vit,@int,@dex,@luk <+/-adjustment>).");
@@ -3886,7 +3886,7 @@ int atcommand_idsearch(const int fd, struct map_session_data* sd, const char* co
 		sprintf(atcmd_output, msg_txt(269), MAX_SEARCH, match);
 		clif_displaymessage(fd, atcmd_output);
 		match = MAX_SEARCH;
-	}	
+	}
 	for(i = 0; i < match; i++) {
 		sprintf(atcmd_output, msg_txt(78), item_array[i]->jname, item_array[i]->nameid); // %s: %d
 		clif_displaymessage(fd, atcmd_output);
@@ -4940,7 +4940,7 @@ int atcommand_jail(const int fd, struct map_session_data* sd, const char* comman
 		x = 24;
 		y = 75;
 		break;
-	default:	
+	default:
 		m_index = mapindex_name2id(MAP_JAIL);
 		x = 49;
 		y = 75;
@@ -4948,7 +4948,7 @@ int atcommand_jail(const int fd, struct map_session_data* sd, const char* comman
 	}
 
 	//Duration of INT_MAX to specify infinity.
-	sc_start4(&pl_sd->bl,SC_JAILED,100,INT_MAX,m_index,x,y,1000); 
+	sc_start4(&pl_sd->bl,SC_JAILED,100,INT_MAX,m_index,x,y,1000);
 	clif_displaymessage(pl_sd->fd, msg_txt(117)); // GM has send you in jails.
 	clif_displaymessage(fd, msg_txt(118)); // Player warped in jails.
 	return 0;
@@ -5075,9 +5075,9 @@ int atcommand_jailfor(const int fd, struct map_session_data* sd, const char* com
 		} else {
 			get_jail_time(jailtime,&year,&month,&day,&hour,&minute);
 			sprintf(atcmd_output,msg_txt(402),"You are now",year,month,day,hour,minute); //%s in jail for %d years, %d months, %d days, %d hours and %d minutes
-	 		clif_displaymessage(pl_sd->fd, atcmd_output); 
+	 		clif_displaymessage(pl_sd->fd, atcmd_output);
 			sprintf(atcmd_output,msg_txt(402),"This player is now",year,month,day,hour,minute); //This player is now in jail for %d years, %d months, %d days, %d hours and %d minutes
-	 		clif_displaymessage(fd, atcmd_output); 
+	 		clif_displaymessage(fd, atcmd_output);
 		}
 	} else if (jailtime < 0) {
 		clif_displaymessage(fd, "Invalid time for jail command.");
@@ -5508,14 +5508,14 @@ int atcommand_follow(const int fd, struct map_session_data* sd, const char* comm
 	struct map_session_data *pl_sd = NULL;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message) { 
-		if (sd->followtarget == -1) 
-			return -1; 
-	
-		pc_stop_following (sd); 
-		clif_displaymessage(fd, "Follow mode OFF."); 
-		return 0; 
-	} 
+	if (!message || !*message) {
+		if (sd->followtarget == -1)
+			return -1;
+
+		pc_stop_following (sd);
+		clif_displaymessage(fd, "Follow mode OFF.");
+		return 0;
+	}
 	
 	if ( (pl_sd = map_nick2sd((char *)message)) == NULL )
 	{
@@ -5816,7 +5816,7 @@ int atcommand_marry(const int fd, struct map_session_data* sd, const char* comma
 
 /*==========================================
  * @divorce by [MouseJstr], fixed by [Lupus]
- * divorce two players 
+ * divorce two players
  *------------------------------------------*/
 int atcommand_divorce(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
@@ -5879,19 +5879,26 @@ int atcommand_changelook(const int fd, struct map_session_data* sd, const char* 
 int atcommand_autotrade(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
-	if (sd->vender_id) //check if player's vending
+	if( sd->vender_id ) //check if player's vending
 	{
-		sd->state.autotrade = 1;
-		clif_authfail_fd(fd, 15);
-	}
-	else 
-	{
-		//"You should be vending to use @Autotrade."
-		clif_displaymessage(fd, msg_txt(549));
-	}
-	return 0;  
-}   
+		if( map[sd->bl.m].flag.autotrade == battle_config.autotrade_mapflag )
+		{
+			sd->state.autotrade = 1;
+			if( battle_config.at_timeout )
+			{
+				int timeout = atoi(message);
+				status_change_start(&sd->bl, SC_AUTOTRADE, 10000, 0, 0, 0, 0, ((timeout > 0) ? min(timeout,battle_config.at_timeout) : battle_config.at_timeout) * 60000, 0);
+			}
 
+			clif_authfail_fd(fd, 15);
+		} else
+			clif_displaymessage(fd, "Autotrade is not allowed on this map.");
+	}
+	else
+		clif_displaymessage(fd, msg_txt(549)); // You should be vending to use @Autotrade.
+
+	return 0;
+}
 
 /*==========================================
  * @changegm by durf (changed by Lupus)
@@ -5920,8 +5927,8 @@ int atcommand_changegm(const int fd, struct map_session_data* sd, const char* co
 	}
 
 	guild_gm_change(sd->status.guild_id, pl_sd);
-	return 0;  
-}   
+	return 0;
+}
 
 /*==========================================
  * @changeleader by Skotlex
@@ -5978,9 +5985,9 @@ int atcommand_changeleader(const int fd, struct map_session_data* sd, const char
 	intif_party_leaderchange(p->party.party_id,p->party.member[pl_mi].account_id,p->party.member[pl_mi].char_id);
 	//Update info.
 	clif_party_info(p,NULL);
-	
-	return 0;  
-}   
+
+	return 0;
+}
 
 /*==========================================
  * @partyoption by Skotlex
@@ -6023,8 +6030,8 @@ int atcommand_partyoption(const int fd, struct map_session_data* sd, const char*
 	else
 		clif_displaymessage(fd, msg_txt(286));
 
-	return 0;  
-} 
+	return 0;
+}
 
 /*==========================================
  * @autoloot by Upa-Kun
@@ -6048,12 +6055,12 @@ int atcommand_autoloot(const int fd, struct map_session_data* sd, const char* co
 	}
 	if (rate < 0) rate = 0;
 	if (rate > 10000) rate = 10000;
-	
+
 	sd->state.autoloot = rate;
-	if (sd->state.autoloot) { 
+	if (sd->state.autoloot) {
 		snprintf(atcmd_output, sizeof atcmd_output, "Autolooting items with drop rates of %0.02f%% and below.",((double)sd->state.autoloot)/100.);
 		clif_displaymessage(fd, atcmd_output);
-	}else 
+	}else
 		clif_displaymessage(fd, "Autoloot is now off.");
 
 	if (sd->state.autoloot && sd->state.autolootid) {
@@ -7134,7 +7141,7 @@ int atcommand_makehomun(const int fd, struct map_session_data* sd, const char* c
 		return -1;
 	}
 
-	homunid = atoi(message);	
+	homunid = atoi(message);
 	if( homunid < HM_CLASS_BASE || homunid > HM_CLASS_BASE + MAX_HOMUNCULUS_CLASS - 1 )
 	{
 		clif_displaymessage(fd, "Invalid Homunculus id.");
@@ -7718,7 +7725,7 @@ int atcommand_monsterignore(const int fd, struct map_session_data* sd, const cha
  * => Gives your character a fake name. [Valaris]
  *------------------------------------------*/
 int atcommand_fakename(const int fd, struct map_session_data* sd, const char* command, const char* message)
-{	
+{
 	char name[NAME_LENGTH];
 	nullpo_retr(-1, sd);
 	

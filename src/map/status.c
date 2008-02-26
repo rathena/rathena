@@ -25,6 +25,7 @@
 #include "script.h"
 #include "unit.h"
 #include "mercenary.h"
+#include "vending.h"
 
 #include <time.h>
 #include <stdio.h>
@@ -6488,6 +6489,15 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 			// "lose almost all their HP and SP" on natural expiration.
 			status_set_hp(bl, 10, 0);
 			status_set_sp(bl, 10, 0);
+			break;
+		case SC_AUTOTRADE:
+			if (tid == -1)
+				break;
+			vending_closevending(sd);
+			map_quit(sd);
+			// Because map_quit calls status_change_end with tid -1
+			// from here it's not neccesary to continue
+			return 1;
 			break;
 		}
 

@@ -3652,6 +3652,8 @@ static const struct _battle_data {
 	{ "sg_miracle_skill_duration",          &battle_config.sg_miracle_skill_duration,       3600000, 0,     INT_MAX,        },
 	{ "hvan_explosion_intimate",            &battle_config.hvan_explosion_intimate,         45000,  0,      100000,         },
 	{ "quest_exp_rate",                     &battle_config.quest_exp_rate,                  100,    0,      INT_MAX,        },
+	{ "at_mapflag",                         &battle_config.autotrade_mapflag,               0,      0,      1,              },
+	{ "at_timeout",                         &battle_config.at_timeout,                      0,      0,      INT_MAX,        },
 	{ "homunculus_autoloot",                &battle_config.homunculus_autoloot,             0,      0,      1,              },
 	{ "idle_no_autoloot",                   &battle_config.idle_no_autoloot,                0,      0,      INT_MAX,        },
 	{ "max_guild_alliance",                 &battle_config.max_guild_alliance,              3,      1,      3,              },

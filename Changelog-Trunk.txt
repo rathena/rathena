@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/02/26
+	* Added new settings for Autotrade. [Zephyrus]
 2008/02/23
 	* Now the server will print an error message if an invalid mapflag is
 	  found during script loading (see bugreport:980 for the motivation)
