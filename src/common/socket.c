@@ -1073,10 +1073,9 @@ void socket_final(void)
 		aFree(access_deny);
 #endif
 
-	for (i = 1; i < fd_max; i++) {
+	for( i = 1; i < fd_max; i++ )
 		if(session[i])
-			delete_session(i);
-	}
+			do_close(i);
 
 	// session[0] のダミーデータを削除
 	aFree(session[0]->rdata);
