@@ -1617,7 +1617,11 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	sd = map_charid2sd(dlist->first_charid);
 	if( sd == NULL ) sd = map_charid2sd(dlist->second_charid);
 	if( sd == NULL ) sd = map_charid2sd(dlist->third_charid);
-	if( sd && (drop_rate <= sd->state.autoloot || ditem->item_data.nameid == sd->state.autolootid) && sd->idletime >= (last_tick - battle_config.idle_no_autoloot) && (battle_config.homunculus_autoloot?1:!flag)
+
+	if( sd
+		&& (drop_rate <= sd->state.autoloot || ditem->item_data.nameid == sd->state.autolootid)
+		&& (battle_config.idle_no_autoloot == 0 || DIFF_TICK(last_tick, sd->idletime) < battle_config.idle_no_autoloot)
+		&& (battle_config.homunculus_autoloot?1:!flag)
 #ifdef AUTOLOOT_DISTANCE
 		&& check_distance_blxy(&sd->bl, dlist->x, dlist->y, AUTOLOOT_DISTANCE)
 #endif
