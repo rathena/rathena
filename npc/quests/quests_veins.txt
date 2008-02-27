@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.3a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -24,7 +24,7 @@
 //= Thor Volcano Base Quest (Disabled):
 //= - Missing addition to High Priest Zhed to start quest.
 //= - Infiltrate Thor Volcano Base. What is Arunafeltz up to?
-//= - Variable in use: rachel_camel (max 26)
+//= - Variable in use: rachel_camel (max 27)
 //===== Additional Comments: ================================= 
 //= 1.0 First version, Added Veins Stone quest. [L0ne_W0lf]
 //= 1.1 Added Veins Spy Quest. [L0ne_W0lf]
@@ -32,6 +32,7 @@
 //=	Added Veins Thor Volcano Base Quest NPC. [L0ne_W0lf]
 //=	Start NPC is missing, but will be added when I get it.
 //= 1.3 Fixed two typos small in Asbar. [L0ne_W0lf]
+//= 1.3a More fixes to some of the Base quest NPCs. [L0ne_W0lf]
 //============================================================ 
 
 // Stone Quest
@@ -5049,10 +5050,7 @@ ra_temin,87,133,1	script	Rachel Guard#vol1	934,5,2,{
 		mes "come back later if you";
 		mes "wish to see him.";
 		next;
-		switch(select("Think of a Distraction")) {
-		case 1:
-			break;
-		}
+		select("Think of a Distraction");
 		mes "["+strcharinfo(0)+"]";
 		mes "This guy's not going to";
 		mes "let me pass. Let's see...";
@@ -5071,7 +5069,7 @@ ra_temin,87,133,1	script	Rachel Guard#vol1	934,5,2,{
 		mes "Of course! I should";
 		mes "talk to him about ^FF0000"+.@input$+"^000000 !!";
 		next;
-		if (.@input != "Lamir") {
+		if (.@input$ != "Lamir") {
 			mes "["+strcharinfo(0)+"]";
 			mes "What the...?";
 			mes "Where did I think of that?";
@@ -5186,7 +5184,6 @@ OnTouch:
 //OnTouch2:
 	warp "ra_temin",85,137;
 	close;
-	end;
 }
 
 ra_temin,82,133,7	script	Rachel Guard#vol2	934,5,2,{
@@ -5205,7 +5202,6 @@ OnTouch:
 //OnTouch2:
 	warp "ra_temin",85,137;
 	close;
-	end;
 }
 
 ra_temin,115,140,1	script	Flower Vase#vol	111,{
@@ -5253,7 +5249,7 @@ ra_temin,115,140,1	script	Flower Vase#vol	111,{
 ra_temin,85,131,0	script	path_vol1	-1,5,0,{
 OnTouch:
 //OnTouch2:
-	if ((aru_vol != 3) || (aru_vol != 4)) {
+	if ((aru_vol != 3) && (aru_vol != 4)) {
 		warp "ra_temin",85,137;
 	}
 	end;
@@ -6954,9 +6950,8 @@ thor_camp,159,74,3	script	Colonel Vito#3	946,{
 thor_camp,141,62,0	script	#vol_study1::VeinsWarp	-1,3,3,{
 OnTouch:
 //OnTouch2:
-	if ((aru_vol >= 14 && aru_vol <= 17) || (aru_vol == 19)) {
+	if ((aru_vol >= 14 && aru_vol <= 16) || (aru_vol == 19)) {
 		warp "thor_camp",156,67;
-		end;
 	}
 	end;
 }

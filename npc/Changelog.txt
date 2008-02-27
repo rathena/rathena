@@ -1,6 +1,8 @@
 Date		Added
 ======
 2008/02/26
+	* Rev 12252 Fully implemented the Thor Volcano Base quest. [L0ne_W0lf]
+2008/02/26
 	* Rev 12244 Fixed bugreport:1057 and bugreport:1058 [L0ne_W0lf]
 2008/02/25
 	* Rev 12241 Implemented Veins Siblings quest. [L0ne_W0lf]
