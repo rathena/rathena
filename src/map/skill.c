@@ -6427,18 +6427,14 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		if(range<=0)
 			map_foreachincell(skill_cell_overlap,src->m,ux,uy,BL_SKILL,skillid,&alive, src);
 		
-		if(alive && map_getcell(src->m,ux,uy,CELL_CHKWALL))
+		if( alive && map_getcell(src->m,ux,uy,CELL_CHKWALL) )
 			alive = 0;
 		
 		if( alive && battle_config.skill_wall_check && !path_search_long(NULL,src->m,ux,uy,x,y,CELL_CHKWALL) )
 			alive = 0; //no path between cell and center of casting.
 					
-		if(alive && skillid == WZ_ICEWALL) {
-				if( map_getcell(src->m,ux,uy,CELL_CHKWALL) || map_getcell(src->m,ux,uy,CELL_CHKCLIFF) )
-					alive=0;
-				else
-					clif_changemapcell(0,src->m,ux,uy,5,AREA);
-		}
+		if( alive && skillid == WZ_ICEWALL && !map_getcell(src->m,ux,uy,CELL_CHKREACH) )
+			alive = 0;
 
 		if(alive){
 			//FIXME: why not calculate val1/val2 in here? [ultramage]
@@ -7245,37 +7241,6 @@ int skill_unit_effect (struct block_list* bl, va_list ap)
 	}
 
 	if( dissonance ) skill_dance_switch(unit, 1);
-
-	return 0;
-}
-
-/*==========================================
- * Triggers when a skill unit is about to be deleted
- *------------------------------------------*/
-static int skill_unit_ondelete (struct skill_unit *src, unsigned int tick)
-{
-	struct skill_unit_group *sg;
-	nullpo_retr(0, src);
-	nullpo_retr(0, sg=src->group);
-
-	switch( sg->unit_id )
-	{
-
-	case UNT_ICEWALL:
-		// hack to prevent client from leaving cells unwalkable
-		//FIXME: this should be done individually in insight/outsight code instead [ultramage]
-		clif_changemapcell(0,src->bl.m,src->bl.x,src->bl.y,src->val2,ALL_SAMEMAP);
-	break;
-
-	case UNT_ANKLESNARE:
-	{
-		struct block_list *target = map_id2bl(sg->val2);
-		if(target)
-			status_change_end(target,SC_ANKLE,-1);
-	}
-	break;
-
-	}
 
 	return 0;
 }
@@ -9249,22 +9214,26 @@ struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int 
 
 	map_addblock(&unit->bl);
 
+	// perform oninit actions
 	switch (group->skill_id) {
+	case WZ_ICEWALL:
+		map_setgatcell(unit->bl.m,unit->bl.x,unit->bl.y,5);
+		clif_changemapcell(0,unit->bl.m,unit->bl.x,unit->bl.y,5,AREA);
+		break;
 	case SA_LANDPROTECTOR:
 		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_LANDPROTECTOR,true);
 		break;
 	case HP_BASILICA:
 		skill_unitsetmapcell(unit,HP_BASILICA,group->skill_lv,CELL_BASILICA,true);
 		break;
-	case WZ_ICEWALL:
-		skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_ICEWALL,true);
-		break;
 	default:
 		if (group->state.song_dance&0x1) //Check for dissonance.
 			skill_dance_overlap(unit, 1);
 		break;
 	}
+
 	clif_skill_setunit(unit);
+
 	return unit;
 }
 
@@ -9280,9 +9249,6 @@ int skill_delunit (struct skill_unit* unit)
 		return 0;
 	nullpo_retr(0, group=unit->group);
 
-	// invoke ondelete event
-	skill_unit_ondelete(unit, gettick());
-
 	if( group->state.song_dance&0x1 ) //Cancel dissonance effect.
 		skill_dance_overlap(unit, 0);
 
@@ -9290,15 +9256,24 @@ int skill_delunit (struct skill_unit* unit)
 	if( !unit->range )
 		map_foreachincell(skill_unit_effect,unit->bl.m,unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,gettick(),4);
 
+	// perform ondelete actions
 	switch (group->skill_id) {
+	case HT_ANKLESNARE:
+		{
+		struct block_list* target = map_id2bl(group->val2);
+		if( target )
+			status_change_end(target,SC_ANKLE,-1);
+		}
+		break;
+	case WZ_ICEWALL:
+		map_setgatcell(unit->bl.m,unit->bl.x,unit->bl.y,unit->val2);
+		clif_changemapcell(0,unit->bl.m,unit->bl.x,unit->bl.y,unit->val2,ALL_SAMEMAP); // hack to avoid clientside cell bug
+		break;
 	case SA_LANDPROTECTOR:
 		skill_unitsetmapcell(unit,SA_LANDPROTECTOR,group->skill_lv,CELL_LANDPROTECTOR,false);
 		break;
 	case HP_BASILICA:
 		skill_unitsetmapcell(unit,HP_BASILICA,group->skill_lv,CELL_BASILICA,false);
-		break;
-	case WZ_ICEWALL:
-		skill_unitsetmapcell(unit,WZ_ICEWALL,group->skill_lv,CELL_ICEWALL,false);
 		break;
 	}
 

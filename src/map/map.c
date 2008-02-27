@@ -2272,12 +2272,8 @@ int map_getcellp(struct map_data* m,int x,int y,cell_chk cellchk)
 			return (cell.basilica);
 		case CELL_CHKLANDPROTECTOR:
 			return (cell.landprotector);
-		case CELL_CHKICEWALL:
-			return (cell.icewall);
 		case CELL_CHKNOVENDING:
 			return (cell.novending);
-		case CELL_CHKNODAMAGE:
-			return (cell.nodamage);
 		case CELL_CHKNOCHAT:
 			return (cell.nochat);
 
@@ -2287,14 +2283,14 @@ int map_getcellp(struct map_data* m,int x,int y,cell_chk cellchk)
 			if (cell.cell_bl >= battle_config.cell_stack_limit) return 0;
 #endif
 		case CELL_CHKREACH:
-			return (cell.walkable && !cell.icewall);
+			return (cell.walkable);
 
 		case CELL_CHKNOPASS:
 #ifdef CELL_NOSTACK
 			if (cell.cell_bl >= battle_config.cell_stack_limit) return 1;
 #endif
 		case CELL_CHKNOREACH:
-			return (!cell.walkable || cell.icewall);
+			return (!cell.walkable);
 
 		case CELL_CHKSTACK:
 #ifdef CELL_NOSTACK
@@ -2328,11 +2324,9 @@ void map_setcell(int m, int x, int y, cell_t cell, bool flag)
 		case CELL_WATER:         map[m].cell[j].water = flag;         break;
 
 		case CELL_NPC:           map[m].cell[j].npc = flag;           break;
-		case CELL_ICEWALL:       map[m].cell[j].icewall = flag;       break;
 		case CELL_BASILICA:      map[m].cell[j].basilica = flag;      break;
 		case CELL_LANDPROTECTOR: map[m].cell[j].landprotector = flag; break;
 		case CELL_NOVENDING:     map[m].cell[j].novending = flag;     break;
-		case CELL_NODAMAGE:      map[m].cell[j].nodamage = flag;      break;
 		case CELL_NOCHAT:        map[m].cell[j].nochat = flag;        break;
 		default:
 			ShowWarning("map_setcell: invalid cell type '%d'\n", (int)cell);

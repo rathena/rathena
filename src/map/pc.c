@@ -3426,18 +3426,14 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		return 0;
 	}
 
-	if(x <0 || x >= map[m].xs || y <0 || y >= map[m].ys)
-		x=y=0;
-	if((x==0 && y==0) ||
-		(map_getcell(m, x, y, CELL_CHKNOPASS) &&
-#ifdef CELL_NOSTACK
-		!map_getcell(m, x, y, CELL_CHKSTACK) &&
-#endif
-		!map_getcell(m, x, y, CELL_CHKICEWALL))
-	){ //It is allowed on top of Moonlight/icewall tiles to prevent force-warping 'cheats' [Skotlex]
-		if(x||y) {
-			ShowError("pc_setpos: attempt to place player %s (%d:%d) on non-walkable tile (%s-%d,%d)\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(mapindex),x,y);
-		}
+	if( x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
+	{
+		ShowError("pc_setpos: attempt to place player %s (%d:%d) on invalid coordinates (%s-%d,%d)\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(mapindex),x,y);
+		x = y = 0; // make it random
+	}
+
+	if( x == 0 && y == 0 )
+	{// pick a random walkable cell
 		do {
 			x=rand()%(map[m].xs-2)+1;
 			y=rand()%(map[m].ys-2)+1;
