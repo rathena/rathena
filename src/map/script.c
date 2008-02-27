@@ -4853,7 +4853,7 @@ BUILDIN_FUNC(cleararray)
 	if( end > 127 )
 		end = 127;
 
-	for( ; start < end; ++start )
+	for( ; start <= end; ++start )
 		set_reg(st, sd, reference_uid(id, start), name, v, script_getref(st,2));
 	return 0;
 }
