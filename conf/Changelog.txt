@@ -1,5 +1,7 @@
 Date	Added
 
+2008/02/27
+	* Disabled idle_no_autoloot setting (bugreport:1051)
 2008/02/14
 	* Removed atcommand @whozeny [ultramage]
 2008/02/11
