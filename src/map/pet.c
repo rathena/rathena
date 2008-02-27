@@ -1237,7 +1237,7 @@ int read_petdb()
 	// Remove any previous scripts in case reloaddb was invoked.	
 	for( j = 0; j < MAX_PET_DB; j++ )
 		if (pet_db[j].script) {
-			aFree(pet_db[j].script);
+			script_free_code(pet_db[j].script);
 			pet_db[j].script = NULL;
 		}
 
@@ -1332,7 +1332,6 @@ int read_petdb()
  *------------------------------------------*/
 int do_init_pet(void)
 {
-	memset(pet_db,0,sizeof(pet_db));
 	read_petdb();
 
 	item_drop_ers = ers_new(sizeof(struct item_drop));
