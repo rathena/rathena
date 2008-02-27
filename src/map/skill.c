@@ -9822,7 +9822,8 @@ int skill_unit_move_unit_group (struct skill_unit_group *group, int m, int dx, i
 	struct skill_unit *unit1;
 	struct skill_unit *unit2;
 
-	nullpo_retr(0, group);
+	if (group == NULL)
+		return 0;
 	if (group->unit_count<=0)
 		return 0;
 	if (group->unit==NULL)

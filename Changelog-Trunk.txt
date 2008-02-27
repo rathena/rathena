@@ -4,6 +4,8 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/02/27
+	* Patched an unresolved case where knocking back a bard/dancer would
+	  cause the mapserver to crash (bugreport:1043)
 	* Fixed Apple of Idun not checking for bard soul link (bugreport:1028)
 	* Fixed Advanced Adrenaline Rush not working barehanded (bugreport:1049)
 	* Disabled idle_no_autoloot setting (bugreport:1051)
