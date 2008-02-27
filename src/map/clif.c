@@ -7429,6 +7429,103 @@ void clif_feel_hate_reset(struct map_session_data *sd)
 	WFIFOSET(fd, packet_len(0x20e));
 }
 
+/*==========================================
+ * Equip window (un)tick ack
+ * R 02d9 <zero>.L <flag>.L
+ *------------------------------------------*/
+void clif_equiptickack(struct map_session_data* sd, int flag)
+{
+	int fd;
+	nullpo_retv(sd);
+	fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0x2d9));
+	WFIFOW(fd, 0) = 0x2d9;
+	WFIFOL(fd, 2) = 0;
+	WFIFOL(fd, 6) = flag;
+	WFIFOSET(fd, packet_len(0x2d9));
+}
+
+/*==========================================
+ * The player's 'view equip' state, sent during login
+ * R 02da <flag>.B
+ *------------------------------------------*/
+void clif_equipcheckbox(struct map_session_data* sd)
+{
+	int fd;
+	nullpo_retv(sd);
+	fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0x2da));
+	WFIFOW(fd, 0) = 0x2da;
+	WFIFOW(fd, 2) = (sd->status.show_equip ? 1 : 0);
+	WFIFOSET(fd, packet_len(0x2da));
+}
+
+/*==========================================
+ * Sends info about a player's equipped items
+ * R 002d7 <length>.W <name>.24B <class>.w <hairstyle>.w <up-viewid>.w <mid-viewid>.w <low-viewid>.w <haircolor>.w <cloth-dye>.w <gender>.1B {equip item}.26B*
+ *------------------------------------------*/
+void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* tsd)
+{
+	int i, n, fd;
+	nullpo_retv(sd);
+	nullpo_retv(tsd);
+	fd = sd->fd;
+	
+	WFIFOHEAD(fd, MAX_INVENTORY * 26 + 43);
+
+	WFIFOW(fd, 0) = 0x2d7;
+	safestrncpy((char*)WFIFOP(fd, 4), tsd->status.name, NAME_LENGTH);
+	WFIFOW(fd,28) = tsd->status.class_;
+	WFIFOW(fd,30) = tsd->vd.hair_style;	
+	WFIFOW(fd,32) = tsd->vd.head_top;
+	WFIFOW(fd,34) = tsd->vd.head_mid;
+	WFIFOW(fd,36) = tsd->vd.head_bottom;
+	WFIFOW(fd,38) = tsd->vd.hair_color;
+	WFIFOW(fd,40) = tsd->vd.cloth_color;
+	WFIFOB(fd,42) = tsd->vd.sex;
+	
+	for(i=0,n=0; i < MAX_INVENTORY; i++)
+	{
+		if (tsd->status.inventory[i].nameid <= 0 || tsd->inventory_data[i] == NULL)	// Item doesn't exist
+			continue;
+		if (itemdb_isstackable2(tsd->inventory_data[i])) // Is not equippable
+			continue;
+	
+		// Inventory position
+		WFIFOW(fd, n*26+43) = i + 2;
+		// Add refine, identify flag, element, etc.
+		clif_item_sub(WFIFOP(fd,0), n*26+45, &tsd->status.inventory[i], tsd->inventory_data[i], pc_equippoint(tsd, i));
+		// Add cards
+		clif_addcards(WFIFOP(fd, n*26+55), &tsd->status.inventory[i]);	
+		// Expiration date stuff, if all of those are set to 0 then the client doesn't show anything related (6 bytes)
+		memset(WFIFOP(fd, n*26+63), 0, 6);
+		
+		n++;
+	}
+
+	WFIFOW(fd, 2) = 43 + n*26;	// Set length
+	WFIFOSET(fd, WFIFOW(fd, 2));
+}
+
+/*==========================================
+ * View player equip request denied
+ * R 0291 <message>.W
+ * TODO: this looks like a general-purpose packet to print msgstringtable entries.
+ *------------------------------------------*/
+void clif_viewequip_fail(struct map_session_data* sd)
+{
+	int fd;
+	nullpo_retv(sd);
+	fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0x291));
+	WFIFOW(fd, 0) = 0x291;
+	WFIFOW(fd, 2) = 0x54d;	// This controls which message is displayed. 0x54d is the correct one. Maybe it's used for something else too?
+	WFIFOSET(fd, packet_len(0x291));
+}
+
 /// Validates one global/guild/party/whisper message packet and tries to recognize its components.
 /// Returns true if the packet was parsed successfully.
 /// Formats: 0 - <packet id>.w <packet len>.w (<name> : <message>).?B 00
@@ -7868,6 +7965,10 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			sd->state.night = 1;
 			clif_status_load(&sd->bl, SI_NIGHT, 1);
 		}
+
+#if PACKETVER >= 9
+		clif_equipcheckbox(sd);
+#endif
 
 		// Notify everyone that this char logged in [Skotlex].
 		clif_foreachclient(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 1);
@@ -11601,6 +11702,34 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 #endif
 
 /*==========================================
+ * Requesting equip of a player
+ *------------------------------------------*/
+void clif_parse_ViewPlayerEquip(int fd, struct map_session_data* sd)
+{
+	int charid = RFIFOL(fd, 2);
+	struct map_session_data* tsd = map_id2sd(charid);
+	
+	if (!tsd)
+		return;
+
+	if( tsd->status.show_equip )
+		clif_viewequip_ack(sd, tsd);
+	else
+		clif_viewequip_fail(sd);
+}
+
+/*==========================================
+ * Equip window (un)tick
+ * S 02d8 <zero?>.L <flag>.L
+ *------------------------------------------*/
+void clif_parse_EquipTick(int fd, struct map_session_data* sd)
+{
+	bool flag = (bool)RFIFOL(fd,6); // 0=off, 1=on
+	sd->status.show_equip = flag;
+	clif_equiptickack(sd, flag);
+}
+
+/*==========================================
  * パケットデバッグ
  *------------------------------------------*/
 void clif_parse_debug(int fd,struct map_session_data *sd)
@@ -11864,12 +11993,12 @@ static int packetdb_readdb(void)
 	    0,  0,  0,  0,  8,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0280
 	    0,  0,  0,  6,  0,  0,  0,  0,   0,  8, 18,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  4,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,191,  0,  0,  0,  0,  0,  0,
 	//#0x02C0
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
-	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
+	    0,  0,  0,  0,  0,  0,  6, -1,  10, 10,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	    0,  0,  0,  0,  0,  0,  0,  0,   0,  0,  0,  0,  0,  0,  0,  0,
 	};
@@ -12032,6 +12161,8 @@ static int packetdb_readdb(void)
 		{clif_parse_Mail_winopen,"mailwinopen"},
 		{clif_parse_Mail_send,"mailsend"},
 #endif
+		{clif_parse_ViewPlayerEquip,"viewplayerequip"},
+		{clif_parse_EquipTick,"equiptickbox"},
 		{NULL,NULL}
 	};
 
