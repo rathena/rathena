@@ -99,6 +99,8 @@
 //=       Updated 'setcell' desc to match latest code changes [ultramage]
 //= 3.14.20080211
 //=       Updated 'input' (new arguments and return value). [FlavioJS]
+//= 3.15.20080227
+//=       Updated 'checkweight' description slightly. [L0ne_W0lf]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -2952,6 +2954,10 @@ number of specific items does not exceed the invoking character's carrying
 capacity, and 0 otherwise. It is important to see if a player can carry the 
 items you expect to give them, failing to do that may open your script up to 
 abuse or create some very unfair errors.
+
+This fucntion, in addition to checking to see if the player is capable of
+holding a set amount of items, also ensures the player has room in their
+inventory for the item(s) they will be receciving.
 
 Like 'getitem', this function will also accept an 'english name' from the 
 database as an argument.

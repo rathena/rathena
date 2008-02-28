@@ -1,6 +1,9 @@
 Date		Added
 ======
 2008/02/27
+	* Rev 12256 Removed "F_CheckMaxCount" as it seems "checkweight". [L0ne_W0lf]
+	  preforms the aforementioned check in addition to checking weight.
+	* Updated 2004 headgear quests to use checkweight.
 	* Rev 12255 Implemented new function F_CheckMaxCount. [L0ne_W0lf]
 	- Checks if you have enough room in your inventory to accept items
 	* Updated 2004 headgear quests to fully official.

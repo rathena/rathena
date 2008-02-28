@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Dj-Yhn
 //===== Current Version: ===================================== 
-//= 1.4
+//= 1.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -31,12 +31,13 @@
 //= 17) Orc Hero Helm (in_orcs01 31 93 & 162 33)
 //===== Additional Comments: =================================
 //= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.5 Vito'd function call for checkweight. [L0ne_W0lf]
 //============================================================
 
 // Black Cat Ears
 //============================================================
 payon,115,131,3	script	Neko Neko#1	725,{
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -103,7 +104,7 @@ payon,115,131,3	script	Neko Neko#1	725,{
 // X Hairpin, Band Aid, Flower Hairpin
 //============================================================
 geffen,129,148,3	script	Argen#1	779,{
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "[Argen]";
 		mes "Hey~ why are you carrying so many items?";
 		mes "You mind sharing them with me?";
@@ -292,7 +293,7 @@ geffen,129,148,3	script	Argen#1	779,{
 // Hot-blooded Headband
 //============================================================
 yuno,300,188,5	script	Zhenbolt#1	753,{
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -387,7 +388,7 @@ yuno,300,188,5	script	Zhenbolt#1	753,{
 // Red Ribbon
 //============================================================
 prontera,165,232,3	script	Nephia#1	744,{
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -501,7 +502,7 @@ prontera,165,232,3	script	Nephia#1	744,{
 // Indian Headband
 //============================================================
 comodo,237,217,5	script	Meruntei#1	732,{
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -555,7 +556,7 @@ comodo,237,217,5	script	Meruntei#1	732,{
 // Mushroom Band
 //============================================================
 geffen,67,87,3	script	Ipore#1	700,{
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -636,7 +637,7 @@ geffen,67,87,3	script	Ipore#1	700,{
 //============================================================
 yuno,241,52,3	script	Old Blacksmith#hgear	813,{
 	//DisableItemMove
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -964,7 +965,7 @@ yuno,241,52,3	script	Old Blacksmith#hgear	813,{
 // Sea-Otter Hat
 //============================================================
 xmas,183,267,3	script	Pretty Lindsay#1	793,{
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -1079,7 +1080,7 @@ xmas,183,267,3	script	Pretty Lindsay#1	793,{
 // Teddybear Hat
 //============================================================
 xmas,175,156,3	script	Fuzzy Fuzz#1	712,{
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -1166,7 +1167,7 @@ xmas,175,156,3	script	Fuzzy Fuzz#1	712,{
 // Model Training Hat
 //============================================================
 payon_in03,8,193,4	script	Nanhyang#1	77,{
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -1326,7 +1327,7 @@ payon_in03,8,193,4	script	Nanhyang#1	77,{
 // Tulip Hairpin
 //============================================================
 geffen,83,189,5	script	Seth#1	716,{
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes " [Seth]";
 		mes "Whoa, why are you carrying so many items with you?";
 		mes "You look so heavy...! Maybe you can walk more easily if you put some of your stuff away?";
@@ -1444,7 +1445,7 @@ geffen,83,189,5	script	Seth#1	716,{
 // Party Hat, Straw Hat, Cowboy Hat, Sombrero, Beanie
 //============================================================
 xmas_in,35,30,3	script	Hat Merchant#zero	797,{
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -1734,7 +1735,7 @@ xmas_in,35,30,3	script	Hat Merchant#zero	797,{
 // Decorative Golden Bell, Crown of Ancient Queen, Crown of Mistress
 //============================================================
 yuno_in03,20,18,6	script	Nehris#1	726,{
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -1898,7 +1899,7 @@ yuno_in03,20,18,6	script	Nehris#1	726,{
 // Alarm Mask
 //============================================================
 alde_alche,88,180,0	script	Muscle Man#Alarm Mask	748,{
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "[Muscle Man]";
 		mes "Hmmm...";
 		mes "It's seems you're carrying too much stuff for me to give anything to you.";
@@ -2087,7 +2088,7 @@ OnAlarmState:
 // Drooping Cat, Smokie Leaf, Lazy Smokie, Blue Fish
 //============================================================
 morocc,273,79,4	script	Educated Traveller	99,{
-	if ((MaxWeight-Weight) < 5000 || callfunc("F_CheckMaxCount") == 1) {
+	if ((MaxWeight-Weight) < 5000 || checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're over weight -";
 		mes "- to receive more items from this NPC. -";
@@ -2523,7 +2524,7 @@ OnTouch:
 }
 
 pay_dun03,48,84,4	script	Nine Tails#Kitsune Man	762,{
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a moment! -";
 		mes "- Currently you are carrying -";
 		mes "- too many items with you. -";
@@ -2644,7 +2645,7 @@ OnMyMobDead2:
 //============================================================
 in_orcs01,31,93,1	script	Orc Warrior#1	1023,2,2,{
 OnTouch:
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -3514,7 +3515,7 @@ OnTouch:
 
 in_orcs01,162,33,1	script	Orc Hero#1	1087,2,2,{
 OnTouch:
-	if (callfunc("F_CheckMaxCount") == 1) {
+	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
