@@ -11702,6 +11702,57 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 #endif
 
 /*==========================================
+ * CASH/POINT SHOP
+ *==========================================*/
+void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd)
+{
+	int fd,i;
+
+	nullpo_retv(sd);
+	nullpo_retv(nd);
+
+	fd = sd->fd;
+	sd->npc_shopid = nd->bl.id;
+	WFIFOHEAD(fd, 200 * 11 + 12);
+	WFIFOW(fd,0) = 0x287;
+	WFIFOW(fd,2) = 12 + nd->u.shop.count*11;
+	WFIFOL(fd,4) = sd->cashPoints; // Cash Points
+	WFIFOL(fd,8) = sd->kafraPoints; // Kafra Points
+
+	for( i = 0; i < nd->u.shop.count; i++ )
+	{
+		struct item_data* id = itemdb_search(nd->u.shop.shop_item[i].nameid);
+		WFIFOL(fd,12+i*11) = nd->u.shop.shop_item[i].value;
+		WFIFOL(fd,16+i*11) = nd->u.shop.shop_item[i].value; // Discount Prize? Maybe a Discount item
+		WFIFOB(fd,20+i*11) = itemtype(id->type);
+		WFIFOW(fd,21+i*11) = ( id->view_id > 0 ) ? id->view_id : id->nameid;
+	}
+	WFIFOSET(fd,WFIFOW(fd,2));
+}
+
+void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
+{
+	int fail = 0, amount, points;
+	short nameid;
+	struct npc_data *nd;
+	nullpo_retv(sd);
+
+	nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
+	nameid = RFIFOW(fd,2);
+	amount = RFIFOW(fd,4);
+	points = RFIFOL(fd,6); // Not Implemented. Should be 0
+
+	fail = npc_cashshop_buy(sd, nameid, amount, points);
+
+	WFIFOHEAD(fd,12);
+	WFIFOW(fd,0) = 0x289;
+	WFIFOL(fd,2) = sd->cashPoints;
+	WFIFOL(fd,6) = sd->kafraPoints;
+	WFIFOW(fd,10) = fail;
+	WFIFOSET(fd,12);
+}
+
+/*==========================================
  * Requesting equip of a player
  *------------------------------------------*/
 void clif_parse_ViewPlayerEquip(int fd, struct map_session_data* sd)
@@ -12161,6 +12212,7 @@ static int packetdb_readdb(void)
 		{clif_parse_Mail_winopen,"mailwinopen"},
 		{clif_parse_Mail_send,"mailsend"},
 #endif
+		{clif_parse_cashshop_buy,"cashshopbuy"},
 		{clif_parse_ViewPlayerEquip,"viewplayerequip"},
 		{clif_parse_EquipTick,"equiptickbox"},
 		{NULL,NULL}

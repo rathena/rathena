@@ -188,7 +188,7 @@ enum bl_type {
 #define BL_CHAR (BL_PC|BL_MOB|BL_HOM)
 #define BL_ALL 0xfff
 
-enum npc_subtype { WARP, SHOP, SCRIPT };
+enum npc_subtype { WARP, SHOP, SCRIPT, CASHSHOP };
 
 enum {
 	RC_FORMLESS=0,
@@ -781,6 +781,8 @@ struct map_session_data {
 	int duel_invite;
 
 	char away_message[128]; // [LuzZza]
+
+	int cashPoints, kafraPoints;
 
 	// Mail System [Zephyrus]
 	struct {

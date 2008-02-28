@@ -932,6 +932,9 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 	case SHOP:
 		clif_npcbuysell(sd,nd->bl.id);
 		break;
+	case CASHSHOP:
+		clif_cashshop_show(sd,nd);
+		break;
 	case SCRIPT:
 		run_script(nd->u.scr.script,0,sd->bl.id,nd->bl.id);
 		break;
@@ -1010,6 +1013,77 @@ static int npc_buylist_sub(struct map_session_data* sd, int n, unsigned short* i
 		pc_setreg(sd,regkey2+(i<<24),(int)item_list[i*2]);
 	}
 	npc_event(sd, npc_ev, 0);
+	return 0;
+}
+/*==========================================
+ * Cash Shop Buy
+ *------------------------------------------*/
+int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int points)
+{
+	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
+	struct item_data *item;
+	int i, prize, w;
+
+	if( !nd || nd->subtype != CASHSHOP )
+		return 1;
+
+	if( sd->state.trading )
+		return 4;
+
+	if( (item = itemdb_search(nameid)) == NULL )
+		return 5; // Invalid Item
+
+	ARR_FIND(0, nd->u.shop.count, i, nd->u.shop.shop_item[i].nameid == nameid);
+	if( i == nd->u.shop.count )
+		return 5;
+	if( nd->u.shop.shop_item[i].value <= 0 )
+		return 5;
+
+	if(!itemdb_isstackable(nameid) && amount > 1)
+	{
+		ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %d!\n",
+			sd->status.name, sd->status.account_id, sd->status.char_id, amount, nameid);
+		amount = 1;
+	}
+
+	switch( pc_checkadditem(sd, nameid, amount) )
+	{
+		case ADDITEM_NEW:
+			if( pc_inventoryblank(sd) == 0 )
+				return 3;
+			break;
+		case ADDITEM_OVERAMOUNT:
+			return 3;
+	}
+
+	w = item->weight * amount;
+	if( w + sd->weight > sd->max_weight )
+		return 3;
+
+	prize = nd->u.shop.shop_item[i].value * amount;
+	if( points > prize )
+		points = prize;
+
+	if( sd->cashPoints < prize - points )
+		return 6;
+	if( sd->kafraPoints < points )
+		return 6;
+
+	pc_paycash(sd, prize, points);
+
+	if( !pet_create_egg(sd, nameid) )
+	{
+		struct item item_tmp;
+		memset(&item_tmp, 0, sizeof(struct item));
+		item_tmp.nameid = nameid;
+		item_tmp.identify = 1;
+
+		pc_additem(sd,&item_tmp, amount);
+	}
+
+	if(log_config.enable_logs&0x20)
+		log_pick_pc(sd, "S", nameid, amount, NULL);
+
 	return 0;
 }
 
@@ -1266,7 +1340,7 @@ int npc_unload(struct npc_data* nd)
 	npc_chat_finalize(nd); // deallocate npc PCRE data structures
 #endif
 
-	if( nd->subtype == SHOP )
+	if( nd->subtype == SHOP || nd->subtype == CASHSHOP )
 		aFree(nd->u.shop.shop_item);
 	else
 	if( nd->subtype == SCRIPT )
@@ -1547,7 +1621,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	return strchr(start,'\n');// continue
 }
 
-/// Parses a shop npc.
+/// Parses a shop/cashshop npc.
 static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const char* start, const char* buffer, const char* filepath)
 {
 	//TODO: could be rewritten to NOT need this temp array [ultramage] 
@@ -1557,12 +1631,17 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	int x, y, dir, m, i;
 	struct npc_data *nd;
 
+	enum npc_subtype type = SHOP;
+	if( !strcasecmp(w2,"cashshop") )
+		type = CASHSHOP;
+
 	if( strcmp(w1,"-") == 0 )
 	{// 'floating' shop?
-		x = 0; y = 0; dir = 0; m = -1;
+		x = y = dir = 0;
+		m = -1;
 	}
 	else
-	{// w1=<map name>,<x>,<y>,<facing>
+	{
 		char mapname[32];
 		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4
 		||	strchr(w4, ',') == NULL )
@@ -1570,6 +1649,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			ShowError("npc_parse_shop: Invalid shop definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			return strchr(start,'\n');// skip and continue
 		}
+		
 		m = map_mapname2mapid(mapname);
 	}
 
@@ -1583,14 +1663,25 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			ShowError("npc_parse_shop: Invalid item definition in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			break;
 		}
-		id = itemdb_search(nameid);
+
+		if( (id = itemdb_search(nameid)) == NULL )
+		{
+			ShowError("npc_parse_shop: Invalid sell item in file '%s', line '%d'. Ignoring the rest of the line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
+			break;
+		}
+
 		if( value < 0 )
-			value = id->value_buy;
-		if( value*0.75 < id->value_sell*1.24 )
+		{
+			if( type == SHOP ) value = id->value_buy;
+			else value = 0; // Cashshop don't have a "buy prize" in the item_db
+		}
+
+		if( type == SHOP && value*0.75 < id->value_sell*1.24 )
 		{// Expoit possible: you can buy and sell back with profit
 			ShowWarning("npc_parse_shop: Item %s [%d] discounted buying price (%d->%d) is less than overcharged selling price (%d->%d) at file '%s', line '%d'.\n",
 				id->name, nameid, value, (int)(value*0.75), id->value_sell, (int)(id->value_sell*1.24), filepath, strline(buffer,start-buffer));
 		}
+
 		//for logs filters, atcommands and iteminfo script command
 		if( id->maxchance <= 0 )
 			id->maxchance = 10000; //10000 (100% drop chance)would show that the item's sold in NPC Shop
@@ -1620,7 +1711,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 
 	++npc_shop;
 	nd->bl.type = BL_NPC;
-	nd->subtype = SHOP;
+	nd->subtype = type;
 	if( m >= 0 )
 	{// normal shop npc
 		map_addnpc(m,nd);
@@ -2605,7 +2696,7 @@ void npc_parsesrcfile(const char* filepath)
 		{
 			p = npc_parse_warp(w1,w2,w3,w4, p, buffer, filepath);
 		}
-		else if( strcasecmp(w2,"shop") == 0 && count > 3 )
+		else if( (!strcasecmp(w2,"shop") || !strcasecmp(w2,"cashshop")) && count > 3 )
 		{
 			p = npc_parse_shop(w1,w2,w3,w4, p, buffer, filepath);
 		}

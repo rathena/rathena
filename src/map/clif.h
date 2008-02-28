@@ -411,4 +411,6 @@ void clif_Mail_refreshinbox(struct map_session_data *sd);
 void clif_Mail_getattachment(int fd, uint8 flag);
 #endif
 
+void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd);
+
 #endif /* _CLIF_H_ */

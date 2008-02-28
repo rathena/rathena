@@ -990,7 +990,7 @@ packet_ver: 22
 0x01fd,15,repairitem,2
 
 //2007-02-27aSakexe to 2007-10-02aSakexe
-0x0288,10
+0x0288,10,cashshopbuy,2:4:6
 0x0289,12
 0x02a6,22
 0x02a7,22
