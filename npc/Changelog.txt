@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/02/28
+	* Rev 12261 Added dialog from euRO for "Frozen Boy" in Rachel. [L0ne_W0lf]
 	* Rev 12259 Updated Alchemist Guild Dealer. [L0ne_W0lf]
 	* Rev 12258 Implemented several "checkweights" in other NPCs. [L0ne_W0lf]
 	* Rev 12257 Implemented several "checkweight" NPC merchants. [L0ne_W0lf]

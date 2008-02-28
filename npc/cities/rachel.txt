@@ -4,7 +4,7 @@
 //= First Version: Tsuyuki and Harp
 //= iRO Version: L0ne_W0lf
 //===== Current Version: =====================================
-//= 0.7
+//= 0.8
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -15,12 +15,27 @@
 //= possibly missing some NPCs and missing all quests.
 //= 0.6 Removed Inn Keeper (it's in inn.txt), name duplicates [Lupus]
 //= 0.7 Total update of most if not all NPCs. [L0ne_W0lf]
+//= 0.8 Updated "Frozen Boy" dialog. (euRO) [L0ne_W0lf]
 //============================================================
 
 //===== Set 1 ================================================
 ice_dun04,33,166,3	script	Frozen Boy	925,{
 	cutin "ra_sboy.bmp",2;
-	mes "Missing dialog.";
+	mes "["+strcharinfo(0)+"]";
+	mes "This boy must be the one who Ktullanux tried to protect.";
+	next;
+	mes "- The boy was frozen inside a giant ice pole, and he looks as if he is in sleep rather than dead. -";
+	next;
+	mes "- You felt freezing as you come closer to the giant ice pole that held the boy within,";
+	mes "- but for some reason, you felt a mysterious power from the pole. -";
+	next;
+	mes "- The boy appeared to be snowy white, and beautiful from the head to the toe. -";
+	next;
+	mes "- You wondered why a young boy had to be confined within this isolated cave, -";
+	mes "- you instinctively knew that no mage in this world would be able to release him from the ice pole.";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "What happened to this boy?";
 	close2;
 	cutin "",255;
 	end;
