@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.9b
+//= 3.0
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -40,6 +40,7 @@
 //= 2.9 Fixed an indent and added a 'break;' in hopes of 'fixing' an error [L0ne_W0lf]
 //= 2.9a Corrected a Typo error ";;". [Samuray22]
 //= 2.9b Moved a wrong 'break'. [Zephyrus_cr]
+//= 3.0 Now uses enable and disable waitingroomevent. [L0ne_W0lf]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -1083,19 +1084,20 @@ in_moc_16,21,165,2	script	Standby Room#ASNTEST	725,{
 OnInit:
 	disablenpc "Standby Room#ASNTEST";
 	waitingroom "Standby Room",10,"Standby Room#ASNTEST::OnStartArena",1;
+	enablewaitingroomevent;
 	end;
 
 OnStartArena:
-	set $@SinUsers, getareausers("in_moc_16", 60, 136, 93, 177);
-	set $@SinUsers, $@SinUsers + getareausers("in_moc_16", 64, 46, 111, 105);
-	if ($@SinUsers > 0) end;		// stops the rest of the script from running if there is somebody taking the test
-
-	if ((getwaitingroomstate(33)) == 0) end;		// stops the rest of the script from running if there is no one in the waiting room
 	killmonsterall "in_moc_16";
 	warpwaitingpc "in_moc_16", 66, 151;
 	donpcevent "Beholder#ASNTEST::OnEnable";
 	donpcevent "Keeper of the Door#ASN::OnDisable";
 	set getvariableofnpc(.DisableTraps,"Beholder#ASNTEST"),0;
+	disablewaitingroomevent;
+	end;
+
+OnStart:
+	enablewaitingroomevent;
 	end;
 }
 
@@ -1246,14 +1248,16 @@ OnMyMobDead:
 		set .DisableTraps,1;
 		stopnpctimer;
 	}
-	else
+	else {
 		mapannounce "in_moc_16","Okay, you're doing good! Hang in there, you're almost there!",bc_map;
+	}
 	end;
 
 OnMyMobDead2:
 	mapannounce "in_moc_16",strcharinfo(0) + "! You made a mistake! I'm bringing you back!",bc_map;
 	set ASSIN_Q,2;
 	warp "in_moc_16",19,161;
+	donpcevent "Standby Room#ASNTEST::OnStart";
 	donpcevent "Beholder#ASNTEST::OnDisable";
 	end;
 
@@ -1314,6 +1318,7 @@ OnTimer185000:
 OnTimer187000:
 	areawarp "in_moc_16",60,136,93,177,"in_moc_16",19,161;
 	donpcevent "Beholder#ASNTEST::OnDisable";
+	donpcevent "Standby Room#ASNTEST::OnStart";
 	end;
 }
 
@@ -1324,6 +1329,7 @@ OnTouch:
 		set ASSIN_Q,2;
 		warp "in_moc_16",19,161;
 		donpcevent "Beholder#ASNTEST::OnDisable";
+		donpcevent "Standby Room#ASNTEST::OnStart";
 	}
 	end;
 }

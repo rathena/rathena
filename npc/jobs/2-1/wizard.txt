@@ -4,7 +4,7 @@
 //= (Aegis) Translated by yoshiki, converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 2.6
+//= 2.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -17,6 +17,8 @@
 //= 2.5b Fixed tests calling on a non-existant label in "Room of x#Failed" npcs. [L0ne_W0lf]
 //= 2.5c Bug fixes. Cleaned up some NPCs slightly. [L0ne_W0lf]
 //= 2.6 Fixed Water Room not warping on time-up. [L0ne_W0lf]
+//= 2.7 Now uses enable and disable waitingroomevent. [L0ne_W0lf]
+//= 	Other monir fixes to various NPCs.
 //============================================================ 
 
 gef_tower,111,37,4	script	Wizard Guildsman	70,{
@@ -1049,19 +1051,19 @@ job_wiz,50,165,4	script	Arena Assistant	700,{
 job_wiz,50,165,4	script	Waiting Room#wiz	700,{
 OnInit:
 	waitingroom "Waiting Room",20,"Waiting Room#wiz::OnStartArena",1;
+	enablewaitingroomevent;
 	end;
 
 OnStartArena:
-	set $@WzUsers, getareausers("job_wiz", 98, 154, 129, 185);			// get user count for first lvl
-	set $@WzUsers, $@WzUsers + getareausers("job_wiz", 100, 82, 131, 113);	// get user count for second lvl + first lvl
-	set $@WzUsers, $@WzUsers + getareausers("job_wiz", 30, 82, 61, 113);	// get user count for third lvl + second lvl + first lvl
-	if ($@WzUsers > 0) end;
-
-	if ((getwaitingroomstate(33)) == 0) end;		// finds out if there is anyone in the waiting room
 	killmonsterall "job_wiz";
 	warpwaitingpc "job_wiz",114,169;
 	donpcevent "Room of Water::OnEnable";
 	disablenpc "Waiting Room#wiz";
+	disablewaitingroomevent;
+	end;
+
+OnStart:
+	enablewaitingroomevent;
 	end;
 }
 
@@ -1153,7 +1155,8 @@ OnTimer185000:
 OnTimer186000:
 	disablenpc "Room of Water#Failed";
 	donpcevent "Room of Water::OnDisable";
-	donpcevent "Waiting Room#wiz::OnEnable";
+	donpcevent "Waiting Room#wiz::OnStart";
+	end;
 }
 
 job_wiz,1,2,1	script	Room of Water#Door	66,{
@@ -1218,7 +1221,8 @@ OnTimer62000:
 OnTimer63000:
 	disablenpc "Room of Water#Failed";
 	donpcevent "Room of Water#Door::OnDisable";
-	donpcevent "Waiting Room#wiz::OnEnable";
+	donpcevent "Waiting Room#wiz::OnStart";
+	end;
 }
 
 job_wiz,114,169,0	script	Room of Water#Failed	-1,16,16,{
@@ -1321,7 +1325,8 @@ OnTimer185000:
 OnTimer186000:
 	disablenpc "Room of Earth#Failed";
 	donpcevent "Room of Earth::OnDisable";
-	donpcevent "Waiting Room#wiz::OnEnable";
+	donpcevent "Waiting Room#wiz::OnStart";
+	end;
 }
 
 job_wiz,1,4,1	script	Room of Earth#Door	66,{
@@ -1388,7 +1393,8 @@ OnTimer62000:
 OnTimer63000:
 	disablenpc "Room of Earth#Failed";
 	donpcevent "Room of Earth#Door::OnDisable";
-	donpcevent "Waiting Room#wiz::OnEnable";
+	donpcevent "Waiting Room#wiz::OnStart";
+	end;
 }
 
 job_wiz,116,97,0	script	Room of Earth#Failed	-1,16,16,{
@@ -1489,7 +1495,8 @@ OnTimer185000:
 OnTimer186000:
 	disablenpc "Room of Fire#Failed";
 	donpcevent "Room of Fire::OnDisable";
-	donpcevent "Waiting Room#wiz::OnEnable";
+	donpcevent "Waiting Room#wiz::OnStart";
+	end;
 }
 
 job_wiz,1,6,1	script	Room of Fire#Door	66,{
@@ -1517,7 +1524,6 @@ OnMyMobDead:
 	if (.MyMobs < 1) {
 		mapannounce "job_wiz","Congratulations, " + strcharinfo(0) + ". You have passed the job change test.",bc_map;
 		set WIZ_Q,7;
-		donpcevent "Room of Fire#Door::OnDisable";
 		donpcevent "Room of Fire#Door::OnDisable";
 		donpcevent "Test Helper#wiz::OnEnable";
 		stopnpctimer;
@@ -1560,7 +1566,7 @@ OnTimer122000:
 OnTimer123000:
 	disablenpc "Room of Fire#Failed";
 	donpcevent "Room of Fire#Door::OnDisable";
-	donpcevent "Waiting Room#wiz::OnEnable";
+	donpcevent "Waiting Room#wiz::OnStart";
 }
 
 job_wiz,46,99,0	script	Room of Fire#Failed	-1,16,16,{
@@ -1606,7 +1612,7 @@ OnTimer7000:
 
 OnTimer9000:
 	donpcevent "Test Helper#wiz::OnDisable";
-	donpcevent "Waiting Room#wiz::OnEnable";
+	donpcevent "Waiting Room#wiz::OnStart";
 	stopnpctimer;
 }
 

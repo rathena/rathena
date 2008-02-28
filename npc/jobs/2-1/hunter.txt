@@ -5,7 +5,7 @@
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
 //===== Current Version: ===================================== 
-//= 3.0a
+//= 3.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -44,6 +44,7 @@
 //= 2.9a Deleted unused variables. [Samuray22]
 //= 3.0 Fixed a small typo, "jo" instead of "Job". [L0ne_W0lf]
 //= 3.0a Corrected a Typo error ";;". [Samuray22]
+//= 3.1 Now uses enable and disable waitingroomevent. [L0ne_W0lf]
 //============================================================ 
 
 // Notices in the old Hunter Guild.
@@ -959,7 +960,7 @@ OnTouch:
 			mapannounce "job_hunte",strcharinfo(0)+ " has resigned. Next person, please enter.",bc_map;
 			mes "[Guide]";
 			mes "Very well. I'll send you to Payon. Hope to see you next time. Don't forget to save when you leave.";
-			donpcevent "Waiting Room#hnt::OnDisable";
+			donpcevent "Waiting Room#hnt::OnStart";
 			close2;
 			set HNTR_Q,13;
 			savepoint "payon",104,99;
@@ -981,17 +982,19 @@ job_hunte,178,38,1	script	Waiting Room#hnt	66,{
 
 OnInit:
 	waitingroom "Waiting Room", 10,"Waiting Room#hnt::OnStartArena",1;
+	enablewaitingroomevent;
 	end;
 
 OnStartArena:
-	set $@HntUsers, getareausers("job_hunte", 50, 64, 129, 143);
-	if ($@HntUsers > 0) end;			// stops the rest of the script from running if there is somebody taking the test
-
-	if ((getwaitingroomstate(33)) == 0) end;			// stops the rest of the script from running if there is no one in the waiting room
 	killmonsterall "job_hunte";
 	warpwaitingpc "job_hunte", 90, 67;
 	donpcevent "Manager#hnt::OnEnable";
 	donpcevent "Switch#hnt::OnDisable";
+	disablewaitingroomevent;
+	end;
+
+OnStart:
+	enablewaitingroomevent;
 	end;
 }
 
@@ -1045,27 +1048,30 @@ OnEnable:
 	end;
 
 OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
 	if (.MyMobs < 3) {
 		mapannounce "job_hunte","Okay, good job... Now, find the switch in the center of the map!! Be careful of the traps!!",bc_map;
 		set HNTR_Q,14;
 		donpcevent "switch#hnt::OnEnable";
 		donpcevent "Manager#hnt::OnDisable";
 	}
-	else
+	else {
 		mapannounce "job_hunte","Okay~ You're almost there!!",bc_map;
-		set .MyMobs,.MyMobs-1;
+	}
 	end;
 
 OnMyMobDead2:
 	mapannounce "job_hunte",strcharinfo(0)+ "!! You made a mistake...Please try again.",bc_map;
 	set HNTR_Q,13;
 	warp "job_hunte",176,22;
-	donpcevent "Waiting Room#hnt::OnDisable";
-	donpcevent "Manager#hnt::OnDisable";
+	donpcevent "Waiting Room#hnt::OnStart";
+	donpcevent "Manager#hnt::OnReset";
 	end;
 
-OnDisable:
+OnReset:
 	stopnpctimer;
+
+OnDisable:
 	killmonsterall "job_hunte";
 	disablenpc "Manager#hnt";
 	end;
@@ -1147,8 +1153,8 @@ OnTimer195000:
 	end;
 
 OnTimer197000:
-	donpcevent "Manager#hnt::OnDisable";
-	donpcevent "Waiting Room#hnt::OnDisable";
+	donpcevent "Manager#hnt::OnReset";
+	donpcevent "Waiting Room#hnt::OnStart";
 	stopnpctimer;
 	end;
 }
@@ -1165,7 +1171,7 @@ OnTouch:
 		mes "has now been activated.^000000";
 		close2;
 		mapannounce "job_hunte"," !! Escape Warp Portal activation complete. !! ",bc_map;
-		donpcevent "exit#hnttest::OnEnable";
+		enablenpc "exit#hnttest";
 		end;
 	case 2:
 		mes "^3355FFCanceling";
@@ -1181,12 +1187,12 @@ OnTouch:
 		close2;
 		set HNTR_Q,13;
 		warp "job_hunte",176,22;
-		donpcevent "Waiting Room#hnt::OnDisable";
+		donpcevent "Waiting Room#hnt::OnStart";
 		end;
 	}
 
 OnDisable:
-	donpcevent "exit#hnttest::OnDisable";
+	disablenpc "exit#hnttest";
 	disablenpc "Switch#hnt";
 	end;
 
@@ -1200,16 +1206,8 @@ OnInit:
 	disablenpc "exit#hnttest";
 	end;
 
-OnEnable:
-	enablenpc "exit#hnttest";
-	end;
-
-OnDisable:
-	disablenpc "exit#hnttest";
-	end;
-
 OnTouch:
-	donpcevent "Waiting Room#hnt::OnDisable";
+	donpcevent "Waiting Room#hnt::OnStart";
 	set HNTR_Q,16;
 	savepoint "payon",104,99;
 	if (rand(1))
@@ -1357,8 +1355,8 @@ OnTouch:
 	}
 	set HNTR_Q,13;
 	warp "job_hunte",176,22;
-	donpcevent "Waiting Room#hnt::OnDisable";
-	donpcevent "Manager#hnt::OnDisable";
+	donpcevent "Waiting Room#hnt::OnStart";
+	donpcevent "Manager#hnt::OnReset";
 	end;
 }
 
@@ -1593,8 +1591,8 @@ OnTouch:
 	mapannounce "job_hunte",strcharinfo(0) + ", has failed me! Go back to where you started!",bc_map;
 	set HNTR_Q,13;
 	warp "job_hunte",176,22;
-	donpcevent "Waiting Room#hnt::OnDisable";
-	donpcevent "Manager#hnt::OnDisable";
+	donpcevent "Waiting Room#hnt::OnStart";
+	donpcevent "Manager#hnt::OnReset";
 	end;
 }
 

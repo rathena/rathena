@@ -4,7 +4,7 @@
 //= Kalen - Original jAthena
 //= Fredzilla - Converted, Lupus
 //===== Current Version: ===================================== 
-//= 3.2a
+//= 3.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 3.2 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=	No longer uses function "F_BlockHigh"
 //= 3.2a Deleted unused variables. [Samuray22]
+//= 3.3 Updated waiting room. (Removes global var) [L0ne_W0lf]
 //============================================================
 
 comodo,180,153,4	script	Sonotora#1	90,{
@@ -871,10 +872,10 @@ job_duncer,95,93,4	script	Bijou#da	101,{
 job_duncer,32,154,1	script	Waiting Room#dance	66,{
 OnInit:
 	waitingroom "Waiting Room",20,"Waiting Room#dance::OnStartArena",1;
+	enablewaitingroomevent;
 	end;
 
 OnStartArena:
-	disablewaitingroomevent;
 	disablenpc "dance#up";
 	disablenpc "dance#down";
 	disablenpc "dance#left";
@@ -883,10 +884,7 @@ OnStartArena:
 	donpcevent "dance#return::OnDisable";
 	warpwaitingpc "job_duncer",69,110,1;
 	donpcevent "Bijou#dance_timer::OnEnable";
-	set .Dance_PID,$@warpwaitingpc[0];
-	if (attachrid(.Dance_PID) == 0) {
-		enablewaitingroomevent;
-	}
+	disablewaitingroomevent;
 	end;
 
 OnEnable:
@@ -1207,6 +1205,7 @@ OnTimer89000:
 	donpcevent "dance#return::OnEnable";
 	donpcevent "dance#poring::OnDisable";
 	stopnpctimer;
+	end;
 }
 
 job_duncer,69,110,0	script	dance#return	-1,1,4,{
@@ -1225,6 +1224,7 @@ OnDisable:
 OnEnable:
 	enablenpc "dance#return";
 	donpcevent "dance#return#2::OnEnable";
+	end;
 }
 
 job_duncer,66,110,0	script	dance#return#2	-1,1,1,{
@@ -1240,6 +1240,7 @@ OnDisable:
 OnEnable:
 	enablenpc "dance#return#2";
 	donpcevent "dance#return#3::OnEnable";
+	end;
 }
 
 job_duncer,72,110,0	script	dance#return#3	-1,1,1,{
@@ -1255,6 +1256,7 @@ OnDisable:
 OnEnable:
 	enablenpc "dance#return#3";
 	donpcevent "Waiting Room#dance::OnEnable";
+	end;
 }
 
 // Dance Move Triggers
@@ -1285,6 +1287,8 @@ OnMyMobDead:
 
 OnDisable:
 	killmonsterall "job_duncer";
+	end;
+
 }
 
 // Backup Dancers

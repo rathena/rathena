@@ -5,7 +5,7 @@
 //= Unknown Translator (1.0)
 //= Darkchild (1.2)
 //===== Current Version: ===================================== 
-//= 2.4a
+//= 2.5
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -19,6 +19,7 @@
 //= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.4 Fixes bug with first room monsters not being reset. [L0ne_W0lf]
 //= 2.4a Deleted unused variables. [Samuray22]
+//= 2.5 Updated waiting room. (Removes global var) [L0ne_W0lf]
 //============================================================ 
 
 yuno_in02,38,61,5	script	Dean of the Academy#sa	743,{
@@ -2469,23 +2470,18 @@ job_sage,50,165,4	script	Waiting Room#sg	700,{
 OnInit:
 	disablenpc "Waiting Room#sg";
 	waitingroom "Waiting Room",20,"Waiting Room#sg::OnStartArena",1;
+	enablewaitingroomevent;
 	end;
 
 OnStartArena:
-	disablewaitingroomevent;
 	warpwaitingpc "job_sage",116,97;
-	set .Sage_pid,$@warpwaitingpc[0];
-	if (attachrid(.Sage_pid) == 0) {
-		enablewaitingroomevent;
-		end;
-	}
 	donpcevent "Arena#1::OnEnable";
+	disablewaitingroomevent;
 	end;
 
 OnEnable:
 	enablewaitingroomevent;
 	end;
-
 }
 
 -	script	Arena#1	66,{
@@ -2580,6 +2576,8 @@ OnTimer185000:
 OnTimer186000:
 	disablenpc "Arena#1";
 	donpcevent "Waiting Room#sg::OnEnable";
+	stopnpctimer;
+	end;
 }
 
 -	script	Arena#2	-1,{
@@ -2680,6 +2678,8 @@ OnTimer185000:
 OnTimer186000:
 	disablenpc "Arena#2";
 	donpcevent "Waiting Room#sg::OnEnable";
+	stopnpctimer;
+	end;
 }
 
 -	script	Arena#Doorkeeper	-1,{
@@ -2745,6 +2745,8 @@ OnTimer62000:
 OnTimer63000:
 	disablenpc "Arena#Doorkeeper";
 	donpcevent "Waiting Room#sg::OnEnable";
+	stopnpctimer;
+	end;
 }
 
 -	script	Arena#3	-1,{

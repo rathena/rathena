@@ -4,7 +4,7 @@
 //= Made by: Black Dragon
 //= Converted by: Shin
 //===== Current Version: ===================================== 
-//= 2.9a
+//= 3.0
 //===== Compatible With: ===================================== 
 //= eAthena  SVN
 //===== Description: ========================================= 
@@ -28,6 +28,7 @@
 //= 2.8 Fixed a little minor bug. [Samuray22]
 //= 2.9 Minor fixes, typos, an incorrect answer. Thanks to yyCC. [L0ne_W0lf]
 //= 2.9a Deleted unused variables. [Samuray22]
+//= 3.0 Updated waiting room. (Removes global var) [L0ne_W0lf]
 //============================================================
 
 
@@ -1199,16 +1200,19 @@ job_cru,24,187,2	script	Waiting Room#cr1	700,{
 
 OnInit:
 	disablenpc "Waiting Room#cr1";
-	waitingroom "Waiting Room",20,"Waiting Room#cr1::OnStart",1;
+	waitingroom "Waiting Room",20,"Waiting Room#cr1::OnStartArena",1;
+	enablewaitingroomevent;
+	end;
+
+OnStartArena:
+	warpwaitingpc "job_cru",168,21;
+	donpcevent "Monster Summon#cr0::OnStart";
+	disablewaitingroomevent;
 	end;
 
 OnStart:
-	if (getareausers("job_cru", 160, 16, 190, 190)) end;
-	if (!getwaitingroomstate(33)) end;
-	warpwaitingpc "job_cru",168,21;
-	donpcevent "Monster Summon#cr0::OnStart";
+	enablewaitingroomevent;
 	end;
-
 }
 
 job_cru,168,17,0	script	Zombie Guide	-1,2,2,{

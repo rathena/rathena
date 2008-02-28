@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= nestor_zulueta (Fusion), converted by Darkchild
 //===== Current Version: ===================================== 
-//= 2.5
+//= 2.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //= 2.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=	No longer uses function "F_BlockHigh"
 //= 2.6 Corrected a bug in advanced class checking. [L0ne_W0lf]
+//= 2.7 Added missing checkweights. [L0ne_W0lf]
 //============================================================ 
 
 alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
@@ -764,16 +765,14 @@ L_AskQuestions:
 }
 
 alde_alche,13,15,7	script	Studying Man#am	750,{
-	//set max_max_c,1201;
-	//if (max_max_c == 1) {
-	//	mes "- Wait a minute! -";
-	//	mes "- Currently you are carrying -";
-	//	mes "- too many items with you. -";
-	//	mes "- Please come back again -";
-	//	mes "- after you store some items into kafra storage. -";
-	//	close;
-	//	return
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you are carrying -";
+		mes "- too many items with you. -";
+		mes "- Please come back again -";
+		mes "- after you store some items into kafra storage. -";
+		close;
+	}
 	mes "[Darwin]";
 	if (BaseJob != Job_Merchant) {
 		if (BaseJob == Job_Alchemist) {
@@ -1736,15 +1735,14 @@ alde_alche,101,184,4	script	Master Alchemist#am	122,{
 }
 
 alde_alche,145,19,1	script	Chief Researcher#am	57,{
-	//set max_max_c,1201;
-	//if (max_max_c == 1) {
-	//	mes "- Wait a minute! -";
-	//	mes "- Currently you are carrying -";
-	//	mes "- too many items with you. -";
-	//	mes "- Please come back again -";
-	//	mes "- after you store some items into kafra storage. -";
-	//	close;
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a minute! -";
+		mes "- Currently you are carrying -";
+		mes "- too many items with you. -";
+		mes "- Please come back again -";
+		mes "- after you store some items into kafra storage. -";
+		close;
+	}
 	if (ALCH_Q > 19 && ALCH_Q < 22) {
 		if (ALCH_Q == 20) {
 			mes "[Nicholas Flamel]";
