@@ -25,13 +25,12 @@
 //============================================================
 
 payon_in01,5,134,5	script	Inventor Jaax	89,{
-	//set max_max_c1,CheckMaxCount;
-	//if (max_max_c1 == 1) {
-	//	mes "[Inventor Jaax]";
-	//	mes "Hey, you're carrying";
-	//	mes "way too much stuff. Why don't you stash it away in Kafra Storage? We can talk after you do that, right?";
-	//	close;
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "[Inventor Jaax]";
+		mes "Hey, you're carrying";
+		mes "way too much stuff. Why don't you stash it away in Kafra Storage? We can talk after you do that, right?";
+		close;
+	}
 	set .@now_weight,MaxWeight-Weight;
 	if (.@now_weight < 2000) {
 		mes "[Inventor Jaax]";

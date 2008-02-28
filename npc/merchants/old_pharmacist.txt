@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= DZeroX
 //===== Current Version: =====================================
-//= 1.1b
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN Trunk
 //===== Description: =========================================
@@ -20,9 +20,18 @@
 //=       the official information. [DZeroX]
 //= 1.1a Removed .GATs [Lupus]
 //= 1.1b Fixed a bug in Orange Potion creating. Copy&Pasting = bad. [L0ne_W0lf]
+//= 1.2 Added checkweight, and input min/max values. [L0ne_W0lf]
 //============================================================
 
 alberta_in,16,28,4	script	Old Pharmacist	61,{
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a moment! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please come back later -";
+		mes "- after you put some items into kafra storage. -";
+		close;
+	}
 	mes "[Old Pharmacist]";
 	mes "Err....Are you a customer...?";
 	switch(select("Make Potion","Talk.","Instruction of making potions","Cancel")) {
@@ -87,7 +96,7 @@ alberta_in,16,28,4	script	Old Pharmacist	61,{
 								next;
 								mes "[Old Pharmacist]";
 								mes "Then pick a number below 100. If you don't want any, just enter '0'. With the materials you have, you can make about "+.@max+" potions.";
-								input .@amount;
+								input .@amount,0,101;
 								if (.@amount == 0) {
 									next;
 									mes "[Old Pharmacist]";

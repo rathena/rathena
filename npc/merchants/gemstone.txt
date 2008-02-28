@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.2
 //===== Compatible With: ===================================== 
 //= eAhena SVN
 //===== Description: ========================================= 
@@ -14,15 +14,15 @@
 //=	Any notes pertaining to the prior trader may be found
 //=	in the cities/payon.txt
 //= 1.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.2 Updated input with min/max values. [L0ne_W0lf]
+//=	Added a checkweight. 
 //============================================================ 
 
 payon,173,238,5	script	Jade#pay	754,{
-	//Ensure the player can hold at least one item
-	//set max_max_c,CheckMaxCount;
-	//if (max_max_c == 1) {
-	//	mes "^3355FFWait a second! Right now, you're carrying too many items with you. Please come back after putting some of your things into Kafra Storage.^000000";
-	//	close;
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FFWait a second! Right now, you're carrying too many items with you. Please come back after putting some of your things into Kafra Storage.^000000";
+		close;
+	}
 	mes "[Jade]";
 	mes "Bring me two";
 	mes "Gemstones of the";
@@ -75,7 +75,7 @@ S_TradeGems:
 			mes "that you can enter is 100.";
 			next;
 			while(1) {
-				input .@input;
+				input .@input,0,101;
 				if (.@input == 0) {
 					mes "[Jade]";
 					mes "None at all?";

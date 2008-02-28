@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= ???, eAthena Team
 //===== Current Version: =====================================
-//= 1.3
+//= 1.4
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -14,11 +14,12 @@
 //=	Made it easier to add new items to exhange list
 //=	meaning only the exchange is done in a function now.
 //= 1.3 Fixed dialog mix-up in function. [L0ne_W0lf]
+//= 1.4 Added checkweight, and input min/max values. [L0ne_W0lf]
 //============================================================
 
 prontera,123,102,5	script	Merchant#pron	85,{
 	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 6301) {
+	if (.@now_weight < 6301 || checkweight(1201,1) == 0) {
 		mes "[Merchant]";
 		mes "Haha!";
 		mes "What are you, superhuman?";
@@ -75,7 +76,7 @@ prontera,123,102,5	script	Merchant#pron	85,{
 
 morocc,180,259,3	script	Merchant#morroc	85,{
 	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 6301) {
+	if (.@now_weight < 6301 || checkweight(1201,1) == 0) {
 		mes "[Merchant]";
 		mes "Haha!";
 		mes "What are you, superhuman?";
@@ -133,7 +134,7 @@ morocc,180,259,3	script	Merchant#morroc	85,{
 
 payon,200,134,5	script	Merchant#pay	85,{
 	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 6301) {
+	if (.@now_weight < 6301 || checkweight(1201,1) == 0) {
 		mes "[Merchant]";
 		mes "Haha!";
 		mes "What are you, superhuman?";
@@ -188,7 +189,7 @@ payon,200,134,5	script	Merchant#pay	85,{
 
 aldebaran,152,63,5	script	Merchant#alde	85,{
 	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 6301) {
+	if (.@now_weight < 6301 || checkweight(1201,1) == 0) {
 		mes "[Merchant]";
 		mes "Haha!";
 		mes "What are you, superhuman?";
@@ -246,7 +247,7 @@ aldebaran,152,63,5	script	Merchant#alde	85,{
 
 geffen,173,88,5	script	Merchant#geff	85,{
 	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 6301) {
+	if (.@now_weight < 6301 || checkweight(1201,1) == 0) {
 		mes "[Merchant]";
 		mes "Haha!";
 		mes "What are you, superhuman?";
@@ -340,7 +341,7 @@ function	script	F_PotExchange	{
 			mes "mind, just enter '0' to cancel.";
 			next;
 			while(1) {
-				input .@input;
+				input .@input,0,101;
 				if (.@input == 0) {
 					mes "[Merchant]";
 					mes "What...?";
