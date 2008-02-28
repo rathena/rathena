@@ -37,6 +37,8 @@
 	2376 General's_Plate_Mail	Increases heal recovery effectiveness on you by 10%
 
 =======================
+2008/02/28
+	* Adjusted const.txt's cell type numbers according to recent updates
 2008/02/27
 	* Added barehanded weapons to Full Adrenaline Rush's list [ultramage]
 2008/02/07

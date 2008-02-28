@@ -230,10 +230,8 @@ cell_water	2
 cell_npc	3
 cell_basilica	4
 cell_landprotector	5
-cell_icewall	6
-cell_novending	7
-cell_nodamage	8
-cell_nochat	9
+cell_novending	6
+cell_nochat	7
 
 StatusPoint	9	1
 BaseLevel	11	1

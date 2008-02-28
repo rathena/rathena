@@ -1140,8 +1140,8 @@ struct mapcell
 	// dynamic flags
 	unsigned char
 		npc : 1,
-		landprotector : 1,
 		basilica : 1,
+		landprotector : 1,
 		novending : 1,
 		nochat : 1;
 
