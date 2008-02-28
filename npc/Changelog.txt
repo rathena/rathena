@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/02/28
+	* Rev 12258 Implemented several "checkweights" in other NPCs. [L0ne_W0lf]
 	* Rev 12257 Implemented several "checkweight" NPC merchants. [L0ne_W0lf]
 2008/02/27
 	* Rev 12256 Removed "F_CheckMaxCount" as it seems "checkweight". [L0ne_W0lf]

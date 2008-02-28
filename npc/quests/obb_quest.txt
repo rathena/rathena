@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= Celesta, Lupus
 //===== Version ==============================================
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -17,17 +17,18 @@
 //= branch from this one.
 //===== Additional Comments: ================================= 
 //= 1.7 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.8 Added missing checkweights. [L0ne_W0lf]
 //============================================================ 
 
 alberta,43,244,0	script	Tourist#thai	99,{
-	//if (max_max_c == 1) {
-	//	mes "- Wait a moment! -";
-	//	mes "- Currently you're carrying -";
-	//	mes "- too many items with you. -";
-	//	mes "- Please enlighten your weight -";
-	//	mes "- and try again. -";
-	//	close;
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a moment! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please enlighten your weight -";
+		mes "- and try again. -";
+		close;
+	}
 	if (thai_head >= 1 && thai_head <= 5) {
 		switch(thai_head) {
 		case 1:
@@ -1062,14 +1063,14 @@ morocc,230,150,0	script	Jacob#thai	50,{
 }
 
 comodo,68,195,0	script	Old Man#thai	120,{
-	//if (max_max_c == 1) {
-	//	mes "- Wait a moment! -";
-	//	mes "- Currently you're carrying -";
-	//	mes "- too many items with you. -";
-	//	mes "- Please enlighten your weight -";
-	//	mes "- and try again. -";
-	//	close;
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a moment! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please enlighten your weight -";
+		mes "- and try again. -";
+		close;
+	}
 	if (thai_head >= 11 && thai_head <= 15) {
 		switch(thai_head) {
 		case 11:

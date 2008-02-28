@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -26,6 +26,8 @@
 //= 1.6 Rescripted Soup, Doctor, and Poison King quests [L0ne_W0lf]
 //=	to Aegis 10.3 standards. Attempted to save current
 //=	quest progress from the old scripts.
+//= 1.7 Added missing checkweights. And corrected [L0ne_W0lf]
+//=	a typo in Poison King quest.
 //============================================================ 
 
 // Soup Quest
@@ -1090,12 +1092,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 	if (QL_GOTHERB) set ch_par,16;
 	set QL_DOC1STTIME,0; set QL_DOCQUEST,0; set QL_GOTHERB,0; set QL_BEENTOSTORAGE,0; set QL_GOTCOMPROP,0; set QL_TOOLMASTER,0;
 
-	//if (max_max_c1 == 1) {
-	//	mes "^3355FFWait a minute! Right now, you're carrying too many items. Please place some of your things in Kafra Storage and then come here again.^000000";
-	//	close;
-	//}
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a minute! Right now, you're over weight, so you cannot receive more items. Please store some of your things in Kafra Storage and try again.^000000";
 		close;
 	}
@@ -1590,13 +1587,7 @@ lou_in02,248,166,2	script	Tool Shop Master#lou	824,{
 }
 
 lou_in02,201,166,4	script	Storage Keeper#lou	819,{
-	//if (max_max_c1 == 1) {
-	//	mes "^3355FF* Wait a moment!! *";
-	//	mes "Currently you're carryingtoo many items with you. Please store some of your items into Kafra Storage and try again.^000000";
-	//	close;
-	//}
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FF * Wait a moment!! *";
 		mes "Currently you're over weight, so you cannot receive more items into your inventory. Please store some of your items into Kafra Storage and try again.^000000";
 		close;
@@ -2425,17 +2416,18 @@ lou_in02,203,159,0	warp	Storage Warp#4	1,1,louyang,129,118
 // Poison King Quest
 //============================================================
 lou_in02,123,39,4	script	Poison King#lou	824,{
-	//Remove outdated variables and attempt to preserve prior quest progress.
-	if (QL_POISONKING <= 12) set ch_poison,QL_POISON;
+	// Attempt to preserve prior quest progress.
+	if (QL_POISONKING <= 12) set ch_poison,QL_POISONKING;
 	else if (QL_POISONKING == 16) set ch_poison,19;
 	else if (QL_POISONKING >= 17) set ch_poison,20;
+	// Remove outdated variable.
 	set QL_POISONKING,0;
 
-	//if (max_max_c == 1) {
-	//	mes "^3355FF * Wait a minute! *";
-	//	mes "Right now, you are carrying too many items with you. Please place some of your items into Kafra Storage and try again.^000000";
-	//	close;
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FF * Wait a minute! *";
+		mes "Right now, you are carrying too many items with you. Please place some of your items into Kafra Storage and try again.^000000";
+		close;
+	}
 	if (ch_poison < 6) {
 		mes "[Nagash Arses]";
 		mes "It's been 40 years since I came here. Hahaha, but it doesn't feel like it's been that long.";
@@ -3416,11 +3408,11 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 }
 
 lou_in02,253,45,0	script	Employee#poison	822,{
-	//if (max_max_c == 1) {
-	//	mes "^3355FF * Wait a minute! *";
-	//	mes "You're carrying too many items with you right now. Please put some of your things into Kafra Storage and try again.^000000";
-	//	close;
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FF * Wait a minute! *";
+		mes "You're carrying too many items with you right now. Please put some of your things into Kafra Storage and try again.^000000";
+		close;
+	}
 	if (ch_par < 10 && ch_poison < 6) {
 		while(1) {
 			if (.@r_o_o_f > 5) {
@@ -4104,11 +4096,11 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 }
 
 lou_fild01,224,348,0	script	Lady#delivery	817,{
-	//if (max_max_c == 1) {
-	//	mes "^3355FF * Wait a minute! *";
-	//	mes "Currently, you're carrying too many items. Please put some of your things into Kafra Storage and try again.^000000";
-	//	close;
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FF * Wait a minute! *";
+		mes "Currently, you're carrying too many items. Please put some of your things into Kafra Storage and try again.^000000";
+		close;
+	}
 	if (ch_poison < 8) {
 		if (rand(1,10) > 5) {
 			mes "[Lady]";
@@ -4399,11 +4391,11 @@ lou_in01,118,167,0	script	 #lou_drink2	111,{
 }
 
 lou_in01,99,158,4	script	Lord#bailong	821,{
-	//if (max_max_c == 1) {
-	//	mes "^3355FF * Wait a minute! *";
-	//	mes "Right now you're carrying too many items. Please put some of your things into Kafra Storage and try again.^000000";
-	//	close;
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FF * Wait a minute! *";
+		mes "Right now you're carrying too many items. Please put some of your things into Kafra Storage and try again.^000000";
+		close;
+	}
 	if (ch_poison == 12 || ch_poison == 16) {
 		mes "[Lord Bai Long]";
 		mes "Hey...!";

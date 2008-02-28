@@ -23,6 +23,7 @@
 //= 1.4	Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.4a Checks the proper variable now. (bard_q -> gef_bard_q) [L0ne_W0lf]
 //= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.6 Added missing checkweights. [L0ne_W0lf]
 //============================================================
 
 prontera,174,328,3	script	Young Man#bard_q1	89,3,3,{
@@ -1164,12 +1165,11 @@ morocc_in,175,70,7	script	Customer#bard_skill02	50,{
 // Bartender
 //============================================================ 
 morocc_in,166,76,7	script	Bartender#bard_qskill	46,{
-	//set max_max_c,1201;
-	//if (max_max_c == 1) {
-	//	mes "^3355FFHold it right there!";
-	//	mes "You're carrying too many items and don't have enough inventory space to receive any rewards. Please make more inventory space available and come back to take this challenge.";
-	//	close;
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FFHold it right there!";
+		mes "You're carrying too many items and don't have enough inventory space to receive any rewards. Please make more inventory space available and come back to take this challenge.";
+		close;
+	}
 	mes "[Bartender]";
 	mes "So what would";
 	mes "you like to order?";

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena team & others? & MasterOfMuppets
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -13,19 +13,20 @@
 //= Dungeon Quest
 //===== Additional Comments: ================================= 
 //= 1.3 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
+//= 1.4 Added missing checkweight. [L0ne_W0lf]
 //============================================================ 
 
 // Momotaro Event
 //============================================================ 
 amatsu,223,236,3	script	Publisher#ama	763,{
-	//if (max_max_c == 1) {
-	//	mes "- Wait a moment!! -";
-	//	mes "- Currently you are carrying -";
-	//	mes "- too many items with you. -";
-	//	mes "- Please store some items into your Kafra storage -";
-	//	mes "- and try again. -";
-	//	close;
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a moment!! -";
+		mes "- Currently you are carrying -";
+		mes "- too many items with you. -";
+		mes "- Please store some items into your Kafra storage -";
+		mes "- and try again. -";
+		close;
+	}
 	if (event_momo < 2) {
 		mes "[Publisher]";
 		mes "Hello~!!";

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Brainstorm
 //===== Current Version: =====================================
-//= 1.1a
+//= 1.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //= 1.0 First semi-working conversion. [Brainstorm]
 //= 1.1 Refined Brainstorm's conversion. [L0ne_W0lf]
 //= 1.1a Minor fixes. (Screwed up weight checks somehow) [L0ne_W0lf]
+//= 1.2 Added missing checkweights. [L0ne_W0lf]
 //============================================================
 
 // Pumpkin Mojo quest (Event 1)
@@ -29,18 +30,8 @@ OnTouch:
 }
 
 prontera,164,69,3	script	Cool Devi#06_hw	738,{
-	/*var max_max_c = CheckMaxCount 1201 1
-	if max_max_c == 1
-		mes "^3355FFWait a second!"
-		mes "Right now, you're carrying"
-		mes "too many things with you."
-		mes "Please come back after"
-		mes "using the Kafra Service"
-		mes "to store some of your items.^000000"
-		close;
-	}*/
 	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if (.@now_weight < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
 		mes "too many things with you.";
@@ -236,18 +227,8 @@ prontera,164,69,3	script	Cool Devi#06_hw	738,{
 
 
 geffen,145,132,3	script	Hoirin#06_hw	729,{
-	/*var max_max_c = CheckMaxCount 1201 1
-	if max_max_c == 1
-		mes "^3355FFWait a second!"
-		mes "Right now, you're carrying"
-		mes "too many things with you."
-		mes "Please come back after"
-		mes "using the Kafra Service"
-		mes "to store some of your items.^000000"
-		close;
-	}*/
 	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if (.@now_weight < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
 		mes "too many things with you.";
@@ -402,18 +383,8 @@ OnTouch:
 }
 
 nif_in,19,32,3	script	Deviruchi#06_hw	738,{
-	/*var max_max_c = CheckMaxCount 1201 1
-	if max_max_c == 1
-		mes "^3355FFWait a second!"
-		mes "Right now, you're carrying"
-		mes "too many things with you."
-		mes "Please come back after"
-		mes "using the Kafra Service"
-		mes "to store some of your items.^000000"
-		close;
-	}*/
 	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if (.@now_weight < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
 		mes "too many things with you.";
@@ -504,18 +475,8 @@ nif_in,19,32,3	script	Deviruchi#06_hw	738,{
 
 // Creation of Pumpkin Pie (Event 2)
 nif_fild01,165,115,3	script	Chicken Masta#06_hw	794,{
-	/*var max_max_c = CheckMaxCount 1201 1
-	if max_max_c == 1
-		mes "^3355FFWait a second!"
-		mes "Right now, you're carrying"
-		mes "too many things with you."
-		mes "Please come back after"
-		mes "using the Kafra Service"
-		mes "to store some of your items.^000000"
-		close;
-	}*/
 	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if (.@now_weight < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
 		mes "too many things with you.";

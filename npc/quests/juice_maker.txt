@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= kobra_k88
 //===== Current Version: =====================================
-//= 1.9
+//= 2,0
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -14,6 +14,7 @@
 //===== Additional Comments: =================================
 //= 1.9 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //=	Added tracking variables in, which are unset when complete.
+//= 2.0 Added missing checkweight. [L0ne_W0lf]
 //============================================================
 
 prt_in,49,172,3	script	Marianne#juice	53,{
@@ -168,17 +169,14 @@ prt_in,47,173,3	script	Morrison#juice	97,{
 }
 
 payon_in03,188,146,5	script	Marx Hansen#juice	86,{
-	// Check if the user carries 100 items.
-	//set max_max_c,1201;
-	//if (max_max_c == 1) {
-	//	mes "- Wait a moment! -";
-	//	mes "- Currently you're carrying -";
-	//	mes "- too many items with you. -";
-	//	mes "- Please come back later -";
-	//	mes "- after you put some items into kafra storage. -";
-	//	close;
-	//}
-	// end check
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a moment! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please come back later -";
+		mes "- after you put some items into kafra storage. -";
+		close;
+	}
 	if (MISC_QUEST&1) {
 		mes "[Merchant Marx Hansen]";
 		mes "Welcome.";

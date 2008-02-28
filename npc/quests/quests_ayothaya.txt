@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= Fredzilla, MasterOfMuppets
 //===== Version ==============================================
-//= 2.0a
+//= 2.1
 //===== Compatible With ======================================
 //= eAthena SVN
 //===== Description ==========================================
@@ -26,6 +26,7 @@
 //= 2.0 Rescripted Tom Yum Goong and Dungeon quest to Aegis [L0ne_W0lf]
 //=	10.3 standards.
 //= 2.0a Corrected a Typo error ";;". [Samuray22]
+//= 2.1 Added missing checkweights. [L0ne_W0lf]
 //============================================================
 
 // Ayothaya Ring Quest
@@ -2685,16 +2686,7 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 }
 	
 ayothaya,153,86,5	script	Thongpool#ayo	843,{
-	//if (max_max_c1 == 1) {
-	//	mes "- Wait a minute! -";
-	//	mes "- Currently you're carrying -";
-	//	mes "- too many items with you. -";
-	//	mes "- Please enlighten your weight -";
-	//	mes "- and try again. -";
-	//	close;
-	//}
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -2810,16 +2802,7 @@ ayothaya,153,86,5	script	Thongpool#ayo	843,{
 }
 	
 ayothaya,121,240,7	script	Mr. Jun#ayo	842,1,1,{
-	//if (max_max_c1 == 1) {
-	//	mes "- Wait a minute! -";
-	//	mes "- Currently you're carrying -";
-	//	mes "- too many items with you. -";
-	//	mes "- Please enlighten your weight -";
-	//	mes "- and try again. -";
-	//	close;
-	//}
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
@@ -2867,16 +2850,7 @@ ayothaya,121,240,7	script	Mr. Jun#ayo	842,1,1,{
 	close;
 
 OnTouch:
-	//if (max_max_c1 == 1) {
-	//	mes "- Wait a minute! -";
-	//	mes "- Currently you're carrying -";
-	//	mes "- too many items with you. -";
-	//	mes "- Please enlighten your weight -";
-	//	mes "- and try again. -";
-	//	close;
-	//}
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "- Wait a minute! -";
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";

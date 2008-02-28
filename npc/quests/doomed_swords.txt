@@ -20,6 +20,7 @@
 //= 1.3 Fixed exploit [Lupus]
 //= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //=	Moved all non-related NPCs to their repsective files.
+//= 1.5 Added missing checkweight. [L0ne_W0lf]
 //============================================================
 
 prt_in,162,11,2	script	Ghatu#magum	86,{
@@ -254,16 +255,16 @@ izlude_in,173,88,2	script	Nain#magum	102,{
 }
 
 pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
-	//if (max_max_c == 1) {
-	//	mes "[Mysterious Man]";
-	//	mes "Hold it.";
-	//	mes "You're carrying";
-	//	mes "far too many items";
-	//	mes "with you. Speak to me";
-	//	mes "after you've placed your";
-	//	mes "goods into Kafra Storage.";
-	//	close;
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "[Mysterious Man]";
+		mes "Hold it.";
+		mes "You're carrying";
+		mes "far too many items";
+		mes "with you. Speak to me";
+		mes "after you've placed your";
+		mes "goods into Kafra Storage.";
+		close;
+	}
 	if (event_magum == 0) {
 		if (dmdswrd_Q2 & 1 || dmdswrd_Q2 & 2 || dmdswrd_Q2 & 4 || dmdswrd_Q2 & 8 || dmdswrd_Q2 & 16 || dmdswrd_Q2 & 32) {
 			mes "[Mysterious Man]";

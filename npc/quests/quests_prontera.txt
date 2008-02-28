@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.0b
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -36,6 +36,7 @@
 //= 2.0 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.0a Corrected a Typo error ";;". [Samuray22]
 //= 2.0b Corrected a Typo error. (bugreport:950) [Samuray22]
+//= 2.1 Added missing checkweights. [L0ne_W0lf]
 //============================================================ 
 
 // Prontera Culvert
@@ -550,18 +551,7 @@ S_GetBooks:
 	return;
 
 S_CheckWeight:
-	//var max_max_c1 = CheckMaxCount 1201 1
-	//if (max_max_c1 == 1) {
-	//	mes "^3355FFWait a second!";
-	//	mes "Right now, you're carrying";
-	//	mes "too many things with you.";
-	//	mes "Please come back after";
-	//	mes "using the Kafra Service";
-	//	mes "to store some of your items.^000000";
-	//	close;
-	//}
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
 		mes "too many things with you.";
@@ -574,18 +564,7 @@ S_CheckWeight:
 }
 
 yuno,311,195,3	script	Historian#prt01	754,{
-	//var max_max_c1 = CheckMaxCount 1201 1
-	//if (max_max_c1 == 1) {
-	//	mes "^3355FFWait a second!";
-	//	mes "Right now, you're carrying";
-	//	mes "too many things with you.";
-	//	mes "Please come back after";
-	//	mes "using the Kafra Service";
-	//	mes "to store some of your items.^000000";
-	//	close;
-	//}
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
 		mes "too many things with you.";
@@ -936,18 +915,7 @@ yuno,311,195,3	script	Historian#prt01	754,{
 }
 
 morocc_in,45,126,3	script	Historian#prt02	702,{
-	//var max_max_c1 = CheckMaxCount 1201 1
-	//if (max_max_c1 == 1) {
-	//	mes "^3355FFWait a second!";
-	//	mes "Right now, you're carrying";
-	//	mes "too many things with you.";
-	//	mes "Please come back after";
-	//	mes "using the Kafra Service";
-	//	mes "to store some of your items.^000000";
-	//	close;
-	//}
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
 		mes "too many things with you.";
@@ -1374,18 +1342,7 @@ S_GiveName:
 }
 
 mjolnir_01,135,168,3	script	Historian#prt03	754,{
-	//var max_max_c1 = CheckMaxCount 1201 1
-	//if (max_max_c1 == 1) {
-	//	mes "^3355FFWait a second!";
-	//	mes "Right now, you're carrying";
-	//	mes "too many things with you.";
-	//	mes "Please come back after";
-	//	mes "using the Kafra Service";
-	//	mes "to store some of your items.^000000";
-	//	close;
-	//}
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
 		mes "too many things with you.";
@@ -1775,18 +1732,7 @@ mjolnir_01,313,269,5	script	Dazed Boy#prt	706,{
 }
 
 mjolnir_01,316,268,3	script	Exhausted-Looking Woman	879,{
-	//var max_max_c1 = CheckMaxCount 1201 1
-	//if (max_max_c1 == 1) {
-	//	mes "^3355FFWait a second!";
-	//	mes "Right now, you're carrying";
-	//	mes "too many things with you.";
-	//	mes "Please come back after";
-	//	mes "using the Kafra Service";
-	//	mes "to store some of your items.^000000";
-	//	close;
-	//}
-	set .@now_weight,MaxWeight-Weight;
-	if (.@now_weight < 2000) {
+	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
 		mes "too many things with you.";
@@ -3437,16 +3383,15 @@ OnTouch:
 }
 
 prt_in,162,99,4	script	Librarian#curse	67,{
-	//var max_max_c1 = CheckMaxCount 1201 1
-	//if (max_max_c1 == 1) {
-	//	mes "^3355FFWait a second!";
-	//	mes "Right now, you're carrying";
-	//	mes "too many things with you.";
-	//	mes "Please come back after";
-	//	mes "using the Kafra Service";
-	//	mes "to store some of your items.";
-	//	close;
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FFWait a second!";
+		mes "Right now, you're carrying";
+		mes "too many things with you.";
+		mes "Please come back after";
+		mes "using the Kafra Service";
+		mes "to store some of your items.";
+		close;
+	}
 	if (prt_curse == 3) {
 		if (countitem(7431) < 1) {
 			mes "[Librarian]";

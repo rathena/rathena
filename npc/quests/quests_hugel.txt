@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= MasterOfMuppets & SinSloth
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= eAthena
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= 1.5b Fixed a variable name. [SinSloth]
 //= 1.6 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.7 Corrected locations of warpinside#1. (DarkValmir) [L0ne_W0lf]
+//= 1.8 Added missing checkweight. [L0ne_W0lf]
 //============================================================
 
 //-------------------------------------------------------------------------
@@ -3738,22 +3739,12 @@ einbech,208,124,3	script	Bomb Maker	851,{
 
 	if(hg_tre == 54)
 	{
-		/*var max_max_c1 = CheckMaxCount 1201 1
-		if (max_max_c1 == 1)
+		if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 			mes "[Boomer]";
 			mes "Hey, you look pretty heavy, huh?";
 			mes "Do you want me to help you?";
-			close
-			return
-		endif
-		var now_weight = v[VAR_MAXWEIGHT] - v[VAR_WEIGHT]
-		if (now_weight < 2000)
-			mes "[Boomer]";
-			mes "Hey, you look pretty heavy, huh?";
-			mes "Do you want me to help you?";
-			close
-			return
-		endif*/
+			close;
+		}
 		mes "[Boomer]";
 		mes "Hey, what's up?";
 		mes "I am a professional Marine Sphere Bottle maker.";

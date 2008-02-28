@@ -5,7 +5,7 @@
 //= DNett123 (1.1 - 1.5)
 //= L0ne_w0lf
 //===== Current Version: =====================================
-//= 3.3a
+//= 3.4
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -32,7 +32,9 @@
 //=	None of the NPCs need the player's partner to be online.
 //= 3.3 Just a small fix up on the Bartender. [L0ne_W0lf]
 //= 3.3a Just a little typo error. [Samuray22]
+//= 3.4 Added missing checkweights. [L0ne_W0lf]
 //============================================================
+
 // Jawaii
 //============================================================
 jawaii,239,112,7	script	Mariner#toizu	100,{
@@ -708,13 +710,11 @@ OnTouch:
 }
 	
 jawaii_in,15,104,0	script	Waitress#jawaii	80,{
-	//var max_max_c = CheckMaxCount 1201 1
-	//if (max_max_c == 1) {
-	//	mes "^3355FF * Wait a minute! *"
-	//	mes "You're carrying too many items with you right now. Please store some of your things into Kafra Storage and try again.^000000"
-	//	close
-	//	return
-	//}
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FF * Wait a minute! *";
+		mes "You're carrying too many items with you right now. Please store some of your things into Kafra Storage and try again.^000000";
+		close;
+	}
 	if (getpartnerid()) {
 		mes "[Waitress]";
 		mes "Hello,";
