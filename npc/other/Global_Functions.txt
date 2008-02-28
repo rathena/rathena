@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.09
+//= 2.10
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -31,6 +31,7 @@
 //= 2.06 Pass to Bio-Lab -> MISC_QUEST|512 [Lupus]
 //= 2.07 Added TK_Q variable clear. 2.08 Added NINJ_Q variable clear [Lupus]
 //= 2.09 Cleared F_ClearGarbage [Lupus]
+//= 2.10 Added F_CheckMaxCount to check count of carrid items. [L0ne_w0lf]
 //============================================================ 
 
 
@@ -306,3 +307,21 @@ function	script	F_Load2Skills	{
 	set ADV_QSK2,0; //Clear var
 	return;
 }
+
+//////////////////////////////////////////////////////////////////////////////////
+// *** Function "F_CheckMaxCount"
+//////////////////////////////////////////////////////////////////////////////////
+// Return 1 if the max items in inventory is 100, else 0.
+// Ensure that this corrisponds to MAX_INVENTORY in src/common/mmo.h,
+// otherwise you will not be able to use several quests, as they will
+// check this if you have over 100 items in your inventory.
+// This function will return 1 if you cannot carry anymore items.
+
+function	script	F_CheckMaxCount	{
+	getinventorylist;
+	if (@inventorylist_count > 99) {
+		return 1;
+	}
+	return 0;
+}
+

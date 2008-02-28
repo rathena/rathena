@@ -1,6 +1,10 @@
 Date		Added
 ======
-2008/02/26
+2008/02/27
+	* Rev 12255 Implemented new function F_CheckMaxCount. [L0ne_W0lf]
+	- Checks if you have enough room in your inventory to accept items
+	* Updated 2004 headgear quests to fully official.
+	- Implemented usage of F_checkMaxCount in the 2004 headgear quests.
 	* Rev 12252 Fully implemented the Thor Volcano Base quest. [L0ne_W0lf]
 2008/02/26
 	* Rev 12244 Fixed bugreport:1057 and bugreport:1058 [L0ne_W0lf]

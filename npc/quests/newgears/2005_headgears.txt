@@ -7,6 +7,7 @@
 //===== Compatible With: ===================================== 
 //= eAthena
 //===== Description: ========================================= 
+// [Aegis Conversion]
 //= 2005 Headgears Official Quest.
 //===== Additional Comments: =================================
 // 1.0 First version, converted from the official aegis script. [MasterOfMuppets]
