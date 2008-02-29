@@ -103,6 +103,7 @@
 //=       Updated 'checkweight' description slightly. [L0ne_W0lf]
 //= 3.16.20080229
 //=       Updated 'Shop' NPC type description to include cashshop. [L0ne_W0lf]
+//=       Woopth. Fixed spelling. ;P Should be a bit clearer now. [L0ne_W0lf]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -385,12 +386,12 @@ to -1, the 'buy price' given in the item database will be used. Otherwise, the
 price you gave will be used for this item, which is how you create differing 
 prices for items in different shops.
 
-Since trunk r12264 you can alernatively use "cashshop" in place of "shop"
-so use the Cash Shop interface, allowing you to buy items with special points
-(currently stored as account vars in global_reg #CASHPOINTSand and #FREEPOINTS.)
+Since trunk r12264 you can alternatively use "cashshop" in place of "shop"
+to use the Cash Shop interface, allowing you to buy items with special points
+(Currently stored as account vars in global_reg #CASHPOINTS and #FREEPOINTS.)
 This type of shop will not allow you to sell items at it, you may only
 purchase items here. The layout used to define sale items still count, and
-"<price>" referes to how many points will be spent purchasing the them.
+"<price>" refers to how many points will be spent purchasing the them.
 
 ** Define a function object
 
