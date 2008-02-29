@@ -272,6 +272,22 @@ struct mail_data {
 	struct mail_message msg[MAIL_MAX_INBOX];
 };
 
+struct auction_data {
+	unsigned int auction_id;
+	int seller_id;
+	char seller_name[NAME_LENGTH];
+	int buyer_id;
+	char buyer_name[NAME_LENGTH];
+	
+	struct item item;
+
+	unsigned short hours;
+	unsigned int price, buynow;
+	unsigned int timestamp;
+
+	bool changed; // To know if data have been changed for save
+};
+
 struct registry {
 	int global_num;
 	struct global_reg global[GLOBAL_REG_NUM];

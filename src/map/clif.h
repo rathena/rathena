@@ -413,4 +413,7 @@ void clif_Mail_getattachment(int fd, uint8 flag);
 
 void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd);
 
+// AUCTION SYSTEM
+void clif_Auction_openwindow(struct map_session_data *sd);
+
 #endif /* _CLIF_H_ */

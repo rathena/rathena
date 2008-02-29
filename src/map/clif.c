@@ -11753,6 +11753,24 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
+ * AUCTIONS SYSTEM
+ *==========================================*/
+void clif_Auction_openwindow(struct map_session_data *sd)
+{
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,12);
+	WFIFOW(fd,0) = 0x25f;
+	WFIFOL(fd,2) = 0;
+	WFIFOB(fd,6) = 0xb6;
+	WFIFOB(fd,7) = 0x00;
+	WFIFOB(fd,8) = 0xa6;
+	WFIFOB(fd,9) = 0xde;
+	WFIFOW(fd,10) = 0;
+	WFIFOSET(fd,12);
+}
+
+/*==========================================
  * Requesting equip of a player
  *------------------------------------------*/
 void clif_parse_ViewPlayerEquip(int fd, struct map_session_data* sd)
