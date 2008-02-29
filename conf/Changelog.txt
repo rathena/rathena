@@ -1,6 +1,8 @@
 Date	Added
 
 2008/02/27
+	* Rev. 12268 Added information for cash related @ and # commands. [L0ne_W0lf]
+2008/02/27
 	* Disabled idle_no_autoloot setting (bugreport:1051)
 2008/02/14
 	* Removed atcommand @whozeny [ultramage]

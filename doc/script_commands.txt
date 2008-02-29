@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.14.20080211
+//= 3.16.20080229
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -101,6 +101,8 @@
 //=       Updated 'input' (new arguments and return value). [FlavioJS]
 //= 3.15.20080227
 //=       Updated 'checkweight' description slightly. [L0ne_W0lf]
+//= 3.16.20080229
+//=       Updated 'Shop' NPC type description to include cashshop. [L0ne_W0lf]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -382,6 +384,13 @@ The item id is the number of item in the 'item_db.txt' database. If Price is set
 to -1, the 'buy price' given in the item database will be used. Otherwise, the 
 price you gave will be used for this item, which is how you create differing 
 prices for items in different shops.
+
+Since trunk r12264 you can alernatively use "cashshop" in place of "shop"
+so use the Cash Shop interface, allowing you to buy items with special points
+(currently stored as account vars in global_reg #CASHPOINTSand and #FREEPOINTS.)
+This type of shop will not allow you to sell items at it, you may only
+purchase items here. The layout used to define sale items still count, and
+"<price>" referes to how many points will be spent purchasing the them.
 
 ** Define a function object
 

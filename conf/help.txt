@@ -131,6 +131,8 @@
  60:@stpoint <number of points> - Gives you the desired number of stat points.
  60:@skpoint <number of points> - Gives you the desired number of skill points.
  60:@zeny <amount> - Gives you desired amount of Zeny.
+ 60:@cash <amount> - Gives you the specified amount of cash points.
+ 60:@points <amount> - Gives you the specified amount of Kafra Points.
  60:@str,@agi,@vit,@int,@dex,@luk <amount> - Adds desired amount to any stat. For example "@str 10" raises your str by 10
  60:@statall/@statsall/@allstats/@allstat [value] - Adds value in all stats (maximum if no value).
  60: @addwarp <map name> <x coord> <y coord>
