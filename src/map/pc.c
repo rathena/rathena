@@ -2708,21 +2708,25 @@ void pc_paycash(struct map_session_data *sd, int prize, int points)
 	int cash = prize - points;
 	nullpo_retv(sd);
 
-	sd->cashPoints -= cash;
-	sd->kafraPoints -= points;
-
-	pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints);
-	pc_setaccountreg(sd,"#KAFRAPOINTS",sd->kafraPoints);
-
-	if( points )
+	if( cash > 0 )
 	{
-		sprintf(output, "Used %d kafra points. %d points remaining.", points, sd->kafraPoints);
+		if( (sd->cashPoints -= cash) < 0 )
+			sd->cashPoints = 0;
+
+		pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints);
+
+		sprintf(output, "Used %d cash points. %d points remaining.", cash, sd->cashPoints);
 		clif_disp_onlyself(sd, output, strlen(output));
 	}
 
-	if( cash )
+	if( points > 0 )
 	{
-		sprintf(output, "Used %d cash points. %d points remaining.", cash, sd->cashPoints);
+		if( (sd->kafraPoints -= points) < 0 )
+			sd->kafraPoints = 0;
+
+		pc_setaccountreg(sd,"#KAFRAPOINTS",sd->kafraPoints);
+
+		sprintf(output, "Used %d kafra points. %d points remaining.", points, sd->kafraPoints);
 		clif_disp_onlyself(sd, output, strlen(output));
 	}
 }
@@ -2732,27 +2736,26 @@ void pc_getcash(struct map_session_data *sd, int cash, int points)
 	char output[128];
 	nullpo_retv(sd);
 
-	if( cash > MAX_ZENY - sd->cashPoints )
-		cash = MAX_ZENY - sd->cashPoints;
-
-	sd->cashPoints += cash;
-
-	if( points > MAX_ZENY - sd->kafraPoints )
-		points = MAX_ZENY - sd->kafraPoints;
-
-	sd->kafraPoints += points;
-
-	pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints);
-	pc_setaccountreg(sd,"#KAFRAPOINTS",sd->kafraPoints);
-
 	if( cash > 0 )
 	{
+		if( cash > MAX_ZENY - sd->cashPoints )
+			cash = MAX_ZENY - sd->cashPoints;
+
+		sd->cashPoints += cash;
+		pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints);
+
 		sprintf(output, "Gained %d cash points. Total %d points", points, sd->cashPoints);
 		clif_disp_onlyself(sd, output, strlen(output));
 	}
 
 	if( points > 0 )
 	{
+		if( points > MAX_ZENY - sd->kafraPoints )
+			points = MAX_ZENY - sd->kafraPoints;
+
+		sd->kafraPoints += points;
+		pc_setaccountreg(sd,"#KAFRAPOINTS",sd->kafraPoints);
+
 		sprintf(output, "Gained %d kafra points. Total %d points", points, sd->kafraPoints);
 		clif_disp_onlyself(sd, output, strlen(output));
 	}
