@@ -1,5 +1,8 @@
 Date		Added
 ======
+2008/03/01
+	* Rev 12275 Resolves bugreport:1025, bugreport:1062, [L0ne_W0lf]
+	  bugreport:1077 and bugreport:1078. :P
 2008/02/29
 	* Rev 12274 Updated Turtle Island quest, and mixture quest. [L0ne_W0lf]
 2008/02/28

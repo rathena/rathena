@@ -4,7 +4,7 @@
 //= Muad_Dib (The Prometheus Project)
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.2
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -18,6 +18,7 @@
 //= 1.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.3 Added a Missing "case 1:". [Samuray22]
 //	-Thanks to Dr.Evil
+//= 1.4 Corrected a few typos. (bugreport:1077) [L0ne_W0lf]
 //============================================================ 
 
 yuno_in03,32,15,3	script	Museum Guide	67,{
@@ -78,7 +79,7 @@ yuno_in03,33,21,1	script	#DEVIACE	111,{
 	mes "character.";
 	next;
 	mes "Therefore, it never initiates";
-	mes "attack on an undersea traveller";
+	mes "attack on an undersea traveler";
 	mes "unless it's attacked first.";
 	mes "However, once it becomes upset, it";
 	mes "uses high level magic skills. So";
@@ -270,7 +271,7 @@ yuno_in03,12,45,1	script	#ASSULTER	111,{
 	mes " Attribute : Wind";
 	next;
 	mes "Explanation :";
-	mes "Unlike other turtles on on Turtle";
+	mes "Unlike other turtles on Turtle";
 	mes "Island, this turtle stands on two";
 	mes "legs and attacks passersby with";
 	mes "the other two legs, wielding a";

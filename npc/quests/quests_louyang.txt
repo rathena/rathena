@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera and The eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.8
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -28,6 +28,7 @@
 //=	quest progress from the old scripts.
 //= 1.7 Added missing checkweights. And corrected [L0ne_W0lf]
 //=	a typo in Poison King quest.
+//= 1.8 Bug fixes. (bugreport:1025 bugreport:1062) [L0ne_Wplf]
 //============================================================ 
 
 // Soup Quest
@@ -361,7 +362,6 @@ lou_in02,62,183,3	script	Chef#1-2	820,2,2,{
 	close;
 
 OnTouch:
-	set rand(1,10),rand(1,10);
 	if (ch_tre == 2 || ch_tre == 3) {
 		if (gettime(3) >= 10 && gettime(3) < 14) {
 			if (rand(1,10) < 9) {
@@ -2417,12 +2417,13 @@ lou_in02,203,159,0	warp	Storage Warp#4	1,1,louyang,129,118
 //============================================================
 lou_in02,123,39,4	script	Poison King#lou	824,{
 	// Attempt to preserve prior quest progress.
-	if (QL_POISONKING <= 12) set ch_poison,QL_POISONKING;
-	else if (QL_POISONKING == 16) set ch_poison,19;
-	else if (QL_POISONKING >= 17) set ch_poison,20;
-	// Remove outdated variable.
-	set QL_POISONKING,0;
-
+	if (ch_poison == 0 && CL_POISONKING != 0) {
+		if (QL_POISONKING <= 12) set ch_poison,QL_POISONKING;
+		else if (QL_POISONKING == 16) set ch_poison,19;
+		else if (QL_POISONKING >= 17) set ch_poison,20;
+		// Remove outdated variable.
+		set QL_POISONKING,0;
+	}
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FF * Wait a minute! *";
 		mes "Right now, you are carrying too many items with you. Please place some of your items into Kafra Storage and try again.^000000";
@@ -3072,7 +3073,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 				mes "my worst memories.";
 				next;
 				set ch_poison,1;
-				if (BaseCalss == Job_Thief) {
+				if (BaseClass == Job_Thief) {
 					mes "[Nagash Arses]";
 					mes "Ah, you look just like I did when";
 					mes "I was young. It seems you know";
