@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena dev team; L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.3
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -28,6 +28,7 @@
 //= 2.01 removed all .GATs [Lupus]
 //= 2.1 Rescripted most NPCs to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.2 Corrected NPC names to fall within proper resctrictions. [L0ne_W0lf]
+//= 2.3 Fixed exploit with kafra pass
 //============================================================
 
 // Al De Baran
@@ -800,7 +801,7 @@ aldeba_in,84,166,4	script	Kafra Service#alde	117,{
 					cutin "",255;
 					end;
 				}
-				delitem 1084,kafrapass; //Kapra's_Pass
+				delitem 1084,countitem(1084); //Kapra's_Pass
 				set Zeny,Zeny+.@kafrapassmoney;
 				mes "[Kafra Pavianne]";
 				mes "Thank you.";
