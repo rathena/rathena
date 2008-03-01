@@ -4,6 +4,7 @@
 //===== By: ==================================================
 //= eAthena Dev Team
 //= 1.0 [Komurka]
+//= 1.1 Added WoE:SE Map restrictions. [L0ne_W0lf]
 //===== Current Version: =====================================
 
 //Aldebaran Turbo Track
@@ -28,3 +29,15 @@ force_5-1	mapflag	restricted	3
 force_1-2	mapflag	restricted	3
 force_1-3	mapflag	restricted	3
 prt_are_in	mapflag	restricted	3
+
+//WoE:SE Maps
+//schg_cas01	mapflag	restricted	4
+//schg_cas02	mapflag	restricted	4
+//schg_cas03	mapflag	restricted	4
+//schg_cas04	mapflag	restricted	4
+//schg_cas05	mapflag	restricted	4
+//arug_cas01	mapflag	restricted	4
+//arug_cas02	mapflag	restricted	4
+//arug_cas03	mapflag	restricted	4
+//arug_cas04	mapflag	restricted	4
+//arug_cas05	mapflag	restricted	4

@@ -121,6 +121,11 @@ schg_cas02	mapflag	noicewall
 schg_cas03	mapflag	noicewall
 schg_cas04	mapflag	noicewall
 schg_cas05	mapflag	noicewall
+arug_cas05	mapflag	noicewall
+arug_cas05	mapflag	noicewall
+arug_cas05	mapflag	noicewall
+arug_cas05	mapflag	noicewall
+arug_cas05	mapflag	noicewall
 // Novice Guild Castles ===
 nguild_alde	mapflag	noicewall
 nguild_gef	mapflag	noicewall

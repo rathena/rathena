@@ -3,6 +3,7 @@
 //===== By: ==================================================
 //= eAthena Dev Team
 //= v 1.2
+//= 1.3 Added WoE SE maps
 //===== Current Version: =====================================
 
 // Special Quests Places =====
@@ -35,6 +36,11 @@ schg_cas02	mapflag	nowarp
 schg_cas03	mapflag	nowarp
 schg_cas04	mapflag	nowarp
 schg_cas05	mapflag	nowarp
+arug_cas01	mapflag	nowarp
+arug_cas02	mapflag	nowarp
+arug_cas03	mapflag	nowarp
+arug_cas04	mapflag	nowarp
+arug_cas05	mapflag	nowarp
 n_castle	mapflag	nowarp
 nguild_alde	mapflag	nowarp
 nguild_gef	mapflag	nowarp

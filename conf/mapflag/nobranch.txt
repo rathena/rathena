@@ -145,6 +145,12 @@ schg_cas02	mapflag	nobranch
 schg_cas03	mapflag	nobranch
 schg_cas04	mapflag	nobranch
 schg_cas05	mapflag	nobranch
+//aru_gld
+arug_cas01	mapflag	nobranch
+arug_cas02	mapflag	nobranch
+arug_cas03	mapflag	nobranch
+arug_cas04	mapflag	nobranch
+arug_cas05	mapflag	nobranch
 
 //n_castle	mapflag	nobranch
 nguild_alde	mapflag	nobranch
@@ -304,7 +310,7 @@ yuno	mapflag	nobranch
 rachel	mapflag	nobranch
 veins	mapflag	nobranch
 
-//Aldebaran Turbo Track
+//Aldebaran Turbo Track ========
 turbo_room	mapflag	nobranch
 turbo_n_1	mapflag	nobranch
 turbo_n_4	mapflag	nobranch
@@ -313,3 +319,22 @@ turbo_n_16	mapflag	nobranch
 turbo_e_4	mapflag	nobranch
 turbo_e_8	mapflag	nobranch
 turbo_e_16	mapflag	nobranch
+
+//Battle Fields ================
+bat_room	mapflag	nobranch
+bat_a01	mapflag	nobranch
+bat_a02	mapflag	nobranch
+bat_b01	mapflag	nobranch
+bat_b02	mapflag	nobranch
+
+//Vision of Okolnir ============
+que_qsch01	mapflag	nobranch
+que_qsch02	mapflag	nobranch
+que_qsch03	mapflag	nobranch
+que_qsch04	mapflag	nobranch
+que_qsch05	mapflag	nobranch
+que_qaru01	mapflag	nobranch
+que_qaru02	mapflag	nobranch
+que_qaru03	mapflag	nobranch
+que_qaru04	mapflag	nobranch
+que_qaru05	mapflag	nobranch

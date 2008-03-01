@@ -440,6 +440,11 @@ schg_cas02	mapflag	nomemo
 schg_cas03	mapflag	nomemo
 schg_cas04	mapflag	nomemo
 schg_cas05	mapflag	nomemo
+arug_cas01	mapflag	nomemo
+arug_cas02	mapflag	nomemo
+arug_cas03	mapflag	nomemo
+arug_cas04	mapflag	nomemo
+arug_cas05	mapflag	nomemo
 //To Protect Novices Guilds from level abusers
 n_castle	mapflag	nomemo
 
@@ -582,3 +587,22 @@ turbo_n_16	mapflag	nomemo
 turbo_e_4	mapflag	nomemo
 turbo_e_8	mapflag	nomemo
 turbo_e_16	mapflag	nomemo
+
+//Battle Fields ==============
+bat_room	mapflag	nomemo
+bat_a01	mapflag	nomemo
+bat_a02	mapflag	nomemo
+bat_b01	mapflag	nomemo
+bat_b02	mapflag	nomemo
+
+//Vision of Okolnir ==========
+que_qsch01	mapflag	nomemo
+que_qsch02	mapflag	nomemo
+que_qsch03	mapflag	nomemo
+que_qsch04	mapflag	nomemo
+que_qsch05	mapflag	nomemo
+que_qaru01	mapflag	nomemo
+que_qaru02	mapflag	nomemo
+que_qaru03	mapflag	nomemo
+que_qaru04	mapflag	nomemo
+que_qaru05	mapflag	nomemo

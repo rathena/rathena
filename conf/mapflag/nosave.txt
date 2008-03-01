@@ -181,6 +181,11 @@ schg_cas02	mapflag	nosave	SavePoint
 schg_cas03	mapflag	nosave	SavePoint
 schg_cas04	mapflag	nosave	SavePoint
 schg_cas05	mapflag	nosave	SavePoint
+arug_cas01	mapflag	nosave	SavePoint
+arug_cas02	mapflag	nosave	SavePoint
+arug_cas03	mapflag	nosave	SavePoint
+arug_cas04	mapflag	nosave	SavePoint
+arug_cas05	mapflag	nosave	SavePoint
 nguild_alde	mapflag	nosave	SavePoint
 nguild_gef	mapflag	nosave	SavePoint
 nguild_pay	mapflag	nosave	SavePoint
@@ -204,3 +209,22 @@ turbo_n_16	mapflag	nosave	SavePoint
 turbo_e_4	mapflag	nosave	SavePoint
 turbo_e_8	mapflag	nosave	SavePoint
 turbo_e_16	mapflag	nosave	SavePoint
+
+//Battle Fields ===============================
+bat_room	mapflag	nosave	SavePoint
+bat_a01	mapflag	nosave	SavePoint
+bat_a02	mapflag	nosave	SavePoint
+bat_b01	mapflag	nosave	SavePoint
+bat_b02	mapflag	nosave	SavePoint
+
+//Vision of Okolnir ===========================
+que_qsch01	mapflag	nosave	SavePoint
+que_qsch02	mapflag	nosave	SavePoint
+que_qsch03	mapflag	nosave	SavePoint
+que_qsch04	mapflag	nosave	SavePoint
+que_qsch05	mapflag	nosave	SavePoint
+que_qaru01	mapflag	nosave	SavePoint
+que_qaru02	mapflag	nosave	SavePoint
+que_qaru03	mapflag	nosave	SavePoint
+que_qaru04	mapflag	nosave	SavePoint
+que_qaru05	mapflag	nosave	SavePoint

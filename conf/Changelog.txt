@@ -1,5 +1,7 @@
 Date	Added
 
+2008/02/29
+	*Rev. 12273 Added some additional map flags for some newer maps. [L0ne_W0lf]
 2008/02/27
 	* Rev. 12268 Added information for cash related @ and # commands. [L0ne_W0lf]
 2008/02/27

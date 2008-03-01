@@ -240,3 +240,22 @@ turbo_n_16	mapflag	nopenalty
 turbo_e_4	mapflag	nopenalty
 turbo_e_8	mapflag	nopenalty
 turbo_e_16	mapflag	nopenalty
+
+//Battle Fields =================
+bat_room	mapflag	nopenalty
+bat_a01	mapflag	nopenalty
+bat_a02	mapflag	nopenalty
+bat_b01	mapflag	nopenalty
+bat_b02	mapflag	nopenalty
+
+//Vision of Okolnir =============
+que_qsch01	mapflag	nopenalty
+que_qsch02	mapflag	nopenalty
+que_qsch03	mapflag	nopenalty
+que_qsch04	mapflag	nopenalty
+que_qsch05	mapflag	nopenalty
+que_qaru01	mapflag	nopenalty
+que_qaru02	mapflag	nopenalty
+que_qaru03	mapflag	nopenalty
+que_qaru04	mapflag	nopenalty
+que_qaru05	mapflag	nopenalty

@@ -34,6 +34,11 @@ schg_cas02	mapflag	nowarpto
 schg_cas03	mapflag	nowarpto
 schg_cas04	mapflag	nowarpto
 schg_cas05	mapflag	nowarpto
+arug_cas01	mapflag	nowarpto
+arug_cas02	mapflag	nowarpto
+arug_cas03	mapflag	nowarpto
+arug_cas04	mapflag	nowarpto
+arug_cas05	mapflag	nowarpto
 //Novice Guild
 n_castle	mapflag	nowarpto
 nguild_alde	mapflag	nowarpto
@@ -64,3 +69,22 @@ force_5-1	mapflag	nowarpto
 force_1-2	mapflag	nowarpto
 force_1-3	mapflag	nowarpto
 prt_are_in	mapflag	nowarpto
+
+//Battle Fields ================
+bat_room	mapflag	nowarpto
+bat_a01	mapflag	nowarpto
+bat_a02	mapflag	nowarpto
+bat_b01	mapflag	nowarpto
+bat_b02	mapflag	nowarpto
+
+//Vision of Okolnir ============
+que_qsch01	mapflag	nowarpto
+que_qsch02	mapflag	nowarpto
+que_qsch03	mapflag	nowarpto
+que_qsch04	mapflag	nowarpto
+que_qsch05	mapflag	nowarpto
+que_qaru01	mapflag	nowarpto
+que_qaru02	mapflag	nowarpto
+que_qaru03	mapflag	nowarpto
+que_qaru04	mapflag	nowarpto
+que_qaru05	mapflag	nowarpto

@@ -162,6 +162,11 @@ schg_cas02	mapflag	noteleport
 schg_cas03	mapflag	noteleport
 schg_cas04	mapflag	noteleport
 schg_cas05	mapflag	noteleport
+arug_cas01	mapflag	noteleport
+arug_cas02	mapflag	noteleport
+arug_cas03	mapflag	noteleport
+arug_cas04	mapflag	noteleport
+arug_cas05	mapflag	noteleport
 nguild_alde	mapflag	noteleport
 nguild_gef	mapflag	noteleport
 nguild_pay	mapflag	noteleport
@@ -281,3 +286,22 @@ turbo_n_16	mapflag	noteleport
 turbo_e_4	mapflag	noteleport
 turbo_e_8	mapflag	noteleport
 turbo_e_16	mapflag	noteleport
+
+//Battle Fields ==================
+bat_room	mapflag	noteleport
+bat_a01	mapflag	noteleport
+bat_a02	mapflag	noteleport
+bat_b01	mapflag	noteleport
+bat_b02	mapflag	noteleport
+
+//Vision of Okolnir ==============
+que_qsch01	mapflag	noteleport
+que_qsch02	mapflag	noteleport
+que_qsch03	mapflag	noteleport
+que_qsch04	mapflag	noteleport
+que_qsch05	mapflag	noteleport
+que_qaru01	mapflag	noteleport
+que_qaru02	mapflag	noteleport
+que_qaru03	mapflag	noteleport
+que_qaru04	mapflag	noteleport
+que_qaru05	mapflag	noteleport
