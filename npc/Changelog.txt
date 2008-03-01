@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/02/29
+	* Rev 12274 Updated Turtle Island quest, and mixture quest. [L0ne_W0lf]
 2008/02/28
 	* Rev 12265 Added Cash shop based on iRO's. (Enable to use) [L0ne_W0lf]
 	* Rev 12263 Updated Lighthalzen dungeon and friendship quests. [L0ne_W0lf]

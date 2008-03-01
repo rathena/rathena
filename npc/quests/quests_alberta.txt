@@ -3,15 +3,16 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 1.8a
+//= 1.9
 //===== Compatible With: ===================================== 
-//= eAthena 1.0
+//= eAthena SVN
 //===== Description: ========================================= 
 //= Dolls Quest
 //= Boy's Cap Quest
 //= Antlers Quest
 //= Bao Bao, Cresent Hairpin, Fashionbale Glasses, Heart Hairpin Quests
 //= Hat of Sun God, Sunday Hat, Mage Hat, Magician Hat Quests
+//= [Aegis conversion]
 //= Turtle Island Quests
 //===== Additional Comments: ================================= 
 //= Fully working
@@ -23,6 +24,7 @@
 //= 1.7 Moved quest from cities/albera.txt [Evera]
 //= 1.8 Re-made the Doll Quest, now with official dialogs. [DZeroX]
 //= 1.8a Removed .GATs [Lupus]
+//= 1.9 Updated Turtle Quest to official. [L0ne_W0lf]
 //============================================================ 
 
 
@@ -828,512 +830,1376 @@ alberta,135,79,3	script	Tempestra	71,{
 //=======================================================================================================//
 //						Turtle Quest
 //=======================================================================================================//
-// Gotanblue --------------------------------------------------------------------------
-alberta,247,123,5	script	Gotanblue	709,{
-	if(TURTLE) goto L_Turtle;
-	mes "[Gotanblue]";
-	mes "Ha ha! The sea seems endless!! We cannot begin to grasp its size merely by gazing at it from land....";
+alberta,91,70,4	script	Kinsey#tur	89,{
+	mes "[Kinsey]";
+	mes "What does a man have to do to get a stiff drink around here? I mean, there are absolutely no good bars in Alberta!";
 	next;
-	mes "[Gotanblue]";
-	mes "Do you know what I mean?.....";
-	close;
-
-L_Turtle:
-	mes "[Gotanblue]";
-	mes "Oh! Your eyes.... they tell me everything!! You must have been sent by that drunken old man!";
-M_Menu:
+	mes "[Kinsey]";
+	mes " Well, the alcohol in the pub here is second rate, but I gotta admit, it's got a great atmosphere.";
 	next;
-	menu "-Tell me about Turtle Island.",-, "-How Can I get there?",M_2, "-End Conversation",M_End;
-
-		mes "[Gotanblue]";
-		mes "So you wanna know about Turtle Island?... You think it's a great place?... Do you like it that much?...";
-		next;
-		mes "[Gotanblue]";
-		mes "Well let me tell you something....";
-		next;
-		mes "[Gotanblue]";
-		mes "TURTLE ISLAND TOOK THE LIVES OF MY CLOSEST FRIENDS!!";
-		emotion e_gasp;
-		next;
-		mes "[Gotanblue]";
-		mes "Can you POSSIBLY understand??.........";
-		next;
-		mes "[Gotanblue]";
-		mes "It all happened a few decades ago....";
-		next;
-		mes "[Gotanblue]";
-		mes "^5555FFJornadan Niliria^000000 and our comrades set off on a journey to find out if the legends about the island were true.";
-		next;
-		mes "[Gotanblue]";
-		mes "It was summer when I was approached to become a member of Jornadan's team.";
-		mes "I was only 20 then, and it was a huge honor for me to be a part of such a well respected group of men.";
-		next;
-		mes "[Gotanblue]";
-		mes "Jornadan Niliria was a great treasure hunter, I was the best seaman of the bunch, and the others were all the very best at what they did.";
-		next;
-		mes "[Gotanblue]";
-		mes "We decided to start our great adventure here, in Alberta.  This was because of a clue we found that put the location of Turtle Island near Alberta.";
-		next;
-		mes "[Gotanblue]";
-		mes "We were all very exited and full of hope! We left everything behind and set sail to seek Turtle Island!";
-		mes "We sailed all day and all night.  We eventually ran adrift, and could do nothing but sit and wait as the days passed.....";
-		next;
-		mes "[Gotanblue]";
-		mes "Then one day... without warning... we were surrounded by a tremendously thick blanket of fog!!";
-		mes "It was impossible to see anything past the length of your own arm!";
-		next;
-		mes "[Gotanblue]";
-		mes "We could not tell which way was East and which way was West.  But it didn't matter... for we were all exhausted at that point.";
-		next;
-		mes "[Gotanblue]";
-		mes "Then what we feared most happened.  A huge rock formation pierced through the fog right in front of us!";
-		mes "There was no way to avoid it and we crashed violently into it, severely damaging our ship!!";
-		emotion e_gasp;
-		next;
-		mes "[Gotanblue]";
-		mes "Amazingly, the ship held together and we were able to continue on.";
-		next;
-		mes "[Gotanblue]";
-		mes "Then like a beam of energy descending down from the heavens, the first ray of sunlight we had seen in weeks pierced through the fog onto our battered ship.";
-		next;
-		mes "[Gotanblue]";
-		mes "And like magic the fog lifted to reveal what we had been searching so long and hard for.... that legendary place.... TURTLE ISLAND!!!!";
-		next;
-		mes "[Gotanblue]";
-		mes "We set up camp immediately and rested our weary bodies.  A few days later we began to extensively search the island.";
-		mes "What we found was shocking! Apparently someone had found the island before us.  He left a very well kept journal of his expedition.";
-		next;
-		mes "[Gotanblue]";
-		mes "According to his journal, the man had come by himself to find the island.  Unfortunately, we couldn't find him.";
-		next;
-		mes "[Gotanblue]";
-		mes "Even though someone had beaten us to Turtle Island, we still felt that it was an accomplishment to have made it to the island.";
-		mes "We continued to explore the island and find out as much about it as we could.";
-		next;
-		mes "[Gotanblue]";
-		mes "A particular artifact caught our interest.  It was mentioned in that man's journal....";
-		mes "Oh, now I remember his name... ^5555FF'Won'^000000... apparently a great sword master....";
-		next;
-		mes "[Gotanblue]";
-		mes "Anyway, he wrote about a '^FF5555Jewel Fragment'^000000 of some kind.  He described it as 'the most beautiful thing in the world'.";
-		next;
-		mes "[Gotanblue]";
-		mes "We became intent on finding that jewel no matter what.  Day after day we searched for it.  Months passed.";
-		mes "But even with Won's journal records, we were not able to find the jewel fragment.  We had no choice but to give up.";
-		next;
-		mes "[Gotanblue]";
-		mes "So we packed up our belongings and headed home.  Again we passed through the horrible dense fog.";
-		mes "After a month of sailing our journey was near its end... or so we thought.";
-		next;
-		mes "[Gotanblue]";
-		mes "We spotted land and I breathed a sigh of relief... unfortunately that feeling of relief turned into bewilderment as I realized that..... that....";
-		next;
-		mes "[Gotanblue]";
-		mes "IT WAS TURTLE ISLAND!!! We had landed on the other side of the island! We had no idea how it happened but we immediately cast off once again.";
-		emotion e_gasp;
-		next;
-		mes "[Gotanblue]";
-		mes "And as if some foul curse and been placed on our group, we again found ourselves on the shores of Turtle Island.";
-		mes "Time after time we attempted to flee the island only to find ourselves back on it.  A whole year passed and still, we were trapped!";
-		next;
-		mes "[Gotanblue]";
-		mes "It was beyond reason.... We had tried every possible path.... Our spirits were broken, our hopes were crushed....";
-		mes "And one by one, my comrades fell, no longer having the strength to find a way home....";
-		next;
-		mes "[Gotanblue]";
-		mes "CURSED ISLAND!!!!!";
-		emotion e_omg;
-		next;
-		mes "[Gotanblue]";
-		mes "As you can see only I and Jornadan were able to make it out alive.  By pure luck, we made back to Alberta....";
-		next;
-		mes "[Gotanblue]";
-		mes "(~sob~sob~sob)... I apologize. I'm still very emotional about it after all these years... Well, that's all I have to say about Turtle Island.";
-		emotion e_sob;
-		goto M_Menu;
-	M_2:
-		mes "[Gotanblue]";
-		mes "What's this? After my terrifying story about Turtle Island, you still want to go there? You're not at all scared??";
-		emotion e_what;
-		next;
-		mes "[Gotanblue]";
-		mes "So be it... but you will need me as your guide and that will cost 10,000 zeny!";
-		next;
-		menu "Turtle Island -> 10000 zeny",-, "Cancel",sM_End;
-
-			if(Zeny < 10000) goto sL_Zeny;
-			mes "[Gotanblue]";
-			mes "Alright!! You've made your choice! With my experience we will get to Turtle Island without any problems.";
-			mes "I admire your fighting spirit.  Carry it with you always!";
-			next;
-			mes "^5555FF(You and Gotanblue climb on board his little steamboat)^000000";
-			next;
-			mes "[Gotanblue]";
-			mes "We are now heading towards Turtle Island.  Let us go without fear!!";
-			next;
-			mes "^5555FF(~choo~choooo~)^000000";
-			next;
-			if(Zeny < 10000) goto sL_Zeny;
-			set Zeny, Zeny - 10000;
-			warp "tur_dun01",154,39;
-			close;
-		sL_Zeny:
-			mes "[Gotanblue]";
-			mes "What's this? I said 10,000 zeny.  I will not guide you for less.  Good day!";
-			emotion e_what;
-			close;
-		sM_End:
-			mes "[Gotanblue]";
-			mes "A very good choice!! Turtle Island is a DREADFULL and EVIL place!";
-			mes "When I take people there, I feel as if I'm leading them to their DEATHS!";
-			close;
-	M_End:
-		mes "[Gotanblue]";
-		mes "To this day, Turtle Island is shrouded in mystery.  It is extremely hard to find, and almost impossible to escape from.";
-		mes "If you do not want to suffer great despair, then leave the truth behind Turtle Island as it is.... unknown....";
-		close; 
-}
-
-//Go back to Alberta
-tur_dun01,166,29,1	script	Gotanblue#2	709,{
-	mes "[Gotanblue]";
-	mes "Going back to Alberta?";
+	mes "[Kinsey]";
+	mes "In fact, this old man is always there, telling stories about Turtle Island! But we're not sure if he's been there, or if he's just that drunk.";
 	next;
-	menu "Yep.",-, "Cancel",M_End;
-
-	mes "^5555FF(You and Gotanblue climb on board his little steamboat)^000000";
-	next;
-	warp "alberta",244,123;
-	close;
-
-M_End:
-	mes "[Gotanblue]";
-	mes "A very good choice!!";
-	close;
-}
-
-// Turtle Grandpa -------------------------------------------------------------------
-alberta_in,23,104,2	script	Turtle Grandpa	120,{
-	mes "[Turtle Grandpa]";
-	mes "~Buuurrrpp!!!~ Oops...";
-	emotion e_swt;
-	next;
-	mes "[Turtle Grandpa]";
-	mes "It's beyond me why people seem to think that Alberta is the center of world trade.";
-	mes "I mean, this place doesn't even have a decent bar for crying out loud!!";
-	emotion e_an;
-	next;
-	mes "[Turtle Grandpa]";
-	mes "Why is it that I have to resort to drinking in a place like this??";
-	emotion e_what;
-	next;
-	menu "-Tell me about Turtle Island.",-, "-How can I get there?",M_1, "-End conversation.",M_End;
-
-		mes "[Turtle Grandpa]";
-		mes "There is an enormous stash of treasure hidden on Turtle Island.";
-		mes "There is also a special potion that can increase a person's lifespan on that island......";
+	if (select("^3333FF*ting!*^000000:Sounds fun~") == 1) {
+		mes "[Kinsey]";
+		mes "Whoa...";
+		mes "Hey, your eyes just lit up right when I said 'Turtle Island!' Hmm, let me try that again.";
 		next;
-		mes "[Turtle Grandpa]";
-		mes "There are so many myths and legends about the island, that no one even knows for sure if Turtle Island exist.";
+		mes "[Kinsey]";
+		mes "*Ahem*";
+		mes "'Tur-tle";
+		mes "Is-land.'";
 		next;
-		mes "[Turtle Grandpa]";
-		mes "I for one believe it does.... It HAS TO!!......";
-		emotion e_gasp;
+		mes "["+ strcharinfo(0) +"]";
+		mes "^3333FF*ting!*^000000";
 		next;
-		mes "[Turtle Grandpa]";
-		mes "If you are any sort of seaman, if you have a spirit for adventure, and if you have the heart to become a great treasure hunter....";
-		mes "Then you may be worthy of the information I have to offer...";
+		mes "[Kinsey]";
+		mes "Ah...";
+		mes "You must be an adventurer. It seems like you really wanna learn more about that place, huh?";
 		next;
-		menu "-(~eyes twinkle~)",-, "-Heck Ya! Gimme that information.",sM_1;
-
-			mes "[Turtle Grandpa]";
-			mes "His name was ^5555FFJornadan Niliria^000000.  Jornadan and his ten comrades set off on a journey to find the legendary Turtle Island.";
-			next;
-			mes "[Turtle Grandpa]";
-			mes "At first they had no idea where the island was.  They were ambitious and worked extremely hard to gather clues on the whereabouts of the island.";
-			next;
-			mes "[Turtle Grandpa]";
-			mes "These men were very strong, especially Jornadan.  He was so strong in fact, that his simple kicks were as powerful as a level 10 bash!!!";
-			next;
-			mes "[Turtle Grandpa]";
-			mes "He could catch an arrow in one hand while healing a comrade with the other, all during the middle of a battle!";
-			next;
-			mes "[Turtle Grandpa]";
-			mes "Heh heh.  Well, it's just a rumor so take it for what it's worth.  As I was saying....";
-			next;
-			mes "[Turtle Grandpa]";
-			mes "After searching tirelessly Jornadan and his crew eventually found the famed Turtle Island.";
-			next;
-			mes "[Turtle Grandpa]";
-			mes "But for reasons unknown, the crew became stranded on the island forever!!";
-			mes "Although I do not know why or how it happened, there IS one person that does.";
-			next;
-			mes "[Turtle Grandpa]";
-			mes "Go the docks on the east end of town.  Look for a scholar named.... ^FF3333Jornadan^000000... ^FF3333Niliria^000000...";
-			mes "Speak to him.  He should be able to tell you more..... ";
-			next;
-			mes "[Turtle Grandpa]";
-			mes "Oh! One more thing... look for his '^5555FFjournal^000000'.  He usually has it close by.  It's definitely an interesting read.";
-			if(TURTLE==0) set TURTLE, 1;
-			close;
-		sM_1:
-			mes "[Turtle Grandpa]";
-			mes "No way! I have no interest in speaking with someone with greed in his/her heart!";
-			emotion e_gasp;
-			next;
-			mes "[Turtle Grandpa]";
-			mes "Get OUT of my sight!!! GO HOME!";
-			emotion e_an;
-			next;
-			mes "[Turtle Grandpa]";
-			mes "What's this?? You're still here?..... GO! GO AWAY!!............";
-			emotion e_go;
-			close;
-	M_1:
-		mes "[Turtle Grandpa]";
-		mes "It's is extremely hard to find, and even more difficult to reach.  The likelihood of returning home is slim at best....";
+		mes "[Kinsey]";
+		mes "Why don't you look around near the pub, and look for that old man? He's usually pretty drunk, and speaks nonsense, but he might have something to say to you.";
 		next;
-		mes "[Turtle Grandpa]";
-		mes "Actually..... IT'S IMPOSSIBLE!!!!";
-		emotion e_gasp;
+		mes "[Kinsey]";
+		mes "Oh, and um, I've been in his room before. He leaves some sort of letter lying around the table that has something to do with his Turtle Island stories.";
 		next;
-		mes "[Turtle Grandpa]";
-		mes "Yet you still want to go there??";
-		emotion e_what;
-		next;
-		mes "[Turtle Grandpa]";
-		mes "I want to warn you about the dangers of going there.... but.... I feel so dizzy..... wooah..... it must be the Vodka....";
-		next;
-		mes "[Turtle Grandpa]";
-		mes "Any who, if you go the docks you'll find a fat, old, sailor.  His name is ^5555FFGotanblue^000000.";
-		mes "Tell him I sent you and maybe he'll tell you how to get to Turtle Island.  Well, good luck.";
+		mes "[Kinsey]";
+		mes "But if he asks for you to buy him a drink, I wouldn't do it. He's got like, three extra livers or something, so he'll drink you to bankruptcy.";
 		close;
-	M_End:
-		mes "[Turtle Grandpa]";
-		mes "Whooops......";
-		next;
-		mes "!!KA-PLOP!!(collapses on the floor)";
-		next;
-		mes "[Turtle Grandpa]";
-		mes "He he he.... look at me.... I'm a fish... I'm drunk like a fish..... enough for today..... ~ZZZZZzzzz~";
-		close;
-}
-
-// Letter of an explorer (on Turtle Grandpa's desk)------------------------------------------------------------------
-alberta_in,17,101,1	script	Letter of an explorer	111,{
-	mes "~ The letter reads... ~";
-	mes "- O/X/XOVX -";
-	mes "If you find this letter, it means that our expedition to Turtle Island has failed.  Please inform the others...";
+	}
+	mes "[Kinsey]";
+	mes "Yeah, I guess it's pretty cool listening to his stories. But it would be even cooler if I could hear them in a better drinking establishment.";
 	next;
-	mes "~ continued...~";
-	mes "As of now, only half the number of our crew members are left.  Our food supply will only last for ten more days.  It is a grave situation we are facing....";
-	next;
-	mes "~ continued...~";
-	mes "- V/O/XOVX -";
-	mes "It seems my letters did not make it to the outside world, and have instead come back to me.... This damn island is CURSED!! Oh God.....";
-	next;
-	mes "~ continued...~";
-	mes "GOD FORSAKEN ISLAND!! There is nothing left to eat..... help... me... please.... HELP ME!!";
-	next;
-	mes "~ continued...~";
-	mes "- V/X/XOVX -";
-	mes "^5555FF- This section is severely crumpled and tattered. -^000000";
-	mes "^5555FF- You are unable to read it. -^000000";
+	mes "[Kinsey]";
+	mes "I mean, they don't even serve a 'Boogieman,' much less a 'Cobo.' It's getting harder and harder to find those fine, fine specialty drinks.";
 	close;
 }
 
-// Jornadan Niliria ------------------------------------------------------------------------
-alberta,248,90,1	script	Jornadan Niliria	121,{
+alberta_in,23,104,4	script	Grandpa Turtle#tur	120,{
+	mes "[Grandpa Turtle]";
+	mes "Ooog...";
+	mes "So dizzy...";
+	next;
+	mes "[Grandpa Turtle]";
+	mes "There isn't one decent drinking establishment in all of Alberta! But then again, why did I drink so much? Hmm...";
+	next;
+	switch(select("Tell me about Turtle Island:How can I get there?:Stop talking")) {
+	case 1:
+		mes "[Grandpa Turtle]";
+		mes "Eh...?";
+		mes "Turtle Island?";
+		next;
+		mes "[Grandpa Turtle]";
+		mes "Well, there's a lot of folklore about that place. Some folk say that there's a mountain of treasure there.";
+		next;
+		mes "[Grandpa Turtle]";
+		mes "Others folk say a potion that can prolong your lifespan can be found somewhere in Turtle Island. But nobody really knows for sure.";
+		next;
+		mes "[Grandpa Turtle]";
+		mes "But I'm sure that Turtle Island does exist, and that something wonderful can be found there.";
+		next;
+		mes "[Grandpa Turtle]";
+		mes "But only someone with a good heart that's eager for adventure should be able to go to that kind of place.";
+		next;
+		switch(select("^3333FF*ting!*^000000:Tell me more, old man!")) {
+		case 1:
+			mes "[Grandpa Turtle]";
+			mes "Ha ha ha~!";
+			if (Sex)
+				mes "I like the shine in your eye, my boy! I can see a little bit of myself in those eyes. Yes...";
+			else
+				mes "No use hiding the glint in your eyes, my dear! It's adventure you wish for, that much I can tell...";
+			next;
+			mes "[Grandpa Turtle]";
+			mes "Tell me...";
+			mes "Have you heard of a man named ^3355FFJornadan Niliria^000000? He, and a group of ten other men actually found Turtle Island!";
+			next;
+			mes "[Grandpa Turtle]";
+			mes "^3355FFJornadan Niliria^000000 was a man of strength and conviction. He and his crew gathered every clue they could about Turtle Island.";
+			next;
+			mes "[Grandpa Turtle]";
+			mes "Even after learning all that they could, much of their voyage relied on their hope and faith that the Turtle Island legend was true...";
+			next;
+			mes "[Grandpa Turtle]";
+			mes "After a long, arduous journey, their efforts were rewarded, and they landed on Turtle Island!";
+			next;
+			mes "[Grandpa Turtle]";
+			mes "However, it gets more complicated after that. I hear Niliria's crew had great difficulty getting back home for some reason.";
+			next;
+			mes "[Grandpa Turtle]";
+			mes "Heh heh...";
+			mes "If you want to learn more, why don't you go to the eastern end of the Alberta port? There's a scholar there that knows more of this story.";
+			next;
+			mes "[Grandpa Turtle]";
+			mes "He could probably shed more light on the subject of Turtle Island's legend.";
+			next;
+			mes "[Grandpa Turtle]";
+			mes "Ah, one more thing! Look around that scholar and you should find his ^3355FFJournal^000000. I promise that it will be an interesting read.";
+			next;
+			mes "[Grandpa Turtle]";
+			mes "Ah...";
+			mes "The fire of youth!";
+			mes "When the winds die, may your dreams fill your sails~ Good luck to you!";
+			close;
+		}
+		mes "[Grandpa Turtle]";
+		mes "Grrrr...!";
+		next;
+		mes "[Grandpa Turtle]";
+		mes "I may not know much, but I won't talk to anyone motivated solely by greed. Go home!";
+		close;
+	case 2:
+		if (TURTLE > 0) {
+			mes "[Grandpa Turtle]";
+			mes "Well...";
+			mes "If you go to eastern side of the Alberta port, you should find an old ferryboatman.";
+			next;
+			mes "[Grandpa Turtle]";
+			mes "His name is ^3355FFGotanblue^000000. I believe he may know a way to Turtle Island. Heh heh, good luck~";
+			close;
+		}
+		mes "[Grandpa Turtle]";
+		mes "Turtle Island...?";
+		next;
+		mes "[Grandpa Turtle]";
+		mes "My, that place is difficult to find and even more difficult to travel to. You're sure you want to go? I would love to give you some advice, but I feel so dizzy after drinking so much...";
+		next;
+		mes "[Grandpa Turtle]";
+		mes "Ho ho ho...";
+		mes "Why don't you talk to a chubby little sailor I know named ^3355FFGotanblue^000000. You can find him loitering on one of the Alberta ports.";
+		next;
+		mes "[Grandpa Turtle]";
+		mes "Tell him that I sent you, and he may tell you more about Turtle Island. He may even know how to get there~";
+		next;
+		mes "[Grandpa Turtle]";
+		mes "Well, then...";
+		mes "Good luck~";
+		set TURTLE,1;
+		close;
+	case 3:
+		mes "[Grandpa Turtle]";
+		mes "Oooh...";
+		mes "Even at this age...";
+		mes "I don't understand";
+		mes "how I can drink so much...";
+		close;
+	}
+}
+
+alberta,247,122,4	script	Sailor#tur	709,{
+	if (TURTLE > 0) {
+		mes "[Gotanblue]";
+		mes "Heh...";
+		mes "Your eyes...";
+		mes "I can tell you're curious about Turtle Island. I guess you must have been talking to that drunken old man!";
+		next;
+		switch(select("Do you know about Turtle Island?:How can I get there?:Stop talking.")) {
+		case 1:
+			mes "[Gotanblue]";
+			mes "Turtle Island...?";
+			mes "Well, first I think it's fair to warn you that Turtle Island took the lives of my buddies. That's right, I was part of ^3355FFJornadan Niliria^000000's crew.";
+			next;
+			mes "[Gotanblue]";
+			mes "We wanted to find out if the legends about that island were true, so we left everything behind to learn the truth.";
+			next;
+			mes "[Gotanblue]";
+			mes "Jornadan Niliria was one of the greatest treasure hunters ever, and he gathered men for his crew from around the globe. I'm proud to say that each member of our crew was the best in his field.";
+			next;
+			mes "[Gotanblue]";
+			mes "I happened to be the best at navigating. I was only twenty, but I was still invited to his team. It was such an honor to be accepted as an equal amongst these great men.";
+			next;
+			mes "[Gotanblue]";
+			mes "Anyway, our biggest clue about Turtle Island's location hinted that it was near Alberta, so our voyage began from here.";
+			next;
+			mes "[Gotanblue]";
+			mes "We sailed day and night, drifting for weeks, until one day, we were surrounded by an incredibly thick fog. We had no idea of which direction we were going and the mist wouldn't clear.";
+			next;
+			mes "[Gotanblue]";
+			mes "But none of us had any regrets and we just kept moving onward. There would be no turning back!";
+			next;
+			mes "[Gotanblue]";
+			mes "Finally, a coral reef sudden appeared and we couldn't steer away from it. Our ship was critically damaged. But when the fog cleared, we saw that we had finally arrived at Turtle Island! It was real!";
+			next;
+			mes "[Gotanblue]";
+			mes "After we made camp on shore and explored the island, we learned something quite remarkable.";
+			next;
+			mes "[Gotanblue]";
+			mes "There was a man who had actually made it to Turtle Island before us. His records, however, never reached Rune-Midgard. He was a great swordmaster known simply as ^3355FFOne^000000.";
+			next;
+			mes "[Gotanblue]";
+			mes "According to his records, he had traveled alone to find Turtle Island and made it by himself. But we couldn't find any sign of him anywhere...";
+			next;
+			mes "[Gotanblue]";
+			mes "As we explored Turtle Island further, we learned that not only was it abundant with treasure, but that it also held an item of great interest.";
+			next;
+			mes "[Gotanblue]";
+			mes "From the first explorer's record, some kind of amazing ^3355FFjewel fragment^000000 was mentioned.";
+			next;
+			mes "[Gotanblue]";
+			mes "He had traveled to Turtle Island with the purpose of discovering secrets to the sword arts, and stumbled upon a jewel he claimed was the most beautiful in the world.";
+			next;
+			mes "[Gotanblue]";
+			mes "By the ^3355FFOne^000000's records, we were able to thoroughly explore all to be seen on Turtle Island. However...";
+			next;
+			mes "[Gotanblue]";
+			mes "Even after months of searching, we could never find a trace of the jewel fragment. Eventually, we had to give up on our search.";
+			next;
+			mes "[Gotanblue]";
+			mes "Finally, we packed our things to leave the island. But then, as we were traveling at sea, we encountered a thick, blinding fog once again.";
+			next;
+			mes "[Gotanblue]";
+			mes "We spent a month trying to steer through that mist. When we finally sailed out of that mist, we saw that we had arrived at the other side of Turtle Island!";
+			next;
+			mes "[Gotanblue]";
+			mes "Our spirits were crushed!! We tried again and again to leave that place, and spent nearly a year trying to leave but we kept winding up at Turtle Island's shores.";
+			next;
+			mes "[Gotanblue]";
+			mes "As we struggled with the fog, we lost our comrades one by one. In the end, Jornadan, the drunken old man you met, and myself were the only ones who were able to return home to Alberta.";
+			next;
+			mes "[Gotanblue]";
+			mes "We were the only ones who did not give in to despair, and doggedly held onto our hopes. Still, it was by pure luck that we found a way back to Rune-Midgard.";
+			next;
+			mes "[Gotanblue]";
+			mes "Well, that's my story. You know, if you want to learn more about Turtle Island, why don't you speak to the scholar on the eastern port of Alberta?";
+			next;
+			mes "[Gotanblue]";
+			mes "Heh heh...";
+			mes "I'm sure he can tell give you details that even I wouldn't be able to provide...";
+			close;
+		case 2:
+			mes "[Gotanblue]";
+			mes "After my story of Turtle Island, you're still not afraid of going? I'm impressed! Alright then...";
+			next;
+			mes "[Gotanblue]";
+			mes "If you wish for me to guide you there, I will charge you 10,000 zeny. I'm the only navigator that can guide you there and back safely.";
+			next;
+			if (select("Turtle island -> 10000 zeny:Cancel") == 1) {
+				if (Zeny > 9999) {
+					mes "[Gotanblue]";
+					mes "Alright!!";
+					mes "You've made your choice! With my experience, we will arrive without fail! I appreciate your spirit!";
+					next;
+					mes "^3355FF*Choo Choo*^000000";
+					set zeny,zeny-10000;
+					warp "tur_dun01",157,39;
+					close;
+				}
+				mes "[Gotanblue]";
+				mes "Hmmm...";
+				mes "Sorry, but you don't have enough zeny. I hope you understand that I can let my expertise and experience be undervalued...";
+				close;
+			}
+			mes "[Gotanblue]";
+			mes "Alright then...";
+			mes "Well, if the spirit of adventure should happen to grab you, I will be here waiting.";
+			close;
+		case 3:
+			mes "[Gotanblue]";
+			mes "Heh...";
+			next;
+			mes "[Gotanblue]";
+			mes "Come back whenever you feel you're ready to hear my story, will you?";
+			close;
+		}
+	}
+	mes "[Gotanblue]";
+	mes "Ahhhh...!";
+	mes "Just look at that ocean! It covers the earth as far as the eye can see. Tell me that's not one of the most beautiful things you've ever seen...";
+	close;
+}
+
+tur_dun01,165,29,4	script	Sailor#tur2	709,{
+	mes "[Gotanblue]";
+	mes "Do you want";
+	mes "to return";
+	mes "to Alberta?";
+	next;
+	if (select("Go to Alberta:Stop talking") == 1) {
+		mes "[Gotanblue]";
+		mes "Heh heh...";
+		mes "I certainly hope you've found what you were looking for. Alright, I guess there's always a time for an adventurer to return home...";
+		next;
+		mes "^3355FF* Choo Choo *^000000";
+		warp "alberta",241,115;
+	}
+	close;
+}
+
+alberta,248,89,4	script	Turtle Island Scholar	121,{
 	mes "[Jornadan Niliria]";
-	mes "Sometimes I think that the world around me is ever changing.";
-	mes "When I view the land it seems different, when I look up at the sky it too seems different....";
+	mes "Every single place";
+	mes "has its own unique";
+	mes "smells, sights and sounds.";
 	next;
 	mes "[Jornadan Niliria]";
-	mes "The way that Alberta and Turtle Island are different.  Hah hah hah....";
+	mes "Even the great, ever expanding sky that's shared by all the peoples of the earth looks strange when you're in a new and foreign land.";
 	next;
-	menu "-About Turtle Island.",-, "-Um, did you get confused with Al De Baran?",M_1, "-End Conversation.",M_End;
-
+	mes "[Jornandan Niliria]";
+	mes "Heh heh...";
+	mes "Just like my";
+	mes "time on Turtle Island.";
+	mes "Hah Hah Hah~";
+	next;
+	switch(select("About Turtle island:You're Jornadan Niliria?!:Stop talking")) {
+	case 1:
 		mes "[Jornadan Niliria]";
-		mes "Ah yes..... Turtle Island.... Do you know why it's named, 'Turtle' Island? Would you like to know? Haha......";
+		mes "Turtle...";
+		mes "Island...";
 		next;
 		mes "[Jornadan Niliria]";
-		mes "The reason behind the name is actually very easy to figure out and you might even feel a little foolish about not getting it in the first place.";
+		mes "It's almost silly, but Turtle Island was named simply because it's shaped just like a turtle.";
 		next;
 		mes "[Jornadan Niliria]";
-		mes "It's called 'Turtle' Island, because of the fact that it is shaped like an actual turtle.  Haha.  That's all there is to it.";
+		mes "Now, Turtle Island is surrounded by a dense fog. When we were first stuck in it, a lot of us believed it was the result of a curse, or some kind of magic.";
 		next;
 		mes "[Jornadan Niliria]";
-		mes "There is an unusually dense area of fog that surrounds the island.";
-		mes "At first we tried to figure what causes it but with no luck.  We figured that it was just a natural phenomenon.";
+		mes "But in actuality, the fog is the result of a natural phenomenon. It's created by a waterfall inside a cave located on Turtle Island's coast.";
 		next;
 		mes "[Jornadan Niliria]";
-		mes "Then we found a cave along the coastline of the island.  Inside we were amazed to see a HUGE waterfall.";
-		mes "It turns out that this waterfall is what creates that extremely thick area of fog around that island.";
+		mes "Heh heh...";
+		mes "Once you attain understanding, the truth becomes so simple. I guess confusion and fear is the fog that clouds your judgment, your path on life.";
 		next;
 		mes "[Jornadan Niliria]";
-		mes "The reason is so simple and yet there are people who still try to find a deeper meaning behind it....";
+		mes "Believe it or not, I too used to fear the dangers of Turtle Island. But now that I understand most of its secrets, I look at my experiences at Turtle Island with fondness.";
 		next;
 		mes "[Jornadan Niliria]";
-		mes "I believe that people continue to probe into the matter because they do not want to feel that their efforts have been in vain.";
-		mes "Maybe they are afraid of the truth..... I for one was once afraid.... afraid of Turtle Island....";
+		mes "Still, there is one thing I haven't yet uncovered. The ^3355FFunknown jewel fragment^000000.";
 		next;
-		mes "[Jornadan Niliria]";
-		mes "But now that I truly understand all of the myths about Turtle Island, I feel at ease and at peace with the island.";
-		mes "There is still one lingering question about the island for me though..... it is the existence of the unknown ^FF5555'Jewel Fragment'^000000.";
-		next;
-		mes "[Jornadan Niliria]";
-		mes "I am still not certain about what it really is.  In the mean time I will continue to pursue the matter until I discover the truth! Hahaha!!";
+		mes "[Jornandan Niliria]";
+		mes "So, until I find it, I'll keep researching and learn as much as I can until I do. Ha ha ha ha~!";
 		close;
-	M_1:
+	case 2:
 		mes "[Jornadan Niliria]";
-		mes "Whoops ! Oh that's right !! Confused !.... Yipe !..... WOOOOO !!!";		//have NO idea what this means.....
-		close;
-	M_End:
-		mes "[Jornadan Niliria]";
-		mes "When you're searching for the truth, make sure to keep trying.  Someday you will find the answers you seek...";
+		mes "Hmm...?";
+		mes "You've heard of me?";
 		next;
 		mes "[Jornadan Niliria]";
-		mes "Hmmm.... by the way.... I feel hungry.  Why doesn't Alberta have a store or restaurant for some good Dim Sum??";
+		mes "Ah...";
+		mes "I suppose that you know about my treasure hunting days, and probably about Turtle Island.";
+		next;
+		mes "[Jornadan Niliria]";
+		mes "Well, as you can see, I'm a little older now. These old bones aren't what they used to be.";
+		next;
+		mes "[Jornadan Niliria]";
+		mes "But perhaps, someday, if my research bears fruit, I'll venture out once more and seek the one treasure I've never found...";
 		close;
+	case 3:
+		mes "[Jornadan Niliria]";
+		mes "When you want to discover the truth, never give in to despair. If you never give up your search, the answer will come to you.";
+		next;
+		mes "[Jornadan Niliria]";
+		mes "...";
+		next;
+		mes "[Jornadan Niliria]";
+		mes "...";
+		mes "......";
+		next;
+		mes "[Jornadan Niliria]";
+		mes "By the way, I'm pretty hungry. Why doesn't Alberta have any good restaurants?! I hear they have good dimsum in Kunlun...";
+		close;
+	}
 }
 
-// Jornadan's Voyage Log -------------------------------------------------
-alberta,247,93,1	script	A Voyage Log	111,{
-	if(TURTLE == 1) goto L_Treasure;
-	mes "[A Voyage Log]";
-	mes "= 03:20 am =";
-	mes "The moon was dark and I couldn't even see 100m in front of me.  I had a bad feeling about the situation..... I was not the only one...";
+alberta_in,18,102,4	script	Letter#tur	111,{
+	mes "[Explorer's Letter]";
+	mes "- O / X / XOVX -";
+	mes "If you find this letter, please don't disregard what you have read.";
 	next;
-	mes "[A Voyage Log]";
-	mes "I could tell by the looks on my comrade's faces, that they too were worried.  No one could sleep that night.  I hope we will see the sunrise soon....";
+	mes "[Explorer's Letter]";
+	mes "Although we have found Turtle Island, it seems our expedition will fail.";
 	next;
-	mes "[A Voyage Log]";
-	mes "= 04:10 =";
-	mes "5 minutes ago one of our comrades, Cooker, died.  While he walking on deck, the flagpole suddenly broke and fell on his head....";
+	mes "[Explorer's Letter]";
+	mes "Only half of our crew is left, and we only have enough food for ten more days. Our condition is truly grave.";
 	next;
-	mes "[A Voyage Log]";
-	mes "He died at approximately 04:07.  The flagpole had been damaged when our ship hit a reef.";
-	mes "The ship sustained serious damage along the left side of the deck.  I called on the chief to repair it.";
+	mes "[Explorer's Letter]";
+	mes "This damn island must be cursed. There's nothing to eat and we're so close to starving!";
 	next;
-	mes "[A Voyage Log]";
-	mes "= 04:45 =";
-	mes "While two of our workers were fixing the bottom of the deck, monsters attacked them without warning.";
-	mes "Apparently they had gotten in through some openings in the deck.";
-	next;
-	mes "[A Voyage Log]";
-	mes "Two more men had been lost.  Fortunately the ship has yet to sink and seems to be holding up.  Still, we must find land soon.";
-	next;
-	mes "[A Voyage Log]";
-	mes "During the collision with the reef we lost about 30% of our supplies.  In particular we lost food... a great deal of food....";
-	next;
-	mes "[A Voyage Log]";
-	mes "= 05:23 =";
-	mes "We've been noticing an increase in the amount of reefs and they are getting larger as well.";
-	mes "I wonder when we will find land.... I wonder if we can....";
-	next;
-	mes "[A Voyage Log]";
-	mes "- Written by -";
-	mes "- captain Jornadan Niliria -";
-	next;
-	mes "^5555FF- Closed the voyage log -^000000";
-	close;
-
-L_Treasure:
-	mes "^5555FF- The paper is torn -";
-	mes "- Seaweed and mold have -";
-	mes "- mixed with the paper -";
-	mes "- It looks to be in very poor";
-	mes "condition. -^000000";
-	next;
-	mes "^5555FF- Between some pages -";
-	mes "- Is a Banana leaf -";
-	mes "- this is written. -^000000";
-	next;
-	mes "[A Voyage Log]";
-	mes "= O/X date =";
-	mes "Just after we arrived to Turtle Island, we searched for some food to eat.  I am so skinny now...";
-	next;
-	mes "[A Voyage Log]";
-	mes "When I looked at myself in the mirror, it was horrible.  I was disturbed by what I saw...";
-	next;
-	mes "[A Voyage Log]";
-	mes "= X/X date =";
-	mes "We found some kind of fruit! It has a yellow color and a long shape.  It looks just like a banana!";
-	next;
-	mes "[A Voyage Log]";
-	mes "= XO/X date =";
-	mes "Although very similar, the fruit we found was not a banana.  We believe it is a relative of the banana.";
-	mes "It smells and tastes exactly like a banana.";
-	next;
-	mes "[A Voyage Log]";
-	mes "We were starving so we just referred to the fruit as bananas and gathered it for food.";
-	mes "Although there were a limited amount of trees, there was enough for our survival.";
-	next;
-	mes "[A Voyage Log]";
-	mes "It has become the answer to our lack of food and has become precious to us.";
-	mes "~ WE LOVE YOU BANANA!! ~";
-	next;
-	mes "[A Voyage Log]";
-	mes "= O/O date =";
-	mes "In the middle of the night, one of our comrades reported that he felt sick from something he ate.";
-	next;
-	mes "[A Voyage Log]";
-	mes "= OO/O date =";
-	mes "Another comrade fell ill.  He had the strongest digestive system among us.";
-	mes "He went by the name, 'Berot Berot', and he played a vital role in our group.";
-	next;
-	mes "[A Voyage Log]";
-	mes "The fact that he got sick from something he ate, made it very clear that there was something poisoning us.";
-	next;
-	mes "[A Voyage Log]";
-	mes "= XO/O date =";
-	mes "A third person became sick today while we were out exploring.  The first person to become ill has passed away.... We are all very worried.";
-	next;
-	mes "[A Voyage Log]";
-	mes "We tried very hard to find the cause of the illness.  Then by observing the animals one day, we found it.";
-	mes "It was the very thing we thought to be our salvation and yet not one animal on the island would even touch it.....";
-	next;
-	mes "[A Voyage Log]";
-	mes "What was killing us was..... our beloved BANANA!!";
-	next;
-	mes "[A Voyage Log]";
-	mes "We decided to get rid of all of the bananas.  But for some reason they didn't seem to be decomposing.";
-	mes "Even when the skin was peeled off, the fruits remained the same.";
-	next;
-	mes "[A Voyage Log]";
-	mes "I think that the poison or some other agent within the fruit is allowing it to survive.";
-	mes "We may be able to use it for medicinal purposes later, but for now it is of no use to us.";
-	mes "Until we get back to Alberta, we have to decided to bury what is left of the fruit.";
-	next;
-	mes "[A Voyage Log]";
-	mes "This is the location where it's buried in case we forget:";
-	mes "^FF8888- tur_dun01 -";
-	mes "- X: 160, Y: 81 -^000000";
-	next;
-	mes "^5555FF- There is a thin Key -";
-	mes "- with a skull mark on it -";
-	mes "- You've gained -";
-	mes "- a 'Skull Key' -^000000";
-	set TURTLE, 2;
+	mes "[Explorer's Letter]";
+	mes "If we don't get help or find Alberta soon...";
+	mes "We'll...";
 	close;
 }
 
-// Burried treasure --------------------------------------------------------------------
-tur_dun01,160,80,1	script	Skull Stone	111,{
-	if(TURTLE == 2) goto L_OpenBox;
-	mes "^5555FF(It's a frightening stone tomb with horrible skull on it.)^000000";
-	close;
+alberta,248,93,4	script	Voyage log#tur	111,{
+	if (rand(1,2) == 1) {
+		mes "[Voyage log]";
+		mes "03:20 am";
+		mes "There's no light from the stars tonight, and we can't even see a hundred meters ahead of us. The men seem to feel something bad in the air.";
+		next;
+		mes "[Voyage Log]";
+		mes "The faces of my comrades betrayed their fears. They couldn't manage to sleep last night. I hope we will see sunrise soon...";
+		next;
+		mes "[Voyage Log]";
+		mes "04:10 ";
+		mes "5 minutes ago, our comrade, Cooker, was killed when the mast suddenly cracked and fell on his head.";
+		next;
+		mes "[Voyage Log]";
+		mes "The estimated time of death is 04:07. The mast broke due to the shock of the ship hitting a reef. The left side of the deck also suffered from serious damage.";
+		next;
+		mes "[Voyage Log]";
+		mes "04:45";
+		mes "While two of our workers were fixing the bottom of the deck, they were attacked by monsters that had snuck through cracks in the deck.";
+		next;
+		mes "[Voyage Log]";
+		mes "These two were lost in the attack. The estimated time of death was 04:32. Fortunately, we are able to stay afloat, but we must hurry and find land.";
+		next;
+		mes "[Voyage Log]";
+		mes "From the damage to the deck, we've lost 30% of our supplies. At this rate, we'll run out of food soon.";
+		next;
+		mes "[Voyage Log]";
+		mes "05:23";
+		mes "There seem to be more and more reefs to steer around, and they are growing larger as we travel. I wonder if we'll find land soon...";
+		next;
+		mes "[Voyage Log]";
+		mes "Written by";
+		mes "Captain Jornadan Niliria";
+		close;
+	}
+	else {
+		if (TURTLE == 1) {
+			mes "^3355FFThe paper is torn and seaweed and mold are stuck to the paper. It seems this log is in very poor condition...^000000";
+			next;
+			switch(rand(1,3)) {
+			case 1:
+				mes "^3355FFThere is a banana leaf between some of the pages. Here is what is written.^000000";
+				next;
+				mes "[Voyage Log]";
+				mes "O / X date";
+				mes "Just after we arrived on Turtle Island, we frantically searched all over for food.";
+				next;
+				mes "[Voyage Log]";
+				mes "It was so bad, that you could see the bones through our skin.";
+				next;
+				mes "[Voyage Log]";
+				mes "X / X date";
+				mes "We found some kind of fruit to eat! It's covered in some sort of yellow skin and looks like a banana!";
+				next;
+				mes "[Voyage Log]";
+				mes "XO / X date";
+				mes "Well, it wasn't exactly like the bananas we have in Rune-Midgard, but it was very similar.";
+				next;
+				mes "[Voyage Log]";
+				mes "O / O date";
+				mes "In the middle of the night, one of the men reported that he felt sick after eating the food.";
+				next;
+				mes "[Voyage Log]";
+				mes "OO / O date";
+				mes "Another crew member, Berot Berot, was also found to have severe indigestion.";
+				next;
+				mes "[Voyage Log]";
+				mes "It's now becoming very clear that the food we have been eating contains some kind of poison.";
+				next;
+				mes "[Voyage Log]";
+				mes "XO / O date";
+				mes "The third person to experience indigestion passed away today. We are all very worried.";
+				next;
+				mes "[Voyage Log]";
+				mes "Our suspicions were confirmed when we found that the animals on Turtle Island wouldn't eat the bananas we found.";
+				next;
+				mes "[Voyage Log]";
+				mes "OX / O date";
+				mes "We decided to seal away this poisonous fruit, but learned that it didn't rot, not even after we removed the skin.";
+				next;
+				mes "[Voyage Log]";
+				mes "We have no idea why it's harmful to eat, or why it never perishes, but it be of some medical or scientific interest.";
+				next;
+				mes "[Voyage Log]";
+				mes "In the meantime, we've decided to bury this fruit until we can get back to Alberta.";
+				next;
+				mes "[Voyage Log]";
+				mes "^FF3355tur_dun01^000000";
+				mes "^FF3355X : 160 , Y : 81^000000";
+				next;
+				mes "^3355FFIn the Voyage log is a thin key marked with a skull. You've taken this Skull key, as it may be of some use later.^000000";
+				set TURTLE,2;
+				close;
+			case 2:
+				mes "^3355FFYou notice a page with a stamp shaped like a bird's foot. The black ink smells sort of like fruit.^000000";
+				next;
+				mes "[Voyage Log]";
+				mes "X / OO date";
+				mes "We've found evidence that other people were here, and that we are not the first to find Turtle Island.";
+				next;
+				mes "[Voyage Log]";
+				mes "There was at least one person who made it here before us. Hopefully, his records are on the island somewhere.";
+				next;
+				mes "[Voyage Log]";
+				mes "Starting tomorrow, we will begin searching for these hidden records.";
+				next;
+				mes "[Voyage Log]";
+				mes "O / OO date";
+				mes "We are having difficulty trying to find any records. Is it possible that the first people here wrote nothing of their journey?";
+				next;
+				mes "[Voyage Log]";
+				mes "XO / OO date";
+				mes "We finally found the records we have been searching for.";
+				next;
+				mes "[Voyage Log]";
+				mes "His notes were so hard to find because only one man, rather than a whole team, came to Turtle Island before us!";
+				next;
+				mes "[Voyage Log]";
+				mes "This man was a swordsman simply known as 'One.' His records tell much about what can be found on Turtle Island.";
+				next;
+				mes "[Voyage Log]";
+				mes "His records were written on animals skin, but they were durable and still easy to read after all this time.";
+				next;
+				mes "[Voyage Log]";
+				mes "According to his notes, Turtle Island consists of 4 levels. Although there are no people here, but there are many traps and devices which operate through a mysterious force.";
+				next;
+				mes "[Voyage Log]";
+				mes "Still, it is certain that something has some control over Turtle Island.";
+				next;
+				mes "[Voyage Log]";
+				mes "To keep this record safe, our crew has decided to hide this valuable record on the second level of Turtle Island.";
+				next;
+				mes "[Voyage Log]";
+				mes "Search here...";
+				mes "^FF3355tur_dun02^000000";
+				mes "^FF3355X : 132 , Y : 251^000000";
+				next;
+				mes "^3355FFThere is a picture of a tree in which there is a small keyhole clearly shown under the roots.^000000";
+				next;
+				mes "^3355FFYou've gained^000000";
+				mes "^3355FFthe Roots key.^000000";
+				set TURTLE,3;
+				close;
+			case 3:
+				mes "^3355FFThese pages of this log are soiled with mud, and some of them are missing.^000000";
+				next;
+				mes "[Voyage Log]";
+				mes "O / XX date";
+				mes "The greatest treasure of Turtle Island, the likes of which have never been seen, is hidden, sealed in some secret place...";
+				next;
+				mes "[Voyage Log]";
+				mes "We have spent many days searching for it, but found not one trace.";
+				next;
+				mes "[Voyage Log]";
+				mes "In the meantime, we've collected many precious treasures. We've decided to take only some of it back home, and to leave the rest here.";
+				next;
+				mes "[Voyage Log]";
+				mes "XO / XX date";
+				mes "We have hidden the treasure we have left behind to keep it from getting stolen.";
+				next;
+				mes "[Voyage Log]";
+				mes "It is somewhere on the fourth level, the bottom of the island. The treasure is sealed in a box that is a relic from an ancient culture.";
+				next;
+				mes "[Voyage Log]";
+				mes "However, the technology of this treasure box is very sophisticated, and it won't be easy to open by force.";
+				next;
+				mes "[Voyage Log]";
+				mes "Here...";
+				mes "^FF3355tur_dun01^000000";
+				mes "^FF3355X : 203 , Y : 155^000000";
+				next;
+				mes "^3355FFYou find three small holes under the turtle stone. Within one of these holes is a thin key.^000000";
+				next;
+				mes "^3355FFYou've gained ^000000";
+				mes "^3355FFthe Security key^000000";
+				set TURTLE,4;
+				close;
+			}
+		}
+		mes "^3355FFYou've closed the voyage log.^000000";
+		close;
+	}
+}
 
-L_OpenBox:
-	mes "^5555FF(Under the stone is a tiny key hole with a skull mark.  You used the 'Skull Key' to open the box.)^000000";
+tur_dun01,160,81,4	script	Skull Stone#tur	111,{
+	if (TURTLE == 2) {
+		mes "^3355FFUnder the stone^000000";
+		mes "^3355FFis a tiny key hole^000000";
+		mes "^3355FFwith a skull mark.^000000";
+		mes "";
+		mes "^3355FFYou used the Skull key^000000";
+		mes "^3355FFin that key hole.^000000";
+		next;
+		mes "^3355FF*Click! Click!*^000000";
+		next;
+		mes "^3355FFSuddenly, the top of^000000";
+		mes "^3355FFthe stone opened and^000000";
+		mes "^3355FFsome items popped out!!^000000";
+		next;
+		switch(rand(1,3)) {
+		case 1:
+			set TURTLE,20;
+			getitem 532,5; //Banana_Juice
+			mes "^3355FFYou've gained^000000";
+			mes "^3355FF5 Banana Juice^000000";
+			close;
+		case 2:
+			set TURTLE,20;
+			getitem 513,5; //Banana
+			mes "^3355FFYou've gained^000000";
+			mes "^3355FF5 Banana^000000";
+			close;
+		case 3:
+			set TURTLE,20;
+			getitem 513,5; //Banana
+			getitem 532,5; //Banana_Juice
+			mes "^3355FFYou've gained^000000";
+			mes "^3355FF5 Banana and^000000";
+			mes "^3355FF5 Banana Juice^000000";
+			close;
+		}
+	}
+	mes "^3355FFIt is a frightening^000000";
+	mes "^3355FFstone tomb with a^000000";
+	mes "^3355FFhorrible skull on it.^000000";
+	close;
+}
+
+tur_dun02,132,251,4	script	Turtle Tree Roots#tur	111,{
+	if (TURTLE == 3) {
+		mes "^3355FFUnder the tree roots^000000";
+		mes "^3355FFis a tiny key hole^000000";
+		mes "^3355FFmarked with a root insignia.^000000";
+		mes "";
+		mes "^3355FFYou used the Roots key^000000";
+		mes "^3355FFin that key hole.^000000";
+		next;
+		mes "^3355FF*Swishy swashy!*^000000";
+		next;
+		mes "^3355FFBetween the roots^000000";
+		mes "^3355FFa little door opens,^000000";
+		mes "^3355FFrevealing an^000000";
+		mes "^3355FFold scroll.^000000";
+		next;
+		mes "[Old scroll]";
+		mes "^FF3355Following the^000000";
+		mes "^FF3355legend from^000000";
+		mes "^FF3355my village,^000000";
+		mes "^FF3355I've come^000000";
+		mes "^FF3355to improve my^000000";
+		mes "^FF3355swordmanship...^000000";
+		next;
+		mes "[Old scroll]";
+		mes "^FF3355Only one who^000000";
+		mes "^FF3355cuts the shell^000000";
+		mes "^FF3355of a turtle^000000";
+		mes "^FF3355can become a^000000";
+		mes "^FF3355grand master^000000";
+		mes "^FF3355of the sword...^000000";
+		next;
+		mes "[Old scroll]";
+		mes "^FF3355To fufill this^000000";
+		mes "^FF3355legend, I have^000000";
+		mes "^FF3355come. I, 'One,'^000000";
+		mes "^FF3355will cut the^000000";
+		mes "^FF3355turtle's shell!!^000000";
+		next;
+		mes "[Old scroll]";
+		mes "^FF3355Go...^000000";
+		mes "^FF3355tur_dun02^000000";
+		mes "^FF3355X : 46 , Y : 125^000000";
+		next;
+		mes "^3355FFInside the pile of turtle^000000";
+		mes "^3355FFcrystals, a scroll is hidden.^000000";
+		mes "";
+		set TURTLE,7;
+		mes "^3355FFYou've gained a^000000";
+		mes "^3355FFTurtle Crystal key.^000000";
+		close;
+	}
+	mes "^3355FFThere are old,^000000";
+	mes "^3355FFthick tree roots^000000";
+	mes "^3355FFanchored into^000000";
+	mes "^3355FFthe ground here.^000000";
+	close;
+}
+
+tur_dun02,46,125,4	script	A pile of turtle crystal	111,{
+	if (TURTLE == 7) {
+		mes "^3355FFAmong the Turtle Crystals,^000000";
+		mes "^3355FFyou find a strange key hole.^000000";
+		next;
+		mes "";
+		mes "^3355FFYou use the";
+		mes "Turtle crystal key";
+		mes "in the key hole.^000000";
+		next;
+		mes "^3355FF*Click! Click!*^000000";
+		next;
+		mes "^3355FFBetween the crystals,000000";
+		mes "^3355FFa small crystal plate^000000";
+		mes "^3355FFin which a message^000000";
+		mes "^3355FFin engraved.^000000";
+		next;
+		mes "[Crystal Plate]";
+		mes "^3355AAI, the swordsman,^000000";
+		mes "^3355AA'One,' has succeeded.^000000";
+		mes "^3355AAI've cut the turtle's shell.^000000";
+		mes "^3355AANow I shall try to^000000";
+		mes "^3355AAcut turtle crystal.^000000";
+		next;
+		mes "[Crystal Plate]";
+		mes "^3355AAThe surface of turtle^000000";
+		mes "^3355AAcrystal is so rough and^000000";
+		mes "^3355AAirregular. I'll need^000000";
+		mes "^3355AAto sharpen my skills.^000000";
+		next;
+		mes "[Crystal Plate]";
+		mes "^3355AAIt's going to be tough,^000000";
+		mes "^3355AAbut I will succeed...^000000";
+		next;
+		mes "[Crystal plate]";
+		mes "^3355AAGo 5 steps east,^000000";
+		mes "^3355AA30 steps south^000000";
+		mes "^3355AAand 5 steps around^000000";
+		mes "^3355AAthe turtle pillar.^000000";
+		mes "^3355AAThere you will find^000000";
+		mes "^3355AAthe end of sword art.^000000";
+		next;
+		mes "^3355FFAt the edge of the crystal^000000";
+		mes "^3355FFplate, is a long key.^000000";
+		mes "";
+		set TURTLE,8;
+		mes "^3355FFYou've gained the^000000";
+		mes "^3355FFTurtle Pillar key.^000000";
+		close;
+	}
+	mes "^3355FFThere are so many Turtle^000000";
+	mes "^3355FFCrystals that can only be^000000";
+	mes "^3355FFfound on Turtle island.^000000";
+	close;
+}
+
+tur_dun02,49,158,4	script	Turtle Pillar#tur	111,{
+	if (TURTLE == 8) {
+		mes "^3355FFAt the base of the pillar^000000";
+		mes "^3355FFis a tiny key hole with^000000";
+		mes "^3355FFa turtle shaped mark.^000000";
+		mes "";
+		mes "^3355FFYou used the";
+		mes "Turtle Pillar key";
+		mes "in that key hole.^000000";
+		next;
+		mes "^3355FF*Click! Crack!*^000000";
+		next;
+		mes "^3355FFAt the base of the pillar,^000000";
+		mes "^3355FFa little door appears, and^000000";
+		mes "^3355FFfrom that door an engraved^000000";
+		mes "^3355FFstone bead rolls out.^000000";
+		next;
+		mes "[Turtle Stone Bead]";
+		mes "This turtle pillar is made of the strongest material on this island.";
+		next;
+		mes "[Turtle Stone Bead]";
+		mes "Cutting it is impossible for even someone with legendary skills. Even if I managed to cut it, all of Turtle Island would collapse upon me.";
+		next;
+		mes "[Turtle Stone Bead]";
+		mes "I've developed my mental skills, and trained using materials on this island. Sharpening my mind, I now know that I can cut this pillar in two.";
+		next;
+		mes "[Turtle Stone Bead]";
+		mes "Can this be the pinnacle of swordsmanship? Of the sword arts?";
+		next;
+		mes "[Turtle Stone Bead]";
+		mes "For this final accomplishment, I leave behind an offering.";
+		next;
+		mes "[Turtle Stone Bead]";
+		mes "I intend to offer my gratitude to the blood of the monsters I have killed, and the materials I have used in my training.";
+		next;
+		mes "^3355FFThere are many items^000000";
+		mes "^3355FFunder the pillar...^000000";
+		switch(rand(1,10)) {
+		case 1:
+			set TURTLE,20;
+			getitem 702,1; //Animal_Blood
+			mes "^3355FFYou've gained ^000000";
+			mes "^3355FFAnimal Gore.^000000";
+			close;
+		case 2:
+			set TURTLE,20;
+			getitem 716,1; //Red_Gemstone
+			mes "^3355FFYou've gained^000000";
+			mes "^3355FFa Red Gemstone.^000000";
+			close;
+		case 3:
+			set TURTLE,20;
+			getitem 734,1; //Red_Frame
+			mes "^3355FFYou've gained^000000";
+			mes "^3355FFa Red Frame^000000";
+			close;
+		case 4:
+			set TURTLE,20;
+			getitem 10019,1; //Red_Muffler
+			mes "^3355FFYou've gained^000000";
+			mes "^3355FFRed Scarf.^000000";
+			close;
+		case 5:
+			set TURTLE,20;
+			getitem 725,1; //Red_Jewel
+			mes "^3355FFYou've gained^000000";
+			mes "^3355FFa Sardonyx.^000000";
+			close;
+		case 6:
+			set TURTLE,20;
+			getitem 716,1; //Red_Gemstone
+			mes "^3355FFYou've gained^000000";
+			mes "^3355FFa Red Gemstone.^000000";
+			close;
+		case 7:
+			set TURTLE,20;
+			getitem 716,1; //Red_Gemstone
+			mes "^3355FFYou've gained^000000";
+			mes "^3355FFa Red Gemstone.^000000";
+			close;
+		case 8:
+			set TURTLE,20;
+			getitem 716,1; //Red_Gemstone
+			mes "^3355FFYou've gained^000000";
+			mes "^3355FFa Red Gemstone.^000000";
+			close;
+		case 9:
+			set TURTLE,20;
+			getitem 716,1; //Red_Gemstone
+			mes "^3355FFYou've gained^000000";
+			mes "^3355FFa Red Gemstone.^000000";
+			close;
+		case 10:
+			set TURTLE,20;
+			getitem 725,1; //Red_Jewel
+			mes "^3355FFYou've gained^000000";
+			mes "^3355FFa Sardonyx.^000000";
+			close;
+		}
+	}
+	mes "^3355FFThis Turtle Pillar^000000";
+	mes "^3355FFis just one of^000000";
+	mes "^3355FFmany pillars.^000000";
 	next;
-	mes "^5555FF(~click!~click!~)^000000";
+	mes "^3355FFOr is it...?^000000";
+	close;
+}
+
+tur_dun01,203,155,4	script	Turtle stone#tur	111,{
+	if (TURTLE == 4) {
+		mes "^3355FFOn top of the stone";
+		mes "is a small key hole";
+		mes "with the turtle mark.^000000";
+		next;
+		mes "^3355FFYou used the";
+		mes "Security Key";
+		mes "in that hole.^000000";
+		next;
+		mes "^3355FF*Tat tat tat tat*^000000";
+		next;
+		mes "^3355FFThe back of the stone";
+		mes "split into two parts";
+		mes "revealing some hidden";
+		mes "words engraved inside.^000000";
+		next;
+		mes "[Turtle Stone]";
+		mes "The one who dreams to be a star of serenity must first hold the comet and three rays of light as one.";
+		next;
+		mes "[Turtle Stone]";
+		mes "You already possess the comet, so I grant you the first light...";
+		next;
+		mes "[Turtle Stone]";
+		mes "- Light of the second stage -";
+		mes "^FF3355B2 , X : 75 , Y : 249^000000";
+		next;
+		mes "^3355FFAt the bottom of the stone";
+		mes "beneath the line of words,";
+		mes "rests a brilliant red bead.^000000";
+		next;
+		set TURTLE,10;
+		mes "^3355FFYou set the red bead to the";
+		mes "Security key, fitting it";
+		mes "within one of three tiny holes.^000000";
+		close;
+	}
+	mes "^3355FFIt is just a";
+	mes "normal turtle";
+	mes "stone. But";
+	mes "on the top";
+	mes "is written";
+	mes "the words,";
+	mes "'1st stage.'^000000";
+	close;
+}
+
+tur_dun02,75,249,4	script	Turtle stone#tur2	111,{
+	if (TURTLE == 10) {
+		mes "^3355FFOn top of the stone";
+		mes "is a small keyhole";
+		mes "with the turtle mark.^000000";
+		next;
+		mes "^3355FFYou used the";
+		mes "Security Key";
+		mes "in the keyhole.^000000";
+		next;
+		mes "^3355FF*Click! Click!*^000000";
+		next;
+		mes "^3355FFThe back of the stone";
+		mes "split into two parts";
+		mes "revealing some hidden";
+		mes "words along the inside.^000000";
+		next;
+		mes "[Turtle Stone]";
+		mes "The one who dreams to be a star of serenity must first hold the comet and three rays of light as one.";
+		next;
+		mes "[Turtle Stone]";
+		mes "You already possess the comet and the first light, so I now grant you the second light.";
+		next;
+		mes "[Turtle stone]";
+		mes "- Light of the third stage -";
+		mes "^FF3355B3 . X : 118 . Y : 233^000000";
+		next;
+		mes "At the bottom of the stone";
+		mes "beneath the line of words,";
+		mes "rests a brilliant yellow bead.";
+		next;
+		set TURTLE,11;
+		mes "^3355FFYou set the yellow bead";
+		mes "into the Security key, fitting it";
+		mes "within one of three tiny holes.^000000";
+		close;
+	}
+	mes "^3355FFIt is just a";
+	mes "normal turtle";
+	mes "stone. But";
+	mes "on the top,";
+	mes "the words";
+	mes "'2nd stage'";
+	mes "are written.^000000";
+	close;
+}
+
+tur_dun03,118,233,4	script	Turtle Stone#tur3	111,{
+	if (TURTLE == 11) {
+		mes "^3355FFOn top of the stone";
+		mes "is a small key hole";
+		mes "with the turtle mark.^000000";
+		next;
+		mes "^3355FFYou used the";
+		mes "Security Key";
+		mes "in the keyhole.^000000";
+		next;
+		mes "^3355FF*Click! Click!*^000000";
+		next;
+		mes "^3355FFThe back of the stone";
+		mes "split into two parts";
+		mes "revealing some hidden";
+		mes "words along the inside.^000000";
+		next;
+		mes "[Turtle Stone]";
+		mes "The one who dreams to be a star of serenity must first hold the comet and three rays of light as one.";
+		next;
+		mes "[Turtle Stone]";
+		mes "You already possess the comet, and the first two lights. The final light is now yours.";
+		next;
+		mes "[Turtle Stone]";
+		mes "- Star of Serenity -";
+		mes "^FF3355B4 . X : 113 . Y : 178^000000";
+		next;
+		mes "^3355FFAt the bottom of the stone";
+		mes "beneath the line of words,";
+		mes "rests a brilliant blue bead.^000000";
+		next;
+		set TURTLE,12;
+		mes "^3355FFYou set the blue bead to the";
+		mes "into the Security Key, fitting it";
+		mes "within one of three tiny holes.^000000";
+		close;
+	}
+	mes "^3355FFIt is just a";
+	mes "normal turtle";
+	mes "stone. But";
+	mes "on the top,";
+	mes "the words,";
+	mes "'3rd stage,'";
+	mes "are written.^000000";
+	close;
+}
+
+tur_dun04,113,178,4	script	Turtle Statue#tur	111,{
+	if (TURTLE == 12) {
+		mes "^3355FFOn top of the statue";
+		mes "is a small key hole";
+		mes "with the turtle mark.^000000";
+		mes "";
+		mes "^3355FFYou used the";
+		mes "Security Key";
+		mes "in the keyhole.^000000";
+		next;
+		mes "^3355FF*Click! Click!*^000000";
+		next;
+		mes "^3355FFThe statue split into";
+		mes "two parts revealing a";
+		mes "metal plate underneath.^000000";
+		next;
+		mes "[Metal Plate]";
+		mes "To the one who dreams to be a star of serenity among the people: You know hold the comet and three rays of light as one.";
+		next;
+		mes "^3355FFYou find a small lever";
+		mes "at the bottom of the";
+		mes "metal plate. You pull";
+		mes "it open like a drawer.^000000";
+		next;
+		if (rand(1,20) == 7) {
+			switch(rand(1,4)) {
+			case 1:
+				set TURTLE,20;
+				getitem 644,1; //Gift_Box
+				mes "^3355FFInside the drawer,";
+				mes "is a Gift Box. This";
+				mes "Gift Box is now yours.^000000";
+				close;
+			case 2:
+				set TURTLE,20;
+				getitem 616,1; //Old_Card_Album
+				mes "^3355FFInside the drawer,";
+				mes "is an Old Card Album.";
+				mes "It is now yours to keep.^000000";
+				close;
+			case 3:
+				set TURTLE,20;
+				getitem 617,1; //Old_Violet_Box
+				mes "^3355FFInside the drawer,";
+				mes "is an Old Purple Box.";
+				mes "It is now yours to keep.^000000";
+				close;
+			case 4:
+				set TURTLE,20;
+				getitem 617,1; //Old_Violet_Box
+				mes "^3355FFInside the drawer,";
+				mes "is an Old Purple Box.";
+				mes "It is now yours to keep.^000000";
+				close;
+			}
+		}
+		set TURTLE,20;
+		getitem 604,1; //Branch_Of_Dead_Tree
+		mes "^3355FFInside the drawer,";
+		mes "is a Dead Branch.";
+		mes "It is now yours to keep.^000000";
+		close;
+	}
+	mes "^3355FFIt is a turtle statue";
+	mes "made of ordinary turtle";
+	mes "stone. On top of it is";
+	mes "the word 'Security.'^000000";
+	close;
+}
+
+tur_dun03,105,76,4	script	Knight Leader#tur	110,5,5,{
+	mes "[Takuyaka]";
+	mes "Where did all my men go?!";
+	mes "This is horrible~!";
 	next;
-	mes "^5555FF(Suddenly the top of the stone opens with many things coming out!)^000000";
-	set TURTLE, 3;
+	mes "[Takuyaka]";
+	mes "Oh...";
+	mes "*Whew!*";
+	mes "Finally, another person.";
+	mes "Tell me who you are!";
 	next;
-	mes "^5555FF(You got 5 Tropical Bananas and 5 Banana Juices.)^000000";
-	getitem 634, 5;
-	getitem 532, 5;
+	switch(select("Who are you to ask?:"+ strcharinfo(0) +"!:What are you doing here?:First, tell me who you are.")) {
+	case 1:
+		mes "[Takuyaka]";
+		mes "How dare you speak to me in that tone! Don't you know who I am?! I'm Takuyaka, leader of the Security Knights of Alberta! Kobolds and Porings quiver in fear when they hear my name...";
+		next;
+		mes "[Takuyaka]";
+		mes "So tell me the truth! You came here for treasure, didn't you?! You want it all for yourself! You bastard! Now get off this island! Go, shoo!";
+		close;
+	case 2:
+		mes "[Takuyaka]";
+		mes "" + strcharinfo(0) + "?";
+		mes "Well, your name sounds better than mine. And you have more hair on your head as well. Hmmm...";
+		next;
+		mes "[Takuyaka]";
+		mes "Do you have anything to give me? You know, some food or zeny? It's not like I really need it, it's just... Oh bother. Never mind. Perhaps we'll meet later.";
+		close;
+	case 3:
+		mes "[Takuyaka]";
+		mes "I've heard that many treasures can be found on Turtle Island. If I can take enough home, I'll be rich! Well, we're supposed to rescue lost adventurers too, but whatever. As leader, I can do whatever I want!";
+		next;
+		mes "[Takuyaka]";
+		mes "However, we're totally lost. Meaning we can't find any treasure or even rescue any people. Grrr...! Where are my useless soldiers! I've probably spoiled them with too much food!";
+		next;
+		mes "[Takuyaka]";
+		mes "If you see any of them, tell them they must assemble here! Alright?!";
+		close;
+	case 4:
+		mes "[Takuyaka]";
+		mes "Me? I'm Takuyaka. A tall, dark, handsome, and dashing leader, as well as a fearsome knight! I have come to save the foolish people of Alberta that have come seeking treasure on Turtle Island.";
+		next;
+		mes "[Mudasamu]";
+		mes "Really, now?";
+		next;
+		mes "[Takuyaka]";
+		mes "Quiet!";
+		next;
+		mes "[Takuyaka]";
+		mes "Anyway, we came here with the purest of intents. But right when we arrived, we were attacked by monsters! Because of the confusion from all the fighting, my soldiers were scattered.";
+		next;
+		mes "[Takuyaka]";
+		mes "Mudasamu!";
+		mes "Why is this";
+		mes "happening to me!!!!";
+		next;
+		mes "[Mudasamu]";
+		mes "Huh...!";
+		mes "Why should you";
+		mes "be surprised,";
+		mes "you chubby dwarf?";
+		close;
+	}
+
+OnTouch:
+	mes "[Scared Voice]";
+	mes "Wh-wh-whaat?!";
+	next;
+	mes "[Terrified Voice]";
+	mes "What's that noise?!";
+	mes "M-M-Mudasamu!";
+	mes "Protect me!";
+	next;
+	mes "[Mudasamu]";
+	mes "No.";
+	mes "And shut up.";
+	close;
+	end;
+}
+
+tur_dun03,105,74,4	script	Mudasamu#tur	119,{
+	mes "[Mudasamu]";
+	mes "My name is Mudasamu...";
+	mes "Second in command of the";
+	mes "Alberta Security Knights.";
+	next;
+	mes "[Mudasamu]";
+	mes "We've come here to rescue treasure hunters that might be in trouble. However, our leader is this porky specimen right next to me. So I guess I foresaw that this mission would fail.";
+	next;
+	mes "[Mudasamu]";
+	mes "Basically, our leader was so distracted by the idea of finding treasure himself that we've lost our men. It's bad enough that he's a fat slob, but he's a greedy slob too!";
+	next;
+	emotion e_ag;
+	mes "[Takuyaka]";
+	mes "Hey, Mudasamu!";
+	mes "Are you talking";
+	mes "about me?!";
+	next;
+	mes "[Mudasamu]";
+	mes "No, fat one,";
+	mes "we're not";
+	mes "talking about you.";
+	next;
+	mes "[Mudasamu]";
+	mes "*Sigh...*";
+	mes "I better be paid";
+	mes "overtime for";
+	mes "putting up with this.";
+}
+
+tur_dun01,190,115,4	script	Knight#tur	105,{
+	mes "[?]";
+	mes "Where are they?";
+	mes "Oh hey! You're an adventurer, aren't you? Do you know where my comrades are?";
+	next;
+	switch(select("Who are you?:Sorry, I don't.:Why did you come here?:How did you get here?")) {
+	case 1:
+		mes "[Passats]";
+		mes "My name is Passats, a proud Security Knight of Alberta. We've obtained some information that some people came here to seek treasure.";
+		next;
+		mes "[Passats]";
+		mes "Our task here is to save people, but when we arrived on Turtle Island, we were attacked by a mob of monsters! So we all got scattered.";
+		next;
+		mes "[Passats]";
+		mes "Now I'm all alone. If you find anyone else in my unit, would you let them know?";
+		close;
+	case 2:
+		mes "[Passats]";
+		mes "Ah well...";
+		mes "Well, if you happen to find anyone else in my unit, would you let them know where I am?";
+		next;
+		mes "[Passat]";
+		mes "Oh, and if you find our leader, kick his butt, will you? It's so fat, there's no way you can miss.";
+		next;
+		if (BaseLevel <= 10)
+			percentheal 40,0;
+		mes "[Passats]";
+		mes "Oh...";
+		mes "And, um...";
+		mes "Cheer up!";
+		close;
+	case 3:
+		mes "[Passats]";
+		mes "There are a lot of stories about the amazing wealth that can be found on this island. However, everyone assumed that it was impossible to find Turtle Island.";
+		next;
+		mes "[Passats]";
+		mes "But then, the problem began when some navigator actually knew the way to Turtle Island. I think he'll take just about anybody for 10,000 zeny!";
+		next;
+		mes "[Passats]";
+		mes "So anyway, some of the people of Alberta have been foolishly coming here, hoping to find treasure. But of course, they can't fight monsters.";
+		next;
+		mes "[Passats]";
+		mes "So now we're here in order to seek out towners in trouble, and send them safely back home. Of course, now it seems that we also need rescuing...";
+		close;
+	case 4:
+		mes "[Passats]";
+		mes "Hmmm...";
+		next;
+		mes "[Passats]";
+		mes "No clue.";
+		next;
+		select("How can that be?!");
+		mes "[Passats]";
+		mes "Oh, don't be angry. I just drank too much vodka! Before we arrived I was still unconscious and when I finally sobered up, I was here. I'm so embarrassed~";
+		next;
+		mes "[Passats]";
+		mes "I...";
+		mes "I'm a victim too~";
+		close;
+	}
+}
+
+tur_dun03,189,126,4	script	Knight#tur2	105,{
+	mes "[Jayprocat]";
+	mes "Oh? Are you a civilian? Nice to meet you. I'm a mighty Security Knight of Alberta, Jayprocat.";
+	next;
+	if (select("What is that, exactly?:I'm not impressed.") == 1) {
+		mes "[Jayprocat]";
+		mes "Well...";
+		mes "We're supposed to protect the people of Alberta. That's our job as proud Security Knights.";
+		next;
+		mes "[Jayprocat]";
+		mes "So when a bunch of them caught treasure fever and started coming here, we came to rescue them. Anyway, that was the plan.";
+		next;
+		mes "[Jayprocat]";
+		mes "It turns out that by some joke by fate, our leader is this pudgy guy who attracted a mob on monsters to us by noisily digging up treasure, instead of doing what we were supposed to do.";
+		next;
+		mes "[Jayprocat]";
+		mes "*Sigh...*";
+		mes "Why wasn't Mudasamu in charge? With him as leader, I would've been home for dinner...";
+		close;
+	}
+	mes "[Jayprocat]";
+	mes "Well...";
+	mes "It's true that we pretty much messed up our current mission to save anyone here seeking for treasure, since we need rescuing now as well.";
+	next;
+	mes "[Jayprocat]";
+	mes "*Sniff*";
+	mes "Why did we have to be attacked by so many monsters on my first mission? I'm... I'm just a new recruit...";
+	next;
+	if (select("Why did you run away?:I don't care.") == 1) {
+		mes "[Jayprocat]";
+		mes "No, I didn't just run away! The monsters were too stong and there were so many of them! Plus, it's our damn leader's fault.";
+		next;
+		mes "[Jayprocat]";
+		mes "The monsters are all highly evolved turtles. And this island even looks like a turtle! But I guess you knew that already.";
+		next;
+		mes "[Jayprocat]";
+		mes "I had no idea that this island's monsters were so much stronger than the ones that live near Alberta.";
+		next;
+		mes "[Jayprocat]";
+		mes "Their shells are so tough, and we can't seem to find any sort of weak point! I have no idea how to fight these turtles!";
+		close;
+	}
+	mes "[Jayprocat]";
+	mes "You're so mean...";
+	mes "I mean, I'm really new at this!";
+	close;
+}
+
+tur_dun03,104,171,4	script	Knight#tur3	105,{
+	mes "[Squall]";
+	mes "Am I the only one left? Where are all my comrades?! I... I'm about to go crazy!";
+	next;
+	switch(select("Maybe they ran away?:What happened?")) {
+		mes "[Squall]";
+		mes "No, we would never run away from the face of danger.";
+		next;
+		mes "[Squall]";
+		mes "Well, we sort of did, but that was because it was a direct order from our leader! If a knight is loyal and proud, he will accept his leader's orders without question!";
+		next;
+		mes "[Squall]";
+		mes "Even if that leader is a little greedy, with hair that might be thinning...";
+		next;
+		mes "[Squall]";
+		mes "^FF0000And has the body";
+		mes "of a pregnant whale^000000.";
+		next;
+		mes "[Squall]";
+		mes "Oh wait!";
+		mes "I shouldn't";
+		mes "have said that!";
+		mes "What I meant";
+		mes "to say was...";
+		next;
+		mes "[Squall]";
+		mes "^CC0000And has the";
+		mes "body of a whale";
+		mes "pregnant with twins^000000.";
+		next;
+		mes "[Squall]";
+		mes "Grrrr...!";
+		mes "I'm so angry!";
+		mes "Why can't Mudasamu";
+		mes "be our leader?!";
+		close;
+	}
+	mes "[Squall]";
+	mes "We had good plans for this mission, made by our second in command, Mudasamu. However, they were executely poorly by the first in command.";
+	next;
+	mes "[Squall]";
+	mes "Whenever Takuyaka leads a mission, he always manages to mess it up! Why do the leaders in Alberta like him anyway?!";
+	next;
+	mes "[Squall]";
+	mes "*Sniff*";
+	mes "I sweat and I bleed for the Alberta Security Knights, and still I'm tortured by the fact that Sir Porky commands us. I hate it!";
+	next;
+	mes "[Squall]";
+	mes "Our weapon and armor budget is always gone after Takuyaka visits a buffet... Why do we have to be so miserable?!";
+	close;
+}
+
+tur_dun03,67,130,4	script	Knight#tur4	105,{
+	mes "[Nysurea]";
+	mes "Hm? I'm surprised that someone around here is still alive.";
+	next;
+	mes "[Nysurea]";
+	mes "I'm beginning to think all my comrades have been killed by the monsters here...";
+	next;
+	if (BaseLevel <= 40) {
+		mes "[Nysurea]";
+		mes "Having a";
+		mes "tough time?";
+		next;
+		if (Zeny <= 3000) {
+			mes "[Nysurea]";
+			mes "Even though you're pretty strong, sooner or later you might need a reprieve. I can send you back to Alberta right now if you want.";
+			next;
+			if (select("Yes, Help me.:No, thanks.") == 1) {
+				mes "[Nysurea]";
+				mes "Okay then, let me activate this teleport thingee donated to us by Kafra Corporation...";
+				close2;
+				warp "alberta",241,115;
+				end;
+			}
+			mes "[Nysurea]";
+			mes "Ah, that's the spirit! You should be careful though. And if you see any other of my comrades, let them know I'm here, would you?";
+			next;
+			mes "[Nysurea]";
+			mes "Well, good luck!";
+			close;
+		}
+		mes "[Nysurea]";
+		mes "You look lost! If you stick around here, well, the monsters will probably get the best of you sooner or later.";
+		next;
+		mes "[Nyusurea]";
+		mes "Anyway...";
+		mes "Good luck!";
+		mes "You'll need it!";
+		close;
+	}
+	mes "[Nysurea]";
+	mes "Huh...";
+	mes "You look calm and collected. If all our soldiers were as strong as you, we probably would not have been scattered.";
+	next;
+	mes "[Nysurea]";
+	mes "I have dreams of becoming a great knight, but since our 'leader' is all plump and no brains, we're stuck in this predicament.";
+	next;
+	mes "[Nysurea]";
+	mes "Anyway, be careful in this third level of Turtle Island. A lot of our men were annihilated when they went to explore the East and North sides, so be careful!";
 	close;
 }
