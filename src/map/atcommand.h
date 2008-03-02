@@ -24,6 +24,7 @@ void do_init_atcommand(void);
 void do_final_atcommand(void);
 int atcommand_config_read(const char *cfgName);
 
+int atcommand_mail(const int fd, struct map_session_data* sd,const char* command, const char* message);
 int atcommand_item(const int fd, struct map_session_data* sd,const char* command, const char* message);
 int atcommand_mapmove(const int fd, struct map_session_data* sd,const char* command, const char* message);
 int atcommand_monster(const int fd, struct map_session_data* sd, const char* command, const char* message);

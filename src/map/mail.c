@@ -4,8 +4,10 @@
 #ifndef TXT_ONLY
 
 #include "../common/nullpo.h"
+#include "../common/showmsg.h"
 
 #include "mail.h"
+#include "atcommand.h"
 #include "itemdb.h"
 #include "clif.h"
 #include "pc.h"
@@ -175,6 +177,18 @@ void mail_deliveryfail(struct map_session_data *sd, struct mail_message *msg)
 	}
 	
 	clif_Mail_send(sd->fd, true);
+}
+
+// This function only check if the mail operations are valid
+bool mail_invalid_operation(struct map_session_data *sd)
+{
+	if( !map[sd->bl.m].flag.town && pc_isGM(sd) < get_atcommand_level(atcommand_mail) )
+	{
+		ShowWarning("clif_parse_Mail: char '%s' trying to do invalid mail operations.\n", sd->status.name);
+		return true;
+	}
+
+	return false;
 }
 
 #endif

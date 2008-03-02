@@ -1164,6 +1164,7 @@ struct map_data {
 	int npc_num;
 	int users;
 	struct map_flag {
+		unsigned town : 1; // [Suggestion to protect Mail System]
 		unsigned autotrade : 1;
 		unsigned allowks : 1; // [Kill Steal Protection]
 		unsigned nomemo : 1;
