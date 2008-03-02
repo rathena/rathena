@@ -6962,7 +6962,7 @@ int atcommand_mobinfo(const int fd, struct map_session_data* sd, const char* com
 			clif_displaymessage(fd, atcmd_output);
 		// mvp
 		if (mob->mexp) {
-			sprintf(atcmd_output, " MVP Bonus EXP:%d  %02.02f%%", mob->mexp, (float)mob->mexpper / 100);
+			sprintf(atcmd_output, " MVP Bonus EXP:%u  %02.02f%%", mob->mexp, (float)mob->mexpper / 100);
 			clif_displaymessage(fd, atcmd_output);
 			strcpy(atcmd_output, " MVP Items:");
 			j = 0;

@@ -110,6 +110,7 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 	//aFree(name);
 	return 0;
 }
+
 int npc_enable(const char* name, int flag)
 {
 	struct npc_data* nd = strdb_get(npcname_db, name);
@@ -1022,7 +1023,7 @@ int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int po
 {
 	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
 	struct item_data *item;
-	int i, prize, w;
+	int i, price, w;
 
 	if( !nd || nd->subtype != CASHSHOP )
 		return 1;
@@ -1060,16 +1061,16 @@ int npc_cashshop_buy(struct map_session_data *sd, int nameid, int amount, int po
 	if( w + sd->weight > sd->max_weight )
 		return 3;
 
-	prize = nd->u.shop.shop_item[i].value * amount;
-	if( points > prize )
-		points = prize;
+	price = nd->u.shop.shop_item[i].value * amount;
+	if( points > price )
+		points = price;
 
-	if( sd->cashPoints < prize - points )
+	if( sd->cashPoints < price - points )
 		return 6;
 	if( sd->kafraPoints < points )
 		return 6;
 
-	pc_paycash(sd, prize, points);
+	pc_paycash(sd, price, points);
 
 	if( !pet_create_egg(sd, nameid) )
 	{
@@ -1673,7 +1674,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		if( value < 0 )
 		{
 			if( type == SHOP ) value = id->value_buy;
-			else value = 0; // Cashshop don't have a "buy prize" in the item_db
+			else value = 0; // Cashshop doesn't have a "buy price" in the item_db
 		}
 
 		if( type == SHOP && value*0.75 < id->value_sell*1.24 )

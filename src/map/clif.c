@@ -11723,7 +11723,7 @@ void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd)
 	{
 		struct item_data* id = itemdb_search(nd->u.shop.shop_item[i].nameid);
 		WFIFOL(fd,12+i*11) = nd->u.shop.shop_item[i].value;
-		WFIFOL(fd,16+i*11) = nd->u.shop.shop_item[i].value; // Discount Prize? Maybe a Discount item
+		WFIFOL(fd,16+i*11) = nd->u.shop.shop_item[i].value; // Discount Price? Maybe a Discount item
 		WFIFOB(fd,20+i*11) = itemtype(id->type);
 		WFIFOW(fd,21+i*11) = ( id->view_id > 0 ) ? id->view_id : id->nameid;
 	}

@@ -543,6 +543,14 @@ void chrif_authok(int fd)
 	struct mmo_charstatus *status = (struct mmo_charstatus *)RFIFOP(fd, 20);
 	int char_id = status->char_id;
 	TBL_PC* sd;
+
+	//Check if both servers agree on the struct's size
+	if( RFIFOW(fd,2) - 20 != sizeof(struct mmo_charstatus) )
+	{
+		ShowError("chrif_authok: Data size mismatch! %d != %d\n", RFIFOW(fd,2) - 20, sizeof(struct mmo_charstatus));
+		return;
+	}
+
 	//Check if we don't already have player data in our server
 	//Causes problems if the currently connected player tries to quit or this data belongs to an already connected player which is trying to re-auth.
 	if ((sd = map_id2sd(account_id)) != NULL)

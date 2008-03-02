@@ -178,7 +178,7 @@ int pc_getzeny(struct map_session_data*,int);
 int pc_delitem(struct map_session_data*,int,int,int);
 
 // Special Shop System
-void pc_paycash(struct map_session_data *sd, int prize, int points);
+void pc_paycash(struct map_session_data *sd, int price, int points);
 void pc_getcash(struct map_session_data *sd, int cash, int points);
 
 int pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amount);

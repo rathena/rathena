@@ -2702,10 +2702,10 @@ int pc_payzeny(struct map_session_data *sd,int zeny)
  * Cash Shop
  *------------------------------------------*/
 
-void pc_paycash(struct map_session_data *sd, int prize, int points)
+void pc_paycash(struct map_session_data *sd, int price, int points)
 {
 	char output[128];
-	int cash = prize - points;
+	int cash = price - points;
 	nullpo_retv(sd);
 
 	if( cash > 0 )
@@ -5500,9 +5500,9 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		return 1; //Nothing to change.
 	// check if we are changing from 1st to 2nd job
 	if (b_class&JOBL_2) {
-	  if (!(sd->class_&JOBL_2))
+		if (!(sd->class_&JOBL_2))
 			sd->change_level = sd->status.job_level;
-	  else if (!sd->change_level)
+		else if (!sd->change_level)
 			sd->change_level = 40; //Assume 40?
 		pc_setglobalreg (sd, "jobchange_level", sd->change_level);
 	}
