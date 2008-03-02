@@ -244,9 +244,6 @@ enum mail_status {
 	MAIL_NEW,
 	MAIL_UNREAD,
 	MAIL_READ,
-	MAIL_DELETED,
-	MAIL_RETURNED,
-	MAIL_INVALID,
 };
 
 struct mail_message {
@@ -283,9 +280,8 @@ struct auction_data {
 
 	unsigned short hours;
 	unsigned int price, buynow;
-	unsigned int timestamp;
-
-	bool changed; // To know if data have been changed for save
+	unsigned int timestamp; // auction's end time
+	int auction_end_timer;
 };
 
 struct registry {

@@ -38,8 +38,10 @@ static int mail_fromsql(int char_id, struct mail_data* md)
 		"`zeny`,`amount`,`nameid`,`refine`,`attribute`,`identify`");
 	for (i = 0; i < MAX_SLOTS; i++)
 		StringBuf_Printf(&buf, ",`card%d`", i);
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `dest_id`='%d' AND `status` >= %d AND `status` <= %d "
-		"ORDER BY `id` LIMIT %d", mail_db, char_id, MAIL_NEW, MAIL_READ, MAIL_MAX_INBOX + 1);
+
+	// I keep the `status` < 3 just in case someone forget to apply the sqlfix
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `dest_id`='%d' AND `status` < 3 ORDER BY `id` LIMIT %d",
+		mail_db, char_id, MAIL_MAX_INBOX + 1);
 
 	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf)) )
 		Sql_ShowDebug(sql_handle);
@@ -102,7 +104,7 @@ static int mail_fromsql(int char_id, struct mail_data* md)
 
 /// Stores a single message in the database.
 /// Returns the message's ID if successful (or 0 if it fails).
-static int mail_savemessage(struct mail_message* msg)
+int mail_savemessage(struct mail_message* msg)
 {
 	StringBuf buf;
 	SqlStmt* stmt;
@@ -129,15 +131,14 @@ static int mail_savemessage(struct mail_message* msg)
 	||  SQL_SUCCESS != SqlStmt_Execute(stmt) )
 	{
 		SqlStmt_ShowDebug(stmt);
-		j = 0;
+		msg->id = 0;
 	} else
-		j = (int)SqlStmt_LastInsertId(stmt);
+		msg->id = (int)SqlStmt_LastInsertId(stmt);
 
 	SqlStmt_Free(stmt);
 	StringBuf_Destroy(&buf);
 
-	// return the ID of the new mail
-	return j;
+	return msg->id;
 }
 
 /// Retrieves a single message from the database.
@@ -292,7 +293,7 @@ static void mapif_parse_Mail_getattach(int fd)
 static void mapif_Mail_delete(int fd, int char_id, int mail_id)
 {
 	bool failed = false;
-	if ( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", mail_db, MAIL_DELETED, mail_id) )
+	if ( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", mail_db, mail_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		failed = true;
@@ -314,21 +315,19 @@ static void mapif_parse_Mail_delete(int fd)
 /*==========================================
  * Report New Mail to Map Server
  *------------------------------------------*/
-static void mapif_Mail_new(int mail_id)
+void mapif_Mail_new(struct mail_message *msg)
 {
-	struct mail_message msg;
+	unsigned char buf[74];
+	
+	if( !msg || !msg->id )
+		return;
 
-	if( mail_loadmessage(mail_id, &msg) )
-	{
-		unsigned char buf[74];
-
-		WBUFW(buf,0) = 0x3849;
-		WBUFL(buf,2) = msg.dest_id;
-		WBUFL(buf,6) = mail_id;
-		memcpy(WBUFP(buf,10), msg.send_name, NAME_LENGTH);
-		memcpy(WBUFP(buf,34), msg.title, MAIL_TITLE_LENGTH);
-		mapif_sendall(buf, 74);
-	}
+	WBUFW(buf,0) = 0x3849;
+	WBUFL(buf,2) = msg->dest_id;
+	WBUFL(buf,6) = msg->id;
+	memcpy(WBUFP(buf,10), msg->send_name, NAME_LENGTH);
+	memcpy(WBUFP(buf,34), msg->title, MAIL_TITLE_LENGTH);
+	mapif_sendall(buf, 74);
 }
 
 /*==========================================
@@ -343,7 +342,7 @@ static void mapif_Mail_return(int fd, int char_id, int mail_id)
 	{
 		if( msg.dest_id != char_id)
 			return;
-		else if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", mail_db, MAIL_RETURNED, mail_id) )
+		else if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", mail_db, mail_id) )
 			Sql_ShowDebug(sql_handle);
 		else
 		{
@@ -363,7 +362,7 @@ static void mapif_Mail_return(int fd, int char_id, int mail_id)
 			msg.timestamp = (unsigned int)calc_times();
 
 			new_mail = mail_savemessage(&msg);
-			mapif_Mail_new(new_mail);
+			mapif_Mail_new(&msg);
 		}
 	}
 

@@ -1591,11 +1591,14 @@ int intif_parse_Mail_return(int fd)
 	{
 		int i;
 		ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
-		if (i < MAIL_MAX_INBOX)
+		if( i < MAIL_MAX_INBOX )
 		{
 			memset(&sd->mail.inbox.msg[i], 0, sizeof(struct mail_message));
 			sd->mail.inbox.amount--;
 		}
+
+		if( sd->mail.inbox.full )
+			intif_Mail_requestinbox(sd->status.char_id, 1); // Free space is available for new mails
 	}
 
 	clif_Mail_return(sd->fd, mail_id, fail);
