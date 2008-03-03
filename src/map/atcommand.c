@@ -6069,7 +6069,7 @@ int atcommand_autoloot(const int fd, struct map_session_data* sd, const char* co
 		clif_displaymessage(fd, "Autolootitem is now off.");
 	}
 
-	return 0;  
+	return 0;
 }
 /*==========================================
  * @autolootitem
@@ -7600,7 +7600,7 @@ static int atcommand_mutearea_sub(struct block_list *bl,va_list ap)
 		return 0;
 
 	id = va_arg(ap, int);
-	time = va_arg(ap, int);	
+	time = va_arg(ap, int);
 
 	if (id != bl->id && !pc_isGM(pl_sd)) {
 		pl_sd->status.manner -= time;
@@ -7655,7 +7655,7 @@ int atcommand_me(const int fd, struct map_session_data* sd, const char* command,
 	char tempmes[200];
 	nullpo_retr(-1, sd);
 
-	memset(tempmes, '\0', sizeof(tempmes));    
+	memset(tempmes, '\0', sizeof(tempmes));
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	if (sd->sc.count && //no "chatting" while muted.
@@ -7705,7 +7705,7 @@ int atcommand_size(const int fd, struct map_session_data* sd, const char* comman
 /*==========================================
  * @monsterignore
  * => Makes monsters ignore you. [Valaris]
- *------------------------------------------*/ 
+ *------------------------------------------*/
 int atcommand_monsterignore(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
 	nullpo_retr(-1, sd);
@@ -8062,7 +8062,7 @@ int atcommand_clone(const int fd, struct map_session_data* sd, const char* comma
 		x = sd->bl.x;
 		y = sd->bl.y;
 	}
-		
+
 	if((x = mob_clone_spawn(pl_sd, sd->bl.m, x, y, "", master, 0, flag?1:0, 0)) > 0) {
 		clif_displaymessage(fd, msg_txt(128+flag*2));	// Evil Clone spawned. Clone spawned. Slave clone spawned.
 		return 0;
