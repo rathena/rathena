@@ -2719,9 +2719,10 @@ static struct block_list *mob_getfriendhprate(struct mob_data *md,int min_rate,i
  *------------------------------------------*/
 struct block_list *mob_getmasterhpltmaxrate(struct mob_data *md,int rate)
 {
-	if (md && md->master_id > 0) {
+	if( md && md->master_id > 0 )
+	{
 		struct block_list *bl = map_id2bl(md->master_id);
-		if (bl && status_calc_life(status_get_hp(bl), status_get_max_hp(bl)) < rate);
+		if( bl && status_calc_life(status_get_hp(bl), status_get_max_hp(bl)) < rate )
 			return bl;
 	}
 
