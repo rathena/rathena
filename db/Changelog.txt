@@ -36,7 +36,17 @@
 	2380 Robe_of_Order
 	2376 General's_Plate_Mail	Increases heal recovery effectiveness on you by 10%
 
+	Endless Tower+
+	13412 Naght_Seiger_Twin_Edge	Chance while attacking to pierce enemy defence for 5 seconds.
+	13413 Naght_Seiger_Twin_Edge_	Chance while attacking to pierce enemy defence for 5 seconds.
+	1185 Violet_Fear		Chance while attacking to pierce enemy defence for 5 seconds.
+	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
+
 =======================
+2008/03/03
+	* Rev. 12284 Rather large update to the item database. [L0ne_W0lf]
+	- Lots of minor updates to sell prices and kRONames, and more.
+	- Added several items. ($ephiroth and myself)
 2008/02/28
 	* Adjusted const.txt's cell type numbers according to recent updates
 2008/02/27
