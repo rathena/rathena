@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/03/02
+	* Rev 12280 Fixes a bug in the hunter job quest. (bugreport:1099) [L0ne_W0lf]
 2008/03/01
 	* Rev 12275 Resolves bugreport:1025, bugreport:1062, [L0ne_W0lf]
 	  bugreport:1077 and bugreport:1078. :P
