@@ -1236,7 +1236,7 @@ OnInit:
 	end;
 
 OnStart:
-	set .MyMobCount,0;
+	set .MyMonsterCount,0;
 	enablenpc "Monster Summon#cr0";
 	donpcevent "Monster Summon#cr1::OnStart";
 	donpcevent "Monster Summon#cr2::OnStart";
