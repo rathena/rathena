@@ -11441,9 +11441,6 @@ void clif_parse_Mail_refreshinbox(int fd, struct map_session_data *sd)
 {
 	struct mail_data* md = &sd->mail.inbox;
 
-	if( mail_invalid_operation(sd) )
-		return;
-
 	if( md->amount < MAIL_MAX_INBOX && (md->full || md->changed) )
 		intif_Mail_requestinbox(sd->status.char_id, 1);
 	else
