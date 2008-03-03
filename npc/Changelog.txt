@@ -1,6 +1,8 @@
 Date		Added
 ======
 2008/03/03
+	* rev 12283 Added Auction file. (Disabled until auctions work) [L0ne_W0lf]
+	* Removed auction NPCs from Lighthalzen, and fixed bugreport:1103.
 	* Rev 12281 Fixes a bug in the crusader job quest (bugreport:1101) [Paradox924X]
 2008/03/02
 	* Rev 12280 Fixes a bug in the hunter job quest. (bugreport:1099) [L0ne_W0lf]

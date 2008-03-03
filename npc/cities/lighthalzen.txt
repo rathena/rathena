@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA, Au{R}oN (Translated by Alan), $ephiroth
 //===== Current Version: ===================================== 
-//= 1.6
+//= 1.7
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -33,6 +33,8 @@
 //=	whitespace (empty lines after header and before end curly)
 //=	reduced usage of the command "goto", grammatical corrections.
 //=	Added additional missing NPCs.
+//= 1.7 Removed Auciton Staff as the offical auction file has been added. [L0ne_W0lf]
+//=	Corrected Lucious so he checks the donation variable. (bugreport:1103) [L0ne_W0lf]
 //=============================================================
 
 lighthalzen,198,285,5	script	Jiwon#zen5	862,{
@@ -593,8 +595,8 @@ lighthalzen,182,102,3	script	Lucius#zen5	866,{
 			mes "donations. I'm glad to see";
 			mes "that there are still kind and";
 			mes "generous people in the world.";
-			close;
 			if ($donatedzeny < 260000) {
+				next;
 				mes "[Lucius]";
 				mes "This should be enough";
 				mes "to send to the Poor Relief";
@@ -605,8 +607,8 @@ lighthalzen,182,102,3	script	Lucius#zen5	866,{
 				set $donatedzeny,0;
 				getitem 603,1; //Old_Blue_Box
 				getitem 12016,1; //Speed_Up_Potion
-				close;
 			}
+			close;
 		}
 		mes "[Lucius]";
 		mes "I understand. Still,";
@@ -2175,52 +2177,6 @@ lhz_in02,147,222,3	script	Officer Guo#06::off_guo	85,{
 }
 
 lhz_in02,142,222,6	duplicate(off_guo)	Suspect#6	870
-
-
-// Auction ----------------------------------------------------------------------- 
-
-lighthalzen,205,169,4	script	Auction Guide	833,{
-
-	mes "[Auction Guide]";
-	mes "Trying to go to the acution";
-	next;
-	menu "Yes.",-,"No.",M_NO;
-
-	mes "[Auction Guide]";
-	mes "Have a good trip~";
-	close2;
-	warp "auction_02",43,24;
-	end;
-
-M_NO:
-	mes "[Auction Guide]";
-	MES "Come visit next time.";
-	close;
-}
-
-auction_02,31,46,9	script	Auction Supervisor::as1	874,{
-
-	mes "[Auctioner]";
-	mes "Welcome.";
-	mes "Is there an item that you're";
-	mes "looking for...?";
-	next;
-	menu "Yes.",-,"No.",M_NO;
-
-	//NEED TO ADD THE COMMAND FOR OPEN AUCTION WINDOW!!
-	mes "Sorry, but at the moment the auction system is in development";//CUSTOM MSG!!
-	close;
-
-M_NO:
-	mes "[Auctioner]";
-	mes "Okay then..";
-	close;
-}
-auction_02,43,65,2	duplicate(as1)	Auction Supervisor::asd1	874
-auction_02,56,46,2	duplicate(as1)	Auction Supervisor::asd2	874
-//move this warp to warps
-auction_02,43,17,0	warp	auc_light01	1,1,lighthalzen,209,169
-
 
 // New ----------------------------------------------------------------------- 
 
