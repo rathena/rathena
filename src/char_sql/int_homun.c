@@ -49,6 +49,18 @@ int mapif_info_homunculus(int fd, int account_id, struct s_homunculus *hd)
 	return 0;
 }
 
+int mapif_noinfo_homunculus(int fd, int account_id)
+{
+	WFIFOHEAD(fd, sizeof(struct s_homunculus)+9);
+	WFIFOW(fd,0) = 0x3891;
+	WFIFOW(fd,2) = sizeof(struct s_homunculus)+9;
+	WFIFOL(fd,4) = account_id;
+	WFIFOB(fd,8) = 0; // not found.
+	memset(WFIFOP(fd,9), 0, sizeof(struct s_homunculus));
+	WFIFOSET(fd, sizeof(struct s_homunculus)+9);
+	return 0;
+}
+
 int mapif_homunculus_deleted(int fd, int flag)
 {
 	WFIFOHEAD(fd, 3);
@@ -157,34 +169,43 @@ int mapif_load_homunculus(int fd)
 		Sql_ShowDebug(sql_handle);
 		return 0;
 	}
-	if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
-	{
-		homun_pt->hom_id = RFIFOL(fd,6);
-		Sql_GetData(sql_handle,  1, &data, NULL); homun_pt->char_id = atoi(data);
-		Sql_GetData(sql_handle,  2, &data, NULL); homun_pt->class_ = atoi(data);
-		Sql_GetData(sql_handle,  3, &data, &len); memcpy(homun_pt->name, data, min(len, NAME_LENGTH));
-		Sql_GetData(sql_handle,  4, &data, NULL); homun_pt->level = atoi(data);
-		Sql_GetData(sql_handle,  5, &data, NULL); homun_pt->exp = atoi(data);
-		Sql_GetData(sql_handle,  6, &data, NULL); homun_pt->intimacy = (unsigned int)strtoul(data, NULL, 10);
-		homun_pt->intimacy = cap_value(homun_pt->intimacy, 0, 100000);
-		Sql_GetData(sql_handle,  7, &data, NULL); homun_pt->hunger = atoi(data);
-		homun_pt->hunger = cap_value(homun_pt->hunger, 0, 100);
-		Sql_GetData(sql_handle,  8, &data, NULL); homun_pt->str = atoi(data);
-		Sql_GetData(sql_handle,  9, &data, NULL); homun_pt->agi = atoi(data);
-		Sql_GetData(sql_handle, 10, &data, NULL); homun_pt->vit = atoi(data);
-		Sql_GetData(sql_handle, 11, &data, NULL); homun_pt->int_ = atoi(data);
-		Sql_GetData(sql_handle, 12, &data, NULL); homun_pt->dex = atoi(data);
-		Sql_GetData(sql_handle, 13, &data, NULL); homun_pt->luk = atoi(data);
-		Sql_GetData(sql_handle, 14, &data, NULL); homun_pt->hp = atoi(data);
-		Sql_GetData(sql_handle, 15, &data, NULL); homun_pt->max_hp = atoi(data);
-		Sql_GetData(sql_handle, 16, &data, NULL); homun_pt->sp = atoi(data);
-		Sql_GetData(sql_handle, 17, &data, NULL); homun_pt->max_sp = atoi(data);
-		Sql_GetData(sql_handle, 18, &data, NULL); homun_pt->skillpts = atoi(data);
-		Sql_GetData(sql_handle, 19, &data, NULL); homun_pt->rename_flag = atoi(data);
-		Sql_GetData(sql_handle, 20, &data, NULL); homun_pt->vaporize = atoi(data);
 
+	if( !Sql_NumRows(sql_handle) )
+	{	//No homunculus found.
+		mapif_noinfo_homunculus(fd, RFIFOL(fd,2));
 		Sql_FreeResult(sql_handle);
+		return 0;
 	}
+	if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
+	{
+		Sql_ShowDebug(sql_handle);
+		Sql_FreeResult(sql_handle);
+		return 0;
+	}
+	homun_pt->hom_id = RFIFOL(fd,6);
+	Sql_GetData(sql_handle,  1, &data, NULL); homun_pt->char_id = atoi(data);
+	Sql_GetData(sql_handle,  2, &data, NULL); homun_pt->class_ = atoi(data);
+	Sql_GetData(sql_handle,  3, &data, &len); memcpy(homun_pt->name, data, min(len, NAME_LENGTH));
+	Sql_GetData(sql_handle,  4, &data, NULL); homun_pt->level = atoi(data);
+	Sql_GetData(sql_handle,  5, &data, NULL); homun_pt->exp = atoi(data);
+	Sql_GetData(sql_handle,  6, &data, NULL); homun_pt->intimacy = (unsigned int)strtoul(data, NULL, 10);
+	homun_pt->intimacy = cap_value(homun_pt->intimacy, 0, 100000);
+	Sql_GetData(sql_handle,  7, &data, NULL); homun_pt->hunger = atoi(data);
+	homun_pt->hunger = cap_value(homun_pt->hunger, 0, 100);
+	Sql_GetData(sql_handle,  8, &data, NULL); homun_pt->str = atoi(data);
+	Sql_GetData(sql_handle,  9, &data, NULL); homun_pt->agi = atoi(data);
+	Sql_GetData(sql_handle, 10, &data, NULL); homun_pt->vit = atoi(data);
+	Sql_GetData(sql_handle, 11, &data, NULL); homun_pt->int_ = atoi(data);
+	Sql_GetData(sql_handle, 12, &data, NULL); homun_pt->dex = atoi(data);
+	Sql_GetData(sql_handle, 13, &data, NULL); homun_pt->luk = atoi(data);
+	Sql_GetData(sql_handle, 14, &data, NULL); homun_pt->hp = atoi(data);
+	Sql_GetData(sql_handle, 15, &data, NULL); homun_pt->max_hp = atoi(data);
+	Sql_GetData(sql_handle, 16, &data, NULL); homun_pt->sp = atoi(data);
+	Sql_GetData(sql_handle, 17, &data, NULL); homun_pt->max_sp = atoi(data);
+	Sql_GetData(sql_handle, 18, &data, NULL); homun_pt->skillpts = atoi(data);
+	Sql_GetData(sql_handle, 19, &data, NULL); homun_pt->rename_flag = atoi(data);
+	Sql_GetData(sql_handle, 20, &data, NULL); homun_pt->vaporize = atoi(data);
+	Sql_FreeResult(sql_handle);
 
 	// Load Homunculus Skill
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`lv` FROM `skill_homunculus` WHERE `homun_id`=%d", homun_pt->hom_id) )

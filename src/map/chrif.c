@@ -116,9 +116,9 @@ bool chrif_auth_delete(int account_id, int char_id, enum sd_state state) {
 	struct auth_node *node;
 	if ((node=chrif_auth_check(account_id, char_id, state)))
 	{
-		if (node->fd && session[node->fd] && node->sd &&
-			session[node->fd]->session_data == node->sd)
-			session[node->fd]->session_data = NULL;
+		int fd = node->sd?node->sd->fd:node->fd;
+		if (session[fd] && session[fd]->session_data == node->sd)
+			session[fd]->session_data = NULL;
 		if (node->char_dat) aFree(node->char_dat);
 		if (node->sd) aFree(node->sd);
 		ers_free(auth_db_ers, node);
@@ -558,7 +558,9 @@ void chrif_authok(int fd)
 	
 	if ((node = chrif_search(account_id)))
 	{	//Is the character already awaiting authorization?
-		if (node->state == ST_LOGIN && node->sd)
+		if (node->state != ST_LOGIN)
+			return; //character in logout phase, do not touch that data.
+		if (node->sd)
 		{
 			sd = node->sd;
 			if(node->char_dat == NULL &&
@@ -566,16 +568,18 @@ void chrif_authok(int fd)
 				node->char_id == char_id &&
 				node->login_id1 == RFIFOL(fd, 8))
 			{ //Auth Ok
-				if (!pc_authok(sd, RFIFOL(fd, 16), RFIFOL(fd, 12), status))
-					chrif_auth_delete(account_id, char_id, ST_LOGIN);
+				if (pc_authok(sd, RFIFOL(fd, 16), RFIFOL(fd, 12), status))
+					return;
 			} else { //Auth Failed
 				pc_authfail(sd);
 				chrif_char_offline(sd); //Set him offline, the char server likely has it set as online already.
-				chrif_auth_delete(account_id, char_id, ST_LOGIN);
 			}
+			chrif_auth_delete(account_id, char_id, ST_LOGIN);
+			return;
 		}
-		//Otherwise discard the entry received as we already have information.
-		return;
+		//When we receive double login info and the client has not connected yet,
+		//discard the older one and keep the new one.
+		chrif_auth_delete(node->account_id, node->char_id, ST_LOGIN);
 	}
 
 	// Awaiting for client to connect.

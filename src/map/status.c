@@ -6026,11 +6026,11 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			opt_flag = 0;
 			break;
 		//0x100 missing?
-//	TODO:
-//		case SC_MOONLIT:
-//			sc->opt3 |= 0x200;
-//			opt_flag = 0;
-//			break;
+		case SC_DANCING:
+			if ((val1&0xFFFF) == CG_MOONLIT)
+				sc->opt3 |= 0x200;
+			opt_flag = 0;
+			break;
 		case SC_MARIONETTE:
 		case SC_MARIONETTE2:
 			sc->opt3 |= 0x400;
@@ -6056,11 +6056,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			sc->opt3 |= 0x8000;
 			opt_flag = 0;
 			break;
-//	TODO:
-//		case SC_BIOLABAURA:
-//			sc->opt3 |= 0x10000;
-//			opt_flag = 0;
-//			break;
+		case SC_CHANGEUNDEAD:
+			sc->opt3 |= 0x10000;
+			opt_flag = 0;
+			break;
 		//OPTION
 		case SC_HIDING:
 			sc->option |= OPTION_HIDE;
@@ -6613,6 +6612,11 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		sc->opt3 &= ~0x80;
 		opt_flag = 0;
 		break;
+	case SC_DANCING:
+		if ((sce->val1&0xFFFF) == CG_MOONLIT)
+			sc->opt3 &= ~0x200;
+		opt_flag = 0;
+		break;
 	case SC_MARIONETTE:
 	case SC_MARIONETTE2:
 		sc->opt3 &= ~0x400;
@@ -6628,6 +6632,14 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		break;
 	case SC_KAITE:
 		sc->opt3 &= ~0x2000;
+		opt_flag = 0;
+		break;
+	case SC_SPIRIT:
+		sc->opt3 &= ~0x8000;
+		opt_flag = 0;
+		break;
+	case SC_CHANGEUNDEAD:
+		sc->opt3 &= ~0x10000;
 		opt_flag = 0;
 		break;
 	default:

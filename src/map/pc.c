@@ -555,12 +555,17 @@ int pc_isequip(struct map_session_data *sd,int n)
 		return 0;
 	if(item->sex != 2 && sd->status.sex != item->sex)
 		return 0;
-	if(map[sd->bl.m].flag.pvp && item->flag.no_equip&1)
+	if(map[sd->bl.m].flag.pvp && ((item->flag.no_equip&1) || !pc_isAllowedCardOn(sd,item->slot,n,1)))
 		return 0;
-	if(map_flag_gvg(sd->bl.m) && item->flag.no_equip&2)
+	if(map_flag_gvg(sd->bl.m) && ((item->flag.no_equip&2) || !pc_isAllowedCardOn(sd,item->slot,n,2)))
 		return 0; 
-	if(map[sd->bl.m].flag.restricted && item->flag.no_equip&map[sd->bl.m].zone)
-		return 0;
+	if(map[sd->bl.m].flag.restricted)
+	{
+		int flag =map[sd->bl.m].zone;
+		if (item->flag.no_equip&flag || !pc_isAllowedCardOn(sd,item->slot,n,flag))
+			return 0;
+	}
+
 	if (sd->sc.count) {
 			
 		if(item->equip & EQP_ARMS && item->type == IT_WEAPON && sd->sc.data[SC_STRIPWEAPON]) // Also works with left-hand weapons [DracoRPG]

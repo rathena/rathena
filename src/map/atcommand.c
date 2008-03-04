@@ -545,14 +545,17 @@ int atcommand_jump(const int fd, struct map_session_data* sd, const char* comman
 
 	sscanf(message, "%d %d", &x, &y);
 
-	if (x <= 0) //If coordinates are 'wrong', random jump.
-		x = -1;
-	if (y <= 0)
-		y = -1;
-	if (sd->bl.m >= 0 && map[sd->bl.m].flag.noteleport && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
+	if (map[sd->bl.m].flag.noteleport && battle_config.any_warp_GM_min_level > pc_isGM(sd)) {
 		clif_displaymessage(fd, msg_txt(248));	// You are not authorized to warp from your current map.
 		return -1;
 	}
+
+	if ((x || y) && map_getcell(sd->bl.m, x, y, CELL_CHKNOPASS))
+  	{	//This is to prevent the pc_setpos call from printing an error.
+		clif_displaymessage(fd, msg_txt(2));
+		x = y = 0; //Invalid cell, use random spot.
+	}
+
 	pc_setpos(sd, sd->mapindex, x, y, 3);
 	sprintf(atcmd_output, msg_txt(5), sd->bl.x, sd->bl.y); // Jumped to %d %d
 	clif_displaymessage(fd, atcmd_output);

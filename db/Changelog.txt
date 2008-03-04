@@ -44,6 +44,9 @@
 
 =======================
 2008/03/04
+	* Updated firepillar so it cannot be placed on top of others.
+	* Changed the default format for @me and @main to avoid crashes on the
+	  newer clients. [Skotlex]
 	* Rev. 12292 Added a slot drooping ninetails. (bugreport:1089) [L0ne_W0lf]
 	* Rev. 12291 Corrected Field Manual 100% box. (bugreport:1104) [L0ne_W0lf]
 2008/03/03

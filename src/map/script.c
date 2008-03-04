@@ -12152,7 +12152,7 @@ BUILDIN_FUNC(getmonsterinfo)
 
 	mob_id	= script_getnum(st,2);
 	if (!mobdb_checkid(mob_id)) {
-		ShowError("buildin_getmonsterinfo: Wrong Monster ID: %i", mob_id);
+		ShowError("buildin_getmonsterinfo: Wrong Monster ID: %i\n", mob_id);
 		if ( !script_getnum(st,3) ) //requested a string
 			script_pushconststr(st,"null");
 		else

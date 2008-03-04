@@ -1706,7 +1706,7 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 	case BL_PET:
 	{
 		struct pet_data *pd = (struct pet_data*)bl;
-		if( pd->pet.intimate <= 0 && !(pd->msd && pd->msd->state.active) )
+		if( pd->pet.intimate <= 0 && !(pd->msd && !pd->msd->state.active) )
 		{	//If logging out, this is deleted on unit_free
 			clif_clearunit_area(bl,clrtype);
 			map_delblock(bl);
@@ -1721,7 +1721,7 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 	{
 		struct homun_data *hd = (struct homun_data *) bl;
 		ud->canact_tick = ud->canmove_tick; //It appears HOM do reset the can-act tick.
-		if(!hd->homunculus.intimacy && !(hd->master && hd->master->state.active) )
+		if(!hd->homunculus.intimacy && !(hd->master && !hd->master->state.active) )
 		{	//If logging out, this is deleted on unit_free
 			clif_emotion(bl, 28) ;	//sob
 			clif_clearunit_area(bl,clrtype);

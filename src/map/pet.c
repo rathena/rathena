@@ -624,7 +624,7 @@ int pet_menu(struct map_session_data *sd,int menunum)
 		return 1;
 	
 	//You lost the pet already.
-	if(!sd->status.pet_id || sd->pd->pet.intimate <= 0)
+	if(!sd->status.pet_id || sd->pd->pet.intimate <= 0 || sd->pd->pet.incuvate)
 		return 1;
 	
 	switch(menunum) {

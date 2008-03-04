@@ -1630,7 +1630,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if (!dmg.amotion) {
 		status_fix_damage(src,bl,damage,dmg.dmotion); //Deal damage before knockback to allow stuff like firewall+storm gust combo.
-		if (dmg.dmg_lv == ATK_DEF || damage > 0) {
+		if (damage > 0) {
 			if (!status_isdead(bl))
 				skill_additional_effect(src,bl,skillid,skilllv,attack_type,tick);
 			//Counter status effects [Skotlex] 
@@ -6824,15 +6824,6 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			skill_delunit(src);
 			break;
 
-		case UNT_FIREPILLAR_ACTIVE:
-			skill_area_temp[1] = 0;
-			map_foreachinrange(skill_attack_area,bl,
-				skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag,
-				BF_MAGIC,ss,&src->bl,sg->skill_id,sg->skill_lv,tick,0,BCT_ENEMY);  // area damage [Celest]
-			sg->interval = -1; //Mark it used up so others can't trigger it for massive splash damage. [Skotlex]
-			sg->limit=DIFF_TICK(tick,sg->tick) + 1500;
-			break;
-
 		case UNT_SKIDTRAP:
 			{
 				skill_blown(&src->bl,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),unit_getdir(bl),0);
@@ -6874,8 +6865,10 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		case UNT_SANDMAN:
 		case UNT_FLASHER:
 		case UNT_FREEZINGTRAP:
+		case UNT_FIREPILLAR_ACTIVE:
 			map_foreachinrange(skill_trap_splash,&src->bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, &src->bl,tick);
-			clif_changetraplook(&src->bl, sg->unit_id==UNT_LANDMINE?UNT_FIREPILLAR_ACTIVE:UNT_USED_TRAPS);
+			if (sg->unit_id != UNT_FIREPILLAR_ACTIVE)
+				clif_changetraplook(&src->bl, sg->unit_id==UNT_LANDMINE?UNT_FIREPILLAR_ACTIVE:UNT_USED_TRAPS);
 			src->range = -1; //Disable range so it does not invoke a for each in area again.
 			sg->limit=DIFF_TICK(tick,sg->tick)+1500;
 			break;
@@ -9056,12 +9049,6 @@ int skill_trap_splash (struct block_list *bl, va_list ap)
 		case UNT_FLASHER:        
 			skill_additional_effect(ss,bl,sg->skill_id,sg->skill_lv,BF_MISC,tick);
 			break;
-		case UNT_LANDMINE:
-		case UNT_BLASTMINE:
-		case UNT_CLAYMORETRAP:
-		case UNT_FREEZINGTRAP:
-			skill_attack(skill_get_type(sg->skill_id),ss,src,bl,sg->skill_id,sg->skill_lv,tick,0);
-			break;
 		case UNT_GROUNDDRIFT_WIND:
 			if(skill_attack(BF_WEAPON,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
 				sc_start(bl,SC_STUN,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
@@ -9083,7 +9070,8 @@ int skill_trap_splash (struct block_list *bl, va_list ap)
 				skill_blown(src,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),-1,0);
 			break;
 		default:
-			return 0;
+			skill_attack(skill_get_type(sg->skill_id),ss,src,bl,sg->skill_id,sg->skill_lv,tick,0);
+			break;
 	}
 	return 1;
 }

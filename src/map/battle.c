@@ -158,7 +158,7 @@ int battle_delay_damage_sub (int tid, unsigned int tick, int id, int data)
 	{
 		map_freeblock_lock();
 		status_fix_damage(dat->src, target, dat->damage, dat->delay);
-		if ((dat->dmg_lv == ATK_DEF || dat->damage > 0) && dat->attack_type)
+		if (dat->damage > 0 && dat->attack_type)
 		{
 			if (!status_isdead(target))
 				skill_additional_effect(dat->src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
@@ -179,7 +179,7 @@ int battle_delay_damage (unsigned int tick, struct block_list *src, struct block
 	if (!battle_config.delay_battle_damage) {
 		map_freeblock_lock();
 		status_fix_damage(src, target, damage, ddelay);
-		if ((damage > 0 || dmg_lv == ATK_DEF) && attack_type)
+		if (damage > 0 && attack_type)
 		{
 			if (!status_isdead(target))
 				skill_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
