@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 3.0
+//= 3.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -41,6 +41,7 @@
 //= 2.9a Corrected a Typo error ";;". [Samuray22]
 //= 2.9b Moved a wrong 'break'. [Zephyrus_cr]
 //= 3.0 Now uses enable and disable waitingroomevent. [L0ne_W0lf]
+//= 3.1 Fixed problem with waiting room. (bugreport:1099) [L0ne_W0lf]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -1088,7 +1089,6 @@ OnInit:
 	end;
 
 OnStartArena:
-	killmonsterall "in_moc_16";
 	warpwaitingpc "in_moc_16", 66, 151;
 	donpcevent "Beholder#ASNTEST::OnEnable";
 	donpcevent "Keeper of the Door#ASN::OnDisable";
@@ -1178,13 +1178,9 @@ OnTouch:
 }
 
 in_moc_16,1,1,0	script	Beholder#ASNTEST	-1,{
-OnInit:
-	disablenpc "Beholder#ASNTEST";
 	end;
 
 OnEnable:
-	mapannounce "in_moc_16","lol?",bc_map;
-	enablenpc "Beholder#ASNTEST";
 	set .MyMobs,6;
 	// Target mobs
 	monster "in_moc_16",62,161,"Job change target",1002,1,"Beholder#ASNTEST::OnMyMobDead";
@@ -1231,9 +1227,16 @@ OnEnable:
 	initnpctimer;
 	end;
 
-OnDisable:
-	killmonsterall "in_moc_16";
-	disablenpc "Beholder#ASNTEST";
+OnReset:
+	killmonster "in_moc_16","Beholder#ASNTEST::OnMyMobDead";
+	killmonster "in_moc_16","Beholder#ASNTEST::OnMyMobDead2";
+	stopnpctimer;
+	donpcevent "Standby Room#ASNTEST::OnStart";
+	end;
+
+OnResetmob:
+	killmonster "in_moc_16","Beholder#ASNTEST::OnMyMobDead";
+	killmonster "in_moc_16","Beholder#ASNTEST::OnMyMobDead2";
 	stopnpctimer;
 	end;
 
@@ -1244,7 +1247,7 @@ OnMyMobDead:
 		set ASSIN_Q,3;
 		donpcevent "timestopper#1::OnEnable";
 		donpcevent "Keeper of the Door#ASN::OnEnable";
-		donpcevent "Beholder#ASNTEST::OnDisable";
+		donpcevent "Beholder#ASNTEST::OnResetmob";
 		set .DisableTraps,1;
 		stopnpctimer;
 	}
@@ -1257,12 +1260,11 @@ OnMyMobDead2:
 	mapannounce "in_moc_16",strcharinfo(0) + "! You made a mistake! I'm bringing you back!",bc_map;
 	set ASSIN_Q,2;
 	warp "in_moc_16",19,161;
-	donpcevent "Standby Room#ASNTEST::OnStart";
-	donpcevent "Beholder#ASNTEST::OnDisable";
+	donpcevent "Beholder#ASNTEST::OnReset";
 	end;
 
 OnTimer1000:
-	mapannounce "in_moc_16","Okay, let the test begin!",bc_map;
+	mapannounce "in_moc_16"," Okay, let the test begin!",bc_map;
 	end;
 
 OnTimer2000:
@@ -1306,7 +1308,7 @@ OnTimer183000:
 	end;
 
 OnTimer184000:
-	mapannounce "in_moc_16","1 second left...",bc_map;
+	mapannounce "in_moc_16","1 second left.",bc_map;
 	end;
 
 OnTimer185000:
@@ -1315,10 +1317,12 @@ OnTimer185000:
 	//set ASSIN_Q,2;
 	end;
 
-OnTimer187000:
+OnTimer186000:
 	areawarp "in_moc_16",60,136,93,177,"in_moc_16",19,161;
-	donpcevent "Beholder#ASNTEST::OnDisable";
-	donpcevent "Standby Room#ASNTEST::OnStart";
+	end;
+
+OnTimer187000:
+	donpcevent "Beholder#ASNTEST::OnReset";
 	end;
 }
 
@@ -1440,6 +1444,7 @@ OnEnable:
 
 OnDisable:
 	disablenpc "Keeper of the Door#ASN";
+	end;
 }
 
 in_moc_16,3,3,0	script	timestopper#1	-1,{
@@ -1454,6 +1459,7 @@ OnTimer187000:
 
 OnDisable:
 	stopnpctimer;
+	end;
 }
 
 in_moc_16,89,98,1	script	Thomas#ASNTEST	118,5,1,{
@@ -1601,6 +1607,7 @@ OnTouch:
 
 OnDisable:
 	mapannounce "in_moc_16","...Next volunteer, please come in.",bc_map;
+	end;
 }
 
 in_moc_16,149,80,4	script	Guildmaster#ASN2	106,1,1,{

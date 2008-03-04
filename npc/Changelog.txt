@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/03/04
+	* Rev 12290 Hopefully fixed waiting room in the assassin quest. (bugreport:1100) [L0ne_W0lf0
 2008/03/03
 	* Rev 12285 Added dummy "OnMyMobDead" labels to rogue quest. (bugreport:1100) [L0ne_W0lf]
 	* Rev 12283 Added Auction file. (Disabled until auctions work) [L0ne_W0lf]
