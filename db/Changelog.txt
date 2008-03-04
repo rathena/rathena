@@ -43,6 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/03/04
+	* Rev. 12291 Corrected Field Manual 100% box. (bugreport:1104) [L0ne_W0lf]
 2008/03/03
 	* Rev. 12284 Rather large update to the item database. [L0ne_W0lf]
 	- Lots of minor updates to sell prices and kRONames, and more.
