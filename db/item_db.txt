@@ -2174,7 +2174,7 @@
 5293,Ramen_Hat,Ramen Hat,5,,10,0,,1,,0,0xFFFFFFFF,7,2,256,,0,1,320,{ bonus bDex,4; bonus3 bAutoSpell,30,1,100; },{},{}
 5294,Whisper_Mask,Whisper Mask,5,,10,0,,0,,0,0xFFFFFFFF,7,2,769,,0,0,321,{ bonus bAgi,3; bonus2 bSubEle,Ele_Ghost,-10; },{},{}
 //5295,Golden_Bandana,Golden Bandana,5,,10,2400,,4,,0,0xFFFFFFFF,7,2,768,,,1,138,{ bonus bMdef,4; },{},{}
-5296,Drooping_Nine_Tail_,Drooping Nine Tail,5,,10,300,,1,,0,0xFFFFFFFF,7,2,256,,0,0,296,{ bonus bAgi,1; bonus bCritical,1; },{},{}
+5296,Drooping_Nine_Tail_,Drooping Nine Tail,5,,10,300,,1,,1,0xFFFFFFFF,7,2,256,,0,0,296,{ bonus bAgi,1; bonus bCritical,1; },{},{}
 5297,Soul_Wing,Soul Wing_,5,,10,300,,2,,1,0xFFFFFFFF,7,2,256,,0,0,301,{},{},{}
 5298,Marvelous_Wig_,Dokebi's Wig,5,,10,100,,1,,1,0xFFFFFFFF,7,2,768,,0,0,302,{},{},{}
 5299,Ati_Atihan_Hat_,Pagdayaw,5,,10,100,,1,,1,0xFFFFFFFF,7,2,769,,0,0,303,{ bonus3 bAutoSpell,326,1,50; },{},{}

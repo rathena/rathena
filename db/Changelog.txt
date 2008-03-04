@@ -44,6 +44,7 @@
 
 =======================
 2008/03/04
+	* Rev. 12292 Added a slot drooping ninetails. (bugreport:1089) [L0ne_W0lf]
 	* Rev. 12291 Corrected Field Manual 100% box. (bugreport:1104) [L0ne_W0lf]
 2008/03/03
 	* Rev. 12284 Rather large update to the item database. [L0ne_W0lf]
