@@ -6594,7 +6594,10 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		break;
 	case SC_INCATKRATE: //Simulated Explosion spirits effect.
 		if (bl->type != BL_MOB)
+		{
+			opt_flag = 0;
 			break;
+		}
 	case SC_EXPLOSIONSPIRITS:
 		sc->opt3 &= ~0x8;
 		opt_flag = 0;

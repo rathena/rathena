@@ -2189,12 +2189,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				break;
 			default:
 			{
-				if (skill_num == NPC_EARTHQUAKE) {
-					if (sstatus->rhw.atk2 > sstatus->rhw.atk)
-						MATK_ADD(sstatus->rhw.atk + rand()%(1+sstatus->rhw.atk2-sstatus->rhw.atk))
-					else
-						MATK_ADD(sstatus->rhw.atk);
-				} else
 				if (sstatus->matk_max > sstatus->matk_min) {
 					MATK_ADD(sstatus->matk_min+rand()%(1+sstatus->matk_max-sstatus->matk_min));
 				} else {
@@ -2287,7 +2281,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 100*skill_lv;
 						break;
 					case NPC_EARTHQUAKE:
-						skillratio += 400 + 500*skill_lv;
+						skillratio += 100 +100*skill_lv +100*(skill_lv/2);
 						break;
 				}
 
@@ -2326,8 +2320,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					//mdef2-= mdef2* i/100;
 				}
 			}
-			if (skill_num == NPC_EARTHQUAKE)
-				mdef>>=1; //Halves MDEF (stupid overpowered skill)
 			if(battle_config.magic_defense_type)
 				ad.damage = ad.damage - mdef*battle_config.magic_defense_type - mdef2;
 			else
@@ -2345,6 +2337,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				else
 					ad.damage = 0;
 			}
+		}
+		
+		if (skill_num == NPC_EARTHQUAKE)
+		{	//Adds atk2 to the damage, should be influenced by number of hits and skill-ratio, but not mdef reductions. [Skotlex]
+			ad.damage+= sstatus->rhw.atk2*skillratio/100;
 		}
 
 		if(ad.damage<1)

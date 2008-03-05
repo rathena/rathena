@@ -528,6 +528,11 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		if (!tsc->data[skill])
 			sc_start(bl,skill,100,skilllv,skill_get_time2(skillid, skilllv));
 		break;
+
+	case WZ_FIREPILLAR:
+		unit_set_walkdelay(bl, tick, skill_get_time2(skillid, skilllv), 1);
+		break;
+
 	case MG_FROSTDIVER:
 	case WZ_FROSTNOVA:
 		sc_start(bl,SC_FREEZE,skilllv*3+35,skilllv,skill_get_time2(skillid,skilllv));

@@ -6593,7 +6593,10 @@ int pc_checkitem(struct map_session_data *sd)
 					| (map[sd->bl.m].flag.pvp?1:0)
 					| (map_flag_gvg(sd->bl.m)?2:0);
 				if (flag && !pc_isAllowedCardOn(sd,it->slot,i,flag))
+				{
+					sd->status.inventory[i].equip=0;
 					calc_flag = 1;
+				}
 			}
 		}
 	}
