@@ -8540,14 +8540,14 @@ static AtCommandInfo* get_atcommandinfo_byname(const char* name)
 	int i;
 	if( *name == atcommand_symbol ) name++; // for backwards compatibility
 	ARR_FIND( 0, ARRAYLENGTH(atcommand_info), i, strcmpi(atcommand_info[i].command, name) == 0 );
-	return ( i != ARRAYLENGTH(atcommand_info) ) ? &atcommand_info[i] : NULL;
+	return ( i < ARRAYLENGTH(atcommand_info) ) ? &atcommand_info[i] : NULL;
 }
 
 static AtCommandInfo* get_atcommandinfo_byfunc(const AtCommandFunc func)
 {
 	int i;
 	ARR_FIND( 0, ARRAYLENGTH(atcommand_info), i, atcommand_info[i].func == func );
-	return ( i != ARRAYLENGTH(atcommand_info) ) ? &atcommand_info[i] : NULL;
+	return ( i < ARRAYLENGTH(atcommand_info) ) ? &atcommand_info[i] : NULL;
 }
 
 

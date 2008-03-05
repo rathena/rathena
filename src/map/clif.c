@@ -6009,7 +6009,7 @@ int clif_mvp_item(struct map_session_data *sd,int nameid)
 /*==========================================
  * MVPŒoŒ±’lŠ“¾
  *------------------------------------------*/
-int clif_mvp_exp(struct map_session_data *sd,unsigned long exp)
+int clif_mvp_exp(struct map_session_data *sd, unsigned int exp)
 {
 	int fd;
 
@@ -6018,7 +6018,7 @@ int clif_mvp_exp(struct map_session_data *sd,unsigned long exp)
 	fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0x10b));
 	WFIFOW(fd,0)=0x10b;
-	WFIFOL(fd,2)=exp;
+	WFIFOL(fd,2)=cap_value(exp,0,INT_MAX);
 	WFIFOSET(fd,packet_len(0x10b));
 	return 0;
 }

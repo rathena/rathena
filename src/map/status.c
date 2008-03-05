@@ -6060,6 +6060,11 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			sc->opt3 |= 0x10000;
 			opt_flag = 0;
 			break;
+//	TODO: unknown option (looks like the aura of biolab mobs)
+//		case ???:
+//			sc->opt3 |= 0x20000;
+//			opt_flag = 0;
+//			break;
 		//OPTION
 		case SC_HIDING:
 			sc->option |= OPTION_HIDE;
@@ -6637,6 +6642,10 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		sc->opt3 &= ~0x2000;
 		opt_flag = 0;
 		break;
+	case SC_BUNSINJYUTSU:
+		sc->opt3 &= ~0x4000;
+		opt_flag = 0;
+		break;
 	case SC_SPIRIT:
 		sc->opt3 &= ~0x8000;
 		opt_flag = 0;
@@ -6645,6 +6654,11 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		sc->opt3 &= ~0x10000;
 		opt_flag = 0;
 		break;
+//	TODO:
+//	case ???:
+//		sc->opt3 &= ~0x20000;
+//		opt_flag = 0;
+//		break;
 	default:
 		opt_flag = 0;
 	}

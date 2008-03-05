@@ -262,7 +262,7 @@ int clif_item_skill(struct map_session_data *sd,int skillid,int skilllv);
 
 int clif_mvp_effect(struct map_session_data *sd);
 int clif_mvp_item(struct map_session_data *sd,int nameid);
-int clif_mvp_exp(struct map_session_data *sd,unsigned long exp);
+int clif_mvp_exp(struct map_session_data *sd, unsigned int exp);
 void clif_changed_dir(struct block_list *bl, int area);
 
 // vending

@@ -1631,10 +1631,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	char *p;
 	int x, y, dir, m, i;
 	struct npc_data *nd;
-
-	enum npc_subtype type = SHOP;
-	if( !strcasecmp(w2,"cashshop") )
-		type = CASHSHOP;
+	enum npc_subtype type;
 
 	if( strcmp(w1,"-") == 0 )
 	{// 'floating' shop?
@@ -1642,7 +1639,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		m = -1;
 	}
 	else
-	{
+	{// w1=<map name>,<x>,<y>,<facing>
 		char mapname[32];
 		if( sscanf(w1, "%31[^,],%d,%d,%d", mapname, &x, &y, &dir) != 4
 		||	strchr(w4, ',') == NULL )
@@ -1653,6 +1650,11 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		
 		m = map_mapname2mapid(mapname);
 	}
+
+	if( !strcasecmp(w2,"cashshop") )
+		type = CASHSHOP;
+	else
+		type = SHOP;
 
 	p = strchr(w4,',');
 	for( i = 0; i < ARRAYLENGTH(items) && p; ++i )
@@ -2720,7 +2722,7 @@ void npc_parsesrcfile(const char* filepath)
 		}
 		else if( strcmpi(w2,"mapflag") == 0 && count >= 3 )
 		{
-			p = npc_parse_mapflag(w1, w2, w3, w4, p, buffer, filepath);
+			p = npc_parse_mapflag(w1, w2, trim(w3), trim(w4), p, buffer, filepath);
 		}
 		else
 		{
