@@ -2715,10 +2715,7 @@ void pc_paycash(struct map_session_data *sd, int price, int points)
 
 	if( cash > 0 )
 	{
-		if( (sd->cashPoints -= cash) < 0 )
-			sd->cashPoints = 0;
-
-		pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints);
+		pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints - cash);
 
 		sprintf(output, "Used %d cash points. %d points remaining.", cash, sd->cashPoints);
 		clif_disp_onlyself(sd, output, strlen(output));
@@ -2726,10 +2723,7 @@ void pc_paycash(struct map_session_data *sd, int price, int points)
 
 	if( points > 0 )
 	{
-		if( (sd->kafraPoints -= points) < 0 )
-			sd->kafraPoints = 0;
-
-		pc_setaccountreg(sd,"#KAFRAPOINTS",sd->kafraPoints);
+		pc_setaccountreg(sd,"#KAFRAPOINTS",sd->kafraPoints - points);
 
 		sprintf(output, "Used %d kafra points. %d points remaining.", points, sd->kafraPoints);
 		clif_disp_onlyself(sd, output, strlen(output));
@@ -2743,11 +2737,7 @@ void pc_getcash(struct map_session_data *sd, int cash, int points)
 
 	if( cash > 0 )
 	{
-		if( cash > MAX_ZENY - sd->cashPoints )
-			cash = MAX_ZENY - sd->cashPoints;
-
-		sd->cashPoints += cash;
-		pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints);
+		pc_setaccountreg(sd,"#CASHPOINTS",sd->cashPoints + cash);
 
 		sprintf(output, "Gained %d cash points. Total %d points", points, sd->cashPoints);
 		clif_disp_onlyself(sd, output, strlen(output));
@@ -2755,11 +2745,7 @@ void pc_getcash(struct map_session_data *sd, int cash, int points)
 
 	if( points > 0 )
 	{
-		if( points > MAX_ZENY - sd->kafraPoints )
-			points = MAX_ZENY - sd->kafraPoints;
-
-		sd->kafraPoints += points;
-		pc_setaccountreg(sd,"#KAFRAPOINTS",sd->kafraPoints);
+		pc_setaccountreg(sd,"#KAFRAPOINTS",sd->kafraPoints + points);
 
 		sprintf(output, "Gained %d kafra points. Total %d points", points, sd->kafraPoints);
 		clif_disp_onlyself(sd, output, strlen(output));
@@ -6000,20 +5986,32 @@ int pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type)
 	int i,*max, regmax;
 
 	nullpo_retr(0, sd);
-	if (type == 3) { //Some special character reg values...
-		if(strcmp(reg,"PC_DIE_COUNTER") == 0 && sd->die_counter != val){
+
+	switch( type )
+	{
+	case 3: //Char reg
+		if( !strcmp(reg,"PC_DIE_COUNTER") && sd->die_counter != val )
+		{
 			i = (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE);
 			sd->die_counter = val;
-			if (i) status_calc_pc(sd,0); //Lost the bonus.
+			if( i )
+				status_calc_pc(sd,0); // Lost the bonus.
 		}
-	}
-	switch (type) {
-	case 3: //Char reg
 		sd_reg = sd->save_reg.global;
 		max = &sd->save_reg.global_num;
 		regmax = GLOBAL_REG_NUM;
 	break;
 	case 2: //Account reg
+		if( !strcmp(reg,"#CASHPOINTS") && sd->cashPoints != val )
+		{
+			val = cap_value(val, 0, MAX_ZENY);
+			sd->cashPoints = val;
+		}
+		else if( !strcmp(reg,"#KAFRAPOINTS") && sd->kafraPoints != val )
+		{
+			val = cap_value(val, 0, MAX_ZENY);
+			sd->kafraPoints = val;
+		}
 		sd_reg = sd->save_reg.account;
 		max = &sd->save_reg.account_num;
 		regmax = ACCOUNT_REG_NUM;
