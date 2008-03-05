@@ -44,6 +44,7 @@
 
 =======================
 2008/03/04
+	* Rev. 12295 Updated Gunslinger battleground set. (bugreport:1010) [L0ne_W0lf]
 	* Updated firepillar so it cannot be placed on top of others.
 	* Changed the default format for @me and @main to avoid crashes on the
 	  newer clients. [Skotlex]
