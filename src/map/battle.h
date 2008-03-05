@@ -444,6 +444,8 @@ extern struct Battle_Config
 	int idle_no_autoloot;
 	int max_guild_alliance;
 	int ksprotection;
+	int auction_feeperhour;
+	int auction_maximumprice;
 } battle_config;
 
 void do_init_battle(void);

@@ -123,7 +123,7 @@ int clif_scriptinput(struct map_session_data*,int);	//self
 int clif_scriptinputstr(struct map_session_data *sd,int npcid);	// self
 int clif_cutin(struct map_session_data* sd, const char* image, int type);	//self
 int clif_viewpoint(struct map_session_data*,int,int,int,int,int,int);	//self
-int clif_additem(struct map_session_data*,int,int,int);	//self
+int clif_additem(struct map_session_data *sd, int n, int amount, int fail); // self
 int clif_delitem(struct map_session_data*,int,int);	//self
 int clif_updatestatus(struct map_session_data*,int);	//self
 int clif_changestatus(struct block_list*,int,int);	//area
@@ -301,7 +301,6 @@ int clif_guild_allianceinfo(struct map_session_data *sd);
 int clif_guild_memberlist(struct map_session_data *sd);
 int clif_guild_skillinfo(struct map_session_data *sd);
 int clif_guild_send_onlineinfo(struct map_session_data *sd); //[LuzZza]
-int clif_guild_masterormember(struct map_session_data *sd);
 int clif_guild_memberlogin_notice(struct guild *g,int idx,int flag);
 int clif_guild_invite(struct map_session_data *sd,struct guild *g);
 int clif_guild_inviteack(struct map_session_data *sd,int flag);
@@ -409,6 +408,8 @@ void clif_Mail_send(int fd, bool fail);
 void clif_Mail_new(int fd, int mail_id, const char *sender, const char *title);
 void clif_Mail_refreshinbox(struct map_session_data *sd);
 void clif_Mail_getattachment(int fd, uint8 flag);
+// AUCTION SYSTEM
+void clif_Auction_results(struct map_session_data *sd, short count, unsigned char *buf);
 #endif
 
 void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd);

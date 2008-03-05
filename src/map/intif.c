@@ -1671,6 +1671,57 @@ static void intif_parse_Mail_new(int fd)
 	clif_Mail_new(sd->fd, mail_id, sender_name, title);
 }
 
+/*==========================================
+ * AUCTION SYSTEM
+ * By Zephyrus
+ *==========================================*/
+int intif_Auction_requestlist(int account_id, short type, int price, const char* searchtext)
+{
+	int len = NAME_LENGTH + 14;
+
+	if( CheckForCharServer() )
+		return 0;
+
+	WFIFOHEAD(inter_fd,len);
+	WFIFOW(inter_fd,0) = 0x3050;
+	WFIFOW(inter_fd,2) = len;
+	WFIFOL(inter_fd,4) = account_id;
+	WFIFOW(inter_fd,8) = type;
+	WFIFOL(inter_fd,10) = price;
+	memcpy(WFIFOP(inter_fd,14), searchtext, NAME_LENGTH);
+	WFIFOSET(inter_fd,len);
+
+	return 0;
+}
+
+static void intif_parse_Auction_results(int fd)
+{
+	struct map_session_data *sd = map_id2sd(RFIFOL(fd,4));
+	short count = (RFIFOW(fd,2) - 8) / sizeof(struct auction_data);
+
+	if( sd == NULL )
+		return;
+
+	clif_Auction_results(sd, count, (char *)RFIFOP(fd,8));
+}
+
+int intif_Auction_register(int account_id, struct auction_data *auction)
+{
+	int len = sizeof(struct auction_data) + 8;
+	
+	if( CheckForCharServer() )
+		return 0;
+
+	WFIFOHEAD(inter_fd,len);
+	WFIFOW(inter_fd,0) = 0x3051;
+	WFIFOW(inter_fd,2) = len;
+	WFIFOL(inter_fd,4) = account_id;
+	memcpy(WFIFOP(inter_fd,8), auction, sizeof(struct auction_data));
+	WFIFOSET(inter_fd,len);
+	
+	return 0;
+}
+
 #endif
 
 //-----------------------------------------------------------------
@@ -1741,16 +1792,17 @@ int intif_parse(int fd)
 	case 0x3841:	intif_parse_GuildCastleDataSave(fd); break;
 	case 0x3842:	intif_parse_GuildCastleAllDataLoad(fd); break;
 	case 0x3843:	intif_parse_GuildMasterChanged(fd); break;
-// Mail System
 #ifndef TXT_ONLY
+// Mail System
 	case 0x3848:	intif_parse_Mail_inboxreceived(fd); break;
 	case 0x3849:	intif_parse_Mail_new(fd); break;
 	case 0x384a:	intif_parse_Mail_getattach(fd); break;
 	case 0x384b:	intif_parse_Mail_delete(fd); break;
 	case 0x384c:	intif_parse_Mail_return(fd); break;
 	case 0x384d:	intif_parse_Mail_send(fd); break;
+// Auction System
+	case 0x3850:	intif_parse_Auction_results(fd); break;
 #endif
-// End of Mail System
 	case 0x3880:	intif_parse_CreatePet(fd); break;
 	case 0x3881:	intif_parse_RecvPetData(fd); break;
 	case 0x3882:	intif_parse_SavePetOk(fd); break;

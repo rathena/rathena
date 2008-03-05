@@ -107,6 +107,22 @@
 #define MAIL_TITLE_LENGTH 40
 #define MAIL_BODY_LENGTH 200
 
+enum item_types {
+	IT_HEALING = 0,
+	IT_UNKNOWN, //1
+	IT_USABLE,  //2
+	IT_ETC,     //3
+	IT_WEAPON,  //4
+	IT_ARMOR,   //5
+	IT_CARD,    //6
+	IT_PETEGG,  //7
+	IT_PETARMOR,//8
+	IT_UNKNOWN2,//9
+	IT_AMMO,    //10
+	IT_DELAYCONSUME,//11
+	IT_MAX 
+};
+
 struct item {
 	int id;
 	short nameid;
@@ -277,6 +293,9 @@ struct auction_data {
 	char buyer_name[NAME_LENGTH];
 	
 	struct item item;
+	// This data is required for searching, as itemdb is not read by char server
+	char item_name[ITEM_NAME_LENGTH];
+	short type;
 
 	unsigned short hours;
 	unsigned int price, buynow;

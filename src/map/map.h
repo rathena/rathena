@@ -784,6 +784,11 @@ struct map_session_data {
 
 	int cashPoints, kafraPoints;
 
+	// Auction System [Zephyrus]
+	struct {
+		int index, amount;
+	} auction;
+
 	// Mail System [Zephyrus]
 	struct {
 		short nameid;

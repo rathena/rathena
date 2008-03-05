@@ -16,6 +16,7 @@
 #include "int_pet.h"
 #include "int_homun.h"
 #include "int_mail.h"
+#include "int_auction.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -47,19 +48,6 @@ static struct accreg *accreg_pt;
 unsigned int party_share_level = 10;
 char main_chat_nick[16] = "Main";
 
-// sending packet list
-// NOTE: This variable ain't used at all! And it's confusing.. where do I add that the length of packet 0x2b07 is 10? x.x [Skotlex]
-int inter_send_packet_length[] = {
-	-1,-1,27,-1, -1, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3800-
-	-1, 7, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0,	// 3810-
-	35,-1,11,15, 34,29, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0,	// 3820-
-	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1,	// 3830-
-	 9, 9,-1, 0,  0, 0, 0, 0, -1,74,-1,11, 11,-1,  0, 0,	// 3840-
-	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3850-
-	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3860-
-	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3870-
-	11,-1, 7, 3, 36, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3880-
-};
 // recv. packet list
 int inter_recv_packet_length[] = {
 	-1,-1, 7,-1, -1,13,36, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3000-
@@ -67,7 +55,7 @@ int inter_recv_packet_length[] = {
 	-1, 6,-1,14, 14,19, 6,-1, 14,14, 0, 0,  0, 0,  0, 0,	// 3020-
 	-1, 6,-1,-1, 55,19, 6,-1, 14,-1,-1,-1, 14,19,186,-1,	// 3030-
 	 5, 9, 0, 0,  0, 0, 0, 0,  7, 6,10,10, 10,-1,  0, 0,	// 3040-
-	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3050-
+	-1,-1, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3050-  Auction System [Zephyrus]
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3060-
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3070-
 	48,14,-1, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3080-
@@ -398,6 +386,7 @@ int inter_init_sql(const char *file)
 	inter_homunculus_sql_init(); // albator
 	inter_accreg_sql_init();
 	inter_mail_sql_init();
+	inter_auction_sql_init();
 
 	sql_ping_init();
 #endif //TXT_SQL_CONVERT
@@ -449,6 +438,8 @@ void inter_final(void)
 	inter_party_sql_final();
 	inter_pet_sql_final();
 	inter_homunculus_sql_final();	//[orn]
+	inter_mail_sql_final();
+	inter_auction_sql_final();
 	
 	if (accreg_pt) aFree(accreg_pt);
 	return;
@@ -865,6 +856,7 @@ int inter_parse_frommap(int fd)
 		  || inter_pet_parse_frommap(fd)
 		  || inter_homunculus_parse_frommap(fd)
 		  || inter_mail_parse_frommap(fd)
+		  || inter_auction_parse_frommap(fd)
 		   )
 			break;
 		else
