@@ -2259,7 +2259,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 
 			if((temp = pc_additem(mvp_sd,&item,1)) != 0) {
-				clif_additem(sd,0,0,temp);
+				clif_additem(mvp_sd,0,0,temp);
 				map_addflooritem(&item,1,mvp_sd->bl.m,mvp_sd->bl.x,mvp_sd->bl.y,mvp_sd->status.char_id,(second_sd?second_sd->status.char_id:0),(third_sd?third_sd->status.char_id:0),1);
 			}
 			
