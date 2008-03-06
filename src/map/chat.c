@@ -273,7 +273,7 @@ int chat_kickchat(struct map_session_data* sd, const char* kickusername)
 
 	cd = (struct chat_data *)map_id2bl(sd->chatID);
 	
-	if( !cd )
+	if( cd==NULL || (struct block_list *)sd != cd->owner )
 		return -1;
 
 	ARR_FIND( 0, cd->users, i, strncmp(cd->usersd[i]->status.name, kickusername, NAME_LENGTH) == 0 );

@@ -42,7 +42,7 @@ int mapif_info_homunculus(int fd, int account_id, struct s_homunculus *hd)
 	WFIFOW(fd,0) = 0x3891;
 	WFIFOW(fd,2) = sizeof(struct s_homunculus)+9;
 	WFIFOL(fd,4) = account_id;
-	WFIFOB(fd,8) = 1; // account loaded with success
+	WFIFOB(fd,8) = 1; // success
 
 	memcpy(WFIFOP(fd,9), hd, sizeof(struct s_homunculus));
 	WFIFOSET(fd, sizeof(struct s_homunculus)+9);
@@ -219,7 +219,7 @@ int mapif_load_homunculus(int fd)
 		Sql_GetData(sql_handle, 0, &data, NULL);
 		i = atoi(data);
 		if( i < HM_SKILLBASE || i >= HM_SKILLBASE + MAX_HOMUNSKILL )
-			continue;// invalid guild skill
+			continue;// invalid skill id
 		i = i - HM_SKILLBASE;
 		homun_pt->hskill[i].id = (unsigned short)atoi(data);
 		// lv

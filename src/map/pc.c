@@ -6564,37 +6564,25 @@ int pc_checkitem(struct map_session_data *sd)
 
 		if(sd->status.inventory[i].nameid==0)
 			continue;
-		if(sd->status.inventory[i].equip & ~pc_equippoint(sd,i)) {
+
+		if(!sd->status.inventory[i].equip)
+			continue;
+
+		if	(sd->status.inventory[i].equip&~pc_equippoint(sd,i)) {
 			sd->status.inventory[i].equip=0;
 			calc_flag = 1;
+			continue;
 		}
-		//?備制限チェック
-		if(sd->status.inventory[i].equip && it) {
-			if (map[sd->bl.m].flag.pvp && it->flag.no_equip&1)
-			{  //PVP check for forbiden items. optimized by [Lupus]
-				sd->status.inventory[i].equip=0;
-				calc_flag = 1;
-			} else
-			if (map_flag_gvg(sd->bl.m) && it->flag.no_equip&2)
-			{  //GvG optimized by [Lupus]
-				sd->status.inventory[i].equip=0;
-				calc_flag = 1;
-			} else
-			if(map[sd->bl.m].flag.restricted && it->flag.no_equip&map[sd->bl.m].zone)
-			{ // Restricted zone by [Komurka]
-				sd->status.inventory[i].equip=0;
-				calc_flag = 1;
-			}
-			if (!calc_flag) { //Check cards
-				int flag;
-				flag = (map[sd->bl.m].flag.restricted?map[sd->bl.m].zone:0)
+		if(it) {
+			//check for forbiden items.
+			int flag =
+					(map[sd->bl.m].flag.restricted?map[sd->bl.m].zone:0)
 					| (map[sd->bl.m].flag.pvp?1:0)
 					| (map_flag_gvg(sd->bl.m)?2:0);
-				if (flag && !pc_isAllowedCardOn(sd,it->slot,i,flag))
-				{
-					sd->status.inventory[i].equip=0;
-					calc_flag = 1;
-				}
+			if (flag && (it->flag.no_equip&flag || !pc_isAllowedCardOn(sd,it->slot,i,flag)))
+			{
+				sd->status.inventory[i].equip=0;
+				calc_flag = 1;
 			}
 		}
 	}
