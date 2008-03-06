@@ -6432,7 +6432,8 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		if(range<=0)
 			map_foreachincell(skill_cell_overlap,src->m,ux,uy,BL_SKILL,skillid,&alive, src);
 		
-		if( alive && map_getcell(src->m,ux,uy,CELL_CHKWALL) )
+		//Song/dances/encores are displayed even over pits/walls.
+		if( alive && map_getcell(src->m,ux,uy,CELL_CHKWALL) && !group->state.song_dance )
 			alive = 0;
 		
 		if( alive && battle_config.skill_wall_check && !path_search_long(NULL,src->m,ux,uy,x,y,CELL_CHKWALL) )
