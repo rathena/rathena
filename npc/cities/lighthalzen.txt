@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //=  erKURITA, Au{R}oN (Translated by Alan), $ephiroth
 //===== Current Version: ===================================== 
-//= 1.7
+//= 1.7a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -34,7 +34,8 @@
 //=	reduced usage of the command "goto", grammatical corrections.
 //=	Added additional missing NPCs.
 //= 1.7 Removed Auciton Staff as the offical auction file has been added. [L0ne_W0lf]
-//=	Corrected Lucious so he checks the donation variable. (bugreport:1103) [L0ne_W0lf]
+//=	Corrected Lucius so he checks the donation variable. (bugreport:1103) [L0ne_W0lf]
+//= 1.7a Another fix to Lucius. (bugreport:1118) [L0ne_W0lf]
 //=============================================================
 
 lighthalzen,198,285,5	script	Jiwon#zen5	862,{
@@ -595,7 +596,7 @@ lighthalzen,182,102,3	script	Lucius#zen5	866,{
 			mes "donations. I'm glad to see";
 			mes "that there are still kind and";
 			mes "generous people in the world.";
-			if ($donatedzeny < 260000) {
+			if ($donatedzeny > 260000) {
 				next;
 				mes "[Lucius]";
 				mes "This should be enough";

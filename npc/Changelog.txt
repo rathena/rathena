@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/03/06
+	* Rev 12309 Another fix to Lucius. (bugreport:1118) [L0ne_W0lf]
 2008/03/04
 	* Rev 12290 Hopefully fixed waiting room in the assassin quest. (bugreport:1100) [L0ne_W0lf0
 2008/03/03
