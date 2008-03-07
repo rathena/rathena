@@ -114,12 +114,14 @@ static bool auction_create(struct auction_data *auction)
 	else
 	{
 		struct auction_data *auction_;
+		int tick = (auction->timestamp - (unsigned int)calc_times) * 1000;
 
 		auction->item.amount = 1;
 		auction->item.identify = 1;
 
 		auction->auction_id = (unsigned int)SqlStmt_LastInsertId(stmt);
-		auction->auction_end_timer = add_timer( gettick() + ((auction->timestamp - (unsigned int)calc_times) * 1000) , auction_end_timer, auction->auction_id, 0);
+		auction->auction_end_timer = add_timer( gettick() + tick , auction_end_timer, auction->auction_id, 0);
+		ShowInfo("New Auction Created: id %u | time left %d ms | Created by %s.\n", auction->auction_id, tick, auction->seller_name);
 
 		CREATE(auction_, struct auction_data, 1);
 		memcpy(auction_, auction, sizeof(struct auction_data));
@@ -181,6 +183,8 @@ static int auction_end_timer(int tid, unsigned int tick, int id, int data)
 			mail_savemessage(&msg);
 			mapif_Mail_new(&msg);
 		}
+
+		ShowInfo("Auction End: id %u.\n", auction->auction_id);
 
 		auction->auction_end_timer = -1;
 		auction_delete(auction);
