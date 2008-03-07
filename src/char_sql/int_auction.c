@@ -84,12 +84,13 @@ void auction_save(struct auction_data *auction)
 unsigned int auction_create(struct auction_data *auction)
 {
 	int j;
-
 	StringBuf buf;
 	SqlStmt* stmt;
 
 	if( !auction )
 		return false;
+
+	auction->timestamp = (int)calc_times + (auction->hours * 3600);
 
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s` (`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`", auction_db);
@@ -114,7 +115,7 @@ unsigned int auction_create(struct auction_data *auction)
 	else
 	{
 		struct auction_data *auction_;
-		int tick = (auction->timestamp - (unsigned int)calc_times) * 1000;
+		int tick = auction->hours * 3600000;
 
 		auction->item.amount = 1;
 		auction->item.identify = 1;

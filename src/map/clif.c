@@ -11898,8 +11898,8 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 	auction.type = item->type;
 	memcpy(&auction.item, &sd->status.inventory[sd->auction.index], sizeof(struct item));
 	auction.item.amount = 1;
+	auction.timestamp = 0;
 
-	auction.timestamp = (int)mail_calctimes() + (auction.hours * 3600);
 	if( !intif_Auction_register(&auction) )
 		clif_Auction_message(fd, 4); // No Char Server? lets say something to the client
 	else
