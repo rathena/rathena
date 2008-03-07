@@ -83,8 +83,8 @@ int intif_Mail_delete(int char_id, int mail_id);
 int intif_Mail_return(int char_id, int mail_id);
 int intif_Mail_send(int account_id, struct mail_message *msg);
 // AUCTION SYSTEM
-int intif_Auction_requestlist(int account_id, short type, int price, const char* searchtext);
-int intif_Auction_register(int account_id, struct auction_data *auction);
+int intif_Auction_requestlist(int char_id, short type, int price, const char* searchtext);
+int intif_Auction_register(struct auction_data *auction);
 #endif
 
 int CheckForCharServer(void);

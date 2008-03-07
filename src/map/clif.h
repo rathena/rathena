@@ -410,6 +410,7 @@ void clif_Mail_refreshinbox(struct map_session_data *sd);
 void clif_Mail_getattachment(int fd, uint8 flag);
 // AUCTION SYSTEM
 void clif_Auction_results(struct map_session_data *sd, short count, unsigned char *buf);
+void clif_Auction_message(int fd, unsigned char flag);
 #endif
 
 void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd);

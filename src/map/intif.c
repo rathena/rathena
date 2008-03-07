@@ -35,7 +35,7 @@ static const int packet_len_table[]={
 	39,-1,15,15, 14,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
 	 9, 9,-1,14,  0, 0, 0, 0, -1,74,-1,11, 11,-1,  0, 0, //0x3840
-	-1, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus]
+	-1,-1, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus]
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,
 	11,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
@@ -1675,7 +1675,7 @@ static void intif_parse_Mail_new(int fd)
  * AUCTION SYSTEM
  * By Zephyrus
  *==========================================*/
-int intif_Auction_requestlist(int account_id, short type, int price, const char* searchtext)
+int intif_Auction_requestlist(int char_id, short type, int price, const char* searchtext)
 {
 	int len = NAME_LENGTH + 14;
 
@@ -1685,7 +1685,7 @@ int intif_Auction_requestlist(int account_id, short type, int price, const char*
 	WFIFOHEAD(inter_fd,len);
 	WFIFOW(inter_fd,0) = 0x3050;
 	WFIFOW(inter_fd,2) = len;
-	WFIFOL(inter_fd,4) = account_id;
+	WFIFOL(inter_fd,4) = char_id;
 	WFIFOW(inter_fd,8) = type;
 	WFIFOL(inter_fd,10) = price;
 	memcpy(WFIFOP(inter_fd,14), searchtext, NAME_LENGTH);
@@ -1696,7 +1696,7 @@ int intif_Auction_requestlist(int account_id, short type, int price, const char*
 
 static void intif_parse_Auction_results(int fd)
 {
-	struct map_session_data *sd = map_id2sd(RFIFOL(fd,4));
+	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,4));
 	short count = (RFIFOW(fd,2) - 8) / sizeof(struct auction_data);
 
 	if( sd == NULL )
@@ -1705,9 +1705,9 @@ static void intif_parse_Auction_results(int fd)
 	clif_Auction_results(sd, count, (char *)RFIFOP(fd,8));
 }
 
-int intif_Auction_register(int account_id, struct auction_data *auction)
+int intif_Auction_register(struct auction_data *auction)
 {
-	int len = sizeof(struct auction_data) + 8;
+	int len = sizeof(struct auction_data) + 4;
 	
 	if( CheckForCharServer() )
 		return 0;
@@ -1715,11 +1715,35 @@ int intif_Auction_register(int account_id, struct auction_data *auction)
 	WFIFOHEAD(inter_fd,len);
 	WFIFOW(inter_fd,0) = 0x3051;
 	WFIFOW(inter_fd,2) = len;
-	WFIFOL(inter_fd,4) = account_id;
-	memcpy(WFIFOP(inter_fd,8), auction, sizeof(struct auction_data));
+	memcpy(WFIFOP(inter_fd,4), auction, sizeof(struct auction_data));
 	WFIFOSET(inter_fd,len);
 	
-	return 0;
+	return 1;
+}
+
+static void intif_parse_Auction_register(int fd)
+{
+	struct map_session_data *sd;
+	struct auction_data auction;
+
+	if( RFIFOW(fd,2) - 4 != sizeof(struct auction_data) )
+	{
+		ShowError("intif_parse_Auction_register: data size error %d %d\n", RFIFOW(fd,2) - 4, sizeof(struct auction_data));
+		return;
+	}
+
+	memcpy(&auction, WFIFOP(fd,4), sizeof(struct auction_data));
+	if( (sd = map_charid2sd(auction.seller_id)) == NULL )
+		return;
+
+	if( auction.auction_id > 0 )
+		clif_Auction_message(sd->fd, 1); // Confirmation Packet ??
+	else
+	{
+		clif_Auction_message(sd->fd, 4);
+		pc_additem(sd, &auction.item, auction.item.amount);
+		pc_getzeny(sd, auction.hours * battle_config.auction_feeperhour);
+	}
 }
 
 #endif
@@ -1802,6 +1826,7 @@ int intif_parse(int fd)
 	case 0x384d:	intif_parse_Mail_send(fd); break;
 // Auction System
 	case 0x3850:	intif_parse_Auction_results(fd); break;
+	case 0x3851:	intif_parse_Auction_register(fd); break;
 #endif
 	case 0x3880:	intif_parse_CreatePet(fd); break;
 	case 0x3881:	intif_parse_RecvPetData(fd); break;

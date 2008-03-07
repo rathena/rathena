@@ -824,7 +824,7 @@ packet_ver: 19
 //2005-10-13aSakexe
 0x007a,6
 0x0251,32
-0x025c,4
+0x025c,4,auctionbuysell,0
 
 //2005-10-17aSakexe
 0x007a,58

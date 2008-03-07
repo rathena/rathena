@@ -33,6 +33,24 @@ time_t calc_times(void)
 	return mktime(localtime(&temp));
 }
 
+static int auction_count(int char_id, bool buy)
+{
+	int i = 0;
+	struct auction_data *auction;
+	DBIterator* iter;
+	DBKey key;
+
+	iter = auction_db_->iterator(auction_db_);
+	for( auction = iter->first(iter,&key); iter->exists(iter); auction = iter->next(iter,&key) )
+	{
+		if( (buy && auction->buyer_id == char_id) || (!buy && auction->seller_id == char_id) )
+			i++;
+	}
+	iter->destroy(iter);
+
+	return i;
+}
+
 void auction_save(struct auction_data *auction)
 {
 	int j;
@@ -247,14 +265,14 @@ void inter_auctions_fromsql(void)
 	Sql_FreeResult(sql_handle);
 }
 
-static void mapif_Auction_sendlist(int fd, int account_id, short count, unsigned char *buf)
+static void mapif_Auction_sendlist(int fd, int char_id, short count, unsigned char *buf)
 {
 	int len = (sizeof(struct auction_data) * count) + 8;
 
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd,0) = 0x3850;
 	WFIFOW(fd,2) = len;
-	WFIFOL(fd,4) = account_id;
+	WFIFOL(fd,4) = char_id;
 	memcpy(WFIFOP(fd,8), buf, len - 8);
 	WFIFOSET(fd,len);
 }
@@ -262,7 +280,7 @@ static void mapif_Auction_sendlist(int fd, int account_id, short count, unsigned
 static void mapif_parse_Auction_requestlist(int fd)
 {
 	char searchtext[NAME_LENGTH];
-	int account_id = RFIFOL(fd,4), len = sizeof(struct auction_data);
+	int char_id = RFIFOL(fd,4), len = sizeof(struct auction_data);
 	unsigned int price = RFIFOL(fd,10);
 	short type = RFIFOW(fd,8);
 	unsigned char buf[MAX_SEARCH_RESULTS * sizeof(struct auction_data)];
@@ -281,7 +299,9 @@ static void mapif_parse_Auction_requestlist(int fd)
 			(type == 2 && auction->type != IT_CARD) ||
 			(type == 3 && auction->type != IT_ETC) ||
 			(type == 4 && auction->price > price) ||
-			(type == 5 && strstr(auction->item_name, searchtext)) )
+			(type == 5 && strstr(auction->item_name, searchtext)) ||
+			(type == 6 && auction->seller_id != char_id) ||
+			(type == 7 && auction->buyer_id != char_id) )
 			continue;
 
 		memcpy(WBUFP(buf, i * len), auction, len);
@@ -289,16 +309,31 @@ static void mapif_parse_Auction_requestlist(int fd)
 	}
 	iter->destroy(iter);
 
-	mapif_Auction_sendlist(fd, account_id, i, buf);
+	mapif_Auction_sendlist(fd, char_id, i, buf);
+}
+
+static void mapif_Auction_register(int fd, struct auction_data *auction)
+{
+	int len = sizeof(struct auction_data) + 4;
+
+	WFIFOHEAD(fd, len);
+	WFIFOW(fd,0) = 0x3851;
+	WFIFOW(fd,2) = len;
+	memcpy(WFIFOP(fd,4), auction, sizeof(struct auction_data));
+	WFIFOSET(fd,len);
 }
 
 static void mapif_parse_Auction_register(int fd)
 {
-	int account_id = RFIFOL(fd,4);
 	struct auction_data auction;
+	if( RFIFOW(fd,2) != sizeof(struct auction_data) + 4 )
+		return;
 
-	memcpy(&auction, RFIFOP(fd,8), sizeof(struct auction_data));
-	auction_create(&auction);
+	memcpy(&auction, RFIFOP(fd,4), sizeof(struct auction_data));
+	if( auction_count(auction.seller_id, false) < 5 )
+		auction_create(&auction);
+
+	mapif_Auction_register(fd, &auction);
 }
 
 /*==========================================
