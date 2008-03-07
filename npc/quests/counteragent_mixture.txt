@@ -4,7 +4,7 @@
 //= kobra_k88
 //= added some dialogs for Morgenstein by Komurka
 //===== Current Version: ===================================== 
-//= 2.2a
+//= 2.2b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -13,6 +13,7 @@
 //===== Additional Comments: ================================= 
 //= 2.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.2a A few minor fixes. (bugreport:1122) [L0ne_W0lf]
+//= 2.2b Follow up fixes to bugreport:1122 [L0ne_W0lf]
 //============================================================ 
 
 alberta_in,133,55,3	script	Louitz#cm	84,{
@@ -76,7 +77,7 @@ alberta_in,133,55,3	script	Louitz#cm	84,{
 			mes "words like ''Karvodailnirol''";
 			mes "and ''Detrimindexta.'' The";
 			mes "first time I heard it, I thought";
-			mes "it was just crazy talk, you know?;
+			mes "it was just crazy talk, you know?";
 			next;
 			mes "[Merchant Louitz]";
 			mes "But it turns out,";
@@ -145,7 +146,8 @@ alberta_in,133,55,3	script	Louitz#cm	84,{
 			mes "Yeah, he kept mumbling";
 			mes "words like ''Karvodailnirol''";
 			mes "and ''Detrimindexta.'' The";
-			mes "first time I heard it, I thought^FFFFFFddd^000000 it was just crazy talk, you know? ^FFFFFFcobo^000000";
+			mes "first time I heard it, I thought";
+			mes "it was just crazy talk, you know?";
 			next;
 			mes "[Merchant Louitz]";
 			mes "But it turns out,";
@@ -214,7 +216,8 @@ alberta_in,133,55,3	script	Louitz#cm	84,{
 			mes "Yeah, he kept mumbling";
 			mes "words like ''Karvodailnirol''";
 			mes "and ''Detrimindexta.'' The";
-			mes "first time I heard it, I thought^FFFFFFddd^000000 it was just crazy talk, you know? ^FFFFFFcobo^000000";
+			mes "first time I heard it, I thought";
+			mes "it was just crazy talk, you know?";
 			next;
 			mes "[Merchant Louitz]";
 			mes "But it turns out,";
@@ -281,7 +284,8 @@ alberta_in,133,55,3	script	Louitz#cm	84,{
 		mes "Yeah, he kept mumbling";
 		mes "words like ''Karvodailnirol''";
 		mes "and ''Detrimindexta.'' The";
-		mes "first time I heard it, I thought^FFFFFFddd^000000 it was just crazy talk, you know? ^FFFFFFcobo^000000";
+		mes "first time I heard it, I thought";
+		mes "it was just crazy talk, you know?";
 		next;
 		mes "[Merchant Louitz]";
 		mes "But it turns out,";
