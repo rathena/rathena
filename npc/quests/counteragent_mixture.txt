@@ -4,7 +4,7 @@
 //= kobra_k88
 //= added some dialogs for Morgenstein by Komurka
 //===== Current Version: ===================================== 
-//= 2.2
+//= 2.2a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -12,6 +12,7 @@
 //= Counteragent and Mixtures for making dyes & Alchemist Job Quest
 //===== Additional Comments: ================================= 
 //= 2.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 2.2a A few minor fixes. (bugreport:1122) [L0ne_W0lf]
 //============================================================ 
 
 alberta_in,133,55,3	script	Louitz#cm	84,{
@@ -53,6 +54,7 @@ alberta_in,133,55,3	script	Louitz#cm	84,{
 	next;
 	if (countitem(971) > 0 && countitem(972) > 0) {
 		switch(select("Talk:Talk about the solutions.:Cancel")) {
+		case 1:
 			mes "[Merchant Louitz]";
 			mes "When I was in Geffen";
 			mes "looking for magic items,";
@@ -73,7 +75,8 @@ alberta_in,133,55,3	script	Louitz#cm	84,{
 			mes "Yeah, he kept mumbling";
 			mes "words like ''Karvodailnirol''";
 			mes "and ''Detrimindexta.'' The";
-			mes "first time I heard it, I thought^FFFFFFddd^000000 it was just crazy talk, you know? ^FFFFFFcobo^000000";
+			mes "first time I heard it, I thought";
+			mes "it was just crazy talk, you know?;
 			next;
 			mes "[Merchant Louitz]";
 			mes "But it turns out,";
