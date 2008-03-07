@@ -122,22 +122,21 @@ static int auction_end_timer(int tid, unsigned int tick, int id, int data)
 		struct mail_message msg;
 		memset(&msg, 0, sizeof(struct mail_message));
 
-		msg.send_id = auction->seller_id;
-		safestrncpy(msg.send_name, auction->seller_name, NAME_LENGTH);
+		msg.send_id = 0;
+		safestrncpy(msg.send_name, "Auction Manager", NAME_LENGTH);
+		safestrncpy(msg.title, "Auction", MAIL_TITLE_LENGTH);
 		msg.timestamp = (unsigned int)calc_times();
 
 		if( auction->buyer_id )
 		{ // Send item to Buyer's Mail (custom messages)
 			msg.dest_id = auction->buyer_id;
 			safestrncpy(msg.dest_name, auction->buyer_name, NAME_LENGTH);
-			safestrncpy(msg.title, "[Auction Winner] Your Item", MAIL_TITLE_LENGTH);
 			safestrncpy(msg.body, "Thanks, you won the auction!.", MAIL_BODY_LENGTH);
 		}
 		else
 		{ // Return item to Seller's Mail (custom messages)
 			msg.dest_id = auction->seller_id;
 			safestrncpy(msg.dest_name, auction->seller_name, NAME_LENGTH);
-			safestrncpy(msg.title, "[Auction Fail] Your Item", MAIL_TITLE_LENGTH);
 			safestrncpy(msg.body, "Sorry, No one buy your item...", MAIL_BODY_LENGTH);
 		}
 
@@ -150,16 +149,16 @@ static int auction_end_timer(int tid, unsigned int tick, int id, int data)
 		{ // Send Money to Seller
 			memset(&msg, 0, sizeof(struct mail_message));
 
-			msg.send_id = auction->buyer_id;
-			safestrncpy(msg.send_name, auction->buyer_name, NAME_LENGTH);
+			msg.send_id = 0;
+			safestrncpy(msg.send_name, "Auction Manager", NAME_LENGTH);
 			msg.dest_id = auction->seller_id;
 			safestrncpy(msg.dest_name, auction->seller_name, NAME_LENGTH);
 			msg.timestamp = (unsigned int)calc_times();
 			msg.zeny = auction->price;
 
 			// Custom Messages, need more info
-			safestrncpy(msg.title, "[Auction] Your Zeny", MAIL_TITLE_LENGTH);
-			safestrncpy(msg.body, "Thanks, you won the auction!.", MAIL_BODY_LENGTH);
+			safestrncpy(msg.title, "Auction", MAIL_TITLE_LENGTH);
+			safestrncpy(msg.body, "Here is the money from your Auction.", MAIL_BODY_LENGTH);
 
 			mail_savemessage(&msg);
 			mapif_Mail_new(&msg);

@@ -11615,7 +11615,7 @@ void clif_parse_Mail_return(int fd, struct map_session_data *sd)
 		return;
 
 	ARR_FIND(0, MAIL_MAX_INBOX, i, sd->mail.inbox.msg[i].id == mail_id);
-	if (i < MAIL_MAX_INBOX)
+	if( i < MAIL_MAX_INBOX && sd->mail.inbox.msg[i].send_id != 0 )
 		intif_Mail_return(sd->status.char_id, mail_id);
 	else
 		clif_Mail_return(sd->fd, mail_id, 1);
