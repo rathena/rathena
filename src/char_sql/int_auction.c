@@ -90,7 +90,7 @@ unsigned int auction_create(struct auction_data *auction)
 	if( !auction )
 		return false;
 
-	auction->timestamp = (int)calc_times + (auction->hours * 3600);
+	auction->timestamp = (int)calc_times() + (auction->hours * 3600);
 
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s` (`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`", auction_db);
@@ -115,14 +115,14 @@ unsigned int auction_create(struct auction_data *auction)
 	else
 	{
 		struct auction_data *auction_;
-		int tick = auction->hours * 3600000;
+		unsigned int tick = auction->hours * 3600000;
 
 		auction->item.amount = 1;
 		auction->item.identify = 1;
 
 		auction->auction_id = (unsigned int)SqlStmt_LastInsertId(stmt);
 		auction->auction_end_timer = add_timer( gettick() + tick , auction_end_timer, auction->auction_id, 0);
-		ShowInfo("New Auction %u | time left %d ms | By %s.\n", auction->auction_id, tick, auction->seller_name);
+		ShowInfo("New Auction %u | time left %u ms | By %s.\n", auction->auction_id, tick, auction->seller_name);
 
 		CREATE(auction_, struct auction_data, 1);
 		memcpy(auction_, auction, sizeof(struct auction_data));
@@ -146,7 +146,7 @@ static int auction_end_timer(int tid, unsigned int tick, int id, int data)
 		msg.send_id = 0;
 		safestrncpy(msg.send_name, "Auction Manager", NAME_LENGTH);
 		safestrncpy(msg.title, "Auction", MAIL_TITLE_LENGTH);
-		msg.timestamp = (unsigned int)calc_times();
+		msg.timestamp = (int)calc_times();
 
 		if( auction->buyer_id )
 		{ // Send item to Buyer's Mail (custom messages)
@@ -174,7 +174,7 @@ static int auction_end_timer(int tid, unsigned int tick, int id, int data)
 			safestrncpy(msg.send_name, "Auction Manager", NAME_LENGTH);
 			msg.dest_id = auction->seller_id;
 			safestrncpy(msg.dest_name, auction->seller_name, NAME_LENGTH);
-			msg.timestamp = (unsigned int)calc_times();
+			msg.timestamp = (int)calc_times();
 			msg.zeny = auction->price;
 
 			// Custom Messages, need more info
