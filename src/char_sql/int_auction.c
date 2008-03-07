@@ -81,7 +81,7 @@ void auction_save(struct auction_data *auction)
 	StringBuf_Destroy(&buf);
 }
 
-static bool auction_create(struct auction_data *auction)
+unsigned int auction_create(struct auction_data *auction)
 {
 	int j;
 
@@ -121,7 +121,7 @@ static bool auction_create(struct auction_data *auction)
 
 		auction->auction_id = (unsigned int)SqlStmt_LastInsertId(stmt);
 		auction->auction_end_timer = add_timer( gettick() + tick , auction_end_timer, auction->auction_id, 0);
-		ShowInfo("New Auction Created: id %u | time left %d ms | Created by %s.\n", auction->auction_id, tick, auction->seller_name);
+		ShowInfo("New Auction %u | time left %d ms | By %s.\n", auction->auction_id, tick, auction->seller_name);
 
 		CREATE(auction_, struct auction_data, 1);
 		memcpy(auction_, auction, sizeof(struct auction_data));
@@ -131,7 +131,7 @@ static bool auction_create(struct auction_data *auction)
 	SqlStmt_Free(stmt);
 	StringBuf_Destroy(&buf);
 
-	return (auction->auction_id > 0);
+	return auction->auction_id;
 }
 
 static int auction_end_timer(int tid, unsigned int tick, int id, int data)
@@ -302,8 +302,8 @@ static void mapif_parse_Auction_requestlist(int fd)
 			(type == 1 && auction->type != IT_WEAPON) ||
 			(type == 2 && auction->type != IT_CARD) ||
 			(type == 3 && auction->type != IT_ETC) ||
-			(type == 4 && auction->price > price) ||
-			(type == 5 && strstr(auction->item_name, searchtext)) ||
+			(type == 4 && !strstr(auction->item_name, searchtext)) ||
+			(type == 5 && auction->price > price) ||
 			(type == 6 && auction->seller_id != char_id) ||
 			(type == 7 && auction->buyer_id != char_id) )
 			continue;
@@ -320,7 +320,7 @@ static void mapif_Auction_register(int fd, struct auction_data *auction)
 {
 	int len = sizeof(struct auction_data) + 4;
 
-	WFIFOHEAD(fd, len);
+	WFIFOHEAD(fd,len);
 	WFIFOW(fd,0) = 0x3851;
 	WFIFOW(fd,2) = len;
 	memcpy(WFIFOP(fd,4), auction, sizeof(struct auction_data));
@@ -335,7 +335,7 @@ static void mapif_parse_Auction_register(int fd)
 
 	memcpy(&auction, RFIFOP(fd,4), sizeof(struct auction_data));
 	if( auction_count(auction.seller_id, false) < 5 )
-		auction_create(&auction);
+		auction.auction_id = auction_create(&auction);
 
 	mapif_Auction_register(fd, &auction);
 }

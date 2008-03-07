@@ -1732,7 +1732,7 @@ static void intif_parse_Auction_register(int fd)
 		return;
 	}
 
-	memcpy(&auction, WFIFOP(fd,4), sizeof(struct auction_data));
+	memcpy(&auction, RFIFOP(fd,4), sizeof(struct auction_data));
 	if( (sd = map_charid2sd(auction.seller_id)) == NULL )
 		return;
 

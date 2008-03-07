@@ -11769,12 +11769,11 @@ static void clif_Auction_setitem(int fd, int index, bool fail)
 	WFIFOSET(fd,packet_len(0x256));
 }
 
-void clif_parse_Auction_registerwindow(int fd, struct map_session_data *sd)
+void clif_parse_Auction_cancelreg(int fd, struct map_session_data *sd)
 {
-	// RFIFOW(fd,2):
-	// = 0 means player opened the register window
-	// = 1 means player press the Cancel button, in that window.
-	// But... if player just enter the register window and press X to close, no packet is send.
+	if( sd->auction.amount > 0 )
+		clif_additem(sd, sd->auction.index, sd->auction.amount, 0);
+
 	sd->auction.amount = 0;
 }
 
@@ -11787,7 +11786,7 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd)
 	if( sd->auction.amount > 0 )
 		sd->auction.amount = 0;
 
-	if( idx < 0 || idx > MAX_INVENTORY )
+	if( idx < 0 || idx >= MAX_INVENTORY )
 	{
 		ShowWarning("Character %s trying to set invalid item index in auctions.\n", sd->status.name);
 		return;
@@ -11813,7 +11812,7 @@ void clif_parse_Auction_setitem(int fd, struct map_session_data *sd)
 
 	sd->auction.index = idx;
 	sd->auction.amount = amount;
-	clif_Auction_setitem(fd, idx, false);
+	clif_Auction_setitem(fd, idx + 2, false);
 }
 
 // 0 = You have failed to bid into the auction
@@ -11921,6 +11920,8 @@ void clif_parse_Auction_search(int fd, struct map_session_data* sd)
 	char search_text[NAME_LENGTH];
 	short type = RFIFOW(fd,2);
 	int price = RFIFOL(fd,4);
+
+	clif_parse_Auction_cancelreg(fd, sd);
 	
 	safestrncpy(search_text, (char*)RFIFOP(fd,8), NAME_LENGTH);
 	intif_Auction_requestlist(sd->status.char_id, type, price, search_text);
@@ -11930,6 +11931,8 @@ void clif_parse_Auction_buysell(int fd, struct map_session_data* sd)
 {
 	short type = RFIFOW(fd,2) + 6;
 	char search_text[NAME_LENGTH];
+
+	clif_parse_Auction_cancelreg(fd, sd);
 
 	memset(&search_text, '\0', NAME_LENGTH);
 	intif_Auction_requestlist(sd->status.char_id, type, 0, search_text);
@@ -12469,7 +12472,7 @@ static int packetdb_readdb(void)
 		{clif_parse_Auction_search,"auctionsearch"},
 		{clif_parse_Auction_buysell,"auctionbuysell"},
 		{clif_parse_Auction_setitem,"auctionsetitem"},
-		{clif_parse_Auction_registerwindow,"auctionregisterwindow"},
+		{clif_parse_Auction_cancelreg,"auctioncancelreg"},
 		{clif_parse_Auction_register,"auctionregister"},
 #endif
 		{clif_parse_cashshop_buy,"cashshopbuy"},

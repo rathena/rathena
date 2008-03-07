@@ -11,6 +11,7 @@ struct guild_position;
 struct s_pet;
 struct s_homunculus;
 struct mail_message;
+struct auction_data;
 
 int intif_parse(int fd);
 

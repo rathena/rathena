@@ -765,7 +765,7 @@ packet_ver: 18
 0x0248,68
 0x0249,3
 0x024a,70
-0x024b,4,auctionregisterwindow,0
+0x024b,4,auctioncancelreg,0
 0x024c,8,auctionsetitem,0
 0x024d,14
 0x024e,6
