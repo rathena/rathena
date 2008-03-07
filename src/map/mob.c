@@ -781,6 +781,7 @@ int mob_spawn (struct mob_data *md)
 	md->state.skillstate = MSS_IDLE;
 	md->next_walktime = tick+rand()%5000+1000;
 	md->last_linktime = tick;
+	md->last_pcneartime = 0;
 
 	for (i = 0, c = tick-1000*3600*10; i < MAX_MOBSKILL; i++)
 		md->skilldelay[i] = c;
@@ -1199,40 +1200,33 @@ int mob_warpchase(struct mob_data *md, struct block_list *target)
 /*==========================================
  * AI of MOB whose is near a Player
  *------------------------------------------*/
-static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
+static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 {
-	struct mob_data *md;
 	struct block_list *tbl = NULL, *abl = NULL;
-	unsigned int tick;
 	int dist;
 	int mode;
 	int search_size;
 	int view_range, can_move;
 
-	md = (struct mob_data*)bl;
-	tick = va_arg(ap, unsigned int);
-
 	if(md->bl.prev == NULL || md->status.hp <= 0)
-		return 1;
+		return false;
 		
-	if(!md->state.spotted) //Hard AI triggered.
-		md->state.spotted = 1;
-
 	if (DIFF_TICK(tick, md->last_thinktime) < MIN_MOBTHINKTIME)
-		return 0;
+		return false;
+
 	md->last_thinktime = tick;
 
 	if (md->ud.skilltimer != -1)
-		return 0;
+		return false;
 
 	if(md->ud.walktimer != -1 && md->ud.walkpath.path_pos <= 3)
-		return 0;
+		return false;
 
 	// Abnormalities
 	if((md->sc.opt1 > 0 && md->sc.opt1 != OPT1_STONEWAIT) || md->sc.data[SC_BLADESTOP])
   	{	//Should reset targets.
 		md->target_id = md->attacked_id = 0;
-		return 0;
+		return false;
 	}
 
 	if (md->sc.count && md->sc.data[SC_BLIND])
@@ -1255,7 +1249,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				((TBL_PC*)tbl)->invincible_timer != INVALID_TIMER)
 		)) {	//Unlock current target.
 			if (mob_warpchase(md, tbl))
-				return 0; //Chasing this target.
+				return true; //Chasing this target.
 			mob_unlocktarget(md, tick-(battle_config.mob_ai&0x8?3000:0)); //Imediately do random walk.
 			tbl = NULL;
 		}
@@ -1274,17 +1268,17 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 				) &&
 				md->state.attacked_count++ >= RUDE_ATTACKED_COUNT &&
 				!mobskill_use(md, tick, MSC_RUDEATTACKED) && //If can't rude Attack
-				can_move && unit_escape(bl, tbl, rand()%10 +1)) //Attempt escape
+				can_move && unit_escape(&md->bl, tbl, rand()%10 +1)) //Attempt escape
 			{	//Escaped
 				md->attacked_id = 0;
-				return 0;
+				return true;
 			}
 		} else
 		if ((abl= map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode))) {
 			if (md->bl.m != abl->m || abl->prev == NULL ||
 				(dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE ||
-				battle_check_target(bl, abl, BCT_ENEMY) <= 0 ||
-				(battle_config.mob_ai&0x2 && !status_check_skilluse(bl, abl, 0, 0)) || //Retaliate check
+				battle_check_target(&md->bl, abl, BCT_ENEMY) <= 0 ||
+				(battle_config.mob_ai&0x2 && !status_check_skilluse(&md->bl, abl, 0, 0)) || //Retaliate check
 				(!battle_check_range(&md->bl, abl, md->status.rhw.range) &&
 					( //Reach check
 					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 &&
@@ -1295,13 +1289,13 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			)	{	//Rude attacked
 				if (md->state.attacked_count++ >= RUDE_ATTACKED_COUNT &&
 					!mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move &&
-					!tbl && unit_escape(bl, abl, rand()%10 +1))
+					!tbl && unit_escape(&md->bl, abl, rand()%10 +1))
 				{	//Escaped.
 					//TODO: Maybe it shouldn't attempt to run if it has another, valid target?
 					md->attacked_id = 0;
-					return 0;
+					return true;
 				}
-			} else if (!(battle_config.mob_ai&0x2) && !status_check_skilluse(bl, abl, 0, 0)) {
+			} else if (!(battle_config.mob_ai&0x2) && !status_check_skilluse(&md->bl, abl, 0, 0)) {
 				//Can't attack back, but didn't invoke a rude attacked skill...
 			} else { //Attackable
 				if (!tbl || dist < md->status.rhw.range || !check_distance_bl(&md->bl, tbl, dist)
@@ -1324,7 +1318,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	
 	// Processing of slave monster
 	if (md->master_id > 0 && mob_ai_sub_hard_slavemob(md, tick))
-		return 0;
+		return true;
 
 	// Scan area for targets
 	if (!tbl && mode&MD_LOOTER && md->lootitem && DIFF_TICK(tick, md->ud.canact_tick) > 0 &&
@@ -1351,7 +1345,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			md->state.aggressive = 1; //Restore angry state when no targets are available.
 		//This handles triggering idle walk/skill.
 		mob_unlocktarget(md, tick);
-		return 0;
+		return true;
 	}
 	
 	//Target exists, attack or loot as applicable.
@@ -1359,29 +1353,29 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 	{	//Loot time.
 		struct flooritem_data *fitem;
 		if (md->ud.target == tbl->id && md->ud.walktimer != -1)
-			return 0; //Already locked.
+			return true; //Already locked.
 		if (md->lootitem == NULL)
 		{	//Can't loot...
 			mob_unlocktarget (md, tick);
-			return 0;
+			return true;
 		}
 		if (!check_distance_bl(&md->bl, tbl, 1))
 		{	//Still not within loot range.
 			if (!(mode&MD_CANMOVE))
 			{	//A looter that can't move? Real smart.
 				mob_unlocktarget(md,tick);
-				return 0;
+				return true;
 			}
 			if (!can_move) //Stuck. Wait before walking.
-				return 0;
+				return true;
 			md->state.skillstate = MSS_LOOT;
 			if (!unit_walktobl(&md->bl, tbl, 0, 1))
 				mob_unlocktarget(md, tick); //Can't loot...
-			return 0;
+			return true;
 		}
 		//Within looting range.
 		if (md->ud.attacktimer != -1)
-			return 0; //Busy attacking?
+			return true; //Busy attacking?
 
 		fitem = (struct flooritem_data *)tbl;
 		if(log_config.enable_logs&0x10)	//Logs items, taken by (L)ooter Mobs [Lupus]
@@ -1404,17 +1398,17 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		//Clear item.
 		map_clearflooritem (tbl->id);
 		mob_unlocktarget (md,tick);
-		return 0;
+		return true;
 	}
 	//Attempt to attack.
 	//At this point we know the target is attackable, we just gotta check if the range matches.
 	if (md->ud.target == tbl->id && md->ud.attacktimer != -1) //Already locked.
-		return 0;
+		return true;
 	
 	if (battle_check_range (&md->bl, tbl, md->status.rhw.range))
 	{	//Target within range, engage
 		unit_attack(&md->bl,tbl->id,1);
-		return 0;
+		return true;
 	}
 
 	//Out of range...
@@ -1423,7 +1417,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		md->state.skillstate = MSS_IDLE;
 		if (!mobskill_use(md, tick, -1))
 			mob_unlocktarget(md,tick);
-		return 0;
+		return true;
 	}
 
 	if (!can_move)
@@ -1431,7 +1425,7 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 		md->state.skillstate = MSS_IDLE;
 		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL))
 			mobskill_use(md, tick, -1);
-		return 0;
+		return true;
 	}
 
 	if (md->ud.walktimer != -1 && md->ud.target == tbl->id &&
@@ -1439,13 +1433,26 @@ static int mob_ai_sub_hard(struct block_list *bl,va_list ap)
 			!(battle_config.mob_ai&0x1) ||
 			check_distance_blxy(tbl, md->ud.to_x, md->ud.to_y, md->status.rhw.range)
 	)) //Current target tile is still within attack range.
-		return 0;
+		return true;
 
 	//Follow up if possible.
 	if(!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH) ||
 		!unit_walktobl(&md->bl, tbl, md->status.rhw.range, 2))
 		mob_unlocktarget(md,tick);
 
+	return true;
+}
+
+static int mob_ai_sub_hard_timer(struct block_list *bl,va_list ap)
+{
+	struct mob_data *md = (struct mob_data*)bl;
+	unsigned int tick = va_arg(ap, unsigned int);
+	if (mob_ai_sub_hard(md, tick)) 
+	{	//Hard AI triggered.
+		if(!md->state.spotted)
+			md->state.spotted = 1;
+		md->last_pcneartime = tick;
+	}
 	return 0;
 }
 
@@ -1456,7 +1463,7 @@ static int mob_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
 {
 	unsigned int tick;
 	tick=va_arg(ap,unsigned int);
-	map_foreachinrange(mob_ai_sub_hard,&sd->bl, AREA_SIZE+ACTIVE_AI_RANGE, BL_MOB,tick);
+	map_foreachinrange(mob_ai_sub_hard_timer,&sd->bl, AREA_SIZE+ACTIVE_AI_RANGE, BL_MOB,tick);
 
 	return 0;
 }
@@ -1475,20 +1482,39 @@ static int mob_ai_sub_lazy(DBKey key,void * data,va_list ap)
 	if(md->bl.prev == NULL)
 		return 0;
 
-	if (md->nd || (battle_config.mob_ai&0x20 && map[md->bl.m].users>0))
-		return mob_ai_sub_hard(&md->bl, ap);
-
 	tick=va_arg(ap,unsigned int);
+
+	if (md->nd || (battle_config.mob_ai&0x20 && map[md->bl.m].users>0))
+		return (int)mob_ai_sub_hard(md, tick);
+
+	if (md->bl.prev==NULL || md->status.hp == 0)
+		return 1;
+
+	if(battle_config.mob_active_time &&
+		md->last_pcneartime &&
+ 		!(md->status.mode&MD_BOSS) &&
+		DIFF_TICK(tick,md->last_thinktime) > MIN_MOBTHINKTIME)
+	{
+		if (DIFF_TICK(tick,md->last_pcneartime) < battle_config.mob_active_time)
+			return (int)mob_ai_sub_hard(md, tick);
+		md->last_pcneartime = 0;
+	}
+
+	if(battle_config.boss_active_time &&
+		md->last_pcneartime &&
+		(md->status.mode&MD_BOSS) &&
+		DIFF_TICK(tick,md->last_thinktime) > MIN_MOBTHINKTIME)
+	{
+		if (DIFF_TICK(tick,md->last_pcneartime) < battle_config.boss_active_time)
+			return (int)mob_ai_sub_hard(md, tick);
+		md->last_pcneartime = 0;
+	}
 
 	if(DIFF_TICK(tick,md->last_thinktime)< 10*MIN_MOBTHINKTIME)
 		return 0;
 
 	md->last_thinktime=tick;
 
-	if (md->bl.prev==NULL || md->status.hp == 0)
-		return 1;
-
-	// 取り巻きモンスターの処理（呼び戻しされた時）
 	if (md->master_id) {
 		mob_ai_sub_hard_slavemob (md,tick);
 		return 0;
@@ -2345,6 +2371,7 @@ void mob_revive(struct mob_data *md, unsigned int hp)
 	md->last_thinktime = tick;
 	md->next_walktime = tick+rand()%50+5000;
 	md->last_linktime = tick;
+	md->last_pcneartime = 0;
 	if (!md->bl.prev)
 		map_addblock(&md->bl);
 	if(pcdb_checkid(md->vd->class_) && md->nd)

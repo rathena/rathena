@@ -383,6 +383,8 @@ extern struct Battle_Config
 	int dynamic_mobs; // Dynamic Mobs [Wizputer] - battle_athena flag implemented by [random]
 	int mob_remove_damaged; // Dynamic Mobs - Remove mobs even if damaged [Wizputer]
 	int mob_remove_delay; // Dynamic Mobs - delay before removing mobs from a map [Skotlex]
+	int mob_active_time; //Duration through which mobs execute their Hard AI after players leave their area of sight.
+	int boss_active_time;
 
 	int show_hp_sp_drain, show_hp_sp_gain;	//[Skotlex]
 

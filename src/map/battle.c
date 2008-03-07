@@ -154,7 +154,9 @@ int battle_delay_damage_sub (int tid, unsigned int tick, int id, int data)
 	struct delay_damage *dat = (struct delay_damage *)data;
 	struct block_list *target = map_id2bl(dat->target);
 	if (target && dat && map_id2bl(id) == dat->src && target->prev != NULL && !status_isdead(target) &&
-		target->m == dat->src->m && check_distance_bl(dat->src, target, dat->distance)) //Check to see if you haven't teleported. [Skotlex]
+		target->m == dat->src->m &&
+		(target->type != BL_PC || ((TBL_PC*)target)->invincible_timer == -1) &&
+		check_distance_bl(dat->src, target, dat->distance)) //Check to see if you haven't teleported. [Skotlex]
 	{
 		map_freeblock_lock();
 		status_fix_damage(dat->src, target, dat->damage, dat->delay);
@@ -3643,6 +3645,8 @@ static const struct _battle_data {
 	{ "day_duration",                       &battle_config.day_duration,                    0,      0,      INT_MAX,        },
 	{ "night_duration",                     &battle_config.night_duration,                  0,      0,      INT_MAX,        },
 	{ "mob_remove_delay",                   &battle_config.mob_remove_delay,                60000,  15000,  INT_MAX,        },
+	{ "mob_active_time",                    &battle_config.mob_active_time,                 0,      0,      INT_MAX,        },
+	{ "boss_active_time",                   &battle_config.boss_active_time,                0,      0,      INT_MAX,        },
 	{ "sg_miracle_skill_duration",          &battle_config.sg_miracle_skill_duration,       3600000, 0,     INT_MAX,        },
 	{ "hvan_explosion_intimate",            &battle_config.hvan_explosion_intimate,         45000,  0,      100000,         },
 	{ "quest_exp_rate",                     &battle_config.quest_exp_rate,                  100,    0,      INT_MAX,        },

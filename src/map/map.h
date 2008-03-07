@@ -918,7 +918,7 @@ struct mob_data {
 	int level;
 	int target_id,attacked_id;
 
-	unsigned int next_walktime,last_thinktime,last_linktime;
+	unsigned int next_walktime,last_thinktime,last_linktime,last_pcneartime;
 	short move_fail_count;
 	short lootitem_count;
 	short min_chase;

@@ -8123,7 +8123,7 @@ BUILDIN_FUNC(sc_start)
 	}
 
 	if( bl )
-		status_change_start(bl, type, 10000, val1, 0, 0, val4, tick, 1|2|8);
+		status_change_start(bl, type, 10000, val1, 0, 0, val4, tick, 2);
 	return 0;
 }
 
@@ -8161,7 +8161,7 @@ BUILDIN_FUNC(sc_start2)
 	}
 
 	if( bl )
-		status_change_start(bl, type, rate, val1, 0, 0, val4, tick, 1|2|8);
+		status_change_start(bl, type, rate, val1, 0, 0, val4, tick, 2);
 
 	return 0;
 }
@@ -8202,7 +8202,7 @@ BUILDIN_FUNC(sc_start4)
 	}
 
 	if( bl )
-		status_change_start(bl, type, 10000, val1, val2, val3, val4, tick, 1|2|8);
+		status_change_start(bl, type, 10000, val1, val2, val3, val4, tick, 2);
 
 	return 0;
 }

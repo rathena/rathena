@@ -1,5 +1,10 @@
 Date	Added
 
+2008/03/07
+	* Added config settings mob_active_time and boss_active_time, what they do
+	  is specify a duration during which monsters will keep running their active
+	  AI after all players have left their vecinity. Their current defaults are
+	  set to 0 (disabled). [Skotlex]
 2008/02/29
 	*Rev. 12273 Added some additional map flags for some newer maps. [L0ne_W0lf]
 2008/02/27
