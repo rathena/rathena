@@ -87,7 +87,7 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 		idx -= 2;
 		mail_removeitem(sd, 0);
 
-		if( idx < 0 || idx > MAX_INVENTORY )
+		if( idx < 0 || idx >= MAX_INVENTORY )
 			return 1;
 		if( amount < 0 || amount > sd->status.inventory[idx].amount )
 			return 1;
