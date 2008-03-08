@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/03/08
+	* Fixed a typo in AuctionWarper function name. [Paradox924X]
 2008/03/07
 	* Rev 12319 Follow-up fixes to counteragent quest. (bugreport:1122) [L0ne_W0lf]
 	* Rev 12316 A few minor fixes to counteragent quest. (bugreport:1122) [L0ne_W0lf]

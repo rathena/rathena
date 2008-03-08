@@ -31,7 +31,7 @@ lighthalzen,205,169,6	script	Auction Hall Guide#lhz	833,{
 	callfunc "F_AuctionWarper",4;
 }
 
-function	script	F_AuctironWarper	{
+function	script	F_AuctionWarper	{
 	mes "[Auction Hall Guide]";
 	mes "Hello, would you";
 	mes "like to enter the";
