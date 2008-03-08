@@ -535,42 +535,43 @@ int mapif_parse_PartyInfo(int fd,int party_id)
 	return 0;
 }
 // パーティ追加要求
-int mapif_parse_PartyAddMember(int fd, int party_id, struct party_member *member) {
+int mapif_parse_PartyAddMember(int fd, int party_id, struct party_member *member)
+{
 	struct party_data *p;
 	int i;
 
 	p = inter_party_fromsql(party_id);
-
-	if(!p || p->size == MAX_PARTY){
-		mapif_party_memberadded(fd,party_id,member->account_id,member->char_id,1);
+	if( p == NULL || p->size == MAX_PARTY ) {
+		mapif_party_memberadded(fd, party_id, member->account_id, member->char_id, 1);
 		return 0;
 	}
 
-	for(i=0;i<MAX_PARTY;i++){
-		if(p->party.member[i].account_id)
-			continue;
-
-		memcpy(&p->party.member[i], member, sizeof(struct party_member));
-		p->party.member[i].leader=0;
-		if (p->party.member[i].online) p->party.count++;
-		p->size++;
-		if (p->size == 3) //Check family state.
-			int_party_calc_state(p);
-		else //Check even share range.
-		if (member->lv < p->min_lv || member->lv > p->max_lv || p->family) {
-			if (p->family) p->family = 0; //Family state broken.
-			int_party_check_lv(p);
-		}
-
-		mapif_party_memberadded(fd,party_id,member->account_id,member->char_id,0);
-		mapif_party_info(-1,&p->party);
-		inter_party_tosql(&p->party, PS_ADDMEMBER, i);
+	ARR_FIND( 0, MAX_PARTY, i, p->party.member[i].account_id == 0 );
+	if( i == MAX_PARTY )
+	{// Party full
+		mapif_party_memberadded(fd, party_id, member->account_id, member->char_id, 1);
 		return 0;
 	}
-	//Party full
-	mapif_party_memberadded(fd,party_id,member->account_id,member->char_id,1);
+
+	memcpy(&p->party.member[i], member, sizeof(struct party_member));
+	p->party.member[i].leader = 0;
+	if (p->party.member[i].online) p->party.count++;
+	p->size++;
+	if (p->size == 3) //Check family state.
+		int_party_calc_state(p);
+	else //Check even share range.
+	if (member->lv < p->min_lv || member->lv > p->max_lv || p->family) {
+		if (p->family) p->family = 0; //Family state broken.
+		int_party_check_lv(p);
+	}
+
+	mapif_party_memberadded(fd, party_id, member->account_id, member->char_id, 0);
+	mapif_party_info(-1, &p->party);
+	inter_party_tosql(&p->party, PS_ADDMEMBER, i);
+
 	return 0;
 }
+
 // パーティー設定変更要求
 int mapif_parse_PartyChangeOption(int fd,int party_id,int account_id,int exp,int item)
 {

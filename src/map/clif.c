@@ -5411,19 +5411,17 @@ int clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd)
  * 3 -> party is full
  * 4 -> char of the same account already joined the party
  *------------------------------------------*/
-int clif_party_inviteack(struct map_session_data* sd, const char* nick, int flag)
+void clif_party_inviteack(struct map_session_data* sd, const char* nick, int flag)
 {
 	int fd;
-
-	nullpo_retr(0, sd);
-
+	nullpo_retv(sd);
 	fd=sd->fd;
+
 	WFIFOHEAD(fd,packet_len(0xfd));
-	WFIFOW(fd,0)=0xfd;
-	memcpy(WFIFOP(fd,2),nick,NAME_LENGTH);
-	WFIFOB(fd,26)=flag;
+	WFIFOW(fd,0) = 0xfd;
+	safestrncpy((char*)WFIFOP(fd,2),nick,NAME_LENGTH);
+	WFIFOB(fd,26) = flag;
 	WFIFOSET(fd,packet_len(0xfd));
-	return 0;
 }
 
 /*==========================================
@@ -9818,27 +9816,35 @@ void clif_parse_PartyInvite2(int fd, struct map_session_data *sd)
 	
 	party_invite(sd, t_sd);
 }
+
 /*==========================================
- * パーティ勧誘返答
+ * Party invitation reply
+ * S 00ff <account ID>.L <flag>.L
+ * S 02c7 <account ID>.L <flag>.B
+ * flag: 0-reject, 1-accept
  *------------------------------------------*/
 void clif_parse_ReplyPartyInvite(int fd,struct map_session_data *sd)
 {
-	if(battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 5){
-		party_reply_invite(sd,RFIFOL(fd,2),RFIFOL(fd,6));
-	} else {
+	if( battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 5 )
+	{
 		party_reply_invite(sd,RFIFOL(fd,2),-1);
 		clif_skill_fail(sd,1,0,4);
+		return;
 	}
+
+	party_reply_invite(sd,RFIFOL(fd,2),RFIFOL(fd,6));
 }
 
 void clif_parse_ReplyPartyInvite2(int fd,struct map_session_data *sd)
 {
-	if(battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 5){
-		party_reply_invite(sd,RFIFOL(fd,2),RFIFOB(fd,6));
-	} else {
+	if( battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 5 )
+	{
 		party_reply_invite(sd,RFIFOL(fd,2),-1);
 		clif_skill_fail(sd,1,0,4);
+		return;
 	}
+
+	party_reply_invite(sd,RFIFOL(fd,2),RFIFOB(fd,6));
 }
 
 /*==========================================

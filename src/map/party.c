@@ -122,7 +122,7 @@ int party_create(struct map_session_data *sd,char *name,int item,int item2)
 }
 
 
-int party_created(int account_id,int char_id,int fail,int party_id,char *name)
+void party_created(int account_id,int char_id,int fail,int party_id,char *name)
 {
 	struct map_session_data *sd;
 	sd=map_id2sd(account_id);
@@ -131,17 +131,16 @@ int party_created(int account_id,int char_id,int fail,int party_id,char *name)
 	{	//Character logged off before creation ack?
 		if (!fail) //break up party since player could not be added to it.
 			intif_party_leave(party_id,account_id,char_id);
-		return 0;
+		return;
 	}
 	
-	if(fail){
-		clif_party_created(sd,1);
-		return 0; // "party name already exists"
+	if( !fail ) {
+		sd->status.party_id = party_id;
+		clif_party_created(sd,0); //Success message
+		//We don't do any further work here because the char-server sends a party info packet right after creating the party.
+	} else {
+		clif_party_created(sd,1); // "party name already exists"
 	}
-	sd->status.party_id=party_id;
-	clif_party_created(sd,0); //Success message
-	//We don't do any further work here because the char-server sends a party info packet right after creating the party.
-	return 1;
 }
 
 int party_request_info(int party_id)
@@ -328,22 +327,23 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	return 1;
 }
 
-int party_reply_invite(struct map_session_data *sd,int account_id,int flag)
+void party_reply_invite(struct map_session_data *sd,int account_id,int flag)
 {
 	struct map_session_data *tsd= map_id2sd(account_id);
 	struct party_member member;
 
-	if(flag==1){
+	if( flag == 1 )
+	{// accepted
 		party_fill_member(&member, sd);
 		intif_party_addmember(sd->party_invite, &member);
-		return 0;
 	}
-	sd->party_invite=0;
-	sd->party_invite_account=0;
-	if(tsd==NULL)
-		return 0;
-	clif_party_inviteack(tsd,sd->status.name,1);
-	return 1;
+	else
+	{// rejected or failure
+		sd->party_invite = 0;
+		sd->party_invite_account = 0;
+		if( tsd != NULL )
+			clif_party_inviteack(tsd,sd->status.name,1);
+	}
 }
 
 //Invoked when a player joins:
@@ -367,10 +367,12 @@ void party_member_joined(struct map_session_data *sd)
 }
 
 /// Invoked (from char-server) when a new member is added to the party.
+/// flag: 0-success, 1-failure
 int party_member_added(int party_id,int account_id,int char_id, int flag)
 {
 	struct map_session_data *sd = map_id2sd(account_id),*sd2;
 	struct party_data *p = party_search(party_id);
+	int invite_aid;
 	int i;
 
 	if(sd == NULL || sd->status.char_id != char_id){
@@ -378,8 +380,10 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 			intif_party_leave(party_id,account_id,char_id);
 		return 0;
 	}
-	sd->party_invite=0;
-	sd->party_invite_account=0;
+
+	invite_aid = sd->party_invite_account;
+	sd->party_invite = 0;
+	sd->party_invite_account = 0;
 
 	if (!p) {
 		ShowError("party_member_added: party %d not found.\n",party_id);
@@ -387,8 +391,8 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 		return 0;
 	}
 
-	if(!flag) {
-		sd->status.party_id=party_id;
+	if( flag == 0 ) {
+		sd->status.party_id = party_id;
 		party_check_conflict(sd);
 		clif_party_option(p,sd,0x100);
 		clif_party_info(p,sd);
@@ -404,8 +408,8 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 		clif_charnameupdate(sd); //Update char name's display [Skotlex]
 	}
 
-	sd2=map_id2sd(sd->party_invite_account);
-	if (sd2)
+	sd2 = map_id2sd(invite_aid);
+	if( sd2 != NULL )
 		clif_party_inviteack(sd2,sd->status.name,flag?2:1);
 	return 0;
 }
