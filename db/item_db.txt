@@ -2257,7 +2257,7 @@
 5381,SantaPoring_Cap,SantaPoring Cap,5,,,100,,2,,1,0xFFFFFFFF,7,2,256,,0,0,387,{ bonus bMdef,2; bonus2 bAddEle,Ele_Dark,3; bonus2 bSubEle,Ele_Dark,3; },{},{}
 5382,Bell_Ribbon,Bell Ribbon,5,,,200,,3,,1,0xFFFFFFFF,7,2,256,,0,1,388,{ bonus bVit,1; skill 33,1; },{},{}
 5383,Hunter_Cap,Hunter Cap,5,,,250,,3,,1,0xFFFFFFFE,7,2,256,,50,1,389,{},{},{ bonus bLuk,1; }
-//5384,Twin_Pompom_By_JB,Twin Pompom By JB,5,,,100,,1,,0,0xFFFFFFFE,7,2,256,,0,1,390,{ bonus bAllStats,1 skill 93,1; },{},{}
+//5384,Twin_Pompom_By_JB,Twin Pompom By JB,5,,,100,,1,,0,0xFFFFFFFE,7,2,256,,0,1,390,{ bonus bAllStats,1; skill 93,1; },{},{}
 //5385,Yoyo_Hat,Yoyo Hat,5,,,300,,1,,0,0xFFFFFFFF,7,2,256,,20,1,391,{ skill 51,1; },{},{}
 //5386,NewYear_Suit_Hat,New Year Suit Hat,5,,,70,,7,,0,0xFFFFFFFF,7,2,256,,0,0,228,{ bonus bMdef,7; bonus bFlee,7; bonus2 bAddMonsterDropItem,12198,200; },{},{}
 //5387,Nekomimi_Kafra_Headband,Nekomimi Kafra Headband,5,,,200,,1,,1,0xFFFFFFFF,7,2,256,,30,1,392,{ bonus bMdef,5; },{},{}
