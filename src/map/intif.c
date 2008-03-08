@@ -1746,6 +1746,62 @@ static void intif_parse_Auction_register(int fd)
 	}
 }
 
+int intif_Auction_cancel(int char_id, unsigned int auction_id)
+{
+	if( CheckForCharServer() )
+		return 0;
+
+	WFIFOHEAD(inter_fd,10);
+	WFIFOW(inter_fd,0) = 0x3052;
+	WFIFOL(inter_fd,2) = char_id;
+	WFIFOL(inter_fd,6) = auction_id;
+	WFIFOSET(inter_fd,10);
+
+	return 0;
+}
+
+static void intif_parse_Auction_cancel(int fd)
+{
+	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
+	int result = RFIFOB(fd,6);
+
+	if( sd == NULL )
+		return;
+
+	switch( result )
+	{
+	case 0: clif_Auction_message(sd->fd, 2); break;
+	case 1: clif_Auction_close(sd->fd, 2); break;
+	case 2: clif_Auction_close(sd->fd, 1); break;
+	case 3: clif_Auction_message(sd->fd, 3); break;
+	}
+}
+
+int intif_Auction_close(int char_id, unsigned int auction_id)
+{
+	if( CheckForCharServer() )
+		return 0;
+
+	WFIFOHEAD(inter_fd,10);
+	WFIFOW(inter_fd,0) = 0x3053;
+	WFIFOL(inter_fd,2) = char_id;
+	WFIFOL(inter_fd,6) = auction_id;
+	WFIFOSET(inter_fd,10);
+
+	return 0;
+}
+
+static void intif_parse_Auction_close(int fd)
+{
+	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
+	unsigned char result = RFIFOB(fd,6);
+
+	if( sd == NULL )
+		return;
+
+	clif_Auction_close(sd->fd, result);
+}
+
 #endif
 
 //-----------------------------------------------------------------
@@ -1827,6 +1883,8 @@ int intif_parse(int fd)
 // Auction System
 	case 0x3850:	intif_parse_Auction_results(fd); break;
 	case 0x3851:	intif_parse_Auction_register(fd); break;
+	case 0x3852:	intif_parse_Auction_cancel(fd); break;
+	case 0x3853:	intif_parse_Auction_close(fd); break;
 #endif
 	case 0x3880:	intif_parse_CreatePet(fd); break;
 	case 0x3881:	intif_parse_RecvPetData(fd); break;

@@ -11834,6 +11834,17 @@ void clif_Auction_message(int fd, unsigned char flag)
 	WFIFOSET(fd,3);
 }
 
+// 0 = You have ended the auction
+// 1 = You cannot end the auction
+// 2 = Bid number is incorrect
+void clif_Auction_close(int fd, unsigned char flag)
+{
+	WFIFOHEAD(fd,6);
+	WFIFOW(fd,0) = 0x25d;
+	WFIFOL(fd,2) = flag;
+	WFIFOSET(fd,6);
+}
+
 void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 {
 	struct auction_data auction;
@@ -11908,6 +11919,20 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 		sd->auction.amount = 0;
 		pc_payzeny(sd, auction.hours * battle_config.auction_feeperhour);
 	}
+}
+
+void clif_parse_Auction_cancel(int fd, struct map_session_data *sd)
+{
+	unsigned int auction_id = RFIFOL(fd,2);
+
+	intif_Auction_cancel(sd->status.char_id, auction_id);
+}
+
+void clif_parse_Auction_close(int fd, struct map_session_data *sd)
+{
+	unsigned int auction_id = RFIFOL(fd,2);
+
+	intif_Auction_close(sd->status.char_id, auction_id);
 }
 
 /*------------------------------------------

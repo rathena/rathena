@@ -768,7 +768,7 @@ packet_ver: 18
 0x024b,4,auctioncancelreg,0
 0x024c,8,auctionsetitem,0
 0x024d,14
-0x024e,6
+0x024e,6,auctioncancel,0
 0x024f,10
 0x0250,3
 0x0251,2
@@ -828,7 +828,7 @@ packet_ver: 19
 
 //2005-10-17aSakexe
 0x007a,58
-0x025d,-1
+0x025d,6,auctionclose,0
 0x025e,4
 
 //2005-10-24aSakexe
@@ -836,7 +836,7 @@ packet_ver: 19
 0x0260,6
 
 //2005-11-07aSakexe
-0x024e,6
+0x024e,6,auctioncancel,0
 0x0251,34,auctionsearch,0
 
 //2006-01-09aSakexe

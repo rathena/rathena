@@ -341,6 +341,110 @@ static void mapif_parse_Auction_register(int fd)
 	mapif_Auction_register(fd, &auction);
 }
 
+static void mapif_Auction_cancel(int fd, int char_id, unsigned char result)
+{
+	WFIFOHEAD(fd,7);
+	WFIFOW(fd,0) = 0x3852;
+	WFIFOL(fd,8) = char_id;
+	WFIFOB(fd,6) = result;
+	WFIFOSET(fd,7);
+}
+
+static void mapif_parse_Auction_cancel(int fd)
+{
+	int char_id = RFIFOL(fd,2), auction_id = RFIFOL(fd,6);
+	struct auction_data *auction;
+	struct mail_message msg;
+
+	if( (auction = (struct auction_data *)idb_get(auction_db_, auction_id)) == NULL )
+	{
+		mapif_Auction_cancel(fd, char_id, 1); // Bid Number is Incorrect
+		return;
+	}
+
+	if( auction->seller_id != char_id )
+	{
+		mapif_Auction_cancel(fd, char_id, 2); // You cannot end the auction
+		return;
+	}
+
+	if( auction->buyer_id > 0 )
+	{
+		mapif_Auction_cancel(fd, char_id, 3); // An auction with at least one bidder cannot be canceled
+		return;
+	}
+
+	memset(&msg, 0, sizeof(struct mail_message));
+	safestrncpy(msg.send_name, "Auction Manager", NAME_LENGTH);
+	msg.dest_id = auction->seller_id;
+	safestrncpy(msg.dest_name, auction->seller_name, NAME_LENGTH);
+	msg.timestamp = (int)calc_times();
+	safestrncpy(msg.title, "Auction", MAIL_TITLE_LENGTH);
+	safestrncpy(msg.body, "Auction canceled.", MAIL_BODY_LENGTH);
+
+	memcpy(&msg.item, &auction->item, sizeof(struct item));
+
+	mail_savemessage(&msg);
+	mapif_Mail_new(&msg);
+	
+	auction_delete(auction);
+	mapif_Auction_cancel(fd, char_id, 0); // The auction has been canceled
+}
+
+static void mapif_Auction_close(int fd, int char_id, unsigned char result)
+{
+	WFIFOHEAD(fd,7);
+	WFIFOW(fd,0) = 0x3853;
+	WFIFOL(fd,8) = char_id;
+	WFIFOB(fd,6) = result;
+	WFIFOSET(fd,7);
+}
+
+static void mapif_parse_Auction_close(int fd)
+{
+	int char_id = RFIFOL(fd,2), auction_id = RFIFOL(fd,6);
+	struct auction_data *auction;
+	struct mail_message msg;
+
+	if( (auction = (struct auction_data *)idb_get(auction_db_, auction_id)) == NULL )
+	{
+		mapif_Auction_cancel(fd, char_id, 2); // Bid Number is Incorrect
+		return;
+	}
+
+	if( auction->buyer_id == 0 )
+	{
+		mapif_Auction_cancel(fd, char_id, 1); // You cannot end the auction
+		return;
+	}
+
+	// Send Money to Seller
+	memset(&msg, 0, sizeof(struct mail_message));
+	safestrncpy(msg.send_name, "Auction Manager", NAME_LENGTH);
+	msg.dest_id = auction->seller_id;
+	safestrncpy(msg.dest_name, auction->seller_name, NAME_LENGTH);
+	msg.timestamp = (int)calc_times();
+	safestrncpy(msg.title, "Auction", MAIL_TITLE_LENGTH);
+	safestrncpy(msg.body, "Auction closed.", MAIL_BODY_LENGTH);
+	msg.zeny = auction->price; // Current Bid
+	mail_savemessage(&msg);
+	mapif_Mail_new(&msg);
+
+	// Send Item to Buyer
+	memset(&msg, 0, sizeof(struct mail_message));
+	safestrncpy(msg.send_name, "Auction Manager", NAME_LENGTH);
+	msg.dest_id = auction->buyer_id;
+	safestrncpy(msg.dest_name, auction->buyer_name, NAME_LENGTH);
+	msg.timestamp = (int)calc_times();
+	safestrncpy(msg.title, "Auction", MAIL_TITLE_LENGTH);
+	safestrncpy(msg.body, "Auction winner.", MAIL_BODY_LENGTH);
+	memcpy(&msg.item, &auction->item, sizeof(struct item));
+	mail_savemessage(&msg);
+	mapif_Mail_new(&msg);
+
+	mapif_Auction_cancel(fd, char_id, 0); // You have ended the auction
+}
+
 /*==========================================
  * Packets From Map Server
  *------------------------------------------*/
@@ -350,6 +454,8 @@ int inter_auction_parse_frommap(int fd)
 	{
 		case 0x3050: mapif_parse_Auction_requestlist(fd); break;
 		case 0x3051: mapif_parse_Auction_register(fd); break;
+		case 0x3052: mapif_parse_Auction_cancel(fd); break;
+		case 0x3053: mapif_parse_Auction_close(fd); break;
 		default:
 			return 0;
 	}
