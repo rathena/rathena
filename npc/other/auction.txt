@@ -93,11 +93,11 @@ auction_01,182,68,6	script	Auction Broker#moc1::AuctionBroker	98,{
 		mes "Please take";
 		mes "a look, and see";
 		mes "What's being offered~";
-		//OpenAuction
+		OpenAuction;
 		close;
 	}
 	mes "[Auction Broker]";
-	mes "Very wellm then.";
+	mes "Very well then.";
 	mes "If you change your";
 	mes "mind, then please";
 	mes "come and check";
