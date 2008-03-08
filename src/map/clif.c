@@ -11716,7 +11716,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
  * AUCTION SYSTEM
  * By Zephyrus
  *==========================================*/
-void clif_Auction_results(struct map_session_data *sd, short count, unsigned char *buf)
+void clif_Auction_results(struct map_session_data *sd, short count, short pages, unsigned char *buf)
 {
 	int i, fd = sd->fd, len = sizeof(struct auction_data);
 	struct auction_data auction;
@@ -11726,7 +11726,7 @@ void clif_Auction_results(struct map_session_data *sd, short count, unsigned cha
 	WFIFOHEAD(fd,20);
 	WFIFOW(fd,0) = 0x252;
 	WFIFOW(fd,2) = 12 + (count * 83);
-	WFIFOL(fd,4) = 1; // ??
+	WFIFOL(fd,4) = pages;
 	WFIFOL(fd,8) = count;
 
 	for( i = 0; i < count; i++ )
@@ -11915,7 +11915,7 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 		clif_Auction_message(fd, 4); // No Char Server? lets say something to the client
 	else
 	{
-		pc_delitem(sd, sd->auction.index, sd->auction.amount, 0);
+		pc_delitem(sd, sd->auction.index, sd->auction.amount, 1);
 		sd->auction.amount = 0;
 		pc_payzeny(sd, auction.hours * battle_config.auction_feeperhour);
 	}
@@ -11935,32 +11935,45 @@ void clif_parse_Auction_close(int fd, struct map_session_data *sd)
 	intif_Auction_close(sd->status.char_id, auction_id);
 }
 
+void clif_parse_Auction_bid(int fd, struct map_session_data *sd)
+{
+	unsigned int auction_id = RFIFOL(fd,2);
+	int bid = RFIFOL(fd,6);
+
+	if( bid <= 0 )
+		clif_Auction_message(fd, 0); // You have failed to bid into the auction
+	else if( bid > sd->status.zeny )
+		clif_Auction_message(fd, 8); // You do not have enough zeny
+	else
+	{
+		pc_payzeny(sd, bid);
+		intif_Auction_bid(sd->status.char_id, sd->status.name, auction_id, bid);
+	}
+}
+
 /*------------------------------------------
  * Auction Search
- * S 0251 <search type>.w <search price>.l <search text>.24B <01>.w
+ * S 0251 <search type>.w <search price>.l <search text>.24B <page number>.w
  * Search Type: 0 Armor 1 Weapon 2 Card 3 Misc 4 By Text 5 By Price 6 Sell 7 Buy
  *------------------------------------------*/
 void clif_parse_Auction_search(int fd, struct map_session_data* sd)
 {
 	char search_text[NAME_LENGTH];
-	short type = RFIFOW(fd,2);
+	short type = RFIFOW(fd,2), page = RFIFOW(fd,32);
 	int price = RFIFOL(fd,4);
 
 	clif_parse_Auction_cancelreg(fd, sd);
 	
 	safestrncpy(search_text, (char*)RFIFOP(fd,8), NAME_LENGTH);
-	intif_Auction_requestlist(sd->status.char_id, type, price, search_text);
+	intif_Auction_requestlist(sd->status.char_id, type, price, search_text, page);
 }
 
 void clif_parse_Auction_buysell(int fd, struct map_session_data* sd)
 {
 	short type = RFIFOW(fd,2) + 6;
-	char search_text[NAME_LENGTH];
-
 	clif_parse_Auction_cancelreg(fd, sd);
 
-	memset(&search_text, '\0', NAME_LENGTH);
-	intif_Auction_requestlist(sd->status.char_id, type, 0, search_text);
+	intif_Auction_requestlist(sd->status.char_id, type, 0, "", 1);
 }
 
 #endif
@@ -12022,6 +12035,9 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
 void clif_Auction_openwindow(struct map_session_data *sd)
 {
 	int fd = sd->fd;
+
+	if( sd->state.storage_flag || sd->vender_id || sd->state.trading )
+		return;
 
 	WFIFOHEAD(fd,12);
 	WFIFOW(fd,0) = 0x25f;
@@ -12499,6 +12515,9 @@ static int packetdb_readdb(void)
 		{clif_parse_Auction_setitem,"auctionsetitem"},
 		{clif_parse_Auction_cancelreg,"auctioncancelreg"},
 		{clif_parse_Auction_register,"auctionregister"},
+		{clif_parse_Auction_cancel,"auctioncancel"},
+		{clif_parse_Auction_close,"auctionclose"},
+		{clif_parse_Auction_bid,"auctionbid"},
 #endif
 		{clif_parse_cashshop_buy,"cashshopbuy"},
 		{clif_parse_ViewPlayerEquip,"viewplayerequip"},

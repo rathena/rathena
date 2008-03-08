@@ -298,7 +298,7 @@ struct auction_data {
 	short type;
 
 	unsigned short hours;
-	unsigned int price, buynow;
+	int price, buynow;
 	unsigned int timestamp; // auction's end time
 	int auction_end_timer;
 };

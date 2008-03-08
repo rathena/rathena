@@ -769,7 +769,7 @@ packet_ver: 18
 0x024c,8,auctionsetitem,0
 0x024d,14
 0x024e,6,auctioncancel,0
-0x024f,10
+0x024f,10,auctionbid,0
 0x0250,3
 0x0251,2
 0x0252,-1

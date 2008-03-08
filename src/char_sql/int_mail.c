@@ -429,6 +429,27 @@ static void mapif_parse_Mail_send(int fd)
 	mapif_Mail_send(fd, &msg);
 }
 
+void mail_sendmail(int send_id, const char* send_name, int dest_id, const char* dest_name, const char* title, const char* body, int zeny, struct item *item)
+{
+	struct mail_message msg;
+	memset(&msg, 0, sizeof(struct mail_message));
+
+	msg.send_id = send_id;
+	safestrncpy(msg.send_name, send_name, NAME_LENGTH);
+	msg.dest_id = dest_id;
+	safestrncpy(msg.dest_name, dest_name, NAME_LENGTH);
+	safestrncpy(msg.title, title, MAIL_TITLE_LENGTH);
+	safestrncpy(msg.body, body, MAIL_BODY_LENGTH);
+	msg.zeny = zeny;
+	if( item != NULL )
+		memcpy(&msg.item, item, sizeof(struct item));
+
+	msg.timestamp = (int)calc_times();
+
+	mail_savemessage(&msg);
+	mapif_Mail_new(&msg);
+}
+
 /*==========================================
  * Packets From Map Server
  *------------------------------------------*/
