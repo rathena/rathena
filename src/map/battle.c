@@ -172,7 +172,7 @@ int battle_delay_damage_sub (int tid, unsigned int tick, int id, int data)
 	return 0;
 }
 
-int battle_delay_damage (unsigned int tick, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, enum damage_lv dmg_lv, int ddelay)
+int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, enum damage_lv dmg_lv, int ddelay)
 {
 	struct delay_damage *dat;
 	nullpo_retr(0, src);
@@ -200,7 +200,9 @@ int battle_delay_damage (unsigned int tick, struct block_list *src, struct block
 	dat->dmg_lv = dmg_lv;
 	dat->delay = ddelay;
 	dat->distance = distance_bl(src, target)+10; //Attack should connect regardless unless you teleported.
-	add_timer(tick, battle_delay_damage_sub, src->id, (int)dat);
+	if (src->type != BL_PC && amotion > 1000)
+		amotion = 1000; //Aegis places a damage-delay cap of 1 sec to non player attacks. [Skotlex]
+	add_timer(tick+amotion, battle_delay_damage_sub, src->id, (int)dat);
 	
 	return 0;
 }
@@ -2885,7 +2887,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	map_freeblock_lock();
 
-	battle_delay_damage(tick+wd.amotion, src, target, wd.flag, 0, 0, damage, wd.dmg_lv, wd.dmotion);
+	battle_delay_damage(tick, wd.amotion, src, target, wd.flag, 0, 0, damage, wd.dmg_lv, wd.dmotion);
 
 	if (sc && sc->data[SC_AUTOSPELL] && rand()%100 < sc->data[SC_AUTOSPELL]->val4) {
 		int sp = 0;
@@ -2924,7 +2926,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if (rdamage > 0) { //By sending attack type "none" skill_additional_effect won't be invoked. [Skotlex]
 		if(tsd && src != target)
 			battle_drain(tsd, src, rdamage, rdamage, sstatus->race, is_boss(src));
-		battle_delay_damage(tick+wd.amotion, target, src, 0, 0, 0, rdamage, ATK_DEF, rdelay);
+		battle_delay_damage(tick, wd.amotion, target, src, 0, 0, 0, rdamage, ATK_DEF, rdelay);
 	}
 
 	if (tsc) {
@@ -3582,7 +3584,7 @@ static const struct _battle_data {
 	{ "min_skill_delay_limit",              &battle_config.min_skill_delay_limit,           100,    10,     INT_MAX,        },
 	{ "default_walk_delay",                 &battle_config.default_walk_delay,              300,    0,      INT_MAX,        },
 	{ "no_skill_delay",                     &battle_config.no_skill_delay,                  BL_MOB, BL_NUL, BL_ALL,         },
-	{ "attack_walk_delay",                  &battle_config.attack_walk_delay,               0,      0,      INT_MAX,        },
+	{ "attack_walk_delay",                  &battle_config.attack_walk_delay,               BL_ALL, BL_NUL, BL_ALL,         },
 	{ "require_glory_guild",                &battle_config.require_glory_guild,             0,      0,      1,              },
 	{ "idle_no_share",                      &battle_config.idle_no_share,                   0,      0,      INT_MAX,        },
 	{ "party_even_share_bonus",             &battle_config.party_even_share_bonus,          0,      0,      INT_MAX,        }, 

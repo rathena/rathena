@@ -1658,7 +1658,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 	
 	//Delayed damage must be dealt after the knockback (it needs to know actual position of target)
 	if (dmg.amotion)
-		battle_delay_damage(tick+dmg.amotion,src,bl,attack_type,skillid,skilllv,damage,dmg.dmg_lv,dmg.dmotion);
+		battle_delay_damage(tick, dmg.amotion,src,bl,attack_type,skillid,skilllv,damage,dmg.dmg_lv,dmg.dmotion);
 
 	if(skillid == RG_INTIMIDATE && damage > 0 && !(tstatus->mode&MD_BOSS)) {
 		int rate = 50 + skilllv * 5;
@@ -1676,7 +1676,7 @@ int skill_attack (int attack_type, struct block_list* src, struct block_list *ds
 
 	if (rdamage>0) {
 		if (dmg.amotion)
-			battle_delay_damage(tick+dmg.amotion,bl,src,0,0,0,rdamage,ATK_DEF,0);
+			battle_delay_damage(tick, dmg.amotion,bl,src,0,0,0,rdamage,ATK_DEF,0);
 		else
 			status_fix_damage(bl,src,rdamage,0);
 		clif_damage(src,src,tick, dmg.amotion,0,rdamage,1,4,0);

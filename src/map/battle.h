@@ -55,7 +55,7 @@ enum {	// ÅIŒvZ‚Ìƒtƒ‰ƒO
 	BF_SKILLMASK= 0x0f00,
 };
 
-int battle_delay_damage (unsigned int tick, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, enum damage_lv dmg_lv, int ddelay);
+int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, int skill_id, int skill_lv, int damage, enum damage_lv dmg_lv, int ddelay);
 
 // ’ÊíUŒ‚ˆ—‚Ü‚Æ‚ß
 enum damage_lv battle_weapon_attack( struct block_list *bl,struct block_list *target,unsigned int tick,int flag);

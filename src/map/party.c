@@ -372,7 +372,6 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 {
 	struct map_session_data *sd = map_id2sd(account_id),*sd2;
 	struct party_data *p = party_search(party_id);
-	int invite_aid;
 	int i;
 
 	if(sd == NULL || sd->status.char_id != char_id){
@@ -381,7 +380,10 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 		return 0;
 	}
 
-	invite_aid = sd->party_invite_account;
+	sd2 = map_id2sd(sd->party_invite_account);
+	if( sd2 != NULL )
+		clif_party_inviteack(sd2,sd->status.name,flag?3:2);
+
 	sd->party_invite = 0;
 	sd->party_invite_account = 0;
 
@@ -391,26 +393,32 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 		return 0;
 	}
 
-	if( flag == 0 ) {
-		sd->status.party_id = party_id;
-		party_check_conflict(sd);
-		clif_party_option(p,sd,0x100);
-		clif_party_info(p,sd);
-		clif_party_member_info(p,sd);
-		for( i = 0; i < ARRAYLENGTH(p->data); ++i )
-		{// hp of the other party members
-			sd2 = p->data[i].sd;
-			if( sd2 && sd2->status.account_id != account_id && sd2->status.char_id != char_id )
-				clif_hpmeter_single(sd->fd, sd2->bl.id, sd2->battle_status.hp, sd2->battle_status.max_hp);
-		}
-		clif_party_hp(sd);
-		clif_party_xy(sd);
-		clif_charnameupdate(sd); //Update char name's display [Skotlex]
+	if( flag ) return 0;
+
+	sd->status.party_id = party_id;
+
+	ARR_FIND( 0, MAX_PARTY, i, p->party.member[i].account_id == 0 );
+	if (i < MAX_PARTY) {
+		//TODO: This is a hack to allow the following clif calls to send the data to the new player.
+		//The correct player data is set when party_recv_info arrives soon afterwards.
+		party_fill_member(&p->party.member[i], sd);
+		p->data[i].sd = sd;
 	}
 
-	sd2 = map_id2sd(invite_aid);
-	if( sd2 != NULL )
-		clif_party_inviteack(sd2,sd->status.name,flag?2:1);
+	party_check_conflict(sd);
+	clif_party_option(p,sd,0x100);
+	clif_party_info(p,sd);
+	clif_party_member_info(p,sd);
+	for( i = 0; i < ARRAYLENGTH(p->data); ++i )
+	{// hp of the other party members
+		sd2 = p->data[i].sd;
+		if( sd2 && sd2->status.account_id != account_id && sd2->status.char_id != char_id )
+			clif_hpmeter_single(sd->fd, sd2->bl.id, sd2->battle_status.hp, sd2->battle_status.max_hp);
+	}
+	clif_party_hp(sd);
+	clif_party_xy(sd);
+	clif_charnameupdate(sd); //Update char name's display [Skotlex]
+
 	return 0;
 }
 

@@ -3431,6 +3431,7 @@ static bool mob_parse_dbrow(char** str)
 	status->adelay = atoi(str[27]);
 	status->amotion = atoi(str[28]);
 	//If the attack animation is longer than the delay, the client crops the attack animation!
+	//On aegis there is no real visible effect of having a recharge-time less than amotion anyway.
 	if (status->adelay < status->amotion)
 		status->adelay = status->amotion;
 	status->dmotion = atoi(str[29]);

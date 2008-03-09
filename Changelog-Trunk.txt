@@ -4,6 +4,14 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/03/09
+	* Modified attack_walk_delay so it behaves on a 'per-object' basis, and
+	  changed the default to 15 (all types).
+	* Modified battle_delay_damage so damage is not delayed more than one
+	  second for non-player attacks. 
+	* Modified party_member_added with a hack so that the clif functions will
+	  send the info of the new member since party_recv_info has not yet arrived.
+	* Updated clif_calc_delay so the type sent to the client is based on the
+	  number of hits of the skill (as Aegis packets reveal) [Skotlex]
 	* Cleaned up and corrected some more land skill code [ultramage]
 	- removed redundant skill_ganbatein() function
 	- Added flag UF_PATHCHECK from jAthena which affects whether a skill's

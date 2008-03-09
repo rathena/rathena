@@ -3473,7 +3473,8 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 }
 
 //Modifies the type of damage according to status changes [Skotlex]
-#define clif_calc_delay(type,damage,delay) ((type)==0x0a?type:((delay)==0&&(damage)>0?9:type))
+//Aegis data specifies that: 4 endure against single hit sources, 9 against multi-hit.
+#define clif_calc_delay(type,div,damage,delay) ((delay)==0&&(damage)>0?((div)>1?9:4):type)
 
 /*==========================================
  * Estimates walk delay based on the damage criteria. [Skotlex]
@@ -3518,7 +3519,7 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 	nullpo_retr(0, src);
 	nullpo_retr(0, dst);
 
-	type = clif_calc_delay(type,damage+damage2,ddelay);
+	type = clif_calc_delay(type,div,damage+damage2,ddelay);
 	sc = status_get_sc(dst);
 	if(sc && sc->count) {
 		if(sc->data[SC_HALLUCINATION]) {
@@ -4092,7 +4093,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int
 	nullpo_retr(0, src);
 	nullpo_retr(0, dst);
 
-	type = clif_calc_delay(type,damage,ddelay);
+	type = clif_calc_delay(type,div,damage,ddelay);
 	sc = status_get_sc(dst);
 	if(sc && sc->count) {
 		if(sc->data[SC_HALLUCINATION] && damage)
@@ -4180,7 +4181,7 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned in
 	nullpo_retr(0, dst);
 
 	type = (type>0)?type:skill_get_hit(skill_id);
-	type = clif_calc_delay(type,damage,ddelay);
+	type = clif_calc_delay(type,div,damage,ddelay);
 	sc = status_get_sc(dst);
 
 	if(sc && sc->count) {
