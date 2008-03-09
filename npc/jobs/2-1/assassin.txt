@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 3.1a
+//= 3.1b
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -43,6 +43,7 @@
 //= 3.0 Now uses enable and disable waitingroomevent. [L0ne_W0lf]
 //= 3.1 Fixed problem with waiting room. (bugreport:1099) [L0ne_W0lf]
 //= 3.1a Follow up fix. Forgot to replace a label. [L0ne_W0lf]
+//= 3.1b Fixed waiting room not enabled in some situations [Zephyrus]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -1333,7 +1334,7 @@ OnTouch:
 		mapannounce "in_moc_16",strcharinfo(0) + ", you're trapped. You will be sent back.",bc_map;
 		set ASSIN_Q,2;
 		warp "in_moc_16",19,161;
-		donpcevent "Beholder#ASNTEST::OnReset";
+		donpcevent "Beholder#ASNTEST::OnResetmob";
 		donpcevent "Standby Room#ASNTEST::OnStart";
 	}
 	end;
@@ -1461,6 +1462,14 @@ OnTimer187000:
 OnDisable:
 	stopnpctimer;
 	end;
+	
+OnMyMobDead:
+	mapannounce "in_moc_16","Hey, what the hell was that?! I told you: No killing monsters!",bc_map;
+	mapannounce "in_moc_16","I'm bringing you back... *Sigh...*",bc_map;
+	set ASSIN_Q,3;
+	warp "in_moc_16",87,102;
+	killmonsterall "in_moc_16";
+	end;
 }
 
 in_moc_16,89,98,1	script	Thomas#ASNTEST	118,5,1,{
@@ -1496,68 +1505,58 @@ OnTouch:
 			set ASSIN_Q3,0;
 			savepoint "in_moc_16",18,14;
 			warp "in_moc_16",18,14;
+			donpcevent "Standby Room#ASNTEST::OnStart";
 			end;
 		}
 	}
-	else {
-		mes "[Thomas]";
-		mes "Hey, I'm Thomas. I'm in charge of testing your use of the hiding skill. Think you're up to it?";
-		next;
-		mes "[Thomas]";
-		mes "Listen. In this test, you can't kill any monsters. Your goal is to reach 'Barcardi' at the opposite side of this room.";
-		next;
-		mes "[Thomas]";
-		mes "So basically, get to the other side of this room and meet 'Barcardi' without killing a single monster. Understand?";
-		next;
-		mes "[Thomas]";
-		mes "If you run away, get a nose bleed and pass out or something like that, I'll fail ya'. Enough talk. Let's see what you got.";
-		close2;
-		set ASSIN_Q,4;
-	}
-	donpcevent "Thomas#ASNTEST::OnTestMode";
-	end;
 
-OnTestMode:
-	monster "in_moc_16",81,77,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",82,77,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",83,77,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",84,77,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",85,77,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",86,77,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",88,77,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",89,77,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",90,77,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",77,77,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",78,56,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",79,56,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",80,56,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",81,56,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",91,55,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",92,56,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",93,56,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",94,56,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",95,56,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",96,56,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",97,56,"Mummy",1041,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",76,62,"Hydra",1068,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",79,62,"Hydra",1068,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",79,65,"Hydra",1068,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",76,65,"Hydra",1068,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",96,62,"Hydra",1068,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",96,65,"Hydra",1068,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",99,62,"Hydra",1068,1,"Thomas#ASNTEST::OnMyMobDead";
-	monster "in_moc_16",99,65,"Hydra",1068,1,"Thomas#ASNTEST::OnMyMobDead";
-	end;
+	mes "[Thomas]";
+	mes "Hey, I'm Thomas. I'm in charge of testing your use of the hiding skill. Think you're up to it?";
+	next;
+	mes "[Thomas]";
+	mes "Listen. In this test, you can't kill any monsters. Your goal is to reach 'Barcardi' at the opposite side of this room.";
+	next;
+	mes "[Thomas]";
+	mes "So basically, get to the other side of this room and meet 'Barcardi' without killing a single monster. Understand?";
+	next;
+	mes "[Thomas]";
+	mes "If you run away, get a nose bleed and pass out or something like that, I'll fail ya'. Enough talk. Let's see what you got.";
+	close2;
+	set ASSIN_Q,4;
 
-OnMyMobDead:
-	mapannounce "in_moc_16","Hey, what the hell was that?! I told you: No killing monsters!",bc_map;
-	mapannounce "in_moc_16","I'm bringing you back... *Sigh...*",bc_map;
-	set ASSIN_Q,3;
-	warp "in_moc_16",87,102;
-	killmonsterall "in_moc_16";
+	monster "in_moc_16",81,77,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",82,77,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",83,77,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",84,77,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",85,77,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",86,77,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",88,77,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",89,77,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",90,77,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",77,77,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",78,56,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",79,56,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",80,56,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",81,56,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",91,55,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",92,56,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",93,56,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",94,56,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",95,56,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",96,56,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",97,56,"Mummy",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",76,62,"Hydra",1068,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",79,62,"Hydra",1068,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",79,65,"Hydra",1068,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",76,65,"Hydra",1068,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",96,62,"Hydra",1068,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",96,65,"Hydra",1068,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",99,62,"Hydra",1068,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",99,65,"Hydra",1068,1,"timestopper#1::OnMyMobDead";
 	end;
 
 OnDisable:
+	donpcevent "Standby Room#ASNTEST::OnStart";
 	killmonsterall "in_moc_16";
 	end;
 }
