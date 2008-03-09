@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 3.1
+//= 3.1a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -42,6 +42,7 @@
 //= 2.9b Moved a wrong 'break'. [Zephyrus_cr]
 //= 3.0 Now uses enable and disable waitingroomevent. [L0ne_W0lf]
 //= 3.1 Fixed problem with waiting room. (bugreport:1099) [L0ne_W0lf]
+//= 3.1a Follow up fix. Forgot to replace a label. [L0ne_W0lf]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -1332,7 +1333,7 @@ OnTouch:
 		mapannounce "in_moc_16",strcharinfo(0) + ", you're trapped. You will be sent back.",bc_map;
 		set ASSIN_Q,2;
 		warp "in_moc_16",19,161;
-		donpcevent "Beholder#ASNTEST::OnDisable";
+		donpcevent "Beholder#ASNTEST::OnReset";
 		donpcevent "Standby Room#ASNTEST::OnStart";
 	}
 	end;

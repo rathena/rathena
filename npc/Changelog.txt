@@ -1,6 +1,8 @@
 Date		Added
 ======
 2008/03/08
+	* Rev. 12329 Follow up fix in assassin job quest. [L0ne_W0lf]
+2008/03/08
 	* Fixed a typo in AuctionWarper function name. [Paradox924X]
 2008/03/07
 	* Rev 12319 Follow-up fixes to counteragent quest. (bugreport:1122) [L0ne_W0lf]
