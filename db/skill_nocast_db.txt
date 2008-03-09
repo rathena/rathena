@@ -51,6 +51,7 @@
 362,32	//Basilica
 395,32	//Sheltering Bliss
 357,32	//Spear Dynamo (Concentration)
+264,32	//Snap (Body Relocation)
 
 //Zone 2 - Jail
 421,64	//TK_JUMPKICK#Flying Side Kick#
