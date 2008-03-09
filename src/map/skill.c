@@ -161,9 +161,8 @@ int skill_attack_area(struct block_list *bl,va_list ap);
 struct skill_unit_group *skill_locate_element_field(struct block_list *bl); // [Skotlex]
 int skill_graffitiremover(struct block_list *bl, va_list ap); // [Valaris]
 int skill_greed(struct block_list *bl, va_list ap);
-int skill_cell_overlap(struct block_list *bl, va_list ap);
-int skill_ganbatein(struct block_list *bl, va_list ap);
-int skill_trap_splash(struct block_list *bl, va_list ap);
+static int skill_cell_overlap(struct block_list *bl, va_list ap);
+static int skill_trap_splash(struct block_list *bl, va_list ap);
 struct skill_unit_group_tickset *skill_unitgrouptickset_search(struct block_list *bl,struct skill_unit_group *sg,int tick);
 static int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsigned int tick);
 static int skill_unit_onleft(int skill_id, struct block_list *bl,unsigned int tick);
@@ -5808,9 +5807,10 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 
 	case HW_GANBANTEIN:
 		if (rand()%100 < 80) {
+			int dummy = 1;
 			clif_skill_poseffect(src,skillid,skilllv,x,y,tick);
 			i = skill_get_splash(skillid, skilllv);
-			map_foreachinarea (skill_ganbatein, src->m, x-i, y-i, x+i, y+i, BL_SKILL);
+			map_foreachinarea(skill_cell_overlap, src->m, x-i, y-i, x+i, y+i, BL_SKILL, HW_GANBANTEIN, &dummy, src);
 		} else {
 			if (sd) clif_skill_fail(sd,skillid,0,0);
 			return 1;
@@ -6203,9 +6203,6 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 			&& (src->type&battle_config.vs_traps_bctall))
 			target = BCT_ALL;
 		break;
-	case NJ_SUITON:
-		skill_clear_group(src,1);
-		break;
 	case HT_SHOCKWAVE:
 		val1=skilllv*15+10;
 	case HT_SANDMAN:
@@ -6340,6 +6337,9 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		skill_clear_group(src, 1); //Delete previous Kaensins/Suitons
 		val2 = (skilllv+1)/2 + 4;
 		break;
+	case NJ_SUITON:
+		skill_clear_group(src, 1);
+		break;
 
 	case GS_GROUNDDRIFT:
 		{
@@ -6392,17 +6392,20 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 			safestrncpy(group->valstr, "Boo!", MESSAGE_SIZE);
 	}
 
-	//Why redefine local variables when the ones of the function can be reused? [Skotlex]
-	val1=skilllv;
-	val2=0;
-	limit=group->limit;
-	for(i=0;i<layout->count;i++)
+	for( i = 0; i < layout->count; i++ )
 	{
 		struct skill_unit *unit;
-		short ux,uy;
-		int alive=1;
-		ux = x + layout->dx[i];
-		uy = y + layout->dy[i];
+		int ux = x + layout->dx[i];
+		int uy = y + layout->dy[i];
+		int val1 = skilllv;
+		int val2 = 0;
+		int limit = group->limit;
+		int alive = 1;
+
+		if( !group->state.song_dance && !map_getcell(src->m,ux,uy,CELL_CHKREACH) )
+			continue; // don't place skill units on walls (except for songs/dances/encores)
+		if( battle_config.skill_wall_check && skill_get_unit_flag(skillid)&UF_PATHCHECK && !path_search_long(NULL,src->m,ux,uy,x,y,CELL_CHKWALL) )
+			continue; // no path between cell and center of casting.
 
 		switch (skillid) {
 		case MG_FIREWALL:
@@ -6429,35 +6432,25 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 				val2 = unit_flag&(UF_DANCE|UF_SONG); //Store whether this is a song/dance
 			break;
 		}
-		if(range<=0)
+
+		if( range <= 0 )
 			map_foreachincell(skill_cell_overlap,src->m,ux,uy,BL_SKILL,skillid,&alive, src);
-		
-		//Song/dances/encores are displayed even over pits/walls.
-		if( alive && map_getcell(src->m,ux,uy,CELL_CHKWALL) && !group->state.song_dance )
-			alive = 0;
-		
-		if( alive && battle_config.skill_wall_check && !path_search_long(NULL,src->m,ux,uy,x,y,CELL_CHKWALL) )
-			alive = 0; //no path between cell and center of casting.
-					
-		if( alive && skillid == WZ_ICEWALL && !map_getcell(src->m,ux,uy,CELL_CHKREACH) )
-			alive = 0;
+		if( !alive )
+			continue;
 
-		if(alive){
-			//FIXME: why not calculate val1/val2 in here? [ultramage]
-			nullpo_retr(NULL, unit=skill_initunit(group,i,ux,uy,val1,val2));
-			unit->limit=limit;
-			unit->range=range;
+		nullpo_retr(NULL, unit=skill_initunit(group,i,ux,uy,val1,val2));
+		unit->limit=limit;
+		unit->range=range;
 
-			if (skillid == PF_FOGWALL && alive == 2)
-			{	//Double duration of cells on top of Deluge/Suiton
-				unit->limit *= 2;
-				group->limit = unit->limit;
-			}
-		
-			// execute on all targets standing on this cell
-			if (range==0 && active_flag)
-				map_foreachincell(skill_unit_effect,unit->bl.m,unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,gettick(),1);
+		if (skillid == PF_FOGWALL && alive == 2)
+		{	//Double duration of cells on top of Deluge/Suiton
+			unit->limit *= 2;
+			group->limit = unit->limit;
 		}
+
+		// execute on all targets standing on this cell
+		if (range==0 && active_flag)
+			map_foreachincell(skill_unit_effect,unit->bl.m,unit->bl.x,unit->bl.y,group->bl_flag,&unit->bl,gettick(),1);
 	}
 
 	if (!group->alive_count)
@@ -6488,7 +6481,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 /*==========================================
  * 
  *------------------------------------------*/
-int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned int tick)
+static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, unsigned int tick)
 {
 	struct skill_unit_group *sg;
 	struct block_list *ss;
@@ -7203,7 +7196,7 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
  * flag&1: Invoke onplace function (otherwise invoke onout)
  * flag&4: Invoke a onleft call (the unit might be scheduled for deletion)
  *------------------------------------------*/
-int skill_unit_effect (struct block_list* bl, va_list ap)
+static int skill_unit_effect (struct block_list* bl, va_list ap)
 {
 	struct skill_unit* unit = va_arg(ap,struct skill_unit*);
 	struct skill_unit_group* group = unit->group;
@@ -7373,6 +7366,7 @@ int skill_check_pc_partner (struct map_session_data *sd, short skill_id, short* 
 				return c;
 		}
 	}
+
 	//Else: new search for partners.
 	c = 0;
 	memset (p_sd, 0, sizeof(p_sd));
@@ -8898,7 +8892,7 @@ int skill_greed (struct block_list *bl, va_list ap)
 /*==========================================
  *
  *------------------------------------------*/
-int skill_cell_overlap(struct block_list *bl, va_list ap)
+static int skill_cell_overlap(struct block_list *bl, va_list ap)
 {
 	int skillid;
 	int *alive;
@@ -8909,23 +8903,29 @@ int skill_cell_overlap(struct block_list *bl, va_list ap)
 	alive = va_arg(ap,int *);
 	src = va_arg(ap,struct block_list *);
 	unit = (struct skill_unit *)bl;
+
 	if (unit == NULL || unit->group == NULL || (*alive) == 0)
 		return 0;
 
 	switch (skillid)
 	{
 		case SA_LANDPROTECTOR:
-			if (unit->group->skill_id == SA_LANDPROTECTOR &&
-				battle_check_target(bl, src, BCT_ENEMY) > 0)
+			if( unit->group->skill_id == SA_LANDPROTECTOR &&
+				battle_check_target(bl, src, BCT_ENEMY) > 0 )
 			{	//Check for offensive Land Protector to delete both. [Skotlex]
 				(*alive) = 0;
 				skill_delunit(unit);
 				return 1;
 			}
-			//Delete the rest of types.
+			if( !(skill_get_inf2(unit->group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)) )
+			{	//It deletes everything except songs/dances and traps
+				skill_delunit(unit);
+				return 1;
+			}
+			break;
 		case HW_GANBANTEIN:
-			if(!(skill_get_inf2(unit->group->skill_id)&(INF2_SONG_DANCE|INF2_TRAP)))
-			{	//It deletes everything except songs/dances
+			if( !(unit->group->state.song_dance&0x1) )
+			{// Don't touch song/dance.
 				skill_delunit(unit);
 				return 1;
 			}
@@ -8933,9 +8933,6 @@ int skill_cell_overlap(struct block_list *bl, va_list ap)
 		case SA_VOLCANO:
 		case SA_DELUGE:
 		case SA_VIOLENTGALE:
-// Suiton/Kaensin CAN super-impose on each another.
-//		case NJ_SUITON:
-//		case NJ_KAENSIN:
 // The official implementation makes them fail to appear when casted on top of ANYTHING
 // but I wonder if they didn't actually meant to fail when casted on top of each other?
 // hence, I leave the alternate implementation here, commented. [Skotlex]
@@ -8950,8 +8947,6 @@ int skill_cell_overlap(struct block_list *bl, va_list ap)
 				case SA_VOLCANO:
 				case SA_DELUGE:
 				case SA_VIOLENTGALE:
-//				case NJ_SUITON:
-//				case NJ_KAENSIN:
 					(*alive) = 0;
 					return 1;
 			}
@@ -8979,6 +8974,7 @@ int skill_cell_overlap(struct block_list *bl, va_list ap)
 			}
 			break;
 	}
+
 	if (unit->group->skill_id == SA_LANDPROTECTOR &&
 		!(skill_get_inf2(skillid)&(INF2_SONG_DANCE|INF2_TRAP)))
 	{	//It deletes everything except songs/dances/traps
@@ -8987,25 +8983,6 @@ int skill_cell_overlap(struct block_list *bl, va_list ap)
 	}
 
 	return 0;
-}
-
-/*==========================================
- * variation of skill_cell_overlap
- *------------------------------------------*/
-int skill_ganbatein (struct block_list *bl, va_list ap)
-{
-	struct skill_unit *unit;
-
-	nullpo_retr(0, bl);
-	nullpo_retr(0, ap);
-	if ((unit = (struct skill_unit *)bl) == NULL || unit->group == NULL)
-		return 0;
-
-	if (unit->group->state.song_dance&0x1)
-		return 0; //Don't touch song/dance.
-
-	skill_delunit(unit);
-	return 1;
 }
 
 /*==========================================
@@ -9032,7 +9009,7 @@ int skill_chastle_mob_changetarget(struct block_list *bl,va_list ap)
 /*==========================================
  *
  *------------------------------------------*/
-int skill_trap_splash (struct block_list *bl, va_list ap)
+static int skill_trap_splash (struct block_list *bl, va_list ap)
 {
 	struct block_list *src;
 	int tick;
@@ -9547,7 +9524,7 @@ int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 
 	// check for expiration
 	if( (DIFF_TICK(tick,group->tick) >= group->limit || DIFF_TICK(tick,group->tick) >= unit->limit) )
-	{	// stuff inlined from skill_unit_onlimit()
+	{// skill unit expired (inlined from skill_unit_onlimit())
 		switch( group->unit_id )
 		{
 			case UNT_BLASTMINE:
@@ -9628,7 +9605,7 @@ int skill_unit_timer_sub (struct block_list* bl, va_list ap)
 		}
 	}
 	else
-	{
+	{// skill unit is still active
 		switch( group->unit_id )
 		{
 			case UNT_ICEWALL:

@@ -7,13 +7,14 @@
 //      0x002(UF_NOREITERRATION)	Spell cannot be stacked
 //      0x004(UF_NOFOOTSET)		Spell cannot be cast near/on targets
 //      0x008(UF_NOOVERLAP)		Spell effects do not overlap
-//      0x010(UF_NOPC)		Spell cannot affect players.
-//      0x020(UF_NOMOB)		Spell cannot affect mobs.
+//      0x010(UF_PATHCHECK)	Only cells with a shootable path will be placed
+//      0x020(UF_NOPC)		Spell cannot affect players.
+//      0x040(UF_NOMOB)		Spell cannot affect mobs.
 //      0x080(UF_SKILL)		Spell CAN affect skills.
 //      0x100(UF_DANCE)		Dance skill
 //      0x200(UF_ENSEMBLE)	Ensemble skill
 //      0x400(UF_SONG)		Song skill
-//      0x800(UF_DUALMODE) Spell has effects both at an interval and when you step in/out
+//      0x800(UF_DUALMODE)	Spell has effects both at an interval and when you step in/out
 // 	Example: 0x006 = 0x002+0x004 -> Cannot be stacked nor cast near targets
 //
 // Notes:
@@ -24,20 +25,20 @@
 //
 
  12,0x7e,    ,  0, 0,  -1,all,   0x003	//MG_SAFETYWALL
- 18,0x7f,    , -1, 0,  20,enemy, 0x008	//MG_FIREWALL
- 21,0x86,    ,  0, 2,1000,enemy, 0x008	//MG_THUNDERSTORM
+ 18,0x7f,    , -1, 0,  20,enemy, 0x018	//MG_FIREWALL
+ 21,0x86,    ,  0, 2,1000,enemy, 0x018	//MG_THUNDERSTORM
  25,0x85,    ,  1, 0,  -1,all,   0x003	//AL_PNEUMA
  27,0x81,0x80,  0, 0,  -1,all,   0x006	//AL_WARP
  47,0x86,    ,  0, 2,1000,enemy, 0x080	//AC_SHOWER
- 70,0x83,    , -1, 1,1000,all,   0x008	//PR_SANCTUARY
- 79,0x84,    , -1, 1,3000,enemy, 0x008	//PR_MAGNUS
+ 70,0x83,    , -1, 1,1000,all,   0x018	//PR_SANCTUARY
+ 79,0x84,    , -1, 1,3000,enemy, 0x018	//PR_MAGNUS
  80,0x87,0x88,  0, 1,2000,enemy, 0x006	//WZ_FIREPILLAR
- 83,0x86,    ,  0, 3,1000,enemy, 0x000	//WZ_METEOR
- 85,0x86,    ,  0, 6:6:6:6:6:6:6:6:6:6:8,1250,enemy,0x008	//WZ_VERMILION
- 87,0x8d,    , -1, 0,  -1,all,   0x000	//WZ_ICEWALL
- 89,0x86,    ,  0, 5, 450,enemy, 0x008	//WZ_STORMGUST
- 91,0x86,    ,  0, 2,1000,enemy, 0x000	//WZ_HEAVENDRIVE
- 92,0x8e,    ,  2, 0,  -1,enemy, 0x000	//WZ_QUAGMIRE
+ 83,0x86,    ,  0, 3,1000,enemy, 0x010	//WZ_METEOR
+ 85,0x86,    ,  0, 6:6:6:6:6:6:6:6:6:6:8,1250,enemy,0x018	//WZ_VERMILION
+ 87,0x8d,    , -1, 0,  -1,all,   0x010	//WZ_ICEWALL
+ 89,0x86,    ,  0, 5, 450,enemy, 0x018	//WZ_STORMGUST
+ 91,0x86,    ,  0, 2,1000,enemy, 0x010	//WZ_HEAVENDRIVE
+ 92,0x8e,    ,  2, 0,  -1,enemy, 0x010	//WZ_QUAGMIRE
 115,0x90,    ,  0, 1,1000,enemy, 0x006	//HT_SKIDTRAP
 116,0x93,    ,  0, 0,1000,enemy, 0x006	//HT_LANDMINE
 117,0x91,    ,  0, 1,1000,enemy, 0x006	//HT_ANKLESNARE
@@ -51,29 +52,29 @@
 140,0x92,    , -1, 0,1000,enemy, 0x000	//AS_VENOMDUST
 220,0xb0,    ,  0, 0,  -1,all,   0x002	//RG_GRAFFITI
 229,0xb1,    ,  0, 1,1000,enemy, 0x006	//AM_DEMONSTRATION
-254,0x86,    , -1, 0, 400,enemy, 0x000	//CR_GRANDCROSS
-285,0x9a,    ,  3, 0,  -1,all,   0x000	//SA_VOLCANO
-286,0x9b,    ,  3, 0,  -1,all,   0x000	//SA_DELUGE
-287,0x9c,    ,  3, 0,  -1,all,   0x000	//SA_VIOLENTGALE
-288,0x9d,    ,  3:3:4:4:5,0, -1,all,   0x000	//SA_LANDPROTECTOR
+254,0x86,    , -1, 0, 400,enemy, 0x010	//CR_GRANDCROSS
+285,0x9a,    ,  3, 0,  -1,all,   0x010	//SA_VOLCANO
+286,0x9b,    ,  3, 0,  -1,all,   0x010	//SA_DELUGE
+287,0x9c,    ,  3, 0,  -1,all,   0x010	//SA_VIOLENTGALE
+288,0x9d,    ,  3:3:4:4:5,0, -1,all,   0x010	//SA_LANDPROTECTOR
 306,0x9e,    ,  4, 0,6000,all,   0x200	//BD_LULLABY
-307,0x9f,    ,  4, 0,  -1,enemy, 0x210	//BD_RICHMANKIM
+307,0x9f,    ,  4, 0,  -1,enemy, 0x220	//BD_RICHMANKIM
 308,0xa0,    ,  4, 0,  -1,enemy, 0x200	//BD_ETERNALCHAOS
 309,0xa1,    ,  4, 0,  -1,party, 0x200	//BD_DRUMBATTLEFIELD
 310,0xa2,    ,  4, 0,  -1,party, 0x200	//BD_RINGNIBELUNGEN
 311,0xa3,    ,  4, 0,  -1,all,   0x200	//BD_ROKISWEIL
-312,0xa4,    ,  4, 0,  -1,party, 0x220	//BD_INTOABYSS
+312,0xa4,    ,  4, 0,  -1,party, 0x240	//BD_INTOABYSS
 313,0xa5,    ,  4, 0,  -1,party, 0x200	//BD_SIEGFRIED
 317,0xa6,    ,  3, 0,3000,enemy, 0x400	//BA_DISSONANCE
-319,0xa7,    ,  3, 0,  -1,all,   0x420	//BA_WHISTLE
-320,0xa8,    ,  3, 0,  -1,all,   0x420	//BA_ASSASSINCROSS
-321,0xa9,    ,  3, 0,  -1,all,   0x420	//BA_POEMBRAGI
-322,0xaa,    ,  3, 0,6000,all,   0xC20	//BA_APPLEIDUN
+319,0xa7,    ,  3, 0,  -1,all,   0x440	//BA_WHISTLE
+320,0xa8,    ,  3, 0,  -1,all,   0x440	//BA_ASSASSINCROSS
+321,0xa9,    ,  3, 0,  -1,all,   0x440	//BA_POEMBRAGI
+322,0xaa,    ,  3, 0,6000,all,   0xC40	//BA_APPLEIDUN
 325,0xab,    ,  3, 0,3000,enemy, 0x100	//DC_UGLYDANCE
-327,0xac,    ,  3, 0,  -1,all,   0x120	//DC_HUMMING
+327,0xac,    ,  3, 0,  -1,all,   0x140	//DC_HUMMING
 328,0xad,    ,  3, 0,  -1,enemy, 0x100	//DC_DONTFORGETME
-329,0xae,    ,  3, 0,  -1,all,   0x120	//DC_FORTUNEKISS
-330,0xaf,    ,  3, 0,  -1,all,   0x120	//DC_SERVICEFORYOU
+329,0xae,    ,  3, 0,  -1,all,   0x140	//DC_FORTUNEKISS
+330,0xaf,    ,  3, 0,  -1,all,   0x140	//DC_SERVICEFORYOU
 336,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARTNER
 339,0x86,    , -1, 0, 400,enemy, 0x000	//NPC_DARKGRANDCROSS
 362,0xb4,    ,  0, 3,  -1,all,   0x000	//HP_BASILICA
@@ -90,7 +91,7 @@
 488,0xb9,    ,  3, 0,  -1,all,   0x200	//CG_HERMODE
 516,0xba,    ,  3, 0, 100,enemy, 0x000	//GS_DESPERADO
 521,0xbe,    ,  0, 1,1000,enemy, 0x000	//GS_GROUNDDRIFT
-527,0xbc,    , -1, 0,2000,enemy, 0x000	//NJ_TATAMIGAESHI
-535,0xbd,    , -1, 0,  20,enemy, 0x008	//NJ_KAENSIN
-538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x000	//NJ_SUITON
-670,0xc7,    ,  5, 1,1000,all,   0x008	//NPC_EVILLAND
+527,0xbc,    , -1, 0,2000,enemy, 0x010	//NJ_TATAMIGAESHI
+535,0xbd,    , -1, 0,  20,enemy, 0x018	//NJ_KAENSIN
+538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x010	//NJ_SUITON
+670,0xc7,    ,  5, 1,1000,all,   0x018	//NPC_EVILLAND

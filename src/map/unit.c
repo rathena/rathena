@@ -1088,8 +1088,8 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, sh
 	if (!status_check_skilluse(src, NULL, skill_num, 0))
 		return 0;
 
-	if (map_getcell(src->m, skill_x, skill_y, CELL_CHKNOREACH))
-	{	//prevent casting ground targeted spells on non-walkable areas. [Skotlex] 
+	if( map_getcell(src->m, skill_x, skill_y, CELL_CHKWALL) )
+	{// can't cast ground targeted spells on wall cells
 		if (sd) clif_skill_fail(sd,skill_num,0,0);
 		return 0;
 	}

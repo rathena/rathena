@@ -43,6 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/03/09
+	* Added UF_PATHCHECK to skill_unit_db.txt, re-numbered flags [ultramage]
 2008/03/08
 	* Added a missing ; in item 5384's script. (bugreport: 1115) [Paradox924X]
 2008/03/04

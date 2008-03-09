@@ -100,17 +100,18 @@ struct s_skill_unit_layout {
 };
 
 enum {
-	UF_DEFNOTENEMY   = 0x0001,	// defnotenemy 設定でBCT_NOENEMYに切り替え
-	UF_NOREITERATION = 0x0002,	// 重複置き禁止 
-	UF_NOFOOTSET     = 0x0004,	// 足元置き禁止
-	UF_NOOVERLAP     = 0x0008,	// ユニット効果が重複しない
-	UF_NOPC          = 0x0010,	//May not target players
-	UF_NOMOB         = 0x0020,	//May not target mobs
-	UF_SKILL         = 0x0080,	//May target skills
-	UF_DANCE         = 0x0100,	//Dance
-	UF_ENSEMBLE      = 0x0200,	//Duet
-	UF_SONG          = 0x0400,	//Song
-	UF_DUALMODE      = 0x0800,	//Spells should trigger both ontimer and onplace/onout/onleft effects.
+	UF_DEFNOTENEMY   = 0x0001,	// If 'defunit_not_enemy' is set, the target is changed to 'friend'
+	UF_NOREITERATION = 0x0002,	// Spell cannot be stacked
+	UF_NOFOOTSET     = 0x0004,	// Spell cannot be cast near/on targets
+	UF_NOOVERLAP     = 0x0008,	// Spell effects do not overlap
+	UF_PATHCHECK     = 0x0010,	// Only cells with a shootable path will be placed
+	UF_NOPC          = 0x0020,	// May not target players
+	UF_NOMOB         = 0x0040,	// May not target mobs
+	UF_SKILL         = 0x0080,	// May target skills
+	UF_DANCE         = 0x0100,	// Dance
+	UF_ENSEMBLE      = 0x0200,	// Duet
+	UF_SONG          = 0x0400,	// Song
+	UF_DUALMODE      = 0x0800,	// Spells should trigger both ontimer and onplace/onout/onleft effects.
 };
 
 // アイテム作成デ?タベ?ス
