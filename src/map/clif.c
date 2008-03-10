@@ -9880,15 +9880,25 @@ void clif_parse_RemovePartyMember(int fd, struct map_session_data *sd)
 void clif_parse_PartyChangeOption(int fd, struct map_session_data *sd)
 {
 	struct party_data *p;
+	int i;
 
-	if(!sd->status.party_id)
+	if( !sd->status.party_id )
 		return;
 
 	p = party_search(sd->status.party_id);
-	if (!p) return;
+	if( p == NULL )
+		return;
+
+	ARR_FIND( 0, MAX_PARTY, i, p->data[i].sd == sd );
+	if( i == MAX_PARTY )
+		return; //Shouldn't happen
+
+	if( !p->party.member[i].leader )
+		return;
+
 	//The client no longer can change the item-field, therefore it always
 	//comes as zero. Here, resend the item data as it is.
-// party_changeoption(sd, RFIFOW(fd,2), RFIFOW(fd,4));
+//	party_changeoption(sd, RFIFOW(fd,2), RFIFOW(fd,4));
 	party_changeoption(sd, RFIFOW(fd,2), p->party.item);
 }
 
