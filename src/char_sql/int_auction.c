@@ -155,7 +155,7 @@ static int auction_end_timer(int tid, unsigned int tick, int id, int data)
 			mail_sendmail(0, "Auction Manager", auction->seller_id, auction->seller_name, "Auction", "Payment for your auction!.", auction->price, NULL);
 		}
 		else
-			mail_sendmail(0, "Auction Manager", auction->seller_id, auction->seller_name, "Auction", "Sorry, No one buy your item...", 0, &auction->item);
+			mail_sendmail(0, "Auction Manager", auction->seller_id, auction->seller_name, "Auction", "No buyers have been found for your auction.", 0, &auction->item);
 		
 		ShowInfo("Auction End: id %u.\n", auction->auction_id);
 
@@ -429,7 +429,7 @@ static void mapif_parse_Auction_bid(int fd)
 			mapif_Auction_message(auction->buyer_id, 7); // You have failed to win the auction
 		}
 		else
-			mail_sendmail(0, "Auction Manager", auction->buyer_id, auction->buyer_name, "Auction", "You has placed a higher bid.", auction->price, NULL);
+			mail_sendmail(0, "Auction Manager", auction->buyer_id, auction->buyer_name, "Auction", "You have placed a higher bid.", auction->price, NULL);
 	}
 
 	auction->buyer_id = char_id;
@@ -442,7 +442,7 @@ static void mapif_parse_Auction_bid(int fd)
 
 		mail_sendmail(0, "Auction Manager", auction->buyer_id, auction->buyer_name, "Auction", "You have won the auction.", 0, &auction->item);
 		mapif_Auction_message(char_id, 6); // You have won the auction
-		mail_sendmail(0, "Auction Manager", auction->seller_id, auction->seller_name, "Auction", "Payment for your Auction!.", auction->buynow, NULL);
+		mail_sendmail(0, "Auction Manager", auction->seller_id, auction->seller_name, "Auction", "Payment for your auction!.", auction->buynow, NULL);
 
 		auction_delete(auction);
 		return;
