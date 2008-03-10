@@ -43,6 +43,9 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/03/10
+	* Rev. 12336 Fixed Hunter Cap Bonus. (bugreport:892) [L0ne_W0lf]
+	* Fixed Ancient Magic combo using the wrong equipment. (bugreport:670)
 2008/03/09
 	* Rev. 12333 Disabled Snap in Turbo track. (Seems obvious, no?) [L0ne_W0lf]
 	* Added UF_PATHCHECK to skill_unit_db.txt, re-numbered flags [ultramage]
