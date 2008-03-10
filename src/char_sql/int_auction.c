@@ -415,7 +415,7 @@ static void mapif_parse_Auction_bid(int fd)
 		return;
 	}
 
-	if( auction_count(char_id, true) > 4 )
+	if( auction_count(char_id, true) > 4 && bid < auction->buynow && auction->buyer_id != char_id )
 	{
 		mapif_Auction_bid(fd, char_id, bid, 9); // You cannot place more than 5 bids at a time
 		return;
@@ -434,6 +434,7 @@ static void mapif_parse_Auction_bid(int fd)
 
 	auction->buyer_id = char_id;
 	safestrncpy(auction->buyer_name, (char*)RFIFOP(fd,16), NAME_LENGTH);
+	auction->price = bid;
 
 	if( bid >= auction->buynow )
 	{ // Automatic won the auction
@@ -447,7 +448,6 @@ static void mapif_parse_Auction_bid(int fd)
 		return;
 	}
 
-	auction->price = bid;
 	auction_save(auction);
 
 	mapif_Auction_bid(fd, char_id, 0, 1); // You have successfully bid in the auction

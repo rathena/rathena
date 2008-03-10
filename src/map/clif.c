@@ -11642,9 +11642,7 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd)
 		return;
 
 	flag = mail_setitem(sd, idx, amount);
-
-	if (idx > 0)
-		clif_Mail_setattachment(fd,idx,flag);
+	clif_Mail_setattachment(fd,idx,flag);
 }
 
 /*------------------------------------------

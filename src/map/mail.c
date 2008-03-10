@@ -73,10 +73,13 @@ unsigned char mail_setitem(struct map_session_data *sd, int idx, int amount)
 {
 	if (idx == 0)
 	{ // Zeny Transfer
-		if (amount < 0)
+		if( amount < 0 )
 			return 0;
-		if (amount > sd->status.zeny)
+		if( amount > sd->status.zeny )
 			amount = sd->status.zeny;
+
+		if( !pc_can_give_items(pc_isGM(sd)) )
+			amount = 0;
 
 		sd->mail.zeny = amount;
 		clif_updatestatus(sd, SP_ZENY);
