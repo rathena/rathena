@@ -91,7 +91,6 @@ void clif_setport(uint16 port);
 uint32 clif_getip(void);
 uint32 clif_refresh_ip(void);
 uint16 clif_getport(void);
-int clif_countusers(void);
 void clif_setwaitclose(int);
 
 int clif_authok(struct map_session_data *);

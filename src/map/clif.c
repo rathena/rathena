@@ -165,23 +165,6 @@ uint16 clif_getport(void)
 }
 
 /*==========================================
- * Counts connected players.
- *------------------------------------------*/
-int clif_countusers(void)
-{
-	int users = 0, i;
-	struct map_session_data *sd;
-
-	for(i = 0; i < fd_max; i++) {
-		if (session[i] && session[i]->func_parse == clif_parse &&
-			(sd = (struct map_session_data*)session[i]->session_data) &&
-		  	sd->state.active && !(battle_config.hide_GM_session && pc_isGM(sd)))
-			users++;
-	}
-	return users;
-}
-
-/*==========================================
  * ‘S‚Ä‚Ìclient‚É‘Î‚µ‚Äfunc()Às
  *------------------------------------------*/
 int clif_foreachclient(int (*func)(struct map_session_data*, va_list),...) //recoded by sasuke, bug when player count gets higher [Kevin]

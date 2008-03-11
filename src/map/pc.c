@@ -6900,7 +6900,7 @@ int pc_autosave(int tid,unsigned int tick,int id,int data)
 	}
 	mapit_free(iter);
 
-	interval = autosave_interval/(clif_countusers()+1);
+	interval = autosave_interval/(map_usercount()+1);
 	if(interval < minsave_interval)
 		interval = minsave_interval;
 	add_timer(gettick()+interval,pc_autosave,0,0);

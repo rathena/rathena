@@ -1442,19 +1442,11 @@ int ping_char_server(int tid, unsigned int tick, int id, int data)
 // unused
 int send_usercount_tochar(int tid, unsigned int tick, int id, int data)
 {
-	int count = 0;
-	struct s_mapiterator* iter;
-
 	chrif_check(-1);
-
-	iter = mapit_getallusers();
-	for( mapit_first(iter); mapit_exists(iter); mapit_next(iter) )
-		count++;
-	mapit_free(iter);
 
 	WFIFOHEAD(char_fd,4);
 	WFIFOW(char_fd,0) = 0x2afe;
-	WFIFOW(char_fd,2) = count;
+	WFIFOW(char_fd,2) = map_usercount();
 	WFIFOSET(char_fd,4);
 	return 0;
 }
