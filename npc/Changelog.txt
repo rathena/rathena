@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/03/12
+	* Rev. 12345 Small update to castle ownership announcement. [L0ne_W0lf]
 2008/03/08
 	* Rev. 12329 Follow up fix in assassin job quest. [L0ne_W0lf]
 2008/03/08

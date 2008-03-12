@@ -4,7 +4,7 @@
 //= kalen (1.0)
 //= 1.1 by Akaru and ho|yAnge|
 //===== Current Version: =====================================
-//= 1.8
+//= 1.8a
 //===== Compatible With: =====================================
 //= eAthena 0.1+; RO Episode 4+
 //===== Description: =========================================
@@ -26,6 +26,7 @@
 //= 1.6 Corrected multiple "WoE has begun" announces [ultramage]
 //= 1.7 Commented out the WoE start and end announces. [L0ne_W0lf]
 //= 1.8 Castle owners displayed when WoE starts and finished. [L0ne_W0lf]
+//= 1.8a Will now report unoccupied castles at start/end. [L0ne_W0lf]
 //============================================================
 //| To know how to set up WoE times, go to doc\woe_time_explanation.txt
 // WoE Start/Stop times
@@ -71,8 +72,14 @@ L_DisplayOwners:
 	setarray .@maps$[5],"gefg_cas01","gefg_cas02","gefg_cas03","gefg_cas04","gefg_cas05";
 	setarray .@maps$[10],"payg_cas01","payg_cas02","payg_cas03","payg_cas04","payg_cas05";
 	setarray .@maps$[15],"prtg_cas01","prtg_cas02","prtg_cas03","prtg_cas04","prtg_cas05";
-	for( set .@i, 0; .@i <= 19; set .@i, .@i+1 )
-		Announce "The [" + GetCastleName(.@maps$[.@i]) + "] castle has been conquered by the [" + GetGuildName(GetCastleData(.@maps$[.@i],1)) + "] guild.",bc_all;
+	for( set .@i, 0; .@i <= 19; set .@i, .@i+1 ) {
+		if (GetCastleData(getarg(1),1)) {
+			Announce "The [" + GetCastleName(.@maps$[.@i]) + "] castle has been conquered by the [" + GetGuildName(GetCastleData(.@maps$[.@i],1)) + "] guild.",bc_all;
+		}
+		else {
+			Announce "The [" + GetCastleName(.@maps$[.@i]) + "] castle is currently unoccupied.",bc_all;
+		}		
+	}
 	end;
 }
 
