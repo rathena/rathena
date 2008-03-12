@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.16.20080229
+//= 3.17.20080312
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -104,6 +104,8 @@
 //= 3.16.20080229
 //=       Updated 'Shop' NPC type description to include cashshop. [L0ne_W0lf]
 //=       Woopth. Fixed spelling. ;P Should be a bit clearer now. [L0ne_W0lf]
+//= 3.17.20080312
+//=       Corrected cashshop description. (#FREEPOINTS->#KAFRAPOINTS) [L0ne_W0lf]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -388,7 +390,7 @@ prices for items in different shops.
 
 Since trunk r12264 you can alternatively use "cashshop" in place of "shop"
 to use the Cash Shop interface, allowing you to buy items with special points
-(Currently stored as account vars in global_reg #CASHPOINTS and #FREEPOINTS.)
+(Currently stored as account vars in global_reg #CASHPOINTS and #KAFRAPOINTS.)
 This type of shop will not allow you to sell items at it, you may only
 purchase items here. The layout used to define sale items still count, and
 "<price>" refers to how many points will be spent purchasing the them.
