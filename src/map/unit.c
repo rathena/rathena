@@ -1890,7 +1890,7 @@ int unit_free(struct block_list *bl, int clrtype)
 			aFree(md->guardian_data);
 			md->guardian_data = NULL;
 		}
-		if (md->spawn && md->spawn_n < 0 && --(md->spawn->num) == 0)
+		if (md->spawn && !md->special_state.cached && --(md->spawn->num) == 0)
 		{	//Spawning data is not attached to the map, so free it
 			//if this is the last mob who is pointing at it.
 			aFree(md->spawn);

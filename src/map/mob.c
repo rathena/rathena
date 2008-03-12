@@ -225,7 +225,6 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 
 	if(md->db->status.mode&MD_LOOTER)
 		md->lootitem = (struct item *)aCalloc(LOOTITEM_SIZE,sizeof(struct item));
-	md->spawn_n = -1;
 	md->deletetimer = -1;
 	md->skillidx = -1;
 	status_set_viewdata(&md->bl, md->class_);

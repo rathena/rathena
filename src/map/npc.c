@@ -2178,11 +2178,9 @@ static const char* npc_parse_function(char* w1, char* w2, char* w3, char* w4, co
  * Parse Mob 1 - Parse mob list into each map
  * Parse Mob 2 - Actually Spawns Mob
  * [Wizputer]
- * If cached =1, it is a dynamic cached mob
- * index points to the index in the mob_list of the map_data cache.
- * -1 indicates that it is not stored on the map.
+ * If 'cached' is true, it is a dynamic cached mob
  *------------------------------------------*/
-int npc_parse_mob2(struct spawn_data* mob, int index)
+int npc_parse_mob2(struct spawn_data* mob, bool cached)
 {
 	int i;
 	struct mob_data *md;
@@ -2190,8 +2188,7 @@ int npc_parse_mob2(struct spawn_data* mob, int index)
 	for (i = mob->skip; i < mob->num; i++) {
 		md = mob_spawn_dataset(mob);
 		md->spawn = mob;
-		md->spawn_n = index;
-		md->special_state.cached = (index>=0);	//If mob is cached on map, it is dynamically removed
+		md->special_state.cached = cached;	//If mob is cached on map, it is dynamically removed
 		mob_spawn(md);
 	}
 	mob->skip = 0;
@@ -2340,7 +2337,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	memcpy(data, &mob, sizeof(struct spawn_data));
 	
 	if( !battle_config.dynamic_mobs || mob.delay1 || mob.delay2 ) {
-		npc_parse_mob2(data,-1);
+		npc_parse_mob2(data,false);
 		npc_delay_mob += mob.num;
 	} else {
 		int index = map_addmobtolist(data->m, data);
@@ -2349,14 +2346,14 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 			// (usually shouldn't occur when map server is just starting,
 			// but not the case when we do @reloadscript
 			if (map[mob.m].users > 0)
-				npc_parse_mob2(data,index);
+				npc_parse_mob2(data,true);
 			npc_cache_mob += mob.num;
 		} else {
 			// mobcache is full
 			// create them as delayed with one second
 			mob.delay1 = 1000;
 			mob.delay2 = 1000;
-			npc_parse_mob2(data,-1);
+			npc_parse_mob2(data,false);
 			npc_delay_mob += mob.num;
 		}
 	}

@@ -37,7 +37,7 @@
 #define MAX_SKILLUNITGROUP 25
 #define MAX_SKILLUNITGROUPTICKSET 25
 #define MAX_SKILLTIMERSKILL 15
-#define MAX_MOBSKILL 50
+#define MAX_MOBSKILL 40
 #define MAX_MOB_LIST_PER_MAP 128
 #define MAX_EVENTQUEUE 2
 #define MAX_EVENTTIMER 32
@@ -913,7 +913,6 @@ struct mob_data {
 	} dmglog[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	struct item *lootitem;
-	short spawn_n;	//Spawn data index on the map server.
 	short class_;
 	unsigned int tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
 	int level;

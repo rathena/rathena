@@ -2019,15 +2019,15 @@ int mob_cache_cleanup_sub(struct block_list *bl, va_list ap)
 	nullpo_retr(0, md);
 
 	//When not to remove:
-	//Mob has the cached flag on 0
+	//Mob is not in cache
 	if (!md->special_state.cached)
 		return 0;
-	if (!battle_config.mob_remove_damaged && 
-		md->status.hp < md->status.max_hp)
+	//Mob is damaged and mob_remove_damaged is off
+	if (!battle_config.mob_remove_damaged && md->status.hp < md->status.max_hp)
 	{
-		if (md->spawn && md->spawn_n >= 0) //Do not respawn mob later.
-			map[md->spawn->m].moblist[md->spawn_n]->skip++;
-		return 0; //Do not remove damaged mobs.
+		if( md->spawn ) //Do not respawn mob later.
+			md->spawn->skip++;
+		return 0;
 	}
 	
 	unit_free(&md->bl,0);
