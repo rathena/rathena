@@ -307,9 +307,11 @@ int chat_createnpcchat(struct npc_data* nd, const char* title, int limit, bool p
 int chat_deletenpcchat(struct npc_data* nd)
 {
 	struct chat_data *cd;
-
 	nullpo_retr(0, nd);
-	nullpo_retr(0, cd = (struct chat_data*)map_id2bl(nd->chat_id));
+
+	cd = (struct chat_data*)map_id2bl(nd->chat_id);
+	if( cd == NULL )
+		return 0;
 	
 	chat_npckickall(cd);
 	clif_clearchat(cd, 0);
