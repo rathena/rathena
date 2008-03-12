@@ -7978,6 +7978,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			sd->state.night = 0;
 			clif_status_load(&sd->bl, SI_NIGHT, 0);
 		}
+		sd->state.changemap = false;
 	}
 	
 	sd->state.using_fake_npc = 0;
@@ -11681,7 +11682,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 	if( DIFF_TICK(sd->cansendmail_tick, gettick()) > 0 )
 	{
 		clif_displaymessage(sd->fd,"Cannot send mails too fast!!.");
-		clif_Mail_send(fd, 1); // fail
+		clif_Mail_send(fd, true); // fail
 		return;
 	}
 
@@ -11692,7 +11693,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
 
 	if( !mail_setattachment(sd, &msg) )
 	{ // Invalid Append condition
-		clif_Mail_send(sd->fd, 1); // fail
+		clif_Mail_send(sd->fd, true); // fail
 		mail_removeitem(sd,0);
 		mail_removezeny(sd,0);
 		return;

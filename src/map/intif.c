@@ -1644,7 +1644,11 @@ static void intif_parse_Mail_send(int fd)
 		if( fail )
 			mail_deliveryfail(sd, &msg);
 		else
+		{
 			clif_Mail_send(sd->fd, false);
+			if( save_settings&16 )
+				chrif_save(sd, 0);
+		}
 	}
 
 	if( fail )
@@ -1738,7 +1742,11 @@ static void intif_parse_Auction_register(int fd)
 		return;
 
 	if( auction.auction_id > 0 )
+	{
 		clif_Auction_message(sd->fd, 1); // Confirmation Packet ??
+		if( save_settings&32 )
+			chrif_save(sd,0);
+	}
 	else
 	{
 		clif_Auction_message(sd->fd, 4);
