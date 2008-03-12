@@ -7958,7 +7958,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 		//Login Event
 		npc_script_event(sd, NPCE_LOGIN);
-	} else {
+	} else if( sd->state.changemap ) {
 		//For some reason the client "loses" these on map-change.
 		clif_updatestatus(sd,SP_STR);
 		clif_updatestatus(sd,SP_AGI);
@@ -7966,8 +7966,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_updatestatus(sd,SP_INT);
 		clif_updatestatus(sd,SP_DEX);
 		clif_updatestatus(sd,SP_LUK);
-
-		sd->state.using_fake_npc = 0;
 
 		//New 'night' effect by dynamix [Skotlex]
 		if (night_flag && map[sd->bl.m].flag.nightenabled)
@@ -7980,14 +7978,16 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			sd->state.night = 0;
 			clif_status_load(&sd->bl, SI_NIGHT, 0);
 		}
+	}
+	
+	sd->state.using_fake_npc = 0;
 
-		if(sd->npc_id)
-			npc_event_dequeue(sd);
+	if(sd->npc_id)
+		npc_event_dequeue(sd);
 
 #ifndef TXT_ONLY
 		mail_clear(sd);
 #endif
-	}
 
 	if(map[sd->bl.m].flag.loadevent) // Lance
 		npc_script_event(sd, NPCE_LOADMAP);
@@ -11433,6 +11433,13 @@ void clif_Mail_refreshinbox(struct map_session_data *sd)
 		j++;
 	}
 	WFIFOSET(fd,len);
+
+	if( md->full )
+	{
+		char output[100];
+		sprintf(output, "Inbox is full (Max %d). Delete some mails.", MAIL_MAX_INBOX);
+		clif_disp_onlyself(sd, output, strlen(output));
+	}
 }
 
 /*------------------------------------------

@@ -549,6 +549,7 @@ struct map_session_data {
 		unsigned short autoloot;
 		unsigned short autolootid; // [Zephyrus]
 		unsigned noks : 3; // [Zeph Kill Steal Protection]
+		bool changemap;
 		struct guild *gmaster_flag;
 	} state;
 	struct {

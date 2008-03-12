@@ -3434,7 +3434,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 
 	m=map_mapindex2mapid(mapindex);
 
-	if (sd->mapindex != mapindex)
+	if( (sd->state.changemap = (sd->mapindex != mapindex)) )
 	{	//Misc map-changing settings
 		if (sd->sc.count)
 		{ //Cancel some map related stuff.
