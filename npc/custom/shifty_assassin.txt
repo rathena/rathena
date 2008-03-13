@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= acky - god@acky.com
 //===== Current Version: =====================================
-//= 1.1.1
+//= 1.1.2
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
 //= Players buy ninjas to assassinate other players
 //===== Additional Comments: =================================
 //= 1.1.1 Changed all gmcommand to atcommand as Poki#3 suggested. [Vicious]
+//= 1.1.2 Updated WoE Check. [Paradox924X]
 //============================================================
 
 morocc,148,86,5	script	Shifty Assassin	725,{
@@ -66,7 +67,7 @@ close;
 
 // ASSASSINATE SOMEBODY //
 M_Kill:
-if ($AgitStarted != 0) goto M_Busy;
+if (agitcheck()) goto M_Busy;
 mes "[Shifty Assassin]";
 mes "Enter the name of the target.";
 mes "^FF0000Type the name exactly, otherwise I won't be able to find the victim.^000000";
