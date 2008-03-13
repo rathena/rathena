@@ -7958,6 +7958,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 		//Login Event
 		npc_script_event(sd, NPCE_LOGIN);
+		mob_barricade_get(sd);
 	} else if( sd->state.changemap ) {
 		//For some reason the client "loses" these on map-change.
 		clif_updatestatus(sd,SP_STR);
@@ -7978,6 +7979,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			sd->state.night = 0;
 			clif_status_load(&sd->bl, SI_NIGHT, 0);
 		}
+
+		mob_barricade_get(sd);
 		sd->state.changemap = false;
 	}
 	

@@ -67,6 +67,8 @@ static struct {
 	int class_[350];
 } summon[MAX_RANDOMMONSTER];
 
+static DBMap* barricade_db;
+
 #define CLASSCHANGE_BOSS_NUM 21
 
 /*==========================================
@@ -492,6 +494,141 @@ int mob_once_spawn_area(struct map_session_data* sd,int m,int x0,int y0,int x1,i
 	}
 
 	return id; // id of last spawned mob
+}
+/*==========================================
+ * Barricades [Zephyrus]
+ *------------------------------------------*/
+short mob_barricade_build(short m, short x, short y, short count, short dir, bool killable, const char* event)
+{
+	int i, j;
+	short x1 = dir ? x + count - 1 : x;
+	short y1 = dir ? y : y + count - 1;
+	struct mob_data *md;
+	struct barricade_data *barricade;
+
+	if( count <= 0 )
+		return 1;
+
+	if( !event )
+		return 2;
+
+	if( (barricade = (struct barricade_data *)strdb_get(barricade_db,event)) != NULL )
+		return 3; // Allready a barricade with event name
+
+	if( map_getcell(m, x, y, CELL_CHKNOREACH) )
+		return 4; // Starting cell problem
+
+	CREATE(barricade, struct barricade_data, 1);
+	barricade->dir = dir;
+	barricade->x = x;
+	barricade->y = y;
+	barricade->m = m;
+	safestrncpy(barricade->npc_event, event, sizeof(barricade->npc_event));
+	barricade->amount = 0;
+
+	ShowInfo("New Barricade: %s.\n", barricade->npc_event);
+
+	for( i = 0; i < count; i++ )
+	{
+		x1 = dir ? x + i : x;
+		y1 = dir ? y : y + i;
+
+		if( map_getcell(m, x1, y1, CELL_CHKNOREACH) )
+			break; // Collision
+
+		if( i % 2 == 0 )
+		{
+			barricade->amount++;
+			j = mob_once_spawn(NULL, m, x1, y1, "--ja--", killable ? MOBID_BARRICADEB : MOBID_BARRICADEA, 1, "");
+			md = (struct mob_data *)map_id2bl(j);
+			md->barricade = barricade;
+		}
+
+		map_setgatcell(m, x1, y1, 5);
+		clif_changemapcell(0, m, x1, y1, 5, ALL_SAMEMAP);
+	}
+
+	barricade->count = i;
+
+	strdb_put(barricade_db, barricade->npc_event, barricade);
+	map[m].barricade_num++;
+
+	return 0;
+}
+
+void mob_barricade_get(struct map_session_data *sd)
+{
+	struct barricade_data *barricade;
+	DBIterator* iter;
+	DBKey key;
+	short x1, y1;
+	int i;
+
+	if( map[sd->bl.m].barricade_num <= 0 )
+		return;
+
+	iter = barricade_db->iterator(barricade_db);
+	for( barricade = iter->first(iter,&key); iter->exists(iter); barricade = iter->next(iter,&key) )
+	{
+		if( sd->bl.m != barricade->m )
+			continue;
+
+		for( i = 0; i < barricade->count; i++ )
+		{
+			x1 = barricade->dir ? barricade->x + i : barricade->x;
+			y1 = barricade->dir ? barricade->y : barricade->y + i;
+			clif_changemapcell(sd->fd, barricade->m, x1, y1, 5, SELF);
+		}
+	}
+	iter->destroy(iter);
+}
+
+static void mob_barricade_break(struct barricade_data *barricade)
+{
+	int i;
+	short x1, y1;
+	
+	if( barricade == NULL )
+		return;
+
+	if( --barricade->amount > 0 )
+		return; // There are still barricades
+
+	for( i = 0; i < barricade->count; i++ )
+	{
+		x1 = barricade->dir ? barricade->x + i : barricade->x;
+		y1 = barricade->dir ? barricade->y : barricade->y + i;
+
+		map_setgatcell(barricade->m, x1, y1, 0);
+		clif_changemapcell(0, barricade->m, x1, y1, 0, ALL_SAMEMAP);
+	}
+
+	npc_event_do(barricade->npc_event);
+	map[barricade->m].barricade_num--;
+
+	strdb_remove(barricade_db, barricade->npc_event);
+}
+
+static int mob_barricade_destroy_sub(struct block_list *bl, va_list ap)
+{
+	TBL_MOB* md = (TBL_MOB*)bl;
+	char *event = va_arg(ap,char *);
+
+	if( md->barricade == NULL )
+		return 0;
+
+	if( strcmp(event, md->barricade->npc_event) == 0 )
+		status_kill(bl);
+
+	return 0;
+}
+
+void mob_barricade_destroy(short m, const char *event)
+{
+	if( !event )
+		return;
+
+	map_foreachinmap(mob_barricade_destroy_sub, m, BL_MOB, event, 0);
 }
 
 /*==========================================
@@ -2337,6 +2474,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		pc_setglobalreg(mvp_sd,"killedrid",md->class_);
 		npc_script_event(mvp_sd, NPCE_KILLNPC); // PCKillNPC [Lance]
 	}
+
+	if( md->barricade != NULL )
+		mob_barricade_break(md->barricade);
 
 	if(md->deletetimer!=-1) {
 		delete_timer(md->deletetimer,mob_timer_delete);
@@ -4199,6 +4339,8 @@ int do_init_mob(void)
 	item_drop_ers = ers_new(sizeof(struct item_drop));
 	item_drop_list_ers = ers_new(sizeof(struct item_drop_list));
 
+	barricade_db = strdb_alloc(DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1);
+
 #ifndef TXT_ONLY
     if(db_use_sqldbs)
         mob_read_sqldb();
@@ -4245,5 +4387,6 @@ int do_final_mob(void)
 	}
 	ers_destroy(item_drop_ers);
 	ers_destroy(item_drop_list_ers);
+	barricade_db->destroy(barricade_db,NULL);
 	return 0;
 }

@@ -49,6 +49,8 @@
 #define MAX_IGNORE_LIST 20 // official is 14
 #define MAX_VENDING 12
 #define MOBID_EMPERIUM 1288
+#define MOBID_BARRICADEB 1905
+#define MOBID_BARRICADEA 1906 // Undestruble
 
 #define MAX_PC_BONUS 10
 #define MAX_DUEL 1024
@@ -882,6 +884,7 @@ struct mob_data {
 	struct status_data status, *base_status; //Second one is in case of leveling up mobs, or tiny/large mobs.
 	struct status_change sc;
 	struct mob_db *db;	//For quick data access (saves doing mob_db(md->class_) all the time) [Skotlex]
+	struct barricade_data *barricade;
 	char name[NAME_LENGTH];
 	struct {
 		unsigned size : 2; //Small/Big monsters.
@@ -1157,6 +1160,11 @@ struct mapcell
 #endif
 };
 
+struct barricade_data {
+	char npc_event[50];
+	short m, x, y, count, amount, dir;
+};
+
 struct map_data {
 	char name[MAP_NAME_LENGTH];
 	unsigned short index; // The map index used by the mapindex* functions.
@@ -1168,6 +1176,7 @@ struct map_data {
 	short bxs,bys; // map dimensions (in blocks)
 	int npc_num;
 	int users;
+	int barricade_num;
 	struct map_flag {
 		unsigned town : 1; // [Suggestion to protect Mail System]
 		unsigned autotrade : 1;

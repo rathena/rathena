@@ -4624,9 +4624,10 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	if( status_isdead(bl) )
 		return 0;
 
-	if( bl->type == BL_MOB && ((TBL_MOB*)bl)->class_ == MOBID_EMPERIUM )
+	if( bl->type == BL_MOB )
 	{
-		if( type != SC_SAFETYWALL && type != SC_PNEUMA )
+		struct mob_data *md = BL_CAST(BL_MOB,bl);
+		if( (md->class_ == MOBID_EMPERIUM && type != SC_SAFETYWALL && type != SC_PNEUMA) || md->class_ == MOBID_BARRICADEA )
 			return 0; //Emperium can't be afflicted by status changes
 	}
 

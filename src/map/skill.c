@@ -1236,10 +1236,13 @@ int skill_blown(struct block_list* src, struct block_list* target, int count, in
 	switch (target->type)
 	{
 		case BL_MOB:
-			if (((TBL_MOB*)target)->class_ == MOBID_EMPERIUM)
+		{
+			struct mob_data* md = BL_CAST(BL_MOB, target);
+			if( md->class_ == MOBID_EMPERIUM || md->class_ == MOBID_BARRICADEA || md->class_ == MOBID_BARRICADEB )
 				return 0;
 			if(src != target && is_boss(target)) //Bosses can't be knocked-back
 				return 0;
+		}
 			break;
 		case BL_PC:
 			if(src != target && ((TBL_PC*)target)->special_state.no_knockback)
@@ -8111,7 +8114,12 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 						continue;
 				}
 				if(sc && sc->data[SC_INTOABYSS])
+				{
+					if( skill != SA_ABRACADABRA )
 					continue;
+					else if( --amount[i] < 1 )
+						amount[i] = 1; // Hocus Pocus allways use at least 1 gem
+				}
 			}
 
 			if((skill == AM_POTIONPITCHER ||
