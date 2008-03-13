@@ -226,7 +226,7 @@ payon,246,158,5	script	Woman#2payon	66,0,0,{
 }
 
 payon,210,110,1	script	Drunkard#payon	120,{
-	if (Class != ARCHER) {
+	if (Class != Job_Archer) {
 		mes "[Drunkard]";
 		mes "Hey...";
 		mes "H-Hey...!";
@@ -241,8 +241,7 @@ payon,210,110,1	script	Drunkard#payon	120,{
 		mes "[Drunkard]";
 		mes "Bwahahahaha!";
 		mes "Buy me a drink?!";
-	}
-	if (Class == Job_Archer) {
+	} else {
 		mes "[Drunkard]";
 		mes "An Archer!";
 		mes "Oh man, you guys!";

@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/03/13
+	* Updated Drunkard#Payon to use a better Class check that won't freeze Novices. [Paradox924X]
 2008/03/12
 	* Rev. 12346 Another Small update to castle ownership announcement. [L0ne_W0lf]
 	* Rev. 12345 Small update to castle ownership announcement. [L0ne_W0lf]
