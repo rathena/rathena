@@ -2004,7 +2004,7 @@ void map_spawnmobs(int m)
 		if(map[m].moblist[i]!=NULL)
 		{
 			k+=map[m].moblist[i]->num;
-			npc_parse_mob2(map[m].moblist[i],i);
+			npc_parse_mob2(map[m].moblist[i],true);
 		}
 
 	if (battle_config.etc_log && k > 0)
