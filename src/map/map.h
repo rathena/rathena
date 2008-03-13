@@ -865,13 +865,14 @@ struct spawn_data {
 	short class_; //Class, used because a mob can change it's class
 	unsigned short m,x,y;	//Spawn information (map, point, spawn-area around point)
 	signed short xs,ys;
-	unsigned short num; //Number of mobs using this structure.
-	unsigned short skip; //Number of mobs to skip when spawning them (for mob_remove_damageed: no)
+	unsigned short num; //Number of mobs using this structure
+	unsigned short active; //Number of mobs that are already spawned (for mob_remove_damaged: no)
 	unsigned int level; //Custom level.
 	unsigned int delay1,delay2; //Min delay before respawning after spawn/death
 	struct {
 		unsigned size :2; //Holds if mob has to be tiny/large
 		unsigned ai :2;	//Holds if mob is special ai.
+		unsigned dynamic :1; //Whether this data is indexed by a map's dynamic mob list
 	} state;
 	char name[NAME_LENGTH],eventname[50]; //Name/event
 };
@@ -888,7 +889,6 @@ struct mob_data {
 	char name[NAME_LENGTH];
 	struct {
 		unsigned size : 2; //Small/Big monsters.
-		unsigned cached : 1; //Cached mobs for dynamic mob unloading [Skotlex]
 		unsigned ai : 2; //Special ai for summoned monsters.
 							//0: Normal mob.
 							//1: Standard summon, attacks mobs.

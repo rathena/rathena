@@ -3800,14 +3800,14 @@ static CharCommandInfo* get_charcommandinfo_byname(const char* name)
 	int i;
 	if( *name == charcommand_symbol ) name++; // for backwards compatibility
 	ARR_FIND( 0, ARRAYLENGTH(charcommand_info), i, strcmpi(charcommand_info[i].command, name) == 0 );
-	return ( i != ARRAYLENGTH(charcommand_info) ) ? &charcommand_info[i] : NULL;
+	return ( i < ARRAYLENGTH(charcommand_info) ) ? &charcommand_info[i] : NULL;
 }
 
 static CharCommandInfo* get_charcommandinfo_byfunc(const CharCommandFunc func)
 {
 	int i;
 	ARR_FIND( 0, ARRAYLENGTH(charcommand_info), i, charcommand_info[i].func == func );
-	return ( i != ARRAYLENGTH(charcommand_info) ) ? &charcommand_info[i] : NULL;
+	return ( i < ARRAYLENGTH(charcommand_info) ) ? &charcommand_info[i] : NULL;
 }
 
 

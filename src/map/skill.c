@@ -7535,7 +7535,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 		itemid[i] = skill_db[j].itemid[i];
 		amount[i] = skill_db[j].amount[i];
 	}
-	if(mhp > 0 && 100 * status->hp / status->max_hp > (unsigned int) mhp) {
+	if(mhp > 0 && status_calc_life(status->hp, status->max_hp) > mhp) {
 		//mhp is the max-hp-requirement, that is,
 		//you must have this % or less of HP to cast it.
 		clif_skill_fail(sd,skill,2,0);

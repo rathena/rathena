@@ -903,7 +903,10 @@ int mob_spawn (struct mob_data *md)
 			add_timer(tick+5000,mob_delayspawn,md->bl.id,0);
 			return 1;
 		}
+
+		md->spawn->active++;
 	}
+
 	memset(&md->state, 0, sizeof(md->state));
 	status_calc_mob(md, 1);
 	md->attacked_id = 0;
@@ -2783,7 +2786,6 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,int skill_id)
 			continue;
 		
 		md= mob_spawn_dataset(&data);
-		md->special_state.cached= md2->special_state.cached;	//[Skotlex]
 		if(skill_id == NPC_SUMMONSLAVE){
 			md->master_id=md2->bl.id;
 			md->state.killer = md2->state.killer;

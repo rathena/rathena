@@ -1883,18 +1883,23 @@ int unit_free(struct block_list *bl, int clrtype)
 			aFree(md->lootitem);
 			md->lootitem=NULL;
 		}
-		if (md->guardian_data)
+		if(md->guardian_data)
 		{
 			if (md->guardian_data->number < MAX_GUARDIANS)
 				md->guardian_data->castle->guardian[md->guardian_data->number].id = 0;
 			aFree(md->guardian_data);
 			md->guardian_data = NULL;
 		}
-		if (md->spawn && !md->special_state.cached && --(md->spawn->num) == 0)
-		{	//Spawning data is not attached to the map, so free it
-			//if this is the last mob who is pointing at it.
-			aFree(md->spawn);
-			md->spawn = NULL;
+		if(md->spawn)
+		{
+			md->spawn->active--;
+			md->spawn->num--;
+
+			if( !md->spawn->state.dynamic && md->spawn->num == 0 )
+			{// Last freed mob is responsible for deallocating the group's spawn data.
+				aFree(md->spawn);
+				md->spawn = NULL;
+			}
 		}
 		if(md->base_status) {
 			aFree(md->base_status);
