@@ -270,3 +270,10 @@
 //12932,91,100	// Pet_Egg_Scroll
 //12933,91,100	// Pet_Egg_Scroll
 //12934,91,100	// Pet_Egg_Scroll
+
+// "St. Patrick's Day (2008)" Quest related items
+//7720,123,100	// Gold_Coin
+//7721,123,100	// Treasure_Box_
+//7915,123,100	// Bronze_Coin
+//7916,123,100	// Silver_Coin
+//12715,123,100	// Black_Treasure_Chest

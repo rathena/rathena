@@ -2921,7 +2921,7 @@
 7717,Choco_Tart_Recipe,Recipe for Chocolate Tart,3,0,,0,,,,,,,,,,,,,{},{},{}
 7718,Cacao_Bean,Cacao_Bean,3,0,,10,,,,,,,,,,,,,{},{},{}
 7719,BlueCard_G,Blue G Card,3,0,,1,,,,,,,,,,,,,{},{},{}
-//St. Patricks Day Event (2007)
+//St. Patrick's Day Event (2007)
 7720,Gold_Coin_US,Gold Coin,3,100,,10,,,,,,,,,,,,,{},{},{}
 7721,Treasure_Box_,Treasure Box,3,100,,500,,,,,,,,,,,,,{},{},{}
 7722,Debt_Note,Debt Note,3,20,,0,,,,,,,,,,,,,{},{},{}
@@ -3092,6 +3092,9 @@
 7909,Stolen_Cookie,Stolen Cookie,3,0,,10,,,,,,,,,,,,,{},{},{}
 7910,Stolen_Candy,Stolen Candy,3,0,,10,,,,,,,,,,,,,{},{},{}
 7911,Yulia_Hat,Yulia's Hat,3,0,,10,,,,,,,,,,,,,{},{},{}
+//St. Patrick's Day Event (2008)
+7915,Bronze_Coin,Bronze Coin,3,100,,10,,,,,,,,,,,,,{},{},{}
+7916,Silver_Coin,Silver Coin,3,100,,10,,,,,,,,,,,,,{},{},{}
 // Pet Eggs
 //===================================================================
 9001,Poring_Egg,Poring Egg,7,,10,0,,,,,,,,,,,,,{},{},{}
@@ -3429,7 +3432,7 @@
 12242,M_Awakening_Potion,Awakening Potion,2,1500,,150,,,,,0xFFF7FEEF,7,2,,,40,,,{ sc_start SC_ASPDPOTION1,1800000,0; },{},{}
 12243,M_Berserk_Potion,Berserk Potion,2,3000,,200,,,,,0x01E646A6,7,2,,,85,,,{ sc_start SC_ASPDPOTION2,1800000,0; },{},{}
 12244,Old_Gift_Box,Old Gift Box,2,,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem rand(5270,5272),1; },{},{}
-//St patrick's day Event (2007)
+//St. Patrick's Day Event (2007)
 12245,Green_Ale_US,Green Ale,0,5000,,500,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,0; },{},{}
 12246,Magic_Card_Album,Magic Card Album,2,10000,,50,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12247,Halohalo,Halo-Halo,2,2,,100,,,,,0xFFFFFFFF,7,2,,,20,,,{ sc_start SC_INCALLSTATUS,600000,3; },{},{}
@@ -3476,6 +3479,8 @@
 12710,Guyak_Pudding,Guyak Pudding,2,0,,200,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12711,Pretzel,Pretzel,2,,50,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12712,Green_Beer,Green Beer,2,,50,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+//St. Patrick's Day Event (2008)
+12715,Black_Treasure_Chest,Black Treasure Chest,2,0,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ end; callfunc "F_08stpattyseventbox"; },{},{}
 //Cash Shop Box Items
 12900,Field_Manual_Box,Battle Manual Box,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12208,10; },{},{}
 12901,Life_Insurrance_Box,Insurance Package,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12209,10; },{},{}
