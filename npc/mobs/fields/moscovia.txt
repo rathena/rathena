@@ -3,17 +3,18 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 0.0
+//= 1.0
 //===== Compatible With: =====================================
 //= Any Athena Version
 //===== Additional Comments: =================================
-//= 
-
-//==================================================
-// mosk_fild01 - Moscovia Field
-//==================================================
+//= 1.0 Added spawns [Playtester]
 
 //==================================================
 // mosk_fild02 - Moscovia Field
 //==================================================
-
+mosk_fild02,0,0,0,0	monster	Bigfoot	1060,40,0,0,0
+mosk_fild02,0,0,0,0	monster	Caramel	1103,20,0,0,0
+mosk_fild02,0,0,0,0	monster	Mantis	1139,30,0,0,0
+mosk_fild02,0,0,0,0	monster	Poring	1002,10,0,0,0
+mosk_fild02,0,0,0,0	monster	Yellow Plant	1081,5,0,0,0
+mosk_fild02,0,0,0,0	monster	White Plant	1082,5,10000,0,0
