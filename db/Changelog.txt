@@ -43,6 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/03/14
+	* Rev. 12363 Commented out St. Patrick's Day mob_db2 entries. [L0ne_W0lf]
 2008/03/10
 	* Rev. 12336 Fixed Hunter Cap Bonus. (bugreport:892) [L0ne_W0lf]
 	* Fixed Ancient Magic combo using the wrong equipment. (bugreport:670)
