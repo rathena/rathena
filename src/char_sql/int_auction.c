@@ -17,8 +17,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-// This is set to limit the search result
-// On iRO, no one uses auctions, so there is no way to know
 static DBMap* auction_db_ = NULL; // int auction_id -> struct auction_data*
 
 void auction_delete(struct auction_data *auction);

@@ -3432,9 +3432,8 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		return 1;
 	}
 
-	m=map_mapindex2mapid(mapindex);
-
-	if( (sd->state.changemap = (sd->mapindex != mapindex)) )
+	sd->state.changemap = (sd->mapindex != mapindex);
+	if( sd->state.changemap )
 	{	//Misc map-changing settings
 		if (sd->sc.count)
 		{ //Cancel some map related stuff.
@@ -3463,6 +3462,7 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 			sd->regen.state.gc = 0;
 	}
 
+	m=map_mapindex2mapid(mapindex);
 	if(m<0) {
 		uint32 ip;
 		uint16 port;

@@ -640,7 +640,7 @@ int npc_event_sub(struct map_session_data* sd, struct event_data* ev, const char
 		if( i < MAX_EVENTQUEUE )
 			safestrncpy(sd->eventqueue[i],eventname,50); //Event enqueued.
 		else
-			ShowWarning("npc_event: event queue is full !\n");
+			ShowWarning("npc_event: player's event queue is full, can't add event '%s' !\n", eventname);
 		
 		return 1;
 	}
@@ -678,8 +678,7 @@ int npc_event(struct map_session_data* sd, const char* eventname, int mob_kill)
 			strcat( mobevent, "::OnMyMobDead");
 			ev = strdb_get(ev_db, mobevent);
 			if (ev == NULL || (nd = ev->nd) == NULL) {
-				if (strnicmp(eventname, "GM_MONSTER",10) != 0)
-					ShowError("npc_event: (mob_kill) event not found [%s]\n", mobevent);
+				ShowError("npc_event: (mob_kill) event not found [%s]\n", mobevent);
 				return 0;
 			}
 		} else {
