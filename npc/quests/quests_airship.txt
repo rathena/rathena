@@ -2911,6 +2911,7 @@ OnTouch:
 }
 
 ein_in01,263,35,3	script	Ferlock#lab	873,{
+	end;
 
 OnInit:
 	disablenpc "Ferlock#lab";

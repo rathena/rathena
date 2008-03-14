@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/03/14
+	* Fixed a bug allowing Ferlock#Lab to get disabled mid-speech. (bugreport: 1129) [Paradox924X]
 	* Fixed the autotimer on an npc warp in Juperos Quest. [Paradox924X]
 2008/03/13
 	* Updated WoE Check in Shift Assassin Script. (bugreport: 1059) [Paradox924X]
