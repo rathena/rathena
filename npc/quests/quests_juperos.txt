@@ -1760,6 +1760,7 @@ juperos_01,100,91,0	script	jupe_goto#1	-1,2,2,{
 	end;
 
 OnTouch:
+	attachrid getcharid(3);
 	initnpctimer;
 	mes "^777777["+ strcharinfo(0) +"]^000000";
 	mes "This light...";
