@@ -903,8 +903,6 @@ int mob_spawn (struct mob_data *md)
 			add_timer(tick+5000,mob_delayspawn,md->bl.id,0);
 			return 1;
 		}
-
-		md->spawn->active++;
 	}
 
 	memset(&md->state, 0, sizeof(md->state));

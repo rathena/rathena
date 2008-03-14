@@ -2186,6 +2186,7 @@ void npc_parse_mob2(struct spawn_data* mob)
 	{
 		struct mob_data* md = mob_spawn_dataset(mob);
 		md->spawn = mob;
+		md->spawn->active++;
 		mob_spawn(md);
 	}
 }
