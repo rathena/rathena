@@ -1,5 +1,9 @@
 Date		Added
 ======
+2008/03/15
+	* Fixed Job_Change Function to properly jobchange babies. (bugreport: 943) [Paradox924X]
+	* Updated Airship Typing Challenge to not fail you when you get both strings correct. (bugreport: 1008) [Paradox924X]
+	* Renamed custom Stylist to Stylist#customstylist to avoid conflicts with official one. (bugreport: 1042) [Paradox924X]
 2008/03/14
 	* Fixed a bug allowing Ferlock#Lab to get disabled mid-speech. (bugreport: 1129) [Paradox924X]
 	* Fixed the autotimer on an npc warp in Juperos Quest. [Paradox924X]

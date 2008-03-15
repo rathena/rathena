@@ -43,6 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/03/15
+	* Updated Poring Tower to not refinable. (bugreport: 1050) [Paradox924X]
 2008/03/14
 	* Rev. 12363 Commented out St. Patrick's Day mob_db2 entries. [L0ne_W0lf]
 2008/03/10

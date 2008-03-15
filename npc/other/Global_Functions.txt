@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.10
+//= 2.11
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -33,6 +33,7 @@
 //= 2.09 Cleared F_ClearGarbage [Lupus]
 //= 2.10 Added F_CheckMaxCount to check count of carrid items. [L0ne_w0lf]
 //= 2.10a Removed fuction F_CheckMaxCount. Not needed. [L0ne_W0lf]
+//= 2.11 Updated function Job_Change to jobchange based on Upper value. [Paradox924X]
 //============================================================ 
 
 
@@ -98,10 +99,7 @@ function	script	F_ClearGarbage	{
 //////////////////////////////////////////////////////////////////////////////////
 
 function	script	Job_Change	{
-	if (Upper<2) 
-		jobchange getarg(0); // Common jobchange
-	else 
-		jobchange getarg(0) + Job_Baby; //Change Job For Baby Class
+	jobchange getarg(0),Upper; //Jobchange based on Upper
 	logmes "CLASS CHANGE: " +strcharinfo(0)+ " become a "+jobname(Class);
 	return;
 }

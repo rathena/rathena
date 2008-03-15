@@ -4,12 +4,13 @@
 //= eAthena Dev team
 //= Revised by Nekosume [pyRO v3.0] 
 //===== Current Version: ===================================== 
-//= 4.0
+//= 4.2
 //===== Compatible With: ===================================== 
 //= Any eAthena Version 
 //===== Description: ========================================= 
 //= Revised dye NPC
 //===== Additional Comments: =================================
+//= v4.2 - Renamed to avoid conflict [Paradox924X]
 //= v4.1 - New hairstyles added [Mass Zero]
 //= v4.0 - Refined and Combined [Darkchild]
 //= v3.0 - Added the 'Browse' options
@@ -21,7 +22,7 @@
 
 
 //Stylist------------------------------------------------------------------------------------------------------------
-prontera,170,180,1	script	Stylist	122,{
+prontera,170,180,1	script	Stylist#custom_stylist	122,{
 	mes "[^FF8000Stylist^000000]";
 	mes "I'm the greatest stylist in all of Rune-Midgard~~!";
 	mes "I can change your hair style or color!";

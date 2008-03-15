@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= eAthena Dev Team
 //===== Current Version: ===================================== 
-//= 1.1
+//= 1.1a
 //===== Compatible With: ===================================== 
 //= eAthena SVN 3422+(Requires jA Script System)
 //===== Description: ========================================= 
@@ -29,6 +29,7 @@
 //= 0.9b Fixed a typo and bad variable use in the Typing Challenge [ultramage]
 //= 1.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.1 Touch-ups, and changed references of "Yuno" to "Juno",  [L0ne_W0lf]
+//= 1.1a Small fix to comparison check. [Paradox924X]
 //============================================================ 
 
 //============================================================ 
@@ -515,7 +516,7 @@ s_Play:
 	if(@string2c$ != "")mes @string2c$;
 	input @comparisonvar$[2];
 	next;
-	if(@comparisonvar$[1] == @typingstring1$ && @comparisonvar$[2] == @typingstring2$) goto s_Fail;
+	if(@comparisonvar$[1] != @typingstring1$ || @comparisonvar$[2] != @typingstring2$) goto s_Fail;
 	set @time,(gettime(3)*60*60+gettime(2)*60+gettime(1))-@start; //seconds taken
 	set @mypoints,(@typingkeys * 100) / @time;
 	mes "[Nils]";

@@ -2151,7 +2151,7 @@ REPLACE INTO `item_db` VALUES (5251,'Blank_Ear','Blank Ear',5,NULL,10,10,NULL,0,
 REPLACE INTO `item_db` VALUES (5252,'Drooping_Ninetails','Drooping Ninetails',5,NULL,10,300,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,20,1,296,' bonus bAgi,1; bonus bDex,1; bonus3 bAutoSpellWhenHit,75,1,30; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5253,'Lif_Doll_Hat','Drooping Lif',5,NULL,10,200,NULL,1,NULL,1,0xFFFFFFFF,7,2,256,NULL,20,1,297,' bonus bInt,1; bonus bMdef,getrefine(); bonus bDef,getrefine()*-1; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5254,'Deviling_Hat','Deviling Hat',5,NULL,10,350,NULL,1,NULL,0,0xFFFFFFFF,7,2,256,NULL,20,1,298,' bonus bStr,1; bonus bCritical,3; bonus2 bSubRace,RC_Angel,-20; if(getrefine()>=6){ bonus bCritical,getrefine()-5; } ',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5255,'Triple_Poring_Hat','Poring Tower',5,NULL,10,600,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,20,1,299,' bonus bLuk,3; bonus3 bAutoSpell,1013,1,20; ',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5255,'Triple_Poring_Hat','Poring Tower',5,NULL,10,600,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,20,0,299,' bonus bLuk,3; bonus3 bAutoSpell,1013,1,20; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5256,'Valkyrie_Feather_Band','Valkyrie Feather Band',5,NULL,10,100,NULL,1,NULL,1,0xFFFFFFFF,7,2,256,NULL,20,1,300,' bonus bInt,1; bonus3 bAutoSpellWhenHit,28,1,10; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5257,'Soulless_Ring','Soul Ring',5,NULL,10,300,NULL,2,NULL,0,0xFFFFFFFE,7,2,256,NULL,20,1,301,' bonus bMdef,2; bonus3 bAutoSpellWhenHit,361,1,10; ',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5258,'Dokebi\'s_Wig','Dokebi\'s Wig',5,NULL,10,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,768,NULL,10,1,302,' bonus3 bAutoSpellWhenHit,142,1,300; bonus2 bSubEle,Ele_Neutral,1; ',NULL,NULL);

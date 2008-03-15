@@ -2133,7 +2133,7 @@
 5252,Drooping_Ninetails,Drooping Ninetails,5,,10,300,,1,,0,0xFFFFFFFF,7,2,256,,20,1,296,{ bonus bAgi,1; bonus bDex,1; bonus3 bAutoSpellWhenHit,75,1,30; },{},{}
 5253,Lif_Doll_Hat,Drooping Lif,5,,10,200,,1,,1,0xFFFFFFFF,7,2,256,,20,1,297,{ bonus bInt,1; bonus bMdef,getrefine(); bonus bDef,getrefine()*-1; },{},{}
 5254,Deviling_Hat,Deviling Hat,5,,10,350,,1,,0,0xFFFFFFFF,7,2,256,,20,1,298,{ bonus bStr,1; bonus bCritical,3; bonus2 bSubRace,RC_Angel,-20; if(getrefine()>=6){ bonus bCritical,getrefine()-5; } },{},{}
-5255,Triple_Poring_Hat,Poring Tower,5,,10,600,,3,,0,0xFFFFFFFF,7,2,256,,20,1,299,{ bonus bLuk,3; bonus3 bAutoSpell,1013,1,20; },{},{}
+5255,Triple_Poring_Hat,Poring Tower,5,,10,600,,3,,0,0xFFFFFFFF,7,2,256,,20,0,299,{ bonus bLuk,3; bonus3 bAutoSpell,1013,1,20; },{},{}
 5256,Valkyrie_Feather_Band,Valkyrie Feather Band,5,,10,100,,1,,1,0xFFFFFFFF,7,2,256,,20,1,300,{ bonus bInt,1; bonus3 bAutoSpellWhenHit,28,1,10; },{},{}
 5257,Soulless_Ring,Soul Ring,5,,10,300,,2,,0,0xFFFFFFFE,7,2,256,,20,1,301,{ bonus bMdef,2; bonus3 bAutoSpellWhenHit,361,1,10; },{},{}
 5258,Afro_Wig,Dokebi's Wig,5,,10,100,,0,,0,0xFFFFFFFF,7,2,768,,10,1,302,{ bonus3 bAutoSpellWhenHit,142,1,300; bonus2 bSubEle,Ele_Neutral,1; },{},{}
