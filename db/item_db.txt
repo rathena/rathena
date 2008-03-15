@@ -4118,8 +4118,8 @@
 14531,Accuracy_30_Scroll,Concentration Power Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHIT,1800000,30; },{},{}
 14532,Battle_Manual25,Field Manual 25%,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,25; },{},{}
 14533,Battle_Manual100,Field Manual 100%,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,100; },{},{}
-14534,Small_Life_Potion,Small Life Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_HPREGEN,600000,5,5,0,0; },{},{}
-14535,Med_Life_Potion,Medium Life Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_HPREGEN,600000,7,4,0,0; },{},{}
+14534,Small_Life_Potion,Small Life Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_HPREGEN,600000,-5,5,0,0; },{},{}
+14535,Med_Life_Potion,Medium Life Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_HPREGEN,600000,-7,4,0,0; },{},{}
 14536,Abrasive,Abrasive,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCCRI,300000,30; },{},{}
 14537,Regeneration_Potion,Regeneration Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHEALRATE,1800000,20; },{},{}
 14538,Glass_of_Illusion,Glass of Illusion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}

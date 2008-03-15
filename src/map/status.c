@@ -5270,12 +5270,12 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			tick = 10000;
 			break;
 		case SC_HPREGEN:
-			// val1 = % of Max HP per tick
-			val4 = tick/(val2 * 1000);
-			if (!val4) val4 = 1;
-			tick = val2 * 1000; // val2 = seconds
-			break;
+			if( val1 == 0 ) val1 = 1;
 
+			if( (val4 = tick/(val2 * 1000)) < 1 )
+				val4 = 1; // Number of total heals
+			tick = val2 * 1000; // val2 = Seconds between heals
+			break;
 		case SC_HIDING:
 			val2 = tick/1000;
 			tick = 1000;
