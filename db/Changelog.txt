@@ -44,6 +44,8 @@
 
 =======================
 2008/03/15
+	* Rev. 12370 Updated mob database with 11.3 information. (bugreport:1191) [L0ne_W0lf]
+	* Updated Battle ground set for Swordman and assassin classes. [zephyrus]
 	* Updated Poring Tower to not refinable. (bugreport: 1050) [Paradox924X]
 2008/03/14
 	* Rev. 12363 Commented out St. Patrick's Day mob_db2 entries. [L0ne_W0lf]
