@@ -44,6 +44,7 @@
 
 =======================
 2008/03/15
+	* Rev. 12371 Fixed Bloody Knight's drops. Shield[1] -> Strong Shield[1] [L0ne_W0lf]
 	* Rev. 12370 Updated mob database with 11.3 information. (bugreport:1191) [L0ne_W0lf]
 	* Updated Battle ground set for Swordman and assassin classes. [zephyrus]
 	* Updated Poring Tower to not refinable. (bugreport: 1050) [Paradox924X]
