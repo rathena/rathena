@@ -1282,19 +1282,15 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 /* Returns 0 if successful
  * Returns < 0 for error
  */
-int delete_char_sql(int char_id, int partner_id)
+int delete_char_sql(int char_id)
 {
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1]; //Name needs be escaped.
-	int account_id;
-	int party_id;
-	int guild_id;
-	int hom_id;
-	int base_level;
+	int account_id, party_id, guild_id, hom_id, base_level, partner_id;
 	char* data;
 	size_t len;
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `name`,`account_id`,`party_id`,`guild_id`,`base_level`,`homun_id` FROM `%s` WHERE `char_id`='%d'", char_db, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `name`,`account_id`,`party_id`,`guild_id`,`base_level`,`homun_id`,`partner_id` FROM `%s` WHERE `char_id`='%d'", char_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 
 	if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
@@ -1310,6 +1306,7 @@ int delete_char_sql(int char_id, int partner_id)
 	Sql_GetData(sql_handle, 3, &data, NULL); guild_id = atoi(data);
 	Sql_GetData(sql_handle, 4, &data, NULL); base_level = atoi(data);
 	Sql_GetData(sql_handle, 5, &data, NULL); hom_id = atoi(data);
+	Sql_GetData(sql_handle, 6, &data, NULL); partner_id = atoi(data);
 
 	Sql_EscapeStringLen(sql_handle, esc_name, name, min(len, NAME_LENGTH));
 	Sql_FreeResult(sql_handle);
@@ -1323,11 +1320,19 @@ int delete_char_sql(int char_id, int partner_id)
 	}
 
 	/* Divorce [Wizputer] */
-	if (partner_id) {
+	if( partner_id )
+	{
+		unsigned char buf[64];
+
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `partner_id`='0' WHERE `char_id`='%d'", char_db, partner_id) )
 			Sql_ShowDebug(sql_handle);
 		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE (`nameid`='%d' OR `nameid`='%d') AND `char_id`='%d'", inventory_db, WEDDING_RING_M, WEDDING_RING_F, partner_id) )
 			Sql_ShowDebug(sql_handle);
+
+		WBUFW(buf,0) = 0x2b12;
+		WBUFL(buf,2) = char_id;
+		WBUFL(buf,6) = partner_id;
+		mapif_sendall(buf,10);
 	}
 
 	//Make the character leave the party [Skotlex]
@@ -2796,7 +2801,6 @@ int parse_char(int fd)
 {
 	int i, ch = 0;
 	char email[40];	
-	unsigned char buf[64];
 	unsigned short cmd;
 	int map_fd;
 	struct char_session_data* sd;
@@ -3084,7 +3088,6 @@ int parse_char(int fd)
 			if (cmd == 0x1fb) FIFOSD_CHECK(56);
 		{
 			int cid = RFIFOL(fd,2);
-			int char_pid=0;
 
 			WFIFOHEAD(fd,46);
 			ShowInfo(CL_RED"Request Char Deletion: "CL_GREEN"%d (%d)"CL_RESET"\n", sd->account_id, cid);
@@ -3120,17 +3123,8 @@ int parse_char(int fd)
 				sd->found_char[ch] = sd->found_char[ch+1];
 			sd->found_char[MAX_CHARS-1] = -1;
 			
-			/* Grab the partner id */ 
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `partner_id` FROM `%s` WHERE `char_id`='%d'", char_db, cid) )
-				Sql_ShowDebug(sql_handle);
-			else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
-			{
-				char* data;
-				Sql_GetData(sql_handle, 0, &data, NULL); char_pid = atoi(data);
-			}
-
-			/* Delete character and partner (if any) */
-			if(delete_char_sql(cid, char_pid)<0){
+			/* Delete character */
+			if(delete_char_sql(cid)<0){
 				//can't delete the char
 				//either SQL error or can't delete by some CONFIG conditions
 				//del fail
@@ -3138,13 +3132,6 @@ int parse_char(int fd)
 				WFIFOB(fd, 2) = 0;
 				WFIFOSET(fd, 3);
 				break;
-			}
-			if (char_pid != 0)
-			{	/* If there is partner, tell map server to do divorce */
-				WBUFW(buf,0) = 0x2b12;
-				WBUFL(buf,2) = cid;
-				WBUFL(buf,6) = char_pid;
-				mapif_sendall(buf,10);
 			}
 			/* Char successfully deleted.*/
 			WFIFOHEAD(fd,2);
