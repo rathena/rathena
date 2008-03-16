@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/03/16
+	* Rev. 12380 Updated Divorce script. [L0ne_W0lf]
 2008/03/15
 	* Fixed Job_Change Function to properly jobchange babies. (bugreport: 943) [Paradox924X]
 	* Updated Airship Typing Challenge to not fail you when you get both strings correct. (bugreport: 1008) [Paradox924X]

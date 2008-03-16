@@ -4,7 +4,7 @@
 //= Perkka, Scriptor, LightFighter
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -20,6 +20,7 @@
 //= 1.2a Commented out check of 'wedding_sign' to let
 //=		old married players divorcing, optimized, fixed a bug [Lupus]
 //= 1.3 Wedding variable 'wedding_sign' is now unset on divorce. [L0ne_W0lf]
+//= 1.4 Removed ifpartneron check, fixed typo in percentheal. [L0ne_W0lf]
 //============================================================ 
 
 nif_in,190,112,5	script	Deviruchi#divorce	738,{
@@ -183,37 +184,33 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 		close;
 	}
 	mes "[Deviruchi]";
-	if (ispartneron()) {
-		if (Zeny > 2499999) {
-			mes "Excellent choice~";
-			mes "Let's get started right";
-			mes "away! This may take some";
-			mes "time, but it's better than";
-			mes "being hopelessly married";
-			mes "^FF0000for the rest of your life.^000000";
-			next;
-			specialeffect 244; //EF_MAGICROD
-			specialeffect2 372; //EF_DEVIL
-			set wedding_sign,0;
-			set zeny,zeny-2500000;
-			percentheal -100,100;
-			divorce;
-			mes "[Deviruchi]";
-			mes "Bwahhahahaha~!";
-			mes "Now you're free~!";
-			mes "Don't you feel so much";
-			mes "better now as a single?";
-			mes "Ah, bachelorhood...";
-			close;
-		}
-		mes "Hmmm...I did tell you to bring";
-		mes "2,500,000 zeny, right?";
-		mes "No one else in this world can";
-		mes "offer this kind of freedom...";
-		mes "You can't put a price on";
-		mes "peace of mind, can you?";
+	if (Zeny > 2499999) {
+		mes "Excellent choice~";
+		mes "Let's get started right";
+		mes "away! This may take some";
+		mes "time, but it's better than";
+		mes "being hopelessly married";
+		mes "^FF0000for the rest of your life.^000000";
+		next;
+		specialeffect 244; //EF_MAGICROD
+		specialeffect2 372; //EF_DEVIL
+		set wedding_sign,0;
+		set zeny,zeny-2500000;
+		percentheal -100,-100;
+		divorce;
+		mes "[Deviruchi]";
+		mes "Bwahhahahaha~!";
+		mes "Now you're free~!";
+		mes "Don't you feel so much";
+		mes "better now as a single?";
+		mes "Ah, bachelorhood...";
 		close;
 	}
-	mes "Hmmm...your spouse isn't online...";
+	mes "Hmmm...I did tell you to bring";
+	mes "2,500,000 zeny, right?";
+	mes "No one else in this world can";
+	mes "offer this kind of freedom...";
+	mes "You can't put a price on";
+	mes "peace of mind, can you?";
 	close;
 }
