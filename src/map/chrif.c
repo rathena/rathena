@@ -33,9 +33,9 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 	60, 3,-1,27,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
 	 6,-1,18, 7,-1,35,30,10,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, U->2b07
 	 6,30,-1,10,86, 7,44,34,	// 2b08-2b0f: U->2b08, U->2b09, U->2b0a, U->2b0b, U->2b0c, U->2b0d, U->2b0e, U->2b0f
-	11, 9,10, 6,11,-1,266,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, U->2b13, U->2b14, U->2b15, U->2b16, U->2b17
+	11, 9,10, 6,11,-1,266,10,	// 2b10-2b17: U->2b10, F->2b11, U->2b12, U->2b13, U->2b14, U->2b15, U->2b16, U->2b17
 	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
-	-1,10, 8, 2, 2,-1,-1,-1,	// 2b20-2b27: U->2b20, U->2b21, U->2b22, U->2b23, U->2b24, F->2b25, F->2b26, F->2b27
+	-1,10, 8, 2, 2,14,-1,-1,	// 2b20-2b27: U->2b20, U->2b21, U->2b22, U->2b23, U->2b24, U->2b25, F->2b26, F->2b27
 };
 
 //Used Packets:
@@ -84,7 +84,8 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b22: Incoming, chrif_updatefamelist_ack. Updated one position in the fame list.
 //2b23: Outgoing, chrif_keepalive. charserver ping.
 //2b24: Incoming, chrif_keepalive_ack. charserver ping reply.
-//2b25-2b27: FREE
+//2b25: Incoming, chrif_deadopt -> 'Removes baby from Father ID and Mother ID'
+//2b26-2b27: FREE
 
 int chrif_connected = 0;
 int char_fd = 0; //Using 0 instead of -1 is safer against crashes. [Skotlex]
@@ -876,7 +877,7 @@ int chrif_changedsex(int fd)
 }
 
 /*==========================================
- * —£¥î•ñ“¯Šú—v‹
+ * Divorce players
  *------------------------------------------*/
 int chrif_divorce(int char_id, int partner_id)
 {
@@ -886,17 +887,42 @@ int chrif_divorce(int char_id, int partner_id)
 	if (!char_id || !partner_id || (sd = map_charid2sd(partner_id)) == NULL || sd->status.partner_id != char_id)
 		return 0;
 
-	//—£¥(‘Š•û‚ÍŠù‚ÉƒLƒƒƒ‰‚ªÁ‚¦‚Ä‚¢‚é”¤‚È‚Ì‚Å)
+	// Update Partner info
 	sd->status.partner_id = 0;
 
-	//‘Š•û‚ÌŒ‹¥w—Ö‚ğ”’D
+	// Remove Wedding Rings from inventory
 	for(i = 0; i < MAX_INVENTORY; i++)
 		if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
 			pc_delitem(sd, i, 1, 0);
 
 	return 0;
 }
+/*==========================================
+ * Removes Baby from parents
+ *------------------------------------------*/
+int chrif_deadopt(int father_id, int mother_id, int child_id)
+{
+	struct map_session_data* sd;
+	int i;
 
+	if( father_id && (sd = map_charid2sd(father_id)) != NULL && sd->status.child == child_id )
+	{
+		sd->status.child = 0;
+		sd->status.skill[WE_CALLBABY].lv = 0;
+		sd->status.skill[WE_CALLBABY].flag = 0;
+		clif_skillinfoblock(sd);
+	}
+
+	if( mother_id && (sd = map_charid2sd(mother_id)) != NULL && sd->status.child == child_id )
+	{
+		sd->status.child = 0;
+		sd->status.skill[WE_CALLBABY].lv = 0;
+		sd->status.skill[WE_CALLBABY].flag = 0;
+		clif_skillinfoblock(sd);
+	}
+
+	return 0;
+}
 /*==========================================
  * Disconnection of a player (account has been deleted in login-server) by [Yor]
  *------------------------------------------*/
@@ -1420,6 +1446,7 @@ int chrif_parse(int fd)
 		case 0x2b21: chrif_save_ack(fd); break;
 		case 0x2b22: chrif_updatefamelist_ack(fd); break;
 		case 0x2b24: chrif_keepalive_ack(fd); break;
+		case 0x2b25: chrif_deadopt(RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)); break;
 		default:
 			ShowError("chrif_parse : unknown packet (session #%d): 0x%x. Disconnecting.\n", fd, cmd);
 			set_eof(fd);
