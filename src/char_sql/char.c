@@ -1277,6 +1277,26 @@ int make_new_char_sql(struct char_session_data* sd, char* name_, int str, int ag
 }
 
 /*----------------------------------------------------------------------------------------------------------*/
+/* Divorce Players */
+/*----------------------------------------------------------------------------------------------------------*/
+int divorce_char_sql(int partner_id1, int partner_id2)
+{
+	unsigned char buf[64];
+
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `partner_id`='0' WHERE `char_id`='%d' OR `char_id`='%d'", char_db, partner_id1, partner_id2) )
+		Sql_ShowDebug(sql_handle);
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE (`nameid`='%d' OR `nameid`='%d') AND (`char_id`='%d' OR `char_id`='%d')", inventory_db, WEDDING_RING_M, WEDDING_RING_F, partner_id1, partner_id2) )
+		Sql_ShowDebug(sql_handle);
+
+	WBUFW(buf,0) = 0x2b12;
+	WBUFL(buf,2) = partner_id1;
+	WBUFL(buf,6) = partner_id2;
+	mapif_sendall(buf,10);
+
+	return 0;
+}
+
+/*----------------------------------------------------------------------------------------------------------*/
 /* Delete char - davidsiaw */
 /*----------------------------------------------------------------------------------------------------------*/
 /* Returns 0 if successful
@@ -1323,19 +1343,7 @@ int delete_char_sql(int char_id)
 
 	/* Divorce [Wizputer] */
 	if( partner_id )
-	{
-		unsigned char buf[64];
-
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `partner_id`='0' WHERE `char_id`='%d'", char_db, partner_id) )
-			Sql_ShowDebug(sql_handle);
-		if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE (`nameid`='%d' OR `nameid`='%d') AND `char_id`='%d'", inventory_db, WEDDING_RING_M, WEDDING_RING_F, partner_id) )
-			Sql_ShowDebug(sql_handle);
-
-		WBUFW(buf,0) = 0x2b12;
-		WBUFL(buf,2) = char_id;
-		WBUFL(buf,6) = partner_id;
-		mapif_sendall(buf,10);
-	}
+		divorce_char_sql(char_id, partner_id);
 
 	/* De-addopt [Zephyrus] */
 	if( father_id || mother_id )
@@ -1857,7 +1865,6 @@ int parse_fromlogin(int fd)
 		{	//Receive account_reg2 registry, forward to map servers.
 			unsigned char buf[ACCOUNT_REG2_NUM*(256+32+2)+16];
 			memcpy(buf,RFIFOP(fd,0), RFIFOW(fd,2));
-//			WBUFW(buf,0) = 0x2b11;
 			WBUFW(buf,0) = 0x3804; //Map server can now receive all kinds of reg values with the same packet. [Skotlex]
 			mapif_sendall(buf, WBUFW(buf,2));
 		}
@@ -2657,6 +2664,15 @@ int parse_frommap(int fd)
 
 			RFIFOSKIP(fd,11);
 		}
+		break;
+
+		// Divorce chars
+		case 0x2b11:
+			if( RFIFOREST(fd) < 10 )
+				return 0;
+
+			divorce_char_sql(RFIFOL(fd,2), RFIFOL(fd,6));
+			RFIFOSKIP(fd,10);
 		break;
 
 		case 0x2b16: // Receive rates [Wizputer]

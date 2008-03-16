@@ -33,7 +33,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 	60, 3,-1,27,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
 	 6,-1,18, 7,-1,35,30,10,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, U->2b07
 	 6,30,-1,10,86, 7,44,34,	// 2b08-2b0f: U->2b08, U->2b09, U->2b0a, U->2b0b, U->2b0c, U->2b0d, U->2b0e, U->2b0f
-	11, 9,10, 6,11,-1,266,10,	// 2b10-2b17: U->2b10, F->2b11, U->2b12, U->2b13, U->2b14, U->2b15, U->2b16, U->2b17
+	11,10,10, 6,11,-1,266,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, U->2b13, U->2b14, U->2b15, U->2b16, U->2b17
 	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
 	-1,10, 8, 2, 2,14,-1,-1,	// 2b20-2b27: U->2b20, U->2b21, U->2b22, U->2b23, U->2b24, U->2b25, F->2b26, F->2b27
 };
@@ -64,8 +64,8 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b0e: Outgoing, chrif_char_ask_name -> 'Do some operations (change sex, ban / unban etc)'
 //2b0f: Incoming, chrif_char_ask_name_answer -> 'answer of the 2b0e'
 //2b10: Outgoing, chrif_updatefamelist -> 'Update the fame ranking lists and send them'
-//2b11: FREE
-//2b12: Incoming, chrif_divorce -> 'divorce a wedding of charid X and partner id X'
+//2b11: Outgoing, chrif_divorce -> 'tell the charserver to do divorce'
+//2b12: Incoming, chrif_divorceack -> 'divorce chars
 //2b13: Incoming, chrif_accountdeletion -> 'Delete acc XX, if the player is on, kick ....'
 //2b14: Incoming, chrif_accountban -> 'not sure: kick the player with message XY'
 //2b15: Incoming, chrif_recvgmaccounts -> 'receive gm accs from charserver (seems to be incomplete !)'
@@ -85,7 +85,8 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b23: Outgoing, chrif_keepalive. charserver ping.
 //2b24: Incoming, chrif_keepalive_ack. charserver ping reply.
 //2b25: Incoming, chrif_deadopt -> 'Removes baby from Father ID and Mother ID'
-//2b26-2b27: FREE
+//2b26: FREE
+//2b27: FREE
 
 int chrif_connected = 0;
 int char_fd = 0; //Using 0 instead of -1 is safer against crashes. [Skotlex]
@@ -875,11 +876,26 @@ int chrif_changedsex(int fd)
 	}
 	return 0;
 }
+/*==========================================
+ * Request Char Server to Divorce Players
+ *------------------------------------------*/
+int chrif_divorce(int partner_id1, int partner_id2)
+{
+	chrif_check(-1);
+
+	WFIFOHEAD(char_fd,10);
+	WFIFOW(char_fd,0) = 0x2b11;
+	WFIFOL(char_fd,2) = partner_id1;
+	WFIFOL(char_fd,6) = partner_id2;
+	WFIFOSET(char_fd,10);
+
+	return 0;
+}
 
 /*==========================================
  * Divorce players
  *------------------------------------------*/
-int chrif_divorce(int char_id, int partner_id)
+int chrif_divorceack(int char_id, int partner_id)
 {
 	struct map_session_data* sd;
 	int i;
@@ -1433,7 +1449,7 @@ int chrif_parse(int fd)
 		case 0x2b0b: chrif_changedgm(fd); break;
 		case 0x2b0d: chrif_changedsex(fd); break;
 		case 0x2b0f: chrif_char_ask_name_answer(RFIFOL(fd,2), (char*)RFIFOP(fd,6), RFIFOW(fd,30), RFIFOW(fd,32)); break;
-		case 0x2b12: chrif_divorce(RFIFOL(fd,2), RFIFOL(fd,6)); break;
+		case 0x2b12: chrif_divorceack(RFIFOL(fd,2), RFIFOL(fd,6)); break;
 		case 0x2b13: chrif_accountdeletion(fd); break;
 		case 0x2b14: chrif_accountban(fd); break;
 		case 0x2b15: chrif_recvgmaccounts(fd); break;
