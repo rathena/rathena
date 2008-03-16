@@ -1368,7 +1368,7 @@
 2672,Anniversary_Ring,3rd Anniversary Celebration Ring,5,,10,100,,0,,0,0xFFFFFFFE,7,2,136,,0,0,0,{},{},{}
 2673,Shining_Ring,Warrior's Shining Ring,5,0,,100,,0,,0,0xFFFFFFFE,7,2,136,,48,0,0,{ bonus bBaseAtk,10; bonus bSPrecovRate,3; },{},{}
 2674,Honor_Ring,Ring of Honor,5,20,,0,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{},{},{}
-2675,Lord_Ring,Lord Ring,5,0,,,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{},{},{}
+2675,Lord_Ring,Lord Ring,5,0,,0,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{},{},{}
 2676,Hunter_Earring,Hunter's Earring,5,,10,300,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{ bonus2 bAddMonsterDropItem,7618,100; },{},{}
 2677,Spiritual_Ring,Spiritual Ring,5,20,,100,,0,,0,0xFFFFFFFF,7,2,136,,1,0,0,{ bonus bInt,2; bonus bDex,1; if(isequipped(2607) || isequipped(2608) || isequipped(2626)) { bonus2 bSkillAtk,28,50; bonus2 bSkillAtk,79,30; bonus bSPrecovRate,9; } },{},{}
 2678,Ring_of_Flame_Lord,Ring of Flame Lord,5,20,,100,,0,,0,0x00CFDF80,2,2,136,,1,0,0,{ bonus bStr,2; bonus bVit,1; bonus bBaseAtk,15; bonus2 bSubEle,Ele_Fire,10; bonus3 bAutoSpell,401,1,30; bonus3 bAutoSpell,270,5,10; bonus3 bAutoSpell,367,2,30; bonus3 bAutoSpell,17,1,150; bonus3 bAutoSpell,62,5,20; if(isequipped(2679)) { bonus4 bAutoSpell,271,1,3,1; bonus3 bAutoSpell,78,1,20; bonus3 bAutoSpell,136,5,50; bonus3 bAutoSpell,266,5,20; bonus3 bAutoSpell,406,2,50; } },{},{}
@@ -3080,7 +3080,7 @@
 7887,Dried_Fruit_Box,Dried Fruit Box,3,0,,30,,,,,,,,,,,,,{},{},{}
 7888,Bag_of_Nuts,Bag of Nuts,3,0,,30,,,,,,,,,,,,,{},{},{}
 7889,Chicken_Feed,Chicken Feed,3,0,,20,,,,,,,,,,,,,{},{},{}
-7891,Mug,,3,2,,100,,,,,,,,,,,,,{},{},{}
+7891,Mug,Mug,3,2,,100,,,,,,,,,,,,,{},{},{}
 7900,Jonathan_Family_Ring,Jonathan Family Ring,3,,0,0,,,,,,,,,,,,,{},{},{}
 7901,Jillberriel_Family_Ring,Jillberriel Family Ring,3,,0,0,,,,,,,,,,,,,{},{},{}
 7902,Jessur_Family_Ring,Jessur Family Ring,3,,0,0,,,,,,,,,,,,,{},{},{}
