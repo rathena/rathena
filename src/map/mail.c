@@ -16,12 +16,6 @@
 #include <time.h>
 #include <string.h>
 
-time_t mail_calctimes(void)
-{
-	time_t temp = time(NULL);
-	return mktime(localtime(&temp));
-}
-
 void mail_clear(struct map_session_data *sd)
 {
 	sd->mail.nameid = 0;

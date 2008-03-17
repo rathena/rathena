@@ -49,6 +49,7 @@ int settick_timer(int tid, unsigned int tick);
 int add_timer_func_list(TimerFunc func, char* name);
 
 unsigned long get_uptime(void);
+unsigned int calc_times(void);
 
 int do_timer();
 void timer_init(void);
