@@ -44,6 +44,7 @@
 
 =======================
 2008/07/17
+	* Rev. 12386 Whoops. Incorrect ID in item_avail. :D [L0ne_W0lf]
 	* Rev. 12385 Whoops. Incorrect IDs in item_avail. [L0ne_W0lf]
 	* Rev. 12384 Added another item entry to item_avail. [L0ne_W0lf]
 	* Rev. 12383 Added item_avail entries for two items. [L0ne_W0lf]
