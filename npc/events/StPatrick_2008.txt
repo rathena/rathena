@@ -18,6 +18,10 @@
 //= The item 12715 Black_Treasure_Chest contains a script 
 //= that relies explicitly on this script being loaded.
 //= Remove the "end" from the item script to enable.
+//= In addition to that, you must enable the item_avail
+//= entries if you are using a kRO client, as the items
+//= were removed from the client between testing and this
+//= updated.
 //===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
 //= 1.1 Fixed checkitems for ale, fixed ale prize(gives the correct one now). [Kisuka]

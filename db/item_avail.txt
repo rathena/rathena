@@ -10,3 +10,8 @@
 //7951,7042
 //1998,1250
 //1999,1472
+
+//St. Patric's Day Quest (2008) Items
+//Enable if you plan to use the quest.
+//7916,673
+//7917,676
