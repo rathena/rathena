@@ -4,7 +4,7 @@
 //= Persian, Vicious_Pucca, aoa00, Evera, MasterOfMupppets,
 //= Lupus, Lord Gywall
 //===== Current Version: ===================================== 
-//= 4.1
+//= 4.2
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -64,6 +64,7 @@
 //= 3.9 Added Rekenber Job quest. Don't know why it hasn't been there before though. [SinSloth]
 //= 4.0 Updated several NPCs to Official (iRO) dialog, and restrucured. [L0ne_W0lf]
 //= 4.1 Updated Dungeon quest, and Friendhsip quest to 10.3 standards. [L0ne_W0lf]
+//= 4.2 Fixed wrong variable type in use in "Box#cube1". [L0ne_W0lf]
 //============================================================ 
 
 lighthalzen,1,1,7	script	sneakAddSuber	-1,{
@@ -1715,7 +1716,7 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 			close;
 		}
 	}
-	else if (@lhz_secret01 == 10 && @lhz_secret02 == 5 && @lhz_secret03 == 4 && @lhz_sincube != 10) {
+	else if (@lhz_secret01 == 10 && @lhz_secret02 == 5 && @lhz_secret03 == 4 && lhz_sincube != 10) {
 		mes "^3355FFYou find a box with";
 		mes "three distinctively";
 		mes "shaped holes that";

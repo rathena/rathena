@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/03/17
+	* Rev. 12387 Corrected variable used in Lighthalzen quest. [L0ne_W0lf]
 	* Rev. 12387 Corrected small error in St. Patrick's Day event. [L0ne_W0lf]
 2008/03/16
 	* Rev. 12380 Updated Divorce script. [L0ne_W0lf]
