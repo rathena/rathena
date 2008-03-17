@@ -44,6 +44,7 @@
 
 =======================
 2008/07/17
+	* Rev. 12384 Added another item entry to item_avail. [L0ne_W0lf]
 	* Rev. 12383 Added item_avail entries for two items. [L0ne_W0lf]
 2008/03/16
 	* Rev. 12381 Fixed two empty fields in the item_db. [L0ne_W0lf]
