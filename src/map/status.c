@@ -2339,8 +2339,10 @@ int status_calc_pc(struct map_session_data* sd,int first)
 		}
 		if(sc->data[SC_ARMOR_ELEMENT])
 		{	//This status change should grant card-type elemental resist.
-			sd->subele[sc->data[SC_ARMOR_ELEMENT]->val1] += sc->data[SC_ARMOR_ELEMENT]->val2;
-			sd->subele[sc->data[SC_ARMOR_ELEMENT]->val3] += sc->data[SC_ARMOR_ELEMENT]->val4;
+			sd->subele[ELE_WATER] += sc->data[SC_ARMOR_ELEMENT]->val1;
+			sd->subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT]->val2;
+			sd->subele[ELE_FIRE] += sc->data[SC_ARMOR_ELEMENT]->val3;
+			sd->subele[ELE_WIND] += sc->data[SC_ARMOR_ELEMENT]->val4;
 		}
 	}
 
@@ -6898,8 +6900,11 @@ int status_change_timer(int tid, unsigned int tick, int id, int data)
 	case SC_HPREGEN:
 		if( sd && --(sce->val4) >= 0 )
 		{
-			if( status->hp < status->max_hp ) {
-				int hp = (int)(sd->status.max_hp * sce->val1 / 100.);
+			if( status->hp < status->max_hp )
+			{
+				// val1 < 0 = per maxhp %
+				// val1 > 0 = exact amount
+				int hp = (sce->val1 < 0) ? (int)(sd->status.max_hp * -1 * sce->val1 / 100.) : sce->val1 ;
 				status_heal(bl, hp, 0, 2);
 			}
 			sc_timer_next((sce->val2 * 1000) + tick, status_change_timer, bl->id, data );
