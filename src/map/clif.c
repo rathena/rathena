@@ -5313,10 +5313,10 @@ int clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 
 	WBUFW(buf, 0) = 0x1e9;
 	WBUFL(buf, 2) = sd->status.account_id;
-	WBUFL(buf, 6) = (p->party.member[i].leader)?1:0;
+	WBUFL(buf, 6) = (p->party.member[i].leader)?0:1;
 	WBUFW(buf,10) = sd->bl.x;
 	WBUFW(buf,12) = sd->bl.y;
-	WBUFB(buf,14) = (p->party.member[i].online)?1:0;
+	WBUFB(buf,14) = (p->party.member[i].online)?0:1;
 	memcpy(WBUFP(buf,15), p->party.name, NAME_LENGTH);
 	memcpy(WBUFP(buf,39), sd->status.name, NAME_LENGTH);
 	mapindex_getmapname_ext(mapindex_id2name(sd->mapindex), (char*)WBUFP(buf,63));
