@@ -17,6 +17,8 @@
 			IntermediateDirectory="$(ProjectName)\$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="2">
+			<DebugSettings
+				WorkingDirectory="$(SolutionDir)"/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -76,6 +78,8 @@
 			ConfigurationType="1"
 			CharacterSet="2"
 			WholeProgramOptimization="TRUE">
+			<DebugSettings
+				WorkingDirectory="$(SolutionDir)"/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"

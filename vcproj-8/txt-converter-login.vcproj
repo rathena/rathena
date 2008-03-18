@@ -23,6 +23,9 @@
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			CharacterSet="2"
 			>
+			<DebugSettings
+				WorkingDirectory="$(SolutionDir)"
+			/>
 			<Tool
 				Name="VCPreBuildEventTool"
 			/>
@@ -112,6 +115,9 @@
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
+			<DebugSettings
+				WorkingDirectory="$(SolutionDir)"
+			/>
 			<Tool
 				Name="VCPreBuildEventTool"
 			/>
