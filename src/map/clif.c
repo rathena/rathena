@@ -12067,13 +12067,10 @@ void clif_parse_Adopt_reply(int fd, struct map_session_data *sd)
 
 	sd->adopt_invite = 0;
 
-	if( pid != p1_sd->status.account_id )
-		return; // Not the same sender
+	if( pid != p1_sd->status.account_id || !result )
+		return; // Not the same sender | Reply No
 
-	if( pc_can_Adopt(p1_sd, p2_sd, sd) )
-	{
-		// Lets do the adoption!!
-	}
+	pc_adoption(p1_sd, p2_sd, sd);
 }
 
 /*==========================================
