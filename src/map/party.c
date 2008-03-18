@@ -381,8 +381,6 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 	}
 
 	sd2 = map_id2sd(sd->party_invite_account);
-	if( sd2 != NULL )
-		clif_party_inviteack(sd2,sd->status.name,flag?3:2);
 
 	sd->party_invite = 0;
 	sd->party_invite_account = 0;
@@ -406,9 +404,13 @@ int party_member_added(int party_id,int account_id,int char_id, int flag)
 	}
 
 	party_check_conflict(sd);
+	clif_party_member_info(p,sd);
 	clif_party_option(p,sd,0x100);
 	clif_party_info(p,sd);
-	clif_party_member_info(p,sd);
+
+	if( sd2 != NULL )
+		clif_party_inviteack(sd2,sd->status.name,flag?3:2);
+
 	for( i = 0; i < ARRAYLENGTH(p->data); ++i )
 	{// hp of the other party members
 		sd2 = p->data[i].sd;

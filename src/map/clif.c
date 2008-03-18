@@ -5301,20 +5301,22 @@ int clif_party_created(struct map_session_data *sd,int result)
 int clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 {
 	unsigned char buf[96];
+	int i;
 
 	if (!sd) { //Pick any party member (this call is used when changing item share rules)
-		int i;
-		for (i=0; i<MAX_PARTY && !p->data[i].sd; i++);
-		if (i >= MAX_PARTY) return 0; //Should never happen...
-		sd = p->data[i].sd;
+		ARR_FIND( 0, MAX_PARTY, i, p->data[i].sd != 0 );
+	} else {
+		ARR_FIND( 0, MAX_PARTY, i, p->data[i].sd == sd );
 	}
+	if (i >= MAX_PARTY) return 0; //Should never happen...
+	sd = p->data[i].sd;
 
 	WBUFW(buf, 0) = 0x1e9;
 	WBUFL(buf, 2) = sd->status.account_id;
-	WBUFL(buf, 6) = 0;
+	WBUFL(buf, 6) = (p->party.member[i].leader)?1:0;
 	WBUFW(buf,10) = sd->bl.x;
 	WBUFW(buf,12) = sd->bl.y;
-	WBUFB(buf,14) = 0; //Unconfirmed byte, could be online/offline.
+	WBUFB(buf,14) = (p->party.member[i].online)?1:0;
 	memcpy(WBUFP(buf,15), p->party.name, NAME_LENGTH);
 	memcpy(WBUFP(buf,39), sd->status.name, NAME_LENGTH);
 	mapindex_getmapname_ext(mapindex_id2name(sd->mapindex), (char*)WBUFP(buf,63));

@@ -4,6 +4,7 @@ AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO 
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
 2008/03/18
+	* Fixed invited party members not displaying correctly (bugreport:1199)
 	* Fixed OnPCLoginEvent not working correctly (bugreport:1182) [ultramage]
 	* Added missing WorkingDirectory value to vcproj-7.1, vcproj-8 projects.
 	  Now you can flawlessly run your compiled server with RUN button in
