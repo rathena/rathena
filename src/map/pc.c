@@ -537,6 +537,119 @@ static int pc_isAllowedCardOn(struct map_session_data *sd,int s,int eqindex,int 
 	return 1;              
 }
 
+bool pc_isequipped(struct map_session_data *sd, int nameid)
+{
+	int i, j, index;
+
+	for( i = 0; i < EQI_MAX; i++ )
+	{
+		index = sd->equip_index[i];
+		if( index < 0 ) continue;
+
+		if( i == EQI_HAND_R && sd->equip_index[EQI_HAND_L] == index ) continue;
+		if( i == EQI_HEAD_MID && sd->equip_index[EQI_HEAD_LOW] == index ) continue;
+		if( i == EQI_HEAD_TOP && (sd->equip_index[EQI_HEAD_MID] == index || sd->equip_index[EQI_HEAD_LOW] == index) ) continue;
+	
+		if( !sd->inventory_data[index] ) continue;
+
+		if( sd->inventory_data[index]->nameid == nameid )
+			return true;
+
+		for( j = 0; j < sd->inventory_data[index]->slot; j++ )
+			if( sd->status.inventory[index].card[j] == nameid )
+				return true;
+	}
+
+	return false;
+}
+
+bool pc_can_Adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd )
+{
+	if( !p1_sd || !p2_sd || !b_sd )
+		return false;
+
+	if( b_sd->status.father || b_sd->status.mother || b_sd->adopt_invite )
+		return false; // allready adopted baby / in adopt request
+
+	if( !p1_sd->status.partner_id || !p1_sd->status.party_id || p1_sd->status.party_id != b_sd->status.party_id )
+		return false; // You need to be married and in party with baby to adopt
+
+	if( p1_sd->status.partner_id != p2_sd->status.char_id || p2_sd->status.partner_id != p1_sd->status.char_id )
+		return false; // Not married, wrong married
+
+	if( p2_sd->status.party_id != p1_sd->status.party_id )
+		return false; // Both parents need to be in the same party
+
+	// Parents need to have their ring equipped
+	if( !pc_isequipped(p1_sd, WEDDING_RING_M) && !pc_isequipped(p1_sd, WEDDING_RING_F) )
+		return false; 
+
+	if( !pc_isequipped(p2_sd, WEDDING_RING_M) && !pc_isequipped(p2_sd, WEDDING_RING_F) )
+		return false;
+
+	// Allready adopted a baby
+	if( p1_sd->status.child || p2_sd->status.child ) {
+		clif_Adopt_reply(p1_sd, 0);
+		return false;
+	}
+
+	// Fathers need at least lvl 70 to adopt
+	if( p1_sd->status.base_level < 70 || p2_sd->status.base_level < 70 ) {
+		clif_Adopt_reply(p1_sd, 1);
+		return false;
+	}
+
+	if( b_sd->status.partner_id ) {
+		clif_Adopt_reply(p1_sd, 2);
+		return false;
+	}
+
+	return ( b_sd->status.class_ >= JOB_NOVICE && b_sd->status.class_ <= JOB_THIEF );
+}
+
+/*==========================================
+ * Adoption Process
+ *------------------------------------------*/
+bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd)
+{
+	int job, joblevel;
+	unsigned int jobexp;
+	
+	if( !pc_can_Adopt(p1_sd, p2_sd, b_sd) )
+		return false;
+
+	// Preserve current job levels and progress
+	joblevel = b_sd->status.job_level;
+	jobexp = b_sd->status.job_exp;
+
+	job = pc_mapid2jobid(b_sd->class_|JOBL_BABY, b_sd->status.sex);
+	if( job != -1 && !pc_jobchange(b_sd, job, 0) )
+	{ // Success, proceed to configure parents and baby skills
+		p1_sd->status.child = b_sd->status.char_id;
+		p2_sd->status.child = b_sd->status.char_id;
+		b_sd->status.father = p1_sd->status.char_id;
+		b_sd->status.mother = p2_sd->status.char_id;
+
+		// Restore progress
+		b_sd->status.job_level = joblevel;
+		clif_updatestatus(b_sd, SP_JOBLEVEL);
+		b_sd->status.job_exp = jobexp;
+		clif_updatestatus(b_sd, SP_JOBEXP);
+
+		// Baby Skills
+		pc_skill(b_sd, WE_BABY, 1, 0);
+		pc_skill(b_sd, WE_CALLPARENT, 1, 0);
+
+		// Parents Skills
+		pc_skill(p1_sd, WE_CALLBABY, 1, 0);
+		pc_skill(p1_sd, WE_CALLBABY, 1, 0);
+		
+		return true;
+	}
+
+	return false; // Job Change Fail
+}
+
 int pc_isequip(struct map_session_data *sd,int n)
 {
 	struct item_data *item;
@@ -6708,53 +6821,6 @@ int pc_divorce(struct map_session_data *sd)
 		clif_divorced(sd, p_sd->status.name);
 		clif_divorced(p_sd, sd->status.name);
 
-	return 0;
-}
-
-/*==========================================
- * sd - father dstsd - mother jasd - child
- *------------------------------------------*/
-int pc_adoption(struct map_session_data *sd,struct map_session_data *dstsd, struct map_session_data *jasd)
-{       
-	int j,level, job;
-	unsigned int exp;
-	if (sd == NULL || dstsd == NULL || jasd == NULL ||
-		sd->status.partner_id <= 0 || dstsd->status.partner_id <= 0 ||
-		sd->status.partner_id != dstsd->status.char_id || dstsd->status.partner_id != sd->status.char_id ||
-		sd->status.child > 0 || dstsd->status.child || jasd->status.father > 0 || jasd->status.mother > 0)
-			return -1;
-	jasd->status.father = sd->status.char_id;
-	jasd->status.mother = dstsd->status.char_id;
-	sd->status.child = jasd->status.char_id;
-	dstsd->status.child = jasd->status.char_id;
-
-	for (j=0; j < MAX_INVENTORY; j++) {
-		if(jasd->status.inventory[j].nameid>0 && jasd->status.inventory[j].equip!=0)
-			pc_unequipitem(jasd, j, 3);
-	}
-
-	//Preserve level and exp.
-	level = jasd->status.job_level;
-	exp = jasd->status.job_exp;
-	job = jasd->class_|JOBL_BABY; //Preserve current Job by babyfying it. [Skotlex]
-	job = pc_mapid2jobid(job, jasd->status.sex);
-	if (job != -1 && pc_jobchange(jasd, job, 0) == 0)
-	{	//Success, and give Junior the Baby skills. [Skotlex]
-		//Restore job level and experience.
-		jasd->status.job_level = level;
-		jasd->status.job_exp = exp;
-		clif_updatestatus(jasd,SP_JOBLEVEL);
-		clif_updatestatus(jasd,SP_JOBEXP);
-		pc_skill(jasd,WE_BABY,1,0);
-		pc_skill(jasd,WE_CALLPARENT,1,0);
-		clif_displaymessage(jasd->fd, msg_txt(12)); // Your job has been changed.
-		//We should also grant the parent skills to the parents [Skotlex]
-		pc_skill(sd,WE_CALLBABY,1,0);
-		pc_skill(dstsd,WE_CALLBABY,1,0);
-	} else {
-		clif_displaymessage(jasd->fd, msg_txt(155)); // Impossible to change your job.
-		return -1;
-	}
 	return 0;
 }
 

@@ -11424,32 +11424,6 @@ BUILDIN_FUNC(getrefine)
 }
 
 /*=======================================================
- * Allows 2 Parents to adopt a character as a Baby
- *-------------------------------------------------------*/
-BUILDIN_FUNC(adopt)
-{
-	int ret;
-	
-	const char *parent1 = script_getstr(st,2);
-	const char *parent2 = script_getstr(st,3);
-	const char *child = script_getstr(st,4);
-
-	TBL_PC *p1_sd = map_nick2sd(parent1);
-	TBL_PC *p2_sd = map_nick2sd(parent2);
-	TBL_PC *c_sd = map_nick2sd(child);
-
-	if (!p1_sd || !p2_sd || !c_sd ||
-		p1_sd->status.base_level < 70 ||
-		p2_sd->status.base_level < 70)
-		return 0;
-
-	ret = pc_adoption(p1_sd, p2_sd, c_sd);
-	script_pushint(st,ret);
-
-	return 0;
-}
-
-/*=======================================================
  * Day/Night controls
  *-------------------------------------------------------*/
 BUILDIN_FUNC(night)
@@ -13310,7 +13284,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(isequippedcnt,"i*"), // check how many items/cards are being equipped [Celest]
 	BUILDIN_DEF(cardscnt,"i*"), // check how many items/cards are being equipped in the same arm [Lupus]
 	BUILDIN_DEF(getrefine,"*"), // returns the refined number of the current item, or an item with index specified [celest]
-	BUILDIN_DEF(adopt,"sss"), // allows 2 parents to adopt a child
 	BUILDIN_DEF(night,""), // sets the server to night time
 	BUILDIN_DEF(day,""), // sets the server to day time
 #ifdef PCRE_SUPPORT

@@ -49,7 +49,7 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 	}
 
 	if (!battle_config.invite_request_check) {
-		if (target_sd->guild_invite > 0 || target_sd->party_invite > 0) {
+		if (target_sd->guild_invite > 0 || target_sd->party_invite > 0 || target_sd->adopt_invite) {
 			clif_tradestart(sd, 2);
 			return;
 		}

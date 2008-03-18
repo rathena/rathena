@@ -7536,9 +7536,7 @@ int atcommand_whereis(const int fd, struct map_session_data* sd, const char* com
  *------------------------------------------*/
 int atcommand_adopt(const int fd, struct map_session_data* sd, const char* command, const char* message)
 {
-	struct map_session_data *pl_sd1 = NULL;
-	struct map_session_data *pl_sd2 = NULL;
-	struct map_session_data *pl_sd3 = NULL;
+	struct map_session_data *pl_sd1, *pl_sd2, *pl_sd3;
 	char player1[NAME_LENGTH], player2[NAME_LENGTH], player3[NAME_LENGTH];
 	char output[256];
 
@@ -7570,7 +7568,7 @@ int atcommand_adopt(const int fd, struct map_session_data* sd, const char* comma
 		return -1;
 	}
 
-	if( pc_adoption(pl_sd1, pl_sd2, pl_sd3) != 0 ) {
+	if( !pc_adoption(pl_sd1, pl_sd2, pl_sd3) ) {
 		return -1;
 	}
 	
@@ -8218,7 +8216,10 @@ int atcommand_auction(const int fd, struct map_session_data *sd, const char *com
 {
 	nullpo_retr(0,sd);
 
+#ifndef TXT_ONLY
 	clif_Auction_openwindow(sd);
+#endif
+
 	return 0;
 }
 

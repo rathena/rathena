@@ -22,7 +22,6 @@ static DBMap* auction_db_ = NULL; // int auction_id -> struct auction_data*
 void auction_delete(struct auction_data *auction);
 static int auction_end_timer(int tid, unsigned int tick, int id, int data);
 
-// Copy Paste from map/mail.c
 static int auction_count(int char_id, bool buy)
 {
 	int i = 0;

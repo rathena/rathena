@@ -408,6 +408,7 @@ void clif_Mail_new(int fd, int mail_id, const char *sender, const char *title);
 void clif_Mail_refreshinbox(struct map_session_data *sd);
 void clif_Mail_getattachment(int fd, uint8 flag);
 // AUCTION SYSTEM
+void clif_Auction_openwindow(struct map_session_data *sd);
 void clif_Auction_results(struct map_session_data *sd, short count, short pages, unsigned char *buf);
 void clif_Auction_message(int fd, unsigned char flag);
 void clif_Auction_close(int fd, unsigned char flag);
@@ -416,7 +417,7 @@ void clif_parse_Auction_cancelreg(int fd, struct map_session_data *sd);
 
 void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd);
 
-// AUCTION SYSTEM
-void clif_Auction_openwindow(struct map_session_data *sd);
+// ADOPTION
+void clif_Adopt_reply(struct map_session_data *sd, int type);
 
 #endif /* _CLIF_H_ */

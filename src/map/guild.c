@@ -618,7 +618,7 @@ int guild_invite(struct map_session_data *sd,struct map_session_data *tsd)
 		return 0; //Invite permission.
 
 	if(!battle_config.invite_request_check) {
-		if (tsd->party_invite>0 || tsd->trade_partner) {	// ‘ŠŽè‚ªŽæˆø’†‚©‚Ç‚¤‚©
+		if (tsd->party_invite>0 || tsd->trade_partner || tsd->adopt_invite ) {	// ‘ŠŽè‚ªŽæˆø’†‚©‚Ç‚¤‚©
 			clif_guild_inviteack(sd,0);
 			return 0;
 		}

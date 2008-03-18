@@ -5311,7 +5311,7 @@ int clif_party_member_info(struct party_data *p, struct map_session_data *sd)
 
 	WBUFW(buf, 0) = 0x1e9;
 	WBUFL(buf, 2) = sd->status.account_id;
-	WBUFL(buf, 6) = 0; //Apparently setting this to 1 makes you adoptable.
+	WBUFL(buf, 6) = 0;
 	WBUFW(buf,10) = sd->bl.x;
 	WBUFW(buf,12) = sd->bl.y;
 	WBUFB(buf,14) = 0; //Unconfirmed byte, could be online/offline.
@@ -6735,19 +6735,7 @@ void clif_callpartner(struct map_session_data *sd)
 	return;
 }
 */
-/*==========================================
- * Adopt baby [Celest]
- *------------------------------------------*/
-void clif_adopt_process(struct map_session_data *sd)
-{
-	int fd;
-	nullpo_retv(sd);
 
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x1f8));
-	WFIFOW(fd,0)=0x1f8;
-	WFIFOSET(fd,packet_len(0x1f8));
-}
 /*==========================================
  * Marry [DracoRPG]
  *------------------------------------------*/
@@ -6776,18 +6764,6 @@ void clif_divorced(struct map_session_data* sd, const char* name)
 	WFIFOW(fd,0)=0x205;
 	memcpy(WFIFOP(fd,2), name, NAME_LENGTH);
 	WFIFOSET(fd, packet_len(0x205));
-}
-
-/*==========================================
- *
- *------------------------------------------*/
-void clif_parse_ReqAdopt(int fd, struct map_session_data *sd)
-{
-	nullpo_retv(sd);
-
-	WFIFOHEAD(fd,packet_len(0x1f6));
-	WFIFOW(fd,0)=0x1f6;
-	WFIFOSET(fd, packet_len(0x1f6));
 }
 
 /*==========================================
@@ -7959,7 +7935,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		//Login Event
 		npc_script_event(sd, NPCE_LOGIN);
 		mob_barricade_get(sd);
-	} else if( sd->state.changemap ) {
+	} else {
 		//For some reason the client "loses" these on map-change.
 		clif_updatestatus(sd,SP_STR);
 		clif_updatestatus(sd,SP_AGI);
@@ -7967,15 +7943,20 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_updatestatus(sd,SP_INT);
 		clif_updatestatus(sd,SP_DEX);
 		clif_updatestatus(sd,SP_LUK);
+	}
 
-		//New 'night' effect by dynamix [Skotlex]
+	if( sd->state.changemap )
+	{
 		if (night_flag && map[sd->bl.m].flag.nightenabled)
 		{	//Display night.
-			if (!sd->state.night) {
+			if( !sd->state.night )
+			{
 				sd->state.night = 1;
 				clif_status_load(&sd->bl, SI_NIGHT, 1);
 			}
-		} else if (sd->state.night) { //Clear night display.
+		}
+		else if( sd->state.night )
+		{ //Clear night display.
 			sd->state.night = 0;
 			clif_status_load(&sd->bl, SI_NIGHT, 0);
 		}
@@ -11216,24 +11197,6 @@ void clif_parse_ReqFeel(int fd, struct map_session_data *sd, int skilllv)
 	sd->menuskill_val = skilllv;
 }
 
-void clif_parse_AdoptRequest(int fd,struct map_session_data *sd)
-{
-	//TODO: add somewhere the adopt code, checks for exploits, etc, etc.
-	//Missing packets are the client's reply packets to the adopt request one. 
-	//[Skotlex]
-	int account_id;
-	struct map_session_data *sd2;
-	
-	account_id = RFIFOL(fd,2);
-	sd2 = map_id2sd(account_id);
-	if(sd2 && sd2->fd && sd2 != sd && sd2->status.party_id == sd->status.party_id) {	//FIXME: No checks whatsoever are in place yet!
-		fd = sd2->fd;
-		WFIFOHEAD(fd,packet_len(0x1f9));
-		WFIFOW(fd,0)=0x1f9;
-		WFIFOSET(fd, packet_len(0x1f9));
-	}
-}
-
 /*==========================================
  * Homunculus packets
  *------------------------------------------*/
@@ -11725,6 +11688,24 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd)
  * AUCTION SYSTEM
  * By Zephyrus
  *==========================================*/
+void clif_Auction_openwindow(struct map_session_data *sd)
+{
+	int fd = sd->fd;
+
+	if( sd->state.storage_flag || sd->vender_id || sd->state.trading )
+		return;
+
+	WFIFOHEAD(fd,12);
+	WFIFOW(fd,0) = 0x25f;
+	WFIFOL(fd,2) = 0;
+	WFIFOB(fd,6) = 0xb6;
+	WFIFOB(fd,7) = 0x00;
+	WFIFOB(fd,8) = 0xa6;
+	WFIFOB(fd,9) = 0xde;
+	WFIFOW(fd,10) = 0;
+	WFIFOSET(fd,12);
+}
+
 void clif_Auction_results(struct map_session_data *sd, short count, short pages, unsigned char *buf)
 {
 	int i, fd = sd->fd, len = sizeof(struct auction_data);
@@ -12039,24 +12020,59 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
 }
 
 /*==========================================
- * AUCTIONS SYSTEM
+ * Adoption System
  *==========================================*/
-void clif_Auction_openwindow(struct map_session_data *sd)
+
+// 0 : You cannot adopt more that 1 son
+// 1 : You should be at least lvl 70 to adopt
+// 2 : You cannot adopt a married player
+void clif_Adopt_reply(struct map_session_data *sd, int type)
 {
 	int fd = sd->fd;
 
-	if( sd->state.storage_flag || sd->vender_id || sd->state.trading )
-		return;
+	WFIFOHEAD(fd,6);
+	WFIFOW(fd,0) = 0x0216;
+	WFIFOL(fd,2) = type;
+	WFIFOSET(fd,6);
+}
 
-	WFIFOHEAD(fd,12);
-	WFIFOW(fd,0) = 0x25f;
-	WFIFOL(fd,2) = 0;
-	WFIFOB(fd,6) = 0xb6;
-	WFIFOB(fd,7) = 0x00;
-	WFIFOB(fd,8) = 0xa6;
-	WFIFOB(fd,9) = 0xde;
-	WFIFOW(fd,10) = 0;
-	WFIFOSET(fd,12);
+void clif_Adopt_request(struct map_session_data *sd, struct map_session_data *src, int p_id)
+{
+	int fd = sd->fd;
+
+	WFIFOSET(fd,34);
+	WFIFOW(fd,0) = 0x01f6;
+	WFIFOL(fd,2) = src->status.account_id;
+	WFIFOL(fd,6) = p_id;
+	memcpy(WFIFOP(fd,10), src->status.name, NAME_LENGTH);
+	WFIFOSET(fd,34);
+}
+
+void clif_parse_Adopt_request(int fd, struct map_session_data *sd)
+{
+	struct map_session_data *tsd = map_id2sd(RFIFOL(fd,2)), *p_sd = map_charid2sd(sd->status.partner_id);
+
+	if( pc_can_Adopt(sd, tsd, p_sd) )
+	{
+		tsd->adopt_invite = sd->status.account_id;
+		clif_Adopt_request(tsd, sd, p_sd->status.account_id);
+	}
+}
+
+void clif_parse_Adopt_reply(int fd, struct map_session_data *sd)
+{
+	struct map_session_data *p1_sd = map_id2sd(RFIFOL(fd,2)), *p2_sd = map_id2sd(RFIFOL(fd,6));
+	int result = RFIFOL(fd,10), pid = sd->adopt_invite;
+
+	sd->adopt_invite = 0;
+
+	if( pid != p1_sd->status.account_id )
+		return; // Not the same sender
+
+	if( pc_can_Adopt(p1_sd, p2_sd, sd) )
+	{
+		// Lets do the adoption!!
+	}
 }
 
 /*==========================================
@@ -12497,7 +12513,6 @@ static int packetdb_readdb(void)
 		{clif_parse_Taekwon,"taekwon"},
 		{clif_parse_RankingPk,"rankingpk"},
 		{clif_parse_FeelSaveOk,"feelsaveok"},
-		{clif_parse_AdoptRequest,"adopt"},
 		{clif_parse_debug,"debug"},
 		{clif_parse_ChangeHomunculusName,"changehomunculusname"},
 		{clif_parse_HomMoveToMaster,"hommovetomaster"},
@@ -12508,6 +12523,8 @@ static int packetdb_readdb(void)
 		{clif_parse_Hotkey,"hotkey"},
 		{clif_parse_AutoRevive,"autorevive"},
 		{clif_parse_Check,"check"},
+		{clif_parse_Adopt_request,"adoptrequest"},
+		{clif_parse_Adopt_reply,"adoptreply"},
 #ifndef TXT_ONLY
 		// MAIL SYSTEM
 		{clif_parse_Mail_refreshinbox,"mailrefresh"},

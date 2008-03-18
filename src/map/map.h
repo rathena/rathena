@@ -746,6 +746,7 @@ struct map_session_data {
 	} deal;
 
 	int party_invite,party_invite_account;
+	int adopt_invite; // Adoption
 
 	int guild_invite,guild_invite_account;
 	int guild_emblem_id,guild_alliance,guild_alliance_account;
