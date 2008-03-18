@@ -569,7 +569,7 @@ bool pc_can_Adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd
 		return false;
 
 	if( b_sd->status.father || b_sd->status.mother || b_sd->adopt_invite )
-		return false; // allready adopted baby / in adopt request
+		return false; // already adopted baby / in adopt request
 
 	if( !p1_sd->status.partner_id || !p1_sd->status.party_id || p1_sd->status.party_id != b_sd->status.party_id )
 		return false; // You need to be married and in party with baby to adopt
@@ -587,13 +587,13 @@ bool pc_can_Adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd
 	if( !pc_isequipped(p2_sd, WEDDING_RING_M) && !pc_isequipped(p2_sd, WEDDING_RING_F) )
 		return false;
 
-	// Allready adopted a baby
+	// Already adopted a baby
 	if( p1_sd->status.child || p2_sd->status.child ) {
 		clif_Adopt_reply(p1_sd, 0);
 		return false;
 	}
 
-	// Fathers need at least lvl 70 to adopt
+	// Parents need at least lvl 70 to adopt
 	if( p1_sd->status.base_level < 70 || p2_sd->status.base_level < 70 ) {
 		clif_Adopt_reply(p1_sd, 1);
 		return false;
@@ -604,7 +604,10 @@ bool pc_can_Adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd
 		return false;
 	}
 
-	return ( b_sd->status.class_ >= JOB_NOVICE && b_sd->status.class_ <= JOB_THIEF );
+	if( !(b_sd->status.class_ >= JOB_NOVICE && b_sd->status.class_ <= JOB_THIEF) )
+		return false;
+
+	return true;
 }
 
 /*==========================================

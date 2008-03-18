@@ -513,7 +513,7 @@ short mob_barricade_build(short m, short x, short y, short count, short dir, boo
 		return 2;
 
 	if( (barricade = (struct barricade_data *)strdb_get(barricade_db,event)) != NULL )
-		return 3; // Allready a barricade with event name
+		return 3; // Already a barricade with event name
 
 	if( map_getcell(m, x, y, CELL_CHKNOREACH) )
 		return 4; // Starting cell problem

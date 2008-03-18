@@ -7834,7 +7834,7 @@ int atcommand_barricade(const int fd, struct map_session_data* sd, const char* c
 	case 1: clif_displaymessage(fd, "Barricade fail. Invalid Size"); break;
 	case 2: clif_displaymessage(fd, "Barricade fail. Wall problem."); break;
 	case 3: clif_displaymessage(fd, "Barricade fail. Invalid Event"); break;
-	case 4: clif_displaymessage(fd, "Barricade fail. Event allready exists"); break;
+	case 4: clif_displaymessage(fd, "Barricade fail. Event already exists"); break;
 	}
 
 	return -1;

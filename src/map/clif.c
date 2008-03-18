@@ -7936,17 +7936,23 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		npc_script_event(sd, NPCE_LOGIN);
 		mob_barricade_get(sd);
 	} else {
-		//For some reason the client "loses" these on map-change.
+		//For some reason the client "loses" these on warp/map-change.
 		clif_updatestatus(sd,SP_STR);
 		clif_updatestatus(sd,SP_AGI);
 		clif_updatestatus(sd,SP_VIT);
 		clif_updatestatus(sd,SP_INT);
 		clif_updatestatus(sd,SP_DEX);
 		clif_updatestatus(sd,SP_LUK);
+	
+		// abort currently running script
+		sd->state.using_fake_npc = 0;
+
+		if(sd->npc_id)
+			npc_event_dequeue(sd);
 	}
 
 	if( sd->state.changemap )
-	{
+	{// restore information that gets lost on map-change
 		if (night_flag && map[sd->bl.m].flag.nightenabled)
 		{	//Display night.
 			if( !sd->state.night )
@@ -7965,11 +7971,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		sd->state.changemap = false;
 	}
 	
-	sd->state.using_fake_npc = 0;
-
-	if(sd->npc_id)
-		npc_event_dequeue(sd);
-
 #ifndef TXT_ONLY
 		mail_clear(sd);
 #endif
@@ -12023,9 +12024,9 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd)
  * Adoption System
  *==========================================*/
 
-// 0 : You cannot adopt more that 1 son
-// 1 : You should be at least lvl 70 to adopt
-// 2 : You cannot adopt a married player
+// 0 : "You cannot adopt more than 1 child."
+// 1 : "You must be at least character level 70 in order to adopt someone."
+// 2 : "You cannot adopt a married person."
 void clif_Adopt_reply(struct map_session_data *sd, int type)
 {
 	int fd = sd->fd;
