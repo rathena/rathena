@@ -44,7 +44,9 @@
 
 =======================
 2008/07/18
-	* Rev. 12386 12397 Moscovia mobs will now do more damage. [L0ne_W0lf]
+	* Rev. 12399 Updated Cursed Abbey monster drops. [L0ne_W0lf]
+2008/07/18
+	* Rev. 12397 Moscovia mobs will now do more damage. [L0ne_W0lf]
 2008/07/17
 	* Rev. 12386 Whoops. Incorrect ID in item_avail. :D [L0ne_W0lf]
 	* Rev. 12385 Whoops. Incorrect IDs in item_avail. [L0ne_W0lf]
