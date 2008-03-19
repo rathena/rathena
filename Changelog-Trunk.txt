@@ -9,6 +9,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	* Added missing WorkingDirectory value to vcproj-7.1, vcproj-8 projects.
 	  Now you can flawlessly run your compiled server with RUN button in
 	  the correct directory. Thanks to Konrad [Lupus]
+	- Reverted changes from the project files, due to incompatibility [Lupus]
 2008/03/10
 	* Added missing check to only allow the leader of a party to modify
 	  its exp share settings (bugreport:12) [ultramage]
