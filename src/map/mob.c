@@ -888,6 +888,13 @@ int mob_spawn (struct mob_data *md)
 		md->bl.x = md->spawn->x;
 		md->bl.y = md->spawn->y;
 
+		if( map[md->spawn->m].users == 0 && md->spawn->state.dynamic )
+		{// cache the mob instead of spawning it
+			//FIXME: deleting 'md' is a potentially dangerous operation
+			unit_free(&md->bl,0);
+			return 0;
+		}
+
 		if ((md->bl.x == 0 && md->bl.y == 0) || md->spawn->xs || md->spawn->ys)
 		{	//Monster can be spawned on an area.
 			if (!map_search_freecell(&md->bl, -1,

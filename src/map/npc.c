@@ -2335,7 +2335,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	data = aMalloc(sizeof(struct spawn_data));
 	memcpy(data, &mob, sizeof(struct spawn_data));
 	
-	if( !battle_config.dynamic_mobs || data->delay1 || data->delay2 ) {
+	if( !battle_config.dynamic_mobs ) {
 		data->state.dynamic = false;
 		npc_parse_mob2(data);
 		npc_delay_mob += data->num;
