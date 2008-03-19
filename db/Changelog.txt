@@ -43,6 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/07/18
+	* Rev. 12386 12397 Moscovia mobs will now do more damage. [L0ne_W0lf]
 2008/07/17
 	* Rev. 12386 Whoops. Incorrect ID in item_avail. :D [L0ne_W0lf]
 	* Rev. 12385 Whoops. Incorrect IDs in item_avail. [L0ne_W0lf]
