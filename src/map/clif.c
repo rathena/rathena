@@ -12043,7 +12043,7 @@ void clif_Adopt_request(struct map_session_data *sd, struct map_session_data *sr
 {
 	int fd = sd->fd;
 
-	WFIFOSET(fd,34);
+	WFIFOHEAD(fd,34);
 	WFIFOW(fd,0) = 0x01f6;
 	WFIFOL(fd,2) = src->status.account_id;
 	WFIFOL(fd,6) = p_id;
@@ -12055,7 +12055,7 @@ void clif_parse_Adopt_request(int fd, struct map_session_data *sd)
 {
 	struct map_session_data *tsd = map_id2sd(RFIFOL(fd,2)), *p_sd = map_charid2sd(sd->status.partner_id);
 
-	if( pc_can_Adopt(sd, tsd, p_sd) )
+	if( pc_can_Adopt(sd, p_sd, tsd) )
 	{
 		tsd->adopt_invite = sd->status.account_id;
 		clif_Adopt_request(tsd, sd, p_sd->status.account_id);

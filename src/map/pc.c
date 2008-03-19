@@ -645,7 +645,7 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 		// Parents Skills
 		pc_skill(p1_sd, WE_CALLBABY, 1, 0);
-		pc_skill(p1_sd, WE_CALLBABY, 1, 0);
+		pc_skill(p2_sd, WE_CALLBABY, 1, 0);
 		
 		return true;
 	}

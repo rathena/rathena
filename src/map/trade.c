@@ -443,8 +443,14 @@ void trade_tradecancel(struct map_session_data *sd)
 	struct map_session_data *target_sd;
 	int trade_i;
 
+	target_sd = map_id2sd(sd->trade_partner);
+
 	if(!sd->state.trading)
+	{ // Not trade acepted
+		if( target_sd ) target_sd->trade_partner = 0;
+		sd->trade_partner = 0;
 		return;
+	}
 	
 	for(trade_i = 0; trade_i < 10; trade_i++) { // give items back (only virtual)
 		if (!sd->deal.item[trade_i].amount)
@@ -458,7 +464,6 @@ void trade_tradecancel(struct map_session_data *sd)
 		sd->deal.zeny = 0;
 	}
 
-	target_sd = map_id2sd(sd->trade_partner);
 	sd->state.deal_locked = 0;
 	sd->state.trading = 0;
 	sd->trade_partner = 0;

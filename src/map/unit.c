@@ -1672,6 +1672,7 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 			sd->menuskill_id = sd->menuskill_val = 0;
 
 		sd->npc_shopid = 0;
+		sd->adopt_invite = 0;
 
 		if(sd->pvp_timer!=-1) {
 			delete_timer(sd->pvp_timer,pc_calc_pvprank_timer);
