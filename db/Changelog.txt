@@ -43,7 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
-2008/07/18
+2008/07/19
+	* Rev. 12400 Updated some monster stats that got missed. [L0ne_W0lf]
 	* Rev. 12399 Updated Cursed Abbey monster drops. [L0ne_W0lf]
 2008/07/18
 	* Rev. 12397 Moscovia mobs will now do more damage. [L0ne_W0lf]
