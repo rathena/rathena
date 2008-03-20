@@ -43,6 +43,10 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/07/20
+	* Rev. 12408 Corrected more duplicates in mob drops. [L0ne_W0lf]
+	- Updated a few custom existing drops as well.
+	- Fixed Hode so it drops Slotted Town Sword
 2008/07/19
 	* Rev. 12401 Fallen Bishop lost his card...he found it though. [L0ne_W0lf]
 	* Rev. 12400 Updated some monster stats that got missed. [L0ne_W0lf]
