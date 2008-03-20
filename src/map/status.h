@@ -286,6 +286,7 @@ enum sc_type {
 	SC_PNEUMA,
 	SC_AUTOTRADE,
 	SC_KSPROTECTED,
+	SC_ARMOR_RESIST,
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 int SkillStatusChangeTable(int skill);

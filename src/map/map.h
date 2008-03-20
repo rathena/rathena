@@ -1164,6 +1164,7 @@ struct mapcell
 struct barricade_data {
 	char npc_event[50];
 	short m, x, y, count, amount, dir;
+	bool killable;
 };
 
 struct map_data {

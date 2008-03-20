@@ -506,6 +506,7 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_WATKFOOD] |= SCB_WATK;
 	StatusChangeFlagTable[SC_MATKFOOD] |= SCB_MATK;
 	StatusChangeFlagTable[SC_ARMOR_ELEMENT] |= SCB_PC;
+	StatusChangeFlagTable[SC_ARMOR_RESIST] |= SCB_PC;
 
 	if (!battle_config.display_hallucination) //Disable Hallucination.
 		StatusIconChangeTable[SC_HALLUCINATION] = SI_BLANK;
@@ -2343,6 +2344,13 @@ int status_calc_pc(struct map_session_data* sd,int first)
 			sd->subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT]->val2;
 			sd->subele[ELE_FIRE] += sc->data[SC_ARMOR_ELEMENT]->val3;
 			sd->subele[ELE_WIND] += sc->data[SC_ARMOR_ELEMENT]->val4;
+		}
+		if(sc->data[SC_ARMOR_RESIST])
+		{ // Undead Scroll
+			sd->subele[ELE_WATER] += sc->data[SC_ARMOR_RESIST]->val1;
+			sd->subele[ELE_EARTH] += sc->data[SC_ARMOR_RESIST]->val2;
+			sd->subele[ELE_FIRE] += sc->data[SC_ARMOR_RESIST]->val3;
+			sd->subele[ELE_WIND] += sc->data[SC_ARMOR_RESIST]->val4;
 		}
 	}
 
@@ -4981,6 +4989,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			case SC_MATKPOTION:
 			case SC_ENCHANTARMS:
 			case SC_ARMOR_ELEMENT:
+			case SC_ARMOR_RESIST:
 				break;
 			case SC_GOSPEL:
 				 //Must not override a casting gospel char.
@@ -5094,14 +5103,16 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			skill_enchant_elemental_end(bl,type);
 			break;
 		case SC_ELEMENTALCHANGE:
-			//Val1 is elemental change level, val2 is element to use.
-			if (!val2) //Val 3 holds the element, when not given, a random one is picked.
-				val2 = rand()%ELE_MAX;
-			//Elemental Lv is always a random value between  1 and 4.
-			if (val1 == 1)
-				val1 =1+rand()%4;
-			else if (val1 > 4)
-				val1 = 4;
+			// val1 : Element Lvl (if called by skill lvl 1, takes random value between 1 and 4)
+			// val2 : Element (When no element, random one is picked)
+			// val3 : 0 = called by skill 1 = called by script (fixed level)
+			if( !val2 ) val2 = rand()%ELE_MAX;
+
+			if( val1 == 1 && val3 == 0 )
+				val1 = 1 + rand()%4;
+			else if( val1 > 4 )
+				val1 = 4; // Max Level
+			val3 = 0; // Not need to keep this info.
 			break;
 		case SC_PROVIDENCE:
 			val2=val1*5; //Race/Ele resist
@@ -5272,10 +5283,13 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			tick = 10000;
 			break;
 		case SC_HPREGEN:
-			if( val1 == 0 ) val1 = 1;
-
+			if( val1 == 0 ) return 0;
+			// val1 = heal percent/amout
+			// val2 = seconds between heals
+			// val4 = total of heals
+			if( val2 < 1 ) val2 = 1;
 			if( (val4 = tick/(val2 * 1000)) < 1 )
-				val4 = 1; // Number of total heals
+				val4 = 1;
 			tick = val2 * 1000; // val2 = Seconds between heals
 			break;
 		case SC_HIDING:
@@ -5892,12 +5906,11 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 		case SC_KAIZEL:
 			val2 = 10*val1; //% of life to be revived with
 			break;
-		case SC_ARMOR_ELEMENT: //Script generated elemental resist, verify bounds.
-			if (val1 < ELE_NEUTRAL || val1 >= ELE_MAX)
-				val1 = val2 = 0; //First Elemental resist
-			if (val3 < ELE_NEUTRAL || val3 >= ELE_MAX)
-				val3 = val4 = 0; //Second element resist
-			break;
+		// case SC_ARMOR_ELEMENT:
+		// case SC_ARMOR_RESIST:
+			// Mod your resistance against elements:
+			// val1 = water | val2 = earth | val3 = fire | val4 = wind
+			// break;
 		case SC_FASTCAST:
 			//Place here SCs that have no SCB_* data, no skill associated, no ICON
 			//associated, and yet are not wrong/unknown. [Skotlex]

@@ -6590,6 +6590,14 @@ int pc_unequipitem(struct map_session_data *sd,int n,int flag)
 		sd->weapontype1 == 0 && sd->weapontype2 == 0)
 		skill_enchant_elemental_end(&sd->bl,-1);
 
+	if(sd->status.inventory[n].equip & EQP_ARMOR) {
+		// On Armor Change...
+		if( sd->sc.data[SC_BENEDICTIO] )
+			status_change_end(&sd->bl, SC_BENEDICTIO, -1);
+		if( sd->sc.data[SC_ARMOR_RESIST] )
+			status_change_end(&sd->bl, SC_ARMOR_RESIST, -1);
+	}
+
 	sd->status.inventory[n].equip=0;
 
 	if(flag&1) {

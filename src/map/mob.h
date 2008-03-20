@@ -161,6 +161,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target);
 short mob_barricade_build(short m, short x, short y, short count, short dir, bool killable, const char* event);
 void mob_barricade_destroy(short m, const char *event);
 void mob_barricade_get(struct map_session_data *sd);
+void mod_barricade_clearall(void);
 
 int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobname, int class_, const char* event, int guardian);	// Spawning Guardians [Valaris]
 int mob_guardian_guildchange(struct block_list *bl,va_list ap); //Change Guardian's ownership. [Skotlex]

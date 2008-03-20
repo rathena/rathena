@@ -525,6 +525,7 @@ short mob_barricade_build(short m, short x, short y, short count, short dir, boo
 	barricade->m = m;
 	safestrncpy(barricade->npc_event, event, sizeof(barricade->npc_event));
 	barricade->amount = 0;
+	barricade->killable = killable;
 
 	ShowInfo("New Barricade: %s.\n", barricade->npc_event);
 
@@ -544,8 +545,8 @@ short mob_barricade_build(short m, short x, short y, short count, short dir, boo
 			md->barricade = barricade;
 		}
 
-		map_setgatcell(m, x1, y1, 5);
-		clif_changemapcell(0, m, x1, y1, 5, ALL_SAMEMAP);
+		map_setgatcell(m, x1, y1, (killable ? 5 : 1));
+		clif_changemapcell(0, m, x1, y1, (killable ? 5 : 1), ALL_SAMEMAP);
 	}
 
 	barricade->count = i;
@@ -557,7 +558,7 @@ short mob_barricade_build(short m, short x, short y, short count, short dir, boo
 }
 
 void mob_barricade_get(struct map_session_data *sd)
-{
+{ // Update Barricade cell in client - Required only on changemap
 	struct barricade_data *barricade;
 	DBIterator* iter;
 	DBKey key;
@@ -577,7 +578,7 @@ void mob_barricade_get(struct map_session_data *sd)
 		{
 			x1 = barricade->dir ? barricade->x + i : barricade->x;
 			y1 = barricade->dir ? barricade->y : barricade->y + i;
-			clif_changemapcell(sd->fd, barricade->m, x1, y1, 5, SELF);
+			clif_changemapcell(sd->fd, barricade->m, x1, y1, (barricade->killable ? 5 : 1), SELF);
 		}
 	}
 	iter->destroy(iter);
@@ -629,6 +630,31 @@ void mob_barricade_destroy(short m, const char *event)
 		return;
 
 	map_foreachinmap(mob_barricade_destroy_sub, m, BL_MOB, event, 0);
+}
+
+void mod_barricade_clearall(void)
+{
+	struct barricade_data *barricade;
+	DBIterator* iter;
+	DBKey key;
+	short x1, y1;
+	int i;
+
+	iter = barricade_db->iterator(barricade_db);
+	for( barricade = iter->first(iter,&key); iter->exists(iter); barricade = iter->next(iter,&key) )
+	{
+		for( i = 0; i < barricade->count; i++ )
+		{
+			x1 = barricade->dir ? barricade->x + i : barricade->x;
+			y1 = barricade->dir ? barricade->y : barricade->y + i;
+
+			map_setgatcell(barricade->m, x1, y1, 0);
+			clif_changemapcell(0, barricade->m, x1, y1, 0, ALL_SAMEMAP);
+		}
+	}
+	iter->destroy(iter);
+
+	barricade_db->clear(barricade_db, NULL);
 }
 
 /*==========================================

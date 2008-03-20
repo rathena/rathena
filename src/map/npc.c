@@ -1679,11 +1679,10 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		}
 
 		if( type == SHOP && value*0.75 < id->value_sell*1.24 )
-		{// Expoit possible: you can buy and sell back with profit
+		{// Exploit possible: you can buy and sell back with profit
 			ShowWarning("npc_parse_shop: Item %s [%d] discounted buying price (%d->%d) is less than overcharged selling price (%d->%d) at file '%s', line '%d'.\n",
 				id->name, nameid, value, (int)(value*0.75), id->value_sell, (int)(id->value_sell*1.24), filepath, strline(buffer,start-buffer));
 		}
-
 		//for logs filters, atcommands and iteminfo script command
 		if( id->maxchance <= 0 )
 			id->maxchance = 10000; //10000 (100% drop chance)would show that the item's sold in NPC Shop
@@ -2845,6 +2844,7 @@ int npc_reload(void)
 	// clear npc-related data structures
 	ev_db->clear(ev_db,NULL);
 	npcname_db->clear(npcname_db,NULL);
+	mod_barricade_clearall(); // Clear Barricades
 	npc_warp = npc_shop = npc_script = 0;
 	npc_mob = npc_cache_mob = npc_delay_mob = 0;
 
