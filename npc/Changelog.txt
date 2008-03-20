@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/03/20
+	* Rev. 12405 Fixed Juperos Elevator not working after failing once. [L0ne_W0lf]
 	* Rev. 12404 Added Gym Pass NPC (disabled by default.) [L0ne_W0lf]
 	- Enabled Auction NPCs now that the auction system is implemented.
 	* Rev. 12403 Updated Umbala npcs, quests, and warps. [L0ne_W0lf]

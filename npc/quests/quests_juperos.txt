@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= MasterOfMuppets
 //===== Version ==============================================
-//= 1.3b
+//= 1.
 //===== Compatible With ======================================
 //= eAthena SVN
 //===== Description ==========================================
@@ -18,6 +18,7 @@
 //=	event-driven story progressive NPCs. Optimization needed.
 //= 1.3a Adjusted the elevafor timer. (132000 -> 142000) [L0ne_W0lf]
 //= 1.3b Minor updates to juperos elevator NPCs. [L0ne_W0lf]
+//= 1.4 Fixed Elevator not working after failing once. [L0ne_W0lf]
 //============================================================
 
 yuno_in04,190,125,4	script	Scholar	700,{
@@ -4695,10 +4696,10 @@ OnTimer59000:
 	if (getmapusers("jupe_ele") == 0) {
 		set $@JupeElevatorInUse2,5;
 		killmonsterall "jupe_ele";
-		disablenpc "Guard-1#ufe";
-		disablenpc "Guard-2#ufe";
-		disablenpc "Guard-3#ufe";
-		disablenpc "Guard-4#ufe";
+		donpcevent "Guard-1#ufe::OnDisable";
+		donpcevent "Guard-2#ufe::OnDisable";
+		donpcevent "Guard-3#ufe::OnDisable";
+		donpcevent "Guard-4#ufe::OnDisable";
 		stopnpctimer;
 		set $@JupeElevatorInUse2,0;
 		set $@JupeElevatorInUse,0;
@@ -4709,10 +4710,10 @@ OnTimer59000:
 
 OnTimer120000:
 	killmonsterall "jupe_ele";
-	disablenpc "Guard-1#ufe";
-	disablenpc "Guard-2#ufe";
-	disablenpc "Guard-3#ufe";
-	disablenpc "Guard-4#ufe";
+	donpcevent "Guard-1#ufe::OnDisable";
+	donpcevent "Guard-2#ufe::OnDisable";
+	donpcevent "Guard-3#ufe::OnDisable";
+	donpcevent "Guard-4#ufe::OnDisable";
 	mapannounce "jupe_ele","In the end, you can't even overcome your inner fear...",bc_map,"0xFF0000";
 	end;
 
