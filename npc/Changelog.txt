@@ -1,6 +1,8 @@
 Date		Added
 ======
 2008/03/20
+	* Rev. 12404 Added Gym Pass NPC (disabled by default.) [L0ne_W0lf]
+	- Enabled Auction NPCs now that the auction system is implemented.
 	* Rev. 12403 Updated Umbala npcs, quests, and warps. [L0ne_W0lf]
 2008/03/17
 	* Rev. 12388 Corrected variable used in Lighthalzen quest. [L0ne_W0lf]
