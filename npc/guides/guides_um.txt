@@ -13,9 +13,10 @@
 //= 1.2 Optimized, updated common guide names [Lupus]
 //= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
 //= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.6 Corrected activating ontouch. [L0ne_W0lf]
 //============================================================ 
 
-umbala,128,94,4	script	Adventurer#um	702,1,1,{
+umbala,128,94,4	script	Adventurer#um	702,{
 	mes "[Adventurer]";
 	mes "This is a very strange place...";
 	mes "It's underdeveloped, and there";

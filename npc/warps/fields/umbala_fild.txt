@@ -3,33 +3,29 @@
 //===== By: ==================================================
 //= Nana (1.0)
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= Any Athena Version; RO Episode 6+
 //===== Description: =========================================
+//= [Aegis Conversion]
 //= Warp Points for Umbala Field
 //===== Additional Comments: =================================
-//= No Comment
+//= 1.1 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
 //============================================================
 
-//Umbala-Umbala Fields Connection
-um_fild04,215,340,0	warp	umba0055	1,1,umbala,130,80
-umbala,129,78,0	warp	umba0001	1,1,um_fild04,215,337
-
-//Umbala-Comodo Connection
-beach_dun2,258,244,0	warp	umba0052	1,1,um_fild01,35,276
-cmd_fild01,179,370,0	warp	umba0041	1,1,um_fild03,239,27
-cmd_fild01,78,367,0	warp	umba0043	1,1,um_fild03,117,51
-um_fild01,30,274,0	warp	umba0051	1,1,beach_dun2,255,244
-um_fild03,119,50,0	warp	umba0044	1,1,cmd_fild01,78,365
-um_fild03,239,25,0	warp	umba0042	1,1,cmd_fild01,179,368
-
-//Umbala Fields
-um_fild01,368,275,0	warp	umba0010	1,1,um_fild02,24,271
-um_fild02,191,374,0	warp	umba0053	1,1,um_fild04,179,13
-um_fild02,21,270,0	warp	umba0009	1,1,um_fild01,365,275
-um_fild02,374,149,0	warp	umba0008	1,1,um_fild03,35,146
-um_fild02,374,326,0	warp	umba0005	1,1,um_fild03,21,334
-um_fild03,18,334,0	warp	umba0006	1,1,um_fild02,371,326
-um_fild03,30,146,0	warp	umba0007	1,1,um_fild02,371,149
-um_fild04,179,10,0	warp	umba0054	1,1,um_fild02,191,372
+cmd_fild01,77,366,0	warp	um_fild1-1	1,1,um_fild03,114,53
+cmd_fild01,178,370,0	warp	um_fild1-2	1,1,um_fild03,243,29
+um_fild01,31,274,0	warp	um_fild1-3	1,1,beach_dun2,254,244
+beach_dun2,258,244,0	warp	um_fild1-4	1,1,um_fild01,35,276
+um_fild01,369,277,0	warp	um_fild1-5	1,1,um_fild02,25,272
+um_fild02,22,272,0	warp	um_fild2-1	1,1,um_fild01,366,277
+um_fild02,188,374,0	warp	um_fild2-2	1,1,um_fild04,182,16
+um_fild02,373,329,0	warp	um_fild2-3	1,1,um_fild03,23,334
+um_fild02,373,148,0	warp	um_fild2-4	1,1,um_fild03,36,145
+um_fild03,19,334,0	warp	um_fild3-1	1,1,um_fild02,370,329
+um_fild03,32,145,0	warp	um_fild3-2	1,1,um_fild02,370,148
+um_fild03,114,50,0	warp	um_fild3-3	1,1,cmd_fild01,74,363
+um_fild03,243,26,0	warp	um_fild3-4	1,1,cmd_fild01,176,367
+um_fild04,182,13,0	warp	um_fild4-1	1,1,um_fild02,190,371
+um_fild04,215,339,0	warp	um_fild4-2	1,1,umbala,130,82
+umbala,130,79,0	warp	um_fild4-3	1,1,um_fild04,215,336
