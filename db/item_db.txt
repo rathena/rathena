@@ -3422,7 +3422,7 @@
 12233,Kvass,Kvass,0,20,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 100,100; },{},{}
 //Valentine's Day Event (2007)
 12234,Cacao99,Fierce Cacao 99%,0,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 25,0; },{},{}
-12235,Strawberry_Choco,Strawberry Chocolate,11,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,5; itemskill 34,5; },{},{}
+12235,Strawberry_Choco,Strawberry Chocolate,11,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,5; skilleffect 34,0; sc_start SC_BLESSING,240000,10; },{},{}
 12236,Choco_Tart,Chocolate Tart,11,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 5,0; itemskill 33,5; },{},{}
 12237,Choco_Lump,Dollop of Chocolate,2,,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 0,5; sc_start SC_Poison,18000,0; sc_start SC_Bleeding,18000,0; },{},{}
 12238,New_Year_Rice_Cake_1,New Year Rice Cake,0,20,,100,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
@@ -4123,8 +4123,8 @@
 14536,Abrasive,Abrasive,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCCRI,300000,30; },{},{}
 14537,Regeneration_Potion,Regeneration Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHEALRATE,1800000,20; },{},{}
 14538,Glass_of_Illusion,Glass of Illusion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-14539,Shadow_Armor_S,Shadow Armor Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,300000,Ele_Fire,20,Ele_Water,0; sc_start4 SC_ARMOR_ELEMENT,300000,Ele_Water,20,Ele_Wind,0; sc_start4 SC_ARMOR_ELEMENT,300000,Ele_Earth,20,Ele_Fire,0; sc_start4 SC_ARMOR_ELEMENT,300000,Ele_Wind,20,Ele_Earth,0; },{},{}
-14540,Holy_Armor_S,Holy Armor Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 91; sc_start SC_BENEDICTIO,300000,1; },{},{}
+14539,Shadow_Armor_S,Shadow Armor Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Dark,1,0; },{},{}
+14540,Holy_Armor_S,Holy Armor Scroll,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 91; sc_start4 SC_ELEMENTALCHANGE,1800000,1,Ele_Holy,1,0; },{},{}
 14541,S_Def_Potion,Small Defense Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCDEFRATE,60000,3; },{},{}
 14542,B_Def_Potion,Big Defense Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCDEFRATE,180000,3; },{},{}
 14543,S_Mdef_Potion,Small Magic Defense Potion,2,,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMDEFRATE,60000,3; },{},{}
