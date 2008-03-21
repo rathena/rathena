@@ -44,6 +44,8 @@
 
 =======================
 2008/07/20
+	* Rev. 12420 Updated special effect rates on 11.3 gear. [L0ne_W0lf]
+2008/07/20
 	* Rev. 12408 Corrected more duplicates in mob drops. [L0ne_W0lf]
 	- Updated a few custom existing drops as well.
 	- Fixed Hode so it drops Slotted Town Sword
