@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/03/21
+	* Rev. 12411 Fixed Gym Pass NPC reporting "00" on use. [L0ne_W0lf]
 2008/03/20
 	* Rev. 12405 Fixed Juperos Elevator not working after failing once. [L0ne_W0lf]
 	* Rev. 12404 Added Gym Pass NPC (disabled by default.) [L0ne_W0lf]

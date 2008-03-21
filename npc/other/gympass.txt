@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Kisuka
 //===== Current Version: ===================================== 
-//= v1.0
+//= v1.1
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= iRO NPC situated in Payon beside Kafra Shop.
 //===== Additional Comments: ================================= 
 //= 1.0 First version [L0ne_W0lf]
+//= 1.1 Fixed the NPC saying you "00" [L0ne_W0lf]
 //============================================================ 
 
 payon,173,141,4	script	Ripped Cabus#GymPass	899,{
@@ -90,7 +91,7 @@ payon,173,141,4	script	Ripped Cabus#GymPass	899,{
 			mes "to carry more stuff with you.";
 			mes "Let's see, we can increase";
 			mes "your item carrying capacity";
-			mes "^FF00000" + gympasslimit + "^000000 more times if we continue";
+			mes "^FF00000" + (10-getskilllv(681)) + "^000000 more times if we continue";
 			mes "training together like this.";
 			close;
 		}
