@@ -507,6 +507,7 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_MATKFOOD] |= SCB_MATK;
 	StatusChangeFlagTable[SC_ARMOR_ELEMENT] |= SCB_PC;
 	StatusChangeFlagTable[SC_ARMOR_RESIST] |= SCB_PC;
+	StatusChangeFlagTable[SC_SPCOST_RATE] |= SCB_PC;
 
 	if (!battle_config.display_hallucination) //Disable Hallucination.
 		StatusIconChangeTable[SC_HALLUCINATION] = SI_BLANK;
@@ -2288,6 +2289,9 @@ int status_calc_pc(struct map_session_data* sd,int first)
 
 	if(sc->data[SC_SERVICE4U])
 		sd->dsprate -= sc->data[SC_SERVICE4U]->val3;
+
+	if(sc->data[SC_SPCOST_RATE])
+		sd->dsprate -= sc->data[SC_SPCOST_RATE]->val1;
 
 	//Underflow protections.
 	if(sd->dsprate < 0)
@@ -4575,9 +4579,13 @@ int status_get_sc_def(struct block_list *bl, enum sc_type type, int rate, int ti
 		rate -= rate*sc_def/100;
 
 		//Item resistance (only applies to rate%)
-		if(sd && SC_COMMON_MIN<=type && type<=SC_COMMON_MAX
-			&& sd->reseff[type-SC_COMMON_MIN] > 0)
+		if(sd && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX)
+		{
+			if( sd->reseff[type-SC_COMMON_MIN] > 0 )
 			rate -= rate*sd->reseff[type-SC_COMMON_MIN]/10000;
+			if( sd->sc.data[SC_COMMONSC_RESIST] )
+				rate -= rate*sd->sc.data[SC_COMMONSC_RESIST]->val1;
+		}
 	}
 	if (!(rand()%10000 < rate))
 		return 0;

@@ -498,11 +498,28 @@ int mob_once_spawn_area(struct map_session_data* sd,int m,int x0,int y0,int x1,i
 /*==========================================
  * Barricades [Zephyrus]
  *------------------------------------------*/
+void mob_barricade_nextxy(short x, short y, short dir, int pos, short *x1, short *y1)
+{ // Calculates Next X-Y Position
+	if( dir == 0 || dir == 4 )
+		*x1 = x; // Keep X
+	else if( dir > 0 && dir < 4 )
+		*x1 = x - pos; // Going left
+	else
+		*x1 = x + pos; // Going right
+
+	if( dir == 2 || dir == 6 )
+		*y1 = y;
+	else if( dir > 2 && dir < 6 )
+		*y1 = y - pos;
+	else
+		*y1 = y + pos;
+}
+
 short mob_barricade_build(short m, short x, short y, short count, short dir, bool killable, const char* event)
 {
 	int i, j;
-	short x1 = dir ? x + count - 1 : x;
-	short y1 = dir ? y : y + count - 1;
+	short x1;
+	short y1;
 	struct mob_data *md;
 	struct barricade_data *barricade;
 
@@ -531,8 +548,7 @@ short mob_barricade_build(short m, short x, short y, short count, short dir, boo
 
 	for( i = 0; i < count; i++ )
 	{
-		x1 = dir ? x + i : x;
-		y1 = dir ? y : y + i;
+		mob_barricade_nextxy(x, y, dir, i, &x1, &y1);
 
 		if( map_getcell(m, x1, y1, CELL_CHKNOREACH) )
 			break; // Collision
@@ -576,8 +592,7 @@ void mob_barricade_get(struct map_session_data *sd)
 
 		for( i = 0; i < barricade->count; i++ )
 		{
-			x1 = barricade->dir ? barricade->x + i : barricade->x;
-			y1 = barricade->dir ? barricade->y : barricade->y + i;
+			mob_barricade_nextxy(barricade->x, barricade->y, barricade->dir, i, &x1, &y1);
 			clif_changemapcell(sd->fd, barricade->m, x1, y1, (barricade->killable ? 5 : 1), SELF);
 		}
 	}
@@ -597,9 +612,7 @@ static void mob_barricade_break(struct barricade_data *barricade)
 
 	for( i = 0; i < barricade->count; i++ )
 	{
-		x1 = barricade->dir ? barricade->x + i : barricade->x;
-		y1 = barricade->dir ? barricade->y : barricade->y + i;
-
+		mob_barricade_nextxy(barricade->x, barricade->y, barricade->dir, i, &x1, &y1);
 		map_setgatcell(barricade->m, x1, y1, 0);
 		clif_changemapcell(0, barricade->m, x1, y1, 0, ALL_SAMEMAP);
 	}
@@ -645,9 +658,7 @@ void mod_barricade_clearall(void)
 	{
 		for( i = 0; i < barricade->count; i++ )
 		{
-			x1 = barricade->dir ? barricade->x + i : barricade->x;
-			y1 = barricade->dir ? barricade->y : barricade->y + i;
-
+			mob_barricade_nextxy(barricade->x, barricade->y, barricade->dir, i, &x1, &y1);
 			map_setgatcell(barricade->m, x1, y1, 0);
 			clif_changemapcell(0, barricade->m, x1, y1, 0, ALL_SAMEMAP);
 		}
