@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= DZeroX
 //===== Current Version: ===================================== 
-//= 1.3
+//= 1.4
 //===== Compatible With: ===================================== 
 //= eAthena 1.0
 //===== Description: ========================================= 
@@ -14,6 +14,7 @@
 //= 1.2 Implemented progression fixes provided by $ephiroth. [L0ne_W0lf]
 //= 1.2b More pregression clean up provided by Barron-Monster. [L0ne_W0lf]
 //= 1.3 Removed npc "Tourist#al" as it's a quest NPC. [L0ne_W0lf]
+//= 1.4 Removed "Fastidious Old Man" duplicate. [L0ne_W0lf]
 //============================================================
 
 alberta,97,51,0	script	Fabian	84,{
@@ -559,15 +560,5 @@ alberta,43,49,5	script	Poor-looking Merchant	89,{
 	mes "they quickly took our place";
 	mes "as the biggest business owners";
 	mes "here. It's our biggest shame...";
-	close;
-}
-
-alberta,165,83,4	script	Fastidious Old Man	755,{
-	mes "[Frank]";
-	mes "My back~";
-	mes "It's so sore!";
-	mes "And my eyes are";
-	mes "hurting worse and worse.";
-	mes "*Sigh* I'm getting old...";
 	close;
 }
