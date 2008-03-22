@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Kisuka
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= eAthena SVN
 //===== Description: =========================================
@@ -12,6 +12,7 @@
 //= Help a suspicious man.
 //===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
+//= 1.1 Corrected a small bug. [L0ne_W0lf]
 //============================================================
 
 // Prontera
@@ -523,7 +524,7 @@ morocc,131,26,5	script	Secret Corps#egg	880,{
 			close;
 		}
 	}
-	else if (easter2008 >= 5 || easter2008 <= 8) {
+	else if (easter2008 >= 5 && easter2008 <= 8) {
 		mes "[Corps Member]";
 		mes "Did you forget";
 		mes "where you must go?";

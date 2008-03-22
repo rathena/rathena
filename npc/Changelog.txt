@@ -1,6 +1,7 @@
 Date		Added
 ======
 2008/03/21
+	* Rev. 12422 Corrected an error that snuck in to the Easter Event. [L0ne_W0lf]
 	* Rev. 12421 Added 2008 iRO Easter Event care of Kisuka. [L0ne_W0lf]
 	* Rev. 12412 Removed "Fastidious Old Man" duplicate in Alberta. [L0ne_W0lf]
 	* Rev. 12411 Fixed Gym Pass NPC reporting "00" on use. [L0ne_W0lf]
