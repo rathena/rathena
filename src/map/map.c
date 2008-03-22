@@ -1981,6 +1981,9 @@ int map_removemobs_sub(struct block_list *bl, va_list ap)
 	nullpo_retr(0, md);
 
 	//When not to remove:
+	//Mob doesn't respawn and is not a slave
+	if( !md->spawn && !md->master_id )
+		return 0;
 	//Mob respawn data is not in cache
 	if( md->spawn && !md->spawn->state.dynamic )
 		return 0;
