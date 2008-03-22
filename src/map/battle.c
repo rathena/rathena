@@ -322,10 +322,10 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			return 0;
 		}
 
-// -- moonsoul (chance to block attacks with new Lord Knight skill parrying)
-//
-		if((sce=sc->data[SC_PARRYING]) && flag&BF_WEAPON &&
-			rand()%100 < sce->val2) {
+		if((sce=sc->data[SC_PARRYING]) && flag&BF_WEAPON
+			&& skill_num != WS_CARTTERMINATION
+			&& rand()%100 < sce->val2)
+		{// attack blocked by Parrying
 			clif_skill_nodamage(bl,bl,LK_PARRYING,sce->val1,1);
 			return 0;
 		}
@@ -409,7 +409,9 @@ int battle_calc_damage(struct block_list *src,struct block_list *bl,int damage,i
 			sce->val3&flag && sce->val4&flag)
 			damage -= damage*sc->data[SC_ARMOR]->val2/100;
 
-		if(sc->data[SC_ENERGYCOAT] && flag&BF_WEAPON){
+		if(sc->data[SC_ENERGYCOAT] && flag&BF_WEAPON
+			&& skill_num != WS_CARTTERMINATION)
+		{
 			struct status_data *status = status_get_status_data(bl);
 			int per = 100*status->sp / status->max_sp -1; //100% should be counted as the 80~99% interval
 			per /=20; //Uses 20% SP intervals.
