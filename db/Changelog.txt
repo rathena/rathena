@@ -43,6 +43,8 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
+2008/07/23
+	* Rev. 12426 Corrected Bishop and Gopinich exp rewards. [L0ne_W0lf]
 2008/07/20
 	* Rev. 12420 Updated special effect rates on 11.3 gear. [L0ne_W0lf]
 2008/07/20
