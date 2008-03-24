@@ -101,6 +101,16 @@ struct script_state {
 	} sleep;
 };
 
+struct script_reg {
+	int index;
+	int data;
+};
+
+struct script_regstr {
+	int index;
+	char* data;
+};
+
 enum script_parse_options {
 	SCRIPT_USE_LABEL_DB = 0x1,// records labels in scriptlabel_db
 	SCRIPT_IGNORE_EXTERNAL_BRACKETS = 0x2,// ignores the check for {} brackets around the script

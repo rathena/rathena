@@ -5,8 +5,11 @@
 #define _MOB_H_
 
 #include "../common/mmo.h" // struct item
-#include "unit.h" // unit_stop_walking(), unit_stop_attack()
+#include "guild.h" // struct guardian_data
 #include "map.h" // struct status_data, struct view_data, struct mob_skill
+#include "status.h" // struct status data, struct status_change
+#include "unit.h" // unit_stop_walking(), unit_stop_attack()
+
 
 #define MAX_RANDOMMONSTER 4
 #define MAX_MOB_RACE_DB 6
@@ -79,6 +82,67 @@ struct mob_db {
 	struct mob_skill skill[MAX_MOBSKILL];
 	struct spawn_info spawn[10];
 };
+
+struct mob_data {
+	struct block_list bl;
+	struct unit_data  ud;
+	struct view_data *vd;
+	struct status_data status, *base_status; //Second one is in case of leveling up mobs, or tiny/large mobs.
+	struct status_change sc;
+	struct mob_db *db;	//For quick data access (saves doing mob_db(md->class_) all the time) [Skotlex]
+	struct barricade_data *barricade;
+	char name[NAME_LENGTH];
+	struct {
+		unsigned size : 2; //Small/Big monsters.
+		unsigned ai : 2; //Special ai for summoned monsters.
+							//0: Normal mob.
+							//1: Standard summon, attacks mobs.
+							//2: Alchemist Marine Sphere
+							//3: Alchemist Summon Flora
+	} special_state; //Special mob information that does not needs to be zero'ed on mob respawn.
+	struct {
+		unsigned skillstate : 8;
+		unsigned aggressive : 1; //Signals whether the mob AI is in aggressive mode or reactive mode. [Skotlex]
+		unsigned char steal_flag; //number of steal tries (to prevent steal exploit on mobs with few items) [Lupus]
+		unsigned steal_coin_flag : 1;
+		unsigned soul_change_flag : 1; // Celest
+		unsigned alchemist: 1;
+		unsigned no_random_walk: 1;
+		unsigned killer: 1;
+		unsigned spotted: 1;
+		unsigned char attacked_count; //For rude attacked.
+		int provoke_flag; // Celest
+	} state;
+	struct guardian_data* guardian_data; 
+	struct {
+		int id;
+		unsigned int dmg;
+		unsigned flag : 1; //0: Normal. 1: Homunc exp
+	} dmglog[DAMAGELOG_SIZE];
+	struct spawn_data *spawn; //Spawn data.
+	struct item *lootitem;
+	short class_;
+	unsigned int tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
+	int level;
+	int target_id,attacked_id;
+
+	unsigned int next_walktime,last_thinktime,last_linktime,last_pcneartime;
+	short move_fail_count;
+	short lootitem_count;
+	short min_chase;
+	
+	int deletetimer;
+	int master_id,master_dist;
+
+	struct npc_data *nd;
+	unsigned short callback_flag;
+	
+	short skillidx;
+	unsigned int skilldelay[MAX_MOBSKILL];
+	char npc_event[50];
+};
+
+
 
 enum {
 	MST_TARGET =	0,

@@ -13,6 +13,7 @@
 #include "../common/nullpo.h"
 
 #include "map.h"
+#include "mob.h"
 #include "pc.h"
 #include "intif.h" //For GM Broadcast
 #include "irc.h"

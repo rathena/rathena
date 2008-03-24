@@ -16,6 +16,7 @@
 #include "intif.h"
 #include "npc.h"
 #include "pc.h"
+#include "pet.h"
 #include "status.h"
 #include "mercenary.h"
 #include "chrif.h"

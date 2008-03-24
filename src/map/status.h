@@ -4,7 +4,6 @@
 #ifndef _STATUS_H_
 #define _STATUS_H_
 
-//#include "map.h"
 struct block_list;
 struct mob_data;
 struct pet_data;
@@ -16,6 +15,7 @@ struct status_change;
 #define MAX_REFINE_BONUS 5
 
 extern unsigned long StatusChangeFlagTable[];
+
 
 // Status changes listing. These code are for use by the server. 
 enum sc_type {
@@ -582,6 +582,106 @@ enum {
 #define BL_CONSUME (BL_PC|BL_HOM)
 //Define to determine who has regen
 #define BL_REGEN (BL_PC|BL_HOM)
+
+
+//Basic damage info of a weapon
+//Required because players have two of these, one in status_data
+//and another for their left hand weapon.
+struct weapon_atk {
+	unsigned short atk, atk2;
+	unsigned short range;
+	unsigned char ele;
+};
+
+
+//For holding basic status (which can be modified by status changes)
+struct status_data {
+	unsigned int
+		hp, sp,
+		max_hp, max_sp;
+	unsigned short
+		str, agi, vit, int_, dex, luk,
+		batk,
+		matk_min, matk_max,
+		speed,
+		amotion, adelay, dmotion,
+		mode;
+	short 
+		hit, flee, cri, flee2,
+		def2, mdef2,
+		aspd_rate;
+	unsigned char
+		def_ele, ele_lv,
+		size, race;
+	signed char
+		def, mdef;
+	struct weapon_atk rhw, lhw; //Right Hand/Left Hand Weapon.
+};
+
+//Additional regen data that only players have.
+struct regen_data_sub {
+	unsigned short
+		hp,sp;
+
+	//tick accumulation before healing.
+	struct {
+		unsigned int hp,sp;
+	} tick;
+	
+	//Regen rates (where every 1 means +100% regen)
+	struct {
+		unsigned char hp,sp;
+	} rate;
+};
+
+struct regen_data {
+
+	unsigned short flag; //Marks what stuff you may heal or not.
+	unsigned short
+		hp,sp,shp,ssp;
+
+	//tick accumulation before healing.
+	struct {
+		unsigned int hp,sp,shp,ssp;
+	} tick;
+	
+	//Regen rates (where every 1 means +100% regen)
+	struct {
+		unsigned char
+		hp,sp,shp,ssp;
+	} rate;
+	
+	struct {
+		unsigned walk:1; //Can you regen even when walking?
+		unsigned gc:1;	//Tags when you should have double regen due to GVG castle
+		unsigned overweight :2; //overweight state (1: 50%, 2: 90%)
+		unsigned block :2; //Block regen flag (1: Hp, 2: Sp)
+	} state;
+
+	//skill-regen, sitting-skill-regen (since not all chars with regen need it)
+	struct regen_data_sub *sregen, *ssregen;
+};
+
+struct status_change_entry {
+	int timer;
+	int val1,val2,val3,val4;
+};
+
+struct status_change {
+	unsigned int option;// effect state (bitfield)
+	unsigned int opt3;// skill state (bitfield)
+	unsigned short opt1;// body state
+	unsigned short opt2;// health state (bitfield)
+	unsigned char count;
+	//TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
+	unsigned char jb_flag; //Joint Beat type flag
+	unsigned short mp_matk_min, mp_matk_max; //Previous matk min/max for ground spells (Amplify magic power)
+	int sg_id; //ID of the previous Storm gust that hit you
+	unsigned char sg_counter; //Storm gust counter (previous hits from storm gust)
+	struct status_change_entry *data[SC_MAX];
+};
+
+
 
 int status_damage(struct block_list *src,struct block_list *target,int hp,int sp, int walkdelay, int flag);
 //Define for standard HP damage attacks.

@@ -4,14 +4,21 @@
 #ifndef _SKILL_H_
 #define _SKILL_H_
 
-#include "../common/mmo.h" // MAX_SKILL
-#include "map.h" // MAX_SKILL_LEVEL, ...
+#include "../common/mmo.h" // MAX_SKILL, struct square
+#include "map.h" // struct block_list
+struct map_session_data;
+struct homun_data;
+struct skill_unit;
+struct skill_unit_group;
+struct status_change_entry;
 
 #define MAX_SKILL_DB			MAX_SKILL
 #define MAX_SKILL_PRODUCE_DB	150
 #define MAX_PRODUCE_RESOURCE	12
 #define MAX_SKILL_ARROW_DB		150
 #define MAX_SKILL_ABRA_DB		350
+
+#define MAX_SKILL_LEVEL 100
 
 //Constants to identify the skill's inf value:
 #define INF_ATTACK_SKILL 1
@@ -99,6 +106,60 @@ struct s_skill_unit_layout {
 	int dy[MAX_SKILL_UNIT_COUNT];
 };
 
+#define MAX_SKILLTIMERSKILL 15
+struct skill_timerskill {
+	int timer;
+	int src_id;
+	int target_id;
+	int map;
+	short x,y;
+	short skill_id,skill_lv;
+	int type; // a BF_ type (NOTE: some places use this as general-purpose storage...)
+	int flag;
+};
+
+#define MAX_SKILLUNITGROUP 25
+struct skill_unit_group {
+	int src_id;
+	int party_id;
+	int guild_id;
+	int map;
+	int target_flag; //Holds BCT_* flag for battle_check_target
+	int bl_flag;	//Holds BL_* flag for map_foreachin* functions
+	unsigned int tick;
+	int limit,interval;
+
+	short skill_id,skill_lv;
+	int val1,val2,val3;
+	char *valstr;
+	int unit_id;
+	int group_id;
+	int unit_count,alive_count;
+	struct skill_unit *unit;
+	struct {
+		unsigned ammo_consume : 1;
+		unsigned magic_power : 1;
+		unsigned song_dance : 2; //0x1 Song/Dance, 0x2 Ensemble
+	} state;
+};
+
+struct skill_unit {
+	struct block_list bl;
+
+	struct skill_unit_group *group;
+
+	int limit;
+	int val1,val2;
+	short alive,range;
+};
+
+#define MAX_SKILLUNITGROUPTICKSET 25
+struct skill_unit_group_tickset {
+	unsigned int tick;
+	int id;
+};
+
+
 enum {
 	UF_DEFNOTENEMY   = 0x0001,	// If 'defunit_not_enemy' is set, the target is changed to 'friend'
 	UF_NOREITERATION = 0x0002,	// Spell cannot be stacked
@@ -139,11 +200,6 @@ extern struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 
 extern int enchant_eff[5];
 extern int deluge_eff[5];
-
-struct block_list;
-struct map_session_data;
-struct skill_unit;
-struct skill_unit_group;
 
 int do_init_skill(void);
 int do_final_skill(void);
@@ -213,8 +269,7 @@ int skill_delunitgroup(struct block_list *src, struct skill_unit_group *group);
 int skill_clear_unitgroup(struct block_list *src);
 int skill_clear_group(struct block_list *bl, int flag);
 
-int skill_unit_ondamaged(struct skill_unit *src,struct block_list *bl,
-	int damage,unsigned int tick);
+int skill_unit_ondamaged(struct skill_unit *src,struct block_list *bl,int damage,unsigned int tick);
 
 int skill_castfix( struct block_list *bl, int skill_id, int skill_lv);
 int skill_castfix_sc( struct block_list *bl, int time);

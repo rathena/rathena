@@ -4,10 +4,12 @@
 #include "../common/strlib.h"
 #include "../common/nullpo.h"
 #include "../common/showmsg.h"
-#include "itemdb.h"
-#include "map.h"
-#include "log.h"
 #include "battle.h"
+#include "itemdb.h"
+#include "log.h"
+#include "map.h"
+#include "mob.h"
+#include "pc.h"
 
 #include <stdlib.h>
 #include <stdio.h>

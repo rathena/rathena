@@ -3,6 +3,11 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/03/24
+	* Reorganized the contents of the mapserver's header files.
+	- map.h is no longer a generic dumping spot of all the shared structs,
+	  and instead, each such structure now resides in its logical component
+	- map.h now only holds mostly map-related things (needs more cleaning)
 2008/03/21
 	* Added VS9 project files. Thanks to Konard [Lupus]
 	- removed redundant map_getallusers() function

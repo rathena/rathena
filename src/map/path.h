@@ -4,6 +4,21 @@
 #ifndef _PATH_H_
 #define _PATH_H_
 
+#include "map.h" // enum cell_chk
+
+#define MAX_WALKPATH 32
+
+struct walkpath_data {
+	unsigned char path_len,path_pos;
+	unsigned char path[MAX_WALKPATH];
+};
+
+struct shootpath_data {
+	int rx,ry,len;
+	int x[MAX_WALKPATH];
+	int y[MAX_WALKPATH];
+};
+
 // calculates destination cell for knockback
 int path_blownpos(int m,int x0,int y0,int dx,int dy,int count);
 

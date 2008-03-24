@@ -7,9 +7,340 @@
 #include "../common/mmo.h" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/timer.h" // INVALID_TIMER
 #include "battle.h" // battle_config
-#include "map.h" // JOB_*, struct map_session_data
-#include "status.h" // OPTION_*
+#include "itemdb.h" // MAX_ITEMGROUP
+#include "map.h" // RC_MAX
+#include "pc.h" // struct map_session_data
+#include "script.h" // struct script_reg, struct script_regstr
+#include "status.h" // OPTION_*, struct weapon_atk
 #include "unit.h" // unit_stop_attack(), unit_stop_walking()
+#include "vending.h" // struct s_vending
+
+#define MAX_PC_BONUS 10
+
+struct weapon_data {
+	int atkmods[3];
+	// all the variables except atkmods get zero'ed in each call of status_calc_pc
+	// NOTE: if you want to add a non-zeroed variable, you need to update the memset call
+	//  in status_calc_pc as well! All the following are automatically zero'ed. [Skotlex]
+	int overrefine;
+	int star;
+	int ignore_def_ele;
+	int ignore_def_race;
+	int def_ratio_atk_ele;
+	int def_ratio_atk_race;
+	int addele[ELE_MAX];
+	int addrace[RC_MAX];
+	int addrace2[RC_MAX];
+	int addsize[3];
+
+	struct drain_data {
+		short rate;
+		short per;
+		short value;
+		unsigned type:1;
+	} hp_drain[RC_MAX], sp_drain[RC_MAX];
+
+	struct {
+		short class_, rate;
+	}	add_dmg[MAX_PC_BONUS];
+};
+
+struct map_session_data {
+	struct block_list bl;
+	struct unit_data ud;
+	struct view_data vd;
+	struct status_data base_status, battle_status;
+	struct status_change sc;
+	struct regen_data regen;
+	struct regen_data_sub sregen, ssregen;
+	//NOTE: When deciding to add a flag to state or special_state, take into consideration that state is preserved in
+	//status_calc_pc, while special_state is recalculated in each call. [Skotlex]
+	struct {
+		unsigned active : 1; //Marks active player (not active is logging in/out, or changing map servers)
+		unsigned menu_or_input : 1;// if a script is waiting for feedback from the player
+		unsigned dead_sit : 2;
+		unsigned lr_flag : 2;
+		unsigned connect_new : 1;
+		unsigned arrow_atk : 1;
+		unsigned skill_flag : 1;
+		unsigned gangsterparadise : 1;
+		unsigned rest : 1;
+		unsigned storage_flag : 2; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex]
+		unsigned snovice_call_flag : 2; //Summon Angel (stage 1~3)
+		unsigned snovice_dead_flag : 2; //Explosion spirits on death: 0 off, 1 active, 2 used.
+		unsigned abra_flag : 1; // Abracadabra bugfix by Aru
+		unsigned autotrade : 1;	//By Fantik
+		unsigned reg_dirty : 3; //By Skotlex (marks whether registry variables have been saved or not yet)
+		unsigned showdelay :1;
+		unsigned showexp :1;
+		unsigned showzeny :1;
+		unsigned mainchat :1; //[LuzZza]
+		unsigned noask :1; // [LuzZza]
+		unsigned trading :1; //[Skotlex] is 1 only after a trade has started.
+		unsigned deal_locked :2; //1: Clicked on OK. 2: Clicked on TRADE
+		unsigned monster_ignore :1; // for monsters to ignore a character [Valaris] [zzo]
+		unsigned size :2; // for tiny/large types
+		unsigned night :1; //Holds whether or not the player currently has the SI_NIGHT effect on. [Skotlex]
+		unsigned blockedmove :1;
+		unsigned using_fake_npc :1;
+		unsigned rewarp :1; //Signals that a player should warp as soon as he is done loading a map. [Skotlex]
+		unsigned killer : 1;
+		unsigned killable : 1;
+		unsigned doridori : 1;
+		unsigned ignoreAll : 1;
+		unsigned short autoloot;
+		unsigned short autolootid; // [Zephyrus]
+		unsigned noks : 3; // [Zeph Kill Steal Protection]
+		bool changemap;
+		struct guild *gmaster_flag;
+	} state;
+	struct {
+		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
+		unsigned restart_full_recover : 1;
+		unsigned no_castcancel : 1;
+		unsigned no_castcancel2 : 1;
+		unsigned no_sizefix : 1;
+		unsigned no_gemstone : 1;
+		unsigned intravision : 1; // Maya Purple Card effect [DracoRPG]
+		unsigned perfect_hiding : 1; // [Valaris]
+		unsigned no_knockback : 1;
+		unsigned bonus_coma : 1;
+	} special_state;
+	int login_id1, login_id2;
+	unsigned short class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
+
+	int packet_ver;  // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 ... 18
+	struct mmo_charstatus status;
+	struct registry save_reg;
+	
+	struct item_data* inventory_data[MAX_INVENTORY]; // direct pointers to itemdb entries (faster than doing item_id lookups)
+	short equip_index[11];
+	unsigned int weight,max_weight;
+	int cart_weight,cart_num;
+	int fd;
+	unsigned short mapindex;
+	unsigned short prev_speed,prev_adelay;
+	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
+	unsigned int client_tick;
+	int npc_id,areanpc_id,npc_shopid;
+	int npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
+	int npc_menu;
+	int npc_amount;
+	struct script_state *st;
+	char npc_str[CHATBOX_SIZE]; // for passing npc input box text to script engine
+	int npc_timer_id; //For player attached npc timers. [Skotlex]
+	unsigned int chatID;
+	time_t idletime;
+
+	struct{
+		char name[NAME_LENGTH];
+	} ignore[MAX_IGNORE_LIST];
+
+	int followtimer; // [MouseJstr]
+	int followtarget;
+
+	time_t emotionlasttime; // to limit flood with emotion packets
+
+	short skillitem,skillitemlv;
+	short skillid_old,skilllv_old;
+	short skillid_dance,skilllv_dance;
+	char blockskill[MAX_SKILL];	// [celest]
+	int cloneskill_id;
+	int menuskill_id, menuskill_val;
+
+	int invincible_timer;
+	unsigned int canlog_tick;
+	unsigned int canuseitem_tick;	// [Skotlex]
+	unsigned int cantalk_tick;
+	unsigned int cansendmail_tick; // [Mail System Flood Protection]
+	unsigned int ks_floodprotect_tick; // [Kill Steal Protection]
+
+	short weapontype1,weapontype2;
+	short disguise; // [Valaris]
+
+	struct weapon_data right_weapon, left_weapon;
+	
+	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
+	int param_bonus[6],param_equip[6]; //Stores card/equipment bonuses.
+	int subele[ELE_MAX];
+	int subrace[RC_MAX];
+	int subrace2[RC_MAX];
+	int subsize[3];
+	int reseff[SC_COMMON_MAX-SC_COMMON_MIN+1];
+	int weapon_coma_ele[ELE_MAX];
+	int weapon_coma_race[RC_MAX];
+	int weapon_atk[16];
+	int weapon_atk_rate[16];
+	int arrow_addele[ELE_MAX];
+	int arrow_addrace[RC_MAX];
+	int arrow_addsize[3];
+	int magic_addele[ELE_MAX];
+	int magic_addrace[RC_MAX];
+	int magic_addsize[3];
+	int critaddrace[RC_MAX];
+	int expaddrace[RC_MAX];
+	int ignore_mdef[RC_MAX];
+	int itemgrouphealrate[MAX_ITEMGROUP];
+	short sp_gain_race[RC_MAX];
+	// zeroed arrays end here.
+	// zeroed structures start here
+	struct s_autospell{
+		short id, lv, rate, card_id, flag;
+	} autospell[15], autospell2[15];
+	struct s_addeffect{
+		short id, rate, arrow_rate;
+		unsigned char flag;
+	} addeff[MAX_PC_BONUS], addeff2[MAX_PC_BONUS];
+	struct { //skillatk raises bonus dmg% of skills, skillheal increases heal%, skillblown increases bonus blewcount for some skills.
+		unsigned short id;
+		short val;
+	} skillatk[MAX_PC_BONUS], skillheal[5], skillblown[MAX_PC_BONUS], skillcast[MAX_PC_BONUS];
+	struct {
+		short value;
+		int rate;
+		int tick;
+	} hp_loss, sp_loss, hp_regen, sp_regen;
+	struct {
+		short class_, rate;
+	}	add_def[MAX_PC_BONUS], add_mdef[MAX_PC_BONUS],
+		add_mdmg[MAX_PC_BONUS];
+	struct s_add_drop { 
+		short id, group;
+		int race, rate;
+	} add_drop[MAX_PC_BONUS];
+	struct {
+		int nameid;
+		int rate;
+	} itemhealrate[MAX_PC_BONUS];
+	// zeroed structures end here
+	// manually zeroed structures start here.
+	struct s_autoscript {
+		unsigned short rate, flag;
+		struct script_code *script;
+	} autoscript[10], autoscript2[10]; //Auto script on attack, when attacked
+	// manually zeroed structures end here.
+	// zeroed vars start here.
+	int arrow_atk,arrow_ele,arrow_cri,arrow_hit;
+	int nsshealhp,nsshealsp;
+	int critical_def,double_rate;
+	int long_attack_atk_rate; //Long range atk rate, not weapon based. [Skotlex]
+	int near_attack_def_rate,long_attack_def_rate,magic_def_rate,misc_def_rate;
+	int ignore_mdef_ele;
+	int ignore_mdef_race;
+	int perfect_hit;
+	int perfect_hit_add;
+	int get_zeny_rate;
+	int get_zeny_num; //Added Get Zeny Rate [Skotlex]
+	int double_add_rate;
+	int short_weapon_damage_return,long_weapon_damage_return;
+	int magic_damage_return; // AppleGirl Was Here
+	int random_attack_increase_add,random_attack_increase_per; // [Valaris]
+	int break_weapon_rate,break_armor_rate;
+	int crit_atk_rate;
+	int classchange; // [Valaris]
+	int speed_add_rate, aspd_add;
+	unsigned int setitem_hash, setitem_hash2; //Split in 2 because shift operations only work on int ranges. [Skotlex]
+	
+	short splash_range, splash_add_range;
+	short add_steal_rate;
+	short sp_gain_value, hp_gain_value;
+	short sp_vanish_rate;
+	short sp_vanish_per;	
+	unsigned short unbreakable;	// chance to prevent ANY equipment breaking [celest]
+	unsigned short unbreakable_equip; //100% break resistance on certain equipment
+	unsigned short unstripable_equip;
+
+	// zeroed vars end here.
+
+	int castrate,delayrate,hprate,sprate,dsprate;
+	int atk_rate;
+	int speed_rate,hprecov_rate,sprecov_rate;
+	int matk_rate;
+	int critical_rate,hit_rate,flee_rate,flee2_rate,def_rate,def2_rate,mdef_rate,mdef2_rate;
+
+	int itemid;
+	short itemindex;	//Used item's index in sd->inventory [Skotlex]
+
+	short catch_target_class; // pet catching, stores a pet class to catch (short now) [zzo]
+
+	short spiritball, spiritball_old;
+	int spirit_timer[MAX_SKILL_LEVEL];
+
+	unsigned char potion_success_counter; //Potion successes in row counter
+	unsigned char mission_count; //Stores the bounty kill count for TK_MISSION
+	short mission_mobid; //Stores the target mob_id for TK_MISSION
+	int die_counter; //Total number of times you've died
+	int devotion[5]; //Stores the account IDs of chars devoted to.
+	int reg_num; //Number of registries (type numeric)
+	int regstr_num; //Number of registries (type string)
+
+	struct script_reg *reg;
+	struct script_regstr *regstr;
+
+	int trade_partner;
+	struct { 
+		struct {
+			short index, amount;
+		} item[10];
+		int zeny, weight;
+	} deal;
+
+	int party_invite,party_invite_account;
+	int adopt_invite; // Adoption
+
+	int guild_invite,guild_invite_account;
+	int guild_emblem_id,guild_alliance,guild_alliance_account;
+	short guild_x,guild_y; // For guildmate position display. [Skotlex] should be short [zzo]
+	int guildspy; // [Syrus22]
+	int partyspy; // [Syrus22]
+
+	int vender_id;
+	int vend_num;
+	char message[MESSAGE_SIZE];
+	struct s_vending vending[MAX_VENDING];
+
+	struct pet_data *pd;
+	struct homun_data *hd;	// [blackhole89]
+
+	struct{
+		int  m; //-1 - none, other: map index corresponding to map name.
+		unsigned short index; //map index
+	}feel_map[3];// 0 - Sun; 1 - Moon; 2 - Stars
+	short hate_mob[3];
+
+	int pvp_timer;
+	short pvp_point;
+	unsigned short pvp_rank, pvp_lastusers;
+	unsigned short pvp_won, pvp_lost;
+
+	char eventqueue[MAX_EVENTQUEUE][50];
+	int eventtimer[MAX_EVENTTIMER];
+	unsigned short eventcount; // [celest]
+
+	unsigned char change_level; // [celest]
+
+	char fakename[NAME_LENGTH]; // fake names [Valaris]
+
+	int duel_group; // duel vars [LuzZza]
+	int duel_invite;
+
+	char away_message[128]; // [LuzZza]
+
+	int cashPoints, kafraPoints;
+
+	// Auction System [Zephyrus]
+	struct {
+		int index, amount;
+	} auction;
+
+	// Mail System [Zephyrus]
+	struct {
+		short nameid;
+		int index, amount, zeny;
+		struct mail_data inbox;
+	} mail;
+};
+
 
 //Update this max as necessary. 54 is the value needed for Super Baby currently
 #define MAX_SKILL_TREE 54
@@ -104,6 +435,7 @@ struct duel {
 	int max_players_limit;
 };
 
+#define MAX_DUEL 1024
 extern struct duel duel_list[MAX_DUEL];
 extern int duel_count;
 

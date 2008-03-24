@@ -14,6 +14,7 @@
 
 #include "atcommand.h"
 #include "battle.h"
+#include "chat.h"
 #include "clif.h"
 #include "chrif.h"
 #include "intif.h"

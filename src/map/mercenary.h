@@ -4,6 +4,9 @@
 #ifndef _MERCENARY_H_
 #define _MERCENARY_H_
 
+#include "status.h" // struct status_data, struct status_change
+#include "unit.h" // struct unit_data
+
 struct s_homunculus_db {
 	int base_class, evo_class;
 	char name[NAME_LENGTH];
@@ -23,6 +26,24 @@ enum {
 	SP_INTIMATE 	= 0x100,
 	SP_HUNGRY 		= 0x200
 };
+
+
+struct homun_data {
+	struct block_list bl;
+	struct unit_data  ud;
+	struct view_data *vd;
+	struct status_data base_status, battle_status;
+	struct status_change sc;
+	struct regen_data regen;
+	struct s_homunculus_db *homunculusDB;	//[orn]
+	struct s_homunculus homunculus ;	//[orn]
+
+	struct map_session_data *master; //pointer back to its master
+	int hungry_timer;	//[orn]
+	unsigned int exp_next;
+	char blockskill[MAX_SKILL];	// [orn]
+};
+
 
 #define homdb_checkid(id) (id >=  HM_CLASS_BASE && id <= HM_CLASS_MAX)
 

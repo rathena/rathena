@@ -4,10 +4,65 @@
 #ifndef _NPC_H_
 #define _NPC_H_
 
-//#include "map.h"
+#include "map.h" // struct block_list
+#include "status.h" // struct status_change
+#include "unit.h" // struct unit_data
 struct block_list;
 struct npc_data;
 struct view_data;
+
+
+struct npc_timerevent_list {
+	int timer,pos;
+};
+struct npc_label_list {
+	char name[NAME_LENGTH];
+	int pos;
+};
+struct npc_item_list {
+	unsigned int nameid,value;
+};
+
+struct npc_data {
+	struct block_list bl;
+	struct unit_data  ud; //Because they need to be able to move....
+	struct view_data *vd;
+	struct status_change sc; //They can't have status changes, but.. they want the visual opt values.
+	struct npc_data *master_nd;
+	short class_;
+	short speed;
+	char name[NAME_LENGTH+1];// display name
+	char exname[NAME_LENGTH+1];// unique npc name
+	int chat_id;
+	unsigned int next_walktime;
+
+	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
+	enum npc_subtype subtype;
+	union {
+		struct {
+			struct script_code *script;
+			short xs,ys; // OnTouch area radius
+			int guild_id;
+			int timer,timerid,timeramount,rid;
+			unsigned int timertick;
+			struct npc_timerevent_list *timer_event;
+			int label_list_num;
+			struct npc_label_list *label_list;
+			int src_id;
+		} scr;
+		struct {
+			struct npc_item_list* shop_item;
+			int count;
+		} shop;
+		struct {
+			short xs,ys; // OnTouch area radius
+			short x,y; // destination coords
+			unsigned short mapindex; // destination map
+		} warp;
+	} u;
+};
+
+
 
 #define START_NPC_NUM 110000000
 

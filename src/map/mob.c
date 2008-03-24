@@ -17,6 +17,7 @@
 #include "clif.h"
 #include "intif.h"
 #include "pc.h"
+#include "pet.h"
 #include "status.h"
 #include "mob.h"
 #include "mercenary.h"	//[orn]
