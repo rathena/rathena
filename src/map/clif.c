@@ -12069,6 +12069,9 @@ void clif_parse_Adopt_reply(int fd, struct map_session_data *sd)
 
 	sd->adopt_invite = 0;
 
+	if( !p1_sd )
+		return; // Parent is not online
+
 	if( pid != p1_sd->status.account_id || !result )
 		return; // Not the same sender | Reply No
 
