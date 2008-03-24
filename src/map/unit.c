@@ -1689,8 +1689,19 @@ int unit_remove_map(struct block_list *bl, int clrtype)
 		party_send_dot_remove(sd);//minimap dot fix [Kevin]
 		guild_send_dot_remove(sd);
 
+		if( map[bl->m].users <= 0 || sd->state.debug_remove_map )
+		{// this is only place where map users is decreased, if the mobs were removed too soon then this function was executed too many times [FlavioJS]
+			ShowDebug("unit_remove_map: unexpected state when removing player AID/CID:%d/%d"
+				" (active=%d connect_new=%d rewarp=%d changemap=%d debug_remove_map=%d)"
+				" from map=%s (users=%d). Please report this!!!\n",
+				sd->status.account_id, sd->status.char_id,
+				sd->state.active, sd->state.connect_new, sd->state.rewarp, sd->state.changemap, sd->state.debug_remove_map,
+				map[bl->m].name, map[bl->m].users);
+		}
+		else
 		if (--map[bl->m].users == 0 && battle_config.dynamic_mobs)	//[Skotlex]
 			map_removemobs(bl->m);
+		sd->state.debug_remove_map = 1; // temporary state to track double remove_map's [FlavioJS]
 
 		break;
 	}

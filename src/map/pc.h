@@ -88,6 +88,7 @@ struct map_session_data {
 		unsigned killable : 1;
 		unsigned doridori : 1;
 		unsigned ignoreAll : 1;
+		unsigned debug_remove_map : 1; // temporary state to track double remove_map's [FlavioJS]
 		unsigned short autoloot;
 		unsigned short autolootid; // [Zephyrus]
 		unsigned noks : 3; // [Zeph Kill Steal Protection]

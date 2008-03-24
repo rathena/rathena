@@ -7813,6 +7813,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if (map[sd->bl.m].users++ == 0 && battle_config.dynamic_mobs)	//Skotlex
 		map_spawnmobs(sd->bl.m);
+	sd->state.debug_remove_map = 0; // temporary state to track double remove_map's [FlavioJS]
 
 	map_addblock(&sd->bl);
 	clif_spawn(&sd->bl);
