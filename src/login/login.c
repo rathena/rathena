@@ -1151,17 +1151,22 @@ int mmo_auth(struct mmo_account* account, int fd)
 	if( login_config.online_check )
 	{
 		struct online_login_data* data = idb_get(online_db,auth_dat[i].account_id);
-		if( data && data->char_server > -1 )
-		{
-			//Request char servers to kick this account out. [Skotlex]
-			uint8 buf[8];
-			ShowNotice("User '%s' is already online - Rejected.\n", auth_dat[i].userid);
-			WBUFW(buf,0) = 0x2734;
-			WBUFL(buf,2) = auth_dat[i].account_id;
-			charif_sendallwos(-1, buf, 6);
-			if( data->waiting_disconnect == -1 )
-				data->waiting_disconnect = add_timer(gettick()+30000, waiting_disconnect_timer, auth_dat[i].account_id, 0);
-			return 3; // Rejected
+		if( data )
+		{// account is already marked as online!
+			if( data->char_server > -1 )
+			{
+				//Request char servers to kick this account out. [Skotlex]
+				uint8 buf[8];
+				ShowNotice("User '%s' is already online - Rejected.\n", auth_dat[i].userid);
+				WBUFW(buf,0) = 0x2734;
+				WBUFL(buf,2) = auth_dat[i].account_id;
+				charif_sendallwos(-1, buf, 6);
+				if( data->waiting_disconnect == -1 )
+					data->waiting_disconnect = add_timer(gettick()+30000, waiting_disconnect_timer, auth_dat[i].account_id, 0);
+				return 3; // Rejected
+			}
+			else
+				; // the client disconnects after doing auth, so can't really kick it... need some form of expiration timer
 		}
 	}
 
@@ -1274,7 +1279,7 @@ int parse_fromchar(int fd)
 				auth_fifo[i].login_id2  == login_id2 &&
 				auth_fifo[i].sex        == sex &&
 				auth_fifo[i].ip         == ip_ &&
-				!auth_fifo[i].delflag );
+				auth_fifo[i].delflag    == 0 );
 
 			if( i == AUTH_FIFO_SIZE || account_id <= 0 )
 			{// authentication not found

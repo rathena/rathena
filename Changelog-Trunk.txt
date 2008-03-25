@@ -42,7 +42,7 @@ IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 	  flags so that they closely match jA's (for easier comparisons).
 	- Fixed code that allowed placing of skill unit cells on 'gaps'.
 	- Fixed code that prevented successful casting of land skills on 'gaps'
-	  (officially it's possbile, even though they will not deploy entirely).
+	  (officially it's possible, even though they will not deploy entirely).
 2008/03/07
 	* Script induced status changes can now be reduced by stats/cards (but
 	  only trigger rate is reduced, not duration).

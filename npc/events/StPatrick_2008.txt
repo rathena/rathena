@@ -27,7 +27,7 @@
 //= 1.1 Fixed checkitems for ale, fixed ale prize(gives the correct one now). [Kisuka]
 //= 1.2 Optimized. Uses only one variable now. [L0ne_W0lf]
 //=	Corrected EXP rewards, and some typos.
-//= 1.3 Corrected random in item fuction. [L0ne_W0lf]
+//= 1.3 Corrected random in item function. [L0ne_W0lf]
 //============================================================
 
 prt_fild05,170,286,4	script	Anxious Leprechaun#8pday	954,{

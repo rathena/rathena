@@ -317,7 +317,7 @@ job_sword1,223,167,2	script	Mae#swd_1_success	92,{
 	end;
 }
 
-// Examination Course Fucntions
+// Examination Course Functions
 //============================================================ 
 function	script	F_JobSwdMedic	{
 	percentheal 100,0;

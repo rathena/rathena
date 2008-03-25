@@ -1943,7 +1943,7 @@ int parse_fromlogin(int fd)
 					{
 						WFIFOHEAD(i,3);
 						WFIFOW(i,0) = 0x81;
-						WFIFOB(i,2) = 2;
+						WFIFOB(i,2) = 2; // "Someone has already logged in with this id"
 						WFIFOSET(i,3);
 					}
 					else //Shouldn't happen, but just in case.
@@ -2871,11 +2871,17 @@ int parse_char(int fd)
 		{
 
 		// request to connect
+		// 0065 <account id>.L <login id1>.L <login id2>.L <???>.W <sex>.B
 		case 0x65:
 			if (RFIFOREST(fd) < 17)
 				return 0;
 		{
-			ShowInfo("request connect - account_id:%d/login_id1:%d/login_id2:%d\n", RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10));
+			int account_id = RFIFOL(fd,2);
+			int login_id1 = RFIFOL(fd,6);
+			int login_id2 = RFIFOL(fd,10);
+			int sex = RFIFOB(fd,16);
+
+			ShowInfo("request connect - account_id:%d/login_id1:%d/login_id2:%d\n", account_id, login_id1, login_id2);
 			if (sd) {
 				//Received again auth packet for already authentified account?? Discard it.
 				//TODO: Perhaps log this as a hack attempt?
@@ -2887,15 +2893,15 @@ int parse_char(int fd)
 			CREATE(session[fd]->session_data, struct char_session_data, 1);
 			sd = (struct char_session_data*)session[fd]->session_data;
 			sd->connect_until_time = 0; // unknown or unlimited (not displaying on map-server)
-			sd->account_id = RFIFOL(fd,2);
-			sd->login_id1 = RFIFOL(fd,6);
-			sd->login_id2 = RFIFOL(fd,10);
-			sd->sex = RFIFOB(fd,16);
+			sd->account_id = account_id;
+			sd->login_id1 = login_id1;
+			sd->login_id2 = login_id2;
+			sd->sex = sex;
 			sd->auth = false; // not authed yet
 
 			// send back account_id
 			WFIFOHEAD(fd,4);
-			WFIFOL(fd,0) = RFIFOL(fd,2);
+			WFIFOL(fd,0) = account_id;
 			WFIFOSET(fd,4);
 
 			// search authentification

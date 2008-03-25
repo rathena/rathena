@@ -2967,7 +2967,7 @@ capacity, and 0 otherwise. It is important to see if a player can carry the
 items you expect to give them, failing to do that may open your script up to 
 abuse or create some very unfair errors.
 
-This fucntion, in addition to checking to see if the player is capable of
+This function, in addition to checking to see if the player is capable of
 holding a set amount of items, also ensures the player has room in their
 inventory for the item(s) they will be receciving.
 
@@ -6130,7 +6130,7 @@ invoking character.
 
 ---------------------------------------
 
-*homshuffle
+*homshuffle;
 
 This will recalculate the homunculus stats acording to its level, of the 
 current invoking character.

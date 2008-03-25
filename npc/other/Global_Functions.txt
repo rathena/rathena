@@ -32,7 +32,7 @@
 //= 2.07 Added TK_Q variable clear. 2.08 Added NINJ_Q variable clear [Lupus]
 //= 2.09 Cleared F_ClearGarbage [Lupus]
 //= 2.10 Added F_CheckMaxCount to check count of carrid items. [L0ne_w0lf]
-//= 2.10a Removed fuction F_CheckMaxCount. Not needed. [L0ne_W0lf]
+//= 2.10a Removed function F_CheckMaxCount. Not needed. [L0ne_W0lf]
 //= 2.11 Updated function Job_Change to jobchange based on Upper value. [Paradox924X]
 //============================================================ 
 

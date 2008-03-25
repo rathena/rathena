@@ -12065,16 +12065,21 @@ void clif_parse_Adopt_request(int fd, struct map_session_data *sd)
 
 void clif_parse_Adopt_reply(int fd, struct map_session_data *sd)
 {
-	struct map_session_data *p1_sd = map_id2sd(RFIFOL(fd,2)), *p2_sd = map_id2sd(RFIFOL(fd,6));
-	int result = RFIFOL(fd,10), pid = sd->adopt_invite;
+	int p1_id = RFIFOL(fd,2);
+	int p2_id = RFIFOL(fd,6);
+	int result = RFIFOL(fd,10);
+	struct map_session_data* p1_sd = map_id2sd(p1_id);
+	struct map_session_data* p2_sd = map_id2sd(p2_id);
 
+	int pid = sd->adopt_invite;
 	sd->adopt_invite = 0;
 
-	if( !p1_sd )
-		return; // Parent is not online
-
-	if( pid != p1_sd->status.account_id || !result )
-		return; // Not the same sender | Reply No
+	if( p1_sd == NULL || p2_sd == NULL )
+		return; // Both players need to be online
+	if( pid != p1_sd->status.account_id || p2_id != p1_sd->status.partner_id )
+		return; // Incorrect values
+	if( result == 0 )
+		return; // Rejected
 
 	pc_adoption(p1_sd, p2_sd, sd);
 }
