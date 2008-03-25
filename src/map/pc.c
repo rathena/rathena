@@ -307,7 +307,7 @@ int pc_setrestartvalue(struct map_session_data *sd,int type)
 		if(sd->state.snovice_dead_flag == 1) { // [Celest]
 			status_heal(&sd->bl, status->max_hp, status->max_sp, 1);
 			sd->state.snovice_dead_flag = 2;
-			sc_start(&sd->bl,SkillStatusChangeTable(MO_STEELBODY),100,1,skill_get_time(MO_STEELBODY,1));
+			sc_start(&sd->bl,status_skill2sc(MO_STEELBODY),100,1,skill_get_time(MO_STEELBODY,1));
 		} else
 			status_heal(&sd->bl, b_status->hp, b_status->sp>status->sp?b_status->sp-status->sp:0, 1);
 	} else { //Just for saving on the char-server (with values as if respawned)
@@ -3781,7 +3781,7 @@ int pc_checkallowskill(struct map_session_data *sd)
 	for (i = 0; i < ARRAYLENGTH(scw_list); i++)
 	{	// Skills requiring specific weapon types
 		if(sd->sc.data[scw_list[i]] &&
-			!pc_check_weapontype(sd,skill_get_weapontype(StatusSkillChangeTable[scw_list[i]])))
+			!pc_check_weapontype(sd,skill_get_weapontype(status_sc2skill(scw_list[i]))))
 			status_change_end(&sd->bl,scw_list[i],-1);
 	}
 	
@@ -4231,18 +4231,18 @@ int pc_checkbaselevelup(struct map_session_data *sd)
 
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
 	{
-		sc_start(&sd->bl,SkillStatusChangeTable(PR_KYRIE),100,1,skill_get_time(PR_KYRIE,1));
-		sc_start(&sd->bl,SkillStatusChangeTable(PR_IMPOSITIO),100,1,skill_get_time(PR_IMPOSITIO,1));
-		sc_start(&sd->bl,SkillStatusChangeTable(PR_MAGNIFICAT),100,1,skill_get_time(PR_MAGNIFICAT,1));
-		sc_start(&sd->bl,SkillStatusChangeTable(PR_GLORIA),100,1,skill_get_time(PR_GLORIA,1));
-		sc_start(&sd->bl,SkillStatusChangeTable(PR_SUFFRAGIUM),100,1,skill_get_time(PR_SUFFRAGIUM,1));
+		sc_start(&sd->bl,status_skill2sc(PR_KYRIE),100,1,skill_get_time(PR_KYRIE,1));
+		sc_start(&sd->bl,status_skill2sc(PR_IMPOSITIO),100,1,skill_get_time(PR_IMPOSITIO,1));
+		sc_start(&sd->bl,status_skill2sc(PR_MAGNIFICAT),100,1,skill_get_time(PR_MAGNIFICAT,1));
+		sc_start(&sd->bl,status_skill2sc(PR_GLORIA),100,1,skill_get_time(PR_GLORIA,1));
+		sc_start(&sd->bl,status_skill2sc(PR_SUFFRAGIUM),100,1,skill_get_time(PR_SUFFRAGIUM,1));
 		if (sd->state.snovice_dead_flag == 2)
 			sd->state.snovice_dead_flag = 0; //Reenable steelbody resurrection on dead.
 	} else
 	if((sd->class_&MAPID_UPPERMASK) == MAPID_TAEKWON || (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR)
 	{
-		sc_start(&sd->bl,SkillStatusChangeTable(AL_INCAGI),100,10,600000);
-		sc_start(&sd->bl,SkillStatusChangeTable(AL_BLESSING),100,10,600000);
+		sc_start(&sd->bl,status_skill2sc(AL_INCAGI),100,10,600000);
+		sc_start(&sd->bl,status_skill2sc(AL_BLESSING),100,10,600000);
 	}
 	clif_misceffect(&sd->bl,0);
 	npc_script_event(sd, NPCE_BASELVUP); //LORDALFA - LVLUPEVENT
@@ -5263,7 +5263,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		clif_resurrection(&sd->bl, 1);
 		if(battle_config.pc_invincible_time)
 			pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
-		sc_start(&sd->bl,SkillStatusChangeTable(PR_KYRIE),100,10,skill_get_time2(SL_KAIZEL,j));
+		sc_start(&sd->bl,status_skill2sc(PR_KYRIE),100,10,skill_get_time2(SL_KAIZEL,j));
 		return 0;
 	}
 	if (sd->state.snovice_dead_flag == 1)
@@ -5276,7 +5276,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		sd->state.snovice_dead_flag = 2;
 		if(battle_config.pc_invincible_time)
 			pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
-		sc_start(&sd->bl,SkillStatusChangeTable(MO_STEELBODY),100,1,skill_get_time(MO_STEELBODY,1));
+		sc_start(&sd->bl,status_skill2sc(MO_STEELBODY),100,1,skill_get_time(MO_STEELBODY,1));
 		return 0;
 	}
 
@@ -5627,7 +5627,7 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 		int id;
 		for(i = 0; i < MAX_SKILL_TREE && (id = skill_tree[class_][i].id) > 0; i++) {
 			//Remove status specific to your current tree skills.
-			id = SkillStatusChangeTable(id);
+			id = status_skill2sc(id);
 			if (id > SC_COMMON_MAX && sd->sc.data[id])
 				status_change_end(&sd->bl, id, -1);
 		}

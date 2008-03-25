@@ -8110,9 +8110,9 @@ BUILDIN_FUNC(sc_start)
 	else
 		bl = map_id2bl(st->rid);
 
-	if( tick == 0 && val1 > 0 && type >= 0 && type < SC_MAX && StatusSkillChangeTable[type] != 0 )
+	if( tick == 0 && val1 > 0 && type >= 0 && type < SC_MAX && status_sc2skill(type) != 0 )
 	{// When there isn't a duration specified, try to get it from the skill_db
-		tick = skill_get_time(StatusSkillChangeTable[type], val1);
+		tick = skill_get_time(status_sc2skill(type), val1);
 	}
 
 	if( potion_flag == 1 && potion_target )
@@ -8148,9 +8148,9 @@ BUILDIN_FUNC(sc_start2)
 	else
 		bl = map_id2bl(st->rid);
 
-	if( tick == 0 && val1 > 0 && type >= 0 && type < SC_MAX && StatusSkillChangeTable[type] != 0 )
+	if( tick == 0 && val1 > 0 && type >= 0 && type < SC_MAX && status_sc2skill(type) != 0 )
 	{// When there isn't a duration specified, try to get it from the skill_db
-		tick = skill_get_time(StatusSkillChangeTable[type], val1);
+		tick = skill_get_time(status_sc2skill(type), val1);
 	}
 
 	if( potion_flag == 1 && potion_target )
@@ -8190,9 +8190,9 @@ BUILDIN_FUNC(sc_start4)
 	else
 		bl = map_id2bl(st->rid);
 
-	if( tick == 0 && val1 > 0 && type >= 0 && type < SC_MAX && StatusSkillChangeTable[type] != 0 )
+	if( tick == 0 && val1 > 0 && type >= 0 && type < SC_MAX && status_sc2skill(type) != 0 )
 	{// When there isn't a duration specified, try to get it from the skill_db
-		tick = skill_get_time(StatusSkillChangeTable[type], val1);
+		tick = skill_get_time(status_sc2skill(type), val1);
 	}
 
 	if( potion_flag == 1 && potion_target )

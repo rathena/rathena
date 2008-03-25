@@ -8219,7 +8219,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 					if( skillnotok(MO_EXPLOSIONSPIRITS,sd) )
 						break; //Do not override the noskill mapflag. [Skotlex]
 					clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,-1,
-						sc_start(&sd->bl,SkillStatusChangeTable(MO_EXPLOSIONSPIRITS),100,
+						sc_start(&sd->bl,status_skill2sc(MO_EXPLOSIONSPIRITS),100,
 						17,skill_get_time(MO_EXPLOSIONSPIRITS,1))); //Lv17-> +50 critical (noted by Poki) [Skotlex]
 					sd->state.snovice_call_flag = 0;
 			break;
@@ -10776,7 +10776,7 @@ void clif_parse_NoviceExplosionSpirits(int fd, struct map_session_data *sd)
 		}
 		if((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_exp > 0 && nextbaseexp > 0 && (int)((double)1000*sd->status.base_exp/nextbaseexp)%100==0){
 			clif_skill_nodamage(&sd->bl,&sd->bl,MO_EXPLOSIONSPIRITS,5,
-				sc_start(&sd->bl,SkillStatusChangeTable(MO_EXPLOSIONSPIRITS),100,
+				sc_start(&sd->bl,status_skill2sc(MO_EXPLOSIONSPIRITS),100,
 					5,skill_get_time(MO_EXPLOSIONSPIRITS,5)));
 		}
 	}

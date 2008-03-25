@@ -61,7 +61,7 @@ int icewall_unit_pos;
 
 /// Maps skill ids to skill db offsets.
 /// Returns the skill's array index, or 0 (Unknown Skill).
-static int skill_get_index( int id )
+int skill_get_index( int id )
 {
 	// avoid ranges reserved for mapping guild/homun skills
 	if( id >= GD_SKILLRANGEMIN && id <= GD_SKILLRANGEMAX )
@@ -639,7 +639,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case NPC_PETRIFYATTACK:
-		sc_start4(bl,SkillStatusChangeTable(skillid),50+10*skilllv,
+		sc_start4(bl,status_skill2sc(skillid),50+10*skilllv,
 			skilllv,0,0,skill_get_time(skillid,skilllv), 
 			skill_get_time2(skillid,skilllv));
 		break;
@@ -649,11 +649,11 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	case NPC_POISON:
 	case NPC_SILENCEATTACK:
 	case NPC_STUNATTACK:
-		sc_start(bl,SkillStatusChangeTable(skillid),50+10*skilllv,skilllv,skill_get_time2(skillid,skilllv));
+		sc_start(bl,status_skill2sc(skillid),50+10*skilllv,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	case NPC_ACIDBREATH:
 	case NPC_ICEBREATH:
-		sc_start(bl,SkillStatusChangeTable(skillid),70,skilllv,skill_get_time2(skillid,skilllv));
+		sc_start(bl,status_skill2sc(skillid),70,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	case NPC_BLEEDING:
 		sc_start(bl,SC_BLEEDING,(20*skilllv),skilllv,skill_get_time2(skillid,skilllv));
@@ -705,7 +705,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case LK_JOINTBEAT:
-		skill = SkillStatusChangeTable(skillid);
+		skill = status_skill2sc(skillid);
 		if (tsc->jb_flag) {
 			sc_start2(bl,skill,(5*skilllv+5),skilllv,tsc->jb_flag&BREAK_FLAGS,skill_get_time2(skillid,skilllv));
 			tsc->jb_flag = 0;
@@ -822,7 +822,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 					continue; //Range Failed.
 			}
 			type =  sd->addeff[i].id;
-			skill = skill_get_time2(StatusSkillChangeTable[type],7);
+			skill = skill_get_time2(status_sc2skill(type),7);
 
 			if (sd->addeff[i].flag&ATF_TARGET)
 				status_change_start(bl,type,rate,7,0,0,0,skill,0);
@@ -967,7 +967,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				kaahi_heal_timer, bl->id, SC_KAAHI); //Activate heal.
 		break;
 	case MO_EXTREMITYFIST:
-		sc_start(src,SkillStatusChangeTable(skillid),100,skilllv,skill_get_time2(skillid,skilllv));
+		sc_start(src,status_skill2sc(skillid),100,skilllv,skill_get_time2(skillid,skilllv));
 		break;
 	case GS_FULLBUSTER:
 		sc_start(src,SC_BLIND,2*skilllv,skilllv,skill_get_time2(skillid,skilllv));
@@ -1013,7 +1013,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 					continue; //Range Failed.
 			}
 			type = dstsd->addeff2[i].id;
-			time = skill_get_time2(StatusSkillChangeTable[type],7);
+			time = skill_get_time2(status_sc2skill(type),7);
 			
 			if (dstsd->addeff2[i].flag&ATF_TARGET)
 				status_change_start(src,type,rate,7,0,0,0,time,0);
@@ -1147,7 +1147,7 @@ int skill_break_equip (struct block_list *bl, unsigned short where, int rate, in
 			else if (rand()%10000 >= rate)
 				where&=~where_list[i];
 			else if (!sd) //Cause Strip effect.
-				sc_start(bl,scatk[i],100,0,skill_get_time(StatusSkillChangeTable[scatk[i]],1));
+				sc_start(bl,scatk[i],100,0,skill_get_time(status_sc2skill(scatk[i]),1));
 		}
 	}
 	if (!where) //Nothing to break.
@@ -2630,7 +2630,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, int 
 
 	case NPC_MAGICALATTACK:
 		skill_attack(BF_MAGIC,src,src,bl,skillid,skilllv,tick,flag);
-		sc_start(src,SkillStatusChangeTable(skillid),100,skilllv,skill_get_time(skillid,skilllv));
+		sc_start(src,status_skill2sc(skillid),100,skilllv,skill_get_time(skillid,skilllv));
 		break;
 
 	case HVAN_CAPRICE: //[blackhole89]
@@ -2866,7 +2866,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 				return skill_castend_pos2(src,bl->x,bl->y,skillid,skilllv,tick,0);
 	}
 
-	type = SkillStatusChangeTable(skillid);
+	type = status_skill2sc(skillid);
 	tsc = status_get_sc(bl);
 	tsce = (tsc && type != -1)?tsc->data[type]:NULL;
 
@@ -4887,6 +4887,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case SL_STAR:
 	case SL_SUPERNOVICE:
 	case SL_WIZARD:
+		//NOTE: here, 'type' has the value of the associated MAPID, not of the SC_SPIRIT constant.
 		if (sd && !(dstsd && (dstsd->class_&MAPID_UPPERMASK) == type)) {
 			clif_skill_fail(sd,skillid,0,0);
 			break;
@@ -5540,7 +5541,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	sd = BL_CAST(BL_PC, src);
 
 	sc = status_get_sc(src);
-	type = SkillStatusChangeTable(skillid);
+	type = status_skill2sc(skillid);
 	sce = (sc && type != -1)?sc->data[type]:NULL;
 
 	switch (skillid) { //Skill effect.
@@ -6509,7 +6510,7 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 	if (sc && sc->option&OPTION_HIDE && sg->skill_id != WZ_HEAVENDRIVE)
 		return 0; //Hidden characters are immune to AoE skills except Heaven's Drive. [Skotlex]
 	
-	type = SkillStatusChangeTable(sg->skill_id);
+	type = status_skill2sc(sg->skill_id);
 	sce = (sc && type != -1)?sc->data[type]:NULL;
 	skillid = sg->skill_id; //In case the group is deleted, we need to return the correct skill id, still.
 	switch (sg->unit_id) {
@@ -6673,7 +6674,7 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 		sc = NULL;
 		sstatus = NULL;
 	}
-	type = SkillStatusChangeTable(sg->skill_id);
+	type = status_skill2sc(sg->skill_id);
 	skillid = sg->skill_id;
 
 	if (sg->interval == -1) {
@@ -7068,7 +7069,7 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 	nullpo_retr(0, bl);
 	nullpo_retr(0, sg=src->group);
 	sc = status_get_sc(bl);
-	type = SkillStatusChangeTable(sg->skill_id);
+	type = status_skill2sc(sg->skill_id);
 	sce = (sc && type != -1)?sc->data[type]:NULL;
 
 	if (bl->prev==NULL || !src->alive || //Need to delete the trap if the source died.
@@ -7115,7 +7116,7 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 	if (sc && !sc->count)
 		sc = NULL;
 	
-	type = SkillStatusChangeTable(skill_id);
+	type = status_skill2sc(skill_id);
 	sce = (sc && type != -1)?sc->data[type]:NULL;
 
 	switch (skill_id)
@@ -7617,7 +7618,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 	case CR_SHRINK:
 	case TK_RUN:
 	case GS_GATLINGFEVER:
-		if(sc && sc->data[SkillStatusChangeTable(skill)])
+		if(sc && sc->data[status_skill2sc(skill)])
 			return 1; //Allow turning off.
 		break;
 
@@ -7706,7 +7707,7 @@ int skill_check_condition(struct map_session_data* sd, short skill, short lv, in
 	case TK_READYDOWN:
 	case TK_READYSTORM:
 	case TK_READYTURN:
-		if(sc && sc->data[SkillStatusChangeTable(skill)])
+		if(sc && sc->data[status_skill2sc(skill)])
 			return 1; //Enable disabling them regardless of who you are.
 	case TK_JUMPKICK:
 		if ((sd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) {

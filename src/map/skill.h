@@ -209,6 +209,7 @@ enum { CAST_GROUND, CAST_DAMAGE, CAST_NODAMAGE };
 int skill_get_casttype(int id); //[Skotlex]
 // スキルデ?タベ?スへのアクセサ
 //
+int skill_get_index( int id );
 int	skill_get_type( int id );
 int	skill_get_hit( int id );
 int	skill_get_inf( int id );

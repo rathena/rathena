@@ -291,8 +291,6 @@ enum sc_type {
 	SC_COMMONSC_RESIST,
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
-int SkillStatusChangeTable(int skill);
-extern int StatusSkillChangeTable[SC_MAX];
 
 //Numerates the Number for the status changes (client-dependent), imported from jA
 enum si_type {
@@ -542,41 +540,44 @@ enum {
 #define MANNER_NOROOM 0x10
 
 //Define flags for the status_calc_bl function. [Skotlex]
-#define SCB_NONE	0x00000000
-#define SCB_BASE	0x00000001
-#define SCB_MAXHP	0x00000002
-#define SCB_MAXSP	0x00000004
-#define SCB_STR	0x00000008
-#define SCB_AGI	0x00000010
-#define SCB_VIT	0x00000020
-#define SCB_INT	0x00000040
-#define SCB_DEX	0x00000080
-#define SCB_LUK	0x00000100
-#define SCB_BATK	0x00000200
-#define SCB_WATK	0x00000400
-#define SCB_MATK	0x00000800
-#define SCB_HIT	0x00001000
-#define SCB_FLEE	0x00002000
-#define SCB_DEF	0x00004000
-#define SCB_DEF2	0x00008000
-#define SCB_MDEF	0x00010000
-#define SCB_MDEF2	0x00020000
-#define SCB_SPEED	0x00040000
-#define SCB_ASPD	0x00080000
-#define SCB_DSPD	0x00100000
-#define SCB_CRI	0x00200000
-#define SCB_FLEE2	0x00400000
-#define SCB_ATK_ELE	0x00800000
-#define SCB_DEF_ELE	0x01000000
-#define SCB_MODE	0x02000000
-#define SCB_SIZE	0x04000000
-#define SCB_RACE	0x08000000
-#define SCB_RANGE	0x10000000
-#define SCB_REGEN	0x20000000
-//SCB_DYE means the sc should force cloth-dye change to 0 to avoid client crashes.
-#define SCB_DYE	0x40000000
-#define SCB_PC		0x80000000
-#define SCB_ALL	0x3FFFFFFF
+enum scb_flag
+{
+	SCB_NONE    = 0x00000000,
+	SCB_BASE    = 0x00000001,
+	SCB_MAXHP   = 0x00000002,
+	SCB_MAXSP   = 0x00000004,
+	SCB_STR     = 0x00000008,
+	SCB_AGI     = 0x00000010,
+	SCB_VIT     = 0x00000020,
+	SCB_INT     = 0x00000040,
+	SCB_DEX     = 0x00000080,
+	SCB_LUK     = 0x00000100,
+	SCB_BATK    = 0x00000200,
+	SCB_WATK    = 0x00000400,
+	SCB_MATK    = 0x00000800,
+	SCB_HIT     = 0x00001000,
+	SCB_FLEE    = 0x00002000,
+	SCB_DEF     = 0x00004000,
+	SCB_DEF2    = 0x00008000,
+	SCB_MDEF    = 0x00010000,
+	SCB_MDEF2   = 0x00020000,
+	SCB_SPEED   = 0x00040000,
+	SCB_ASPD    = 0x00080000,
+	SCB_DSPD    = 0x00100000,
+	SCB_CRI     = 0x00200000,
+	SCB_FLEE2   = 0x00400000,
+	SCB_ATK_ELE = 0x00800000,
+	SCB_DEF_ELE = 0x01000000,
+	SCB_MODE    = 0x02000000,
+	SCB_SIZE    = 0x04000000,
+	SCB_RACE    = 0x08000000,
+	SCB_RANGE   = 0x10000000,
+	SCB_REGEN   = 0x20000000,
+	SCB_DYE     = 0x40000000, // force cloth-dye change to 0 to avoid client crashes.
+	SCB_PC      = 0x80000000,
+
+	SCB_ALL     = 0x3FFFFFFF
+};
 
 //Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
 #define BL_CONSUME (BL_PC|BL_HOM)
@@ -681,7 +682,9 @@ struct status_change {
 	struct status_change_entry *data[SC_MAX];
 };
 
-
+// for looking up associated data
+int status_skill2sc(int skill);
+int status_sc2skill(int sc);
 
 int status_damage(struct block_list *src,struct block_list *target,int hp,int sp, int walkdelay, int flag);
 //Define for standard HP damage attacks.
