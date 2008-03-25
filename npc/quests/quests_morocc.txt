@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 2.0a
+//= 2.1
 //===== Compatible With: ===================================== 
 //= eAthena 7.15 +
 //===== Description: ========================================= 
@@ -22,6 +22,7 @@
 //= 1.9 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 2.0a Corrected a Typo error ";;". [Samuray22]
+//= 2.1 Assassins will now get their request item. (bugreport:1220) [L0ne_W0lf]
 //============================================================ 
 
 
@@ -1583,6 +1584,7 @@ morocc,155,56,3	script	Miya	93,3,3,{
 			mes "We'll need all the help that";
 			mes "we can possibly get...";
 			set mao_request,1;
+			getitem 7416,1;
 			close;
 		}
 	}

@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/03/24
+	* Rev. 12431 Assassins will now get their request item. (bugreport:1220) [L0ne_W0lf]
 2008/03/21
 	* Rev. 12422 Corrected an error that snuck in to the Easter Event. [L0ne_W0lf]
 	* Rev. 12421 Added 2008 iRO Easter Event care of Kisuka. [L0ne_W0lf]
