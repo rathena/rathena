@@ -34,11 +34,8 @@ char db_server_logindb[32] = "ragnarok";
 
 int isGM(int account_id)
 {
-	struct gm_account *p;
-	p = idb_get(gm_account_db,account_id);
-	if( p == NULL)
-		return 0;
-	return p->level;
+	struct gm_account* p = (struct gm_account*)idb_get(gm_account_db,account_id);
+	return( p != NULL ) ? p->level : 0;
 }
 
 int read_gm_account()
@@ -74,7 +71,7 @@ int read_gm_account()
 		else {
 			if(p->level > 99)
 				p->level = 99;
-			p = idb_put(gm_account_db,p->account_id,p);
+			p = (struct gm_account*)idb_put(gm_account_db,p->account_id,p);
 			if( p )
 				aFree(p);// old entry replaced
 			gm_counter++;

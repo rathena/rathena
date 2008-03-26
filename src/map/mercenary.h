@@ -7,18 +7,21 @@
 #include "status.h" // struct status_data, struct status_change
 #include "unit.h" // struct unit_data
 
+struct h_stats {
+	unsigned int HP, SP;
+	unsigned short str, agi, vit, int_, dex, luk;
+};
+
 struct s_homunculus_db {
 	int base_class, evo_class;
 	char name[NAME_LENGTH];
-	struct h_stats {
-		unsigned int HP, SP;
-		unsigned short str, agi, vit, int_, dex, luk;
-	} base, gmin, gmax, emin, emax;
+	struct h_stats base, gmin, gmax, emin, emax;
 	int foodID ;
 	int baseASPD ;
 	long hungryDelay ;
 	unsigned char element, race, base_size, evo_size;
 };
+
 extern struct s_homunculus_db homuncumlus_db[MAX_HOMUNCULUS_CLASS];
 enum { HOMUNCULUS_CLASS, HOMUNCULUS_FOOD };
 enum {

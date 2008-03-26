@@ -485,8 +485,9 @@ int mapif_wis_message(struct WisData *wd)
 
 	return 0;
 }
+
 // Wis sending result
-int mapif_wis_end(struct WisData *wd,int flag)
+int mapif_wis_end(struct WisData *wd, int flag)
 {
 	unsigned char buf[27];
 
@@ -497,15 +498,11 @@ int mapif_wis_end(struct WisData *wd,int flag)
 	return 0;
 }
 
-int mapif_account_reg(int fd,unsigned char *src)
+// Account registry transfer to map-server
+static void mapif_account_reg(int fd, unsigned char *src)
 {
-//	unsigned char buf[WBUFW(src,2)]; <- Hey, can this really be done? [Skotlex]
-	unsigned char *buf = aCalloc(1,WBUFW(src,2)); // [Lance] - Skot... Dynamic allocation is better :D
-	memcpy(WBUFP(buf,0),src,WBUFW(src,2));
-	WBUFW(buf, 0)=0x3804;
-	mapif_sendallwos(fd, buf, WBUFW(buf,2));
-	aFree(buf);
-	return 0;
+	WBUFW(src,0)=0x3804; //NOTE: writing to RFIFO
+	mapif_sendallwos(fd, src, WBUFW(src,2));
 }
 
 // Send the requested account_reg
@@ -524,8 +521,8 @@ int mapif_account_reg_reply(int fd,int account_id,int char_id, int type)
 	}else{
 		int i,p;
 		for (p=13,i = 0; i < reg->reg_num && p < 5000; i++) {
-			p+= sprintf(WFIFOP(fd,p), "%s", reg->reg[i].str)+1; //We add 1 to consider the '\0' in place.
-			p+= sprintf(WFIFOP(fd,p), "%s", reg->reg[i].value)+1;
+			p+= sprintf((char*)WFIFOP(fd,p), "%s", reg->reg[i].str)+1; //We add 1 to consider the '\0' in place.
+			p+= sprintf((char*)WFIFOP(fd,p), "%s", reg->reg[i].value)+1;
 		}
 		WFIFOW(fd,2)=p;
 		if (p>= 5000)
@@ -605,7 +602,7 @@ int check_ttl_wisdata(void)
 		wis_delnum = 0;
 		wis_db->foreach(wis_db, check_ttl_wisdata_sub, tick);
 		for(i = 0; i < wis_delnum; i++) {
-			struct WisData *wd = idb_get(wis_db, wis_dellist[i]);
+			struct WisData *wd = (struct WisData*)idb_get(wis_db, wis_dellist[i]);
 			ShowWarning("inter: wis data id=%d time out : from %s to %s\n", wd->id, wd->src, wd->dst);
 			// removed. not send information after a timeout. Just no answer for the player
 			//mapif_wis_end(wd, 1); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
@@ -710,7 +707,7 @@ int mapif_parse_WisReply(int fd)
 
 	id = RFIFOL(fd,2);
 	flag = RFIFOB(fd,6);
-	wd = idb_get(wis_db, id);
+	wd = (struct WisData*)idb_get(wis_db, id);
 	if (wd == NULL)
 		return 0;	// This wisp was probably suppress before, because it was timeout of because of target was found on another map-server
 
@@ -755,10 +752,10 @@ int mapif_parse_Registry(int fd)
 		return 1;
 	}
 	for(j=0,p=13;j<max && p<RFIFOW(fd,2);j++){
-		sscanf(RFIFOP(fd,p), "%31c%n",reg->reg[j].str,&len);
+		sscanf((char*)RFIFOP(fd,p), "%31c%n",reg->reg[j].str,&len);
 		reg->reg[j].str[len]='\0';
 		p +=len+1; //+1 to skip the '\0' between strings.
-		sscanf(RFIFOP(fd,p), "%255c%n",reg->reg[j].value,&len);
+		sscanf((char*)RFIFOP(fd,p), "%255c%n",reg->reg[j].value,&len);
 		reg->reg[j].value[len]='\0';
 		p +=len+1;
 	}
@@ -802,7 +799,7 @@ int mapif_parse_NameChangeRequest(int fd)
 	account_id = RFIFOL(fd,2);
 	char_id = RFIFOL(fd,6);
 	type = RFIFOB(fd,10);
-	name = RFIFOP(fd,11);
+	name = (char*)RFIFOP(fd,11);
 
 	// Check Authorised letters/symbols in the name
 	if (char_name_option == 1) { // only letters/symbols in char_name_letters are authorised

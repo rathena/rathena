@@ -25,7 +25,7 @@ extern struct Script_Config {
 	const char *joblvup_event_name;
 } script_config;
 
-enum c_op {
+typedef enum c_op {
 	C_NOP, // end of script/no value (nil)
 	C_POS,
 	C_INT, // number
@@ -63,7 +63,7 @@ enum c_op {
 	C_NOT, // ~ a
 	C_R_SHIFT, // a >> b
 	C_L_SHIFT // a << b
-};
+} c_op;
 
 struct script_data {
 	enum c_op type;

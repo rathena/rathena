@@ -60,22 +60,22 @@ int current_equip_card_id; //To prevent card-stacking (from jA) [Skotlex]
 //we need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only
 //to avoid cards exploits
 
-static int SkillStatusChangeTable[MAX_SKILL]; // skill -> status
-static int StatusIconChangeTable[SC_MAX];     // status -> icon
-unsigned long StatusChangeFlagTable[SC_MAX];  // status -> flags
-static int StatusSkillChangeTable[SC_MAX];    // status -> skill
+static sc_type SkillStatusChangeTable[MAX_SKILL]; // skill  -> status
+static int StatusIconChangeTable[SC_MAX];         // status -> icon
+unsigned long StatusChangeFlagTable[SC_MAX];      // status -> flags
+static int StatusSkillChangeTable[SC_MAX];        // status -> skill
 
-int status_skill2sc(int skill)
+sc_type status_skill2sc(int skill)
 {
 	int sk = skill_get_index(skill);
 	if( sk == 0 ) {
 		ShowError("status_skill2sc: Unsupported skill id %d\n", skill);
-		return -1;
+		return SC_NONE;
 	}
 	return SkillStatusChangeTable[sk];
 }
 
-int status_sc2skill(int sc)
+int status_sc2skill(sc_type sc)
 {
 	if( sc < 0 || sc >= SC_MAX ) {
 		ShowError("status_skill2sc: Unsupported status change id %d\n", sc);
@@ -87,7 +87,7 @@ int status_sc2skill(int sc)
 
 #define add_sc(skill,sc) set_sc(skill,sc,SI_BLANK,SCB_NONE)
 
-static void set_sc(int skill, int sc, int icon, unsigned int flag)
+static void set_sc(int skill, sc_type sc, int icon, unsigned int flag)
 {
 	int sk = skill_get_index(skill);
 	if( sk == 0 ) {
@@ -105,7 +105,7 @@ static void set_sc(int skill, int sc, int icon, unsigned int flag)
   		StatusIconChangeTable[sc] = icon;
 	StatusChangeFlagTable[sc] |= flag;
 
-	if( SkillStatusChangeTable[sk] == -1 )
+	if( SkillStatusChangeTable[sk] == SC_NONE )
 		SkillStatusChangeTable[sk] = sc;
 }
 
@@ -115,7 +115,7 @@ void initChangeTables(void)
 	for (i = 0; i < SC_MAX; i++)
 		StatusIconChangeTable[i] = SI_BLANK;
 	for (i = 0; i < MAX_SKILL; i++)
-		SkillStatusChangeTable[i] = -1;
+		SkillStatusChangeTable[i] = SC_NONE;
 
 	memset(StatusSkillChangeTable, 0, sizeof(StatusSkillChangeTable));
 	memset(StatusChangeFlagTable, 0, sizeof(StatusChangeFlagTable));
@@ -407,21 +407,21 @@ void initChangeTables(void)
 	set_sc( GD_REGENERATION      , SC_REGENERATION    , SI_BLANK           , SCB_REGEN );
 
 	// Storing the target job rather than simply SC_SPIRIT simplifies code later on.
-	SkillStatusChangeTable[SL_ALCHEMIST]   = MAPID_ALCHEMIST,
-	SkillStatusChangeTable[SL_MONK]        = MAPID_MONK,
-	SkillStatusChangeTable[SL_STAR]        = MAPID_STAR_GLADIATOR,
-	SkillStatusChangeTable[SL_SAGE]        = MAPID_SAGE,
-	SkillStatusChangeTable[SL_CRUSADER]    = MAPID_CRUSADER,
-	SkillStatusChangeTable[SL_SUPERNOVICE] = MAPID_SUPER_NOVICE,
-	SkillStatusChangeTable[SL_KNIGHT]      = MAPID_KNIGHT,
-	SkillStatusChangeTable[SL_WIZARD]      = MAPID_WIZARD,
-	SkillStatusChangeTable[SL_PRIEST]      = MAPID_PRIEST,
-	SkillStatusChangeTable[SL_BARDDANCER]  = MAPID_BARDDANCER,
-	SkillStatusChangeTable[SL_ROGUE]       = MAPID_ROGUE,
-	SkillStatusChangeTable[SL_ASSASIN]     = MAPID_ASSASSIN,
-	SkillStatusChangeTable[SL_BLACKSMITH]  = MAPID_BLACKSMITH,
-	SkillStatusChangeTable[SL_HUNTER]      = MAPID_HUNTER,
-	SkillStatusChangeTable[SL_SOULLINKER]  = MAPID_SOUL_LINKER,
+	SkillStatusChangeTable[SL_ALCHEMIST]   = (sc_type)MAPID_ALCHEMIST,
+	SkillStatusChangeTable[SL_MONK]        = (sc_type)MAPID_MONK,
+	SkillStatusChangeTable[SL_STAR]        = (sc_type)MAPID_STAR_GLADIATOR,
+	SkillStatusChangeTable[SL_SAGE]        = (sc_type)MAPID_SAGE,
+	SkillStatusChangeTable[SL_CRUSADER]    = (sc_type)MAPID_CRUSADER,
+	SkillStatusChangeTable[SL_SUPERNOVICE] = (sc_type)MAPID_SUPER_NOVICE,
+	SkillStatusChangeTable[SL_KNIGHT]      = (sc_type)MAPID_KNIGHT,
+	SkillStatusChangeTable[SL_WIZARD]      = (sc_type)MAPID_WIZARD,
+	SkillStatusChangeTable[SL_PRIEST]      = (sc_type)MAPID_PRIEST,
+	SkillStatusChangeTable[SL_BARDDANCER]  = (sc_type)MAPID_BARDDANCER,
+	SkillStatusChangeTable[SL_ROGUE]       = (sc_type)MAPID_ROGUE,
+	SkillStatusChangeTable[SL_ASSASIN]     = (sc_type)MAPID_ASSASSIN,
+	SkillStatusChangeTable[SL_BLACKSMITH]  = (sc_type)MAPID_BLACKSMITH,
+	SkillStatusChangeTable[SL_HUNTER]      = (sc_type)MAPID_HUNTER,
+	SkillStatusChangeTable[SL_SOULLINKER]  = (sc_type)MAPID_SOUL_LINKER,
 
 	//Status that don't have a skill associated.
 	StatusIconChangeTable[SC_WEIGHT50] = SI_WEIGHT50;
@@ -1350,7 +1350,7 @@ int status_calc_mob(struct mob_data* md, int first)
 		return 0;
 	}
 	if (!md->base_status)
-		md->base_status = aCalloc(1, sizeof(struct status_data));
+		md->base_status = (struct status_data*)aCalloc(1, sizeof(struct status_data));
 
 	status = md->base_status;
 	memcpy(status, &md->db->status, sizeof(struct status_data));
@@ -4603,7 +4603,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 	sc = status_get_sc(bl);
 	status = status_get_status_data(bl);
 
-	if( type < 0 || type >= SC_MAX )
+	if( type <= SC_NONE || type >= SC_MAX )
 	{
 		ShowError("status_change_start: invalid status change (%d)!\n", type);
 		return 0;
@@ -5581,8 +5581,8 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 			{	//Try to inherit the status from the Crusader [Skotlex]
 			//Ideally, we should calculate the remaining time and use that, but we'll trust that
 			//once the Crusader's status changes, it will reflect on the others. 
-				const int types[] = { SC_AUTOGUARD, SC_DEFENDER, SC_REFLECTSHIELD, SC_ENDURE };
-				int type2;
+				const enum sc_type types[] = { SC_AUTOGUARD, SC_DEFENDER, SC_REFLECTSHIELD, SC_ENDURE };
+				enum sc_type type2;
 				int i = map_flag_gvg(bl->m)?2:3;
 				while (i >= 0) {
 					type2 = types[i];
@@ -6166,7 +6166,7 @@ int status_change_start(struct block_list* bl,enum sc_type type,int rate,int val
 int status_change_clear(struct block_list* bl, int type)
 {
 	struct status_change* sc;
-	enum sc_type i;
+	int i;
 
 	sc = status_get_sc(bl);
 
@@ -6200,7 +6200,7 @@ int status_change_clear(struct block_list* bl, int type)
 			continue;
 		}
 
-		status_change_end(bl, i, INVALID_TIMER);
+		status_change_end(bl, (sc_type)i, INVALID_TIMER);
 
 		if( type == 1 && sc->data[i] )
 		{	//If for some reason status_change_end decides to still keep the status when quitting. [Skotlex]
@@ -6442,7 +6442,7 @@ int status_change_end(struct block_list* bl, enum sc_type type, int tid)
 		case SC_MARIONETTE2:	/// Marionette target
 			if (sce->val1)
 			{	// check for partner and end their marionette status as well
-				int type2 = (type == SC_MARIONETTE) ? SC_MARIONETTE2 : SC_MARIONETTE;
+				enum sc_type type2 = (type == SC_MARIONETTE) ? SC_MARIONETTE2 : SC_MARIONETTE;
 				struct block_list *pbl = map_id2bl(sce->val1);
 				struct status_change* sc2 = pbl?status_get_sc(pbl):NULL;
 				
@@ -6728,7 +6728,7 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, int data)
  *------------------------------------------*/
 int status_change_timer(int tid, unsigned int tick, int id, int data)
 {
-	enum sc_type type = data;
+	enum sc_type type = (sc_type)data;
 	struct block_list *bl;
 	struct map_session_data *sd;
 	struct status_data *status;
@@ -7074,7 +7074,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 
 	struct block_list* src = va_arg(ap,struct block_list*);
 	struct status_change_entry* sce = va_arg(ap,struct status_change_entry*);
-	enum sc_type type = va_arg(ap,enum sc_type); 
+	enum sc_type type = (sc_type)va_arg(ap,int); //gcc: enum args get promoted to int
 	unsigned int tick = va_arg(ap,unsigned int);
 
 	if (status_isdead(bl))
@@ -7129,7 +7129,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
  *------------------------------------------*/
 int status_change_clear_buffs (struct block_list* bl, int type)
 {
-	enum sc_type i;
+	int i;
 	struct status_change *sc= status_get_sc(bl);
 
 	if (!sc || !sc->count)
@@ -7139,7 +7139,7 @@ int status_change_clear_buffs (struct block_list* bl, int type)
 	for( i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++ )
 	{
 		if(sc->data[i])
-			status_change_end(bl,i,-1);
+			status_change_end(bl,(sc_type)i,-1);
 	}
 
 	for( i = SC_COMMON_MAX+1; i < SC_MAX; i++ )
@@ -7206,7 +7206,7 @@ int status_change_clear_buffs (struct block_list* bl, int type)
 					continue;
 				break;
 		}
-		status_change_end(bl,i,-1);
+		status_change_end(bl,(sc_type)i,-1);
 	}
 	return 0;
 }

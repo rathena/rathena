@@ -256,11 +256,11 @@ struct mmo_charstatus {
 	bool show_equip;
 };
 
-enum mail_status {
+typedef enum mail_status {
 	MAIL_NEW,
 	MAIL_UNREAD,
 	MAIL_READ,
-};
+} mail_status;
 
 struct mail_message {
 	unsigned int id;
@@ -271,7 +271,7 @@ struct mail_message {
 	char title[MAIL_TITLE_LENGTH];
 	char body[MAIL_BODY_LENGTH];
 
-	enum mail_status status;
+	mail_status status;
 	unsigned int timestamp; // marks when the message was sent
 
 	int zeny;

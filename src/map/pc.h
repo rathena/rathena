@@ -45,6 +45,26 @@ struct weapon_data {
 	}	add_dmg[MAX_PC_BONUS];
 };
 
+struct s_autospell {
+	short id, lv, rate, card_id, flag;
+};
+
+struct s_addeffect {
+	enum sc_type id;
+	short rate, arrow_rate;
+	unsigned char flag;
+};
+
+struct s_add_drop { 
+	short id, group;
+	int race, rate;
+};
+
+struct s_autoscript {
+	unsigned short rate, flag;
+	struct script_code *script;
+};
+
 struct map_session_data {
 	struct block_list bl;
 	struct unit_data ud;
@@ -185,13 +205,8 @@ struct map_session_data {
 	short sp_gain_race[RC_MAX];
 	// zeroed arrays end here.
 	// zeroed structures start here
-	struct s_autospell{
-		short id, lv, rate, card_id, flag;
-	} autospell[15], autospell2[15];
-	struct s_addeffect{
-		short id, rate, arrow_rate;
-		unsigned char flag;
-	} addeff[MAX_PC_BONUS], addeff2[MAX_PC_BONUS];
+	struct s_autospell autospell[15], autospell2[15];
+	struct s_addeffect addeff[MAX_PC_BONUS], addeff2[MAX_PC_BONUS];
 	struct { //skillatk raises bonus dmg% of skills, skillheal increases heal%, skillblown increases bonus blewcount for some skills.
 		unsigned short id;
 		short val;
@@ -203,22 +218,15 @@ struct map_session_data {
 	} hp_loss, sp_loss, hp_regen, sp_regen;
 	struct {
 		short class_, rate;
-	}	add_def[MAX_PC_BONUS], add_mdef[MAX_PC_BONUS],
-		add_mdmg[MAX_PC_BONUS];
-	struct s_add_drop { 
-		short id, group;
-		int race, rate;
-	} add_drop[MAX_PC_BONUS];
+	}	add_def[MAX_PC_BONUS], add_mdef[MAX_PC_BONUS], add_mdmg[MAX_PC_BONUS];
+	struct s_add_drop add_drop[MAX_PC_BONUS];
 	struct {
 		int nameid;
 		int rate;
 	} itemhealrate[MAX_PC_BONUS];
 	// zeroed structures end here
 	// manually zeroed structures start here.
-	struct s_autoscript {
-		unsigned short rate, flag;
-		struct script_code *script;
-	} autoscript[10], autoscript2[10]; //Auto script on attack, when attacked
+	struct s_autoscript autoscript[10], autoscript2[10]; //Auto script on attack, when attacked
 	// manually zeroed structures end here.
 	// zeroed vars start here.
 	int arrow_atk,arrow_ele,arrow_cri,arrow_hit;
@@ -382,15 +390,15 @@ enum weapon_type {
 	W_DOUBLE_SA, // sword + axe
 };
 
-enum {
+enum ammo_type {
 	A_ARROW = 1,
-	A_DAGGER,    //2
+	A_DAGGER,   //2
 	A_BULLET,   //3
 	A_SHELL,    //4
 	A_GRENADE,  //5
 	A_SHURIKEN, //6
 	A_KUNAI     //7
-} ammo_type;
+};
 
 //Equip position constants
 enum equip_pos {
@@ -415,7 +423,7 @@ enum equip_pos {
 
 //Equip indexes constants. (eg: sd->equip_index[EQI_AMMO] returns the index
 //where the arrows are equipped)
-enum {
+enum equip_index {
 	EQI_ACC_L = 0,
 	EQI_ACC_R,
 	EQI_SHOES,
@@ -428,7 +436,7 @@ enum {
 	EQI_HAND_R,
 	EQI_AMMO,
 	EQI_MAX
-} equip_index_enum;
+};
 
 struct duel {
 	int members_count;

@@ -2754,11 +2754,11 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	int skillv;
 	struct Damage wd;
 
-	nullpo_retr(0, src);
-	nullpo_retr(0, target);
+	nullpo_retr(ATK_NONE, src);
+	nullpo_retr(ATK_NONE, target);
 
 	if (src->prev == NULL || target->prev == NULL)
-		return 0;
+		return ATK_NONE;
 
 	sd = BL_CAST(BL_PC, src);
 	tsd = BL_CAST(BL_PC, target);
@@ -2782,7 +2782,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			damage = sd->equip_index[EQI_AMMO];
 			if (damage<0) {
 				clif_arrow_fail(sd,0);
-				return 0;
+				return ATK_NONE;
 			}
 			//Ammo check by Ishizu-chan
 			if (sd->inventory_data[damage])
@@ -2790,7 +2790,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			case W_BOW:
 				if (sd->inventory_data[damage]->look != A_ARROW) {
 					clif_arrow_fail(sd,0);
-					return 0;
+					return ATK_NONE;
 				}
 			break;
 			case W_REVOLVER:
@@ -2799,13 +2799,13 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			case W_SHOTGUN:
 				if (sd->inventory_data[damage]->look != A_BULLET) {
 					clif_arrow_fail(sd,0);
-					return 0;
+					return ATK_NONE;
 				}
 			break;
 			case W_GRENADE:
 				if (sd->inventory_data[damage]->look != A_GRENADE) {
 					clif_arrow_fail(sd,0);
-					return 0;
+					return ATK_NONE;
 				}
 			break;
 			}
@@ -2831,7 +2831,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				clif_damage(src, target, tick, sstatus->amotion, 1, 0, 1, 0, 0); //Display MISS.
 				status_change_end(target,SC_AUTOCOUNTER,-1);
 				skill_attack(BF_WEAPON,target,target,src,KN_AUTOCOUNTER,skilllv,tick,0);
-				return 0;
+				return ATK_NONE;
 			}
 		}
 		if (tsc->data[SC_BLADESTOP_WAIT] && !is_boss(src)) {
@@ -2843,7 +2843,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				clif_damage(src, target, tick, sstatus->amotion, 1, 0, 1, 0, 0); //Display MISS.
 				clif_bladestop(target,src,1);
 				sc_start4(target, SC_BLADESTOP, 100, skilllv, 0, 0,(int)src, duration);
-				return 0;
+				return ATK_NONE;
 			}
 		}
 	}
@@ -2857,15 +2857,18 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			status_change_end(src,SC_SKILLRATE_UP,-1);
 		}
 		if (rand()%100 < triple_rate)
-			return skill_attack(BF_WEAPON,src,src,target,MO_TRIPLEATTACK,skillv,tick,0);
+			//FIXME: invalid return type!
+			return (damage_lv)skill_attack(BF_WEAPON,src,src,target,MO_TRIPLEATTACK,skillv,tick,0);
 	}
 
 	if (sc)
 	{
 		if (sc->data[SC_SACRIFICE])
-			return skill_attack(BF_WEAPON,src,src,target,PA_SACRIFICE,sc->data[SC_SACRIFICE]->val1,tick,0);
+			//FIXME: invalid return type!
+			return (damage_lv)skill_attack(BF_WEAPON,src,src,target,PA_SACRIFICE,sc->data[SC_SACRIFICE]->val1,tick,0);
 		if (sc->data[SC_MAGICALATTACK])
-			return skill_attack(BF_MAGIC,src,src,target,NPC_MAGICALATTACK,sc->data[SC_MAGICALATTACK]->val1,tick,0);
+			//FIXME: invalid return type!
+			return (damage_lv)skill_attack(BF_MAGIC,src,src,target,NPC_MAGICALATTACK,sc->data[SC_MAGICALATTACK]->val1,tick,0);
 	}
 
 	wd = battle_calc_weapon_attack(src, target, 0, 0, flag);

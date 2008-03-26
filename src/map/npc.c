@@ -113,7 +113,7 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 
 int npc_enable(const char* name, int flag)
 {
-	struct npc_data* nd = strdb_get(npcname_db, name);
+	struct npc_data* nd = (struct npc_data*)strdb_get(npcname_db, name);
 	if (nd==NULL)
 		return 0;
 
@@ -559,7 +559,7 @@ void npc_timerevent_quit(struct map_session_data* sd)
 		char buf[NAME_LENGTH*2+3];
 		struct event_data *ev;
 		snprintf(buf, ARRAYLENGTH(buf), "%s::OnTimerQuit", nd->exname);
-		ev = strdb_get(ev_db, buf);
+		ev = (struct event_data*)strdb_get(ev_db, buf);
 		if(ev && ev->nd != nd) {
 			ShowWarning("npc_timerevent_quit: Unable to execute \"OnTimerQuit\", two NPCs have the same event name [%s]!\n",buf);
 			ev = NULL;
@@ -659,7 +659,7 @@ int npc_event_sub(struct map_session_data* sd, struct event_data* ev, const char
  *------------------------------------------*/
 int npc_event(struct map_session_data* sd, const char* eventname, int mob_kill)
 {
-	struct event_data* ev = strdb_get(ev_db, eventname);
+	struct event_data* ev = (struct event_data*)strdb_get(ev_db, eventname);
 	struct npc_data *nd;
 	int xs,ys;
 	char mobevent[100];
@@ -676,7 +676,7 @@ int npc_event(struct map_session_data* sd, const char* eventname, int mob_kill)
 		if (mob_kill) {
 			strcpy( mobevent, eventname);
 			strcat( mobevent, "::OnMyMobDead");
-			ev = strdb_get(ev_db, mobevent);
+			ev = (struct event_data*)strdb_get(ev_db, mobevent);
 			if (ev == NULL || (nd = ev->nd) == NULL) {
 				ShowError("npc_event: (mob_kill) event not found [%s]\n", mobevent);
 				return 0;
@@ -2331,7 +2331,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 
 	//Now that all has been validated. We allocate the actual memory
 	//that the re-spawn data will use.
-	data = aMalloc(sizeof(struct spawn_data));
+	data = (struct spawn_data*)aMalloc(sizeof(struct spawn_data));
 	memcpy(data, &mob, sizeof(struct spawn_data));
 	
 	if( !battle_config.dynamic_mobs ) {
@@ -2632,7 +2632,7 @@ void npc_parsesrcfile(const char* filepath)
 		lines++;
 
 		// w1<TAB>w2<TAB>w3<TAB>w4
-		count = sv_parse(p, len+buffer-p, 0, '\t', pos, ARRAYLENGTH(pos), SV_TERMINATE_LF|SV_TERMINATE_CRLF);
+		count = sv_parse(p, len+buffer-p, 0, '\t', pos, ARRAYLENGTH(pos), (e_svopt)(SV_TERMINATE_LF|SV_TERMINATE_CRLF));
 		if( count < 0 )
 		{
 			ShowError("npc_parsesrcfile: Parse error in file '%s', line '%d'. Stopping...\n", filepath, strline(buffer,p-buffer));
@@ -2810,7 +2810,7 @@ int npc_reload(void)
 
 	//Remove all npcs/mobs. [Skotlex]
 	iter = mapit_geteachiddb();
-	for( bl = mapit_first(iter); mapit_exists(iter); bl = mapit_next(iter) )
+	for( bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter) )
 	{
 		switch(bl->type) {
 		case BL_NPC:
@@ -2954,7 +2954,7 @@ int do_init_npc(void)
 	for( i = 1; i < MAX_NPC_CLASS; i++ ) 
 		npc_viewdb[i].class_ = i;
 
-	ev_db = strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1);
+	ev_db = strdb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA),2*NAME_LENGTH+2+1);
 	npcname_db = strdb_alloc(DB_OPT_BASE,NAME_LENGTH);
 
 	timer_event_ers = ers_new(sizeof(struct timer_event_data));

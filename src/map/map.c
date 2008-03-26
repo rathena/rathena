@@ -951,7 +951,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int m,int x0,int y
 	if (length)
 	{	//Adjust final position to fit in the given area.
 		//TODO: Find an alternate method which does not requires a square root calculation.
-		k = (int)sqrt(magnitude2);
+		k = (int)sqrt((float)magnitude2);
 		mx1 = x0 + (x1 - x0)*length/k;
 		my1 = y0 + (y1 - y0)*length/k;
 		len_limit = MAGNITUDE2(x0,y0, mx1,my1);
@@ -1449,7 +1449,7 @@ void map_addnickdb(int charid, const char* nick)
 	if( map_charid2sd(charid) )
 		return;// already online
 
-	p = idb_ensure(nick_db, charid, create_charid2nick);
+	p = (struct charid2nick*)idb_ensure(nick_db, charid, create_charid2nick);
 	safestrncpy(p->nick, nick, sizeof(p->nick));
 
 	while( p->requests )
@@ -1471,7 +1471,7 @@ void map_delnickdb(int charid, const char* name)
 	struct charid_request* req;
 	struct map_session_data* sd;
 
-	p = idb_remove(nick_db, charid);
+	p = (struct charid2nick*)idb_remove(nick_db, charid);
 	if( p == NULL )
 		return;
 
@@ -1734,7 +1734,7 @@ struct block_list * map_id2bl(int id)
 	if(id >= 0 && id < ARRAYLENGTH(objects))
 		bl = objects[id];
 	else
-		bl = idb_get(id_db,id);
+		bl = (struct block_list*)idb_get(id_db,id);
 
 	return bl;
 }
@@ -2149,7 +2149,7 @@ int map_random_dir(struct block_list *bl, short *x, short *y)
 	short yi = *y-bl->y;
 	short i=0, j;
 	int dist2 = xi*xi + yi*yi;
-	short dist = (short)sqrt(dist2);
+	short dist = (short)sqrt((float)dist2);
 	short segment;
 	
 	if (dist < 1) dist =1;
@@ -2158,7 +2158,7 @@ int map_random_dir(struct block_list *bl, short *x, short *y)
 		j = rand()%8; //Pick a random direction
 		segment = 1+(rand()%dist); //Pick a random interval from the whole vector in that direction
 		xi = bl->x + segment*dirx[j];
-		segment = (short)sqrt(dist2 - segment*segment); //The complement of the previously picked segment
+		segment = (short)sqrt((float)(dist2 - segment*segment)); //The complement of the previously picked segment
 		yi = bl->y + segment*diry[j];
 	} while (
 		(map_getcell(bl->m,xi,yi,CELL_CHKNOPASS) || !path_search(NULL,bl->m,bl->x,bl->y,xi,yi,1,CELL_CHKNOREACH))
@@ -2385,7 +2385,7 @@ int map_eraseipport(unsigned short mapindex, uint32 ip, uint16 port)
 {
 	struct map_data_other_server *mdos;
 
-	mdos = uidb_get(map_db,(unsigned int)mapindex);
+	mdos = (struct map_data_other_server*)uidb_get(map_db,(unsigned int)mapindex);
 	if(!mdos || mdos->cell) //Map either does not exists or is a local map.
 		return 0;
 
@@ -2432,8 +2432,8 @@ int map_readfromcache(struct map_data *m, FILE *fp)
 		m->ys = info.ys;
 		size = info.xs*info.ys;
 
-		buf = aMalloc(info.len); // temp buffer to read the zipped map
-		buf2 = aMalloc(size); // temp buffer to unpack the data
+		buf = (unsigned char*)aMalloc(info.len); // temp buffer to read the zipped map
+		buf2 = (unsigned char*)aMalloc(size); // temp buffer to unpack the data
 		CREATE(m->cell, struct mapcell, size);
 
 		fread(buf, info.len, 1, fp);

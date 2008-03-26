@@ -106,13 +106,13 @@ static void* create_storage(DBKey key, va_list args)
 }
 struct storage *account2storage(int account_id)
 {
-	return idb_ensure(storage_db,account_id,create_storage);
+	return (struct storage*)idb_ensure(storage_db,account_id,create_storage);
 }
 
 // Just to ask storage, without creation
 struct storage *account2storage2(int account_id)
 {
-	return idb_get(storage_db, account_id);
+	return (struct storage*)idb_get(storage_db, account_id);
 }
 
 int storage_delete(int account_id)
@@ -141,7 +141,7 @@ int storage_storageopen(struct map_session_data *sd)
 		return 1;
 	}
 	
-	if((stor = idb_get(storage_db,sd->status.account_id)) == NULL)
+	if((stor = (struct storage*)idb_get(storage_db,sd->status.account_id)) == NULL)
   	{	//Request storage.
 		intif_request_storage(sd->status.account_id);
 		return 2;
@@ -478,7 +478,7 @@ struct guild_storage *guild2storage(int guild_id)
 
 struct guild_storage *guild2storage2(int guild_id)
 {	//For just locating a storage without creating one. [Skotlex]
-	return idb_get(guild_storage_db,guild_id);
+	return (struct guild_storage*)idb_get(guild_storage_db,guild_id);
 }
 
 int guild_storage_delete(int guild_id)	

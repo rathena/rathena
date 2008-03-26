@@ -408,6 +408,7 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 	struct status_data *sstatus, *tstatus;
 	struct status_change *sc, *tsc;
 
+	enum sc_type status;
 	int skill;
 	int rate;
 
@@ -523,9 +524,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case AS_GRIMTOOTH:
-		skill = dstsd?SC_SLOWDOWN:SC_STOP;
-		if (!tsc->data[skill])
-			sc_start(bl,skill,100,skilllv,skill_get_time2(skillid, skilllv));
+		status = dstsd?SC_SLOWDOWN:SC_STOP;
+		if (!tsc->data[status])
+			sc_start(bl,status,100,skilllv,skill_get_time2(skillid, skilllv));
 		break;
 
 	case WZ_FIREPILLAR:
@@ -705,9 +706,9 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		break;
 
 	case LK_JOINTBEAT:
-		skill = status_skill2sc(skillid);
+		status = status_skill2sc(skillid);
 		if (tsc->jb_flag) {
-			sc_start2(bl,skill,(5*skilllv+5),skilllv,tsc->jb_flag&BREAK_FLAGS,skill_get_time2(skillid,skilllv));
+			sc_start2(bl,status,(5*skilllv+5),skilllv,tsc->jb_flag&BREAK_FLAGS,skill_get_time2(skillid,skilllv));
 			tsc->jb_flag = 0;
 		}
 		break;
@@ -807,7 +808,8 @@ int skill_additional_effect (struct block_list* src, struct block_list *bl, int 
 		skillid != CR_REFLECTSHIELD &&
 		skillid != ASC_BREAKER
 	){	//Trigger status effects
-		int i, type;
+		enum sc_type type;
+		int i;
 		for(i=0; i < ARRAYLENGTH(sd->addeff) && sd->addeff[i].flag; i++)
 		{
 			rate = sd->addeff[i].rate;
@@ -998,7 +1000,8 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 
 	if(dstsd && attack_type&BF_WEAPON)
 	{	//Counter effects.
-		int i, type, time;
+		enum sc_type type;
+		int i, time;
 		for(i=0; i < ARRAYLENGTH(dstsd->addeff2) && dstsd->addeff2[i].flag; i++)
 		{
 			rate = dstsd->addeff2[i].rate;
@@ -1104,9 +1107,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 --------------------------------------------------------------------------*/
 int skill_break_equip (struct block_list *bl, unsigned short where, int rate, int flag) 
 {
-	const int where_list[4] = {EQP_WEAPON, EQP_ARMOR, EQP_SHIELD, EQP_HELM};
-	const int scatk[4] = {SC_STRIPWEAPON, SC_STRIPARMOR, SC_STRIPSHIELD, SC_STRIPHELM};
-	const int scdef[4] = {SC_CP_WEAPON, SC_CP_ARMOR, SC_CP_SHIELD, SC_CP_HELM};
+	const int where_list[4]     = {EQP_WEAPON, EQP_ARMOR, EQP_SHIELD, EQP_HELM};
+	const enum sc_type scatk[4] = {SC_STRIPWEAPON, SC_STRIPARMOR, SC_STRIPSHIELD, SC_STRIPHELM};
+	const enum sc_type scdef[4] = {SC_CP_WEAPON, SC_CP_ARMOR, SC_CP_SHIELD, SC_CP_HELM};
 	struct status_change *sc = status_get_sc(bl);
 	int i,j;
 	TBL_PC *sd;
@@ -1188,9 +1191,9 @@ int skill_break_equip (struct block_list *bl, unsigned short where, int rate, in
 int skill_strip_equip(struct block_list *bl, unsigned short where, int rate, int lv, int time)
 {
 	struct status_change *sc;
-	const int pos[4]    = {EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HELM};
-	const int sc_atk[4] = {SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM};
-	const int sc_def[4] = {SC_CP_WEAPON, SC_CP_SHIELD, SC_CP_ARMOR, SC_CP_HELM};
+	const int pos[4]             = {EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HELM};
+	const enum sc_type sc_atk[4] = {SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM};
+	const enum sc_type sc_def[4] = {SC_CP_WEAPON, SC_CP_SHIELD, SC_CP_ARMOR, SC_CP_HELM};
 	int i;
 
 	if (rand()%100 >= rate)
@@ -2810,7 +2813,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	struct status_change_entry *tsce;
 	struct mob_data *md;
 	struct mob_data *dstmd;
-	int i,type;
+	int i;
+	enum sc_type type;
 	
 	if(skillid > 0 && skilllv <= 0) return 0;	// celest
 
@@ -3109,9 +3113,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			mob_class_change(dstmd,class_);
 			if( tsc && dstmd->status.mode&MD_BOSS )
 			{
-				const int scs[] = { SC_QUAGMIRE, SC_PROVOKE, SC_ROKISWEIL, SC_GRAVITATION, SC_SUITON, SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM, SC_BLADESTOP };
+				const enum sc_type scs[] = { SC_QUAGMIRE, SC_PROVOKE, SC_ROKISWEIL, SC_GRAVITATION, SC_SUITON, SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM, SC_BLADESTOP };
 				for (i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++)
-					if (tsc->data[i]) status_change_end(bl, i, -1);
+					if (tsc->data[i]) status_change_end(bl, (sc_type)i, -1);
 				for (i = 0; i < ARRAYLENGTH(scs); i++)
 					if (tsc->data[scs[i]]) status_change_end(bl, scs[i], -1);
 			}
@@ -3153,7 +3157,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case CG_MARIONETTE:
 		{
 			struct status_change *sc= status_get_sc(src);
-			int type2 = SC_MARIONETTE2;
+			enum sc_type type2 = SC_MARIONETTE2;
 
 			if(sc && tsc){
 				if (!sc->data[type] && !tsc->data[type2]) {
@@ -4020,32 +4024,36 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case RG_STRIPARMOR:
 	case RG_STRIPHELM:
 	case ST_FULLSTRIP:
+	{
+		unsigned short location = 0;
 		i = 5+2*skilllv;
 		if (sstatus->dex > tstatus->dex)
 			i += (sstatus->dex - tstatus->dex)/5;
+
 		switch (skillid) {
 		case RG_STRIPWEAPON:
-			type = EQP_WEAPON;
+			location = EQP_WEAPON;
 			break;
 		case RG_STRIPSHIELD:
-			type = EQP_SHIELD;
+			location = EQP_SHIELD;
 			break;
 		case RG_STRIPARMOR:
-			type = EQP_ARMOR;
+			location = EQP_ARMOR;
 			break;
 		case RG_STRIPHELM:
-			type = EQP_HELM;
+			location = EQP_HELM;
 			break;
 		case ST_FULLSTRIP:
-			type = EQP_WEAPON|EQP_SHIELD|EQP_ARMOR|EQP_HELM;
+			location = EQP_WEAPON|EQP_SHIELD|EQP_ARMOR|EQP_HELM;
 			break;
 		}
 		//Note that Full Strip autospell doesn't use a duration
 		if (!clif_skill_nodamage(src,bl,skillid,skilllv,
-				skill_strip_equip(bl, type, i, skilllv, 
+				skill_strip_equip(bl, location, i, skilllv, 
 				sd&&skillid==ST_FULLSTRIP&&!pc_checkskill(sd, skillid)?0:skill_get_time(skillid,skilllv)))
 			&& sd)
 			clif_skill_fail(sd,skillid,0,0); //Nothing stripped.
+	}
 		break;
 
 	case AM_BERSERKPITCHER:
@@ -4139,7 +4147,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 	case AM_CP_ARMOR:
 	case AM_CP_HELM:
 		{
-			int scid = SC_STRIPWEAPON + (skillid - AM_CP_WEAPON);
+			enum sc_type scid = (sc_type)(SC_STRIPWEAPON + (skillid - AM_CP_WEAPON));
 			if(tsc && tsc->data[scid])
 				status_change_end(bl, scid, -1 );
 			clif_skill_nodamage(src,bl,skillid,skilllv,
@@ -4192,7 +4200,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 			if(status_isimmune(bl) || !tsc || !tsc->count)
 				break;
-			for(i=0;i<SC_MAX;i++){
+			for(i=0;i<SC_MAX;i++)
+			{
 				if (!tsc->data[i])
 					continue;
 				switch (i) {
@@ -4217,7 +4226,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					continue;
 				}
 				if(i==SC_BERSERK) tsc->data[i]->val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
-				status_change_end(bl,i,-1);
+				status_change_end(bl,(sc_type)i,-1);
 			}
 			break;
 		}
@@ -4446,7 +4455,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			if (i > SC_ASPDPOTION3)
 				i = SC_ASPDPOTION3;
 			clif_skill_nodamage(src,bl,skillid,skilllv,
-				sc_start(bl,i,100,skilllv,skilllv * 60000));
+				sc_start(bl,(sc_type)i,100,skilllv,skilllv * 60000));
 		}
 		break;
 
@@ -4764,8 +4773,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 			}
 			for (i=0; i<4; i++) {
 				if(tsc->data[SC_STRIPWEAPON + i])
-					status_change_end(bl, SC_STRIPWEAPON + i, -1 );
-				sc_start(bl,SC_CP_WEAPON + i,100,skilllv,skilltime);
+					status_change_end(bl, (sc_type)(SC_STRIPWEAPON + i), -1 );
+				sc_start(bl,(sc_type)(SC_CP_WEAPON + i),100,skilllv,skilltime);
 			}
 			clif_skill_nodamage(src,bl,skillid,skilllv,1);
 		}
@@ -4831,7 +4840,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 					break;
 				case 7:	// stop freeze or stoned
 					{
-						int sc[] = { SC_STOP, SC_FREEZE, SC_STONE };
+						enum sc_type sc[] = { SC_STOP, SC_FREEZE, SC_STONE };
 						sc_start(bl,sc[rand()%3],100,skilllv,skill_get_time2(skillid,skilllv));
 					}
 					break;
@@ -5120,7 +5129,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, in
 
 	case NPC_DRAGONFEAR:
 		if (flag&1) {
-			const int sc[] = { SC_STUN, SC_CURSE, SC_SILENCE, SC_BLEEDING };
+			const enum sc_type sc[] = { SC_STUN, SC_CURSE, SC_SILENCE, SC_BLEEDING };
 			i = rand()%ARRAYLENGTH(sc);
 			sc_start(bl,sc[i],100,skilllv,skill_get_time2(skillid,i+1));
 		} else {
@@ -5528,7 +5537,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, int skillid, int sk
 	struct status_change* sc;
 	struct status_change_entry *sce;
 	struct skill_unit_group* sg;
-	int i,type;
+	enum sc_type type;
+	int i;
 
 	//if(skilllv <= 0) return 0;
 	if(skillid > 0 && skilllv <= 0) return 0;	// celest
@@ -6491,7 +6501,8 @@ static int skill_unit_onplace (struct skill_unit *src, struct block_list *bl, un
 	struct block_list *ss;
 	struct status_change *sc;
 	struct status_change_entry *sce;
-	int type,skillid;
+	enum sc_type type;
+	int skillid;
 
 	nullpo_retr(0, src);
 	nullpo_retr(0, bl);
@@ -6651,7 +6662,8 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 	struct status_data *tstatus, *sstatus;
 	struct status_change *tsc, *sc;
 	struct skill_unit_group_tickset *ts;
-	int type, skillid;
+	enum sc_type type;
+	int skillid;
 	int diff=0;
 
 	nullpo_retr(0, src);
@@ -6926,60 +6938,61 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 				break;
 			if (battle_check_target(ss,bl,BCT_PARTY)>0)
 			{ // Support Effect only on party, not guild
+				int heal;
 				int i = rand()%13; // Positive buff count
-				type = skill_get_time2(sg->skill_id, sg->skill_lv); //Duration
+				int time = skill_get_time2(sg->skill_id, sg->skill_lv); //Duration
 				switch (i)
 				{
 					case 0: // Heal 1~9999 HP
-						type = rand() %9999+1;
-						clif_skill_nodamage(ss,bl,AL_HEAL,type,1);
-						status_heal(bl,type,0,0);
+						heal = rand() %9999+1;
+						clif_skill_nodamage(ss,bl,AL_HEAL,heal,1);
+						status_heal(bl,heal,0,0);
 						break;
 					case 1: // End all negative status
 						status_change_clear_buffs(bl,2);
 						if (tsd) clif_gospel_info(tsd, 0x15);
 						break;
 					case 2: // Immunity to all status
-						sc_start(bl,SC_SCRESIST,100,100,type);
+						sc_start(bl,SC_SCRESIST,100,100,time);
 						if (tsd) clif_gospel_info(tsd, 0x16);
 						break;
 					case 3: // MaxHP +100%
-						sc_start(bl,SC_INCMHPRATE,100,100,type);
+						sc_start(bl,SC_INCMHPRATE,100,100,time);
 						if (tsd) clif_gospel_info(tsd, 0x17);
 						break;
 					case 4: // MaxSP +100%
-						sc_start(bl,SC_INCMSPRATE,100,100,type);
+						sc_start(bl,SC_INCMSPRATE,100,100,time);
 						if (tsd) clif_gospel_info(tsd, 0x18);
 						break;
 					case 5: // All stats +20
-						sc_start(bl,SC_INCALLSTATUS,100,20,type);
+						sc_start(bl,SC_INCALLSTATUS,100,20,time);
 						if (tsd) clif_gospel_info(tsd, 0x19);
 						break;
 					case 6: // Level 10 Blessing
-						sc_start(bl,SC_BLESSING,100,10,type);
+						sc_start(bl,SC_BLESSING,100,10,time);
 						break;
 					case 7: // Level 10 Increase AGI
-						sc_start(bl,SC_INCREASEAGI,100,10,type);
+						sc_start(bl,SC_INCREASEAGI,100,10,time);
 						break;
 					case 8: // Enchant weapon with Holy element
-						sc_start(bl,SC_ASPERSIO,100,1,type);
+						sc_start(bl,SC_ASPERSIO,100,1,time);
 						if (tsd) clif_gospel_info(tsd, 0x1c);
 						break;
 					case 9: // Enchant armor with Holy element
-						sc_start(bl,SC_BENEDICTIO,100,1,type);
+						sc_start(bl,SC_BENEDICTIO,100,1,time);
 						if (tsd) clif_gospel_info(tsd, 0x1d);
 						break;
 					case 10: // DEF +25%
-						sc_start(bl,SC_INCDEFRATE,100,25,type);
+						sc_start(bl,SC_INCDEFRATE,100,25,time);
 						if (tsd) clif_gospel_info(tsd, 0x1e);
 						break;
 					case 11: // ATK +100%
-						sc_start(bl,SC_INCATKRATE,100,100,type);
+						sc_start(bl,SC_INCATKRATE,100,100,time);
 						if (tsd) clif_gospel_info(tsd, 0x1f);
 						break;
 					case 12: // HIT/Flee +50
-						sc_start(bl,SC_INCHIT,100,50,type);
-						sc_start(bl,SC_INCFLEE,100,50,type);
+						sc_start(bl,SC_INCHIT,100,50,time);
+						sc_start(bl,SC_INCFLEE,100,50,time);
 						if (tsd) clif_gospel_info(tsd, 0x20);
 						break;
 				}
@@ -6987,35 +7000,35 @@ int skill_unit_onplace_timer (struct skill_unit *src, struct block_list *bl, uns
 			else if (battle_check_target(&src->bl,bl,BCT_ENEMY)>0)
 			{ // Offensive Effect
 				int i = rand()%9; // Negative buff count
-				type = skill_get_time2(sg->skill_id, sg->skill_lv);
+				int time = skill_get_time2(sg->skill_id, sg->skill_lv);
 				switch (i)
 				{
 					case 0: // Deal 1~9999 damage
 						skill_attack(BF_MISC,ss,&src->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 						break;
 					case 1: // Curse
-						sc_start(bl,SC_CURSE,100,1,type);
+						sc_start(bl,SC_CURSE,100,1,time);
 						break;
 					case 2: // Blind
-						sc_start(bl,SC_BLIND,100,1,type);
+						sc_start(bl,SC_BLIND,100,1,time);
 						break;
 					case 3: // Poison
-						sc_start(bl,SC_POISON,100,1,type);
+						sc_start(bl,SC_POISON,100,1,time);
 						break;
 					case 4: // Level 10 Provoke
-						sc_start(bl,SC_PROVOKE,100,10,type);
+						sc_start(bl,SC_PROVOKE,100,10,time);
 						break;
 					case 5: // DEF -100%
-						sc_start(bl,SC_INCDEFRATE,100,-100,type);
+						sc_start(bl,SC_INCDEFRATE,100,-100,time);
 						break;
 					case 6: // ATK -100%
-						sc_start(bl,SC_INCATKRATE,100,-100,type);
+						sc_start(bl,SC_INCATKRATE,100,-100,time);
 						break;
 					case 7: // Flee -100%
-						sc_start(bl,SC_INCFLEERATE,100,-100,type);
+						sc_start(bl,SC_INCFLEERATE,100,-100,time);
 						break;
 					case 8: // Speed/ASPD -25%
-						sc_start4(bl,SC_GOSPEL,100,1,0,0,BCT_ENEMY,type);
+						sc_start4(bl,SC_GOSPEL,100,1,0,0,BCT_ENEMY,time);
 						break;
 				}
 			}
@@ -7063,7 +7076,7 @@ int skill_unit_onout (struct skill_unit *src, struct block_list *bl, unsigned in
 	struct skill_unit_group *sg;
 	struct status_change *sc;
 	struct status_change_entry *sce;
-	int type;
+	enum sc_type type;
 
 	nullpo_retr(0, src);
 	nullpo_retr(0, bl);
@@ -7110,7 +7123,7 @@ static int skill_unit_onleft (int skill_id, struct block_list *bl, unsigned int 
 {
 	struct status_change *sc;
 	struct status_change_entry *sce;
-	int type;
+	enum sc_type type;
 
 	sc = status_get_sc(bl);
 	if (sc && !sc->count)

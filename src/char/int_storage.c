@@ -169,7 +169,7 @@ static void* create_storage(DBKey key, va_list args) {
 struct storage *account2storage(int account_id)
 {
 	struct storage *s;
-	s= idb_ensure(storage_db, account_id, create_storage);
+	s = (struct storage*)idb_ensure(storage_db, account_id, create_storage);
 	return s;
 }
 
@@ -184,7 +184,7 @@ struct guild_storage *guild2storage(int guild_id)
 {
 	struct guild_storage *gs = NULL;
 	if(inter_guild_search(guild_id) != NULL)
-		gs= idb_ensure(guild_storage_db, guild_id, create_guildstorage);
+		gs = (struct guild_storage*)idb_ensure(guild_storage_db, guild_id, create_guildstorage);
 	return gs;
 }
 
@@ -319,7 +319,7 @@ int inter_guild_storage_save()
 // 倉庫データ削除
 int inter_storage_delete(int account_id)
 {
-	struct storage *s = idb_get(storage_db,account_id);
+	struct storage *s = (struct storage*)idb_get(storage_db,account_id);
 	if(s) {
 		int i;
 		for(i=0;i<s->storage_amount;i++){
@@ -334,7 +334,7 @@ int inter_storage_delete(int account_id)
 // ギルド倉庫データ削除
 int inter_guild_storage_delete(int guild_id)
 {
-	struct guild_storage *gs = idb_get(guild_storage_db,guild_id);
+	struct guild_storage *gs = (struct guild_storage*)idb_get(guild_storage_db,guild_id);
 	if(gs) {
 		int i;
 		for(i=0;i<gs->storage_amount;i++){

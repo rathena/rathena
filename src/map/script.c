@@ -30,6 +30,7 @@
 #include "mercenary.h"	//[orn]
 #include "intif.h"
 #include "skill.h"
+#include "status.h"
 #include "chat.h"
 #include "battle.h"
 #include "party.h"
@@ -251,14 +252,16 @@ char mapregsql_db_index[32] = "index";
 char mapregsql_db_value[32] = "value";
 #endif
 
-int get_com(unsigned char *script,int *pos);
+c_op get_com(unsigned char *script,int *pos);
 int get_num(unsigned char *script,int *pos);
 
-struct script_function {
+typedef struct script_function {
 	int (*func)(struct script_state *st);
 	const char *name;
 	const char *arg;
-} buildin_func[];
+} script_function;
+
+extern script_function buildin_func[];
 
 static struct linkdb_node *sleep_db;
 #define not_server_variable(prefix) ( (prefix) != '$' && (prefix) != '.')
@@ -1851,7 +1854,7 @@ void script_error(const char *src,const char *file,int start_line, const char *e
 	const char *linestart[5] = { NULL, NULL, NULL, NULL, NULL };
 
 	for(p=src;p && *p;line++){
-		char *lineend=strchr(p,'\n');
+		const char *lineend=strchr(p,'\n');
 		if(lineend==NULL || error_pos<lineend){
 			break;
 		}
@@ -2167,7 +2170,7 @@ void get_val(struct script_state* st, struct script_data* data)
 					data->ref      ? data->ref:
 					name[1] == '@' ? st->stack->var_function:// instance/scope variable
 					                 &st->script->script_vars;// npc variable
-				data->u.str = linkdb_search(n, (void*)reference_getuid(data));
+				data->u.str = (char*)linkdb_search(n, (void*)reference_getuid(data));
 			}
 			break;
 		default:
@@ -2234,7 +2237,7 @@ void get_val(struct script_state* st, struct script_data* data)
 	return;
 }
 
-void push_val2(struct script_stack* stack, int type, int val, struct linkdb_node** ref);
+void push_val2(struct script_stack* stack, enum c_op type, int val, struct linkdb_node** ref);
 
 /// Retrieves the value of a reference identified by uid (variable, constant, param)
 /// The value is left in the top of the stack and needs to be removed manually.
@@ -2271,7 +2274,7 @@ static int set_reg(struct script_state* st, TBL_PC* sd, int num, char* name, con
 			char* p;
 			struct linkdb_node** n;
 			n = (ref) ? ref : (name[1] == '@') ? st->stack->var_function : &st->script->script_vars;
-			p = linkdb_erase(n, (void*)num);
+			p = (char*)linkdb_erase(n, (void*)num);
 			if (p) aFree(p);
 			if (str[0]) linkdb_insert(n, (void*)num, aStrdup(str));
 			}
@@ -2423,7 +2426,7 @@ void stack_expand(struct script_stack* stack)
 #define push_val(stack,type,val) push_val2(stack, type, val, NULL)
 
 /// Pushes a value into the stack (with reference)
-void push_val2(struct script_stack* stack, int type, int val, struct linkdb_node** ref)
+void push_val2(struct script_stack* stack, enum c_op type, int val, struct linkdb_node** ref)
 {
 	if( stack->sp >= stack->sp_max )
 		stack_expand(stack);
@@ -2434,7 +2437,7 @@ void push_val2(struct script_stack* stack, int type, int val, struct linkdb_node
 }
 
 /// Pushes a string into the stack
-void push_str(struct script_stack* stack, int type, char* str)
+void push_str(struct script_stack* stack, enum c_op type, char* str)
 {
 	if( stack->sp >= stack->sp_max )
 		stack_expand(stack);
@@ -2549,35 +2552,18 @@ void script_free_code(struct script_code* code)
 /*==========================================
  * コマンドの読み取り
  *------------------------------------------*/
-static int unget_com_data=-1;
-int get_com(unsigned char *script,int *pos)
+c_op get_com(unsigned char *script,int *pos)
 {
-	int i,j;
-	if(unget_com_data>=0){
-		i=unget_com_data;
-		unget_com_data=-1;
-		return i;
-	}
+	int i = 0, j = 0;
+
 	if(script[*pos]>=0x80){
 		return C_INT;
 	}
-	i=0; j=0;
 	while(script[*pos]>=0x40){
 		i=script[(*pos)++]<<j;
 		j+=6;
 	}
-	return i+(script[(*pos)++]<<j);
-}
-
-/*==========================================
- * コマンドのプッシュバック
- *------------------------------------------*/
-void unget_com(int c)
-{
-	if(unget_com_data!=-1)
-		ShowError("unget_com can back only 1 data\n");
-
-	unget_com_data=c;
+	return (c_op)(i+(script[(*pos)++]<<j));
 }
 
 /*==========================================
@@ -2970,14 +2956,14 @@ void run_script(struct script_code *rootscript,int pos,int rid,int oid)
 		//Resume script.
 		st = sd->st;
 	} else {
-		st = aCalloc(sizeof(struct script_state), 1);
+		st = (struct script_state*)aCalloc(sizeof(struct script_state), 1);
 		// the script is different, make new script_state and stack
-		st->stack = aMalloc (sizeof(struct script_stack));
+		st->stack = (struct script_stack*)aMalloc (sizeof(struct script_stack));
 		st->stack->sp=0;
 		st->stack->sp_max=64;
 		st->stack->stack_data = (struct script_data *)aCalloc(st->stack->sp_max,sizeof(st->stack->stack_data[0]));
 		st->stack->defsp = st->stack->sp;
-		st->stack->var_function = aCalloc(1, sizeof(struct linkdb_node*));
+		st->stack->var_function = (struct linkdb_node**)aCalloc(1, sizeof(struct linkdb_node*));
 		st->state  = RUN;
 		st->script = rootscript;
 	}
@@ -3056,7 +3042,6 @@ int run_script_timer(int tid, unsigned int tick, int id, int data)
  *------------------------------------------*/
 void run_script_main(struct script_state *st)
 {
-	int c;
 	int cmdcount=script_config.check_cmdcount;
 	int gotocount=script_config.check_gotocount;
 	TBL_PC *sd;
@@ -3084,8 +3069,9 @@ void run_script_main(struct script_state *st)
 	} else if(st->state != END)
 		st->state = RUN;
 
-	while(st->state == RUN){
-		c= get_com(st->script->script_buf,&st->pos);
+	while(st->state == RUN)
+	{
+		enum c_op c = get_com(st->script->script_buf,&st->pos);
 		switch(c){
 		case C_EOL:
 			if( stack->sp != stack->defsp )
@@ -3623,7 +3609,7 @@ int do_init_script()
 	mapreg_db= idb_alloc(DB_OPT_BASE);
 	mapregstr_db=idb_alloc(DB_OPT_RELEASE_DATA);
 	userfunc_db=strdb_alloc(DB_OPT_DUP_KEY,0);
-	scriptlabel_db=strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_ALLOW_NULL_DATA,50);
+	scriptlabel_db=strdb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_ALLOW_NULL_DATA),50);
 	
 	script_load_mapreg();
 
@@ -4039,7 +4025,7 @@ BUILDIN_FUNC(callfunc)
 	struct script_code *scr, *oldscr;
 	const char* str = script_getstr(st,2);
 
-	scr = strdb_get(userfunc_db, str);
+	scr = (struct script_code*)strdb_get(userfunc_db, str);
 	if( !scr )
 	{
 		ShowError("script:callfunc: function not found! [%s]\n", str);
@@ -8097,12 +8083,12 @@ BUILDIN_FUNC(hideonnpc)
 BUILDIN_FUNC(sc_start)
 {
 	struct block_list* bl;
-	int type;
+	enum sc_type type;
 	int tick;
 	int val1;
 	int val4 = 0;
 
-	type = script_getnum(st,2);
+	type = (sc_type)script_getnum(st,2);
 	tick = script_getnum(st,3);
 	val1 = script_getnum(st,4);
 	if( script_hasdata(st,5) )
@@ -8110,7 +8096,7 @@ BUILDIN_FUNC(sc_start)
 	else
 		bl = map_id2bl(st->rid);
 
-	if( tick == 0 && val1 > 0 && type >= 0 && type < SC_MAX && status_sc2skill(type) != 0 )
+	if( tick == 0 && val1 > 0 && type > SC_NONE && type < SC_MAX && status_sc2skill(type) != 0 )
 	{// When there isn't a duration specified, try to get it from the skill_db
 		tick = skill_get_time(status_sc2skill(type), val1);
 	}
@@ -8124,6 +8110,7 @@ BUILDIN_FUNC(sc_start)
 
 	if( bl )
 		status_change_start(bl, type, 10000, val1, 0, 0, val4, tick, 2);
+
 	return 0;
 }
 
@@ -8133,13 +8120,13 @@ BUILDIN_FUNC(sc_start)
 BUILDIN_FUNC(sc_start2)
 {
 	struct block_list* bl;
-	int type;
+	enum sc_type type;
 	int tick;
 	int val1;
 	int val4 = 0;
 	int rate;
 
-	type = script_getnum(st,2);
+	type = (sc_type)script_getnum(st,2);
 	tick = script_getnum(st,3);
 	val1 = script_getnum(st,4);
 	rate = script_getnum(st,5);
@@ -8148,7 +8135,7 @@ BUILDIN_FUNC(sc_start2)
 	else
 		bl = map_id2bl(st->rid);
 
-	if( tick == 0 && val1 > 0 && type >= 0 && type < SC_MAX && status_sc2skill(type) != 0 )
+	if( tick == 0 && val1 > 0 && type > SC_NONE && type < SC_MAX && status_sc2skill(type) != 0 )
 	{// When there isn't a duration specified, try to get it from the skill_db
 		tick = skill_get_time(status_sc2skill(type), val1);
 	}
@@ -8172,14 +8159,14 @@ BUILDIN_FUNC(sc_start2)
 BUILDIN_FUNC(sc_start4)
 {
 	struct block_list* bl;
-	int type;
+	enum sc_type type;
 	int tick;
 	int val1;
 	int val2;
 	int val3;
 	int val4;
 
-	type = script_getnum(st,2);
+	type = (sc_type)script_getnum(st,2);
 	tick = script_getnum(st,3);
 	val1 = script_getnum(st,4);
 	val2 = script_getnum(st,5);
@@ -8190,7 +8177,7 @@ BUILDIN_FUNC(sc_start4)
 	else
 		bl = map_id2bl(st->rid);
 
-	if( tick == 0 && val1 > 0 && type >= 0 && type < SC_MAX && status_sc2skill(type) != 0 )
+	if( tick == 0 && val1 > 0 && type > SC_NONE && type < SC_MAX && status_sc2skill(type) != 0 )
 	{// When there isn't a duration specified, try to get it from the skill_db
 		tick = skill_get_time(status_sc2skill(type), val1);
 	}
@@ -8235,7 +8222,7 @@ BUILDIN_FUNC(sc_end)
 		if (!sce) return 0;
 		//This should help status_change_end force disabling the SC in case it has no limit.
 		sce->val1 = sce->val2 = sce->val3 = sce->val4 = 0;
-		status_change_end(bl, type, INVALID_TIMER);
+		status_change_end(bl, (sc_type)type, INVALID_TIMER);
 	} else
 		status_change_clear(bl, 2);// remove all effects
 	return 0;
@@ -8257,7 +8244,7 @@ BUILDIN_FUNC(getscrate)
 		bl = map_id2bl(st->rid);
 
 	if (bl)
-		rate = status_get_sc_def(bl,type, 10000, 10000, 0);
+		rate = status_get_sc_def(bl, (sc_type)type, 10000, 10000, 0);
 
 	script_pushint(st,rate);
 	return 0;
@@ -9193,7 +9180,7 @@ BUILDIN_FUNC(getcastlename)
 {
 	const char* mapname = mapindex_getmapname(script_getstr(st,2),NULL);
 	struct guild_castle* gc = guild_mapname2gc(mapname);
-	char* name = (gc) ? gc->castle_name : "";
+	const char* name = (gc) ? gc->castle_name : "";
 	script_pushstrcopy(st,name);
 	return 0;
 }
@@ -10309,9 +10296,8 @@ BUILDIN_FUNC(petrecovery)
 	} else //Init
 		pd->recovery = (struct pet_recovery *)aMalloc(sizeof(struct pet_recovery));
 		
-	pd->recovery->type=script_getnum(st,2);
+	pd->recovery->type=(sc_type)script_getnum(st,2);
 	pd->recovery->delay=script_getnum(st,3);
-
 	pd->recovery->timer=-1;
 
 	return 0;
@@ -10484,11 +10470,13 @@ BUILDIN_FUNC(npcskilleffect)
 BUILDIN_FUNC(specialeffect)
 {
 	struct block_list *bl=map_id2bl(st->oid);
+	int type = script_getnum(st,2);
+	enum send_target target = script_hasdata(st,3) ? (send_target)script_getnum(st,3) : AREA;
 
 	if(bl==NULL)
 		return 0;
 
-	clif_specialeffect(bl,script_getnum(st,2), (script_hasdata(st,3)?script_getnum(st,3):AREA));
+	clif_specialeffect(bl, type, target);
 
 	return 0;
 }
@@ -10496,11 +10484,13 @@ BUILDIN_FUNC(specialeffect)
 BUILDIN_FUNC(specialeffect2)
 {
 	TBL_PC *sd=script_rid2sd(st);
+	int type = script_getnum(st,2);
+	enum send_target target = script_hasdata(st,3) ? (send_target)script_getnum(st,3) : AREA;
 
 	if(sd==NULL)
 		return 0;
 
-	clif_specialeffect(&sd->bl,script_getnum(st,2), (script_hasdata(st,3)?script_getnum(st,3):AREA));
+	clif_specialeffect(&sd->bl, type, target);
 
 	return 0;
 }
@@ -11651,7 +11641,7 @@ BUILDIN_FUNC(checkcell)
 	const char *map = script_getstr(st, 2);
 	m = mapindex_name2id(map);
 	if(m){
-		script_pushint(st,map_getcell(m, script_getnum(st,3), script_getnum(st,4),script_getnum(st,5)));
+		script_pushint(st,map_getcell(m, script_getnum(st,3), script_getnum(st,4),(cell_chk)script_getnum(st,5)));
 	} else {
 		script_pushint(st,0);
 	}
@@ -11831,7 +11821,7 @@ BUILDIN_FUNC(escape_sql)
 
 	str = script_getstr(st,2);
 	len = strlen(str);
-	esc_str = aMallocA(len*2+1);
+	esc_str = (char*)aMallocA(len*2+1);
 #if defined(TXT_ONLY)
 	jstrescapecpy(esc_str, str);
 #else

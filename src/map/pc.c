@@ -1339,7 +1339,7 @@ void pc_autoscript_clear(struct s_autoscript *scripts, int max)
 	memset(scripts, 0, i*sizeof(struct s_autoscript));
 }
 
-static int pc_bonus_autospell_del(struct s_autospell *spell, int max, short id, short lv, short rate, short card_id)
+static int pc_bonus_autospell_del(struct s_autospell* spell, int max, short id, short lv, short rate, short card_id)
 {
 	int i, j;
 	for(i=max-1; i>=0 && !spell[i].id; i--);
@@ -1405,7 +1405,7 @@ static int pc_bonus_autospell(struct s_autospell *spell, int max, short id, shor
 	return 1;
 }
 
-static int pc_bonus_addeff(struct s_addeffect* effect, int max, short id, short rate, short arrow_rate, unsigned char flag)
+static int pc_bonus_addeff(struct s_addeffect* effect, int max, enum sc_type id, short rate, short arrow_rate, unsigned char flag)
 {
 	int i;
 	if (!(flag&(ATF_SHORT|ATF_LONG)))
@@ -2081,7 +2081,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			ShowWarning("pc_bonus2 (Add Effect): %d is not supported.\n", type2);
 			break;
 		}
-		pc_bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), type2,
+		pc_bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), (sc_type)type2,
 			sd->state.lr_flag!=2?val:0, sd->state.lr_flag==2?val:0, 0);
 		break;
 	case SP_ADDEFF2:
@@ -2089,7 +2089,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			ShowWarning("pc_bonus2 (Add Effect2): %d is not supported.\n", type2);
 			break;
 		}
-		pc_bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), type2,
+		pc_bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), (sc_type)type2,
 			sd->state.lr_flag!=2?val:0, sd->state.lr_flag==2?val:0, ATF_SELF);
 		break;
 	case SP_RESEFF:
@@ -2304,7 +2304,7 @@ int pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 		if(sd->state.lr_flag != 2)
-			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), type2, val, 0, 0);
+			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), (sc_type)type2, val, 0, 0);
 		break;
 	case SP_SKILL_ATK:
 		if(sd->state.lr_flag == 2)
@@ -2548,7 +2548,7 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			ShowWarning("pc_bonus3 (Add Effect): %d is not supported.\n", type2);
 			break;
 		}
-		pc_bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), type2,
+		pc_bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), (sc_type)type2,
 			sd->state.lr_flag!=2?type3:0, sd->state.lr_flag==2?type3:0, val);
 		break;
 
@@ -2558,7 +2558,7 @@ int pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			break;
 		}
 		if(sd->state.lr_flag != 2)
-			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), type2, type3, 0, val);
+			pc_bonus_addeff(sd->addeff2, ARRAYLENGTH(sd->addeff2), (sc_type)type2, type3, 0, val);
 		break;
 
 	default:
@@ -3757,7 +3757,7 @@ int pc_checkskill(struct map_session_data *sd,int skill_id)
  *------------------------------------------*/
 int pc_checkallowskill(struct map_session_data *sd)
 {
-	const int scw_list[] = {
+	const enum sc_type scw_list[] = {
 		SC_TWOHANDQUICKEN,
 		SC_ONEHAND,
 		SC_AURABLADE,
@@ -3767,7 +3767,7 @@ int pc_checkallowskill(struct map_session_data *sd)
 		SC_ADRENALINE2,
 		SC_GATLINGFEVER
 	};
-	const int scs_list[] = {
+	const enum sc_type scs_list[] = {
 		SC_AUTOGUARD,
 		SC_DEFENDER,
 		SC_REFLECTSHIELD
@@ -5624,12 +5624,12 @@ int pc_jobchange(struct map_session_data *sd,int job, int upper)
 	if ((b_class&&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK))
 	{ //Things to remove when changing class tree.
 		const int class_ = pc_class2idx(sd->status.class_);
-		int id;
+		short id;
 		for(i = 0; i < MAX_SKILL_TREE && (id = skill_tree[class_][i].id) > 0; i++) {
 			//Remove status specific to your current tree skills.
-			id = status_skill2sc(id);
-			if (id > SC_COMMON_MAX && sd->sc.data[id])
-				status_change_end(&sd->bl, id, -1);
+			enum sc_type sc = status_skill2sc(id);
+			if (sc > SC_COMMON_MAX && sd->sc.data[sc])
+				status_change_end(&sd->bl, sc, -1);
 		}
 	}
 	

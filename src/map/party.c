@@ -86,7 +86,7 @@ struct party_data* party_search(int party_id)
 {
 	if(!party_id)
 		return NULL;
-	return idb_get(party_db,party_id);
+	return (struct party_data*)idb_get(party_db,party_id);
 }
 
 /// Party data lookup using party name.
@@ -95,7 +95,7 @@ struct party_data* party_searchname(const char* str)
 	struct party_data* p;
 
 	DBIterator* iter = party_db->iterator(party_db);
-	for( p = iter->first(iter,NULL); iter->exists(iter); p = iter->next(iter,NULL) )
+	for( p = (struct party_data*)iter->first(iter,NULL); iter->exists(iter); p = (struct party_data*)iter->next(iter,NULL) )
 	{
 		if( strncmpi(p->party.name,str,NAME_LENGTH) == 0 )
 			break;
@@ -235,7 +235,7 @@ int party_recv_info(struct party *sp)
 	
 	nullpo_retr(0, sp);
 
-	p= idb_ensure(party_db, sp->party_id, create_party);
+	p = (struct party_data*)idb_ensure(party_db, sp->party_id, create_party);
 	if (!p->party.party_id) //party just received.
 	{
 		party_new = true;
@@ -726,7 +726,7 @@ int party_send_xy_timer(int tid,unsigned int tick,int id,int data)
 
 	DBIterator* iter = party_db->iterator(party_db);
 	// for each existing party,
-	for( p = iter->first(iter,NULL); iter->exists(iter); p = iter->next(iter,NULL) )
+	for( p = (struct party_data*)iter->first(iter,NULL); iter->exists(iter); p = (struct party_data*)iter->next(iter,NULL) )
 	{
 		int i;
 		// for each member of this party,

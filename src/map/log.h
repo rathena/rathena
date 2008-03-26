@@ -24,7 +24,7 @@ int log_mvpdrop(struct map_session_data *sd, int monster_id, int *log_mvp);
 
 int log_config_read(char *cfgName);
 
-enum log_what {
+typedef enum log_what {
 	LOG_ALL                 = 0xFFF,
 	LOG_TRADES              = 0x002,
 	LOG_VENDING             = 0x004,
@@ -36,7 +36,7 @@ enum log_what {
 	LOG_USED_ITEMS          = 0x100, // used by player
 	LOG_MVP_PRIZE           = 0x200,
 	LOG_COMMAND_ITEMS       = 0x400  // created/deleted through @/# commands
-};
+} log_what;
 
 extern struct Log_Config {
 	enum log_what enable_logs;

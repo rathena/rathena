@@ -606,7 +606,7 @@ int merc_hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 		intif_homunculus_requestdelete(hom->hom_id);
 		return 1;
 	}
-	sd->hd = hd = aCalloc(1,sizeof(struct homun_data));
+	sd->hd = hd = (struct homun_data*)aCalloc(1,sizeof(struct homun_data));
 	hd->bl.type = BL_HOM;
 	hd->bl.id = npc_get_new_npc_id();
 

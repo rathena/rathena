@@ -18,7 +18,9 @@ extern unsigned long StatusChangeFlagTable[];
 
 
 // Status changes listing. These code are for use by the server. 
-enum sc_type {
+typedef enum sc_type {
+	SC_NONE = -1,
+
 	//First we enumerate common status ailments which are often used around.
 	SC_STONE = 0,
 	SC_COMMON_MIN = 0, // begin
@@ -290,7 +292,7 @@ enum sc_type {
 	SC_SPCOST_RATE,
 	SC_COMMONSC_RESIST,
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
-};
+} sc_type;
 
 //Numerates the Number for the status changes (client-dependent), imported from jA
 enum si_type {
@@ -683,8 +685,8 @@ struct status_change {
 };
 
 // for looking up associated data
-int status_skill2sc(int skill);
-int status_sc2skill(int sc);
+sc_type status_skill2sc(int skill);
+int status_sc2skill(sc_type sc);
 
 int status_damage(struct block_list *src,struct block_list *target,int hp,int sp, int walkdelay, int flag);
 //Define for standard HP damage attacks.

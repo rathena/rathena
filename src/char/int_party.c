@@ -505,10 +505,11 @@ int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct part
 }
 
 // パ?ティ情報要求
-int mapif_parse_PartyInfo(int fd, int party_id) {
+int mapif_parse_PartyInfo(int fd, int party_id)
+{
 	struct party_data *p;
 
-	p = idb_get(party_db, party_id);
+	p = (struct party_data*)idb_get(party_db, party_id);
 	if (p != NULL)
 		mapif_party_info(fd, &p->party);
 	else {
@@ -525,7 +526,7 @@ int mapif_parse_PartyAddMember(int fd, int party_id, struct party_member *member
 	struct party_data *p;
 	int i;
 
-	p = idb_get(party_db, party_id);
+	p = (struct party_data*)idb_get(party_db, party_id);
 	if( p == NULL || p->size == MAX_PARTY ) {
 		mapif_party_memberadded(fd, party_id, member->account_id, member->char_id, 1);
 		return 0;
@@ -557,11 +558,12 @@ int mapif_parse_PartyAddMember(int fd, int party_id, struct party_member *member
 }
 
 // パ?ティ?設定?更要求
-int mapif_parse_PartyChangeOption(int fd, int party_id, int account_id, int exp, int item) {
+int mapif_parse_PartyChangeOption(int fd, int party_id, int account_id, int exp, int item)
+{
 	struct party_data *p;
 	int flag = 0;
 
-	p = idb_get(party_db, party_id);
+	p = (struct party_data*)idb_get(party_db, party_id);
 	if (p == NULL)
 		return 0;
 
@@ -576,11 +578,12 @@ int mapif_parse_PartyChangeOption(int fd, int party_id, int account_id, int exp,
 }
 
 // パ?ティ?退要求
-int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id) {
+int mapif_parse_PartyLeave(int fd, int party_id, int account_id, int char_id)
+{
 	struct party_data *p;
 	int i,lv;
 
-	p = idb_get(party_db, party_id);
+	p = (struct party_data*)idb_get(party_db, party_id);
 	if (!p) return 0;
 
 	for(i = 0; i < MAX_PARTY; i++) {
@@ -610,7 +613,7 @@ int mapif_parse_PartyChangeMap(int fd, int party_id, int account_id, int char_id
 	struct party_data *p;
 	int i;
 
-	p = idb_get(party_db, party_id);
+	p = (struct party_data*)idb_get(party_db, party_id);
 	if (p == NULL)
 		return 0;
 
@@ -682,7 +685,7 @@ int mapif_parse_PartyLeaderChange(int fd,int party_id,int account_id,int char_id
 	struct party_data *p;
 	int i;
 
-	p = idb_get(party_db, party_id);
+	p = (struct party_data*)idb_get(party_db, party_id);
 	if (p == NULL)
 		return 0;
 

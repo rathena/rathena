@@ -56,7 +56,7 @@ struct s_packet_db {
 extern struct s_packet_db packet_db[MAX_PACKET_VER+1][MAX_PACKET_DB+1];
 
 // local define
-enum send_target {
+typedef enum send_target {
 	ALL_CLIENT,
 	ALL_SAMEMAP,
 	AREA,				// area
@@ -82,7 +82,7 @@ enum send_target {
 	DUEL_WOS,
 	CHAT_MAINCHAT,		// everyone on main chat
 	SELF,
-};
+} send_target;
 
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
@@ -132,7 +132,7 @@ void clif_sitting(struct block_list* bl);
 void clif_standing(struct block_list* bl);
 void clif_changelook(struct block_list *bl,int type,int val);	// area
 void clif_changetraplook(struct block_list *bl,int val); // area
-void clif_refreshlook(struct block_list *bl,int id,int type,int val,int area); //area specified in 'area'
+void clif_refreshlook(struct block_list *bl,int id,int type,int val,enum send_target target); //area specified in 'target'
 int clif_arrowequip(struct map_session_data *sd,int val); //self
 int clif_arrow_fail(struct map_session_data *sd,int type); //self
 int clif_arrow_create_list(struct map_session_data *sd);	//self
@@ -262,7 +262,7 @@ int clif_item_skill(struct map_session_data *sd,int skillid,int skilllv);
 int clif_mvp_effect(struct map_session_data *sd);
 int clif_mvp_item(struct map_session_data *sd,int nameid);
 int clif_mvp_exp(struct map_session_data *sd, unsigned int exp);
-void clif_changed_dir(struct block_list *bl, int area);
+void clif_changed_dir(struct block_list *bl, enum send_target target);
 
 // vending
 void clif_openvendingreq(struct map_session_data* sd, int num);
@@ -355,7 +355,7 @@ void clif_friendslist_reqack(struct map_session_data *sd, struct map_session_dat
 
 // [Valaris]
 int clif_mob_hp(struct mob_data *md);
-int clif_weather(int m); // [Valaris]
+void clif_weather(int m); // [Valaris]
 int clif_specialeffect(struct block_list* bl, int type, enum send_target target); // special effects [Valaris]
 void clif_specialeffect_single(struct block_list* bl, int type, int fd);
 int clif_message(struct block_list *bl, const char* msg); // messages (from mobs/npcs) [Valaris]
@@ -409,7 +409,7 @@ void clif_Mail_refreshinbox(struct map_session_data *sd);
 void clif_Mail_getattachment(int fd, uint8 flag);
 // AUCTION SYSTEM
 void clif_Auction_openwindow(struct map_session_data *sd);
-void clif_Auction_results(struct map_session_data *sd, short count, short pages, unsigned char *buf);
+void clif_Auction_results(struct map_session_data *sd, short count, short pages, uint8 *buf);
 void clif_Auction_message(int fd, unsigned char flag);
 void clif_Auction_close(int fd, unsigned char flag);
 void clif_parse_Auction_cancelreg(int fd, struct map_session_data *sd);

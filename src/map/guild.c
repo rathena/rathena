@@ -223,7 +223,7 @@ static int guild_read_castledb(void)
 /// lookup: guild id -> guild*
 struct guild* guild_search(int guild_id)
 {
-	return idb_get(guild_db,guild_id);
+	return (struct guild*)idb_get(guild_db,guild_id);
 }
 
 /// lookup: guild name -> guild*
@@ -232,7 +232,7 @@ struct guild* guild_searchname(char* str)
 	struct guild* g;
 
 	DBIterator* iter = guild_db->iterator(guild_db);
-	for( g = iter->first(iter,NULL); iter->exists(iter); g = iter->next(iter,NULL) )
+	for( g = (struct guild*)iter->first(iter,NULL); iter->exists(iter); g = (struct guild*)iter->next(iter,NULL) )
 	{
 		if( strcmpi(g->name, str) == 0 )
 			break;
@@ -245,7 +245,7 @@ struct guild* guild_searchname(char* str)
 /// lookup: castle id -> castle*
 struct guild_castle* guild_castle_search(int gcid)
 {
-	return idb_get(castle_db,gcid);
+	return (struct guild_castle*)idb_get(castle_db,gcid);
 }
 
 /// lookup: map index -> castle*
@@ -254,7 +254,7 @@ struct guild_castle* guild_mapindex2gc(short mapindex)
 	struct guild_castle* gc;
 
 	DBIterator* iter = castle_db->iterator(castle_db);
-	for( gc = iter->first(iter,NULL); iter->exists(iter); gc = iter->next(iter,NULL) )
+	for( gc = (struct guild_castle*)iter->first(iter,NULL); iter->exists(iter); gc = (struct guild_castle*)iter->next(iter,NULL) )
 	{
 		if( gc->mapindex == mapindex )
 			break;
@@ -460,7 +460,7 @@ int guild_npc_request_info(int guild_id,const char *event)
 		ev=(struct eventlist *)aCalloc(sizeof(struct eventlist),1);
 		memcpy(ev->name,event,strlen(event));
 		//The one in the db becomes the next event from this.
-		ev->next=idb_put(guild_infoevent_db,guild_id,ev);
+		ev->next = (struct eventlist*)idb_put(guild_infoevent_db,guild_id,ev);
 	}
 
 	return guild_request_info(guild_id);
@@ -521,7 +521,8 @@ int guild_recv_info(struct guild *sg)
 
 	nullpo_retr(0, sg);
 
-	if((g=idb_get(guild_db,sg->guild_id))==NULL){
+	if((g = (struct guild*)idb_get(guild_db,sg->guild_id))==NULL)
+	{
 		guild_new = true;
 		g=(struct guild *)aCalloc(1,sizeof(struct guild));
 		idb_put(guild_db,sg->guild_id,g);
@@ -588,7 +589,8 @@ int guild_recv_info(struct guild *sg)
 	}
 
 	// ƒCƒxƒ“ƒg‚Ì”­¶
-	if( (ev=idb_remove(guild_infoevent_db,sg->guild_id))!=NULL ){
+	if( (ev = (struct eventlist*)idb_remove(guild_infoevent_db,sg->guild_id))!=NULL )
+	{
 		while(ev){
 			npc_event_do(ev->name);
 			ev2=ev->next;
@@ -1141,7 +1143,7 @@ unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp)
 		exp = (unsigned int) exp * per / 100;
 	//Otherwise tax everything.
 	
-	c = guild_expcache_db->ensure(guild_expcache_db, i2key(sd->status.char_id), create_expcache, sd);
+	c = (struct guild_expcache*)guild_expcache_db->ensure(guild_expcache_db, i2key(sd->status.char_id), create_expcache, sd);
 
 	if (c->exp > UINT_MAX - exp)
 		c->exp = UINT_MAX;
@@ -1161,7 +1163,7 @@ int guild_getexp(struct map_session_data *sd,int exp)
 	if (sd->status.guild_id == 0 || (g = guild_search(sd->status.guild_id)) == NULL)
 		return 0;
 
-	c = guild_expcache_db->ensure(guild_expcache_db, i2key(sd->status.char_id), create_expcache, sd);
+	c = (struct guild_expcache*)guild_expcache_db->ensure(guild_expcache_db, i2key(sd->status.char_id), create_expcache, sd);
 	if (c->exp > UINT_MAX - exp)
 		c->exp = UINT_MAX;
 	else
@@ -1676,10 +1678,10 @@ int guild_addcastleinfoevent(int castle_id,int index,const char *name)
 	if( name==NULL || *name==0 )
 		return 0;
 
-	ev=(struct eventlist *)aMalloc(sizeof(struct eventlist));
+	ev = (struct eventlist *)aMalloc(sizeof(struct eventlist));
 	memcpy(ev->name,name,sizeof(ev->name));
 	//The next event becomes whatever was currently stored.
-	ev->next= idb_put(guild_castleinfoevent_db,code,ev);
+	ev->next = (struct eventlist *)idb_put(guild_castleinfoevent_db,code,ev);
 	return 0;
 }
 
@@ -1720,7 +1722,9 @@ int guild_castledataloadack(int castle_id,int index,int value)
 		ShowError("guild_castledataloadack ERROR!! (Not found index=%d)\n", index);
 		return 0;
 	}
-	if( (ev=idb_remove(guild_castleinfoevent_db,code))!=NULL ){
+
+	if( (ev = (struct eventlist *)idb_remove(guild_castleinfoevent_db,code))!=NULL )
+	{
 		while(ev){
 			npc_event_do(ev->name);
 			ev2=ev->next;

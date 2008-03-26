@@ -145,7 +145,7 @@ int inter_pet_save()
 int inter_pet_delete(int pet_id)
 {
 	struct s_pet *p;
-	p = idb_get(pet_db,pet_id);
+	p = (struct s_pet*)idb_get(pet_db,pet_id);
 	if( p == NULL)
 		return 1;
 	else {
@@ -267,7 +267,7 @@ int mapif_create_pet(int fd,int account_id,int char_id,short pet_class,short pet
 int mapif_load_pet(int fd,int account_id,int char_id,int pet_id)
 {
 	struct s_pet *p;
-	p= idb_get(pet_db,pet_id);
+	p = (struct s_pet*)idb_get(pet_db,pet_id);
 	if(p!=NULL) {
 		if(p->incuvate == 1) {
 			p->account_id = p->char_id = 0;
@@ -304,7 +304,7 @@ int mapif_save_pet(int fd,int account_id,struct s_pet *data)
 		pet_id = data->pet_id;
 		if (pet_id == 0)
 			pet_id = data->pet_id = pet_newid++;
-		p= idb_ensure(pet_db,pet_id,create_pet);
+		p = (struct s_pet*)idb_ensure(pet_db,pet_id,create_pet);
 		if(data->hungry < 0)
 			data->hungry = 0;
 		else if(data->hungry > 100)

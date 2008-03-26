@@ -678,7 +678,7 @@ static int clif_clearunit_delayed_sub(int tid, unsigned int tick, int id, int da
 int clif_clearunit_delayed(struct block_list* bl, unsigned int tick)
 {
 	struct block_list *tbl;
-	tbl = aMalloc(sizeof (struct block_list));
+	tbl = (struct block_list*)aMalloc(sizeof (struct block_list));
 	memcpy (tbl, bl, sizeof (struct block_list));
 	add_timer(tick, clif_clearunit_delayed_sub, (int)tbl, 0);
 	return 0;
@@ -1009,21 +1009,18 @@ static void clif_weather_check(struct map_session_data *sd)
 	}
 }
 
-int clif_weather(int m)
+void clif_weather(int m)
 {
-	int i;
-
+	struct s_mapiterator* iter;
 	struct map_session_data *sd=NULL;
 
-	for(i = 0; i < fd_max; i++) {
-		if (session[i] && session[i]->func_parse == clif_parse &&	
-			(sd = session[i]->session_data) != NULL &&
-		  	sd->state.active && sd->bl.m == m) {
+	iter = mapit_getallusers();
+	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) )
+	{
+		if( sd->bl.m == m )
 			clif_weather_check(sd);
-		}
 	}
-
-	return 0;
+	mapit_free(iter);
 }
 
 int clif_spawn(struct block_list *bl)
@@ -2488,9 +2485,8 @@ void clif_changetraplook(struct block_list *bl,int val)
 
 	
 }
-//For the stupid cloth-dye bug. Resends the given view data
-//to the area specified by bl.
-void clif_refreshlook(struct block_list *bl,int id,int type,int val,int area)
+//For the stupid cloth-dye bug. Resends the given view data to the area specified by bl.
+void clif_refreshlook(struct block_list *bl,int id,int type,int val,enum send_target target)
 {
 	unsigned char buf[32];
 #if PACKETVER < 4
@@ -2498,14 +2494,14 @@ void clif_refreshlook(struct block_list *bl,int id,int type,int val,int area)
 	WBUFL(buf,2)=id;
 	WBUFB(buf,6)=type;
 	WBUFB(buf,7)=val;
-	clif_send(buf,packet_len(0xc3),bl,area);
+	clif_send(buf,packet_len(0xc3),bl,target);
 #else
 	WBUFW(buf,0)=0x1d7;
 	WBUFL(buf,2)=id;
 	WBUFB(buf,6)=type;
 	WBUFW(buf,7)=val;
 	WBUFW(buf,9)=0;
-	clif_send(buf,packet_len(0x1d7),bl,area);
+	clif_send(buf,packet_len(0x1d7),bl,target);
 #endif
 	return;
 }
@@ -6485,9 +6481,9 @@ int clif_guild_expulsion(struct map_session_data *sd,const char *name,const char
 	nullpo_retr(0, sd);
 
 	WBUFW(buf, 0)=0x15c;
-	safestrncpy(WBUFP(buf, 2),name,NAME_LENGTH);
-	safestrncpy(WBUFP(buf,26),mes,40);
-	safestrncpy(WBUFP(buf,66),"",NAME_LENGTH); // account name (not used for security reasons)
+	safestrncpy((char*)WBUFP(buf, 2),name,NAME_LENGTH);
+	safestrncpy((char*)WBUFP(buf,26),mes,40);
+	safestrncpy((char*)WBUFP(buf,66),"",NAME_LENGTH); // account name (not used for security reasons)
 	clif_send(buf,packet_len(0x15c),&sd->bl,GUILD);
 	return 0;
 }
@@ -6512,9 +6508,9 @@ int clif_guild_expulsionlist(struct map_session_data *sd)
 	for(i=c=0;i<MAX_GUILDEXPULSION;i++){
 		struct guild_expulsion *e=&g->expulsion[i];
 		if(e->account_id>0){
-			safestrncpy(WFIFOP(fd,4 + c*88),e->name,NAME_LENGTH);
-			safestrncpy(WFIFOP(fd,4 + c*88+24),"",24); // account name (not used for security reasons)
-			safestrncpy(WFIFOP(fd,4 + c*88+48),e->mes,40);
+			safestrncpy((char*)WFIFOP(fd,4 + c*88),e->name,NAME_LENGTH);
+			safestrncpy((char*)WFIFOP(fd,4 + c*88+24),"",24); // account name (not used for security reasons)
+			safestrncpy((char*)WFIFOP(fd,4 + c*88+48),e->mes,40);
 			c++;
 		}
 	}
@@ -8263,7 +8259,7 @@ void clif_parse_MapMove(int fd, struct map_session_data *sd)
 /*==========================================
  *
  *------------------------------------------*/
-void clif_changed_dir(struct block_list *bl, int type)
+void clif_changed_dir(struct block_list *bl, enum send_target target)
 {
 	unsigned char buf[64];
 
@@ -8272,7 +8268,8 @@ void clif_changed_dir(struct block_list *bl, int type)
 	WBUFW(buf,6) = bl->type==BL_PC?((TBL_PC*)bl)->head_dir:0;
 	WBUFB(buf,8) = unit_getdir(bl);
 
-	clif_send(buf, packet_len(0x9c), bl, type);
+	clif_send(buf, packet_len(0x9c), bl, target);
+
 	if (disguised(bl)) {
 		WBUFL(buf,2) = -bl->id;
 		WBUFW(buf,6) = 0;
@@ -9005,10 +9002,13 @@ void clif_parse_TradeRequest(int fd,struct map_session_data *sd)
 		return;
 	}
 
-	if(battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 1){
-		trade_traderequest(sd,t_sd);
-	} else
+	if( battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 1)
+	{
 		clif_skill_fail(sd,1,0,0);
+		return;
+	}
+	
+	trade_traderequest(sd,t_sd);
 }
 
 /*==========================================
@@ -9712,19 +9712,24 @@ void clif_parse_StoragePassword(int fd, struct map_session_data *sd)
 
 
 /*==========================================
- * パーティを作る
+ * Party creation request
+ * S 00f9 <party name>.24S
+ * S 01e8 <party name>.24S <item1>.B <item2>.B
  *------------------------------------------*/
 void clif_parse_CreateParty(int fd, struct map_session_data *sd)
 {
 	if(map[sd->bl.m].flag.partylock)
-	{	//Guild locked.
+	{// Party locked.
 		clif_displaymessage(fd, msg_txt(227));
 		return;
 	}
-	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 7) {
-		party_create(sd,(char*)RFIFOP(fd,2),0,0);
-	} else
+	if( battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 7 )
+	{
 		clif_skill_fail(sd,1,0,4);
+		return;
+	}
+
+	party_create(sd,(char*)RFIFOP(fd,2),0,0);
 }
 
 /*==========================================
@@ -9733,33 +9738,38 @@ void clif_parse_CreateParty(int fd, struct map_session_data *sd)
 void clif_parse_CreateParty2(int fd, struct map_session_data *sd)
 {
 	if(map[sd->bl.m].flag.partylock)
-	{	//Guild locked.
+	{// Party locked.
 		clif_displaymessage(fd, msg_txt(227));
 		return;
 	}
-	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd,NV_BASIC) >= 7)
-		party_create(sd,(char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27));
-	else
+	if( battle_config.basic_skill_check && pc_checkskill(sd,NV_BASIC) < 7 )
+	{
 		clif_skill_fail(sd,1,0,4);
+		return;
+	}
+
+	party_create(sd,(char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27));
 }
 
 /*==========================================
- * パーティに勧誘
+ * Party invitation request
+ * S 00fc <account ID>.L
+ * S 02c4 <char name>.24S
  *------------------------------------------*/
 void clif_parse_PartyInvite(int fd, struct map_session_data *sd)
 {
 	struct map_session_data *t_sd;
 	
 	if(map[sd->bl.m].flag.partylock)
-	{	//Guild locked.
+	{// Party locked.
 		clif_displaymessage(fd, msg_txt(227));
 		return;
 	}
 
 	t_sd = map_id2sd(RFIFOL(fd,2));
 
-	// @noask [LuzZza]
-	if(t_sd && t_sd->state.noask) {
+	if(t_sd && t_sd->state.noask)
+	{// @noask [LuzZza]
 		clif_noask_sub(sd, t_sd, 1);
 		return;
 	}
@@ -9771,18 +9781,18 @@ void clif_parse_PartyInvite2(int fd, struct map_session_data *sd)
 {
 	struct map_session_data *t_sd;
 	char *name = (char*)RFIFOP(fd,2);
-	name[NAME_LENGTH]='\0';
+	name[NAME_LENGTH-1] = '\0';
 
 	if(map[sd->bl.m].flag.partylock)
-	{	//Guild locked.
+	{// Party locked.
 		clif_displaymessage(fd, msg_txt(227));
 		return;
 	}
 
 	t_sd = map_nick2sd(name);
 
-	// @noask [LuzZza]
-	if(t_sd && t_sd->state.noask) {
+	if(t_sd && t_sd->state.noask)
+	{// @noask [LuzZza]
 		clif_noask_sub(sd, t_sd, 1);
 		return;
 	}
@@ -11710,7 +11720,7 @@ void clif_Auction_openwindow(struct map_session_data *sd)
 	WFIFOSET(fd,12);
 }
 
-void clif_Auction_results(struct map_session_data *sd, short count, short pages, unsigned char *buf)
+void clif_Auction_results(struct map_session_data *sd, short count, short pages, uint8 *buf)
 {
 	int i, fd = sd->fd, len = sizeof(struct auction_data);
 	struct auction_data auction;
@@ -11729,7 +11739,7 @@ void clif_Auction_results(struct map_session_data *sd, short count, short pages,
 		k = 12 + (i * 83);
 
 		WFIFOL(fd,k) = auction.auction_id;
-		safestrncpy(WFIFOP(fd,4+k), auction.seller_name, NAME_LENGTH);
+		safestrncpy((char*)WFIFOP(fd,4+k), auction.seller_name, NAME_LENGTH);
 
 		if( (item = itemdb_search(auction.item.nameid)) != NULL && item->view_id > 0 )
 			WFIFOW(fd,28+k) = item->view_id;
@@ -11748,7 +11758,7 @@ void clif_Auction_results(struct map_session_data *sd, short count, short pages,
 		WFIFOW(fd,45+k) = auction.item.card[3];
 		WFIFOL(fd,47+k) = auction.price;
 		WFIFOL(fd,51+k) = auction.buynow;
-		safestrncpy(WFIFOP(fd,55+k), auction.buyer_name, NAME_LENGTH);
+		safestrncpy((char*)WFIFOP(fd,55+k), auction.buyer_name, NAME_LENGTH);
 		WFIFOL(fd,79+k) = auction.timestamp;
 	}
 	WFIFOSET(fd, 12 + (count * 83));

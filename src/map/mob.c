@@ -209,7 +209,7 @@ int mob_parse_dataset(struct spawn_data *data)
  *------------------------------------------*/
 struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 {
-	struct mob_data *md = aCalloc(1, sizeof(struct mob_data));
+	struct mob_data *md = (struct mob_data*)aCalloc(1, sizeof(struct mob_data));
 	md->bl.id= npc_get_new_npc_id();
 	md->bl.type = BL_MOB;
 	md->bl.m = data->m;
@@ -419,7 +419,7 @@ int mob_once_spawn(struct map_session_data* sd, int m, short x, short y, const c
 			struct guild_castle* gc = guild_mapindex2gc(map[m].index);
 			struct guild* g = gc?guild_search(gc->guild_id):NULL;
 			if(gc) {
-				md->guardian_data = aCalloc(1, sizeof(struct guardian_data));
+				md->guardian_data = (struct guardian_data*)aCalloc(1, sizeof(struct guardian_data));
 				md->guardian_data->castle = gc;
 				md->guardian_data->number = MAX_GUARDIANS;
 				md->guardian_data->guild_id = gc->guild_id;
@@ -586,7 +586,7 @@ void mob_barricade_get(struct map_session_data *sd)
 		return;
 
 	iter = barricade_db->iterator(barricade_db);
-	for( barricade = iter->first(iter,&key); iter->exists(iter); barricade = iter->next(iter,&key) )
+	for( barricade = (struct barricade_data *)iter->first(iter,&key); iter->exists(iter); barricade = (struct barricade_data *)iter->next(iter,&key) )
 	{
 		if( sd->bl.m != barricade->m )
 			continue;
@@ -655,7 +655,7 @@ void mod_barricade_clearall(void)
 	int i;
 
 	iter = barricade_db->iterator(barricade_db);
-	for( barricade = iter->first(iter,&key); iter->exists(iter); barricade = iter->next(iter,&key) )
+	for( barricade = (struct barricade_data *)iter->first(iter,&key); iter->exists(iter); barricade = (struct barricade_data *)iter->next(iter,&key) )
 	{
 		for( i = 0; i < barricade->count; i++ )
 		{
@@ -789,8 +789,8 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 		}
 	}
 
-	md= mob_spawn_dataset(&data);
-	md->guardian_data = aCalloc(1, sizeof(struct guardian_data));
+	md = mob_spawn_dataset(&data);
+	md->guardian_data = (struct guardian_data*)aCalloc(1, sizeof(struct guardian_data));
 	md->guardian_data->number = guardian;
 	md->guardian_data->guild_id = gc->guild_id;
 	md->guardian_data->castle = gc;
@@ -3539,7 +3539,7 @@ static bool mob_parse_dbrow(char** str)
 	}
 
 	if (mob_db_data[class_] == NULL)
-		mob_db_data[class_] = aCalloc(1, sizeof (struct mob_db));
+		mob_db_data[class_] = (struct mob_db*)aCalloc(1, sizeof (struct mob_db));
 	
 	db = mob_db_data[class_];
 	status = &db->status;
@@ -4379,7 +4379,7 @@ void mob_clear_spawninfo()
 int do_init_mob(void)
 {	//Initialize the mob database
 	memset(mob_db_data,0,sizeof(mob_db_data)); //Clear the array
-	mob_db_data[0] = aCalloc(1, sizeof (struct mob_db));	//This mob is used for random spawns
+	mob_db_data[0] = (struct mob_db*)aCalloc(1, sizeof (struct mob_db));	//This mob is used for random spawns
 	mob_makedummymobdb(0); //The first time this is invoked, it creates the dummy mob
 	item_drop_ers = ers_new(sizeof(struct item_drop));
 	item_drop_list_ers = ers_new(sizeof(struct item_drop_list));

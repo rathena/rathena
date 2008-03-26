@@ -30,7 +30,7 @@ static int auction_count(int char_id, bool buy)
 	DBKey key;
 
 	iter = auction_db_->iterator(auction_db_);
-	for( auction = iter->first(iter,&key); iter->exists(iter); auction = iter->next(iter,&key) )
+	for( auction = (struct auction_data*)iter->first(iter,&key); iter->exists(iter); auction = (struct auction_data*)iter->next(iter,&key) )
 	{
 		if( (buy && auction->buyer_id == char_id) || (!buy && auction->seller_id == char_id) )
 			i++;
@@ -262,7 +262,7 @@ static void mapif_parse_Auction_requestlist(int fd)
 	memcpy(searchtext, RFIFOP(fd,16), NAME_LENGTH);
 
 	iter = auction_db_->iterator(auction_db_);
-	for( auction = iter->first(iter,&key); iter->exists(iter); auction = iter->next(iter,&key) )
+	for( auction = (struct auction_data*)iter->first(iter,&key); iter->exists(iter); auction = (struct auction_data*)iter->next(iter,&key) )
 	{
 		if( (type == 0 && auction->type != IT_ARMOR && auction->type != IT_PETARMOR) || 
 			(type == 1 && auction->type != IT_WEAPON) ||

@@ -175,7 +175,7 @@ int inter_homun_save()
 int inter_homun_delete(int hom_id)
 {
 	struct s_homunculus *p;
-	p = idb_get(homun_db,hom_id);
+	p = (struct s_homunculus*)idb_get(homun_db,hom_id);
 	if( p == NULL)
 		return 0;
 	idb_remove(homun_db,hom_id);
@@ -255,7 +255,6 @@ int mapif_rename_homun_ack(int fd, int account_id, int char_id, int flag, char *
 int mapif_create_homun(int fd)
 {
 	struct s_homunculus *p;
-	RFIFOHEAD(fd);
 	p= (struct s_homunculus *) aCalloc(sizeof(struct s_homunculus), 1);
 	if(p==NULL){
 		ShowFatalError("int_homun: out of memory !\n");
@@ -274,10 +273,9 @@ int mapif_load_homun(int fd)
 {
 	struct s_homunculus *p;
 	int account_id;
-	RFIFOHEAD(fd);
 	account_id = RFIFOL(fd,2);
 
-	p= idb_get(homun_db,RFIFOL(fd,6));
+	p = (struct s_homunculus*)idb_get(homun_db,RFIFOL(fd,6));
 	if(p==NULL) {
 		mapif_homun_noinfo(fd,account_id);
 		return 0;
@@ -300,7 +298,7 @@ int mapif_save_homun(int fd,int account_id,struct s_homunculus *data)
 	if (data->hom_id == 0)
 		data->hom_id = homun_newid++;
 	hom_id = data->hom_id;
-	p= idb_ensure(homun_db,hom_id,create_homun);
+	p = (struct s_homunculus*)idb_ensure(homun_db,hom_id,create_homun);
 	memcpy(p,data,sizeof(struct s_homunculus));
 	mapif_save_homun_ack(fd,account_id,1);
 	return 0;
@@ -336,27 +334,24 @@ int mapif_rename_homun(int fd, int account_id, int char_id, char *name){
 
 int mapif_parse_SaveHomun(int fd)
 {
-	RFIFOHEAD(fd);
 	mapif_save_homun(fd,RFIFOL(fd,4),(struct s_homunculus *)RFIFOP(fd,8));
 	return 0;
 }
 
 int mapif_parse_DeleteHomun(int fd)
 {
-	RFIFOHEAD(fd);
 	mapif_delete_homun(fd,RFIFOL(fd,2));
 	return 0;
 }
 
-int mapif_parse_RenameHomun(int fd){
-	RFIFOHEAD(fd);
-	mapif_rename_homun(fd, RFIFOL(fd, 2), RFIFOL(fd, 6), RFIFOP(fd, 10));
+int mapif_parse_RenameHomun(int fd)
+{
+	mapif_rename_homun(fd, RFIFOL(fd, 2), RFIFOL(fd, 6), (char*)RFIFOP(fd, 10));
 	return 0;
 }
 
 int inter_homun_parse_frommap(int fd)
 {
-	RFIFOHEAD(fd);
 	switch(RFIFOW(fd,0)){
 	case 0x3090: mapif_create_homun(fd); break;
 	case 0x3091: mapif_load_homun(fd); break;

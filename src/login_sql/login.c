@@ -104,7 +104,7 @@ void add_online_user(int char_server, int account_id)
 	struct online_login_data* p;
 	if( !login_config.online_check )
 		return;
-	p = idb_ensure(online_db, account_id, create_online_user);
+	p = (struct online_login_data*)idb_ensure(online_db, account_id, create_online_user);
 	p->char_server = char_server;
 	if( p->waiting_disconnect != -1 )
 	{
@@ -127,7 +127,7 @@ void remove_online_user(int account_id)
 
 static int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data)
 {
-	struct online_login_data* p = idb_get(online_db, id);
+	struct online_login_data* p = (struct online_login_data*)idb_get(online_db, id);
 	if( p != NULL && p->waiting_disconnect == id )
 	{
 		p->waiting_disconnect = -1;
@@ -531,7 +531,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 	else
 		safestrncpy(user_password, account->passwd, NAME_LENGTH);
 
-	if( !check_password(session[fd]->session_data, account->passwdenc, user_password, password) )
+	if( !check_password((struct login_session_data*)session[fd]->session_data, account->passwdenc, user_password, password) )
 	{
 		ShowInfo("Invalid password (account: '%s', pass: '%s', received pass: '%s', ip: %s)\n",
 			esc_userid, password, (account->passwdenc) ? "[MD5]" : user_password, ip);
@@ -552,7 +552,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 
 	if( login_config.online_check )
 	{
-		struct online_login_data* data = idb_get(online_db, account->account_id);
+		struct online_login_data* data = (struct online_login_data*)idb_get(online_db, account->account_id);
 		if( data )
 		{// account is already marked as online!
 			if( data->char_server > -1 )
@@ -817,8 +817,8 @@ int parse_fromchar(int fd)
 			char actual_email[40];
 			char new_email[40];
 			int account_id = RFIFOL(fd,2);
-			safestrncpy(actual_email, RFIFOP(fd,6), 40);
-			safestrncpy(new_email, RFIFOP(fd,46), 40);
+			safestrncpy(actual_email, (char*)RFIFOP(fd,6), 40);
+			safestrncpy(new_email, (char*)RFIFOP(fd,46), 40);
 			RFIFOSKIP(fd, 86);
 
 			if( e_mail_check(actual_email) == 0 )
@@ -997,17 +997,17 @@ int parse_fromchar(int fd)
 					SqlStmt_ShowDebug(stmt);
 				for( i = 0, off = 13; i < ACCOUNT_REG2_NUM && off < RFIFOW(fd,2); ++i )
 				{
-					uint8* p;
+					char* p;
 					size_t len;
 
 					// str
-					p = (uint8*)RFIFOP(fd,off);
+					p = (char*)RFIFOP(fd,off);
 					len = strlen(p);
 					SqlStmt_BindParam(stmt, 0, SQLDT_STRING, p, len);
 					off += len + 1;
 
 					// value
-					p = (uint8*)RFIFOP(fd,off);
+					p = (char*)RFIFOP(fd,off);
 					len = strlen(p);
 					SqlStmt_BindParam(stmt, 1, SQLDT_STRING, p, len);
 					off += len + 1;
@@ -1067,7 +1067,7 @@ int parse_fromchar(int fd)
 				users = RFIFOW(fd,4);
 				for (i = 0; i < users; i++) {
 					aid = RFIFOL(fd,6+i*4);
-					p = idb_ensure(online_db, aid, create_online_user);
+					p = (struct online_login_data*)idb_ensure(online_db, aid, create_online_user);
 					p->char_server = id;
 					if (p->waiting_disconnect != -1)
 					{

@@ -106,8 +106,9 @@ int other_mapserver_count=0; //Holds count of how many other map servers are onl
 //This define should spare writing the check in every function. [Skotlex]
 #define chrif_check(a) { if(!chrif_isconnected()) return a; }
 
-struct auth_node* chrif_search(int account_id) {
-	return idb_get(auth_db, account_id);
+struct auth_node* chrif_search(int account_id)
+{
+	return (struct auth_node*)idb_get(auth_db, account_id);
 }
 
 struct auth_node* chrif_auth_check(int account_id, int char_id, enum sd_state state) {
@@ -1234,7 +1235,7 @@ int chrif_load_scdata(int fd)
 	for (i = 0; i < count; i++)
 	{
 		data = (struct status_change_data*)RFIFOP(fd,14 + i*sizeof(struct status_change_data));
-		status_change_start(&sd->bl, data->type, 10000, data->val1, data->val2, data->val3, data->val4, data->tick, 15);
+		status_change_start(&sd->bl, (sc_type)data->type, 10000, data->val1, data->val2, data->val3, data->val4, data->tick, 15);
 	}
 #endif
 	return 0;

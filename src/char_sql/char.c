@@ -232,7 +232,7 @@ void set_char_online(int map_id, int char_id, int account_id)
 		}
 	}
 
-	character = idb_ensure(online_char_db, account_id, create_online_char_data);
+	character = (struct online_char_data*)idb_ensure(online_char_db, account_id, create_online_char_data);
 	if (online_check && character->char_id != -1 && character->server > -1 && character->server != map_id)
 	{
 		//char == 99 <- Character logging in, so someone has logged in while one
@@ -257,7 +257,7 @@ void set_char_online(int map_id, int char_id, int account_id)
 	if (char_id != 99)
 	{	//Set char online in guild cache. If char is in memory, use the guild id on it, otherwise seek it.
 		struct mmo_charstatus *cp;
-		cp = idb_get(char_db_,char_id);
+		cp = (struct mmo_charstatus*)idb_get(char_db_,char_id);
  		inter_guild_CharOnline(char_id, cp?cp->guild_id:-1);
 	}
 	if (login_fd > 0 && !session[login_fd]->flag.eof)
@@ -281,7 +281,7 @@ void set_char_offline(int char_id, int account_id)
 	}
 	else
 	{
-		struct mmo_charstatus* cp = idb_get(char_db_,char_id);
+		struct mmo_charstatus* cp = (struct mmo_charstatus*)idb_get(char_db_,char_id);
 		inter_guild_CharOffline(char_id, cp?cp->guild_id:-1);
 		if (cp)
 			idb_remove(char_db_,char_id);
@@ -290,7 +290,7 @@ void set_char_offline(int char_id, int account_id)
 			Sql_ShowDebug(sql_handle);
 	}
 
-	if ((character = idb_get(online_char_db, account_id)) != NULL)
+	if ((character = (struct online_char_data*)idb_get(online_char_db, account_id)) != NULL)
 	{	//We don't free yet to avoid aCalloc/aFree spamming during char change. [Skotlex]
 		if( character->server > -1 )
 			server[character->server].users--;
@@ -442,9 +442,9 @@ int mmo_char_tosql(int char_id, struct mmo_charstatus* p)
 	if (char_id!=p->char_id) return 0;
 
 #ifndef TXT_SQL_CONVERT
-	cp = idb_ensure(char_db_, char_id, create_charstatus);
+	cp = (struct mmo_charstatus*)idb_ensure(char_db_, char_id, create_charstatus);
 #else
-	cp = aCalloc(1, sizeof(struct mmo_charstatus));
+	cp = (struct mmo_charstatus*)aCalloc(1, sizeof(struct mmo_charstatus));
 #endif
 
 	StringBuf_Init(&buf);
@@ -1141,7 +1141,7 @@ int mmo_char_fromsql(int char_id, struct mmo_charstatus* p, bool load_everything
 	SqlStmt_Free(stmt);
 	StringBuf_Destroy(&buf);
 
-	cp = idb_ensure(char_db_, char_id, create_charstatus);
+	cp = (struct mmo_charstatus*)idb_ensure(char_db_, char_id, create_charstatus);
 	memcpy(cp, p, sizeof(struct mmo_charstatus));
 	return 1;
 }
@@ -1613,7 +1613,7 @@ static void char_auth_ok(int fd, struct char_session_data *sd)
 		return;
 	}
 
-	if( online_check && (character = idb_get(online_char_db, sd->account_id)) != NULL )
+	if( online_check && (character = (struct online_char_data*)idb_get(online_char_db, sd->account_id)) != NULL )
 	{	// check if character is not online already. [Skotlex]
 		if (character->server > -1)
 		{	//Character already online. KICK KICK KICK
@@ -1898,7 +1898,7 @@ int parse_fromlogin(int fd)
 				return 0;
 
 			if(!char_gm_read) {
-				unsigned char buf[32000];
+				unsigned char buf[32000]; //FIXME: this will crash
 				if (gm_account != NULL)
 					aFree(gm_account);
 				gm_account = (struct gm_account*)aCalloc(sizeof(struct gm_account) * ((RFIFOW(fd,2) - 4) / 5), 1);
@@ -1926,7 +1926,7 @@ int parse_fromlogin(int fd)
 		{
 			struct online_char_data* character;
 			int aid = RFIFOL(fd,2);
-			if ((character = idb_get(online_char_db, aid)) != NULL)
+			if ((character = (struct online_char_data*)idb_get(online_char_db, aid)) != NULL)
 			{	//Kick out this player.
 				if( character->server > -1 )
 				{	//Kick it from the map server it is on.
@@ -2118,7 +2118,7 @@ int char_send_fame_list(int fd)
 
 void char_update_fame_list(int type, int index, int fame)
 {
-	char buf[9];
+	unsigned char buf[8];
 	WBUFW(buf,0) = 0x2b22;
 	WBUFB(buf,2) = type;
 	WBUFB(buf,3) = index;
@@ -2346,7 +2346,7 @@ int parse_frommap(int fd)
 			for(i = 0; i < server[id].users; i++) {
 				aid = RFIFOL(fd,6+i*8);
 				cid = RFIFOL(fd,6+i*8+4);
-				character = idb_ensure(online_char_db, aid, create_online_char_data);
+				character = (struct online_char_data*)idb_ensure(online_char_db, aid, create_online_char_data);
 				if (character->server > -1 && character->server != id)
 				{
 					ShowNotice("Set map user: Character (%d:%d) marked on map server %d, but map server %d claims to have (%d:%d) online!\n",
@@ -2375,7 +2375,7 @@ int parse_frommap(int fd)
 			}
 			//Check account only if this ain't final save. Final-save goes through because of the char-map reconnect
 			if (RFIFOB(fd,12) || (
-				(character = idb_get(online_char_db, aid)) != NULL &&
+				(character = (struct online_char_data*)idb_get(online_char_db, aid)) != NULL &&
 				character->char_id == cid))
 			{
 				struct mmo_charstatus char_dat;
@@ -2435,7 +2435,7 @@ int parse_frommap(int fd)
 			if (map_id >= 0)
 				map_fd = server[map_id].fd;
 			//Char should just had been saved before this packet, so this should be safe. [Skotlex]
-			char_data = uidb_get(char_db_,RFIFOL(fd,14));
+			char_data = (struct mmo_charstatus*)uidb_get(char_db_,RFIFOL(fd,14));
 			if (char_data == NULL) 
 			{	//Really shouldn't happen.
 				mmo_char_fromsql(RFIFOL(fd,14), &char_dat, true);
@@ -2460,7 +2460,7 @@ int parse_frommap(int fd)
 				memcpy(WFIFOP(map_fd,20), char_data, sizeof(struct mmo_charstatus));
 				WFIFOSET(map_fd, WFIFOW(map_fd,2));
 
-				data = idb_ensure(online_char_db, RFIFOL(fd,2), create_online_char_data);
+				data = (struct online_char_data*)idb_ensure(online_char_db, RFIFOL(fd,2), create_online_char_data);
 				data->char_id = char_data->char_id;
 				data->server = map_id; //Update server where char is.
 				
@@ -2683,7 +2683,7 @@ int parse_frommap(int fd)
 			char esc_motd[sizeof(motd)*2+1];
 			char esc_server_name[sizeof(server_name)*2+1];
 
-			strncpy(motd, RFIFOP(fd,10), 255); //First copy it to make sure the motd fits.
+			strncpy(motd, (char*)RFIFOP(fd,10), 255); //First copy it to make sure the motd fits.
 			motd[255] = '\0';
 			Sql_EscapeString(sql_handle, esc_motd, motd);
 			Sql_EscapeString(sql_handle, esc_server_name, server_name);
@@ -2851,7 +2851,7 @@ int parse_char(int fd)
 	{
 		if (sd != NULL)
 		{	// already authed client
-			struct online_char_data* data = idb_get(online_char_db, sd->account_id);
+			struct online_char_data* data = (struct online_char_data*)idb_get(online_char_db, sd->account_id);
 			if (!data || data->server == -1) //If it is not in any server, send it offline. [Skotlex]
 				set_char_offline(99,sd->account_id);
 			if (data && data->fd == fd)
@@ -3202,8 +3202,8 @@ int parse_char(int fd)
 			if (RFIFOREST(fd) < 60)
 				return 0;
 		{
-			char* l_user = RFIFOP(fd,2);
-			char* l_pass = RFIFOP(fd,26);
+			char* l_user = (char*)RFIFOP(fd,2);
+			char* l_pass = (char*)RFIFOP(fd,26);
 			l_user[23] = '\0';
 			l_pass[23] = '\0';
 			ARR_FIND( 0, MAX_MAP_SERVERS, i, server[i].fd <= 0 );
@@ -3466,7 +3466,7 @@ int ping_login_server(int tid, unsigned int tick, int id, int data)
 static int chardb_waiting_disconnect(int tid, unsigned int tick, int id, int data)
 {
 	struct online_char_data* character;
-	if ((character = idb_get(online_char_db, id)) != NULL && character->waiting_disconnect == tid)
+	if ((character = (struct online_char_data*)idb_get(online_char_db, id)) != NULL && character->waiting_disconnect == tid)
 	{	//Mark it offline due to timeout.
 		character->waiting_disconnect = -1;
 		set_char_offline(character->char_id, character->account_id);

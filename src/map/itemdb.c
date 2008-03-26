@@ -176,7 +176,7 @@ struct item_data* itemdb_exists(int nameid)
 
 	if( nameid >= 0 && nameid < ARRAYLENGTH(itemdb_array) )
 		return itemdb_array[nameid];
-	item = idb_get(itemdb_other,nameid);
+	item = (struct item_data*)idb_get(itemdb_other,nameid);
 	if( item == &dummy_item )
 		return NULL;// dummy data, doesn't exist
 	return item;
@@ -279,16 +279,16 @@ struct item_data* itemdb_load(int nameid)
 		if( id == NULL )
 		{
 			key.i = nameid;
-			id = itemdb_array[nameid] = create_item_data(key, NULL);
+			id = itemdb_array[nameid] = (struct item_data*)create_item_data(key, NULL);
 		}
 		return id;
 	}
 
-	id = idb_ensure(itemdb_other, nameid, create_item_data);
+	id = (struct item_data*)idb_ensure(itemdb_other, nameid, create_item_data);
 	if( id == &dummy_item )
 	{// Remove dummy_item, replace by real data.
 		key.i = nameid;
-		id = create_item_data(key, NULL);
+		id = (struct item_data*)create_item_data(key, NULL);
 		idb_put(itemdb_other, nameid, id);
 	}
 	return id;
@@ -314,7 +314,7 @@ struct item_data* itemdb_search(int nameid)
 		key.i = nameid;
 		return (struct item_data*)return_dummy_data(key, NULL);
 	}
-	return idb_ensure(itemdb_other,nameid,return_dummy_data);
+	return (struct item_data*)idb_ensure(itemdb_other,nameid,return_dummy_data);
 }
 
 /*==========================================

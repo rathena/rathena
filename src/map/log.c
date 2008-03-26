@@ -426,9 +426,9 @@ int log_config_read(char *cfgName)
 		if(sscanf(line, "%[^:]: %[^\r\n]", w1, w2) == 2)
 		{
 			if(strcmpi(w1,"enable_logs") == 0) {
-				log_config.enable_logs = (atoi(w2));
+				log_config.enable_logs = (log_what)atoi(w2);
 				if (log_config.enable_logs&1) //Log everything.
-					log_config.enable_logs=0xFFFFFFFF;
+					log_config.enable_logs = LOG_ALL;
 			} else if(strcmpi(w1,"sql_logs") == 0) {
 				log_config.sql_logs = (bool)atoi(w2);
 //start of common filter settings

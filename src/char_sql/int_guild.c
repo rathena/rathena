@@ -59,7 +59,7 @@ static int guild_save_timer(int tid, unsigned int tick, int id, int data)
 		state = 1;
 
 	iter = guild_db_->iterator(guild_db_);
-	for( g = iter->first(iter,&key); iter->exists(iter); g = iter->next(iter,&key) )
+	for( g = (struct guild*)iter->first(iter,&key); iter->exists(iter); g = (struct guild*)iter->next(iter,&key) )
 	{
 		if( state == 0 && g->guild_id == last_id )
 			state++; //Save next guild in the list.
@@ -374,7 +374,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	if( guild_id <= 0 )
 		return NULL;
 
-	g = idb_get(guild_db_, guild_id);
+	g = (struct guild*)idb_get(guild_db_, guild_id);
 	if( g )
 		return g;
 
@@ -1852,7 +1852,7 @@ int mapif_parse_GuildCastleDataSave(int fd,int castle_id,int index,int value)
 	case 1:
 		if( gc.guild_id!=value ){
 			int gid=(value)?value:gc.guild_id;
-			struct guild *g=idb_get(guild_db_, gid);
+			struct guild *g = (struct guild*)idb_get(guild_db_, gid);
 			if(log_inter)
 				inter_log("guild %s (id=%d) %s castle id=%d\n",
 					(g)?g->name:"??" ,gid, (value)?"occupy":"abandon", castle_id);

@@ -9,19 +9,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 char *account_txt = "../save/account.txt";
 
 //-----------------------------------------------------
 // Function to suppress control characters in a string.
 //-----------------------------------------------------
-int remove_control_chars(unsigned char *str)
+int remove_control_chars(char* str)
 {
 	int i;
 	int change = 0;
 
 	for(i = 0; str[i]; i++) {
-		if (str[i] < 32) {
+		if (iscntrl((unsigned char)(str[i]))) {
 			str[i] = '_';
 			change = 1;
 		}
@@ -64,7 +65,7 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
-	close(FPaccin);
+	fclose(FPaccin);
 	printf("File exists.\n");
 
 	printf("Don't create an account if the login-server is online!!!\n");
@@ -96,7 +97,7 @@ int main(int argc, char *argv[])
 	FPaccout = fopen(account_txt, "r+");
 	fseek(FPaccout, 0, SEEK_END);
 	fprintf(FPaccout, "%i	%s	%s	-	%s	-\r\n", next_id, username, password, sex);
-	close(FPaccout);
+	fclose(FPaccout);
 
 	printf("Account added.\n");
 }

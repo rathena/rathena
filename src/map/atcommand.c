@@ -2394,7 +2394,7 @@ int atcommand_monster(const int fd, struct map_session_data* sd, const char* com
 		ShowInfo("%s monster='%s' name='%s' id=%d count=%d (%d,%d)\n", command, monster, name, mob_id, number, sd->bl.x, sd->bl.y);
 
 	count = 0;
-	range = (int)sqrt(number) +2; // calculation of an odd number (+ 4 area around)
+	range = (int)sqrt((float)number) +2; // calculation of an odd number (+ 4 area around)
 	for (i = 0; i < number; i++) {
 		map_search_freecell(&sd->bl, 0, &mx,  &my, range, range, 0);
 		k = mob_once_spawn(sd, sd->bl.m, mx, my, name, mob_id, 1, "");
@@ -5365,7 +5365,7 @@ int atcommand_effect(const int fd, struct map_session_data* sd, const char* comm
 		return -1;
 	}
 
-	clif_specialeffect(&sd->bl, type, flag);
+	clif_specialeffect(&sd->bl, type, (send_target)flag);
 	clif_displaymessage(fd, msg_txt(229)); // Your effect has changed.
 	return 0;
 }
@@ -6997,9 +6997,8 @@ int atcommand_mobinfo(const int fd, struct map_session_data* sd, const char* com
 *------------------------------------------*/
 int atshowmobs_timer(int tid, unsigned int tick, int id, int data)
 {
-	struct map_session_data *sd;
-
-	if (!session[id] || (sd = session[id]->session_data) == NULL)
+	struct map_session_data* sd = map_id2sd(id);
+	if( sd == NULL )
 		return 0;
 
 	clif_viewpoint(sd, 1, 2, 0, 0, data, 0xFFFFFF);

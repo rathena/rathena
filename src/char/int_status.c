@@ -15,9 +15,10 @@ static DBMap* scdata_db = NULL; // int char_id -> struct scdata*
 char scdata_txt[1024]="save/scdata.txt"; //By [Skotlex]
 
 #ifdef ENABLE_SC_SAVING
-static void* create_scdata(DBKey key, va_list args) {
+static void* create_scdata(DBKey key, va_list args)
+{
 	struct scdata *data;
-	data = aCalloc(1, sizeof(struct scdata));
+	data = (struct scdata*)aCalloc(1, sizeof(struct scdata));
 	data->account_id = va_arg(args, int);
 	data->char_id = key.i;
 	return data;
@@ -28,9 +29,7 @@ static void* create_scdata(DBKey key, va_list args) {
  *------------------------------------------*/
 struct scdata* status_search_scdata(int aid, int cid)
 {
-	struct scdata *data;
-	data = scdata_db->ensure(scdata_db, i2key(cid), create_scdata, aid);
-	return data;
+	return (struct scdata*)scdata_db->ensure(scdata_db, i2key(cid), create_scdata, aid);
 }
 
 /*==========================================
@@ -39,7 +38,7 @@ struct scdata* status_search_scdata(int aid, int cid)
  *------------------------------------------*/
 void status_delete_scdata(int aid, int cid)
 {
-	struct scdata *scdata = idb_remove(scdata_db, cid);
+	struct scdata* scdata = (struct scdata*)idb_remove(scdata_db, cid);
 	if (scdata)
 	{
 		if (scdata->data)
@@ -71,7 +70,7 @@ static int inter_scdata_fromstr(char *line, struct scdata *sc_data)
 	if (sc_data->count < 1)
 		return 0;
 	
-	sc_data->data = aCalloc(sc_data->count, sizeof (struct status_change_data));
+	sc_data->data = (struct status_change_data*)aCalloc(sc_data->count, sizeof (struct status_change_data));
 
 	for (i = 0; i < sc_data->count; i++)
 	{
@@ -106,7 +105,7 @@ void status_load_scdata(const char* filename)
 		if (inter_scdata_fromstr(line, sc)) {
 			sd_count++;
 			sc_count+= sc->count;
-			sc = idb_put(scdata_db, sc->char_id, sc);
+			sc = (struct scdata*)idb_put(scdata_db, sc->char_id, sc);
 			if (sc) {
 				ShowError("Duplicate entry in %s for character %d\n", filename, sc->char_id);
 				if (sc->data) aFree(sc->data);

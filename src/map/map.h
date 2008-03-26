@@ -176,11 +176,12 @@ enum bl_type {
 	BL_SKILL = 0x020,
 	BL_NPC   = 0x040,
 	BL_CHAT  = 0x080,
+
+	BL_ALL   = 0xFFF,
 };
 
 //For common mapforeach calls. Since pets cannot be affected, they aren't included here yet.
 #define BL_CHAR (BL_PC|BL_MOB|BL_HOM)
-#define BL_ALL 0xfff
 
 enum npc_subtype { WARP, SHOP, SCRIPT, CASHSHOP };
 
@@ -228,6 +229,7 @@ struct block_list {
 	enum bl_type type;
 };
 
+
 // Mob List Held in memory for Dynamic Mobs [Wizputer]
 // Expanded to specify all mob-related spawn data by [Skotlex]
 struct spawn_data {
@@ -245,6 +247,7 @@ struct spawn_data {
 	} state;
 	char name[NAME_LENGTH],eventname[50]; //Name/event
 };
+
 
 
 

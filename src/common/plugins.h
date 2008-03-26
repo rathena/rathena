@@ -17,7 +17,7 @@
 	#define WIN32_LEAN_AND_MEAN
 	#include <windows.h>
 	#define DLL_OPEN(x)		LoadLibrary(x)
-	#define DLL_SYM(x,y,z)	(FARPROC)(x) = GetProcAddress(y,z)
+	#define DLL_SYM(x,y)	GetProcAddress(x,y)
 	#define DLL_CLOSE(x)	FreeLibrary(x)
 	char *DLL_ERROR(void);
 
@@ -28,7 +28,7 @@
 
 	#include <dlfcn.h>
 	#define DLL_OPEN(x)		dlopen(x,RTLD_NOW)
-	#define DLL_SYM(x,y,z)	(x) = (void *)dlsym(y,z)
+	#define DLL_SYM(x,y)	dlsym(x,y)
 	#define DLL_CLOSE(x)	dlclose(x)
 	#define DLL_ERROR		dlerror
 
@@ -60,7 +60,8 @@ int register_plugin_event(Plugin_Event_Func* func, char* name);
 int plugin_event_trigger(char* name);
 
 int export_symbol(void* var, size_t offset);
-#define EXPORT_SYMBOL(s)	export_symbol((s), -1);
+#define EXPORT_SYMBOL(s,o) export_symbol((void*)(s),(o));
+#define EXPORT_SYMBOL2(s) EXPORT_SYMBOL((s), -1);
 
 Plugin* plugin_open(const char* filename);
 void plugin_load(const char* filename);

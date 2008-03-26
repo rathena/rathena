@@ -38,6 +38,7 @@ Plugin* plugin_head = NULL;
 
 static Plugin_Info default_info = { "Unknown", PLUGIN_ALL, "0", PLUGIN_VERSION, "Unknown" };
 
+void** plugin_call_table;
 static size_t call_table_size	= 0;
 static size_t max_call_table	= 0;
 
@@ -196,7 +197,7 @@ Plugin* plugin_open(const char* filename)
 
 	// Retrieve plugin information
 	plugin->state = 0;	// initialising
-	DLL_SYM(info, plugin->dll, "plugin_info");
+	info = (Plugin_Info*)DLL_SYM(plugin->dll, "plugin_info");
 	// For high priority plugins (those that are explicitly loaded from the conf file)
 	// we'll ignore them even (could be a 3rd party dll file)
 	if( !info )
@@ -225,20 +226,20 @@ Plugin* plugin_open(const char* filename)
 	plugin->filename = aStrdup(filename);
 
 	// Initialise plugin call table (For exporting procedures)
-	DLL_SYM(procs, plugin->dll, "plugin_call_table");
+	procs = (void**)DLL_SYM(plugin->dll, "plugin_call_table");
 	if( procs )
 		*procs = plugin_call_table;
 	//else ShowDebug("plugin_open: plugin_call_table not found\n");
 
 	// Register plugin events
-	DLL_SYM(events, plugin->dll, "plugin_event_table");
+	events = (Plugin_Event_Table*)DLL_SYM(plugin->dll, "plugin_event_table");
 	if( events ){
 		int i = 0;
 		//ShowDebug("plugin_open: parsing plugin_event_table\n");
 		while( events[i].func_name ){
 			if( strcmpi(events[i].event_name, EVENT_PLUGIN_TEST) == 0 ){
 				Plugin_Test_Func* test_func;
-				DLL_SYM(test_func, plugin->dll, events[i].func_name);
+				test_func = (Plugin_Test_Func*)DLL_SYM(plugin->dll, events[i].func_name);
 				//ShowDebug("plugin_open: invoking "EVENT_PLUGIN_TEST" with %s()\n", events[i].func_name);
 				if( test_func && test_func() == 0 ){
 					// plugin has failed test, disabling
@@ -247,7 +248,7 @@ Plugin* plugin_open(const char* filename)
 				}
 			} else {
 				Plugin_Event_Func* func;
-				DLL_SYM(func, plugin->dll, events[i].func_name);
+				func = (Plugin_Event_Func*)DLL_SYM(plugin->dll, events[i].func_name);
 				if (func)
 					register_plugin_event(func, events[i].event_name);
 			}
@@ -340,27 +341,27 @@ void plugins_init(void)
 	register_plugin_func(EVENT_ATHENA_FINAL);
 
 	// networking
-	export_symbol(RFIFOSKIP,        SYMBOL_RFIFOSKIP);
-	export_symbol(WFIFOSET,         SYMBOL_WFIFOSET);
-	export_symbol(do_close,   SYMBOL_DELETE_SESSION);
-	export_symbol(session,          SYMBOL_SESSION);
-	export_symbol(&fd_max,          SYMBOL_FD_MAX);
-	export_symbol(addr_,            SYMBOL_ADDR);
+	EXPORT_SYMBOL(RFIFOSKIP,  SYMBOL_RFIFOSKIP);
+	EXPORT_SYMBOL(WFIFOSET,   SYMBOL_WFIFOSET);
+	EXPORT_SYMBOL(do_close,   SYMBOL_DELETE_SESSION);
+	EXPORT_SYMBOL(session,    SYMBOL_SESSION);
+	EXPORT_SYMBOL(&fd_max,    SYMBOL_FD_MAX);
+	EXPORT_SYMBOL(addr_,      SYMBOL_ADDR);
 	// timers
-	export_symbol(get_uptime,              SYMBOL_GET_UPTIME);
-	export_symbol(delete_timer,            SYMBOL_DELETE_TIMER);
-	export_symbol(add_timer_func_list,     SYMBOL_ADD_TIMER_FUNC_LIST);
-	export_symbol(add_timer_interval,      SYMBOL_ADD_TIMER_INTERVAL);
-	export_symbol(add_timer,               SYMBOL_ADD_TIMER);
-	export_symbol((void*)get_svn_revision, SYMBOL_GET_SVN_REVISION);
-	export_symbol(gettick,                 SYMBOL_GETTICK);
+	EXPORT_SYMBOL(get_uptime,              SYMBOL_GET_UPTIME);
+	EXPORT_SYMBOL(delete_timer,            SYMBOL_DELETE_TIMER);
+	EXPORT_SYMBOL(add_timer_func_list,     SYMBOL_ADD_TIMER_FUNC_LIST);
+	EXPORT_SYMBOL(add_timer_interval,      SYMBOL_ADD_TIMER_INTERVAL);
+	EXPORT_SYMBOL(add_timer,               SYMBOL_ADD_TIMER);
+	EXPORT_SYMBOL((void*)get_svn_revision, SYMBOL_GET_SVN_REVISION);
+	EXPORT_SYMBOL(gettick,                 SYMBOL_GETTICK);
 	// core
-	export_symbol(parse_console, SYMBOL_PARSE_CONSOLE);
-	export_symbol(&runflag,      SYMBOL_RUNFLAG);
-	export_symbol(arg_v,         SYMBOL_ARG_V);
-	export_symbol(&arg_c,        SYMBOL_ARG_C);
-	export_symbol(SERVER_NAME,   SYMBOL_SERVER_NAME);
-	export_symbol(&SERVER_TYPE,  SYMBOL_SERVER_TYPE);
+	EXPORT_SYMBOL(parse_console, SYMBOL_PARSE_CONSOLE);
+	EXPORT_SYMBOL(&runflag,      SYMBOL_RUNFLAG);
+	EXPORT_SYMBOL(arg_v,         SYMBOL_ARG_V);
+	EXPORT_SYMBOL(&arg_c,        SYMBOL_ARG_C);
+	EXPORT_SYMBOL(SERVER_NAME,   SYMBOL_SERVER_NAME);
+	EXPORT_SYMBOL(&SERVER_TYPE,  SYMBOL_SERVER_TYPE);
 
 	load_priority = 1;
 	plugins_config_read(PLUGIN_CONF_FILENAME);

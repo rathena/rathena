@@ -24,7 +24,7 @@ const char *stristr(const char *haystack, const char *needle);
 char* _strtok_r(char* s1, const char* s2, char** lasts);
 #endif
 
-#if !(defined(WIN32) && defined(_MSC_VER) && _MSC_VER >= 1400)
+#if !(defined(WIN32) && defined(_MSC_VER) && _MSC_VER >= 1400) && !defined(CYGWIN)
 size_t strnlen (const char* string, size_t maxlen);
 #endif
 
@@ -49,7 +49,7 @@ int strline(const char* str, size_t pos);
 
 
 /// Bitfield determining the behaviour of sv_parse.
-enum e_svopt
+typedef enum e_svopt
 {
 	// default: no escapes and no line terminator
 	SV_NOESCAPE_NOTERMINATE = 0,
@@ -59,7 +59,7 @@ enum e_svopt
 	SV_TERMINATE_LF = 2,
 	SV_TERMINATE_CRLF = 4,
 	SV_TERMINATE_CR = 8,
-};
+} e_svopt;
 
 /// Other escape sequences supported by the C compiler.
 #define SV_ESCAPE_C_SUPPORTED "abtnvfr\?\"'\\"

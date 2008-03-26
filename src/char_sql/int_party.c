@@ -211,7 +211,7 @@ struct party_data *inter_party_fromsql(int party_id)
 		return NULL;
 	
 	//Load from memory
-	p = idb_get(party_db_, party_id);
+	p = (struct party_data*)idb_get(party_db_, party_id);
 	if( p != NULL )
 		return p;
 
@@ -498,7 +498,7 @@ int mapif_parse_CreateParty(int fd, char *name, int item, int item2, struct part
 			}
 	}
 
-	p= aCalloc(1, sizeof(struct party_data));
+	p = (struct party_data*)aCalloc(1, sizeof(struct party_data));
 	
 	memcpy(p->party.name,name,NAME_LENGTH);
 	p->party.exp=0;

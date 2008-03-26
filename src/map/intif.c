@@ -585,7 +585,7 @@ int intif_guild_leave(int guild_id,int account_id,int char_id,int flag,const cha
 	WFIFOL(inter_fd, 6) = account_id;
 	WFIFOL(inter_fd,10) = char_id;
 	WFIFOB(inter_fd,14) = flag;
-	safestrncpy(WFIFOP(inter_fd,15),mes,40);
+	safestrncpy((char*)WFIFOP(inter_fd,15),mes,40);
 	WFIFOSET(inter_fd,55);
 	return 0;
 }
@@ -1702,12 +1702,14 @@ int intif_Auction_requestlist(int char_id, short type, int price, const char* se
 static void intif_parse_Auction_results(int fd)
 {
 	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,4));
-	short count = RFIFOW(fd,8), pages = RFIFOW(fd,10);
+	short count = RFIFOW(fd,8);
+	short pages = RFIFOW(fd,10);
+	uint8* data = RFIFOP(fd,12);
 
 	if( sd == NULL )
 		return;
 
-	clif_Auction_results(sd, count, pages, (char *)RFIFOP(fd,12));
+	clif_Auction_results(sd, count, pages, data);
 }
 
 int intif_Auction_register(struct auction_data *auction)
