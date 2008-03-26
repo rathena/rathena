@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= DiviniaRO members, cleaned by reddozen
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3a
 //===== Compatible With: =====================================
 //= SVN eA
 //===== Description: =========================================
@@ -20,6 +20,7 @@
 //= 1.2 Fixed bugs in the Hahoe/Lion/Bride Mask NPC. [L0ne_W0lf]
 //=	Fixed some of the names to iRO.
 //= 1.3 Fixed some color code bugs in Ghenirhemin. Thanks to yyCC. [L0ne_W0lf]
+//= 1.3a Fixed wrong item names (due to copy/paste) [Lupus]
 //============================================================
 
 //===================== Censor Bar =====================================================
@@ -902,7 +903,7 @@ payon_in03,139,124,3	script	Han Garam	88,{
 			mes "[Han Garam]";
 			mes "I still feel good that I had a chance";
 			mes "to exercise my skills, you know. It was fun, too.";
-			mes "Please take this Ayam.";
+			mes "Please take this Magistrate Hat.";
 			mes "As I promised, this is my gift for you.";
 			next;
 			delitem 954,300; //Shining_Scales
@@ -918,8 +919,8 @@ payon_in03,139,124,3	script	Han Garam	88,{
 			mes "so I guess that it will happen when the time is right.";
 			next;
 			mes "[Han Garam]";
-			mes "Thank you so much! Please take my Ayam with care,";
-			mes "and be proud that you are the owner of Ayam!";
+			mes "Thank you so much! Please take my Magistrate Hat with care,";
+			mes "and be proud that you are the owner of Magistrate Hat!";
 			close;
 		}
 		mes "[Han Garam]";
