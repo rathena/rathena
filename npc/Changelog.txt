@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/03/25
+	* Rev. 12434 Updated Zhed's Thor Vol. Base addition dialog to iRO's. [L0ne_W0lf]
 2008/03/24
 	* Rev. 12431 Assassins will now get their request item. (bugreport:1220) [L0ne_W0lf]
 2008/03/21
