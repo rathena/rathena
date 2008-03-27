@@ -43,21 +43,23 @@
 	2385 Recuvative_Armor		Should trigger HP/SP return with magical kills as well.
 
 =======================
-2008/07/23
+2008/03/27
+	* Added constants for the cell checking script function [ultramage]
+2008/03/23
 	* Rev. 12426 Corrected Bishop and Gopinich exp rewards. [L0ne_W0lf]
-2008/07/20
+2008/03/20
 	* Rev. 12420 Updated special effect rates on 11.3 gear. [L0ne_W0lf]
-2008/07/20
+2008/03/20
 	* Rev. 12408 Corrected more duplicates in mob drops. [L0ne_W0lf]
 	- Updated a few custom existing drops as well.
 	- Fixed Hode so it drops Slotted Town Sword
-2008/07/19
+2008/03/19
 	* Rev. 12401 Fallen Bishop lost his card...he found it though. [L0ne_W0lf]
 	* Rev. 12400 Updated some monster stats that got missed. [L0ne_W0lf]
 	* Rev. 12399 Updated Cursed Abbey monster drops. [L0ne_W0lf]
-2008/07/18
+2008/03/18
 	* Rev. 12397 Moscovia mobs will now do more damage. [L0ne_W0lf]
-2008/07/17
+2008/03/17
 	* Rev. 12386 Whoops. Incorrect ID in item_avail. :D [L0ne_W0lf]
 	* Rev. 12385 Whoops. Incorrect IDs in item_avail. [L0ne_W0lf]
 	* Rev. 12384 Added another item entry to item_avail. [L0ne_W0lf]

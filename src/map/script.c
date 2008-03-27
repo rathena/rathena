@@ -11635,19 +11635,6 @@ BUILDIN_FUNC(distance)
 	return 0;
 }
 
-BUILDIN_FUNC(checkcell)
-{
-	int m;
-	const char *map = script_getstr(st, 2);
-	m = mapindex_name2id(map);
-	if(m){
-		script_pushint(st,map_getcell(m, script_getnum(st,3), script_getnum(st,4),(cell_chk)script_getnum(st,5)));
-	} else {
-		script_pushint(st,0);
-	}
-	return 0;
-}
-
 // <--- [zBuffer] List of mathematics commands
 // [zBuffer] List of dynamic var commands --->
 //FIXME: some other functions are using this private function
@@ -12994,6 +12981,23 @@ BUILDIN_FUNC(openauction)
 	return 0;
 }
 
+/// Retrieves the value of the specified flag of the specified cell.
+///
+/// checkcell("<map name>",<x>,<y>,<type>) -> <bool>
+///
+/// @see cell_chk* constants in const.txt for the types
+BUILDIN_FUNC(checkcell)
+{
+	int m = map_mapname2mapid(script_getstr(st,2));
+	int x = script_getnum(st,3);
+	int y = script_getnum(st,4);
+	cell_chk type = (cell_chk)script_getnum(st,5);
+
+	script_pushint(st, map_getcell(m, x, y, type));
+
+	return 0;
+}
+
 /// Modifies flags of cells in the specified area.
 ///
 /// setcell "<map name>",<x1>,<y1>,<x2>,<y2>,<type>,<flag>;
@@ -13303,7 +13307,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(sqrt,"i"),
 	BUILDIN_DEF(pow,"ii"),
 	BUILDIN_DEF(distance,"iiii"),
-	BUILDIN_DEF(checkcell,"siii"),
 	// <--- [zBuffer] List of mathematics commands
 	// [zBuffer] List of dynamic var commands --->
 	BUILDIN_DEF(getd,"*"),
@@ -13364,6 +13367,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkchatting,"*"),
 	BUILDIN_DEF(openmail,""),
 	BUILDIN_DEF(openauction,""),
+	BUILDIN_DEF(checkcell,"siii"),
 	BUILDIN_DEF(setcell,"siiiiii"),
 	{NULL,NULL,NULL},
 };

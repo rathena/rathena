@@ -4,7 +4,7 @@
 //= A reference manual for the eAthena scripting language.
 //= Commands are sorted depending on their functionality.
 //===== Version ===========================================
-//= 3.17.20080312
+//= 3.18.20080327
 //=========================================================
 //= 1.0 - First release, filled will as much info as I could
 //=       remember or figure out, most likely there are errors,
@@ -106,6 +106,8 @@
 //=       Woopth. Fixed spelling. ;P Should be a bit clearer now. [L0ne_W0lf]
 //= 3.17.20080312
 //=       Corrected cashshop description. (#FREEPOINTS->#KAFRAPOINTS) [L0ne_W0lf]
+//= 3.18.20080327
+//=       Added documentation for the 'checkcell' command [ultramage]
 //=========================================================
 
 This document is a reference manual for all the scripting commands and functions 
@@ -6176,5 +6178,42 @@ to proceed until all barricades are destroyed. This script would place and
 remove a nonwalkable row of cells after the barricade mobs.
 	
 ---------------------------------------
+
+*checkcell ("<map name>",<x>,<y>,<type>);
+
+This command will return 1 or 0, depending on whether the specified cell has
+the 'type' flag set or not. There are various types to check, all mimicking
+the server's cell_chk enumeration. The types can be found in db/const.txt.
+
+The meaning of the individual types can be confusing, so here's an overview:
+  - cell_chkwall/water/cliff
+    these check directly for the 'terrain component' of the specified cell
+  - cell_chkpass/reach/nopass/noreach
+    passable = not wall & not cliff, reachable = passable wrt. no-stacking mod
+  - cell_chknpc/basilica/landprotector/novending/nochat
+    these check for specific dynamic flags (their name indicates what they do)
+
+Example:
+
+	mes "Pick a destination map.";
+	input .@map$;
+	mes "Alright, now give me the coordinates.";
+	input .@x;
+	input .@y;
+	if( !checkcell(.@map$,.@x,.@y,cell_chkpass) )
+	{
+		mes "Can't warp you there, sorry!";
+		close;
+	}
+	else
+	{
+		mes "Ok, get ready...";
+		close2;
+		warp .@map$, .@x, .@y;
+		end;
+	}
+
+---------------------------------------
+
 Whew.
 That's about all of them.
