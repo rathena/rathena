@@ -3,6 +3,8 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2007/03/27
+	* Chagned trunk's default server->client PACKETVER to 9
 2008/03/26
 	* Adjusted eAthena code to compile cleanly in C++ mode.
 2008/03/24

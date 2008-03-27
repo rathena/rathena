@@ -37,7 +37,7 @@ struct guild;
 // v8 - 2007-05-21aSakexe+ - 0x283
 // v9 - 2007-11-06aSakexe+ - 0x78, 0x7c, 0x22c
 #ifndef PACKETVER
-	#define PACKETVER	7
+	#define PACKETVER	9
 #endif
 
 // packet DB
