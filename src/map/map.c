@@ -1693,21 +1693,19 @@ struct map_session_data * map_nick2sd(const char *nick)
 	{
 		if( battle_config.partial_name_scan )
 		{// partial name search
+			int qty = 0;
+
 			if( strnicmp(sd->status.name, nick, nicklen) == 0 )
 			{
-				if( strcmp(sd->status.name, nick) == 0 )
-				{// perfect match found
-					found_sd = sd;
-					break;
-				}
-				if( found_sd != NULL )
-				{// collision
-					found_sd = NULL;
-					break;
-				}
-
 				found_sd = sd;
+
+				if( strcmp(sd->status.name, nick) == 0 )
+					break; // Perfect Match
+
+				qty++;
 			}
+
+			if( qty != 1 ) found_sd = NULL; // Collisions
 		}
 		else
 		{// exact search only
