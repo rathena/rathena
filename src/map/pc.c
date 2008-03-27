@@ -3586,11 +3586,12 @@ int pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y
 		if(!sd->mapindex || map_mapname2ipport(mapindex,&ip,&port))
 			return 2;
 
+		//remove from map, THEN change x/y coordinates
+		unit_remove_map_pc(sd,clrtype);
 		sd->mapindex = mapindex;
 		sd->bl.x=x;
 		sd->bl.y=y;
 		pc_clean_skilltree(sd);
-		unit_remove_map_pc(sd,clrtype);
 		chrif_save(sd,2);
 		chrif_changemapserver(sd, ip, (short)port);
 		//It is important to invoke remove_map separately from unit_free before
