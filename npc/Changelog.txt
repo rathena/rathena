@@ -1,5 +1,7 @@
 Date		Added
 ======
+2008/03/27
+	* Fixed typos and misplaced names in valkyrie.txt and 2006_headgear.txt [Lupus]
 2008/03/25
 	* Rev. 12434 Updated Zhed's Thor Vol. Base addition dialog to iRO's. [L0ne_W0lf]
 2008/03/24

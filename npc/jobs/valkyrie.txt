@@ -5,7 +5,7 @@
 //= finished, optimized and tested by Lupus
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
-//= 2.9
+//= 2.9a
 //===== Compatible With: ===================================== 
 //= eAthena SVN
 //===== Description: ========================================= 
@@ -35,6 +35,7 @@
 //= 2.7b Removed function "F_BlockHigh" as it's no longer used. [L0ne_W0lf]
 //= 2.8 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.9 Corrected Valkyrie case spicifying where to warp after rebirthing. [L0ne_W0lf]
+//= 2.9 Fixed Verdandi typo [Lupus]
 //============================================================ 
 
 valkyrie,48,86,4	script	Valkyrie#	811,{
@@ -120,7 +121,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 			mes "[Valkyrie]";
 			mes "With two,";
 			mes "I will ask the";
-			mes "goddess Verdani to keep";
+			mes "goddess Verdandi to keep";
 			mes "and record the most honorable moments of your present life.";
 			next;
 			mes "[Valkyrie]";
