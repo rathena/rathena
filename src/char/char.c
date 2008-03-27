@@ -2009,27 +2009,36 @@ int parse_fromlogin(int fd)
 
 		// acknowledgement of account authentication request
 		case 0x2713:
-			if (RFIFOREST(fd) < 51)
+			if (RFIFOREST(fd) < 59)
 				return 0;
+		{
+			int account_id = RFIFOL(fd,2);
+			int login_id1 = RFIFOL(fd,6);
+			int login_id2 = RFIFOL(fd,10);
+			bool result = RFIFOB(fd,14);
+			const char* email = (const char*)RFIFOP(fd,15);
+			time_t connect_until = (time_t)RFIFOL(fd,55);
 
 			// find the session with this account id
-			ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) && sd->account_id == RFIFOL(fd,2) );
+			ARR_FIND( 0, fd_max, i, session[i] && (sd = (struct char_session_data*)session[i]->session_data) &&
+				sd->account_id == account_id && sd->login_id1 == login_id1 && sd->login_id2 == login_id2 );
 			if( i < fd_max )
 			{
-				if( RFIFOB(fd,6) != 0 ) { // failure
+				if( result ) { // failure
 					WFIFOHEAD(i,3);
 					WFIFOW(i,0) = 0x6c;
 					WFIFOB(i,2) = 0x42;
 					WFIFOSET(i,3);
 				} else { // success
-					memcpy(sd->email, RFIFOP(fd,7), 40);
+					memcpy(sd->email, email, 40);
 					if (e_mail_check(sd->email) == 0)
 						strncpy(sd->email, "a@a.com", 40); // default e-mail
-					sd->connect_until_time = (time_t)RFIFOL(fd,47);
+					sd->connect_until_time = connect_until;
 					char_auth_ok(i, sd);
 				}
 			}
-			RFIFOSKIP(fd,51);
+		}
+			RFIFOSKIP(fd,59);
 		break;
 
 		// Receiving of an e-mail/time limit from the login-server (answer of a request because a player comes back from map-server to char-server) by [Yor]
@@ -3223,12 +3232,12 @@ int parse_char(int fd)
 
 	if(session[fd]->flag.eof)
 	{
-		if (sd != NULL)
+		if( sd != NULL && sd->auth )
 		{
 			struct online_char_data* data = (struct online_char_data*)idb_get(online_char_db, sd->account_id);
-			if (!data || data->server == -1) //If it is not in any server, send it offline. [Skotlex]
+			if( data == NULL || data->server == -1) //If it is not in any server, send it offline. [Skotlex]
 				set_char_offline(99,sd->account_id);
-			if (data && data->fd == fd)
+			if( data != NULL && data->fd == fd)
 				data->fd = -1;
 		}
 		do_close(fd);

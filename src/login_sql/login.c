@@ -65,16 +65,26 @@ char login_db_userid[256] = "userid";
 char login_db_user_pass[256] = "user_pass";
 char login_db_level[256] = "level";
 
-//-----------------------------------------------------
 
 struct login_session_data {
 	uint16 md5keylen;
 	char md5key[20];
 };
 
-// auth information of incoming clients
-struct _auth_fifo auth_fifo[AUTH_FIFO_SIZE];
-int auth_fifo_pos = 0;
+//-----------------------------------------------------
+// Auth database
+//-----------------------------------------------------
+#define AUTH_TIMEOUT 30000
+
+struct auth_node {
+	int account_id;
+	uint32 login_id1;
+	uint32 login_id2;
+	uint32 ip;
+	uint8 sex;
+};
+
+static DBMap* auth_db; // int account_id -> struct auth_node*
 
 //-----------------------------------------------------
 // Online User Database [Wizputer]
@@ -99,11 +109,11 @@ static void* create_online_user(DBKey key, va_list args)
 	return p;
 }
 
-void add_online_user(int char_server, int account_id)
+struct online_login_data* add_online_user(int char_server, int account_id)
 {
 	struct online_login_data* p;
 	if( !login_config.online_check )
-		return;
+		return NULL;
 	p = (struct online_login_data*)idb_ensure(online_db, account_id, create_online_user);
 	p->char_server = char_server;
 	if( p->waiting_disconnect != -1 )
@@ -111,27 +121,31 @@ void add_online_user(int char_server, int account_id)
 		delete_timer(p->waiting_disconnect, waiting_disconnect_timer);
 		p->waiting_disconnect = -1;
 	}
+	return p;
 }
 
 void remove_online_user(int account_id)
 {
+	struct online_login_data* p;
 	if( !login_config.online_check )
 		return;
-	if( account_id == 99 )
-	{// reset all to offline
-		online_db->clear(online_db, NULL); // purge db
+	p = (struct online_login_data*)idb_get(online_db, account_id);
+	if( p == NULL )
 		return;
-	}
+	if( p->waiting_disconnect != -1 )
+		delete_timer(p->waiting_disconnect, waiting_disconnect_timer);
+
 	idb_remove(online_db, account_id);
 }
 
 static int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data)
 {
 	struct online_login_data* p = (struct online_login_data*)idb_get(online_db, id);
-	if( p != NULL && p->waiting_disconnect == id )
+	if( p != NULL && p->waiting_disconnect == tid && p->account_id == id )
 	{
 		p->waiting_disconnect = -1;
 		remove_online_user(id);
+		idb_remove(auth_db, id);
 	}
 	return 0;
 }
@@ -550,28 +564,6 @@ int mmo_auth(struct mmo_account* account, int fd)
 		return state - 1;
 	}
 
-	if( login_config.online_check )
-	{
-		struct online_login_data* data = (struct online_login_data*)idb_get(online_db, account->account_id);
-		if( data )
-		{// account is already marked as online!
-			if( data->char_server > -1 )
-			{// Request char servers to kick this account out. [Skotlex]
-				uint8 buf[8];
-				ShowNotice("User '%s' is already online - Rejected.\n", account->userid);
-				WBUFW(buf,0) = 0x2734;
-				WBUFL(buf,2) = account->account_id;
-				charif_sendallwos(-1, buf, 6);
-				if( data->waiting_disconnect == -1 )
-					data->waiting_disconnect = add_timer(gettick()+30000, waiting_disconnect_timer, account->account_id, 0);
-				return 3; // Rejected
-			}
-			else
-				; // the client disconnects after doing auth, so can't really kick it... need some form of expiration timer
-
-		}
-	}
-
 	account->login_id1 = rand();
 	account->login_id2 = rand();
 
@@ -659,6 +651,8 @@ int parse_fromchar(int fd)
 			if( RFIFOREST(fd) < 19 )
 				return 0;
 		{
+			struct auth_node* node;
+
 			int account_id = RFIFOL(fd,2);
 			int login_id1 = RFIFOL(fd,6);
 			int login_id2 = RFIFOL(fd,10);
@@ -666,32 +660,19 @@ int parse_fromchar(int fd)
 			uint32 ip_ = ntohl(RFIFOL(fd,15));
 			RFIFOSKIP(fd,19);
 
-			ARR_FIND( 0, AUTH_FIFO_SIZE, i, 
-				auth_fifo[i].account_id == account_id &&
-				auth_fifo[i].login_id1  == login_id1 &&
-				auth_fifo[i].login_id2  == login_id2 &&
-				auth_fifo[i].sex        == sex &&
-				auth_fifo[i].ip         == ip_ &&
-				auth_fifo[i].delflag    == 0 );
-
-			if( i == AUTH_FIFO_SIZE || account_id <= 0 )
-			{// authentication not found
-				ShowStatus("Char-server '%s': authentication of the account %d REFUSED (ip: %s).\n", server[id].name, account_id, ip);
-				WFIFOHEAD(fd,51);
-				WFIFOW(fd,0) = 0x2713;
-				WFIFOL(fd,2) = account_id;
-				WFIFOB(fd,6) = 1;
-				// It is unnecessary to send email
-				// It is unnecessary to send validity date of the account
-				WFIFOSET(fd,51);
-			}
-			else
+			node = (struct auth_node*)idb_get(auth_db, account_id);
+			if( node != NULL &&
+			    node->account_id == account_id &&
+				node->login_id1  == login_id1 &&
+				node->login_id2  == login_id2 &&
+				node->sex        == sex &&
+				node->ip         == ip_ )
 			{// found
 				uint32 connect_until_time;
 				char email[40];
 
 				// each auth entry can only be used once
-				auth_fifo[i].delflag = 1;
+				idb_remove(auth_db, account_id);
 
 				// retrieve email and account expiration time
 				if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `email`,`connect_until` FROM `%s` WHERE `%s`='%d'", login_db, login_db_account_id, account_id) )
@@ -715,13 +696,28 @@ int parse_fromchar(int fd)
 				}
 
 				// send ack
-				WFIFOHEAD(fd,51);
+				WFIFOHEAD(fd,59);
 				WFIFOW(fd,0) = 0x2713;
 				WFIFOL(fd,2) = account_id;
-				WFIFOB(fd,6) = 0;
-				memcpy(WFIFOP(fd, 7), email, 40);
-				WFIFOL(fd,47) = connect_until_time;
-				WFIFOSET(fd,51);
+				WFIFOL(fd,6) = login_id1;
+				WFIFOL(fd,10) = login_id2;
+				WFIFOB(fd,14) = 0;
+				memcpy(WFIFOP(fd,15), email, 40);
+				WFIFOL(fd,55) = connect_until_time;
+				WFIFOSET(fd,59);
+			}
+			else
+			{// authentication not found
+				ShowStatus("Char-server '%s': authentication of the account %d REFUSED (ip: %s).\n", server[id].name, account_id, ip);
+				WFIFOHEAD(fd,59);
+				WFIFOW(fd,0) = 0x2713;
+				WFIFOL(fd,2) = account_id;
+				WFIFOL(fd,6) = login_id1;
+				WFIFOL(fd,10) = login_id2;
+				WFIFOB(fd,14) = 1;
+				// It is unnecessary to send email
+				// It is unnecessary to send validity date of the account
+				WFIFOSET(fd,59);
 			}
 		}
 		break;
@@ -1191,12 +1187,222 @@ int login_ip_ban_check(uint32 ip)
 	return 1;
 }
 
+void login_auth_ok(struct mmo_account* account, int fd)
+{
+	char esc_userid[NAME_LENGTH*2+1];
+	uint32 ip = session[fd]->client_addr;
+
+	uint8 server_num, n;
+	uint32 subnet_char_ip;
+	struct auth_node* node;
+	int i;
+
+	Sql_EscapeStringLen(sql_handle, esc_userid, account->userid, strlen(account->userid));
+
+	if( account->level < login_config.min_level_to_connect )
+	{
+		ShowStatus("Connection refused: the minimum GM level for connection is %d (account: %s, GM level: %d).\n", login_config.min_level_to_connect, account->userid, account->level);
+		WFIFOHEAD(fd,3);
+		WFIFOW(fd,0) = 0x81;
+		WFIFOB(fd,2) = 1; // 01 = Server closed
+		WFIFOSET(fd,3);
+		return;
+	}
+
+	server_num = 0;
+	for( i = 0; i < MAX_SERVERS; ++i )
+		if( session_isValid(server[i].fd) )
+			server_num++;
+
+	if( server_num == 0 )
+	{// if no char-server, don't send void list of servers, just disconnect the player with proper message
+		ShowStatus("Connection refused: there is no char-server online (account: %s).\n", account->userid);
+		WFIFOHEAD(fd,3);
+		WFIFOW(fd,0) = 0x81;
+		WFIFOB(fd,2) = 1; // 01 = Server closed
+		WFIFOSET(fd,3);
+		return;
+	}
+
+	if( login_config.online_check )
+	{
+		struct online_login_data* data = (struct online_login_data*)idb_get(online_db, account->account_id);
+		if( data )
+		{// account is already marked as online!
+			if( data->char_server > -1 )
+			{// Request char servers to kick this account out. [Skotlex]
+				uint8 buf[6];
+				ShowNotice("User '%s' is already online - Rejected.\n", account->userid);
+				WBUFW(buf,0) = 0x2734;
+				WBUFL(buf,2) = account->account_id;
+				charif_sendallwos(-1, buf, 6);
+				if( data->waiting_disconnect == -1 )
+					data->waiting_disconnect = add_timer(gettick()+AUTH_TIMEOUT, waiting_disconnect_timer, account->account_id, 0);
+
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x81;
+				WFIFOB(fd,2) = 8; // 08 = Server still recognizes your last login
+				WFIFOSET(fd,3);
+				return;
+			}
+			else
+			if( data->char_server == -1 )
+			{// client has authed but did not access char-server yet
+				// wipe previous session
+				idb_remove(auth_db, account->account_id);
+				remove_online_user(account->account_id);
+				data = NULL;
+			}
+		}
+	}
+
+	if( login_config.log_login && SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s','100', 'login ok')", loginlog_db, ip, esc_userid) )
+		Sql_ShowDebug(sql_handle);
+
+	if( account->level > 0 )
+		ShowStatus("Connection of the GM (level:%d) account '%s' accepted.\n", account->level, account->userid);
+	else
+		ShowStatus("Connection of the account '%s' accepted.\n", account->userid);
+
+	WFIFOHEAD(fd,47+32*server_num);
+	WFIFOW(fd,0) = 0x69;
+	WFIFOW(fd,2) = 47+32*server_num;
+	WFIFOL(fd,4) = account->login_id1;
+	WFIFOL(fd,8) = account->account_id;
+	WFIFOL(fd,12) = account->login_id2;
+	WFIFOL(fd,16) = 0; // in old version, that was for ip (not more used)
+	//memcpy(WFIFOP(fd,20), account->lastlogin, 24); // in old version, that was for name (not more used)
+	WFIFOW(fd,44) = 0; // unknown
+	WFIFOB(fd,46) = account->sex;
+	for( i = 0, n = 0; i < MAX_SERVERS; ++i )
+	{
+		if( !session_isValid(server[i].fd) )
+			continue;
+
+		subnet_char_ip = lan_subnetcheck(ip); // Advanced subnet check [LuzZza]
+		WFIFOL(fd,47+n*32) = htonl((subnet_char_ip) ? subnet_char_ip : server[i].ip);
+		WFIFOW(fd,47+n*32+4) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
+		memcpy(WFIFOP(fd,47+n*32+6), server[i].name, 20);
+		WFIFOW(fd,47+n*32+26) = server[i].users;
+		WFIFOW(fd,47+n*32+28) = server[i].maintenance;
+		WFIFOW(fd,47+n*32+30) = server[i].new_;
+		n++;
+	}
+	WFIFOSET(fd,47+32*server_num);
+
+	// create temporary auth entry
+	CREATE(node, struct auth_node, 1);
+	node->account_id = account->account_id;
+	node->login_id1 = account->login_id1;
+	node->login_id2 = account->login_id2;
+	node->sex = account->sex;
+	node->ip = ip;
+	idb_put(auth_db, account->account_id, node);
+
+	if( login_config.online_check )
+	{
+		struct online_login_data* data;
+
+		// mark client as 'online'
+		data = add_online_user(-1, account->account_id);
+
+		// schedule deletion of this node
+		data->waiting_disconnect = add_timer(gettick()+AUTH_TIMEOUT, waiting_disconnect_timer, account->account_id, 0);
+	}
+}
+
+void login_auth_failed(struct mmo_account* account, int fd, int result)
+{
+	char esc_userid[NAME_LENGTH*2+1];
+	uint32 ip = session[fd]->client_addr;
+
+	Sql_EscapeStringLen(sql_handle, esc_userid, account->userid, strlen(account->userid));
+
+	if (login_config.log_login)
+	{
+		const char* error;
+		switch( result ) {
+		case   0: error = "Unregistered ID."; break; // 0 = Unregistered ID
+		case   1: error = "Incorrect Password."; break; // 1 = Incorrect Password
+		case   2: error = "Account Expired."; break; // 2 = This ID is expired
+		case   3: error = "Rejected from server."; break; // 3 = Rejected from Server
+		case   4: error = "Blocked by GM."; break; // 4 = You have been blocked by the GM Team
+		case   5: error = "Not latest game EXE."; break; // 5 = Your Game's EXE file is not the latest version
+		case   6: error = "Banned."; break; // 6 = Your are Prohibited to log in until %s
+		case   7: error = "Server Over-population."; break; // 7 = Server is jammed due to over populated
+		case   8: error = "Account limit from company"; break; // 8 = No more accounts may be connected from this company
+		case   9: error = "Ban by DBA"; break; // 9 = MSI_REFUSE_BAN_BY_DBA
+		case  10: error = "Email not confirmed"; break; // 10 = MSI_REFUSE_EMAIL_NOT_CONFIRMED
+		case  11: error = "Ban by GM"; break; // 11 = MSI_REFUSE_BAN_BY_GM
+		case  12: error = "Working in DB"; break; // 12 = MSI_REFUSE_TEMP_BAN_FOR_DBWORK
+		case  13: error = "Self Lock"; break; // 13 = MSI_REFUSE_SELF_LOCK
+		case  14: error = "Not Permitted Group"; break; // 14 = MSI_REFUSE_NOT_PERMITTED_GROUP
+		case  15: error = "Not Permitted Group"; break; // 15 = MSI_REFUSE_NOT_PERMITTED_GROUP
+		case  99: error = "Account gone."; break; // 99 = This ID has been totally erased
+		case 100: error = "Login info remains."; break; // 100 = Login information remains at %s
+		case 101: error = "Hacking investigation."; break; // 101 = Account has been locked for a hacking investigation. Please contact the GM Team for more information
+		case 102: error = "Bug investigation."; break; // 102 = This account has been temporarily prohibited from login due to a bug-related investigation
+		case 103: error = "Deleting char."; break; // 103 = This character is being deleted. Login is temporarily unavailable for the time being
+		case 104: error = "Deleting spouse char."; break; // 104 = This character is being deleted. Login is temporarily unavailable for the time being
+		default : error = "Unknown Error."; break;
+		}
+
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s', '%d','login failed : %s')", loginlog_db, ip, esc_userid, result, error) )
+			Sql_ShowDebug(sql_handle);
+	}
+
+	if( result == 1 && login_config.dynamic_pass_failure_ban && login_config.log_login ) // failed password
+	{
+		unsigned long failures = 0;
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT count(*) FROM `%s` WHERE `ip` = '%u' AND `rcode` = '1' AND `time` > NOW() - INTERVAL %d MINUTE",
+			loginlog_db, ip, login_config.dynamic_pass_failure_ban_interval) )// how many times failed account? in one ip.
+			Sql_ShowDebug(sql_handle);
+
+		//check query result
+		if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+		{
+			char* data;
+			Sql_GetData(sql_handle, 0, &data, NULL);
+			failures = strtoul(data, NULL, 10);
+			Sql_FreeResult(sql_handle);
+		}
+		if( failures >= login_config.dynamic_pass_failure_ban_limit )
+		{
+			uint8* p = (uint8*)&ip;
+			if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `ipbanlist`(`list`,`btime`,`rtime`,`reason`) VALUES ('%u.%u.%u.*', NOW() , NOW() +  INTERVAL %d MINUTE ,'Password error ban: %s')", p[3], p[2], p[1], login_config.dynamic_pass_failure_ban_duration, esc_userid) )
+				Sql_ShowDebug(sql_handle);
+		}
+	}
+
+	WFIFOHEAD(fd,23);
+	WFIFOW(fd,0) = 0x6a;
+	WFIFOB(fd,2) = (uint8)result;
+	if( result != 6 )
+		memset(WFIFOP(fd,3), '\0', 20);
+	else
+	{// 6 = Your are Prohibited to log in until %s
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `ban_until` FROM `%s` WHERE `%s` = %s '%s'", login_db, login_db_userid, (login_config.case_sensitive ? "BINARY" : ""), esc_userid) )
+			Sql_ShowDebug(sql_handle);
+		else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
+		{
+			char* data;
+			time_t ban_until_time;
+
+			Sql_GetData(sql_handle, 0, &data, NULL);
+			ban_until_time = (time_t)strtoul(data, NULL, 10);
+			Sql_FreeResult(sql_handle);
+
+			strftime((char*)WFIFOP(fd,3), 20, login_config.date_format, localtime(&ban_until_time));
+		}
+	}
+	WFIFOSET(fd,23);
+}
+
 //----------------------------------------------------------------------------------------
 // Default packet parsing (normal players or administation/char-server connection requests)
 //----------------------------------------------------------------------------------------
 int parse_login(int fd)
 {
-	char esc_userid[NAME_LENGTH*2+1];// escaped username
 	struct mmo_account account;
 	int result, i;
 	uint32 ipl;
@@ -1272,165 +1478,13 @@ int parse_login(int fd)
 			RFIFOSKIP(fd,packet_len);
 
 			account.passwdenc = (command == 0x01dd) ? PASSWORDENC : 0;
-			Sql_EscapeStringLen(sql_handle, esc_userid, account.userid, strlen(account.userid));
 
 			result = mmo_auth(&account, fd);
+
 			if( result == -1 )
-			{	// auth success
-				if( login_config.min_level_to_connect > account.level )
-				{
-					ShowStatus("Connection refused: the minimum GM level for connection is %d (account: %s, GM level: %d, ip: %s).\n", login_config.min_level_to_connect, account.userid, account.level, ip);
-					WFIFOHEAD(fd,3);
-					WFIFOW(fd,0) = 0x81;
-					WFIFOB(fd,2) = 1; // 01 = Server closed
-					WFIFOSET(fd,3);
-				}
-				else
-				{
-					uint8 server_num, n;
-					uint32 subnet_char_ip;
-
-					server_num = 0;
-					for( i = 0; i < MAX_SERVERS; ++i )
-						if( session_isValid(server[i].fd) )
-							server_num++;
-
-					if( server_num > 0 )
-					{// if at least 1 char-server
-						if( login_config.log_login && SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s','100', 'login ok')", loginlog_db, ipl, esc_userid) )
-							Sql_ShowDebug(sql_handle);
-						if( account.level )
-							ShowStatus("Connection of the GM (level:%d) account '%s' accepted.\n", account.level, account.userid);
-						else
-							ShowStatus("Connection of the account '%s' accepted.\n", account.userid);
-
-						WFIFOHEAD(fd,47+32*server_num);
-						WFIFOW(fd,0) = 0x69;
-						WFIFOW(fd,2) = 47+32*server_num;
-						WFIFOL(fd,4) = account.login_id1;
-						WFIFOL(fd,8) = account.account_id;
-						WFIFOL(fd,12) = account.login_id2;
-						WFIFOL(fd,16) = 0; // in old version, that was for ip (not more used)
-						//memcpy(WFIFOP(fd,20), account.lastlogin, 24); // in old version, that was for name (not more used)
-						WFIFOW(fd,44) = 0; // unknown
-						WFIFOB(fd,46) = account.sex;
-						for( i = 0, n = 0; i < MAX_SERVERS; ++i )
-						{
-							if( !session_isValid(server[i].fd) )
-								continue;
-
-							subnet_char_ip = lan_subnetcheck(ipl); // Advanced subnet check [LuzZza]
-							WFIFOL(fd,47+n*32) = htonl((subnet_char_ip) ? subnet_char_ip : server[i].ip);
-							WFIFOW(fd,47+n*32+4) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
-							memcpy(WFIFOP(fd,47+n*32+6), server[i].name, 20);
-							WFIFOW(fd,47+n*32+26) = server[i].users;
-							WFIFOW(fd,47+n*32+28) = server[i].maintenance;
-							WFIFOW(fd,47+n*32+30) = server[i].new_;
-							n++;
-						}
-						WFIFOSET(fd,47+32*server_num);
-
-						if (auth_fifo_pos >= AUTH_FIFO_SIZE)
-							auth_fifo_pos = 0;
-						auth_fifo[auth_fifo_pos].account_id = account.account_id;
-						auth_fifo[auth_fifo_pos].login_id1 = account.login_id1;
-						auth_fifo[auth_fifo_pos].login_id2 = account.login_id2;
-						auth_fifo[auth_fifo_pos].sex = account.sex;
-						auth_fifo[auth_fifo_pos].delflag = 0;
-						auth_fifo[auth_fifo_pos].ip = session[fd]->client_addr;
-						auth_fifo_pos++;
-					}
-					else
-					{// if no char-server, don't send void list of servers, just disconnect the player with proper message
-						ShowStatus("Connection refused: there is no char-server online (account: %s, ip: %s).\n", account.userid, ip);
-						WFIFOHEAD(fd,3);
-						WFIFOW(fd,0) = 0x81;
-						WFIFOB(fd,2) = 1; // 01 = Server closed
-						WFIFOSET(fd,3);
-					}
-				}
-			}
+				login_auth_ok(&account, fd);
 			else
-			{	// auth failed
-				if (login_config.log_login)
-				{
-					const char* error;
-					switch( result ) {
-					case   0: error = "Unregistered ID."; break; // 0 = Unregistered ID
-					case   1: error = "Incorrect Password."; break; // 1 = Incorrect Password
-					case   2: error = "Account Expired."; break; // 2 = This ID is expired
-					case   3: error = "Rejected from server."; break; // 3 = Rejected from Server
-					case   4: error = "Blocked by GM."; break; // 4 = You have been blocked by the GM Team
-					case   5: error = "Not latest game EXE."; break; // 5 = Your Game's EXE file is not the latest version
-					case   6: error = "Banned."; break; // 6 = Your are Prohibited to log in until %s
-					case   7: error = "Server Over-population."; break; // 7 = Server is jammed due to over populated
-					case   8: error = "Account limit from company"; break; // 8 = No more accounts may be connected from this company
-					case   9: error = "Ban by DBA"; break; // 9 = MSI_REFUSE_BAN_BY_DBA
-					case  10: error = "Email not confirmed"; break; // 10 = MSI_REFUSE_EMAIL_NOT_CONFIRMED
-					case  11: error = "Ban by GM"; break; // 11 = MSI_REFUSE_BAN_BY_GM
-					case  12: error = "Working in DB"; break; // 12 = MSI_REFUSE_TEMP_BAN_FOR_DBWORK
-					case  13: error = "Self Lock"; break; // 13 = MSI_REFUSE_SELF_LOCK
-					case  14: error = "Not Permitted Group"; break; // 14 = MSI_REFUSE_NOT_PERMITTED_GROUP
-					case  15: error = "Not Permitted Group"; break; // 15 = MSI_REFUSE_NOT_PERMITTED_GROUP
-					case  99: error = "Account gone."; break; // 99 = This ID has been totally erased
-					case 100: error = "Login info remains."; break; // 100 = Login information remains at %s
-					case 101: error = "Hacking investigation."; break; // 101 = Account has been locked for a hacking investigation. Please contact the GM Team for more information
-					case 102: error = "Bug investigation."; break; // 102 = This account has been temporarily prohibited from login due to a bug-related investigation
-					case 103: error = "Deleting char."; break; // 103 = This character is being deleted. Login is temporarily unavailable for the time being
-					case 104: error = "Deleting spouse char."; break; // 104 = This character is being deleted. Login is temporarily unavailable for the time being
-					default : error = "Unknown Error."; break;
-					}
-
-					if( SQL_ERROR == Sql_Query(sql_handle, "INSERT DELAYED INTO `%s`(`time`,`ip`,`user`,`rcode`,`log`) VALUES (NOW(), '%u', '%s', '%d','login failed : %s')", loginlog_db, ipl, esc_userid, result, error) )
-						Sql_ShowDebug(sql_handle);
-				}
-
-				if( result == 1 && login_config.dynamic_pass_failure_ban && login_config.log_login ) // failed password
-				{
-					unsigned long failures = 0;
-					if( SQL_ERROR == Sql_Query(sql_handle, "SELECT count(*) FROM `%s` WHERE `ip` = '%u' AND `rcode` = '1' AND `time` > NOW() - INTERVAL %d MINUTE",
-						loginlog_db, ipl, login_config.dynamic_pass_failure_ban_interval) )// how many times failed account? in one ip.
-						Sql_ShowDebug(sql_handle);
-
-					//check query result
-					if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
-					{
-						char* data;
-						Sql_GetData(sql_handle, 0, &data, NULL);
-						failures = strtoul(data, NULL, 10);
-						Sql_FreeResult(sql_handle);
-					}
-					if( failures >= login_config.dynamic_pass_failure_ban_limit )
-					{
-						uint8* p = (uint8*)&ipl;
-						if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `ipbanlist`(`list`,`btime`,`rtime`,`reason`) VALUES ('%u.%u.%u.*', NOW() , NOW() +  INTERVAL %d MINUTE ,'Password error ban: %s')", p[3], p[2], p[1], login_config.dynamic_pass_failure_ban_duration, esc_userid) )
-							Sql_ShowDebug(sql_handle);
-					}
-				}
-
-				WFIFOHEAD(fd,23);
-				WFIFOW(fd,0) = 0x6a;
-				WFIFOB(fd,2) = (uint8)result;
-				if( result != 6 )
-					memset(WFIFOP(fd,3), '\0', 20);
-				else
-				{// 6 = Your are Prohibited to log in until %s
-					if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `ban_until` FROM `%s` WHERE `%s` = %s '%s'", login_db, login_db_userid, (login_config.case_sensitive ? "BINARY" : ""), esc_userid) )
-						Sql_ShowDebug(sql_handle);
-					else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
-					{
-						char* data;
-						time_t ban_until_time;
-
-						Sql_GetData(sql_handle, 0, &data, NULL);
-						ban_until_time = (time_t)strtoul(data, NULL, 10);
-						Sql_FreeResult(sql_handle);
-
-						strftime((char*)WFIFOP(fd,3), 20, login_config.date_format, localtime(&ban_until_time));
-					}
-				}
-				WFIFOSET(fd,23);
-			}
+				login_auth_failed(&account, fd, result);
 		}
 		break;
 
@@ -1466,6 +1520,7 @@ int parse_login(int fd)
 			if (RFIFOREST(fd) < 86)
 				return 0;
 		{
+			char esc_userid[NAME_LENGTH*2+1];
 			char server_name[20];
 			char esc_server_name[20*2+1];
 			uint32 server_ip;
@@ -1598,9 +1653,6 @@ static int online_data_cleanup_sub(DBKey key, void *data, va_list ap)
 	struct online_login_data *character= (struct online_login_data*)data;
 	if (character->char_server == -2) //Unknown server.. set them offline
 		remove_online_user(character->account_id);
-	else if (character->char_server < 0)
-		//Free data from players that have not been online for a while.
-		db_remove(online_db, key);
 	return 0;
 }
 
@@ -1846,6 +1898,7 @@ void do_final(void)
 
 	mmo_db_close();
 	online_db->destroy(online_db, NULL);
+	auth_db->destroy(auth_db, NULL);
 
 	if(gm_account_db) aFree(gm_account_db);
 
@@ -1890,9 +1943,6 @@ int do_init(int argc, char** argv)
 
 	srand((unsigned int)time(NULL));
 
-	for( i = 0; i < AUTH_FIFO_SIZE; i++ )
-		auth_fifo[i].delflag = 1;
-
 	for( i = 0; i < MAX_SERVERS; i++ )
 		server[i].fd = -1;
 
@@ -1901,6 +1951,7 @@ int do_init(int argc, char** argv)
 	add_timer_func_list(waiting_disconnect_timer, "waiting_disconnect_timer");
 
 	// Auth init
+	auth_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	mmo_auth_sqldb_init();
 
 	// Read account information.

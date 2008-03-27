@@ -3,7 +3,29 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
-2007/03/27
+2008/03/27
+	* Partial rewrite of the login server's auth system.
+	- replaced the cyclic, size-limited auth_fifo data structure with the
+	  more appropriate DBMap-based alternative (stops some erratic behavior)
+	- added code to simulate the pseudo-status "online on login server"
+	- auth data will now expire after 30 seconds instead of persisting
+	- better-than-aegis handling of login cancellation (the server will wipe
+	  all previous auth data instead of making you wait for it to expire)
+	- proper status message - no more generic "rejected from server", now
+	  you'll get "the server still recognizes your last connection"
+	- fixed a typo in r10110 which caused disconnect timer removal to fail
+	- split off some parsing code to login_auth_ok() and login_auth_failed()
+	- extended the auth confirmation packet so that the login_id1/2 values
+	  are sent along with the associated account id (stops charserver from
+	  making wrong choices if two incoming sessions have the same acc_id)
+	- fixed a bug in the disconnect part of the main charserver parsing
+	  loop, where a non-authed client would erase the online db entry for
+	  a client that's already online, thus bypassing any dual-login checks
+	- added code to stop the waiting_disconnect timer when the associated
+	  online entry is removed right away, instead of doing checks later
+	- removed code that would periodically wipe the online status of clients
+	  that are in the auth process (producing yet more erratic behavior)
+	- commented out some TXT-only reconnect prevention code (bugreport:1281)
 	* merged the charserver acc modification code cleanup to TXT (r11324)
 	* changed trunk's default server->client PACKETVER to 9
 2008/03/26

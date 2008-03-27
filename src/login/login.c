@@ -79,10 +79,6 @@ struct login_session_data {
 	char md5key[20];
 };
 
-// auth information of incoming clients
-struct _auth_fifo auth_fifo[AUTH_FIFO_SIZE];
-int auth_fifo_pos = 0;
-
 // account database
 struct auth_data* auth_dat = NULL;
 uint32 auth_num = 0, auth_max = 0;
@@ -102,6 +98,21 @@ char gm_pass[64] = "";
 int level_new_gm = 60;
 
 int parse_admin(int fd);
+
+//-----------------------------------------------------
+// Auth database
+//-----------------------------------------------------
+#define AUTH_TIMEOUT 30000
+
+struct auth_node {
+	int account_id;
+	uint32 login_id1;
+	uint32 login_id2;
+	uint32 ip;
+	uint8 sex;
+};
+
+static DBMap* auth_db; // int account_id -> struct auth_node*
 
 //-----------------------------------------------------
 // Online User Database [Wizputer]
@@ -126,11 +137,11 @@ static void* create_online_user(DBKey key, va_list args)
 	return p;
 }
 
-void add_online_user(int char_server, int account_id)
+struct online_login_data* add_online_user(int char_server, int account_id)
 {
 	struct online_login_data* p;
 	if( !login_config.online_check )
-		return;
+		return NULL;
 	p = (struct online_login_data*)idb_ensure(online_db, account_id, create_online_user);
 	p->char_server = char_server;
 	if( p->waiting_disconnect != -1 )
@@ -138,17 +149,20 @@ void add_online_user(int char_server, int account_id)
 		delete_timer(p->waiting_disconnect, waiting_disconnect_timer);
 		p->waiting_disconnect = -1;
 	}
+	return p;
 }
 
 void remove_online_user(int account_id)
 {
+	struct online_login_data* p;
 	if( !login_config.online_check )
 		return;
-	if( account_id == 99 )
-	{// reset all to offline
-		online_db->clear(online_db, NULL); // purge db
+	p = (struct online_login_data*)idb_get(online_db, account_id);
+	if( p == NULL )
 		return;
-	}
+	if( p->waiting_disconnect != -1 )
+		delete_timer(p->waiting_disconnect, waiting_disconnect_timer);
+
 	idb_remove(online_db, account_id);
 }
 
@@ -159,6 +173,7 @@ static int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data
 	{
 		p->waiting_disconnect = -1;
 		remove_online_user(id);
+		idb_remove(auth_db, id);
 	}
 	return 0;
 }
@@ -1148,28 +1163,6 @@ int mmo_auth(struct mmo_account* account, int fd)
 		return auth_dat[i].state - 1;
 	}
 
-	if( login_config.online_check )
-	{
-		struct online_login_data* data = (struct online_login_data*)idb_get(online_db,auth_dat[i].account_id);
-		if( data )
-		{// account is already marked as online!
-			if( data->char_server > -1 )
-			{
-				//Request char servers to kick this account out. [Skotlex]
-				uint8 buf[8];
-				ShowNotice("User '%s' is already online - Rejected.\n", auth_dat[i].userid);
-				WBUFW(buf,0) = 0x2734;
-				WBUFL(buf,2) = auth_dat[i].account_id;
-				charif_sendallwos(-1, buf, 6);
-				if( data->waiting_disconnect == -1 )
-					data->waiting_disconnect = add_timer(gettick()+30000, waiting_disconnect_timer, auth_dat[i].account_id, 0);
-				return 3; // Rejected
-			}
-			else
-				; // the client disconnects after doing auth, so can't really kick it... need some form of expiration timer
-		}
-	}
-
 	ShowNotice("Authentication accepted (account: %s, id: %d, ip: %s)\n", account->userid, auth_dat[i].account_id, ip);
 
 	// auth start : time seed
@@ -1266,6 +1259,8 @@ int parse_fromchar(int fd)
 			if( RFIFOREST(fd) < 19 )
 				return 0;
 		{
+			struct auth_node* node;
+
 			int account_id = RFIFOL(fd,2);
 			int login_id1 = RFIFOL(fd,6);
 			int login_id2 = RFIFOL(fd,10);
@@ -1273,42 +1268,29 @@ int parse_fromchar(int fd)
 			uint32 ip_ = ntohl(RFIFOL(fd,15));
 			RFIFOSKIP(fd,19);
 
-			ARR_FIND( 0, AUTH_FIFO_SIZE, i, 
-				auth_fifo[i].account_id == account_id &&
-				auth_fifo[i].login_id1  == login_id1 &&
-				auth_fifo[i].login_id2  == login_id2 &&
-				auth_fifo[i].sex        == sex &&
-				auth_fifo[i].ip         == ip_ &&
-				auth_fifo[i].delflag    == 0 );
-
-			if( i == AUTH_FIFO_SIZE || account_id <= 0 )
-			{// authentication not found
-				ShowStatus("Char-server '%s': authentication of the account %d REFUSED (ip: %s).\n", server[id].name, account_id, ip);
-				WFIFOHEAD(fd,51);
-				WFIFOW(fd,0) = 0x2713;
-				WFIFOL(fd,2) = account_id;
-				WFIFOB(fd,6) = 1;
-				// It is unnecessary to send email
-				// It is unnecessary to send validity date of the account
-				WFIFOSET(fd,51);
-			}
-			else
+			node = (struct auth_node*)idb_get(auth_db, account_id);
+			if( node != NULL &&
+			    node->account_id == account_id &&
+				node->login_id1  == login_id1 &&
+				node->login_id2  == login_id2 &&
+				node->sex        == sex &&
+				node->ip         == ip_ )
 			{// found
-				time_t connect_until_time;
+				uint32 connect_until_time;
 				char email[40];
 				unsigned int k;
 
 				//ShowStatus("Char-server '%s': authentication of the account %d accepted (ip: %s).\n", server[id].name, account_id, ip);
 
 				// each auth entry can only be used once
-				auth_fifo[i].delflag = 1;
+				idb_remove(auth_db, account_id);
 
 				// retrieve email and account expiration time
 				ARR_FIND( 0, auth_num, k, auth_dat[k].account_id == account_id );
 				if( k < auth_num )
 				{
 					strcpy(email, auth_dat[k].email);
-					connect_until_time = auth_dat[k].connect_until_time;
+					connect_until_time = (uint32)auth_dat[k].connect_until_time;
 				}
 				else
 				{
@@ -1317,13 +1299,28 @@ int parse_fromchar(int fd)
 				}
 
 				// send ack
-				WFIFOHEAD(fd,51);
+				WFIFOHEAD(fd,59);
 				WFIFOW(fd,0) = 0x2713;
 				WFIFOL(fd,2) = account_id;
-				WFIFOB(fd,6) = 0;
-				memcpy(WFIFOP(fd, 7), email, 40);
-				WFIFOL(fd,47) = (unsigned long)connect_until_time;
-				WFIFOSET(fd,51);
+				WFIFOL(fd,6) = login_id1;
+				WFIFOL(fd,10) = login_id2;
+				WFIFOB(fd,14) = 0;
+				memcpy(WFIFOP(fd,15), email, 40);
+				WFIFOL(fd,55) = connect_until_time;
+				WFIFOSET(fd,59);
+			}
+			else
+			{// authentication not found
+				ShowStatus("Char-server '%s': authentication of the account %d REFUSED (ip: %s).\n", server[id].name, account_id, ip);
+				WFIFOHEAD(fd,59);
+				WFIFOW(fd,0) = 0x2713;
+				WFIFOL(fd,2) = account_id;
+				WFIFOL(fd,6) = login_id1;
+				WFIFOL(fd,10) = login_id2;
+				WFIFOB(fd,14) = 1;
+				// It is unnecessary to send email
+				// It is unnecessary to send validity date of the account
+				WFIFOSET(fd,59);
 			}
 		}
 		break;
@@ -1500,15 +1497,17 @@ int parse_fromchar(int fd)
 			else {
 				ShowNotice("Char-server '%s': Status change (account: %d, new status %d, ip: %s).\n", server[id].name, account_id, state, ip);
 				if (state != 0) {
-					unsigned char buf[16];
+					uint8 buf[11];
 					WBUFW(buf,0) = 0x2731;
 					WBUFL(buf,2) = account_id;
 					WBUFB(buf,6) = 0; // 0: change of state, 1: ban
 					WBUFL(buf,7) = state; // status or final date of a banishment
 					charif_sendallwos(-1, buf, 11);
+/*
 					ARR_FIND( 0, AUTH_FIFO_SIZE, j, auth_fifo[j].account_id == account_id );
 					if( j < AUTH_FIFO_SIZE )
 						auth_fifo[j].login_id1++; // to avoid reconnection error when come back from map-server (char-server will ask again the authentication)
+*/
 				}
 				auth_dat[i].state = state;
 				// Save
@@ -1565,10 +1564,11 @@ int parse_fromchar(int fd)
 					WBUFB(buf,6) = 1; // 0: change of status, 1: ban
 					WBUFL(buf,7) = (unsigned int)timestamp; // status or final date of a banishment
 					charif_sendallwos(-1, buf, 11);
+/*
 					ARR_FIND( 0, AUTH_FIFO_SIZE, j, auth_fifo[j].account_id == account_id );
 					if( j < AUTH_FIFO_SIZE )
 						auth_fifo[j].login_id1++; // to avoid reconnection error when come back from map-server (char-server will ask again the authentication)
-
+*/
 					auth_dat[i].ban_until_time = timestamp;
 					// Save
 					mmo_auth_sync();
@@ -1596,11 +1596,11 @@ int parse_fromchar(int fd)
 				uint8 sex = ( auth_dat[i].sex == 0 ) ? 1 : 0; // invert sex
 				auth_dat[i].sex = sex;
 				ShowNotice("Char-server '%s': Sex change (account: %d, new sex %c, ip: %s).\n", server[id].name, account_id, (sex == 1 ? 'M' : 'F'), ip);
-
+/*
 				ARR_FIND( 0, AUTH_FIFO_SIZE, j, auth_fifo[j].account_id == account_id );
 				if( j < AUTH_FIFO_SIZE )
 					auth_fifo[j].login_id1++; // to avoid reconnection error when come back from map-server (char-server will ask again the authentication)
-
+*/
 				WBUFW(buf,0) = 0x2723;
 				WBUFL(buf,2) = account_id;
 				WBUFB(buf,6) = sex;
@@ -1826,6 +1826,144 @@ int lan_subnetcheck(uint32 ip)
 	return ( i < subnet_count ) ? subnet[i].char_ip : 0;
 }
 
+void login_auth_ok(struct mmo_account* account, int fd)
+{
+	uint32 ip = session[fd]->client_addr;
+
+	uint8 server_num, n;
+	uint32 subnet_char_ip;
+	struct auth_node* node;
+	int i;
+
+	account->level = isGM(account->account_id);
+
+	if( account->level < login_config.min_level_to_connect )
+	{
+		ShowStatus("Connection refused: the minimum GM level for connection is %d (account: %s, GM level: %d).\n", login_config.min_level_to_connect, account->userid, account->level);
+		WFIFOHEAD(fd,3);
+		WFIFOW(fd,0) = 0x81;
+		WFIFOB(fd,2) = 1; // 01 = Server closed
+		WFIFOSET(fd,3);
+		return;
+	}
+
+	server_num = 0;
+	for( i = 0; i < MAX_SERVERS; ++i )
+		if( session_isValid(server[i].fd) )
+			server_num++;
+
+	if( server_num == 0 )
+	{// if no char-server, don't send void list of servers, just disconnect the player with proper message
+		ShowStatus("Connection refused: there is no char-server online (account: %s).\n", account->userid);
+		WFIFOHEAD(fd,3);
+		WFIFOW(fd,0) = 0x81;
+		WFIFOB(fd,2) = 1; // 01 = Server closed
+		WFIFOSET(fd,3);
+		return;
+	}
+
+	if( login_config.online_check )
+	{
+		struct online_login_data* data = (struct online_login_data*)idb_get(online_db, account->account_id);
+		if( data )
+		{// account is already marked as online!
+			if( data->char_server > -1 )
+			{// Request char servers to kick this account out. [Skotlex]
+				uint8 buf[8];
+				ShowNotice("User '%s' is already online - Rejected.\n", auth_dat[i].userid);
+				WBUFW(buf,0) = 0x2734;
+				WBUFL(buf,2) = account->account_id;
+				charif_sendallwos(-1, buf, 6);
+				if( data->waiting_disconnect == -1 )
+					data->waiting_disconnect = add_timer(gettick()+AUTH_TIMEOUT, waiting_disconnect_timer, account->account_id, 0);
+
+				WFIFOHEAD(fd,3);
+				WFIFOW(fd,0) = 0x81;
+				WFIFOB(fd,2) = 8; // 08 = Server still recognizes your last login
+				WFIFOSET(fd,3);
+				return;
+			}
+			else
+			if( data->char_server == -1 )
+			{// client has authed but did not access char-server yet
+				// wipe previous session
+				idb_remove(auth_db, account->account_id);
+				remove_online_user(account->account_id);
+				data = NULL;
+			}
+		}
+	}
+
+	if( account->level > 0 )
+		ShowStatus("Connection of the GM (level:%d) account '%s' accepted.\n", account->level, account->userid);
+	else
+		ShowStatus("Connection of the account '%s' accepted.\n", account->userid);
+
+	WFIFOHEAD(fd,47+32*server_num);
+	WFIFOW(fd,0) = 0x69;
+	WFIFOW(fd,2) = 47+32*server_num;
+	WFIFOL(fd,4) = account->login_id1;
+	WFIFOL(fd,8) = account->account_id;
+	WFIFOL(fd,12) = account->login_id2;
+	WFIFOL(fd,16) = 0; // in old version, that was for ip (not more used)
+	//memcpy(WFIFOP(fd,20), account->lastlogin, 24); // in old version, that was for name (not more used)
+	WFIFOW(fd,44) = 0; // unknown
+	WFIFOB(fd,46) = account->sex;
+	for( i = 0, n = 0; i < MAX_SERVERS; ++i )
+	{
+		if( !session_isValid(server[i].fd) )
+			continue;
+
+		subnet_char_ip = lan_subnetcheck(ip); // Advanced subnet check [LuzZza]
+		WFIFOL(fd,47+n*32) = htonl((subnet_char_ip) ? subnet_char_ip : server[i].ip);
+		WFIFOW(fd,47+n*32+4) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
+		memcpy(WFIFOP(fd,47+n*32+6), server[i].name, 20);
+		WFIFOW(fd,47+n*32+26) = server[i].users;
+		WFIFOW(fd,47+n*32+28) = server[i].maintenance;
+		WFIFOW(fd,47+n*32+30) = server[i].new_;
+		n++;
+	}
+	WFIFOSET(fd,47+32*server_num);
+
+	// create temporary auth entry
+	CREATE(node, struct auth_node, 1);
+	node->account_id = account->account_id;
+	node->login_id1 = account->login_id1;
+	node->login_id2 = account->login_id2;
+	node->sex = account->sex;
+	node->ip = ip;
+	idb_put(auth_db, account->account_id, node);
+
+	if( login_config.online_check )
+	{
+		struct online_login_data* data;
+
+		// mark client as 'online'
+		data = add_online_user(-1, account->account_id);
+
+		// schedule deletion of this node
+		data->waiting_disconnect = add_timer(gettick()+AUTH_TIMEOUT, waiting_disconnect_timer, account->account_id, 0);
+	}
+}
+
+void login_auth_failed(struct mmo_account* account, int fd, int result)
+{
+	WFIFOHEAD(fd,23);
+	WFIFOW(fd,0) = 0x6a;
+	WFIFOB(fd,2) = (uint8)result;
+	if( result != 6 )
+		memset(WFIFOP(fd,3), '\0', 20);
+	else
+	{// 6 = Your are Prohibited to log in until %s
+		char tmpstr[20];
+		int i = search_account_index(account->userid);
+		time_t ban_until_time = ( i >= 0 ) ? auth_dat[i].ban_until_time : 0;
+		strftime(tmpstr, 20, login_config.date_format, localtime(&ban_until_time));
+		safestrncpy((char*)WFIFOP(fd,3), tmpstr, 20); // ban timestamp goes here
+	}
+	WFIFOSET(fd,23);
+}
+
 //----------------------------------------------------------------------------------------
 // Default packet parsing (normal players or administation/char-server connection requests)
 //----------------------------------------------------------------------------------------
@@ -1912,97 +2050,9 @@ int parse_login(int fd)
 
 			result = mmo_auth(&account, fd);
 			if( result == -1 )
-			{	// auth success
-				int gm_level = isGM(account.account_id);
-				if( login_config.min_level_to_connect > gm_level )
-				{
-					ShowStatus("Connection refused: the minimum GM level for connection is %d (account: %s, GM level: %d, ip: %s).\n", login_config.min_level_to_connect, account.userid, gm_level, ip);
-					WFIFOHEAD(fd,3);
-					WFIFOW(fd,0) = 0x81;
-					WFIFOB(fd,2) = 1; // 01 = Server closed
-					WFIFOSET(fd,3);
-				}
-				else
-				{
-					uint8 server_num, n;
-					uint32 subnet_char_ip;
-
-					server_num = 0;
-					for( i = 0; i < MAX_SERVERS; ++i )
-						if( session_isValid(server[i].fd) )
-							server_num++;
-
-					if( server_num > 0 )
-					{// if at least 1 char-server
-						if (gm_level)
-							ShowStatus("Connection of the GM (level:%d) account '%s' accepted.\n", gm_level, account.userid);
-						else
-							ShowStatus("Connection of the account '%s' accepted.\n", account.userid);
-
-						WFIFOHEAD(fd,47+32*server_num);
-						WFIFOW(fd,0) = 0x69;
-						WFIFOW(fd,2) = 47+32*server_num;
-						WFIFOL(fd,4) = account.login_id1;
-						WFIFOL(fd,8) = account.account_id;
-						WFIFOL(fd,12) = account.login_id2;
-						WFIFOL(fd,16) = 0; // in old version, that was for ip (not more used)
-						//memcpy(WFIFOP(fd,20), account.lastlogin, 24); // in old version, that was for name (not more used)
-						WFIFOW(fd,44) = 0; // unknown
-						WFIFOB(fd,46) = account.sex;
-						for( i = 0, n = 0; i < MAX_SERVERS; ++i )
-						{
-							if( !session_isValid(server[i].fd) )
-								continue;
-
-							subnet_char_ip = lan_subnetcheck(ipl); // Advanced subnet check [LuzZza]
-							WFIFOL(fd,47+n*32) = htonl((subnet_char_ip) ? subnet_char_ip : server[i].ip);
-							WFIFOW(fd,47+n*32+4) = ntows(htons(server[i].port)); // [!] LE byte order here [!]
-							memcpy(WFIFOP(fd,47+n*32+6), server[i].name, 20);
-							WFIFOW(fd,47+n*32+26) = server[i].users;
-							WFIFOW(fd,47+n*32+28) = server[i].maintenance;
-							WFIFOW(fd,47+n*32+30) = server[i].new_;
-							n++;
-						}
-						WFIFOSET(fd,47+32*server_num);
-
-						if (auth_fifo_pos >= AUTH_FIFO_SIZE)
-							auth_fifo_pos = 0;
-						auth_fifo[auth_fifo_pos].account_id = account.account_id;
-						auth_fifo[auth_fifo_pos].login_id1 = account.login_id1;
-						auth_fifo[auth_fifo_pos].login_id2 = account.login_id2;
-						auth_fifo[auth_fifo_pos].sex = account.sex;
-						auth_fifo[auth_fifo_pos].delflag = 0;
-						auth_fifo[auth_fifo_pos].ip = session[fd]->client_addr;
-						auth_fifo_pos++;
-					}
-					else
-					{// if no char-server, don't send void list of servers, just disconnect the player with proper message
-						ShowStatus("Connection refused: there is no char-server online (account: %s, ip: %s).\n", account.userid, ip);
-						WFIFOHEAD(fd,3);
-						WFIFOW(fd,0) = 0x81;
-						WFIFOB(fd,2) = 1; // 01 = Server closed
-						WFIFOSET(fd,3);
-					}
-				}
-			}
+				login_auth_ok(&account, fd);
 			else
-			{	// auth failed
-				WFIFOHEAD(fd,23);
-				WFIFOW(fd,0) = 0x6a;
-				WFIFOB(fd,2) = (uint8)result;
-				if( result != 6 )
-					memset(WFIFOP(fd,3), '\0', 20);
-				else
-				{// 6 = Your are Prohibited to log in until %s
-					char tmpstr[20];
-					time_t ban_until_time;
-					i = search_account_index(account.userid);
-					ban_until_time = (i) ? auth_dat[i].ban_until_time : 0;
-					strftime(tmpstr, 20, login_config.date_format, localtime(&ban_until_time));
-					safestrncpy((char*)WFIFOP(fd,3), tmpstr, 20); // ban timestamp goes here
-				}
-				WFIFOSET(fd,23);
-			}
+				login_auth_failed(&account, fd, result);
 		}
 		break;
 
@@ -2256,9 +2306,6 @@ static int online_data_cleanup_sub(DBKey key, void *data, va_list ap)
 	struct online_login_data *character= (struct online_login_data*)data;
 	if (character->char_server == -2) //Unknown server.. set them offline
 		remove_online_user(character->account_id);
-	else if (character->char_server < 0)
-		//Free data from players that have not been online for a while.
-		db_remove(online_db, key);
 	return 0;
 }
 
@@ -2615,6 +2662,7 @@ void do_final(void)
 
 	mmo_auth_sync();
 	online_db->destroy(online_db, NULL);
+	auth_db->destroy(auth_db, NULL);
 
 	if(auth_dat) aFree(auth_dat);
 	if(gm_account_db) aFree(gm_account_db);
@@ -2666,9 +2714,6 @@ int do_init(int argc, char** argv)
 
 	srand((unsigned int)time(NULL));
 
-	for( i = 0; i < AUTH_FIFO_SIZE; i++ )
-		auth_fifo[i].delflag = 1;
-
 	for( i = 0; i < MAX_SERVERS; i++ )
 		server[i].fd = -1;
 
@@ -2677,6 +2722,7 @@ int do_init(int argc, char** argv)
 	add_timer_func_list(waiting_disconnect_timer, "waiting_disconnect_timer");
 
 	// Auth init
+	auth_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	mmo_auth_init();
 
 	// Read account information.

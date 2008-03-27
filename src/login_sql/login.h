@@ -22,7 +22,6 @@ struct mmo_account {
 	int account_id;
 	long login_id1;
 	long login_id2;
-	int char_id;
 	char lastlogin[24];
 	int sex;
 	uint8 level;
@@ -64,16 +63,5 @@ extern struct Login_Config {
 	char dnsbl_servs[1024];							// comma-separated list of dnsbl servers
 
 } login_config;
-
-// stores auth information of incoming clients
-// used during charserver auth validation process
-#define AUTH_FIFO_SIZE 256
-extern struct _auth_fifo {
-	int account_id;
-	uint32 login_id1, login_id2;
-	uint32 ip;
-	uint8 sex;
-	bool delflag;
-} auth_fifo[AUTH_FIFO_SIZE];
 
 #endif /* _LOGIN_SQL_H_ */

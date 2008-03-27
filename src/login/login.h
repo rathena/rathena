@@ -21,10 +21,9 @@ struct mmo_account {
 	int account_id;
 	long login_id1;
 	long login_id2;
-	long char_id;
 	char lastlogin[24];
 	char sex;
-	//uint8 level;
+	uint8 level;
 };
 
 struct mmo_char_server {
@@ -83,16 +82,5 @@ extern struct auth_data {
 	int account_reg2_num;
 	struct global_reg account_reg2[ACCOUNT_REG2_NUM]; // account script variables (stored on login server)
 } *auth_dat;
-
-// stores auth information of incoming clients
-// used during charserver auth validation process
-#define AUTH_FIFO_SIZE 256
-extern struct _auth_fifo {
-	int account_id;
-	uint32 login_id1, login_id2;
-	uint32 ip;
-	uint8 sex;
-	bool delflag;
-} auth_fifo[AUTH_FIFO_SIZE];
 
 #endif /* _LOGIN_H_ */
