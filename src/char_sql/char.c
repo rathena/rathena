@@ -2521,12 +2521,19 @@ int parse_frommap(int fd)
 			if (RFIFOREST(fd) < 44)
 				return 0;
 		{
-			int acc = RFIFOL(fd,2); // account_id of who ask (-1 if server itself made this request)
-			const char* name = (char*)RFIFOP(fd,6); // name of the target character
-			int type = RFIFOW(fd, 30); // type of operation: 1-block, 2-ban, 3-unblock, 4-unban
-
 			int result = 0; // 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline
 			char esc_name[NAME_LENGTH*2+1];
+
+			int acc = RFIFOL(fd,2); // account_id of who ask (-1 if server itself made this request)
+			const char* name = (char*)RFIFOP(fd,6); // name of the target character
+			int type = RFIFOW(fd,30); // type of operation: 1-block, 2-ban, 3-unblock, 4-unban
+			short year = RFIFOW(fd,32);
+			short month = RFIFOW(fd,34);
+			short day = RFIFOW(fd,36);
+			short hour = RFIFOW(fd,38);
+			short minute = RFIFOW(fd,40);
+			short second = RFIFOW(fd,42);
+			RFIFOSKIP(fd,44);
 
 			Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
 			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`name` FROM `%s` WHERE `name` = '%s'", char_db, esc_name) )
@@ -2539,6 +2546,7 @@ int parse_frommap(int fd)
 			else
 			if( SQL_SUCCESS != Sql_NextRow(sql_handle) )
 				Sql_ShowDebug(sql_handle);
+				//FIXME: set proper result value?
 			else
 			{
 				char name[NAME_LENGTH];
@@ -2566,12 +2574,12 @@ int parse_frommap(int fd)
 						WFIFOHEAD(login_fd,18);
 						WFIFOW(login_fd, 0) = 0x2725;
 						WFIFOL(login_fd, 2) = account_id;
-						WFIFOW(login_fd, 6) = RFIFOW(fd,32); // year
-						WFIFOW(login_fd, 8) = RFIFOW(fd,34); // month
-						WFIFOW(login_fd,10) = RFIFOW(fd,36); // day
-						WFIFOW(login_fd,12) = RFIFOW(fd,38); // hour
-						WFIFOW(login_fd,14) = RFIFOW(fd,40); // minute
-						WFIFOW(login_fd,16) = RFIFOW(fd,42); // second
+						WFIFOW(login_fd, 6) = year;
+						WFIFOW(login_fd, 8) = month;
+						WFIFOW(login_fd,10) = day;
+						WFIFOW(login_fd,12) = hour;
+						WFIFOW(login_fd,14) = minute;
+						WFIFOW(login_fd,16) = second;
 						WFIFOSET(login_fd,18);
 				break;
 				case 3: // unblock
@@ -2608,8 +2616,6 @@ int parse_frommap(int fd)
 				WFIFOW(fd,32) = result;
 				WFIFOSET(fd,34);
 			}
-
-			RFIFOSKIP(fd,44);
 		}
 		break;
 
