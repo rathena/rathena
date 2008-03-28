@@ -1681,6 +1681,7 @@ struct map_session_data * map_nick2sd(const char *nick)
 	struct map_session_data* found_sd;
 	struct s_mapiterator* iter;
 	size_t nicklen;
+	int qty = 0;
 
 	if( nick == NULL )
 		return NULL;
@@ -1693,31 +1694,29 @@ struct map_session_data * map_nick2sd(const char *nick)
 	{
 		if( battle_config.partial_name_scan )
 		{// partial name search
-			int qty = 0;
-
 			if( strnicmp(sd->status.name, nick, nicklen) == 0 )
 			{
 				found_sd = sd;
 
 				if( strcmp(sd->status.name, nick) == 0 )
-					break; // Perfect Match
+				{// Perfect Match
+					qty = 1;
+					break;
+				}
 
 				qty++;
 			}
-
-			if( qty != 1 ) found_sd = NULL; // Collisions
 		}
-		else
+		else if( strcasecmp(sd->status.name, nick) == 0 )
 		{// exact search only
-			if( strcasecmp(sd->status.name, nick) == 0 )
-			{
-				found_sd = sd;
-				break;
-			}
+			found_sd = sd;
+			break;
 		}
 	}
-
 	mapit_free(iter);
+
+	if( battle_config.partial_name_scan && qty != 1 )
+		found_sd = NULL;
 
 	return found_sd;
 }
