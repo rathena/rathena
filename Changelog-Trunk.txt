@@ -3,6 +3,15 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/03/28
+	* Some more txt/sql login server synchronization [ultramage]
+	- removed the option to specify multiple IPs/subnets for 'ladminallowip'
+	- removed the @gm command and all associated management code
+	- removed the 'save unknown packets' code
+	- removed the lengthy TXT ipban code (which was essentially a copy of
+	  what's already handled by the socket layer/packet_athena.conf)
+	- implemented 'start_limited_time' in SQL (expiration for new accounts)
+	- applied some missing TXT changes from the last update
 2008/03/27
 	* Updated SQL Files (item & mobs) [Toms]
 	* Partial rewrite of the login server's auth system.

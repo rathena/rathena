@@ -92,4 +92,3 @@
  99:@gat - For debugging (you inspect around gat)
  99:@packet - For debugging (packet variety)
 100:@nuke <char name> -
-100:@GM <password> - it becomes GM! (password is set in login_athena.conf)

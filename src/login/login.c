@@ -35,53 +35,26 @@ struct s_subnet {
 
 int subnet_count = 0;
 
+// GM account management
 struct gm_account* gm_account_db = NULL;
 unsigned int GM_num = 0; // number of gm accounts
-unsigned int GM_max = 0;
+char GM_account_filename[1024] = "conf/GM_account.txt";
+long creation_time_GM_account_file; // tracks the last-changed timestamp of the gm accounts file
+int gm_account_filename_check_timer = 15; // Timer to check if GM_account file has been changed and reload GM account automaticaly (in seconds; default: 15)
 
 //Account registration flood protection [Kevin]
 int allowed_regs = 1;
 int time_allowed = 10; //in seconds
-unsigned int new_reg_tick = 0;
-int num_regs = 0;
 
-int account_id_count = START_ACCOUNT_NUM;
 
+// data handling (TXT)
 char account_filename[1024] = "save/account.txt";
-char GM_account_filename[1024] = "conf/GM_account.txt";
-FILE *log_fp = NULL;
-char login_log_unknown_packets_filename[1024] = "log/login_unknown_packets.log";
-int save_unknown_packets = 0;
-long creation_time_GM_account_file; // tracks the last-changed timestamp of the gm accounts file
-int gm_account_filename_check_timer = 15; // Timer to check if GM_account file has been changed and reload GM account automaticaly (in seconds; default: 15)
-
-
-enum {
-	ACO_DENY_ALLOW = 0,
-	ACO_ALLOW_DENY,
-	ACO_MUTUAL_FAILTURE,
-	ACO_STRSIZE = 128,
-};
-
-int access_order = ACO_DENY_ALLOW;
-int access_allownum = 0;
-int access_denynum = 0;
-char *access_allow = NULL;
-char *access_deny = NULL;
-
-int access_ladmin_allownum = 0;
-char *access_ladmin_allow = NULL;
-
-int start_limited_time = -1; // Starting additional sec from now for the limited time at creation of accounts (-1: unlimited time, 0 or more: additional sec from now)
-
-struct login_session_data {
-	uint16 md5keylen;
-	char md5key[20];
-};
 
 // account database
 struct auth_data* auth_dat = NULL;
-uint32 auth_num = 0, auth_max = 0;
+unsigned int auth_num = 0, auth_max = 0;
+
+int account_id_count = START_ACCOUNT_NUM;
 
 // define the number of times that some players must authentify them before to save account file.
 // it's just about normal authentication. If an account is created or modified, save is immediatly done.
@@ -92,12 +65,22 @@ uint32 auth_num = 0, auth_max = 0;
 #define AUTH_SAVE_FILE_DIVIDER 50
 int auth_before_save_file = 0; // Counter. First save when 1st char-server do connection.
 
+
+// ladmin configuration
 bool admin_state = false;
 char admin_pass[24] = "";
-char gm_pass[64] = "";
-int level_new_gm = 60;
+uint32 admin_allowed_ip = 0;
 
 int parse_admin(int fd);
+
+
+//-----------------------------------------------------
+// Session data structure
+//-----------------------------------------------------
+struct login_session_data {
+	uint16 md5keylen;
+	char md5key[20];
+};
 
 //-----------------------------------------------------
 // Auth database
@@ -169,7 +152,7 @@ void remove_online_user(int account_id)
 static int waiting_disconnect_timer(int tid, unsigned int tick, int id, int data)
 {
 	struct online_login_data* p = (struct online_login_data*)idb_get(online_db, id);
-	if( p != NULL && p->waiting_disconnect == id )
+	if( p != NULL && p->waiting_disconnect == tid && p->account_id == id )
 	{
 		p->waiting_disconnect = -1;
 		remove_online_user(id);
@@ -216,6 +199,7 @@ int isGM(int account_id)
 //----------------------------------------------------------------------
 void addGM(int account_id, int level)
 {
+	static unsigned int GM_max = 0;
 	unsigned int i;
 
 	ARR_FIND( 0, auth_num, i, auth_dat[i].account_id == account_id );
@@ -311,118 +295,6 @@ int read_gm_account(void)
 	return 0;
 }
 
-//--------------------------------------------------------------
-// Test of the IP mask
-// (ip: IP to be tested, str: mask x.x.x.x/# or x.x.x.x/y.y.y.y)
-//--------------------------------------------------------------
-int check_ipmask(uint32 ip, const unsigned char *str)
-{
-	unsigned int i = 0, m = 0;
-	uint32 ip2, mask = 0;
-	uint32 a0, a1, a2, a3;
-	uint8* p = (uint8 *)&ip2, *p2 = (uint8 *)&mask;
-
-
-	// scan ip address
-	if (sscanf((const char*)str, "%u.%u.%u.%u/%n", &a0, &a1, &a2, &a3, &i) != 4 || i == 0)
-		return 0;
-	p[0] = (uint8)a3; p[1] = (uint8)a2; p[2] = (uint8)a1; p[3] = (uint8)a0;
-
-	// scan mask
-	if (sscanf((const char*)str+i, "%u.%u.%u.%u", &a0, &a1, &a2, &a3) == 4) {
-		p2[0] = (uint8)a3; p2[1] = (uint8)a2; p2[2] = (uint8)a1; p2[3] = (uint8)a0;
-	} else if (sscanf((const char*)(str+i), "%u", &m) == 1 && m <= 32) {
-		for(i = 32 - m; i < 32; i++)
-			mask |= (1 << i);
-	} else {
-		ShowError("check_ipmask: invalid mask [%s].\n", str);
-		return 0;
-	}
-
-	return ((ip & mask) == (ip2 & mask));
-}
-
-//---------------------
-// Access control by IP
-//---------------------
-int check_ip(uint32 ip)
-{
-	int i;
-	char buf[20];
-	char * access_ip;
-	enum { ACF_DEF, ACF_ALLOW, ACF_DENY } flag = ACF_DEF;
-
-	if (access_allownum == 0 && access_denynum == 0)
-		return 1; // When there is no restriction, all IP are authorised.
-
-//	+   012.345.: front match form, or
-//	    all: all IP are matched, or
-//	    012.345.678.901/24: network form (mask with # of bits), or
-//	    012.345.678.901/255.255.255.0: network form (mask with ip mask)
-//	+   Note about the DNS resolution (like www.ne.jp, etc.):
-//	    There is no guarantee to have an answer.
-//	    If we have an answer, there is no guarantee to have a 100% correct value.
-//	    And, the waiting time (to check) can be long (over 1 minute to a timeout). That can block the software.
-//	    So, DNS notation isn't authorised for ip checking.
-	sprintf(buf, "%u.%u.%u.%u.", CONVIP(ip));
-
-	for(i = 0; i < access_allownum; i++) {
-		access_ip = access_allow + i * ACO_STRSIZE;
-		if (memcmp(access_ip, buf, strlen(access_ip)) == 0 || check_ipmask(ip, (unsigned char*)access_ip)) {
-			if(access_order == ACO_ALLOW_DENY)
-				return 1; // With 'allow, deny' (deny if not allow), allow has priority
-			flag = ACF_ALLOW;
-			break;
-		}
-	}
-
-	for(i = 0; i < access_denynum; i++) {
-		access_ip = access_deny + i * ACO_STRSIZE;
-		if (memcmp(access_ip, buf, strlen(access_ip)) == 0 || check_ipmask(ip, (unsigned char*)access_ip)) {
-			//flag = ACF_DENY; // not necessary to define flag
-			return 0; // At this point, if it's 'deny', we refuse connection.
-		}
-	}
-
-	return (flag == ACF_ALLOW || access_order == ACO_DENY_ALLOW) ? 1:0;
-		// With 'mutual-failture', only 'allow' and non 'deny' IP are authorised.
-		//   A non 'allow' (even non 'deny') IP is not authorised. It's like: if allowed and not denied, it's authorised.
-		//   So, it's disapproval if you have no description at the time of 'mutual-failture'.
-		// With 'deny,allow' (allow if not deny), because here it's not deny, we authorise.
-}
-
-//--------------------------------
-// Access control by IP for ladmin
-//--------------------------------
-int check_ladminip(uint32 ip)
-{
-	int i;
-	char buf[20];
-	char * access_ip;
-
-	if (access_ladmin_allownum == 0)
-		return 1; // When there is no restriction, all IP are authorised.
-
-//	+   012.345.: front match form, or
-//	    all: all IP are matched, or
-//	    012.345.678.901/24: network form (mask with # of bits), or
-//	    012.345.678.901/255.255.255.0: network form (mask with ip mask)
-//	+   Note about the DNS resolution (like www.ne.jp, etc.):
-//	    There is no guarantee to have an answer.
-//	    If we have an answer, there is no guarantee to have a 100% correct value.
-//	    And, the waiting time (to check) can be long (over 1 minute to a timeout). That can block the software.
-//	    So, DNS notation isn't authorised for ip checking.
-	sprintf(buf, "%u.%u.%u.%u.", CONVIP(ip));
-
-	for(i = 0; i < access_ladmin_allownum; i++) {
-		access_ip = access_ladmin_allow + i * ACO_STRSIZE;
-		if (memcmp(access_ip, buf, strlen(access_ip)) == 0 || check_ipmask(ip, (unsigned char*)access_ip)) {
-			return 1;
-		}
-	}
-
-	return 0;
-}
 
 //-----------------------------------------------
 // Search an account id
@@ -947,6 +819,7 @@ int check_GM_file(int tid, unsigned int tick, int id, int data)
 bool check_encrypted(const char* str1, const char* str2, const char* passwd)
 {
 	char md5str[64], md5bin[32];
+
 	snprintf(md5str, sizeof(md5str), "%s%s", str1, str2);
 	md5str[sizeof(md5str)-1] = '\0';
 	MD5_String2binary(md5str, md5bin);
@@ -977,8 +850,7 @@ bool check_password(struct login_session_data* ld, int passwdenc, const char* pa
 //-------------------------------------
 int mmo_auth_new(struct mmo_account* account, char sex, char* email)
 {
-	time_t timestamp, timestamp_temp;
-	struct tm *tmtime;
+	time_t connect_until = 0;
 	int i = auth_num;
 
 	if (auth_num >= auth_max) {
@@ -988,6 +860,7 @@ int mmo_auth_new(struct mmo_account* account, char sex, char* email)
 
 	memset(&auth_dat[i], '\0', sizeof(struct auth_data));
 
+	// find a suitable non-gm account id
 	while (isGM(account_id_count) > 0)
 		account_id_count++;
 
@@ -1004,19 +877,9 @@ int mmo_auth_new(struct mmo_account* account, char sex, char* email)
 	safestrncpy(auth_dat[i].email, e_mail_check(email) ? email : "a@a.com", sizeof(auth_dat[i].email));
 	safestrncpy(auth_dat[i].error_message, "-", sizeof(auth_dat[i].error_message));
 	auth_dat[i].ban_until_time = 0;
-	if (start_limited_time < 0)
-		auth_dat[i].connect_until_time = 0; // unlimited
-	else { // limited time
-		timestamp = time(NULL) + start_limited_time;
-		// double conversion to be sure that it is possible
-		tmtime = localtime(&timestamp);
-		timestamp_temp = mktime(tmtime);
-		if (timestamp_temp != -1 && (timestamp_temp + 3600) >= timestamp) // check possible value and overflow (and avoid summer/winter hour)
-			auth_dat[i].connect_until_time = timestamp_temp;
-		else
-			auth_dat[i].connect_until_time = 0; // unlimited
-	}
-
+	if( login_config.start_limited_time != -1 )
+		connect_until = time(NULL) + login_config.start_limited_time;
+	auth_dat[i].connect_until_time = connect_until;
 	strncpy(auth_dat[i].last_ip, "-", 16);
 	strncpy(auth_dat[i].memo, "-", 255);
 	auth_dat[i].account_reg2_num = 0;
@@ -1031,6 +894,9 @@ int mmo_auth_new(struct mmo_account* account, char sex, char* email)
 //-----------------------------------------------------
 int mmo_auth(struct mmo_account* account, int fd)
 {
+	static int num_regs = 0; // registration counter
+	static unsigned int new_reg_tick = gettick();
+
 	unsigned int i;
 	time_t raw_time;
 	char tmpstr[256];
@@ -1104,7 +970,7 @@ int mmo_auth(struct mmo_account* account, int fd)
 		{
 			int new_id = mmo_auth_new(account, account->userid[len-1], "a@a.com");
 			unsigned int tick = gettick();
-			ShowNotice("Account creation (account %s, id: %d, pass: %s, sex: %c, connection with _F/_M, ip: %s)\n", account->userid, new_id, account->passwd, account->userid[len-1], ip);
+			ShowNotice("Account creation (account %s, id: %d, pass: %s, sex: %c, connection with _M/_F, ip: %s)\n", account->userid, new_id, account->passwd, account->userid[len-1], ip);
 			auth_before_save_file = 0; // Creation of an account -> save accounts file immediatly
 			
 			if( DIFF_TICK(tick, new_reg_tick) > 0 )
@@ -1214,7 +1080,7 @@ static int online_db_setoffline(DBKey key, void* data, va_list ap)
 //--------------------------------
 int parse_fromchar(int fd)
 {
-	uint32 i;
+	unsigned int i;
 	int j, id;
 	uint32 ipl;
 	char ip[16];
@@ -1328,9 +1194,18 @@ int parse_fromchar(int fd)
 		case 0x2714:
 			if( RFIFOREST(fd) < 6 )
 				return 0;
-			//printf("parse_fromchar: Receiving of the users number of the server '%s': %d\n", server[id].name, RFIFOL(fd,2));
-			server[id].users = RFIFOL(fd,2);
+		{
+			int users = RFIFOL(fd,2);
 			RFIFOSKIP(fd,6);
+
+			// how many users on world? (update)
+			if( server[id].users != users )
+			{
+				ShowStatus("set users %s : %d\n", server[id].name, users);
+
+				server[id].users = users;
+			}
+		}
 		break;
 
 		case 0x2715: // request from char server to change e-email from default "a@a.com"
@@ -1365,7 +1240,7 @@ int parse_fromchar(int fd)
 				return 0;
 		{
 			uint32 connect_until_time = 0;
-			char* email = "";
+			char email[40] = "";
 
 			int account_id = RFIFOL(fd,2);
 			RFIFOSKIP(fd,6);
@@ -1375,7 +1250,7 @@ int parse_fromchar(int fd)
 				ShowNotice("Char-server '%s': e-mail of the account %d NOT found (ip: %s).\n", server[id].name, RFIFOL(fd,2), ip);
 			else
 			{
-				email = auth_dat[i].email;
+				safestrncpy(email, auth_dat[i].email, sizeof(email));
 				connect_until_time = (uint32)auth_dat[i].connect_until_time;
 			}
 
@@ -1398,53 +1273,6 @@ int parse_fromchar(int fd)
 			WFIFOSET(fd,2);
 		break;
 
-		case 0x2720: // Request to become a GM
-			if( RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2) )
-				return 0;
-		{
-			int level = 0;
-			FILE *fp;
-
-			char pass[60];
-			int acc = RFIFOL(fd,4);
-			safestrncpy(pass, (char*)RFIFOP(fd,8), sizeof(pass));
-			RFIFOSKIP(fd, RFIFOW(fd,2));
-
-			if( strcmp(pass, gm_pass) != 0 ) // password check
-				ShowError("Char-server '%s': Error of GM change (account: %d, invalid password, ip: %s).\n", server[id].name, acc, ip);
-			else
-			if( isGM(acc) > 0 ) // only non-GM can become GM
-				ShowError("Char-server '%s': Error of GM change (account: %d (already GM), correct password, ip: %s).\n", server[id].name, acc, ip);
-			else
-			if( level_new_gm == 0 ) // if we autorise creation
-				ShowError("Char-server '%s': Error of GM change (account: %d, correct password, but GM creation is disable (level_new_gm = 0), ip: %s).\n", server[id].name, acc, ip);
-			else
-			if( (fp = fopen(GM_account_filename, "a")) == NULL ) // if we can open the file to add the new GM
-				ShowError("Char-server '%s': Error of GM change (account: %d, correct password, unable to add a GM account in GM accounts file, ip: %s).\n", server[id].name, acc, ip);
-			else
-			{
-				char tmpstr[24];
-				time_t raw_time;
-				time(&raw_time);
-				strftime(tmpstr, 23, login_config.date_format, localtime(&raw_time));
-				fprintf(fp, "\n// %s: @GM command on account %d\n%d %d\n", tmpstr, acc, acc, level_new_gm);
-				fclose(fp);
-				level = level_new_gm;
-				read_gm_account();
-				send_GM_accounts(-1);
-
-				ShowNotice("Char-server '%s': GM Change of the account %d: level 0 -> %d (ip: %s).\n", server[id].name, acc, level_new_gm, ip);
-			}
-
-			// announce gm level update result
-			WFIFOHEAD(fd,10);
-			WFIFOW(fd,0) = 0x2721;
-			WFIFOL(fd,2) = acc;
-			WFIFOL(fd,6) = level; // 0:failed, >0:success
-			WFIFOSET(fd,10);
-		}
-		break;
-
 		// Map server send information to change an email of an account via char-server
 		case 0x2722:	// 0x2722 <account_id>.L <actual_e-mail>.40B <new_e-mail>.40B
 			if (RFIFOREST(fd) < 86)
@@ -1459,9 +1287,9 @@ int parse_fromchar(int fd)
 
 			if( e_mail_check(actual_email) == 0 )
 				ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command), but actual email is invalid (account: %d, ip: %s)\n", server[id].name, account_id, ip);
-			else if (e_mail_check(new_email) == 0)
+			else if( e_mail_check(new_email) == 0 )
 				ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command) with a invalid new e-mail (account: %d, ip: %s)\n", server[id].name, account_id, ip);
-			else if (strcmpi(new_email, "a@a.com") == 0)
+			else if( strcmpi(new_email, "a@a.com") == 0 )
 				ShowNotice("Char-server '%s': Attempt to modify an e-mail on an account (@email GM command) with a default e-mail (account: %d, ip: %s)\n", server[id].name, account_id, ip);
 			else {
 				ARR_FIND( 0, auth_num, i, auth_dat[i].account_id == account_id );
@@ -1737,8 +1565,8 @@ int parse_fromchar(int fd)
 			{
 				if( auth_dat[i].account_reg2[j].str[0] != '\0' )
 				{
-					off+= sprintf((char*)WFIFOP(fd,off), "%s", auth_dat[i].account_reg2[j].str)+1; //We add 1 to consider the '\0' in place.
-					off+= sprintf((char*)WFIFOP(fd,off), "%s", auth_dat[i].account_reg2[j].value)+1;
+					off += sprintf((char*)WFIFOP(fd,off), "%s", auth_dat[i].account_reg2[j].str)+1; //We add 1 to consider the '\0' in place.
+					off += sprintf((char*)WFIFOP(fd,off), "%s", auth_dat[i].account_reg2[j].value)+1;
 				}
 			}
 
@@ -1765,50 +1593,9 @@ int parse_fromchar(int fd)
 		break;
 
 		default:
-		{
-			FILE* logfp;
-			char tmpstr[24];
-			time_t raw_time;
-			logfp = fopen(login_log_unknown_packets_filename, "a");
-			if (logfp) {
-				time(&raw_time);
-				strftime(tmpstr, 23, login_config.date_format, localtime(&raw_time));
-				fprintf(logfp, "%s: receiving of an unknown packet -> disconnection\n", tmpstr);
-				fprintf(logfp, "parse_fromchar: connection #%d (ip: %s), packet: 0x%x (with being read: %lu).\n", fd, ip, command, (unsigned long)RFIFOREST(fd));
-				fprintf(logfp, "Detail (in hex):\n");
-				fprintf(logfp, "---- 00-01-02-03-04-05-06-07  08-09-0A-0B-0C-0D-0E-0F\n");
-				memset(tmpstr, '\0', sizeof(tmpstr));
-				for(i = 0; i < RFIFOREST(fd); i++) {
-					if ((i & 15) == 0)
-						fprintf(logfp, "%04X ",i);
-					fprintf(logfp, "%02x ", RFIFOB(fd,i));
-					if (RFIFOB(fd,i) > 0x1f)
-						tmpstr[i % 16] = RFIFOB(fd,i);
-					else
-						tmpstr[i % 16] = '.';
-					if ((i - 7) % 16 == 0) // -8 + 1
-						fprintf(logfp, " ");
-					else if ((i + 1) % 16 == 0) {
-						fprintf(logfp, " %s\n", tmpstr);
-						memset(tmpstr, '\0', sizeof(tmpstr));
-					}
-				}
-				if (i % 16 != 0) {
-					for(j = i; j % 16 != 0; j++) {
-						fprintf(logfp, "   ");
-						if ((j - 7) % 16 == 0) // -8 + 1
-							fprintf(logfp, " ");
-					}
-					fprintf(logfp, " %s\n", tmpstr);
-				}
-				fprintf(logfp, "\n");
-				fclose(logfp);
-			}
-
 			ShowError("parse_fromchar: Unknown packet 0x%x from a char-server! Disconnecting!\n", command);
 			set_eof(fd);
 			return 0;
-		}
 		} // switch
 	} // while
 
@@ -1869,8 +1656,8 @@ void login_auth_ok(struct mmo_account* account, int fd)
 		{// account is already marked as online!
 			if( data->char_server > -1 )
 			{// Request char servers to kick this account out. [Skotlex]
-				uint8 buf[8];
-				ShowNotice("User '%s' is already online - Rejected.\n", auth_dat[i].userid);
+				uint8 buf[6];
+				ShowNotice("User '%s' is already online - Rejected.\n", account->userid);
 				WBUFW(buf,0) = 0x2734;
 				WBUFL(buf,2) = account->account_id;
 				charif_sendallwos(-1, buf, 6);
@@ -1968,10 +1755,9 @@ void login_auth_failed(struct mmo_account* account, int fd, int result)
 // Default packet parsing (normal players or administation/char-server connection requests)
 //----------------------------------------------------------------------------------------
 int parse_login(int fd)
-{	
+{
 	struct mmo_account account;
-	int result, j;
-	unsigned int i;
+	int result;
 	uint32 ipl;
 	char ip[16];
 
@@ -2010,19 +1796,6 @@ int parse_login(int fd)
 		{
 			size_t packet_len = RFIFOREST(fd); // assume no other packet was sent
 
-			// Perform ip-ban check
-			if (!check_ip(ipl))
-			{
-				ShowStatus("Connection refused: IP isn't authorised (deny/allow, ip: %s).\n", ip);
-				WFIFOHEAD(fd,23);
-				WFIFOW(fd,0) = 0x6a;
-				WFIFOB(fd,2) = 3; // 3 = Rejected from Server
-				WFIFOSET(fd,23);
-				RFIFOSKIP(fd,packet_len);
-				set_eof(fd);
-				break;
-			}
-
 			if( (command == 0x0064 && packet_len < 55)
 			||  (command == 0x01dd && packet_len < 47)
 			||  (command == 0x0277 && packet_len < 84)
@@ -2038,17 +1811,18 @@ int parse_login(int fd)
 			account.version = RFIFOL(fd,2);
 			safestrncpy(account.userid, (char*)RFIFOP(fd,6), NAME_LENGTH); remove_control_chars(account.userid);
 			if (command != 0x01dd) {
-				ShowStatus("Request for connection (non encryption mode) of %s (ip: %s).\n", account.userid, ip);
+				ShowStatus("Request for connection of %s (ip: %s).\n", account.userid, ip);
 				safestrncpy(account.passwd, (char*)RFIFOP(fd,30), NAME_LENGTH); remove_control_chars(account.passwd);
+				account.passwdenc = 0;
 			} else {
 				ShowStatus("Request for connection (encryption mode) of %s (ip: %s).\n", account.userid, ip);
 				memcpy(account.passwd, RFIFOP(fd,30), 16); account.passwd[16] = '\0'; // raw binary data here!
+				account.passwdenc = PASSWORDENC;
 			}
 			RFIFOSKIP(fd,packet_len);
 
-			account.passwdenc = (command == 0x01dd) ? PASSWORDENC : 0;
-
 			result = mmo_auth(&account, fd);
+
 			if( result == -1 )
 				login_auth_ok(&account, fd);
 			else
@@ -2061,6 +1835,7 @@ int parse_login(int fd)
 			RFIFOSKIP(fd,2);
 		{
 			struct login_session_data* ld;
+			unsigned int i;
 			if( session[fd]->session_data )
 			{
 				ShowWarning("login: abnormal request of MD5 key (already opened session).\n");
@@ -2165,7 +1940,7 @@ int parse_login(int fd)
 				return 0;
 			WFIFOW(fd,0) = 0x7919;
 			WFIFOB(fd,2) = 1;
-			if (!check_ladminip(session[fd]->client_addr)) {
+			if( session[fd]->client_addr != admin_allowed_ip ) {
 				ShowNotice("'ladmin'-login: Connection in administration mode refused: IP isn't authorised (ladmin_allow, ip: %s).\n", ip);
 			} else {
 				struct login_session_data *ld = (struct login_session_data*)session[fd]->session_data;
@@ -2217,46 +1992,6 @@ int parse_login(int fd)
 		break;
 
 		default:
-			if (save_unknown_packets) {
-				FILE *logfp;
-				char tmpstr[24];
-				time_t raw_time;
-				logfp = fopen(login_log_unknown_packets_filename, "a");
-				if (logfp) {
-					time(&raw_time);
-					strftime(tmpstr, 23, login_config.date_format, localtime(&raw_time));
-					fprintf(logfp, "%s: receiving of an unknown packet -> disconnection\n", tmpstr);
-					fprintf(logfp, "parse_login: connection #%d (ip: %s), packet: 0x%x (with being read: %lu).\n", fd, ip, command, (unsigned long)RFIFOREST(fd));
-					fprintf(logfp, "Detail (in hex):\n");
-					fprintf(logfp, "---- 00-01-02-03-04-05-06-07  08-09-0A-0B-0C-0D-0E-0F\n");
-					memset(tmpstr, '\0', sizeof(tmpstr));
-					for(i = 0; i < RFIFOREST(fd); i++) {
-						if ((i & 15) == 0)
-							fprintf(logfp, "%04X ",i);
-						fprintf(logfp, "%02x ", RFIFOB(fd,i));
-						if (RFIFOB(fd,i) > 0x1f)
-							tmpstr[i % 16] = RFIFOB(fd,i);
-						else
-							tmpstr[i % 16] = '.';
-						if ((i - 7) % 16 == 0) // -8 + 1
-							fprintf(logfp, " ");
-						else if ((i + 1) % 16 == 0) {
-							fprintf(logfp, " %s\n", tmpstr);
-							memset(tmpstr, '\0', sizeof(tmpstr));
-						}
-					}
-					if (i % 16 != 0) {
-						for(j = i; j % 16 != 0; j++) {
-							fprintf(logfp, "   ");
-							if ((j - 7) % 16 == 0) // -8 + 1
-								fprintf(logfp, " ");
-						}
-						fprintf(logfp, " %s\n", tmpstr);
-					}
-					fprintf(logfp, "\n");
-					fclose(logfp);
-				}
-			}
 			ShowNotice("Abnormal end of connection (ip: %s): Unknown packet 0x%x\n", ip, command);
 			set_eof(fd);
 			return 0;
@@ -2393,43 +2128,6 @@ int login_config_read(const char* cfgName)
 			ShowInfo("Console Silent Setting: %d\n", atoi(w2));
 			msg_silent = atoi(w2);
 		}
-		else if (strcmpi(w1, "admin_state") == 0) {
-			admin_state = (bool)config_switch(w2);
-		} else if (strcmpi(w1, "admin_pass") == 0) {
-			memset(admin_pass, 0, sizeof(admin_pass));
-			strncpy(admin_pass, w2, sizeof(admin_pass));
-			admin_pass[sizeof(admin_pass)-1] = '\0';
-		} else if (strcmpi(w1, "ladminallowip") == 0) {
-			if (strcmpi(w2, "clear") == 0) {
-				if (access_ladmin_allow)
-					aFree(access_ladmin_allow);
-				access_ladmin_allow = NULL;
-				access_ladmin_allownum = 0;
-			} else {
-				if (strcmpi(w2, "all") == 0) {
-					// reset all previous values
-					if (access_ladmin_allow)
-						aFree(access_ladmin_allow);
-					// set to all
-					access_ladmin_allow = (char*)aCalloc(ACO_STRSIZE, sizeof(char));
-					access_ladmin_allownum = 1;
-					access_ladmin_allow[0] = '\0';
-				} else if (w2[0] && !(access_ladmin_allownum == 1 && access_ladmin_allow[0] == '\0')) { // don't add IP if already 'all'
-					if (access_ladmin_allow)
-						access_ladmin_allow = (char*)aRealloc(access_ladmin_allow, (access_ladmin_allownum+1) * ACO_STRSIZE);
-					else
-						access_ladmin_allow = (char*)aCalloc(ACO_STRSIZE, sizeof(char));
-					strncpy(access_ladmin_allow + (access_ladmin_allownum++) * ACO_STRSIZE, w2, ACO_STRSIZE);
-					access_ladmin_allow[access_ladmin_allownum * ACO_STRSIZE - 1] = '\0';
-				}
-			}
-		} else if (strcmpi(w1, "gm_pass") == 0) {
-			memset(gm_pass, 0, sizeof(gm_pass));
-			strncpy(gm_pass, w2, sizeof(gm_pass));
-			gm_pass[sizeof(gm_pass)-1] = '\0';
-		} else if (strcmpi(w1, "level_new_gm") == 0) {
-			level_new_gm = atoi(w2);
-		}
 		else if( !strcmpi(w1, "bind_ip") ) {
 			char ip_str[16];
 			login_config.login_ip = host2ip(w2);
@@ -2440,6 +2138,17 @@ int login_config_read(const char* cfgName)
 			login_config.login_port = (uint16)atoi(w2);
 			ShowStatus("set login_port : %s\n",w2);
 		}
+		else if(!strcmpi(w1, "log_login"))
+			login_config.log_login = (bool)config_switch(w2);
+
+		else if (strcmpi(w1, "admin_state") == 0) {
+			admin_state = (bool)config_switch(w2);
+		} else if (strcmpi(w1, "admin_pass") == 0) {
+			memset(admin_pass, 0, sizeof(admin_pass));
+			strncpy(admin_pass, w2, sizeof(admin_pass));
+			admin_pass[sizeof(admin_pass)-1] = '\0';
+		} else if (strcmpi(w1, "admin_allowed_ip") == 0)
+			admin_allowed_ip = host2ip(w2);
 		else if (strcmpi(w1, "account_filename") == 0) {
 			memset(account_filename, 0, sizeof(account_filename));
 			strncpy(account_filename, w2, sizeof(account_filename));
@@ -2448,78 +2157,14 @@ int login_config_read(const char* cfgName)
 			memset(GM_account_filename, 0, sizeof(GM_account_filename));
 			strncpy(GM_account_filename, w2, sizeof(GM_account_filename));
 			GM_account_filename[sizeof(GM_account_filename)-1] = '\0';
-		} else if (strcmpi(w1, "gm_account_filename_check_timer") == 0) {
-			gm_account_filename_check_timer = atoi(w2);
-		} else if (strcmpi(w1, "log_login") == 0) {
-			login_config.log_login = (bool)config_switch(w2);
-		} else if (strcmpi(w1, "login_log_unknown_packets_filename") == 0) {
-			memset(login_log_unknown_packets_filename, 0, sizeof(login_log_unknown_packets_filename));
-			strncpy(login_log_unknown_packets_filename, w2, sizeof(login_log_unknown_packets_filename));
-			login_log_unknown_packets_filename[sizeof(login_log_unknown_packets_filename)-1] = '\0';
-		} else if (strcmpi(w1, "save_unknown_packets") == 0) {
-			save_unknown_packets = config_switch(w2);
-		} else if (strcmpi(w1, "start_limited_time") == 0) {
-			start_limited_time = atoi(w2);
-		} else if (strcmpi(w1, "order") == 0) {
-			access_order = atoi(w2);
-			if (strcmpi(w2, "deny,allow") == 0 ||
-			    strcmpi(w2, "deny, allow") == 0) access_order = ACO_DENY_ALLOW;
-			if (strcmpi(w2, "allow,deny") == 0 ||
-			    strcmpi(w2, "allow, deny") == 0) access_order = ACO_ALLOW_DENY;
-			if (strcmpi(w2, "mutual-failture") == 0 ||
-			    strcmpi(w2, "mutual-failure") == 0) access_order = ACO_MUTUAL_FAILTURE;
-		} else if (strcmpi(w1, "allow") == 0) {
-			if (strcmpi(w2, "clear") == 0) {
-				if (access_allow)
-					aFree(access_allow);
-				access_allow = NULL;
-				access_allownum = 0;
-			} else {
-				if (strcmpi(w2, "all") == 0) {
-					// reset all previous values
-					if (access_allow)
-						aFree(access_allow);
-					// set to all
-					access_allow = (char*)aCalloc(ACO_STRSIZE, sizeof(char));
-					access_allownum = 1;
-					access_allow[0] = '\0';
-				} else if (w2[0] && !(access_allownum == 1 && access_allow[0] == '\0')) { // don't add IP if already 'all'
-					if (access_allow)
-						access_allow = (char*)aRealloc(access_allow, (access_allownum+1) * ACO_STRSIZE);
-					else
-						access_allow = (char*)aCalloc(ACO_STRSIZE, sizeof(char));
-					strncpy(access_allow + (access_allownum++) * ACO_STRSIZE, w2, ACO_STRSIZE);
-					access_allow[access_allownum * ACO_STRSIZE - 1] = '\0';
-				}
-			}
-		} else if (strcmpi(w1, "deny") == 0) {
-			if (strcmpi(w2, "clear") == 0) {
-				if (access_deny)
-					aFree(access_deny);
-				access_deny = NULL;
-				access_denynum = 0;
-			} else {
-				if (strcmpi(w2, "all") == 0) {
-					// reset all previous values
-					if (access_deny)
-						aFree(access_deny);
-					// set to all
-					access_deny = (char*)aCalloc(ACO_STRSIZE, sizeof(char));
-					access_denynum = 1;
-					access_deny[0] = '\0';
-				} else if (w2[0] && !(access_denynum == 1 && access_deny[0] == '\0')) { // don't add IP if already 'all'
-					if (access_deny)
-						access_deny = (char*)aRealloc(access_deny, (access_denynum+1) * ACO_STRSIZE);
-					else
-						access_deny = (char*)aCalloc(ACO_STRSIZE, sizeof(char));
-					strncpy(access_deny + (access_denynum++) * ACO_STRSIZE, w2, ACO_STRSIZE);
-					access_deny[access_denynum * ACO_STRSIZE - 1] = '\0';
-				}
-			}
 		}
+		else if (strcmpi(w1, "gm_account_filename_check_timer") == 0)
+			gm_account_filename_check_timer = atoi(w2);
 
 		else if(!strcmpi(w1, "new_account"))
 			login_config.new_account_flag = (bool)config_switch(w2);
+		else if(!strcmpi(w1, "start_limited_time"))
+			login_config.start_limited_time = atoi(w2);
 		else if(!strcmpi(w1, "check_client_version"))
 			login_config.check_client_version = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "client_version_to_connect"))
@@ -2568,19 +2213,6 @@ void display_conf_warnings(void)
 		}
 	}
 
-	if (gm_pass[0] == '\0') {
-		ShowWarning("'To GM become' password is void (gm_pass).\n");
-		ShowWarning("  We highly recommend that you set one password.\n");
-	} else if (strcmp(gm_pass, "gm") == 0) {
-		ShowWarning("You are using the default GM password (gm_pass).\n");
-		ShowWarning("  We highly recommend that you change it.\n");
-	}
-
-	if (level_new_gm < 0 || level_new_gm > 99) {
-		ShowWarning("Invalid value for level_new_gm parameter -> setting to 60 (default).\n");
-		level_new_gm = 60;
-	}
-
 	if (gm_account_filename_check_timer < 0) {
 		ShowWarning("Invalid value for gm_account_filename_check_timer parameter. Setting to 15 sec (default).\n");
 		gm_account_filename_check_timer = 15;
@@ -2597,30 +2229,10 @@ void display_conf_warnings(void)
 		login_config.min_level_to_connect = 99;
 	}
 
-	if (start_limited_time < -1) { // -1: create unlimited account, 0 or more: additionnal sec from now to create limited time
+	if (login_config.start_limited_time < -1) { // -1: create unlimited account, 0 or more: additionnal sec from now to create limited time
 		ShowWarning("Invalid value for start_limited_time parameter\n");
 		ShowWarning("  -> setting to -1 (new accounts are created with unlimited time).\n");
-		start_limited_time = -1;
-	}
-
-	if (access_order == ACO_DENY_ALLOW) {
-		if (access_denynum == 1 && access_deny[0] == '\0') {
-			ShowWarning("The IP security order is 'deny,allow' (allow if not deny) and you refuse ALL IP.\n");
-		}
-	} else if (access_order == ACO_ALLOW_DENY) {
-		if (access_allownum == 0) {
-			ShowWarning("The IP security order is 'allow,deny' (deny if not allow) but, NO IP IS AUTHORISED!\n");
-		}
-	} else { // ACO_MUTUAL_FAILTURE
-		if (access_allownum == 0) {
-			ShowWarning("The IP security order is 'mutual-failture'\n");
-			ShowWarning("  (allow if in the allow list and not in the deny list).\n");
-			ShowWarning("  But, NO IP IS AUTHORISED!\n");
-		} else if (access_denynum == 1 && access_deny[0] == '\0') {
-			ShowWarning("The IP security order is mutual-failture\n");
-			ShowWarning("  (allow if in the allow list and not in the deny list).\n");
-			ShowWarning("  But, you refuse ALL IP!\n");
-		}
+		login_config.start_limited_time = -1;
 	}
 
 	return;
@@ -2666,9 +2278,6 @@ void do_final(void)
 
 	if(auth_dat) aFree(auth_dat);
 	if(gm_account_db) aFree(gm_account_db);
-	if(access_ladmin_allow) aFree(access_ladmin_allow);
-	if(access_allow) aFree(access_allow);
-	if(access_deny) aFree(access_deny);
 
 	for (i = 0; i < MAX_SERVERS; i++) {
 		if ((fd = server[i].fd) >= 0) {
@@ -2678,9 +2287,6 @@ void do_final(void)
 		}
 	}
 	do_close(login_fd);
-
-	if(log_fp)
-		fclose(log_fp);
 
 	ShowStatus("Finished.\n");
 }
@@ -2754,8 +2360,6 @@ int do_init(int argc, char** argv)
 	{
 		//##TODO invoke a CONSOLE_START plugin event
 	}
-
-	new_reg_tick = gettick();
 
 	// server port open & binding
 	login_fd = make_listen_bind(login_config.login_ip, login_config.login_port);

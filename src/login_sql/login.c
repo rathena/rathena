@@ -35,15 +35,16 @@ struct s_subnet {
 
 int subnet_count = 0;
 
+// GM account management
 struct gm_account* gm_account_db = NULL;
 unsigned int GM_num = 0; // number of gm accounts
 
 //Account registration flood protection [Kevin]
 int allowed_regs = 1;
 int time_allowed = 10; //in seconds
-unsigned int new_reg_tick = 0;
-int num_regs = 0;
 
+
+// data handling (SQL)
 Sql* sql_handle;
 
 // database parameters
@@ -66,6 +67,9 @@ char login_db_user_pass[256] = "user_pass";
 char login_db_level[256] = "level";
 
 
+//-----------------------------------------------------
+// Session data structure
+//-----------------------------------------------------
 struct login_session_data {
 	uint16 md5keylen;
 	char md5key[20];
@@ -386,8 +390,12 @@ bool check_password(struct login_session_data* ld, int passwdenc, const char* pa
 //-----------------------------------------------------
 int mmo_auth_new(struct mmo_account* account, char sex)
 {
+	static int num_regs = 0; // registration counter
+	static unsigned int new_reg_tick = gettick();
+
 	unsigned int tick = gettick();
 	char md5buf[32+1];
+	time_t connect_until = 0;
 	SqlStmt* stmt;
 	int result = 0;
 
@@ -413,10 +421,13 @@ int mmo_auth_new(struct mmo_account* account, char sex)
 	if( result )
 		return result;// error or incorrect user/pass
 
+	if( login_config.start_limited_time != -1 )
+		connect_until = time(NULL) + login_config.start_limited_time;
+
 	// insert new entry into db
 	//TODO: error checking
 	stmt = SqlStmt_Malloc(sql_handle);
-	SqlStmt_Prepare(stmt, "INSERT INTO `%s` (`%s`, `%s`, `sex`, `email`) VALUES (?, ?, '%c', 'a@a.com')", login_db, login_db_userid, login_db_user_pass, TOUPPER(sex));
+	SqlStmt_Prepare(stmt, "INSERT INTO `%s` (`%s`, `%s`, `sex`, `email`, `connect_until`) VALUES (?, ?, '%c', 'a@a.com', '%d')", login_db, login_db_userid, login_db_user_pass, TOUPPER(sex), connect_until);
 	SqlStmt_BindParam(stmt, 0, SQLDT_STRING, account->userid, strnlen(account->userid, NAME_LENGTH));
 	if( login_config.use_md5_passwds )
 	{
@@ -426,9 +437,9 @@ int mmo_auth_new(struct mmo_account* account, char sex)
 	else
 		SqlStmt_BindParam(stmt, 1, SQLDT_STRING, account->passwd, strnlen(account->passwd, NAME_LENGTH));
 	SqlStmt_Execute(stmt);
-	SqlStmt_Free(stmt);
 
-	ShowInfo("New account: userid='%s' passwd='%s' sex='%c'\n", account->userid, account->passwd, TOUPPER(sex));
+	ShowNotice("Account creation (account %s, id: %d, pass: %s, sex: %c, connection with _M/_F)\n", account->userid, SqlStmt_LastInsertId(stmt), account->passwd, TOUPPER(sex));
+	SqlStmt_Free(stmt);
 
 	if( DIFF_TICK(tick, new_reg_tick) > 0 )
 	{// Update the registration check.
@@ -600,7 +611,8 @@ static int online_db_setoffline(DBKey key, void* data, va_list ap)
 //--------------------------------
 int parse_fromchar(int fd)
 {
-	int i, id;
+	unsigned int i;
+	int id;
 	uint32 ipl;
 	char ip[16];
 
@@ -784,25 +796,6 @@ int parse_fromchar(int fd)
 			WFIFOHEAD(fd,2);
 			WFIFOW(fd,0) = 0x2718;
 			WFIFOSET(fd,2);
-		break;
-
-		case 0x2720: // Request to become a GM
-			if( RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2) )
-				return 0;
-		{
-			int acc = RFIFOL(fd,4);
-			RFIFOSKIP(fd, RFIFOW(fd,2));
-
-			ShowWarning("change GM isn't supported in this login server version.\n");
-			ShowError("change GM error 0 %s\n", RFIFOP(fd,8));
-
-			// announce gm level update result
-			WFIFOHEAD(fd,10);
-			WFIFOW(fd,0) = 0x2721;
-			WFIFOL(fd,2) = acc;
-			WFIFOL(fd,6) = 0; // level
-			WFIFOSET(fd,10);
-		}
 		break;
 
 		// Map server send information to change an email of an account via char-server
@@ -1404,7 +1397,7 @@ void login_auth_failed(struct mmo_account* account, int fd, int result)
 int parse_login(int fd)
 {
 	struct mmo_account account;
-	int result, i;
+	int result;
 	uint32 ipl;
 	char ip[16];
 
@@ -1471,13 +1464,15 @@ int parse_login(int fd)
 			account.version = RFIFOL(fd,2);
 			safestrncpy(account.userid, (char*)RFIFOP(fd,6), NAME_LENGTH);//## does it have to be nul-terminated?
 			if (command != 0x01dd) {
+				ShowStatus("Request for connection of %s (ip: %s).\n", account.userid, ip);
 				safestrncpy(account.passwd, (char*)RFIFOP(fd,30), NAME_LENGTH);//## does it have to be nul-terminated?
+				account.passwdenc = 0;
 			} else {
+				ShowStatus("Request for connection (encryption mode) of %s (ip: %s).\n", account.userid, ip);
 				memcpy(account.passwd, RFIFOP(fd,30), 16); account.passwd[16] = '\0'; // raw binary data here!
+				account.passwdenc = PASSWORDENC;
 			}
 			RFIFOSKIP(fd,packet_len);
-
-			account.passwdenc = (command == 0x01dd) ? PASSWORDENC : 0;
 
 			result = mmo_auth(&account, fd);
 
@@ -1492,6 +1487,7 @@ int parse_login(int fd)
 			RFIFOSKIP(fd,2);
 		{
 			struct login_session_data* ld;
+			unsigned int i;
 			if( session[fd]->session_data )
 			{
 				ShowWarning("login: abnormal request of MD5 key (already opened session).\n");
@@ -1777,6 +1773,8 @@ int login_config_read(const char* cfgName)
 
 		else if(!strcmpi(w1, "new_account"))
 			login_config.new_account_flag = (bool)config_switch(w2);
+		else if(!strcmpi(w1, "start_limited_time"))
+			login_config.start_limited_time = atoi(w2);
 		else if(!strcmpi(w1, "check_client_version"))
 			login_config.check_client_version = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "client_version_to_connect"))
@@ -1979,8 +1977,6 @@ int do_init(int argc, char** argv)
 	{
 		//##TODO invoke a CONSOLE_START plugin event
 	}
-
-	new_reg_tick = gettick();
 
 	// server port open & binding
 	login_fd = make_listen_bind(login_config.login_ip, login_config.login_port);

@@ -1902,30 +1902,6 @@ int atcommand_help2(const int fd, struct map_session_data* sd, const char* comma
 }
 
 
-/*==========================================
- * @gm
- *------------------------------------------*/
-int atcommand_gm(const int fd, struct map_session_data* sd, const char* command, const char* message)
-{
-	char password[100];
-	nullpo_retr(-1, sd);
-
-	memset(password, '\0', sizeof(password));
-
-	if (!message || !*message || sscanf(message, "%99[^\n]", password) < 1) {
-		clif_displaymessage(fd, "Please, enter a password (usage: @gm <password>).");
-		return -1;
-	}
-
-	if (pc_isGM(sd)) { // a GM can not use this function. only a normal player (become gm is not for gm!)
-		clif_displaymessage(fd, msg_txt(50)); // You already have some GM powers.
-		return -1;
-	} else
-		chrif_changegm(sd->status.account_id, password, strlen(password) + 1);
-
-	return 0;
-}
-
 // helper function, used in foreach calls to stop auto-attack timers
 // parameter: '0' - everyone, 'id' - only those attacking someone with that id
 static int atcommand_stopattack(struct block_list *bl,va_list ap)
@@ -8333,7 +8309,6 @@ AtCommandInfo atcommand_info[] = {
 	{ "help",              20,     atcommand_help },
 	{ "h2",                20,     atcommand_help2 },
 	{ "help2",             20,     atcommand_help2 },
-	{ "gm",               100,     atcommand_gm },
 	{ "pvpoff",            40,     atcommand_pvpoff },
 	{ "pvpon",             40,     atcommand_pvpon },
 	{ "gvgoff",            40,     atcommand_gvgoff },

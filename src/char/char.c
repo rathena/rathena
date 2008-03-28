@@ -2066,20 +2066,6 @@ int parse_fromlogin(int fd)
 			RFIFOSKIP(fd,2);
 		break;
 
-		case 0x2721:	// gm reply
-			if (RFIFOREST(fd) < 10)
-				return 0;
-		{
-			unsigned char buf[10];
-			WBUFW(buf,0) = 0x2b0b;
-			WBUFL(buf,2) = RFIFOL(fd,2); // account
-			WBUFL(buf,6) = RFIFOL(fd,6); // GM level
-			mapif_sendall(buf,10);
-
-			RFIFOSKIP(fd,10);
-		}
-		break;
-
 		case 0x2723:	// changesex reply (modified by [Yor])
 			if (RFIFOREST(fd) < 7)
 				return 0;
@@ -2903,24 +2889,6 @@ int parse_frommap(int fd)
 			WFIFOSET(fd,30);
 
 			RFIFOSKIP(fd,6);
-		break;
-
-		case 0x2b0a: // request to become GM
-			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-				return 0;
-			if (login_fd > 0) { // don't send request if no login-server
-				WFIFOHEAD(login_fd, RFIFOW(fd,2));
-				WFIFOW(login_fd,0) = 0x2720;
-				memcpy(WFIFOP(login_fd,2), RFIFOP(fd,2), RFIFOW(fd,2)-2);
-				WFIFOSET(login_fd, RFIFOW(fd,2));
-			} else {
-				WFIFOHEAD(fd,10);
-				WFIFOW(fd,0) = 0x2b0b;
-				WFIFOL(fd,2) = RFIFOL(fd,4);
-				WFIFOL(fd,6) = 0;
-				WFIFOSET(fd,10);
-			}
-			RFIFOSKIP(fd, RFIFOW(fd,2));
 		break;
 
 		case 0x2b0c: // Map server send information to change an email of an account -> login-server

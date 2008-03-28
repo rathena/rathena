@@ -1762,35 +1762,6 @@ int parse_fromlogin(int fd)
 			RFIFOSKIP(fd,2);
 		break;
 
-		// gm reply. I don't want to support this function.
-		case 0x2721:
-			if (RFIFOREST(fd) < 10)
-				return 0;
-
-/*		Note that this is the code from char-txt! Even uncommenting it will not work.
-		  {
-			int oldacc, newacc;
-			unsigned char buf[64];
-			if (RFIFOREST(fd) < 10)
-				return 0;
-			oldacc = RFIFOL(fd, 2);
-			newacc = RFIFOL(fd, 6);
-			RFIFOSKIP(fd, 10);
-			if (newacc > 0) {
-				for(i=0;i<char_num;i++){
-					if(char_dat[i].account_id==oldacc)
-						char_dat[i].account_id=newacc;
-				}
-			}
-			WBUFW(buf,0)=0x2b0b;
-			WBUFL(buf,2)=oldacc;
-			WBUFL(buf,6)=newacc;
-			mapif_sendall(buf,10);
-		  }
-*/
-			RFIFOSKIP(fd, 10);
-		break;
-
 		// changesex reply
 		case 0x2723:
 			if (RFIFOREST(fd) < 7)
@@ -2500,18 +2471,6 @@ int parse_frommap(int fd)
 			WFIFOSET(fd,30);
 
 			RFIFOSKIP(fd,6);
-		break;
-
-		case 0x2b0a: // request to become GM
-			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
-				return 0;
-			/*
-			memcpy(WFIFOP(login_fd,2),RFIFOP(fd,2),RFIFOW(fd,2)-2);
-			WFIFOW(login_fd,0)=0x2720;
-			WFIFOSET(login_fd,RFIFOW(fd,2));
-			*/
-			ShowWarning("packet 0x2ba (become GM) is not supported by the Char-Server.\n");
-			RFIFOSKIP(fd, RFIFOW(fd, 2));
 		break;
 
 		case 0x2b0c: // Map server send information to change an email of an account -> login-server

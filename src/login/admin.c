@@ -22,7 +22,6 @@ extern struct mmo_char_server server[MAX_SERVERS];
 extern uint32 auth_num;
 extern int account_id_count;
 extern char GM_account_filename[1024];
-extern char login_log_unknown_packets_filename[1024];
 
 int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len);
 int search_account_index(char* account_name);
@@ -894,46 +893,6 @@ int parse_admin(int fd)
 			break;
 
 		default:
-			{
-				FILE *logfp;
-				char tmpstr[24];
-				time_t raw_time;
-				logfp = fopen(login_log_unknown_packets_filename, "a");
-				if (logfp) {
-					time(&raw_time);
-					strftime(tmpstr, 23, login_config.date_format, localtime(&raw_time));
-					fprintf(logfp, "%s: receiving of an unknown packet -> disconnection\n", tmpstr);
-					fprintf(logfp, "parse_admin: connection #%d (ip: %s), packet: 0x%x (with being read: %lu).\n", fd, ip, command, (unsigned long)RFIFOREST(fd));
-					fprintf(logfp, "Detail (in hex):\n");
-					fprintf(logfp, "---- 00-01-02-03-04-05-06-07  08-09-0A-0B-0C-0D-0E-0F\n");
-					memset(tmpstr, '\0', sizeof(tmpstr));
-					for(i = 0; i < RFIFOREST(fd); i++) {
-						if ((i & 15) == 0)
-							fprintf(logfp, "%04X ",i);
-						fprintf(logfp, "%02x ", RFIFOB(fd,i));
-						if (RFIFOB(fd,i) > 0x1f)
-							tmpstr[i % 16] = RFIFOB(fd,i);
-						else
-							tmpstr[i % 16] = '.';
-						if ((i - 7) % 16 == 0) // -8 + 1
-							fprintf(logfp, " ");
-						else if ((i + 1) % 16 == 0) {
-							fprintf(logfp, " %s\n", tmpstr);
-							memset(tmpstr, '\0', sizeof(tmpstr));
-						}
-					}
-					if (i % 16 != 0) {
-						for(j = i; j % 16 != 0; j++) {
-							fprintf(logfp, "   ");
-							if ((j - 7) % 16 == 0) // -8 + 1
-								fprintf(logfp, " ");
-						}
-						fprintf(logfp, " %s\n", tmpstr);
-					}
-					fprintf(logfp, "\n");
-					fclose(logfp);
-				}
-			}
 			ShowStatus("'ladmin': End of connection, unknown packet (ip: %s)\n", ip);
 			set_eof(fd);
 			return 0;
