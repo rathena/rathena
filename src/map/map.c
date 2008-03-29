@@ -1617,6 +1617,9 @@ int map_quit(struct map_session_data *sd)
 		}
 	}
 	
+	// Return loot to owner
+	if( sd->pd ) pet_lootitem_drop(sd->pd, sd);
+
 	unit_remove_map_pc(sd,3);
 	pc_makesavestatus(sd);
 	pc_clean_skilltree(sd);

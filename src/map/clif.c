@@ -2231,7 +2231,7 @@ int clif_updatestatus(struct map_session_data *sd,int type)
 
 	case SP_ZENY:
 		WFIFOW(fd,0)=0xb1;
-		WFIFOL(fd,4)=sd->status.zeny - sd->mail.zeny;
+		WFIFOL(fd,4)=sd->status.zeny;
 		break;
 	case SP_BASEEXP:
 		WFIFOW(fd,0)=0xb1;
