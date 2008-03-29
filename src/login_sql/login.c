@@ -42,6 +42,7 @@ unsigned int GM_num = 0; // number of gm accounts
 //Account registration flood protection [Kevin]
 int allowed_regs = 1;
 int time_allowed = 10; //in seconds
+unsigned int new_reg_tick = 0;
 
 
 // data handling (SQL)
@@ -391,7 +392,6 @@ bool check_password(struct login_session_data* ld, int passwdenc, const char* pa
 int mmo_auth_new(struct mmo_account* account, char sex)
 {
 	static int num_regs = 0; // registration counter
-	static unsigned int new_reg_tick = gettick();
 
 	unsigned int tick = gettick();
 	char md5buf[32+1];
@@ -1977,6 +1977,8 @@ int do_init(int argc, char** argv)
 	{
 		//##TODO invoke a CONSOLE_START plugin event
 	}
+
+	new_reg_tick = gettick();
 
 	// server port open & binding
 	login_fd = make_listen_bind(login_config.login_ip, login_config.login_port);

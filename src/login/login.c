@@ -45,6 +45,7 @@ int gm_account_filename_check_timer = 15; // Timer to check if GM_account file h
 //Account registration flood protection [Kevin]
 int allowed_regs = 1;
 int time_allowed = 10; //in seconds
+unsigned int new_reg_tick = 0;
 
 
 // data handling (TXT)
@@ -895,7 +896,6 @@ int mmo_auth_new(struct mmo_account* account, char sex, char* email)
 int mmo_auth(struct mmo_account* account, int fd)
 {
 	static int num_regs = 0; // registration counter
-	static unsigned int new_reg_tick = gettick();
 
 	unsigned int i;
 	time_t raw_time;
@@ -2360,6 +2360,8 @@ int do_init(int argc, char** argv)
 	{
 		//##TODO invoke a CONSOLE_START plugin event
 	}
+
+	new_reg_tick = gettick();
 
 	// server port open & binding
 	login_fd = make_listen_bind(login_config.login_ip, login_config.login_port);
