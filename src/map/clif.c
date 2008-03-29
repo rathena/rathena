@@ -12086,8 +12086,10 @@ void clif_parse_Adopt_reply(int fd, struct map_session_data *sd)
 
 	if( p1_sd == NULL || p2_sd == NULL )
 		return; // Both players need to be online
-	if( pid != p1_sd->status.account_id || p2_id != p1_sd->status.partner_id )
+
+	if( pid != p1_sd->status.account_id )
 		return; // Incorrect values
+
 	if( result == 0 )
 		return; // Rejected
 
