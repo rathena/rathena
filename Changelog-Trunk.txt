@@ -3,6 +3,12 @@ Date	Added
 AS OF SVN REV. 5091, WE ARE NOW USING TRUNK.  ALL UNTESTED BUGFIXES/FEATURES GO INTO TRUNK.
 IF YOU HAVE A WORKING AND TESTED BUGFIX PUT IT INTO STABLE AS WELL AS TRUNK.
 
+2008/03/30
+	* yet more login server stuff
+	- jA data structure compatibility renaming / adjustments
+	- mmo_account -> login_session_data, auth_data -> mmo_account
+	- made gender variable usage consistent for the entire login server
+	- rewrote TXT's new account creation procedure to match SQL's
 2008/03/28
 	* Some more txt/sql login server synchronization [ultramage]
 	- removed the option to specify multiple IPs/subnets for 'ladminallowip'

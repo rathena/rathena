@@ -13,18 +13,24 @@
 // supported encryption types: 1- passwordencrypt, 2- passwordencrypt2, 3- both
 #define PASSWORDENC 3
 
-struct mmo_account {
-	int version;
-	char userid[NAME_LENGTH];
-	char passwd[NAME_LENGTH];
-	int passwdenc;
-	
+struct login_session_data {
+
 	int account_id;
 	long login_id1;
 	long login_id2;
+	char sex;
+
+	char userid[NAME_LENGTH];
+	char passwd[NAME_LENGTH];
+	int passwdenc;
+	char md5key[20];
+	uint16 md5keylen;
+
 	char lastlogin[24];
-	int sex;
 	uint8 level;
+	int version;
+
+	int fd;
 };
 
 struct mmo_char_server {
@@ -37,7 +43,7 @@ struct mmo_char_server {
 	int new_;
 };
 
-extern struct Login_Config {
+struct Login_Config {
 
 	uint32 login_ip;                                // the address to bind to
 	uint16 login_port;                              // the port to bind to
@@ -63,6 +69,26 @@ extern struct Login_Config {
 	bool use_dnsbl;                                 // dns blacklist blocking ?
 	char dnsbl_servs[1024];                         // comma-separated list of dnsbl servers
 
-} login_config;
+};
+
+struct mmo_account {
+
+	int account_id;
+	char sex;
+	char userid[24];
+	char pass[32+1]; // 23+1 for normal, 32+1 for md5-ed passwords
+	char lastlogin[24];
+	int logincount;
+	uint32 state; // packet 0x006a value + 1 (0: compte OK)
+	char email[40]; // e-mail (by default: a@a.com)
+	char error_message[20]; // Message of error code #6 = Your are Prohibited to log in until %s (packet 0x006a)
+	time_t ban_until_time; // # of seconds 1/1/1970 (timestamp): ban time limit of the account (0 = no ban)
+	time_t connect_until_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
+	char last_ip[16]; // save of last IP of connection
+	char memo[255]; // a memo field
+	int account_reg2_num;
+	struct global_reg account_reg2[ACCOUNT_REG2_NUM]; // account script variables (stored on login server)
+};
+
 
 #endif /* _LOGIN_SQL_H_ */

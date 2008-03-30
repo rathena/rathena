@@ -17,17 +17,20 @@
 #include <string.h>
 #include <sys/stat.h> // for stat/lstat/fstat
 
+extern struct Login_Config login_config;
+
 #define MAX_SERVERS 30
 extern struct mmo_char_server server[MAX_SERVERS];
+extern struct mmo_account* auth_dat;
 extern uint32 auth_num;
 extern int account_id_count;
 extern char GM_account_filename[1024];
 
 int charif_sendallwos(int sfd, unsigned char *buf, unsigned int len);
 int search_account_index(char* account_name);
-int mmo_auth_new(struct mmo_account* account, char sex, char* email);
+int mmo_auth_new(struct mmo_account* account);
 void mmo_auth_sync(void);
-int mmo_auth_tostr(char* str, struct auth_data* p);
+int mmo_auth_tostr(char* str, struct mmo_account* p);
 int read_gm_account(void);
 void send_GM_accounts(int fd);
 int isGM(int account_id);
@@ -133,44 +136,39 @@ int parse_admin(int fd)
 				return 0;
 			{
 				struct mmo_account ma;
-				memcpy(ma.userid,RFIFOP(fd, 2),NAME_LENGTH);
-				ma.userid[23] = '\0';
-				memcpy(ma.passwd, RFIFOP(fd, 26), NAME_LENGTH);
-				ma.passwd[23] = '\0';
+				safestrncpy(ma.userid, (char*)RFIFOP(fd, 2), NAME_LENGTH);
+				safestrncpy(ma.pass,   (char*)RFIFOP(fd,26), NAME_LENGTH);
+				safestrncpy(ma.email,  (char*)RFIFOP(fd,51), 40);
 				memcpy(ma.lastlogin, "-", 2);
 				ma.sex = RFIFOB(fd,50);
+				RFIFOSKIP(fd,91);
+
 				WFIFOW(fd,0) = 0x7931;
-				WFIFOL(fd,2) = 0xffffffff;
-				memcpy(WFIFOP(fd,6), RFIFOP(fd,2), 24);
-				if (strlen(ma.userid) < 4 || strlen(ma.passwd) < 4) {
+				WFIFOL(fd,2) = 0xffffffff; // invalid account id
+				safestrncpy((char*)WFIFOP(fd,6), ma.userid, 24);
+				if (strlen(ma.userid) < 4 || strlen(ma.pass) < 4) {
 					ShowNotice("'ladmin': Attempt to create an invalid account (account or pass is too short, ip: %s)\n", ip);
 				} else if (ma.sex != 'F' && ma.sex != 'M') {
-					ShowNotice("'ladmin': Attempt to create an invalid account (account: %s, received pass: %s, invalid sex, ip: %s)\n", ma.userid, ma.passwd, ip);
+					ShowNotice("'ladmin': Attempt to create an invalid account (account: %s, received pass: %s, invalid sex, ip: %s)\n", ma.userid, ma.pass, ip);
 				} else if (account_id_count > END_ACCOUNT_NUM) {
-					ShowNotice("'ladmin': Attempt to create an account, but there is no more available id number (account: %s, pass: %s, sex: %c, ip: %s)\n", ma.userid, ma.passwd, ma.sex, ip);
+					ShowNotice("'ladmin': Attempt to create an account, but there is no more available id number (account: %s, pass: %s, sex: %c, ip: %s)\n", ma.userid, ma.pass, ma.sex, ip);
 				} else {
 					remove_control_chars(ma.userid);
-					remove_control_chars(ma.passwd);
-					for(i = 0; i < auth_num; i++) {
-						if (strncmp(auth_dat[i].userid, ma.userid, 24) == 0) {
-							ShowNotice("'ladmin': Attempt to create an already existing account (account: %s, pass: %s, received pass: %s, ip: %s)\n", auth_dat[i].userid, auth_dat[i].pass, ma.passwd, ip);
-							break;
-						}
-					}
-					if (i == auth_num) {
+					remove_control_chars(ma.pass);
+					remove_control_chars(ma.email);
+					ARR_FIND( 0, auth_num, i, strncmp(auth_dat[i].userid, ma.userid, 24) == 0 );
+					if( i < auth_num )
+						ShowNotice("'ladmin': Attempt to create an already existing account (account: %s, pass: %s, received pass: %s, ip: %s)\n", auth_dat[i].userid, auth_dat[i].pass, ma.pass, ip);
+					else
+					{
 						int new_id;
-						char email[40];
-						memcpy(email, RFIFOP(fd,51), 40);
-						email[39] = '\0';
-						remove_control_chars(email);
-						new_id = mmo_auth_new(&ma, ma.sex, email);
-						ShowNotice("'ladmin': Account creation (account: %s (id: %d), pass: %s, sex: %c, email: %s, ip: %s)\n", ma.userid, new_id, ma.passwd, ma.sex, auth_dat[i].email, ip);
+						new_id = mmo_auth_new(&ma);
+						ShowNotice("'ladmin': Account creation (account: %s (id: %d), pass: %s, sex: %c, email: %s, ip: %s)\n", ma.userid, new_id, ma.pass, ma.sex, auth_dat[i].email, ip);
 						WFIFOL(fd,2) = new_id;
 						mmo_auth_sync();
 					}
 				}
 				WFIFOSET(fd,30);
-				RFIFOSKIP(fd,91);
 			}
 			break;
 
