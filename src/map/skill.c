@@ -6406,6 +6406,7 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 			safestrncpy(group->valstr, "Boo!", MESSAGE_SIZE);
 	}
 
+	limit = group->limit;
 	for( i = 0; i < layout->count; i++ )
 	{
 		struct skill_unit *unit;
@@ -6413,7 +6414,6 @@ struct skill_unit_group* skill_unitsetting (struct block_list *src, short skilli
 		int uy = y + layout->dy[i];
 		int val1 = skilllv;
 		int val2 = 0;
-		int limit = group->limit;
 		int alive = 1;
 
 		if( !group->state.song_dance && !map_getcell(src->m,ux,uy,CELL_CHKREACH) )
