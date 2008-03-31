@@ -98,7 +98,7 @@ prontera,111,99,5	script	Egg Salesman#prt::EggVendor	98,{
 						mes "You don't have enough Zeny.";
 						next;
 						mes "[Egg Salesman]";
-						mes "no discount, go and get enough Zeny.";
+						mes "No discount, go and get enough Zeny.";
 						close;
 					}
 					else {

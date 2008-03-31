@@ -323,7 +323,7 @@ yuno_in02,93,207,1	script	Book of Ymir	111,{
 			mes "can confirm that Valkyrie and Valhalla actually exist...";
 			next;
 			set valkyrie_Q,2;
-			mes "[The book of Ymir]";
+			mes "[The Book of Ymir]";
 			mes "Let the heroes live new lives";
 			mes "so they can protect the world";
 			mes "from danger. And then...";
@@ -351,7 +351,7 @@ valkyrie,44,33,5	script	Teleporter	124,{
 		if (.@karma_d > 4) {
 			mes "[Teleporter]";
 			mes "Congratulations.";
-			mes "Honors to the warriors!";
+			mes "Honor to the warriors!";
 			close;
 		}
 		mes "[Teleporter]";
