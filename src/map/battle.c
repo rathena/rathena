@@ -2518,7 +2518,10 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage = 1+rand()%9999;
 		break;
 	case CR_ACIDDEMONSTRATION: // updated the formula based on a Japanese formula found to be exact [Reddozen]
-		md.damage = 7*tstatus->vit*sstatus->int_*sstatus->int_ / (10*(tstatus->vit+sstatus->int_));
+		if(tstatus->vit+sstatus->int_) //crash fix
+			md.damage = 7*tstatus->vit*sstatus->int_*sstatus->int_ / (10*(tstatus->vit+sstatus->int_));
+		else
+			md.damage = 0;
 		if (tsd) md.damage>>=1;
 		if (md.damage < 0 || md.damage > INT_MAX>>1)
 	  	//Overflow prevention, will anyone whine if I cap it to a few billion?
